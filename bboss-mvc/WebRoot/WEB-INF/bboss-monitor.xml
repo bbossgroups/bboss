@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding='gb2312'?>
+<!-- 
+bboss-monitor.xml
+描述：bbossgroup监控模块配置文件
+-->
+<properties>
+
+    <property name="/monitor/*.htm"
+    		path:monitor="/monitor/console"    		
+    		class="org.frameworkset.spi.monitor.MonitorController"/>
+</properties>

@@ -1,0 +1,138 @@
+<properties>
+		<!-- 
+			远程调用处理服务组件
+		 -->
+		<property name="rpc.server_object" singlable="true"
+					      class="org.frameworkset.spi.remote.DefaultRemoteHandler"/>
+					      
+		<!-- 
+			公用的服务请求处理类，所有协议的服务器端请求
+		 -->		
+		<property name="rpc.request_handler" singlable="true"
+						  class="org.frameworkset.spi.remote.RPCRequestHandler">	
+			<construction>
+				<property name="serverobject" 
+					      refid="attr:rpc.server_object" />	
+			</construction>				
+		</property>				      
+		
+		<!-- 
+			restful风格地址转换器
+		 -->
+		<property name="rpc.restful.convertor" singlable="true"
+					      class="org.frameworkset.spi.serviceid.RestfulServiceConvertorImplTest"/>
+		
+		
+		
+		<!-- 
+			指定远程通讯的默认协议：mina,
+							   jgroup,
+							   jms,
+							   webservice
+			一个完整的远程组件访问地址的实例如下：
+			(protocol::ip:port)/serviceid
+			如果应用程序没有指定protocol头，例如：
+			ip:port/serviceid
+			将使用rpc.default.protocol指定的协议
+		 -->			      
+		<property name="rpc.default.protocol" 
+					      value="jgroup"/>
+		
+		<!-- 
+			rpc服务启动模式配置
+			auto： 内嵌模式启动，框架将启动rpc.startup.protocols配置的协议
+				      相关的服务，比如mina，jgroup
+			mannual：手动模式，配置成这种模式的话，需要应用显示地调用相关启动方法来启动服务
+			         mina的手动启动方法为：
+			         org.frameworkset.spi.remote.mina.MinaRPCServer.getMinaRPCServer().start();
+			         jgroup的手动启动方法为：
+			         com.chinacreator.remote.JGroupHelper.getJGroupHelper().start();		
+			         jms协议的手动启动方法：
+			         org.frameworkset.spi.remote.jms.JMSServer.getJMSServer().start();	
+		 -->
+		<property name="rpc.startup.mode" 
+					      value="mannual"/>
+		<!-- 
+			rpc服务运行时需要启动的服务协议配置，多个协议用,号分隔
+			mina：启动mina
+			jgroup：表示启动jgroup
+		 -->			      
+		<property name="rpc.startup.protocols" 
+					      value="jms"/>			      
+		<!--
+			请求响应超时时间，单位为秒，默认为60秒 
+		 -->
+		<property name="rpc.request.timeout" 
+					      value="600"/>		
+					      
+		<!-- 
+			多播地址配置,用于客服端广播远程调用时的请求范围，
+			当客服端执行服务：(all)/serviceid调用时，请求将被分别发送到server 127.0.0.1:12346和server 127.0.0.1:12347
+			上去
+			mina和jgroup的地址配置
+		 -->
+		<property name="rpc.all.servers" value="127.0.0.1:12347;127.0.0.1:12346"/>	
+		
+		<!-- 
+			jms的组播地址配置
+		 -->
+		<!-- <property name="rpc.all.servers" value="server_uuid1;server_uuid2"/> -->
+			
+		<!-- 
+			webservice的组播地址配置
+		 -->
+		<!-- <property name="rpc.all.servers" value="http://ip:port/context/cxfservices;http://ip1:port/context/cxfservices"/> -->
+		<!-- 
+		
+			客服端远程服务发送请求模式采用异步发送-同步等待处理结果的模式
+			服务器端处理模式基于rpc协议的处理模式，
+							jgroup（异步事件处理模式），
+							jms（异步事件处理模式），
+							mina（nio模式），
+							cxf webservice（高效的异步处理模式）
+			
+		 -->
+
+
+		
+		<property name="system.securityManager" singlable="true" class="org.frameworkset.spi.security.SecurityManagerImpl">
+			<construction>
+				<property name="securityconfig" 
+					      refid="attr:rpc.security" />	
+			</construction>	
+		</property>
+		
+		<property name="rpc.security" >
+			<map>
+				<property name="rpc.login.module" enable="false" class="org.frameworkset.spi.security.SimpleLoginModule"/>
+				<property name="rpc.authority.module" enable="false" class="org.frameworkset.spi.security.SimpleAuthorityModule"/>
+				<property name="data.encrypt.module" enable="false" class="org.frameworkset.spi.security.SimpleEncryptModule"/>	
+			</map>
+		</property>
+		
+		
+		<!-- 
+		jgroups集群协议配置
+		 -->
+		<property name="cluster_name" value="Cluster"/>
+		<property name="cluster_protocol" value="tcp"/>
+		<property name="cluster_protocol.tcp.configfile" value="etc/META-INF/replSync-service-aop-tcp.xml"/>
+		<property name="cluster_protocol.udp.configfile" value="etc/META-INF/replSync-service-aop.xml"/>
+		<!-- 
+		jgroups集群协议配置结束
+		 -->		
+		<!-- 
+			导入webservice服务配置
+		 --> 
+		<managerimport file="org/frameworkset/spi/manager-rpc-webservices.xml" />
+		
+		<!-- 
+			导入jms服务配置
+		 --> 
+		<managerimport file="org/frameworkset/spi/manager-rpc-jms.xml" />		 	
+		
+		<!-- 
+			导入mina服务配置
+		 --> 
+		<managerimport file="org/frameworkset/spi/manager-rpc-mina.xml" />			
+	</properties>

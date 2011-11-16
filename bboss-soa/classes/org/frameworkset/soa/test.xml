@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="gbk"?>
+<properties>
+	<property name="person" class="org.frameworkset.soa.xblink.Person">
+		<property name="fax" class="org.frameworkset.soa.xblink.PhoneNumber">
+			<property name="code" soa:type="int" value="123" />
+			<property name="number" soa:type="String"><![CDATA[9999-999]]></property>
+		</property>
+		<property name="firstname" soa:type="String"><![CDATA[Joe]]></property>
+		<property name="lastname" soa:type="String"><![CDATA[Walnes]]></property>
+		<property name="phone" class="org.frameworkset.soa.xblink.PhoneNumber">
+			<property name="code" soa:type="int" value="123" />
+			<property name="number" soa:type="String"><![CDATA[1234-456]]></property>
+		</property>
+	</property>
+</properties>

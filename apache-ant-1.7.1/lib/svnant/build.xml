@@ -1,0 +1,174 @@
+<!-- This file is an ANT build script. ANT is a Java based build tool. -->
+<!-- It is available from http://ant.apache.org/               -->
+
+<project name="svnant" default="all" basedir=".">
+
+	<!-- user defined values can be defined in build.properties -->
+	<property file="build.properties" />
+
+	<!-- ================================================================= -->
+	<!-- Default properties -->
+	<!-- the above call the to build.properties file can supply non-default values -->
+	<!-- ================================================================= -->
+
+	<!-- svnant version -->
+	<property name="svnant.version" value="1.2.1" />
+
+	<!-- compile with debug on or off -->
+	<property name="debug" value="off" />
+	
+	<!-- locations of directories -->
+	<property name="src.main.dir" value="src/main" />
+	<property name="src.testcases.dir" value="src/testcases" />
+	<property name="src.doc.dir" value="src/doc" />
+	<property name="build.dir" value="build" />
+	<property name="build.distrib.dir" value="${build.dir}/distrib" />
+	<property name="build.classes.dir" value="${build.dir}/classes" />
+	<property name="build.lib.dir" value="${build.dir}/lib" />
+	<property name="build.cache.dir" value="build/depcache" />
+	<property name="distribfiles.dir" value="distribfiles" />
+
+	<!-- Required libraries -->
+	<property name="lib.dir" value="lib" />
+	<property name="svnClientAdapter.jar" value="${lib.dir}/svnClientAdapter.jar" />
+	<property name="svnjavahl.jar" value="${lib.dir}/svnjavahl.jar" />
+	<property name="svnkit.jar" value="${lib.dir}/svnkit.jar" />
+	<property name="ganymed.jar" value="${lib.dir}/ganymed.jar" />
+	<property name="ant.jar" value="${lib.dir}/ant.jar" />
+	<property name="ant-launcher.jar" value="${lib.dir}/ant-launcher.jar" />
+	<property name="junit.jar" value="${lib.dir}/junit.jar" />
+
+	
+	<path id="project.classpath">
+		<pathelement location="${ant.jar}" />
+		<pathelement location="${ant-launcher.jar}" />
+		<pathelement location="${svnClientAdapter.jar}" />
+		<pathelement location="${svnjavahl.jar}" />
+		<pathelement location="${svnkit.jar}" />
+		<pathelement location="${ganymed.jar}" />
+		<pathelement location="${junit.jar}" />
+	</path>
+
+	<!-- ================================================================= -->
+	<!-- cleans everything                                                 -->
+	<!-- ================================================================= -->
+	<target name="clean">
+		<delete dir="${build.dir}" />
+	</target>
+
+	<!-- ================================================================= -->
+	<!-- compile                                                           -->
+	<!-- ================================================================= -->
+	<target name="compile" description="compile all source files">
+		<mkdir dir="${build.classes.dir}" />
+		<depend srcDir="${src.main.dir}" destDir="${build.classes.dir}" cache="${build.cache.dir}" />
+		<javac srcdir="${src.main.dir}" 
+	      destdir="${build.classes.dir}"
+		  debug="${debug}" 
+	      target="${targetJvm}"
+	      includes="**" 
+	      classpathref="project.classpath" />
+		<copy file="${src.main.dir}/svnantlib.xml" todir="${build.classes.dir}/org/tigris/subversion/svnant" />
+	</target>
+
+	<!-- ================================================================= -->
+	<!-- create svnant.jar                                                 -->
+	<!-- ================================================================= -->
+	<target name="svnant.jar" depends="compile" description="generate svnant.jar">
+		<tstamp />
+		<mkdir dir="${build.lib.dir}" />
+		<jar jarfile="${build.lib.dir}/svnant.jar" basedir="${build.classes.dir}" excludes="**/*Test*.class">
+			<manifest>
+				<section name="org.tigris.subversion.svnant">
+					<attribute name="Specification-Title" value="svnant" />
+					<attribute name="Specification-Version" value="${svnant.version}" />
+					<attribute name="Implementation-Title" value="org.tigris.subversion.svnant" />
+					<attribute name="Implementation-Version" value="${svnant.version} (${TODAY})" />
+				</section>
+			</manifest>
+		</jar>
+	</target>
+
+	<!-- ================================================================= -->
+	<!-- compile docs                                                      -->
+	<!-- ================================================================= -->
+	<target name="docs" depends="" description="generate documentation">
+		<mkdir dir="${build.distrib.dir}/doc" />
+		<style basedir="${src.doc.dir}" destdir="doc" extension=".html" style="${src.doc.dir}/ant-types.xsl" processor="trax" includes="*.xml" />
+	</target>
+
+	<!-- ================================================================= -->
+	<!-- compile junit test classes                                        -->
+	<!-- ================================================================= -->
+	<target name="compileTests" description="compile junit sources files">
+		<mkdir dir="${build.classes.dir}" />
+		<javac srcdir="${src.testcases.dir}" 
+	      destdir="${build.classes.dir}" 
+	      debug="${debug}" 
+	      includes="**" 
+	      target="${targetJvm}"
+	      classpathref="project.classpath">
+		</javac>
+	</target>
+
+
+	<!-- ================================================================= -->
+	<!-- run junit tests                                                   -->
+	<!-- ================================================================= -->
+	<target name="runTests" depends="svnant.jar,compileTests" description="run junit tests">
+		<echo message="Please wait, tests can take a long time to execute...." level="info" />
+		<junit printsummary="yes" fork="yes" haltonfailure="false">
+			<classpath>
+				<pathelement location="${build.classes.dir}" />
+				<path refid="project.classpath" />
+			</classpath>
+			<formatter type="plain" />
+			<test name="org.tigris.subversion.svnant.SvnJavaHLTest" fork="yes" />
+			<test name="org.tigris.subversion.svnant.SvnSvnKitTest" fork="yes" />
+			<test name="org.tigris.subversion.svnant.SvnCmdLineTest" fork="yes" />
+		</junit>
+	</target>
+
+	<!-- ================================================================= -->
+	<!-- make distribution                                                 -->
+	<!-- ================================================================= -->
+	<target name="makeDistrib" depends="clean, svnant.jar, docs" description="make binary distribution">
+		<mkdir dir="${build.distrib.dir}" />
+		<mkdir dir="${build.distrib.dir}/lib" />
+		<mkdir dir="${build.distrib.dir}/doc" />
+		<copy file="readme.txt" todir="${build.distrib.dir}" />
+		<copy file="changelog.txt" todir="${build.distrib.dir}" />
+		<copy file="license.txt" todir="${build.distrib.dir}" />
+		<copy file="${svnClientAdapter.jar}" todir="${build.distrib.dir}/lib" />
+		<copy file="${lib.dir}/SVNCLIENTADAPTER-LICENSE" todir="${build.distrib.dir}/lib" />
+		<copy file="${svnjavahl.jar}" todir="${build.distrib.dir}/lib" />
+		<copy file="${lib.dir}/JAVAHL-LICENSE" todir="${build.distrib.dir}/lib" />
+		<copy file="${svnkit.jar}" todir="${build.distrib.dir}/lib" />
+		<copy file="${lib.dir}/SVNKit-LICENSE" todir="${build.distrib.dir}" />
+		<copy file="${ganymed.jar}" todir="${build.distrib.dir}/lib" />
+		<copy file="${lib.dir}/GANYMED-LICENSE" todir="${build.distrib.dir}" />
+		<copy file="${build.lib.dir}/svnant.jar" todir="${build.distrib.dir}/lib" />
+		<copy todir="${build.distrib.dir}/doc">
+			<fileset dir="doc" />
+		</copy>
+		<copy file="${distribfiles.dir}/build.xml" todir="${build.distrib.dir}" />
+		<copy file="${distribfiles.dir}/build.properties" todir="${build.distrib.dir}">
+			<filterset>
+				<filter token="SVNANTVERSION" value="${svnant.version}" />
+			</filterset>
+		</copy>
+		<copy file="${distribfiles.dir}/release-announcement-template.txt" todir="${build.dir}">
+			<filterset>
+				<filter token="SVNANTVERSION" value="${svnant.version}" />
+			</filterset>
+		</copy>
+		<zip destfile="${build.dir}/svnant-${svnant.version}.zip">
+			<zipfileset dir="${build.distrib.dir}" prefix="svnant-${svnant.version}" />
+		</zip>
+	</target>
+
+	<!-- create all jar files -->
+	<target name="all" depends="svnant.jar">
+	</target>
+
+</project>

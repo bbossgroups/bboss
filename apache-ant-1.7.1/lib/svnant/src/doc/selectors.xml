@@ -1,0 +1,402 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE types [
+	<!ENTITY javahl_svnkit_params SYSTEM "javahl_svnkit.txt">
+	<!ENTITY fail_on_error_params SYSTEM "fail_on_error.txt">
+]>
+
+<ant:types 
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:ant="http://www.fiset.ca/ant-docs/v1"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://www.fiset.ca/ant-docs/v1 ant-types.xsd" 
+	>
+	<ant:title>Svn Selectors</ant:title>
+	
+	<ant:introduction>
+		<p>
+			This document describes the file selectors offered in svnAnt. To use those selectors,
+			you must first obtain a copy of svnant.jar, add it to the classpath of your ant project
+			and define the types. Fortunately, there is a resource file, within the distributed JAR file,
+			and all those steps can be accomplished with the following code:
+			<ant:example>
+				<![CDATA[
+<path id="svnant.classpath">
+  <pathelement location="${svnant.dir}/lib/svnant.jar" />
+  <pathelement location="${svnant.dir}/lib/svnClientAdapter.jar" />
+</path>  
+
+<typedef resource="svntypes.xml" classpathref="project.classpath"/>
+				]]>
+			</ant:example>
+		</p>
+		<p>
+			If you are upgrading from an earlier version of svnAnt, and the following line was used
+			in your <i>build.xml</i> file, then replace it with the ones above.
+			<ant:example>
+				<![CDATA[
+<taskdef resource="svntask.properties" classpathref="svnant.classpath"/>
+				]]>
+			</ant:example>
+		</p>
+		<h3><a name="bindings">Bindings</a></h3>
+		<p>
+			All file selectors offer two parameters: <b>javahl</b> and <b>svnkit</b>. Those parameters
+			are booleans, which means their values can be set to either <b>true</b> or <b>false</b>. 
+			If not specified, those parameters are assumed to be set (true). These two parameters are used
+			to select which client is used to access Subversion.
+		</p>
+		<p>
+			There are three clients used by svnAnt to access Subversion:
+			<ul>
+				<li>JavaHL;</li>
+				<li>SVNKit; and,</li>
+				<li>Command Line Interface.</li>
+			</ul>
+			To better understand the difference between those three clients, please refer to
+			documentation on <b>svnClientAdapter.jar</b>.
+		</p>
+		<p>
+			The property <b>javahl</b> is considered only if the javahl libraries are available. Similarly,
+			the property <b>svnkit</b> is considered only if SVNKit is present. Finally, <b>javahl</b>
+			takes precedence over <b>svnkit</b>.
+		</p>
+		<p>
+			To better illustrate the previous paragraph, use the following steps:
+			<ol>
+				<li>If <b>javahl</b> is <i>true</i> and JavaHL bindings are available, then JavaHL is used.</li>
+				<li>If <b>svnkit</b> is <i>true</i> and SVNKit is present, then SVNKit is used.</li>
+				<li>If the two previous tests failed, for any reason, then the Command Line Interface is used.</li>
+			</ol>
+		</p>
+	</ant:introduction>
+	
+	<!-- ***************************** -->
+	<ant:type name="svnAdded" className="org.tigris.subclipse.svnant.selectors.Added">
+		<ant:shortDescription>File selector that performs discrimination based on the 'added' subversion status. </ant:shortDescription>
+		<ant:fullDescription>
+			<p>
+				This file selector is used to discriminate files within a <b>fileset</b> based on a Subversion
+				status. In particular, this selector keeps files that are recognized as 'added'.
+			</p>
+			<p>
+				An 'added' file or directory is one that has been added to the repository, but not yet
+				commited. In general, <b>svn status</b> displays those items with the letter <i>A</i>
+				preceeding the name.
+			</p>
+			<p>
+				Example: to copy a number of files with the status 'added' from their location in
+				<b>workingcopy</b> to a new directory called <b>test</b>, the following ant task can
+				be used:
+				<ant:example>
+<![CDATA[
+<copy todir="test">
+	<fileset dir="workingcopy">
+		<svnAdded/>
+	</fileset>
+</copy>
+]]>					
+				</ant:example>
+			</p>
+		</ant:fullDescription>
+		&javahl_svnkit_params; &fail_on_error_params;
+	</ant:type>
+	
+	<!-- ***************************** -->
+	<ant:type name="svnModified" className="org.tigris.subclipse.svnant.selectors.Modified">
+		<ant:shortDescription>File selector that performs discrimination based on the 'modified' subversion status. </ant:shortDescription>
+		<ant:fullDescription>
+			<p>
+				This file selector is used to discriminate files within a <b>fileset</b> based on a Subversion
+				status. In particular, this selector keeps files that are recognized as 'modified'.
+			</p>
+			<p>
+				A 'modified' file or directory is one that has been changed since the last update and where 
+				the changes have not yet been commited to the repository. In general, <b>svn status</b>
+				display those items with the letter <i>M</i> preceeding the name. It is important to note
+				that other items can also be considered modified, such as conflicted ones.
+			</p>
+			<p>
+				Example: to copy a number of files with the status 'modified' from their location in
+				<b>workingcopy</b> to a new directory called <b>test</b>, the following ant task can
+				be used:
+				<ant:example>
+<![CDATA[
+<copy todir="test">
+	<fileset dir="workingcopy">
+		<svnModified/>
+	</fileset>
+</copy>
+]]>					
+				</ant:example>
+			</p>
+		</ant:fullDescription>
+		&javahl_svnkit_params; &fail_on_error_params;
+	</ant:type>	
+
+	<!-- ***************************** -->
+	<ant:type name="svnUnversioned" className="org.tigris.subclipse.svnant.selectors.Unversioned">
+		<ant:shortDescription>File selector that performs discrimination based on the 'unversioned' subversion status. </ant:shortDescription>
+		<ant:fullDescription>
+			<p>
+				This file selector is used to discriminate files within a <b>fileset</b> based on a Subversion
+				status. In particular, this selector keeps files that are recognized as 'unversioned'.
+			</p>
+			<p>
+				An 'unversioned' file or directory is one that is present in a working copy but is not yet
+				known to the repository. In general, <b>svn status</b>
+				display those items with a question mark (<i>?</i>) preceeding the name. Note that 'ignored'
+				items are not considered 'unversioned'.
+			</p>
+			<p>
+				Eexample: to copy a number of files with the status 'unversioned' from their location in
+				<b>workingcopy</b> to a new directory called <b>test</b>, the following ant task can
+				be used:
+				<ant:example>
+<![CDATA[
+<copy todir="test">
+	<fileset dir="workingcopy">
+		<svnUnversioned/>
+	</fileset>
+</copy>
+]]>		
+				</ant:example>
+			</p>
+		</ant:fullDescription>
+		&javahl_svnkit_params; &fail_on_error_params;
+	</ant:type>	
+
+	<!-- ***************************** -->
+	<ant:type name="svnConflicted" className="org.tigris.subclipse.svnant.selectors.Conflicted">
+		<ant:shortDescription>File selector that performs discrimination based on the 'conflicted' subversion status. </ant:shortDescription>
+		<ant:fullDescription>
+			<p>
+				This file selector is used to discriminate files within a <b>fileset</b> based on a Subversion
+				status. In particular, this selector keeps files that are recognized as 'conflicted'.
+			</p>
+			<p>
+				When updating a subversion item (file or directory), it is possible to have two sets of 
+				changes merged into the	working item. This happens when the item was modified locally as 
+				well as remotely during the period since the last update. If the two sets of changes conflict
+				(same lines of a file changes, same directory entries modified), then the item is marked
+				as 'conflicted'. In general, <b>svn status</b> displays 'conflicted' items with the letter
+				<i>C</i> preceeding the name. Note that 'conflicted' items are also considered 'modified'.
+			</p>
+			<p>
+				Example: to copy a number of files with the status 'conflicted' from their location in
+				<b>workingcopy</b> to a new directory called <b>test</b>, the following ant task can
+				be used:
+				<ant:example>
+<![CDATA[
+<copy todir="test">
+	<fileset dir="workingcopy">
+		<svnConflicted/>
+	</fileset>
+</copy>
+]]>		
+				</ant:example>
+			</p>
+		</ant:fullDescription>
+		&javahl_svnkit_params; &fail_on_error_params;
+	</ant:type>	
+
+	<!-- ***************************** -->
+	<ant:type name="svnIgnored" className="org.tigris.subclipse.svnant.selectors.Ignored">
+		<ant:shortDescription>File selector that performs discrimination based on the 'ignored' subversion status. </ant:shortDescription>
+		<ant:fullDescription>
+			<p>
+				This file selector is used to discriminate files within a <b>fileset</b> based on a Subversion
+				status. In particular, this selector keeps files that are recognized as 'ignored'.
+			</p>
+			<p>
+				An 'ignored' file or directory is one which name match the patterns found in the parent
+				directory's <b>svn:ignore</b> property. In general, <b>svn status --no-ignore</b>
+				display those items with the letter <i>I</i> preceeding the name.
+			</p>
+			<p>
+				Example: to copy a number of files with the status 'ignored' from their location in
+				<b>workingcopy</b> to a new directory called <b>test</b>, the following ant task can
+				be used:
+				<ant:example>
+<![CDATA[
+<copy todir="test">
+	<fileset dir="workingcopy">
+		<svnIgnored/>
+	</fileset>
+</copy>
+]]>		
+				</ant:example>
+			</p>
+		</ant:fullDescription>
+		&javahl_svnkit_params; &fail_on_error_params;
+	</ant:type>	
+
+	<!-- ***************************** -->
+	<ant:type name="svnLocked" className="org.tigris.subclipse.svnant.selectors.Locked">
+		<ant:shortDescription>File selector that performs discrimination based on the 'locked' subversion status. </ant:shortDescription>
+		<ant:fullDescription>
+			<p>
+				This file selector is used to discriminate files within a <b>fileset</b> based on a Subversion
+				status. In particular, this selector keeps files that are recognized as 'locked'.
+			</p>
+			<p>
+				A 'locked' file or directory is one where the repository has been informed of the
+				intent of a user to prevent others from modifying the file. For a working copy to
+				be aware of this fact, it must have been 'updated' since the lock status was changed.
+				In general, <b>svn status</b> displays those items with one of the letters <i>K</i>,
+				<i>O</i> or <i>B</i> in the sixth column. The 'lock' status is independent of most other
+				conditions such as 'modified', 'conflicted', etc.
+			</p>
+			<p>
+				Example: to copy a number of files with the status 'locked' from their location in
+				<b>workingcopy</b> to a new directory called <b>test</b>, the following ant task can
+				be used:
+				<ant:example>
+<![CDATA[
+<copy todir="test">
+	<fileset dir="workingcopy">
+		<svnLocked/>
+	</fileset>
+</copy>
+]]>		
+				</ant:example>
+			</p>
+		</ant:fullDescription>
+		&javahl_svnkit_params; &fail_on_error_params;
+	</ant:type>	
+
+	<!-- ***************************** -->
+	<ant:type name="svnNormal" className="org.tigris.subclipse.svnant.selectors.Normal">
+		<ant:shortDescription>File selector that performs discrimination based on the 'normal' subversion status. </ant:shortDescription>
+		<ant:fullDescription>
+			<p>
+				This file selector is used to discriminate files within a <b>fileset</b> based on a Subversion
+				status. In particular, this selector keeps files that are recognized as 'normal'.
+			</p>
+			<p>
+				A 'normal' file or directory is one that has not undergone any changes since the last
+				update. In general, this is the great majority of the files in a working copy. <b>svn status</b>
+				returns no special character for those items (a space in the first column).
+			</p>
+			<p>
+				Example: to copy a number of files with the status 'normal' from their location in
+				<b>workingcopy</b> to a new directory called <b>test</b>, the following ant task can
+				be used:
+				<ant:example>
+<![CDATA[
+<copy todir="test">
+	<fileset dir="workingcopy">
+		<svnNormal/>
+	</fileset>
+</copy>
+]]>		
+				</ant:example>
+			</p>
+		</ant:fullDescription>
+		&javahl_svnkit_params; &fail_on_error_params;
+	</ant:type>	
+
+	<!-- ***************************** -->
+	<ant:type name="svnReplaced" className="org.tigris.subclipse.svnant.selectors.Replaced">
+		<ant:shortDescription>File selector that performs discrimination based on the 'replaced' subversion status. </ant:shortDescription>
+		<ant:fullDescription>
+			<p>
+				This file selector is used to discriminate files within a <b>fileset</b> based on a Subversion
+				status. In particular, this selector keeps files that are recognized as 'replaced'.
+			</p>
+			<p>
+				A 'replaced' file or directory is one that has been deleted, then created anew and finally 
+				added back to the repository. Also, those changes must not have been comitted.
+				In general, <b>svn status</b> displays those items with the letter <i>R</i> preceeding 
+				the name.
+			</p>
+			<p>
+				Example: to copy a number of files with the status 'replaced' from their location in
+				<b>workingcopy</b> to a new directory called <b>test</b>, the following ant task can
+				be used:
+				<ant:example>
+<![CDATA[
+<copy todir="test">
+	<fileset dir="workingcopy">
+		<svnReplaced/>
+	</fileset>
+</copy>
+]]>		
+				</ant:example>
+			</p>
+		</ant:fullDescription>
+		&javahl_svnkit_params; &fail_on_error_params;
+	</ant:type>	
+
+	<!-- ***************************** -->
+	<ant:type name="svnMissing" className="org.tigris.subclipse.svnant.selectors.Missing">
+		<ant:shortDescription>File selector that performs discrimination based on the 'missing' subversion status. </ant:shortDescription>
+		<ant:fullDescription>
+			<p>
+				This file selector is used to discriminate files within a <b>fileset</b> based on a Subversion
+				status. In particular, this selector keeps files that are recognized as 'missing'.
+			</p>
+			<p>
+				A 'missing' file or directory is one that is managed by Subversion and
+				has been deleted without using the remove command. In general, <b>svn status</b> 
+				displays those items with the exclamation point (<i>!</i>) preceeding the name.
+			</p>
+			<p>
+				It is important to note that a regular FileSet (the one supplied by ANT) can not
+				detect a missing item, since it does not exist on the file system. To detect
+				Subversion missing items, use the FileSet provided by svn-ant (svnFileSet).
+			</p>
+			<p>
+				Example: to delete missing files from the repository associated with a <b>workingcopy</b>:
+				<ant:example>
+<![CDATA[
+<svn>
+	<delete>
+		<svnFileSet dir="workingcopy">
+			<svnMissing/>
+		</svnFileSet>
+	</delete>
+</svn>
+]]>		
+				</ant:example>
+			</p>
+		</ant:fullDescription>
+		&javahl_svnkit_params; &fail_on_error_params;
+	</ant:type>	
+
+	<!-- ***************************** -->
+	<ant:type name="svnDeleted" className="org.tigris.subclipse.svnant.selectors.Deleted">
+		<ant:shortDescription>File selector that performs discrimination based on the 'deleted' subversion status. </ant:shortDescription>
+		<ant:fullDescription>
+			<p>
+				This file selector is used to discriminate files within a <b>fileset</b> based on a Subversion
+				status. In particular, this selector keeps files that are recognized as 'deleted'.
+			</p>
+			<p>
+				A 'deleted' file or directory is one that has been erased using Subversion's 'remove'
+				command. In general, <b>svn status</b> displays those items with the letter <i>D</i>
+				preceeding the name.
+			</p>
+			<p>
+				It is important to note that a regular FileSet (the one supplied by ANT) can not
+				detect a deleted item, since it does not exist on the file system. To detect
+				Subversion deleted items, use the FileSet provided by svn-ant (svnFileSet).
+			</p>
+			<p>
+				Example: to revert deleted files from a <b>workingcopy</b>:
+				<ant:example>
+<![CDATA[
+<svn>
+	<revert>
+		<svnFileSet dir="workingcopy">
+			<svnDeleted/>
+		</svnFileSet>
+	</revert>
+</svn>
+]]>		
+				</ant:example>
+			</p>
+		</ant:fullDescription>
+		&javahl_svnkit_params; &fail_on_error_params;
+	</ant:type>	
+		
+</ant:types>

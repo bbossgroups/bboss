@@ -1,0 +1,8 @@
+[PropertyInfo]
+delegate,Object,false,false, , ,false,<default>
+interceptor,com.frameworkset.proxy.Interceptor,false,false, , ,false,<default>
+[IconNames]
+
+
+
+

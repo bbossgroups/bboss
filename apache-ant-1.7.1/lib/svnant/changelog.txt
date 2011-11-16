@@ -1,0 +1,29 @@
+* 1.2.1
+- Built against svnClientAdapter r4107, Subversion 1.5.x, SVNKit 1.2.x
+- fixed remote info bug
+- fixed svnkit exists task
+- added cleanup task
+
+* 1.2-rc1
+- Built against svnClientAdapter r3957, Subversion 1.5, SVNKit 1.20 beta4
+
+* 1.1-rc3
+- Built against svnClientAdapter r2847, Subversion 1.4.2 and SVNKit 1.1.0
+- renamed references to JavaSVN (former name of SVNKit)
+- renamed the svn task attribute "javasvn" to "svnkit"
+
+* 1.1-rc2
+- Built against svnClientAdapter r2834 and Subversion 1.4.0,
+  incorporating numerous bug fixes and improvements from both.
+- Added support for javasvn adapter
+- Added the "url" option to <propget> command
+- Added the "lastChangedDateProperty" to <status> command
+- Added the "dateFormatter" attribute to <svn> task
+- Added the "failonerror" attribute to <svn> task and svn selectors
+- Added the <wcVersion> command
+- Added the <log> command
+- Added svn related selectors 
+- Added SvnFileSet type
+- Added the force option to <add> command
+  
+* 1.0.0

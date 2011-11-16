@@ -1,0 +1,13 @@
+Buildfile: build.xml
+
+init:
+     [echo] Init...
+   [delete] Deleting directory D:\workspace\bbossgroups-3.2\bboss-mvc\distrib
+    [mkdir] Created dir: D:\workspace\bbossgroups-3.2\bboss-mvc\classes-bboss-mvc
+    [mkdir] Created dir: D:\workspace\bbossgroups-3.2\bboss-mvc\classes-bboss-aop-mvc
+    [mkdir] Created dir: D:\workspace\bbossgroups-3.2\bboss-mvc\distrib
+    [mkdir] Created dir: D:\workspace\bbossgroups-3.2\bboss-mvc\distrib\test
+    [mkdir] Created dir: D:\workspace\bbossgroups-3.2\bboss-mvc\distrib\WebRoot
+
+compile-bboss-mvc:
+     [echo] compile the bboss-mvc source ...

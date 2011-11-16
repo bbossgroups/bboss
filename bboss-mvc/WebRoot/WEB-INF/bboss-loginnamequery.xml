@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding='gb2312'?>
+<!-- 
+bboss-test.xml
+描述：demo配置文件
+-->
+<properties>
+    <property name="loginNamequery" 
+    	class="org.frameworkset.web.restful.LoginNameQuery" 
+    	singlable="true" 
+    	path:loginName="/restful/loginName"/>
+</properties>

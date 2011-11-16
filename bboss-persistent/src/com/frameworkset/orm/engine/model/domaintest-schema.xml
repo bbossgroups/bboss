@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+<!DOCTYPE database SYSTEM "resources/database_3_2.dtd">
+
+<database name="domaindb" defaultIdMethod="idbroker">
+  <domain name="amount" type="NUMERIC" size="10" scale="2" default="0" description="amount domain" />
+  
+  <table name="product">
+    <column name="product_id" required="true" primaryKey="true" type="INTEGER" />
+    <column name="name" size="40" />
+    <column name="price" domain="amount" />
+  </table>
+  
+  <table name="article">
+    <column name="article_id" required="true" primaryKey="true" type="INTEGER" />
+    <column name="name" size="40" />
+    <column name="price" domain="amount" size="12" default="1000" />
+    <column name="note" type="VARCHAR" size="50" default="default note" />
+    <column name="decimal_col" type="DECIMAL" size="10" scale="3" />
+    <column name="date_col" type="DATE"/>
+  </table>
+
+  <table name="native" idMethod="native">
+    <column name="native_id" required="true" autoIncrement="true"
+            primaryKey="true" type="INTEGER" />
+    <column name="name" size="40" />
+  </table>
+
+  <table name="types" description="used to test the handling for all supported types">
+    <column name="cbit" type="BIT" />
+    <column name="ctinyint" type="TINYINT" />
+    <column name="csmallint" type="SMALLINT" />
+    <column name="cbigint" type="BIGINT" />
+    <column name="cfloat" type="FLOAT" />
+    <column name="creal" type="REAL" />
+    <column name="cnumeric" type="NUMERIC" />
+    <column name="cdecimal" type="DECIMAL" />
+    <column name="cchar" type="CHAR" />
+    <column name="cvarchar" type="VARCHAR" />
+    <column name="clongvarchar" type="LONGVARCHAR" />
+    <column name="cdate" type="DATE" />
+    <column name="ctime" type="TIME" />
+    <column name="cinteger" type="INTEGER" />
+    <column name="ctimestamp" type="TIMESTAMP" />
+    <column name="cbinary" type="BINARY" />
+    <column name="cvarbinary" type="VARBINARY" />
+    <column name="clongvarbinary" type="LONGVARBINARY" />
+    <column name="cnull" type="NULL" />
+    <column name="cother" type="OTHER" />
+    <column name="cjavaobject" type="JAVA_OBJECT" />
+    <column name="cdistinct" type="DISTINCT" />
+    <column name="cstruct" type="STRUCT" />
+    <column name="carray" type="ARRAY" />
+    <column name="cblob" type="BLOB" />
+    <column name="cclob" type="CLOB" />
+    <column name="cref" type="REF" />
+    <column name="cbooleanint" type="BOOLEANINT" />
+    <column name="cbooleanchar" type="BOOLEANCHAR" />
+    <column name="cdouble" type="DOUBLE" />
+  </table>
+
+</database>

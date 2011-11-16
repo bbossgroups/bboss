@@ -1,0 +1,34 @@
+<!-- 
+	任务调度
+-->
+<properties>
+	<property name="taskconfig" enable="true">
+		<list>
+			<property name="定时任务执行器" taskid="default"
+				class="org.frameworkset.task.DefaultScheduleService" used="true">
+				<!--
+					可执行的任务项
+					属性说明：
+					name：任务项名称
+					id:任务项标识
+					action:具体的任务执行处理程序,实现org.frameworkset.task.Execute接口
+					cron_time：	cron格式的时间表达式，用来管理任务执行的生命周期，相关的规则请参照日期管理控件quartz的说明文档
+					used 是否使用
+					true 加载，缺省值
+					false 不加载	  
+					子元素说明：
+					parameter:设置任务执行的参数，name标识参数名称，value指定参数的值
+				-->
+				<list>
+					<property name="workbroker" jobid="workbroker"
+						action="org.frameworkset.task.TestJob"
+						cronb_time="0 56 14 * * ?" used="true">
+						<map>
+							<property name="send_count" value="2" />
+						</map>
+					</property>
+				</list>
+			</property>
+		</list>
+	</property>
+</properties>

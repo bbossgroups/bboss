@@ -1,0 +1,3 @@
+<properties>
+	<property name="mina.rpc.test" singlable="true" class="org.frameworkset.spi.remote.mina.rpc.MinaRPCTest"/>
+</properties>

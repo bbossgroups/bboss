@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding='gb2312'?>
+<!-- 
+bboss-jfreechart.xml
+描述：jfreechart
+-->
+<properties>
+    <property name = "/jfreechart/*.htm" class="org.frameworkset.web.jfreechart.JfreeChartController" ></property>
+</properties>

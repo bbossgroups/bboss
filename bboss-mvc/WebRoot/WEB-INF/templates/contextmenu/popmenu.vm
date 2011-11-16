@@ -1,0 +1,6 @@
+${popscript}
+<script language="javascript">
+${initscript}
+</script>
+${menus}
+<a name="menu_bridge" id="menu_bridge"></a>

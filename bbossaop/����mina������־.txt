@@ -1,0 +1,33 @@
+javax.servlet.ServletException: org/apache/mina/filter/codec/ProtocolCodecFactory
+	org.apache.jasper.runtime.PageContextImpl.doHandlePageException(PageContextImpl.java:825)
+	org.apache.jasper.runtime.PageContextImpl.handlePageException(PageContextImpl.java:758)
+	org.apache.jsp.mq.broker.mq_005fmon_005ftablelist_jsp._jspService(mq_005fmon_005ftablelist_jsp.java:586)
+	org.apache.jasper.runtime.HttpJspBase.service(HttpJspBase.java:94)
+	javax.servlet.http.HttpServlet.service(HttpServlet.java:802)
+	org.apache.jasper.servlet.JspServletWrapper.service(JspServletWrapper.java:324)
+	org.apache.jasper.servlet.JspServlet.serviceJspFile(JspServlet.java:292)
+	org.apache.jasper.servlet.JspServlet.service(JspServlet.java:236)
+	javax.servlet.http.HttpServlet.service(HttpServlet.java:802)
+	org.jasig.cas.client.session.SingleSignOutFilter.doFilter(SingleSignOutFilter.java:99)
+	com.frameworkset.common.filter.CharsetEncodingFilter.doFilter(CharsetEncodingFilter.java:92)
+
+
+root cause 
+
+java.lang.NoClassDefFoundError: org/apache/mina/filter/codec/ProtocolCodecFactory
+	com.chinacreator.remote.ServiceID.rpcserviceStarted(ServiceID.java:131)
+	com.chinacreator.remote.ServiceID.<init>(ServiceID.java:200)
+	com.chinacreator.spi.BaseSPIManager.buildServiceID(BaseSPIManager.java:1547)
+	com.chinacreator.spi.BaseSPIManager.getProvider(BaseSPIManager.java:1031)
+	com.chinacreator.spi.BaseSPIManager.getProvider(BaseSPIManager.java:873)
+	com.chinacreator.spi.BaseSPIManager.getProvider(BaseSPIManager.java:758)
+	org.apache.jsp.mq.broker.mq_005fmon_005ftablelist_jsp._jspService(mq_005fmon_005ftablelist_jsp.java:349)
+	org.apache.jasper.runtime.HttpJspBase.service(HttpJspBase.java:94)
+	javax.servlet.http.HttpServlet.service(HttpServlet.java:802)
+	org.apache.jasper.servlet.JspServletWrapper.service(JspServletWrapper.java:324)
+	org.apache.jasper.servlet.JspServlet.serviceJspFile(JspServlet.java:292)
+	org.apache.jasper.servlet.JspServlet.service(JspServlet.java:236)
+	javax.servlet.http.HttpServlet.service(HttpServlet.java:802)
+	org.jasig.cas.client.session.SingleSignOutFilter.doFilter(SingleSignOutFilter.java:99)
+	com.frameworkset.common.filter.CharsetEncodingFilter.doFilter(CharsetEncodingFilter.java:92)
+

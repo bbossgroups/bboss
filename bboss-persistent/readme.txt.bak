@@ -1,0 +1,1066 @@
+directory:
+src--source code
+test--test source code
+conf--contain database pool config files
+listener--database transaction leak listener file
+lib--bboss persistent framework depends jars
+dist--bboss persistent release package.
+
+
+---------------------------------
+bboss-persistent关联工程：
+---------------------------------
+bboss-persistent<-active-ext [frameworkset-pool.jar]
+bboss-persistent<-bboss-ws [frameworkset-pool.jar]
+bboss-persistent<-bbossaop [frameworkset-pool.jar]
+bboss-persistent<-bbossevent [frameworkset-pool.jar]
+bboss-persistent<-cms_baseline [frameworkset-pool.jar]
+bboss-persistent<-bboss-taglib [frameworkset-pool.jar]
+bboss-persistent<-kettle [frameworkset-pool.jar]
+bboss-persistent<-portal [frameworkset-pool.jar]
+bboss-persistent<-cas server [frameworkset-pool.jar]
+
+------------------------------------------------------------------------
+update function list in bbossgroups-2.0-rc1 since bbossgroups-2.0-rc
+------------------------------------------------------------------------
+----------------------------------------
+bbossgroups-2.0-rc1 - 2010-07-30
+----------------------------------------
+select to_char(inserttime,'HH24MISS'),count(*) from TEST_CURRENT 
+group by to_char(inserttime,'HH24MISS') order by to_char(inserttime,'HH24MISS')
+truncate table TEST_CURRENT
+purge recyclebin
+----------------------------------------
+bbossgroups-2.0-rc1 - 2010-08-03
+----------------------------------------
+o 多数据库事务完善：
+如果存在两个连接池bspf和mq上的一个事务，如果mq实际引用了bspf做为外部数据源，那么mq的对应子事务就是bspf的子事务
+o 外部数据源监控信息完善，源数据加载完善，配置信息精简
+<datasource external="true">
+
+    <dbname>mq</dbname>
+    <externaljndiName>jdbc/mysql-ds</externaljndiName>
+	<showsql>false</showsql>
+
+  </datasource>
+  <datasource external="true">
+    <dbname>kettle</dbname>
+   
+    <externaljndiName>jdbc/mysql-ds</externaljndiName>
+	<showsql>false</showsql>
+  </datasource>
+  
+  
+----------------------------------------
+bbossgroups-2.0-rc1 - 2010-07-23
+----------------------------------------
+
+
+o 增加to_char函数的适配,to_date函数适配，目前修改的有oracle，mysql
+----------------------------------------
+bbossgroups-2.0-rc1 - 2010-07-22
+----------------------------------------
+o 扩展db适配器数据库日期转换函数，增加指定转换日期格式参数方法
+o 优化/bboss-persistent/src/com/frameworkset/common/poolman/management/BaseTableManager.java中加载tableinfo信息，uuid和sequence时无需计算表的最大值
+o mysql 数据库适配器bug修改
+/bboss-persistent/src/com/frameworkset/orm/adapter/DBMM.java
+public String getIDMAXSql(String table_name,String table_id_name,String table_id_prefix,String type)
+	{
+    	//SUBSTR(table_id_name,LENGTH(table_id_prefix))
+    	String maxSql = "select max("+ table_id_name + ") from " + table_name;
+    	if(type.equalsIgnoreCase("string") || type.equalsIgnoreCase("java.lang.string"))
+    	{
+    		if(table_id_prefix != null && !table_id_prefix.trim().equals(""))
+    		{
+    		//将bigint 修改为DECIMAL，否则会报错，具体原因是mysql的cast函数不制止bigint类型
+    			maxSql = "select max(CAST(SUBSTRING(" + table_id_name + ",len(" + table_id_prefix + ") + 1) as DECIMAL))) from " + table_name;
+    		}
+    		else
+    		{
+    		//将bigint 修改为DECIMAL，否则会报错，具体原因是mysql的cast函数不制止bigint类型
+    			maxSql = "select max(CAST(" + table_id_name + " as DECIMAL)) from " + table_name;
+    		}
+    	}
+		
+		return maxSql;
+	}
+
+update function list:
+----------------------------------------
+bbossgroup 1.0rc - 2010-07-7
+----------------------------------------
+o 扩展适配器功能，用户可以自定义特定数据库的适配器
+所实现的适配器必须从com.frameworkset.orm.adapter.DB继承或者其com.frameworkset.orm.adapter.DB子类继承
+自定义适配器配置方法：
+poolman.xml文件中配置：
+<poolman>
+	<adaptor dbtype="oracle">com.frameworkset.orm.adaptors.MyOracle
+	</adaptor>
+	<adaptor dbtype="oracle_other">com.frameworkset.orm.adaptors.OtherOracle
+	</adaptor>
+	<adaptor dbtype="db2net">com.frameworkset.orm.adaptors.MyDB2Adaptor
+	</adaptor>
+	.........
+
+</poolman>
+
+o DBUtil增加数据库连接池创建方法：
+        public static void startPool(String poolname,String driver,String jdbcurl,String username,String password,String readOnly,String validationQuery)
+    	{
+        	SQLUtil.getSQLManager().startPool(poolname, driver, jdbcurl, username, password, readOnly, validationQuery);
+    	}
+    	
+    	
+o DBUtil增加拦截器,用来满足应用平台特殊的需求，其他应用无需关心这些问题
+    	
+    	public static InterceptorInf getInterceptorInf(String dbname)
+    	{
+    		return SQLUtil.getSQLManager().getPool(dbname).getInterceptor();
+    	}
+    	相关的程序：
+    	com.frameworkset.common.poolman.interceptor.DummyInterceptor
+    	com.frameworkset.common.poolman.interceptor.InterceptorInf
+    	poolman.xml文件中配置InterceptorInf的方法：
+    	在datasource中增加以下节点即可：
+    	<interceptor>com.frameworkset.orm.adaptors.MyInterceptor</interceptor>
+    	自定义的拦截器需要从com.frameworkset.common.poolman.interceptor.InterceptorInf接口继承，实现以下两个方法：
+    	public String getDefaultDBName();
+		public String convertSQL(String sql,String dbtype,String dbname);
+    	或者从com.frameworkset.common.poolman.interceptor.DummyInterceptor继承，过载方法：
+    	public String convertSQL(String sql, String dbtype, String dbname) {
+			return sql;
+		}
+	
+		public String getDefaultDBName() {
+			return SQLManager.getInstance().getPool(null).getDBName();
+			
+		}
+    	
+
+o 修改weglobic环境下jndi查找失败bug
+相关程序
+com.frameworkset.common.poolman.util.JDBCPool
+----------------------------------------
+bbossgroup 1.0rc - 2010-07-2
+----------------------------------------
+o 修改db2源数据加载表数据时加载所有用户数据的问题，修改程序：
+/bboss-persistent/src/com/frameworkset/common/poolman/util/JDBCPool.java
+/bboss-persistent/src/com/frameworkset/orm/adapter/DB.java
+----------------------------------------
+bbossgroup 1.0rc - 2010-05-27
+----------------------------------------
+o 新增监控服务组件
+com.frameworkset.common.poolman.monitor
+----------------------------------------
+bbossgroup 1.0rc - 2010-05-21
+----------------------------------------
+o 增加uuid主键生成机制
+/bboss-persistent/src/com/frameworkset/common/poolman/sql/PrimaryKey.java
+新增uuid机制将生成36位长度的字符串唯一主键值
+
+----------------------------------------
+bbossgroup 1.0rc - 2010-05-07
+----------------------------------------
+
+o mysql主键生成机制bug修复
+生成主键的方法中直接写死了dbname和sequence名称
+o com.frameworkset.commons.dbcp.DelegatingResultSet去除了对OracleResultSet的依赖
+----------------------------------------
+bbossgroup 1.0rc - 2010-05-05
+----------------------------------------
+o 新增关闭连接池方法
+----------------------------------------
+ DBUtil.stopPool(dbname);
+ DBUtil.startPool(dbname);
+bbossgroup 1.0rc - 2010-04-29
+----------------------------------------
+o 增加pool的监控信息
+starttime
+stoptime
+----------------------------------------
+bbossgroup 1.0rc - 2010-04-24
+----------------------------------------
+o 增加mysql主键生成机制
+1.创建sequence数据库
+CREATE DATABASE sequence; 
+在sequence上创建表：
+CREATE TABLE sequence.sequence_data ( 
+sequence_name varchar(100) NOT NULL, 
+sequence_increment int(11) unsigned NOT NULL DEFAULT 1, 
+sequence_min_value int(11) unsigned NOT NULL DEFAULT 1, 
+sequence_max_value bigint(20) unsigned NOT NULL DEFAULT 18446744073709551615, 
+sequence_cur_value bigint(20) unsigned DEFAULT 1, 
+sequence_cycle boolean NOT NULL DEFAULT FALSE, 
+PRIMARY KEY (sequence_name) 
+) ENGINE=MyISAM;
+创建表sequence
+-- This code will create sequence with default values. 
+--INSERT INTO sequence.sequence_data 
+--(sequence_name) 
+--VALUE 
+--(sq_my_sequence) ; 
+
+ 
+-- You can also customize the sequence behavior. 
+--INSERT INTO sequence.sequence_data 
+--(sequence_name, sequence_increment, sequence_max_value) 
+--VALUE 
+--(sq_sequence_2, 10, 100) 
+--;
+
+创建获取sequence值的函数：
+CREATE FUNCTION nextval (seq_name varchar(100)) 
+RETURNS bigint(20) NOT DETERMINISTIC 
+BEGIN
+DECLARE cur_val bigint(20); 
+SELECT
+sequence_cur_value INTO cur_val 
+FROM
+sequence.sequence_data 
+WHERE
+sequence_name = seq_name ; 
+IF cur_val IS NOT NULL THEN
+UPDATE
+sequence.sequence_data 
+SET
+sequence_cur_value = IF ( 
+(sequence_cur_value + sequence_increment) > sequence_max_value, 
+IF ( 
+sequence_cycle = TRUE, 
+sequence_min_value, 
+NULL
+), 
+sequence_cur_value + sequence_increment ) 
+WHERE
+sequence_name = seq_name ; 
+END IF; 
+RETURN cur_val; 
+END;
+
+修改的程序
+/bboss-persistent/src/com/frameworkset/common/poolman/sql/PrimaryKey.java
+/bboss-persistent/src/com/frameworkset/orm/adapter/DB.java--增加sequence生成主键方法
+/bboss-persistent/src/com/frameworkset/orm/adapter/DBMM.java--增加sequence生成主键方法
+
+o 修改bug,当连接池还没有初始化时通过以下方法获取主键时报NullpointException
+PreparedDBUtil.getNextPrimaryKey("mysql",
+							"cim_dbpool"))
+修改程序
+/bboss-persistent/src/com/frameworkset/common/poolman/DBUtil.java
+添加静态初始化代码
+
+----------------------------------------
+1.0.5 - 2010-04-01
+----------------------------------------
+o 添加获取数据库池名称列表的方法
+com.frameworkset.common.poolman.util.SQLManager
+com.frameworkset.common.poolman.util.PoolManager
+
+ public List<String> getAllPoolNames() {
+        assertLoaded();
+        return super.getAllPoolNames();
+    }
+
+com/frameworkset/common/poolman/util/SQLUtil.java
+
+/**
+	 * Get a Vector containing all the names of the database pools currently in
+	 * use.
+	 */
+	public Enumeration getAllPoolnames() {
+		SQLManager datab = getSQLManager();
+		if (datab == null)
+			return null;
+		return datab.getAllPoolnames();
+	}
+    /**
+----------------------------------------
+1.0.5 - 2010-03-30
+----------------------------------------
+o 解决mysql数据库调用Record.getClob和Record.getBlob方法报类型转换异常问题
+原因分析mysql中blob和clob字段返回的jdbc类型分别为LONGVARBINARY和LONGVARCHAR
+而/bboss-persistent/src/com/frameworkset/common/poolman/handle/ValueExchange.java类中将
+LONGVARBINARY和LONGVARCHAR类型的字段读取时采用ResultSet.getObject方法来获取，默认返回byte[]数组类型
+解决办法：
+
+LONGVARBINARY-采用ResultSet.getBlob方法来获取
+LONGVARCHAR-采用ResultSet.getClob方法来获取
+
+在数据库适配器com.frameworkset.orm.adapter.DB中提供LONGVARBINARY和LONGVARCHAR类型值的适配器方法，以便不同的数据库对这两种类型的数据进行特殊处理
+mysql数据库适配器com.frameworkset.orm.adapter.DBMM覆盖DB中的方法做blob和clob处理，其他类型数据库暂时按DB中的默认方法来处理
+----------------------------------------
+1.0.5 - 2010-03-29
+----------------------------------------
+o 修复问题，DBUtil.getDBDate(new Date())方法时报格式不正确问题
+解决办法
+com.frameworkset.orm.adapter.DBOracle中新增变量db_format，保证java日期格式DATE_FORMAT和oracle日期格式保持一致
+//DD-MM-YYYY HH24:MI:SS old format
+    public static final String db_format = "yyyy-MM-dd HH24:mi:ss";
+
+
+o 增加sql模板预编译操作组件
+com.frameworkset.common.poolman.SQLExecutor
+SQLExecutor主要用来支撑bboss标签库预编译增、删、改、查、批处理功能，后续将直接开放给应用程序使用
+
+主要提供以下特性：
+数据库预编译/普通查询操作，
+插入，删除，修改
+预编译插入，删除，修改
+批处理预编译/普通插入，删除，修改操作
+
+系统提供注解模式来支持所有预编译操作模式
+SQLExecutor组件在原有数据库组件的基础上开发的一个新的组件，继承原有全部功能。
+
+
+----------------------------------------
+1.0.5 - 2010-01-19
+----------------------------------------
+
+o 增加事务类型枚举类com.frameworkset.orm.annotation.TransactionType
+定义了以下几种类型：
+/**
+     * 始终创建新事务
+     */
+    NEW_TRANSACTION,
+    
+    /**
+     * 如果没有事务创建新事务，有事务加入当前事务
+     */
+    REQUIRED_TRANSACTION,
+    /**
+     * 有事务就加入事务，没有不创建事务,默认情况
+     */
+    MAYBE_TRANSACTION,
+    /**
+     * 没有事务
+     */
+    NO_TRANSACTION,
+    
+    /**
+     * 未知事务类型
+     */
+    UNKNOWN_TRANSACTION,
+    
+    /**
+     * 读写事务类型，支持数据库读写操作，事务中所做的操作
+     * 其他事务都可以看到
+     */
+    RW_TRANSACTION
+
+----------------------------------------
+1.0.5 - 2010-01-19
+----------------------------------------
+o oracle和derby，mysql处理lob字段的区别：
+对lob字段的写操作oracle，derby，mysql中基本一致
+读lob字段时，oracle支持在读取事务之外还可以读取blob字段和clob字段的内容，但是derby和mysql中就不可以，这里以clob字段为示例，例如：
+
+oracle中作以下操作是可以的：
+		PreparedDBUtil dbUtil = new PreparedDBUtil();
+		try {
+			//查询大字段内容并且将大字段存放到文件中
+			dbUtil.preparedSelect( "select id,clobname from test");
+			dbUtil.executePrepared();//执行读取事务
+			
+			for(int i = 0; i < dbUtil.size(); i ++)
+			{
+				
+				dbUtil.getFile(i, "clobname", new java.io.File("d:/route" + i + ".txt")); //读取clob字段到文件中，在读取的事务之外操作clob字段
+//				String clobvalue = dbUtil.getString(i, "clobname");//获取clob字段到字符串变量中
+//				Clob clob = dbUtil.getClob(i, "clobname");//获取clob字段值到clob类型变量中
+			}
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally
+		{
+			dbUtil = null;
+		}
+
+那么在mysql和derby中怎么做呢，那就要借助于NullRowHandler处理器或者RowHandler处理器来实现一个事务内对blob字段的处理了(blob为例)：
+		PreparedDBUtil dbUtil = new PreparedDBUtil();
+		try {
+
+			//查询大字段内容并且将大字段存放到文件中
+			dbUtil.preparedSelect("derby", "select id,blobname from test");
+			final List<File> datas = new ArrayList<File>();//存储blob字段blobname到datas列表中
+			dbUtil.executePreparedWithRowHandler(new NullRowHandler(){
+
+                @Override
+                public void handleRow(Record origine) throws Exception
+                {
+                    File file = origine.getFile("blobname", new java.io.File("resources/lob/reader/dominspector_" + origine.getRowid() +".rar"));
+                    datas.add(file);
+                }});
+			
+			System.out.println("testblobRead dbUtil.size():"+dbUtil.size());//输出结果集的大小
+			System.out.println("testblobRead datas.size():"+datas.size());//输出结果集的大小
+			
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			throw e;
+		}
+		finally
+		{
+			
+		}
+
+o DBUtil中增加了以下方法,用来支持不带返回值的普通查询和分页查询操作：
+
+public void executeSelectWithRowHandler(String sql,Connection con,NullRowHandler rowhandler)  throws SQLException
+public void executeSelectWithRowHandler(String sql,NullRowHandler rowhandler)  throws SQLException
+public void executeSelectWithRowHandler(String dbname,String sql,NullRowHandler rowhandler)  throws SQLException
+public void executeSelectWithRowhandler(String dbname, String sql, Connection con,NullRowHandler rowhandler) throws SQLException
+public void executeSelectWithRowHandler(String sql,long offset,int pagesize,Connection con,NullRowHandler rowhandler)  throws SQLException
+public void executeSelectWithRowHandler(String sql,long offset,int pagesize,NullRowHandler rowhandler)  throws SQLException
+public void executeSelectWithRowHandler(String dbname,String sql,long offset,int pagesize,NullRowHandler rowhandler)  throws SQLException
+public void executeSelectWithRowhandler(String dbname, String sql,long offset,int pagesize, Connection con,NullRowHandler rowhandler) throws SQLException
+
+用户可以通过上述方法自由地构造自己的查询结果集合    ,可参考简单的测试用列：
+/bboss-persistent/test/com/frameworkset/common/rowhandler/DBUtilRowHandler.java
+
+o PreparedDBUtil中添加两个方法,用来支持不带返回值的普通查询和分页查询操作：
+
+public void executePreparedWithRowHandler(NullRowHandler rowhandler) throws SQLException
+public void executePreparedWithRowHandler(Connection con,NullRowHandler rowhandler) throws SQLException
+用户可以通过上述方法自由地构造自己的查询结果集合      ,可参考简单的测试用列：
+/bboss-persistent/test/com/frameworkset/common/rowhandler/PreparedDBUtilRowhandler.java
+
+
+o 增加抽象类com.frameworkset.common.poolman.handle.NullRowHandler，
+
+public abstract class NullRowHandler extends BaseRowHandler
+{
+
+    。。。。。。
+    
+
+    public abstract void handleRow(Record origine) throws Exception;
+}
+用来处理自定义返回值类型，具体实现类实现抽象方法public abstract void handleRow(Record origine) throws Exception;参数record为当前记录可以进行相应的处理
+
+具体的使用方法，请参考测试用例/bboss-persistent/test/com/frameworkset/derby/TestLob.java中的方法：
+public void testBlobRead()  throws Exception
+
+o 修正使用mysql和derby时的一些问题，
+
+o mysql,derby数据库的datasource配置文件poolman.xml中的readOnly属性要设置为false
+
+o 增加注解方式的数据库事务管理
+	@Transaction("REQUIRED_TRANSACTION")
+    @RollbackExceptions("") //@RollbackExceptions("{exception1,excpetion2}")
+    详细情况参看测试用例/bbossaop/test/com/chinacreator/spi/transaction/annotation
+----------------------------------------
+1.0.5 - 2009-12-14
+----------------------------------------
+o 修改prepareddbutil中的分页查询方法，将offset参数类型由int修改为long
+/bboss-persistent/src/com/frameworkset/common/poolman/PreparedDBUtil.java
+----------------------------------------
+1.0.5 - 2009-6-16
+----------------------------------------
+
+o PoolManager 增加以下方法：
+ public boolean exist(String name)
+    {
+        return this.pools.containsKey(name);
+    }
+  SQLUtil  增加以下方法：
+  判断数据库连接池是否存在
+   public static boolean exist(String dbname)
+	    {
+	      SQLManager datab = getSQLManager();
+              return  datab.exist(dbname);
+	    }
+   
+
+o 修改公司信息
+
+o 修改邮件地址错误问题
+If the StackTrace contains an InstanceAlreadyExistsException, then you have  encountered a ClassLoader linkage problem.  Please email poolman@codestudio.com **
+	at com.frameworkset.common.poolman.util.SQLManager.requestConnection(SQLManager.java:190)
+	at com.frameworkset.common.poolman.util.SQLUtil.getConection(SQLUtil.java:930)
+	at com.chinacreator.mq.transfer.send.SendBigData.execute(SendBigData.java:268)
+o 增加Serializable对象获取接口
+com.frameworkset.common.poolman.DBUtil
+
+	
+	public Serializable getSerializable(int rowid,String fieldname) throws SQLException
+	{
+	    inrange(rowid, fieldname);
+            return allResults[getTrueRowid(rowid)].getSerializable(fieldname);
+	}
+	
+	public Serializable getSerializable(int rowid,int columnIndex)throws SQLException
+        {
+	    inrange(rowid, columnIndex);
+            return allResults[getTrueRowid(rowid)].getSerializable(columnIndex);
+        }
+
+com.frameworkset.common.poolman.Record
+public Serializable getSerializable(String field) throws SQLException
+    {
+        Blob blog = this.getBlob(field);
+        if(blog == null)
+            return null;
+        Serializable object = null;
+        InputStream in = null;        
+        java.io.ObjectInputStream objectin = null;
+        try
+        {
+            
+            in = blog.getBinaryStream();
+            objectin = new ObjectInputStream(in);
+            
+            object = (Serializable)objectin.readObject();
+        }
+        catch(SQLException e)
+        {
+            throw e;
+        }
+        catch(Exception e)
+        {
+            throw new NestedSQLException(e);
+        }
+        return object;
+    }
+    
+    public Serializable getSerializable(int parameterIndex) throws SQLException
+    {
+        Blob blog = this.getBlob(parameterIndex);
+        if(blog == null)
+            return null;
+        Serializable object = null;
+        InputStream in = null;        
+        java.io.ObjectInputStream objectin = null;
+        try
+        {
+            
+            in = blog.getBinaryStream();
+            objectin = new ObjectInputStream(in);
+            
+            object = (Serializable)objectin.readObject();
+        }
+        catch(SQLException e)
+        {
+            throw e;
+        }
+        catch(Exception e)
+        {
+            throw new NestedSQLException(e);
+        }
+        return object;
+        
+    }
+o 从bboss-persistent\src\com\frameworkset\common\poolman\Record.java
+  获取blob对象堆栈溢出的问题：
+  java.lang.StackOverflowError
+	at com.frameworkset.common.poolman.Record.getBlob(Record.java:1630)
+  原因分析：以下方法陷入死循环
+  public Blob getBlob (String parameterName) throws SQLException
+{
+	return (Blob)this.getBlob(parameterName);
+}
+修改为：
+public Blob getBlob (String parameterName) throws SQLException
+    {
+    	return (Blob)this.getObject(parameterName);
+    }
+  即可。
+  
+o 异常：java.util.ConcurrentModificationException: concurrent access to HashMap attempted by Thread[Thread-58,5,main]
+错误描述：
+	[09-4-28 16:37:53:375 CST] 0000003b SystemErr     R java.util.ConcurrentModificationException: concurrent access to HashMap attempted by Thread[Thread-58,5,main]
+	at java.util.HashMap.onEntry(HashMap.java(Inlined Compiled Code))
+	at java.util.HashMap.transfer(HashMap.java(Compiled Code))
+	at java.util.HashMap.resize(HashMap.java(Inlined Compiled Code))
+	at java.util.HashMap.addEntry(HashMap.java(Compiled Code))
+	at java.util.HashMap.put(HashMap.java(Compiled Code))
+	at com.frameworkset.common.poolman.sql.PrimaryKeyCache.loaderPrimaryKey(PrimaryKeyCache.java:143)
+	at com.frameworkset.common.poolman.sql.PrimaryKeyCache.getIDTable(PrimaryKeyCache.java:95)
+	at com.frameworkset.common.poolman.util.StatementParser.refactorInsertStatement(StatementParser.java:421)
+	at com.frameworkset.common.poolman.util.StatementParser.refactorInsertStatement(StatementParser.java:362)
+	at com.frameworkset.common.poolman.DBUtil.doJDBCInsert(DBUtil.java:1372)
+	at com.frameworkset.common.poolman.DBUtil.executeInsert(DBUtil.java:1166)
+	at com.frameworkset.common.poolman.DBUtil.executeInsert(DBUtil.java:1176)
+	at com.frameworkset.common.poolman.DBUtil.executeInsert(DBUtil.java:1172)
+	at com.chinacreator.sms.BaseMTWriterImpl.traceSendSuccess(BaseMTWriterImpl.java:61)
+	at com.chinacreator.sms.thread.QueueServiceHandleThread.run(QueueServiceHandleThread.java:79)
+	at java.lang.Thread.run(Thread.java:570)
+
+[09-4-28 16:37:53:375 CST] 0000003b SystemErr     R 	at java.util.HashMap.onEntry(HashMap.java(Inlined Compiled Code))
+[09-4-28 16:37:53:375 CST] 0000003b SystemErr     R 	at java.util.HashMap.transfer(HashMap.java(Compiled Code))
+[09-4-28 16:37:53:375 CST] 0000003b SystemErr     R 	at java.util.HashMap.resize(HashMap.java(Inlined Compiled Code))
+[09-4-28 16:37:53:375 CST] 0000003b SystemErr     R 	at java.util.HashMap.addEntry(HashMap.java(Compiled Code))
+[09-4-28 16:37:53:375 CST] 0000003b SystemErr     R 	at java.util.HashMap.put(HashMap.java(Compiled Code))
+[09-4-28 16:37:53:375 CST] 0000003b SystemErr     R 	at com.frameworkset.common.poolman.sql.PrimaryKeyCache.loaderPrimaryKey(PrimaryKeyCache.java:143)
+[09-4-28 16:37:53:375 CST] 0000003b SystemErr     R 	at com.frameworkset.common.poolman.sql.PrimaryKeyCache.getIDTable(PrimaryKeyCache.java:95)
+[09-4-28 16:37:53:375 CST] 0000003b SystemErr     R 	at com.frameworkset.common.poolman.util.StatementParser.refactorInsertStatement(StatementParser.java:421)
+[09-4-28 16:37:53:375 CST] 0000003b SystemErr     R 	at com.frameworkset.common.poolman.util.StatementParser.refactorInsertStatement(StatementParser.java:362)
+[09-4-28 16:37:53:375 CST] 0000003b SystemErr     R 	at com.frameworkset.common.poolman.DBUtil.doJDBCInsert(DBUtil.java:1372)
+[09-4-28 16:37:53:375 CST] 0000003b SystemErr     R 	at com.frameworkset.common.poolman.DBUtil.executeInsert(DBUtil.java:1166)
+[09-4-28 16:37:53:375 CST] 0000003b SystemErr     R 	at com.frameworkset.common.poolman.DBUtil.executeInsert(DBUtil.java:1176)
+[09-4-28 16:37:53:375 CST] 0000003b SystemErr     R 	at com.frameworkset.common.poolman.DBUtil.executeInsert(DBUtil.java:1172)
+[09-4-28 16:37:53:375 CST] 0000003b SystemErr     R 	at com.chinacreator.sms.BaseMTWriterImpl.traceSendSuccess(BaseMTWriterImpl.java:61)
+[09-4-28 16:37:53:375 CST] 0000003b SystemErr     R 	at com.chinacreator.sms.thread.QueueServiceHandleThread.run(QueueServiceHandleThread.java:79)
+[09-4-28 16:37:53:375 CST] 0000003b SystemErr     R 	at java.lang.Thread.run(Thread.java:570)
+
+问题分析：这个错误只是偶尔出现，在服务器压力大，或者数据库压力大的时候容易出现，参照文档：http://jira.codehaus.org/browse/XFIRE-1119
+解决方案：找到这个类中的方法：
+com.frameworkset.common.poolman.sql.PrimaryKeyCache
+里面对应的Map，将map修改为同步Map：
+	id_tables = new java.util.concurrent.ConcurrentHashMap(new HashMap());
+	
+o 增加行处理器对泛型的支持
+
+public abstract class RowHandler<T>
+public abstract void handleRow(T rowValue,Record record);
+
+
+
+----------------------------------------
+1.0.4 - 2009-5-22
+----------------------------------------
+o 调整com.frameworkset.common.poolman.handle.RowHandler
+
+将原来的接口改为抽象类
+将接口方法public void handleRow(Object rowValue,Record origine)
+改为抽象方法public abstract void handleRow(Object rowValue,Record origine)
+增加init和destroy方法，以便进行查询源数据和数据库名称dbname的初始化和销毁，这些信息对存储过程和函数调用中的行处理器不起作用。
+
+增加方法
+public SchemaType getSchemaType(String colName)
+以便在行处理器中 获取列的java数据类型名称和数据库类型名称
+        
+o 修改com/frameworkset/common/poolman/Record.java类
+增加记录的原始行号信息和get/set方法：
+/**
+	 * 设置记录对应的数据库原始记录行号
+	 */
+	private int rowid;
+	public void setRowid(int rowid)
+	{
+	    this.rowid = rowid;
+	}
+	public int getRowid()
+        {
+            return rowid;
+        }
+ 
+o ResoultMap类中对Record类的初始化方法进行了优化
+
+o 扩展xml行处理器
+
+可以自定义根节点名称
+可以自定义字符集
+可以自定义版本号
+添加构造xml节点串的两个方法
+
+实现
+在com.frameworkset.common.poolman.handle.XMLRowHandler程序中添加以下方法：
+        /**
+         * rowValue类型为StringBuffer
+         */
+	public void handleRow(Object rowValue,Record origine) 的默认实现
+	
+/**
+	 * 返回xml串的根节点名称
+	 * 缺省为records，用户可以扩展这个方法
+	 * @return
+	 */
+	public String getRootName()
+	{
+	    return "records";
+	}
+	
+	/**
+         * 返回xml的编码字符集
+         * 缺省为gb2312，用户可以扩展这个方法
+         * @return
+         */
+        public String getEncoding()
+        {
+            return "gb2312";
+        }
+        
+        
+        /**
+         * 返回xml语法的版本号
+         * 缺省为1.0，用户可以扩展这个方法
+         * @return
+         */
+        public String getVersion()
+        {
+            return "1.0";
+        }
+
+构建xml节点串的方法
+public static String buildNode(String columnNodeName,//xml节点名称
+                                      String columnName,//结点列名name属性的值
+                                      String columnType, //结点列jdbc类型属性名称值
+                                      String columnJavaType, //结点列java类型属性名称值
+                                      String value,//结点值
+                                      String split)//结点与节点之间的分割符
+
+public static String buildNode(String columnNodeName, //xml节点名称
+                                Map attributes,//节点属性集
+                                String value, //节点值
+                                String split)//节点间的分割符
+这些方法都有缺省实现，如果不一致的话可以在子类中覆盖。
+
+使用实例
+public class TestXMLHandler {
+    public static void testCustomXMLHandler()
+    {
+        PreparedDBUtil db = new PreparedDBUtil();
+        try {
+            db.preparedSelect("select * from tableinfo");
+//            String results_1 = db.executePreparedForXML();
+            String results_ = db.executePreparedForXML(new XMLRowHandler(){
+//
+//               
+                public void handleRow(Object rowValue, Record origine)  {
+                    StringBuffer record = (StringBuffer )rowValue;
+                    record.append("    <record>\r\n");
+   
+                    try {
+                        SchemaType schemaType = super.getSchemaType("TABLE_NAME"); 
+                        record.append(super.buildNode("attribute", 
+                                                      "TABLE_NAME", 
+                                                      schemaType.getName(),
+                                                      schemaType.getJavaType(), 
+                                                      origine.getString("TABLE_NAME"),
+                                                      "\r\n"));
+                        schemaType = super.getSchemaType("table_id_name");
+                        record.append(super.buildNode("attribute", 
+                                                      "table_id_name", 
+                                                      schemaType.getName(),
+                                                      schemaType.getJavaType(),  
+                                                      origine.getString("table_id_name"),
+                                                      "\r\n"));
+                        schemaType = super.getSchemaType("TABLE_ID_INCREMENT");
+                        record.append(super.buildNode("attribute", 
+                                                      "TABLE_ID_INCREMENT", 
+                                                      schemaType.getName(),
+                                                      schemaType.getJavaType(),  
+                                                      origine.getString("TABLE_ID_INCREMENT"),
+                                                      "\r\n"));
+                        
+                        schemaType = super.getSchemaType("TABLE_ID_GENERATOR");
+                        record.append(super.buildNode("attribute", 
+                                                      "TABLE_ID_GENERATOR", 
+                                                      schemaType.getName(),
+                                                      schemaType.getJavaType(), 
+                                                      origine.getString("TABLE_ID_GENERATOR"),
+                                                      "\r\n"));
+                        schemaType = super.getSchemaType("TABLE_ID_TYPE");
+                        record.append(super.buildNode("attribute", 
+                                                      "TABLE_ID_TYPE", 
+                                                      schemaType.getName(),
+                                                      schemaType.getJavaType(),  
+                                                      origine.getString("TABLE_ID_TYPE"),
+                                                      "\r\n"));
+                        
+                    } catch (SQLException e) {
+                        
+                        throw new RowHandlerException(e);
+                    }
+                    record.append("    </record>\r\n");
+                }
+
+                
+                public String getEncoding() {
+                    // TODO Auto-generated method stub
+                    return "gbk";
+                }
+
+               
+                public String getRootName() {
+                    // TODO Auto-generated method stub
+                    return "tableinfo";
+                }
+
+               
+                public String getVersion() {
+                    // TODO Auto-generated method stub
+                    return "2.0";
+                }
+                
+            });
+            
+            System.out.println(results_);
+//            System.out.println(results_1);
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        
+    }
+    
+    public static void testDefualtXML()
+    {
+        PreparedDBUtil db = new PreparedDBUtil();
+        try {
+            db.preparedSelect("select * from tableinfo");
+            String results_1 = db.executePreparedForXML();
+
+            System.out.println(results_1);
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+    
+    public static void main(String[] args)
+    {
+        testCustomXMLHandler();
+    }
+}
+
+o 修改bug，执行o/r mapping 查询时，如果数字类型/byte/boolean的数据值为null时，会报以下异常：
+Build ValueObject for ResultSet[select * from mq_node where NODE_NAME='test'] Get Column[CA_ID] from  ResultSet to com.chinacreator.mq.client.MqNode@10cec16.CA_ID[int] failed:null
+ERROR 01-06 17:30:25,093 - Build ValueObject for ResultSet[select * from mq_node where NODE_NAME='test'] Get Column[CA_ID] from  ResultSet to com.chinacreator.mq.client.MqNode@10cec16.CA_ID[int] failed:null
+java.lang.IllegalArgumentException
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:585)
+	at com.frameworkset.common.poolman.ResultMap.buildValueObject(ResultMap.java:193)
+	at com.frameworkset.common.poolman.StatementInfo.buildResultMap(StatementInfo.java:731)
+	at com.frameworkset.common.poolman.util.SQLUtil.innerExecuteJDBC(SQLUtil.java:540)
+	at com.frameworkset.common.poolman.DBUtil.executeSelectForObject(DBUtil.java:3753)
+	at com.frameworkset.common.poolman.DBUtil.executeSelectForObject(DBUtil.java:3742)
+	at com.frameworkset.common.poolman.DBUtil.executeSelectForObject(DBUtil.java:3618)
+	at com.chinacreator.mq.client.MqNodeService.getNodeByName(MqNodeService.java:150)
+	at be.ibridge.kettle.consumer_stream.ConsumerService.buildMQClient(ConsumerService.java:63)
+	at be.ibridge.kettle.consumer_stream.Consumer.processRow(Consumer.java:155)
+	at be.ibridge.kettle.consumer_stream.Consumer.run(Consumer.java:200)
+
+原因分析：
+数据库查询返回的结果集，由于数字类型/byte/boolean为null时，原来的处理程序直接返回null，而不是返回具体的数字类型/byte/boolean的缺省值，导致将null值设置给对象属性失败。
+
+解决办法，修改对应数字类型/byte/boolean的handle接口提供null值的转换函数,将null转换为相应的缺省值。
+com/frameworkset/common/poolman/handle/type/BigDecimalTypeHandler.java
+com/frameworkset/common/poolman/handle/type/BooleanTypeHandler.java
+com/frameworkset/common/poolman/handle/type/ByteTypeHandler.java
+com/frameworkset/common/poolman/handle/type/DoubleTypeHandler.java
+com/frameworkset/common/poolman/handle/type/FloatTypeHandler.java
+om/frameworkset/common/poolman/handle/type/IntegerTypeHandler.java
+com/frameworkset/common/poolman/handle/type/LongTypeHandler.java
+com/frameworkset/common/poolman/handle/type/ShortTypeHandler.java
+
+----------------------------------------
+1.0.3-1 - 2009-4-16
+----------------------------------------
+
+o 问题描述：
+当sql语句中即出现同名列又有不同名列时，就会在读值时报空指针异常。
+控制台信息：
+
+java.lang.NullPointerException
+	at com.frameworkset.common.poolman.Record.seekField(Record.java:694)
+	at com.frameworkset.common.poolman.Record.getObject(Record.java:724)
+	at com.frameworkset.common.poolman.Record.getString(Record.java:156)
+	at com.frameworkset.common.poolman.DBUtil.getValue(DBUtil.java:292)
+	at com.chinacreator.jspreport.DimenDao.findReportBeans(DimenDao.java:133)
+	at com.chinacreator.jspreport.DimenDao.getReport(DimenDao.java:222)
+	at com.chinacreator.jspreport.report.ReportList.getDataList(ReportList.java:31)
+	at com.frameworkset.common.tag.pager.DataInfoImpl.getItemCount(DataInfoImpl.java:147)
+	at com.frameworkset.common.tag.pager.tags.PagerContext.setDataInfo(PagerContext.java:1094)
+	at com.frameworkset.common.tag.pager.tags.PagerContext.initContext(PagerContext.java:954)
+	at com.frameworkset.common.tag.pager.tags.PagerContext.init(PagerContext.java:209)
+	at com.frameworkset.common.tag.pager.tags.PagerTag.doStartTag(PagerTag.java:1030)
+	at org.apache.jsp.jspreport.report_005flist_jsp._jspService(report_005flist_jsp.java:299)
+	at org.apache.jasper.runtime.HttpJspBase.service(HttpJspBase.java:133)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:856)
+	at org.apache.jasper.servlet.JspServletWrapper.service(JspServletWrapper.java:311)
+	at org.apache.jasper.servlet.JspServlet.serviceJspFile(JspServlet.java:301)
+	at org.apache.jasper.servlet.JspServlet.service(JspServlet.java:248)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:856)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:284)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:204)
+	at com.frameworkset.common.filter.CharsetEncodingFilter.doFilter(CharsetEncodingFilter.java:92)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:233)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:204)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:256)
+	at org.apache.catalina.core.StandardValveContext.invokeNext(StandardValveContext.java:151)
+	at org.apache.catalina.core.StandardPipeline.invoke(StandardPipeline.java:563)
+	at org.apache.catalina.core.StandardContextValve.invokeInternal(StandardContextValve.java:245)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:199)
+	at org.apache.catalina.core.StandardValveContext.invokeNext(StandardValveContext.java:151)
+	at org.apache.catalina.core.StandardPipeline.invoke(StandardPipeline.java:563)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:195)
+	at org.apache.catalina.core.StandardValveContext.invokeNext(StandardValveContext.java:151)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:164)
+	at org.apache.catalina.core.StandardValveContext.invokeNext(StandardValveContext.java:149)
+	at org.apache.catalina.core.StandardPipeline.invoke(StandardPipeline.java:563)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:156)
+	at org.apache.catalina.core.StandardValveContext.invokeNext(StandardValveContext.java:151)
+	at org.apache.catalina.core.StandardPipeline.invoke(StandardPipeline.java:563)
+	at org.apache.catalina.core.ContainerBase.invoke(ContainerBase.java:972)
+	at org.apache.coyote.tomcat5.CoyoteAdapter.service(CoyoteAdapter.java:209)
+	at org.apache.coyote.http11.Http11Processor.process(Http11Processor.java:670)
+	at org.apache.coyote.http11.Http11Protocol$Http11ConnectionHandler.processConnection(Http11Protocol.java:517)
+	at org.apache.tomcat.util.net.TcpWorkerThread.runIt(PoolTcpEndpoint.java:575)
+	at org.apache.tomcat.util.threads.ThreadPool$ControlRunnable.run(ThreadPool.java:666)
+	at java.lang.Thread.run(Thread.java:595)
+
+
+修改程序
+com/frameworkset/common/poolman/Record.java
+
+
+------------------------------
+ 1.0.3 - 2009-4-13
+------------------------------
+
+ o 单独使用poolman，未建立表tableinfo，后台报SQLException异常
+修改程序：
+com/frameworkset/common/poolman/management/BaseTableManager.java
+
+ o sql server 2005翻页查询异常问题
+原因是sqlserver中需要这样创建statement
+Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY); 
+但是poolman中是这样获取Statement ：stmt=conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_UPDATABLE);
+因此报下面的错误：
+com.microsoft.sqlserver.jdbc.SQLServerException: 不支持此游标类型/并发组
+合。
+
+修改方法：
+通过适配器方法来获取游标类型：
+
+修改的程序
+com\frameworkset\orm\adapter\DB.java
+com\frameworkset\orm\adapter\DBMSSQL.java
+com\frameworkset\common\poolman\StatementInfo.java
+com\frameworkset\common\poolman\DBUtil.java
+
+
+o 增加获取DataSource的接口
+修改的程序：
+com\frameworkset\common\poolman\util\SQLUtil.java
+增加以下三个方法
+获取缺省连接池对应的datasource
+public static DataSource getDataSource()
+	
+获取给定数据库连接池名对应的datasource
+	public static DataSource getDataSource(String dbname)
+      
+通过jndi名称查找数据源
+  public static DataSource getDataSourceByJNDI(String jndiname) throws NamingException
+      
+
+com/frameworkset/common/poolman/handle/type/CallableStatementResultSet.java
+增加以下方法：
+public Object getObject(int arg0, Map arg1) throws SQLException
+
+
+com/frameworkset/common/poolman/util/JDBCPool.java
+增加方法：
+public static DataSource find(String jndiName) throws NamingException
+
+
+增加全局变量：
+public static Context ctx = null;
+	
+o 新增bboss jndi 上下文环境
+新增jndi上下文环境，解决系统脱离应用服务器单独运行时无法进行jndi绑定的问题。
+新增和修改的程序如下：
+com/frameworkset/common/poolman/jndi/DummyContext.java（新增）
+com/frameworkset/common/poolman/jndi/DummyContextFactory.java（新增）
+com/frameworkset/common/poolman/util/JDBCPool.java（修改）
+
+
+
+o DBUtil执行两个表的联合查询，如果两表的查询字段中包含相同字段名但没有指定这些字段的别名时，查询结果中前面的表字段的值被后面的表字段的值覆盖。例如：
+select table_a.id,table_b.id from table_a,table_b;
+
+代码段如下：
+DBUtil dbUtil = new DBUtil();
+		dbUtil.executeSelect("select table_a.id,table_b.id from table_a,table_b ");
+		System.out.println("table_a.id" + dbUtil.getInt(0, 0));
+		System.out.println("table_b.id" + dbUtil.getInt(0, 1));
+
+查询的结果显示table_a.id的值变为table_b.id字段的值。
+
+原因分析：
+
+执行本次查询后，结果集元数据为：
+[id,id]
+可见两个查询字段的列名相同，有没有指定别名字段，由于DBUtil临时存放结果集的数据结构为一个hash表，key为字段名，值为相应字段的值，这样就导致原来的字段的值被前面的字段的值覆盖。
+解决办法：
+A.	为字段指定不同的别名
+B.	修改原来的存储机制，为相同的列名建立不同的别名
+建立别名的规则为：列名+#$_+列索引，例如：
+将原来的[id,id]转换为[id,id#$_1]
+
+
+修改的程序清单为：
+/bboss-persistent/src/com/frameworkset/common/poolman/sql/PoolManResultSetMetaData.java
+/bboss-persistent/src/com/frameworkset/common/poolman/ResultMap.java
+/bboss-persistent/src/com/frameworkset/common/poolman/Record.java
+/bboss-persistent/src/com/frameworkset/common/poolman/DBUtil.java
+
+测试脚本：
+create table TABLE_A
+(
+  ID  NUMBER(10),
+  ID1 NUMBER(10)
+)
+/
+create table TABLE_b
+(
+  ID  NUMBER(10),
+  ID1 NUMBER(10)
+)
+/
+insert into table_a (id,id1) value(1,11)
+/
+insert into table_b (id,id1) value(2,22)
+/
+
+测试程序：
+/bboss-persistent/test/com/frameworkset/common/TestTwoTablewithSameCol.java
+执行查询结果正确。
+
+o  sqlserver中如果数据库表有列的类型是char(1),那么, DBUtil查询这个字段的时候,就报错
+出错的原因可能是poolman.xml文件中指定的数据库驱动程序不正确。
+<jndiName>hb_datasource_jndiname</jndiName>
+<driver>com.microsoft.sqlserver.jdbc.SQLServerDriver</driver>
+正确的配法为：
+<jndiName>hb_datasource_jndiname</jndiName>
+<driver>com.microsoft.jdbc.sqlserver.SQLServerDriver</driver>
+现在不明确是否存在com.microsoft. sqlserver.jdbc.SQLServerDriver驱动程序，
+估计这个驱动程序是sqlserver 2005版本的驱动程序。
+需要修正程序：
+/bboss-persistent/src/com/frameworkset/orm/adapter/DBFactory.java
+以便能够正确地找到sql server的适配器（不同数据库的适配器，是通过驱动程序查找的）。修正后，问题解决。
+
+o  改造oracle分页机制
+修改程序：
+com/frameworkset/orm/adapter/DBOracle.java
+
+
+
+
+------------------------------
+ 1.0.2 - DEC 24, 2008
+------------------------------
+
+ o Improved  blob/clob handle perfermence.
+ o Fixed maybe memery leaker in handle blob/clob columns.
+
+First version of bboss persitent released.
+
+------------------------------
+ 1.0.1 - DEC 14, 2008
+------------------------------
+
+First version of bboss persitent released.
+
+hibernate.rar 
+这个文件包含了bboss persistent 和 hibernate结合的程序，包括hibernate使用bboss persistent 生成主键
+hibernate使用bboss persistent 提供的数据源
+
+[http://blog.csdn.net/yin_bp]

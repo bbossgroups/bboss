@@ -1,0 +1,8 @@
+[PropertyInfo]
+log,org.apache.log4j.Logger,false,false, , ,false,<default>
+src,String,false,false, , ,false,<default>
+[IconNames]
+
+
+
+

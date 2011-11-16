@@ -1,0 +1,70 @@
+package com.frameworkset.filter;
+
+import javax.servlet.ServletRequestEvent;
+import javax.servlet.http.HttpServletRequest;
+
+import com.chinacreator.security.AccessControl;
+import com.frameworkset.common.poolman.DBUtil;
+import com.frameworkset.orm.transaction.TransactionManager;
+
+/**
+ * 
+ * 
+ * <p>Title: BSServletRequestListener.java</p>
+ *
+ * <p>Description: </p>
+ *
+ * <p>Copyright: Copyright (c) 2007</p>
+ *
+ * <p>Company: 湖南科创信息股份有限公司</p>
+ * @Date Jul 24, 2008 11:09:47 AM
+ * @author biaoping.yin,尹标平
+ * @version 1.0
+ */
+public class BSServletRequestListener implements javax.servlet.ServletRequestListener
+{
+
+	public void requestDestroyed(ServletRequestEvent requestEvent) {
+		System.out.println("requestDestroyed Thread.currentThread():" + Thread.currentThread());
+		System.out.println("requestDestroyed tx before:" + TransactionManager.getTransaction());
+		
+		if(requestEvent.getServletRequest() instanceof HttpServletRequest )
+		{
+			HttpServletRequest request = (HttpServletRequest)requestEvent.getServletRequest();
+			String uri = request.getRequestURI();
+			System.out.println("uri = " + uri);
+			
+			
+			if(uri.endsWith(".jsp") || uri.endsWith(".do"))
+			{
+				System.out.println(uri);
+				TransactionManager.destroyTransaction();
+				AccessControl.init(null);
+			}			
+		}		
+		System.out.println("requestDestroyed tx after:" + TransactionManager.getTransaction());
+		
+		System.out.println("requestDestroyed tx after DBUtil.getNumActive():" +DBUtil.getNumActive());
+		System.out.println("requestDestroyed tx after DBUtil.getNumIdle():" +DBUtil.getNumIdle());
+	}
+
+	public void requestInitialized(ServletRequestEvent requestEvent) {
+//		System.out.println("requestInitialized Thread.currentThread():" + Thread.currentThread());
+//		if(requestEvent.getServletRequest() instanceof HttpServletRequest )
+//		{
+//			HttpServletRequest request = (HttpServletRequest)requestEvent.getServletRequest();
+//			String uri = request.getRequestURI();
+//			
+//			
+//			if(uri.endsWith(".jsp") || uri.endsWith(".do"))
+//			{
+//				System.out.println(uri);
+//				TransactionManager.destroyTransaction();
+//				AccessControl.init(null);
+//			}
+//			
+//		}
+		
+	}
+
+}

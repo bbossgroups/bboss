@@ -1,0 +1,8 @@
+<properties>
+<!-- 
+		数据库连接池监控服务
+-->
+	<property name="pool.monitor.service" singlable="true"
+		class="com.frameworkset.common.poolman.monitor.PoolMonitorServiceImpl">
+	</property>
+</properties>

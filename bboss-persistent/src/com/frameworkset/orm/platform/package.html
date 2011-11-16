@@ -1,0 +1,27 @@
+<html>
+<head>
+<title>Platform package</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body bgcolor="#FFFFFF">
+This package contains classes that provide compatibility to a range of RDBM platforms. 
+<p>
+The <code>Platform</code> interface provides callbacks that allow to get 
+RDBMS Platform specific information whereever neccessary.
+
+<p>
+The class <code>PlatformDefaultImpl</code> implements <code>Platform</code> and 
+provides default implementations of all methods.
+
+<p>
+For each supported Platform <code>Xxx</code> there is a class <code>PlatformXxxImpl</code> 
+which extends <code>PlatformDefaultImpl</code> and may override the methods of the
+baseclass.
+
+<p>
+The factory class <code>PlatformFactory</code> can be used to create <code>Platform</code>
+instances. 
+
+</body>
+</html>

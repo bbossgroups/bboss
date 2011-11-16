@@ -1,0 +1,61 @@
+package org.frameworkset.spi.support.bind;
+
+import java.io.Serializable;
+
+import org.frameworkset.util.Assert;
+import org.frameworkset.util.beans.BeanWrapper;
+
+
+
+public class BeanPropertyBindingResult  extends AbstractPropertyBindingResult implements Serializable {
+
+	private final Object target;
+
+//	private transient BeanWrapper beanWrapper;
+
+
+	/**
+	 * Creates a new instance of the {@link BeanPropertyBindingResult} class.
+	 * @param target the target bean to bind onto
+	 * @param objectName the name of the target object
+	 * @throws IllegalArgumentException if the supplied <code>target</code> is <code>null</code> 
+	 */
+	public BeanPropertyBindingResult(Object target, String objectName) {
+		super(objectName);
+		Assert.notNull(target, "Target bean must not be null");
+		this.target = target;
+	}
+
+	public final Object getTarget() {
+		return this.target;
+	}
+
+//	/**
+//	 * Returns the {@link BeanWrapper} that this instance uses.
+//	 * Creates a new one if none existed before.
+//	 * @see #createBeanWrapper()
+//	 */
+//	public final BeanWrapper getPropertyAccessor() {
+//		if (this.beanWrapper == null) {
+//			this.beanWrapper = createBeanWrapper();
+//			
+//		}
+//		return this.beanWrapper;
+//	}
+
+	/**
+	 * Create a new {@link BeanWrapper} for the underlying target object.
+	 * @see #getTarget()
+	 */
+	protected BeanWrapper createBeanWrapper() {
+		return new BeanWrapper(getTarget());
+	}
+
+	@Override
+	protected Object getActualFieldValue(String field) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+}

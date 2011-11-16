@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src/main"/>
+	<classpathentry kind="src" path="src/testcases"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="lib/ant.jar"/>
+	<classpathentry kind="lib" path="lib/svnClientAdapter.jar" sourcepath="/svnClientAdapter/src"/>
+	<classpathentry kind="lib" path="lib/junit.jar"/>
+	<classpathentry kind="lib" path="lib/ant-launcher.jar"/>
+	<classpathentry kind="lib" path="lib/ganymed.jar"/>
+	<classpathentry kind="lib" path="lib/svnkit.jar"/>
+	<classpathentry kind="lib" path="lib/svnjavahl.jar"/>
+	<classpathentry kind="output" path="build/bin"/>
+</classpath>

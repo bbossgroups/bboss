@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns:ant="http://www.fiset.ca/ant-docs/v1" xmlns:html="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=windows-1252"/>
+<title>Svn Conditions</title>
+<META HTTP-EQUIV="Content-Language" CONTENT="en-us"/>
+<style type="text/css">	
+				
+				body {
+					font: 80% Verdana, Arial, Helvetica, sans-serif;
+					margin: 5px; padding: 0;
+				/*	background: rgb(95%,95%,80%);  */
+					color: black;
+				}
+				h1 {
+					font-size: 200%; letter-spacing: 3px;
+					margin-bottom: 1em; 
+					padding: 0.66em 0 0.33em 1em;
+					background: rgb(85%,85%,70%);
+				}
+				h2 {
+					background: rgb(90%,90%,80%);
+				}
+				h3 {
+					background-color: rgb(95%,95%,85%);
+				}
+				.sample {
+					font-family: Courier, "Courier New", monospace;
+					background-color: #f3f1f4;
+				 }
+				div.sample {
+					margin-left: 10px;
+					margin-right: 10px;
+					padding-top: 3px;
+					padding-bottom: 3px;
+					padding-left: 3px;
+					padding-right: 3px;
+					border:1px dashed black;
+					width: 80%;
+				 }
+				 table.params {
+					width: 80%;
+					border: 1px solid gray;
+					margin-bottom:1em;
+				 }
+				 th.params, td.params {
+					padding: 0 0.5em;
+					border-left: 1px solid #DDD;
+					border-bottom: 1px solid #DDD;
+					font: 70%
+				}
+				th.params {
+					
+				}
+				table.toc {
+					width: 80%;
+					border: 1px solid gray;
+					margin-bottom:1em;
+				}
+				td.toc {
+					padding: 0 0.5em;
+					border: none
+					font: 70%
+				}
+				table.type {
+					width: 80%;
+					border: none;
+					margin-bottom:1em;
+				}
+				th.type, td.type {
+					text-align: left;
+					padding: 0 0.5em;
+					border: none
+					font: 70%
+				}
+				th.type {
+					font-weight: bold;
+				}
+				
+			</style>
+</head>
+<body lang="en-US" dir="LTR">
+<h1>Svn Conditions</h1>
+<h2>Table of Content</h2>
+<table class="toc">
+<tbody class="toc">
+<tr class="toc">
+<td class="toc">
+<a href="#svnExists">svnExists</a>
+</td>
+<td class="toc">Ant condition that returns true if an element exists in the repository</td>
+</tr>
+</tbody>
+</table>
+<h2>Introduction</h2>
+<ant:introduction xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+		<p>
+			This document describes the conditions offered in svnant. To use those conditions,
+			you must first obtain a copy of svnant.jar, add it to the classpath of your ant project
+			and define the types. Fortunately, there is a resource file, within the distributed JAR file,
+			and all those steps can be accomplished with the following code:
+			<div class="sample">
+<pre class="sample">
+				
+&lt;path id="svnant.classpath"&gt;
+  &lt;pathelement location="${svnant.dir}/lib/svnant.jar" /&gt;
+  &lt;pathelement location="${svnant.dir}/lib/svnClientAdapter.jar" /&gt;
+&lt;/path&gt;  
+
+&lt;typedef resource="svntypes.xml" classpathref="project.classpath"/&gt;
+				
+			</pre>
+</div>
+		</p>
+		<p>
+			If you are upgrading from an earlier version of svnant, and the following line was used
+			in your <i>build.xml</i> file, then replace it with the ones above.
+			<div class="sample">
+<pre class="sample">
+				
+&lt;taskdef resource="svntask.properties" classpathref="svnant.classpath"/&gt;
+				
+			</pre>
+</div>
+		</p>
+		<h3>
+<a name="bindings">Bindings</a>
+</h3>
+		<p>
+			All conditions offer two parameters: <b>javahl</b> and <b>svnkit</b>. Those parameters
+			are booleans, which means their values can be set to either <b>true</b> or <b>false</b>. 
+			If not specified, those parameters are assumed to be set (true). These two parameters are used
+			to select which client is used to access Subversion.
+		</p>
+		<p>
+			There are three clients used by svnant to access Subversion:
+			<ul>
+				<li>JavaHL;</li>
+				<li>SVNKit; and,</li>
+				<li>Command Line Interface.</li>
+			</ul>
+			To better understand the difference between those three clients, please refer to
+			documentation on <b>svnClientAdapter.jar</b>.
+		</p>
+		<p>
+			The property <b>javahl</b> is considered only if the javahl libraries are available. Similarly,
+			the property <b>svnkit</b> is considered only if SVNKit is present. Finally, <b>javahl</b>
+			takes precedence over <b>svnkit</b>.
+		</p>
+		<p>
+			To better illustrate the previous paragraph, use the following steps:
+			<ol>
+				<li>If <b>javahl</b> is <i>true</i> and JavaHL bindings are available, then JavaHL is used.</li>
+				<li>If <b>svnkit</b> is <i>true</i> and SVNKit is present, then SVNKit is used.</li>
+				<li>If the two previous tests failed, for any reason, then the Command Line Interface is used.</li>
+			</ol>
+		</p>
+	</ant:introduction>
+<h1>
+<a name="">svnExists</a>
+</h1>
+<p>Ant condition that returns true if an element exists in the repository</p>
+<table class="type">
+<tbody class="type">
+<tr class="type">
+<th class="type">Implementation:</th>
+<td class="type">org.tigris.subclipse.svnant.conditions.Exists</td>
+</tr>
+</tbody>
+</table>
+<h2>Parameters</h2>
+<table class="params">
+<tr class="params">
+<th class="params">Attribute</th>
+<th class="params">Description</th>
+<th class="params">Required</th>
+</tr>
+<tr class="params">
+<td class="params">target</td>
+<td class="params">
+<ant:description xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+				File name or URL to the element to be queried during the condition.
+			</ant:description>
+</td>
+<td class="params">
+<ant:required xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+				Yes
+			</ant:required>
+</td>
+</tr>
+<tr class="params">
+<td class="params">javahl</td>
+<td class="params">
+<ant:description xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+		If set, instructs the use of JavaHL bindings, if available.
+		Set to <b>false</b> to use command line client interface to subversion. 
+		Defaults to true. See <a href="#bindings">note</a> for more details.
+	</ant:description>
+</td>
+<td class="params">
+<ant:required xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+		No
+	</ant:required>
+</td>
+</tr>
+<tr class="params">
+<td class="params">svnkit</td>
+<td class="params">
+<ant:description xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+		If set, instructs the use of SVNKit bindings, if available.
+		Set to <b>false</b> to use command line client interface to subversion. 
+		Defaults to true. See <a href="#bindings">note</a> for more details.
+	</ant:description>
+</td>
+<td class="params">
+<ant:required xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+		No
+	</ant:required>
+</td>
+</tr>
+</table>
+<h2>Nested Types</h2>No nested types defined for this type.<h2>Description</h2>
+			<p xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+				This is a custom condition, as defined in the Ant documentation. A custom
+				condition must be employed in conjunction with a &lt;Condition&gt; task
+				to set a property.
+			</p>
+			<p xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+				This custom condition is used to determine if an element exists in the repository. The condition returns
+				true if the element is known to te repository. It uses a process similar to "svn info"
+				to determine the existence of an element. If "svn info" can return information
+				about a file or a directory, then the svnExists condition should return true for
+				such file or directory.
+			</p>
+			<p xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+				Example: determine if there exist a "build.xml" file for a project
+				<div class="sample">
+<pre class="sample">
+
+&lt;condition 
+	property="fileExists" 
+	value="true"
+	else="false"
+	&gt;
+	&lt;svnExists javahl="${javahl}" svnkit="${svnkit}" target="http://svn.mycompany.com/project/trunk/build.xml"/&gt;
+&lt;/condition&gt;
+&lt;echo&gt;fileExists: ${fileExists}&lt;/echo&gt;
+					
+				</pre>
+</div>
+			</p>
+		</body>
+</html>

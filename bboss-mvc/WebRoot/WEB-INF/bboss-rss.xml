@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding='gb2312'?>
+	<!--
+		bboss-rss配置文件,mapping follow urls:
+		http://ip:port/contextpath/rss/rss.html
+		http://ip:port/contextpath/rss/atom.html
+	-->
+<properties>
+	<property name="/rss/*.html"
+		class="org.frameworkset.web.http.converter.feed.RSSController"
+		singlable="true">
+	</property>
+</properties>

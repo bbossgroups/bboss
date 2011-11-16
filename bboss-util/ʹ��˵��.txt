@@ -1,0 +1,262 @@
+一.运行环境
+   1.jdk1.4
+   2.所需的第三方包:ecs-1.4.2.jar                  
+                  jakarta-oro-2.0.8.jar
+                  jmxri.jar
+                  jmxtools.jar
+                  log4j.jar
+                  turbine-2.3.jar
+                  
+二.如何配置
+
+1.将/tld目录下的标签库文件放到应用的/WEB-INF/目录下,并且加到web.xml文件中，将所有的库文件和数据库驱动程序库文件放到WEB-INF/lib目录下面
+
+2.修改frameworkset.jar包中或者其他classpath中的poolman.xml文件的以下内容：
+    <dbname>youdbname</dbname>    	
+    <driver>oracle.jdbc.driver.OracleDriver</driver>
+    <url>jdbc:oracle:thin:@localhost:1521:XXXX</url>
+    <username>user</username>
+    <password>password</password>
+    将以上各项修改为你自己的数据库连接配置即可
+ 
+3.树标签库数据获取接口配置文件：treedata.properties放到/WEB-INF/classes/下
+4.分页/列表/详细信息数据获取接口配置文件：listdata.properties放到/WEB-INF/classes/下
+                                
+    
+三.标签使用说明：    
+
+1.分页/列表/详细信息标签库
+
+    可以通过两种方式获取分页列表数据：
+        第一种直接访问数据库，如果您的数据是存放在数据库中，那么你可以直接通过sql语句或者存储过程访问数据库获取数据
+        第二种通过实现自定义的接口获取存放在不同数据源中的数据
+    
+    
+    1.1 pagertaglib中的逻辑比较标签名称已做相应的简化，具体名称请参看pager-taglib.tld文件，新增了检测当前页面是否有记录的标签notify
+        使用方法如下：
+            <!--检测当前页面是否有记录-->
+        	  <pg:notify>
+    		      <tr height="18px" class="labeltable_middle_tr_01">
+    		      	<td colspan=100 align='center' colspan=3>没有记录</td>
+    		      </tr>
+    	      </pg:notify>
+    1.2 使用标签库访问数据库例子
+        a.详细显示数据页
+        <pg:beaninfo  statement="<%=query%>"  //数据库查询语句，比如"select name,birthdate from student"
+    				  dbname="oa"			  //poolman.xml文件中指定的dbname	
+    				  >
+    			      <tr height="20px">		
+    			      	<pg:title width="10%" align="right" className="labeltable_middle_td_01"  title="姓名"/>
+    			    	<td colspan="5">	
+    			    	<!--colName的值对应数据查询语句select name,birthdate from student中的字段“name”-->	
+    			    	<%
+    			    	    //直接通过beaninfo.getString(fieldname)获取相应字段的值
+    			    	    String name = beaninfo.getString("name");
+    			    	%>							    	
+    			    	<pg:cell colName="name" defaultValue="200512000"/>
+    			    	</td>
+    			      </tr>	
+        </pg:beaninfo>
+        
+        b.列表和分页
+        
+        <pg:pager maxPageItems="5"
+    				  scope="request"    
+    	              statement="<%=query%>"  //数据库查询语句，比如"select name,birthdate from student"
+    				  dbname="oa"			  //poolman.xml文件中指定的dbname	  
+    			      title="分页标题"    			     
+    			      //isList="true" 如果是列表的话指定isList属性为true
+    			      >
+    			      <!--记录页面查询参数-->
+    			      <pg:param name="sourceNumber"/>
+    			      <pg:param name="meetingSubject"/>
+    			      <pg:param name="writeUserName"/>			      
+    
+    			      <tr class="labeltable_middle_td">
+    			      <!--设置分页表头-->
+    			      <pg:header>
+    			      	
+    			    	<pg:title nowrap="true" width="10%" colid="0"/>					    
+    					
+    			      </pg:header>
+    			      </tr>
+    			      
+    			      <!--检测当前页面是否有记录-->
+    			     <pg:notify>
+    				      <tr height="18px" class="labeltable_middle_tr_01">
+    				      	<td colspan=100 align='center'>暂时没有记录</td>
+    				      </tr>
+    			     </pg:notify>			      
+    			      
+    			      <input type="hidden" name="del_returnLink" value="meetingnote_list.jsp?<pg:querystring/>">
+    			      <!--list标签循环输出每条记录-->			      
+    			      <pg:list>				      		
+    			      		<tr height="18px" class="labeltable_middle_tr_01" >							
+    							<td align="center" nowrap>	
+    							
+    							<%
+    							    //直接通过dataSet.getString(Integer.parseInt(rowid),fieldName)获取相应记录的值
+    							    String name = dataSet.getString(Integer.parseInt(rowid),"name");
+    							%>
+    							<!--colName的值对应数据查询语句select name,birthdate from student中的字段“name”-->						
+    							    <pg:cell colName="name" />
+    							 <!--逻辑判断，其他的逻辑标签请查看标签定义文件-->
+    							    <pg:equal colName="name" value="张建">我是张建</pg:equal>						
+    						    </td>  			    		
+    					  	</tr>			      		
+    					  	
+    			      </pg:list>			   	      
+        			    <tr>
+        			      <td align="right" colspan=100 nowrap>
+        					<!--设置页面导航-->
+        					<pg:index/>
+                		  </td>
+        		        </tr>
+    		
+    		</pg:pager>
+        
+    1.3 通过自定义接口获取分页/列表数据的例子
+        通过自定义接口获取数据的分页、列表和直接访问数据库的标签使用区别不大，只是通过另外的标签辅助为分页、列表标签指定自定义数据获取接口，例如：
+        <pg:listdata dataInfo="MeetingUnitType_list" keyName="unittype_list"/>
+        dataInfo属性为listdata.properties文件中相应的自定义接口的key
+        keyName属性为在request中缓冲自定义接口实例的key，pager标签中的data属性值必须与其值一样，比如：<pg:pager data="unittype_list" isList="true">
+        
+        
+        
+    1.4 如何实现分页/列表数据获取接口
+        所有的自定义接口必须继承自抽象类com.frameworkset.common.tag.pager.DataInfoImpl
+        如果是分页必须实现方法：
+        /**
+    	* 分页显示时获取每页的数据项
+    	* sortKey:排序字段
+    	* desc:排序的秩序，true为降序，false为升序 
+    	* @param offSet - 从数据源获取数据的游标位置
+    	* 
+    	* @param pageItemsize - 每页显示的数据条数
+    	* @return ListInfo
+    	*/
+	
+        protected ListInfo getDataList(String sortKey, boolean desc, int offSet, int pageItemsize)
+        如果是列表必须实现方法：
+        /**
+    	 * 如果分页tag只是作为列表来实现时，调用该方法
+    	 * sortKey:排序字段
+    	 * desc:排序的秩序，true为降序，false为升序
+    	 * @return java.util.List
+    	 */
+        protected ListInfo getDataList(String sortKey, boolean desc) 
+        
+        
+    1.5 补充说明如下：
+        a.原来的逻辑比较标签的名称太长，把名称改短了一些，便于使用
+        b.分页列表标签还定义dataSet，rowid(为String类型)两个变量，如果万一需要的话可以在list标签内（只能在list标签中使用）直接通过dataSet.getString(Integer.parseInt(rowid),fieldName)获取相应记录的属性值
+        
+        c.详细显示页标签中也定义了beaninfo变量，如果万一需要的话可以在beaninfo标签内（只能在beaninfo标签中使用）直接通过beaninfo.getString(fieldname)获取相应字段的值
+            
+2.树型标签库的使用
+   
+  2.1 树型标签包含以下几个标签：tree,checkbox,radio,treedata
+    以下是一个简单的例子：
+    <tree:tree tree="chooseunit_tree" node="chooseunit_tree.node" imageFolder="../../images/tree_images/">
+	    <tree:checkbox name="unit" />
+	    <tree:radio name="unit_r" />
+	    <tree:treedata treetype="1" 
+	                   scope="session"
+	                   rootid="0"
+	                   rootName="省办公厅组织结构"
+	                   expandLevel="100"
+	                   showRootHref="false"	  
+	                   needObserver="false"                 
+	                   />
+	</tree:tree>      
+	
+	特别说明的是标签treedata的treetype属性：
+	这个属性指定树行结构数据获取接口配置名称，该名称对应于treedata.properties文件中的具体配置，例如：
+	1=com.chinacreator.oa.tag.meeting.meetingnotemanager.MeetingUnitTree
+	
+  2.2 如何实现自己的树结构数据获取类
+    自定义的数据获取类需要继承抽象类com.frameworkset.common.tag.tree.COMTree，并且实现以下三个抽象方法：
+    /**
+	 * 判断树节点是否有儿子
+	 * ITreeNode father:父节点
+	 */
+    public abstract boolean hasSon(ITreeNode father);
+    /**
+	 * 往树中添加父节点的所有直接儿子
+	 * ITreeNode father:父节点
+	 * int curLevel:父节点所处的当前层级
+	 */
+    public abstract boolean setSon(ITreeNode father, int curLevel);
+
+	/**
+	 * 从数据源获取给定id的节点信息节点信息
+	 */
+	public abstract ITreeNode getTreeNode(String id);
+	
+	举例如下：	
+	
+        package com.chinacreator.oa.tag.meeting.meetingnotemanager;
+        
+        import java.util.Iterator;
+        
+        import com.chinacreator.oa.business.humanresource.OrgUnitManager;
+        import com.chinacreator.oa.meeting.dao.ACOrg;
+        import com.frameworkset.common.tag.tree.COMTree;
+        import com.frameworkset.common.tag.tree.itf.ITreeNode;
+        
+        
+        /**
+         * 会议选择组织结构树
+         * @author biaoping.yin
+         * created on 2005-4-13
+         * version 1.0 
+         */
+        public class MeetingUnitTree extends COMTree {
+        
+            /**
+             * 判断节点father是否有儿子 
+             * @see com.frameworkset.common.tag.tree.itf.ActiveTree#hasSon(com.frameworkset.common.tag.tree.itf.ITreeNode)
+             */
+            public boolean hasSon(ITreeNode father) {
+                String id = father.getId();        
+                return OrgUnitManager.hasSon(id);
+            }
+        
+            /**
+             * 设置节点father的儿子，curLevel为节点father所在的层级
+             * @see com.frameworkset.common.tag.tree.itf.ActiveTree#setSon(com.frameworkset.common.tag.tree.itf.ITreeNode, int)
+             */
+            public boolean setSon(ITreeNode father, int curLevel) {
+                String id = father.getId();
+                //String orgInfo[] = id.split("\\|");
+                Iterator iterator = OrgUnitManager.getSubOrgUnits(id).iterator();
+                while(iterator.hasNext())
+                {
+                    ACOrg org = (ACOrg)iterator.next();           
+                    String sid = org.getId() + "|" + org.getTitle() + "|" + org.getUnitLinkMan() + "|" + org.getUnitLinkPhone();   
+                    //this.addNode(father,id,org.getTitle(),"",)
+                    addNode(father,org.getId(),org.getTitle(),"",curLevel,null,null,sid);
+                    
+                }
+                 
+                return true;
+            }
+        
+            /**
+             * 获取节点的当前最新信息
+             * @see com.frameworkset.common.tag.tree.itf.ActiveTree#getTreeNode(java.lang.String)
+             */
+            public ITreeNode getTreeNode(String id) {   
+                ACOrg org = OrgUnitManager.getOrgInfo(id);        
+                String sid = org.getId() + "|" + org.getTitle() + "|" + org.getUnitLinkMan() + "|" + org.getUnitLinkPhone();
+                return getTreeNode(org.getId(),org.getTitle(),"",null,null,sid);        
+            }
+        
+        }
+        
+3.标签库的描述－－－－待续
+
+四.如何访问数据数据库
+   系统中通过类com.frameworkset.common.poolman.DBUtil来完成数据库的查询、插入、更新、删除以及批处理操作等操作，分别说明如下
+   
+   1.新增－－－－待续

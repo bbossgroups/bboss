@@ -1,0 +1,377 @@
+<?xml version="1.0"?>
+
+<!-- $Id: build.xml,v 1.0.7 2009/01/05 12:29:55 belaban Exp $ -->
+
+<project name="bboss aop" default="default" basedir=".">
+	<description>
+		      bboss aop build file
+	</description>
+	<tstamp prefix="start" />
+
+	<tstamp>
+		<format property="compile.timestamp" pattern="yyyy-MM-dd HH.mm.ss" />
+	</tstamp>
+
+
+
+	<!-- set global properties for this build -->
+	<property file="build.properties" />
+	<target name="init" description="create timestamp and directories">
+		<echo>Init...</echo>
+
+		<tstamp />
+		<delete dir="${classes-bboss-aop}" />
+		<delete dir="${classes-bboss-aop-test}" />
+		<delete dir="classes-bboss-camel" />
+		<delete dir="classes-bboss-tlq" />
+		<delete dir="classes-bboss-rmi" />
+
+
+		<delete dir="${distrib}" />
+		<mkdir dir="${classes-bboss-aop}" />
+		<mkdir dir="${classes-bboss-aop-test}" />
+		<mkdir dir="classes-bboss-camel" />
+		<mkdir dir="classes-bboss-tlq" />
+		<mkdir dir="classes-bboss-rmi" />
+
+		<mkdir dir="${distrib}" />
+		<mkdir dir="${distrib}/test" />
+
+
+	</target>
+	<target name="default" depends="complete" description="default = build distribution package" />
+	<path id="cp-bboss-aop">
+
+		<fileset dir="lib/" includes="*.jar *.zip" />
+		<fileset dir="lib/test/" includes="*.jar *.zip" />
+		<fileset dir="lib/camel/" includes="**/*.jar *.zip" />
+		<fileset dir="lib/cxf/" includes="*.jar *.zip" />
+		<fileset dir="lib/jms/" includes="**/*.jar *.zip" />
+		<fileset dir="lib/mina/" includes="*.jar *.zip" />
+		<fileset dir="lib/mina/test/" includes="**/*.jar *.zip" />
+		<fileset dir="lib/encrypt" includes="*.jar *.zip" />
+		<fileset dir="lib/jgroups" includes="*.jar *.zip" />
+		<fileset dir="lib/quartz" includes="*.jar *.zip" />
+		<fileset dir="lib/netty" includes="*.jar *.zip" />
+		<fileset dir="lib/tlq" includes="*.jar *.zip" />
+		<fileset dir="lib/cglib" includes="*.jar *.zip" />
+		<fileset dir="lib/asm" includes="*.jar *.zip" />
+		<fileset dir="lib/http" includes="*.jar *.zip" />
+		<fileset dir="${distrib}" includes="**/*.jar **/*.zip" />
+
+	</path>
+	<!--
+		       ==========================
+		        Distribution jar package
+		       ==========================
+		  -->
+	<target name="distrib" depends="init,jar-bboss-aop-jgroups,jar-bboss-ws,jar-bboss-camel,jar-bboss-mina,jar-bboss-jms,jar-bboss-schedule,jar-bboss-rmi,jar-bboss-http,jar-bboss-aop,copy-resource,copy-depends-liberary,jar-bboss-tlq,jar-bboss-aop-test" description="copy jar file to distribution directory">
+		<echo>Construct the distribution package...</echo>
+
+	</target>
+
+	<target name="compile-bboss-aop" description="compile the bboss-aop source ">
+		<echo>compile the bboss-aop source ...</echo>
+
+		<javac destdir="${classes-bboss-aop}" target="1.5" source="1.5" deprecation="true" debug="${debug}" optimize="${optimize}" memorymaximumsize="256M" fork="true" verbose="yes">
+			<src path="src" />
+			<src path="src-mina" />
+			<src path="src-log" />
+			<!--<src path="src-camel" />-->
+			<src path="src-cxf" />
+			<src path="src-jms" />
+			<src path="src-jgroups" />
+			<src path="src-thread" />
+			<src path="src-schedule" />
+			<src path="src-netty" />
+			<src path="src-rmi" />
+			<src path="src-http" />
+			<!--<src path="src-tlq" />-->
+
+
+			<classpath refid="cp-bboss-aop" />
+
+		</javac>
+		<rmic classname="org.frameworkset.spi.remote.rmi.RMIRpcService" base="${classes-bboss-aop}">
+			<classpath refid="cp-bboss-aop" />
+		</rmic>
+		<copy todir="${classes-bboss-aop}">
+			<fileset dir="src-rmi/" includes="rmi.server.policy" />
+		</copy>
+		<copy todir="${classes-bboss-aop}">
+			<fileset dir="resources" includes="jg-protocol-ids.xml jg-magic-map.xml" />
+		</copy>
+		
+		<copy todir="${classes-bboss-aop}">
+			<fileset dir="src" includes="aop.properties" />
+		</copy>
+
+
+	</target>
+	<target name="jar-bboss-aop" depends="compile-bboss-aop" description="generate the bboss-aop library bboss-aop.jar">
+		<echo>Generate the bboss-aop library bboss-aop.jar ...</echo>
+		<jar jarfile="${distrib}/bboss-aop.jar" basedir="${classes-bboss-aop}" includes="**/*">
+			<manifest>
+
+				<attribute name="Implementation-Version" value="${impl.version}" />
+				<attribute name="Specification-Version" value="${revision}" />
+				<attribute name="Implementation-Vendor" value="${impl.vendor}" />
+				<attribute name="Implementation-ProductID" value="${impl.productID}" />
+				<attribute name="Compile-Timestamp" value="${compile.timestamp}" />
+				<attribute name="Compile-User" value="${username}" />
+			</manifest>
+		</jar>
+
+	</target>
+	<target name="jar-bboss-netty" depends="compile-bboss-aop" description="generate the bboss-netty library bboss-netty.jar">
+		<echo>Generate the bboss-aop library bboss-netty.jar ...</echo>
+		<jar jarfile="${distrib}/bboss-netty.jar" basedir="${classes-bboss-aop}" includes="org/frameworkset/netty/**/*">
+			<manifest>
+
+				<attribute name="Implementation-Version" value="${impl.version}" />
+				<attribute name="Specification-Version" value="${revision}" />
+				<attribute name="Implementation-Vendor" value="${impl.vendor}" />
+				<attribute name="Implementation-ProductID" value="${impl.productID}" />
+				<attribute name="Compile-Timestamp" value="${compile.timestamp}" />
+				<attribute name="Compile-User" value="${username}" />
+			</manifest>
+		</jar>
+		<delete dir="${classes-bboss-aop}/org/frameworkset/netty" />
+	</target>
+	<target name="jar-bboss-schedule" depends="compile-bboss-aop" description="generate the bboss-schedule library bboss-schedule.jar">
+		<echo>Generate the bboss-aop library bboss-schedule.jar ...</echo>
+		<jar jarfile="${distrib}/bboss-schedule.jar" basedir="${classes-bboss-aop}" includes="org/frameworkset/task/**/*">
+			<manifest>
+
+				<attribute name="Implementation-Version" value="${impl.version}" />
+				<attribute name="Specification-Version" value="${revision}" />
+				<attribute name="Implementation-Vendor" value="${impl.vendor}" />
+				<attribute name="Implementation-ProductID" value="${impl.productID}" />
+				<attribute name="Compile-Timestamp" value="${compile.timestamp}" />
+				<attribute name="Compile-User" value="${username}" />
+			</manifest>
+		</jar>
+		<delete dir="${classes-bboss-aop}/org/frameworkset/task" />
+	</target>
+	<target name="jar-bboss-mina" depends="compile-bboss-aop" description="generate the bboss-mina library bboss-mina.jar">
+		<echo>Generate the bboss-aop library bboss-mina.jar ...</echo>
+		<jar jarfile="${distrib}/bboss-mina.jar" basedir="${classes-bboss-aop}" includes="org/frameworkset/spi/remote/mina/**/*">
+			<manifest>
+
+				<attribute name="Implementation-Version" value="${impl.version}" />
+				<attribute name="Specification-Version" value="${revision}" />
+				<attribute name="Implementation-Vendor" value="${impl.vendor}" />
+				<attribute name="Implementation-ProductID" value="${impl.productID}" />
+				<attribute name="Compile-Timestamp" value="${compile.timestamp}" />
+				<attribute name="Compile-User" value="${username}" />
+			</manifest>
+		</jar>
+		<delete dir="${classes-bboss-aop}/org/frameworkset/spi/remote/mina" />
+	</target>
+
+	<target name="jar-bboss-jms" depends="compile-bboss-aop" description="generate the bboss-jms library bboss-jms.jar">
+		<echo>Generate the bboss-aop library bboss-jms.jar ...</echo>
+		<jar jarfile="${distrib}/bboss-jms.jar" basedir="${classes-bboss-aop}" includes="org/frameworkset/mq/**/* org/frameworkset/spi/remote/jms/**/*">
+			<manifest>
+				<attribute name="Implementation-Title" value="${impl.title.ui}" />
+				<attribute name="Implementation-Version" value="${impl.version}" />
+				<attribute name="Specification-Version" value="${revision}" />
+				<attribute name="Implementation-Vendor" value="${impl.vendor}" />
+				<attribute name="Implementation-ProductID" value="${impl.productID}" />
+				<attribute name="Compile-Timestamp" value="${compile.timestamp}" />
+				<attribute name="Compile-User" value="${username}" />
+			</manifest>
+		</jar>
+		<delete dir="${classes-bboss-aop}/org/frameworkset/mq" />
+		<delete dir="${classes-bboss-aop}/org/frameworkset/spi/remote/jms" />
+	</target>
+
+	<target name="jar-bboss-ws" depends="compile-bboss-aop" description="generate the bboss-ws library bboss-ws.jar">
+		<echo>Generate the bboss-aop library bboss-ws.jar ...</echo>
+		<jar jarfile="${distrib}/bboss-ws.jar" basedir="${classes-bboss-aop}" includes="org/apache/cxf/transport/servlet/**/* org/frameworkset/spi/remote/webservice/**/*">
+			<manifest>
+
+				<attribute name="Implementation-Version" value="${impl.version}" />
+				<attribute name="Specification-Version" value="${revision}" />
+				<attribute name="Implementation-Vendor" value="${impl.vendor}" />
+				<attribute name="Implementation-ProductID" value="${impl.productID}" />
+				<attribute name="Compile-Timestamp" value="${compile.timestamp}" />
+				<attribute name="Compile-User" value="${username}" />
+			</manifest>
+		</jar>
+		<delete dir="${classes-bboss-aop}/org/apache/cxf/transport/servlet/" />
+		<delete dir="${classes-bboss-aop}/org/frameworkset/spi/remote/webservice" />
+	</target>
+
+
+	<target name="compile-bboss-aop-test" description="compile the bboss-aop-test source ">
+		<echo>compile the bboss-aop-test source ...</echo>
+		<javac destdir="${classes-bboss-aop-test}" target="1.5" source="1.5" deprecation="true" debug="${debug}" optimize="${optimize}" memorymaximumsize="256M" fork="true" verbose="yes">
+
+			<src path="test" />
+
+			<classpath refid="cp-bboss-aop" />
+		</javac>
+
+		<copy todir="${classes-bboss-aop-test}">
+			<fileset dir="test" includes="**/*.xml" />
+		</copy>
+	</target>
+	<target name="jar-bboss-aop-test" depends="compile-bboss-aop-test" description="generate the bboss-aop library bboss-aop.jar">
+		<echo>Generate the bboss-aop-test library bboss-aop-test.jar ...</echo>
+		<jar jarfile="${distrib}/test/bboss-aop-test.jar" basedir="${classes-bboss-aop-test}" includes="**/*">
+			<manifest>
+
+				<attribute name="Implementation-Version" value="${impl.version}" />
+				<attribute name="Specification-Version" value="${revision}" />
+				<attribute name="Implementation-Vendor" value="${impl.vendor}" />
+				<attribute name="Implementation-ProductID" value="${impl.productID}" />
+				<attribute name="Compile-Timestamp" value="${compile.timestamp}" />
+				<attribute name="Compile-User" value="${username}" />
+			</manifest>
+		</jar>
+
+	</target>
+
+
+
+	<target name="jar-bboss-aop-jgroups" depends="compile-bboss-aop" description="generate the bboss-aop-jgroups library jgroups.jar">
+		<echo>Generate the bboss-aop-jgroups library jgroups.jar ...</echo>
+		<jar jarfile="${distrib}/jgroups.jar" basedir="${classes-bboss-aop}" includes="org/jgroups/**/* jg-protocol-ids.xml jg-magic-map.xml">
+			<manifest>
+
+				<attribute name="Implementation-Version" value="${impl.version}" />
+				<attribute name="Specification-Version" value="${revision}" />
+				<attribute name="Implementation-Vendor" value="${impl.vendor}" />
+				<attribute name="Implementation-ProductID" value="${impl.productID}" />
+				<attribute name="Compile-Timestamp" value="${compile.timestamp}" />
+				<attribute name="Compile-User" value="${username}" />
+			</manifest>
+		</jar>
+		<delete dir="${classes-bboss-aop}/org/jgroups/" />
+		<delete file="${classes-bboss-aop}/jg-protocol-ids.xml" />
+		<delete file="${classes-bboss-aop}/jg-magic-map.xml" />
+	</target>
+	<target name="copy-resource" description="copy resource files">
+		<echo>copy resource files ...</echo>
+		<copy todir="${distrib}/resources">
+			<fileset dir="resources" includes="**/*" />
+		</copy>
+
+	</target>
+	<target name="copy-depends-liberary" description="copy depends liberarys">
+		<echo>copy depends liberarys ...</echo>
+		<copy todir="${distrib}/lib">
+			<fileset dir="lib" includes="**/*" />
+		</copy>
+
+	</target>
+	<target name="complete" depends="distrib" description="complete build project">
+		<delete dir="${classes-bboss-aop}" />
+		<delete dir="${classes-bboss-aop-test}" />
+		<delete dir="classes-bboss-camel" />
+		<delete dir="classes-bboss-tlq" />
+		<delete dir="classes-bboss-rmi" />
+	</target>
+	<target name="compile-bboss-camel" description="compile the bboss-camel source ">
+		<echo>compile the bboss-camel source ...</echo>
+		<javac destdir="classes-bboss-camel" target="1.5" source="1.5" deprecation="true" debug="${debug}" optimize="${optimize}" memorymaximumsize="256M" fork="true" verbose="yes">
+
+			<src path="src-camel" />
+
+
+
+			<classpath refid="cp-bboss-aop" />
+		</javac>
+		<echo>copy META-INF the bboss-camel  ...</echo>
+		<copy todir="classes-bboss-camel/META-INF">
+			<fileset dir="src-camel/META-INF" includes="**/*" />
+		</copy>
+
+
+	</target>
+	<target name="jar-bboss-camel" depends="compile-bboss-camel" description="generate the bboss-camel library bboss-camel.jar">
+		<echo>Generate the bboss-aop library bboss-camel.jar ...</echo>
+		<jar jarfile="${distrib}/bboss-camel.jar" basedir="classes-bboss-camel">
+			<manifest>
+
+				<attribute name="Implementation-Version" value="${impl.version}" />
+				<attribute name="Specification-Version" value="${revision}" />
+				<attribute name="Implementation-Vendor" value="${impl.vendor}" />
+				<attribute name="Implementation-ProductID" value="${impl.productID}" />
+				<attribute name="Compile-Timestamp" value="${compile.timestamp}" />
+				<attribute name="Compile-User" value="${username}" />
+			</manifest>
+		</jar>
+
+
+
+	</target>
+
+	<target name="compile-bboss-tlq" description="compile the bboss-tlq source ">
+		<echo>compile the bboss-tlq source ...</echo>
+		<javac destdir="classes-bboss-tlq" target="1.5" source="1.5" deprecation="true" debug="${debug}" optimize="${optimize}" memorymaximumsize="256M" fork="true" verbose="yes">
+
+			<src path="src-tlq" />
+
+			<classpath refid="cp-bboss-aop" />
+		</javac>
+		<echo>copy META-INF the bboss-tlq source ...</echo>
+		<copy todir="classes-bboss-tlq/META-INF">
+			<fileset dir="src-tlq/META-INF" includes="**/*" />
+		</copy>
+
+
+	</target>
+	<target name="jar-bboss-tlq" depends="compile-bboss-tlq" description="generate the bboss-tlq library bboss-tlq.jar">
+		<echo>Generate the bboss-tlq library bboss-tlq.jar ...</echo>
+		<jar jarfile="${distrib}/bboss-tlq.jar" basedir="classes-bboss-tlq">
+			<manifest>
+				<attribute name="Implementation-Title" value="${impl.title.ui}" />
+				<attribute name="Implementation-Version" value="${impl.version}" />
+				<attribute name="Specification-Version" value="${revision}" />
+				<attribute name="Implementation-Vendor" value="${impl.vendor}" />
+				<attribute name="Implementation-ProductID" value="${impl.productID}" />
+				<attribute name="Compile-Timestamp" value="${compile.timestamp}" />
+				<attribute name="Compile-User" value="${username}" />
+			</manifest>
+		</jar>
+
+
+	</target>
+
+
+	<target name="jar-bboss-http" depends="compile-bboss-aop" description="generate the bboss-http library bboss-http.jar">
+		<echo>Generate the bboss-http library bboss-http.jar ...</echo>
+		<jar jarfile="${distrib}/bboss-http.jar" basedir="${classes-bboss-aop}" includes="org/frameworkset/spi/remote/http/**/*.*">
+			<manifest>
+				<attribute name="Implementation-Title" value="${impl.title.ui}" />
+				<attribute name="Implementation-Version" value="${impl.version}" />
+				<attribute name="Specification-Version" value="${revision}" />
+				<attribute name="Implementation-Vendor" value="${impl.vendor}" />
+				<attribute name="Implementation-ProductID" value="${impl.productID}" />
+				<attribute name="Compile-Timestamp" value="${compile.timestamp}" />
+				<attribute name="Compile-User" value="${username}" />
+			</manifest>
+		</jar>
+		<delete dir="${classes-bboss-aop}/org/frameworkset/spi/remote/http" />
+	</target>
+
+	<target name="jar-bboss-rmi" depends="compile-bboss-aop" description="generate the bboss-rmi library bboss-rmi.jar">
+		<echo>Generate the bboss-rmi library bboss-rmi.jar ...</echo>
+		<jar jarfile="${distrib}/bboss-rmi.jar" basedir="${classes-bboss-aop}" includes="org/frameworkset/spi/remote/rmi/**/*.* rmi.server.policy">
+			<manifest>
+				<attribute name="Implementation-Title" value="${impl.title.ui}" />
+				<attribute name="Implementation-Version" value="${impl.version}" />
+				<attribute name="Specification-Version" value="${revision}" />
+				<attribute name="Implementation-Vendor" value="${impl.vendor}" />
+				<attribute name="Implementation-ProductID" value="${impl.productID}" />
+				<attribute name="Compile-Timestamp" value="${compile.timestamp}" />
+				<attribute name="Compile-User" value="${username}" />
+			</manifest>
+		</jar>
+
+		<delete dir="${classes-bboss-aop}/org/frameworkset/spi/remote/rmi" />
+		<delete file="${classes-bboss-aop}/rmi.server.policy" />
+	</target>
+</project>

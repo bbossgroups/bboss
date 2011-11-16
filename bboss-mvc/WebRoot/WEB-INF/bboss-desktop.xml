@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding='gb2312'?>
+<!-- 
+bboss-desktop.xml
+描述：exjs桌面程序示例
+-->
+<properties>
+    <property 
+     name="/desktop/*.htm" 
+     	path:desktop="/desktop/desktop"
+     class="org.frameworkset.web.desktop.DesktopController"/>
+     	
+    
+    
+</properties>

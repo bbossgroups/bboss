@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="gbk"?>
+<ps>
+	<p n="_dflt_" cs="org.frameworkset.spi.remote.RPCMessage">
+		<p n="buffer" s:t="byte[]"><![CDATA[rO0ABXQAFEZyb20gc2VydmVyIG1zZzphYWFh]]></p>
+		<p n="dest" s:nvl="true" s:t="org.frameworkset.spi.remote.RPCAddress" />
+		<p n="headers" s:t="org.frameworkset.spi.remote.Headers">
+			<m cmt="bean">
+				<p n="RPCServerIoHandler" cs="org.frameworkset.spi.remote.Header"></p>
+			</m>
+		</p>
+		<p n="src" cs="org.frameworkset.spi.remote.RPCAddress">
+			<p n="contextpath" s:t="String"><![CDATA[/bboss-mvc/http.rpc]]></p>
+			<p n="ip" s:t="String"><![CDATA[172.16.25.108]]></p>
+			<p n="port" s:t="int" v="8080" />
+			<p n="protocol" s:t="String"><![CDATA[http]]></p>
+			<p n="security" s:t="boolean" v="false" />
+		</p>
+	</p>
+</ps>

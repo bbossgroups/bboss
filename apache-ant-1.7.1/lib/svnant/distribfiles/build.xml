@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!-- Sample build file used to retrieve svnant's sources -->
+<project name="svn-test" basedir="." default="checkoutThis">
+  
+  <!--  all properties are in build.properties --> 
+  <property file="build.properties" /> 
+
+  <!-- path to the svnant libraries. Usually they will be located in ANT_HOME/lib -->
+  <path id="svnant.classpath">
+    <fileset dir="${lib.dir}">
+      <include name="**/*.jar"/>
+    </fileset>
+  </path>  
+  
+  <!-- load the svn task -->
+  <typedef resource="org/tigris/subversion/svnant/svnantlib.xml" classpathref="svnant.classpath" />
+  
+  <target name="clean">
+    <delete dir="src_latest"/>
+    <delete dir="src_${svnant.version}"/>  
+  </target>
+
+  <target name="checkoutLatest">
+    <svn username="${svnant.repository.user}" password="${svnant.repository.passwd}">
+      <checkout url="${svnant.latest.url}" revision="HEAD" destPath="src_latest" />
+    </svn>
+  </target>
+
+  <target name="checkoutThis">
+    <svn username="${svnant.repository.user}" password="${svnant.repository.passwd}">
+      <checkout url="${svnant.this.url}" revision="HEAD" destPath="src_${svnant.version}" />
+    </svn>
+  </target>
+
+</project>

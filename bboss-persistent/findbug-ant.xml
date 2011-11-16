@@ -1,0 +1,46 @@
+<project name="findbugs-gwcs-core" default="all" basedir="." >
+    <property name="findbugs.destdir" value="deploy/findbugs"></property>
+	<property name="findbugs.home" value="F:/environment/findbugs-1.3.9"></property>
+	<property name="" value=""></property>
+	<property name="" value=""></property>
+	
+    <target name="all" depends="clean,findbugs">
+        <!-- TODO define script. See Help menu or http://ant.apache.org/ -->
+    </target>
+    
+    <target name="init">
+        <mkdir dir="${findbugs.destdir}" />
+        
+    </target>
+    
+    <target name="clean" description="清理所有Findbugs检查结果">
+        <echo>清理所有Findbugs检查结果!</echo>
+       
+    </target>
+    
+    <!-- findbugs task definition -->
+    <path id="findbugs.lib">
+        <fileset dir="${findbugs.home}/lib">
+            <include name="findbugs-ant.jar"/>
+        </fileset>
+    </path>
+    
+    
+    <taskdef name="findbugs"  classpathref="findbugs.lib" classname="edu.umd.cs.findbugs.anttask.FindBugsTask" />
+    
+    
+    
+    <target name="findbugs" depends="init" description="用Findbugs检查代码错误.">
+        <echo>开始用Findbugs检查代码错误......</echo>
+        <findbugs home="${findbugs.home}"
+                  output="xml:withMessages"
+                  outputFile="findbugs-gwcs.xml" 
+                  jvmargs="-Xmx512m" >
+            <!--auxClasspath path="${basedir}/lib/Regex.jar" /-->
+            <sourcePath path="src"  />
+        	 <sourcePath path="listener"  />
+            <class location="classes-bboss-persistent" />
+        </findbugs>
+        <echo>Findbugs检查代码错误完成......</echo>
+    </target>
+</project>

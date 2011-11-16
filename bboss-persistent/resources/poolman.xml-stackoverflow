@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="GB2312"?>
+<poolman>
+  <management-mode>local</management-mode>
+	<datasource external="true">
+		<dbname>cim</dbname>
+		<jndiName>bspf_datasource_jndiname</jndiName> 
+		<driver>oracle.jdbc.driver.OracleDriver</driver>
+		<externaljndiName>java:comp/env/jdbc/bspf</externaljndiName> 
+		<showsql>true</showsql> 
+	</datasource>
+
+</poolman>

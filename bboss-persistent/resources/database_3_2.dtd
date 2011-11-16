@@ -1,0 +1,187 @@
+<!--
+ Licensed to the Apache Software Foundation (ASF) under one
+ or more contributor license agreements.  See the NOTICE file
+ distributed with this work for additional information
+ regarding copyright ownership.  The ASF licenses this file
+ to you under the Apache License, Version 2.0 (the
+ "License"); you may not use this file except in compliance
+ with the License.  You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing,
+ software distributed under the License is distributed on an
+ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ KIND, either express or implied.  See the License for the
+ specific language governing permissions and limitations
+ under the License.
+-->
+<!--
+    Torque XML database schema DTD
+    $Id: database.dtd,v 1.8 2005/06/27 21:34:10 tfischer Exp $
+-->
+
+<!--
+For: database.defaultIdMethod and table.idMethod
+
+Do not use autoincrement or sequence. They are deprecated in favor of
+using native which will use the Connection pool to determine
+which database it is talking to (yes, it knows that) and then use
+whatever native database methodology for insert increments that it can.
+Otherwise, you should use idbroker or none. none is good if you have a
+table that is just a join table. idbroker is good if you want a
+centralized repository for brokering out clumps of id's in a database
+agnostic way.
+-->
+
+<!--
+
+defaultJavaNamingMethod determines how a table or column name,
+from the name attribute in the xml database file, is converted to a
+Java class or method name.
+
+     nochange   - indicates not change is performed.
+     underscore - Underscores and dots are removed, first letter is
+              capitalized, first letter after an underscore
+              is capitalized, first letter after a dot is capitalized,
+              the rest of the letters are converted to lowercase.
+     underscoreOmitSchema - The section of the name before and including
+              the last dot in the name is removed. For the remaining part,
+              underscores are removed, first letter is capitalized,
+              first letter after an underscore is capitalized,
+              the rest of the letters are converted to lowercase.
+     javaname   - same as underscore, but no letters are converted
+              to lowercase.
+-->
+
+<!ELEMENT database (external-schema*, domain*, table+)>
+<!ATTLIST database
+  name CDATA #REQUIRED
+  defaultIdMethod (idbroker|native|none) "none"
+  defaultJavaType (object|primitive) "primitive"
+  package CDATA #IMPLIED
+  baseClass CDATA #IMPLIED
+  basePeer CDATA #IMPLIED
+  defaultJavaNamingMethod (nochange|underscore|underscoreOmitSchema|javaname) "underscore"
+  heavyIndexing (true|false) "false"
+>
+
+<!ELEMENT external-schema EMPTY>
+<!ATTLIST external-schema
+  filename CDATA #REQUIRED
+>
+
+<!ELEMENT domain EMPTY>
+<!ATTLIST domain
+  name CDATA #REQUIRED
+  type
+    (
+          BIT  | TINYINT | SMALLINT    | INTEGER    | BIGINT    | FLOAT
+        | REAL | NUMERIC | DECIMAL     | CHAR       | VARCHAR   | LONGVARCHAR
+        | DATE | TIME    | TIMESTAMP   | BINARY     | VARBINARY | LONGVARBINARY
+        | NULL | OTHER   | JAVA_OBJECT | DISTINCT   | STRUCT    | ARRAY
+        | BLOB | CLOB    | REF         | BOOLEANINT | BOOLEANCHAR
+        | DOUBLE
+    ) "VARCHAR"
+  size CDATA #IMPLIED
+  scale CDATA #IMPLIED
+  default CDATA #IMPLIED
+  description CDATA #IMPLIED
+>
+
+
+<!--
+     note: the interface="true", requires that useManagers=true in the
+     properties file.
+-->
+<!ELEMENT table (column+,(foreign-key|index|unique|id-method-parameter)*)>
+<!ATTLIST table
+  name CDATA #REQUIRED
+  javaName CDATA #IMPLIED
+  idMethod (idbroker|native|none|null) "null"
+  skipSql (true|false) "false"
+  abstract (true|false) "false"
+  baseClass CDATA #IMPLIED
+  basePeer CDATA #IMPLIED
+  alias CDATA #IMPLIED
+  interface CDATA #IMPLIED
+  javaNamingMethod (nochange|underscore|underscoreOmitSchema|javaname) #IMPLIED
+  heavyIndexing (true|false) #IMPLIED
+  description CDATA #IMPLIED
+>
+
+<!ELEMENT id-method-parameter EMPTY>
+<!ATTLIST id-method-parameter
+  name CDATA "default"
+  value CDATA #REQUIRED
+>
+
+<!ELEMENT column (inheritance*)>
+<!ATTLIST column
+  name CDATA #REQUIRED
+  javaName CDATA #IMPLIED
+  primaryKey (true|false) "false"
+  required (true|false) "false"
+  protected (true|false) "false"
+  domain CDATA #IMPLIED
+  type
+    (
+          BIT  | TINYINT | SMALLINT    | INTEGER    | BIGINT    | FLOAT
+        | REAL | NUMERIC | DECIMAL     | CHAR       | VARCHAR   | LONGVARCHAR
+        | DATE | TIME    | TIMESTAMP   | BINARY     | VARBINARY | LONGVARBINARY
+        | NULL | OTHER   | JAVA_OBJECT | DISTINCT   | STRUCT    | ARRAY
+        | BLOB | CLOB    | REF         | BOOLEANINT | BOOLEANCHAR
+        | DOUBLE
+    ) #IMPLIED
+  javaType (object|primitive) #IMPLIED
+  size CDATA #IMPLIED
+  scale CDATA #IMPLIED
+  default CDATA #IMPLIED
+  autoIncrement (true|false) #IMPLIED
+  inheritance (single|false) "false"
+  inputValidator CDATA #IMPLIED
+  javaNamingMethod (nochange|underscore|javaname) #IMPLIED
+  description CDATA #IMPLIED
+>
+
+<!ELEMENT inheritance EMPTY>
+<!ATTLIST inheritance
+  key CDATA #REQUIRED
+  class CDATA #REQUIRED
+  extends CDATA #IMPLIED
+>
+
+<!ELEMENT foreign-key (reference+)>
+<!ATTLIST foreign-key
+  foreignTable CDATA #REQUIRED
+  name CDATA #IMPLIED
+  onUpdate (cascade|setnull|restrict|none) "none"
+  onDelete (cascade|setnull|restrict|none) "none"
+>
+
+<!ELEMENT reference EMPTY>
+<!ATTLIST reference
+  local CDATA #REQUIRED
+  foreign CDATA #REQUIRED
+>
+
+<!ELEMENT index (index-column+)>
+<!ATTLIST index
+  name CDATA #IMPLIED
+>
+
+<!ELEMENT index-column EMPTY>
+<!ATTLIST index-column
+  name CDATA #REQUIRED
+  size CDATA #IMPLIED
+>
+
+<!ELEMENT unique (unique-column+)>
+<!ATTLIST unique
+  name CDATA #IMPLIED
+>
+
+<!ELEMENT unique-column EMPTY>
+<!ATTLIST unique-column
+  name CDATA #REQUIRED
+>

@@ -1,0 +1,814 @@
+/*****************************************************************************
+ *                                                                           *
+ *  This file is part of the tna framework distribution.                     *
+ *  Documentation and updates may be get from  biaoping.yin the author of    *
+ *  this framework							     *
+ *                                                                           *
+ *  Sun Public License Notice:                                               *
+ *                                                                           *
+ *  The contents of this file are subject to the Sun Public License Version  *
+ *  1.0 (the "License"); you may not use this file except in compliance with *
+ *  the License. A copy of the License is available at http://www.sun.com    * 
+ *                                                                           *
+ *  The Original Code is tag. The Initial Developer of the Original          *    
+ *  Code is biaoping yin. Portions created by biaoping yin are Copyright     *
+ *  (C) 2000.  All Rights Reserved.                                          *
+ *                                                                           *
+ *  GNU Public License Notice:                                               *
+ *                                                                           *
+ *  Alternatively, the contents of this file may be used under the terms of  *
+ *  the GNU Lesser General Public License (the "LGPL"), in which case the    *
+ *  provisions of LGPL are applicable instead of those above. If you wish to *
+ *  allow use of your version of this file only under the  terms of the LGPL *
+ *  and not to allow others to use your version of this file under the SPL,  *
+ *  indicate your decision by deleting the provisions above and replace      *
+ *  them with the notice and other provisions required by the LGPL.  If you  *
+ *  do not delete the provisions above, a recipient may use your version of  *
+ *  this file under either the SPL or the LGPL.                              *
+ *                                                                           *
+ *  biaoping.yin (yin-bp@163.com)                                            *
+ *  Author of Learning Java 						     					 *
+ *                                                                           *
+ *****************************************************************************/
+
+
+package com.frameworkset.common.tag.tree.impl;
+
+//import javax.servlet.jsp.JspException;
+
+import java.util.Iterator;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
+import com.frameworkset.common.tag.tree.itf.ITreeIteratorElement;
+import com.frameworkset.common.tag.tree.itf.ITreeNode;
+import com.frameworkset.common.util.StringUtil;
+
+/**
+ * 该类辅助TreeTag生成各种树的html代码，
+ * 可以通过ecs/velocity/StringBuffer几种方式来生成
+ * @author biaoping.yin
+ * create on 2005-3-25
+ * version 1.0
+ */
+ 
+public class NodeHelper {
+	/**
+	 * 包含显示的节点信息
+	 */
+	private ITreeIteratorElement element = null;
+
+	/**
+	 * 待显示的节点action
+	 */
+	private String action = null;
+
+	/**
+	 * 该节点是否为展开节点
+	 */
+	boolean expanded = false;
+	/**
+	 * 节点是否有字节点
+	 */
+	boolean hasChildren = true;
+
+	/**
+	 * 是否是最后孩子节点
+	 */
+	boolean isLastChild = false;
+
+	/**
+	 * 是否是第一个孩子节点
+	 */
+	boolean isFirstChild = false;
+	/**
+		 * 节点是否选中
+		 */
+	boolean selected = false;
+	
+	/**
+     * 控制树的折叠功能：
+     * false：不折叠
+     * true：折叠
+     * 缺省值：true
+     */
+	private boolean isCollapse = true;
+	
+	/**
+		 * 节点href扩展串
+		 */
+	String extendString = "";
+	/**
+		 * 节点类型
+		 */
+	String type = "";
+	/**
+		 * 页面请求对象
+		 */
+	HttpServletRequest request;
+	
+	/**
+	 * 页面请求范围
+	 * session，request，pageContext，缺省值为session
+	 */
+	String scope = "session";	
+	/**
+		 * 指定节点的修饰图片的目录
+		 */
+	String imageFolder = "/images/";
+	/**
+		 * checkbox名称
+		 */
+	String checkBox = null;
+	/**
+		 * radio名称
+		 */
+	String radio = null;
+	/**
+		 * checkbox默认选中值，以‘,’分隔的字符串
+		 */
+	private String checkBoxDefaultValue = null;
+	
+	/**
+	 * checkbox 的值
+	 */
+	
+	private String checkboxValue;
+	/**
+		 * radio的默认选中值
+		 */
+	private String radioDefaultValue = null;
+	/**
+		 * checkbox扩展串
+		 */
+	private String checkBoxExtention;
+	/**
+	 * radio按钮扩展串
+	 */
+	private String radioExtention;
+	
+	/**
+	 * radio按钮值
+	 */
+	private String radioValue;
+	/**
+		 * 节点href目标
+		 */
+	String target = "";
+	/**
+		 * 节点标识
+		 */
+	String nodeId;
+	
+	public NodeHelper(
+		ITreeIteratorElement element,
+		HttpServletRequest request) {
+		this.element = element;
+		this.expanded = element.isExpanded();
+		this.hasChildren = element.getNode().hasChildren();
+		this.radioValue = element.getNode().getRadioValue();
+		this.checkboxValue = element.getNode().getCheckboxValue();
+		this.isLastChild = element.isLastChild();
+		this.isFirstChild = element.isFirstChild();
+		this.selected = element.isSelected();
+		this.type = element.getNode().getType();
+		this.request = request;
+		this.nodeId = element.getNode().getId();
+	}
+
+	public void setCollapse(boolean isCollapse)
+	{
+	    this.isCollapse = isCollapse;
+	}
+	public void setImageFolder(String imageFolder) {
+		this.imageFolder = imageFolder;
+	}
+
+	public void setCheckBox(String checkBox) {
+		this.checkBox = checkBox;
+	}
+
+	public void setRadio(String radio) {
+		this.radio = radio;
+	}
+
+	public String getImageContent() {
+		StringBuffer buffer = new StringBuffer();
+		if (!expanded && hasChildren && !isLastChild)
+			buffer.append(
+				getImageContent(
+					"expand",
+					getCollapsedMidNodeImage(),
+					getClosedFolderImage()));
+
+		if (expanded && hasChildren && !isLastChild)
+			buffer.append(
+				getImageContent(
+					"collapse",
+					getExpandedMidNodeImage(),
+					getOpenFolderImage()));
+
+		/**
+		 * 1,2 completed
+		 * selected
+		 */
+		if (!expanded && hasChildren && isLastChild)
+			buffer.append(
+				getImageContent(
+					"expand",
+					getCollapsedLastNodeImage(),
+					getClosedFolderImage()));
+		//<td><a href="classtree.jsp?expand=<tree:nodeId node="example.node"/>"><img src="images/collapsedLastNode.gif"  border="0"></a><img src="images/closedFolder.gif"></td>
+		if (expanded && hasChildren && isLastChild)
+			buffer.append(
+				getImageContent(
+					"collapse",
+					getExpandedLastNodeImage(),
+					getOpenFolderImage()));
+		//<td><a href="classtree.jsp?collapse=<tree:nodeId node="example.node"/>"><img src="images/expandedLastNode.gif" border="0"></a><img src="images/openFolder.gif"></td>
+		if (!expanded && !hasChildren && !isLastChild)
+			buffer.append(
+				getImageContent(
+					"null",
+					getNoChildrenMidNodeImage(),
+					getNonFolderImage()));
+		//<td><img src="images/noChildrenMidNode.gif"><img src="images/nonFolder.gif"></td>
+		if (!expanded && !hasChildren && isLastChild)
+			buffer.append(
+				getImageContent(
+					"null",
+					getNoChildrenLastNodeImage(),
+					getNonFolderImage()));
+		//<td><img src="images/noChildrenLastNode.gif"><img src="images/nonFolder.gif"></td>
+
+		return buffer.toString();
+	}
+
+	public String getNodeContent() {
+		return getNodeContent("selected", selected);
+	}
+
+	private String getNodeContent(String event, boolean selected) {
+		StringBuffer buffer = new StringBuffer();
+		buffer.append("<td>");
+		String action = this.getAction();
+		buffer.append(getCheckBox());
+		buffer.append(getRadio());
+		if (action != null
+			&& action.trim().length() > 0
+			&& !action.trim().equals("#")) {
+			//if(!action.trim().equals("#"))
+			
+			buffer
+				.append("<a href=\"")
+				.append(action)
+				.append(action.indexOf("?") == -1 ? "?" : "&")
+				.append(event)
+				.append("=")
+				.append(element.getId())
+				.append("&classType=")
+				.append(element.getNode().getType())
+			
+			.append("&nodeMemo=")
+			.append(element.getNode().getMemo())
+			.append("\" ")
+			.append("target=\"")
+			.append(getTarget())
+			.append("\" ")
+			.append(getExtendString())
+			.append(">");
+			//			else
+			//				buffer.append("<a href=\"")
+			//					  .append(action)					  
+			//					  .append("\" ")
+			//					  .append("target=\"")
+			//					  .append(this.getTarget())				  
+			//					  .append("\" ").append(getExtendString())
+			//					  .append(">");
+			//			
+		}
+
+//		if (action == null
+//			|| action.trim().length() == 0
+//			|| action.trim().equals("#"))
+//			buffer
+//				//.append("<span style=\"Font-Size: 12px;\" ")
+//			.append("<span ")
+//				.append(getExtendString())
+//				.append(">");
+//
+//		else
+//			//buffer.append("<span style=\"Font-Size: 12px;\">");
+//		    //buffer.append("<span >");
+//		    ;
+		if (selected)
+			buffer.append("<b>");
+
+		buffer.append(element.getName());
+
+		if (selected)
+			buffer.append("</b>");
+
+		//buffer.append("</span>");
+
+		if (action != null && action.trim().length() > 0)
+			buffer.append("</a>");
+		buffer.append("</td>");
+		return buffer.toString();
+	}
+
+	private String localAction;
+
+	public String getLocalAction() {
+		return localAction;
+	}
+	
+	public String getLocalAction(int index,String attach) {
+		return new StringBuffer(localAction)
+						.insert(index,attach)						
+						.toString();
+	}
+	private String getImageContent(
+		String event,
+		String nodeImage,
+		String typeImage) {
+		StringBuffer buffer = new StringBuffer();
+		if (!event.equals("null")) {
+			String anchor = element.getId();
+			int index = getLocalAction().indexOf('?');
+			
+			buffer
+				.append("<td>");
+			//如果允许树进行折叠，那么设置图标的链接，否则不设置
+			if(isCollapse())
+			{    
+				buffer
+				.append("<a name=\"#" + anchor
+											 +"\"></a><a href=\"");
+				//.append(this.getLocalAction());
+			
+				if(index == -1)	
+					buffer.append(this.getLocalAction())
+	
+						  .append("?");
+				else
+					buffer.append(this.getLocalAction())
+						  .append("&");
+				buffer.append("anchor=")
+					  .append(anchor)
+					  .append("&");
+				buffer.append(event)
+					.append("=")
+					.append(element.getId());
+				buffer.append("&request_scope=")
+					  .append(getScope())
+				.append("\">");
+			}
+			
+			buffer
+				.append("<img src=\"")
+				.append(nodeImage)
+				.append("\" border=\"0\"></a>")
+				.append("<img src=\"");
+			
+			buffer.append(typeImage)
+				.append("\"></td>");
+		} else
+			buffer
+				.append("<td>")
+				.append("<img src=\"")
+				.append(nodeImage)
+				.append("\">")
+				.append("<img src=\"")
+				.append(typeImage)
+				.append("\"></td>");
+		return buffer.toString();
+	}
+
+	/**
+	 * 获取树头部分
+	 */
+	public String getUpper() {
+		StringBuffer buffer = new StringBuffer();
+		buffer
+			.append("<tr><td>")
+			.append("<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\">")
+			.append("<tr>");
+		return buffer.toString();
+	}
+
+	/**
+	 * 获取树根
+	 * @return
+	 */
+	public String getBoot() {
+		StringBuffer buffer = new StringBuffer();
+		buffer.append("</tr>").append("</table></td></tr>");
+		return buffer.toString();
+	}
+
+	/**
+	 * 获取节点的缩排格式
+	 */
+	public String getIndent() {
+		Iterator indentationProfileIterator =
+			element.getIndendationProfile().iterator();
+		StringBuffer indent = new StringBuffer();
+		indent.append("<td>");
+
+		while (indentationProfileIterator.hasNext()) {
+			boolean isVerticalLineIndentationType =
+				!((Boolean) indentationProfileIterator.next()).booleanValue();
+			if (isVerticalLineIndentationType) {
+				//:log imgsrc必须动态获取
+				indent.append("<img src=\"").append(getVerticalLine()).append(
+					"\">");
+			} else {
+				indent.append("<img src=\"").append(getBlankSpace()).append(
+					"\">");
+			}
+		}
+		indent.append("</td>");
+		return indent.toString();
+
+		/**		 
+		this.indentationProfileIterator = getElement().getIndendationProfile().iterator();
+		
+				if(this.indentationProfileIterator.hasNext()){
+					pageContext.getRequest().setAttribute(getIndentationType(),
+							this.indentationProfileIterator.next());
+					return EVAL_BODY_INCLUDE;
+				}
+				return SKIP_BODY;
+		* 
+		 */
+	}
+
+	private String getVerticalLine() {
+		return this.getImageFolder() + "verticalLine.gif";
+		//"<img src=\"images/verticalLine.gif\">";
+	}
+
+	private String getBlankSpace() {
+		return this.getImageFolder() + "blankSpace.gif";
+		//"<img src=\"images/blankSpace.gif\">";
+	}
+
+	private String getCollapsedMidNodeImage() {
+		return this.getImageFolder() + "collapsedMidNode.gif";
+	}
+
+	private String getExpandedMidNodeImage() {
+		return this.getImageFolder() + "expandedMidNode.gif";
+	}
+
+	private String getClosedFolderImage() {
+	    if(this.element.getNode().isRoot())
+	        return this.getImageFolder() + "root.gif";
+	    else
+	        return this.getImageFolder() + "closedFolder.gif";
+	}
+
+	private String getOpenFolderImage() {
+	    if(this.element.getNode().isRoot())
+	        return this.getImageFolder() + "root.gif";
+	    else
+	        return this.getImageFolder() + "openFolder.gif";
+	}
+	private String getCollapsedLastNodeImage() {
+		return this.getImageFolder() + "collapsedLastNode.gif";
+	}
+
+	private String getExpandedLastNodeImage() {
+		return this.getImageFolder() + "expandedLastNode.gif";
+	}
+
+	private String getNoChildrenMidNodeImage() {
+		return this.getImageFolder() + "noChildrenMidNode.gif";
+	}
+
+	private String getNonFolderImage() {
+		return this.getImageFolder() + "nonFolder.gif";
+	}
+
+	private String getNoChildrenLastNodeImage() {
+		return this.getImageFolder() + "noChildrenLastNode.gif";
+	}
+
+	public void setAction(String action) {
+		this.action = action;
+	}
+
+	public String getAction() {
+
+		return StringUtil.getRealPath(request, action);
+		//return this.action;
+	}
+	/**
+	 * @return
+	 */
+	public String getCheckBox() {
+	    //如果没有设置单选框的名称，或者单选框的值为null时，不生成相应的复选框
+	    String value = this.getCheckboxValue();
+		if (checkBox == null || checkBox.trim().equals("") || value == null)
+			return "";
+		String checked = "";
+		String[] values = getCheckBoxDefaultValues();
+		
+		if (values != null && StringUtil.containKey(values, nodeId))
+			checked = "checked";
+		System.out.println("checked:" + checked);
+		StringBuffer ret = new StringBuffer();
+		ret
+			.append("<input type='checkbox' name='")
+			.append(checkBox)
+			.append("' value='");
+		
+		if(value == null)
+			ret.append(nodeId);
+		else
+			ret.append(value);
+		ret.append("' ")
+			.append(checked)
+			.append(" ")
+			.append(" id='checkbox_")
+			.append(nodeId)
+			.append("'")			
+			.append(" ")
+			.append(" sonids='")
+			.append(getSonIDs())
+			.append("'")
+			
+			.append(" ")
+			.append(getCheckBoxExtention())
+			.append(">");
+		return ret.toString();
+		//		return checkBox == null
+		//			? ""
+		//			: new Input()
+		//				.setType("checkbox")
+		//				.setName(checkBox)
+		//				.setValue(nodeId)
+		//				.setChecked(StringUtil.containKey(getCheckBoxDefaultValues(),nodeId))
+		//				.toString();
+
+	}
+	
+	/**
+	 * 获取当前节点的所有子节点的id，组成一个串，以“##”作为分隔符
+	 * @return 返回生成的串
+	 */
+	private String getSonIDs()
+	{
+	    List list = this.element.getNode().getChildren();
+	    StringBuffer ret = new StringBuffer(); 
+	    if(list != null)
+	    {
+	        boolean first = true;
+	        for(int i = 0; i < list.size(); i ++)
+	        {
+	            if(first)
+	            {
+	                ret.append("checkbox_").append(((ITreeNode)list.get(i)).getId());
+	                first = false;
+	            }
+	            else
+	                ret.append("##").append("checkbox_").append(((ITreeNode)list.get(i)).getId());
+	            
+	        }
+	    }
+	    return ret.toString();
+	}
+
+	/**
+	 * @return
+	 */
+	public String getImageFolder() {
+		return StringUtil.getRealPath(request, getPath(imageFolder));
+	}
+
+	private String getPath(String path) {
+		if (path == null)
+			return path;
+		path = path.replace('\\', '/');
+		if (path.endsWith("/"))
+			return path;
+		return path.concat("/");
+	}
+	/**
+	 * @return
+	 */
+	public String getRadio() {
+	    String value = this.getRadioValue();
+	    //如果没有设置单选框的名称，或者单选框的值为null时，不生成相应的单选框
+		if (radio == null || radio.trim().equals("") || value==null)
+			return "";
+		String checked = "";
+		if (getRadioDefaultValue() != null
+			&& getRadioDefaultValue().equals(nodeId))
+			checked = "checked";
+
+		StringBuffer ret = new StringBuffer();
+		ret
+			.append("<input type='radio' name='")
+			.append(radio)
+			.append("' value='");
+		
+		if(value == null)
+			ret.append(nodeId);
+		else
+			ret.append(value);
+		ret.append("' ")
+			.append(checked)
+			.append(" ")
+			.append(this.getRadioExtention())
+			.append(">");
+		return ret.toString();
+		//		return radio == null
+		//			? ""
+		//			: new Input()
+		//				.setType("radio")
+		//				.setName(radio)
+		//				.setValue(nodeId)
+		//				.setChecked(this.getRadioDefaultValue().equals(nodeId))
+		//				.toString();
+	}
+
+	/**
+	 * @return
+	 */
+	public String getTarget() {
+		return target;
+	}
+
+	/**
+	 * @param string
+	 */
+	public void setTarget(String string) {
+		target = string;
+	}
+
+	/**
+	 * @param string
+	 */
+	public void setLocalAction(String string) {
+		localAction = string;
+	}
+
+	public void setExtendString(String string) {
+		extendString = string;
+	}
+
+	/**
+	 * @return
+	 */
+	public String getExtendString() {
+		return extendString == null ? "" : extendString;
+	}
+
+	/**
+	 * 复选框的缺省值，以"$$"分隔
+	 * @return
+	 */
+	public String[] getCheckBoxDefaultValues() {
+		String value = getCheckBoxDefaultValue();
+		
+		System.out.println("checkbox values:" + value);
+		return value == null ? null : StringUtil.split(value,"$$");
+
+	}
+
+	/**
+	 * @return
+	 */
+	public String getCheckBoxDefaultValue() {
+		return checkBoxDefaultValue;
+	}
+
+	/**
+	 * @return
+	 */
+	public String getRadioDefaultValue() {
+		return radioDefaultValue;
+	}
+
+	/**
+	 * @param string
+	 */
+	public void setCheckBoxDefaultValue(String string) {
+		checkBoxDefaultValue = string;
+	}
+
+	/**
+	 * @param string
+	 */
+	public void setRadioDefaultValue(String string) {
+		radioDefaultValue = string;
+	}
+
+	/**
+	 * @return
+	 */
+	public String getCheckBoxExtention() {
+		return checkBoxExtention == null ? "" : checkBoxExtention;
+	}
+
+	/**
+	 * @param string
+	 */
+	public void setCheckBoxExtention(String string) {
+		checkBoxExtention = string;
+	}
+
+	/**
+	 * @return
+	 */
+	public String getRadioExtention() {
+		return radioExtention == null ? "" : radioExtention;
+	}
+
+	/**
+	 * @param string
+	 */
+	public void setRadioExtention(String string) {
+		radioExtention = string;
+	}
+
+	/**
+	 * @return
+	 */
+	public String getCheckboxValue() {
+		return checkboxValue;
+	}
+
+	/**
+	 * @return
+	 */
+	public String getRadioValue() {
+		return radioValue;
+	}
+
+	/**
+	 * @param string
+	 */
+	public void setCheckboxValue(String string) {
+		checkboxValue = string;
+	}
+
+	/**
+	 * @param string
+	 */
+	public void setRadioValue(String string) {
+		radioValue = string;
+	}
+	
+	/**
+	 * 锁定到当前页面的焦点节点
+	 * Description:
+	 * @return
+	 * String
+	 */
+	public static String getCatchScript(HttpServletRequest request)
+	{
+		String anchor = request.getParameter("anchor");		
+		if(anchor == null || anchor.trim().equals(""))
+			return "";
+		StringBuffer ret = new StringBuffer();
+		ret.append("<tr><td><a id='anchor_id' href='#").append(anchor).append("></a>");
+		ret.append("<script language='javascript'><!--\r\n")
+		   .append("document.all.item(\"anchor_id\").click();")
+		.append("\r\n//--></script></td></tr>");
+		return ret.toString();
+	}
+	
+	public static void main(String args[])
+	{
+		String test = "aaaaa?aa=6";
+		String achor = "#name";
+		int index = test.indexOf('?');
+		System.out.println(new StringBuffer(test).insert(index,achor));
+		
+	}
+	
+	public void setScope(String scope)
+	{
+		this.scope = scope;
+	}
+
+	/**
+	 * Description:
+	 * @return
+	 * String
+	 */
+	public String getScope() {
+		return scope;
+	}
+
+    /**
+     * @return Returns the isCollapse.
+     */
+    public boolean isCollapse() {
+        return isCollapse;
+    }
+}

@@ -1,0 +1,57 @@
+<!-- 
+	任务调度
+-->
+<properties>
+	<property name="quartz.config">
+		<map>
+			<property name="org.quartz.scheduler.instanceName" value="DefaultQuartzScheduler111" />
+			<property name="org.quartz.scheduler.rmi.export" value="false" />
+			<property name="org.quartz.scheduler.rmi.proxy" value="false" />
+			<property name="org.quartz.scheduler.wrapJobExecutionInUserTransaction" value="false" />
+			<property name="org.quartz.threadPool.class" value="org.quartz.simpl.SimpleThreadPool" />
+			<property name="org.quartz.threadPool.threadCount" value="10" />
+			<property name="org.quartz.threadPool.threadPriority" value="5" />
+			<property name="org.quartz.threadPool.threadsInheritContextClassLoaderOfInitializingThread" value="true" />
+			<property name="org.quartz.jobStore.misfireThreshold" value="6000" />
+			<property name="org.quartz.jobStore.class" value="org.quartz.simpl.RAMJobStore" />
+		</map>
+		<!-- for cluster -->
+		
+	</property>
+
+	<property name="taskconfig" enable="true">
+		<list>
+			<property name="定时任务执行器" taskid="default"
+				class="org.frameworkset.task.DefaultScheduleService" used="true">
+				<!--
+					可执行的任务项
+					属性说明：
+					name：任务项名称
+					id:任务项标识
+					action:具体的任务执行处理程序,实现org.frameworkset.task.Execute接口
+					cron_time：	cron格式的时间表达式，用来管理任务执行的生命周期，相关的规则请参照日期管理控件quartz的说明文档
+					shouldRecover:集群环境下属性必须设置为 true，当Quartz服务被中止后，再次启动或集群中其他机器接手任务时会尝试恢复执行之前未完成的所有任务。
+					used 是否使用
+					true 加载，缺省值
+					false 不加载	  
+					子元素说明：
+					parameter:设置任务执行的参数，name标识参数名称，value指定参数的值
+				-->
+				<list>
+					<property name="workbroker" jobid="workbroker"
+						action="org.frameworkset.task.TestJob"
+						cronb_time="0 56 14 * * ?" used="true"
+						shouldRecover="false"
+						>
+						<map>
+							<property name="send_count" value="2" />
+						</map>
+					</property>
+				</list>
+			</property>
+		</list>
+	</property>
+	
+	<property name="methodjob" class="org.framework.task.MethodJob"/>
+	
+</properties>

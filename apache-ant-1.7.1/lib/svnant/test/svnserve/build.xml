@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+
+<project name="svn-test" basedir="." default="all">
+  
+  <!--  all properties are in build.properties 
+  --> 
+  
+  <property file="build.properties" /> 
+  
+  <!-- url for the repository -->
+  <property name="urlRepository" value="svn://localhost"/>
+
+  <path id="project.classpath">
+    <pathelement location="${svn-javahl.jar}" /> 
+    <pathelement location="${svnant.jar}" />
+    <pathelement location="${svnClientAdapter.jar}"/>
+  </path>  
+  
+  <taskdef resource="svntask.properties" classpathref="project.classpath"/>
+
+  <target name="clean">
+    <delete dir="workingcopy"/>
+    <delete dir="workingcopy2"/>
+  </target>
+
+  <!-- create the svnserve test repository -->
+  <target name="createRepository">
+    <echo>using svnadmin to create repositories (you need it in your path) ...</echo>
+    <delete dir="repository"/>
+    <exec executable="svnadmin" failonerror="true">
+      <arg value="create"/>
+      <arg value="repository"/>
+    </exec>
+    <copy file="svnserve.conf" todir="repository/conf" overwrite="true"/>
+    <copy file="passwd" todir="repository/conf" overwrite="true"/>
+  </target>  
+
+  <!-- for now we launch it in daemon mode, so you will need to kill it after -->
+  <target name="launchSvnserve" depends="createRepository">
+    <!-- spawn is only available with ant >= 1.6 -->
+    <exec executable="svnserve" spawn="yes">
+      <arg value="-d"/>
+      <arg value="-r"/>
+      <arg value="repository"/>
+    </exec>
+  </target>
+
+  <!-- init is executed before each target -->
+  <target name="init" depends="clean,createRepository,launchSvnserve">
+    <mkdir dir="workingcopy"/>
+    <svn javahl="${javahl}">
+      <checkout url="${urlRepository}" destPath="workingcopy" />
+    </svn>
+  </target>
+
+  <target name="testSvnservePasswdSucceed" depends="init" >
+    <copy todir="workingcopy/svnservePasswdTest">
+      <fileset dir="model/svnservePasswdTest"></fileset>
+    </copy>
+    <svn javahl="${javahl}" username="cedric" password="cedricpass">
+      <add dir="workingcopy/svnservePasswdTest"/>
+      <commit message="svnservePasswdTest added" dir="workingcopy/svnservePasswdTest"/>
+    </svn>  
+  </target>
+
+  <target name="testSvnservePasswdFail" depends="init" >
+    <copy todir="workingcopy/svnservePasswdTest">
+      <fileset dir="model/svnservePasswdTest"></fileset>
+    </copy>
+    <svn javahl="${javahl}" username="cedric" password="incorrectpass">
+      <add dir="workingcopy/svnservePasswdTest"/>
+      <commit message="svnservePasswdTest added" dir="workingcopy/svnservePasswdTest"/>
+    </svn>  
+  </target>
+
+  <target name="all" depends="init">
+  </target>
+
+</project>

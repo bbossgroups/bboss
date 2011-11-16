@@ -1,0 +1,7 @@
+<properties>
+	<property name="test.interceptorbean" singlable="true" class="org.frameworkset.spi.properties.interceptor.A">
+		<interceptor class="org.frameworkset.spi.properties.interceptor.InterceptorImpl"/>		
+	</property>
+	
+	
+</properties>

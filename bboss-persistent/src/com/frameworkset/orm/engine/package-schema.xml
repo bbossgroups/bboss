@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+<!DOCTYPE database SYSTEM "resources/database_3_2.dtd">
+
+<database name="packagedb" defaultIdMethod="idbroker">
+  <table name="table_a">
+    <column name="table_a_id" required="true" primaryKey="true" type="INTEGER" />
+    <column name="col_a" type="CHAR" size="5" />
+  </table>
+</database>
+

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding='gb2312'?>
+<!-- 
+bboss-demo.xml
+
+-->
+<properties>
+    <property name="org.frameworkset.web.demo.DemoContentCache" 
+		class="org.frameworkset.web.demo.DemoContentCache" 
+		f:refreshInterval="60000"/>			    
+</properties>

@@ -1,0 +1,1 @@
+Only *.add files will be added.

@@ -1,0 +1,313 @@
+﻿<%@ page contentType="text/html;charset=UTF-8" language="java"
+	session="false"%><%@ page import="java.io.ByteArrayOutputStream"%><%@ page import="java.io.PrintStream"%><%@ page import="java.io.File"%><%@ page import="java.io.File,org.frameworkset.util.CodeUtils,com.frameworkset.util.FileUtil,org.frameworkset.web.demo.DemoUtil,com.frameworkset.util.StringUtil"%><%@ taglib uri="/WEB-INF/pager-taglib.tld" prefix="pg"%><%@ taglib uri="/WEB-INF/commontag.tld" prefix="common"%><%
+String path = request.getContextPath();
+String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/index.htm";
+%><html>
+	<head>
+		<title>bbossgroups - 打造中国自主框架品牌</title>
+		  <meta name="description" content="Bboss mvc DEMO列表 资源和文档下载 bboss-mvc框架体系结构图 bboss-mvc框架请求处理流程图 web.xml部署文件部分说明了mvc框架的涉及web.xml主要配置内容 框架更新记录" />
+    <meta name="keywords" content="Bboss mvc DEMO列表,资源和文档下载 体系结构图, bboss-mvc框架请求处理流程图,web.xml部署文件,框架更新记录" />
+   <pg:config enablecontextmenu="false"/>
+		<link rel="shortcut icon"
+			href="${pageContext.request.contextPath}/css/favicon.gif">
+		<link rel="stylesheet"
+			href="${pageContext.request.contextPath}/css/classic/tables.css"
+			type="text/css">
+		<link rel="stylesheet"
+			href="${pageContext.request.contextPath}/css/classic/main.css"
+			type="text/css">
+		<link rel="stylesheet"
+			href="${pageContext.request.contextPath}/css/classic/mainnav.css"
+			type="text/css">
+		<link rel="stylesheet"
+			href="${pageContext.request.contextPath}/css/classic/messages.css"
+			type="text/css">
+		<link rel="stylesheet"
+			href="${pageContext.request.contextPath}/css/classic/tooltip.css"
+			type="text/css">
+		<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/include/syntaxhighlighter/styles/SyntaxHighlighter.css"></link>
+	<script language="javascript" src="${pageContext.request.contextPath}/include/syntaxhighlighter/shCore.js"></script>
+	<script language="javascript" src="${pageContext.request.contextPath}/include/syntaxhighlighter/shBrushJava.js"></script>
+	<script language="javascript" src="${pageContext.request.contextPath}/include/syntaxhighlighter/shBrushXml.js"></script>
+	<script language="javascript" src="${pageContext.request.contextPath}/include/syntaxhighlighter/shBrushJScript.js"></script>
+	</head>
+	<body>
+	<div id="caption">
+	<a name="top"></a>
+    <ul id="top">
+        <li id="logo"><a href="index.htm"><img alt="BbossGroups Logo" src="${pageContext.request.contextPath}/jsp/logo.png" height="50"></a></li>
+        <li id="runtime">
+            Bboss MVC Version demos
+            <span class="uptime"></span>
+        </li><li id="title">/aop - mvc - persistent - taglib</li>
+    </ul>
+</div>
+
+		<div id="mainBody">
+			
+    	<div class="embeddedBlockContainer">
+			<h1>
+				MVC Demo站点使用指南(建议在火狐浏览器下浏览)：
+			</h1>
+			<div class="shadow">
+				<div class="info">
+					<p>
+						<ul>		
+									
+						<li><a href="#3720">Demo列表中包含每个demo的基本信息，包括名称，访问地址清单，功能说明，查看demo相关的所有代码和配置文件明细</a></li>
+						<li>点击demo的访问地址清单中的地址可以访问demo的实际功能并进行相应的操作</li>
+						<li>点击代码明细，可以进入查看demo的实现代码，包括控制器类，业务组件，java对象，mvc配置文件，jsp页面</li>
+						<li><a href="#3721">bboss-mvc框架demo的部署部分介绍了如何下载和部署demo应用</a></li>
+						<li><a href="#3722">资源和文档下载</a></li>
+						<li><a href="#3723">bboss-mvc框架体系结构图</a></li>
+						<li><a href="#3724">bboss-mvc框架请求处理流程图</a></li>
+						<li><a href="#3725">web.xml部署文件部分说明了mvc框架的涉及web.xml主要配置内容</a></li>						
+						
+						<li><a href="#3726">框架更新记录</a></li>
+						<li><a href="#3719">友情链接</a></li>	
+						</ul>
+					</p>
+				</div>
+			</div>
+			
+			
+		
+        
+			
+
+			<div class="blockContainer">
+
+				 <h1>Bboss mvc DEMO列表<a href="#top" name="3720">
+			<img border="0" src="<%=request.getContextPath() %>/jsp/top.gif" alt="Top">
+			</a></h1>
+				<table cellspacing="0" cellpadding="0" id="app" class="genericTbl">
+					<thead>
+						<tr>
+							<th class="order1 sorted">
+								&nbsp;
+							</th>
+							<th class="sortable">
+								<a href="?d-16387-o=2&amp;size=&amp;d-16387-s=1">名称</a>
+							</th>
+							<th class="sortable">
+								<a href="?d-16387-o=2&amp;size=&amp;d-16387-s=2">访问地址</a>
+							</th>
+							<th class="sortable">
+								&nbsp;
+							</th>
+							<th class="sortable">
+								描述
+							</th>
+							<th class="sortable">
+								<a href="?d-16387-o=2&amp;size=&amp;d-16387-s=5">代码明细</a>
+							</th>
+						   
+						</tr>
+					</thead>
+					
+					
+					
+					<tbody>
+					<pg:list requestKey="demobeans">
+						<tr class="odd">
+							<td class="leftMostIcon">
+								<a
+									href="#"
+									class="imglink"> <img title="Undeploy /bboss-mvc"
+										alt="Undeploy" src="${pageContext.request.contextPath}/css/classic/img/bin.jpg"
+										class="lnk"> </a>
+							</td>
+							<td>
+							
+								<a href="#"><pg:cell colName="cnname" defaultValue=""/></a>
+							</td>
+							
+							<td><pg:list colName="visturl" >
+								<a title="title"
+									href="${pageContext.request.contextPath}<pg:cell />" class="okValue"
+									target="listbean"
+									>
+									<div id="rs_2">
+									<pg:cell />
+									</div> </a>
+									</pg:list>
+							</td>
+							
+							
+							<td>
+								<a href="#"
+									class="imglink"
+									onclick="#"> <img
+										border="0" title="" alt="reload"
+										src="${pageContext.request.contextPath}/css/classic/gifs/reset.gif" id="ri_2"> </a>
+							</td>
+							<td>
+								<pg:cell colName="description" defaultValue=""></pg:cell>
+							</td>
+							<td>
+								<a href="detail.htm?demoname=<pg:cell colName="name" />" target="detail">进入</a>
+							</td>
+							
+						</tr>
+						
+						</pg:list>
+						
+					</tbody>
+					
+					
+					
+				</table>
+
+
+			</div>
+		</div>
+		<h1>bboss-mvc框架demo的部署<a href="#top" name="3721">
+			<img border="0" src="<%=request.getContextPath() %>/jsp/top.gif" alt="Top">
+			</a></h1>
+		<div class="shadow">
+		 
+				<div class="info">
+					<p>
+						<div id="detail">
+		                    
+		                        <span class="value">在下面的列表内下载到bboss-mvc.war包和database压缩包，将bboss-mvc.war放入tomcat的webapps目录下，并解压database到本地磁盘，修改derby数据源路径，配置文件在bboss-mvc/resources
+		                        /poolman.xml中，将<url>jdbc:derby:D:/workspace/bbossgroups-3.1/bboss-mvc/database/cimdb</url>修改
+		                        为本地解压后的database路径便可。</span>
+		                </div>
+						
+					</p>
+				</div>
+			</div>
+			<h1>bboss-mvc资源下载<a href="#top" name="3722">
+			<img border="0" src="<%=request.getContextPath() %>/jsp/top.gif" alt="Top">
+			</a></h1>
+			<div  class="shadow" style="width:860;">
+		       <div class="info" id="downloadList">
+     			</div>
+			<script type="text/javascript">
+				$(document).ready(function(){
+					  $("#downloadList").load("files/downloadList.htm");
+					});
+			</script>
+		</div>
+		 <h1>bboss-mvc框架体系结构图<a href="#top" name="3723">
+			<img border="0" src="<%=request.getContextPath() %>/jsp/top.gif" alt="Top">
+			</a></h1>
+			<div class="shadow">
+				<div class="info">
+					<p>
+						<div id="detail">
+		                    
+		                        <span class="value"><img src="<%=request.getContextPath()%>/jsp/bboss_archetech.png" width="800" height="400"/></span>
+		                </div>
+						
+					</p>
+				</div>
+			</div>
+			 <h1>bboss-mvc框架请求处理流程图<a href="#top" name="3724">
+			<img border="0" src="<%=request.getContextPath() %>/jsp/top.gif" alt="Top">
+			</a></h1>
+		<div class="shadow">
+				<div class="info">
+					<p>
+						<div id="detail">
+		                    
+		                        <span class="value"><img src="<%=request.getContextPath()%>/jsp/bboss_mvc_handler_flow.png"/></span>
+		                </div>
+						
+					</p>
+				</div>
+			</div>
+			 <h1>web.xml的配置<a href="#top" name="3725">
+			<img src="<%=request.getContextPath() %>/jsp/top.gif" border="0" alt="Top">
+			</a></h1>
+		<div class="shadow">
+				<div class="info">
+					<p>
+						<div id="detail">	
+		
+						
+							<table cellspacing="0" id="resultsTable">
+								<tbody>
+									<tr>
+										<td>
+											<pre name="code" class="xml"><%
+											String content = null;
+											content = DemoUtil.getDemoContentCache().getFileContent(request.getRealPath("/WEB-INF/web.xml"),"UTF-8",true);
+											out.print(content);							
+											%>
+											</pre>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+									
+				         </div> 
+				         <span class="value">
+				         此web.xml的主要功能是配置加载扩展包目录下jar包监听器，申明mvc请求分发器以及url和控制器映射匹配规则，设定字符编码过滤器和出错处理页面。<br/><br/><br/>
+						 <img src="<%=request.getContextPath()%>/jsp/tags.jpg"/><br/>
+						 这个监听器是指加载扩展jar包目录结构的监听器，声明它后它会加载引入扩展的jar包。<br/><br/><br/>
+						 
+						 <img src="<%=request.getContextPath()%>/jsp/mapping.jpg"/><br/>
+						 这个是控制器映射匹配，在web.xml中申明后缀名，mvc会自动识别并匹配以此后缀名的映射地址。并加载所有在WIN-INF目录下"bboss-"开头的xml文件.<br/><br/><br/>
+						</span>	
+					</p>
+				</div>
+			</div>
+			 <h1>框架更新记录<a href="#top" name="3726">
+			<img border="0" src="<%=request.getContextPath() %>/jsp/top.gif" alt="Top">
+			</a></h1>
+			<div class="shadow">
+				<div class="info">
+					<p>
+						<div id="detail">	
+						
+							<table cellspacing="0" id="resultsTable">
+								<tbody>
+									<tr>
+										<td>
+											<pre name="code" class="xml"><%
+											content = DemoUtil.getDemoContentCache().getFileContent(request.getRealPath("/filesdown/releasenote.txt"),null,true);
+											out.print(content);							
+											%>
+											</pre>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+				         </div> 
+					</p>
+				</div>
+			</div>
+			<div class="blockContainer">
+			<h1>友情链接<a href="#top" name="3719">
+			<img border="0" src="<%=request.getContextPath() %>/jsp/top.gif" alt="Top">
+			</a></h1>
+			<p>
+						<ul>			
+						<li><a href="https://sourceforge.net/projects/bboss/files/" target="_blank">bbossgroups源码工程sourceforge下载地址</a></li>			
+						<li><a href="http://www.iteye.com/wiki/bbossgroups/3092-mvc-bboss-config" target="_blank">bbossgroups 开发系列文章之一 最佳实践</a> </li>
+						<li><a href="http://www.iteye.com/wiki/bbossgroups/3090-mvc-aop-bboss" target="_blank">搭建bboss mvc eclipse开发工程，编写第一个实例</a></li>
+						<li><a href="http://www.iteye.com/wiki/bbossgroups/3094-persistent" target="_blank">bbossgroups SQLExecutor组件api使用实例</a></li>
+						<li><a href="http://www.iteye.com/wiki/bbossgroups/3091-webservice-bboss-aop" target="_blank">bbossgroups webservice引擎使用方法</a></li>
+						<li><a href="http://www.iteye.com/wiki/bbossgroups/3089-bbossgroups-aop-rmi" target="_blank">bbossgroups rmi组件服务发布和rmi客服端获取方法</a></li>
+						<li><a href="http://yin-bp.iteye.com/blog/1026245" target="_blank">bbossgroups mvc demo部署方法</a></li>
+						<li><a href="http://yin-bp.iteye.com/" target="_blank">bbossgroups官方博客</a></li>
+						<li><a href="http://www.wiixii.com/" target="_blank">wiixii（维系希望）</a></li>
+						
+						
+						</ul>
+					</p>
+			
+			</div>
+			<h1>回到顶部<a href="#top" name="3727">
+			<img border="0" src="<%=request.getContextPath() %>/jsp/top.gif" alt="Top">
+			</a></h1>
+	</body>
+	<script language="javascript">
+if(!$.browser.msie) {	
+dp.SyntaxHighlighter.ClipboardSwf = '${pageContext.request.contextPath}/include/syntaxhighlighter/clipboard.swf';
+dp.SyntaxHighlighter.HighlightAll('code');
+}
+</script>
+</html>

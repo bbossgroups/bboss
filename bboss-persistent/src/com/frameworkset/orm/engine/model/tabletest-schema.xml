@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+<!DOCTYPE database SYSTEM "database_3_2.dtd">
+
+<database name="iddb" defaultIdMethod="idbroker">
+
+  <table name="table_idbroker">
+    <column name="table_a_id" required="true" primaryKey="true" type="INTEGER" />
+    <column name="col_a" type="CHAR" size="5" />
+  </table>
+  
+  <table name="table_native" idMethod="native">
+    <column name="table_a_id" required="true" primaryKey="true" type="INTEGER" />
+    <column name="col_a" type="CHAR" size="5" />
+  </table>
+
+  <table name="nopk">
+    <column name="col_a" type="CHAR" size="5" />
+    <column name="col_b" type="CHAR" size="5" />
+  </table>
+
+  <table name="singlepk">
+    <column name="singlepk_id" required="true" primaryKey="true" type="INTEGER" />
+    <column name="col_a" type="CHAR" size="5" />
+  </table>
+
+  <table name="multipk">
+    <column name="multipk_a" required="true" primaryKey="true" type="INTEGER" />
+    <column name="multipk_b" required="true" primaryKey="true" type="INTEGER" />
+    <column name="col_a" type="CHAR" size="5" />
+  </table>
+
+  <table name="singlefk">
+    <column name="id" required="true" primaryKey="true" type="INTEGER" />
+    <column name="singlepk_id" required="true" type="INTEGER" />
+    <column name="col_a" type="CHAR" size="5" />
+    <foreign-key foreignTable="singlepk">
+      <reference local="singlepk_id" foreign="singlepk_id"/>
+    </foreign-key>
+  </table>
+
+  <table name="singlefk1">
+    <column name="id" required="true" primaryKey="true" type="INTEGER" />
+    <column name="singlepk_id" required="true" type="INTEGER" />
+    <column name="col_a" type="CHAR" size="5" />
+    <foreign-key foreignTable="singlefk" onUpdate="cascade" onDelete="setnull">
+      <reference local="singlepk_id" foreign="id"/>
+    </foreign-key>
+  </table>
+  
+  <table name="multifk">
+    <column name="id" required="true" primaryKey="true" type="INTEGER" />
+    <column name="multipk_a" required="true" type="INTEGER" />
+    <column name="multipk_b" required="true" type="INTEGER" />
+    <column name="col_a" type="CHAR" size="5" />
+    <foreign-key foreignTable="multipk">
+      <reference local="multipk_a" foreign="multipk_a"/>
+      <reference local="multipk_b" foreign="multipk_b"/>
+    </foreign-key>
+  </table>
+  
+  <table name="unique_test">
+    <column name="id" required="true" primaryKey="true" type="INTEGER" />
+    <column name="col_a" type="CHAR" size="5" />
+    <column name="col_b" type="CHAR" size="5" />
+    <unique name="unique_name">
+      <unique-column name="col_a"/>
+      <unique-column name="col_b"/>
+    </unique>
+  </table>
+  
+  
+</database>
+

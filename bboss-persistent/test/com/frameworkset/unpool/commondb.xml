@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="gb2312"?>
+<poolman>
+	<datasource>
+		<dbname>bspf</dbname>
+		<loadmetadata>false</loadmetadata>
+		<jndiName>jdbc/derby-ds</jndiName>
+		<usepool>false</usepool>
+	    <driver>org.apache.derby.jdbc.EmbeddedDriver</driver>
+	     <url>jdbc:derby:database/cimdb</url> 
+	    <username></username>   
+	    <password></password>
+		<txIsolationLevel>READ_COMMITTED</txIsolationLevel>		
+	    <logAbandoned>true</logAbandoned>
+		<readOnly>false</readOnly>
+		<keygenerate>composite</keygenerate>	
+		<autoprimarykey>false</autoprimarykey>
+		<showsql>false</showsql>
+	</datasource>
+</poolman>

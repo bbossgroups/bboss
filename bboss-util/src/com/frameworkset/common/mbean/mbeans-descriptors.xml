@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<mbeans-descriptors>
+
+  <mbean         name="PoolManBootstrap"
+            type="com.frameworkset.common.poolman.management.PoolManBootstrap"
+          description="bootstrap poolman"
+               domain="Catalina">
+     <operation   name="reStart"
+          description="restart poolman"
+               impact="ACTION"
+           returnType="java.lang.Void">
+      <parameter name="configFile"
+          description="the path of poolman config file"
+                 type="java.lang.String"/>
+    </operation>
+    
+    <operation   name="start"
+          description="start poolman"
+               impact="ACTION"
+           returnType="java.lang.Void">
+      <parameter name="configFile"
+          description="the path of poolman config file"
+                 type="java.lang.String"/>
+    </operation>
+    <operation   name="stop"
+          description="stop poolman"
+               impact="ACTION"
+           returnType="java.lang.Void">     
+    </operation>
+
+  </mbean>
+
+</mbeans-descriptors>

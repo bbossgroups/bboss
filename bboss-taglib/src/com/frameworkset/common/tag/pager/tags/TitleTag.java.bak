@@ -1,0 +1,511 @@
+/*****************************************************************************
+ *                                                                           *
+ *  This file is part of the tna framework distribution.                     *
+ *  Documentation and updates may be get from  biaoping.yin the author of    *
+ *  this framework							     *
+ *                                                                           *
+ *  Sun Public License Notice:                                               *
+ *                                                                           *
+ *  The contents of this file are subject to the Sun Public License Version  *
+ *  1.0 (the "License"); you may not use this file except in compliance with *
+ *  the License. A copy of the License is available at http://www.sun.com    *
+ *                                                                           *
+ *  The Original Code is tag. The Initial Developer of the Original          *
+ *  Code is biaoping yin. Portions created by biaoping yin are Copyright     *
+ *  (C) 2000.  All Rights Reserved.                                          *
+ *                                                                           *
+ *  GNU Public License Notice:                                               *
+ *                                                                           *
+ *  Alternatively, the contents of this file may be used under the terms of  *
+ *  the GNU Lesser General Public License (the "LGPL"), in which case the    *
+ *  provisions of LGPL are applicable instead of those above. If you wish to *
+ *  allow use of your version of this file only under the  terms of the LGPL *
+ *  and not to allow others to use your version of this file under the SPL,  *
+ *  indicate your decision by deleting the provisions above and replace      *
+ *  them with the notice and other provisions required by the LGPL.  If you  *
+ *  do not delete the provisions above, a recipient may use your version of  *
+ *  this file under either the SPL or the LGPL.                              *
+ *                                                                           *
+ *  biaoping.yin (yin-bp@163.com)                                            *
+ *  Author of Learning Java 						     					 *
+ *                                                                           *
+ *****************************************************************************/
+package com.frameworkset.common.tag.pager.tags;
+
+
+
+import java.io.OutputStream;
+
+import javax.servlet.jsp.JspException;
+
+import org.apache.ecs.html.A;
+import org.apache.ecs.html.TD;
+import org.apache.ecs.html.TH;
+import com.frameworkset.util.StringUtil;
+
+//import com.frameworkset.common.tag.BaseTag;
+
+/**
+ * @author biaoping.yin
+ * 显示表头标题的tag
+ * To change the template for this generated type comment go to
+ * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
+ */
+public class TitleTag  extends PagerTagSupport
+{
+
+	private String bgColor = "#8da6c4";
+	private String title = null;
+	private boolean sort = false;
+	private int colid = -1;
+
+
+	/**标题样式名称*/
+	private String className = null;
+
+	/**标题对齐样式名称*/
+	private String align = null;
+
+	/**控制内容是否折行*/
+	private boolean nowrap = false;
+
+	/**控制标题跨行*/
+	private int colspan = 0;
+	/**
+	 * 指定标题的宽度
+	 */
+	private String width = null;
+
+	private int pageItems = 0;
+
+	/**
+	 * 指定标题对应的属性名称
+	 */
+	private String colName = null;
+	public int doStartTag() throws JspException
+	{
+		super.doStartTag();
+
+		try
+		{
+            if(pagerTag == null || !pagerTag.isWapflag())
+            {
+                out.print(generateContent());
+            }
+            else
+               out.print(generateWapContent());
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			throw new JspException(e.getMessage());
+		}
+
+		return SKIP_BODY;
+	}
+    public String generateWapContent() {
+        StringBuffer ret = new StringBuffer();
+        TD td = new TD();
+        if(this.getTitle() == null)//如果没有设定标题
+        {
+            /**
+             * 如果改字段需要排序，构建排序的href
+             * 并且反转排序顺序
+             *
+             */
+            if(isSortKey())
+            {
+                A a = new A();
+                String href = null;
+
+                String sortKey = "";
+                if(this.getColName() != null)
+                    sortKey = getColName();
+                else if(getColid() >= 0)
+                {
+                    sortKey = getSortKey(getColid());
+                }
+
+                if(!pagerTag.ListMode())
+                {
+                    href = pagerTag.getOffsetUrl(pagerTag.getOffset(),sortKey,!pagerTag.getDesc());
+                    href = StringUtil.replace(href,"&","&amp;");
+                }
+
+                else
+                {
+                    //href = pagerTag.hasParams()?"&":"?" + "sortKey=" + getSortKey(getColId());
+                    href = pagerTag.getUrl(sortKey,!pagerTag.getDesc());
+                    href = StringUtil.replace(href,"&","&amp;");
+                }
+
+
+
+                a.setHref(href);
+                //a.setTagText( "<strong>" + getTitle(getColId()) + "</strong>");
+                a.setTagText( getTitle(getColid()) );
+                td.addElement(a);
+            }
+            else
+                td.setTagText(getTitle(getColid()));
+        }
+        else //如果不需要排序直接输出标题
+        {
+
+            String title = getTitle();
+            if(isSortKey())
+            {
+                A a = new A();
+                String href = null;
+
+                String sortKey = "";
+                if(this.getColName() != null)
+                    sortKey = getColName();
+                else if(getColid() >= 0)
+                {
+                    sortKey = getSortKey(getColid());
+                }
+
+                if(!pagerTag.ListMode())
+                {
+                    href = pagerTag.getOffsetUrl(pagerTag.getOffset(),sortKey,!pagerTag.getDesc());
+                    href = StringUtil.replace(href,"&","&amp;");
+                }
+
+                else
+                {
+                    //href = pagerTag.hasParams()?"&":"?" + "sortKey=" + getSortKey(getColId());
+                    href = pagerTag.getUrl(sortKey,!pagerTag.getDesc());
+                    href = StringUtil.replace(href,"&","&amp;");
+                }
+
+
+
+                a.setHref(href);
+                //a.setTagText( "<strong>" + getTitle(getColId()) + "</strong>");
+                a.setTagText( title );
+                td.addElement(a);
+            }
+            else
+                td.setTagText(title);
+        }
+        if(this.getClassName() != null)
+            td.setClass(this.getClassName());
+        ret.append(td.toString());
+        return ret.toString();
+    }
+	/* (non-Javadoc)
+	 * @see com.frameworkset.common.tag.BaseTag#generateContent()
+	 */
+	public String generateContent() {
+
+		StringBuffer ret = new StringBuffer();
+		TH td = new TH();
+		//td.setBgColor(getBgColor());
+		String fwidth = getWidth(getColid());
+
+		if(width != null && !width.equals(""))
+			td.setWidth(width);
+		else if(!fwidth.equals(""))
+			td.setWidth(fwidth);
+		if(this.align != null)
+		    td.setAlign(align);
+		td.setNoWrap(nowrap);
+		if(this.getColspan() != 0)
+		    td.setColSpan(getColspan());
+		if(this.getTitle() == null)//如果没有设定标题
+		{
+			/**
+			 * 如果改字段需要排序，构建排序的href
+			 * 并且反转排序顺序
+			 *
+			 */
+			if(isSortKey())
+			{
+				A a = new A();
+				String href = null;
+
+				String sortKey = "";
+				if(this.getColName() != null)
+				    sortKey = getColName();
+				else if(getColid() >= 0)
+				{
+				    sortKey = getSortKey(getColid());
+				}
+
+				if(!pagerTag.ListMode())
+				{
+					href = pagerTag.getOffsetUrl(pagerTag.getOffset(),sortKey,!pagerTag.getDesc());
+					if(pagerTag.getForm() != null)
+						href = pagerTag.getCustomUrl(pagerTag.getForm(),
+													 pagerTag.getQueryString(pagerTag.getOffset(),sortKey,!pagerTag.getDesc()),
+													 pagerTag.getPromotion(),
+													 href,pagerTag.getId());
+				}
+
+				else
+				{
+					//href = pagerTag.hasParams()?"&":"?" + "sortKey=" + getSortKey(getColId());
+					href = pagerTag.getUrl(sortKey,!pagerTag.getDesc());
+					if(pagerTag.getForm() != null)
+						href = pagerTag.getCustomUrl(pagerTag.getForm(),
+													 pagerTag.getQueryString(sortKey,!pagerTag.getDesc()),
+													 pagerTag.getPromotion(),
+													 href,pagerTag.getId());
+				}
+
+
+
+				a.setHref(href);
+				//a.setTagText( "<strong>" + getTitle(getColId()) + "</strong>");
+				a.setTagText( getTitle(getColid()) );
+				td.addElement(a);
+			}
+			else
+				td.setTagText(getTitle(getColid()));
+		}
+		else //如果不需要排序直接输出标题
+		{
+
+			String title = getTitle();
+			if(isSortKey())
+			{
+				A a = new A();
+				String href = null;
+
+				String sortKey = "";
+				if(this.getColName() != null)
+				    sortKey = getColName();
+				else if(getColid() >= 0)
+				{
+				    sortKey = getSortKey(getColid());
+				}
+
+				if(!pagerTag.ListMode())
+				{
+					href = pagerTag.getOffsetUrl(pagerTag.getOffset(),sortKey,!pagerTag.getDesc());
+					if(pagerTag.getForm() != null)
+						href = pagerTag.getCustomUrl(pagerTag.getForm(),
+													 pagerTag.getQueryString(pagerTag.getOffset(),sortKey,!pagerTag.getDesc()),
+													 pagerTag.getPromotion(),
+													 href,pagerTag.getId());
+				}
+
+				else
+				{
+					//href = pagerTag.hasParams()?"&":"?" + "sortKey=" + getSortKey(getColId());
+					href = pagerTag.getUrl(sortKey,!pagerTag.getDesc());
+					if(pagerTag.getForm() != null)
+						href = pagerTag.getCustomUrl(pagerTag.getForm(),
+													 pagerTag.getQueryString(sortKey,!pagerTag.getDesc()),
+													 pagerTag.getPromotion(),
+													 href,pagerTag.getId());
+				}
+
+
+
+				a.setHref(href);
+				//a.setTagText( "<strong>" + getTitle(getColId()) + "</strong>");
+				a.setTagText( title );
+				td.addElement(a);
+			}
+			else
+				td.setTagText(title);
+		}
+		if(this.getClassName() != null)
+		    td.setClass(this.getClassName());
+		ret.append(td.toString());
+		return ret.toString();
+	}
+
+	private String getTitle(int i)
+	{
+		String[] temp = fieldHelper.getTitles();
+		return temp == null?"":temp[i] ;
+	}
+	private String getSortKey(int i)
+	{
+		String[] temp = fieldHelper.getFields();
+		return temp == null?"":temp[i] ;
+	}
+
+	private String getWidth(int i)
+	{
+
+		String[] temp = fieldHelper.getWidths();
+		if(temp == null)
+			return "";
+		if(i >= temp.length || i < 0)
+			return "";
+		return temp[i] ;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.frameworkset.common.tag.BaseTag#write(java.io.OutputStream)
+	 */
+	public void write(OutputStream output) {
+		// TODO Auto-generated method stub
+
+	}
+
+	/**
+	 * @return int
+	 */
+	public long getOffset()
+	{
+		return pagerTag.getOffset();
+	}
+
+	/**
+	 * @return int
+	 */
+	public int getPageItems() {
+		return pageItems;
+	}
+
+	/**
+	 * 判断是否是排序字段
+	 * @return boolean
+	 */
+	public boolean isSortKey() {
+		return sort;
+	}
+
+
+
+	/**
+	 * @param i
+	 */
+	public void setPageItems(int i) {
+		pageItems = i;
+	}
+
+	/**
+	 * @param string
+	 */
+	public void setSort(boolean string) {
+		sort = string;
+	}
+
+
+	/**
+	 * @return int
+	 */
+	public int getColid() {
+		return colid;
+	}
+
+	/**
+	 * @param colid
+	 */
+	public void setColid(int colid) {
+		this.colid = colid;
+	}
+
+	/**
+	 * @return String
+	 */
+	public String getBgColor() {
+		return bgColor == null?"#8da6c4":bgColor;
+	}
+
+	/**
+	 * @param string
+	 */
+	public void setBgColor(String string) {
+		bgColor = string;
+	}
+
+	/**
+	 * @return String
+	 */
+	public String getTitle() {
+		return title;
+	}
+
+	/**
+	 * @param string
+	 */
+	public void setTitle(String string) {
+		title = string;
+	}
+
+	/**
+	 * Description:
+	 * @return
+	 * String
+	 */
+	public String getWidth() {
+		return width;
+	}
+
+	/**
+	 * Description:
+	 * @param string
+	 * void
+	 */
+	public void setWidth(String string) {
+		width = string;
+	}
+
+    /**
+     * @return Returns the className.
+     */
+    public String getClassName() {
+        return className;
+    }
+    /**
+     * @param className The className to set.
+     */
+    public void setClassName(String className) {
+        this.className = className;
+    }
+    /**
+     * @return Returns the align.
+     */
+    public String getAlign() {
+        return align;
+    }
+    /**
+     * @param align The align to set.
+     */
+    public void setAlign(String align) {
+        this.align = align;
+    }
+    /**
+     * @return Returns the nowrap.
+     */
+    public boolean isNowrap() {
+        return nowrap;
+    }
+    /**
+     * @param nowrap The nowrap to set.
+     */
+    public void setNowrap(boolean nowrap) {
+        this.nowrap = nowrap;
+    }
+    /**
+     * @return Returns the colspan.
+     */
+    public int getColspan() {
+        return colspan;
+    }
+    /**
+     * @param colspan The colspan to set.
+     */
+    public void setColspan(int colspan) {
+        this.colspan = colspan;
+    }
+    /**
+     * @return Returns the colName.
+     */
+    public String getColName() {
+        return colName;
+    }
+    /**
+     * @param colName The colName to set.
+     */
+    public void setColName(String colName) {
+        this.colName = colName;
+    }
+}

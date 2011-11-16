@@ -1,0 +1,87 @@
+<project name="bboss event" default="default" basedir=".">
+	<description>
+		bboss event build file
+	</description>
+	<tstamp prefix="start" />
+
+	<tstamp>
+		<format property="compile.timestamp" pattern="yyyy-MM-dd HH.mm.ss" />
+	</tstamp>
+
+
+
+	<!-- set global properties for this build -->
+	<property file="build.properties" />
+	<target name="init" description="create timestamp and directories">
+		<echo>Init...</echo>
+
+		<tstamp />
+		<delete dir="classes-bboss-event" />
+		
+		<delete dir="distrib" />
+		<mkdir dir="classes-bboss-event" />		
+		<mkdir dir="distrib" />
+	</target>
+	<target name="default" depends="complete" description="default = build distribution package" />
+
+	<!--
+		       ==========================
+		        Distribution jar package
+		       ==========================
+		  -->
+	<target name="distrib" depends="init,jar-frameworkset-event,copy-depends-resources,copy-depends-liberary" description="copy jar file to distribution directory">
+		<echo>Construct the distribution package...</echo>
+	</target>
+
+	<target name="compile-frameworkset-event" description="compile the bboss-event source ">
+		<echo>compile the frameworkset-event source ...</echo>
+		<javac destdir="classes-bboss-event" target="1.5" source="1.5" deprecation="true" debug="${debug}" optimize="${optimize}" memorymaximumsize="256M" fork="true" verbose="yes">
+			<src path="src" />
+			
+			
+			<classpath id="cp-classes-bboss-event">
+				<fileset dir="lib/" includes="*.jar *.zip" />			
+				
+			</classpath>
+		</javac>
+	</target>
+	<target name="jar-frameworkset-event" depends="compile-frameworkset-event" description="generate the bboss-taglib library bboss-event.jar.jar">
+		<echo>Generate the bboss-event library bboss-event.jar ...</echo>
+		<jar jarfile="distrib/bboss-event.jar" basedir="classes-bboss-event" includes="**/*">
+			<manifest>
+				
+				<attribute name="Implementation-Version" value="${impl.version}" />
+				<attribute name="Specification-Version" value="${revision}" />
+				<attribute name="Implementation-Vendor" value="${impl.vendor}" />
+				<attribute name="Implementation-ProductID" value="${impl.productID}" />
+				<attribute name="Compile-Timestamp" value="${compile.timestamp}" />
+				<attribute name="Compile-User" value="${username}" />
+			</manifest>
+		</jar>
+	</target>
+	
+	
+	<target name="copy-depends-liberary" description="copy depends liberarys">
+				<echo>copy depends liberarys ...</echo>
+				<copy todir="distrib/dependlibs">
+					<fileset dir="lib" includes="*.jar" />
+				</copy>
+					
+
+	</target>
+	
+	
+	
+	<target name="copy-depends-resources" description="copy depends resources">
+					<echo>copy depends liberarys ...</echo>
+					<copy todir="distrib/resources">
+						<fileset dir="resources" includes="**/*"/>
+					</copy>						
+
+	</target>
+	
+	<target name="complete" depends="distrib" description="copy depends liberarys">
+		<delete dir="classes-bboss-event" />				
+		
+	</target>
+</project>

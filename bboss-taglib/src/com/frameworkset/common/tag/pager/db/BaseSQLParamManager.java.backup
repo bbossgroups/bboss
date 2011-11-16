@@ -1,0 +1,198 @@
+/*
+ *  Copyright 2008 biaoping.yin
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+
+package com.frameworkset.common.tag.pager.db;
+
+import java.sql.SQLException;
+
+import com.frameworkset.common.poolman.PreparedDBUtil;
+import com.frameworkset.common.poolman.SQLParams;
+import com.frameworkset.common.poolman.SetSQLParamException;
+
+/**
+ * <p>Title: BaseSQLParamManager.java</p> 
+ * <p>Description: </p>
+ * <p>bboss workgroup</p>
+ * <p>Copyright (c) 2008</p>
+ * @Date 2010-3-11 下午01:46:25
+ * @author biaoping.yin
+ * @version 1.0
+ */
+public class BaseSQLParamManager
+{
+    /**
+     * 数据库查询语句属性
+     */
+    protected String statement = "";    
+//    protected String pretoken;
+//    protected String endtoken;
+    protected String action;
+//    protected String dbname;
+    
+
+
+    /**
+     * 预编译参数列表,单独的预编语句参数
+     * Map<String,Param>
+     */
+    protected SQLParams sqlparams ;
+    
+    public SQLParams getSQLParams() throws SetSQLParamException
+    {
+        if(sqlparams != null )
+        {
+            if((this.getPretoken() == null && this.getEndtoken()!= null) ||
+                    (getPretoken() != null && getEndtoken() == null))
+                throw new SetSQLParamException("非法的绑定变量分割符设置:pretoken = " + getPretoken() + "endtoken =" + getEndtoken() );            
+        }
+        
+        return this.sqlparams;
+    }
+    
+    /**
+     * 添加sql参数，由DefaultDataInfoImpl进行处理
+     * @param name
+     * @param value
+     * @param type
+     * @throws SetSQLParamException 
+     */
+    public void addSQLParam(String name, String value, String type) throws SetSQLParamException
+    {   
+        addSQLParam( name,  value,  type, null);
+    }
+   
+    private void init()
+    {
+        if(sqlparams == null)
+        {
+            sqlparams = new SQLParams();            
+        }
+    }
+    /**
+     * 添加sql参数，由DefaultDataInfoImpl进行处理
+     * @param name
+     * @param value
+     * @param type
+     * @throws SetSQLParamException 
+     */
+    public void addSQLParam(String name, String value, String type,String dataformat) throws SetSQLParamException
+    {   
+        init();
+       
+        this.sqlparams.addSQLParam( name,  value,  type, dataformat);
+    }
+    
+    public String getDbname()
+    {
+        init();
+        return this.sqlparams.getDbname();
+    }
+
+    public void setDbname(String dbname)
+    {
+        init();
+        this.sqlparams.setDbname(dbname);
+    }
+
+    public String getStatement()
+    {
+        return statement;
+    }
+
+    public void setStatement(String statement)
+    {
+        this.statement = statement;
+    }
+
+    public String getPretoken()
+    {
+        init();
+        return this.sqlparams.getPretoken();
+    }
+
+    public void setPretoken(String pretoken)
+    {
+        init();
+        sqlparams.setPretoken(pretoken);
+    }
+
+    public String getEndtoken()
+    {
+        init();
+        return this.sqlparams.getEndtoken();
+    }
+
+    public void setEndtoken(String endtoken)
+    {
+        init();
+        this.sqlparams.setEndtoken(endtoken);
+    }
+
+    public String getAction()
+    {
+        return action;
+    }
+
+    public void setAction(String action)
+    {
+        this.action = action;
+    }
+    
+    public Object execute() throws SQLException
+    {
+        action = action.toLowerCase();
+        PreparedDBUtil dbutil = new PreparedDBUtil();
+        if(action.equals("insert"))
+        {
+            if(this.getSQLParams().size() > 0)
+            {
+                dbutil.preparedInsert(this.getSQLParams(), this.getDbname(),this.getStatement());
+            }
+            else
+            {
+                dbutil.executeInsert(this.getDbname(),this.getStatement());
+            }
+        }
+        else if(action.equals("update"))
+        {
+            if(this.getSQLParams().size() > 0)
+            {
+                dbutil.preparedUpdate(this.getSQLParams(), this.getDbname(),this.getStatement());
+            }
+            else
+            {
+                dbutil.executeUpdate(this.getDbname(),this.getStatement());
+            }
+                
+        }
+        else if(action.equals("delete"))
+        {
+            if(this.getSQLParams().size() > 0)
+            {
+                dbutil.preparedDelete(this.getSQLParams(), this.getDbname(),this.getStatement());
+            }
+            else
+            {
+                dbutil.executeDelete(this.getDbname(),this.getStatement());
+            }
+        }
+        else
+            throw new SQLException("不支持的数据库操作：" + action);
+        return dbutil.executePrepared();
+        
+        
+    }
+}

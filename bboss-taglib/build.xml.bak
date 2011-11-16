@@ -1,0 +1,149 @@
+<project name="bboss taglib" default="default" basedir=".">
+	<description>
+		bboss taglib build file
+	</description>
+	<tstamp prefix="start" />
+
+	<tstamp>
+		<format property="compile.timestamp" pattern="yyyy-MM-dd HH.mm.ss" />
+	</tstamp>
+
+
+
+	<!-- set global properties for this build -->
+	<property file="build.properties" />
+	<target name="init" description="create timestamp and directories">
+		<echo>Init...</echo>
+
+		<tstamp />
+		<delete dir="classes-bboss-taglib" />
+		<delete dir="classes-bboss-tabpane" />
+		<delete dir="distrib" />
+		<mkdir dir="classes-bboss-taglib" />
+		<mkdir dir="classes-bboss-tabpane" />
+		<mkdir dir="distrib/WebRoot" />		
+
+
+	</target>
+	<target name="default" depends="complete" description="default = build distribution package" />
+
+	<!--
+		       ==========================
+		        Distribution jar package
+		       ==========================
+		  -->
+	<target name="distrib" depends="init,jar-frameworkset,jar-tabpane,copy-resource,copy-depends-liberary" description="copy jar file to distribution directory">
+		<echo>Construct the distribution package...</echo>
+	</target>
+
+	<target name="compile-frameworkset" description="compile the bboss-taglib source ">
+		<echo>compile the bboss-taglib source ...</echo>
+		<javac destdir="classes-bboss-taglib" target="1.5" source="1.5" deprecation="true" debug="${debug}" optimize="${optimize}" memorymaximumsize="256M" fork="true" verbose="yes">
+			<src path="src" />
+			<src path="test" />
+			
+		
+
+			<classpath id="cp-bboss-taglib">
+
+				<fileset dir="lib/" includes="*.jar *.zip" />
+				<fileset dir="compilelib/" includes="*.jar *.zip" />
+				
+			</classpath>
+		</javac>
+
+
+	</target>
+	<target name="jar-frameworkset" depends="compile-frameworkset" description="generate the bboss-taglib library frameworkset.jar">
+		<echo>Generate the bboss-aop library bboss-aop.jar ...</echo>
+		<jar jarfile="distrib/frameworkset.jar" basedir="classes-bboss-taglib" includes="**/*">
+			<manifest>
+				
+				<attribute name="Implementation-Version" value="${impl.version}" />
+				<attribute name="Specification-Version" value="${revision}" />
+				<attribute name="Implementation-Vendor" value="${impl.vendor}" />
+				<attribute name="Implementation-ProductID" value="${impl.productID}" />
+				<attribute name="Compile-Timestamp" value="${compile.timestamp}" />
+				<attribute name="Compile-User" value="${username}" />
+			</manifest>
+		</jar>
+
+	</target>
+	
+	
+	<target name="compile-tabpane" description="compile the bboss-tabpane source ">
+			<echo>compile the bboss-tabpane source ...</echo>
+			<javac destdir="classes-bboss-tabpane" target="1.5" source="1.5" deprecation="true" debug="${debug}" optimize="${optimize}" memorymaximumsize="256M" fork="true" verbose="yes">
+				<src path="tabpane" />
+				<classpath id="cp-bboss-tabpane">
+
+					<fileset dir="lib/" includes="*.jar *.zip" />
+					<fileset dir="distrib/" includes="*.jar *.zip" />
+					<fileset dir="compilelib/" includes="*.jar *.zip" />
+					
+				</classpath>
+			</javac>
+		</target>
+		<target name="jar-tabpane" depends="compile-tabpane" description="generate the bboss-tabpane library ditchnet-tabs-taglib.jar">
+			<echo>Generate the bboss-aop library bboss-aop.jar ...</echo>
+			<jar jarfile="distrib/ditchnet-tabs-taglib.jar" basedir="classes-bboss-tabpane" includes="**/*">
+				<manifest>					
+					<attribute name="Implementation-Version" value="${impl.version}" />
+					<attribute name="Specification-Version" value="${revision}" />
+					<attribute name="Implementation-Vendor" value="${impl.vendor}" />
+					<attribute name="Implementation-ProductID" value="${impl.productID}" />
+					<attribute name="Compile-Timestamp" value="${compile.timestamp}" />
+					<attribute name="Compile-User" value="${username}" />
+				</manifest>
+			</jar>
+
+		</target>
+		
+	
+
+	<target name="copy-resource" description="copy resource files">
+		<echo>copy resource files ...</echo>
+		<copy todir="distrib/WebRoot">
+			<fileset dir="webapp" includes="**/*" />
+		</copy>		
+	</target>
+	<target name="copy-depends-liberary" description="copy depends liberarys">
+			<echo>copy depends liberarys ...</echo>
+			<copy todir="distrib/WebRoot/WEB-INF/lib">
+						<fileset dir="lib" includes="**/*"/>
+			</copy>
+			<copy todir="distrib/WebRoot/WEB-INF/lib">
+				<fileset dir="distrib" includes="*.jar"/>
+			</copy>
+		
+
+	</target>
+	
+	<target name="war" depends="distrib" description="copy depends liberarys">
+		<war destfile="distrib/bbosstaglib.war" webxml="distrib/WebRoot/WEB-INF/web.xml">
+		  <fileset dir="distrib/WebRoot/"/>
+			<manifest>
+							
+							<attribute name="Implementation-Version" value="${impl.version}" />
+							<attribute name="Specification-Version" value="${revision}" />
+							<attribute name="Implementation-Vendor" value="${impl.vendor}" />
+							<attribute name="Implementation-ProductID" value="${impl.productID}" />
+							<attribute name="Compile-Timestamp" value="${compile.timestamp}" />
+							<attribute name="Compile-User" value="${username}" />
+						</manifest>
+		  
+		</war>
+	</target>
+	
+	<target name="complete" depends="war" description="copy depends liberarys">
+				<delete dir="classes-bboss-taglib" />
+				<delete dir="classes-bboss-tabpane" />
+				<delete dir="distrib/WebRoot" />
+	</target>
+	
+	
+
+	
+	
+	
+</project>

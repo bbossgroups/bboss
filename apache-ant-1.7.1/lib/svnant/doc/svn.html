@@ -1,0 +1,1462 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+
+<head>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=windows-1252">
+	<TITLE>Svn Task</TITLE>
+	<META HTTP-EQUIV="Content-Language" CONTENT="en-us">
+  <link rel="stylesheet" type="text/css" href="http://tortoisesvn.tigris.org/branding/css/print.css" media="print" />
+<style type="text/css"> /* <![CDATA[ */
+ @import "http://subclipse.tigris.org/branding/css/tigris.css";
+ @import "http://subclipse.tigris.org/branding/css/inst.css";
+ /* ]]> */
+ </style>
+<!--
+<style type="text/css">	
+body {
+	font: 80% Verdana, Arial, Helvetica, sans-serif;
+	margin: 12px; padding: 12px;
+/*	background: rgb(95%,95%,80%);  */
+	color: black;
+}
+h1 {
+	font-size: 200%; text-transform: lowercase; letter-spacing: 3px;
+	margin-bottom: 1em; 
+	padding: 0.66em 0 0.33em 1em;
+	background: rgb(85%,85%,70%);
+}
+h2 {
+	background: rgb(85%,85%,70%);
+}
+h3 {
+	border:1px solid rgb(85%,85%,70%);
+	color: rgb(55%,55%,40%);
+	padding: 0.66em 0 0.33em 1em;
+	background-color: #f3f1f4;
+}
+.sample {
+	font-family: Courier, "Courier New", monospace;
+	background-color: #f3f1f4;
+	margin-left: 10px;
+	margin-right: 10px;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	padding-left: 3px;
+	padding-right: 3px;
+	border:1px dashed black;
+	width: 50%;
+ }
+ table {
+	width: 80%;
+	border: 1px solid gray;
+	margin-bottom:1em;
+ }
+ th, td {
+	padding: 0 0.5em;
+	border-left: 1px solid #DDD;
+	border-bottom: 1px solid #DDD;
+	font: 70%
+}
+th {
+	
+}
+-->
+</style>
+</head>
+
+<body lang="en-US" dir="LTR">
+
+<div class="h1" id="svn" title="svn">
+<H1>&lt;Svn&gt;</H1>
+By <A HREF="mailto:users@subclipse.tigris.org">C&eacute;dric Chabanois et al.</A>
+
+
+<div class="h2" id="Description" title="Description">
+<H2>Description</H2>
+<p>This task provides an interface to <A HREF="http://subversion.tigris.org/">Subversion</A> 
+revision control system that is a compelling replacement for CVS in the open source community.
+<br>
+With the help of the underlying svnClientAdapter, &lt;svn&gt; task uses JavaHL (a 
+native JNI interface to the subversion api) if it
+can find the corresponding library (e.g. svnjavahl.dll on windows).
+Otherwise it uses svn command line interface.</p>
+</div>
+
+<div class="h2" id="Setup" title="Setup">
+<h2>Setup</h2>
+<p>As with most Ant extensions, SvnAnt's task and type names must be
+<a href="http://ant.apache.org/manual/CoreTasks/typedef.html">mapped
+to their implementing classes</a> before being used in an Ant build
+file.  An example of how to use the <em>antlib</em> bundled in
+SvnAnt's JAR file to perform that registration follows:</p>
+
+<div class="sample">
+<span style="font-face: Courier New; font-size: 12">
+<span style="color: #000080">&lt;typedef</span>
+<span style="color: #000080">resource=</span><span style="color: #008000">&quot;org/tigris/subversion/svnant/svnantlib.xml&quot;</span>
+<span style="color: #000080">classpath=</span><span style="color: #008000">&quot;svnant.jar&quot;</span>
+<span style="color: #000080">/&gt;</span>
+</span>
+</div>  <!-- sample -->
+</div>
+
+<div class="h2" id="Parameters" title="Parameters">
+<H2>Parameters</H2>
+<table border="1" width="80%">	<tr>
+		<th>Attribute</th>
+		<th>Description</th>
+		<th>Required</th>
+	</tr>
+	<tr>
+		<td>username</td>
+		<td>username that will be used for all nested svn commands.</td>
+		<td>No</td>
+	</tr>
+	<tr>
+		<td>password</td>
+		<td>password that will be used for all nested svn commands.</td>
+		<td>No</td>
+	</tr>
+	<tr>
+		<td>javahl</td>
+		<td>Set to &ldquo;false&rdquo; to use command line client interface instead of JNI JavaHL binding.</td>
+		<td>No (Defaults to true)</td>
+	</tr>
+	<tr>
+		<td>svnkit</td>
+		<td>Set to &ldquo;false&rdquo; to use command line client interface instead of SVNKit binding.</td>
+		<td>No (Defaults to false)</td>
+	</tr>
+	<tr>
+		<td>dateFormatter</td>
+		<td>formatter definition used to format/parse dates (e.g. when revision is specified as date).</td>
+		<td>No (Defaults to "MM/DD/YYYY HH:MM AM_PM")</td>
+	</tr>
+	<tr>
+		<td>dateTimeZone</td>
+		<td>time zone used to format/parse dates (e.g. when revision is specified as date).</td>
+		<td>No (Defaults to local)</td>
+	</tr>
+	<tr>
+		<td>failonerror</td>
+		<td>Controls whether an error stops the build or is merely reported to the screen.</td>
+		<td>No (Defaults to "true")</td>
+	</tr>
+</table>
+</div>
+
+<div class="h2" id="Commands" title="Commands">
+<H2>Svn commands specified as nested elements</H2>
+<table border="1" width="90%">
+	<tr>
+		<td><a href="#add">add </a></td>
+		<td><a href="#createRepository">createRepository</a></td>
+		<td><a href="#import">import</a></td>
+		<td><a href="#move">move</a></td>
+		<td><a href="#revert">revert</a></td>
+	</tr>
+	<tr>
+		<td><a href="#cat">cat</a></td>
+		<td><a href="#delete">delete</a></td>
+		<td><a href="#info">info</a></td>
+		<td><a href="#mkdir">mkdir</a></td>
+		<td><a href="#status">status</a></td>
+	</tr>
+	<tr>
+		<td><a href="#checkout">checkout</a></td>
+		<td><a href="#diff">diff</a></td>
+		<td><a href="#keywordsset">keywordsset</a></td>
+		<td><a href="#propdel">propdel</a></td>
+		<td><a href="#switch">switch</a></td>
+	</tr>
+	<tr>
+		<td><a href="#commit">commit</a></td>
+		<td><a href="#export">export</a></td>
+		<td><a href="#keywordsadd">keywordsadd</a></td>
+		<td><a href="#propget">propget</a></td>
+		<td><a href="#update">update</a></td>
+	</tr>
+	<tr>
+		<td><a href="#copy">copy</a></td>
+		<td><a href="#ignore">ignore</a></td>
+		<td><a href="#keywordsremove">keywordsremove</a></td>
+		<td><a href="#propset">propset</a></td>
+		<td><a href="#wcVersion">wcVersion</a></td>
+	</tr>
+	</table>
+</div>
+
+<![CDATA[=========================================================]]>
+
+<div class="h3" id="add" title="add">
+<H3><a name="add">add</a></H3>
+<p>You can add files and directories to svn repository with nested <CODE>&lt;add&gt;</CODE> elements.</p>
+<table border="1" width="80%">	<tr>
+		<td>Attribute</td>
+		<td>Description</td>
+		<td>Required</td>
+	</tr>
+	<tr>
+		<td>file</td>
+		<td>file to add to the repository</td>
+		<td>No</td>
+	</tr>
+	<tr>
+		<td>dir</td>
+		<td>directory to add to the repository</td>
+		<td>No</td>
+	</tr>
+	<tr>
+		<td>recurse</td>
+		<td>Set to &quot;false&quot; to operate on a single directory only
+			(applies only when <CODE>dir</CODE> attribute is set). Default is
+			&quot;true&quot;
+		</td>
+		<td>No</td>
+	</tr>
+	<tr>
+		<td>force</td>
+		<td>Set to &quot;true&quot; to check the contents of a directory that
+			is already under source control for new directories/files
+			(applies only when <CODE>dir</CODE> attribute is set). Default is
+			&quot;false&quot;
+		</td>
+		<td>No</td>
+	</tr>
+</table>
+<p>Parameters specified as nested elements :
+<ul>
+<li>fileset <br>
+	Filesets are used to select sets of files to add to the repository. <br>
+	<B>Note	that directories needed to add selected files will be added to the
+	repository even if they are not selected by the fileset.</B>
+</li>
+</ul>
+</p>
+</div>
+
+<![CDATA[=========================================================]]>
+
+<div class="h3" id="cat" title="cat">
+<H3><a name="cat">cat</a></H3>
+<p>Get the content of a file on repository.</p>
+<table border="1" width="80%">	<tr>
+		<td>Attribute</td>
+		<td>Description</td>
+		<td>Required</td>
+	</tr>
+	<tr>
+		<td>destFile</td>
+		<td>Name of the destination file</td>
+		<td>No <BR>(default is the name of the file on the url placed in the ant project's basedir)</td>
+	</tr>
+	<tr>
+		<td>url</td>
+		<td>Url of the file in repository</td>
+		<td>Yes</td>
+	</tr>
+	<tr>
+		<td>revision</td>
+		<td>revision to get.<BR>Possible values are :<BR>- a date with the
+			format as specified in dateFormatter attribute<BR>- a revision number<BR>-
+			HEAD, BASE, COMMITED or PREV<BR>Default is &quot;HEAD&quot;
+		</td>
+		<td>No</td>
+	</tr>
+</table>
+</div>
+
+<![CDATA[=========================================================]]>
+
+<div class="h3" id="checkout" title="checkout">
+<H3><a name="checkout">checkout</a></H3>
+<p>Check out a working copy from a repository.</p>
+<table border="1" width="80%">	<tr>
+		<td>Attribute</td>
+		<td>Description</td>
+		<td>Required</td>
+	</tr>
+	<tr>
+		<td>url</td>
+		<td>url to checkout from</td>
+		<td>Yes</td>
+	</tr>
+	<tr>
+		<td>recurse</td>
+		<td>Set to &quot;false&quot; to operate on single directory only.
+			Default is &quot;true&quot;
+		</td>
+		<td>No</td>
+	</tr>
+	<tr>
+		<td>destPath</td>
+		<td>destination directory</td>
+		<td>Yes</td>
+	</tr>
+	<tr>
+		<td>revision</td>
+		<td>revision to checkout.<BR>Possible values are :<BR>- a date with
+			the format as specified in dateFormatter attribute<BR>- a revision
+			number<BR>- HEAD, BASE, COMMITED or PREV<BR>Default is &quot;HEAD&quot;
+		</td>
+		<td>No</td>
+	</tr>
+</table>
+</div>
+
+<![CDATA[=========================================================]]>
+
+<div class="h3" id="commit" title="commit">
+<H3><a name="commit">commit</a></H3>
+<p>Send changes from your working copy to the repository.</p>
+<table border="1" width="80%">	<tr>
+		<td>Attribute</td>
+		<td>Description</td>
+		<td>Required</td>
+	</tr>
+	<tr>
+		<td>file</td>
+		<td>file to commit</td>
+		<td>No</td>
+	</tr>
+	<tr>
+		<td>recurse</td>
+		<td>Set to &quot;false&quot; to operate on single directory only.
+			Default is &quot;true&quot;<BR>Apply only when dir attribute is
+			set.
+		</td>
+		<td>No</td>
+	</tr>
+	<tr>
+		<td>dir</td>
+		<td>directory to commit</td>
+		<td>No</td>
+	</tr>
+	<tr>
+		<td>message</td>
+		<td>commit message</td>
+		<td>Yes</td>
+	</tr>
+</table>
+<p>Parameters specified as nested elements :
+<ul>
+	<li>fileset<BR>
+	Filesets are used to select sets of files to commit. 
+	</li>
+</ul>
+</p>
+</div>
+
+<![CDATA[=========================================================]]>
+
+<div class="h3" id="copy" title="copy">
+<H3><a name="copy">copy</a></H3>
+<p>Duplicate something in working copy or repository, remembering
+history.<BR>
+source and destination can each be either a working copy (WC) path or URL:
+<ul>
+	<li>WC-&gt;WC: copy and schedule for addition (with history)</li>
+	<li>WC-&gt;URL: immediately commit a copy of WC to URL</li>
+	<li>URL-&gt;WC: check out URL into WC, schedule for addition</li>
+	<li>URL-&gt;URL: complete server-side copy;&nbsp; used to branch &amp; tag</li>
+</ul>
+</p>
+<br/>
+
+<table border="1" width="80%">	<tr>
+		<td>Attribute</td>
+		<td>Description</td>
+		<td>Required</td>
+	</tr>
+	<tr>
+		<td>srcPath</td>
+		<td>source path</td>
+		<TD ROWSPAN=2>One of the two</td>
+	</tr>
+	<tr>
+		<td>srcUrl</td>
+		<td>source url</td>
+	</tr>
+	<tr>
+		<td>testPath</td>
+		<td>destination path</td>
+		<TD ROWSPAN=2>One of the two</td>
+	</tr>
+	<tr>
+		<td>destUrl</td>
+		<td>destination url</td>
+	</tr>
+	<tr>
+		<td>message</td>
+		<td>commit message</td>
+		<td>when destUrl is set</td>
+	</tr>
+	<tr>
+		<td>revision</td>
+		<td>revision to copy from (when srcUrl is set)<BR>Possible values
+			are :<BR>- a date with the format as specified in dateFormatter attribute
+			<BR>- a revision number<BR>- HEAD, BASE, COMMITED or
+			PREV<BR>Default is &quot;HEAD&quot;
+		</td>
+		<td>no</td>
+	</tr>
+</table>
+</div>
+
+<![CDATA[=========================================================]]>
+
+<div class="h3" id="createRepository" title="createRepository">
+<H3><a name="createRepository">createRepository</a></H3>
+<p>Create a new, empty repository at path.</p>
+<table border="1" width="80%">	<tr>
+		<td>Attribute</td>
+		<td>Description</td>
+		<td>Required</td>
+	</tr>
+	<tr>
+		<td>path</td>
+		<td>Path where to create the new repository</td>
+		<td>Yes</td>
+	</tr>
+</table>
+<div class="sample">
+<p>Example: <br>
+<FONT FACE="Courier New"><FONT SIZE=2><FONT COLOR="#000080">&lt;svn</FONT>
+<FONT COLOR="#000080">javahl=</FONT><FONT COLOR="#008000">&quot;false&quot;</FONT><FONT COLOR="#000080">&gt;<BR>&lt;createRepository</FONT>
+<FONT COLOR="#000080">path=</FONT><FONT COLOR="#008000">&quot;repository&quot;</FONT><FONT COLOR="#000080">/&gt;<BR>&lt;/svn&gt;</FONT></FONT></FONT>
+</p>
+</div>
+</div>
+
+<![CDATA[=========================================================]]>
+
+<div class="h3" id="delete" title="delete">
+<H3><a name="delete">delete</a></H3>
+<p>If run on a working copy target, the item is scheduled for
+deletion upon the next commit.&nbsp; Files, and directories that have
+not been committed, are immediately removed from the working copy.&nbsp;
+<BR>The command will not remove targets that are, or contain,
+unversioned or modified items; use the force attribute to override
+this behaviour.
+<BR>If run on an url, the item is deleted from the repository via an immediate commit.
+</p>
+<table border="1" width="80%">	<tr>
+		<td>Attribute</td>
+		<td>Description</td>
+		<td>Required</td>
+	</tr>
+	<tr>
+		<td>file</td>
+		<td>file to delete</td>
+		<td>No</td>
+	</tr>
+	<tr>
+		<td>url</td>
+		<td>url to delete</td>
+		<td>No</td>
+	</tr>
+	<tr>
+		<td>dir</td>
+		<td>directory to delete</td>
+		<td>No</td>
+	</tr>
+	<tr>
+		<td>message</td>
+		<td>commit message</td>
+		<td>when url attribute is set</td>
+	</tr>
+	<tr>
+		<td>force</td>
+		<td>default is &quot;false&quot;</td>
+		<td>No</td>
+	</tr>
+</table>
+<p>Parameters specified as nested elements :
+<ul>
+	<li>fileset<BR>
+	Filesets are used to select sets of files to delete.. 
+	</li>
+</ul>
+</p>
+</div>
+
+<![CDATA[=========================================================]]>
+
+<div class="h3" id="diff" title="diff">
+<H3><a name="diff">diff</a></H3>
+<p>Display the differences between two paths (oldPath and newPath) or
+two urls (oldUrl and newUrl).
+</p>
+<table border="1" width="80%">	<tr>
+		<td>Attribute</td>
+		<td>Description</td>
+		<td>Required</td>
+	</tr>
+	<tr>
+		<td>oldPath</td>
+		<td>If oldUrl is not set, defaults to the path '.'</td>
+		<td>No</td>
+	</tr>
+	<tr>
+		<td>oldUrl</td>
+		<td>&nbsp;</td>
+		<td>No</td>
+	</tr>
+	<tr>
+		<td>oldTargetRevision</td>
+		<td>defaults to BASE or, if oldUrl is set, to HEAD</td>
+		<td>No</td>
+	</tr>
+	<tr>
+		<td>newPath</td>
+		<td>defaults to oldPath if oldUrl is not set</td>
+		<td>No</td>
+	</tr>
+	<tr>
+		<td>newUrl</td>
+		<td>&nbsp;</td>
+		<td>No</td>
+	</tr>
+	<tr>
+		<td>newTargetRevision</td>
+		<td>defaults to the current working version or, if newUrl is set, to HEAD</td>
+		<td>No</td>
+	</tr>
+	<tr>
+		<td>outFile</td>
+		<td>Default is 'patch'</td>
+		<td>No</td>
+	</tr>
+	<tr>
+		<td>recurse</td>
+		<td>Set to &quot;false&quot; to operate on single directory only.
+			Default is &quot;true&quot;
+		</td>
+		<td>No</td>
+	</tr>
+</table>
+<div class="sample">
+<p>Example : diff between BASE and current working version <br>
+<FONT FACE="Courier New"><FONT SIZE=2><FONT COLOR="#000080">&lt;svn</FONT>
+<FONT COLOR="#000080">javahl=</FONT><FONT COLOR="#008000">&quot;${javahl}&quot;</FONT><FONT COLOR="#000080">&gt;</FONT></FONT></FONT>
+<FONT FACE="Courier New"><FONT SIZE=2><FONT COLOR="#000080">&lt;diff</FONT>
+<FONT COLOR="#000080">oldPath=</FONT><FONT COLOR="#008000">&quot;workingcopy/diffTest/file.txt&quot;</FONT>
+<FONT COLOR="#000080">outFile=</FONT><FONT COLOR="#008000">&quot;workingcopy/diffTest/patch.txt&quot;</FONT><FONT COLOR="#000080">/&gt;</FONT></FONT></FONT>
+<FONT COLOR="#000080"><FONT FACE="Courier New"><FONT SIZE=2>&lt;/svn&gt;</FONT></FONT></FONT>
+</p>
+</div>
+</div>
+
+<![CDATA[=========================================================]]>
+
+<div class="h3" id="export" title="export">
+<H3><a name="export">export</a></H3>
+<p>
+<ol>
+	<li>
+	Exports a clean directory tree from the repository specified by <CODE>srcurl</CODE>, 
+	at revision <CODE>revision</CODE> if it is given, otherwise at HEAD, into <CODE>destPath</CODE>.
+	</li>
+	<li>Exports a clean directory tree from the working copy specified by
+	<CODE>srcPath</CODE> into <CODE>destPath</CODE>.&nbsp; all local changes will be preserved, 
+	but files not under revision control will not be copied.
+	</li>
+</ol>
+</p>
+<br/>
+<table border="1" width="80%">	<tr>
+		<td>Attribute</td>
+		<td>Description</td>
+		<td>Required</td>
+	</tr>
+	<tr>
+		<td>srcUrl</td>
+		<td>source url to export from</td>
+		<td>One of the two</td>
+	</tr>
+	<tr>
+		<td>srcPath</td>
+		<td>source path to export from</td>
+	</tr>
+	<tr>
+		<td>destPath</td>
+		<td>destination path</td>
+		<td>Yes</td>
+	</tr>
+	<tr>
+		<td>revision</td>
+		<td>revision of the source url to export from. Defaults is
+			&quot;HEAD&quot;<BR>Possible values are :<BR>- a date with the
+			format as specified in dateFormatter attribute<BR>- a revision number<BR>-
+			HEAD, BASE, COMMITED or PREV
+		</td>
+		<td>No (defaults to HEAD)</td>
+	</tr>
+</table>
+</div>
+
+<![CDATA[=========================================================]]>
+
+<div class="h3" id="ignore" title="ignore">
+<H3><a name="ignore">ignore</a></H3>
+<p>Add a given file or a pattern to the ignored files list (modifies
+svn:ignore property)</p>
+<table border="1" width="80%">	<tr>
+		<td>Attribute</td>
+		<td>Description</td>
+		<td>Required</td>
+	</tr>
+	<tr>
+		<td>file</td>
+		<td>file to ignore</td>
+		<td>One of the two</td>
+	</tr>
+	<tr>
+		<td>dir</td>
+		<td>directory on which we will update svn:ignore property</td>
+	</tr>
+	<tr>
+		<td>pattern</td>
+		<td>pattern to add to svn:ignore on the directory<BR>Only when dir
+			is set
+		</td>
+		<td>Yes</td>
+	</tr>
+	<tr>
+		<td>recurse</td>
+		<td>Set to &quot;true&quot; to add the pattern recursively to
+			directories. Default is &quot;false&quot;<BR>Only when dir is set
+		</td>
+		<td>No</td>
+	</tr>
+</table>
+<div class="sample">
+<p>Example :<BR>
+<FONT SIZE=2><FONT FACE="Courier New"><FONT COLOR="#000080">&lt;ignore</FONT>
+<FONT COLOR="#000080">dir=</FONT><FONT COLOR="#008000">&quot;workingcopy/ignoreTest/dir1&quot;</FONT>
+<FONT COLOR="#000080">pattern=</FONT><FONT COLOR="#008000">&quot;*.ignore&quot;</FONT>
+<FONT COLOR="#000080">recurse=</FONT><FONT COLOR="#008000">&quot;true&quot;</FONT><FONT COLOR="#000080">/&gt;</FONT></FONT></FONT>
+</p>
+</div>
+</div>
+
+<![CDATA[=========================================================]]>
+
+<div class="h3" id="import" title="import">
+<H3><a name="import">import</a></H3>
+<p>Commit an unversioned file or tree into the repository.<BR>
+Recursively commit a copy of <CODE>path</CODE> to <CODE>url</CODE>.<BR>
+If <CODE>newEntry </CODE>is not set, copy top-level contents of <CODE>path</CODE>into<CODE>url</CODE>directly.&nbsp;
+Otherwise, create <CODE>newEntry </CODE>underneath <CODE>url </CODE>and begin copy there.
+</p>
+<table border="1" width="80%">	<tr>
+		<td>Attribute</td>
+		<td>Description</td>
+		<td>Required</td>
+	</tr>
+	<tr>
+		<td>path</td>
+		<td>source path to export from</td>
+		<td>Yes</td>
+	</tr>
+	<tr>
+		<td>url</td>
+		<td>source url to import to</td>
+		<td>Yes</td>
+	</tr>
+	<tr>
+		<td>newEntry</td>
+		<td>&nbsp;</td>
+		<td>No</td>
+	</tr>
+	<tr>
+		<td>message</td>
+		<td>commit message</td>
+		<td>Yes</td>
+	</tr>
+	<tr>
+		<td>recurse</td>
+		<td>Set to &quot;false&quot; to operate on single directory only.
+			Default is &quot;true&quot;
+		</td>
+		<td>False</td>
+	</tr>
+</table>
+</div>
+
+<![CDATA[=========================================================]]>
+
+<div class="h3" id="info" title="info">
+<h3><a name="info">info</a></h3>
+<p>Gets the information from the repository for a file, directory or url and sets
+the values to ant properties.</p>
+
+<table border="1" width="80%">	<tr>
+		<td>Attribute</td>
+		<td>Description</td>
+		<td>Required</td>
+	</tr>
+	<tr>
+		<td>target</td>
+		<td>Directory or file to gather the information about.</td>
+		<td>Yes</td>
+	</tr>
+	<tr>
+		<td>propPrefix</td>
+		<td>Prefix to use for the properties.  Default is &quot;svn.info.&quot;.</td>
+		<td>False</td>
+	</tr>
+	<tr>
+		<td>verbose</td>
+		<td>Turns on verbosity for this task.  Default is &quot;false&quot;.</td>
+		<td>False</td>
+	</tr>
+</table>
+
+<p>&nbsp;</p>
+<p>The task sets the following properties (prefix applied accordingly): <br>
+</p>
+
+<table border="1" width="80%">	<tr>
+		<td>Property</td>
+		<td>Description</td>
+	</tr>
+	<tr>
+		<td>path</td>
+		<td>Always</td>
+	</tr>
+	<tr>
+		<td>name</td>
+		<td>For files only</td>
+	</tr>
+	<tr>
+		<td>url</td>
+		<td>Always</td>
+	</tr>
+	<tr>
+		<td>repouuid</td>
+		<td>Always</td>
+	</tr>
+	<tr>
+		<td>rev</td>
+		<td>Always</td>
+	</tr>
+	<tr>
+		<td>nodekind</td>
+		<td>Always</td>
+	</tr>
+	<tr>
+		<td>schedule</td>
+		<td>Always</td>
+	</tr>
+	<tr>
+		<td>author</td>
+		<td>Always</td>
+	</tr>
+	<tr>
+		<td>lastRev</td>
+		<td>Always</td>
+	</tr>
+	<tr>
+		<td>lastDate</td>
+		<td>Always</td>
+	</tr>
+	<tr>
+		<td>lastTextUpdate</td>
+		<td>For files only</td>
+	</tr>
+	<tr>
+		<td>lastPropUpdate</td>
+		<td>For files only</td>
+	</tr>
+	<tr>
+		<td>checksum</td>
+		<td>For files only</td>
+	</tr>
+</table>
+</div>
+
+<![CDATA[=========================================================]]>
+
+<div class="h3" id="keywordsset" title="keywordsset">
+<H3><a name="keywordsset">keywordsset</a></H3>
+<p>Keywordsset controls which keywords will be substituted on the
+given files. Valid keywords are:
+<ul>
+	<li>URL, HeadURL : The URL for the head version of the object.</li>
+	<li>Author, LastChangedBy : The last person to modify the file.</li>
+	<li>Date, LastChangedDate : The date/time the object was last modified.</li>
+	<li>Rev, LastChangedRevision : The last revision the object	changed.</li>
+	<li>Id : A compressed summary of the previous</li>
+</ul>
+</p>
+<br/>
+<table border="1" width="80%">	<tr>
+		<td>Attribute</td>
+		<td>Description</td>
+		<td>Required</td>
+	</tr>
+	<tr>
+		<td>file</td>
+		<td>File for which keywords will be substituted</td>
+		<td>Either file, dir or filesets</td>
+	</tr>
+	<tr>
+		<td>dir</td>
+		<td>All files in this directory will have their keywords substituted (recursively)</td>
+		<td>Either file, dir or filesets</td>
+	</tr>
+	<tr>
+		<td>keywords</td>
+		<td>The keywords to substitute on the given files</td>
+		<td>No</td>
+	</tr>
+	<tr>
+		<td>HeadURL/URL<BR>Author, LastChangedBy<BR>Date,
+			LastChangedDate<BR>Rev, LastChangedRevision<BR>Id
+		</td>
+		<td>Set to &ldquo;true&ldquo; the keyword to substitute it on the
+			given file.
+		</td>
+		<td>No</td>
+	</tr>
+</table>
+<p>Parameters specified as nested elements :
+<ul>
+	<li>fileset<BR>
+	Filesets are used to select sets of files on which to apply keywords substitution.
+	</li>
+</ul>
+</p>
+</div>
+
+<![CDATA[=========================================================]]>
+
+<div class="h3" id="keywordsadd" title="keywordsadd">
+<H3><a name="keywordsadd">keywordsadd</a></H3>
+<p>Keywordsadd add some keywords to be substituted on the given
+files. Present keywords are not modified.<BR>
+The attributes are the same than for keywordsset command.</p>
+</div>
+
+<![CDATA[=========================================================]]>
+
+<div class="h3" id="keywordsremove" title="keywordsremove">
+<H3><a name="keywordsremove">keywordsremove</a></H3>
+<p>Keywordsadd remove some keywords to be substituted on the given
+files. Other present keywords are not modified.<BR>
+The attributes are the same than for keywordsset command.</p>
+</div>
+
+<![CDATA[=========================================================]]>
+
+<div class="h3" id="mkdir" title="mkdir">
+<H3><a name="mkdir">mkdir</a></H3>
+<p>Create a new directory under revision control.<BR>
+If target is a working copy path the directory is scheduled for addition in the
+working copy.&nbsp; If target is an url the directory is created in
+the repository via an immediate commit.&nbsp; <BR>
+In both cases all the intermediate directories must already exist.
+</p>
+<table border="1" width="80%">	<tr>
+		<td>Attribute</td>
+		<td>Description</td>
+		<td>Required</td>
+	</tr>
+	<tr>
+		<td>path</td>
+		<td>path to create</td>
+		<td>One of the two</td>
+	</tr>
+	<tr>
+		<td>url</td>
+		<td>url to create</td>
+	</tr>
+	<tr>
+		<td>message</td>
+		<td>commit message</td>
+		<td>Yes</td>
+	</tr>
+</table>
+</div>
+
+<![CDATA[=========================================================]]>
+
+<div class="h3" id="move" title="move">
+<H3><a name="move">move</a></H3>
+<p>Move/rename something in working copy or repository.<BR><BR>&nbsp;
+cource and destination can both be working copy (WC) paths or
+URLs:<BR>&nbsp;&nbsp;&nbsp; WC&nbsp; -&gt; WC:&nbsp;&nbsp; move and
+schedule for addition (with history)<BR>&nbsp;&nbsp;&nbsp; URL -&gt;
+URL:&nbsp; complete server-side rename.
+</p>
+<table border="1" width="80%">	<tr>
+		<td>Attribute</td>
+		<td>Description</td>
+		<td>Required</td>
+	</tr>
+	<tr>
+		<td>srcPath</td>
+		<td>source path</td>
+		<td ROWSPAN=2>One of the two</td>
+	</tr>
+	<tr>
+		<td>srcUrl</td>
+		<td>source url</td>
+	</tr>
+	<tr>
+		<td>destPath</td>
+		<td>destination path</td>
+		<td ROWSPAN=2>One of the two</td>
+	</tr>
+	<tr>
+		<td>destUrl</td>
+		<td>destination url</td>
+	</tr>
+	<tr>
+		<td>message</td>
+		<td>commit message</td>
+		<td>Yes</td>
+	</tr>
+</table>
+</div>
+
+<![CDATA[=========================================================]]>
+
+<div class="h3" id="propdel" title="propdel">
+<H3><a name="propdel">propdel</a></H3>
+<p>Remove a property from files or dirs.</p>
+<table border="1" width="80%">	<tr>
+		<td>Attribute</td>
+		<td>Description</td>
+		<td>Required</td>
+	</tr>
+	<tr>
+		<td>path</td>
+		<td>path of the file or directory on which to delete the property</td>
+		<td>Yes</td>
+	</tr>
+	<tr>
+		<td>name</td>
+		<td>name of the property to delete</td>
+		<td>Yes</td>
+	</tr>
+	<tr>
+		<td>recurse</td>
+		<td>if set, property will be removed recursively</td>
+		<td>No</td>
+	</tr>
+</table>
+</div>
+
+<![CDATA[=========================================================]]>
+
+<div class="h3" id="propget" title="propget">
+<H3><a name="propget">propget</a></H3>
+<p>Get a property from a file or a directory.</p>
+<table border="1" width="80%">	<tr>
+		<td>Attribute</td>
+		<td>Description</td>
+		<td>Required</td>
+	</tr>
+	<tr>
+		<td>path</td>
+		<td>path of the file or directory on which to get the property</td>
+		<td ROWSPAN=2>One of the two</td>
+	</tr>
+	<tr>
+		<td>url</td>
+		<td>url of the file or directory in repository on which to get the property</td>
+	</tr>
+	<tr>
+		<td>name</td>
+		<td>name of the property to get</td>
+		<td>Yes</td>
+	</tr>
+	<tr>
+		<td>property</td>
+		<td>the name of the property to set with the value of the svn property</td>
+		<td ROWSPAN=2>One of the two</td>
+	</tr>
+	<tr>
+		<td>file</td>
+		<td>file that will contain the value of the property</td>
+	</tr>
+</table>
+<div class="sample">
+<p>
+Example :<br>
+<FONT FACE="Courier New"><FONT SIZE=2><FONT COLOR="#000080">&lt;propget</FONT>
+<FONT COLOR="#000080">path=</FONT><FONT COLOR="#008000">&quot;workingcopy/propTest/file.png&quot;</FONT>
+<FONT COLOR="#000080">name=</FONT><FONT COLOR="#008000">&quot;svn:mime-type&quot;</FONT>
+<FONT COLOR="#000080">property=</FONT><FONT COLOR="#008000">&quot;propTest.mimeType&quot;</FONT><FONT COLOR="#000080">/&gt;</FONT></FONT></FONT>
+</p>
+</div>
+</div>
+
+<![CDATA[=========================================================]]>
+
+<div class="h3" id="propset" title="propset">
+<H3><a name="propset">propset</a></H3>
+<p>Set a property on files or dirs.</p>
+<table border="1" width="80%">	<tr>
+		<td>Attribute</td>
+		<td>Description</td>
+		<td>Required</td>
+	</tr>
+	<tr>
+		<td>path</td>
+		<td>path of the file or directory on which to set the property</td>
+		<td>Yes</td>
+	</tr>
+	<tr>
+		<td>name</td>
+		<td>name of the property to set</td>
+		<td>Yes</td>
+	</tr>
+	<tr>
+		<td>value</td>
+		<td>the value of the property</td>
+		<td ROWSPAN=2>One of the two</td>
+	</tr>
+	<tr>
+		<td>file</td>
+		<td>the file that will be used as a value</td>
+	</tr>
+	<tr>
+		<td>recurse</td>
+		<td>if set, property will be set recursively</td>
+		<td>No</td>
+	</tr>
+</table>
+<p>
+<I>Note:</I>svn recognizes the following special versioned properties but 
+will store any arbitrary properties set:
+<ul>
+	<li>svn:ignore : A newline separated list of file patterns to ignore. </li>
+	<li>svn:keywords : Keywords to be expanded.&nbsp; Valid keywords are:
+		<ul>
+			<li>URL, HeadURL : The URL for the head version of the object.</li>
+			<li>Author, LastChangedBy : The last person to modify the file.</li>
+			<li>Date, LastChangedDate : The date/time the object was last modified.</li>
+			<li>Rev, LastChangedRevision : The last revision the object changed.</li>
+			<li>Id : A compressed summary of the previous 4 keywords. </li>
+		</ul>
+	</li>
+	<li>svn:executable : If present, make the file executable. This property cannot be set on a directory.&nbsp;
+	A non-recursive attempt will fail, and a recursive attempt will set
+	the property only on the file children of the directory 
+	</li>
+	<li>svn:eol-style : One of 'native', 'LF', 'CR', 'CRLF'. </li>
+	<li>svn:mime-type :  The mimetype of the file.&nbsp; Used to determine whether to merge the file, and
+	how to serve it from Apache. <BR>
+	A mimetype beginning with 'text/' (or an absent mimetype) is treated as text.&nbsp; Anything else is
+	treated as binary. 
+	</li>
+	<li>svn:externals : A newline separated list of module
+	specifiers, each of which consists of a relative directory path,
+	optional revision flags, and an URL.&nbsp; For example<BR>
+ 	foo             http://example.com/repos/zig <br>
+ 	foo/bar -r 1234 http://example.com/repos/zag
+	</li>
+</ul>
+</p>
+</div>
+
+<![CDATA[=========================================================]]>
+
+<div class="h3" id="revert" title="revert">
+<H3><a name="revert">revert</a></H3>
+<p>Restore pristine working copy file (undo most local edits).</p>
+<table border="1" width="80%">	<tr>
+		<td>Attribute</td>
+		<td>Description</td>
+		<td>Required</td>
+	</tr>
+	<tr>
+		<td>file</td>
+		<td>file to revert</td>
+		<td>No</td>
+	</tr>
+	<tr>
+		<td>dir</td>
+		<td>directory to revert</td>
+		<td>No</td>
+	</tr>
+	<tr>
+		<td>recurse</td>
+		<td>Set to &quot;false&quot; to operate on a single directory only
+			(applies only when <CODE>dir</CODE> attribute is set). Default is
+			&quot;false&quot;</td>
+		<td>No</td>
+	</tr>
+	<tr>
+		<td>revision</td>
+		<td>revision. Defaults is &quot;HEAD&quot;<BR>Possible values are
+			:<BR>- a date with the format as specified in dateFormatter attribute<BR>-
+			a revision number<BR>- HEAD, BASE, COMMITED or PREV</td>
+		<td>No</td>
+	</tr>
+</table>
+<p>Parameters specified as nested elements :
+<ul>
+	<li>fileset<BR>
+	Filesets are used to select sets of files to revert. 
+	</li>
+</ul>
+</p>
+</div>
+
+<![CDATA[=========================================================]]>
+
+<div class="h3" id="status" title="status">
+<H3><a name="status">status</a></H3>
+<p>Get the status of working copy files and directories.</p>
+<table border="1" width="80%">	<tr>
+		<td>Attribute</td>
+		<td>Description</td>
+		<td>Required</td>
+	</tr>
+	<tr>
+		<td>path</td>
+		<td>path of the file or directory</td>
+		<td>Yes</td>
+	</tr>
+	<tr>
+		<td>textStatusProperty</td>
+		<td>Name of the property to set to the status of the item</td>
+		<td>No</td>
+	</tr>
+	<tr>
+		<td>propStatusProperty</td>
+		<td>Name of the property to set to the status of the item
+			properties</td>
+		<td>No</td>
+	</tr>
+	<tr>
+		<td>revisionProperty</td>
+		<td>Name of the property to set to the revision of the item (or &ldquo;&rdquo;
+			if unversioned)</td>
+		<td>No</td>
+	</tr>
+	<tr>
+		<td>lastChangedRevisionProperty</td>
+		<td>Name of the property to set to the last changed revision of the
+			item (or &ldquo;&rdquo; if unversioned)</td>
+		<td>No</td>
+	</tr>
+	<tr>
+		<td>lastChangedDateProperty</td>
+		<td>Name of the property to set to the last changed date of the
+			item (or &ldquo;&rdquo; if unversioned). 
+			The date is formatted according to task's "dateFormatter"</td>
+		<td>No</td>
+	</tr>
+	<tr>
+		<td>lastCommitAuthorProperty</td>
+		<td>Name of the property to set to the last commit author (or &ldquo;&rdquo;
+			if unversioned)</td>
+		<td>No</td>
+	</tr>
+	<tr>
+		<td>urlProperty</td>
+		<td>Name of the property to set to the url of the item</td>
+		<td>No</td>
+	</tr>
+</table>
+<p>
+The value of TextStatusProperty can be :
+<ul>
+	<li>non-svn</li>
+	<li>normal : no modifications</li>
+	<li>added</li>
+	<li>missing : item is missing (removed by non-svn command)</li>
+	<li>incomplete</li>
+	<li>deleted</li>
+	<li>replaced</li>
+	<li>modified</li>
+	<li>merged</li>
+	<li>conflicted</li>
+	<li>obstructed</li>
+	<li>ignored</li>
+	<li>external</li>
+	<li>unversioned</li>
+</ul>
+The value of propStatusProperty can be :
+<ul>
+	<li>normal : no	modifications</li>
+	<li>conflicted</li>
+	<li>modified</li>
+</ul>
+</p>
+<p></p>
+<div class="sample">
+<p>
+Example : <br>
+<FONT FACE="Courier New"><FONT SIZE=2><FONT COLOR="#000080">&lt;status</FONT>
+<FONT COLOR="#000080">path=</FONT><FONT COLOR="#008000">&quot;workingcopy/statusTest/added.txt&quot;</FONT>
+</FONT></FONT>
+<FONT COLOR="#000080"><FONT FACE="Courier New"><FONT SIZE=2>textStatusProperty=<FONT COLOR="#008000">&quot;testStatus.textStatus&quot;</FONT></FONT></FONT></FONT>
+<FONT FACE="Courier New"><FONT SIZE=2><FONT COLOR="#000080">propStatusProperty=</FONT><FONT COLOR="#008000">&quot;testStatus.propStatus&quot;</FONT></FONT></FONT>
+<FONT FACE="Courier New"><FONT SIZE=2><FONT COLOR="#000080">lastChangedRevisionProperty=</FONT><FONT COLOR="#008000">&quot;testStatus.lastCommitRevision&quot;</FONT></FONT></FONT>
+<FONT COLOR="#000080"><FONT FACE="Courier New"><FONT SIZE=2>revisionProperty=<FONT COLOR="#008000">&quot;testStatus.revision&quot;</FONT></FONT></FONT></FONT>
+<FONT FACE="Courier New"><FONT SIZE=2><FONT COLOR="#000080">lastCommitAuthorProperty=</FONT><FONT COLOR="#008000">&quot;testStatus.lastCommitAuthor&quot;</FONT></FONT></FONT>
+</p>
+</div>
+</div>
+
+<![CDATA[=========================================================]]>
+
+<div class="h3" id="switch" title="switch">
+<H3><a name="switch">switch</a></H3>
+<p>Update the working copy to mirror a new URL within the repository.
+This behaviour is similar to 'svn update', and is the way to move a
+working copy to a branch or tag within the same repository.</p>
+<table border="1" width="80%">	<tr>
+		<td>Attribute</td>
+		<td>Description</td>
+		<td>Required</td>
+	</tr>
+	<tr>
+		<td>path</td>
+		<td>The working copy to switch to the given url</td>
+		<td>Yes</td>
+	</tr>
+	<tr>
+		<td>url</td>
+		<td>The url to switch to</td>
+		<td>Yes</td>
+	</tr>
+	<tr>
+		<td>recurse</td>
+		<td>Set to &quot;false&quot; to operate on a single directory only.
+			Default is &quot;true&quot;</td>
+		<td>No</td>
+	</tr>
+	<tr>
+		<td>revision</td>
+		<td>revision. Defaults is &quot;HEAD&quot;<BR>Possible values are
+			:<BR>- a date with the format as specified in dateFormatter attribute<BR>-
+			a revision number<BR>- HEAD, BASE, COMMITED or PREV</td>
+		<td>No</td>
+	</tr>
+</table>
+<div class="sample" style="width: 602px; height: 43px">
+<p>
+Example:
+<FONT FACE="Courier New"><FONT SIZE=2><FONT COLOR="#000080">&lt;svn&gt;</FONT></FONT></FONT>
+<FONT FACE="Courier New"><FONT SIZE=2><FONT COLOR="#000080">&lt;switch</FONT>
+<FONT COLOR="#000080">path=</FONT><FONT COLOR="#008000">&quot;workingcopy/switchTest&quot;</FONT>
+<FONT COLOR="#000080">url=</FONT><FONT COLOR="#008000">&quot;${urlRepos}/switchTestBranch&quot;</FONT><FONT COLOR="#000080">/&gt;</FONT></FONT></FONT>
+<FONT COLOR="#000080"><FONT FACE="Courier New"><FONT SIZE=2>&lt;/svn&gt;</FONT></FONT></FONT>
+</p>
+</div>
+</div>
+
+<![CDATA[=========================================================]]>
+
+<div class="h3" id="update" title="update">
+<H3><a name="update">update</a></H3>
+<p>Bring changes from the repository into the working copy.<BR>If no
+revision given, bring working copy up-to-date with HEAD rev.&nbsp;
+Else synchronize working copy to revision.</p>
+<table border="1" width="80%">	<tr>
+		<td>Attribute</td>
+		<td>Description</td>
+		<td>Required</td>
+	</tr>
+	<tr>
+		<td>file</td>
+		<td>file to update</td>
+		<td>No</td>
+	</tr>
+	<tr>
+		<td>dir</td>
+		<td>directory to update</td>
+		<td>No</td>
+	</tr>
+	<tr>
+		<td>recurse</td>
+		<td>Set to &quot;false&quot; to operate on a single directory only
+			(applies only when <CODE>dir</CODE> attribute is set). Default is
+			&quot;true&quot;</td>
+		<td>No</td>
+	</tr>
+	<tr>
+		<td>revision</td>
+		<td>revision. Defaults is &quot;HEAD&quot;<BR>Possible values are
+			:<BR>- a date with the format as specified in dateFormatter attribute<BR>-
+			a revision number<BR>- HEAD, BASE, COMMITED or PREV</td>
+		<td>No</td>
+	</tr>
+</table>
+Parameters specified as nested elements :
+<ul>
+<li>fileset<BR>
+Filesets are used to select sets of files to update. 
+</li>
+</ul>
+</div>
+
+<![CDATA[=========================================================]]>
+
+<div class="h3" id="wcVersion" title="wcVersion">
+<H3><a name="wcVersion">wcVersion</a></H3>
+<p>Retrieves a state of the working copy. Similar to the svn's utility svnversion, just providing more.<BR>
+Crawls the working copy and retrieves the maximum revision number, revision range if workingCopy is mixed etc.
+</p>
+<table border="1" width="80%">	<tr>
+		<td>Attribute</td>
+		<td>Description</td>
+		<td>Required</td>
+	</tr>
+	<tr>
+		<td>path</td>
+		<td>a path to the working copy</td>
+		<td>Yes</td>
+	</tr>
+	<tr>
+		<td>prefix</td>
+		<td>a string which will be prefixed to output properties set/filled by this command</td>
+		<td>No</td>
+	</tr>
+	<tr>
+		<td>processUnversioned</td>
+		<td>flag whether presence of unversioned resoures should be treated as changes</td>
+		<td>No (defaults to false)</td>
+	</tr>
+</table>
+
+<p>The command fill set the following properties: (with optional prefix applied)</p>
+
+<table border="1" width="80%">	<tr>
+		<td>Property name</td>
+		<td>Description</td>
+	</tr>
+	<tr>
+		<td>repository.url</td>
+		<td>URL of the repository of the working copy root</td>
+	</tr>
+	<tr>
+		<td>repository.path</td>
+		<td>path in the repository</td>
+	</tr>
+	<tr>
+		<td>revision.max</td>
+		<td>the highest revision number in the working copy</td>
+	</tr>
+	<tr>
+		<td>revision.max-with-flags</td>
+		<td>the highest revision number in the working copy plus flags (M - modified, X - mixed)</td>
+	</tr>
+	<tr>
+		<td>revision.range</td>
+		<td>the revision range (in mixed wc), similar to svnversion format. (e.g. 1000:1010MX)</td>
+	</tr>
+	<tr>
+		<td>committed.max</td>
+		<td>the highest 'last committed revision'</td>
+	</tr>
+	<tr>
+		<td>committed.max-with-flags</td>
+		<td>the highest 'last committed revision' plus flags (M, X)</td>
+	</tr>
+	<tr>
+		<td>modified</td>
+		<td>set to "true" if working copy is modified, property not set otherwise</td>
+	</tr>
+	<tr>
+		<td>mixed</td>
+		<td>set to "true" if working copy is mixed, property not set otherwise</td>
+	</tr>
+</table>
+<p>
+An example of the properties that would be set in a sample working copy (with modifications):<br>
+(with prefix="svn.")
+<pre>
+svn.repository.url -> https://server/repos/branches/1.2.x
+svn.repository.path -> /repos/branches/1.2.x
+svn.revision.max -> 676
+svn.revision.max-with-flags -> 676M
+svn.revision.range -> 676M
+svn.committed.max -> 651
+svn.committed.max-with-flags -> 651M
+svn.modified -> true
+</pre>
+Example output in case of mixed and modified working copy:
+(without prefix set)
+<pre>
+repository.url -> https://server/repos/branches/1.2.x
+repository.path -> /repos/branches/1.2.x
+revision.max -> 676
+revision.max-with-flags -> 676MX
+revision.range -> 673:676M
+svn.committed.max -> 651
+svn.committed.max-with-flags -> 651M
+modified -> true
+mixed -> true
+</pre>
+</p>
+</div>
+
+<![CDATA[=========================================================]]>
+
+
+<div class="h2" id="Examples" title="Examples">
+<H2>Examples</H2>
+<p>&nbsp;</p>
+
+<div class="sample" style="width: 588px; height: 48px">
+<FONT FACE="Courier New"><FONT SIZE=2><FONT COLOR="#000080">&lt;svn</FONT>
+<FONT COLOR="#000080">javahl=</FONT><FONT COLOR="#008000">&quot;${javahl}&quot;</FONT><FONT COLOR="#000080">&gt;</FONT></FONT></FONT><br>
+<FONT FACE="Courier New"><FONT SIZE=2><FONT COLOR="#000080">&lt;checkout</FONT>
+<FONT COLOR="#000080">url=</FONT><FONT COLOR="#008000">&quot;${urlRepos}&quot;</FONT>
+<FONT COLOR="#000080">destPath=</FONT><FONT COLOR="#008000">&quot;workingcopy&quot;</FONT>
+<FONT COLOR="#000080">/&gt;</FONT></FONT></FONT><br>
+<FONT FACE="Courier New"><FONT SIZE=2><FONT COLOR="#000080">&lt;/svn&gt;</FONT></FONT></FONT>
+</div>
+<p>checkouts a working copy from repository</p>
+<p>&nbsp;</p>
+</p>
+
+<p>
+<div class="sample">
+<FONT FACE="Courier New"><FONT SIZE=2><FONT COLOR="#000080">&lt;svn</FONT><FONT COLOR="#000080">&gt;</FONT></FONT></FONT><br>
+<FONT COLOR="#000080">  <FONT FACE="Courier New"><FONT SIZE=2>&lt;delete&gt;</FONT></FONT></FONT><br>
+<FONT COLOR="#000080">    <FONT FACE="Courier New"><FONT SIZE=2>&lt;fileset</FONT>
+<FONT COLOR="#000080">dir=</FONT><FONT COLOR="#008000">&quot;workingcopy/deleteTest&quot;</FONT><FONT COLOR="#000080">&gt;</FONT></FONT></FONT><br>
+<FONT COLOR="#000080">      <FONT FACE="Courier New"><FONT SIZE=2>&lt;include</FONT>
+<FONT COLOR="#000080">name=</FONT><FONT COLOR="#008000">&quot;**/*.del&quot;</FONT><FONT COLOR="#000080">/&gt;</FONT></FONT></FONT>
+<FONT COLOR="#000080">    <FONT FACE="Courier New"><FONT SIZE=2>&lt;/fileset&gt;</FONT></FONT></FONT><br>
+<FONT COLOR="#000080">  <FONT FACE="Courier New"><FONT SIZE=2>&lt;/delete&gt;</FONT></FONT></FONT><br>
+<FONT COLOR="#000080">  <FONT FACE="Courier New"><FONT SIZE=2>&lt;commit</FONT>
+<FONT COLOR="#000080">message=</FONT><FONT COLOR="#008000">&quot;commit
+deleted files&quot;</FONT> <FONT COLOR="#000080">dir=</FONT><FONT COLOR="#008000">&quot;workingcopy/deleteTest&quot;</FONT><FONT COLOR="#000080">/&gt;</FONT></FONT></FONT><br>
+<FONT FACE="Courier New"><FONT SIZE=2><FONT COLOR="#000080">&lt;/svn&gt;</FONT></FONT></FONT>
+</div>
+<p>deletes some files from repository (and commit changes)</p>
+<p>&nbsp;</p>
+
+<p>
+<div class="sample">
+<FONT FACE="Courier New"><FONT SIZE=2><FONT COLOR="#000080">&lt;svn&gt;</FONT></FONT></FONT><br>
+<FONT COLOR="#000080">  <FONT FACE="Courier New"><FONT SIZE=2>&lt;add</FONT>
+<FONT COLOR="#000080">dir=</FONT><FONT COLOR="#008000">&quot;workingcopy/propTest&quot;</FONT><FONT COLOR="#000080">/&gt;</FONT></FONT></FONT><br>
+<FONT COLOR="#000080">  <FONT FACE="Courier New"><FONT SIZE=2>&lt;commit</FONT>
+<FONT COLOR="#000080">message=</FONT><FONT COLOR="#008000">&quot;propTest
+added&quot;</FONT> <FONT COLOR="#000080">dir=</FONT><FONT COLOR="#008000">&quot;workingcopy/propTest&quot;</FONT><FONT COLOR="#000080">/&gt;</FONT></FONT></FONT><br>
+  <FONT FACE="Courier New"><FONT SIZE=2><FONT COLOR="#000080">&lt;propset</FONT>
+<FONT COLOR="#000080">path=</FONT><FONT COLOR="#008000">&quot;workingcopy/propTest/file.png&quot;</FONT>
+<FONT COLOR="#000080">name=</FONT><FONT COLOR="#008000">&quot;svn:mime-type&quot;</FONT>
+<FONT COLOR="#000080">value=</FONT><FONT COLOR="#008000">&quot;image/png&quot;</FONT><FONT COLOR="#000080">/&gt;</FONT></FONT></FONT><br>
+  <FONT FACE="Courier New"><FONT SIZE=2><FONT COLOR="#000080">&lt;propset</FONT>
+<FONT COLOR="#000080">path=</FONT><FONT COLOR="#008000">&quot;workingcopy/propTest/file.png&quot;</FONT>
+<FONT COLOR="#000080">name=</FONT><FONT COLOR="#008000">&quot;myPicture&quot;</FONT>
+<FONT COLOR="#000080">file=</FONT><FONT COLOR="#008000">&quot;workingcopy/propTest/icon.gif&quot;</FONT><FONT COLOR="#000080">/&gt;</FONT></FONT></FONT><br>
+<FONT FACE="Courier New"><FONT SIZE=2><FONT COLOR="#000080">&lt;/svn&gt;</FONT></FONT></FONT>
+</div>
+<p>add my_repos/propTest to repository and set two properties on file.png <br>
+subversion command line interface is used (javahl="false").
+
+</BODY>
+</HTML>

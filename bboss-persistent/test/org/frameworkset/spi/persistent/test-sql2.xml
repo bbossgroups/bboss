@@ -1,0 +1,3068 @@
+<?xml version="1.0" encoding='gb2312'?>
+<manager-config>
+<description>
+<![CDATA[
+	smc mysql初始化语句
+ ]]>
+</description>
+<properties>
+	<property name="testsqlvariable"><![CDATA[insert into tableinfo2
+									  (table_name,
+									   table_id_name,
+									   table_id_increment,
+									   table_id_value,
+									   table_id_generator,
+									   table_id_type,
+									   table_id_prefix)
+									values
+									  ('mq_node',
+									   'node_id',
+									   1,
+									   0,
+									   '${table_id_generator}',
+									   '${table_id_type}',
+									   ' ')]]>
+	</property>
+	
+	<property name="testerrsqlvariable"><![CDATA[insert into tableinfo2
+									  (table_name,
+									   table_id_name,
+									   table_id_increment,
+									   table_id_value,
+									   table_id_generator,
+									   table_id_type,
+									   table_id_prefix)
+									values
+									  ('mq_node',
+									   'node_id',
+									   1,
+									   0,
+									   '${table_id_generator',
+									   '${table_id_type}',
+									   ' ')]]>
+	</property>
+	
+	<property name="sys_tableinfo_list">
+		<list>
+			<property index="0"><![CDATA[insert into tableinfo
+									  (table_name,
+									   table_id_name,
+									   table_id_increment,
+									   table_id_value,
+									   table_id_generator,
+									   table_id_type,
+									   table_id_prefix)
+									values
+									  ('mq_node',
+									   'node_id',
+									   1,
+									   0,
+									   '${table_id_generator}',
+									   '${table_id_type}',
+									   ' ')]]></property>
+				<property index="1"><![CDATA[insert into tableinfo
+									  (table_name,
+									   table_id_name,
+									   table_id_increment,
+									   table_id_value,
+									   table_id_generator,
+									   table_id_type,
+									   table_id_prefix)
+									values
+									  ('td_sd_notic',
+									   'notic_id',
+									   1,
+									   0,
+									   'SEQ_TD_SD_NOTIC',
+									   'sequence',
+									   ' ')]]></property>
+				<property index="2"><![CDATA[insert into tableinfo
+									  (table_name,
+									   table_id_name,
+									   table_id_increment,
+									   table_id_value,
+									   table_id_generator,
+									   table_id_type,
+									   table_id_prefix)
+									values
+									  ('td_sd_ratifyadvice',
+									   'ratifyadvice_id',
+									   1,
+									   0,
+									   'SEQ_TD_SD_RATIFYADVICE',
+									   'sequence',
+									   ' ')]]></property>
+				<property index="3"><![CDATA[insert into tableinfo
+									  (table_name,
+									   table_id_name,
+									   table_id_increment,
+									   table_id_value,
+									   table_id_generator,
+									   table_id_type,
+									   table_id_prefix)
+									values
+									  ('td_sd_schedular',
+									   'schedular_id',
+									   1,
+									   0,
+									   'SEQ_TD_SD_SCHEDULAR',
+									   'sequence',
+									   ' ')]]></property>
+				<property index="4"><![CDATA[insert into tableinfo
+									  (table_name,
+									   table_id_name,
+									   table_id_increment,
+									   table_id_value,
+									   table_id_generator,
+									   table_id_type,
+									   table_id_prefix)
+									values
+									  ('td_sm_dictdata',
+									   'dictdata_id',
+									   1,
+									   193,
+									   'SEQ_TD_SM_DICTDATA',
+									   'sequence',
+									   ' ')]]></property>
+				<property index="5"><![CDATA[insert into tableinfo
+									  (table_name,
+									   table_id_name,
+									   table_id_increment,
+									   table_id_value,
+									   table_id_generator,
+									   table_id_type,
+									   table_id_prefix)
+									values
+									  ('td_sm_dicttype',
+									   'dicttype_id',
+									   1,
+									   2312,
+									   'SEQ_TD_SM_DICTTYPE',
+									   'sequence',
+									   ' ')]]></property>
+					<property index="6"><![CDATA[insert into tableinfo
+									  (table_name,
+									   table_id_name,
+									   table_id_increment,
+									   table_id_value,
+									   table_id_generator,
+									   table_id_type,
+									   table_id_prefix)
+									values
+									  ('td_sm_group',
+									   'group_id',
+									   1,
+									   0,
+									   'SEQ_TD_SM_GROUP',
+									   'sequence',
+									   ' ')]]></property>
+					<property index="7"><![CDATA[insert into tableinfo
+									  (table_name,
+									   table_id_name,
+									   table_id_increment,
+									   table_id_value,
+									   table_id_generator,
+									   table_id_type,
+									   table_id_prefix)
+									values
+									  ('td_sm_job',
+									   'job_id',
+									   1,
+									   1,
+									   'SEQ_TD_SM_JOB',
+									   'sequence',
+									   ' ')]]></property>
+					<property index="8"><![CDATA[insert into tableinfo
+									  (table_name,
+									   table_id_name,
+									   table_id_increment,
+									   table_id_value,
+									   table_id_generator,
+									   table_id_type,
+									   table_id_prefix)
+									values
+									  ('td_sm_organization',
+									   'org_id',
+									   1,
+									   1,
+									   'SEQ_TD_SM_ORGANIZATION',
+									   'sequence',
+									   ' ')]]></property>
+					<property index="9"><![CDATA[insert into tableinfo
+									  (table_name,
+									   table_id_name,
+									   table_id_increment,
+									   table_id_value,
+									   table_id_generator,
+									   table_id_type,
+									   table_id_prefix)
+									values
+									  ('td_sm_res',
+									   'res_id',
+									   1,
+									   0,
+									   'SEQ_TD_SM_RES',
+									   'sequence',
+									   ' ')]]></property>
+					<property index="10"><![CDATA[insert into tableinfo
+									  (table_name,
+									   table_id_name,
+									   table_id_increment,
+									   table_id_value,
+									   table_id_generator,
+									   table_id_type,
+									   table_id_prefix)
+									values
+									  ('td_sm_role',
+									   'role_id',
+									   1,
+									   4,
+									   'SEQ_TD_SM_ROLE',
+									   'sequence',
+									   ' ')]]></property>
+				<property index="11"><![CDATA[insert into tableinfo
+									  (table_name,
+									   table_id_name,
+									   table_id_increment,
+									   table_id_value,
+									   table_id_generator,
+									   table_id_type,
+									   table_id_prefix)
+									values
+									  ('td_sd_remind',
+									   'remind_id',
+									   1,
+									   0,
+									   'SEQ_TD_SD_REMIND',
+									   'sequence',
+									   ' ')]]></property>
+				<property index="12"><![CDATA[insert into tableinfo
+  							(table_name,
+   							table_id_name,
+   							table_id_increment,
+   						table_id_value,
+   						table_id_generator,
+   					table_id_type)
+						values
+  					('mq_broker', 'BROKER_ID', 1, 1, 'SEQ_MQ_SERVER', 'sequence')]]></property>	
+  			<property index="13"><![CDATA[insert into tableinfo
+									  (table_name,
+									   table_id_name,
+									   table_id_increment,
+									   table_id_value,
+									   table_id_generator,
+									   table_id_type,
+									   table_id_prefix)
+									values
+									  ('td_sm_user',
+									   'user_id',
+									   1,
+									   1,
+									   'SEQ_TD_SM_USER',
+									   'sequence',
+									   ' ')]]></property>
+			 <property index="14"><![CDATA[insert into tableinfo
+									  (table_name,
+									   table_id_name,
+									   table_id_increment,
+									   table_id_value,
+									   table_id_generator,
+									   table_id_type,
+									   table_id_prefix)
+									values
+									  ('TB_SM_INPUTTYPE',
+									   'INPUT_TYPE_ID',
+									   1,
+									   9,
+									   'SEQ_TB_SM_INPUTTYPE',
+									   'sequence',
+									   ' ')]]></property>
+		 <property index="15"><![CDATA[insert into tableinfo
+									  (table_name,
+									   table_id_name,
+									   table_id_increment,
+									   table_id_value,
+									   table_id_generator,
+									   table_id_type,
+									   table_id_prefix)
+									values
+									  ('td_sd_notepaper',
+									   'notepaper_id',
+									   1,
+									   0,
+									   'SEQ_TD_SD_NOTEPAPER',
+									   'sequence',
+									   ' ')]]></property>
+		<property index="16"><![CDATA[insert into tableinfo
+									  (table_name,
+									   table_id_name,
+									   table_id_increment,
+									   table_id_value,
+									   table_id_generator,
+									   table_id_type,
+									   table_id_prefix)
+									values
+									  ('td_sm_roletype',
+									   'type_id',
+									   1,
+									   1,
+									   'SEQ_TD_SM_ROLETYPE',
+									   'sequence',
+									   ' ')]]></property>
+		<property index="17"><![CDATA[insert into tableinfo
+									  (table_name,
+									   table_id_name,
+									   table_id_increment,
+									   table_id_value,
+									   table_id_generator,
+									   table_id_type,
+									   table_id_prefix)
+									values
+									  ('TD_SM_LOGMODULE',
+									   'id',
+									   1,
+									   3,
+									   'SEQ_TD_SM_LOGMODULE',
+									   'sequence',
+									   ' ')]]></property>
+			<property index="18"><![CDATA[insert into tableinfo
+									  (table_name,
+									   table_id_name,
+									   table_id_increment,
+									   table_id_value,
+									   table_id_generator,
+									   table_id_type,
+									   table_id_prefix)
+									values
+									  ('TD_SM_DICTKEYWORDS',
+									   'KEYWORD_ID',
+									   1,
+									   0,
+									   'SEQ_DICTKEYWORD',
+									   'sequence',
+									   ' ')]]></property>
+		<property index="19"><![CDATA[insert into tableinfo
+									  (table_name,
+									   table_id_name,
+									   table_id_increment,
+									   table_id_value,
+									   table_id_generator,
+									   table_id_type,
+									   table_id_prefix)
+									values
+									  ('TD_SM_LOGDETAIL',
+									   'DETAIL_ID',
+									   1,
+									   0,
+									   'SEQ_LOG_DETAIL',
+									   'sequence',
+									   ' ')]]></property>
+			<property index="20"><![CDATA[insert into tableinfo
+									  (table_name,
+									   table_id_name,
+									   table_id_increment,
+									   table_id_value,
+									   table_id_generator,
+									   table_id_type,
+									   table_id_prefix)
+									values
+									  ('TD_SM_LOG',
+									   'LOG_ID',
+									   1,
+									   121,
+									   'SEQ_LOG',
+									   'sequence',
+									   ' ')]]></property>
+	      <property index="21"><![CDATA[insert into tableinfo
+									  (table_name,
+									   table_id_name,
+									   table_id_increment,
+									   table_id_value,
+									   table_id_generator,
+									   table_id_type,
+									   table_id_prefix)
+									values
+									  ('mq_rules_tpl',
+									   'rule_tpl_id',
+									   1,
+									   31,
+									   'SEQ_RULE_TPL',
+									   'sequence',
+									   ' ')]]></property>
+		   
+									   				
+									   
+									   
+		</list>
+	</property>
+	<property dbname="bspf"  name="addtableinfo_seqlist-mysql">
+		<list>
+			<property index="0"><![CDATA[INSERT INTO sequence.sequence_data 
+				(sequence_name) 
+				VALUES
+				('SEQ_MQ_NODE')]]></property>
+				<property index="1"><![CDATA[INSERT INTO sequence.sequence_data 
+				(sequence_name) 
+				VALUES
+				('SEQ_TD_SD_NOTIC')]]></property>
+				<property index="2"><![CDATA[INSERT INTO sequence.sequence_data 
+				(sequence_name) 
+				VALUES
+				('SEQ_TD_SD_RATIFYADVICE')]]></property>
+				<property index="3"><![CDATA[INSERT INTO sequence.sequence_data 
+				(sequence_name) 
+				VALUES
+				('SEQ_TD_SD_SCHEDULAR')]]></property>
+				<property index="4"><![CDATA[INSERT INTO sequence.sequence_data 
+				(sequence_name) 
+				VALUES
+				('SEQ_TD_SM_DICTDATA')]]></property>
+				<property index="5"><![CDATA[INSERT INTO sequence.sequence_data 
+				(sequence_name) 
+				VALUES
+				('SEQ_TD_SM_DICTTYPE')]]></property>
+				<property index="6"><![CDATA[INSERT INTO sequence.sequence_data 
+				(sequence_name) 
+				VALUES
+				('SEQ_TD_SM_GROUP')]]></property>
+				<property index="7"><![CDATA[INSERT INTO sequence.sequence_data 
+				(sequence_name) 
+				VALUES
+				('SEQ_TD_SM_JOB')]]></property>
+				<property index="8"><![CDATA[INSERT INTO sequence.sequence_data 
+				(sequence_name) 
+				VALUES
+				('SEQ_TD_SM_ORGANIZATION')]]></property>
+				<property index="9"><![CDATA[INSERT INTO sequence.sequence_data 
+				(sequence_name) 
+				VALUES
+				('SEQ_TD_SM_RES')]]></property>
+				<property index="10"><![CDATA[INSERT INTO sequence.sequence_data 
+				(sequence_name) 
+				VALUES
+				('SEQ_TD_SM_ROLE')]]></property>
+				<property index="11"><![CDATA[INSERT INTO sequence.sequence_data 
+				(sequence_name) 
+				VALUES
+				('SEQ_TD_SD_REMIND')]]></property>
+				<property index="12"><![CDATA[INSERT INTO sequence.sequence_data 
+				(sequence_name) 
+				VALUES
+				('SEQ_MQ_SERVER')]]></property>	
+				<property index="13"><![CDATA[INSERT INTO sequence.sequence_data 
+				(sequence_name) 
+				VALUES
+				('SEQ_TD_SM_USER')]]></property>	
+				<property index="14"><![CDATA[INSERT INTO sequence.sequence_data 
+				(sequence_name) 
+				VALUES
+				('SEQ_TB_SM_INPUTTYPE')]]></property>
+				<property index="15"><![CDATA[INSERT INTO sequence.sequence_data 
+				(sequence_name) 
+				VALUES
+				('SEQ_TD_SD_NOTEPAPER')]]></property>
+				<property index="16"><![CDATA[INSERT INTO sequence.sequence_data 
+				(sequence_name) 
+				VALUES
+				('SEQ_TD_SM_ROLETYPE')]]></property>
+				<property index="17"><![CDATA[INSERT INTO sequence.sequence_data 
+				(sequence_name) 
+				VALUES
+				('SEQ_TD_SM_LOGMODULE')]]></property>
+				<property index="18"><![CDATA[INSERT INTO sequence.sequence_data 
+				(sequence_name) 
+				VALUES
+				('SEQ_DICTKEYWORD')]]></property>
+				<property index="19"><![CDATA[INSERT INTO sequence.sequence_data 
+				(sequence_name) 
+				VALUES
+				('SEQ_LOG_DETAIL')]]></property>
+				<property index="20"><![CDATA[INSERT INTO sequence.sequence_data 
+				(sequence_name) 
+				VALUES
+				('SEQ_LOG')]]></property>
+				<property index="21"><![CDATA[INSERT INTO sequence.sequence_data 
+				(sequence_name) 
+				VALUES
+				('SEQ_RULE_TPL')]]></property>
+				
+		</list>
+	</property>
+	<property dbname="bspf"  name="addtableinfo_seqlist-oracle">
+		<list>
+			<property index="0"><![CDATA[INSERT INTO sequence.sequence_data 
+				(sequence_name) 
+				VALUES
+				('SEQ_MQ_NODE')]]></property>
+				<property index="1"><![CDATA[INSERT INTO sequence.sequence_data 
+				(sequence_name) 
+				VALUES
+				('SEQ_TD_SD_NOTIC')]]></property>
+				<property index="2"><![CDATA[INSERT INTO sequence.sequence_data 
+				(sequence_name) 
+				VALUES
+				('SEQ_TD_SD_RATIFYADVICE')]]></property>
+				<property index="3"><![CDATA[INSERT INTO sequence.sequence_data 
+				(sequence_name) 
+				VALUES
+				('SEQ_TD_SD_SCHEDULAR')]]></property>
+				<property index="4"><![CDATA[INSERT INTO sequence.sequence_data 
+				(sequence_name) 
+				VALUES
+				('SEQ_TD_SM_DICTDATA')]]></property>
+				<property index="5"><![CDATA[INSERT INTO sequence.sequence_data 
+				(sequence_name) 
+				VALUES
+				('SEQ_TD_SM_DICTTYPE')]]></property>
+				<property index="6"><![CDATA[INSERT INTO sequence.sequence_data 
+				(sequence_name) 
+				VALUES
+				('SEQ_TD_SM_GROUP')]]></property>
+				<property index="7"><![CDATA[INSERT INTO sequence.sequence_data 
+				(sequence_name) 
+				VALUES
+				('SEQ_TD_SM_JOB')]]></property>
+				<property index="8"><![CDATA[INSERT INTO sequence.sequence_data 
+				(sequence_name) 
+				VALUES
+				('SEQ_TD_SM_ORGANIZATION')]]></property>
+				<property index="9"><![CDATA[INSERT INTO sequence.sequence_data 
+				(sequence_name) 
+				VALUES
+				('SEQ_TD_SM_RES')]]></property>
+				<property index="10"><![CDATA[INSERT INTO sequence.sequence_data 
+				(sequence_name) 
+				VALUES
+				('SEQ_TD_SM_ROLE')]]></property>
+				<property index="11"><![CDATA[INSERT INTO sequence.sequence_data 
+				(sequence_name) 
+				VALUES
+				('SEQ_TD_SD_REMIND')]]></property>
+				<property index="12"><![CDATA[INSERT INTO sequence.sequence_data 
+				(sequence_name) 
+				VALUES
+				('SEQ_MQ_SERVER')]]></property>	
+				<property index="13"><![CDATA[INSERT INTO sequence.sequence_data 
+				(sequence_name) 
+				VALUES
+				('SEQ_TD_SM_USER')]]></property>	
+				<property index="14"><![CDATA[INSERT INTO sequence.sequence_data 
+				(sequence_name) 
+				VALUES
+				('SEQ_TB_SM_INPUTTYPE')]]></property>
+				<property index="15"><![CDATA[INSERT INTO sequence.sequence_data 
+				(sequence_name) 
+				VALUES
+				('SEQ_TD_SD_NOTEPAPER')]]></property>
+				<property index="16"><![CDATA[INSERT INTO sequence.sequence_data 
+				(sequence_name) 
+				VALUES
+				('SEQ_TD_SM_ROLETYPE')]]></property>
+				<property index="17"><![CDATA[INSERT INTO sequence.sequence_data 
+				(sequence_name) 
+				VALUES
+				('SEQ_TD_SM_LOGMODULE')]]></property>
+				<property index="18"><![CDATA[INSERT INTO sequence.sequence_data 
+				(sequence_name) 
+				VALUES
+				('SEQ_DICTKEYWORD')]]></property>
+				<property index="19"><![CDATA[INSERT INTO sequence.sequence_data 
+				(sequence_name) 
+				VALUES
+				('SEQ_LOG_DETAIL')]]></property>
+				<property index="20"><![CDATA[INSERT INTO sequence.sequence_data 
+				(sequence_name) 
+				VALUES
+				('SEQ_LOG')]]></property>
+				<property index="21"><![CDATA[INSERT INTO sequence.sequence_data 
+				(sequence_name) 
+				VALUES
+				('SEQ_RULE_TPL')]]></property>
+				
+		</list>
+	</property>
+	<property dbname="bspf" name="addtb_sm_inputtype_list">
+		<list>
+			<property index="0"><![CDATA[insert into tb_sm_inputtype
+									  (INPUT_TYPE_ID,
+									   INPUT_TYPE_DESC,
+									   DATASOURCE_PATH,
+									   INPUT_TYPE_NAME,
+									   SCRIPT)
+									values
+									  (1,
+									   ' ',
+									   ' ',
+									   '文本类型',
+									   ' ')]]></property>
+			<property index="1"><![CDATA[insert into tb_sm_inputtype
+									  (INPUT_TYPE_ID,
+									   INPUT_TYPE_DESC,
+									   DATASOURCE_PATH,
+									   INPUT_TYPE_NAME,
+									   SCRIPT)
+									values
+									  (2,
+									   ' ',
+									   ' ',
+									   '选择字典',
+									   ' ')]]></property>
+		<property index="2"><![CDATA[insert into tb_sm_inputtype
+									  (INPUT_TYPE_ID,
+									   INPUT_TYPE_DESC,
+									   DATASOURCE_PATH,
+									   INPUT_TYPE_NAME,
+									   SCRIPT)
+									values
+									  (3,
+									   ' ',
+									   ' ',
+									   '选择时间',
+									   ' ')]]></property>
+			<property index="3"><![CDATA[insert into tb_sm_inputtype
+									  (INPUT_TYPE_ID,
+									   INPUT_TYPE_DESC,
+									   DATASOURCE_PATH,
+									   INPUT_TYPE_NAME,
+									   SCRIPT)
+									values
+									  (4,
+									   ' ',
+									   ' ',
+									   '主键生成',
+									   ' ')]]></property>
+				<property index="4"><![CDATA[insert into tb_sm_inputtype
+									  (INPUT_TYPE_ID,
+									   INPUT_TYPE_DESC,
+									   DATASOURCE_PATH,
+									   INPUT_TYPE_NAME,
+									   SCRIPT)
+									values
+									  (5,
+									   ' ',
+									   ' ',
+									   '选择机构',
+									   ' ')]]></property>
+			 <property index="5"><![CDATA[insert into tb_sm_inputtype
+									  (INPUT_TYPE_ID,
+									   INPUT_TYPE_DESC,
+									   DATASOURCE_PATH,
+									   INPUT_TYPE_NAME,
+									   SCRIPT)
+									values
+									  (6,
+									   ' ',
+									   ' ',
+									   '选择人员',
+									   ' ')]]></property>
+			<property index="6"><![CDATA[insert into tb_sm_inputtype
+									  (INPUT_TYPE_ID,
+									   INPUT_TYPE_DESC,
+									   DATASOURCE_PATH,
+									   INPUT_TYPE_NAME,
+									   SCRIPT)
+									values
+									  (7,
+									   ' ',
+									   ' ',
+									   '当前用户',
+									   ' ')]]></property>
+			<property index="7"><![CDATA[insert into tb_sm_inputtype
+									  (INPUT_TYPE_ID,
+									   INPUT_TYPE_DESC,
+									   DATASOURCE_PATH,
+									   INPUT_TYPE_NAME,
+									   SCRIPT)
+									values
+									  (8,
+									   ' ',
+									   ' ',
+									   '当前机构',
+									   ' ')]]></property>
+			 <property index="8"><![CDATA[insert into tb_sm_inputtype
+									  (INPUT_TYPE_ID,
+									   INPUT_TYPE_DESC,
+									   DATASOURCE_PATH,
+									   INPUT_TYPE_NAME,
+									   SCRIPT)
+									values
+									  (9,
+									   ' ',
+									   ' ',
+									   '当前用户',
+									   ' ')]]></property>
+				
+		</list>
+	</property>
+	
+	<property dbname="bspf"  name="addtd_sm_dicttype_list">
+		<list>
+			<property index="0"><![CDATA[insert into td_sm_dicttype
+									  (DATA_VALIDATE_FIELD,
+									   DATA_CREATE_ORGID_FIELD,
+									   DICTTYPE_TYPE,
+									   IS_TREE,
+									   DICTTYPE_ID,
+									   USER_ID,
+									   DICTTYPE_NAME,
+									   DICTTYPE_DESC,
+									   DICTTYPE_PARENT,
+									   DATA_TABLE_NAME,
+									   DATA_NAME_FILED,
+									   DATA_VALUE_FIELD,
+									   DATA_ORDER_FIELD,
+									   DATA_TYPEID_FIELD,
+									   DATA_DBNAME,
+									   DATA_PARENTID_FIELD,
+									   DATA_NAME_CN,
+									   DATA_VALUE_CN,
+									   KEY_GENERAL_TYPE,
+									   NAME_GENERAL_TYPE,
+									   KEY_GENERAL_INFO,
+									   NEEDCACHE,
+									   ENABLE_VALUE_MODIFY)
+									values
+									  (' ',
+									   ' ',
+									   0,
+									   0,
+									   '9',
+									   null,
+									   'isPublicAffair',
+									   '日程管理是否公事',
+									   '0',
+									   ' ',
+									   ' ',
+									   ' ',
+									   ' ',
+									   ' ',
+									   ' ',
+									   ' ',
+									   '名称',
+									   '真实值',
+									   null,
+									   ' ',
+									   ' ',
+									   1,
+									   0)]]></property>
+			<property index="1"><![CDATA[insert into td_sm_dicttype
+									  (DATA_VALIDATE_FIELD,
+									   DATA_CREATE_ORGID_FIELD,
+									   DICTTYPE_TYPE,
+									   IS_TREE,
+									   DICTTYPE_ID,
+									   USER_ID,
+									   DICTTYPE_NAME,
+									   DICTTYPE_DESC,
+									   DICTTYPE_PARENT,
+									   DATA_TABLE_NAME,
+									   DATA_NAME_FILED,
+									   DATA_VALUE_FIELD,
+									   DATA_ORDER_FIELD,
+									   DATA_TYPEID_FIELD,
+									   DATA_DBNAME,
+									   DATA_PARENTID_FIELD,
+									   DATA_NAME_CN,
+									   DATA_VALUE_CN,
+									   KEY_GENERAL_TYPE,
+									   NAME_GENERAL_TYPE,
+									   KEY_GENERAL_INFO,
+									   NEEDCACHE,
+									   ENABLE_VALUE_MODIFY)
+									values
+									  (' ',
+									   ' ',
+									   0,
+									   0,
+									   '6',
+									   null,
+									   'intervalType',
+									   '日程管理提醒时间间隔单位',
+									   '0',
+									   ' ',
+									   ' ',
+									   ' ',
+									   ' ',
+									   ' ',
+									   ' ',
+									   ' ',
+									   '名称',
+									   '真实值',
+									   null,
+									   ' ',
+									   ' ',
+									   1,
+									   0)]]></property>
+				<property index="2"><![CDATA[insert into td_sm_dicttype
+									  (DATA_VALIDATE_FIELD,
+									   DATA_CREATE_ORGID_FIELD,
+									   DICTTYPE_TYPE,
+									   IS_TREE,
+									   DICTTYPE_ID,
+									   USER_ID,
+									   DICTTYPE_NAME,
+									   DICTTYPE_DESC,
+									   DICTTYPE_PARENT,
+									   DATA_TABLE_NAME,
+									   DATA_NAME_FILED,
+									   DATA_VALUE_FIELD,
+									   DATA_ORDER_FIELD,
+									   DATA_TYPEID_FIELD,
+									   DATA_DBNAME,
+									   DATA_PARENTID_FIELD,
+									   DATA_NAME_CN,
+									   DATA_VALUE_CN,
+									   KEY_GENERAL_TYPE,
+									   NAME_GENERAL_TYPE,
+									   KEY_GENERAL_INFO,
+									   NEEDCACHE,
+									   ENABLE_VALUE_MODIFY)
+									values
+									  (' ',
+									   ' ',
+									   0,
+									   0,
+									   '2',
+									   null,
+									   'isvalid',
+									   '有效否',
+									   '0',
+									   ' ',
+									   ' ',
+									   ' ',
+									   ' ',
+									   ' ',
+									   ' ',
+									   ' ',
+									   '名称',
+									   '真实值',
+									   null,
+									   ' ',
+									   ' ',
+									   1,
+									   0)]]></property>
+			 <property index="3"><![CDATA[insert into td_sm_dicttype
+									  (DATA_VALIDATE_FIELD,
+									   DATA_CREATE_ORGID_FIELD,
+									   DICTTYPE_TYPE,
+									   IS_TREE,
+									   DICTTYPE_ID,
+									   USER_ID,
+									   DICTTYPE_NAME,
+									   DICTTYPE_DESC,
+									   DICTTYPE_PARENT,
+									   DATA_TABLE_NAME,
+									   DATA_NAME_FILED,
+									   DATA_VALUE_FIELD,
+									   DATA_ORDER_FIELD,
+									   DATA_TYPEID_FIELD,
+									   DATA_DBNAME,
+									   DATA_PARENTID_FIELD,
+									   DATA_NAME_CN,
+									   DATA_VALUE_CN,
+									   KEY_GENERAL_TYPE,
+									   NAME_GENERAL_TYPE,
+									   KEY_GENERAL_INFO,
+									   NEEDCACHE,
+									   ENABLE_VALUE_MODIFY)
+									values
+									  (' ',
+									   ' ',
+									   0,
+									   0,
+									   '1',
+									   null,
+									   'sex',
+									   '性别',
+									   '0',
+									   ' ',
+									   ' ',
+									   ' ',
+									   ' ',
+									   ' ',
+									   ' ',
+									   ' ',
+									   '名称',
+									   '真实值',
+									   null,
+									   ' ',
+									   ' ',
+									   1,
+									   0)]]></property>
+			<property index="4"><![CDATA[insert into td_sm_dicttype
+									  (DATA_VALIDATE_FIELD,
+									   DATA_CREATE_ORGID_FIELD,
+									   DICTTYPE_TYPE,
+									   IS_TREE,
+									   DICTTYPE_ID,
+									   USER_ID,
+									   DICTTYPE_NAME,
+									   DICTTYPE_DESC,
+									   DICTTYPE_PARENT,
+									   DATA_TABLE_NAME,
+									   DATA_NAME_FILED,
+									   DATA_VALUE_FIELD,
+									   DATA_ORDER_FIELD,
+									   DATA_TYPEID_FIELD,
+									   DATA_DBNAME,
+									   DATA_PARENTID_FIELD,
+									   DATA_NAME_CN,
+									   DATA_VALUE_CN,
+									   KEY_GENERAL_TYPE,
+									   NAME_GENERAL_TYPE,
+									   KEY_GENERAL_INFO,
+									   NEEDCACHE,
+									   ENABLE_VALUE_MODIFY)
+									values
+									  (' ',
+									   ' ',
+									   0,
+									   0,
+									   '5',
+									   null,
+									   'orgType',
+									   '机构类型',
+									   '0',
+									   ' ',
+									   ' ',
+									   ' ',
+									   ' ',
+									   ' ',
+									   ' ',
+									   ' ',
+									   '名称',
+									   '真实值',
+									   null,
+									   ' ',
+									   ' ',
+									   1,
+									   0)]]></property>
+				<property index="5"><![CDATA[insert into td_sm_dicttype
+									  (DATA_VALIDATE_FIELD,
+									   DATA_CREATE_ORGID_FIELD,
+									   DICTTYPE_TYPE,
+									   IS_TREE,
+									   DICTTYPE_ID,
+									   USER_ID,
+									   DICTTYPE_NAME,
+									   DICTTYPE_DESC,
+									   DICTTYPE_PARENT,
+									   DATA_TABLE_NAME,
+									   DATA_NAME_FILED,
+									   DATA_VALUE_FIELD,
+									   DATA_ORDER_FIELD,
+									   DATA_TYPEID_FIELD,
+									   DATA_DBNAME,
+									   DATA_PARENTID_FIELD,
+									   DATA_NAME_CN,
+									   DATA_VALUE_CN,
+									   KEY_GENERAL_TYPE,
+									   NAME_GENERAL_TYPE,
+									   KEY_GENERAL_INFO,
+									   NEEDCACHE,
+									   ENABLE_VALUE_MODIFY)
+									values
+									  (' ',
+									   ' ',
+									   0,
+									   0,
+									   '4',
+									   null,
+									   'MailPostfix',
+									   '邮箱后缀',
+									   '0',
+									   ' ',
+									   ' ',
+									   ' ',
+									   ' ',
+									   ' ',
+									   ' ',
+									   ' ',
+									   '名称',
+									   '真实值',
+									   null,
+									   ' ',
+									   ' ',
+									   1,
+									   0)]]></property>
+			 <property index="6"><![CDATA[insert into td_sm_dicttype
+									  (DATA_VALIDATE_FIELD,
+									   DATA_CREATE_ORGID_FIELD,
+									   DICTTYPE_TYPE,
+									   IS_TREE,
+									   DICTTYPE_ID,
+									   USER_ID,
+									   DICTTYPE_NAME,
+									   DICTTYPE_DESC,
+									   DICTTYPE_PARENT,
+									   DATA_TABLE_NAME,
+									   DATA_NAME_FILED,
+									   DATA_VALUE_FIELD,
+									   DATA_ORDER_FIELD,
+									   DATA_TYPEID_FIELD,
+									   DATA_DBNAME,
+									   DATA_PARENTID_FIELD,
+									   DATA_NAME_CN,
+									   DATA_VALUE_CN,
+									   KEY_GENERAL_TYPE,
+									   NAME_GENERAL_TYPE,
+									   KEY_GENERAL_INFO,
+									   NEEDCACHE,
+									   ENABLE_VALUE_MODIFY)
+									values
+									  (' ',
+									   ' ',
+									   0,
+									   0,
+									   '3',
+									   null,
+									   'userType',
+									   '用户类型',
+									   '0',
+									   ' ',
+									   ' ',
+									   ' ',
+									   ' ',
+									   ' ',
+									   ' ',
+									   ' ',
+									   '名称',
+									   '真实值',
+									   null,
+									   ' ',
+									   ' ',
+									   1,
+									   0)]]></property>
+				<property index="7"><![CDATA[insert into td_sm_dicttype
+									  (DATA_VALIDATE_FIELD,
+									   DATA_CREATE_ORGID_FIELD,
+									   DICTTYPE_TYPE,
+									   IS_TREE,
+									   DICTTYPE_ID,
+									   USER_ID,
+									   DICTTYPE_NAME,
+									   DICTTYPE_DESC,
+									   DICTTYPE_PARENT,
+									   DATA_TABLE_NAME,
+									   DATA_NAME_FILED,
+									   DATA_VALUE_FIELD,
+									   DATA_ORDER_FIELD,
+									   DATA_TYPEID_FIELD,
+									   DATA_DBNAME,
+									   DATA_PARENTID_FIELD,
+									   DATA_NAME_CN,
+									   DATA_VALUE_CN,
+									   KEY_GENERAL_TYPE,
+									   NAME_GENERAL_TYPE,
+									   KEY_GENERAL_INFO,
+									   NEEDCACHE,
+									   ENABLE_VALUE_MODIFY)
+									values
+									  (' ',
+									   ' ',
+									   0,
+									   0,
+									   '7',
+									   null,
+									   'essentiality',
+									   '日程管理重要性',
+									   '0',
+									   ' ',
+									   ' ',
+									   ' ',
+									   ' ',
+									   ' ',
+									   ' ',
+									   ' ',
+									   '名称',
+									   '真实值',
+									   null,
+									   ' ',
+									   ' ',
+									   1,
+									   0)]]></property>
+			<property index="8"><![CDATA[insert into td_sm_dicttype
+									  (DATA_VALIDATE_FIELD,
+									   DATA_CREATE_ORGID_FIELD,
+									   DICTTYPE_TYPE,
+									   IS_TREE,
+									   DICTTYPE_ID,
+									   USER_ID,
+									   DICTTYPE_NAME,
+									   DICTTYPE_DESC,
+									   DICTTYPE_PARENT,
+									   DATA_TABLE_NAME,
+									   DATA_NAME_FILED,
+									   DATA_VALUE_FIELD,
+									   DATA_ORDER_FIELD,
+									   DATA_TYPEID_FIELD,
+									   DATA_DBNAME,
+									   DATA_PARENTID_FIELD,
+									   DATA_NAME_CN,
+									   DATA_VALUE_CN,
+									   KEY_GENERAL_TYPE,
+									   NAME_GENERAL_TYPE,
+									   KEY_GENERAL_INFO,
+									   NEEDCACHE,
+									   ENABLE_VALUE_MODIFY)
+									values
+									  (' ',
+									   ' ',
+									   0,
+									   0,
+									   '8',
+									   null,
+									   'isLeisure',
+									   '日程管理是否空闲',
+									   '0',
+									   ' ',
+									   ' ',
+									   ' ',
+									   ' ',
+									   ' ',
+									   ' ',
+									   ' ',
+									   '名称',
+									   '真实值',
+									   null,
+									   ' ',
+									   ' ',
+									   1,
+									   0)]]></property>
+			<property index="9"><![CDATA[insert into td_sm_dicttype
+									  (DATA_VALIDATE_FIELD,
+									   DATA_CREATE_ORGID_FIELD,
+									   DICTTYPE_TYPE,
+									   IS_TREE,
+									   DICTTYPE_ID,
+									   USER_ID,
+									   DICTTYPE_NAME,
+									   DICTTYPE_DESC,
+									   DICTTYPE_PARENT,
+									   DATA_TABLE_NAME,
+									   DATA_NAME_FILED,
+									   DATA_VALUE_FIELD,
+									   DATA_ORDER_FIELD,
+									   DATA_TYPEID_FIELD,
+									   DATA_DBNAME,
+									   DATA_PARENTID_FIELD,
+									   DATA_NAME_CN,
+									   DATA_VALUE_CN,
+									   KEY_GENERAL_TYPE,
+									   NAME_GENERAL_TYPE,
+									   KEY_GENERAL_INFO,
+									   NEEDCACHE,
+									   ENABLE_VALUE_MODIFY)
+									values
+									  (' ',
+									   ' ',
+									   0,
+									   0,
+									   '45',
+									   null,
+									   'ispartybussiness',
+									   '机构是否业务部门',
+									   '0',
+									   ' ',
+									   ' ',
+									   ' ',
+									   ' ',
+									   ' ',
+									   ' ',
+									   ' ',
+									   '名称',
+									   '真实值',
+									   null,
+									   ' ',
+									   ' ',
+									   1,
+									   0)]]></property>
+			<property index="10"><![CDATA[insert into td_sm_dicttype
+									  (DATA_VALIDATE_FIELD,
+									   DATA_CREATE_ORGID_FIELD,
+									   DICTTYPE_TYPE,
+									   IS_TREE,
+									   DICTTYPE_ID,
+									   USER_ID,
+									   DICTTYPE_NAME,
+									   DICTTYPE_DESC,
+									   DICTTYPE_PARENT,
+									   DATA_TABLE_NAME,
+									   DATA_NAME_FILED,
+									   DATA_VALUE_FIELD,
+									   DATA_ORDER_FIELD,
+									   DATA_TYPEID_FIELD,
+									   DATA_DBNAME,
+									   DATA_PARENTID_FIELD,
+									   DATA_NAME_CN,
+									   DATA_VALUE_CN,
+									   KEY_GENERAL_TYPE,
+									   NAME_GENERAL_TYPE,
+									   KEY_GENERAL_INFO,
+									   NEEDCACHE,
+									   ENABLE_VALUE_MODIFY)
+									values
+									  (' ',
+									   ' ',
+									   0,
+									   0,
+									   '2312',
+									   null,
+									   '是否字典',
+									   '是否字典',
+									   '0',
+									   ' ',
+									   ' ',
+									   ' ',
+									   ' ',
+									   ' ',
+									   ' ',
+									   ' ',
+									   '名称',
+									   '真实值',
+									   null,
+									   ' ',
+									   ' ',
+									   1,
+									   0)]]></property>
+			
+		</list>
+	</property>
+	
+	<property dbname="bspf" name="addtd_sm_dictdata_list">
+		<list>
+			<property index="0"><![CDATA[insert into td_sm_dictdata
+									  (DICTDATA_ID,
+									   DICTTYPE_ID,
+									   DICTDATA_NAME,
+									   DICTDATA_VALUE,
+									   DICTDATA_ORDER)
+									values
+									  ('70',
+									   2312,
+									   '是',
+									   '1',
+									   0)]]></property>
+			 <property index="1"><![CDATA[insert into td_sm_dictdata
+									  (DICTDATA_ID,
+									   DICTTYPE_ID,
+									   DICTDATA_NAME,
+									   DICTDATA_VALUE,
+									   DICTDATA_ORDER)
+									values
+									  ('71',
+									   2312,
+									   '否',
+									   '0',
+									   1)]]></property>
+				<property index="2"><![CDATA[insert into td_sm_dictdata
+									  (DICTDATA_ID,
+									   DICTTYPE_ID,
+									   DICTDATA_NAME,
+									   DICTDATA_VALUE,
+									   DICTDATA_ORDER)
+									values
+									  ('60',
+									   9,
+									   '公事',
+									   '0',
+									   0)]]></property>
+			<property index="3"><![CDATA[insert into td_sm_dictdata
+									  (DICTDATA_ID,
+									   DICTTYPE_ID,
+									   DICTDATA_NAME,
+									   DICTDATA_VALUE,
+									   DICTDATA_ORDER)
+									values
+									  ('61',
+									   9,
+									   '私事',
+									   '1',
+									   0)]]></property>
+		<property index="4"><![CDATA[insert into td_sm_dictdata
+									  (DICTDATA_ID,
+									   DICTTYPE_ID,
+									   DICTDATA_NAME,
+									   DICTDATA_VALUE,
+									   DICTDATA_ORDER)
+									values
+									  ('62',
+									   6,
+									   '分',
+									   '0',
+									   0)]]></property>
+		  <property index="5"><![CDATA[insert into td_sm_dictdata
+									  (DICTDATA_ID,
+									   DICTTYPE_ID,
+									   DICTDATA_NAME,
+									   DICTDATA_VALUE,
+									   DICTDATA_ORDER)
+									values
+									  ('63',
+									   6,
+									   '小时',
+									   '1',
+									   0)]]></property>
+			<property index="6"><![CDATA[insert into td_sm_dictdata
+									  (DICTDATA_ID,
+									   DICTTYPE_ID,
+									   DICTDATA_NAME,
+									   DICTDATA_VALUE,
+									   DICTDATA_ORDER)
+									values
+									  ('64',
+									   6,
+									   '天',
+									   '2',
+									   0)]]></property>
+		  <property index="7"><![CDATA[insert into td_sm_dictdata
+									  (DICTDATA_ID,
+									   DICTTYPE_ID,
+									   DICTDATA_NAME,
+									   DICTDATA_VALUE,
+									   DICTDATA_ORDER)
+									values
+									  ('65',
+									   7,
+									   '重要',
+									   '0',
+									   0)]]></property>
+			<property index="8"><![CDATA[insert into td_sm_dictdata
+									  (DICTDATA_ID,
+									   DICTTYPE_ID,
+									   DICTDATA_NAME,
+									   DICTDATA_VALUE,
+									   DICTDATA_ORDER)
+									values
+									  ('66',
+									   7,
+									   '一般',
+									   '1',
+									   0)]]></property>
+			<property index="9"><![CDATA[insert into td_sm_dictdata
+									  (DICTDATA_ID,
+									   DICTTYPE_ID,
+									   DICTDATA_NAME,
+									   DICTDATA_VALUE,
+									   DICTDATA_ORDER)
+									values
+									  ('67',
+									   7,
+									   '不重要',
+									   '2',
+									   0)]]></property>
+			<property index="10"><![CDATA[insert into td_sm_dictdata
+									  (DICTDATA_ID,
+									   DICTTYPE_ID,
+									   DICTDATA_NAME,
+									   DICTDATA_VALUE,
+									   DICTDATA_ORDER)
+									values
+									  ('68',
+									   8,
+									   '忙',
+									   '0',
+									   0)]]></property>
+			<property index="11"><![CDATA[insert into td_sm_dictdata
+									  (DICTDATA_ID,
+									   DICTTYPE_ID,
+									   DICTDATA_NAME,
+									   DICTDATA_VALUE,
+									   DICTDATA_ORDER)
+									values
+									  ('69',
+									   8,
+									   '空闲',
+									   '1',
+									   0)]]></property>
+			 <property index="12"><![CDATA[insert into td_sm_dictdata
+									  (DICTDATA_ID,
+									   DICTTYPE_ID,
+									   DICTDATA_NAME,
+									   DICTDATA_VALUE,
+									   DICTDATA_ORDER)
+									values
+									  ('11',
+									   1,
+									   '男',
+									   'M',
+									   0)]]></property>
+			<property index="13"><![CDATA[insert into td_sm_dictdata
+									  (DICTDATA_ID,
+									   DICTTYPE_ID,
+									   DICTDATA_NAME,
+									   DICTDATA_VALUE,
+									   DICTDATA_ORDER)
+									values
+									  ('12',
+									   1,
+									   '女',
+									   'F',
+									   0)]]></property>
+		 <property index="14"><![CDATA[insert into td_sm_dictdata
+									  (DICTDATA_ID,
+									   DICTTYPE_ID,
+									   DICTDATA_NAME,
+									   DICTDATA_VALUE,
+									   DICTDATA_ORDER)
+									values
+									  ('124',
+									   2,
+									   '删除',
+									   '0',
+									   3)]]></property>
+		  <property index="15"><![CDATA[insert into td_sm_dictdata
+									  (DICTDATA_ID,
+									   DICTTYPE_ID,
+									   DICTDATA_NAME,
+									   DICTDATA_VALUE,
+									   DICTDATA_ORDER)
+									values
+									  ('125',
+									   2,
+									   '申请',
+									   '1',
+									   1)]]></property>
+			<property index="16"><![CDATA[insert into td_sm_dictdata
+									  (DICTDATA_ID,
+									   DICTTYPE_ID,
+									   DICTDATA_NAME,
+									   DICTDATA_VALUE,
+									   DICTDATA_ORDER)
+									values
+									  ('126',
+									   2,
+									   '开通',
+									   '2',
+									   0)]]></property>
+			<property index="17"><![CDATA[insert into td_sm_dictdata
+									  (DICTDATA_ID,
+									   DICTTYPE_ID,
+									   DICTDATA_NAME,
+									   DICTDATA_VALUE,
+									   DICTDATA_ORDER)
+									values
+									  ('127',
+									   2,
+									   '停用',
+									   '3',
+									   2)]]></property>
+			<property index="18"><![CDATA[insert into td_sm_dictdata
+									  (DICTDATA_ID,
+									   DICTTYPE_ID,
+									   DICTDATA_NAME,
+									   DICTDATA_VALUE,
+									   DICTDATA_ORDER)
+									values
+									  ('31',
+									   4,
+									   'kechuang.com',
+									   'kechuang.com',
+									   0)]]></property>
+			 <property index="19"><![CDATA[insert into td_sm_dictdata
+									  (DICTDATA_ID,
+									   DICTTYPE_ID,
+									   DICTDATA_NAME,
+									   DICTDATA_VALUE,
+									   DICTDATA_ORDER)
+									values
+									  ('32',
+									   4,
+									   'furongwang.com',
+									   'furongwang.com',
+									   0)]]></property>
+			 <property index="20"><![CDATA[insert into td_sm_dictdata
+									  (DICTDATA_ID,
+									   DICTTYPE_ID,
+									   DICTDATA_NAME,
+									   DICTDATA_VALUE,
+									   DICTDATA_ORDER)
+									values
+									  ('33',
+									   4,
+									   'china.com',
+									   'china.com',
+									   0)]]></property>
+			 <property index="21"><![CDATA[insert into td_sm_dictdata
+									  (DICTDATA_ID,
+									   DICTTYPE_ID,
+									   DICTDATA_NAME,
+									   DICTDATA_VALUE,
+									   DICTDATA_ORDER)
+									values
+									  ('13',
+									   1,
+									   '未知',
+									   '-1',
+									   0)]]></property>
+			<property index="22"><![CDATA[insert into td_sm_dictdata
+									  (DICTDATA_ID,
+									   DICTTYPE_ID,
+									   DICTDATA_NAME,
+									   DICTDATA_VALUE,
+									   DICTDATA_ORDER)
+									values
+									  ('41',
+									   5,
+									   '有效',
+									   '0',
+									   0)]]></property>
+			
+		</list>
+	</property>
+	
+	<property dbname="bspf" name="addtd_sm_job">
+	
+	<![CDATA[insert into td_sm_job
+  				(JOB_ID, JOB_NAME, JOB_DESC, JOB_FUNCTION,JOB_AMOUNT,JOB_NUMBER,JOB_CONDITION,JOB_RANK,OWNER_ID)
+				values
+  				('1','在职','不能删除',' ',' ',' ',' ',' ',1)]]>
+	</property>
+	
+	<property dbname="bspf" name="addtd_sm_role_list">
+		<list>
+			<property index="0"><![CDATA[insert into td_sm_role
+									  (ROLE_ID,
+									   ROLE_NAME,
+									   ROLE_TYPE,
+									   ROLE_DESC,
+									   ROLE_USAGE,
+									   REMARK1,
+									   REMARK2,
+									   REMARK3,
+									   OWNER_ID)
+									values
+									  ('1',
+									   'administrator',
+									   '1',
+									   '超级管理员角色，此角色不要修改，超级管理员admin自动拥有本角色，只有admin可以将本角色授予其他用户，本角色也不需要授予权限，默认拥有系统中的所有权限',
+									   ' ',
+									   ' ',
+									   ' ',
+									   ' ',
+									   1)]]></property>
+			<property index="1"><![CDATA[insert into td_sm_role
+									  (ROLE_ID,
+									   ROLE_NAME,
+									   ROLE_TYPE,
+									   ROLE_DESC,
+									   ROLE_USAGE,
+									   REMARK1,
+									   REMARK2,
+									   REMARK3,
+									   OWNER_ID)
+									values
+									  ('2',
+									   'roleofeveryone',
+									   '1',
+									   '每个用户都缺省拥有的角色，此角色不能被修改，也不能被删除',
+									   ' ',
+									   ' ',
+									   ' ',
+									   ' ',
+									   1)]]></property>
+			<property index="2"><![CDATA[insert into td_sm_role
+									  (ROLE_ID,
+									   ROLE_NAME,
+									   ROLE_TYPE,
+									   ROLE_DESC,
+									   ROLE_USAGE,
+									   REMARK1,
+									   REMARK2,
+									   REMARK3,
+									   OWNER_ID)
+									values
+									  ('3',
+									   'orgmanager',
+									   '1',
+									   '部门管理员角色,此角色不能被修改，也不能被删除，所有部门管理员自动拥有本角色',
+									   ' ',
+									   ' ',
+									   ' ',
+									   ' ',
+									   1)]]></property>
+		 <property index="3"><![CDATA[insert into td_sm_role
+									  (ROLE_ID,
+									   ROLE_NAME,
+									   ROLE_TYPE,
+									   ROLE_DESC,
+									   ROLE_USAGE,
+									   REMARK1,
+									   REMARK2,
+									   REMARK3,
+									   OWNER_ID)
+									values
+									  ('4',
+									   'orgmanagerroletemplate',
+									   '1',
+									   '部门管理员角色模板,本角色不能被删除和修改，不能授予普通用户，只能够授权，新增部门管理员时自动拥有本角色，只有超级管理员才能给部门管理员角色模板授权',
+									   ' ',
+									   ' ',
+									   ' ',
+									   ' ',
+									   1)]]></property>
+			
+				
+		</list>
+	</property>
+	
+	<property name="addtd_sm_roleresop_list">
+		<list>
+			<property index="0"><![CDATA[insert into td_sm_roleresop
+									  (OP_ID,
+									   RES_ID,
+									   ROLE_ID,
+									   RESTYPE_ID,
+									   AUTO,
+									   RES_NAME,
+									   TYPES,
+									   AUTHORIZATION_TYPE,
+									   USE_COUNT,
+									   AUTHORIZATION_STIME,
+									   AUTHORIZATION_ETIME,
+									   USE_COUNTED)
+									values
+									  ('add',
+									   'globalrole',
+									   '3',
+									   'role',
+									   '0',
+									   '角色资源',
+									   'role',
+									   0,
+									   null,
+									   null,
+									   null,
+									   null)]]></property>
+		 <property index="1"><![CDATA[insert into td_sm_roleresop
+									  (OP_ID,
+									   RES_ID,
+									   ROLE_ID,
+									   RESTYPE_ID,
+									   AUTO,
+									   RES_NAME,
+									   TYPES,
+									   AUTHORIZATION_TYPE,
+									   USE_COUNT,
+									   AUTHORIZATION_STIME,
+									   AUTHORIZATION_ETIME,
+									   USE_COUNTED)
+									values
+									  ('lisanusermanager',
+									   'orgunit',
+									   '3',
+									   'orgunit',
+									   '0',
+									   '机构资源',
+									   'role',
+									   0,
+									   null,
+									   null,
+									   null,
+									   null)]]></property>
+		 <property index="2"><![CDATA[insert into td_sm_roleresop
+									  (OP_ID,
+									   RES_ID,
+									   ROLE_ID,
+									   RESTYPE_ID,
+									   AUTO,
+									   RES_NAME,
+									   TYPES,
+									   AUTHORIZATION_TYPE,
+									   USE_COUNT,
+									   AUTHORIZATION_STIME,
+									   AUTHORIZATION_ETIME,
+									   USE_COUNTED)
+									values
+									  ('lisanusertoorg',
+									   'orgunit',
+									   '3',
+									   'orgunit',
+									   '0',
+									   '角色资源',
+									   'role',
+									   0,
+									   null,
+									   null,
+									   null,
+									   null)]]></property>
+			<property index="3"><![CDATA[insert into td_sm_roleresop
+									  (OP_ID,
+									   RES_ID,
+									   ROLE_ID,
+									   RESTYPE_ID,
+									   AUTO,
+									   RES_NAME,
+									   TYPES,
+									   AUTHORIZATION_TYPE,
+									   USE_COUNT,
+									   AUTHORIZATION_STIME,
+									   AUTHORIZATION_ETIME,
+									   USE_COUNTED)
+									values
+									  ('visible',
+									   'org_taxcode',
+									   '3',
+									   'column',
+									   '0',
+									   '机构授权编码维护',
+									   'role',
+									   0,
+									   null,
+									   null,
+									   null,
+									   null)]]></property>
+			 <property index="4"><![CDATA[insert into td_sm_roleresop
+									  (OP_ID,
+									   RES_ID,
+									   ROLE_ID,
+									   RESTYPE_ID,
+									   AUTO,
+									   RES_NAME,
+									   TYPES,
+									   AUTHORIZATION_TYPE,
+									   USE_COUNT,
+									   AUTHORIZATION_STIME,
+									   AUTHORIZATION_ETIME,
+									   USE_COUNTED)
+									values
+									  ('visible',
+									   'usualorg_taxcode',
+									   '3',
+									   'column',
+									   '0',
+									   '机构常用编码维护',
+									   'role',
+									   0,
+									   null,
+									   null,
+									   null,
+									   null)]]></property>
+			<property index="5"><![CDATA[insert into td_sm_roleresop
+									  (OP_ID,
+									   RES_ID,
+									   ROLE_ID,
+									   RESTYPE_ID,
+									   AUTO,
+									   RES_NAME,
+									   TYPES,
+									   AUTHORIZATION_TYPE,
+									   USE_COUNT,
+									   AUTHORIZATION_STIME,
+									   AUTHORIZATION_ETIME,
+									   USE_COUNTED)
+									values
+									  ('visible',
+									   'rolemanager',
+									   '3',
+									   'column',
+									   '0',
+									   '角色管理',
+									   'role',
+									   0,
+									   null,
+									   null,
+									   null,
+									   null)]]></property>
+			<property index="6"><![CDATA[insert into td_sm_roleresop
+									  (OP_ID,
+									   RES_ID,
+									   ROLE_ID,
+									   RESTYPE_ID,
+									   AUTO,
+									   RES_NAME,
+									   TYPES,
+									   AUTHORIZATION_TYPE,
+									   USE_COUNT,
+									   AUTHORIZATION_STIME,
+									   AUTHORIZATION_ETIME,
+									   USE_COUNTED)
+									values
+									  ('visible',
+									   'usermanage',
+									   '3',
+									   'column',
+									   '0',
+									   '用户管理',
+									   'role',
+									   0,
+									   null,
+									   null,
+									   null,
+									   null)]]></property>
+			 <property index="7"><![CDATA[insert into td_sm_roleresop
+									  (OP_ID,
+									   RES_ID,
+									   ROLE_ID,
+									   RESTYPE_ID,
+									   AUTO,
+									   RES_NAME,
+									   TYPES,
+									   AUTHORIZATION_TYPE,
+									   USE_COUNT,
+									   AUTHORIZATION_STIME,
+									   AUTHORIZATION_ETIME,
+									   USE_COUNTED)
+									values
+									  ('visible',
+									   'orgmanager',
+									   '3',
+									   'column',
+									   '0',
+									   '机构管理',
+									   'role',
+									   0,
+									   null,
+									   null,
+									   null,
+									   null)]]></property>
+			 <property index="8"><![CDATA[insert into td_sm_roleresop
+									  (OP_ID,
+									   RES_ID,
+									   ROLE_ID,
+									   RESTYPE_ID,
+									   AUTO,
+									   RES_NAME,
+									   TYPES,
+									   AUTHORIZATION_TYPE,
+									   USE_COUNT,
+									   AUTHORIZATION_STIME,
+									   AUTHORIZATION_ETIME,
+									   USE_COUNTED)
+									values
+									  ('visible',
+									   'userManageItem',
+									   '3',
+									   'column',
+									   '0',
+									   '权限维护',
+									   'role',
+									   0,
+									   null,
+									   null,
+									   null,
+									   null)]]></property>
+			 <property index="9"><![CDATA[insert into td_sm_roleresop
+									  (OP_ID,
+									   RES_ID,
+									   ROLE_ID,
+									   RESTYPE_ID,
+									   AUTO,
+									   RES_NAME,
+									   TYPES,
+									   AUTHORIZATION_TYPE,
+									   USE_COUNT,
+									   AUTHORIZATION_STIME,
+									   AUTHORIZATION_ETIME,
+									   USE_COUNTED)
+									values
+									  ('visible',
+									   'permissionmanager',
+									   '3',
+									   'column',
+									   '0',
+									   '权限维护',
+									   'role',
+									   0,
+									   null,
+									   null,
+									   null,
+									   null)]]></property>
+			 <property index="10"><![CDATA[insert into td_sm_roleresop
+									  (OP_ID,
+									   RES_ID,
+									   ROLE_ID,
+									   RESTYPE_ID,
+									   AUTO,
+									   RES_NAME,
+									   TYPES,
+									   AUTHORIZATION_TYPE,
+									   USE_COUNT,
+									   AUTHORIZATION_STIME,
+									   AUTHORIZATION_ETIME,
+									   USE_COUNTED)
+									values
+									  ('visible',
+									   'sysuserpassword',
+									   '3',
+									   'column',
+									   '0',
+									   '系统账户修改',
+									   'role',
+									   0,
+									   null,
+									   null,
+									   null,
+									   null)]]></property>
+			<property index="11"><![CDATA[insert into td_sm_roleresop
+									  (OP_ID,
+									   RES_ID,
+									   ROLE_ID,
+									   RESTYPE_ID,
+									   AUTO,
+									   RES_NAME,
+									   TYPES,
+									   AUTHORIZATION_TYPE,
+									   USE_COUNT,
+									   AUTHORIZATION_STIME,
+									   AUTHORIZATION_ETIME,
+									   USE_COUNTED)
+									values
+									  ('visible',
+									   'purviewmanager',
+									   '3',
+									   'column',
+									   '0',
+									   '权限管理',
+									   'role',
+									   0,
+									   null,
+									   null,
+									   null,
+									   null)]]></property>
+		
+			
+				
+		</list>
+	</property>
+	
+	<property name="addtd_sm_roletype">
+	
+	<![CDATA[insert into td_sm_roletype
+  				(TYPE_NAME, TYPE_DESC, TYPE_ID, CREATOR_USER_ID,CREATOR_ORG_ID)
+				values
+  				('通用角色类型','通用角色类型',1,'1','1')]]>
+	</property>
+	
+		<property name="addtd_sm_user">
+	
+	<![CDATA[insert into td_sm_user
+  				(USER_ID, USER_SN, USER_NAME, USER_PASSWORD,USER_REALNAME,USER_PINYIN,USER_SEX,USER_HOMETEL,
+  				USER_WORKTEL,USER_WORKNUMBER,USER_MOBILETEL1,USER_MOBILETEL2,USER_FAX,USER_OICQ,USER_BIRTHDAY,
+  				USER_EMAIL,USER_ADDRESS,USER_POSTALCODE,USER_IDCARD,USER_ISVALID,USER_REGDATE,USER_LOGINCOUNT,
+  				USER_TYPE,REMARK1,REMARK2,REMARK3,REMARK4,REMARK5,PAST_TIME,DREDGE_TIME,LASTLOGIN_DATE,
+  				WORKLENGTH,POLITICS,ISTAXMANAGER,LOGON_IP,CERT_SN)
+				values
+  				(1,1,'admin','123456','系统管理员',' ','M',' ',
+  				' ',' ',' ',' ',' ',' ',null,
+  				' ',' ',' ',' ',2,null,null,
+  				'0',' ',' ',' ',' ',' ',null,' ',null,
+  				' ',' ',null,' ',' ')]]>
+	</property>
+	
+	
+	<property name="addtd_sm_userrole">
+	<![CDATA[insert into td_sm_userrole
+  				(USER_ID, ROLE_ID, RESOP_ORIGIN_USERID)
+				values
+  				(1,'1',' ')]]>
+	</property>
+	
+		<property name="addmq_rules_tpl_list">
+		<list>
+			<property index="0"><![CDATA[insert into mq_rules_tpl
+									  (RULE_TPL_ID,
+									   RULES,
+									   RULES_NAME,
+									   MODIFIABLE,
+									   TPL_AUTH,
+									   TPL_DESC,
+									   RUTE_IMAGE,
+									   IMPORTCLASS,
+									   ORDERBY,
+									   TPL_TYPE)
+									values
+									  (29,
+									   'from("cmq:start").resequencer(body()).to("cmq:result");
+                                        from("cmq:start").resequencer(body()).batch().to("cmq:result");
+                                        from("cmq:start").resequencer(body()).batch().size(300).timeout(4000L).to("cmq:result");
+                                        from("cmq:start").resequencer(body()).batch(new BatchResequencerConfig(300, 4000L)).to("cmq:result");',
+									   '批处理重组器(Batch Resequencing)',
+									   1,
+									   'admin',
+									   'EIP模式中的消息重组模式允许消息基于某种比较器重新组织，批处理重组是将消息排成一批有序的消息发送。
+                                                                                                          功能说明：
+                        Camel支持两种重组器算法，批处理重组器和流程重组器，批处理重组器将消息收集成一组，然后将消息排序后发到目的地。
+                        事例说明：
+                        模板中展示了如何使用批处理重组器根据消息body()排序，这些消息被收集成一组（每组既可以设置最大消息数量也可以设置超时时间）然后排序发送到目的地。
+                        from("cmq:start").resequencer(body()).to("cmq:result");和from("cmq:start").resequencer(body()).batch().to("cmq:result");等价。
+                        from("cmq:start").resequencer(body()).batch().size(300).timeout(4000L).to("cmq:result");设置了每组消息数量和超时时间。
+                        排序也可以根据消息的header属性而不是根据body部分例如：
+                        from("cmq:start").resequencer(resequencer(header("JMSPriority"))
+                        ).batch().size(300).timeout(4000L).to("cmq:result");
+                        您也可以使用多种表达式，例如
+                        from("cmq:start").resequencer(header("JMSPriority"), header("MyCustomerRating")).batch().size(300).timeout(4000L).to("cmq:result");',
+									   '1245936062828_Resequencer.gif',
+									   'import org.apache.camel.model.config.BatchResequencerConfig;',
+									   null,
+									   0)]]></property>
+			<property index="1"><![CDATA[insert into mq_rules_tpl
+									  (RULE_TPL_ID,
+									   RULES,
+									   RULES_NAME,
+									   MODIFIABLE,
+									   TPL_AUTH,
+									   TPL_DESC,
+									   RUTE_IMAGE,
+									   IMPORTCLASS,
+									   ORDERBY,
+									   TPL_TYPE)
+									values
+									  (7,
+									   'from("cmq:start").filter().xpath("/person[@name=''James'']").to("cmq:result");',
+									   '消息过滤(Message filterXPath方式)',
+									   1,
+									   'admin',
+									   'EIP模式中的消息过滤模式可以过滤符合过滤条件消息。此规则的用途在于可以避免组件收到与之无关的消息，要让组件只接收与之相关的消息，基本的方法就是只订购那些相关信息的通道，组件所订购通道上的消息才会被该组件接收，但是发布－订购通道时，通常会存在一种“全有或者全无”的限制：如果组件订购了一个通道，就会接收该通道的所有消息。要想获得更细粒度的控制，唯一的方法是创建更多的通道。消息过滤器方式则比通道订购具有更大的灵活性，它可以描述为一种特殊的基于内容的路由器，会把消息路由到输出通道或者一个空通道。
+
+                      事例说明：
+                      from("cmq:start").filter().xpath("/person[@name=''James'']").to("cmq:result");此例子从队列start接收到的生产的消息，如果头部属性person等于''James''的时候就发送到队列result',
+									   '1245935765296_MessageFilter.gif',
+									   ' ',
+									   null,
+									   0)]]></property>
+			 <property index="2"><![CDATA[insert into mq_rules_tpl
+									  (RULE_TPL_ID,
+									   RULES,
+									   RULES_NAME,
+									   MODIFIABLE,
+									   TPL_AUTH,
+									   TPL_DESC,
+									   RUTE_IMAGE,
+									   IMPORTCLASS,
+									   ORDERBY,
+									   TPL_TYPE)
+									values
+									  (6,
+									   'from("cmq:a").filter(header("foo").isEqualTo("bar")).to("cmq:b");',
+									   '消息过滤(Message filter)',
+									   1,
+									   'admin',
+									   'EIP模式中的消息过滤模式可以过滤符合过滤条件消息。此规则的用途在于可以避免组件收到与之无关的消息，要让组件只接收与之相关的消息，基本的方法就是只订购那些相关信息的通道，组件所订购通道上的消息才会被该组件接收，但是发布－订购通道时，通常会存在一种“全有或者全无”的限制：如果组件订购了一个通道，就会接收该通道的所有消息。要想获得更细粒度的控制，唯一的方法是创建更多的通道。消息过滤器方式则比通道订购具有更大的灵活性，它可以描述为一种特殊的基于内容的路由器，会把消息路由到输出通道或者一个空通道。
+
+                      事例说明：
+                      from("cmq:a").filter(header("foo").isEqualTo("bar")).to("cmq:b");此例子从队列a接收到的生产的消息，如果头部属性foo等于bar的时候就发送到队列b。',
+									   '1245935630390_MessageFilter.gif',
+									   ' ',
+									   null,
+									   0)]]></property>
+			<property index="3"><![CDATA[insert into mq_rules_tpl
+									  (RULE_TPL_ID,
+									   RULES,
+									   RULES_NAME,
+									   MODIFIABLE,
+									   TPL_AUTH,
+									   TPL_DESC,
+									   RUTE_IMAGE,
+									   IMPORTCLASS,
+									   ORDERBY,
+									   TPL_TYPE)
+									values
+									  (15,
+									   'from("cmq:start").setBody(body().append(" World!")).to("cmq:result");
+                      from("cmq:start").process(new Processor() {
+                       public void process(Exchange exchange) {
+                        Message in = exchange.getIn();
+                        in.setBody(in.getBody(String.class) + " World!");
+                         }
+                         }).to("mock:result");',
+									   '内容过滤(content filter)',
+									   1,
+									   'admin',
+									   'EIP中的内容过滤模式在路欧逻辑中使用消息转换函数、调用java bean或者是对象处理的方式来转换消息内容。
+
+                      事例说明：
+                       from("cmq:start").setBody(body().append(" World!")).to("cmq:result");使用DSL模式。
+                       from("cmq:start").process(new Processor() {
+                           public void process(Exchange exchange) {
+                           Message in = exchange.getIn();
+                           in.setBody(in.getBody(String.class) + " World!");
+                           }
+                       }).to("cmq:result");使用的处理对象方式。 ',
+									   '1245936943531_ContentFilter.gif',
+									   'import org.apache.camel.*;',
+									   null,
+									   0)]]></property>
+			<property index="4"><![CDATA[insert into mq_rules_tpl
+									  (RULE_TPL_ID,
+									   RULES,
+									   RULES_NAME,
+									   MODIFIABLE,
+									   TPL_AUTH,
+									   TPL_DESC,
+									   RUTE_IMAGE,
+									   IMPORTCLASS,
+									   ORDERBY,
+									   TPL_TYPE)
+									values
+									  (11,
+									   'errorHandler(deadLetterChannel("cmq:dead").maximumRedeliveries(3).maximumRedeliveryDelay(5000));
+
+                      /*
+                       您也可以定义自己的处理方法，如下：
+                          这里我们定义了一个自己的处理器来处理每个被发送的死信队列之前的操作。
+                         // we configure our Dead Letter Channel to invoke
+                         // MyRedeliveryProcessor before a redelivery is
+                         // attempted. This allows us to alter the message before
+                          errorHandler(deadLetterChannel("cmq:error")
+                         .onRedelivery(new MyRedeliverPrcessor())
+                           // setting delay to zero is just to make unit teting faster
+                          .redeliverDelay(0L));
+                         我们自己的处理器 MyRedeliveryProcessor在这里可以修改消息。
+                          // This is our processor that is executed before every redelivery attempt
+                          // here we can do what we want in the java code, such as altering the message
+                           public class MyRedeliverPrcessor implements Processor {
+
+                             public void process(Exchange exchange) throws Exception {
+                             // the message is being redelivered so we can alter it
+
+                             // we just append the redelivery counter to the body
+                             // you can of course do all kind of stuff instead
+                              String body = exchange.getIn().getBody(String.class);
+                           int count = exchange.getIn().getHeader("CamelRedeliveryCounter", Integer.class);
+
+                             exchange.getIn().setBody(body + count);
+                               }
+                              }
+
+                         */ ',
+									   '死信通道(Dead Letter Channel)',
+									   1,
+									   'admin',
+									   'EIP模式中死信通道模式使用一个能够处理错误的队列来处理错误信息。
+
+                      功能说明：
+                      死信通道与默认错误处理不同的是，死信通道使用一个队列存放信息交换时发生的错误，无论什么时候，一旦使用了死信队列，错误信息发生时错误信息就被发送的该队列中。默认错误处理并没有一个存放错误的信息的队列，一旦有交换信息不能被处理时，则错误信息被发送到客户端。
+
+                      事例说明：
+                        errorHandler(deadLetterChannel("cmq:dead").maximumRedeliveries(3).maximumRedeliveryDelay(5000));
+                      使用该处理方式，错误发生时死信通道将处理这个错误，并将错误信息发送到dead这个队列中，客户端就不会发现这个错误信息。
+
+                      参数设置：
+                      willmaximumRedeliveries=5
+                      redeliverDelay=1000L (1 second, new as of Camel 2.0)
+                      use initialRedeliveryDelay for previous versions
+                      maximumRedeliveryDelay = 60 * 1000L (60 seconds, new option in Camel 1.4)
+                      And the exponential backoff and collision avoidance is turned off.
+                      The retriesExhaustedLogLevel and retryAttemptedLogLevel are set to LoggingLevel.ERROR
+                      Stack traces is logged
+
+                      扩展：
+                      您也可以定义自己的处理方法，如下：
+                      这里我们定义了一个自己的处理器来处理每个被发送的死信队列之前的操作。
+
+                      // we configure our Dead Letter Channel to invoke
+                      // MyRedeliveryProcessor before a redelivery is
+                      // attempted. This allows us to alter the message before
+                       errorHandler(deadLetterChannel("mock:error")
+                      .onRedelivery(new MyRedeliverPrcessor())
+                      // setting delay to zero is just to make unit teting faster
+                       .redeliverDelay(0L));
+                      我们自己的处理器 MyRedeliveryProcessor在这里可以修改消息。
+                      // This is our processor that is executed before every redelivery attempt
+                      // here we can do what we want in the java code, such as altering the message
+                       public class MyRedeliverPrcessor implements Processor {
+
+                        public void process(Exchange exchange) throws Exception {
+                      // the message is being redelivered so we can alter it
+
+                       // we just append the redelivery counter to the body
+                      // you can of course do all kind of stuff instead
+                        String body = exchange.getIn().getBody(String.class);
+                       int count = exchange.getIn().getHeader("CamelRedeliveryCounter", Integer.class);
+
+                         exchange.getIn().setBody(body + count);
+                       }
+                      }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    ',
+									   '1245936786015_deadletterchannle.gif',
+									   ' ',
+									   null,
+									   0)]]></property>
+		 <property index="5"><![CDATA[insert into mq_rules_tpl
+									  (RULE_TPL_ID,
+									   RULES,
+									   RULES_NAME,
+									   MODIFIABLE,
+									   TPL_AUTH,
+									   TPL_DESC,
+									   RUTE_IMAGE,
+									   IMPORTCLASS,
+									   ORDERBY,
+									   TPL_TYPE)
+									values
+									  (9,
+									   'from("cmq:a").choice().when(header("foo").isEqualTo("bar")).to("cmq:b").otherwise().throwFault("No matching when clause found on choice block");',
+									   '增加例外',
+									   1,
+									   'admin',
+									   'EIP模式中的增加例外模式允许当消息交换没有匹配条件，加入一个匹配条件。',
+									   ' ',
+									   ' ',
+									   null,
+									   0)]]></property>
+			 <property index="6"><![CDATA[insert into mq_rules_tpl
+									  (RULE_TPL_ID,
+									   RULES,
+									   RULES_NAME,
+									   MODIFIABLE,
+									   TPL_AUTH,
+									   TPL_DESC,
+									   RUTE_IMAGE,
+									   IMPORTCLASS,
+									   ORDERBY,
+									   TPL_TYPE)
+									values
+									  (8,
+									   'from("cmq:SomeQueue").beanRef("myTransformerBean", "myMethodName").to("cmq:AnotherQueue");',
+									   '消息转换(Message Transformation)',
+									   1,
+									   'admin',
+									   'EIP模式中的消息转行允许在路由逻辑中使用任意一个处理器，通过使用一个bean或者一个转行函数来对消息改造。',
+									   '1245936592375_MessageTranslator.gif',
+									   ' ',
+									   null,
+									   0)]]></property>
+			<property index="7"><![CDATA[insert into mq_rules_tpl
+									  (RULE_TPL_ID,
+									   RULES,
+									   RULES_NAME,
+									   MODIFIABLE,
+									   TPL_AUTH,
+									   TPL_DESC,
+									   RUTE_IMAGE,
+									   IMPORTCLASS,
+									   ORDERBY,
+									   TPL_TYPE)
+									values
+									  (19,
+									   'from("cmq:start").multicast().to("cmq:vendor1, cmq:vendor2,cmq:vendor3");
+                      from("cmq:vendor1").to("bean:vendor1").to("cmq:quoteAggregator");
+                      from("cmq:vendor2").to("bean:vendor2").to("cmq:quoteAggregator");
+                      from("cmq:vendor3").to("bean:vendor3").to("cmq:quoteAggregator");
+                      from("cmq:quoteAggregator").aggregator(header("quoteRequestId")).to("cmq:result");',
+									   '分散收集器(Scatter-Gather)',
+									   1,
+									   'admin',
+									   '把响应的消息重新组合成为一个消息,EIP模式中消息分发和整合模式允许将消息广播后将多份消息的响应整合成一个消息。
+
+                      事例说明：
+                      from("cmq:start").multicast().to("cmq:vendor1, cmq:vendor2,cmq:vendor3");
+                      from("cmq:vendor1").to("bean:vendor1").to("cmq:quoteAggregator");
+                      from("cmq:vendor2").to("bean:vendor2").to("cmq:quoteAggregator");
+                      from("cmq:vendor3").to("bean:vendor3").to("cmq:quoteAggregator");
+                      from("cmq:quoteAggregator").aggregator(header("quoteRequestId")).to("cmq:result");事例说明首先使用消息广播将消息发送到vendor1、vendor2、vendor3，发送到vendor1的消息通过bean:vendor1的处理发送到quoteAggregator，
+                      发送到vendor2的消息通过bean:vendor2的处理发送到quoteAggregator，
+                      发送到vendor3的消息通过bean:vendor3的处理发送到quoteAggregator，最后在quoteAggregator将三条消息整合发送到result。',
+									   '1245936131734_ScatterGather.gif',
+									   ' ',
+									   null,
+									   0)]]></property>
+			<property index="8"><![CDATA[insert into mq_rules_tpl
+									  (RULE_TPL_ID,
+									   RULES,
+									   RULES_NAME,
+									   MODIFIABLE,
+									   TPL_AUTH,
+									   TPL_DESC,
+									   RUTE_IMAGE,
+									   IMPORTCLASS,
+									   ORDERBY,
+									   TPL_TYPE)
+									values
+									  (20,
+									   'from("cmq:SomeQueue").routingSlip("headerName");
+                      from("cmq:c").routingSlip("aRoutingSlipHeader", "#");',
+									   '串行路由',
+									   1,
+									   'admin',
+									   'EIP模式中的串行路由允许路由消息通过一个持续消息处理步骤，对于每个消息而这个处理过程在设计时并不已知而且是可以改变的。
+                      事例说明：
+                      from("cmq:SomeQueue").routingSlip("headerName");此例子可以将消息路由到ActiveMQ中的队列任何地方，路由的逻辑是根据消息的头部headerName的值来设置，在headerName的值设置中，值必须是以逗号为分隔符，每个值就是一个URI消息传递端点。
+                      from("cmq:c").routingSlip("aRoutingSlipHeader", "#");此例子自定义分隔符为“＃”，而不是使用默认分隔符“，”。',
+									   '1245937320593_RoutingSlip.gif',
+									   ' ',
+									   null,
+									   0)]]></property>
+			<property index="9"><![CDATA[insert into mq_rules_tpl
+									  (RULE_TPL_ID,
+									   RULES,
+									   RULES_NAME,
+									   MODIFIABLE,
+									   TPL_AUTH,
+									   TPL_DESC,
+									   RUTE_IMAGE,
+									   IMPORTCLASS,
+									   ORDERBY,
+									   TPL_TYPE)
+									values
+									  (21,
+									   'from("cmq:a").throttler(3).timePeriodMillis(10000).to("cmq:result");',
+									   'Throttler模式',
+									   1,
+									   'admin',
+									   'EIP模式中的Throttler模式可以确保某个特定的端点不会超载。
+                      事例说明：
+                      from("cmq:a").throttler(3).timePeriodMillis(10000).to("cmq:result");此例子设置在往result队列发送消息的之前设置阈值，最大发送消息是3条每10秒钟。',
+									   ' ',
+									   ' ',
+									   null,
+									   0)]]></property>
+		<property index="10"><![CDATA[insert into mq_rules_tpl
+									  (RULE_TPL_ID,
+									   RULES,
+									   RULES_NAME,
+									   MODIFIABLE,
+									   TPL_AUTH,
+									   TPL_DESC,
+									   RUTE_IMAGE,
+									   IMPORTCLASS,
+									   ORDERBY,
+									   TPL_TYPE)
+									values
+									  (24,
+									   'from("cmq:a").multicast().to("cmq:x, cmq:y, cmq:z");',
+									   '消息广播',
+									   1,
+									   'admin',
+									   'EIP模式中消息广播模式允许将同一份消息发送到多个消息接收端点。',
+									   '1245937387390_RecipientList.gif',
+									   ' ',
+									   null,
+									   0)]]></property>
+			<property index="11"><![CDATA[insert into mq_rules_tpl
+									  (RULE_TPL_ID,
+									   RULES,
+									   RULES_NAME,
+									   MODIFIABLE,
+									   TPL_AUTH,
+									   TPL_DESC,
+									   RUTE_IMAGE,
+									   IMPORTCLASS,
+									   ORDERBY,
+									   TPL_TYPE)
+									values
+									  (23,
+									   'from("cmq:start").loadBalance().roundRobin().to("cmq:x, cmq:y, cmq:z");',
+									   '负载均衡(Load Balancer)',
+									   1,
+									   'admin',
+									   'EIP模式中的负载均衡模式允许使用多种均衡策略(例如：Round Robin，Random，Sticky，Topic，Failover )委派多个消息端点。
+                      事例说明：
+                      from("cmq:start").loadBalance().roundRobin().to("cmq:x, cmq:y, cmq:z");事例说明例子采用RoundRobin方式。
+                      参数设置：
+                      负载均衡的几种策略的设置：
+                      Round Robin：The exchanges is selected in a round robin fashion。 This is a well known and classic policy. This spreads the load even。
+                      Random：A random endpoint is selected for each exchange  。
+                      Sticky：Sticky load balancing using an Expression to calculate a correlation key to perform the sticky load balancing; rather like jsessionid in the web or JMSXGroupID in JMS.
+                      Topic：Topic which sends to all destinations (rather like JMS Topics)
+                      Failover：Camel 2.0: In case of failures the exchange is tried on the next endpoint.',
+									   ' ',
+									   ' ',
+									   null,
+									   0)]]></property>
+			<property index="12"><![CDATA[insert into mq_rules_tpl
+									  (RULE_TPL_ID,
+									   RULES,
+									   RULES_NAME,
+									   MODIFIABLE,
+									   TPL_AUTH,
+									   TPL_DESC,
+									   RUTE_IMAGE,
+									   IMPORTCLASS,
+									   ORDERBY,
+									   TPL_TYPE)
+									values
+									  (1,
+									   'from("cmq:a").choice().when(header("foo").isEqualTo("bar")).to("cmq:b").when(header("foo").isEqualTo("cheese")).to("cmq:c").otherwise().to("cmq:d");',
+									   '基于内容路由(Content Based Router )',
+									   1,
+									   'admin',
+									   'EIP模式中的基于内容的路由模板可以在消息内容的基础上路由消息至正确的目的地。
+
+                      事例说明：
+                      from("cmq:a").choice().when(header("foo").isEqualTo("bar")).to("cmq:b").when(header("foo").isEqualTo("cheese")).to("cmq:c").otherwise().to("cmq:d");改例子根据消息头部信息左右路由目的地的条件，当消息头部”foo”属性等于"bar"，消息发送到"b"队列，当消息头部”foo”属性等于" cheese "，消息发送到"c"队列，都不相等时发送到”d”队列。From消息发送的起点，choice相当于条件选择，when表示条件满足时执行的操作，to表示发送的目的地。',
+									   '1245936911562_ContentBaseRouter.gif',
+									   ' ',
+									   null,
+									   0)]]></property>
+			<property index="13"><![CDATA[insert into mq_rules_tpl
+									  (RULE_TPL_ID,
+									   RULES,
+									   RULES_NAME,
+									   MODIFIABLE,
+									   TPL_AUTH,
+									   TPL_DESC,
+									   RUTE_IMAGE,
+									   IMPORTCLASS,
+									   ORDERBY,
+									   TPL_TYPE)
+									values
+									  (5,
+									   'from("cmq:a").multicast().to("cmq:b, cmq:c,cmq:d");',
+									   '发布订阅(publish-subscribe)',
+									   1,
+									   'admin',
+									   'EIP模式中的发布订阅模式允许订阅消息的消费者，当消息发布时都同时能收到订阅消息。此模式和动态接收列表模式，静态接收列表模式相似，发布－订阅方式只提供两种选择：要么订购通道中的所有消息，要么什么也不订购。接收列表模式消费端是可以选择接收消息的。
+
+                                                                                                      事例说明：
+                                      from("cmq:a").multicast().to("cmq:b, cmq:c, cmq:d");from为消息的生产端，to为消息消费端，multicast为广播，但是广播的对象不是所有的消费者，而是b,c,d三个消费者。',
+									   '1245936670390_PublishSubcribe.gif',
+									   ' ',
+									   null,
+									   0)]]></property>
+			 <property index="14"><![CDATA[insert into mq_rules_tpl
+									  (RULE_TPL_ID,
+									   RULES,
+									   RULES_NAME,
+									   MODIFIABLE,
+									   TPL_AUTH,
+									   TPL_DESC,
+									   RUTE_IMAGE,
+									   IMPORTCLASS,
+									   ORDERBY,
+									   TPL_TYPE)
+									values
+									  (4,
+									   'from("cmq:a").multicast().to("cmq:b, cmq:c, cmq:d");',
+									   '静态接收列表(Static Recipient List)',
+									   1,
+									   'admin',
+									   'EIP模式中的静态收件人列表模式可以允许消息路由到一个静态的收件人列表。此模式类似于邮件系统中的接收列表，对于每条电子邮件消息，发送者都可以指定一个接收列表，此模式类似与消息发布－订阅方式，但是方式更灵活，发布－订阅方式只提供两种选择：要么订购通道中的所有消息，要么什么也不订购。而静态态接收列表模式可以保持集中控制，可以在每条消息附带的列表中指定消息所面向的消费者，这样一来，消息被广播给所有可能的接收者时，不在接收列表中的各个接受者可以丢得该消息。
+
+                                                                                                       事例说明：
+                                       from("cmq:a").multicast().to("cmq:b, cmq:c, cmq:d");from为消息的生产端，to为消息消费端，multicast为广播，但是广播的对象不是所有的消费者，而是b,c,d三个消费者。',
+									   '1245935910250_RecipientList.gif',
+									   ' ',
+									   null,
+									   0)]]></property>
+			<property index="15"><![CDATA[insert into mq_rules_tpl
+									  (RULE_TPL_ID,
+									   RULES,
+									   RULES_NAME,
+									   MODIFIABLE,
+									   TPL_AUTH,
+									   TPL_DESC,
+									   RUTE_IMAGE,
+									   IMPORTCLASS,
+									   ORDERBY,
+									   TPL_TYPE)
+									values
+									  (12,
+									   'from("cmq:a").splitter(body(String.class).tokenize("\n")).to("cmq:b");
+                                        from("cmq:my.queue").splitter().xpath(("//foo/bar")).convertBodyTo(String.class).to("file://some/directory");
+                                        from("cmq:streaming").splitter(body().tokenize(",")).streaming().to("cmq:my.parts");',
+									   '分离器(Splitter)',
+									   1,
+									   'admin',
+									   'EIP模式中的分离器模式允许将消息分割成一个一个小块的消息分别处理。
+
+功能说明：
+Camel分离器将消息拆分成许多块，默认返回最后一个块被分离的消息。Camel支持编写自己的聚合消息的策略。
+
+事例说明：
+errorHandler(deadLetterChannel("mock:error"));
+from("seda:a").split(body(String.class).tokenize("\n")).to("seda:b");
+例子展示了一个消息从队列a发出，通过分割符号回车将一个整体消息分成一块一块，发到了队列b，在使用分离器功能前，使用了死信通道功能，将异常信息发送到error队列中。
+在分离器中还可以支持XPath，XQuery，SQL或者一种脚本语言来执行分离表达式。事例如下：
+from("cmq:my.queue").split(xpath("//foo/bar")).convertBodyTo(String.class).to("file://some/directory");
+在分离器中也可以分离数据流，事例如下：
+from("cmq:streaming").splitter(body().tokenize(",")).streaming().to("cmq:my.parts");
+基本使用
+from("cmq:start").resequencer(header("seqnum")).stream().to("cmq:result");
+设置容量和超时时间大小
+from("cmq:start").resequencer(header("seqnum")).stream().capacity(5000).timeout(4000L).to("cmq:result");
+在分离器中在并行分离模式中也可以定制ThreadPoolExecutor，例子如下。
+XPathBuilder xPathBuilder = new XPathBuilder("//foo/bar");
+ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(8, 16, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue());
+from("cmq:my.queue").split(xPathBuilder, true, threadPoolExecutor).to("cmq:my.parts");
+分离器中使用pojo来分离消息，我们可以使用method表达式来调用一个Bean来获得分离的部分，这个Bean必须返回一个iterable，例如：java.util.Collection, java.util.Iterator or an array.
+事例如下：
+from("direct:body") // here we use a POJO bean mySplitterBean to do the split of the payload .splitter().method("mySplitterBean", "splitBody")
+.to("mock:result");
+from("direct:message") // here we use a POJO bean mySplitterBean to do the split of the message  // with a certain header value
+.splitter().method("mySplitterBean", "splitMessage").to("mock:result");
+Bean编写如下：
+public class MySplitterBean {
+
+    /**
+     * The split body method returns something that is iteratable such as a java.util.List.
+     *
+     * @param body the payload of the incoming message
+     * @return a list containing each part splitted
+     */
+    public List splitBody(String body) {
+        // since this is based on an unit test you can of couse
+        // use different logic for splitting as Camel have out
+        // of the box support for splitting a String based on comma
+        // but this is for show and tell, since this is java code
+        // you have the full power how you like to split your messages
+        List answer = new ArrayList();
+        String[] parts = body.split(",");
+        for (String part : parts) {
+            answer.add(part);
+        }
+        return answer;
+    }
+
+    /**
+     * The split message method returns something that is iteratable such as a java.util.List.
+     *
+     * @param header the header of the incoming message with the name user
+     * @param body the payload of the incoming message
+     * @return a list containing each part splitted
+     */
+    public List<Message> splitMessage(@Header(value = "user") String header, @Body String body) {
+        // we can leverage the Parameter Binding Annotations
+        // http://camel.apache.org/parameter-binding-annotations.html
+        // to access the message header and body at same time,
+        // then create the message that we want, splitter will
+        // take care rest of them.
+        // *NOTE* this feature requires Camel version >= 1.6.1
+        List<Message> answer = new ArrayList<Message>();
+        String[] parts = header.split(",");
+        for (String part : parts) {
+            DefaultMessage message = new DefaultMessage();
+            message.setHeader("user", part);
+            message.setBody(body);
+            answer.add(message);
+        }
+        return answer;
+    }
+}
+分离、整合 请求/应答 例子
+在分离器中可以将分离的消息分别处理，整合并且返回一个组合响应到原始的调用者。以下是演示事例
+// this routes starts from the direct:start endpoint
+            // the body is then splitted based on @ separator
+            // the splitter in Camel supports InOut as well and for that we need
+            // to be able to aggregate what response we need to send back, so we provide our
+            // own strategy with the class MyOrderStrategy.
+            from("direct:start")
+            .splitter(body().tokenize("@"), new MyOrderStrategy())
+                // each splitted message is then send to this bean where we can process it
+                .to("bean:MyOrderService?method=handleOrder")
+                // this is important to end the splitter route as we do not want to do more routing
+                // on each splitted message
+            .end()
+            // after we have splitted and handled each message we want to send a single combined
+            // response back to the original caller, so we let this bean build it for us
+            // this bean will receive the result of the aggregate strategy: MyOrderStrategy
+            .to("bean:MyOrderService?method=buildCombinedResponse");
+OrderService bean如下
+public static class MyOrderService {
+
+    private static int counter;
+
+    /**
+     * We just handle the order by returning a id line for the order
+     */
+    public String handleOrder(String line) {
+        LOG.debug("HandleOrder: " + line);
+        return "(id=" + ++counter + ",item=" + line + ")";
+    }
+
+    /**
+     * We use the same bean for building the combined response to send
+     * back to the original caller
+     */
+    public String buildCombinedResponse(String line) {
+        LOG.debug("BuildCombinedResponse: " + line);
+        return "Response[" + line + "]";
+    }
+}
+以下是整合消息方式
+/**
+ * This is our own order aggregation strategy where we can control
+ * how each splitted message should be combined. As we do not want to
+ * loos any message we copy from the new to the old to preserve the
+ * order lines as long we process them
+ */
+public static class MyOrderStrategy implements AggregationStrategy {
+
+    public Exchange aggregate(Exchange oldExchange, Exchange newExchange) {
+        // put order together in old exchange by adding the order from new exchange
+
+        if (oldExchange == null) {
+            // the first time we aggregate we only have the new exchange,
+            // so we just return it
+            return newExchange;
+        }
+
+        // copy from OUT as we use InOut pattern
+        String orders = oldExchange.getOut().getBody(String.class);
+        String newLine = newExchange.getOut().getBody(String.class);
+
+        LOG.debug("Aggregate old orders: " + orders);
+        LOG.debug("Aggregate new order: " + newLine);
+
+        // put orders together separating by semi colon
+        orders = orders + ";" + newLine;
+        // put combined order back on old to preserve it
+        oldExchange.getOut().setBody(orders);
+
+        // return old as this is the one that has all the orders gathered until now
+        return oldExchange;
+    }
+}
+上述例子的打印消息，假设在direct:start存在一个消息，消息的body包含数据A@B@C，经过处理后
+HandleOrder: A
+HandleOrder: B
+Aggregate old orders: (id=1,item=A)
+Aggregate new order: (id=2,item=B)
+HandleOrder: C
+Aggregate old orders: (id=1,item=A);(id=2,item=B)
+Aggregate new order: (id=3,item=C)
+BuildCombinedResponse: (id=1,item=A);(id=2,item=B);(id=3,item=C)
+Response to caller: Response[(id=1,item=A);(id=2,item=B);(id=3,item=C)]',
+									   '1245935929921_Splitter.gif',
+									   ' ',
+									   null,
+									   0)]]></property>
+			 <property index="16"><![CDATA[insert into mq_rules_tpl
+									  (RULE_TPL_ID,
+									   RULES,
+									   RULES_NAME,
+									   MODIFIABLE,
+									   TPL_AUTH,
+									   TPL_DESC,
+									   RUTE_IMAGE,
+									   IMPORTCLASS,
+									   ORDERBY,
+									   TPL_TYPE)
+									values
+									  (13,
+									   'from("cmq:my.queue").splitter().xpath("//foo/bar").convertBodyTo(String.class).to("file://some/directory");',
+									   '分离器(SplitterXPath模式)',
+									   1,
+									   'admin',
+									   'EIP模式中的分离器模式允许将消息分割成一个一个小块的消息分别处理。
+
+功能说明：
+Camel分离器将消息拆分成许多块，默认返回最后一个块被分离的消息。Camel支持编写自己的聚合消息的策略。
+
+事例说明：
+errorHandler(deadLetterChannel("mock:error"));
+from("seda:a").split(body(String.class).tokenize("\n")).to("seda:b");
+例子展示了一个消息从队列a发出，通过分割符号回车将一个整体消息分成一块一块，发到了队列b，在使用分离器功能前，使用了死信通道功能，将异常信息发送到error队列中。
+在分离器中还可以支持XPath，XQuery，SQL或者一种脚本语言来执行分离表达式。事例如下：
+from("cmq:my.queue").split(xpath("//foo/bar")).convertBodyTo(String.class).to("file://some/directory");
+在分离器中也可以分离数据流，事例如下：
+from("direct:streaming").splitter(body().tokenize(",")).streaming().to("cmq:my.parts");
+基本使用
+from("cmq:start").resequencer(header("seqnum")).stream().to("activemq:result");
+设置容量和超时时间大小
+from("cmq:start").resequencer(header("seqnum")).stream().capacity(5000).timeout(4000L).to("cmq:result");
+在分离器中在并行分离模式中也可以定制ThreadPoolExecutor，例子如下。
+XPathBuilder xPathBuilder = new XPathBuilder("//foo/bar");
+ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(8, 16, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue());
+from("cmq:my.queue").split(xPathBuilder, true, threadPoolExecutor).to("cmq:my.parts");
+分离器中使用pojo来分离消息，我们可以使用method表达式来调用一个Bean来获得分离的部分，这个Bean必须返回一个iterable，例如：java.util.Collection, java.util.Iterator or an array.
+事例如下：
+from("direct:body") // here we use a POJO bean mySplitterBean to do the split of the payload .splitter().method("mySplitterBean", "splitBody")
+.to("mock:result");
+from("direct:message") // here we use a POJO bean mySplitterBean to do the split of the message  // with a certain header value
+.splitter().method("mySplitterBean", "splitMessage").to("mock:result");
+Bean编写如下：
+public class MySplitterBean {
+
+    /**
+     * The split body method returns something that is iteratable such as a java.util.List.
+     *
+     * @param body the payload of the incoming message
+     * @return a list containing each part splitted
+     */
+    public List splitBody(String body) {
+        // since this is based on an unit test you can of couse
+        // use different logic for splitting as Camel have out
+        // of the box support for splitting a String based on comma
+        // but this is for show and tell, since this is java code
+        // you have the full power how you like to split your messages
+        List answer = new ArrayList();
+        String[] parts = body.split(",");
+        for (String part : parts) {
+            answer.add(part);
+        }
+        return answer;
+    }
+
+    /**
+     * The split message method returns something that is iteratable such as a java.util.List.
+     *
+     * @param header the header of the incoming message with the name user
+     * @param body the payload of the incoming message
+     * @return a list containing each part splitted
+     */
+    public List<Message> splitMessage(@Header(value = "user") String header, @Body String body) {
+        // we can leverage the Parameter Binding Annotations
+        // http://camel.apache.org/parameter-binding-annotations.html
+        // to access the message header and body at same time,
+        // then create the message that we want, splitter will
+        // take care rest of them.
+        // *NOTE* this feature requires Camel version >= 1.6.1
+        List<Message> answer = new ArrayList<Message>();
+        String[] parts = header.split(",");
+        for (String part : parts) {
+            DefaultMessage message = new DefaultMessage();
+            message.setHeader("user", part);
+            message.setBody(body);
+            answer.add(message);
+        }
+        return answer;
+    }
+}
+分离、整合 请求/应答 例子
+在分离器中可以将分离的消息分别处理，整合并且返回一个组合响应到原始的调用者。以下是演示事例
+// this routes starts from the direct:start endpoint
+            // the body is then splitted based on @ separator
+            // the splitter in Camel supports InOut as well and for that we need
+            // to be able to aggregate what response we need to send back, so we provide our
+            // own strategy with the class MyOrderStrategy.
+            from("direct:start")
+            .splitter(body().tokenize("@"), new MyOrderStrategy())
+                // each splitted message is then send to this bean where we can process it
+                .to("bean:MyOrderService?method=handleOrder")
+                // this is important to end the splitter route as we do not want to do more routing
+                // on each splitted message
+            .end()
+            // after we have splitted and handled each message we want to send a single combined
+            // response back to the original caller, so we let this bean build it for us
+            // this bean will receive the result of the aggregate strategy: MyOrderStrategy
+            .to("bean:MyOrderService?method=buildCombinedResponse");
+OrderService bean如下
+public static class MyOrderService {
+
+    private static int counter;
+
+    /**
+     * We just handle the order by returning a id line for the order
+     */
+    public String handleOrder(String line) {
+        LOG.debug("HandleOrder: " + line);
+        return "(id=" + ++counter + ",item=" + line + ")";
+    }
+
+    /**
+     * We use the same bean for building the combined response to send
+     * back to the original caller
+     */
+    public String buildCombinedResponse(String line) {
+        LOG.debug("BuildCombinedResponse: " + line);
+        return "Response[" + line + "]";
+    }
+}
+以下是整合消息方式
+/**
+ * This is our own order aggregation strategy where we can control
+ * how each splitted message should be combined. As we do not want to
+ * loos any message we copy from the new to the old to preserve the
+ * order lines as long we process them
+ */
+public static class MyOrderStrategy implements AggregationStrategy {
+
+    public Exchange aggregate(Exchange oldExchange, Exchange newExchange) {
+        // put order together in old exchange by adding the order from new exchange
+
+        if (oldExchange == null) {
+            // the first time we aggregate we only have the new exchange,
+            // so we just return it
+            return newExchange;
+        }
+
+        // copy from OUT as we use InOut pattern
+        String orders = oldExchange.getOut().getBody(String.class);
+        String newLine = newExchange.getOut().getBody(String.class);
+
+        LOG.debug("Aggregate old orders: " + orders);
+        LOG.debug("Aggregate new order: " + newLine);
+
+        // put orders together separating by semi colon
+        orders = orders + ";" + newLine;
+        // put combined order back on old to preserve it
+        oldExchange.getOut().setBody(orders);
+
+        // return old as this is the one that has all the orders gathered until now
+        return oldExchange;
+    }
+}
+上述例子的打印消息，假设在direct:start存在一个消息，消息的body包含数据A@B@C，经过处理后
+HandleOrder: A
+HandleOrder: B
+Aggregate old orders: (id=1,item=A)
+Aggregate new order: (id=2,item=B)
+HandleOrder: C
+Aggregate old orders: (id=1,item=A);(id=2,item=B)
+Aggregate new order: (id=3,item=C)
+BuildCombinedResponse: (id=1,item=A);(id=2,item=B);(id=3,item=C)
+Response to caller: Response[(id=1,item=A);(id=2,item=B);(id=3,item=C)] ',
+									   '1245935964796_Splitter.gif',
+									   ' ',
+									   null,
+									   0)]]></property>
+			<property index="17"><![CDATA[insert into mq_rules_tpl
+									  (RULE_TPL_ID,
+									   RULES,
+									   RULES_NAME,
+									   MODIFIABLE,
+									   TPL_AUTH,
+									   TPL_DESC,
+									   RUTE_IMAGE,
+									   IMPORTCLASS,
+									   ORDERBY,
+									   TPL_TYPE)
+									values
+									  (14,
+									   'from("cmq:start").resequencer(header("seqnum")).stream().to("cmq:result");
+from("cmq:start").resequencer(header("seqnum")).stream().capacity(5000).timeout(4000L).to("cmq:result");
+from("cmq:start").resequencer(header("seqnum")).stream(new StreamResequencerConfig(5000, 4000L)).to("cmq:result");',
+									   '流重组器(Stream Resequencing)',
+									   1,
+									   'admin',
+									   'EIP模式中的消息重组模式允许消息基于某种比较器重新组织，流重组器根据探测信息之间的间隙，而重新排列连续的信息流 。
+
+功能说明：
+Camel支持两种重组器算法，批处理重组器和流程重组器，流重组器在独立消息的层面上根据缝隙探测和超时，使用消息头部序号重排消息。
+
+事例说明：
+基本使用
+from("cmq:start").resequencer(header("seqnum")).stream().to("cmq:result");
+设置容量和超时时间大小
+from("cmq:start").resequencer(header("seqnum")).stream().capacity(5000).timeout(4000L).to("cmq:result");',
+									   '1245936079656_Resequencer.gif',
+									   'import org.apache.camel.model.config.StreamResequencerConfig;',
+									   null,
+									   0)]]></property>
+			 <property index="18"><![CDATA[insert into mq_rules_tpl
+									  (RULE_TPL_ID,
+									   RULES,
+									   RULES_NAME,
+									   MODIFIABLE,
+									   TPL_AUTH,
+									   TPL_DESC,
+									   RUTE_IMAGE,
+									   IMPORTCLASS,
+									   ORDERBY,
+									   TPL_TYPE)
+									values
+									  (17,
+									   'from("cmq:a").idempotentConsumer(header("myMessageId"),memoryMessageIdRepository(200)).to("cmq:b");',
+									   '幂等消费(Idempotent Consumer)',
+									   1,
+									   'admin',
+									   '幂等术语在数学中是指，一个函数应用于自身，可以产生相同的结果，即f(x)=f(f(x))。在消息传递引擎中，可以解释为：不管消息接收一次还是多次，产生的效果都相同。也就是说，消息可以多次重传，而不会引起任何问题，即使接收者会重复接收到相同的消息。
+功能说明：
+EIP模式中的幂等消费将消费者设计成为幂等消费，安全的多次的接收相同消息。
+事例说明：
+from("cmq:a").idempotentConsumer(header("myMessageId"),memoryMessageIdRepository(200)).to("cmq:b");此例子使用messageId来过滤重复的信息，使用MessageId库来存储消息id。',
+									   ' ',
+									   ' ',
+									   null,
+									   0)]]></property>
+			<property index="19"><![CDATA[insert into mq_rules_tpl
+									  (RULE_TPL_ID,
+									   RULES,
+									   RULES_NAME,
+									   MODIFIABLE,
+									   TPL_AUTH,
+									   TPL_DESC,
+									   RUTE_IMAGE,
+									   IMPORTCLASS,
+									   ORDERBY,
+									   TPL_TYPE)
+									values
+									  (18,
+									   'from("cmq:start").splitter().body().choice().when().method("orderItemHelper", "isWidget").to("cmq:widgetInventory, cmq:aggregate").otherwise().to("cmq:gadgetInventory,cmq:aggregate");',
+									   '复合消息处理(Composed Message Processor)',
+									   1,
+									   'admin',
+									   '复合消息处理(Composed Message Processor)
+如果一个消息需要多个处理过程，如图所示，一个消息由分解器把单独的消息划分成多个组成部分，基于内容的路由器可以根据消息的内容或者类型把分解后的各个子消息路由给正确的处理过程，最后使用聚合器把响应的结果重新组合成一个消息，EIP中的消息组合处理模式允许对消息进行组合操作。
+事例说明：
+from("cmq:start").splitter().body().choice().when().method("orderItemHelper", "isWidget").to("cmq:widgetInventory, cmq:aggregate").otherwise().to("cmq:gadgetInventory,cmq:aggregate");此例子首先使用分解器将消息分成一个一个单独消息，然后使用基于内容的路由器，如果消息的内容是widget，则发送到widgetInventory处理，如是gadget，则发送的gadgetInventory处理。',
+									   '1245936107453_ComposedMessageProcessor.gif',
+									   ' ',
+									   null,
+									   0)]]></property>
+			<property index="20"><![CDATA[insert into mq_rules_tpl
+									  (RULE_TPL_ID,
+									   RULES,
+									   RULES_NAME,
+									   MODIFIABLE,
+									   TPL_AUTH,
+									   TPL_DESC,
+									   RUTE_IMAGE,
+									   IMPORTCLASS,
+									   ORDERBY,
+									   TPL_TYPE)
+									values
+									  (30,
+									   'from("cmq:a").filter(header("foo").isEqualTo("bar")).process(myProcessor);',
+									   '选择性消费者(Selective Consumer )',
+									   1,
+									   'admin',
+									   '应用使用消息传递，从消息传递中消费消息，但是并不想消费消息通道中所有的消息，而只想消费其中的一部分消息，消息的消费者实现为选择性消费者，过滤在通道上传送的消息，从而使其只能接收到符合其标准的消息。
+
+事例说明：
+from("cmq:a").filter(header("foo").isEqualTo("bar")).process(myProcessor);事例说明消费者监听队列a，当队列里的消息的头部信息等于bar，才把消息传到定义的处理器myProcessor',
+									   '1245937185500_SelectiveConsumer.gif',
+									   ' ',
+									   null,
+									   0)]]></property>
+			<property index="21"><![CDATA[insert into mq_rules_tpl
+									  (RULE_TPL_ID,
+									   RULES,
+									   RULES_NAME,
+									   MODIFIABLE,
+									   TPL_AUTH,
+									   TPL_DESC,
+									   RUTE_IMAGE,
+									   IMPORTCLASS,
+									   ORDERBY,
+									   TPL_TYPE)
+									values
+									  (10,
+									   'from("cmq:start").aggregator(header("cheese")).to("cmq:result");
+from("cmq:someReallyFastTopic").aggregator(header("JMSDestination")).to("cmq:someSlowTopicForGuis");
+from("cmq:start").aggregator().xpath("/stockQuote/@symbol", String.class).batchSize(5).to("cmq:result");
+from("cmq:start").aggregator().xpath("name(/stockQuote[@symbol=APACHE])", String.class).batchSize(5).to("cmq:result");
+from("cmq:start").aggregator().header("id").batchTimeout(500L).to("cmq:result");
+AggregationCollection ag = new PredicateAggregationCollection(header("id"),new UseLatestAggregationStrategy(),header(Exchange.AGGREGATED_COUNT).isEqualTo(3));
+from("cmq:start").aggregator(ag).batchTimeout(500L).to("cmq:result");',
+									   '整合模式(Aggregator )',
+									   1,
+									   'admin',
+									   'EIP模式中的整合模式允许将多个消息整合成一个单独消息发送。
+
+功能说明：
+整合模式用来将消息合成一个消息，例如，假设有一个股票系统，你可能受到每秒30000个消息，你可能想减缓数据更新速度，一个GUI无法处理如此快的更新速率，所以你想整合这些消息到一个window，对于这些股票消息被整合在一起，在缺省情况整合模式会选择最近的消息，并且丢弃时间长的消息。
+
+事例说明：
+from("seda:header").setHeader("visited", constant(true)). aggregator (header("cheese")).to("mock:result");
+
+// 自定义整合策略
+// stating that the aggregated header is equal to 5.
+from("direct:predicate"). aggregator (header("cheese"), new MyAggregationStrategy()).
+completionPredicate(header("aggregated").isEqualTo(5)).to("mock:result");
+// this sample is similar to the one above but it also illustrates the use of outBatchSize
+// to send exchanges to mock:endpoint in batches of 10.
+from("direct:outBatchPredicate"). aggregator (header("cheese"), new MyAggregationStrategy()).
+completionPredicate(header("aggregated").isEqualTo(5)).outBatchSize(10).to("mock:result");
+
+如果是使用JMS可以使用JMSDestinnation头部作为相关的key。
+from("activemq:someReallyFastTopic").aggregator(header("JMSDestination")).to("activemq:someSlowTopicForGuis");
+
+同时也可以是使用不同的语言如XPath，XQuery，SQL或者不同的脚本语言，以下是XPath的例子。
+//aggregate based on the message content using an XPath expression
+//example assumes an XML document starting with <stockQuote symbol=''...''>
+//aggregate messages based on their symbol attribute within the <stockQuote> element
+from("seda:start").aggregate().xpath("/stockQuote/@symbol", String.class).batchSize(5).to("mock:result");
+
+//this example will aggregate all messages starting with <stockQuote symbol=''APACHE''> into
+//one exchange and all the other messages (different symbol or different root element) into another exchange.
+from("seda:start").aggregate().xpath("name(/stockQuote[@symbol=''APACHE''])", String.class).batchSize(5).to("mock:result");
+
+默认情况下Camel使用DefaultAggregationCollection 和 UseLatestAggregationStrategy，以下是简单的例子。
+// our route is aggregating from the direct queue and sending the response to the mock
+from("direct:start")
+    // aggregated by header id
+    // as we have not configured more on the aggregator it will default to aggregate the
+    // latest exchange only
+    .aggregate().header("id")
+    // wait for 0.5 seconds to aggregate
+    .batchTimeout(500L)
+.to("mock:result");
+
+以下是对整合策略的扩展，使用断言来决定收集策略。事例如下：
+        // create the aggregation collection we will use.
+            // - we will correlate the received message based on the id header
+            // - as we will just keep the latest message we use the latest strategy
+            // - and finally we stop aggregate if we receive 2 or more messages
+            AggregationCollection ag = new PredicateAggregationCollection(header("id"),
+                new UseLatestAggregationStrategy(),
+                header(Exchange.AGGREGATED_COUNT).isEqualTo(3));
+
+            // our route is aggregating from the direct queue and sending the response to the mock
+            from("direct:start")
+                // we use the collection based aggregator we already have configured
+                .aggregator(ag)
+                // wait for 0.5 seconds to aggregate
+                .batchTimeout(500L)
+                .to("mock:result");
+
+使用custom整合策略
+private static class MyAggregationStrategy implements AggregationStrategy {
+
+        public Exchange aggregate(Exchange oldExchange, Exchange newExchange) {
+            if (oldExchange == null) {
+                // the first time we only have the new exchange so it wins the first round
+                return newExchange;
+            }
+            int oldPrice = oldExchange.getIn().getBody(Integer.class);
+            int newPrice = newExchange.getIn().getBody(Integer.class);
+            // return the "winner" that has the highest price
+            return newPrice > oldPrice ? newExchange : oldExchange;
+        }
+    }
+以下是对路由的配置
+// our route is aggregating from the direct queue and sending the response to the mock
+from("direct:start")
+    // aggregated by header id and use our own strategy how to aggregate
+    .aggregate(new MyAggregationStrategy()).header("id")
+    // wait for 0.5 seconds to aggregate
+    .batchTimeout(500L)
+.to("mock:result");',
+									   '1246587722296_Aggregator.gif',
+									   'import org.apache.camel.*;
+import org.apache.camel.processor.aggregate.*;',
+									   null,
+									   0)]]></property>
+			<property index="22"><![CDATA[insert into mq_rules_tpl
+									  (RULE_TPL_ID,
+									   RULES,
+									   RULES_NAME,
+									   MODIFIABLE,
+									   TPL_AUTH,
+									   TPL_DESC,
+									   RUTE_IMAGE,
+									   IMPORTCLASS,
+									   ORDERBY,
+									   TPL_TYPE)
+									values
+									  (22,
+									   'from("cmq:b").delayer(1000).to("cmq:result");
+                                        from("cmq:foo").delayer().method("someBean", "computeDelay").to("cmq:bar");
+                                         public class SomeBean {
+                                          public long computeDelay() {
+                                           long delay = 0;
+                                      // use java code to compute a delay value in millis
+                                         return delay;
+                                         }
+                                      }',
+									   '延迟发送(delay)',
+									   1,
+									   'admin',
+									   'EIP模式中消息延迟模式允许设置消息延迟发送。
+功能说明：
+事例说明：
+from("cmq:b").delayer(1000).to("cmq:result");此例子是将b队列中的消息都延迟1秒中发送到队列result中。
+from("cmq:someQueue").resequencer(header("MyDeliveryTime")).delayer("MyRedeliveryTime").to("cmq:aDelayedQueue");此例子是将队列中的消息根据头部属性MyDeliveryTime重新排序，然后再延迟发送到aDelayedQueue队列中。
+from("cmq:foo").delayer().method("someBean", "computeDelay").to("cmq:bar");
+public class SomeBean {
+  public long computeDelay() {
+     long delay = 0;
+     // use java code to compute a delay value in millis
+     return delay;
+ }
+}此例子是与上面两个例子不同的是，可以自定义延迟发送策略。',
+									   ' ',
+									   ' ',
+									   null,
+									   0)]]></property>
+		
+		
+			
+				
+		</list>
+	</property>
+		
+</properties>
+</manager-config>

@@ -1,0 +1,67 @@
+[PropertyInfo]
+autoIncrement,boolean,false,false, , ,true,<default>
+autoIncrementString,String,false,false, , ,true,<default>
+bit,boolean,false,false, , ,true,<default>
+booleanChar,boolean,false,false, , ,true,<default>
+booleanInt,boolean,false,false, , ,true,<default>
+children,java.util.List,false,false, , ,true,<default>
+correctGetters,boolean,false,false, , ,true,<default>
+defaultSetting,String,false,false, , ,true,<default>
+defaultValue,String,false,false, , ,true,<default>
+description,String,false,false, , ,true,<default>
+domain,com.frameworkset.orm.engine.model.Domain,false,false, , ,true,<default>
+enumeratedClasses,boolean,false,false, , ,true,<default>
+foreignKey,boolean,false,false, , ,true,<default>
+foreignKey,com.frameworkset.orm.engine.model.ForeignKey,false,false, , ,true,<default>
+fullyQualifiedName,String,false,false, , ,true,<default>
+getterName,String,false,false, , ,true,<default>
+inheritance,boolean,false,false, , ,true,<default>
+inheritanceList,java.util.List,false,false, , ,false,<default>
+inheritanceType,String,false,false, , ,false,<default>
+inputValidator,String,false,false, , ,true,<default>
+isAutoIncrement,boolean,false,false, , ,false,<default>
+isEnumeratedClasses,boolean,false,false, , ,false,<default>
+isInheritance,boolean,false,false, , ,false,<default>
+isNotNull,boolean,false,false, , ,false,<default>
+isPrimaryKey,boolean,false,false, , ,false,<default>
+isUnique,boolean,false,false, , ,false,<default>
+javaName,String,false,false, , ,true,<default>
+javaNamingMethod,String,false,false, , ,false,<default>
+javaNative,String,false,false, , ,true,<default>
+javaObject,String,false,false, , ,true,<default>
+javaPrimitive,String,false,false, , ,true,<default>
+javaType,String,false,false, , ,true,<default>
+log,org.apache.commons.logging.Log,false,false, , ,false,<default>
+multipleFK,boolean,false,false, , ,true,<default>
+name,String,false,false, , ,true,<default>
+needsTransactionInPostgres,boolean,false,false, , ,false,<default>
+notNull,boolean,false,false, , ,true,<default>
+notNullString,String,false,false, , ,true,<default>
+parameterParserMethod,String,false,false, , ,true,<default>
+parentTable,com.frameworkset.orm.engine.model.Table,false,false, , ,false,<default>
+position,int,false,false, , ,true,<default>
+primaryKey,boolean,false,false, , ,true,<default>
+primitive,boolean,false,false, , ,true,<default>
+referrers,java.util.List,false,false, , ,true,<default>
+relatedColumnName,String,false,false, , ,true,<default>
+relatedTableName,String,false,false, , ,true,<default>
+scale,String,false,false, , ,true,<default>
+setterName,String,false,false, , ,true,<default>
+size,String,false,false, , ,true,<default>
+sqlString,String,false,false, , ,true,<default>
+string,boolean,false,false, , ,true,<default>
+table,com.frameworkset.orm.engine.model.Table,false,false, , ,true,<default>
+tableName,String,false,false, , ,true,<default>
+torqueType,Object,false,false, , ,true,<default>
+type,String,false,false, , ,true,<default>
+type,com.frameworkset.orm.engine.model.SchemaType,false,false, , ,true,<default>
+type,Object,false,false, , ,true,<default>
+uncapitalisedJavaName,String,false,false, , ,true,<default>
+unique,boolean,false,false, , ,true,<default>
+usePrimitive,boolean,false,false, , ,true,<default>
+villageMethod,String,false,false, , ,true,<default>
+[IconNames]
+
+
+
+

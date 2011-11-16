@@ -1,0 +1,9 @@
+[PropertyInfo]
+curPage,int,false,false, , ,false,<default>
+curValue,String,false,false, , ,false,<default>
+total,int,false,false, , ,false,<default>
+[IconNames]
+
+
+
+
