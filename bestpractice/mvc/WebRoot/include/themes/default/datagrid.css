@@ -1,0 +1,207 @@
+.datagrid{
+	font-size:12px;
+	border:1px solid #8DB2E3;
+	overflow1:hidden;
+	background:#fff;
+}
+.datagrid-noborder{
+	border-width:0px;
+}
+.datagrid-wrap{
+	position:relative;
+}
+.datagrid-view{
+	position:relative;
+	overflow:hidden;
+}
+.datagrid-view1{
+	position:absolute;
+	overflow:hidden;
+	left:0px;
+	top:0px;
+	border-right1:1px solid #ccc;
+}
+.datagrid-view2{
+	position:absolute;
+	overflow:hidden;
+	left:210px;
+	top:0px;
+}
+.datagrid-mask{
+	position:absolute;
+	left:0;
+	top:0;
+	background:#ccc;
+	opacity:0.3;
+	filter:alpha(opacity=30);
+	display:none;
+}
+.datagrid-mask-msg{
+	position:absolute;
+	cursor1:wait;
+	left:100px;
+	top:50px;
+	width:auto;
+	height:16px;
+	padding:12px 5px 10px 30px;
+	background:#fff url('images/pagination_loading.gif') no-repeat scroll 5px 10px;
+	border:2px solid #6593CF;
+	color:#222;
+	display:none;
+}
+.datagrid-title{
+	background:url('images/datagrid_title_bg.png') repeat-x;
+	border-bottom:1px solid #8DB2E3;
+	border-top:1px solid #fff;
+	position:relative;
+	padding:5px 0px;
+}
+.datagrid-title-text{
+	color:#15428b;
+	font-weight:bold;
+	padding-left:5px;
+}
+.datagrid-title-with-icon{
+	padding-left:22px;
+}
+.datagrid-title-icon{
+	position:absolute;
+	width:16px;
+	height:16px;
+	left:3px;
+	top:4px!important;
+	top:6px;
+}
+.datagrid-sort-desc .datagrid-sort-icon{
+	padding:2px 13px 3px 0px;
+	background:url('images/datagrid_sort_desc.gif') no-repeat center center;
+}
+.datagrid-sort-asc .datagrid-sort-icon{
+	padding:2px 13px 3px 0px;
+	background:url('images/datagrid_sort_asc.gif') no-repeat center center;
+}
+.datagrid-toolbar{
+	height:28px;
+	background:#efefef;
+	padding:1px 2px;
+	border-bottom:1px solid #ccc;
+}
+.datagrid-btn-separator{
+	float:left;
+	height:24px;
+	border-left:1px solid #ccc;
+	border-right:1px solid #fff;
+	margin:2px 1px;
+}
+.datagrid-pager{
+	background:#efefef;
+	border-top:1px solid #ccc;
+	position:relative;
+}
+
+.datagrid-header{
+	overflow:hidden;
+	background:#fafafa url('images/datagrid_header_bg.gif') repeat-x left bottom;
+	border-bottom:1px solid #ccc;
+	margin-bottom:1px;
+}
+.datagrid-header-inner{
+	float:left;
+	padding-right:20px;
+	margin-bottom:-1px;
+}
+.datagrid-header th{
+	border-right:1px dotted #ccc;
+	font-size:12px;
+	font-weight:normal;
+	background:#fafafa url('images/datagrid_header_bg.gif') repeat-x left bottom;
+	border-bottom:1px dotted #ccc;
+	border-top:1px dotted #fff;
+}
+.datagrid-header th.datagrid-header-over{
+	background:#EBF3FD;
+}
+.datagrid-header .datagrid-cell{
+	margin:0;
+	padding:4px 2px;
+	white-space:nowrap;
+	word-wrap:normal;
+	overflow:hidden;
+}
+.datagrid-header .datagrid-cell-group{
+	margin:0;
+	padding:4px 2px;
+	white-space:nowrap;
+	word-wrap:normal;
+	overflow:hidden;
+}
+.datagrid-header-rownumber{
+	width:25px;
+	text-align:center;
+	margin:0px;
+	padding:3px 0px;
+}
+.datagrid-cell-rownumber{
+	width:25px;
+	text-align:center;
+	background:#fafafa url('images/datagrid_header_bg.gif') repeat-x left bottom;
+	margin:0px;
+	padding:3px 0px;
+}
+.datagrid-header-check{
+	padding:0px 3px;
+}
+.datagrid-cell-check{
+	padding:0px 3px;
+}
+.datagrid-body{
+	margin:0;
+	padding:0;
+	overflow:auto;
+	zoom:1;
+}
+.datagrid-view1 .datagrid-body-inner{
+	padding-bottom:20px;
+}
+.datagrid-view1 .datagrid-body{
+	overflow:hidden;
+}
+.datagrid-body td{
+	font-size:12px;
+	border-right:1px dotted #ccc;
+	border-bottom:1px dotted #ccc;
+	overflow:hidden;
+	padding:0;
+	margin:0;
+}
+.datagrid-body .datagrid-cell{
+	overflow:hidden;
+	margin:0;
+	padding:3px 4px;
+	white-space:nowrap;
+	word-wrap:normal;
+}
+.datagrid-body .datagrid-cell-height{
+	height:16px!important;
+	*height:22px;
+}
+.datagrid-row-alt{
+	background:#EEEEFF;
+}
+.datagrid-row-over{
+	background:#D0E5F5;
+	background1:#FBEC88;
+	cursor:default;
+}
+.datagrid-row-selected{
+	background:#FBEC88;
+}
+.datagrid-resize-proxy{
+	position:absolute;
+	width:1px;
+	top:0;
+	height:10000px;
+	background:red;
+	cursor:e-resize;
+	display:none;
+}
