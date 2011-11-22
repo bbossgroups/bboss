@@ -277,40 +277,57 @@ function convertValue(object, needconvert) {
  *            选择页面内容范围的选择器
  * @return
  */
-function loadPageContent(pageurl, containerid, selector) {
-	containerid = convertValue(containerid, true);
-	
-	var idx = pageurl.indexOf("?");
-	
-	var queryString = null;
-	var params = null;
-	var tempurl = null;
-	
-	if(idx >= 0 )
-	{
-		
-		queryString = pageurl.substring(idx+1);
-		
-		tempurl = pageurl.substring(0,idx)
-			
-		params = ___parserParams(queryString);
-		
-	}
-	else
-	{
-		tempurl = pageurl;
-	}
+//function loadPageContent(pageurl, containerid, selector) {
+//	containerid = convertValue(containerid, true);
+//	
+//	var idx = pageurl.indexOf("?");
+//	
+//	var queryString = null;
+//	var params = null;
+//	var tempurl = null;
+//	
+//	if(idx >= 0 )
+//	{
+//		
+//		queryString = pageurl.substring(idx+1);
+//		
+//		tempurl = pageurl.substring(0,idx)
+//			
+//		params = ___parserParams(queryString);
+//		
+//	}
+//	else
+//	{
+//		tempurl = pageurl;
+//	}
+//
+//	
+//	
+//	if (selector && selector != "") {
+//		$("#" + containerid).load(tempurl + " #" + selector,params,function(){
+//			setTable_grayCss();
+//			if($.parser)	$.parser.parse("#" + containerid);
+//		});
+//		
+//	} else {
+//		$("#" + containerid).load(tempurl,params,function(){
+//			setTable_grayCss();
+//			if($.parser)	$.parser.parse("#" + containerid);
+//		});
+//	}
+//}
 
-	
-	
+
+function loadPageContent(pageurl, containerid, selector) {
+	containerid = convertValue(containerid, true);	
 	if (selector && selector != "") {
-		$("#" + containerid).load(tempurl + " #" + selector,params,function(){
+		$("#" + containerid).load(pageurl + " #" + selector,function(){
 			setTable_grayCss();
 			if($.parser)	$.parser.parse("#" + containerid);
 		});
 		
 	} else {
-		$("#" + containerid).load(tempurl,params,function(){
+		$("#" + containerid).load(pageurl,function(){
 			setTable_grayCss();
 			if($.parser)	$.parser.parse("#" + containerid);
 		});

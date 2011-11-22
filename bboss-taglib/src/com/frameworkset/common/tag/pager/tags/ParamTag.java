@@ -131,11 +131,11 @@ public final class ParamTag extends PagerTagSupport {
 						   (!type.equals(pagerContext.ATTRIBUTE) && !type.equals(pagerContext.PARAMETER)))
 				{
 
-					pagerContext.addParam(name, value,defaultValue,encode);
+					pagerContext.addParam(name, value,defaultValue,false);
 				}
 				else
 				{
-					pagerContext.addParamByRequest(name,type,defaultValue,encode);
+					pagerContext.addParamByRequest(name,type,defaultValue,false);
 				}
 				return EVAL_BODY_INCLUDE; 
 			}

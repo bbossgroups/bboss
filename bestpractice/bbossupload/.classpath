@@ -21,5 +21,7 @@
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/cms.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/frameworkset.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/ecs-1.4.2.jar"/>
+	<classpathentry kind="lib" path="/bboss-mvc/lib-compile/jsp-api.jar"/>
+	<classpathentry kind="lib" path="/bboss-mvc/lib-compile/servlet-api.jar"/>
 	<classpathentry kind="output" path="WebRoot/WEB-INF/classes"/>
 </classpath>

@@ -32,6 +32,7 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 import org.frameworkset.util.BigFile;
 import org.frameworkset.util.ClassUtil;
+import org.frameworkset.util.ClassUtil.ClassInfo;
 import org.frameworkset.util.annotations.ValueConstants;
 
 import com.frameworkset.common.poolman.handle.FieldRowHandler;
@@ -206,6 +207,7 @@ public class ResultMap {
 			} catch (IntrospectionException e1) {
 				throw new NestedSQLException(e1);
 			}
+			ClassInfo classinfo = ClassUtil.getClassInfo(valueObjectType);
 			PropertyDescriptor[] attributes = beanInfo.getPropertyDescriptors();
 			for (int n = 0; n < attributes.length; n++) {
 				PropertyDescriptor attribute = attributes[n];
@@ -217,7 +219,7 @@ public class ResultMap {
 					continue;
 				try {
 					
-					Field field = ClassUtil.getDeclaredField(valueObjectType,attrName);
+					Field field = classinfo.getDeclaredField(attrName);
 					if(field != null)
 					{
 						
@@ -411,6 +413,7 @@ public class ResultMap {
 			} catch (IntrospectionException e1) {
 				throw new NestedSQLException(e1);
 			}
+			ClassInfo classinfo = ClassUtil.getClassInfo(valueObjectType);
 			PropertyDescriptor[] attributes = beanInfo.getPropertyDescriptors();
 			for (int n = 0; n < attributes.length; n++) {
 				PropertyDescriptor attribute = attributes[n];
@@ -421,7 +424,7 @@ public class ResultMap {
 					continue;
 				String annotationName = null;
 				try {
-					Field field = ClassUtil.getDeclaredField(valueObjectType,attrName);
+					Field field = classinfo.getDeclaredField(attrName);
 					if(field != null)
 					{
 						

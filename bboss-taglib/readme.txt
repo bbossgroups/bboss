@@ -12,8 +12,77 @@ bboss-taglib<-portal [frameworkset.jar]
 bboss-taglib<-bboss-ws [frameworkset.jar]
 
 #######update function list since bbossgroups-3.4 begin###########
+------2011-11-20------------
+o 调整jquery-1.4.2.min.js的load方法支持数组参数的传递
+o 调整pager.js的loadPageContent方法支持数组参数的传递
+o 分页参数传递支持map，bean中包含数据参数传递，支持数组参数传递，通过以下标签实现：
+params标签：<pg:params name="userName" />
+beanparams标签：<pg:beanparams name="user"/>
+
+如果要使用这两个标签，需要更新以下程序：
+/WEB-INF/lib/frameworkset.jar
+/include/jquery-1.4.2.min.js
+/include/pager.js
+
+
+同时需要检查pager-taglib.tld中是否定义了一下params标签和beanparams标签：
+
+<!--
+		功能说明：为分页列表标签中自动设置的超链接添加参数数组
+	-->
+	<tag>
+		<name>params</name>
+		<tagclass>com.frameworkset.common.tag.pager.tags.ParamsTag</tagclass>
+		<bodycontent>empty</bodycontent>
+		<attribute>
+			<name>id</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>name</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		
+		<attribute>
+			<name>encode</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	
+	
+	<!--
+		功能说明：为分页列表标签中自动设置的超链接添加参数，参数来自java对象属性或者Map中键值对
+	-->
+	<tag>
+		<name>beanparams</name>
+		<tagclass>com.frameworkset.common.tag.pager.tags.BeanParamsTag</tagclass>
+		<bodycontent>empty</bodycontent>
+		<attribute>
+			<name>id</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>name</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		
+		<attribute>
+			<name>encode</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+------2011-11-18------------
+o 增加params,beanparams标签
+params:为分页列表标签中自动设置的超链接添加参数数组
+beanparams:为分页列表标签中自动设置的超链接添加参数，参数来自java对象属性或者Map中键值对
+bean属性可以指定com.frameworkset.common.tag.pager.IgnoreParam注解，beanparams标签会忽略带有
+IgnoreParam注解的属性
+
 ------2011-11-2------------
 o 修改covert标签空指针异常
+
 
 #######update function list since bbossgroups-3.3 begin###########
 ------2011-10-14------------

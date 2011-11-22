@@ -514,13 +514,17 @@ bboss-demo.xml
 						<property f:formPath="jsp/jquerypagine/main.jsp"
 							f:charset="UTF-8" class="org.frameworkset.web.demo.FormUrl">
 							<property name="description"><![CDATA[
-								分页列表main.jsp, 对应于/jquerypagine/main.htm跳转页面 
+								分页列表main.jsp, 对应于/jquerypagine/main.htm跳转页面 ，展示了jquery load方法如何传递
+								json数组参数的方法：
+								$("#pagecontainer").load("pagerqueryuser.htm?name=读破肚皮 #pagecontent",
+				               { userName: [$("#userName").val(),$("#userName").val(),$("#userName").val()] } );
 							]]></property>
 						</property>
 						<property f:formPath="jsp/jquerypagine/page.jsp"
 							f:charset="UTF-8" class="org.frameworkset.web.demo.FormUrl">
 							<property name="description"><![CDATA[
 								加载页面page.jsp, 对应于/jquerypagine/pagerqueryuser.htm
+								展示params传递数组参数用法
 							]]></property>
 						</property>
 						
@@ -528,6 +532,15 @@ bboss-demo.xml
 							f:charset="UTF-8" class="org.frameworkset.web.demo.FormUrl">
 							<property name="description"><![CDATA[
 								加载页面page1.jsp, 对应于/jquerypagine/pagerqueryuser1.htm
+								展示beanparams传递bean属性参数用法
+							]]></property>
+						</property>
+						
+						<property f:formPath="jsp/jquerypagine/page2.jsp"
+							f:charset="UTF-8" class="org.frameworkset.web.demo.FormUrl">
+							<property name="description"><![CDATA[
+								加载页面page2.jsp, 对应于/jquerypagine/pagerqueryuser2.htm
+								展示beanparams传递map属性参数用法
 							]]></property>
 						</property>
 					</list>

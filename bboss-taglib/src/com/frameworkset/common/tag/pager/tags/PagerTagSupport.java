@@ -180,7 +180,7 @@ public abstract class PagerTagSupport extends BaseTag {
 			{
 				//无需初时化pagerContext
 			}
-			else if(this instanceof ParamTag)
+			else if(this instanceof ParamTag || this instanceof ParamsTag || this instanceof BeanParamsTag)
 			{
 				if(pagerTag != null)
 				{

@@ -1,7 +1,16 @@
 package com.frameworkset.common.tag.pager.tags;
 
+import java.beans.BeanInfo;
+import java.beans.IntrospectionException;
+import java.beans.Introspector;
+import java.beans.PropertyDescriptor;
 import java.io.Serializable;
+import java.lang.reflect.Array;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.net.URLEncoder;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.Stack;
 
 import javax.servlet.ServletRequest;
@@ -12,6 +21,8 @@ import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.Tag;
 
 import org.apache.log4j.Logger;
+import org.frameworkset.util.ClassUtil;
+import org.frameworkset.util.ClassUtil.ClassInfo;
 
 import com.chinacreator.cms.driver.context.ContentContext;
 import com.chinacreator.cms.driver.context.PagineContext;
@@ -27,6 +38,7 @@ import com.frameworkset.common.tag.CMSTagUtil;
 import com.frameworkset.common.tag.html.CMSListTag;
 import com.frameworkset.common.tag.pager.DataInfo;
 import com.frameworkset.common.tag.pager.DefaultDataInfoImpl;
+import com.frameworkset.common.tag.pager.IgnoreParam;
 import com.frameworkset.common.tag.pager.ListInfoDataInfoImpl;
 import com.frameworkset.common.tag.pager.ObjectDataInfoImpl;
 import com.frameworkset.common.tag.pager.parser.PagerTagExport;
@@ -846,7 +858,7 @@ public class PagerContext
 		if (value != null) {
 			// value = value.trim();
 			if (encode) {
-				name = URLEncoder.encode(name);
+//				name = URLEncoder.encode(name);
 				value = URLEncoder.encode(value);
 			}
 			addQueryParam(name, value);
@@ -858,7 +870,7 @@ public class PagerContext
 			// value = value.trim();
 			if (encode) {
 
-				name = URLEncoder.encode(name);
+//				name = URLEncoder.encode(name);
 				value = URLEncoder.encode(defauleValue.toString());
 			} else {
 				value = defauleValue.toString();
@@ -868,6 +880,197 @@ public class PagerContext
 			uri.append(params == 0 ? '?' : '&').append(name).append('=')
 					.append(value.toString());
 			params++;
+		}
+	}
+	
+	/**
+	 * 从request中获取参数值， 并且添加到参数串中 Description:
+	 * 
+	 * @param name
+	 * @param type
+	 *            void
+	 */
+	public final void addParamsByRequest(String name, boolean encode) {
+		
+
+		String values[] = null;
+		
+		values = request.getParameterValues(name);
+		
+		if (values != null) {
+			for(int i = 0; values != null && i < values.length; i ++)
+			{
+				String value = values[i];
+				// value = value.trim();
+				if (encode) {
+//					name = URLEncoder.encode(name);
+//					name = name;
+					value = URLEncoder.encode(value);
+				}
+				addQueryParam(name, value);
+	
+				uri.append(params == 0 ? '?' : '&').append(name).append('=')
+						.append(value);
+				params++;
+			}
+		}
+	}
+	
+	
+	/**
+	 * 从request中获取参数值， 并且添加到参数串中 Description:
+	 * 
+	 * @param name
+	 * @param type
+	 *            void
+	 */
+	public final void addBeanParams(String name, boolean encode,String scope) {
+		
+		Object bean = request.getAttribute(name);
+		if(bean == null)
+			return ;
+		if(bean instanceof Map)
+		{
+			mapParamsAppend((Map) bean, name,  encode, scope);
+		}
+		else
+		{
+			beanParamsAppend( bean, name,  encode, scope);
+		}
+		
+	}
+	
+	private final void beanParamsAppend(Object bean,String name, boolean encode,String scope)
+	{
+		BeanInfo beanInfo;
+		try {
+			
+			beanInfo = Introspector.getBeanInfo(bean.getClass());
+		} catch (IntrospectionException e1) {
+			return;
+		}
+		ClassInfo classinfo = ClassUtil.getClassInfo(bean.getClass());
+		PropertyDescriptor[] attributes = beanInfo.getPropertyDescriptors();
+		
+		
+		if(attributes == null || attributes.length <=0)
+			return ;
+		Method m = null;
+		Field field= null;
+		for(PropertyDescriptor f:attributes)
+		{	
+			name = f.getName();
+			if(name.equals("class"))
+				continue;
+			m = f.getReadMethod();
+			
+			if(m == null)
+				continue;
+			
+			field= classinfo.getDeclaredField(name);
+			if(field != null)
+			{
+				IgnoreParam ignore = field.getAnnotation(IgnoreParam.class);
+				if(ignore != null)
+					continue;
+			}
+			Object v = null;
+			try
+			{
+				v = m.invoke(bean);
+			}
+			catch (Exception e)
+			{
+				continue;
+			}
+			
+			if(v == null)
+				continue;
+			if(!v.getClass().isArray())
+			{
+				
+				
+				String value = String.valueOf(v);
+				// value = value.trim();
+				
+				if (encode) {					
+					value = URLEncoder.encode(value);
+				}
+				addQueryParam(name, value);
+	
+				uri.append(params == 0 ? '?' : '&').append(name).append('=')
+						.append(value);
+				params++;
+			}
+			else //处理数组值
+			{
+				int size = Array.getLength(v);
+				if(size == 0)
+					continue;
+				for(int i = 0; i < size; i  ++)
+				{
+					Object v_ = Array.get(v, i);
+					String value = String.valueOf(v_);
+					if (encode) {					
+						value = URLEncoder.encode(value);
+					}
+					addQueryParam(name, value);
+					uri.append(params == 0 ? '?' : '&').append(name).append('=')
+							.append(value);
+					params++;
+				}
+			}
+		}
+	}
+	
+	private final void mapParamsAppend(Map bean,String name, boolean encode,String scope)
+	{
+		if(bean.isEmpty())
+			return;
+		Iterator<Map.Entry> it = bean.entrySet().iterator();
+		while(it.hasNext())
+		{	
+			Map.Entry entry = it.next();
+			Object v = entry.getValue();
+			
+			
+			if(v == null)
+				continue;
+			name = String.valueOf(entry.getKey());
+			if(!v.getClass().isArray())
+			{
+				
+				
+				String value = String.valueOf(v);
+				// value = value.trim();
+				
+				if (encode) {					
+					value = URLEncoder.encode(value);
+				}
+				addQueryParam(name, value);
+	
+				uri.append(params == 0 ? '?' : '&').append(name).append('=')
+						.append(value);
+				params++;
+			}
+			else //处理数组值
+			{
+				int size = Array.getLength(v);
+				if(size == 0)
+					continue;
+				for(int i = 0; i < size; i  ++)
+				{
+					Object v_ = Array.get(v, i);
+					String value = String.valueOf(v_);
+					if (encode) {					
+						value = URLEncoder.encode(value);
+					}
+					addQueryParam(name, value);
+					uri.append(params == 0 ? '?' : '&').append(name).append('=')
+							.append(value);
+					params++;
+				}
+			}
 		}
 	}
 
@@ -894,7 +1097,8 @@ public class PagerContext
 			String tempName = "";
 			String tempValue = "";
 			if (encode) {
-				tempName = URLEncoder.encode(name);
+//				tempName = URLEncoder.encode(name);
+				tempName = name;
 				tempValue = URLEncoder.encode(value);
 			} else {
 				tempName = name;
@@ -916,7 +1120,8 @@ public class PagerContext
 			String tempName = "";
 			String tempValue = "";
 			if (encode) {
-				tempName = URLEncoder.encode(name);
+//				tempName = URLEncoder.encode(name);
+				tempName = name;
 				tempValue = URLEncoder.encode(defaultValue.toString());
 			} else {
 				tempName = name;

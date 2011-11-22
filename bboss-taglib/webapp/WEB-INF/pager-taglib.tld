@@ -216,6 +216,53 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
+	
+	<!--
+		功能说明：为分页列表标签中自动设置的超链接添加参数数组
+	-->
+	<tag>
+		<name>params</name>
+		<tagclass>com.frameworkset.common.tag.pager.tags.ParamsTag</tagclass>
+		<bodycontent>empty</bodycontent>
+		<attribute>
+			<name>id</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>name</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		
+		<attribute>
+			<name>encode</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	
+	
+	<!--
+		功能说明：为分页列表标签中自动设置的超链接添加参数，参数来自java对象属性或者Map中键值对
+	-->
+	<tag>
+		<name>beanparams</name>
+		<tagclass>com.frameworkset.common.tag.pager.tags.BeanParamsTag</tagclass>
+		<bodycontent>empty</bodycontent>
+		<attribute>
+			<name>id</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>name</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		
+		<attribute>
+			<name>encode</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
 	<!--
 		功能说明：显示上下翻页，跳转按钮
 	-->

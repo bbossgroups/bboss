@@ -16,5 +16,7 @@
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/log4j-1.2.14.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/velocity-1.6.4-dep.jar"/>
 	<classpathentry kind="con" path="com.instantiations.j2ee.J2EE5_CONTAINER"/>
+	<classpathentry kind="lib" path="/bboss-mvc/lib-compile/jsp-api.jar"/>
+	<classpathentry kind="lib" path="/bboss-mvc/lib-compile/servlet-api.jar"/>
 	<classpathentry kind="output" path="WebRoot/WEB-INF/classes"/>
 </classpath>

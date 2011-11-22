@@ -216,6 +216,53 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
+	
+	<!--
+		功能说明：为分页列表标签中自动设置的超链接添加参数数组
+	-->
+	<tag>
+		<name>params</name>
+		<tagclass>com.frameworkset.common.tag.pager.tags.ParamsTag</tagclass>
+		<bodycontent>empty</bodycontent>
+		<attribute>
+			<name>id</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>name</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		
+		<attribute>
+			<name>encode</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	
+	
+	<!--
+		功能说明：为分页列表标签中自动设置的超链接添加参数，参数来自java对象属性或者Map中键值对
+	-->
+	<tag>
+		<name>beanparams</name>
+		<tagclass>com.frameworkset.common.tag.pager.tags.BeanParamsTag</tagclass>
+		<bodycontent>empty</bodycontent>
+		<attribute>
+			<name>id</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>name</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		
+		<attribute>
+			<name>encode</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
 	<!--
 		功能说明：显示上下翻页，跳转按钮
 	-->
@@ -637,6 +684,142 @@
 		</attribute>
 	</tag>
 	<!--
+		功能：循环输出map中的数据，每次循环展示map中的一个对象，对象的属性通过cell标签输出
+		如果需要获取对应的属性的key可以通过mapkey标签获取
+		可嵌套map，beaninfo list tag 如果是嵌套列表则可设置如下属性：
+		colName,property,sortKey,desc，必须设置colName属性
+	-->
+	<tag>
+		<name>map</name>
+		<tagclass>com.frameworkset.common.tag.pager.tags.MapTag</tagclass>
+		<teiclass>com.frameworkset.common.tag.pager.tags.PagerDataSetExtraInfo</teiclass>
+		<bodycontent>JSP</bodycontent>
+		
+		
+		<!--
+			列表标识
+		-->
+		<attribute>
+			<name>id</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		
+		<attribute>
+			<name>colName</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>property</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<!--指定缺省的排序关键字-->
+		<attribute>
+			<name>sortKey</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<!--
+			查找祖先(map或者list，beaninfo)索引
+		-->
+		<attribute>
+			<name>index</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>sessionKey</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>requestKey</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>pageContextKey</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>needClear</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<!--
+			是否声明外部变量
+			true:声明，缺省值
+			false：不声明
+		-->
+		<attribute>
+			<name>declare</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<!--指定缺省的排序顺序-->
+		<attribute>
+			<name>desc</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<!--
+			指定数据库查询语句，或者存储过程，
+			Added on 2007.2.1 by biaoping.yin
+		-->
+		<attribute>
+			<name>statement</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<!--
+			指定数据库链接池的名称 
+			Added on 2007.2.1 PM by biaoping.yin
+		-->
+		<attribute>
+			<name>dbname</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		
+		<attribute>
+			<name>sqlparamskey</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		
+		
+		<attribute>
+			<name>url</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		
+		
+		<!--
+			为map添加分页功能的相关属性定义结束 指定list标签内部变量dataSet的变量名称,缺省为dataSet
+			dataSet提供以下方法： getString(propertyName); getInt(propertyName);
+			getString(propertyName,defaultvalue);
+			getInt(propertyName,defaultvalue); getDate(propertyName); 例如：
+			<pg:list ... dataSetName="dataSet1" ...> ...
+			dataSet1.getString("name"); ... </pg:list>
+		-->
+		<attribute>
+			<name>dataSetName</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<!--
+			指定map标签内部变量rowid的变量名称,缺省为"rowid" 例如： <pg:map ... rowidName="rowid1"
+			...> ... out.println(rowid1); ... </pg:map>
+		-->
+		<attribute>
+			<name>rowidName</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<!--
+		是否自动派讯
+		-->
+		<attribute>
+			<name>autosort</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	
+	<tag>
+		<name>mapkey</name>
+		<tagclass>com.frameworkset.common.tag.pager.tags.MapKeyTag</tagclass>
+		<bodycontent>JSP</bodycontent>
+		
+	</tag>	
+	<!--
 		功能：用来显示对象的详细信息，包括字段值，对象中包含的集合（list/set/map等等）中的对象的所有信息
 		所要显示的对象可以从request,session,pageContext中获取，事先将对象设置到上述对象的属性中 属性值通过嵌套cell
 		tag显示，集合通过嵌套list tag显示. 本标签还可作为分页/列表的内嵌标签使用，当属性为javabean时用来显示其详细信息 属性：
@@ -857,6 +1040,10 @@
 		-->
 		<attribute>
 			<name>htmlDecode</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>actual</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
@@ -2197,9 +2384,24 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
+	<!-- 
+	记录总条数
+	 -->
 	<tag>
 		<name>rowcount</name>
 		<tagclass>com.frameworkset.common.tag.pager.tags.PagerRowCount</tagclass>
+		<bodycontent>JSP</bodycontent>
+		<attribute>
+			<name>id</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<!-- 
+	当页数据条数
+	 -->
+	<tag>
+		<name>pagesize</name>
+		<tagclass>com.frameworkset.common.tag.pager.tags.PageSizeTag</tagclass>
 		<bodycontent>JSP</bodycontent>
 		<attribute>
 			<name>id</name>
