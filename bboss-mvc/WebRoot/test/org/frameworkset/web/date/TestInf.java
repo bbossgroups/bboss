@@ -13,26 +13,20 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.  
  */
-package org.frameworkset.web.ws;
-
-import javax.jws.WebService;
+package org.frameworkset.web.date;
 
 
 /**
- * <p>MyserviceImpl.java</p>
+ * <p>TestInf.java</p>
  * <p> Description: </p>
  * <p> bboss workgroup </p>
  * <p> Copyright (c) 2009 </p>
  * 
- * @Date 2011-10-13
+ * @Date 2011-10-25
  * @author biaoping.yin
  * @version 1.0
  */
-@WebService
-public class MyserviceImpl implements Myservice
+public interface TestInf 
 {
-	public String test(String msg)
-	{ 
-		return msg + " from server";
-	}
+	public String dateconvert();
 }

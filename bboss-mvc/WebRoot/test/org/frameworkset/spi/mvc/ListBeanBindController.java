@@ -23,11 +23,6 @@ public class ListBeanBindController {
 	public String stringarraytoList(List<ListBean> beans, ModelMap model,
 			@RequestParam(name = "fieldName")
 			List fieldNames) {
-//		String sql = "INSERT INTO LISTBEAN (" + "ID," + "FIELDNAME," + "FIELDLABLE," + "FIELDTYPE," + "SORTORDER,"
-//				+ " ISPRIMARYKEY," + "REQUIRED," + "FIELDLENGTH,"
-//				+ "ISVALIDATED" + ")" + "VALUES"
-//				+ "(#[id],#[fieldName],#[fieldLable],#[fieldType],#[sortorder]"
-//				+ ",#[isprimaryKey],#[required],#[fieldLength],#[isvalidated])";
 		TransactionManager tm = new TransactionManager();
 		try {
 
@@ -50,6 +45,38 @@ public class ListBeanBindController {
 
 		return "/databind/stringarraytoList";
 	}
+	
+//	/**
+//	 * 
+//	 * @param beans
+//	 * @return
+//	 */
+//	public String savedatas(List<ListBean> beans) {
+//		TransactionManager tm = new TransactionManager();
+//		try {
+//			tm.begin();
+//			executor.delete("stringarraytoList_delete");
+//			executor.insertBeans("stringarraytoList_insert", beans);
+//			tm.commit();			
+//		} catch (Exception e) {
+//			try {tm.rollback();} catch (RollbackException e1) {}			
+//		}
+//		return "/databind/stringarraytoList";
+//	}
+//	
+//	
+//	/**
+//	 * 
+//	 * @param beans
+//	 * @return
+//	 */
+//	public String savedatas(List<ListBean> beans) {
+//		testservice.savedatas( beans);
+//		return "/databind/stringarraytoList";
+//	}
+//	
+	
+	
 
 	public String showstringarraytoList(ModelMap model) {
 		List<ListBean> beans = null;

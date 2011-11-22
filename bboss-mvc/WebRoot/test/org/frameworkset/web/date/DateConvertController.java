@@ -27,7 +27,7 @@ import org.frameworkset.web.servlet.ModelMap;
  * @author biaoping.yin
  * @version 1.0
  */
-public class DateConvertController {
+public class DateConvertController implements TestInf{
 	
 	public String converStringToDate(@RequestParam(name="d12",dateformat="yyyy-MM-dd") java.util.Date d12,
 									 @RequestParam(name="stringdate",dateformat="yyyy-MM-dd") java.sql.Date stringdate,

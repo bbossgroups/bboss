@@ -13,26 +13,45 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.  
  */
-package org.frameworkset.web.ws;
-
-import javax.jws.WebService;
+package org.frameworkset.web.jquerypagine;
 
 
 /**
- * <p>MyserviceImpl.java</p>
+ * <p>UserBean.java</p>
  * <p> Description: </p>
  * <p> bboss workgroup </p>
  * <p> Copyright (c) 2009 </p>
  * 
- * @Date 2011-10-13
+ * @Date 2011-11-20
  * @author biaoping.yin
  * @version 1.0
  */
-@WebService
-public class MyserviceImpl implements Myservice
+public class UserBean
 {
-	public String test(String msg)
-	{ 
-		return msg + " from server";
+	private String name ;
+	private String[] userName;
+	
+	public String getName()
+	{
+	
+		return name;
+	}
+	
+	public void setName(String name)
+	{
+	
+		this.name = name;
+	}
+	
+	public String[] getUserName()
+	{
+	
+		return userName;
+	}
+	
+	public void setUserName(String[] userName)
+	{
+	
+		this.userName = userName;
 	}
 }

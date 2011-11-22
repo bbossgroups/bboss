@@ -1,6 +1,8 @@
 package org.frameworkset.web.jquerypagine;
 
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.frameworkset.util.annotations.PagerParam;
 import org.frameworkset.util.annotations.RequestParam;
@@ -50,14 +52,42 @@ public class JqueryPagineController {
 			@PagerParam(name=PagerParam.DESC,defaultvalue="true") boolean desc,
 			@PagerParam(name=PagerParam.OFFSET) long offset,
 			@PagerParam(name=PagerParam.PAGE_SIZE,defaultvalue="2") int pagesize,
-			@RequestParam(name = "userName",decodeCharset = "UTF-8") String username ,
+			UserBean user ,
 			ModelMap model) throws UserManagerException {
-
+		String username = null;
+		if(user != null &&  user.getUserName() != null && user.getUserName().length > 0)
+			username = user.getUserName()[0];
 		ListInfo userTemp = userService.getUsersNullRowHandler(username,offset, pagesize);
 		if(userTemp == null)
 		model.getErrors().rejectValueWithErrorArgs("message", "user.not.exist",new Object[]{username});
 		model.addAttribute("users", userTemp);
+		if(user != null)
+			model.addAttribute("user",user);
 		return "jquerypagine/page1";
+	}
+	
+	
+	public String pagerqueryuser2(@PagerParam(name=PagerParam.SORT ) String sortKey,
+			@PagerParam(name=PagerParam.DESC,defaultvalue="true") boolean desc,
+			@PagerParam(name=PagerParam.OFFSET) long offset,
+			@PagerParam(name=PagerParam.PAGE_SIZE,defaultvalue="2") int pagesize,
+			UserBean user ,
+			ModelMap model) throws UserManagerException {
+		String username = null;
+		if(user != null &&  user.getUserName() != null && user.getUserName().length > 0)
+			username = user.getUserName()[0];
+		ListInfo userTemp = userService.getUsersNullRowHandler(username,offset, pagesize);
+		if(userTemp == null)
+		model.getErrors().rejectValueWithErrorArgs("message", "user.not.exist",new Object[]{username});
+		model.addAttribute("users", userTemp);
+		if(user != null)
+		{
+			Map mapuser = new HashMap();
+			mapuser.put("name", user.getName());
+			mapuser.put("userName", user.getUserName());
+			model.addAttribute("usermap",mapuser);
+		}
+		return "jquerypagine/page2";
 	}
 
 
