@@ -35,8 +35,19 @@ String path = request.getContextPath();
 			function doquery()
 			{
 				//$("#pagecontainer").load("pagerqueryuser.htm #pagecontent",{userName:encodeURIComponent($("#userName").val())});
-				$("#pagecontainer").load("pagerqueryuser.htm?name=读破肚皮 #pagecontent",{userName:$("#userName").val()});
+				$("#pagecontainer").load("pagerqueryuser.htm?name=读破肚皮 #pagecontent",
+				               { userName: [$("#userName").val(),$("#userName").val(),$("#userName").val()] } );
 				
+			}
+			
+			function dobeanparamsquery()
+			{
+				$("#pagecontainer1").load("pagerqueryuser1.htm #pagecontent",{ name:"多多",userName: [$("#beanuserName").val(),$("#beanuserName").val(),$("#beanuserName").val()] });
+			}
+			
+			function domapparamsquery()
+			{
+				$("#pagecontainer2").load("pagerqueryuser2.htm #pagecontent",{ name:"多多",userName: [$("#mapuserName").val(),$("#mapuserName").val(),$("#mapuserName").val()] });
 			}
 		</script>
 		<link rel="stylesheet"  
@@ -66,30 +77,14 @@ String path = request.getContextPath();
 						<th align="center">
 							NAME:<input id="userName" name="userName" value=""/>
 						</th>
-						 
-						<th>
-							<input type="button" value="查询" onclick="doquery()"/>
-						</th>
-						<!-- 
-						<th>
 						
-						  <ul class="options">
-					  		   <li id="size">
-									<a href="#">增加用户</a>
-							  </li>
-					      </ul>
+						<th>
+							<input type="button" value="数组条件查询" onclick="doquery()"/>
 						</th>
 						
-						<th>	  
-						    <ul class="options">
-							   <li id="abbreviations">
-					  				<a href="javascript:deleteUsers()">批量删除</a>
-					          </li>
-					      </ul>
-						</th>
-						 -->
 					</tr>
-			</table>		
+			</table>
+			</form>		
 			<div id="pagecontainer">
 				<script type="text/javascript">
 				$(document).ready(function(){
@@ -97,7 +92,21 @@ String path = request.getContextPath();
 					});
 				</script>
 			</div>
-			
+			<table class="genericTbl">
+				
+				<!--分页显示开始,分页标签初始化-->
+				
+					<tr >
+						<th align="center">
+							NAME:<input id="beanuserName" name="beanuserName" value=""/>
+						</th>
+						
+						<th>
+							<input type="button" value="bean参数查询" onclick="dobeanparamsquery()"/>
+						</th>
+						
+					</tr>
+			</table>
 			<div id="pagecontainer1">
 				<script type="text/javascript">
 				$(document).ready(function(){
@@ -105,6 +114,31 @@ String path = request.getContextPath();
 					});
 				</script>
 			</div>
-			</form>
+			
+			
+			<table class="genericTbl">
+				
+				
+				
+					<tr >
+						<th align="center">
+							NAME:<input id="mapuserName" name="mapuserName" value=""/>
+						</th>
+						
+						<th>
+							<input type="button" value="map参数查询" onclick="domapparamsquery()"/>
+						</th>
+						
+					</tr>
+			</table>
+			<div id="pagecontainer2">
+				<script type="text/javascript">
+				$(document).ready(function(){
+					  $("#pagecontainer2").load("pagerqueryuser2.htm #pagecontent");
+					});
+				</script>
+			</div>
+			
+			
 	</body>
 </html>

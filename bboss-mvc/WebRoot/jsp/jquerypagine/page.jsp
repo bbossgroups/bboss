@@ -9,7 +9,7 @@ String path = request.getContextPath();
 				<!--分页显示开始,分页标签初始化-->
 			   	<pg:pager scope="request" data="users" 
 						  isList="false" containerid="pagecontainer" selector="pagecontent">
-				<pg:param name="userName" encode="true"/>
+				<pg:params name="userName" />
 				<div><pg:index/></div>
 			  
 			<table class="genericTbl">
