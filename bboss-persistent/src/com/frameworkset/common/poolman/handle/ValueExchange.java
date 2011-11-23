@@ -1270,58 +1270,81 @@ public class ValueExchange {
 			DecimalFormat form= new DecimalFormat(pattern);
 			ret = form.format(value);
 		}
+		else
+		{
+			ret = value + "";
+		}
 		
-		//接着做长度、精度处理
-		StringBuffer fmt=new StringBuffer();
+//		//接着做长度、精度处理
+//		StringBuffer fmt=new StringBuffer();
 
-		int i;
-		DecimalFormat form;
+//		int i;
+//		DecimalFormat form;
 		
-		int length_ = -1;
+//		int length_ = -1;
 		int precision_ = -1;
 		
 
-		if (value >= 0) 
-			fmt.append(' '); //to compensate for minus sign.
+//		if (value >= 0) 
+//			fmt.append(' '); //to compensate for minus sign.
 		
 		if(precision != null && !"".equals(precision)){
 			precision_ = Integer.parseInt(precision);
 		}
-		if(length != null && !"".equals(length)){
-			length_ = Integer.parseInt(length);
-		}
+//		if(length != null && !"".equals(length)){
+//			length_ = Integer.parseInt(length);
+//		}
 		
 		
 		if (precision_<0)  // Default: two decimals
 		{
-			for (i=0;i<length_;i++) 
-				fmt.append('0');
-			fmt.append(".00"); // for the .00
+//			for (i=0;i<length_;i++) 
+//				fmt.append('0');
+//			fmt.append(".00"); // for the .00
 		}else{
-			for (i=0;i<=length_;i++)
-				fmt.append('0'); // all zeroes.
-			
-			if(length_<0)
-				length_ = String.valueOf(value).length()-1;
-			
-			int pos = length_-precision_+1-(value<0?1:0);
-			
-			if (pos>=0 && pos <fmt.length())
+//			for (i=0;i<=length_;i++)
+//				fmt.append('0'); // all zeroes.
+//			
+//			if(length_<0)
+//				length_ = String.valueOf(value).length()-1;
+//			
+//			int pos = length_-precision_+1-(value<0?1:0);
+//			
+//			if (pos>=0 && pos <fmt.length())
+//			{
+//				fmt.setCharAt(length_-precision_+1-(value<0?1:0), '.'); // one 'comma'
+//			}else if(pos >= fmt.length()){
+//				for(int j=0;j< String.valueOf(value).length()+1;j++)
+//					fmt.append('0'); 
+//				fmt.setCharAt(pos+1-(value<0?1:0), '.');
+//			}if(pos<=0){
+//				for(int j=0;j< precision_;j++)
+//					fmt.append('0'); 
+//				fmt.setCharAt(0, '.');
+//			}
+			int idex = ret.indexOf(".");
+			if(idex > 0)
 			{
-				fmt.setCharAt(length_-precision_+1-(value<0?1:0), '.'); // one 'comma'
-			}else if(pos >= fmt.length()){
-				for(int j=0;j< String.valueOf(value).length()+1;j++)
-					fmt.append('0'); 
-				fmt.setCharAt(pos+1-(value<0?1:0), '.');
-			}if(pos<=0){
-				for(int j=0;j< precision_;j++)
-					fmt.append('0'); 
-				fmt.setCharAt(0, '.');
+				String sn = ret.substring(idex + 1);
+				if(sn.length() > precision_)
+				{
+					sn = sn.substring(0,precision_);
+				}
+				else if(sn.length() < precision_)
+				{
+					StringBuffer ret_ = new StringBuffer();
+					int rap = precision_ - sn.length();
+					for(int i = 0; i < rap; i ++)
+						ret_.append("0");
+					sn = sn + ret_;					
+				}
+				String integers = ret.substring(0,idex);
+				ret = integers + "." + sn;
 			}
 		}
 		
-		form= new DecimalFormat(fmt.toString());
-		ret=form.format(value);
+//		form= new DecimalFormat(fmt.toString());
+//		ret=form.format(value);
 		return ret;
 	}
 	
@@ -1348,21 +1371,24 @@ public class ValueExchange {
 			DecimalFormat form= new DecimalFormat(dataformat);
 			ret = form.format(value);
 		}
-		//接着做长度处理
-		StringBuffer fmt=new StringBuffer();
-		int i;
-		DecimalFormat form;
-
-		if (value>=0) fmt.append(' '); //to compensate for minus sign.
-		int len = 0;
-		if(length != null && !"".equals(length)){
-			len = Integer.parseInt(length);
-			for (i=0;i<len;i++)
-				fmt.append('0'); // all zeroes.
-		}
-		
-		form= new DecimalFormat(fmt.toString());
-		return form.format(ret);
+		else
+			ret = value + "";
+//		//接着做长度处理
+//		StringBuffer fmt=new StringBuffer();
+//		int i;
+//		DecimalFormat form;
+//
+//		if (value>=0) fmt.append(' '); //to compensate for minus sign.
+//		int len = 0;
+//		if(length != null && !"".equals(length)){
+//			len = Integer.parseInt(length);
+//			for (i=0;i<len;i++)
+//				fmt.append('0'); // all zeroes.
+//		}
+//		
+//		form= new DecimalFormat(fmt.toString());
+//		return form.format(ret);
+		return ret;
 	}
 	
 
@@ -1379,16 +1405,18 @@ public class ValueExchange {
 			DecimalFormat form= new DecimalFormat(dataformat);
 			ret = form.format(bigDecimal);
 		}
+		else
+			ret = bigDecimal + "";
 		
-		
-		//接着做长度处理
-		StringBuffer retbuffer = new StringBuffer(ret);
-		int length_ = 0;
-		if(length != null && !"".equals(length)){
-			length_ = Integer.parseInt(length);
-			rightPad(retbuffer,length_);
-		}
-		ret = retbuffer.toString();
+//		
+//		//接着做长度处理
+//		StringBuffer retbuffer = new StringBuffer(ret);
+//		int length_ = 0;
+//		if(length != null && !"".equals(length)){
+//			length_ = Integer.parseInt(length);
+//			rightPad(retbuffer,length_);
+//		}
+//		ret = retbuffer.toString();
 		return ret;
 	}
 	
