@@ -40,6 +40,7 @@ import org.apache.velocity.exception.ResourceNotFoundException;
 public class VelocityUtil implements Serializable{
 	private static Logger log = Logger.getLogger(VelocityUtil.class);
 	private static boolean inited = false;
+	private static boolean VERSION_OLD = true; 
 
 //    static {
 //    	init(null);
@@ -194,7 +195,16 @@ public class VelocityUtil implements Serializable{
 	    	       java.util.Properties pros =SimpleStringUtil.getProperties("/velocity.properties", VelocityUtil.class);
 	    	       
 //	    	       pros.load(new java.io.FileInputStream(configurationFile));
-	    	       pros.setProperty("file.resource.loader.path", templatePath);
+	    	       String loadclass =(String) pros.get("file.resource.loader.class");
+	    	       if(loadclass != null && loadclass.equals("org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader"))
+	    	       {
+//	    	    	   templatePath = "/";
+	    	    	   VERSION_OLD = false;
+	    	       }
+	    	       else
+	    	       {
+	    	    	   pros.setProperty("file.resource.loader.path", templatePath);
+	    	       }
 	             
 	
 	             //≥ı ºªØvelocity
@@ -236,22 +246,27 @@ public class VelocityUtil implements Serializable{
     //private static Map templates;
 
     public static Template getTemplate(String templateName) {
-        init(null);
+    	if(SimpleStringUtil.isEmpty(templateName))
+    		return null;
+    	init(null);
+    	
         Template template = null;
         try {
-
+        	
+        	if(!VERSION_OLD && !templateName.startsWith("templates/"))
+        		templateName = "templates/" + templateName;
             template = Velocity.getTemplate(templateName);
 
         } catch (ResourceNotFoundException rnfe) {
             //rnfe.printStackTrace();
-           log.error("Example : error : cannot find template " +
-                               templateName,rnfe);
+           log.error("Cannot find template " +
+                               templateName + ": new version have change template dir as classpath root relatived,but not web-inf dir,please copy templates in web-inf to classpath root dir.",rnfe);
         } catch (ParseErrorException pee) {
            // pee.printStackTrace();
-            log.error("Example : Syntax error in template " +
-                               templateName + ":" + pee,pee);
+            log.error("Syntax error in template " +
+                               templateName + ":",pee);
         } catch (Exception ex) {
-            log.error("Example : Syntax error in template " +
+            log.error("Error in Template " +
                                templateName + ":" ,ex);
         }
 
