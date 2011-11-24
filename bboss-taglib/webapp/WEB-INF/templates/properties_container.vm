@@ -1,9 +1,0 @@
-<HTML><HEAD><TITLE></TITLE>
-<META http-equiv=Content-Type content="text/html; charset=UTF-8">
-<META content="MSHTML 6.00.2800.1522" name=GENERATOR></HEAD>
-<FRAMESET border=0 frameSpacing=0 rows="${properties_container_rows}" name="properties_container" frameBorder=0>
-    <FRAME name="base_properties_toolbar" marginWidth=0 marginHeight=0 src="${base_properties_toolbar_url}" frameBorder=0 noResize
-scrolling=no ${noresize}>
-    <FRAME name="base_properties_content" marginWidth=0 marginHeight=0
-src="${base_properties_content_url}" frameBorder=0 noResize
-scrolling=auto></FRAMESET></HTML>

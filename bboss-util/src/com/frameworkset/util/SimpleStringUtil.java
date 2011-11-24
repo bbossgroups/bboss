@@ -1942,7 +1942,7 @@ outStr = "2010Äê02ÔÂ07ÈÕ11Ê±Ğí£¬ÖÜÁéÓ±±¨¾¯£ºÔÚ2Â·¹«½»³µÉÏ±»°ÇÇÔ£¬²¢×¥»ñÒ»ÃûÏÓÒÉÈ
 
 		is = clazz.getResourceAsStream(resourcefile);
 		if (is == null) {
-			throw new FileNotFoundException(AOP_PROPERTIES_PATH
+			throw new FileNotFoundException(resourcefile
 					+ " cannot be opened because it does not exist");
 		}
 		return is;

@@ -40,8 +40,13 @@ import org.apache.velocity.exception.ResourceNotFoundException;
 public class VelocityUtil implements Serializable{
 	private static Logger log = Logger.getLogger(VelocityUtil.class);
 	private static boolean inited = false;
-	private static boolean VERSION_OLD = true; 
-
+	private static boolean VERSION_OLD = true; 	
+	
+	public static boolean OLDVERSION()
+	{
+		init(null);
+		return VERSION_OLD;
+	}
 //    static {
 //    	init(null);
 //    }
