@@ -40,7 +40,7 @@ public class ClientTest {
 		//获取mvc容器中组件的远程服务调用接口，mvc容器由服务端mvc框架自动初始化
 		mvcinf = ClientProxyContext.getWebMVCClientBean(
 				"(http::localhost:8080/bboss-mvc/http.rpc)" +
-				"/client.proxy.demo?user=admin&password=123456",
+				"/client.proxy.demo",
 				ClientInf.class);
 		
 		//获取ApplicationContext类型容器中组件的远程服务调用接口
