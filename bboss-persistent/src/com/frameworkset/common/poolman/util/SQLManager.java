@@ -505,7 +505,7 @@ public class SQLManager extends PoolManager implements Serializable{
 	    		validationQuery,
 	    		"",   
 	    		2,
-	    		0,
+	    		2,
 	    		10,
 	    		true,
 	    		false,
@@ -559,7 +559,7 @@ public class SQLManager extends PoolManager implements Serializable{
 		if(validationQuery != null && !validationQuery.equals(""))
 			values.put("validationQuery", validationQuery);
 		else
-			values.put("validationQuery", "select 1 from dual");
+			values.put("validationQuery", "");
 		
 		
 		if(initialConnections >= 0)
@@ -569,7 +569,7 @@ public class SQLManager extends PoolManager implements Serializable{
 		if(minimumSize >= 0)
 			values.put("minimumSize", ""+minimumSize);
 		else
-			values.put("minimumSize", ""+0);
+			values.put("minimumSize", ""+2);
 		if(maximumSize > 0)
 			values.put("maximumSize", ""+maximumSize);
 		else
@@ -590,9 +590,9 @@ public class SQLManager extends PoolManager implements Serializable{
 		int shrinkBy = 5;
 		values.put("shrinkBy", shrinkBy+"");
 		
-		int connectionTimeout = 60*30;
+		int connectionTimeout = 360000;
 		values.put("connectionTimeout", connectionTimeout+"");
-		int skimmerFrequency = 180;
+		int skimmerFrequency = 180000;
 		values.put("skimmerFrequency", skimmerFrequency+"");
 		boolean logAbandoned = true;
 		values.put("logAbandoned", logAbandoned+"");
