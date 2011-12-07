@@ -164,6 +164,7 @@ public class SOAApplicationContextTest {
 		System.out.println(xmlcontent);
 		ArrayBean bean1 = ObjectSerializable.convertXMLToBeanObject("beanarray",xmlcontent,ArrayBean.class);
 		System.out.println(new String(bean1.getArrays()));
+		bean1.getE().printStackTrace();
 		
 	}
 	
