@@ -30,6 +30,7 @@ import java.util.Map;
 import java.util.Properties;
 
 import org.frameworkset.spi.ApplicationContext;
+import org.frameworkset.spi.BaseApplicationContext;
 import org.frameworkset.spi.serviceidentity.TargetImpl;
 
 
@@ -371,17 +372,17 @@ public class Util
    {
        
 	   if(Target.BROADCAST_TYPE_MINA.equals(protocol))
-		   return (RPCIOHandler)ApplicationContext.getApplicationContext().getBeanObject(Util.rpc_mina_RPCServerIoHandler);
+		   return (RPCIOHandler)defaultContext.getBeanObject(Util.rpc_mina_RPCServerIoHandler);
 	   if(Target.BROADCAST_TYPE_NETTY.equals(protocol))
-           return (RPCIOHandler)ApplicationContext.getApplicationContext().getBeanObject(Util.rpc_netty_RPCServerIoHandler);
+           return (RPCIOHandler)defaultContext.getBeanObject(Util.rpc_netty_RPCServerIoHandler);
 	   else if(Target.BROADCAST_TYPE_WEBSERVICE.equals(protocol))
-		   return (RPCIOHandler)ApplicationContext.getApplicationContext().getBeanObject(Util.rpc_webservice_RPCServerIoHandler);
+		   return (RPCIOHandler)defaultContext.getBeanObject(Util.rpc_webservice_RPCServerIoHandler);
 	   else if(Target.BROADCAST_TYPE_JMS.equals(protocol))
-		   return (RPCIOHandler)ApplicationContext.getApplicationContext().getBeanObject(Util.rpc_jms_RPCServerIoHandler);
+		   return (RPCIOHandler)defaultContext.getBeanObject(Util.rpc_jms_RPCServerIoHandler);
 	   else if(Target.BROADCAST_TYPE_RMI.equals(protocol))
-		   return (RPCIOHandler)ApplicationContext.getApplicationContext().getBeanObject(Util.rpc_rmi_RPCServerIoHandler);
+		   return (RPCIOHandler)defaultContext.getBeanObject(Util.rpc_rmi_RPCServerIoHandler);
 	   else if(Target.BROADCAST_TYPE_HTTP.equals(protocol))
-		   return (RPCIOHandler)ApplicationContext.getApplicationContext().getBeanObject(Util.rpc_http_RPCServerIoHandler);
+		   return (RPCIOHandler)defaultContext.getBeanObject(Util.rpc_http_RPCServerIoHandler);
 	   else
 		   throw new java.lang.UnsupportedOperationException("protocol[" + protocol+"] not implmented.");
 		   
@@ -424,25 +425,44 @@ public class Util
 	   }
 	   return temp;
 	}
+   public static BaseApplicationContext defaultContext = null;
+   public static String rpc_all_servers ;
    
-   public static String rpc_all_servers = ApplicationContext.getApplicationContext().getProperty("rpc.all.servers");
+   public static String rpc_startup_mode ;
    
-   public static String rpc_startup_mode = ApplicationContext.getApplicationContext().getProperty("rpc.startup.mode","mannual");
+   public static String default_protocol ;
+   public static String rpc_startup_protocols ;
    
-   public static String default_protocol = ApplicationContext.getApplicationContext().getProperty("rpc.default.protocol",Target.BROADCAST_TYPE_MINA);
-   public static String rpc_startup_protocols = ApplicationContext.getApplicationContext().getProperty("rpc.startup.protocols");
+   public static String clusterName ;
+   public static String jgroupprotocol ;
    
-   public static String clusterName = ApplicationContext.getApplicationContext().getProperty("cluster_name", "Cluster");
-   
+   static
+   {
+	   init();
+   }
+   private static void init()
+   {
+	   defaultContext = ApplicationContext.getApplicationContext();
+	   rpc_all_servers = defaultContext.getProperty("rpc.all.servers");
+	   
+	   rpc_startup_mode = defaultContext.getProperty("rpc.startup.mode","mannual");
+	   
+	   default_protocol = defaultContext.getProperty("rpc.default.protocol",Target.BROADCAST_TYPE_MINA);
+	   rpc_startup_protocols = defaultContext.getProperty("rpc.startup.protocols");
+	   
+	   clusterName = defaultContext.getProperty("cluster_name", "Cluster");
+	   jgroupprotocol = defaultContext.getProperty("cluster_protocol", "udp");
+   }
+  
    public static String getProtocolConfigFile()
    {
        String key = "cluster_protocol." + jgroupprotocol + ".configfile" ;
-       String conf = ApplicationContext.getApplicationContext().getProperty(key, "etc/META-INF/replSync-service-aop.xml");
+       String conf = defaultContext.getProperty(key, "etc/META-INF/replSync-service-aop.xml");
        return conf;
        
    }
    
-   public static String jgroupprotocol = ApplicationContext.getApplicationContext().getProperty("cluster_protocol", "udp");
+  
    
 //   public static final String SYN_MODE = "syn";
 //   public static final String ASYN_MODE = "asyn";

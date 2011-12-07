@@ -17,6 +17,7 @@ package org.frameworkset.spi.remote.webservice;
 
 import javax.jws.WebService;
 
+import org.frameworkset.soa.ObjectSerializable;
 import org.frameworkset.spi.remote.RPCMessage;
 
 /**
@@ -32,9 +33,10 @@ import org.frameworkset.spi.remote.RPCMessage;
 
 @WebService(name="RPCCall", endpointInterface="org.frameworkset.spi.remote.webservice.RPCCallService", targetNamespace="http://webservice.remote.spi.frameworkset.org/", portName="RPCCallServicePort", serviceName="RPCCallService" )
 public class RPCCall implements RPCCallService {
-	public RPCMessage sendRPCMessage(RPCMessage message) throws Exception
+	public String sendRPCMessage(String message) throws Exception
 	{	    
-		HandleFuture future = new HandleFuture(message);
+		RPCMessage message_ = ObjectSerializable.toBean(message, RPCMessage.class);
+		HandleFuture future = new HandleFuture(message_);
 //		if(Util.asyn_response)
 //		{
 //	    	FutureTask<RPCMessage> task = new FutureTask<RPCMessage>(future);
@@ -43,7 +45,8 @@ public class RPCCall implements RPCCallService {
 //		}
 //		else
 		{
-			return future.call();
+			message_ = future.call();
+			return ObjectSerializable.toXML(message_);
 		}
 
 		

@@ -283,7 +283,7 @@ public class SynchronizedMethod implements java.io.Serializable {
     	{
 	    	StringBuffer uuid = new StringBuffer();
 	    	Class[] paramTypes = method_call.getTypes();
-	    	uuid.append(method_call.getMethod_name());
+	    	uuid.append(method_call.getMethodName());
 	    	if(paramTypes == null || paramTypes.length == 0)
 	    	{
 	    		return uuid.toString();

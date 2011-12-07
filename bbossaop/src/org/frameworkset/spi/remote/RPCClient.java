@@ -206,7 +206,7 @@ public final class RPCClient
 		if (dests != null && dests.isEmpty())
 		{		
 			log.info(new StringBuilder("destination list of ")
-						.append(method_call.getMethod_name())
+						.append(method_call.getMethodName())
 						.append("() is empty: no need to send message"));
 			return new RPCResponseList();
 		}

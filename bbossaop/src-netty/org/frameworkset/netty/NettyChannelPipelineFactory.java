@@ -20,8 +20,6 @@ import static org.jboss.netty.channel.Channels.pipeline;
 
 import javax.net.ssl.SSLEngine;
 
-import org.frameworkset.spi.ApplicationContext;
-import org.frameworkset.spi.BaseSPIManager;
 import org.frameworkset.spi.assemble.ProMap;
 import org.frameworkset.spi.remote.Util;
 import org.jboss.netty.channel.ChannelPipeline;
@@ -67,7 +65,7 @@ public class NettyChannelPipelineFactory implements ChannelPipelineFactory
         /**
          * 增加ssl的技术支持
          */
-        ProMap commons = ApplicationContext.getApplicationContext().getMapProperty("rpc.protocol.netty.params");
+        ProMap commons = Util.defaultContext.getMapProperty("rpc.protocol.netty.params");
         boolean enablessl = commons.getBoolean("enablessl",false);
         SSLEngine eg = null;
         if(enablessl)
@@ -79,7 +77,7 @@ public class NettyChannelPipelineFactory implements ChannelPipelineFactory
             pipeline.addFirst("ssl", new SslHandler(eg));
         
         ChannelUpstreamHandler sh = null;
-        sh = (ChannelUpstreamHandler)BaseSPIManager.getBeanObject(Util.rpc_netty_RPCServerIoHandler); 
+        sh = (ChannelUpstreamHandler)Util.defaultContext.getBeanObject(Util.rpc_netty_RPCServerIoHandler); 
         pipeline.addLast("decoder", new ObjectDecoder(maxFramgeLength));
         pipeline.addLast("encoder", new ObjectEncoder(estimatedLength));
         pipeline.addLast("handler", sh);

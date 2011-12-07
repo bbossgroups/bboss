@@ -24,6 +24,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import org.apache.log4j.Logger;
+import org.frameworkset.soa.annotation.ExcludeField;
 import org.frameworkset.spi.security.SecurityContext;
 import org.frameworkset.util.ClassUtil;
 
@@ -44,7 +45,7 @@ public class RPCMethodCall implements Externalizable
 	private static final long serialVersionUID=7873471327078957662L;
 
     /** The name of the method, case sensitive. */
-    protected String method_name;
+    protected String methodName;
 
     /** The ID of a method, maps to a java.lang.reflect.Method */
 //    protected short method_id=-1;
@@ -53,6 +54,7 @@ public class RPCMethodCall implements Externalizable
     protected Object[] args;
 
     /** The class types, e.g., new Class[]{String.class, int.class}. */
+    @ExcludeField
     protected Class[] types;
 
 //    /** The signature, e.g., new String[]{String.class.getName(), int.class.getName()}. */
@@ -114,7 +116,7 @@ public class RPCMethodCall implements Externalizable
      * @deprecated Use one of the constructors that take class types as arguments
      */
     public RPCMethodCall(String method_name, Object[] args,SecurityContext securityContext) {
-        this.method_name=method_name;
+        this.methodName=method_name;
 //        this.mode=OLD;
         this.args=args;
     }
@@ -127,7 +129,7 @@ public class RPCMethodCall implements Externalizable
 
 
     public RPCMethodCall(String method_name, Object[] args, Class[] types,SecurityContext securityContext) {
-        this.method_name=method_name;
+        this.methodName=method_name;
         this.args=args;
         this.types=types;
 //        this.mode=TYPES;
@@ -135,7 +137,7 @@ public class RPCMethodCall implements Externalizable
     }
 
     public RPCMethodCall(String method_name, Object[] args, String[] signature,SecurityContext securityContext) {
-        this.method_name=method_name;
+        this.methodName=method_name;
         this.args=args;
 //        this.signature=signature;
 //        this.mode=SIGNATURE;
@@ -306,7 +308,7 @@ public class RPCMethodCall implements Externalizable
         Object retval=null;
 
 
-        if(method_name == null || target == null) {
+        if(methodName == null || target == null) {
             log.error("method name or target is null");
             return null;
         }
@@ -343,12 +345,12 @@ public class RPCMethodCall implements Externalizable
 //          meth = getMethod(cl, method_name, types);
           //new method in 3.5
         	if(meth == null)
-        		meth = getMethod(cl, method_name, types);
+        		meth = getMethod(cl, methodName, types);
             if(meth != null) {
                 retval=meth.invoke(target, args);
             }
             else {
-                throw new NoSuchMethodException(method_name);
+                throw new NoSuchMethodException(methodName);
             }
             return retval;
         }
@@ -357,7 +359,7 @@ public class RPCMethodCall implements Externalizable
         }
         catch(NoSuchMethodException no) {
             StringBuilder sb=new StringBuilder();
-            sb.append("found no method called ").append(method_name).append(" in class ");
+            sb.append("found no method called ").append(methodName).append(" in class ");
             sb.append(cl.getName()).append(" with (");
             if(args != null) {
                 for(int i=0; i < args.length; i++) {
@@ -419,8 +421,8 @@ public class RPCMethodCall implements Externalizable
     public String toString() {
         StringBuilder ret=new StringBuilder();
         boolean first=true;
-        if(method_name != null)
-            ret.append(method_name);
+        if(methodName != null)
+            ret.append(methodName);
 //        else
 //            ret.append(method_id);
         ret.append('(');
@@ -440,8 +442,8 @@ public class RPCMethodCall implements Externalizable
     public String toStringDetails() {
         StringBuilder ret=new StringBuilder();
         ret.append("MethodCall ");
-        if(method_name != null)
-            ret.append("name=").append(method_name);
+        if(methodName != null)
+            ret.append("name=").append(methodName);
 //        else
 //            ret.append("id=").append(method_id);
         ret.append(", number of args=").append((args != null? args.length : 0)).append(')');
@@ -457,9 +459,9 @@ public class RPCMethodCall implements Externalizable
 
 
     public void writeExternal(ObjectOutput out) throws IOException {
-        if(method_name != null) {
+        if(methodName != null) {
             out.writeBoolean(true);
-            out.writeUTF(method_name);
+            out.writeUTF(methodName);
         }
 //        else {
 //            out.writeBoolean(false);
@@ -509,7 +511,7 @@ public class RPCMethodCall implements Externalizable
     public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
         boolean name_available=in.readBoolean();
         if(name_available)
-            method_name=in.readUTF();
+            methodName=in.readUTF();
 //        else
 //            method_id=in.readShort();
         args=(Object[])in.readObject();
@@ -522,7 +524,7 @@ public class RPCMethodCall implements Externalizable
 //            Class[] parametertypes=(Class[])in.readObject();
 //            Class   declaringclass=(Class)in.readObject();
 //            try {
-//                method=declaringclass.getDeclaredMethod(method_name, parametertypes);
+//                method=declaringclass.getDeclaredMethod(methodName, parametertypes);
 //            }
 //            catch(NoSuchMethodException e) {
 //                throw new IOException(e.toString());
@@ -559,14 +561,14 @@ public class RPCMethodCall implements Externalizable
     }
 
 
-	public String getMethod_name() {
-		return method_name;
-	}
-
-
-	public void setMethod_name(String method_name) {
-		this.method_name = method_name;
-	}
+//	public String getMethod_name() {
+//		return method_name;
+//	}
+//
+//
+//	public void setMethod_name(String method_name) {
+//		this.method_name = method_name;
+//	}
 
 
 	public void setTypes(Class[] types) {
@@ -576,6 +578,16 @@ public class RPCMethodCall implements Externalizable
 
 	public void setSecurityContext(SecurityContext securityContext) {
 		this.securityContext = securityContext;
+	}
+
+
+	public String getMethodName() {
+		return methodName;
+	}
+
+
+	public void setMethodName(String methodName) {
+		this.methodName = methodName;
 	}
 
 }

@@ -26,6 +26,7 @@ import org.apache.cxf.endpoint.Client;
 import org.apache.cxf.frontend.ClientProxy;
 import org.apache.cxf.transport.http.HTTPConduit;
 import org.apache.cxf.transports.http.configuration.HTTPClientPolicy;
+import org.frameworkset.soa.ObjectSerializable;
 import org.frameworkset.spi.BaseSPIManager;
 import org.frameworkset.spi.assemble.BeanAccembleHelper;
 import org.frameworkset.spi.assemble.Pro;
@@ -152,7 +153,9 @@ public class FutureCall extends BaseFutureCall
                 }
             }            
         }
-        RPCMessage ret = client.sendRPCMessage(srcmsg);
+        
+        String ret_ = client.sendRPCMessage(ObjectSerializable.toXML(srcmsg));
+        RPCMessage ret = ObjectSerializable.toBean(ret_, RPCMessage.class);
         return ret;
     }
     

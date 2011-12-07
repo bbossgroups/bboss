@@ -40,7 +40,7 @@
 				<!-- 
 					服务器绑定ip
 				 -->
-			<property name="connection.bind.ip" value="192.168.1.22" />
+			<property name="connection.bind.ip" value="172.16.25.108" />
 			
 			<!-- 
 				ssl配置参数开始

@@ -18,10 +18,6 @@ package org.frameworkset.spi.remote.webservice;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
-import javax.xml.ws.RequestWrapper;
-import javax.xml.ws.ResponseWrapper;
-
-import org.frameworkset.spi.remote.RPCMessage;
 
 /**
  * 
@@ -37,8 +33,6 @@ import org.frameworkset.spi.remote.RPCMessage;
 public interface RPCCallService {
 
 	@WebMethod(operationName="sendRPCMessage", action="urn:SendRPCMessage")
-	@RequestWrapper(className="org.frameworkset.spi.remote.webservice.SendRPCMessage", localName="sendRPCMessage", targetNamespace="http://webservice.remote.spi.frameworkset.org/")
-	@ResponseWrapper(className="org.frameworkset.spi.remote.webservice.SendRPCMessageResponse", localName="sendRPCMessageResponse", targetNamespace="http://webservice.remote.spi.frameworkset.org/")
-	public RPCMessage sendRPCMessage(@WebParam(name="message") RPCMessage message)  throws Exception;
+	public String sendRPCMessage(@WebParam(name="message") String message)  throws Exception;
 
 }
