@@ -239,7 +239,7 @@ public class ClientTest {
 		long e = System.currentTimeMillis();
 		long interval = (e-s);
 		System.out.println(interval);
-	}
+	}  
 	
 	@Test
 	public void testWebService()
