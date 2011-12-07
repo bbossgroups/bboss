@@ -28,12 +28,14 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 import org.frameworkset.util.ClassUtils;
 import org.frameworkset.util.ParameterNameDiscoverer;
-import org.objectweb.asm.ClassReader;
-import org.objectweb.asm.Label;
-import org.objectweb.asm.MethodVisitor;
-import org.objectweb.asm.Opcodes;
-import org.objectweb.asm.Type;
-import org.objectweb.asm.commons.EmptyVisitor;
+
+import bboss.org.objectweb.asm.ClassAdapter;
+import bboss.org.objectweb.asm.ClassReader;
+import bboss.org.objectweb.asm.Label;
+import bboss.org.objectweb.asm.MethodVisitor;
+import bboss.org.objectweb.asm.Opcodes;
+import bboss.org.objectweb.asm.Type;
+
 
 /**
  * <p>Title: LocalVariableTableParameterNameDiscoverer.java</p> 
@@ -104,7 +106,7 @@ public class LocalVariableTableParameterNameDiscoverer  implements ParameterName
 		ClassReader classReader = getClassReader(method.getDeclaringClass());
 		FindMethodParameterNamesClassVisitor classVisitor = new FindMethodParameterNamesClassVisitor(method);
 		//classReader.accept(classVisitor, false);
-		classReader.accept(classVisitor, ClassReader.SKIP_CODE);
+		classReader.accept(classVisitor, 0);
 		return classVisitor;
 	}
 
@@ -147,7 +149,7 @@ public class LocalVariableTableParameterNameDiscoverer  implements ParameterName
 	 * Helper class that looks for a given member name and descriptor, and then
 	 * attempts to find the parameter names for that member.
 	 */
-	private static abstract class ParameterNameDiscoveringVisitor extends EmptyVisitor {
+	private static abstract class ParameterNameDiscoveringVisitor extends ClassAdapter {
 
 		private String methodNameToMatch;
 
@@ -164,6 +166,7 @@ public class LocalVariableTableParameterNameDiscoverer  implements ParameterName
 		private String[] parameterNames;
 		
 		public ParameterNameDiscoveringVisitor(String name, boolean isStatic, Class[] paramTypes) {
+			super(Opcodes.ASM4);
 			this.methodNameToMatch = name;
 			this.numParamsExpected = paramTypes.length;
 			computeLvtSlotIndices(isStatic, paramTypes);
@@ -233,7 +236,7 @@ public class LocalVariableTableParameterNameDiscoverer  implements ParameterName
 	}
 
 
-	private static class LocalVariableTableVisitor extends EmptyVisitor {
+	private static class LocalVariableTableVisitor extends MethodVisitor {
 
 		private final ParameterNameDiscoveringVisitor memberVisitor;
 
@@ -244,6 +247,7 @@ public class LocalVariableTableParameterNameDiscoverer  implements ParameterName
 		private boolean hasLvtInfo = false;
 
 		public LocalVariableTableVisitor(ParameterNameDiscoveringVisitor memberVisitor, boolean isStatic) {
+			super(Opcodes.ASM4);
 			this.memberVisitor = memberVisitor;
 			this.isStatic = isStatic;
 			this.parameterNames = new String[memberVisitor.numParamsExpected];
