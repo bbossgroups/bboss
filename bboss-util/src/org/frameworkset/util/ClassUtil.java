@@ -71,18 +71,21 @@ public class ClassUtil
 			this.readMethod = readMethod;
 			if(this.field != null)
 				oldAccessible = this.field.isAccessible();
-			if((writeMethod == null || this.readMethod == null)
-					&& this.field != null && !this.field.isAccessible())
+			if((writeMethod == null || this.readMethod == null))
 			{
-				 int mode = this.field.getModifiers();
-				 if( !Modifier.isFinal(mode) 
-							&& !Modifier.isStatic(mode)
-							)
-				 {
-					this.field.setAccessible(true);
-					canwrite = true;
-					canread = true;
-				 }
+				if(this.field != null)
+				{
+					 int mode = this.field.getModifiers();
+					 if( !Modifier.isFinal(mode) 
+								&& !Modifier.isStatic(mode)
+								&& !Modifier.isPublic(mode)
+								)
+					 {
+						this.field.setAccessible(true);
+						canwrite = true;
+						canread = true;
+					 }
+				}
 			}
 			
 			if(!canread && readMethod != null)
