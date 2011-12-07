@@ -39,7 +39,7 @@ public class ClientTest {
 	ClientInf simpleinf;
 	
 	static java.util.concurrent.atomic.AtomicLong longcount = new AtomicLong(0);
-	@Before
+//	@Before
 	public void init()
 	{
 		//获取mvc容器中组件的远程服务调用接口，mvc容器由服务端mvc框架自动初始化
@@ -145,12 +145,12 @@ public class ClientTest {
 		//发起远程方法调用
 		client.helloworld("aaa");
 	}
-	
-	public static void testHttpa()
+	@Test
+	public  void testHttpa()
 	{
 		WSService WSService = ClientProxyContext.getSimpleClientBean("org/frameworkset/web/ws/testwsmodule.xml", 
-				"(http::localhost:8080/bboss-mvc/http.rpc)" +
-				"/mysfirstwsservice", 
+				"(http::172.16.25.164:8080/bboss-mvc/http.rpc)" +
+				"/mysfirstwsservice?user=admin&password=123456", 
 				WSService.class);
 		WSService.sayHello("aaa");
 		String ss = "你好，多多,你好，多多你好，多多你好，多多你好，多多你好，多多你好，多多你好，多多你好，多多你好，多多你好，多多你好，多多你好，多多" +
@@ -161,6 +161,9 @@ public class ClientTest {
 		long interval = (e-s);
 		System.out.println(interval+":"+ret);
 	}
+	
+	
+	
 	public static void testHttp()
 	{
 		WSService WSService = ClientProxyContext.getSimpleClientBean("org/frameworkset/web/ws/testwsmodule.xml", 
@@ -221,11 +224,11 @@ public class ClientTest {
 //				;
 		long times = (10 * 10 * 10000)/((e-s)/1000);		System.out.println(times);
 	}
-	
-	public static void testNettya()
+	@Test
+	public void testNettya()
 	{
 		RPCTestInf WSService = ClientProxyContext.getSimpleClientBean("org/frameworkset/spi/remote/manager-rpc-test.xml", 
-				"(netty::192.168.1.22:12347)" +
+				"(netty::172.16.25.108:12347)" +
 				"/rpc.test", 
 				RPCTestInf.class);
 		WSService.sayHelloWorld("你好，多多");
@@ -233,6 +236,24 @@ public class ClientTest {
 				"你好，多多你好，多多你好，多多你好，多多你好，多多你好，多多你好，多多你好，多多";
 		long s = System.currentTimeMillis();
 		WSService.sayHelloWorld(ss);
+		long e = System.currentTimeMillis();
+		long interval = (e-s);
+		System.out.println(interval);
+	}
+	
+	@Test
+	public void testWebService()
+	{
+		
+		ClientInf WSService = ClientProxyContext.getWebMVCClientBean(
+				"(webservice::http://localhost:8080/bboss-mvc/cxfservices)" +
+				"/client.proxy.demo",
+				ClientInf.class);
+		WSService.helloworld("你好，多多");
+		String ss = "你好，多多,你好，多多你好，多多你好，多多你好，多多你好，多多你好，多多你好，多多你好，多多你好，多多你好，多多你好，多多你好，多多" +
+				"你好，多多你好，多多你好，多多你好，多多你好，多多你好，多多你好，多多你好，多多";
+		long s = System.currentTimeMillis();
+		WSService.helloworld(ss);
 		long e = System.currentTimeMillis();
 		long interval = (e-s);
 		System.out.println(interval);
@@ -309,7 +330,7 @@ public class ClientTest {
 	public static void main(String[] args)
 	{
 //		testHttp();
-		testHttpa();
+//		testHttpa();
 //		testNetty();
 //		testNettya();
 		
