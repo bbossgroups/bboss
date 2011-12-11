@@ -12,6 +12,8 @@ bboss-taglib<-portal [frameworkset.jar]
 bboss-taglib<-bboss-ws [frameworkset.jar]
 
 #######update function list since bbossgroups-3.4 begin###########
+------2011-12-11------------
+o 更新最新的frameworkset-util.jar，cell标签读取的bean的属性不再需要get方法
 ------2011-11-20------------
 o 调整jquery-1.4.2.min.js的load方法支持数组参数的传递
 o 调整pager.js的loadPageContent方法支持数组参数的传递
