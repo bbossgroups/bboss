@@ -12,6 +12,38 @@ todo
 6.mvc和gwt结合可行性研究
 
 #######update function list since bbossgroups-3.4 begin###########
+------2011-12-11------------
+o 更新最新的bboss aop框架，控制器需要注入的业务组件不再需要set方法
+o 改进以下注解，name或者value属性不再是必须选项，如果没有指定name属性，则使用
+方法参数名称作为name属性的值：
+RequestParam
+PathVariable
+CookieValue
+RequestHeader
+Attribute
+
+为了确保能够正确获取到mvc控制器方法的参数名称，必须在编译java代码时保证在class文件中生存java本地变量表
+eclipse工具默认会生成，ant编译工具也会生成。
+同时除了PathVariable注解，以下注解不在是控制器方法参数的必须注解，如果没有指定，基础类型参数将直接用方法名称从request中获取相关属性的值：
+RequestParam
+PathVariable
+RequestHeader
+Attribute
+
+bboss中界定的基础数据类型如下：
+		String.class,int.class ,Integer.class,
+		long.class,Long.class,
+		java.sql.Timestamp.class,java.sql.Date.class,java.util.Date.class,
+		boolean.class ,Boolean.class,
+		BigFile.class,
+		float.class ,Float.class,
+		short.class ,Short.class,
+		double.class,Double.class,
+		char.class ,Character.class,
+		
+		byte.class ,Byte.class,
+		BigDecimal.class
+
 ------2011-11-2------------
 o 改进jason转换器，避免和文件下载转换器的冲突
 #######update function list since bbossgroups-3.3 begin###########

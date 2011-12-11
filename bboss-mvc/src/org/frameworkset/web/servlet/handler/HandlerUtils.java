@@ -346,12 +346,37 @@ public abstract class HandlerUtils {
 		return paramValue;
 	}
 	
+	private static Object evaluatePrimaryStringParam(HttpServletRequest request,String requestParamName,Class type)
+	{
+		Object paramValue = null;
+		String[] values = request
+				.getParameterValues(requestParamName);
+		request.setAttribute(USE_MVC_DENCODE_KEY, null);
+		if (values != null) {
+			
+			
+			if (!type.isArray() && !List.class.isAssignableFrom(type) && !Set.class.isAssignableFrom(type))
+			{
+				if( values.length > 0)
+				{
+//					paramValue = values[0];
+					String value_ = values[0];
+					paramValue = value_;
+				}
+			}
+			else
+			{
+				paramValue = values;
+			}
+		}
+		
+		return paramValue;
+	}
+	
 	
 	private static Object evaluateMultipartFileParam(RequestParam requestParam,HttpServletRequest request,String requestParamName,Class type)
 	{
 		Object paramValue = null;
-		
-		
 		MultipartFile[] values = ((MultipartHttpServletRequest)request).getFiles(requestParamName);
 		
 		if (values != null) {
@@ -426,6 +451,7 @@ public abstract class HandlerUtils {
 		
 		List<MethodParameter> methodParameters = methodParameter_.getMultiAnnotationParams();
 		String dateformat = null;
+		
 		for(MethodParameter methodParameter:methodParameters)
 		{
 			String requestParamName = methodParameter.getRequestParameterName();
@@ -685,6 +711,64 @@ public abstract class HandlerUtils {
 	}
 	
 	/**
+	 * 处理基础数据类型绑定，附件如何考虑呢，如果没有注解修饰
+	 * 最好也是按照基础类型的方式来处理
+	 * @param methodParameter_
+	 * @param request
+	 * @param response
+	 * @param pageContext
+	 * @param handlerMethod
+	 * @param model
+	 * @param pathVarDatas
+	 * @param validators
+	 * @param messageConverters
+	 * @param type
+	 * @return
+	 * @throws Exception
+	 */
+	private static Object evaluatePrimaryTypeMethodArg(MethodParameter methodParameter,HttpServletRequest request,
+			HttpServletResponse response, PageContext pageContext,
+			MethodData handlerMethod, ModelMap model,Map pathVarDatas, Validator[] validators,
+			HttpMessageConverter[] messageConverters,Class type) throws Exception
+	{
+		Object paramValue = null;
+
+		String requestParamName = methodParameter.getRequestParameterName();
+
+		if(!isMultipartFile(type))
+		{
+
+			paramValue = evaluatePrimaryStringParam(request,requestParamName,type);
+		}
+		else
+		{
+			paramValue = evaluateMultipartFileParam( null, request, requestParamName, type);
+		}
+		
+
+		
+		if (paramValue == null) {			
+			
+			paramValue = ValueObjectUtil.getDefaultValue(type);
+			
+		}
+		else
+		{
+			try {
+				
+				paramValue = ValueObjectUtil.typeCast(paramValue,
+						type,(String)null);
+			} catch (Exception e) {
+				
+				Exception error = raiseMissingParameterException(requestParamName, type,paramValue, e);
+				model.getErrors().rejectValue(requestParamName, "ValueObjectUtil.typeCast.error", String.valueOf(paramValue), type, error.getMessage());
+				return ValueObjectUtil.getDefaultValue(type);
+			}
+		}
+		return paramValue;
+	}
+	
+	/**
 	 * 计算分页参数的值
 	 * @param methodParameter
 	 * @param request
@@ -824,10 +908,20 @@ public abstract class HandlerUtils {
 				}
 			}
 			else if (methodParameter != null) {
-				paramValue = evaluateMethodArg( methodParameter,request,
-						response, pageContext,
-						 handlerMethod,  model, pathVarDatas, validators,
-						 messageConverters, type);
+				if(!methodParameter.isPrimaryType())
+				{
+					paramValue = evaluateMethodArg( methodParameter,request,
+							response, pageContext,
+							 handlerMethod,  model, pathVarDatas, validators,
+							 messageConverters, type);
+				}
+				else
+				{
+					paramValue = evaluatePrimaryTypeMethodArg( methodParameter,request,
+							response, pageContext,
+							 handlerMethod,  model, pathVarDatas, validators,
+							 messageConverters, type);
+				}
 				params[i] = paramValue;
 				continue;
 			}
@@ -1510,9 +1604,6 @@ public abstract class HandlerUtils {
 	{
 		Object value = null;
 		boolean required = false;
-		
-		
-
 		EditorInf editor = null;
 		boolean useEditor = true;
 		boolean touched = false;
@@ -1524,7 +1615,12 @@ public abstract class HandlerUtils {
 			if (anno instanceof PathVariable) {
 				PathVariable param = (PathVariable)anno;
 				if (pathVarDatas != null)
-					value = pathVarDatas.get(param.value());
+				{
+					if(!param.value().equals(""))
+						value = pathVarDatas.get(param.value());
+					else
+						value = pathVarDatas.get(name);
+				}
 				if (param.editor() != null && !param.editor().equals(""))
 					editor = (EditorInf) BeanUtils.instantiateClass(param.editor());
 				defaultValue = param.defaultvalue();
@@ -1562,7 +1658,7 @@ public abstract class HandlerUtils {
 					
 					request.setAttribute(USE_MVC_DENCODE_KEY, null);
 	
-					String[] values = request.getParameterValues(param.name());
+					String[] values = !param.name().equals("")?request.getParameterValues(param.name()):request.getParameterValues(name);
 					value = getRequestData(values, holder, type,decodeCharset,charset,convertcharset);
 					
 				
@@ -1577,7 +1673,8 @@ public abstract class HandlerUtils {
 				}
 				else
 				{
-					MultipartFile[] values =  ((MultipartHttpServletRequest)request).getFiles(param.name());
+					MultipartFile[] values =  !param.name().equals("")?((MultipartHttpServletRequest)request).getFiles(param.name()):
+																	   ((MultipartHttpServletRequest)request).getFiles(name);
 					value = getRequestData(values, holder, type);				
 					if (param.editor() != null && !param.editor().equals(""))
 						editor = (EditorInf) BeanUtils.instantiateClass(param.editor());
@@ -1593,34 +1690,34 @@ public abstract class HandlerUtils {
 				
 			} else if (anno instanceof Attribute) {
 				Attribute param = (Attribute)anno;
-				
+				String paramName = !param.name().equals("")?param.name():name;
 				if(!required) required = param.required();
 	
 				if (param.scope() == AttributeScope.PAGECONTEXT_APPLICATION_SCOPE)
-					value = pageContext.getAttribute(param.name(),
+					value = pageContext.getAttribute(paramName,
 							PageContext.APPLICATION_SCOPE);
 	
 				else if (param.scope() == AttributeScope.PAGECONTEXT_PAGE_SCOPE) {
-					value = pageContext.getAttribute(param.name(),
+					value = pageContext.getAttribute(paramName,
 							PageContext.PAGE_SCOPE);
 	
 				} else if (param.scope() == AttributeScope.PAGECONTEXT_REQUEST_SCOPE) {
-					value = pageContext.getAttribute(param.name(),
+					value = pageContext.getAttribute(paramName,
 							PageContext.REQUEST_SCOPE);
 	
 				} else if (param.scope() == AttributeScope.PAGECONTEXT_SESSION_SCOPE) {
-					value = pageContext.getAttribute(param.name(),
+					value = pageContext.getAttribute(paramName,
 							PageContext.SESSION_SCOPE);
 				} else if (param.scope() == AttributeScope.REQUEST_ATTRIBUTE) {
-					value = request.getAttribute(param.name());
+					value = request.getAttribute(paramName);
 				} else if (param.scope() == AttributeScope.SESSION_ATTRIBUTE) {
 					HttpSession session = request.getSession(false);
 					if (session != null)
-						value = session.getAttribute(param.name());
+						value = session.getAttribute(paramName);
 				} else if (param.scope() == AttributeScope.MODEL_ATTRIBUTE) {
 	
 					if (model != null)
-						value = model.get(param.name());
+						value = model.get(paramName);
 	
 				}
 				dateformat = param.dateformat();
@@ -1644,7 +1741,8 @@ public abstract class HandlerUtils {
 				defaultValue = param.defaultvalue();
 				if (defaultValue.equals(ValueConstants.DEFAULT_NONE))
 					defaultValue = null;
-				value = resolveCookieValue(type, param.name(), request);
+				String paramName = !param.name().equals("")?param.name():name;
+				value = resolveCookieValue(type, paramName, request);
 				useEditor = true;
 				
 				
@@ -1663,7 +1761,8 @@ public abstract class HandlerUtils {
 				
 	//			resolveRequestHeader(Class<?> paramType,String headerName,Object defaultValue,
 	//					HttpServletRequest webRequest,boolean required) 
-				value = resolveRequestHeader(type, param.name(), request);
+				String paramName = !param.name().equals("")?param.name():name;
+				value = resolveRequestHeader(type, paramName, request);
 				useEditor = true;
 				
 			} 

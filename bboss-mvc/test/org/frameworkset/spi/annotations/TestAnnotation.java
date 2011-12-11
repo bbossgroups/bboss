@@ -17,7 +17,6 @@ package org.frameworkset.spi.annotations;
 
 import java.beans.BeanInfo;
 import java.beans.Introspector;
-import java.beans.PropertyChangeEvent;
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
@@ -27,9 +26,8 @@ import java.util.List;
 
 import org.frameworkset.spi.mvc.ListBean;
 import org.frameworkset.spi.mvc.UserBean;
-import org.frameworkset.spi.support.LocalVariableTableParameterNameDiscoverer;
+import org.frameworkset.util.LocalVariableTableParameterNameDiscoverer;
 import org.frameworkset.util.annotations.ResponseBody;
-import org.frameworkset.util.beans.PropertyAccessException;
 import org.frameworkset.web.servlet.handler.HandlerUrlMappingRegisterTable;
 import org.junit.Test;
 
