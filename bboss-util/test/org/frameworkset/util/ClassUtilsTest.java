@@ -76,6 +76,9 @@ public class ClassUtilsTest
 		private int parentfield;
 		private static String staticparentfield;
 		private static final String fparentfield = "dd";
+		/**
+		 * don't named isbooleanfield.
+		 */
 		private boolean blooenfield = false;
 		private boolean blooenfield2 = false;
 		

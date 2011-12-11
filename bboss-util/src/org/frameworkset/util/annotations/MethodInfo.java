@@ -26,13 +26,17 @@ import java.util.List;
 import java.util.Map;
 
 import org.frameworkset.http.MediaType;
+import org.frameworkset.util.ClassUtil;
 import org.frameworkset.util.ClassUtils;
+import org.frameworkset.util.LocalVariableTableParameterNameDiscoverer;
 import org.frameworkset.util.MethodParameter;
+import org.frameworkset.util.ParameterNameDiscoverer;
 import org.frameworkset.util.beans.BeansException;
 
 import com.frameworkset.util.BeanUtils;
 import com.frameworkset.util.EditorInf;
 import com.frameworkset.util.SimpleStringUtil;
+import com.frameworkset.util.ValueObjectUtil;
 
 /**
  * <p>Title: MethodInfo.java</p> 
@@ -345,7 +349,7 @@ public class MethodInfo {
 	{
 		return mapping == null?null:mapping.value();
 	}
-	private MethodParameter buildMutilMethodParamAnnotations(Annotation[] annotations,int parampostion)
+	private MethodParameter buildMutilMethodParamAnnotations(Annotation[] annotations,int parampostion,String methodparamname,Class paramType)
 	{
 		MethodParameter ret = new MethodParameter(method,parampostion);
 		List<MethodParameter> mutilMethodParamAnnotations = new ArrayList<MethodParameter>();
@@ -381,7 +385,10 @@ public class MethodInfo {
 				paramAnno.setRequestParam(param);
 				if(param.editor() != null && !param.editor().equals(""))
 					paramAnno.setEditor((EditorInf)BeanUtils.instantiateClass(param.editor()));
-				paramAnno.setParameterName(param.name());
+				if(!param.name().equals(""))
+					paramAnno.setParameterName(param.name());
+				else
+					paramAnno.setParameterName(methodparamname);
 				paramAnno.setDataBindScope(Scope.REQUEST_PARAM);
 				paramAnno.setRequired(param.required());
 				String aa = param.defaultvalue();
@@ -446,7 +453,11 @@ public class MethodInfo {
 				paramAnno.setPathVariable(param);
 				if(param.editor() != null && !param.editor().equals(""))
 					paramAnno.setEditor((EditorInf)BeanUtils.instantiateClass(param.editor()));
-				paramAnno.setParameterName(param.value());
+//				paramAnno.setParameterName(param.value());
+				if(!param.value().equals(""))
+					paramAnno.setParameterName(param.value());
+				else
+					paramAnno.setParameterName(methodparamname);
 				paramAnno.setDataBindScope(Scope.PATHVARIABLE);
 				String aa = param.defaultvalue();
 				if(!aa.equals(ValueConstants.DEFAULT_NONE))
@@ -462,7 +473,11 @@ public class MethodInfo {
 				paramAnno.setCookieValue(param);
 				if(param.editor() != null && !param.editor().equals(""))
 					paramAnno.setEditor((EditorInf)BeanUtils.instantiateClass(param.editor()));
-				paramAnno.setParameterName(param.name());
+				if(!param.name().equals(""))
+					paramAnno.setParameterName(param.name());
+				else
+					paramAnno.setParameterName(methodparamname);
+//				paramAnno.setParameterName(param.name());
 				paramAnno.setDataBindScope(Scope.COOKIE);
 				
 				String aa = param.defaultvalue();
@@ -478,7 +493,11 @@ public class MethodInfo {
 				paramAnno.setRequestHeader(param);
 				if(param.editor() != null && !param.editor().equals(""))
 					paramAnno.setEditor((EditorInf)BeanUtils.instantiateClass(param.editor()));
-				paramAnno.setParameterName(param.name());
+				if(!param.name().equals(""))
+					paramAnno.setParameterName(param.name());
+				else
+					paramAnno.setParameterName(methodparamname);
+//				paramAnno.setParameterName(param.name());
 				paramAnno.setDataBindScope(Scope.REQUEST_HEADER);
 				String aa = param.defaultvalue();
 				if(!aa.equals(ValueConstants.DEFAULT_NONE))
@@ -496,7 +515,11 @@ public class MethodInfo {
 				paramAnno.setRequired(param.required());
 				if(param.editor() != null && !param.editor().equals(""))
 					paramAnno.setEditor((EditorInf)BeanUtils.instantiateClass(param.editor()));
-				paramAnno.setParameterName(param.name());
+				if(!param.name().equals(""))
+					paramAnno.setParameterName(param.name());
+				else
+					paramAnno.setParameterName(methodparamname);
+//				paramAnno.setParameterName(param.name());
 				if(param.scope() == AttributeScope.PAGECONTEXT_APPLICATION_SCOPE)
 					paramAnno.setDataBindScope(Scope.PAGECONTEXT_APPLICATION_SCOPE);
 				else if(param.scope() == AttributeScope.PAGECONTEXT_PAGE_SCOPE)
@@ -518,17 +541,26 @@ public class MethodInfo {
 				continue;
 			}
 			
-//			else
-//			{
-//				
-//				paramNames[i] = null;
-//			}
 		}
 		
 		if(mutilMethodParamAnnotations.size() == 0)
 		{
 			if(!ismapkey)
-				return null;
+			{
+				boolean isprimary = ValueObjectUtil.isPrimaryType(paramType);
+				if(isprimary )
+				{
+					MethodParameter temp = new MethodParameter(method,parampostion);
+					temp.setParameterName(methodparamname);
+					temp.setPrimaryType(isprimary);
+					return temp;
+				}
+				else
+				{
+					return null;
+				}
+				
+			}
 			return ret;
 		}
 		ret.setMultiAnnotationParams(mutilMethodParamAnnotations);
@@ -588,21 +620,41 @@ public class MethodInfo {
 	private void parserInfo()
 	{
 		Annotation[][] annotations = method.getParameterAnnotations();
-		if(annotations == null || annotations.length ==0)
+		Class[] paramTypes = method.getParameterTypes();
+		ParameterNameDiscoverer parameterNameDiscoverer = ClassUtil.getParameterNameDiscoverer();
+		String[] temp_paramNames = parameterNameDiscoverer.getParameterNames(getMethod());
+		/**
+		 * 如果方法没有指定任何注解，并且没有通过asm获取到方法参数名称
+		 * 则直接返回
+		 */
+		if((temp_paramNames == null || temp_paramNames.length == 0 ) 
+				&& (annotations == null || annotations.length ==0))
 			return;
 //		editors = new EditorInf[annotations.length];
 		paramNames = new MethodParameter[annotations.length];
 		databind = new boolean[annotations.length];
 		for(int i = 0; i < annotations.length; i ++)
 		{
+			String methodparamName = temp_paramNames == null || temp_paramNames.length == 0?"": temp_paramNames[i];
 			if(annotations[i].length == 0)
 			{
 //				editors[i] = null;
-				paramNames[i] = null;
+				boolean isprimary = ValueObjectUtil.isPrimaryType(paramTypes[i]);
+				if(isprimary && !methodparamName.equals(""))
+				{
+					MethodParameter temp = new MethodParameter(method,i);
+					temp.setParameterName(methodparamName);
+					temp.setPrimaryType(isprimary);
+					paramNames[i] = temp;
+				}
+				else
+				{
+					paramNames[i] = null;
+				}
 			}
 			else
 			{
-				paramNames[i] = buildMutilMethodParamAnnotations(annotations[i],i);
+				paramNames[i] = buildMutilMethodParamAnnotations(annotations[i],i,methodparamName,paramTypes[i]);
 			}
 		}
 		

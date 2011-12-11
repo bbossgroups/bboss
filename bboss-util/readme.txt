@@ -19,6 +19,13 @@ bboss-util<-kettle [frameworkset-util.jar]
 bboss-util<-portal [frameworkset-util.jar]
 bboss-util<-cas server [frameworkset-util.jar]
 #######update function list since bbossgroups-3.4 begin###########
+o 增加获取方法参数名称的工具类LocalVariableTableParameterNameDiscoverer
+获取LocalVariableTableParameterNameDiscoverer的方法如下：
+ParameterNameDiscoverer parameterNameDiscoverer = ClassUtil.getParameterNameDiscoverer();
+获取方法参数名称的方法如下：
+ParameterNameDiscoverer parameterNameDiscoverer = ClassUtil.getParameterNameDiscoverer();
+Method method = ClassInfo.class.getMethod("getDeclaredMethod", String.class);
+String[] names = parameterNameDiscoverer.getParameterNames(method);
 o 内置asm 4.0版本
 #######update function list since bbossgroups-3.3 begin###########
 ------2011-10-14------------

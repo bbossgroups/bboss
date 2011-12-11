@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
 import org.frameworkset.util.annotations.Attribute;
 import org.frameworkset.util.annotations.CookieValue;
 import org.frameworkset.util.annotations.MapKey;
@@ -58,6 +59,8 @@ public class MethodParameter {
 	private static final Method constructorParameterAnnotationsMethod = ClassUtils
 			.getMethodIfAvailable(Constructor.class, "getParameterAnnotations",
 					new Class[0]);
+	
+	
 
 	private Method method;
 
@@ -91,6 +94,8 @@ public class MethodParameter {
 	private RequestHeader requestHeader;
 
 	private MapKey	mapKey;
+	
+	private boolean primaryType;
 	
 	/**
 	 * 标识参数是否被多个不同类型的注解所注解
@@ -581,6 +586,14 @@ public class MethodParameter {
 	
 		return mapKey;
 	}
-	
+
+	public boolean isPrimaryType() {
+		return primaryType;
+	}
+
+	public void setPrimaryType(boolean isPrimaryType) {
+		this.primaryType = isPrimaryType;
+	}
+
 
 }

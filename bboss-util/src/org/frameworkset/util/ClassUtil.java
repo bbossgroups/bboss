@@ -35,7 +35,10 @@ import org.frameworkset.soa.annotation.ExcludeField;
 
 /**
  * <p>ClassUtil.java</p>
- * <p> Description: </p>
+ * <p> Description: 需要注意
+ * boolean 类型属性的get/set方法的生成方式
+ * 已经boolean变量的命名方式，不要在前面添加is前缀，不要命名成isXXXX，这样处理会有问题的
+ * </p>
  * <p> bboss workgroup </p>
  * <p> Copyright (c) 2009 </p>
  * 
@@ -46,6 +49,12 @@ import org.frameworkset.soa.annotation.ExcludeField;
 public class ClassUtil
 {
 	private static final Logger log = Logger.getLogger(ClassUtil.class);
+	private static final ParameterNameDiscoverer parameterNameDiscoverer = new LocalVariableTableParameterNameDiscoverer();
+	
+	public static ParameterNameDiscoverer getParameterNameDiscoverer()
+	{
+		return parameterNameDiscoverer;
+	}
 	public static class PropertieDescription
 	{
 		private Class propertyType;		

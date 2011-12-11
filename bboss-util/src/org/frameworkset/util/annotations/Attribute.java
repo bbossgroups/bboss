@@ -34,7 +34,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface Attribute {
-	String name();
+	String name()  default "";
 	boolean required() default false;
 	String editor() default "";
 	AttributeScope scope() default AttributeScope.REQUEST_ATTRIBUTE;

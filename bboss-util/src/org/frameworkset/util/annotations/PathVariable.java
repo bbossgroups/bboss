@@ -34,7 +34,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface PathVariable {
-	String value() ;
+	String value() default "";
 	String editor() default "";
 	String defaultvalue() default ValueConstants.DEFAULT_NONE;
 	/**

@@ -26,6 +26,10 @@ public @interface PagerParam {
 	public static final String PAGE_SIZE = "PAGE_SIZE";
 	
 	String id() default DEFAULT_ID;
+	/**
+	 * 分页参数名称
+	 * @return
+	 */
 	String name() ;	
 	boolean required() default false;
 	String editor() default "";

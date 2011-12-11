@@ -67,9 +67,10 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import org.apache.log4j.Logger;
+import org.frameworkset.util.BigFile;
 import org.frameworkset.util.ClassUtil;
-import org.frameworkset.util.MethodParameter;
 import org.frameworkset.util.ClassUtil.PropertieDescription;
+import org.frameworkset.util.MethodParameter;
 
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
@@ -83,6 +84,29 @@ import com.frameworkset.spi.assemble.CurrentlyInCreationException;
  * @author biaoping.yin 改类充分使用java.lang.reflection中提供的功能，提供以下工具： 从对象中获取对应属性的值
  */
 public class ValueObjectUtil {
+
+	/**
+	 * 基本数据类型，bboss定位如下：
+	 * java定义的基本数据类型
+	 * BigFile 大附件类型
+	 * 枚举类型
+	 * 日期类型
+	 * 字符串类型
+	 * 这些类型主要应用于mvc控制器方法参数的绑定过程中
+	 */
+	public static final Class[] baseTypes = {String.class,
+		int.class ,Integer.class,
+		long.class,Long.class,
+		java.sql.Timestamp.class,java.sql.Date.class,java.util.Date.class,
+		boolean.class ,Boolean.class,
+		BigFile.class,
+		float.class ,Float.class,
+		short.class ,Short.class,
+		double.class,Double.class,
+		char.class ,Character.class,
+		
+		byte.class ,Byte.class,
+		BigDecimal.class};
 	private static final Logger log = Logger.getLogger(ValueObjectUtil.class);
 
 	private static final SimpleDateFormat format = new SimpleDateFormat(
@@ -1324,6 +1348,7 @@ public class ValueObjectUtil {
 				type).append("]向[").append(toType).append("]的转换").append(",value is").append(obj).toString());
 
 	}
+	
 	
 	public static BigDecimal converObjToBigDecimal(Object obj)
 	{
@@ -4155,6 +4180,31 @@ public class ValueObjectUtil {
     	{
     		  return new FileInputStream(configFile);
     	}
+    }
+    
+    /**
+     * 判断类type是否是基础数据类型
+     * @param type
+     * @return
+     */
+    public static boolean isPrimaryType(Class type)
+    {
+    	if(!type.isArray())
+    	{
+    		if(type.isEnum())
+    			return true;
+	    	for(Class primaryType:ValueObjectUtil.baseTypes)
+	    	{
+	    		if(primaryType.isAssignableFrom(type))
+	    			return true;
+	    	}
+	    	return false;
+    	}
+    	else
+    	{
+    		return isPrimaryType(type.getComponentType());
+    	}
+    	
     }
 	
 }
