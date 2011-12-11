@@ -118,6 +118,11 @@ classpath根目录下，例如classes目录。
 more details see my blog [http://blog.csdn.net/yin_bp]
 todo list:
 运行aop/ioc的最小依赖包整理
+#######update function list since bbossgroups-3.4 begin###########
+o 改进http协议和webservice rpc协议性能，改进反射机制
+o ioc属性注入中相应的属性不再需要set方法
+o 引进最新的bboss soa序列化机制，对于static，final，transient类型的属性不进行序列化，对于添加了@ExcludeField的注解不序列化
+需要序列化的字段不再需要get/set方法
 #######update function list since bbossgroups-3.3 begin###########
 ------2011-10-22-----------
 o 增加webservice服务JaxWsProxyFactory组件,用来获取webservice服务组件的客户端调用代理组件

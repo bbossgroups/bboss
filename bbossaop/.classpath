@@ -65,7 +65,6 @@
 	<classpathentry kind="lib" path="lib/jms/activemq-jmdns_1.0-5.3.2.jar"/>
 	<classpathentry kind="lib" path="lib/jms/activemq-optional-5.3.2.jar"/>
 	<classpathentry kind="lib" path="lib/jms/activemq-pool-5.3.2.jar"/>
-	<classpathentry kind="lib" path="lib/jms/activemq-web-5.3.2.jar"/>
 	<classpathentry kind="lib" path="lib/jms/activemq-xmpp-5.3.2.jar"/>
 	<classpathentry kind="lib" path="lib/jms/commons-pool-1.5.4.jar"/>
 	<classpathentry kind="lib" path="lib/camel/camel-core-2.2.0.jar" sourcepath="/camel-core"/>
@@ -95,12 +94,12 @@
 	<classpathentry kind="lib" path="lib/jms/geronimo-j2ee-management_1.0_spec-1.0.jar"/>
 	<classpathentry kind="lib" path="lib/mina/test/log4j-1.2.16.jar"/>
 	<classpathentry kind="lib" path="lib/frameworkset-util.jar" sourcepath="/bboss-util"/>
-	<classpathentry kind="lib" path="lib/cxf/spring-beans-2.5.5.jar"/>
-	<classpathentry kind="lib" path="lib/cxf/spring-context-2.5.5.jar"/>
-	<classpathentry kind="lib" path="lib/cxf/spring-core-2.5.5.jar"/>
-	<classpathentry kind="lib" path="lib/cxf/spring-web-2.5.5.jar"/>
 	<classpathentry kind="lib" path="lib/bboss-soa.jar" sourcepath="/bboss-soa"/>
 	<classpathentry kind="lib" path="lib/http/httpclient-4.0.1.jar" sourcepath="D:/workspace/httpcomponents-client-4.0.1"/>
 	<classpathentry kind="lib" path="lib/http/httpmime-4.0.1.jar"/>
+	<classpathentry kind="lib" path="lib/jms/spring-beans-2.5.5.jar"/>
+	<classpathentry kind="lib" path="lib/jms/spring-context-2.5.5.jar"/>
+	<classpathentry kind="lib" path="lib/jms/spring-core-2.5.5.jar"/>
+	<classpathentry kind="lib" path="lib/jms/spring-web-2.5.5.jar"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>
