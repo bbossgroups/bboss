@@ -1,3 +1,7 @@
+#######update function list since bbossgroups-3.4 begin###########
+o 引进序列化机制，对于static，final，transient类型的属性不进行序列化，对于添加了@ExcludeField的注解不序列化
+对象中序列化的字段不再需要get/set方法
+#######update function list since bbossgroups-3.2 begin###########
 o 实现对象与xml相互转化功能
 o 性能优化策略
 properties转换为ps
@@ -18,4 +22,5 @@ componentType转换为cmt
 
 o 修复set转换问题
 o 修复枚举类型转换问题
+
 
