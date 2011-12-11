@@ -105,15 +105,13 @@ public class UploadController
 	
 	
 	/**
-	 * @param request
-	 * @param model
-	 * @param idNum
-	 * @param type
-	 * @param des
-	 * @param byid
+	 * 
+	 * @param upload1 参数名称要和<input type="file" id="upload1" name="upload1" style="width: 200px"/>
+	 *        中的name属性保持一致，这样就能够自动进行绑定和映射
 	 * @return
 	 */
-	public String uploadFileWithMultipartFile(@RequestParam(name="upload1")  MultipartFile file)
+//	public String uploadFileWithMultipartFile(@RequestParam(name="upload1")  MultipartFile file)
+	public String uploadFileWithMultipartFile(MultipartFile upload1)
 	{
 
 		
@@ -121,10 +119,10 @@ public class UploadController
 		
 		try
 		{
-			String filename = file.getOriginalFilename();
+			String filename = upload1.getOriginalFilename();
 			if (filename != null && filename.trim().length() > 0)
 			{
-				uploadService.uploadFile(file.getInputStream(), file
+				uploadService.uploadFile(upload1.getInputStream(), upload1
 						.getSize(), filename);
 
 			}			
@@ -137,11 +135,34 @@ public class UploadController
 		return "path:ok";
 	}
 	
-	public @ResponseBody File uploaddownFileWithMultipartFile( MultipartFile file) throws IllegalStateException, IOException
+	public String uploadFileClobWithMultipartFile(MultipartFile upload1)
+	{
+		try
+		{
+			uploadService.uploadClobFile(upload1);			
+			
+		}
+		catch (Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		return "path:ok";
+	}
+	
+//	public @ResponseBody File uploaddownFileWithMultipartFile( MultipartFile file) throws IllegalStateException, IOException
+	/**
+	 * 
+	 * @param upload1 参数名称要和<input type="file" id="upload1" name="upload1" style="width: 200px"/>
+	 *        中的name属性保持一致
+	 * @return
+	 * @throws IllegalStateException
+	 * @throws IOException
+	 */
+	public @ResponseBody File uploaddownFileWithMultipartFile( MultipartFile upload1) throws IllegalStateException, IOException
 	{
 
-		File f = new File("d:/" + file.getOriginalFilename());
-		file.transferTo(f);
+		File f = new File("d:/" + upload1.getOriginalFilename());
+		upload1.transferTo(f);
 		return f;
 		// 根据服务器的文件保存地址和原文件名创建目录文件全路径
 		
@@ -179,20 +200,18 @@ public class UploadController
 	}
 	
 	/**
-	 * @param request
-	 * @param model
-	 * @param idNum
-	 * @param type
-	 * @param des
-	 * @param byid
+	 * 
+	 * @param upload1 参数名称要和<input type="file" id="upload1" name="upload1" style="width: 200px"/>
+	 *        中的name属性保持一致,否则就需要@RequestParam来建立映射关系
 	 * @return
 	 */
-	public String uploadFileWithMultipartFiles(@RequestParam(name="upload1")  MultipartFile[] files)
+//	public String uploadFileWithMultipartFiles(@RequestParam(name="upload1")  MultipartFile[] files)
+	public String uploadFileWithMultipartFiles(MultipartFile[] upload1)
 	{		
 		try
 		{ 
 			
-			for(MultipartFile file:files)
+			for(MultipartFile file:upload1)
 			{
 				String filename = file.getOriginalFilename();
 //				file.transferTo(new File("d:/"+ filename));
@@ -213,20 +232,18 @@ public class UploadController
 	}
 	
 	/**
-	 * @param request
-	 * @param model
-	 * @param idNum
-	 * @param type
-	 * @param des
-	 * @param byid
+	 * 
+	 * @param upload1 参数名称要和<input type="file" id="upload1" name="upload1" style="width: 200px"/>
+	 *        中的name属性保持一致,否则就需要@RequestParam来建立映射关系
 	 * @return
 	 */
-	public @ResponseBody(charset="GBK") String uploadFileWithMultipartFilesJson(@RequestParam(name="upload1")  MultipartFile[] files,HttpServletResponse response)
+//	public @ResponseBody(charset="GBK") String uploadFileWithMultipartFilesJson(@RequestParam(name="upload1")  MultipartFile[] upload1)
+	public @ResponseBody(charset="GBK") String uploadFileWithMultipartFilesJson(MultipartFile[] upload1)
 	{		
 		try
 		{ 
 
-			for(MultipartFile file:files)
+			for(MultipartFile file:upload1)
 			{
 				String filename = file.getOriginalFilename();
 //				file.transferTo(new File("d:/"+ filename));
@@ -288,13 +305,17 @@ public class UploadController
 	 * 直接将blob对应的文件内容以相应的文件名响应到客户端，需要提供request和response对象
 	 * 这个方法比较特殊，因为derby数据库的blob字段必须在statement有效范围内才能使用，所以采用了空行处理器，来进行处理
 	 * 查询数据库的操作也只好放在控制器中处理
-	 * @param fileid
+	 * @param fileid 参数名称要和request请求中的参数名称保持一致,否则就需要@RequestParam来建立映射关系
 	 * @param request
 	 * @param response
 	 * @throws Exception
 	 */
+//	public void downloadFileFromBlob(
+//			@RequestParam(name = "fileid") String fileid,
+//			 HttpServletRequest request, HttpServletResponse response)
+//			throws Exception
 	public void downloadFileFromBlob(
-			@RequestParam(name = "fileid") String fileid,
+			String fileid,
 			 HttpServletRequest request, HttpServletResponse response)
 			throws Exception
 	{
@@ -306,13 +327,18 @@ public class UploadController
 	 * 直接将blob对应的文件内容以相应的文件名响应到客户端，需要提供request和response对象
 	 * 这个方法比较特殊，因为derby数据库的blob字段必须在statement有效范围内才能使用，所以采用了空行处理器，来进行处理
 	 * 查询数据库的操作也只好放在控制器中处理
-	 * @param fileid
+	 * @param fileid 用来验证指定@RequestParam注解的参数，但是RequestParam并没明显地指定参数的名称，则将会用方法参数的名称
+	 * 作为参数名称
 	 * @param request
 	 * @param response
 	 * @throws Exception
 	 */
+//	public void downloadFileFromClob(
+//			@RequestParam(name = "fileid") String fileid,
+//			 HttpServletRequest request, HttpServletResponse response)
+//			throws Exception
 	public void downloadFileFromClob(
-			@RequestParam(name = "fileid") String fileid,
+			@RequestParam String fileid,
 			 HttpServletRequest request, HttpServletResponse response)
 			throws Exception
 	{
@@ -328,13 +354,13 @@ public class UploadController
 	 * @return
 	 * @throws Exception
 	 */
-	public @ResponseBody File downloadFileFromFile(@RequestParam(name = "fileid") String fileid)
+	public @ResponseBody File downloadFileFromFile(String fileid)
 			throws Exception
 	{
 
 		return uploadService.getDownloadFile(fileid);
 	}
-	public @ResponseBody File downloadFileFromClobFile(@RequestParam(name = "fileid") String fileid)
+	public @ResponseBody File downloadFileFromClobFile(String fileid)
 	throws Exception
 	{
 	
@@ -342,16 +368,19 @@ public class UploadController
 	}
 	
 
-	public UploadService getUploadService()
-	{
-
-		return uploadService;
-	}
-
-	public void setUploadService(UploadService uploadService)
-	{
-
-		this.uploadService = uploadService;
-	}
+	/**
+	 * bbossgroups 3.5版本对aop框架的属性注入功能做了改进，注入的属性无需再定义get/set方法
+	 */
+//	public UploadService getUploadService()
+//	{
+//
+//		return uploadService;
+//	}
+//
+//	public void setUploadService(UploadService uploadService)
+//	{
+//
+//		this.uploadService = uploadService;
+//	}
 
 }

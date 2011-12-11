@@ -37,7 +37,7 @@ public class TestMethodNameParser {
 //		Perl5Compiler s;
 //		s.compile(arg0);
 		LocalVariableTableParameterNameDiscoverer r = new LocalVariableTableParameterNameDiscoverer();
-		Method method = ClassInfo.class.getMethod("getDeclaredMethod", String.class);
+		Method method = ClassInfo.class.getMethod("getDeclaredMethods");
 		String[] names = r.getParameterNames(method);
 		System.out.println(names);
 	}
