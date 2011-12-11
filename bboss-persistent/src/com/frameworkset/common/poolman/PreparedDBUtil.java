@@ -632,26 +632,30 @@ public class PreparedDBUtil extends DBUtil {
 					if(reader != null)
 						resources.add(reader);
 					if(in != null)
-						try
-						{
-							in.close();
-						}
-						catch (Exception e)
-						{
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
+					{
+						resources.add(in);
+					}
+//						try
+//						{
+//							in.close();
+//						}
+//						catch (Exception e)
+//						{
+//							// TODO Auto-generated catch block
+//							e.printStackTrace();
+//						}
 					if( dataf != null)
 					{
-						try
-						{
-							dataf.close();
-						}
-						catch (Exception e)
-						{
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
+//						try
+//						{
+//							dataf.close();
+//						}
+//						catch (Exception e)
+//						{
+//							// TODO Auto-generated catch block
+//							e.printStackTrace();
+//						}
+						resources.add(dataf);
 					}
 					
 				}

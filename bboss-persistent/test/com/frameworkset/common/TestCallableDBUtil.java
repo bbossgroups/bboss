@@ -159,6 +159,7 @@ public class TestCallableDBUtil {
 	{
 		PreparedDBUtil callableDBUtil = new PreparedDBUtil();
 		try {
+			
 			SQLResult result = callableDBUtil.execute("select * from tableinfo");
 			System.out.println(result.size());
 		} catch (SQLException e) {
@@ -251,10 +252,24 @@ public class TestCallableDBUtil {
 	
 	
 	
+//	@SuppressWarnings("finally")
+	static boolean test()
+	{
+		try
+		{
+			return true;
+		}
+		finally
+		{
+			return false;
+		}
+	}
 	
 	
 	public static void main(String[] args)
 	{
+		
+		System.out.println(test());
 //		System.out.println("1---------------------------------------------------testTest_pWithPositionIndex()");
 //		testTest_pWithPositionIndex();
 //		System.out.println("2---------------------------------------------------testTest_pWithNameIndex()");

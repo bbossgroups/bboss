@@ -23,7 +23,17 @@ bboss-persistent<-cas server [frameworkset-pool.jar]
 to do list:
 无
 #######update function list since bbossgroups-3.4 begin###########
+o 修复执行clob 文件插入操作导致空指针的问题
+
+sql = "INSERT INTO CLOBFILE (FILENAME,FILECONTENT,fileid,FILESIZE) VALUES(#[filename],#[FILECONTENT],#[FILEID],#[FILESIZE])";
+			SQLParams sqlparams = new SQLParams();
+			sqlparams.addSQLParam("filename", file.getOriginalFilename(), SQLParams.STRING);
+			sqlparams.addSQLParam("FILECONTENT", file,SQLParams.CLOBFILE);
+			sqlparams.addSQLParam("FILEID", UUID.randomUUID().toString(),SQLParams.STRING);
+			sqlparams.addSQLParam("FILESIZE", file.getSize(),SQLParams.LONG);
+			SQLExecutor.insertBean(sql, sqlparams);	
 o 优化or mapping性能
+o 更新最新的frameworkset-util.jar，持久层or mapping机制的bean的属性不再需要get/set方法
 o 将动态添加的数据源的removeAbandoned属性设置为false
 #######update function list since bbossgroups-3.3 begin###########
 ------2011-09-22-------------
