@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="gb2312"?>
+
+<poolman>
+
+  <management-mode>local</management-mode>
+
+<datasource>
+
+    <dbname>bspf</dbname>
+	<loadmetadata>false</loadmetadata>
+    <jndiName>jdbc/oracle-ds</jndiName>
+	
+    <driver>oracle.jdbc.driver.OracleDriver</driver>
+    <url>jdbc:oracle:thin:@//172.16.25.219:1521/orcl</url> 
+    
+    <username>esb</username>
+    <password>esb</password>
+
+    <txIsolationLevel>READ_COMMITTED</txIsolationLevel>
+    <nativeResults>true</nativeResults>
+    <poolPreparedStatements>false</poolPreparedStatements>
+    <initialConnections>2</initialConnections>
+    <minimumSize>2</minimumSize>
+    <maximumSize>10</maximumSize>
+    <maximumSoft>false</maximumSoft>
+    <removeAbandoned>true</removeAbandoned>
+    <userTimeout>50</userTimeout>
+    <logAbandoned>true</logAbandoned>
+    <readOnly>false</readOnly>
+	<skimmerFrequency>120000</skimmerFrequency>
+	<connectionTimeout>240000</connectionTimeout>
+    <shrinkBy>5</shrinkBy>
+    <testWhileidle>true</testWhileidle>
+    <keygenerate>composite</keygenerate>
+    <maxWait>60</maxWait>
+    <validationQuery>select 1 from dual</validationQuery>
+    <autoprimarykey>false</autoprimarykey>
+	<showsql>false</showsql>
+  </datasource>
+  
+   <datasource external="true">
+    <dbname>datareuse</dbname>
+    <externaljndiName>jdbc/oracle-ds</externaljndiName>
+	<showsql>false</showsql>
+  </datasource>
+  
+</poolman>
