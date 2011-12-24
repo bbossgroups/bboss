@@ -47,11 +47,9 @@
  
   
   <listener>
-	<listener-class>com.frameworkset.filter.BSServletRequestListener</listener-class>
+	<listener-class>com.frameworkset.listener.BSServletRequestListener</listener-class>
   </listener>
-  <listener>
-	<listener-class>com.chinacreator.security.SessionListener</listener-class>
-  </listener>	
+
   
 	<servlet>
         <servlet-name>mvc</servlet-name>
@@ -67,20 +65,10 @@
         <servlet-name>mvc</servlet-name>
         <url-pattern>*.page</url-pattern>
     </servlet-mapping>
-	
-
-  <servlet>
-    <servlet-name>frameworkset</servlet-name>
-    <servlet-class>com.chinacreator.framework.FrameworkServlet</servlet-class>
-	<load-on-startup>1</load-on-startup>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>frameworkset</servlet-name>
-    <url-pattern>*.frame</url-pattern>
-  </servlet-mapping>
 
 
-	<servlet>
+
+ <servlet>
   <display-name>RPCHttpServLet</display-name>
   <servlet-name>RPCHttpServLet</servlet-name>
   <servlet-class>org.frameworkset.spi.remote.http.RPCHttpServLet</servlet-class>

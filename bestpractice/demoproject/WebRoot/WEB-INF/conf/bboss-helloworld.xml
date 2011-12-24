@@ -1,0 +1,6 @@
+<properties>
+	<property name="/examples/*.page"
+		path:sayHello="/examples/hello.jsp"
+		class="org.frameworkset.mvc.HelloWord">
+	</property>
+</properties>
