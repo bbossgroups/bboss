@@ -228,14 +228,14 @@ public class ClientTest {
 	public void testNettya()
 	{
 		RPCTestInf WSService = ClientProxyContext.getSimpleClientBean("org/frameworkset/spi/remote/manager-rpc-test.xml", 
-				"(netty::172.16.25.108:12347)" +
+				"(netty::172.16.17.217:12347)" +
 				"/rpc.test", 
 				RPCTestInf.class);
 		WSService.sayHelloWorld("你好，多多");
 		String ss = "你好，多多,你好，多多你好，多多你好，多多你好，多多你好，多多你好，多多你好，多多你好，多多你好，多多你好，多多你好，多多你好，多多" +
 				"你好，多多你好，多多你好，多多你好，多多你好，多多你好，多多你好，多多你好，多多";
 		long s = System.currentTimeMillis();
-		WSService.sayHelloWorld(ss);
+		String resustl = WSService.sayHelloWorld(ss);
 		long e = System.currentTimeMillis();
 		long interval = (e-s);
 		System.out.println(interval);
