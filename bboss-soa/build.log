@@ -8,19 +8,17 @@ init:
 
 compile-frameworkset-soa:
      [echo] compile the frameworkset-soa source ...
+    [javac] Warning: org\frameworkset\soa\ObjectSerializable.java modified in the future.
     [javac] Compiling 3 source files to D:\workspace\bbossgroups-3.5\bboss-soa\classes-bboss-soa
     [javac] [解析开始时间 D:\workspace\bbossgroups-3.5\bboss-soa\src\org\frameworkset\soa\ObjectSerializable.java]
-    [javac] [解析已完成时间 62ms]
+    [javac] [解析已完成时间 125ms]
     [javac] [解析开始时间 D:\workspace\bbossgroups-3.5\bboss-soa\src\org\frameworkset\soa\SOAMethodCall.java]
-    [javac] [解析已完成时间 15ms]
+    [javac] [解析已完成时间 0ms]
     [javac] [解析开始时间 D:\workspace\bbossgroups-3.5\bboss-soa\src\org\frameworkset\soa\SOAMethodInfo.java]
     [javac] [解析已完成时间 0ms]
     [javac] [源文件的搜索路径： D:\workspace\bbossgroups-3.5\bboss-soa\src]
     [javac] [类文件的搜索路径： E:\environment\jdk16\jre\lib\resources.jar,E:\environment\jdk16\jre\lib\rt.jar,E:\environment\jdk16\jre\lib\sunrsasign.jar,E:\environment\jdk16\jre\lib\jsse.jar,E:\environment\jdk16\jre\lib\jce.jar,E:\environment\jdk16\jre\lib\charsets.jar,E:\environment\jdk16\jre\classes,E:\environment\jdk16\jre\lib\ext\dnsns.jar,E:\environment\jdk16\jre\lib\ext\localedata.jar,E:\environment\jdk16\jre\lib\ext\sunjce_provider.jar,E:\environment\jdk16\jre\lib\ext\sunmscapi.jar,E:\environment\jdk16\jre\lib\ext\sunpkcs11.jar,D:\workspace\bbossgroups-3.5\bboss-soa\classes-bboss-soa,D:\workspace\bbossgroups-3.5\bboss-soa\lib\bboss-aop.jar,D:\workspace\bbossgroups-3.5\bboss-soa\lib\cglib-2.2.jar,D:\workspace\bbossgroups-3.5\bboss-soa\lib\frameworkset-util.jar,D:\workspace\bbossgroups-3.5\bboss-soa\lib\log4j-1.2.14.jar,E:\environment\apache-ant-1.7.1\lib\ant-launcher.jar,E:\environment\apache-ant-1.7.1\lib\ant-antlr.jar,E:\environment\apache-ant-1.7.1\lib\ant-apache-bcel.jar,E:\environment\apache-ant-1.7.1\lib\ant-apache-bsf.jar,E:\environment\apache-ant-1.7.1\lib\ant-apache-log4j.jar,E:\environment\apache-ant-1.7.1\lib\ant-apache-oro.jar,E:\environment\apache-ant-1.7.1\lib\ant-apache-regexp.jar,E:\environment\apache-ant-1.7.1\lib\ant-apache-resolver.jar,E:\environment\apache-ant-1.7.1\lib\ant-commons-logging.jar,E:\environment\apache-ant-1.7.1\lib\ant-commons-net.jar,E:\environment\apache-ant-1.7.1\lib\ant-contrib-1.0b3.jar,E:\environment\apache-ant-1.7.1\lib\ant-jai.jar,E:\environment\apache-ant-1.7.1\lib\ant-javamail.jar,E:\environment\apache-ant-1.7.1\lib\ant-jdepend.jar,E:\environment\apache-ant-1.7.1\lib\ant-jmf.jar,E:\environment\apache-ant-1.7.1\lib\ant-jsch.jar,E:\environment\apache-ant-1.7.1\lib\ant-junit.jar,E:\environment\apache-ant-1.7.1\lib\ant-netrexx.jar,E:\environment\apache-ant-1.7.1\lib\ant-nodeps.jar,E:\environment\apache-ant-1.7.1\lib\ant-starteam.jar,E:\environment\apache-ant-1.7.1\lib\ant-stylebook.jar,E:\environment\apache-ant-1.7.1\lib\ant-swing.jar,E:\environment\apache-ant-1.7.1\lib\ant-testutil.jar,E:\environment\apache-ant-1.7.1\lib\ant-trax.jar,E:\environment\apache-ant-1.7.1\lib\ant-weblogic.jar,E:\environment\apache-ant-1.7.1\lib\ant.jar,E:\environment\apache-ant-1.7.1\lib\ganymed.jar,E:\environment\apache-ant-1.7.1\lib\svnant.jar,E:\environment\apache-ant-1.7.1\lib\svnClientAdapter.jar,E:\environment\apache-ant-1.7.1\lib\svnjavahl.jar,E:\environment\apache-ant-1.7.1\lib\svnkit-javahl.jar,E:\environment\apache-ant-1.7.1\lib\svnkit.jar,E:\environment\apache-ant-1.7.1\lib\xercesImpl.jar,E:\environment\apache-ant-1.7.1\lib\xml-apis.jar,E:\environment\jdk16\lib\tools.jar]
-    [javac] [正在装入 java\beans\BeanInfo.class(java\beans:BeanInfo.class)]
     [javac] [正在装入 java\beans\IntrospectionException.class(java\beans:IntrospectionException.class)]
-    [javac] [正在装入 java\beans\Introspector.class(java\beans:Introspector.class)]
-    [javac] [正在装入 java\beans\PropertyDescriptor.class(java\beans:PropertyDescriptor.class)]
     [javac] [正在装入 java\io\File.class(java\io:File.class)]
     [javac] [正在装入 java\io\FileNotFoundException.class(java\io:FileNotFoundException.class)]
     [javac] [正在装入 java\io\IOException.class(java\io:IOException.class)]
@@ -92,7 +90,7 @@ compile-frameworkset-soa:
     [javac] [已写入 D:\workspace\bbossgroups-3.5\bboss-soa\classes-bboss-soa\org\frameworkset\soa\SOAMethodCall.class]
     [javac] [正在检查 org.frameworkset.soa.SOAMethodInfo]
     [javac] [已写入 D:\workspace\bbossgroups-3.5\bboss-soa\classes-bboss-soa\org\frameworkset\soa\SOAMethodInfo.class]
-    [javac] [总时间 1156ms]
+    [javac] [总时间 1406ms]
 
 jar-frameworkset-soa:
      [echo] Generate the bboss-soa library bboss-soa.jar ...
@@ -111,4 +109,4 @@ complete:
 default:
 
 BUILD SUCCESSFUL
-Total time: 3 seconds
+Total time: 5 seconds
