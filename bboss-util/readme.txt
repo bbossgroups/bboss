@@ -19,6 +19,7 @@ bboss-util<-kettle [frameworkset-util.jar]
 bboss-util<-portal [frameworkset-util.jar]
 bboss-util<-cas server [frameworkset-util.jar]
 #######update function list since bbossgroups-3.4 begin###########
+o ClassInfo对象增加isprimary方法，标识对应的类型是否是bboss定义的基础数据类型范畴
 o 增加获取方法参数名称的工具类LocalVariableTableParameterNameDiscoverer
 获取LocalVariableTableParameterNameDiscoverer的方法如下：
 ParameterNameDiscoverer parameterNameDiscoverer = ClassUtil.getParameterNameDiscoverer();

@@ -32,6 +32,8 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 import org.frameworkset.soa.annotation.ExcludeField;
 
+import com.frameworkset.util.ValueObjectUtil;
+
 
 /**
  * <p>ClassUtil.java</p>
@@ -262,6 +264,8 @@ public class ClassUtil
 
 	    private Class clazz;
 	    
+	    private boolean primary;
+	    
 	    private  ClassInfo(Class clazz){
 	    	this.clazz = clazz;
 	    	try {
@@ -323,6 +327,7 @@ public class ClassUtil
 	    
 	    private void init()
 	    {
+	    	this.primary = ValueObjectUtil.isPrimaryType(clazz);
 //	    	if(declaredFields == null)
 	    	{
 //	    		synchronized(prodescLock)
@@ -773,6 +778,14 @@ public class ClassUtil
 			if(this.defaultConstruction != null)
 				return defaultConstruction;
 			throw new NoSuchMethodException(this.clazz.getName() + " do not define a default construction.");
+		}
+
+		public boolean isPrimary() {
+			return primary;
+		}
+
+		public void setPrimary(boolean primary) {
+			this.primary = primary;
 		}
 
 		
