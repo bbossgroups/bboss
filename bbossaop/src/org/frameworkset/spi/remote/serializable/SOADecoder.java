@@ -16,6 +16,8 @@
 
 package org.frameworkset.spi.remote.serializable;
 
+import java.io.InputStream;
+
 import org.frameworkset.soa.ObjectSerializable;
 
 /**
@@ -30,8 +32,17 @@ import org.frameworkset.soa.ObjectSerializable;
 public class SOADecoder  implements Decoder{
 
 	public Object decoder(Object msg)  throws Exception{
-		
-		return ObjectSerializable.toBean((String)msg, Object.class);
+		if(msg instanceof String)
+		{
+			return ObjectSerializable.toBean((String)msg, Object.class);
+		}
+		else if(msg instanceof InputStream)
+		{
+			return ObjectSerializable.toBean((InputStream)msg, Object.class);
+		}
+		else //Ö±½Ó·µ»Ø
+			return msg;
+			
 	}
 
 }

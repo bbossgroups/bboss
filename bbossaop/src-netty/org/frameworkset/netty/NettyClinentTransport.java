@@ -37,6 +37,7 @@ import org.frameworkset.spi.remote.RPCMessage;
 import org.frameworkset.spi.remote.RemoteException;
 import org.frameworkset.spi.remote.SSLHelper;
 import org.frameworkset.spi.remote.Target;
+import org.frameworkset.spi.remote.Util;
 import org.jboss.netty.bootstrap.ClientBootstrap;
 import org.jboss.netty.channel.Channel;
 import org.jboss.netty.channel.ChannelFactory;
@@ -541,7 +542,8 @@ public class NettyClinentTransport {
         try
         {
             setSourceAddress(message);
-            this.cc.write(message);
+            Object msg = Util.getEncoder().encoder(message);
+            this.cc.write(msg);
         }
         catch(Exception e)
         {

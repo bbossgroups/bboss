@@ -31,6 +31,10 @@ import java.util.Properties;
 
 import org.frameworkset.spi.ApplicationContext;
 import org.frameworkset.spi.BaseApplicationContext;
+import org.frameworkset.spi.remote.serializable.Decoder;
+import org.frameworkset.spi.remote.serializable.Encoder;
+import org.frameworkset.spi.remote.serializable.SOADecoder;
+import org.frameworkset.spi.remote.serializable.SOAEncoder;
 import org.frameworkset.spi.serviceidentity.TargetImpl;
 
 
@@ -460,6 +464,19 @@ public class Util
        String conf = defaultContext.getProperty(key, "etc/META-INF/replSync-service-aop.xml");
        return conf;
        
+   }
+   
+   private static Encoder encoder = new SOAEncoder();
+   public static Encoder getEncoder()
+   {
+	   return encoder;
+   }
+   
+   
+   private static Decoder decoder = new SOADecoder();
+   public static Decoder getDecoder()
+   {
+	   return decoder;
    }
    
   

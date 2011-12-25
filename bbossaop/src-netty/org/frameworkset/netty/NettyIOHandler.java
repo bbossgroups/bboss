@@ -27,6 +27,7 @@ import org.frameworkset.spi.remote.IllegalMessage;
 import org.frameworkset.spi.remote.RPCAddress;
 import org.frameworkset.spi.remote.RPCMessage;
 import org.frameworkset.spi.remote.RequestHandler;
+import org.frameworkset.spi.remote.Util;
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.channel.Channel;
 import org.jboss.netty.channel.ChannelEvent;
@@ -145,10 +146,14 @@ public class NettyIOHandler extends BaseRPCIOHandler implements ChannelUpstreamH
 
             public void run()
             {
-            	 RPCMessage message_ = (RPCMessage) e.getMessage();
-                 Header hdr = message_.getHeader(name);
+            	
+            	
                  RPCMessage rsp;
 				try {
+					Object m = e.getMessage();
+					RPCMessage message_ = (RPCMessage) Util.getDecoder().decoder(m);
+//	            	 RPCMessage message_ = (RPCMessage) e.getMessage();
+	                 Header hdr = message_.getHeader(name);
 					rsp = messageReceived( message_);
 				
 	                 switch (hdr.getType())

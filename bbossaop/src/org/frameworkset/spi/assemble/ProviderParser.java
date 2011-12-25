@@ -847,10 +847,10 @@ public class ProviderParser extends DefaultHandler
         }
         else
         {
-        	if(this.applicationContext.isfile())
-        		log.info("解析文件时[" + this.parent + "]遇到元素[" + name + "]，忽略处理。");
-        	else
-        		log.info("解析报文时遇到元素[" + name + "]，忽略处理。");
+//        	if(this.applicationContext.isfile())
+//        		log.info("解析文件时[" + this.parent + "]遇到元素[" + name + "]，忽略处理。");
+//        	else
+//        		log.info("解析报文时遇到元素[" + name + "]，忽略处理。");
         }
     }
 
