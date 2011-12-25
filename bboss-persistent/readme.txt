@@ -23,6 +23,49 @@ bboss-persistent<-cas server [frameworkset-pool.jar]
 to do list:
 无
 #######update function list since bbossgroups-3.4 begin###########
+o SQLExecutor/ConfigSQLExecutor组件增加单字段多记录结果类型为List<String>的查询功能，使用方法如下：
+使用方法：
+@Test
+	public void dynamicquery() throws SQLException
+	{
+		 
+		List<ListBean> result =  SQLExecutor.queryList(ListBean.class,"select id  from LISTBEAN");
+		 
+		 
+		 System.out.println(result.size());
+		 
+		 List<String> result_string =  SQLExecutor.queryList(String.class,"select id  from LISTBEAN");
+		 
+		 
+		 System.out.println(result_string.size());
+		 
+		 List<Integer> result_int =  SQLExecutor.queryList(Integer.class,"select id  from LISTBEAN");
+		 
+		 
+		 System.out.println(result_int.size());
+		 
+	}
+	
+	@Test
+	public void dynamicqueryObject() throws SQLException
+	{
+		 
+		ListBean result =  SQLExecutor.queryObject(ListBean.class,"select id  from LISTBEAN");
+		 
+		 
+		 System.out.println(result.getId());
+		 
+		 String result_string =  SQLExecutor.queryObject(String.class,"select id  from LISTBEAN");
+		 
+		 
+		 System.out.println(result_string);
+		 
+		 int result_int =  SQLExecutor.queryObject(int.class,"select id  from LISTBEAN");
+		 
+		 
+		 System.out.println(result_int);
+		 
+	}
 o 修复执行clob 文件插入操作导致空指针的问题
 
 sql = "INSERT INTO CLOBFILE (FILENAME,FILECONTENT,fileid,FILESIZE) VALUES(#[filename],#[FILECONTENT],#[FILEID],#[FILESIZE])";

@@ -80,7 +80,19 @@ public class ConfigSQLExecutorTest {
 		 
 		 bean.setFieldName(null);
 		 result = (List<ListBean>) executor.queryListBean(ListBean.class,"dynamicsqltemplate", bean);
+		 
+		 
 		 System.out.println(result.size());
+		 
+		 List<String> result_string =  executor.queryListBean(String.class,"dynamicsqltemplate", bean);
+		 
+		 
+		 System.out.println(result_string.size());
+		 
+		 List<Integer> result_int =  executor.queryListBean(Integer.class,"dynamicsqltemplate", bean);
+		 
+		 
+		 System.out.println(result_int.size());
 		 
 	}
 	

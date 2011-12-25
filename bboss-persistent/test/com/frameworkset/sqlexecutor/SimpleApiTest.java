@@ -54,13 +54,13 @@ public class SimpleApiTest {
 		String sql = "insert into LISTBEAN(ID,FIELDNAME,FIELDLABLE,FIELDTYPE,SORTORDER,ISPRIMARYKEY,REQUIRED,FIELDLENGTH,ISVALIDATED) " +
 				"values(#[id],#[fieldName],#[fieldLable],#[fieldType],#[sortorder]," +
 				"#[isprimaryKey],#[required],#[fieldLength],#[isvalidated])";
-		SQLExecutor.insertBeans("mysql",sql,beans);
+		SQLExecutor.insertBeans("bspf",sql,beans);
 		
 		 
 		
-		SQLExecutor.insertBean("mysql", sql, lb);
+		SQLExecutor.insertBean("bspf", sql, lb);
 		
-		SQLExecutor.insertBeans("mysql", sql, beans);
+		SQLExecutor.insertBeans("bspf", sql, beans);
 		
 		
 		
@@ -70,7 +70,7 @@ public class SimpleApiTest {
 		
 		sql ="insert into LISTBEAN(ID,FIELDNAME,FIELDLABLE,FIELDTYPE) " +
 		"values(?,?,?,?)";
-		SQLExecutor.insertWithDBName("mysql", sql,DBUtil.getNextPrimaryKey("mysql", "ListBean"),"insertOpreation","ttyee","int");
+		SQLExecutor.insertWithDBName("bspf", sql,DBUtil.getNextPrimaryKey("bspf", "ListBean"),"insertOpreation","ttyee","int");
 //		SQLExecutor.insert(sql,122,lb.getFieldName(),lb.getFieldLable(),lb.getFieldType());
 		
 		 
@@ -88,7 +88,7 @@ public class SimpleApiTest {
 //				"values(#[id],#[fieldName],#[fieldLable],#[fieldType],#[sortorder]," +
 //				"#[isprimaryKey],#[required],#[fieldLength],#[isvalidated])";
 //        //SQLExecutor.insertBeans(sql,newdatas);//不带数据源的方法
-//		SQLExecutor.insertBeans("mysql",//数据源
+//		SQLExecutor.insertBeans("bspf",//数据源
 //		                        sql,//数据库sql语句
 //		                        newdatas//批量插入的对象记录集
 //		                        );
@@ -113,13 +113,13 @@ public class SimpleApiTest {
 		beans.add(bean);
 		
 		sql ="update LISTBEAN set FIELDNAME='yyyy' where ID=#[id]"; 
-		SQLExecutor.updateBeans("mysql", sql, beans);
+		SQLExecutor.updateBeans("bspf", sql, beans);
 		
 		sql ="update LISTBEAN set FIELDNAME=#[fieldName] where ID=#[id]"; 
 		SQLExecutor.updateBean(sql,bean);
 		
 		sql ="update LISTBEAN set FIELDNAME=#[fieldName] where ID=#[id]"; 
-		SQLExecutor.updateBean("mysql",sql,bean);
+		SQLExecutor.updateBean("bspf",sql,bean);
 		
 		
 		sql ="update LISTBEAN set FIELDNAME=#[fieldName] where ID=#[id]"; 
@@ -129,7 +129,7 @@ public class SimpleApiTest {
 		SQLExecutor.update(sql, "mytest",100);
 		
 		sql = "update LISTBEAN set FIELDNAME=? where ID=?";
-		SQLExecutor.updateWithDBName("mysql", sql, "zhansans",101);
+		SQLExecutor.updateWithDBName("bspf", sql, "zhansans",101);
 		
 		
 	}
@@ -153,7 +153,7 @@ public class SimpleApiTest {
 		{
 			NULLNUMBER number = new NULLNUMBER();
 			number.setCol2(10);
-			SQLExecutor.insertBean("mysql",sql,number);
+			SQLExecutor.insertBean("bspf",sql,number);
 		}
 		catch (SQLException e)
 		{
@@ -201,16 +201,16 @@ public class SimpleApiTest {
 		SQLExecutor.deleteBeans(sql, beans);
 		
 		sql ="delete  from LISTBEAN where ID=#[id]";   
-		SQLExecutor.deleteBean("mysql",sql,lb);
+		SQLExecutor.deleteBean("bspf",sql,lb);
 		
 		sql ="delete  from LISTBEAN where ID=#[id]";   
-		SQLExecutor.deleteBeans("mysql",sql,beans);
+		SQLExecutor.deleteBeans("bspf",sql,beans);
 		
 		sql = "delete from LISTBEAN where ID=?";
-		SQLExecutor.deleteWithDBName("mysql", sql, 3);
+		SQLExecutor.deleteWithDBName("bspf", sql, 3);
 		
 		sql = "delete from LISTBEAN where FIELDNAME=?";
-		SQLExecutor.deleteByKeysWithDBName("mysql", sql,"pppp");
+		SQLExecutor.deleteByKeysWithDBName("bspf", sql,"pppp");
 		
 		
 	}
@@ -218,7 +218,7 @@ public class SimpleApiTest {
 	public void queryListMap() throws SQLException
 	{
 		String sql = "select * from LISTBEAN ";
-		List<HashMap> dbBeans  =  SQLExecutor.queryListWithDBName(HashMap.class, "mysql", sql);
+		List<HashMap> dbBeans  =  SQLExecutor.queryListWithDBName(HashMap.class, "bspf", sql);
 		System.out.println(dbBeans);
 	}
 	
@@ -268,12 +268,12 @@ public class SimpleApiTest {
 		List<ListBean> lbs =  SQLExecutor.queryList(ListBean.class, sql,22);
 		
 		sql = "select * from LISTBEAN where fieldName=?";
-		beans = (List<ListBean>) SQLExecutor.queryListWithDBName(ListBean.class,"mysql",sql,"testttt");
+		beans = (List<ListBean>) SQLExecutor.queryListWithDBName(ListBean.class,"bspf",sql,"testttt");
 		for(int i=0;i<beans.size();i++)
 		System.out.println(beans.get(i).getId());
 		
 		sql = "select * from LISTBEAN where fieldName=?";
-		List<ListBean> dbBeans  =  (List<ListBean>) SQLExecutor.queryListWithDBName(ListBean.class, "mysql", sql, "testttt");
+		List<ListBean> dbBeans  =  (List<ListBean>) SQLExecutor.queryListWithDBName(ListBean.class, "bspf", sql, "testttt");
 		for(int i=0;i<dbBeans.size();i++)
 			System.out.println(dbBeans.get(i).getFieldName());
 		
@@ -290,11 +290,11 @@ public class SimpleApiTest {
 		System.out.println(lbs1);
 		
 		sql="select FIELDNAME from LISTBEAN where  ID=?";
-		String result = SQLExecutor.queryFieldWithDBName("mysql", sql, 100);
+		String result = SQLExecutor.queryFieldWithDBName("bspf", sql, 100);
 		System.out.println(result);
 		
 		sql = "select * from LISTBEAN where ID=?";
-		ListBean lb = (ListBean)SQLExecutor.queryObjectWithDBName(ListBean.class,"mysql",sql,20);
+		ListBean lb = (ListBean)SQLExecutor.queryObjectWithDBName(ListBean.class,"bspf",sql,20);
 		
 		
 		sql="select * from LISTBEAN where ID<? and ID>?";
@@ -316,7 +316,7 @@ public class SimpleApiTest {
 		sql ="select * from LISTBEAN where FIELDNAME=#[fieldName]";
 		 result = SQLExecutor.queryFieldBean(sql, bean);
 		System.out.println(result);
-		result = SQLExecutor.queryFieldBeanWithDBName("mysql", sql, bean);
+		result = SQLExecutor.queryFieldBeanWithDBName("bspf", sql, bean);
 		System.out.println(result);
 		
 		beans = (List<ListBean>) SQLExecutor.queryListBean(ListBean.class, sql, bean);
@@ -326,13 +326,13 @@ public class SimpleApiTest {
 
 		
 		
-		beans = (List<ListBean>) SQLExecutor.queryListBeanWithDBName(ListBean.class, "mysql", sql, bean);
+		beans = (List<ListBean>) SQLExecutor.queryListBeanWithDBName(ListBean.class, "bspf", sql, bean);
 		for(int i=0;i<beans.size();i++)
 			System.out.println(beans.get(i).getId());
 		
 
 		sql = "select * from LISTBEAN where ID>?";
-		lif = SQLExecutor.queryListInfoWithDBName(ListBean.class, "mysql", sql, 0, 10,80);
+		lif = SQLExecutor.queryListInfoWithDBName(ListBean.class, "bspf", sql, 0, 10,80);
 		for(int i=0;i<beans.size();i++)
 			System.out.println(beans.get(i).getFieldName()+"^^^^^");
 		
@@ -344,18 +344,90 @@ public class SimpleApiTest {
 
 		
 		
-		lif = SQLExecutor.queryListInfoBeanWithDBName(ListBean.class, "mysql", sql, 0, 5, bean);
+		lif = SQLExecutor.queryListInfoBeanWithDBName(ListBean.class, "bspf", sql, 0, 5, bean);
 		for(int i=0;i<beans.size();i++)
 			System.out.println(beans.get(i).getId());
 		
 
 		
 		
-		bean = SQLExecutor.queryObjectBeanWithDBName(ListBean.class, "mysql", sql, bean);
+		bean = SQLExecutor.queryObjectBeanWithDBName(ListBean.class, "bspf", sql, bean);
 		System.out.println(bean.getId());
 		
 		
 		
+	}
+	
+	@Test
+	public void dynamicqueryBean() throws SQLException
+	{
+		 ListBean bean = new ListBean();
+		    bean.setFieldName("阿斯顿飞");
+		 //<property name="refresh_interval" value="10000"/>
+		 List<ListBean> result = SQLExecutor.queryListBean(ListBean.class, "select *  from LISTBEAN", bean);
+		 System.out.println(result.size());
+		  bean.setFieldName("");
+		 result = (List<ListBean>) SQLExecutor.queryListBean(ListBean.class,"select *  from LISTBEAN", bean);
+		 System.out.println(result.size());
+		 
+		 bean.setFieldName(null);
+		 result = (List<ListBean>) SQLExecutor.queryListBean(ListBean.class,"select *  from LISTBEAN", bean);
+		 
+		 
+		 System.out.println(result.size());
+		 
+		 List<String> result_string =  SQLExecutor.queryListBean(String.class,"select *  from LISTBEAN", bean);
+		 
+		 
+		 System.out.println(result_string.size());
+		 
+		 List<Integer> result_int =  SQLExecutor.queryListBean(Integer.class,"select *  from LISTBEAN", bean);
+		 
+		 
+		 System.out.println(result_int.size());
+		 
+	}
+	
+	@Test
+	public void dynamicquery() throws SQLException
+	{
+		 
+		List<ListBean> result =  SQLExecutor.queryList(ListBean.class,"select id  from LISTBEAN");
+		 
+		 
+		 System.out.println(result.size());
+		 
+		 List<String> result_string =  SQLExecutor.queryList(String.class,"select id  from LISTBEAN");
+		 
+		 
+		 System.out.println(result_string.size());
+		 
+		 List<Integer> result_int =  SQLExecutor.queryList(Integer.class,"select id  from LISTBEAN");
+		 
+		 
+		 System.out.println(result_int.size());
+		 
+	}
+	
+	@Test
+	public void dynamicqueryObject() throws SQLException
+	{
+		 
+		ListBean result =  SQLExecutor.queryObject(ListBean.class,"select id  from LISTBEAN");
+		 
+		 
+		 System.out.println(result.getId());
+		 
+		 String result_string =  SQLExecutor.queryObject(String.class,"select id  from LISTBEAN");
+		 
+		 
+		 System.out.println(result_string);
+		 
+		 int result_int =  SQLExecutor.queryObject(int.class,"select id  from LISTBEAN");
+		 
+		 
+		 System.out.println(result_int);
+		 
 	}
 	
 	@Test
@@ -440,7 +512,7 @@ public class SimpleApiTest {
 				// TODO Auto-generated method stub
 				rowValue.setId(record.getInt("id"));
 				rowValue.setFieldName(record.getString("fieldName"));
-			}}, ListBean.class, "mysql", sql, bean);
+			}}, ListBean.class, "bspf", sql, bean);
 		for(int i=0;i<beans.size();i++)
 			System.out.println(beans.get(i).getId()+"  ccccccccc");
 		
@@ -467,7 +539,7 @@ public class SimpleApiTest {
 				// TODO Auto-generated method stub
 				rowValue.setId(record.getInt("id"));
 				rowValue.setFieldName(record.getString("fieldName"));
-			}},ListBean.class, "mysql",sql, 0, 5, bean);
+			}},ListBean.class, "bspf",sql, 0, 5, bean);
 		for(int i=0;i<lbs.size();i++)
 			System.out.println(lbs.get(i).getId()+"  ffff");
 		
@@ -496,7 +568,7 @@ public class SimpleApiTest {
 				lb.setId(record.getInt("id"));
 				lbs.add(lb);
 				lb.setFieldName(record.getString("fieldName"));
-			}},ListBean.class,"mysql", sql, 0, 5, 20);
+			}},ListBean.class,"bspf", sql, 0, 5, 20);
 		for(int i=0;i<lbs.size();i++)
 			System.out.println(lbs.get(i).getId()+"  kkkk");
 		
@@ -509,7 +581,7 @@ public class SimpleApiTest {
 					throws Exception {
 			rowValue.setId(record.getInt("id"));
 			rowValue.setFieldName(record.getString("fieldName"));
-			}}, ListBean.class, "mysql", sql, 20);
+			}}, ListBean.class, "bspf", sql, 20);
 		for(int i=0;i<beans.size();i++)
 			System.out.println(beans.get(i).getFieldName()+"  wwwww");
 		
@@ -530,7 +602,7 @@ public class SimpleApiTest {
 					throws Exception {
 				rowValue.setId(record.getInt("id"));
 				rowValue.setFieldName(record.getString("fieldName"));
-			}}, ListBean.class,"mysql", sql, 20);
+			}}, ListBean.class,"bspf", sql, 20);
 		System.out.println(lb4.getFieldName()+"lb4444");
 		sql = "select * from LISTBEAN where ID=#[id]";
 		
@@ -542,7 +614,7 @@ public class SimpleApiTest {
 				// TODO Auto-generated method stub
 				rowValue.setId(record.getInt("id"));
 				rowValue.setFieldName(record.getString("fieldName"));
-			}}, ListBean.class, "mysql", sql, bean);
+			}}, ListBean.class, "bspf", sql, bean);
 		System.out.println(lb2.getId()+"++++");
 	}
 	
@@ -589,7 +661,7 @@ public class SimpleApiTest {
 				lbs.add(lb);
 				System.out.println("queryListInfoByNullRowHandler test result:"+record.getInt("id"));
 				
-			}},"mysql", sql, 0, 5, 10);
+			}},"bspf", sql, 0, 5, 10);
 		for(int i=0;i<lbs.size();i++)
 			System.out.println(lbs.get(i).getFieldName()+"oooooooo");
 		
@@ -604,7 +676,7 @@ public class SimpleApiTest {
 				lb.setId(record.getInt("id"));
 				lb.setFieldName(record.getString("fieldName"));
 				lbs.add(lb);
-			}}, "mysql", sql, 80);
+			}}, "bspf", sql, 80);
 		for(int i=0;i<lbs.size();i++)
 			System.out.println(lbs.get(i).getFieldName()+"ppppp");
 		
@@ -633,7 +705,7 @@ public class SimpleApiTest {
 				lb.setId(record.getInt("id"));
 				lb.setFieldName(record.getString("fieldName"));
 				lbs.add(lb);
-			}}, "mysql",sql, b);
+			}}, "bspf",sql, b);
 		for(int i=0;i<lbs.size();i++)
 			System.out.println(lbs.get(i).getId()+"rrrrrrr");
 		
@@ -660,7 +732,7 @@ public class SimpleApiTest {
 				lb.setId(record.getInt("id"));
 				lb.setFieldName(record.getString("fieldName"));
 				lbs.add(lb);
-			}}, "mysql",sql, 0, 5, b);
+			}}, "bspf",sql, 0, 5, b);
 		for(int i=0;i<lbs.size();i++)
 			System.out.println(lbs.get(i).getId()+"-----");
 		

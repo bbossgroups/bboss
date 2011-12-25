@@ -40,6 +40,7 @@ import com.frameworkset.common.poolman.util.SQLUtil;
 import com.frameworkset.orm.transaction.JDBCTransaction;
 import com.frameworkset.orm.transaction.TransactionException;
 import com.frameworkset.orm.transaction.TransactionManager;
+import com.frameworkset.util.ValueObjectUtil;
 
 public class StatementInfo {
 	private static final Logger log = Logger.getLogger(StatementInfo.class);
@@ -495,6 +496,8 @@ public class StatementInfo {
 			go = res.next();
 
 		// 从结果集中获取当前游标后maxsize条记录
+		
+		boolean ismap = Map.class.isAssignableFrom(objectType);
 		while (go) {
 
 			if (rowcount == results.length) {
@@ -506,7 +509,7 @@ public class StatementInfo {
 			}
 
 			Object record = ResultMap.buildValueObject(res, objectType, this,
-					rowHandler);
+					rowHandler,ismap);
 			results[rowcount] = record;
 			rowcount++;
 			if (ispagine)
@@ -555,9 +558,11 @@ public class StatementInfo {
 		else
 			go = res.next();
 		// 从结果集中获取当前游标后maxsize条记录
+		
+		boolean ismap = Map.class.isAssignableFrom(objectType);
 		while (go) {
 			T record = ResultMap.buildValueObject(res, objectType, this,
-					rowHandler);
+					rowHandler,ismap);
 			results.add(record);
 			rowcount++;
 			if (ispagine)
@@ -772,7 +777,9 @@ public class StatementInfo {
 			{
 				if(res.next())
 				{
-					T result = ResultMap.buildValueObject(res, objectType, this, rowhandler);
+					
+					boolean ismap = Map.class.isAssignableFrom(objectType);
+					T result = ResultMap.buildValueObject(res, objectType, this, rowhandler,ismap);
 					resultMap.setCommonresult(result);
 					if(result != null)
 					{

@@ -842,3 +842,384 @@ Caused by: ERROR 42X01: Syntax error: Encountered "<EOF>" at line 1, column 8.
 [2012-01-05 11:16:59][DEBUG][com.frameworkset.common.poolman.util.JDBCPool] Shutdown poolman[bspf] start.
 [2012-01-05 11:16:59][DEBUG][com.frameworkset.common.poolman.sql.PoolManDataSource] Close  datasource[jndiName=jdbc/derby-ds,dbname=bspf] begin.
 [2012-01-05 11:16:59][DEBUG][com.frameworkset.common.poolman.sql.PoolManDataSource] Close  datasource[jndiName=jdbc/derby-ds,dbname=bspf] end.
+[2011-12-25 14:17:07][INFO][com.frameworkset.util.DaemonThread] Start check files is changed or not.if some files is changed,the resources of these files will be refreshed use ResourceInit interface.
+[2011-12-25 14:17:07][DEBUG][com.frameworkset.common.poolman.management.PoolManBootstrap] PoolManBootstrap(configFile): poolman.xml
+[2011-12-25 14:17:08][DEBUG][com.frameworkset.common.poolman.util.JDBCPool] JDBCPool[bspf]:INNER JNDI Name is bspf_datasource_jndiname
+[2011-12-25 14:17:08][DEBUG][com.frameworkset.common.poolman.util.JDBCPool] Init DBAdapter from driver:oracle.jdbc.driver.OracleDriver
+[2011-12-25 14:17:09][DEBUG][com.frameworkset.common.poolman.util.JDBCPool] Bind the DataSource view of this pool to JNDI
+[2011-12-25 14:17:09][INFO][com.frameworkset.common.poolman.util.JDBCPool] Intial Context : bspf_datasource_jndiname
+[2011-12-25 14:17:09][DEBUG][com.frameworkset.common.poolman.util.JDBCPool] binding: bspf_datasource_jndiname
+[2011-12-25 14:17:09][DEBUG][com.frameworkset.common.poolman.util.JDBCPool] Bound name: bspf_datasource_jndiname
+[2011-12-25 14:17:09][INFO][com.frameworkset.common.poolman.util.JDBCPool] DataSource bound to JNDI under name[bspf_datasource_jndiname]
+[2011-12-25 14:17:30][DEBUG][com.frameworkset.common.poolman.util.JDBCPool] Load Database Meta Data=true
+[2011-12-25 14:17:30][DEBUG][com.frameworkset.common.poolman.util.JDBCPool] Load Database[bspf] Meta Data beginning.....
+[2011-12-25 14:18:12][INFO][com.frameworkset.util.DaemonThread] Start check files is changed or not.if some files is changed,the resources of these files will be refreshed use ResourceInit interface.
+[2011-12-25 14:18:12][DEBUG][com.frameworkset.common.poolman.management.PoolManBootstrap] PoolManBootstrap(configFile): poolman.xml
+[2011-12-25 14:18:13][DEBUG][com.frameworkset.common.poolman.util.JDBCPool] JDBCPool[cim]:INNER JNDI Name is jdbc/derby-ds
+[2011-12-25 14:18:13][DEBUG][com.frameworkset.common.poolman.util.JDBCPool] Init DBAdapter from driver:org.apache.derby.jdbc.EmbeddedDriver
+[2011-12-25 14:18:13][DEBUG][com.frameworkset.common.poolman.util.JDBCPool] Bind the DataSource view of this pool to JNDI
+[2011-12-25 14:18:13][INFO][com.frameworkset.common.poolman.util.JDBCPool] Intial Context : jdbc/derby-ds
+[2011-12-25 14:18:13][DEBUG][com.frameworkset.common.poolman.util.JDBCPool] binding: jdbc/derby-ds
+[2011-12-25 14:18:13][DEBUG][com.frameworkset.common.poolman.util.JDBCPool] Bound name: jdbc/derby-ds
+[2011-12-25 14:18:13][INFO][com.frameworkset.common.poolman.util.JDBCPool] DataSource bound to JNDI under name[jdbc/derby-ds]
+[2011-12-25 14:18:17][DEBUG][com.frameworkset.common.poolman.util.JDBCPool] Load Database Meta Data=false
+[2011-12-25 14:18:17][DEBUG][com.frameworkset.common.poolman.util.JDBCPool] Ignore Load Database[cim] Meta Data .
+[2011-12-25 14:18:17][DEBUG][com.frameworkset.common.poolman.management.BaseTableManager] initial tableinfo start.......
+[2011-12-25 14:18:17][DEBUG][com.frameworkset.common.poolman.management.BaseTableManager] load pool[cim] tables information.......
+[2011-12-25 14:18:19][DEBUG][com.frameworkset.common.poolman.management.BaseTableManager]     load table[CIM_DATACACHE] information.......
+[2011-12-25 14:18:19][DEBUG][com.frameworkset.common.poolman.util.JDBCPool] load table[CIM_DATACACHE]'s metadata.
+[2011-12-25 14:18:20][DEBUG][com.frameworkset.common.poolman.management.BaseTableManager]     load table[CIM_ETL_REPOSITORY] information.......
+[2011-12-25 14:18:20][DEBUG][com.frameworkset.common.poolman.util.JDBCPool] load table[CIM_ETL_REPOSITORY]'s metadata.
+[2011-12-25 14:18:20][DEBUG][com.frameworkset.common.poolman.management.BaseTableManager]     load table[TB_USER] information.......
+[2011-12-25 14:18:20][DEBUG][com.frameworkset.common.poolman.management.BaseTableManager]     load table[LISTBEAN] information.......
+[2011-12-25 14:18:20][DEBUG][com.frameworkset.common.poolman.management.BaseTableManager] initial tableinfo complete!
+[2011-12-25 14:18:20][INFO][com.frameworkset.common.poolman.util.PoolManager] ERROR: Could not locate bspf. This usually means that the poolman.xml file could not be found, or that it does not contain configuration data for a pool with a name equal to bspf
+[2011-12-25 14:18:20][INFO][com.frameworkset.common.poolman.util.PoolManager] ERROR: Could not locate bspf. This usually means that the poolman.xml file could not be found, or that it does not contain configuration data for a pool with a name equal to bspf
+[2011-12-25 14:18:20][INFO][com.frameworkset.common.poolman.util.PoolManager] ERROR: Could not locate bspf. This usually means that the poolman.xml file could not be found, or that it does not contain configuration data for a pool with a name equal to bspf
+[2011-12-25 14:18:20][INFO][com.frameworkset.common.poolman.util.PoolManager] ERROR: Could not locate bspf. This usually means that the poolman.xml file could not be found, or that it does not contain configuration data for a pool with a name equal to bspf
+[2011-12-25 14:18:20][INFO][com.frameworkset.common.poolman.util.PoolManager] ERROR: Could not locate bspf. This usually means that the poolman.xml file could not be found, or that it does not contain configuration data for a pool with a name equal to bspf
+[2011-12-25 14:18:20][INFO][com.frameworkset.common.poolman.util.PoolManager] ERROR: Could not locate bspf. This usually means that the poolman.xml file could not be found, or that it does not contain configuration data for a pool with a name equal to bspf
+[2011-12-25 14:18:20][INFO][com.frameworkset.common.poolman.util.PoolManager] ERROR: Could not locate bspf. This usually means that the poolman.xml file could not be found, or that it does not contain configuration data for a pool with a name equal to bspf
+[2011-12-25 14:18:20][INFO][com.frameworkset.common.poolman.util.PoolManager] ERROR: Could not locate bspf. This usually means that the poolman.xml file could not be found, or that it does not contain configuration data for a pool with a name equal to bspf
+[2011-12-25 14:18:20][INFO][com.frameworkset.common.poolman.util.PoolManager] ERROR: Could not locate bspf. This usually means that the poolman.xml file could not be found, or that it does not contain configuration data for a pool with a name equal to bspf
+[2011-12-25 14:18:20][DEBUG][com.frameworkset.common.poolman.util.JDBCPool] Shutdown poolman[cim] start.
+[2011-12-25 14:18:20][DEBUG][com.frameworkset.common.poolman.sql.PoolManDataSource] Close  datasource[jndiName=jdbc/derby-ds,dbname=cim] begin.
+[2011-12-25 14:18:20][DEBUG][com.frameworkset.common.poolman.sql.PoolManDataSource] Close  datasource[jndiName=jdbc/derby-ds,dbname=cim] end.
+[2011-12-25 14:18:49][INFO][com.frameworkset.util.DaemonThread] Start check files is changed or not.if some files is changed,the resources of these files will be refreshed use ResourceInit interface.
+[2011-12-25 14:18:49][DEBUG][com.frameworkset.common.poolman.management.PoolManBootstrap] PoolManBootstrap(configFile): poolman.xml
+[2011-12-25 14:18:49][DEBUG][com.frameworkset.common.poolman.util.JDBCPool] JDBCPool[bspf]:INNER JNDI Name is jdbc/derby-ds
+[2011-12-25 14:18:49][DEBUG][com.frameworkset.common.poolman.util.JDBCPool] Init DBAdapter from driver:org.apache.derby.jdbc.EmbeddedDriver
+[2011-12-25 14:18:50][DEBUG][com.frameworkset.common.poolman.util.JDBCPool] Bind the DataSource view of this pool to JNDI
+[2011-12-25 14:18:50][INFO][com.frameworkset.common.poolman.util.JDBCPool] Intial Context : jdbc/derby-ds
+[2011-12-25 14:18:50][DEBUG][com.frameworkset.common.poolman.util.JDBCPool] binding: jdbc/derby-ds
+[2011-12-25 14:18:50][DEBUG][com.frameworkset.common.poolman.util.JDBCPool] Bound name: jdbc/derby-ds
+[2011-12-25 14:18:50][INFO][com.frameworkset.common.poolman.util.JDBCPool] DataSource bound to JNDI under name[jdbc/derby-ds]
+[2011-12-25 14:18:51][DEBUG][com.frameworkset.common.poolman.util.JDBCPool] Load Database Meta Data=false
+[2011-12-25 14:18:51][DEBUG][com.frameworkset.common.poolman.util.JDBCPool] Ignore Load Database[bspf] Meta Data .
+[2011-12-25 14:18:51][DEBUG][com.frameworkset.common.poolman.management.BaseTableManager] initial tableinfo start.......
+[2011-12-25 14:18:51][DEBUG][com.frameworkset.common.poolman.management.BaseTableManager] load pool[bspf] tables information.......
+[2011-12-25 14:18:52][DEBUG][com.frameworkset.common.poolman.management.BaseTableManager]     load table[CIM_DATACACHE] information.......
+[2011-12-25 14:18:52][DEBUG][com.frameworkset.common.poolman.util.JDBCPool] load table[CIM_DATACACHE]'s metadata.
+[2011-12-25 14:18:53][DEBUG][com.frameworkset.common.poolman.management.BaseTableManager]     load table[CIM_ETL_REPOSITORY] information.......
+[2011-12-25 14:18:53][DEBUG][com.frameworkset.common.poolman.util.JDBCPool] load table[CIM_ETL_REPOSITORY]'s metadata.
+[2011-12-25 14:18:53][DEBUG][com.frameworkset.common.poolman.management.BaseTableManager]     load table[TB_USER] information.......
+[2011-12-25 14:18:53][DEBUG][com.frameworkset.common.poolman.management.BaseTableManager]     load table[LISTBEAN] information.......
+[2011-12-25 14:18:53][DEBUG][com.frameworkset.common.poolman.management.BaseTableManager] initial tableinfo complete!
+[2011-12-25 14:18:53][DEBUG][com.frameworkset.common.poolman.PreparedDBUtil] Execute JDBC prepared update statement:select * from LISTBEAN
+	
+[2011-12-25 14:18:54][DEBUG][com.frameworkset.util.VelocityUtil] FileUtil.apppath:D:\workspace
+[2011-12-25 14:18:54][DEBUG][com.frameworkset.util.VelocityUtil] velocity.properties:file:/D:/workspace/bbossgroups-3.5/bboss-persistent/classes/velocity.properties
+[2011-12-25 14:18:54][DEBUG][com.frameworkset.util.VelocityUtil] file.resource.loader.path:D:\workspace/WEB-INF/templates
+[2011-12-25 14:18:55][DEBUG][com.frameworkset.common.poolman.PreparedDBUtil] Execute JDBC prepared update statement:select FIELDNAME from LISTBEAN where FIELDNAME=?
+	
+[2011-12-25 14:18:55][DEBUG][com.frameworkset.common.poolman.PreparedDBUtil] Execute JDBC prepared update statement:select FIELDNAME from LISTBEAN where FIELDNAME=?
+	
+[2011-12-25 14:18:55][DEBUG][com.frameworkset.common.poolman.PreparedDBUtil] Execute JDBC prepared update statement:select *  from LISTBEAN  where 1=1 
+					 and FIELDNAME = ? 	
+[2011-12-25 14:18:55][INFO][com.frameworkset.common.poolman.SQLParams] 预编译sql语句提示：指定了预编译参数,sql语句中没有包含符合要求的预编译变量，sql{select *  from LISTBEAN  where 1=1 
+						},params{[name=isvalidated,index=0,value=0,dataformat=null,method=setInt(int, int)][name=sortorder,index=0,value=12,dataformat=null,method=setNull(int, int)][name=required,index=0,value=false,dataformat=null,method=setBoolean(int, boolean)][name=fieldType,index=0,value=12,dataformat=null,method=setNull(int, int)][name=fieldLable,index=0,value=12,dataformat=null,method=setNull(int, int)][name=fieldName,index=0,value=,dataformat=null,method=setString(int, String)][name=id,index=0,value=0,dataformat=null,method=setInt(int, int)][name=fieldLength,index=0,value=0,dataformat=null,method=setInt(int, int)][name=isprimaryKey,index=0,value=false,dataformat=null,method=setBoolean(int, boolean)]},action{unkown action},Variable identity{pretoken=#\[,endtoken=\]}
+[2011-12-25 14:18:55][DEBUG][com.frameworkset.common.poolman.PreparedDBUtil] Execute JDBC prepared update statement:select *  from LISTBEAN  where 1=1 
+						
+[2011-12-25 14:18:55][INFO][com.frameworkset.common.poolman.SQLParams] 预编译sql语句提示：指定了预编译参数,sql语句中没有包含符合要求的预编译变量，sql{select *  from LISTBEAN  where 1=1 
+						},params{[name=isvalidated,index=0,value=0,dataformat=null,method=setInt(int, int)][name=sortorder,index=0,value=12,dataformat=null,method=setNull(int, int)][name=required,index=0,value=false,dataformat=null,method=setBoolean(int, boolean)][name=fieldType,index=0,value=12,dataformat=null,method=setNull(int, int)][name=fieldLable,index=0,value=12,dataformat=null,method=setNull(int, int)][name=fieldName,index=0,value=12,dataformat=null,method=setNull(int, int)][name=id,index=0,value=0,dataformat=null,method=setInt(int, int)][name=fieldLength,index=0,value=0,dataformat=null,method=setInt(int, int)][name=isprimaryKey,index=0,value=false,dataformat=null,method=setBoolean(int, boolean)]},action{unkown action},Variable identity{pretoken=#\[,endtoken=\]}
+[2011-12-25 14:18:55][DEBUG][com.frameworkset.common.poolman.PreparedDBUtil] Execute JDBC prepared update statement:select *  from LISTBEAN  where 1=1 
+						
+[2011-12-25 14:18:55][DEBUG][com.frameworkset.common.poolman.PreparedDBUtil] Execute JDBC prepared update statement:select *  from LISTBEAN  where 1=1 
+					 and FIELDNAME = ? 	
+[2011-12-25 14:18:55][INFO][com.frameworkset.common.poolman.SQLParams] 预编译sql语句提示：指定了预编译参数,sql语句中没有包含符合要求的预编译变量，sql{select *  from LISTBEAN  where 1=1 
+						},params{[name=fieldName,index=0,value=,dataformat=null,method=setString(int, String)]},action{unkown action},Variable identity{pretoken=#\[,endtoken=\]}
+[2011-12-25 14:18:55][DEBUG][com.frameworkset.common.poolman.PreparedDBUtil] Execute JDBC prepared update statement:select *  from LISTBEAN  where 1=1 
+						
+[2011-12-25 14:18:55][INFO][com.frameworkset.common.poolman.SQLParams] 预编译sql语句提示：指定了预编译参数,sql语句中没有包含符合要求的预编译变量，sql{select *  from LISTBEAN  where 1=1 
+						},params{[name=fieldName,index=0,value=12,dataformat=null,method=setNull(int, int)]},action{unkown action},Variable identity{pretoken=#\[,endtoken=\]}
+[2011-12-25 14:18:55][DEBUG][com.frameworkset.common.poolman.PreparedDBUtil] Execute JDBC prepared update statement:select *  from LISTBEAN  where 1=1 
+						
+[2011-12-25 14:18:55][DEBUG][com.frameworkset.common.poolman.PreparedDBUtil] Execute JDBC prepared update statement:select *  from LISTBEAN  where 1=1 
+					 and id = ? 	
+[2011-12-25 14:18:55][INFO][com.frameworkset.common.poolman.SQLParams] 预编译sql语句提示：指定了预编译参数,sql语句中没有包含符合要求的预编译变量，sql{select *  from LISTBEAN  where 1=1 
+						},params{[name=isvalidated,index=0,value=0,dataformat=null,method=setInt(int, int)][name=sortorder,index=0,value=12,dataformat=null,method=setNull(int, int)][name=required,index=0,value=false,dataformat=null,method=setBoolean(int, boolean)][name=fieldType,index=0,value=12,dataformat=null,method=setNull(int, int)][name=fieldLable,index=0,value=12,dataformat=null,method=setNull(int, int)][name=fieldName,index=0,value=12,dataformat=null,method=setNull(int, int)][name=id,index=0,value=-1,dataformat=null,method=setInt(int, int)][name=fieldLength,index=0,value=0,dataformat=null,method=setInt(int, int)][name=isprimaryKey,index=0,value=false,dataformat=null,method=setBoolean(int, boolean)]},action{unkown action},Variable identity{pretoken=#\[,endtoken=\]}
+[2011-12-25 14:18:55][DEBUG][com.frameworkset.common.poolman.PreparedDBUtil] Execute JDBC prepared update statement:select *  from LISTBEAN  where 1=1 
+						
+[2011-12-25 14:18:55][INFO][com.frameworkset.common.poolman.SQLParams] 预编译sql语句提示：指定了预编译参数,sql语句中没有包含符合要求的预编译变量，sql{select *  from LISTBEAN  where 1=1 
+						},params{[name=isvalidated,index=0,value=0,dataformat=null,method=setInt(int, int)][name=sortorder,index=0,value=12,dataformat=null,method=setNull(int, int)][name=required,index=0,value=false,dataformat=null,method=setBoolean(int, boolean)][name=fieldType,index=0,value=12,dataformat=null,method=setNull(int, int)][name=fieldLable,index=0,value=12,dataformat=null,method=setNull(int, int)][name=fieldName,index=0,value=12,dataformat=null,method=setNull(int, int)][name=id,index=0,value=0,dataformat=null,method=setInt(int, int)][name=fieldLength,index=0,value=0,dataformat=null,method=setInt(int, int)][name=isprimaryKey,index=0,value=false,dataformat=null,method=setBoolean(int, boolean)]},action{unkown action},Variable identity{pretoken=#\[,endtoken=\]}
+[2011-12-25 14:18:55][DEBUG][com.frameworkset.common.poolman.PreparedDBUtil] Execute JDBC prepared update statement:select *  from LISTBEAN  where 1=1 
+						
+[2011-12-25 14:18:55][DEBUG][com.frameworkset.common.poolman.PreparedDBUtil] Execute JDBC prepared update statement:select *  from LISTBEAN  where 1=1 
+					 and id = ? 	
+[2011-12-25 14:18:55][INFO][com.frameworkset.common.poolman.SQLParams] 预编译sql语句提示：指定了预编译参数,sql语句中没有包含符合要求的预编译变量，sql{select *  from LISTBEAN  where 1=1 
+						},params{[name=id,index=0,value=-1,dataformat=null,method=setInt(int, int)]},action{unkown action},Variable identity{pretoken=#\[,endtoken=\]}
+[2011-12-25 14:18:55][DEBUG][com.frameworkset.common.poolman.PreparedDBUtil] Execute JDBC prepared update statement:select *  from LISTBEAN  where 1=1 
+						
+[2011-12-25 14:18:55][INFO][com.frameworkset.common.poolman.SQLParams] 预编译sql语句提示：指定了预编译参数,sql语句中没有包含符合要求的预编译变量，sql{select *  from LISTBEAN  where 1=1 
+						},params{[name=id,index=0,value=0,dataformat=null,method=setInt(int, int)]},action{unkown action},Variable identity{pretoken=#\[,endtoken=\]}
+[2011-12-25 14:18:55][DEBUG][com.frameworkset.common.poolman.PreparedDBUtil] Execute JDBC prepared update statement:select *  from LISTBEAN  where 1=1 
+						
+[2011-12-25 14:18:55][DEBUG][com.frameworkset.common.poolman.PreparedDBUtil] Execute JDBC prepared batch statement:update LISTBEAN  set FIELDNAME = ? where id = ? 
+	
+[2011-12-25 14:18:55][DEBUG][com.frameworkset.common.poolman.PreparedDBUtil] Execute prepared Batch sql[update LISTBEAN  set FIELDNAME = ? where id = ? 
+	] success:0:0,1:0,2:0
+[2011-12-25 14:18:55][DEBUG][com.frameworkset.common.poolman.PreparedDBUtil] Execute JDBC prepared update statement:select count(1)  from LISTBEAN 
+	
+[2011-12-25 14:18:55][DEBUG][com.frameworkset.common.poolman.PreparedDBUtil] Execute JDBC prepared update statement:select count(1)  from LISTBEAN 
+	
+[2011-12-25 14:18:55][DEBUG][com.frameworkset.common.poolman.PreparedDBUtil] Execute JDBC prepared update statement:select count(1)  from LISTBEAN 
+	
+[2011-12-25 14:18:55][DEBUG][com.frameworkset.common.poolman.PreparedDBUtil] Execute JDBC prepared update statement:select count(1)  from LISTBEAN 
+	
+[2011-12-25 14:18:55][DEBUG][com.frameworkset.common.poolman.PreparedDBUtil] Execute JDBC prepared update statement:select count(1)  from LISTBEAN 
+	
+[2011-12-25 14:18:55][DEBUG][com.frameworkset.common.poolman.PreparedDBUtil] Execute JDBC prepared update statement:select count(1)  from LISTBEAN 
+	
+[2011-12-25 14:18:55][DEBUG][com.frameworkset.common.poolman.PreparedDBUtil] Execute JDBC prepared update statement:select count(1)  from LISTBEAN 
+	
+[2011-12-25 14:18:55][DEBUG][com.frameworkset.common.poolman.PreparedDBUtil] Execute JDBC prepared batch statement:update LISTBEAN  set FIELDNAME = ? where id = ? 
+	
+[2011-12-25 14:18:55][DEBUG][com.frameworkset.common.poolman.PreparedDBUtil] Execute prepared Batch sql[update LISTBEAN  set FIELDNAME = ? where id = ? 
+	] success:0:0,1:0,2:0
+[2011-12-25 14:18:55][DEBUG][com.frameworkset.common.poolman.util.JDBCPool] Shutdown poolman[bspf] start.
+[2011-12-25 14:18:55][DEBUG][com.frameworkset.common.poolman.sql.PoolManDataSource] Close  datasource[jndiName=jdbc/derby-ds,dbname=bspf] begin.
+[2011-12-25 14:18:55][DEBUG][com.frameworkset.common.poolman.sql.PoolManDataSource] Close  datasource[jndiName=jdbc/derby-ds,dbname=bspf] end.
+[2011-12-25 14:22:08][DEBUG][com.frameworkset.common.poolman.management.PoolManBootstrap] PoolManBootstrap(configFile): poolman.xml
+[2011-12-25 14:22:08][DEBUG][com.frameworkset.common.poolman.util.JDBCPool] JDBCPool[bspf]:INNER JNDI Name is jdbc/derby-ds
+[2011-12-25 14:22:08][DEBUG][com.frameworkset.common.poolman.util.JDBCPool] Init DBAdapter from driver:org.apache.derby.jdbc.EmbeddedDriver
+[2011-12-25 14:22:08][DEBUG][com.frameworkset.common.poolman.util.JDBCPool] Bind the DataSource view of this pool to JNDI
+[2011-12-25 14:22:08][INFO][com.frameworkset.common.poolman.util.JDBCPool] Intial Context : jdbc/derby-ds
+[2011-12-25 14:22:08][DEBUG][com.frameworkset.common.poolman.util.JDBCPool] binding: jdbc/derby-ds
+[2011-12-25 14:22:08][DEBUG][com.frameworkset.common.poolman.util.JDBCPool] Bound name: jdbc/derby-ds
+[2011-12-25 14:22:08][INFO][com.frameworkset.common.poolman.util.JDBCPool] DataSource bound to JNDI under name[jdbc/derby-ds]
+[2011-12-25 14:22:09][DEBUG][com.frameworkset.common.poolman.util.JDBCPool] Load Database Meta Data=false
+[2011-12-25 14:22:09][DEBUG][com.frameworkset.common.poolman.util.JDBCPool] Ignore Load Database[bspf] Meta Data .
+[2011-12-25 14:22:09][DEBUG][com.frameworkset.common.poolman.management.BaseTableManager] initial tableinfo start.......
+[2011-12-25 14:22:09][DEBUG][com.frameworkset.common.poolman.management.BaseTableManager] load pool[bspf] tables information.......
+[2011-12-25 14:22:10][DEBUG][com.frameworkset.common.poolman.management.BaseTableManager]     load table[CIM_DATACACHE] information.......
+[2011-12-25 14:22:10][DEBUG][com.frameworkset.common.poolman.util.JDBCPool] load table[CIM_DATACACHE]'s metadata.
+[2011-12-25 14:22:11][DEBUG][com.frameworkset.common.poolman.management.BaseTableManager]     load table[CIM_ETL_REPOSITORY] information.......
+[2011-12-25 14:22:11][DEBUG][com.frameworkset.common.poolman.util.JDBCPool] load table[CIM_ETL_REPOSITORY]'s metadata.
+[2011-12-25 14:22:11][DEBUG][com.frameworkset.common.poolman.management.BaseTableManager]     load table[TB_USER] information.......
+[2011-12-25 14:22:11][DEBUG][com.frameworkset.common.poolman.management.BaseTableManager]     load table[LISTBEAN] information.......
+[2011-12-25 14:22:11][DEBUG][com.frameworkset.common.poolman.management.BaseTableManager] initial tableinfo complete!
+[2011-12-25 14:22:11][DEBUG][com.frameworkset.common.poolman.util.JDBCPool] Shutdown poolman[bspf] start.
+[2011-12-25 14:22:11][DEBUG][com.frameworkset.common.poolman.sql.PoolManDataSource] Close  datasource[jndiName=jdbc/derby-ds,dbname=bspf] begin.
+[2011-12-25 14:22:11][DEBUG][com.frameworkset.common.poolman.sql.PoolManDataSource] Close  datasource[jndiName=jdbc/derby-ds,dbname=bspf] end.
+[2011-12-25 14:23:20][DEBUG][com.frameworkset.common.poolman.management.PoolManBootstrap] PoolManBootstrap(configFile): poolman.xml
+[2011-12-25 14:23:20][DEBUG][com.frameworkset.common.poolman.util.JDBCPool] JDBCPool[bspf]:INNER JNDI Name is jdbc/derby-ds
+[2011-12-25 14:23:20][DEBUG][com.frameworkset.common.poolman.util.JDBCPool] Init DBAdapter from driver:org.apache.derby.jdbc.EmbeddedDriver
+[2011-12-25 14:23:20][DEBUG][com.frameworkset.common.poolman.util.JDBCPool] Bind the DataSource view of this pool to JNDI
+[2011-12-25 14:23:20][INFO][com.frameworkset.common.poolman.util.JDBCPool] Intial Context : jdbc/derby-ds
+[2011-12-25 14:23:20][DEBUG][com.frameworkset.common.poolman.util.JDBCPool] binding: jdbc/derby-ds
+[2011-12-25 14:23:20][DEBUG][com.frameworkset.common.poolman.util.JDBCPool] Bound name: jdbc/derby-ds
+[2011-12-25 14:23:20][INFO][com.frameworkset.common.poolman.util.JDBCPool] DataSource bound to JNDI under name[jdbc/derby-ds]
+[2011-12-25 14:23:22][DEBUG][com.frameworkset.common.poolman.util.JDBCPool] Load Database Meta Data=false
+[2011-12-25 14:23:22][DEBUG][com.frameworkset.common.poolman.util.JDBCPool] Ignore Load Database[bspf] Meta Data .
+[2011-12-25 14:23:22][DEBUG][com.frameworkset.common.poolman.management.BaseTableManager] initial tableinfo start.......
+[2011-12-25 14:23:22][DEBUG][com.frameworkset.common.poolman.management.BaseTableManager] load pool[bspf] tables information.......
+[2011-12-25 14:23:23][DEBUG][com.frameworkset.common.poolman.management.BaseTableManager]     load table[CIM_DATACACHE] information.......
+[2011-12-25 14:23:23][DEBUG][com.frameworkset.common.poolman.util.JDBCPool] load table[CIM_DATACACHE]'s metadata.
+[2011-12-25 14:23:24][DEBUG][com.frameworkset.common.poolman.management.BaseTableManager]     load table[CIM_ETL_REPOSITORY] information.......
+[2011-12-25 14:23:24][DEBUG][com.frameworkset.common.poolman.util.JDBCPool] load table[CIM_ETL_REPOSITORY]'s metadata.
+[2011-12-25 14:23:24][DEBUG][com.frameworkset.common.poolman.management.BaseTableManager]     load table[TB_USER] information.......
+[2011-12-25 14:23:24][DEBUG][com.frameworkset.common.poolman.management.BaseTableManager]     load table[LISTBEAN] information.......
+[2011-12-25 14:23:24][DEBUG][com.frameworkset.common.poolman.management.BaseTableManager] initial tableinfo complete!
+[2011-12-25 14:23:24][DEBUG][com.frameworkset.util.VelocityUtil] FileUtil.apppath:D:\workspace
+[2011-12-25 14:23:24][DEBUG][com.frameworkset.util.VelocityUtil] velocity.properties:file:/D:/workspace/bbossgroups-3.5/bboss-persistent/classes/velocity.properties
+[2011-12-25 14:23:24][DEBUG][com.frameworkset.util.VelocityUtil] file.resource.loader.path:D:\workspace/WEB-INF/templates
+[2011-12-25 14:23:25][DEBUG][com.frameworkset.common.poolman.PreparedDBUtil] Execute JDBC prepared batch statement:insert into LISTBEAN(ID,FIELDNAME,FIELDLABLE,FIELDTYPE,SORTORDER,ISPRIMARYKEY,REQUIRED,FIELDLENGTH,ISVALIDATED) values(?,?,?,?,?,?,?,?,?)
+[2011-12-25 14:23:25][DEBUG][com.frameworkset.common.poolman.PreparedDBUtil] Execute prepared Batch sql[insert into LISTBEAN(ID,FIELDNAME,FIELDLABLE,FIELDTYPE,SORTORDER,ISPRIMARYKEY,REQUIRED,FIELDLENGTH,ISVALIDATED) values(?,?,?,?,?,?,?,?,?)] success:0:1
+[2011-12-25 14:23:25][DEBUG][com.frameworkset.common.poolman.PreparedDBUtil] Execute JDBC prepared batch statement:insert into LISTBEAN(ID,FIELDNAME,FIELDLABLE,FIELDTYPE,SORTORDER,ISPRIMARYKEY,REQUIRED,FIELDLENGTH,ISVALIDATED) values(?,?,?,?,?,?,?,?,?)
+[2011-12-25 14:23:25][DEBUG][com.frameworkset.common.poolman.PreparedDBUtil] Execute prepared Batch sql[insert into LISTBEAN(ID,FIELDNAME,FIELDLABLE,FIELDTYPE,SORTORDER,ISPRIMARYKEY,REQUIRED,FIELDLENGTH,ISVALIDATED) values(?,?,?,?,?,?,?,?,?)] success:0:1
+[2011-12-25 14:23:25][DEBUG][com.frameworkset.common.poolman.PreparedDBUtil] Execute JDBC prepared batch statement:insert into LISTBEAN(ID,FIELDNAME,FIELDLABLE,FIELDTYPE,SORTORDER,ISPRIMARYKEY,REQUIRED,FIELDLENGTH,ISVALIDATED) values(?,?,?,?,?,?,?,?,?)
+[2011-12-25 14:23:25][DEBUG][com.frameworkset.common.poolman.PreparedDBUtil] Execute prepared Batch sql[insert into LISTBEAN(ID,FIELDNAME,FIELDLABLE,FIELDTYPE,SORTORDER,ISPRIMARYKEY,REQUIRED,FIELDLENGTH,ISVALIDATED) values(?,?,?,?,?,?,?,?,?)] success:0:1
+[2011-12-25 14:23:25][DEBUG][com.frameworkset.common.poolman.PreparedDBUtil] Execute JDBC prepared batch statement:insert into LISTBEAN(ID,FIELDNAME,FIELDLABLE,FIELDTYPE,SORTORDER,ISPRIMARYKEY,REQUIRED,FIELDLENGTH,ISVALIDATED) values(?,?,?,?,?,?,?,?,?)
+[2011-12-25 14:23:25][DEBUG][com.frameworkset.common.poolman.PreparedDBUtil] Execute prepared Batch sql[insert into LISTBEAN(ID,FIELDNAME,FIELDLABLE,FIELDTYPE,SORTORDER,ISPRIMARYKEY,REQUIRED,FIELDLENGTH,ISVALIDATED) values(?,?,?,?,?,?,?,?,?)] success:0:1
+[2011-12-25 14:23:25][DEBUG][com.frameworkset.common.poolman.PreparedDBUtil] Execute JDBC prepared statement:insert into LISTBEAN(ID,FIELDNAME,FIELDLABLE,FIELDTYPE) values(?,?,?,?)
+[2011-12-25 14:23:25][DEBUG][com.frameworkset.common.poolman.util.JDBCPool] Shutdown poolman[bspf] start.
+[2011-12-25 14:23:25][DEBUG][com.frameworkset.common.poolman.sql.PoolManDataSource] Close  datasource[jndiName=jdbc/derby-ds,dbname=bspf] begin.
+[2011-12-25 14:23:25][DEBUG][com.frameworkset.common.poolman.sql.PoolManDataSource] Close  datasource[jndiName=jdbc/derby-ds,dbname=bspf] end.
+[2011-12-25 14:23:50][INFO][com.frameworkset.util.DaemonThread] Start check files is changed or not.if some files is changed,the resources of these files will be refreshed use ResourceInit interface.
+[2011-12-25 14:23:50][DEBUG][com.frameworkset.common.poolman.management.PoolManBootstrap] PoolManBootstrap(configFile): poolman.xml
+[2011-12-25 14:23:50][DEBUG][com.frameworkset.common.poolman.util.JDBCPool] JDBCPool[bspf]:INNER JNDI Name is jdbc/derby-ds
+[2011-12-25 14:23:50][DEBUG][com.frameworkset.common.poolman.util.JDBCPool] Init DBAdapter from driver:org.apache.derby.jdbc.EmbeddedDriver
+[2011-12-25 14:23:50][DEBUG][com.frameworkset.common.poolman.util.JDBCPool] Bind the DataSource view of this pool to JNDI
+[2011-12-25 14:23:50][INFO][com.frameworkset.common.poolman.util.JDBCPool] Intial Context : jdbc/derby-ds
+[2011-12-25 14:23:50][DEBUG][com.frameworkset.common.poolman.util.JDBCPool] binding: jdbc/derby-ds
+[2011-12-25 14:23:50][DEBUG][com.frameworkset.common.poolman.util.JDBCPool] Bound name: jdbc/derby-ds
+[2011-12-25 14:23:50][INFO][com.frameworkset.common.poolman.util.JDBCPool] DataSource bound to JNDI under name[jdbc/derby-ds]
+[2011-12-25 14:23:52][DEBUG][com.frameworkset.common.poolman.util.JDBCPool] Load Database Meta Data=false
+[2011-12-25 14:23:52][DEBUG][com.frameworkset.common.poolman.util.JDBCPool] Ignore Load Database[bspf] Meta Data .
+[2011-12-25 14:23:52][DEBUG][com.frameworkset.common.poolman.management.BaseTableManager] initial tableinfo start.......
+[2011-12-25 14:23:52][DEBUG][com.frameworkset.common.poolman.management.BaseTableManager] load pool[bspf] tables information.......
+[2011-12-25 14:23:53][DEBUG][com.frameworkset.common.poolman.management.BaseTableManager]     load table[CIM_DATACACHE] information.......
+[2011-12-25 14:23:53][DEBUG][com.frameworkset.common.poolman.util.JDBCPool] load table[CIM_DATACACHE]'s metadata.
+[2011-12-25 14:23:53][DEBUG][com.frameworkset.common.poolman.management.BaseTableManager]     load table[CIM_ETL_REPOSITORY] information.......
+[2011-12-25 14:23:53][DEBUG][com.frameworkset.common.poolman.util.JDBCPool] load table[CIM_ETL_REPOSITORY]'s metadata.
+[2011-12-25 14:23:53][DEBUG][com.frameworkset.common.poolman.management.BaseTableManager]     load table[TB_USER] information.......
+[2011-12-25 14:23:53][DEBUG][com.frameworkset.common.poolman.management.BaseTableManager]     load table[LISTBEAN] information.......
+[2011-12-25 14:23:54][DEBUG][com.frameworkset.common.poolman.management.BaseTableManager] initial tableinfo complete!
+[2011-12-25 14:23:54][DEBUG][com.frameworkset.common.poolman.PreparedDBUtil] Execute JDBC prepared update statement:select * from LISTBEAN
+	
+[2011-12-25 14:23:54][DEBUG][com.frameworkset.util.VelocityUtil] FileUtil.apppath:D:\workspace
+[2011-12-25 14:23:54][DEBUG][com.frameworkset.util.VelocityUtil] velocity.properties:file:/D:/workspace/bbossgroups-3.5/bboss-persistent/classes/velocity.properties
+[2011-12-25 14:23:54][DEBUG][com.frameworkset.util.VelocityUtil] file.resource.loader.path:D:\workspace/WEB-INF/templates
+[2011-12-25 14:23:54][DEBUG][com.frameworkset.common.poolman.PreparedDBUtil] Execute JDBC prepared update statement:select FIELDNAME from LISTBEAN where FIELDNAME=?
+	
+[2011-12-25 14:23:54][DEBUG][com.frameworkset.common.poolman.PreparedDBUtil] Execute JDBC prepared update statement:select FIELDNAME from LISTBEAN where FIELDNAME=?
+	
+[2011-12-25 14:23:54][DEBUG][com.frameworkset.common.poolman.PreparedDBUtil] Execute JDBC prepared update statement:select *  from LISTBEAN  where 1=1 
+					 and FIELDNAME = ? 	
+[2011-12-25 14:23:54][INFO][com.frameworkset.common.poolman.SQLParams] 预编译sql语句提示：指定了预编译参数,sql语句中没有包含符合要求的预编译变量，sql{select *  from LISTBEAN  where 1=1 
+						},params{[name=isvalidated,index=0,value=0,dataformat=null,method=setInt(int, int)][name=sortorder,index=0,value=12,dataformat=null,method=setNull(int, int)][name=required,index=0,value=false,dataformat=null,method=setBoolean(int, boolean)][name=fieldType,index=0,value=12,dataformat=null,method=setNull(int, int)][name=fieldLable,index=0,value=12,dataformat=null,method=setNull(int, int)][name=fieldName,index=0,value=,dataformat=null,method=setString(int, String)][name=id,index=0,value=0,dataformat=null,method=setInt(int, int)][name=fieldLength,index=0,value=0,dataformat=null,method=setInt(int, int)][name=isprimaryKey,index=0,value=false,dataformat=null,method=setBoolean(int, boolean)]},action{unkown action},Variable identity{pretoken=#\[,endtoken=\]}
+[2011-12-25 14:23:54][DEBUG][com.frameworkset.common.poolman.PreparedDBUtil] Execute JDBC prepared update statement:select *  from LISTBEAN  where 1=1 
+						
+[2011-12-25 14:23:54][INFO][com.frameworkset.common.poolman.SQLParams] 预编译sql语句提示：指定了预编译参数,sql语句中没有包含符合要求的预编译变量，sql{select *  from LISTBEAN  where 1=1 
+						},params{[name=isvalidated,index=0,value=0,dataformat=null,method=setInt(int, int)][name=sortorder,index=0,value=12,dataformat=null,method=setNull(int, int)][name=required,index=0,value=false,dataformat=null,method=setBoolean(int, boolean)][name=fieldType,index=0,value=12,dataformat=null,method=setNull(int, int)][name=fieldLable,index=0,value=12,dataformat=null,method=setNull(int, int)][name=fieldName,index=0,value=12,dataformat=null,method=setNull(int, int)][name=id,index=0,value=0,dataformat=null,method=setInt(int, int)][name=fieldLength,index=0,value=0,dataformat=null,method=setInt(int, int)][name=isprimaryKey,index=0,value=false,dataformat=null,method=setBoolean(int, boolean)]},action{unkown action},Variable identity{pretoken=#\[,endtoken=\]}
+[2011-12-25 14:23:54][DEBUG][com.frameworkset.common.poolman.PreparedDBUtil] Execute JDBC prepared update statement:select *  from LISTBEAN  where 1=1 
+						
+[2011-12-25 14:23:54][DEBUG][com.frameworkset.common.poolman.PreparedDBUtil] Execute JDBC prepared update statement:select *  from LISTBEAN  where 1=1 
+					 and FIELDNAME = ? 	
+[2011-12-25 14:23:54][INFO][com.frameworkset.common.poolman.SQLParams] 预编译sql语句提示：指定了预编译参数,sql语句中没有包含符合要求的预编译变量，sql{select *  from LISTBEAN  where 1=1 
+						},params{[name=fieldName,index=0,value=,dataformat=null,method=setString(int, String)]},action{unkown action},Variable identity{pretoken=#\[,endtoken=\]}
+[2011-12-25 14:23:54][DEBUG][com.frameworkset.common.poolman.PreparedDBUtil] Execute JDBC prepared update statement:select *  from LISTBEAN  where 1=1 
+						
+[2011-12-25 14:23:54][INFO][com.frameworkset.common.poolman.SQLParams] 预编译sql语句提示：指定了预编译参数,sql语句中没有包含符合要求的预编译变量，sql{select *  from LISTBEAN  where 1=1 
+						},params{[name=fieldName,index=0,value=12,dataformat=null,method=setNull(int, int)]},action{unkown action},Variable identity{pretoken=#\[,endtoken=\]}
+[2011-12-25 14:23:54][DEBUG][com.frameworkset.common.poolman.PreparedDBUtil] Execute JDBC prepared update statement:select *  from LISTBEAN  where 1=1 
+						
+[2011-12-25 14:23:54][DEBUG][com.frameworkset.common.poolman.PreparedDBUtil] Execute JDBC prepared update statement:select *  from LISTBEAN  where 1=1 
+					 and id = ? 	
+[2011-12-25 14:23:54][INFO][com.frameworkset.common.poolman.SQLParams] 预编译sql语句提示：指定了预编译参数,sql语句中没有包含符合要求的预编译变量，sql{select *  from LISTBEAN  where 1=1 
+						},params{[name=isvalidated,index=0,value=0,dataformat=null,method=setInt(int, int)][name=sortorder,index=0,value=12,dataformat=null,method=setNull(int, int)][name=required,index=0,value=false,dataformat=null,method=setBoolean(int, boolean)][name=fieldType,index=0,value=12,dataformat=null,method=setNull(int, int)][name=fieldLable,index=0,value=12,dataformat=null,method=setNull(int, int)][name=fieldName,index=0,value=12,dataformat=null,method=setNull(int, int)][name=id,index=0,value=-1,dataformat=null,method=setInt(int, int)][name=fieldLength,index=0,value=0,dataformat=null,method=setInt(int, int)][name=isprimaryKey,index=0,value=false,dataformat=null,method=setBoolean(int, boolean)]},action{unkown action},Variable identity{pretoken=#\[,endtoken=\]}
+[2011-12-25 14:23:54][DEBUG][com.frameworkset.common.poolman.PreparedDBUtil] Execute JDBC prepared update statement:select *  from LISTBEAN  where 1=1 
+						
+[2011-12-25 14:23:54][INFO][com.frameworkset.common.poolman.SQLParams] 预编译sql语句提示：指定了预编译参数,sql语句中没有包含符合要求的预编译变量，sql{select *  from LISTBEAN  where 1=1 
+						},params{[name=isvalidated,index=0,value=0,dataformat=null,method=setInt(int, int)][name=sortorder,index=0,value=12,dataformat=null,method=setNull(int, int)][name=required,index=0,value=false,dataformat=null,method=setBoolean(int, boolean)][name=fieldType,index=0,value=12,dataformat=null,method=setNull(int, int)][name=fieldLable,index=0,value=12,dataformat=null,method=setNull(int, int)][name=fieldName,index=0,value=12,dataformat=null,method=setNull(int, int)][name=id,index=0,value=0,dataformat=null,method=setInt(int, int)][name=fieldLength,index=0,value=0,dataformat=null,method=setInt(int, int)][name=isprimaryKey,index=0,value=false,dataformat=null,method=setBoolean(int, boolean)]},action{unkown action},Variable identity{pretoken=#\[,endtoken=\]}
+[2011-12-25 14:23:54][DEBUG][com.frameworkset.common.poolman.PreparedDBUtil] Execute JDBC prepared update statement:select *  from LISTBEAN  where 1=1 
+						
+[2011-12-25 14:23:54][DEBUG][com.frameworkset.common.poolman.PreparedDBUtil] Execute JDBC prepared update statement:select *  from LISTBEAN  where 1=1 
+					 and id = ? 	
+[2011-12-25 14:23:54][INFO][com.frameworkset.common.poolman.SQLParams] 预编译sql语句提示：指定了预编译参数,sql语句中没有包含符合要求的预编译变量，sql{select *  from LISTBEAN  where 1=1 
+						},params{[name=id,index=0,value=-1,dataformat=null,method=setInt(int, int)]},action{unkown action},Variable identity{pretoken=#\[,endtoken=\]}
+[2011-12-25 14:23:54][DEBUG][com.frameworkset.common.poolman.PreparedDBUtil] Execute JDBC prepared update statement:select *  from LISTBEAN  where 1=1 
+						
+[2011-12-25 14:23:54][INFO][com.frameworkset.common.poolman.SQLParams] 预编译sql语句提示：指定了预编译参数,sql语句中没有包含符合要求的预编译变量，sql{select *  from LISTBEAN  where 1=1 
+						},params{[name=id,index=0,value=0,dataformat=null,method=setInt(int, int)]},action{unkown action},Variable identity{pretoken=#\[,endtoken=\]}
+[2011-12-25 14:23:54][DEBUG][com.frameworkset.common.poolman.PreparedDBUtil] Execute JDBC prepared update statement:select *  from LISTBEAN  where 1=1 
+						
+[2011-12-25 14:23:54][DEBUG][com.frameworkset.common.poolman.PreparedDBUtil] Execute JDBC prepared batch statement:update LISTBEAN  set FIELDNAME = ? where id = ? 
+	
+[2011-12-25 14:23:54][DEBUG][com.frameworkset.common.poolman.PreparedDBUtil] Execute prepared Batch sql[update LISTBEAN  set FIELDNAME = ? where id = ? 
+	] success:0:0,1:0,2:0
+[2011-12-25 14:23:54][DEBUG][com.frameworkset.common.poolman.PreparedDBUtil] Execute JDBC prepared update statement:select count(1)  from LISTBEAN 
+	
+[2011-12-25 14:23:54][DEBUG][com.frameworkset.common.poolman.PreparedDBUtil] Execute JDBC prepared update statement:select count(1)  from LISTBEAN 
+	
+[2011-12-25 14:23:54][DEBUG][com.frameworkset.common.poolman.PreparedDBUtil] Execute JDBC prepared update statement:select count(1)  from LISTBEAN 
+	
+[2011-12-25 14:23:54][DEBUG][com.frameworkset.common.poolman.PreparedDBUtil] Execute JDBC prepared update statement:select count(1)  from LISTBEAN 
+	
+[2011-12-25 14:23:54][DEBUG][com.frameworkset.common.poolman.PreparedDBUtil] Execute JDBC prepared update statement:select count(1)  from LISTBEAN 
+	
+[2011-12-25 14:23:54][DEBUG][com.frameworkset.common.poolman.PreparedDBUtil] Execute JDBC prepared update statement:select count(1)  from LISTBEAN 
+	
+[2011-12-25 14:23:54][DEBUG][com.frameworkset.common.poolman.PreparedDBUtil] Execute JDBC prepared update statement:select count(1)  from LISTBEAN 
+	
+[2011-12-25 14:23:54][DEBUG][com.frameworkset.common.poolman.PreparedDBUtil] Execute JDBC prepared batch statement:update LISTBEAN  set FIELDNAME = ? where id = ? 
+	
+[2011-12-25 14:23:54][DEBUG][com.frameworkset.common.poolman.PreparedDBUtil] Execute prepared Batch sql[update LISTBEAN  set FIELDNAME = ? where id = ? 
+	] success:0:0,1:0,2:0
+[2011-12-25 14:23:54][DEBUG][com.frameworkset.common.poolman.util.JDBCPool] Shutdown poolman[bspf] start.
+[2011-12-25 14:23:54][DEBUG][com.frameworkset.common.poolman.sql.PoolManDataSource] Close  datasource[jndiName=jdbc/derby-ds,dbname=bspf] begin.
+[2011-12-25 14:23:54][DEBUG][com.frameworkset.common.poolman.sql.PoolManDataSource] Close  datasource[jndiName=jdbc/derby-ds,dbname=bspf] end.
+[2011-12-25 14:24:36][DEBUG][com.frameworkset.common.poolman.management.PoolManBootstrap] PoolManBootstrap(configFile): poolman.xml
+[2011-12-25 14:24:36][INFO][com.frameworkset.util.DaemonThread] Start check files is changed or not.if some files is changed,the resources of these files will be refreshed use ResourceInit interface.
+[2011-12-25 14:24:37][DEBUG][com.frameworkset.common.poolman.util.JDBCPool] JDBCPool[bspf]:INNER JNDI Name is jdbc/derby-ds
+[2011-12-25 14:24:37][DEBUG][com.frameworkset.common.poolman.util.JDBCPool] Init DBAdapter from driver:org.apache.derby.jdbc.EmbeddedDriver
+[2011-12-25 14:24:37][DEBUG][com.frameworkset.common.poolman.util.JDBCPool] Bind the DataSource view of this pool to JNDI
+[2011-12-25 14:24:37][INFO][com.frameworkset.common.poolman.util.JDBCPool] Intial Context : jdbc/derby-ds
+[2011-12-25 14:24:37][DEBUG][com.frameworkset.common.poolman.util.JDBCPool] binding: jdbc/derby-ds
+[2011-12-25 14:24:37][DEBUG][com.frameworkset.common.poolman.util.JDBCPool] Bound name: jdbc/derby-ds
+[2011-12-25 14:24:37][INFO][com.frameworkset.common.poolman.util.JDBCPool] DataSource bound to JNDI under name[jdbc/derby-ds]
+[2011-12-25 14:24:39][DEBUG][com.frameworkset.common.poolman.util.JDBCPool] Load Database Meta Data=false
+[2011-12-25 14:24:39][DEBUG][com.frameworkset.common.poolman.util.JDBCPool] Ignore Load Database[bspf] Meta Data .
+[2011-12-25 14:24:39][DEBUG][com.frameworkset.common.poolman.management.BaseTableManager] initial tableinfo start.......
+[2011-12-25 14:24:39][DEBUG][com.frameworkset.common.poolman.management.BaseTableManager] load pool[bspf] tables information.......
+[2011-12-25 14:24:39][DEBUG][com.frameworkset.common.poolman.management.BaseTableManager]     load table[CIM_DATACACHE] information.......
+[2011-12-25 14:24:40][DEBUG][com.frameworkset.common.poolman.util.JDBCPool] load table[CIM_DATACACHE]'s metadata.
+[2011-12-25 14:24:40][DEBUG][com.frameworkset.common.poolman.management.BaseTableManager]     load table[CIM_ETL_REPOSITORY] information.......
+[2011-12-25 14:24:40][DEBUG][com.frameworkset.common.poolman.util.JDBCPool] load table[CIM_ETL_REPOSITORY]'s metadata.
+[2011-12-25 14:24:40][DEBUG][com.frameworkset.common.poolman.management.BaseTableManager]     load table[TB_USER] information.......
+[2011-12-25 14:24:40][DEBUG][com.frameworkset.common.poolman.management.BaseTableManager]     load table[LISTBEAN] information.......
+[2011-12-25 14:24:40][DEBUG][com.frameworkset.common.poolman.management.BaseTableManager] initial tableinfo complete!
+[2011-12-25 14:24:41][DEBUG][com.frameworkset.common.poolman.PreparedDBUtil] Execute JDBC prepared update statement:select * from LISTBEAN
+	
+[2011-12-25 14:24:41][DEBUG][com.frameworkset.util.VelocityUtil] FileUtil.apppath:D:\workspace
+[2011-12-25 14:24:41][DEBUG][com.frameworkset.util.VelocityUtil] velocity.properties:file:/D:/workspace/bbossgroups-3.5/bboss-persistent/classes/velocity.properties
+[2011-12-25 14:24:41][DEBUG][com.frameworkset.util.VelocityUtil] file.resource.loader.path:D:\workspace/WEB-INF/templates
+[2011-12-25 14:24:41][DEBUG][com.frameworkset.common.poolman.PreparedDBUtil] Execute JDBC prepared update statement:select FIELDNAME from LISTBEAN where FIELDNAME=?
+	
+[2011-12-25 14:24:41][DEBUG][com.frameworkset.common.poolman.PreparedDBUtil] Execute JDBC prepared update statement:select FIELDNAME from LISTBEAN where FIELDNAME=?
+	
+[2011-12-25 14:24:41][DEBUG][com.frameworkset.common.poolman.PreparedDBUtil] Execute JDBC prepared update statement:select *  from LISTBEAN  where 1=1 
+					 and FIELDNAME = ? 	
+[2011-12-25 14:24:41][INFO][com.frameworkset.common.poolman.SQLParams] 预编译sql语句提示：指定了预编译参数,sql语句中没有包含符合要求的预编译变量，sql{select *  from LISTBEAN  where 1=1 
+						},params{[name=isvalidated,index=0,value=0,dataformat=null,method=setInt(int, int)][name=sortorder,index=0,value=12,dataformat=null,method=setNull(int, int)][name=required,index=0,value=false,dataformat=null,method=setBoolean(int, boolean)][name=fieldType,index=0,value=12,dataformat=null,method=setNull(int, int)][name=fieldLable,index=0,value=12,dataformat=null,method=setNull(int, int)][name=fieldName,index=0,value=,dataformat=null,method=setString(int, String)][name=id,index=0,value=0,dataformat=null,method=setInt(int, int)][name=fieldLength,index=0,value=0,dataformat=null,method=setInt(int, int)][name=isprimaryKey,index=0,value=false,dataformat=null,method=setBoolean(int, boolean)]},action{unkown action},Variable identity{pretoken=#\[,endtoken=\]}
+[2011-12-25 14:24:41][DEBUG][com.frameworkset.common.poolman.PreparedDBUtil] Execute JDBC prepared update statement:select *  from LISTBEAN  where 1=1 
+						
+[2011-12-25 14:24:41][INFO][com.frameworkset.common.poolman.SQLParams] 预编译sql语句提示：指定了预编译参数,sql语句中没有包含符合要求的预编译变量，sql{select *  from LISTBEAN  where 1=1 
+						},params{[name=isvalidated,index=0,value=0,dataformat=null,method=setInt(int, int)][name=sortorder,index=0,value=12,dataformat=null,method=setNull(int, int)][name=required,index=0,value=false,dataformat=null,method=setBoolean(int, boolean)][name=fieldType,index=0,value=12,dataformat=null,method=setNull(int, int)][name=fieldLable,index=0,value=12,dataformat=null,method=setNull(int, int)][name=fieldName,index=0,value=12,dataformat=null,method=setNull(int, int)][name=id,index=0,value=0,dataformat=null,method=setInt(int, int)][name=fieldLength,index=0,value=0,dataformat=null,method=setInt(int, int)][name=isprimaryKey,index=0,value=false,dataformat=null,method=setBoolean(int, boolean)]},action{unkown action},Variable identity{pretoken=#\[,endtoken=\]}
+[2011-12-25 14:24:41][DEBUG][com.frameworkset.common.poolman.PreparedDBUtil] Execute JDBC prepared update statement:select *  from LISTBEAN  where 1=1 
+						
+[2011-12-25 14:24:41][DEBUG][com.frameworkset.common.poolman.PreparedDBUtil] Execute JDBC prepared update statement:select *  from LISTBEAN  where 1=1 
+					 and FIELDNAME = ? 	
+[2011-12-25 14:24:41][INFO][com.frameworkset.common.poolman.SQLParams] 预编译sql语句提示：指定了预编译参数,sql语句中没有包含符合要求的预编译变量，sql{select *  from LISTBEAN  where 1=1 
+						},params{[name=fieldName,index=0,value=,dataformat=null,method=setString(int, String)]},action{unkown action},Variable identity{pretoken=#\[,endtoken=\]}
+[2011-12-25 14:24:41][DEBUG][com.frameworkset.common.poolman.PreparedDBUtil] Execute JDBC prepared update statement:select *  from LISTBEAN  where 1=1 
+						
+[2011-12-25 14:24:41][INFO][com.frameworkset.common.poolman.SQLParams] 预编译sql语句提示：指定了预编译参数,sql语句中没有包含符合要求的预编译变量，sql{select *  from LISTBEAN  where 1=1 
+						},params{[name=fieldName,index=0,value=12,dataformat=null,method=setNull(int, int)]},action{unkown action},Variable identity{pretoken=#\[,endtoken=\]}
+[2011-12-25 14:24:41][DEBUG][com.frameworkset.common.poolman.PreparedDBUtil] Execute JDBC prepared update statement:select *  from LISTBEAN  where 1=1 
+						
+[2011-12-25 14:24:41][DEBUG][com.frameworkset.common.poolman.PreparedDBUtil] Execute JDBC prepared update statement:select *  from LISTBEAN  where 1=1 
+					 and id = ? 	
+[2011-12-25 14:24:41][INFO][com.frameworkset.common.poolman.SQLParams] 预编译sql语句提示：指定了预编译参数,sql语句中没有包含符合要求的预编译变量，sql{select *  from LISTBEAN  where 1=1 
+						},params{[name=isvalidated,index=0,value=0,dataformat=null,method=setInt(int, int)][name=sortorder,index=0,value=12,dataformat=null,method=setNull(int, int)][name=required,index=0,value=false,dataformat=null,method=setBoolean(int, boolean)][name=fieldType,index=0,value=12,dataformat=null,method=setNull(int, int)][name=fieldLable,index=0,value=12,dataformat=null,method=setNull(int, int)][name=fieldName,index=0,value=12,dataformat=null,method=setNull(int, int)][name=id,index=0,value=-1,dataformat=null,method=setInt(int, int)][name=fieldLength,index=0,value=0,dataformat=null,method=setInt(int, int)][name=isprimaryKey,index=0,value=false,dataformat=null,method=setBoolean(int, boolean)]},action{unkown action},Variable identity{pretoken=#\[,endtoken=\]}
+[2011-12-25 14:24:41][DEBUG][com.frameworkset.common.poolman.PreparedDBUtil] Execute JDBC prepared update statement:select *  from LISTBEAN  where 1=1 
+						
+[2011-12-25 14:24:41][INFO][com.frameworkset.common.poolman.SQLParams] 预编译sql语句提示：指定了预编译参数,sql语句中没有包含符合要求的预编译变量，sql{select *  from LISTBEAN  where 1=1 
+						},params{[name=isvalidated,index=0,value=0,dataformat=null,method=setInt(int, int)][name=sortorder,index=0,value=12,dataformat=null,method=setNull(int, int)][name=required,index=0,value=false,dataformat=null,method=setBoolean(int, boolean)][name=fieldType,index=0,value=12,dataformat=null,method=setNull(int, int)][name=fieldLable,index=0,value=12,dataformat=null,method=setNull(int, int)][name=fieldName,index=0,value=12,dataformat=null,method=setNull(int, int)][name=id,index=0,value=0,dataformat=null,method=setInt(int, int)][name=fieldLength,index=0,value=0,dataformat=null,method=setInt(int, int)][name=isprimaryKey,index=0,value=false,dataformat=null,method=setBoolean(int, boolean)]},action{unkown action},Variable identity{pretoken=#\[,endtoken=\]}
+[2011-12-25 14:24:41][DEBUG][com.frameworkset.common.poolman.PreparedDBUtil] Execute JDBC prepared update statement:select *  from LISTBEAN  where 1=1 
+						
+[2011-12-25 14:24:41][DEBUG][com.frameworkset.common.poolman.PreparedDBUtil] Execute JDBC prepared update statement:select *  from LISTBEAN  where 1=1 
+					 and id = ? 	
+[2011-12-25 14:24:41][INFO][com.frameworkset.common.poolman.SQLParams] 预编译sql语句提示：指定了预编译参数,sql语句中没有包含符合要求的预编译变量，sql{select *  from LISTBEAN  where 1=1 
+						},params{[name=id,index=0,value=-1,dataformat=null,method=setInt(int, int)]},action{unkown action},Variable identity{pretoken=#\[,endtoken=\]}
+[2011-12-25 14:24:41][DEBUG][com.frameworkset.common.poolman.PreparedDBUtil] Execute JDBC prepared update statement:select *  from LISTBEAN  where 1=1 
+						
+[2011-12-25 14:24:41][INFO][com.frameworkset.common.poolman.SQLParams] 预编译sql语句提示：指定了预编译参数,sql语句中没有包含符合要求的预编译变量，sql{select *  from LISTBEAN  where 1=1 
+						},params{[name=id,index=0,value=0,dataformat=null,method=setInt(int, int)]},action{unkown action},Variable identity{pretoken=#\[,endtoken=\]}
+[2011-12-25 14:24:41][DEBUG][com.frameworkset.common.poolman.PreparedDBUtil] Execute JDBC prepared update statement:select *  from LISTBEAN  where 1=1 
+						
+[2011-12-25 14:24:41][DEBUG][com.frameworkset.common.poolman.PreparedDBUtil] Execute JDBC prepared batch statement:update LISTBEAN  set FIELDNAME = ? where id = ? 
+	
+[2011-12-25 14:24:41][DEBUG][com.frameworkset.common.poolman.PreparedDBUtil] Execute prepared Batch sql[update LISTBEAN  set FIELDNAME = ? where id = ? 
+	] success:0:0,1:0,2:0
+[2011-12-25 14:24:41][DEBUG][com.frameworkset.common.poolman.PreparedDBUtil] Execute JDBC prepared update statement:select count(1)  from LISTBEAN 
+	
+[2011-12-25 14:24:41][DEBUG][com.frameworkset.common.poolman.PreparedDBUtil] Execute JDBC prepared update statement:select count(1)  from LISTBEAN 
+	
+[2011-12-25 14:24:41][DEBUG][com.frameworkset.common.poolman.PreparedDBUtil] Execute JDBC prepared update statement:select count(1)  from LISTBEAN 
+	
+[2011-12-25 14:24:41][DEBUG][com.frameworkset.common.poolman.PreparedDBUtil] Execute JDBC prepared update statement:select count(1)  from LISTBEAN 
+	
+[2011-12-25 14:24:41][DEBUG][com.frameworkset.common.poolman.PreparedDBUtil] Execute JDBC prepared update statement:select count(1)  from LISTBEAN 
+	
+[2011-12-25 14:24:41][DEBUG][com.frameworkset.common.poolman.PreparedDBUtil] Execute JDBC prepared update statement:select count(1)  from LISTBEAN 
+	
+[2011-12-25 14:24:41][DEBUG][com.frameworkset.common.poolman.PreparedDBUtil] Execute JDBC prepared update statement:select count(1)  from LISTBEAN 
+	
+[2011-12-25 14:24:41][DEBUG][com.frameworkset.common.poolman.PreparedDBUtil] Execute JDBC prepared batch statement:update LISTBEAN  set FIELDNAME = ? where id = ? 
+	
+[2011-12-25 14:24:41][DEBUG][com.frameworkset.common.poolman.PreparedDBUtil] Execute prepared Batch sql[update LISTBEAN  set FIELDNAME = ? where id = ? 
+	] success:0:0,1:0,2:0
+[2011-12-25 14:24:41][DEBUG][com.frameworkset.common.poolman.util.JDBCPool] Shutdown poolman[bspf] start.
+[2011-12-25 14:24:41][DEBUG][com.frameworkset.common.poolman.sql.PoolManDataSource] Close  datasource[jndiName=jdbc/derby-ds,dbname=bspf] begin.
+[2011-12-25 14:24:41][DEBUG][com.frameworkset.common.poolman.sql.PoolManDataSource] Close  datasource[jndiName=jdbc/derby-ds,dbname=bspf] end.

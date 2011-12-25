@@ -41,12 +41,13 @@ import com.frameworkset.common.poolman.util.SQLUtil;
 import com.frameworkset.orm.annotation.Column;
 import com.frameworkset.orm.annotation.PrimaryKey;
 import com.frameworkset.orm.engine.model.SchemaType;
+import com.frameworkset.util.ValueObjectUtil;
 
 /**
  * 
  * 
  * <p>
- * Title: CallableDBUtil.java
+ * Title: ResultMap.java
  * </p>
  * 
  * <p>
@@ -143,13 +144,13 @@ public class ResultMap {
 		{
 			
 			this.commonresult = buildValueObject(cstmt, valueobjectType,
-					outparams, stmtInfo, rowHander);
+					outparams, stmtInfo, rowHander,ValueObjectUtil.isPrimaryType(valueobjectType));
 		}
 	}
 
 	public static <T> T buildValueObject(ResultSet rs,
 			Class<T> valueObjectType, 
-			StatementInfo stmtInfo, RowHandler rowHander)
+			StatementInfo stmtInfo, RowHandler rowHander,boolean ismap)
 			throws SQLException {
 		
 		if (rs == null ||valueObjectType == null || stmtInfo == null)
@@ -187,60 +188,48 @@ public class ResultMap {
 
 		}
 		
-		if( !Map.class.isAssignableFrom(valueObjectType))
+		if( !ismap)
 		{
-			try {
-				valueObject = valueObjectType.newInstance();
-			} catch (InstantiationException e1) {
-				throw new NestedSQLException(e1);
-			} catch (IllegalAccessException e1) {
-				throw new NestedSQLException(e1);
-			}
-//			BeanInfo beanInfo;
-//			try {
-//				
-//				beanInfo = Introspector.getBeanInfo(valueObjectType);
-//			} catch (IntrospectionException e1) {
-//				throw new NestedSQLException(e1);
-//			}
+			
+//			if(!String.class.isAssignableFrom(valueObjectType))//如果要求返回字符串类型的数据，则直接返回String类型的值
 			ClassInfo beanInfo = ClassUtil.getClassInfo(valueObjectType);
-			List<PropertieDescription> attributes = beanInfo.getPropertyDescriptors();
-			for (int n = 0; attributes != null && n < attributes.size(); n++) {
-				PropertieDescription attribute = attributes.get(n);
-				String attrName = attribute.getName();
-//				if(attrName.equals("class"))
-//					continue;
-				String annotationName = null;
-				if(BigFile.class.isAssignableFrom(attribute.getPropertyType()) )//不支持大字段转换为BigFile接口
-					continue;
+			if(!beanInfo.isPrimary())
+			{
 				try {
-					
-//					Field field = classinfo.getDeclaredField(attrName);
-//					if(field != null)
-					{
+					valueObject = valueObjectType.newInstance();
+				} catch (InstantiationException e1) {
+					throw new NestedSQLException(e1);
+				} catch (IllegalAccessException e1) {
+					throw new NestedSQLException(e1);
+				}
+	//			BeanInfo beanInfo;
+	//			try {
+	//				
+	//				beanInfo = Introspector.getBeanInfo(valueObjectType);
+	//			} catch (IntrospectionException e1) {
+	//				throw new NestedSQLException(e1);
+	//			}
+				
+				List<PropertieDescription> attributes = beanInfo.getPropertyDescriptors();
+				for (int n = 0; attributes != null && n < attributes.size(); n++) {
+					PropertieDescription attribute = attributes.get(n);
+					String attrName = attribute.getName();
+	//				if(attrName.equals("class"))
+	//					continue;
+					String annotationName = null;
+					if(BigFile.class.isAssignableFrom(attribute.getPropertyType()) )//不支持大字段转换为BigFile接口
+						continue;
+					try {
 						
-						PrimaryKey apk = attribute.findAnnotation(PrimaryKey.class);
-						if(apk != null)
+	//					Field field = classinfo.getDeclaredField(attrName);
+	//					if(field != null)
 						{
-//							PrimaryKey apk = field.getAnnotation(PrimaryKey.class);
-							annotationName = apk.name();
-							if(annotationName == null 
-									|| annotationName.equals(ValueConstants.DEFAULT_NONE) || annotationName.equals(""))
-							{
-								
-							}
-							else
-							{
-								attrName = annotationName;
-							}
 							
-						}
-						else 
-						{
-							Column cl = attribute.findAnnotation(Column.class);
-							if(cl != null)
+							PrimaryKey apk = attribute.findAnnotation(PrimaryKey.class);
+							if(apk != null)
 							{
-								annotationName = cl.name();
+	//							PrimaryKey apk = field.getAnnotation(PrimaryKey.class);
+								annotationName = apk.name();
 								if(annotationName == null 
 										|| annotationName.equals(ValueConstants.DEFAULT_NONE) || annotationName.equals(""))
 								{
@@ -250,66 +239,94 @@ public class ResultMap {
 								{
 									attrName = annotationName;
 								}
+								
+							}
+							else 
+							{
+								Column cl = attribute.findAnnotation(Column.class);
+								if(cl != null)
+								{
+									annotationName = cl.name();
+									if(annotationName == null 
+											|| annotationName.equals(ValueConstants.DEFAULT_NONE) || annotationName.equals(""))
+									{
+										
+									}
+									else
+									{
+										attrName = annotationName;
+									}
+								}
 							}
 						}
-					}
-				} catch (Exception e1) {
-					log.info(attribute.getName() + " is not a field of bean[" +valueObjectType.getClass().getCanonicalName() + "].");
-				} 
-				for (int i = 0; i < stmtInfo.getMeta().getColumnCounts(); i++) {
-					String columnName = stmtInfo.getMeta().getColumnLabelUpper(i+1);
-	
-					if (!attrName.equalsIgnoreCase(columnName))
-						continue;
-	
-					Class type = attribute.getPropertyType();
-					Object propsVal = null;
-					
-					try {
-	//					propsVal = ValueExchange.getValueFromResultSet(rs, columnName, 
-	//														stmtInfo.getMeta().getColumnType(i + 1), 
-	//														type, 
-	//														stmtInfo.getDbname());
-						propsVal = ValueExchange.getValueFromResultSet(rs, i + 1, 
-								stmtInfo.getMeta().getColumnType(i + 1), 
-								type, 
-								stmtInfo.getDbname());
-	
-					} catch (Exception e) {
-						StringBuffer err = new StringBuffer(
-								"Build ValueObject for ResultSet[").append(
-										stmtInfo.getSql()).append("] Get Column[")
-								.append(columnName).append("] from  ResultSet to ").append(valueObject).append(".")
-								.append(attrName).append("[")
-								.append(type.getName()).append("] failed:").append(
-										e.getMessage());
-						log.error(err.toString(), e);
-						break;
-					}
-	
-					try {
-						if(attribute.canwrite())
-						{
-							attribute.setValue(valueObject, propsVal);
+					} catch (Exception e1) {
+						log.info(attribute.getName() + " is not a field of bean[" +valueObjectType.getClass().getCanonicalName() + "].");
+					} 
+					for (int i = 0; i < stmtInfo.getMeta().getColumnCounts(); i++) {
+						
+						int cidx = i+1;
+						String columnName = stmtInfo.getMeta().getColumnLabelUpper(cidx);
+						
+		
+						if (!attrName.equalsIgnoreCase(columnName))
+							continue;
+		
+						Class type = attribute.getPropertyType();
+						Object propsVal = null;
+						
+						try {
+		//					propsVal = ValueExchange.getValueFromResultSet(rs, columnName, 
+		//														stmtInfo.getMeta().getColumnType(i + 1), 
+		//														type, 
+		//														stmtInfo.getDbname());
+							propsVal = ValueExchange.getValueFromResultSet(rs, cidx, 
+									stmtInfo.getMeta().getColumnType(cidx), 
+									type, 
+									stmtInfo.getDbname());
+		
+						} catch (Exception e) {
+							StringBuffer err = new StringBuffer(
+									"Build ValueObject for ResultSet[").append(
+											stmtInfo.getSql()).append("] Get Column[")
+									.append(columnName).append("] from  ResultSet to ").append(valueObject).append(".")
+									.append(attrName).append("[")
+									.append(type.getName()).append("] failed:").append(
+											e.getMessage());
+							log.error(err.toString(), e);
+							break;
 						}
-//						attribute.getWriteMethod().invoke(valueObject,
-//								new Object[] { propsVal });
-						break;
-					} catch (Exception e) {
-						StringBuffer err = new StringBuffer(
-						"Build ValueObject for ResultSet[").append(
-								stmtInfo.getSql()).append("] Get Column[")
-						.append(columnName).append("] from  ResultSet to ").append(valueObject).append(".")
-						.append(attrName).append("[")
-						.append(type.getName()).append("] failed:").append(
-								e.getMessage());
-//						System.out.println(err);
-						log.error(err.toString(), e);
-						break;
+		
+						try {
+							if(attribute.canwrite())
+							{
+								attribute.setValue(valueObject, propsVal);
+							}
+	//						attribute.getWriteMethod().invoke(valueObject,
+	//								new Object[] { propsVal });
+							break;
+						} catch (Exception e) {
+							StringBuffer err = new StringBuffer(
+							"Build ValueObject for ResultSet[").append(
+									stmtInfo.getSql()).append("] Get Column[")
+							.append(columnName).append("] from  ResultSet to ").append(valueObject).append(".")
+							.append(attrName).append("[")
+							.append(type.getName()).append("] failed:").append(
+									e.getMessage());
+	//						System.out.println(err);
+							log.error(err.toString(), e);
+							break;
+						}
+						
 					}
-					
+	
 				}
-
+			}
+			else
+			{
+				valueObject = (T)ValueExchange.getValueFromResultSet(rs,  1, 
+						stmtInfo.getMeta().getColumnType(1), 
+						valueObjectType, 
+						stmtInfo.getDbname());
 			}
 		}
 		else
@@ -356,7 +373,7 @@ public class ResultMap {
 	}
 	public static Object buildValueObject(CallableStatement cstmt,
 			Class valueObjectType, CallableParams outparams,
-			StatementInfo stmtInfo, RowHandler rowHander)
+			StatementInfo stmtInfo, RowHandler rowHander,boolean isprimaryType)
 			throws SQLException {
 		// Record data = buildMap( cstmt, outparams, stmtInfo);
 
@@ -403,53 +420,34 @@ public class ResultMap {
 		}
 		if( !Map.class.isAssignableFrom(valueObjectType))
 		{
-			try {
-				valueObject = valueObjectType.newInstance();
-			} catch (InstantiationException e1) {
-				throw new NestedSQLException(e1);
-			} catch (IllegalAccessException e1) {
-				throw new NestedSQLException(e1);
-			}
-//			BeanInfo beanInfo;
-//			try {
-//				beanInfo = Introspector.getBeanInfo(valueObjectType);
-//			} catch (IntrospectionException e1) {
-//				throw new NestedSQLException(e1);
-//			}
-			ClassInfo beanInfo = ClassUtil.getClassInfo(valueObjectType);
-			List<PropertieDescription> attributes = beanInfo.getPropertyDescriptors();
-			for (int n = 0; attributes != null && n < attributes.size(); n++) {
-				PropertieDescription attribute = attributes.get(n);
-				String attrName = attribute.getName();
-//				if(attrName.equals("class"))
-//					continue;
-				if(BigFile.class.isAssignableFrom(attribute.getPropertyType()) )//不支持大字段转换为BigFile接口
-					continue;
-				String annotationName = null;
+//			if(!String.class.isAssignableFrom(valueObjectType))//如果要求返回String类型，直接按照String类型进行处理
+			if(!isprimaryType)
+			{
 				try {
+					valueObject = valueObjectType.newInstance();
+				} catch (InstantiationException e1) {
+					throw new NestedSQLException(e1);
+				} catch (IllegalAccessException e1) {
+					throw new NestedSQLException(e1);
+				}
 
-					PrimaryKey apk = attribute.findAnnotation(PrimaryKey.class);
-					if(apk != null)
-					{
-						
-						annotationName = apk.name();
-						if(annotationName == null 
-								|| annotationName.equals(ValueConstants.DEFAULT_NONE) || annotationName.equals(""))
+				ClassInfo beanInfo = ClassUtil.getClassInfo(valueObjectType);
+				List<PropertieDescription> attributes = beanInfo.getPropertyDescriptors();
+				for (int n = 0; attributes != null && n < attributes.size(); n++) {
+					PropertieDescription attribute = attributes.get(n);
+					String attrName = attribute.getName();
+	//				if(attrName.equals("class"))
+	//					continue;
+					if(BigFile.class.isAssignableFrom(attribute.getPropertyType()) )//不支持大字段转换为BigFile接口
+						continue;
+					String annotationName = null;
+					try {
+	
+						PrimaryKey apk = attribute.findAnnotation(PrimaryKey.class);
+						if(apk != null)
 						{
 							
-						}
-						else
-						{
-							attrName = annotationName;
-						}
-						
-					}
-					else 
-					{
-						Column cl = attribute.findAnnotation(Column.class);
-						if(cl != null)
-						{
-							annotationName = cl.name();
+							annotationName = apk.name();
 							if(annotationName == null 
 									|| annotationName.equals(ValueConstants.DEFAULT_NONE) || annotationName.equals(""))
 							{
@@ -459,92 +457,130 @@ public class ResultMap {
 							{
 								attrName = annotationName;
 							}
+							
 						}
-					}
-					
-				} catch (Exception e1) {
-					log.info(attribute.getName() + " is not a field of bean[" +valueObjectType.getClass().getCanonicalName() + "].");
-				} 
-				for (int i = 0; i < outparams.outParams.size(); i++) {
-					CallableParam param = (CallableParam) outparams.outParams
-							.get(i);
-					if (param.parameterName == null) {
-						String msg = new StringBuffer(
-								"Build ValueObject for callablestatement[").append(
-								outparams.prepareselect_sql).append(
-								"] need named binding variable,ignore handle ")
-								.append(param).append(".").toString();
-						log.warn(msg);
-						System.out.println(msg);
-						outparams.outParams.remove(i);
-						continue;
-					}
-					if (!attrName.equalsIgnoreCase(param.parameterName))
-						continue;
-	
-					Class type = attribute.getPropertyType();
-					Object propsVal = null;
-					// Object temp_ = getValueFromCallableStatement(cstmt,
-					// param.parameterName,
-					// param.sqlType,
-					// stmtInfo.getDbname());
-					try {
-						propsVal = ValueExchange.getValueFromCallableStatement(
-								cstmt, param.parameterName, param.sqlType, type,
-								stmtInfo.getDbname());
-					} catch (Exception e) {
-						StringBuffer err = new StringBuffer(
-								"Build ValueObject for callablestatement[").append(
-								outparams.prepareselect_sql).append("] Get Param[")
-								.append(param).append("] from  ").append(cstmt)
-								.append(" to ").append(valueObject).append(".")
-								.append(attrName).append("[")
-								.append(type.getName()).append("] failed:").append(
-										e.getMessage());
-						log.error(err.toString(), e);
-						// 处理一个就外部参数剔除一个
-						outparams.outParams.remove(i);
-						break;
-					}
-					// if(propsVal == null)
-					// {
-					// outparams.outParams.remove(i);
-					// }
-	
-					try {
-						if(attribute.canwrite())
+						else 
 						{
-							attribute.setValue(valueObject, propsVal);
+							Column cl = attribute.findAnnotation(Column.class);
+							if(cl != null)
+							{
+								annotationName = cl.name();
+								if(annotationName == null 
+										|| annotationName.equals(ValueConstants.DEFAULT_NONE) || annotationName.equals(""))
+								{
+									
+								}
+								else
+								{
+									attrName = annotationName;
+								}
+							}
 						}
-//						attribute.getWriteMethod().invoke(valueObject,
-//								new Object[] { propsVal });
-						// 处理一个就外部参数剔除一个
-						outparams.outParams.remove(i);
-						break;
-					} catch (Exception e) {
-						StringBuffer err = new StringBuffer("set Param[").append(
-								param).append("] into ").append(valueObject)
-								.append(".").append(attrName).append("[").append(
-										type.getName()).append("] failed:").append(
-										e.getMessage());
-//						System.out.println(err);
-						log.error(err.toString(), e);
-						// 处理一个就外部参数剔除一个
-						outparams.outParams.remove(i);
-						break;
+						
+					} catch (Exception e1) {
+						log.info(attribute.getName() + " is not a field of bean[" +valueObjectType.getClass().getCanonicalName() + "].");
+					} 
+					for (int i = 0; i < outparams.outParams.size(); i++) {
+						CallableParam param = (CallableParam) outparams.outParams
+								.get(i);
+						if (param.parameterName == null) {
+							String msg = new StringBuffer(
+									"Build ValueObject for callablestatement[").append(
+									outparams.prepareselect_sql).append(
+									"] need named binding variable,ignore handle ")
+									.append(param).append(".").toString();
+							log.warn(msg);
+//							System.out.println(msg);
+							outparams.outParams.remove(i);
+							continue;
+						}
+						if (!attrName.equalsIgnoreCase(param.parameterName))
+							continue;
+		
+						Class type = attribute.getPropertyType();
+						Object propsVal = null;
+						// Object temp_ = getValueFromCallableStatement(cstmt,
+						// param.parameterName,
+						// param.sqlType,
+						// stmtInfo.getDbname());
+						try {
+							propsVal = ValueExchange.getValueFromCallableStatement(
+									cstmt, param.parameterName, param.sqlType, type,
+									stmtInfo.getDbname());
+						} catch (Exception e) {
+							StringBuffer err = new StringBuffer(
+									"Build ValueObject for callablestatement[").append(
+									outparams.prepareselect_sql).append("] Get Param[")
+									.append(param).append("] from  ").append(cstmt)
+									.append(" to ").append(valueObject).append(".")
+									.append(attrName).append("[")
+									.append(type.getName()).append("] failed:").append(
+											e.getMessage());
+							log.error(err.toString(), e);
+							// 处理一个就外部参数剔除一个
+							outparams.outParams.remove(i);
+							break;
+						}
+						// if(propsVal == null)
+						// {
+						// outparams.outParams.remove(i);
+						// }
+		
+						try {
+							if(attribute.canwrite())
+							{
+								attribute.setValue(valueObject, propsVal);
+							}
+	//						attribute.getWriteMethod().invoke(valueObject,
+	//								new Object[] { propsVal });
+							// 处理一个就外部参数剔除一个
+							outparams.outParams.remove(i);
+							break;
+						} catch (Exception e) {
+							StringBuffer err = new StringBuffer("set Param[").append(
+									param).append("] into ").append(valueObject)
+									.append(".").append(attrName).append("[").append(
+											type.getName()).append("] failed:").append(
+											e.getMessage());
+	//						System.out.println(err);
+							log.error(err.toString(), e);
+							// 处理一个就外部参数剔除一个
+							outparams.outParams.remove(i);
+							break;
+						}
+						
 					}
 					
+		
 				}
-				
-	
+				if (outparams.outParams.size() > 0) {
+					StringBuffer msg = new StringBuffer();
+					msg.append("Following outparams not mapping attributes in ")
+							.append(valueObjectType.getName()).append(":\r\n");
+					for (int i = 0; i < outparams.outParams.size(); i++) {
+						msg.append("    ").append(outparams.outParams.remove(i));
+					}
+				}
 			}
-			if (outparams.outParams.size() > 0) {
-				StringBuffer msg = new StringBuffer();
-				msg.append("Following outparams not mapping attributes in ")
-						.append(valueObjectType.getName()).append(":\r\n");
-				for (int i = 0; i < outparams.outParams.size(); i++) {
-					msg.append("    ").append(outparams.outParams.remove(i));
+			else
+			{
+				CallableParam param = (CallableParam) outparams.outParams.get(0);
+				
+				try {
+					valueObject = ValueExchange.getValueFromCallableStatement(
+							cstmt, param.parameterName, param.sqlType, valueObjectType,
+							stmtInfo.getDbname());
+				} catch (Exception e) {
+					StringBuffer err = new StringBuffer(
+							"Build ValueObject for callablestatement[").append(
+							outparams.prepareselect_sql).append("] Get Param[")
+							.append(param).append("] from  ").append(cstmt)
+							.append(" to String failed:").append(
+									e.getMessage());
+					log.error(err.toString(), e);
+					
 				}
+				outparams.outParams.clear();
 			}
 		}
 		else
