@@ -29,6 +29,7 @@ RequestParam
 PathVariable
 RequestHeader
 Attribute
+CookieValue
 
 bboss中界定的基础数据类型如下：
 		String.class,int.class ,Integer.class,
