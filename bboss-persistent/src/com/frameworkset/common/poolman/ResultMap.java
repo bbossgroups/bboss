@@ -150,7 +150,7 @@ public class ResultMap {
 
 	public static <T> T buildValueObject(ResultSet rs,
 			Class<T> valueObjectType, 
-			StatementInfo stmtInfo, RowHandler rowHander,boolean ismap)
+			StatementInfo stmtInfo, RowHandler rowHander,boolean ismap,ClassInfo beanInfo)
 			throws SQLException {
 		
 		if (rs == null ||valueObjectType == null || stmtInfo == null)
@@ -192,7 +192,7 @@ public class ResultMap {
 		{
 			
 //			if(!String.class.isAssignableFrom(valueObjectType))//如果要求返回字符串类型的数据，则直接返回String类型的值
-			ClassInfo beanInfo = ClassUtil.getClassInfo(valueObjectType);
+//			ClassInfo beanInfo = ClassUtil.getClassInfo(valueObjectType);
 			if(!beanInfo.isPrimary())
 			{
 				try {

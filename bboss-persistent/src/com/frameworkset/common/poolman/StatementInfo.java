@@ -30,6 +30,8 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.log4j.Logger;
+import org.frameworkset.util.ClassUtil;
+import org.frameworkset.util.ClassUtil.ClassInfo;
 
 import com.frameworkset.common.poolman.handle.RowHandler;
 import com.frameworkset.common.poolman.handle.XMLRowHandler;
@@ -498,6 +500,7 @@ public class StatementInfo {
 		// 从结果集中获取当前游标后maxsize条记录
 		
 		boolean ismap = Map.class.isAssignableFrom(objectType);
+		ClassInfo beanInfo = ClassUtil.getClassInfo(objectType);
 		while (go) {
 
 			if (rowcount == results.length) {
@@ -509,7 +512,7 @@ public class StatementInfo {
 			}
 
 			Object record = ResultMap.buildValueObject(res, objectType, this,
-					rowHandler,ismap);
+					rowHandler,ismap,beanInfo);
 			results[rowcount] = record;
 			rowcount++;
 			if (ispagine)
@@ -560,9 +563,10 @@ public class StatementInfo {
 		// 从结果集中获取当前游标后maxsize条记录
 		
 		boolean ismap = Map.class.isAssignableFrom(objectType);
+		ClassInfo beanInfo = ClassUtil.getClassInfo(objectType);
 		while (go) {
 			T record = ResultMap.buildValueObject(res, objectType, this,
-					rowHandler,ismap);
+					rowHandler,ismap,beanInfo);
 			results.add(record);
 			rowcount++;
 			if (ispagine)
@@ -777,9 +781,9 @@ public class StatementInfo {
 			{
 				if(res.next())
 				{
-					
+					ClassInfo beanInfo = ClassUtil.getClassInfo(objectType);
 					boolean ismap = Map.class.isAssignableFrom(objectType);
-					T result = ResultMap.buildValueObject(res, objectType, this, rowhandler,ismap);
+					T result = ResultMap.buildValueObject(res, objectType, this, rowhandler,ismap,beanInfo);
 					resultMap.setCommonresult(result);
 					if(result != null)
 					{
