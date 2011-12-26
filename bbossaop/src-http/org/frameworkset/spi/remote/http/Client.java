@@ -17,14 +17,16 @@ package org.frameworkset.spi.remote.http;
 
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.StringWriter;
+import java.security.KeyManagementException;
 import java.security.KeyStore;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.UnrecoverableKeyException;
+import java.security.cert.CertificateException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,11 +35,16 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.conn.ClientConnectionManager;
+import org.apache.http.conn.ClientConnectionManagerFactory;
 import org.apache.http.conn.params.ConnManagerParams;
+import org.apache.http.conn.scheme.PlainSocketFactory;
 import org.apache.http.conn.scheme.Scheme;
+import org.apache.http.conn.scheme.SchemeRegistry;
 import org.apache.http.conn.ssl.SSLSocketFactory;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
@@ -51,9 +58,6 @@ import org.frameworkset.spi.remote.RPCAddress;
 import org.frameworkset.spi.remote.RPCMessage;
 import org.frameworkset.spi.remote.Target;
 import org.frameworkset.spi.serviceidentity.TargetImpl;
-
-import com.frameworkset.util.FileUtil;
-import com.frameworkset.util.SimpleStringUtil;
 
 //import com.thoughtworks.xstream.XStream;
 
@@ -82,9 +86,16 @@ public class Client {
 	static ProMap conparams = HttpServer.getHttpServer().getParams();
 	static boolean usepool = conparams.getBoolean("http.usepool", false);
 	private static Logger log = Logger.getLogger(Client.class);
+	private static ClientConnectionManager clientconnectionManager;
 	static
 	{
 		params =  buildHttpParams();
+		try {
+			clientconnectionManager = createClientConnectionManager();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		usepool = false;
 		
 	}
@@ -104,38 +115,84 @@ public class Client {
 		HttpConnectionParams.setConnectionTimeout(params, CONNECTION_TIMEOUT * 1000);
 		HttpConnectionParams.setLinger(params, httpsoLinger );
 		ConnManagerParams.setTimeout(params, CONNECTION_Manager_TIMEOUT * 1000);
+//		params.setParameter(ClientPNames.CONNECTION_MANAGER_FACTORY_CLASS_NAME, 
+//				"org.frameworkset.spi.remote.http.BBossClientConnectionManagerFactory");
 		return params;
 	}
+	
+	
+    protected static ClientConnectionManager createClientConnectionManager() throws KeyStoreException, NoSuchAlgorithmException, CertificateException, FileNotFoundException, IOException, KeyManagementException, UnrecoverableKeyException {
+        SchemeRegistry registry = new SchemeRegistry();
+        registry.register(
+                new Scheme("http", PlainSocketFactory.getSocketFactory(), 80));
+        
+       
+			ProMap ssls = ApplicationContext.getApplicationContext()
+					.getMapProperty("rpc.protocol.http.ssl.client");
+			ssls = null;
+			if (ssls == null) {
+				 registry.register(
+			                new Scheme("https", SSLSocketFactory.getSocketFactory(), 443));
+//				throw new Exception(
+//						"启用了ssl模式， 但是没有指定rpc.protocol.http.ssl.server 参数，请检查文件org/frameworkset/spi/manager-rpc-http.xml是否正确设置了该参数。");
+			}
+			else
+			{
+				String trustStore_ = ssls.getString("trustStore");
+				String trustStorePassword = ssls
+						.getString("trustStorePassword");
+				KeyStore trustStore = SSLHelper.getKeyStore(trustStore_,
+						trustStorePassword);
+	
+				SSLSocketFactory socketFactory = new SSLSocketFactory(
+						trustStore);
+				 registry.register(
+			                new Scheme("https", socketFactory, 443));
+			}
+       
+
+        ClientConnectionManager connManager = null;     
+       
+        
+        ClientConnectionManagerFactory factory = null;
+
+     
+       
+        connManager = new ThreadSafeClientConnManager(params, registry); 
+        
+        
+        return connManager;
+    }
 	
 	private static Map<String,HttpClient> cacheObjects = new HashMap<String,HttpClient>();
 	private static HttpClient buildHttpClient_(RPCAddress address) throws Exception
 	{
-		HttpClient httpclient = new DefaultHttpClient();
+		HttpClient httpclient = new DefaultHttpClient(clientconnectionManager,params);
 		
 		
-		if (!address.getProtocol().equals(Target.BROADCAST_TYPE_HTTPS)) {
-
-		} else {
-			ProMap ssls = ApplicationContext.getApplicationContext()
-					.getMapProperty("rpc.protocol.http.ssl.client");
-			if (ssls == null) {
-				throw new Exception(
-						"启用了ssl模式， 但是没有指定rpc.protocol.http.ssl.server 参数，请检查文件org/frameworkset/spi/manager-rpc-http.xml是否正确设置了该参数。");
-			}
-			String trustStore_ = ssls.getString("trustStore");
-			String trustStorePassword = ssls
-					.getString("trustStorePassword");
-			KeyStore trustStore = SSLHelper.getKeyStore(trustStore_,
-					trustStorePassword);
-
-			SSLSocketFactory socketFactory = new SSLSocketFactory(
-					trustStore);
-			Scheme sch = new Scheme("https", socketFactory, address
-					.getPort());
-			
-			httpclient.getConnectionManager().getSchemeRegistry().register(
-					sch);
-		}
+//		if (!address.getProtocol().equals(Target.BROADCAST_TYPE_HTTPS)) {
+//
+//		} else {
+//			ProMap ssls = ApplicationContext.getApplicationContext()
+//					.getMapProperty("rpc.protocol.http.ssl.client");
+//			if (ssls == null) {
+//				throw new Exception(
+//						"启用了ssl模式， 但是没有指定rpc.protocol.http.ssl.server 参数，请检查文件org/frameworkset/spi/manager-rpc-http.xml是否正确设置了该参数。");
+//			}
+//			String trustStore_ = ssls.getString("trustStore");
+//			String trustStorePassword = ssls
+//					.getString("trustStorePassword");
+//			KeyStore trustStore = SSLHelper.getKeyStore(trustStore_,
+//					trustStorePassword);
+//
+//			SSLSocketFactory socketFactory = new SSLSocketFactory(
+//					trustStore);
+//			Scheme sch = new Scheme("https", socketFactory, address
+//					.getPort());
+//			
+//			httpclient.getConnectionManager().getSchemeRegistry().register(
+//					sch);
+//		}
 		
 		return httpclient;
 	}
@@ -191,7 +248,8 @@ public class Client {
 		HttpClient httpclient = null;
 		HttpPost httppost = null;
 		try {
-			httpclient = buildHttpClient(address);
+//			httpclient = buildHttpClient(address);
+			httpclient = buildHttpClient_( address);
 			
 			String address_real = TargetImpl.buildWebserviceURL(address);
 			httppost = new HttpPost(address_real);
@@ -274,8 +332,16 @@ public class Client {
 					}
 				}
 			}
-			if(!usepool)
-				shutdownclient(httpclient);
+			else if(!usepool)
+			{
+//				shutdownclient(httpclient);
+				try {
+					httppost.abort();
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 		}
 
 		// When HttpClient instance is no longer needed,

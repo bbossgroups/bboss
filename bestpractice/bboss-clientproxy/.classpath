@@ -7,7 +7,6 @@
 	<classpathentry kind="lib" path="lib/bboss-http.jar" sourcepath="/bbossaop"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="lib" path="lib/cglib-2.2.jar"/>
-	<classpathentry kind="lib" path="lib/httpclient-4.0.3.jar"/>
 	<classpathentry kind="lib" path="lib/jasypt-1.6.jar"/>
 	<classpathentry kind="lib" path="lib/frameworkset-util.jar"/>
 	<classpathentry kind="lib" path="lib/jakarta-oro-2.0.8.jar"/>
@@ -21,5 +20,7 @@
 	<classpathentry kind="lib" path="lib/commons-lang-2.1.jar"/>
 	<classpathentry kind="lib" path="lib/icu4j-4_2_1.jar"/>
 	<classpathentry kind="lib" path="lib/bboss-soa.jar" sourcepath="/bboss-soa"/>
+	<classpathentry kind="lib" path="lib/httpclient-4.0.1.jar" sourcepath="D:/workspace/httpcomponents-client-4.0.1"/>
+	<classpathentry kind="lib" path="lib/bboss-jms.jar" sourcepath="/bbossaop"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>

@@ -16,6 +16,8 @@
 
 package org.frameworkset.spi.remote.clientproxy;
 
+import java.util.concurrent.atomic.AtomicLong;
+
 import org.frameworkset.spi.ClientProxyContext;
 import org.junit.Before;
 import org.junit.Test;
@@ -34,6 +36,8 @@ public class ClientTest {
 	WSService WSService; 
 	ClientInf defaultinf ; 
 	ClientInf simpleinf;
+	
+	static java.util.concurrent.atomic.AtomicLong longcount = new AtomicLong(0);
 	@Before
 	public void init()
 	{
@@ -129,6 +133,101 @@ public class ClientTest {
 		System.out.println("testSimpleClient:" +re + "," + (e -s));
 		
 	}
+	
+	public static void main(String[] args)
+	{
+		WSService WSService = ClientProxyContext.getSimpleClientBean("org/frameworkset/web/ws/testwsmodule.xml", 
+				"(http::localhost:8080/bboss-mvc/http.rpc)" +
+				"/mysfirstwsservice", 
+				WSService.class);
+		WSService.sayHello("");
+//		t tt = new t(WSService);
+		t tt1 = new t(WSService);
+		t tt2 = new t(WSService);
+		t tt3 = new t(WSService);
+		t tt4 = new t(WSService);
+		t tt5 = new t(WSService);
+		t tt6 = new t(WSService);
+		t tt7 = new t(WSService);
+		t tt8 = new t(WSService);
+		t tt9 = new t(WSService);
+		t tt10 = new t(WSService);
+		long s = System.currentTimeMillis();
+		tt1.start();
+		tt2.start();
+		tt3.start();
+		tt4.start();
+		tt5.start();
+		tt6.start();
+		tt7.start();
+		tt8.start();
+		tt9.start();
+		tt10.start();
+		
+		try {
+			tt1.join();
+			tt2.join();
+			tt3.join();
+			tt4.join();
+			tt5.join();
+			tt6.join();
+			tt7.join();
+			tt8.join();
+			tt9.join();
+			tt10.join();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		long e = System.currentTimeMillis();
+		
+		
+//		long count = tt1.getCount() + tt2.getCount()
+//				+ tt3.getCount()
+//				+ tt4.getCount()
+//				+ tt5.getCount()
+//				+ tt6.getCount()
+//				+ tt7.getCount()
+//				+ tt8.getCount()
+//				+ tt9.getCount()
+//				+ tt10.getCount()
+//				;
+		long times = (10 * 10 * 10000)/((e-s)/1000);		System.out.println(times);
+	}
 
+	public static class t extends Thread
+	{
+		WSService WSService; 
+		public t(WSService WSService)
+		{
+			this.WSService = WSService;
+		}
+		long count = 0;
+		
+		public void run()
+		{
+			
+			long e = 0;
+			long i = 10  * 10000;
+			
+//			long s = System.currentTimeMillis();
+			while(true)
+			{
+				String re = WSService.sayHello("¶à¶à");
+//				longcount.incrementAndGet();
+//				e = System.currentTimeMillis() -s;
+				e ++;
+				if(e >= i)
+					break;
+			}
+			
+//			System.out.println("testMvcClient:" + (e -s));
+		}
+		
+		public long getCount()
+		{
+			return count;
+		}
+	}
 
 }

@@ -84,8 +84,6 @@
 	<classpathentry kind="lib" path="lib/mina/mina-transport-serial-2.0.0-RC1.jar"/>
 	<classpathentry kind="lib" path="lib/http/httpcore-4.0.1.jar" sourcepath="/httpcore"/>
 	<classpathentry kind="lib" path="lib/http/httpcore-nio-4.0.1.jar" sourcepath="/httpcore-nio"/>
-	<classpathentry kind="lib" path="lib/http/httpclient-4.0.3.jar" sourcepath="/httpclient"/>
-	<classpathentry kind="lib" path="lib/http/httpmime-4.0.3.jar"/>
 	<classpathentry kind="lib" path="lib/quartz/quartz-all-1.8.4.jar"/>
 	<classpathentry kind="lib" path="/bboss-persistent/lib/derby/derby.jar"/>
 	<classpathentry kind="lib" path="/bboss-persistent/lib/derby/derbyclient.jar"/>
@@ -102,5 +100,7 @@
 	<classpathentry kind="lib" path="lib/cxf/spring-core-2.5.5.jar"/>
 	<classpathentry kind="lib" path="lib/cxf/spring-web-2.5.5.jar"/>
 	<classpathentry kind="lib" path="lib/bboss-soa.jar" sourcepath="/bboss-soa"/>
+	<classpathentry kind="lib" path="lib/http/httpclient-4.0.1.jar"/>
+	<classpathentry kind="lib" path="lib/http/httpmime-4.0.1.jar"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>

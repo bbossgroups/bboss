@@ -30,11 +30,11 @@ import javax.jws.WebService;
 public class WSServiceImpl implements WSService{
 
 	public String sayHello(String duoduo) {
-		System.out.println("ModuleService»¶Ó­Äú!" + duoduo);
+//		System.out.println("ModuleService»¶Ó­Äú!" + duoduo);
 	
 		
 
-		return "ModuleService»¶Ó­Äú!" + duoduo;
+		return duoduo;
 	}
 
 }

@@ -35,7 +35,7 @@
 			<!-- 缓冲窗口大小 -->
 			<property name="http.socket.buffer-size" value="8192" />
 			<property name="http.conn-manager.timeout" value="60" />
-			<property name="http.soLinger" value="-1" />
+			<property name="http.soLinger" value="0" />
 			
 			<property name="http.usepool" value="true" />
 			

@@ -71,6 +71,10 @@ public class WSClient {
 				"bboss-mvc/cxfservices/mysfirstwsservicePort",WSService.class);
 		System.out.println(wsservice.sayHello("¶à¶à"));
 	}
+	
+	
+	
+	
 	                                                                                                                          
 
 }

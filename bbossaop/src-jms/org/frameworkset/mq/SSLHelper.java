@@ -36,7 +36,9 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.TrustManagerFactory;
 
-import org.testng.log4testng.Logger;
+import org.apache.log4j.Logger;
+
+
 
 /**
  * <p>
