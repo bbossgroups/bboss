@@ -14,9 +14,8 @@
  *  limitations under the License.
  */
 
-package org.frameworkset.spi.remote;
+package org.frameworkset.spi.remote.clientproxy;
 
-import org.frameworkset.spi.remote.ConcurrentTest.O;
 
 
 /**
@@ -30,13 +29,6 @@ import org.frameworkset.spi.remote.ConcurrentTest.O;
  */
 public interface RPCTestInf
 {
-	public Object getCount();
-	public void sayHello(String name);
-	public byte[] getBytes(String name);
-	public String getString(String name);
-	public void throwexcpetion() throws Exception;
-	public Object getParameter();
-	public O getO();
 	
 	 public String sayHelloWorld(String name);
 	

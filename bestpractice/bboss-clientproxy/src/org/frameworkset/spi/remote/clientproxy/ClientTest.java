@@ -146,7 +146,7 @@ public class ClientTest {
 		client.helloworld("aaa");
 	}
 	
-	public static void main(String[] args)
+	public static void testHttp()
 	{
 		WSService WSService = ClientProxyContext.getSimpleClientBean("org/frameworkset/web/ws/testwsmodule.xml", 
 				"(http::localhost:8080/bboss-mvc/http.rpc)" +
@@ -206,6 +206,75 @@ public class ClientTest {
 //				;
 		long times = (10 * 10 * 10000)/((e-s)/1000);		System.out.println(times);
 	}
+	
+	
+	public static void testNetty()
+	{
+		RPCTestInf WSService = ClientProxyContext.getSimpleClientBean("org/frameworkset/spi/remote/manager-rpc-test.xml", 
+				"(netty::192.168.1.22:12347)" +
+				"/rpc.test", 
+				RPCTestInf.class);
+		WSService.sayHelloWorld("你好，多多");
+//		t tt = new t(WSService);
+		tnetty tt1 = new tnetty(WSService);
+		tnetty tt2 = new tnetty(WSService);
+		tnetty tt3 = new tnetty(WSService);
+		tnetty tt4 = new tnetty(WSService);
+		tnetty tt5 = new tnetty(WSService);
+		tnetty tt6 = new tnetty(WSService);
+		tnetty tt7 = new tnetty(WSService);
+		tnetty tt8 = new tnetty(WSService);
+		tnetty tt9 = new tnetty(WSService);
+		tnetty tt10 = new tnetty(WSService);
+		long s = System.currentTimeMillis();
+		tt1.start();
+		tt2.start();
+		tt3.start();
+		tt4.start();
+		tt5.start();
+		tt6.start();
+		tt7.start();
+		tt8.start();
+		tt9.start();
+		tt10.start();
+		
+		try {
+			tt1.join();
+			tt2.join();
+			tt3.join();
+			tt4.join();
+			tt5.join();
+			tt6.join();
+			tt7.join();
+			tt8.join();
+			tt9.join();
+			tt10.join();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		long e = System.currentTimeMillis();
+		
+		
+//		long count = tt1.getCount() + tt2.getCount()
+//				+ tt3.getCount()
+//				+ tt4.getCount()
+//				+ tt5.getCount()
+//				+ tt6.getCount()
+//				+ tt7.getCount()
+//				+ tt8.getCount()
+//				+ tt9.getCount()
+//				+ tt10.getCount()
+//				;
+		long times = (10 * 10 * 10000)/((e-s)/1000);		System.out.println(times);
+	}
+	
+	public static void main(String[] args)
+	{
+//		testHttp();
+		testNetty();
+		
+	}
 
 	public static class t extends Thread
 	{
@@ -214,7 +283,6 @@ public class ClientTest {
 		{
 			this.WSService = WSService;
 		}
-		long count = 0;
 		
 		public void run()
 		{
@@ -236,10 +304,39 @@ public class ClientTest {
 //			System.out.println("testMvcClient:" + (e -s));
 		}
 		
-		public long getCount()
+	
+	}
+	
+	public static class tnetty extends Thread
+	{
+		RPCTestInf WSService; 
+		public tnetty(RPCTestInf WSService)
 		{
-			return count;
+			this.WSService = WSService;
 		}
+		
+		
+		public void run()
+		{
+			
+			long e = 0;
+			long i = 10  * 10000;
+			
+//			long s = System.currentTimeMillis();
+			while(true)
+			{
+				String re = WSService.sayHelloWorld("你好,多多");
+//				longcount.incrementAndGet();
+//				e = System.currentTimeMillis() -s;
+				e ++;
+				if(e >= i)
+					break;
+			}
+			
+//			System.out.println("testMvcClient:" + (e -s));
+		}
+		
+		
 	}
 
 }

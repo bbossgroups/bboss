@@ -49,7 +49,7 @@ public class NettyRPCServer
 {
     private Executor bossExecutor;
     private Executor workerExecutor;
-    private static Logger log = Logger.getLogger(MinaRPCServer.class);
+    private static Logger log = Logger.getLogger(NettyRPCServer.class);
     public ProMap conparams = null;
     final static ChannelGroup allChannels = new DefaultChannelGroup("netty-server" );   
 //  public static boolean defaultlongconnection ;

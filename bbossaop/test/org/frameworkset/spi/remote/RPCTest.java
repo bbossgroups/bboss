@@ -49,6 +49,12 @@ public class RPCTest implements RPCTestInf
         System.out.println("Hello " + name);
         
     }
+    
+    public String sayHelloWorld(String name)
+    {
+        return name;
+        
+    }
     public void throwexcpetion() throws Exception
     {
     	throw new TestRPCException("throwexcpetion:invoker.");
