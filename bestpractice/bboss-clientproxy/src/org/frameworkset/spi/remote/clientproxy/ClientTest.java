@@ -19,6 +19,7 @@ package org.frameworkset.spi.remote.clientproxy;
 import java.util.concurrent.atomic.AtomicLong;
 
 import org.frameworkset.spi.ClientProxyContext;
+import org.frameworkset.spi.DefaultApplicationContext;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -132,6 +133,17 @@ public class ClientTest {
 		long e = System.currentTimeMillis();
 		System.out.println("testSimpleClient:" +re + "," + (e -s));
 		
+	}
+	@Test
+	public void testAopFactoryPattern()
+	{
+		 
+		//定义容器对象
+		DefaultApplicationContext context = DefaultApplicationContext.getApplicationContext("org/frameworkset/spi/remote/clientproxy/consumer.xml");
+		//获取客户端组件实例
+		ClientInf client = context.getTBeanObject("clientservice", ClientInf.class);
+		//发起远程方法调用
+		client.helloworld("aaa");
 	}
 	
 	public static void main(String[] args)
