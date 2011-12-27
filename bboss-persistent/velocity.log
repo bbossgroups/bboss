@@ -499,3 +499,407 @@ org.apache.velocity.exception.ResourceNotFoundException: ClasspathResourceLoader
 2011-12-25 14:50:56,000 - Velocimacro : autoload off : VM system will not automatically reload global library macros
 2011-12-25 14:50:56,000 - Velocimacro : Velocimacro : initialization complete.
 2011-12-25 14:50:56,000 - RuntimeInstance successfully initialized.
+2011-12-27 14:19:23,343 - Log4JLogChute initialized using file 'velocity.log'
+2011-12-27 14:19:23,343 - The version of log4j being used does not support the "trace" level.
+2011-12-27 14:19:23,343 - *******************************************************************
+2011-12-27 14:19:23,343 - Starting Apache Velocity v1.6.4 (compiled: 2010-04-27 15:31:23)
+2011-12-27 14:19:23,343 - RuntimeInstance initializing.
+2011-12-27 14:19:23,343 - Default Properties File: org\apache\velocity\runtime\defaults\velocity.properties
+2011-12-27 14:19:23,343 - Trying to use logger class org.apache.velocity.runtime.log.AvalonLogChute
+2011-12-27 14:19:23,343 - Target log system for org.apache.velocity.runtime.log.AvalonLogChute is not available (java.lang.NoClassDefFoundError: org/apache/log/format/Formatter).  Falling back to next log system...
+2011-12-27 14:19:23,343 - Trying to use logger class org.apache.velocity.runtime.log.Log4JLogChute
+2011-12-27 14:19:23,343 - Using logger class org.apache.velocity.runtime.log.Log4JLogChute
+2011-12-27 14:19:23,359 - Default ResourceManager initializing. (class org.apache.velocity.runtime.resource.ResourceManagerImpl)
+2011-12-27 14:19:23,359 - ResourceLoader instantiated: org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+2011-12-27 14:19:23,359 - ClasspathResourceLoader : initialization complete.
+2011-12-27 14:19:23,375 - ResourceCache: initialized (class org.apache.velocity.runtime.resource.ResourceCacheImpl) with class java.util.Collections$SynchronizedMap cache map.
+2011-12-27 14:19:23,375 - Default ResourceManager initialization complete.
+2011-12-27 14:19:23,375 - Loaded System Directive: org.apache.velocity.runtime.directive.Define
+2011-12-27 14:19:23,375 - Loaded System Directive: org.apache.velocity.runtime.directive.Break
+2011-12-27 14:19:23,375 - Loaded System Directive: org.apache.velocity.runtime.directive.Evaluate
+2011-12-27 14:19:23,375 - Loaded System Directive: org.apache.velocity.runtime.directive.Literal
+2011-12-27 14:19:23,375 - Loaded System Directive: org.apache.velocity.runtime.directive.Macro
+2011-12-27 14:19:23,375 - Loaded System Directive: org.apache.velocity.runtime.directive.Parse
+2011-12-27 14:19:23,375 - Loaded System Directive: org.apache.velocity.runtime.directive.Include
+2011-12-27 14:19:23,375 - Loaded System Directive: org.apache.velocity.runtime.directive.Foreach
+2011-12-27 14:19:23,375 - Velocity was not initialized! Calling init()...
+2011-12-27 14:19:23,406 - Velocity was not initialized! Calling init()...
+2011-12-27 14:19:23,406 - Velocity was not initialized! Calling init()...
+2011-12-27 14:19:23,406 - Velocity was not initialized! Calling init()...
+2011-12-27 14:19:23,406 - Velocity was not initialized! Calling init()...
+2011-12-27 14:19:23,406 - Velocity was not initialized! Calling init()...
+2011-12-27 14:19:23,421 - Velocity was not initialized! Calling init()...
+2011-12-27 14:19:23,421 - Velocity was not initialized! Calling init()...
+2011-12-27 14:19:23,468 - Velocity was not initialized! Calling init()...
+2011-12-27 14:19:23,468 - Velocity was not initialized! Calling init()...
+2011-12-27 14:19:23,468 - Velocity was not initialized! Calling init()...
+2011-12-27 14:19:23,468 - Velocity was not initialized! Calling init()...
+2011-12-27 14:19:23,468 - Velocity was not initialized! Calling init()...
+2011-12-27 14:19:23,468 - Velocity was not initialized! Calling init()...
+2011-12-27 14:19:23,468 - Velocity was not initialized! Calling init()...
+2011-12-27 14:19:23,468 - Velocity was not initialized! Calling init()...
+2011-12-27 14:19:23,468 - Velocity was not initialized! Calling init()...
+2011-12-27 14:19:23,468 - Velocity was not initialized! Calling init()...
+2011-12-27 14:19:23,468 - Velocity was not initialized! Calling init()...
+2011-12-27 14:19:23,468 - Velocity was not initialized! Calling init()...
+2011-12-27 14:19:23,468 - Created '20' parsers.
+2011-12-27 14:19:23,484 - Velocimacro : initialization starting.
+2011-12-27 14:19:23,484 - Velocimacro : "velocimacro.library" is not set.  Trying default library: VM_global_library.vm
+2011-12-27 14:19:23,484 - Velocity was not initialized! Calling init()...
+2011-12-27 14:19:23,484 - Could not load resource 'VM_global_library.vm' from ResourceLoader org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader: 
+org.apache.velocity.exception.ResourceNotFoundException: ClasspathResourceLoader Error: cannot find resource VM_global_library.vm
+	at org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader.getResourceStream(ClasspathResourceLoader.java:131)
+	at org.apache.velocity.runtime.resource.loader.ResourceLoader.resourceExists(ResourceLoader.java:224)
+	at org.apache.velocity.runtime.resource.ResourceManagerImpl.getLoaderForResource(ResourceManagerImpl.java:641)
+	at org.apache.velocity.runtime.resource.ResourceManagerImpl.getLoaderNameForResource(ResourceManagerImpl.java:624)
+	at org.apache.velocity.runtime.RuntimeInstance.getLoaderNameForResource(RuntimeInstance.java:1464)
+	at org.apache.velocity.runtime.VelocimacroFactory.initVelocimacro(VelocimacroFactory.java:159)
+	at org.apache.velocity.runtime.RuntimeInstance.init(RuntimeInstance.java:261)
+	at org.apache.velocity.runtime.RuntimeInstance.init(RuntimeInstance.java:589)
+	at org.apache.velocity.runtime.RuntimeSingleton.init(RuntimeSingleton.java:229)
+	at org.apache.velocity.app.Velocity.init(Velocity.java:107)
+	at com.frameworkset.util.VelocityUtil.init(VelocityUtil.java:218)
+	at com.frameworkset.util.VelocityUtil.evaluate(VelocityUtil.java:290)
+	at com.frameworkset.common.poolman.SQLParams.evaluateSqlTemplate(SQLParams.java:133)
+	at com.frameworkset.common.poolman.SQLParams.buildParams(SQLParams.java:179)
+	at com.frameworkset.common.poolman.SQLParams.buildParams(SQLParams.java:127)
+	at com.frameworkset.common.poolman.PreparedDBUtil.addPreparedBatch(PreparedDBUtil.java:3970)
+	at com.frameworkset.common.poolman.SQLExecutor.execute(SQLExecutor.java:380)
+	at com.frameworkset.common.poolman.SQLExecutor.execute(SQLExecutor.java:404)
+	at com.frameworkset.common.poolman.SQLExecutor.insertBeans(SQLExecutor.java:362)
+	at com.frameworkset.common.poolman.SQLExecutor.insertBean(SQLExecutor.java:674)
+	at com.frameworkset.common.TestLob.testNew(TestLob.java:46)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:585)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:44)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:15)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:41)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:20)
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:28)
+	at org.junit.internal.runners.statements.RunAfters.evaluate(RunAfters.java:31)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:70)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:44)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:180)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:41)
+	at org.junit.runners.ParentRunner$1.evaluate(ParentRunner.java:173)
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:28)
+	at org.junit.internal.runners.statements.RunAfters.evaluate(RunAfters.java:31)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:220)
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:50)
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:467)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:683)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:390)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:197)
+2011-12-27 14:19:23,484 - Velocimacro : Default library not found.
+2011-12-27 14:19:23,484 - Velocimacro : allowInline = true : VMs can be defined inline in templates
+2011-12-27 14:19:23,484 - Velocimacro : allowInlineToOverride = false : VMs defined inline may NOT replace previous VM definitions
+2011-12-27 14:19:23,484 - Velocimacro : allowInlineLocal = false : VMs defined inline will be global in scope if allowed.
+2011-12-27 14:19:23,484 - Velocimacro : autoload off : VM system will not automatically reload global library macros
+2011-12-27 14:19:23,484 - Velocimacro : Velocimacro : initialization complete.
+2011-12-27 14:19:23,484 - RuntimeInstance successfully initialized.
+2011-12-27 14:20:00,937 - Log4JLogChute initialized using file 'velocity.log'
+2011-12-27 14:20:00,937 - The version of log4j being used does not support the "trace" level.
+2011-12-27 14:20:00,937 - *******************************************************************
+2011-12-27 14:20:00,937 - Starting Apache Velocity v1.6.4 (compiled: 2010-04-27 15:31:23)
+2011-12-27 14:20:00,937 - RuntimeInstance initializing.
+2011-12-27 14:20:00,937 - Default Properties File: org\apache\velocity\runtime\defaults\velocity.properties
+2011-12-27 14:20:00,937 - Trying to use logger class org.apache.velocity.runtime.log.AvalonLogChute
+2011-12-27 14:20:00,937 - Target log system for org.apache.velocity.runtime.log.AvalonLogChute is not available (java.lang.NoClassDefFoundError: org/apache/log/format/Formatter).  Falling back to next log system...
+2011-12-27 14:20:00,937 - Trying to use logger class org.apache.velocity.runtime.log.Log4JLogChute
+2011-12-27 14:20:00,937 - Using logger class org.apache.velocity.runtime.log.Log4JLogChute
+2011-12-27 14:20:00,937 - Default ResourceManager initializing. (class org.apache.velocity.runtime.resource.ResourceManagerImpl)
+2011-12-27 14:20:00,953 - ResourceLoader instantiated: org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+2011-12-27 14:20:00,953 - ClasspathResourceLoader : initialization complete.
+2011-12-27 14:20:00,953 - ResourceCache: initialized (class org.apache.velocity.runtime.resource.ResourceCacheImpl) with class java.util.Collections$SynchronizedMap cache map.
+2011-12-27 14:20:00,953 - Default ResourceManager initialization complete.
+2011-12-27 14:20:00,953 - Loaded System Directive: org.apache.velocity.runtime.directive.Define
+2011-12-27 14:20:00,953 - Loaded System Directive: org.apache.velocity.runtime.directive.Break
+2011-12-27 14:20:00,968 - Loaded System Directive: org.apache.velocity.runtime.directive.Evaluate
+2011-12-27 14:20:00,968 - Loaded System Directive: org.apache.velocity.runtime.directive.Literal
+2011-12-27 14:20:00,968 - Loaded System Directive: org.apache.velocity.runtime.directive.Macro
+2011-12-27 14:20:00,968 - Loaded System Directive: org.apache.velocity.runtime.directive.Parse
+2011-12-27 14:20:00,968 - Loaded System Directive: org.apache.velocity.runtime.directive.Include
+2011-12-27 14:20:00,968 - Loaded System Directive: org.apache.velocity.runtime.directive.Foreach
+2011-12-27 14:20:00,968 - Velocity was not initialized! Calling init()...
+2011-12-27 14:20:01,000 - Velocity was not initialized! Calling init()...
+2011-12-27 14:20:01,000 - Velocity was not initialized! Calling init()...
+2011-12-27 14:20:01,000 - Velocity was not initialized! Calling init()...
+2011-12-27 14:20:01,000 - Velocity was not initialized! Calling init()...
+2011-12-27 14:20:01,000 - Velocity was not initialized! Calling init()...
+2011-12-27 14:20:01,000 - Velocity was not initialized! Calling init()...
+2011-12-27 14:20:01,062 - Velocity was not initialized! Calling init()...
+2011-12-27 14:20:01,062 - Velocity was not initialized! Calling init()...
+2011-12-27 14:20:01,062 - Velocity was not initialized! Calling init()...
+2011-12-27 14:20:01,062 - Velocity was not initialized! Calling init()...
+2011-12-27 14:20:01,062 - Velocity was not initialized! Calling init()...
+2011-12-27 14:20:01,062 - Velocity was not initialized! Calling init()...
+2011-12-27 14:20:01,062 - Velocity was not initialized! Calling init()...
+2011-12-27 14:20:01,062 - Velocity was not initialized! Calling init()...
+2011-12-27 14:20:01,062 - Velocity was not initialized! Calling init()...
+2011-12-27 14:20:01,062 - Velocity was not initialized! Calling init()...
+2011-12-27 14:20:01,062 - Velocity was not initialized! Calling init()...
+2011-12-27 14:20:01,062 - Velocity was not initialized! Calling init()...
+2011-12-27 14:20:01,062 - Velocity was not initialized! Calling init()...
+2011-12-27 14:20:01,062 - Created '20' parsers.
+2011-12-27 14:20:01,078 - Velocimacro : initialization starting.
+2011-12-27 14:20:01,078 - Velocimacro : "velocimacro.library" is not set.  Trying default library: VM_global_library.vm
+2011-12-27 14:20:01,078 - Velocity was not initialized! Calling init()...
+2011-12-27 14:20:01,078 - Could not load resource 'VM_global_library.vm' from ResourceLoader org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader: 
+org.apache.velocity.exception.ResourceNotFoundException: ClasspathResourceLoader Error: cannot find resource VM_global_library.vm
+	at org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader.getResourceStream(ClasspathResourceLoader.java:131)
+	at org.apache.velocity.runtime.resource.loader.ResourceLoader.resourceExists(ResourceLoader.java:224)
+	at org.apache.velocity.runtime.resource.ResourceManagerImpl.getLoaderForResource(ResourceManagerImpl.java:641)
+	at org.apache.velocity.runtime.resource.ResourceManagerImpl.getLoaderNameForResource(ResourceManagerImpl.java:624)
+	at org.apache.velocity.runtime.RuntimeInstance.getLoaderNameForResource(RuntimeInstance.java:1464)
+	at org.apache.velocity.runtime.VelocimacroFactory.initVelocimacro(VelocimacroFactory.java:159)
+	at org.apache.velocity.runtime.RuntimeInstance.init(RuntimeInstance.java:261)
+	at org.apache.velocity.runtime.RuntimeInstance.init(RuntimeInstance.java:589)
+	at org.apache.velocity.runtime.RuntimeSingleton.init(RuntimeSingleton.java:229)
+	at org.apache.velocity.app.Velocity.init(Velocity.java:107)
+	at com.frameworkset.util.VelocityUtil.init(VelocityUtil.java:218)
+	at com.frameworkset.util.VelocityUtil.evaluate(VelocityUtil.java:290)
+	at com.frameworkset.common.poolman.SQLParams.evaluateSqlTemplate(SQLParams.java:133)
+	at com.frameworkset.common.poolman.SQLParams.buildParams(SQLParams.java:179)
+	at com.frameworkset.common.poolman.SQLParams.buildParams(SQLParams.java:127)
+	at com.frameworkset.common.poolman.PreparedDBUtil.addPreparedBatch(PreparedDBUtil.java:3970)
+	at com.frameworkset.common.poolman.SQLExecutor.execute(SQLExecutor.java:380)
+	at com.frameworkset.common.poolman.SQLExecutor.execute(SQLExecutor.java:404)
+	at com.frameworkset.common.poolman.SQLExecutor.insertBeans(SQLExecutor.java:362)
+	at com.frameworkset.common.poolman.SQLExecutor.insertBean(SQLExecutor.java:674)
+	at com.frameworkset.common.TestLob.testNew(TestLob.java:45)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:585)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:44)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:15)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:41)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:20)
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:28)
+	at org.junit.internal.runners.statements.RunAfters.evaluate(RunAfters.java:31)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:70)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:44)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:180)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:41)
+	at org.junit.runners.ParentRunner$1.evaluate(ParentRunner.java:173)
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:28)
+	at org.junit.internal.runners.statements.RunAfters.evaluate(RunAfters.java:31)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:220)
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:50)
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:467)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:683)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:390)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:197)
+2011-12-27 14:20:01,078 - Velocimacro : Default library not found.
+2011-12-27 14:20:01,078 - Velocimacro : allowInline = true : VMs can be defined inline in templates
+2011-12-27 14:20:01,078 - Velocimacro : allowInlineToOverride = false : VMs defined inline may NOT replace previous VM definitions
+2011-12-27 14:20:01,078 - Velocimacro : allowInlineLocal = false : VMs defined inline will be global in scope if allowed.
+2011-12-27 14:20:01,078 - Velocimacro : autoload off : VM system will not automatically reload global library macros
+2011-12-27 14:20:01,078 - Velocimacro : Velocimacro : initialization complete.
+2011-12-27 14:20:01,078 - RuntimeInstance successfully initialized.
+2011-12-27 14:20:29,140 - Log4JLogChute initialized using file 'velocity.log'
+2011-12-27 14:20:29,140 - The version of log4j being used does not support the "trace" level.
+2011-12-27 14:20:29,140 - *******************************************************************
+2011-12-27 14:20:29,140 - Starting Apache Velocity v1.6.4 (compiled: 2010-04-27 15:31:23)
+2011-12-27 14:20:29,140 - RuntimeInstance initializing.
+2011-12-27 14:20:29,140 - Default Properties File: org\apache\velocity\runtime\defaults\velocity.properties
+2011-12-27 14:20:29,140 - Trying to use logger class org.apache.velocity.runtime.log.AvalonLogChute
+2011-12-27 14:20:29,140 - Target log system for org.apache.velocity.runtime.log.AvalonLogChute is not available (java.lang.NoClassDefFoundError: org/apache/log/format/Formatter).  Falling back to next log system...
+2011-12-27 14:20:29,140 - Trying to use logger class org.apache.velocity.runtime.log.Log4JLogChute
+2011-12-27 14:20:29,140 - Using logger class org.apache.velocity.runtime.log.Log4JLogChute
+2011-12-27 14:20:29,140 - Default ResourceManager initializing. (class org.apache.velocity.runtime.resource.ResourceManagerImpl)
+2011-12-27 14:20:29,156 - ResourceLoader instantiated: org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+2011-12-27 14:20:29,156 - ClasspathResourceLoader : initialization complete.
+2011-12-27 14:20:29,156 - ResourceCache: initialized (class org.apache.velocity.runtime.resource.ResourceCacheImpl) with class java.util.Collections$SynchronizedMap cache map.
+2011-12-27 14:20:29,156 - Default ResourceManager initialization complete.
+2011-12-27 14:20:29,156 - Loaded System Directive: org.apache.velocity.runtime.directive.Define
+2011-12-27 14:20:29,156 - Loaded System Directive: org.apache.velocity.runtime.directive.Break
+2011-12-27 14:20:29,156 - Loaded System Directive: org.apache.velocity.runtime.directive.Evaluate
+2011-12-27 14:20:29,156 - Loaded System Directive: org.apache.velocity.runtime.directive.Literal
+2011-12-27 14:20:29,171 - Loaded System Directive: org.apache.velocity.runtime.directive.Macro
+2011-12-27 14:20:29,171 - Loaded System Directive: org.apache.velocity.runtime.directive.Parse
+2011-12-27 14:20:29,171 - Loaded System Directive: org.apache.velocity.runtime.directive.Include
+2011-12-27 14:20:29,171 - Loaded System Directive: org.apache.velocity.runtime.directive.Foreach
+2011-12-27 14:20:29,171 - Velocity was not initialized! Calling init()...
+2011-12-27 14:20:29,203 - Velocity was not initialized! Calling init()...
+2011-12-27 14:20:29,203 - Velocity was not initialized! Calling init()...
+2011-12-27 14:20:29,203 - Velocity was not initialized! Calling init()...
+2011-12-27 14:20:29,203 - Velocity was not initialized! Calling init()...
+2011-12-27 14:20:29,203 - Velocity was not initialized! Calling init()...
+2011-12-27 14:20:29,203 - Velocity was not initialized! Calling init()...
+2011-12-27 14:20:29,265 - Velocity was not initialized! Calling init()...
+2011-12-27 14:20:29,265 - Velocity was not initialized! Calling init()...
+2011-12-27 14:20:29,265 - Velocity was not initialized! Calling init()...
+2011-12-27 14:20:29,265 - Velocity was not initialized! Calling init()...
+2011-12-27 14:20:29,265 - Velocity was not initialized! Calling init()...
+2011-12-27 14:20:29,265 - Velocity was not initialized! Calling init()...
+2011-12-27 14:20:29,265 - Velocity was not initialized! Calling init()...
+2011-12-27 14:20:29,265 - Velocity was not initialized! Calling init()...
+2011-12-27 14:20:29,265 - Velocity was not initialized! Calling init()...
+2011-12-27 14:20:29,265 - Velocity was not initialized! Calling init()...
+2011-12-27 14:20:29,265 - Velocity was not initialized! Calling init()...
+2011-12-27 14:20:29,265 - Velocity was not initialized! Calling init()...
+2011-12-27 14:20:29,265 - Velocity was not initialized! Calling init()...
+2011-12-27 14:20:29,265 - Created '20' parsers.
+2011-12-27 14:20:29,281 - Velocimacro : initialization starting.
+2011-12-27 14:20:29,281 - Velocimacro : "velocimacro.library" is not set.  Trying default library: VM_global_library.vm
+2011-12-27 14:20:29,281 - Velocity was not initialized! Calling init()...
+2011-12-27 14:20:29,281 - Could not load resource 'VM_global_library.vm' from ResourceLoader org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader: 
+org.apache.velocity.exception.ResourceNotFoundException: ClasspathResourceLoader Error: cannot find resource VM_global_library.vm
+	at org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader.getResourceStream(ClasspathResourceLoader.java:131)
+	at org.apache.velocity.runtime.resource.loader.ResourceLoader.resourceExists(ResourceLoader.java:224)
+	at org.apache.velocity.runtime.resource.ResourceManagerImpl.getLoaderForResource(ResourceManagerImpl.java:641)
+	at org.apache.velocity.runtime.resource.ResourceManagerImpl.getLoaderNameForResource(ResourceManagerImpl.java:624)
+	at org.apache.velocity.runtime.RuntimeInstance.getLoaderNameForResource(RuntimeInstance.java:1464)
+	at org.apache.velocity.runtime.VelocimacroFactory.initVelocimacro(VelocimacroFactory.java:159)
+	at org.apache.velocity.runtime.RuntimeInstance.init(RuntimeInstance.java:261)
+	at org.apache.velocity.runtime.RuntimeInstance.init(RuntimeInstance.java:589)
+	at org.apache.velocity.runtime.RuntimeSingleton.init(RuntimeSingleton.java:229)
+	at org.apache.velocity.app.Velocity.init(Velocity.java:107)
+	at com.frameworkset.util.VelocityUtil.init(VelocityUtil.java:218)
+	at com.frameworkset.util.VelocityUtil.evaluate(VelocityUtil.java:290)
+	at com.frameworkset.common.poolman.SQLParams.evaluateSqlTemplate(SQLParams.java:133)
+	at com.frameworkset.common.poolman.SQLParams.buildParams(SQLParams.java:179)
+	at com.frameworkset.common.poolman.SQLParams.buildParams(SQLParams.java:127)
+	at com.frameworkset.common.poolman.PreparedDBUtil.addPreparedBatch(PreparedDBUtil.java:3970)
+	at com.frameworkset.common.poolman.SQLExecutor.execute(SQLExecutor.java:380)
+	at com.frameworkset.common.poolman.SQLExecutor.execute(SQLExecutor.java:404)
+	at com.frameworkset.common.poolman.SQLExecutor.insertBeans(SQLExecutor.java:362)
+	at com.frameworkset.common.poolman.SQLExecutor.insertBean(SQLExecutor.java:674)
+	at com.frameworkset.common.TestLob.testNew(TestLob.java:45)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:585)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:44)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:15)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:41)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:20)
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:28)
+	at org.junit.internal.runners.statements.RunAfters.evaluate(RunAfters.java:31)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:70)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:44)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:180)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:41)
+	at org.junit.runners.ParentRunner$1.evaluate(ParentRunner.java:173)
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:28)
+	at org.junit.internal.runners.statements.RunAfters.evaluate(RunAfters.java:31)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:220)
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:50)
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:467)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:683)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:390)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:197)
+2011-12-27 14:20:29,281 - Velocimacro : Default library not found.
+2011-12-27 14:20:29,281 - Velocimacro : allowInline = true : VMs can be defined inline in templates
+2011-12-27 14:20:29,281 - Velocimacro : allowInlineToOverride = false : VMs defined inline may NOT replace previous VM definitions
+2011-12-27 14:20:29,281 - Velocimacro : allowInlineLocal = false : VMs defined inline will be global in scope if allowed.
+2011-12-27 14:20:29,281 - Velocimacro : autoload off : VM system will not automatically reload global library macros
+2011-12-27 14:20:29,281 - Velocimacro : Velocimacro : initialization complete.
+2011-12-27 14:20:29,281 - RuntimeInstance successfully initialized.
+2011-12-27 14:37:04,718 - Log4JLogChute initialized using file 'velocity.log'
+2011-12-27 14:37:04,718 - The version of log4j being used does not support the "trace" level.
+2011-12-27 14:37:04,718 - *******************************************************************
+2011-12-27 14:37:04,718 - Starting Apache Velocity v1.6.4 (compiled: 2010-04-27 15:31:23)
+2011-12-27 14:37:04,718 - RuntimeInstance initializing.
+2011-12-27 14:37:04,718 - Default Properties File: org\apache\velocity\runtime\defaults\velocity.properties
+2011-12-27 14:37:04,718 - Trying to use logger class org.apache.velocity.runtime.log.AvalonLogChute
+2011-12-27 14:37:04,718 - Target log system for org.apache.velocity.runtime.log.AvalonLogChute is not available (java.lang.NoClassDefFoundError: org/apache/log/format/Formatter).  Falling back to next log system...
+2011-12-27 14:37:04,718 - Trying to use logger class org.apache.velocity.runtime.log.Log4JLogChute
+2011-12-27 14:37:04,718 - Using logger class org.apache.velocity.runtime.log.Log4JLogChute
+2011-12-27 14:37:04,718 - Default ResourceManager initializing. (class org.apache.velocity.runtime.resource.ResourceManagerImpl)
+2011-12-27 14:37:04,718 - ResourceLoader instantiated: org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+2011-12-27 14:37:04,718 - ClasspathResourceLoader : initialization complete.
+2011-12-27 14:37:04,734 - ResourceCache: initialized (class org.apache.velocity.runtime.resource.ResourceCacheImpl) with class java.util.Collections$SynchronizedMap cache map.
+2011-12-27 14:37:04,734 - Default ResourceManager initialization complete.
+2011-12-27 14:37:04,734 - Loaded System Directive: org.apache.velocity.runtime.directive.Define
+2011-12-27 14:37:04,734 - Loaded System Directive: org.apache.velocity.runtime.directive.Break
+2011-12-27 14:37:04,734 - Loaded System Directive: org.apache.velocity.runtime.directive.Evaluate
+2011-12-27 14:37:04,734 - Loaded System Directive: org.apache.velocity.runtime.directive.Literal
+2011-12-27 14:37:04,734 - Loaded System Directive: org.apache.velocity.runtime.directive.Macro
+2011-12-27 14:37:04,734 - Loaded System Directive: org.apache.velocity.runtime.directive.Parse
+2011-12-27 14:37:04,750 - Loaded System Directive: org.apache.velocity.runtime.directive.Include
+2011-12-27 14:37:04,750 - Loaded System Directive: org.apache.velocity.runtime.directive.Foreach
+2011-12-27 14:37:04,750 - Velocity was not initialized! Calling init()...
+2011-12-27 14:37:04,781 - Velocity was not initialized! Calling init()...
+2011-12-27 14:37:04,781 - Velocity was not initialized! Calling init()...
+2011-12-27 14:37:04,828 - Velocity was not initialized! Calling init()...
+2011-12-27 14:37:04,828 - Velocity was not initialized! Calling init()...
+2011-12-27 14:37:04,828 - Velocity was not initialized! Calling init()...
+2011-12-27 14:37:04,828 - Velocity was not initialized! Calling init()...
+2011-12-27 14:37:04,828 - Velocity was not initialized! Calling init()...
+2011-12-27 14:37:04,843 - Velocity was not initialized! Calling init()...
+2011-12-27 14:37:04,843 - Velocity was not initialized! Calling init()...
+2011-12-27 14:37:04,843 - Velocity was not initialized! Calling init()...
+2011-12-27 14:37:04,843 - Velocity was not initialized! Calling init()...
+2011-12-27 14:37:04,843 - Velocity was not initialized! Calling init()...
+2011-12-27 14:37:04,843 - Velocity was not initialized! Calling init()...
+2011-12-27 14:37:04,843 - Velocity was not initialized! Calling init()...
+2011-12-27 14:37:04,843 - Velocity was not initialized! Calling init()...
+2011-12-27 14:37:04,843 - Velocity was not initialized! Calling init()...
+2011-12-27 14:37:04,843 - Velocity was not initialized! Calling init()...
+2011-12-27 14:37:04,843 - Velocity was not initialized! Calling init()...
+2011-12-27 14:37:04,843 - Velocity was not initialized! Calling init()...
+2011-12-27 14:37:04,843 - Created '20' parsers.
+2011-12-27 14:37:04,843 - Velocimacro : initialization starting.
+2011-12-27 14:37:04,843 - Velocimacro : "velocimacro.library" is not set.  Trying default library: VM_global_library.vm
+2011-12-27 14:37:04,843 - Velocity was not initialized! Calling init()...
+2011-12-27 14:37:04,843 - Could not load resource 'VM_global_library.vm' from ResourceLoader org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader: 
+org.apache.velocity.exception.ResourceNotFoundException: ClasspathResourceLoader Error: cannot find resource VM_global_library.vm
+	at org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader.getResourceStream(ClasspathResourceLoader.java:131)
+	at org.apache.velocity.runtime.resource.loader.ResourceLoader.resourceExists(ResourceLoader.java:224)
+	at org.apache.velocity.runtime.resource.ResourceManagerImpl.getLoaderForResource(ResourceManagerImpl.java:641)
+	at org.apache.velocity.runtime.resource.ResourceManagerImpl.getLoaderNameForResource(ResourceManagerImpl.java:624)
+	at org.apache.velocity.runtime.RuntimeInstance.getLoaderNameForResource(RuntimeInstance.java:1464)
+	at org.apache.velocity.runtime.VelocimacroFactory.initVelocimacro(VelocimacroFactory.java:159)
+	at org.apache.velocity.runtime.RuntimeInstance.init(RuntimeInstance.java:261)
+	at org.apache.velocity.runtime.RuntimeInstance.init(RuntimeInstance.java:589)
+	at org.apache.velocity.runtime.RuntimeSingleton.init(RuntimeSingleton.java:229)
+	at org.apache.velocity.app.Velocity.init(Velocity.java:107)
+	at com.frameworkset.util.VelocityUtil.init(VelocityUtil.java:218)
+	at com.frameworkset.util.VelocityUtil.evaluate(VelocityUtil.java:290)
+	at com.frameworkset.common.poolman.SQLParams.evaluateSqlTemplate(SQLParams.java:133)
+	at com.frameworkset.common.poolman.SQLParams.buildParams(SQLParams.java:179)
+	at com.frameworkset.common.poolman.SQLParams.buildParams(SQLParams.java:127)
+	at com.frameworkset.common.poolman.PreparedDBUtil.addPreparedBatch(PreparedDBUtil.java:3970)
+	at com.frameworkset.common.poolman.SQLExecutor.execute(SQLExecutor.java:380)
+	at com.frameworkset.common.poolman.SQLExecutor.execute(SQLExecutor.java:404)
+	at com.frameworkset.common.poolman.SQLExecutor.insertBeans(SQLExecutor.java:362)
+	at com.frameworkset.common.poolman.SQLExecutor.insertBean(SQLExecutor.java:674)
+	at com.frameworkset.common.TestLob.testNewBeanInsert(TestLob.java:64)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:585)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:44)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:15)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:41)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:20)
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:28)
+	at org.junit.internal.runners.statements.RunAfters.evaluate(RunAfters.java:31)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:70)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:44)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:180)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:41)
+	at org.junit.runners.ParentRunner$1.evaluate(ParentRunner.java:173)
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:28)
+	at org.junit.internal.runners.statements.RunAfters.evaluate(RunAfters.java:31)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:220)
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:50)
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:467)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:683)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:390)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:197)
+2011-12-27 14:37:04,859 - Velocimacro : Default library not found.
+2011-12-27 14:37:04,859 - Velocimacro : allowInline = true : VMs can be defined inline in templates
+2011-12-27 14:37:04,859 - Velocimacro : allowInlineToOverride = false : VMs defined inline may NOT replace previous VM definitions
+2011-12-27 14:37:04,859 - Velocimacro : allowInlineLocal = false : VMs defined inline will be global in scope if allowed.
+2011-12-27 14:37:04,859 - Velocimacro : autoload off : VM system will not automatically reload global library macros
+2011-12-27 14:37:04,859 - Velocimacro : Velocimacro : initialization complete.
+2011-12-27 14:37:04,859 - RuntimeInstance successfully initialized.

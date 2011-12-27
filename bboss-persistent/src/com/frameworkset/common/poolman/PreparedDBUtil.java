@@ -369,13 +369,63 @@ public class PreparedDBUtil extends DBUtil {
 					
 				}
 			}
-			else if(param.method.equals(Param.setBlob_int_blob))//#5
+			else if(param.method.equals(Param.setBlob_int_blob))//#5 //blob字段包含String和Blob对象存储到Blob类型字段的功能
 			{
-				statement.setBlob(param.index, (Blob)param.data);
-				if(statement_count != null)
+				if(param.data == null)
 				{
-					statement_count.setBlob(param.index, (Blob)param.data);
+					statement.setNull(param.index, Types.BLOB);
+//					statement.setBlob(param.index, (Blob)param.data);
+					if(statement_count != null)
+					{
+						statement_count.setNull(param.index, Types.BLOB);
+					}
 				}
+				else
+				{
+					if(param.data instanceof String)
+					{
+						InputStream in = null;
+
+						try
+						{
+
+							String data_str = (String)param.data;
+							int len =data_str.length();
+							in = new ByteArrayInputStream(data_str.getBytes());
+							statement.setBinaryStream(param.index, in, (int)len);
+							if(statement_count != null)
+							{
+								statement_count.setBinaryStream(param.index, in, (int)len);
+							}
+							
+						}
+						catch(SQLException e)
+						{
+							throw e;
+						}
+						catch(Exception e)
+						{
+							throw new NestedSQLException(e);
+						}
+						finally
+						{
+
+							if(in != null)
+								resources.add(in);
+							
+						}
+						
+					}
+					else
+					{
+						statement.setBlob(param.index, (Blob)param.data);
+						if(statement_count != null)
+						{
+							statement_count.setBlob(param.index, (Blob)param.data);
+						}
+					}
+				}
+				
 			}
 //			else if(param.method.equals(Param.setBlob_int_bytearray_String))//#6
 //			{
@@ -3219,8 +3269,33 @@ public class PreparedDBUtil extends DBUtil {
 		}
 		else
 		{
-//			this.setBinaryStream(i, getInputStream(x), Integer.MAX_VALUE);
 			this.addParam(i, x, Param.setBlob_int_File);
+		}
+	}
+	
+	public void setBlob(int i, String x) throws SQLException {
+//		try {
+//			this.initBigdata();
+//			BigData bigData = new BigData();
+//			bigData.bigdata = x;
+//			bigData.index = i;
+//			bigData.type = BigData.BLOB;
+//			Params.bigdatas.add(bigData);
+//			// if (this.action == INSERT)
+////			this.statement.setBlob(i, BLOB.empty_lob());
+//			
+//			this.addParam(i, BLOB.empty_lob(), Param.setBlob_int_File);
+//		} catch (SQLException e) {
+//			this.resetFromSetMethod(e);
+//		}
+		if(x == null)
+		{
+			this.setNull(i, Types.BLOB);
+		}
+		else
+		{
+//			this.setBinaryStream(i, getInputStream(x), Integer.MAX_VALUE);
+			this.addParam(i, x, Param.setBlob_int_blob);
 			
 		}
 	}

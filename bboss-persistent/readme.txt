@@ -23,6 +23,53 @@ bboss-persistent<-cas server [frameworkset-pool.jar]
 to do list:
 无
 #######update function list since bbossgroups-3.4 begin###########
+o PreparedDBUtil增加public void setBlob(int i, String x) throws SQLException 方法，用来直接向blob类型字段中存入字符串
+o 修改TestLob测试用例，用来演示SQLExecutor/ConfigSQLExecutor组件向Blob和clob中插入字符串的方法：
+	@Test
+	public void testNewSQLParamInsert() throws Exception
+	{
+		SQLParams params = new SQLParams();
+		params.addSQLParam("id", "1", SQLParams.STRING);
+		// ID,HOST_ID,PLUGIN_ID,CATEGORY_ID,NAME,DESCRIPTION,DATASOURCE_NAME,DRIVER,JDBC_URL,USERNAME,PASSWORD,VALIDATION_QUERY
+		params.addSQLParam("blobname", "abcdblob",
+				SQLParams.BLOB);
+		params.addSQLParam("clobname", "abcdclob",
+				SQLParams.CLOB);
+		SQLExecutor.insertBean("insert into test(id,blobname,clobname) values(#[id],#[blobname],#[clobname])", params);
+	}
+	@Test
+	public void testNewBeanInsert() throws Exception
+	{
+		LobBean bean = new LobBean();
+		bean.id = "2";
+		bean.blobname = "abcdblob";
+		bean.clobname = "abcdclob";
+		SQLExecutor.insertBean("insert into test(id,blobname,clobname) values(#[id],#[blobname],#[clobname])", bean);
+	}
+	
+	注意如果
+	public static class LobBean
+	{
+		private String id;
+		@Column(type="blob")
+		private String blobname;
+		@Column(type="clob")
+		private String clobname;
+	}
+	中type分别为blobfile或者clobfile时，就必须要求字段的值类型为以下三种：
+	1.java.io.File
+	2.MultipartFile
+	3.InputStream
+	
+	例如：
+	public static class LobBean
+	{
+		private String id;
+		@Column(type="blobfile")
+		private File blobname;
+		@Column(type="clobfile")
+		private File clobname;
+	}
 o SQLExecutor/ConfigSQLExecutor组件增加单字段多记录结果类型为List<String>的查询功能，使用方法如下：
 使用方法：
 @Test

@@ -541,6 +541,10 @@ public class SQLParams
 							{
 								type = Clob.class;
 							}
+							else if(type_.equals("blob"))
+							{
+								type = Blob.class;
+							}
 							else if(type_.equals("blobfile"))
 							{
 								type = blobfile.class;
@@ -855,6 +859,10 @@ public class SQLParams
         else if(type.equals(CLOB))
         {
             return Param.setClob_int_String;
+        }
+        else if(type.equals(BLOB))
+        {
+            return Param.setBlob_int_blob;
         }
         else if(type.equals(BYTE))    
             return Param.setByte_int_byte ;
