@@ -1031,8 +1031,7 @@ public class ObjectSerializable {
 	private static void appendBeanProperties(Object obj, Class type,
 			String dateformat, Writer ret, String[] filters)
 			throws IntrospectionException {
-		if(type.getName().equals("org.frameworkset.spi.serviceidentity.ServiceIDImpl"))
-			System.out.println();
+		
 		BeanInfo beanInfo = Introspector.getBeanInfo(type);
 		PropertyDescriptor[] attributes = beanInfo.getPropertyDescriptors();
 		for (int n = 0; n < attributes.length; n++) {
