@@ -33,7 +33,7 @@ import org.frameworkset.spi.SPIException;
  * @version 1.0
  */
 
-public class DefaultRemoteHandler {
+public class DefaultRemoteHandler implements RemoteHandler{
 
     
     /**

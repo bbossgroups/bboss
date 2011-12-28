@@ -49,6 +49,10 @@ import org.jgroups.util.Buffer;
 public abstract class BaseRPCIOHandler implements RPCIOHandler
 {
     private ThreadPoolExecutor reqest_threadpool ;
+    /**
+     * 用来标识是否采用对象结果类型
+     */
+    public static final boolean useOOB = true;
 
 //    public static ThreadPoolExecutor response_threadpool = ThreadPoolManagerFactory
 //            .getThreadPoolExecutor("RPCIOHandler.response.Threadpool");
@@ -411,7 +415,7 @@ public abstract class BaseRPCIOHandler implements RPCIOHandler
         Object retval;
         Object rsp_buf; // either byte[] or Buffer
         Header rsp_hdr;
-        RPCMessage rsp;
+        RPCMessage rsp = null;
 
         // i. Get the request correlator header from the msg and pass it to
         // the registered handler
@@ -446,53 +450,61 @@ public abstract class BaseRPCIOHandler implements RPCIOHandler
         // log.error("failure sending response; no transport available");
         // return;
         // }
-
-        // changed (bela Feb 20 2004): catch exception and return exception
-        try
-        { // retval could be an exception, or a real value
-            rsp_buf = Util.objectToByteBuffer(retval);
-        }
-        catch (Throwable t)
+        if(!useOOB)
         {
-            try
-            { // this call should succeed (all exceptions are serializable)
-                rsp_buf = Util.objectToByteBuffer(t);
-            }
-            catch (Throwable tt)
-            {
-                // if(log.isErrorEnabled())
-                // log.error("failed sending rsp: return value (" + retval +
-                // ") is not serializable");
-                return null;
-            }
+	        // changed (bela Feb 20 2004): catch exception and return exception
+	        try
+	        { // retval could be an exception, or a real value
+	            rsp_buf = Util.objectToByteBuffer(retval);
+	        }
+	        catch (Throwable t)
+	        {
+	            try
+	            { // this call should succeed (all exceptions are serializable)
+	                rsp_buf = Util.objectToByteBuffer(t);
+	            }
+	            catch (Throwable tt)
+	            {
+	                // if(log.isErrorEnabled())
+	                // log.error("failed sending rsp: return value (" + retval +
+	                // ") is not serializable");
+	                return null;
+	            }
+	        }
+	
+	        rsp = req.makeReply();
+	        boolean encrypt = SecurityContext.getSecurityManager().enableEncrypt();
+	        rsp.setEncrypt(encrypt);
+	        // rsp.setFlag(Message.OOB);
+	        if (rsp_buf instanceof Buffer)
+	        {
+	//            rsp.setBuffer(((Buffer) rsp_buf).getBuf());
+	//        	byte[] temp = null;
+	//			try {
+	//				temp = RequestCorrelator.encrypt((Buffer) rsp_buf);
+	//			} catch (Exception e) {
+	//				rsp.setEncrypt(false);
+	//				temp = ((Buffer) rsp_buf).getBuf();
+	//			}
+				try {
+					rsp.setBuffer(((Buffer) rsp_buf).getBuf());
+				} catch (Exception e) {
+					rsp.setEncrypt(false);
+				}
+	        }
+	        else if (rsp_buf instanceof byte[])
+				try {
+					rsp.setBuffer((byte[]) rsp_buf);
+				} catch (Exception e) {
+					rsp.setEncrypt(false);
+				}
         }
-
-        rsp = req.makeReply();
-        boolean encrypt = SecurityContext.getSecurityManager().enableEncrypt();
-        rsp.setEncrypt(encrypt);
-        // rsp.setFlag(Message.OOB);
-        if (rsp_buf instanceof Buffer)
+        else 
         {
-//            rsp.setBuffer(((Buffer) rsp_buf).getBuf());
-//        	byte[] temp = null;
-//			try {
-//				temp = RequestCorrelator.encrypt((Buffer) rsp_buf);
-//			} catch (Exception e) {
-//				rsp.setEncrypt(false);
-//				temp = ((Buffer) rsp_buf).getBuf();
-//			}
-			try {
-				rsp.setBuffer(((Buffer) rsp_buf).getBuf());
-			} catch (Exception e) {
-				rsp.setEncrypt(false);
-			}
+        	  rsp = req.makeReply();
+        	rsp.setResultSerial(RPCMessage.OOB);
+        	rsp.setData(retval);
         }
-        else if (rsp_buf instanceof byte[])
-			try {
-				rsp.setBuffer((byte[]) rsp_buf);
-			} catch (Exception e) {
-				rsp.setEncrypt(false);
-			}
         rsp_hdr = new Header(Header.RSP, hdr.getId(), false, name);
         rsp.putHeader(name, rsp_hdr);
         return rsp;
@@ -555,18 +567,27 @@ public abstract class BaseRPCIOHandler implements RPCIOHandler
                 {
                     RPCAddress sender = message_.getSrc();
                     Object retval = null;
-                    byte[] buf = message_.getBuffer();
-                    int offset = message_.getOffset(), length = message_.getLength();
-                    try
+                    if(message_.getResultSerial() != RPCMessage.OOB)
                     {
-                        retval = marshaller != null ? marshaller.objectFromByteBuffer(buf, offset, length) : Util
-                                .objectFromByteBuffer(buf, offset, length);
+                    	
+	                    byte[] buf = message_.getBuffer();
+	                    int offset = message_.getOffset(), length = message_.getLength();
+	                    try
+	                    {
+	                        retval = marshaller != null ? marshaller.objectFromByteBuffer(buf, offset, length) : Util
+	                                .objectFromByteBuffer(buf, offset, length);
+	                    }
+	                    catch (Exception e)
+	                    {
+	                        log.error("failed unmarshalling buffer into return value", e);
+	                        retval = e;
+	                    }
                     }
-                    catch (Exception e)
+                    else
                     {
-                        log.error("failed unmarshalling buffer into return value", e);
-                        retval = e;
+                    	retval = message_.getData();
                     }
+                    
                     coll.receiveResponse(retval, sender);
                 }
                 return null;

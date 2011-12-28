@@ -47,10 +47,10 @@ import org.apache.http.protocol.ResponseConnControl;
 import org.apache.http.protocol.ResponseContent;
 import org.apache.http.protocol.ResponseDate;
 import org.apache.http.protocol.ResponseServer;
-import org.frameworkset.mq.SSLHelper;
 import org.frameworkset.spi.ApplicationContext;
 import org.frameworkset.spi.assemble.ProMap;
 import org.frameworkset.spi.remote.RPCAddress;
+import org.frameworkset.spi.remote.SSLHelper;
 import org.frameworkset.spi.remote.Target;
 import org.frameworkset.spi.remote.mina.client.ClinentTransport;
 

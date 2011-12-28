@@ -82,7 +82,7 @@
 	<classpathentry kind="lib" path="lib/mina/mina-statemachine-2.0.0-RC1.jar"/>
 	<classpathentry kind="lib" path="lib/mina/mina-transport-apr-2.0.0-RC1.jar" sourcepath="D:/workspace/mina-2.0.0-M6/src/mina-transport-apr"/>
 	<classpathentry kind="lib" path="lib/mina/mina-transport-serial-2.0.0-RC1.jar"/>
-	<classpathentry kind="lib" path="lib/http/httpcore-4.0.1.jar" sourcepath="/httpcore"/>
+	<classpathentry kind="lib" path="lib/http/httpcore-4.0.1.jar" sourcepath="D:/workspace/httpcomponents-core-4.0.1"/>
 	<classpathentry kind="lib" path="lib/http/httpcore-nio-4.0.1.jar" sourcepath="/httpcore-nio"/>
 	<classpathentry kind="lib" path="lib/quartz/quartz-all-1.8.4.jar"/>
 	<classpathentry kind="lib" path="/bboss-persistent/lib/derby/derby.jar"/>
@@ -100,7 +100,7 @@
 	<classpathentry kind="lib" path="lib/cxf/spring-core-2.5.5.jar"/>
 	<classpathentry kind="lib" path="lib/cxf/spring-web-2.5.5.jar"/>
 	<classpathentry kind="lib" path="lib/bboss-soa.jar" sourcepath="/bboss-soa"/>
-	<classpathentry kind="lib" path="lib/http/httpclient-4.0.1.jar"/>
+	<classpathentry kind="lib" path="lib/http/httpclient-4.0.1.jar" sourcepath="D:/workspace/httpcomponents-client-4.0.1"/>
 	<classpathentry kind="lib" path="lib/http/httpmime-4.0.1.jar"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>

@@ -47,7 +47,11 @@ public class RPCMessage implements Serializable
     /** All headers are placed here */
     protected Headers headers;
     
+    protected Object data;
+    
     protected boolean encrypt = false;
+    
+    protected int resultSerial ;
     
     /**
      * 是否解密标记
@@ -256,12 +260,15 @@ public class RPCMessage implements Serializable
         RPCMessage retval = new RPCMessage(false);
         retval.dest = dest;
         retval.src_addr = src_addr;
+     
         retval.encrypt = this.encrypt;
 
         if (copy_buffer && buf != null)
         {
 
             retval.setBuffer(buf, offset, length);
+            retval.data = this.data;
+            retval.resultSerial = this.resultSerial;
         }
         retval.flag = flag;
         retval.headers = createHeaders(headers);
@@ -305,6 +312,8 @@ public class RPCMessage implements Serializable
     }
 
     protected static final Log log = LogFactory.getLog(RPCMessage.class);
+
+	public static final int OOB = 2;
     
     public void setEncrypt(boolean encrypt)
     {
@@ -330,5 +339,24 @@ public class RPCMessage implements Serializable
     		return String.valueOf(header.getValue());
     	return defaultValue;
     }
+
+	
+
+	public int getResultSerial() {
+		return resultSerial;
+	}
+
+	public void setResultSerial(int resultSerial) {
+		this.resultSerial = resultSerial;
+	}
+
+	public void setData(Object data) {
+		this.data = data;
+		
+	}
+
+	public Object getData() {
+		return data;
+	}
 
 }

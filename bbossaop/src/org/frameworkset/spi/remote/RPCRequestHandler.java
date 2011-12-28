@@ -16,8 +16,9 @@
 
 package org.frameworkset.spi.remote;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import java.lang.reflect.Method;
+
+import org.apache.log4j.Logger;
 import org.frameworkset.spi.remote.context.RequestContext;
 import org.frameworkset.spi.security.SecurityContext;
 
@@ -35,10 +36,21 @@ import org.frameworkset.spi.security.SecurityContext;
 public class RPCRequestHandler implements RequestHandler
 {
 	private Object server_obj;
-	 protected final Log log=LogFactory.getLog(getClass());
+	private Method callMethod ;
+	 protected final Logger log=Logger.getLogger(RPCRequestHandler.class);
 	public RPCRequestHandler(Object server_obj)
 	{
 		this.server_obj = server_obj;
+		try {
+			this.callMethod = server_obj.getClass().getDeclaredMethod("callMethod", new Class[]{ServiceID.class,
+			                     String.class,
+			                     Object[].class,
+			                     Class[].class});
+		} catch (SecurityException e) {
+			log.error(e);
+		} catch (NoSuchMethodException e) {
+			log.error(e);
+		}
 	}
 	/**
      * Message contains MethodCall. Execute it against *this* object and return result.
@@ -49,26 +61,32 @@ public class RPCRequestHandler implements RequestHandler
         RPCMethodCall  method_call;
 
         if(server_obj == null) {
-            if(log.isErrorEnabled()) log.error("no method handler is registered. Discarding request.");
+           log.error("no method handler is registered. Discarding request.");
             return null;
         }
-
-        if(req == null || req.getLength() == 0) {
-            if(log.isErrorEnabled()) log.error("message or message buffer is null");
-            return null;
+        if(req.getResultSerial() != RPCMessage.OOB)
+        {
+	        if(req == null || req.getLength() == 0) {
+	           log.error("message or message buffer is null");
+	            return null;
+	        }
+	
+	        try {
+	            body=Util.objectFromByteBuffer(req.getBuffer(), req.getOffset(), req.getLength());
+	                    
+	        }
+	        catch(Throwable e) {
+	           log.error("exception marshalling object", e);
+	            return e;
+	        }
         }
-
-        try {
-            body=Util.objectFromByteBuffer(req.getBuffer(), req.getOffset(), req.getLength());
-                    
-        }
-        catch(Throwable e) {
-            if(log.isErrorEnabled()) log.error("exception marshalling object", e);
-            return e;
+        else
+        {
+        	body = req.getData();
         }
 
         if(!(body instanceof RPCMethodCall)) {
-            if(log.isErrorEnabled()) log.error("message does not contain a MethodCall object");
+            log.error("message does not contain a MethodCall object");
             
             // create an exception to represent this and return it
             return  new IllegalArgumentException("message does not contain a MethodCall object") ;
@@ -90,7 +108,7 @@ public class RPCRequestHandler implements RequestHandler
             String method = (String)method_call.getArgs()[1];
             Class[] types = (Class[])method_call.getArgs()[3];
             context.preMethodCall( id, method, types, req.getHeaders());
-            return method_call.invoke(server_obj);
+            return method_call.invoke(server_obj,this.callMethod);
         }
         catch(Throwable x) {
             return x;
@@ -100,6 +118,9 @@ public class RPCRequestHandler implements RequestHandler
         	RequestContext.destoryRequestContext();
         }
     }
+	public Method getCallMethod() {
+		return callMethod;
+	}
     
 //    /**
 //     * 执行远程调用的准备功能，做认证和鉴权

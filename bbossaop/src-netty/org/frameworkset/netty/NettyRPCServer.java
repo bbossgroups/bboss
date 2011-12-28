@@ -27,7 +27,6 @@ import org.frameworkset.spi.BaseSPIManager;
 import org.frameworkset.spi.assemble.ProMap;
 import org.frameworkset.spi.remote.RPCAddress;
 import org.frameworkset.spi.remote.Target;
-import org.frameworkset.spi.remote.mina.server.MinaRPCServer;
 import org.jboss.netty.bootstrap.ServerBootstrap;
 import org.jboss.netty.channel.Channel;
 import org.jboss.netty.channel.group.ChannelGroup;

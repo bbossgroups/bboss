@@ -22,15 +22,10 @@ import java.io.ObjectInput;
 import java.io.ObjectOutput;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.log4j.Logger;
 import org.frameworkset.spi.security.SecurityContext;
+import org.frameworkset.util.ClassUtil;
 
 
 
@@ -52,7 +47,7 @@ public class RPCMethodCall implements Externalizable
     protected String method_name;
 
     /** The ID of a method, maps to a java.lang.reflect.Method */
-    protected short method_id=-1;
+//    protected short method_id=-1;
 
     /** The arguments of the method. */
     protected Object[] args;
@@ -60,34 +55,34 @@ public class RPCMethodCall implements Externalizable
     /** The class types, e.g., new Class[]{String.class, int.class}. */
     protected Class[] types;
 
-    /** The signature, e.g., new String[]{String.class.getName(), int.class.getName()}. */
-    protected String[] signature;
-
-    /** The Method of the call. */
-    protected Method method;
+//    /** The signature, e.g., new String[]{String.class.getName(), int.class.getName()}. */
+//    protected String[] signature;
+//
+//    /** The Method of the call. */
+//    protected Method method;
 
     /** To carry arbitrary data with a method call, data needs to be serializable if sent across the wire */
-    protected Map payload;
+//    protected Map payload;
 
-    protected static final Log log=LogFactory.getLog(RPCMethodCall.class);
+    protected static final Logger log=Logger.getLogger(RPCMethodCall.class);
 
-    /** Which mode to use. */
-    protected short mode=OLD;
-
-    /** Infer the method from the arguments. */
-    protected static final short OLD=1;
-
-    /** Explicitly ship the method, caller has to determine method himself. */
-    protected static final short METHOD=2;
-
-    /** Use class information. */
-    protected static final short TYPES=3;
-
-    /** Provide a signature, similar to JMX. */
-    protected static final short SIGNATURE=4;
-
-    /** Use an ID to map to a method */
-    protected static final short ID=5;
+//    /** Which mode to use. */
+//    protected short mode=OLD;
+//
+//    /** Infer the method from the arguments. */
+//    protected static final short OLD=1;
+//
+//    /** Explicitly ship the method, caller has to determine method himself. */
+//    protected static final short METHOD=2;
+//
+//    /** Use class information. */
+//    protected static final short TYPES=3;
+//
+//    /** Provide a signature, similar to JMX. */
+//    protected static final short SIGNATURE=4;
+//
+//    /** Use an ID to map to a method */
+//    protected static final short ID=5;
     
     /**
      * 方法执行上下文环境，主要有安全和其他属性消息
@@ -103,14 +98,14 @@ public class RPCMethodCall implements Externalizable
     }
 
 
-    public RPCMethodCall(Method method) {
-        this(method, null);
-    }
-
-    public RPCMethodCall(Method method, Object[] arguments) {
-        init(method);
-        if(arguments != null) args=arguments;
-    }
+//    public RPCMethodCall(Method method) {
+//        this(method, null);
+//    }
+//
+//    public RPCMethodCall(Method method, Object[] arguments) {
+//        init(method);
+//        if(arguments != null) args=arguments;
+//    }
 
     /**
      *
@@ -120,13 +115,13 @@ public class RPCMethodCall implements Externalizable
      */
     public RPCMethodCall(String method_name, Object[] args,SecurityContext securityContext) {
         this.method_name=method_name;
-        this.mode=OLD;
+//        this.mode=OLD;
         this.args=args;
     }
 
     public RPCMethodCall(short method_id, Object[] args,SecurityContext securityContext) {
-        this.method_id=method_id;
-        this.mode=ID;
+//        this.method_id=method_id;
+//        this.mode=ID;
         this.args=args;
     }
 
@@ -135,55 +130,39 @@ public class RPCMethodCall implements Externalizable
         this.method_name=method_name;
         this.args=args;
         this.types=types;
-        this.mode=TYPES;
+//        this.mode=TYPES;
         this.securityContext = securityContext;
     }
 
     public RPCMethodCall(String method_name, Object[] args, String[] signature,SecurityContext securityContext) {
         this.method_name=method_name;
         this.args=args;
-        this.signature=signature;
-        this.mode=SIGNATURE;
+//        this.signature=signature;
+//        this.mode=SIGNATURE;
         this.securityContext = securityContext;
     }
 
-    private void init(Method method) {
-        this.method=method;
-        this.mode=METHOD;
-        method_name=method.getName();
-    }
+//    private void init(Method method) {
+////        this.method=method;
+////        this.mode=METHOD;
+//        method_name=method.getName();
+//    }
 
 
-    public int getMode() {
-        return mode;
-    }
+//    public int getMode() {
+//        return mode;
+//    }
 
 
 
-    /**
-     * returns the name of the method to be invoked using this method call object
-     * @return a case sensitive name, can be null for an invalid method call
-     */
-    public String getName() {
-        return method_name;
-    }
 
-    /**
-     * sets the name for this MethodCall and allowing you to reuse the same object for
-     * a different method invokation of a different method
-     * @param n - a case sensitive method name
-     */
-    public void setName(String n) {
-        method_name=n;
-    }
-
-    public short getId() {
-        return method_id;
-    }
-
-    public void setId(short method_id) {
-        this.method_id=method_id;
-    }
+//    public short getId() {
+//        return method_id;
+//    }
+//
+//    public void setId(short method_id) {
+//        this.method_id=method_id;
+//    }
 
     /**
      * returns an ordered list of arguments used for the method invokation
@@ -198,48 +177,48 @@ public class RPCMethodCall implements Externalizable
             this.args=args;
     }
 
-    public Method getMethod() {
-        return method;
-    }
+//    public Method getMethod() {
+//        return method;
+//    }
 
 
-    public void setMethod(Method m) {
-        init(m);
-    }
+//    public void setMethod(Method m) {
+//        init(m);
+//    }
 
 
-    public synchronized Object put(Object key, Object value) {
-        if(payload == null)
-            payload=new HashMap();
-        return payload.put(key, value);
-    }
+//    public synchronized Object put(Object key, Object value) {
+//        if(payload == null)
+//            payload=new HashMap();
+//        return payload.put(key, value);
+//    }
 
-    public synchronized Object get(Object key) {
-        return payload != null? payload.get(key) : null;
-    }
+//    public synchronized Object get(Object key) {
+//        return payload != null? payload.get(key) : null;
+//    }
 
 
-    /**
-     *
-     * @param target_class
-     * @return
-     * @throws Exception
-     */
-    Method findMethod(Class target_class) throws Exception {
-        int     len=args != null? args.length : 0;
-        Method  m;
-
-        Method[] methods=getAllMethods(target_class);
-        for(int i=0; i < methods.length; i++) {
-            m=methods[i];
-            if(m.getName().equals(method_name)) {
-                if(m.getParameterTypes().length == len)
-                    return m;
-            }
-        }
-
-        return null;
-    }
+//    /**
+//     *
+//     * @param target_class
+//     * @return
+//     * @throws Exception
+//     */
+//    Method findMethod(Class target_class) throws Exception {
+//        int     len=args != null? args.length : 0;
+//        Method  m;
+//
+//        Method[] methods=getAllMethods(target_class);
+//        for(int i=0; i < methods.length; i++) {
+//            m=methods[i];
+//            if(m.getName().equals(method_name)) {
+//                if(m.getParameterTypes().length == len)
+//                    return m;
+//            }
+//        }
+//
+//        return null;
+//    }
 
 
     /**
@@ -247,35 +226,36 @@ public class RPCMethodCall implements Externalizable
      * and those inherited from superclasses and superinterfaces.
      */
     static Method[] getAllMethods(Class target) {
-        Class superclass = target;
-        List methods = new ArrayList();
-        int size = 0;
-
-        while(superclass != null) {
-            try {
-                Method[] m = superclass.getDeclaredMethods();
-                methods.add(m);
-                size += m.length;
-                superclass = superclass.getSuperclass();
-            }
-            catch(SecurityException e) {
-                // if it runs in an applet context, it won't be able to retrieve
-                // methods from superclasses that belong to the java VM and it will
-                // raise a security exception, so we catch it here.
-                if(log.isWarnEnabled())
-                    log.warn("unable to enumerate methods of superclass "+superclass+" of class "+target);
-                superclass=null;
-            }
-        }
-
-        Method[] result = new Method[size];
-        int index = 0;
-        for(Iterator i = methods.iterator(); i.hasNext();) {
-            Method[] m = (Method[])i.next();
-            System.arraycopy(m, 0, result, index, m.length);
-            index += m.length;
-        }
-        return result;
+//        Class superclass = target;
+//        List methods = new ArrayList();
+//        int size = 0;
+//
+//        while(superclass != null) {
+//            try {
+//                Method[] m = superclass.getDeclaredMethods();
+//                methods.add(m);
+//                size += m.length;
+//                superclass = superclass.getSuperclass();
+//            }
+//            catch(SecurityException e) {
+//                // if it runs in an applet context, it won't be able to retrieve
+//                // methods from superclasses that belong to the java VM and it will
+//                // raise a security exception, so we catch it here.
+////                if(log.isWarnEnabled())
+//                    log.warn("unable to enumerate methods of superclass "+superclass+" of class "+target);
+//                superclass=null;
+//            }
+//        }
+//
+//        Method[] result = new Method[size];
+//        int index = 0;
+//        for(Iterator i = methods.iterator(); i.hasNext();) {
+//            Method[] m = (Method[])i.next();
+//            System.arraycopy(m, 0, result, index, m.length);
+//            index += m.length;
+//        }
+//        return result;
+    	return ClassUtil.getDeclaredMethods(target);
     }
 
     /**
@@ -320,44 +300,50 @@ public class RPCMethodCall implements Externalizable
      * @param target - the object that you want to invoke the method on
      * @return an object
      */
-    public Object invoke(Object target) throws Throwable {
+    public Object invoke(Object target,Method targetMethod) throws Throwable {
         Class  cl;
-        Method meth=null;
+        Method meth=targetMethod;
         Object retval=null;
 
 
         if(method_name == null || target == null) {
-            if(log.isErrorEnabled()) log.error("method name or target is null");
+            log.error("method name or target is null");
             return null;
         }
         cl=target.getClass();
         try {
-            switch(mode) {
-            case OLD:
-                meth=findMethod(cl);
-                break;
-            case METHOD:
-                if(this.method != null)
-                    meth=this.method;
-                break;
-            case TYPES:
-                //meth=cl.getDeclaredMethod(method_name, types);
-                meth = getMethod(cl, method_name, types);
-                break;
-            case SIGNATURE:
-                Class[] mytypes=null;
-                if(signature != null)
-                    mytypes=getTypesFromString(cl, signature);
+        	
+//            switch(mode) {
+//            case OLD:
+//                meth=findMethod(cl);
+//                break;
+//            case METHOD:
+//                if(this.method != null)
+//                    meth=this.method;
+//                break;
+//            case TYPES:
+//                //meth=cl.getDeclaredMethod(method_name, types);
+//                meth = getMethod(cl, method_name, types);
+//                break;
+//            case SIGNATURE:
+//                Class[] mytypes=null;
+//                if(signature != null)
+//                    mytypes=getTypesFromString(cl, signature);
                 //meth=cl.getDeclaredMethod(method_name, mytypes);
-                meth = getMethod(cl, method_name, mytypes);
-                break;
-            case ID:
-                break;
-            default:
-                if(log.isErrorEnabled()) log.error("mode " + mode + " is invalid");
-                break;
-            }
+//                meth = getMethod(cl, method_name, mytypes);
+//                break;
+//            case ID:
+//                break;
+//            default:
+//                if(log.isErrorEnabled()) log.error("mode " + mode + " is invalid");
+//                break;
+//            }
 
+        //old method in 3.4	
+//          meth = getMethod(cl, method_name, types);
+          //new method in 3.5
+        	if(meth == null)
+        		meth = getMethod(cl, method_name, types);
             if(meth != null) {
                 retval=meth.invoke(target, args);
             }
@@ -391,43 +377,43 @@ public class RPCMethodCall implements Externalizable
         return types;
     }
 
+//
+//    public Object invoke(Object target, Object[] args) throws Throwable {
+//        if(args != null)
+//            this.args=args;
+//        return invoke(target);
+//    }
 
-    public Object invoke(Object target, Object[] args) throws Throwable {
-        if(args != null)
-            this.args=args;
-        return invoke(target);
-    }
 
-
-    static Class[] getTypesFromString(Class cl, String[] signature) throws Exception {
-        String  name;
-        Class   parameter;
-        Class[] mytypes=new Class[signature.length];
-
-        for(int i=0; i < signature.length; i++) {
-            name=signature[i];
-            if("long".equals(name))
-                parameter=long.class;
-            else if("int".equals(name))
-                parameter=int.class;
-            else if("short".equals(name))
-                parameter=short.class;
-            else if("char".equals(name))
-                parameter=char.class;
-            else if("byte".equals(name))
-                parameter=byte.class;
-            else if("float".equals(name))
-                parameter=float.class;
-            else if("double".equals(name))
-                parameter=double.class;
-            else if("boolean".equals(name))
-                parameter=boolean.class;
-            else
-                parameter=Class.forName(name, false, cl.getClassLoader());
-            mytypes[i]=parameter;
-        }
-        return mytypes;
-    }
+//    static Class[] getTypesFromString(Class cl, String[] signature) throws Exception {
+//        String  name;
+//        Class   parameter;
+//        Class[] mytypes=new Class[signature.length];
+//
+//        for(int i=0; i < signature.length; i++) {
+//            name=signature[i];
+//            if("long".equals(name))
+//                parameter=long.class;
+//            else if("int".equals(name))
+//                parameter=int.class;
+//            else if("short".equals(name))
+//                parameter=short.class;
+//            else if("char".equals(name))
+//                parameter=char.class;
+//            else if("byte".equals(name))
+//                parameter=byte.class;
+//            else if("float".equals(name))
+//                parameter=float.class;
+//            else if("double".equals(name))
+//                parameter=double.class;
+//            else if("boolean".equals(name))
+//                parameter=boolean.class;
+//            else
+//                parameter=Class.forName(name, false, cl.getClassLoader());
+//            mytypes[i]=parameter;
+//        }
+//        return mytypes;
+//    }
 
 
     public String toString() {
@@ -435,8 +421,8 @@ public class RPCMethodCall implements Externalizable
         boolean first=true;
         if(method_name != null)
             ret.append(method_name);
-        else
-            ret.append(method_id);
+//        else
+//            ret.append(method_id);
         ret.append('(');
         if(args != null) {
             for(int i=0; i < args.length; i++) {
@@ -456,8 +442,8 @@ public class RPCMethodCall implements Externalizable
         ret.append("MethodCall ");
         if(method_name != null)
             ret.append("name=").append(method_name);
-        else
-            ret.append("id=").append(method_id);
+//        else
+//            ret.append("id=").append(method_id);
         ret.append(", number of args=").append((args != null? args.length : 0)).append(')');
         if(args != null) {
             ret.append("\nArgs:");
@@ -475,40 +461,40 @@ public class RPCMethodCall implements Externalizable
             out.writeBoolean(true);
             out.writeUTF(method_name);
         }
-        else {
-            out.writeBoolean(false);
-            out.writeShort(method_id);
-        }
+//        else {
+//            out.writeBoolean(false);
+//            out.writeShort(method_id);
+//        }
         out.writeObject(args);
-        out.writeShort(mode);
-
-        switch(mode) {
-        case OLD:
-            break;
-        case METHOD:
-            out.writeObject(method.getParameterTypes());
-            out.writeObject(method.getDeclaringClass());
-            break;
-        case TYPES:
-            out.writeObject(types);
-            break;
-        case SIGNATURE:
-            out.writeObject(signature);
-            break;
-        case ID:
-            break;
-        default:
-            if(log.isErrorEnabled()) log.error("mode " + mode + " is invalid");
-            break;
-        }
-
-        if(payload != null) {
-            out.writeBoolean(true);
-            out.writeObject(payload);
-        }
-        else {
-            out.writeBoolean(false);
-        }
+//        out.writeShort(mode);
+//
+//        switch(mode) {
+//        case OLD:
+//            break;
+//        case METHOD:
+//            out.writeObject(method.getParameterTypes());
+//            out.writeObject(method.getDeclaringClass());
+//            break;
+//        case TYPES:
+//            out.writeObject(types);
+//            break;
+//        case SIGNATURE:
+//            out.writeObject(signature);
+//            break;
+//        case ID:
+//            break;
+//        default:
+//            if(log.isErrorEnabled()) log.error("mode " + mode + " is invalid");
+//            break;
+//        }
+//
+//        if(payload != null) {
+//            out.writeBoolean(true);
+//            out.writeObject(payload);
+//        }
+//        else {
+//            out.writeBoolean(false);
+//        }
         if(this.securityContext != null)
         {
             out.writeBoolean(true);
@@ -524,41 +510,41 @@ public class RPCMethodCall implements Externalizable
         boolean name_available=in.readBoolean();
         if(name_available)
             method_name=in.readUTF();
-        else
-            method_id=in.readShort();
+//        else
+//            method_id=in.readShort();
         args=(Object[])in.readObject();
-        mode=in.readShort();
-
-        switch(mode) {
-        case OLD:
-            break;
-        case METHOD:
-            Class[] parametertypes=(Class[])in.readObject();
-            Class   declaringclass=(Class)in.readObject();
-            try {
-                method=declaringclass.getDeclaredMethod(method_name, parametertypes);
-            }
-            catch(NoSuchMethodException e) {
-                throw new IOException(e.toString());
-            }
-            break;
-        case TYPES:
-            types=(Class[])in.readObject();
-            break;
-        case SIGNATURE:
-            signature=(String[])in.readObject();
-            break;
-        case ID:
-            break;
-        default:
-            if(log.isErrorEnabled()) log.error("mode " + mode + " is invalid");
-            break;
-        }
-
-        boolean payload_available=in.readBoolean();
-        if(payload_available) {
-            payload=(Map)in.readObject();
-        }
+//        mode=in.readShort();
+//
+//        switch(mode) {
+//        case OLD:
+//            break;
+//        case METHOD:
+//            Class[] parametertypes=(Class[])in.readObject();
+//            Class   declaringclass=(Class)in.readObject();
+//            try {
+//                method=declaringclass.getDeclaredMethod(method_name, parametertypes);
+//            }
+//            catch(NoSuchMethodException e) {
+//                throw new IOException(e.toString());
+//            }
+//            break;
+//        case TYPES:
+//            types=(Class[])in.readObject();
+//            break;
+//        case SIGNATURE:
+//            signature=(String[])in.readObject();
+//            break;
+//        case ID:
+//            break;
+//        default:
+//            if(log.isErrorEnabled()) log.error("mode " + mode + " is invalid");
+//            break;
+//        }
+//
+//        boolean payload_available=in.readBoolean();
+//        if(payload_available) {
+//            payload=(Map)in.readObject();
+//        }
         
         boolean securitycontext_available = in.readBoolean();
         if(securitycontext_available)
@@ -571,5 +557,25 @@ public class RPCMethodCall implements Externalizable
     {
         return this.securityContext;
     }
+
+
+	public String getMethod_name() {
+		return method_name;
+	}
+
+
+	public void setMethod_name(String method_name) {
+		this.method_name = method_name;
+	}
+
+
+	public void setTypes(Class[] types) {
+		this.types = types;
+	}
+
+
+	public void setSecurityContext(SecurityContext securityContext) {
+		this.securityContext = securityContext;
+	}
 
 }

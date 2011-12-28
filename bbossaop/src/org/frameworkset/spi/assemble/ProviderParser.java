@@ -121,7 +121,7 @@ public class ProviderParser extends DefaultHandler
     }
 
     public void characters(char[] ch, int start, int length)
-    {
+    {    	
         currentValue.append(ch, start, length);
     }
     /**

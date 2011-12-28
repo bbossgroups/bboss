@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-package org.frameworkset.mq;
+package org.frameworkset.spi.remote;
 
 
 

@@ -296,4 +296,32 @@ public abstract class BaseServiceIDImpl implements ServiceID {
 	
 		this.containerType = containerType;
 	}
+
+	public void setServiceID(String serviceID) {
+		this.serviceID = serviceID;
+	}
+
+	
+
+	public void setService(String service) {
+		this.service = service;
+	}
+
+	public void setSourceip(String sourceip) {
+		this.sourceip = sourceip;
+	}
+
+	public void setSourceport(String sourceport) {
+		this.sourceport = sourceport;
+	}
+
+	public void setSourcename(String sourcename) {
+		this.sourcename = sourcename;
+	}
+
+	public void setProviderID(String providerID) {
+		this.providerID = providerID;
+	}
+
+	
 }

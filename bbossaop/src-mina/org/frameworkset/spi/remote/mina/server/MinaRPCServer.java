@@ -31,11 +31,11 @@ import org.apache.mina.filter.codec.serialization.ObjectSerializationCodecFactor
 import org.apache.mina.filter.executor.ExecutorFilter;
 import org.apache.mina.filter.ssl.SslFilter;
 import org.apache.mina.transport.socket.nio.NioSocketAcceptor;
-import org.frameworkset.mq.SSLHelper;
 import org.frameworkset.spi.ApplicationContext;
 import org.frameworkset.spi.BaseSPIManager;
 import org.frameworkset.spi.assemble.ProMap;
 import org.frameworkset.spi.remote.RPCAddress;
+import org.frameworkset.spi.remote.SSLHelper;
 import org.frameworkset.spi.remote.Target;
 import org.frameworkset.spi.remote.mina.MinaUtil;
 import org.frameworkset.spi.remote.mina.client.ClinentTransport;

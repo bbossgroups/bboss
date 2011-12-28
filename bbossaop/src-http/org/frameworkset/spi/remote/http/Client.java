@@ -50,13 +50,12 @@ import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 import org.apache.http.util.EntityUtils;
 import org.apache.log4j.Logger;
-import org.frameworkset.mq.SSLHelper;
 import org.frameworkset.soa.ObjectSerializable;
 import org.frameworkset.spi.ApplicationContext;
 import org.frameworkset.spi.assemble.ProMap;
 import org.frameworkset.spi.remote.RPCAddress;
 import org.frameworkset.spi.remote.RPCMessage;
-import org.frameworkset.spi.remote.Target;
+import org.frameworkset.spi.remote.SSLHelper;
 import org.frameworkset.spi.serviceidentity.TargetImpl;
 
 //import com.thoughtworks.xstream.XStream;
@@ -250,13 +249,16 @@ public class Client {
 		try {
 //			httpclient = buildHttpClient(address);
 			httpclient = buildHttpClient_( address);
-			
+//			httpclient.getParams().setParameter(HttpConnectionParams, arg1);
 			String address_real = TargetImpl.buildWebserviceURL(address);
 			httppost = new HttpPost(address_real);
 
 //			XStream stream_ = new XStream();
-			StringEntity reqEntity = new StringEntity(ObjectSerializable.toXML(srcmessag));
-			reqEntity.setContentType("text/xml;charset=gbk");
+			String message_ = ObjectSerializable.toXML(srcmessag);
+//			System.out.println(message_);
+			StringEntity reqEntity = new StringEntity(message_,BBossHttp.GBK);
+			reqEntity.setContentType(BBossHttp.XML_TEXT_TYPE);
+			
 
 			httppost.setEntity(reqEntity);
 			httppost.setParams(params);

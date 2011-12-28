@@ -33,12 +33,12 @@ import org.apache.mina.filter.codec.serialization.ObjectSerializationCodecFactor
 import org.apache.mina.filter.ssl.SslFilter;
 import org.apache.mina.transport.socket.SocketConnector;
 import org.apache.mina.transport.socket.nio.NioSocketConnector;
-import org.frameworkset.mq.SSLHelper;
 import org.frameworkset.spi.ApplicationContext;
 import org.frameworkset.spi.assemble.ProMap;
 import org.frameworkset.spi.remote.RPCAddress;
 import org.frameworkset.spi.remote.RPCMessage;
 import org.frameworkset.spi.remote.RemoteException;
+import org.frameworkset.spi.remote.SSLHelper;
 import org.frameworkset.spi.remote.Target;
 import org.frameworkset.spi.remote.mina.DummyIOHandler;
 import org.frameworkset.spi.remote.mina.server.MinaRPCServer;

@@ -71,7 +71,7 @@ public class RPCHttpServLet extends HttpServlet {
 			RPCMessage message = (RPCMessage) ObjectSerializable.toBean(instream, RPCMessage.class);
 			ret = ioHandler.messageReceived(message);
 			resp.reset();
-			resp.setContentType("text/xml;charset=GBK");
+			resp.setContentType(BBossHttp.XML_TEXT_TYPE);
 
 			PrintWriter out = resp.getWriter();
 			ObjectSerializable.toXML(ret, out);

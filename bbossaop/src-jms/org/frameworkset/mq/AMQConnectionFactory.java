@@ -46,6 +46,7 @@ import org.frameworkset.spi.BaseSPIManager;
 import org.frameworkset.spi.assemble.BeanAccembleHelper;
 import org.frameworkset.spi.assemble.Pro;
 import org.frameworkset.spi.assemble.ProMap;
+import org.frameworkset.spi.remote.SSLHelper;
 
 /**
  * <p>

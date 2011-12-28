@@ -30,12 +30,12 @@ import java.util.concurrent.Executors;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLEngine;
 
-import org.frameworkset.mq.SSLHelper;
 import org.frameworkset.spi.ApplicationContext;
 import org.frameworkset.spi.assemble.ProMap;
 import org.frameworkset.spi.remote.RPCAddress;
 import org.frameworkset.spi.remote.RPCMessage;
 import org.frameworkset.spi.remote.RemoteException;
+import org.frameworkset.spi.remote.SSLHelper;
 import org.frameworkset.spi.remote.Target;
 import org.jboss.netty.bootstrap.ClientBootstrap;
 import org.jboss.netty.channel.Channel;

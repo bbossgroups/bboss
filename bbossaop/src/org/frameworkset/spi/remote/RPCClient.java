@@ -19,11 +19,10 @@ package org.frameworkset.spi.remote;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 import java.util.Map.Entry;
+import java.util.Set;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.log4j.Logger;
 import org.frameworkset.spi.CallContext;
 import org.frameworkset.spi.remote.BaseRPCIOHandler.Marshaller2;
 import org.frameworkset.spi.security.SecurityContext;
@@ -83,7 +82,7 @@ public final class RPCClient
 	}
 	
 	
-	protected final Log			log				= LogFactory.getLog(getClass());
+	protected final Logger			log				= Logger.getLogger(getClass());
 
 	
 
@@ -116,19 +115,30 @@ public final class RPCClient
 		List<RPCAddress> mbrs = new ArrayList<RPCAddress>();
 		if (dest == null)
 		{
-			if (log.isErrorEnabled())
+//			if (log.isErrorEnabled())
 				log
 						.error("the message's destination is null, cannot send message");
 			return null;
 		}
 		mbrs.add(dest);
 		
-
-		buf = Util.objectToByteBuffer(method_call);
+		if(!BaseRPCIOHandler.useOOB)
+		{
+			buf = Util.objectToByteBuffer(method_call);
+			
+			msg = new RPCMessage(null,dest);		
+			msg.setEncrypt(SecurityContext.getSecurityManager().enableEncrypt());
+			
+			msg.setBuffer( buf);
+		}
+		else
+		{
+			msg = new RPCMessage(null,dest);		
+//			msg.setEncrypt(SecurityContext.getSecurityManager().enableEncrypt());
+			msg.setResultSerial(RPCMessage.OOB);
+			msg.setData( method_call);
+		}
 		
-		msg = new RPCMessage(null,dest);		
-		msg.setEncrypt(SecurityContext.getSecurityManager().enableEncrypt());
-		msg.setBuffer( buf);
 		if(callContext != null && callContext.getHeaders() != null && callContext.getHeaders().size() > 0)
 		    msg.setHeaders(callContext.getHeaders());		
 //		msg.setEncrypt(SecurityContext.getSecurityManager().enableEncrypt());
@@ -141,7 +151,7 @@ public final class RPCClient
 		}
 		if (rsp_list.size() > 1)
 		{
-			if (log.isWarnEnabled())
+//			if (log.isWarnEnabled())
 				log
 						.warn("response list contains more that 1 response; returning first response !");
 		}
@@ -195,37 +205,51 @@ public final class RPCClient
 
 		if (dests != null && dests.isEmpty())
 		{		
-			if (log.isTraceEnabled())
-				log.trace(new StringBuilder("destination list of ")
-						.append(method_call.getName())
+			log.info(new StringBuilder("destination list of ")
+						.append(method_call.getMethod_name())
 						.append("() is empty: no need to send message"));
 			return new RPCResponseList();
 		}
 		byte[] buf = null;
 		RPCMessage msg = null;
 		int expected_mbrs = 1;
-		if (log.isTraceEnabled())
-			log.trace(new StringBuilder("dests=").append(dests)
+//		if (log.isTraceEnabled())
+		log.info(new StringBuilder("dests=").append(dests)
 					.append(", method_call=").append(method_call)
 					.append(", resultMode=").append(resultMode).append(", timeout=")
 					.append(timeout));
-
-		try
+		if(!BaseRPCIOHandler.useOOB)
 		{
-			buf =  Util.objectToByteBuffer(method_call);
+			try
+			{
+				buf =  Util.objectToByteBuffer(method_call);
+			}
+			catch (Exception e)
+			{			
+				throw new RuntimeException("failure to marshal argument(s)", e);
+			}
+	
+			msg = new RPCMessage();
+			try {
+				msg.setEncrypt(SecurityContext.getSecurityManager().enableEncrypt());
+				msg.setBuffer(buf);
+			} catch (Exception e) {
+				throw new RuntimeException("failure to setBuffer ", e);
+			}
 		}
-		catch (Exception e)
-		{			
-			throw new RuntimeException("failure to marshal argument(s)", e);
+		else
+		{
+			msg = new RPCMessage();
+			try {
+//				msg.setEncrypt(SecurityContext.getSecurityManager().enableEncrypt());
+				msg.setData(method_call);
+//				msg.setBuffer(buf);
+				msg.setResultSerial(msg.OOB);
+			} catch (Exception e) {
+				throw new RuntimeException("failure to setBuffer ", e);
+			}
 		}
-
-		msg = new RPCMessage();
-		try {
-			msg.setEncrypt(SecurityContext.getSecurityManager().enableEncrypt());
-			msg.setBuffer(buf);
-		} catch (Exception e) {
-			throw new RuntimeException("failure to setBuffer ", e);
-		}
+		
 		if(headers != null && headers.size() > 0)
 		    msg.setHeaders(headers);
 		// if(oob)
@@ -240,8 +264,8 @@ public final class RPCClient
 			return null;
 		}		
 //		prehandleResponses(rsp_list);		
-		if (log.isTraceEnabled())
-			log.trace("responses: " + rsp_list);
+//		if (log.isTraceEnabled())
+		log.info("responses: " + rsp_list);
 		return rsp_list;
 	}
 	
@@ -283,7 +307,7 @@ public final class RPCClient
 
 		if (mbrs == null)
 		{
-			if (log.isErrorEnabled())
+//			if (log.isErrorEnabled())
 				log
 						.error("the message's destination is null, cannot send message");
 			return null;

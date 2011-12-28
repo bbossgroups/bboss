@@ -16,6 +16,8 @@
 
 package org.frameworkset.spi.remote;
 
+import java.lang.reflect.Method;
+
 
 
 
@@ -30,5 +32,6 @@ package org.frameworkset.spi.remote;
  */
 public interface RequestHandler {
     Object handle(RPCMessage msg);
+    public Method getCallMethod();
 }
 
