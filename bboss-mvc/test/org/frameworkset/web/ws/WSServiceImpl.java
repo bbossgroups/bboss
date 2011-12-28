@@ -33,8 +33,10 @@ public class WSServiceImpl implements WSService{
 //		System.out.println("ModuleService»¶Ó­Äú!" + duoduo);
 	
 		
-
-		return duoduo;
+		if(duoduo == null)
+			return "";
+		else
+			return duoduo;
 	}
 
 }
