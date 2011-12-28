@@ -431,6 +431,10 @@ public class ClassUtil
 	}
 
 	
-	
+	public static Method[] getDeclaredMethods(Class target)	
+	{
+		ClassInfo  csinfo = getClassInfo(target);
+		return csinfo.getDeclaredMethods();
+	}
 	
 }

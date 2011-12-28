@@ -906,7 +906,7 @@ public class ValueObjectUtil {
 			{
 				throw new IllegalArgumentException(new StringBuffer(
 				"类型无法转换,不支持[").append(type.getName()).append("]向[")
-				.append(toType.getName()).append("]转换").append(",value is").append(obj).toString());
+				.append(toType.getName()).append("]转换").append(",value is ").append(obj).toString());
 			}
 			
 			
@@ -1088,7 +1088,7 @@ public class ValueObjectUtil {
 			// && toType.getName().startsWith("["))
 			throw new IllegalArgumentException(new StringBuffer("类型无法转换,不支持[")
 					.append(type.getName()).append("]向[").append(
-							toType.getName()).append("]转换").append(",value is").append(obj).toString());
+							toType.getName()).append("]转换").append(",value is ").append(obj).toString());
 		} else if (type == String.class && toType == Class.class) {
 			try {
 				return getClass((String) obj);
@@ -1271,7 +1271,7 @@ public class ValueObjectUtil {
 			} catch (ClassNotFoundException e) {
 				throw new IllegalArgumentException(new StringBuffer(
 						"类型无法转换,不支持[").append(type.getName()).append("]向[")
-						.append(toType.getName()).append("]转换").append(",value is").append(obj).toString());
+						.append(toType.getName()).append("]转换").append(",value is ").append(obj).toString());
 			}
 		}
 		
@@ -3513,34 +3513,37 @@ public class ValueObjectUtil {
 	{
 		A,B,C
 	}
-	public static void main(String[] args)
+	public static void main(String[] args) throws ClassNotFoundException
 	{
-		Test[] a = new Test[]{Test.A,Test.B};
-		try {
-			Test[] temp = ValueObjectUtil.convertStringsToEnumArray(new String[]{"A","B","C"}, Test.class);
-			System.out.println(temp.getClass().getComponentType());
-			System.out.println(temp[0].getClass());
-			Method f=  Calle.class.getMethod("testEnum", new Class[]{Test[].class});
-			
-			f.invoke(null, new Object[]{temp});
-		} catch (SecurityException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (NoSuchMethodException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		System.out.println(a.getClass().isArray());
-		System.out.println(a.getClass().getComponentType().isEnum());
+		Test[][] a = new Test[][]{{Test.A,Test.B}};
+		String ttt = a.getClass().getName();
+		Class x= Class.forName(ttt);
+		System.out.println();
+//		try {
+//			Test[] temp = ValueObjectUtil.convertStringsToEnumArray(new String[]{"A","B","C"}, Test.class);
+//			System.out.println(temp.getClass().getComponentType());
+//			System.out.println(temp[0].getClass());
+//			Method f=  Calle.class.getMethod("testEnum", new Class[]{Test[].class});
+//			
+//			f.invoke(null, new Object[]{temp});
+//		} catch (SecurityException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (IllegalArgumentException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (NoSuchMethodException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (IllegalAccessException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (InvocationTargetException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		System.out.println(a.getClass().isArray());
+//		System.out.println(a.getClass().getComponentType().isEnum());
 	}
 	
 	static class Calle
@@ -3753,6 +3756,27 @@ public class ValueObjectUtil {
 			return byte.class;
 		else if (type.equals("TreeSet"))
 			return TreeSet.class;
+		else if(type.endsWith("[]"))
+		{
+			int len = type.length() - 2;
+			int idx = type.indexOf("[");
+			String subClass = type.substring(0,idx);
+			String array = type.substring(idx);
+			int count = 0;
+			StringBuilder builder = new StringBuilder();
+			
+			
+			for(int i = 0; i < array.length(); i ++)
+			{
+				char c = array.charAt(i);
+				if(c == '[')
+					builder.append("[");
+			}
+			builder.append("L").append(subClass).append(";");
+			return Class.forName(builder.toString());
+			
+		    
+		}
 		Class<?> Type = Class.forName(type);
 		return Type;
 	}
