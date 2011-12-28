@@ -84,7 +84,7 @@ public class RPCTest implements RPCTestInf
 	
 	public Object getParameter()
 	{
-		String value = RequestContext.getRequestContext().getStringParameter("server_uuid");
+		String value = RequestContext.getRequestContext().getStringParameter("parameterKey");
 		System.out.println("value:" + value);
 		return value;
 	}

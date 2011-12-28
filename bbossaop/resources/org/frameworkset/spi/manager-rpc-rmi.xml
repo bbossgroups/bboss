@@ -31,11 +31,11 @@
 				<!-- 
 					服务器绑定端口
 				 -->
-			<property name="connection.bind.port" value="1099" />
+			<property name="connection.bind.port" value="1090" />
 				<!-- 
 					服务器绑定ip
 				 -->
-			<property name="connection.bind.ip" value="172.16.25.108" />
+			<property name="connection.bind.ip" value="192.168.1.22" />
 			<!-- 
 				当多个应用公用统一的注册中心时，用来区分每个服务器的协议组件名称的唯一标识
 				注册的语法如下：

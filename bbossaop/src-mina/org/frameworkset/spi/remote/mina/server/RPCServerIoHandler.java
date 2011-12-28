@@ -16,8 +16,8 @@
 
 package org.frameworkset.spi.remote.mina.server;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+import org.apache.log4j.Logger;
 import org.apache.mina.core.service.IoHandler;
 import org.apache.mina.core.session.IdleStatus;
 import org.apache.mina.core.session.IoSession;
@@ -29,6 +29,7 @@ import org.frameworkset.spi.remote.RPCIOHandler;
 import org.frameworkset.spi.remote.RPCMessage;
 import org.frameworkset.spi.remote.RequestHandler;
 import org.frameworkset.spi.remote.Target;
+import org.frameworkset.spi.remote.Util;
 import org.frameworkset.spi.serviceidentity.TargetImpl;
 
 /**
@@ -60,7 +61,7 @@ public class RPCServerIoHandler extends BaseRPCIOHandler implements RPCIOHandler
 //        return name;
 //    }
 
-    protected static final Log log = LogFactory.getLog(RPCServerIoHandler.class);
+    protected static final Logger log = Logger.getLogger(RPCServerIoHandler.class);
 
 //    /**
 //     * The table of pending requests (keys=Long (request IDs), values=
@@ -114,9 +115,10 @@ public class RPCServerIoHandler extends BaseRPCIOHandler implements RPCIOHandler
     {
         // System.out.println(message);
         assertMessage(message);
-        RPCMessage message_ = (RPCMessage) message;
+//        RPCMessage message_ = (RPCMessage) message;
+        RPCMessage message_ = (RPCMessage)Util.getDecoder().decoder(message);
         Header hdr = message_.getHeader(name);
-        RPCMessage rsp = super.messageReceived((RPCMessage) message);
+        RPCMessage rsp = super.messageReceived(message_);
         switch (hdr.getType())
         {
             case Header.REQ:

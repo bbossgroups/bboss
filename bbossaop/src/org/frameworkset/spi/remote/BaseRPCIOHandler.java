@@ -396,7 +396,7 @@ public abstract class BaseRPCIOHandler implements RPCIOHandler
 
     protected void assertMessage(Object message) throws IllegalMessage
     {
-        if (message instanceof RPCMessage)
+        if (message instanceof RPCMessage || message instanceof String)
         {
 
         }

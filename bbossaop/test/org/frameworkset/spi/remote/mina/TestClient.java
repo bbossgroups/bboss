@@ -46,7 +46,7 @@ public class TestClient  extends TestBase
 	public  void testWithParameter()
 	{
 //		RPCTestInf testInf = (RPCTestInf)context.getBeanObject("(192.168.11.102:1186)/rpc.test");
-		RPCTestInf testInf = (RPCTestInf)context.getBeanObject("(mina::172.16.17.216:12347)/rpc.test?parameterKey=多多");
+		RPCTestInf testInf = (RPCTestInf)context.getBeanObject("(mina::192.168.1.22:12346)/rpc.test?parameterKey=多多");
 		
 		for(int i = 0; i < 10; i ++)
 		{

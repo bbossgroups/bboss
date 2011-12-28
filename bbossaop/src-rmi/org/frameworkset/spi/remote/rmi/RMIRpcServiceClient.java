@@ -16,11 +16,13 @@
 
 package org.frameworkset.spi.remote.rmi;
 
+import java.rmi.RemoteException;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.frameworkset.spi.remote.RPCAddress;
 import org.frameworkset.spi.remote.RPCMessage;
+import org.frameworkset.spi.remote.Util;
 
 /**
  * <p>Title: RMIRpcServiceClient.java</p> 
@@ -62,11 +64,18 @@ public class RMIRpcServiceClient {
 		 }
 		 try
 		 {
-			 return rmiInterfactRemote.sendRPCMessage(msg);
+			 String msg_str = (String)Util.getEncoder().encoder(msg);
+			 
+			 String ret = rmiInterfactRemote.sendRPCMessage(msg_str);
+			 return (RPCMessage)Util.getDecoder().decoder(ret);
+		 }
+		 catch(RemoteException e)
+		 {
+			 services.remove(address);
+			 throw e;
 		 }
 		 catch(Exception e)
 		 {
-			 services.remove(address);
 			 throw e;
 		 }
 		

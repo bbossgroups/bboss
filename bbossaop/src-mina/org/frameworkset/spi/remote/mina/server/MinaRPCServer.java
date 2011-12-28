@@ -32,11 +32,11 @@ import org.apache.mina.filter.executor.ExecutorFilter;
 import org.apache.mina.filter.ssl.SslFilter;
 import org.apache.mina.transport.socket.nio.NioSocketAcceptor;
 import org.frameworkset.spi.ApplicationContext;
-import org.frameworkset.spi.BaseSPIManager;
 import org.frameworkset.spi.assemble.ProMap;
 import org.frameworkset.spi.remote.RPCAddress;
 import org.frameworkset.spi.remote.SSLHelper;
 import org.frameworkset.spi.remote.Target;
+import org.frameworkset.spi.remote.Util;
 import org.frameworkset.spi.remote.mina.MinaUtil;
 import org.frameworkset.spi.remote.mina.client.ClinentTransport;
 
@@ -89,7 +89,7 @@ public class MinaRPCServer
 		{
 			if(server != null)
 				return server;
-			server = (MinaRPCServer)BaseSPIManager.getBeanObject("rpc.mina.server");
+			server = (MinaRPCServer)Util.defaultContext.getBeanObject("rpc.mina.server");
 			
 		}
 		
@@ -149,13 +149,13 @@ public class MinaRPCServer
 		        /**
 		         * 增加ssl的技术支持
 		         */
-		        ProMap commons = ApplicationContext.getApplicationContext().getMapProperty("rpc.protocol.mina.params");
-		        boolean enablessl = ApplicationContext.getApplicationContext().getMapProperty("rpc.protocol.mina.params").getBoolean("enablessl",false);
+		        ProMap commons = Util.defaultContext.getMapProperty("rpc.protocol.mina.params");
+		        boolean enablessl = Util.defaultContext.getMapProperty("rpc.protocol.mina.params").getBoolean("enablessl",false);
 		        if(enablessl)
 		        {
 		            try
 		            {
-		                ProMap ssls =  ApplicationContext.getApplicationContext().getMapProperty("rpc.protocol.mina.ssl.server");
+		                ProMap ssls =  Util.defaultContext.getMapProperty("rpc.protocol.mina.ssl.server");
 		                if(ssls == null)
 		                {
 		                    throw new MinaRunException("启用了ssl模式， 但是没有指定rpc.protocol.mina.ssl.server 参数，请检查文件org/frameworkset/spi/manager-rpc-mina.xml是否正确设置了该参数。");
@@ -219,7 +219,7 @@ public class MinaRPCServer
 		        
 		        System.out.println("Mina server is listenig at port " + PORT);
 		        System.out.println("Mina server started.");
-		        BaseSPIManager.addShutdownHook(new ShutDownMinaServer(this));
+		        ApplicationContext.addShutdownHook(new ShutDownMinaServer(this));
 		        this.started = true;
 			}
 			catch(IOException e)

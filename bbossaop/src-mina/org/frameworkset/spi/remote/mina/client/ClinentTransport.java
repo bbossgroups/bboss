@@ -40,6 +40,7 @@ import org.frameworkset.spi.remote.RPCMessage;
 import org.frameworkset.spi.remote.RemoteException;
 import org.frameworkset.spi.remote.SSLHelper;
 import org.frameworkset.spi.remote.Target;
+import org.frameworkset.spi.remote.Util;
 import org.frameworkset.spi.remote.mina.DummyIOHandler;
 import org.frameworkset.spi.remote.mina.server.MinaRPCServer;
 import org.frameworkset.spi.remote.mina.server.MinaRunException;
@@ -321,13 +322,13 @@ public class ClinentTransport
         /**
          * 增加ssl的技术支持
          */
-        ProMap commons = ApplicationContext.getApplicationContext().getMapProperty("rpc.protocol.mina.params");
-        boolean enablessl = ApplicationContext.getApplicationContext().getMapProperty("rpc.protocol.mina.params").getBoolean("enablessl",false);
+        ProMap commons = Util.defaultContext.getMapProperty("rpc.protocol.mina.params");
+        boolean enablessl = Util.defaultContext.getMapProperty("rpc.protocol.mina.params").getBoolean("enablessl",false);
         if(enablessl)
         {
             try
             {
-                ProMap ssls =  ApplicationContext.getApplicationContext().getMapProperty("rpc.protocol.mina.ssl.client");
+                ProMap ssls =  Util.defaultContext.getMapProperty("rpc.protocol.mina.ssl.client");
                 if(ssls == null)
                 {
                     throw new MinaRunException("启用了ssl模式， 但是没有指定rpc.protocol.mina.ssl.client 参数，请检查文件org/frameworkset/spi/manager-rpc-mina.xml是否正确设置了该参数。");
@@ -461,7 +462,9 @@ public class ClinentTransport
         try
         {
             setSourceAddress(message);
-            session.write(message);
+            Object msg = Util.getEncoder().encoder(message);
+//            session.write(message);
+            session.write(msg);
         }
         catch(Exception e)
         {

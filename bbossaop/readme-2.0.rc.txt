@@ -119,6 +119,11 @@ more details see my blog [http://blog.csdn.net/yin_bp]
 todo list:
 运行aop/ioc的最小依赖包整理
 #######update function list since bbossgroups-3.4 begin###########
+o 统一将rpc协议序列化机制切换到bboss的序列化机制
+已经完成切换的协议：
+http，webservice，netty，rmi，mina
+未完成的协议：
+jms，jgroups
 o 改进http协议和webservice rpc协议性能，改进反射机制
 o ioc属性注入中相应的属性不再需要set方法
 o 引进最新的bboss soa序列化机制，对于static，final，transient类型的属性不进行序列化，对于添加了@ExcludeField的注解不序列化

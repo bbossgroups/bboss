@@ -30,6 +30,6 @@ import org.frameworkset.spi.remote.RPCMessage;
  * @version 1.0
  */
 public interface RMIServiceInfo extends java.rmi.Remote{
-	public RPCMessage sendRPCMessage(RPCMessage message) throws RemoteException;
+	public String sendRPCMessage(String message) throws RemoteException;
 
 }

@@ -33,7 +33,7 @@ import org.junit.Test;
  * @version 1.0
  */
 public class TestRMI extends TestBase{
-	ApplicationContext context = ApplicationContext.getApplicationContext(); 
+	ApplicationContext context = ApplicationContext.getApplicationContext("org/frameworkset/spi/remote/manager-rpc-test.xml"); 
 	public static class TestDamone extends java.lang.Thread
     {
         public TestDamone()
@@ -127,7 +127,7 @@ public static void main(String[] args)
 @Test
 public  void testRMIRPC()
 {
-	RPCTestInf testInf = (RPCTestInf)context.getBeanObject("(rmi::172.16.17.216:1092)/rpc.test?user=admin&password=123456&server_uuid=app1");
+	RPCTestInf testInf = (RPCTestInf)context.getBeanObject("(rmi::192.168.1.22:1090)/rpc.test?user=admin&password=123456&server_uuid=app1");
 //	RPCTestInf testInf = (RPCTestInf)context.getBeanObject("rpc.test");
 	long start = System.currentTimeMillis();
 	

@@ -47,7 +47,7 @@ import org.jgroups.blocks.GroupRequest;
 public class ServiceIDImpl extends BaseServiceIDImpl{
 	private static Logger log = Logger.getLogger(ServiceIDImpl.class);
       
-    public static final boolean evaluatelocaladdress = ApplicationContext.getApplicationContext().getBooleanProperty("rpc.evaluatelocaladdress", false);
+    public static final boolean evaluatelocaladdress = Util.defaultContext.getBooleanProperty("rpc.evaluatelocaladdress", false);
    
 	private boolean rpcserviceStarted(Target target)
     {

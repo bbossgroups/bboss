@@ -20,6 +20,7 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
 import org.frameworkset.spi.remote.RPCMessage;
+import org.frameworkset.spi.remote.Util;
 
 
 /**
@@ -43,8 +44,8 @@ public class RMIRpcService extends UnicastRemoteObject  implements RMIServiceInf
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public RPCMessage sendRPCMessage(RPCMessage message) throws RemoteException {
-		HandleFuture future = new HandleFuture(message);
+	public String sendRPCMessage(String message_) throws RemoteException {
+	
 //		if(Util.asyn_response)
 //		{
 //	    	FutureTask<RPCMessage> task = new FutureTask<RPCMessage>(future);
@@ -55,7 +56,9 @@ public class RMIRpcService extends UnicastRemoteObject  implements RMIServiceInf
 		{
 			
 				try {
-					return future.call();
+					RPCMessage message = (RPCMessage)Util.getDecoder().decoder(message_);
+					HandleFuture future = new HandleFuture(message);
+					return (String)Util.getEncoder().encoder(future.call());
 				} catch (Exception e) {
 					throw new RemoteException("",e);
 				}

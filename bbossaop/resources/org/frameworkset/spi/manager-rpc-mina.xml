@@ -35,7 +35,7 @@
 				<!-- 
 					服务器绑定ip
 				 -->
-			<property name="connection.bind.ip" value="172.16.17.216" />
+			<property name="connection.bind.ip" value="192.168.1.22" />
 			
 			<!-- 
 				ssl配置参数开始
@@ -44,7 +44,7 @@
 				服务器端只需要配置rpc.protocol.mina.ssl.server
 				客服端只需要配置rpc.protocol.mina.ssl.client
 			 -->
-			<property name="enablessl" value="true" />
+			<property name="enablessl" value="false" />
 <!--			<property name="enabledCipherSuites" value="SSL_DH_anon_WITH_RC4_128_MD5"  >-->
 <!--				<editor class="org.frameworkset.spi.assemble.StringArrayEditor"/>-->
 <!--			</property>-->

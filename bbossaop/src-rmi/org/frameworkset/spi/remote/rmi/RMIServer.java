@@ -21,11 +21,11 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import org.apache.log4j.Logger;
 import org.frameworkset.spi.ApplicationContext;
-import org.frameworkset.spi.BaseSPIManager;
 import org.frameworkset.spi.assemble.ProMap;
 import org.frameworkset.spi.remote.BaseRPCIOHandler;
 import org.frameworkset.spi.remote.RPCAddress;
 import org.frameworkset.spi.remote.Target;
+import org.frameworkset.spi.remote.Util;
 
 
 
@@ -81,7 +81,7 @@ public class RMIServer {
 	public static String iohandler_name = "rpc.rmi.RPCServerIoHandler";
 
 	public static BaseRPCIOHandler getBaseRPCIOHandler() {
-		return (BaseRPCIOHandler) ApplicationContext.getApplicationContext()
+		return (BaseRPCIOHandler) Util.defaultContext
 				.getBeanObject(iohandler_name);
 	}
 
@@ -91,7 +91,7 @@ public class RMIServer {
 		synchronized (RMIServer.class) {
 			if (server != null)
 				return server;
-			server = (RMIServer) BaseSPIManager.getBeanObject("rpc.rmi.server");
+			server = (RMIServer)Util.defaultContext.getBeanObject("rpc.rmi.server");
 		}
 
 		return server;

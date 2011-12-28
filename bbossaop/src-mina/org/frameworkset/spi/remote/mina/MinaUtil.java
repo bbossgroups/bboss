@@ -17,7 +17,6 @@
 package org.frameworkset.spi.remote.mina;
 
 //import org.frameworkset.spi.remote.mina.conf.ClassConfigurator;
-import org.frameworkset.spi.ApplicationContext;
 import org.frameworkset.spi.remote.Util;
 import org.frameworkset.spi.remote.mina.server.RPCServerIoHandler;
 /**
@@ -34,7 +33,7 @@ public class MinaUtil
 //	private static RPCServerIoHandler RPCServerIoHandler = (RPCServerIoHandler)BaseSPIManager.getBeanObject("rpc.mina.RPCServerIoHandler");  
    public static RPCServerIoHandler getRPCServerIoHandler()
    {
-	   return (RPCServerIoHandler)ApplicationContext.getApplicationContext().getBeanObject(Util.rpc_mina_RPCServerIoHandler); 
+	   return (RPCServerIoHandler)Util.defaultContext.getBeanObject(Util.rpc_mina_RPCServerIoHandler); 
    }
 	   
 }
