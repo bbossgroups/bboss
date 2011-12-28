@@ -23,7 +23,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.lang.reflect.Array;
@@ -520,12 +519,31 @@ public class ObjectSerializable {
 
 			} else {
 				if (name == null)
-					ret.append("<p s:t=\"String\"><![CDATA[").append(obj.toString())
-							.append("]]></p>");
+				{
+					if(!obj.equals(""))
+					{
+						ret.append("<p s:t=\"String\"><![CDATA[").append(obj.toString())
+								.append("]]></p>");
+					}
+					else
+					{
+						ret.append("<p s:t=\"String\" v=\"\"/>");
+					}
+				}
 				else
-					ret.append("<p n=\"").append(name).append(
+				{
+					if(!obj.equals(""))
+					{
+						ret.append("<p n=\"").append(name).append(
 							"\" s:t=\"String\"><![CDATA[").append(obj.toString()).append(
 							"]]></p>");
+					}
+					else
+					{
+						ret.append("<p n=\"").append(name).append(
+								"\" s:t=\"String\" v=\"\"/>");
+					}
+				}
 			}
 			return;
 		} else if (type != null && List.class.isAssignableFrom(type)) {
@@ -1013,7 +1031,8 @@ public class ObjectSerializable {
 	private static void appendBeanProperties(Object obj, Class type,
 			String dateformat, Writer ret, String[] filters)
 			throws IntrospectionException {
-
+		if(type.getName().equals("org.frameworkset.spi.serviceidentity.ServiceIDImpl"))
+			System.out.println();
 		BeanInfo beanInfo = Introspector.getBeanInfo(type);
 		PropertyDescriptor[] attributes = beanInfo.getPropertyDescriptors();
 		for (int n = 0; n < attributes.length; n++) {
