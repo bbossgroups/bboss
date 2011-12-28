@@ -21,7 +21,6 @@
 	<classpathentry kind="lib" path="lib/icu4j-4_2_1.jar"/>
 	<classpathentry kind="lib" path="lib/bboss-soa.jar" sourcepath="/bboss-soa"/>
 	<classpathentry kind="lib" path="lib/httpclient-4.0.1.jar" sourcepath="D:/workspace/httpcomponents-client-4.0.1"/>
-	<classpathentry kind="lib" path="lib/bboss-jms.jar" sourcepath="/bbossaop"/>
 	<classpathentry kind="lib" path="lib/netty-3.2.1.Final.jar"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>

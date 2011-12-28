@@ -146,6 +146,21 @@ public class ClientTest {
 		client.helloworld("aaa");
 	}
 	
+	public static void testHttpa()
+	{
+		WSService WSService = ClientProxyContext.getSimpleClientBean("org/frameworkset/web/ws/testwsmodule.xml", 
+				"(http::localhost:8080/bboss-mvc/http.rpc)" +
+				"/mysfirstwsservice", 
+				WSService.class);
+		WSService.sayHello("aaa");
+		String ss = "你好，多多,你好，多多你好，多多你好，多多你好，多多你好，多多你好，多多你好，多多你好，多多你好，多多你好，多多你好，多多你好，多多" +
+				"你好，多多你好，多多你好，多多你好，多多你好，多多你好，多多你好，多多你好，多多";
+		long s = System.currentTimeMillis();
+		String ret = WSService.sayHello(ss);
+		long e = System.currentTimeMillis();
+		long interval = (e-s);
+		System.out.println(interval+":"+ret);
+	}
 	public static void testHttp()
 	{
 		WSService WSService = ClientProxyContext.getSimpleClientBean("org/frameworkset/web/ws/testwsmodule.xml", 
@@ -207,6 +222,22 @@ public class ClientTest {
 		long times = (10 * 10 * 10000)/((e-s)/1000);		System.out.println(times);
 	}
 	
+	public static void testNettya()
+	{
+		RPCTestInf WSService = ClientProxyContext.getSimpleClientBean("org/frameworkset/spi/remote/manager-rpc-test.xml", 
+				"(netty::192.168.1.22:12347)" +
+				"/rpc.test", 
+				RPCTestInf.class);
+		WSService.sayHelloWorld("你好，多多");
+		String ss = "你好，多多,你好，多多你好，多多你好，多多你好，多多你好，多多你好，多多你好，多多你好，多多你好，多多你好，多多你好，多多你好，多多" +
+				"你好，多多你好，多多你好，多多你好，多多你好，多多你好，多多你好，多多你好，多多";
+		long s = System.currentTimeMillis();
+		WSService.sayHelloWorld(ss);
+		long e = System.currentTimeMillis();
+		long interval = (e-s);
+		System.out.println(interval);
+	}
+	
 	
 	public static void testNetty()
 	{
@@ -215,6 +246,11 @@ public class ClientTest {
 				"/rpc.test", 
 				RPCTestInf.class);
 		WSService.sayHelloWorld("你好，多多");
+		long s = System.currentTimeMillis();
+		WSService.sayHelloWorld("你好，多多");
+		long e = System.currentTimeMillis();
+		long interval = (e-s);
+		System.out.println(interval);
 //		t tt = new t(WSService);
 		tnetty tt1 = new tnetty(WSService);
 		tnetty tt2 = new tnetty(WSService);
@@ -226,7 +262,7 @@ public class ClientTest {
 		tnetty tt8 = new tnetty(WSService);
 		tnetty tt9 = new tnetty(WSService);
 		tnetty tt10 = new tnetty(WSService);
-		long s = System.currentTimeMillis();
+		s = System.currentTimeMillis();
 		tt1.start();
 		tt2.start();
 		tt3.start();
@@ -249,11 +285,11 @@ public class ClientTest {
 			tt8.join();
 			tt9.join();
 			tt10.join();
-		} catch (InterruptedException e) {
+		} catch (InterruptedException ex) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			ex.printStackTrace();
 		}
-		long e = System.currentTimeMillis();
+	    e = System.currentTimeMillis();
 		
 		
 //		long count = tt1.getCount() + tt2.getCount()
@@ -266,15 +302,20 @@ public class ClientTest {
 //				+ tt9.getCount()
 //				+ tt10.getCount()
 //				;
-		long times = (10 * 10 * 10000)/((e-s)/1000);		System.out.println(times);
+		interval = (e-s);
+		long times = interval >= 1000?(10 * 10 * 10000)/(interval/1000):10;		System.out.println(times);
 	}
 	
 	public static void main(String[] args)
 	{
 //		testHttp();
-		testNetty();
+		testHttpa();
+//		testNetty();
+//		testNettya();
 		
 	}
+//	static long i = 10 * 10000;
+	static long i = 1;
 
 	public static class t extends Thread
 	{
@@ -288,12 +329,13 @@ public class ClientTest {
 		{
 			
 			long e = 0;
-			long i = 10  * 10000;
+			
 			
 //			long s = System.currentTimeMillis();
 			while(true)
 			{
 				String re = WSService.sayHello("多多");
+				System.out.println(re);
 //				longcount.incrementAndGet();
 //				e = System.currentTimeMillis() -s;
 				e ++;
@@ -320,7 +362,7 @@ public class ClientTest {
 		{
 			
 			long e = 0;
-			long i = 10  * 10000;
+			
 			
 //			long s = System.currentTimeMillis();
 			while(true)
@@ -328,6 +370,7 @@ public class ClientTest {
 				String re = WSService.sayHelloWorld("你好,多多");
 //				longcount.incrementAndGet();
 //				e = System.currentTimeMillis() -s;
+//				System.out.println(re);
 				e ++;
 				if(e >= i)
 					break;
