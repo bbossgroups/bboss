@@ -16,8 +16,15 @@
 package org.frameworkset.soa.xblink;
 
 import java.beans.IntrospectionException;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.StreamCorruptedException;
+import java.io.StringReader;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -27,6 +34,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import org.apache.log4j.Logger;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.frameworkset.soa.ObjectSerializable;
 import org.frameworkset.soa.TransientFieldBean;
 import org.junit.Test;
@@ -124,6 +132,166 @@ public class TestSerializable
 		}
 		
 	}
+	@Test
+	public void testJAVASerializable() throws Exception
+	{
+		Test1 test1 = new Test1();
+		Test2 test2 = new Test2();
+		Test3 test3 = new Test3();
+		test2.setTest1(test1);
+		test1.setTest2(test2);
+		test1.setTest3(test3);
+		test3.setTest2(test2);
+		
+		byte[] cs = oldObjectToByteBuffer(test1) ;
+		
+		Test1 test1_ =  (Test1)oldObjectFromByteBuffer(cs, 0, cs.length);
+		System.out.println();
+		
+		
+	}
+	
+	
+	/**
+	 * 
+	 * @throws Exception
+	 */
+	@Test
+	public void testJsonSerializable() throws Exception
+	{
+		Test1 test1 = new Test1();
+		Test2 test2 = new Test2();
+		Test3 test3 = new Test3();
+		test2.setTest1(test1);
+		test1.setTest2(test2);
+		test1.setTest3(test3);
+		test3.setTest2(test2);
+		ObjectMapper objectMapper = new ObjectMapper();
+		StringWriter wt = new StringWriter(); 
+		objectMapper.writeValue(wt, test1);
+		String ss = wt.toString();
+		
+		Test1 test1_ =  objectMapper.readValue(new StringReader(ss), Test1.class);
+		System.out.println();
+		
+		
+	}
+	
+	@Test
+	public void testXSTreamSerializable() throws Exception
+	{
+		Test1 test1 = new Test1();
+		Test2 test2 = new Test2();
+		Test3 test3 = new Test3();
+		test2.setTest1(test1);
+		test1.setTest2(test2);
+		test1.setTest3(test3);
+		test3.setTest2(test2);
+		
+//		byte[] cs = oldObjectToByteBuffer(test1) ;
+		String ss = xStream.toXML(test1);
+		Test1 test1_ =  (Test1)xStream.fromXML(ss);
+		System.out.println();
+		
+		
+	}
+	
+	
+	@Test
+	public void testBBossSerializable() throws Exception
+	{
+		Test1 test1 = new Test1();
+		Test2 test2 = new Test2();
+		Test3 test3 = new Test3();
+		test2.setTest1(test1);
+		test1.setTest2(test2);
+		test1.setTest3(test3);
+		test3.setTest2(test2);
+		
+//		byte[] cs = oldObjectToByteBuffer(test1) ;
+		String ss = ObjectSerializable.toXML(test1);
+		Test1 test1_ =  (Test1)ObjectSerializable.toBean(ss,Test1.class);
+		System.out.println();
+		
+		
+	}
+	
+	 /**
+     * Serializes/Streams an object into a byte buffer.
+     * The object has to implement interface Serializable or Externalizable
+     * or Streamable.  Only Streamable objects are interoperable w/ jgroups-me
+     */
+    public static byte[] oldObjectToByteBuffer(Object obj) throws Exception {
+        byte[] result=null;
+        ObjectOutputStream out= null;
+        ByteArrayOutputStream out_stream = null;
+        try
+        {
+        	out_stream=new ByteArrayOutputStream();
+        
+            out=new ObjectOutputStream(out_stream);
+            out.writeObject(obj);
+            
+            result=out_stream.toByteArray();
+            return result;
+        }
+        catch(Exception e)
+        {
+        	throw e;
+        }
+        finally
+        {
+        	try
+			{
+				if (out_stream != null)
+					out_stream.close();
+			}
+			catch (Exception e2)
+			{
+				// TODO: handle exception
+			}
+			try
+			{
+				if (out != null)
+					out.close();
+			}
+			catch (Exception e2)
+			{
+				// TODO: handle exception
+			}
+        	
+        }
+        
+    }
+    
+    public static Object oldObjectFromByteBuffer(byte[] buffer, int offset, int length) throws Exception {
+        if(buffer == null) return null;
+        Object retval=null;
+
+        try {  // to read the object as an Externalizable
+            ByteArrayInputStream in_stream=new ByteArrayInputStream(buffer, offset, length);
+            ObjectInputStream in=new ObjectInputStream(in_stream); // changed Nov 29 2004 (bela)
+            retval=in.readObject();
+            in.close();
+        }
+        catch(StreamCorruptedException sce) {
+//            try {  // is it Streamable?
+//                ByteArrayInputStream in_stream=new ByteArrayInputStream(buffer, offset, length);
+//                DataInputStream in=new DataInputStream(in_stream);
+//                retval=readGenericStreamable(in);
+//                in.close();
+//            }
+//            catch(Exception ee) {
+                IOException tmp=new IOException("unmarshalling failed");
+                tmp.initCause(sce);
+                throw tmp;
+//            }
+        }
+
+        if(retval == null)
+            return null;
+        return retval;
+    }
 	
 	private void convertXMLToBean(int count,String xml)
 	{

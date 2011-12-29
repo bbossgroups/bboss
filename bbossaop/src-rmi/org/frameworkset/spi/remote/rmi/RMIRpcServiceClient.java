@@ -64,9 +64,9 @@ public class RMIRpcServiceClient {
 		 }
 		 try
 		 {
-			 String msg_str = (String)Util.getEncoder().encoder(msg);
+			 Object msg_str = (Object)Util.getEncoder().encoder(msg);
 			 
-			 String ret = rmiInterfactRemote.sendRPCMessage(msg_str);
+			 Object ret = rmiInterfactRemote.sendRPCMessage(msg_str);
 			 return (RPCMessage)Util.getDecoder().decoder(ret);
 		 }
 		 catch(RemoteException e)

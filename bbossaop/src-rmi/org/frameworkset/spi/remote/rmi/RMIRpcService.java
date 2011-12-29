@@ -44,7 +44,7 @@ public class RMIRpcService extends UnicastRemoteObject  implements RMIServiceInf
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public String sendRPCMessage(String message_) throws RemoteException {
+	public Object sendRPCMessage(Object message_) throws RemoteException {
 	
 //		if(Util.asyn_response)
 //		{
@@ -58,7 +58,7 @@ public class RMIRpcService extends UnicastRemoteObject  implements RMIServiceInf
 				try {
 					RPCMessage message = (RPCMessage)Util.getDecoder().decoder(message_);
 					HandleFuture future = new HandleFuture(message);
-					return (String)Util.getEncoder().encoder(future.call());
+					return Util.getEncoder().encoder(future.call());
 				} catch (Exception e) {
 					throw new RemoteException("",e);
 				}

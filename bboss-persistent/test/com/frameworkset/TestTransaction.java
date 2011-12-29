@@ -64,9 +64,39 @@ public class TestTransaction {
 	            Connection con = DBUtil.getConection();
 	            con.createStatement();
 	            con.prepareStatement("select 1 from dual");
-	            con = DBUtil.getConection("mq");
+	            con = DBUtil.getConection("bspf");
 	            con.prepareStatement("select 1 from dual");
+	            tm.rollback();
 	            List objects = DBUtil.getTraceObjects();
+	            tm.destroyTransaction();
+	            
+	        
+	        } catch (Exception e) {
+	            
+	            try {
+	                tm.rollback();
+	            } catch (RollbackException e1) {
+	                // TODO Auto-generated catch block
+	                e1.printStackTrace();
+	            }
+	            
+	            
+	        } 
+	}
+	
+	
+	@Test
+	public void testNullDestroyTX()
+	{
+		 TransactionManager tm = new TransactionManager();
+	        try {
+	            tm.begin(TransactionManager.RW_TRANSACTION);
+//	            Connection con = DBUtil.getConection();
+//	            con.createStatement();
+//	            con.prepareStatement("select 1 from dual");
+//	            con = DBUtil.getConection("bspf");
+//	            con.prepareStatement("select 1 from dual");
+//	            List objects = DBUtil.getTraceObjects();
 	            tm.destroyTransaction();
 	            
 	        

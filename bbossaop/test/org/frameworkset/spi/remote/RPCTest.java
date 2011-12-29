@@ -37,7 +37,7 @@ public class RPCTest implements RPCTestInf
 	{
 	    SecurityContext securityContext = SecurityContext.getSecurityContext();	    
 
-		System.out.println(this);
+//		System.out.println(this);
 		
 		return ret ++;
 	}

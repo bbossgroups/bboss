@@ -35,6 +35,7 @@ public class ConcurrentTest {
 	{
 		TestT a = new TestT();
 		a.start();
+		RuntimeException s;
 		TestB b = new TestB();
 		b.start();
 //		TestO o = new TestO();

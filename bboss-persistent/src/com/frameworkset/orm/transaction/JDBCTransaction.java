@@ -63,7 +63,7 @@ public class JDBCTransaction {
 	
 	
 	
-	private Map<String,TransactionEntity> txentities = new HashMap<String,TransactionEntity>();
+	private Map<String,TransactionEntity> txentities = new HashMap<String,TransactionEntity>(1);
 	private Stack<TransactionEntity> executeStack = new Stack<TransactionEntity>();
 	private int count = 0;
 	TransactionType currenttxtype;
@@ -547,19 +547,19 @@ public class JDBCTransaction {
 		
 		if(this.status == Status.STATUS_ROLLEDBACK)
 		{
-			if(executeStack.size() > 0)
-			{
-				System.out.println("executeStack ");
-			}
+//			if(executeStack.size() > 0)
+//			{
+//				System.out.println("executeStack ");
+//			}
 			throw new IllegalStateException("事务已经回滚");
 		}
 		
 		if(this.status == Status.STATUS_COMMITTED)
 		{
-			if(executeStack.size() > 0)
-			{
-				System.out.println("executeStack");
-			}
+//			if(executeStack.size() > 0)
+//			{
+//				System.out.println("executeStack");
+//			}
 			throw new IllegalStateException("事务已经提交");
 		}
 		/**

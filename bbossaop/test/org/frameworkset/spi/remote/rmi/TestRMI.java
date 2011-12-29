@@ -129,13 +129,14 @@ public  void testRMIRPC()
 {
 	RPCTestInf testInf = (RPCTestInf)context.getBeanObject("(rmi::192.168.1.22:1090)/rpc.test?user=admin&password=123456&server_uuid=app1");
 //	RPCTestInf testInf = (RPCTestInf)context.getBeanObject("rpc.test");
+	testInf.getCount();
 	long start = System.currentTimeMillis();
 	
 	for(int i = 0; i < 1; i ++)
 	    System.out.println("testInf.getCount():" + i + " = "+testInf.getCount());
 	
 	long end = System.currentTimeMillis();
-	System.out.println("消耗时间：" + (end - start) / 1000 + "秒");
+	System.out.println("消耗时间：" + (end - start)  + "豪秒");
 	
 	
 	
@@ -145,7 +146,7 @@ public  void testRMIRPC()
 public  void testWithParameter()
 {
 //	RPCTestInf testInf = (RPCTestInf)context.getBeanObject("(192.168.11.102:1186)/rpc.test");
-	RPCTestInf testInf = (RPCTestInf)context.getBeanObject("(rmi::172.16.17.216:1099)/rpc.test");
+	RPCTestInf testInf = (RPCTestInf)context.getBeanObject("(rmi::192.168.1.22:1090)/rpc.test");
 	
 	for(int i = 0; i < 10; i ++)
 	{
@@ -164,6 +165,13 @@ public  void testWithParameter()
 //		System.out.println("ret_1189:" + i + " = "+ret_1189);
 	}
 	
+long start = System.currentTimeMillis();
+	
+
+	    testInf.getCount();
+	
+	long end = System.currentTimeMillis();
+	System.out.println("消耗时间：" + (end - start)  + "豪秒");
 	
 }
 

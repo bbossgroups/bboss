@@ -13,21 +13,32 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-
-package org.frameworkset.spi.remote.rmi;
-
-import java.rmi.RemoteException;
+package org.frameworkset.soa.xblink;
 
 /**
- * <p>Title: RMIServerInf.java</p> 
+ * <p>Title: Test1.java</p> 
  * <p>Description: </p>
  * <p>bboss workgroup</p>
- * <p>Copyright (c) 2007</p>
- * @Date 2010-6-16 ÏÂÎç09:30:38
+ * <p>Copyright (c) 2008</p>
+ * @Date 2011-12-29
  * @author biaoping.yin
  * @version 1.0
  */
-public interface RMIServiceInfo extends java.rmi.Remote{
-	public Object sendRPCMessage(Object message) throws RemoteException;
+public class Test1 implements java.io.Serializable{
+	Test2 test2;
+	Test3 test3;
+	public Test2 getTest2() {
+		return test2;
+	}
+	public void setTest2(Test2 test2) {
+		this.test2 = test2;
+	}
+	public Test3 getTest3() {
+		return test3;
+	}
+	public void setTest3(Test3 test3) {
+		this.test3 = test3;
+	}
+	
 
 }
