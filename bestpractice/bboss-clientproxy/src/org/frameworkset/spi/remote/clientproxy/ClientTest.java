@@ -253,7 +253,7 @@ public class ClientTest {
 		String ss = "你好，多多,你好，多多你好，多多你好，多多你好，多多你好，多多你好，多多你好，多多你好，多多你好，多多你好，多多你好，多多你好，多多" +
 				"你好，多多你好，多多你好，多多你好，多多你好，多多你好，多多你好，多多你好，多多";
 		long s = System.currentTimeMillis();
-		WSService.helloworld(ss);
+		String ssss  = WSService.helloworld(ss);
 		long e = System.currentTimeMillis();
 		long interval = (e-s);
 		System.out.println(interval);

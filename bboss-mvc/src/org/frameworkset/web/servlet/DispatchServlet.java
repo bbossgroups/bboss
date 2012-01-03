@@ -844,6 +844,12 @@ public class DispatchServlet extends HttpServlet {
 			triggerAfterCompletion(mappedHandler, interceptorIndex, processedRequest, response, ex);
 			throw ex;
 		}
+		catch (Throwable err) {
+			ServletException ex = new NestedServletException("Handler processing failed", err);
+			// Trigger after-completion for thrown exception.
+			triggerAfterCompletion(mappedHandler, interceptorIndex, processedRequest, response, ex);
+			throw ex;
+		}
 
 		finally {
 			// Clean up any resources used by a multipart request.
