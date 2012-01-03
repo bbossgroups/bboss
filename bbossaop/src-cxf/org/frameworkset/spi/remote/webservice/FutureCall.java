@@ -154,8 +154,8 @@ public class FutureCall extends BaseFutureCall
             }            
         }
         
-        String ret_ = client.sendRPCMessage(ObjectSerializable.toXML(srcmsg));
-        RPCMessage ret = ObjectSerializable.toBean(ret_, RPCMessage.class);
+        Object ret_ = client.sendRPCMessage(Util.getEncoder().encoder(srcmsg));
+        RPCMessage ret = (RPCMessage)Util.getDecoder().decoder(ret_);
         return ret;
     }
     

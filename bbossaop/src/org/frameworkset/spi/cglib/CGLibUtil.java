@@ -28,6 +28,7 @@ import net.sf.cglib.proxy.NoOp;
 import org.apache.log4j.Logger;
 import org.frameworkset.spi.CallContext;
 import org.frameworkset.spi.assemble.BaseTXManager;
+import org.frameworkset.spi.assemble.Pro;
 import org.frameworkset.spi.assemble.ProviderInfoQueue;
 import org.frameworkset.spi.assemble.ProviderManagerInfo;
 import org.frameworkset.spi.assemble.SecurityProviderInfo;
@@ -109,6 +110,59 @@ public class CGLibUtil {
 					try {
 						return invoke_(delegate, method, args,
 								proxy,callcontext,serviceID,providerManagerInfo);
+					} catch (Exception e) {
+						throw e;
+					}
+					 catch (Throwable e) {
+						throw new Exception(e);
+					}
+				}
+				
+			});
+		}
+			
+		
+	}
+	
+	public static Object invoke(final Object delegate, final Method method, final Object[] args,
+			final MethodProxy proxy,final Pro providerManagerInfo) throws Throwable
+	{
+		final SynchronizedMethod synmethod = providerManagerInfo.isAsyncMethod(method) ;
+		if(synmethod == null )
+		{
+			return invoke_(delegate, method, args,
+					proxy,providerManagerInfo) ;
+		}
+		else
+		{
+//			if(synmethod.getAsyncResultMode() == Result.YES 
+//					&& synmethod.getAsyncCallback() == null 
+//					&& synmethod.getAsyncTimeout() <= 0 )
+//			{
+//				return invoke_(delegate, method, args,
+//						proxy,callcontext,serviceID,providerManagerInfo) ; 
+//			}
+			init();
+
+			
+			return asyncCall.runCallService(new CallService(){
+				public SynchronizedMethod getAsyncMethod() {
+					return synmethod;
+				}
+
+				public CallBackService getCallBackService() {
+					if(providerManagerInfo.getApplicationContext() != null && synmethod.getAsyncCallback() != null)
+					{
+						CallBack callBack = (CallBack)providerManagerInfo.getApplicationContext().getBeanObject(synmethod.getAsyncCallback());
+						return new CallBackServiceImpl(callBack);
+					}
+					return null;
+				}
+				public Object call() throws Exception {
+					
+					try {
+						return invoke_(delegate, method, args,
+								proxy,providerManagerInfo);
 					} catch (Exception e) {
 						throw e;
 					}
@@ -205,6 +259,85 @@ public class CGLibUtil {
             return RPCHelper.getRPCHelper().rpcService(serviceID, method, args,callcontext);
 
         }
+    }
+	
+	private static Object invoke_(Object delegate, Method method, Object[] args,
+			MethodProxy proxy,BaseTXManager providerManagerInfo) throws Throwable
+    {
+//        if (!serviceID.isRemote())
+        {
+            Interceptor interceptor = providerManagerInfo.getTransactionInterceptor();
+            try
+            {
+
+                Object obj = null;// 只返回delegate中方法返回的值
+                // 如果不是同步方法，则无需同步调用其他接口方法
+                // log.debug("method.getName():" + method.getName());
+                //log.debug("providerManagerInfo.getSynchronizedMethod("
+                // +
+                // method.getName() + "):" +
+                // providerManagerInfo.getSynchronizedMethod
+                // (method.getName()));
+                if (interceptor != null)
+                    interceptor.before(method, args);
+                if(proxy == null)
+                	obj = method.invoke(delegate, args);
+                else
+                	obj = method.invoke(delegate, args);
+                if (interceptor != null)
+                    interceptor.after(method, args);
+                return obj;
+
+            }
+            catch (InvocationTargetException e)
+            {
+                //log.error(e);
+                if (interceptor != null)
+                {
+                    try
+                    {
+                        interceptor.afterThrowing(method, args, e.getTargetException());
+                    }
+                    catch (Exception ei)
+                    {
+                        ei.printStackTrace();
+                    }
+                }
+
+                // 将方法抛出的异常直接抛出方法异常
+                throw e.getTargetException();
+            }
+            catch (Throwable t)
+            {
+                log.error(t);
+                try
+                {
+                    // t.printStackTrace();
+                    if (interceptor != null)
+                        interceptor.afterThrowing(method, args, t);
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+                throw t;
+            }
+            finally
+            {
+                try
+                {
+                    if (interceptor != null)
+                        interceptor.afterFinally(method, args);
+
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+                interceptor = null;
+            }
+        }
+      
     }
 	public static Object invokeSynTX(final Object delegate, final Method method, final Object[] args,
 			final MethodProxy proxy,final CallContext callcontext,final ServiceID serviceID,final ProviderManagerInfo providerManagerInfo) throws Throwable {

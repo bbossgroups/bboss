@@ -8,6 +8,7 @@ public interface BeanInf
 {
     Class getBeanClass();
     String getName();
+    String getXpath();
     public List<Pro> getReferences();
     public Construction getConstruction();
     public List<Pro> getConstructorParams();

@@ -155,6 +155,35 @@ public class SOAApplicationContext extends DefaultApplicationContext {
 		
 	}
 	
+	public Object proxyObject(Pro providerManagerInfo,Object refvalue,String refid)
+    {
+//    	if (providerManagerInfo.enableTransaction()
+//				|| providerManagerInfo.enableAsyncCall()
+//				|| providerManagerInfo.usedCustomInterceptor()) {
+//    		if (refid != null && providerManagerInfo.isSinglable()) {
+//				Object provider = servicProviders.get(refid);
+//				if (provider != null)
+//					return provider;
+//				synchronized (servicProviders) {
+//					provider = servicProviders.get(refid);
+//					if (provider != null)
+//						return provider;
+//					provider = createInf( providerManagerInfo,
+//							refvalue);
+//					servicProviders.put(refid, provider);
+//				}
+//				return provider;
+//			} else {
+//				refvalue = createInf( providerManagerInfo,
+//						refvalue);
+//				return refvalue;
+//			}
+//		} else 
+		
+		return refvalue;
+		
+    }
+	
 	
 
 

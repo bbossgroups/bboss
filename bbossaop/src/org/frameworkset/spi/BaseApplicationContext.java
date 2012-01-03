@@ -41,10 +41,13 @@ import org.frameworkset.spi.assemble.ProList;
 import org.frameworkset.spi.assemble.ProMap;
 import org.frameworkset.spi.assemble.ProSet;
 import org.frameworkset.spi.assemble.ProviderManagerInfo;
+import org.frameworkset.spi.assemble.RefID;
 import org.frameworkset.spi.assemble.ServiceProviderManager;
 import org.frameworkset.spi.assemble.callback.AssembleCallback;
+import org.frameworkset.spi.cglib.BaseCGLibProxy;
 import org.frameworkset.spi.cglib.CGLibProxy;
 import org.frameworkset.spi.cglib.CGLibUtil;
+import org.frameworkset.spi.cglib.SimpleCGLibProxy;
 import org.frameworkset.spi.cglib.SynCGLibProxy;
 import org.frameworkset.spi.cglib.SynTXCGLibProxy;
 import org.frameworkset.spi.remote.Header;
@@ -637,6 +640,61 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 			// callcontext, serviceID, providerManagerInfo);
 		}
 	}
+	
+	
+	/**
+	 * 创建不具有同步控制的provider代理接口实例 该代理接口可能有事务控制的功能也可能没有有事务控制，根据具体的配置来决定 createInf
+	 * 
+	 * @return Object
+	 */
+	public static Object createInf(
+			final Pro providerManagerInfo, final Object delegate) {
+		if (BaseApplicationContext.getAOPProxyType() != BaseApplicationContext.aop_proxy_type_cglib) {
+			return ProxyFactory.createProxy(new InvocationHandler(delegate) {
+				public Object invoke(Object proxy, Method method, Object[] args)
+						throws Throwable {
+					return CGLibUtil.invoke(delegate, method, args, null,
+							 providerManagerInfo);
+				}
+			});
+		} else {
+			BaseCGLibProxy proxy = new SimpleCGLibProxy(delegate,
+					providerManagerInfo);
+			return CGLibUtil.getBeanInstance(delegate.getClass(), delegate
+					.getClass(), proxy);
+			// return CGLibUtil.forCreateInf(proxy, method, args, null,
+			// callcontext, serviceID, providerManagerInfo);
+		}
+	}
+	
+	
+	 public Object proxyObject(Pro providerManagerInfo,Object refvalue,String refid)
+	    {
+	    	if (providerManagerInfo.enableTransaction()
+					|| providerManagerInfo.enableAsyncCall()
+					|| providerManagerInfo.usedCustomInterceptor()) {
+	    		if (refid != null && providerManagerInfo.isSinglable()) {
+					Object provider = servicProviders.get(refid);
+					if (provider != null)
+						return provider;
+					synchronized (servicProviders) {
+						provider = servicProviders.get(refid);
+						if (provider != null)
+							return provider;
+						provider = createInf( providerManagerInfo,
+								refvalue);
+						servicProviders.put(refid, provider);
+					}
+					return provider;
+				} else {
+					refvalue = createInf( providerManagerInfo,
+							refvalue);
+					return refvalue;
+				}
+			} else {
+				return refvalue;
+			}
+	    }
 
 	/**
 	 * 创建没有同步但有事务控制的provider代理接口实例 该方法的实现逻辑目前和createInf方法一致
@@ -1339,6 +1397,39 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 		context.setHeaders(headers);
 		return context;
 	}
+	
+	
+	/**
+	 * bean工厂方法
+	 * 
+	 * @param context
+	 * @param name
+	 * @param defaultValue
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public Object getBeanObjectFromRefID(CallContext context, RefID name,String strrefid ,Object defaultValue) {
+//		// 分析服务参数
+//		int idx = name.indexOf("?");
+//
+//		String _name = name;
+		if (context == null)
+			context = new CallContext(this);
+
+		Pro providerManagerInfo = this.providerManager
+				.getInnerPropertyBean(name,strrefid);
+
+		if (providerManagerInfo == null) {
+			if(defaultValue == null)
+				throw new SPIException("容器["+this.getConfigfile()+"]没有定义名称为[" + name + "]的bean对象。");
+			else
+				return defaultValue;
+		}
+		Object finalsynProvider =  providerManagerInfo.getTrueValue(context,
+				defaultValue);
+		return this.proxyObject(providerManagerInfo, finalsynProvider, providerManagerInfo.getXpath());
+		
+	}
 
 	/**
 	 * bean工厂方法
@@ -1536,6 +1627,39 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 		} else {
 			return finalsynProvider;
 		}
+	}
+	
+	
+	/**
+	 * bean组件工厂方法， 如果serviceID不为空，则serviceID是根据getBeanObject(Context context,
+	 * String name,Object defaultValue)方法的name生成的
+	 * 否则需要根据providerManagerInfo的name或者refid来生成serviceID
+	 * 
+	 * @param context
+	 * @param providerManagerInfo
+	 * @param defaultValue
+	 * @param serviceID
+	 * @return
+	 */
+	protected Object getBeanObjectFromRefID(CallContext context, Pro providerManagerInfo,
+			Object defaultValue) {
+		if (providerManagerInfo == null)
+			throw new SPIException("容器["+this.getConfigfile()+"]bean对象为空。");
+		
+		if (providerManagerInfo.isRefereced()) {
+			Object retvalue = providerManagerInfo.getTrueValue(context,
+					defaultValue);
+			return retvalue;
+		}
+
+		Object finalsynProvider = null;
+		
+		// new ServiceID(key, GroupRequest.GET_ALL
+		// ,0,ServiceID.result_rsplist,ServiceID.PROPERTY_BEAN_SERVICE);
+		finalsynProvider = this.providerManager.getBeanObject(context,
+				providerManagerInfo, defaultValue);
+		return this.proxyObject(providerManagerInfo, finalsynProvider, providerManagerInfo.getXpath());
+		
 	}
 
 	public String getStringExtendAttribute(String name, String extendName) {

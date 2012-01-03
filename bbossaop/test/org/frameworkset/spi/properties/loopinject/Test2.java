@@ -13,26 +13,25 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package org.frameworkset.spi.remote.webservice;
-
-import javax.jws.WebMethod;
-import javax.jws.WebParam;
-import javax.jws.WebService;
+package org.frameworkset.spi.properties.loopinject;
 
 /**
- * 
- * <p>Title: RPCCallService.java</p> 
+ * <p>Title: Test2.java</p> 
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2008</p>
- * @Date 2009-11-4 ÏÂÎç05:04:55
+ * @Date 2011-12-29
  * @author biaoping.yin
  * @version 1.0
  */
-@WebService(name="RPCCallService", targetNamespace="http://webservice.remote.spi.frameworkset.org/")
-public interface RPCCallService {
+public class Test2  implements java.io.Serializable{
+	Test1 test1;
 
-	@WebMethod(operationName="sendRPCMessage", action="urn:SendRPCMessage")
-	public Object sendRPCMessage(@WebParam(name="message") Object message)  throws Exception;
+	public Test1 getTest1() {
+		return test1;
+	}
 
+	public void setTest1(Test1 test1) {
+		this.test1 = test1;
+	}
 }

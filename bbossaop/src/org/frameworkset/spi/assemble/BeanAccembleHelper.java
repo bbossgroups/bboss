@@ -58,7 +58,23 @@ public class BeanAccembleHelper<V> {
 
 	private Constructor<V> constructor = null;
 	
-	
+	public static class LoopObject
+	{
+		Object obj;
+		public LoopObject()
+		{
+//			this.obj = obj;
+		}
+		public Object getObj() {
+			return obj;
+		}
+		public void setObj(Object obj) {
+			this.obj = obj;
+		}
+		
+		
+		
+	}
 
 	/**
 	 * 获取属性的引用值
@@ -79,21 +95,42 @@ public class BeanAccembleHelper<V> {
 //			else
 			{
 				Context context = callcontext.getLoopContext();
-
-				if (context != null && context.isLoopIOC(property.getRefid())) {
+				
+//				if (context != null && context.isLoopIOC(property.getRefid())) {
+//					throw new CurrentlyInCreationException(
+//							"loop inject constructor error. the inject context path is ["
+//									+ context + ">" + property.getRefid()
+//									+ "],请检查配置文件是否配置正确[" + property.getConfigFile()
+//									+ "]");
+//				}
+				LoopObject lo = new LoopObject();
+				boolean loopobject = context != null?context.isLoopIOC(property.getRefid(),lo):false;
+				if (loopobject && lo.getObj() == null) {
 					throw new CurrentlyInCreationException(
 							"loop inject constructor error. the inject context path is ["
 									+ context + ">" + property.getRefid()
 									+ "],请检查配置文件是否配置正确[" + property.getConfigFile()
 									+ "]");
 				}
+				if(lo.getObj() != null)
+					return lo.getObj();
 			}
 		}
 			
 		
-		if (!property.isServiceRef()) {
-			Object ret = property.getApplicationContext().getBeanObject(
+		if (!property.isServiceRef()) {//识别新的模式
+			/**
+			 * 需要对refid进行内部识别的处理
+			 * test1->test2->test3
+			 * 
+			 */
+			Object ret = null;
+			if(property.getRefidLink() == null)
+				ret = property.getApplicationContext().getBeanObject(
 			                                        					callcontext, property.getRefid());
+			else
+				ret = property.getApplicationContext().getBeanObjectFromRefID(
+    					callcontext, property.getRefidLink(),property.getRefid(),null);
 			if (ret == null)
 				return defaultValue;
 			if (property.getClazz() != null && !property.getClazz().equals("")) {
@@ -152,14 +189,25 @@ public class BeanAccembleHelper<V> {
 		Context context = null;
 		if (callcontext != null)
 			context = callcontext.getLoopContext();
-
-		if (context != null && context.isLoopIOC(factoryname)) {
+//		Object loopobject = context != null?context.isLoopIOC(factoryname):null;
+//		if (context != null && context.isLoopIOC(factoryname)) {
+//			throw new CurrentlyInCreationException(
+//					"loop inject constructor error. the inject context path is ["
+//							+ context + ">" + property.getRefid()
+//							+ "],请检查配置文件是否配置正确[" + property.getConfigFile()
+//							+ "]");
+//		}
+		LoopObject lo = new LoopObject();
+		boolean loopobject = context != null?context.isLoopIOC(factoryname,lo):false;
+		if (loopobject && lo.getObj() == null) {
 			throw new CurrentlyInCreationException(
 					"loop inject constructor error. the inject context path is ["
-							+ context + ">" + property.getRefid()
+							+ context + ">" + factoryname
 							+ "],请检查配置文件是否配置正确[" + property.getConfigFile()
 							+ "]");
 		}
+		if(lo.getObj() != null)
+			return lo.getObj();
 		
 		Object ret = property.getApplicationContext().getBeanObject(
 				callcontext, factoryname);
@@ -309,7 +357,10 @@ public class BeanAccembleHelper<V> {
 			}
 			try
 			{
-				refvalue = param.getTrueValue(context);
+//				refvalue = param.getTrueValue(context);
+				refvalue = param.getApplicationContext().proxyObject(param, 
+						param.getTrueValue(context), 
+						param.getXpath());
 			}
 			finally
 			{
@@ -343,7 +394,7 @@ public class BeanAccembleHelper<V> {
 			if (providerManagerInfo.getConstruction() == null
 					|| providerManagerInfo.getConstructorParams() == null
 					|| providerManagerInfo.getConstructorParams().size() == 0) {
-				return cls.newInstance();
+				return (V)context.getLoopContext().setCurrentObj(cls.newInstance());
 			}
 			List<Pro> params = providerManagerInfo.getConstructorParams();
 			Object[] valuetypes = getValue2ndTypes(params, context);
@@ -386,7 +437,7 @@ public class BeanAccembleHelper<V> {
 
 			
 
-			return constructor.newInstance(values);
+			return (V)context.getLoopContext().setCurrentObj(constructor.newInstance(values));
 		} catch (InstantiationException e) {
 			throw new BeanInstanceException("providerManagerInfo["
 					+ providerManagerInfo.getName() + "],请检查配置文件是否配置正确["
@@ -840,6 +891,7 @@ public class BeanAccembleHelper<V> {
 			}
 			//2.创建组件实例
 			V bean  = creatorBeanByFactoryBean(pro, factory,factoryMethod,callcontext);
+			context.setCurrentObj(bean);
 			return bean;
 		}
 		else//使用工厂类静态方法创建组件实例
@@ -848,6 +900,7 @@ public class BeanAccembleHelper<V> {
 			try {
 				Class cls = Class.forName(factoryClass);
 				V bean  = creatorBeanByFactoryClass(pro, cls, factoryMethod,callcontext);
+//				context.getLoopContext().setCurrentObj(bean);
 				return bean;
 			}
 			catch(CurrentlyInCreationException e)
@@ -1381,6 +1434,8 @@ public class BeanAccembleHelper<V> {
 //			
 //		}
 //    }
+    
+   
 	
 	private V getBeanFromClass(BeanInf providerManagerInfo, CallContext callcontext)
 	{
@@ -1397,6 +1452,7 @@ public class BeanAccembleHelper<V> {
 			List<Pro> refs = providerManagerInfo.getReferences();
 			ClassInfo classInfo = ClassUtil.getClassInfo(cls);
 			if (refs != null && refs.size() > 0) {
+				//这里需要增加引用Pro的调用上下文
 				Context currentLoopContext = callcontext != null?callcontext.getLoopContext():null;
 				for (int i = 0; i < refs.size(); i++) {
 					Pro ref = refs.get(i);
@@ -1405,7 +1461,10 @@ public class BeanAccembleHelper<V> {
 					Object refvalue = null;
 					try
 					{
-						refvalue = ref.getTrueValue(callcontext);
+//						if(ref.getXpath() != null)
+							refvalue = providerManagerInfo.getApplicationContext().proxyObject(ref, 
+									ref.getTrueValue(callcontext), 
+									ref.getXpath());
 					}
 					finally
 					{
@@ -1552,8 +1611,16 @@ public class BeanAccembleHelper<V> {
 				context = new Context(providerManagerInfo.getName());
 				callcontext.setLoopContext(context);
 			} else {
-				context = new Context(callcontext.getLoopContext(),
-						providerManagerInfo.getName());
+//				context = new Context(callcontext.getLoopContext(),
+//						providerManagerInfo.getName());
+				if(providerManagerInfo.getXpath() != null)
+					context = new Context(callcontext.getLoopContext(),
+							providerManagerInfo.getXpath());
+				else
+				{
+					context = new Context(callcontext.getLoopContext(),
+							providerManagerInfo.getName());
+				}
 				callcontext.setLoopContext(context);
 			}
 			if(providerManagerInfo.getFactory_bean() == null && providerManagerInfo.getFactory_class() == null)

@@ -15,6 +15,8 @@
  */
 package org.frameworkset.spi.assemble;
 
+import org.frameworkset.spi.assemble.BeanAccembleHelper.LoopObject;
+
 /**
  * 
  * 
@@ -41,6 +43,10 @@ package org.frameworkset.spi.assemble;
 public class Context {
 	Context parent;
 	String refid;
+	/**
+	 * 保存应用的
+	 */
+	private Object currentObj;
 	boolean isroot = false;
 	
 	public Context(String refid)
@@ -55,17 +61,21 @@ public class Context {
 		this.refid = refid;
 	}
 	
-	public boolean isLoopIOC(String refid_)
+	public boolean isLoopIOC(String refid_,LoopObject lo)
 	{
 		if(refid_.equals(this.refid))
+		{
+			lo.setObj(currentObj);
 			return true;
+			
+		}
 		if(this.isroot)
 		{
 			return false;
 		}
 		else if(parent != null)
 		{
-			return parent.isLoopIOC(refid_);
+			return parent.isLoopIOC(refid_,lo);
 		}
 		return false;
 		
@@ -85,6 +95,15 @@ public class Context {
 			.append(refid);
 		}
 		return ret.toString();
+	}
+
+	public Object getCurrentObj() {
+		return currentObj;
+	}
+
+	public Object setCurrentObj(Object currentObj) {
+		this.currentObj = currentObj;
+		return currentObj;
 	}
 	
 }

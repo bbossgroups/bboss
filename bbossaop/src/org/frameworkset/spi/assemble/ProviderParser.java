@@ -80,6 +80,8 @@ public class ProviderParser extends DefaultHandler
     private Map<String,Pro> properties = new HashMap<String,Pro>();
     
     private BaseApplicationContext applicationContext;  
+    
+    
 
     public Map getProperties()
     {
@@ -433,6 +435,8 @@ public class ProviderParser extends DefaultHandler
     			{
     				f.setValue(value);
     			}
+    			//增加xpath信息
+    			f.setXpath(property.getXpath() + Pro.REF_TOKEN + f.getName());
     			property.addReferenceParam(f);
     		}
     		else if(name.startsWith("path:"))
@@ -474,8 +478,114 @@ public class ProviderParser extends DefaultHandler
 //    	return null;
     }
     
-    
-    
+    /**
+     * 构建元素的xpath值
+     * @param p
+     * @return
+     */
+    private void buildXpath(Pro p)
+    {
+    	String xpath = null;
+    	if(traceStack.size() > 0)
+        {
+            Object value = this.traceStack.peek();
+            if(value instanceof Pro)
+            {
+            	Pro pro = (Pro)value;
+            	xpath = pro.getXpath() + Pro.REF_TOKEN + p.getName();
+            	p.setXpath(xpath);
+            }
+            else if (value instanceof List)
+            {
+                ProList<Pro> list = (ProList<Pro>) value;
+                Pro pp = (Pro)traceStack.get(traceStack.size() - 2);
+//                list.add(p.getValue());
+                if(list.size() > 0)
+                	xpath = pp.getXpath() + "[" + (list.size() - 1) + "]";
+                else
+                	xpath = pp.getXpath() + "[0]";
+//                list.add(p);
+                p.setXpath(xpath);
+            }
+            else if (value instanceof Map)
+            {
+//            	ProMap<String,Pro> map = (ProMap<String,Pro>)value;
+//                map.put(p.getName(), p.value);
+//                map.put(p.getName(), p);
+                Pro pp = (Pro)traceStack.get(traceStack.size() - 2);
+//              list.add(p.getValue());
+//              if(list.size() > 0)
+              	xpath = pp.getXpath() + "[" + p.getName() + "]";
+//              else
+//              	xpath = pp.getXpath() + "[0]";
+//              list.add(p);
+              	p.setXpath(xpath);
+                
+            }
+            else if (value instanceof ProArray)
+            {
+            	ProArray set = (ProArray)value;
+//                set.add(p.value);
+//                set.addPro(p);
+                Pro pp = (Pro)traceStack.get(traceStack.size() - 2);
+//              list.add(p.getValue());
+              if(set.size() > 0)
+              	xpath = pp.getXpath() + "[" + (set.size() - 1) + "]";
+              else
+              	xpath = pp.getXpath() + "[0]";
+//              list.add(p);
+              p.setXpath(xpath);
+            }
+            else if(value instanceof Construction)
+            {
+            	Construction construction = (Construction)value;
+//            	construction.addParam(p);
+            	Pro pp = (Pro)traceStack.get(traceStack.size() - 2);
+//              list.add(p.getValue());
+              if(construction.getParams() != null && construction.getParams().size() > 0)
+              	xpath = pp.getXpath() + "{" + (construction.getParams().size() - 1) + "}";
+              else
+              	xpath = pp.getXpath() + "{0}";
+//              list.add(p);
+              p.setXpath(xpath);
+            }
+            else if (value instanceof Set)
+            {
+            	ProSet<Pro> set = (ProSet<Pro>)value;
+            	 Pro pp = (Pro)traceStack.get(traceStack.size() - 2);
+//               list.add(p.getValue());
+               if(set.size() > 0)
+               	xpath = pp.getXpath() + "[" + (set.size() - 1) + "]";
+               else
+               	xpath = pp.getXpath() + "[0]";
+//               list.add(p);
+               p.setXpath(xpath);
+            }
+            
+            else if(value instanceof ProviderManagerInfo)
+            {
+            	ProviderManagerInfo providerManagerInfo = (ProviderManagerInfo) value;
+            	providerManagerInfo.addReference(p);
+//            	if(p.getName() != null)
+//            		p.setUuid(providerManagerInfo.getId() + Pro.id_mask + p.getName());
+//            	else
+//            	{
+//            		p.setUuid(providerManagerInfo.getId());
+//            	}
+            }
+            else
+            {
+            	xpath = p.getName();
+            	 p.setXpath(xpath);
+            }
+        }
+        else
+        {
+        	xpath = p.getName();
+        	 p.setXpath(xpath);
+        }
+//    	return xpath;
+    }
     public void startElement(String s1, String s2, String name, Attributes attributes)
     {
     	    	
@@ -548,6 +658,7 @@ public class ProviderParser extends DefaultHandler
             p.setDestroyMethod(destroyMethod);
             String initMethod = attributes.getValue("init-method");
             p.setInitMethod(initMethod);
+            this.buildXpath(p);
             setFAttr(p, attributes);
             if(label != null && !label.equals(""))
                 p.setLabel(label);
@@ -556,7 +667,7 @@ public class ProviderParser extends DefaultHandler
             {
                 p.setRefid(refid);
             }
-
+            
             this.traceStack.push(p);
         }
         else if (name.equals("l")||name.equals("list"))

@@ -44,6 +44,8 @@ public class Pro<V> extends BaseTXManager implements Comparable<V>, BeanInf {
 			"class","cs", "refid", "singlable", "init-method", "destroy-method",
 			"factory-bean", "factory-class", "factory-method" };
 	
+	public static final String REF_TOKEN = "->";
+	
 	/**
 	 * 内置的属性前缀标识
 	 */
@@ -263,6 +265,11 @@ public class Pro<V> extends BaseTXManager implements Comparable<V>, BeanInf {
 		return getBean((CallContext) null);
 	}
 
+	/**
+	 * 本方法返回原始的bean组件
+	 * @param context
+	 * @return
+	 */
 	public Object getBean(CallContext context) {
 		if (this.isSinglable()) // 单列模式
 		{
@@ -289,6 +296,18 @@ public class Pro<V> extends BaseTXManager implements Comparable<V>, BeanInf {
 			// return accember.getBean(this,context);
 
 		}
+
+	}
+	
+	/**
+	 * 本方法带ioc功能的bean组件
+	 * @param context
+	 * @return
+	 */
+	public Object getProxyBean(CallContext context) {
+		return getApplicationContext().proxyObject(this, 
+				this.getBean(context), 
+				this.getXpath());
 
 	}
 
@@ -339,10 +358,21 @@ public class Pro<V> extends BaseTXManager implements Comparable<V>, BeanInf {
 	public boolean isRefereced() {
 		return this.refid != null && !this.refid.equals("");
 	}
-
+	
 	private Object value;
+	private String xpath;
 
+	/**
+	 * attr:test1->test2
+	 * attr:test1[0]
+	 * attr:test1[key]
+	 * 
+	 */
 	private String refid;
+	
+	private RefID refidLink;
+	
+	
 
 	/**
 	 * 值类型
@@ -353,8 +383,12 @@ public class Pro<V> extends BaseTXManager implements Comparable<V>, BeanInf {
 	/**
 	 * 属性编辑器信息
 	 */
-	private Editor editor;
+	private Editor editor; 
 
+	public boolean innerNode()
+	{
+		return refidLink != null && refidLink.getNext() != null;
+	}
 	public void setEditor(Editor editor) {
 		modify();
 		this.editor = editor;
@@ -409,6 +443,8 @@ public class Pro<V> extends BaseTXManager implements Comparable<V>, BeanInf {
 	public String getRefid() {
 		return refid;
 	}
+	
+	
 
 	public void setRefid(String refid) {
 		modify();
@@ -421,6 +457,8 @@ public class Pro<V> extends BaseTXManager implements Comparable<V>, BeanInf {
 				this.refid = refid
 						.substring(ServiceProviderManager.ATTRIBUTE_PREFIX
 								.length());
+				this.refidLink = RefIDUtil.parsedRefID(this.refid);
+				
 			} else {
 				this.refid = refid;
 				isserviceRef = true;
@@ -642,6 +680,19 @@ public class Pro<V> extends BaseTXManager implements Comparable<V>, BeanInf {
 	public Object getTrueValue(CallContext context) {
 		return getTrueValue(context, null);
 	}
+	
+	/**
+	 * 本方法返回带ioc功能的值
+	 * @param context
+	 * @return
+	 */
+	public Object getProxyTrueValue(CallContext context) {
+//		return getTrueValue(context, null);
+		return getApplicationContext().proxyObject(this, 
+				getTrueValue( context) , 
+				this.getXpath());
+
+	}
 
 	public Object getTrueValue(CallContext context, Object defaultValue) {
 		return getTrueValue(context, defaultValue, true);
@@ -825,7 +876,7 @@ public class Pro<V> extends BaseTXManager implements Comparable<V>, BeanInf {
 				{
 					try {
 						Class clazz = ValueObjectUtil.getClass(soatype);
-						retvalue = ((ProList) value).getComponentList(clazz);
+						retvalue = ((ProList) value).getComponentList(clazz,context);
 					} catch (ClassNotFoundException e) {
 						throw new BeanInstanceException(e);
 					}
@@ -833,7 +884,7 @@ public class Pro<V> extends BaseTXManager implements Comparable<V>, BeanInf {
 				}
 				else
 				{
-					retvalue = ((ProList) value).getComponentList(ArrayList.class);
+					retvalue = ((ProList) value).getComponentList(ArrayList.class,context);
 				}
 			} else if (value instanceof ProMap) {
 				String soatype = this.getSOAAttribute(soa_type_attribute);
@@ -841,14 +892,14 @@ public class Pro<V> extends BaseTXManager implements Comparable<V>, BeanInf {
 				{
 					try {
 						Class clazz = ValueObjectUtil.getClass(soatype);
-						retvalue = ((ProMap) value).getComponentMap(clazz);
+						retvalue = ((ProMap) value).getComponentMap(clazz,context);
 					} catch (ClassNotFoundException e) {
 						throw new BeanInstanceException(e);
 					}
 				}
 				else
 				{
-					retvalue = ((ProMap) value).getComponentMap(HashMap.class);
+					retvalue = ((ProMap) value).getComponentMap(HashMap.class,context);
 				}
 				
 			} else if (value instanceof ProSet) {
@@ -857,7 +908,7 @@ public class Pro<V> extends BaseTXManager implements Comparable<V>, BeanInf {
 				{
 					try {
 						Class clazz = ValueObjectUtil.getClass(soatype);
-						retvalue = ((ProSet) value).getComponentSet(clazz);
+						retvalue = ((ProSet) value).getComponentSet(clazz,context);
 					} catch (ClassNotFoundException e) {
 						throw new BeanInstanceException(e);
 					}
@@ -865,11 +916,11 @@ public class Pro<V> extends BaseTXManager implements Comparable<V>, BeanInf {
 				}
 				else
 				{
-					retvalue = ((ProSet) value).getComponentSet(TreeSet.class);
+					retvalue = ((ProSet) value).getComponentSet(TreeSet.class,context);
 				}
 				
 			} else if (value instanceof ProArray) {
-				retvalue = ((ProArray) value).getComponentArray();
+				retvalue = ((ProArray) value).getComponentArray(context);
 			} else {
 				String soatype = this.getSOAAttribute(soa_type_attribute);
 				if(soatype == null)
@@ -1676,5 +1727,19 @@ public class Pro<V> extends BaseTXManager implements Comparable<V>, BeanInf {
 		modify();
 		RMIAttributes = rMIAttributes;
 	}
+
+	public String getXpath() {
+		return xpath;
+	}
+
+	public void setXpath(String xpath) {
+		this.xpath = xpath;
+	}
+
+	public RefID getRefidLink() {
+		return refidLink;
+	}
+	
+	
 
 }

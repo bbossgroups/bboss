@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import org.frameworkset.spi.CallContext;
+
 /**
  * 
  * <p>Title: ProMap.java</p> 
@@ -190,13 +192,23 @@ public class ProMap<K,V extends Pro> extends HashMap<K,V>
         return value.getSet();
     }
     
-    public Object getObject(String key)
+    /**
+     * 返回带ioc功能的对象
+     * @param key
+     * @param callcontext
+     * @return
+     */
+    public Object getProxyObject(String key,CallContext callcontext)
     {
         Pro<V> value = this.get(key);
         if(value == null)
             return null;
         
-        return value.getObject();
+        return value.getProxyTrueValue(callcontext);
+    }
+    public Object getObject(String key)
+    {
+        return getObject(key,null);
     }
     public Pro getPro(String name)
     {
@@ -237,7 +249,7 @@ public class ProMap<K,V extends Pro> extends HashMap<K,V>
 	
 	private Map componentMap;
     private Object lock = new Object();
-    public Map getComponentMap(Class maptype)
+    public Map getComponentMap(Class maptype,CallContext callcontext)
     {
     	if(this.getComponentType() == null)
     		return this;
@@ -269,10 +281,19 @@ public class ProMap<K,V extends Pro> extends HashMap<K,V>
     							componentMap = new HashMap(this.size());
     						}
     						Iterator<String> keys = (Iterator<String>)this.keySet().iterator();
+    						Context currentLoopContext = callcontext != null?callcontext.getLoopContext():null;	    					
 	    					while(keys.hasNext())
 	    					{
 	    						String key = keys.next();
-	    						componentMap.put(key, getObject(key));	
+	    						try
+	    						{
+	    							componentMap.put(key, getProxyObject(key,callcontext));	
+	    						}
+	    						finally
+	    						{
+	    							if(callcontext != null)
+	    								callcontext.setLoopContext(currentLoopContext);
+	    						}
 	    					}
     						
     					}
@@ -318,10 +339,24 @@ public class ProMap<K,V extends Pro> extends HashMap<K,V>
     							componentMap = new HashMap(this.size());
     						}
     						Iterator<String> keys = (Iterator<String>)this.keySet().iterator();
+//	    					while(keys.hasNext())
+//	    					{
+//	    						String key = keys.next();
+//	    						componentMap.put(key, getObject(key));	
+//	    					}
+    						Context currentLoopContext = callcontext != null?callcontext.getLoopContext():null;	    					
 	    					while(keys.hasNext())
 	    					{
 	    						String key = keys.next();
-	    						componentMap.put(key, getObject(key));	
+	    						try
+	    						{
+	    							componentMap.put(key, getProxyObject(key,callcontext));	
+	    						}
+	    						finally
+	    						{
+	    							if(callcontext != null)
+	    								callcontext.setLoopContext(currentLoopContext);
+	    						}
 	    					}
     					}
     				}

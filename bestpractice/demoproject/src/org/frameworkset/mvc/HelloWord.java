@@ -46,12 +46,13 @@ public class HelloWord
 {
 
 	public String sayHelloNumber(@RequestParam(name = "name") int ynum,
-			ModelMap model)
+			ModelMap model) throws Throwable
 	{
 
 		if (ynum != 0)
 		{
 			model.addAttribute("serverHelloNumber", "幸运数字为[" + ynum + "]！");
+			throw new Throwable();
 		}
 		else
 			model.addAttribute("serverHelloNumber", "幸运数字为[" + ynum

@@ -793,4 +793,9 @@ public class SecurityProviderInfo implements java.io.Serializable,BeanInf
 		return null;
 	}
 
+	public String getXpath() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

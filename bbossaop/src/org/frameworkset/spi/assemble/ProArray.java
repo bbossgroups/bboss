@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.frameworkset.spi.CallContext;
 
 import com.frameworkset.util.ValueObjectUtil;
 
@@ -208,7 +209,7 @@ public class ProArray implements Serializable{
 
 	private Object lock = new Object();
 
-	public Object getComponentArray() {
+	public Object getComponentArray(CallContext callcontext) {
 		if (this.getComponentType() == null)
 			return this;
 
@@ -219,14 +220,23 @@ public class ProArray implements Serializable{
 					{
 						if (this.componentType.equalsIgnoreCase(Pro.COMPONENT_BEAN)) {
 							Class enumType = this.pros[0].getBeanClass();
+
 							// componentArray = new ArrayList(this.size());
 							componentArray = Array.newInstance(enumType, this
 									.size());
 							int i = 0;
 							if(pros != null)
 							{
+								Context currentLoopContext = callcontext != null?callcontext.getLoopContext():null;
 								for (Pro v : this.pros) {
-									Array.set(componentArray, i, v.getBean());
+									try{
+										Array.set(componentArray, i, v.getBean(callcontext));
+									}
+									finally
+		    						{
+		    							if(callcontext != null)
+		    								callcontext.setLoopContext(currentLoopContext);
+		    						}
 									i++;
 								}
 							}
@@ -254,9 +264,17 @@ public class ProArray implements Serializable{
 							int i = 0;
 							if(pros != null)
 							{
+								Context currentLoopContext = callcontext != null?callcontext.getLoopContext():null;
 								for (Pro v : this.pros) {
-								Array.set(componentArray, i, v.getBean());
-								i++;
+									try{
+										Array.set(componentArray, i, v.getBean(callcontext));
+									}
+									finally
+		    						{
+		    							if(callcontext != null)
+		    								callcontext.setLoopContext(currentLoopContext);
+		    						}
+									i++;
 								}
 							}
 						}
@@ -268,9 +286,17 @@ public class ProArray implements Serializable{
 							int i = 0;
 							if(pros != null)
 							{
+								Context currentLoopContext = callcontext != null?callcontext.getLoopContext():null;
 								for (Pro v : this.pros) {
-								Object value = v.getBean();
-								Array.set(componentArray, i, ValueObjectUtil.typeCast(value, Class.class));
+								try{
+									Object value = v.getBean(callcontext);
+									Array.set(componentArray, i, ValueObjectUtil.typeCast(value, Class.class));
+								}
+								finally
+	    						{
+	    							if(callcontext != null)
+	    								callcontext.setLoopContext(currentLoopContext);
+	    						}
 								i++;
 								}
 							}
@@ -282,8 +308,16 @@ public class ProArray implements Serializable{
 								int i = 0;
 								if(pros != null)
 								{
+									Context currentLoopContext = callcontext != null?callcontext.getLoopContext():null;
 									for (Pro v : this.pros) {
-									Array.set(componentArray, i, v.getBean());
+										try{
+											Array.set(componentArray, i, v.getBean(callcontext));
+										}
+										finally
+										{
+											if(callcontext != null)
+			    								callcontext.setLoopContext(currentLoopContext);
+										}
 									i++;
 									}
 								}

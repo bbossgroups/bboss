@@ -33,6 +33,7 @@ import javax.xml.parsers.SAXParserFactory;
 import org.apache.log4j.Logger;
 import org.frameworkset.spi.BaseApplicationContext;
 import org.frameworkset.spi.CallContext;
+import org.frameworkset.spi.assemble.RefID.Index;
 import org.frameworkset.spi.assemble.callback.AssembleCallback;
 
 /**
@@ -717,6 +718,91 @@ public class ServiceProviderManager {
         Pro pro = this.properties.get(name);
         if(pro == null){
             log.debug("配置文件["+applicationContext.getConfigfile() +"]中没有指定属性[" + name + "]！");
+            return null;
+        }
+        return pro;
+    }
+    
+    /**
+     * 根据引用的维度获取其对应的Pro对象
+     * @param refid
+     * @return
+     */
+    public Pro getInnerPropertyBean(RefID refid,String strrefid)
+    {	
+//    	String name = refid.getName();
+    	Pro pro = null;
+    	
+    	boolean firsted = true;
+    	Pro temp = null;
+    	do
+    	{
+    		if(firsted)
+    		{
+    			pro = this.properties.get(refid.getName());
+    			firsted = false;
+    		}
+    		else
+    		{
+    			
+    			List<Pro> refs = pro.getReferences();
+    			pro = null;
+    			for(int i = 0; i < refs.size(); i ++)
+    			{
+    				temp = refs.get(i);
+    				if(temp.getName().equals(refid.getName()))
+					{
+    					pro = temp;
+    					break;
+					}
+    			}
+    			if(pro == null)
+    			{
+    				 log.debug("配置文件["+applicationContext.getConfigfile() +"]中没有指定属性[" + strrefid + "]！");
+    		         return null;
+    			}
+    		}
+    		
+	        List<Index> indexs = refid.getIndexs();
+	        if(indexs != null && indexs.size() > 0)//内部对象：构造器，list/array/set
+	        {
+	        	for(int i = 0;i < indexs.size(); i ++)
+	        	{
+	        		Index index = indexs.get(i);
+	        		if(!index.isInconstruction())
+	        		{
+	        			if(index.getInt_idx() > 0)
+	        			{
+	        				if(pro.isList())
+	        					pro = pro.getList().getPro(index.getInt_idx());
+	        				else if(pro.isArray())
+	        					pro = pro.getArray().getPro(index.getInt_idx());
+	        				
+	        				else 
+	        					pro = pro.getSet().getPro(index.getInt_idx());	
+	        			}
+	        			else
+	        			{
+	        				pro = pro.getMap().getPro(index.getString_idx());	
+	        			}
+	        		}
+	        		else
+	        		{
+	        			pro = (Pro)pro.getConstructorParams().get(index.getInt_idx());
+	        		}
+	        	}
+	        }
+	        else//属性引用
+	        {
+	        	
+	        }
+	       
+	        refid = refid.getNext();
+    	}while(refid != null);
+	        
+        
+        if(pro == null){
+            log.debug("配置文件["+applicationContext.getConfigfile() +"]中没有指定属性[" + strrefid + "]！");
             return null;
         }
         return pro;

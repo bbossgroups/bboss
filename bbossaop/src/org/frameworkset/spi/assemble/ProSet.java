@@ -8,6 +8,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
+import org.frameworkset.spi.CallContext;
+
 
 /**
  * 
@@ -235,7 +237,7 @@ public  class ProSet<V extends Pro> extends TreeSet<V>
 	private Set componentSet;
     private Object lock = new Object();
     
-    public Set getComponentSet(Class settype)
+    public Set getComponentSet(Class settype,CallContext callcontext)
     {
     	if(this.getComponentType() == null)
     		return this;
@@ -265,10 +267,18 @@ public  class ProSet<V extends Pro> extends TreeSet<V>
     							componentSet = new TreeSet();
     						}
     						Iterator keys = this.iterator();
+    						Context currentLoopContext = callcontext != null?callcontext.getLoopContext():null;
 	    					while(keys.hasNext())
 	    					{
 	    						Pro pro = (Pro)keys.next();
-	    						componentSet.add(pro.getBean());	
+	    						try{
+	    							componentSet.add(pro.getBean(callcontext));	
+	    						}
+	    						finally
+	    						{
+	    							if(callcontext != null)
+	    								callcontext.setLoopContext(currentLoopContext);
+	    						}
 	    					}
     					}
     					else if(this.componentType.equalsIgnoreCase(Pro.COMPONENT_STRING_SHORTNAME) || this.componentType.equalsIgnoreCase(Pro.COMPONENT_STRING))
@@ -311,10 +321,19 @@ public  class ProSet<V extends Pro> extends TreeSet<V>
     							componentSet = new TreeSet();
     						}
     						Iterator keys = this.iterator();
+    						Context currentLoopContext = callcontext != null?callcontext.getLoopContext():null;
 	    					while(keys.hasNext())
 	    					{
 	    						Pro pro = (Pro)keys.next();
-	    						componentSet.add(pro.getBean());	
+	    						try
+	    						{
+	    							componentSet.add(pro.getBean(callcontext));	
+	    						}
+	    						finally
+	    						{
+	    							if(callcontext != null)
+	    								callcontext.setLoopContext(currentLoopContext);
+	    						}
 	    					}
     					}
     				}

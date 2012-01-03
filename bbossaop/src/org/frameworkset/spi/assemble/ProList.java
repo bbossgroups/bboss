@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
+import org.frameworkset.spi.CallContext;
+
 /**
  * 
  * <p>Title: ProList.java</p> 
@@ -214,7 +216,7 @@ public  class ProList<V extends Pro> extends ArrayList<V>
     }
     private List componentList;
     private Object lock = new Object();
-    public List getComponentList(Class listtype)
+    public List getComponentList(Class listtype,CallContext callcontext)
     {
     	if(this.getComponentType() == null)
     		return this;
@@ -243,9 +245,19 @@ public  class ProList<V extends Pro> extends ArrayList<V>
     						{
     							componentList = new ArrayList(this.size());
     						}
+        					Context currentLoopContext = callcontext != null?callcontext.getLoopContext():null;
 	    					for(Pro pro:this)
 	    					{
-	    						componentList.add(pro.getBean());	
+	    						
+	    						try{
+	    							componentList.add(pro.getProxyBean(callcontext));
+	    						}
+	    						finally
+	    						{
+	    							if(callcontext != null)
+	    								callcontext.setLoopContext(currentLoopContext);
+	    						}
+	    						
 	    					}
     					}
     					else if(this.componentType
@@ -289,9 +301,17 @@ public  class ProList<V extends Pro> extends ArrayList<V>
     						{
     							componentList = new ArrayList(this.size());
     						}
+    						Context currentLoopContext = callcontext != null?callcontext.getLoopContext():null;
 	    					for(Pro pro:this)
 	    					{
-	    						componentList.add(pro.getBean());	
+	    						try{
+	    							componentList.add(pro.getProxyBean(callcontext));	
+	    						}
+	    						finally
+	    						{
+	    							if(callcontext != null)
+	    								callcontext.setLoopContext(currentLoopContext);
+	    						}
 	    					}
     					}
     					else
@@ -311,9 +331,21 @@ public  class ProList<V extends Pro> extends ArrayList<V>
     						{
     							componentList = new ArrayList(this.size());
     						}
+//	    					for(Pro pro:this)
+//	    					{
+//	    						componentList.add(pro.getBean());	
+//	    					}
+    						Context currentLoopContext = callcontext != null?callcontext.getLoopContext():null;
 	    					for(Pro pro:this)
 	    					{
-	    						componentList.add(pro.getBean());	
+	    						try{
+	    							componentList.add(pro.getProxyBean(callcontext));	
+	    						}
+	    						finally
+	    						{
+	    							if(callcontext != null)
+	    								callcontext.setLoopContext(currentLoopContext);
+	    						}
 	    					}
     					}
     				}
