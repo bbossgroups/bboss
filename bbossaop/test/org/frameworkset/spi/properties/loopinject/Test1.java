@@ -31,6 +31,7 @@ public class Test1 implements java.io.Serializable{
 	Test2 test2;
 	Test3 test3;
 	Test1 test4;
+	Test1 test5;
 	Map testmap;
 	List testlist;
 	Test1[] testarray;
@@ -69,6 +70,12 @@ public class Test1 implements java.io.Serializable{
 	}
 	public void setTestarray(Test1[] testarray) {
 		this.testarray = testarray;
+	}
+	public Test1 getTest5() {
+		return test5;
+	}
+	public void setTest5(Test1 test5) {
+		this.test5 = test5;
 	}
 	
 

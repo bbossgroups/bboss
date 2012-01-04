@@ -109,7 +109,7 @@ public class SOAApplicationContext extends DefaultApplicationContext {
 			Object defaultValue, ServiceID serviceID) {
 		if (providerManagerInfo == null)
 			throw new SPIException("bean对象为空。");
-		String key = providerManagerInfo.getName();
+//		String key = providerManagerInfo.getName();
 		if (providerManagerInfo.isRefereced()) {
 			Object retvalue = providerManagerInfo.getTrueValue(context,
 					defaultValue);
@@ -134,16 +134,16 @@ public class SOAApplicationContext extends DefaultApplicationContext {
 	protected Object getBeanObject(CallContext context, String name, Object defaultValue,
 			boolean fromprovider) {
 		// 分析服务参数
-		int idx = name.indexOf("?");
+//		int idx = name.indexOf("?");
 
-		String _name = name;
+//		String _name = name;
 		if (context == null)
 			context = new CallContext(this);
-		if (idx > 0) {
-			String params = name.substring(idx + 1);
-			context = buildCallContext(params, context);
-			// name = name.substring(0,idx);
-		}
+//		if (idx > 0) {
+//			String params = name.substring(idx + 1);
+//			context = buildCallContext(params, context);
+//			// name = name.substring(0,idx);
+//		}
 
 		
 		// new ServiceID(name,GroupRequest.GET_ALL,0,ServiceID.result_rsplist,

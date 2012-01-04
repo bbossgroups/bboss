@@ -3,6 +3,7 @@
 	<property name="test1" class="org.frameworkset.spi.properties.loopinject.Test1">
 		<property name="test2" class="org.frameworkset.spi.properties.loopinject.Test2">
 			<property name="test1" refid="attr:test1" />
+			<property name="test3" refid="attr:test1->test3" />
 		</property>
 		<property name="test3" class="org.frameworkset.spi.properties.loopinject.Test3"
 			f:test2="attr:test1->test2"/>
@@ -22,5 +23,8 @@
 				<property refid="attr:test1"/>
 			</array>
 		</property>
+		<property name="test5" refid="attr:test5"/>
 	</property>
+	
+	<property name="test5" refid="attr:test1"/>
 </properties>

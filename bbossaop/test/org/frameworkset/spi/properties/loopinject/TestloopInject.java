@@ -63,4 +63,12 @@ public class TestloopInject
 		Test1 a = (Test1)context.getBeanObject("test1");
 		System.out.println(a);
 	}
+	
+	@Test
+	public void refinjectloop()
+	{
+		BaseApplicationContext context = ApplicationContext.getApplicationContext("org/frameworkset/spi/properties/loopinject/reftest.xml"); 
+		Test1 a = (Test1)context.getBeanObject("test5");
+		System.out.println(a);
+	}
 }

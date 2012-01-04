@@ -882,11 +882,11 @@ public class BeanAccembleHelper<V> {
 				callcontext = new CallContext(providerManagerInfo
 						.getApplicationContext());
 			if (callcontext.getLoopContext() == null) {
-				context = new Context(beanname);
+				context = new Context(providerManagerInfo.getXpath());
 				callcontext.setLoopContext(context);
 			} else {
 				context = new Context(callcontext.getLoopContext(),
-						beanname);
+						providerManagerInfo.getXpath());
 				callcontext.setLoopContext(context);
 			}
 			//2.创建组件实例
@@ -899,6 +899,20 @@ public class BeanAccembleHelper<V> {
 			String factoryClass = pro.getFactory_class();
 			try {
 				Class cls = Class.forName(factoryClass);
+				//通过工厂对象创建组件实例
+				//1.构建工厂创建路径上下文，防止工厂对象在创建组件实例时产生循环依赖
+				Context context = null;
+				if (callcontext == null)
+					callcontext = new CallContext(providerManagerInfo
+							.getApplicationContext());
+				if (callcontext.getLoopContext() == null) {
+					context = new Context(providerManagerInfo.getXpath());
+					callcontext.setLoopContext(context);
+				} else {
+					context = new Context(callcontext.getLoopContext(),
+							providerManagerInfo.getXpath());
+					callcontext.setLoopContext(context);
+				}
 				V bean  = creatorBeanByFactoryClass(pro, cls, factoryMethod,callcontext);
 //				context.getLoopContext().setCurrentObj(bean);
 				return bean;
@@ -1608,7 +1622,7 @@ public class BeanAccembleHelper<V> {
 //		else
 		{
 			if (callcontext.getLoopContext() == null) {
-				context = new Context(providerManagerInfo.getName());
+				context = new Context(providerManagerInfo.getXpath());
 				callcontext.setLoopContext(context);
 			} else {
 //				context = new Context(callcontext.getLoopContext(),
