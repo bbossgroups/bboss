@@ -38,7 +38,7 @@
 		<echo>compile the frameworkset-util source ...</echo>
 		<javac destdir="classes-bboss-util" target="1.5" source="1.5" deprecation="true" debug="${debug}" optimize="${optimize}" memorymaximumsize="256M" fork="true" verbose="yes">
 			<src path="src" />
-			<src path="test" />
+			<src path="src-asm" />
 			
 			<classpath id="cp-classes-bboss-util">
 				<fileset dir="lib/" includes="*.jar *.zip" />				

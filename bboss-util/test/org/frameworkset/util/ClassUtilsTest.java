@@ -64,7 +64,17 @@ public class ClassUtilsTest
 	public static class ParentTest
 	{
 		private String parentfield;
-
+		private static String staticparentfield;
+		private static final String fparentfield = "dd";
+		
+		public String getNotExistField()
+		{
+			return "";
+		}
+		public void setNotExistField(String notExistField)
+		{
+//			return "";
+		}
 		
 		public String getParentfield()
 		{

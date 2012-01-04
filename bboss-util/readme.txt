@@ -18,6 +18,8 @@ bboss-util<-bboss-taglib [frameworkset-util.jar]
 bboss-util<-kettle [frameworkset-util.jar]
 bboss-util<-portal [frameworkset-util.jar]
 bboss-util<-cas server [frameworkset-util.jar]
+#######update function list since bbossgroups-3.4 begin###########
+o 内置asm 4.0版本
 #######update function list since bbossgroups-3.3 begin###########
 ------2011-10-14------------
 o 优化ValueObjectUtil中根据属性名称获取字段值得方法，改进性能。

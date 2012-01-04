@@ -2,7 +2,8 @@
 <classpath>
 	<classpathentry excluding="xjavadoc/" kind="src" path="src"/>
 	<classpathentry kind="src" path="test"/>
-	<classpathentry kind="lib" path="lib/commons-lang-2.1.jar"/>
+	<classpathentry kind="src" path="src-asm"/>
+	<classpathentry kind="lib" path="lib/commons-lang-2.1.jar" sourcepath="C:/Documents and Settings/Administrator/.m2/repository/commons-lang/commons-lang/2.1/commons-lang-2.1-sources.jar"/>
 	<classpathentry kind="lib" path="lib/commons-modeler.jar"/>
 	<classpathentry kind="lib" path="lib/concurrent-1.3.2.jar"/>
 	<classpathentry kind="lib" path="lib/ecs-1.4.2.jar"/>
@@ -15,7 +16,7 @@
 	<classpathentry kind="lib" path="lib/ext/servlet-api.jar" sourcepath="D:/workspace/apache-tomcat-6.0.20-src"/>
 	<classpathentry kind="lib" path="lib/jmxri.jar"/>
 	<classpathentry kind="lib" path="lib/jmxtools.jar"/>
-	<classpathentry kind="lib" path="lib/ext/junit-4.6.jar"/>
+	<classpathentry kind="lib" path="lib/ext/junit-4.6.jar" sourcepath="C:/Documents and Settings/Administrator/.m2/repository/junit/junit/4.6/junit-4.6-sources.jar"/>
 	<classpathentry kind="lib" path="lib/jhighlight-1.0.jar"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>
