@@ -15,7 +15,12 @@
  */
 package org.frameworkset.soa;
 
+import java.beans.IntrospectionException;
 import java.io.File;
+import java.lang.reflect.Field;
+
+import org.frameworkset.util.ClassUtil;
+import org.frameworkset.util.ClassUtil.ClassInfo;
 
 /**
  * <p>Title: FileBean.java</p> 
@@ -29,17 +34,39 @@ import java.io.File;
 public class FileBean {
 	private File file;
   
-	/**
-	 * @return the file
-	 */
-	public File getFile() {
-		return file;
-	}
-
+//	/**
+//	 * @return the file
+//	 */
+//	public File getFile() {
+//		return file;
+//	}
+//
 	/**
 	 * @param file the file to set
 	 */
 	public void setFile(File file) {
 		this.file = file;
+	}
+	
+	public static void main(String[] args) throws IntrospectionException
+	{
+		ClassInfo beanInfo_ = ClassUtil.getClassInfo(TestBean.class);
+		Field[] fields = beanInfo_.getDeclaredFields();
+		for(int i = 0; i < fields.length; i ++)
+		{
+			Field f = fields[i];
+			Class ptype = f.getType();
+			String name = f.getName();
+			try {
+				Object value = f.get(new TestBean());
+				System.out.println();
+				
+			} catch (IllegalArgumentException e) {
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				
+				e.printStackTrace();
+			}
+		}
 	}
 }

@@ -2,7 +2,6 @@ Buildfile: build.xml
 
 init:
      [echo] Init...
-   [delete] Deleting directory D:\workspace\bbossgroups-3.5\bboss-soa\distrib
     [mkdir] Created dir: D:\workspace\bbossgroups-3.5\bboss-soa\classes-bboss-soa
     [mkdir] Created dir: D:\workspace\bbossgroups-3.5\bboss-soa\distrib
 
@@ -10,7 +9,7 @@ compile-frameworkset-soa:
      [echo] compile the frameworkset-soa source ...
     [javac] Compiling 4 source files to D:\workspace\bbossgroups-3.5\bboss-soa\classes-bboss-soa
     [javac] [解析开始时间 D:\workspace\bbossgroups-3.5\bboss-soa\src\org\frameworkset\soa\ObjectSerializable.java]
-    [javac] [解析已完成时间 63ms]
+    [javac] [解析已完成时间 93ms]
     [javac] [解析开始时间 D:\workspace\bbossgroups-3.5\bboss-soa\src\org\frameworkset\soa\SOAMethodCall.java]
     [javac] [解析已完成时间 0ms]
     [javac] [解析开始时间 D:\workspace\bbossgroups-3.5\bboss-soa\src\org\frameworkset\soa\SOAMethodInfo.java]
@@ -32,11 +31,15 @@ compile-frameworkset-soa:
     [javac] [正在装入 java\lang\reflect\Array.class(java\lang\reflect:Array.class)]
     [javac] [正在装入 java\lang\reflect\InvocationTargetException.class(java\lang\reflect:InvocationTargetException.class)]
     [javac] [正在装入 java\lang\reflect\Method.class(java\lang\reflect:Method.class)]
+    [javac] [正在装入 java\util\Collection.class(java\util:Collection.class)]
     [javac] [正在装入 java\util\Iterator.class(java\util:Iterator.class)]
     [javac] [正在装入 java\util\List.class(java\util:List.class)]
     [javac] [正在装入 java\util\Map.class(java\util:Map.class)]
     [javac] [正在装入 java\util\Set.class(java\util:Set.class)]
     [javac] [正在装入 org\frameworkset\spi\SOAApplicationContext.class(org\frameworkset\spi:SOAApplicationContext.class)]
+    [javac] [正在装入 org\frameworkset\util\ClassUtil.class(org\frameworkset\util:ClassUtil.class)]
+    [javac] [正在装入 org\frameworkset\util\ClassUtil$ClassInfo.class(org\frameworkset\util:ClassUtil$ClassInfo.class)]
+    [javac] [正在装入 org\frameworkset\util\ClassUtil$PropertieDescription.class(org\frameworkset\util:ClassUtil$PropertieDescription.class)]
     [javac] [正在装入 com\frameworkset\spi\assemble\BeanInstanceException.class(com\frameworkset\spi\assemble:BeanInstanceException.class)]
     [javac] [正在装入 com\frameworkset\spi\assemble\CurrentlyInCreationException.class(com\frameworkset\spi\assemble:CurrentlyInCreationException.class)]
     [javac] [正在装入 com\frameworkset\util\NoSupportTypeCastException.class(com\frameworkset\util:NoSupportTypeCastException.class)]
@@ -71,7 +74,6 @@ compile-frameworkset-soa:
     [javac] [正在装入 java\lang\Appendable.class(java\lang:Appendable.class)]
     [javac] [正在装入 java\io\Closeable.class(java\io:Closeable.class)]
     [javac] [正在装入 java\io\Flushable.class(java\io:Flushable.class)]
-    [javac] [正在装入 java\util\Collection.class(java\util:Collection.class)]
     [javac] [正在装入 java\lang\Iterable.class(java\lang:Iterable.class)]
     [javac] [正在装入 java\io\FileInputStream.class(java\io:FileInputStream.class)]
     [javac] [正在装入 java\io\ByteArrayOutputStream.class(java\io:ByteArrayOutputStream.class)]
@@ -88,10 +90,7 @@ compile-frameworkset-soa:
     [javac] [正在装入 java\lang\Byte.class(java\lang:Byte.class)]
     [javac] [正在装入 java\util\Date.class(java\util:Date.class)]
     [javac] [正在装入 java\lang\StackTraceElement.class(java\lang:StackTraceElement.class)]
-    [javac] [正在装入 java\lang\System.class(java\lang:System.class)]
-    [javac] [正在装入 java\io\PrintStream.class(java\io:PrintStream.class)]
-    [javac] [正在装入 java\io\FilterOutputStream.class(java\io:FilterOutputStream.class)]
-    [javac] [正在装入 java\beans\FeatureDescriptor.class(java\beans:FeatureDescriptor.class)]
+    [javac] [正在装入 java\lang\reflect\Field.class(java\lang\reflect:Field.class)]
     [javac] [正在装入 java\lang\IllegalAccessException.class(java\lang:IllegalAccessException.class)]
     [javac] [正在装入 java\lang\Error.class(java\lang:Error.class)]
     [javac] [正在装入 java\lang\ArrayIndexOutOfBoundsException.class(java\lang:ArrayIndexOutOfBoundsException.class)]
@@ -103,7 +102,7 @@ compile-frameworkset-soa:
     [javac] [已写入 D:\workspace\bbossgroups-3.5\bboss-soa\classes-bboss-soa\org\frameworkset\soa\SOAMethodInfo.class]
     [javac] [正在检查 org.frameworkset.soa.annotation.ExecuteField]
     [javac] [已写入 D:\workspace\bbossgroups-3.5\bboss-soa\classes-bboss-soa\org\frameworkset\soa\annotation\ExecuteField.class]
-    [javac] [总时间 656ms]
+    [javac] [总时间 1500ms]
 
 jar-frameworkset-soa:
      [echo] Generate the bboss-soa library bboss-soa.jar ...
@@ -122,4 +121,4 @@ complete:
 default:
 
 BUILD SUCCESSFUL
-Total time: 1 second
+Total time: 4 seconds

@@ -102,6 +102,8 @@ public class SOAApplicationContextTest {
 		
 	}
 	
+	
+	
 	@Test
 	public void commonToxml()
 	{
@@ -174,7 +176,7 @@ public class SOAApplicationContextTest {
 		String xmlcontent = ObjectSerializable.convertBeanObjectToXML("beanfile",bean, bean.getClass());
 		System.out.println(xmlcontent);
 		FileBean bean1 = ObjectSerializable.convertXMLToBeanObject("beanfile",xmlcontent,FileBean.class);
-		System.out.println(ValueObjectUtil.getFileContent(bean1.getFile(),"UTF-8"));
+//		System.out.println(ValueObjectUtil.getFileContent(bean1.getFile(),"UTF-8"));
 	}
 	@Test
 	public void beanstoxml() throws Exception

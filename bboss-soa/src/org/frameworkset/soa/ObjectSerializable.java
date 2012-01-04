@@ -34,6 +34,9 @@ import java.util.Map;
 import java.util.Set;
 
 import org.frameworkset.spi.SOAApplicationContext;
+import org.frameworkset.util.ClassUtil;
+import org.frameworkset.util.ClassUtil.ClassInfo;
+import org.frameworkset.util.ClassUtil.PropertieDescription;
 
 import com.frameworkset.spi.assemble.BeanInstanceException;
 import com.frameworkset.spi.assemble.CurrentlyInCreationException;
@@ -1031,30 +1034,36 @@ public class ObjectSerializable {
 	private static void appendBeanProperties(Object obj, Class type,
 			String dateformat, Writer ret, String[] filters)
 			throws IntrospectionException {
+		ClassInfo beanInfo = ClassUtil.getClassInfo(type);		
+//		beanInfo_.getDeclaredFields();
+//		beanInfo_.getPropertyDescriptor("");
 		
-		BeanInfo beanInfo = Introspector.getBeanInfo(type);
-		PropertyDescriptor[] attributes = beanInfo.getPropertyDescriptors();
-		for (int n = 0; n < attributes.length; n++) {
+//		BeanInfo beanInfo = Introspector.getBeanInfo(type);
+//		PropertyDescriptor[] attributes = beanInfo.getPropertyDescriptors();
+		List<PropertieDescription> attributes = beanInfo.getPropertyDescriptors();
+		for (int n = 0; n < attributes.size(); n++) {
 
 			// get bean attribute name
-			PropertyDescriptor propertyDescriptor = attributes[n];
+			PropertieDescription propertyDescriptor = attributes.get(n);
 			String attrName = propertyDescriptor.getName();
-			if (attrName.equals("class"))
-				continue;
-			else if (isexclusive(attrName, filters)) {
+//			if (attrName.equals("class"))
+//				continue;
+//			else 
+			if (isexclusive(attrName, filters)) {
 				continue;
 			}
 			Class ptype = propertyDescriptor.getPropertyType();
 
 			// create attribute value of correct type
-			Method readmethod = propertyDescriptor.getReadMethod();
-			Method writermethod = propertyDescriptor.getWriteMethod();
-			if (readmethod == null || writermethod == null)
+//			Method readmethod = propertyDescriptor.getReadMethod();
+//			Method writermethod = propertyDescriptor.getWriteMethod();
+//			if ((readmethod == null || writermethod == null) && propertyDescriptor.getField() == null )
+			if(!propertyDescriptor.canseriable())
 				continue;
-
+ 
 			try {
 
-				Object value = readmethod.invoke(obj);
+				Object value = propertyDescriptor.getValue(obj);
 				if (value != null)
 					ptype = value.getClass();
 				convertBeanObjectToXML(attrName, value, ptype, dateformat, ret);

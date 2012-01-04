@@ -15,6 +15,7 @@
  */
 package org.frameworkset.soa.xblink;
 
+import java.beans.IntrospectionException;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -27,6 +28,7 @@ import java.util.TreeSet;
 
 import org.apache.log4j.Logger;
 import org.frameworkset.soa.ObjectSerializable;
+import org.frameworkset.soa.TransientFieldBean;
 import org.junit.Test;
 
 import com.frameworkset.util.FileUtil;
@@ -46,7 +48,19 @@ import com.thoughtworks.xstream.XStream;
 public class TestSerializable
 {
 	private static Logger log = Logger.getLogger(TestSerializable.class);
-	 private static XStream xStream = new XStream(); 
+	 private static XStream xStream = new XStream();
+	 @Test
+	 public void testTransientBeantoxml() throws NumberFormatException, IllegalArgumentException, IntrospectionException
+	{
+		TransientFieldBean transientFieldBean = new TransientFieldBean("onlyField");
+		transientFieldBean.setExcludeField("exccc");
+		transientFieldBean.setStaticFiled("staticFiled");
+		transientFieldBean.setTransientField("transientField");
+		String xml = ObjectSerializable.toXML(transientFieldBean);
+		TransientFieldBean transientFieldBean_new = ObjectSerializable.toBean(xml, TransientFieldBean.class);
+		System.out.println();
+		
+	}
 	private void convertBeanToXStreamXml(int count,Person joe)
 	{
 		try

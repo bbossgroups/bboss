@@ -15,6 +15,15 @@
  */
 package org.frameworkset.soa;
 
+import java.beans.BeanInfo;
+import java.beans.IntrospectionException;
+import java.beans.Introspector;
+import java.beans.PropertyDescriptor;
+import java.lang.reflect.Field;
+
+import org.frameworkset.util.ClassUtil;
+import org.frameworkset.util.ClassUtil.ClassInfo;
+
 /**
  * <p>Title: TestBean.java</p> 
  * <p>Description: </p>
@@ -25,5 +34,31 @@ package org.frameworkset.soa;
  * @version 1.0
  */
 public class TestBean {
+	private transient String field = "aaaa";
+	
+	public static void main(String[] args) throws IntrospectionException
+	{
+		ClassInfo beanInfo_ = ClassUtil.getClassInfo(TestBean.class);
+		Field[] fields = beanInfo_.getDeclaredFields();
+		for(int i = 0; i < fields.length; i ++)
+		{
+			Field f = fields[i];
+			Class ptype = f.getType();
+			String name = f.getName();
+			try {
+				Object value = f.get(new TestBean());
+				System.out.println();
+				
+			} catch (IllegalArgumentException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+
+	
 
 }
