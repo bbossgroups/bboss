@@ -29,6 +29,8 @@ import java.util.WeakHashMap;
 
 import org.apache.log4j.Logger;
 import org.frameworkset.util.Assert;
+import org.frameworkset.util.ClassUtil;
+import org.frameworkset.util.ClassUtil.ClassInfo;
 import org.frameworkset.util.ClassUtils;
 import org.frameworkset.util.MethodParameter;
 import org.frameworkset.util.ReflectionUtils;
@@ -87,7 +89,8 @@ public abstract class BeanUtils {
 			throw new BeanInstantiationException(clazz, "Specified class is an interface");
 		}
 		try {
-			return instantiateClass(clazz,clazz.getDeclaredConstructor((Class[]) null), null);
+			ClassInfo classInfo = ClassUtil.getClassInfo(clazz);
+			return instantiateClass(clazz,classInfo.getDefaultConstruction(), null);
 		}
 		catch (NoSuchMethodException ex) {
 			throw new BeanInstantiationException(clazz, "No default constructor found", ex);
@@ -166,7 +169,7 @@ public abstract class BeanUtils {
 	public static <T> T instantiateClass(Class<T> type,Constructor ctor, Object[] args) throws BeanInstantiationException {
 		Assert.notNull(ctor, "Constructor must not be null");
 		try {
-			ReflectionUtils.makeAccessible(ctor);
+//			ReflectionUtils.makeAccessible(ctor);
 			return (T)ctor.newInstance(args);
 		}
 		catch (InstantiationException ex) {

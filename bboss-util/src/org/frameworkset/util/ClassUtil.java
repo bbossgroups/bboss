@@ -19,6 +19,7 @@ import java.beans.BeanInfo;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 import java.lang.annotation.Annotation;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -30,7 +31,6 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.frameworkset.soa.annotation.ExcludeField;
-import org.frameworkset.util.asm.AsmUtil;
 
 
 /**
@@ -45,7 +45,7 @@ import org.frameworkset.util.asm.AsmUtil;
  */
 public class ClassUtil
 {
-	private static final Logger log = Logger.getLogger(AsmUtil.class);
+	private static final Logger log = Logger.getLogger(ClassUtil.class);
 	public static class PropertieDescription
 	{
 		private Class propertyType;		
@@ -108,6 +108,30 @@ public class ClassUtil
 			}
 			
 				
+		}
+		
+		public Class[] getPropertyGenericTypes()
+		{
+			if(this.writeMethod != null)
+			{
+				return ClassUtils.getPropertyGenericTypes(writeMethod);
+			}
+			else
+			{
+				return ClassUtils.genericTypes(this.field);
+			}
+		}
+		
+		public Class getPropertyGenericType()
+		{
+			if(this.writeMethod != null)
+			{
+				return ClassUtils.getPropertyGenericType(writeMethod);
+			}
+			else
+			{
+				return ClassUtils.genericType(this.field);
+			}
 		}
 		
 		public <T extends Annotation> T findAnnotation(Class<T> type)
@@ -207,18 +231,34 @@ public class ClassUtil
 	}
 	public static class ClassInfo
 	{
-		
+		/**
+		 * declaredFields保存了类clazz以及父类中的所有属性字段定义，如果子类中和父类变量
+		 * 重名，则安顺包含在数组中，这种情况是不允许的必须过滤掉，也就是说子类中有了和父类中相同签名的方法，则自动过滤掉
+		 */
 	    private volatile transient Field[] declaredFields;
 	    
 //	    private volatile transient Map<String ,PropertieDescription> propertyDescriptors;
 	    private volatile transient List<PropertieDescription> propertyDescriptors;
-
+	    /**
+		 * declaredMethods保存了类clazz以及父类中的所有public方法定义，如果子类中和父类方法定义
+		 * 像同(抽象方法实现，过载等等)，则安顺序包含在数组中，这种情况是不允许的必须过滤掉，
+		 * 也就是说子类中有了和父类中相同签名的方法，则自动过滤掉
+		 */
 	    private volatile transient Method[] declaredMethods;
+	    
+	    private volatile transient Constructor defaultConstruction;
 
 	    private Class clazz;
 	    
 	    private  ClassInfo(Class clazz){
 	    	this.clazz = clazz;
+	    	try {
+				defaultConstruction  = clazz.getDeclaredConstructor();
+				ReflectionUtils.makeAccessible(defaultConstruction);
+			} catch (Exception e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+			} 
 	    	this.init();
 	    }
 	    
@@ -227,10 +267,41 @@ public class ClassUtil
 
 		private static final List<PropertieDescription>	NULL_P	= new ArrayList<PropertieDescription>();
 	 
-//	    private Object prodescLock = new Object();
+	    private Object declaredMethodLock = new Object();
+	    /**
+	     * 获取类的公共方法数组，包括类以及父类的public方法
+	     * @return
+	     */
 	    public Method[] getDeclaredMethods()
 		{
-	    	
+	    	if(declaredMethods != null)
+	    	{
+	    		if(declaredMethods == NULL_M)
+    				return null;
+	    		return declaredMethods;
+	    	}
+	    	synchronized(declaredMethodLock)
+	    	{
+	    		if(declaredMethods != null)
+		    	{
+		    		if(declaredMethods == NULL_M)
+	    				return null;
+		    		return declaredMethods;
+		    	}
+		    	Method[] retmethods = null;
+				try
+				{		    				
+					retmethods = getRecursiveDeclaredMehtods();		    			
+				}
+				catch(Exception e)
+				{
+					log.error(e);
+				}
+				if(retmethods == null)
+					declaredMethods = NULL_M;
+				else
+					declaredMethods = retmethods;
+	    	}
 	    	if(declaredMethods == NULL_M)
     				return null;
     		return declaredMethods;
@@ -267,20 +338,9 @@ public class ClassUtil
     	    			{
     	    				retpropertyDescriptors = NULL_P;
     	    			}
-		    			Method[] retmethods = null;
-		    			try
-		    			{		    				
-		    				retmethods = getRecursiveDeclaredMehtods();		    			
-		    			}
-		    			catch(Exception e)
-		    			{
-		    				log.error(e);
-		    			}
+		    			
 		    			this.propertyDescriptors = retpropertyDescriptors;
-		    			if(retmethods == null)
-	    					declaredMethods = NULL_M;
-	    				else
-	    					declaredMethods = retmethods;
+		    			
 		    			if(retfs == null)
 	    					declaredFields = NULL;
 	    				else
@@ -302,27 +362,77 @@ public class ClassUtil
 	    {
 	    	return propertyDescriptors ;
 	    }
+	    /**
+	     * 根据方法名称和方法参数类型判断是否是同一个方法
+	     * @param method
+	     * @param other
+	     * @return
+	     */
+	    private boolean issamemethod(Method method,Method other)
+	    {
+	    	if(!method.getName().equals(other.getName()))
+    			return false;
+    		Class[] parameterTypes = method.getParameterTypes();
+    		Class[] otherparameterTypes = other.getParameterTypes();
+    		if((parameterTypes == null || parameterTypes.length == 0)  
+    				&& (otherparameterTypes == null || otherparameterTypes.length == 0))
+    			return true;
+    		if(parameterTypes == null)
+    		{
+    			return false;
+    		}
+    		
+    		if(otherparameterTypes == null)
+    		{
+    			return false;
+    		}
+    		
+    		if(parameterTypes.length != otherparameterTypes.length)
+    			return false;
+    		for(int i = 0; i < parameterTypes.length; i ++)
+    		{
+    			if(parameterTypes[i] != otherparameterTypes[i])
+    				return false;
+    		}
+    		return true;
+	    }
+	    private boolean containMethod(List<Method> lfs,Method method)
+	    {
+	    	if(lfs == null || lfs.size() == 0)
+	    		return false;
+	    	for(Method other:lfs)
+	    	{
+	    		if(issamemethod(method,other))
+	    			return true;
+	    	}
+	    	return false;
+	    }
+	    
+	    
+	    
 	    
 	    private Method[] getRecursiveDeclaredMehtods()
 	    {
 	    	Method[] methods = null;
 	    	List<Method> lfs = new ArrayList<Method>();
+	    	Method m;
 	    	Class clazz_super = clazz;
 	    	do
 	    	{
 		    	try
 		    	{
-		    		methods = clazz_super.getDeclaredMethods();	
+		    		methods = clazz_super.getMethods();	
 		    		if(methods != null && methods.length > 0)
 		    		{
 		    			for(Method f:methods)
 		    			{
-			    			lfs.add(f);
+		    				if(!containMethod(lfs,f))//过滤重载方法和抽象方法，或者接口方法
+		    					lfs.add(f);
 			    		}
 		    		}
 			    		
 		    		clazz_super = clazz_super.getSuperclass();
-		    		if(clazz_super == null)
+		    		if(clazz_super == null || clazz_super == Object.class)
 		    		{
 		    			break;
 		    		}
@@ -348,7 +458,28 @@ public class ClassUtil
 	    	
 	    }
 	    
-	    
+	    private boolean issamefield(Field field,Field other)
+	    {
+	    	if(!field.getName().equals(other.getName()))
+	    	{
+	    		return false;
+	    	}
+	    	
+	    	if(field.getType() != other.getType())
+	    		return false;
+	    	return true;
+	    }
+	    private boolean containField(List<Field> lfs,Field field)
+	    {
+	    	if(lfs == null || lfs.size() == 0)
+	    		return false;
+	    	for(Field other:lfs)
+	    	{
+	    		if(issamefield(field,other))
+	    			return true;
+	    	}
+	    	return false;
+	    }
 	    private Field[] getRecursiveDeclaredFileds()
 	    {
 	    	Field[] fields = null;
@@ -363,7 +494,8 @@ public class ClassUtil
 		    		{
 		    			for(Field f:fields)
 			    		{
-			    			lfs.add(f);
+		    				if(!containField(lfs,f))
+		    					lfs.add(f);
 			    		}
 		    		}
 		    		clazz_super = clazz_super.getSuperclass();
@@ -422,14 +554,16 @@ public class ClassUtil
 	    		
 	    }
 	    
-	    private Field getDeclaredField(Field[] declaredFields,String name)
+	    private Field getDeclaredField(Field[] declaredFields,String name,Class type)
 	    {
 //	    	    Field[] declaredFields = this.getDeclaredFields();
 	    	    if(declaredFields == null)
 	    	    	return null;
-	    	    for(Field f:declaredFields)
+//	    	    for(Field f:declaredFields)
+	    	    for(int i = declaredFields.length - 1; i >=0; i --)
 	    	    {
-	    	    	if(f.getName().equals(name))
+	    	    	Field f = declaredFields[i];
+	    	    	if(f.getName().equals(name) && f.getType() == type)
 	    	    		return f;
 	    	    }
 	    	    return null;
@@ -460,7 +594,7 @@ public class ClassUtil
 	    private Field containFieldAndRemove(String name,List<Field> fields)
 		{
 	    	
-			for(int i = 0; i < fields.size(); i ++)
+			for(int i = 0; fields != null && i < fields.size(); i ++)
 			{
 				Field p = fields.get(i);
 				if(p.getName().equals(name))
@@ -477,6 +611,42 @@ public class ClassUtil
 	    {
 	    	return this.clazz;
 	    }
+	    
+	    private boolean containFieldInPropertyDescriptors(List<PropertieDescription> propertyDescriptors,Field field)
+	    {
+	    	if(propertyDescriptors == null || propertyDescriptors.size() == 0)
+	    		return false;
+	    	for(PropertieDescription p:propertyDescriptors)
+	    	{
+	    		if(p.getName().equalsIgnoreCase(field.getName()))
+	    		{
+	    			return true;
+	    		}
+	    	}
+	    	return false;
+	    }
+	    
+	    private void buildFieldPropertieDescriptions(List<PropertieDescription> propertyDescriptors,Field[] declaredFields)
+	    {
+	    	for(int i = 0; i < declaredFields.length  ;  i++)
+			{
+				Field f = declaredFields[i];
+				if(containFieldInPropertyDescriptors(propertyDescriptors,f))
+					continue;
+				propertyDescriptors.add(buildPropertieDescription( f));
+			}
+	    }
+	    
+	    private void buildFieldPropertieDescriptions(List<PropertieDescription> propertyDescriptors,List<Field> declaredFields)
+	    {
+	    	for(int i = 0; i < declaredFields.size()  ;  i++)
+			{
+				Field f = declaredFields.get(i);
+				if(containFieldInPropertyDescriptors(propertyDescriptors,f))
+					continue;
+				propertyDescriptors.add(buildPropertieDescription( f));
+			}
+	    }
 	    private List<PropertieDescription> initBeaninfo(Field[] declaredFields)
 	    {
 	    	List<PropertieDescription> propertyDescriptors = null;
@@ -488,7 +658,10 @@ public class ClassUtil
 				
 				PropertyDescriptor[] attributes = beanInfo.getPropertyDescriptors();
 //				List<PropertieDescription> asm = new ArrayList<PropertieDescription>();
-				if(attributes == null || attributes.length == 0)
+				if(attributes == null || attributes.length == 0 ||
+						(attributes.length == 1 && attributes[0]
+								.getName()
+								.equals("class")))
 				{
 					if(declaredFields == null || declaredFields.length == 0)
 					{
@@ -497,14 +670,8 @@ public class ClassUtil
 					else
 					{
 						propertyDescriptors = new ArrayList<PropertieDescription>(declaredFields.length);
-						for(Field f:declaredFields)
-						{
-							propertyDescriptors.add(buildPropertieDescription( f));
-						}
-//						if(asm.size() > 0)
-//						{
-//							this.clazz = AsmUtil.addGETSETMethodForClass(asm, this.clazz);
-//						}
+						buildFieldPropertieDescriptions( propertyDescriptors,declaredFields);
+
 					}
 					return propertyDescriptors;
 				}
@@ -512,31 +679,21 @@ public class ClassUtil
 				{
 					List<Field> copyFields = copyFields(declaredFields);
 					propertyDescriptors = new ArrayList<PropertieDescription>();
+					
 					for(int i = 0;  i < attributes.length; i ++)
 					{		
 						PropertyDescriptor attr = attributes[i];
 						if(attr.getName().equals("class"))
-						{
-							if(i == 0 && attributes.length == 1)
-							{
-								propertyDescriptors = NULL_P;
-								break;
-							}
-							else
-							{
-								continue;
-							}
-						}
-						
+							continue;
 						propertyDescriptors.add( buildPropertieDescription(declaredFields, copyFields,attr));
 					}
 					
-					if(copyFields.size() > 0)
+					if(copyFields != null && copyFields.size() > 0)
 					{
-						for(Field f:copyFields)
-						{
-							propertyDescriptors.add(  buildPropertieDescription( f));
-						}
+						List<PropertieDescription> propertyDescriptors_ = new ArrayList<PropertieDescription>(declaredFields.length);
+						buildFieldPropertieDescriptions( propertyDescriptors_,copyFields);
+						propertyDescriptors.addAll(propertyDescriptors_);
+
 					}
 //					if(asm.size() > 0)
 //					{
@@ -560,7 +717,7 @@ public class ClassUtil
 	    {
 	    	Method wm = attr.getWriteMethod();
 	    	Method rm = attr.getReadMethod();
-	    	Field field = this.getDeclaredField(declaredFields,attr.getName());
+	    	Field field = this.getDeclaredField(declaredFields,attr.getName(),attr.getPropertyType());
 	    	
 	    	this.containFieldAndRemove(attr.getName(), copeFields) ;    	
 	    	PropertieDescription pd = new PropertieDescription(attr.getPropertyType(),
@@ -598,6 +755,12 @@ public class ClassUtil
     		else
     			return null;
     		
+		}
+
+		public Constructor getDefaultConstruction() throws NoSuchMethodException {
+			if(this.defaultConstruction != null)
+				return defaultConstruction;
+			throw new NoSuchMethodException(this.clazz.getName() + " do not define a default construction.");
 		}
 
 		

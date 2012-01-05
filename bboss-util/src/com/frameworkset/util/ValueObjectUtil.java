@@ -113,7 +113,20 @@ public class ValueObjectUtil {
 	 * @return Object
 	 */
 	public static Object getValue(Object obj, String property) {
-		return getValue(obj, property,null) ;
+		if (obj == null || property == null || property.trim().length() == 0)
+			return null;
+
+		try {
+
+			PropertieDescription pd = ClassUtil.getPropertyDescriptor(obj.getClass(), property);
+			return pd.getValue(obj);
+				
+			
+		} catch (Exception e) {
+			log.debug("没有为属性[" + property + "]定义get或者返回布尔值的is方法.");
+		}
+		
+		return null;
 	}
 	
 	
@@ -122,10 +135,11 @@ public class ValueObjectUtil {
 			return null;
 
 		try {
-//			if(params == null || params.length == 0)
+			if(params == null || params.length == 0)
 			{
-				Method method = getMethodByPropertyName(obj, property);
-				return getValueByMethod(obj, method, params);
+				PropertieDescription pd = ClassUtil.getPropertyDescriptor(obj.getClass(), property);
+				return pd.getValue(obj);
+				
 			}
 //			else
 //			{
@@ -160,6 +174,7 @@ public class ValueObjectUtil {
 	 * @param params
 	 *            方法的参数
 	 * @return Object
+	 * @deprecated
 	 */
 	public static Object getValueByMethodName(Object obj, String methodName,
 			Object[] params) {
@@ -233,6 +248,7 @@ public class ValueObjectUtil {
 	 *            方法的参数
 	 * @param paramsTtype
 	 *            方法的参数类型
+	 * @deprecated           
 	 * @return Object
 	 */
 	public static Object getValueByMethodName(Object obj, String methodName,
@@ -345,6 +361,7 @@ public class ValueObjectUtil {
 	 * 
 	 * @param fieldName
 	 * @return String
+	 * @deprecated
 	 */
 	public static String getSetterMethodName(String fieldName) {
 		String ret = null;

@@ -41,7 +41,7 @@ public class ClassUtilsTest
 	public static class Test extends ParentTest
 	{
 		private String field;
-
+		private String parentfield;
 		
 		public String getField()
 		{
@@ -55,6 +55,16 @@ public class ClassUtilsTest
 		
 			this.field = field;
 		}
+
+
+//		public int getParentfield() {
+//			return parentfield;
+//		}
+
+
+		public void setParentfield(String parentfield) {
+			this.parentfield = parentfield;
+		}
 	}
 	public void test(Map<String,Test> datas)
 	{
@@ -63,9 +73,11 @@ public class ClassUtilsTest
 	
 	public static class ParentTest
 	{
-		private String parentfield;
+		private int parentfield;
 		private static String staticparentfield;
 		private static final String fparentfield = "dd";
+		private boolean blooenfield = false;
+		private boolean blooenfield2 = false;
 		
 		public String getNotExistField()
 		{
@@ -76,17 +88,29 @@ public class ClassUtilsTest
 //			return "";
 		}
 		
-		public String getParentfield()
+		public int getParentfield()
 		{
 		
 			return parentfield;
 		}
 
 		
-		public void setParentfield(String parentfield)
-		{
-		
-			this.parentfield = parentfield;
+//		public void setParentfield(String parentfield)
+//		{
+//		
+//			this.parentfield = parentfield;
+//		}
+		public boolean isBlooenfield() {
+			return blooenfield;
+		}
+		public void setBlooenfield(boolean blooenfield) {
+			this.blooenfield = blooenfield;
+		}
+		public boolean getBlooenfield2() {
+			return blooenfield2;
+		}
+		public void setBlooenfield2(boolean blooenfield2) {
+			this.blooenfield2 = blooenfield2;
 		}
 		
 	}
@@ -95,6 +119,7 @@ public class ClassUtilsTest
 	{
 		Field parentfield = ClassUtil.getDeclaredField(Test.class, "parentfield");
 		Field fields[] = ClassUtil.getDeclaredFields(Test.class);
+		
 		System.out.println();
 	}
 	
@@ -102,7 +127,13 @@ public class ClassUtilsTest
 	public void testProGet()
 	{
 		PropertieDescription parentfield = ClassUtil.getPropertyDescriptor(Test.class, "parentfield");
-		System.out.println();
+		PropertieDescription blooenfield = ClassUtil.getPropertyDescriptor(Test.class, "blooenfield");
+		PropertieDescription blooenfield2 = ClassUtil.getPropertyDescriptor(Test.class, "blooenfield2");
+		Test t = new Test();
+		t.setParentfield("aaa");
+		
+		
+		System.out.println(t.getParentfield());
 	}
 	
 	public static void main(String[] args)

@@ -18,6 +18,7 @@ package org.frameworkset.util;
 import java.beans.Introspector;
 import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.ParameterizedType;
@@ -1348,6 +1349,31 @@ public class ClassUtils
 		return null;
 
 	}
+	
+	
+	public static Class genericType(Field field)
+	{
+
+		Type type = field.getGenericType();
+		// Class[] pts = method.getParameterTypes();
+
+		if (type == null)
+		{
+			return null;
+		}
+
+//		Type type = types[posistion];
+		if (type instanceof ParameterizedType)
+		{
+
+			Type zzz = ((ParameterizedType) type).getActualTypeArguments()[0];
+			return (Class) zzz;
+
+		}
+
+		return null;
+
+	}
 
 	public static Class[] genericParameterTypes(Method method, int posistion)
 	{
@@ -1380,6 +1406,42 @@ public class ClassUtils
 
 			}
 		}
+		return null;
+
+	}
+	
+	public static Class[] genericTypes(Field field)
+	{
+		if (field == null )
+		{
+			return null;
+		}
+		Type type = field.getGenericType();
+		// Class[] pts = method.getParameterTypes();
+
+		if (type == null )
+		{
+			return null;
+		}
+
+		
+		if (type instanceof ParameterizedType)
+		{
+
+			Type[] ptypes = ((ParameterizedType) type)
+					.getActualTypeArguments();
+
+			Class[] genericParameterTypes = new Class[ptypes.length];
+			int i = 0;
+			for (Type zzz : ptypes)
+			{
+				genericParameterTypes[i] = (Class) zzz;
+				i++;
+			}
+			return genericParameterTypes;
+
+		}
+		
 		return null;
 
 	}
