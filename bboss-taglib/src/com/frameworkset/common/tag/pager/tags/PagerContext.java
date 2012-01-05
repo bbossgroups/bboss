@@ -1,15 +1,10 @@
 package com.frameworkset.common.tag.pager.tags;
 
-import java.beans.BeanInfo;
-import java.beans.IntrospectionException;
-import java.beans.Introspector;
-import java.beans.PropertyDescriptor;
 import java.io.Serializable;
 import java.lang.reflect.Array;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.net.URLEncoder;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Stack;
 
@@ -23,6 +18,7 @@ import javax.servlet.jsp.tagext.Tag;
 import org.apache.log4j.Logger;
 import org.frameworkset.util.ClassUtil;
 import org.frameworkset.util.ClassUtil.ClassInfo;
+import org.frameworkset.util.ClassUtil.PropertieDescription;
 
 import com.chinacreator.cms.driver.context.ContentContext;
 import com.chinacreator.cms.driver.context.PagineContext;
@@ -942,42 +938,40 @@ public class PagerContext
 	
 	private final void beanParamsAppend(Object bean,String name, boolean encode,String scope)
 	{
-		BeanInfo beanInfo;
-		try {
-			
-			beanInfo = Introspector.getBeanInfo(bean.getClass());
-		} catch (IntrospectionException e1) {
-			return;
-		}
-		ClassInfo classinfo = ClassUtil.getClassInfo(bean.getClass());
-		PropertyDescriptor[] attributes = beanInfo.getPropertyDescriptors();
+//		BeanInfo beanInfo;
+//		try {
+//			
+//			beanInfo = Introspector.getBeanInfo(bean.getClass());
+//		} catch (IntrospectionException e1) {
+//			return;
+//		}
+		ClassInfo beanInfo = ClassUtil.getClassInfo(bean.getClass());
+		List<PropertieDescription> attributes = beanInfo.getPropertyDescriptors();
 		
 		
-		if(attributes == null || attributes.length <=0)
+		if(attributes == null || attributes.size() <=0)
 			return ;
-		Method m = null;
-		Field field= null;
-		for(PropertyDescriptor f:attributes)
+//		Method m = null;
+//		Field field= null;
+		for(PropertieDescription f:attributes)
 		{	
 			name = f.getName();
-			if(name.equals("class"))
-				continue;
-			m = f.getReadMethod();
-			
-			if(m == null)
+
+			if(!f.canread())
 				continue;
 			
-			field= classinfo.getDeclaredField(name);
-			if(field != null)
+			IgnoreParam ignore = f.findAnnotation(IgnoreParam.class);
+
+			if(ignore != null)
 			{
-				IgnoreParam ignore = field.getAnnotation(IgnoreParam.class);
-				if(ignore != null)
+
 					continue;
 			}
+			
 			Object v = null;
 			try
 			{
-				v = m.invoke(bean);
+				v = f.getValue(bean);
 			}
 			catch (Exception e)
 			{
