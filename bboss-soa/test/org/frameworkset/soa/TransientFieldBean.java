@@ -27,12 +27,12 @@ import org.frameworkset.soa.annotation.ExcludeField;
  * @version 1.0
  */
 public class TransientFieldBean {
-	private transient String transientField;
-	private static String staticFiled;
-	private static final String finalField = "123456";
-	private String onlyField ;
+	private transient String transientField;//被忽略
+	private static String staticFiled;//静态，被忽略
+	private static final String finalField = "123456"; //常量，被忽略
+	private String onlyField ;//没有set/get方法，通过构造函数初始化，能被序列化
 	@ExcludeField
-	private String excludeField = null;
+	private String excludeField = null;//有get/set方法，但是有@ExcludeField注解，所以被忽略，不被序列化
 	public TransientFieldBean()
 	{
 		
