@@ -37,11 +37,11 @@ public class UserBean
 		return name;
 	}
 	
-	public void setName(String name)
-	{
-	
-		this.name = name;
-	}
+//	public void setName(String name)
+//	{
+//	
+//		this.name = name;
+//	}
 	
 	public String[] getUserName()
 	{
@@ -49,9 +49,9 @@ public class UserBean
 		return userName;
 	}
 	
-	public void setUserName(String[] userName)
-	{
-	
-		this.userName = userName;
-	}
+//	public void setUserName(String[] userName)
+//	{
+//	
+//		this.userName = userName;
+//	}
 }

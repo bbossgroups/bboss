@@ -545,6 +545,12 @@ bboss-demo.xml
 						</property>
 					</list>
 				</property>
+				<property name="beanClass">
+					<list componentType="String">
+						<property
+							value="test/org/frameworkset/web/jquerypagine/UserBean.java" />
+					</list>
+				</property>
 				<property name="description"><![CDATA[
 					JQuery实现分页列表展示
 				]]></property>

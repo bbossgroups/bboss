@@ -15,7 +15,6 @@
  */
 package org.frameworkset.web.servlet.handler;
 
-import java.beans.PropertyDescriptor;
 import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
@@ -59,7 +58,7 @@ import org.frameworkset.spi.support.validate.BindingResult;
 import org.frameworkset.spi.support.validate.ValidationUtils;
 import org.frameworkset.spi.support.validate.Validator;
 import org.frameworkset.util.AntPathMatcher;
-import org.frameworkset.util.ClassUtil;
+import org.frameworkset.util.ClassUtil.PropertieDescription;
 import org.frameworkset.util.ClassUtils;
 import org.frameworkset.util.Conventions;
 import org.frameworkset.util.GenericTypeResolver;
@@ -1898,7 +1897,7 @@ public abstract class HandlerUtils {
 	}
 	
 	
-	public static Object buildPropertyValue(PropertyDescriptor property,
+	public static Object buildPropertyValue(PropertieDescription property,
 			HttpServletRequest request, HttpServletResponse response,
 			PageContext pageContext, MethodData handlerMethod, ModelMap model,
 			HttpMessageConverter[] messageConverters,CallHolder holder,Class objectType)
@@ -1927,8 +1926,9 @@ public abstract class HandlerUtils {
 		else
 		{
 			Method writeMethod = property.getWriteMethod();
-			Field field = ClassUtil.getDeclaredField(objectType,name);
-			if (writeMethod == null || field == null) {
+//			Field field = ClassUtil.getDeclaredField(objectType,name);
+			Field field = property.getField();
+			if (field == null ) {
 				return null;
 			}
 			
@@ -1937,7 +1937,7 @@ public abstract class HandlerUtils {
 				if (session == null) {
 					throw new HttpSessionRequiredException(
 							"Pre-existing session required for write method '"
-									+ property.getDisplayName() + "." + name + "'");
+									+ property.getName() + "." + name + "'");
 				}
 				value = session;
 				if(holder.needAddData())
@@ -1981,19 +1981,24 @@ public abstract class HandlerUtils {
 			}
 			else if(Map.class.isAssignableFrom(type))
 			{
-				if(!field.isAnnotationPresent(MapKey.class))
+				MapKey mapKey = null;
+				if(field != null) 
+					mapKey = field.getAnnotation(MapKey.class);
+				if(mapKey == null)
+				{
 					value = buildParameterMaps(request);
+				}
 				else
 				{
 					Map command = new HashMap();
 					
-					Class[] ct = ClassUtils.getPropertyGenericTypes(writeMethod);//获取元素类型
+					Class[] ct = property.getPropertyGenericTypes();//获取元素类型
 					if(ct == null)
 					{
-						model.getErrors().rejectValue(name, "evaluateAnnotationsValue.error","没有获取到集合对象类型,请检查属性方法：" + writeMethod.getName() + "是否指定了集合泛型.");
+						model.getErrors().rejectValue(name, "evaluateAnnotationsValue.error","没有获取到集合对象类型,请检查属性" + property.getName() + "或者属性set方法是否指定了集合泛型.");
 						return ValueObjectUtil.getDefaultValue(type);
 					}
-					MapKey mapKey = field.getAnnotation(MapKey.class);
+//					MapKey mapKey = field.getAnnotation(MapKey.class);
 					bind(request, response, pageContext, handlerMethod, model,
 							command, ct[0],ct[1],mapKey.value(),null, messageConverters);
 					value = command;
@@ -2008,10 +2013,10 @@ public abstract class HandlerUtils {
 					|| field.getAnnotations().length == 0 || !hasParameterAnnotation(field)) {
 				if (List.class.isAssignableFrom(type)) {//如果是列表数据集				
 					List command = new ArrayList();
-					Class ct = ClassUtils.getPropertyGenericType(writeMethod);//获取元素类型
+					Class ct = property.getPropertyGenericType();//获取元素类型
 					if(ct == null)
 					{
-						model.getErrors().rejectValue(name, "evaluateAnnotationsValue.error","没有获取到集合对象类型,请检查是否指定了集合泛型：" + writeMethod.getName());
+						model.getErrors().rejectValue(name, "evaluateAnnotationsValue.error","没有获取到集合对象类型,请检查属性是否指定了集合泛型：" + property.getName());
 						return ValueObjectUtil.getDefaultValue(type);
 					}
 					bind(request, response, pageContext, handlerMethod, model,
@@ -2025,7 +2030,7 @@ public abstract class HandlerUtils {
 				}
 				else if (Set.class.isAssignableFrom(type)) {//如果是Set数据集				
 					Set command = new TreeSet();
-					Class ct = ClassUtils.getPropertyGenericType(writeMethod);//获取元素类型
+					Class ct = property.getPropertyGenericType();//获取元素类型
 					if(ct == null)
 					{
 						model.getErrors().rejectValue(name, "evaluateAnnotationsValue.error","没有获取到集合对象类型,请检查是否指定了集合泛型：" + writeMethod.getName());
@@ -2315,7 +2320,8 @@ public abstract class HandlerUtils {
 			logger.debug("Creating new command of class [" + clazz.getName()
 					+ "]");
 		}
-		return BeanUtils.instantiateClass(clazz);
+		
+		return BeanUtils.instantiateClass(clazz); 
 	}
 
 	public static Exception raiseMissingParameterException(String paramName,

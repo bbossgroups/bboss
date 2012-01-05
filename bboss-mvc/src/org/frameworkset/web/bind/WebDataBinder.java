@@ -15,15 +15,12 @@
  */
 package org.frameworkset.web.bind;
 
-import java.beans.BeanInfo;
-import java.beans.Introspector;
-import java.beans.PropertyDescriptor;
 import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,6 +29,9 @@ import javax.servlet.jsp.PageContext;
 
 import org.frameworkset.http.converter.HttpMessageConverter;
 import org.frameworkset.spi.support.validate.BindingResult;
+import org.frameworkset.util.ClassUtil;
+import org.frameworkset.util.ClassUtil.ClassInfo;
+import org.frameworkset.util.ClassUtil.PropertieDescription;
 import org.frameworkset.util.annotations.MethodData;
 import org.frameworkset.web.multipart.MultipartFile;
 import org.frameworkset.web.servlet.ModelMap;
@@ -403,19 +403,20 @@ public class WebDataBinder  {//extends DataBinder {
 			MethodData handlerMethod,ModelMap model,
 		    Object whichToVO,HttpMessageConverter[] messageConverters)
 	{		
-		BeanInfo beanInfo = null;
-		try {
-			beanInfo = Introspector.getBeanInfo(whichToVO.getClass());
-			
-		} catch (Exception e) {
-			model.getErrors().reject("createTransferObject.getBeanInfo.error",whichToVO.getClass().getCanonicalName() + ":"+e.getMessage());
-//			throw new PropertyAccessException(new PropertyChangeEvent(whichToVO, "",
-//				     null, null),"获取bean 信息失败",e);
-			return ;
-		} 
+//		BeanInfo beanInfo = null;
+//		try {
+//			beanInfo = Introspector.getBeanInfo(whichToVO.getClass());
+//			
+//		} catch (Exception e) {
+//			model.getErrors().reject("createTransferObject.getBeanInfo.error",whichToVO.getClass().getCanonicalName() + ":"+e.getMessage());
+////			throw new PropertyAccessException(new PropertyChangeEvent(whichToVO, "",
+////				     null, null),"获取bean 信息失败",e);
+//			return ;
+//		} 
+		ClassInfo beanInfo = ClassUtil.getClassInfo(whichToVO.getClass());
 		CallHolder holder = new CallHolder();
 		holder.isCollection =  this.isCollection();
-		PropertyDescriptor[] attributes = beanInfo.getPropertyDescriptors();		
+		List<PropertieDescription> attributes = beanInfo.getPropertyDescriptors();		
 		Object mapKey = null;
 		do
 		{
@@ -428,12 +429,16 @@ public class WebDataBinder  {//extends DataBinder {
 				}
 			
 			
-			for(PropertyDescriptor property :attributes)
+			for(int in = 0; attributes != null && in < attributes.size(); in ++)
 			{
-				
-				Method writeMethod = property.getWriteMethod();
-				if(writeMethod == null)
+				PropertieDescription property = attributes.get(in);
+				if(!property.canwrite())
+				{
 					continue;
+				}
+//				Method writeMethod = property.getWriteMethod();
+//				if(writeMethod == null)
+//					continue;
 				
 				Object value = null;
 				try {
@@ -442,7 +447,8 @@ public class WebDataBinder  {//extends DataBinder {
 							handlerMethod, model, messageConverters, holder,whichToVO.getClass());
 					if(this.mapKeyName != null && this.mapKeyName.equals(property.getName()))//如果是map对象绑定，则需要设置map key的值
 						mapKey = ValueObjectUtil.typeCast(value, this.mapKeyType);
-					writeMethod.invoke(whichToVO, new Object[]{value});
+//					writeMethod.invoke(whichToVO, new Object[]{value});
+					property.setValue(whichToVO, value);
 					
 				} catch (IllegalArgumentException e) {
 					//rejectValue(String field, String errorCode, String[] rejectvalue,Class fieldtype,String defaultMessage);
