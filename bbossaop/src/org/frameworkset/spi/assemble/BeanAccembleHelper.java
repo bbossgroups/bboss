@@ -518,8 +518,10 @@ public class BeanAccembleHelper<V> {
 	public static void injectCommonProperties(Object bean,
 			Map<String, Object> globalparams,
 			Map<String, Object> persistentparams) throws IntrospectionException {
-		BeanInfo beanInfo = Introspector.getBeanInfo(bean.getClass());
-		PropertyDescriptor[] attributes = beanInfo.getPropertyDescriptors();
+//		BeanInfo beanInfo = Introspector.getBeanInfo(bean.getClass());
+//		PropertyDescriptor[] attributes = beanInfo.getPropertyDescriptors();
+		ClassInfo beanInfo = ClassUtil.getClassInfo(bean.getClass());
+		List<PropertieDescription> attributes = beanInfo.getPropertyDescriptors();
 		if (globalparams == null || globalparams.size() == 0) {
 			return;
 		}
@@ -536,14 +538,13 @@ public class BeanAccembleHelper<V> {
 
 				if (persistentparams_) {
 					pvalue = persistentparams.get(key);
-
 				}
 
 				boolean flag = false;
-				for (int n = 0; n < attributes.length; n++) {
+				for (int n = 0; attributes != null && n < attributes.size(); n++) {
 
 					// get bean attribute name
-					PropertyDescriptor propertyDescriptor = attributes[n];
+					PropertieDescription propertyDescriptor = attributes.get(n);
 					String attrName = propertyDescriptor.getName();
 
 					if (filedName.equals(attrName)) {
@@ -561,18 +562,30 @@ public class BeanAccembleHelper<V> {
 						// PropertyEditorManager.findEditor(type);
 						// editor.setAsText(ref.getValue());
 						// Object value = editor.getValue();
-						Method wm = propertyDescriptor.getWriteMethod();
+//						Method wm = propertyDescriptor.getWriteMethod();
 
 						try {
-							if(wm == null)
+							if(propertyDescriptor.canwrite())
+							{
+								propertyDescriptor.setValue(bean, value);
+								break;
+							}
+							else
 							{
 								log.warn("设置组件["+bean.getClass()+"]属性失败：Does not exist a writer method for field ["
 										+ propertyDescriptor.getName() +"] ,请检查类定义文件是否正确设置了该字段的set方法，或者字段名称是否指定正确。");
 								flag = false;
 								break;
 							}
-							wm.invoke(bean, new Object[] { value });
-							break;
+//							if(wm == null)
+//							{
+//								log.warn("设置组件["+bean.getClass()+"]属性失败：Does not exist a writer method for field ["
+//										+ propertyDescriptor.getName() +"] ,请检查类定义文件是否正确设置了该字段的set方法，或者字段名称是否指定正确。");
+//								flag = false;
+//								break;
+//							}
+//							wm.invoke(bean, new Object[] { value });
+//							break;
 						} catch (IllegalArgumentException e) {
 							throw new CurrentlyInCreationException(
 									"providerManagerInfo[" + bean.getClass()
@@ -639,8 +652,10 @@ public class BeanAccembleHelper<V> {
 	public static void injectProperties(Object bean,
 			Map<String, Pro> globalparams, Map<String, Pro> persistentparams)
 			throws IntrospectionException {
-		BeanInfo beanInfo = Introspector.getBeanInfo(bean.getClass());
-		PropertyDescriptor[] attributes = beanInfo.getPropertyDescriptors();
+//		BeanInfo beanInfo = Introspector.getBeanInfo(bean.getClass());
+//		PropertyDescriptor[] attributes = beanInfo.getPropertyDescriptors();
+		ClassInfo beanInfo = ClassUtil.getClassInfo(bean.getClass());
+		List<PropertieDescription> attributes = beanInfo.getPropertyDescriptors();
 		if (globalparams == null || globalparams.size() == 0) {
 			return;
 		}
@@ -676,10 +691,10 @@ public class BeanAccembleHelper<V> {
 							pvalue.getClass(), ptype);
 
 				boolean flag = false;
-				for (int n = 0; n < attributes.length; n++) {
+				for (int n = 0; n < attributes.size(); n++) {
 
 					// get bean attribute name
-					PropertyDescriptor propertyDescriptor = attributes[n];
+					PropertieDescription propertyDescriptor = attributes.get(n);
 					String attrName = propertyDescriptor.getName();
 
 					if (filedName.equals(attrName)) {
@@ -701,18 +716,31 @@ public class BeanAccembleHelper<V> {
 						// PropertyEditorManager.findEditor(type);
 						// editor.setAsText(ref.getValue());
 						// Object value = editor.getValue();
-						Method wm = propertyDescriptor.getWriteMethod();
+						
 
 						try {
-							if(wm == null)
+							if(propertyDescriptor.canwrite())
+							{
+//								Method wm = propertyDescriptor.getWriteMethod();
+//								if(wm == null)
+//								{
+//									log.warn("初始化组件["+bean.getClass()+"]失败：Does not exist a writer method for field ["
+//											+ propertyDescriptor.getName() +"] ,请检查类定义文件是否正确设置了该字段的set方法，或者字段名称是否指定正确。");
+//									flag = false;
+//									break;
+//								}
+//								wm.invoke(bean, new Object[] { value });
+								propertyDescriptor.setValue(bean, value);
+								break;
+							}
+							else
 							{
 								log.warn("初始化组件["+bean.getClass()+"]失败：Does not exist a writer method for field ["
 										+ propertyDescriptor.getName() +"] ,请检查类定义文件是否正确设置了该字段的set方法，或者字段名称是否指定正确。");
 								flag = false;
 								break;
 							}
-							wm.invoke(bean, new Object[] { value });
-							break;
+							
 						} catch (IllegalArgumentException e) {
 							throw new CurrentlyInCreationException(
 									pro.getName()+"@" + pro.getConfigFile() + "，providerManagerInfo[" + bean.getClass()
@@ -1402,19 +1430,30 @@ public class BeanAccembleHelper<V> {
 						Object value = refvalue != null?ValueObjectUtil.typeCast(refvalue,
 								refvalue.getClass(), type):ValueObjectUtil.getDefaultValue(type);
 						
-						Method wm = propertyDescriptor.getWriteMethod();
+//						Method wm = propertyDescriptor.getWriteMethod();
 
 						try {
-							
-							if(wm == null)
+							if(propertyDescriptor.canwrite())
+							{
+								propertyDescriptor.setValue(instance, value);
+								continue;
+							}
+							else
 							{
 								log.warn("设置组件["+providerManagerInfo.getName()+"]属性失败：Does not exist a writer method for field ["
 										+ propertyDescriptor.getName() +"] in class ["+instance.getClass().getCanonicalName()+"],请检查类定义文件是否正确设置了该字段的set方法，或者字段名称是否指定正确。");
 								
 								continue;
 							}
-							wm.invoke(instance, new Object[] { value });
-							continue;
+//							if(wm == null)
+//							{
+//								log.warn("设置组件["+providerManagerInfo.getName()+"]属性失败：Does not exist a writer method for field ["
+//										+ propertyDescriptor.getName() +"] in class ["+instance.getClass().getCanonicalName()+"],请检查类定义文件是否正确设置了该字段的set方法，或者字段名称是否指定正确。");
+//								
+//								continue;
+//							}
+//							wm.invoke(instance, new Object[] { value });
+//							continue;
 						} catch (IllegalArgumentException e) {
 							throw new CurrentlyInCreationException(
 									"providerManagerInfo["
