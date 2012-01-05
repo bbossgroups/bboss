@@ -15,12 +15,7 @@
  */
 package com.frameworkset.common.poolman;
 
-import java.beans.BeanInfo;
-import java.beans.IntrospectionException;
-import java.beans.Introspector;
-import java.beans.PropertyDescriptor;
 import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.CallableStatement;
 import java.sql.ResultSet;
@@ -33,6 +28,7 @@ import org.apache.log4j.Logger;
 import org.frameworkset.util.BigFile;
 import org.frameworkset.util.ClassUtil;
 import org.frameworkset.util.ClassUtil.ClassInfo;
+import org.frameworkset.util.ClassUtil.PropertieDescription;
 import org.frameworkset.util.annotations.ValueConstants;
 
 import com.frameworkset.common.poolman.handle.FieldRowHandler;
@@ -200,33 +196,33 @@ public class ResultMap {
 			} catch (IllegalAccessException e1) {
 				throw new NestedSQLException(e1);
 			}
-			BeanInfo beanInfo;
-			try {
-				
-				beanInfo = Introspector.getBeanInfo(valueObjectType);
-			} catch (IntrospectionException e1) {
-				throw new NestedSQLException(e1);
-			}
-			ClassInfo classinfo = ClassUtil.getClassInfo(valueObjectType);
-			PropertyDescriptor[] attributes = beanInfo.getPropertyDescriptors();
-			for (int n = 0; n < attributes.length; n++) {
-				PropertyDescriptor attribute = attributes[n];
+//			BeanInfo beanInfo;
+//			try {
+//				
+//				beanInfo = Introspector.getBeanInfo(valueObjectType);
+//			} catch (IntrospectionException e1) {
+//				throw new NestedSQLException(e1);
+//			}
+			ClassInfo beanInfo = ClassUtil.getClassInfo(valueObjectType);
+			List<PropertieDescription> attributes = beanInfo.getPropertyDescriptors();
+			for (int n = 0; attributes != null && n < attributes.size(); n++) {
+				PropertieDescription attribute = attributes.get(n);
 				String attrName = attribute.getName();
-				if(attrName.equals("class"))
-					continue;
+//				if(attrName.equals("class"))
+//					continue;
 				String annotationName = null;
 				if(BigFile.class.isAssignableFrom(attribute.getPropertyType()) )//不支持大字段转换为BigFile接口
 					continue;
 				try {
 					
-					Field field = classinfo.getDeclaredField(attrName);
-					if(field != null)
+//					Field field = classinfo.getDeclaredField(attrName);
+//					if(field != null)
 					{
 						
-					
-						if(field.isAnnotationPresent(PrimaryKey.class))
+						PrimaryKey apk = attribute.findAnnotation(PrimaryKey.class);
+						if(apk != null)
 						{
-							PrimaryKey apk = field.getAnnotation(PrimaryKey.class);
+//							PrimaryKey apk = field.getAnnotation(PrimaryKey.class);
 							annotationName = apk.name();
 							if(annotationName == null 
 									|| annotationName.equals(ValueConstants.DEFAULT_NONE) || annotationName.equals(""))
@@ -239,18 +235,21 @@ public class ResultMap {
 							}
 							
 						}
-						else if(field.isAnnotationPresent(Column.class))
+						else 
 						{
-							Column apk = field.getAnnotation(Column.class);
-							annotationName = apk.name();
-							if(annotationName == null 
-									|| annotationName.equals(ValueConstants.DEFAULT_NONE) || annotationName.equals(""))
+							Column cl = attribute.findAnnotation(Column.class);
+							if(cl != null)
 							{
-								
-							}
-							else
-							{
-								attrName = annotationName;
+								annotationName = cl.name();
+								if(annotationName == null 
+										|| annotationName.equals(ValueConstants.DEFAULT_NONE) || annotationName.equals(""))
+								{
+									
+								}
+								else
+								{
+									attrName = annotationName;
+								}
 							}
 						}
 					}
@@ -289,8 +288,12 @@ public class ResultMap {
 					}
 	
 					try {
-						attribute.getWriteMethod().invoke(valueObject,
-								new Object[] { propsVal });
+						if(attribute.canwrite())
+						{
+							attribute.setValue(valueObject, propsVal);
+						}
+//						attribute.getWriteMethod().invoke(valueObject,
+//								new Object[] { propsVal });
 						break;
 					} catch (Exception e) {
 						StringBuffer err = new StringBuffer(
@@ -407,47 +410,46 @@ public class ResultMap {
 			} catch (IllegalAccessException e1) {
 				throw new NestedSQLException(e1);
 			}
-			BeanInfo beanInfo;
-			try {
-				beanInfo = Introspector.getBeanInfo(valueObjectType);
-			} catch (IntrospectionException e1) {
-				throw new NestedSQLException(e1);
-			}
-			ClassInfo classinfo = ClassUtil.getClassInfo(valueObjectType);
-			PropertyDescriptor[] attributes = beanInfo.getPropertyDescriptors();
-			for (int n = 0; n < attributes.length; n++) {
-				PropertyDescriptor attribute = attributes[n];
+//			BeanInfo beanInfo;
+//			try {
+//				beanInfo = Introspector.getBeanInfo(valueObjectType);
+//			} catch (IntrospectionException e1) {
+//				throw new NestedSQLException(e1);
+//			}
+			ClassInfo beanInfo = ClassUtil.getClassInfo(valueObjectType);
+			List<PropertieDescription> attributes = beanInfo.getPropertyDescriptors();
+			for (int n = 0; attributes != null && n < attributes.size(); n++) {
+				PropertieDescription attribute = attributes.get(n);
 				String attrName = attribute.getName();
-				if(attrName.equals("class"))
-					continue;
+//				if(attrName.equals("class"))
+//					continue;
 				if(BigFile.class.isAssignableFrom(attribute.getPropertyType()) )//不支持大字段转换为BigFile接口
 					continue;
 				String annotationName = null;
 				try {
-					Field field = classinfo.getDeclaredField(attrName);
-					if(field != null)
+
+					PrimaryKey apk = attribute.findAnnotation(PrimaryKey.class);
+					if(apk != null)
 					{
 						
-					
-						if(field.isAnnotationPresent(PrimaryKey.class))
+						annotationName = apk.name();
+						if(annotationName == null 
+								|| annotationName.equals(ValueConstants.DEFAULT_NONE) || annotationName.equals(""))
 						{
-							PrimaryKey apk = field.getAnnotation(PrimaryKey.class);
-							annotationName = apk.name();
-							if(annotationName == null 
-									|| annotationName.equals(ValueConstants.DEFAULT_NONE) || annotationName.equals(""))
-							{
-								
-							}
-							else
-							{
-								attrName = annotationName;
-							}
 							
 						}
-						else if(field.isAnnotationPresent(Column.class))
+						else
 						{
-							Column apk = field.getAnnotation(Column.class);
-							annotationName = apk.name();
+							attrName = annotationName;
+						}
+						
+					}
+					else 
+					{
+						Column cl = attribute.findAnnotation(Column.class);
+						if(cl != null)
+						{
+							annotationName = cl.name();
 							if(annotationName == null 
 									|| annotationName.equals(ValueConstants.DEFAULT_NONE) || annotationName.equals(""))
 							{
@@ -459,6 +461,7 @@ public class ResultMap {
 							}
 						}
 					}
+					
 				} catch (Exception e1) {
 					log.info(attribute.getName() + " is not a field of bean[" +valueObjectType.getClass().getCanonicalName() + "].");
 				} 
@@ -509,8 +512,12 @@ public class ResultMap {
 					// }
 	
 					try {
-						attribute.getWriteMethod().invoke(valueObject,
-								new Object[] { propsVal });
+						if(attribute.canwrite())
+						{
+							attribute.setValue(valueObject, propsVal);
+						}
+//						attribute.getWriteMethod().invoke(valueObject,
+//								new Object[] { propsVal });
 						// 处理一个就外部参数剔除一个
 						outparams.outParams.remove(i);
 						break;
@@ -520,7 +527,7 @@ public class ResultMap {
 								.append(".").append(attrName).append("[").append(
 										type.getName()).append("] failed:").append(
 										e.getMessage());
-						System.out.println(err);
+//						System.out.println(err);
 						log.error(err.toString(), e);
 						// 处理一个就外部参数剔除一个
 						outparams.outParams.remove(i);

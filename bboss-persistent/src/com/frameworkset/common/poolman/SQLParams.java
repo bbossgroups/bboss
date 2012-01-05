@@ -15,14 +15,8 @@
  */
 package com.frameworkset.common.poolman;
 
-import java.beans.BeanInfo;
-import java.beans.Introspector;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyDescriptor;
 import java.io.File;
 import java.io.InputStream;
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.Blob;
 import java.sql.Clob;
@@ -41,8 +35,9 @@ import org.apache.log4j.Logger;
 import org.apache.velocity.VelocityContext;
 import org.frameworkset.util.BigFile;
 import org.frameworkset.util.ClassUtil;
+import org.frameworkset.util.ClassUtil.ClassInfo;
+import org.frameworkset.util.ClassUtil.PropertieDescription;
 import org.frameworkset.util.annotations.ValueConstants;
-import org.frameworkset.util.beans.PropertyAccessException;
 
 import com.frameworkset.orm.annotation.Column;
 import com.frameworkset.orm.annotation.PrimaryKey;
@@ -427,13 +422,14 @@ public class SQLParams
 		}
 		SQLParams params = new SQLParams();
 		
-		BeanInfo beanInfo = null;
-		try {
-			beanInfo = Introspector.getBeanInfo(bean.getClass());
-		} catch (Exception e) {
-			throw new PropertyAccessException(new PropertyChangeEvent(bean, "",
-				     null, null),"获取bean 信息失败",e);
-		}
+//		BeanInfo beanInfo = null;
+//		try {
+//			beanInfo = Introspector.getBeanInfo(bean.getClass());
+//		} catch (Exception e) {
+//			throw new PropertyAccessException(new PropertyChangeEvent(bean, "",
+//				     null, null),"获取bean 信息失败",e);
+//		}
+		ClassInfo beanInfo = ClassUtil.getClassInfo(bean.getClass());
 		params.setOldsql(sql);
 		String name = null;
 		String dataformat = null;
@@ -443,59 +439,57 @@ public class SQLParams
 		Method readMethod = null;
 //		Method writeMethod = null;
 		String sqltype = null;
-		PropertyDescriptor[] attributes = beanInfo.getPropertyDescriptors();
-		for(PropertyDescriptor property:attributes)
+		List<PropertieDescription> attributes = beanInfo.getPropertyDescriptors();
+		for(int i = 0; attributes != null && i < attributes.size();i ++ )
 		{
-			if(property.getName().equals("class"))
-				continue;
+			PropertieDescription property = attributes.get(i);
+//			if(property.getName().equals("class"))
+//				continue;
 			type = property.getPropertyType();
-			try
-			{
-				readMethod = property.getReadMethod();
-				if(readMethod == null)
-					continue;
-			}
-			catch(Exception e)
-			{
-				continue;
-			}
+//			try
+//			{
+//				readMethod = property.getReadMethod();
+//				if(readMethod == null)
+//					continue;
+//			}
+//			catch(Exception e)
+//			{
+//				continue;
+//			}
 			
 			
 			
 			
 			try {
-				value =  readMethod.invoke(bean);
-				
-				
-				Field field = null;
-				try
+				if(property.canread())
 				{
-					
-					field = ClassUtil.getDeclaredField(beantype,property.getName());
-//					if(field == null)
+					try {
+						value =  property.getValue(bean);
+					} catch (Exception e1) {
+						log.info(e1);
+					}
+//					Field field = null;
+//					try
 //					{
-//						continue;
+//						
+//						field = ClassUtil.getDeclaredField(beantype,property.getName());
+//	//					if(field == null)
+//	//					{
+//	//						continue;
+//	//					}
 //					}
-				}
-				catch(Exception e)
-				{
-					log.info(property.getName() + " is not a field of bean[" +bean.getClass().getCanonicalName() + "].");
-//					continue;
-				}
-				name = property.getName();
-				
-				if(field != null)
-				{
-					if( field.isAnnotationPresent(PrimaryKey.class))
+//					catch(Exception e)
+//					{
+//						log.info(property.getName() + " is not a field of bean[" +bean.getClass().getCanonicalName() + "].");
+//	//					continue;
+//					}
+					name = property.getName();
+					PrimaryKey pka = property.findAnnotation(PrimaryKey.class);
+					if( pka != null)
 					{
-						PrimaryKey pka = field.getAnnotation(PrimaryKey.class);
-
-						
 						if(pka.auto() && action == PreparedDBUtil.INSERT)
 						{
 							String pkname = pka.pkname();
-
-							
 							if(type == long.class || type == int.class
 									|| type == Long.class || type == Integer.class)
 							{
@@ -505,34 +499,38 @@ public class SQLParams
 									value = (int)_value;
 								else  if(type == Integer.class)
 									value = new Integer((int)_value);
-									
-								
-									
 							}
-							
 							else 
 								value = DBUtil.getNextStringPrimaryKey(con,dbname,pkname);
 							//设置主键到对象中
-							Method writeMethod = null;
-							try
+//								Method writeMethod = null;
+//								try
+//								{
+//									writeMethod = property.getWriteMethod();
+//									if(writeMethod == null)
+//										continue;
+//								}
+//								catch(Exception e)
+//								{
+//									continue;
+//								}
+//								writeMethod.invoke(bean, value);
+							if(property.canwrite())
 							{
-								writeMethod = property.getWriteMethod();
-								if(writeMethod == null)
-									continue;
+								
+								property.setValue(bean, value);
+//								
 							}
-							catch(Exception e)
+							else
 							{
 								continue;
 							}
-							writeMethod.invoke(bean, value);
 						}
 					}
 					
-					Column column = field.getAnnotation(Column.class);
+					Column column = property.findAnnotation(Column.class);
 					if(column != null)
 					{
-						
-
 						dataformat = column.dataformat();
 						if(dataformat.equals(ValueConstants.DEFAULT_NONE) )
 							dataformat = null;
@@ -557,11 +555,12 @@ public class SQLParams
 							}
 						}
 					}
+					
+					sqltype = SQLParams.getParamJavaType(name,type);
+					params.addSQLParam(name, value, sqltype, dataformat);
+					name = null; value = null; sqltype = null; 
+					dataformat = null;
 				}
-				sqltype = SQLParams.getParamJavaType(name,type);
-				params.addSQLParam(name, value, sqltype, dataformat);
-				name = null; value = null; sqltype = null; 
-				dataformat = null;
 				
 				
 				
@@ -569,11 +568,12 @@ public class SQLParams
 				throw new NestedSQLException(e);
 			} catch (IllegalArgumentException e) {
 				throw new NestedSQLException(e);
-			} catch (IllegalAccessException e) {
+			} catch (Exception e) {
 				throw new NestedSQLException(e);
-			} catch (InvocationTargetException e) {
-				throw new NestedSQLException(e);
-			}
+			} 
+//			catch (InvocationTargetException e) {
+//				throw new NestedSQLException(e);
+//			}
 			
 		
 			

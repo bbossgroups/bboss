@@ -47,7 +47,7 @@ public class ConfigSQLExecutorTest {
 	{
 		
 		
-		Map dbBeans  =  executor.queryObjectWithDBName(HashMap.class,"ds", "sqltest");
+		Map dbBeans  =  executor.queryObjectWithDBName(HashMap.class,"bspf", "sqltest");
 		System.out.println(dbBeans);
 	}
 	
@@ -139,7 +139,7 @@ public class ConfigSQLExecutorTest {
 		 System.out.println(result.size());
 		 params = new SQLParams();
 		 params.addSQLParam("id", 0, SQLParams.INT);
-		 result = (List<ListBean>) executor.queryListBeanWithDBName(ListBean.class,"mysql","dynamicsqltemplateid", params);
+		 result = (List<ListBean>) executor.queryListBeanWithDBName(ListBean.class,"bspf","dynamicsqltemplateid", params);
 //		 result = (List<ListBean>) SQLExecutor.queryListBeanWithDBName(ListBean.class,"dbname","sql", params);
 		 System.out.println(result.size());
 		 

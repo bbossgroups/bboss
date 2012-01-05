@@ -6,11 +6,11 @@
   
   <datasource>
 
-    <dbname>mysql</dbname>
+    <dbname>bspf</dbname>
     <loadmetadata>false</loadmetadata>
     <jndiName>jdbc/derby-ds</jndiName>
     <driver>org.apache.derby.jdbc.EmbeddedDriver</driver>
-     <url>jdbc:derby:D:/workspace/CreatorETL-3.0/bin/embedded/ETL_RESDB1</url> 
+     <url>jdbc:derby:D:/workspace/bbossgroups-3.5/bboss-persistent/database/cimdb</url> 
     <username></username>   
     <password></password>
     <txIsolationLevel>READ_COMMITTED</txIsolationLevel>

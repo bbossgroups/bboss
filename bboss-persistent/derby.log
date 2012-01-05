@@ -1,6 +1,6 @@
 ----------------------------------------------------------------
-2011-09-29 08:21:22.562 GMT:
- Booting Derby version The Apache Software Foundation - Apache Derby - 10.6.1.0 - (938214): instance a816c00e-0132-b446-0d66-0000000c9838 
-on database directory D:\workspace\CreatorETL-3.0\bin\embedded\ETL_RESDB1   with class loader sun.misc.Launcher$AppClassLoader@82ba41
+2012-01-05 03:16:30.046 GMT:
+ Booting Derby version The Apache Software Foundation - Apache Derby - 10.6.1.0 - (938214): instance a816c00e-0134-abde-2613-0000000fd810 
+on database directory D:\workspace\bbossgroups-3.5\bboss-persistent\database\cimdb   with class loader sun.misc.Launcher$AppClassLoader@7259da
 
 Database Class Loader started - derby.database.classpath=''

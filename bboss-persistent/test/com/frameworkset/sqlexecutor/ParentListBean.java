@@ -21,16 +21,16 @@ import com.frameworkset.orm.annotation.PrimaryKey;
 public class ParentListBean
 {
 	@PrimaryKey(pkname="ListBean",auto=true)
-	public int id ;
-	public String fieldName;
+	private int id ;
+	private String fieldName;
 //	@Column(name="fileNamezzz",dataformat="¸ñÊ½×ª»»" ,type="clob")
-	public String fieldLable;
-	public String fieldType;
-	public String sortorder;
-	public boolean isprimaryKey;
-	public boolean required;
-	public int fieldLength;
-	public int isvalidated;
+	private String fieldLable;
+	private String fieldType;
+	private String sortorder;
+	private boolean isprimaryKey;
+	private boolean required;
+	private int fieldLength;
+	private int isvalidated;
 	/**
 	 * @return the fieldName
 	 */
