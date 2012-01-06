@@ -15,10 +15,7 @@
  */
 package org.frameworkset.soa;
 
-import java.beans.BeanInfo;
 import java.beans.IntrospectionException;
-import java.beans.Introspector;
-import java.beans.PropertyDescriptor;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -932,9 +929,10 @@ public class ObjectSerializable {
 	private static void appendThrowableProperties(Object obj, Class type,
 			String dateformat, Writer ret) throws IntrospectionException, IOException {
 
-		BeanInfo beanInfo = Introspector.getBeanInfo(type);
-
-		PropertyDescriptor[] attributes = beanInfo.getPropertyDescriptors();
+//		BeanInfo beanInfo = Introspector.getBeanInfo(type);
+//		ClassInfo beanInfo = ClassUtil.getClassInfo(type);
+//
+//		List<PropertieDescription> attributes = beanInfo.getPropertyDescriptors();
 
 		ret.append("<construction>");
 
@@ -975,9 +973,9 @@ public class ObjectSerializable {
 			Class type, String dateformat, Writer ret)
 			throws IntrospectionException, IOException {
 
-		BeanInfo beanInfo = Introspector.getBeanInfo(type);
-
-		PropertyDescriptor[] attributes = beanInfo.getPropertyDescriptors();
+//		BeanInfo beanInfo = Introspector.getBeanInfo(type);
+//
+//		PropertyDescriptor[] attributes = beanInfo.getPropertyDescriptors();
 
 		ret.append("<construction>");
 
@@ -1041,7 +1039,7 @@ public class ObjectSerializable {
 //		BeanInfo beanInfo = Introspector.getBeanInfo(type);
 //		PropertyDescriptor[] attributes = beanInfo.getPropertyDescriptors();
 		List<PropertieDescription> attributes = beanInfo.getPropertyDescriptors();
-		for (int n = 0; n < attributes.size(); n++) {
+		for (int n = 0; attributes != null && n < attributes.size(); n++) {
 
 			// get bean attribute name
 			PropertieDescription propertyDescriptor = attributes.get(n);
