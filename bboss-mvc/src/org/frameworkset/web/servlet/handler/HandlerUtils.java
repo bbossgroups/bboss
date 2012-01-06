@@ -2033,7 +2033,7 @@ public abstract class HandlerUtils {
 					Class ct = property.getPropertyGenericType();//获取元素类型
 					if(ct == null)
 					{
-						model.getErrors().rejectValue(name, "evaluateAnnotationsValue.error","没有获取到集合对象类型,请检查是否指定了集合泛型：" + writeMethod.getName());
+						model.getErrors().rejectValue(name, "evaluateAnnotationsValue.error","没有获取到集合对象类型,请检查是否指定了集合泛型：" + property.getName());
 						return ValueObjectUtil.getDefaultValue(type);
 					}
 					bind(request, response, pageContext, handlerMethod, model,
