@@ -24,6 +24,7 @@ to do list:
 无
 #######update function list since bbossgroups-3.4 begin###########
 o 优化or mapping性能
+o 将动态添加的数据源的removeAbandoned属性设置为false
 #######update function list since bbossgroups-3.3 begin###########
 ------2011-09-22-------------
 o 完善MultipartFile对象持久化功能，增加友好提示，如果对象属性类型为MultipartFile，要自动存储到数据库的blob或者clob字段时
