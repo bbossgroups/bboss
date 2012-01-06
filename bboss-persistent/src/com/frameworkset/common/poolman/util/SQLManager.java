@@ -599,7 +599,7 @@ public class SQLManager extends PoolManager implements Serializable{
 		
 		int userTimeout = 50;
 		values.put("userTimeout", userTimeout+"");
-		boolean removeAbandoned = true;
+		boolean removeAbandoned = false;
 		values.put("removeAbandoned", removeAbandoned+"");
 		if(externaljndiName != null && !externaljndiName.equals(""))
 			values.put("externaljndiName", externaljndiName);
