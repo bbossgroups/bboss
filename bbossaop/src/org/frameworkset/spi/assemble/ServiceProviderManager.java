@@ -771,7 +771,7 @@ public class ServiceProviderManager {
 	        		Index index = indexs.get(i);
 	        		if(!index.isInconstruction())
 	        		{
-	        			if(index.getInt_idx() > 0)
+	        			if(index.getInt_idx() >= 0)
 	        			{
 	        				if(pro.isList())
 	        					pro = pro.getList().getPro(index.getInt_idx());

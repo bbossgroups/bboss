@@ -263,8 +263,14 @@ public class ClassUtil
 	    private volatile transient Constructor defaultConstruction;
 
 	    private Class clazz;
-	    
+	    /**
+	     * 识别class是否是基本数据类型或者基本数据类型数组
+	     */
 	    private boolean primary;
+	    /**
+	     * 识别class是否是基本数据类型
+	     */
+	    private boolean baseprimary;
 	    
 	    private  ClassInfo(Class clazz){
 	    	this.clazz = clazz;
@@ -328,6 +334,7 @@ public class ClassUtil
 	    private void init()
 	    {
 	    	this.primary = ValueObjectUtil.isPrimaryType(clazz);
+	    	this.baseprimary = ValueObjectUtil.isBasePrimaryType(clazz);
 //	    	if(declaredFields == null)
 	    	{
 //	    		synchronized(prodescLock)
@@ -786,6 +793,10 @@ public class ClassUtil
 
 		public void setPrimary(boolean primary) {
 			this.primary = primary;
+		}
+
+		public boolean isBaseprimary() {
+			return baseprimary;
 		}
 
 		

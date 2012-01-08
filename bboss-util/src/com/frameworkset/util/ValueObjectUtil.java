@@ -107,6 +107,21 @@ public class ValueObjectUtil {
 		
 		byte.class ,Byte.class,
 		BigDecimal.class};
+	/**
+	 * 用于序列化机制识别基础数据类型
+	 */
+	public static final Class[] basePrimaryTypes = {String.class,
+		int.class ,
+		long.class,		
+		boolean.class ,
+//		BigFile.class,
+		float.class ,
+		short.class ,
+		double.class,
+		char.class ,
+		byte.class ,
+		Class.class
+		};
 	private static final Logger log = Logger.getLogger(ValueObjectUtil.class);
 
 	private static final SimpleDateFormat format = new SimpleDateFormat(
@@ -3602,7 +3617,7 @@ public class ValueObjectUtil {
 			return null;
 		if(array.isArray())
 		{	
-			String ret = array.getComponentType().getCanonicalName();
+			String ret = array.getComponentType().getName();
 			if(ret.equals("java.lang.String"))
 				return "String[]";
 			else if(ret.equals("java.lang.Object"))
@@ -3611,7 +3626,11 @@ public class ValueObjectUtil {
 				return "Class[]";
 			else if(ret.equals("byte"))
 				return "byte[]";	
-		
+			else
+			{
+				ret = array.getName();
+			}
+			
 			return ret;
 		}
 		else
@@ -3646,11 +3665,11 @@ public class ValueObjectUtil {
 			else if(ret.equals("byte"))
 				return "byte[]";	
 		
-			return ret;
+			return array.getName();
 		}
 		else
 		{
-			String ret = array.getCanonicalName() ;
+			String ret = array.getName() ;
 			if(ret.equals("java.lang.String"))
 				return "String";
 			else if(ret.equals("java.util.ArrayList"))
@@ -3672,13 +3691,18 @@ public class ValueObjectUtil {
 		
 	}
 	
+	/**
+	 * 获取数组元素类型名称
+	 * @param array
+	 * @return
+	 */
 	public static String getComponentTypeName(Class array)
 	{
 		if(array == null)
 			return null;
 		if(array.isArray())
 		{	
-			String ret = array.getComponentType().getCanonicalName() ;
+			String ret = array.getComponentType().getName() ;
 		
 			if(ret.equals("java.lang.String"))
 				return "String";
@@ -4183,7 +4207,7 @@ public class ValueObjectUtil {
     }
     
     /**
-     * 判断类type是否是基础数据类型
+     * 判断类type是否是基础数据类型或者基础数据类型数组
      * @param type
      * @return
      */
@@ -4204,6 +4228,28 @@ public class ValueObjectUtil {
     	{
     		return isPrimaryType(type.getComponentType());
     	}
+    	
+    }
+    
+    /**
+     * 判断类type是否是基础数据类型
+     * @param type
+     * @return
+     */
+    public static boolean isBasePrimaryType(Class type)
+    {
+    	if(!type.isArray())
+    	{
+    		if(type.isEnum())
+    			return true;
+	    	for(Class primaryType:ValueObjectUtil.basePrimaryTypes)
+	    	{
+	    		if(primaryType.isAssignableFrom(type))
+	    			return true;
+	    	}
+	    	return false;
+    	}
+    	return false;
     	
     }
 	

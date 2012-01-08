@@ -15,6 +15,9 @@
  */
 package org.frameworkset.soa.xblink;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * <p>Title: Test1.java</p> 
  * <p>Description: </p>
@@ -27,6 +30,11 @@ package org.frameworkset.soa.xblink;
 public class Test1 implements java.io.Serializable{
 	Test2 test2;
 	Test3 test3;
+	Test1 test4;
+	Test1 test5;
+	Map testmap;
+	List testlist;
+	Test1[] testarray;
 	public Test2 getTest2() {
 		return test2;
 	}
@@ -38,6 +46,36 @@ public class Test1 implements java.io.Serializable{
 	}
 	public void setTest3(Test3 test3) {
 		this.test3 = test3;
+	}
+	public Test1 getTest4() {
+		return test4;
+	}
+	public void setTest4(Test1 test4) {
+		this.test4 = test4;
+	}
+	public Map getTestmap() {
+		return testmap;
+	}
+	public void setTestmap(Map testmap) {
+		this.testmap = testmap;
+	}
+	public List getTestlist() {
+		return testlist;
+	}
+	public void setTestlist(List testlist) {
+		this.testlist = testlist;
+	}
+	public Test1[] getTestarray() {
+		return testarray;
+	}
+	public void setTestarray(Test1[] testarray) {
+		this.testarray = testarray;
+	}
+	public Test1 getTest5() {
+		return test5;
+	}
+	public void setTest5(Test1 test5) {
+		this.test5 = test5;
 	}
 	
 

@@ -29,6 +29,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
 
 import org.frameworkset.spi.SOAApplicationContext;
 import org.frameworkset.util.ClassUtil;
@@ -39,6 +40,7 @@ import com.frameworkset.spi.assemble.BeanInstanceException;
 import com.frameworkset.spi.assemble.CurrentlyInCreationException;
 import com.frameworkset.util.NoSupportTypeCastException;
 import com.frameworkset.util.ValueObjectUtil;
+import com.thoughtworks.xstream.converters.basic.UUIDConverter;
 
 /**
  * <p>
@@ -93,7 +95,7 @@ public class ObjectSerializable {
 			String charset) throws NoSupportTypeCastException,
 			NumberFormatException, IllegalArgumentException,
 			IntrospectionException, IOException {
-
+		SerialStack stack = new SerialStack();
 		ret
 				.append("<p n=\"soamethodcall\" ")
 				.append("cs=\"org.frameworkset.soa.SOAMethodCall\" >")
@@ -111,11 +113,14 @@ public class ObjectSerializable {
 					.append("\">");
 
 			{
-				ObjectSerializable.convertParams(ret, params, paramTypes, null);
+				
+				stack.addStack(params, "params");
+				ObjectSerializable.convertParams(ret, params, paramTypes, null,stack,"params");
+				
 			}
 			ret.append("</a></p>");
 		}
-
+		stack.clear();
 		ret.append("</p></p>");
 
 		// SOAMethodCall method = new SOAMethodCall();
@@ -155,9 +160,10 @@ public class ObjectSerializable {
 			} else
 				ret.append(content_header_gbk);
 			ret.append(call_header);
-
+			SerialStack stack = new SerialStack();
 			convertBeanObjectToXML("soamethodcall", method, method.getClass(),
-					null, ret);
+					null, ret,stack,"soamethodcall");
+			stack.clear();
 			ret.append(call_tailer);
 			return ret.toString();
 		} catch (Exception e) {
@@ -171,7 +177,10 @@ public class ObjectSerializable {
 			IntrospectionException {
 		try {
 			StringWriter ret = new StringWriter();
-			convertBeanObjectToXML(null, obj, type, dateformat, ret);
+			SerialStack stack = new SerialStack();
+			String name = UUID.randomUUID().toString();
+			convertBeanObjectToXML(name, obj, type, dateformat, ret,stack,name);
+			stack.clear();
 			return ret.toString();
 		} catch (Exception e) {
 			throw new IllegalArgumentException(e);
@@ -276,7 +285,9 @@ public class ObjectSerializable {
 			} else
 				ret.append(content_header_gbk);
 			ret.append("<ps>");
-			convertBeanObjectToXML(name, obj, type, dateformat, ret);
+			SerialStack stack = new SerialStack();
+			convertBeanObjectToXML(name, obj, type, dateformat, ret,stack,name);
+			stack.clear();
 			ret.append("</ps>");
 		} catch (Exception e) {
 			throw new IllegalArgumentException(e);
@@ -289,7 +300,10 @@ public class ObjectSerializable {
 			IllegalArgumentException, IntrospectionException {
 		StringWriter ret = new StringWriter();
 		try {
-			convertBeanObjectToXML(null, obj, type, null, ret);
+			SerialStack stack = new SerialStack();
+			String name = UUID.randomUUID().toString();
+			convertBeanObjectToXML(name, obj, type, null, ret,stack,name);
+			stack.clear();
 		} catch (IOException e) {
 			throw new IllegalArgumentException(e);
 		}
@@ -319,9 +333,10 @@ public class ObjectSerializable {
 			ret.append("<ps>");
 			if (objs != null && objs.size() > 0) {
 				int i = 0;
+				SerialStack stack = new SerialStack();
 				for (Object obj : objs) {
 					convertBeanObjectToXML(names.get(i), obj, types.get(i), null,
-							ret);
+							ret,stack,names.get(i));
 					i++;
 				}
 			}
@@ -334,7 +349,7 @@ public class ObjectSerializable {
 
 	/**
 	 * 根据对象值，对象类型查找到对应的方法，这个玩意儿，比较麻烦
-	 * 
+	 * 需要判读currentAddress为空的情况，biaoping.yin
 	 * @param obj
 	 * @param type
 	 * @param dateformat
@@ -346,12 +361,42 @@ public class ObjectSerializable {
 	 * @throws IOException 
 	 */
 	private final static void convertBeanObjectToXML(String name, Object obj,
-			Class type, String dateformat, Writer ret)
+			Class type, String dateformat, Writer ret,SerialStack serialStack,String currentAddress)
 			throws NoSupportTypeCastException, NumberFormatException,
 			IllegalArgumentException, IntrospectionException, IOException {
 		if (obj != null)
+		{
 			type = obj.getClass();
-
+			ClassInfo classinfo = ClassUtil.getClassInfo(type);
+			if(!classinfo.isBaseprimary())
+			{
+				String address = serialStack.getRefID(obj);
+				if(address != null)
+				{
+					if (name == null)
+					{
+						ret
+								.append("<p refid=\"attr:").append(address)
+								.append("\"/>");
+					}
+					else
+					{
+						ret
+								.append("<p n=\"")
+								.append(name)
+								.append("\" refid=\"attr:").append(address)
+								.append("\"/>");
+					}
+					return;
+				}
+				else
+				{
+					serialStack.addStack(obj, currentAddress);
+				}
+			}
+			
+		}
+		
 		if (type == byte[].class) {
 			if (obj == null) {
 				if (name == null)
@@ -366,10 +411,11 @@ public class ObjectSerializable {
 
 				return;
 			} else {
-
-				if (!File.class.isAssignableFrom(obj.getClass())) {
-
+				
+				if (!File.class.isAssignableFrom(type)) {
+					
 					if (name == null)
+					{
 						ret
 								.append("<p s:t=\"")
 								.append(ValueObjectUtil.getSimpleTypeName(type))
@@ -378,6 +424,7 @@ public class ObjectSerializable {
 										ValueObjectUtil
 												.byteArrayEncoder((byte[]) obj))
 								.append("]]></p>");
+					}
 					else
 						ret
 								.append("<p n=\"")
@@ -562,23 +609,33 @@ public class ObjectSerializable {
 				List datas = (List) obj;
 
 				if (name == null)
+				{
 					ret.append("<p s:t=\"").append(
 							ValueObjectUtil.getSimpleTypeName(type)).append(
 							"\">");
+					
+				}
 				else
+				{
 					ret.append("<p n=\"").append(name).append("\" s:t=\"")
 							.append(ValueObjectUtil.getSimpleTypeName(type))
 							.append("\">");
+//					currentAddress = currentAddress + "->" + name;
+				}
 				ret.append("<l cmt=\"bean\">");
 				Object value = null;
 				for (int i = 0; i < datas.size(); i++) {
 					value = datas.get(i);
 					if (value == null)
+						/**
+						 * convertBeanObjectToXML(String name, Object obj,
+			Class type, String dateformat, Writer ret,SerialStack serialStack,String currentAddress)
+						 */
 						convertBeanObjectToXML(null, value, null, dateformat,
-								ret);
+								ret,serialStack,currentAddress + "[" + i + "]");
 					else
 						convertBeanObjectToXML(null, value, value.getClass(),
-								dateformat, ret);
+								dateformat, ret,serialStack,currentAddress + "[" + i + "]");
 				}
 				ret.append("</l>");
 				ret.append("</p>");
@@ -606,22 +663,27 @@ public class ObjectSerializable {
 							ValueObjectUtil.getSimpleTypeName(type)).append(
 							"\">");
 				else
+				{
 					ret.append("<p n=\"").append(name).append("\" s:t=\"")
 							.append(ValueObjectUtil.getSimpleTypeName(type))
 							.append("\">");
+//					currentAddress = currentAddress + "->" + name;
+				}
 				ret.append("<s cmt=\"bean\">");
 				Object value = null;
 				Iterator itr = datas.iterator();
+				int i = 0;
 				while (itr.hasNext())
 
 				{
 					value = itr.next();
 					if (value == null)
 						convertBeanObjectToXML(null, value, null, dateformat,
-								ret);
+								ret,serialStack,currentAddress + "[" + i + "]");
 					else
 						convertBeanObjectToXML(null, value, value.getClass(),
-								dateformat, ret);
+								dateformat, ret,serialStack,currentAddress + "[" + i + "]");
+					i ++;
 				}
 				ret.append("</s>");
 				ret.append("</p>");
@@ -647,9 +709,12 @@ public class ObjectSerializable {
 							ValueObjectUtil.getSimpleTypeName(type)).append(
 							"\">");
 				else
+				{
 					ret.append("<p n=\"").append(name).append("\" s:t=\"")
 							.append(ValueObjectUtil.getSimpleTypeName(type))
 							.append("\">");
+//					currentAddress = currentAddress + "->" + name;
+				}
 				ret.append("<m cmt=\"bean\">");
 				Object value = null;
 				Iterator itr = datas.entrySet().iterator();
@@ -660,10 +725,10 @@ public class ObjectSerializable {
 					value = entry.getValue();
 					if (value == null)
 						convertBeanObjectToXML(String.valueOf(entry.getKey()),
-								value, null, dateformat, ret);
+								value, null, dateformat, ret,serialStack,currentAddress + "[" + entry.getKey() + "]");
 					else
 						convertBeanObjectToXML(String.valueOf(entry.getKey()),
-								value, value.getClass(), dateformat, ret);
+								value, value.getClass(), dateformat, ret,serialStack,currentAddress + "[" + entry.getKey() + "]");
 				}
 				ret.append("</m>");
 				ret.append("</p>");
@@ -674,23 +739,38 @@ public class ObjectSerializable {
 			if (obj == null) {
 				if (name == null)
 					ret.append("<p s:nvl=\"true\" s:t=\"").append(
-							ValueObjectUtil.getSimpleTypeName(type)).append(
+							ValueObjectUtil.getTypeName(type)).append(
 							"\"/>");
 				else
 					ret.append("<p n=\"").append(name).append(
 							"\" s:nvl=\"true\" s:t=\"").append(
-							ValueObjectUtil.getSimpleTypeName(type)).append(
+							ValueObjectUtil.getTypeName(type)).append(
 							"\"/>");
 				return;
 			} else {
+//				if (name == null)
+//					ret.append("<p s:t=\"").append(
+//							ValueObjectUtil.getSimpleTypeName(type)).append(
+//							"\">");
+//				else
+//				{
+//					ret.append("<p n=\"").append(name).append("\" s:t=\"")
+//							.append(ValueObjectUtil.getSimpleTypeName(type))
+//							.append("\">");
+//					currentAddress = currentAddress + "->" + name;
+//				}
+				
 				if (name == null)
 					ret.append("<p s:t=\"").append(
-							ValueObjectUtil.getSimpleTypeName(type)).append(
+							ValueObjectUtil.getTypeName(type)).append(
 							"\">");
 				else
+				{
 					ret.append("<p n=\"").append(name).append("\" s:t=\"")
-							.append(ValueObjectUtil.getSimpleTypeName(type))
+							.append(ValueObjectUtil.getTypeName(type))
 							.append("\">");
+//					currentAddress = currentAddress + "->" + name;
+				}
 
 			}
 			ret.append("<a cmt=\"").append(
@@ -702,17 +782,17 @@ public class ObjectSerializable {
 				value = Array.get(obj, i);
 
 				if (value == null)
-					convertBeanObjectToXML(null, value, null, dateformat, ret);
+					convertBeanObjectToXML(null, value, null, dateformat, ret,serialStack,currentAddress + "[" + i + "]");
 				else
 					convertBeanObjectToXML(null, value, value.getClass(),
-							dateformat, ret);
+							dateformat, ret,serialStack,currentAddress + "[" + i + "]");
 			}
 			ret.append("</a>");
 			ret.append("</p>");
 		}
 
 		else {
-			basicTypeCast(name, obj, type, dateformat, ret);
+			basicTypeCast(name, obj, type, dateformat, ret, serialStack,currentAddress);
 		}
 
 		// Object arrayObj;
@@ -748,7 +828,7 @@ public class ObjectSerializable {
 	 * 
 	 */
 	private final static boolean basicTypeCast(String name, Object obj,
-			Class type, String dateformat, Writer ret)
+			Class type, String dateformat, Writer ret,SerialStack stack,String currentAddress)
 			throws NoSupportTypeCastException, NumberFormatException,
 			IntrospectionException, IOException {
 		if (obj == null) {
@@ -915,11 +995,11 @@ public class ObjectSerializable {
 				ret.append("<p n=\"").append(name).append("\" cs=\"").append(
 						obj.getClass().getCanonicalName()).append("\">");
 			if (StackTraceElement.class.isAssignableFrom(type))
-				appendStackTraceElementProperties(obj, type, dateformat, ret);
+				appendStackTraceElementProperties(obj, type, dateformat, ret, stack,currentAddress);
 			else if (Throwable.class.isAssignableFrom(type))
-				appendThrowableProperties(obj, type, dateformat, ret);
+				appendThrowableProperties(obj, type, dateformat, ret,stack,currentAddress);
 			else
-				appendBeanProperties(obj, type, dateformat, ret);
+				appendBeanProperties(obj, type, dateformat, ret,stack,currentAddress);
 			ret.append("</p>");
 			return true;
 		}
@@ -927,7 +1007,7 @@ public class ObjectSerializable {
 	}
 
 	private static void appendThrowableProperties(Object obj, Class type,
-			String dateformat, Writer ret) throws IntrospectionException, IOException {
+			String dateformat, Writer ret,SerialStack stack,String currentAddress) throws IntrospectionException, IOException {
 
 //		BeanInfo beanInfo = Introspector.getBeanInfo(type);
 //		ClassInfo beanInfo = ClassUtil.getClassInfo(type);
@@ -941,14 +1021,14 @@ public class ObjectSerializable {
 			Object value = ValueObjectUtil.getValue(obj, "message");
 
 			convertBeanObjectToXML("message", value, String.class, dateformat,
-					ret);
+					ret,stack,currentAddress + "{0}"  );
 			value = ValueObjectUtil.getValue(obj, "cause");
 			if (value != null) {
 				convertBeanObjectToXML("cause", value, value.getClass(),
-						dateformat, ret);
+						dateformat, ret,stack,currentAddress + "{1}" );
 			} else {
 				convertBeanObjectToXML("cause", value, Throwable.class,
-						dateformat, ret);
+						dateformat, ret,stack,currentAddress + "{2}" );
 			}
 
 		} catch (CurrentlyInCreationException e) {
@@ -965,12 +1045,12 @@ public class ObjectSerializable {
 		ret.append("</construction>");
 
 		appendBeanProperties(obj, type, dateformat, ret,
-				throwable_filterattributes);
+				throwable_filterattributes,stack,currentAddress);
 
 	}
 
 	private static void appendStackTraceElementProperties(Object obj,
-			Class type, String dateformat, Writer ret)
+			Class type, String dateformat, Writer ret,SerialStack serialStack,String currentAddress)
 			throws IntrospectionException, IOException {
 
 //		BeanInfo beanInfo = Introspector.getBeanInfo(type);
@@ -984,19 +1064,19 @@ public class ObjectSerializable {
 			Object value = ValueObjectUtil.getValue(obj, "className");
 
 			convertBeanObjectToXML("declaringClass", value, String.class,
-					dateformat, ret);
+					dateformat, ret,serialStack, currentAddress + "{0}");
 			value = ValueObjectUtil.getValue(obj, "methodName");
 
 			convertBeanObjectToXML("methodName", value, String.class,
-					dateformat, ret);
+					dateformat, ret,serialStack, currentAddress + "{1}");
 			value = ValueObjectUtil.getValue(obj, "fileName");
 
 			convertBeanObjectToXML("fileName", value, String.class, dateformat,
-					ret);
+					ret,serialStack, currentAddress + "{2}");
 			value = ValueObjectUtil.getValue(obj, "lineNumber");
 
 			convertBeanObjectToXML("lineNumber", value, int.class, dateformat,
-					ret);
+					ret,serialStack, currentAddress + "{3}");
 		} catch (CurrentlyInCreationException e) {
 			throw e;
 		} catch (BeanInstanceException e) {
@@ -1013,9 +1093,9 @@ public class ObjectSerializable {
 	}
 
 	private static void appendBeanProperties(Object obj, Class type,
-			String dateformat, Writer ret) throws IntrospectionException {
+			String dateformat, Writer ret,SerialStack stack,String currentAddress) throws IntrospectionException {
 
-		appendBeanProperties(obj, type, dateformat, ret, null);
+		appendBeanProperties(obj, type, dateformat, ret, null, stack,currentAddress);
 
 	}
 
@@ -1030,7 +1110,7 @@ public class ObjectSerializable {
 	}
 
 	private static void appendBeanProperties(Object obj, Class type,
-			String dateformat, Writer ret, String[] filters)
+			String dateformat, Writer ret, String[] filters,SerialStack stack,String currentAddress)
 			throws IntrospectionException {
 		ClassInfo beanInfo = ClassUtil.getClassInfo(type);		
 //		beanInfo_.getDeclaredFields();
@@ -1064,7 +1144,8 @@ public class ObjectSerializable {
 				Object value = propertyDescriptor.getValue(obj);
 				if (value != null)
 					ptype = value.getClass();
-				convertBeanObjectToXML(attrName, value, ptype, dateformat, ret);
+				
+				convertBeanObjectToXML(attrName, value, ptype, dateformat, ret,stack,currentAddress + "->" + attrName);
 			} catch (IllegalArgumentException e) {
 				throw new CurrentlyInCreationException("", e);
 			} catch (IllegalAccessException e) {
@@ -1087,12 +1168,13 @@ public class ObjectSerializable {
 	}
 
 	private static void convertParams(Writer ret, Object[] params,
-			Class[] paramTypes, String dateformat)
+			Class[] paramTypes, String dateformat,SerialStack stack,String currentAddress)
 			throws NoSupportTypeCastException, NumberFormatException,
 			IllegalArgumentException, IntrospectionException, IOException {
+		
 		for (int i = 0; i < params.length; i++) {
 			ObjectSerializable.convertBeanObjectToXML(null, params[i],
-					paramTypes[i], dateformat, ret);
+					paramTypes[i], dateformat, ret, stack,currentAddress + "[" + i+"]");
 		}
 	}
 

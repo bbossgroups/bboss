@@ -37,6 +37,8 @@ import org.apache.log4j.Logger;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.frameworkset.soa.ObjectSerializable;
 import org.frameworkset.soa.TransientFieldBean;
+import org.frameworkset.spi.BaseApplicationContext;
+import org.frameworkset.spi.DefaultApplicationContext;
 import org.junit.Test;
 
 import com.frameworkset.util.FileUtil;
@@ -207,6 +209,21 @@ public class TestSerializable
 		test1.setTest2(test2);
 		test1.setTest3(test3);
 		test3.setTest2(test2);
+		
+//		byte[] cs = oldObjectToByteBuffer(test1) ;
+		String ss = ObjectSerializable.toXML(test1);
+		Test1 test1_ =  (Test1)ObjectSerializable.toBean(ss,Test1.class);
+		System.out.println();
+		
+		
+	}
+	
+	@Test
+	public void testFullBBossSerializable() throws Exception
+	{
+		BaseApplicationContext context = DefaultApplicationContext.getApplicationContext("org/frameworkset/soa/xblink/test.xml");
+		Test1 test1 = context.getTBeanObject("test1",  Test1.class);
+		
 		
 //		byte[] cs = oldObjectToByteBuffer(test1) ;
 		String ss = ObjectSerializable.toXML(test1);

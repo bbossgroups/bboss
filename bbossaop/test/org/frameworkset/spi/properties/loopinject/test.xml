@@ -11,20 +11,30 @@
 		<property name="testmap" >
 			<map componentType="bean">
 				<property name="test4" refid="attr:test1"/>
+				<property name="testmap1" class="org.frameworkset.spi.properties.loopinject.Test1"/>
+				<property name="testmap2" class="org.frameworkset.spi.properties.loopinject.Test1"/>
 			</map>
 		</property>
 		<property name="testlist" >
 			<list componentType="bean">
 				<property refid="attr:test1"/>
+				<property class="org.frameworkset.spi.properties.loopinject.Test1"/>
+				<property class="org.frameworkset.spi.properties.loopinject.Test1"/>
 			</list>
 		</property>
 		<property name="testarray" >
 			<array componentType="org.frameworkset.spi.properties.loopinject.Test1">
 				<property refid="attr:test1"/>
+				<property class="org.frameworkset.spi.properties.loopinject.Test1"/>
+				<property class="org.frameworkset.spi.properties.loopinject.Test1"/>
 			</array>
 		</property>
 		<property name="test5" refid="attr:test5"/>
 	</property>
 	
 	<property name="test5" refid="attr:test1"/>
+	
+	<property name="test6" refid="attr:test1->testmap[testmap2]"/>
+	<property name="test7" refid="attr:test1->testlist[1]"/>
+	<property name="test8" refid="attr:test1->testarray[1]"/>
 </properties>

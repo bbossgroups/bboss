@@ -13,34 +13,36 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package org.frameworkset.soa.xblink;
+package org.frameworkset.soa;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
- * <p>Title: Test2.java</p> 
- * <p>Description: </p>
+ * <p>Title: SerialStack.java</p> 
+ * <p>Description: 记录对象和对象引用标识，便于构建后续的引用节点</p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2008</p>
- * @Date 2011-12-29
+ * @Date 2012-1-6
  * @author biaoping.yin
  * @version 1.0
  */
-public class Test2  implements java.io.Serializable{
-	Test1 test1;
-	Test3 test3;
-
-	public Test1 getTest1() {
-		return test1;
+public class SerialStack {
+	private Map<Object,String> stack = new HashMap<Object,String>();
+	public void addStack(Object address,String refid)
+	{
+		this.stack.put(address, refid);
 	}
-
-	public void setTest1(Test1 test1) {
-		this.test1 = test1;
+	public String getRefID(Object address)
+	{
+		return this.stack.get(address);
 	}
-
-	public Test3 getTest3() {
-		return test3;
+	
+	public void clear()
+	{
+		this.stack.clear();
+		this.stack = null;
 	}
+	
 
-	public void setTest3(Test3 test3) {
-		this.test3 = test3;
-	}
 }
