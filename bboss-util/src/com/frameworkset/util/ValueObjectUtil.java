@@ -108,7 +108,7 @@ public class ValueObjectUtil {
 		byte.class ,Byte.class,
 		BigDecimal.class};
 	/**
-	 * 用于序列化机制识别基础数据类型
+	 * 用于序列化机制识别基础数据类型   
 	 */
 	public static final Class[] basePrimaryTypes = {String.class,
 		int.class ,
