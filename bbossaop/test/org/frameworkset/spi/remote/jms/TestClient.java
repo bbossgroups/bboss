@@ -129,13 +129,14 @@ public class TestClient  extends TestBase
 	{
 		RPCTestInf testInf = (RPCTestInf)context.getBeanObject("(jms::yinbiaoping-jms)/rpc.test");
 //		RPCTestInf testInf = (RPCTestInf)context.getBeanObject("rpc.test");
+		testInf.getCount();
 		long start = System.currentTimeMillis();
 		
 		for(int i = 0; i < 10; i ++)
 		    System.out.println("testInf.getCount():" + i + " = "+testInf.getCount());
 		
 		long end = System.currentTimeMillis();
-		System.out.println("消耗时间：" + (end - start) / 1000 + "秒");
+		System.out.println("消耗时间：" + (end - start)  + "毫秒");
 		
 		
 		

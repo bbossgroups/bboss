@@ -16,7 +16,10 @@
 
 package org.frameworkset.spi.remote.jms;
 
+import java.io.Serializable;
+
 import javax.jms.ObjectMessage;
+import javax.jms.TextMessage;
 
 import org.frameworkset.mq.JMSTemplate;
 import org.frameworkset.spi.remote.BaseFutureCall;
@@ -24,6 +27,7 @@ import org.frameworkset.spi.remote.RPCAddress;
 import org.frameworkset.spi.remote.RPCIOHandler;
 import org.frameworkset.spi.remote.RPCMessage;
 import org.frameworkset.spi.remote.RemoteException;
+import org.frameworkset.spi.remote.Util;
 
 
 /**
@@ -55,13 +59,29 @@ public class RPCJMSFuture extends BaseFutureCall
 	protected RPCMessage _call() throws Exception
 	{		
 		
-		ObjectMessage message = this.request.createObjectMessage(); 
-		this.srcmsg.setSrc(src_address);
-		message.setObject(this.srcmsg);
-		message.setJMSCorrelationID(this.address.getServer_uuid());		
+		
+		this.srcmsg.setSrc_addr(src_address);
+		
 		try
 		{
-		    this.request.send(message);
+			
+			 
+			Object value = Util.getEncoder().encoder(srcmsg);
+			if(value instanceof String)
+			{
+				
+				TextMessage message = this.request.createTextMessage((String)value);
+//				message.setObject(this.srcmsg);
+				message.setJMSCorrelationID(this.address.getServer_uuid());		
+			    this.request.send(message);
+			}
+			else
+			{
+				ObjectMessage message = this.request.createObjectMessage();
+				message.setObject((Serializable)value);
+				message.setJMSCorrelationID(this.address.getServer_uuid());		
+			    this.request.send(message);
+			}
 		}
     	 
         catch(Exception e)

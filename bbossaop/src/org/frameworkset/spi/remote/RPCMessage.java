@@ -74,13 +74,13 @@ public class RPCMessage implements Serializable
 
     protected RPCAddress dest;
 
-    public RPCAddress getSrc()
+    public RPCAddress getSrc_addr()
     {
 
         return src_addr;
     }
 
-    public void setSrc(RPCAddress src_addr)
+    public void setSrc_addr(RPCAddress src_addr)
     {
 
         this.src_addr = src_addr;

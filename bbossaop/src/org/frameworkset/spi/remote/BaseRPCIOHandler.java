@@ -565,7 +565,7 @@ public abstract class BaseRPCIOHandler implements RPCIOHandler
                 ResponseCollector coll = requests.get(Long.valueOf(hdr.getId()));
                 if (coll != null)
                 {
-                    RPCAddress sender = message_.getSrc();
+                    RPCAddress sender = message_.getSrc_addr();
                     Object retval = null;
                     if(message_.getResultSerial() != RPCMessage.OOB)
                     {

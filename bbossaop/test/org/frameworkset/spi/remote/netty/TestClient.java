@@ -50,7 +50,7 @@ public class TestClient extends TestBase
 	{
 //		AssembleUtil.registAssembleCallback(new WebDocbaseAssembleCallback("D:/workspace/bbossgroup-2.0-RC2/bbossaop/"));
 //		RPCTestInf testInf = (RPCTestInf)context.getBeanObject("(192.168.11.102:1186)/rpc.test");
-		RPCTestInf testInf = (RPCTestInf)context.getBeanObject("(netty::172.16.33.46:12347)/rpc.test?user=admin&password=123456&server_uuid=多多");
+		RPCTestInf testInf = (RPCTestInf)context.getBeanObject("(netty::192.168.1.22:12347)/rpc.test?user=admin&password=123456&server_uuid=多多");
 		
 		for(int i = 0; i < 10; i ++)
 		{

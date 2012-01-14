@@ -93,6 +93,28 @@ public class TestSerializable
 		
 	}
 	
+	private void convertBeanToXStreamXml(int count,Test1 joe)
+	{
+		try
+		{
+			long start = System.currentTimeMillis();
+			for(int i = 0; i < count; i++)
+			{
+				xStream.toXML(joe);
+				
+			}
+			long end = System.currentTimeMillis();
+			
+			System.out.println("执行xtream beantoxml "+count+"次，耗时:"+(end - start)+"毫秒");
+		}
+		catch (Exception e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
 	private void convertXStreamXMLToBean(int count,String xml)
 	{
 		try
@@ -114,7 +136,30 @@ public class TestSerializable
 		
 	}
 	
+	
+	
 	private void convertBeanToXml(int count,Person joe)
+	{
+		try
+		{
+			long start = System.currentTimeMillis();
+			for(int i = 0; i < count; i++)
+			{
+				ObjectSerializable.toXML(joe);
+			}
+			long end = System.currentTimeMillis();
+			
+			System.out.println("执行bboss beantoxml "+count+"次，耗时:"+(end - start)+"毫秒");
+		}
+		catch (Exception e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	private void convertBeanToXml(int count,Test1 joe)
 	{
 		try
 		{
@@ -209,11 +254,9 @@ public class TestSerializable
 		test1.setTest2(test2);
 		test1.setTest3(test3);
 		test3.setTest2(test2);
-		
-//		byte[] cs = oldObjectToByteBuffer(test1) ;
 		String ss = ObjectSerializable.toXML(test1);
 		Test1 test1_ =  (Test1)ObjectSerializable.toBean(ss,Test1.class);
-		System.out.println();
+		
 		
 		
 	}
@@ -425,6 +468,178 @@ public class TestSerializable
 			System.out.println();System.out.println("bboss反序列化测试用例开始");System.out.println();
 			start = System.currentTimeMillis();
 			person =  ObjectSerializable.toBean(xml, Person.class);
+			end = System.currentTimeMillis();			
+			System.out.println("执行bboss xmltobean 1次，耗时:"+(end - start)+"豪秒");			
+			convertXMLToBean(10,xml);			
+			convertXMLToBean(100,xml);
+			convertXMLToBean(1000,xml);
+			convertXMLToBean(10000,xml);
+			
+			System.out.println();System.out.println("xstream反序列化测试用例开始");System.out.println();
+			start = System.currentTimeMillis();
+			xStream.fromXML(xmlXstream);
+			end = System.currentTimeMillis();			
+			System.out.println("执行XStream xmltobean 1次，耗时:"+(end - start)+"豪秒");
+			convertXStreamXMLToBean(10,xmlXstream);
+			convertXStreamXMLToBean(100,xmlXstream);
+			convertXStreamXMLToBean(1000,xmlXstream);
+			convertXStreamXMLToBean(10000,xmlXstream);
+			
+			//测试用例结束
+			
+			
+		}
+		catch (Exception e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	
+	@Test
+	public void testTest1()
+	{
+		Test1 test1 = new Test1();
+		Test2 test2 = new Test2();
+		Test3 test3 = new Test3();
+		test2.setTest1(test1);
+		test1.setTest2(test2);
+		test1.setTest3(test3);
+		test3.setTest2(test2);
+		
+	
+		
+		
+		try
+		{
+			//预热bboss和xstream
+			String xml = ObjectSerializable.toXML(test1);
+			Test1 test1_ =  (Test1)ObjectSerializable.toBean(xml,Test1.class);
+			String xmlXstream = xStream.toXML(test1);
+			Test1 p = (Test1)xStream.fromXML(xmlXstream);
+			System.out.println(xmlXstream);
+			
+			System.out.println();System.out.println("bboss序列化测试用例开始");System.out.println();
+			
+			long start = System.currentTimeMillis();			
+			ObjectSerializable.toXML(test1);			
+			long end = System.currentTimeMillis();			
+			System.out.println("执行bboss beantoxml 1次，耗时:"+(end - start) +"毫秒");
+			
+			
+			convertBeanToXml(10,test1);
+			
+			
+			convertBeanToXml(100,test1);
+				
+			
+			convertBeanToXml(1000,test1);			
+			
+			
+			convertBeanToXml(10000,test1);
+			System.out.println();System.out.println("xstream序列化测试用例开始");System.out.println();
+			start = System.currentTimeMillis();			
+				xStream.toXML(test1);			
+				 end = System.currentTimeMillis();			
+				System.out.println("执行XStream beantoxml 1次，耗时:"+(end - start) +"毫秒");
+				
+			convertBeanToXStreamXml(10,test1);
+			convertBeanToXStreamXml(100,test1);
+			convertBeanToXStreamXml(1000,test1);
+			convertBeanToXStreamXml(10000,test1);
+			
+			System.out.println();System.out.println("bboss反序列化测试用例开始");System.out.println();
+			start = System.currentTimeMillis();
+			test1 =  ObjectSerializable.toBean(xml, Test1.class);
+			end = System.currentTimeMillis();			
+			System.out.println("执行bboss xmltobean 1次，耗时:"+(end - start)+"豪秒");			
+			convertXMLToBean(10,xml);			
+			convertXMLToBean(100,xml);
+			convertXMLToBean(1000,xml);
+			convertXMLToBean(10000,xml);
+			
+			System.out.println();System.out.println("xstream反序列化测试用例开始");System.out.println();
+			start = System.currentTimeMillis();
+			xStream.fromXML(xmlXstream);
+			end = System.currentTimeMillis();			
+			System.out.println("执行XStream xmltobean 1次，耗时:"+(end - start)+"豪秒");
+			convertXStreamXMLToBean(10,xmlXstream);
+			convertXStreamXMLToBean(100,xmlXstream);
+			convertXStreamXMLToBean(1000,xmlXstream);
+			convertXStreamXMLToBean(10000,xmlXstream);
+			
+			//测试用例结束
+			
+			
+		}
+		catch (Exception e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	@Test
+	public void testXMLTest1()
+	{
+		
+		Test1 test1 = new Test1();
+		Test2 test2 = new Test2();
+		Test3 test3 = new Test3();
+		test2.setTest1(test1);
+		test1.setTest2(test2);
+		test1.setTest3(test3);
+		test3.setTest2(test2);
+		
+	
+		
+		
+		try
+		{
+			String bigcontent = FileUtil.getFileContent(new File("D:\\workspace\\bbossgroups-3.2\\bboss-soa\\test\\org\\frameworkset\\soa\\testxstream.xml"), "GBK");
+			//预热bboss和xstream
+			test1.setXmlvalue(bigcontent);
+			String xml = ObjectSerializable.toXML(test1);
+			Test1 test1_ =  (Test1)ObjectSerializable.toBean(xml,Test1.class);
+			String xmlXstream = xStream.toXML(test1);
+			Test1 p = (Test1)xStream.fromXML(xmlXstream);
+			System.out.println(xmlXstream);
+			
+			System.out.println();System.out.println("bboss序列化测试用例开始");System.out.println();
+			
+			long start = System.currentTimeMillis();			
+			ObjectSerializable.toXML(test1);			
+			long end = System.currentTimeMillis();			
+			System.out.println("执行bboss beantoxml 1次，耗时:"+(end - start) +"毫秒");
+			
+			
+			convertBeanToXml(10,test1);
+			
+			
+			convertBeanToXml(100,test1);
+				
+			
+			convertBeanToXml(1000,test1);			
+			
+			
+			convertBeanToXml(10000,test1);
+			System.out.println();System.out.println("xstream序列化测试用例开始");System.out.println();
+			start = System.currentTimeMillis();			
+				xStream.toXML(test1);			
+				 end = System.currentTimeMillis();			
+				System.out.println("执行XStream beantoxml 1次，耗时:"+(end - start) +"毫秒");
+				
+			convertBeanToXStreamXml(10,test1);
+			convertBeanToXStreamXml(100,test1);
+			convertBeanToXStreamXml(1000,test1);
+			convertBeanToXStreamXml(10000,test1);
+			
+			System.out.println();System.out.println("bboss反序列化测试用例开始");System.out.println();
+			start = System.currentTimeMillis();
+			test1 =  ObjectSerializable.toBean(xml, Test1.class);
 			end = System.currentTimeMillis();			
 			System.out.println("执行bboss xmltobean 1次，耗时:"+(end - start)+"豪秒");			
 			convertXMLToBean(10,xml);			

@@ -20,7 +20,6 @@ import java.util.concurrent.atomic.AtomicLong;
 
 import org.frameworkset.spi.ClientProxyContext;
 import org.frameworkset.spi.DefaultApplicationContext;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -149,7 +148,7 @@ public class ClientTest {
 	public  void testHttpa()
 	{
 		WSService WSService = ClientProxyContext.getSimpleClientBean("org/frameworkset/web/ws/testwsmodule.xml", 
-				"(http::172.16.25.164:8080/bboss-mvc/http.rpc)" +
+				"(http::192.168.1.22:8080/bboss-mvc/http.rpc)" +
 				"/mysfirstwsservice?user=admin&password=123456", 
 				WSService.class);
 		WSService.sayHello("aaa");
@@ -228,7 +227,7 @@ public class ClientTest {
 	public void testNettya()
 	{
 		RPCTestInf WSService = ClientProxyContext.getSimpleClientBean("org/frameworkset/spi/remote/manager-rpc-test.xml", 
-				"(netty::172.16.17.217:12347)" +
+				"(netty::192.168.1.22:12347)" +
 				"/rpc.test", 
 				RPCTestInf.class);
 		WSService.sayHelloWorld("ÄãºÃ£¬¶à¶à");

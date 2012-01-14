@@ -28,7 +28,6 @@ import java.util.concurrent.locks.ReentrantLock;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.frameworkset.spi.remote.annotations.GuardedBy;
-import org.jgroups.View;
 
 /**
  * <p>
@@ -165,12 +164,12 @@ public class RPCRequest implements java.io.Serializable, ResponseCollector
                 // if(log.isTraceEnabled())
                 // log.trace("command is done; cannot add response !");
             }
-            else if (suspects.contains(sender))
-            {
-                // if(log.isWarnEnabled())
-                // log.warn("received response from suspected member " + sender
-                // + "; discarding");
-            }
+//            else if (suspects.contains(sender))
+//            {
+//                // if(log.isWarnEnabled())
+//                // log.warn("received response from suspected member " + sender
+//                // + "; discarding");
+//            }
             else
             {
                 // try
@@ -220,53 +219,53 @@ public class RPCRequest implements java.io.Serializable, ResponseCollector
     /** keep suspects vector bounded */
     private static final int MAX_SUSPECTS = 40;
 
-    /**
-     * Adds a member to the 'suspects' list. Removes oldest elements from
-     * 'suspects' list to keep the list bounded ('max_suspects' number of
-     * elements), Requires lock to be held
-     */
-    @GuardedBy("lock")
-    private void addSuspect(RPCAddress suspected_mbr)
-    {
-        if (!suspects.contains(suspected_mbr))
-        {
-            suspects.add(suspected_mbr);
-            while (suspects.size() >= MAX_SUSPECTS && !suspects.isEmpty())
-                suspects.remove(0); // keeps queue bounded
-        }
-    }
+//    /**
+//     * Adds a member to the 'suspects' list. Removes oldest elements from
+//     * 'suspects' list to keep the list bounded ('max_suspects' number of
+//     * elements), Requires lock to be held
+//     */
+//    @GuardedBy("lock")
+//    private void addSuspect(RPCAddress suspected_mbr)
+//    {
+//        if (!suspects.contains(suspected_mbr))
+//        {
+//            suspects.add(suspected_mbr);
+//            while (suspects.size() >= MAX_SUSPECTS && !suspects.isEmpty())
+//                suspects.remove(0); // keeps queue bounded
+//        }
+//    }
 
-    public void suspect(RPCAddress suspected_member)
-    {
+//    public void suspect(RPCAddress suspected_member)
+//    {
+//
+//        if (suspected_member == null)
+//            return;
+//
+//        lock.lock();
+//        try
+//        {
+//            addSuspect(suspected_member);
+//            RPCResponse rsp = requests.get(suspected_member);
+//            if (rsp != null)
+//            {
+//                rsp.setSuspected(true);
+//                rsp.setValue(null);
+//                completed.signalAll();
+//            }
+//        }
+//        finally
+//        {
+//            lock.unlock();
+//        }
+//
+//    }
 
-        if (suspected_member == null)
-            return;
-
-        lock.lock();
-        try
-        {
-            addSuspect(suspected_member);
-            RPCResponse rsp = requests.get(suspected_member);
-            if (rsp != null)
-            {
-                rsp.setSuspected(true);
-                rsp.setValue(null);
-                completed.signalAll();
-            }
-        }
-        finally
-        {
-            lock.unlock();
-        }
-
-    }
-
-    public void viewChange(View new_view)
-    {
-
-        // TODO Auto-generated method stub
-
-    }
+//    public void viewChange(View new_view)
+//    {
+//
+//        // TODO Auto-generated method stub
+//
+//    }
 
     private final Lock lock = new ReentrantLock();
 

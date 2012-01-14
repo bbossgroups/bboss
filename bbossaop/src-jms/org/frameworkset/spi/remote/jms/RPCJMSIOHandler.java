@@ -19,6 +19,7 @@ package org.frameworkset.spi.remote.jms;
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.ObjectMessage;
+import javax.jms.TextMessage;
 
 import org.apache.log4j.Logger;
 import org.frameworkset.mq.JMSConnectionFactory;
@@ -30,6 +31,7 @@ import org.frameworkset.spi.remote.RPCAddress;
 import org.frameworkset.spi.remote.RPCMessage;
 import org.frameworkset.spi.remote.RequestHandler;
 import org.frameworkset.spi.remote.Target;
+import org.frameworkset.spi.remote.Util;
 import org.frameworkset.spi.serviceidentity.TargetImpl;
 
 /**
@@ -127,7 +129,48 @@ public class RPCJMSIOHandler extends BaseRPCIOHandler implements org.frameworkse
     }
     public void receiveMessage(Message msg)
     {
-        if (msg instanceof ObjectMessage)
+    	if (msg instanceof TextMessage)
+    	{
+    		try
+            {
+    			TextMessage msg_ = (TextMessage)msg;
+                RPCMessage rpcmsg = (RPCMessage) Util.getDecoder().decoder(msg_.getText());
+//                javax.jms.Destination reply = msg.getJMSReplyTo();
+
+                Header hdr = rpcmsg.getHeader(name);
+                RPCMessage rsp = super.messageReceived(rpcmsg);
+                switch (hdr.getType())
+                {
+                    case Header.REQ:
+                        if (rsp != null)
+                        {
+                        	//回复消息
+                            TextMessage response = this.reply.createTextMessage((String)Util.getEncoder().encoder(rsp));
+                            RPCAddress src_address = rpcmsg.getSrc_addr();
+                            response.setJMSCorrelationID(src_address.getServer_uuid());
+//                            response.setObject(rsp);
+                            this.reply.send(response);
+                        }
+                        break;
+                    case Header.RSP:
+                        break;
+                    default:
+
+                        break;
+                }
+            }
+            catch (JMSException e)
+            {
+                // TODO Auto-generated catch block
+                // e.printStackTrace();
+                log.error(e);
+            }
+            catch (Exception e)
+            {
+                log.error(e);
+            }
+    	}
+    	else if (msg instanceof ObjectMessage)
         {
             try
             {
@@ -143,7 +186,7 @@ public class RPCJMSIOHandler extends BaseRPCIOHandler implements org.frameworkse
                         {
                         	//回复消息
                             ObjectMessage response = this.reply.createObjectMessage();
-                            RPCAddress src_address = rpcmsg.getSrc();
+                            RPCAddress src_address = rpcmsg.getSrc_addr();
                             response.setJMSCorrelationID(src_address.getServer_uuid());
                             response.setObject(rsp);
                             this.reply.send(response);

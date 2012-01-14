@@ -17,7 +17,6 @@
 package org.frameworkset.spi.remote;
 
 //import org.frameworkset.spi.remote.mina.client.ClinentTransport;
-import org.jgroups.View;
 
 
 /**
@@ -33,8 +32,8 @@ public interface ResponseCollector
 {
 	
 	    void receiveResponse(Object response_value, RPCAddress sender);
-	    void suspect(RPCAddress mbr);
-	    void viewChange(View new_view);
+//	    void suspect(RPCAddress mbr);
+//	    void viewChange(View new_view);
 	    
 //	    void registConnection(ClinentTransport transport)
 //	    ;

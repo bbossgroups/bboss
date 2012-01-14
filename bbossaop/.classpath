@@ -57,15 +57,6 @@
 	<classpathentry kind="lib" path="lib/tlq/tlclient.jar"/>
 	<classpathentry kind="lib" path="lib/tlq/tlqadapter.jar"/>
 	<classpathentry kind="lib" path="lib/netty/netty-3.2.1.Final.jar" sourcepath="D:/workspace/bbossgroups-3.2/netty-3.2.4.Final"/>
-	<classpathentry kind="lib" path="lib/jms/activeio-core-3.1.2.jar"/>
-	<classpathentry kind="lib" path="lib/jms/activemq-camel-5.3.2.jar"/>
-	<classpathentry kind="lib" path="lib/jms/activemq-console-5.3.2.jar"/>
-	<classpathentry kind="lib" path="lib/jms/activemq-core-5.3.2.jar"/>
-	<classpathentry kind="lib" path="lib/jms/activemq-jaas-5.3.2.jar"/>
-	<classpathentry kind="lib" path="lib/jms/activemq-jmdns_1.0-5.3.2.jar"/>
-	<classpathentry kind="lib" path="lib/jms/activemq-optional-5.3.2.jar"/>
-	<classpathentry kind="lib" path="lib/jms/activemq-pool-5.3.2.jar"/>
-	<classpathentry kind="lib" path="lib/jms/activemq-xmpp-5.3.2.jar"/>
 	<classpathentry kind="lib" path="lib/jms/commons-pool-1.5.4.jar"/>
 	<classpathentry kind="lib" path="lib/camel/camel-core-2.2.0.jar" sourcepath="/camel-core"/>
 	<classpathentry kind="lib" path="lib/camel/camel-jms-2.2.0.jar" sourcepath="/camel-jms"/>
@@ -101,5 +92,15 @@
 	<classpathentry kind="lib" path="lib/jms/spring-context-2.5.5.jar"/>
 	<classpathentry kind="lib" path="lib/jms/spring-core-2.5.5.jar"/>
 	<classpathentry kind="lib" path="lib/jms/spring-web-2.5.5.jar"/>
+	<classpathentry kind="lib" path="lib/jms/activeio-core-3.1.2.jar"/>
+	<classpathentry kind="lib" path="lib/jms/activemq-camel-5.5.0.jar"/>
+	<classpathentry kind="lib" path="lib/jms/activemq-console-5.5.0.jar"/>
+	<classpathentry kind="lib" path="lib/jms/activemq-core-5.5.0.jar"/>
+	<classpathentry kind="lib" path="lib/jms/activemq-jaas-5.5.0.jar"/>
+	<classpathentry kind="lib" path="lib/jms/activemq-jmdns_1.0-5.5.0.jar"/>
+	<classpathentry kind="lib" path="lib/jms/activemq-optional-5.5.0.jar"/>
+	<classpathentry kind="lib" path="lib/jms/activemq-pool-5.5.0.jar"/>
+	<classpathentry kind="lib" path="lib/jms/activemq-web-5.5.0.jar"/>
+	<classpathentry kind="lib" path="lib/jms/activemq-xmpp-5.5.0.jar"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>

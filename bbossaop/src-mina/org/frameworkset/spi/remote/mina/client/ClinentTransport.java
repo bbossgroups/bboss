@@ -284,10 +284,10 @@ public class ClinentTransport
     private void setSourceAddress(RPCMessage msg)
     {
 
-        if (msg.getSrc() == null)
+        if (msg.getSrc_addr() == null)
         {
             buildRPCAddress(session);
-            msg.setSrc(local_addr);
+            msg.setSrc_addr(local_addr);
         }
     }
 

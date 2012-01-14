@@ -98,7 +98,7 @@ public class RPCRequestHandler implements RequestHandler
 
         try {
             if(log.isTraceEnabled())
-                log.trace("[sender=" + req.getSrc() + "], method_call: " + method_call);
+                log.trace("[sender=" + req.getSrc_addr() + "], method_call: " + method_call);
 //            preMethodCall(method_call);
           //UPDATE EXECUTE AUTHENTICATE AND AHUTHORIATE OPERATION
             SecurityContext securityContext = method_call.getSecurityContext(); 

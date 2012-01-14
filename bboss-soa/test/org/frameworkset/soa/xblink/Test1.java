@@ -35,6 +35,8 @@ public class Test1 implements java.io.Serializable{
 	Map testmap;
 	List testlist;
 	Test1[] testarray;
+	String xmlvalue ;
+
 	public Test2 getTest2() {
 		return test2;
 	}
@@ -76,6 +78,12 @@ public class Test1 implements java.io.Serializable{
 	}
 	public void setTest5(Test1 test5) {
 		this.test5 = test5;
+	}
+	public String getXmlvalue() {
+		return xmlvalue;
+	}
+	public void setXmlvalue(String xmlvalue) {
+		this.xmlvalue = xmlvalue;
 	}
 	
 

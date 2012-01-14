@@ -25,6 +25,4 @@
 		</property>
 		<property name="test5" refid="attr:test1"/>
 	</property>
-	
-	
 </properties>

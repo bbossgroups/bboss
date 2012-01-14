@@ -56,7 +56,7 @@
 	<property name="rpc.jms.ConnectionFactory" singlable="true" class="org.frameworkset.mq.AMQConnectionFactory">	
 		<construction>		
 			<property name="connectURL" 
-				      value="tcp://creator-cc:61616"/>				
+				      value="tcp://zengjiao-f2ebc9:61616"/>				
 			<property name="username" 
 				      value="system" />	
 			<property name="password" 
