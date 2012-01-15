@@ -15,7 +15,7 @@ org.frameworkset.persitent.util.**
 org.frameworkset.spi.**
 org.frameworkset.task.**
 org.frameworkset.thread.**
-org.jgroups.**
+bboss.org.jgroups.**
 org.springframework.beans.factory.**
 </entry>
 <entry key="ProfilerCPUSettings_filter_value">org.apache.cxf.transport.servlet.*,
@@ -27,7 +27,7 @@ org.frameworkset.persitent.util.*,
 org.frameworkset.spi.*,
 org.frameworkset.task.*,
 org.frameworkset.thread.*,
-org.jgroups.*,
+bboss.org.jgroups.*,
 org.springframework.beans.factory.*</entry>
 <entry key="profiler.settings.istrument.getter.setter.methods">true</entry>
 <entry key="myeclipse.profiling.mode">0</entry>

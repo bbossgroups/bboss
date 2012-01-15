@@ -12,7 +12,7 @@ org.frameworkset.log.**
 org.frameworkset.mq.**
 org.frameworkset.persitent.util.**
 org.frameworkset.spi.**
-org.jgroups.**
+bboss.org.jgroups.**
 </entry>
 <entry key="ProfilerCPUSettings_filter_value">org.apache.cxf.transport.servlet.*,
 org.frameworkset.camel.*,
@@ -20,7 +20,7 @@ org.frameworkset.log.*,
 org.frameworkset.mq.*,
 org.frameworkset.persitent.util.*,
 org.frameworkset.spi.*,
-org.jgroups.*</entry>
+bboss.org.jgroups.*</entry>
 <entry key="profiler.settings.istrument.getter.setter.methods">true</entry>
 <entry key="myeclipse.profiling.mode">0</entry>
 <entry key="ProfilerMemorySettings_stacktraces">-1</entry>

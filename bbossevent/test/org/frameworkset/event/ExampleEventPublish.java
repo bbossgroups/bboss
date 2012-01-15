@@ -18,8 +18,9 @@ package org.frameworkset.event;
 import java.util.Vector;
 
 import org.frameworkset.spi.remote.JGroupHelper;
-import org.jgroups.Address;
 import org.junit.Test;
+
+import bboss.org.jgroups.Address;
 
 /**
  * 

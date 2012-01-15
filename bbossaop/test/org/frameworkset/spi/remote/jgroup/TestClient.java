@@ -22,7 +22,7 @@ import org.frameworkset.spi.remote.RPCHelper;
 import org.frameworkset.spi.remote.RPCTestInf;
 import org.frameworkset.spi.remote.Target;
 import org.frameworkset.spi.remote.TestBase;
-import org.jgroups.Address;
+import bboss.org.jgroups.Address;
 import org.junit.Test;
 
 
@@ -312,8 +312,9 @@ public   void testJGroupAll()
 @Test
 public   void testJGroupAllWithParameter()
 {
+	JGroupHelper.getJGroupHelper().start();	
 //	RPCTestInf testInf = (RPCTestInf)context.getBeanObject("(192.168.11.102:1186)/rpc.test");
-	RPCTestInf testInf = (RPCTestInf)context.getBeanObject("(jgroup::all)/rpc.test?parameterKey=aa");
+	RPCTestInf testInf = (RPCTestInf)context.getBeanObject("(jgroup::all)/rpc.test?server_uuid=aa");
 	
 	for(int i = 0; i < 10; i ++)
 	{

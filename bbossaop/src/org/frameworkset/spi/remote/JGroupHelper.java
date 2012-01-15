@@ -20,12 +20,12 @@ import java.util.Vector;
 
 import org.apache.log4j.Logger;
 import org.frameworkset.spi.BaseSPIManager;
-import org.jgroups.Address;
-import org.jgroups.Channel;
-import org.jgroups.ChannelException;
-import org.jgroups.JChannel;
-import org.jgroups.blocks.RpcDispatcher;
-import org.jgroups.stack.IpAddress;
+import bboss.org.jgroups.Address;
+import bboss.org.jgroups.Channel;
+import bboss.org.jgroups.ChannelException;
+import bboss.org.jgroups.JChannel;
+import bboss.org.jgroups.blocks.RpcDispatcher;
+import bboss.org.jgroups.stack.IpAddress;
 
 /**
  * 

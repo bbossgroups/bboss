@@ -26,7 +26,7 @@ import org.apache.log4j.Logger;
 import org.frameworkset.spi.security.SecurityContext;
 import org.frameworkset.thread.ThreadPoolExecutor;
 import org.frameworkset.thread.ThreadPoolManagerFactory;
-import org.jgroups.util.Buffer;
+import bboss.org.jgroups.util.Buffer;
 
 /**
  * <p>

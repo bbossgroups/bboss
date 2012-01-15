@@ -22,7 +22,7 @@ import org.frameworkset.spi.remote.RPCAddress;
 import org.frameworkset.spi.remote.ServiceID;
 import org.frameworkset.spi.serviceidentity.ServiceIDImpl;
 import org.frameworkset.spi.serviceidentity.TargetImpl;
-import org.jgroups.blocks.GroupRequest;
+import bboss.org.jgroups.blocks.GroupRequest;
 import org.junit.Test;
 
 

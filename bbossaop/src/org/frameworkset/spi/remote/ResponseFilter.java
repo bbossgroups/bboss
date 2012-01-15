@@ -33,13 +33,13 @@ public interface ResponseFilter
      * Determines whether a response from a given sender should be added to the response list of the request
      * @param response The response (usually a serializable value)
      * @param sender The sender of response
-     * @return True if we should add the response to the response list ({@link org.jgroups.util.RspList}) of a request,
+     * @return True if we should add the response to the response list ({@link bboss.org.jgroups.util.RspList}) of a request,
      * otherwise false. In the latter case, we don't add the response to the response list.
      */
     boolean isAcceptable(Object response, RPCAddress sender);
 
     /**
-     * Right after calling {@link #isAcceptable(Object, org.jgroups.Address)}, this method is called to see whether
+     * Right after calling {@link #isAcceptable(Object, bboss.org.jgroups.Address)}, this method is called to see whether
      * we are done with the request and can unblock the caller
      * @return False if the request is done, otherwise true
      */

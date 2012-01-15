@@ -256,7 +256,7 @@ public class RPCAddress implements Externalizable, Comparable<RPCAddress>, Clone
      * 
      * @return 0 for equality, value less than 0 if smaller, greater than 0 if
      *         greater.
-     * @deprecated Use {@link #compareTo(org.jgroups.Address)} instead
+     * @deprecated Use {@link #compareTo(bboss.org.jgroups.Address)} instead
      */
     public final int compare(RPCAddress other)
     {

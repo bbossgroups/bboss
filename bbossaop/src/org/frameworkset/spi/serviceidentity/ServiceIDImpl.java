@@ -32,8 +32,8 @@ import org.frameworkset.spi.remote.http.HttpServer;
 import org.frameworkset.spi.remote.mina.server.MinaRPCServer;
 import org.frameworkset.spi.remote.restful.RestfulServiceManager;
 import org.frameworkset.spi.remote.rmi.RMIServer;
-import org.jgroups.Address;
-import org.jgroups.blocks.GroupRequest;
+import bboss.org.jgroups.Address;
+import bboss.org.jgroups.blocks.GroupRequest;
 
 /**
  * <p>Title: ServiceIDImpl.java</p> 

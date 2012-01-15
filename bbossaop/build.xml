@@ -99,7 +99,7 @@
 			<fileset dir="src-rmi/" includes="rmi.server.policy" />
 		</copy>
 		<copy todir="${classes-bboss-aop}">
-			<fileset dir="resources" includes="jg-protocol-ids.xml jg-magic-map.xml" />
+			<fileset dir="resources" includes="bboss-protocol-ids.xml bboss-magic-map.xml" />
 		</copy>
 		
 		<copy todir="${classes-bboss-aop}">
@@ -237,7 +237,7 @@
 
 	<target name="jar-bboss-aop-jgroups" depends="compile-bboss-aop" description="generate the bboss-aop-jgroups library jgroups.jar">
 		<echo>Generate the bboss-aop-jgroups library jgroups.jar ...</echo>
-		<jar jarfile="${distrib}/jgroups.jar" basedir="${classes-bboss-aop}" includes="org/jgroups/**/* jg-protocol-ids.xml jg-magic-map.xml">
+		<jar jarfile="${distrib}/jgroups.jar" basedir="${classes-bboss-aop}" includes="bboss/org/jgroups/**/* bboss-protocol-ids.xml bboss-magic-map.xml">
 			<manifest>
 
 				<attribute name="Implementation-Version" value="${impl.version}" />
@@ -248,9 +248,9 @@
 				<attribute name="Compile-User" value="${username}" />
 			</manifest>
 		</jar>
-		<delete dir="${classes-bboss-aop}/org/jgroups/" />
-		<delete file="${classes-bboss-aop}/jg-protocol-ids.xml" />
-		<delete file="${classes-bboss-aop}/jg-magic-map.xml" />
+		<delete dir="${classes-bboss-aop}/bboss/org/jgroups/" />
+		<delete file="${classes-bboss-aop}/bboss-protocol-ids.xml" />
+		<delete file="${classes-bboss-aop}/bboss-magic-map.xml" />
 	</target>
 	<target name="copy-resource" description="copy resource files">
 		<echo>copy resource files ...</echo>

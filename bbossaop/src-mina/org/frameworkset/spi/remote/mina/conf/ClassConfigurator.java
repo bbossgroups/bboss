@@ -19,11 +19,11 @@ import org.frameworkset.spi.remote.Util;
  * This class will be replaced with the class that read info
  * from the magic number configurator that reads info from the xml file.
  * The name and the relative path of the magic number map file can be specified
- * as value of the property <code>org.jgroups.conf.magicNumberFile</code>.
+ * as value of the property <code>bboss.org.jgroups.conf.magicNumberFile</code>.
  * It must be relative to one of the classpath elements, to allow the
  * classloader to locate the file. If a value is not specified,
  * <code>MagicNumberReader.MAGIC_NUMBER_FILE</code> is used, which defaults
- * to "jg-magic-map.xml".
+ * to "bboss-magic-map.xml".
  *
  * @author Filip Hanik
  * @author Bela Ban
@@ -60,7 +60,7 @@ public class ClassConfigurator {
 
             // PropertyPermission not granted if running in an untrusted environment with JNLP.
             try {
-                String mnfile=Util.getProperty(new String[]{Global.MAGIC_NUMBER_FILE, "org.jgroups.conf.magicNumberFile"},
+                String mnfile=Util.getProperty(new String[]{Global.MAGIC_NUMBER_FILE, "bboss.org.jgroups.conf.magicNumberFile"},
                                                null, null, false, null);
                 if(mnfile != null) {
                     if(log.isDebugEnabled()) log.debug("Using " + mnfile + " as magic number file");

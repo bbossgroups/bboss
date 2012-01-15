@@ -119,11 +119,32 @@ more details see my blog [http://blog.csdn.net/yin_bp]
 todo list:
 运行aop/ioc的最小依赖包整理
 #######update function list since bbossgroups-3.4 begin###########
+o 为了和避免和官方jgroups包冲突，将bboss中的jgroups包路径全部由org.jgroups改为bboss.org.jgroups
+jg-magic-map.xml文件名称改为bboss-magic-map.xml
+jg-protocol-ids.xml文件名称改为bboss-protocol-ids.xml
+
+为了避免不必要的麻烦，jgroups.jar包名称暂时没有改，如果存在包名称冲突用户可根据实际情况进行修改名称（一般不需要修改）
+
+o 改进ioc依赖注入机制，支持循环依赖注入功能（之前得版本不支持循环依赖注入），并且支持任何层面的对象引用，引用的定义为：
+
+refid格式：                                                                                      含义
+1.attr:serviceid                             根据服务标识引用容器服务组件 
+2.attr:serviceid[0]                          根据服务标识及数组下标引用容器服务组件对应的下标为0对应的元素（容器服务组件类型为list，set，array三种类型）
+3.attr:serviceid[key]                        根据服务标识及map key引用容器服务组件对应的索引为key对应的元素（容器服务组件类型为map类型）
+4.attr:serviceid{0}                          根据服务标识及构造函数参数位置下标引用容器服务组件对应的下标为0对应的构造函数参数（容器服务组件为构造函数注入）
+5.attr:serviceid->innerattributename         根据服务标识及服务组件的属性名称引用容器服务组件属性值 
+6.attr:serviceid->innerattributename[0]      根据服务标识及服务属性名称以及属性数组下标引用容器服务组件属性中对应的下标为0对应的元素（容器服务组件类型为list，set，array三种类型）
+7.attr:serviceid->innerattributename[key]    根据服务标识及服务属性名称以及map key引用容器服务组件属性对应的索引为key对应的元素（容器服务组件类型为map类型）
+8.attr:serviceid->innerattributename{0}      根据服务标识及服务属性名称对应属性的造函数参数位置下标引用容器服务组件对应的下标为0对应的构造函数参数（容器服务组件为构造函数注入）
+
+其中属性的引用是不限制层级的
+
 o 统一将rpc协议序列化机制切换到bboss的序列化机制
 已经完成切换的协议：
-http，webservice，netty，rmi，mina
+http，webservice，netty，rmi，mina,jms
 未完成的协议：
-jms，jgroups
+jgroups 
+因此采用jgroups协议时，所有的参数数据都要实现序列化接口，其他协议则不需要
 o 改进http协议和webservice rpc协议性能，改进反射机制
 o ioc属性注入中相应的属性不再需要set方法
 o 引进最新的bboss soa序列化机制，对于static，final，transient类型的属性不进行序列化，对于添加了@ExcludeField的注解不序列化
@@ -1168,17 +1189,17 @@ rest风格地址中节点对应的物理地址的协议可以是aop框架目前提供的协议中的任何一种：j
 rest风格地址后面带的认证参数将被忽略。
 
 
-o org.jgroups.protocols.pbcast.STREAMING_STATE_TRANSFER升级到2.9
+o bboss.org.jgroups.protocols.pbcast.STREAMING_STATE_TRANSFER升级到2.9
 FIXED for https://jira.jboss.org/jira/browse/JGRP-1136
 o 以下类升级到2.9
-org.jgroups.protocols.UNICAST
-org.jgroups.stack.AckReceiverWindow
-org.jgroups.stack.AckSenderWindow
+bboss.org.jgroups.protocols.UNICAST
+bboss.org.jgroups.stack.AckReceiverWindow
+bboss.org.jgroups.stack.AckSenderWindow
 FIXED for https://jira.jboss.org/jira/browse/JGRP-1122
 
 o 以下类升级到2.9
-org.jgroups.protocols.pbcast.NAKACK
-org.jgroups.stack.NakReceiverWindow
+bboss.org.jgroups.protocols.pbcast.NAKACK
+bboss.org.jgroups.stack.NakReceiverWindow
 
 FIXED for 
 https://jira.jboss.org/jira/browse/JGRP-1104

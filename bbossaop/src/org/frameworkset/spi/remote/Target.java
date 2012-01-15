@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
-import org.jgroups.Address;
+import bboss.org.jgroups.Address;
 
 /**
  * 

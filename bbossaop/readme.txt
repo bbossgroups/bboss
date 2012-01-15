@@ -75,7 +75,7 @@ bbossaop->bboss-util [frameworkset-util.jar]
 ---------------------------------
 o 发布包名---bboss-aop.jar src test src-log        
     包含内容：
-  classes下的com包，org包，jg-magic-map.xml
+  classes下的com包，org包，bboss-magic-map.xml
 
 o 发布包名---bboss-ws.jar src-cxf
 
@@ -229,17 +229,17 @@ rest风格地址中节点对应的物理地址的协议可以是aop框架目前提供的协议中的任何一种：j
 rest风格地址后面带的认证参数将被忽略。
 
 
-o org.jgroups.protocols.pbcast.STREAMING_STATE_TRANSFER升级到2.9
+o bboss.org.jgroups.protocols.pbcast.STREAMING_STATE_TRANSFER升级到2.9
 FIXED for https://jira.jboss.org/jira/browse/JGRP-1136
 o 以下类升级到2.9
-org.jgroups.protocols.UNICAST
-org.jgroups.stack.AckReceiverWindow
-org.jgroups.stack.AckSenderWindow
+bboss.org.jgroups.protocols.UNICAST
+bboss.org.jgroups.stack.AckReceiverWindow
+bboss.org.jgroups.stack.AckSenderWindow
 FIXED for https://jira.jboss.org/jira/browse/JGRP-1122
 
 o 以下类升级到2.9
-org.jgroups.protocols.pbcast.NAKACK
-org.jgroups.stack.NakReceiverWindow
+bboss.org.jgroups.protocols.pbcast.NAKACK
+bboss.org.jgroups.stack.NakReceiverWindow
 
 FIXED for 
 https://jira.jboss.org/jira/browse/JGRP-1104

@@ -38,12 +38,12 @@ import org.frameworkset.spi.remote.mina.server.MinaRPCServer;
 import org.frameworkset.spi.remote.rmi.RMIServer;
 import org.frameworkset.spi.serviceidentity.ServiceIDImpl;
 import org.frameworkset.spi.serviceidentity.TargetImpl;
-import org.jgroups.Address;
-import org.jgroups.blocks.GroupRequest;
-import org.jgroups.blocks.RpcDispatcher;
-import org.jgroups.stack.IpAddress;
-import org.jgroups.util.Rsp;
-import org.jgroups.util.RspList;
+import bboss.org.jgroups.Address;
+import bboss.org.jgroups.blocks.GroupRequest;
+import bboss.org.jgroups.blocks.RpcDispatcher;
+import bboss.org.jgroups.stack.IpAddress;
+import bboss.org.jgroups.util.Rsp;
+import bboss.org.jgroups.util.RspList;
 
 /**
  * 
