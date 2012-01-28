@@ -40,7 +40,6 @@ import com.frameworkset.spi.assemble.BeanInstanceException;
 import com.frameworkset.spi.assemble.CurrentlyInCreationException;
 import com.frameworkset.util.NoSupportTypeCastException;
 import com.frameworkset.util.ValueObjectUtil;
-import com.thoughtworks.xstream.converters.basic.UUIDConverter;
 
 /**
  * <p>
