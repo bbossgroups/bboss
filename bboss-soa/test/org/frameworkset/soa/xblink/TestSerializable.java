@@ -865,8 +865,7 @@ public class TestSerializable
 			ho.writeObject(test1);   
 			byte[] cs = os.toByteArray();   
 			e = System.currentTimeMillis();
-//			System.out.println("bboss:"+xml.getBytes().length + ",times:" + (e - s));
-//			oldObjectToByteBuffer(test1) ;
+
 			System.out.println("hessian:"+cs.length+ ",times:" + (e - s));
 			s = System.currentTimeMillis();
 			ByteArrayInputStream is = new ByteArrayInputStream(cs);   
@@ -874,10 +873,6 @@ public class TestSerializable
 			 test1_ =  (Test1) hi.readObject();   
 			 e = System.currentTimeMillis();
 				System.out.println("hessian de times:" + (e - s));
-//			test1_ =  (Test1)oldObjectFromByteBuffer(cs, 0, cs.length);
-			System.out.println();
-			
-			
 			
 			//≤‚ ‘”√¿˝Ω· ¯
 			
@@ -888,10 +883,6 @@ public class TestSerializable
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
-		
-		
 	}
 	@Test
 	public void test1()
