@@ -41,6 +41,8 @@ import org.frameworkset.spi.BaseApplicationContext;
 import org.frameworkset.spi.DefaultApplicationContext;
 import org.junit.Test;
 
+import com.caucho.hessian.io.HessianInput;
+import com.caucho.hessian.io.HessianOutput;
 import com.frameworkset.util.FileUtil;
 import com.thoughtworks.xstream.XStream;
 
@@ -191,6 +193,7 @@ public class TestSerializable
 		test3.setTest2(test2);
 		
 		byte[] cs = oldObjectToByteBuffer(test1) ;
+		System.out.println("java:"+cs.length);
 		
 		Test1 test1_ =  (Test1)oldObjectFromByteBuffer(cs, 0, cs.length);
 		System.out.println();
@@ -217,7 +220,7 @@ public class TestSerializable
 		StringWriter wt = new StringWriter(); 
 		objectMapper.writeValue(wt, test1);
 		String ss = wt.toString();
-		
+		System.out.println("json:"+ss.getBytes().length);
 		Test1 test1_ =  objectMapper.readValue(new StringReader(ss), Test1.class);
 		System.out.println();
 		
@@ -237,6 +240,7 @@ public class TestSerializable
 		
 //		byte[] cs = oldObjectToByteBuffer(test1) ;
 		String ss = xStream.toXML(test1);
+		System.out.println("xstream:"+ss.getBytes().length);
 		Test1 test1_ =  (Test1)xStream.fromXML(ss);
 		System.out.println();
 		
@@ -255,6 +259,7 @@ public class TestSerializable
 		test1.setTest3(test3);
 		test3.setTest2(test2);
 		String ss = ObjectSerializable.toXML(test1);
+		System.out.println("bboss:"+ss.getBytes().length);
 		Test1 test1_ =  (Test1)ObjectSerializable.toBean(ss,Test1.class);
 		
 		
@@ -430,9 +435,11 @@ public class TestSerializable
 			
 			
 			System.out.println(xml);
+			System.out.println("bboss:"+xml.getBytes().length);
 			Person person = ObjectSerializable.toBean(xml, Person.class);
 			
 			String xmlXstream = xStream.toXML(joe);
+			System.out.println("xmlXstream:"+xmlXstream.getBytes().length);
 			Person p = (Person)xStream.fromXML(xmlXstream);
 			System.out.println(xmlXstream);
 			
@@ -484,6 +491,78 @@ public class TestSerializable
 			convertXStreamXMLToBean(100,xmlXstream);
 			convertXStreamXMLToBean(1000,xmlXstream);
 			convertXStreamXMLToBean(10000,xmlXstream);
+			
+			//测试用例结束
+			
+			
+		}
+		catch (Exception e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	@Test
+	public void testLength()
+	{
+		PhoneNumber phone = new PhoneNumber();
+		phone.setCode(123);
+		phone.setNumber("1234-456");
+
+		PhoneNumber fax = new PhoneNumber();
+		fax.setCode(123);
+		fax.setNumber("<aaaa>9999-999</bbbb>");
+
+	   Set dataSet = new TreeSet();
+	   dataSet.add("aa");
+	   dataSet.add("bb");
+	   
+	   List dataList = new ArrayList();
+	   dataList.add("aa");
+	   dataList.add("bb");
+	   
+	   Map dataMap = new HashMap();
+	   dataMap.put("aa","aavalue");
+	   dataMap.put("bb","bbvalue");
+	   
+	   String[] dataArray = new String[]{"aa","bb"};
+	   String[][] datadoubleArray = new String[][]{{"aaa","bbb"},{"cccc","dddd"}};
+		
+		Person joe = new Person();
+		joe.setFirstname("Joe");
+		joe.setDataDoubleArray(datadoubleArray);
+//		joe.setLastname("Walnes");
+		//用来验证bboss和Xstream是否会按照null值传递，也就是说lastname有默认值"ssss"
+		//这样我们手动把lastname设置为null，理论上来说反序列化后joe中的lastname应该是null而不是默认值"ssss"
+		joe.setBirthdate(new Date());
+		Date[] updates = new Date[]{new Date(),new Date()};
+		joe.setUpdatedate(updates);
+		joe.setLastname(null);
+		joe.setPhone(phone);
+		joe.setFax(fax);
+		joe.setDataArray(dataArray);
+		joe.setDataList(dataList);
+		joe.setDataMap(dataMap);
+		joe.setDataSet(dataSet);
+		EnumData sex = EnumData.M;
+		joe.setSex(sex);
+		
+		
+		
+		try
+		{
+			//预热bboss和xstream
+			String xml = ObjectSerializable.toXML(joe);
+			
+			
+			System.out.println(xml);
+			System.out.println("bboss:"+xml.getBytes().length);
+			Person person = ObjectSerializable.toBean(xml, Person.class);
+			
+			String xmlXstream = xStream.toXML(joe);
+			System.out.println("xmlXstream:"+xmlXstream.getBytes().length);
 			
 			//测试用例结束
 			
@@ -669,6 +748,151 @@ public class TestSerializable
 		
 	}
 	
+	@Test
+	public void testXMLTest1Len()
+	{
+		
+		Test1 test1 = new Test1();
+		Test2 test2 = new Test2();
+		Test3 test3 = new Test3();
+		test2.setTest1(test1);
+		test1.setTest2(test2);
+		test1.setTest3(test3);
+		test3.setTest2(test2);
+		
+	
+		
+		
+		try
+		{
+			String bigcontent = FileUtil.getFileContent(new File("D:\\workspace\\bbossgroups-3.2\\bboss-soa\\test\\org\\frameworkset\\soa\\testxstream.xml"), "GBK");
+			//预热bboss和xstream
+			test1.setXmlvalue(bigcontent);
+			String xml = ObjectSerializable.toXML(test1);
+			System.out.println("bboss:"+xml.getBytes().length);
+			Test1 test1_ =  (Test1)ObjectSerializable.toBean(xml,Test1.class);
+			String xmlXstream = xStream.toXML(test1);
+			Test1 p = (Test1)xStream.fromXML(xmlXstream);
+			System.out.println("xmlXstream:"+xmlXstream.getBytes().length);
+			
+			
+			
+			//测试用例结束
+			
+			
+		}
+		catch (Exception e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	@Test
+	public void testDupJAVASerializable() throws Exception
+	{
+		Test1 test1 = new Test1();
+		Test2 test2 = new Test2();
+		Test3 test3 = new Test3();
+		test2.setTest1(test1);
+		test1.setTest2(test2);
+		test1.setTest3(test3);
+		test3.setTest2(test2);
+		
+	
+		
+		
+		try
+		{
+			String bigcontent = FileUtil.getFileContent(new File("D:\\workspace\\bbossgroups-3.2\\bboss-soa\\test\\org\\frameworkset\\soa\\testxstream.xml"), "GBK");
+			//预热bboss和xstream
+			test1.setXmlvalue(bigcontent);
+			String xml = ObjectSerializable.toXML(test1);
+			System.out.println("bboss:"+xml.getBytes().length);
+			Test1 test1_ =  (Test1)ObjectSerializable.toBean(xml,Test1.class);
+			byte[] cs = oldObjectToByteBuffer(test1) ;
+			System.out.println("java:"+cs.length);
+			long s = System.currentTimeMillis();
+			test1_ =  (Test1)oldObjectFromByteBuffer(cs, 0, cs.length);
+			 long e = System.currentTimeMillis();
+				System.out.println("java de times:" + (e - s));
+			
+			
+			
+			//测试用例结束
+			
+			
+		}
+		catch (Exception e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
+		
+	}
+	
+	
+	@Test
+	public void testHessianSerializable() throws Exception
+	{
+		Test1 test1 = new Test1();
+		Test2 test2 = new Test2();
+		Test3 test3 = new Test3();
+		test2.setTest1(test1);
+		test1.setTest2(test2);
+		test1.setTest3(test3);
+		test3.setTest2(test2);
+		try
+		{
+			String bigcontent = FileUtil.getFileContent(new File("D:\\workspace\\bbossgroups-3.2\\bboss-soa\\test\\org\\frameworkset\\soa\\testxstream.xml"), "GBK");
+			//预热bboss和xstream
+			test1.setXmlvalue(bigcontent);
+			long s = System.currentTimeMillis();
+			String xml = ObjectSerializable.toXML(test1);
+			long e = System.currentTimeMillis();
+			System.out.println("bboss:"+xml.getBytes().length + ",times:" + (e - s));
+			s = System.currentTimeMillis();
+			Test1 test1_ =  (Test1)ObjectSerializable.toBean(xml,Test1.class);
+			e = System.currentTimeMillis();
+			System.out.println("bboss de times:" + (e - s));
+			s = System.currentTimeMillis();
+			ByteArrayOutputStream os = new ByteArrayOutputStream();   
+			HessianOutput ho = new HessianOutput(os);   
+			ho.writeObject(test1);   
+			byte[] cs = os.toByteArray();   
+			e = System.currentTimeMillis();
+//			System.out.println("bboss:"+xml.getBytes().length + ",times:" + (e - s));
+//			oldObjectToByteBuffer(test1) ;
+			System.out.println("hessian:"+cs.length+ ",times:" + (e - s));
+			s = System.currentTimeMillis();
+			ByteArrayInputStream is = new ByteArrayInputStream(cs);   
+			 HessianInput hi = new HessianInput(is);   
+			 test1_ =  (Test1) hi.readObject();   
+			 e = System.currentTimeMillis();
+				System.out.println("hessian de times:" + (e - s));
+//			test1_ =  (Test1)oldObjectFromByteBuffer(cs, 0, cs.length);
+			System.out.println();
+			
+			
+			
+			//测试用例结束
+			
+			
+		}
+		catch (Exception e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
+		
+	}
 	@Test
 	public void test1()
 	{
