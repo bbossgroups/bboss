@@ -31,7 +31,7 @@ public class SimpleApiTest {
 		String sql ="insert into xxxx(f1,f2,f3) values(#[f1],#[f2],#[f2])"; 
 	
 		List beans = null;
-		SQLExecutor.insert("bspf",sql,beans);
+		SQLExecutor.insert(sql,beans);
 		
 		sql ="insert into xxxx(f1,f2,f3) values(#[f1],#[f2],#[f2])"; 
 		

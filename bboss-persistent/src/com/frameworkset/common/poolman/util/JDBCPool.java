@@ -22,6 +22,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -29,7 +30,6 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import javax.naming.Context;
-import javax.naming.InitialContext;
 import javax.naming.Name;
 import javax.naming.NameNotFoundException;
 import javax.naming.NamingException;
@@ -41,7 +41,8 @@ import com.frameworkset.common.poolman.DBUtil;
 import com.frameworkset.common.poolman.NestedSQLException;
 import com.frameworkset.common.poolman.PoolManConstants;
 import com.frameworkset.common.poolman.interceptor.InterceptorInf;
-import com.frameworkset.common.poolman.management.PoolManConfiguration;
+import com.frameworkset.common.poolman.jndi.ContextUtil;
+import com.frameworkset.common.poolman.jndi.DummyContextFactory;
 import com.frameworkset.common.poolman.sql.ColumnMetaData;
 import com.frameworkset.common.poolman.sql.ForeignKeyMetaData;
 import com.frameworkset.common.poolman.sql.PoolManDataSource;
@@ -67,6 +68,7 @@ public class JDBCPool {
 	public static String TABLE_TYPE_TABLE = "TABLE";
 	public static String TABLE_TYPE_ALL = "ALL";
 	private DataSource datasource;
+	
 
 //	protected JDBCPoolMetaData metadata;
 
@@ -84,68 +86,124 @@ public class JDBCPool {
 	 */
 	private long stopTime;
 
-	public static Context ctx = null;
-	private static boolean initcontexted = false;
+	private  Context ctx = null;
+	private  Context dummyctx = null;
+	private  boolean initcontexted = false;
+	
+	private static Context buildContext(JDBCPoolMetaData meta)
+	{
+		Context ctx = null;
+		if(meta != null)
+		{
+			if((meta.getJNDIName() == null || meta.getJNDIName().equals("")) 
+					&& (meta.getExternaljndiName() == null || meta.getExternaljndiName().equals("")))
+			{
+				return null;
+			}
+		}
+		if(meta != null && meta.getJndiclass() != null)
+		{
+			Hashtable environment = new Hashtable();
+			environment.put(Context.INITIAL_CONTEXT_FACTORY, meta.getJndiclass());
+			if(meta.getJndiurl() != null)
+				environment.put(Context.PROVIDER_URL, meta.getJndiurl());
+			if(meta.getJndiuser() != null)
+				environment.put(Context.SECURITY_PRINCIPAL
+						, meta.getJndiuser());
+			if(meta.getJndipassword() != null)
+				environment.put(Context.SECURITY_CREDENTIALS, meta.getJndipassword());
+			ctx = ContextUtil.finaContext(environment, JDBCPool.class.getClassLoader());
+		}
+		else
+		{
+			ctx = ContextUtil.finaContext(null, JDBCPool.class.getClassLoader());
+		}
+		return ctx;
+	}
 
-	private static void initctx()
+	private  void initctx(JDBCPoolMetaData meta)
 	{
 		if(ctx == null)
 		{
-			try {
-				// org.apache.naming.java.URLContextFactory s;
-	
-				// System.setProperty(Context.INITIAL_CONTEXT_FACTORY,"com.frameworkset.common.poolman.management.JndiDataSourceFactory");
-				if (PoolManConfiguration.jndi_principal != null) {
-					Hashtable environment = new Hashtable();
-					// environment.put("java.naming.factory.initial",
-					// "weblogic.jndi.WLInitialContextFactory");
-					// environment.put("java.naming.provider.url",
-					// "t3://localhost:7001");
-	
-//					environment.put("java.naming.security.principal",
-//							PoolManConfiguration.jndi_principal);
-//					environment.put("java.naming.security.credentials",
-//							PoolManConfiguration.jndi_credentials);
-					ctx = new InitialContext(environment);
-				} else {
-					ctx = new InitialContext();
-				}
-				testJNDI();
-	
-			} catch (NamingException e) {
-				
+//			try {
+//				// org.apache.naming.java.URLContextFactory s;
+//	
+//				// System.setProperty(Context.INITIAL_CONTEXT_FACTORY,"com.frameworkset.common.poolman.management.JndiDataSourceFactory");
+//				if (PoolManConfiguration.jndi_principal != null) {
+//					Hashtable environment = new Hashtable();
+//					// environment.put("java.naming.factory.initial",
+//					// "weblogic.jndi.WLInitialContextFactory");
+//					// environment.put("java.naming.provider.url",
+//					// "t3://localhost:7001");
+//	
+////					environment.put("java.naming.security.principal",
+////							PoolManConfiguration.jndi_principal);
+////					environment.put("java.naming.security.credentials",
+////							PoolManConfiguration.jndi_credentials);
+//					ctx = new InitialContext(environment);
+//				} else {
+//					ctx = new InitialContext();
+//				}
+//				testJNDI();
+//	
+//			} catch (NamingException e) {
+//				
+//				try {
+//					System
+//							.setProperty(Context.INITIAL_CONTEXT_FACTORY,
+//									"com.frameworkset.common.poolman.jndi.DummyContextFactory");
+//					ctx = new InitialContext();
+//				} catch (NamingException e1) {
+//					// TODO Auto-generated catch block
+//					e1.printStackTrace();
+//				}
+//			}
+//			catch (Exception e) {
+//				
+//				try {
+//					System
+//							.setProperty(Context.INITIAL_CONTEXT_FACTORY,
+//									"com.frameworkset.common.poolman.jndi.DummyContextFactory");
+//					ctx = new InitialContext();
+//				} catch (NamingException e1) {
+//					// TODO Auto-generated catch block
+//					e1.printStackTrace();
+//				}
+//			}
+//			if(meta != null && meta.getJndiclass() != null)
+//			{
+//				Hashtable environment = new Hashtable();
+//				environment.put(Context.INITIAL_CONTEXT_FACTORY, meta.getJndiclass());
+//				if(meta.getJndiurl() != null)
+//					environment.put(Context.PROVIDER_URL, meta.getJndiurl());
+//				if(meta.getJndiuser() != null)
+//					environment.put(Context.SECURITY_PRINCIPAL
+//							, meta.getJndiuser());
+//				if(meta.getJndipassword() != null)
+//					environment.put(Context.SECURITY_CREDENTIALS, meta.getJndipassword());
+//				ctx = ContextUtil.finaContext(environment, JDBCPool.class.getClassLoader());
+//			}
+//			else
+//			{
+//				ctx = ContextUtil.finaContext(null, JDBCPool.class.getClassLoader());
+//			}
+			ctx = buildContext(meta);
+			if(meta.getJNDIName() != null && !meta.getJNDIName().equals(""))
+			{
 				try {
-					System
-							.setProperty(Context.INITIAL_CONTEXT_FACTORY,
-									"com.frameworkset.common.poolman.jndi.DummyContextFactory");
-					ctx = new InitialContext();
-				} catch (NamingException e1) {
+					this.dummyctx = (new DummyContextFactory()).getInitialContext(null);
+				} catch (NamingException e) {
 					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					e.printStackTrace();
 				}
 			}
-			catch (Exception e) {
 				
-				try {
-					System
-							.setProperty(Context.INITIAL_CONTEXT_FACTORY,
-									"com.frameworkset.common.poolman.jndi.DummyContextFactory");
-					ctx = new InitialContext();
-				} catch (NamingException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-			}
 			initcontexted = true;
 			
 		}
 	}
 
-	public static void testJNDI() throws NamingException {
-		ctx.rebind("test", "1");
-		ctx.unbind("test");
-
-	}
+	
 
 	private Hashtable preparedStatementPool;
 
@@ -493,7 +551,7 @@ public class JDBCPool {
 				// Context ctx = new InitialContext();
 				if(this.externalDBName == null)
 				{
-					DataSource _datasource = find(this.info.getExternaljndiName());
+					DataSource _datasource = find(this.info.getExternaljndiName(),info);
 					if (_datasource != null) {
 						if (this.info.getJNDIName() != null
 								&& !this.info.getJNDIName().equals("")) {
@@ -544,22 +602,109 @@ public class JDBCPool {
 		//			
 
 	}
-
-	public static DataSource find(String jndiName) throws NamingException {
-		try {
-			// Context ctx = new InitialContext();
-			initctx();
-			DataSource _datasource = (DataSource) ctx.lookup(jndiName);
+	
+	public DataSource find_(String jndiName) throws NamingException
+	{
+		
+		if(ctx == null && this.dummyctx == null)
+			return null;
+		DataSource _datasource = ctx != null ?(DataSource) ctx.lookup(jndiName):null;
+		if(_datasource != null)
 			return _datasource;
-		} catch (NamingException e) {
-
-			throw e;
-			// e.printStackTrace();
-		}
+		if(dummyctx != null)
+			_datasource = (DataSource) dummyctx.lookup(jndiName);
+		return _datasource;
 	}
 
-	public JDBCPool(JDBCPoolMetaData metad) {
+	public static DataSource find(String jndiName,JDBCPoolMetaData meta) throws NamingException {
+		
+			// Context ctx = new InitialContext();
+			Map pools = SQLManager.getInstance().getPools();
+			if(pools != null && pools.size() > 0)
+			{
+				Iterator its = pools.entrySet().iterator();
+				String name = ContextUtil.handleJndiName(jndiName);
+				Context ctx = null;
+				while(its.hasNext())
+				{
+					try
+					{
+						Map.Entry ent = (Map.Entry)its.next();
+						JDBCPool pool = (JDBCPool)ent.getValue();
+						
+						DataSource _datasource = (DataSource) pool.find_(name);
+						if(_datasource != null)
+							return _datasource;
+					} catch (NamingException e) {
+	
+						continue;
+						// e.printStackTrace();
+					}
+				}
+				return null;
+			}
+			else
+			{
+				try {
+					Context ctx = JDBCPool.buildContext(meta);
+					DataSource _datasource = (DataSource) ctx.lookup(ContextUtil.handleJndiName(jndiName));
+					return _datasource;
+				} catch (NamingException e) {
 
+					throw e;
+					// e.printStackTrace();
+				}
+			}
+		
+	}
+	
+	
+	public static DataSource find(String jndiName) throws NamingException {
+		
+		// Context ctx = new InitialContext();
+		Map pools = SQLManager.getInstance().getPools();
+		if(pools != null && pools.size() > 0)
+		{
+			Iterator its = pools.entrySet().iterator();
+			String name = ContextUtil.handleJndiName(jndiName);
+			Context ctx = null;
+			while(its.hasNext())
+			{
+				try
+				{
+					Map.Entry ent = (Map.Entry)its.next();
+					JDBCPool pool = (JDBCPool)ent.getValue();
+					ctx = pool.ctx;
+					if(ctx == null)
+						continue;
+					DataSource _datasource = (DataSource) ctx.lookup(name);
+					if(_datasource != null)
+						return _datasource;
+				} catch (NamingException e) {
+
+					continue;
+					// e.printStackTrace();
+				}
+			}
+			return null;
+		}
+		else
+		{
+			try {
+				Context ctx = JDBCPool.buildContext(null);
+				DataSource _datasource = (DataSource) ctx.lookup(ContextUtil.handleJndiName(jndiName));
+				return _datasource;
+			} catch (NamingException e) {
+
+				throw e;
+				// e.printStackTrace();
+			}
+		}
+	
+}
+
+	public JDBCPool(JDBCPoolMetaData metad) {
+		initctx(metad);
 		
 		this.deployedDataSource = false;
 		this.info = metad;
@@ -1729,29 +1874,20 @@ public class JDBCPool {
 		try {
 			log.debug("Bind the DataSource view of this pool to JNDI");
 			String jndiName = this.info.getJNDIName();
-			log.info("Intial Context : " + jndiName);
-			System.out.println("Intial Context : " + jndiName);
-			// Context ctx = new InitialContext();
-			if (!exist(ctx, jndiName)) {
-				bind(ctx, jndiName, this.datasource);
+			
+			
+			if (!exist(ctx, jndiName,info)) {
+				bind(ctx, jndiName, this.datasource,info);
 			}
 
 			this.deployedDataSource = true;
 
 			log.info("DataSource bound to JNDI under name[" + jndiName + "]");
-			System.out.println("DataSource bound to JNDI under name["
-					+ jndiName + "]");
+			
 
 		} catch (Exception e) {
-			e.printStackTrace();
-			log
-					.error("PoolMan JDBCPool unable to locate a default JNDI provider, "
-							+ "DataSource is still available -- for example, get the DataSource via "
-							+ "PoolMan.findDataSource("
-							+ this.info.getDbname()
-							+ ") --  "
-							+ "but is not available through JNDI: "
-							+ e.getMessage());
+			
+			log.error(e);
 		}
 	}
 
@@ -1767,12 +1903,13 @@ public class JDBCPool {
 	 *            the object to be bound
 	 * @throws NamingException
 	 */
-	public static void bind(Context ctx, String name, Object val)
+	public void bind(Context ctx, String name, Object val,JDBCPoolMetaData meta)
 			throws NamingException {
 		try {
-			initctx();
-			log.debug("binding: " + name);
+			initctx(meta);			
 			ctx.rebind(name, val);
+			log.debug("binding datasource  to container context  with: " + name);
+			
 		} catch (Exception e) {
 			Name n = ctx.getNameParser("").parse(name);
 			while (n.size() > 1) {
@@ -1797,7 +1934,12 @@ public class JDBCPool {
 			log.debug("binding: " + n);
 			ctx.rebind(n, val);
 		}
-		log.debug("Bound name: " + name);
+		finally
+		{
+			this.dummyctx.rebind(name, val);
+			log.debug("Bound name " + name + " to dummy context.");
+		}
+		
 	}
 
 	/**
@@ -1807,10 +1949,11 @@ public class JDBCPool {
 	 * @param jndiName
 	 * @return
 	 */
-	private boolean exist(Context ctx, String jndiName) {
+	private boolean exist(Context ctx, String jndiName,JDBCPoolMetaData meta) {
 		try {
-			initctx();
-			DataSource datasource = (DataSource) ctx.lookup(jndiName);
+			initctx(meta);
+			ctx = this.ctx;
+			DataSource datasource = (DataSource) find_(ContextUtil.handleJndiName(jndiName));
 			if (datasource == null) {
 
 				return false;

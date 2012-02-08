@@ -2239,7 +2239,7 @@ public abstract class HandlerUtils {
 
 	}
 	
-	private static boolean isMultipartFile(Class type)
+	public static boolean isMultipartFile(Class type)
 	{
 		return MultipartFile.class.isAssignableFrom(type) || MultipartFile[].class.isAssignableFrom(type);
 	}

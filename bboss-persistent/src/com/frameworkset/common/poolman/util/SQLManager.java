@@ -177,7 +177,7 @@ public class SQLManager extends PoolManager implements Serializable{
                 return jpool;
 
         }
-        String errorString = "pool with jndiname[" + name + "] does not exist. " + "Please check your " + PoolManConstants.XML_CONFIG_FILE;
+        String errorString = "pool with jndiname[" + name + "] does not exist or this is container datasource.  Please check your " + PoolManConstants.XML_CONFIG_FILE;
         log.warn(errorString);
 //        return null;
         return null;
@@ -244,6 +244,11 @@ public class SQLManager extends PoolManager implements Serializable{
                                    " encountered a ClassLoader linkage problem. " +
                                    " Please email yin-bp@163.com **");
         }
+    }
+    
+    public Map getPools()
+    {
+    	return this.pools;
     }
 
     /**

@@ -85,6 +85,9 @@ public class DBFactory
             DBMSSQL.class);
         adapters.put("com.microsoft.sqlserver.jdbc.SQLServerDriver",
                      DBMSSQL.class);
+        adapters.put("net.sourceforge.jtds.jdbc.Driver",
+                DBMSSQL.class);
+        
         
         adapters.put("com.jnetdirect.jsql.JSQLDriver", DBMSSQL.class);
         adapters.put("org.gjt.mm.mysql.Driver", DBMM.class);

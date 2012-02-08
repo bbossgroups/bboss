@@ -23,6 +23,8 @@ bboss-persistent<-cas server [frameworkset-pool.jar]
 to do list:
 无
 #######update function list since bbossgroups-3.4 begin###########
+o 解决连接池中无法查找到tomcat 6和weblogic 容器数据源的问题
+o 解决sql server jtd驱动无法正确找到DB adaptor的问题
 o PreparedDBUtil增加public void setBlob(int i, String x) throws SQLException 方法，用来直接向blob类型字段中存入字符串
 o 修改TestLob测试用例，用来演示SQLExecutor/ConfigSQLExecutor组件向Blob和clob中插入字符串的方法：
 	@Test

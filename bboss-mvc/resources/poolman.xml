@@ -8,7 +8,7 @@
 
     <dbname>cim</dbname>
     <loadmetadata>false</loadmetadata>
-    <jndiName>jdbc/derby-ds</jndiName>
+   
     <driver>org.apache.derby.jdbc.EmbeddedDriver</driver>
      <url>jdbc:derby:D:/workspace/bbossgroups-3.5/bboss-mvc/database/cimdb</url> 
     <username></username>   
@@ -108,7 +108,13 @@
 
   </datasource>
 
-  
+   <datasource external="true">
+
+    <dbname>datareuse</dbname>
+    <externaljndiName>LiferayPool</externaljndiName>
+	<showsql>false</showsql>
+
+  </datasource>
   
  
 </poolman>

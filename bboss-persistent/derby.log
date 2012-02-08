@@ -1,6 +1,6 @@
 ----------------------------------------------------------------
-2011-12-27 06:41:57.437 GMT:
- Booting Derby version The Apache Software Foundation - Apache Derby - 10.6.1.0 - (938214): instance a816c00e-0134-7e41-0402-0000000aa2a0 
-on database directory D:\workspace\bbossgroups-3.5\bboss-mvc\database\cimdb   with class loader sun.misc.Launcher$AppClassLoader@7259da
+2012-02-08 13:13:18.828 GMT:
+ Booting Derby version The Apache Software Foundation - Apache Derby - 10.6.1.0 - (938214): instance a816c00e-0135-5d18-c45f-0000001104c0 
+on database directory D:\workspace\bbossgroups-3.5\bboss-mvc\database\cimdb   with class loader sun.misc.Launcher$AppClassLoader@82ba41
 
 Database Class Loader started - derby.database.classpath=''

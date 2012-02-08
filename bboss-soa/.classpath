@@ -14,5 +14,6 @@
 	<classpathentry kind="lib" path="testlib/jackson-all-1.6.2.jar"/>
 	<classpathentry kind="lib" path="testlib/jakarta-oro-2.0.8.jar"/>
 	<classpathentry kind="lib" path="testlib/frameworkset-pool.jar"/>
+	<classpathentry kind="lib" path="testlib/hessian-4.0.7.jar"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>

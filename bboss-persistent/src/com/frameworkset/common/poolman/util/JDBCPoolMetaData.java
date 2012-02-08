@@ -84,6 +84,19 @@ public class JDBCPoolMetaData implements Serializable{
     /* DATASOURCE ATTRIBUTES */
     private String JNDIName;
     private String interceptor = "com.frameworkset.common.poolman.interceptor.DummyInterceptor";
+    
+    private String jndiclass;
+    private String jndiuser;
+    private String jndipassword;
+    public String getJndiclass() {
+		return jndiclass;
+	}
+
+	public void setJndiclass(String jndiclass) {
+		this.jndiclass = jndiclass;
+	}
+
+	private String jndiurl;
     /**
 	 * @return the interceptor
 	 */
@@ -754,6 +767,10 @@ public class JDBCPoolMetaData implements Serializable{
 			setDriverName(extenalInfo.getDriverName());
 			
 			setDriverVersion(extenalInfo.getDriverVersion());
+			this.setJndiclass(extenalInfo.getJndiclass());
+			this.setJndiurl(extenalInfo.getJndiurl());
+			this.setJndiuser(extenalInfo.getJndiuser());
+			this.setJndipassword(extenalInfo.getJndipassword());
 			this.setUsepool(extenalInfo.isUsepool());
 		}
 	}
@@ -826,5 +843,29 @@ public class JDBCPoolMetaData implements Serializable{
 	 */
 	public void setUsepool(boolean usepool) {
 		this.usepool = usepool;
+	}
+
+	public String getJndiurl() {
+		return jndiurl;
+	}
+
+	public void setJndiurl(String jndiurl) {
+		this.jndiurl = jndiurl;
+	}
+
+	public String getJndiuser() {
+		return jndiuser;
+	}
+
+	public void setJndiuser(String jndiuser) {
+		this.jndiuser = jndiuser;
+	}
+
+	public String getJndipassword() {
+		return jndipassword;
+	}
+
+	public void setJndipassword(String jndipassword) {
+		this.jndipassword = jndipassword;
 	}
 }

@@ -1412,11 +1412,11 @@ public class SQLUtil implements Serializable{
         
         public static DataSource getDataSourceByJNDI(String jndiname) throws NamingException
         {
-            DataSource datasource = JDBCPool.find(jndiname);
+            DataSource datasource = JDBCPool.find(jndiname,null);
             if(datasource == null)
             {
                 SQLUtil.getSQLManager().getPool(null);
-                return JDBCPool.find(jndiname);
+                return JDBCPool.find(jndiname,null);
             }
             else
                 return datasource;

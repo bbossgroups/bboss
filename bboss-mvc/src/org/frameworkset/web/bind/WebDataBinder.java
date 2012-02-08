@@ -34,6 +34,7 @@ import org.frameworkset.util.ClassUtil.ClassInfo;
 import org.frameworkset.util.ClassUtil.PropertieDescription;
 import org.frameworkset.util.annotations.MethodData;
 import org.frameworkset.web.multipart.MultipartFile;
+import org.frameworkset.web.multipart.MultipartHttpServletRequest;
 import org.frameworkset.web.servlet.ModelMap;
 import org.frameworkset.web.servlet.handler.HandlerUtils;
 
@@ -199,7 +200,7 @@ public class WebDataBinder  {//extends DataBinder {
 					 handlerMethod, model,this.getTarget(),messageConverters);
 		else
 		{
-			Object target = this.getTarget();
+//			Object target = this.getTarget();
 			createTransferObject( request, response, pageContext,
 					 handlerMethod, model,this.getTarget(),messageConverters);
 //			BeanInfo beanInfo = null;
@@ -418,6 +419,50 @@ public class WebDataBinder  {//extends DataBinder {
 		holder.isCollection =  this.isCollection();
 		List<PropertieDescription> attributes = beanInfo.getPropertyDescriptors();		
 		Object mapKey = null;
+		if(holder.isCollection)//集合类型（List,Map）,如果没有数据记录，则直接返回，修复没有数据情况下返回一条空记录的问题
+		{
+			boolean hasdata = false;
+			PropertieDescription property = null;
+			for(int in = 0; attributes != null && in < attributes.size(); in ++)
+			{
+				property = attributes.get(in);
+				if(!property.canwrite())
+				{
+					continue;
+				}
+				
+				String name = property.getName();
+				
+				Class type = property.getPropertyType();
+				if(!HandlerUtils.isMultipartFile(type))
+				{
+					String[] values = request.getParameterValues(name);
+					
+					if(values != null && values.length > 0)
+					{
+						hasdata = true;
+						break;
+					}
+				}
+				else
+				{
+					if(request instanceof MultipartHttpServletRequest)
+					{
+						MultipartFile[] values = ((MultipartHttpServletRequest)request).getFiles(name);
+						if(values != null && values.length > 0)
+						{
+							hasdata = true;
+							break;
+						}
+					}
+					
+				}
+				
+			}
+			if(!hasdata)
+				return;
+			
+		}
 		do
 		{
 			if(holder.getPosition() > 0)
