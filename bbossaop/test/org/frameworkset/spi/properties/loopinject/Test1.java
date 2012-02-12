@@ -43,6 +43,8 @@ public class Test1 implements java.io.Serializable{
 	List testlist;
 	Test1[] testarray;
 	String xmlvalue ;
+	Test1 innerelement;
+	Test1[] testarraybasic;
 
 	public Test2 getTest2() {
 		return test2;

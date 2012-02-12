@@ -796,6 +796,12 @@ public class ServiceProviderManager {
 	        		{
 	        			pro = (Pro)pro.getConstructorParams().get(index.getInt_idx());
 	        		}
+	        		
+        			if(pro.isRefereced() && indexs.size() > 1)
+        			{
+        				pro = getInnerPropertyBean(pro.getRefidLink(),pro.getRefid());
+        			}
+	        		
 	        	}
 	        }
 	        else// Ù–‘“˝”√

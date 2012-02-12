@@ -21,15 +21,29 @@
 			<list componentType="bean">
 			 <!--List类型属性testlist的第一个值是对外层组件test1引用-->
 				<property refid="attr:test1"/>
+			 <!--List类型属性testlist的第二个值是对外层组件test1的数组属性testarraybasic的引用-->
+				<property refid="attr:test1->testarraybasic"/>
 			</list>
 		</property>
 		<property name="testarray" >
 			<array componentType="org.frameworkset.spi.properties.loopinject.Test1">
 				<!--数组类型属性testlist的第一个值是对外层组件test1引用-->
 				<property refid="attr:test1"/>
+				<!--数组类型属性testlist的第二个值是对外层组件test1的数组属性testarraybasic的第二个值得引用-->
+				<property refid="attr:test1->testarraybasic[1]"/>
 			</array>
 		</property>
-		
+		<!--数组类型属性testarraybasic用来验证属性多维引用功能-->
+		<property name="testarraybasic" >
+			<array componentType="org.frameworkset.spi.properties.loopinject.Test1">
+				<property class="org.frameworkset.spi.properties.loopinject.Test1"/>
+				<property class="org.frameworkset.spi.properties.loopinject.Test1"/>
+				<property class="org.frameworkset.spi.properties.loopinject.Test1"/>
+				<property class="org.frameworkset.spi.properties.loopinject.Test1"/>
+			</array>
+		</property>
+		<!--属性innerelement用来验证属性多维引用功能-->
+		<property name="innerelement" refid="attr:test1->testlist[1][0]"/>
 		<property name="test6" refid="attr:test1->testarray[0]->test2"/>
 		<property name="test7" refid="attr:test1->testlist[0]->test2"/>
 		<property name="test8" refid="attr:test1->testmap[test4]->test2"/>
