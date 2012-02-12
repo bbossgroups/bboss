@@ -16,7 +16,7 @@
 	<classpathentry kind="lib" path="lib/httpcore-nio-4.0.1.jar"/>
 	<classpathentry kind="lib" path="lib/asm-3.1.jar"/>
 	<classpathentry kind="lib" path="lib/commons-logging-1.0.4.jar"/>
-	<classpathentry kind="lib" path="lib/frameworkset-pool.jar"/>
+	<classpathentry kind="lib" path="lib/frameworkset-pool.jar" sourcepath="/bboss-persistent"/>
 	<classpathentry kind="lib" path="lib/commons-lang-2.1.jar"/>
 	<classpathentry kind="lib" path="lib/icu4j-4_2_1.jar"/>
 	<classpathentry kind="lib" path="lib/bboss-soa.jar" sourcepath="/bboss-soa"/>

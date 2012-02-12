@@ -16,6 +16,10 @@
 
 package org.frameworkset.spi.remote.serializable;
 
+import java.io.ByteArrayInputStream;
+
+import com.caucho.hessian.io.HessianInput;
+
 /**
  * <p>Title: HessianDecoder.java</p> 
  * <p>Description: </p>
@@ -28,8 +32,15 @@ package org.frameworkset.spi.remote.serializable;
 public class HessianDecoder   implements Decoder{
 
 	public Object decoder(Object msg) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		if(msg == null)
+			return null;
+		if(msg instanceof byte[]){
+			ByteArrayInputStream is = new ByteArrayInputStream((byte[])msg);   
+			 HessianInput hi = new HessianInput(is);   
+			 return hi.readObject();   
+		}
+		else
+			return msg;
 	}
 
 }

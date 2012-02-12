@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding='gb2312'?>
+<!-- 
+bboss-utf8.xml
+描述：swfupload多文件上传示例
+-->
+<properties>
+    <property 
+     name="/utf8/*.page" 
+     path:main-success="/utf8/generalAjaxFormGet"
+     			
+     class="org.frameworkset.web.utf8.FormSubmintController" >
+     
+    </property>
+   
+</properties>

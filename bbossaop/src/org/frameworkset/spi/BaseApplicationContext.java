@@ -1421,7 +1421,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 
 		if (providerManagerInfo == null) {
 			if(defaultValue == null)
-				throw new SPIException("容器["+this.getConfigfile()+"]没有定义名称为[" + name + "]的bean对象。");
+				throw new SPIException("容器["+this.getConfigfile()+"]没有定义名称为[" + strrefid + "]的bean对象。");
 			else
 				return defaultValue;
 		}

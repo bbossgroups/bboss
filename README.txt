@@ -30,7 +30,7 @@ bbossgroups-3.5 release futures
 更多的信息如下：  
     
 一.bboss aop框架更新
-o 修复IOC机制中三层及三层以上循环依赖注入引用关系无法正常解析的漏洞
+
 o 为了和避免和官方jgroups包冲突，将bboss中的jgroups包路径全部由org.jgroups改为bboss.org.jgroups
 jg-magic-map.xml文件名称改为bboss-magic-map.xml
 jg-protocol-ids.xml文件名称改为bboss-protocol-ids.xml

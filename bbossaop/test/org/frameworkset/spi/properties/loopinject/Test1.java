@@ -32,9 +32,18 @@ public class Test1 implements java.io.Serializable{
 	Test3 test3;
 	Test1 test4;
 	Test1 test5;
+	Test2 test6;
+	Test2 test7;
+	Test2 test8;
+	Test1 test9;
+	Test1 test10;
+	Test1 test11;
+	Test2 test12;
 	Map testmap;
 	List testlist;
 	Test1[] testarray;
+	String xmlvalue ;
+
 	public Test2 getTest2() {
 		return test2;
 	}
@@ -76,6 +85,12 @@ public class Test1 implements java.io.Serializable{
 	}
 	public void setTest5(Test1 test5) {
 		this.test5 = test5;
+	}
+	public String getXmlvalue() {
+		return xmlvalue;
+	}
+	public void setXmlvalue(String xmlvalue) {
+		this.xmlvalue = xmlvalue;
 	}
 	
 

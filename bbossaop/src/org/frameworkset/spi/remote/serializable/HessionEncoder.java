@@ -16,7 +16,9 @@
 
 package org.frameworkset.spi.remote.serializable;
 
-import org.frameworkset.soa.ObjectSerializable;
+import java.io.ByteArrayOutputStream;
+
+import com.caucho.hessian.io.HessianOutput;
 
 /**
  * <p>Title: HessionEncoder.java</p> 
@@ -30,7 +32,13 @@ import org.frameworkset.soa.ObjectSerializable;
 public class HessionEncoder  implements Encoder{
 
 	public Object encoder(Object msg) throws Exception {
-		return ObjectSerializable.toXML(msg);
+		if(msg == null)
+			return null;
+		ByteArrayOutputStream os = new ByteArrayOutputStream();   
+		HessianOutput ho = new HessianOutput(os);   
+		ho.writeObject(msg);   
+		byte[] cs = os.toByteArray();   
+		return cs;
 	}
 
 }

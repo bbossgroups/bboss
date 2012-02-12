@@ -22,6 +22,7 @@ public class CharacterEncodingHttpServletRequestWrapper
         super(request);
         this.newecoding = encoding != null ? encoding:system_encoding;
         this.oldEncoding = request.getCharacterEncoding();
+        parameters = new HashMap<String,String[]>();
         
     }
 
@@ -62,16 +63,6 @@ public class CharacterEncodingHttpServletRequestWrapper
         try {
         	
             
-            if(parameters == null)
-        	{
-        		synchronized(lock)
-        		{
-        			if(parameters == null)
-        			{
-        				parameters = new HashMap<String,String[]>();
-        			}
-        		}
-        	}
             String[] tempArray = parameters.get(name);
             if(tempArray != null)
             	return tempArray; 

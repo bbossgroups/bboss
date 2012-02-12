@@ -732,7 +732,10 @@ public class ServiceProviderManager {
     {	
 //    	String name = refid.getName();
     	Pro pro = null;
-    	
+//    	if(strrefid != null && strrefid.equals("test1->testarray[0]->test2"))
+//    	{
+//    		System.out.println();
+//    	}
     	boolean firsted = true;
     	Pro temp = null;
     	do
@@ -744,7 +747,10 @@ public class ServiceProviderManager {
     		}
     		else
     		{
-    			
+    			if(pro.isRefereced())//如果任然是一个引用关系，继续查找到实际的对象pro，然后在继续下一个环节的引用关系查找
+    			{
+    				pro = getInnerPropertyBean(pro.getRefidLink(),pro.getRefid());
+    			}
     			List<Pro> refs = pro.getReferences();
     			pro = null;
     			for(int i = 0; i < refs.size(); i ++)

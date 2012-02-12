@@ -7,10 +7,6 @@
 		<property name="test3" class="org.frameworkset.soa.xblink.Test3">
 			<property name="test2" refid="attr:test1->test2" />
 		</property>
-		
-		
 		<property name="test4" refid="attr:test1"/>
-		
-		
 	</property>
 </properties>

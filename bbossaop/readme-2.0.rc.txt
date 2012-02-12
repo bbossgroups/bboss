@@ -119,6 +119,7 @@ more details see my blog [http://blog.csdn.net/yin_bp]
 todo list:
 运行aop/ioc的最小依赖包整理
 #######update function list since bbossgroups-3.4 begin###########
+o 修复IOC机制中三层及三层以上循环依赖注入引用关系无法正常解析的漏洞
 o 为了和避免和官方jgroups包冲突，将bboss中的jgroups包路径全部由org.jgroups改为bboss.org.jgroups
 jg-magic-map.xml文件名称改为bboss-magic-map.xml
 jg-protocol-ids.xml文件名称改为bboss-protocol-ids.xml
@@ -142,7 +143,7 @@ refid格式：                                                                     
 o 统一将rpc协议序列化机制切换到bboss的序列化机制
 已经完成切换的协议：
 http，webservice，netty，rmi，mina,jms
-未完成的协议：
+未完成的协议(暂不做改进)：
 jgroups 
 因此采用jgroups协议时，所有的参数数据都要实现序列化接口，其他协议则不需要
 o 改进http协议和webservice rpc协议性能，改进反射机制

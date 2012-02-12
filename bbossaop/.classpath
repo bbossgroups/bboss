@@ -14,7 +14,7 @@
 	<classpathentry kind="src" path="src-tlq"/>
 	<classpathentry kind="src" path="src-rmi"/>
 	<classpathentry kind="src" path="src-http"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/Sun JDK 1.6.0_13"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/mina/test/jcl-over-slf4j-1.5.2.jar"/>
 	<classpathentry kind="lib" path="lib/mina/test/slf4j-api-1.5.2-sources.jar"/>
 	<classpathentry kind="lib" path="lib/mina/test/slf4j-api-1.5.2.jar"/>
@@ -102,5 +102,6 @@
 	<classpathentry kind="lib" path="lib/jms/activemq-pool-5.5.0.jar"/>
 	<classpathentry kind="lib" path="lib/jms/activemq-web-5.5.0.jar"/>
 	<classpathentry kind="lib" path="lib/jms/activemq-xmpp-5.5.0.jar"/>
+	<classpathentry kind="lib" path="lib/netty/hessian-4.0.7.jar"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>

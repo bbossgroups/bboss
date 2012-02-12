@@ -861,6 +861,7 @@ bbossaop<-cas server [bboss-aop.jar]
 			<delete dir="${bbossevent}/distrib" />
 			
 			<delete dir="${bboss-mvc}/distrib" />
+		    <delete dir="${bboss-soa}/distrib" />
 
 			<delete includeemptydirs="true">
 				<fileset dir="${bboss-persistent}/classes" includes="**/*" />
@@ -884,6 +885,10 @@ bbossaop<-cas server [bboss-aop.jar]
 			<delete includeemptydirs="true">
 				<fileset dir="${bboss-mvc}/WebRoot/WEB-INF/classes" includes="**/*" />
 			</delete>
+		
+		<delete includeemptydirs="true">
+						<fileset dir="${bboss-soa}/classes" includes="**/*" />
+					</delete>
 			
 		</target>
 		<target name="copyversions">
