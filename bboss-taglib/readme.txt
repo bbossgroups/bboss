@@ -10,6 +10,8 @@ bboss-taglib<-bbossaop [frameworkset.jar]
 bboss-taglib<-cas server [frameworkset.jar]
 bboss-taglib<-portal [frameworkset.jar]
 bboss-taglib<-bboss-ws [frameworkset.jar]
+#######update function list since bbossgroups-3.5 begin###########
+o BaseTag和BaseBodyTag实现TryCatchFinally接口
 
 #######update function list since bbossgroups-3.4 begin###########
 ------2011-12-11------------

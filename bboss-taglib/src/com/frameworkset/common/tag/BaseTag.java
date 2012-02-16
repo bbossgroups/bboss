@@ -56,7 +56,7 @@ import com.frameworkset.common.tag.contextmenu.ContextMenu;
  * 子类必须实现抽象方法generateContent(),提供各自产生输出内容的机制
  * @author biaoping.yin
  */
-public abstract class BaseTag extends TagSupport 
+public abstract class BaseTag extends TagSupport implements javax.servlet.jsp.tagext.TryCatchFinally
 {
 	private final static Logger log = Logger.getLogger(BaseTag.class);
 	protected transient HttpServletRequest request = null;
@@ -217,4 +217,16 @@ public abstract class BaseTag extends TagSupport
     public void write(OutputStream output)
     {    	
     }
+
+	@Override
+	public void doCatch(Throwable arg0) throws Throwable {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void doFinally() {
+		// TODO Auto-generated method stub
+		
+	}
 }

@@ -48,7 +48,7 @@ import javax.servlet.jsp.tagext.BodyTagSupport;
  * 子类必须实现抽象方法generateContent(),提供各自产生输出内容的机制
  * @author biaoping.yin
  */
-public abstract class BaseBodyTag extends BodyTagSupport
+public abstract class BaseBodyTag extends BodyTagSupport  implements javax.servlet.jsp.tagext.TryCatchFinally
 {
 	protected transient HttpServletRequest request = null;
 	protected transient JspWriter out =  null;
@@ -160,4 +160,15 @@ public abstract class BaseBodyTag extends BodyTagSupport
      * @param output
      */
     //public  void write(OutputStream output){}
+	@Override
+	public void doCatch(Throwable arg0) throws Throwable {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void doFinally() {
+		// TODO Auto-generated method stub
+		
+	}
 }
