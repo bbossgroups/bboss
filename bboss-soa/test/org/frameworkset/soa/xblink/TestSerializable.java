@@ -281,6 +281,22 @@ public class TestSerializable
 		
 	}
 	
+	@Test
+	public void testFullBBossSerializable1() throws Exception
+	{
+		//加载配置文件，构建一个组件容器对象
+		BaseApplicationContext context = DefaultApplicationContext.getApplicationContext("org/frameworkset/soa/xblink/testcontainref.xml");
+		//获取组件test1
+		Test1 test1 = context.getTBeanObject("test1",  Test1.class);
+		//重新将组件序列化为xml串
+		String ss = ObjectSerializable.toXML(test1);
+		//将xml串ss转换为对象test_
+		Test1 test1_ =  (Test1)ObjectSerializable.toBean(ss,Test1.class);
+		System.out.println();
+		
+		
+	}
+	
 	 /**
      * Serializes/Streams an object into a byte buffer.
      * The object has to implement interface Serializable or Externalizable

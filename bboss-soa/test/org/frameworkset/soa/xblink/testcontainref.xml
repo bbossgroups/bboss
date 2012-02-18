@@ -28,7 +28,7 @@
 			</list>
 		</property>
 		<property name="testarray" >
-			<array componentType="org.frameworkset.spi.properties.loopinject.Test1">
+			<array componentType="org.frameworkset.soa.xblink.Test1">
 				<!--数组类型属性testlist的第一个值是对外层组件test1引用-->
 				<property refid="attr:test1"/>
 				<!--数组类型属性testlist的第二个值是对外层组件test1的数组属性testarraybasic的第二个值得引用-->
@@ -37,11 +37,11 @@
 		</property>
 		<!--数组类型属性testarraybasic用来验证属性多维引用功能-->
 		<property name="testarraybasic" >
-			<array componentType="org.frameworkset.spi.properties.loopinject.Test1">
-				<property class="org.frameworkset.spi.properties.loopinject.Test1"/>
-				<property class="org.frameworkset.spi.properties.loopinject.Test1"/>
-				<property class="org.frameworkset.spi.properties.loopinject.Test1"/>
-				<property class="org.frameworkset.spi.properties.loopinject.Test1"/>
+			<array componentType="org.frameworkset.soa.xblink.Test1">
+				<property class="org.frameworkset.soa.xblink.Test1"/>
+				<property class="org.frameworkset.soa.xblink.Test1"/>
+				<property class="org.frameworkset.soa.xblink.Test1"/>
+				<property class="org.frameworkset.soa.xblink.Test1"/>
 			</array>
 		</property>
 		<!--属性innerelement用来验证属性多维引用功能-->
