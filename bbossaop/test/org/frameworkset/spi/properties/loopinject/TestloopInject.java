@@ -59,7 +59,7 @@ public class TestloopInject
 	@Test
 	public void selfinjectloop()
 	{
-		BaseApplicationContext context = ApplicationContext.getApplicationContext("org/frameworkset/spi/properties/loopinject/test.xml"); 
+		BaseApplicationContext context = DefaultApplicationContext.getApplicationContext("org/frameworkset/spi/properties/loopinject/test.xml"); 
 		Test1 a = (Test1)context.getBeanObject("test1");
 		System.out.println(a);
 	}
