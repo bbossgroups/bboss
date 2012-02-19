@@ -4,7 +4,7 @@ String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/index.htm";
 %><html>
 	<head>
-		<title>bbossgroups - 打造中国自主开发框架品牌</title>
+		<title>欢迎您访问BbossGroups官方网站 - 打造中国自主开发框架品牌</title>
 		  <meta name="description" content="Bboss mvc DEMO列表 资源和文档下载 bboss-mvc框架体系结构图 bboss-mvc框架请求处理流程图 web.xml部署文件部分说明了mvc框架的涉及web.xml主要配置内容 框架更新记录" />
     <meta name="keywords" content="Bboss mvc DEMO列表,资源和文档下载 体系结构图, bboss-mvc框架请求处理流程图,web.xml部署文件,框架更新记录" />
    <pg:config enablecontextmenu="false"/>
@@ -38,9 +38,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <ul id="top">
         <li id="logo"><a href="index.htm"><img alt="BbossGroups Logo" src="${pageContext.request.contextPath}/jsp/logo.png" height="50"></a></li>
         <li id="runtime">
-            Bboss MVC Version demos
+            
             <span class="uptime"></span>
-        </li><li id="title">/aop - mvc - persistent - taglib</li>
+        </li><li id="title">aop/ioc - mvc - persistent - taglib - rpc - soa - devent</li>
     </ul>
 </div>
 
@@ -48,13 +48,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			
     	<div class="embeddedBlockContainer">
 			<h1>
-				MVC Demo站点使用指南(建议在火狐浏览器下浏览)：
+				bboss官方站点使用指南(建议在火狐浏览器下浏览)：
 			</h1>
 			<div class="shadow">
 				<div class="info">
 					<p>
 						<ul>		
-									
+						<li><a href="#1000">bbossgroups特色</a></li>			
 						<li><a href="#3720">Demo列表中包含每个demo的基本信息，包括名称，访问地址清单，功能说明，查看demo相关的所有代码和配置文件明细</a></li>
 						<li>点击demo的访问地址清单中的地址可以访问demo的实际功能并进行相应的操作</li>
 						<li>点击代码明细，可以进入查看demo的实现代码，包括控制器类，业务组件，java对象，mvc配置文件，jsp页面</li>
@@ -70,10 +70,33 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					</p>
 				</div>
 			</div>
-			
-			
-		
-        
+			<h1>
+				bbossgroups特色<a href="#top" name="1000">
+			<img border="0" src="<%=request.getContextPath() %>/jsp/top.gif" alt="Top">
+			</a>
+			</h1>
+			<div class="shadow">
+				<div class="info">
+					<p>
+						<ul>		
+									
+						<li>1.aop/ioc 业务组件管理、依赖注入、声明式事务等</li>
+						<li>2.rpc(http/netty/mina/jms/webservice/rmi/jgroups/restful) 安全高效</li>						
+						<li>3.persistent framework,multi db transaction</li>
+						<li>4.mvc/restful</li>
+						<li>5.jsp taglib 分页、树、列表、抽屉式、逻辑标签</li>
+						<li>6.distribute event framework</li>
+						<li>7.xml-bean serializable</li>
+						 <li>8.cxf webservice 服务发布和客户端代理</li>
+						  <li>9.quartz任务管理</li>
+						  <li>10.cluster with jgroups</li>
+						  <li>11.jms 开发套件</li>
+						  <li>12.完备的框架监控体系</li>
+						
+						</ul>
+					</p>
+				</div>
+			</div>
 			
 
 			<div class="blockContainer">
@@ -294,7 +317,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						<li><a href="http://www.iteye.com/wiki/bbossgroups/3089-bbossgroups-aop-rmi" target="_blank">bbossgroups rmi组件服务发布和rmi客服端获取方法</a></li>
 						<li><a href="http://yin-bp.iteye.com/blog/1026245" target="_blank">bbossgroups mvc demo部署方法</a></li>
 						<li><a href="http://yin-bp.iteye.com/" target="_blank">bbossgroups官方博客</a></li>
-						<li><a href="http://www.wiixii.com/" target="_blank">wiixii（维系希望）</a></li>
+						
 						
 						
 						</ul>
