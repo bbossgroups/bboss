@@ -51,7 +51,7 @@
 		对应属性：timeBetweenEvictionRunsMillis
 		the amount of time (in milliseconds) to sleep between examining idle objects for eviction 
 	-->
-	<skimmerFrequency>10</skimmerFrequency>
+	<skimmerFrequency>120000</skimmerFrequency>
 	<!--对应于minEvictableIdleTimeMillis 属性：
 	minEvictableIdleTimeMillis the minimum number of milliseconds 
 	an object can sit idle in the pool before it is eligable for evcition
@@ -59,7 +59,7 @@
 	
 	空闲链接回收时间，空闲时间超过指定的值时，将被回收
 	-->
-	<connectionTimeout>60</connectionTimeout>
+	<connectionTimeout>240000</connectionTimeout>
 	<!--
 	numTestsPerEvictionRun 
 	the number of idle objects to 
@@ -108,13 +108,7 @@
 
   </datasource>
 
-   <datasource external="true">
 
-    <dbname>datareuse</dbname>
-    <externaljndiName>LiferayPool</externaljndiName>
-	<showsql>false</showsql>
-
-  </datasource>
   
  
 </poolman>
