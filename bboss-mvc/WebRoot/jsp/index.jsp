@@ -55,9 +55,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<p>
 						<ul>		
 						<li><a href="#1000">bbossgroups特色</a></li>			
-						<li><a href="#3720">Demo列表中包含每个demo的基本信息，包括名称，访问地址清单，功能说明，查看demo相关的所有代码和配置文件明细</a></li>
-						<li>点击demo的访问地址清单中的地址可以访问demo的实际功能并进行相应的操作</li>
-						<li>点击代码明细，可以进入查看demo的实现代码，包括控制器类，业务组件，java对象，mvc配置文件，jsp页面</li>
+						<li><a href="#3720">Demo列表中包含每个demo的基本信息，包括名称，访问地址清单，功能说明，查看demo相关的所有代码和配置文件明细</a>
+							<ul><li>点击demo的访问地址清单中的地址可以访问demo的实际功能并进行相应的操作</li>
+							<li>点击代码明细，可以进入查看demo的实现代码，包括控制器类，业务组件，java对象，mvc配置文件，jsp页面</li></ul>
+						</li>
 						<li><a href="#3721">bboss-mvc框架demo的部署部分介绍了如何下载和部署demo应用</a></li>
 						<li><a href="#3722">资源和文档下载</a></li>
 						<li><a href="#3723">bboss-mvc框架体系结构图</a></li>
@@ -65,7 +66,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						<li><a href="#3725">web.xml部署文件部分说明了mvc框架的涉及web.xml主要配置内容</a></li>						
 						
 						<li><a href="#3726">框架更新记录</a></li>
-						<li><a href="#3719">友情链接</a></li>	
+						
+						<li><a href="#3719">友情链接</a></li>
+						<li><a href="#1002">联系我们</a></li>		
 						</ul>
 					</p>
 				</div>
@@ -194,9 +197,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<p>
 						<div id="detail">
 		                    
-		                        <span class="value">在下面的列表内下载到bboss-mvc.war包和database压缩包，将bboss-mvc.war放入tomcat的webapps目录下，并解压database到本地磁盘，修改derby数据源路径，配置文件在bboss-mvc/resources
-		                        /poolman.xml中，将<url>jdbc:derby:D:/workspace/bbossgroups-3.1/bboss-mvc/database/cimdb</url>修改
-		                        为本地解压后的database路径便可。</span>
+		                        <span class="value">参考博客文章：<a href="http://yin-bp.iteye.com/blog/1026245" target="demodeploy">《bbossgroups mvc demo构建部署方法》</a> </span>
 		                </div>
 						
 					</p>
@@ -307,9 +308,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<h1>友情链接<a href="#top" name="3719">
 			<img border="0" src="<%=request.getContextPath() %>/jsp/top.gif" alt="Top">
 			</a></h1>
-			<p>
+			<div class="shadow">
+				<div class="info"><p>
 						<ul>			
-						<li><a href="https://sourceforge.net/projects/bboss/files/" target="_blank">bbossgroups源码工程sourceforge下载地址</a></li>			
+						<li><a href="https://sourceforge.net/projects/bboss/files/" target="_blank">bbossgroups源码工程sourceforge下载地址</a></li>
+						<li><a href="https://github.com/bbossgroups/bbossgroups-3.5" target="_blank">bbossgroups github托管地址</a></li>			
 						<li><a href="http://www.iteye.com/wiki/bbossgroups/3092-mvc-bboss-config" target="_blank">bbossgroups 开发系列文章之一 最佳实践</a> </li>
 						<li><a href="http://www.iteye.com/wiki/bbossgroups/3090-mvc-aop-bboss" target="_blank">搭建bboss mvc eclipse开发工程，编写第一个实例</a></li>
 						<li><a href="http://www.iteye.com/wiki/bbossgroups/3094-persistent" target="_blank">bbossgroups SQLExecutor组件api使用实例</a></li>
@@ -322,13 +325,32 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						
 						</ul>
 					</p>
+			</div>
+			</div>
+			</div>
 			
+			<div class="blockContainer">
+			<h1>联系我们<a href="#top" name="1002">
+			<img border="0" src="<%=request.getContextPath() %>/jsp/top.gif" alt="Top">
+			</a></h1>
+			<div class="shadow">
+				<div class="info"><p>
+				<div id="detail">	<b>QQ交流群：
+				21220580
+				166471282
+				166471103
+				154752521
+				3625720</b> </div>		
+			</p>
+			</div>
+			</div>
 			</div>
 			<h1>回到顶部<a href="#top" name="3727">
 			<img border="0" src="<%=request.getContextPath() %>/jsp/top.gif" alt="Top">
 			</a>
 			
 			</h1>
+					
 			
 	</body>
 	<script language="javascript">
