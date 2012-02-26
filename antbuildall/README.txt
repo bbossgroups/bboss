@@ -1,17 +1,10 @@
-release version : bbossgroups-3.5
-release date: 2012/02/11
+版本：bbossgroups-3.5 
+官网：http://www.bbossgroups.com 
+项目博客：http://yin-bp.iteye.com/ 
+Sourceforge站点：http://sourceforge.net/projects/bboss/files/ 
+Github站点：https://github.com/bbossgroups/bbossgroups-3.5 
 
-bboss group website:
-[url]http://www.bbossgroups.com[/url]
 
-bboss group project blog:
-[url]http://yin-bp.iteye.com/[/url]
-
-bboss group project sourceforge site url:
-[url]http://sourceforge.net/projects/bboss/files/[/url]
-
-bboss group project github source url:
-[url]https://github.com/bbossgroups/bbossgroups-3.5[/url]
 -----------------------------------------------------------------------------------------------
 
 bbossgroups-3.5 release futures

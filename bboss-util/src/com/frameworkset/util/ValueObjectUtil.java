@@ -2377,7 +2377,579 @@ public class ValueObjectUtil {
 //
 //	}
 
-	//	
+	/**
+	 * 对象比较功能，value1 > value2 返回1，value1 < value2 返回-1，value1 == value2 返回0
+	 * 比较之前首先将value2转换为value1的类型
+	 * 目前只支持数字和String，日期类型的比较，复杂类型不能使用改方法进行比较
+	 */
+	public static int typecompare(Object value1,Object value2)
+	{
+		if(value1 == null && value2 != null)
+			return -1;
+		if(value1 != null && value2 == null)
+			return 1;
+		if(value1 == null && value2 == null)
+			return 0;
+		Class vc1 = value1.getClass();
+
+		try
+		{
+			if (value1 instanceof String && value2 instanceof String)
+			{
+				return ((String)value1).compareTo((String)value2);
+			}
+			else if (value1 instanceof String )
+			{
+				return ((String)value1).compareTo(String.valueOf(value2));
+			}		
+			else if (vc1 == int.class || Integer.class.isAssignableFrom(vc1))
+			{
+				return intcompare(((Integer)value1).intValue(),value2);
+			}
+			else if(vc1 == long.class
+					|| Long.class.isAssignableFrom(vc1))
+				return longCompare(((Long)value1).longValue(),value2);
+			else if(vc1 == double.class
+					|| Double.class.isAssignableFrom(vc1))
+				return doubleCompare(((Double)value1).doubleValue(),value2);
+			else if(vc1 == float.class
+					|| Float.class.isAssignableFrom(vc1))
+				return floatCompare(((Float)value1).floatValue(),value2);
+			else if(vc1 == short.class
+					|| Short.class.isAssignableFrom(vc1))
+				return shortCompare(((Short)value1).shortValue(),value2);
+			else if(java.util.Date.class.isAssignableFrom(vc1))
+				return dateCompare((java.util.Date)value1,value2);
+			else if(value1 instanceof java.util.Date && value2 instanceof java.util.Date)
+				return ((java.util.Date)value1).compareTo(((java.util.Date)value2));
+		}
+		catch(Throwable e)
+		{
+			log.error("compare value1=" + value1 + ",value2=" + value2 + " failed,use default String compare rules instead.",e);
+			return String.valueOf(value1).compareTo(String.valueOf(value2));
+		}
+		
+		return String.valueOf(value1).compareTo(String.valueOf(value2));
+		
+	}
+	
+	
+	public static int intcompare(int value1,Object value2)
+	{
+		Class vc2 = value2.getClass();
+		if(String.class.isAssignableFrom(vc2))
+		{
+			int v2 = Integer.parseInt((String)value2);
+			if(value1 == v2)
+				return 0;
+			else if(value1 > v2)
+				return 1;
+			else	
+				return -1;
+		}
+		else if(Integer.class.isAssignableFrom(vc2))
+		{
+			int v2 = ((Integer)value2).intValue();
+			if(value1 == v2)
+				return 0;
+			else if(value1 > v2)
+				return 1;
+			else	
+				return -1;
+		}
+		else if(Long.class.isAssignableFrom(vc2))
+		{
+			long v2 = (Long)value2;
+			if(value1 == v2)
+				return 0;
+			else if(value1 > v2)
+				return 1;
+			else	
+				return -1;
+		}
+		else if(Double.class.isAssignableFrom(vc2))
+		{
+			double v2 = ((Double)value2).doubleValue();
+			if(value1 == v2)
+				return 0;
+			else if(value1 > v2)
+				return 1;
+			else	
+				return -1;
+		}
+		else if(Float.class.isAssignableFrom(vc2))
+		{
+			float v2 = ((Float)value2).floatValue();
+			if(value1 == v2)
+				return 0;
+			else if(value1 > v2)
+				return 1;
+			else	
+				return -1;
+		}
+		else if(Short.class.isAssignableFrom(vc2))
+		{
+			short v2 = ((Short)value2).shortValue();
+			if(value1 == v2)
+				return 0;
+			else if(value1 > v2)
+				return 1;
+			else	
+				return -1;
+		}
+		
+		else if(java.util.Date.class.isAssignableFrom(vc2))
+		{
+			long v2 = ((java.util.Date)value2).getTime();
+			if(value1 == v2)
+				return 0;
+			else if(value1 > v2)
+				return 1;
+			else	
+				return -1;
+		}
+		else
+		{
+			int v2 = Integer.parseInt((String)value2);
+			if(value1 == v2)
+				return 0;
+			else if(value1 > v2)
+				return 1;
+			else	
+				return -1;
+		}
+			
+		
+		
+	}
+	
+	public static int IntegerCompare(Integer value1,Object value2)
+	{
+		return intcompare(value1.intValue(),value2);
+	}
+	
+	public static int longCompare(long value1,Object value2)
+	{
+		Class vc2 = value2.getClass();
+		 if(String.class.isAssignableFrom(vc2))
+		{
+			long v2 = Long.parseLong((String)value2);
+			if(value1 == v2)
+				return 0;
+			else if(value1 > v2)
+				return 1;
+			else	
+				return -1;
+		}
+		 else if(Integer.class.isAssignableFrom(vc2))
+		{
+			int v2 = ((Integer)value2).intValue();
+			if(value1 == v2)
+				return 0;
+			else if(value1 > v2)
+				return 1;
+			else	
+				return -1;
+		}
+		else if(Long.class.isAssignableFrom(vc2))
+		{
+			long v2 = (Long)value2;
+			if(value1 == v2)
+				return 0;
+			else if(value1 > v2)
+				return 1;
+			else	
+				return -1;
+		}
+		else if(Double.class.isAssignableFrom(vc2))
+		{
+			double v2 = ((Double)value2).doubleValue();
+			if(value1 == v2)
+				return 0;
+			else if(value1 > v2)
+				return 1;
+			else	
+				return -1;
+		}
+		else if(Float.class.isAssignableFrom(vc2))
+		{
+			float v2 = ((Float)value2).floatValue();
+			if(value1 == v2)
+				return 0;
+			else if(value1 > v2)
+				return 1;
+			else	
+				return -1;
+		}
+		else if(Short.class.isAssignableFrom(vc2))
+		{
+			short v2 = ((Short)value2).shortValue();
+			if(value1 == v2)
+				return 0;
+			else if(value1 > v2)
+				return 1;
+			else	
+				return -1;
+		}
+		
+		else if(java.util.Date.class.isAssignableFrom(vc2))
+		{
+			long v2 = ((java.util.Date)value2).getTime();
+			if(value1 == v2)
+				return 0;
+			else if(value1 > v2)
+				return 1;
+			else	
+				return -1;
+		}
+		else
+		{
+			long v2 = Long.parseLong((String)value2);
+			if(value1 == v2)
+				return 0;
+			else if(value1 > v2)
+				return 1;
+			else	
+				return -1;
+		}
+	}
+	
+	public static int LongCompare(Long value1,Object value2)
+	{
+		return longCompare(value1.longValue(),value2);
+	}
+	
+	public static int doubleCompare(double value1,Object value2)
+	{
+		Class vc2 = value2.getClass();
+		if(String.class.isAssignableFrom(vc2))
+		{
+			double v2 = Double.parseDouble((String)value2);
+			if(value1 == v2)
+				return 0;
+			else if(value1 > v2)
+				return 1;
+			else	
+				return -1;
+		}
+		else if(Integer.class.isAssignableFrom(vc2))
+		{
+			int v2 = ((Integer)value2).intValue();
+			if(value1 == v2)
+				return 0;
+			else if(value1 > v2)
+				return 1;
+			else	
+				return -1;
+		}
+		else if(Long.class.isAssignableFrom(vc2))
+		{
+			long v2 = (Long)value2;
+			if(value1 == v2)
+				return 0;
+			else if(value1 > v2)
+				return 1;
+			else	
+				return -1;
+		}
+		else if(Double.class.isAssignableFrom(vc2))
+		{
+			double v2 = ((Double)value2).doubleValue();
+			if(value1 == v2)
+				return 0;
+			else if(value1 > v2)
+				return 1;
+			else	
+				return -1;
+		}
+		else if(Float.class.isAssignableFrom(vc2))
+		{
+			float v2 = ((Float)value2).floatValue();
+			if(value1 == v2)
+				return 0;
+			else if(value1 > v2)
+				return 1;
+			else	
+				return -1;
+		}
+		else if(Short.class.isAssignableFrom(vc2))
+		{
+			short v2 = ((Short)value2).shortValue();
+			if(value1 == v2)
+				return 0;
+			else if(value1 > v2)
+				return 1;
+			else	
+				return -1;
+		}
+		
+		else if(java.util.Date.class.isAssignableFrom(vc2))
+		{
+			long v2 = ((java.util.Date)value2).getTime();
+			if(value1 == v2)
+				return 0;
+			else if(value1 > v2)
+				return 1;
+			else	
+				return -1;
+		}
+		else
+		{
+			double v2 = Double.parseDouble((String)value2);
+			if(value1 == v2)
+				return 0;
+			else if(value1 > v2)
+				return 1;
+			else	
+				return -1;
+		}
+	}
+	
+	public static int DoubleCompare(Double value1,Object value2)
+	{
+		return doubleCompare(value1.doubleValue(),value2);
+	}
+	
+	public static int floatCompare(float value1,Object value2)
+	{
+		Class vc2 = value2.getClass();
+		if(String.class.isAssignableFrom(vc2))
+		{
+			float v2 = Float.parseFloat(String.valueOf(value2));
+			if(value1 == v2)
+				return 0;
+			else if(value1 > v2)
+				return 1;
+			else	
+				return -1;
+		}
+		else if(Integer.class.isAssignableFrom(vc2))
+		{
+			int v2 = ((Integer)value2).intValue();
+			if(value1 == v2)
+				return 0;
+			else if(value1 > v2)
+				return 1;
+			else	
+				return -1;
+		}
+		else if(Long.class.isAssignableFrom(vc2))
+		{
+			long v2 = (Long)value2;
+			if(value1 == v2)
+				return 0;
+			else if(value1 > v2)
+				return 1;
+			else	
+				return -1;
+		}
+		else if(Double.class.isAssignableFrom(vc2))
+		{
+			double v2 = ((Double)value2).doubleValue();
+			if(value1 == v2)
+				return 0;
+			else if(value1 > v2)
+				return 1;
+			else	
+				return -1;
+		}
+		else if(Float.class.isAssignableFrom(vc2))
+		{
+			float v2 = ((Float)value2).floatValue();
+			if(value1 == v2)
+				return 0;
+			else if(value1 > v2)
+				return 1;
+			else	
+				return -1;
+		}
+		else if(Short.class.isAssignableFrom(vc2))
+		{
+			short v2 = ((Short)value2).shortValue();
+			if(value1 == v2)
+				return 0;
+			else if(value1 > v2)
+				return 1;
+			else	
+				return -1;
+		}
+		
+		else if(java.util.Date.class.isAssignableFrom(vc2))
+		{
+			long v2 = ((java.util.Date)value2).getTime();
+			if(value1 == v2)
+				return 0;
+			else if(value1 > v2)
+				return 1;
+			else	
+				return -1;
+		}
+		else
+		{
+			float v2 = Float.parseFloat(String.valueOf(value2));
+			if(value1 == v2)
+				return 0;
+			else if(value1 > v2)
+				return 1;
+			else	
+				return -1;
+		}
+	}
+	
+	public static int FloatCompare(Float value1,Object value2)
+	{
+		return floatCompare(value1.floatValue(),value2);
+	}
+	
+	public static int shortCompare(short value1,Object value2)
+	{
+		Class vc2 = value2.getClass();
+		if(String.class.isAssignableFrom(vc2))
+		{
+			short v2 = Short.parseShort(String.valueOf(value2));
+			if(value1 == v2)
+				return 0;
+			else if(value1 > v2)
+				return 1;
+			else	
+				return -1;
+		}
+		else if(Integer.class.isAssignableFrom(vc2))
+		{
+			int v2 = ((Integer)value2).intValue();
+			if(value1 == v2)
+				return 0;
+			else if(value1 > v2)
+				return 1;
+			else	
+				return -1;
+		}
+		else if(Long.class.isAssignableFrom(vc2))
+		{
+			long v2 = (Long)value2;
+			if(value1 == v2)
+				return 0;
+			else if(value1 > v2)
+				return 1;
+			else	
+				return -1;
+		}
+		else if(Double.class.isAssignableFrom(vc2))
+		{
+			double v2 = ((Double)value2).doubleValue();
+			if(value1 == v2)
+				return 0;
+			else if(value1 > v2)
+				return 1;
+			else	
+				return -1;
+		}
+		else if(Float.class.isAssignableFrom(vc2))
+		{
+			float v2 = ((Float)value2).floatValue();
+			if(value1 == v2)
+				return 0;
+			else if(value1 > v2)
+				return 1;
+			else	
+				return -1;
+		}
+		else if(Short.class.isAssignableFrom(vc2))
+		{
+			short v2 = ((Short)value2).shortValue();
+			if(value1 == v2)
+				return 0;
+			else if(value1 > v2)
+				return 1;
+			else	
+				return -1;
+		}
+		
+		else if(java.util.Date.class.isAssignableFrom(vc2))
+		{
+			long v2 = ((java.util.Date)value2).getTime();
+			if(value1 == v2)
+				return 0;
+			else if(value1 > v2)
+				return 1;
+			else	
+				return -1;
+		}
+		else
+		{
+			short v2 = Short.parseShort(String.valueOf(value2));
+			if(value1 == v2)
+				return 0;
+			else if(value1 > v2)
+				return 1;
+			else	
+				return -1;
+		}
+	}
+	
+	public static int ShortCompare(Short value1,Object value2)
+	{
+		return shortCompare(value1.shortValue(),value2);
+	}
+	
+	public static int dateCompare(java.util.Date value1,Object value2)
+	{
+		try {
+			Class vc2 = value2.getClass();
+			if(java.util.Date.class.isAssignableFrom(vc2))
+			{
+				java.util.Date v2 = ((java.util.Date)value2);
+				return dateCompare(value1,v2);
+			}
+			else if(String.class.isAssignableFrom(vc2))
+			{
+				java.util.Date v2 = ValueObjectUtil.format.parse((String)value2);
+				return dateCompare(value1,v2);
+			}
+			else if(Long.class.isAssignableFrom(vc2))
+			{
+				java.util.Date v2 = new java.util.Date(((Long)value2).longValue());
+				return dateCompare(value1,v2);
+			}
+			if(Integer.class.isAssignableFrom(vc2))
+			{
+				
+				java.util.Date v2 = new java.util.Date(((Integer)value2).intValue());
+				return dateCompare(value1,v2);
+			}
+			
+			else if(Double.class.isAssignableFrom(vc2))
+			{
+				
+				java.util.Date v2 = new java.util.Date(((Double)value2).longValue());
+				return dateCompare(value1,v2);
+			}
+			else if(Float.class.isAssignableFrom(vc2))
+			{
+				java.util.Date v2 = new java.util.Date(((Float)value2).longValue());
+				return dateCompare(value1,v2);
+			}
+			else if(Short.class.isAssignableFrom(vc2))
+			{
+				java.util.Date v2 = new java.util.Date(((Short)value2).longValue());
+				return dateCompare(value1,v2);
+			}
+			else
+			{
+				java.util.Date v2 = ValueObjectUtil.format.parse(String.valueOf(value2));
+				return dateCompare(value1,v2);
+			}
+				
+			
+		} catch (Exception e) {
+			return -1;
+		}
+	}
+	
+	public static int dateCompare(java.util.Date value1,java.util.Date value2)
+	{
+		return value1.compareTo(value2);
+	}
 
 	public static boolean isNumber(Object value) {
 
@@ -3572,10 +4144,12 @@ public class ValueObjectUtil {
 	}
 	public static void main(String[] args) throws ClassNotFoundException
 	{
-		Test[][] a = new Test[][]{{Test.A,Test.B}};
-		String ttt = a.getClass().getName();
-		Class x= Class.forName(ttt);
-		System.out.println();
+//		Test[][] a = new Test[][]{{Test.A,Test.B}};
+//		String ttt = a.getClass().getName();
+//		Class x= Class.forName(ttt);
+//		System.out.println();
+		System.out.println(ValueObjectUtil.typecompare(0,"0"));
+		System.out.println(ValueObjectUtil.typecompare(0,0));
 //		try {
 //			Test[] temp = ValueObjectUtil.convertStringsToEnumArray(new String[]{"A","B","C"}, Test.class);
 //			System.out.println(temp.getClass().getComponentType());

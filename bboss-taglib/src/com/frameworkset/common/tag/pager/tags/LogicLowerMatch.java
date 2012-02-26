@@ -32,6 +32,8 @@
  *****************************************************************************/
 package com.frameworkset.common.tag.pager.tags;
 
+import com.frameworkset.util.ValueObjectUtil;
+
 
 
 /**
@@ -47,13 +49,24 @@ public class LogicLowerMatch extends MatchTag {
 	 * @return boolean
 	 * @see com.frameworkset.common.tag.pager.tags.MatchTag#match()
 	 */
+//	protected boolean match() {
+//		if(actualValue == null)
+//			return false;
+//		if (String.valueOf(actualValue).compareTo(String.valueOf(getValue())) < 0)
+//			return true;
+//		else
+//			return false;
+//	}
+	
 	protected boolean match() {
-		if(actualValue == null)
-			return false;
-		if (String.valueOf(actualValue).compareTo(String.valueOf(getValue())) < 0)
+//		if(actualValue == null)
+//			return false;
+		if (ValueObjectUtil.typecompare(actualValue,getValue()) < 0)
 			return true;
 		else
 			return false;
 	}
+	
+	
 
 }

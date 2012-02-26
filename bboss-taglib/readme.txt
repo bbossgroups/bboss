@@ -12,6 +12,15 @@ bboss-taglib<-portal [frameworkset.jar]
 bboss-taglib<-bboss-ws [frameworkset.jar]
 #######update function list since bbossgroups-3.5 begin###########
 o BaseTag和BaseBodyTag实现TryCatchFinally接口
+o 逻辑比较标签改进，除了进行字符串比较外还能进行数字比较，只要实际值是数字优先进行数字比较，比较失败后再进行字符串比较
+LogicELMatch
+LogicEUMatch
+LogicLowerMatch
+LogicMatchTag
+LogicNotMatchTag
+LogicUpperMatch
+
+目前只支持数字和String，日期类型的比较，复杂类型不能使用改方法进行比较
 
 #######update function list since bbossgroups-3.4 begin###########
 ------2011-12-11------------

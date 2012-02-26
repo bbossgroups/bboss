@@ -18,6 +18,9 @@ bboss-util<-bboss-taglib [frameworkset-util.jar]
 bboss-util<-kettle [frameworkset-util.jar]
 bboss-util<-portal [frameworkset-util.jar]
 bboss-util<-cas server [frameworkset-util.jar]
+#######update function list since bbossgroups-3.5 begin###########
+o 合并StringUtil和SimpleStringUtil中的部分方法，StringUtil只保留和HttpServletRequest相关的的方法
+o ValueObjectUtil类中增加一系列数据比较函数
 #######update function list since bbossgroups-3.4 begin###########
 o ClassInfo对象增加isprimary方法，标识对应的类型是否是bboss定义的基础数据类型范畴
 o 增加获取方法参数名称的工具类LocalVariableTableParameterNameDiscoverer

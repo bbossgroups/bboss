@@ -32,6 +32,8 @@
  *****************************************************************************/
 package com.frameworkset.common.tag.pager.tags;
 
+import com.frameworkset.util.ValueObjectUtil;
+
 /**
  * 如果对象属性值与给定value值不匹配时输出本标签得内容，否则不输出
  * @author biaoping.ying
@@ -47,15 +49,26 @@ public class LogicNotMatchTag extends MatchTag {
 	 * @return boolean
 	 * @see com.frameworkset.common.tag.pager.tags.MatchTag#match()
 	 */
+//	protected boolean match() {
+//		if(actualValue == null && getValue() == null)
+//			return true;
+//		if(actualValue == null || getValue() == null)
+//			return true;
+//		if(String.valueOf(actualValue).compareTo(String.valueOf(getValue())) != 0)
+//			return true;
+//		else
+//			return false;
+//	}
 	protected boolean match() {
-		if(actualValue == null && getValue() == null)
-			return true;
-		if(actualValue == null || getValue() == null)
-			return true;
-		if(String.valueOf(actualValue).compareTo(String.valueOf(getValue())) != 0)
+//		if(actualValue == null && getValue() == null)
+//			return true;
+//		if(actualValue == null || getValue() == null)
+//			return true;
+		if(ValueObjectUtil.typecompare(actualValue,getValue()) != 0)
 			return true;
 		else
 			return false;
 	}
+	
 
 }
