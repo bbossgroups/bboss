@@ -17,8 +17,8 @@ package org.frameworkset.web.xml;
 
 import java.lang.reflect.Method;
 
-import org.frameworkset.spi.support.LocalVariableTableParameterNameDiscoverer;
 import org.frameworkset.util.ClassUtil.ClassInfo;
+import org.frameworkset.util.LocalVariableTableParameterNameDiscoverer;
 import org.junit.Test;
 
 /**

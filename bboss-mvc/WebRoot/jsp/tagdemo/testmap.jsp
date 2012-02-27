@@ -63,5 +63,36 @@
 		</pg:beaninfo>
 		
 	</table>
+	
+	<table>
+		<tr>
+		<td>
+	    <h3>逻辑true和false标签,展示true标签和false标签功能：
+	    	true标签：如果指定的字段属性或者变量对应的值为true或者不为空对象，则输出标签体中的内容
+	    	false标签：如果指定的字段属性或者变量对应的值为false或者为空对象，则输出标签体中的内容
+	    </h3></td>
+	    </tr>
+		<pg:true actual="${mapstrings}">
+		
+			<tr>
+				<td colspan="3">
+					is true.
+				</td> 
+				 
+				
+				
+				
+			</tr>
+		</pg:true>
+		<pg:false actual="${mapstrings1}">
+		
+			<tr>
+				<td colspan="3">
+					is false.
+				</td> 
+			</tr>
+		</pg:false>
+		
+	</table>
 </body>
 </html>
