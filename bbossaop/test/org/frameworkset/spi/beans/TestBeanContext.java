@@ -19,6 +19,7 @@ package org.frameworkset.spi.beans;
 import org.frameworkset.spi.ApplicationContext;
 import org.frameworkset.spi.BaseApplicationContext;
 import org.frameworkset.spi.DefaultApplicationContext;
+import org.frameworkset.spi.assemble.Pro;
 import org.frameworkset.spi.remote.restful.RestfulServiceConvertor;
 import org.junit.Test;
 
@@ -77,6 +78,17 @@ public class TestBeanContext {
 //	    super.toString();
 	    System.out.println(ret);
 	    
+	    
+	}
+	
+	@Test
+	public void testBeanInfoAware()
+	{
+		BaseApplicationContext context = DefaultApplicationContext.getApplicationContext("org/frameworkset/spi/beans/manager-beans.xml");
+		BeanInfoAwareTest convertor = context.getTBeanObject("test.beaninfoawary",BeanInfoAwareTest.class);
+		//从组件实例中获取组件配置元数据对象
+		Pro beaninfo = convertor.getBeaninfo();
+
 	    
 	}
 	

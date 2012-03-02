@@ -6,4 +6,7 @@
 	
 	<property name="test.destorybeans" init-method="init" destroy-method="destroy"
 		class="org.frameworkset.spi.beans.DestroyBean"/>
+		
+	<property name="test.beaninfoawary" 
+		class="org.frameworkset.spi.beans.BeanInfoAwareTest"/>	
 </properties>

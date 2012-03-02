@@ -13,6 +13,7 @@ import org.apache.log4j.Logger;
 import org.frameworkset.spi.ApplicationContextAware;
 import org.frameworkset.spi.BaseApplicationContext;
 import org.frameworkset.spi.BeanClassLoaderAware;
+import org.frameworkset.spi.BeanInfoAware;
 import org.frameworkset.spi.BeanNameAware;
 import org.frameworkset.spi.CallContext;
 import org.frameworkset.spi.DisposableBean;
@@ -1669,6 +1670,11 @@ public class BeanAccembleHelper<V> {
 			if(providerManagerInfo != null)
 				((BeanNameAware) bean).setBeanName(providerManagerInfo.getName());
 		}
+		if(bean instanceof BeanInfoAware)
+		{
+			if(providerManagerInfo != null && providerManagerInfo instanceof Pro)
+				((BeanInfoAware) bean).setBeaninfo((Pro)providerManagerInfo);
+		}
 		if (bean instanceof MessageSourceAware) {
 			((MessageSourceAware) bean).setMessageSource(context);
 		}
@@ -1681,7 +1687,7 @@ public class BeanAccembleHelper<V> {
 
 	}
 	public static void initBean(Object bean, String beanname,
-			BaseApplicationContext context) throws BeanInstanceException {
+			BaseApplicationContext context) throws BeanInstanceException {		
 		if (bean instanceof ApplicationObjectSupport) {
 			((ApplicationObjectSupport) bean).setApplicationContext(context);
 
