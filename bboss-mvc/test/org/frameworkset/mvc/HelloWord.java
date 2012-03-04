@@ -163,7 +163,7 @@ public class HelloWord
 	 * @param response
 	 * @throws IOException
 	 */
-	public @ResponseBody(charset = "GBK")
+	public @ResponseBody
 	String sayHelloEnum(@RequestParam(name = "sex") SexType type)
 			throws IOException
 	{
@@ -195,7 +195,7 @@ public class HelloWord
 	 * @param response
 	 * @throws IOException
 	 */
-	public @ResponseBody(charset = "GBK")
+	public @ResponseBody
 	String sayHelloEnums(@RequestParam(name = "sex") SexType[] types)
 			throws IOException
 	{

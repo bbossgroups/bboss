@@ -40,8 +40,10 @@ import org.frameworkset.util.FileCopyUtils;
  * @since 3.0
  */
 public class StringHttpMessageConverter extends AbstractHttpMessageConverter<String> {
+	
+	
 
-	public static final Charset DEFAULT_CHARSET = Charset.forName("ISO-8859-1");
+	public static  Charset DEFAULT_CHARSET = Charset.forName("ISO-8859-1");
 
 	private final List<Charset> availableCharsets;
 
@@ -109,5 +111,11 @@ public class StringHttpMessageConverter extends AbstractHttpMessageConverter<Str
 	protected List<Charset> getAcceptedCharsets() {
 		return this.availableCharsets;
 	}
+	
+	public void setResponseCharset(String charset) {
+		super.responsecontenteype = new MediaType("text","html",Charset.forName(charset));
+	}
+
+	
 
 }

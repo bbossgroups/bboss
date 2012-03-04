@@ -31,7 +31,7 @@ import org.frameworkset.util.annotations.ResponseBody;
 
 public class LoginNameQuery {
 	@HandlerMapping(value="/query/loginnamequery/{loginname}")
-	public @ResponseBody(charset="GBK") 
+	public @ResponseBody 
 				String  loginnamequery(@PathVariable(value="loginname",decodeCharset="UTF-8") String loginname)
 	{
 		

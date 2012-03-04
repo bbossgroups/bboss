@@ -10,6 +10,22 @@ todo
 
 3.国际化功能完善
 6.mvc和gwt结合可行性研究
+#######update function list since bbossgroups-3.5 begin###########
+o 改进StringHttpMessageConverter转换器，增加responseCharset属性，用于全局指定@ResponseBody String类型相应的字符编码，
+默认值为"ISO-8859-1"，使用方法为f:responseCharset="UTF-8"，例如：
+<property class="org.frameworkset.http.converter.StringHttpMessageConverter" f:responseCharset="UTF-8"/>
+这样以下的响应字符串将采用UTF-8编码输出：
+public  @ResponseBody String queryMutiSex(SexType[] sex)
+{
+	return "你好";//将以UTF-8编码
+}
+
+如果在控制器方法级别指定了字符编码，则将覆盖StringHttpMessageConverter转换器上的字符编码,例如：
+public  @ResponseBody(charset="GBK") String queryMutiSex(SexType[] sex)
+{
+	return "你好";//将以GBK响应编码
+}
+
 
 #######update function list since bbossgroups-3.4 begin###########
 ------2012-2-7------------

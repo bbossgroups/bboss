@@ -91,7 +91,7 @@ public class FileController {
 	}
 
 	@HandlerMapping("/swfupload/deletefiles.htm")
-	public @ResponseBody(charset="UTF-8") String deleteFileOpera(
+	public @ResponseBody String deleteFileOpera(
 			@RequestParam(name = "fileNames", decodeCharset = "UTF-8")
 			String fileNames) throws UnsupportedEncodingException {
 		

@@ -44,9 +44,16 @@ public abstract class AbstractHttpMessageConverter<T> implements HttpMessageConv
 
 	/** Logger available to subclasses */
 	protected final static Logger logger = Logger.getLogger(AbstractHttpMessageConverter.class);
-
+	/**
+	 * 指定默认的输出字符编码
+	 */
+	protected MediaType responsecontenteype;
 	private List<MediaType> supportedMediaTypes = Collections.emptyList();
 
+
+	public void setResponseCharset(String charset) {
+		
+	}
 
 	/**
 	 * Construct an {@code AbstractHttpMessageConverter} with no supported media types.
@@ -158,7 +165,7 @@ public abstract class AbstractHttpMessageConverter<T> implements HttpMessageConv
 	 * type was not provided, calls {@link #getContentLength}, and sets the corresponding headers
 	 * on the output message. It then calls {@link #writeInternal}.
 	 */
-	public final void write(T t, MediaType contentType, HttpOutputMessage outputMessage,HttpInputMessage inputMessage)
+	public final void write(T t, MediaType contentType, HttpOutputMessage outputMessage,HttpInputMessage inputMessage,boolean usecustomMediaTypeByMethod)
 			throws IOException, HttpMessageNotWritableException {
 
 		HttpHeaders headers = outputMessage.getHeaders();
@@ -166,7 +173,12 @@ public abstract class AbstractHttpMessageConverter<T> implements HttpMessageConv
 			if (contentType == null || contentType.isWildcardType() || contentType.isWildcardSubtype()) {
 				contentType = getDefaultContentType(t);
 			}
+			if(!usecustomMediaTypeByMethod && this.responsecontenteype != null)
+			{
+				contentType = this.responsecontenteype;
+			}
 			if (contentType != null) {
+				
 				headers.setContentType(contentType);
 			}
 		}

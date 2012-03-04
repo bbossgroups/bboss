@@ -70,13 +70,17 @@ public class ResourceHttpMessageConverter implements HttpMessageConverter<Resour
 		return new ByteArrayResource(body);
 	}
 
-	public void write(Resource resource, MediaType contentType, HttpOutputMessage outputMessage,HttpInputMessage inputMessage)
+	public void write(Resource resource, MediaType contentType, HttpOutputMessage outputMessage,HttpInputMessage inputMessage,boolean usecustomMediaTypeByMethod)
 			throws IOException, HttpMessageNotWritableException {
 
 		HttpHeaders headers = outputMessage.getHeaders();
 		if (contentType == null || contentType.isWildcardType() || contentType.isWildcardSubtype()) {
 			contentType = getContentType(resource);
 		}
+//		if(!usecustomMediaTypeByMethod && this.responsecontenteype != null)
+//		{
+//			contentType = this.responsecontenteype;
+//		}
 		if (contentType != null) {
 			headers.setContentType(contentType);
 		}

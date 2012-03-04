@@ -17,7 +17,6 @@ package org.frameworkset.web.enumtest;
 
 import java.io.IOException;
 
-import org.frameworkset.util.annotations.RequestParam;
 import org.frameworkset.util.annotations.ResponseBody;
 
 /**
@@ -37,7 +36,7 @@ public class EnumConvertController {
 	 * @param response
 	 * @throws IOException
 	 */
-	public  @ResponseBody(charset="GBK") String querySex(SexType sex) 
+	public  @ResponseBody String querySex(SexType sex) 
 	{
 		if(sex != null)
 		{
@@ -81,7 +80,7 @@ public class EnumConvertController {
 	 * @param response
 	 * @throws IOException
 	 */
-	public  @ResponseBody(charset="GBK") String queryMutiSex(SexType[] sex)
+	public  @ResponseBody String queryMutiSex(SexType[] sex)
 	{
 		if(sex != null)
 		{

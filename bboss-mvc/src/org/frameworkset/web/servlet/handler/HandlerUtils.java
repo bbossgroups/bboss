@@ -3179,6 +3179,7 @@ public abstract class HandlerUtils {
 				throws IOException, HttpMediaTypeNotAcceptableException {
 			List<MediaType> acceptedMediaTypes = inputMessage.getHeaders()
 					.getAccept();
+			boolean usecustomMediaTypeByMethod = false;
 			if (acceptedMediaTypes.isEmpty()) {
 				if(responseMediaType == null)
 					acceptedMediaTypes = Collections.singletonList(MediaType.ALL);
@@ -3192,6 +3193,7 @@ public abstract class HandlerUtils {
 				{	
 					acceptedMediaTypes.clear();
 					acceptedMediaTypes.add(responseMediaType);
+					usecustomMediaTypeByMethod = true;
 				}
 				else
 				{
@@ -3209,7 +3211,7 @@ public abstract class HandlerUtils {
 						if (messageConverter.canWrite(returnValueType,
 								acceptedMediaType)) {
 							messageConverter.write(returnValue,
-									acceptedMediaType, outputMessage,inputMessage);
+									acceptedMediaType, outputMessage,inputMessage,usecustomMediaTypeByMethod);
 							if (logger.isDebugEnabled()) {
 								MediaType contentType = outputMessage
 										.getHeaders().getContentType();

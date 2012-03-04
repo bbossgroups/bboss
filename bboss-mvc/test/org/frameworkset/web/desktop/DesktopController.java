@@ -34,7 +34,7 @@ public class DesktopController {
 		return "path:desktop";
 	}
 	
-	public @ResponseBody(charset="UTF-8") String getdata() throws IOException
+	public @ResponseBody String getdata() throws IOException
 	{
 //		response.setContentType("text/html; charset=UTF-8");
 		String ret = "[" + 

@@ -77,11 +77,12 @@ public interface HttpMessageConverter<T> {
 	 * default content type of the converter must be used. If not {@code null}, this media type must have
 	 * previously been passed to the {@link #canWrite canWrite} method of this interface, which must have
 	 * returned {@code true}.
+	 * @param usecustomMediaTypeByMethod 识别contentType是不是由控制器方法单独指定，如果是则为true,否则为false，如果没有使用
 	 * @param outputMessage the message to write to
 	 * @throws IOException in case of I/O errors
 	 * @throws HttpMessageNotWritableException in case of conversion errors
 	 */
-	void write(T t, MediaType contentType, HttpOutputMessage outputMessage,HttpInputMessage inputMessage)
+	void write(T t, MediaType contentType, HttpOutputMessage outputMessage,HttpInputMessage inputMessage,boolean usecustomMediaTypeByMethod)
 			throws IOException, HttpMessageNotWritableException;
 
 

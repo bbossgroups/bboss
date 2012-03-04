@@ -79,7 +79,7 @@ public class FileMessageConvertor<T> implements HttpMessageConverter<T>
 	}
 
 	public void write(T t, MediaType contentType,
-			HttpOutputMessage outputMessage,HttpInputMessage inputMessage) throws IOException,
+			HttpOutputMessage outputMessage,HttpInputMessage inputMessage,boolean usecustomMediaTypeByMethod) throws IOException,
 			HttpMessageNotWritableException
 	{
 
