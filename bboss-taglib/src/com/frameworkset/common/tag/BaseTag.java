@@ -42,6 +42,7 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.TagSupport;
+import javax.servlet.jsp.tagext.TryCatchFinally;
 
 import org.apache.log4j.Logger;
 import org.frameworkset.spi.BaseSPIManager;
@@ -56,8 +57,18 @@ import com.frameworkset.common.tag.contextmenu.ContextMenu;
  * 子类必须实现抽象方法generateContent(),提供各自产生输出内容的机制
  * @author biaoping.yin
  */
-public abstract class BaseTag extends TagSupport implements javax.servlet.jsp.tagext.TryCatchFinally
+public abstract class BaseTag extends TagSupport implements TryCatchFinally
 {
+	public void doCatch(Throwable arg0) throws Throwable {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void doFinally() {
+		// TODO Auto-generated method stub
+		
+	}
+
 	private final static Logger log = Logger.getLogger(BaseTag.class);
 	protected transient HttpServletRequest request = null;
 								//(HttpServletRequest) pageContext.getRequest();
@@ -217,16 +228,4 @@ public abstract class BaseTag extends TagSupport implements javax.servlet.jsp.ta
     public void write(OutputStream output)
     {    	
     }
-
-	@Override
-	public void doCatch(Throwable arg0) throws Throwable {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void doFinally() {
-		// TODO Auto-generated method stub
-		
-	}
 }
