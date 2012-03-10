@@ -15,7 +15,6 @@
  */
 package org.frameworkset.web.interceptor;
 
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Array;
 import java.net.URLEncoder;
@@ -24,26 +23,20 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
-import org.frameworkset.util.AntPathMatcher;
 import org.frameworkset.util.ObjectUtils;
-import org.frameworkset.util.PathMatcher;
 import org.frameworkset.web.servlet.HandlerInterceptor;
 import org.frameworkset.web.servlet.ModelAndView;
 import org.frameworkset.web.servlet.handler.HandlerMeta;
 import org.frameworkset.web.servlet.mvc.RequestMap;
-import org.frameworkset.web.util.UrlPathHelper;
 import org.frameworkset.web.util.WebUtils;
 
 import com.frameworkset.util.BeanUtils;
-import com.frameworkset.util.StringUtil;
 
 
 /**
@@ -64,32 +57,7 @@ import com.frameworkset.util.StringUtil;
  * @author biaoping.yin
  * @version 1.0
  */
-public abstract class AuthenticateInterceptor implements HandlerInterceptor {
-	protected boolean preventDispatchLoop = false;
-	protected boolean http10Compatible = true;
-	protected String redirecturl = "/login.jsp";
-	public static String REDIRECT = "redirect";
-	public static String FORWARD = "forward";
-	public static String INCLUDE = "include";
-	
-	protected boolean isforward = false;
-	protected boolean isinclude = false;
-	
-	/**
-	 * redirect
-	 * forward
-	 */
-	protected String directtype = "redirect";
-	protected boolean contextRelative = true;
-	protected boolean exposeModelAttributes = false;
-	protected List<String> patternsInclude;
-	protected List<String> patternsExclude;
-	protected UrlPathHelper urlPathHelper = new UrlPathHelper();
-	
-
-	protected PathMatcher pathMatcher = new AntPathMatcher();
-
-	protected String encodingScheme;
+public abstract class AuthenticateInterceptor extends AuthenticateFilter implements HandlerInterceptor {
 	private static Logger logger = Logger.getLogger(AuthenticateInterceptor.class);
 
 	public void afterCompletion(HttpServletRequest request,
@@ -107,114 +75,57 @@ public abstract class AuthenticateInterceptor implements HandlerInterceptor {
 		// TODO Auto-generated method stub
 
 	}
-
-	protected String prepareForRendering(HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-
-		String path = this.getRedirecturl();
-		if (this.preventDispatchLoop) {
-			String uri = request.getRequestURI();
-			if (path.startsWith("/") ? uri.equals(path) : uri.equals(StringUtil
-					.applyRelativePath(uri, path))) {
-				throw new ServletException(
-						"Circular view path ["
-								+ path
-								+ "]: would dispatch back "
-								+ "to the current handler URL ["
-								+ uri
-								+ "] again. Check your ViewResolver setup! "
-								+ "(Hint: This may be the result of an unspecified view, due to default view name generation.)");
-			}
-		}
-		return path;
-	}
 	
-	private boolean needCheck(String path)
-	{
-		boolean needcheck = false;
-		if(this.patternsExclude == null && this.patternsExclude == null)
-			return true;
-		if(this.patternsInclude != null)
-		{
-			for(String pattern:this.patternsInclude)
-			{
-				if(this.pathMatcher.match(pattern, path))
-				{
-					needcheck = true;
-					break;
-				}
-			}
-			if(needcheck && patternsExclude != null)
-			{
-				for(String pattern:this.patternsExclude)
-				{
-					if(this.pathMatcher.match(pattern, path))
-					{
-						needcheck = false;
-						break;
-					}
-				}
-			}
-			
-		}
-		else if(patternsExclude != null)
-		{
-			needcheck = true;
-			for(String pattern:this.patternsExclude)
-			{
-				if(this.pathMatcher.match(pattern, path))
-				{
-					needcheck = false;
-					break;
-				}
-			}
-		}
-		else
-			needcheck = true;
-		
-		return needcheck;
-	}
-	protected abstract boolean check(HttpServletRequest request,
-			HttpServletResponse response, HandlerMeta handlerMeta); 
-	public boolean preHandle(HttpServletRequest request,
+	public boolean _preHandle(HttpServletRequest request,
 			HttpServletResponse response, HandlerMeta handlerMeta)
 			throws Exception {
 		String requesturipath = WebUtils.getHANDLER_Mappingpath(request);
 		//做控制逻辑检测，如果检测失败，则执行下述逻辑，否则执行正常的控制器方法		
-		if(needCheck(requesturipath) && !check(request,
-				response, handlerMeta))
+		if(needCheck(requesturipath) )
 		{			
-			if(!response.isCommitted())
+			boolean checkresult = check(request,
+					response, handlerMeta);
+			if(!checkresult)
 			{
-				String dispatcherPath = prepareForRendering(request, response);
-				StringBuffer targetUrl = new StringBuffer();
-				if (!this.isforward() && !this.isinclude && this.contextRelative && dispatcherPath.startsWith("/")) {
-					targetUrl.append(request.getContextPath());
-				}
-				targetUrl.append(dispatcherPath);
-				if (this.exposeModelAttributes) {
-					String enc = this.encodingScheme;
-					if (enc == null) {
-						enc = request.getCharacterEncoding();
+				request.setAttribute(accesscontrol_check_result, accesscontrol_check_result_fail);
+				if(!response.isCommitted())
+				{
+					String dispatcherPath = prepareForRendering(request, response);
+					StringBuffer targetUrl = new StringBuffer();
+					if (!this.isforward() && !this.isinclude && this.contextRelative && dispatcherPath.startsWith("/")) {
+						targetUrl.append(request.getContextPath());
 					}
-					if (enc == null) {
-						enc = WebUtils.DEFAULT_CHARACTER_ENCODING;
+					targetUrl.append(dispatcherPath);
+					if (this.exposeModelAttributes) {
+						String enc = this.encodingScheme;
+						if (enc == null) {
+							enc = request.getCharacterEncoding();
+						}
+						if (enc == null) {
+							enc = WebUtils.DEFAULT_CHARACTER_ENCODING;
+						}
+						appendQueryProperties(targetUrl, request, new RequestMap(request),
+								enc);
 					}
-					appendQueryProperties(targetUrl, request, new RequestMap(request),
-							enc);
+					sendRedirect(request, response, targetUrl.toString(), http10Compatible);
 				}
-				sendRedirect(request, response, targetUrl.toString(), http10Compatible);
+				return false;
 			}
-			return false;
+			else
+			{
+				request.setAttribute(accesscontrol_check_result, accesscontrol_check_result_ok);
+				return true;
+			}
 		}
-		return true;
+		else
+		{
+			request.setAttribute(accesscontrol_check_result, accesscontrol_check_result_ok);
+			return true;
+		}	
 		
 	}
 	
-	protected boolean isforward()
-	{
-		return isforward;
-	}
+	
 
 	/**
 	 * Append query properties to the redirect URL. Stringifies, URL-encodes and
@@ -527,155 +438,5 @@ public abstract class AuthenticateInterceptor implements HandlerInterceptor {
 	// return result;
 	// }
 
-	/**
-	 * Send a redirect back to the HTTP client
-	 * 
-	 * @param request
-	 *            current HTTP request (allows for reacting to request method)
-	 * @param response
-	 *            current HTTP response (for sending response headers)
-	 * @param targetUrl
-	 *            the target URL to redirect to
-	 * @param http10Compatible
-	 *            whether to stay compatible with HTTP 1.0 clients
-	 * @throws IOException
-	 *             if thrown by response methods
-	 */
-	protected void sendRedirect(HttpServletRequest request,
-			HttpServletResponse response, String targetUrl,
-			boolean http10Compatible) throws IOException {
-
-		if(!this.isforward())
-		{
-			if(!isinclude)
-			{
-				if (http10Compatible) {
-					// Always send status code 302.
-					response.sendRedirect(response.encodeRedirectURL(targetUrl));
-				} else {
-					// Correct HTTP status code is 303, in particular for POST requests.
-					response.setStatus(303);
-					response.setHeader("Location", response
-							.encodeRedirectURL(targetUrl));
-				}
-			}
-			else
-			{
-				 try
-					{
-						request.getRequestDispatcher(targetUrl).include(request, response);
-					}
-					catch (ServletException e)
-					{
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-			}
-		}
-		else
-		{
-			 try
-			{
-				request.getRequestDispatcher(targetUrl).forward(request, response);
-			}
-			catch (ServletException e)
-			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-	}
-
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-
-		// TODO Auto-generated method stub
-
-	}
-
-	public boolean isPreventDispatchLoop() {
-
-		return preventDispatchLoop;
-	}
-
-	public void setPreventDispatchLoop(boolean preventDispatchLoop) {
-
-		this.preventDispatchLoop = preventDispatchLoop;
-	}
-
-	public String getRedirecturl() {
-
-		return redirecturl;
-	}
-
-	public void setRedirecturl(String redirecturl) {
-
-		this.redirecturl = redirecturl;
-	}
-
-	public boolean isHttp10Compatible() {
-
-		return http10Compatible;
-	}
-
-	public void setHttp10Compatible(boolean http10Compatible) {
-
-		this.http10Compatible = http10Compatible;
-	}
-
-	/**
-	 * @return the patternsInclude
-	 */
-	public List<String> getPatternsInclude() {
-		return patternsInclude;
-	}
-
-	/**
-	 * @param patternsInclude
-	 *            the patternsInclude to set
-	 */
-	public void setPatternsInclude(List<String> patternsInclude) {
-		this.patternsInclude = patternsInclude;
-	}
-
-	/**
-	 * @return the patternsExclude
-	 */
-	public List<String> getPatternsExclude() {
-		return patternsExclude;
-	}
-
-	/**
-	 * @param patternsExclude
-	 *            the patternsExclude to set
-	 */
-	public void setPatternsExclude(List<String> patternsExclude) {
-		this.patternsExclude = patternsExclude;
-	}
-
-	
-	public String getDirecttype()
-	{
-	
-		return directtype;
-	}
-
-	
-	public void setDirecttype(String directtype)
-	{
-		
-		this.directtype = directtype;
-		if(this.directtype != null && this.directtype.equals(FORWARD))
-		{
-			this.isforward = true;
-		}
-		else if(this.directtype != null && this.directtype.equals(INCLUDE))
-		{
-			this.isinclude = true;
-		}
-		
-	}
 
 }

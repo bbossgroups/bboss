@@ -8,9 +8,9 @@
 <%@page import="java.net.URLEncoder"%><%
 /**
  * 
- * <p>Title: ¹ÜÀí·şÎñÃ÷Ï¸ĞÅÏ¢ÏÔÊ¾Ò³Ãæ</p>
+ * <p>Title: ç®¡ç†æœåŠ¡æ˜ç»†ä¿¡æ¯æ˜¾ç¤ºé¡µé¢</p>
  *
- * <p>Description: ¹ÜÀí·şÎñÃ÷Ï¸ĞÅÏ¢ÏÔÊ¾Ò³Ãæ</p>
+ * <p>Description: ç®¡ç†æœåŠ¡æ˜ç»†ä¿¡æ¯æ˜¾ç¤ºé¡µé¢</p>
  *
  * <p>Copyright: Copyright (c) 2008</p>
  *
@@ -20,7 +20,7 @@
  * @version 1.0
  */
  %>
-<%@ page language="java" contentType="text/html; charset=GBK" session="false"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" session="false"%>
 <%@page import="org.frameworkset.spi.assemble.*,org.frameworkset.spi.BaseApplicationContext,java.util.Iterator,java.util.Map"%>
 <%@ taglib prefix="tab" uri="/WEB-INF/tabpane-taglib.tld" %>		
 
@@ -36,7 +36,7 @@
 		isWebApplicationContext = true;
 	}
 	//String classType = request.getParameter("classType");
-	//¹ÜÀí·şÎñÃ÷Ï¸ĞÅÏ¢
+	//ç®¡ç†æœåŠ¡æ˜ç»†ä¿¡æ¯
 	String proParentPath = request.getParameter("proParentPath");
 	Pro providerManagerInfo =  null;
 	if(proParentPath != null)
@@ -45,10 +45,10 @@
 		providerManagerInfo = context.getProBean(selected) ;
 	if(providerManagerInfo == null)
 	{
-		out.print("·ÇÈ«¾Öbean×é¼ş");
+		out.print("éå…¨å±€beanç»„ä»¶");
 		return ;
 	}	
-	//·şÎñÃû³Æ
+	//æœåŠ¡åç§°
 	String name = proParentPath == null ?selected:proParentPath +  "[" + selected + "]";
 	String pro_name = providerManagerInfo.getName() == null?"":providerManagerInfo.getName() ;
 		Iterator iterator = null;
@@ -152,7 +152,7 @@
 	 %>
 <html>
 	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=GBK">
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title><%=pro_name %></title>
 		
 <%@ include file="/include/css.jsp"%>
@@ -164,21 +164,21 @@
 	<body class="contentbodymargin" scroll="no">
 	<div style="width:100%;height:100%;overflow:auto">
 	<fieldset height=100% width="100%">
-	<LEGEND align=left><strong>&nbsp;È«¾ÖÊôĞÔÅäÖÃ:<%=pro_name %>&nbsp;×é¼şÔªËØÀàĞÍ:<%=componetType == null?"ÊôĞÔ¶ÔÏó":componetType %></strong></LEGEND>
+	<LEGEND align=left><strong>&nbsp;å…¨å±€å±æ€§é…ç½®:<%=pro_name %>&nbsp;ç»„ä»¶å…ƒç´ ç±»å‹:<%=componetType == null?"å±æ€§å¯¹è±¡":componetType %></strong></LEGEND>
 	<table class="thin" width="100%">
-		<tr><td colspan="3" class="headercolor">È«¾ÖÊôĞÔÅäÖÃĞÅÏ¢</td></tr>
+		<tr><td colspan="3" class="headercolor">å…¨å±€å±æ€§é…ç½®ä¿¡æ¯</td></tr>
 		<tr>
-		<td class="headercolor" width="20%">ÅäÖÃÊôĞÔÃû</td>
-		<td class="headercolor" width="30%">ÊôĞÔ¶ÔÓ¦Öµ</td>
+		<td class="headercolor" width="20%">é…ç½®å±æ€§å</td>
+		<td class="headercolor" width="30%">å±æ€§å¯¹åº”å€¼</td>
 		
-		<td class="headercolor" width="50%">ÃèÊö</td>
+		<td class="headercolor" width="50%">æè¿°</td>
 		
 		</tr>
 		<tr>
-		<td width="20%">name</td><td width="30%"><%=pro_name %></td><td width="50%">È«¾ÖÊôĞÔÃû³Æ£¬Î¨Ò»±êÊ¶Ò»¸öÈ«¾ÖÊôĞÔ£¬±£³ÖÈ«¾ÖÎ¨Ò»ĞÔ</td>
+		<td width="20%">name</td><td width="30%"><%=pro_name %></td><td width="50%">å…¨å±€å±æ€§åç§°ï¼Œå”¯ä¸€æ ‡è¯†ä¸€ä¸ªå…¨å±€å±æ€§ï¼Œä¿æŒå…¨å±€å”¯ä¸€æ€§</td>
 		</tr>
 		<tr>
-		<td width="20%">ÊôĞÔ¶¨ÒåÂ·¾¶</td><td width="20%"><%=name %></td><td width="50%">ÊôĞÔ¶¨ÒåÂ·¾¶ĞÅÏ¢</td>
+		<td width="20%">å±æ€§å®šä¹‰è·¯å¾„</td><td width="20%"><%=name %></td><td width="50%">å±æ€§å®šä¹‰è·¯å¾„ä¿¡æ¯</td>
 		
 		</tr>
 		<tr>
@@ -199,14 +199,14 @@
 		}
 		
 		
-		%></td><td width="50%">È«¾ÖÊôĞÔÖµ</td>
+		%></td><td width="50%">å…¨å±€å±æ€§å€¼</td>
 		</tr>
 		<tr>
 		
-		<td width="20%">editor</td><td width="30%"><%=editor %></td><td width="50%">ÊôĞÔ±à¼­Æ÷</td>
+		<td width="20%">editor</td><td width="30%"><%=editor %></td><td width="50%">å±æ€§ç¼–è¾‘å™¨</td>
 		</tr>
 		<tr>
-		<td width="20%">label</td><td width="30%"><%=providerManagerInfo.getLabel() != null?providerManagerInfo.getLabel():"" %></td><td width="50%">È«¾ÖÊôĞÔlabelÊôĞÔ£¬ÓÃÀ´×öÒ³ÃæÊ±ÓĞÓÃ</td>
+		<td width="20%">label</td><td width="30%"><%=providerManagerInfo.getLabel() != null?providerManagerInfo.getLabel():"" %></td><td width="50%">å…¨å±€å±æ€§labelå±æ€§ï¼Œç”¨æ¥åšé¡µé¢æ—¶æœ‰ç”¨</td>
 		
 		</tr>			
 	</table>
@@ -216,14 +216,14 @@
 	
 	
 	<fieldset height=100% width="100%">
-	<LEGEND align=left><strong>&nbsp;<%=title %>Ã÷Ï¸:<%=pro_name %>&nbsp;</strong></LEGEND>
+	<LEGEND align=left><strong>&nbsp;<%=title %>æ˜ç»†:<%=pro_name %>&nbsp;</strong></LEGEND>
 	<table  height="50%"  width="100%" border="0" cellpadding="0" cellspacing="0"  class="thin">
 	
 	<tr>
-		<td class="headercolor" width="20%">ÊôĞÔÃû</td>
-		<td class="headercolor" width="30%">Ã÷Ï¸</td>
-		<td class="headercolor" width="10%">ÀàĞÍ</td>
-		<td class="headercolor" width="50%">ÃèÊö</td>
+		<td class="headercolor" width="20%">å±æ€§å</td>
+		<td class="headercolor" width="30%">æ˜ç»†</td>
+		<td class="headercolor" width="10%">ç±»å‹</td>
+		<td class="headercolor" width="50%">æè¿°</td>
 		</tr>
 	<%if(iterator != null || array != null){ 
 	
@@ -299,7 +299,7 @@
 		out.print((__name == null?"":"name=" + __name+ "<br>") );	
 	
 		out.print("refid=" + pro.getRefid() + "<br>");
-		//out.print("ÒıÓÃÀàĞÍ£º" );out.print("×é¼ş»òÕßÊôĞÔÒıÓÃ");
+		//out.print("å¼•ç”¨ç±»å‹ï¼š" );out.print("ç»„ä»¶æˆ–è€…å±æ€§å¼•ç”¨");
 		
 	 %></a>
 	 <%} else if(pro.isServiceRef()) {
@@ -310,7 +310,7 @@
 		out.print((__name == null?"":"name=" + __name+ "<br>") );	
 	
 		out.print("refid=" + pro.getRefid() + "<br>");
-		//out.print("ÒıÓÃÀàĞÍ£º" );out.print("¹ÜÀí·şÎñÒıÓÃ");
+		//out.print("å¼•ç”¨ç±»å‹ï¼š" );out.print("ç®¡ç†æœåŠ¡å¼•ç”¨");
 		
 	 %></a>
 	 <%}%>
@@ -335,7 +335,7 @@
 				out.print("value=" + pro.getValue() + "<br>");		
 		}
 		
-		//out.print("ÒıÓÃÀàĞÍ£º" );out.print("×é¼ş»òÕßÊôĞÔÒıÓÃ");
+		//out.print("å¼•ç”¨ç±»å‹ï¼š" );out.print("ç»„ä»¶æˆ–è€…å±æ€§å¼•ç”¨");
 		
 	 %></a>
 	<%
@@ -345,15 +345,15 @@
 	<td ><%
 		if(pro.isBean())
 		{
-			out.print("×é¼ş");
+			out.print("ç»„ä»¶");
 		}
 		else if(pro.isRefereced())
 		{
-			out.print("ÒıÓÃ");
+			out.print("å¼•ç”¨");
 		}
 		else
 		{
-			out.print("È«¾ÖÊôĞÔ");
+			out.print("å…¨å±€å±æ€§");
 		}
 	 %></td>
 	 <td ><%
@@ -362,7 +362,7 @@
 	</tr>
 	<% 
 	   }
-	   out.print("<tr><td colspan='4'>×Ü¹²ÅäÖÃÁË" + size + "¸öÊôĞÔ£¡</td></tr>");	
+	   out.print("<tr><td colspan='4'>æ€»å…±é…ç½®äº†" + size + "ä¸ªå±æ€§ï¼</td></tr>");	
 	  }else{ 
 	%>
 	<tr><td colspan="100">
@@ -397,7 +397,7 @@
 		out.print("name=" + refid_ + "<br>");
 			
 		out.print("refid=" + providerManagerInfo.getRefid() + "<br>");
-		//out.print("ÒıÓÃÀàĞÍ£º" );out.print("×é¼ş»òÕßÊôĞÔÒıÓÃ");
+		//out.print("å¼•ç”¨ç±»å‹ï¼š" );out.print("ç»„ä»¶æˆ–è€…å±æ€§å¼•ç”¨");
 		
 	 %></a>
 	 <%} else if(providerManagerInfo.isServiceRef()) {
@@ -407,7 +407,7 @@
 		out.print("name=" +refserviceid + "<br>");
 			
 		out.print("refid=" + providerManagerInfo.getRefid() + "<br>");
-		//out.print("ÒıÓÃÀàĞÍ£º" );out.print("¹ÜÀí·şÎñÒıÓÃ");
+		//out.print("å¼•ç”¨ç±»å‹ï¼š" );out.print("ç®¡ç†æœåŠ¡å¼•ç”¨");
 		
 	 %></a>
 	 <%}%>
@@ -420,14 +420,14 @@
 	</fieldset>
 	
 	<fieldset height=100% width="100%">
-	<LEGEND align=left><strong>&nbsp;À©Õ¹ÊôĞÔ&nbsp;</strong></LEGEND>
+	<LEGEND align=left><strong>&nbsp;æ‰©å±•å±æ€§&nbsp;</strong></LEGEND>
 	<% 
 				Map extendattrs = providerManagerInfo.getExtendsAttributes();
 				
 			%>
 			<table class="thin" width="100%">
 			
-			<tr><td class="headercolor">À©Õ¹ÊôĞÔÃû³Æ</td><td class="headercolor">À©Õ¹ÊôĞÔÖµ</td></tr>
+			<tr><td class="headercolor">æ‰©å±•å±æ€§åç§°</td><td class="headercolor">æ‰©å±•å±æ€§å€¼</td></tr>
 			<%
 				if(extendattrs != null && extendattrs.size() > 0)
 				{
@@ -450,7 +450,7 @@
 	</fieldset>
 	
 	<fieldset height=100% width="100%">
-	<LEGEND align=left><strong>&nbsp;ÊôĞÔ¹¹Ôì²ÎÊı&nbsp;</strong></LEGEND>
+	<LEGEND align=left><strong>&nbsp;å±æ€§æ„é€ å‚æ•°&nbsp;</strong></LEGEND>
 				<% 
 					Construction construction = providerManagerInfo.getConstruction();
 					if(construction == null)
@@ -471,16 +471,16 @@
 					%>
 					<table class="thin" width="100%">
 					<tr><td colspan="4">
-						fieldname-¶ÔÓ¦µÄ¹ÜÀí·şÎñÌá¹©ÕßÖĞµÄ×Ö¶ÎÃû³Æ£¬±ØÑ¡ÊôĞÔ<br>
-						refid-ÒıÓÃµÄ¹ÜÀí·şÎñµÄid£¬¶ÔÓ¦manager½ÚµãµÄidÊôĞÔ£¬±ØÑ¡ÊôĞÔ<br>
+						fieldname-å¯¹åº”çš„ç®¡ç†æœåŠ¡æä¾›è€…ä¸­çš„å­—æ®µåç§°ï¼Œå¿…é€‰å±æ€§<br>
+						refid-å¼•ç”¨çš„ç®¡ç†æœåŠ¡çš„idï¼Œå¯¹åº”managerèŠ‚ç‚¹çš„idå±æ€§ï¼Œå¿…é€‰å±æ€§<br>
 						
-						value-¶ÔÓ¦×Ö¶ÎfieldnameµÄÖµ<br>
+						value-å¯¹åº”å­—æ®µfieldnameçš„å€¼<br>
 					</td></tr>
 					<tr>
-						<td class="headercolor">×Ö¶ÎÃû³Æ</td>
-						<td class="headercolor">×Ö¶ÎÃû³ÆµÄÖµ</td>
-						<td class="headercolor">ÒıÓÃ¹ÜÀí·şÎñµÄid</td>
-						<td class="headercolor">¹ÜÀí·şÎñÌá¹©Õß±êÊ¶</td>
+						<td class="headercolor">å­—æ®µåç§°</td>
+						<td class="headercolor">å­—æ®µåç§°çš„å€¼</td>
+						<td class="headercolor">å¼•ç”¨ç®¡ç†æœåŠ¡çš„id</td>
+						<td class="headercolor">ç®¡ç†æœåŠ¡æä¾›è€…æ ‡è¯†</td>
 					</tr>
 					<% 
 					    /**
@@ -535,7 +535,7 @@
 		out.print((_name == null?"":"name=" + _name+ "<br>") );	
 		
 		out.print("refid=" + pro.getRefid() + "<br>");
-		//out.print("ÒıÓÃÀàĞÍ£º" );out.print("×é¼ş»òÕßÊôĞÔÒıÓÃ");
+		//out.print("å¼•ç”¨ç±»å‹ï¼š" );out.print("ç»„ä»¶æˆ–è€…å±æ€§å¼•ç”¨");
 		
 	 %></a>
 	 <%} else if(pro.isServiceRef()) {
@@ -546,7 +546,7 @@
 		
 	
 		out.print("refid=" + pro.getRefid() + "<br>");
-		//out.print("ÒıÓÃÀàĞÍ£º" );out.print("¹ÜÀí·şÎñÒıÓÃ");
+		//out.print("å¼•ç”¨ç±»å‹ï¼š" );out.print("ç®¡ç†æœåŠ¡å¼•ç”¨");
 		
 	 %></a>
 	 <%}%>
@@ -574,7 +574,7 @@
 			out.print("class=" + pro.getClazz() + "<br>");		
 		if(pro.getRefid() != null)
 			out.print("refid=" + pro.getRefid() + "<br>");
-		//out.print("ÒıÓÃÀàĞÍ£º" );out.print("×é¼ş»òÕßÊôĞÔÒıÓÃ");
+		//out.print("å¼•ç”¨ç±»å‹ï¼š" );out.print("ç»„ä»¶æˆ–è€…å±æ€§å¼•ç”¨");
 		
 	 %></a>
 	<%
@@ -584,15 +584,15 @@
 	<td ><%
 		if(pro.isBean())
 		{
-			out.print("×é¼ş");
+			out.print("ç»„ä»¶");
 		}
 		else if(pro.isRefereced())
 		{
-			out.print("ÒıÓÃ");
+			out.print("å¼•ç”¨");
 		}
 		else
 		{
-			out.print("È«¾ÖÊôĞÔ");
+			out.print("å…¨å±€å±æ€§");
 		}
 	 %></td>
 	 <td ><%
@@ -601,10 +601,10 @@
 	</tr>
 	<% 
 	   }
-	   out.print("<tr><td colspan='4'>×Ü¹²ÅäÖÃÁË" + constructionparams.size() + "¸ö¹¹Ôìº¯Êı²ÎÊı£¡</td></tr>");	
+	   out.print("<tr><td colspan='4'>æ€»å…±é…ç½®äº†" + constructionparams.size() + "ä¸ªæ„é€ å‡½æ•°å‚æ•°ï¼</td></tr>");	
 	  }else{ 
 	%>
-	<tr><td colspan="2">Ã»ÓĞ¹¹Ôìº¯Êı²ÎÊı£¡</td></tr>
+	<tr><td colspan="2">æ²¡æœ‰æ„é€ å‡½æ•°å‚æ•°ï¼</td></tr>
 	<%} %>
 					
 					</table>

@@ -7,9 +7,9 @@
 <%@page import="java.util.Iterator"%><%
 /**
  * 
- * <p>Title: ����������ϸ��Ϣ��ʾҳ��</p>
+ * <p>Title: 管理服务明细信息显示页面</p>
  *
- * <p>Description: ����������ϸ��Ϣ��ʾҳ��</p>
+ * <p>Description: 管理服务明细信息显示页面</p>
  *
  * <p>Copyright: Copyright (c) 2008</p>
  *
@@ -19,7 +19,7 @@
  * @version 1.0
  */
  %>
-<%@ page language="java" contentType="text/html; charset=GBK" session="false"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" session="false"%>
 <%@page import="org.frameworkset.spi.assemble.*,java.util.*,org.frameworkset.spi.BaseApplicationContext"%>
 <%@ taglib prefix="tab" uri="/WEB-INF/tabpane-taglib.tld" %>		
 
@@ -37,7 +37,7 @@
 %>
 <html>
 	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=GBK">
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title><%=context.getConfigfile() %></title>
 		<link rel="stylesheet" type="text/css" href="<%=rootpath%>/sysmanager/css/treeview.css">
 <%@ include file="/include/css.jsp"%>
@@ -49,41 +49,41 @@
 	<body class="contentbodymargin" scroll="yes">
 	
 		<table class="thin" >
-			<tr><td colspan="3" class="headercolor">SQL�ļ���Ҫ��Ϣ</td></tr>
+			<tr><td colspan="3" class="headercolor">SQL文件概要信息</td></tr>
 			<tr>
-			<td  width="20%">SQL�ļ����ƣ�<%=selected.substring(4) %></td>
+			<td  width="20%">SQL文件名称：<%=selected.substring(4) %></td>
 			
 			</tr>
 			<tr>
 			
-			<td  width="20%">SQL�ļ����¼����ƣ�<%=sqlutil.getRefresh_interval() > 0?"����":"�ر�" %></td>
+			<td  width="20%">SQL文件更新检测机制：<%=sqlutil.getRefresh_interval() > 0?"开启":"关闭" %></td>
 			
 			</tr>
 			<tr>
 			
-			<td width="50%">SQL�ļ����¼��ʱ������<%=sqlutil.getRefresh_interval() +"" %></td>
+			<td width="50%">SQL文件更新检测时间间隔：<%=sqlutil.getRefresh_interval() +"" %></td>
 			</tr>
 			<tr>
 			
-			<td width="50%">����SQL�ļ����¼����ƺͼ��ʱ�������÷�����<br>
-			��bboss-aop.jar���е�aop.properties�ļ��У����ò���sqlfile.refresh_interval<br>
+			<td width="50%">开启SQL文件更新检测机制和检测时间间隔配置方法：<br>
+			在bboss-aop.jar包中的aop.properties文件中，配置参数sqlfile.refresh_interval<br>
 			sqlfile.refresh_interval=5000<br>
-			��λΪ���룬�������Ϊ0���߸�������ر�ˢ�»���
+			单位为毫秒，如果配置为0或者负数，则关闭刷新机制
 			</td>
 			</tr>
 			
 			<tr>
 			
-			<td width="50%">SQL�ļ��������ͣ�<%=context.getClass().getCanonicalName() %></td>
+			<td width="50%">SQL文件容器类型：<%=context.getClass().getCanonicalName() %></td>
 			</tr>
 			
 		</table>
 		<table class="thin" >
-			<tr><td colspan="3" class="headercolor">SQL������Ϣ</td></tr>
+			<tr><td colspan="3" class="headercolor">SQL配置信息</td></tr>
 			<tr>
-			<td class="headercolor" >SQL����</td>
+			<td class="headercolor" >SQL名称</td>
 			<td class="headercolor" >sql</td>
-			<td class="headercolor" >����</td>
+			<td class="headercolor" >描述</td>
 			</tr>
 			<%while(its != null && its.hasNext() ){
 				Pro pro = context.getProBean(its.next());

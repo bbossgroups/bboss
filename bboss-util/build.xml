@@ -39,7 +39,7 @@
 		<javac destdir="classes-bboss-util" target="1.5" source="1.5" deprecation="true" debug="${debug}" optimize="${optimize}" memorymaximumsize="256M" fork="true" verbose="yes">
 			<src path="src" />
 			<src path="src-asm" />
-			
+			<src path="src-charset" />			
 			<classpath id="cp-classes-bboss-util">
 				<fileset dir="lib/" includes="*.jar *.zip" />				
 				<fileset dir="lib/ext" includes="jsp-api.jar junit-4.6.jar servlet-api.jar" />

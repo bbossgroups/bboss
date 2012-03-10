@@ -1,12 +1,12 @@
 <%@ taglib uri="/WEB-INF/treetag.tld" prefix="tree" %>
 
 <%@ taglib prefix="tab" uri="/WEB-INF/pager-taglib.tld" %>
-<%@ page language="java" contentType="text/html; charset=GBK"%>
-<%@page import="com.chinacreator.security.AccessControl"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"%>
+<%@page import="com.frameworkset.platform.security.AccessControl"%>
 <%
 /*
- * <p>Title: SPI服务监控树</p>
- * <p>Description: SPI服务监控树</p>
+ * <p>Title: SPI鏈嶅姟鐩戞帶鏍�</p>
+ * <p>Description: SPI鏈嶅姟鐩戞帶鏍�</p>
  * <p>Copyright: Copyright (c) 2008</p>
  * <p>Company: chinacreator</p>
  * @Date 2008-9-8
@@ -17,7 +17,7 @@
  %>
 <html>
 	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=GBK">
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<pg:config enablecontextmenu="false"/>
 		<link rel="stylesheet" type="text/css" href="<%=rootpath%>/include/treeview.css">
 <%@ include file="/include/css.jsp"%>
@@ -44,7 +44,7 @@
     			   <tree:treedata treetype="org.frameworkset.spi.monitor.SPITree"
     	                   scope="request"
     	                   rootid="0"  
-    	                   rootName="SPI管理"
+    	                   rootName="SPI绠＄悊"
     	                   expandLevel="1"
     	                   showRootHref="false"
     	                   needObserver="false"

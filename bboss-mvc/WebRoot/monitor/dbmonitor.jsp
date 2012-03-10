@@ -1,7 +1,7 @@
 <%
 /*
- * <p>Title: ¼à¿ØÊý¾Ý¿âÐÅÏ¢Ò³Ãæ</p>
- * <p>Description: ·þÎñÆ÷Á´½ÓÊý¾Ý¿âµÄ×´Ì¬£¬ºÍÊ¹ÓÃÇé¿ö</p>
+ * <p>Title: ç›‘æŽ§æ•°æ®åº“ä¿¡æ¯é¡µé¢</p>
+ * <p>Description: æœåŠ¡å™¨é“¾æŽ¥æ•°æ®åº“çš„çŠ¶æ€ï¼Œå’Œä½¿ç”¨æƒ…å†µ</p>
  * <p>Copyright: Copyright (c) 2008</p>
  * <p>Company: chinacreator</p>
  * @Date 2008-9-8
@@ -10,13 +10,13 @@
  */
  %>
 
-<%@ page session="false" contentType="text/html; charset=GBK" language="java" import="java.util.List"%>
+<%@ page session="false" contentType="text/html; charset=UTF-8" language="java" import="java.util.List"%>
 <%@ page import="com.frameworkset.common.poolman.DBUtil"%>
-<%@page import="com.chinacreator.security.AccessControl"%>
+<%@page import="com.frameworkset.platform.security.AccessControl"%>
 <%@page import="java.util.*"%>
 <%@page import="java.util.Enumeration,
 				com.frameworkset.common.poolman.util.JDBCPoolMetaData"%>
-<%@page import="com.chinacreator.remote.Utils"%>
+<%@page import="com.frameworkset.platform.remote.Utils"%>
 <%@page import="org.jgroups.blocks.GroupRequest"%>
 <%@page import="java.util.Iterator"%>
 <%@ taglib prefix="tab" uri="/WEB-INF/tabpane-taglib.tld" %>				
@@ -33,8 +33,8 @@
 
 <html>
 	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=GBK">
-		<title>poolmanÁ¬½Ó³ØÊ¹ÓÃÇé¿öÓëÅäÖÃÐÅÏ¢</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>poolmanè¿žæŽ¥æ± ä½¿ç”¨æƒ…å†µä¸Žé…ç½®ä¿¡æ¯</title>
 <%@ include file="/include/css.jsp"%>
 		<tab:tabConfig/>	
 		<script src="../inc/js/func.js"></script>
@@ -44,18 +44,18 @@
 	<div style="width:100%;height:100%;overflow:auto">
 	<tab:tabContainer id="monitor" skin="amethyst">
 	
-	<tab:tabPane id="allServerMonitorInfo" tabTitle="ËùÓÐ·þÎñÆ÷poolmanÐÅÏ¢" lazeload="true" >
+	<tab:tabPane id="allServerMonitorInfo" tabTitle="æ‰€æœ‰æœåŠ¡å™¨poolmanä¿¡æ¯" lazeload="true" >
 		<tab:iframe id="allServer-monitorinfo" src="allServerMonitorInfo.jsp" frameborder="0" scrolling="no" width="100%" height="580">
 		</tab:iframe>
 	</tab:tabPane>
 	
 	<%if(isCluster){ %>
-	<tab:tabPane id="allMonitor" tabTitle="ËùÓÐ·þÎñÆ÷poolmanÊµÊ±ÐÅÏ¢" lazeload="true" >
+	<tab:tabPane id="allMonitor" tabTitle="æ‰€æœ‰æœåŠ¡å™¨poolmanå®žæ—¶ä¿¡æ¯" lazeload="true" >
 		<tab:iframe id="all-monitor" src="clusterMonitor.jsp" frameborder="0" scrolling="no" width="100%" height="580">
 		</tab:iframe>
 	</tab:tabPane>
 	
-	<tab:tabPane id="allServerState" tabTitle="ËùÓÐ·þÎñÆ÷×´Ì¬" lazeload="true" >
+	<tab:tabPane id="allServerState" tabTitle="æ‰€æœ‰æœåŠ¡å™¨çŠ¶æ€" lazeload="true" >
 		<tab:iframe id="allServer-State" src="allServerState.jsp" frameborder="0" scrolling="no" width="100%" height="580">
 		</tab:iframe>
 	</tab:tabPane>

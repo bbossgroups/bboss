@@ -1,7 +1,7 @@
 <%
 /*
- * <p>Title: ¼à¿ØÔÚÏßÓÃ»§Êý</p>
- * <p>Description: ÔÚÏßÓÃ»§µÇÂ½ÏµÍ³µÄÇé¿ö</p>
+ * <p>Title: ç›‘æŽ§åœ¨çº¿ç”¨æˆ·æ•°</p>
+ * <p>Description: åœ¨çº¿ç”¨æˆ·ç™»é™†ç³»ç»Ÿçš„æƒ…å†µ</p>
  * <p>Copyright: Copyright (c) 2008</p>
  * <p>Company: chinacreator</p>
  * @Date 2008-9-8
@@ -9,16 +9,16 @@
  * @version 1.0
  */
  %>
-<%@page contentType="text/html;charset=GBK" session="false"%>
+<%@page contentType="text/html;charset=UTF-8" session="false"%>
 <%@page import="java.util.Map"%>
-<%@page import="com.chinacreator.remote.Utils"%>
+<%@page import="com.frameworkset.platform.remote.Utils"%>
 <%@page import="java.util.Set"%>
 <%@page import="java.util.Iterator"%>
 <%@page import="org.jgroups.util.Rsp"%>
 <%@page import="java.util.Vector"%>
 <%@page import="org.jgroups.stack.IpAddress"%>
 <%@page import="com.frameworkset.common.poolman.DBUtil"%>
-<%@page import="com.chinacreator.config.ConfigManager"%>
+<%@page import="com.frameworkset.platform.config.ConfigManager"%>
 
 <%
 
@@ -26,7 +26,7 @@
 %>
 
 <html>
-<head><title>ÔÚÏßÓÃ»§ÊýÍ³¼Æ</title>
+<head><title>åœ¨çº¿ç”¨æˆ·æ•°ç»Ÿè®¡</title>
 <%@ include file="/include/css.jsp"%>
 		<tab:tabConfig/>	
 		<script src="../inc/js/func.js"></script>
@@ -44,12 +44,12 @@
 <div style="width:100%;height:100%;overflow:auto">
 <form  name="LogForm"  method="post">
 	<fieldset>
-	<LEGEND align=left><strong>&nbsp;BSÔÚÏßÈËÊýÍ³¼ÆÐÅÏ¢&nbsp;</strong></LEGEND>
+	<LEGEND align=left><strong>&nbsp;BSåœ¨çº¿äººæ•°ç»Ÿè®¡ä¿¡æ¯&nbsp;</strong></LEGEND>
 	<table width="100%" height="" border="0" cellpadding="0" cellspacing="1" class="thin">
-	<div align="right" ><input type="button" value="Ë¢ÐÂÒ³Ãæ" class="input" onclick="flushButton()"></div>
+	<div align="right" ><input type="button" value="åˆ·æ–°é¡µé¢" class="input" onclick="flushButton()"></div>
 	<tr>
-	<th>·þÎñÆ÷Ãû</th>
-	<th>ÔÚÏßÓÃ»§Êý</th>
+	<th>æœåŠ¡å™¨å</th>
+	<th>åœ¨çº¿ç”¨æˆ·æ•°</th>
 	</tr>
 	<% 
 		Map onlineUserCount = Utils.getOnlineUserCount();
@@ -80,7 +80,7 @@
 		}
 	%>
 	<tr>
-	<td colspan="2"><strong>BS×ÜÔÚÏßÈËÊýÎª£º<%=allUsercount %></strong></td>
+	<td colspan="2"><strong>BSæ€»åœ¨çº¿äººæ•°ä¸ºï¼š<%=allUsercount %></strong></td>
 	</tr>
 	</table>
 	</fieldset>
@@ -91,7 +91,7 @@
 	
 	%>
 	<fieldset>
-	<LEGEND align=left><strong>&nbsp;CSÔÚÏßÈËÊýÍ³¼ÆÐÅÏ¢&nbsp;</strong></LEGEND>
+	<LEGEND align=left><strong>&nbsp;CSåœ¨çº¿äººæ•°ç»Ÿè®¡ä¿¡æ¯&nbsp;</strong></LEGEND>
 	<table width="100%" height="" border="0" cellpadding="0" cellspacing="1" class="thin">
 	<% 
 		int CScount = 0;
@@ -106,10 +106,10 @@
 			e.printStackTrace();
 		}
 	%>
-	<div align="right" ><input type="button" value="Ë¢ÐÂÒ³Ãæ" class="input" onclick="flushButton()"></div>
+	<div align="right" ><input type="button" value="åˆ·æ–°é¡µé¢" class="input" onclick="flushButton()"></div>
 	<TR>
 	<TD COLSPAN="2">
-	<strong>CS×ÜÔÚÏßÈËÊýÎª£º<%=CScount %></strong>
+	<strong>CSæ€»åœ¨çº¿äººæ•°ä¸ºï¼š<%=CScount %></strong>
 	</TD>
 	</TR>
 	</table>
