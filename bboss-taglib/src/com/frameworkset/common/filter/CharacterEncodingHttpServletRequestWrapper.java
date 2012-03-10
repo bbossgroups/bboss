@@ -1,29 +1,42 @@
 package com.frameworkset.common.filter;
 
-import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 
+import bboss.org.mozilla.intl.chardet.UTF8Convertor;
+
 public class CharacterEncodingHttpServletRequestWrapper
     extends HttpServletRequestWrapper{
 	private Map<String,String[]> parameters = null;
-	private Object lock = new Object();
+//	private Object lock = new Object();
     private String newecoding = null;
     private String oldEncoding = null;
+    private boolean isie = false;
     
+    private boolean isget = false;
+    
+    private boolean isutf8 = false;
+    private boolean checkiemodeldialog;
     private static final String system_encoding = System.getProperty("sun.jnu.encoding");
     public static final String USE_MVC_DENCODE_KEY = "org.frameworkset.web.servlet.handler.HandlerUtils.USE_MVC_DENCODE_KEY";
     
 
     public CharacterEncodingHttpServletRequestWrapper(HttpServletRequest request, String encoding) {
         super(request);
+        String agent = request.getHeader("User-Agent");
+        isie = agent.contains("MSIE ");
+        String method = this.getMethod();
+        isget = method !=null && method.equals("GET");
         this.newecoding = encoding != null ? encoding:system_encoding;
+        isutf8 = newecoding.toLowerCase().equals("utf-8");
         this.oldEncoding = request.getCharacterEncoding();
         parameters = new HashMap<String,String[]>();
-        
+        String _checkiemodeldialog = request.getParameter("_checkiemodeldialog");
+        if(_checkiemodeldialog != null && _checkiemodeldialog.equals("true"));
+        	this.checkiemodeldialog = true; 
     }
 
     public String getParameter(String name) {
@@ -61,8 +74,7 @@ public class CharacterEncodingHttpServletRequestWrapper
     	
     	  
         try {
-        	
-            
+           
             String[] tempArray = parameters.get(name);
             if(tempArray != null)
             	return tempArray; 
@@ -74,10 +86,31 @@ public class CharacterEncodingHttpServletRequestWrapper
             if ( (oldEncoding == null || isIOS88591(oldEncoding)) )
             {
             	String[] clone = new String[tempArray.length];
-            	Boolean userdecode = (Boolean)this.getAttribute(USE_MVC_DENCODE_KEY);
+            	
                 for (int i = 0; i < tempArray.length; i++) {
                     if ( tempArray[i]!= null) {
-                    	clone[i] = new String(tempArray[i].getBytes("iso-8859-1"), newecoding);
+                    	byte[] buf = tempArray[i].getBytes("iso-8859-1");
+                		if(isutf8 && isie && isget )
+                		{
+                			
+	                    	String charset = UTF8Convertor.takecharset(buf) ;
+	                    	if(charset !=null && charset.startsWith("GB"))
+	                    	{
+	                    		
+	                    		clone[i] = new String(buf, "GBK");
+	                    		
+	                    	}
+//	                    	else if(charset !=null && charset.startsWith("UTF-8"))
+//	                    		clone[i] = new String(tempArray[i].getBytes("iso-8859-1"), charset);
+//	                    	else if(charset !=null && charset.startsWith("UTF-"))
+//	                    		clone[i] = new String(tempArray[i].getBytes("iso-8859-1"), "UTF-16");
+	                    	else
+	                    		clone[i] = new String(buf, newecoding);
+                		}
+                		else
+                		{
+                			clone[i] = new String(buf, newecoding);
+                		}
                     }
                     else
                     {
@@ -99,6 +132,8 @@ public class CharacterEncodingHttpServletRequestWrapper
             return super.getParameterValues(name) ;
         }
     }
+    
+    
     
     
 //    public String[] getParameterValues(String name) {

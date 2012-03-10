@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
  * ≈‰÷√ æ¿˝£∫
  * <filter>
     	<filter-name>CharsetEncoding</filter-name>
-    	<filter-class>com.chinacreator.oa.meeting.util.CharsetEncodingFilter</filter-class>
+    	<filter-class>com.frameworkset.platform.oa.meeting.util.CharsetEncodingFilter</filter-class>
     	<init-param>
       		<param-name>RequestEncoding</param-name>
       		<param-value>iso-8859-1</param-value>
@@ -41,11 +41,12 @@ public class CharsetEncodingFilter implements Filter {
     private String RequestEncoding = null;
     private String ResponseEncoding = null;
     private String mode = "0";
-
+    
     public void init(FilterConfig arg0) throws ServletException {
         this.config = arg0;
         this.RequestEncoding = config.getInitParameter("RequestEncoding");
         this.ResponseEncoding = config.getInitParameter("ResponseEncoding");
+        
         mode = config.getInitParameter("mode");
         if(mode == null)
             mode = "0";
