@@ -40,7 +40,50 @@
         <filter-name>encodingFilter</filter-name>  
         <url-pattern>/rest/*</url-pattern>  
     </filter-mapping>
-  
+    <filter> 
+    <filter-name>securityFilter</filter-name> 
+    <filter-class>org.frameworkset.web.interceptor.MyFirstAuthFilter</filter-class> 
+    <init-param> 
+      <param-name>patternsExclude</param-name> 
+      <param-value> 
+    	/login.jsp
+       </param-value> 
+    </init-param> 
+    <init-param> 
+      <param-name>redirecturl</param-name> 
+      <param-value>/login.jsp</param-value> 
+    </init-param> 
+    <init-param> 
+      <param-name>preventDispatchLoop</param-name> 
+      <param-value>true</param-value> 
+    </init-param>     
+  </filter> 
+
+
+  <filter-mapping> 
+    <filter-name>securityFilter</filter-name> 
+    <url-pattern>*.jsp</url-pattern> 
+  </filter-mapping> 
+  <filter-mapping> 
+    <filter-name>securityFilter</filter-name> 
+    <url-pattern>*.page</url-pattern> 
+  </filter-mapping> 
+  <filter-mapping> 
+    <filter-name>securityFilter</filter-name> 
+    <url-pattern>*.htm</url-pattern> 
+  </filter-mapping>
+  <filter-mapping> 
+    <filter-name>securityFilter</filter-name> 
+    <url-pattern>*.html</url-pattern> 
+  </filter-mapping>
+   <filter-mapping>  
+        <filter-name>securityFilter</filter-name>  
+        <url-pattern>*.ajax</url-pattern>  
+    </filter-mapping>
+    <filter-mapping>  
+        <filter-name>securityFilter</filter-name>  
+        <url-pattern>/rest/*</url-pattern>  
+    </filter-mapping>
 	<!--
         Core dispatcher servlet
     -->

@@ -115,23 +115,7 @@
      <!-- 配置全局控制器方法拦截器 -->
      <property name="org.frameworkset.web.servlet.gloabel.HandlerInterceptors" >
      	<list componentType="bean">
-     		<!-- 配置认证检查拦截器 -->
-     		<property class="org.frameworkset.web.interceptor.MyFirstInterceptor">
-     			<!-- 配置认证检查拦截器拦截url模式规则 -->
-     			<property name="patternsInclude">
-     				<list componentType="string">
-     					<property value="/**/*.htm"/>
-     				</list>
-     			</property>
-     			<!-- 配置认证检查拦截器不拦截url模式规则 -->
-     			<property name="patternsExclude">
-     				<list componentType="string">
-     					<property value="/*.html"/>
-     				</list>
-     			</property>
-     			<property name="redirecturl" value="/login.jsp"/>
-     			<property name="directtype" value="forward"/>
-     		</property>
+     		
      	</list>
      </property>
 </properties>
