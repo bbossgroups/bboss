@@ -7,6 +7,8 @@
                   log4j.jar
                   turbine-2.3.jar
                   
+                  详见readme.txt
+                  
 二.如何配置
 
 1.将/tld目录下的标签库文件放到应用的/WEB-INF/目录下,并且加到web.xml文件中，将所有的库文件和数据库驱动程序库文件放到WEB-INF/lib目录下面

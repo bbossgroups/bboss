@@ -11,6 +11,17 @@ bboss-taglib<-cas server [frameworkset.jar]
 bboss-taglib<-portal [frameworkset.jar]
 bboss-taglib<-bboss-ws [frameworkset.jar]
 #######update function list since bbossgroups-3.5 begin###########
+o 完善字符过滤器，utf-8编码时，get方式下，在ie浏览器中可以自动识别中文参数，无需在js中escape编码即可解决中文乱码问题
+可以在过滤器配置中指定checkiemodeldialog初始化参数为false来禁用该功能：
+    <filter>  
+        <filter-name>encodingFilter</filter-name>  
+        <filter-class>com.frameworkset.common.filter.CharsetEncodingFilter</filter-class>
+	    <init-param>
+	      <param-name>checkiemodeldialog</param-name>
+	      <param-value>false</param-value>
+	    </init-param>
+	    //other init parameters.
+    </filter>  
 o BaseTag和BaseBodyTag实现TryCatchFinally接口
 o 逻辑比较标签改进，除了进行字符串比较外还能进行数字比较，只要实际值是数字优先进行数字比较，比较失败后再进行字符串比较
 LogicELMatch

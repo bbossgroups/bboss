@@ -19,9 +19,9 @@ bboss-util<-kettle [frameworkset-util.jar]
 bboss-util<-portal [frameworkset-util.jar]
 bboss-util<-cas server [frameworkset-util.jar]
 #######update function list since bbossgroups-3.5 begin###########
-1.标签库工程：字符编码过滤器功能改进，解决utf-8字符集下get请求中文乱码问题
-2.util功能：增加字符串编码集识别功能
-3.mvc框架：增加安全认证检测过滤器，替代mvc安全认证拦截器功能
+
+o util功能：增加字符串编码集识别功能
+
 o 合并StringUtil和SimpleStringUtil中的部分方法，StringUtil只保留和HttpServletRequest相关的的方法
 o ValueObjectUtil类中增加一系列数据比较函数
 #######update function list since bbossgroups-3.4 begin###########

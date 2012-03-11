@@ -41,12 +41,15 @@ public class CharsetEncodingFilter implements Filter {
     private String RequestEncoding = null;
     private String ResponseEncoding = null;
     private String mode = "0";
+    private boolean checkiemodeldialog;
     
     public void init(FilterConfig arg0) throws ServletException {
         this.config = arg0;
         this.RequestEncoding = config.getInitParameter("RequestEncoding");
         this.ResponseEncoding = config.getInitParameter("ResponseEncoding");
-        
+        String _checkiemodeldialog = config.getInitParameter("_checkiemodeldialog");
+        if(_checkiemodeldialog != null && _checkiemodeldialog.equals("true"))
+        	this.checkiemodeldialog = true;
         mode = config.getInitParameter("mode");
         if(mode == null)
             mode = "0";
@@ -87,7 +90,7 @@ public class CharsetEncodingFilter implements Filter {
         {
 
             CharacterEncodingHttpServletRequestWrapper mrequestw = new
-                CharacterEncodingHttpServletRequestWrapper(request, RequestEncoding);
+                CharacterEncodingHttpServletRequestWrapper(request, RequestEncoding,checkiemodeldialog);
             CharacterEncodingHttpServletResponseWrapper wresponsew = new
                 CharacterEncodingHttpServletResponseWrapper(response, ResponseEncoding);
             fc.doFilter(mrequestw, wresponsew);
@@ -103,7 +106,7 @@ public class CharsetEncodingFilter implements Filter {
         else
         {
             CharacterEncodingHttpServletRequestWrapper mrequestw = new
-                CharacterEncodingHttpServletRequestWrapper(request, this.RequestEncoding);
+                CharacterEncodingHttpServletRequestWrapper(request, this.RequestEncoding,checkiemodeldialog);
             CharacterEncodingHttpServletResponseWrapper wresponsew = new
                 CharacterEncodingHttpServletResponseWrapper(response, ResponseEncoding);
             fc.doFilter(mrequestw, wresponsew);

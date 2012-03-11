@@ -24,7 +24,7 @@ public class CharacterEncodingHttpServletRequestWrapper
     public static final String USE_MVC_DENCODE_KEY = "org.frameworkset.web.servlet.handler.HandlerUtils.USE_MVC_DENCODE_KEY";
     
 
-    public CharacterEncodingHttpServletRequestWrapper(HttpServletRequest request, String encoding) {
+    public CharacterEncodingHttpServletRequestWrapper(HttpServletRequest request, String encoding,boolean checkiemodeldialog) {
         super(request);
         String agent = request.getHeader("User-Agent");
         isie = agent.contains("MSIE ");
@@ -34,9 +34,9 @@ public class CharacterEncodingHttpServletRequestWrapper
         isutf8 = newecoding.toLowerCase().equals("utf-8");
         this.oldEncoding = request.getCharacterEncoding();
         parameters = new HashMap<String,String[]>();
-        String _checkiemodeldialog = request.getParameter("_checkiemodeldialog");
-        if(_checkiemodeldialog != null && _checkiemodeldialog.equals("true"));
-        	this.checkiemodeldialog = true; 
+//        String _checkiemodeldialog = request.getParameter("_checkiemodeldialog");
+//        if(_checkiemodeldialog != null && _checkiemodeldialog.equals("true"));
+        	this.checkiemodeldialog = checkiemodeldialog; 
     }
 
     public String getParameter(String name) {
@@ -90,7 +90,7 @@ public class CharacterEncodingHttpServletRequestWrapper
                 for (int i = 0; i < tempArray.length; i++) {
                     if ( tempArray[i]!= null) {
                     	byte[] buf = tempArray[i].getBytes("iso-8859-1");
-                		if(isutf8 && isie && isget )
+                		if(checkiemodeldialog && isutf8 && isie && isget )
                 		{
                 			
 	                    	String charset = UTF8Convertor.takecharset(buf) ;
