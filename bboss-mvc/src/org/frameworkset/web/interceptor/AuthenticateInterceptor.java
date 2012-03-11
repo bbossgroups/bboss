@@ -90,7 +90,7 @@ public abstract class AuthenticateInterceptor extends AuthenticateFilter impleme
 				request.setAttribute(accesscontrol_check_result, accesscontrol_check_result_fail);
 				if(!response.isCommitted())
 				{
-					String dispatcherPath = prepareForRendering(request, response);
+					String dispatcherPath = prepareForRendering(request, response,requesturipath);
 					StringBuffer targetUrl = new StringBuffer();
 					if (!this.isforward() && !this.isinclude && this.contextRelative && dispatcherPath.startsWith("/")) {
 						targetUrl.append(request.getContextPath());

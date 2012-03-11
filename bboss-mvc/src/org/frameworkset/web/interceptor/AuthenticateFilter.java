@@ -18,6 +18,7 @@ import org.frameworkset.util.AntPathMatcher;
 import org.frameworkset.util.PathMatcher;
 import org.frameworkset.web.servlet.handler.HandlerMeta;
 import org.frameworkset.web.util.UrlPathHelper;
+import org.frameworkset.web.util.WebUtils;
 
 import com.frameworkset.util.StringUtil;
 
@@ -116,11 +117,11 @@ public abstract class AuthenticateFilter  implements Filter {
 		return needcheck;
 	}
 	protected String prepareForRendering(HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+			HttpServletResponse response,String uripathwithnocontextpath) throws Exception {
 
 		String path = this.getRedirecturl();
 		if (this.preventDispatchLoop) {
-			String uri = request.getRequestURI();
+			String uri = uripathwithnocontextpath;
 			if (path.startsWith("/") ? uri.equals(path) : uri.equals(StringUtil
 					.applyRelativePath(uri, path))) {
 				throw new ServletException(
@@ -137,13 +138,22 @@ public abstract class AuthenticateFilter  implements Filter {
 	}
 	protected abstract boolean check(HttpServletRequest request,
 			HttpServletResponse response, HandlerMeta handlerMeta); 
-	
+	protected String getPathUrl(HttpServletRequest request)
+	{
+		String requesturipath = WebUtils.getHANDLER_Mappingpath(request);
+		if(requesturipath != null)
+			return requesturipath;
+		String contextpath = request.getContextPath();
+    	requesturipath = request.getRequestURI();
+    	requesturipath = requesturipath.substring(contextpath.length());
+    	return requesturipath;
+	}
     protected boolean _preHandle(HttpServletRequest request,
 			HttpServletResponse response, HandlerMeta handlerMeta)
 	throws Exception
 	{
 //    	String requesturipath = WebUtils.getHANDLER_Mappingpath(request);
-    	String requesturipath = request.getRequestURI();
+    	String requesturipath = getPathUrl(request);
 		//做控制逻辑检测，如果检测失败，则执行下述逻辑，否则执行正常的控制器方法		
 		if(needCheck(requesturipath) )
 		{			
@@ -154,7 +164,7 @@ public abstract class AuthenticateFilter  implements Filter {
 				request.setAttribute(accesscontrol_check_result, accesscontrol_check_result_fail);
 				if(!response.isCommitted())
 				{
-					String dispatcherPath = prepareForRendering(request, response);
+					String dispatcherPath = prepareForRendering(request, response,requesturipath);
 					StringBuffer targetUrl = new StringBuffer();
 					if (!this.isforward() && !this.isinclude && this.contextRelative && dispatcherPath.startsWith("/")) {
 						targetUrl.append(request.getContextPath());
