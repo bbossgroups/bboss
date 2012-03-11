@@ -10,7 +10,74 @@ todo
 
 3.国际化功能完善
 6.mvc和gwt结合可行性研究
-#######update function list since bbossgroups-3.5 begin###########
+#######update function list since bbossgroups-3.5 begin########### 
+o 增加安全认证过滤器,废除mvc安全认证拦截器,该过滤器具有以下属性：
+	preventDispatchLoop = false;//循环跳转检测开关，true启用，false禁用，默认为false
+	http10Compatible = true; //whether to stay compatible with HTTP 1.0 clients,true标识兼容，false标识不兼容，默认为true
+	redirecturl = "/login.jsp"; //指定检测失败重定向地址，默认为login.jsp,即安全认证检测失败跳转向指定的页面
+
+	/**
+	 * 跳转方式，有以下三个值，默认为redirect
+	 * include
+	 * redirect
+	 * forward
+	 */
+	directtype = "redirect";
+
+	
+	//明确指出需要检测的页面范围，多个用逗号分隔，可选，如果没有配置则扫描所有页面（忽略patternsExclude指定的相关页面）
+	//可以是指定包含通配符*的页面地址，用来模糊匹配多个页面
+	patternsInclude;
+	//明确指出不需要检测的页面范围，多个用逗号分隔，可选，如果没有配置则扫描所有页面或者扫描patternsInclude指定的页面
+	//可以是指定包含通配符*的页面地址，用来模糊匹配多个页面
+	patternsExclude;
+配置方法如下：
+ <filter> 
+    <filter-name>securityFilter</filter-name> 
+    <filter-class>org.frameworkset.web.interceptor.MyFirstAuthFilter</filter-class> 
+    <init-param> 
+      <param-name>patternsExclude</param-name> 
+      <param-value> 
+    	/login.jsp
+       </param-value> 
+    </init-param> 
+    <init-param> 
+      <param-name>redirecturl</param-name> 
+      <param-value>/login.jsp</param-value> 
+    </init-param> 
+    <init-param> 
+      <param-name>preventDispatchLoop</param-name> 
+      <param-value>true</param-value> 
+    </init-param>     
+  </filter> 
+
+//要扫描的页面规则配置
+  <filter-mapping> 
+    <filter-name>securityFilter</filter-name> 
+    <url-pattern>*.jsp</url-pattern> 
+  </filter-mapping> 
+  <filter-mapping> 
+    <filter-name>securityFilter</filter-name> 
+    <url-pattern>*.page</url-pattern> 
+  </filter-mapping> 
+  <filter-mapping> 
+    <filter-name>securityFilter</filter-name> 
+    <url-pattern>*.htm</url-pattern> 
+  </filter-mapping>
+  <filter-mapping> 
+    <filter-name>securityFilter</filter-name> 
+    <url-pattern>*.html</url-pattern> 
+  </filter-mapping>
+   <filter-mapping>  
+        <filter-name>securityFilter</filter-name>  
+        <url-pattern>*.ajax</url-pattern>  
+    </filter-mapping>
+    <filter-mapping>  
+        <filter-name>securityFilter</filter-name>  
+        <url-pattern>/rest/*</url-pattern>  
+    </filter-mapping>
+    
+    
 o 改进StringHttpMessageConverter转换器，增加responseCharset属性，用于全局指定@ResponseBody String类型相应的字符编码，
 默认值为"ISO-8859-1"，使用方法为f:responseCharset="UTF-8"，例如：
 <property class="org.frameworkset.http.converter.StringHttpMessageConverter" f:responseCharset="UTF-8"/>
