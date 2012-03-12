@@ -49,10 +49,31 @@
     	/login.jsp
        </param-value> 
     </init-param> 
+     <init-param> 
+      <param-name>enablePermissionCheck</param-name> 
+      <param-value>true</param-value> 
+    </init-param> 
+    <init-param> 
+      <param-name>permissionExclude</param-name> 
+      <param-value> 
+    	/login.jsp
+       </param-value> 
+    </init-param> 
+<!--     <init-param>  -->
+<!--       <param-name>permissionInclude</param-name>  -->
+<!--       <param-value>  -->
+<!--     	/login.jsp -->
+<!--        </param-value>  -->
+<!--     </init-param>  -->
     <init-param> 
       <param-name>redirecturl</param-name> 
       <param-value>/login.jsp</param-value> 
     </init-param> 
+    
+    <init-param> 
+      <param-name>authorfailedurl</param-name> 
+      <param-value>/authorfailed.jsp</param-value> 
+    </init-param>
     <init-param> 
       <param-name>preventDispatchLoop</param-name> 
       <param-value>false</param-value> 

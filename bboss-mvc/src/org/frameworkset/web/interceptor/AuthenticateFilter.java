@@ -47,6 +47,7 @@ public abstract class AuthenticateFilter  implements Filter {
 	protected boolean preventDispatchLoop = false;
 	protected boolean http10Compatible = true;
 	protected String redirecturl = "/login.jsp";
+	
 	public static String REDIRECT = "redirect";
 	public static String FORWARD = "forward";
 	public static String INCLUDE = "include";
@@ -65,7 +66,11 @@ public abstract class AuthenticateFilter  implements Filter {
 	protected List<String> patternsExclude;
 	protected UrlPathHelper urlPathHelper = new UrlPathHelper();
 	
-
+	protected boolean enablePermissionCheck;
+	protected List<String> permissionExclude;
+	protected List<String> permissionInclude;
+	protected String authorfailedurl = "/authorfailedurl.jsp";
+	
 	protected PathMatcher pathMatcher = new AntPathMatcher();
 
 	protected String encodingScheme;
@@ -73,12 +78,60 @@ public abstract class AuthenticateFilter  implements Filter {
 	
 	protected boolean needCheck(String path)
 	{
+//		boolean needcheck = false;
+//		if(this.patternsExclude == null && this.patternsExclude == null)
+//			return true;
+//		if(this.patternsInclude != null)
+//		{
+//			for(String pattern:this.patternsInclude)
+//			{
+//				if(this.pathMatcher.match(pattern, path))
+//				{
+//					needcheck = true;
+//					break;
+//				}
+//			}
+//			if(needcheck && patternsExclude != null)
+//			{
+//				for(String pattern:this.patternsExclude)
+//				{
+//					if(this.pathMatcher.match(pattern, path))
+//					{
+//						needcheck = false;
+//						break;
+//					}
+//				}
+//			}
+//			
+//		}
+//		else if(patternsExclude != null)
+//		{
+//			needcheck = true;
+//			for(String pattern:this.patternsExclude)
+//			{
+//				if(this.pathMatcher.match(pattern, path))
+//				{
+//					needcheck = false;
+//					break;
+//				}
+//			}
+//		}
+//		else
+//			needcheck = true;
+//		
+//		return needcheck;
+		return needCheck(path,patternsExclude,patternsInclude);
+	}
+	
+	
+	protected boolean needCheck(String path,List<String> patternsExclude,List<String> patternsInclude)
+	{
 		boolean needcheck = false;
-		if(this.patternsExclude == null && this.patternsExclude == null)
+		if(patternsExclude == null && patternsExclude == null)
 			return true;
-		if(this.patternsInclude != null)
+		if(patternsInclude != null)
 		{
-			for(String pattern:this.patternsInclude)
+			for(String pattern:patternsInclude)
 			{
 				if(this.pathMatcher.match(pattern, path))
 				{
@@ -88,7 +141,7 @@ public abstract class AuthenticateFilter  implements Filter {
 			}
 			if(needcheck && patternsExclude != null)
 			{
-				for(String pattern:this.patternsExclude)
+				for(String pattern:patternsExclude)
 				{
 					if(this.pathMatcher.match(pattern, path))
 					{
@@ -102,7 +155,7 @@ public abstract class AuthenticateFilter  implements Filter {
 		else if(patternsExclude != null)
 		{
 			needcheck = true;
-			for(String pattern:this.patternsExclude)
+			for(String pattern:patternsExclude)
 			{
 				if(this.pathMatcher.match(pattern, path))
 				{
@@ -119,7 +172,51 @@ public abstract class AuthenticateFilter  implements Filter {
 	protected String prepareForRendering(HttpServletRequest request,
 			HttpServletResponse response,String uripathwithnocontextpath) throws Exception {
 
-		String path = this.getRedirecturl();
+//		String path = this.getRedirecturl();
+//		if (this.preventDispatchLoop) {
+//			String uri = uripathwithnocontextpath;
+//			if (path.startsWith("/") ? uri.equals(path) : uri.equals(StringUtil
+//					.applyRelativePath(uri, path))) {
+//				throw new ServletException(
+//						"Circular view path ["
+//								+ path
+//								+ "]: would dispatch back "
+//								+ "to the current handler URL ["
+//								+ uri
+//								+ "] again. Check your ViewResolver setup! "
+//								+ "(Hint: This may be the result of an unspecified view, due to default view name generation.)");
+//			}
+//		}
+//		return path;
+		return prepareForRendering(request,response,uripathwithnocontextpath,this.getRedirecturl());
+	}
+	
+	protected String preparePermissionForRendering(HttpServletRequest request,
+			HttpServletResponse response,String uripathwithnocontextpath) throws Exception {
+
+//		String path = this.getRedirecturl();
+//		if (this.preventDispatchLoop) {
+//			String uri = uripathwithnocontextpath;
+//			if (path.startsWith("/") ? uri.equals(path) : uri.equals(StringUtil
+//					.applyRelativePath(uri, path))) {
+//				throw new ServletException(
+//						"Circular view path ["
+//								+ path
+//								+ "]: would dispatch back "
+//								+ "to the current handler URL ["
+//								+ uri
+//								+ "] again. Check your ViewResolver setup! "
+//								+ "(Hint: This may be the result of an unspecified view, due to default view name generation.)");
+//			}
+//		}
+//		return path;
+		return prepareForRendering(request,response,uripathwithnocontextpath,this.getAuthorfailedurl());
+	}
+	
+	protected String prepareForRendering(HttpServletRequest request,
+			HttpServletResponse response,String uripathwithnocontextpath,String renderpath) throws Exception {
+
+		String path = renderpath;
 		if (this.preventDispatchLoop) {
 			String uri = uripathwithnocontextpath;
 			if (path.startsWith("/") ? uri.equals(path) : uri.equals(StringUtil
@@ -138,6 +235,8 @@ public abstract class AuthenticateFilter  implements Filter {
 	}
 	protected abstract boolean check(HttpServletRequest request,
 			HttpServletResponse response, HandlerMeta handlerMeta); 
+	protected abstract boolean checkPermission(HttpServletRequest request,
+			HttpServletResponse response, HandlerMeta handlerMeta,String uri); 
 	protected String getPathUrl(HttpServletRequest request)
 	{
 		String requesturipath = WebUtils.getHANDLER_Mappingpath(request);
@@ -159,6 +258,48 @@ public abstract class AuthenticateFilter  implements Filter {
 		{			
 			boolean checkresult = check(request,
 					response, handlerMeta);
+			if(!checkresult)
+			{
+				request.setAttribute(accesscontrol_check_result, accesscontrol_check_result_fail);
+				if(!response.isCommitted())
+				{
+					String dispatcherPath = prepareForRendering(request, response,requesturipath);
+					StringBuffer targetUrl = new StringBuffer();
+					if (!this.isforward() && !this.isinclude && this.contextRelative && dispatcherPath.startsWith("/")) {
+						targetUrl.append(request.getContextPath());
+					}
+					targetUrl.append(dispatcherPath);
+					
+					sendRedirect(request, response, targetUrl.toString(), http10Compatible);
+				}
+				return false;
+			}
+			else
+			{
+				request.setAttribute(accesscontrol_check_result, accesscontrol_check_result_ok);
+				return true;
+			}
+		}
+		else
+		{
+			request.setAttribute(accesscontrol_check_result, accesscontrol_check_result_ok);
+			return true;
+		}
+		
+	}
+    
+    
+    protected boolean _permissionHandle(HttpServletRequest request,
+			HttpServletResponse response, HandlerMeta handlerMeta)
+	throws Exception
+	{
+//    	String requesturipath = WebUtils.getHANDLER_Mappingpath(request);
+    	String requesturipath = getPathUrl(request);
+		//做控制逻辑检测，如果检测失败，则执行下述逻辑，否则执行正常的控制器方法		
+		if(needCheck(requesturipath,this.permissionExclude,this.permissionInclude) )
+		{			
+			boolean checkresult = checkPermission(request,
+					response, handlerMeta,requesturipath);
 			if(!checkresult)
 			{
 				request.setAttribute(accesscontrol_check_result, accesscontrol_check_result_fail);
@@ -387,7 +528,12 @@ public abstract class AuthenticateFilter  implements Filter {
 				boolean result = preHandle((HttpServletRequest)arg0, (HttpServletResponse)arg1, null);
 				if(result)
 				{
-					arg2.doFilter(arg0, arg1);
+					if(!this.isEnablePermissionCheck())
+						arg2.doFilter(arg0, arg1);
+					else
+					{
+						
+					}
 				}
 			}
 			else
@@ -422,6 +568,13 @@ public abstract class AuthenticateFilter  implements Filter {
 		{
 			setRedirecturl(redirecturl);
 		}
+		String authorfailedurl = arg0.getInitParameter("authorfailedurl");
+		
+		if(authorfailedurl != null && !authorfailedurl.equals(""))
+		{
+			setAuthorfailedurl(authorfailedurl);
+		}
+		
 		String http10Compatible = arg0.getInitParameter("http10Compatible");
 		if(http10Compatible != null && http10Compatible.equals("false"))
 		{
@@ -445,6 +598,28 @@ public abstract class AuthenticateFilter  implements Filter {
 			setDirecttype(directtype);
 		}
 		
+//		protected boolean enablePermissionCheck;
+		String enablePermissionCheck = arg0.getInitParameter("enablePermissionCheck");
+		if(enablePermissionCheck != null && enablePermissionCheck.equals("true"))
+		{
+			setEnablePermissionCheck(true);
+		}
+//		protected List<String> permissionExclude;
+//		protected List<String> permissionInclude;
+		
+		String permissionInclude = arg0.getInitParameter("permissionInclude");
+		if(permissionInclude != null && !permissionInclude.trim().equals(""))
+		{
+			String[] ips = patternsInclude.split(",");
+			setPermissionInclude(convertArrayToList(ips));
+		}
+		String permissionExclude = arg0.getInitParameter("permissionExclude");
+		if(permissionExclude != null && !permissionExclude.trim().equals(""))
+		{
+			String[] ips = patternsExclude.split(",");
+			setPermissionExclude(convertArrayToList(ips));
+		}
+		
 	}
 	
 	private List<String> convertArrayToList(String[] arrays)
@@ -458,6 +633,30 @@ public abstract class AuthenticateFilter  implements Filter {
 			}
 		}
 		return rets;
+	}
+	public boolean isEnablePermissionCheck() {
+		return enablePermissionCheck;
+	}
+	public void setEnablePermissionCheck(boolean enablePermissionCheck) {
+		this.enablePermissionCheck = enablePermissionCheck;
+	}
+	public List<String> getPermissionExclude() {
+		return permissionExclude;
+	}
+	public void setPermissionExclude(List<String> permissionExclude) {
+		this.permissionExclude = permissionExclude;
+	}
+	public List<String> getPermissionInclude() {
+		return permissionInclude;
+	}
+	public void setPermissionInclude(List<String> permissionInclude) {
+		this.permissionInclude = permissionInclude;
+	}
+	public String getAuthorfailedurl() {
+		return authorfailedurl;
+	}
+	public void setAuthorfailedurl(String authorfailedurl) {
+		this.authorfailedurl = authorfailedurl;
 	} 
 	
 	/*************Filter接口实现结束********************/

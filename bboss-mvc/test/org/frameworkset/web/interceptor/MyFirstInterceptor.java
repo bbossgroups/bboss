@@ -51,6 +51,13 @@ public  class MyFirstInterceptor extends AuthenticateInterceptor{
 			return false;
 		return true;
 	}
+
+	@Override
+	protected boolean checkPermission(HttpServletRequest request,
+			HttpServletResponse response, HandlerMeta handlerMeta, String uri) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 	
 
 }

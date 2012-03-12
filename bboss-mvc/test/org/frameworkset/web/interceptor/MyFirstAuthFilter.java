@@ -17,4 +17,11 @@ public class MyFirstAuthFilter extends AuthenticateFilter{
 		return true;
 	}
 
+	@Override
+	protected boolean checkPermission(HttpServletRequest request,
+			HttpServletResponse response, HandlerMeta handlerMeta, String uri) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }
