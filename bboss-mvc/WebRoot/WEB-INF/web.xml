@@ -49,14 +49,24 @@
     	/login.jsp
        </param-value> 
     </init-param> 
+      
+    <init-param> 
+      <param-name>redirecturl</param-name> 
+      <param-value>/login.jsp</param-value> 
+    </init-param> 
+    <!--
+    安全认证过滤器AuthenticateFilter中增加checkPermission方法，应用系统可以继承实现这个方法来实现url权限检测功能，返回true表示有url访问权限，false表示无url访问权限，无权限时将跳转到authorfailedurl属性对应的提示页面
+    enablePermissionCheck属性可以屏蔽权限检测机制
+    -->
      <init-param> 
       <param-name>enablePermissionCheck</param-name> 
       <param-value>true</param-value> 
     </init-param> 
+  
     <init-param> 
       <param-name>permissionExclude</param-name> 
       <param-value> 
-    	/login.jsp
+    	/login.jsp,/authorfailed.jsp
        </param-value> 
     </init-param> 
 <!--     <init-param>  -->
@@ -66,10 +76,6 @@
 <!--        </param-value>  -->
 <!--     </init-param>  -->
     <init-param> 
-      <param-name>redirecturl</param-name> 
-      <param-value>/login.jsp</param-value> 
-    </init-param> 
-    
     <init-param> 
       <param-name>authorfailedurl</param-name> 
       <param-value>/authorfailed.jsp</param-value> 

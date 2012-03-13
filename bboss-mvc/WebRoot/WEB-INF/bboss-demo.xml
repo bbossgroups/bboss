@@ -23,6 +23,7 @@ bboss-demo.xml
 					<list componentType="String">
 						<property value="/index.htm" />
 						<property value="/index.htm?name=test" />
+						<property value="/authorfailed.htm" />
 					</list>
 				</property>
 				<property name="formlist">

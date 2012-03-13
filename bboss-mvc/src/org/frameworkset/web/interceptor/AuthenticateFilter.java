@@ -44,6 +44,11 @@ public abstract class AuthenticateFilter  implements Filter {
 	public static final String accesscontrol_check_result = "com.frameworkset.platform.security.accesscontrol_check_result";
 	public static final String accesscontrol_check_result_ok = "ok";
 	public static final String accesscontrol_check_result_fail = "fail";
+	
+	
+	public static final String accesscontrol_permissioncheck_result = "com.frameworkset.platform.security.accesscontrol_permissioncheck_result";
+	public static final String accesscontrol_permissioncheck_result_ok = "ok";
+	public static final String accesscontrol_permissioncheck_result_fail = "fail";
 	protected boolean preventDispatchLoop = false;
 	protected boolean http10Compatible = true;
 	protected String redirecturl = "/login.jsp";
@@ -58,6 +63,7 @@ public abstract class AuthenticateFilter  implements Filter {
 	/**
 	 * redirect
 	 * forward
+	 * include
 	 */
 	protected String directtype = "redirect";
 	protected boolean contextRelative = true;
@@ -70,7 +76,22 @@ public abstract class AuthenticateFilter  implements Filter {
 	protected List<String> permissionExclude;
 	protected List<String> permissionInclude;
 	protected String authorfailedurl = "/authorfailedurl.jsp";
+	/**
+	 * redirect
+	 * forward
+	 * include
+	 * 权限检测定向方法暂时不用，和认证检测公用directtype属性
+	 */
+	protected String permissiondirecttype = "redirect";
 	
+	public String getPermissiondirecttype() {
+		return permissiondirecttype;
+	}
+
+
+	public void setPermissiondirecttype(String permissiondirecttype) {
+		this.permissiondirecttype = permissiondirecttype;
+	}
 	protected PathMatcher pathMatcher = new AntPathMatcher();
 
 	protected String encodingScheme;
@@ -302,10 +323,10 @@ public abstract class AuthenticateFilter  implements Filter {
 					response, handlerMeta,requesturipath);
 			if(!checkresult)
 			{
-				request.setAttribute(accesscontrol_check_result, accesscontrol_check_result_fail);
+				request.setAttribute(accesscontrol_permissioncheck_result, accesscontrol_permissioncheck_result_fail);
 				if(!response.isCommitted())
 				{
-					String dispatcherPath = prepareForRendering(request, response,requesturipath);
+					String dispatcherPath = this.preparePermissionForRendering(request, response,requesturipath);
 					StringBuffer targetUrl = new StringBuffer();
 					if (!this.isforward() && !this.isinclude && this.contextRelative && dispatcherPath.startsWith("/")) {
 						targetUrl.append(request.getContextPath());
@@ -318,13 +339,13 @@ public abstract class AuthenticateFilter  implements Filter {
 			}
 			else
 			{
-				request.setAttribute(accesscontrol_check_result, accesscontrol_check_result_ok);
+				request.setAttribute(accesscontrol_permissioncheck_result, accesscontrol_permissioncheck_result_ok);
 				return true;
 			}
 		}
 		else
 		{
-			request.setAttribute(accesscontrol_check_result, accesscontrol_check_result_ok);
+			request.setAttribute(accesscontrol_permissioncheck_result, accesscontrol_permissioncheck_result_ok);
 			return true;
 		}
 		
@@ -340,6 +361,27 @@ public abstract class AuthenticateFilter  implements Filter {
 					response, handlerMeta);
 		}
 		else if(result.equals(accesscontrol_check_result_ok))
+		{
+			return true;
+		}
+		else 
+//			if(result.equals(accesscontrol_check_result_ok))
+		{
+			return false;
+		}
+		
+		
+	}
+	public boolean prepermissionHandle(HttpServletRequest request,
+			HttpServletResponse response, HandlerMeta handlerMeta)
+			throws Exception {
+		String result = (String)request.getAttribute(accesscontrol_permissioncheck_result);
+		if(result == null)
+		{
+			return _permissionHandle(request,
+					response, handlerMeta);
+		}
+		else if(result.equals(accesscontrol_permissioncheck_result_ok))
 		{
 			return true;
 		}
@@ -525,14 +567,16 @@ public abstract class AuthenticateFilter  implements Filter {
 		try {
 			if(arg0 instanceof HttpServletRequest)
 			{
-				boolean result = preHandle((HttpServletRequest)arg0, (HttpServletResponse)arg1, null);
+				boolean result = preHandle((HttpServletRequest)arg0, (HttpServletResponse)arg1, null);//认证检测
 				if(result)
 				{
-					if(!this.isEnablePermissionCheck())
+					if(!this.isEnablePermissionCheck())//如果没有启用权限检测则忽略页面权限检测，继续后续处理流程
 						arg2.doFilter(arg0, arg1);
 					else
 					{
-						
+						result = prepermissionHandle((HttpServletRequest)arg0, (HttpServletResponse)arg1, null);//权限检测
+						if(result)
+							arg2.doFilter(arg0, arg1);
 					}
 				}
 			}

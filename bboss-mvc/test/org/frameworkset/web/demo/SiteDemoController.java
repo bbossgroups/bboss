@@ -13,6 +13,17 @@ public class SiteDemoController {
 		return "index";
 	}
 	
+	/**
+	 * 这是一个权限检测失败测试控制器方法
+	 * authorfailed.htm
+	 * @param model
+	 */
+	public void authorfailed(ModelMap model)
+	{		
+		
+//		return "index";
+	}
+	
 	public String detail(ModelMap model,@RequestParam(name="demoname") String demoname)
 	{
 		SiteDemoBean bean = null;
