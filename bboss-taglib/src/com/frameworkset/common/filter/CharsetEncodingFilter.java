@@ -47,7 +47,7 @@ public class CharsetEncodingFilter implements Filter {
         this.config = arg0;
         this.RequestEncoding = config.getInitParameter("RequestEncoding");
         this.ResponseEncoding = config.getInitParameter("ResponseEncoding");
-        String _checkiemodeldialog = config.getInitParameter("_checkiemodeldialog");
+        String _checkiemodeldialog = config.getInitParameter("checkiemodeldialog");
         if(_checkiemodeldialog != null && _checkiemodeldialog.equals("true"))
         	this.checkiemodeldialog = true;
         mode = config.getInitParameter("mode");

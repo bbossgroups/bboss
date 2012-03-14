@@ -1000,6 +1000,10 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>encodecount</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>decode</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

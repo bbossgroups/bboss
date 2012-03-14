@@ -1,3 +1,4 @@
+https://github.com/bbossgroups/bbossgroups-3.5.git
 ---------------------------------
 bboss-tablib关联工程：
 ---------------------------------
@@ -11,8 +12,26 @@ bboss-taglib<-cas server [frameworkset.jar]
 bboss-taglib<-portal [frameworkset.jar]
 bboss-taglib<-bboss-ws [frameworkset.jar]
 #######update function list since bbossgroups-3.5 begin###########
+o cell标签增加encodecount属性，用来指定用utf-8编码输出的次数，有些情况下需要编码2次
+使用方法：
+首先检查cell标签中是否包含了以下属性定义，如果没有则加到pager-taglib.tld文件中
+		<attribute>
+			<name>encodecount</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+使用方法：
+ <a href="<%=request.getContextPath() %>/file/downloadFile.htm?fileName=<pg:cell encode="true" encodecount="2" colName="fileName"/>">下载此文件</a>
+ 
+ 服务端控制器方法获取该参数的方法：
+ public @ResponseBody File downloadFile(@RequestParam(decodeCharset="UTF-8")
+	String fileName, HttpServletRequest request)	
+在RequestParam注解中指定decodeCharset为UTF-8即可
+
+修改程序
+CellTag.java
+
 o 完善字符过滤器，utf-8编码时，get方式下，在ie浏览器中可以自动识别中文参数，无需在js中escape编码即可解决中文乱码问题
-可以在过滤器配置中指定checkiemodeldialog初始化参数为false来禁用该功能：
+可以在过滤器配置中指定checkiemodeldialog初始化参数为false来禁用该功能，默认值为false，如果要开启则改为true：
     <filter>  
         <filter-name>encodingFilter</filter-name>  
         <filter-class>com.frameworkset.common.filter.CharsetEncodingFilter</filter-class>

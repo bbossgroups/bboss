@@ -32,54 +32,18 @@
  *****************************************************************************/
 package com.frameworkset.util;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.io.RandomAccessFile;
 import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
-import java.security.AccessController;
 import java.sql.Blob;
 import java.sql.Clob;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.BitSet;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Date;
-import java.util.Enumeration;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Properties;
-import java.util.Set;
-import java.util.StringTokenizer;
-import java.util.TreeSet;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang.StringUtils;
-import org.apache.oro.text.regex.MalformedPatternException;
-import org.apache.oro.text.regex.MatchResult;
-import org.apache.oro.text.regex.Pattern;
-import org.apache.oro.text.regex.PatternCompiler;
-import org.apache.oro.text.regex.PatternMatcher;
-import org.apache.oro.text.regex.PatternMatcherInput;
-import org.apache.oro.text.regex.Perl5Compiler;
-import org.apache.oro.text.regex.Perl5Matcher;
-import org.apache.oro.text.regex.StringSubstitution;
-import org.frameworkset.util.CollectionUtils;
-import org.frameworkset.util.ObjectUtils;
-
-import sun.security.action.GetPropertyAction;
+import org.apache.log4j.Logger;
 
 /**
  * To change for your class or interface DAO÷–VOObject String¿‡–Õ”ÎPO ˝æ›¿‡–Õ◊™ªªπ§æﬂ¿‡.
@@ -89,6 +53,7 @@ import sun.security.action.GetPropertyAction;
  */
 
 public class StringUtil extends SimpleStringUtil {
+	private static Logger log = Logger.getLogger(StringUtil.class);
 	
 	public static String getRealPath(HttpServletRequest request, String path) {
 		String contextPath = request.getContextPath();
@@ -146,7 +111,20 @@ outStr = "2010ƒÍ02‘¬07»’11 ±–Ì£¨÷‹¡È”±±®æØ£∫‘⁄2¬∑π´Ωª≥µ…œ±ª∞««‘£¨≤¢◊•ªÒ“ª√˚œ”“…»
 	}
 
 	
-	
+//	private static String handleCNName(String name,HttpServletRequest request) throws UnsupportedEncodingException
+//	{
+//		 if(isIE(request))
+//         {
+//	            name = java.net.URLEncoder.encode(name.replaceAll(" ", "-"),"UTF-8");
+////	            response.setHeader("Content-Disposition", "attachment; filename=" + name);
+//         }
+//         else
+//         {
+//         	name = new String(name.getBytes(),"ISO-8859-1").replaceAll(" ", "-");
+////	            response.setHeader("Content-Disposition", "attachment; filename=" + name);
+//         }
+//		 return name;
+//	}
 	public static void sendFile(HttpServletRequest request, HttpServletResponse response, File file) throws Exception {
         OutputStream out = null;
         RandomAccessFile raf = null;
@@ -181,9 +159,9 @@ outStr = "2010ƒÍ02‘¬07»’11 ±–Ì£¨÷‹¡È”±±®æØ£∫‘⁄2¬∑π´Ωª≥µ…œ±ª∞««‘£¨≤¢◊•ªÒ“ª√˚œ”“…»
             }
 
             // set some headers
-
-
-            response.setHeader("Content-Disposition", "attachment; filename=" + new String(file.getName().getBytes(),"ISO-8859-1").replaceAll(" ", "-"));
+            String name = handleCNName(file.getName(),request);
+            response.setHeader("Content-Disposition", "attachment; filename=" + name);
+//            response.setHeader("Content-Disposition", "attachment; filename=" + new String(file.getName().getBytes(),"ISO-8859-1").replaceAll(" ", "-"));
             response.setHeader("Accept-Ranges", "bytes");
             response.setHeader("Content-Length", Long.toString(rangeFinish - rangeStart + 1));
             response.setHeader("Content-Range", "bytes " + rangeStart + "-" + rangeFinish + "/" + fileSize);
@@ -254,7 +232,49 @@ outStr = "2010ƒÍ02‘¬07»’11 ±–Ì£¨÷‹¡È”±±®æØ£∫‘⁄2¬∑π´Ωª≥µ…œ±ª∞««‘£¨≤¢◊•ªÒ“ª√˚œ”“…»
 		 return ;
 	 sendFile_( request,  response,  filename,clob.getAsciiStream(),clob.length());
  }
+ public static boolean isIE(HttpServletRequest request)
+ {
+	 String agent = request.getHeader("User-Agent");
+//	 log.debug(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>isie:" + agent);
+     boolean isie = agent.contains("MSIE ");
+//     log.debug(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>isie:" + isie);
+     return isie;
+ }
+ public static boolean isIE6(HttpServletRequest request)
+ {
+	 String clientInfo = request.getHeader("User-Agent");
+	  if(clientInfo.indexOf("MSIE 6") > 0 || clientInfo.indexOf("MSIE 5") > 0){//IE6£¨”√GBK£¨¥À¥¶ µœ÷”…æ÷œﬁ–‘
+	        return true;
+	  }
+	  else
+		  return false;
+ }
  
+ public static String handleCNName(String name,HttpServletRequest request) throws UnsupportedEncodingException
+ {
+	 
+	 String agent = request.getHeader("User-Agent");
+//	 log.debug(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>isie:" + agent);
+     boolean isie = agent.contains("MSIE ");
+     if(isie )
+     {
+//    	 if( (agent.indexOf("MSIE 6") > 0 || agent.indexOf("MSIE 5") > 0))
+//    	 {
+//    		 name = new String(name.getBytes(),"ISO-8859-1").replaceAll(" ", "-"); 
+//    	 }
+//    	 else
+    	 {
+    		 name = java.net.URLEncoder.encode(name.replaceAll(" ", "-"),"UTF-8");
+    	 }
+     }
+     else
+     {
+    	 name = new String(name.getBytes(),"ISO-8859-1").replaceAll(" ", "-"); 
+     }
+     return name;
+     
+	 
+ }
  public static void sendFile_(HttpServletRequest request, HttpServletResponse response, String filename,InputStream in,long fileSize) throws Exception {
         OutputStream out = null;
 //        InputStream in = null;
@@ -294,9 +314,19 @@ outStr = "2010ƒÍ02‘¬07»’11 ±–Ì£¨÷‹¡È”±±®æØ£∫‘⁄2¬∑π´Ωª≥µ…œ±ª∞««‘£¨≤¢◊•ªÒ“ª√˚œ”“…»
             }
 
             // set some headers
-
-
-            response.setHeader("Content-Disposition", "attachment; filename=" + new String(filename.getBytes(),"ISO-8859-1").replaceAll(" ", "-"));
+            
+//            if(isIE(request))
+//            {
+//	            String name = java.net.URLEncoder.encode(filename.replaceAll(" ", "-"));
+//	            response.setHeader("Content-Disposition", "attachment; filename=" + name);
+//            }
+//            else
+//            {
+//            	 response.setHeader("Content-Disposition", "attachment; filename=" + new String(filename.getBytes(),"ISO-8859-1").replaceAll(" ", "-"));
+//            }
+            String name = handleCNName(filename,request);
+            response.setHeader("Content-Disposition", "attachment; filename=" + name);
+//            response.setHeader("Content-Disposition", "attachment; filename=" + new String(filename.getBytes(),"ISO-8859-1").replaceAll(" ", "-"));
             response.setHeader("Accept-Ranges", "bytes");
             response.setHeader("Content-Length", Long.toString(rangeFinish - rangeStart + 1));
             response.setHeader("Content-Range", "bytes " + rangeStart + "-" + rangeFinish + "/" + fileSize);

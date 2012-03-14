@@ -1,3 +1,4 @@
+https://github.com/bbossgroups/bbossgroups-3.5.git
 todo
 
 1.url重写规则可以在以下级别指定：

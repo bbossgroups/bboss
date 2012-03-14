@@ -19,7 +19,7 @@ bboss-util<-kettle [frameworkset-util.jar]
 bboss-util<-portal [frameworkset-util.jar]
 bboss-util<-cas server [frameworkset-util.jar]
 #######update function list since bbossgroups-3.5 begin###########
-
+o 解决附件下载中文名称文件在ie 6下无法下载的问题
 o util功能：增加字符串编码集识别功能
 
 o 合并StringUtil和SimpleStringUtil中的部分方法，StringUtil只保留和HttpServletRequest相关的的方法

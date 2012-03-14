@@ -149,7 +149,7 @@ public class FileController {
 	}
 
 	@HandlerMapping(value = "/file/download.htm")
-	public String downloadFile(@RequestParam(name = "fileName")
+	public String downloadFile(@RequestParam(decodeCharset="UTF-8")
 	String fileName, HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
 		File file = new File(request.getRealPath("/")+"filesdown/"+fileName);
@@ -160,7 +160,7 @@ public class FileController {
 	}
 	
 	@HandlerMapping(value = "/file/downloadFile.htm")
-	public @ResponseBody File downloadFile(@RequestParam(name = "fileName")
+	public @ResponseBody File downloadFile(@RequestParam(decodeCharset="UTF-8")
 	String fileName, HttpServletRequest request)
 			throws IOException {
 		File file = new File(request.getRealPath("/")+"filesdown/"+fileName);

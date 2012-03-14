@@ -74,7 +74,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		    <pg:cell colName="lastModified"></pg:cell>
          </td>
          <td >
-            <a href="<%=request.getContextPath() %>/file/downloadFile.htm?fileName=<pg:cell colName="fileName"></pg:cell>">下载此文件</a>
+            <a href="<%=request.getContextPath() %>/file/downloadFile.htm?fileName=<pg:cell encode="true" encodecount="2" colName="fileName"/>">下载此文件</a>
          </td>
          
         </tr>

@@ -15,6 +15,7 @@
  */
 package com.frameworkset.common.tag.pager.tags;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.text.DecimalFormat;
@@ -29,6 +30,7 @@ import org.apache.log4j.Logger;
 
 import com.chinacreator.cms.driver.htmlconverter.CmsLinkProcessor;
 import com.chinacreator.cms.driver.jsp.CMSServletRequest;
+import com.chinacreator.cms.driver.jsp.InternalImplConverter;
 import com.frameworkset.common.tag.exception.FormulaException;
 import com.frameworkset.common.tag.pager.model.Field;
 import com.frameworkset.common.tag.pager.model.Formula;
@@ -94,6 +96,12 @@ public class CellTag  extends PagerTagSupport {
 	 * 是否进行url编码
 	 */
 	private String encode;
+	
+	/**
+	 * 编码次数，连续编码次数
+	 */
+	private int encodecount = 1;
+	
 
 	/**
 	 * 是否进行url解码
@@ -148,7 +156,7 @@ public class CellTag  extends PagerTagSupport {
         	{
         		HttpServletRequest request = getHttpServletRequest();
 //        		HttpSession session = request.getSession(false) ;
-	        	CMSServletRequest cmsRequest = com.chinacreator.cms.driver.jsp.InternalImplConverter.getInternalRequest(request);
+	        	CMSServletRequest cmsRequest = InternalImplConverter.getInternalRequest(request);
 	        	if( cmsRequest != null)
 	        	{
 //		        	CMSServletRequest internalRequest = (CMSServletRequest)request;
@@ -195,7 +203,30 @@ public class CellTag  extends PagerTagSupport {
 		if(outStr != null)
 		{
 			if(getEncode() != null && getEncode().equals("true"))
-				outStr = URLEncoder.encode(outStr);
+			{
+				if(this.encodecount == 1)
+					try {
+						outStr = URLEncoder.encode(outStr,"UTF-8");
+					} catch (UnsupportedEncodingException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				else if(this.encodecount == 2)
+					try {
+						outStr = URLEncoder.encode(URLEncoder.encode(outStr,"UTF-8"),"UTF-8");
+					} catch (UnsupportedEncodingException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				else if(this.encodecount == 3)
+					try {
+						outStr = URLEncoder.encode(URLEncoder.encode(URLEncoder.encode(outStr,"UTF-8"),"UTF-8"),"UTF-8");
+					} catch (UnsupportedEncodingException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+			}
+			
 			if(getDecode() != null && getDecode().equals("true"))
 				outStr = URLDecoder.decode(outStr);
 		}
@@ -1147,5 +1178,15 @@ public class CellTag  extends PagerTagSupport {
 	{
 		actualseted = true;
 		this.actual = actual;
+	}
+
+
+	public int getEncodecount() {
+		return encodecount;
+	}
+
+
+	public void setEncodecount(int encodecount) {
+		this.encodecount = encodecount;
 	}
 }
