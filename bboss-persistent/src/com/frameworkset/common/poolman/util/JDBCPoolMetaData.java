@@ -88,6 +88,13 @@ public class JDBCPoolMetaData implements Serializable{
     private String jndiclass;
     private String jndiuser;
     private String jndipassword;
+    /**
+     * 是否对数据库信息进行加密：
+     * 账号信息
+     * url信息
+     * 口令信息
+     */
+    private boolean encryptdbinfo = false;
     public String getJndiclass() {
 		return jndiclass;
 	}
@@ -772,6 +779,7 @@ public class JDBCPoolMetaData implements Serializable{
 			this.setJndiuser(extenalInfo.getJndiuser());
 			this.setJndipassword(extenalInfo.getJndipassword());
 			this.setUsepool(extenalInfo.isUsepool());
+			this.setEncryptdbinfo(extenalInfo.isEncryptdbinfo());
 		}
 	}
 
@@ -867,5 +875,13 @@ public class JDBCPoolMetaData implements Serializable{
 
 	public void setJndipassword(String jndipassword) {
 		this.jndipassword = jndipassword;
+	}
+
+	public boolean isEncryptdbinfo() {
+		return encryptdbinfo;
+	}
+
+	public void setEncryptdbinfo(boolean encryptdbinfo) {
+		this.encryptdbinfo = encryptdbinfo;
 	}
 }

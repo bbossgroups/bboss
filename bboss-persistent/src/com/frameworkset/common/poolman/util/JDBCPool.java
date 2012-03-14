@@ -15,6 +15,7 @@
  */
 package com.frameworkset.common.poolman.util;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
@@ -36,6 +37,7 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 import org.apache.log4j.Logger;
+import org.frameworkset.spi.BaseApplicationContext;
 
 import com.frameworkset.common.poolman.DBUtil;
 import com.frameworkset.common.poolman.NestedSQLException;
@@ -43,6 +45,8 @@ import com.frameworkset.common.poolman.PoolManConstants;
 import com.frameworkset.common.poolman.interceptor.InterceptorInf;
 import com.frameworkset.common.poolman.jndi.ContextUtil;
 import com.frameworkset.common.poolman.jndi.DummyContextFactory;
+import com.frameworkset.common.poolman.security.DBInfoEncrypt;
+import com.frameworkset.common.poolman.security.DESDBPasswordEncrypt;
 import com.frameworkset.common.poolman.sql.ColumnMetaData;
 import com.frameworkset.common.poolman.sql.ForeignKeyMetaData;
 import com.frameworkset.common.poolman.sql.PoolManDataSource;
@@ -391,19 +395,85 @@ public class JDBCPool {
 		this.info.setDbtype(this.getDbAdapter().getDBTYPE());
 	}
 	
-	
+	private DBInfoEncrypt getDBInfoEncrypt()
+	{
+		try {
+			Properties  p = BaseApplicationContext.fillProperties();
+			if(p != null)
+			{
+				String DBInfoEncryptclass = p.getProperty("DBInfoEncryptclass");
+				if(DBInfoEncryptclass != null)
+				{
+					DBInfoEncryptclass = DBInfoEncryptclass.trim();
+					return (DBInfoEncrypt)Class.forName(DBInfoEncryptclass).newInstance();
+				}
+				
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		catch (Throwable e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+		}
+		return new DESDBPasswordEncrypt();
+	}
 	private Properties getProperties()
 	{
 		Properties p = new Properties();
 		p.setProperty(PoolManConstants.PROP_DRIVERCLASSNAME, info
 				.getDriver());
-		p.setProperty(PoolManConstants.PROP_URL, info.getURL());
+		DBInfoEncrypt dbInfoEncrypt = getDBInfoEncrypt();
+		if(this.info.isEncryptdbinfo())
+		{
+//			dbInfoEncrypt.decrypt(data)
+			p.setProperty(PoolManConstants.PROP_URL, dbInfoEncrypt.decryptDBUrl(info.getURL()));
+		}
+		else 
+		{
+			p.setProperty(PoolManConstants.PROP_URL, info.getURL());
+		}
+		
 		if (info.getPassword() != null)
-			p.setProperty(PoolManConstants.PROP_PASSWORD, info
-					.getPassword());
+		{
+			if(this.info.isEncryptdbinfo())
+			{
+//				dbInfoEncrypt.decrypt(data)
+				p.setProperty(PoolManConstants.PROP_PASSWORD, dbInfoEncrypt.decryptDBPassword(info
+						.getPassword()));
+			}
+			else 
+			{
+				p.setProperty(PoolManConstants.PROP_PASSWORD, info
+						.getPassword());
+			}
+			
+			
+		}
 		if (info.getUserName() != null)
-			p.setProperty(PoolManConstants.PROP_USERNAME, info
-					.getUserName());
+		{
+			if(this.info.isEncryptdbinfo())
+			{
+				p.setProperty(PoolManConstants.PROP_USERNAME, dbInfoEncrypt.decryptDBUser(info
+						.getUserName()));
+			}
+			else 
+			{
+				p.setProperty(PoolManConstants.PROP_USERNAME, info
+						.getUserName());
+			}
+			
+		}
 		p.setProperty(PoolManConstants.PROP_MAXACTIVE, info
 				.getMaximumSize()
 				+ "");
