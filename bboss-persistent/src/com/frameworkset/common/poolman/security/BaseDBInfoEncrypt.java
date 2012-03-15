@@ -30,6 +30,27 @@ package com.frameworkset.common.poolman.security;
  */
 public abstract class BaseDBInfoEncrypt implements DBInfoEncrypt{
 
+	public String encrypt(String data) {
+		
+		try {
+			return new DESCipher().encrypt(data);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return data;
+	}
+
+	public String decrypt(String data){
+		
+		try {
+			return new DESCipher().decrypt(data);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return data;
+	}
 	public String encryptDBUrl(String url) {
 		// TODO Auto-generated method stub
 		return url;

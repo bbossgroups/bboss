@@ -28,28 +28,7 @@ package com.frameworkset.common.poolman.security;
  */
 public class DESDBUserEncrypt extends BaseDBInfoEncrypt{
 
-	public String encrypt(String data) {
-		
-		try {
-			return new DESCipher().encrypt(data);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return data;
-	}
-
-	public String decrypt(String data){
-		
-		try {
-			return new DESCipher().decrypt(data);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return data;
-	}
-
+	
 	
 	@Override
 	public String encryptDBUser(String user) {
