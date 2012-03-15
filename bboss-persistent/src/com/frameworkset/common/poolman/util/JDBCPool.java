@@ -402,7 +402,7 @@ public class JDBCPool {
 			if(p != null)
 			{
 				String DBInfoEncryptclass = p.getProperty("DBInfoEncryptclass");
-				if(DBInfoEncryptclass != null)
+				if(DBInfoEncryptclass != null && !DBInfoEncryptclass.trim().equals(""))
 				{
 					DBInfoEncryptclass = DBInfoEncryptclass.trim();
 					return (DBInfoEncrypt)Class.forName(DBInfoEncryptclass).newInstance();
