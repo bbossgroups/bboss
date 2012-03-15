@@ -10,11 +10,16 @@
 	<loadmetadata>false</loadmetadata>
     <jndiName>jdbc/mysql-ds</jndiName>
     <driver>com.mysql.jdbc.Driver</driver>
-	<encryptdbinfo>true</encryptdbinfo>
+	<!-- <encryptdbinfo>true</encryptdbinfo>
      <url>b708bd11fa5eb60c7eee4be2c974c2800c5296e4dde70723e9a6f3ceadcbc516</url> 
-
     <username>ac6023515aa7d147</username>
-    <password>40ebe1805f90ebf5</password>
+    <password>40ebe1805f90ebf5</password> -->
+    
+    <encryptdbinfo>false</encryptdbinfo>
+     <url>jdbc:mysql://localhost:3306/cim</url> 
+
+    <username>root</username>
+    <password>123456</password>
 
     <txIsolationLevel>READ_COMMITTED</txIsolationLevel>
 
