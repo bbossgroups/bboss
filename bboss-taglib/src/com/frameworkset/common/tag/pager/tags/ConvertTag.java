@@ -56,30 +56,31 @@ public class ConvertTag extends BaseValueTag{
 	{
 		if(convertData == null || actualValue == null)
 			return actualValue;
-		String key = actualValue.toString(); 
+//		String key = actualValue.toString();
+//		Object key = actualValue;
 		if(scope.equals(scope_request))
 		{
 			Map datas = (Map)request.getAttribute(this.convertData);
 			if(datas == null) return null;
-			return datas.get(key);
+			return datas.get(actualValue);
 		}
 		else if(scope.equals(scope_session))
 		{
 			Map datas = (Map)session.getAttribute(this.convertData);
 			if(datas == null) return null;
-			return datas.get(key);
+			return datas.get(actualValue);
 		}
 		else if(scope.equals(scope_pageContext))
 		{
 			Map datas = (Map)pageContext.getAttribute(this.convertData);
 			if(datas == null) return null;
-			return datas.get(key);
+			return datas.get(actualValue);
 		}
 		else
 		{
 			Map datas = (Map)request.getAttribute(this.convertData);
 			if(datas == null) return null;
-			return datas.get(key);
+			return datas.get(actualValue);
 		}
 		
 			
