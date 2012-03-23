@@ -95,7 +95,9 @@
 			ant svn-update-procedure：执行svn文件替换任务
 		</echo>
 	</target>
-	<target name="default" depends="complete" description="default = build distribution package" />
+	<target name="default" depends="complete" description="default = build distribution package" >
+		<delete dir="${distrib}"/>
+	</target>
 
 	<!-- set global properties for this build -->
 	<property file="build.properties" />
@@ -852,6 +854,7 @@ bbossaop<-cas server [bboss-aop.jar]
 	</target>
 	
 	<target name="cleanall" description="clean all project">
+		<delete dir="${alldistrib}" />
 			<delete dir="${bboss-persistent}/distrib" />
 			<delete dir="${bboss-taglib}/distrib" />
 			<delete dir="${bboss-util}/distrib" />
@@ -897,4 +900,34 @@ bbossaop<-cas server [bboss-aop.jar]
 					
 		</copy>
 	</target>
+	
+	
+	<target name="build-all" description="build bboss all project">
+		<echo>build bboss all project</echo>		
+		<antcall target="build-bboss-util"/>
+		<antcall target="build-bboss-aop-only"/>
+		<antcall target="build-persistent"/>
+		<antcall target="build-bboss-soa"/>
+		<antcall target="build-bboss-taglib-only"/>
+		<antcall target="build-bboss-mvc-only"/>
+		<antcall target="build-bboss-event-only"/>
+		<antcall target="move-all-jars"/>		
+	</target>
+	
+	<target name="move-all-jars" description="move-all-jars">
+		<echo>move-all-jars</echo>
+		<delete dir="${alldistrib}"/>
+		<mkdir dir="${alldistrib}"/>
+		
+		<copy todir="${alldistrib}" overwrite="true">
+			<fileset dir="${bboss-util}/distrib" includes="*.jar" />
+			<fileset dir="${bboss-persistent}/distrib" includes="frameworkset-pool.jar" />
+			<fileset dir="${bboss-taglib}/distrib" includes="*.jar,*.war" />
+			<fileset dir="${bboss-soa}/distrib" includes="*.jar" />
+			<fileset dir="${bboss-mvc}/distrib" includes="*.jar,*.war" />
+			<fileset dir="${bbossevent}/distrib" includes="*.jar" />
+			<fileset dir="${bboss-aop}/distrib" includes="*.jar" />
+		</copy>
+	</target>
+		
 </project>
