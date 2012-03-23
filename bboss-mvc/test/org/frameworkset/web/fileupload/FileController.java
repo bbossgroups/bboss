@@ -7,6 +7,8 @@ import java.io.RandomAccessFile;
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -260,10 +262,27 @@ public class FileController {
 					files.add(uf);
 				}
 			}
+			if(files != null && files.size() > 0)
+				sortfile(files);
 			model.addAttribute("files", files);
 
 			return "files/downloadlist";
 		}
+	   
+	   private void sortfile(List<UpFile> files)
+	   {
+		   Collections.sort(files, new Comparator<UpFile>() {
+
+			@Override
+			public int compare(UpFile o1, UpFile o2) {
+				// TODO Auto-generated method stub
+				return o1.getFileName().toLowerCase().compareTo(o2.getFileName().toLowerCase());
+			}
+
+			
+			   
+		   });
+	   }
 	   
 	   
 	   

@@ -7,6 +7,8 @@ import java.io.RandomAccessFile;
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -91,7 +93,7 @@ public class FileController {
 	}
 
 	@HandlerMapping("/swfupload/deletefiles.htm")
-	public @ResponseBody(charset="UTF-8") String deleteFileOpera(
+	public @ResponseBody String deleteFileOpera(
 			@RequestParam(name = "fileNames", decodeCharset = "UTF-8")
 			String fileNames) throws UnsupportedEncodingException {
 		
@@ -149,7 +151,7 @@ public class FileController {
 	}
 
 	@HandlerMapping(value = "/file/download.htm")
-	public String downloadFile(@RequestParam(name = "fileName")
+	public String downloadFile(@RequestParam(decodeCharset="UTF-8")
 	String fileName, HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
 		File file = new File(request.getRealPath("/")+"filesdown/"+fileName);
@@ -160,7 +162,7 @@ public class FileController {
 	}
 	
 	@HandlerMapping(value = "/file/downloadFile.htm")
-	public @ResponseBody File downloadFile(@RequestParam(name = "fileName")
+	public @ResponseBody File downloadFile(@RequestParam(decodeCharset="UTF-8")
 	String fileName, HttpServletRequest request)
 			throws IOException {
 		File file = new File(request.getRealPath("/")+"filesdown/"+fileName);
@@ -260,10 +262,27 @@ public class FileController {
 					files.add(uf);
 				}
 			}
+			if(files != null && files.size() > 0)
+				sortfile(files);
 			model.addAttribute("files", files);
 
 			return "files/downloadlist";
 		}
+	   
+	   private void sortfile(List<UpFile> files)
+	   {
+		   Collections.sort(files, new Comparator<UpFile>() {
+
+			@Override
+			public int compare(UpFile o1, UpFile o2) {
+				// TODO Auto-generated method stub
+				return o1.getFileName().toLowerCase().compareTo(o2.getFileName().toLowerCase());
+			}
+
+			
+			   
+		   });
+	   }
 	   
 	   
 	   

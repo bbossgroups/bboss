@@ -12,6 +12,7 @@ todo
 3.国际化功能完善
 6.mvc和gwt结合可行性研究
 #######update function list since bbossgroups-3.5 begin########### 
+o 将官网的文件资源下载列表按照文件名称进行排序
 o 增加安全认证过滤器,废除mvc安全认证拦截器,该过滤器具有以下属性：
 	preventDispatchLoop = false;//循环跳转检测开关，true启用，false禁用，默认为false
 	http10Compatible = true; //whether to stay compatible with HTTP 1.0 clients,true标识兼容，false标识不兼容，默认为true

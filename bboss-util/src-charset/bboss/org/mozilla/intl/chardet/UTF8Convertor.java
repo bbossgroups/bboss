@@ -20,37 +20,26 @@ public class UTF8Convertor {
 	{
 		return buffer.toString();
 	}
-	public void convertCharsetToUtf_8(String dir)
+	private boolean contain(String excludedirs[],String name)
+	{
+		for(int i = 0; excludedirs != null && i < excludedirs.length; i ++)
+		{
+			if(name.equals(excludedirs[i]))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+	public void convertCharsetToUtf_8(String dir,final String[] excludedirs,final  String includefiles[])
 	{
 		File root = new File(dir);
 		File[] files = root.listFiles(new FileFilter(){
 
 			public boolean accept(File arg0) {
-				if(arg0.isDirectory() 
-						&& !arg0.getName().equals(".svn") && !arg0.getName().equals("classes")
-						&& !arg0.getName().equals(".settings")
-						&& !arg0.getName().equals("文档")
-						&& !arg0.getName().equals("dbinit-system")
-						&& !arg0.getName().equals("distrib")
-						&& !arg0.getName().equals("doc")
-						&& !arg0.getName().equals("lib")
-						&& !arg0.getName().equals("lib-client")
-						&& !arg0.getName().equals("lib-compile")
-						)
+				if(arg0.isDirectory() && !contain(excludedirs,arg0.getName()))
 					return true;
-				else if(
-						arg0.getName().endsWith(".jsp") 
-						|| arg0.getName().endsWith(".java")  
-						|| arg0.getName().endsWith(".js") 
-						|| arg0.getName().endsWith(".css")
-						|| arg0.getName().endsWith(".txt")
-						|| arg0.getName().endsWith(".properties")
-						|| arg0.getName().endsWith(".html")
-						|| arg0.getName().endsWith(".htm")
-						|| arg0.getName().endsWith(".tld")
-						|| arg0.getName().endsWith(".vm")
-						|| 
-						arg0.getName().endsWith(".xml"))
+				else if(contain(includefiles,arg0.getName()))
 				{
 					return true;
 				}
@@ -77,6 +66,12 @@ public class UTF8Convertor {
 				e.printStackTrace();
 			}
 		}
+	}
+	public void convertCharsetToUtf_8(String dir)
+	{
+		convertCharsetToUtf_8(dir,
+							new String[]{".svn","classes",".settings","文档","dbinit-system","distrib","doc","lib","lib-client","lib-compile"},
+							new String[]{".jsp",".java",".js",".css",".txt",".properties",".html",".htm",".tld",".vm",".xml"});
 				
 	}
 	
@@ -454,8 +449,18 @@ public class UTF8Convertor {
 	public static void main(String[] args) throws Exception
 	{
 		UTF8Convertor convertor = new UTF8Convertor();
+    	//转换文件字符编码GBK,GB2312,gb18030为UTF-8
+		convertor.convertCharsetToUtf_8("D:\\workspace\\smc-desktop");
+		
+		//转换文件字符编码GBK,GB2312,gb18030为UTF-8,指定忽略的目录名称，指定要转换的文件类型
+		convertor.convertCharsetToUtf_8("D:\\workspace\\smc-desktop",
+				new String[]{".svn","classes",".settings","文档","dbinit-system","distrib","doc","lib","lib-client","lib-compile"},
+				new String[]{".jsp",".java",".js",".css",".txt",".properties",".html",".htm",".tld",".vm",".xml"});
+		
+		//获取文件内容编码集
 		 String charset = convertor.takefilecharset(new File("D:\\workspace\\smc-desktop/src-sys/com/frameworkset/platform/sysmgrcore/purviewmanager/PurviewManagerOrgTree.java"));
-		System.out.println(convertor.getUnknown());
+		//打印没有精确识别出字符集的文件信息
+		 System.out.println(convertor.getUnknown());
 		
 	}
 

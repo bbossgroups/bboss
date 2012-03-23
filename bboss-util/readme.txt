@@ -19,6 +19,8 @@ bboss-util<-kettle [frameworkset-util.jar]
 bboss-util<-portal [frameworkset-util.jar]
 bboss-util<-cas server [frameworkset-util.jar]
 #######update function list since bbossgroups-3.5 begin###########
+o SimpleStringUtil类中增加格式化Exception类为String的方法
+o UTF8Convertor类中增加指定目录，指定过滤子目录名列表，指定文件类型列表的编码转换方法
 o 解决附件下载中文名称文件在ie 6下无法下载的问题
 o util功能：增加字符串编码集识别功能
 

@@ -37,6 +37,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStreamWriter;
+import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
@@ -1964,4 +1965,29 @@ outStr = "2010ƒÍ02‘¬07»’11 ±–Ì£¨÷‹¡È”±±®æØ£∫‘⁄2¬∑π´Ωª≥µ…œ±ª∞««‘£¨≤¢◊•ªÒ“ª√˚œ”“…»
 	{
 		return value == null || "".equals(value);
 	}
+	
+	public static String formatException(Throwable exception)
+	{
+		StringWriter out = new StringWriter();
+		exception.printStackTrace(new java.io.PrintWriter(out));
+		String errorMessage = out.toString();
+		errorMessage = errorMessage.replaceAll("\\n",
+				"\\\\n");
+		errorMessage = errorMessage.replaceAll("\\r",
+				"\\\\r");
+		return errorMessage;
+	}
+	
+	public static String exceptionToString(Throwable exception)
+	{
+		StringWriter out = new StringWriter();
+		exception.printStackTrace(new java.io.PrintWriter(out));
+		String errorMessage = out.toString();
+//		errorMessage = errorMessage.replaceAll("\\n",
+//				"\\\\n");
+//		errorMessage = errorMessage.replaceAll("\\r",
+//				"\\\\r");
+		return errorMessage;
+	}
+	
 }
