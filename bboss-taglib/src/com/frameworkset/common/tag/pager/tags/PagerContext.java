@@ -2,7 +2,6 @@ package com.frameworkset.common.tag.pager.tags;
 
 import java.io.Serializable;
 import java.lang.reflect.Array;
-import java.net.URLEncoder;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -39,6 +38,7 @@ import com.frameworkset.common.tag.pager.ListInfoDataInfoImpl;
 import com.frameworkset.common.tag.pager.ObjectDataInfoImpl;
 import com.frameworkset.common.tag.pager.parser.PagerTagExport;
 import com.frameworkset.util.ListInfo;
+import com.frameworkset.util.SimpleStringUtil;
 import com.frameworkset.util.StringUtil;
 
 /**
@@ -840,7 +840,7 @@ public class PagerContext
 	 *            void
 	 */
 	public final void addParamByRequest(String name, String type,
-			Object defauleValue, boolean encode) {
+			Object defauleValue, boolean encode,int encodecount) {
 		if (type == null)
 			return;
 
@@ -855,7 +855,8 @@ public class PagerContext
 			// value = value.trim();
 			if (encode) {
 //				name = URLEncoder.encode(name);
-				value = URLEncoder.encode(value);
+//				value = URLEncoder.encode(value);
+				value = SimpleStringUtil.urlencode(value, "UTF-8",encodecount);
 			}
 			addQueryParam(name, value);
 
@@ -867,7 +868,8 @@ public class PagerContext
 			if (encode) {
 
 //				name = URLEncoder.encode(name);
-				value = URLEncoder.encode(defauleValue.toString());
+//				value = URLEncoder.encode(defauleValue.toString());
+				value = SimpleStringUtil.urlencode(defauleValue.toString(), "UTF-8",encodecount);
 			} else {
 				value = defauleValue.toString();
 			}
@@ -886,7 +888,7 @@ public class PagerContext
 	 * @param type
 	 *            void
 	 */
-	public final void addParamsByRequest(String name, boolean encode) {
+	public final void addParamsByRequest(String name, boolean encode,int encodecount) {
 		
 
 		String values[] = null;
@@ -901,7 +903,8 @@ public class PagerContext
 				if (encode) {
 //					name = URLEncoder.encode(name);
 //					name = name;
-					value = URLEncoder.encode(value);
+//					value = URLEncoder.encode(value);
+					value = SimpleStringUtil.urlencode(value, "UTF-8",encodecount);
 				}
 				addQueryParam(name, value);
 	
@@ -920,23 +923,23 @@ public class PagerContext
 	 * @param type
 	 *            void
 	 */
-	public final void addBeanParams(String name, boolean encode,String scope) {
+	public final void addBeanParams(String name, boolean encode,String scope,int encodecount) {
 		
 		Object bean = request.getAttribute(name);
 		if(bean == null)
 			return ;
 		if(bean instanceof Map)
 		{
-			mapParamsAppend((Map) bean, name,  encode, scope);
+			mapParamsAppend((Map) bean, name,  encode, scope,encodecount);
 		}
 		else
 		{
-			beanParamsAppend( bean, name,  encode, scope);
+			beanParamsAppend( bean, name,  encode, scope,encodecount);
 		}
 		
 	}
 	
-	private final void beanParamsAppend(Object bean,String name, boolean encode,String scope)
+	private final void beanParamsAppend(Object bean,String name, boolean encode,String scope,int encodecount)
 	{
 //		BeanInfo beanInfo;
 //		try {
@@ -988,7 +991,9 @@ public class PagerContext
 				// value = value.trim();
 				
 				if (encode) {					
-					value = URLEncoder.encode(value);
+//					value = URLEncoder.encode(value);
+					value = SimpleStringUtil.urlencode(value, "UTF-8",encodecount);
+					
 				}
 				addQueryParam(name, value);
 	
@@ -1006,7 +1011,8 @@ public class PagerContext
 					Object v_ = Array.get(v, i);
 					String value = String.valueOf(v_);
 					if (encode) {					
-						value = URLEncoder.encode(value);
+//						value = URLEncoder.encode(value);
+						value = SimpleStringUtil.urlencode(value, "UTF-8",encodecount);
 					}
 					addQueryParam(name, value);
 					uri.append(params == 0 ? '?' : '&').append(name).append('=')
@@ -1017,7 +1023,7 @@ public class PagerContext
 		}
 	}
 	
-	private final void mapParamsAppend(Map bean,String name, boolean encode,String scope)
+	private final void mapParamsAppend(Map bean,String name, boolean encode,String scope,int encodecount)
 	{
 		if(bean.isEmpty())
 			return;
@@ -1039,7 +1045,8 @@ public class PagerContext
 				// value = value.trim();
 				
 				if (encode) {					
-					value = URLEncoder.encode(value);
+//					value = URLEncoder.encode(value);
+					value = SimpleStringUtil.urlencode(value, "UTF-8",encodecount);
 				}
 				addQueryParam(name, value);
 	
@@ -1057,7 +1064,8 @@ public class PagerContext
 					Object v_ = Array.get(v, i);
 					String value = String.valueOf(v_);
 					if (encode) {					
-						value = URLEncoder.encode(value);
+						value = SimpleStringUtil.urlencode(value, "UTF-8",encodecount);
+//						value = URLEncoder.encode(value);
 					}
 					addQueryParam(name, value);
 					uri.append(params == 0 ? '?' : '&').append(name).append('=')
@@ -1075,7 +1083,7 @@ public class PagerContext
 	}
 
 	public final void addParam(String name, String value, Object defaultValue,
-			boolean encode) {
+			boolean encode,int encodecount) {
 		// String[] values = null;
 		if (value == null) {
 			value = request.getParameter(name);
@@ -1093,7 +1101,8 @@ public class PagerContext
 			if (encode) {
 //				tempName = URLEncoder.encode(name);
 				tempName = name;
-				tempValue = URLEncoder.encode(value);
+//				tempValue = URLEncoder.encode(value);
+				tempValue = SimpleStringUtil.urlencode(value, "UTF-8",encodecount);
 			} else {
 				tempName = name;
 				tempValue = value;
@@ -1116,7 +1125,9 @@ public class PagerContext
 			if (encode) {
 //				tempName = URLEncoder.encode(name);
 				tempName = name;
-				tempValue = URLEncoder.encode(defaultValue.toString());
+//				tempValue = URLEncoder.encode(defaultValue.toString());
+				tempValue = SimpleStringUtil.urlencode(defaultValue.toString(), "UTF-8",encodecount);
+				
 			} else {
 				tempName = name;
 				tempValue = defaultValue.toString();

@@ -39,9 +39,9 @@ import org.apache.log4j.Logger;
 public class AbandonedTrace implements java.io.Serializable{
 
     /** Date format */
-    private static SimpleDateFormat format = new SimpleDateFormat
-        ("'DBCP object created' yyyy-MM-dd HH:mm:ss " +
-         "'by the following code was never closed:'");
+//    private SimpleDateFormat format = new SimpleDateFormat
+//        ("'DBCP object created' yyyy-MM-dd HH:mm:ss " +
+//         "'by the following code was never closed:'");
     
     private static final Logger log = Logger.getLogger(AbandonedTrace.class);
 
@@ -236,6 +236,9 @@ public class AbandonedTrace implements java.io.Serializable{
      */
     public void printStackTrace() {
         if (createdBy != null) {
+        	 SimpleDateFormat format = new SimpleDateFormat
+        		        ("'DBCP object created' yyyy-MM-dd HH:mm:ss " +
+        		         "'by the following code was never closed:'");
             System.out.println(format.format(new Date(createdTime)));
             createdBy.printStackTrace(System.out);
             log.debug((Object)"Abandoned remove connection:", createdBy);

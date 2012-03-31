@@ -66,7 +66,7 @@ import com.frameworkset.util.SimpleStringUtil;
  */
 public class ValueObjectUtil implements Serializable{
 	private static final Logger log = Logger.getLogger(ValueObjectUtil.class);
-	private static final SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss") ;
+//	private static final SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss") ;
 	
 
 	/**
@@ -465,6 +465,7 @@ public class ValueObjectUtil implements Serializable{
 		Class type,
 		Class toType)
 		throws NoSupportTypeCastException, NumberFormatException {
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		if(obj == null)
 			return null;
 		if (isSameType(type,toType ))

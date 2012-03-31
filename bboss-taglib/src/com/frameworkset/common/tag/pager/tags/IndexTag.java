@@ -64,6 +64,7 @@ public final class IndexTag extends PagerTagSupport {
 	 * 扩展属性，导航按钮是否使用图片
 	 */
     private boolean useimage = false;
+    private boolean usegoimage = false;
     public static final String[] _sizescope = new String[] {"5","10","20","30","40","50","60","70","80","90","100"};
     private String sizescope = null;
     
@@ -149,7 +150,7 @@ public final class IndexTag extends PagerTagSupport {
     public static final String next_image = "next.gif";
     public static final String pre_image = "pre.gif";
     public static final String last_image = "last.gif";
-    public static final String go_image = "go.gif";
+    public static final String go_image = "go.jpg";
     
     /**本属性控制分页标签中哪些导航按钮出现在页面上*/
 	private String export = null;
@@ -324,6 +325,7 @@ public final class IndexTag extends PagerTagSupport {
 //	    pagerContext.getContainerid() = null;
 //	    pagerContext.getSelector() = null;
 	    this.sizescope = null;
+	    this.usegoimage = false;
 		return EVAL_PAGE;
 	}
 
@@ -363,7 +365,7 @@ public final class IndexTag extends PagerTagSupport {
         if( switchcase[8] == 0)
         {
         	if(enable_page_total_size)
-        		ret.append(" 共").append(!pagerContext.ListMode()?pagerContext.getItemCount():pagerContext.getDataSize()).append("条记录  ");
+        		ret.append("共<span class='Total'>").append(!pagerContext.ListMode()?pagerContext.getItemCount():pagerContext.getDataSize()).append("</span>条记录  ");
         }
 
 		//ret.append("<div align=\"right\">");
@@ -371,35 +373,33 @@ public final class IndexTag extends PagerTagSupport {
 			long serial =
 				Math.min(pagerContext.getPageNumber() + 1, pagerContext.getPageCount());
             if(!pagerContext.isWapflag())
-			    ret.append("第" + serial + "页");
+			    ret.append("<span class='current'>" + serial + "</span>/");
             else
-                ret.append("<br/>第" + serial + "页");
+                ret.append("<span class='current'>" + serial + "</span>/");
 		}
 		if (switchcase[1] == 0) {
             if(!pagerContext.isWapflag())
                 ret.append(
-                    "	共"
-                        + pagerContext.getPageCount()
-                        + "页	");
+                		pagerContext.getPageCount()
+                        + " 页");
             else
                 ret.append(
-                    "	共"
-                        + pagerContext.getPageCount()
-                        + "页	");
+                		pagerContext.getPageCount()
+                        + " 页");
 
 		}
 		
 
 		if (switchcase[2] == 0) {
-            if(!pagerContext.isWapflag())
-    			ret.append(this.getFirstContent()).append("	");
+			if(!pagerContext.isWapflag() )
+				ret.append("<span class='next'>"+this.getFirstContent()).append("</span>");           
             else
                 ret.append(this.getWapFirstContent()).append("	");
 		}
 
 		if (switchcase[3] == 0) {
             if(!pagerContext.isWapflag())
-    			ret.append(this.getPrevContent()).append("	");
+    			ret.append("<span class='next'>"+this.getPrevContent()).append("</span>	");
             else
                 ret.append(this.getWapPrevContent()).append("	");
 		}
@@ -413,12 +413,12 @@ public final class IndexTag extends PagerTagSupport {
         }
 		if (switchcase[4] == 0)
             if(!pagerContext.isWapflag())
-			    ret.append(this.getNextContent()).append("	");
+			    ret.append("<span class='next'>"+this.getNextContent()).append("</span>");
             else
                 ret.append(this.getWapNextContent()).append("	");
 		if (switchcase[5] == 0)
             if(!pagerContext.isWapflag())
-    			ret.append(this.getLastContent()).append("	");
+    			ret.append("<span class='next'>"+this.getLastContent()).append("</span>");
             else
                 ret.append(this.getWapLastContent()).append("	");
 		if (switchcase[6] == 0)
@@ -496,7 +496,7 @@ public final class IndexTag extends PagerTagSupport {
 			}
 			select.addElement(option);
 		}
-		return " 每页显示" + select.toString() + "条记录";
+		return " <span class='pages1'>每页显示" + select.toString() + "条</span>";
 		
 	}
 	
@@ -600,7 +600,7 @@ public final class IndexTag extends PagerTagSupport {
 		if (firstUrl.equals(""))
 		{
 		    if(!this.useimage)
-		        return "首 页";
+		        return "<a href='#'>首 页</a>";
 		    else
 		    {
 		        IMG image = new IMG();
@@ -639,6 +639,7 @@ public final class IndexTag extends PagerTagSupport {
 		    }
 		    else
 		    {
+		    	a.setHref("#");
 		        a.setOnClick(this.getJqueryUrl(customFirstUrl,pagerContext.getContainerid(),pagerContext.getSelector()));
 		    }
 		    
@@ -798,7 +799,7 @@ public final class IndexTag extends PagerTagSupport {
 		{
 //			return "　上一页";
 			if(!this.useimage)
-	            return "　上一页";
+	            return "<a href='#'>上一页</a>";
 	        else
 	        {
 	            IMG image = new IMG();
@@ -839,10 +840,11 @@ public final class IndexTag extends PagerTagSupport {
             }
             else
             {
+            	a.setHref("#");
                 a.setOnClick(this.getJqueryUrl(customPrevutl,pagerContext.getContainerid(),pagerContext.getSelector()));
             }
             
-            return "　" + a.toString();
+            return  a.toString();
 //		    return "　" + new A().setHref(customPrevutl).setTagText("上一页");
         }
         else
@@ -960,9 +962,10 @@ public final class IndexTag extends PagerTagSupport {
 	            }
 	            else
 	            {
+	            	a.setHref("#");
 	                a.setOnClick(this.getJqueryUrl(customNextUrl,pagerContext.getContainerid(),pagerContext.getSelector()));
 	            }
-			    return "　" + a.toString();
+			    return a.toString();
 	        }
 	        else
 	        {
@@ -992,7 +995,7 @@ public final class IndexTag extends PagerTagSupport {
 			
 		}
 		if(!this.useimage)
-            return "　下一页";
+            return "<a href='#'>下一页</a>";
         else
         {
             IMG image = new IMG();
@@ -1084,11 +1087,11 @@ public final class IndexTag extends PagerTagSupport {
             for(int i=start;i<end;i++){
                 if(totalPage>1){
                     if((i - 1) ==currentPage){
-                        output.append(i+" ");
+                        output.append("<span class='current_page'><a href='#'>"+i+"</a></span> ");
                     }else{
 //                        Context loop = new VelocityContext();       
                         A a = new A();
-                        a.setTagText("[" +i+ "]");
+                        a.setTagText(""+i+"");
                         String url = getCenterPageUrl((i-1) * this.pagerContext.getMaxPageItems(),this.pagerContext.getSortKey());
                         if(pagerContext.getForm() != null)
                         {
@@ -1096,6 +1099,7 @@ public final class IndexTag extends PagerTagSupport {
                         }
                         else
                         {
+                        	a.setHref("#");
                             a.setOnClick(getJqueryUrl(url,pagerContext.getContainerid(),pagerContext.getSelector()));
                         }
                         if(centerextend != null)
@@ -1132,7 +1136,7 @@ public final class IndexTag extends PagerTagSupport {
 		{
 //			return "　尾 页";
 			if(!this.useimage)
-                return "尾 页";
+                return "<a href='#'>尾 页</a>";
             else
             {
                 IMG image = new IMG();
@@ -1173,9 +1177,10 @@ public final class IndexTag extends PagerTagSupport {
             }
             else
             {
+            	a.setHref("#");
                 a.setOnClick(this.getJqueryUrl(customLastUrl,pagerContext.getContainerid(),pagerContext.getSelector()));
             }
-            return "　" + a.toString();
+            return a.toString();
 //		    return "　" + new A().setHref(customLastUrl).setTagText("尾 页");
         }
         else
@@ -1736,90 +1741,87 @@ public final class IndexTag extends PagerTagSupport {
               promotion)
                      */
             
-            
-            A a = new A();
-            
-            if(!this.useimage)
-            {
-                a.setOnClick(goTo);
-            
-                a.setTagText("跳转到 ");
-            }
-            else
-            {
-                IMG image = new IMG();                
-                image.setSrc(buildPath(this.getImagedir(), this.go_image));
-                image.setAlt("跳转到");
-                if(this.imageextend != null)
-                {
-                    
-                    image.setExtend(this.imageextend);
-                }
-                image.setOnClick(goTo);
-               
-                a.addElement(image);
-            }
             String pagerjumpto = uuid+".jumpto";
-            a.setName(pagerjumpto);
-            a.setID(pagerjumpto);
-            a.setHref("#");
-            ///a.setStyle("cursor:hand");
-            ret.append(a.toString());
-            Input go = new Input()
             
-            .setName(gotopageid)
-            
+            Input go = (Input) new Input()            
+            .setName(gotopageid)            
             .setType("text")
-            .setSize(2);
-            go.setID(gotopageid);
-            
+            .setSize(2)
+            .setClass("page_input");
+            go.setID(gotopageid);            
             go.setOnKeyDown("keydowngo(event,'"+ pagerjumpto + "')");
-            ret
-                .append(
-                    go.toString())
-                .append(" 页");
-        } else {
-            if(!this.useimage)
-            {
-                Input go = new Input()
-                
-                .setName(gotopageid)
-                .setType("text")
-                .setSize(2)
-                .setDisabled(true);
-                
-                ret
-                    .append("跳转到 ")
-                    .append(
-                        go.toString()                       
-                            )
-                    .append(" 页");
-            }
-            else
-            {
-                IMG image = new IMG();                
-                image.setSrc(buildPath(this.getImagedir(), this.go_image));
-                image.setAlt("跳转到");
-                if(this.imageextend != null)
-                {
+            
+            
+                  
+            
+            	if(this.usegoimage){
+            		ret
+                    .append(" 跳转到"+
+                        go.toString())
+                    .append("页");
+            		IMG image = new IMG();                
+                    image.setSrc(buildPath(this.getImagedir(), this.go_image));
+                    image.setAlt("跳转到");
+                    if(this.imageextend != null)
+                    {
+                        
+                        image.setExtend(this.imageextend);
+                    }
+                    image.setOnClick(goTo);                   
+                    ret.append(image.toString());
+            	}else{
+            		
+            		A a = new A();     
+            		a.setOnClick(goTo);            
+                    a.setTagText("跳转到");
+                    ret.append(a.toString()).append(go.toString()).append("页");
                     
-                    image.setExtend(this.imageextend);
-                }
-               
-                Input go = new Input()
+            	}                
+            
+            
+        } else {
+            
+            	
+            	if(this.usegoimage){
+            		Input go = ((Input) new Input()                
+                    .setName(gotopageid)
+                    .setType("text")
+                    .setSize(2)
+                    .setClass("page_input"))
+                    .setDisabled(true);
+            		ret
+                    .append(" 跳转到"+
+                        go.toString())
+                    .append("页");
+            		IMG image = new IMG();                
+                    image.setSrc(buildPath(this.getImagedir(), this.go_image));
+                    image.setAlt("跳转到");
+                    if(this.imageextend != null)
+                    {
+                        
+                        image.setExtend(this.imageextend);
+                    }
+//                    image.setOnClick(goTo);                   
+                    ret.append(image.toString());
+            	}else{
+            		
+            		Input go = ((Input) new Input()                
+                    .setName(gotopageid)
+                    .setType("text")
+                    .setSize(2)
+                    .setClass("page_input"))
+                    .setDisabled(true);
+                    
+                    ret
+                        .append(" 跳转到")
+                        .append(
+                            go.toString()                       
+                                )
+                        .append("页");
+                    
+            	}     
                 
-                .setName(gotopageid)
-                .setType("text")
-                .setSize(2)
-                .setDisabled(true);
-                
-                ret
-                    .append(image.toString())
-                    .append(
-                        go.toString()                       
-                            )
-                    .append(" 页");
-            }
+            
             
         }
 
@@ -1887,6 +1889,16 @@ public final class IndexTag extends PagerTagSupport {
 	 */
 	public void setSizescope(String sizescope) {
 		this.sizescope = sizescope;
+	}
+
+
+	public boolean isUsegoimage() {
+		return usegoimage;
+	}
+
+
+	public void setUsegoimage(boolean usegoimage) {
+		this.usegoimage = usegoimage;
 	}
 
 

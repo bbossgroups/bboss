@@ -19,6 +19,9 @@ bboss-util<-kettle [frameworkset-util.jar]
 bboss-util<-portal [frameworkset-util.jar]
 bboss-util<-cas server [frameworkset-util.jar]
 #######update function list since bbossgroups-3.5 begin###########
+o 修复ValueObjectUtil日期转换方法多线程安全问题，问题表现为多个不同的用户并发转换时间时，得到不可预期的结果
+升级frameworkset-util.jar可以解决这个问题
+/bboss-util/src/com/frameworkset/util/ValueObjectUtil.java
 o SimpleStringUtil类中增加格式化Exception类为String的方法
 o UTF8Convertor类中增加指定目录，指定过滤子目录名列表，指定文件类型列表的编码转换方法
 o 解决附件下载中文名称文件在ie 6下无法下载的问题

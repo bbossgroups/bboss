@@ -35,9 +35,21 @@ import javax.servlet.jsp.JspException;
 public class BeanParamsTag extends PagerTagSupport {
 
 	private String name  = null;
+	/**
+	 * 编码次数，连续编码次数
+	 */
+	private int encodecount = 1;
 	
 
-    private boolean encode = false;
+    public int getEncodecount() {
+		return encodecount;
+	}
+
+	public void setEncodecount(int encodecount) {
+		this.encodecount = encodecount;
+	}
+
+	private boolean encode = false;
     public void setEncode(boolean encode)
   {
       this.encode = encode;
@@ -66,7 +78,7 @@ public class BeanParamsTag extends PagerTagSupport {
 		
 		this.encode = false;
 		this.name = null;
-		
+		encodecount = 1;
 		return super.doEndTag();
 	}
 
@@ -75,7 +87,7 @@ public class BeanParamsTag extends PagerTagSupport {
 		if(pagerContext != null)
 		{
 			
-			pagerContext.addBeanParams(name,false,"");
+			pagerContext.addBeanParams(name,encode,"",this.encodecount);
 			
 			return EVAL_BODY_INCLUDE;
 		}
@@ -91,7 +103,7 @@ public class BeanParamsTag extends PagerTagSupport {
 			{
 				pagerContext = listTag.getPagerContext();
 				
-				pagerContext.addBeanParams(name,false,"");
+				pagerContext.addBeanParams(name,encode,"",this.encodecount);
 				
 				return EVAL_BODY_INCLUDE; 
 			}

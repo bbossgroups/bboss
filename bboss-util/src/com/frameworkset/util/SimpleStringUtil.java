@@ -82,8 +82,8 @@ import sun.security.action.GetPropertyAction;
  */
 
 public class SimpleStringUtil  {
-	private static final SimpleDateFormat format = new SimpleDateFormat(
-			"yyyy-MM-dd HH:mm:ss");
+//	private static final SimpleDateFormat format = new SimpleDateFormat(
+//			"yyyy-MM-dd HH:mm:ss");
 
 	// ¶ººÅ³£Á¿
 	public static final String COMMA = ",";
@@ -290,7 +290,7 @@ public class SimpleStringUtil  {
 		if (date == null || date.trim().equals("")) {
 			return null;
 		}
-
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		// date = date.replace('-', '/');
 		// SimpleDateFormat format = new SimpleDateFormat();
 		try {
@@ -360,6 +360,7 @@ public class SimpleStringUtil  {
 		if (dates == null) {
 			return null;
 		}
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String[] dates_s = new String[dates.length];
 		for (int i = 0; i < dates.length; i++) {
 			dates_s[i] = format.format(dates[i]);
@@ -1988,6 +1989,111 @@ outStr = "2010Äê02ÔÂ07ÈÕ11Ê±Ðí£¬ÖÜÁéÓ±±¨¾¯£ºÔÚ2Â·¹«½»³µÉÏ±»°ÇÇÔ£¬²¢×¥»ñÒ»ÃûÏÓÒÉÈ
 //		errorMessage = errorMessage.replaceAll("\\r",
 //				"\\\\r");
 		return errorMessage;
+	}
+	
+//	/**
+//	 * ¶Ôvalue²ÉÓÃcharset½øÐÐURLEncode±àÂë£¬±àÂëµÄ´ÎÊý¸ù¾ÝencoudtimesÖ¸¶¨
+//	 * @param value
+//	 * @param charset
+//	 * @param encoudtimes
+//	 * @return
+//	 */
+//	public static String urlencode(String value,String charset,int encodecount)
+//	{
+//		if(value == null)
+//			return value;
+//		else if(encodecount <= 1)
+//			try {
+//				value = URLEncoder.encode(value,"UTF-8");
+//			} catch (UnsupportedEncodingException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//		else if(encodecount == 2)
+//			try {
+//				value = URLEncoder.encode(URLEncoder.encode(value,"UTF-8"),"UTF-8");
+//			} catch (UnsupportedEncodingException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//		else if(encodecount == 3)
+//			try {
+//				value = URLEncoder.encode(URLEncoder.encode(URLEncoder.encode(value,"UTF-8"),"UTF-8"),"UTF-8");
+//			} catch (UnsupportedEncodingException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//		else
+//			try {
+//				for(int i = 0; i < encodecount; i ++)
+//				{
+//					value = URLEncoder.encode(value,"UTF-8");
+//				}
+//				return value;
+//			} catch (Exception e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//		return value;
+//		
+//	}
+	
+	/**
+	 * ¶Ôvalue²ÉÓÃcharset½øÐÐURLEncode±àÂë£¬±àÂëµÄ´ÎÊý¸ù¾ÝencoudtimesÖ¸¶¨
+	 * @param value
+	 * @param charset
+	 * @param encoudtimes
+	 * @return
+	 */
+	public static String urlencode(String value,String charset,int encodecount)
+	{
+ 		if(value == null)
+			return value;
+		else if(encodecount <= 1)
+			try {
+				value = URLEncoder.encode(value,charset);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		else if(encodecount == 2)
+			try {
+				value = URLEncoder.encode(URLEncoder.encode(value,charset),charset);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		else if(encodecount == 3)
+			try {
+				value = URLEncoder.encode(URLEncoder.encode(URLEncoder.encode(value,charset),charset),charset);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		else
+			try {
+				for(int i = 0; i < encodecount; i ++)
+				{
+					value = URLEncoder.encode(value,charset);
+				}
+				return value;
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		return value;
+		
+	}
+	
+	/**
+	 * ¶Ôvalue²ÉÓÃcharset½øÐÐURLEncode±àÂë£¬±àÂëµÄ´ÎÊýÎª1
+	 * @param value
+	 * @param charset
+	 * @return
+	 */
+	public static String urlencode(String value,String charset)
+	{
+		return urlencode(value,charset,1);
 	}
 	
 }

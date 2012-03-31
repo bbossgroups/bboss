@@ -12,6 +12,7 @@ bboss-taglib<-cas server [frameworkset.jar]
 bboss-taglib<-portal [frameworkset.jar]
 bboss-taglib<-bboss-ws [frameworkset.jar]
 #######update function list since bbossgroups-3.5 begin###########
+o index标签增加usegoimage属性，为true时跳转到后面将出现go条片按钮，false不出现，默认不出现
 标签库：convert标签改进，支持各种类型的key，之前只支持String类型的key，现在支持数字类型的key
 o cell标签增加encodecount属性，用来指定用utf-8编码输出的次数，有些情况下需要编码2次
 使用方法：

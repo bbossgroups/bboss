@@ -49,6 +49,10 @@ public final class ParamTag extends PagerTagSupport {
 
 	private String name  = null;
 	private String value = null;
+	/**
+	 * 编码次数，连续编码次数
+	 */
+	private int encodecount = 1;
 
 	private String defaultValue = null;
 
@@ -94,6 +98,7 @@ public final class ParamTag extends PagerTagSupport {
 		this.name = null;
 		this.type = null;
 		this.value = null;
+		encodecount = 1;
 		return super.doEndTag();
 	}
 
@@ -106,11 +111,11 @@ public final class ParamTag extends PagerTagSupport {
 					   (!type.equals(pagerContext.ATTRIBUTE) && !type.equals(pagerContext.PARAMETER)))
 			{
 
-						pagerContext.addParam(name, value,defaultValue,false);
+						pagerContext.addParam(name, value,defaultValue,encode,encodecount);
 			}
 			else
 			{
-				pagerContext.addParamByRequest(name,type,defaultValue,false);
+				pagerContext.addParamByRequest(name,type,defaultValue,encode,encodecount);
 			}
 
 			return EVAL_BODY_INCLUDE;
@@ -131,11 +136,11 @@ public final class ParamTag extends PagerTagSupport {
 						   (!type.equals(pagerContext.ATTRIBUTE) && !type.equals(pagerContext.PARAMETER)))
 				{
 
-					pagerContext.addParam(name, value,defaultValue,false);
+					pagerContext.addParam(name, value,defaultValue,encode,encodecount);
 				}
 				else
 				{
-					pagerContext.addParamByRequest(name,type,defaultValue,false);
+					pagerContext.addParamByRequest(name,type,defaultValue,encode,encodecount);
 				}
 				return EVAL_BODY_INCLUDE; 
 			}
@@ -204,6 +209,14 @@ public final class ParamTag extends PagerTagSupport {
 	 */
 	public void setDefaultValue(String string) {
 		defaultValue = string;
+	}
+
+	public int getEncodecount() {
+		return encodecount;
+	}
+
+	public void setEncodecount(int encodecount) {
+		this.encodecount = encodecount;
 	}
 
 }

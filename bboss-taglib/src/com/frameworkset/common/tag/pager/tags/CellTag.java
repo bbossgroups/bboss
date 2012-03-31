@@ -15,9 +15,7 @@
  */
 package com.frameworkset.common.tag.pager.tags;
 import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.net.URLEncoder;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
@@ -35,6 +33,7 @@ import com.frameworkset.common.tag.exception.FormulaException;
 import com.frameworkset.common.tag.pager.model.Field;
 import com.frameworkset.common.tag.pager.model.Formula;
 import com.frameworkset.util.RegexUtil;
+import com.frameworkset.util.SimpleStringUtil;
 import com.frameworkset.util.StringUtil;
 /**
  * @author biaoping.yin
@@ -204,27 +203,28 @@ public class CellTag  extends PagerTagSupport {
 		{
 			if(getEncode() != null && getEncode().equals("true"))
 			{
-				if(this.encodecount == 1)
-					try {
-						outStr = URLEncoder.encode(outStr,"UTF-8");
-					} catch (UnsupportedEncodingException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				else if(this.encodecount == 2)
-					try {
-						outStr = URLEncoder.encode(URLEncoder.encode(outStr,"UTF-8"),"UTF-8");
-					} catch (UnsupportedEncodingException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				else if(this.encodecount == 3)
-					try {
-						outStr = URLEncoder.encode(URLEncoder.encode(URLEncoder.encode(outStr,"UTF-8"),"UTF-8"),"UTF-8");
-					} catch (UnsupportedEncodingException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+//				if(this.encodecount == 1)
+//					try {
+//						outStr = URLEncoder.encode(outStr,"UTF-8");
+//					} catch (UnsupportedEncodingException e) {
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//					}
+//				else if(this.encodecount == 2)
+//					try {
+//						outStr = URLEncoder.encode(URLEncoder.encode(outStr,"UTF-8"),"UTF-8");
+//					} catch (UnsupportedEncodingException e) {
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//					}
+//				else if(this.encodecount == 3)
+//					try {
+//						outStr = URLEncoder.encode(URLEncoder.encode(URLEncoder.encode(outStr,"UTF-8"),"UTF-8"),"UTF-8");
+//					} catch (UnsupportedEncodingException e) {
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//					}
+				outStr = SimpleStringUtil.urlencode(outStr, "UTF-8",encodecount);
 			}
 			
 			if(getDecode() != null && getDecode().equals("true"))

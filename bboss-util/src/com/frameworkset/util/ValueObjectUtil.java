@@ -124,12 +124,12 @@ public class ValueObjectUtil {
 		};
 	private static final Logger log = Logger.getLogger(ValueObjectUtil.class);
 
-	private static final SimpleDateFormat format = new SimpleDateFormat(
-			"yyyy-MM-dd HH:mm:ss");
+//	private static final SimpleDateFormat format = new SimpleDateFormat(
+//			"yyyy-MM-dd HH:mm:ss");
 	/**
 	 * 缓存所有的日期格式
 	 */
-	private static final Map<String,SimpleDateFormat> dataformats = new HashMap<String,SimpleDateFormat>();
+//	private static final Map<String,SimpleDateFormat> dataformats = new HashMap<String,SimpleDateFormat>();
 
 //	/**
 //	 * Description:获取对象obj的property属性值
@@ -1205,16 +1205,31 @@ public class ValueObjectUtil {
 				toType,null);
 			}
 	
+//	public static SimpleDateFormat getDateFormat(
+//			String dateformat)
+//	{
+//		if(dateformat == null || dateformat.equals(""))
+//			return format;
+//		SimpleDateFormat f = dataformats.get(dateformat);
+//		if(f != null)
+//			return f;
+//		f = new SimpleDateFormat(dateformat);
+//		dataformats.put(dateformat, f);
+//		return f;
+//	}
+	
+
 	public static SimpleDateFormat getDateFormat(
 			String dateformat)
 	{
 		if(dateformat == null || dateformat.equals(""))
-			return format;
-		SimpleDateFormat f = dataformats.get(dateformat);
-		if(f != null)
-			return f;
-		f = new SimpleDateFormat(dateformat);
-		dataformats.put(dateformat, f);
+			return new SimpleDateFormat(
+					"yyyy-MM-dd HH:mm:ss");
+		SimpleDateFormat f = new SimpleDateFormat(dateformat);
+//		if(f != null)
+//			return f;
+		
+//		dataformats.put(dateformat, f);
 		return f;
 	}
 	/**
@@ -2894,6 +2909,8 @@ public class ValueObjectUtil {
 	
 	public static int dateCompare(java.util.Date value1,Object value2)
 	{
+		 SimpleDateFormat format = new SimpleDateFormat(
+					"yyyy-MM-dd HH:mm:ss");
 		try {
 			Class vc2 = value2.getClass();
 			if(java.util.Date.class.isAssignableFrom(vc2))
@@ -2903,7 +2920,7 @@ public class ValueObjectUtil {
 			}
 			else if(String.class.isAssignableFrom(vc2))
 			{
-				java.util.Date v2 = ValueObjectUtil.format.parse((String)value2);
+				java.util.Date v2 = format.parse((String)value2);
 				return dateCompare(value1,v2);
 			}
 			else if(Long.class.isAssignableFrom(vc2))
@@ -2936,7 +2953,7 @@ public class ValueObjectUtil {
 			}
 			else
 			{
-				java.util.Date v2 = ValueObjectUtil.format.parse(String.valueOf(value2));
+				java.util.Date v2 = format.parse(String.valueOf(value2));
 				return dateCompare(value1,v2);
 			}
 				

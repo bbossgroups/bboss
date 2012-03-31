@@ -33,9 +33,20 @@ import javax.servlet.jsp.JspException;
 public class ParamsTag extends PagerTagSupport {
 
 	private String name  = null;
-	
+	/**
+	 * 编码次数，连续编码次数
+	 */
+	private int encodecount = 1;
 
-    private boolean encode = false;
+    public int getEncodecount() {
+		return encodecount;
+	}
+
+	public void setEncodecount(int encodecount) {
+		this.encodecount = encodecount;
+	}
+
+	private boolean encode = false;
     public void setEncode(boolean encode)
   {
       this.encode = encode;
@@ -64,6 +75,7 @@ public class ParamsTag extends PagerTagSupport {
 		
 		this.encode = false;
 		this.name = null;
+		encodecount = 1;
 		
 		return super.doEndTag();
 	}
@@ -73,7 +85,7 @@ public class ParamsTag extends PagerTagSupport {
 		if(pagerContext != null)
 		{
 			
-			pagerContext.addParamsByRequest(name,false);
+			pagerContext.addParamsByRequest(name,this.encode,encodecount);
 			
 			return EVAL_BODY_INCLUDE;
 		}
@@ -89,7 +101,7 @@ public class ParamsTag extends PagerTagSupport {
 			{
 				pagerContext = listTag.getPagerContext();
 				
-				pagerContext.addParamsByRequest(name,false);
+				pagerContext.addParamsByRequest(name,this.encode,encodecount);
 				
 				return EVAL_BODY_INCLUDE; 
 			}

@@ -119,6 +119,9 @@ more details see my blog [http://blog.csdn.net/yin_bp]
 todo list:
 运行aop/ioc的最小依赖包整理
 #######update function list since bbossgroups-3.5 begin###########
+o 改进mvc文件加载过滤器搜索文件规则，大幅提升mvc容器启动速度
+升级bboss-aop.jar即可，相关的程序：
+/bbossaop/src/org/frameworkset/spi/assemble/callback/DefaultAssembleCallbackResolver.java
 o 新增抽象类beaninfoware，用来向组件中注入Pro对象
 org.frameworkset.spi.BeanInfoAware
 使用示例：

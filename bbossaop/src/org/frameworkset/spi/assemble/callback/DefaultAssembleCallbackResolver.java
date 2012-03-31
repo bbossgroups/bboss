@@ -17,6 +17,7 @@
 package org.frameworkset.spi.assemble.callback;
 
 import java.io.File;
+import java.io.FileFilter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -98,13 +99,16 @@ public class DefaultAssembleCallbackResolver implements AssembleCallbackResolver
 			throw new AssembleCallbackException("GetManagerImports("+docbaseType+","+docbase+","+contextFile+")Ê§°Ü£º"+absoluteParentPath + " do not exist.");
 //		String docContextFilePattern = StringUtil.getRealPath(docbase, contextFile);
 		String docContextFilePattern = contextFile;
-		ContextFileFilter fileFilter = new ContextFileFilter(managerImports,absoluteParentPath,docContextFilePattern);
+		
+		FileFilter fileFilter = docbaseImport.isWebBase()?
+								new WebContextFileFilter(managerImports,absoluteParentPath,docContextFilePattern):
+								new ClassPathContextFileFilter(managerImports,absoluteParentPath,docContextFilePattern);
 		
 		getSubFolderManagerImports( parent,fileFilter);
 		return managerImports;
 	}
 	
-	private void getSubFolderManagerImports(File parent,ContextFileFilter fileFilter)
+	private void getSubFolderManagerImports(File parent,FileFilter fileFilter)
 	{
 		File[] files = parent.listFiles(fileFilter);
 		for(int i = 0; files != null && i < files.length; i ++)
@@ -138,13 +142,17 @@ public class DefaultAssembleCallbackResolver implements AssembleCallbackResolver
 		
 	}
 	
-	static class ContextFileFilter implements java.io.FileFilter
+	static class WebContextFileFilter implements java.io.FileFilter
 	{
 		private String absoluteParentPathPattern;
 		private String[] contextFilePattern;
 		private String absoluteParentPath;
+		private String absoluteWEBINFPath;
 		List<ManagerImport> managerImports;
-		ContextFileFilter(List<ManagerImport> managerImports,String absoluteParentPath,String contextFilePattern)
+		private String[] ignoreDirs = new String[]{".svn","classes"};
+		private String[] includeDirs = new String[]{"WEB-INF"};
+		private String[] includeFiles = new String[]{".xml"};
+		WebContextFileFilter(List<ManagerImport> managerImports,String absoluteParentPath,String contextFilePattern)
 		{
 			this.absoluteParentPathPattern = absoluteParentPath.endsWith("/")?absoluteParentPath + "*":absoluteParentPath + "/*";
 //			this.contextFilePattern = contextFilePattern;
@@ -161,16 +169,109 @@ public class DefaultAssembleCallbackResolver implements AssembleCallbackResolver
 				
 			}
 			this.absoluteParentPath = absoluteParentPath;
+			this.absoluteWEBINFPath = SimpleStringUtil.getRealPath(absoluteParentPath, "WEB-INF");
 			this.managerImports = managerImports;
 		}
+		
 		public boolean accept(File pathname) {
 			if(contextFilePattern == null || contextFilePattern.length == 0)
 				return false;
-			if(pathname.isDirectory())
-				return true;
-			String path = pathname.getAbsolutePath();
-			
+			String path = pathname.getAbsolutePath();			
 			path = path.replace('\\', '/');
+			if(pathname.isDirectory())
+			{
+			
+				if(!path.startsWith(this.absoluteWEBINFPath))
+					return false;
+				if(SimpleStringUtil.containKey(ignoreDirs, pathname.getName()))
+					return false;
+				return true;
+			}
+			else
+			{
+				if(!pathname.getName().endsWith(".xml"))
+				{
+					return false;
+				}
+				
+			}
+			
+			String subpath = pathMatcher.extractPathWithinPattern(absoluteParentPathPattern, path);
+			
+			for(String pattern:contextFilePattern)
+			{
+				if(pathMatcher.match(pattern, subpath))
+				{
+					ManagerImport managerimport = new ManagerImport();
+					managerimport.setFile(subpath);
+					managerimport.setRealPath(SimpleStringUtil.getRealPath(absoluteParentPath, subpath));
+					managerimport.setWebbased(true);
+					managerImports.add(managerimport);
+					break;
+				}
+			}
+			
+			return false;
+		}
+		
+		 
+		
+	}
+	
+	
+	static class ClassPathContextFileFilter implements java.io.FileFilter
+	{
+		private String absoluteParentPathPattern;
+		private String[] contextFilePattern;
+		private String absoluteParentPath;
+		private String absoluteWEBINFPath;
+		List<ManagerImport> managerImports;
+		private String[] ignoreDirs = new String[]{".svn","classes"};
+		private String[] includeDirs = new String[]{"WEB-INF"};
+		private String[] includeFiles = new String[]{".xml"};
+		ClassPathContextFileFilter(List<ManagerImport> managerImports,String absoluteParentPath,String contextFilePattern)
+		{
+			this.absoluteParentPathPattern = absoluteParentPath.endsWith("/")?absoluteParentPath + "*":absoluteParentPath + "/*";
+//			this.contextFilePattern = contextFilePattern;
+			String[] patterns = contextFilePattern.split(",");
+			this.contextFilePattern = new String[patterns.length];
+			int i = 0;
+			for(String pattern:patterns)
+			{
+				if(pattern.trim().startsWith("/"))
+					this.contextFilePattern[i] = pattern.trim().substring(1);
+				else
+					this.contextFilePattern[i] = pattern.trim();
+				i ++;
+				
+			}
+			this.absoluteParentPath = absoluteParentPath;
+			this.absoluteWEBINFPath = SimpleStringUtil.getRealPath(absoluteParentPath, "WEB-INF");
+			this.managerImports = managerImports;
+		}
+		
+		public boolean accept(File pathname) {
+			if(contextFilePattern == null || contextFilePattern.length == 0)
+				return false;
+			String path = pathname.getAbsolutePath();			
+			path = path.replace('\\', '/');
+			if(pathname.isDirectory())
+			{
+			
+				
+				if(SimpleStringUtil.containKey(ignoreDirs, pathname.getName()))
+					return false;
+				return false;
+			}
+			else
+			{
+				if(!pathname.getName().endsWith(".xml"))
+				{
+					return false;
+				}
+				
+			}
+			
 			String subpath = pathMatcher.extractPathWithinPattern(absoluteParentPathPattern, path);
 			
 			for(String pattern:contextFilePattern)
