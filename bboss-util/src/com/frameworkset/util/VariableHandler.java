@@ -171,8 +171,9 @@ public class VariableHandler
     }
     
     public static class URLStruction {
-		private List<String> tokens;
-		private List<Variable> variables;
+		protected List<String> tokens;
+		protected List<Variable> variables;
+		
 
 		public List<String> getTokens() {
 			return tokens;
@@ -189,7 +190,67 @@ public class VariableHandler
 		public void setVariables(List<Variable> variables) {
 			this.variables = variables;
 		}
+		
+		
 
+	}
+    
+    public static class SQLStruction extends URLStruction{
+    	private String sql;
+    	private boolean hasVars = true;
+    	public SQLStruction()
+    	{
+    		
+    	}
+    	public SQLStruction(String sql)
+    	{
+    		this.sql = sql;
+    		hasVars = false;
+    	}
+    	
+    	public boolean hasVars()
+    	{
+    		return this.hasVars;
+    	}
+    	public String buildSQL()
+    	{
+    		if(sql == null)
+    		{
+    			if(this.variables != null && variables.size() > 0)
+    			{
+    				
+	    			StringBuffer sql_ = new StringBuffer();
+	    			int tsize = this.tokens.size();
+	    			int vsize = this.variables.size();
+	    			if(tsize == vsize)
+	    			{
+		    			for(int i = 0; i < vsize; i ++)
+		    			{
+		    				sql_.append(tokens.get(i)).append("?");
+		    			}
+	    			}
+	    			else //tsize = vsize + 1;
+	    			{
+	    				for(int i = 0; i < vsize; i ++)
+		    			{	    					
+		    				sql_.append(tokens.get(i)).append("?");
+		    			}
+	    				sql_.append(tokens.get(vsize));
+	    			}
+	    			this.sql = sql_.toString();
+	    			
+    			}
+    			
+    		}
+    		return sql;
+    	}
+		public String getSql() {
+			return sql;
+		}
+		public void setSql(String sql) {
+			this.sql = sql;
+		}
+    	
 	}
 
 	public static class Variable {
@@ -384,7 +445,7 @@ public class VariableHandler
      * @param url
      * @return
      */
-    public static URLStruction parserSQLStruction(String sql) {
+    public static SQLStruction parserSQLStruction(String sql) {
 		if(sql == null || sql.trim().length() == 0)
 			return null;
 		int len = sql.length();
@@ -676,147 +737,20 @@ public class VariableHandler
 		}
 
 		if (variables.size() == 0)
-			return null;
+		{
+			return new SQLStruction(sql);
+		}
 		else {
-			URLStruction itemUrlStruction = new URLStruction();
+			SQLStruction itemUrlStruction = new SQLStruction();
 			itemUrlStruction.setTokens(tokens);
 			itemUrlStruction.setVariables(variables);
+			itemUrlStruction.buildSQL();
 			return itemUrlStruction;
 		}
 
 	}
     
-    public static void testUrlParser()
-    {
-    	String url = "http://localhost:80/detail.html?user=#[account[0][0]]&password=#[password->aaa[0]->bb->cc[0]]love";
-        URLStruction a = parserURLStruction(url);
-		 url =
-		 "http://localhost:80/detail.html?user=#[account&password=password]&love=#[account[key]]";
-		 a = parserURLStruction(url);
-		 url =
-			 "http://localhost:80/detail.html?user=#[account&password=password]&love=#[account";
-//		 
-		 a = parserURLStruction(url);
-		 url =
-			 "http://localhost:80/detail.html?user=#[account&password=#[password&love=#[account";
-		 a = parserURLStruction(url);
-//		 url =
-//			 "http://localhost:80/detail.html";
-//		 
-//		 url =
-//			 "http://localhost:80/#[]detail.html";
-//		 url =
-//			 "#[account";
-		 System.out.println("url:"+url);
-		// Item item = new Item();
-		
-		// Map<String,String> map = new HashMap<String, String>();
-		// map.put("account", "aaa");
-		// map.put("password", "123");
-		// item.combinationItemUrlStruction(a, map);
-
-		if(a != null){
-			
-		
-		List<String> tokens = a.getTokens();
-		for (int k = 0; k < tokens.size(); k++) {
-			System.out.println("tokens[" + k + "]:" + tokens.get(k));
-		}
-		List<Variable> variables = a.getVariables();
-
-		for (int k = 0; k < variables.size(); k++) {
-
-			Variable as = variables.get(k);
-
-			System.out.println("变量名称：" + as.getVariableName());
-			System.out.println("变量对应位置：" + as.getPosition());
-
-		}
-		}
-    }
-    public static void testSQLParser()
-    {
-    	 String url = "http://localhost:80/detail.html?user=#[account[0][0]]&password=#[password->aaa[0]->bb->cc[0]]love";
-         URLStruction a = parserSQLStruction(url);
- 		 url =
- 		 "http://localhost:80/detail.html?user=#[account]&password=#[password]&love=#[account[key]]";
- 		 a = parserSQLStruction(url);
- 		url =
- 	 		 "http://localhost:80/detail.html?user=#[account]&password=#[password]&love=#[account[0";
- 	 		 a = parserSQLStruction(url);
- 	 		 
- 	 		url =
- 	 	 		 "http://localhost:80/detail.html?user=account&password=password&love=account";
- 	 	 		 a = parserSQLStruction(url);
- 	 	 		url =
- 	 	 	 		 "http://localhost:80/detail.html?user=account&password=password]&love=account]";
- 	 	 	 		 a = parserSQLStruction(url);
- 		 url =
- 			 "http://localhost:80/detail.html,user=#[account],password=#[password],account=#[account]";
- 		 a = parserSQLStruction(url);
- 		 
- 		 url =
- 			 "http://localhost:80/#[detail.html,user=#[account],password=#[password],account=#[account]";
- 		 a = parserSQLStruction(url);
-// 		 url =
-// 			 "http://localhost:80/detail.html";
-// 		 
-// 		 url =
-// 			 "http://localhost:80/#[]detail.html";
-// 		 url =
-// 			 "#[account";
- 		 System.out.println("url:"+url);
- 		// Item item = new Item();
- 		
- 		// Map<String,String> map = new HashMap<String, String>();
- 		// map.put("account", "aaa");
- 		// map.put("password", "123");
- 		// item.combinationItemUrlStruction(a, map);
-
- 		if(a != null){
- 			
- 		
-	 		List<String> tokens = a.getTokens();
-	 		for (int k = 0; k < tokens.size(); k++) {
-	 			System.out.println("tokens[" + k + "]:" + tokens.get(k));
-	 		}
-	 		List<Variable> variables = a.getVariables();
-	
-	 		for (int k = 0; k < variables.size(); k++) {
-	
-	 			Variable as = variables.get(k);
-	
-	 			System.out.println("变量名称：" + as.getVariableName());
-	 			System.out.println("变量对应位置：" + as.getPosition());
-	 			//如果变量是对应的数组或者list、set、map中元素的应用，则解析相应的元素索引下标信息
-	 			List<Index> idxs = as.getIndexs();
-	 			if(idxs != null)
-	 			{
-	 				for(int h = 0; h < idxs.size(); h ++)
-	 				{
-	 					Index idx = idxs.get(h);
-	 					if(idx.getInt_idx() > 0)
-	 					{
-	 						System.out.println("元素索引下标："+idx.getInt_idx());
-	 					}
-	 					else
-	 					{
-	 						System.out.println("map key："+idx.getString_idx());
-	 					}
-	 				}
-	 			}
-	
-	 		}
- 		}
-    }
-    public static void main(String[] args)
-    {
-    	testSQLParser();
-        
-        
-        
-        
-    }
+    
     
     
 }

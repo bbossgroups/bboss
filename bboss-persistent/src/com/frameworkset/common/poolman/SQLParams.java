@@ -42,6 +42,7 @@ import org.frameworkset.util.annotations.ValueConstants;
 import com.frameworkset.orm.annotation.Column;
 import com.frameworkset.orm.annotation.PrimaryKey;
 import com.frameworkset.util.VariableHandler;
+import com.frameworkset.util.VariableHandler.SQLStruction;
 import com.frameworkset.util.VelocityUtil;
 
 /**
@@ -92,7 +93,13 @@ public class SQLParams
     {
         this.action = action;
     }
+    /**
+     * 不建议使用，该变量已经被parserSQLStructions所取代
+     * parserResults任然保留用来存放非#[]类型的变量数据
+     */
+    @Deprecated 
     private static final Map<String,String[][]> parserResults = new java.util.WeakHashMap<String,String[][]>();
+    private static final Map<String,SQLStruction> parserSQLStructions = new java.util.WeakHashMap<String,SQLStruction>();
     public String getNewsql()
     {
         return newsql;
@@ -130,6 +137,7 @@ public class SQLParams
     private String evaluateSqlTemplate(String sql)
     {
     	try {
+    		//@Fixed me
 			String realsql = VelocityUtil.evaluate(buildVelocityContext(),
 					"evaluateSqlTemplate:" + sql, sql);
 			return realsql;
