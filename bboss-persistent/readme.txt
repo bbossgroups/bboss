@@ -23,6 +23,19 @@ bboss-persistent<-cas server [frameworkset-pool.jar]
 to do list:
 无
 #######update function list since bbossgroups-3.4 begin###########
+o 持久层框架模板sql中变量解析功能扩展和优化，由正则表达式切换为自主编写的sql变量解析机制
+正则表达式只能解析简单的变量，无法解析复杂的变量格式
+     #[HOST_ID]这种格式正则表达式能够解析
+     #[HOST_ID->bb[0]]这种带引用的格式，正则表达就不能解析了
+     VariableHandler.parserSQLStruction方法可以解析上述两种格式的变量，并且能够将复杂的变量
+
+的信息以Variable列表的方式存储，以供持久层框架对这些变量求值
+
+变量解析功能开发已经完成并经过各种场景的测试，下一步就是就是该机制替换原来的正则表达式方式。
+具体的测试方法请查看测试用例：
+/bboss-util/test/com/frameworkset/util/TestVaribleHandler.java中的相关方法
+public void varialparserUtil()
+public void regexUtilvsVarialparserUtil()
 o 解决连接池中无法查找到tomcat 6和weblogic 容器数据源的问题
 o 解决sql server jtd驱动无法正确找到DB adaptor的问题
 o PreparedDBUtil增加public void setBlob(int i, String x) throws SQLException 方法，用来直接向blob类型字段中存入字符串
