@@ -194,7 +194,11 @@ public class VariableHandler
 
 	public static class Variable {
 		private String variableName;
-
+		private int position;
+		private List<Index> indexs;
+		
+		private Variable parent;
+		private Variable next;
 		public String getVariableName() {
 			return variableName;
 		}
@@ -211,8 +215,59 @@ public class VariableHandler
 			this.position = position;
 		}
 
-		private int position;
+		public List<Index> getIndexs() {
+			return indexs;
+		}
+
+		public void setIndexs(List<Index> indexs) {
+			this.indexs = indexs;
+		}
+
+		public Variable getParent() {
+			return parent;
+		}
+
+		public void setParent(Variable parent) {
+			this.parent = parent;
+		}
+
+		public Variable getNext() {
+			return next;
+		}
+
+		public void setNext(Variable next) {
+			this.next = next;
+		}
+		
+
+		
 	}
+	
+	public static class Index
+	{
+//		private Object index;
+		private int int_idx = -1;
+		private String string_idx;
+		public Index(int index) {
+			super();
+			this.int_idx = index;
+			
+		}
+		public Index(String index) {
+			super();
+			this.string_idx = index;
+			
+		}
+		
+		public int getInt_idx() {
+			return int_idx;
+		}
+		public String getString_idx() {
+			return string_idx;
+		}
+	}
+	
+	
     
     /**
      * 将包含变量的url路径解析成常量字符串列表和变量名称两个列表
@@ -300,8 +355,11 @@ public class VariableHandler
 			tokens.add(token.toString());
 		} else {
 			if (var.length() > 0) {
+//				token.append("#[").append(var);
+//				tokens.add(token.toString());
 				token.append("#[").append(var);
-				tokens.add(token.toString());
+				int idx = tokens.size() - 1;
+				tokens.set(idx,tokens.get(idx)+token.toString());
 			}
 
 		}
@@ -317,29 +375,331 @@ public class VariableHandler
 
 	}
     
-    public static void main(String[] args)
-    {
-//        String pretoken = "\\{";
-//        String endtoken = "\\}";
-//        String url = "${context}/${context0}/${context0}creatorepp";
-//        String regex = buildVariableRegex(pretoken,endtoken);
-//        System.out.print(regex);
-//        String[] vars = variableParser(url,pretoken,endtoken);
-//        System.out.println(vars);
-//        vars = variableParser(url,regex);
-//        
-//        System.out.println(vars);
-        
-        
-        String url = "http://localhost:80/detail.html?user=#[account]&password=#[password]love";
+    
+    /**
+     * 将包含变量的sql语句解析成常量字符串列表和变量名称两个列表
+     * 变量的分界符为#[和],如果url中没有包含变量那么返回null值
+     * 变量数组、list、map的元素取值采用[]结合数字下标和key名称
+     * 变量引用采用->连接符
+     * @param url
+     * @return
+     */
+    public static URLStruction parserSQLStruction(String sql) {
+		if(sql == null || sql.trim().length() == 0)
+			return null;
+		int len = sql.length();
+		int i = 0;
+		StringBuffer token = new StringBuffer();
+		StringBuffer var = new StringBuffer();
+//		StringBuffer index = new StringBuffer();
 		
+		boolean varstart = false;
+		int varstartposition = -1;//记录变量的开始位置
+		//集合索引开始
+		boolean index_start = false;
+		Variable header = null;
+		Variable hh = null;
+		Variable variable = null;
+		List<Index> indexs = null;
+		/**
+		 * 对象属性引用位置开始
+		 */
+		boolean ref_start = false;
+
+		List<Variable> variables = new ArrayList<Variable>();
+		int varcount = 0;
+		List<String> tokens = new ArrayList<String>();
+		while (i < len) {
+			if (sql.charAt(i) == '#') {
+				if(i + 1 < len)
+				{
+					if( sql.charAt(i + 1) == '[')
+					{
+				
+						if (varstart) {//fixed me
+							String partvar = sql.substring(varstartposition,i);
+//							token.append("#[").append(var);							
+							token.append("#[").append(partvar);
+							var.setLength(0);
+						}
+						index_start = false;
+						varstart = true;
+						variable = null;
+						header = null;
+						header = null;
+						hh = null;
+						indexs = null;
+						/**
+						 * 对象属性引用位置开始
+						 */
+						ref_start = false;
+						i = i + 2;
+		
+						varstartposition = i;
+						var.setLength(0);
+						continue;
+					}
+					
+				}
+				
+			}
+
+			if (varstart) {
+				if (sql.charAt(i) == '[') {
+					
+					if(!ref_start)
+					{				
+						if(!index_start)
+						{
+							header = new Variable();
+							header.setPosition(varcount);
+							header.setVariableName(var.toString());
+//							variables.add(header);
+							var.setLength(0);
+							tokens.add(token.toString());
+							token.setLength(0);
+							varcount++;
+							index_start = true;
+							indexs = new ArrayList<Index>();
+							header.setIndexs(indexs);
+							hh = header;
+						}
+						else
+						{
+							//]
+						}
+						
+					}
+					else
+					{
+						if(!index_start)
+						{
+							variable = new Variable();
+							//variable.setPosition(varcount);
+							variable.setVariableName(var.toString());
+							var.setLength(0);
+							header.setNext(variable);
+							header = variable;
+							index_start = true;
+							indexs = new ArrayList<Index>();
+							header.setIndexs(indexs);
+						}
+					}
+					i++;
+//					token.append("#[").append(var);
+					var.setLength(0);
+					continue;
+				} else if (sql.charAt(i) == ']') {
+					if (i == varstartposition) {
+						varstart = false;
+						i++;
+						token.append("#[]");
+						continue;
+					} else {
+						if(index_start)
+						{
+						
+							String t = var.toString();
+							try{
+								int idx = Integer.parseInt(t);
+								indexs.add(new Index(idx));
+							}
+							catch(Exception e)
+							{
+								indexs.add(new Index(t));
+							}
+							var.setLength(0);
+//							index_start = false;
+							if(i + 1 < len)
+							{
+								if(sql.charAt(i + 1) == ']')
+								{
+									index_start = false;
+									indexs = null;
+//									i ++;
+								}
+							}
+							i++;
+							
+						}
+						else if(ref_start)//引用结束，变量定义结束a->b[0]
+						{
+							ref_start = false;
+//							if(sql.charAt(i + 1) == '-' && sql.charAt(i + 2) == '>')
+//							{
+//								
+//							}
+//							else
+							{
+								varstart = false;
+							}
+//							tokens.add(token.toString());
+//							token.setLength(0);
+							varcount++;
+							if(variable == null)
+							{
+								variable = new Variable();
+								//variable.setPosition(varcount);
+								variable.setVariableName(var.toString());
+								var.setLength(0);
+								header.setNext(variable);
+								header = variable;
+							}
+							variables.add(hh);	
+							hh = null;
+							i++;
+						}
+						else if(varstart)
+						{
+							if(header == null)
+							{
+								header = new Variable();
+								header.setPosition(varcount);
+								header.setVariableName(var.toString());
+//								variables.add(header);								
+								var.setLength(0);
+								tokens.add(token.toString());
+								token.setLength(0);
+								varcount++;
+								hh = header;
+							}							
+							varstart = false;
+							variables.add(hh);	
+							hh = null;
+							i++;
+						}
+					}
+				}
+				else if (sql.charAt(i) == '-')
+				{
+					if(i + 1 < len )
+					{
+						if(sql.charAt(i+1) == '>')
+						{
+							if(varstart)
+							{
+								if(!ref_start)
+								{
+									ref_start = true;
+									header = new Variable();
+									header.setPosition(varcount);
+									header.setVariableName(var.toString());
+//									variables.add(header);
+									var.setLength(0);
+									//fixed
+									tokens.add(token.toString());
+									token.setLength(0);
+									varcount++;
+									hh = header;
+								}
+								else
+								{
+									if(variable == null)//没有因为索引下标导致引用对象已经创建，则开始创建对象
+									{
+										variable = new Variable();
+										//variable.setPosition(varcount);
+										variable.setVariableName(var.toString());
+										var.setLength(0);
+										indexs = null;
+										header.setNext(variable);
+										header = variable;
+									}
+									else
+									{
+										if(var.length() > 0)
+										{
+											variable = new Variable();
+											//variable.setPosition(varcount);
+											variable.setVariableName(var.toString());
+											var.setLength(0);
+											indexs = null;
+											header.setNext(variable);
+											header = variable;
+										}
+									}
+								}
+								index_start = false;
+								indexs = null;
+							}
+							else
+							{
+								token.append("->");
+							}
+							i++;
+							i++;
+							continue;
+						}
+						else
+						{
+							var.append(sql.charAt(i)); 
+							i ++;
+						}
+					}
+				}
+				else {
+					var.append(sql.charAt(i)); 
+					i ++;
+				}
+
+			} else {
+				token.append(sql.charAt(i));
+				i ++;
+			}
+		}
+		/**
+		 * 容错处理：
+		 * 情况1.变量没有完全结束(需要反转header对象)
+		 * 情况2.后面的字符串没有变量
+		 * a.完全没有变量的相关关键字
+		 * b.有部分变量定义，但是不全
+		 * 
+		 */
+		if (token.length() > 0) {//情况2.后面的字符串没有变量
+			if (var.length() > 0) {// b.有部分变量定义，但是不全，从变量开始的位置恢复token
+				String partvar = sql.substring(varstartposition);
+				token.append("#[").append(partvar);
+//				token.append("#[").append(var);
+			}
+			tokens.add(token.toString());
+		} 
+		
+		else {
+			if (var.length() > 0) {//情况1.变量没有完全结束，从变量开始的位置恢复token
+//				token.append("#[").append(var);
+				String partvar = sql.substring(varstartposition);
+				token.append("#[").append(partvar);
+				int idx = tokens.size() - 1;
+				tokens.set(idx, tokens.get(idx) + token.toString());
+//				tokens.add(token.toString());
+			}
+
+		}
+
+		if (variables.size() == 0)
+			return null;
+		else {
+			URLStruction itemUrlStruction = new URLStruction();
+			itemUrlStruction.setTokens(tokens);
+			itemUrlStruction.setVariables(variables);
+			return itemUrlStruction;
+		}
+
+	}
+    
+    public static void testUrlParser()
+    {
+    	String url = "http://localhost:80/detail.html?user=#[account[0][0]]&password=#[password->aaa[0]->bb->cc[0]]love";
+        URLStruction a = parserURLStruction(url);
 		 url =
-		 "http://localhost:80/detail.html?user=#[account&password=password]&love=#[account]";
+		 "http://localhost:80/detail.html?user=#[account&password=password]&love=#[account[key]]";
+		 a = parserURLStruction(url);
 		 url =
 			 "http://localhost:80/detail.html?user=#[account&password=password]&love=#[account";
 //		 
+		 a = parserURLStruction(url);
 		 url =
 			 "http://localhost:80/detail.html?user=#[account&password=#[password&love=#[account";
+		 a = parserURLStruction(url);
 //		 url =
 //			 "http://localhost:80/detail.html";
 //		 
@@ -349,7 +709,7 @@ public class VariableHandler
 //			 "#[account";
 		 System.out.println("url:"+url);
 		// Item item = new Item();
-		 URLStruction a = parserURLStruction(url);
+		
 		// Map<String,String> map = new HashMap<String, String>();
 		// map.put("account", "aaa");
 		// map.put("password", "123");
@@ -373,6 +733,88 @@ public class VariableHandler
 
 		}
 		}
+    }
+    public static void testSQLParser()
+    {
+    	 String url = "http://localhost:80/detail.html?user=#[account[0][0]]&password=#[password->aaa[0]->bb->cc[0]]love";
+         URLStruction a = parserSQLStruction(url);
+ 		 url =
+ 		 "http://localhost:80/detail.html?user=#[account]&password=#[password]&love=#[account[key]]";
+ 		 a = parserSQLStruction(url);
+ 		url =
+ 	 		 "http://localhost:80/detail.html?user=#[account]&password=#[password]&love=#[account[0";
+ 	 		 a = parserSQLStruction(url);
+ 	 		 
+ 	 		url =
+ 	 	 		 "http://localhost:80/detail.html?user=account&password=password&love=account";
+ 	 	 		 a = parserSQLStruction(url);
+ 	 	 		url =
+ 	 	 	 		 "http://localhost:80/detail.html?user=account&password=password]&love=account]";
+ 	 	 	 		 a = parserSQLStruction(url);
+ 		 url =
+ 			 "http://localhost:80/detail.html,user=#[account],password=#[password],account=#[account]";
+ 		 a = parserSQLStruction(url);
+ 		 
+ 		 url =
+ 			 "http://localhost:80/#[detail.html,user=#[account],password=#[password],account=#[account]";
+ 		 a = parserSQLStruction(url);
+// 		 url =
+// 			 "http://localhost:80/detail.html";
+// 		 
+// 		 url =
+// 			 "http://localhost:80/#[]detail.html";
+// 		 url =
+// 			 "#[account";
+ 		 System.out.println("url:"+url);
+ 		// Item item = new Item();
+ 		
+ 		// Map<String,String> map = new HashMap<String, String>();
+ 		// map.put("account", "aaa");
+ 		// map.put("password", "123");
+ 		// item.combinationItemUrlStruction(a, map);
+
+ 		if(a != null){
+ 			
+ 		
+	 		List<String> tokens = a.getTokens();
+	 		for (int k = 0; k < tokens.size(); k++) {
+	 			System.out.println("tokens[" + k + "]:" + tokens.get(k));
+	 		}
+	 		List<Variable> variables = a.getVariables();
+	
+	 		for (int k = 0; k < variables.size(); k++) {
+	
+	 			Variable as = variables.get(k);
+	
+	 			System.out.println("变量名称：" + as.getVariableName());
+	 			System.out.println("变量对应位置：" + as.getPosition());
+	 			//如果变量是对应的数组或者list、set、map中元素的应用，则解析相应的元素索引下标信息
+	 			List<Index> idxs = as.getIndexs();
+	 			if(idxs != null)
+	 			{
+	 				for(int h = 0; h < idxs.size(); h ++)
+	 				{
+	 					Index idx = idxs.get(h);
+	 					if(idx.getInt_idx() > 0)
+	 					{
+	 						System.out.println("元素索引下标："+idx.getInt_idx());
+	 					}
+	 					else
+	 					{
+	 						System.out.println("map key："+idx.getString_idx());
+	 					}
+	 				}
+	 			}
+	
+	 		}
+ 		}
+    }
+    public static void main(String[] args)
+    {
+    	testSQLParser();
+        
+        
+        
         
     }
     

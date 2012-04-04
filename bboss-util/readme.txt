@@ -19,6 +19,40 @@ bboss-util<-kettle [frameworkset-util.jar]
 bboss-util<-portal [frameworkset-util.jar]
 bboss-util<-cas server [frameworkset-util.jar]
 #######update function list since bbossgroups-3.5 begin###########
+o 增加变量、数组元素、list/set、map元素变量解析方法,使用方法如下：
+ String url = "http://localhost:80/detail.html?user=#[account[0][0]]&password=#[password->aaa[0]->bb->cc[0]]love";
+         URLStruction a = com.frameworkset.util.VariableHandler.parserSQLStruction(url);
+List<String> tokens = a.getTokens();
+	 		for (int k = 0; k < tokens.size(); k++) {
+	 			System.out.println("tokens[" + k + "]:" + tokens.get(k));
+	 		}
+	 		List<Variable> variables = a.getVariables();
+	
+	 		for (int k = 0; k < variables.size(); k++) {
+	
+	 			Variable as = variables.get(k);
+	
+	 			System.out.println("变量名称：" + as.getVariableName());
+	 			System.out.println("变量对应位置：" + as.getPosition());
+	 			//如果变量是对应的数组或者list、set、map中元素的应用，则解析相应的元素索引下标信息
+	 			List<Index> idxs = as.getIndexs();
+	 			if(idxs != null)
+	 			{
+	 				for(int h = 0; h < idxs.size(); h ++)
+	 				{
+	 					Index idx = idxs.get(h);
+	 					if(idx.getInt_idx() > 0)
+	 					{
+	 						System.out.println("元素索引下标："+idx.getInt_idx());
+	 					}
+	 					else
+	 					{
+	 						System.out.println("map key："+idx.getString_idx());
+	 					}
+	 				}
+	 			}
+	
+	 		}
 o 修复ValueObjectUtil日期转换方法多线程安全问题，问题表现为多个不同的用户并发转换时间时，得到不可预期的结果
 升级frameworkset-util.jar可以解决这个问题
 /bboss-util/src/com/frameworkset/util/ValueObjectUtil.java
