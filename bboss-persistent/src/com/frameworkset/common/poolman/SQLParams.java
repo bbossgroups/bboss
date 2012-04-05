@@ -43,6 +43,7 @@ import com.frameworkset.orm.annotation.Column;
 import com.frameworkset.orm.annotation.PrimaryKey;
 import com.frameworkset.util.VariableHandler;
 import com.frameworkset.util.VariableHandler.SQLStruction;
+import com.frameworkset.util.VariableHandler.Variable;
 import com.frameworkset.util.VelocityUtil;
 
 /**
@@ -183,46 +184,97 @@ public class SQLParams
         }
         if(realParams == null)
         {
-            List<Param> _realParams = new ArrayList<Param>();       
-            sql = this.evaluateSqlTemplate(sql);
-            String[][] args =  parserResults.get(sql);
-            if(args == null)
-            {
-                synchronized(lock)
-                {
-                    if(args == null)
-                    {
-                        args = VariableHandler.parser2ndSubstitution(sql, this.pretoken,this.endtoken, "?");
-                        parserResults.put(sql,args);
-                    }
-                }
-            }            
-            newsql = args[0][0];
-            String vars[] = args[1];  
-            if(vars.length == 0 )
-            {
-            	log.info("预编译sql语句提示：指定了预编译参数,sql语句中没有包含符合要求的预编译变量，" + this);
-//                throw new SetSQLParamException("预编译sql语句非法：指定了预编译参数,sql语句中没有包含符合要求的预编译变量，" + this);
-            }
-            Param temp = null;
-            for(int i = 0;i < vars.length; i ++)
-            {
-                temp = this.sqlparams.get(vars[i]);
-                if(temp == null)
-                    throw new SetSQLParamException("未指定绑定变量的值：" 
-                                                    + vars[i] 
-                                                    + "\r\n" 
-                                                    + this);
-                Param newparam = temp.clone();
-                //绑定变量索引从1开始
-                newparam.index = i + 1;
-                _realParams.add(newparam);
-            }
-            
-            this.realParams = new Params(_realParams);
+//        	if(this.pretoken.equals("#\\[") && this.endtoken.equals("\\]"))
+//        		buildParamsByVariableParser(sql,dbname);
+//        	else
+        		buildParamsByRegex( sql,dbname);
             
         }
         
+    }
+    
+    private void buildParamsByRegex(String sql,String dbname) throws SetSQLParamException
+    {
+    	List<Param> _realParams = new ArrayList<Param>();       
+        sql = this.evaluateSqlTemplate(sql);
+        String[][] args =  parserResults.get(sql);
+        if(args == null)
+        {
+            synchronized(lock)
+            {
+                if(args == null)
+                {
+                    args = VariableHandler.parser2ndSubstitution(sql, this.pretoken,this.endtoken, "?");
+                    parserResults.put(sql,args);
+                }
+            }
+        }            
+        newsql = args[0][0];
+        String vars[] = args[1];  
+        if(vars.length == 0 )
+        {
+        	log.info("预编译sql语句提示：指定了预编译参数,sql语句中没有包含符合要求的预编译变量，" + this);
+//            throw new SetSQLParamException("预编译sql语句非法：指定了预编译参数,sql语句中没有包含符合要求的预编译变量，" + this);
+        }
+        Param temp = null;
+        for(int i = 0;i < vars.length; i ++)
+        {
+            temp = this.sqlparams.get(vars[i]);
+            if(temp == null)
+                throw new SetSQLParamException("未指定绑定变量的值：" 
+                                                + vars[i] 
+                                                + "\r\n" 
+                                                + this);
+            Param newparam = temp.clone();
+            //绑定变量索引从1开始
+            newparam.index = i + 1;
+            _realParams.add(newparam);
+        }
+        
+        this.realParams = new Params(_realParams);
+    }
+    
+    private void buildParamsByVariableParser(String sql,String dbname) throws SetSQLParamException
+    {
+    	List<Param> _realParams = new ArrayList<Param>();       
+        sql = this.evaluateSqlTemplate(sql);
+        SQLStruction sqlstruction =  this.parserSQLStructions.get(sql);
+        if(sqlstruction == null)
+        {
+            synchronized(lock)
+            {
+                if(sqlstruction == null)
+                {
+                	sqlstruction = VariableHandler.parserSQLStruction(sql);
+                	parserSQLStructions.put(sql,sqlstruction);
+                }
+            }
+        }            
+        newsql = sqlstruction.getSql();
+//        String vars[] = args[1];  
+        if(!sqlstruction.hasVars())
+        {
+        	log.info("预编译sql语句提示：指定了预编译参数,sql语句中没有包含符合要求的预编译变量，" + this);
+//            throw new SetSQLParamException("预编译sql语句非法：指定了预编译参数,sql语句中没有包含符合要求的预编译变量，" + this);
+        }
+        Param temp = null;
+        List<Variable> vars = sqlstruction.getVariables();
+        for(int i = 0;i < vars.size(); i ++)
+        {
+        	Variable var = vars.get(i);
+            temp = this.sqlparams.get(var.getVariableName());
+            if(temp == null)
+                throw new SetSQLParamException("未指定绑定变量的值：" 
+                                                + var.getVariableName() 
+                                                + "\r\n" 
+                                                + this);
+            Param newparam = temp.clone(var);
+            //绑定变量索引从1开始
+            newparam.index = i + 1;
+            _realParams.add(newparam);
+        }
+        
+        this.realParams = new Params(_realParams);
     }
    
     

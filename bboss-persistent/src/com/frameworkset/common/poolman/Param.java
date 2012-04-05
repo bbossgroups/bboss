@@ -15,6 +15,8 @@
  */
 package com.frameworkset.common.poolman;
 
+import com.frameworkset.util.VariableHandler.Variable;
+
 
 /**
  * 
@@ -123,10 +125,27 @@ public class Param
         newparam.type = this.type;
         return newparam;
     }
+    public Param clone(Variable variable)
+    {
+        Param newparam = new Param();
+        newparam.data = this.data;
+        newparam.name = this.name;
+        newparam.dataformat = this.dataformat;
+        newparam.index = this.index;
+        newparam.method = this.method;
+        newparam.type = this.type;
+        newparam.variable = variable; 
+        return newparam;
+    }
     int index;
 	Object data;	
 	String dataformat;
 	String name;
+	/**
+	 * 引用变量，适用于变量引用，list，set，map，数组以及多级
+	 * 变量引用
+	 */
+	Variable variable;
 	public String toString()
 	{
 		return new StringBuffer()

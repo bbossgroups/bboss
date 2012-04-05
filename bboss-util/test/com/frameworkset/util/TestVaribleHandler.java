@@ -304,12 +304,14 @@ public class TestVaribleHandler
 		" and CATEGORY_ID = #[CATEGORY_ID] and APP = #[APP] ";
     	
     	SQLStruction a = VariableHandler.parserSQLStruction(listRepositorySql);
+    	
     	 long start = System.currentTimeMillis();
     	 String[][] sqls = VariableHandler.parser2ndSubstitution(listRepositorySql, "#\\[","\\]","?");
     	 long end = System.currentTimeMillis();
     	 System.out.println("正则表达式解析的错误sql:" + sqls[0][0]);
     	 System.out.println("--------------------------");
     	 System.out.println("bboss变量解析器的分析出的正确sql:" + a.getSql());
+    	 System.out.println("bboss变量:" + a.getVariables().get(0).toString());
     	 System.out.println(sqls[0][0].equals(a.getSql()));
     	 
     	 

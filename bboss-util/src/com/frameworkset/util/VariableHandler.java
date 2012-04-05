@@ -300,6 +300,26 @@ public class VariableHandler
 			this.next = next;
 		}
 		
+		public String toString()
+		{
+			StringBuffer ret = new StringBuffer();
+			ret.append(this.variableName);
+			if(this.indexs != null && this.indexs.size() >0)
+			{
+				for(Index idx :indexs)
+				{
+					ret.append("[").append(idx.toString()).append("]");
+				}
+			}
+			if(next != null)
+			{
+				ret.append("->").append(next.toString());
+			}
+			if(this.parent == null)
+				ret.append(",position=").append(this.position);
+			return ret.toString();
+		}
+		
 
 		
 	}
@@ -325,6 +345,13 @@ public class VariableHandler
 		}
 		public String getString_idx() {
 			return string_idx;
+		}
+		public String toString()
+		{
+			if(int_idx != -1)
+				return int_idx + "";
+			else
+				return string_idx;
 		}
 	}
 	
@@ -540,6 +567,7 @@ public class VariableHandler
 							variable.setVariableName(var.toString());
 							var.setLength(0);
 							header.setNext(variable);
+							variable.setParent(header);
 							header = variable;
 							index_start = true;
 							indexs = new ArrayList<Index>();
@@ -604,6 +632,7 @@ public class VariableHandler
 								variable.setVariableName(var.toString());
 								var.setLength(0);
 								header.setNext(variable);
+								variable.setParent(header);
 								header = variable;
 							}
 							variables.add(hh);	
@@ -663,6 +692,7 @@ public class VariableHandler
 										var.setLength(0);
 										indexs = null;
 										header.setNext(variable);
+										variable.setParent(header);
 										header = variable;
 									}
 									else
@@ -675,6 +705,7 @@ public class VariableHandler
 											var.setLength(0);
 											indexs = null;
 											header.setNext(variable);
+											variable.setParent(header);
 											header = variable;
 										}
 									}
