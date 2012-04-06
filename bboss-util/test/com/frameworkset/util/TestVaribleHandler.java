@@ -298,13 +298,15 @@ public class TestVaribleHandler
     {
     	String listRepositorySql = "select *  from CIM_ETL_REPOSITORY  where 1=1 " +
 		"#if($HOST_ID && !$HOST_ID.equals(\"\")) " +
-		"	and HOST_ID = #[HOST_ID->bb[0]]" +
+		"	and HOST_ID = #[host_id->bb[2]->bb[aa]]" +
 		"#end  " +
-		" and PLUGIN_ID = #[PLUGIN_ID] " +
+		" and PLUGIN_ID in (#[PLUGIN_ID[0]], #[PLUGIN_ID[1]])" +
 		" and CATEGORY_ID = #[CATEGORY_ID] and APP = #[APP] ";
     	
     	SQLStruction a = VariableHandler.parserSQLStruction(listRepositorySql);
-    	
+    	Variable hostid = a.getVariables().get(0);
+    	Object value = VariableHandler.evaluateVariableValue(hostid, new Host());
+    	System.out.println(value);
     	 long start = System.currentTimeMillis();
     	 String[][] sqls = VariableHandler.parser2ndSubstitution(listRepositorySql, "#\\[","\\]","?");
     	 long end = System.currentTimeMillis();

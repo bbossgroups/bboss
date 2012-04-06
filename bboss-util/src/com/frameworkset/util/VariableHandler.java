@@ -16,8 +16,14 @@
 
 package com.frameworkset.util;
 
+import java.lang.reflect.Array;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
+import org.frameworkset.util.ClassUtil;
+import org.frameworkset.util.ClassUtil.PropertieDescription;
 
 
 /**
@@ -781,7 +787,125 @@ public class VariableHandler
 
 	}
     
-    
+    /**
+     * 根据引用的维度获取其对应的Pro对象
+     * @param refid
+     * @return
+     */
+    public static Object evaluateVariableValue(Variable var,Object bean)
+    {	
+    	if(bean == null)
+    		return null;
+    	if(var.getNext() == null)//不存在引用，直接返回当前数据
+    	{
+    		return bean;
+    	}
+
+    	Object varvalue = null;
+
+    	boolean firsted = true;
+    	Object temp = null;
+    	PropertieDescription pro = null;
+    	List<Index> indexs = null;
+root:  	do
+    	{
+    		if(firsted)
+    		{
+    			pro = ClassUtil.getPropertyDescriptor(bean.getClass(), var.getVariableName());
+    			if(pro == null)
+    				throw new EvalVariableValueFailedException("计算变量值失败：class["+bean.getClass().getCanonicalName()+"]没有定义属性["+var.getVariableName()+"]");
+    			try {
+					temp = pro.getValue(bean);
+				} catch (EvalVariableValueFailedException e) {
+					throw e;
+				} catch (IllegalAccessException e) {
+					throw new EvalVariableValueFailedException(e);
+				} catch (InvocationTargetException e) {
+					throw new EvalVariableValueFailedException(e.getTargetException());
+				}
+    			catch (Throwable e) {
+ 					throw new EvalVariableValueFailedException(e);
+ 				}
+    			if(temp == null)
+    				break;
+    			indexs = var.getIndexs();
+    			if(indexs != null && indexs.size() > 0)
+    			{    				
+    				for(Index idx:indexs)
+    				{
+    					if(idx.getInt_idx() != -1 )
+							try {
+								temp = Array.get(temp, idx.getInt_idx());
+							} catch (ArrayIndexOutOfBoundsException e) {
+								throw new EvalVariableValueFailedException("获取数组元素失败：数组越界"+temp+"["+idx.getInt_idx()+"]",e);
+							} catch (Throwable e) {
+								throw new EvalVariableValueFailedException("获取数组元素失败："+temp+"["+idx.getInt_idx()+"]",e);
+							}
+						else
+							try {
+								temp = ((Map)temp).get(idx.getString_idx());
+							} catch (Throwable e) {
+								throw new EvalVariableValueFailedException("获取Map元素失败："+temp+"["+idx.getString_idx()+"]",e);
+							}
+    					if(temp == null)
+    						break root;
+    				}
+    			}
+    			var = var.getNext();
+    			if(var == null)
+    				break;
+    			firsted = false;
+    		}
+    		else
+    		{
+    			pro = ClassUtil.getPropertyDescriptor(temp.getClass(), var.getVariableName());
+    			if(pro == null)
+    				throw new EvalVariableValueFailedException("计算变量值失败：class["+bean.getClass().getCanonicalName()+"]没有定义属性["+var.getVariableName()+"]");
+    			try {
+					temp = pro.getValue(temp);
+				} catch (EvalVariableValueFailedException e) {
+					throw e;
+				} catch (IllegalAccessException e) {
+					throw new EvalVariableValueFailedException(e);
+				} catch (InvocationTargetException e) {
+					throw new EvalVariableValueFailedException(e.getTargetException());
+				}
+    			catch (Throwable e) {
+ 					throw new EvalVariableValueFailedException(e);
+ 				}
+    			if(temp == null)
+    				break;
+    			indexs = var.getIndexs();
+    			if(indexs != null && indexs.size() > 0)
+    			{    				
+    				for(Index idx:indexs)
+    				{
+    					if(idx.getInt_idx() != -1 )
+							try {
+								temp = Array.get(temp, idx.getInt_idx());
+							} catch (ArrayIndexOutOfBoundsException e) {
+								throw new EvalVariableValueFailedException("获取数组元素失败：数组越界"+temp+"["+idx.getInt_idx()+"]",e);
+							} catch (Throwable e) {
+								throw new EvalVariableValueFailedException("获取数组元素失败："+temp+"["+idx.getInt_idx()+"]",e);
+							}
+						else
+							try {
+								temp = ((Map)temp).get(idx.getString_idx());
+							} catch (Throwable e) {
+								throw new EvalVariableValueFailedException("获取Map元素失败："+temp+"["+idx.getString_idx()+"]",e);
+							}
+    					if(temp == null)
+    						break root;
+    				}
+    			}
+    			var = var.getNext();
+    			if(var == null)
+    				break;
+    		}	        
+    	}while(true);
+	        
+        return temp;
+    }    
     
     
 }

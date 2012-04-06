@@ -238,7 +238,7 @@ public class SQLParams
     {
     	List<Param> _realParams = new ArrayList<Param>();       
         sql = this.evaluateSqlTemplate(sql);
-        SQLStruction sqlstruction =  this.parserSQLStructions.get(sql);
+        SQLStruction sqlstruction =  parserSQLStructions.get(sql);
         if(sqlstruction == null)
         {
             synchronized(lock)
