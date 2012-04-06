@@ -15,6 +15,7 @@
  */
 package com.frameworkset.common.poolman;
 
+import com.frameworkset.util.VariableHandler;
 import com.frameworkset.util.VariableHandler.Variable;
 
 
@@ -127,8 +128,12 @@ public class Param
     }
     public Param clone(Variable variable)
     {
+    	if(variable == null)
+    	{
+    		return this.clone();
+    	}
         Param newparam = new Param();
-        newparam.data = this.data;
+        newparam.data = VariableHandler.evaluateVariableValue(variable, data);
         newparam.name = this.name;
         newparam.dataformat = this.dataformat;
         newparam.index = this.index;

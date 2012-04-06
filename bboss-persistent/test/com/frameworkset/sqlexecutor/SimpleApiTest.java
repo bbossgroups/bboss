@@ -36,6 +36,7 @@ public class SimpleApiTest {
 	@Test
 	public void insertOpera()throws SQLException
 	{
+		SQLExecutor.delete("delete from LISTBEAN");
 		ListBean lb = new ListBean();
 		lb.setFieldLable("tttt");
 		lb.setFieldName("testttt");
@@ -45,12 +46,43 @@ public class SimpleApiTest {
 		lb.setSortorder("ppp");
 		lb.setFieldLength(20);
 		lb.setIsvalidated(6);
-		ValueObjectUtil.getDefaultValue(null);
+		
 		
 		//用List存放Bean，在某特定的连接池中进行crud操作
 		List<ListBean> beans = new ArrayList<ListBean>();
 		beans.add(lb);
+		lb = new ListBean();
+		lb.setFieldLable("sss");
+		lb.setFieldName("ss");
+		lb.setFieldType("int");
+		lb.setIsprimaryKey(false);
+		lb.setRequired(true);
+		lb.setSortorder("ppp");
+		lb.setFieldLength(20);
+		lb.setIsvalidated(6);
+		beans.add(lb);
 		
+		lb = new ListBean();
+		lb.setFieldLable("sss");
+		lb.setFieldName("ss556");
+		lb.setFieldType("int");
+		lb.setIsprimaryKey(false);
+		lb.setRequired(true);
+		lb.setSortorder("ppp");
+		lb.setFieldLength(20);
+		lb.setIsvalidated(6);
+		beans.add(lb);
+		
+		lb = new ListBean();
+		lb.setFieldLable("ddd");
+		lb.setFieldName("sdds");
+		lb.setFieldType("int");
+		lb.setIsprimaryKey(false);
+		lb.setRequired(true);
+		lb.setSortorder("ppp");
+		lb.setFieldLength(20);
+		lb.setIsvalidated(6);
+		beans.add(lb);
 		String sql = "insert into LISTBEAN(ID,FIELDNAME,FIELDLABLE,FIELDTYPE,SORTORDER,ISPRIMARYKEY,REQUIRED,FIELDLENGTH,ISVALIDATED) " +
 				"values(#[id],#[fieldName],#[fieldLable],#[fieldType],#[sortorder]," +
 				"#[isprimaryKey],#[required],#[fieldLength],#[isvalidated])";
@@ -61,6 +93,8 @@ public class SimpleApiTest {
 		SQLExecutor.insertBean("bspf", sql, lb);
 		
 		SQLExecutor.insertBeans("bspf", sql, beans);
+		
+		
 		
 		
 		
@@ -77,6 +111,42 @@ public class SimpleApiTest {
 		
 		
 		
+		
+	}
+	@Test
+	public void arrayVariableTest() throws SQLException
+	{
+		/**
+		 * 删除数据，数据条件由数组,FIELDNAMES，这里主要演示如果通过信息变量语法获取
+		 */
+		insertOpera();
+		String[] FIELDNAMES = new String[]{"ss","testttt","sdds","insertOpreation","ss556"};
+		String deleteAllsql = "delete from LISTBEAN where FIELDNAME in (#[FIELDNAMES[0]],#[FIELDNAMES[1]],#[FIELDNAMES[2]],#[FIELDNAMES[3]],#[FIELDNAMES[4]])";
+		Map conditions = new HashMap();
+		conditions.put("FIELDNAMES", FIELDNAMES);		
+		SQLExecutor.deleteBean(deleteAllsql, conditions);
+		
+	}
+	
+	@Test
+	public void listVariableTest()
+	{
+		/**
+		 * 删除数据，数据条件由数组,FIELDNAMES，这里主要演示如果通过信息变量语法获取
+		 */
+		
+		String deleteAllsql = "delete from LISTBEAN where FIELDNAME in (#[FIELDNAMES[0]],#[FIELDNAMES[1]],#[FIELDNAMES[2]],#[FIELDNAMES[3]],,#[FIELDNAMES[4]])";
+		
+	}
+	
+	@Test
+	public void mapVariableTest()
+	{
+		/**
+		 * 删除数据，数据条件由数组,FIELDNAMES，这里主要演示如果通过信息变量语法获取
+		 */
+		
+		String deleteAllsql = "delete from LISTBEAN where FIELDNAME in (#[FIELDNAMES[0]],#[FIELDNAMES[1]],#[FIELDNAMES[2]],#[FIELDNAMES[3]],,#[FIELDNAMES[4]])";
 		
 	}
 	

@@ -184,9 +184,9 @@ public class SQLParams
         }
         if(realParams == null)
         {
-//        	if(this.pretoken.equals("#\\[") && this.endtoken.equals("\\]"))
-//        		buildParamsByVariableParser(sql,dbname);
-//        	else
+        	if(this.pretoken.equals("#\\[") && this.endtoken.equals("\\]"))
+        		buildParamsByVariableParser(sql,dbname);
+        	else
         		buildParamsByRegex( sql,dbname);
             
         }
