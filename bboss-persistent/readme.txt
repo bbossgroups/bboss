@@ -22,7 +22,23 @@ bboss-persistent<-cas server [frameworkset-pool.jar]
 
 to do list:
 无
-#######update function list since bbossgroups-3.4 begin###########
+#######update function list since bbossgroups-3.5 begin###########
+o 持久层模板sql变量解析机制由正则表达式切换为bboss自带的变量解析机制，支持以下类型变量：
+基本数据类型
+日期类型
+上述类型组合复杂类型如下：
+   数组（一维数组，多维数组）
+ List
+ Map
+ 
+以下是一个数组变量使用的简单示例：
+String[] FIELDNAMES = new
+String[]{"ss","testttt","sdds","insertOpreation","ss556"};
+		String deleteAllsql = "delete from LISTBEAN where FIELDNAME in
+(#[FIELDNAMES[0]],#[FIELDNAMES[1]],#[FIELDNAMES[2]],#[FIELDNAMES[3]],#[FIELDNAMES[4]])";
+		Map conditions = new HashMap();
+		conditions.put("FIELDNAMES", FIELDNAMES);
+		
 o 持久层框架模板sql中变量解析功能扩展和优化，由正则表达式切换为自主编写的sql变量解析机制
 正则表达式只能解析简单的变量，无法解析复杂的变量格式
      #[HOST_ID]这种格式正则表达式能够解析
@@ -35,7 +51,9 @@ o 持久层框架模板sql中变量解析功能扩展和优化，由正则表达式切换为自主编写的sql变量
 具体的测试方法请查看测试用例：
 /bboss-util/test/com/frameworkset/util/TestVaribleHandler.java中的相关方法
 public void varialparserUtil()
-public void regexUtilvsVarialparserUtil()
+public void regexUtilvsVarialparserUtil()			
+#######update function list since bbossgroups-3.4 begin###########
+
 o 解决连接池中无法查找到tomcat 6和weblogic 容器数据源的问题
 o 解决sql server jtd驱动无法正确找到DB adaptor的问题
 o PreparedDBUtil增加public void setBlob(int i, String x) throws SQLException 方法，用来直接向blob类型字段中存入字符串
