@@ -254,27 +254,36 @@ public class SQLParams
 //        String vars[] = args[1];  
         if(!sqlstruction.hasVars())
         {
-        	log.info("预编译sql语句提示：指定了预编译参数,sql语句中没有包含符合要求的预编译变量，" + this);
+        	log.info("预编译sql语句提示：指定了预编译参数,sql语句中没有包含符合要求的预编译变量，" + this.toString());
 //            throw new SetSQLParamException("预编译sql语句非法：指定了预编译参数,sql语句中没有包含符合要求的预编译变量，" + this);
         }
-        Param temp = null;
-        List<Variable> vars = sqlstruction.getVariables();
-        for(int i = 0;i < vars.size(); i ++)
+        else
         {
-        	Variable var = vars.get(i);
-            temp = this.sqlparams.get(var.getVariableName());
-            if(temp == null)
-                throw new SetSQLParamException("未指定绑定变量的值：" 
-                                                + var.getVariableName() 
-                                                + "\r\n" 
-                                                + this);
-            Param newparam = temp.clone(var);
-            //绑定变量索引从1开始
-            newparam.index = i + 1;
-            _realParams.add(newparam);
+	        Param temp = null;
+	        List<Variable> vars = sqlstruction.getVariables();
+	        for(int i = 0;i < vars.size(); i ++)
+	        {
+	        	Variable var = vars.get(i);
+	            temp = this.sqlparams.get(var.getVariableName());
+	            if(temp == null)
+	                throw new SetSQLParamException("未指定绑定变量的值：" 
+	                                                + var.getVariableName() 
+	                                                + "\r\n" 
+	                                                + this.toString());
+	            Param newparam = temp.clone(var);
+	            //绑定变量索引从1开始
+	            newparam.index = i + 1;
+	            _realParams.add(newparam);
+	        }
+	        
         }
         
         this.realParams = new Params(_realParams);
+        if(sqlstruction.hasVars())
+        {
+        	log.info("SQL INFO:" + this.toString() );
+        }
+        
     }
    
     

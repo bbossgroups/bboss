@@ -153,13 +153,27 @@ public class Param
 	Variable variable;
 	public String toString()
 	{
-		return new StringBuffer()
-		.append("[name=").append(name)
-		.append(",index=").append(index)
-		.append(",value=").append(data)
-		.append(",dataformat=").append(dataformat)
-		.append(",method=").append(method).append("]")
-		.toString();
+		if(variable == null)
+		{
+			return new StringBuffer()
+			.append("[name=").append(name)
+			.append(",index=").append(index)
+			.append(",value=").append(data)
+			.append(",dataformat=").append(dataformat)
+			.append(",method=").append(method).append("]")
+			.toString();
+		}
+		else
+		{
+			return new StringBuffer()
+			.append("[name=").append(name)
+			.append(",index=").append(index)
+			.append(",value=").append(data)
+			.append(",variable=").append(variable.toString())
+			.append(",dataformat=").append(dataformat)
+			.append(",method=").append(method).append("]")
+			.toString();
+		}
 	}
 	
 	public static String getParamType(int sqltype,boolean isnull)
