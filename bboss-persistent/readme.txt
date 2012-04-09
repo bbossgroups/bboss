@@ -23,6 +23,10 @@ bboss-persistent<-cas server [frameworkset-pool.jar]
 to do list:
 无
 #######update function list since bbossgroups-3.5 begin###########
+o 完善sql变量bean类型变量属性引用功能
+更新包：
+frameworkset-pool.jar
+frameworkset-util.jar
 o 持久层模板sql变量解析机制由正则表达式切换为bboss自带的变量解析机制，支持以下类型变量：
 基本数据类型
 日期类型

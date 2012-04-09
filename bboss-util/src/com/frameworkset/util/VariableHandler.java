@@ -630,7 +630,7 @@ public class VariableHandler
 							}
 //							tokens.add(token.toString());
 //							token.setLength(0);
-							varcount++;
+//							varcount++;
 							if(variable == null)
 							{
 								variable = new Variable();
@@ -796,9 +796,7 @@ public class VariableHandler
     {	
     	if(bean == null)
     		return null;
-    	Object varvalue = null;
 
-    	boolean firsted = true;
     	Object temp = null;
     	PropertieDescription pro = null;
     	List<Index> indexs = null;
@@ -806,7 +804,15 @@ public class VariableHandler
     	
 		indexs = var.getIndexs() ;
 		if(indexs == null || indexs.size() == 0)//直接返回当前数据
-			return bean;
+		{
+			if(var.getNext() == null)
+				return bean;
+			else
+			{
+				temp = bean;
+				var = var.getNext();
+			}
+		}
 		else//获取数组/map/list或者任意组合中的元素数据
 		{
 			Class tcls = null;
@@ -849,8 +855,6 @@ public class VariableHandler
 			else
 				var = var.getNext();
 		}
-    	
-
     	
 root:  	do
     	{

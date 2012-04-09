@@ -29,8 +29,8 @@ import com.frameworkset.common.poolman.Record;
 import com.frameworkset.common.poolman.SQLExecutor;
 import com.frameworkset.common.poolman.handle.NullRowHandler;
 import com.frameworkset.common.poolman.handle.RowHandler;
+import com.frameworkset.sqlexecutor.BeanVariable.Bean;
 import com.frameworkset.util.ListInfo;
-import com.frameworkset.util.ValueObjectUtil;
 
 public class SimpleApiTest {
 	@Test
@@ -117,37 +117,74 @@ public class SimpleApiTest {
 	public void arrayVariableTest() throws SQLException
 	{
 		/**
-		 * 删除数据，数据条件由数组,FIELDNAMES，这里主要演示如果通过信息变量语法获取
+		 * 删除数据，数据条件由数组,FIELDNAMES，这里主要演示如果通过数组变量语法获取数据项
+		 * 后台转换为预编译执行
 		 */
 		insertOpera();
 		String[] FIELDNAMES = new String[]{"ss","testttt","sdds","insertOpreation","ss556"};
 		String deleteAllsql = "delete from LISTBEAN where FIELDNAME in (#[FIELDNAMES[0]],#[FIELDNAMES[1]],#[FIELDNAMES[2]],#[FIELDNAMES[3]],#[FIELDNAMES[4]])";
-		Map conditions = new HashMap();
+		Map<String,String[]> conditions = new HashMap<String,String[]>();
 		conditions.put("FIELDNAMES", FIELDNAMES);		
 		SQLExecutor.deleteBean(deleteAllsql, conditions);
 		
 	}
 	
 	@Test
-	public void listVariableTest()
+	public void listVariableTest() throws SQLException
 	{
 		/**
-		 * 删除数据，数据条件由数组,FIELDNAMES，这里主要演示如果通过信息变量语法获取
+		 * 删除数据，数据条件由list 对象FIELDNAMES提供，这里主要演示如何通过list变量语法获取数据项
+		 * 后台转换为预编译执行
 		 */
-		
-		String deleteAllsql = "delete from LISTBEAN where FIELDNAME in (#[FIELDNAMES[0]],#[FIELDNAMES[1]],#[FIELDNAMES[2]],#[FIELDNAMES[3]],,#[FIELDNAMES[4]])";
+		insertOpera();
+		List<String> FIELDNAMES = new ArrayList<String>();
+		FIELDNAMES.add("ss");
+		FIELDNAMES.add("testttt");
+		FIELDNAMES.add("sdds");
+		FIELDNAMES.add("insertOpreation");
+		FIELDNAMES.add("ss556");
+		String deleteAllsql = "delete from LISTBEAN where FIELDNAME in (#[FIELDNAMES[0]],#[FIELDNAMES[1]],#[FIELDNAMES[2]],#[FIELDNAMES[3]],#[FIELDNAMES[4]])";
+		Map<String,List<String> > conditions = new HashMap<String,List<String> >();
+		conditions.put("FIELDNAMES", FIELDNAMES);		
+		SQLExecutor.deleteBean(deleteAllsql, conditions);
 		
 	}
 	
 	@Test
-	public void mapVariableTest()
+	public void beanVariableTest() throws SQLException
 	{
 		/**
-		 * 删除数据，数据条件由数组,FIELDNAMES，这里主要演示如果通过信息变量语法获取
+		 * 删除数据，数据条件由数组FIELDNAMES，这里主要演示如果通过bean属性引用变量语法获取数据项
+		 * 后台转换为预编译执行
 		 */
-		
-		String deleteAllsql = "delete from LISTBEAN where FIELDNAME in (#[FIELDNAMES[0]],#[FIELDNAMES[1]],#[FIELDNAMES[2]],#[FIELDNAMES[3]],,#[FIELDNAMES[4]])";
-		
+		insertOpera();
+		BeanVariable beanvariable = new BeanVariable();
+		beanvariable.setBean(new Bean());
+		String deleteAllsql = "delete from LISTBEAN where FIELDNAME in (#[bean->fss],#[bean->ftestttt],#[bean->fsdds]," +
+				"#[bean->finsertOpreation],#[bean->fss556])";
+		SQLExecutor.deleteBean(deleteAllsql, beanvariable);
+	}
+	
+	@Test
+	public void mapVariableTest() throws SQLException
+	{
+		/**
+		 * 删除数据，数据条件由FIELDNAMES为名称索引的map对象中，这里主要演示如果通过map变量获取数据项
+		 * 后台转换为预编译执行
+		 */
+		insertOpera();
+		Map<String,String> datas = new HashMap<String,String>();
+		datas.put("sskey", "ss");
+		datas.put("testtttkey", "testttt");
+		datas.put("sddskey", "sdds");
+		datas.put("insertOpreationkey", "insertOpreation");
+		datas.put("ss556key", "ss556");
+		String deleteAllsql = "delete from LISTBEAN where FIELDNAME in " +
+				"(#[FIELDNAMES[sskey]],#[FIELDNAMES[testtttkey]],#[FIELDNAMES[sddskey]],#[FIELDNAMES[insertOpreationkey]]," +
+				"#[FIELDNAMES[ss556key]])";
+		Map conditions = new HashMap();
+		conditions.put("FIELDNAMES", datas);		
+		SQLExecutor.deleteBean(deleteAllsql, conditions);
 	}
 	
 //	public void batchadd(List<TestBean> newdatas)

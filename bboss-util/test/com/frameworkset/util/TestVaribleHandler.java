@@ -302,7 +302,9 @@ public class TestVaribleHandler
 		"#end  " +
 		" and PLUGIN_ID in (#[PLUGIN_ID[0]], #[PLUGIN_ID[1]])" +
 		" and CATEGORY_ID = #[CATEGORY_ID] and APP = #[APP] ";
-    	
+    	String deleteAllsql = "delete from LISTBEAN where FIELDNAME in (#[bean->fss],#[bean->ftestttt],#[bean->fsdds]," +
+		"#[bean->finsertOpreation],#[bean->fss556])";
+    	SQLStruction b = VariableHandler.parserSQLStruction(deleteAllsql);
     	SQLStruction a = VariableHandler.parserSQLStruction(listRepositorySql);
     	Variable hostid = a.getVariables().get(0);
     	Object value = VariableHandler.evaluateVariableValue(hostid, new Host());
