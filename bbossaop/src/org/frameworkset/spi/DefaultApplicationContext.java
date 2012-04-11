@@ -22,6 +22,7 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.frameworkset.spi.assemble.ServiceProviderManager;
+import org.frameworkset.spi.assemble.callback.AssembleCallback;
 import org.frameworkset.spi.remote.ServiceID;
 import org.frameworkset.spi.serviceidentity.ServiceIDUtil;
 
@@ -69,6 +70,32 @@ public class DefaultApplicationContext extends BaseApplicationContext {
 		return instance;
 	}
 	
+	
+	public static DefaultApplicationContext getApplicationContext(URL configfile) {
+		if (configfile == null || configfile.equals("")) {
+			throw new IllegalArgumentException("configfile is null");
+		}
+		String conf = configfile.getFile();
+		DefaultApplicationContext instance = (DefaultApplicationContext)applicationContexts.get(conf);
+		if (instance != null)
+		{
+			instance.initApplicationContext();
+			return instance;
+		}
+		synchronized (lock) {
+			instance = (DefaultApplicationContext)applicationContexts.get(conf);
+			if (instance != null)
+				return instance;
+			instance = new DefaultApplicationContext(configfile);
+			BaseApplicationContext.addShutdownHook(new BeanDestroyHook(instance));
+			applicationContexts.put(conf, instance);
+			
+
+		}
+		instance.initApplicationContext();
+		return instance;
+	}
+	
 	protected DefaultApplicationContext(String configfile)
 	{
 		super(configfile);
@@ -98,6 +125,17 @@ public class DefaultApplicationContext extends BaseApplicationContext {
 	public DefaultApplicationContext(InputStream instream, boolean isfile) {
 		super((InputStream)instream,isfile);
 	}
+	
+	/**
+	 * 可以用于外部文件加载，类似于构造函数
+	 * public DefaultApplicationContext(String configfile)
+	 * @param configfile
+	 */
+	public DefaultApplicationContext(URL configfile) {
+		super(AssembleCallback.classpathprex, "", 
+				configfile, true);
+	}
+
 
 	public ServiceID buildServiceID(Map<String, ServiceID> serviceids,
 			String serviceid, int serviceType, String providertype,

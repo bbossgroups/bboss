@@ -322,6 +322,30 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 				instream);
 	}
 	
+	public BaseApplicationContext(String docbaseType, String docbase,
+			URL instream, boolean isfile) {
+		if (instream == null )
+			throw new NullPointerException(
+					"build ApplicationContext failed:instream is null.");
+		this.isfile = isfile;
+		
+		
+		if(isfile)
+		{
+			
+			this.configfile = instream.getFile();
+			rootFiles.add(configfile);
+		}
+		else			
+		{
+			this.needRecordFile = false;
+		}
+		providerManager = new ServiceProviderManager(this);
+//		providerManager.init(docbaseType, docbase, 
+//				instream);
+		providerManager.init(docbaseType, "", configfile,instream);
+	}
+	
 	public BaseApplicationContext(URL file, String path)
 	{
 		if (file == null )

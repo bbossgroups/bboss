@@ -119,6 +119,8 @@ more details see my blog [http://blog.csdn.net/yin_bp]
 todo list:
 运行aop/ioc的最小依赖包整理
 #######update function list since bbossgroups-3.5 begin###########
+o DefaultApplicationContext类中增加使用URL对象构建组件容器的方法，功能类似于从文件路径直接构建组件容器的方法
+public static DefaultApplicationContext getApplicationContext(URL configfile)
 o 改进mvc文件加载过滤器搜索文件规则，大幅提升mvc容器启动速度
 升级bboss-aop.jar即可，相关的程序：
 /bbossaop/src/org/frameworkset/spi/assemble/callback/DefaultAssembleCallbackResolver.java
