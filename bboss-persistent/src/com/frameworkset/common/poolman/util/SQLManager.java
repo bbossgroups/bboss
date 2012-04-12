@@ -25,6 +25,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.sql.DataSource;
+
 import org.apache.log4j.Logger;
 
 import com.frameworkset.common.poolman.PoolManConstants;
@@ -137,6 +139,20 @@ public class SQLManager extends PoolManager implements Serializable{
         }
     }
 
+    /**
+     * 根据dbname获取数据源
+     * @param dbname
+     * @return
+     */
+    public static DataSource getDatasourceByDBName(String dbname)
+    {
+    	JDBCPool pool = SQLManager.getInstance().getPool(dbname);
+    	if(pool != null)
+    		return pool.getDataSource();
+    	throw new IllegalArgumentException("获取数据源失败："+dbname +"不存在，请检查配置文件poolman.xml中是否配置了相应的数据源。");
+    }
+    
+  
     /**
      * Overridden implementation ensures the config is loaded.
      */
