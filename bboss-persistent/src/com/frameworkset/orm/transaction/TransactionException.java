@@ -38,7 +38,7 @@ public class TransactionException extends Exception {
     	super();
     }
     
-    public TransactionException(Exception e)
+    public TransactionException(Throwable e)
     {
     	super(e);
     }

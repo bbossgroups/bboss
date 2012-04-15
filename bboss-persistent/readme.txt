@@ -23,6 +23,115 @@ bboss-persistent<-cas server [frameworkset-pool.jar]
 to do list:
 无
 #######update function list since bbossgroups-3.5 begin###########
+o 新增TXDataSource数据源类，用来实现第三方数据库事务代理功能
+com.frameworkset.orm.transaction.TXDataSource
+TXDataSource可以托管hibernate，ibatis，mybatis等持久层框架的事务管理，原理如下：
+我们只需要通过TXDataSource的构造函数传入需要托管事务的实际数据源DataSource即可，这个DataSource可以是bboss内置的数据源，也可以是第三方数据源（common dbcp，C3P0，Proxool ，Druid）等等
+public TXDataSource(DataSource datasource)
+
+这样我们只要通过TXDataSource实例的getConnection()方法既可以获取到事务环境中的connection资源从而实现数据库事务的托管功能。
+TXDataSource数据源的具体使用方法：
+我们以托管开源工作流activiti的事务作为示例，采用bboss内置数据源
+在继续之前需要知道一下组件com.frameworkset.common.poolman.util.SQLManager中的两个工具方法：
+ public static DataSource getTXDatasourceByDBName(String dbname) --直接获取bboss的内置数据源，并将该数据源转换为一个代理事务的数据源，bboss持久层的poolman.xml文件中需要定义dbname代表的数据源
+ public static DataSource getTXDatasource(DataSource ds) --直接将ds数据源转换为一个代理事务的数据源
+
+首先在poolman.xml文件中配置一个名称叫mysql的datasource
+ <datasource>
+
+    <dbname>mysql</dbname>
+	<loadmetadata>false</loadmetadata>
+    <jndiName>jdbc/mysql-ds</jndiName>
+    <driver>com.mysql.jdbc.Driver</driver>
+
+     <url>jdbc:mysql://localhost:3306/activiti</url> 
+
+    <username>root</username>
+    <password>123456</password>
+    .........
+</datasource>
+
+然后在activiti的配置文件activiti.cfg.xml中做如下配置：
+<properties>
+  <property name="processEngineConfiguration" class="org.activiti.engine.impl.cfg.StandaloneProcessEngineConfiguration">
+     <property name="dataSource" factory-class="com.frameworkset.common.poolman.util.SQLManager" factory-method="getTXDatasourceByDBName">
+    	<construction>
+    		<property value="mysql" />
+    	</construction>
+    </property>
+    <!-- Database configurations -->
+    <property name="databaseSchemaUpdate" value="true" />    
+    <!-- job executor configurations -->
+    <property name="jobExecutorActivate" value="false" />    
+    <!-- mail server configurations -->
+    <property name="mailServerPort" value="5025" />    
+    <property name="history" value="full" />
+  </property>
+</properties>
+
+从activiti.cfg.xml配置文件中可以看出，我们已经可以使用bboss ioc框架来管理activiti流程引擎，bboss ioc容器中管理的组件都可以用于activiti的相关
+活动环节和事件监听器中（该功能另外写文章介绍）。这里需要关注的是配置内容：
+<property name="dataSource" factory-class="com.frameworkset.common.poolman.util.SQLManager" factory-method="getTXDatasourceByDBName">
+    	<construction>
+    		<property value="mysql" />
+    	</construction>
+    </property>
+我们采用bboss ioc的静态工厂模式来定义一个TXDatasource并注入到activiti的org.activiti.engine.impl.cfg.StandaloneProcessEngineConfiguration
+组件中，这样activiti流程引擎的db事务就可以被bboss数据库事务所托管了。bboss数据库事务管理可以参考bbossgroups training.ppt中的相关事务介绍章节。
+http://www.bbossgroups.com/file/download.htm?fileName=bbossgroups trainning.ppt
+
+配置好了后就可以，启动流程引擎（相关方法请参考activiti的十分钟指南），看看两个事务管理的代码示例：
+创建activiti的用户信息--将两个创建用户操作包含在事务中，activiti采用mybatis作为持久层框架
+ TransactionManager tm = new TransactionManager();
+    try
+    {
+	    tm.begin();//开启事务
+	    identityService.saveUser(identityService.newUser("kermit"));
+	    identityService.saveUser(identityService.newUser("gonzo"));	    
+	    tm.commit();//提交事务
+    }
+    catch(Throwable e)
+    {
+    	try {
+			tm.rollback();//回滚事务
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+    }
+
+完成流程任务和业务逻辑处理相结合--将业务处理和流程操作包含在一个事务中，activiti采用mybatis作为持久层框架
+ // Start process instance
+	ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("taskAssigneeExampleProcess");
+	TransactionManager tm = new TransactionManager();
+	try {
+		tm.begin();
+		//处理业务逻辑,省略处理代码
+		.....
+	    // 获取用户任务列表
+	    List<Task> tasks = taskService
+	      .createTaskQuery()
+	      .taskAssignee("kermit")
+	      .list();
+	    
+	    Task myTask = tasks.get(0);
+	    //完成任务
+	    taskService.complete(myTask.getId());
+	    
+	    tm.commit();
+	} catch (Throwable e) {
+		try {
+			tm.rollback();
+		} catch (RollbackException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	}
+
+
+
+
+
 o 完善sql变量bean类型变量属性引用功能
 更新包：
 frameworkset-pool.jar

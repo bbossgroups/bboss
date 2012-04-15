@@ -37,6 +37,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Stack;
 
+import javax.sql.DataSource;
 import javax.transaction.HeuristicMixedException;
 import javax.transaction.HeuristicRollbackException;
 import javax.transaction.RollbackException;
@@ -63,7 +64,7 @@ public class JDBCTransaction {
 	
 	
 	
-	private Map<String,TransactionEntity> txentities = new HashMap<String,TransactionEntity>(1);
+	private Map<Object,TransactionEntity> txentities = new HashMap<Object,TransactionEntity>(1);
 	private Stack<TransactionEntity> executeStack = new Stack<TransactionEntity>();
 	private int count = 0;
 	TransactionType currenttxtype;
@@ -102,10 +103,10 @@ public class JDBCTransaction {
     {
     	if(this.txentities != null && this.txentities.size() > 0)
     	{
-    		Iterator<Map.Entry<String, TransactionEntity>> entries = txentities.entrySet().iterator();
+    		Iterator<Map.Entry<Object, TransactionEntity>> entries = txentities.entrySet().iterator();
     		while(entries.hasNext())
     		{
-    			Map.Entry<String, TransactionEntity> entry = entries.next();
+    			Map.Entry<Object, TransactionEntity> entry = entries.next();
     			if(entry.getValue() != null)
     				entry.getValue().printStackTrace();
     		}
@@ -311,6 +312,84 @@ public class JDBCTransaction {
     	
     	this.count ++;
     }
+    
+   
+    
+	public Connection getConnectionFromDS(DataSource datasource) throws TransactionException {
+		if(wasRolledBack())
+		{
+			throw new TransactionException(new SQLException("JDBCTransaction.getConnectionFromDS()£ºTX was RolledBack."));
+		}
+		
+		if(this.wasCommitted())
+			throw new TransactionException(new SQLException("JDBCTransaction.getConnectionFromDS£ºTX was committed."));
+		if(this.status == Status.STATUS_MARKED_ROLLBACK)
+		{
+			throw new TransactionException(new SQLException("JDBCTransaction.getConnectionFromDS£ºTX was remarked rollingback."));
+		}
+		TransactionEntity txentity = null;
+//		String t_dbName = (dbName == null ?SQLManager.getInstance().getDefaultDBName():dbName);
+    	try
+    	{
+//    		String t_dbName = (dbName == null ?"NULL":dbName);
+//    		t_dbName = SQLManager.getRealDBNameFromExternalDBName(t_dbName);
+    		txentity = txentities.get(datasource);
+    		if(this.status != Status.STATUS_ACTIVE)
+    			this.status = Status.STATUS_ACTIVE;
+    		Connection con = null;
+    		if(txentity == null)
+    		{    			
+	    		con = datasource.getConnection();
+	    		if(con == null)
+	    			throw new TransactionException(new SQLException("JDBCTransaction.getConnectionFromDS£ºRequest connection  from datasource return null!"));
+	    		txentity = new TransactionEntity(con);
+	    		txentity.increament();
+	    		txentity.setStatus(Status.STATUS_ACTIVE);
+	    		txentities.put(datasource,txentity);
+	    		executeStack.push(txentity);
+	    		
+    		}
+    		else
+    		{
+    			if(txentity.getStatus() == Status.STATUS_COMMITTED 
+    					|| txentity.getStatus() == Status.STATUS_MARKED_ROLLBACK
+    					|| txentity.getStatus() == Status.STATUS_ROLLEDBACK
+    					|| txentity.getStatus() == Status.STATUS_ROLLING_BACK)
+    				throw new TransactionException(new SQLException("JDBCTransaction.getConnectionFromDS£º" + "TransactionEntity.getStatus() == Status.STATUS_COMMITTED "
+        					+ "|| TransactionEntity.getStatus() == Status.STATUS_MARKED_ROLLBACK"
+        					+ "|| TransactionEntity.getStatus() == Status.STATUS_ROLLEDBACK"
+        					+ "|| TransactionEntity.getStatus() == Status.STATUS_ROLLING_BACK"));
+    			txentity.increament();
+    		}
+    		return txentity.getConnection();
+    	}
+    	catch(Throwable e)
+    	{
+    		
+    		if(txentity != null)
+    		{
+    			txentity.destroy();
+    			try
+    			{
+    				this.executeStack.removeElement(txentity);
+    			}
+    			catch(Exception ie)
+    			{
+    				ie.printStackTrace();
+    			}
+    			try
+    			{
+    				this.txentities.remove(datasource);
+    			}
+    			catch(Exception ie)
+    			{
+    				ie.printStackTrace();
+    			}
+    		}
+    		throw new TransactionException(e);
+    	}
+	}
+	
     
     public Connection getConnection(String dbName) throws TransactionException {
     	
@@ -596,7 +675,8 @@ public class JDBCTransaction {
 	protected JDBCTransaction getParent_tx() {
 		return parent_tx;
 	}
-	
+
+
 
 
     //    private static final Logger log = Logger.getLogger(JDBCTransaction.class);

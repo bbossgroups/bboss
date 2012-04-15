@@ -33,6 +33,7 @@ import com.frameworkset.common.poolman.PoolManConstants;
 import com.frameworkset.common.poolman.management.BaseTableManager;
 import com.frameworkset.common.poolman.management.PoolManBootstrap;
 import com.frameworkset.orm.adapter.DB;
+import com.frameworkset.orm.transaction.TXDataSource;
 
 
 public class SQLManager extends PoolManager implements Serializable{
@@ -152,6 +153,37 @@ public class SQLManager extends PoolManager implements Serializable{
     	throw new IllegalArgumentException("获取数据源失败："+dbname +"不存在，请检查配置文件poolman.xml中是否配置了相应的数据源。");
     }
     
+    
+    /**
+     * 根据dbname获取数据源
+     * @param dbname
+     * @return
+     */
+    public static DataSource getTXDatasourceByDBName(String dbname)
+    {
+    	JDBCPool pool = SQLManager.getInstance().getPool(dbname);
+    	if(pool != null)
+    		return new TXDataSource( pool.getDataSource());
+    	throw new IllegalArgumentException("获取数据源失败："+dbname +"不存在，请检查配置文件poolman.xml中是否配置了相应的数据源。");
+    }
+    
+    
+    /**
+     * 将ds转换为TXDatasource事务代理数据源
+     * @param dbname
+     * @return
+     */
+    public static DataSource getTXDatasource(DataSource ds)
+    {
+    	
+    	if(ds != null)
+    	{
+    		if(ds instanceof TXDataSource)
+    			return ds;
+    		return new TXDataSource( ds);
+    	}
+    	throw new IllegalArgumentException("获取数据源失败：ds is null");
+    }
   
     /**
      * Overridden implementation ensures the config is loaded.

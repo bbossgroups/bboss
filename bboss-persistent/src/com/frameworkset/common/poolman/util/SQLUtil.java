@@ -55,6 +55,7 @@ import com.frameworkset.common.poolman.interceptor.InterceptorInf;
 import com.frameworkset.common.poolman.management.PoolManBootstrap;
 import com.frameworkset.common.poolman.sql.ColumnMetaData;
 import com.frameworkset.common.poolman.sql.ForeignKeyMetaData;
+import com.frameworkset.common.poolman.sql.PoolManDataSource;
 import com.frameworkset.common.poolman.sql.PoolManResultSetMetaData;
 import com.frameworkset.common.poolman.sql.PrimaryKeyMetaData;
 import com.frameworkset.common.poolman.sql.TableMetaData;
@@ -823,6 +824,50 @@ public class SQLUtil implements Serializable{
 		} else {
 			try {
 				return new TXConnection(tx.getConnection(dbName));
+			} catch (TransactionException e) {
+				try {
+					tx.setRollbackOnly();
+				} catch (IllegalStateException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (SystemException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				throw new SQLException(e.getMessage());
+			}
+		}
+	}
+	
+	/**
+	 * 获取数据库链接,如果系统属于系统上下文事务环境时，将返回事务中的链接
+	 * 
+	 * @return Connection 数据库链接
+	 * @throws SQLException
+	 */
+	public static Connection getConectionFromDatasource(DataSource datasource) throws SQLException {
+		JDBCTransaction tx = getTransaction();
+		if (tx == null) {
+//			SQLManager datab = getSQLManager();
+//			return datab.requestConnection(datasource.getPoolName());
+			return datasource.getConnection();
+		} else {
+			try {
+				/*
+				 * 数据源如果是bboss 数据源则直接从根据数据源名称获取事务链接
+				 * 否则从数据源 
+				 */
+				if(datasource instanceof PoolManDataSource)
+				{
+					return new TXConnection(tx.getConnection(((PoolManDataSource)datasource).getPoolName()));
+				}
+				else
+				{
+					Connection con = tx.getConnectionFromDS(datasource);
+					if(con instanceof TXConnection)
+						return con;
+					return new TXConnection(con);
+				}
 			} catch (TransactionException e) {
 				try {
 					tx.setRollbackOnly();
