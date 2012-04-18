@@ -54,7 +54,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<div class="info">
 					<p>
 						<ul>		
-						<li><a href="#1000">bbossgroups特色</a></li>			
+						<li><a href="#1000">bbossgroups特色</a></li>	
+						<li><a href="#999">bbossgroups源码ant构建方法</a></li>	
+						<li><a href="#998">bbossgroups下载</a></li>
+							
 						<li><a href="#3720">Demo列表中包含每个demo的基本信息，包括名称，访问地址清单，功能说明，查看demo相关的所有代码和配置文件明细</a>
 							<ul><li>点击demo的访问地址清单中的地址可以访问demo的实际功能并进行相应的操作</li>
 							<li>点击代码明细，可以进入查看demo的实现代码，包括控制器类，业务组件，java对象，mvc配置文件，jsp页面</li></ul>
@@ -100,8 +103,37 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					</p>
 				</div>
 			</div>
-			
-
+			   <h1>
+				bboss下载<a href="#top" name="998">
+			<img border="0" src="<%=request.getContextPath() %>/jsp/top.gif" alt="Top">
+			</a>
+			</h1>
+			<div class="shadow">
+				<div class="info">
+					<p><ul>
+					<li><a href="http://www.bbossgroups.com/file/download.htm?fileName=bbossgroups-3.5.1.zip" target="_blank">官网下载发布版本</a></li>
+					 
+					
+						<li><a href="https://sourceforge.net/projects/bboss/files/" target="_blank">从sourceforge下载发布版本</a></li>
+						<li><a href="https://github.com/bbossgroups/bbossgroups-3.5" target="_blank">从github源码库下载最新代码（开发库，实时更新）</a></li>
+						</ul>	
+					</p>
+				</div>
+			</div>
+					
+      <h1>
+				bbossgroups源码ant构建方法<a href="#top" name="999">
+			<img border="0" src="<%=request.getContextPath() %>/jsp/top.gif" alt="Top">
+			</a>
+			</h1>
+			<div class="shadow">
+				<div class="info">
+					<p>
+						参考博客文章： 
+						<a href="http://yin-bp.iteye.com/blog/1462842" target="_blank">《bboss 版本ant构建方法》</a>
+					</p>
+				</div>
+			</div>
 			<div class="blockContainer">
 
 				 <h1>Bboss mvc DEMO列表<a href="#top" name="3720">
