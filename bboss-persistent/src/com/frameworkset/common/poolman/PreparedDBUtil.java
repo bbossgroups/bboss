@@ -2694,8 +2694,15 @@ public class PreparedDBUtil extends DBUtil {
      */
     public void preparedSelect(SQLParams params,String prepareDBName, String sql)
             throws SQLException {
-        params.buildParams(sql,prepareDBName);
-        preparedSelect(params.getRealParams(),prepareDBName, params.getNewsql());
+    	if(params != null)
+    	{
+	        params.buildParams(sql,prepareDBName);
+	        preparedSelect(params.getRealParams(),prepareDBName, params.getNewsql());
+    	}
+    	else
+    	{
+    		preparedSelect((Params)null,prepareDBName, sql);
+    	}
     }
 
 
@@ -2753,8 +2760,13 @@ public class PreparedDBUtil extends DBUtil {
      */
     public void preparedSelect(SQLParams params,String prepareDBName, String sql, long offset,
             int pagesize) throws SQLException {
-        params.buildParams(sql,prepareDBName);
-        preparedSelect(params.getRealParams(),prepareDBName, params.getNewsql(), offset, pagesize);
+    	if( params != null)
+    	{
+    		params.buildParams(sql,prepareDBName);
+    		preparedSelect(params.getRealParams(),prepareDBName, params.getNewsql(), offset, pagesize);
+    	}
+    	else
+    		preparedSelect((Params)null,prepareDBName, sql, offset, pagesize);
     }
     
     /**
@@ -2833,9 +2845,17 @@ public class PreparedDBUtil extends DBUtil {
      */
     public void preparedSelect(SQLParams params,String prepareDBName, String sql, long offset,
             int pagesize, String oraclerownum) throws SQLException {
-        params.buildParams(sql,prepareDBName);
-        preparedSelect(params.getRealParams(),prepareDBName, params.getNewsql(), offset,
-                pagesize, oraclerownum);
+        if(params != null)
+        {
+	    	params.buildParams(sql,prepareDBName);
+	        preparedSelect(params.getRealParams(),prepareDBName, params.getNewsql(), offset,
+	                pagesize, oraclerownum);
+        }
+        else
+        {
+        	preparedSelect((Params)null,prepareDBName, sql, offset,
+	                pagesize, oraclerownum);
+        }
     }
     
     
@@ -2922,8 +2942,15 @@ public class PreparedDBUtil extends DBUtil {
      * @throws SQLException
      */
     public void preparedUpdate(SQLParams params,String dbName, String sql) throws SQLException {
-        params.buildParams(sql, dbName);        
-        preparedUpdate(params.getRealParams(),dbName, params.getNewsql());
+        if(params != null)
+        {
+        	params.buildParams(sql, dbName);        
+        	preparedUpdate(params.getRealParams(),dbName, params.getNewsql());
+        }
+        else
+        {
+        	preparedUpdate((Params)null,dbName, sql);
+        }
     }
     /**
      * 创建特定数据库的预编译更新语句
@@ -3024,9 +3051,17 @@ public class PreparedDBUtil extends DBUtil {
      * @throws SQLException
      */
     public void preparedDelete(SQLParams params,String dbName, String sql) throws SQLException {
-        params.buildParams(sql, dbName);
+        if(params != null)
+        {
+        	params.buildParams(sql, dbName);
+        	preparedDelete(params.getRealParams(),dbName, params.getNewsql());
+        }
+        else
+        {
+        	preparedDelete((Params)null,dbName, sql);
+        }
         
-        preparedDelete(params.getRealParams(),dbName, params.getNewsql());
+        
     }
     
     /**

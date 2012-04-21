@@ -595,7 +595,7 @@ public class EventHandle extends RejectCallback implements Notifiable {
 		_change(event);
 
 	}
-	static InnerThreadPoolExecutor executor = (InnerThreadPoolExecutor)ThreadPoolManagerFactory.getThreadPoolExecutor("event.threadpool");
+	static InnerThreadPoolExecutor executor ;
 	/**
 	 * 本地事件处理
 	 * 
@@ -604,6 +604,7 @@ public class EventHandle extends RejectCallback implements Notifiable {
 	private void _change(Event event) {
 
 		if (!event.isSynchronized()) {
+			init();
 			executor.busy(this, baselog);
 			commandsQueue.add(event);
 		   
@@ -769,19 +770,31 @@ public class EventHandle extends RejectCallback implements Notifiable {
         }
 
     }
+	private static Thread evntHanderWorker;
+	private static boolean stopped = false;
+	private static boolean inited = false;
 	
-	static
+	
+	static synchronized void init()
 	{
-		Thread evntHanderWorker = new Thread(new Runnable(){
+		if(inited )
+			return;
+		inited = true;
+		executor = (InnerThreadPoolExecutor)ThreadPoolManagerFactory.getThreadPoolExecutor("event.threadpool");
+		evntHanderWorker = new Thread(new Runnable(){
 			public void run() {
 				
 				while(true)
 				{
 					try {
 						Event<?> event = commandsQueue.take();
+						if(stopped)
+							break;
 						executor.execute(new HandleThread(event));
 					} catch (InterruptedException e) {
 //						e.printStackTrace();
+						if(stopped)
+							break;
 						log.error(e);
 						continue;
 					}
@@ -790,6 +803,33 @@ public class EventHandle extends RejectCallback implements Notifiable {
 				 
 			}},"Event Handler Worker");
 		evntHanderWorker.start();
+	}
+	
+	public static void shutdown()
+	{
+		if(stopped)
+			return;
+		stopped = true;
+		try {
+			if(evntHanderWorker != null)
+				synchronized(evntHanderWorker)
+				{
+					
+					evntHanderWorker.interrupt();
+					
+				}
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		try {
+			if(executor != null)
+				executor.shutdown();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//inited = false;
 	}
 
 

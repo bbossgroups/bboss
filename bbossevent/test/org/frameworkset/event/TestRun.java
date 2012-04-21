@@ -48,7 +48,60 @@ public class TestRun {
 ////		run.testAsyEvent();
 //		run.testAsyEvents();
 	}
+	@Test
+	public void testEventHandlerShutdown()
+	{
+EventHandle.getInstance().change(new Event(){
+
+			
+			public Object getSource() {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+			
+			public EventType getType() {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+			
+			public boolean isSynchronized() {
+				// TODO Auto-generated method stub
+				return false;
+			}
+
+			
+			public void setSynchronized(boolean issynchronized) {
+				// TODO Auto-generated method stub
+				
+			}
+
+		
+			public boolean isRemote() {
+				// TODO Auto-generated method stub
+				return false;
+			}
+
+			
+			public boolean isRemoteLocal() {
+				// TODO Auto-generated method stub
+				return false;
+			}
+
 	
+			public boolean isLocal() {
+				// TODO Auto-generated method stub
+				return false;
+			}
+
+		
+			public EventTarget getEventTarget() {
+				// TODO Auto-generated method stub
+				return null;
+			}}, false);
+		EventHandle.getInstance().shutdown();
+	}
 	@Test
 	public void testAsyEvent()
 	{

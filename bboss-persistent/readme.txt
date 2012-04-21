@@ -23,6 +23,8 @@ bboss-persistent<-cas server [frameworkset-pool.jar]
 to do list:
 无
 #######update function list since bbossgroups-3.5 begin###########
+o 增加对datasource配置文件中对账号和密码的同时加密插件
+com.frameworkset.common.poolman.security.DESDBUserAndPasswordEncrypt
 o 新增TXDataSource数据源类，用来实现第三方数据库事务代理功能
 com.frameworkset.orm.transaction.TXDataSource
 TXDataSource可以托管hibernate，ibatis，mybatis等持久层框架的事务管理，原理如下：

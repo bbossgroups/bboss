@@ -143,7 +143,9 @@ public class DaemonThread extends java.lang.Thread
         	if(confURL != null)
         		file = new File(confURL.getPath() );
         }
+       
     	this.files.add(new FileBean(file,init));
+    	 log.debug("Add file " + file.getAbsolutePath() + " to damon thread which moniting file modified.");
     }
     
     public DaemonThread(String fileName,long refresh_interval,ResourceInitial init)
@@ -161,6 +163,7 @@ public class DaemonThread extends java.lang.Thread
         
 //        this.init = init;
         this.files.add(new FileBean(file,init));
+        log.debug("Add file " + file.getAbsolutePath() + " to damon thread which moniting file modified.");
         this.setDaemon(true);
     }
 
@@ -172,6 +175,7 @@ public class DaemonThread extends java.lang.Thread
 //        this.file = file;
 //        this.init = init;
     	this.files.add(new FileBean(file,init));
+    	log.debug("Add file " + file.getAbsolutePath() + " to damon thread which moniting file modified.");
         this.setDaemon(true);
     }
 
@@ -223,6 +227,10 @@ public class DaemonThread extends java.lang.Thread
     public void stopped()
     {
     	this.stopped = true;
+    	synchronized(this)
+    	{
+    		this.notifyAll();
+    	}
     }
     
     

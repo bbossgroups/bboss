@@ -110,6 +110,12 @@ public class SQLUtil {
 		
 	}
 	
+	public static void stopmonitor()
+	{
+		if(SQLUtil.damon != null)
+			SQLUtil.damon.stopped();
+	}
+	
 	public String getSQLFile()
 	{
 		return this.sqlcontext.getConfigfile();
