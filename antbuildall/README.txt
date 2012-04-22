@@ -3,8 +3,8 @@
 项目博客：http://yin-bp.iteye.com/ 
 Sourceforge站点：http://sourceforge.net/projects/bboss/files/ 
 Github站点：https://github.com/bbossgroups/bbossgroups-3.5 
-
-
+since 3.5.1
+o 修改各模块构建jar包和资源文件分发脚本，使相关模块测试工程中的jar包和资源文件同步更新
 -----------------------------------------------------------------------------------------------
 
 bbossgroups-3.5 release futures

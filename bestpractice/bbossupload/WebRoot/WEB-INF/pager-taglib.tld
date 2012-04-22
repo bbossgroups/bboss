@@ -215,6 +215,10 @@
 			<name>encode</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
+		<attribute>
+			<name>encodecount</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
 	</tag>
 	
 	<!--
@@ -236,6 +240,10 @@
 		
 		<attribute>
 			<name>encode</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>encodecount</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
@@ -260,6 +268,10 @@
 		
 		<attribute>
 			<name>encode</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>encodecount</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
@@ -358,7 +370,13 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		
-		
+		<!-- 
+			go按钮是否采用图片，true及采用图片，false任然采用文字，默认值为true
+		 -->
+		<attribute>
+			<name>usegoimage</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
 	
 		
 	</tag>
@@ -997,6 +1015,10 @@
 		</attribute>
 		<attribute>
 			<name>encode</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>encodecount</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>

@@ -119,7 +119,7 @@
 		</antcall>
 	</target>
 	<target name="distrib-bboss-persistent-jars" description="distrib-bboss-persistent-jars">
-		<for list="${bbossupload-lib},${demoproject-lib},${portallib},${casserverlib},${active-ext-lib},${bboss-aop-lib},${cms_baseline-lib},${bboss-taglib-lib},${kettle-lib},${monitorconsole-lib},${monitorconsole-compilelib},${bboss-mvc-lib},${creatoresb-lib}" param="destdir">
+		<for list="${bbossupload-lib},${demoproject-lib},${portallib},${casserverlib},${active-ext-lib},${bboss-aop-lib},${cms_baseline-lib},${bboss-taglib-lib},${kettle-lib},${monitorconsole-lib},${monitorconsole-compilelib},${bboss-mvc-lib},${creatoresb-lib},${bboss-clientproxy-lib},${mvc-lib},${persistent-lib},${xmlrequest-lib}" param="destdir">
 			<sequential>
 				<echo>@{destdir}-------------------------------</echo>
 				<antcall target="svn-update-procedure">
@@ -152,7 +152,7 @@
 	</target>
 
 	<target name="distrib-bboss-taglib-jars" description="distrib-bboss-taglib-jars">
-		<for list="${bbossupload-lib},${demoproject-lib},${portallib},${casserverlib},${cms_baseline-lib},${monitorconsole-lib},${monitorconsole-compilelib},${bboss-mvc-lib},${creatoresb-lib}" param="destdir">
+		<for list="${bbossupload-lib},${demoproject-lib},${portallib},${casserverlib},${cms_baseline-lib},${monitorconsole-lib},${monitorconsole-compilelib},${bboss-mvc-lib},${creatoresb-lib},${mvc-lib},${xmlrequest-lib}" param="destdir">
 			<sequential>
 				<echo>@{destdir}-------------------------------</echo>
 				<antcall target="svn-update-procedure">
@@ -207,7 +207,7 @@
 		</target>
 
 	<target name="distrib-bboss-util-jars" description="distrib-bboss-util-jars">
-		<for list="${bbossupload-lib},${demoproject-lib},${active-ext-lib},${bboss-aop-lib},${bbossevent-lib},${cms_baseline-lib},${bboss-persistent-lib},${bboss-taglib-lib},${kettle-lib},${portallib},${casserverlib},${monitorconsole-lib},${monitorconsole-compilelib},${bboss-mvc-lib},${creatoresb-lib},${bboss-soa-lib}" param="destdir">
+		<for list="${bbossupload-lib},${demoproject-lib},${active-ext-lib},${bboss-aop-lib},${bbossevent-lib},${cms_baseline-lib},${bboss-persistent-lib},${bboss-taglib-lib},${kettle-lib},${portallib},${casserverlib},${monitorconsole-lib},${monitorconsole-compilelib},${bboss-mvc-lib},${creatoresb-lib},${bboss-soa-lib},${bboss-clientproxy-lib},${mvc-lib},${persistent-lib},${xmlrequest-lib},${xmlserializable-lib}" param="destdir">
 			<sequential>
 				<echo>@{destdir}-------------------------------</echo>
 				<antcall target="svn-update-procedure">
@@ -220,7 +220,7 @@
 	</target>
 	
 	<target name="distrib-bboss-soa-jars" description="distrib-bboss-soa-jars">
-			<for list="${demoproject-lib},${portallib},${casserverlib},${active-ext-lib},${bboss-aop-lib},${cms_baseline-lib},${bboss-taglib-lib},${kettle-lib},${monitorconsole-lib},${monitorconsole-compilelib},${bboss-mvc-lib},${creatoresb-lib},${bboss-persistent-lib}" param="destdir">
+			<for list="${demoproject-lib},${portallib},${casserverlib},${active-ext-lib},${bboss-aop-lib},${cms_baseline-lib},${bboss-taglib-lib},${kettle-lib},${monitorconsole-lib},${monitorconsole-compilelib},${bboss-mvc-lib},${creatoresb-lib},${bboss-persistent-lib},${bboss-clientproxy-lib},${xmlserializable-lib}" param="destdir">
 				<sequential>
 					<echo>@{destdir}-------------------------------</echo>
 					<antcall target="svn-update-procedure">
@@ -244,6 +244,7 @@
 	<target name="build-bboss-mvc-only" description="build bboss-mvc project">
 		<ant dir="${bboss-mvc}" />
 		<antcall target="distrib-bboss-mvc-jars" />
+		<antcall target="distrib-bboss-mvc-resources" />
 	</target>
 		
 	
@@ -345,7 +346,7 @@ bbossaop<-cas server [bboss-aop.jar]
 			</sequential>
 		</for>
 
-		<for list="${bbossupload-lib},${bboss-taglib-lib},${bboss-util-lib},${portallib},${casserverlib}}" param="destdir">
+		<for list="${bboss-soa-lib},${bboss-persistent-lib},${bbossupload-lib},${bboss-taglib-lib},${bboss-util-lib},${portallib},${casserverlib},${mvc-lib},${xmlrequest-lib},${xmlserializable-lib},${persistent-lib}" param="destdir">
 			<sequential>
 				<echo>@{destdir}-------------------------------</echo>
 				<antcall target="svn-update-procedure">
@@ -356,7 +357,7 @@ bbossaop<-cas server [bboss-aop.jar]
 			</sequential>
 		</for>
 		
-		<for list="${bboss-mvc-lib}" param="destdir">
+		<for list="${bboss-mvc-lib},${bboss-clientproxy-lib}" param="destdir">
 					<sequential>
 						<echo>@{destdir}-------------------------------</echo>
 						<antcall target="svn-update-procedure">
@@ -366,22 +367,34 @@ bbossaop<-cas server [bboss-aop.jar]
 						</antcall>
 					</sequential>
 				</for>
-		<for list="${bboss-soa-lib},${bboss-persistent-lib}" param="destdir">
-			<sequential>
-				<echo>@{destdir}-------------------------------</echo>
-				<antcall target="svn-update-procedure">
-					<param name="sourcedir" value="${bboss-aop}/distrib" />
-					<param name="filedir" value="@{destdir}" />
-					<param name="files" value="bboss-aop.jar" />
-				</antcall>
-			</sequential>
-		</for>
+		<for list="${bboss-clientproxy-lib}" param="destdir">
+					<sequential>
+						<echo>@{destdir}/cxf-------------------------------</echo>
+						<antcall target="svn-update-procedure">
+							<param name="sourcedir" value="${bboss-aop}/distrib" />
+							<param name="filedir" value="@{destdir}/cxf" />
+							<param name="files" value="bboss-ws.jar" />
+						</antcall>
+					</sequential>
+				</for>
+				<for list="${xmlrequest-lib}" param="destdir">
+					<sequential>
+						<echo>@{destdir}/cxf-------------------------------</echo>
+						<antcall target="svn-update-procedure">
+							<param name="sourcedir" value="${bboss-aop}/distrib" />
+							<param name="filedir" value="@{destdir}" />
+							<param name="files" value="bboss-ws.jar" />
+						</antcall>
+					</sequential>
+				</for>
+				
+		
 		
 	</target>
 	
 	
 	<target name="distrib-bboss-mvc-jars" description="distrib-bboss-mvc-jars">
-			<for list="${bbossupload-lib},${demoproject-lib},${cms_baseline-lib},${monitorconsole-compilelib},${monitorconsole-lib},${creatoresb-lib}" param="destdir">
+			<for list="${bbossupload-lib},${demoproject-lib},${cms_baseline-lib},${monitorconsole-compilelib},${monitorconsole-lib},${creatoresb-lib},${mvc-lib},${xmlrequest-lib}" param="destdir">
 				<sequential>
 					<echo>@{destdir}-------------------------------</echo>
 					<antcall target="svn-update-procedure">
@@ -392,6 +405,29 @@ bbossaop<-cas server [bboss-aop.jar]
 				</sequential>
 			</for>
 		</target>
+	<target name="distrib-bboss-mvc-resources" description="distrib-bboss-mvc-resources">
+			<for list="${demoproject}/WebRoot/WEB-INF,${bbossupload}/WebRoot/WEB-INF,${mvc}/WebRoot/WEB-INF,${xmlrequest}/WebRoot/WEB-INF" param="destdir">
+				<sequential>
+					<echo>@{destdir}-------------------------------</echo>
+					<antcall target="svn-update-procedure">
+						<param name="sourcedir" value="${bboss-mvc}/WebRoot/WEB-INF" />
+						<param name="filedir" value="@{destdir}" />
+						<param name="files" value="treetag.tld,tabpane-taglib.tld,pager-taglib.tld" />
+					</antcall>
+				</sequential>
+			</for>
+			<for list="${demoproject}/WebRoot/include,${bbossupload}/WebRoot/include,${mvc}/WebRoot/include,${xmlrequest}/WebRoot/include" param="destdir">
+				<sequential>
+					<echo>@{destdir}-------------------------------</echo>
+					<antcall target="svn-update-procedure">
+						<param name="sourcedir" value="${bboss-mvc}/WebRoot/include" />
+						<param name="filedir" value="@{destdir}" />
+						<param name="files" value="jquery-1.4.2.min.js,jquery.easyui.min.js,pager.js,pager_custom.js" />
+					</antcall>
+				</sequential>
+			</for>
+		</target>	
+		
 
 	<target name="distrib-bboss-aop-rpc-conf" description="distrib-bboss-aop-rpc-conf">
 		<!--
@@ -457,7 +493,7 @@ bbossaop<-cas server [bboss-aop.jar]
 		<!--
 					
 				-->
-		<for list="${cms_baseline-lib},${kettle-lib},${active-ext-lib},${creatoresb-lib},${monitorconsole-lib},${monitorconsole-compilelib}" param="destdir">
+		<for list="${cms_baseline-lib},${kettle-lib},${active-ext-lib},${creatoresb-lib},${monitorconsole-lib},${monitorconsole-compilelib},${demoproject-lib}" param="destdir">
 			<sequential>
 				<echo>@{destdir}-------------------------------</echo>
 				<antcall target="svn-update-procedure">
