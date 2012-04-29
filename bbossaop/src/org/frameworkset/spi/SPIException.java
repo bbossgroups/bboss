@@ -15,6 +15,8 @@
  */
 package org.frameworkset.spi;
 
+import java.io.PrintStream;
+import java.io.PrintWriter;
 import java.io.Serializable;
 
 /**
@@ -24,12 +26,13 @@ import java.io.Serializable;
  *
  * <p>Copyright: Copyright (c) 2006</p>
  *
- * <p>Company: 长沙科创计算机系统集成有限公司</p>
+ * <p>Company:bboss workspace groups</p>
  *
  * @author biaoping.yin
  * @version 1.0
  */
 public class SPIException extends RuntimeException implements Serializable {
+	private SPIException[] es;
     public static void main(String[] args) {
 
     }
@@ -37,6 +40,11 @@ public class SPIException extends RuntimeException implements Serializable {
     public SPIException() {
         super();
         // TODO Auto-generated constructor stub
+    }
+    
+    public SPIException(SPIException[] es)
+    {
+    	this.es = es;
     }
 
     public SPIException(String message, Throwable cause) {
@@ -53,6 +61,46 @@ public class SPIException extends RuntimeException implements Serializable {
     {
         super(message);
     }
+
+	@Override
+	public void printStackTrace() {
+		// TODO Auto-generated method stub
+		if(this.es == null || this.es.length == 0)
+			super.printStackTrace();
+		else
+		{
+			for(SPIException e:es)
+			{
+				e.printStackTrace();
+			}
+		}
+	}
+
+	@Override
+	public void printStackTrace(PrintStream s) {
+		if(this.es == null || this.es.length == 0)
+			super.printStackTrace(s);
+		else
+		{
+			for(SPIException e:es)
+			{
+				e.printStackTrace(s);
+			}
+		}
+	}
+
+	@Override
+	public void printStackTrace(PrintWriter s) {
+		if(this.es == null || this.es.length == 0)
+			super.printStackTrace(s);
+		else
+		{
+			for(SPIException e:es)
+			{
+				e.printStackTrace(s);
+			}
+		}
+	}
 
 
 }
