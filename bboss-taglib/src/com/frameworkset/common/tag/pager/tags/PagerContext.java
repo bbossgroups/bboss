@@ -1401,7 +1401,7 @@ public class PagerContext
 				try {
 					load(COLUMN_SCOPE);
 				} catch (LoadDataException e) {
-					log.info(e.getMessage());
+//					log.info(e.getMessage());
 					throw e;
 					// return SKIP_BODY;
 				}
@@ -1410,7 +1410,7 @@ public class PagerContext
 				try {
 					load(DB_SCOPE);
 				} catch (LoadDataException e) {
-					log.info(e.getMessage());
+//					log.info(e.getMessage());
 					// return SKIP_BODY;
 					throw e;
 				}
@@ -1422,7 +1422,7 @@ public class PagerContext
 					load(REQUEST_SCOPE);
 					// data = request.getAttribute(listTag.requestKey);
 				} catch (LoadDataException e) {
-					log.info(e.getMessage());
+//					log.info(e.getMessage());
 					// return SKIP_BODY;
 					throw e;
 				}
@@ -1433,7 +1433,7 @@ public class PagerContext
 				try {
 					load(SESSION_SCOPE);
 				} catch (LoadDataException e1) {
-					log.info(e1.getMessage());
+//					log.info(e1.getMessage());
 					// return SKIP_BODY;
 					throw e1;
 				}
@@ -1441,7 +1441,7 @@ public class PagerContext
 				try {
 					load(PAGECONTEXT_SCOPE);
 				} catch (LoadDataException e2) {
-					log.info(e2.getMessage());
+//					log.info(e2.getMessage());
 					// return SKIP_BODY;
 					throw e2;
 				}
@@ -1468,7 +1468,7 @@ public class PagerContext
 				try {
 					load(CELL_SCOPE);
 				} catch (LoadDataException e2) {
-					log.info(e2.getMessage());
+//					log.info(e2.getMessage());
 					// return SKIP_BODY;
 					throw e2;
 				}

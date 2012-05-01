@@ -37,9 +37,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<a name="top"></a>
     <ul id="top">
         <li id="logo"><a href="index.htm"><img alt="BbossGroups Logo" src="${pageContext.request.contextPath}/jsp/logo.png" height="50"></a></li>
+        
         <li id="runtime">
-            
-            <span class="uptime"></span>
+            <span class="uptime"><P>最新资讯：
+ <a href="http://yin-bp.iteye.com/blog/1506335" target="_blank">开源工作流引擎activiti与bboss整合使用方法浅析</a></P></span>
         </li><li id="title">aop/ioc - mvc - persistent - taglib - rpc - soa - devent</li>
     </ul>
 </div>

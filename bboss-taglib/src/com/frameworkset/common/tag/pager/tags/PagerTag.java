@@ -479,9 +479,20 @@ public class PagerTag extends BaseTag implements FieldHelper, PagerInfo {
 		
 		try {
 			pagerContext.init();
-		} catch (LoadDataException e) {
-			
-			e.printStackTrace();
+		}  catch (LoadDataException e) {
+			if(e.getCause() == null)
+				log.info(e.getMessage());
+			else
+				log.info(e.getCause().getMessage());
+//			return SKIP_BODY;
+		}
+		catch (Throwable e) {
+			if(e.getCause() == null)
+				log.info(e.getMessage());
+			else
+				log.info(e.getCause().getMessage());
+			throw new JspException(e);
+//			return SKIP_BODY;
 		}
 
 		// //addParam("sortKey",getSortKey());

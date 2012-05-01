@@ -199,9 +199,18 @@ public class DetailTag extends PagerDataSet implements FieldHelper{
 					init();
 					
 				} catch (LoadDataException e) {
-					log.info(e);
-	//				// TODO Auto-generated catch block
-	//				e.printStackTrace();
+					if(e.getCause() == null)
+						log.info(e.getMessage());
+					else
+						log.info(e.getCause().getMessage());
+//					return SKIP_BODY;
+				}
+				catch (Throwable e) {
+					if(e.getCause() == null)
+						log.info(e.getMessage());
+					else
+						log.info(e.getCause().getMessage());
+//					return SKIP_BODY;
 				}
 			}
 		    /**
@@ -256,8 +265,18 @@ public class DetailTag extends PagerDataSet implements FieldHelper{
 	//			sortKey = pagerContext.getSortKey();
 	
 			} catch (LoadDataException e) {
-	
-				log.info(e.getMessage());
+				if(e.getCause() == null)
+					log.info(e.getMessage());
+				else
+					log.info(e.getCause().getMessage());
+	//			e.printStackTrace();
+			}
+			catch (Throwable e) {
+				
+				if(e.getCause() == null)
+					log.info(e.getMessage());
+				else
+					log.info(e.getCause().getMessage());
 	//			e.printStackTrace();
 			}
 	

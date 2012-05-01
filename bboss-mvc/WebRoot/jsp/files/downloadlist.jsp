@@ -62,7 +62,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
        <pg:list requestKey="files">
        <tr class="even">
          <td >
-            <pg:cell colName="fileName"></pg:cell>
+                   
+            <a href="<%=request.getContextPath() %>/file/download.htm?fileName=<pg:cell colName="fileName"/>"><pg:cell colName="fileName"/></a>
          </td>
          <td >
             <pg:cell colName="fileType"></pg:cell>
@@ -74,7 +75,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		    <pg:cell colName="lastModified"></pg:cell>
          </td>
          <td >
-            <a href="<%=request.getContextPath() %>/file/downloadFile.htm?fileName=<pg:cell encode="true" encodecount="2" colName="fileName"/>">下载此文件</a>
+            <a href="<%=request.getContextPath() %>/file/download.htm?fileName=<pg:cell  colName="fileName"/>">下载此文件</a>
          </td>
          
         </tr>

@@ -12,6 +12,8 @@ todo
 3.国际化功能完善
 6.mvc和gwt结合可行性研究
 #######update function list since bbossgroups-3.5 begin########### 
+o 改进beaninfo，list标签异常处理方式，将系统级异常输出到日志文件中，日志级别为info级
+o bboss mvc 站点资源下载可以点击文件名称下载
 o 将官网的文件资源下载列表按照文件名称进行排序
 o 增加安全认证过滤器,废除mvc安全认证拦截器,该过滤器具有以下属性：
 	preventDispatchLoop = false;//循环跳转检测开关，true启用，false禁用，默认为false

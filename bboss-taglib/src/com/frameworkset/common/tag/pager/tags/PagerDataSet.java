@@ -2171,8 +2171,17 @@ public class PagerDataSet extends PagerTagSupport {
 				init();
 				
 			} catch (LoadDataException e) {
-
-				//e.printStackTrace();
+				if(e.getCause() == null)
+					log.info(e.getMessage());
+				else
+					log.info(e.getCause().getMessage());
+				return SKIP_BODY;
+			}
+			catch (Throwable e) {
+				if(e.getCause() == null)
+					log.info(e.getMessage());
+				else
+					log.info(e.getCause().getMessage());
 				return SKIP_BODY;
 			}
 		}
@@ -2244,11 +2253,14 @@ public class PagerDataSet extends PagerTagSupport {
 			// */
 			// sortKey = pagerContext.getSortKey();
 
-		} catch (LoadDataException e) {
-
-			log.info(e.getMessage());
-			e.printStackTrace();
+		}  catch (LoadDataException e) {
+			if(e.getCause() == null)
+				log.info(e.getMessage());
+			else
+				log.info(e.getCause().getMessage());
+//			return SKIP_BODY;
 		}
+		
 
 		if (size() > 0) {
 
