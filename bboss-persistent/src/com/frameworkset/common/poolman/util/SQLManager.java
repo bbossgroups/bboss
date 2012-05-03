@@ -163,7 +163,13 @@ public class SQLManager extends PoolManager implements Serializable{
     {
     	JDBCPool pool = SQLManager.getInstance().getPool(dbname);
     	if(pool != null)
-    		return new TXDataSource( pool.getDataSource());
+    	{
+    		DataSource datasource = pool.getDataSource();
+    		if(!(datasource instanceof TXDataSource))
+    			return new TXDataSource( pool.getDataSource());
+    		else
+    			return datasource;
+    	}
     	throw new IllegalArgumentException("获取数据源失败："+dbname +"不存在，请检查配置文件poolman.xml中是否配置了相应的数据源。");
     }
     

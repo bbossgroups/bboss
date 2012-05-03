@@ -173,6 +173,14 @@ public class JDBCPoolMetaData implements Serializable{
 	 * 设定链接是否是readOnly属性
 	 */
 	private boolean readOnly = true;
+	/**
+	 * 是否启用jta datasource，如果启用将在jndi context中注册一个
+	 * TXDatasource
+	 * jta datasource的jndiname为 jndiName属性指定的值
+	 * 默认为不启用，该属性在托管第三方数据源时有用
+	 * 当enablejta == true时，必须在poolman.xml文件中指定jndiName属性
+	 */
+	private boolean enablejta =  false;
     
     
     
@@ -780,6 +788,7 @@ public class JDBCPoolMetaData implements Serializable{
 			this.setJndipassword(extenalInfo.getJndipassword());
 			this.setUsepool(extenalInfo.isUsepool());
 			this.setEncryptdbinfo(extenalInfo.isEncryptdbinfo());
+			this.setEnablejta(extenalInfo.isEnablejta());
 		}
 	}
 
@@ -883,5 +892,13 @@ public class JDBCPoolMetaData implements Serializable{
 
 	public void setEncryptdbinfo(boolean encryptdbinfo) {
 		this.encryptdbinfo = encryptdbinfo;
+	}
+
+	public boolean isEnablejta() {
+		return enablejta;
+	}
+
+	public void setEnablejta(boolean enablejta) {
+		this.enablejta = enablejta;
 	}
 }

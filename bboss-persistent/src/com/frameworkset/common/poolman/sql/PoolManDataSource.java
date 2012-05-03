@@ -39,6 +39,7 @@ import org.apache.log4j.Logger;
 
 import com.frameworkset.common.poolman.util.SQLManager;
 import com.frameworkset.commons.dbcp.BasicDataSource;
+import com.frameworkset.orm.transaction.TXDataSource;
 
 /**
  * 
@@ -99,7 +100,7 @@ public class PoolManDataSource
     	{
 	    	if(datasource_ instanceof PoolManDataSource)
 	    	{
-	    		PoolManDataSource temp_ = (PoolManDataSource)datasource;
+	    		PoolManDataSource temp_ = (PoolManDataSource)datasource_;
 
 	    		if(temp_.getInnerDataSource() == null)
 	    		{
@@ -108,12 +109,34 @@ public class PoolManDataSource
 	    		else
 	    		{
 	    			datasource_ = temp_.getInnerDataSource();
+	    			if(datasource_ == temp_)
+	    			{
+	    				return datasource_;
+	    			}
+
+	    		}
+	    	}
+	    	else if(datasource_ instanceof TXDataSource)
+	    	{
+	    		TXDataSource temp_ = (TXDataSource)datasource_;
+
+	    		if(temp_.getSRCDataSource() == null)
+	    		{
+	    			return datasource_;
+	    		}
+	    		else
+	    		{
+	    			datasource_ = temp_.getSRCDataSource();
+	    			if(datasource_ == temp_)
+	    			{
+	    				return datasource_;
+	    			}
 
 	    		}
 	    	}
 	    	else
 	    	{
-	    		return this.datasource;
+	    		return datasource_;
 	    	}
     	}
 //    	return this.datasource;
@@ -233,11 +256,11 @@ public class PoolManDataSource
 		if(datasource != null && this.datasource instanceof BasicDataSource)
 		{
 			log.debug("Close  datasource[jndiName="+this.jndiName+",dbname=" + this.poolName + "] begin.");
-			System.out.println("Close  datasource[jndiName="+this.jndiName+",dbname=" + this.poolName + "] begin.");
+//			System.out.println("Close  datasource[jndiName="+this.jndiName+",dbname=" + this.poolName + "] begin.");
 			try {
 				((BasicDataSource)datasource).close();
 				log.debug("Close  datasource[jndiName="+this.jndiName+",dbname=" + this.poolName + "] end.");
-				System.out.println("Close  datasource[jndiName="+this.jndiName+",dbname=" + this.poolName + "] end.");
+//				System.out.println("Close  datasource[jndiName="+this.jndiName+",dbname=" + this.poolName + "] end.");
 			} catch (Exception e) {
 				
 				e.printStackTrace();

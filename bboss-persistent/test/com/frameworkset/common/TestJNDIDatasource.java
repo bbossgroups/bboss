@@ -24,6 +24,7 @@ public class TestJNDIDatasource {
         getDataSourceByJNDI();
         testGetJDBCPoolByJndiName();
         testGetDBNameByJndiName();
+        DBUtil.debugStatus();
     }
     
     public static void getDataSourceByJNDI()

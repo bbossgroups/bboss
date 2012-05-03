@@ -354,6 +354,47 @@
 						</td>
 						</tr>
 						
+						
+						
+						<tr>
+						<td>enablejta</td>
+						<td height="25"><%=metadata.isEnablejta() %></td>
+						<td>false</td>
+						<td>是否启用jta datasource，如果启用将在jndi context中注册一个
+						  TXDatasource
+						  jta datasource的jndiname为 jndiName属性指定的值
+						  默认为不启用，该属性在托管第三方数据源时有用
+						  当enablejta == true时，必须在poolman.xml文件中指定jndiName属性
+						</td>
+						</tr>
+						<tr>
+						<td>encryptdbinfo</td>
+						<td height="25"><%=metadata.isEncryptdbinfo() %></td>
+						<td>false</td>
+						<td>是否加密数据库信息，包括url，useraccount,password,提供以下插件：
+						
+						#DESDBInfoEncrypt-采用des算法对数据库url，账号，密码进行加密和解密操作
+						#DBInfoEncryptclass=com.frameworkset.common.poolman.security.DESDBInfoEncrypt
+						
+						#DESDBPasswordEncrypt-采用des算法对数据库密码进行加密和解密操作
+						DBInfoEncryptclass=com.frameworkset.common.poolman.security.DESDBPasswordEncrypt
+						
+						#DESDBUserEncrypt-采用des算法对数据库用户名进行加密和解密操作
+						#DBInfoEncryptclass=com.frameworkset.common.poolman.security.DESDBUserEncrypt
+						
+						#DESDBUrlEncrypt-采用des算法对数据库url进行加密和解密操作
+						#DBInfoEncryptclass=com.frameworkset.common.poolman.security.DESDBUrlEncrypt
+						#DESDBUserAndPasswordEncrypt-采用des算法对数据库用户名/口令进行加密和解密操作
+						#DBInfoEncryptclass=com.frameworkset.common.poolman.security.DESDBUserAndPasswordEncrypt
+						
+						对应的配置在bboss-aop.jar/aop.properties文件中，你只需要放开需要的加密插件，关闭另外的插件即可，数据库信息的加密请使用如下方法：
+						com.frameworkset.common.poolman.security.DESCipher aa = new com.frameworkset.common.poolman.security.DESCipher();
+						String password = aa.encrypt("123456");		
+						String user = aa.encrypt("root");		
+						String url = aa.encrypt("jdbc:mysql://localhost:3306/cim");
+						</td>
+						</tr>
+						
 						</table>
 						</tr>
 						

@@ -22,7 +22,7 @@
 		<poolPreparedStatements>false</poolPreparedStatements>
 
 		<initialConnections>2</initialConnections>
-		<minimumSize>0</minimumSize>
+		<minimumSize>2</minimumSize>
 		<maximumSize>50</maximumSize>
 		<!--控制connection达到maximumSize是否允许再创建新的connection
 			true：允许，缺省值
@@ -39,9 +39,9 @@
 			如果发现有connectionTimeout的connection则将其关闭，释放数据库资源。
 			缺省为420秒
 		-->
-		<!--<skimmerFrequency>420</skimmerFrequency>-->
+		<skimmerFrequency>120000</skimmerFrequency>
 		<!--扫描空闲队列中超过指定的时间的connection，如果发现超过了，则将连接关闭，释放数据库资源-->
-		<connectionTimeout>10</connectionTimeout>
+		<connectionTimeout>240000</connectionTimeout>
 		<!--扫描空闲队列中超过指定的时间的connection，如果发现超过了，则将连接关闭，释放数据库资源，
 			当清除connection的个数达到7个时退出本次扫描
 			原则上shrinkBy的值应该介于maxsize和minimumSize的值之间

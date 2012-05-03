@@ -74,5 +74,10 @@ public class TXDataSource implements DataSource{
 		// TODO Auto-generated method stub
 		return datasource.getLoginTimeout();
 	}
+	
+	public DataSource getSRCDataSource()
+	{
+		return this.datasource;
+	}
 
 }

@@ -23,6 +23,10 @@ bboss-persistent<-cas server [frameworkset-pool.jar]
 to do list:
 无
 #######update function list since bbossgroups-3.5 begin###########
+o poolman.xml文件中datasource增加<enablejta>true</enablejta>属性配置
+enablejta和jndiName属性结合使用，当enablejta为true时将把数据源转换为TXDataSource注册jndi上下文中
+主要应用于托管hibernate和ibatis等持久层框架事务
+
 o 增加对datasource配置文件中对账号和密码的同时加密插件
 com.frameworkset.common.poolman.security.DESDBUserAndPasswordEncrypt
 o 新增TXDataSource数据源类，用来实现第三方数据库事务代理功能

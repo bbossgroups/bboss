@@ -59,6 +59,7 @@ import com.frameworkset.commons.pool.impl.GenericObjectPool;
 import com.frameworkset.orm.adapter.DB;
 import com.frameworkset.orm.adapter.DBFactory;
 import com.frameworkset.orm.transaction.JDBCTransaction;
+import com.frameworkset.orm.transaction.TXDataSource;
 import com.frameworkset.orm.transaction.TransactionManager;
 
 /**
@@ -595,13 +596,20 @@ public class JDBCPool {
 			Properties p = getProperties();
 			DataSource _datasource =  BasicDataSourceFactory
 					.createDataSource(p);
-
+//			if(this.info.isEnablejta())
+//			{
+//				_datasource = new TXDataSource(_datasource);
+//			}
 			if (this.info.getJNDIName() != null
 					&& !this.info.getJNDIName().equals("")) {
 				this.datasource = new PoolManDataSource(_datasource, info
 						.getDbname(), info.getJNDIName());
 			} else {
 				this.datasource = _datasource;
+			}
+			if(this.info.isEnablejta())
+			{
+				this.datasource = new TXDataSource(datasource);
 			}
 
 		} catch (Exception e) {
@@ -619,10 +627,12 @@ public class JDBCPool {
 
 			try {
 				// Context ctx = new InitialContext();
-				if(this.externalDBName == null)
+				if(this.externalDBName == null)//如果引用的是poolman.xml文件中定义的数据源externalDBName不会为空，externalDBName为空表示表示外部数据源始容器数据源或者外部数据源
 				{
 					DataSource _datasource = find(this.info.getExternaljndiName(),info);
+					
 					if (_datasource != null) {
+						
 						if (this.info.getJNDIName() != null
 								&& !this.info.getJNDIName().equals("")) {
 							this.datasource = new PoolManDataSource(_datasource,
@@ -630,7 +640,23 @@ public class JDBCPool {
 						} else {
 							this.datasource = _datasource;
 						}
+						
+						if(this.info.isEnablejta())
+						{
+							if(!(_datasource instanceof TXDataSource))
+							{
+//								if(_datasource instanceof PoolManDataSource)
+//								{
+//									
+//								}
+//								else
+								{
+									this.datasource = new TXDataSource(datasource);
+								}
+							}
+						}
 					}
+					
 				}
 			} catch (NamingException e) {
 				log.error("通过JNDI名称[" + info.getExternaljndiName()
@@ -2396,11 +2422,20 @@ public class JDBCPool {
 //		// o = null;
 //	}
 
-	/** Retrieves a PooledConnection impl and returns its Handle. */
+	/**
+	 * Retrieves a PooledConnection impl and returns its Handle. 
+	 * 直接从原始池中获取connection，如果datasource 是一个TXDataSource
+	 * 那么需要查找TXDataSource内部包含的原始数据源，然后从中获取对应的connection
+	 */
 	public Connection requestConnection() throws SQLException {
 		if(datasource != null)
 		{
-			return this.datasource.getConnection();
+			if(!(datasource instanceof TXDataSource))
+				return this.datasource.getConnection();
+			else
+			{
+				return ((TXDataSource)this.datasource).getSRCDataSource().getConnection();
+			}
 		}
 		else
 		{
@@ -2493,14 +2528,23 @@ public class JDBCPool {
 	public int getNumActive() {
 		if(this.externalDBName == null)
 		{
-			if (this.datasource instanceof BasicDataSource) {
-				return ((BasicDataSource) this.datasource).getNumActive();
+			DataSource datasource_ = null;
+			if(this.datasource instanceof TXDataSource)
+			{
+				datasource_ =getSRCDataSource((TXDataSource)datasource);
 			}
-			else if (this.datasource instanceof NativeDataSource) {
-				return ((NativeDataSource) this.datasource).getNumActive();
+			else
+			{
+				datasource_ = datasource;
 			}
-			else if (this.datasource instanceof PoolManDataSource) {
-				PoolManDataSource temp = (PoolManDataSource) this.datasource;
+			if (datasource_ instanceof BasicDataSource) {
+				return ((BasicDataSource) datasource_).getNumActive();
+			}
+			else if (datasource_ instanceof NativeDataSource) {
+				return ((NativeDataSource) datasource_).getNumActive();
+			}
+			else if (datasource_ instanceof PoolManDataSource) {
+				PoolManDataSource temp = (PoolManDataSource) datasource_;
 				DataSource temp_ = temp.getInnerDataSource();
 				if (temp_ != null) {
 					if (temp_ instanceof BasicDataSource) {
@@ -2529,14 +2573,23 @@ public class JDBCPool {
 	public List getTraceObjects() {
 		if(this.externalDBName == null)
 		{
-			if (this.datasource instanceof BasicDataSource) {
-				return ((BasicDataSource) this.datasource).getTraceObjects();
-			} 
-			else if (this.datasource instanceof NativeDataSource) {
-				return ((NativeDataSource) this.datasource).getTraces();
+			DataSource datasource_ = null;
+			if(this.datasource instanceof TXDataSource)
+			{
+				datasource_ =getSRCDataSource((TXDataSource)datasource);
 			}
-			else if (this.datasource instanceof PoolManDataSource) {
-				PoolManDataSource temp = (PoolManDataSource) this.datasource;
+			else
+			{
+				datasource_ = datasource;
+			}
+			if (datasource_ instanceof BasicDataSource) {
+				return ((BasicDataSource) datasource_).getTraceObjects();
+			} 
+			else if (datasource_ instanceof NativeDataSource) {
+				return ((NativeDataSource) datasource_).getTraces();
+			}
+			else if (datasource_ instanceof PoolManDataSource) {
+				PoolManDataSource temp = (PoolManDataSource) datasource_;
 				DataSource temp_ = temp.getInnerDataSource();
 				if (temp_ != null) {
 					if (temp_ instanceof BasicDataSource) {
@@ -2556,7 +2609,10 @@ public class JDBCPool {
 		}
 	}
 	
-	
+	private DataSource getSRCDataSource(TXDataSource ds)
+	{
+		return ds.getSRCDataSource();
+	}
 
 	/**
 	 * 获取并发最大使用链接数，记录链接池到目前为止并发使用链接的最大数目， 外部数据源返回-1
@@ -2566,14 +2622,23 @@ public class JDBCPool {
 	public int getMaxNumActive() {
 		if(this.externalDBName == null)
 		{
-			if (this.datasource instanceof BasicDataSource) {
-				return ((BasicDataSource) this.datasource).getMaxNumActive();
-			} 
-			else if (this.datasource instanceof NativeDataSource) {
-				return ((NativeDataSource) this.datasource).getMaxNumActive();
+			DataSource datasource_ = null;
+			if(this.datasource instanceof TXDataSource)
+			{
+				datasource_ =getSRCDataSource((TXDataSource)datasource);
 			}
-			else if (this.datasource instanceof PoolManDataSource) {
-				PoolManDataSource temp = (PoolManDataSource) this.datasource;
+			else
+			{
+				datasource_ = datasource;
+			}
+			if (datasource_  instanceof BasicDataSource) {
+				return ((BasicDataSource) datasource_ ).getMaxNumActive();
+			} 
+			else if (datasource_  instanceof NativeDataSource) {
+				return ((NativeDataSource) datasource_ ).getMaxNumActive();
+			}
+			else if (datasource_  instanceof PoolManDataSource) {
+				PoolManDataSource temp = (PoolManDataSource) datasource_ ;
 				DataSource temp_ = temp.getInnerDataSource();
 				if (temp_ != null) {
 					if (temp_ instanceof BasicDataSource) {
@@ -2601,10 +2666,24 @@ public class JDBCPool {
 	public int getNumIdle() {
 		if(this.externalDBName == null)
 		{
-			if (this.datasource instanceof BasicDataSource) {
-				return ((BasicDataSource) this.datasource).getNumIdle();
-			} else if (this.datasource instanceof PoolManDataSource) {
-				PoolManDataSource temp = (PoolManDataSource) this.datasource;
+			
+			DataSource datasource_ = null;
+			if(this.datasource instanceof TXDataSource)
+			{
+				datasource_ =getSRCDataSource((TXDataSource)datasource);
+			}
+			else
+			{
+				datasource_ = datasource;
+			}
+			if (datasource_ instanceof BasicDataSource) {
+				return ((BasicDataSource) datasource_).getNumIdle();
+			} 
+			else if (datasource_ instanceof NativeDataSource) {
+				return -1;
+			}
+			else if (datasource_ instanceof PoolManDataSource) {
+				PoolManDataSource temp = (PoolManDataSource) datasource_;
 				DataSource temp_ = temp.getInnerDataSource();
 				if (temp_ != null) {
 					if (temp_ instanceof BasicDataSource) {

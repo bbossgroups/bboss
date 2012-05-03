@@ -3,7 +3,11 @@ package com.frameworkset.common;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import javax.transaction.RollbackException;
+
 import com.frameworkset.common.poolman.DBUtil;
+import com.frameworkset.orm.transaction.TransactionException;
+import com.frameworkset.orm.transaction.TransactionManager;
 
 public class TestConnection {
 	static long max = 0;
@@ -29,15 +33,25 @@ public class TestConnection {
 		try {
 			long s = System.currentTimeMillis();
 			System.out.println("获取connection前空闲：" +DBUtil.getNumIdle()  + "个.");
+			TransactionManager tm = new TransactionManager();
+			tm.begin();
 			Connection con = DBUtil.getConection();
+			Connection connn = DBUtil.getDataSource(null).getConnection();
 			System.out.println("获取connection耗时空闲：" +DBUtil.getNumIdle()  + "个.");
 			Connection con1 = DBUtil.getConection();
 			long end = System.currentTimeMillis();
 			System.out.println("获取connection1耗时空闲：" +DBUtil.getNumIdle()  + "个.");
 			con.close();
 			con1.close();
+			tm.commit();
 			System.out.println("获取connection1后空闲：" +DBUtil.getNumIdle()  + "个.");
 		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (RollbackException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (TransactionException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
