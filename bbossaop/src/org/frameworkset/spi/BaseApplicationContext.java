@@ -503,6 +503,23 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 		
 	
 	}
+	
+	public static long getResourceFileRefreshInterval() {
+		
+		Properties pro = null;
+		try {
+			pro = fillProperties();
+			String ResourceFileRefreshInterval = pro.getProperty("resourcefile.refresh_interval", "5000");
+			return Long.parseLong(ResourceFileRefreshInterval);
+			
+		} catch (Exception e) {
+			log.warn(e.getMessage(),e);
+			return 5000l;
+		}
+		
+	
+
+}
 
 //	/**
 //	 * 获取指定根配置文件上下文bean组件管理容器，配置文件从参数configfile对应配置文件开始
@@ -1798,6 +1815,9 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 				.getMessage(code, null, defaultMessage, locale);
 	}
 
+	public String getMessage(String code,Locale locale) {
+		return getMessageSource().getMessage(code, null, null, locale);
+	}
 	public String getMessage(String code, String defaultMessage) {
 		return getMessageSource().getMessage(code, null, defaultMessage, null);
 	}

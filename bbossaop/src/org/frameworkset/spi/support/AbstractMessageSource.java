@@ -100,7 +100,12 @@ public abstract class AbstractMessageSource extends MessageSourceSupport  implem
 		}
 		return renderDefaultMessage(defaultMessage, args, locale);
 	}
-
+	public final String getMessage(String code,  Locale locale) throws NoSuchMessageException {
+		return getMessage(code, null, locale);
+	}
+	public final String getMessage(String code) throws NoSuchMessageException {
+		return getMessage(code, null, (Locale)null);
+	}
 	public final String getMessage(String code, Object[] args, Locale locale) throws NoSuchMessageException {
 		String msg = getMessageInternal(code, args, locale);
 		

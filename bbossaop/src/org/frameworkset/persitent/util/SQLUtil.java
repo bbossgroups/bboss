@@ -112,8 +112,13 @@ public class SQLUtil {
 	
 	public static void stopmonitor()
 	{
-		if(SQLUtil.damon != null)
-			SQLUtil.damon.stopped();
+		try {
+			if(SQLUtil.damon != null)
+				SQLUtil.damon.stopped();
+		} catch (Throwable e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+		}
 	}
 	
 	public String getSQLFile()
@@ -133,8 +138,14 @@ public class SQLUtil {
 				{
 					if(damon == null)
 					{
-						damon = new DaemonThread(refresh_interval,"SQLFILES REFresh Worker"); 
+						damon = new DaemonThread(refresh_interval,"SQL files Refresh Worker"); 
 						damon.start();
+						BaseApplicationContext.addShutdownHook(new Runnable(){
+
+							public void run() {
+								SQLUtil.stopmonitor();
+								
+							}});
 					}
 				}
 			}
