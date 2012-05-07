@@ -33,6 +33,7 @@ import org.frameworkset.util.io.Resource;
 import org.frameworkset.util.io.ResourcePatternResolver;
 import org.frameworkset.web.servlet.DispatchServlet;
 import org.frameworkset.web.servlet.support.ServletContextResource;
+import org.frameworkset.web.servlet.support.ServletContextResourceLoader;
 import org.frameworkset.web.servlet.support.WebApplicationContextUtils;
 import org.frameworkset.web.ui.ThemeSource;
 import org.frameworkset.web.ui.context.Theme;
@@ -270,9 +271,9 @@ public class WebApplicationContext extends DefaultApplicationContext implements 
 	 */
 	protected void initMessageSource() {
 
-		String messageClass = DispatchServlet.getDefaultStrategies().getProperty("messageSource","org.frameworkset.spi.support.ReloadableResourceBundleMessageSource");
+		String messageClass = DispatchServlet.getDefaultStrategies().getProperty("messageSource","org.frameworkset.spi.support.HotDeployResourceBundleMessageSource");
 		String messageSource_basename = DispatchServlet.getDefaultStrategies().getProperty("messageSource.basename","/WEB-INF/messages");
-		String 	messageSource_cacheSeconds = DispatchServlet.getDefaultStrategies().getProperty("messageSource.cacheSeconds","-1");
+//		String 	messageSource_cacheSeconds = DispatchServlet.getDefaultStrategies().getProperty("messageSource.cacheSeconds","-1");
 		String 	messageSource_useCodeAsDefaultMessage = DispatchServlet.getDefaultStrategies().getProperty("messageSource.useCodeAsDefaultMessage","true");
 		
 		Class  message = null;
@@ -281,6 +282,7 @@ public class WebApplicationContext extends DefaultApplicationContext implements 
 			message = Class.forName(messageClass);
 			HotDeployResourceBundleMessageSource ms = (HotDeployResourceBundleMessageSource) message.newInstance();
 			ms.setBasename(messageSource_basename);
+			ms.setResourceLoader(new ServletContextResourceLoader(this.servletContext));
 //			ms.setCacheSeconds(Integer.parseInt(messageSource_cacheSeconds));
 			ms.setUseCodeAsDefaultMessage(Boolean.parseBoolean(messageSource_useCodeAsDefaultMessage));
 			this.initBean(ms, "org.frameworkset.spi.support.HotDeployResourceBundleMessageSource");
@@ -297,6 +299,7 @@ public class WebApplicationContext extends DefaultApplicationContext implements 
 				message = Class.forName("org.frameworkset.spi.support.HotDeployResourceBundleMessageSource");
 				HotDeployResourceBundleMessageSource ms = (HotDeployResourceBundleMessageSource) message.newInstance();
 				ms.setBasename(messageSource_basename);
+				ms.setResourceLoader(new ServletContextResourceLoader(this.servletContext));
 //				ms.setCacheSeconds(Integer.parseInt(messageSource_cacheSeconds));
 				ms.setUseCodeAsDefaultMessage(Boolean.parseBoolean(messageSource_useCodeAsDefaultMessage));
 				this.initBean(ms, "org.frameworkset.spi.support.HotDeployResourceBundleMessageSource");
