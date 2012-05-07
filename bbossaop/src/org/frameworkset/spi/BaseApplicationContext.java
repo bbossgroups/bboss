@@ -56,10 +56,10 @@ import org.frameworkset.spi.remote.ServiceID;
 import org.frameworkset.spi.security.SecurityContext;
 import org.frameworkset.spi.security.SecurityManager;
 import org.frameworkset.spi.support.DelegatingMessageSource;
+import org.frameworkset.spi.support.HotDeployResourceBundleMessageSource;
 import org.frameworkset.spi.support.MessageSource;
 import org.frameworkset.spi.support.MessageSourceResolvable;
 import org.frameworkset.spi.support.NoSuchMessageException;
-import org.frameworkset.spi.support.ResourceBundleMessageSource;
 import org.frameworkset.util.Assert;
 import org.frameworkset.util.io.DefaultResourceLoader;
 import org.frameworkset.util.io.PathMatchingResourcePatternResolver;
@@ -2059,8 +2059,33 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 	public static final String DEFAULT_MESSAGE_BASENAME = "messages";
 
 
+//	protected MessageSource getInternalParentMessageSource() {
+//		ResourceBundleMessageSource messagesource = new ResourceBundleMessageSource();
+//		if(this.configfile != null && !configfile.equals(""))
+//		{
+//			int index = configfile.lastIndexOf("/");
+//			if(index > 0)
+//			{
+//				String parent = configfile.substring(0,index);
+//				messagesource.setBasename(getRealPath(parent, DEFAULT_MESSAGE_BASENAME));
+//				
+//			}
+//			else
+//			{
+//				messagesource.setBasename(DEFAULT_MESSAGE_BASENAME);
+//			}
+//		}
+//		else
+//		{
+//			messagesource.setBasename(DEFAULT_MESSAGE_BASENAME);
+//		}
+//		messagesource.setBundleClassLoader(getClassLoader());
+//		messagesource.setUseCodeAsDefaultMessage(true);
+//		return messagesource;
+//	}
+	
 	protected MessageSource getInternalParentMessageSource() {
-		ResourceBundleMessageSource messagesource = new ResourceBundleMessageSource();
+		HotDeployResourceBundleMessageSource messagesource = new HotDeployResourceBundleMessageSource();
 		if(this.configfile != null && !configfile.equals(""))
 		{
 			int index = configfile.lastIndexOf("/");

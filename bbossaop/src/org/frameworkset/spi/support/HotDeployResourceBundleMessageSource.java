@@ -28,7 +28,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
 
-import org.frameworkset.persitent.util.SQLUtil;
 import org.frameworkset.spi.BaseApplicationContext;
 import org.frameworkset.spi.ResourceLoaderAware;
 import org.frameworkset.util.Assert;
@@ -75,6 +74,7 @@ public class HotDeployResourceBundleMessageSource extends AbstractMessageSource
 	private Properties fileEncodings;
 
 	private boolean fallbackToSystemLocale = true;
+	private ClassLoader bundleClassLoader;
 
 
 
@@ -406,7 +406,7 @@ public class HotDeployResourceBundleMessageSource extends AbstractMessageSource
 //			}
 			propHolder = this.firstLoadProperties(filename);
 			if(propHolder.getResource() != null)
-				checkResource(this,propHolder.getResource());
+				checkResource(this,propHolder.getResource(),propHolder.getBasename(),propHolder.getRelativefile());
 			cachedProperties.put(filename, propHolder);
 			return propHolder;
 		}
@@ -491,17 +491,26 @@ public class HotDeployResourceBundleMessageSource extends AbstractMessageSource
 //		return propHolder;
 //	}
 	
-	protected PropertiesHolder refreshProperties(String filename) {
-		filename = "org/frameworkset/spi/support/messages_en_US.properties";
-		Resource resource = this.resourceLoader.getResource(filename);
+	/**
+	 * relativefile = "org/frameworkset/spi/support/messages_en_US.properties";
+	 * basename = "org/frameworkset/spi/support/messages_en_US";
+	 * filepath = "d:/workspace/org/frameworkset/spi/support/messages_en_US.properties";
+	 * @param filename
+	 * @param basename
+	 * @param relativefile
+	 * @return
+	 */
+	protected PropertiesHolder refreshProperties(String filepath,String basename,String relativefile) {
+//		filename = "org/frameworkset/spi/support/messages_en_US.properties";
+		Resource resource = this.resourceLoader.getResource(relativefile);
 //		if (!resource.exists()) {
 //			resource = this.resourceLoader.getResource(filename + XML_SUFFIX);
 //		}
 		
 		PropertiesHolder  propHolder = null;
 		try {
-			Properties props = loadProperties(resource, filename);
-			propHolder = new PropertiesHolder(props,resource.getFile().getCanonicalPath());
+			Properties props = loadProperties(resource, relativefile);
+			propHolder = new PropertiesHolder(props,filepath,basename,relativefile);
 		} catch (IOException ex) {
 			{
 				logger.warn(
@@ -516,7 +525,7 @@ public class HotDeployResourceBundleMessageSource extends AbstractMessageSource
 		
 
 	
-		this.cachedProperties.put(filename, propHolder);
+		this.cachedProperties.put(basename, propHolder);
 		return propHolder;
 	}
 	
@@ -537,8 +546,8 @@ public class HotDeployResourceBundleMessageSource extends AbstractMessageSource
 		else
 		{
 			try {
-				Properties props = loadProperties(resource, filename);
-				propHolder = new PropertiesHolder(props,resource.getFile().getCanonicalPath());
+				Properties props = loadProperties(resource, name);
+				propHolder = new PropertiesHolder(props,resource.getFile().getCanonicalPath(),filename,name);
 			} catch (IOException ex) {
 				{
 					logger.warn(
@@ -653,6 +662,8 @@ public class HotDeployResourceBundleMessageSource extends AbstractMessageSource
 
 		private Properties properties;
 		private String resource;
+		private String basename;
+		private String relativefile;
 
 //		private long fileTimestamp = -1;
 //
@@ -661,11 +672,14 @@ public class HotDeployResourceBundleMessageSource extends AbstractMessageSource
 		/** Cache to hold already generated MessageFormats per message code */
 		private final Map cachedMessageFormats = new HashMap();
 
-		public PropertiesHolder(Properties properties,String resource) {
+		public PropertiesHolder(Properties properties,String resource,String basename,String relativefile) {
 			this.properties = properties;
 			this.resource = resource;
+			this.basename = basename;
+			this.relativefile = relativefile;
 //			this.fileTimestamp = fileTimestamp;
 		}
+		
 		public PropertiesHolder(Properties properties) {
 			this.properties = properties;
 //			this.resource = resource;
@@ -728,6 +742,14 @@ public class HotDeployResourceBundleMessageSource extends AbstractMessageSource
 		public String getResource() {
 			return resource;
 		}
+
+		public String getBasename() {
+			return basename;
+		}
+
+		public String getRelativefile() {
+			return relativefile;
+		}
 	}
 
 	/**
@@ -773,7 +795,7 @@ public class HotDeployResourceBundleMessageSource extends AbstractMessageSource
 	private static long refresh_interval = 5000;
 	private static DaemonThread damon = null; 
 	private static Object lock = new Object();
-	private static void checkResource(HotDeployResourceBundleMessageSource messagesource,String filename){
+	private static void checkResource(HotDeployResourceBundleMessageSource messagesource,String filepath,String basename,String filename){
 		
 		refresh_interval = BaseApplicationContext.getResourceFileRefreshInterval();
 		if(refresh_interval > 0)
@@ -789,13 +811,12 @@ public class HotDeployResourceBundleMessageSource extends AbstractMessageSource
 						BaseApplicationContext.addShutdownHook(new Runnable(){
 
 							public void run() {
-								stopmonitor();
-								
+								stopmonitor();								
 							}});
 					}
 				}
 			}
-			damon.addFile(filename, new ResourceFileRefresh(messagesource,filename));
+			damon.addFile(filename, new ResourceFileRefresh(messagesource,filepath,basename,filename));
 		}
 		
 	}
@@ -803,13 +824,17 @@ public class HotDeployResourceBundleMessageSource extends AbstractMessageSource
 	{
 		private HotDeployResourceBundleMessageSource messagesource ;
 		private String filename;
-		public ResourceFileRefresh(HotDeployResourceBundleMessageSource messagesource,String filename)
+		private String basename;
+		private String filepath;
+		public ResourceFileRefresh(HotDeployResourceBundleMessageSource messagesource,String filepath,String basename,String filename)
 		{
 			this.messagesource = messagesource;
 			this.filename = filename;
+			this.basename = basename;
+			this.filepath = filepath;
 		}
 		public void reinit() {
-			messagesource.refreshProperties(filename);
+			messagesource.refreshProperties(filepath,basename,filename);
 		}
 		
 	}
@@ -823,5 +848,13 @@ public class HotDeployResourceBundleMessageSource extends AbstractMessageSource
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();
 		}
+	}
+
+	public ClassLoader getBundleClassLoader() {
+		return bundleClassLoader;
+	}
+
+	public void setBundleClassLoader(ClassLoader bundleClassLoader) {
+		this.bundleClassLoader = bundleClassLoader;
 	}
 }

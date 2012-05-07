@@ -28,7 +28,7 @@ import org.frameworkset.spi.assemble.BeanInf;
 import org.frameworkset.spi.assemble.ServiceProviderManager;
 import org.frameworkset.spi.assemble.callback.AssembleCallback;
 import org.frameworkset.spi.assemble.callback.WebDocbaseAssembleCallback;
-import org.frameworkset.spi.support.ReloadableResourceBundleMessageSource;
+import org.frameworkset.spi.support.HotDeployResourceBundleMessageSource;
 import org.frameworkset.util.io.Resource;
 import org.frameworkset.util.io.ResourcePatternResolver;
 import org.frameworkset.web.servlet.DispatchServlet;
@@ -279,11 +279,11 @@ public class WebApplicationContext extends DefaultApplicationContext implements 
 		try
 		{
 			message = Class.forName(messageClass);
-			ReloadableResourceBundleMessageSource ms = (ReloadableResourceBundleMessageSource) message.newInstance();
+			HotDeployResourceBundleMessageSource ms = (HotDeployResourceBundleMessageSource) message.newInstance();
 			ms.setBasename(messageSource_basename);
-			ms.setCacheSeconds(Integer.parseInt(messageSource_cacheSeconds));
+//			ms.setCacheSeconds(Integer.parseInt(messageSource_cacheSeconds));
 			ms.setUseCodeAsDefaultMessage(Boolean.parseBoolean(messageSource_useCodeAsDefaultMessage));
-			this.initBean(ms, "org.frameworkset.spi.support.ReloadableResourceBundleMessageSource");
+			this.initBean(ms, "org.frameworkset.spi.support.HotDeployResourceBundleMessageSource");
 			
 			this.messageSource = ms;
 			if (logger.isDebugEnabled()) {
@@ -294,12 +294,12 @@ public class WebApplicationContext extends DefaultApplicationContext implements 
 		{
 			logger.error("Using MessageSource [" + messageClass + "] failed:",e);
 			try {
-				message = Class.forName("org.frameworkset.spi.support.ReloadableResourceBundleMessageSource");
-				ReloadableResourceBundleMessageSource ms = (ReloadableResourceBundleMessageSource) message.newInstance();
+				message = Class.forName("org.frameworkset.spi.support.HotDeployResourceBundleMessageSource");
+				HotDeployResourceBundleMessageSource ms = (HotDeployResourceBundleMessageSource) message.newInstance();
 				ms.setBasename(messageSource_basename);
-				ms.setCacheSeconds(Integer.parseInt(messageSource_cacheSeconds));
+//				ms.setCacheSeconds(Integer.parseInt(messageSource_cacheSeconds));
 				ms.setUseCodeAsDefaultMessage(Boolean.parseBoolean(messageSource_useCodeAsDefaultMessage));
-				this.initBean(ms, "org.frameworkset.spi.support.ReloadableResourceBundleMessageSource");
+				this.initBean(ms, "org.frameworkset.spi.support.HotDeployResourceBundleMessageSource");
 				
 				this.messageSource = ms;
 				if (logger.isDebugEnabled()) {

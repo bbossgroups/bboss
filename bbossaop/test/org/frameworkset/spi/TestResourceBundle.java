@@ -45,6 +45,7 @@ public class TestResourceBundle {
 	{
 		ApplicationContext context = ApplicationContext.getApplicationContext("org/frameworkset/spi/support/messages.xml");
 		System.out.println(context.getMessage("Trans.Log.TransformationIsToAllocateStep", new Object[]{"a","b"}, (Locale)null));
+		System.out.println(context.getMessage("Trans.Log.TransformationIsToAllocateStep", new Object[]{"a","b"}, Locale.SIMPLIFIED_CHINESE));
 		System.out.println(context.getMessage("StepLoader.RuntimeError.UnableToInstantiateClass.TRANS0006",Locale.US));
 		Resource resource = context.getResource("org/frameworkset/spi/support/messages");
 		System.out.println(resource);

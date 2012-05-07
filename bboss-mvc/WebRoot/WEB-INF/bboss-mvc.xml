@@ -39,9 +39,8 @@
 	<!-- 
 	cacheSeconds:-1±íÊ¾ÓÀÔ¶»º³å
 	 -->
-    <property name="messageSource" class="org.frameworkset.spi.support.ReloadableResourceBundleMessageSource" singlable="true">
+    <property name="messageSource" class="org.frameworkset.spi.support.HotDeployResourceBundleMessageSource" >
         <property name="basename" value="/WEB-INF/messages"/>
-        <property name="cacheSeconds" value="-1"/>
         <property name="useCodeAsDefaultMessage" value="true"/>
     </property>
     
