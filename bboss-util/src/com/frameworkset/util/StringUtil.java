@@ -33,6 +33,7 @@
 package com.frameworkset.util;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.RandomAccessFile;
@@ -44,6 +45,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
+import org.frameworkset.util.io.Resource;
 
 /**
  * To change for your class or interface DAOÖÐVOObject StringÀàÐÍÓëPOÊý¾ÝÀàÐÍ×ª»»¹¤¾ßÀà.
@@ -274,6 +276,83 @@ outStr = "2010Äê02ÔÂ07ÈÕ11Ê±Ðí£¬ÖÜÁéÓ±±¨¾¯£ºÔÚ2Â·¹«½»³µÉÏ±»°ÇÇÔ£¬²¢×¥»ñÒ»ÃûÏÓÒÉÈ
      return name;
      
 	 
+ }
+ 
+
+ public static void sendFile_(HttpServletRequest request, HttpServletResponse response, Resource in) throws Exception {
+//	 if(in == null || in.exists())
+//		 throw new IOException("×ÊÔ´²»´æÔÚ,ÏÂÔØÊ§°Ü");
+	
+	 sendFile_(request, response, in.getFilename(),in.getInputStream());
+ }
+ public static void sendFile_(HttpServletRequest request, HttpServletResponse response, String filename,InputStream in) throws Exception {
+     OutputStream out = null;
+//     InputStream in = null;
+     try {
+     	if(in == null)
+     		return;
+     	out = response.getOutputStream();
+     	
+
+         String name = StringUtil.handleCNName(filename,request);
+         response.setContentType("Application");
+         response.setHeader("Content-Disposition", "attachment; filename=" + name);
+//         response.setHeader("Content-Disposition", "attachment; filename=" + new String(filename.getBytes(),"ISO-8859-1").replaceAll(" ", "-"));
+//         response.setHeader("Accept-Ranges", "bytes");
+//         response.setHeader("Content-Length", Long.toString(rangeFinish - rangeStart + 1));
+//         response.setHeader("Content-Range", "bytes " + rangeStart + "-" + rangeFinish + "/" + fileSize);
+
+         // seek to the requested offset
+         
+
+         // send the file
+         byte buffer[] = new byte[1024];
+//         in.skip(rangeStart);
+         long len;
+         int totalRead = 0;
+//         boolean nomore = false;
+         while (true) {
+             len = in.read(buffer);
+             if(len > 0)
+             {
+	                out.write(buffer, 0, (int) len);
+	                totalRead += len;
+             }
+             else
+             {
+             	break;
+             }
+                 
+         }
+         out.flush();
+     }
+     catch(Exception e)
+     {
+     	e.printStackTrace();
+     	throw e;
+     }
+     finally {
+     	try
+			{
+     		if(in != null)
+     			in.close();		
+			}
+			catch (Exception e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+         try
+			{
+         	if(out != null)
+         		out.close();
+			}
+			catch (Exception e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+     }
  }
  public static void sendFile_(HttpServletRequest request, HttpServletResponse response, String filename,InputStream in,long fileSize) throws Exception {
         OutputStream out = null;

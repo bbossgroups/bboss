@@ -43,7 +43,7 @@ import org.apache.log4j.Logger;
  */
 public abstract class MessageSourceSupport {
 	/** Logger available to subclasses */
-	protected final Logger logger = Logger
+	protected static final Logger logger = Logger
 			.getLogger(MessageSourceSupport.class);
 
 	private boolean alwaysUseMessageFormat = false;
@@ -125,7 +125,7 @@ public abstract class MessageSourceSupport {
 	 *            the Locale to create a MessageFormat for
 	 * @return the MessageFormat instance
 	 */
-	protected MessageFormat createMessageFormat(String msg, Locale locale) {
+	protected static MessageFormat createMessageFormat(String msg, Locale locale) {
 		if (logger.isDebugEnabled()) {
 			logger.debug("Creating MessageFormat for pattern [" + msg
 					+ "] and locale '" + locale + "'");

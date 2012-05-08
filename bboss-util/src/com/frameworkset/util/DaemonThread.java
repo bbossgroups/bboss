@@ -143,10 +143,18 @@ public class DaemonThread extends java.lang.Thread
         	if(confURL != null)
         		file = new File(confURL.getPath() );
         }
-       
+        addFile(file,init);
+//    	this.files.add(new FileBean(file,init));
+//    	 log.debug("Add file " + file.getAbsolutePath() + " to damon thread which moniting file modified.");
+    }
+    
+    public void addFile(File file,ResourceInitial init)
+    {   
     	this.files.add(new FileBean(file,init));
     	 log.debug("Add file " + file.getAbsolutePath() + " to damon thread which moniting file modified.");
     }
+    
+    
     
     public DaemonThread(String fileName,long refresh_interval,ResourceInitial init)
     {

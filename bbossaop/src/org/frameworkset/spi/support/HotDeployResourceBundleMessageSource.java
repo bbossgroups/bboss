@@ -16,6 +16,7 @@
 
 package org.frameworkset.spi.support;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -75,6 +76,13 @@ public class HotDeployResourceBundleMessageSource extends AbstractMessageSource
 
 	private boolean fallbackToSystemLocale = true;
 	private ClassLoader bundleClassLoader;
+	/**
+	 * 是否需要对HotDeployResourceBundleMessageSource实例管理的资源文件启用热加载机制
+	 * true 启用
+	 * false 关闭
+	 * 默认启用
+	 */
+	private boolean changemonitor = true;
 
 
 
@@ -90,7 +98,9 @@ public class HotDeployResourceBundleMessageSource extends AbstractMessageSource
 
 	/** Cache to hold merged loaded properties per basename */
 	private final Map cachedMergedProperties = new HashMap();
-
+	private static final PropertiesHolder  NOTEXIST_propHolder = new PropertiesHolder();
+	
+	private static final PropertiesHolder  ERROR_propHolder = new PropertiesHolder();
 	
 
 	/**
@@ -112,7 +122,8 @@ public class HotDeployResourceBundleMessageSource extends AbstractMessageSource
 	 * @see java.util.ResourceBundle
 	 */
 	public void setBasename(String basename) {
-		setBasenames(new String[] { basename });
+		String[] basenames = basename.split(",");
+		setBasenames(basenames);
 	}
 
 	/**
@@ -405,7 +416,7 @@ public class HotDeployResourceBundleMessageSource extends AbstractMessageSource
 //				return propHolder;
 //			}
 			propHolder = this.firstLoadProperties(filename);
-			if(propHolder.getResource() != null)
+			if(propHolder.getResource() != null && this.isChangemonitor())
 				checkResource(this,propHolder.getResource(),propHolder.getBasename(),propHolder.getRelativefile());
 			cachedProperties.put(filename, propHolder);
 			return propHolder;
@@ -500,7 +511,7 @@ public class HotDeployResourceBundleMessageSource extends AbstractMessageSource
 	 * @param relativefile
 	 * @return
 	 */
-	protected PropertiesHolder refreshProperties(String filepath,String basename,String relativefile) {
+	protected PropertiesHolder refreshProperties(File filepath,String basename,String relativefile) {
 //		filename = "org/frameworkset/spi/support/messages_en_US.properties";
 		Resource resource = this.resourceLoader.getResource(relativefile);
 //		if (!resource.exists()) {
@@ -515,10 +526,10 @@ public class HotDeployResourceBundleMessageSource extends AbstractMessageSource
 			{
 				logger.warn(
 						"Could not parse properties file ["
-								+ resource.getFilename() + "]", ex);
+								+ filepath + "]", ex);
 			}
 			// Empty holder representing "not valid".
-			propHolder = new PropertiesHolder();
+			propHolder = ERROR_propHolder;
 		}
 		
 
@@ -541,21 +552,26 @@ public class HotDeployResourceBundleMessageSource extends AbstractMessageSource
 		
 		PropertiesHolder  propHolder = null;
 		if (!resource.exists()) {
-			propHolder = new PropertiesHolder();
+			propHolder = NOTEXIST_propHolder;
 		}
 		else
 		{
 			try {
 				Properties props = loadProperties(resource, name);
-				propHolder = new PropertiesHolder(props,resource.getFile().getCanonicalPath(),filename,name);
+				propHolder = new PropertiesHolder(props,resource.getFile(),filename,name);
 			} catch (IOException ex) {
 				{
-					logger.warn(
-							"Could not parse properties file ["
-									+ resource.getFilename() + "]", ex);
+					try {
+						logger.warn(
+								"Could not parse properties file ["
+										+ resource.getFile().getCanonicalPath() + "]", ex);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 				// Empty holder representing "not valid".
-				propHolder = new PropertiesHolder();
+				propHolder = ERROR_propHolder;
 			}
 		}
 		
@@ -563,7 +579,7 @@ public class HotDeployResourceBundleMessageSource extends AbstractMessageSource
 		
 
 	
-		this.cachedProperties.put(filename, propHolder);
+//		this.cachedProperties.put(filename, propHolder);
 		return propHolder;
 	}
 
@@ -658,10 +674,10 @@ public class HotDeployResourceBundleMessageSource extends AbstractMessageSource
 	 * source file for efficient change detection, and the timestamp of the last
 	 * refresh attempt (updated every time the cache entry gets re-validated).
 	 */
-	protected class PropertiesHolder {
+	protected static class PropertiesHolder {
 
 		private Properties properties;
-		private String resource;
+		private File resource;
 		private String basename;
 		private String relativefile;
 
@@ -672,7 +688,7 @@ public class HotDeployResourceBundleMessageSource extends AbstractMessageSource
 		/** Cache to hold already generated MessageFormats per message code */
 		private final Map cachedMessageFormats = new HashMap();
 
-		public PropertiesHolder(Properties properties,String resource,String basename,String relativefile) {
+		public PropertiesHolder(Properties properties,File resource,String basename,String relativefile) {
 			this.properties = properties;
 			this.resource = resource;
 			this.basename = basename;
@@ -739,7 +755,7 @@ public class HotDeployResourceBundleMessageSource extends AbstractMessageSource
 			}
 		}
 
-		public String getResource() {
+		public File getResource() {
 			return resource;
 		}
 
@@ -795,7 +811,7 @@ public class HotDeployResourceBundleMessageSource extends AbstractMessageSource
 	private static long refresh_interval = 5000;
 	private static DaemonThread damon = null; 
 	private static Object lock = new Object();
-	private static void checkResource(HotDeployResourceBundleMessageSource messagesource,String filepath,String basename,String filename){
+	private static void checkResource(HotDeployResourceBundleMessageSource messagesource,File file,String basename,String filename){
 		
 		refresh_interval = BaseApplicationContext.getResourceFileRefreshInterval();
 		if(refresh_interval > 0)
@@ -816,7 +832,7 @@ public class HotDeployResourceBundleMessageSource extends AbstractMessageSource
 					}
 				}
 			}
-			damon.addFile(filename, new ResourceFileRefresh(messagesource,filepath,basename,filename));
+			damon.addFile(file, new ResourceFileRefresh(messagesource,file,basename,filename));
 		}
 		
 	}
@@ -825,16 +841,16 @@ public class HotDeployResourceBundleMessageSource extends AbstractMessageSource
 		private HotDeployResourceBundleMessageSource messagesource ;
 		private String filename;
 		private String basename;
-		private String filepath;
-		public ResourceFileRefresh(HotDeployResourceBundleMessageSource messagesource,String filepath,String basename,String filename)
+		private File file;
+		public ResourceFileRefresh(HotDeployResourceBundleMessageSource messagesource,File file,String basename,String filename)
 		{
 			this.messagesource = messagesource;
 			this.filename = filename;
 			this.basename = basename;
-			this.filepath = filepath;
+			this.file = file;
 		}
 		public void reinit() {
-			messagesource.refreshProperties(filepath,basename,filename);
+			messagesource.refreshProperties(file,basename,filename);
 		}
 		
 	}
@@ -856,5 +872,13 @@ public class HotDeployResourceBundleMessageSource extends AbstractMessageSource
 
 	public void setBundleClassLoader(ClassLoader bundleClassLoader) {
 		this.bundleClassLoader = bundleClassLoader;
+	}
+
+	public boolean isChangemonitor() {
+		return changemonitor;
+	}
+
+	public void setChangemonitor(boolean changemonitor) {
+		this.changemonitor = changemonitor;
 	}
 }

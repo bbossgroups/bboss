@@ -1,5 +1,11 @@
+<%@page import="org.frameworkset.web.servlet.i18n.SessionLocalResolver"%>
 <%@ page contentType="text/html; charset=GBK" language="java" %>
 <%@ taglib uri="/WEB-INF/pager-taglib.tld" prefix="pg"%>
+<%
+session.setAttribute(SessionLocalResolver.SESSION_LOCAL_KEY, java.util.Locale.US);
+org.frameworkset.spi.support.MessageSource messageSource = org.frameworkset.web.servlet.support.WebApplicationContextUtils.getWebApplicationContext();
+out.println("sss" + messageSource);
+%>
 <html>
 <head>
 <title>主题和国际化</title>
@@ -49,13 +55,14 @@
 							<input class="checkbox" hideFocus onClick="checkOne('checkBoxAll','ID')" 
 							type="checkbox" name="ID" 
 							value="<pg:cell colName="id" defaultValue=""/>">
+							
 							<img border="0" src="${pageContext.request.contextPath}<pg:theme code="exclamation.gif"/>"
                                          alt="<pg:message code="probe.jsp.datasources.list.misconfigured.alt"/>"/>										
 						</td>
 						<td width="8%">
 							<pg:cell colName="name" defaultValue=""/>		
-							<pg:message var="messagecode" code="probe.jsp.wrongparams"/>
-							${messagecode}
+							<pg:message  code="probe.jsp.wrongparams"/>
+							
 										</td>
 						<td></td>
 					</tr>

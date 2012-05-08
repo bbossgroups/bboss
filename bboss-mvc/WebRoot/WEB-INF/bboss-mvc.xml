@@ -37,7 +37,7 @@
 
    
 	<!-- 
-	cacheSeconds:-1±íÊ¾ÓÀÔ¶»º³å
+	
 	 -->
     <property name="messageSource" class="org.frameworkset.spi.support.HotDeployResourceBundleMessageSource" >
         <property name="basename" value="/WEB-INF/messages"/>
@@ -117,6 +117,8 @@
      		
      	</list>
      </property>
+     
+     <property name="localeResolver" class="org.frameworkset.web.servlet.i18n.SessionLocalResolver"/>
 </properties>
 
 

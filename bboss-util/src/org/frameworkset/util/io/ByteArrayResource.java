@@ -88,6 +88,14 @@ public class ByteArrayResource  extends AbstractResource {
 	public String getDescription() {
 		return this.description;
 	}
+	
+	/**
+	 * This implementation returns the name of the file.
+	 * @see java.io.File#getName()
+	 */
+	public String getFilename() {
+		return description;
+	}
 
 
 	/**

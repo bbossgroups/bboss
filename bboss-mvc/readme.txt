@@ -11,7 +11,38 @@ todo
 
 3.国际化功能完善
 6.mvc和gwt结合可行性研究
-#######update function list since bbossgroups-3.5 begin########### 
+#######update function list since bbossgroups-3.5 begin###########
+------2012-05-08------------- 
+o mvc国际化功能完善：
+增加org.frameworkset.web.servlet.i18n.SessionLocalResolver类，以便从session中获取用户登录时存储的Locale对象，默认的key为
+org.frameworkset.web.servlet.i18n.SESSION_LOCAL_KEY
+如果用户需要使用SessionLocalResolver必须在bboss-mvc.xml文件中增加以下配置：
+ <property name="localeResolver" class="org.frameworkset.web.servlet.i18n.SessionLocalResolver"/>
+以便覆盖默认的LocalResolver组件org.frameworkset.web.servlet.i18n.AcceptHeaderLocaleResolver(默认根据客户端所处的Locale来解析相应的code)
+
+mvc国际化标签的使用方式：
+<pg:message  code="probe.jsp.wrongparams"/>
+
+mvc国际化组件messageSource的获取方法：
+org.frameworkset.spi.support.MessageSource messageSource = org.frameworkset.web.servlet.support.WebApplicationContextUtils.getWebApplicationContext();
+详情请参考测试jsp页面：/bboss-mvc/WebRoot/jsp/demo.jsp
+
+mvc国际化配置文件路径默认为
+/bboss-mvc/WebRoot/WEB-INF/messages.properties
+/bboss-mvc/WebRoot/WEB-INF/messages_zh_CN.properties
+/bboss-mvc/WebRoot/WEB-INF/messages_en_US.properties
+等等
+如果要覆盖默认的配置，请修改bboss-mvc.jar/org/frameworkset/web/servlet/DispatcherServlet.properties文件内容：
+messageSource.basename=/WEB-INF/messages
+这里不需要带国家标识，系统会自动在/WEB-INF/目录下查找对应国家语言的配置文件，如果有多个配置文件可以用逗号分割，例如：
+messageSource.basename=/WEB-INF/messages,/WEB-INF/messages1,/WEB-INF/messages2
+
+国际化配置文件热加载机制配置：
+默认5秒检测文件是否改动，如果有改动mvc框架会重新加载有修改的文件，没有修改的文件不会重新加载
+如果想屏蔽改机制请修改bboss-aop.jar/aop.properties文件的选项
+#国际化属性文件变更检测时间间隔，单位为毫秒，默认为5秒间隔
+resourcefile.refresh_interval=5000
+若果>0则启用热加载机制，<=0则屏蔽热加载机制，开发环境请开启，生产环境请关闭
 o 改进beaninfo，list标签异常处理方式，将系统级异常输出到日志文件中，日志级别为info级
 o bboss mvc 站点资源下载可以点击文件名称下载
 o 将官网的文件资源下载列表按照文件名称进行排序

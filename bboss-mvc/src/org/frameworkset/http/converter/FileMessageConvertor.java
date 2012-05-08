@@ -24,6 +24,12 @@ import org.frameworkset.http.FileBlob;
 import org.frameworkset.http.HttpInputMessage;
 import org.frameworkset.http.HttpOutputMessage;
 import org.frameworkset.http.MediaType;
+import org.frameworkset.util.io.ByteArrayResource;
+import org.frameworkset.util.io.ClassPathResource;
+import org.frameworkset.util.io.FileSystemResource;
+import org.frameworkset.util.io.Resource;
+import org.frameworkset.util.io.UrlResource;
+import org.frameworkset.web.servlet.support.ServletContextResource;
 
 import com.frameworkset.util.StringUtil;
 
@@ -60,7 +66,12 @@ public class FileMessageConvertor<T> implements HttpMessageConverter<T>
 	{
 
 		// TODO Auto-generated method stub
-		return File.class.isAssignableFrom(clazz) || Blob.class.isAssignableFrom(clazz);
+		return File.class.isAssignableFrom(clazz) || Blob.class.isAssignableFrom(clazz) 
+				|| ClassPathResource.class.isAssignableFrom(clazz)
+				|| ServletContextResource.class.isAssignableFrom(clazz)
+				|| FileSystemResource.class.isAssignableFrom(clazz)
+				|| UrlResource.class.isAssignableFrom(clazz)
+				|| ByteArrayResource.class.isAssignableFrom(clazz);
 	}
 
 	public List<MediaType> getSupportedMediaTypes()
@@ -94,6 +105,15 @@ public class FileMessageConvertor<T> implements HttpMessageConverter<T>
 				throw new HttpMessageNotWritableException(((File)t).getAbsolutePath(),e);
 			}
 		}
+		else if(t instanceof Resource)
+		{
+			try {
+				StringUtil.sendFile_(inputMessage.getServletRequest(), outputMessage.getResponse(), (Resource)t);
+			} catch (Exception e)
+			{
+				throw new HttpMessageNotWritableException(((Resource)t).toString(),e);
+			}
+		}		
 		else
 		{
 			FileBlob fb = (FileBlob)t;

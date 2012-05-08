@@ -192,7 +192,7 @@ public class UrlResource extends AbstractResource {
 	 * @see java.io.File#getName()
 	 */
 	public String getFilename() {
-		return new File(this.url.getFile()).getName();
+		return SimpleStringUtil.getFilename(this.url.getFile());
 	}
 
 	/**

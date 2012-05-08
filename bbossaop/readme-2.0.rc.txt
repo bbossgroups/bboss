@@ -119,6 +119,53 @@ more details see my blog [http://blog.csdn.net/yin_bp]
 todo list:
 运行aop/ioc的最小依赖包整理
 #######update function list since bbossgroups-3.5 begin###########
+------2012-05-08------------- 
+o bboss国际化功能完善
+1.增加国际化属性配置文件管理组件org.frameworkset.spi.support.HotDeployResourceBundleMessageSource
+HotDeployResourceBundleMessageSource的使用方法为：
+HotDeployResourceBundleMessageSource messagesource = new HotDeployResourceBundleMessageSource( );
+messagesource.setBasenames(new String[] {"org/frameworkset/spi/support/messages"});
+messagesource.setUseCodeAsDefaultMessage(true);
+System.out.println(messagesource.getMessage("probe.jsp.generic.abbreviations",  Locale.US));
+System.out.println(messagesource.getMessage("probe.jsp.generic.abbreviations",  Locale.US));
+
+是否需要对HotDeployResourceBundleMessageSource实例管理的资源文件启用热加载机制
+通过属性	private boolean changemonitor = true;来控制
+	 true 启用
+	 false 关闭
+默认启用
+设置changemonitor属性值的方法为：
+messagesource.setChangemonitor(false);
+
+通过ioc容器来管理messagesource对象的方法如下：
+ <property name="messageSource" class="org.frameworkset.spi.support.HotDeployResourceBundleMessageSource" >
+        <property name="basename" value="/WEB-INF/messages"/>
+        <property name="useCodeAsDefaultMessage" value="true"/>
+ </property>
+ 
+ DefaultApplicationContext context = DefaultApplicationContext.getApplicationContext("org/frameworkset/spi/support/messages.xml");
+MessageSource messagesource = context.getTBeanObject("messageSource",MessageSource.class);
+
+2.每个ioc容器默认自带一个MessageSource对象，对应的国际化资源配置文件和ioc组件配置必须在同一个包路径下：
+/bbossaop/test/org/frameworkset/spi/support/messages.xml
+/bbossaop/test/org/frameworkset/spi/support/messages_zh_CN.properties
+/bbossaop/test/org/frameworkset/spi/support/messages_en_US.properties
+而且名称必须是messages，相应的语言信息部分为_en_US.properties
+使用的实例为：
+DefaultApplicationContext context = DefaultApplicationContext.getApplicationContext("org/frameworkset/spi/support/messages.xml");
+		System.out.println(context.getMessage("Trans.Log.TransformationIsToAllocateStep", new Object[]{"a","b"}, (Locale)null));
+		System.out.println(context.getMessage("Trans.Log.TransformationIsToAllocateStep", new Object[]{"a","b"}, Locale.SIMPLIFIED_CHINESE));
+		System.out.println(context.getMessage("StepLoader.RuntimeError.UnableToInstantiateClass.TRANS0006",Locale.US));
+		Resource resource = context.getResource("org/frameworkset/spi/support/messages");
+		System.out.println(resource);
+		
+3.国际化配置文件热加载机制配置：
+默认5秒检测文件是否改动，如果有改动mvc框架会重新加载有修改的文件，没有修改的文件不会重新加载
+如果想屏蔽改机制请修改bboss-aop.jar/aop.properties文件的选项
+#国际化属性文件变更检测时间间隔，单位为毫秒，默认为5秒间隔
+resourcefile.refresh_interval=5000
+若果>0则启用热加载机制，<=0则屏蔽热加载机制，开发环境请开启，生产环境请关闭		
+
 o DefaultApplicationContext类中增加使用URL对象构建组件容器的方法，功能类似于从文件路径直接构建组件容器的方法
 public static DefaultApplicationContext getApplicationContext(URL configfile)
 o 改进mvc文件加载过滤器搜索文件规则，大幅提升mvc容器启动速度
