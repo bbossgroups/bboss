@@ -3230,8 +3230,13 @@ public abstract class HandlerUtils {
 					}
 				}
 				for (HttpMessageConverter messageConverter : messageConverters) {
-					allSupportedMediaTypes.addAll(messageConverter
-							.getSupportedMediaTypes());
+					if(messageConverter
+							.getSupportedMediaTypes() != null && messageConverter
+									.getSupportedMediaTypes().size() > 0)
+					{
+						allSupportedMediaTypes.addAll(messageConverter
+								.getSupportedMediaTypes());
+					}
 				}
 			}
 			throw new HttpMediaTypeNotAcceptableException(

@@ -35,6 +35,7 @@ import org.frameworkset.spi.support.validate.EscapedErrors;
 import org.frameworkset.util.Assert;
 import org.frameworkset.util.ClassUtils;
 import org.frameworkset.util.annotations.ValueConstants;
+import org.frameworkset.web.servlet.DispatchServlet;
 import org.frameworkset.web.servlet.HandlerMapping;
 import org.frameworkset.web.servlet.LocaleResolver;
 import org.frameworkset.web.servlet.context.WebApplicationContext;
@@ -232,6 +233,8 @@ public class RequestContext {
 
 		// Determine locale to use for this RequestContext.
 		LocaleResolver localeResolver = RequestContextUtils.getLocaleResolver(request);
+		if(localeResolver == null)
+			localeResolver = webApplicationContext.getTBeanObject(DispatchServlet.LOCALE_RESOLVER_BEAN_NAME, LocaleResolver.class);
 		if (localeResolver != null) {
 			// Try LocaleResolver (we're within a DispatcherServlet request).
 			this.locale = localeResolver.resolveLocale(request);
@@ -278,12 +281,12 @@ public class RequestContext {
 	 * @see javax.servlet.http.HttpServletRequest#getLocale()
 	 */
 	protected Locale getFallbackLocale() {
-		if (jstlPresent) {
-			Locale locale = JstlLocaleResolver.getJstlLocale(getRequest(), getServletContext());
-			if (locale != null) {
-				return locale;
-			}
-		}
+//		if (jstlPresent) {
+//			Locale locale = JstlLocaleResolver.getJstlLocale(getRequest(), getServletContext());
+//			if (locale != null) {
+//				return locale;
+//			}
+//		}
 		return getRequest().getLocale();
 	}
 

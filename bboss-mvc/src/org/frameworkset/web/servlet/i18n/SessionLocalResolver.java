@@ -41,7 +41,7 @@ public class SessionLocalResolver  implements LocaleResolver {
 	private String sessionlocalkey = SESSION_LOCAL_KEY;
 	public Locale resolveLocale(HttpServletRequest request) {
 		HttpSession session = request.getSession();
-		Locale local = (Locale)session.getAttribute(SESSION_LOCAL_KEY);
+		Locale local = (Locale)session.getAttribute(sessionlocalkey);
 		return (local == null ?request.getLocale():local);
 	}
 
