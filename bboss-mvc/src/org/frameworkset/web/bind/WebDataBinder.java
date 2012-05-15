@@ -33,6 +33,7 @@ import org.frameworkset.util.ClassUtil;
 import org.frameworkset.util.ClassUtil.ClassInfo;
 import org.frameworkset.util.ClassUtil.PropertieDescription;
 import org.frameworkset.util.annotations.MethodData;
+import org.frameworkset.web.multipart.IgnoreFieldNameMultipartFile;
 import org.frameworkset.web.multipart.MultipartFile;
 import org.frameworkset.web.multipart.MultipartHttpServletRequest;
 import org.frameworkset.web.servlet.ModelMap;
@@ -446,13 +447,42 @@ public class WebDataBinder  {//extends DataBinder {
 				}
 				else
 				{
-					if(request instanceof MultipartHttpServletRequest)
+					if(!HandlerUtils.isIgnoreFieldNameMultipartFile(type))
 					{
-						MultipartFile[] values = ((MultipartHttpServletRequest)request).getFiles(name);
-						if(values != null && values.length > 0)
+						if(request instanceof MultipartHttpServletRequest)
 						{
-							hasdata = true;
-							break;
+							MultipartFile[] values = ((MultipartHttpServletRequest)request).getFiles(name);
+							if(values != null && values.length > 0)
+							{
+								hasdata = true;
+								break;
+							}
+						}
+					}
+					else
+					{
+						if(request instanceof MultipartHttpServletRequest)
+						{
+							MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest)request;
+							MultipartFile[] values = multipartRequest.getFirstFieldFiles();
+							if(values != null && values.length > 0)
+							{
+								hasdata = true;
+								break;
+							}
+//							Iterator<String> filenames = multipartRequest.getFileNames();
+//							if(filenames == null)
+//								break;
+//							while(filenames.hasNext())
+//							{
+//								MultipartFile[] values = multipartRequest.getFiles(filenames.next());
+//								
+//								if(values != null && values.length > 0)
+//								{
+//									hasdata = true;
+//									break;
+//								}
+//							}
 						}
 					}
 					

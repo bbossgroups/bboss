@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>xhEditor demo2 : 自定义按钮</title>
+<link rel="stylesheet" href="common.css" type="text/css" media="screen" />
+<script type="text/javascript" src="../jquery/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../xheditor-1.1.13-zh-cn.min.js"></script>
+<script type="text/javascript">
+$(pageInit);
+function pageInit()
+{
+	$.extend(xheditor.settings,{shortcuts:{'ctrl+enter':submitForm}});
+	$('#elm1').xheditor({tools:'full'});
+	$('#elm2').xheditor({tools:'mfull'});
+	$('#elm3').xheditor({tools:'simple'});
+	$('#elm4').xheditor({tools:'mini'});
+	$('#elm5').xheditor({tools:'Cut,Copy,Paste,Pastetext,|,Source,Fullscreen,About'});
+	$('#elm6').xheditor({tools:'Cut,Copy,Paste,Pastetext,/,Source,Fullscreen,About'});
+}
+function submitForm(){$('#frmDemo').submit();}
+</script>
+</head>
+<body>
+<div id="header-nav">
+	<ul>
+		<li><a href="demo01.html"><span>默认模式</span></a></li>
+		<li><a href="demo02.html"><span>自定义按钮</span></a></li>
+		<li><a href="demo03.html"><span>皮肤选择</span></a></li>
+		<li><a href="demo04.html"><span>其它选项</span></a></li>
+		<li><a href="demo05.html"><span>API交互</span></a></li>
+		<li><a href="demo06.html"><span>非utf-8编码调用</span></a></li>
+		<li><a href="demo07.html"><span>UBB可视化</span></a></li>
+		<li><a href="demo08.html"><span>Ajax上传</span></a></li>
+		<li><a href="demo09.html"><span>插件扩展</span></a></li>
+		<li><a href="demo10.html"><span>iframe调用上传</span></a></li>
+		<li><a href="demo11.html"><span>异步加载</span></a></li>
+		<li><a href="demo12.html"><span>远程抓图</span></a></li>
+		<li><a href="../wizard.html" target="_blank"><span>生成代码</span></a></li>
+	</ul>
+</div>
+<form id="frmDemo" method="post" action="show.php">
+	<h3>xhEditor demo2 : 自定义按钮</h3>
+	1,full(完全):<br />
+	<textarea id="elm1" name="elm1" rows="12" cols="80" style="width: 80%">
+&lt;p&gt;当前实例调用的Javascript源代码为：&lt;/p&gt;&lt;p&gt;$('#elm1').xheditor({&lt;span style=&quot;color:#ff0000;&quot;&gt;tools:'full'&lt;/span&gt;});&lt;/p&gt;
+	</textarea><br /><br />
+	2,mfull(多行完全):<br />
+	<textarea id="elm2" name="elm2" rows="12" cols="80" style="width: 80%">
+&lt;p&gt;当前实例调用的Javascript源代码为：&lt;/p&gt;&lt;p&gt;$('#elm2').xheditor({&lt;span style=&quot;color:#ff0000;&quot;&gt;tools:'mfull'&lt;/span&gt;});&lt;/p&gt;
+	</textarea><br /><br />
+	3,simple(简单):<br />
+	<textarea id="elm3" name="elm3" rows="12" cols="80" style="width: 80%">
+&lt;p&gt;当前实例调用的Javascript源代码为：&lt;/p&gt;&lt;p&gt;$('#elm3').xheditor({&lt;span style=&quot;color:#ff0000;&quot;&gt;tools:'simple'&lt;/span&gt;});&lt;/p&gt;
+	</textarea><br /><br />
+	4,mini(迷你):<br />
+	<textarea id="elm4" name="elm4" rows="12" cols="80" style="width: 80%">
+&lt;p&gt;当前实例调用的Javascript源代码为：&lt;/p&gt;&lt;p&gt;$('#elm4').xheditor({&lt;span style=&quot;color:#ff0000;&quot;&gt;tools:'mini'&lt;/span&gt;});&lt;/p&gt;
+	</textarea><br /><br />
+	5,custom(自定义):<br />
+	<textarea id="elm5" name="elm5" rows="12" cols="80" style="width: 80%">
+&lt;p&gt;当前实例调用的Javascript源代码为：&lt;/p&gt;&lt;p&gt;$('#elm5').xheditor({&lt;span style=&quot;color:#ff0000;&quot;&gt;tools:'Cut,Copy,Paste,Pastetext,|,Source,Fullscreen,About'&lt;/span&gt;});&lt;/p&gt;
+	</textarea><br /><br />
+	6,自定义多行模式:<br />
+	<textarea id="elm6" name="elm6" rows="12" cols="80" style="width: 80%">
+&lt;p&gt;当前实例调用的Javascript源代码为：&lt;/p&gt;&lt;p&gt;$('#elm6').xheditor({tools:'Cut,Copy,Paste,Pastetext,&lt;span style=&quot;color:#ff0000;&quot;&gt;/&lt;/span&gt;,Source,Fullscreen,About'});&lt;/p&gt;
+	</textarea>
+	<br/><br />
+	<input type="submit" name="save" value="Submit" />
+	<input type="reset" name="reset" value="Reset" />
+</form>
+</body>
+</html>

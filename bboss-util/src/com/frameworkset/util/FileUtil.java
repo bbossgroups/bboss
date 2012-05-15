@@ -427,6 +427,60 @@ public class FileUtil
     }
     
     
+    public static void fileCopy(File sourcefile, File destinctionFile) throws IOException
+    {
+
+        FileInputStream stFileInputStream = null;
+
+        FileOutputStream stFileOutputStream = null;
+
+        try
+        {
+//            makeFile(destinctionFile);
+
+            stFileInputStream = new FileInputStream(sourcefile);
+
+            stFileOutputStream = new FileOutputStream(destinctionFile);
+
+            int arraySize = 1024;
+            byte buffer[] = new byte[arraySize];
+            int bytesRead;
+            while ((bytesRead = stFileInputStream.read(buffer)) != -1)
+            {
+                stFileOutputStream.write(buffer, 0, bytesRead);
+            }
+
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        finally
+        {
+            if (stFileInputStream != null)
+                try
+                {
+                    stFileInputStream.close();
+                }
+                catch (IOException e)
+                {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            if (stFileOutputStream != null)
+                try
+                {
+                    stFileOutputStream.close();
+                }
+                catch (IOException e)
+                {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+        }
+
+    }
+    
     /**
      * 获取文件得内容
      * 
@@ -646,6 +700,17 @@ public class FileUtil
     {
         File file = new File(source);
         file.renameTo(new File(dest));
+    }
+    
+    /**
+     * 重命名文件，原来的文件会被删除
+     * @param source
+     * @param dest
+     */
+    public static void renameFile(File source,File dest)
+    {
+     
+        source.renameTo(dest);
     }
     
     /**

@@ -12,6 +12,16 @@ todo
 3.国际化功能完善
 6.mvc和gwt结合可行性研究
 #######update function list since bbossgroups-3.5 begin###########
+------2012-05-15-------------
+o 附件上传功能完善：
+1.支持html5附件上传，目前只支持单次上传一个文件
+2.增加IgnoreFieldNameMultipartFile接口用来标识不知道input file的名称的情况下，将上传的附件与方法参数或者对象属性进行绑定
+public @ResponseBody String upload(IgnoreFieldNameMultipartFile[] filedata,String testparam) throws IllegalStateException, IOException
+public @ResponseBody String upload(IgnoreFieldNameMultipartFile filedata,String testparam) throws IllegalStateException, IOException
+详情请查看测试用例：
+\bestpractice\demoproject\src\org\frameworkset\mvc\FileController.java
+\bestpractice\demoproject\WebRoot\xheditor\demos\demo08.jsp
+
 ------2012-05-08------------- 
 o mvc国际化功能完善：
 增加org.frameworkset.web.servlet.i18n.SessionLocalResolver类，以便从session中获取用户登录时存储的Locale对象，默认的key为

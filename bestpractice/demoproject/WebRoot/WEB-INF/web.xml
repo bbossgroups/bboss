@@ -14,11 +14,11 @@
     <filter-class>com.frameworkset.common.filter.CharsetEncodingFilter</filter-class>
     <init-param>
       <param-name>RequestEncoding</param-name>
-      <param-value>GBK</param-value>
+      <param-value>UTF-8</param-value>
     </init-param>
     <init-param>
       <param-name>ResponseEncoding</param-name>
-      <param-value>GBK</param-value>
+      <param-value>UTF-8</param-value>
     </init-param>
     <init-param>
       <param-name>mode</param-name>

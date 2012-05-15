@@ -1773,3 +1773,40 @@ Caused by: ERROR 42X02: Lexical error at line 1, column 35.  Encountered: "#" (3
 	at org.apache.derby.impl.sql.GenericStatement.prepare(Unknown Source)
 	at org.apache.derby.impl.sql.conn.GenericLanguageConnectionContext.prepareInternalStatement(Unknown Source)
 	... 39 more
+[2012-03-14 17:08:06][WARN][com.frameworkset.common.poolman.management.ConfigParser] 解析文件时[file:/D:/bbossgroups-3.5.1/bboss-persistent/classes/poolman.xml]遇到元素[encryptdbinfo]，忽略处理。
+[2012-03-14 17:08:53][WARN][com.frameworkset.common.poolman.management.ConfigParser] 解析文件时[file:/D:/bbossgroups-3.5.1/bboss-persistent/classes/poolman.xml]遇到元素[encryptdbinfo]，忽略处理。
+[2012-03-14 17:14:15][WARN][com.frameworkset.common.poolman.management.ConfigParser] 解析文件时[file:/D:/bbossgroups-3.5.1/bboss-persistent/classes/poolman.xml]遇到元素[encryptdbinfo]，忽略处理。
+[2012-03-14 17:27:46][WARN][com.frameworkset.common.poolman.management.ConfigParser] 解析文件时[file:/D:/bbossgroups-3.5.1/bboss-persistent/classes/poolman.xml]遇到元素[encryptdbinfo]，忽略处理。
+[2012-03-14 17:27:46][ERROR][com.frameworkset.common.poolman.management.BaseTableManager] Load table infomation failed! Cannot create JDBC driver of class 'com.mysql.jdbc.Driver' for connect URL 'b708bd11fa5eb60c7eee4be2c974c2800c5296e4dde70723e9a6f3ceadcbc516'. Please check table [tableinfo] in your database! 
+[2012-03-15 09:24:54][WARN][com.frameworkset.common.poolman.management.ConfigParser] 解析文件时[file:/D:/bbossgroups-3.5.1/bboss-persistent/classes/poolman.xml]遇到元素[encryptdbinfo]，忽略处理。
+[2012-03-15 09:24:55][ERROR][com.frameworkset.common.poolman.management.BaseTableManager] Load table infomation failed! Cannot create JDBC driver of class 'com.mysql.jdbc.Driver' for connect URL 'b708bd11fa5eb60c7eee4be2c974c2800c5296e4dde70723e9a6f3ceadcbc516'. Please check table [tableinfo] in your database! 
+[2012-03-15 09:28:33][WARN][com.frameworkset.common.poolman.management.ConfigParser] 解析文件时[file:/D:/bbossgroups-3.5.1/bboss-persistent/classes/poolman.xml]遇到元素[encryptdbinfo]，忽略处理。
+[2012-03-15 10:02:35][WARN][com.frameworkset.common.poolman.management.ConfigParser] 解析文件时[file:/D:/bbossgroups-3.5.1/bboss-persistent/classes/poolman.xml]遇到元素[encryptdbinfo]，忽略处理。
+[2012-03-15 10:43:21][WARN][com.frameworkset.common.poolman.management.ConfigParser] 解析文件时[file:/D:/bbossgroups-3.5.1/bboss-persistent/classes/poolman.xml]遇到元素[encryptdbinfo]，忽略处理。
+[2012-03-15 10:43:58][WARN][com.frameworkset.common.poolman.management.ConfigParser] 解析文件时[file:/D:/bbossgroups-3.5.1/bboss-persistent/classes/poolman.xml]遇到元素[encryptdbinfo]，忽略处理。
+[2012-05-03 16:52:30][WARN][com.frameworkset.common.poolman.management.ConfigParser] 解析文件时[file:/D:/bbossgroups-3.5.1/bboss-persistent/classes/poolman.xml]遇到元素[enablejta]，忽略处理。
+[2012-05-03 16:52:30][WARN][com.frameworkset.common.poolman.management.ConfigParser] 解析文件时[file:/D:/bbossgroups-3.5.1/bboss-persistent/classes/poolman.xml]遇到元素[encryptdbinfo]，忽略处理。
+[2012-05-03 16:52:35][WARN][com.frameworkset.common.poolman.util.SQLManager] pool with jndiname[bspf_datasource_jndiname] does not exist or this is container datasource.  Please check your poolman.xml
+[2012-05-03 16:52:35][WARN][com.frameworkset.common.poolman.util.SQLManager] pool with jndiname[bspf_datasource_jndiname] does not exist or this is container datasource.  Please check your poolman.xml
+[2012-05-03 16:53:06][WARN][com.frameworkset.common.poolman.management.ConfigParser] 解析文件时[file:/D:/bbossgroups-3.5.1/bboss-persistent/classes/poolman.xml]遇到元素[enablejta]，忽略处理。
+[2012-05-03 16:53:06][WARN][com.frameworkset.common.poolman.management.ConfigParser] 解析文件时[file:/D:/bbossgroups-3.5.1/bboss-persistent/classes/poolman.xml]遇到元素[encryptdbinfo]，忽略处理。
+[2012-05-03 16:54:06][WARN][com.frameworkset.common.poolman.management.ConfigParser] 解析文件时[file:/D:/bbossgroups-3.5.1/bboss-persistent/classes/poolman.xml]遇到元素[enablejta]，忽略处理。
+[2012-05-03 16:54:06][WARN][com.frameworkset.common.poolman.management.ConfigParser] 解析文件时[file:/D:/bbossgroups-3.5.1/bboss-persistent/classes/poolman.xml]遇到元素[encryptdbinfo]，忽略处理。
+[2012-05-03 17:16:01][WARN][com.frameworkset.common.poolman.management.ConfigParser] 解析文件时[file:/D:/bbossgroups-3.5.1/bboss-persistent/classes/poolman.xml]遇到元素[enablejta]，忽略处理。
+[2012-05-03 17:16:01][WARN][com.frameworkset.common.poolman.management.ConfigParser] 解析文件时[file:/D:/bbossgroups-3.5.1/bboss-persistent/classes/poolman.xml]遇到元素[encryptdbinfo]，忽略处理。
+[2012-05-03 17:16:38][WARN][com.frameworkset.common.poolman.management.ConfigParser] 解析文件时[file:/D:/bbossgroups-3.5.1/bboss-persistent/classes/poolman.xml]遇到元素[enablejta]，忽略处理。
+[2012-05-03 17:16:38][WARN][com.frameworkset.common.poolman.management.ConfigParser] 解析文件时[file:/D:/bbossgroups-3.5.1/bboss-persistent/classes/poolman.xml]遇到元素[encryptdbinfo]，忽略处理。
+[2012-05-03 17:17:58][WARN][com.frameworkset.common.poolman.management.ConfigParser] 解析文件时[file:/D:/bbossgroups-3.5.1/bboss-persistent/classes/poolman.xml]遇到元素[enablejta]，忽略处理。
+[2012-05-03 17:17:58][WARN][com.frameworkset.common.poolman.management.ConfigParser] 解析文件时[file:/D:/bbossgroups-3.5.1/bboss-persistent/classes/poolman.xml]遇到元素[encryptdbinfo]，忽略处理。
+[2012-05-03 17:23:09][WARN][com.frameworkset.common.poolman.management.ConfigParser] 解析文件时[file:/D:/bbossgroups-3.5.1/bboss-persistent/classes/poolman.xml]遇到元素[enablejta]，忽略处理。
+[2012-05-03 17:23:09][WARN][com.frameworkset.common.poolman.management.ConfigParser] 解析文件时[file:/D:/bbossgroups-3.5.1/bboss-persistent/classes/poolman.xml]遇到元素[encryptdbinfo]，忽略处理。
+[2012-05-03 17:38:43][WARN][com.frameworkset.common.poolman.management.ConfigParser] 解析文件时[file:/D:/bbossgroups-3.5.1/bboss-persistent/classes/poolman.xml]遇到元素[enablejta]，忽略处理。
+[2012-05-03 17:38:43][WARN][com.frameworkset.common.poolman.management.ConfigParser] 解析文件时[file:/D:/bbossgroups-3.5.1/bboss-persistent/classes/poolman.xml]遇到元素[encryptdbinfo]，忽略处理。
+[2012-05-07 16:36:37][WARN][com.frameworkset.common.poolman.management.ConfigParser] 解析文件时[file:/D:/bbossgroups-3.5.1/bboss-persistent/classes/poolman.xml]遇到元素[enablejta]，忽略处理。
+[2012-05-07 16:36:37][WARN][com.frameworkset.common.poolman.management.ConfigParser] 解析文件时[file:/D:/bbossgroups-3.5.1/bboss-persistent/classes/poolman.xml]遇到元素[encryptdbinfo]，忽略处理。
+[2012-05-07 16:39:49][WARN][com.frameworkset.common.poolman.management.ConfigParser] 解析文件时[file:/D:/bbossgroups-3.5.1/bboss-persistent/classes/poolman.xml]遇到元素[enablejta]，忽略处理。
+[2012-05-07 16:39:49][WARN][com.frameworkset.common.poolman.management.ConfigParser] 解析文件时[file:/D:/bbossgroups-3.5.1/bboss-persistent/classes/poolman.xml]遇到元素[encryptdbinfo]，忽略处理。
+[2012-05-07 16:40:43][WARN][com.frameworkset.common.poolman.management.ConfigParser] 解析文件时[file:/D:/bbossgroups-3.5.1/bboss-persistent/classes/poolman.xml]遇到元素[enablejta]，忽略处理。
+[2012-05-07 16:40:43][WARN][com.frameworkset.common.poolman.management.ConfigParser] 解析文件时[file:/D:/bbossgroups-3.5.1/bboss-persistent/classes/poolman.xml]遇到元素[encryptdbinfo]，忽略处理。
+[2012-05-07 16:41:53][WARN][com.frameworkset.common.poolman.management.ConfigParser] 解析文件时[file:/D:/bbossgroups-3.5.1/bboss-persistent/classes/poolman.xml]遇到元素[enablejta]，忽略处理。
+[2012-05-07 16:41:53][WARN][com.frameworkset.common.poolman.management.ConfigParser] 解析文件时[file:/D:/bbossgroups-3.5.1/bboss-persistent/classes/poolman.xml]遇到元素[encryptdbinfo]，忽略处理。

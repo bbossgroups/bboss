@@ -21,6 +21,12 @@ public interface MultipartRequest {
 	 */
 	MultipartFile getFile(String name);
 	MultipartFile[] getFiles(String name);
+	
+	/**
+	 * 获取第一个file input元素对应的附件数组
+	 * @return
+	 */
+	MultipartFile[] getFirstFieldFiles();
 
 	/**
 	 * Return a {@link java.util.Map} of the multipart files contained in this request.

@@ -19,6 +19,7 @@ bboss-util<-kettle [frameworkset-util.jar]
 bboss-util<-portal [frameworkset-util.jar]
 bboss-util<-cas server [frameworkset-util.jar]
 #######update function list since bbossgroups-3.5 begin###########
+o ValueObjectUtil增加cast(Object obj,Class toType)方法，用来将父类类型对象obj转换为子类型对象，支持数组类型和普通类型
 o 增加变量、数组元素、list/set、map元素变量解析方法,使用方法如下：
  String url = "http://localhost:80/detail.html?user=#[account[0][0]]&password=#[password->aaa[0]->bb->cc[0]]love";
          URLStruction a = com.frameworkset.util.VariableHandler.parserSQLStruction(url);

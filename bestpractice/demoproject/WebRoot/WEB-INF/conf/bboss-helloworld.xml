@@ -3,4 +3,7 @@
 		path:sayHello="/examples/hello.jsp"
 		class="org.frameworkset.mvc.HelloWord">
 	</property>
+	<property name="/file/*.page"		
+		class="org.frameworkset.mvc.FileController">
+	</property>
 </properties>

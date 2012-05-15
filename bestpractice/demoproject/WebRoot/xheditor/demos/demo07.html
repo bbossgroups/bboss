@@ -1,0 +1,134 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>xhEditor demo7 : UBB可视化编辑</title>
+<link rel="stylesheet" href="common.css" type="text/css" media="screen" />
+<style type="text/css">
+<!--
+.btnCode {
+	background:transparent url(prettify/code.gif) no-repeat 16px 16px;
+	background-position:2px 2px;
+}
+.btnFlv {
+	background:transparent url(mediaplayer/flv.gif) no-repeat 16px 16px;
+	background-position:2px 2px;
+}
+.btnMap {
+	width:50px !important;
+	background:transparent url(googlemap/map.gif) no-repeat center center;
+}
+-->
+</style>
+<script type="text/javascript" src="../jquery/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../xheditor-1.1.13-zh-cn.min.js"></script>
+<script type="text/javascript" src="../xheditor_plugins/ubb.min.js"></script>
+<script type="text/javascript">
+$(pageInit);
+function pageInit()
+{
+	var plugins={
+		Code:{c:'btnCode',t:'插入代码',h:1,e:function(){
+			var _this=this;
+			var htmlCode='<div><select id="xheCodeType"><option value="html">HTML/XML</option><option value="js">Javascript</option><option value="css">CSS</option><option value="php">PHP</option><option value="java">Java</option><option value="py">Python</option><option value="pl">Perl</option><option value="rb">Ruby</option><option value="cs">C#</option><option value="c">C++/C</option><option value="vb">VB/ASP</option><option value="">其它</option></select></div><div><textarea id="xheCodeValue" wrap="soft" spellcheck="false" style="width:300px;height:100px;" /></div><div style="text-align:right;"><input type="button" id="xheSave" value="确定" /></div>';			var jCode=$(htmlCode),jType=$('#xheCodeType',jCode),jValue=$('#xheCodeValue',jCode),jSave=$('#xheSave',jCode);
+			jSave.click(function(){
+				_this.loadBookmark();
+				_this.pasteText('[code='+jType.val()+']\r\n'+jValue.val()+'\r\n[/code]');
+				_this.hidePanel();
+				return false;	
+			});
+			_this.saveBookmark();
+			_this.showDialog(jCode);
+		}},
+		Flv:{c:'btnFlv',t:'插入Flv视频',h:1,e:function(){
+			var _this=this;
+			var htmlFlv='<div>Flv文件:&nbsp; <input type="text" id="xheFlvUrl" value="http://" class="xheText" /></div><div>宽度高度: <input type="text" id="xheFlvWidth" style="width:40px;" value="480" /> x <input type="text" id="xheFlvHeight" style="width:40px;" value="400" /></div><div style="text-align:right;"><input type="button" id="xheSave" value="确定" /></div>';
+			var jFlv=$(htmlFlv),jUrl=$('#xheFlvUrl',jFlv),jWidth=$('#xheFlvWidth',jFlv),jHeight=$('#xheFlvHeight',jFlv),jSave=$('#xheSave',jFlv);
+			jSave.click(function(){
+				_this.loadBookmark();
+				_this.pasteText('[flv='+jWidth.val()+','+jHeight.val()+']'+jUrl.val()+'[/flv]');
+				_this.hidePanel();
+				return false;	
+			});
+			_this.saveBookmark();
+			_this.showDialog(jFlv);
+		}},
+		map:{c:'btnMap',t:'插入Google地图',e:function(){
+			var _this=this;
+			_this.saveBookmark();
+			_this.showIframeModal('Google 地图','googlemap/googlemap.html',function(v){_this.loadBookmark();_this.pasteHTML('<img src="'+v+'" />');},538,404);
+		}}
+	},emots={
+		msn:{name:'MSN',count:40,width:22,height:22,line:8},
+		pidgin:{name:'Pidgin',width:22,height:25,line:8,list:{smile:'微笑',cute:'可爱',wink:'眨眼',laugh:'大笑',victory:'胜利',sad:'伤心',cry:'哭泣',angry:'生气',shout:'大骂',curse:'诅咒',devil:'魔鬼',blush:'害羞',tongue:'吐舌头',envy:'羡慕',cool:'耍酷',kiss:'吻',shocked:'惊讶',sweat:'汗',sick:'生病',bye:'再见',tired:'累',sleepy:'睡了',question:'疑问',rose:'玫瑰',gift:'礼物',coffee:'咖啡',music:'音乐',soccer:'足球',good:'赞同',bad:'反对',love:'心',brokenheart:'伤心'}},
+		ipb:{name:'IPB',width:20,height:25,line:8,list:{smile:'微笑',joyful:'开心',laugh:'笑',biglaugh:'大笑',w00t:'欢呼',wub:'欢喜',depres:'沮丧',sad:'悲伤',cry:'哭泣',angry:'生气',devil:'魔鬼',blush:'脸红',kiss:'吻',surprised:'惊讶',wondering:'疑惑',unsure:'不确定',tongue:'吐舌头',cool:'耍酷',blink:'眨眼',whistling:'吹口哨',glare:'轻视',pinch:'捏',sideways:'侧身',sleep:'睡了',sick:'生病',ninja:'忍者',bandit:'强盗',police:'警察',angel:'天使',magician:'魔法师',alien:'外星人',heart:'心动'}}
+	};
+	$('#elm1').xheditor({plugins:plugins,tools:'full',showBlocktag:false,forcePtag:false,beforeSetSource:ubb2html,beforeGetSource:html2ubb,emots:emots,emotMark:true,shortcuts:{'ctrl+enter':submitForm}});
+}
+function submitForm(){$('#frmDemo').submit();}
+</script>
+</head>
+<body>
+<div id="header-nav">
+	<ul>
+		<li><a href="demo01.html"><span>默认模式</span></a></li>
+		<li><a href="demo02.html"><span>自定义按钮</span></a></li>
+		<li><a href="demo03.html"><span>皮肤选择</span></a></li>
+		<li><a href="demo04.html"><span>其它选项</span></a></li>
+		<li><a href="demo05.html"><span>API交互</span></a></li>
+		<li><a href="demo06.html"><span>非utf-8编码调用</span></a></li>
+		<li><a href="demo07.html"><span>UBB可视化</span></a></li>
+		<li><a href="demo08.html"><span>Ajax上传</span></a></li>
+		<li><a href="demo09.html"><span>插件扩展</span></a></li>
+		<li><a href="demo10.html"><span>iframe调用上传</span></a></li>
+		<li><a href="demo11.html"><span>异步加载</span></a></li>
+		<li><a href="demo12.html"><span>远程抓图</span></a></li>
+		<li><a href="../wizard.html" target="_blank"><span>生成代码</span></a></li>
+	</ul>
+</div>
+<form id="frmDemo" method="post" action="showubb.php">
+	<h3>xhEditor demo7 : UBB可视化编辑</h3>
+	<textarea id="elm1" name="elm1" rows="12" cols="80" style="width: 90%">[b]粗体文字 Abc[/b]
+[u]下划线文字 Abc[/u]
+[i]斜体文字 Abc[/i]
+[s]删除线 Abc[/s]
+[s][i][u][b]粗体下划斜体删除线 Abc[/b][/u][/i][/s]
+[color=red]红颜色[/color]
+[back=#cccccc]背景灰色[/back]
+[size=16px]文字大小为 16px[/size]
+[font=FangSong_GB2312]字体为仿宋[/font]
+[align=Center]内容居中[/align]
+[img]img/xheditor.gif[/img]
+[img=,221,79]img/xheditor.gif[/img]
+[url]http://xheditor.com/[/url]
+[url=http://xheditor.com/]xhEditor[/url]
+[url=http://xheditor.com/][img]img/xheditor.gif[/img][/url]
+[email]yanis.wang@gmail.com[/email]
+[email=yanis.wang@gmail.com]Yanis.Wang[/email]
+X[sup]2[/sup]
+X[sub]2[/sub]
+[list][*]aaa[*]bbb[*]ccc[/list]
+[list=1][*]列表项 #1[*]列表项 #2[*]列表项 #3[list=a][*]列表项 #1[*]列表项 #2[*]列表项 #3[/list][*]列表项 #4[/list]
+[table=300,#f5f5f5][tr=#E8F3FD][td=2,1]&nbsp;[/td][/tr][tr][td]&nbsp;[/td][td]&nbsp;[/td][/tr][tr][td]&nbsp;[/td][td]&nbsp;[/td][/tr][/table]
+[quote]我们是一艘年轻的海盗船，载着梦想，我们愿将快乐带到大海的每一个角落。 [/quote] 
+
+[flash=400,300]test.swf[/flash]
+
+[media=400,300,1]test.avi[/media]
+
+[flv]http://content.longtailvideo.com/videos/8.flv[/flv]
+
+[code=php]
+&lt;?php
+$t=1;
+if($t==1)$str="Hello xhEditor!";
+else $str='Hello PHP';
+echo $str;//输出文字
+?&gt;
+[/code]</textarea>
+	<br/><br />
+	<input type="submit" name="save" value="Submit" />
+	<input type="reset" name="reset" value="Reset" />
+</form>
+</body>
+</html>

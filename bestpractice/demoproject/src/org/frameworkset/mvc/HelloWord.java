@@ -199,4 +199,14 @@ public class HelloWord
 	{		
 		return "path:sayHello";
 	}
+	
+	public @ResponseBody String jsonp(String callback)
+	{
+		return callback + "({\"symbol\" : \"IBM\", \"price\" : \"91.42\"})";
+	}
+	public @ResponseBody String jsonpwithjquery(String callback)
+	{
+		return callback + "({\"symbol\" : \"IBM jquery jsonp\", \"price\" : \"91.42\"})";
+	}
+	
 }

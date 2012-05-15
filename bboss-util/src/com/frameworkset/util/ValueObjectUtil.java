@@ -909,6 +909,37 @@ public class ValueObjectUtil {
 
 	}
 	/**
+	 * 父类型向子类型转换
+	 * @param obj
+	 * @param toType
+	 * @param type
+	 * @return
+	 */
+	public static Object cast(Object obj,Class toType)
+	{
+//		if (!java.util.Date.class.isAssignableFrom(type))
+		{
+			if(!toType.isArray())
+				return toType.cast(obj);
+			else
+			{
+				int size = Array.getLength(obj);
+				Class ctype = toType.getComponentType();
+				Object ret = Array.newInstance(ctype, size);
+				for(int i = 0; i < size; i ++)
+				{
+					Array.set(ret, i,ctype.cast(Array.get(obj, i)));
+				}
+				return ret;
+			}
+		}
+		/**
+		 * 日期类型处理比较特殊
+		 */
+//		return null;
+			
+	}
+	/**
 	 * 将obj对象从类型type转换到类型toType 支持字符串向其他基本类行转换: 支持的类型:
 	 * int,char,short,double,float,long,boolean,byte
 	 * java.sql.Date,java.util.Date, Integer Long Float Short Double Character
@@ -933,7 +964,8 @@ public class ValueObjectUtil {
 		{
 			// return shell(toType,obj);
 			if (!java.util.Date.class.isAssignableFrom(type))
-				return toType.cast(obj);
+//				return toType.cast(obj);
+				return cast(obj,toType);
 		}
 
 		if (type == byte[].class && toType == String.class) {

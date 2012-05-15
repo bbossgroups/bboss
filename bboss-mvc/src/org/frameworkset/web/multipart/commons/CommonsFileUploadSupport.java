@@ -1,6 +1,7 @@
 package org.frameworkset.web.multipart.commons;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.Collection;
 import java.util.HashMap;
@@ -8,13 +9,24 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileItemFactory;
 import org.apache.commons.fileupload.FileUpload;
+import org.apache.commons.fileupload.FileUploadBase;
+import org.apache.commons.fileupload.FileUploadBase.FileUploadIOException;
+import org.apache.commons.fileupload.FileUploadBase.SizeLimitExceededException;
+import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.util.LimitedInputStream;
+import org.apache.commons.fileupload.util.Streams;
 import org.apache.log4j.Logger;
 import org.frameworkset.util.io.Resource;
+import org.frameworkset.web.multipart.MaxUploadSizeExceededException;
+import org.frameworkset.web.multipart.MultipartException;
 import org.frameworkset.web.multipart.MultipartFile;
+import org.frameworkset.web.servlet.mvc.RequestMap;
 import org.frameworkset.web.util.WebUtils;
 
 import com.frameworkset.util.StringUtil;
@@ -193,11 +205,18 @@ public abstract class CommonsFileUploadSupport {
 	 * @return the Bboss MultipartParsingResult
 	 * @see CommonsMultipartFile#CommonsMultipartFile(org.apache.commons.fileupload.FileItem)
 	 */
-	protected MultipartParsingResult parseFileItems(List fileItems, String[] encoding) {
+	protected MultipartParsingResult parseFileItems(List fileItems, String[] encoding,HttpServletRequest request) {
 		Map multipartFiles = new HashMap();
 		Map multipartParameters = new HashMap();
 		String oldEncoding = encoding[1];
 		String newEncoding = encoding[0];
+		
+		
+        String method = request.getMethod();
+        String agent = request.getHeader("User-Agent");        
+        boolean isie = agent.contains("MSIE ");
+		boolean isutf8 = newEncoding.toLowerCase().equals("utf-8");
+        boolean isget = method !=null && method.equals("GET");
 
 		// Extract multipart files and multipart parameters.
 		for (Iterator it = fileItems.iterator(); it.hasNext();) {
@@ -206,9 +225,6 @@ public abstract class CommonsFileUploadSupport {
 				String value = null;
 				if (encoding != null) {
 					try {
-//						value = fileItem.getString(encoding);
-						
-						
 						if ( (oldEncoding == null || isIOS88591(oldEncoding)) ) {
 							if(newEncoding != null)
 							{
@@ -222,7 +238,7 @@ public abstract class CommonsFileUploadSupport {
 			            else 
 			            {
 			                
-			            	value = fileItem.getString(oldEncoding);;
+			            	value = fileItem.getString(oldEncoding);
 			            }
 						
 					}
@@ -277,6 +293,111 @@ public abstract class CommonsFileUploadSupport {
 		return new MultipartParsingResult(multipartFiles, multipartParameters);
 	}
 	
+	private InputStream getOctetStream(long requestSize,InputStream input) throws SizeLimitExceededException
+	{
+		
+		long sizeMax = this.getFileUpload().getSizeMax();
+		if (sizeMax >= 0) {
+           
+            if (requestSize == -1) {
+                input = new LimitedInputStream(input, sizeMax) {
+                    protected void raiseError(long pSizeMax, long pCount)
+                            throws IOException {
+                        FileUploadException ex =
+                            new SizeLimitExceededException(
+                                "the request was rejected because"
+                                + " its size (" + pCount
+                                + ") exceeds the configured maximum"
+                                + " (" + pSizeMax + ")",
+                                pCount, pSizeMax);
+                        throw new FileUploadIOException(ex);
+                    }
+                };
+            } else {
+                if (sizeMax >= 0 && requestSize > sizeMax) {
+                    throw new SizeLimitExceededException(
+                            "the request was rejected because its size ("
+                            + requestSize
+                            + ") exceeds the configured maximum ("
+                            + sizeMax + ")",
+                            requestSize, sizeMax);
+                }
+            }
+        }
+		return input;
+	}
+	/**
+	 * html 5,firefox application/octet-stream upload parse
+	 * 
+	 * text/html,application/xhtml+xml,application/xml;q=0.9,;q=0.8
+		Accept-Encoding	gzip, deflate
+		Accept-Language	zh-cn,zh;q=0.8,en-us;q=0.5,en;q=0.3
+		Cache-Control	no-cache
+		Connection	keep-alive
+		Content-Disposition	attachment; name="filedata"; filename="bluegreen_tab_bg_left.gif"
+		Content-Length	870
+		Content-Type	application/octet-stream
+		Cookie	CNZZDATA2111753=cnzz_eid=60843127-1336722603-http%253A%252F%252Fwww.google.com.hk%252Furl%253Fsa%253Dt%2526rct%253Dj%2526q%253Dxheditor%2526source%253Dweb%2526cd%253D1%2526ved%253D0CF8QFjAA%2526url%253Dhttp%25253A%25252F%25252Fxheditor.com%25252F%2526ei%253DpcSsT5DdFoaYiAeuhZmKCQ%2526usg%253DAFQjCNFWHUR0AgI4Lt7sEW8bN7Lz7jLtbw%2526cad%253Drjt&ntime=1337046438&cnzz_a=2&retime=1337046850765&sin=none&ltime=1337046850765&rtime=2
+		Host	xheditor.com
+		Pragma	no-cache
+		Referer	http://xheditor.com/demos/demo08.html
+		User-Agent	Mozilla/5.0 (Windows NT 5.1; rv:11.0) Gecko/20100101 Firefox/11.0
+	 * Parse the given List of octet Files into a Bboss MultipartParsingResult,
+	 * containing Bboss MultipartFile instances and a Map of multipart parameter.
+	 * @param fileItems the Commons FileIterms to parse
+	 * @param encoding the encoding to use for form fields
+	 * @return the Bboss MultipartParsingResult
+	 * 
+	 */
+	protected MultipartParsingResult parseOctetFileItems(HttpServletRequest request) {
+		Map multipartFiles = new HashMap();
+		try {  
+            String dispoString = request.getHeader("Content-Disposition");  
+            int iFindStart = dispoString.indexOf(" filename=\"") + 11;  
+            int iFindEnd = dispoString.indexOf("\"", iFindStart);  
+            String sFileName = dispoString.substring(iFindStart, iFindEnd);
+            iFindStart = dispoString.indexOf(" name=\"") + 7;  
+            iFindEnd = dispoString.indexOf("\"", iFindStart);  
+            String sFieldName = dispoString.substring(iFindStart, iFindEnd);
+            
+            String contentType = request.getContentType();
+            int i = request.getContentLength();
+            OctetstreamMultipartFile file = new OctetstreamMultipartFile(sFieldName,contentType,i,this.getFileItemFactory().getRepository(),this.getFileItemFactory().getSizeThreshold(),sFileName);
+            Streams.copy(getOctetStream(i,request.getInputStream()), file.getOutputStream(),
+                    true);
+            MultipartFile[] multipartFiles_ = (MultipartFile[])multipartFiles.get(file.getName());
+    		if(multipartFiles_ == null)
+    		{
+    			multipartFiles_ = new MultipartFile[]{file};
+    			multipartFiles.put(file.getName(),multipartFiles_);
+    		}
+    		else
+    		{
+    			MultipartFile[] newParam = addFileToArrayFiles( multipartFiles_, file);
+    			multipartFiles.put(file.getName(),newParam);
+    		}
+    		if (logger.isDebugEnabled()) {
+    			logger.debug("Found multipart file [" + file.getName() + "] of size " + file.getSize() +
+    					" bytes with original filename [" + file.getOriginalFilename() + "], stored " +
+    					file.getStorageDescription());
+
+    		}
+		}
+		catch (FileUploadBase.SizeLimitExceededException ex) {
+			throw new MaxUploadSizeExceededException(fileUpload.getSizeMax(), ex);
+		}
+//		catch (FileUploadException ex) {
+//			throw new MultipartException("Could not parse multipart servlet request", ex);
+//		} 
+		catch (IOException e) {
+			throw new MultipartException("Could not parse multipart servlet request", e);
+		} 
+
+				  	
+		return new MultipartParsingResult(multipartFiles, new RequestMap(request));
+	}
+	
+	
 	private MultipartFile[] addFileToArrayFiles(MultipartFile[] multipartFiles_,MultipartFile file)
 	{
 		
@@ -300,12 +421,13 @@ public abstract class CommonsFileUploadSupport {
 			{
 				for(MultipartFile file_:files)
 				{
-					CommonsMultipartFile file = (CommonsMultipartFile)file_;
+					
+					MultipartFile file = file_;
 					if (logger.isDebugEnabled()) {
 						logger.debug("Cleaning up multipart file [" + file.getName() + "] with original filename [" +
 								file.getOriginalFilename() + "], stored " + file.getStorageDescription());
 					}
-					file.getFileItem().delete();
+					file.destroy();
 				}
 			}
 		}
@@ -321,6 +443,7 @@ public abstract class CommonsFileUploadSupport {
 		private final Map multipartFiles;
 
 		private final Map multipartParameters;
+		
 
 		/**
 		 * Create a new MultipartParsingResult.
@@ -331,6 +454,8 @@ public abstract class CommonsFileUploadSupport {
 			this.multipartFiles = multipartFiles;
 			this.multipartParameters = multipartParameters;
 		}
+		
+		
 
 		/**
 		 * Return the multipart files as Map of field name to MultipartFile instance.

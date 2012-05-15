@@ -20,6 +20,7 @@ import org.frameworkset.web.multipart.commons.CommonsMultipartResolver;
  * @see DispatcherServlet
  */
 public interface MultipartResolver {
+	public static final String mimetype_application_octet_stream = "application/octet-stream"; 
 	
 	/**
 	 * Determine if the given request contains multipart content.

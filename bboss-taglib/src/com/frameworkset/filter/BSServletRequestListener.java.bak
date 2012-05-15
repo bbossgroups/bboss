@@ -5,7 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 
-import com.chinacreator.security.AccessControl;
+import com.frameworkset.platform.security.AccessControl;
 import com.frameworkset.common.poolman.DBUtil;
 import com.frameworkset.orm.transaction.TransactionManager;
 

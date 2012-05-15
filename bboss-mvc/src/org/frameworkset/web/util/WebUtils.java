@@ -610,12 +610,15 @@ public abstract class WebUtils {
 		Assert.notNull(request, "Request must not be null");
 		Enumeration paramNames = request.getParameterNames();
 		Map params = new TreeMap();
-		if (prefix == null) {
-			prefix = "";
+		boolean hasprefix = false;
+		if (prefix != null && !prefix .equals( "")) {
+			
+			hasprefix = true;
 		}
+		
 		while (paramNames != null && paramNames.hasMoreElements()) {
 			String paramName = (String) paramNames.nextElement();
-			if ("".equals(prefix) || paramName.startsWith(prefix)) {
+			if (hasprefix && paramName.startsWith(prefix)) {
 				String unprefixed = paramName.substring(prefix.length());
 				String[] values = request.getParameterValues(paramName);
 				if (values == null || values.length == 0) {
@@ -658,12 +661,14 @@ public abstract class WebUtils {
 			e.printStackTrace();
 		}
 		Map params = new TreeMap();
-		if (prefix == null) {
-			prefix = "";
+		boolean hasprefix = false;
+		if (prefix != null && !prefix .equals( "")) {
+			
+			hasprefix = true;
 		}
 		while (paramNames != null && paramNames.hasNext()) {
 			String paramName = (String) paramNames.next();
-			if ("".equals(prefix) || paramName.startsWith(prefix)) {
+			if (hasprefix && paramName.startsWith(prefix)) {
 				String unprefixed = paramName.substring(prefix.length());
 				String[] values = request.getParameterValues(paramName);
 				if (values == null || values.length == 0) {

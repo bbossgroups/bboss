@@ -92,6 +92,7 @@ import org.frameworkset.web.HttpSessionRequiredException;
 import org.frameworkset.web.bind.MissingServletRequestParameterException;
 import org.frameworkset.web.bind.ServletRequestDataBinder;
 import org.frameworkset.web.bind.WebDataBinder.CallHolder;
+import org.frameworkset.web.multipart.IgnoreFieldNameMultipartFile;
 import org.frameworkset.web.multipart.MultipartFile;
 import org.frameworkset.web.multipart.MultipartHttpServletRequest;
 import org.frameworkset.web.servlet.ModelAndView;
@@ -109,6 +110,7 @@ import org.frameworkset.web.servlet.view.UrlBasedViewResolver;
 import org.frameworkset.web.servlet.view.View;
 import org.frameworkset.web.util.UrlPathHelper;
 import org.frameworkset.web.util.WebUtils;
+import org.jfree.util.Log;
 
 import com.frameworkset.util.BeanUtils;
 import com.frameworkset.util.EditorInf;
@@ -377,27 +379,43 @@ public abstract class HandlerUtils {
 	private static Object evaluateMultipartFileParam(RequestParam requestParam,HttpServletRequest request,String requestParamName,Class type)
 	{
 		Object paramValue = null;
-		MultipartFile[] values = ((MultipartHttpServletRequest)request).getFiles(requestParamName);
-		
-		if (values != null) {
+		if(request instanceof MultipartHttpServletRequest )
+		{
 			
-			
-			if (!type.isArray() && !List.class.isAssignableFrom(type) && !Set.class.isAssignableFrom(type))
+			MultipartFile[] values = null;
+			if(!HandlerUtils.isIgnoreFieldNameMultipartFile(type))
 			{
-				if( values.length > 0)
-				{
-
-					MultipartFile value_ = values[0];
-					
-					paramValue = value_;
-					
-				}
+				values = ((MultipartHttpServletRequest)request).getFiles(requestParamName);
 			}
 			else
 			{
-
-				paramValue = values;
+				values = ((MultipartHttpServletRequest)request).getFirstFieldFiles();
+			}			
+			
+			if (values != null) {
+				
+				
+				if (!type.isArray() && !List.class.isAssignableFrom(type) && !Set.class.isAssignableFrom(type))
+				{
+					if( values.length > 0)
+					{
+	
+						MultipartFile value_ = values[0];
+						
+						paramValue = value_;
+						
+					}
+				}
+				else
+				{
+	
+					paramValue = values;
+				}
 			}
+		}
+		else
+		{
+			logger.debug("Evaluate Multipart File failed: request is not a MultipartHttpServletRequest.");
 		}
 		
 		return paramValue;
@@ -406,16 +424,11 @@ public abstract class HandlerUtils {
 	private static Object evaluateMultipartFileParamWithNoName(HttpServletRequest request,Class type)
 	{
 		Object paramValue = null;
-		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest)request;
-		Iterator<String> filenames = multipartRequest.getFileNames();
-		if(filenames == null)
-			return null;
-		while(filenames.hasNext())
+		if(request instanceof MultipartHttpServletRequest )
 		{
-			MultipartFile[] values = multipartRequest.getFiles(filenames.next());
-			
-			if (values != null) {
-				
+			MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest)request;
+			MultipartFile[] values = multipartRequest.getFirstFieldFiles();
+			if (values != null) {			
 				
 				if (!type.isArray() )
 				{
@@ -423,16 +436,45 @@ public abstract class HandlerUtils {
 					{
 						MultipartFile value_ = values[0];
 						paramValue = value_;
-						break;
 						
 					}
 				}
 				else
 				{
 					paramValue = values;
-					break;
+					
 				}
 			}
+//			Iterator<String> filenames = multipartRequest.getFileNames();
+//			if(filenames == null)
+//				return null;
+//			while(filenames.hasNext())
+//			{
+//				MultipartFile[] values = multipartRequest.getFiles(filenames.next());
+//				
+//				if (values != null) {
+//					
+//					
+//					if (!type.isArray() )
+//					{
+//						if( values.length > 0)
+//						{
+//							MultipartFile value_ = values[0];
+//							paramValue = value_;
+//							break;
+//						}
+//					}
+//					else
+//					{
+//						paramValue = values;
+//						break;
+//					}
+//				}
+//			}
+		}
+		else
+		{
+			logger.debug("Evaluate Multipart File failed: request is not a MultipartHttpServletRequest.");
 		}
 		
 		return paramValue;
@@ -1673,9 +1715,18 @@ public abstract class HandlerUtils {
 				}
 				else
 				{
-					MultipartFile[] values =  !param.name().equals("")?((MultipartHttpServletRequest)request).getFiles(param.name()):
-																	   ((MultipartHttpServletRequest)request).getFiles(name);
-					value = getRequestData(values, holder, type);				
+					MultipartFile[] values = null;
+					if(!HandlerUtils.isIgnoreFieldNameMultipartFile(type))
+					{
+						values =  !param.name().equals("")?((MultipartHttpServletRequest)request).getFiles(param.name()):
+																		   ((MultipartHttpServletRequest)request).getFiles(name);
+						
+					}
+					else
+					{
+						values = ((MultipartHttpServletRequest)request).getFirstFieldFiles();
+					}
+					value = getRequestData(values, holder, type);
 					if (param.editor() != null && !param.editor().equals(""))
 						editor = (EditorInf) BeanUtils.instantiateClass(param.editor());
 					if(!required) required = param.required();					
@@ -2159,11 +2210,23 @@ public abstract class HandlerUtils {
 					{
 						if(request instanceof MultipartHttpServletRequest)
 						{
-							MultipartFile[] values = ((MultipartHttpServletRequest)request).getFiles(name);
-							value = getRequestData(values, holder, type);
-							if(holder.needAddData())
+							if(!HandlerUtils.isIgnoreFieldNameMultipartFile(type))
 							{
-								holder.addData(name, values,true,null,false);
+								MultipartFile[] values = ((MultipartHttpServletRequest)request).getFiles(name);
+								value = getRequestData(values, holder, type);
+								if(holder.needAddData())
+								{
+									holder.addData(name, values,true,null,false);
+								}
+							}
+							else
+							{
+								MultipartFile[] values = ((MultipartHttpServletRequest)request).getFirstFieldFiles();
+								value = getRequestData(values, holder, type);
+								if(holder.needAddData())
+								{
+									holder.addData(name, values,true,null,false);
+								}
 							}
 						}
 						else
@@ -2242,6 +2305,11 @@ public abstract class HandlerUtils {
 	public static boolean isMultipartFile(Class type)
 	{
 		return MultipartFile.class.isAssignableFrom(type) || MultipartFile[].class.isAssignableFrom(type);
+	}
+	//!IgnoreFieldNameMultipartFile.class.isAssignableFrom(type) && !IgnoreFieldNameMultipartFile[].class.isAssignableFrom(type)
+	public static boolean isIgnoreFieldNameMultipartFile(Class type)
+	{
+		return IgnoreFieldNameMultipartFile.class.isAssignableFrom(type) || IgnoreFieldNameMultipartFile[].class.isAssignableFrom(type);
 	}
 
 	/**

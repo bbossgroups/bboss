@@ -75,5 +75,23 @@ public abstract class AbstractMultipartHttpServletRequest extends RequestMethodH
 	protected void initializeMultipart() {
 		throw new IllegalStateException("Multipart request not initialized");
 	}
+	
+	@Override
+	public MultipartFile[] getFirstFieldFiles() {
+		Iterator<String> filenames = getFileNames();
+		if(filenames == null)
+			return null;
+		while(filenames.hasNext())
+		{
+			MultipartFile[] values = getFiles(filenames.next());
+			
+			if(values != null && values.length > 0)
+			{
+				return values; 
+				
+			}
+		}
+		return null;
+	}
 
 }

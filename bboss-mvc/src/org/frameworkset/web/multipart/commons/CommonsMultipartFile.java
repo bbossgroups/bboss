@@ -10,9 +10,9 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItem;
 import org.apache.log4j.Logger;
-import org.frameworkset.web.multipart.MultipartFile;
+import org.frameworkset.web.multipart.IgnoreFieldNameMultipartFile;
 
-public class CommonsMultipartFile  implements MultipartFile, Serializable {
+public class CommonsMultipartFile  implements IgnoreFieldNameMultipartFile, Serializable {
 
 	protected final static Logger logger = Logger.getLogger(CommonsMultipartFile.class);
 
@@ -159,6 +159,12 @@ public class CommonsMultipartFile  implements MultipartFile, Serializable {
 		else {
 			return "on disk";
 		}
+	}
+
+	@Override
+	public void destroy() {
+		this.fileItem.delete();
+		
 	}
 
 }

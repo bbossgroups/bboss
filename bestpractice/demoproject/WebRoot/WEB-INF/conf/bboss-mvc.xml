@@ -93,7 +93,7 @@
     </property>
     
     
-     <property name="multipartResolver"   f:encoding="GBK"
+     <property name="multipartResolver"   f:encoding="UTF-8"
          class="org.frameworkset.web.multipart.commons.CommonsMultipartResolver">        
      </property>   
      

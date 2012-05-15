@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>xhEditor demo12 : 远程抓图&amp;剪切板图片粘贴上传</title>
+<link rel="stylesheet" href="common.css" type="text/css" media="screen" />
+<script type="text/javascript" src="../jquery/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../xheditor-1.1.13-zh-cn.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	$('#elm1').xheditor({localUrlTest:/^https?:\/\/[^\/]*?(xheditor\.com)\//i,remoteImgSaveUrl:'saveremoteimg.php',shortcuts:{'ctrl+enter':submitForm}});
+});
+function submitForm(){$('#frmDemo').submit();}
+</script>
+</head>
+<body>
+<div id="header-nav">
+	<ul>
+		<li><a href="demo01.html"><span>默认模式</span></a></li>
+		<li><a href="demo02.html"><span>自定义按钮</span></a></li>
+		<li><a href="demo03.html"><span>皮肤选择</span></a></li>
+		<li><a href="demo04.html"><span>其它选项</span></a></li>
+		<li><a href="demo05.html"><span>API交互</span></a></li>
+		<li><a href="demo06.html"><span>非utf-8编码调用</span></a></li>
+		<li><a href="demo07.html"><span>UBB可视化</span></a></li>
+		<li><a href="demo08.html"><span>Ajax上传</span></a></li>
+		<li><a href="demo09.html"><span>插件扩展</span></a></li>
+		<li><a href="demo10.html"><span>iframe调用上传</span></a></li>
+		<li><a href="demo11.html"><span>异步加载</span></a></li>
+		<li><a href="demo12.html"><span>远程抓图</span></a></li>
+		<li><a href="../wizard.html" target="_blank"><span>生成代码</span></a></li>
+	</ul>
+</div>
+<form id="frmDemo" method="post" action="show.php">
+	<h3>xhEditor demo12 : 远程抓图&amp;剪切板图片粘贴上传</h3>
+	<textarea id="elm1" name="elm1" rows="15" cols="80" style="width: 80%">
+&lt;p&gt;本页面演示以下功能：&lt;/p&gt;&lt;ol&gt;&lt;li&gt;粘贴自动抓取远程图片(全浏览器兼容)&lt;/li&gt;&lt;li&gt;剪切板图片粘贴自动上传(仅支持Firefox 4.0,5.0 Chrome 10,11,12)&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;特别说明：Chrome 12及之前的版本(将来版本是否会修正也是个未知数)仅能粘贴QQ等屏幕截图，ACDSEE等图片软件复制粘贴会上传白屏图，具体原因不详，理论上应该是Chrome浏览器的Bug，因为Gmail官方的这个功能也同样存在这个BUG。&lt;/p&gt;&lt;p&gt;&lt;strong&gt;使用说明：&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;初始化时添加以下两个参数：&lt;span style=&quot;font-family:monospace;font-size:16px;white-space: pre-wrap; &quot;&gt;&lt;strong&gt;localUrlTest&lt;/strong&gt;、&lt;span style=&quot;font-family:monospace;font-size:16px;white-space: pre-wrap; &quot;&gt;&lt;strong&gt;remoteImgSaveUrl&lt;/strong&gt;&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;&lt;p&gt;localUrlTest是正则表达式，用来测试URL是否属于非本域名。如果测试为false，则会将图片的URL提交给remoteImgSaveUrl参数指定的服务器端上传接收程序，抓取后返回替换。&lt;br /&gt;&lt;/p&gt;
+	</textarea>
+	<br/><br />
+	<input type="submit" name="save" value="Submit" />
+	<input type="reset" name="reset" value="Reset" />
+</form>
+</body>
+</html>

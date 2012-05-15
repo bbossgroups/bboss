@@ -32,6 +32,10 @@ public interface MultipartFile extends BigFile{
 	 * @return the name of the parameter (never <code>null</code> or empty)
 	 */
 	String getName();
+	void destroy();
+	String getStorageDescription();
+	
+	
 
 	
 

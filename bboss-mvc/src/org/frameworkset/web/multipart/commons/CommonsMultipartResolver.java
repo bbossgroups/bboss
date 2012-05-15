@@ -18,6 +18,7 @@ import org.frameworkset.web.multipart.MaxUploadSizeExceededException;
 import org.frameworkset.web.multipart.MultipartException;
 import org.frameworkset.web.multipart.MultipartHttpServletRequest;
 import org.frameworkset.web.multipart.MultipartResolver;
+import org.frameworkset.web.multipart.commons.CommonsFileUploadSupport.MultipartParsingResult;
 import org.frameworkset.web.servlet.context.ServletContextAware;
 import org.frameworkset.web.servlet.context.WebApplicationContext;
 import org.frameworkset.web.util.WebUtils;
@@ -85,8 +86,13 @@ public class CommonsMultipartResolver  extends CommonsFileUploadSupport
 
 
 	public boolean isMultipart(HttpServletRequest request) {
+		String contenttype = request.getContentType();
 		if (request == null) {
 			return false;
+		}
+		else if(contenttype != null && contenttype.equals(MultipartResolver.mimetype_application_octet_stream))
+		{
+			return true;
 		}
 		else if (commonsFileUpload12Present) {
 			return ServletFileUpload.isMultipartContent(request);
@@ -122,16 +128,24 @@ public class CommonsMultipartResolver  extends CommonsFileUploadSupport
 	 */
 	protected MultipartParsingResult parseRequest(HttpServletRequest request) throws MultipartException {
 		String[] encoding = determineEncoding(request);
-		FileUpload fileUpload = prepareFileUpload(encoding[1] == null?encoding[0]:encoding[1]);
-		try {
-			List fileItems = ((ServletFileUpload) fileUpload).parseRequest(request);
-			return parseFileItems(fileItems, encoding);
+		String contentType = request.getContentType();
+		if(contentType != null && !contentType.equals(MultipartResolver.mimetype_application_octet_stream))
+		{
+			FileUpload fileUpload = prepareFileUpload(encoding[1] == null?encoding[0]:encoding[1]);
+			try {
+				List fileItems = ((ServletFileUpload) fileUpload).parseRequest(request);
+				return parseFileItems(fileItems, encoding,request);
+			}
+			catch (FileUploadBase.SizeLimitExceededException ex) {
+				throw new MaxUploadSizeExceededException(fileUpload.getSizeMax(), ex);
+			}
+			catch (FileUploadException ex) {
+				throw new MultipartException("Could not parse multipart servlet request", ex);
+			}
 		}
-		catch (FileUploadBase.SizeLimitExceededException ex) {
-			throw new MaxUploadSizeExceededException(fileUpload.getSizeMax(), ex);
-		}
-		catch (FileUploadException ex) {
-			throw new MultipartException("Could not parse multipart servlet request", ex);
+		else
+		{
+			return parseOctetFileItems(request);
 		}
 	}
 

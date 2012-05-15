@@ -1,0 +1,24 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"> 
+<head>
+<meta name="robots" content="noindex, nofollow" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+<title>Google Maps</title>
+<style type="text/css">
+<!--
+body{margin:0;padding:10px;font-size:12px;}
+input{border:1px solid #ABADB3;}
+button{border:1px solid #888;border-color:#fff #888 #888 #fff;}
+input,button{border-radius:3px;-moz-border-radius:3px;-webkit-border-radius:3px;}
+#mapArea{width:512px; height:320px;border:1px #999 solid;text-align:center;margin-top:10px}
+-->
+</style>
+<script type="text/javascript" src="../../jquery/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+<script type="text/javascript" src="googlemap.js"></script>
+</head>
+<body onload="initMap()">
+	<label for="address">地址：</label><input type="text" id="address" value="北京市" /> <button id="mapsearch">搜索</button> <button id="addMap">插入地图</button>
+	<div id="mapArea"></div>
+</body>
+</html>
