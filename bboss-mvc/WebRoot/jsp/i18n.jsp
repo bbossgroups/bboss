@@ -4,6 +4,7 @@
 <%
 session.setAttribute(SessionLocalResolver.SESSION_LOCAL_KEY, java.util.Locale.SIMPLIFIED_CHINESE);
 org.frameworkset.spi.support.MessageSource messageSource = org.frameworkset.web.servlet.support.WebApplicationContextUtils.getWebApplicationContext();
+
 out.println("sss" + messageSource);
 %>
 <html>

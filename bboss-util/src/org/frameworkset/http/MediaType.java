@@ -70,6 +70,12 @@ public class MediaType implements Comparable<MediaType> {
 	public final static MediaType APPLICATION_JSON;
 
 	/**
+	 * Public constant media type for {@code application/json}.
+	 * */
+	public final static MediaType APPLICATION_JSONP;
+
+
+	/**
 	 * Public constant media type for {@code application/octet-stream}.
 	 *  */
 	public final static MediaType APPLICATION_OCTET_STREAM;
@@ -180,6 +186,7 @@ public class MediaType implements Comparable<MediaType> {
 		APPLICATION_ATOM_XML = new MediaType("application","atom+xml");
 		APPLICATION_FORM_URLENCODED = new MediaType("application","x-www-form-urlencoded");
 		APPLICATION_JSON = new MediaType("application","json");
+		APPLICATION_JSONP = new MediaType("application","jsonp");
 		APPLICATION_OCTET_STREAM = new MediaType("application","octet-stream");
 		APPLICATION_XHTML_XML = new MediaType("application","xhtml+xml");
 		APPLICATION_XML = new MediaType("application","xml");

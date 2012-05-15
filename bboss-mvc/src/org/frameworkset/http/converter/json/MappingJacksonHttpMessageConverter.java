@@ -51,17 +51,18 @@ import org.frameworkset.util.Assert;
 public class MappingJacksonHttpMessageConverter extends AbstractHttpMessageConverter<Object> {
 
 	public static final Charset DEFAULT_CHARSET = Charset.forName("UTF-8");
-
+	public static final String JSONPCALLBACK_PARAM_NAME = "jsonp_callback";
 	private ObjectMapper objectMapper = new ObjectMapper();
 
 	private boolean prefixJson = false;
+	private String jsonpCallback = JSONPCALLBACK_PARAM_NAME;
 
 
 	/**
 	 * Construct a new {@code BindingJacksonHttpMessageConverter}.
 	 */
 	public MappingJacksonHttpMessageConverter() {
-		super(new MediaType("application", "json", DEFAULT_CHARSET));
+		super(new MediaType[] {new MediaType("application", "json", DEFAULT_CHARSET),new MediaType("application", "jsonp", DEFAULT_CHARSET)});
 	}
 
 	/**

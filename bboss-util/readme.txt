@@ -54,6 +54,8 @@ List<String> tokens = a.getTokens();
 	 			}
 	
 	 		}
+o 文件下载方法扩展，可以直接将Resource代表的资源进行下载
+ public static void sendFile_(HttpServletRequest request, HttpServletResponse response, Resource in)	 		
 o 修复ValueObjectUtil日期转换方法多线程安全问题，问题表现为多个不同的用户并发转换时间时，得到不可预期的结果
 升级frameworkset-util.jar可以解决这个问题
 /bboss-util/src/com/frameworkset/util/ValueObjectUtil.java

@@ -170,6 +170,16 @@ public class MethodInfo {
 				else
 					temp = new MediaType("application","json",Charset.forName("UTF-8"));
 			}
+			else if(type.equals("jsonp"))
+			{
+				if(!charset.equals(ValueConstants.DEFAULT_NONE))
+				{
+					temp = new MediaType("application","jsonp",Charset.forName(charset));
+				}
+				else
+					temp = new MediaType("application","jsonp",Charset.forName("UTF-8"));
+			}
+			
 			else if(type.equals("xml"))
 			{
 				if(!charset.equals(ValueConstants.DEFAULT_NONE))

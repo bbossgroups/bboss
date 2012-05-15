@@ -59,6 +59,8 @@ public interface MessageSource {
 	 * @see java.text.MessageFormat
 	 */
 	String getMessage(String code, Object[] args, Locale locale) throws NoSuchMessageException;
+	String getMessage(String code) throws NoSuchMessageException;
+	String getMessage(String code,Locale locale) throws NoSuchMessageException;
 
 	/**
 	 * Try to resolve the message using all the attributes contained within the

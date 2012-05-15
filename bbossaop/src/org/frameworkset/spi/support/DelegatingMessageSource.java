@@ -75,5 +75,24 @@ public class DelegatingMessageSource  extends MessageSourceSupport implements Hi
 		}
 	}
 
+	public String getMessage(String code) throws NoSuchMessageException {
+		if (this.parentMessageSource != null) {
+			return this.parentMessageSource.getMessage(code);
+		}
+		else {
+			throw new NoSuchMessageException(code);
+		}
+	}
+
+	public String getMessage(String code, Locale locale)
+			throws NoSuchMessageException {
+		if (this.parentMessageSource != null) {
+			return this.parentMessageSource.getMessage(code,locale);
+		}
+		else {
+			throw new NoSuchMessageException(code,locale);
+		}
+	}
+
 
 }
