@@ -23,7 +23,7 @@
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/ditchnet-tabs-taglib.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/ecs-1.4.2.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/freemarker-2.3.15.jar"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/jackson-all-1.6.2.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/jackson-all-1.6.2.jar" sourcepath="lib-compile/jackson-src-1.6.9.zip"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/jakarta-oro-2.0.8.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/jarjar.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/jasperreports-3.7.6.jar"/>

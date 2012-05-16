@@ -101,7 +101,8 @@
      	<list>
 <!--     		<property class="org.frameworkset.http.converter.feed.RssChannelHttpMessageConverter"/>-->
 <!--     		<property class="org.frameworkset.http.converter.feed.AtomFeedHttpMessageConverter"/>-->
-				<property class="org.frameworkset.http.converter.json.MappingJacksonHttpMessageConverter"/>
+				<property class="org.frameworkset.http.converter.json.MappingJacksonHttpMessageConverter"
+					f:jsonpCallback="jsonp_callback"/>
 <!--     		<property class="org.frameworkset.http.converter.xml.Jaxb2RootElementHttpMessageConverter"/>-->
      		
 <!--     		<property class="org.frameworkset.http.converter.xml.MarshallingHttpMessageConverter"/>-->

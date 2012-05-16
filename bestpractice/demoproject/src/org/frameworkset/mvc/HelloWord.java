@@ -200,13 +200,29 @@ public class HelloWord
 		return "path:sayHello";
 	}
 	
-	public @ResponseBody String jsonp(String callback)
+//	public @ResponseBody String jsonp(String callback)
+//	{
+//		return callback + "({\"symbol\" : \"IBM\", \"price\" : \"91.42\"})";
+//	}
+	public @ResponseBody(datatype="jsonp") JsonpBean jsonp()
 	{
-		return callback + "({\"symbol\" : \"IBM\", \"price\" : \"91.42\"})";
+		JsonpBean jsonpbean = new JsonpBean();
+		jsonpbean.setPrice("91.42");
+		jsonpbean.setSymbol("IBM");
+		return jsonpbean;
 	}
-	public @ResponseBody String jsonpwithjquery(String callback)
+//	public @ResponseBody String jsonpwithjquery(String callback)
+//	{
+//		return callback + "({\"symbol\" : \"IBM jquery jsonp\", \"price\" : \"91.42\"})";
+//	}
+	
+	public @ResponseBody(datatype="jsonp") JsonpBean jsonpwithjquery()
 	{
-		return callback + "({\"symbol\" : \"IBM jquery jsonp\", \"price\" : \"91.42\"})";
+		JsonpBean jsonpbean = new JsonpBean();
+		jsonpbean.setPrice("91.42");
+		jsonpbean.setSymbol("IBM jquery jsonp");
+		return jsonpbean;
+//		return callback + "({\"symbol\" : \"IBM jquery jsonp\", \"price\" : \"91.42\"})";
 	}
 	
 }

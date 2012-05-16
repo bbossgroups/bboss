@@ -20,6 +20,8 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.codehaus.jackson.JsonEncoding;
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.JsonGenerator;
@@ -56,13 +58,14 @@ public class MappingJacksonHttpMessageConverter extends AbstractHttpMessageConve
 
 	private boolean prefixJson = false;
 	private String jsonpCallback = JSONPCALLBACK_PARAM_NAME;
+	public static final MediaType[] jsonmediatypes = new MediaType[] {new MediaType("application", "json", DEFAULT_CHARSET),new MediaType("application", "jsonp", DEFAULT_CHARSET)}; 
 
 
 	/**
 	 * Construct a new {@code BindingJacksonHttpMessageConverter}.
 	 */
 	public MappingJacksonHttpMessageConverter() {
-		super(new MediaType[] {new MediaType("application", "json", DEFAULT_CHARSET),new MediaType("application", "jsonp", DEFAULT_CHARSET)});
+		super(jsonmediatypes);
 	}
 
 	/**
@@ -155,14 +158,43 @@ public class MappingJacksonHttpMessageConverter extends AbstractHttpMessageConve
 	protected void writeInternal(Object o, HttpOutputMessage outputMessage,HttpInputMessage inputMessage)
 			throws IOException, HttpMessageNotWritableException {
 
-		JsonEncoding encoding = getEncoding(outputMessage.getHeaders().getContentType());
+		MediaType contenttype = outputMessage.getHeaders().getContentType();
+		JsonEncoding encoding = getEncoding(contenttype);
 		JsonGenerator jsonGenerator =
 				this.objectMapper.getJsonFactory().createJsonGenerator(outputMessage.getBody(), encoding);
 		try {
-			if (this.prefixJson) {
-				jsonGenerator.writeRaw("{} && ");
+			if(!contenttype.isCompatibleWith(this.jsonmediatypes[1]))
+			{
+				if (this.prefixJson) {
+					jsonGenerator.writeRaw("{} && ");
+				}
+				this.objectMapper.writeValue(jsonGenerator, o);
 			}
-			this.objectMapper.writeValue(jsonGenerator, o);
+			else
+			{
+				HttpServletRequest request = inputMessage.getServletRequest();
+				String callback = request.getParameter(jsonpCallback);
+				if(callback == null || callback.equals(""))
+				{
+					logger.warn("jsonp responsed warn:callback function is not post by client request,direct to reponse json datas.");
+					if (this.prefixJson) {
+						jsonGenerator.writeRaw("{} && ");
+					}
+					this.objectMapper.writeValue(jsonGenerator, o);
+				}
+				else
+				{
+					jsonGenerator.writeRaw(callback);
+					jsonGenerator.writeRaw("(");
+					if (this.prefixJson) {
+						jsonGenerator.writeRaw("{} && ");
+					}
+					this.objectMapper.writeValue(jsonGenerator, o);
+					jsonGenerator.writeRaw(")");
+					jsonGenerator.flush();
+				}
+				
+			}
 		}
 		catch (JsonGenerationException ex) {
 			throw new HttpMessageNotWritableException("Could not write JSON: " + ex.getMessage(), ex);

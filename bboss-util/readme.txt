@@ -19,6 +19,15 @@ bboss-util<-kettle [frameworkset-util.jar]
 bboss-util<-portal [frameworkset-util.jar]
 bboss-util<-cas server [frameworkset-util.jar]
 #######update function list since bbossgroups-3.5 begin###########
+o com.framworkset.util.StringUtil增加下载Resource接口对应的资源的方法
+public static void sendFile_(HttpServletRequest request, HttpServletResponse response, Resource in) throws Exception 
+目前支持Resource接口的以下实现：
+ClassPathResource -- 适用于应classpath下面的资源
+ServletContextResource --适用于web应用根目录及子目录下的资源
+FileSystemResource --适用于文件系统中文件资源
+UrlResource --适用于url连接对应资源
+ByteArrayResource--适用于二进制资源
+
 o ValueObjectUtil增加cast(Object obj,Class toType)方法，用来将父类类型对象obj转换为子类型对象，支持数组类型和普通类型
 o 增加变量、数组元素、list/set、map元素变量解析方法,使用方法如下：
  String url = "http://localhost:80/detail.html?user=#[account[0][0]]&password=#[password->aaa[0]->bb->cc[0]]love";
