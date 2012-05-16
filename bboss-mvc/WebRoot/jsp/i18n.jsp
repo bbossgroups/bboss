@@ -2,10 +2,11 @@
 <%@ page contentType="text/html; charset=GBK" language="java" %>
 <%@ taglib uri="/WEB-INF/pager-taglib.tld" prefix="pg"%>
 <%
-session.setAttribute(SessionLocalResolver.SESSION_LOCAL_KEY, java.util.Locale.SIMPLIFIED_CHINESE);
+session.setAttribute(SessionLocalResolver.SESSION_LOCAL_KEY, java.util.Locale.US);
 org.frameworkset.spi.support.MessageSource messageSource = org.frameworkset.web.servlet.support.WebApplicationContextUtils.getWebApplicationContext();
+//messageSource.getMessage("test.multifiles");
 
-out.println("sss" + messageSource);
+//out.println("sss:" + messageSource.getMessage("test.multifiles"));
 %>
 <html>
 <head>
@@ -43,7 +44,11 @@ out.println("sss" + messageSource);
 							<pg:message  code="probe.jsp.wrongparams"/>
 							
 										</td>
-						<td></td>
+						<td width="8%">
+							
+							<pg:message  code="test.multifiles"/>
+							
+										</td>
 					</tr>
 					
 					

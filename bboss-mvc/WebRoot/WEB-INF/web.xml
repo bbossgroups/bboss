@@ -126,6 +126,14 @@
 			<param-name>contextConfigLocation</param-name>
 			<param-value>/WEB-INF/bboss-*.xml,/WEB-INF/conf/bboss-*.xml</param-value>
 		</init-param>
+		<init-param>
+			<param-name>messagesources</param-name>
+			<param-value>/WEB-INF/messages,/WEB-INF/messages1</param-value>
+		</init-param>
+		<init-param>
+			<param-name>useCodeAsDefaultMessage</param-name>
+			<param-value>true</param-value>
+		</init-param>
 		<load-on-startup>0</load-on-startup>
 	</servlet>
 	<servlet-mapping>

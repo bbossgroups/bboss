@@ -272,9 +272,11 @@ public class WebApplicationContext extends DefaultApplicationContext implements 
 	protected void initMessageSource() {
 
 		String messageClass = DispatchServlet.getDefaultStrategies().getProperty("messageSource","org.frameworkset.spi.support.HotDeployResourceBundleMessageSource");
-		String messageSource_basename = DispatchServlet.getDefaultStrategies().getProperty("messageSource.basename","/WEB-INF/messages");
+//		String messageSource_basename = DispatchServlet.getDefaultStrategies().getProperty("messageSource.basename","/WEB-INF/messages");
+		String messageSource_basename = DispatchServlet.getMessagesources();
+		
 //		String 	messageSource_cacheSeconds = DispatchServlet.getDefaultStrategies().getProperty("messageSource.cacheSeconds","-1");
-		String 	messageSource_useCodeAsDefaultMessage = DispatchServlet.getDefaultStrategies().getProperty("messageSource.useCodeAsDefaultMessage","true");
+		String 	messageSource_useCodeAsDefaultMessage = DispatchServlet.getUseCodeAsDefaultMessage();
 		
 		Class  message = null;
 		try

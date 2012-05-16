@@ -27,6 +27,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.jstl.core.Config;
 
+import org.apache.log4j.Logger;
 import org.frameworkset.spi.support.MessageSource;
 import org.frameworkset.spi.support.MessageSourceResolvable;
 import org.frameworkset.spi.support.NoSuchMessageException;
@@ -50,6 +51,7 @@ import org.frameworkset.web.util.WebUtils;
 import com.frameworkset.common.tag.pager.tags.PagerDataSet;
 import com.frameworkset.util.HtmlUtils;
 
+
 /**
  * <p>Title: RequestContext.java</p> 
  * <p>Description: </p>
@@ -60,6 +62,7 @@ import com.frameworkset.util.HtmlUtils;
  * @version 1.0
  */
 public class RequestContext {
+	private static final Logger logger = Logger.getLogger(RequestContext.class);
 	/**
 	 * Default theme name used if the RequestContext cannot find a ThemeResolver.
 	 * Only applies to non-DispatcherServlet requests.
@@ -234,7 +237,9 @@ public class RequestContext {
 		// Determine locale to use for this RequestContext.
 		LocaleResolver localeResolver = RequestContextUtils.getLocaleResolver(request);
 		if(localeResolver == null)
-			localeResolver = webApplicationContext.getTBeanObject(DispatchServlet.LOCALE_RESOLVER_BEAN_NAME, LocaleResolver.class);
+			
+				localeResolver = DispatchServlet.getLocaleResolver(webApplicationContext);
+			
 		if (localeResolver != null) {
 			// Try LocaleResolver (we're within a DispatcherServlet request).
 			this.locale = localeResolver.resolveLocale(request);

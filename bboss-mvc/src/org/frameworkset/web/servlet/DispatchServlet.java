@@ -63,6 +63,7 @@ import org.frameworkset.web.servlet.handler.HandlerMappingsTable;
 import org.frameworkset.web.servlet.handler.HandlerMeta;
 import org.frameworkset.web.servlet.handler.HandlerUtils;
 import org.frameworkset.web.servlet.handler.PathURLNotSetException;
+import org.frameworkset.web.servlet.i18n.AcceptHeaderLocaleResolver;
 import org.frameworkset.web.servlet.support.RequestContext;
 import org.frameworkset.web.servlet.support.RequestContextUtils;
 import org.frameworkset.web.servlet.support.RequestMethodHttpServletRequest;
@@ -91,6 +92,7 @@ import com.frameworkset.util.StringUtil;
  */
 public class DispatchServlet extends HttpServlet {
 	private static final Properties defaultStrategies;
+	
 	
 	
 	public static Properties getDefaultStrategies()
@@ -246,7 +248,7 @@ public class DispatchServlet extends HttpServlet {
 	/** List of HandlerAdapters used by this servlet */
 	private List<HandlerInterceptor> gloabelHandlerInterceptors;
 	
-	/**ÏûÏ¢¸ñÊ½×ª»»Æ÷*/
+	/**ï¿½ï¿½Ï¢ï¿½ï¿½Ê½×ªï¿½ï¿½ï¿½ï¿½*/
 	private  HttpMessageConverter[] messageConverters;	
 
 	
@@ -264,6 +266,12 @@ public class DispatchServlet extends HttpServlet {
 	
 	/** WebApplicationContext for this servlet */
 	public  static WebApplicationContext webApplicationContext;
+	private static String messagesources = null;
+	private static String useCodeAsDefaultMessage = "true";
+	public static String getMessagesources()
+	{
+		return messagesources;
+	}
 	
 	/**
 	 * Set whether this servlet should dispatch an HTTP OPTIONS request to
@@ -473,7 +481,7 @@ public class DispatchServlet extends HttpServlet {
 	private boolean publishContext;
 	private boolean cleanupAfterInclude;
 		/** LocaleResolver used by this servlet */
-	private LocaleResolver localeResolver;
+	private static LocaleResolver localeResolver;
 	
 	/** ThemeResolver used by this servlet */
 	private ThemeResolver themeResolver;
@@ -905,7 +913,7 @@ public class DispatchServlet extends HttpServlet {
 			{
 				if(exMv.getView() != null && exMv.getView() instanceof AbstractUrlBasedView)
 				{
-					//´¦Àípath:ÀàÐÍÂ·¾¶
+					//ï¿½ï¿½ï¿½ï¿½path:ï¿½ï¿½ï¿½ï¿½Â·ï¿½ï¿½
 					AbstractUrlBasedView view = (AbstractUrlBasedView) exMv.getView();
 					String url = view.getUrl();
 					if(UrlBasedViewResolver.isPathVariable(url))
@@ -1107,7 +1115,21 @@ public class DispatchServlet extends HttpServlet {
 		}
 		return null;
 	}
-	
+	protected void initMessagesources(ServletConfig config)
+	{
+		messagesources = config.getInitParameter("messagesources");
+		if(messagesources == null)
+		{
+			messagesources = DispatchServlet.getDefaultStrategies().getProperty("messageSource.basename","/WEB-INF/messages");
+		}
+		useCodeAsDefaultMessage = config.getInitParameter("useCodeAsDefaultMessage");
+		if(useCodeAsDefaultMessage == null)
+		{
+			useCodeAsDefaultMessage = DispatchServlet.getDefaultStrategies().getProperty("messageSource.useCodeAsDefaultMessage","true");
+		}
+		
+		
+	}
 	/**
 	 * Initialize the strategy objects that this servlet uses.
 	 * <p>May be overridden in subclasses in order to initialize
@@ -1116,6 +1138,7 @@ public class DispatchServlet extends HttpServlet {
 	 */
 	protected void init_(ServletConfig config) throws Exception {
 //		loadCustomJars(config);
+		initMessagesources(config);
 		this.initServletBean(config);
 		
 //		WebApplicationContext context = this.initWebApplicationContext( config);
@@ -1422,31 +1445,46 @@ public class DispatchServlet extends HttpServlet {
 			}
 		}
 	}
+	public static LocaleResolver getLocaleResolver(WebApplicationContext context)
+	{
+		if(localeResolver != null)
+		{
+			return localeResolver;
+		}
+		else
+		{
+			initLocaleResolver(context);
+			return localeResolver;
+		}
+	}
 	
 	/**
 	 * Initialize the LocaleResolver used by this class.
 	 * <p>If no bean is defined with the given name in the BeanFactory
 	 * for this namespace, we default to AcceptHeaderLocaleResolver.
 	 */
-	private void initLocaleResolver(WebApplicationContext context) {
-		try {
-			this.localeResolver = (LocaleResolver)
-					context.getBeanObject(LOCALE_RESOLVER_BEAN_NAME);
-			if (logger.isDebugEnabled()) {
-				logger.debug("Using LocaleResolver [" + this.localeResolver + "]");
-			}
-		}
-		catch (Exception ex) {
-			// We need to use the default.
+	public synchronized static void initLocaleResolver(WebApplicationContext context) {
+		if(localeResolver == null)
+		{
 			try {
-				this.localeResolver = (LocaleResolver) getDefaultStrategy(context, LocaleResolver.class);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				localeResolver = (LocaleResolver)
+						context.getBeanObject(LOCALE_RESOLVER_BEAN_NAME);
+				if (logger.isDebugEnabled()) {
+					logger.debug("Using LocaleResolver [" + localeResolver + "]");
+				}
 			}
-			if (logger.isDebugEnabled()) {
-				logger.debug("Unable to locate LocaleResolver with name '" + LOCALE_RESOLVER_BEAN_NAME +
-						"': using default [" + this.localeResolver + "]");
+			catch (Exception ex) {
+				// We need to use the default.
+				try {
+					localeResolver = (LocaleResolver) getDefaultStrategy(context, LocaleResolver.class);
+				} catch (Exception e) {
+					localeResolver = new AcceptHeaderLocaleResolver();
+					e.printStackTrace();
+				}
+				if (logger.isDebugEnabled()) {
+					logger.debug("Unable to locate LocaleResolver with name '" + LOCALE_RESOLVER_BEAN_NAME +
+							"': using default [" + localeResolver + "]");
+				}
 			}
 		}
 	}
@@ -1461,7 +1499,7 @@ public class DispatchServlet extends HttpServlet {
 	 * @throws BeansException if initialization failed
 	 * @see #getDefaultStrategies
 	 */
-	protected Object getDefaultStrategy(BaseApplicationContext context, Class strategyInterface) throws BeanInstanceException {
+	public static Object getDefaultStrategy(BaseApplicationContext context, Class strategyInterface) throws BeanInstanceException {
 		List strategies = getDefaultStrategies(context, strategyInterface);
 		if (strategies.size() <= 0) {
 			throw new BeanInstanceException(
@@ -1480,7 +1518,7 @@ public class DispatchServlet extends HttpServlet {
 	 * @return the List of corresponding strategy objects
 	 * @throws BeansException if initialization failed
 	 */
-	protected List getDefaultStrategies(BaseApplicationContext context, Class strategyInterface) throws BeanInstanceException {
+	public static List getDefaultStrategies(BaseApplicationContext context, Class strategyInterface) throws BeanInstanceException {
 		String key = strategyInterface.getName();
 		List strategies = null;
 		String value = defaultStrategies.getProperty(key);
@@ -1526,7 +1564,7 @@ public class DispatchServlet extends HttpServlet {
 	 * @return the fully configured strategy instance
 
 	 */
-	protected Object createDefaultStrategy(BaseApplicationContext context, Class clazz) throws BeanInstanceException {
+	protected static Object createDefaultStrategy(BaseApplicationContext context, Class clazz) throws BeanInstanceException {
 		
 		if(context != null)
 			return context.createBean(clazz);
@@ -1667,5 +1705,9 @@ public class DispatchServlet extends HttpServlet {
 	protected String getUsernameForRequest(HttpServletRequest request) {
 		Principal userPrincipal = request.getUserPrincipal();
 		return (userPrincipal != null ? userPrincipal.getName() : null);
+	}
+
+	public static String getUseCodeAsDefaultMessage() {
+		return useCodeAsDefaultMessage;
 	}
 }

@@ -12,6 +12,37 @@ todo
 3.国际化功能完善
 6.mvc和gwt结合可行性研究
 #######update function list since bbossgroups-3.5 begin###########
+o mvc国际化配置调整
+在web.xml文件的DispatchServlet中增加以下配置
+<init-param>
+			<param-name>messagesources</param-name>
+			<param-value>/WEB-INF/messages,/WEB-INF/messages1</param-value>
+		</init-param>
+		<init-param>
+			<param-name>useCodeAsDefaultMessage</param-name>
+			<param-value>true</param-value>
+		</init-param>
+messagesources用来指定国际化配置文件清单
+useCodeAsDefaultMessage用来指定如果没有在相应的配置文件中找到相应的code对应的配置项是否直接输出code，默认值为true
+为true时输出，false不输出	
+完整的配置如下：
+<servlet>
+		<servlet-name>mvcdispather</servlet-name>
+		<servlet-class>org.frameworkset.web.servlet.DispatchServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>/WEB-INF/bboss-*.xml,/WEB-INF/conf/bboss-*.xml</param-value>
+		</init-param>
+		<init-param>
+			<param-name>messagesources</param-name>
+			<param-value>/WEB-INF/messages,/WEB-INF/messages1</param-value>
+		</init-param>
+		<init-param>
+			<param-name>useCodeAsDefaultMessage</param-name>
+			<param-value>true</param-value>
+		</init-param>
+		<load-on-startup>0</load-on-startup>
+	</servlet>
 o mvc控制器方法响应插件MappingJacksonHttpMessageConverter支持jsonp数据响应（跨站跨域通讯协议）
 使用方法如下：
 服务器端：
