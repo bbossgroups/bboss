@@ -12,6 +12,8 @@ bboss-taglib<-cas server [frameworkset.jar]
 bboss-taglib<-portal [frameworkset.jar]
 bboss-taglib<-bboss-ws [frameworkset.jar]
 #######update function list since bbossgroups-3.5 begin###########
+o 修改index标签bug，非jquery 异步模式下tagnumber属性页面没有正确设置超链接
+<pg:index tagnumber="5" .../>
 o 改进beaninfo，list标签异常处理方式，将系统级异常输出到日志文件中，日志级别为info级
 o index标签增加usegoimage属性，为true时跳转到后面将出现go条片按钮，false不出现，默认不出现
 标签库：convert标签改进，支持各种类型的key，之前只支持String类型的key，现在支持数字类型的key

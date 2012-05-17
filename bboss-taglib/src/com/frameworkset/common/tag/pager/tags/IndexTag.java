@@ -1099,8 +1099,15 @@ public final class IndexTag extends PagerTagSupport {
                         }
                         else
                         {
-                        	a.setHref("#");
-                            a.setOnClick(getJqueryUrl(url,pagerContext.getContainerid(),pagerContext.getSelector()));
+                        	if(pagerContext.getContainerid() != null && !pagerContext.getContainerid().equals(""))
+                        	{
+	                        	a.setHref("#");
+	                            a.setOnClick(getJqueryUrl(url,pagerContext.getContainerid(),pagerContext.getSelector()));
+                        	}
+                        	else
+                        	{
+                        		a.setHref(url);
+                        	}
                         }
                         if(centerextend != null)
                             a.setExtend(centerextend);
