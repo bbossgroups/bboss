@@ -96,6 +96,7 @@ public class RequestContext {
 	private WebApplicationContext webApplicationContext;
 
 	private Locale locale;
+	private String localeName;
 
 	private Theme theme;
 
@@ -248,7 +249,7 @@ public class RequestContext {
 			// No LocaleResolver available -> try fallback.
 			this.locale = getFallbackLocale();
 		}
-
+		localeName = this.locale.toString();
 		// Determine default HTML escape setting from the "defaultHtmlEscape"
 		// context-param in web.xml, if any.
 		this.defaultHtmlEscape = WebUtils.getDefaultHtmlEscape(this.webApplicationContext.getServletContext());
@@ -875,6 +876,10 @@ public class RequestContext {
 			}
 		}
 		return default_;
+	}
+
+	public String getLocaleName() {
+		return localeName;
 	}
 
 }

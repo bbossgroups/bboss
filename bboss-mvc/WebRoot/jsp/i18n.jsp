@@ -1,16 +1,18 @@
+<%@page import="org.frameworkset.web.servlet.support.RequestContextUtils"%>
 <%@page import="org.frameworkset.web.servlet.i18n.SessionLocalResolver"%>
 <%@ page contentType="text/html; charset=GBK" language="java" %>
 <%@ taglib uri="/WEB-INF/pager-taglib.tld" prefix="pg"%>
 <%
-session.setAttribute(SessionLocalResolver.SESSION_LOCAL_KEY, java.util.Locale.US);
+session.setAttribute(SessionLocalResolver.SESSION_LOCAL_KEY, java.util.Locale.SIMPLIFIED_CHINESE);
 org.frameworkset.spi.support.MessageSource messageSource = org.frameworkset.web.servlet.support.WebApplicationContextUtils.getWebApplicationContext();
 //messageSource.getMessage("test.multifiles");
 
 //out.println("sss:" + messageSource.getMessage("test.multifiles"));
+out.println(RequestContextUtils.getRequestContextLocalName(pageContext));
 %>
 <html>
 <head>
-<title>主题和国际化</title>
+<title>主题和国际化,你选择的国家代码-<pg:locale/></title>
 		<link rel="stylesheet"
 			href="${pageContext.request.contextPath}/css/classic/tables.css"
 			type="text/css">

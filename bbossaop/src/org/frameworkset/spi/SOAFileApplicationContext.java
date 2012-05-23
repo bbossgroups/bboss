@@ -19,8 +19,6 @@ import java.net.URL;
 
 import org.frameworkset.util.ResourceUtils;
 
-import com.frameworkset.util.ValueObjectUtil;
-
 /**
  * <p>Title: SOAFileApplicationContext.java</p> 
  * <p>Description: </p>
@@ -37,6 +35,7 @@ public class SOAFileApplicationContext extends SOAApplicationContext{
 		
 		
 	}
+	
 	
 	
 	

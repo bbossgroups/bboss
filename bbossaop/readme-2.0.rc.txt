@@ -119,6 +119,7 @@ more details see my blog [http://blog.csdn.net/yin_bp]
 todo list:
 运行aop/ioc的最小依赖包整理
 #######update function list since bbossgroups-3.5 begin###########
+o 改进sql语句配置文件解析机制，去除sql语句两头的空格和回车换行符
 ------2012-05-08------------- 
 o bboss国际化功能完善
 1.增加国际化属性配置文件管理组件org.frameworkset.spi.support.HotDeployResourceBundleMessageSource

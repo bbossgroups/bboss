@@ -12,6 +12,9 @@ todo
 3.国际化功能完善
 6.mvc和gwt结合可行性研究
 #######update function list since bbossgroups-3.5 begin###########
+o 增加locale标签,用来输出国家代码，使用方法：
+<pg:locale/>
+输出：en_US,zh_CN等等
 o mvc国际化配置调整
 在web.xml文件的DispatchServlet中增加以下配置
 <init-param>

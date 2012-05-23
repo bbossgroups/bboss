@@ -136,10 +136,13 @@ public abstract class COMTree extends Tree {
              * 2009.07.02 注释，如果放入系统平台需要打开
              */
             if(BaseTag.ENABLE_TAG_SECURITY)
-            {
-                
-                accessControl = AccessControl.getInstance();
-                accessControl.checkAccess(request,response,out,false);
+            {   
+                accessControl = AccessControl.getAccessControl();
+                if(accessControl == null)
+                {
+                	accessControl = AccessControl.getInstance();
+                	accessControl.checkAccess(request,response,out,false);
+                }
             }
 
         }

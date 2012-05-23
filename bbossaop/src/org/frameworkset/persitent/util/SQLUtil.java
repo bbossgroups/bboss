@@ -56,16 +56,49 @@ public class SQLUtil {
 	
 	private static long refresh_interval = 5000;
 	private String defaultDBName = null;
+	private Map<String,String> sqls;
 	private static DaemonThread damon = null; 
-	
-	
-	
+	/**
+	 * 
+	 */
+	private void trimValues()
+	{
+		if(sqlcontext == null)
+			return;
+		sqls = null;
+		sqls = new HashMap<String,String>();
+		Set keys = this.sqlcontext.getPropertyKeys();
+		if(keys != null && keys.size() > 0)
+		{
+			Iterator<String> keys_it = keys.iterator();
+			while(keys_it.hasNext())
+			{
+				String key = keys_it.next();
+				Object o = this.sqlcontext.getObjectProperty(key);
+				if(o instanceof String)
+				{
+					String value = (String)o;
+					if(value != null)
+					{
+						value = value.trim();
+						sqls.put(key, value.trim());
+					}
+				}
+			}
+		}
+	}
 	void reinit()
 	{
+		if(sqls != null)
+		{
+			this.sqls.clear();
+			sqls = null;
+		}
 		String file = sqlcontext.getConfigfile();
 		sqlcontext.destroy(true);
 		sqlcontext = new SOAFileApplicationContext(file);		
 		defaultDBName = sqlcontext.getProperty("default.dbname");
+		trimValues();
 //		if(refresh_interval > 0 )
 //		{
 //			if(damon == null)
@@ -155,6 +188,7 @@ public class SQLUtil {
 	}
 	private SQLUtil(String sqlfile) {
 		sqlcontext = new SOAFileApplicationContext(sqlfile);		
+		this.trimValues();
 		defaultDBName = sqlcontext.getProperty("default.dbname");
 //		refresh_interval = ApplicationContext.getApplicationContext().getLongProperty("sqlfile.refresh_interval", -1);
 		
@@ -193,12 +227,15 @@ public class SQLUtil {
 		
 		String sql = null;
 		if(dbtype != null)
-			sql = sqlcontext.getProperty(sqlname + "-" + dbtype.toLowerCase());		
+//			sql = sqlcontext.getProperty(sqlname + "-" + dbtype.toLowerCase());		
+			sql = sqls.get(sqlname + "-" + dbtype.toLowerCase());
 		if (sql == null) {
-			sql = sqlcontext.getProperty(sqlname);
+//			sql = sqlcontext.getProperty(sqlname);
+			sql = sqls.get(sqlname);
 		}
 		if (sql == null) {
-			sql = sqlcontext.getProperty(sqlname + "-default");
+//			sql = sqlcontext.getProperty(sqlname + "-default");
+			sql = sqls.get(sqlname + "-default");
 		}		
 		return sql;
 
@@ -210,13 +247,16 @@ public class SQLUtil {
 		.getDBTYPE();
 		String sql = null;
 		if(dbtype != null)
-			sql = sqlcontext.getProperty(sqlname + "-" + dbtype.toLowerCase());
+//			sql = sqlcontext.getProperty(sqlname + "-" + dbtype.toLowerCase());
+			sql = sqls.get(sqlname + "-" + dbtype.toLowerCase());
 		
 		if (sql == null) {
-			sql = sqlcontext.getProperty(sqlname);
+//			sql = sqlcontext.getProperty(sqlname);
+			sql = sqls.get(sqlname);
 		}
 		if (sql == null) {
-			sql = sqlcontext.getProperty(sqlname + "-default");
+//			sql = sqlcontext.getProperty(sqlname + "-default");
+			sql = sqls.get(sqlname + "-default");
 		}
 		if(sql != null &&  variablevalues != null && variablevalues.size() > 0)
 		{

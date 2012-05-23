@@ -4980,6 +4980,14 @@
 			Retrieves the errors 
 		</description>
 	</tag>
+	 <tag>
+		<name>locale</name>
+		<tag-class>org.frameworkset.web.tag.LocaleTag</tag-class>
+		<body-content>JSP</body-content>
+		<description>
+			Retrieves the country locale code text .
+		</description>
+	</tag>	
 	<!-- 定义bboss mvc标签结束 -->
 	
 </taglib>

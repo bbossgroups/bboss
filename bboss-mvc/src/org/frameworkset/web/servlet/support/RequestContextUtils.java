@@ -20,6 +20,7 @@ import java.util.Locale;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.PageContext;
 
 import org.frameworkset.web.servlet.DispatchServlet;
 import org.frameworkset.web.servlet.LocaleResolver;
@@ -39,6 +40,11 @@ import org.frameworkset.web.ui.context.Theme;
  * @version 1.0
  */
 public abstract class RequestContextUtils {
+	/** {@link javax.servlet.jsp.PageContext} attribute for page-level
+	 * {@link RequestContext} instance.
+	 * */
+	public static final String REQUEST_CONTEXT_PAGE_ATTRIBUTE =
+			"org.frameworkset.web.servlet.tags.REQUEST_CONTEXT";
 	/**
 	 * Look for the WebApplicationContext associated with the DispatchServlet
 	 * that has initiated request processing.
@@ -149,6 +155,44 @@ public abstract class RequestContextUtils {
 		else {
 			return null;
 		}
+	}
+	
+	public static Locale getRequestContextLocal(PageContext pageContext)
+	{
+		RequestContext requestContext = (RequestContext) pageContext.getAttribute(REQUEST_CONTEXT_PAGE_ATTRIBUTE);
+		
+		if (requestContext == null) {
+			requestContext = new JspAwareRequestContext(pageContext);
+			pageContext.setAttribute(REQUEST_CONTEXT_PAGE_ATTRIBUTE, requestContext);
+		}
+		return requestContext.getLocale();
+		
+		
+	}
+	public static String getRequestContextLocalName(PageContext pageContext)
+	{
+		RequestContext requestContext = (RequestContext) pageContext.getAttribute(REQUEST_CONTEXT_PAGE_ATTRIBUTE);
+		
+		if (requestContext == null) {
+			requestContext = new JspAwareRequestContext(pageContext);
+			pageContext.setAttribute(REQUEST_CONTEXT_PAGE_ATTRIBUTE, requestContext);
+		}
+		return requestContext.getLocaleName();
+		
+		
+	}
+	
+	public static RequestContext getRequestContext(PageContext pageContext)
+	{
+		RequestContext requestContext = (RequestContext) pageContext.getAttribute(REQUEST_CONTEXT_PAGE_ATTRIBUTE);
+		
+		if (requestContext == null) {
+			requestContext = new JspAwareRequestContext(pageContext);
+			pageContext.setAttribute(REQUEST_CONTEXT_PAGE_ATTRIBUTE, requestContext);
+		}
+		return requestContext;
+		
+		
 	}
 
 }

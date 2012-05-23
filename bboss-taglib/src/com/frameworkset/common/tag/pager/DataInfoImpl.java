@@ -32,18 +32,16 @@
  *****************************************************************************/
 package com.frameworkset.common.tag.pager;
 
-import com.chinacreator.security.AccessControl;
-import com.frameworkset.common.poolman.Param;
-import com.frameworkset.common.poolman.SQLParams;
-import com.frameworkset.common.tag.BaseTag;
-import com.frameworkset.util.ListInfo;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
+import com.chinacreator.security.AccessControl;
+import com.frameworkset.common.poolman.SQLParams;
+import com.frameworkset.common.tag.BaseTag;
+import com.frameworkset.util.ListInfo;
 
 /**
  * @author biaoping.yin
@@ -96,8 +94,12 @@ public abstract class DataInfoImpl implements DataInfo
 		 */
 		if(BaseTag.ENABLE_TAG_SECURITY)
 		{
-                    accessControl = AccessControl.getInstance();
-                    accessControl.checkAccess(request,null,null,false);
+                    accessControl = AccessControl.getAccessControl();
+                    if(accessControl == null)
+                    {
+                    	accessControl = AccessControl.getInstance();
+                    	accessControl.checkAccess(request,null,null,false);
+                    }
 		}
 		listInfo = null;
 		this.listMode = listMode;
