@@ -147,9 +147,26 @@ public class DaemonThread extends java.lang.Thread
 //    	this.files.add(new FileBean(file,init));
 //    	 log.debug("Add file " + file.getAbsolutePath() + " to damon thread which moniting file modified.");
     }
-    
+    private boolean containFile(File file)
+    {
+    	if(this.files == null || files.size() <= 0 )
+    		return false;
+    	if(file == null)
+    		return false;
+    	for(FileBean f:files)
+    	{
+    		if(f.getFile() != null && f.getFile().getAbsolutePath().equals(file.getAbsolutePath()))
+    			return true;
+    	}
+    	return false;
+    }
     public void addFile(File file,ResourceInitial init)
     {   
+    	if(this.containFile(file))
+    	{
+    		log.debug(file.getAbsolutePath() + " has been monitored,ignore this operation.");
+    		return;
+    	}
     	this.files.add(new FileBean(file,init));
     	 log.debug("Add file " + file.getAbsolutePath() + " to damon thread which moniting file modified.");
     }

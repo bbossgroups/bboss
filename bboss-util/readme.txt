@@ -19,6 +19,7 @@ bboss-util<-kettle [frameworkset-util.jar]
 bboss-util<-portal [frameworkset-util.jar]
 bboss-util<-cas server [frameworkset-util.jar]
 #######update function list since bbossgroups-3.5 begin###########
+o 修改DameonThread组件，添加监控文件时，判断文件是否已经被监控，如果已经监控则忽略
 o com.framworkset.util.StringUtil增加下载Resource接口对应的资源的方法
 public static void sendFile_(HttpServletRequest request, HttpServletResponse response, Resource in) throws Exception 
 目前支持Resource接口的以下实现：
