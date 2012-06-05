@@ -18,8 +18,6 @@ package org.frameworkset.spi.support;
 
 import java.util.Locale;
 
-import org.frameworkset.util.Assert;
-
 
 
 /**
@@ -33,24 +31,23 @@ import org.frameworkset.util.Assert;
  */
 public class SimpleLocaleContext implements LocaleContext {
 
-	private final Locale locale;
-
-
-	/**
-	 * Create a new SimpleLocaleContext that exposes the specified Locale.
-	 * Every <code>getLocale()</code> will return this Locale.
-	 * @param locale the Locale to expose
-	 */
-	public SimpleLocaleContext(Locale locale) {
-		Assert.notNull(locale, "Locale must not be null");
+	private Locale locale;
+	public SimpleLocaleContext(Locale locale, String localeName) {
+		super();
 		this.locale = locale;
+		this.localeName = localeName;
 	}
-
+	
+	public SimpleLocaleContext(Locale locale) {
+		super();
+		this.locale = locale;
+		this.localeName = locale.toString();
+	}
+	private String localeName;
 	public Locale getLocale() {
-		return this.locale;
+		return locale;
 	}
-
-	public String toString() {
-		return this.locale.toString();
+	public String getLocaleName() {
+		return localeName;
 	}
 }

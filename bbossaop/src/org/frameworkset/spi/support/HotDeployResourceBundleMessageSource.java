@@ -88,7 +88,7 @@ public class HotDeployResourceBundleMessageSource extends AbstractMessageSource
 
 	private PropertiesPersister propertiesPersister = new DefaultPropertiesPersister();
 
-	private ResourceLoader resourceLoader = new DefaultResourceLoader();
+	private ResourceLoader resourceLoader = new HotResourceLoader();
 
 	/** Cache to hold filename lists per Locale */
 	private final Map cachedFilenames = new HashMap();
@@ -531,10 +531,6 @@ public class HotDeployResourceBundleMessageSource extends AbstractMessageSource
 			// Empty holder representing "not valid".
 			propHolder = ERROR_propHolder;
 		}
-		
-
-		
-
 	
 		this.cachedProperties.put(basename, propHolder);
 		return propHolder;
@@ -558,13 +554,26 @@ public class HotDeployResourceBundleMessageSource extends AbstractMessageSource
 		{
 			try {
 				Properties props = loadProperties(resource, name);
-				propHolder = new PropertiesHolder(props,resource.getFile(),filename,name);
+				File f = null;
+				
+				try
+				{
+					f = resource.getFile();
+				
+					
+				}
+				catch(Throwable e)
+				{
+					logger.warn(
+							new StringBuffer().append("Get properties file from ").append( resource.getClass().getCanonicalName() ).append( " failed:"+e.getMessage()).toString());
+				}
+				propHolder = new PropertiesHolder(props,f,filename,name);
 			} catch (IOException ex) {
 				{
 					try {
 						logger.warn(
-								"Could not parse properties file ["
-										+ resource.getFile().getCanonicalPath() + "]", ex);
+								new StringBuffer().append("Could not parse properties file [").append(
+										resource.getFile().getCanonicalPath() ).append( "]").toString(), ex);
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -880,5 +889,16 @@ public class HotDeployResourceBundleMessageSource extends AbstractMessageSource
 
 	public void setChangemonitor(boolean changemonitor) {
 		this.changemonitor = changemonitor;
+	}
+	
+	/**
+	 * 注销国际化资源
+	 */
+	public void destroy()
+	{
+		this.cachedFilenames.clear();
+		this.cachedMergedProperties.clear();
+		this.cachedProperties.clear();
+		
 	}
 }

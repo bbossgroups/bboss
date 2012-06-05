@@ -39,5 +39,19 @@ public class TestHotDeployResourceBundleMessageSource {
 		System.out.println(messagesource.getMessage("probe.jsp.generic.abbreviations",  Locale.US));
 		System.out.println(messagesource.getMessage("probe.jsp.generic.abbreviations",  Locale.US));
 	}
+	@Test
+	public void test()
+	{
+		HotDeployResourceBundleMessageSource messageSource = (HotDeployResourceBundleMessageSource)MessageSourceUtil.
+				getMessageSource("org/frameworkset/spi/support/messages");
+		System.out.println(messageSource.getMessage("sany.pdp.module.personcenter",  Locale.US));
+		try {
+			Thread.currentThread().sleep(10000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println(messageSource.getMessage("sany.pdp.module.personcenter",  Locale.US));
+	}
 
 }

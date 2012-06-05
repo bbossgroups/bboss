@@ -33,5 +33,6 @@ public interface LocaleContext {
 	 * depending on the implementation strategy.
 	 */
 	Locale getLocale();
+	public String getLocaleName() ;
 
 }
