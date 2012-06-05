@@ -46,6 +46,7 @@ import org.frameworkset.spi.assemble.ProList;
 import org.frameworkset.spi.io.PropertiesLoaderUtils;
 import org.frameworkset.spi.support.LocaleContext;
 import org.frameworkset.spi.support.LocaleContextHolder;
+import org.frameworkset.spi.support.SimpleLocaleContext;
 import org.frameworkset.util.ClassUtils;
 import org.frameworkset.util.JdkVersion;
 import org.frameworkset.util.beans.BeansException;
@@ -747,7 +748,8 @@ public class DispatchServlet extends HttpServlet {
 		if (logger.isTraceEnabled()) {
 			logger.trace("Bound request context to thread: " + request);
 		}
-		
+		PageContext pageContext = null;
+		JspFactory fac= null;
 		try {
 			ModelAndView mv = null;
 			boolean errorView = false;
@@ -780,8 +782,8 @@ public class DispatchServlet extends HttpServlet {
 
 				// Actually invoke the handler.
 				HandlerAdapter ha = getHandlerAdapter(mappedHandler.getHandler());
-				JspFactory fac=JspFactory.getDefaultFactory();
-				PageContext pageContext=fac.getPageContext(this, request,response, null, false, JspWriter.DEFAULT_BUFFER <= 0?8192:JspWriter.DEFAULT_BUFFER, true); 
+				fac=JspFactory.getDefaultFactory();
+				pageContext=fac.getPageContext(this, request,response, null, false, JspWriter.DEFAULT_BUFFER <= 0?8192:JspWriter.DEFAULT_BUFFER, true); 
 //				if(this.messageConverters != null && messageConverters.length > 0)
 //				{
 //					try
@@ -873,6 +875,10 @@ public class DispatchServlet extends HttpServlet {
 			requestAttributes.requestCompleted();
 			if (logger.isTraceEnabled()) {
 				logger.trace("Cleared thread-bound request context: " + request);
+			}
+			if(fac != null && pageContext != null)
+			{
+				fac.releasePageContext(pageContext);
 			}
 		}
 	}
@@ -1022,14 +1028,8 @@ public class DispatchServlet extends HttpServlet {
 	 * @return the corresponding LocaleContext
 	 */
 	protected LocaleContext buildLocaleContext(final HttpServletRequest request) {
-		return new LocaleContext() {
-			public Locale getLocale() {
-				return localeResolver.resolveLocale(request);
-			}
-			public String toString() {
-				return getLocale().toString();
-			}
-		};
+		Locale locale = localeResolver.resolveLocale(request);
+		return new SimpleLocaleContext(locale);
 	}
 	/**
 	 * Return this servlet's WebApplicationContext.

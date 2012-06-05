@@ -28,6 +28,7 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.jstl.core.Config;
 
 import org.apache.log4j.Logger;
+import org.frameworkset.spi.support.LocaleContext;
 import org.frameworkset.spi.support.MessageSource;
 import org.frameworkset.spi.support.MessageSourceResolvable;
 import org.frameworkset.spi.support.NoSuchMessageException;
@@ -36,9 +37,7 @@ import org.frameworkset.spi.support.validate.EscapedErrors;
 import org.frameworkset.util.Assert;
 import org.frameworkset.util.ClassUtils;
 import org.frameworkset.util.annotations.ValueConstants;
-import org.frameworkset.web.servlet.DispatchServlet;
 import org.frameworkset.web.servlet.HandlerMapping;
-import org.frameworkset.web.servlet.LocaleResolver;
 import org.frameworkset.web.servlet.context.WebApplicationContext;
 import org.frameworkset.web.servlet.theme.AbstractThemeResolver;
 import org.frameworkset.web.servlet.view.InternalResourceView;
@@ -236,20 +235,25 @@ public class RequestContext {
 		}
 
 		// Determine locale to use for this RequestContext.
-		LocaleResolver localeResolver = RequestContextUtils.getLocaleResolver(request);
-		if(localeResolver == null)
-			
-				localeResolver = DispatchServlet.getLocaleResolver(webApplicationContext);
-			
-		if (localeResolver != null) {
-			// Try LocaleResolver (we're within a DispatcherServlet request).
-			this.locale = localeResolver.resolveLocale(request);
-		}
-		else {
-			// No LocaleResolver available -> try fallback.
-			this.locale = getFallbackLocale();
-		}
-		localeName = this.locale.toString();
+//		LocaleResolver localeResolver = RequestContextUtils.getLocaleResolver(request);
+//		if(localeResolver == null)
+//			
+//				localeResolver = DispatchServlet.getLocaleResolver(webApplicationContext);
+//			
+//		if (localeResolver != null) {
+//			// Try LocaleResolver (we're within a DispatcherServlet request).
+//			this.locale = localeResolver.resolveLocale(request);
+//		}
+//		else {
+//			// No LocaleResolver available -> try fallback.
+//			this.locale = getFallbackLocale();
+//		}
+//		localeName = this.locale.toString();
+		LocaleContext lc = RequestContextUtils.getLocalContext(request);
+		this.locale = lc.getLocale();
+		this.localeName = lc.getLocaleName();
+		
+		
 		// Determine default HTML escape setting from the "defaultHtmlEscape"
 		// context-param in web.xml, if any.
 		this.defaultHtmlEscape = WebUtils.getDefaultHtmlEscape(this.webApplicationContext.getServletContext());

@@ -29,9 +29,11 @@ import org.frameworkset.spi.assemble.ServiceProviderManager;
 import org.frameworkset.spi.assemble.callback.AssembleCallback;
 import org.frameworkset.spi.assemble.callback.WebDocbaseAssembleCallback;
 import org.frameworkset.spi.support.HotDeployResourceBundleMessageSource;
+import org.frameworkset.spi.support.MessageSource;
 import org.frameworkset.util.io.Resource;
 import org.frameworkset.util.io.ResourcePatternResolver;
 import org.frameworkset.web.servlet.DispatchServlet;
+import org.frameworkset.web.servlet.i18n.WebMessageSourceUtil;
 import org.frameworkset.web.servlet.support.ServletContextResource;
 import org.frameworkset.web.servlet.support.ServletContextResourceLoader;
 import org.frameworkset.web.servlet.support.WebApplicationContextUtils;
@@ -271,22 +273,16 @@ public class WebApplicationContext extends DefaultApplicationContext implements 
 	 */
 	protected void initMessageSource() {
 
-		String messageClass = DispatchServlet.getDefaultStrategies().getProperty("messageSource","org.frameworkset.spi.support.HotDeployResourceBundleMessageSource");
-//		String messageSource_basename = DispatchServlet.getDefaultStrategies().getProperty("messageSource.basename","/WEB-INF/messages");
+
 		String messageSource_basename = DispatchServlet.getMessagesources();
 		
-//		String 	messageSource_cacheSeconds = DispatchServlet.getDefaultStrategies().getProperty("messageSource.cacheSeconds","-1");
 		String 	messageSource_useCodeAsDefaultMessage = DispatchServlet.getUseCodeAsDefaultMessage();
 		
-		Class  message = null;
 		try
 		{
-			message = Class.forName(messageClass);
-			HotDeployResourceBundleMessageSource ms = (HotDeployResourceBundleMessageSource) message.newInstance();
-			ms.setBasename(messageSource_basename);
-			ms.setResourceLoader(new ServletContextResourceLoader(this.servletContext));
-//			ms.setCacheSeconds(Integer.parseInt(messageSource_cacheSeconds));
-			ms.setUseCodeAsDefaultMessage(Boolean.parseBoolean(messageSource_useCodeAsDefaultMessage));
+
+			MessageSource ms = WebMessageSourceUtil.getMessageSource(messageSource_basename, servletContext,Boolean.parseBoolean(messageSource_useCodeAsDefaultMessage)) ;
+					
 			this.initBean(ms, "org.frameworkset.spi.support.HotDeployResourceBundleMessageSource");
 			
 			this.messageSource = ms;
@@ -296,45 +292,83 @@ public class WebApplicationContext extends DefaultApplicationContext implements 
 		}
 		catch(Exception e)
 		{
-			logger.error("Using MessageSource [" + messageClass + "] failed:",e);
-			try {
-				message = Class.forName("org.frameworkset.spi.support.HotDeployResourceBundleMessageSource");
-				HotDeployResourceBundleMessageSource ms = (HotDeployResourceBundleMessageSource) message.newInstance();
-				ms.setBasename(messageSource_basename);
-				ms.setResourceLoader(new ServletContextResourceLoader(this.servletContext));
-//				ms.setCacheSeconds(Integer.parseInt(messageSource_cacheSeconds));
-				ms.setUseCodeAsDefaultMessage(Boolean.parseBoolean(messageSource_useCodeAsDefaultMessage));
-				this.initBean(ms, "org.frameworkset.spi.support.HotDeployResourceBundleMessageSource");
-				
-				this.messageSource = ms;
-				if (logger.isDebugEnabled()) {
-					logger.debug("Using MessageSource [" + this.messageSource + "]");
-				}
-			} catch (Exception e1) {
-//				if (logger.isDebugEnabled()) {
-					logger.error("Using MessageSource [" + messageClass + "] failed:",e1);
-//				}
-			}
+			logger.error("Using MessageSource [org.frameworkset.spi.support.HotDeployResourceBundleMessageSource] failed:",e);
+			
 		}
-		
-		 
-		
-//		else {
-//			// Use empty MessageSource to be able to accept getMessage calls.
-//			DelegatingMessageSource dms = new DelegatingMessageSource();
-//			dms.setParentMessageSource(getInternalParentMessageSource());
-//			this.messageSource = dms;
-//			// beanFactory.registerSingleton(MESSAGE_SOURCE_BEAN_NAME,
-//			// this.messageSource);
-//			if (log.isDebugEnabled()) {
-//				log.debug("Unable to locate MessageSource with name '"
-//						+ MESSAGE_SOURCE_BEAN_NAME + "': using default ["
-//						+ this.messageSource + "]");
-//			}
-//		}
 		
 		
 	}
+	
+//	/**
+//	 * Initialize the MessageSource. Use parent's if none defined in this
+//	 * context.
+//	 */
+//	protected void initMessageSource() {
+//
+//		String messageClass = DispatchServlet.getDefaultStrategies().getProperty("messageSource","org.frameworkset.spi.support.HotDeployResourceBundleMessageSource");
+////		String messageSource_basename = DispatchServlet.getDefaultStrategies().getProperty("messageSource.basename","/WEB-INF/messages");
+//		String messageSource_basename = DispatchServlet.getMessagesources();
+//		
+////		String 	messageSource_cacheSeconds = DispatchServlet.getDefaultStrategies().getProperty("messageSource.cacheSeconds","-1");
+//		String 	messageSource_useCodeAsDefaultMessage = DispatchServlet.getUseCodeAsDefaultMessage();
+//		
+//		Class  message = null;
+//		try
+//		{
+//			message = Class.forName(messageClass);
+//			HotDeployResourceBundleMessageSource ms = (HotDeployResourceBundleMessageSource) message.newInstance();
+//			ms.setBasename(messageSource_basename);
+//			ms.setResourceLoader(new ServletContextResourceLoader(this.servletContext));
+////			ms.setCacheSeconds(Integer.parseInt(messageSource_cacheSeconds));
+//			ms.setUseCodeAsDefaultMessage(Boolean.parseBoolean(messageSource_useCodeAsDefaultMessage));
+//			this.initBean(ms, "org.frameworkset.spi.support.HotDeployResourceBundleMessageSource");
+//			
+//			this.messageSource = ms;
+//			if (logger.isDebugEnabled()) {
+//				logger.debug("Using MessageSource [" + this.messageSource + "]");
+//			}
+//		}
+//		catch(Exception e)
+//		{
+//			logger.error("Using MessageSource [" + messageClass + "] failed:",e);
+//			try {
+//				message = Class.forName("org.frameworkset.spi.support.HotDeployResourceBundleMessageSource");
+//				HotDeployResourceBundleMessageSource ms = (HotDeployResourceBundleMessageSource) message.newInstance();
+//				ms.setBasename(messageSource_basename);
+//				ms.setResourceLoader(new ServletContextResourceLoader(this.servletContext));
+////				ms.setCacheSeconds(Integer.parseInt(messageSource_cacheSeconds));
+//				ms.setUseCodeAsDefaultMessage(Boolean.parseBoolean(messageSource_useCodeAsDefaultMessage));
+//				this.initBean(ms, "org.frameworkset.spi.support.HotDeployResourceBundleMessageSource");
+//				
+//				this.messageSource = ms;
+//				if (logger.isDebugEnabled()) {
+//					logger.debug("Using MessageSource [" + this.messageSource + "]");
+//				}
+//			} catch (Exception e1) {
+////				if (logger.isDebugEnabled()) {
+//					logger.error("Using MessageSource [" + messageClass + "] failed:",e1);
+////				}
+//			}
+//		}
+//		
+//		 
+//		
+////		else {
+////			// Use empty MessageSource to be able to accept getMessage calls.
+////			DelegatingMessageSource dms = new DelegatingMessageSource();
+////			dms.setParentMessageSource(getInternalParentMessageSource());
+////			this.messageSource = dms;
+////			// beanFactory.registerSingleton(MESSAGE_SOURCE_BEAN_NAME,
+////			// this.messageSource);
+////			if (log.isDebugEnabled()) {
+////				log.debug("Unable to locate MessageSource with name '"
+////						+ MESSAGE_SOURCE_BEAN_NAME + "': using default ["
+////						+ this.messageSource + "]");
+////			}
+////		}
+//		
+//		
+//	}
 	
 	public Object createBean(Class clazz) throws BeanInstanceException{
 		return createBean(clazz, null);

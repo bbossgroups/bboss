@@ -22,6 +22,8 @@ import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
 
+import org.frameworkset.spi.support.LocaleContext;
+import org.frameworkset.spi.support.SimpleLocaleContext;
 import org.frameworkset.web.servlet.DispatchServlet;
 import org.frameworkset.web.servlet.LocaleResolver;
 import org.frameworkset.web.servlet.ThemeResolver;
@@ -45,6 +47,11 @@ public abstract class RequestContextUtils {
 	 * */
 	public static final String REQUEST_CONTEXT_PAGE_ATTRIBUTE =
 			"org.frameworkset.web.servlet.tags.REQUEST_CONTEXT";
+	
+	public static final String LOCALE_CONTEXT_REQUEST_ATTRIBUTE =
+			"org.frameworkset.web.servlet.tags.LocalContext";
+	
+	
 	/**
 	 * Look for the WebApplicationContext associated with the DispatchServlet
 	 * that has initiated request processing.
@@ -95,7 +102,14 @@ public abstract class RequestContextUtils {
 	 * @return the current LocaleResolver, or <code>null</code> if not found
 	 */
 	public static LocaleResolver getLocaleResolver(HttpServletRequest request) {
-		return (LocaleResolver) request.getAttribute(DispatchServlet.LOCALE_RESOLVER_ATTRIBUTE);
+		LocaleResolver localeResolver = (LocaleResolver) request.getAttribute(DispatchServlet.LOCALE_RESOLVER_ATTRIBUTE);
+		if(localeResolver == null)	
+		{
+			localeResolver = DispatchServlet.getLocaleResolver(DispatchServlet.webApplicationContext);
+			request.setAttribute(DispatchServlet.LOCALE_RESOLVER_ATTRIBUTE,localeResolver);
+		}
+			
+		return localeResolver;
 	}
 
 	/**
@@ -194,5 +208,44 @@ public abstract class RequestContextUtils {
 		
 		
 	}
+	
+	public static Locale getRequestContextLocal(HttpServletRequest request)
+	{
+		LocaleContext lc = getLocalContext( request);
+		return lc.getLocale();
+		
+		
+	}
+	public static LocaleContext getLocalContext(HttpServletRequest request)
+	{
+		LocaleContext lc = (LocaleContext)request.getAttribute(RequestContextUtils.LOCALE_CONTEXT_REQUEST_ATTRIBUTE);
+		if(lc == null)
+		{
+			LocaleResolver localeResolver = RequestContextUtils.getLocaleResolver(request);
+			Locale locale = null;
+			if (localeResolver != null) {
+				// Try LocaleResolver (we're within a DispatcherServlet request).
+				locale = localeResolver.resolveLocale(request);
+			}
+			else {
+				// No LocaleResolver available -> try fallback.
+				locale =  request.getLocale();
+			}
+			String localeName = locale.toString();
+			lc = new SimpleLocaleContext(locale,localeName);
+			request.setAttribute(RequestContextUtils.LOCALE_CONTEXT_REQUEST_ATTRIBUTE,lc);
+		}
+		return lc;
+		
+	}
+	public static String getRequestContextLocalName(HttpServletRequest request)
+	{
+		LocaleContext lc = getLocalContext( request);
+		return lc.getLocaleName();
+		
+		
+	}
+	
+
 
 }

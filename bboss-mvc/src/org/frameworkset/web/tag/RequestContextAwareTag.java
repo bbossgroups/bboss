@@ -17,6 +17,7 @@ package org.frameworkset.web.tag;
 
 import java.io.IOException;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspTagException;
 import javax.servlet.jsp.tagext.TagSupport;
@@ -24,7 +25,6 @@ import javax.servlet.jsp.tagext.TryCatchFinally;
 
 import org.apache.log4j.Logger;
 import org.frameworkset.spi.support.MessageSource;
-import org.frameworkset.web.servlet.support.JspAwareRequestContext;
 import org.frameworkset.web.servlet.support.RequestContext;
 import org.frameworkset.web.servlet.support.RequestContextUtils;
 
