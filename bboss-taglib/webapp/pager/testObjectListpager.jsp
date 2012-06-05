@@ -77,10 +77,6 @@
 					</pg:list>
 					<tr class="labeltable_middle_tr_01">
 						<td colspan=11 ><div class="Data_List_Table_Bottom"> 
-							共
-							<pg:rowcount />
-							条记录
-							每页显示15条
 							<pg:index />					</div>  </td>
 					</tr>
 					<input id="queryString" name="queryString" value="<pg:querystring/>" type="hidden">

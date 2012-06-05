@@ -33,6 +33,7 @@
 
 package com.frameworkset.common.tag.pager.tags;
 
+import java.util.Locale;
 import java.util.Stack;
 import java.util.UUID;
 
@@ -46,8 +47,10 @@ import org.apache.ecs.html.Option;
 import org.apache.ecs.html.Script;
 import org.apache.ecs.html.Select;
 import org.frameworkset.spi.BaseSPIManager;
+import org.frameworkset.web.servlet.support.RequestContextUtils;
 
 import com.chinacreator.cms.driver.jsp.CMSServletRequest;
+import com.frameworkset.common.tag.TagUtil;
 import com.frameworkset.common.tag.pager.config.PageConfig;
 import com.frameworkset.util.StringUtil;
 
@@ -59,7 +62,7 @@ import com.frameworkset.util.StringUtil;
  * @version 1.0
  */
 public final class IndexTag extends PagerTagSupport {
-
+	
 	/**
 	 * 扩展属性，导航按钮是否使用图片
 	 */
@@ -350,7 +353,10 @@ public final class IndexTag extends PagerTagSupport {
             if(!pagerContext.isWapflag())
 			    ret.append(this.getScript());
 		}
-
+		Locale locale = RequestContextUtils.getLocale(request);
+		String total_label = TagUtil.tagmessageSource.getMessage("bboss.tag.pager.total",locale) ;
+		String total_page_label = TagUtil.tagmessageSource.getMessage("bboss.tag.pager.total.page",locale) ;
+		String total_records_label = TagUtil.tagmessageSource.getMessage("bboss.tag.pager.total.records",locale) ;
 //		ret.append(
 //			"<table width=\"100%\" border=\"0\" align=\"center\" cellpadding=\"0\" cellspacing=\"1\">");
 		//ret.append("<tr class='TableHead1'>");
@@ -365,7 +371,8 @@ public final class IndexTag extends PagerTagSupport {
         if( switchcase[8] == 0)
         {
         	if(enable_page_total_size)
-        		ret.append("共<span class='Total'>").append(!pagerContext.ListMode()?pagerContext.getItemCount():pagerContext.getDataSize()).append("</span>条记录  ");
+        		ret.append(total_label)//共
+        		.append("<span class='Total'>").append(!pagerContext.ListMode()?pagerContext.getItemCount():pagerContext.getDataSize()).append("</span>").append(total_records_label);//条记录  
         }
 
 		//ret.append("<div align=\"right\">");
@@ -380,12 +387,10 @@ public final class IndexTag extends PagerTagSupport {
 		if (switchcase[1] == 0) {
             if(!pagerContext.isWapflag())
                 ret.append(
-                		pagerContext.getPageCount()
-                        + " 页");
+                		pagerContext.getPageCount()).append(total_page_label);//" 页"
             else
                 ret.append(
-                		pagerContext.getPageCount()
-                        + " 页");
+                		pagerContext.getPageCount()).append(total_page_label);//" 页"
 
 		}
 		
@@ -496,7 +501,12 @@ public final class IndexTag extends PagerTagSupport {
 			}
 			select.addElement(option);
 		}
-		return " <span class='pages1'>每页显示" + select.toString() + "条</span>";
+		Locale locale = RequestContextUtils.getLocale(request);
+		String everypage_label = TagUtil.tagmessageSource.getMessage("bboss.tag.pager.everypageshow",locale) ;
+		String everypagerecords_label = TagUtil.tagmessageSource.getMessage("bboss.tag.pager.everypageshow.records",locale) ;
+		return new StringBuffer(" <span class='pages1'>").append(everypage_label)//每页显示
+		.append(select.toString()).append(everypagerecords_label)//条
+		.append("</span>").toString();
 		
 	}
 	
@@ -596,17 +606,20 @@ public final class IndexTag extends PagerTagSupport {
     
 	private String getFirstContent() {
 		String firstUrl = pagerContext.getPageUrl(getJumpPage(PagerConst.FIRST_PAGE));
-		
+		Locale locale = RequestContextUtils.getLocale(request);
+		String firstpage_label = TagUtil.tagmessageSource.getMessage("bboss.tag.pager.firstpage",locale) ;
 		if (firstUrl.equals(""))
 		{
 		    if(!this.useimage)
-		        return "<a href='#'>首 页</a>";
+		        return new StringBuffer("<a href='#'>")
+		    			.append(firstpage_label)//首 页
+		    			.append("</a>").toString();
 		    else
 		    {
 		        IMG image = new IMG();
 		        
 		        image.setSrc(buildPath(this.getImagedir(), first_image));
-		        image.setAlt("首 页");
+		        image.setAlt(firstpage_label);//首 页
 		        if(this.imageextend != null)
 		        {
 		            
@@ -632,7 +645,7 @@ public final class IndexTag extends PagerTagSupport {
 		if(!this.useimage)
 		{
 		    A a = new A();
-		    a.setTagText("首 页");
+		    a.setTagText(firstpage_label);//首 页;
 		    if(pagerContext.getContainerid() == null || pagerContext.getContainerid().equals(""))
 		    {
 		        a.setHref(customFirstUrl);
@@ -650,7 +663,7 @@ public final class IndexTag extends PagerTagSupport {
 		    IMG image = new IMG();
             
             image.setSrc(buildPath(this.getImagedir(), first_image));
-            image.setAlt("首 页");
+            image.setAlt(firstpage_label);//首 页
             if(this.imageextend != null)
             {                
                 image.setExtend(this.imageextend);
@@ -794,18 +807,24 @@ public final class IndexTag extends PagerTagSupport {
     
     
 	private String getPrevContent() {
-		StringBuffer ret = new StringBuffer();
+		
+		Locale locale = RequestContextUtils.getLocale(request);
+		String prepage_label = TagUtil.tagmessageSource.getMessage("bboss.tag.pager.prepage",locale) ;
 		if (!pagerContext.hasPrevPage())
 		{
 //			return "　上一页";
 			if(!this.useimage)
-	            return "<a href='#'>上一页</a>";
+			{
+	            return new StringBuffer("<a href='#'>")
+				.append(prepage_label)//上一页
+				.append("</a>").toString();
+			}
 	        else
 	        {
 	            IMG image = new IMG();
 	            
 	            image.setSrc(buildPath(this.getImagedir(), this.pre_image));
-	            image.setAlt("上一页");
+	            image.setAlt(prepage_label);//上一页
 	            if(this.imageextend != null)
 	            {
 	                
@@ -833,7 +852,7 @@ public final class IndexTag extends PagerTagSupport {
 		if(!this.useimage)
         {
 		    A a = new A();
-            a.setTagText("上一页");
+            a.setTagText(prepage_label);//上一页
             if(pagerContext.getContainerid() == null || pagerContext.getContainerid().equals(""))
             {
                 a.setHref(customPrevutl);
@@ -852,7 +871,7 @@ public final class IndexTag extends PagerTagSupport {
             IMG image = new IMG();
             
             image.setSrc(buildPath(this.getImagedir(), pre_image));
-            image.setAlt("上一页");
+            image.setAlt(prepage_label);//上一页
             if(this.imageextend != null)
             {                
                 image.setExtend(this.imageextend);
@@ -934,6 +953,8 @@ public final class IndexTag extends PagerTagSupport {
 	 */
 
 	private String getNextContent() {
+		Locale locale = RequestContextUtils.getLocale(request);
+		String nextpage_label = TagUtil.tagmessageSource.getMessage("bboss.tag.pager.nextpage",locale) ;
 		if (pagerContext.hasNextPage()) {
 			long offset = pagerContext.getNextOffset();
 			String sortKey = pagerContext.getSortKey();
@@ -955,7 +976,7 @@ public final class IndexTag extends PagerTagSupport {
 			if(!this.useimage)
 	        {
 			    A a = new A();
-	            a.setTagText("下一页");
+	            a.setTagText(nextpage_label);//"下一页"
 	            if(pagerContext.getContainerid() == null || pagerContext.getContainerid().equals(""))
 	            {
 	                a.setHref(customNextUrl);
@@ -972,7 +993,7 @@ public final class IndexTag extends PagerTagSupport {
 	            IMG image = new IMG();
 	            
 	            image.setSrc(buildPath(this.getImagedir(), this.next_image));
-	            image.setAlt("下一页");
+	            image.setAlt(nextpage_label);//"下一页"
 	            if(this.imageextend != null)
 	            {                
 	                image.setExtend(this.imageextend);
@@ -995,13 +1016,13 @@ public final class IndexTag extends PagerTagSupport {
 			
 		}
 		if(!this.useimage)
-            return "<a href='#'>下一页</a>";
+            return new StringBuffer("<a href='#'>").append(nextpage_label)//"下一页"
+            		.append("</a>").toString();
         else
         {
-            IMG image = new IMG();
-            
+            IMG image = new IMG();            
             image.setSrc(buildPath(this.getImagedir(), next_image));
-            image.setAlt("下一页");
+            image.setAlt(nextpage_label);//"下一页"
             if(this.imageextend != null)
             {
                 
@@ -1101,13 +1122,14 @@ public final class IndexTag extends PagerTagSupport {
                         {
                         	if(pagerContext.getContainerid() != null && !pagerContext.getContainerid().equals(""))
                         	{
-	                        	a.setHref("#");
-	                            a.setOnClick(getJqueryUrl(url,pagerContext.getContainerid(),pagerContext.getSelector()));
+                        		a.setHref("#");
+                        		a.setOnClick(getJqueryUrl(url,pagerContext.getContainerid(),pagerContext.getSelector()));
                         	}
                         	else
                         	{
                         		a.setHref(url);
                         	}
+                            	
                         }
                         if(centerextend != null)
                             a.setExtend(centerextend);
@@ -1137,19 +1159,22 @@ public final class IndexTag extends PagerTagSupport {
 	 * @return String
 	 */
 	private String getLastContent() {
-
+		 String lastpage_label = TagUtil.tagmessageSource.getMessage("bboss.tag.pager.lastpage",RequestContextUtils.getLocale(request)) ;
+	    
 		String lastUrl = pagerContext.getPageUrl(getJumpPage(PagerConst.LAST_PAGE));
 		if (lastUrl.equals(""))
 		{
 //			return "　尾 页";
 			if(!this.useimage)
-                return "<a href='#'>尾 页</a>";
+                return new StringBuffer().append(" <a href='#'>")
+                		.append(lastpage_label)//尾页
+                		.append("</a>").toString();
             else
             {
                 IMG image = new IMG();
                 
                 image.setSrc(buildPath(this.getImagedir(), last_image));
-                image.setAlt("尾 页");
+                image.setAlt(lastpage_label);//尾页
                 if(this.imageextend != null)
                 {
                     
@@ -1177,7 +1202,7 @@ public final class IndexTag extends PagerTagSupport {
         {
 		    
 		    A a = new A();
-            a.setTagText("尾 页");
+            a.setTagText(lastpage_label);//尾页
             if(pagerContext.getContainerid() == null || pagerContext.getContainerid().equals(""))
             {
                 a.setHref(customLastUrl);
@@ -1195,7 +1220,7 @@ public final class IndexTag extends PagerTagSupport {
             IMG image = new IMG();
             
             image.setSrc(buildPath(this.getImagedir(), this.last_image));
-            image.setAlt("尾 页");
+            image.setAlt(lastpage_label);//尾页
             if(this.imageextend != null)
             {                
                 image.setExtend(this.imageextend);
@@ -1572,6 +1597,10 @@ public final class IndexTag extends PagerTagSupport {
         //System.out.println("pagerContext.getPageCount():"+pagerContext.getPageCount());
         String uuid = UUID.randomUUID().toString();
         String gotopageid = uuid+".go";
+        Locale locale = RequestContextUtils.getLocale(request);
+        String gotopage_label = TagUtil.tagmessageSource.getMessage("bboss.tag.pager.gotopage",locale) ;
+        String page_label = TagUtil.tagmessageSource.getMessage("bboss.tag.pager.page",locale) ;
+        String gopageerror_msg = TagUtil.tagmessageSource.getMessage("bboss.tag.pager.gopageerror_msg",locale) ;
         if (pages > 1) {
             
            
@@ -1758,17 +1787,17 @@ public final class IndexTag extends PagerTagSupport {
             go.setID(gotopageid);            
             go.setOnKeyDown("keydowngo(event,'"+ pagerjumpto + "')");
             
-            
+           
                   
             
             	if(this.usegoimage){
-            		ret
-                    .append(" 跳转到"+
-                        go.toString())
-                    .append("页");
+            		ret.append(" ")
+                    .append(gotopage_label)//跳转到
+                    .append(go.toString())
+                    .append(page_label); //页
             		IMG image = new IMG();                
                     image.setSrc(buildPath(this.getImagedir(), this.go_image));
-                    image.setAlt("跳转到");
+                    image.setAlt(gotopage_label);
                     if(this.imageextend != null)
                     {
                         
@@ -1780,8 +1809,8 @@ public final class IndexTag extends PagerTagSupport {
             		
             		A a = new A();     
             		a.setOnClick(goTo);            
-                    a.setTagText("跳转到");
-                    ret.append(a.toString()).append(go.toString()).append("页");
+                    a.setTagText(gotopage_label);//跳转到
+                    ret.append(a.toString()).append(go.toString()).append(page_label); //页
                     
             	}                
             
@@ -1796,13 +1825,13 @@ public final class IndexTag extends PagerTagSupport {
                     .setSize(2)
                     .setClass("page_input"))
                     .setDisabled(true);
-            		ret
-                    .append(" 跳转到"+
-                        go.toString())
-                    .append("页");
+            		ret.append(" ")
+                    .append(gotopage_label)//跳转到
+                    .append(go.toString())
+                    .append(page_label); //页
             		IMG image = new IMG();                
                     image.setSrc(buildPath(this.getImagedir(), this.go_image));
-                    image.setAlt("跳转到");
+                    image.setAlt(gotopage_label);//跳转到
                     if(this.imageextend != null)
                     {
                         
@@ -1819,12 +1848,11 @@ public final class IndexTag extends PagerTagSupport {
                     .setClass("page_input"))
                     .setDisabled(true);
                     
-                    ret
-                        .append(" 跳转到")
-                        .append(
-                            go.toString()                       
+                    ret.append(" ")
+                    .append(gotopage_label)//跳转到
+                    .append(go.toString()                       
                                 )
-                        .append("页");
+                        .append(page_label); //页
                     
             	}     
                 

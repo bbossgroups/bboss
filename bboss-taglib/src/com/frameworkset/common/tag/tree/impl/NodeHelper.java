@@ -571,9 +571,7 @@ public class NodeHelper  implements Serializable
 				}
 				else //动静结合的模式
 				{
-//					buffer.append("doClickImageIcon('").append(
-//							eventLink).append("','").append(this.element.getId()).append("')");
-					//function doClickImageIcon(linkUrl,eventNode,name,nodetype,nodepath)
+
 					buffer.append("doClickImageIcon('").append(
 							eventLink).append("','")
 							.append(this.element.getId())
@@ -581,10 +579,7 @@ public class NodeHelper  implements Serializable
 							.append(StringUtil.encode(this.element.getName()))
 							.append("','")
 							.append(this.element.getNode().getType())	
-//							.append("','")
-//							.append(this.element.getNode().getShowHref())
-//							.append("','")
-//							.append(this.element.getNode().hasChildren())
+
 							.append("','")
 							.append(this.element.getNode().getPath())
 							.append("','")
@@ -827,11 +822,7 @@ public class NodeHelper  implements Serializable
 		// 如果允许树进行折叠，那么设置图标的链接，否则不设置
 		StringBuffer temp_b = new StringBuffer();
 
-		// temp_b
-		// // .append("<a name=\"#" + anchor
-		// // +"\"></a><a onclick=\"doClickImageIcon('");
-		// .append("doClickImageIcon('");
-		// .append(this.getLocalAction());
+	
 
 		if (index == -1)
 			temp_b.append(location)
@@ -1815,247 +1806,9 @@ public class NodeHelper  implements Serializable
 		}
 		
 	}
-//	public static void getSelectedScript(StringBuffer buffer,ITree tree)
-//	{
-//
-//        buffer.append("<a id=\"tree_node_bridge\">")
-//              .append("</a><a id=\"tree_node_localbridge\">")
-//              .append("</a>");
-//        if(tree.isStaticDynamic() || tree.isStatic())
-//            buffer.append("<iframe height='0' width='0' name='tree_content_bridge' FRAMEBORDER='no' border=0 ></iframe>");
-//        buffer.append("<script language=\"javascript\"> ")
-//              .append("function doClickTreeNode(linkUrl,selected,target,oldselected,eventLink,nodeid) ")
-//              .append("{ ")
-//              .append("     if(oldselected && document.getElementById(oldselected))")
-//              .append("         document.getElementById(oldselected).className = \"unselectedTextAnchor\";")
-//              .append("     if(selectNode && document.getElementById(selectNode))")
-//              .append("         document.getElementById(selectNode).className = \"unselectedTextAnchor\"; ")
-//              .append("     selectNode = selected; ")
-//              .append("if(document.getElementById(selectNode)) ")
-//              .append("     document.getElementById(selectNode).className = \"selectedTextAnchor\"; ")
-//              .append("     tree_node_bridge.href=linkUrl; ")
-//              .append("tree_node_bridge.target=target; ")
-//              .append("tree_node_bridge.click(); ")
-//              .append("if(eventLink)")
-//              .append("{ ")
-//              .append("doClickImageIcon(eventLink,nodeid);")
-//              .append("} ")
-//              .append("} ")
-//              .append(" function doClickImageIcon(linkUrl,eventNode)")
-//              .append("{")
-//              .append("if(eventNode)")
-//              .append("{")
-//              .append("var firsted = $(\"icon_\" + eventNode).firsted; ")
-//              .append("if(firsted == \"true\")")
-//              .append("{")
-//              .append("nodetoggle(eventNode); ")
-//              .append("}")
-//              .append("else ")
-//              .append("{ ")
-//              .append("if(selectNode) ")
-//              .append("{")
-//              .append("linkUrl += \"&selectedNode=\" + selectNode; ")
-//              .append("}")
-//              .append("var indent = $(\"icon_\" + eventNode).indent;")
-//              .append("linkUrl += \"&node_parent_indent=\" + indent;")
-//              .append("document.getElementById(\"icon_\" + eventNode).firsted = \"true\"; ")
-//              .append("getSonOfNode(linkUrl,eventNode); ")
-//              .append("} ")
-//              .append("} ")
-//              .append("else ")
-//              .append(" {")
-//              .append("if(selectNode)")
-//              .append("{")
-//              .append("linkUrl += \"&selectedNode=\" + selectNode; ")
-//              .append("}")
-//              .append("tree_node_localbridge.href=linkUrl;  ")
-//              .append("tree_node_localbridge.target=\"\"; ")
-//              .append("tree_node_localbridge.click();")
-//              .append("}")
-//              .append("}")
-//              .append("function nodetoggle(eventNode) ")
-//              .append("{")
-//              .append(" 	if(!$(\"div_parent_\" + eventNode)) return;")//如果事件节点不存在，则直接返回
-//              .append("if(Element.visible(\"div_parent_\" + eventNode)) ")
-//              .append("{")
-//              .append("$(\"icon0_\" + eventNode).src = $(\"icon_\" + eventNode).collapsedimg;")
-//              .append("$(\"icon1_\" + eventNode).src = $(\"icon_\" + eventNode).closedimg; ")
-//              .append("}")
-//              .append(" else ")
-//              .append(" {")
-//              .append("$(\"icon0_\" + eventNode).src = $(\"icon_\" + eventNode).expandedimg; ")
-//              .append("$(\"icon1_\" + eventNode).src = $(\"icon_\" + eventNode).openedimg; ")
-//              .append("}")
-//              .append("Element.toggle(\"div_parent_\" + eventNode); ")
-//              .append("} ")
-//              .append("function getSonOfNode(linkUrl,eventNode)")
-//              .append(" {  ")
-//              .append("$(\"tree_content_bridge\").src = linkUrl; ")
-//              .append("} ")
-//              .append("function setSon(father,sons,sonids,fatherids)")
-//              .append("{")
-//              .append("new Insertion.After(\"div_\" + father,sons); ")
-//              .append("nodetoggle(father); ")
-//              .append("var checkNode = document.getElementById(\"checkbox_\" + father);")
-//              .append("if(!checkNode)")
-//              .append("     return;")
-//              .append("   var recursive = checkNode.recursive;")
-//              .append("if(recursive && recursive == \"true\")")
-//              .append("{")
-//              .append("   checkNode.sonids = sonids;")
-//              .append("   checkSonCheckbox(checkNode,sonids);")
-//              .append("}")
-//              .append("}")
-//              .append("function treeNodeCheckboxChange(checkNode)")
-//              .append("{")
-//              .append("if(!checkNode)")
-//              .append("     checkNode = event.srcElement;")
-//              .append("var sonids = checkNode.sonids;")
-//              .append("var recursive = checkNode.recursive;")
-//              .append("if(recursive && recursive == \"true\")")
-//              .append("		checkSonCheckbox(checkNode,sonids);")
-//              
-//              .append("var fatherids = checkNode.fatherids;")
-//              .append("var uprecursive = checkNode.uprecursive;")
-//              .append("if(uprecursive && uprecursive == \"true\")")
-//              .append("		checkFatherCheckbox(checkNode,fatherids);")
-//              .append("}")
-//              .append("function checkSonCheckbox(checkNode,sonids)")
-//              .append("{")
-//              .append(" if(sonids && sonids != \"\")")
-//              .append(" {")
-//              .append("   var sons = sonids.split(\"##\");")
-//              .append("   if(sons.length){  ")
-//              .append("  	for(var i = 0; i < sons.length; i ++)")
-//              .append("  	{")
-//              .append("   		if($(\"checkbox_\" + sons[i])){")
-//              .append("      		$(\"checkbox_\" + sons[i]).checked = checkNode.checked;")
-//              .append("      		checkSonCheckbox($(\"checkbox_\" + sons[i]),$(\"checkbox_\" + sons[i]).sonids);")
-//              .append("			}")	
-//              .append("  	}")
-//              .append("	  }else")
-//              .append("   {")
-//              .append("   	if($(\"checkbox_\" + sons)){")
-//              .append("  		$(\"checkbox_\" + sons).checked = checkNode.checked;")
-//              .append("      	checkSonCheckbox($(\"checkbox_\" + sons),$(\"checkbox_\" + sons).sonids);")
-//              .append("		 }")
-//              .append("   }")
-//              .append(" }")
-//              .append("}")
-//              .append("function checkFatherCheckbox(checkNode,fatherids)")
-//              .append("{")
-//              .append(" if(checkNode.checked && fatherids && fatherids != \"\")")
-//              .append(" {")
-//              .append("   var fathers = fatherids.split(\"##\");")
-//              .append("   if(fathers.length)")
-//              .append("  	for(var i = 0; i < fathers.length; i ++)")
-//              .append("  	{")
-//              .append("   		if($(\"checkbox_\" + fathers[i]))")
-//              .append("      		$(\"checkbox_\" + fathers[i]).checked = checkNode.checked;")
-//              
-//              .append("  	}")
-//              .append("	  else")
-//              .append("   {")
-//              .append("   		if($(\"checkbox_\" + fathers))")
-//              .append("  			$(\"checkbox_\" + fathers).checked = checkNode.checked;")
-//             
-//              .append("   }")
-//              .append(" }")
-//              .append("}")
-//              /**
-//               * 去掉子节点时，递归检测父节点是否需要被去掉
-//               */
-//              .append("function checkPartFatherCheckbox(checkNode,fatherids)")
-//              .append("{")
-//              .append("      ")
-//              .append(" if(fatherids && fatherids != \"\")")
-//              .append(" {")
-//              .append("   var fathers = fatherids.split(\"##\");")
-//              .append("   if(checkNode.checked){")
-//              .append("   	if(fathers.length)")
-//              .append("  		for(var i = 0; i < fathers.length; i ++)")
-//              .append("  		{")
-//              .append("				if($(\"checkbox_\" + fathers[i]).checked) return;")
-//              .append("   			if($(\"checkbox_\" + fathers[i]))")
-//              .append("      			$(\"checkbox_\" + fathers[i]).checked = true;")
-//              
-//              .append("  		}")
-//              .append("	  	else")
-//              .append("   	{")
-//              .append("   		if($(\"checkbox_\" + fathers))")
-//              .append("  			$(\"checkbox_\" + fathers).checked = checkNode.checked;")
-//             
-//              .append("   	}")
-//              .append("    }")
-//              .append("    else")
-//              .append("	   {")
-//              .append("   	if(fathers.length){")
-//              .append("			var flag = false;")
-//              .append("  		for(var i = fathers.length - 1; i >= 0; i --)")
-//              .append("  		{")
-//              .append("   			if($(\"checkbox_\" + fathers[i])){")
-//              .append("					if($(\"checkbox_\" + fathers[i]).checked == false) return;")
-//              .append("					var check = false;")
-//              .append("      			var sonids = $(\"checkbox_\" + fathers[i]).sonids;")
-//              .append("   				var sons = sonids.split(\"##\");")	
-//               .append("   				if(sons.length)")
-//	              .append("					for( var j = 0; sons.length && j < sons.length; j ++)")	
-//	              .append("					{")
-//	              .append("						if($(\"checkbox_\" + sons[j]).checked)")
-//	              .append("						{check = true;break;}		")
-//	              								
-//	              .append("					}")	
-//				          .append("	  	else")
-//			              .append("   	{")
-//			              .append("   		if($(\"checkbox_\" + sonids).checked)")
-//			              .append("			{check = true;}		")
-//			              .append("   	}")
-//              .append(" 				if(check) break;")
-//              .append("    				else ")
-//              .append("						$(\"checkbox_\" + fathers[i]).checked = false;")
-//              .append("				}")	
-//              .append("  		}")
-//              .append("	  	}else")
-//              .append("   	{")
-//              .append("   		if($(\"checkbox_\" + fathers)){")
-//              .append("					if($(\"checkbox_\" + fathers).checked == false) return;")
-//              .append("					var check = false;")
-//              .append("      			var sonids = $(\"checkbox_\" + fathers).sonids;")
-//              .append("   				var sons = sonids.split(\"##\");")	
-//               .append("   				if(sons.length)")
-//	              .append("					for( var j = 0; sons.length && j < sons.length; j ++)")	
-//	              .append("					{")
-//	              .append("						if($(\"checkbox_\" + sons[j]).checked)")
-//	              .append("						{check = true;break;}		")
-//	              								
-//	              .append("					}")	
-//				          .append("	  	else")
-//			              .append("   	{")
-//			              .append("   		if($(\"checkbox_\" + sonids).checked)")
-//			              .append("			{check = true;}		")
-//			              .append("   	}")
-//              .append(" 				if(check) break;")
-//              .append("    				else ")
-//              .append("						$(\"checkbox_\" + fathers).checked = false;")
-//              .append("			}")	
-//             
-//              .append("   	}")
-//              .append("    }")
-//              		
-//              .append(" }")
-//              .append("}")
-//              .append("</script>");
-//	}
 
-	// /**
-	// * 获取
-	// * @param buffer
-	// * @param event
-	// */
-	// private void getSelectedScript(StringBuffer buffer,String event)
-	// {
-	//
-	// }
+
+
 
 	public static void getInitScript(StringBuffer ret, String selectedNode,String contextpath)
 	{
@@ -2068,69 +1821,10 @@ public class NodeHelper  implements Serializable
 		}
 		ret.append("</script >");
 		
-		/*
-		 * 已经移到textMenu.vm文件中
-		 */
-//        ret.append("<script language=\"javascript\" src=\"").append(contextpath).append("/include/prototype-1.4.0.js\"></script >");
-		// return ret.toString();
+		
 	}
 	
-//	public static void getPopScript(StringBuffer ret,HttpServletRequest request,boolean enablecontextmenu)
-//	{
-//	    try
-//        {
-//            ret.append(PageConfig.getPopScript(request,enablecontextmenu));
-//        }
-//	    catch (ResourceNotFoundException e)
-//        {
-//            // TODO Auto-generated catch block
-//            e.printStackTrace();
-//        }
-//        catch (ParseErrorException e)
-//        {
-//            // TODO Auto-generated catch block
-//            e.printStackTrace();
-//        }
-//        catch (MethodInvocationException e)
-//        {
-//            // TODO Auto-generated catch block
-//            e.printStackTrace();
-//        }
-//        catch (IOException e)
-//        {
-//            // TODO Auto-generated catch block
-//            e.printStackTrace();
-//        }
-//	}
-	
-//	public static void getConfigScript(StringBuffer ret,HttpServletRequest request)
-//	{
-//	    try
-//        {
-//            ret.append(PageConfig.getConfig(request));
-//        }
-//        catch (ResourceNotFoundException e)
-//        {
-//            // TODO Auto-generated catch block
-//            e.printStackTrace();
-//        }
-//        catch (ParseErrorException e)
-//        {
-//            // TODO Auto-generated catch block
-//            e.printStackTrace();
-//        }
-//        catch (MethodInvocationException e)
-//        {
-//            // TODO Auto-generated catch block
-//            e.printStackTrace();
-//        }
-//        catch (IOException e)
-//        {
-//            // TODO Auto-generated catch block
-//            e.printStackTrace();
-//        }
-////		ret.append("<script language=\"javascript\" src=\"").append(contextpath).append("/include/prototype-1.4.0.js\"></script >");
-//	}
+
 
 	public static void main(String args[])
 	{

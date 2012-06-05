@@ -42,8 +42,6 @@
 			<src path="src" />
 			<src path="test" />
 			
-		
-
 			<classpath id="cp-bboss-taglib">
 
 				<fileset dir="lib/" includes="*.jar *.zip" />
@@ -51,8 +49,9 @@
 				
 			</classpath>
 		</javac>
-
-
+		<copy todir="classes-bboss-taglib">
+			<fileset dir="src" includes="**/*.properties" />
+		</copy>
 	</target>
 	<target name="jar-frameworkset" depends="compile-frameworkset" description="generate the bboss-taglib library frameworkset.jar">
 		<echo>Generate the bboss-aop library bboss-aop.jar ...</echo>

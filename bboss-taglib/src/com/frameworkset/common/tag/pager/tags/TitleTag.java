@@ -43,6 +43,9 @@ import org.apache.ecs.html.A;
 import org.apache.ecs.html.Span;
 import org.apache.ecs.html.TD;
 import org.apache.ecs.html.TH;
+import org.frameworkset.spi.support.MessageSource;
+import org.frameworkset.web.servlet.support.RequestContextUtils;
+import org.frameworkset.web.servlet.support.WebApplicationContextUtils;
 
 import com.frameworkset.util.StringUtil;
 
@@ -59,6 +62,9 @@ public class TitleTag  extends PagerTagSupport
 
 	private String bgColor = "#8da6c4";
 	private String title = null;
+	/**标题国际化code*/
+	private String titlecode = null;
+	
 	private boolean sort = false;
 	private int colid = -1;
 
@@ -91,6 +97,7 @@ public class TitleTag  extends PagerTagSupport
 	{
 		bgColor = "#8da6c4";
 		title = null;
+		this.titlecode = null;
 		sort = false;
 		colid = -1;
 
@@ -278,7 +285,7 @@ public class TitleTag  extends PagerTagSupport
 
 		StringBuffer ret = new StringBuffer();
 		TH td = new TH();
-		
+		String title_lable = this.titlecode == null?this.getTitle():convertTitlei18n();
 		//td.setBgColor(getBgColor());
 		String fwidth = getWidth(getColid());
 
@@ -291,7 +298,7 @@ public class TitleTag  extends PagerTagSupport
 		td.setNoWrap(nowrap);
 		if(this.getColspan() != 0)
 		    td.setColSpan(getColspan());
-		if(this.getTitle() == null)//如果没有设定标题
+		if(title_lable == null)//如果没有设定标题
 		{
 			/**
 			 * 如果改字段需要排序，构建排序的href
@@ -383,7 +390,7 @@ public class TitleTag  extends PagerTagSupport
 		else //如果不需要排序直接输出标题
 		{
 
-			String title = getTitle();
+			String title = title_lable;
 			if(isSortKey())
 			{
 				A a = new A();
@@ -470,6 +477,11 @@ public class TitleTag  extends PagerTagSupport
 		ret.append(td.toString());
 		return ret.toString();
 	}
+	private String convertTitlei18n()
+	{
+		MessageSource source = WebApplicationContextUtils.getWebApplicationContext();
+		return source.getMessage(this.titlecode, RequestContextUtils.getLocale(request));
+	}
 	/**
 	 * @see com.frameworkset.common.tag.BaseTag#generateContent()
 	 */
@@ -477,6 +489,7 @@ public class TitleTag  extends PagerTagSupport
 
 		StringBuffer ret = new StringBuffer();
 		TD td = new TD();
+		String title_lable = this.titlecode == null?this.getTitle():convertTitlei18n();
 		
 		//td.setBgColor(getBgColor());
 		String fwidth = getWidth(getColid());
@@ -490,7 +503,7 @@ public class TitleTag  extends PagerTagSupport
 		td.setNoWrap(nowrap);
 		if(this.getColspan() != 0)
 		    td.setColSpan(getColspan());
-		if(this.getTitle() == null)//如果没有设定标题
+		if(title_lable == null)//如果没有设定标题
 		{
 			/**
 			 * 如果改字段需要排序，构建排序的href
@@ -577,7 +590,7 @@ public class TitleTag  extends PagerTagSupport
 		else //如果不需要排序直接输出标题
 		{
 
-			String title = getTitle();
+			String title = title_lable;
 			if(isSortKey())
 			{
 				A a = new A();
@@ -860,5 +873,11 @@ public class TitleTag  extends PagerTagSupport
 	}
 	public void setType(String type) {
 		this.type = type;
+	}
+	public String getTitlecode() {
+		return titlecode;
+	}
+	public void setTitlecode(String titlecode) {
+		this.titlecode = titlecode;
 	}
 }

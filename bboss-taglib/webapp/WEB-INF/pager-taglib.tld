@@ -461,6 +461,12 @@
 			<name>bgColor</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
+		<!--标题国际化代码，如果代码在mvc国际化相关配置文件中不存在，则输出code-->
+		<attribute>
+			<name>titlecode</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		
 		<attribute>
 			<name>title</name>
 			<rtexprvalue>true</rtexprvalue>
