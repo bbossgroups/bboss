@@ -13,7 +13,7 @@ org.frameworkset.spi.support.MessageSource messageSource = org.frameworkset.web.
 out.println(RequestContextUtils.getRequestContextLocalName(pageContext));
 String local = RequestContextUtils.getRequestContextLocalName(pageContext);
 String local_request = RequestContextUtils.getRequestContextLocalName(request);
-Locale locale = RequestContextUtils.getLocale(request);
+Locale locale = RequestContextUtils.getRequestContextLocal(request);
 //String message = messageSource.getMessage("probe.jsp.wrongparams", local_request);
 messageSource = WebMessageSourceUtil.getMessageSource("org/frameworkset/servlet/i18n/messages_module");
 out.println(messageSource.getMessage("sany.pdp.module.personcenter", locale));

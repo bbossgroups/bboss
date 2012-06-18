@@ -1049,7 +1049,8 @@ public class DispatchServlet extends HttpServlet {
 			throws Exception {
 
 		// Determine locale for request and apply it to the response.
-		Locale locale = this.localeResolver.resolveLocale(request);
+//		Locale locale = this.localeResolver.resolveLocale(request);
+		Locale locale = RequestContextUtils.getRequestContextLocal(request);
 		response.setLocale(locale);
 
 		View view = null;

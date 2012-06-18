@@ -480,7 +480,7 @@ public class TitleTag  extends PagerTagSupport
 	private String convertTitlei18n()
 	{
 		MessageSource source = WebApplicationContextUtils.getWebApplicationContext();
-		return source.getMessage(this.titlecode, RequestContextUtils.getLocale(request));
+		return source.getMessage(this.titlecode, RequestContextUtils.getRequestContextLocal(request));
 	}
 	/**
 	 * @see com.frameworkset.common.tag.BaseTag#generateContent()

@@ -154,7 +154,7 @@ public abstract class AbstractJExcelView extends AbstractView {
 	 */
 	protected Workbook getTemplateSource(String url, HttpServletRequest request) throws Exception {
 		LocalizedResourceHelper helper = new LocalizedResourceHelper(getApplicationContext());
-		Locale userLocale = RequestContextUtils.getLocale(request);
+		Locale userLocale = RequestContextUtils.getRequestContextLocal(request);
 		Resource inputFile = helper.findLocalizedResource(url, EXTENSION, userLocale);
 
 		// Create the Excel document from the source.

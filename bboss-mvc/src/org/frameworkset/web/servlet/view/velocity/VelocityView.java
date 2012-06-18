@@ -407,7 +407,7 @@ public class VelocityView extends AbstractTemplateView {
 
 		// Expose locale-aware DateTool/NumberTool attributes.
 		if (this.dateToolAttribute != null || this.numberToolAttribute != null) {
-			Locale locale = RequestContextUtils.getLocale(request);
+			Locale locale = RequestContextUtils.getRequestContextLocal(request);
 			if (this.dateToolAttribute != null) {
 				velocityContext.put(this.dateToolAttribute, new LocaleAwareDateTool(locale));
 			}

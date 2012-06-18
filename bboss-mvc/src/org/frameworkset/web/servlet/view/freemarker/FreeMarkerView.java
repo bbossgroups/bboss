@@ -279,7 +279,7 @@ public class FreeMarkerView extends AbstractTemplateView {
 			logger.debug("Rendering FreeMarker template [" + getUrl() + "] in FreeMarkerView '" + getBeanName() + "'");
 		}
 		// Grab the locale-specific version of the template.
-		Locale locale = RequestContextUtils.getLocale(request);
+		Locale locale = RequestContextUtils.getRequestContextLocal(request);
 		processTemplate(getTemplate(locale), fmModel, response);
 	}
 

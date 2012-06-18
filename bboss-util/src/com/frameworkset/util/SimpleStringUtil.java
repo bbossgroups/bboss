@@ -50,16 +50,19 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import java.util.StringTokenizer;
 import java.util.TreeSet;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 import org.apache.oro.text.regex.MalformedPatternException;
 import org.apache.oro.text.regex.MatchResult;
 import org.apache.oro.text.regex.Pattern;
@@ -85,6 +88,7 @@ public class SimpleStringUtil  {
 //	private static final SimpleDateFormat format = new SimpleDateFormat(
 //			"yyyy-MM-dd HH:mm:ss");
 
+	protected static final Logger logger = Logger.getLogger(SimpleStringUtil.class);
 	// ¶ººÅ³£Á¿
 	public static final String COMMA = ",";
 
@@ -2094,6 +2098,225 @@ outStr = "2010Äê02ÔÂ07ÈÕ11Ê±Ðí£¬ÖÜÁéÓ±±¨¾¯£ºÔÚ2Â·¹«½»³µÉÏ±»°ÇÇÔ£¬²¢×¥»ñÒ»ÃûÏÓÒÉÈ
 	public static String urlencode(String value,String charset)
 	{
 		return urlencode(value,charset,1);
+	}
+	
+	
+	private static Map<String,Locale> localesIndexByString;
+	  /**
+     * 
+    
+   
+     * @param locales
+     * @return
+     */
+    public static Map<String,Locale> getAllLocales()
+	{
+    	if(localesIndexByString != null)
+    	{
+    		return localesIndexByString;
+    	}
+    	synchronized(SimpleStringUtil.class)
+    	{
+    		if(localesIndexByString != null)
+        	{
+        		return localesIndexByString;
+        	}
+	    	Map<String,Locale> lm = new HashMap<String,Locale>();
+	    	
+	    	{
+	//    		if(locale.equals(Locale.SIMPLIFIED_CHINESE))
+	    		{
+	    			lm.put(String.valueOf(Locale.SIMPLIFIED_CHINESE), Locale.SIMPLIFIED_CHINESE);
+	    		}
+	//    		else if(locale.equals(Locale.ENGLISH))
+	    		{
+	    			lm.put(String.valueOf(Locale.ENGLISH), Locale.ENGLISH);
+	    		}
+	//    		else if(locale.equals(Locale.US))
+	    		{
+	    			lm.put(String.valueOf(Locale.US), Locale.US);
+	    		}
+	//    		else if(locale.equals(Locale.JAPANESE))
+	    		{
+	    			lm.put(String.valueOf(Locale.JAPANESE), Locale.JAPANESE);
+	    		}
+	//    		else if(locale.equals(Locale.FRENCH))
+	    		{
+	    			lm.put(String.valueOf(Locale.FRENCH), Locale.FRENCH);
+	    		}
+	//    		else if(locale.equals(Locale.CANADA_FRENCH))
+	    		{
+	    			lm.put(String.valueOf(Locale.CANADA_FRENCH), Locale.CANADA_FRENCH);
+	    		}
+	//    		else if(locale.equals(Locale.CANADA))
+	    		{
+	    			lm.put(String.valueOf(Locale.CANADA), Locale.CANADA);
+	    		}
+	//    		else if(locale.equals(Locale.UK))
+	    		{
+	    			lm.put(String.valueOf(Locale.UK), Locale.UK);
+	    		}
+	//    		else if(locale.equals(Locale.TAIWAN))
+	    		{
+	    			lm.put(String.valueOf(Locale.TAIWAN), Locale.TAIWAN);
+	    		}
+	//    		else if(locale.equals(Locale.PRC))
+	    		{
+	    			lm.put(String.valueOf(Locale.PRC), Locale.PRC);
+	    		}
+	//    		else if(locale.equals(Locale.KOREA))
+	    		{
+	    			lm.put(String.valueOf(Locale.KOREA), Locale.KOREA);
+	    		}
+	//    		else if(locale.equals(Locale.JAPAN))
+	    		{
+	    			lm.put(String.valueOf(Locale.JAPAN), Locale.JAPAN);
+	    		}
+	//    		else if(locale.equals(Locale.ITALY))
+	    		{
+	    			lm.put(String.valueOf(Locale.ITALY), Locale.ITALY);
+	    		}
+	//    		else if(locale.equals(Locale.GERMANY))
+	    		{
+	    			lm.put(String.valueOf(Locale.GERMANY), Locale.GERMANY);
+	    		}
+	//    		else if(locale.equals(Locale.FRANCE))
+	    		{
+	    			lm.put(String.valueOf(Locale.FRANCE), Locale.FRANCE);
+	    		}
+	//    		else if(locale.equals(Locale.TRADITIONAL_CHINESE))
+	    		{
+	    			lm.put(String.valueOf(Locale.TRADITIONAL_CHINESE), Locale.TRADITIONAL_CHINESE);
+	    		}
+	//    		else if(locale.equals(Locale.CHINESE))
+	    		{
+	    			lm.put(String.valueOf(Locale.CHINESE), Locale.CHINESE);
+	    		}
+	//    		else if(locale.equals(Locale.KOREAN))
+	    		{
+	    			lm.put(String.valueOf(Locale.KOREAN), Locale.KOREAN);
+	    		}
+	//    		else if(locale.equals(Locale.ITALIAN))
+	    		{
+	    			lm.put(String.valueOf(Locale.ITALIAN), Locale.ITALIAN);
+	    		}
+	//    		else if(locale.equals(Locale.GERMAN))
+	    		{
+	    			lm.put(String.valueOf(Locale.GERMAN), Locale.GERMAN);
+	    		}
+	    		lm.put("ROOT", Locale.ROOT);   			
+	//    		else
+	//    		{
+	//    			log.debug("²»ÕýÈ·µÄÓïÑÔ´úÂë:"+ locale);
+	//    		}    		
+	    	}
+	    	localesIndexByString = lm;
+	    	
+    	}
+    	return localesIndexByString;
+	}
+    /**
+     * 
+    
+   
+     * @param locales
+     * @return
+     */
+    public static  Map<String,Locale> converLocales(String locales)
+	{
+    	if(locales == null && locales.trim().equals(""))
+    		return null;
+    	String[] locales_ = locales.split("\\,");
+    	Map<String,Locale> lm = new HashMap<String,Locale>();
+    	for(String locale:locales_)
+    	{
+    		if(locale.equals(Locale.SIMPLIFIED_CHINESE.toString()))
+    		{
+    			lm.put(locale, Locale.SIMPLIFIED_CHINESE);
+    		}
+    		else if(locale.equals(Locale.ENGLISH.toString()))
+    		{
+    			lm.put(locale, Locale.ENGLISH);
+    		}
+    		else if(locale.equals(Locale.US.toString()))
+    		{
+    			lm.put(locale, Locale.US);
+    		}
+    		else if(locale.equals(Locale.JAPANESE.toString()))
+    		{
+    			lm.put(locale, Locale.JAPANESE);
+    		}
+    		else if(locale.equals(Locale.FRENCH.toString()))
+    		{
+    			lm.put(locale, Locale.FRENCH);
+    		}
+    		else if(locale.equals(Locale.CANADA_FRENCH.toString()))
+    		{
+    			lm.put(locale, Locale.CANADA_FRENCH);
+    		}
+    		else if(locale.equals(Locale.CANADA.toString()))
+    		{
+    			lm.put(locale, Locale.CANADA);
+    		}
+    		else if(locale.equals(Locale.UK.toString()))
+    		{
+    			lm.put(locale, Locale.UK);
+    		}
+    		else if(locale.equals(Locale.TAIWAN.toString()))
+    		{
+    			lm.put(locale, Locale.TAIWAN);
+    		}
+    		else if(locale.equals(Locale.PRC.toString()))
+    		{
+    			lm.put(locale, Locale.PRC);
+    		}
+    		else if(locale.equals(Locale.KOREA.toString()))
+    		{
+    			lm.put(locale, Locale.KOREA);
+    		}
+    		else if(locale.equals(Locale.JAPAN.toString()))
+    		{
+    			lm.put(locale, Locale.JAPAN);
+    		}
+    		else if(locale.equals(Locale.ITALY.toString()))
+    		{
+    			lm.put(locale, Locale.ITALY);
+    		}
+    		else if(locale.equals(Locale.GERMANY.toString()))
+    		{
+    			lm.put(locale, Locale.GERMANY);
+    		}
+    		else if(locale.equals(Locale.FRANCE.toString()))
+    		{
+    			lm.put(locale, Locale.FRANCE);
+    		}
+    		else if(locale.equals(Locale.TRADITIONAL_CHINESE.toString()))
+    		{
+    			lm.put(locale, Locale.TRADITIONAL_CHINESE);
+    		}
+    		else if(locale.equals(Locale.CHINESE.toString()))
+    		{
+    			lm.put(locale, Locale.CHINESE);
+    		}
+    		else if(locale.equals(Locale.KOREAN.toString()))
+    		{
+    			lm.put(locale, Locale.KOREAN);
+    		}
+    		else if(locale.equals(Locale.ITALIAN.toString()))
+    		{
+    			lm.put(locale, Locale.ITALIAN);
+    		}
+    		else if(locale.equals(Locale.GERMAN.toString()))
+    		{
+    			lm.put(locale, Locale.GERMAN);
+    		}
+    		else
+    		{
+    			logger.debug("²»ÕýÈ·µÄÓïÑÔ´úÂë:"+ locale + ",build new Locale for " + locale + "." );
+    			lm.put(locale, new Locale(locale));   			
+    		}    		
+    	}
+    	return lm;
 	}
 	
 }

@@ -79,7 +79,7 @@ public abstract class JstlUtils {
 	 * @see #exposeLocalizationContext(RequestContext)
 	 */
 	public static void exposeLocalizationContext(HttpServletRequest request, MessageSource messageSource) {
-		Locale jstlLocale = RequestContextUtils.getLocale(request);
+		Locale jstlLocale = RequestContextUtils.getRequestContextLocal(request);
 		Config.set(request, Config.FMT_LOCALE, jstlLocale);
 		if (messageSource != null) {
 			LocalizationContext jstlContext = new BBossLocalizationContext(messageSource, request);
@@ -138,7 +138,7 @@ public abstract class JstlUtils {
 					return (Locale) localeObject;
 				}
 			}
-			return RequestContextUtils.getLocale(this.request);
+			return RequestContextUtils.getRequestContextLocal(this.request);
 		}
 	};
 
