@@ -26,13 +26,11 @@ import javax.jws.WebService;
  * @author biaoping.yin
  * @version 1.0
  */
-@WebService(name="WSServiceImpl")
+@WebService(name="WSServiceImpl",targetNamespace="org.frameworkset.web.ws")
 public class WSServiceImpl implements WSService{
 
 	public String sayHello(String duoduo) {
-//		System.out.println("ModuleService»¶Ó­Äú!" + duoduo);
-	
-		
+
 		if(duoduo == null)
 			return "";
 		else

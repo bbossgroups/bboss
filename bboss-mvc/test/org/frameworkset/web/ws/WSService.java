@@ -26,7 +26,7 @@ import javax.jws.WebService;
  * @author biaoping.yin
  * @version 1.0
  */
-@WebService(name="WSService")
+@WebService(name="WSService",targetNamespace="org.frameworkset.web.ws")
 public interface WSService {
 	
 	public String sayHello(String duoduo)
