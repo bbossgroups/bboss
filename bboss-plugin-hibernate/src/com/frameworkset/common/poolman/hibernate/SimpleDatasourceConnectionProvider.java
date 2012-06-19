@@ -46,7 +46,7 @@ public class SimpleDatasourceConnectionProvider  implements ConnectionProvider {
 
 
 	public void configure(Properties props) throws HibernateException {
-		this.dataSource = SQLManager.getDatasourceByDBName(dbname);
+		this.dataSource = SQLManager.getTXDatasourceByDBName(dbname);
 		// absolutely needs thread-bound DataSource to initialize
 		if (this.dataSource == null) {
 			throw new HibernateException("No local DataSource found for configuration - " +
