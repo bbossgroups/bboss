@@ -41,6 +41,7 @@ import java.io.UnsupportedEncodingException;
 import java.sql.Blob;
 import java.sql.Clob;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -56,7 +57,70 @@ import org.frameworkset.util.io.Resource;
 
 public class StringUtil extends SimpleStringUtil {
 	private static Logger log = Logger.getLogger(StringUtil.class);
+	public static String getCookieValue(HttpServletRequest request,String name,String defaultvalue)
+	{
+		Cookie[] cookies = request.getCookies();
 	
+		if(cookies == null)
+		{
+			return defaultvalue;
+		}
+			String temp_ = null;
+			for (Cookie temp : cookies) {
+				if(name.equals(temp.getName()))
+				{
+					temp_ = temp.getValue();
+					break;
+				}
+			}
+			if(temp_==null){
+				temp_ = defaultvalue;
+			}
+		return temp_;
+	}
+	
+	public static String getCookieValue(HttpServletRequest request,String name)
+	{
+		return getCookieValue(request,name,null);
+	}
+	
+	public static void  addCookieValue(HttpServletRequest request,HttpServletResponse response ,String name,String value,int maxage)
+	{
+		Cookie[] cookies = request.getCookies();
+		
+		Cookie loginPathCookie = null;
+		if(cookies != null)
+		{
+			for(Cookie cookie:cookies)
+			{
+				if(name.equals(cookie.getName()))
+				{
+					loginPathCookie = cookie;
+					break;
+				}
+			}
+		}
+		if(loginPathCookie == null)
+		{
+			 loginPathCookie = new Cookie(name, value);			 
+			loginPathCookie.setMaxAge(maxage);
+			loginPathCookie.setPath(request.getContextPath());			
+			response.addCookie(loginPathCookie);
+		}
+		else
+		{
+			loginPathCookie.setMaxAge(maxage);
+			loginPathCookie.setValue(value);
+			loginPathCookie.setPath(request.getContextPath());	
+			response.addCookie(loginPathCookie);
+//			loginPathCookie.setPath(request.getContextPath());
+		}
+	}
+	
+	public static void  addCookieValue(HttpServletRequest request,HttpServletResponse response ,String name,String value)
+	{
+		addCookieValue( request, response , name, value,3600 * 24);
+	}
 	public static String getRealPath(HttpServletRequest request, String path) {
 		String contextPath = request.getContextPath();
 
