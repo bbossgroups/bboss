@@ -23,6 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
 
 import org.frameworkset.spi.support.LocaleContext;
+import org.frameworkset.spi.support.MessageSource;
 import org.frameworkset.spi.support.SimpleLocaleContext;
 import org.frameworkset.web.servlet.DispatchServlet;
 import org.frameworkset.web.servlet.LocaleResolver;
@@ -213,6 +214,70 @@ public abstract class RequestContextUtils {
 	{
 		LocaleContext lc = getLocalContext( request);
 		return lc.getLocale();
+		
+		
+	}
+	/**
+	 * 根据code从mvc的国际化配置文件中获取对应语言的代码值
+	 * @param code
+	 * @param request
+	 * @return
+	 */
+	public static String getI18nMessage(String code,HttpServletRequest request)
+	{
+		return getI18nMessage(code,(String )null,request);
+		
+		
+	}
+	/**
+	 * 根据code从mvc的国际化配置文件中获取对应语言的代码值,如果代码值为空，则返回defaultMessage
+	 * @param code
+	 * @param defaultMessage
+	 * @param request
+	 * @return
+	 */
+	public static String getI18nMessage(String code,String defaultMessage,HttpServletRequest request)
+	{
+		return getI18nMessage(code,(Object[])null,defaultMessage,request);
+		
+		
+	}
+	/**
+	 * 根据code从mvc的国际化配置文件中获取对应语言的代码值,并且将数组args中的每个元素替换到代码值中位置占位符，例如{0}会用数组的第一个元素替换
+	 * @param code
+	 * @param args
+	 * @param request
+	 * @return
+	 */
+	public static String getI18nMessage(String code,Object[] args,HttpServletRequest request)
+	{
+		return getI18nMessage(code,args,(String)null,request);
+		
+		
+	}
+	/**
+	 * 根据code从mvc的国际化配置文件中获取对应语言的代码值,如果代码值为空，则返回defaultMessage,并且将数组args中的每个元素替换到代码值中位置占位符，例如{0}会用数组的第一个元素替换
+	 * @param code
+	 * @param args
+	 * @param defaultMessage
+	 * @param request
+	 * @return
+	 */
+	public static String getI18nMessage(String code,Object[] args,String defaultMessage,HttpServletRequest request)
+	{
+		Locale locale = RequestContextUtils.getRequestContextLocal(request);
+		MessageSource messageSource = WebApplicationContextUtils.getWebApplicationContext();
+		if(messageSource != null)
+			return  messageSource.getMessage(code, args, defaultMessage, locale);
+		else
+		{
+			if(defaultMessage != null)
+				return defaultMessage;
+			else
+				return code;
+			
+		}
+		
 		
 		
 	}

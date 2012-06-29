@@ -68,6 +68,16 @@
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
+		<!-- 
+		tabTitleCode:用来指定tab标题的国际化code，如果指定了tabTitleCode属性，那么就从mvc配置的国际化
+		属性文件中获取对应的国际化代码输出。
+		如果没有指定相应的code属性，那么输出tabTitle对应的值，如果tabTitle也没有指定则直接则直接输出tabTitleCode属性
+		 -->
+		<attribute>
+			<name>tabTitleCode</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
 		
 		<!--
 			lazeload:是否需要延迟加载iframe页面，

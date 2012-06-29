@@ -17,15 +17,18 @@ public class CookieLocaleResolver implements LocaleResolver{
 	@Override
 	public Locale resolveLocale(HttpServletRequest request) {
 		Cookie[] cookies = request.getCookies();
-		Map<String,Locale> locales = SimpleStringUtil.getAllLocales();
 		Locale locale = null;
-		for (Cookie temp : cookies) {
-			if(cookielocalkey.equals(temp.getName()))
-			{
-				locale = locales.get(temp.getValue());
-				break;
+		if(cookies != null)
+		{
+			Map<String,Locale> locales = SimpleStringUtil.getAllLocales();			
+			for (Cookie temp : cookies) {
+				if(cookielocalkey.equals(temp.getName()))
+				{
+					locale = locales.get(temp.getValue());
+					break;
+				}
+				
 			}
-			
 		}
 		if(locale == null)
 			return request.getLocale();

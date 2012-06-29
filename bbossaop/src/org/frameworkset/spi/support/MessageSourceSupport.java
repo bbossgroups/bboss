@@ -103,18 +103,22 @@ public abstract class MessageSourceSupport {
 				|| (!this.alwaysUseMessageFormat && (args == null || args.length == 0))) {
 			return msg;
 		}
-		MessageFormat messageFormat = null;
-		synchronized (this.cachedMessageFormats) {
-			messageFormat = (MessageFormat) this.cachedMessageFormats.get(msg);
-			if (messageFormat == null) {
-				messageFormat = createMessageFormat(msg, locale);
-				this.cachedMessageFormats.put(msg, messageFormat);
+		MessageFormat messageFormat = (MessageFormat) this.cachedMessageFormats.get(msg);
+		if (messageFormat == null)
+		{
+			synchronized (this.cachedMessageFormats) {
+				messageFormat = (MessageFormat) this.cachedMessageFormats.get(msg);
+				if (messageFormat == null) {
+					messageFormat = createMessageFormat(msg, locale);
+					this.cachedMessageFormats.put(msg, messageFormat);
+				}
 			}
 		}
 		synchronized (messageFormat) {
 			return messageFormat.format(resolveArguments(args, locale));
 		}
 	}
+	
 
 	/**
 	 * Create a MessageFormat for the given message and Locale.

@@ -29,6 +29,7 @@ import javax.servlet.jsp.JspException;
 
 import org.ditchnet.jsp.util.JspResponseWriter;
 import org.ditchnet.xml.Xhtml;
+import org.frameworkset.web.servlet.support.RequestContextUtils;
 
 import com.frameworkset.common.tag.BaseBodyTag;
 
@@ -41,7 +42,15 @@ import com.frameworkset.common.tag.BaseBodyTag;
  */
 public final class TabPaneTag extends BaseBodyTag {
 		
-	private String id,tabTitle;
+	private String id,tabTitle,tabTitleCode;
+	public String getTabTitleCode() {
+		return tabTitleCode;
+	}
+
+	public void setTabTitleCode(String tabTitleCode) {
+		this.tabTitleCode = tabTitleCode;
+	}
+
 	private TabContainerTag tabContainer;
 	private TabPane tab = null;
 	
@@ -120,7 +129,12 @@ public final class TabPaneTag extends BaseBodyTag {
 		TabPane tab = new TabPane();
 		this.tab = tab;
 		tab.setId(this.getId());
-		tab.setTabTitle(this.tabTitle);
+		if(this.tabTitleCode == null)
+			tab.setTabTitle(this.tabTitle);
+		else
+		{
+			tab.setTabTitle( RequestContextUtils.getI18nMessage(tabTitleCode,(String)tabTitle, request));
+		}
 		
 		getTabContainer().addChild(tab);
 	}
@@ -140,6 +154,7 @@ public final class TabPaneTag extends BaseBodyTag {
 	{
 		id = null;
 		tabTitle= null;
+		this.tabTitleCode = null;
 		tabContainer= null;
 		tab = null;
 		
