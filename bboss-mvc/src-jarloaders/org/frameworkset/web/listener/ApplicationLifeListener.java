@@ -18,6 +18,8 @@ package org.frameworkset.web.listener;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
+import org.frameworkset.spi.BaseApplicationContext;
+
 /**
  * <p>Title: ApplicationLifeListener.java</p> 
  * <p>Description: </p>
@@ -28,19 +30,23 @@ import javax.servlet.ServletContextListener;
  * @version 1.0
  */
 public class ApplicationLifeListener implements ServletContextListener{
-	
-	static
-	{
-		try {
-			JarUtil.loadCustomJars();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+/**
+ * since bboss 3.6 we remove load custom jars from other directory but /WEB-INF/lib,so if 
+ * you update from lower version of bboss you should copy all jars from other lib directories to 
+ * /WEB-INF/lib  		
+ */
+//	static
+//	{
+//		try {
+//			JarUtil.loadCustomJars();
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//	}
 	public void contextDestroyed(ServletContextEvent arg0) {
 		
-		
+		BaseApplicationContext.shutdown();
 	}
 	
 	

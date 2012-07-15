@@ -289,7 +289,13 @@
         <!--根节点名称-->
 		<attribute>
             <name>rootName</name>
-            <required>true</required>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+         <!--根节点名称国际化代码-->
+        <attribute>
+            <name>rootNameCode</name>
+            <required>false</required>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
 

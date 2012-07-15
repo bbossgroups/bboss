@@ -38,6 +38,7 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.JspException;
 
 import org.apache.log4j.Logger;
+import org.frameworkset.web.servlet.support.RequestContextUtils;
 
 import com.frameworkset.common.tag.BaseTag;
 import com.frameworkset.common.tag.tree.COMTree;
@@ -83,6 +84,8 @@ public class TreeData extends BaseTag {
 	 * 树根节点名称
 	 */
 	private String rootName = "根节点";
+	
+	private String rootNameCode;
 	/**
 	 * 树默认展开层级
 	 */
@@ -141,7 +144,7 @@ public class TreeData extends BaseTag {
 //		this.radioValue = null;
 //		this.refreshNode = true;
 //		this.rootid = "-1";
-//		this.rootName = "根节点";
+		this.rootName = "根节点";
 //		this.scope = "session";  
 //		this.showRootHref = "true" ;
 //		this.singleSelection = "false";
@@ -282,7 +285,7 @@ public class TreeData extends BaseTag {
 			
 			comTree.loadTree(
 				getRootid(),
-				getRootName(),
+				getI18NRootName(),
 				level,
 				showRootHref(),
 				getMemo(),getRadioValue(),getCheckboxValue(),path);
@@ -326,7 +329,7 @@ public class TreeData extends BaseTag {
 			{
 				comTree.loadTree(
 					getRootid(),
-					getRootName(),
+					getI18NRootName(),
 					level,
 					showRootHref(),
 					getMemo(),getRadioValue(),getCheckboxValue(),path);
@@ -403,6 +406,20 @@ public class TreeData extends BaseTag {
 	 */
 	public String getRootName() {
 		return rootName;
+	}
+	
+	/**
+	 * @return String
+	 */
+	public String getI18NRootName() {
+		if(this.getRootNameCode() == null)
+		{
+			return this.getRootName();
+		}
+		else
+		{	
+			return RequestContextUtils.getI18nMessage(this.getRootNameCode(), this.rootName, request);
+		}
 	}
 
 	/**
@@ -543,6 +560,14 @@ public class TreeData extends BaseTag {
 	public void setSortable(boolean sortable)
 	{
 		this.sortable = sortable;
+	}
+
+	public String getRootNameCode() {
+		return rootNameCode;
+	}
+
+	public void setRootNameCode(String rootNameCode) {
+		this.rootNameCode = rootNameCode;
 	}
 
 }

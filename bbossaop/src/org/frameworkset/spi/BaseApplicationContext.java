@@ -553,7 +553,27 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 //		instance.initApplicationContext();
 //		return instance;
 //	}
-
+	private static List<Runnable> shutdownHooks = new ArrayList<Runnable>();
+	private static void addShutdownHook_(Runnable destroyVMHook)
+	{
+		shutdownHooks.add(destroyVMHook);
+	}
+	
+	/**
+	 * invoke shutdown hooks by programs when application is undeployed.  
+	 */
+	public static void shutdown()
+	{
+		for(Runnable destroyVMHook:shutdownHooks)
+		{
+			try {
+				destroyVMHook.run();
+				Thread.sleep(1000);
+			} catch (Throwable e) {
+				log.warn("execute shutdown hook error:", e);
+			}
+		}
+	}
 	/**
 	 * 添加系统中停止时的回调程序
 	 * 
@@ -571,6 +591,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		addShutdownHook_(destroyVMHook);
 	}
 
 	public void destroySingleBeans() {

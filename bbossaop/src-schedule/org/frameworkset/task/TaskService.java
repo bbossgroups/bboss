@@ -10,7 +10,8 @@ import java.util.Properties;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
-import org.frameworkset.spi.ApplicationContext;
+import org.frameworkset.spi.BaseApplicationContext;
+import org.frameworkset.spi.DefaultApplicationContext;
 import org.frameworkset.spi.assemble.Pro;
 import org.frameworkset.spi.assemble.ProList;
 import org.frameworkset.spi.assemble.ProMap;
@@ -41,7 +42,7 @@ public class TaskService implements Service {
 //	private static TaskService taskService = null;
 	
 
-	private ApplicationContext taskContext;
+	private BaseApplicationContext taskContext;
 
 	private boolean started = false;
 	private String taskconfig;
@@ -53,7 +54,7 @@ public class TaskService implements Service {
 	}
 	static 
 	{
-		ApplicationContext.addShutdownHook(new ShutdownThread());
+		BaseApplicationContext.addShutdownHook(new ShutdownThread());
 	}
 	static class ShutdownThread extends Thread {
 //		TaskService taskService;
@@ -208,7 +209,7 @@ public class TaskService implements Service {
 
 		if (started)
 			return;
-		taskContext = ApplicationContext.getApplicationContext(taskconfig);
+		taskContext = DefaultApplicationContext.getApplicationContext(taskconfig);
 		Pro taskconfig = taskContext.getProBean("taskconfig");
 		if (!taskconfig.getBooleanExtendAttribute("enable")) {
 			log.debug("Scheduler not enable.");

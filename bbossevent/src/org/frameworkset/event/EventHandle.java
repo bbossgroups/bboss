@@ -208,6 +208,11 @@ public class EventHandle extends RejectCallback implements Notifiable {
 					if (this.containEventType(listenersIndexbyType, eventType)) {
 						List listeners = (List) listenersIndexbyType
 								.get(eventType.toString());
+						if(listeners == null)
+						{
+							listeners = new ArrayList();
+							listenersIndexbyType.put(eventType.toString(), listeners);
+						}
 						if (containListener(listeners, listener)) {
 							continue;
 
@@ -230,6 +235,11 @@ public class EventHandle extends RejectCallback implements Notifiable {
 							eventType)) {
 						List listeners = (List) localListenersIndexbyType
 								.get(eventType.toString());
+						if(listeners == null)
+						{
+							listeners = new ArrayList();
+							localListenersIndexbyType.put(eventType.toString(), listeners);
+						}
 						if (containListener(listeners, listener)) {
 							continue;
 
@@ -253,6 +263,11 @@ public class EventHandle extends RejectCallback implements Notifiable {
 							eventType)) {
 						List listeners = (List) remoteListenersIndexbyType
 								.get(eventType.toString());
+						if(listeners == null)
+						{
+							listeners = new ArrayList();
+							remoteListenersIndexbyType.put(eventType.toString(), listeners);
+						}
 						if (containListener(listeners, listener)) {
 							continue;
 
@@ -275,6 +290,11 @@ public class EventHandle extends RejectCallback implements Notifiable {
 					if (this.containEventType(listenersIndexbyType, eventType)) {
 						List listeners = (List) listenersIndexbyType
 								.get(eventType.toString());
+						if(listeners == null)
+						{
+							listeners = new ArrayList();
+							listenersIndexbyType.put(eventType.toString(), listeners);
+						}
 						if (containListener(listeners, listener)) {
 							continue;
 

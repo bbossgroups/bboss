@@ -31,15 +31,31 @@ public class UTF8Convertor {
 		}
 		return false;
 	}
+	
+	private boolean endwith(String excludedirs[],String name)
+	{
+		for(int i = 0; excludedirs != null && i < excludedirs.length; i ++)
+		{
+			if(name.endsWith(excludedirs[i]))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
 	public void convertCharsetToUtf_8(String dir,final String[] excludedirs,final  String includefiles[])
 	{
 		File root = new File(dir);
 		File[] files = root.listFiles(new FileFilter(){
 
 			public boolean accept(File arg0) {
-				if(arg0.isDirectory() && !contain(excludedirs,arg0.getName()))
-					return true;
-				else if(contain(includefiles,arg0.getName()))
+				if(arg0.isDirectory() )
+				{
+					if(!contain(excludedirs,arg0.getName()))
+						return true;
+					return false;
+				}
+				else if(endwith(includefiles,arg0.getName()))
 				{
 					return true;
 				}
@@ -59,7 +75,7 @@ public class UTF8Convertor {
 					doconvert(files[i]);
 				else
 				{
-					convertCharsetToUtf_8(files[i].getCanonicalPath());
+					convertCharsetToUtf_8(files[i].getCanonicalPath(),excludedirs,includefiles);
 				}
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
@@ -450,15 +466,18 @@ public class UTF8Convertor {
 	{
 		UTF8Convertor convertor = new UTF8Convertor();
     	//转换文件字符编码GBK,GB2312,gb18030为UTF-8
-		convertor.convertCharsetToUtf_8("D:\\workspace\\smc-desktop");
+//		convertor.convertCharsetToUtf_8("D:\\workspace\\SanyPDP\\src-htmlparser");
 		
 		//转换文件字符编码GBK,GB2312,gb18030为UTF-8,指定忽略的目录名称，指定要转换的文件类型
-		convertor.convertCharsetToUtf_8("D:\\workspace\\smc-desktop",
-				new String[]{".svn","classes",".settings","文档","dbinit-system","distrib","doc","lib","lib-client","lib-compile"},
-				new String[]{".jsp",".java",".js",".css",".txt",".properties",".html",".htm",".tld",".vm",".xml"});
+//		convertor.convertCharsetToUtf_8("D:\\workspace\\SanyPDP\\src-htmlparser",
+//				new String[]{".svn","classes",".settings","文档","dbinit-system","distrib","doc","lib","lib-client","lib-compile"},
+//				new String[]{".jsp",".java",".js",".css",".txt",".properties",".html",".htm",".tld",".vm",".xml"});
+		convertor.convertCharsetToUtf_8("D:\\workspace\\SanyPDP\\src-htmlparser",
+				new String[]{".svn"},
+				new String[]{".java"});
 		
 		//获取文件内容编码集
-		 String charset = convertor.takefilecharset(new File("D:\\workspace\\smc-desktop/src-sys/com/frameworkset/platform/sysmgrcore/purviewmanager/PurviewManagerOrgTree.java"));
+//		 String charset = convertor.takefilecharset(new File("D:\\workspace\\smc-desktop/src-sys/com/frameworkset/platform/sysmgrcore/purviewmanager/PurviewManagerOrgTree.java"));
 		//打印没有精确识别出字符集的文件信息
 		 System.out.println(convertor.getUnknown());
 		

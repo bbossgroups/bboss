@@ -3,7 +3,28 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
 	<display-name>BBOSS-MVC</display-name>
-	
+	<listener>
+	<description><![CDATA[应用销毁监听器：
+		在应用销毁之前调用系统shutdown 回调函数，前提是所有的shutdown回调函数
+		是通过以下方法注册：
+		BaseApplicationContext.addShutdownHook(new Runnable(){
+
+				@Override
+				public void run() {
+					
+					try {
+						stop();
+					
+
+					} catch (Throwable e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}});]]>
+		
+	</description>
+	<listener-class>org.frameworkset.web.listener.ApplicationLifeListener</listener-class>
+	</listener>
 	<filter>  
         <filter-name>encodingFilter</filter-name>  
         <filter-class>com.frameworkset.common.filter.CharsetEncodingFilter</filter-class>
