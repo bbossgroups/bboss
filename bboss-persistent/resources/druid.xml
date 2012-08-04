@@ -1,0 +1,32 @@
+<property id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
+	init-method="init"><!-- 这里不需要配置destroy-method，因为bboss持久层在jvm退出时会自动调用数据源的close方法 -->
+	<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
+	<property name="url" value="jdbc:oracle:thin:@//10.0.15.134:1521/orcl">
+		<!-- 如果数据库url是加密的，则需要配置解密的编辑器 -->
+		<!--<editor clazz="com.frameworkset.common.poolman.security.DecryptEditor"/> -->
+	</property>
+	<!-- 连接数据库的用户名 -->
+	<property name="username" value="SANYGCMP">
+		<!-- 如果账号是加密的账号，则需要配置解密的编辑器 -->
+		<!-- <editor clazz="com.frameworkset.common.poolman.security.DecryptEditor"/> -->
+	</property>
+	<!-- 连接数据库的密码 -->
+	<property name="password" value="SANYGCMP">
+		<!-- 如果口令是加密的口令，则需要配置解密的编辑器 -->
+		<!-- <editor clazz="com.frameworkset.common.poolman.security.DecryptEditor"/> -->
+	</property>
+	<property name="filters" value="stat" />
+	<property name="maxActive" value="20" />
+	<property name="initialSize" value="1" />
+	<property name="maxWait" value="60000" />
+	<property name="minIdle" value="1" />
+	<property name="timeBetweenEvictionRunsMillis" value="3000" />
+	<property name="minEvictableIdleTimeMillis" value="300000" />
+	<property name="validationQuery" value="SELECT 1 from dual" />
+	<property name="testWhileIdle" value="true" />
+	<property name="testOnBorrow" value="false" />
+	<property name="testOnReturn" value="false" />
+	<property name="poolPreparedStatements" value="true" />
+	<property name="maxPoolPreparedStatementPerConnectionSize"
+		value="20" />
+</property>
