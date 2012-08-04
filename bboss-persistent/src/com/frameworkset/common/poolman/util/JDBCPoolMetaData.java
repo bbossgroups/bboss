@@ -16,8 +16,10 @@
 package com.frameworkset.common.poolman.util;
 
 import java.io.Serializable;
+import java.util.Map;
 
 import com.frameworkset.common.poolman.PoolManConstants;
+import com.frameworkset.util.StringUtil;
 
 public class JDBCPoolMetaData implements Serializable{
 
@@ -36,11 +38,13 @@ public class JDBCPoolMetaData implements Serializable{
     private int shrinkBy = PoolManConstants.DEFAULT_SHRINKBY;
     private boolean emergencyCreates = PoolManConstants.DEFAULT_EMERGENCY_CREATES;
     private String maxWait = "30";//30√Î  
+    private String datasourceFile ;
     
     private String databaseProductName;
     private String driverName;
     private String databaseProductVersion;
     private String driverVersion;
+    private Map<String,Object> datasourceParameters ; 
     
 //    addDbMetaDataEntry(dbMetaData, "probe.jsp.dataSourceTest.dbMetaData.dbProdName", md.getDatabaseProductName());
 //    addDbMetaDataEntry(dbMetaData, "probe.jsp.dataSourceTest.dbMetaData.dbProdVersion", md.getDatabaseProductVersion());
@@ -187,9 +191,31 @@ public class JDBCPoolMetaData implements Serializable{
    
 
     /* PHYSICAL CONNECTION METHODS */
-
+	public static final String[] driver_names = new String[]{"driverClass","driverClassName","driver","driver-class","driverName"};
     public String getDriver() {
-        return this.driver;
+    	if(!StringUtil.isEmpty(this.driver))
+    	{
+    		return this.driver;
+    	}
+    	else if(this.datasourceParameters != null && this.datasourceParameters.size() > 0)
+    	{
+    		String dr = null;
+    		for(int i = 0; i < driver_names.length; i ++)
+    		{
+    			dr = (String)this.datasourceParameters.get(driver_names[i]);
+    			if(!StringUtil.isEmpty(dr))
+    			{
+    				this.driver = dr;
+    				break;
+    			}
+    		}
+    		return this.driver;
+    	}
+    	else
+    	{
+    		return this.driver;
+    	}
+    	
     }
 
     public void setDriver(String driver) {
@@ -789,6 +815,8 @@ public class JDBCPoolMetaData implements Serializable{
 			this.setUsepool(extenalInfo.isUsepool());
 			this.setEncryptdbinfo(extenalInfo.isEncryptdbinfo());
 			this.setEnablejta(extenalInfo.isEnablejta());
+			this.setDatasourceFile(extenalInfo.getDatasourceFile());
+			this.setDatasourceParameters(getDatasourceParameters());
 		}
 	}
 
@@ -900,5 +928,29 @@ public class JDBCPoolMetaData implements Serializable{
 
 	public void setEnablejta(boolean enablejta) {
 		this.enablejta = enablejta;
+	}
+
+	public String getDatasourceFile() {
+		return datasourceFile;
+	}
+
+	public void setDatasourceFile(String datasourceFile) {
+		this.datasourceFile = datasourceFile;
+	}
+
+	public Map<String, Object> getDatasourceParameters() {
+		return datasourceParameters;
+	}
+
+	public void setDatasourceParameters(Map<String, Object> datasourceParameters) {
+		this.datasourceParameters = datasourceParameters;
+	}
+	
+	public void initDatasourceParameters()
+	{
+		if(!StringUtil.isEmpty(this.datasourceFile ))
+		{
+			this.datasourceParameters = DatasourceUtil.getDataSourceParameters(this.datasourceFile);
+		}
 	}
 }

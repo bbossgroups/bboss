@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- bboss 持久层框架中配置c3p0,dbcp,proxool等第三方数据源的配置文件示例 -->
+<poolman>
+
+
+
+  
+  <datasource>
+	
+    <dbname>c3p0</dbname>
+	<loadmetadata>false</loadmetadata>
+	<enablejta>true</enablejta>
+    <jndiName>c3p0_datasource_jndiname</jndiName>
+    <datasourceFile>c3p0.xml</datasourceFile>
+    <autoprimarykey>false</autoprimarykey>
+	<showsql>false</showsql>
+	 <!--
+        定义数据库主键生成机制
+        缺省的采用系统自带的主键生成机制，
+        外步程序可以覆盖系统主键生成机制
+        由值来决定
+        auto:自动，一般在生产环境下采用该种模式，
+               解决了单个应用并发访问数据库添加记录产生冲突的问题，效率高，如果生产环境下有多个应用并发访问同一数据库时，必须采用composite模式
+        composite：结合自动和实时从数据库中获取最大的主键值两种方式来处理，开发环境下建议采用该种模式，
+                   解决了多个应用同时访问数据库添加记录时产生冲突的问题，效率相对较低， 如果生产环境下有多个应用并发访问同一数据库时，必须采用composite模式
+    -->
+    <keygenerate>composite</keygenerate>
+
+  </datasource>
+  
+   <datasource>
+	
+    <dbname>dbcp</dbname>
+	<loadmetadata>false</loadmetadata>
+	<enablejta>true</enablejta>
+    <jndiName>dbcp_datasource_jndiname_1</jndiName>
+    <datasourceFile>dbcp.xml</datasourceFile>
+    <autoprimarykey>false</autoprimarykey>
+	<showsql>false</showsql>
+	 <!--
+        定义数据库主键生成机制
+        缺省的采用系统自带的主键生成机制，
+        外步程序可以覆盖系统主键生成机制
+        由值来决定
+        auto:自动，一般在生产环境下采用该种模式，
+               解决了单个应用并发访问数据库添加记录产生冲突的问题，效率高，如果生产环境下有多个应用并发访问同一数据库时，必须采用composite模式
+        composite：结合自动和实时从数据库中获取最大的主键值两种方式来处理，开发环境下建议采用该种模式，
+                   解决了多个应用同时访问数据库添加记录时产生冲突的问题，效率相对较低， 如果生产环境下有多个应用并发访问同一数据库时，必须采用composite模式
+    -->
+    <keygenerate>composite</keygenerate>
+
+  </datasource>
+  <datasource>
+	
+    <dbname>proxool</dbname>
+	<loadmetadata>false</loadmetadata>
+	<enablejta>true</enablejta>
+    <jndiName>proxool_datasource_jndiname</jndiName>
+    <datasourceFile>proxool.xml</datasourceFile>
+    <autoprimarykey>false</autoprimarykey>
+	<showsql>false</showsql>
+	 <!--
+        定义数据库主键生成机制
+        缺省的采用系统自带的主键生成机制，
+        外步程序可以覆盖系统主键生成机制
+        由值来决定
+        auto:自动，一般在生产环境下采用该种模式，
+               解决了单个应用并发访问数据库添加记录产生冲突的问题，效率高，如果生产环境下有多个应用并发访问同一数据库时，必须采用composite模式
+        composite：结合自动和实时从数据库中获取最大的主键值两种方式来处理，开发环境下建议采用该种模式，
+                   解决了多个应用同时访问数据库添加记录时产生冲突的问题，效率相对较低， 如果生产环境下有多个应用并发访问同一数据库时，必须采用composite模式
+    -->
+    <keygenerate>composite</keygenerate>
+
+  </datasource>
+  
+
+
+</poolman>

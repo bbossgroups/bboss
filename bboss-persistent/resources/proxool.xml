@@ -1,0 +1,30 @@
+<property name="datasource" class="org.logicalcobwebs.proxool.ProxoolDataSource">
+  <!-- 指定连接数据库的JDBC驱动 -->
+  <property name="driver" value="oracle.jdbc.driver.OracleDriver"/>  
+  <!-- 连接数据库所用的URL -->
+  <property name="driverUrl"
+   value="jdbc:oracle:thin:@//10.0.15.134:1521/orcl">
+   <!-- 如果数据库url是加密的，则需要配置解密的编辑器 -->
+	<!--<editor clazz="com.frameworkset.common.poolman.security.DecryptEditor"/> -->
+   </property>  
+  <!-- 连接数据库的用户名 -->
+  <property name="user" value="SANYGCMP">
+    <!-- 如果账号是加密的账号，则需要配置解密的编辑器 -->
+<!--   	<editor clazz="com.frameworkset.common.poolman.security.DecryptEditor"/> -->
+  </property>  
+  <!-- 连接数据库的密码 -->
+  <property name="password" value="SANYGCMP">
+  <!-- 如果口令是加密的口令，则需要配置解密的编辑器 -->
+<!--   	<editor clazz="com.frameworkset.common.poolman.security.DecryptEditor"/> -->
+  </property>
+
+
+    <property name="alias" value="Pool_dbname" />
+    <property name="houseKeepingSleepTime" value="90000" />
+    <property name="prototypeCount" value="0" />
+    <property name="maximumConnectionCount" value="50" />
+    <property name="minimumConnectionCount" value="2" />
+    <property name="simultaneousBuildThrottle" value="50" />
+    <property name="maximumConnectionLifetime" value="14400000" />
+    <property name="houseKeepingTestSql" value="select 1 from dual1" />
+</property>

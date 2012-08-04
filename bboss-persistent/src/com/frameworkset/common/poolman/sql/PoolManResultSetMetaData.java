@@ -496,6 +496,14 @@ public class PoolManResultSetMetaData implements java.sql.ResultSetMetaData, jav
 	public boolean isWritable(String colName) throws SQLException{
 		return this.isWritable(this.seekIndex(colName)+ 1);
 	}
+	public <T> T unwrap(Class<T> iface) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	public boolean isWrapperFor(Class<?> iface) throws SQLException {
+		// TODO Auto-generated method stub
+		return false;
+	}
 
 }
 

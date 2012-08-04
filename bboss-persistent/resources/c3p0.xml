@@ -1,0 +1,33 @@
+<property name="datasource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+  <!-- 指定连接数据库的JDBC驱动 -->
+  <property name="driverClass" value="oracle.jdbc.driver.OracleDriver"/>  
+  <!-- 连接数据库所用的URL -->
+  <property name="jdbcUrl"
+   value="jdbc:oracle:thin:@//10.0.15.134:1521/orcl">
+   <!-- 如果数据库url是加密的，则需要配置解密的编辑器 -->
+	<!--<editor clazz="com.frameworkset.common.poolman.security.DecryptEditor"/> -->
+   </property>  
+  <!-- 连接数据库的用户名 -->
+  <property name="user" value="SANYGCMP">
+    <!-- 如果账号是加密的账号，则需要配置解密的编辑器 -->
+<!--   	<editor clazz="com.frameworkset.common.poolman.security.DecryptEditor"/> -->
+  </property>  
+  <!-- 连接数据库的密码 -->
+  <property name="password" value="SANYGCMP">
+  <!-- 如果口令是加密的口令，则需要配置解密的编辑器 -->
+<!--   	<editor clazz="com.frameworkset.common.poolman.security.DecryptEditor"/> -->
+  </property>
+  
+  <!-- 设置数据库连接池的最大连接数 -->
+  <property name="maxPoolSize" value="20"/>  
+  <!-- 设置数据库连接池的最小连接数 -->
+  <property name="minPoolSize" value="2"/>
+  
+  <!-- 设置数据库连接池的初始化连接数 -->
+  <property name="initialPoolSize" value="2"/>
+  <!-- 设置数据库连接池的连接的最大空闲时间,单位为秒 -->
+  <property name="maxIdleTime" value="20"/>  
+  <property name="preferredTestQuery" value="select 1 from dual"/>
+  
+</property>
+ 

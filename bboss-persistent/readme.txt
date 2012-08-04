@@ -23,6 +23,78 @@ bboss-persistent<-cas server [frameworkset-pool.jar]
 to do list:
 无
 #######update function list since bbossgroups-3.5 begin###########
+o poolman内置数据源apache common dbcp升级到1.4版本，apache common pool升级到1.5.4，
+由于dbcp 1.4只支持jdk 1.6，所以对持久层进行相应的调整，调整后的持久层框架
+同时支持在jdk 1.5和jdk 1.6下进行编译和打包（之前的持久层版本只能在jdk 1.5下面打包和编译）。
+如果需要在jdk 1.5中使用请使用run.bat进行打包发布，发布的包在distrib目录下
+如果需要在jdk 1.6中使用请使用run-jdk6.bat进行打包发布，发布的包在distrib目录下
+
+为了兼容jdk 1.5版本的应用程序，同时在antbuildall工程下面的两个build-all.bat和build-all-jdk16.bat分别对应jdk 5和jdk 6的编译指令
+
+工程目录下增加src-jdk5和src-jdk6两个源码目录，默认采用src-jdk6导入工程，如果环境是1.5请切换至src-jdk5同时将工程的jdk指定为jdk 1.5
+o poolman.xml文件增加datasourceFile属性，用来指定定义数据源的ioc配置文件（基于bboss ioc框架）
+以c3p0为例进行说明（不同的数据源请参考poolmna-third.xml文件）：
+  <datasource>
+	
+    <dbname>c3p0</dbname>
+	<loadmetadata>false</loadmetadata>
+	<enablejta>true</enablejta>
+    <jndiName>bspf_datasource_jndiname_1</jndiName>
+    <datasourceFile>c3p0.xml</datasourceFile>
+    <autoprimarykey>false</autoprimarykey>
+	<showsql>false</showsql>
+	 <!--
+        定义数据库主键生成机制
+        缺省的采用系统自带的主键生成机制，
+        外步程序可以覆盖系统主键生成机制
+        由值来决定
+        auto:自动，一般在生产环境下采用该种模式，
+               解决了单个应用并发访问数据库添加记录产生冲突的问题，效率高，如果生产环境下有多个应用并发访问同一数据库时，必须采用composite模式
+        composite：结合自动和实时从数据库中获取最大的主键值两种方式来处理，开发环境下建议采用该种模式，
+                   解决了多个应用同时访问数据库添加记录时产生冲突的问题，效率相对较低， 如果生产环境下有多个应用并发访问同一数据库时，必须采用composite模式
+    -->
+    <keygenerate>composite</keygenerate>
+
+  </datasource>
+  其中的<datasourceFile>c3p0.xml</datasourceFile>指定了c3p0 datasource的配置文件地址，c3p0.xml相对应classpath的根路径。
+  
+c3p0.xml参考测试配置文件/bboss-persistent/resources/c3p0.xml
+<property name="datasource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+  <!-- 指定连接数据库的JDBC驱动 -->
+  <property name="driverClass" value="oracle.jdbc.driver.OracleDriver"/>  
+  <!-- 连接数据库所用的URL -->
+  <property name="jdbcUrl"
+   value="jdbc:oracle:thin:@//10.0.15.134:1521/orcl">
+   <!-- 如果数据库url是加密的，则需要配置解密的编辑器 -->
+	<!--<editor clazz="com.frameworkset.common.poolman.security.DecryptEditor"/> -->
+   </property>  
+  <!-- 连接数据库的用户名 -->
+  <property name="user" value="SANYGCMP">
+    <!-- 如果账号是加密的账号，则需要配置解密的编辑器 -->
+<!--   	<editor clazz="com.frameworkset.common.poolman.security.DecryptEditor"/> -->
+  </property>  
+  <!-- 连接数据库的密码 -->
+  <property name="password" value="SANYGCMP">
+  <!-- 如果口令是加密的口令，则需要配置解密的编辑器 -->
+<!--   	<editor clazz="com.frameworkset.common.poolman.security.DecryptEditor"/> -->
+  </property>
+  
+  <!-- 设置数据库连接池的最大连接数 -->
+  <property name="maxPoolSize" value="20"/>  
+  <!-- 设置数据库连接池的最小连接数 -->
+  <property name="minPoolSize" value="2"/>
+  
+  <!-- 设置数据库连接池的初始化连接数 -->
+  <property name="initialPoolSize" value="2"/>
+  <!-- 设置数据库连接池的连接的最大空闲时间,单位为秒 -->
+  <property name="maxIdleTime" value="20"/>  
+  <property name="preferredTestQuery" value="select 1 from dual"/>
+  
+</property>
+ 
+ 测试用例
+ int num = SQLExecutor.queryObjectWithDBName(int.class, "c3p0", "select 1 from dual")
+ 
 o poolman.xml文件中datasource增加<enablejta>true</enablejta>属性配置
 enablejta和jndiName属性结合使用，当enablejta为true时将把数据源转换为TXDataSource注册jndi上下文中
 主要应用于托管hibernate和ibatis等持久层框架事务

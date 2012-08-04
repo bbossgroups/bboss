@@ -52,15 +52,14 @@ import com.frameworkset.common.poolman.sql.ForeignKeyMetaData;
 import com.frameworkset.common.poolman.sql.PoolManDataSource;
 import com.frameworkset.common.poolman.sql.PrimaryKeyMetaData;
 import com.frameworkset.common.poolman.sql.TableMetaData;
-import com.frameworkset.commons.dbcp.BasicDataSource;
 import com.frameworkset.commons.dbcp.BasicDataSourceFactory;
-import com.frameworkset.commons.dbcp.NativeDataSource;
 import com.frameworkset.commons.pool.impl.GenericObjectPool;
 import com.frameworkset.orm.adapter.DB;
 import com.frameworkset.orm.adapter.DBFactory;
 import com.frameworkset.orm.transaction.JDBCTransaction;
 import com.frameworkset.orm.transaction.TXDataSource;
 import com.frameworkset.orm.transaction.TransactionManager;
+import com.frameworkset.util.StringUtil;
 
 /**
  * JDBCPool is an ObjectPool of JDBC connection objects. It is also a
@@ -130,68 +129,7 @@ public class JDBCPool {
 	{
 		if(ctx == null)
 		{
-//			try {
-//				// org.apache.naming.java.URLContextFactory s;
-//	
-//				// System.setProperty(Context.INITIAL_CONTEXT_FACTORY,"com.frameworkset.common.poolman.management.JndiDataSourceFactory");
-//				if (PoolManConfiguration.jndi_principal != null) {
-//					Hashtable environment = new Hashtable();
-//					// environment.put("java.naming.factory.initial",
-//					// "weblogic.jndi.WLInitialContextFactory");
-//					// environment.put("java.naming.provider.url",
-//					// "t3://localhost:7001");
-//	
-////					environment.put("java.naming.security.principal",
-////							PoolManConfiguration.jndi_principal);
-////					environment.put("java.naming.security.credentials",
-////							PoolManConfiguration.jndi_credentials);
-//					ctx = new InitialContext(environment);
-//				} else {
-//					ctx = new InitialContext();
-//				}
-//				testJNDI();
-//	
-//			} catch (NamingException e) {
-//				
-//				try {
-//					System
-//							.setProperty(Context.INITIAL_CONTEXT_FACTORY,
-//									"com.frameworkset.common.poolman.jndi.DummyContextFactory");
-//					ctx = new InitialContext();
-//				} catch (NamingException e1) {
-//					// TODO Auto-generated catch block
-//					e1.printStackTrace();
-//				}
-//			}
-//			catch (Exception e) {
-//				
-//				try {
-//					System
-//							.setProperty(Context.INITIAL_CONTEXT_FACTORY,
-//									"com.frameworkset.common.poolman.jndi.DummyContextFactory");
-//					ctx = new InitialContext();
-//				} catch (NamingException e1) {
-//					// TODO Auto-generated catch block
-//					e1.printStackTrace();
-//				}
-//			}
-//			if(meta != null && meta.getJndiclass() != null)
-//			{
-//				Hashtable environment = new Hashtable();
-//				environment.put(Context.INITIAL_CONTEXT_FACTORY, meta.getJndiclass());
-//				if(meta.getJndiurl() != null)
-//					environment.put(Context.PROVIDER_URL, meta.getJndiurl());
-//				if(meta.getJndiuser() != null)
-//					environment.put(Context.SECURITY_PRINCIPAL
-//							, meta.getJndiuser());
-//				if(meta.getJndipassword() != null)
-//					environment.put(Context.SECURITY_CREDENTIALS, meta.getJndipassword());
-//				ctx = ContextUtil.finaContext(environment, JDBCPool.class.getClassLoader());
-//			}
-//			else
-//			{
-//				ctx = ContextUtil.finaContext(null, JDBCPool.class.getClassLoader());
-//			}
+
 			ctx = buildContext(meta);
 			if(meta.getJNDIName() != null && !meta.getJNDIName().equals(""))
 			{
@@ -344,14 +282,18 @@ public class JDBCPool {
 	{
 		String dbtype = info.getDbtype();
 		String driver = info.getDriver();
+		
 		if (dbtype == null) {
+			
 			try {
 				log.debug("Init DBAdapter from driver:" + driver);
 				dbAdapter = DBFactory.create(driver);
 			} catch (InstantiationException ex) {
 				log.error(ex.getMessage());
 			}
-		} else if(driver != null){
+		} 
+		else
+		{
 			try {
 				log.debug("Init DBAdapter from dbtype:" + dbtype);
 				dbAdapter = DBFactory.create(dbtype);
@@ -588,18 +530,22 @@ public class JDBCPool {
 
 		return p;
 	}
+	
 	private void initPoolDatasource()
 	{
 		try {
+			DataSource _datasource = null;
+			if(StringUtil.isEmpty(this.info.getDatasourceFile()))//没有指定IOC数据源配置文件，直接初始化内置数据源apache dbcp
+			{
+				Properties p = getProperties();
+				_datasource =  BasicDataSourceFactory
+						.createDataSource(p);
+			}
+			else //从ioc配置文件中获取数据源实例
+			{
+				_datasource =  DatasourceUtil.getDataSource(info.getDatasourceFile());
+			}
 
-			
-			Properties p = getProperties();
-			DataSource _datasource =  BasicDataSourceFactory
-					.createDataSource(p);
-//			if(this.info.isEnablejta())
-//			{
-//				_datasource = new TXDataSource(_datasource);
-//			}
 			if (this.info.getJNDIName() != null
 					&& !this.info.getJNDIName().equals("")) {
 				this.datasource = new PoolManDataSource(_datasource, info
@@ -611,6 +557,8 @@ public class JDBCPool {
 			{
 				this.datasource = new TXDataSource(datasource);
 			}
+			
+			
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -666,36 +614,7 @@ public class JDBCPool {
 
 		}
 
-		// /**
-		// * 首先创建一个对象池来保存数据库连接
-		// *
-		// * 使用 commons.pool 的 GenericObjectPool对象
-		// */
-		// ObjectPool connectionPool = new GenericObjectPool();
-		//
-		// /**
-		// * 创建一个 DriverManagerConnectionFactory对象 连接池将用它来获取一个连接
-		// */
-		//
-		// Properties properties = new Properties();
-		// properties.put("user", info.getUserName());
-		// properties.put("password", info.getPassword());
-		// ConnectionFactory connectionFactory = new
-		// DriverManagerConnectionFactory(
-		// this.info.getURL(), properties);
-		//
-		// /**
-		// * 创建一个PoolableConnectionFactory 对象。
-		// */
-		// PoolableConnectionFactory poolableConnectionFactory = new
-		// PoolableConnectionFactory(
-		// connectionFactory, connectionPool, null, null, false,
-		// true);
-		//
-		// // connectionPool.setFactory(poolableConnectionFactory);
-		//
-		// driver.registerPool(info.getDbname(), connectionPool);
-		//			
+		
 
 	}
 	
@@ -841,6 +760,7 @@ public class JDBCPool {
 		
 	}
 
+	
 	public void startPool() {
 		if (status.equals("start"))
 			return;
@@ -853,31 +773,15 @@ public class JDBCPool {
 			if(this.datasource != null)
 			{
 				try {
-					if (this.datasource instanceof BasicDataSource) {
-						((BasicDataSource) datasource).close();
-					} else if (datasource instanceof PoolManDataSource) {
-						((PoolManDataSource) datasource).close();
-					}
+
+					DatasourceUtil.closeDS(datasource);
 				} catch (Exception e) {
 					
 				}
 				datasource = null;
 			}
 		}
-//		else
-//		{
-//			if(this.datasource != null)
-//				try {
-//					if (this.datasource instanceof BasicDataSource) {
-//						((BasicDataSource) datasource).close();
-//					} else if (datasource instanceof PoolManDataSource) {
-//						((PoolManDataSource) datasource).close();
-//					}
-//				} catch (Exception e) {
-//					
-//				}
-//			this.datasource = null;
-//		}
+
 		this.setUpCommonPool();
 		this.startTime = System.currentTimeMillis();
 		this.status = "start";
@@ -1915,34 +1819,7 @@ public class JDBCPool {
 
 	public void init() throws Exception {
 
-		// temporarily unset initConnectionSQL until after initPoolSQL executes
-		// String initConSQL = info.getInitialConnectionSQL();
-		//
-		// // super.init();
-		// // set up cache
-		// // if (info.isCacheEnabled()) {
-		// // this.sqlcache = new SQLCache(this, info.getCacheSize(),
-		// // info.getCacheRefreshInterval());
-		// // }
-		//
-		// // perform initial pool SQL
-		// if (info.getInitialPoolSQL() != null) {
-		// // try {
-		// // // PoolManConnection pc = (PoolManConnection) create();
-		// // // Connection c = pc.getPhysicalConnection();
-		// // // Statement s = c.createStatement();
-		// // // s.execute(info.getInitialPoolSQL());
-		// // } catch (SQLException sqe) {
-		// // log.debug("Init Pool SQL suffered a SQLException: " + sqe);
-		// // throw new SQLException("Init Pool SQL suffered a SQLException: "
-		// // + sqe);
-		// // }
-		// }
-		//
-		// // now reset initConSQL
-		// info.setInitialConnectionSQL(initConSQL);
 
-		// bind the DataSource view of this pool to JNDI
 		deployDataSource();
 
 	}
@@ -2072,11 +1949,8 @@ public class JDBCPool {
 
 		try {
 			try {
-				if (this.datasource instanceof BasicDataSource) {
-					((BasicDataSource) datasource).close();
-				} else if (datasource instanceof PoolManDataSource) {
-					((PoolManDataSource) datasource).close();
-				}
+
+				DatasourceUtil.closeDS(datasource);
 			} catch (Exception e) {
 				throw e;
 			}
@@ -2098,15 +1972,6 @@ public class JDBCPool {
 		return this.deployedDataSource;
 	}
 
-	// /** Associates a SQLCache with this pool. */
-	// public void setCache(SQLCache cache) {
-	// this.sqlcache = cache;
-	// }
-
-	// /** @return SQLCache The SQLCache associated with this pool. */
-	// public SQLCache getCache() {
-	// return this.sqlcache;
-	// }
 
 	/**
 	 * Determine whether or not this pool is using a SQLCache (configured in
@@ -2120,16 +1985,11 @@ public class JDBCPool {
 
 	/** Force the cache to refresh. */
 	public void refreshCache() {
-		// if (usingCache())
-		// this.sqlcache.forceRefresh();
+
 	}
 
 	public String getDriver() {
-//		if(this.externalDBName == null)
-//			return info.getDriver();
-//		JDBCPoolMetaData meta = SQLManager.getInstance().getJDBCPoolMetaData(externalDBName);
-//		if(meta != null)
-//			return meta.getDriver();
+
 		return info.getDriver();
 	}
 
@@ -2199,12 +2059,9 @@ public class JDBCPool {
 	}
 
 	public boolean isUsingNativeResults() {
-//		if(this.externalDBName == null)
+
 			return info.isNativeResults();
-//		JDBCPoolMetaData meta = SQLManager.getInstance().getJDBCPoolMetaData(externalDBName);
-//		if(meta != null)
-//			return meta.isNativeResults();
-//		return info.isNativeResults();
+
 		
 	}
 
@@ -2227,200 +2084,7 @@ public class JDBCPool {
 		}
 	}
 
-//	/** Returns a connection to the pool. */
-//	public void returnConnection(Object pcon) {
-//
-//		// pcon.clean();
-//		// super.checkIn(pcon);
-//	}
 
-//	private Object connectionForOracle10g() throws SQLException {
-//		try {
-//			OracleDataSource ods = new OracleDataSource();
-//			ods.setURL(info.getURL());
-//			ods.setUser(info.getUserName());
-//			ods.setPassword(info.getPassword());
-//			Connection con = ods.getConnection();
-//			con.setTransactionIsolation(info.getIsolationLevel());
-//
-//			// set auto commit
-//			con.setAutoCommit(true);
-//			if (info.getInitialConnectionSQL() != null) {
-//				try {
-//					Statement s = con.createStatement();
-//					s.execute(info.getInitialConnectionSQL());
-//					s.close();
-//				} catch (SQLException sqe) {
-//					log.debug("Init SQL Suffered a SQLException: " + sqe);
-//					throw new RuntimeException(
-//							"Init SQL Suffered a SQLException: " + sqe);
-//				}
-//			}
-//			//	        
-//			// PoolManConnection pcon = new PoolManConnection(con, this);
-//			// pcon.addConnectionEventListener(this);
-//			return con;
-//
-//			// return pcon;
-//		} catch (SQLException sqlex) {
-//			String emsg = "SQLException occurred in JDBCPool: "
-//					+ sqlex.toString() + "\nparams: " + info.getDriver() + ", "
-//					+ info.getURL() + ". Please check your username, password "
-//					+ "and other connectivity info.";
-//			log.info(emsg, sqlex);
-//			throw new SQLException(emsg);
-//		} catch (Exception e) {
-//			log.info(e.getMessage(), e);
-//			throw new SQLException(e.getMessage());
-//		}
-//	}
-//
-//	private Object connectionForOracle9i() throws SQLException {
-//		try {
-//
-//			Driver d = (Driver) (Class.forName(info.getDriver()).newInstance());
-//			Properties p = new Properties();
-//			p.put("user", info.getUserName());
-//			p.put("password", info.getPassword());
-//
-//			if (!d.acceptsURL(info.getURL())) {
-//				log.info("Driver cannot accept URL: " + info.getURL());
-//				throw new SQLException("Driver cannot accept URL: "
-//						+ info.getURL());
-//			}
-//			Connection con = d.connect(info.getURL(), p);
-//
-//			// set tx isolation level
-//			con.setTransactionIsolation(info.getIsolationLevel());
-//
-//			// set auto commit
-//			con.setAutoCommit(true);
-//
-//			// execute initialConnectionSQL, if any
-//			if (info.getInitialConnectionSQL() != null) {
-//				try {
-//					Statement s = con.createStatement();
-//					s.execute(info.getInitialConnectionSQL());
-//					s.close();
-//				} catch (SQLException sqe) {
-//					log.debug("Init SQL Suffered a SQLException: " + sqe);
-//					throw new RuntimeException(
-//							"Init SQL Suffered a SQLException: " + sqe);
-//				}
-//			}
-//
-//			// PoolManConnection pcon = new PoolManConnection(con, this);
-//			// pcon.addConnectionEventListener(this);
-//			//
-//			// return pcon;
-//			return con;
-//
-//			/*
-//			 * OLD CODE Class.forName(info.getDrivername()).newInstance();
-//			 * Connection con = DriverManager.getConnection(info.getUrl(),
-//			 * info.getUsername(), info.getPassword());
-//			 */
-//
-//		} catch (ClassNotFoundException cnfex) {
-//			String msg = "Looks like the driver for your database was not found. Please verify that it is in your CLASSPATH and "
-//					+ "listed properly in the poolman.xml file.";
-//			log.info(msg, cnfex);
-//			throw new SQLException(msg);
-//		} catch (SQLException sqlex) {
-//			String emsg = "SQLException occurred in JDBCPool: "
-//					+ sqlex.toString() + "\nparams: " + info.getDriver() + ", "
-//					+ info.getURL() + ". Please check your username, password "
-//					+ "and other connectivity info.";
-//			log.info(emsg, sqlex);
-//			throw new SQLException(emsg);
-//		} catch (Exception e) {
-//			log.info(e.getMessage(), e);
-//			throw new SQLException(e.getMessage());
-//		}
-//	}
-
-//	/**
-//	 * Creates a physical Connection and PooledConnection wrapper for it (a
-//	 * PoolManConnection).
-//	 */
-//	protected Object create() throws SQLException {
-//
-//		if (info.getDriver() == null || info.getURL() == null) {
-//			log.info("No Driver and/or URL found!");
-//			throw new SQLException("No Driver and/or URL found!");
-//		}
-//
-//		if (false)
-//			return this.connectionForOracle10g();
-//		else
-//			return this.connectionForOracle9i();
-//
-//	}
-
-	// /** Checks to see if the current connection is valid. */
-	// protected boolean validate(Object o) {
-	//
-	// boolean valid = false;
-	// PoolManConnection pcon = (PoolManConnection) o;
-	//
-	// if (this.info.getValidationQuery() != null) {
-	//
-	// // execute validationSQL
-	// Connection con = null;
-	// Statement vs = null;
-	// ResultSet rs = null;
-	// try {
-	// // Postgres fails on raw connection...
-	//            	
-	// con = pcon.getPhysicalConnection();
-	// vs = con.createStatement();
-	// vs.execute(this.info.getValidationQuery());
-	// valid = true;
-	// } catch (Exception e) {
-	// log.debug("Failed to validate Connection using validationQuery: " +
-	// this.info.getValidationQuery(), e);
-	// }
-	// finally {
-	// closeResources(vs, rs);
-	// }
-	// }
-	//
-	// else {
-	// Connection con = null;
-	// Statement vs = null;
-	// try {
-	// if(pcon.isClosed())
-	// return false;
-	// con = pcon.getPhysicalConnection();
-	// vs = con.createStatement();
-	// valid = true;
-	// //valid = !pcon.isClosed();
-	// } catch (SQLException e) {
-	// }
-	// finally
-	// {
-	// if(vs != null)
-	// closeResources(vs, null);
-	// }
-	// }
-	//
-	// return valid;
-	// }
-
-//	/** Closes a physical database connection. */
-//	protected void expire(Object o) {
-//		// try {
-//		// PoolManConnection pcon = (PoolManConnection) o;
-//		// pcon.removeConnectionEventListener(this);
-//		// try {
-//		// pcon.commit();
-//		// } catch (SQLException se) {
-//		// }
-//		// pcon.close();
-//		// } catch (Exception e) {
-//		// }
-//		// o = null;
-//	}
 
 	/**
 	 * Retrieves a PooledConnection impl and returns its Handle. 
@@ -2456,69 +2120,10 @@ public class JDBCPool {
 				throw new NestedSQLException("Request Connection failed:DB Pool[" + this.info.getDbname() + "] is stopped. Please restarted the pool.");	
 			}
 		}
-		// try {
-		// PoolManConnection pcon = (PoolManConnection) super.checkOut();
-		// return pcon.getConnection();
-		// } catch (SQLException sqle) {
-		// log.error(sqle.getMessage(), sqle);
-		// throw new SQLException(sqle.getMessage());
-		// } catch (Exception e) {
-		// log.error("A non-SQL error occurred when requesting a connection:",
-		// e);
-		// throw new SQLException(e.getMessage());
-		// }
+	
 	}
 
-//	public PreparedStatement requestPooledStatement(String sql) {
-//
-//		PreparedStatement ps = null;
-//
-//		if (preparedStatementPool.containsKey(sql)) {
-//			ArrayList statements = (ArrayList) preparedStatementPool.get(sql);
-//			synchronized (statements) {
-//				if (statements.size() > 0) {
-//					ps = (PreparedStatement) statements.remove(0);
-//				}
-//			}
-//		}
-//
-//		return ps;
-//	}
 
-	// /** Retuns a PreparedStatement to the statement pool */
-	// public void returnPooledStatement(PoolManPreparedStatement ps) {
-	//
-	// ArrayList statements = null;
-	// if (info.isPoolPreparedStatements()) {
-	// if (preparedStatementPool.containsKey(ps.getSQL())) {
-	// statements = (ArrayList) preparedStatementPool.get(ps.getSQL());
-	// }
-	// else {
-	// statements = new ArrayList();
-	// }
-	//
-	// synchronized (statements) {
-	// statements.add(ps.getNativePreparedStatement());
-	// preparedStatementPool.put(ps.getSQL(), statements);
-	// }
-	// }
-	// else {
-	// closeStatement(ps.getNativePreparedStatement());
-	// }
-	// }
-
-//	public int numStatementPools() {
-//		return preparedStatementPool.size();
-//	}
-
-//	public int numPooledStatements(String sql) {
-//		int num = 0;
-//		if (preparedStatementPool.containsKey(sql)) {
-//			ArrayList statements = (ArrayList) preparedStatementPool.get(sql);
-//			num = statements.size();
-//		}
-//		return num;
-//	}
 
 	/**
 	 * 获取当前链接池中正在使用的链接 接口只对内部数据源有用，外部数据源返回-1
@@ -2528,35 +2133,8 @@ public class JDBCPool {
 	public int getNumActive() {
 		if(this.externalDBName == null)
 		{
-			DataSource datasource_ = null;
-			if(this.datasource instanceof TXDataSource)
-			{
-				datasource_ =getSRCDataSource((TXDataSource)datasource);
-			}
-			else
-			{
-				datasource_ = datasource;
-			}
-			if (datasource_ instanceof BasicDataSource) {
-				return ((BasicDataSource) datasource_).getNumActive();
-			}
-			else if (datasource_ instanceof NativeDataSource) {
-				return ((NativeDataSource) datasource_).getNumActive();
-			}
-			else if (datasource_ instanceof PoolManDataSource) {
-				PoolManDataSource temp = (PoolManDataSource) datasource_;
-				DataSource temp_ = temp.getInnerDataSource();
-				if (temp_ != null) {
-					if (temp_ instanceof BasicDataSource) {
-						return ((BasicDataSource) temp_).getNumActive();
-					}
-					else if (temp_ instanceof NativeDataSource) {
-						return ((NativeDataSource) temp_).getNumActive();
-					}
-				}
-			}
-	
-			return -1;
+
+			return DatasourceUtil.getNumActive(datasource);
 		}
 		else
 		{
@@ -2573,35 +2151,7 @@ public class JDBCPool {
 	public List getTraceObjects() {
 		if(this.externalDBName == null)
 		{
-			DataSource datasource_ = null;
-			if(this.datasource instanceof TXDataSource)
-			{
-				datasource_ =getSRCDataSource((TXDataSource)datasource);
-			}
-			else
-			{
-				datasource_ = datasource;
-			}
-			if (datasource_ instanceof BasicDataSource) {
-				return ((BasicDataSource) datasource_).getTraceObjects();
-			} 
-			else if (datasource_ instanceof NativeDataSource) {
-				return ((NativeDataSource) datasource_).getTraces();
-			}
-			else if (datasource_ instanceof PoolManDataSource) {
-				PoolManDataSource temp = (PoolManDataSource) datasource_;
-				DataSource temp_ = temp.getInnerDataSource();
-				if (temp_ != null) {
-					if (temp_ instanceof BasicDataSource) {
-						return ((BasicDataSource) temp_).getTraceObjects();
-					}
-					else if (temp_ instanceof NativeDataSource) {
-						return ((NativeDataSource) temp_).getTraces();
-					}
-				}
-			}
-	
-			return new ArrayList();
+			return DatasourceUtil.getTraceObjects(datasource);
 		}
 		else
 		{
@@ -2609,6 +2159,7 @@ public class JDBCPool {
 		}
 	}
 	
+
 	private DataSource getSRCDataSource(TXDataSource ds)
 	{
 		return ds.getSRCDataSource();
@@ -2622,35 +2173,8 @@ public class JDBCPool {
 	public int getMaxNumActive() {
 		if(this.externalDBName == null)
 		{
-			DataSource datasource_ = null;
-			if(this.datasource instanceof TXDataSource)
-			{
-				datasource_ =getSRCDataSource((TXDataSource)datasource);
-			}
-			else
-			{
-				datasource_ = datasource;
-			}
-			if (datasource_  instanceof BasicDataSource) {
-				return ((BasicDataSource) datasource_ ).getMaxNumActive();
-			} 
-			else if (datasource_  instanceof NativeDataSource) {
-				return ((NativeDataSource) datasource_ ).getMaxNumActive();
-			}
-			else if (datasource_  instanceof PoolManDataSource) {
-				PoolManDataSource temp = (PoolManDataSource) datasource_ ;
-				DataSource temp_ = temp.getInnerDataSource();
-				if (temp_ != null) {
-					if (temp_ instanceof BasicDataSource) {
-						return ((BasicDataSource) temp_).getMaxNumActive();
-					}
-					else if (temp_ instanceof NativeDataSource) {
-						return ((NativeDataSource) temp_).getMaxNumActive();
-					}
-				}
-			}
-	
-			return -1;
+
+			return DatasourceUtil.getMaxNumActive(datasource);
 		}
 		else
 		{
@@ -2667,31 +2191,8 @@ public class JDBCPool {
 		if(this.externalDBName == null)
 		{
 			
-			DataSource datasource_ = null;
-			if(this.datasource instanceof TXDataSource)
-			{
-				datasource_ =getSRCDataSource((TXDataSource)datasource);
-			}
-			else
-			{
-				datasource_ = datasource;
-			}
-			if (datasource_ instanceof BasicDataSource) {
-				return ((BasicDataSource) datasource_).getNumIdle();
-			} 
-			else if (datasource_ instanceof NativeDataSource) {
-				return -1;
-			}
-			else if (datasource_ instanceof PoolManDataSource) {
-				PoolManDataSource temp = (PoolManDataSource) datasource_;
-				DataSource temp_ = temp.getInnerDataSource();
-				if (temp_ != null) {
-					if (temp_ instanceof BasicDataSource) {
-						return ((BasicDataSource) temp_).getNumIdle();
-					}
-				}
-			}
-			return -1;
+
+			return DatasourceUtil.getNumIdle(datasource);
 		}
 		else
 		{
@@ -2735,21 +2236,7 @@ public class JDBCPool {
 				this.tableMetaDatasindexByTablename.clear();
 			this.datasource = null;
 			this.inited = false;
-//		}
-//		else
-//		{
-//			try {
-//				
-//				if(ctx != null)
-//					ctx.unbind(this.info.getJNDIName());
-//			} catch (Exception e) {
-//
-//			}
-//			this.datasource = null;
-//			SQLManager.getInstance().getPool(externalDBName).closeAllResources();
-//			this.stopTime = System.currentTimeMillis();
-//			this.status = "stop";
-//		}		
+	
 		System.out.println("Shutdown poolman[" + this.getDBName() + "] ok.");
 
 		
@@ -2940,12 +2427,7 @@ public class JDBCPool {
 		this.interceptor = interceptor;
 	}
 
-	// public static void main(String[] args)
-	// {
-	// Set s = DBUtil.getColumnMetaDatas("tableinfo");
-	// s.getClass();
-	// }
-	
+
 	public boolean isExternal()
 	{
 		return getJDBCPoolMetadata().isExternal();
@@ -2959,11 +2441,8 @@ public class JDBCPool {
 	}
 	
 	public boolean isAutoprimarykey() {
-//		if(this.externalDBName == null)
+
 			return this.info.getAutoprimarykey();
-//		else
-//		{
-//			return SQLManager.getInstance().getPool(externalDBName).isAutoprimarykey();
-//		}
+
 	}
 }

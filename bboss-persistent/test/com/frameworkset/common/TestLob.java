@@ -66,11 +66,20 @@ public class TestLob {
 	
 	public static class LobBean
 	{
-		private String id;
-		@Column(type="blob")
+		private String id;		
+		@Column(type="blob")//指示属性的值按blob类型写入或者读取
 		private String blobname;
-		@Column(type="clob")
-		private String clobname;
+		@Column(type="clob")//指示属性的值按clob类型写入或者读取
+		private String clobname; 
+
+        @Column(name="name_")//指示属性名称与表字段名称映射关系，name属性对应于表中的name_字段
+		private String name; 
+        @Column(dataformat="yyyy-mm-dd")//指示日期类型属性值的存储和读取转换日期格式
+		private String regdate; 
+        
+//        。。。。。。
+
+
 	}
 	@Test
 	public void testNewSQLParamInsert() throws Exception

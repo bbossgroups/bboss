@@ -292,7 +292,12 @@
             <required>true</required>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
-
+ 		<!--根节点名称国际化代码-->
+        <attribute>
+            <name>rootNameCode</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
 		<!--树的默认展开层级-->
 		<attribute>
             <name>expandLevel</name>

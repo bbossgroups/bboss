@@ -38,13 +38,17 @@ public class NotEmptyTag extends MatchTag
 		if(this.actualValue != null )
 		{
 			
-			if(actualValue instanceof Collection && ((Collection)actualValue).size()> 0)
+			if(actualValue instanceof Collection )
 			{
-				return true;
+				if( ((Collection)actualValue).size()> 0)
+					return true;
+				return false;
 			}
-			else if(actualValue instanceof Map && ((Map)actualValue).size() > 0)
+			else if(actualValue instanceof Map )
 			{
-				return true;
+				if(((Map)actualValue).size() > 0)
+					return true;
+				return false;
 			}
 			else if(!this.actualValue.equals(""))
 				return true;

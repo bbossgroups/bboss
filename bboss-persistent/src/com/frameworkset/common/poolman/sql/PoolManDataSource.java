@@ -37,8 +37,8 @@ import javax.sql.PooledConnection;
 
 import org.apache.log4j.Logger;
 
+import com.frameworkset.common.poolman.util.DatasourceUtil;
 import com.frameworkset.common.poolman.util.SQLManager;
-import com.frameworkset.commons.dbcp.BasicDataSource;
 import com.frameworkset.orm.transaction.TXDataSource;
 
 /**
@@ -217,19 +217,19 @@ public class PoolManDataSource
         return ref;
     }
 
-    public Object getObjectInstance(Object RefObj, Name Nm, Context Ctx, Hashtable Env)
-            throws Exception {
-
-        Object result = null;
-        Reference ref = (Reference) RefObj;
-        if (ref.getClassName().equals("com.frameworkset.common.poolman.sql.PoolManDataSource")) {
-            String poolname = (String) ref.get("dbname").getContent();
-            String jndiname = (String) ref.get("jndiname").getContent();
-            PoolManDataSource pds = new PoolManDataSource(poolname, jndiname);
-            result = pds;
-        }
-        return result;
-    }
+//    public Object getObjectInstance(Object RefObj, Name Nm, Context Ctx, Hashtable Env)
+//            throws Exception {
+//
+//        Object result = null;
+//        Reference ref = (Reference) RefObj;
+//        if (ref.getClassName().equals("com.frameworkset.common.poolman.sql.PoolManDataSource")) {
+//            String poolname = (String) ref.get("dbname").getContent();
+//            String jndiname = (String) ref.get("jndiname").getContent();
+//            PoolManDataSource pds = new PoolManDataSource(poolname, jndiname);
+//            result = pds;
+//        }
+//        return result;
+//    }
 
     public Serializable getPrimaryKey(String tableName) throws SQLException
     {
@@ -253,20 +253,47 @@ public class PoolManDataSource
 
 
 	public void close() {
-		if(datasource != null && this.datasource instanceof BasicDataSource)
-		{
-			log.debug("Close  datasource[jndiName="+this.jndiName+",dbname=" + this.poolName + "] begin.");
-//			System.out.println("Close  datasource[jndiName="+this.jndiName+",dbname=" + this.poolName + "] begin.");
-			try {
-				((BasicDataSource)datasource).close();
-				log.debug("Close  datasource[jndiName="+this.jndiName+",dbname=" + this.poolName + "] end.");
-//				System.out.println("Close  datasource[jndiName="+this.jndiName+",dbname=" + this.poolName + "] end.");
-			} catch (Exception e) {
-				
-				e.printStackTrace();
-			}
-		}
+//		if(datasource != null && this.datasource instanceof BasicDataSource)
+//		{
+//			log.debug("Close  datasource[jndiName="+this.jndiName+",dbname=" + this.poolName + "] begin.");
+////			System.out.println("Close  datasource[jndiName="+this.jndiName+",dbname=" + this.poolName + "] begin.");
+//			try {
+//				((BasicDataSource)datasource).close();
+//				log.debug("Close  datasource[jndiName="+this.jndiName+",dbname=" + this.poolName + "] end.");
+////				System.out.println("Close  datasource[jndiName="+this.jndiName+",dbname=" + this.poolName + "] end.");
+//			} catch (Exception e) {
+//				
+//				e.printStackTrace();
+//			}
+//		}
+		DatasourceUtil.closeDS(datasource);
 		
+	}
+
+
+	public <T> T unwrap(Class<T> iface) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	public boolean isWrapperFor(Class<?> iface) throws SQLException {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+	public Object getObjectInstance(Object RefObj, Name name, Context nameCtx,
+			Hashtable<?, ?> environment) throws Exception {
+		 Object result = null;
+	        Reference ref = (Reference) RefObj;
+	        if (ref.getClassName().equals("com.frameworkset.common.poolman.sql.PoolManDataSource")) {
+	            String poolname = (String) ref.get("dbname").getContent();
+	            String jndiname = (String) ref.get("jndiname").getContent();
+	            PoolManDataSource pds = new PoolManDataSource(poolname, jndiname);
+	            result = pds;
+	        }
+	        return result;
 	}
 }
 

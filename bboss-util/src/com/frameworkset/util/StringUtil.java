@@ -129,6 +129,7 @@ public class StringUtil extends SimpleStringUtil {
 //					+ contextPath);
 			return path;
 		}
+		
 		if (path == null) {
 			return null;
 		}
@@ -142,6 +143,45 @@ public class StringUtil extends SimpleStringUtil {
 		} else {
 			return path;
 		}
+//		return getRealPath(request, path,false);
+	}
+	
+	public static String getRealPath(HttpServletRequest request, String path,boolean usebase) {
+		String contextPath = request.getContextPath();
+
+		if (contextPath == null ) {
+//			System.out.println("StringUtil.getRealPath() contextPath:"
+//					+ contextPath);
+			if(usebase)//如果需要检测上下文路径为空串，那么如果path第一个字符不是/，那么需要补充字符/到第一个位置
+			{
+				if(isEmpty(path))
+					return "/";
+				else
+				{
+					return path.startsWith("/")?path:"/"+path;
+				}
+			}
+			else
+			{
+				return path;
+			}
+		}
+		
+		if (path == null) {
+			return null;
+		}
+		if (path.startsWith("/") && !path.startsWith(contextPath + "/")) {
+			if (!contextPath.equals("/"))
+				path = contextPath + path;
+			else {
+//				return path;
+			}
+
+		} else {
+//			return path;
+		}
+		return path;
+//		return getRealPath(contextPath, path, usebase);
 
 	}
 	

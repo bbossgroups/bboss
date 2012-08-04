@@ -149,7 +149,9 @@ public class ConfigParser extends DefaultHandler{
         		!name.equals("autoprimarykey")&&
         		!name.equals("cachequerymetadata")&&
         		!name.equals("showsql") &&
-        		!name.equals("externaljndiName"))
+        		!name.equals("externaljndiName")&&
+        		!name.equals("enablejta") &&
+        		!name.equals("datasourceFile"))
             
         {
         	log.warn("解析文件时[" + this.file + "]遇到元素[" + name + "]，忽略处理。");

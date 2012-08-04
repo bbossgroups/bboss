@@ -234,10 +234,30 @@ public class SimpleStringUtil  {
 	public static String getRealPath(String contextPath, String path) {
 		
 		
+		return getRealPath(contextPath, path,false); 
+
+	}
+	
+	public static String getRealPath(String contextPath, String path,boolean usebase) {
+		
+		
 		if (contextPath == null || contextPath.equals("")) {
 //			System.out.println("SimpleStringUtil.getRealPath() contextPath:"
 //					+ contextPath);
-			return path == null?"":path;
+			if(usebase)//如果需要检测上下文路径为空串，那么如果path第一个字符不是/，那么需要补充字符/到第一个位置
+			{
+				if(isEmpty(path))
+					return "/";
+				else
+				{
+					return path.startsWith("/")?path:"/"+path;
+				}
+			}
+			else
+			{
+				return path == null?"":path;
+			}
+				
 		}
 		if (path == null || path.equals("")) {
 			

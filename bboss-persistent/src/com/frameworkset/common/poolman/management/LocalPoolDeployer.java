@@ -141,7 +141,7 @@ public class LocalPoolDeployer extends BaseTableManager implements PoolManDeploy
                     attributes[n].getWriteMethod().invoke(metadata, new Object[]{value});
                 }
             }
-            
+            metadata.initDatasourceParameters();
 			SQLManager.getInstance().createPool(metadata);
             //jpool.log("PoolMan Local Pool Deployer: Created JDBC Connection Pool named: " + metadata.getDbname());
 
@@ -212,7 +212,7 @@ public class LocalPoolDeployer extends BaseTableManager implements PoolManDeploy
                     attributes[n].getWriteMethod().invoke(metadata, new Object[]{value});
                 }
             }
-
+            metadata.initDatasourceParameters();
             JDBCPool jpool = SQLManager.getInstance().createPool(metadata);
             //jpool.log("PoolMan Local Pool Deployer: Created JDBC Connection Pool named: " + metadata.getDbname());
         }

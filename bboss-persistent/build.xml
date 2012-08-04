@@ -30,7 +30,7 @@
 		        Distribution jar package
 		       ==========================
 		  -->
-	<target name="distrib" depends="init,jar-frameworkset-test,jar-frameworkset,copy-depends-liberary" description="copy jar file to distribution directory">
+	<target name="distrib" depends="init,jar-frameworkset-test,jar-frameworkset,jar-sources,copy-depends-liberary" description="copy jar file to distribution directory">
 		<echo>Construct the distribution package...</echo>
 	</target>
 
@@ -40,6 +40,7 @@
 			executable="${JDK}/bin/javac"
 			target="1.5" source="1.5" deprecation="true" debug="${debug}" optimize="${optimize}" memorymaximumsize="256M" fork="true" verbose="yes">
 			<src path="src" />			
+			<src path="src-jdk5" />
 			<src path="listener" />
 			<classpath id="cp-classes-bboss-persistent">
 				<fileset dir="lib/" includes="**/*.jar *.zip" />				
@@ -92,6 +93,23 @@
 			</manifest>
 		</jar>
 	</target>	
+	
+	<target name="jar-sources" description="jar sources">
+				<echo>Generate the bboss-persistent library sources.jar ...</echo>
+				<jar jarfile="distrib/frameworkset-pool-sources.jar" >
+					<manifest>				
+						<attribute name="Implementation-Version" value="${impl.version}" />
+						<attribute name="Specification-Version" value="${revision}" />
+						<attribute name="Implementation-Vendor" value="${impl.vendor}" />
+						<attribute name="Implementation-ProductID" value="${impl.productID}" />
+						<attribute name="Compile-Timestamp" value="${compile.timestamp}" />
+						<attribute name="Compile-User" value="${username}" />
+					</manifest>
+					<fileset dir="src" includes="**/*"/>
+					<fileset dir="src-jdk5" includes="**/*"/>
+					<fileset dir="listener" includes="**/*"/>
+				</jar>
+			</target>
 		
 	<target name="copy-depends-liberary" description="copy depends liberarys">
 				<echo>copy depends liberarys ...</echo>

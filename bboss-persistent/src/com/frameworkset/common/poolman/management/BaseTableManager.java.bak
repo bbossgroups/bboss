@@ -1,0 +1,406 @@
+/*****************************************************************************
+ *                                                                           *
+ *  This file is part of the tna framework distribution.                     *
+ *  Documentation and updates may be get from  biaoping.yin the author of    *
+ *  this framework							     							 *
+ *                                                                           *
+ *  Sun Public License Notice:                                               *
+ *                                                                           *
+ *  The contents of this file are subject to the Sun Public License Version  *
+ *  1.0 (the "License"); you may not use this file except in compliance with *
+ *  the License. A copy of the License is available at http://www.sun.com    *
+ *                                                                           *
+ *  The Original Code is tag. The Initial Developer of the Original          *
+ *  Code is biaoping yin. Portions created by biaoping yin are Copyright     *
+ *  (C) 2000.  All Rights Reserved.                                          *
+ *                                                                           *
+ *  GNU Public License Notice:                                               *
+ *                                                                           *
+ *  Alternatively, the contents of this file may be used under the terms of  *
+ *  the GNU Lesser General Public License (the "LGPL"), in which case the    *
+ *  provisions of LGPL are applicable instead of those above. If you wish to *
+ *  allow use of your version of this file only under the  terms of the LGPL *
+ *  and not to allow others to use your version of this file under the SPL,  *
+ *  indicate your decision by deleting the provisions above and replace      *
+ *  them with the notice and other provisions required by the LGPL.  If you  *
+ *  do not delete the provisions above, a recipient may use your version of  *
+ *  this file under either the SPL or the LGPL.                              *
+ *                                                                           *
+ *  biaoping.yin (yin-bp@163.com)                                            *
+ *                                                                           *
+ *****************************************************************************/
+package com.frameworkset.common.poolman.management;
+
+import java.io.Serializable;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
+import org.apache.log4j.Logger;
+
+import com.frameworkset.common.poolman.sql.PrimaryKey;
+import com.frameworkset.common.poolman.sql.PrimaryKeyCache;
+import com.frameworkset.common.poolman.sql.PrimaryKeyCacheManager;
+import com.frameworkset.common.poolman.util.SQLManager;
+import com.frameworkset.orm.adapter.DB;
+import com.frameworkset.orm.transaction.JDBCTransaction;
+import com.frameworkset.orm.transaction.TransactionManager;
+
+/**
+ * @author biaoping.yin created on 2005-3-30 TODO To change the template for
+ *         this generated type comment go to Window - Preferences - Java - Code
+ *         Style - Code Templates
+ */
+public abstract class BaseTableManager implements Serializable{
+	PrimaryKeyCacheManager manager = PrimaryKeyCacheManager.getInstance();
+
+	private static Logger log = Logger.getLogger(BaseTableManager.class);
+
+	// 查询表的信息sql
+	public static final String queryTableInfoSql = "select * from tableinfo";
+
+	public static final String queryTableInfoSqlBytableName = "select * from tableinfo where table_name=?";
+
+	// 获取表的主键值sql
+	public static final String queryPrimaryKey = "select max(?) from ?";
+
+	// 更新tableinfo中表的最新主键值sql
+	public static final String updateTableInfoSql = "update tableinfo set table_id_value=? where upper(table_name)=?";
+
+	public static PrimaryKeyCache getPoolTableInfos(String poolName)
+			throws Exception {
+
+		Connection con = null;
+		Statement stmt = null;
+		ResultSet rs1 = null;
+		Statement q_pstmt = null;
+		PreparedStatement u_pstmt = null;
+
+		ResultSet rs = null;
+
+		log.debug("load pool[" + poolName + "] tables information.......");
+		try {
+			PrimaryKeyCache keyCache = new PrimaryKeyCache(poolName);
+			con = SQLManager.getInstance().requestConnection(poolName);
+			DB dbAdapter = SQLManager.getInstance().getDBAdapter(poolName);
+
+			stmt = con.createStatement();
+			q_pstmt = con.createStatement();
+			u_pstmt = con.prepareStatement(updateTableInfoSql);
+			rs = stmt.executeQuery(queryTableInfoSql);
+			// 创建数据库链接池的主键缓冲池
+
+			while (rs.next()) {
+				String table_name = rs.getString("table_name").trim();
+				log.debug("    load table[" + table_name
+						+ "] information.......");
+//				System.out.println("    load table[" + table_name
+//						+ "] information.......");
+				String table_id_name = rs.getString("table_id_name").trim();
+				int table_id_increment = rs.getInt("table_id_increment");
+				long table_id_value = rs.getLong("table_id_value");
+				String type = rs.getString("TABLE_ID_TYPE");
+				String prefix = rs.getString("table_id_prefix");
+				String TABLE_ID_GENERATOR = rs.getString("TABLE_ID_GENERATOR");
+				if (prefix == null)
+					prefix = "";
+				// Connection con1 =
+				// SQLManager.getInstance().requestConnection(poolName);
+
+				try {
+					// to_number(logoff_time-logon_time);
+					// SUBSTR('Message',1,4);
+					/**
+					 * SUBSTR(table_id_name,LENGTH(table_id_prefix))
+					 */
+
+					// System.out.println("table_name:" + table_name);
+					String maxSql = dbAdapter.getIDMAXSql(table_name,
+							table_id_name, prefix, type);
+					rs1 = q_pstmt.executeQuery(maxSql);
+					long new_table_id_value = 0;
+
+					if (rs1.next()) {
+
+						new_table_id_value = rs1.getLong(1);// PrimaryKey.parserSequence(rs1.getString(1),prefix,type,table_name);
+					}
+
+					// 如果tableinfo表中表主键值与表的实际主键值不相符时，更新tableinfo中表的主键值
+					if (new_table_id_value > table_id_value || new_table_id_value < table_id_value) {
+						
+						u_pstmt.setString(2, table_name.toUpperCase());
+						u_pstmt.setLong(1, new_table_id_value);
+						u_pstmt.execute();
+						table_id_value = new_table_id_value;
+					}
+					PrimaryKey primaryKey = new PrimaryKey(poolName, table_name
+							.toLowerCase(), table_id_name.toLowerCase(),
+							table_id_increment, table_id_value, type,
+							prefix,maxSql,TABLE_ID_GENERATOR);
+					keyCache.addIDTable(primaryKey);
+				} catch (Exception e) {
+					// e.printStackTrace();
+					// 获取表的主键信息失败时自动跳过本表主键信息初始化
+					log.error("    load table[" + table_name
+							+ "] failed!\r\nerror message:\r\n"
+							+ e.getMessage());
+					continue;
+				}
+			}
+			return keyCache;
+		} catch (Exception e) {
+			throw e;
+		}
+
+		finally {
+			try {
+				if (rs != null)
+					rs.close();
+			} catch (Exception e) {
+				;
+			}
+			try {
+
+				if (stmt != null)
+					stmt.close();
+			} catch (Exception e) {
+				;
+			}
+			try {
+
+				if (rs1 != null)
+					rs1.close();
+			} catch (Exception e) {
+				;
+			}
+			try {
+
+				if (q_pstmt != null)
+					q_pstmt.close();
+			} catch (Exception e) {
+				;
+			}
+			try {
+
+				if (u_pstmt != null)
+					u_pstmt.close();
+			} catch (Exception e) {
+				;
+			}
+			try {
+
+				if (con != null) {
+					con.close();
+				}
+			} catch (Exception e) {
+				;
+			}
+
+		}
+
+	}
+
+	/**
+	 * 如果表的主键信息不存在时通过本方法从数据库中实时加载表的主键信息
+	 * 
+	 * @param poolName
+	 * @param tableName
+	 * @return
+	 * @throws Exception
+	 */
+	public static PrimaryKey getPoolTableInfo(String poolName, String tableName)
+			throws Exception {
+		return getPoolTableInfo( poolName,null,  tableName);
+	}
+	
+	
+	/**
+	 * 如果表的主键信息不存在时通过本方法从数据库中实时加载表的主键信息
+	 * 
+	 * @param poolName
+	 * @param Connection con 外部传入的系统链接
+	 * @param tableName
+	 * @return
+	 * @throws Exception
+	 * added by biaoping.yin on 2008.05.29
+	 */
+	public static PrimaryKey getPoolTableInfo(String poolName,Connection con, String tableName)
+			throws Exception {
+//		Connection con = null;
+		PreparedStatement stmt = null;
+		ResultSet rs1 = null;
+		Statement q_pstmt = null;
+		PreparedStatement u_pstmt = null;
+		//区分是否使用外部链接标识，方法参数con为空时，需要改变outcon的值为false
+		boolean outcon = true;
+
+		ResultSet rs = null;
+		JDBCTransaction tx = TransactionManager.getTransaction();
+		log.debug("load pool[" + poolName + "] tables information.......");
+		try {
+			if(con == null)
+			{
+				//判断当前的操作是否在事务环境中，如果在使用事务环境的链接 
+				if(tx != null)
+				{
+					con = tx.getConnection(poolName);
+				}
+				else
+				{
+					con = SQLManager.getInstance().requestConnection(poolName);
+				}
+				outcon = false;
+			}
+
+			q_pstmt = con.createStatement();
+			u_pstmt = con.prepareStatement(updateTableInfoSql);
+			stmt = con.prepareStatement(queryTableInfoSqlBytableName);
+			stmt.setString(1, tableName);
+			rs = stmt.executeQuery();
+			DB dbAdapter = SQLManager.getInstance().getDBAdapter(poolName);
+			// 创建数据库链接池的主键缓冲池
+
+			if (rs.next()) {
+				String table_name = rs.getString("table_name").trim();
+				log.debug("    load table[" + table_name
+						+ "] information.......");
+				String table_id_name = rs.getString("table_id_name").trim();
+				int table_id_increment = rs.getInt("table_id_increment");
+				long table_id_value = rs.getLong("table_id_value");
+				String type = rs.getString("table_id_type");
+				String prefix = rs.getString("table_id_prefix");
+				String TABLE_ID_GENERATOR = rs.getString("TABLE_ID_GENERATOR");
+//				if(!type.equals("sequence"))
+				{
+				
+
+					// Connection con1 =
+					// SQLManager.getInstance().requestConnection(poolName);
+					String maxSql = dbAdapter.getIDMAXSql(table_name,
+							table_id_name, prefix, type);
+					try {
+						rs1 = q_pstmt.executeQuery(maxSql);
+						long new_table_id_value = 0;
+						if (rs1.next()) {
+							new_table_id_value = rs1.getLong(1);// PrimaryKey.parserSequence(rs1.getString(1),prefix,type,table_name);
+						}
+	
+						// 如果tableinfo表中表主键值与表的实际主键值不相符时，更新tableinfo中表的主键值
+						if (new_table_id_value > table_id_value || new_table_id_value < table_id_value) {
+							u_pstmt.setString(2, table_name.toUpperCase());
+							u_pstmt.setLong(1, new_table_id_value);
+							u_pstmt.execute();
+							table_id_value = new_table_id_value;
+						}
+						PrimaryKey primaryKey = new PrimaryKey(poolName, table_name
+								.toLowerCase(), table_id_name.toLowerCase(),
+								table_id_increment, table_id_value, type,
+								prefix,maxSql,TABLE_ID_GENERATOR);
+						return primaryKey;
+					} catch (Exception e) {
+						// e.printStackTrace();
+						// 获取表的主键信息失败时自动跳过本表主键信息初始化
+						log.error("    load table[" + table_name
+								+ "] failed!\r\nerror message:\r\n"
+								+ e.getMessage());
+	
+					}
+				}
+//				else
+//				{
+//					PrimaryKey primaryKey = new PrimaryKey(poolName, table_name
+//							.toLowerCase(), table_id_name.toLowerCase(),
+//							table_id_increment, table_id_value, type,
+//							prefix,"select " + TABLE_ID_GENERATOR + ".nextval from dual");
+//					return primaryKey;
+//				}
+			}
+		} catch (Exception e) {
+			throw e;
+
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+			} catch (Exception e) {
+				;
+			}
+			try {
+				if (stmt != null)
+					stmt.close();
+			} catch (Exception e) {
+				;
+			}
+			try {
+				if (rs1 != null)
+					rs1.close();
+			} catch (Exception e) {
+				;
+			}
+			try {
+				if (q_pstmt != null)
+					q_pstmt.close();
+			} catch (Exception e) {
+				;
+			}
+			try {
+				if (u_pstmt != null)
+					u_pstmt.close();
+			} catch (Exception e) {
+				;
+			}
+
+			try {
+				if (con != null ) {
+					if(tx == null && !outcon)
+					{
+						con.close();
+					}
+				}
+			} catch (Exception e) {
+				;
+
+			}
+
+		}
+
+		return null;
+	}
+
+	public void initTableInfo() throws Exception {
+		log.debug("initial tableinfo start.......");
+		// 获取所有的数据库链接池的名称
+		java.util.Enumeration poolNames = SQLManager.getInstance()
+				.getAllPoolnames();
+
+		// 同步数据库表与该表在tableinfo中的相应的信息（主键值）
+
+		// 同步开始
+		while (poolNames.hasMoreElements()) {
+			String poolName = (String) poolNames.nextElement();
+			// PrimaryKeyCache keyCache = new PrimaryKeyCache(poolName);
+			try {
+				PrimaryKeyCache keyCache = getPoolTableInfos(poolName);
+				manager.addPrimaryKeyCache(keyCache);
+			} catch (Exception e) {
+				// 获取表的主键信息失败时自动跳过本表主键信息初始化
+				log.error("load pool[" + poolName
+						+ "] tables information failed!\r\nerror message:\r\n"
+						+ e.getMessage());
+				// e.printStackTrace();
+				// continue;
+				// throw e;
+			}
+
+		}
+
+		log.debug("initial tableinfo complete!");
+	}
+
+	// 更新缓冲区信息到数据库中
+	public void updateTableInfo() {
+
+	}
+
+}
