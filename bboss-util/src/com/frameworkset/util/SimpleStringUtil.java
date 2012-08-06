@@ -2244,7 +2244,7 @@ outStr = "2010Äê02ÔÂ07ÈÕ11Ê±Ğí£¬ÖÜÁéÓ±±¨¾¯£ºÔÚ2Â·¹«½»³µÉÏ±»°ÇÇÔ£¬²¢×¥»ñÒ»ÃûÏÓÒÉÈ
      */
     public static  Map<String,Locale> converLocales(String locales)
 	{
-    	if(locales == null && locales.trim().equals(""))
+    	if(locales == null || locales.trim().equals(""))
     		return null;
     	String[] locales_ = locales.split("\\,");
     	Map<String,Locale> lm = new HashMap<String,Locale>();
