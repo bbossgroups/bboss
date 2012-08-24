@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
+import org.frameworkset.util.annotations.AssertDToken;
 import org.frameworkset.util.annotations.MapKey;
 import org.frameworkset.util.annotations.RequestParam;
 import org.frameworkset.util.annotations.ResponseBody;
@@ -44,7 +45,7 @@ import org.frameworkset.web.servlet.ModelMap;
  */
 public class HelloWord
 {
-
+	@AssertDToken
 	public String sayHelloNumber(@RequestParam(name = "name") int ynum,
 			ModelMap model)
 	{
@@ -195,6 +196,7 @@ public class HelloWord
 	 * @param response
 	 * @throws IOException
 	 */
+	@AssertDToken
 	public @ResponseBody
 	String sayHelloEnums(@RequestParam(name = "sex") SexType[] types)
 			throws IOException

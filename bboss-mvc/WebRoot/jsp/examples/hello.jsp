@@ -41,7 +41,7 @@
 			 //  var value = $("#form1:checkbox").fieldValue();
 			 //  alert(value.length);
 			 
-				$("#queryresult").load("sayHelloEnums.page",{sex:$("#sex").val()});
+				$("#queryresult").load("sayHelloEnums.page",{sex:$("#sex").val(),<pg:dtoken element="json"/>});
 			}
 			
 			
@@ -56,6 +56,8 @@
 				Hello World number bind Examples.
 			</h3>
 			<form action="sayHelloNumber.page" method="post">
+			<pg:dtoken/>
+			
 			<table cellspacing="0" >
 				<tbody>
 					<tr><td>
@@ -87,6 +89,7 @@
 				Hello World String bind Examples.
 			</h3>
 			<form action="sayHelloString.page" method="post">
+			<pg:dtoken/>
 			<table cellspacing="0" >
 				<tbody>
 					<tr>
@@ -122,6 +125,7 @@
 				Hello World Time bind Examples.
 			</h3>
 			<form action="sayHelloTime.page" method="post">
+			<pg:dtoken/>
 			<table cellspacing="0" >
 				<tbody>
 					<tr>
@@ -186,6 +190,7 @@
 				Hello World Time Array bind Examples.
 			</h3>
 			<form action="sayHelloTimes.page" method="post">
+			<pg:dtoken/>
 			<table cellspacing="0" >
 				<tbody>
 					<tr>
@@ -251,6 +256,7 @@
 				Hello World Bean bind Examples.
 			</h3>
 			<form action="sayHelloBean.page" method="post">
+			<pg:dtoken/>
 			<table cellspacing="0" >
 				<tbody>
 					<tr>
@@ -291,6 +297,7 @@
 				Hello World List<PO> bind  Examples.
 			</h3>
 			<form action="sayHelloBeanList.page" method="post">
+			<pg:dtoken/>
 			<table cellspacing="0" >
 				<tbody>
 					<tr>
@@ -359,6 +366,7 @@
 				Hello World Map<String,PO> bind  Examples.
 			</h3>
 			<form action="sayHelloBeanMap.page" method="post">
+			<pg:dtoken/>
 			<table cellspacing="0" >
 				<tbody>
 				
@@ -456,6 +464,7 @@
 				Hello World Array bind  Examples.
 			</h3>
 			<form action="sayHelloArray.page" method="post">
+			<pg:dtoken/>
 			<table cellspacing="0" >
 				<tbody>
 					<tr>

@@ -181,5 +181,10 @@ public abstract class AbstractResource implements Resource {
 	public int hashCode() {
 		return getDescription().hashCode();
 	}
+	
+	public void release()
+	{
+		
+	}
 
 }

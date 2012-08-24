@@ -4,6 +4,82 @@
 Sourceforge站点：http://sourceforge.net/projects/bboss/files/ 
 Github站点：https://github.com/bbossgroups/bbossgroups-3.5 
 since 3.5.1
+o 增加动态令牌机制，增加动态令牌检测过滤器（可独立使用，也可与安全认证过滤器结合使用）
+增加dtoken标签（用来在表单或者请求中投放动态令牌）
+增加assertdtoken标签（用来在接收请求的服务器jsp页面头部判断客户端是否正确传递令牌，并检测令
+
+牌是否有效，如果没有令牌或者令牌无效，那么拒绝客户端请求）
+增加assertdtoken注解（用来在接收请求的服务器mvc控制器方法执行前判断客户端是否正确传递令牌，
+
+并检测令牌是否有效，如果没有令牌或者令牌无效，那么拒绝客户端请求）
+
+令牌的过滤器的详细配置请参考web.xml文件：
+/bboss-mvc/WebRoot/WEB-INF/web.xml
+/bboss-mvc/WebRoot/WEB-INF/web-tokenfilter.xml（令牌过滤器独立使用配置示例）
+/bboss-mvc/WebRoot/WEB-INF/web-token.xml（与安全认证过滤器结合使用示例）
+
+动态令牌机制可以有效解决以下问题：
+1.防止表单重复提交
+2.防止跨站脚本编制漏洞
+3.防止跨站请求伪造攻击
+4.有效避免框架钓鱼攻击
+
+o 持久层TransactionManager组件增加以下方法
+	/**
+	 * 在final方法中调用，用来在出现异常时对事务资源进行回收，首先对事务进行回滚，
+	 * 然后回收资源（不输出日志），如果事务已经提交和回滚，则不做任何操作
+	 */
+	public void releasenolog()
+	/**
+	 * 在final方法中调用，用来在出现异常时对事务资源进行回收，首先对事务进行回滚，
+	 * 然后回收资源，并将回事日志输出到日志文件中，如果事务已经提交和回滚，则不做任何操
+
+作
+	 */
+	public void release()
+
+这两个方法的示例如下：
+public void testTX11() throws Exception
+	{
+		TransactionManager tm = new TransactionManager();
+        try {
+            tm.begin();
+            
+            //进行一系列db操作            
+            //必须调用commit            
+            tm.commit();
+        }
+        catch (Exception e) {            
+            throw e;            
+        } 
+        finally
+        {
+        	tm.release();
+        }
+	}
+	public void testTX() throws Exception
+	{
+		TransactionManager tm = new TransactionManager();
+        try {
+            tm.begin(TransactionManager.RW_TRANSACTION);
+            
+            //进行一系列db操作
+            
+            //注意对于RW_TRANSACTION事务可以不调用commit方法，tm.releasenolog()
+            //方法会释放事务，调用commit也可以
+            
+            tm.commit();
+        }
+        catch (Exception e) {
+            
+            throw e;
+            
+        } 
+        finally
+        {
+        	tm.releasenolog();
+        }
+	}
 o 修改各模块构建jar包和资源文件分发脚本，使相关模块测试工程中的jar包和资源文件同步更新
 -----------------------------------------------------------------------------------------------
 

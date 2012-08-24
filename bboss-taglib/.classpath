@@ -20,7 +20,7 @@
 	<classpathentry kind="lib" path="lib/commons-digester.jar"/>
 	<classpathentry kind="lib" path="lib/frameworkset-pool.jar" sourcepath="/bboss-persistent"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="lib/cms.jar" sourcepath="/cms_baseline"/>
+	<classpathentry kind="lib" path="lib/cms.jar" sourcepath="/SanyPDP"/>
 	<classpathentry kind="lib" path="lib/geronimo-jta_1.0.1B_spec-1.0.1.jar"/>
 	<classpathentry kind="lib" path="compilelib/jsp-api.jar"/>
 	<classpathentry kind="lib" path="compilelib/servlet-api.jar"/>

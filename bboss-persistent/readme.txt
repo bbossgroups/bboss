@@ -23,6 +23,10 @@ bboss-persistent<-cas server [frameworkset-pool.jar]
 to do list:
 无
 #######update function list since bbossgroups-3.5 begin###########
+o TransactionManager组件增加release方法，
+	  应用程序在final方法中调用，用来在出现异常时对事务资源进行回收，首先对事务进行回滚，
+	  然后回收资源，如果事务没有开启或者已经提交或者已经回滚，则release方法不做任何操作
+	
 o poolman内置数据源apache common dbcp升级到1.4版本，apache common pool升级到1.5.4，
 由于dbcp 1.4只支持jdk 1.6，所以对持久层进行相应的调整，调整后的持久层框架
 同时支持在jdk 1.5和jdk 1.6下进行编译和打包（之前的持久层版本只能在jdk 1.5下面打包和编译）。

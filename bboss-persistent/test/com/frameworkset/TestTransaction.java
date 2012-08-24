@@ -44,12 +44,11 @@ public class TestTransaction {
 		}
 		catch(Exception e)
 		{
-			try {
-				tm.rollback();
-			} catch (RollbackException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+			
+		}
+		finally
+		{
+			tm.release();
 		}
 		
 		
@@ -73,15 +72,14 @@ public class TestTransaction {
 	        
 	        } catch (Exception e) {
 	            
-	            try {
-	                tm.rollback();
-	            } catch (RollbackException e1) {
-	                // TODO Auto-generated catch block
-	                e1.printStackTrace();
-	            }
+	          
 	            
 	            
 	        } 
+	        finally
+			{
+				tm.release();
+			}
 	}
 	
 	
@@ -111,6 +109,10 @@ public class TestTransaction {
 	            
 	            
 	        } 
+	        finally
+			{
+				tm.release();
+			}
 	}
 	
 	public static  void testTraceObjects()
@@ -221,6 +223,47 @@ public class TestTransaction {
 			}
 		}
 		
+	}
+	public void testTX11() throws Exception
+	{
+		TransactionManager tm = new TransactionManager();
+        try {
+            tm.begin();
+            
+            //进行一系列db操作            
+            //必须调用commit            
+            tm.commit();
+        }
+        catch (Exception e) {            
+            throw e;            
+        } 
+        finally
+        {
+        	tm.release();
+        }
+	}
+	public void testTX() throws Exception
+	{
+		TransactionManager tm = new TransactionManager();
+        try {
+            tm.begin(TransactionManager.RW_TRANSACTION);
+            
+            //进行一系列db操作
+            
+            //注意对于RW_TRANSACTION事务可以不调用commit方法，tm.releasenolog()
+            //方法会释放事务，调用commit也可以
+            
+            tm.commit();
+        }
+        catch (Exception e) {
+            
+            throw e;
+            
+        } 
+        finally
+        {
+        	tm.releasenolog();
+        }
 	}
 	@Test
 	public void testNoCompaintRWTX() throws Exception

@@ -465,7 +465,12 @@ public class TransactionManager implements java.io.Serializable {
 	 *             If the transaction service fails in an unexpected way.
 	 */
 	public void rollback() throws RollbackException {
-		assertTX() ;
+		_rollback(true);
+	}
+	
+	private void _rollback(boolean check) throws RollbackException {
+		if(check)
+			assertTX() ;
 		if(this.currenttxtype == NO_TRANSACTION)
 		{
 			try {				
@@ -735,6 +740,57 @@ public class TransactionManager implements java.io.Serializable {
 			default:				
 				return "UNKNOWN_TRANSACTION";
 		}
+	}
+	/**
+	 * 在final方法中调用，用来在出现异常时对事务资源进行回收，首先对事务进行回滚，
+	 * 然后回收资源，如果事务已经提交和回滚，则不做任何操作
+	 */
+	public void release()
+	{
+		if(!this.started )
+//			throw new RollbackException("事务没有开始");
+			return ;
+		if(this.committed )
+//			throw new RollbackException("事务已经提交");
+			return ;
+		
+		if(this.rollbacked)
+//			throw new RollbackException("事务已经回滚");
+			return;
+		try {
+			log.debug("Warnning:Detected uncommit Transaction,force rollbacked this transaction by system.",new Exception());
+			this._rollback(false);
+		} catch (Throwable e) {
+			
+//			e.printStackTrace();
+		}
+		
+	}
+	
+	/**
+	 * 在final方法中调用，用来在出现异常时对事务资源进行回收，首先对事务进行回滚，
+	 * 然后回收资源，如果事务已经提交和回滚，则不做任何操作
+	 */
+	public void releasenolog()
+	{
+		if(!this.started )
+//			throw new RollbackException("事务没有开始");
+			return ;
+		if(this.committed )
+//			throw new RollbackException("事务已经提交");
+			return ;
+		
+		if(this.rollbacked)
+//			throw new RollbackException("事务已经回滚");
+			return;
+		try {
+//			log.debug("Warnning:Detected uncommit Transaction,force rollbacked this transaction by system.",new Exception());
+			this._rollback(false);
+		} catch (Throwable e) {
+			
+//			e.printStackTrace();
+		}
+		
 	}
 	
 

@@ -118,5 +118,6 @@ public interface Resource extends InputStreamSource {
 	 * (in the file system or as some other known physical resource type)
 	 */
 	long contentLength() throws IOException;
+	void release();
 
 }

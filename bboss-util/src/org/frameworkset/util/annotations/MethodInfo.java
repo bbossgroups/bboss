@@ -28,7 +28,6 @@ import java.util.Map;
 import org.frameworkset.http.MediaType;
 import org.frameworkset.util.ClassUtil;
 import org.frameworkset.util.ClassUtils;
-import org.frameworkset.util.LocalVariableTableParameterNameDiscoverer;
 import org.frameworkset.util.MethodParameter;
 import org.frameworkset.util.ParameterNameDiscoverer;
 import org.frameworkset.util.beans.BeansException;
@@ -64,6 +63,7 @@ public class MethodInfo {
 	private MethodParameter[] paramNames;
 	private HandlerMapping mapping = null;
 	private HandlerMapping typeLevelMapping;
+	private AssertDToken assertDToken;
 	private boolean responsebody = false;
 	private ResponseBody responsebodyAnno ;
 	private MediaType responseMediaType;
@@ -74,6 +74,20 @@ public class MethodInfo {
 	private Integer[] pathVariablePositions;
 	private boolean[] databind;
 	private String[] baseurls ;
+	/**
+	 * 用来标注mvc控制器方法强制要求进行动态令牌校验，如果客户端请求没有附带令牌或者令牌已经作废，那么直接拒绝
+	 * 请求 
+	 * 
+	 * 防止跨站请求过滤器相关参数 bboss防止跨站请求过滤器的机制如下： 采用动态令牌和session相结合的方式产生客户端令牌，一次请求产生一个唯一令牌 
+				令牌识别采用客户端令牌和服务端session标识混合的方式进行判别，如果客户端令牌和服务端令牌正确匹配，则允许访问，否则认为用户为非法用户并阻止用户访问并跳转到 
+				redirectpath参数对应的地址，默认为/login.jsp。 令牌存储机制通过参数tokenstore指定，包括两种，内存存储和session存储，默认为session存储，当令牌失效（匹配后立即失效，或者超时失效）后，系统自动清除失效的令牌；采用session方式 
+				存储令牌时，如果客户端页面没有启用session，那么令牌还是会存储在内存中。 令牌生命周期：客户端的令牌在服务器端留有存根，当令牌失效（匹配后立即失效，或者超时失效）后，系统自动清除失效的令牌； 
+				当客户端并没有正确提交请求，会导致服务端令牌存根变为垃圾令牌，需要定时清除这些 垃圾令牌；如果令牌存储在session中，那么令牌的生命周期和session的生命周期保持一致，无需额外清除机制； 
+				如果令牌存储在内存中，那么令牌的清除由令牌管理组件自己定时扫描清除，定时扫描时间间隔为由tokenscaninterval参数指定，单位为毫秒，默认为30分钟，存根保存时间由tokendualtime参数指定，默认为1个小时 
+				可以通过enableToken参数配置指定是否启用令牌检测机制，true检测，false不检测，默认为false不检测 enableToken是否启用令牌检测机制，true 
+				启用，false 不启用，默认为不启用
+	 */
+	private boolean requiredDToken = false;
 	
 	/**
 	 * 存放控制方法参数的泛型数据类型
@@ -99,6 +113,8 @@ public class MethodInfo {
 	public MethodInfo(Method method, HandlerMapping typeLevelMapping) {
 		super();
 		this.method = method;
+		this.assertDToken = method.getAnnotation(AssertDToken.class);
+		this.requiredDToken = assertDToken != null;
 		mapping = method.getAnnotation(HandlerMapping.class);
 		
 		this.responsebodyAnno = method.getAnnotation(ResponseBody.class);
@@ -124,6 +140,8 @@ public class MethodInfo {
 		super();
 		this.method = method;
 		mapping = method.getAnnotation(HandlerMapping.class);
+		this.assertDToken = method.getAnnotation(AssertDToken.class);
+		this.requiredDToken = assertDToken != null;
 		this.responsebodyAnno = method.getAnnotation(ResponseBody.class);
 		if(responsebodyAnno != null)
 		{
@@ -345,6 +363,8 @@ public class MethodInfo {
 	public MethodInfo(Method method) {
 		super();
 		this.method = method;
+		this.assertDToken = method.getAnnotation(AssertDToken.class);
+		this.requiredDToken = assertDToken != null;
 		this.responsebodyAnno = method.getAnnotation(ResponseBody.class);
 		if(responsebodyAnno != null)
 		{
@@ -805,6 +825,14 @@ public class MethodInfo {
 	{
 	
 		this.responseMediaType = responseMediaType;
+	}
+
+	public boolean isRequiredDToken() {
+		return requiredDToken;
+	}
+
+	public AssertDToken getAssertDToken() {
+		return assertDToken;
 	}
 
 }

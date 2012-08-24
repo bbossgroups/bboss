@@ -12,7 +12,26 @@ bboss-taglib<-cas server [frameworkset.jar]
 bboss-taglib<-portal [frameworkset.jar]
 bboss-taglib<-bboss-ws [frameworkset.jar]
 #######update function list since bbossgroups-3.5 begin###########
-o notempty标签collection和map元素为空时不能正确执行问题修复
+o cms导航索引样式调整，频道导航调整
+o 修复notempty标签当collection集合元素为0时不能正常工作的缺陷
+o treedata标签增加rootNameCode属性用来指定树根节点国际化名称
+o titile标签增加titlecode属性：
+<!--标题国际化代码，如果代码在mvc国际化相关配置文件中不存在，则输出code-->
+		<attribute>
+			<name>titlecode</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+o tabPane标签增加tabTitleCode属性
+<!-- 
+		tabTitleCode:用来指定tab标题的国际化code，如果指定了tabTitleCode属性，那么就从mvc配置的国际化
+		属性文件中获取对应的国际化代码输出。
+		如果没有指定相应的code属性，那么输出tabTitle对应的值，如果tabTitle也没有指定则直接则直接输出tabTitleCode属性
+		 -->
+		<attribute>
+			<name>tabTitleCode</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>		
 o 优化COMTree和DataInfoImpl中获取accesscontrol安全访问控制对象的方法，提升性能
 o 修改在非jquery模式下index标签设置tagnumber属性后，相应的页码上面没有超链接的bug
 <pg:index tagnumber="5" sizescope="10,20,50,100"/>

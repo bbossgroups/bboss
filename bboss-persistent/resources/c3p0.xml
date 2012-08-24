@@ -28,6 +28,8 @@
   <!-- 设置数据库连接池的连接的最大空闲时间,单位为秒 -->
   <property name="maxIdleTime" value="20"/>  
   <property name="preferredTestQuery" value="select 1 from dual"/>
+  <property name="testConnectionOnCheckout" value="true"/>
+  
   
 </property>
  

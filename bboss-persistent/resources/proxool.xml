@@ -26,5 +26,7 @@
     <property name="minimumConnectionCount" value="2" />
     <property name="simultaneousBuildThrottle" value="50" />
     <property name="maximumConnectionLifetime" value="14400000" />
-    <property name="houseKeepingTestSql" value="select 1 from dual1" />
+    <property name="houseKeepingTestSql" value="select 1 from dual" />
+    <property name="test-before-use" value="true" />
+    
 </property>

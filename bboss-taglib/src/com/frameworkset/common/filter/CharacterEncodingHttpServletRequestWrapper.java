@@ -27,7 +27,8 @@ public class CharacterEncodingHttpServletRequestWrapper
     public CharacterEncodingHttpServletRequestWrapper(HttpServletRequest request, String encoding,boolean checkiemodeldialog) {
         super(request);
         String agent = request.getHeader("User-Agent");
-        isie = agent.contains("MSIE ");
+        if(agent != null)
+        	isie = agent.contains("MSIE ");
         String method = this.getMethod();
         isget = method !=null && method.equals("GET");
         this.newecoding = encoding != null ? encoding:system_encoding;

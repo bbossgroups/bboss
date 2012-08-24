@@ -107,7 +107,7 @@ public abstract class AuthenticateInterceptor extends AuthenticateFilter impleme
 						appendQueryProperties(targetUrl, request, new RequestMap(request),
 								enc);
 					}
-					sendRedirect(request, response, targetUrl.toString(), http10Compatible);
+					sendRedirect(request, response, targetUrl.toString(), http10Compatible,this.isforward(),this.isinclude);
 				}
 				return false;
 			}

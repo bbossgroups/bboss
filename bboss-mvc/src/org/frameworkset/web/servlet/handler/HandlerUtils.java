@@ -35,6 +35,8 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -108,9 +110,11 @@ import org.frameworkset.web.servlet.support.RequestContext;
 import org.frameworkset.web.servlet.view.AbstractUrlBasedView;
 import org.frameworkset.web.servlet.view.UrlBasedViewResolver;
 import org.frameworkset.web.servlet.view.View;
+import org.frameworkset.web.token.DTokenValidateFailedException;
+import org.frameworkset.web.token.MemTokenManager;
+import org.frameworkset.web.token.MemTokenManagerFactory;
 import org.frameworkset.web.util.UrlPathHelper;
 import org.frameworkset.web.util.WebUtils;
-import org.jfree.util.Log;
 
 import com.frameworkset.util.BeanUtils;
 import com.frameworkset.util.EditorInf;
@@ -2727,6 +2731,7 @@ public abstract class HandlerUtils {
 			// getMethodResolver(handler.getClass(),methodResolverCache,urlPathHelper,pathMatcher,methodNameResolver);
 			MethodData handlerMethod = methodResolver
 					.resolveHandlerMethod(request);
+			assertDToken(request,response,handlerMethod);
 			ServletHandlerMethodInvoker methodInvoker = new ServletHandlerMethodInvoker(
 					methodResolver, 
 					messageConverters);
@@ -2755,6 +2760,28 @@ public abstract class HandlerUtils {
 	}
 	
 	
+
+	private static void assertDToken(ServletRequest request,ServletResponse response,MethodData handlerMethod) throws IOException, DTokenValidateFailedException{
+		if(handlerMethod.getMethodInfo().isRequiredDToken())
+		{
+			MemTokenManager memTokenManager = MemTokenManagerFactory.getMemTokenManagerNoexception();
+			if(memTokenManager == null)
+				return;
+			memTokenManager.doDTokencheck(request, response);
+//			if(!memTokenManager.assertDTokenSetted(request))
+//			{
+//				if(request instanceof HttpServletRequest)
+//				{
+//					memTokenManager.sendRedirect((HttpServletRequest) request,(HttpServletResponse) response);
+//				}
+//				else
+//				{
+//					throw new DTokenValidateFailedException();
+//				}
+//			}
+		}
+		
+	}
 
 	/**
 	 * Handle the case where no request handler method was found.
@@ -2844,8 +2871,8 @@ public abstract class HandlerUtils {
 
 			String resolvedMethodName = methodNameResolver
 					.getHandlerMethodName(request);
-
-			for (MethodInfo handlerMethod : getHandlerMethods()) {
+			Set<MethodInfo> handlerMethods = getHandlerMethods();
+			for (MethodInfo handlerMethod : handlerMethods) {
 
 				HandlerMapping mapping = handlerMethod.getMethodMapping();
 				if (mapping == null) {

@@ -722,7 +722,7 @@ public class TreeTag extends ContextMenuTag {
 			if(!this.isJquery())
 			{
 				 ret.append(PageConfig.getJqueryConfig(request)); //jquery
-				 ret.append(PageConfig.getTreeConfig(request)); //jquery
+				 ret.append(PageConfig.getTreeConfig(request,true)); //jquery
 	             ret.append(PageConfig.getPopScript( request, enablecontextmenu)); //jquery
 			}
 			NodeHelper.getSelectedScript(ret,itree,this.getTree());
@@ -743,7 +743,7 @@ public class TreeTag extends ContextMenuTag {
             	if(!this.isJquery())
     			{
     				 ret.append(PageConfig.getJqueryConfig(request)); //jquery
-	                ret.append(PageConfig.getTreeConfig(request)); //jquery
+	                ret.append(PageConfig.getTreeConfig(request,true)); //jquery
 	                ret.append(PageConfig.getPopScript( request, enablecontextmenu)); //jquery
     			}
                 
@@ -763,7 +763,7 @@ public class TreeTag extends ContextMenuTag {
 			if(!this.isJquery())
 			{
 				 ret.append(PageConfig.getJqueryConfig(request)); //jquery
-			    ret.append(PageConfig.getTreeConfig(request)); //jquery
+			    ret.append(PageConfig.getTreeConfig(request,true)); //jquery
 	            ret.append(PageConfig.getPopScript( request, enablecontextmenu)); //jquery
 			}
 			NodeHelper.getInitScript(ret,request.getParameter("selectedNode"),request.getContextPath()); 

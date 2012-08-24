@@ -1451,7 +1451,32 @@ public class PagerContext
 				CMSListTag cmsListTag = (CMSListTag) tag;
 				CMSBaseListData dataInfo = CMSTagUtil
 						.getCMSBaseListData(cmsListTag.getDatatype());
+				/** 2012-8-24 °æ cms½Ó¿Ú
+				Map<String,Object> params = cmsListTag.getParams();
+				if(params != null)
+				{
+					if(!params.containsKey("doctype") && cmsListTag.getDocType() != null)
+					{
+						params.put("doctype", cmsListTag.getDocType() );
+					}
+					else 
+					{
+						
+					}
+					dataInfo.setOutlineInfo(cmsListTag.getSite(), cmsListTag
+							.getChannel(), cmsListTag.getCount(), params);
 
+				
+				}
+				else
+				{
+					dataInfo.setOutlineInfo(cmsListTag.getSite(), cmsListTag
+							.getChannel(), cmsListTag.getCount(), cmsListTag.getDocType());
+				}
+				*/
+				/**
+				 * ¾É°æ¼æÈÝ´úÂë
+				 */
 				dataInfo.setOutlineInfo(cmsListTag.getSite(), cmsListTag
 						.getChannel(), cmsListTag.getCount());
 				if (cmsListTag.getDocumentid() != null)

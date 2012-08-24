@@ -51,6 +51,7 @@ public class PageConfig extends BaseTag
     public static final String pagerscript_set_flag= "pagerscript_set_flag________";
     public static final String treescript_set_flag= "treescript_set_flag________";
     private boolean enablecontextmenu = true;
+    private boolean enabletree = true;
     @Override
     public int doEndTag() throws JspException
     {
@@ -162,7 +163,7 @@ public class PageConfig extends BaseTag
     }
     
     public static final String treeview_css = "/include/treeview.css";
-    public static String getTreeConfig(HttpServletRequest request) 
+    public static String getTreeConfig(HttpServletRequest request,boolean enabletree) 
     {
 //        String configed = (String)request.getAttribute(treescript_set_flag);
 //        if(configed == null || !configed.equals("true"))
@@ -174,6 +175,8 @@ public class PageConfig extends BaseTag
 //            return output.toString();
 //        }
 //        return "";
+    	if(!enabletree )
+    		return "";
     	String treecss = request.getContextPath()+treeview_css;
     	return PageConfig.getLink(treecss, request);
     }
@@ -243,7 +246,7 @@ public class PageConfig extends BaseTag
             out.print(getJqueryConfig(request));
             out.print(getPagerConfig(request));
             out.print(getPagerCss(request));            
-            out.print(getTreeConfig(request));
+            out.print(getTreeConfig(request,enabletree));
             out.print(getPopScript(request, enablecontextmenu));
         }
         catch (Exception e)
@@ -360,5 +363,13 @@ public class PageConfig extends BaseTag
 		
 		
     }
+
+	public boolean isEnabletree() {
+		return enabletree;
+	}
+
+	public void setEnabletree(boolean enabletree) {
+		this.enabletree = enabletree;
+	}
 
 }

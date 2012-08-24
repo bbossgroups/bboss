@@ -3727,6 +3727,16 @@
 			<name>rowidName</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
+		<!--文档类型,根据文档类型查找文档-->
+		<!--<attribute>
+			<name>docType</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>-->
+		<!--扩展参数，采用json格式进行管理-->
+		<!--<attribute>
+			<name>config</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>-->
 	</tag>
 	<tag>
 		<name>contextmenu</name>
@@ -4746,6 +4756,11 @@
 		 -->
 		<attribute>
 			<name>enablecontextmenu</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<!-- 是否输出树样式 -->
+		<attribute>
+			<name>enabletree</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>

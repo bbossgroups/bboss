@@ -72,6 +72,8 @@ import org.apache.oro.text.regex.PatternMatcherInput;
 import org.apache.oro.text.regex.Perl5Compiler;
 import org.apache.oro.text.regex.Perl5Matcher;
 import org.apache.oro.text.regex.StringSubstitution;
+import org.codehaus.jackson.JsonParser.Feature;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.frameworkset.util.CollectionUtils;
 import org.frameworkset.util.ObjectUtils;
 
@@ -1187,6 +1189,8 @@ outStr = "2010ƒÍ02‘¬07»’11 ±–Ì£¨÷‹¡È”±±®æØ£∫‘⁄2¬∑π´Ωª≥µ…œ±ª∞««‘£¨≤¢◊•ªÒ“ª√˚œ”“…»
 	 * @return
 	 */
 	public static String HTMLEncode(String text) {
+		if(SimpleStringUtil.isEmpty(text ))
+			return text;
 		text = SimpleStringUtil.replaceAll(text, "&", "&amp;");
 		text = SimpleStringUtil.replaceAll(text, "\"", "&quot;");
 		text = SimpleStringUtil.replaceAll(text, "<", "&lt;");
@@ -1206,6 +1210,8 @@ outStr = "2010ƒÍ02‘¬07»’11 ±–Ì£¨÷‹¡È”±±®æØ£∫‘⁄2¬∑π´Ωª≥µ…œ±ª∞««‘£¨≤¢◊•ªÒ“ª√˚œ”“…»
 	 * @return
 	 */
 	public static String HTMLNoBREncode(String text) {
+		if(SimpleStringUtil.isEmpty(text ))
+			return text;
 		text = SimpleStringUtil.replaceAll(text, "&", "&amp;");
 		text = SimpleStringUtil.replaceAll(text, "\"", "&quot;");
 		text = SimpleStringUtil.replaceAll(text, "<", "&lt;");
@@ -1224,6 +1230,8 @@ outStr = "2010ƒÍ02‘¬07»’11 ±–Ì£¨÷‹¡È”±±®æØ£∫‘⁄2¬∑π´Ωª≥µ…œ±ª∞««‘£¨≤¢◊•ªÒ“ª√˚œ”“…»
 	 * @return
 	 */
 	public static String HTMLEncodej(String text) {
+		if(SimpleStringUtil.isEmpty(text ))
+			return text;
 		text = SimpleStringUtil.replaceAll(text, "&amp;", "&");
 		text = SimpleStringUtil.replaceAll(text, "&quot;", "\"");
 		text = SimpleStringUtil.replaceAll(text, "&lt;", "<");
@@ -1241,6 +1249,8 @@ outStr = "2010ƒÍ02‘¬07»’11 ±–Ì£¨÷‹¡È”±±®æØ£∫‘⁄2¬∑π´Ωª≥µ…œ±ª∞««‘£¨≤¢◊•ªÒ“ª√˚œ”“…»
 	 * @return
 	 */
 	public static String HTMLNoBREncodej(String text) {
+		if(SimpleStringUtil.isEmpty(text ))
+			return text;
 		text = SimpleStringUtil.replaceAll(text, "&amp;", "&");
 		text = SimpleStringUtil.replaceAll(text, "&quot;", "\"");
 		text = SimpleStringUtil.replaceAll(text, "&lt;", "<");
@@ -2337,6 +2347,32 @@ outStr = "2010ƒÍ02‘¬07»’11 ±–Ì£¨÷‹¡È”±±®æØ£∫‘⁄2¬∑π´Ωª≥µ…œ±ª∞««‘£¨≤¢◊•ªÒ“ª√˚œ”“…»
     		}    		
     	}
     	return lm;
+	}
+    
+    public static <T> T json2Object(String jsonString,Class<T> toclass,boolean ALLOW_SINGLE_QUOTES) {
+		// TODO Auto-generated method stub
+
+//		String jsonString = "[{'from_date':'2001-09-21','to_date':'2011-04-02','company':'»À Ÿ±£œ’','department':'xxx','position':'÷˜π‹' },{'from_date':'0002-12-01','to_date':'2011-04-02', 'company':'»À Ÿ±£œ’','department':'xxx','position':'÷˜π‹' }]";
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.configure(Feature.ALLOW_SINGLE_QUOTES, ALLOW_SINGLE_QUOTES); 
+		try {
+			T value = mapper.readValue(jsonString, toclass);
+			return value;
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return (T)jsonString;
+		
+	
+	}
+    
+    public static <T> T json2Object(String jsonString,Class<T> toclass) {
+		// TODO Auto-generated method stub
+		return json2Object(jsonString,toclass,true);
+		
+	
 	}
 	
 }

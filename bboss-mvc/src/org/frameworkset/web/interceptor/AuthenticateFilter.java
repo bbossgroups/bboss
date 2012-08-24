@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
@@ -17,6 +16,7 @@ import org.apache.log4j.Logger;
 import org.frameworkset.util.AntPathMatcher;
 import org.frameworkset.util.PathMatcher;
 import org.frameworkset.web.servlet.handler.HandlerMeta;
+import org.frameworkset.web.token.TokenFilter;
 import org.frameworkset.web.util.UrlPathHelper;
 import org.frameworkset.web.util.WebUtils;
 
@@ -40,7 +40,7 @@ import com.frameworkset.util.StringUtil;
  * @author biaoping.yin
  * @version 1.0
  */
-public abstract class AuthenticateFilter  implements Filter {
+public abstract class AuthenticateFilter extends TokenFilter{
 	public static final String accesscontrol_check_result = "com.frameworkset.platform.security.accesscontrol_check_result";
 	public static final String accesscontrol_check_result_ok = "ok";
 	public static final String accesscontrol_check_result_fail = "fail";
@@ -51,7 +51,7 @@ public abstract class AuthenticateFilter  implements Filter {
 	public static final String accesscontrol_permissioncheck_result_fail = "fail";
 	protected boolean preventDispatchLoop = false;
 	protected boolean http10Compatible = true;
-	protected String redirecturl = "/login.jsp";
+	
 	
 	public static String REDIRECT = "redirect";
 	public static String FORWARD = "forward";
@@ -291,7 +291,7 @@ public abstract class AuthenticateFilter  implements Filter {
 					}
 					targetUrl.append(dispatcherPath);
 					
-					sendRedirect(request, response, targetUrl.toString(), http10Compatible);
+					sendRedirect(request, response, targetUrl.toString(), http10Compatible,this.isforward(),this.isinclude);
 				}
 				return false;
 			}
@@ -333,7 +333,7 @@ public abstract class AuthenticateFilter  implements Filter {
 					}
 					targetUrl.append(dispatcherPath);
 					
-					sendRedirect(request, response, targetUrl.toString(), http10Compatible);
+					sendRedirect(request, response, targetUrl.toString(), http10Compatible,this.isforward(),this.isinclude);
 				}
 				return false;
 			}
@@ -419,50 +419,7 @@ public abstract class AuthenticateFilter  implements Filter {
 	 * @throws IOException
 	 *             if thrown by response methods
 	 */
-	protected void sendRedirect(HttpServletRequest request,
-			HttpServletResponse response, String targetUrl,
-			boolean http10Compatible) throws IOException {
-
-		if(!this.isforward())
-		{
-			if(!isinclude)
-			{
-				if (http10Compatible) {
-					// Always send status code 302.
-					response.sendRedirect(response.encodeRedirectURL(targetUrl));
-				} else {
-					// Correct HTTP status code is 303, in particular for POST requests.
-					response.setStatus(303);
-					response.setHeader("Location", response
-							.encodeRedirectURL(targetUrl));
-				}
-			}
-			else
-			{
-				 try
-					{
-						request.getRequestDispatcher(targetUrl).include(request, response);
-					}
-					catch (ServletException e)
-					{
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-			}
-		}
-		else
-		{
-			 try
-			{
-				request.getRequestDispatcher(targetUrl).forward(request, response);
-			}
-			catch (ServletException e)
-			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-	}
+	
 
 	/**
 	 * @param args
@@ -483,15 +440,7 @@ public abstract class AuthenticateFilter  implements Filter {
 		this.preventDispatchLoop = preventDispatchLoop;
 	}
 
-	public String getRedirecturl() {
-
-		return redirecturl;
-	}
-
-	public void setRedirecturl(String redirecturl) {
-
-		this.redirecturl = redirecturl;
-	}
+	
 
 	public boolean isHttp10Compatible() {
 
@@ -565,8 +514,13 @@ public abstract class AuthenticateFilter  implements Filter {
 	public void doFilter(ServletRequest arg0, ServletResponse arg1,
 			FilterChain arg2) throws IOException, ServletException {
 		try {
+			
 			if(arg0 instanceof HttpServletRequest)
 			{
+				if(!checkTokenExist((HttpServletRequest )arg0,(HttpServletResponse )arg1))//令牌检查，如果当前令牌已经失效则直接跳转到登录页，否则继续进行后去安全认证检查
+				{
+					return ;
+				}
 				boolean result = preHandle((HttpServletRequest)arg0, (HttpServletResponse)arg1, null);//认证检测
 				if(result)
 				{
@@ -601,17 +555,13 @@ public abstract class AuthenticateFilter  implements Filter {
 	}
 
 	public void init(FilterConfig arg0) throws ServletException {
+		super.init(arg0);
 		String preventDispatchLoop = arg0.getInitParameter("preventDispatchLoop");
 		if(preventDispatchLoop != null && preventDispatchLoop.equals("true"))
 		{
 			setPreventDispatchLoop(true);
 		}
-		String redirecturl = arg0.getInitParameter("redirecturl");
 		
-		if(redirecturl != null && !redirecturl.equals(""))
-		{
-			setRedirecturl(redirecturl);
-		}
 		String authorfailedurl = arg0.getInitParameter("authorfailedurl");
 		
 		if(authorfailedurl != null && !authorfailedurl.equals(""))

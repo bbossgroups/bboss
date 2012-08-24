@@ -218,4 +218,9 @@ public class UrlResource extends AbstractResource {
 		return this.cleanedUrl.hashCode();
 	}
 
+	public void release() {
+		
+		
+	}
+
 }

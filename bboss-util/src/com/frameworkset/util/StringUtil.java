@@ -86,34 +86,41 @@ public class StringUtil extends SimpleStringUtil {
 	
 	public static void  addCookieValue(HttpServletRequest request,HttpServletResponse response ,String name,String value,int maxage)
 	{
-		Cookie[] cookies = request.getCookies();
-		
-		Cookie loginPathCookie = null;
-		if(cookies != null)
+		try
 		{
-			for(Cookie cookie:cookies)
+			Cookie[] cookies = request.getCookies();
+			
+			Cookie loginPathCookie = null;
+			if(cookies != null)
 			{
-				if(name.equals(cookie.getName()))
+				for(Cookie cookie:cookies)
 				{
-					loginPathCookie = cookie;
-					break;
+					if(name.equals(cookie.getName()))
+					{
+						loginPathCookie = cookie;
+						break;
+					}
 				}
 			}
+			if(loginPathCookie == null)
+			{
+				 loginPathCookie = new Cookie(name, value);			 
+				loginPathCookie.setMaxAge(maxage);
+				loginPathCookie.setPath(request.getContextPath());			
+				response.addCookie(loginPathCookie);
+			}
+			else
+			{
+				loginPathCookie.setMaxAge(maxage);
+				loginPathCookie.setValue(value);
+				loginPathCookie.setPath(request.getContextPath());	
+				response.addCookie(loginPathCookie);
+	//			loginPathCookie.setPath(request.getContextPath());
+			}
 		}
-		if(loginPathCookie == null)
+		catch(Throwable e)
 		{
-			 loginPathCookie = new Cookie(name, value);			 
-			loginPathCookie.setMaxAge(maxage);
-			loginPathCookie.setPath(request.getContextPath());			
-			response.addCookie(loginPathCookie);
-		}
-		else
-		{
-			loginPathCookie.setMaxAge(maxage);
-			loginPathCookie.setValue(value);
-			loginPathCookie.setPath(request.getContextPath());	
-			response.addCookie(loginPathCookie);
-//			loginPathCookie.setPath(request.getContextPath());
+			
 		}
 	}
 	
@@ -386,8 +393,16 @@ outStr = "2010Äê02ÔÂ07ÈÕ11Ê±Ğí£¬ÖÜÁéÓ±±¨¾¯£ºÔÚ2Â·¹«½»³µÉÏ±»°ÇÇÔ£¬²¢×¥»ñÒ»ÃûÏÓÒÉÈ
  public static void sendFile_(HttpServletRequest request, HttpServletResponse response, Resource in) throws Exception {
 //	 if(in == null || in.exists())
 //		 throw new IOException("×ÊÔ´²»´æÔÚ,ÏÂÔØÊ§°Ü");
-	
-	 sendFile_(request, response, in.getFilename(),in.getInputStream());
+	try
+	{
+		sendFile_(request, response, in.getFilename(),in.getInputStream());	
+	}
+	finally
+	{
+		in.release();
+	}
+	 
+	 
  }
  public static void sendFile_(HttpServletRequest request, HttpServletResponse response, String filename,InputStream in) throws Exception {
      OutputStream out = null;
@@ -432,7 +447,7 @@ outStr = "2010Äê02ÔÂ07ÈÕ11Ê±Ğí£¬ÖÜÁéÓ±±¨¾¯£ºÔÚ2Â·¹«½»³µÉÏ±»°ÇÇÔ£¬²¢×¥»ñÒ»ÃûÏÓÒÉÈ
      }
      catch(Exception e)
      {
-     	e.printStackTrace();
+     	
      	throw e;
      }
      finally {
@@ -443,8 +458,7 @@ outStr = "2010Äê02ÔÂ07ÈÕ11Ê±Ğí£¬ÖÜÁéÓ±±¨¾¯£ºÔÚ2Â·¹«½»³µÉÏ±»°ÇÇÔ£¬²¢×¥»ñÒ»ÃûÏÓÒÉÈ
 			}
 			catch (Exception e)
 			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				
 			}
          try
 			{
@@ -453,8 +467,7 @@ outStr = "2010Äê02ÔÂ07ÈÕ11Ê±Ğí£¬ÖÜÁéÓ±±¨¾¯£ºÔÚ2Â·¹«½»³µÉÏ±»°ÇÇÔ£¬²¢×¥»ñÒ»ÃûÏÓÒÉÈ
 			}
 			catch (Exception e)
 			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				
 			}
      }
  }
@@ -544,7 +557,7 @@ outStr = "2010Äê02ÔÂ07ÈÕ11Ê±Ğí£¬ÖÜÁéÓ±±¨¾¯£ºÔÚ2Â·¹«½»³µÉÏ±»°ÇÇÔ£¬²¢×¥»ñÒ»ÃûÏÓÒÉÈ
         }
         catch(Exception e)
         {
-        	e.printStackTrace();
+        	
         	throw e;
         }
         finally {

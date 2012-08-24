@@ -1347,7 +1347,7 @@ public class PreparedDBUtil extends DBUtil {
 			{
 				if(showsql(stmtInfo.getDbname()))
 				{
-					log.debug("Execute JDBC prepared pagine statement:"+stmtInfo.getSql());
+					log.debug("Execute JDBC prepared pagine query statement:"+stmtInfo.getSql());
 				}
 				statement = stmtInfo.preparePagineStatement();
 
@@ -1358,7 +1358,7 @@ public class PreparedDBUtil extends DBUtil {
 			{
 				if(showsql(stmtInfo.getDbname()))
 				{
-					log.debug("Execute JDBC prepared update statement:"+stmtInfo.getSql());
+					log.debug("Execute JDBC prepared query statement:"+stmtInfo.getSql());
 				}
 				statement = stmtInfo.prepareStatement();
 			}

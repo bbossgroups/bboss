@@ -4743,6 +4743,11 @@
 			<name>enablecontextmenu</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
+		<!-- 是否输出树样式 -->
+		<attribute>
+			<name>enabletree</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
 	</tag>
 	<!-- 通过csslink标签导入的css文件能够自动去重功能 -->
 	<tag>
@@ -4992,7 +4997,57 @@
 		<description>
 			Retrieves the country locale code text .
 		</description>
-	</tag>	
+	</tag>
+	 <tag>
+		<name>dtoken</name>
+		<tag-class>org.frameworkset.web.token.DTokenTag</tag-class>
+		<body-content>JSP</body-content>
+		<description>
+			生成动态令牌标签，用来防止跨站伪造攻击
+		</description>
+		<attribute>
+			<name>element</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description>
+					参数有3个值（如果没有指定默认为input类型）：
+				  json 输出json表达式，名称和值的分隔符默认为'号，如果要指定为"号，那么需要
+				  通过jsonsplit参数来指定				  
+				  input输出input hidden				  
+				  param(等号表达式)
+			</description>
+		</attribute>
+		<attribute>
+			<name>jsonsplit</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description>
+			生成动态令牌标签，用来防止跨站伪造攻击
+		</description>
+		</attribute>
+		
+		<attribute>
+			<name>fid</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description>
+				令牌所属窗体唯一标识，一个窗体只需要一个令牌，如果在同一个窗体
+			 中dttoken标签需要出现多次，比如在逻辑判断中出现多次，那么就需要指定
+			 fid属性，除此以外都不需要指定fid属性
+			</description>
+		</attribute>
+	</tag>
+ 	<tag>
+		<name>assertdtoken</name>
+		<tag-class>org.frameworkset.web.token.AssertDTokenTag</tag-class>
+		<body-content>JSP</body-content>
+		<description>
+			用于在页面上判断令牌被客户端传回并且校验令牌是否正确
+			如果没有启用动态令牌机制，该标签无效
+			如果启用了，assertdtoken判断令牌是否被客户端传回并且校验令牌是否正确
+			如果没有传回则拒绝访问，如果传回的令牌已经失效则拒绝访问
+		</description>
+	</tag>		
 	<!-- 定义bboss mvc标签结束 -->
 	
 </taglib>
