@@ -195,6 +195,33 @@ public class MemTokenManager {
 		request.setAttribute(MemTokenManager.temptoken_request_validateresult_key,result);
 		return 	assertDToken(result);
 	}
+	public static final String temptoken_param_name_word = temptoken_param_name + "=";
+	/**
+	 * 为url追加动态令牌参数
+	 * @param url
+	 * @return
+	 */
+	public String appendDTokenToURL(HttpServletRequest request,String url)
+	{
+		if(url == null)
+			return url;
+		if(url.indexOf(temptoken_param_name_word) > 0)
+			return url;
+		StringBuffer ret = new StringBuffer();
+		String token = this.buildDToken(request);
+		int idx = url.indexOf("?");
+		if(idx > 0)
+		{
+			ret.append(url).append("&").append(temptoken_param_name).append("=").append(token);
+		}
+		else
+		{
+			ret.append(url).append("?").append(temptoken_param_name).append("=").append(token);
+		}
+		return ret.toString();
+			
+		
+	}
 	
 	/**
 	 * 判断令牌是否设置并且校验成功
@@ -252,7 +279,7 @@ public class MemTokenManager {
 		}
 	}
 	
-	public String genToken(ServletRequest request,String fid)
+	public String genToken(ServletRequest request,String fid,boolean cache)
 	{
 		String tmp = null;
 		String k = null;
@@ -269,16 +296,16 @@ public class MemTokenManager {
 			HttpSession session = ((HttpServletRequest)request).getSession(false);
 			if(session == null)
 			{
-				tmp = memToken();
+				tmp = memToken( cache);
 			}
 			else
 			{
-				tmp = sessionmemhashToken(request,session);
+				tmp = sessionmemhashToken(request,session,cache);
 			}
 		}
 		else
 		{
-			tmp = memToken();
+			tmp = memToken( cache);
 		}
 		if(fid != null)
 		{
@@ -287,28 +314,32 @@ public class MemTokenManager {
 		return tmp;
 	}
 	
-	private String sessionmemhashToken(ServletRequest request,HttpSession session)
+	private String sessionmemhashToken(ServletRequest request,HttpSession session,boolean cache)
 	{
 		String sessionid = session.getId();
 		String token = UUID.randomUUID().toString();
 		String hash = String.valueOf(HashUtil.mixHash(new StringBuffer().append(sessionid).append("_").append(token).toString()));
 		if(this.enableToken)
 		{
-			if(this.tokenstore_i == tokenstore_in_session)
+			if(cache)
 			{
-				session.setAttribute(hash, c);
-			}
-			else
-			{
-				put(hash + "_" + sessionid);
+				if(this.tokenstore_i == tokenstore_in_session)
+				{
+					session.setAttribute(hash, c);
+				}
+				else
+				{
+					put(hash + "_" + sessionid);
+				}
 			}
 		}
 		return hash;
 	}
-	private String memToken()
+	private String memToken(boolean cache)
 	{
 		String token = UUID.randomUUID().toString();
-		put(token);
+		if(cache)
+			put(token);
 		return token;
 	}
 	
@@ -398,31 +429,81 @@ public class MemTokenManager {
 	{
 		return buildDToken(elementType,"'",request,null);
 	}
-	
 	public String buildDToken(String elementType,String jsonsplit,HttpServletRequest request,String fid)
+	{
+		return buildDToken(elementType,jsonsplit,request,fid,true);
+	}
+	/**
+	 * 生成隐藏域令牌,输出值为：
+	 * <input type="hidden" name="_dt_token_" value="-1518435257">
+	 * @param request
+	 * @return
+	 */
+	public String buildHiddenDToken(HttpServletRequest request)
+	{
+		return buildDToken("input",null,request,null,true);
+	}
+	/**
+	 * 生成json串令牌
+	 * 如果jsonsplit为'，则输出值为：
+	 * _dt_token_:'1518435257'
+	 * 如果如果jsonsplit为",则输出值为：
+	 * _dt_token_:"1518435257"
+	 * @param jsonsplit
+	 * @param request
+	 * @return
+	 */
+	public String buildJsonDToken(String jsonsplit,HttpServletRequest request)
+	{
+		return buildDToken("json","'",request,null,true);
+	}
+	/**
+	 * 生成url参数串令牌
+	 * 输出值为：
+	 * _dt_token_=1518435257
+	 * @param request
+	 * @return
+	 */
+	public String buildParameterDToken(HttpServletRequest request)
+	{
+		return buildDToken("param",null,request,null,true);
+	}
+	/**
+	 * 只生成令牌，对于这种方式，客户端必须将该token以参数名_dt_token_传回服务端，否则不起作用
+	 * 输出值为：
+	 * 1518435257
+	 * @param request
+	 * @return
+	 */
+	public String buildDToken(HttpServletRequest request)
+	{
+		return buildDToken("token",null,request,null,true);
+	}
+	
+	public String buildDToken(String elementType,String jsonsplit,HttpServletRequest request,String fid,boolean cache)
 	{
 //		if(!this.enableToken)
 //			return "";
 		StringBuffer buffer = new StringBuffer();
 		if(StringUtil.isEmpty(elementType) || elementType.equals("input"))
 		{
-			buffer.append("<input type=\"hidden\" name=\"").append(temptoken_param_name).append("\" value=\"").append(this.genToken(request,fid)).append("\">");
+			buffer.append("<input type=\"hidden\" name=\"").append(temptoken_param_name).append("\" value=\"").append(this.genToken(request,fid, cache)).append("\">");
 		}
 		else if(elementType.equals("json"))//json
 		{
-			buffer.append(temptoken_param_name).append(":").append(jsonsplit).append(this.genToken(request,fid)).append(jsonsplit);
+			buffer.append(temptoken_param_name).append(":").append(jsonsplit).append(this.genToken(request,fid,cache)).append(jsonsplit);
 		}
 		else if(elementType.equals("param"))//参数
 		{
-			buffer.append(temptoken_param_name).append("=").append(this.genToken(request,fid));
+			buffer.append(temptoken_param_name).append("=").append(this.genToken(request,fid,cache));
 		}
 		else if(elementType.equals("token"))//只输出token
 		{
-			buffer.append(this.genToken(request,fid));
+			buffer.append(this.genToken(request,fid,cache));
 		}
 		else
 		{
-			buffer.append("<input type=\"hidden\" name=\"").append(temptoken_param_name).append("\" value=\"").append(this.genToken(request,fid)).append("\">");
+			buffer.append("<input type=\"hidden\" name=\"").append(temptoken_param_name).append("\" value=\"").append(this.genToken(request,fid, cache)).append("\">");
 		}
 		return buffer.toString();
 	}

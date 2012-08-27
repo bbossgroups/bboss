@@ -56,7 +56,7 @@ String path = request.getContextPath();
 				</pg:list>
 		
 			</table>
-			<div><pg:index/></div>
+			<div><pg:index aindex="false" tagnumber="5" numberend=">" numberpre="<"/></div>
 			</pg:pager> 
 			</div>
 	

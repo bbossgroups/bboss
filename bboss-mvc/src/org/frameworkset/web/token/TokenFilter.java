@@ -197,13 +197,46 @@ public class TokenFilter implements Filter{
 			response.sendError(HttpServletResponse.SC_FORBIDDEN);
 		}
 	}
+	protected String appendDTokenToTargetURL(HttpServletRequest request, String targetUrl)
+	{
+		if(this.memTokenManager != null)
+		{
+			return memTokenManager.appendDTokenToURL(request, targetUrl);
+		}
+		else
+		{
+			return targetUrl;
+		}
+	}
 	
+	protected boolean isloopredirect(HttpServletRequest request,
+			String targetUrl)
+	{
+		String fromurl = request.getRequestURI();
+		int idx = targetUrl.indexOf("?");
+		String comp = targetUrl;
+		if(idx > 0)
+		{
+			comp = targetUrl.substring(0,idx);
+		}
+		if(fromurl.equals(comp))
+			return true;
+		return false;
+	}
 	protected void sendRedirect(HttpServletRequest request,
 			HttpServletResponse response, String targetUrl,
 			boolean http10Compatible,boolean isforward,boolean isinclude) throws IOException {
 
+		if(isloopredirect(request,
+				targetUrl))
+		{
+			response.sendError(HttpServletResponse.SC_FORBIDDEN);
+			return;
+		}
 		if(!isforward)
 		{
+			
+			targetUrl = appendDTokenToTargetURL(request, targetUrl);
 			if(!isinclude)
 			{
 				if (http10Compatible) {

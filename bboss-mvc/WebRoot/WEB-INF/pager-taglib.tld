@@ -377,7 +377,26 @@
 			<name>usegoimage</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
-	
+	<!-- 
+		上下翻页如果没有连接时，是否添加a标记
+        true（默认值） 添加，false不添加
+		 -->
+		<attribute>
+			<name>aindex</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<!-- 
+		数字页面索引前缀
+		 -->
+		<attribute>
+			<name>numberpre</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<!-- 数字页面索引后缀 -->
+		<attribute>
+			<name>numberend</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
 		
 	</tag>
 	<!--
@@ -5034,6 +5053,15 @@
 				令牌所属窗体唯一标识，一个窗体只需要一个令牌，如果在同一个窗体
 			 中dttoken标签需要出现多次，比如在逻辑判断中出现多次，那么就需要指定
 			 fid属性，除此以外都不需要指定fid属性
+			</description>
+		</attribute>
+		
+		<attribute>
+			<name>cache</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description>
+				标识是否在服务器端保存令牌，保存机制由tokenFilter的tokenstore参数指定
 			</description>
 		</attribute>
 	</tag>

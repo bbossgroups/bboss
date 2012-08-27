@@ -32,6 +32,7 @@ public class DTokenTag extends BaseTag {
 	 * 
 	 */
 	private String fid ;
+	private boolean cache = true;
 	public String getElement() {
 		return element;
 	}
@@ -50,6 +51,7 @@ public class DTokenTag extends BaseTag {
 		super.doFinally();
 		element = "input";
 		jsonsplit ="'";
+		this.cache = true;
 		this.fid = null;
 	}
 	@Override
@@ -57,7 +59,7 @@ public class DTokenTag extends BaseTag {
 		
 		int ret = super.doStartTag();
 		try {
-			out.print(MemTokenManagerFactory.getMemTokenManager().buildDToken(element,this.jsonsplit,request,fid));
+			out.print(MemTokenManagerFactory.getMemTokenManager().buildDToken(element,this.jsonsplit,request,fid,this.cache));
 		} catch (IOException e) {
 			throw new JspException(e);
 		}
@@ -71,6 +73,12 @@ public class DTokenTag extends BaseTag {
 	}
 	public void setFid(String fid) {
 		this.fid = fid;
+	}
+	public boolean isCache() {
+		return cache;
+	}
+	public void setCache(boolean cache) {
+		this.cache = cache;
 	}
 	
 	

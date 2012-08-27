@@ -378,8 +378,26 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		
-		
-	
+		<!-- 
+		上下翻页如果没有连接时，是否添加a标记
+        true（默认值） 添加，false不添加
+		 -->
+		<attribute>
+			<name>aindex</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<!-- 
+		数字页面索引前缀
+		 -->
+		<attribute>
+			<name>numberpre</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<!-- 数字页面索引后缀 -->
+		<attribute>
+			<name>numberend</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
 		
 	</tag>
 	<!--
@@ -3728,15 +3746,15 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!--文档类型,根据文档类型查找文档-->
-		<!--<attribute>
+		<attribute>
 			<name>docType</name>
 			<rtexprvalue>true</rtexprvalue>
-		</attribute>-->
+		</attribute>
 		<!--扩展参数，采用json格式进行管理-->
-		<!--<attribute>
+		<attribute>
 			<name>config</name>
 			<rtexprvalue>true</rtexprvalue>
-		</attribute>-->
+		</attribute>
 	</tag>
 	<tag>
 		<name>contextmenu</name>

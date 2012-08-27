@@ -46,7 +46,7 @@ import org.apache.ecs.html.Input;
 import org.apache.ecs.html.Option;
 import org.apache.ecs.html.Script;
 import org.apache.ecs.html.Select;
-import org.frameworkset.spi.BaseSPIManager;
+import org.frameworkset.spi.ApplicationContext;
 import org.frameworkset.web.servlet.support.RequestContextUtils;
 
 import com.chinacreator.cms.driver.jsp.CMSServletRequest;
@@ -71,8 +71,21 @@ public final class IndexTag extends PagerTagSupport {
     public static final String[] _sizescope = new String[] {"5","10","20","30","40","50","60","70","80","90","100"};
     private String sizescope = null;
     
-    private static boolean enable_page_size_set = BaseSPIManager.getBooleanProperty("enable_page_size_set",true);
-    private static boolean enable_page_total_size = BaseSPIManager.getBooleanProperty("enable_page_total_size",true);
+    private static boolean enable_page_size_set = ApplicationContext.getApplicationContext().getBooleanProperty("enable_page_size_set",true);
+    private static boolean enable_page_total_size = ApplicationContext.getApplicationContext().getBooleanProperty("enable_page_total_size",true);
+    /**
+     * 上下翻页如果没有连接时，是否添加a标记
+     * true（默认值） 添加，false不添加
+     */
+    private boolean aindex = false;
+    /**
+     * 数字页面索引前缀
+     */
+    private String numberpre ;
+    /**
+     * 数字页面索引后缀
+     */
+    private String numberend;
     
 //    /**
 //     * jquery内容容器
@@ -329,6 +342,9 @@ public final class IndexTag extends PagerTagSupport {
 //	    pagerContext.getSelector() = null;
 	    this.sizescope = null;
 	    this.usegoimage = false;
+	    this.numberend = null;
+	    this.numberpre = null;
+	    this.aindex = false;
 		return EVAL_PAGE;
 	}
 
@@ -611,9 +627,18 @@ public final class IndexTag extends PagerTagSupport {
 		if (firstUrl.equals(""))
 		{
 		    if(!this.useimage)
-		        return new StringBuffer("<a href='#'>")
-		    			.append(firstpage_label)//首 页
-		    			.append("</a>").toString();
+		    {
+		    	if(this.aindex)
+		    	{
+			        return new StringBuffer("<a href='#'>")
+			    			.append(firstpage_label)//首 页
+			    			.append("</a>").toString();
+		    	}
+		    	else
+		    	{
+		    		return firstpage_label;
+		    	}
+		    }
 		    else
 		    {
 		        IMG image = new IMG();
@@ -815,9 +840,17 @@ public final class IndexTag extends PagerTagSupport {
 //			return "　上一页";
 			if(!this.useimage)
 			{
-	            return new StringBuffer("<a href='#'>")
-				.append(prepage_label)//上一页
-				.append("</a>").toString();
+				if(this.aindex)
+				{
+		            return new StringBuffer("<a href='#'>")
+					.append(prepage_label)//上一页
+					.append("</a>").toString();
+				}
+				else
+				{
+					return prepage_label//上一页
+					;
+				}
 			}
 	        else
 	        {
@@ -1016,8 +1049,18 @@ public final class IndexTag extends PagerTagSupport {
 			
 		}
 		if(!this.useimage)
-            return new StringBuffer("<a href='#'>").append(nextpage_label)//"下一页"
+		{
+			if(this.aindex)
+            {
+				return new StringBuffer("<a href='#'>").append(nextpage_label)//"下一页"            
             		.append("</a>").toString();
+            }
+			else
+			{
+				return nextpage_label//"下一页"            
+	            		;
+			}
+		}
         else
         {
             IMG image = new IMG();            
@@ -1108,11 +1151,32 @@ public final class IndexTag extends PagerTagSupport {
             for(int i=start;i<end;i++){
                 if(totalPage>1){
                     if((i - 1) ==currentPage){
-                        output.append("<span class='current_page'><a href='#'>"+i+"</a></span> ");
+                    	if(aindex)
+                    	{
+                    		if(this.numberpre == null)
+                    			output.append("<span class='current_page'><a href='#'>").append(i).append("</a></span> ");
+                    		else
+                    			output.append("<span class='current_page'><a href='#'>").append(this.numberpre).append(i).append(this.numberend).append("</a></span> ");
+                    	}
+                    	else
+                    	{
+                    		if(this.numberpre == null)
+                    			output.append("<span class='current_page'>").append(i).append("</span> ");
+                    		else
+                    			output.append("<span class='current_page'>").append(this.numberpre).append(i).append(this.numberend).append("</span> ");
+                    	}
                     }else{
 //                        Context loop = new VelocityContext();       
                         A a = new A();
-                        a.setTagText(""+i+"");
+                        if(this.numberpre == null)
+                        {
+                        	a.setTagText(String.valueOf(i));
+                        }
+                        else
+                        {
+                        	a.setTagText(this.numberpre +i+this.numberend);
+                        }
+                        
                         String url = getCenterPageUrl((i-1) * this.pagerContext.getMaxPageItems(),this.pagerContext.getSortKey());
                         if(pagerContext.getForm() != null)
                         {
@@ -1166,9 +1230,18 @@ public final class IndexTag extends PagerTagSupport {
 		{
 //			return "　尾 页";
 			if(!this.useimage)
-                return new StringBuffer().append(" <a href='#'>")
-                		.append(lastpage_label)//尾页
-                		.append("</a>").toString();
+			{
+				if(this.aindex)
+				{
+	                return new StringBuffer().append(" <a href='#'>")
+	                		.append(lastpage_label)//尾页
+	                		.append("</a>").toString();
+				}
+				else
+				{
+					 return lastpage_label;
+				}
+			}
             else
             {
                 IMG image = new IMG();
@@ -1934,6 +2007,36 @@ public final class IndexTag extends PagerTagSupport {
 
 	public void setUsegoimage(boolean usegoimage) {
 		this.usegoimage = usegoimage;
+	}
+
+
+	public boolean isAindex() {
+		return aindex;
+	}
+
+
+	public void setAindex(boolean aindex) {
+		this.aindex = aindex;
+	}
+
+
+	public String getNumberpre() {
+		return numberpre;
+	}
+
+
+	public void setNumberpre(String numberpre) {
+		this.numberpre = numberpre;
+	}
+
+
+	public String getNumberend() {
+		return numberend;
+	}
+
+
+	public void setNumberend(String numberend) {
+		this.numberend = numberend;
 	}
 
 
