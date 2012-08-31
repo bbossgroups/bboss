@@ -1451,7 +1451,8 @@ public class PagerContext
 				CMSListTag cmsListTag = (CMSListTag) tag;
 				CMSBaseListData dataInfo = CMSTagUtil
 						.getCMSBaseListData(cmsListTag.getDatatype());
-				/** 2012-8-24 版 cms接口
+				/**
+				* 最新cms需要放开注释的代码 
 				Map<String,Object> params = cmsListTag.getParams();
 				if(params != null)
 				{
@@ -1473,10 +1474,10 @@ public class PagerContext
 					dataInfo.setOutlineInfo(cmsListTag.getSite(), cmsListTag
 							.getChannel(), cmsListTag.getCount(), cmsListTag.getDocType());
 				}
+				* 
+				* 旧的cms使用以下代码，后续需要屏蔽dataInfo.setOutlineInfo(cmsListTag.getSite(), cmsListTag
+						.getChannel(), cmsListTag.getCount());
 				*/
-				/**
-				 * 旧版兼容代码
-				 */
 				dataInfo.setOutlineInfo(cmsListTag.getSite(), cmsListTag
 						.getChannel(), cmsListTag.getCount());
 				if (cmsListTag.getDocumentid() != null)
@@ -1580,21 +1581,30 @@ public class PagerContext
 			}
 
 		} else if (scope.equals(CELL_SCOPE)) {
-			CMSServletRequest cmsRequest = (CMSServletRequest) request;
-			// CMSDetailDataLoader dataLoader =
-			// (CMSDetailDataLoader)request.getAttribute("dataset."
-			// + cmsRequest.getContext().getID());
-
-			CMSDetailDataLoader dataLoader = cmsRequest.getContext()
-					.getCMSDetailDataLoader();
-			try {
-				if (dataLoader == null)
-					return;
-				data = dataLoader.getContent((ContentContext) cmsRequest
-						.getContext());
-			} catch (CMSDataLoadException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			if(request instanceof CMSServletRequest)
+			{
+				CMSServletRequest cmsRequest = (CMSServletRequest) request;
+				// CMSDetailDataLoader dataLoader =
+				// (CMSDetailDataLoader)request.getAttribute("dataset."
+				// + cmsRequest.getContext().getID());
+	
+				CMSDetailDataLoader dataLoader = cmsRequest.getContext()
+						.getCMSDetailDataLoader();
+				try {
+					if (dataLoader == null)
+						return;
+					data = dataLoader.getContent((ContentContext) cmsRequest
+							.getContext());
+				} catch (CMSDataLoadException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			else
+			{
+				PagerDataSet dataSet = ((PagerDataSet) tag).searchDataSet(tag,
+						PagerDataSet.class);
+				data = dataSet.getValue(dataSet.getRowid());
 			}
 		}
 

@@ -68,6 +68,7 @@ import com.frameworkset.common.tag.pager.DefaultDataInfoImpl;
 import com.frameworkset.common.tag.pager.ObjectDataInfoImpl;
 import com.frameworkset.common.tag.pager.model.DataModel;
 import com.frameworkset.common.tag.pager.model.Formula;
+import com.frameworkset.util.StringUtil;
 import com.frameworkset.util.ValueObjectUtil;
 
 /**
@@ -1566,7 +1567,7 @@ public class PagerDataSet extends PagerTagSupport {
 	 * cell标签用来展示value对象的属性值或者value对象本身	 * 
 	 * @param data
 	 */
-	protected void loadMapClassData(Map data) {
+	protected void loadMapClassData(Map data,MapTag maptag) {
 		
 		if (data == null)
 			return;
@@ -1575,11 +1576,30 @@ public class PagerDataSet extends PagerTagSupport {
 		if(data.size() <=0)
 			return;
 		
-		Iterator its = data.entrySet().iterator();
-		while(its.hasNext())
+		if(!StringUtil.isEmpty(maptag.getKey()))
+		{	
+			theClassDataList.add(new ClassData(data.get(maptag.getKey()),maptag.getKey(), false));
+		}
+		else if(!StringUtil.isEmpty(maptag.getKeycolName()))
 		{
-			Map.Entry ent = (Map.Entry)its.next();
-			theClassDataList.add(new ClassData(ent.getValue(),ent.getKey(), false));
+			PagerDataSet dataSet = (PagerDataSet)stack.elementAt(stack.size() - 2);
+			Object key = maptag.getKeycolName();
+			theClassDataList.add(new ClassData(data.get(key),key, false));
+		}
+		else if(maptag.isKeycell())
+		{
+			PagerDataSet dataSet = (PagerDataSet)stack.elementAt(stack.size() - 2);
+			Object key = dataSet.getValue(dataSet.getRowid());
+			theClassDataList.add(new ClassData(data.get(key),key, false));
+		}
+		else
+		{
+			Iterator its = data.entrySet().iterator();
+			while(its.hasNext())
+			{
+				Map.Entry ent = (Map.Entry)its.next();
+				theClassDataList.add(new ClassData(ent.getValue(),ent.getKey(), false));
+			}
 		}
 		// for(int i = 0; i < datas.length; i ++)
 		// {
@@ -2227,7 +2247,7 @@ public class PagerDataSet extends PagerTagSupport {
 					}
 					else
 					{
-						loadMapClassData((Map) data);
+						loadMapClassData((Map) data,(MapTag)this);
 					}
 				} 
 				else if (data instanceof Map[]) // 如果集合是一个对象数组，则调用加载对象数组的方法

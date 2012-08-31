@@ -853,6 +853,24 @@
 			<name>autosort</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
+		<!-- 指定map数据库key，从map中获取key对应的value，map标签中内置的cell标签、逻辑标签、list标签
+		都可以展示value对象中包含的数据 -->
+		<attribute>
+			<name>key</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<!-- 指定map所对应的外围容器中对象中的属性名称，key的由该属性对应的值指定，map标签然后获取key对应的value，map标签中内置的cell标签、逻辑标签、list标签
+		都可以展示value对象中包含的数据 -->
+		<attribute>
+			<name>keycolName</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<!-- 指定map所对应的外围容器中对象作为key值，map标签然后获取key对应的value，map标签中内置的cell标签、逻辑标签、list标签
+		都可以展示value对象中包含的数据 -->
+		<attribute>
+			<name>keycell</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
 	</tag>
 	
 	<tag>

@@ -16,6 +16,8 @@
 package org.frameworkset.mvc;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -45,6 +47,79 @@ import org.frameworkset.web.servlet.ModelMap;
  */
 public class HelloWord
 {
+	public String listmap(ModelMap model)
+	{
+		//将所有的key放到nameList中
+		List<String> nameList = new ArrayList<String>();
+		nameList.add("handlerModel");
+		nameList.add("applyUnionModel");
+		nameList.add("billLoanModel");
+		nameList.add("loanPayModel");
+		nameList.add("budgetModel");
+		nameList.add("outgoModel");
+		nameList.add("billItemModel");
+		nameList.add("billAttachment");
+		nameList.add("billSapModel");
+		//构造每个key对应的List<ExampleBean>数据并放到Map<String,List<ExampleBean>> billDataMap变量中
+		Map<String,List<ExampleBean>> billDataMap = new HashMap<String,List<ExampleBean>>();
+		List<ExampleBean> datas = new ArrayList<ExampleBean>();//定义List<ExampleBean>集合，为了示例的简单，每个集合中只放一个ExampleBean类型对象
+		ExampleBean bean = new ExampleBean();
+		bean.setName("handlerModel");
+		bean.setSex("男");
+		datas.add(bean);
+		billDataMap.put("handlerModel",datas);//put数据到map中
+		datas = new ArrayList<ExampleBean>();
+		bean = new ExampleBean();
+		bean.setName("applyUnionModel");
+		bean.setSex("女");
+		datas.add(bean);
+		billDataMap.put("applyUnionModel",datas);//put数据到map中
+		datas = new ArrayList<ExampleBean>();
+		bean = new ExampleBean();
+		bean.setName("billLoanModel");
+		bean.setSex("男");
+		datas.add(bean);
+		billDataMap.put("billLoanModel",datas);//put数据到map中
+		datas = new ArrayList<ExampleBean>();
+		bean = new ExampleBean();
+		bean.setName("loanPayModel");
+		bean.setSex("女");
+		datas.add(bean);
+		billDataMap.put("loanPayModel",datas);//put数据到map中
+		datas = new ArrayList<ExampleBean>();
+		bean = new ExampleBean();
+		bean.setName("budgetModel");
+		bean.setSex("男");
+		datas.add(bean);
+		billDataMap.put("budgetModel",datas);//put数据到map中
+		datas = new ArrayList<ExampleBean>();
+		bean = new ExampleBean();
+		bean.setName("outgoModel");
+		bean.setSex("女");
+		datas.add(bean);
+		billDataMap.put("outgoModel",datas);//put数据到map中
+		datas = new ArrayList<ExampleBean>();
+		bean = new ExampleBean();
+		bean.setName("billItemModel");
+		bean.setSex("女");
+		datas.add(bean);
+		billDataMap.put("billItemModel",datas);//put数据到map中
+		datas = new ArrayList<ExampleBean>();
+		bean = new ExampleBean();
+		bean.setName("billAttachment");
+		bean.setSex("男");
+		datas.add(bean);
+		billDataMap.put("billAttachment",datas);//put数据到map中
+		datas = new ArrayList<ExampleBean>();
+		bean = new ExampleBean();
+		bean.setName("billSapModel");
+		bean.setSex("未知");
+		datas.add(bean);
+		billDataMap.put("billSapModel",datas);//put数据到map中	
+		model.addAttribute("nameList", nameList);//将名称列表放到控制器数据容器中	
+		model.addAttribute("billDataMap", billDataMap);//将map数据放到控制器数据容器中
+		return "path:listmap";//跳转到数据展示页面
+	}
 	@AssertDToken
 	public String sayHelloNumber(@RequestParam(name = "name") int ynum,
 			ModelMap model)
