@@ -1677,21 +1677,22 @@ public class PagerDataSet extends PagerTagSupport {
 		if (dataInfo == null)
 			throw new LoadDataException(
 					"load list Data error loadClassData(Collection dataInfo):数据对象为空");
-		Iterator temp = dataInfo.iterator();
-		if (temp.hasNext()) {
-			Class clazz = temp.next().getClass();
+		
+		
 			Iterator it = dataInfo.iterator();
-			try {
-				loadClassData(it, clazz);
+			
+			if (theClassDataList == null)
+				theClassDataList = new ClassDataList();
+			while (it.hasNext()) {
+				theClassDataList.add(new ClassData(dataInfo));
+			}
 				/**
 				 * 以下的代码对取到的数据进行排序
 				 */
 				// sortKey = getSortKey();
 				// sortBy(getSortKey(),desc());
-			} catch (LoadDataException e) {
-				throw e;
-			}
-		}
+			
+		
 	}
 
 	/**

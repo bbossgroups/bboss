@@ -5047,11 +5047,12 @@
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<description>
-					参数有3个值（如果没有指定默认为input类型）：
+					参数有4个值（如果没有指定默认为input类型）：
 				  json 输出json表达式，名称和值的分隔符默认为'号，如果要指定为"号，那么需要
 				  通过jsonsplit参数来指定				  
 				  input输出input hidden				  
 				  param(等号表达式)
+				  token-只生成令牌本身
 			</description>
 		</attribute>
 		<attribute>
