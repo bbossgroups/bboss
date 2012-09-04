@@ -1662,8 +1662,10 @@ public class PagerDataSet extends PagerTagSupport {
 			throw new LoadDataException(
 					"load list Data error loadClassData(Iterator dataInfo, Class voClazz):数据对象为空");
 		// log.info();
+		if (theClassDataList == null)
+			theClassDataList = new ClassDataList();
 		while (dataInfo.hasNext()) {
-			this.loadClassData(dataInfo.next(), voClazz);
+			theClassDataList.add(new ClassData(dataInfo.next()));
 		}
 
 	}
@@ -1684,7 +1686,7 @@ public class PagerDataSet extends PagerTagSupport {
 			if (theClassDataList == null)
 				theClassDataList = new ClassDataList();
 			while (it.hasNext()) {
-				theClassDataList.add(new ClassData(dataInfo));
+				theClassDataList.add(new ClassData(it.next()));
 			}
 				/**
 				 * 以下的代码对取到的数据进行排序

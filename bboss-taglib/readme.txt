@@ -1,4 +1,22 @@
 https://github.com/bbossgroups/bbossgroups-3.5.git
+refs/heads/master
+https://github.com/bbossgroups/bbossgroups-3.5.git
+https://github.com/bbossgroups/bboss-cms.git
+refs/heads/master
+
+
+touch README.md
+git init
+git add README.md
+git commit -m "first commit"
+git remote add origin https://github.com/bbossgroups/bboss-cms.git
+git push -u origin master
+
+Push an existing repository from the command line
+
+git remote add origin https://github.com/bbossgroups/bboss-cms.git
+git push -u origin master
+
 ---------------------------------
 bboss-tablib关联工程：
 ---------------------------------
