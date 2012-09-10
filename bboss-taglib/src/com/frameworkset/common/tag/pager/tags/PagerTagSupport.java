@@ -23,8 +23,8 @@ package com.frameworkset.common.tag.pager.tags;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 
-import com.chinacreator.cms.driver.jsp.CMSServletRequest;
 import com.frameworkset.common.tag.BaseTag;
+import com.frameworkset.platform.cms.driver.jsp.CMSServletRequest;
 
 /**
  * 

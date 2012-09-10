@@ -39,7 +39,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 
-import com.chinacreator.cms.driver.jsp.CMSServletRequest;
+import com.frameworkset.platform.cms.driver.jsp.CMSServletRequest;
 
 /**
  * 

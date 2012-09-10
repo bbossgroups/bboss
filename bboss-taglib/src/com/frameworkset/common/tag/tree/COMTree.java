@@ -47,7 +47,6 @@ import javax.servlet.jsp.PageContext;
 
 import org.apache.log4j.Logger;
 
-import com.chinacreator.security.AccessControl;
 import com.frameworkset.common.tag.BaseTag;
 import com.frameworkset.common.tag.tree.impl.Tree;
 import com.frameworkset.common.tag.tree.impl.TreeNode;
@@ -56,6 +55,7 @@ import com.frameworkset.common.tag.tree.itf.IExpandListenerAdapter;
 import com.frameworkset.common.tag.tree.itf.ISelectListener;
 import com.frameworkset.common.tag.tree.itf.ITree;
 import com.frameworkset.common.tag.tree.itf.ITreeNode;
+import com.frameworkset.platform.security.AccessControl;
 
 
 

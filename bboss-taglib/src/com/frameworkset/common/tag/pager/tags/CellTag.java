@@ -26,12 +26,12 @@ import javax.servlet.jsp.tagext.Tag;
 
 import org.apache.log4j.Logger;
 
-import com.chinacreator.cms.driver.htmlconverter.CmsLinkProcessor;
-import com.chinacreator.cms.driver.jsp.CMSServletRequest;
-import com.chinacreator.cms.driver.jsp.InternalImplConverter;
 import com.frameworkset.common.tag.exception.FormulaException;
 import com.frameworkset.common.tag.pager.model.Field;
 import com.frameworkset.common.tag.pager.model.Formula;
+import com.frameworkset.platform.cms.driver.htmlconverter.CmsLinkProcessor;
+import com.frameworkset.platform.cms.driver.jsp.CMSServletRequest;
+import com.frameworkset.platform.cms.driver.jsp.InternalImplConverter;
 import com.frameworkset.util.RegexUtil;
 import com.frameworkset.util.SimpleStringUtil;
 import com.frameworkset.util.StringUtil;

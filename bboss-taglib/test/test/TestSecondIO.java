@@ -5,7 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
-import com.chinacreator.cms.util.FileUtil;
+import com.frameworkset.common.util.FileUtil;
 
 public class TestSecondIO {
 

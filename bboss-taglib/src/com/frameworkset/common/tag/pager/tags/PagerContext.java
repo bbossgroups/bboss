@@ -19,13 +19,6 @@ import org.frameworkset.util.ClassUtil;
 import org.frameworkset.util.ClassUtil.ClassInfo;
 import org.frameworkset.util.ClassUtil.PropertieDescription;
 
-import com.chinacreator.cms.driver.context.ContentContext;
-import com.chinacreator.cms.driver.context.PagineContext;
-import com.chinacreator.cms.driver.dataloader.CMSBaseListData;
-import com.chinacreator.cms.driver.dataloader.CMSDataLoadException;
-import com.chinacreator.cms.driver.dataloader.CMSDetailDataLoader;
-import com.chinacreator.cms.driver.jsp.CMSServletRequest;
-import com.chinacreator.cms.driver.jsp.InternalImplConverter;
 import com.frameworkset.common.poolman.SQLExecutor;
 import com.frameworkset.common.poolman.SQLParams;
 import com.frameworkset.common.poolman.SetSQLParamException;
@@ -37,6 +30,13 @@ import com.frameworkset.common.tag.pager.IgnoreParam;
 import com.frameworkset.common.tag.pager.ListInfoDataInfoImpl;
 import com.frameworkset.common.tag.pager.ObjectDataInfoImpl;
 import com.frameworkset.common.tag.pager.parser.PagerTagExport;
+import com.frameworkset.platform.cms.driver.context.ContentContext;
+import com.frameworkset.platform.cms.driver.context.PagineContext;
+import com.frameworkset.platform.cms.driver.dataloader.CMSBaseListData;
+import com.frameworkset.platform.cms.driver.dataloader.CMSDataLoadException;
+import com.frameworkset.platform.cms.driver.dataloader.CMSDetailDataLoader;
+import com.frameworkset.platform.cms.driver.jsp.CMSServletRequest;
+import com.frameworkset.platform.cms.driver.jsp.InternalImplConverter;
 import com.frameworkset.util.ListInfo;
 import com.frameworkset.util.SimpleStringUtil;
 import com.frameworkset.util.StringUtil;
@@ -1453,6 +1453,8 @@ public class PagerContext
 						.getCMSBaseListData(cmsListTag.getDatatype());
 				/**
 				* 最新cms需要放开注释的代码 
+				* https://github.com/bbossgroups/bboss-cms.git
+				* */
 				Map<String,Object> params = cmsListTag.getParams();
 				if(params != null)
 				{
@@ -1474,12 +1476,12 @@ public class PagerContext
 					dataInfo.setOutlineInfo(cmsListTag.getSite(), cmsListTag
 							.getChannel(), cmsListTag.getCount(), cmsListTag.getDocType());
 				}
-				* 
+				/**
 				* 旧的cms使用以下代码，后续需要屏蔽dataInfo.setOutlineInfo(cmsListTag.getSite(), cmsListTag
 						.getChannel(), cmsListTag.getCount());
-				*/
+				
 				dataInfo.setOutlineInfo(cmsListTag.getSite(), cmsListTag
-						.getChannel(), cmsListTag.getCount());
+						.getChannel(), cmsListTag.getCount());*/
 				if (cmsListTag.getDocumentid() != null)
 					dataInfo.setDocumentid(cmsListTag.getDocumentid());
 

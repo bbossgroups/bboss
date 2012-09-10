@@ -38,9 +38,9 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import com.chinacreator.security.AccessControl;
 import com.frameworkset.common.poolman.SQLParams;
 import com.frameworkset.common.tag.BaseTag;
+import com.frameworkset.platform.security.AccessControl;
 import com.frameworkset.util.ListInfo;
 
 /**
