@@ -3307,18 +3307,18 @@ public abstract class HandlerUtils {
 								acceptedMediaType)) {
 							messageConverter.write(returnValue,
 									acceptedMediaType, outputMessage,inputMessage,usecustomMediaTypeByMethod);
-							if (logger.isDebugEnabled()) {
-								MediaType contentType = outputMessage
-										.getHeaders().getContentType();
-								if (contentType == null) {
-									contentType = acceptedMediaType;
-								}
-								logger
-										.debug("Written [" + returnValue
-												+ "] as \"" + contentType
-												+ "\" using ["
-												+ messageConverter + "]");
-							}
+//							if (logger.isDebugEnabled()) {
+//								MediaType contentType = outputMessage
+//										.getHeaders().getContentType();
+//								if (contentType == null) {
+//									contentType = acceptedMediaType;
+//								}
+//								logger
+//										.debug("Written [" + returnValue
+//												+ "] as \"" + contentType
+//												+ "\" using ["
+//												+ messageConverter + "]");
+//							}
 							this.responseArgumentUsed = true;
 							return;
 						}
