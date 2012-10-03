@@ -2013,6 +2013,18 @@ outStr = "2010Äê02ÔÂ07ÈÕ11Ê±Ğí£¬ÖÜÁéÓ±±¨¾¯£ºÔÚ2Â·¹«½»³µÉÏ±»°ÇÇÔ£¬²¢×¥»ñÒ»ÃûÏÓÒÉÈ
 		return errorMessage;
 	}
 	
+	public static String formatBRException(Throwable exception)
+	{
+		StringWriter out = new StringWriter();
+		exception.printStackTrace(new java.io.PrintWriter(out));
+		String errorMessage = out.toString();
+		errorMessage = errorMessage.replaceAll("\\n",
+				"<br/>");
+		errorMessage = errorMessage.replaceAll("\\r",
+				"<br/>");
+		return errorMessage;
+	}
+	
 	public static String exceptionToString(Throwable exception)
 	{
 		StringWriter out = new StringWriter();

@@ -66,7 +66,8 @@ public class TaskService implements Service {
 		public void run() {
 //			if (taskService != null)
 //				taskService.stopService();
-			scheduleRepository.stopTaskServices();
+			if(scheduleRepository != null)
+				scheduleRepository.stopTaskServices();
 		}
 	}
 

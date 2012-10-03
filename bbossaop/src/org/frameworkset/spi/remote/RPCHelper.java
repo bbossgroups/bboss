@@ -76,7 +76,10 @@ public class RPCHelper
     {
         
     }
-    
+    public static RPCHelper getRPCHelperInstance()
+    {
+    	return instance ;
+    }
     public static RPCHelper getRPCHelper()
     {
         if(instance != null)
@@ -85,7 +88,9 @@ public class RPCHelper
         {
             if(instance != null)
                 return instance;
-            instance = new RPCHelper();
+            RPCHelper instance_ = new RPCHelper();
+            instance_.webserviceenabled = BaseSPIManager.getBooleanProperty("rpc.webservice.enable",false);
+            instance = instance_;		
 //            instance.startServers();
         }
         return instance;
@@ -132,7 +137,7 @@ public class RPCHelper
     public boolean jmsenabled = false;
     public boolean rmienabled = false;
     public boolean httpenabled = false;
-    public boolean webserviceenabled = BaseSPIManager.getBooleanProperty("rpc.webservice.enable",false);
+    public boolean webserviceenabled = false;
 
     public Object rpcService(ServiceID serviceID,// 服务标识
             Method method,// 需要在服务上调用的方法

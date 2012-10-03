@@ -3861,6 +3861,13 @@
 		<name>extend</name>
 		<tagclass>com.frameworkset.common.tag.html.BaseExtendTag</tagclass>
 		<bodycontent>JSP</bodycontent>
+		<!-- 
+			扩展字段所属文档对象所处层级
+		-->
+		<attribute>
+			<name>index</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
 		<attribute>
 			<name>colName</name>
 			<rtexprvalue>true</rtexprvalue>

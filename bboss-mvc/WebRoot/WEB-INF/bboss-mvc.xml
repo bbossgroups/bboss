@@ -101,7 +101,7 @@
      		<property class="org.frameworkset.http.converter.feed.AtomFeedHttpMessageConverter"/>
      		<property class="org.frameworkset.http.converter.json.MappingJacksonHttpMessageConverter"/>
      		<property class="org.frameworkset.http.converter.FileMessageConvertor"/>
-
+     	
 <!--     		<property class="org.frameworkset.http.converter.BufferedImageHttpMessageConverter"/>-->
 <!--     		<property class="org.frameworkset.http.converter.ByteArrayHttpMessageConverter"/>-->
 <!--     		<property class="org.frameworkset.http.converter.FormHttpMessageConverter"/>-->
