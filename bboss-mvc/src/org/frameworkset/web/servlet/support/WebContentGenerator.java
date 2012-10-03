@@ -25,6 +25,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.frameworkset.web.HttpRequestMethodNotSupportedException;
 import org.frameworkset.web.HttpSessionRequiredException;
+import org.frameworkset.web.servlet.handler.annotations.ExcludeMethod;
 
 import com.frameworkset.util.StringUtil;
 
@@ -104,6 +105,7 @@ public abstract class WebContentGenerator extends WebApplicationObjectSupport
 	 * Set the HTTP methods that this content generator should support.
 	 * Default is HEAD, GET and POST.
 	 */
+	@ExcludeMethod
 	public final void setSupportedMethods(String[] methods) {
 		if (methods != null) {
 			this.supportedMethods = new HashSet(Arrays.asList(methods));
@@ -116,6 +118,7 @@ public abstract class WebContentGenerator extends WebApplicationObjectSupport
 	/**
 	 * Return the HTTP methods that this content generator supports.
 	 */
+	@ExcludeMethod
 	public final String[] getSupportedMethods() {
 		return StringUtil.toStringArray(this.supportedMethods);
 	}

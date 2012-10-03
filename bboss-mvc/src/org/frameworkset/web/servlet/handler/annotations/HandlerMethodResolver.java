@@ -130,7 +130,7 @@ public class HandlerMethodResolver {
 			if (isExceptionHandlerMethod(method)) {
 				registerExceptionHandlerMethod(method);
 			}
-			else	if (HandlerUtils.isHandlerMethod(method)) {
+			else	if (HandlerUtils.isHandlerMethod(handlerType,method)) {
 					handlerMethods.add(new MethodInfo(ClassUtils.getMostSpecificMethod(method, handlerType),typeLevelMapping ));
 				}
 //				else if (method.isAnnotationPresent(InitBinder.class)) {
@@ -160,7 +160,7 @@ public class HandlerMethodResolver {
 		for(Method method:methods)
 		{
 				
-				if (HandlerUtils.isHandlerMethod(method)) {
+				if (HandlerUtils.isHandlerMethod(handlerType,method)) {
 					//System.out.println(method);
 					handlerMethods.add(new MethodInfo(ClassUtils.getMostSpecificMethod(method, handlerType),baseurls));
 				}

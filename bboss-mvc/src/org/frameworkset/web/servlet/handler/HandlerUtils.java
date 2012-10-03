@@ -60,6 +60,7 @@ import org.frameworkset.spi.support.validate.BindingResult;
 import org.frameworkset.spi.support.validate.ValidationUtils;
 import org.frameworkset.spi.support.validate.Validator;
 import org.frameworkset.util.AntPathMatcher;
+import org.frameworkset.util.ClassUtil;
 import org.frameworkset.util.ClassUtil.PropertieDescription;
 import org.frameworkset.util.ClassUtils;
 import org.frameworkset.util.Conventions;
@@ -99,6 +100,7 @@ import org.frameworkset.web.multipart.MultipartFile;
 import org.frameworkset.web.multipart.MultipartHttpServletRequest;
 import org.frameworkset.web.servlet.ModelAndView;
 import org.frameworkset.web.servlet.ModelMap;
+import org.frameworkset.web.servlet.handler.annotations.ExcludeMethod;
 import org.frameworkset.web.servlet.handler.annotations.HandlerMethodInvoker;
 import org.frameworkset.web.servlet.handler.annotations.HandlerMethodResolver;
 import org.frameworkset.web.servlet.handler.annotations.ServletAnnotationMappingUtils;
@@ -146,7 +148,61 @@ public abstract class HandlerUtils {
 	public static final String DEFAULT_COMMAND_NAME = "command";
 	public static final String USE_MVC_DENCODE_KEY = "org.frameworkset.web.servlet.handler.HandlerUtils.USE_MVC_DENCODE_KEY";
 	public static final Boolean TRUE = new Boolean(true);
-	
+	public static boolean isExcludehandleMethod(Class<?> handlerType,Method method)
+	{
+		String methodName = method.getName();	
+		
+		if(
+				methodName.equals("notifyAll")
+				|| methodName.equals("notify"))				
+				return true;
+		if(methodName.equals("wait")
+				|| methodName.equals("clone")
+				|| methodName.equals("equals")
+				|| methodName.equals("hashCode")
+				|| methodName.equals("getClass")
+				)				
+				return true;
+		Class<?>[] parameterTypes = method.getParameterTypes();
+		Class<?> returnType = method.getReturnType();
+		if (String.class.equals(returnType)) {
+			
+			if (parameterTypes.length == 0
+					&& (methodName.equals("toString") ))
+				return true;
+
+		}
+		boolean isExcludehandleMethod = method.getAnnotation(ExcludeMethod.class) != null;		
+		if (isExcludehandleMethod)
+			return true;
+		Field[] fields = ClassUtil.getDeclaredFields(handlerType);//判读方法是否为字段的get/set方法，如果是则方法不是控制器方法
+			
+		for(int i = 0; fields != null && i < fields.length; i ++)
+		{
+			Field f = fields[i];
+			String fname = f.getName();
+			fname = String.valueOf(fname.charAt(0)).toUpperCase() + fname.substring(1);
+			
+			if(methodName.equals("set"+fname) )
+			{
+				if(parameterTypes != null &&  parameterTypes.length == 1)
+				{	
+					if(f.getType().isAssignableFrom(method.getParameterTypes()[0]))
+					{
+						return true;
+					}
+				}
+			}
+			else if( (methodName.equals("get"+fname) || methodName.equals("is"+fname) ))
+			{
+				if(parameterTypes == null ||  parameterTypes.length == 0)
+					return true;
+				
+			}
+		}
+		return false;
+		
+	}
 
 	/**
 	 * Is the supplied method a valid handler method?
@@ -154,10 +210,15 @@ public abstract class HandlerUtils {
 	 * Does not consider <code>Controller.handleRequest</code> itself as handler
 	 * method (to avoid potential stack overflow).
 	 */
-	public static boolean isHandlerMethod(Method method) {
+	public static boolean isHandlerMethod(Class<?> handlerType, Method method) {
+		
 		boolean ishandleMethod = containHandleAnnotations(method);
 		if (ishandleMethod)
 			return true;
+
+		boolean isExcludehandleMethod = isExcludehandleMethod(handlerType, method);		
+		if (isExcludehandleMethod)
+			return false;
 		boolean flag = containParamAnnotations(method);
 		if (flag)
 			return true;
@@ -166,34 +227,8 @@ public abstract class HandlerUtils {
 		if (("handleRequest".equals(methodName) && parameterTypes.length == 3))
 //				|| parameterTypes.length == 0)
 			return false;
-		if(
-				methodName.equals("notifyAll")
-				|| methodName.equals("notify"))				
-				return false;
-		if(methodName.equals("wait")
-				|| methodName.equals("clone")
-				|| methodName.equals("equals")
-				|| methodName.equals("hashCode")
-				|| methodName.equals("getClass")
-				)				
-				return false;
+
 		Class returnType = method.getReturnType();
-		if (void.class.equals(returnType)) {
-//			if (parameterTypes.length == 0)
-//				return false;
-			
-			
-
-		}
-		if (String.class.equals(returnType)) {
-			
-			if (parameterTypes.length == 0
-					&& (method.getName().equals("toString") ))
-				return false;
-
-		}
-		
-		
 
 		if (ModelAndView.class.equals(returnType)
 				|| Map.class.equals(returnType)
@@ -2558,7 +2593,7 @@ public abstract class HandlerUtils {
 			final Set<Method> handlerMethods = new LinkedHashSet<Method>();
 			Method[] methods = handlerType.getMethods();
 			for (Method method : methods) {
-				if (HandlerUtils.isHandlerMethod(method)) {
+				if (HandlerUtils.isHandlerMethod(handlerType,method)) {
 
 					handlerMethods.add(ClassUtils.getMostSpecificMethod(method,
 							handlerType));
