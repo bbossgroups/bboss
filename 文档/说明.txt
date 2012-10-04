@@ -7,7 +7,7 @@ mvc框架开发参考《bboss mvc开发手册.doc》
 
 bbossgroups 是什么东西？类似什么？spring？springmvc？自己封装的servlet？
 
-类似s3h3架构？
+类似s3h3架构？     
 
 有什么特点？优势？用于什么地方？
 如果这些没有详细说明的话，再多功能估计也没人看。。。[/quote]
