@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding='gb2312'?>
-<!-- 
-bboss-wordpdf.xml
-描述：wordpdf插件演示demo
--->
-<properties>
-    <property name="/wordpdf/*.htm"    		    		
-    		class="org.frameworkset.web.wordpdf.PrintController"/>
-</properties>
