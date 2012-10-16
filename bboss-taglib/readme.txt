@@ -29,7 +29,18 @@ bboss-taglib<-bbossaop [frameworkset.jar]
 bboss-taglib<-cas server [frameworkset.jar]
 bboss-taglib<-portal [frameworkset.jar]
 bboss-taglib<-bboss-ws [frameworkset.jar]
+
 #######update function list since bbossgroups-3.6 begin###########
+o 解决map标签指定keycolName不起作用的bug
+o 标签库表达式中增加了currentcell，mapkey两个表达式内置变量，所有表达式内置具体含义如下：
+rowid：可以在表达式中获取当前记录集的行号，带页面偏移量，前面可带外面集合的索引号，索引号从最外层集合以0开始,依次加1
+offset：在表达式中获取当前页面记录的起始位置，分页时有用
+rowcount :保存总记录数
+pagesize：保存当页显示的最多纪录数
+mapkey： 保存map迭代当前的key值
+currentcell：保存list/array循环中当前的值
+
+#######update function list since bbossgroups-3.5.1 begin###########
 o bboss3.6.0分支相对于之前的分支版本（bboss3.5.1分支和master分支)的最大变化为：
 更换cms.jar中程序包路径
 com.chinacreator为

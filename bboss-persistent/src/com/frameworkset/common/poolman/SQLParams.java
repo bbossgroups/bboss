@@ -213,7 +213,7 @@ public class SQLParams
         String vars[] = args[1];  
         if(vars.length == 0 )
         {
-        	log.info("预编译sql语句提示：指定了预编译参数,sql语句中没有包含符合要求的预编译变量，" + this);
+        	log.debug("预编译sql语句提示：指定了预编译参数,sql语句中没有包含符合要求的预编译变量，" + this);
 //            throw new SetSQLParamException("预编译sql语句非法：指定了预编译参数,sql语句中没有包含符合要求的预编译变量，" + this);
         }
         Param temp = null;
@@ -254,7 +254,7 @@ public class SQLParams
 //        String vars[] = args[1];  
         if(!sqlstruction.hasVars())
         {
-        	log.info("预编译sql语句提示：指定了预编译参数,sql语句中没有包含符合要求的预编译变量，" + this.toString());
+        	log.debug("预编译sql语句提示：指定了预编译参数,sql语句中没有包含符合要求的预编译变量，" + this.toString());
 //            throw new SetSQLParamException("预编译sql语句非法：指定了预编译参数,sql语句中没有包含符合要求的预编译变量，" + this);
         }
         else
@@ -281,7 +281,7 @@ public class SQLParams
         this.realParams = new Params(_realParams);
         if(sqlstruction.hasVars())
         {
-        	log.info("SQL INFO:" + this.toString() );
+        	log.debug("SQL INFO:" + this.toString() );
         }
         
     }
@@ -535,7 +535,7 @@ public class SQLParams
 					try {
 						value =  property.getValue(bean);
 					} catch (Exception e1) {
-						log.info(e1);
+						log.error(e1);
 					}
 //					Field field = null;
 //					try

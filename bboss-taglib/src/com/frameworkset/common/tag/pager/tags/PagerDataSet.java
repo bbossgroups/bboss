@@ -700,6 +700,16 @@ public class PagerDataSet extends PagerTagSupport {
 		return convertLobToObject(value);
 	}
 	
+	
+	/**
+	 * @param rowid
+	 * @param colName
+	 * @return java.lang.String
+	 */
+	public Object getObject() {
+		return getObject(this.rowid);
+	}
+	
 	/**
 	 * 获取属性对应的map对象
 	 * @param colName
@@ -1583,7 +1593,7 @@ public class PagerDataSet extends PagerTagSupport {
 		else if(!StringUtil.isEmpty(maptag.getKeycolName()))
 		{
 			PagerDataSet dataSet = (PagerDataSet)stack.elementAt(stack.size() - 2);
-			Object key = maptag.getKeycolName();
+			Object key = dataSet.getValue(maptag.getKeycolName());
 			theClassDataList.add(new ClassData(data.get(key),key, false));
 		}
 		else if(maptag.isKeycell())
