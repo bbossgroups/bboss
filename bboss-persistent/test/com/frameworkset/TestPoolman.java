@@ -387,7 +387,7 @@ public class TestPoolman
 				long end = System.currentTimeMillis();
 				System.out.println("common total times:" + (end - time));
 				System.out.println(pdb.size());
-				System.out.println(pdb.getTotalSize());
+				System.out.println(pdb.getLongTotalSize());
 				System.out.println(pdb.getString(0,"name"));
 				
 				
@@ -412,7 +412,7 @@ public class TestPoolman
 				long end = System.currentTimeMillis();
 				System.out.println("oracle total times:" + (end - time));
 				System.out.println(pdb.size());
-				System.out.println(pdb.getTotalSize());
+				System.out.println(pdb.getLongTotalSize());
 				System.out.println(pdb.getString(0,"name"));
 				
 				

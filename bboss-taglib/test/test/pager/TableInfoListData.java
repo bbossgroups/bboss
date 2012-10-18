@@ -65,7 +65,7 @@ public class TableInfoListData extends DataInfoImpl {
 			db.preparedSelect(sql,(int)offSet,pageItemsize);
 			List tables = db.executePreparedForList(TableInfo.class);
 			ListInfo datas = new ListInfo();
-			datas.setTotalSize(db.getTotalSize());//设置总记录数
+			datas.setTotalSize(db.getLongTotalSize());//设置总记录数
 			datas.setDatas(tables);//设置当页数据
 			return datas;
 			

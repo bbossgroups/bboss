@@ -69,7 +69,7 @@ public class TestDBUtil {
 				System.out.println("id :" + dbUtil.getInt(i, 0));
 			}
 			System.out.println("page size:" + dbUtil.size());
-			System.out.println("total page size:" + dbUtil.getTotalSize());
+			System.out.println("total page size:" + dbUtil.getLongTotalSize());
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

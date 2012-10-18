@@ -398,16 +398,39 @@ public class ConfigSQLExecutor  {
 		return queryListBeanWithDBName(beanType,null, sql, bean); 
 	}
 	
+	public ListInfo queryListInfoBeanWithDBName(Class<?> beanType,String dbname, String sqlname, long offset,int pagesize,long totalsize,Object bean) throws SQLException
+	{
+		
+		String sql = this.getSql(dbname, sqlname);
+		return SQLExecutor.queryListInfoBeanWithDBName(  beanType, dbname,  sql,  offset, pagesize, totalsize,bean); 
+	}
+	
+	/**
+	 * 
+	 * @param beanType
+	 * @param dbname
+	 * @param sqlname
+	 * @param offset
+	 * @param pagesize
+	 * @param bean
+	 * @return
+	 * @throws SQLException
+	 */
 	public ListInfo queryListInfoBeanWithDBName(Class<?> beanType,String dbname, String sqlname, long offset,int pagesize,Object bean) throws SQLException
 	{
 		
 		String sql = this.getSql(dbname, sqlname);
-		return SQLExecutor.queryListInfoBeanWithDBName(  beanType, dbname,  sql,  offset, pagesize, bean); 
+		return SQLExecutor.queryListInfoBeanWithDBName(  beanType, dbname,  sql,  offset, pagesize, -1L,bean); 
+	}
+	
+	public ListInfo queryListInfoBean(Class<?> beanType, String sql, long offset,int pagesize,long totalsize,Object bean) throws SQLException
+	{
+		return queryListInfoBeanWithDBName(beanType, null,sql, offset,pagesize,totalsize,bean);		 
 	}
 	
 	public ListInfo queryListInfoBean(Class<?> beanType, String sql, long offset,int pagesize,Object bean) throws SQLException
 	{
-		return queryListInfoBeanWithDBName(beanType, null,sql, offset,pagesize,bean);		 
+		return queryListInfoBeanWithDBName(beanType, null,sql, offset,pagesize,-1L,bean);		 
 	}
 	public String queryField( String sql, Object... fields) throws SQLException
 	{
@@ -544,16 +567,39 @@ public class ConfigSQLExecutor  {
 		return queryListBeanWithDBNameByRowHandler(rowhandler,beanType,null, sql, bean); 
 	}
 	
+	public ListInfo queryListInfoBeanWithDBNameByRowHandler(RowHandler rowhandler,Class<?> beanType,String dbname, String sqlname, long offset,int pagesize,long totalsize,Object  bean) throws SQLException
+	{
+		
+		String sql = this.getSql(dbname, sqlname);
+		return SQLExecutor.queryListInfoBeanWithDBNameByRowHandler(  rowhandler,beanType,dbname, sql, offset,pagesize,totalsize,bean);  
+	}
+	/**
+	 * 
+	 * @param rowhandler
+	 * @param beanType
+	 * @param dbname
+	 * @param sqlname
+	 * @param offset
+	 * @param pagesize
+	 * @param bean
+	 * @return
+	 * @throws SQLException
+	 */
 	public ListInfo queryListInfoBeanWithDBNameByRowHandler(RowHandler rowhandler,Class<?> beanType,String dbname, String sqlname, long offset,int pagesize,Object  bean) throws SQLException
 	{
 		
 		String sql = this.getSql(dbname, sqlname);
-		return SQLExecutor.queryListInfoBeanWithDBNameByRowHandler(  rowhandler,beanType,dbname, sql, offset,pagesize,bean);  
+		return SQLExecutor.queryListInfoBeanWithDBNameByRowHandler(  rowhandler,beanType,dbname, sql, offset,pagesize,-1L,bean);  
+	}
+	
+	public ListInfo queryListInfoBeanByRowHandler(RowHandler rowhandler,Class<?> beanType, String sql, long offset,int pagesize,long totalsize,Object bean) throws SQLException
+	{
+		return queryListInfoBeanWithDBNameByRowHandler( rowhandler,beanType, null,sql, offset,pagesize,totalsize,bean);		 
 	}
 	
 	public ListInfo queryListInfoBeanByRowHandler(RowHandler rowhandler,Class<?> beanType, String sql, long offset,int pagesize,Object bean) throws SQLException
 	{
-		return queryListInfoBeanWithDBNameByRowHandler( rowhandler,beanType, null,sql, offset,pagesize,bean);		 
+		return queryListInfoBeanWithDBNameByRowHandler( rowhandler,beanType, null,sql, offset,pagesize,-1L,bean);		 
 	}
 	
 	
@@ -590,18 +636,39 @@ public class ConfigSQLExecutor  {
 		 queryBeanWithDBNameByNullRowHandler( rowhandler,null, sql, bean); 
 	}
 	
+	public ListInfo queryListInfoBeanWithDBNameByNullRowHandler(NullRowHandler rowhandler,String dbname, String sqlname, long offset,int pagesize,long totalsize,Object bean) throws SQLException
+	{
+		
+		String sql = this.getSql(dbname, sqlname);
+		return SQLExecutor.queryListInfoBeanWithDBNameByNullRowHandler(  rowhandler, dbname, sql, offset,pagesize,totalsize,bean);  	 
+	}
+	/**
+	 * 
+	 * @param rowhandler
+	 * @param dbname
+	 * @param sqlname
+	 * @param offset
+	 * @param pagesize
+	 * @param totalsize
+	 * @param bean
+	 * @return
+	 * @throws SQLException
+	 */
 	public ListInfo queryListInfoBeanWithDBNameByNullRowHandler(NullRowHandler rowhandler,String dbname, String sqlname, long offset,int pagesize,Object bean) throws SQLException
 	{
 		
 		String sql = this.getSql(dbname, sqlname);
-		return SQLExecutor.queryListInfoBeanWithDBNameByNullRowHandler(  rowhandler, dbname, sql, offset,pagesize,bean);  	 
+		return SQLExecutor.queryListInfoBeanWithDBNameByNullRowHandler(  rowhandler, dbname, sql, offset,pagesize,-1L,bean);  	 
 	}
 	
+	public ListInfo queryListInfoBeanByNullRowHandler(NullRowHandler rowhandler, String sql, long offset,int pagesize,long totalsize,Object bean) throws SQLException
+	{
+		return queryListInfoBeanWithDBNameByNullRowHandler( rowhandler, null,sql, offset,pagesize,totalsize,bean);		 
+	}
 	public ListInfo queryListInfoBeanByNullRowHandler(NullRowHandler rowhandler, String sql, long offset,int pagesize,Object bean) throws SQLException
 	{
-		return queryListInfoBeanWithDBNameByNullRowHandler( rowhandler, null,sql, offset,pagesize,bean);		 
+		return queryListInfoBeanWithDBNameByNullRowHandler( rowhandler, null,sql, offset,pagesize,-1L,bean);		 
 	}
-	
 	
 	
 	public void queryBeanWithDBNameByNullRowHandler(NullRowHandler rowhandler,String dbname, String sqlname, Object bean) throws SQLException

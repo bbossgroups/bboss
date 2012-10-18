@@ -1345,13 +1345,22 @@ public class PreparedDBUtil extends DBUtil {
 			} 
 			else if (Params.action == SELECT)// 分页查询操作
 			{
-				if(showsql(stmtInfo.getDbname()))
+				boolean showsql = showsql(stmtInfo.getDbname()); 
+				if(showsql)
 				{
-					log.debug("Execute JDBC prepared pagine query statement:"+stmtInfo.getSql());
+					log.debug("Execute JDBC prepared query statement:"+stmtInfo.getSql());
 				}
-				statement = stmtInfo.preparePagineStatement();
-
-				statement_count = stmtInfo.prepareCountStatement();
+				
+				statement = stmtInfo.preparePagineStatement(showsql);
+				if(Params.totalsize < 0)
+				{
+					statement_count = stmtInfo.prepareCountStatement( showsql);
+				}
+				else
+				{
+					stmtInfo.setTotalsize(Params.totalsize);
+				}
+				
 
 			} 
 			else // delete和通用查询操作
@@ -1748,15 +1757,43 @@ public class PreparedDBUtil extends DBUtil {
 			ResultMap resultMap = new ResultMap();
 			ResultSet res = null;
 			ResultSet rs = null;
-			rs = statement_count.executeQuery();
-			stmtInfo.addResultSet(rs);
-			if (rs.next()) {
-				totalSize = rs.getInt(1);
+			if(stmtInfo.getTotalsize() < 0)
+			{
+				try
+				{
+					rs = statement_count.executeQuery();
+	//				stmtInfo.addResultSet(rs);
+					if (rs.next()) {
+						totalSize = rs.getInt(1);
+					}
+					this.offset = stmtInfo.rebuildOffset(totalSize);
+				}
+				finally//就近关闭
+				{
+					if(rs != null)
+					{
+						try {
+							rs.close();
+						} catch (Exception e) {
+							
+						}
+						rs = null;
+					}
+					if(statement_count != null)
+					{
+						try {
+							statement_count.close();
+							statement_count = null;
+						} catch (Exception e) {
+							
+						}
+					}
+				}
 			}
-
-
-			stmtInfo.rebuildOffset(totalSize);
-
+			else
+			{
+				this.totalSize = stmtInfo.getTotalsize();
+			}
 			if (totalSize > 0) {
 
 				res = statement.executeQuery();
@@ -2617,7 +2654,19 @@ public class PreparedDBUtil extends DBUtil {
 	public void preparedSelect(String sql, long offset, int pagesize)
 			throws SQLException {
 
-		preparedSelect(prepareDBName, sql, offset, pagesize);
+		preparedSelect(prepareDBName, sql, offset, pagesize,-1L);
+	}
+	
+	/**
+	 * 创建预编译查询语句
+	 * 
+	 * @param sql
+	 * @throws SQLException
+	 */
+	public void preparedSelect(String sql, long offset, int pagesize,long totalsize)
+			throws SQLException {
+
+		preparedSelect(prepareDBName, sql, offset, pagesize,totalsize);
 	}
 	
 //	/**
@@ -2638,9 +2687,21 @@ public class PreparedDBUtil extends DBUtil {
 	 * @throws SQLException
 	 */
 	public void preparedSelect(String sql, long offset, int pagesize,
+			String oraclerownum,long totalsize) throws SQLException {
+
+		preparedSelect(prepareDBName, sql, offset, pagesize, oraclerownum,totalsize);
+	}
+	
+	/**
+	 * 创建预编译查询语句
+	 * 
+	 * @param sql
+	 * @throws SQLException
+	 */
+	public void preparedSelect(String sql, long offset, int pagesize,
 			String oraclerownum) throws SQLException {
 
-		preparedSelect(prepareDBName, sql, offset, pagesize, oraclerownum);
+		preparedSelect(prepareDBName, sql, offset, pagesize, oraclerownum,-1L);
 	}
 
 //	/**
@@ -2737,7 +2798,31 @@ public class PreparedDBUtil extends DBUtil {
 	public void preparedSelect(String prepareDBName, String sql, long offset,
 			int pagesize) throws SQLException {
 		
-		preparedSelect(prepareDBName, sql, offset, pagesize, oraclerownum);
+		preparedSelect(prepareDBName, sql, offset, pagesize, oraclerownum,-1L);
+	}
+	
+	/**
+	 * 预编译查询方法
+	 * 
+	 * @param sql
+	 * @throws SQLException
+	 */
+	public void preparedSelect(String prepareDBName, String sql, long offset,
+			int pagesize,long totalsize) throws SQLException {
+		
+		preparedSelect(prepareDBName, sql, offset, pagesize, oraclerownum,totalsize);
+	}
+	
+	/**
+	 * 预编译查询方法
+	 * 
+	 * @param sql
+	 * @throws SQLException
+	 */
+	public void preparedSelect(Params params,String prepareDBName, String sql, long offset,
+			int pagesize,long totalsize) throws SQLException {
+		
+		preparedSelect(params,prepareDBName, sql, offset, pagesize, oraclerownum,totalsize);
 	}
 	
 	/**
@@ -2749,10 +2834,27 @@ public class PreparedDBUtil extends DBUtil {
 	public void preparedSelect(Params params,String prepareDBName, String sql, long offset,
 			int pagesize) throws SQLException {
 		
-		preparedSelect(params,prepareDBName, sql, offset, pagesize, oraclerownum);
+		preparedSelect(params,prepareDBName, sql, offset, pagesize, oraclerownum,-1L);
 	}
 	
 	/**
+     * 预编译查询方法
+     * 
+     * @param sql
+     * @throws SQLException
+     */
+    public void preparedSelect(SQLParams params,String prepareDBName, String sql, long offset,
+            int pagesize,long totalsize) throws SQLException {
+    	if( params != null)
+    	{
+    		params.buildParams(sql,prepareDBName);
+    		preparedSelect(params.getRealParams(),prepareDBName, params.getNewsql(), offset, pagesize,totalsize);
+    	}
+    	else
+    		preparedSelect((Params)null,prepareDBName, sql, offset, pagesize,totalsize);
+    }
+    
+    /**
      * 预编译查询方法
      * 
      * @param sql
@@ -2763,10 +2865,24 @@ public class PreparedDBUtil extends DBUtil {
     	if( params != null)
     	{
     		params.buildParams(sql,prepareDBName);
-    		preparedSelect(params.getRealParams(),prepareDBName, params.getNewsql(), offset, pagesize);
+    		preparedSelect(params.getRealParams(),prepareDBName, params.getNewsql(), offset, pagesize,-1L);
     	}
     	else
-    		preparedSelect((Params)null,prepareDBName, sql, offset, pagesize);
+    		preparedSelect((Params)null,prepareDBName, sql, offset, pagesize,-1L);
+    }
+    
+    
+    
+    /**
+     * 预编译查询方法
+     * 
+     * @param sql
+     * @throws SQLException
+     */
+    public void preparedSelect(SQLParams params,String sql, long offset,
+            int pagesize,long totalsize) throws SQLException {
+    	preparedSelect( params,null,  sql,  offset,
+                 pagesize,totalsize);
     }
     
     /**
@@ -2778,7 +2894,7 @@ public class PreparedDBUtil extends DBUtil {
     public void preparedSelect(SQLParams params,String sql, long offset,
             int pagesize) throws SQLException {
     	preparedSelect( params,null,  sql,  offset,
-                 pagesize);
+                 pagesize,-1L);
     }
 
 //	/**
@@ -2809,10 +2925,45 @@ public class PreparedDBUtil extends DBUtil {
 	 * @throws SQLException
 	 */
 	public void preparedSelect(String prepareDBName, String sql, long offset,
+			int pagesize, String oraclerownum,long totalsize) throws SQLException {
+		Params = this.buildParams();
+		preparedSelect(Params ,prepareDBName, sql, offset,
+				pagesize, oraclerownum,totalsize);
+	}
+	
+	/**
+	 * 创建预编译查询语句
+	 *
+	 * @param sql
+	 * @throws SQLException
+	 */
+	public void preparedSelect(String prepareDBName, String sql, long offset,
 			int pagesize, String oraclerownum) throws SQLException {
 		Params = this.buildParams();
 		preparedSelect(Params ,prepareDBName, sql, offset,
-				pagesize, oraclerownum);
+				pagesize, oraclerownum,-1L);
+	}
+	
+	/**
+	 * 创建预编译查询语句
+	 * 
+	 * @param sql
+	 * @throws SQLException
+	 */
+	public void preparedSelect(Params params,String prepareDBName, String sql, long offset,
+			int pagesize, String oraclerownum,long totalsize) throws SQLException {
+	    if(params == null)
+            Params = this.buildParams();
+        else
+            Params = params;
+//		Params = params;
+		Params.action = SELECT;
+		this.offset = StatementInfo.rebuildOffset(offset, pagesize,totalsize);
+		this.pagesize = pagesize;
+		Params.prepareselect_sql = sql;
+		this.oraclerownum = oraclerownum;
+		Params.totalsize = totalsize;
+		preparedSql(Params,prepareDBName, sql);
 	}
 	
 	/**
@@ -2823,21 +2974,34 @@ public class PreparedDBUtil extends DBUtil {
 	 */
 	public void preparedSelect(Params params,String prepareDBName, String sql, long offset,
 			int pagesize, String oraclerownum) throws SQLException {
-	    if(params == null)
-            Params = this.buildParams();
-        else
-            Params = params;
-//		Params = params;
-		Params.action = SELECT;
-		this.offset = offset;
-		this.pagesize = pagesize;
-		Params.prepareselect_sql = sql;
-		this.oraclerownum = oraclerownum;
-
-		preparedSql(Params,prepareDBName, sql);
+		preparedSelect(params,prepareDBName, sql, offset,
+				pagesize, oraclerownum,-1L);
 	}
 	
+	
+	
 	/**
+     * 创建预编译查询语句
+     * 
+     * @param sql
+     * @throws SQLException
+     */
+    public void preparedSelect(SQLParams params,String prepareDBName, String sql, long offset,
+            int pagesize, String oraclerownum,long totalsize) throws SQLException {
+        if(params != null)
+        {
+	    	params.buildParams(sql,prepareDBName);
+	        preparedSelect(params.getRealParams(),prepareDBName, params.getNewsql(), offset,
+	                pagesize, oraclerownum,totalsize);
+        }
+        else
+        {
+        	preparedSelect((Params)null,prepareDBName, sql, offset,
+	                pagesize, oraclerownum,totalsize);
+        }
+    }
+    
+    /**
      * 创建预编译查询语句
      * 
      * @param sql
@@ -2849,12 +3013,12 @@ public class PreparedDBUtil extends DBUtil {
         {
 	    	params.buildParams(sql,prepareDBName);
 	        preparedSelect(params.getRealParams(),prepareDBName, params.getNewsql(), offset,
-	                pagesize, oraclerownum);
+	                pagesize, oraclerownum,-1L);
         }
         else
         {
         	preparedSelect((Params)null,prepareDBName, sql, offset,
-	                pagesize, oraclerownum);
+	                pagesize, oraclerownum,-1L);
         }
     }
     
@@ -2866,9 +3030,21 @@ public class PreparedDBUtil extends DBUtil {
      * @throws SQLException
      */
     public void preparedSelect(SQLParams params, String sql, long offset,
+            int pagesize, String oraclerownum,long totalsize) throws SQLException {
+    	preparedSelect( params,null, sql, offset,
+                pagesize, oraclerownum,totalsize);
+    }
+    
+    /**
+     * 创建预编译查询语句
+     * 
+     * @param sql
+     * @throws SQLException
+     */
+    public void preparedSelect(SQLParams params, String sql, long offset,
             int pagesize, String oraclerownum) throws SQLException {
     	preparedSelect( params,null, sql, offset,
-                pagesize, oraclerownum);
+                pagesize, oraclerownum,-1L);
     }
     
     public static String convertOperationType(int action)

@@ -161,20 +161,37 @@ public class DBUtil extends SQLUtil implements Serializable {
 	}
 
 	/** 分页查询时，保存记录总条数 */
-	protected int totalSize = 0;
+	protected long totalSize = 0;
 
 	
 
 	/** 返回每次查询数据库获取的实际记录条数 */
 	public int size() {
 		// 如果是robust查询将返回总的记录条数，然后分块返回数据
+		return isRobustQuery ? (int)totalSize : size;
+	}
+	
+	/** 返回每次查询数据库获取的实际记录条数 */
+	public long longsize() {
+		// 如果是robust查询将返回总的记录条数，然后分块返回数据
 		return isRobustQuery ? totalSize : size;
 	}
 
-	/** 获取记录总条数 */
+	/**
+	 * @deprecated
+	 * please use method getLongTotalSize()
+	 * 获取记录总条数 
+	 */
+	
 	public int getTotalSize() {
+		return (int)this.totalSize;
+	}
+	/** 获取记录总条数 */
+	public long getLongTotalSize() {
 		return this.totalSize;
 	}
+	
+	
 
 	/**
 	 * 判断是否开时进行下一个数据块的获取工作

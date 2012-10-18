@@ -209,7 +209,7 @@ public class TestTemplateDBUtil {
 								db.executePrepared();
 								System.out.println("after delete pagine select£º");
 								System.out.println("db.size():"+db.size());
-								System.out.println("db.getTotalSize():" +db.getTotalSize());
+								System.out.println("db.getTotalSize():" +db.getLongTotalSize());
 								
 								db = new PreparedDBUtil();
 								db.preparedSelect("bspf",
@@ -219,7 +219,7 @@ public class TestTemplateDBUtil {
 								db.executePrepared();
 								System.out.println(" pagine select£º");
 								System.out.println("db.size():"+db.size());
-								System.out.println("db.getTotalSize():" +db.getTotalSize());
+								System.out.println("db.getTotalSize():" +db.getLongTotalSize());
 						} finally {
 							
 						}
@@ -322,7 +322,7 @@ public class TestTemplateDBUtil {
 								db.executePrepared();
 								System.out.println("after delete pagine select£º");
 								System.out.println("db.size():"+db.size());
-								System.out.println("db.getTotalSize():" +db.getTotalSize());
+								System.out.println("db.getTotalSize():" +db.getLongTotalSize());
 								
 								db = new PreparedDBUtil();
 								db.preparedSelect("bspf",
@@ -332,7 +332,7 @@ public class TestTemplateDBUtil {
 								db.executePrepared();
 								System.out.println(" pagine select£º");
 								System.out.println("db.size():"+db.size());
-								System.out.println("db.getTotalSize():" +db.getTotalSize());
+								System.out.println("db.getTotalSize():" +db.getLongTotalSize());
 						} finally {
 							
 						}
@@ -433,7 +433,7 @@ public class TestTemplateDBUtil {
 								db.executePrepared();
 								System.out.println("after delete pagine select£º");
 								System.out.println("db.size():"+db.size());
-								System.out.println("db.getTotalSize():" +db.getTotalSize());
+								System.out.println("db.getTotalSize():" +db.getLongTotalSize());
 								
 								db = new PreparedDBUtil();
 								db.preparedSelect(
@@ -443,7 +443,7 @@ public class TestTemplateDBUtil {
 								db.executePrepared();
 								System.out.println(" pagine select£º");
 								System.out.println("db.size():"+db.size());
-								System.out.println("db.getTotalSize():" +db.getTotalSize());
+								System.out.println("db.getTotalSize():" +db.getLongTotalSize());
 						} finally {
 							
 						}

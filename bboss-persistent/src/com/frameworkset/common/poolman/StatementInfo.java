@@ -42,12 +42,12 @@ import com.frameworkset.common.poolman.util.SQLUtil;
 import com.frameworkset.orm.transaction.JDBCTransaction;
 import com.frameworkset.orm.transaction.TransactionException;
 import com.frameworkset.orm.transaction.TransactionManager;
-import com.frameworkset.util.ValueObjectUtil;
 
 public class StatementInfo {
 	private static final Logger log = Logger.getLogger(StatementInfo.class);
 	private String dbname;
 	private String sql;
+	private long totalsize = -1L;
 
 	// Connection con,
 	private boolean goNative;
@@ -206,20 +206,30 @@ public class StatementInfo {
 		return pstmt;
 	}
 
-	public PreparedStatement preparePagineStatement() throws SQLException {
+	public PreparedStatement preparePagineStatement(boolean showsql) throws SQLException {
 		paginesql = this.sql;
 		if (this.rownum == null) {
 			// if (this.isRobotQuery(prepareDBName))
 			paginesql = getDBPagineSql();
+			if(showsql)
+			{
+				log.debug("Execute JDBC prepared pagine query statement:"+paginesql);
+			}
 		} else {
 			paginesql = getDBPagineSqlForOracle();
 		}
+		
 		return prepareStatement(paginesql);
 
 	}
 
-	public PreparedStatement prepareCountStatement() throws SQLException {
-		return prepareStatement(countSql());
+	public PreparedStatement prepareCountStatement(boolean showsql) throws SQLException {
+		String countsql = countSql();
+		if(showsql)
+		{
+			log.debug("Execute JDBC prepared pagine query count statement:"+countsql);
+		}
+		return prepareStatement(countsql);
 	}
 
 	/**
@@ -825,22 +835,60 @@ public class StatementInfo {
 		return resultMap;
 	}
 
-	public void rebuildOffset(int totalSize) {
+	public static long rebuildOffset(long offset,int pagesize,long totalSize) {
+//		if (totalSize > 0) {
+//			if (getOffset() > 0) {
+//				if (totalSize > getOffset())
+//					;
+//
+//				else {
+//					setOffset(totalSize - getMaxsize() - 1);
+//
+//				}
+//
+//			} else {
+//				setOffset(0);
+//			}
+//
+//		}
+		long offset_ = offset;
 		if (totalSize > 0) {
-			if (getOffset() > 0) {
-				if (totalSize > getOffset())
+			if (offset > 0) {
+				if (totalSize > offset)
 					;
 
 				else {
-					setOffset(totalSize - getMaxsize() - 1);
+					offset_ = totalSize - pagesize - 1;
 
 				}
 
 			} else {
-				setOffset(0);
+				offset_ = 0;
 			}
 
 		}
+		return offset_;
+
+	}
+	
+	public long rebuildOffset(long totalSize) {
+//		if (totalSize > 0) {
+//			if (getOffset() > 0) {
+//				if (totalSize > getOffset())
+//					;
+//
+//				else {
+//					setOffset(totalSize - getMaxsize() - 1);
+//
+//				}
+//
+//			} else {
+//				setOffset(0);
+//			}
+//
+//		}
+		this.setOffset(rebuildOffset(this.getOffset(),this.getMaxsize(),totalSize));
+		return this.getOffset();
 
 	}
 
@@ -985,5 +1033,13 @@ public class StatementInfo {
             return pool.getDbAdapter().getSCROLLType(pool.getDriver());
         }
     }
+
+	public long getTotalsize() {
+		return totalsize;
+	}
+
+	public void setTotalsize(long totalsize) {
+		this.totalsize = totalsize;
+	}
 
 }

@@ -36,7 +36,7 @@ import com.frameworkset.common.poolman.PreparedDBUtil.UpdateKeyInfo;
  */
 public class Params implements java.lang.Comparable
 {
-	
+	long totalsize = -1L;
 	public Params()
 	{
 		params = new ArrayList<Param>();
@@ -109,6 +109,7 @@ public class Params implements java.lang.Comparable
 		updateKeyInfo = null;
 		action = -1;
 		prepareselect_sql = null;
+		totalsize = -1L;
 	}
 
 	public int compareTo(Object other) {
@@ -133,6 +134,15 @@ public class Params implements java.lang.Comparable
 		params.params = this.params;
 		params.prepareselect_sql = this.prepareselect_sql;
 		params.updateKeyInfo = this.updateKeyInfo;
+		params.totalsize = this.totalsize;
 		return params;
+	}
+
+	public long getTotalsize() {
+		return totalsize;
+	}
+
+	public void setTotalsize(long totalsize) {
+		this.totalsize = totalsize;
 	}
 }

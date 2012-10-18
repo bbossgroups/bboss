@@ -227,7 +227,7 @@ public class DefaultDataInfoImpl implements DataInfo {
 	            DBUtil dbUtil = new DBUtil();
 	            Hashtable[] tables = (Hashtable[])dbUtil.executeSelectForObjectArray(dbName,sql,offSet,pageItemsize,Record.class);            
                 listInfo.setArrayDatas(tables);
-                listInfo.setTotalSize(dbUtil.getTotalSize());
+                listInfo.setTotalSize(dbUtil.getLongTotalSize());
                 return listInfo;
 	        }
 	        else
@@ -236,7 +236,7 @@ public class DefaultDataInfoImpl implements DataInfo {
 	            dbUtil.preparedSelect(params.copy(), dbName, sql, offSet, pageItemsize);
 	            Hashtable[] tables = (Hashtable[])dbUtil.executePreparedForObjectArray(Record.class);            
                 listInfo.setArrayDatas(tables);
-                listInfo.setTotalSize(dbUtil.getTotalSize());
+                listInfo.setTotalSize(dbUtil.getLongTotalSize());
                 return listInfo;
 	        }
         } catch (SQLException e) {

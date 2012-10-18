@@ -29,7 +29,7 @@ public class TestDataInfo extends DataInfoImpl {
 		try {
 			dbUtil.executeSelect("select * from tableinfo ",offSet,pageItemsize);
 			info.setArrayDatas(dbUtil.getAllResults());
-			info.setTotalSize(dbUtil.getTotalSize());
+			info.setTotalSize(dbUtil.getLongTotalSize());
 		} catch (SQLException e) {
 			
 			e.printStackTrace();

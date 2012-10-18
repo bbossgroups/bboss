@@ -72,7 +72,7 @@ public class TestDBUtilNewInterface {
 				System.out.println(list.get(i));
 			}
 			
-			int totalsize = dbUtil.getTotalSize();//总记录数
+			long totalsize = dbUtil.getLongTotalSize();//总记录数
 			
 			
 		} catch (SQLException e) {
@@ -103,7 +103,7 @@ public class TestDBUtilNewInterface {
 				System.out.println(list.get(i));
 			}
 			
-			int totalsize = dbUtil.getTotalSize();//总记录数
+			long totalsize = dbUtil.getLongTotalSize();//总记录数
 			
 			
 		} catch (SQLException e) {

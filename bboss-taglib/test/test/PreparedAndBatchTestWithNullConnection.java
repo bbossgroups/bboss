@@ -338,7 +338,7 @@ public class PreparedAndBatchTestWithNullConnection {
 				db.executePrepared();
 
 				// db.executePrepared();
-				System.out.println("total size:" + db.getTotalSize());
+				System.out.println("total size:" + db.getLongTotalSize());
 				System.out.println("page size:" + db.size());
 
 			}

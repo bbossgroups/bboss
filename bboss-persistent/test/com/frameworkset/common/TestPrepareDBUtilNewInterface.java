@@ -66,7 +66,7 @@ public class TestPrepareDBUtilNewInterface {
 				}
 				
 			});
-			int totalsize = dbUtil.getTotalSize();//获得总记录数
+			long totalsize = dbUtil.getLongTotalSize();//获得总记录数
 			for(int i = 0; i < list.size()/*list.size()当页记录数*/; i ++)//遍历当页记录
 			{
 				TestNewface testNewface = (TestNewface)list.get(i);

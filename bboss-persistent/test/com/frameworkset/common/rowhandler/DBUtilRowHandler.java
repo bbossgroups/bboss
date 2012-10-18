@@ -112,7 +112,7 @@ public class DBUtilRowHandler
 			System.out.print("dbUtil.size():" + dbUtil.size());
 			
 			//总记录条数
-			System.out.print("dbUtil.getTotalSize():" + dbUtil.getTotalSize());
+			System.out.print("dbUtil.getTotalSize():" + dbUtil.getLongTotalSize());
 			
 			/**
 			 * 遍历当前记录
