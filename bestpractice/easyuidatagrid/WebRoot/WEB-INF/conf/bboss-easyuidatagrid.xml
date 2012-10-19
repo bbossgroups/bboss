@@ -1,0 +1,6 @@
+<properties>
+	<property name="/examples/*.page"
+		path:portal="/examples/portal.jsp"
+		class="org.frameworkset.mvc.EasyUIDatagridController">
+	</property>
+</properties>
