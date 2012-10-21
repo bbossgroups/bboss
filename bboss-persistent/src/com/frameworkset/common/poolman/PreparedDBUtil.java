@@ -1354,6 +1354,7 @@ public class PreparedDBUtil extends DBUtil {
 				statement = stmtInfo.preparePagineStatement(showsql);
 				if(Params.totalsize < 0)
 				{
+					stmtInfo.setTotalsizesql(Params.totalsizesql);
 					statement_count = stmtInfo.prepareCountStatement( showsql);
 				}
 				else
@@ -2659,7 +2660,7 @@ public class PreparedDBUtil extends DBUtil {
 	
 	/**
 	 * 创建预编译查询语句
-	 * 
+	 * @mark
 	 * @param sql
 	 * @throws SQLException
 	 */
@@ -2667,6 +2668,18 @@ public class PreparedDBUtil extends DBUtil {
 			throws SQLException {
 
 		preparedSelect(prepareDBName, sql, offset, pagesize,totalsize);
+	}
+	
+	/**
+	 * 创建预编译查询语句
+	 * 
+	 * @param sql
+	 * @throws SQLException
+	 */
+	public void preparedSelectWithTotalsizesql(String sql, long offset, int pagesize,String totalsizesql)
+			throws SQLException {
+
+		preparedSelectWithTotalsizesql(prepareDBName, sql, offset, pagesize,totalsizesql);
 	}
 	
 //	/**
@@ -2682,7 +2695,7 @@ public class PreparedDBUtil extends DBUtil {
 
 	/**
 	 * 创建预编译查询语句
-	 * 
+	 * @mark
 	 * @param sql
 	 * @throws SQLException
 	 */
@@ -2690,6 +2703,18 @@ public class PreparedDBUtil extends DBUtil {
 			String oraclerownum,long totalsize) throws SQLException {
 
 		preparedSelect(prepareDBName, sql, offset, pagesize, oraclerownum,totalsize);
+	}
+	
+	/**
+	 * 创建预编译查询语句
+	 * 
+	 * @param sql
+	 * @throws SQLException
+	 */
+	public void preparedSelectWithTotalsizesql(String sql, long offset, int pagesize,
+			String oraclerownum,String totalsizesql) throws SQLException {
+
+		preparedSelectWithTotalsizesql(prepareDBName, sql, offset, pagesize, oraclerownum,totalsizesql);
 	}
 	
 	/**
@@ -2803,7 +2828,7 @@ public class PreparedDBUtil extends DBUtil {
 	
 	/**
 	 * 预编译查询方法
-	 * 
+	 * @mark
 	 * @param sql
 	 * @throws SQLException
 	 */
@@ -2819,10 +2844,34 @@ public class PreparedDBUtil extends DBUtil {
 	 * @param sql
 	 * @throws SQLException
 	 */
+	public void preparedSelectWithTotalsizesql(String prepareDBName, String sql, long offset,
+			int pagesize,String totalsizesql) throws SQLException {
+		
+		preparedSelectWithTotalsizesql(prepareDBName, sql, offset, pagesize, oraclerownum,totalsizesql);
+	}
+	
+	/**
+	 * 预编译查询方法
+	 * @mark
+	 * @param sql
+	 * @throws SQLException
+	 */
 	public void preparedSelect(Params params,String prepareDBName, String sql, long offset,
 			int pagesize,long totalsize) throws SQLException {
 		
 		preparedSelect(params,prepareDBName, sql, offset, pagesize, oraclerownum,totalsize);
+	}
+	
+	/**
+	 * 预编译查询方法
+	 * 
+	 * @param sql
+	 * @throws SQLException
+	 */
+	public void preparedSelectWithTotalsizesql(Params params,String prepareDBName, String sql, long offset,
+			int pagesize,String totalsizesql) throws SQLException {
+		
+		preparedSelectWithTotalsizesql(params,prepareDBName, sql, offset, pagesize, oraclerownum,totalsizesql);
 	}
 	
 	/**
@@ -2838,8 +2887,8 @@ public class PreparedDBUtil extends DBUtil {
 	}
 	
 	/**
-     * 预编译查询方法
-     * 
+     * 预编译分页查询方法 ，外部传入总记录数
+     * @mark
      * @param sql
      * @throws SQLException
      */
@@ -2852,6 +2901,23 @@ public class PreparedDBUtil extends DBUtil {
     	}
     	else
     		preparedSelect((Params)null,prepareDBName, sql, offset, pagesize,totalsize);
+    }
+    
+    /**
+     * 预编译分页查询方法，总记录数通过totalsizesql查询获取
+     * 
+     * @param sql
+     * @throws SQLException
+     */
+    public void preparedSelectWithTotalsizesql(SQLParams params,String prepareDBName, String sql, long offset,
+            int pagesize,String totalsizesql) throws SQLException {
+    	if( params != null)
+    	{
+    		params.buildParams(sql,totalsizesql,prepareDBName);
+    		preparedSelect(params.getRealParams(),prepareDBName, params.getNewsql(), offset, pagesize,params.getNewtotalsizesql());
+    	}
+    	else
+    		preparedSelect((Params)null,prepareDBName, sql, offset, pagesize,totalsizesql);
     }
     
     /**
@@ -2875,7 +2941,7 @@ public class PreparedDBUtil extends DBUtil {
     
     /**
      * 预编译查询方法
-     * 
+     * @mark
      * @param sql
      * @throws SQLException
      */
@@ -2883,6 +2949,18 @@ public class PreparedDBUtil extends DBUtil {
             int pagesize,long totalsize) throws SQLException {
     	preparedSelect( params,null,  sql,  offset,
                  pagesize,totalsize);
+    }
+    
+    /**
+     * 预编译查询方法
+     * 
+     * @param sql
+     * @throws SQLException
+     */
+    public void preparedSelectWithTotalsizesql(SQLParams params,String sql, long offset,
+            int pagesize, String totalsizesql) throws SQLException {
+    	preparedSelectWithTotalsizesql( params,null,  sql,  offset,
+                 pagesize,totalsizesql);
     }
     
     /**
@@ -2920,7 +2998,7 @@ public class PreparedDBUtil extends DBUtil {
 //    }
 	/**
 	 * 创建预编译查询语句
-	 * 
+	 * @mark
 	 * @param sql
 	 * @throws SQLException
 	 */
@@ -2929,6 +3007,19 @@ public class PreparedDBUtil extends DBUtil {
 		Params = this.buildParams();
 		preparedSelect(Params ,prepareDBName, sql, offset,
 				pagesize, oraclerownum,totalsize);
+	}
+	
+	/**
+	 * 创建预编译查询语句
+	 * 
+	 * @param sql
+	 * @throws SQLException
+	 */
+	public void preparedSelectWithTotalsizesql(String prepareDBName, String sql, long offset,
+			int pagesize, String oraclerownum,String totalsizesql) throws SQLException {
+		Params = this.buildParams();
+		preparedSelectWithTotalsizesql(Params ,prepareDBName, sql, offset,
+				pagesize, oraclerownum,totalsizesql);
 	}
 	
 	/**
@@ -2946,7 +3037,7 @@ public class PreparedDBUtil extends DBUtil {
 	
 	/**
 	 * 创建预编译查询语句
-	 * 
+	 * @mark
 	 * @param sql
 	 * @throws SQLException
 	 */
@@ -2967,6 +3058,28 @@ public class PreparedDBUtil extends DBUtil {
 	}
 	
 	/**
+	 * 创建预编译分页查询，额外增加分页总记录数sql语句
+	 * 
+	 * @param sql
+	 * @throws SQLException
+	 */
+	public void preparedSelectWithTotalsizesql(Params params,String prepareDBName, String sql, long offset,
+			int pagesize, String oraclerownum,String totalsizesql) throws SQLException {
+	    if(params == null)
+            Params = this.buildParams();
+        else
+            Params = params;
+//		Params = params;
+		Params.action = SELECT;
+		this.offset = offset;
+		this.pagesize = pagesize;
+		Params.prepareselect_sql = sql;
+		this.oraclerownum = oraclerownum;
+		Params.totalsizesql = totalsizesql;
+		preparedSql(Params,prepareDBName, sql);
+	}
+	
+	/**
 	 * 创建预编译查询语句
 	 * 
 	 * @param sql
@@ -2982,7 +3095,7 @@ public class PreparedDBUtil extends DBUtil {
 	
 	/**
      * 创建预编译查询语句
-     * 
+     * @mark
      * @param sql
      * @throws SQLException
      */
@@ -2998,6 +3111,27 @@ public class PreparedDBUtil extends DBUtil {
         {
         	preparedSelect((Params)null,prepareDBName, sql, offset,
 	                pagesize, oraclerownum,totalsize);
+        }
+    }
+    
+	/**
+     * 创建预编译查询语句
+     * 
+     * @param sql
+     * @throws SQLException
+     */
+    public void preparedSelectWithTotalsizesql(SQLParams params,String prepareDBName, String sql, long offset,
+            int pagesize, String oraclerownum,String totalsizesql) throws SQLException {
+        if(params != null)
+        {
+	    	params.buildParams(sql,totalsizesql,prepareDBName);
+	        preparedSelectWithTotalsizesql(params.getRealParams(),prepareDBName, params.getNewsql(), offset,
+	                pagesize, oraclerownum,params.getNewtotalsizesql());
+        }
+        else
+        {
+        	preparedSelectWithTotalsizesql((Params)null,prepareDBName, sql, offset,
+	                pagesize, oraclerownum,totalsizesql);
         }
     }
     
@@ -3025,7 +3159,7 @@ public class PreparedDBUtil extends DBUtil {
     
     /**
      * 创建预编译查询语句
-     * 
+     * @mark
      * @param sql
      * @throws SQLException
      */
@@ -3033,6 +3167,18 @@ public class PreparedDBUtil extends DBUtil {
             int pagesize, String oraclerownum,long totalsize) throws SQLException {
     	preparedSelect( params,null, sql, offset,
                 pagesize, oraclerownum,totalsize);
+    }
+    
+    /**
+     * 创建预编译查询语句
+     * 
+     * @param sql
+     * @throws SQLException
+     */
+    public void preparedSelectWithTotalsizesql(SQLParams params, String sql, long offset,
+            int pagesize, String oraclerownum,String totalsizesql) throws SQLException {
+    	preparedSelectWithTotalsizesql( params,null, sql, offset,
+                pagesize, oraclerownum,totalsizesql);
     }
     
     /**

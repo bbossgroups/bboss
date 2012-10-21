@@ -63,6 +63,7 @@ public class SQLParams
     private Map<String,Param> sqlparams = null;
     private Params realParams = null;
     private String newsql = null;
+    private String newtotalsizesql ;
     private String dbname = null;
     private static Logger log = Logger.getLogger(SQLParams.class);
     /**
@@ -135,11 +136,11 @@ public class SQLParams
     	buildParams(this.oldsql, dbname);
     }
     
-    private String evaluateSqlTemplate(String sql)
+    private String evaluateSqlTemplate(VelocityContext vcontext,String sql)
     {
     	try {
     		//@Fixed me
-			String realsql = VelocityUtil.evaluate(buildVelocityContext(),
+			String realsql = VelocityUtil.evaluate(vcontext,
 					"evaluateSqlTemplate:" + sql, sql);
 			return realsql;
 		} catch (Exception e) {
@@ -185,23 +186,46 @@ public class SQLParams
         if(realParams == null)
         {
         	if(this.pretoken.equals("#\\[") && this.endtoken.equals("\\]"))
-        		buildParamsByVariableParser(sql,dbname);
+        		buildParamsByVariableParser(sql,null,dbname);
         	else
-        		buildParamsByRegex( sql,dbname);
+        		buildParamsByRegex( sql,null,dbname);
             
         }
         
     }
     
-    private void buildParamsByRegex(String sql,String dbname) throws SetSQLParamException
+    public void buildParams(String sql,String totalsizesql,String dbname) throws SetSQLParamException
     {
-    	List<Param> _realParams = new ArrayList<Param>();       
-        sql = this.evaluateSqlTemplate(sql);
+        if(realParams != null)
+            return;
+        if(sqlparams == null || this.sqlparams.size() <=0)
+        {
+            this.newsql = sql;
+            this.newtotalsizesql = totalsizesql;
+            return;
+        }
+        if(realParams == null)
+        {
+        	if(this.pretoken.equals("#\\[") && this.endtoken.equals("\\]"))
+        		buildParamsByVariableParser(sql,totalsizesql,dbname);
+        	else
+        		buildParamsByRegex( sql,totalsizesql,dbname);
+            
+        }
+        
+    }
+    
+    private void buildParamsByRegex(String sql,String totalsizesql,String dbname) throws SetSQLParamException
+    {
+    	List<Param> _realParams = new ArrayList<Param>();   
+    	VelocityContext vcontext = buildVelocityContext();
+        sql = this.evaluateSqlTemplate(vcontext,sql);
         String[][] args =  parserResults.get(sql);
         if(args == null)
         {
             synchronized(lock)
             {
+            	args =  parserResults.get(sql);
                 if(args == null)
                 {
                     args = VariableHandler.parser2ndSubstitution(sql, this.pretoken,this.endtoken, "?");
@@ -210,6 +234,24 @@ public class SQLParams
             }
         }            
         newsql = args[0][0];
+        if(totalsizesql != null)
+        {
+        	totalsizesql = this.evaluateSqlTemplate(vcontext,totalsizesql);
+	        String[][] totalsizesqlargs =  parserResults.get(totalsizesql);
+	        if(totalsizesqlargs == null)
+	        {
+	            synchronized(lock)
+	            {
+	            	totalsizesqlargs =  parserResults.get(totalsizesql);
+	                if(totalsizesqlargs == null)
+	                {
+	                	totalsizesqlargs = VariableHandler.parser2ndSubstitution(totalsizesql, this.pretoken,this.endtoken, "?");
+	                    parserResults.put(totalsizesql,totalsizesqlargs);
+	                }
+	            }
+	        }            
+	        newtotalsizesql = totalsizesqlargs[0][0];
+        }
         String vars[] = args[1];  
         if(vars.length == 0 )
         {
@@ -234,15 +276,18 @@ public class SQLParams
         this.realParams = new Params(_realParams);
     }
     
-    private void buildParamsByVariableParser(String sql,String dbname) throws SetSQLParamException
+    private void buildParamsByVariableParser(String sql,String totalsizesql,String dbname) throws SetSQLParamException
     {
-    	List<Param> _realParams = new ArrayList<Param>();       
-        sql = this.evaluateSqlTemplate(sql);
+    	List<Param> _realParams = new ArrayList<Param>();  
+    	VelocityContext vcontext = buildVelocityContext();//一个context是否可以被同时用于多次运算呢？
+        sql = this.evaluateSqlTemplate(vcontext,sql);
+      
         SQLStruction sqlstruction =  parserSQLStructions.get(sql);
         if(sqlstruction == null)
         {
             synchronized(lock)
             {
+            	sqlstruction =  parserSQLStructions.get(sql);
                 if(sqlstruction == null)
                 {
                 	sqlstruction = VariableHandler.parserSQLStruction(sql);
@@ -251,6 +296,24 @@ public class SQLParams
             }
         }            
         newsql = sqlstruction.getSql();
+        if(totalsizesql != null)
+        {
+        	totalsizesql = this.evaluateSqlTemplate(vcontext,totalsizesql);
+	        SQLStruction totalsizesqlstruction =  parserSQLStructions.get(totalsizesql);
+	        if(totalsizesqlstruction == null)
+	        {
+	            synchronized(lock)
+	            {
+	            	totalsizesqlstruction =  parserSQLStructions.get(totalsizesql);
+	                if(totalsizesqlstruction == null)
+	                {
+	                	totalsizesqlstruction = VariableHandler.parserSQLStruction(totalsizesql);
+	                	parserSQLStructions.put(totalsizesql,totalsizesqlstruction);
+	                }
+	            }
+	        }            
+	        newtotalsizesql = totalsizesqlstruction.getSql();
+        }
 //        String vars[] = args[1];  
         if(!sqlstruction.hasVars())
         {
@@ -1017,6 +1080,12 @@ public class SQLParams
 			sqlparams.realParams = this.realParams.copy();
 		sqlparams.sqlparams = this.sqlparams;		
 		return sqlparams;
+	}
+	public String getNewtotalsizesql() {
+		return newtotalsizesql;
+	}
+	public void setNewtotalsizesql(String newtotalsizesql) {
+		this.newtotalsizesql = newtotalsizesql;
 	}
 
 }

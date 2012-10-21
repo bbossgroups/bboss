@@ -567,6 +567,31 @@ public abstract class DB implements Serializable, IDMethod,Platform
 		return sql;
 	}
 	
+	public static class PagineSql
+	{
+		public PagineSql(String sql, long startoffset, long endoffset) {
+			super();
+			this.sql = sql;
+			this.startoffset = startoffset;
+			this.endoffset = endoffset;
+		}
+		private String sql;
+		private long startoffset;
+		private long endoffset;
+		public String getSql() {
+			return sql;
+		}
+		
+		public long getStartoffset() {
+			return startoffset;
+		}
+		
+		public long getEndoffset() {
+			return endoffset;
+		}
+		
+	}
+	
 	 /**
      * 获取受限制结果条数的sql语句，要求selectSql的语法，按oracle自定义受限语句语法，例如
      * SELECT   a.cpmc,a.ggxh,a.cjdd,a.ph,a.jgxs,a.dj,a.jldw,a.cd,a.cddm,a.flag,cjrq,a.pricepsj_id,b.user_name, 

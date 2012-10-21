@@ -36,7 +36,16 @@ import com.frameworkset.common.poolman.PreparedDBUtil.UpdateKeyInfo;
  */
 public class Params implements java.lang.Comparable
 {
+	/**
+	 * 指定分页总记录数，通过外部传入，提升分页查询性能
+	 */
 	long totalsize = -1L;
+	/**
+	 * 指定分页查询sql语句，通过外部传入，提升分页查询性能
+	 * 
+	 * totalsize和totalsizesql两个属性一次只能使用一个
+	 */
+	String totalsizesql;
 	public Params()
 	{
 		params = new ArrayList<Param>();
@@ -110,6 +119,7 @@ public class Params implements java.lang.Comparable
 		action = -1;
 		prepareselect_sql = null;
 		totalsize = -1L;
+		totalsizesql = null;
 	}
 
 	public int compareTo(Object other) {
@@ -135,7 +145,16 @@ public class Params implements java.lang.Comparable
 		params.prepareselect_sql = this.prepareselect_sql;
 		params.updateKeyInfo = this.updateKeyInfo;
 		params.totalsize = this.totalsize;
+		params.totalsizesql = this.totalsizesql;
 		return params;
+	}
+
+	public String getTotalsizesql() {
+		return totalsizesql;
+	}
+
+	public void setTotalsizesql(String totalsizesql) {
+		this.totalsizesql = totalsizesql;
 	}
 
 	public long getTotalsize() {

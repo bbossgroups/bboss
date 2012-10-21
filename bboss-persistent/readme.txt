@@ -23,9 +23,11 @@ bboss-persistent<-cas server [frameworkset-pool.jar]
 to do list:
 无
 #######update function list since bbossgroups-3.6 begin###########
-o 扩展分页查询功能,3.6.0之后的版本ConfigSQLExecutor/SQLExecutor/PreparedDBUtil三个持久层组件中增加了一组分页接口，
-  这组接口和之前的分页接口的区别是增加了一个totalsize参数，也就是说可以通过totalsize参数从外部传入总记录数，
+o 扩展分页查询功能,3.6.0之后的版本ConfigSQLExecutor/SQLExecutor/PreparedDBUtil三个持久层组件中增加了两组分页接口，
+  第一组接口和之前的分页接口的区别是增加了一个totalsize参数，也就是说可以通过totalsize参数从外部传入总记录数，
  这样在分页方法内部无需执行总记录数查询操作，以便提升系统性能,同步更新了标签库中和数据库查询相关的程序
+   第二组接口和之前的分页接口的区别是增加了一个totalsizesql参数，也就是说分页接口内部可以通过执行totalsizesql参数获取总记录数，
+ 以便提升系统性能,同步更新了标签库中和数据库查询相关的程序
 o 在日志文件中输出分页查询相关的所有sql语句
 #######update function list since bbossgroups-3.5 begin###########
 o TransactionManager组件增加release方法，

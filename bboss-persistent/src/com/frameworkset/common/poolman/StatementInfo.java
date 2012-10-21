@@ -48,6 +48,7 @@ public class StatementInfo {
 	private String dbname;
 	private String sql;
 	private long totalsize = -1L;
+	private String totalsizesql;
 
 	// Connection con,
 	private boolean goNative;
@@ -224,13 +225,22 @@ public class StatementInfo {
 	}
 
 	public PreparedStatement prepareCountStatement(boolean showsql) throws SQLException {
-		String countsql = countSql();
+		String countsql = null;
+		if(this.totalsizesql == null)
+		{
+			countsql = countSql();
+		}
+		else
+		{
+			countsql = totalsizesql;
+		}
 		if(showsql)
 		{
 			log.debug("Execute JDBC prepared pagine query count statement:"+countsql);
 		}
 		return prepareStatement(countsql);
 	}
+	
 
 	/**
 	 * 分页查询，构建查询数据库总记录数的sql语句
@@ -1040,6 +1050,14 @@ public class StatementInfo {
 
 	public void setTotalsize(long totalsize) {
 		this.totalsize = totalsize;
+	}
+
+	public String getTotalsizesql() {
+		return totalsizesql;
+	}
+
+	public void setTotalsizesql(String totalsizesql) {
+		this.totalsizesql = totalsizesql;
 	}
 
 }
