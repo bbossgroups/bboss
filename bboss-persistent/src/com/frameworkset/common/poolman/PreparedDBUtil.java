@@ -219,6 +219,115 @@ public class PreparedDBUtil extends DBUtil {
 					statement_count.setString(param.index, (String)param.data);
 				}
 			}
+			else if(param.method.equals(Param.setInt_int_int))//#21
+			{
+				statement.setInt(param.index, ((Integer)param.data).intValue());
+				if(statement_count != null)
+				{
+					statement_count.setInt(param.index, ((Integer)param.data).intValue());
+				}
+			}
+			else if(param.method.equals(Param.setTimestamp_int_Timestamp))//#33
+			{
+				statement.setTimestamp(param.index, (Timestamp)param.data);
+				if(statement_count != null)
+				{
+					statement_count.setTimestamp(param.index, (Timestamp)param.data);
+				}
+			}
+			else if(param.method.equals(Param.setObject_int_Object))//#25
+			{
+				statement.setObject(param.index, param.data);
+				if(statement_count != null)
+				{
+					statement_count.setObject(param.index, param.data);
+				}
+			}
+			else if(param.method.equals(Param.setLong_int_long))//#22
+			{
+				statement.setLong(param.index, ((Long)param.data).longValue());
+				if(statement_count != null)
+				{
+					statement_count.setLong(param.index, ((Long)param.data).longValue());
+				}
+			}
+			else if(param.method.equals(Param.setDouble_int_double))//#19
+			{
+				statement.setDouble(param.index, ((Double)param.data).doubleValue());
+				if(statement_count != null)
+				{
+					statement_count.setDouble(param.index, ((Double)param.data).doubleValue());
+				}
+			}
+			else if(param.method.equals(Param.setFloat_int_float))//#20
+			{
+				statement.setFloat(param.index, ((Float)param.data).floatValue());
+				if(statement_count != null)
+				{
+					statement_count.setFloat(param.index, ((Float)param.data).floatValue());
+				}
+			}
+			
+			else if(param.method.equals(Param.setNull_int_int))//#23
+			{
+				statement.setNull(param.index, ((Integer)param.data).intValue());
+				if(statement_count != null)
+				{
+					statement_count.setNull(param.index, ((Integer)param.data).intValue());
+				}
+			}
+			else if(param.method.equals(Param.setNull_int_int_String))//#24
+			{
+				Object[] data = (Object[])param.data;
+				statement.setNull(param.index, ((Integer)data[0]).intValue(),(String)data[1]);
+				if(statement_count != null)
+				{
+					statement_count.setNull(param.index, ((Integer)data[0]).intValue(),(String)data[1]);
+				}
+			}
+			else if(param.method.equals(Param.setDate_int_sqlDate))//#17
+			{
+				statement.setDate(param.index, (java.sql.Date)param.data);
+				if(statement_count != null)
+				{
+					statement_count.setDate(param.index, (java.sql.Date)param.data);
+				}
+			}
+			else if(param.method.equals(Param.setDate_int_utilDate))//#18
+			{
+				statement.setDate(param.index, (java.sql.Date)param.data);
+				if(statement_count != null)
+				{
+					statement_count.setDate(param.index, (java.sql.Date)param.data);
+				}
+			}
+			else if(param.method.equals(Param.setDate_int_Date_Calendar))//#16
+			{
+				Object[] data = (Object[])param.data;
+				statement.setDate(param.index, (java.sql.Date)data[0],(Calendar)data[1]);
+				if(statement_count != null)
+				{
+					statement_count.setDate(param.index, (Date)data[0],(Calendar)data[1]);
+				}
+			}
+			
+			else if(param.method.equals(Param.setShort_int_short))//#29
+			{
+				statement.setShort(param.index, ((Short)param.data).shortValue());
+				if(statement_count != null)
+				{
+					statement_count.setShort(param.index, ((Short)param.data).shortValue());
+				}
+			}
+			else if(param.method.equals(Param.setTimestamp_int_Timestamp_Calendar))//#34
+			{
+				Object[] data = (Object[])param.data;
+				statement.setTimestamp(param.index, (Timestamp)data[0],(Calendar)data[1]);
+				if(statement_count != null)
+				{
+					statement_count.setTimestamp(param.index, (Timestamp)data[0],(Calendar)data[1]);
+				}
+			}
 			else if(param.method.equals(Param.SET_ARRAY_INT_ARRAY))//#1
 			{
 				statement.setArray(param.index, (Array)param.data);
@@ -877,88 +986,8 @@ public class PreparedDBUtil extends DBUtil {
 //					statement_count.setClob(param.index, (Clob)param.data);
 //				}
 //			}
-			else if(param.method.equals(Param.setDate_int_Date_Calendar))//#16
-			{
-				Object[] data = (Object[])param.data;
-				statement.setDate(param.index, (java.sql.Date)data[0],(Calendar)data[1]);
-				if(statement_count != null)
-				{
-					statement_count.setDate(param.index, (Date)data[0],(Calendar)data[1]);
-				}
-			}
-			else if(param.method.equals(Param.setDate_int_sqlDate))//#17
-			{
-				statement.setDate(param.index, (java.sql.Date)param.data);
-				if(statement_count != null)
-				{
-					statement_count.setDate(param.index, (java.sql.Date)param.data);
-				}
-			}
-			else if(param.method.equals(Param.setDate_int_utilDate))//#18
-			{
-				statement.setDate(param.index, (java.sql.Date)param.data);
-				if(statement_count != null)
-				{
-					statement_count.setDate(param.index, (java.sql.Date)param.data);
-				}
-			}
-			else if(param.method.equals(Param.setDouble_int_double))//#19
-			{
-				statement.setDouble(param.index, ((Double)param.data).doubleValue());
-				if(statement_count != null)
-				{
-					statement_count.setDouble(param.index, ((Double)param.data).doubleValue());
-				}
-			}
-			else if(param.method.equals(Param.setFloat_int_float))//#20
-			{
-				statement.setFloat(param.index, ((Float)param.data).floatValue());
-				if(statement_count != null)
-				{
-					statement_count.setFloat(param.index, ((Float)param.data).floatValue());
-				}
-			}
-			else if(param.method.equals(Param.setInt_int_int))//#21
-			{
-				statement.setInt(param.index, ((Integer)param.data).intValue());
-				if(statement_count != null)
-				{
-					statement_count.setInt(param.index, ((Integer)param.data).intValue());
-				}
-			}
-			else if(param.method.equals(Param.setLong_int_long))//#22
-			{
-				statement.setLong(param.index, ((Long)param.data).longValue());
-				if(statement_count != null)
-				{
-					statement_count.setLong(param.index, ((Long)param.data).longValue());
-				}
-			}
-			else if(param.method.equals(Param.setNull_int_int))//#23
-			{
-				statement.setNull(param.index, ((Integer)param.data).intValue());
-				if(statement_count != null)
-				{
-					statement_count.setNull(param.index, ((Integer)param.data).intValue());
-				}
-			}
-			else if(param.method.equals(Param.setNull_int_int_String))//#24
-			{
-				Object[] data = (Object[])param.data;
-				statement.setNull(param.index, ((Integer)data[0]).intValue(),(String)data[1]);
-				if(statement_count != null)
-				{
-					statement_count.setNull(param.index, ((Integer)data[0]).intValue(),(String)data[1]);
-				}
-			}
-			else if(param.method.equals(Param.setObject_int_Object))//#25
-			{
-				statement.setObject(param.index, param.data);
-				if(statement_count != null)
-				{
-					statement_count.setObject(param.index, param.data);
-				}
-			}
+			
+			
 			else if(param.method.equals(Param.setObject_int_Object_int))//#26
 			{
 				Object[] data = (Object[])param.data;
@@ -985,14 +1014,7 @@ public class PreparedDBUtil extends DBUtil {
 					statement_count.setRef(param.index, (Ref)param.data);
 				}
 			}
-			else if(param.method.equals(Param.setShort_int_short))//#29
-			{
-				statement.setShort(param.index, ((Short)param.data).shortValue());
-				if(statement_count != null)
-				{
-					statement_count.setShort(param.index, ((Short)param.data).shortValue());
-				}
-			}
+			
 			
 			else if(param.method.equals(Param.setTime_int_Time))//#31
 			{
@@ -1011,23 +1033,7 @@ public class PreparedDBUtil extends DBUtil {
 					statement_count.setTime(param.index, (Time)data[0],(Calendar)data[1]);
 				}
 			}
-			else if(param.method.equals(Param.setTimestamp_int_Timestamp))//#33
-			{
-				statement.setTimestamp(param.index, (Timestamp)param.data);
-				if(statement_count != null)
-				{
-					statement_count.setTimestamp(param.index, (Timestamp)param.data);
-				}
-			}
-			else if(param.method.equals(Param.setTimestamp_int_Timestamp_Calendar))//#34
-			{
-				Object[] data = (Object[])param.data;
-				statement.setTimestamp(param.index, (Timestamp)data[0],(Calendar)data[1]);
-				if(statement_count != null)
-				{
-					statement_count.setTimestamp(param.index, (Timestamp)data[0],(Calendar)data[1]);
-				}
-			}
+			
 			else if(param.method.equals(Param.setUnicodeStream_int_InputStream_int))//#35
 			{
 				Object[] data = null;
@@ -1396,6 +1402,14 @@ public class PreparedDBUtil extends DBUtil {
 			} else if (Params.action == SELECT) {
 				resources = new ArrayList();
 				setUpParams(Params,statement,statement_count,resources);
+				long start = stmtInfo.getPaginesql().getStart();
+				long end = stmtInfo.getPaginesql().getEnd();
+				if(start >= 0)
+				{
+					int startidx = Params.params != null?Params.params.size():0;
+					statement.setLong(startidx+1, start);
+					statement.setLong(startidx+2, end);
+				}
 				ResultMap resultMap =  this.doPrepareSelect(stmtInfo,
 						   statement,
 						   statement_count,
@@ -2914,10 +2928,10 @@ public class PreparedDBUtil extends DBUtil {
     	if( params != null)
     	{
     		params.buildParams(sql,totalsizesql,prepareDBName);
-    		preparedSelect(params.getRealParams(),prepareDBName, params.getNewsql(), offset, pagesize,params.getNewtotalsizesql());
+    		preparedSelectWithTotalsizesql(params.getRealParams(),prepareDBName, params.getNewsql(), offset, pagesize,params.getNewtotalsizesql());
     	}
     	else
-    		preparedSelect((Params)null,prepareDBName, sql, offset, pagesize,totalsizesql);
+    		preparedSelectWithTotalsizesql((Params)null,prepareDBName, sql, offset, pagesize,totalsizesql);
     }
     
     /**
@@ -3049,11 +3063,13 @@ public class PreparedDBUtil extends DBUtil {
             Params = params;
 //		Params = params;
 		Params.action = SELECT;
-		this.offset = StatementInfo.rebuildOffset(offset, pagesize,totalsize);
 		this.pagesize = pagesize;
+		Params.totalsize = totalsize;
+		this.offset = StatementInfo.rebuildOffset(offset, pagesize,totalsize);
+		
 		Params.prepareselect_sql = sql;
 		this.oraclerownum = oraclerownum;
-		Params.totalsize = totalsize;
+		
 		preparedSql(Params,prepareDBName, sql);
 	}
 	

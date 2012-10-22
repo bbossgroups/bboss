@@ -2,40 +2,29 @@
 
 <poolman>
 
-<datasource>
+	<datasource>
 
-    <dbname>bspf</dbname>
-	<loadmetadata>false</loadmetadata>
-    <jndiName>jdbc/mysql-ds</jndiName>
+		<dbname>bspf</dbname>
+		<loadmetadata>false</loadmetadata>
+		<enablejta>true</enablejta>
+		<jndiName>proxool_datasource_jndiname</jndiName>
+		<datasourceFile>proxool.xml</datasourceFile>
+		<autoprimarykey>false</autoprimarykey>
+		<showsql>false</showsql>
+		<keygenerate>composite</keygenerate>
+	</datasource>
 	
-    <driver>oracle.jdbc.driver.OracleDriver</driver>
-    <url>jdbc:oracle:thin:@//10.0.15.134:1521/orcl</url> 
-    
-    <username>SANYGCMP</username>
-    <password>SANYGCMP</password>
+	<datasource>
 
-    <txIsolationLevel>READ_COMMITTED</txIsolationLevel>
-    <nativeResults>true</nativeResults>
-    <poolPreparedStatements>false</poolPreparedStatements>
-    <initialConnections>2</initialConnections>
-    <minimumSize>2</minimumSize>
-    <maximumSize>10</maximumSize>
-    <maximumSoft>false</maximumSoft>
-    <removeAbandoned>true</removeAbandoned>
-    <userTimeout>50</userTimeout>
-    <logAbandoned>true</logAbandoned>
-    <readOnly>true</readOnly>
-	<skimmerFrequency>120000</skimmerFrequency>
-	<connectionTimeout>240000</connectionTimeout>
-    <shrinkBy>5</shrinkBy>
-    <testWhileidle>true</testWhileidle>
-    <keygenerate>composite</keygenerate>
-    <maxWait>60</maxWait>
-    <validationQuery>select 1 from dual</validationQuery>
-    <autoprimarykey>false</autoprimarykey>
-	<showsql>false</showsql>
-  </datasource>
-  
+		<dbname>proxool</dbname>
+		<loadmetadata>false</loadmetadata>
+		<enablejta>true</enablejta>
+		<jndiName>proxool_datasource_jndiname1</jndiName>
+		<datasourceFile>proxool_1.xml</datasourceFile>
+		<autoprimarykey>false</autoprimarykey>
+		<showsql>false</showsql>
+		<keygenerate>composite</keygenerate>
+	</datasource>
   
   
 

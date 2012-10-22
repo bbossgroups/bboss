@@ -61,6 +61,7 @@ import com.frameworkset.common.poolman.sql.PrimaryKeyMetaData;
 import com.frameworkset.common.poolman.sql.TableMetaData;
 import com.frameworkset.common.poolman.sql.UpdateSQL;
 import com.frameworkset.orm.adapter.DB;
+import com.frameworkset.orm.adapter.DB.PagineSql;
 import com.frameworkset.orm.adapter.DBFactory;
 import com.frameworkset.orm.engine.model.SchemaType;
 import com.frameworkset.orm.transaction.JDBCTransaction;
@@ -940,9 +941,9 @@ public class SQLUtil implements Serializable{
 	 * @param sql
 	 * @return
 	 */
-	public static String getDBPagineSql(String sql, long offset, int maxsize) {
+	public static PagineSql getDBPagineSql(String sql, long offset, int maxsize,boolean prepared) {
 		return SQLManager.getInstance().getDBAdapter().getDBPagineSql(sql,
-				offset, maxsize);
+				offset, maxsize, prepared);
 	}
 	
 	public static boolean isRobotQuery(String dbName)
@@ -958,10 +959,10 @@ public class SQLUtil implements Serializable{
 	 * @param sql
 	 * @return
 	 */
-	public static String getDBPagineSqlForOracle(String dbName, String sql,
-			long offset, int maxsize, String rownum) {
+	public static PagineSql getDBPagineSqlForOracle(String dbName, String sql,
+			long offset, int maxsize, String rownum,boolean prepared) {
 		return SQLManager.getInstance().getDBAdapter(dbName)
-				.getOracleDBPagineSql(sql, offset, maxsize, rownum);
+				.getOracleDBPagineSql(sql, offset, maxsize, rownum, prepared);
 
 	}
 

@@ -911,7 +911,7 @@ public class DBUtil extends SQLUtil implements Serializable {
 			if (totalSize > 0) {
 
 
-				String paginesql = stmtInfo.paginesql();
+				String paginesql = stmtInfo.paginesql(false).getSql();
 				if(showsql(stmtInfo.getDbname()))
 				{
 					log.debug("JDBC pageine origine statement:" + stmtInfo.getSql());

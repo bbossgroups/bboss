@@ -1,5 +1,9 @@
 package com.frameworkset.sqlexecutor;
 
+import java.util.HashMap;
+
+import org.junit.Test;
+
 import com.frameworkset.common.poolman.ConfigSQLExecutor;
 import com.frameworkset.util.ListInfo;
 /**
@@ -38,5 +42,10 @@ public class ApplyService {
 		//这样在分页方法内部无需执行总记录数查询操作，以便提升系统性能
 		//condition参数保存了查询条件
 		return executor.queryListInfoBean(ListBean.class, "queryMaterialList", offset, pagesize,totalSize ,condition);
+	}
+	@Test
+	public void queryMaterailListInfo1() throws Exception {
+//		long totalSize = executor.queryObjectBeanWithDBName(long.class,Constant.DATASOURCE_NAME_COMMON, "queryCountMaterialList", condition);
+		ListInfo list = executor.queryListInfoBeanWithDBName(HashMap.class, "bspf","queryMaterialList", 0, 10,"queryCountMaterialList" ,null);
 	}
 }

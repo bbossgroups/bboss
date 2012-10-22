@@ -39,6 +39,7 @@ import com.frameworkset.common.poolman.sql.PoolManResultSetMetaData;
 import com.frameworkset.common.poolman.util.JDBCPool;
 import com.frameworkset.common.poolman.util.SQLManager;
 import com.frameworkset.common.poolman.util.SQLUtil;
+import com.frameworkset.orm.adapter.DB.PagineSql;
 import com.frameworkset.orm.transaction.JDBCTransaction;
 import com.frameworkset.orm.transaction.TransactionException;
 import com.frameworkset.orm.transaction.TransactionManager;
@@ -64,7 +65,7 @@ public class StatementInfo {
 	private String rownum;
 
 	private boolean prepared = false;
-	private String paginesql;
+	private PagineSql paginesql;
 	List resultSets;
 
 	private boolean oldautocommit = true;
@@ -208,19 +209,19 @@ public class StatementInfo {
 	}
 
 	public PreparedStatement preparePagineStatement(boolean showsql) throws SQLException {
-		paginesql = this.sql;
+		paginesql = new PagineSql(this.sql,true);
 		if (this.rownum == null) {
 			// if (this.isRobotQuery(prepareDBName))
-			paginesql = getDBPagineSql();
+			paginesql = getDBPagineSql(true);
 			if(showsql)
 			{
 				log.debug("Execute JDBC prepared pagine query statement:"+paginesql);
 			}
 		} else {
-			paginesql = getDBPagineSqlForOracle();
+			paginesql = getDBPagineSqlForOracle(true);
 		}
 		
-		return prepareStatement(paginesql);
+		return prepareStatement(paginesql.getSql());
 
 	}
 
@@ -271,21 +272,21 @@ public class StatementInfo {
 	}
 
 	public void absolute(ResultSet rs) throws SQLException {
-		if (paginesql.equals(getSql()) && rs != null) {
+		if (paginesql.getSql().equals(getSql()) && rs != null) {
 			if (getOffset() > 0L) {
 				rs.absolute((int) getOffset());
 			}
 		}
 	}
 
-	public String paginesql() {
+	public PagineSql paginesql(boolean prepared) {
 		if (paginesql == null) {
-			paginesql = getSql();
+			paginesql = new PagineSql(getSql(),prepared);
 			if (this.rownum == null) {
 				if (isRobotquery())
-					paginesql = getDBPagineSql();
+					paginesql = getDBPagineSql(prepared);
 			} else {
-				paginesql = getDBPagineSqlForOracle();
+				paginesql = getDBPagineSqlForOracle(prepared);
 			}
 		}
 		return paginesql;
@@ -909,9 +910,9 @@ public class StatementInfo {
 	 * @param sql
 	 * @return
 	 */
-	public String getDBPagineSql() {
+	public PagineSql getDBPagineSql(boolean prepared) {
 		return SQLManager.getInstance().getDBAdapter(this.dbname)
-				.getDBPagineSql(sql, offset, maxsize);
+				.getDBPagineSql(sql, offset, maxsize,prepared);
 
 	}
 
@@ -922,9 +923,9 @@ public class StatementInfo {
 	 * @param sql
 	 * @return
 	 */
-	public String getDBPagineSqlForOracle() {
+	public PagineSql getDBPagineSqlForOracle(boolean prepared) {
 		return SQLManager.getInstance().getDBAdapter(dbname)
-				.getOracleDBPagineSql(sql, offset, maxsize, rownum);
+				.getOracleDBPagineSql(sql, offset, maxsize, rownum, prepared);
 
 	}
 
@@ -1058,6 +1059,10 @@ public class StatementInfo {
 
 	public void setTotalsizesql(String totalsizesql) {
 		this.totalsizesql = totalsizesql;
+	}
+
+	public PagineSql getPaginesql() {
+		return paginesql;
 	}
 
 }

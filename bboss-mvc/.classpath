@@ -42,7 +42,7 @@
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/xmlbeans-2.4.0.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/bboss-aop.jar" sourcepath="/bbossaop"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/bboss-rmi.jar"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/frameworkset-pool.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/frameworkset-pool.jar" sourcepath="/bboss-persistent"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/frameworkset.jar" sourcepath="/bboss-tablib"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/bboss-util"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/bboss-camel.jar"/>

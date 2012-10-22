@@ -2,29 +2,13 @@
 <properties>
 	<property name="queryMaterialList">
 	<![CDATA[
-		select m.material_id as materialId,m.material_code as
-		materialCode,m.material_name_cn as materialName, m.material_name_en as materialNameEn,s.dict_item_name as
-		measureUnit from md_material m join SYS_DICT_ITEM s on
-		m.measure_unit_id = s.dict_item_id  
-		#if($material_code && !$material_code.equals(""))
-				and m.material_code = #[material_code]
-		#end
-		#if($material_name_cn && !$material_name_cn.equals(""))
-				and m.material_name_cn like #[material_name_cn]
-		#end
+		select * from td_app_bom 
 		]]>
 	</property>
 	
 	<property name="queryCountMaterialList">
 	<![CDATA[
-		select count(1) from md_material m join SYS_DICT_ITEM s on
-		m.measure_unit_id = s.dict_item_id  
-		#if($material_code && !$material_code.equals(""))
-				and m.material_code = #[material_code]
-		#end
-		#if($material_name_cn && !$material_name_cn.equals(""))
-				and m.material_name_cn like #[material_name_cn]
-		#end
+		select count(1) from td_app_bom 
 		]]>
 	</property>
 </properties>

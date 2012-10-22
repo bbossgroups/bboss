@@ -458,7 +458,7 @@ public class DBOracle extends DB
      * @param sql
      * @return
      */
-    public String getDBPagineSql(String sql, long offset, int maxsize)
+    public PagineSql getDBPagineSql(String sql, long offset, int maxsize,boolean prepared)
     {
         // StringBuffer ret = new
         // StringBuffer("select ss1.* from (select tt1.*,rownum rowno_ from (")
@@ -467,10 +467,19 @@ public class DBOracle extends DB
         // .append((offset + 1) + "")
         // .append(" and ")
         // .append((offset + maxsize) + "");
-        StringBuffer ret = new StringBuffer("select ss1.* from (select tt1.*,rownum rowno_ from (").append(sql).append(
-                ") tt1 where rownum <= ").append((offset + maxsize)).append(") ss1 where ss1.rowno_ >= ").append(
-                (offset + 1));
-        return ret.toString();
+//        StringBuffer ret = new StringBuffer("select ss1.* from (select tt1.*,rownum rowno_ from (").append(sql).append(
+//                ") tt1 where rownum <= ").append((offset + maxsize)).append(") ss1 where ss1.rowno_ >= ").append(
+//                (offset + 1));
+//        return ret.toString();
+    	StringBuffer ret = null;
+    	if(prepared)
+    		ret = new StringBuffer().append("select ss1.* from (select tt1.*,rownum rowno_ from (").append(sql).append(
+                ") tt1 where rownum <= ?) ss1 where ss1.rowno_ >= ?");
+    	else
+    		ret = new StringBuffer("select ss1.* from (select tt1.*,rownum rowno_ from (").append(sql).append(
+                  ") tt1 where rownum <= ").append((offset + maxsize)).append(") ss1 where ss1.rowno_ >= ").append(
+                  (offset + 1));
+        return new PagineSql(ret.toString(),offset + maxsize,offset + 1,offset, maxsize, prepared);
     }
 
     /**
@@ -500,11 +509,18 @@ public class DBOracle extends DB
      * 获取高效的oracle分页语句，sql中已经写好ROW_NUMBER() OVER ( ORDER BY cjrq ) rownum
      * 否则不能调用本方法生成oralce的分页语句
      */
-    public String getOracleDBPagineSql(String sql, long offset, int maxsize, String rownum)
+    public PagineSql getOracleDBPagineSql(String sql, long offset, int maxsize, String rownum,boolean prepared)
     {
-        StringBuffer ret = new StringBuffer("select * from (").append(sql).append(") where ").append(rownum).append(
-                " between ").append((offset + 1) + "").append(" and ").append((offset + maxsize) + "");
-        return ret.toString();
+    	StringBuffer ret = null;
+    	if(prepared)
+	        ret = new StringBuffer().append("select * from (").append(sql).append(") where ").append(rownum).append(
+	                " between ? and ?");
+    	else
+    	{
+    		ret = new StringBuffer().append("select * from (").append(sql).append(") where ").append(rownum).append(
+	                " between ").append(offset + 1).append(" and ").append(offset + maxsize);
+    	}
+        return new PagineSql(ret.toString(),offset + 1,offset + maxsize,offset, maxsize, prepared);
     }
 
     private static final String columncommentsql = "select c.comments from user_col_comments c where NLS_LOWER(c.table_name)=? and NLS_LOWER(c.column_name)=?";
