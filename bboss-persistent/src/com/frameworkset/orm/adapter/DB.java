@@ -562,33 +562,62 @@ public abstract class DB implements Serializable, IDMethod,Platform
 	 * @param sql
 	 * @return
 	 */
-	public String getDBPagineSql(String sql, long offset, int maxsize) {
+	public PagineSql getDBPagineSql(String sql, long offset, int maxsize,boolean prepared) {
 		
-		return sql;
+		return new PagineSql(sql,-1L,-1L,offset,maxsize,prepared);
 	}
+	
+//	public String getDBPagineSql(String sql, long offset, int maxsize) {
+//		
+//		return sql;
+//	}
 	
 	public static class PagineSql
 	{
-		public PagineSql(String sql, long startoffset, long endoffset) {
+		private long offset;
+		private int maxsize;
+		private String sql;
+		private long start = -1L;
+		private long end= -1L;
+		private boolean prepared = true;
+		public PagineSql(String sql, long start, long end,long offset,int maxsize,boolean prepared) {
 			super();
 			this.sql = sql;
-			this.startoffset = startoffset;
-			this.endoffset = endoffset;
+			this.start = start;
+			this.end = end;
+			this.offset = offset;
+			this.maxsize = maxsize;
+			this.prepared = prepared;
 		}
-		private String sql;
-		private long startoffset;
-		private long endoffset;
+		public PagineSql(String sql,boolean prepared) {
+			super();
+			this.sql = sql;
+			this.prepared = prepared;
+		}
+		
 		public String getSql() {
 			return sql;
 		}
 		
-		public long getStartoffset() {
-			return startoffset;
+		public long getStart() {
+			return start;
 		}
 		
-		public long getEndoffset() {
-			return endoffset;
+		public long getEnd() {
+			return end;
 		}
+		public long getOffset() {
+			return offset;
+		}
+		
+		public int getMaxsize() {
+			return maxsize;
+		}
+		
+		public boolean isPrepared() {
+			return prepared;
+		}
+	
 		
 	}
 	
@@ -616,19 +645,41 @@ public abstract class DB implements Serializable, IDMethod,Platform
     
     
 	
-   /**
+//   /**
+//     * 获取高效的oracle分页语句，sql中已经写好ROW_NUMBER() OVER ( ORDER   BY   cjrq ) rownum
+//     * 否则不能调用本方法生成oralce的分页语句
+//     */
+//	 
+//	public String getOracleDBPagineSql(String sql, long offset, int maxsize,String rownum) {
+//		StringBuffer ret = new StringBuffer("select * from (")
+//									.append(sql)
+//									.append(") where ").append(rownum).append(" between ")
+//									.append((offset + 1) + "")
+//									.append(" and ")
+//									.append((offset  + maxsize) + "");
+//		return ret.toString();
+//	}
+    
+    /**
      * 获取高效的oracle分页语句，sql中已经写好ROW_NUMBER() OVER ( ORDER   BY   cjrq ) rownum
      * 否则不能调用本方法生成oralce的分页语句
      */
 	 
-	public String getOracleDBPagineSql(String sql, long offset, int maxsize,String rownum) {
-		StringBuffer ret = new StringBuffer("select * from (")
+	public PagineSql getOracleDBPagineSql(String sql, long offset, int maxsize,String rownum,boolean prepared) {
+		StringBuffer ret = null;
+		if(prepared)
+			ret = new StringBuffer().append("select * from (")
 									.append(sql)
-									.append(") where ").append(rownum).append(" between ")
-									.append((offset + 1) + "")
-									.append(" and ")
-									.append((offset  + maxsize) + "");
-		return ret.toString();
+									.append(") where ").append(rownum).append(" between ? and ?");
+		else
+			ret = new StringBuffer("select * from (")
+			.append(sql)
+			.append(") where ").append(rownum).append(" between ")
+			.append((offset + 1) + "")
+			.append(" and ")
+			.append((offset  + maxsize) + "");
+		return new PagineSql(ret.toString(),offset + 1,offset  + maxsize,offset, maxsize,prepared);
+		
 	}
 
 	public String getTableRemarks(Connection con,String tableName, String tableRemark) {

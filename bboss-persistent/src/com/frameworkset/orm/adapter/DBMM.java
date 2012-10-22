@@ -411,9 +411,15 @@ public class DBMM extends DB
 	 * @param sql
 	 * @return
 	 */
-	public String getDBPagineSql(String sql, long offset, int maxsize) {
+	public PagineSql getDBPagineSql(String sql, long offset, int maxsize,boolean prepared) {
 		
-		return new StringBuffer(sql).append(" limit ").append(offset).append(",").append(maxsize).toString();
+//		return new StringBuffer(sql).append(" limit ").append(offset).append(",").append(maxsize).toString();
+		StringBuffer newsql = null;
+		if(prepared)
+			newsql = new StringBuffer().append(sql).append(" limit ?,?");
+		else
+			newsql = new StringBuffer().append(sql).append(" limit ").append(offset).append(",").append(maxsize);
+		return new PagineSql(newsql.toString(),offset,(long)maxsize,offset, maxsize, prepared);
 	}
 	public Object getLONGVARBINARY(CallableStatement cstmt,int parameterIndex) throws SQLException
     {

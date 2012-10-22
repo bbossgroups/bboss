@@ -19,7 +19,9 @@ import java.sql.SQLException;
 
 import org.junit.Test;
 
+import com.frameworkset.common.poolman.DBUtil;
 import com.frameworkset.common.poolman.SQLExecutor;
+import com.frameworkset.common.poolman.util.JDBCPool;
 
 public class TestIOCPool {
 	@Test
@@ -38,6 +40,20 @@ public class TestIOCPool {
 	{
 		try {
 			System.out.println(SQLExecutor.queryObjectWithDBName(int.class, "bspf", "select 1 from dual"));
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void testmulti()
+	{
+		try {
+			JDBCPool pool = DBUtil.getPool("bspf");
+			JDBCPool pool_1 = DBUtil.getPool("proxool");
+			System.out.println(SQLExecutor.queryObjectWithDBName(int.class, "bspf", "select count(1) from TD_APP_BOM"));
+			System.out.println(SQLExecutor.queryObjectWithDBName(int.class, "proxool", "select count(1) from TD_APP_BOM"));
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
