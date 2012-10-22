@@ -310,7 +310,7 @@ public class ConfigSQLExecutor  {
 		
 		String sql = this.getSql(dbname, sqlname);
 		String totalsizesql = this.getSql(dbname, totalsizesqlname);
-		return SQLExecutor.queryListInfoWithDBName(beanType,dbname, sql, offset,pagesize,totalsizesql,fields);  	 
+		return SQLExecutor.queryListInfoWithDBName2ndTotalsizesql(beanType,dbname, sql, offset,pagesize,totalsizesql,fields);  	 
 	}
 	/**
 	 * 
