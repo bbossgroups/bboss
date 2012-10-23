@@ -18,7 +18,6 @@ import org.frameworkset.web.multipart.MaxUploadSizeExceededException;
 import org.frameworkset.web.multipart.MultipartException;
 import org.frameworkset.web.multipart.MultipartHttpServletRequest;
 import org.frameworkset.web.multipart.MultipartResolver;
-import org.frameworkset.web.multipart.commons.CommonsFileUploadSupport.MultipartParsingResult;
 import org.frameworkset.web.servlet.context.ServletContextAware;
 import org.frameworkset.web.servlet.context.WebApplicationContext;
 import org.frameworkset.web.util.WebUtils;

@@ -2,13 +2,26 @@
 <properties>
 	<property name="queryMaterialList">
 	<![CDATA[
-		select * from td_app_bom 
+		select * from td_app_bom where id=#[id]
 		]]>
 	</property>
 	
 	<property name="queryCountMaterialList">
 	<![CDATA[
-		select count(1) from td_app_bom 
+		select count(1) from td_app_bom where id=#[id]
+		]]>
+	</property>
+	
+	
+	<property name="queryMaterialListbindParam">
+	<![CDATA[
+		select * from td_app_bom where id=?
+		]]>
+	</property>
+	
+	<property name="queryCountMaterialListbindParam">
+	<![CDATA[
+		select count(1) from td_app_bom where id=?
 		]]>
 	</property>
 </properties>
