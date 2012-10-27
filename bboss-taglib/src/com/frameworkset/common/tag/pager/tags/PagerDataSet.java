@@ -90,7 +90,7 @@ public class PagerDataSet extends PagerTagSupport {
 	 * false-在数据加载器中手工构造sql语句对全部数据排序,如果数据加载器没有将title指定的排序字段作为sql的排序字段，那么
 	 *       指定的排序字段将不起作用
 	 */
-	protected boolean autosort = true;
+	protected boolean autosort = false;
 	
 	protected Object actual;
 	
@@ -2488,7 +2488,7 @@ public class PagerDataSet extends PagerTagSupport {
 		/**
 		 * added by biaoping.yin on 20080912 start.
 		 */
-		this.autosort = true;
+		this.autosort = false;
 		this.needClear = false;
 		sessionKey = null;
 
