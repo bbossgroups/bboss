@@ -31,6 +31,8 @@ bboss-taglib<-portal [frameworkset.jar]
 bboss-taglib<-bboss-ws [frameworkset.jar]
 
 #######update function list since bbossgroups-3.6 begin###########
+o list/map标签增加softparser属性，针对sessionKey、requestKey、pagecontextKey进行classdataList数据对象缓存，
+ 避免重复使用时重复生成数据对象，默认值为true
 o 解决map标签指定keycolName不起作用的bug
 o 标签库表达式中增加了currentcell，mapkey两个表达式内置变量，所有表达式内置具体含义如下：
 rowid：可以在表达式中获取当前记录集的行号，带页面偏移量，前面可带外面集合的索引号，索引号从最外层集合以0开始,依次加1

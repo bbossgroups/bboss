@@ -91,7 +91,11 @@ public class PagerDataSet extends PagerTagSupport {
 	 *       指定的排序字段将不起作用
 	 */
 	protected boolean autosort = false;
-	
+	/**
+	 * 针对sessionKey、requestKey、pagecontextKey进行classdataList数据对象缓存，
+	 * 避免重复使用时重复生成数据对象
+	 */
+	protected boolean softparser = true;
 	protected Object actual;
 	
 	
@@ -1543,8 +1547,10 @@ public class PagerDataSet extends PagerTagSupport {
 		if (datas == null)
 			return;
 		
-		if (theClassDataList == null)
-			theClassDataList = new ClassDataList();
+//		if (theClassDataList == null)
+//			theClassDataList = new ClassDataList();
+		if(this.softparsered())
+			return;
 		for (int i = 0; i < datas.length; i++) {
 			theClassDataList.add(new ClassData(datas[i], toUpercase));
 		}
@@ -1604,6 +1610,8 @@ public class PagerDataSet extends PagerTagSupport {
 		}
 		else
 		{
+			if(this.softparsered())
+				return;
 			Iterator its = data.entrySet().iterator();
 			while(its.hasNext())
 			{
@@ -1628,8 +1636,10 @@ public class PagerDataSet extends PagerTagSupport {
 		// modified by biaoping.yin on 2005.03.28
 		if (datas == null)
 			return;
-		if (theClassDataList == null)
-			theClassDataList = new ClassDataList();
+//		if (theClassDataList == null)
+//			theClassDataList = new ClassDataList();
+		if(this.softparsered())
+			return;
 //		Class valueClass = null;
 		for (int i = 0; i < datas.length; i++) {
 //			if (valueClass == null)
@@ -1679,7 +1689,63 @@ public class PagerDataSet extends PagerTagSupport {
 		}
 
 	}
+	public static final String softparser_cache_pre = "com.frameworkset.common.tag.pager.tags.";
 
+	protected boolean softparsered()
+	{
+		if (theClassDataList == null)
+		{
+//			theClassDataList = new ClassDataList();
+			if(this.softparser)
+			{
+				if(!StringUtil.isEmpty(this.requestKey))
+				{
+					String cachekey = softparser_cache_pre +"requestKey";
+					theClassDataList = (ClassDataList)request.getAttribute(cachekey);
+					if(theClassDataList != null)
+						return true;
+					theClassDataList = new ClassDataList();
+					request.setAttribute(cachekey,theClassDataList);
+					
+				}
+				else if(!StringUtil.isEmpty(this.sessionKey))
+				{
+					
+					if(this.session != null)
+					{
+						String cachekey = softparser_cache_pre +"requestKey";
+						theClassDataList = (ClassDataList)session.getAttribute(cachekey);
+						if(theClassDataList != null)
+							return true;
+						theClassDataList = new ClassDataList();
+						session.setAttribute(cachekey,theClassDataList);
+					}
+				}
+				else if(!StringUtil.isEmpty(this.pageContextKey))
+				{
+					
+					String cachekey = softparser_cache_pre +"requestKey";
+					theClassDataList = (ClassDataList)pageContext.getAttribute(cachekey);
+					if(theClassDataList != null)
+						return true;
+					theClassDataList = new ClassDataList();
+					pageContext.setAttribute(cachekey,theClassDataList);
+					
+				}
+				else
+				{
+					theClassDataList = new ClassDataList();
+				}
+			}
+			else
+			{
+				theClassDataList = new ClassDataList();
+			}
+			
+		}
+		return false;
+		
+	}
 	/**
 	 * 装载集合中的数据
 	 * 
@@ -1691,10 +1757,61 @@ public class PagerDataSet extends PagerTagSupport {
 					"load list Data error loadClassData(Collection dataInfo):数据对象为空");
 		
 		
-			Iterator it = dataInfo.iterator();
 			
-			if (theClassDataList == null)
-				theClassDataList = new ClassDataList();
+			
+//			if (theClassDataList == null)
+//			{
+////				theClassDataList = new ClassDataList();
+//				if(this.softparser)
+//				{
+//					if(!StringUtil.isEmpty(this.requestKey))
+//					{
+//						String cachekey = softparser_cache_pre +"requestKey";
+//						theClassDataList = (ClassDataList)request.getAttribute(cachekey);
+//						if(theClassDataList != null)
+//							return;
+//						theClassDataList = new ClassDataList();
+//						request.setAttribute(cachekey,theClassDataList);
+//						
+//					}
+//					else if(!StringUtil.isEmpty(this.sessionKey))
+//					{
+//						
+//						if(this.session != null)
+//						{
+//							String cachekey = softparser_cache_pre +"requestKey";
+//							theClassDataList = (ClassDataList)session.getAttribute(cachekey);
+//							if(theClassDataList != null)
+//								return;
+//							theClassDataList = new ClassDataList();
+//							session.setAttribute(cachekey,theClassDataList);
+//						}
+//					}
+//					else if(!StringUtil.isEmpty(this.pageContextKey))
+//					{
+//						
+//						String cachekey = softparser_cache_pre +"requestKey";
+//						theClassDataList = (ClassDataList)pageContext.getAttribute(cachekey);
+//						if(theClassDataList != null)
+//							return;
+//						theClassDataList = new ClassDataList();
+//						pageContext.setAttribute(cachekey,theClassDataList);
+//						
+//					}
+//					else
+//					{
+//						theClassDataList = new ClassDataList();
+//					}
+//				}
+//				else
+//				{
+//					theClassDataList = new ClassDataList();
+//				}
+//				
+//			}
+			if(this.softparsered())
+				return;
+			Iterator it = dataInfo.iterator();
 			while (it.hasNext()) {
 				theClassDataList.add(new ClassData(it.next()));
 			}
@@ -1747,8 +1864,10 @@ public class PagerDataSet extends PagerTagSupport {
 					"load list Data error in loadClassData(Object dataInfo, Class voClazz):数据对象为空");
 		// log.info();
 
-		if (theClassDataList == null)
-			theClassDataList = new ClassDataList();
+//		if (theClassDataList == null)
+//			theClassDataList = new ClassDataList();
+		if(this.softparsered())
+			return;
 		while (dataInfo.hasNext()) {
 			Object data = dataInfo.next();
 			theClassDataList.add(new ClassData(data));
@@ -1765,63 +1884,7 @@ public class PagerDataSet extends PagerTagSupport {
 		theClassDataList.add(new ClassData(null));
 	}
 
-	// /**
-	// * 存在bug
-	// * 装载数据，调用数据获取接口的相应方法获取数据集，然后装载
-	// * @param dataInfo
-	// */
-	// protected void loadClassData(Object dataInfo) throws LoadDataException {
-	// if (dataInfo == null)
-	// {
-	// log.debug("load Data in loadClassData(Object dataInfo):数据对象为空");
-	// if (theClassDataList == null)
-	// theClassDataList = new ClassDataList();
-	// theClassDataList.add(new ClassData(null, null, null));
-	//
-	// // throw new LoadDataException(
-	// // "load list Data error in loadClassData(Object dataInfo):数据对象为空");
-	// }
-	// else if(dataInfo instanceof DefaultDataInfoImpl) //log.info();
-	// //如果dataInfo为DefaultDataInfoImpl类型时直接调用
-	// {
-	//
-	// DataInfo defaultDataInfo = (DefaultDataInfoImpl)dataInfo;
-	// //分页列表的形式pagerTag不会为空，但是详细信息显示时就会为空
-	// if(pagerContext != null)
-	// {
-	// defaultDataInfo.initial(statement,
-	// dbname,
-	// -1,
-	// -1,
-	// pagerContext.ListMode(),
-	// null);
-	// }
-	// else
-	// {
-	//
-	// defaultDataInfo.initial(statement,
-	// dbname,
-	// -1,
-	// -1,
-	// true,
-	// null);
-	// }
-	// loadClassData(defaultDataInfo.getListItemsFromDB(),null);
-	// }
-	// else
-	// {
-	// Class voClazz = dataInfo.getClass();
-	// Field[] fields = voClazz == null ? null : voClazz.getFields();
-	// Method[] methods = voClazz == null ? null : voClazz.getMethods();
-	//
-	// if (theClassDataList == null)
-	// theClassDataList = new ClassDataList();
-	// theClassDataList.add(new ClassData(dataInfo, methods, fields));
-	// }
-	//
-	//
-	//
-	// }
+
 	/**
 	 * 输入参数index 定位fields数组中下标为index的数据项并返回该项
 	 * 
@@ -1852,7 +1915,7 @@ public class PagerDataSet extends PagerTagSupport {
 			theClassDataList.sortBy(sortKey, desc);
 		else
 			// :log
-			log.info("没有要排序列表数据：" + PagerDataSet.class.getName() + ".sort("
+			log.warn("没有要排序列表数据：" + PagerDataSet.class.getName() + ".sort("
 					+ sortKey + "," + desc + ")");
 	}
 
@@ -2205,16 +2268,16 @@ public class PagerDataSet extends PagerTagSupport {
 				
 			} catch (LoadDataException e) {
 				if(e.getCause() == null)
-					log.info(e.getMessage());
+					log.error(e.getMessage());
 				else
-					log.info(e.getCause().getMessage());
+					log.error(e.getCause().getMessage());
 				return SKIP_BODY;
 			}
 			catch (Throwable e) {
 				if(e.getCause() == null)
-					log.info(e.getMessage());
+					log.error(e.getMessage());
 				else
-					log.info(e.getCause().getMessage());
+					log.error(e.getCause().getMessage());
 				return SKIP_BODY;
 			}
 		}
@@ -2288,9 +2351,9 @@ public class PagerDataSet extends PagerTagSupport {
 
 		}  catch (LoadDataException e) {
 			if(e.getCause() == null)
-				log.info(e.getMessage());
+				log.error(e.getMessage());
 			else
-				log.info(e.getCause().getMessage());
+				log.error(e.getCause().getMessage());
 //			return SKIP_BODY;
 		}
 		
@@ -3231,6 +3294,14 @@ public class PagerDataSet extends PagerTagSupport {
 	{
 	
 		this.actual = actual;
+	}
+
+	public boolean isSoftparser() {
+		return softparser;
+	}
+
+	public void setSoftparser(boolean softparser) {
+		this.softparser = softparser;
 	}
     
    
