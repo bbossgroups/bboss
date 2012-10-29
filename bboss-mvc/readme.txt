@@ -11,7 +11,12 @@ todo
 
 3.国际化功能完善
 6.mvc和gwt结合可行性研究
+
 #######update function list since bbossgroups-3.6 begin###########
+o list/map标签增加softparser属性，针对sessionKey、requestKey、pagecontextKey进行classdataList数据对象缓存，
+ 避免重复使用时重复生成数据对象，默认值为true
+o 解决mvc 文件上传组件ie6兼容性问题,commons-fileupload-1.2.2在ie6下文件上传报错导致无法文件上传
+解决办法，将common file upload的版本回退到1.2，经测试问题解决
 o 添加注解org.frameworkset.web.servlet.handler.annotations.ExcludeMethod，标注方法不是mvc控制器方法，添加了ExcludeMethod注解的方法就不会被加入到mvc控制器的方法注册表中
 o 完善控制器方法解析算法，排除属性的get/set方法，加强系统安全性
 #######update function list since bbossgroups-3.5 begin###########
