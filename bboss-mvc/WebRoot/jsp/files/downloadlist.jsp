@@ -39,8 +39,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		type="text/css">
   </head>
   
-  <body>
-  <h1>资源下载列表</h1>
+  <body> 
      <table class="genericTbl">
        <tr>
        <th class="order1 sorted">
@@ -62,8 +61,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
        <pg:list requestKey="files">
        <tr class="even">
          <td >
-                   
+            <pg:equal actual="${filetype }" value="file">      
             <a href="<%=request.getContextPath() %>/file/download.htm?fileName=<pg:cell colName="fileName"/>"><pg:cell colName="fileName"/></a>
+            </pg:equal>
+            <pg:equal actual="${filetype }" value="vidio">      
+            <a href="<%=request.getContextPath() %>/vidio/download.htm?fileName=<pg:cell colName="fileName"/>"><pg:cell colName="fileName"/></a>
+            </pg:equal>  
          </td>
          <td >
             <pg:cell colName="fileType"></pg:cell>
@@ -75,7 +78,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		    <pg:cell colName="lastModified"></pg:cell>
          </td>
          <td >
+          <pg:equal actual="${filetype }" value="file">     
             <a href="<%=request.getContextPath() %>/file/download.htm?fileName=<pg:cell  colName="fileName"/>">下载此文件</a>
+           </pg:equal>
+           <pg:equal actual="${filetype }" value="vidio">     
+            <a href="<%=request.getContextPath() %>/vidio/download.htm?fileName=<pg:cell  colName="fileName"/>">下载此文件</a>
+           </pg:equal>
          </td>
          
         </tr>
