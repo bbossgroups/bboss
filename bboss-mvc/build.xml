@@ -85,7 +85,7 @@
 
 	</target>
 	
-	<target name="build-bboss-mvc" depends="jar-bboss-mvc" description="generate the bboss-mvc library bboss-mvc.jar">
+	<target name="build-bboss-mvc" depends="jar-bboss-mvc,jar-bboss-mvc-test" description="generate the bboss-mvc library bboss-mvc.jar">
 		<delete dir="${classes-bboss-aop}" />
 		<delete dir="${classes-bboss-aop-test}" />
 		<delete dir="${distrib}/WebRoot/" />

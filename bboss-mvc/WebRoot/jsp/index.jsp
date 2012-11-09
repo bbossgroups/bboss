@@ -65,6 +65,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						</li>
 						<li><a href="#3721">bboss-mvc框架demo的部署部分介绍了如何下载和部署demo应用</a></li>
 						<li><a href="#3722">资源和文档下载</a></li>
+						<li><a href="#4722">视频教程下载</a></li>
 						<li><a href="#3723">bboss-mvc框架体系结构图</a></li>
 						<li><a href="#3724">bboss-mvc框架请求处理流程图</a></li>
 						<li><a href="#3725">web.xml部署文件部分说明了mvc框架的涉及web.xml主要配置内容</a></li>						
@@ -245,6 +246,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<script type="text/javascript">
 				$(document).ready(function(){
 					  $("#downloadList").load("files/downloadList.htm");
+					});
+			</script>
+		</div>
+		
+		<h1>视频教程下载<a href="#top" name="4722">
+			<img border="0" src="<%=request.getContextPath() %>/jsp/top.gif" alt="Top">
+			</a></h1>
+			<div  class="shadow" style="width:860;">
+		       <div class="info" id="downloadVidioList">
+     			</div>
+			<script type="text/javascript">
+				$(document).ready(function(){
+					  $("#downloadVidioList").load("vidios/downloadList.htm");
 					});
 			</script>
 		</div>

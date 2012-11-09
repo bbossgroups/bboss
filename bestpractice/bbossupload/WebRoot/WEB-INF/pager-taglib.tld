@@ -540,6 +540,14 @@
 		<tagclass>com.frameworkset.common.tag.pager.tags.PagerDataSet</tagclass>
 		<teiclass>com.frameworkset.common.tag.pager.tags.PagerDataSetExtraInfo</teiclass>
 		<bodycontent>JSP</bodycontent>
+		<!--
+			针对sessionKey、requestKey、pagecontextKey进行classdataList数据对象缓存，
+ 			避免重复使用时重复生成数据对象，默认值为true
+		-->
+		<attribute>
+			<name>softparser</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
 			<!-- 
 		jquery内容容器
 		 -->
@@ -737,7 +745,14 @@
 		<teiclass>com.frameworkset.common.tag.pager.tags.PagerDataSetExtraInfo</teiclass>
 		<bodycontent>JSP</bodycontent>
 		
-		
+		<!--
+			针对sessionKey、requestKey、pagecontextKey进行classdataList数据对象缓存，
+ 			避免重复使用时重复生成数据对象，默认值为true
+		-->
+		<attribute>
+			<name>softparser</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
 		<!--
 			列表标识
 		-->
