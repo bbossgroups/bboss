@@ -1,1 +1,6 @@
 /distrib
+/classes
+/build.properties.bak
+/build-jdk5.log
+/build-jdk6.log
+/common.log

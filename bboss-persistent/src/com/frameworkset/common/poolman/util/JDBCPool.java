@@ -2445,4 +2445,9 @@ public class JDBCPool {
 			return this.info.getAutoprimarykey();
 
 	}
+	
+	public boolean showsql()
+	{
+		return this.info.isShowsql();
+	}
 }

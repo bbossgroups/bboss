@@ -39,6 +39,8 @@ import org.frameworkset.util.ClassUtil.ClassInfo;
 import org.frameworkset.util.ClassUtil.PropertieDescription;
 import org.frameworkset.util.annotations.ValueConstants;
 
+import com.frameworkset.common.poolman.util.JDBCPool;
+import com.frameworkset.common.poolman.util.SQLManager;
 import com.frameworkset.orm.annotation.Column;
 import com.frameworkset.orm.annotation.PrimaryKey;
 import com.frameworkset.util.VariableHandler;
@@ -342,9 +344,13 @@ public class SQLParams
         }
         
         this.realParams = new Params(_realParams);
-        if(sqlstruction.hasVars())
+        if(sqlstruction.hasVars() )
         {
-//        	log.debug("SQL INFO:" + this.toString() );
+        	JDBCPool pool = SQLManager.getInstance().getPool(dbname);
+        	if(pool != null && pool.showsql())
+        	{
+        		log.debug("SQL INFO:" + this.toString() );
+        	}
         }
         
     }

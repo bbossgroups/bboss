@@ -1689,7 +1689,7 @@ public class PagerDataSet extends PagerTagSupport {
 		}
 
 	}
-	public static final String softparser_cache_pre = "com.frameworkset.common.tag.pager.tags.";
+	public static final String softparser_cache_pre = "com.frameworkset.common.tag.pager.tags.softparser.";
 
 	protected boolean softparsered()
 	{
@@ -1700,7 +1700,7 @@ public class PagerDataSet extends PagerTagSupport {
 			{
 				if(!StringUtil.isEmpty(this.requestKey))
 				{
-					String cachekey = softparser_cache_pre +"requestKey";
+					String cachekey = softparser_cache_pre +requestKey;
 					theClassDataList = (ClassDataList)request.getAttribute(cachekey);
 					if(theClassDataList != null)
 						return true;
@@ -1713,7 +1713,7 @@ public class PagerDataSet extends PagerTagSupport {
 					
 					if(this.session != null)
 					{
-						String cachekey = softparser_cache_pre +"requestKey";
+						String cachekey = softparser_cache_pre +sessionKey;
 						theClassDataList = (ClassDataList)session.getAttribute(cachekey);
 						if(theClassDataList != null)
 							return true;
@@ -1724,7 +1724,7 @@ public class PagerDataSet extends PagerTagSupport {
 				else if(!StringUtil.isEmpty(this.pageContextKey))
 				{
 					
-					String cachekey = softparser_cache_pre +"requestKey";
+					String cachekey = softparser_cache_pre +pageContextKey;
 					theClassDataList = (ClassDataList)pageContext.getAttribute(cachekey);
 					if(theClassDataList != null)
 						return true;
@@ -2268,16 +2268,16 @@ public class PagerDataSet extends PagerTagSupport {
 				
 			} catch (LoadDataException e) {
 				if(e.getCause() == null)
-					log.error(e.getMessage());
+					log.warn(e.getMessage());
 				else
-					log.error(e.getCause().getMessage());
+					log.warn(e.getCause().getMessage());
 				return SKIP_BODY;
 			}
 			catch (Throwable e) {
 				if(e.getCause() == null)
-					log.error(e.getMessage());
+					log.warn(e.getMessage());
 				else
-					log.error(e.getCause().getMessage());
+					log.warn(e.getCause().getMessage());
 				return SKIP_BODY;
 			}
 		}
@@ -2351,9 +2351,9 @@ public class PagerDataSet extends PagerTagSupport {
 
 		}  catch (LoadDataException e) {
 			if(e.getCause() == null)
-				log.error(e.getMessage());
+				log.warn(e.getMessage());
 			else
-				log.error(e.getCause().getMessage());
+				log.warn(e.getCause().getMessage());
 //			return SKIP_BODY;
 		}
 		
