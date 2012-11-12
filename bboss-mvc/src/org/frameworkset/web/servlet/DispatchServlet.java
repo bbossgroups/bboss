@@ -333,7 +333,7 @@ public class DispatchServlet extends HttpServlet {
 			HandlerExecutionChain mappedHandler = getHandler(request, true);
 			if (mappedHandler == null || mappedHandler.getHandler() == null || mappedHandler.getHandler().getHandler() == null) {
 				// Ignore -> will reappear on doService.
-				logger.info("No handler found in getLastModified");
+				logger.debug("No handler found in getLastModified");
 				return -1;
 			}
 
@@ -341,7 +341,7 @@ public class DispatchServlet extends HttpServlet {
 			long lastModified = ha.getLastModified(request, mappedHandler.getHandler());
 			if (logger.isInfoEnabled()) {
 				String requestUri = new UrlPathHelper().getRequestUri(request);
-				logger.info("Last-Modified value for [" + requestUri + "] is: " + lastModified);
+				logger.debug("Last-Modified value for [" + requestUri + "] is: " + lastModified);
 			}
 			return lastModified;
 		}
