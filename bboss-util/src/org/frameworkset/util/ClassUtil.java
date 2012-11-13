@@ -29,6 +29,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.management.RuntimeErrorException;
+
 import org.apache.log4j.Logger;
 import org.frameworkset.soa.annotation.ExcludeField;
 
@@ -284,6 +286,37 @@ public class ClassUtil
 	    	this.init();
 	    }
 	    
+	    public void setPropertyValue(Object obj,String property, Object value)
+	    {
+	    	try {
+				this.getPropertyDescriptor(property).setValue(obj, value);
+			} catch (IllegalArgumentException e) {
+				throw new RuntimeException(e);
+			} catch (IllegalAccessException e) {
+				throw new RuntimeException(e);
+			} catch (InvocationTargetException e) {
+				throw new RuntimeException(e.getTargetException());
+			}
+		    catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+	    }
+	    
+	    public Object getPropertyValue(Object obj,String property)
+	    {
+	    	try {
+				return this.getPropertyDescriptor(property).getValue(obj);
+	    	} catch (IllegalArgumentException e) {
+				throw new RuntimeException(e);
+			} catch (IllegalAccessException e) {
+				throw new RuntimeException(e);
+			} catch (InvocationTargetException e) {
+				throw new RuntimeException(e.getTargetException());
+			}
+		    catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+	    }
 	    private static final Field[] NULL = new Field[0];
 	    private static final Method[] NULL_M = new Method[0];
 
