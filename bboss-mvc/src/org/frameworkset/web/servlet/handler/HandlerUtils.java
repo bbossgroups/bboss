@@ -1666,6 +1666,131 @@ public abstract class HandlerUtils {
 			return true;
 		return false;
 	}
+	
+	/**
+	 * 指定了多个注解类型的属性，可以选择性地从不同的注解方式获取属性的值
+	 * @param writeMethod
+	 * @param annotations
+	 * @param pathVarDatas
+	 * @param request
+	 * @param pageContext
+	 * @param handlerMethod
+	 * @param model
+	 * @param type
+	 * @return
+	 * @throws Exception
+	 */
+	private static Object evaluateArrayPositionAnnotationsValue(Annotation[] annotations,
+			Map pathVarDatas,HttpServletRequest request, String name,
+			PageContext pageContext, MethodData handlerMethod, ModelMap model,Class type,Object value) throws Exception
+	{
+		
+		boolean required = false;
+		EditorInf editor = null;
+		boolean useEditor = true;
+//		boolean touched = false;
+		Object defaultValue = null;
+		String dateformat = null;
+		for(Annotation anno :annotations)
+		{
+			
+			if (anno instanceof PathVariable) {
+				
+				useEditor = false;
+			} 
+			else if (anno instanceof RequestParam) {
+				RequestParam param = (RequestParam)anno;
+				if(!isMultipartFile(type))
+				{
+					dateformat = param.dateformat();
+					if (dateformat.equals(ValueConstants.DEFAULT_NONE))
+						dateformat = null;
+//					String decodeCharset = param.decodeCharset();
+//					String charset = param.charset();
+//					String convertcharset = param.convertcharset();
+//					if(decodeCharset.equals(ValueConstants.DEFAULT_NONE))
+//					{
+//						decodeCharset = null;
+//					}
+//					else
+//					{
+//						request.setAttribute(USE_MVC_DENCODE_KEY, TRUE);
+//					}
+//					if(charset.equals(ValueConstants.DEFAULT_NONE))
+//					{
+//						charset = null;
+//					}
+//					if(convertcharset.equals(ValueConstants.DEFAULT_NONE))
+//					{
+//						convertcharset = null;
+//					}
+//					
+//					request.setAttribute(USE_MVC_DENCODE_KEY, null);
+					
+				
+					if (param.editor() != null && !param.editor().equals(""))
+						editor = (EditorInf) BeanUtils.instantiateClass(param.editor());
+					if(!required) required = param.required();
+					defaultValue = param.defaultvalue();
+					
+				}
+				else
+				{
+					
+				}
+			
+				useEditor = true;
+				
+				
+			} else if (anno instanceof Attribute) {
+				
+				
+				useEditor = false;
+				
+	
+			} else if (anno instanceof CookieValue) {				
+				
+				useEditor = false;
+					
+			} else if (anno instanceof RequestHeader) {
+	
+	
+				useEditor = false;
+				
+			} 
+			if (defaultValue != null && defaultValue.equals(ValueConstants.DEFAULT_NONE))
+				defaultValue = null;
+			if(value == null)
+				value = defaultValue;
+			if(value != null)
+				break;
+			dateformat = null;
+		}
+		
+		
+		
+		if (useEditor) {
+			try {
+				if (editor == null)
+					value = ValueObjectUtil.typeCast(value, type,dateformat);
+				else
+					value = ValueObjectUtil.typeCast(value, editor);
+			} catch (Exception e) {
+				Exception error = raiseMissingParameterException(name, type,value, e);
+				model.getErrors().rejectValue(name, "ValueObjectUtil.typeCast.error", String.valueOf(value), type, error.getMessage());
+				return ValueObjectUtil.getDefaultValue(type);
+			}
+
+		}
+		if (value == null && required)
+		{
+			Exception e = raiseMissingParameterException(name, type);
+			model.getErrors().rejectValue(name, "value.required.null",e.getMessage());
+			return ValueObjectUtil.getDefaultValue(type);
+			
+		}
+		return value;
+	}
 	/**
 	 * 指定了多个注解类型的属性，可以选择性地从不同的注解方式获取属性的值
 	 * @param writeMethod
@@ -2086,6 +2211,101 @@ public abstract class HandlerUtils {
 	}
 	
 	
+	private static Object buildArrayPositionData(PropertieDescription property,
+			HttpServletRequest request, HttpServletResponse response,
+			PageContext pageContext, MethodData handlerMethod, ModelMap model,
+			HttpMessageConverter[] messageConverters,CallHolder holder ,Class objectType,Map pathVarDatas ) throws Exception
+	{
+		String name = property.getName();
+		Object value = holder.getData(name);
+		boolean required = false;
+		
+		EditorInf editor = null;
+		boolean useEditor = true;
+		if(holder.isArray(name))
+		{
+			useEditor = true;
+			editor = holder.getEditor(name);
+			required = holder.isRequired(name);
+		}
+		
+		Field field = property.getField();
+		Class type = property.getPropertyType();
+		if (field == null ) {
+			return null;
+		}
+		
+		if (HttpSession.class.isAssignableFrom(type)) {
+		
+			
+
+		} 
+		else if (HttpServletRequest.class.isAssignableFrom(type))
+		{
+			
+		} else if (javax.servlet.http.HttpServletResponse.class
+				.isAssignableFrom(type))
+		{
+			
+		} else if (PageContext.class.isAssignableFrom(type)) {
+			
+		} else if (ModelMap.class.isAssignableFrom(type)) {
+			
+		}
+		else if(Map.class.isAssignableFrom(type))
+		{
+			
+		}
+		else if (field.getAnnotations() == null
+				|| field.getAnnotations().length == 0 || !hasParameterAnnotation(field)) {
+					
+		}
+		
+		else if (field.isAnnotationPresent(RequestBody.class)) {
+			
+		}			
+		else if (field.isAnnotationPresent(DataBind.class)) {
+			
+		}
+		else 
+		{
+			Annotation[] annotations = field.getAnnotations();
+			try
+			{
+				value = evaluateArrayPositionAnnotationsValue(  annotations,
+						 pathVarDatas, request,  name,
+						 pageContext,  handlerMethod,  model, type,value);
+				
+				return value;
+			}
+			catch(Exception e)
+			{
+				model.getErrors().rejectValue(name, "evaluateAnnotationsValue.error",e.getMessage());
+				return ValueObjectUtil.getDefaultValue(type);
+			}
+		}
+		if (useEditor) {
+			try {
+				if (editor == null)
+					value = ValueObjectUtil.typeCast(value, type);
+				else
+					value = ValueObjectUtil.typeCast(value, editor);
+			} catch (Exception e) {
+				Exception error = raiseMissingParameterException(name, type,value, e);
+				model.getErrors().rejectValue(name, "ValueObjectUtil.typeCast.error", String.valueOf(value), type, error.getMessage());
+				return ValueObjectUtil.getDefaultValue(type);
+			}
+
+		}
+		if (value == null && required)
+		{
+			Exception e = raiseMissingParameterException(name, type);
+			model.getErrors().rejectValue(name, "value.required.null",e.getMessage());
+			return ValueObjectUtil.getDefaultValue(type);
+		}
+		return value;
+	}
+	
 	public static Object buildPropertyValue(PropertieDescription property,
 			HttpServletRequest request, HttpServletResponse response,
 			PageContext pageContext, MethodData handlerMethod, ModelMap model,
@@ -2104,18 +2324,24 @@ public abstract class HandlerUtils {
 		boolean useEditor = true;
 		if(holder.isCollection() && holder.getPosition() > 0)
 		{
-			value = holder.getData(name);
-			if(holder.isArray(name))
-			{
-				useEditor = true;
-				editor = holder.getEditor(name);
-				required = holder.isRequired(name);
-			}
+//			value = holder.getData(name);
+//			if(holder.isArray(name))
+//			{
+//				useEditor = true;
+//				editor = holder.getEditor(name);
+//				required = holder.isRequired(name);
+//			}
+			//解决问题：List<Bean>中如果bean有日期类型并且指定了日期格式，对应多条记录情况下格式化日期报错的问题
+			value = buildArrayPositionData(property,
+					request, response,
+					pageContext, handlerMethod, model,
+					messageConverters,holder,objectType,pathVarDatas );
+			return value;
 		}
 		else
 		{
-			Method writeMethod = property.getWriteMethod();
-//			Field field = ClassUtil.getDeclaredField(objectType,name);
+			
+
 			Field field = property.getField();
 			if (field == null ) {
 				return null;
