@@ -17,6 +17,7 @@ package org.frameworkset.web.bind;
 
 import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -33,7 +34,6 @@ import org.frameworkset.util.ClassUtil;
 import org.frameworkset.util.ClassUtil.ClassInfo;
 import org.frameworkset.util.ClassUtil.PropertieDescription;
 import org.frameworkset.util.annotations.MethodData;
-import org.frameworkset.web.multipart.IgnoreFieldNameMultipartFile;
 import org.frameworkset.web.multipart.MultipartFile;
 import org.frameworkset.web.multipart.MultipartHttpServletRequest;
 import org.frameworkset.web.servlet.ModelMap;
@@ -241,6 +241,10 @@ public class WebDataBinder  {//extends DataBinder {
 		private Map<String,Boolean> isarray = new HashMap<String,Boolean>();
 		private Map<String,Boolean> isrequired = new HashMap<String,Boolean>();
 		private Map<String,EditorInf> editors = new HashMap<String,EditorInf>();
+		/**
+		 * 记录属性的日期格式，如果指定就有，没有指定就为null；
+		 */
+		private Map<String,SimpleDateFormat> dateformats = new HashMap<String,SimpleDateFormat>();
 		private Map<String,Object> defaultValues = new HashMap<String,Object>();
 		
 		
@@ -318,12 +322,17 @@ public class WebDataBinder  {//extends DataBinder {
 			editors.put(name, editor);
 		}
 		
-		public void addData(String name,String[] value,boolean isarray,EditorInf editor,boolean required,Object defaultValue)
+		public void addData(String name,String[] value,boolean isarray,EditorInf editor,boolean required,Object defaultValue,String dateformat)
 		{
 			this.datas.put(name, value);
 			this.isarray.put(name, isarray);
 			isrequired.put(name, required);
 			editors.put(name, editor);
+			if(dateformat != null)
+			{
+				SimpleDateFormat df = new SimpleDateFormat(dateformat); 
+				this.dateformats.put(name, df);
+			}
 			this.defaultValues.put(name, defaultValue);
 		}
 		
@@ -387,6 +396,13 @@ public class WebDataBinder  {//extends DataBinder {
 		 */
 		public EditorInf getEditor(String name) {
 			return this.editors.get(name);
+		}
+		
+		/**
+		 * @return the dateformat
+		 */
+		public SimpleDateFormat getDateformat(String name) {
+			return this.dateformats.get(name);
 		}
 
 		

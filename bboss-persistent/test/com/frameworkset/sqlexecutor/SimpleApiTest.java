@@ -25,6 +25,7 @@ import java.util.Map;
 import org.junit.Test;
 
 import com.frameworkset.common.poolman.DBUtil;
+import com.frameworkset.common.poolman.GetCUDResult;
 import com.frameworkset.common.poolman.Record;
 import com.frameworkset.common.poolman.SQLExecutor;
 import com.frameworkset.common.poolman.handle.NullRowHandler;
@@ -902,6 +903,33 @@ public class SimpleApiTest {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public @Test void testReturnObject() throws SQLException
+	{
+		Demo demo = new Demo();
+		demo.setId("aaa");
+		demo.setName("name");
+		Object delret = SQLExecutor.deleteBean("delete from demo where id=#[id]", demo);
+		Object ret = SQLExecutor.insertBean("insert into demo(id,name) values(#[id],#[name])", demo);
+		demo.setName("newname");
+		Object upret = SQLExecutor.updateBean("update demo set name=#[name] where id=#[id]", demo);
+		System.out.println();
+		
+	}
+	
+	public @Test void testAutoGenalKeysReturnObject() throws SQLException
+	{
+		AutoKeyDemo demo = new AutoKeyDemo();
+		
+		demo.setName("name2");
+		
+		GetCUDResult ret = (GetCUDResult)SQLExecutor.insertBean("insert into demo(name) values(#[name])", demo,true);
+		demo.setId((Long)ret.getKeys());
+		demo.setName("newname");
+		Object upret = SQLExecutor.updateBean("update demo set name=#[name] where id=#[id]", demo);
+		System.out.println();
+		
 	}
 
 }

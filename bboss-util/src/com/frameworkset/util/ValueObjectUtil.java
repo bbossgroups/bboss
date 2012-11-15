@@ -573,6 +573,14 @@ public class ValueObjectUtil {
 		return typeCast(obj, obj.getClass(), toType,dateformat);
 	}
 	
+	public final static Object typeCastWithDateformat(Object obj, Class toType,SimpleDateFormat dateformat)
+			throws NoSupportTypeCastException, NumberFormatException,
+			IllegalArgumentException {
+		if (obj == null)
+			return null;
+		return typeCastWithDateformat(obj, obj.getClass(), toType,dateformat);
+	}
+	
 	public final static Object typeCast(Object obj, Class toType)
 	throws NoSupportTypeCastException, NumberFormatException,
 	IllegalArgumentException{
@@ -1206,6 +1214,261 @@ public class ValueObjectUtil {
 		return arrayObj;
 	}
 	
+	public final static Object typeCastWithDateformat(Object obj, Class type, Class toType,SimpleDateFormat dateformat)
+			throws NoSupportTypeCastException, NumberFormatException,
+			IllegalArgumentException {
+		if (obj == null)
+			return null;
+		if (isSameType(type, toType, obj))
+			return obj;
+
+		if (type.isAssignableFrom(toType)) // type是toType的父类，父类向子类转换的过程，这个转换过程是不安全的
+		{
+			// return shell(toType,obj);
+			if (!java.util.Date.class.isAssignableFrom(type))
+//				return toType.cast(obj);
+				return cast(obj,toType);
+		}
+
+		if (type == byte[].class && toType == String.class) {
+			return new String((byte[]) obj);
+		} else if (type == String.class && toType == byte[].class) {
+			return ((String) obj).getBytes();
+		}
+		else if (java.sql.Blob.class.isAssignableFrom(type) ) {
+			
+			try
+			{
+				if( File.class.isAssignableFrom(toType))
+				{
+					File tmp = File.createTempFile(java.util.UUID.randomUUID().toString(),".tmp");
+					getFileFromBlob((Blob)obj,tmp);
+					return tmp;
+				}
+				else if( byte[].class.isAssignableFrom(toType))
+				{
+					return ValueObjectUtil.getByteArrayFromBlob((Blob)obj);
+				}
+				else
+					return ValueObjectUtil.getStringFromBlob((Blob)obj);
+			}
+			catch (Exception e)
+			{
+				throw new IllegalArgumentException(new StringBuffer(
+				"类型无法转换,不支持[").append(type.getName()).append("]向[")
+				.append(toType.getName()).append("]转换").append(",value is ").append(obj).toString());
+			}
+			
+			
+		}
+		else if (java.sql.Clob.class.isAssignableFrom(type) ) {
+			
+			try
+			{
+				if( File.class.isAssignableFrom(toType))
+				{
+					File tmp = File.createTempFile(java.util.UUID.randomUUID().toString(),".tmp");
+					getFileFromClob((Clob)obj,tmp);
+					return tmp;
+				}
+				else if( byte[].class.isAssignableFrom(toType))
+				{
+					return ValueObjectUtil.getByteArrayFromClob((Clob)obj);
+				}
+				else
+					return ValueObjectUtil.getStringFromClob((Clob)obj);
+			}
+			catch (Exception e)
+			{
+				throw new IllegalArgumentException(new StringBuffer(
+				"类型无法转换,不支持[").append(type.getName()).append("]向[")
+				.append(toType.getName()).append("]转换").append(",value is").append(obj).toString());
+			}
+			
+			
+		}
+
+		else if (type == byte[].class && File.class.isAssignableFrom(toType)) {
+			java.io.ByteArrayInputStream byteIn = null;
+			java.io.FileOutputStream fileOut = null;
+			if(!(obj instanceof byte[]))
+			{
+				Object[] object = (Object[]) obj;
+				
+				try {
+					byteIn = new java.io.ByteArrayInputStream((byte[]) object[0]);
+					fileOut = new java.io.FileOutputStream((File) object[1]);
+					byte v[] = new byte[1024];
+	
+					int i = 0;
+	
+					while ((i = byteIn.read(v)) > 0) {
+						fileOut.write(v, 0, i);
+	
+					}
+					fileOut.flush();
+					return object[1];
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} finally {
+					try {
+						if (byteIn != null)
+							byteIn.close();
+					} catch (Exception e) {
+	
+					}
+					try {
+						if (fileOut != null)
+							fileOut.close();
+					} catch (Exception e) {
+	
+					}
+				}
+			}
+			else
+			{
+				try {
+					byteIn = new java.io.ByteArrayInputStream((byte[]) obj);
+					File f = File.createTempFile(java.util.UUID.randomUUID().toString(), ".soa");
+					fileOut = new java.io.FileOutputStream(f);
+					byte v[] = new byte[1024];
+	
+					int i = 0;
+	
+					while ((i = byteIn.read(v)) > 0) {
+						fileOut.write(v, 0, i);
+	
+					}
+					fileOut.flush();
+					return f;
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} finally {
+					try {
+						if (byteIn != null)
+							byteIn.close();
+					} catch (Exception e) {
+	
+					}
+					try {
+						if (fileOut != null)
+							fileOut.close();
+					} catch (Exception e) {
+	
+					}
+				}
+			}
+		} else if (List.class.isAssignableFrom(toType)) {
+
+			if (!type.isArray()) {
+				List valueto = new java.util.ArrayList();
+				valueto.add(obj);
+				return valueto;
+			} else {
+				if (type == String[].class) {
+					List valueto = new java.util.ArrayList();
+					for (String data : (String[]) obj)
+						valueto.add(data);
+					return valueto;
+				}
+			}
+
+		}
+
+		else if (Set.class.isAssignableFrom(toType)) {
+
+			if (!type.isArray()) {
+				Set valueto = new java.util.TreeSet();
+				valueto.add(obj);
+				return valueto;
+			} else {
+				if (type == String[].class) {
+					Set valueto = new java.util.TreeSet();
+					for (String data : (String[]) obj)
+						valueto.add(data);
+					return valueto;
+				}
+
+			}
+
+		} else if (File.class.isAssignableFrom(toType)
+				&& toType == byte[].class) {
+			java.io.FileInputStream in = null;
+			java.io.ByteArrayOutputStream out = null;
+			try {
+				int i = 0;
+				in = new FileInputStream((File) obj);
+				out = new ByteArrayOutputStream();
+				byte v[] = new byte[1024];
+				while ((i = in.read(v)) > 0) {
+					out.write(v, 0, i);
+				}
+				return out.toByteArray();
+			} catch (Exception e) {
+
+			} finally {
+				try {
+					if (in != null)
+						in.close();
+				} catch (Exception e) {
+
+				}
+				try {
+					if (out != null)
+						out.close();
+				} catch (Exception e) {
+
+				}
+			}
+
+		} else if (type.isArray() && !toType.isArray()){ 
+				//|| !type.isArray()
+				//&& toType.isArray()) {
+			// if (type.getName().startsWith("[")
+			// && !toType.getName().startsWith("[")
+			// || !type.getName().startsWith("[")
+			// && toType.getName().startsWith("["))
+			throw new IllegalArgumentException(new StringBuffer("类型无法转换,不支持[")
+					.append(type.getName()).append("]向[").append(
+							toType.getName()).append("]转换").append(",value is ").append(obj).toString());
+		} else if (type == String.class && toType == Class.class) {
+			try {
+				return getClass((String) obj);
+			} catch (ClassNotFoundException e) {
+				throw new IllegalArgumentException(new StringBuffer(
+						"类型无法转换,不支持[").append(type.getName()).append("]向[")
+						.append(toType.getName()).append("]转换").append(",value is").append(obj).toString());
+			}
+		}
+		Object arrayObj;
+
+		/**
+		 * 基本类型转换和基本类型之间相互转换
+		 */
+		if (!type.isArray() && !toType.isArray()) {
+			arrayObj = basicTypeCastWithDateformat(obj, type, toType,dateformat);
+		}
+
+		/**
+		 * 字符串数组向其他类型数组之间转换
+		 * 数组和数组之间的转换
+		 * 基础类型数据向数组转换
+		 */
+		else {
+
+			arrayObj = arrayTypeCastWithDateformat(obj, type, toType,dateformat);
+		}
+		return arrayObj;
+	}
+	
 	
 	
 
@@ -1250,6 +1513,11 @@ public class ValueObjectUtil {
 //	}
 	
 
+	public static SimpleDateFormat getDefaultDateFormat(){
+		
+			return new SimpleDateFormat(
+					"yyyy-MM-dd HH:mm:ss");
+	}
 	public static SimpleDateFormat getDateFormat(
 			String dateformat)
 	{
@@ -1410,6 +1678,146 @@ public class ValueObjectUtil {
 
 	}
 	
+	public final static Object basicTypeCastWithDateformat(Object obj, Class type,
+			Class toType,SimpleDateFormat dateformat) throws NoSupportTypeCastException,
+			NumberFormatException {
+		if (obj == null)
+			return null;
+		if (isSameType(type, toType, obj))
+			return obj;
+
+		if (type.isAssignableFrom(toType)) // type是toType的父类，父类向子类转换的过程，这个转换过程是不安全的
+		{
+			if (!java.util.Date.class.isAssignableFrom(type))
+				return shell(toType, obj);
+		}
+		/**
+		 * 如果obj的类型不是String型时直接抛异常, 不支持非字符串和字符串数组的类型转换
+		 */
+		// if (type != String.class)
+		// throw new NoSupportTypeCastException(
+		// new StringBuffer("不支持[")
+		// .append(type)
+		// .append("]向[")
+		// .append(toType)
+		// .append("]的转换")
+		// .toString());
+		/*******************************************
+		 * 字符串向基本类型及其包装器转换 * 如果obj不是相应得数据格式,将抛出 * NumberFormatException *
+		 ******************************************/
+		if (toType == long.class || toType == Long.class) {
+			if (ValueObjectUtil.isNumber(obj))
+				return ((Number) obj).longValue();
+			else if(java.util.Date.class.isAssignableFrom(type))
+			{
+				return ((java.util.Date)obj).getTime();
+			}
+			return Long.parseLong(obj.toString());
+		}
+		if (toType == int.class || toType == Integer.class) {
+			if (ValueObjectUtil.isNumber(obj))
+				return ((Number) obj).intValue();
+			return Integer.parseInt(obj.toString());
+		}
+		if (toType == float.class || toType == Float.class) {
+			if (ValueObjectUtil.isNumber(obj))
+				return ((Number) obj).floatValue();
+			return Float.parseFloat(obj.toString());
+		}
+		if (toType == short.class || toType == Short.class) {
+			if (ValueObjectUtil.isNumber(obj))
+				return ((Number) obj).shortValue();
+			return Short.parseShort(obj.toString());
+		}
+		if (toType == double.class || toType == Double.class) {
+			if (ValueObjectUtil.isNumber(obj))
+				return ((Number) obj).doubleValue();
+			return Double.parseDouble(obj.toString());
+		}
+		if (toType == char.class || toType == Character.class)
+			return new Character(obj.toString().charAt(0));
+
+		if (toType == boolean.class || toType == Boolean.class) {
+			String ret = obj.toString();
+			if (ret.equals("1")) {
+				return new Boolean(true);
+			} else if (ret.equals("0")) {
+				return new Boolean(false);
+			}
+			return new Boolean(obj.toString());
+		}
+
+		if (toType == byte.class || toType == Byte.class)
+			return new Byte(obj.toString());
+		if(toType == BigDecimal.class)
+		{
+			return converObjToBigDecimal(obj);
+			
+		}
+		// 如果是字符串则直接返回obj.toString()
+		if (toType == String.class) {
+			if (obj instanceof java.util.Date)
+			{
+				
+				if(!"".equals(obj))
+				{
+					if(dateformat == null)
+						dateformat = ValueObjectUtil.getDefaultDateFormat();
+					return dateformat.format(obj);
+				}
+				return null;
+			}
+			
+			return obj.toString();
+		}
+		
+		Object date = convertObjToDateWithDateformat( obj,toType,dateformat);
+		if(date != null)
+			return date;
+		
+		if (type == String.class && toType == Class.class) {
+			try {
+				return getClass((String) obj);
+			} catch (ClassNotFoundException e) {
+				throw new IllegalArgumentException(new StringBuffer(
+						"类型无法转换,不支持[").append(type.getName()).append("]向[")
+						.append(toType.getName()).append("]转换").append(",value is ").append(obj).toString());
+			}
+		}
+		
+		if (type == String.class && toType.isEnum())
+		{
+			
+			try {
+				return convertStringToEnum((String )obj,toType);
+			} catch (SecurityException e) {
+				throw new IllegalArgumentException(new StringBuffer(
+				"类型无法转换,不支持[").append(type.getName()).append("]向枚举类型[")
+				.append(toType.getName()).append("]转换，超出枚举值范围").append(",value is").append(obj).toString());
+			} catch (IllegalArgumentException e) {
+				throw new IllegalArgumentException(new StringBuffer(
+				"类型无法转换,不支持[").append(type.getName()).append("]向枚举类型[")
+				.append(toType.getName()).append("]转换，超出枚举值范围").append(",value is").append(obj).toString());
+			} catch (NoSuchMethodException e) {
+				throw new IllegalArgumentException(new StringBuffer(
+				"类型无法转换,不支持[").append(type.getName()).append("]向枚举类型[")
+				.append(toType.getName()).append("]转换，超出枚举值范围").append(",value is").append(obj).toString());
+			} catch (IllegalAccessException e) {
+				throw new IllegalArgumentException(new StringBuffer(
+				"类型无法转换,不支持[").append(type.getName()).append("]向枚举类型[")
+				.append(toType.getName()).append("]转换，超出枚举值范围").append(",value is").append(obj).toString());
+			} catch (InvocationTargetException e) {
+				throw new IllegalArgumentException(new StringBuffer(
+				"类型无法转换,不支持[").append(type.getName()).append("]向枚举类型[")
+				.append(toType.getName()).append("]转换，超出枚举值范围").append(",value is").append(obj).toString());
+			}
+		}
+
+		throw new NoSupportTypeCastException(new StringBuffer("不支持[").append(
+				type).append("]向[").append(toType).append("]的转换").append(",value is").append(obj).toString());
+
+	}
+	
 	
 	public static BigDecimal converObjToBigDecimal(Object obj)
 	{
@@ -1425,10 +1833,17 @@ public class ValueObjectUtil {
 			return BigDecimal.valueOf((Float)obj);
 		return new BigDecimal(obj.toString());
 	}
-	
 	public static Object convertObjToDate(Object obj,Class toType,String dateformat)
 	{
-		
+		if(dateformat == null)
+			return convertObjToDateWithDateformat(obj,toType,null);
+		else
+			return convertObjToDateWithDateformat(obj,toType,ValueObjectUtil.getDateFormat(dateformat));
+	}
+	public static Object convertObjToDateWithDateformat(Object obj,Class toType,SimpleDateFormat dateformat)
+	{
+		if(dateformat == null)
+			dateformat = ValueObjectUtil.getDefaultDateFormat();
 		/**
 		 * 字符串向java.util.Date和java.sql.Date 类型转换
 		 */
@@ -1446,7 +1861,7 @@ public class ValueObjectUtil {
 			try {
 				
 				if(!"".equals(data_str))					
-					return getDateFormat(dateformat).parse(data_str);
+					return dateformat.parse(data_str);
 				else
 					return null;
 			} catch (ParseException e) {
@@ -1482,7 +1897,7 @@ public class ValueObjectUtil {
 				
 				
 				if(!"".equals(data_str))					
-					return new java.sql.Date(getDateFormat(dateformat).parse(data_str).getTime());
+					return new java.sql.Date(dateformat.parse(data_str).getTime());
 				else
 					return null;
 			} catch (ParseException e) {
@@ -1519,7 +1934,7 @@ public class ValueObjectUtil {
 			try {
 				
 				if(!"".equals(data_str))					
-					return new java.sql.Timestamp(getDateFormat(dateformat).parse(data_str).getTime());
+					return new java.sql.Timestamp((dateformat).parse(data_str).getTime());
 				else
 					return null;
 			} catch (ParseException e) {
@@ -1636,6 +2051,15 @@ public class ValueObjectUtil {
 		return arrayTypeCast(obj, type,
 				toType,null);
 	}
+	public final static Object arrayTypeCast(Object obj, Class type,
+			Class toType,String dateformat) throws NoSupportTypeCastException,
+			NumberFormatException{
+		SimpleDateFormat dateformat_ = null;
+		if(dateformat != null)
+			dateformat_ = new SimpleDateFormat(dateformat);
+		return arrayTypeCastWithDateformat(obj, type,
+				toType,dateformat_);
+	}
 	/**
 	 * 数组类型转换 支持字符串数组向一下类型数组得自动转换: int[] Integer[] long[] Long[] short[] Short[]
 	 * double[] Double[] boolean[] Boolean[] char[] Character[] float[] Float[]
@@ -1648,8 +2072,8 @@ public class ValueObjectUtil {
 	 * @throws NoSupportTypeCastException
 	 * @throws NumberFormatException
 	 */
-	public final static Object arrayTypeCast(Object obj, Class type,
-			Class toType,String dateformat) throws NoSupportTypeCastException,
+	public final static Object arrayTypeCastWithDateformat(Object obj, Class type,
+			Class toType,SimpleDateFormat dateformat) throws NoSupportTypeCastException,
 			NumberFormatException {
 		if (isSameType(type, toType, obj))
 			return obj;
@@ -1661,7 +2085,8 @@ public class ValueObjectUtil {
 		// .append(toType)
 		// .append("]的转换")
 		// .toString());
-
+		if(dateformat == null)
+			dateformat = ValueObjectUtil.getDefaultDateFormat();
 		if (toType == long[].class) {
 			Class componentType = ValueObjectUtil.isNumberArray(obj);
 			if (componentType == null) {
@@ -1926,7 +2351,7 @@ public class ValueObjectUtil {
 		/**
 		 * 字符串向java.util.Date和java.sql.Date 类型转换
 		 */
-		Object dates = convertObjectToDateArray( obj,type,toType, dateformat);
+		Object dates = convertObjectToDateArrayWithDateFormat( obj,type,toType, dateformat);
 		if(dates != null)
 			return dates;
 		/**
@@ -1997,21 +2422,29 @@ public class ValueObjectUtil {
 				type).append("]向[").append(toType).append("]的转换").append(",value is").append(obj).toString());
 
 	}
-	
 	public static Object convertObjectToDateArray(Object obj,Class type,Class toType,String dateformat)
 	{
+		if(dateformat == null)
+			return convertObjectToDateArrayWithDateFormat(obj,type,toType,ValueObjectUtil.getDefaultDateFormat());
+		else
+			return convertObjectToDateArrayWithDateFormat(obj,type,toType,ValueObjectUtil.getDateFormat(dateformat));
+	}
+	public static Object convertObjectToDateArrayWithDateFormat(Object obj,Class type,Class toType,SimpleDateFormat dateformat)
+	{
+		if(dateformat == null)
+			dateformat = ValueObjectUtil.getDefaultDateFormat();
 		if (toType == java.util.Date[].class) {
 			if(type.isArray())
 			{
 				if(type == String[].class)
 				{
 					String[] values = (String[]) obj;
-					return SimpleStringUtil.stringArrayTODateArray(values,ValueObjectUtil.getDateFormat(dateformat));
+					return SimpleStringUtil.stringArrayTODateArray(values,(dateformat));
 				}
 				else
 				{
 					long[] values = (long[])obj;
-					return SimpleStringUtil.longArrayTODateArray(values,ValueObjectUtil.getDateFormat(dateformat));
+					return SimpleStringUtil.longArrayTODateArray(values,(dateformat));
 				}
 			}
 			else
@@ -2019,12 +2452,12 @@ public class ValueObjectUtil {
 				if(type == String.class)
 				{
 					String[] values = new String[] {(String)obj};
-					return SimpleStringUtil.stringArrayTODateArray(values,ValueObjectUtil.getDateFormat(dateformat));
+					return SimpleStringUtil.stringArrayTODateArray(values,dateformat);
 				}
 				else 
 				{
 					long[] values = new long[] {((Long)obj).longValue()};
-					return SimpleStringUtil.longArrayTODateArray(values,ValueObjectUtil.getDateFormat(dateformat));
+					return SimpleStringUtil.longArrayTODateArray(values,(dateformat));
 				}
 			}
 		}
@@ -2034,13 +2467,13 @@ public class ValueObjectUtil {
 				if(type == String[].class)
 				{
 					String[] values = (String[] )obj;
-					return SimpleStringUtil.stringArrayTOSQLDateArray(values,ValueObjectUtil.getDateFormat(dateformat));
+					return SimpleStringUtil.stringArrayTOSQLDateArray(values,(dateformat));
 				}
 				else
 				{
 					long[] values = (long[] )obj;
 					
-					return SimpleStringUtil.longArrayTOSQLDateArray(values,ValueObjectUtil.getDateFormat(dateformat));
+					return SimpleStringUtil.longArrayTOSQLDateArray(values,(dateformat));
 				}
 			}
 			else
@@ -2048,13 +2481,13 @@ public class ValueObjectUtil {
 				if(type == String.class)
 				{
 					String[] values = new String[] {(String)obj};
-					return SimpleStringUtil.stringArrayTOSQLDateArray(values,ValueObjectUtil.getDateFormat(dateformat));
+					return SimpleStringUtil.stringArrayTOSQLDateArray(values,(dateformat));
 				}
 				else 
 				{
 					long[] values = new long[] {((Long)obj).longValue()};
 					
-					return SimpleStringUtil.longArrayTOSQLDateArray(values,ValueObjectUtil.getDateFormat(dateformat));
+					return SimpleStringUtil.longArrayTOSQLDateArray(values,(dateformat));
 				}
 			}
 			
@@ -2068,13 +2501,13 @@ public class ValueObjectUtil {
 				if(type == String[].class)
 				{
 					String[] values = (String[] )obj;
-					return SimpleStringUtil.stringArrayTOTimestampArray(values,ValueObjectUtil.getDateFormat(dateformat));
+					return SimpleStringUtil.stringArrayTOTimestampArray(values,dateformat);
 				}
 				else
 				{
 					long[] values = (long[] )obj;
 					
-					return SimpleStringUtil.longArrayTOTimestampArray(values,ValueObjectUtil.getDateFormat(dateformat));
+					return SimpleStringUtil.longArrayTOTimestampArray(values,(dateformat));
 				}
 			}
 			else
@@ -2082,12 +2515,12 @@ public class ValueObjectUtil {
 				if(type == String.class)
 				{
 					String[] values = new String[] {(String)obj};
-					return SimpleStringUtil.stringArrayTOTimestampArray(values,ValueObjectUtil.getDateFormat(dateformat));
+					return SimpleStringUtil.stringArrayTOTimestampArray(values,(dateformat));
 				}
 				else 
 				{
 					long[] values = new long[] {((Long)obj).longValue()};					
-					return SimpleStringUtil.longArrayTOTimestampArray(values,ValueObjectUtil.getDateFormat(dateformat));
+					return SimpleStringUtil.longArrayTOTimestampArray(values,(dateformat));
 				}
 			}
 		}

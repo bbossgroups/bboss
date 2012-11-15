@@ -71,6 +71,8 @@ public class StatementInfo {
 	private boolean oldautocommit = true;
 
 	private boolean needTransaction = false;
+	
+//	private boolean neadGetGenerateKeys = false;
 
 	protected static Map<String,Map<String, SoftReference<PoolManResultSetMetaData>>> metas = new HashMap<String,Map<String, SoftReference<PoolManResultSetMetaData>>>();
 	// protected String[] fields = null;
@@ -113,9 +115,10 @@ public class StatementInfo {
 		this.rownum = rownum;
 		this.prepared = prepared;
 		resultSets = new ArrayList();
-
-		if (dbname == null)
-			this.dbname = SQLManager.getInstance().getDefaultDBName();
+		
+//		neadGetGenerateKeys = DBUtil.getJDBCPoolMetaData(dbname).isNeadGetGenerateKeys();
+//		if (dbname == null)
+//			this.dbname = SQLManager.getInstance().getDefaultDBName();
 		this.needTransaction = needTransaction;
 	}
 
@@ -1064,5 +1067,9 @@ public class StatementInfo {
 	public PagineSql getPaginesql() {
 		return paginesql;
 	}
+
+//	public boolean isNeadGetGenerateKeys() {
+//		return neadGetGenerateKeys;
+//	}
 
 }

@@ -390,6 +390,89 @@ public class SQLExecutor
 			}
 		}
 	}
+	private static Object CUDexecute(String dbname, String sql, Object bean,int action) throws SQLException
+	{
+		return CUDexecute(dbname, sql, bean,action,false) ;
+	}
+	/**
+	 * 针对增删改三种类型DB操作的统一处理方法
+	 * @param dbname
+	 * @param sql
+	 * @param bean
+	 * @param isBatchOptimize
+	 * @param action
+	 * @return
+	 * @throws SQLException
+	 */
+	private static Object CUDexecute(String dbname, String sql, Object bean,int action,boolean getCUDResult) throws SQLException
+	{
+		Connection con = null;
+		try
+		{
+			con = DBUtil.getConection(dbname);
+			SQLParams batchsqlparams = SQLParams.convertBeanToSqlParams(bean,sql,dbname,action,con);
+			if(batchsqlparams == null)
+				return null;
+//			PreparedDBUtil dbutil = new PreparedDBUtil();
+//			dbutil.setBatchOptimize(isBatchOptimize);
+//			dbutil.setPrepareDBName(dbname);
+//			dbutil.addPreparedBatch(batchsqlparams);
+//			dbutil.executePreparedBatch(con);
+			
+			
+//			 action = action.toLowerCase();
+	        PreparedDBUtil dbutil = new PreparedDBUtil();
+	        if(action == PreparedDBUtil.INSERT)
+	        {
+	            if(batchsqlparams.size() > 0)
+	            {
+	                dbutil.preparedInsert(batchsqlparams, dbname,sql);
+	                return dbutil.executePrepared(con,getCUDResult);
+	            }
+	            else
+	            {
+	                return dbutil.executeInsert(dbname,sql,con);
+	            }
+	        }
+	        else if(action == PreparedDBUtil.UPDATE)
+	        {
+	            if(batchsqlparams.size() > 0)
+	            {
+	                dbutil.preparedUpdate(batchsqlparams, dbname,sql);
+	                return dbutil.executePrepared(con,getCUDResult);
+	            }
+	            else
+	            {
+	                return dbutil.executeUpdate(dbname,sql,con);
+	            }
+	                
+	        }
+	        else if(action == PreparedDBUtil.DELETE)
+	        {
+	            if(batchsqlparams.size() > 0)
+	            {
+	                dbutil.preparedDelete(batchsqlparams, dbname,sql);
+	                return dbutil.executePrepared(con,getCUDResult);
+	            }
+	            else
+	            {
+	                return dbutil.executeDelete(dbname,sql,con);
+	            }
+	        }
+	        else
+	            throw new SQLException("不支持的数据库操作：" + action);
+		        
+		}
+		finally
+		{
+			try {
+				if (con != null)
+					con.close();
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+		}
+	}
 	
 	
 	
@@ -616,33 +699,45 @@ public class SQLExecutor
 
 
 
-	public static void insertBean(String dbname, String sql, Object bean) throws SQLException {
+	public static Object insertBean(String dbname, String sql, Object bean) throws SQLException {
 		if(bean == null)
-			return ;
-		List datas = new ArrayList();
-		datas.add(bean);
-		insertBeans( dbname,  sql,  datas);
+			return null;
+//		List datas = new ArrayList();
+//		datas.add(bean);
+//		insertBeans( dbname,  sql,  datas);
+		return CUDexecute(dbname, sql, bean,PreparedDBUtil.INSERT);
+	}
+	
+	public static Object insertBean(String dbname, String sql, Object bean,boolean getCUDResult) throws SQLException {
+		if(bean == null)
+			return null;
+//		List datas = new ArrayList();
+//		datas.add(bean);
+//		insertBeans( dbname,  sql,  datas);
+		return CUDexecute(dbname, sql, bean,PreparedDBUtil.INSERT,getCUDResult);
 	}
 
 
 
-	public static void updateBean(String dbname, String sql, Object bean) throws SQLException {
+	public static Object updateBean(String dbname, String sql, Object bean) throws SQLException {
 		if(bean == null )
-			return ;
-		List datas = new ArrayList();
-		datas.add(bean);
-		updateBeans( dbname,  sql,  datas);
+			return null;
+//		List datas = new ArrayList();
+//		datas.add(bean);
+//		updateBeans( dbname,  sql,  datas);
+		return CUDexecute(dbname, sql, bean,PreparedDBUtil.UPDATE);
 	}
 
 	
 
-	public static void deleteBean(String dbname, String sql, Object bean) throws SQLException {
+	public static Object deleteBean(String dbname, String sql, Object bean) throws SQLException {
 		
 		if(bean == null)
-			return ;
-		List datas = new ArrayList();
-		datas.add(bean);
-		deleteBeans( dbname,  sql,  datas);
+			return null;
+//		List datas = new ArrayList();
+//		datas.add(bean);
+//		deleteBeans( dbname,  sql,  datas);
+		return CUDexecute(dbname, sql, bean,PreparedDBUtil.DELETE);
 	}
 	
 	public static void insertBeans(String sql, List beans) throws SQLException {
@@ -666,33 +761,45 @@ public class SQLExecutor
 
 
 
-	public static void insertBean( String sql, Object bean) throws SQLException {
-		if(bean == null)
-			return ;
-		List datas = new ArrayList();
-		datas.add(bean);
-		insertBeans( null,  sql,  datas);
+	public static Object insertBean( String sql, Object bean) throws SQLException {
+//		if(bean == null)
+//			return ;
+//		List datas = new ArrayList();
+//		datas.add(bean);
+//		insertBeans( null,  sql,  datas);
+		return insertBean( (String)null,sql, bean);
+	}
+	public static Object insertBean( String sql, Object bean,boolean getCUDResult) throws SQLException {
+//		if(bean == null)
+//			return ;
+//		List datas = new ArrayList();
+//		datas.add(bean);
+//		insertBeans( null,  sql,  datas);
+		return insertBean( (String)null,sql, bean,getCUDResult);
 	}
 
 
 
-	public static void updateBean( String sql, Object bean) throws SQLException {
-		if(bean == null )
-			return ;
-		List datas = new ArrayList();
-		datas.add(bean);
-		updateBeans( null,  sql,  datas);
+	public static Object updateBean( String sql, Object bean) throws SQLException {
+//		if(bean == null )
+//			return ;
+//		List datas = new ArrayList();
+//		datas.add(bean);
+//		updateBeans( null,  sql,  datas);
+		return updateBean( (String)null,sql, bean);
 	}
 
 	
 
-	public static void deleteBean(String sql, Object bean) throws SQLException {
+	public static Object deleteBean(String sql, Object bean) throws SQLException {
 		
-		if(bean == null)
-			return ;
-		List datas = new ArrayList();
-		datas.add(bean);
-		deleteBeans( null,  sql,  datas);
+//		if(bean == null)
+//			return ;
+//		List datas = new ArrayList();
+//		datas.add(bean);
+//		deleteBeans( null,  sql,  datas);
+		return deleteBean((String)null,sql, bean);
+		
 	}
 	
 	

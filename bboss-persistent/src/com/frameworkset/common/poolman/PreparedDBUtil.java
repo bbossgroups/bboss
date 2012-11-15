@@ -1074,7 +1074,21 @@ public class PreparedDBUtil extends DBUtil {
 	public Object executePrepared() throws SQLException {
 		if(this.batchparams != null && batchparams.size() > 0)
 			throw new SQLException("Can not execute batch prepared operations as single prepared operation,Please call method executePreparedBatch()!");
-		return executePrepared(null);
+		return executePrepared((Connection)null);
+	}
+	/**
+	 * 如果getCUDResult参数为true，则返回GetCUDResult类型对象，GetCUDResult的属性含义如下：
+	 * result：操作结果，如果数据源autoprimarykey为true，并且在tableinfo表中保存了表的主键信息result为自增的主键，反之result为更新的记录数
+	 * updateCount:更新的记录数
+	 * keys:自动产生的主键，如果只有一条记录则为普通对象，如果有多条记录则为List<Object>类型
+	 * @param getCUDResult
+	 * @return
+	 * @throws SQLException
+	 */
+	public Object executePreparedGetCUDResult(boolean getCUDResult) throws SQLException {
+		if(this.batchparams != null && batchparams.size() > 0)
+			throw new SQLException("Can not execute batch prepared operations as single prepared operation,Please call method executePreparedBatch()!");
+		return executePrepared((Connection)null,getCUDResult);
 	}
 	
 	
@@ -1170,11 +1184,11 @@ public class PreparedDBUtil extends DBUtil {
 			throw new SQLException("Can not execute batch prepared operations as single prepared operation,Please call method executePreparedBatch()!");
 		if(objectType != null)
 		{
-		    return innerExecute(con,objectType,rowhandler,ResultMap.type_objcet);
+		    return innerExecute(con,objectType,rowhandler,ResultMap.type_objcet,false);
 		}
 		else
 		{
-		    return innerExecute(con,objectType,rowhandler,ResultMap.type_null);
+		    return innerExecute(con,objectType,rowhandler,ResultMap.type_null,false);
 		}
 	}
 	
@@ -1183,24 +1197,24 @@ public class PreparedDBUtil extends DBUtil {
 	public Object[] executePreparedForObjectArray(Connection con,Class objectType,RowHandler rowhandler) throws SQLException {
 		if(this.batchparams != null && batchparams.size() > 0)
 			throw new SQLException("Can not execute batch prepared operations as single prepared operation,Please call method executePreparedBatch()!");
-		return (Object[])innerExecute(con,objectType,rowhandler,ResultMap.type_objectarray);
+		return (Object[])innerExecute(con,objectType,rowhandler,ResultMap.type_objectarray,false);
 	}
 	
 	public <T> List<T> executePreparedForList(Connection con,Class<T> objectType,RowHandler rowhandler) throws SQLException {
 		if(this.batchparams != null && batchparams.size() > 0)
 			throw new SQLException("Can not execute batch prepared operations as single prepared operation,Please call method executePreparedBatch()!");
-		return (List<T>)innerExecute(con,objectType,rowhandler,ResultMap.type_list);
+		return (List<T>)innerExecute(con,objectType,rowhandler,ResultMap.type_list,false);
 	}
 	
 	public String executePreparedForXML(Connection con,RowHandler rowhandler) throws SQLException {
 		if(this.batchparams != null && batchparams.size() > 0)
 			throw new SQLException("Can not execute batch prepared operations as single prepared operation,Please call method executePreparedBatch()!");
-		return (String)innerExecute(con,XMLMark.class,rowhandler,ResultMap.type_xml);
+		return (String)innerExecute(con,XMLMark.class,rowhandler,ResultMap.type_xml,false);
 	}
 	
 	
 	
-	private Object innerExecute(Connection con,Class objectType,RowHandler rowhandler,int type) throws SQLException
+	private Object innerExecute(Connection con,Class objectType,RowHandler rowhandler,int type,boolean getCUDResult) throws SQLException
 	{
 		if(this.batchparams != null && batchparams.size() > 0)
 			throw new SQLException("Can not execute batch prepared operations as single prepared operation,Please call method executePreparedBatch(Connection con)!");
@@ -1384,10 +1398,54 @@ public class PreparedDBUtil extends DBUtil {
 				resources = new ArrayList();
 				setUpParams(Params,statement,resources);
 				statement.execute();
+				int updatecount = statement.getUpdateCount();
 				if(result == null)
 				{
-					result = new Integer(statement.getUpdateCount());
+					result = new Integer(updatecount);
 				}
+				GetCUDResult CUDResult = null;
+				if(getCUDResult)
+				{
+					
+					ResultSet keys = null;
+					
+					try
+					{
+						Object key = null;
+						keys = statement.getGeneratedKeys();
+						
+						
+						List<Object> morekeys = null;
+						 while (keys.next()) {
+							 if(morekeys == null)
+								 morekeys = new ArrayList<Object>();
+							 
+							 
+							 key = keys.getObject(1);
+							 morekeys.add(key);
+							 
+				            }
+						 if(morekeys.size() == 1)
+							 CUDResult = new GetCUDResult(result,updatecount,morekeys.get(0));
+						 else
+							 CUDResult = new GetCUDResult(result,updatecount,morekeys);
+//						 return CUDResult;
+					}
+					catch(Exception e)
+					{
+						
+					}
+					finally
+					{
+						if(keys != null)
+							try {
+								keys.close();
+							} catch (Exception e) {
+								
+							}
+					}
+				}
+//				ResultSet keys = statement.getGeneratedKeys();
 				//oracle大字段处理分析程序段，系统于2008.11.5日对大字段的处理进行了优化后无需再进行单独的大字段处理了
 				//biaoping.yin
 //				this.updateBigDatas(Params,Params.updateKeyInfo,
@@ -1398,7 +1456,10 @@ public class PreparedDBUtil extends DBUtil {
 //					execute(stmtInfo.getCon(), preparedUpdate);
 //				}
 				statement.clearParameters();
-				return result;
+				if(CUDResult == null)
+					return result;
+				else
+					return CUDResult;
 			} else if (Params.action == SELECT) {
 				resources = new ArrayList();
 				setUpParams(Params,statement,statement_count,resources);
@@ -1564,13 +1625,17 @@ public class PreparedDBUtil extends DBUtil {
 		executePreparedBatch(null);
 	}
 
+	public Object executePrepared(Connection con) throws SQLException
+	{
+		return executePrepared(con,false);
+	}
 	/**
 	 * 执行prepare语句，并且返回执行后的结果(例如插入语句后生成的主键值)
 	 * 
 	 * @return Object 主键值
 	 * @throws SQLException
 	 */
-	public Object executePrepared(Connection con) throws SQLException {
+	public Object executePrepared(Connection con,boolean getCUDResult) throws SQLException {
 //		if(this.batchparams != null && batchparams.size() > 0)
 //			throw new SQLException("Can not execute batch prepared operations as single prepared operation,Please call method executePreparedBatch(Connection con)!");
 //		if(Params.prepareselect_sql == null || Params.prepareselect_sql.equals(""))
@@ -1750,7 +1815,7 @@ public class PreparedDBUtil extends DBUtil {
 //				stmtInfo.dofinally();
 //			this.resetFromSetMethod(null);
 //		}
-		return innerExecute(con,null,null,ResultMap.type_maparray);
+		return innerExecute(con,null,null,ResultMap.type_maparray,getCUDResult);
 	}
 
 	/**

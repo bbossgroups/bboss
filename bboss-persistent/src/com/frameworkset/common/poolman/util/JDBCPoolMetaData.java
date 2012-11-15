@@ -39,6 +39,7 @@ public class JDBCPoolMetaData implements Serializable{
     private boolean emergencyCreates = PoolManConstants.DEFAULT_EMERGENCY_CREATES;
     private String maxWait = "30";//30√Î  
     private String datasourceFile ;
+//    private boolean neadGetGenerateKeys;
     
     private String databaseProductName;
     private String driverName;
@@ -817,6 +818,7 @@ public class JDBCPoolMetaData implements Serializable{
 			this.setEnablejta(extenalInfo.isEnablejta());
 			this.setDatasourceFile(extenalInfo.getDatasourceFile());
 			this.setDatasourceParameters(getDatasourceParameters());
+//			this.setNeadGetGenerateKeys(extenalInfo.isNeadGetGenerateKeys());
 		}
 	}
 
@@ -953,4 +955,12 @@ public class JDBCPoolMetaData implements Serializable{
 			this.datasourceParameters = DatasourceUtil.getDataSourceParameters(this.datasourceFile);
 		}
 	}
+
+//	public boolean isNeadGetGenerateKeys() {
+//		return neadGetGenerateKeys;
+//	}
+//
+//	public void setNeadGetGenerateKeys(boolean neadGetGenerateKeys) {
+//		this.neadGetGenerateKeys = neadGetGenerateKeys;
+//	}
 }

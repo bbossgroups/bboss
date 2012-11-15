@@ -1052,6 +1052,10 @@ public abstract class DB implements Serializable, IDMethod,Platform
 				return null;
 			}
 		}
+		public boolean neadGetGenerateKeys()
+		{
+			return false;
+		}
 
         
         

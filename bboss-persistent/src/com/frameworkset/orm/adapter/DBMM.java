@@ -484,5 +484,9 @@ public class DBMM extends DB
 		   
 		return ret.toString();
 	}
+	public boolean neadGetGenerateKeys()
+	{
+		return true;
+	}
     
 }

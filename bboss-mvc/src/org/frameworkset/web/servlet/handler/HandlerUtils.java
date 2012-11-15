@@ -20,6 +20,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.net.URLDecoder;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -1874,7 +1875,7 @@ public abstract class HandlerUtils {
 					defaultValue = param.defaultvalue();
 					if(holder.needAddData())
 					{
-						holder.addData(name, values,true,editor,required,defaultValue);
+						holder.addData(name, values,true,editor,required,defaultValue,dateformat);
 					}
 				}
 				else
@@ -2222,11 +2223,13 @@ public abstract class HandlerUtils {
 		
 		EditorInf editor = null;
 		boolean useEditor = true;
+		SimpleDateFormat dateformat = null;
 		if(holder.isArray(name))
 		{
 			useEditor = true;
 			editor = holder.getEditor(name);
 			required = holder.isRequired(name);
+			dateformat = holder.getDateformat(name);
 		}
 		
 		Field field = property.getField();
@@ -2235,59 +2238,59 @@ public abstract class HandlerUtils {
 			return null;
 		}
 		
-		if (HttpSession.class.isAssignableFrom(type)) {
-		
-			
-
-		} 
-		else if (HttpServletRequest.class.isAssignableFrom(type))
-		{
-			
-		} else if (javax.servlet.http.HttpServletResponse.class
-				.isAssignableFrom(type))
-		{
-			
-		} else if (PageContext.class.isAssignableFrom(type)) {
-			
-		} else if (ModelMap.class.isAssignableFrom(type)) {
-			
-		}
-		else if(Map.class.isAssignableFrom(type))
-		{
-			
-		}
-		else if (field.getAnnotations() == null
-				|| field.getAnnotations().length == 0 || !hasParameterAnnotation(field)) {
-					
-		}
-		
-		else if (field.isAnnotationPresent(RequestBody.class)) {
-			
-		}			
-		else if (field.isAnnotationPresent(DataBind.class)) {
-			
-		}
-		else 
-		{
-			Annotation[] annotations = field.getAnnotations();
-			try
-			{
-				value = evaluateArrayPositionAnnotationsValue(  annotations,
-						 pathVarDatas, request,  name,
-						 pageContext,  handlerMethod,  model, type,value);
-				
-				return value;
-			}
-			catch(Exception e)
-			{
-				model.getErrors().rejectValue(name, "evaluateAnnotationsValue.error",e.getMessage());
-				return ValueObjectUtil.getDefaultValue(type);
-			}
-		}
+//		if (HttpSession.class.isAssignableFrom(type)) {
+//		
+//			
+//
+//		} 
+//		else if (HttpServletRequest.class.isAssignableFrom(type))
+//		{
+//			
+//		} else if (javax.servlet.http.HttpServletResponse.class
+//				.isAssignableFrom(type))
+//		{
+//			
+//		} else if (PageContext.class.isAssignableFrom(type)) {
+//			
+//		} else if (ModelMap.class.isAssignableFrom(type)) {
+//			
+//		}
+//		else if(Map.class.isAssignableFrom(type))
+//		{
+//			
+//		}
+//		else if (field.getAnnotations() == null
+//				|| field.getAnnotations().length == 0 || !hasParameterAnnotation(field)) {
+//					
+//		}
+//		
+//		else if (field.isAnnotationPresent(RequestBody.class)) {
+//			
+//		}			
+//		else if (field.isAnnotationPresent(DataBind.class)) {
+//			
+//		}
+//		else 
+//		{
+//			Annotation[] annotations = field.getAnnotations();
+//			try
+//			{
+//				value = evaluateArrayPositionAnnotationsValue(  annotations,
+//						 pathVarDatas, request,  name,
+//						 pageContext,  handlerMethod,  model, type,value);
+//				
+//				return value;
+//			}
+//			catch(Exception e)
+//			{
+//				model.getErrors().rejectValue(name, "evaluateAnnotationsValue.error",e.getMessage());
+//				return ValueObjectUtil.getDefaultValue(type);
+//			}
+//		}
 		if (useEditor) {
 			try {
 				if (editor == null)
-					value = ValueObjectUtil.typeCast(value, type);
+					value = ValueObjectUtil.typeCastWithDateformat(value, type,dateformat);
 				else
 					value = ValueObjectUtil.typeCast(value, editor);
 			} catch (Exception e) {
