@@ -31,10 +31,10 @@ package com.frameworkset.common.poolman;
  */
 public class GetCUDResult {
 	private Object result;
-	private int updatecount;
+	private Object updatecount;
 	private Object keys;
 
-	public GetCUDResult(Object result,int updatecount,Object keys) {
+	public GetCUDResult(Object result,Object updatecount,Object keys) {
 		super();
 		this.result = result;
 		this.updatecount = updatecount;
@@ -46,7 +46,7 @@ public class GetCUDResult {
 		return result;
 	}
 
-	public int getUpdatecount() {
+	public Object getUpdatecount() {
 		return updatecount;
 	}
 	public Object getKeys() {

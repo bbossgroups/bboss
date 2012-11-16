@@ -186,7 +186,7 @@ public abstract class BaseTableManager {
 			}
 			return keyCache;
 		} catch (Exception e) {
-			log.error("Load table infomation failed! " + e.getMessage()  + ". Please check table [tableinfo] in your database! ");
+			log.warn("Load table infomation failed! " + e.getMessage()  + ". Please check table [tableinfo] in your database! ");
 			return null;
 		}
 

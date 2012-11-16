@@ -931,5 +931,33 @@ public class SimpleApiTest {
 		System.out.println();
 		
 	}
+	
+	
+	public @Test void testAutoGenalKeys() throws SQLException
+	{
+		List<AutoKeyDemo> datas = new ArrayList<AutoKeyDemo>();
+		
+		AutoKeyDemo demo = new AutoKeyDemo();
+		
+		demo.setName("name2");
+		datas.add(demo);
+		demo = new AutoKeyDemo();
+		
+		demo.setName("name3");
+		datas.add(demo);
+		demo = new AutoKeyDemo();
+		
+		demo.setName("name4");
+		datas.add(demo);
+		GetCUDResult ret = SQLExecutor.insertBeans("insert into demo(name) values(#[name])", datas,true);
+		List<Object> keys = (List<Object>)ret.getKeys();
+		for(int i = 0; i <keys.size(); i ++)
+		{
+			datas.get(i).setId((Long)keys.get(i));
+		}
+		
+		
+		
+	}
 
 }

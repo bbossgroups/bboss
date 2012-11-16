@@ -1405,45 +1405,14 @@ public class PreparedDBUtil extends DBUtil {
 				}
 				GetCUDResult CUDResult = null;
 				if(getCUDResult)
-				{
+				{		
+					List<Object> morekeys = getGeneratedKeys(statement);
 					
-					ResultSet keys = null;
-					
-					try
-					{
-						Object key = null;
-						keys = statement.getGeneratedKeys();
+					if(morekeys != null && morekeys.size() == 1)
+						 CUDResult = new GetCUDResult(result,updatecount,morekeys.get(0));
+					else
+						 CUDResult = new GetCUDResult(result,updatecount,morekeys);
 						
-						
-						List<Object> morekeys = null;
-						 while (keys.next()) {
-							 if(morekeys == null)
-								 morekeys = new ArrayList<Object>();
-							 
-							 
-							 key = keys.getObject(1);
-							 morekeys.add(key);
-							 
-				            }
-						 if(morekeys.size() == 1)
-							 CUDResult = new GetCUDResult(result,updatecount,morekeys.get(0));
-						 else
-							 CUDResult = new GetCUDResult(result,updatecount,morekeys);
-//						 return CUDResult;
-					}
-					catch(Exception e)
-					{
-						
-					}
-					finally
-					{
-						if(keys != null)
-							try {
-								keys.close();
-							} catch (Exception e) {
-								
-							}
-					}
 				}
 //				ResultSet keys = statement.getGeneratedKeys();
 				//oracle大字段处理分析程序段，系统于2008.11.5日对大字段的处理进行了优化后无需再进行单独的大字段处理了
@@ -1555,6 +1524,42 @@ public class PreparedDBUtil extends DBUtil {
 		}
 	}
 	
+	protected List<Object> getGeneratedKeys(PreparedStatement statement) throws Exception
+	{
+		ResultSet keys = null;
+		
+		Object key = null;
+		try
+		{
+			keys = statement.getGeneratedKeys();			
+			List<Object> morekeys = null;
+			 while (keys.next()) {
+				 if(morekeys == null)
+					 morekeys = new ArrayList<Object>();
+				 
+				 
+				 key = keys.getObject(1);
+				 morekeys.add(key);
+			 
+            }
+			 return morekeys;
+		}
+		catch(Exception e)
+		{
+			throw e;
+		}
+		finally
+		{
+			if(keys != null)
+				try {
+					keys.close();
+				} catch (Exception e) {
+					
+				}
+		}
+		
+	}
+	
 	/**
 	 * 
 	 * @param resources
@@ -1614,15 +1619,15 @@ public class PreparedDBUtil extends DBUtil {
 	 * @return
 	 * @throws SQLException
 	 */
-	public void executePreparedBatch() throws SQLException
+	public GetCUDResult executePreparedBatch() throws SQLException
 	{
 		if(this.batchparams == null || batchparams.size() == 0)
 		{
 //			throw new SQLException("Can not execute single prepared statement as batch prepared operation,Please call method executePrepared()!");
 			log.info("Can not execute single prepared statement as batch prepared operation,Please call method executePrepared()!");
-			return;
+			return null;
 		}
-		executePreparedBatch(null);
+		return executePreparedBatch(null);
 	}
 
 	public Object executePrepared(Connection con) throws SQLException
@@ -4443,6 +4448,10 @@ public class PreparedDBUtil extends DBUtil {
 		}
 		return ret.toString();
 	}
+	public GetCUDResult executePreparedBatch(Connection con_) throws SQLException
+	{
+		return executePreparedBatch(con_,false) ;
+	}
 	/**
 	 * 执行预编译批出理操作,支持事务，如果con参数本身就是事务链接，则使用该事务链接
 	 * 如果con == null则判断外部事务是否存在，如果存在从外部事务中获取一个事务链接来完成批处理操作
@@ -4450,22 +4459,24 @@ public class PreparedDBUtil extends DBUtil {
 	 * 如果想指定特定数据库的事务则需要调用this.setPrepareDBName(prepareDBName);方法指定执行的逻辑
 	 * 数据库名称	
 	 * @param con 外部传入的数据库链接
+	 * @param getCUDResult 是否返回处理结果：批处理数据的处理情况，比如更新记录数，自动产生的主键信息
 	 * @return
 	 * @throws SQLException
 	 */
-	public void executePreparedBatch(Connection con_) throws SQLException
+	public GetCUDResult executePreparedBatch(Connection con_,boolean getCUDResult) throws SQLException
 	{
 		if(this.batchparams == null || batchparams.size() == 0)
 		{
 //			throw new SQLException("Can not execute single prepared statement as batch prepared operation,Please call method executePrepared(Connection con)!");
 			log.info("Can not execute single prepared statement as batch prepared operation,Please call method executePrepared(Connection con)!");
-			return;
+			return null;
 		}
 		StatementInfo stmtInfo = null;
 
 		
 		PreparedStatement statement = null;
 		List resources = null;
+		GetCUDResult CUDResult = null;
 		try
 		{	
 			stmtInfo = new StatementInfo(this.prepareDBName,
@@ -4480,6 +4491,7 @@ public class PreparedDBUtil extends DBUtil {
 				java.util.Collections.sort(batchparams);
 			}
 			String old_sql = null;
+			boolean showsql = showsql(stmtInfo.getDbname());
 			
 			while(batchparams.size() > 0)
 			{
@@ -4494,7 +4506,7 @@ public class PreparedDBUtil extends DBUtil {
 				{
 					
 					old_sql = Params.prepareselect_sql;
-					if(showsql(stmtInfo.getDbname()))
+					if(showsql)
 					{
 						log.debug("Execute JDBC prepared batch statement:"+Params.prepareselect_sql);
 					}
@@ -4504,6 +4516,7 @@ public class PreparedDBUtil extends DBUtil {
 						resources = new ArrayList();
 					setUpParams(Params,statement,resources);
 					statement.addBatch();
+					
 				}
 //				else if(Params.prepareselect_sql == null)
 //				{
@@ -4515,11 +4528,14 @@ public class PreparedDBUtil extends DBUtil {
 					try
 					{
 						int[] ret = statement.executeBatch();	
-						log.debug(new StringBuffer("Execute prepared Batch sql[")
-						.append(old_sql)
-						.append("] success:")
-						.append(buildInfo(ret))
-						.toString());
+						if(showsql)
+						{
+							log.debug(new StringBuffer("Execute prepared Batch sql[")
+							.append(old_sql)
+							.append("] success:")
+							.append(buildInfo(ret))
+							.toString());
+						}
 					}
 					finally
 					{
@@ -4540,7 +4556,7 @@ public class PreparedDBUtil extends DBUtil {
 					}
 					
 					old_sql = Params.prepareselect_sql;
-					if(showsql(stmtInfo.getDbname()))
+					if(showsql)
 					{
 						log.debug("Execute JDBC prepared batch statement:"+Params.prepareselect_sql);
 					}
@@ -4550,7 +4566,6 @@ public class PreparedDBUtil extends DBUtil {
 						resources = new ArrayList();
 					setUpParams(Params,statement,resources);	
 					statement.addBatch();
-					
 				}	
 				else
 				{			
@@ -4565,11 +4580,24 @@ public class PreparedDBUtil extends DBUtil {
 					try
 					{
 						int[] ret = statement.executeBatch();	
-						log.debug(new StringBuffer("Execute prepared Batch sql[")
-						.append(old_sql)
-						.append("] success:")
-						.append(buildInfo(ret))
-						.toString());
+						if(showsql)
+						{
+							log.debug(new StringBuffer("Execute prepared Batch sql[")
+							.append(old_sql)
+							.append("] success:")
+							.append(buildInfo(ret))
+							.toString());
+						}
+					
+						
+						
+						if(getCUDResult)
+						{		
+							List<Object> morekeys = getGeneratedKeys(statement);
+							CUDResult = new GetCUDResult(ret,ret,morekeys);
+						}
+						else
+							CUDResult = new GetCUDResult(ret,ret,null);
 					}
 					finally
 					{
@@ -4598,14 +4626,14 @@ public class PreparedDBUtil extends DBUtil {
 		}
 		catch(BatchUpdateException error)
 		{
-			try{
-				
-				log.error("Execuete batch prepared Error:" + error.getMessage(), error);
-			}
-			catch(Exception ei)
-			{
-				
-			}
+//			try{
+//				
+//				log.error("Execuete batch prepared Error:" + error.getMessage(), error);
+//			}
+//			catch(Exception ei)
+//			{
+//				
+//			}
 			
 			if(stmtInfo != null)
 				stmtInfo.errorHandle(error);
@@ -4614,14 +4642,14 @@ public class PreparedDBUtil extends DBUtil {
 			throw error;
 		}
 	    catch (Exception e) {
-	    	try{
-				
-	    		log.error("Execuete batch prepared Error:" + e.getMessage(), e);
-			}
-			catch(Exception ei)
-			{
-				
-			}
+//	    	try{
+//				
+//	    		log.error("Execuete batch prepared Error:" + e.getMessage(), e);
+//			}
+//			catch(Exception ei)
+//			{
+//				
+//			}
 			
 	    	
 			if(stmtInfo != null)
@@ -4641,6 +4669,7 @@ public class PreparedDBUtil extends DBUtil {
 				
 			this.resetFromSetMethod(null);
 		}
+		return CUDResult;
 
 	}
 
