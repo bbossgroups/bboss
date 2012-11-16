@@ -17,6 +17,7 @@ package com.frameworkset.common.poolman;
 
 import java.io.File;
 import java.io.InputStream;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.Blob;
 import java.sql.Clob;
@@ -601,10 +602,14 @@ public class SQLParams
 			try {
 				if(property.canread())
 				{
-					try {
+					try {						
 						value =  property.getValue(bean);
+					}
+					catch(InvocationTargetException e1)
+					{
+						log.error("获取属性["+beanInfo.getClazz().getName()+"."+property.getName()+"]值失败：",e1.getTargetException());
 					} catch (Exception e1) {
-						log.error(e1);
+						log.error("获取属性["+beanInfo.getClazz().getName()+"."+property.getName()+"]值失败：",e1);
 					}
 //					Field field = null;
 //					try

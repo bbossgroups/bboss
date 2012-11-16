@@ -167,7 +167,7 @@
 						
 						<span class="value"><%=file.length()%>b</span> Last modified:&nbsp;
 						<span class="value"><%=sdf.format(new Date(file.lastModified()))%></span> Encoding:&nbsp;
-						<span class="value">UTF-8</span> 
+						<span class="value"><pg:cell colName="beanClassCharset" defaultValue=""/></span> 
 					</p>
 				</div>
 			</div>
@@ -177,8 +177,17 @@
 					<tr>
 						<td>
 							<pre name="code" class="java"><%
+							charset = bean.getBeanClassCharset();
 						    // content = StringUtil.HTMLNoBREncode(FileUtil.getFileContent(parentPath+beanClass.get(i)));
-						     content =DemoUtil.getDemoContentCache().getFileContent(parentPath+beanClass.get(i),null,true);
+						    if(charset == null || charset.equals(""))
+						    {
+						     	content =DemoUtil.getDemoContentCache().getFileContent(parentPath+beanClass.get(i),null,true);
+						    }
+						    else
+						    {
+						    	content =DemoUtil.getDemoContentCache().getFileContent(parentPath+beanClass.get(i),charset,true);
+						    }
+						    	
 							out.print(content);
 							%>
 							</pre>

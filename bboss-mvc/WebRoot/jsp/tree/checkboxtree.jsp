@@ -39,7 +39,7 @@ String id = treetype+"root";
 		    			   		recursive="true"
 		    			   -->                        
 		                   <tree:param name="treetype"/>
-		                    <tree:checkbox recursive="true" uprecursive="true" name="test_checkbox"/>
+		                    <tree:checkbox recursive="false" uprecursive="false" name="test_checkbox"/>
 		                   <!-- 指定树的数据加载器和根节点信息
 		                   		treetype-数据加载器的实现类，这里是test.tree.TestTree
 		                   		scope 数据加载器对象的存储范围，一般是request级别
@@ -57,7 +57,7 @@ String id = treetype+"root";
 		    	                   scope="request"
 		    	                   rootid="<%=id %>"  
 		    	                   rootName="测试树"
-		    	                   expandLevel="1"
+		    	                   expandLevel="2"
 		    	                   showRootHref="true"
 		    	                   needObserver="false"
 		    	                   refreshNode="false"

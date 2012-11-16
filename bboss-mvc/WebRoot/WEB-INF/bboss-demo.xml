@@ -19,6 +19,7 @@ bboss-demo.xml
 				<property name="configFile" value="WEB-INF/bboss-demo.xml" />
 				<property name="controllerClassCharset" value="GBK"></property>
 				<property name="configFileCharset" value="gb2312"></property>
+				<property name="beanClassCharset" value="GBK"></property>
 				<property name="visturl">
 					<list componentType="String">
 						<property value="/index.htm" />
@@ -69,6 +70,7 @@ bboss-demo.xml
 				<property name="configFile" value="WEB-INF/bboss-monitor.xml" />
 				<property name="controllerClassCharset" value="GBK"></property>
 				<property name="configFileCharset" value="gb2312"></property>
+				<property name="beanClassCharset" value="GBK"></property>
 				<property name="visturl">
 					<list componentType="String">
 						<property value="/monitor/console.htm" />
@@ -96,6 +98,7 @@ bboss-demo.xml
 				<property name="configFile" value="WEB-INF/bboss-files.xml" />
 				<property name="controllerClassCharset" value="GBK"></property>
 				<property name="configFileCharset" value="gb2312"></property>
+				<property name="beanClassCharset" value="GBK"></property>
 				<property name="visturl">
 					<list componentType="String">
 						<property value="/files/downloadList.htm" />
@@ -124,6 +127,7 @@ bboss-demo.xml
 				<property name="configFile" value="WEB-INF/bboss-helloworld.xml" />
 				<property name="controllerClassCharset" value="GBK"></property>
 				<property name="configFileCharset" value="gb2312"></property>
+				<property name="beanClassCharset" value="GBK"></property>
 				<property name="visturl">
 					<list componentType="String">
 						<property value="/examples/index.page" />
@@ -152,6 +156,7 @@ bboss-demo.xml
 				<property name="configFile" value="WEB-INF/bboss-listbean.xml" />
 				<property name="controllerClassCharset" value="GBK"></property>
 				<property name="configFileCharset" value="gb2312"></property>
+				<property name="beanClassCharset" value="GBK"></property>
 				<property name="visturl">
 					<list componentType="String">
 						<property value="/databind/showstringarraytoList.htm" />
@@ -199,6 +204,7 @@ bboss-demo.xml
 				<property name="configFile" value="WEB-INF/bboss-mapbean.xml" />
 				<property name="controllerClassCharset" value="GBK"></property>
 				<property name="configFileCharset" value="gb2312"></property>
+				<property name="beanClassCharset" value="GBK"></property>
 				<property name="visturl">
 					<list componentType="String">
 						<property value="/databind/map/showstringarraytoMap.htm" />
@@ -246,6 +252,7 @@ bboss-demo.xml
 				<property name="configFile" value="WEB-INF/bboss-path.xml" />
 				<property name="controllerClassCharset" value="GBK"></property>
 				<property name="configFileCharset" value="gb2312"></property>
+				<property name="beanClassCharset" value="GBK"></property>
 				<property name="visturl">
 					<list componentType="String">
 						<property value="/pathalias/showstringarraytoList.htm" />
@@ -294,6 +301,7 @@ bboss-demo.xml
 				<property name="configFile" value="WEB-INF/bboss-control.xml" />
 				<property name="controllerClassCharset" value="GBK"></property>
 				<property name="configFileCharset" value="gb2312"></property>
+				<property name="beanClassCharset" value="GBK"></property>
 				<property name="visturl">
 					<list componentType="String">
 						<property value="/demo/uploadjsp.htm" />
@@ -328,6 +336,7 @@ bboss-demo.xml
 				<property name="configFile" value="WEB-INF/bboss-files.xml" />
 				<property name="controllerClassCharset" value="GBK"></property>
 				<property name="configFileCharset" value="gb2312"></property>
+				<property name="beanClassCharset" value="GBK"></property>
 				<property name="visturl">
 					<list componentType="String">
 						<property value="/swfupload/mutifileselects.htm" />
@@ -364,6 +373,7 @@ bboss-demo.xml
 				<property name="configFile" value="WEB-INF/bboss-user.xml" />
 				<property name="controllerClassCharset" value="GBK"></property>
 				<property name="configFileCharset" value="gb2312"></property>
+				<property name="beanClassCharset" value="GBK"></property>
 				<property name="visturl">
 					<list componentType="String">
 						<property value="/updateUser.htm" />
@@ -411,6 +421,7 @@ bboss-demo.xml
 				<property name="configFile" value="WEB-INF/bboss-rss.xml" />
 				<property name="controllerClassCharset" value="GBK"></property>
 				<property name="configFileCharset" value="gb2312"></property>
+				<property name="beanClassCharset" value="GBK"></property>
 				<property name="visturl">
 					<list componentType="String">
 						<property value="/rss/rss.html" />
@@ -441,6 +452,7 @@ bboss-demo.xml
 				<property name="configFile" value="WEB-INF/bboss-json.xml" />
 				<property name="controllerClassCharset" value="GBK"></property>
 				<property name="configFileCharset" value="gb2312"></property>
+				<property name="beanClassCharset" value="GBK"></property>
 				<property name="visturl">
 					<list componentType="String">
 						<property value="/json/showjson.html" />
@@ -477,6 +489,7 @@ bboss-demo.xml
 				<property name="configFile" value="WEB-INF/bboss-pagerdemo.xml" />
 				<property name="controllerClassCharset" value="GBK"></property>
 				<property name="configFileCharset" value="gb2312"></property>
+				<property name="beanClassCharset" value="GBK"></property>
 				<property name="visturl">
 					<list componentType="String">
 						<property value="/pager/pagerdemo.html" />
@@ -505,6 +518,7 @@ bboss-demo.xml
 				<property name="configFile" value="WEB-INF/bboss-jquerypagine.xml" />
 				<property name="controllerClassCharset" value="GBK"></property>
 				<property name="configFileCharset" value="gb2312"></property>
+				<property name="beanClassCharset" value="GBK"></property>
 				<property name="visturl">
 					<list componentType="String">
 						<property value="/jquerypagine/main.htm" />
@@ -564,6 +578,8 @@ bboss-demo.xml
 					value="test/org/frameworkset/web/tree/TreeController.java" />
 				<property name="configFile" value="WEB-INF/bboss-tree.xml" />
 				<property name="controllerClassCharset" value="GBK"></property>
+				<property name="beanClassCharset" value="GBK"></property>
+				
 				<property name="configFileCharset" value="gb2312"></property>
 				<property name="visturl">
 					<list componentType="String">
@@ -624,6 +640,7 @@ bboss-demo.xml
 				<property name="configFile" value="WEB-INF/bboss-desktop.xml" />
 				<property name="controllerClassCharset" value="GBK"></property>
 				<property name="configFileCharset" value="gb2312"></property>
+				<property name="beanClassCharset" value="GBK"></property>
 				<property name="visturl">
 					<list componentType="String">
 						<property value="/desktop/desktop.htm" />
@@ -659,6 +676,7 @@ bboss-demo.xml
 				<property name="configFile" value="WEB-INF/bboss-restful.xml" />
 				<property name="controllerClassCharset" value="GBK"></property>
 				<property name="configFileCharset" value="gb2312"></property>
+				<property name="beanClassCharset" value="GBK"></property>
 				<property name="visturl">
 					<list componentType="String">
 						<property value="/rest/people" />
@@ -694,6 +712,7 @@ bboss-demo.xml
 				<property name="configFile" value="WEB-INF/bboss-loginnamequery.xml" />
 				<property name="controllerClassCharset" value="GBK"></property>
 				<property name="configFileCharset" value="gb2312"></property>
+				<property name="beanClassCharset" value="GBK"></property>
 				<property name="visturl">
 					<list componentType="String">
 						<property value="/query/loginName.htm" />
@@ -722,6 +741,7 @@ bboss-demo.xml
 				<property name="configFile" value="WEB-INF/bboss-restful.xml" />
 				<property name="controllerClassCharset" value="GBK"></property>
 				<property name="configFileCharset" value="gb2312"></property>
+				<property name="beanClassCharset" value="GBK"></property>
 				<property name="visturl">
 					<list componentType="String">
 						<property value="/rest/imagevalidator" />
@@ -758,6 +778,7 @@ bboss-demo.xml
 				<property name="configFile" value="WEB-INF/bboss-jfreechart.xml" />
 				<property name="controllerClassCharset" value="GBK"></property>
 				<property name="configFileCharset" value="gb2312"></property>
+				<property name="beanClassCharset" value="GBK"></property>
 				<property name="visturl">
 					<list componentType="String">
 						<property value="/jfreechart/showjfree.htm" />
@@ -786,6 +807,7 @@ bboss-demo.xml
 				<property name="configFile" value="WEB-INF/bboss-datepicker.xml" />
 				<property name="controllerClassCharset" value="GBK"></property>
 				<property name="configFileCharset" value="gb2312"></property>
+				<property name="beanClassCharset" value="GBK"></property>
 				<property name="visturl">
 					<list componentType="String">
 						<property value="/datepicker/datepicker.htm" />
@@ -814,6 +836,7 @@ bboss-demo.xml
 				<property name="configFile" value="WEB-INF/bboss-enum.xml" />
 				<property name="controllerClassCharset" value="GBK"></property>
 				<property name="configFileCharset" value="gb2312"></property>
+				<property name="beanClassCharset" value="GBK"></property>
 				<property name="visturl">
 					<list componentType="String">
 						<property value="/enum/selectSex.html" />
@@ -847,6 +870,7 @@ bboss-demo.xml
 				<property name="configFile" value="WEB-INF/bboss-dateconvert.xml" />
 				<property name="controllerClassCharset" value="GBK"></property>
 				<property name="configFileCharset" value="gb2312"></property>
+				<property name="beanClassCharset" value="GBK"></property>
 				<property name="visturl">
 					<list componentType="String">
 						<property value="/dateconvert/dateconvert.html" />
@@ -882,6 +906,7 @@ bboss-demo.xml
 				<property name="configFile" value="WEB-INF/bboss-control.xml" />
 				<property name="controllerClassCharset" value="GBK"></property>
 				<property name="configFileCharset" value="gb2312"></property>
+				<property name="beanClassCharset" value="GBK"></property>
 				<property name="visturl">
 					<list componentType="String">
 						<property value="/demo.htm" />
@@ -910,6 +935,7 @@ bboss-demo.xml
 				<property name="configFile" value="WEB-INF/bboss-control.xml" />
 				<property name="controllerClassCharset" value="GBK"></property>
 				<property name="configFileCharset" value="gb2312"></property>
+				<property name="beanClassCharset" value="GBK"></property>
 				<property name="visturl">
 					<list componentType="String">
 						<property value="/rest/search/dosearch" />
@@ -935,6 +961,7 @@ bboss-demo.xml
 				<property name="configFile" value="WEB-INF/bboss-datagrid.xml" />
 				
 				<property name="configFileCharset" value="gb2312"></property>
+				<property name="beanClassCharset" value="GBK"></property>
 				<property name="visturl">
 					<list componentType="String">
 						<property value="/datagrid/editer.page" />
@@ -977,6 +1004,7 @@ bboss-demo.xml
 				<property name="configFile" value="WEB-INF/conf/bboss-portal.xml" />
 				<property name="controllerClassCharset" value="GBK"></property>
 				<property name="configFileCharset" value="gb2312"></property>
+				<property name="beanClassCharset" value="GBK"></property>
 				<property name="visturl">
 					<list componentType="String">
 						<property value="/portal/portal.page" />
@@ -1017,6 +1045,7 @@ bboss-demo.xml
 				<property name="configFile" value="WEB-INF/conf/bboss-maptag.xml" />
 				<property name="controllerClassCharset" value="GBK"></property>
 				<property name="configFileCharset" value="gb2312"></property>
+				<property name="beanClassCharset" value="GBK"></property>
 				<property name="visturl">
 					<list componentType="String">
 						<property value="/tagdemo/testmap.page" />
