@@ -920,13 +920,17 @@ public class SimpleApiTest {
 	
 	public @Test void testAutoGenalKeysReturnObject() throws SQLException
 	{
-		AutoKeyDemo demo = new AutoKeyDemo();
-		
-		demo.setName("name2");
-		
+		AutoKeyDemo demo = new AutoKeyDemo();		
+		demo.setName("name2");	
+		//主键被封装到GetCUDResult对象中返回
+		//下面的insertBean方法最后带了一个boolean类型参数，
+		//这个方法是专门为返回自增主键而新增的一个api，true表示返回自增主键，false，表示不返回，默认为false
 		GetCUDResult ret = (GetCUDResult)SQLExecutor.insertBean("insert into demo(name) values(#[name])", demo,true);
+		//通过GetCUDResult对象的getKeys方法获取主键，并将主键设置到demo对象中
 		demo.setId((Long)ret.getKeys());
-		demo.setName("newname");
+		//更新刚添加的记录
+		demo.setName("newname");	
+		//upret是一个数字类型，表示更新成功的记录数
 		Object upret = SQLExecutor.updateBean("update demo set name=#[name] where id=#[id]", demo);
 		System.out.println();
 		
@@ -935,26 +939,30 @@ public class SimpleApiTest {
 	
 	public @Test void testAutoGenalKeys() throws SQLException
 	{
-		List<AutoKeyDemo> datas = new ArrayList<AutoKeyDemo>();
-		
-		AutoKeyDemo demo = new AutoKeyDemo();
-		
+		//构建多条记录
+		List<AutoKeyDemo> datas = new ArrayList<AutoKeyDemo>();		
+		AutoKeyDemo demo = new AutoKeyDemo();		
 		demo.setName("name2");
 		datas.add(demo);
-		demo = new AutoKeyDemo();
-		
+		demo = new AutoKeyDemo();		
 		demo.setName("name3");
 		datas.add(demo);
-		demo = new AutoKeyDemo();
-		
+		demo = new AutoKeyDemo();		
 		demo.setName("name4");
 		datas.add(demo);
+		//插入多条记录，并将成功插入的记录数和最后一条记录的主键值封装成GetCUDResult对象返回
+		//下面的insertBeans方法最后带了一个boolean类型参数，
+		//这个方法是专门为返回自增主键而新增的一个api，true表示返回自增主键，false，表示不返回，默认为false
 		GetCUDResult ret = SQLExecutor.insertBeans("insert into demo(name) values(#[name])", datas,true);
+		//获取自增主键列表（很遗憾，list中只有最后一条记录的主键，
+		//但是还是保留为List对象，以便后续有返回所有记录主键的解决方案后再以列表的方式返回这些主键）
 		List<Object> keys = (List<Object>)ret.getKeys();
 		for(int i = 0; i <keys.size(); i ++)
 		{
 			datas.get(i).setId((Long)keys.get(i));
 		}
+		//获取插入的记录数
+		int updatecount = (Integer)ret.getUpdatecount();
 		
 		
 		
