@@ -14,29 +14,24 @@
  *  limitations under the License.
  */
 
-package com.frameworkset.util;
+package org.frameworkset.spi;
 
+import com.frameworkset.spi.assemble.BeanInstanceException;
 
 /**
- * <p>Title: EditorInf.java</p> 
- * <p>Description: 用户自定义属性编辑接口</p>
+ * <p>Title: BaseApplicationContextAware.java</p> 
+ * <p>Description: </p>
  * <p>bboss workgroup</p>
- * <p>Copyright (c) 2008</p>
- * @Date 2009-12-7 上午10:44:15
+ * <p>Copyright (c) 2007</p>
+ * @Date 2012-11-21 上午10:23:27
  * @author biaoping.yin
  * @version 1.0
  */
-public interface EditorInf<T>
-{
-    
-    /**
-     * Gets the property value.
-     * @param fromValue
-     * @return The value of the property.  Primitive types such as "int" will
-     * be wrapped as the corresponding object type such as "java.lang.Integer".
-     */
-    T getValueFromObject(Object fromValue) ;    
-    T getValueFromString(String fromValue);
-   
-  
+public class BaseApplicationContextAware implements ApplicationContextAware {
+	protected BaseApplicationContext applicationContext; 
+	public void setApplicationContext(BaseApplicationContext applicationContext)
+			throws BeanInstanceException {
+		this.applicationContext = applicationContext;
+	}
+
 }

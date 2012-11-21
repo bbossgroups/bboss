@@ -584,5 +584,20 @@ outStr = "2010Äê02ÔÂ07ÈÕ11Ê±Ğí£¬ÖÜÁéÓ±±¨¾¯£ºÔÚ2Â·¹«½»³µÉÏ±»°ÇÇÔ£¬²¢×¥»ñÒ»ÃûÏÓÒÉÈ
         }
     }
  
+  public static String getClientIP(HttpServletRequest request)
+  {
+//	  String ip=request.getHeader("X-Forwarded-For");   
+//	  if(ip == null || ip.length() == 0) {   //»ñÈ¡weblogicÖĞÉèÖÃµÄÍ·²¿ĞÅÏ¢
+//		  ip=request.getHeader("WL-Proxy-Client-IP");
+//	  }   
+//	  if(ip == null || ip.length() == 0) {   
+//		  ip=request.getRemoteAddr();   
+//	  }
+	  String ip=request.getRemoteAddr();   
+	  
+	  return ip;
+
+  }
+ 
  	
 }

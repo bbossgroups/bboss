@@ -119,6 +119,7 @@ import org.frameworkset.web.token.MemTokenManagerFactory;
 import org.frameworkset.web.util.UrlPathHelper;
 import org.frameworkset.web.util.WebUtils;
 
+import com.frameworkset.util.ArrayEditorInf;
 import com.frameworkset.util.BeanUtils;
 import com.frameworkset.util.EditorInf;
 import com.frameworkset.util.StringUtil;
@@ -285,7 +286,7 @@ public abstract class HandlerUtils {
 		return false;
 	}
 	
-	private static Object evaluateStringParam(RequestParam requestParam,HttpServletRequest request,String requestParamName,Class type)
+	private static Object evaluateStringParam(RequestParam requestParam,HttpServletRequest request,String requestParamName,Class type,EditorInf editor)
 	{
 		Object paramValue = null;
 
@@ -316,79 +317,106 @@ public abstract class HandlerUtils {
 			
 			if (!type.isArray() && !List.class.isAssignableFrom(type) && !Set.class.isAssignableFrom(type))
 			{
+				
 				if( values.length > 0)
 				{
-//					paramValue = values[0];
-					String value_ = values[0];
-					if(decodeCharset != null)
+					if(editor == null)
 					{
-						try {
-							paramValue = URLDecoder.decode(value_,decodeCharset);
-						} catch (Exception e) {
-							logger.error(e);
-							paramValue = value_;
-						}
+
+//						String value_ = values[0];
+//						if(decodeCharset != null)
+//						{
+//							try {
+//								paramValue = URLDecoder.decode(value_,decodeCharset);
+//							} catch (Exception e) {
+//								logger.error(e);
+//								paramValue = value_;
+//							}
+//						}
+//						else if(charset != null && convertcharset != null)
+//						{
+//							try {
+//								paramValue = new String(value_.getBytes(charset), convertcharset);
+//							} catch (Exception e) {
+//								logger.error(e);
+//								paramValue = value_;
+//							}
+//						}
+//						else
+//						{
+//							paramValue = value_;
+//						}
+						paramValue = HandlerUtils._getRequestData(values, decodeCharset, charset, convertcharset);
 					}
-					else if(charset != null && convertcharset != null)
+					else if(editor instanceof ArrayEditorInf)
 					{
-						try {
-							paramValue = new String(value_.getBytes(charset), convertcharset);
-						} catch (Exception e) {
-							logger.error(e);
-							paramValue = value_;
-						}
+						paramValue = HandlerUtils._getRequestDatas(values, decodeCharset, charset, convertcharset);
 					}
-					else
+					else 
 					{
-						paramValue = value_;
+						paramValue = HandlerUtils._getRequestData(values, decodeCharset, charset, convertcharset);
 					}
+						
 				}
 			}
 			else
 			{
 //				paramValue = values;
-				if(decodeCharset != null)
+//				if(decodeCharset != null)
+//				{
+//					String[] values_ = new String[values.length];
+//					
+//					for(int i = 0; i < values_.length; i ++)
+//					{
+//						try {
+//							values_[i] = URLDecoder.decode(values[i],decodeCharset);
+//						} catch (Exception e) {
+//							logger.error(e);
+//							values_[i] = values[i];
+//						}
+//					}
+//					paramValue = values_;
+//					
+//				}
+//				else if(charset != null && convertcharset != null)
+//				{
+//					String[] values_ = new String[values.length];
+//					
+//					for(int i = 0; i < values_.length; i ++)
+//					{
+//						try {
+//							values_[i] = new String(values[i].getBytes(charset), convertcharset);
+//						} catch (Exception e) {
+//							logger.error(e);
+//							values_[i] = values[i];
+//						}
+//					}
+//					paramValue = values_;
+//				}
+//				else
+//				{
+//					paramValue = values;
+//				}
+				if(editor == null)
 				{
-					String[] values_ = new String[values.length];
-					
-					for(int i = 0; i < values_.length; i ++)
-					{
-						try {
-							values_[i] = URLDecoder.decode(values[i],decodeCharset);
-						} catch (Exception e) {
-							logger.error(e);
-							values_[i] = values[i];
-						}
-					}
-					paramValue = values_;
-					
+					paramValue = HandlerUtils._getRequestDatas(values, decodeCharset, charset, convertcharset);
 				}
-				else if(charset != null && convertcharset != null)
+				else if(editor instanceof ArrayEditorInf)
 				{
-					String[] values_ = new String[values.length];
-					
-					for(int i = 0; i < values_.length; i ++)
-					{
-						try {
-							values_[i] = new String(values[i].getBytes(charset), convertcharset);
-						} catch (Exception e) {
-							logger.error(e);
-							values_[i] = values[i];
-						}
-					}
-					paramValue = values_;
+					paramValue = HandlerUtils._getRequestDatas(values, decodeCharset, charset, convertcharset);
 				}
-				else
+				else 
 				{
-					paramValue = values;
+					paramValue = HandlerUtils._getRequestData(values, decodeCharset, charset, convertcharset);
 				}
+					
 			}
 		}
 		
 		return paramValue;
 	}
 	
-	private static Object evaluatePrimaryStringParam(HttpServletRequest request,String requestParamName,Class type)
+	private static Object evaluatePrimaryStringParam(HttpServletRequest request,String requestParamName,Class type,EditorInf editor)
 	{
 		Object paramValue = null;
 		String[] values = request
@@ -542,14 +570,13 @@ public abstract class HandlerUtils {
 			if(!isrequired )
 				isrequired = methodParameter.isRequired();
 			if (methodParameter.getDataBindScope() == Scope.REQUEST_PARAM) {
-				RequestParam requestParam = methodParameter.getRequestParam();
-				
+				RequestParam requestParam = methodParameter.getRequestParam();				
 				if(!isMultipartFile(type))
 				{
 					dateformat = requestParam.dateformat();
 					if (dateformat.equals(ValueConstants.DEFAULT_NONE))
 						dateformat = null;
-					paramValue = evaluateStringParam(requestParam,request,requestParamName,type);
+					paramValue = evaluateStringParam(requestParam,request,requestParamName,type,editor);
 				}
 				else
 				{
@@ -702,7 +729,10 @@ public abstract class HandlerUtils {
 			} else if (methodParameter.getDataBindScope() == Scope.REQUEST_BODY) {
 				paramValue = resolveRequestBody(methodParameter, request,
 						messageConverters);
-				userEditor = false;
+				if(editor == null)
+					userEditor = false;
+				else
+					userEditor = true;
 				
 			} else if (methodParameter.isDataBeanBind()) {
 				Object command = newCommandObject(type);
@@ -732,7 +762,7 @@ public abstract class HandlerUtils {
 						else
 							paramValue = ValueObjectUtil.typeCast(paramValue,
 									editor);
-					}
+					}  
 					break;
 				} catch (Exception e) {
 					
@@ -816,18 +846,16 @@ public abstract class HandlerUtils {
 		Object paramValue = null;
 
 		String requestParamName = methodParameter.getRequestParameterName();
-
+		EditorInf editor = methodParameter.getEditor();
 		if(!isMultipartFile(type))
 		{
 
-			paramValue = evaluatePrimaryStringParam(request,requestParamName,type);
+			paramValue = evaluatePrimaryStringParam(request,requestParamName,type,editor);
 		}
 		else
 		{
 			paramValue = evaluateMultipartFileParam( null, request, requestParamName, type);
 		}
-		
-
 		
 		if (paramValue == null) {			
 			
@@ -837,9 +865,16 @@ public abstract class HandlerUtils {
 		else
 		{
 			try {
-				
-				paramValue = ValueObjectUtil.typeCast(paramValue,
-						type,(String)null);
+				if(editor == null)
+				{
+					paramValue = ValueObjectUtil.typeCast(paramValue,
+							type,(String)null);
+				}
+				else
+				{
+					paramValue = ValueObjectUtil.typeCast(paramValue,
+							editor);
+				}
 			} catch (Exception e) {
 				
 				Exception error = raiseMissingParameterException(requestParamName, type,paramValue, e);
@@ -1864,13 +1899,14 @@ public abstract class HandlerUtils {
 					}
 					
 					request.setAttribute(USE_MVC_DENCODE_KEY, null);
-	
-					String[] values = !param.name().equals("")?request.getParameterValues(param.name()):request.getParameterValues(name);
-					value = getRequestData(values, holder, type,decodeCharset,charset,convertcharset);
-					
-				
 					if (param.editor() != null && !param.editor().equals(""))
 						editor = (EditorInf) BeanUtils.instantiateClass(param.editor());
+					String[] values = !param.name().equals("")?request.getParameterValues(param.name()):request.getParameterValues(name);
+//					boolean needAddData = holder.needAddData();
+					value = getRequestData(values, holder, type,decodeCharset,charset,convertcharset,editor);
+					
+				
+					
 					if(!required) required = param.required();
 					defaultValue = param.defaultvalue();
 					if(holder.needAddData())
@@ -2085,7 +2121,7 @@ public abstract class HandlerUtils {
 	public static Object getRequestData(String values[],CallHolder holder,Class type,
 			String decodeCharset,
 			String charset,
-			String convertcharset)
+			String convertcharset,EditorInf editor)
 	{
 		Object value = null;
 		if (values != null) {
@@ -2130,32 +2166,36 @@ public abstract class HandlerUtils {
 			{	
 				if (!type.isArray() && !List.class.isAssignableFrom(type) 
 						&& !Set.class.isAssignableFrom(type))
-				{
+				{	
 					if(values.length >0)
 					{
-//						value = values[0];
-						String value_ = values[0];
-						if(decodeCharset != null)
+						if(editor == null  )
 						{
-							try {
-								value = URLDecoder.decode(value_,decodeCharset);
-							} catch (Exception e) {
-								logger.error(e);
-								value = value_;
-							}
+							value = _getRequestData(values,
+							decodeCharset,
+							charset,
+							convertcharset);
 						}
-						else if(charset != null && convertcharset != null)
+						else if(editor instanceof ArrayEditorInf)
 						{
-							try {
-								value = new String(value_.getBytes(charset), convertcharset);
-							} catch (Exception e) {
-								logger.error(e);
-								value = value_;
+							if(values.length > 0)
+							{
+								value = _getRequestDatas( values,
+										 decodeCharset,
+										 charset,
+										 convertcharset);
+							}
+							else
+							{
+								value = values;
 							}
 						}
 						else
 						{
-							value = value_;
+							value = _getRequestData(values,
+									decodeCharset,
+									charset,
+									convertcharset);
 						}
 					}
 				}
@@ -2163,41 +2203,28 @@ public abstract class HandlerUtils {
 				{
 					if(values.length > 0)
 					{
-						if(decodeCharset != null)
+						if(editor == null  )//默认返回多条值
 						{
-							String[] values_ = new String[values.length];
-							
-							for(int i = 0; i < values_.length; i ++)
-							{
-								try {
-									values_[i] = URLDecoder.decode(values[i],decodeCharset);
-								} catch (Exception e) {
-									logger.error(e);
-									values_[i] = values[i];
-								}
-							}
-							value = values_;
-							
+							value = _getRequestDatas( values,
+									 decodeCharset,
+									 charset,
+									 convertcharset);
 						}
-						else if(charset != null && convertcharset != null)
+						else if(editor instanceof ArrayEditorInf)//ArrayEditorInf，返回多条值
 						{
-							String[] values_ = new String[values.length];
-							
-							for(int i = 0; i < values_.length; i ++)
-							{
-								try {
-									values_[i] = new String(values[i].getBytes(charset), convertcharset);
-								} catch (Exception e) {
-									logger.error(e);
-									values_[i] = values[i];
-								}
-							}
-							value = values_;
+							value = _getRequestDatas( values,
+										 decodeCharset,
+										 charset,
+										 convertcharset);							
 						}
-						else
+						else//EditorInf，只返回第一条值
 						{
-							value = values;
+							value = _getRequestData(values,
+									decodeCharset,
+									charset,
+									convertcharset);
 						}
+						
 					}
 					else
 					{
@@ -2207,6 +2234,80 @@ public abstract class HandlerUtils {
 				}
 			}
 			
+		}
+		return value;
+	}
+	private static Object _getRequestDatas(String values[],
+			String decodeCharset,
+			String charset,
+			String convertcharset)
+	{
+		Object value = null;
+		if(decodeCharset != null)
+		{
+			String[] values_ = new String[values.length];
+			
+			for(int i = 0; i < values_.length; i ++)
+			{
+				try {
+					values_[i] = URLDecoder.decode(values[i],decodeCharset);
+				} catch (Exception e) {
+					logger.error("URLDecoder.decode("+values[i]+","+decodeCharset+") error:",e);
+					values_[i] = values[i];
+				}
+			}
+			value = values_;
+			
+		}
+		else if(charset != null && convertcharset != null)
+		{
+			String[] values_ = new String[values.length];
+			
+			for(int i = 0; i < values_.length; i ++)
+			{
+				try {
+					values_[i] = new String(values[i].getBytes(charset), convertcharset);
+				} catch (Exception e) {
+					logger.error("new String("+values[i]+".getBytes("+charset+"), "+convertcharset+") error:",e);
+					values_[i] = values[i];
+				}
+			}
+			value = values_;
+		}
+		else
+		{
+			value = values;
+		}
+		return value;
+	}
+	private static Object _getRequestData(String values[],
+			String decodeCharset,
+			String charset,
+			String convertcharset)
+	{
+		Object value = null;
+		String value_ = values[0];
+		if(decodeCharset != null)
+		{
+			try {
+				value = URLDecoder.decode(value_,decodeCharset);
+			} catch (Exception e) {
+				logger.error("URLDecoder.decode("+value_+","+decodeCharset+") error:",e);
+				value = value_;
+			}
+		}
+		else if(charset != null && convertcharset != null)
+		{
+			try {
+				value = new String(value_.getBytes(charset), convertcharset);
+			} catch (Exception e) {
+				logger.error("new String(value_.getBytes("+charset+"), "+convertcharset+") error:",e);
+				value = value_;
+			}
+		}
+		else
+		{
+			value = value_;
 		}
 		return value;
 	}
@@ -2468,7 +2569,7 @@ public abstract class HandlerUtils {
 					if(!isMultipartFile(type))
 					{
 						String[] values = request.getParameterValues(name);
-						value = getRequestData(values, holder, type,null,null,null);
+						value = getRequestData(values, holder, type,null,null,null,null);
 						if(holder.needAddData())
 						{
 							holder.addData(name, values,true,null,false);

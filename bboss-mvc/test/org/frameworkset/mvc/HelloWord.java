@@ -27,6 +27,8 @@ import org.frameworkset.util.annotations.RequestParam;
 import org.frameworkset.util.annotations.ResponseBody;
 import org.frameworkset.web.servlet.ModelMap;
 
+import com.frameworkset.util.StringUtil;
+
 /**
  * <p>
  * HelloWord.java
@@ -187,6 +189,70 @@ public class HelloWord
 			model.addAttribute("serverHelloBean", yourname);
 		else
 			;
+
+		return "path:sayHello";
+	}
+	
+	public String sayHelloEditorBean(EditorExampleBean yourname,ModelMap model)
+	{
+
+		if (yourname.getName() != null && yourname.getName().length > 0)
+			model.addAttribute("serverHelloBean", StringUtil.arrayToDelimitedString(yourname.getName(), ","));
+		else
+			;
+
+		return "path:sayHello";
+	}
+	
+	public String sayHelloEditorBeans(List<EditorExampleBean> yournames,ModelMap model)
+	{
+		if(yournames != null && yournames.size() > 0)
+		{
+			StringBuffer ret = new StringBuffer();
+			for(EditorExampleBean yourname:yournames)
+			{
+				if (yourname.getName() != null && yourname.getName().length > 0)
+					ret.append(StringUtil.arrayToDelimitedString(yourname.getName(), ",")).append("<br/>");			
+				
+			}
+			model.addAttribute("serverHelloBean", ret.toString());
+		}
+
+		return "path:sayHello";
+	}
+	public String sayHelloEditor(@RequestParam(editor="org.frameworkset.mvc.Editor") String[] name,ModelMap model)
+	{
+
+		if (name != null && name.length > 0)
+			model.addAttribute("serverHelloBean", StringUtil.arrayToDelimitedString(name, ","));
+		else
+			;
+
+		return "path:sayHello";
+	}
+	public String sayHelloListEditor(@RequestParam(editor="org.frameworkset.mvc.ListEditor") List<String> name,ModelMap model)
+	{
+
+		if (name != null && name.size() > 0)
+			model.addAttribute("serverHelloBean", name);
+		else
+			;
+
+		return "path:sayHello";
+	}
+	public String sayHelloEditors(@RequestParam(editor="org.frameworkset.mvc.ListStringArrayEditor") List<String[]> name,ModelMap model)
+	{
+		if(name != null && name.size() > 0)
+		{
+			StringBuffer ret = new StringBuffer();
+			for(String[] yourname:name)
+			{
+				if (yourname != null && yourname.length > 0)
+					ret.append(StringUtil.arrayToDelimitedString(yourname, ",")).append("<br/>");			
+				
+			}
+			model.addAttribute("serverHelloBean", ret.toString());
+		}
 
 		return "path:sayHello";
 	}

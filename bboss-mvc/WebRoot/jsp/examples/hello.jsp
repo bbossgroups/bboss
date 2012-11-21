@@ -53,7 +53,7 @@
 
 <body>
 			<h3>
-				Hello World number bind Examples.
+				Hello World number bind Example.
 			</h3>
 			<form action="sayHelloNumber.page" method="post">
 			<pg:dtoken/>
@@ -86,7 +86,7 @@
 	
 		
 			<h3>
-				Hello World String bind Examples.
+				Hello World String bind Example.
 			</h3>
 			<form action="sayHelloString.page" method="post">
 			<pg:dtoken/>
@@ -122,7 +122,7 @@
 			
 			
 			<h3>
-				Hello World Time bind Examples.
+				Hello World Time bind Example.
 			</h3>
 			<form action="sayHelloTime.page" method="post">
 			<pg:dtoken/>
@@ -187,7 +187,7 @@
 			</form>
 			
 			<h3>
-				Hello World Time Array bind Examples.
+				Hello World Time Array bind Example.
 			</h3>
 			<form action="sayHelloTimes.page" method="post">
 			<pg:dtoken/>
@@ -253,7 +253,7 @@
 			
 			
 			<h3>
-				Hello World Bean bind Examples.
+				Hello World Bean bind Example.
 			</h3>
 			<form action="sayHelloBean.page" method="post">
 			<pg:dtoken/>
@@ -294,7 +294,238 @@
 			</form>
 			
 			<h3>
-				Hello World List<PO> bind  Examples.
+				Hello World EditorBean bind Example.
+			</h3>
+			<form action="sayHelloEditorBean.page" method="post">
+			<pg:dtoken/>
+			<table cellspacing="0" >
+				<tbody>
+					<tr>
+						
+						
+
+						<td>
+							请输入您的名字：
+						<input name="name" type="text">
+						</td>
+						
+						
+					</tr>
+					<tr>
+						<td>
+							来自服务器的问候：
+							<pg:null actual="${serverHelloBean}">
+								没有名字，不问候。
+							</pg:null>
+							<pg:notnull actual="${serverHelloBean}">
+								<common:request name="serverHelloBean" property="name"/>
+							</pg:notnull>
+							
+						</td>
+						
+
+						
+					</tr>
+					<tr>
+						<td><input type="submit" name="确定" value="确定"></td>						
+					</tr>
+				</tbody>
+			</table>
+				
+			</form>
+			
+			
+			<h3>
+				Hello World EditorBeans bind Example.
+			</h3>
+			<form action="sayHelloEditorBeans.page" method="post">
+			<pg:dtoken/>
+			<table cellspacing="0" >
+				<tbody>
+					<tr>
+						
+						
+
+						<td>
+							请输入您的名字：
+						<input name="name" type="text">
+						</td>
+						
+						
+					</tr>
+					<tr>
+						
+						
+
+						<td>
+							请输入您的名字：
+						<input name="name" type="text">
+						</td>
+						
+						
+					</tr>
+					<tr>
+						<td>
+							来自服务器的问候：
+							<pg:null actual="${serverHelloBean}">
+								没有名字，不问候。
+							</pg:null>
+							<pg:notnull actual="${serverHelloBean}">
+								<common:request name="serverHelloBean"/>
+							</pg:notnull>
+							
+						</td>
+						
+
+						
+					</tr>
+					<tr>
+						<td><input type="submit" name="确定" value="确定"></td>						
+					</tr>
+				</tbody>
+			</table>
+				
+			</form>
+			
+			
+			<h3>
+				Hello World Editor bind Example.
+			</h3>
+			<form action="sayHelloEditor.page" method="post">
+			<pg:dtoken/>
+			<table cellspacing="0" >
+				<tbody>
+					<tr>
+						
+						
+
+						<td>
+							请输入您的名字：
+						<input name="name" type="text">
+						</td>
+						
+						
+					</tr>
+					<tr>
+						<td>
+							来自服务器的问候：
+							<pg:null actual="${serverHelloBean}">
+								没有名字，不问候。
+							</pg:null>
+							<pg:notnull actual="${serverHelloBean}">
+								<common:request name="serverHelloBean"/>
+							</pg:notnull>
+							
+						</td>
+						
+
+						
+					</tr>
+					<tr>
+						<td><input type="submit" name="确定" value="确定"></td>						
+					</tr>
+				</tbody>
+			</table>
+				
+			</form>
+			
+			
+			<h3>
+				Hello World ListStringArrayEditor bind Example.
+			</h3>
+			<form action="sayHelloEditors.page" method="post">
+			<pg:dtoken/>
+			<table cellspacing="0" >
+				<tbody>
+					<tr>
+						
+						
+
+						<td>
+							请输入您的名字：
+						<input name="name" type="text">
+						</td>
+						
+						
+					</tr>
+					<tr>
+						
+						
+
+						<td>
+							请输入您的名字：
+						<input name="name" type="text">
+						</td>
+						
+						
+					</tr>
+					<tr>
+						<td>
+							来自服务器的问候：
+							<pg:null actual="${serverHelloBean}">
+								没有名字，不问候。
+							</pg:null>
+							<pg:notnull actual="${serverHelloBean}">
+								<common:request name="serverHelloBean"/>
+							</pg:notnull>
+							
+						</td>
+						
+
+						
+					</tr>
+					<tr>
+						<td><input type="submit" name="确定" value="确定"></td>						
+					</tr>
+				</tbody>
+			</table>
+				
+			</form>
+			
+			<h3>
+				Hello World ListEditor bind Example.
+			</h3>
+			<form action="sayHelloListEditor.page" method="post">
+			<pg:dtoken/>
+			<table cellspacing="0" >
+				<tbody>
+					<tr>
+						
+						
+
+						<td>
+							请输入您的名字：
+						<input name="name" type="text">
+						</td>
+						
+						
+					</tr>
+					
+					<tr>
+						<td>
+							来自服务器的问候：
+							<pg:null actual="${serverHelloBean}">
+								没有名字，不问候。
+							</pg:null>
+							<pg:notnull actual="${serverHelloBean}">
+								<common:request name="serverHelloBean"/>
+							</pg:notnull>
+							
+						</td>
+						
+
+						
+					</tr>
+					<tr>
+						<td><input type="submit" name="确定" value="确定"></td>						
+					</tr>
+				</tbody>
+			</table>
+				
+			</form>
+			
+			<h3>
+				Hello World List<PO> bind  Example.
 			</h3>
 			<form action="sayHelloBeanList.page" method="post">
 			<pg:dtoken/>
@@ -363,7 +594,7 @@
 			</form>
 			
 			<h3>
-				Hello World Map<String,PO> bind  Examples.
+				Hello World Map<String,PO> bind  Example.
 			</h3>
 			<form action="sayHelloBeanMap.page" method="post">
 			<pg:dtoken/>
@@ -461,7 +692,7 @@
 			</form>
 			
 			<h3>
-				Hello World Array bind  Examples.
+				Hello World Array bind  Example.
 			</h3>
 			<form action="sayHelloArray.page" method="post">
 			<pg:dtoken/>
@@ -498,7 +729,7 @@
 			
 			
 			<h3>
-				Hello World Enum bind  Examples.
+				Hello World Enum bind  Example.
 			</h3>
 			
 			
