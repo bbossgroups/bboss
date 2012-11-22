@@ -38,8 +38,11 @@ public class ListStringArrayEditor implements ArrayEditorInf<List<String[]>> {
 			return null;
 		if(fromValue instanceof String[])
 		{
-			List<String[]> ret = new ArrayList<String[]>();
 			String[] datas = (String[])fromValue; 
+			if(datas.length<=0)
+				return null;
+			List<String[]> ret = new ArrayList<String[]>();
+			
 			for(String data :datas)
 			{
 				String[] tt = data.split(",");

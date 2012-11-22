@@ -33,7 +33,7 @@ import com.frameworkset.util.EditorInf;
 public class ListEditor implements EditorInf<List<String>> {
 
 	public List<String> getValueFromObject(Object fromValue) {
-		if(fromValue == null)
+		if(fromValue == null || fromValue.equals(""))
 			return null;
 			
 		return getValueFromString(String.valueOf( fromValue));
