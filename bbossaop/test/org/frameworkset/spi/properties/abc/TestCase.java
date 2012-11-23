@@ -17,6 +17,8 @@
 package org.frameworkset.spi.properties.abc;
 
 import org.frameworkset.spi.ApplicationContext;
+import org.frameworkset.spi.BaseApplicationContext;
+import org.frameworkset.spi.DefaultApplicationContext;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -31,11 +33,13 @@ import org.junit.Test;
  */
 public class TestCase {
 	
-	ApplicationContext context ;
+	BaseApplicationContext context ;
+	BaseApplicationContext context1 ;
 	@Before
 	public void init()
 	{
 		context = ApplicationContext.getApplicationContext("org/frameworkset/spi/properties/abc/mutilreference.xml");
+		context1 = DefaultApplicationContext.getApplicationContext("org/frameworkset/spi/properties/abc/test.xml");
 	}
 	@Test
 	public void test()
@@ -43,6 +47,11 @@ public class TestCase {
 		A a = (A)context.getBeanObject("a");
 		System.out.println();
 		B b = (B)context.getBeanObject("b");
+	}
+	@Test 
+	public void test1()
+	{
+		context1.getBeanObject("test");
 	}
 
 }
