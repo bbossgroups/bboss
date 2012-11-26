@@ -258,15 +258,15 @@ public abstract class BaseTXManager implements java.io.Serializable,UNmodify
                 catch (ClassNotFoundException ex)
                 {
                     // ex.printStackTrace();
-                    log.error(ex);
+                    log.error("",ex);
                 }
                 catch (IllegalAccessException ex)
                 {
-                    log.error(ex);
+                    log.error("",ex);
                 }
                 catch (InstantiationException ex)
                 {
-                    log.error(ex);
+                    log.error("",ex);
                 }
                 catch (java.lang.NullPointerException ne)
                 {

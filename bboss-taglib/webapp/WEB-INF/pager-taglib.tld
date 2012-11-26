@@ -3816,6 +3816,10 @@
 			<name>enablecontextmenu</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
+		<attribute>
+			<name>jquery</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
 	</tag>
 	<!-- 
 		生成频道当前位置

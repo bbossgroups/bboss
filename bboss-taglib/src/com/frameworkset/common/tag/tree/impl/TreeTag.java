@@ -28,19 +28,8 @@
 
 package com.frameworkset.common.tag.tree.impl;
 
-import com.frameworkset.common.tag.contextmenu.ContextMenu;
-import com.frameworkset.common.tag.contextmenu.ContextMenuTag;
-import com.frameworkset.common.tag.pager.config.PageConfig;
-import com.frameworkset.common.tag.tree.itf.ITree;
-import com.frameworkset.common.tag.tree.itf.ITreeIteratorElement;
-import com.frameworkset.common.tag.tree.itf.ITreeNode;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.PrintStream;
 import java.util.Iterator;
 
 import javax.servlet.http.HttpServletRequest;
@@ -49,6 +38,13 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 
 import org.apache.log4j.Logger;
+
+import com.frameworkset.common.tag.contextmenu.ContextMenu;
+import com.frameworkset.common.tag.contextmenu.ContextMenuTag;
+import com.frameworkset.common.tag.pager.config.PageConfig;
+import com.frameworkset.common.tag.tree.itf.ITree;
+import com.frameworkset.common.tag.tree.itf.ITreeIteratorElement;
+import com.frameworkset.common.tag.tree.itf.ITreeNode;
 
 /**
  * 
@@ -155,13 +151,7 @@ public class TreeTag extends ContextMenuTag {
      *      缺省值：dynamic 
      */
     private String mode = null;
-    /**
-     * 是否jquery装载,true-是，false-不是
-            默认值：false;
-            为false时,标签库将自动为页面引入以下样式和脚本，否则不导入
-            true时，上述样式和脚本将通过外部导入
-     */
-    private boolean jquery = false; 
+   
     
    
 	public void setCheckBoxExtention(String checkBoxExtention) {
@@ -721,6 +711,7 @@ public class TreeTag extends ContextMenuTag {
 			
 			if(!this.isJquery())
 			{
+				
 				 ret.append(PageConfig.getJqueryConfig(request)); //jquery
 				 ret.append(PageConfig.getTreeConfig(request,true)); //jquery
 	             ret.append(PageConfig.getPopScript( request, enablecontextmenu)); //jquery
@@ -740,8 +731,11 @@ public class TreeTag extends ContextMenuTag {
 //            	if(!this.enablecontextmenu) //jquery
 //            	    if(!this.isJquery())
 //                        NodeHelper.getPrototypeScript(ret,request,this.enablecontextmenu);
+            	
             	if(!this.isJquery())
     			{
+            		
+            		
     				 ret.append(PageConfig.getJqueryConfig(request)); //jquery
 	                ret.append(PageConfig.getTreeConfig(request,true)); //jquery
 	                ret.append(PageConfig.getPopScript( request, enablecontextmenu)); //jquery
@@ -1110,13 +1104,5 @@ public class TreeTag extends ContextMenuTag {
 		return partuprecursive;
 	}
 
-    public boolean isJquery()
-    {
-        return jquery;
-    }
-
-    public void setJquery(boolean jquery)
-    {
-        this.jquery = jquery;
-    }
+   
 }

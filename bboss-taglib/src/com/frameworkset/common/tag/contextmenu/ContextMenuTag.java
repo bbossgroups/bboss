@@ -37,7 +37,13 @@ public class ContextMenuTag extends BaseTag {
 	private static final String menuScript = "contextmenu/popmenu.vm";
 	private static final String parentmenuScript = "contextmenu/parentpopmenu.vm";
 	private String parent_indent ;
-	
+	 /**
+     * 是否jquery装载,true-是，false-不是
+            默认值：false;
+            为false时,标签库将自动为页面引入以下样式和脚本，否则不导入
+            true时，上述样式和脚本将通过外部导入
+     */
+    protected boolean jquery = false; 
 	
 	
 	
@@ -91,7 +97,11 @@ public class ContextMenuTag extends BaseTag {
 //	        }
 //	        else
 //	        {
-	            popscript = PageConfig.getPopScript(request, enablecontextmenu);
+			if(!this.isJquery())
+			{
+				popscript = PageConfig.getPopScript(request, enablecontextmenu);
+			}
+	            
 //                buffer.append(popscript);
                 
                 
@@ -130,7 +140,7 @@ public class ContextMenuTag extends BaseTag {
 				template.merge(context,out);
 			}
 						
-			
+			jquery = false;
 			this.parent_indent = null;
 			
 		} catch (IOException e) {
@@ -595,12 +605,21 @@ public class ContextMenuTag extends BaseTag {
 //		menuScript = "contextmenu/popmenu.vm";
 		//flag = true;
 		context = null;
+		jquery = false;
 		scope = "request";
 	}
 
 
 
-	
+	  public boolean isJquery()
+	    {
+	        return jquery;
+	    }
+
+	    public void setJquery(boolean jquery)
+	    {
+	        this.jquery = jquery;
+	    }	
 	
 
 }
