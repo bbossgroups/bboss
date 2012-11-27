@@ -38,6 +38,7 @@ import org.frameworkset.spi.async.CallBack;
 import org.frameworkset.spi.async.CallBackService;
 import org.frameworkset.spi.async.CallBackServiceImpl;
 import org.frameworkset.spi.async.CallService;
+import org.frameworkset.spi.interceptor.AfterThrowable;
 import org.frameworkset.spi.remote.RPCHelper;
 import org.frameworkset.spi.remote.ServiceID;
 
@@ -182,11 +183,26 @@ public class CGLibUtil {
     {
         if (!serviceID.isRemote())
         {
-            Interceptor interceptor = providerManagerInfo.getTransactionInterceptor();
+            Interceptor txinterceptor = providerManagerInfo.getTransactionInterceptor(method);
+            Interceptor interceptor = providerManagerInfo.getInterceptorChain();
+            Object obj = null;// 只返回delegate中方法返回的值
+            try
+            {
+            	if (interceptor != null)
+                    interceptor.before(method, args);
+            }
+            catch(Exception e)
+            {
+            	throw e;
+            }
+//            catch(Exception e)
+//            {
+//            	log.info("",e);
+//            }
             try
             {
 
-                Object obj = null;// 只返回delegate中方法返回的值
+              
                 // 如果不是同步方法，则无需同步调用其他接口方法
                 // log.debug("method.getName():" + method.getName());
                 //log.debug("providerManagerInfo.getSynchronizedMethod("
@@ -194,30 +210,35 @@ public class CGLibUtil {
                 // method.getName() + "):" +
                 // providerManagerInfo.getSynchronizedMethod
                 // (method.getName()));
-                if (interceptor != null)
-                    interceptor.before(method, args);
-                if(proxy == null)
-                	obj = method.invoke(delegate, args);
+                
+                if(txinterceptor == null)
+                {
+                	untxinvoke_(delegate, method, args,
+                			proxy,providerManagerInfo);
+                }
                 else
-                	obj = method.invoke(delegate, args);
+                {
+                	txinvoke_(delegate, method, args,
+                			proxy,providerManagerInfo,txinterceptor );
+                }
                 if (interceptor != null)
-                    interceptor.after(method, args);
+					try {
+						interceptor.after(method, args);
+					} catch (Throwable e) {
+						throw new AfterThrowable(e);
+					}
                 return obj;
 
             }
-            catch (InvocationTargetException e)
+            catch(AfterThrowable e)
             {
-                //log.error(e);
+            	throw e.getCause();
+            }
+            catch (InvocationTargetException e)
+            {               
                 if (interceptor != null)
-                {
-                    try
-                    {
-                        interceptor.afterThrowing(method, args, e.getTargetException());
-                    }
-                    catch (Exception ei)
-                    {
-                        ei.printStackTrace();
-                    }
+                {                   
+                    interceptor.afterThrowing(method, args, e.getTargetException());
                 }
 
                 // 将方法抛出的异常直接抛出方法异常
@@ -225,32 +246,22 @@ public class CGLibUtil {
             }
             catch (Throwable t)
             {
-                log.error(t);
-                try
-                {
+               
+               
                     // t.printStackTrace();
-                    if (interceptor != null)
-                        interceptor.afterThrowing(method, args, t);
-                }
-                catch (Exception e)
-                {
-                    e.printStackTrace();
-                }
+                if (interceptor != null)
+                    interceptor.afterThrowing(method, args, t);
+                
                 throw t;
             }
             finally
             {
-                try
+                
+                if (interceptor != null)
                 {
-                    if (interceptor != null)
-                        interceptor.afterFinally(method, args);
-
+                    interceptor.afterFinally(method, args);
+                    interceptor = null;
                 }
-                catch (Exception e)
-                {
-                    e.printStackTrace();
-                }
-                interceptor = null;
             }
         }
         else
@@ -261,16 +272,87 @@ public class CGLibUtil {
         }
     }
 	
+	private static Object txinvoke_(Object delegate, Method method, Object[] args,
+			MethodProxy proxy,BaseTXManager providerManagerInfo,Interceptor tx ) throws Throwable
+	{
+		
+		Object obj = null;
+		try
+		{
+			tx.before(method, args);
+			if(proxy == null)
+	        	obj = method.invoke(delegate, args);
+	        else
+	        	obj = method.invoke(delegate, args);
+			tx.after(method, args);
+			return obj;
+		}
+		 catch (InvocationTargetException e)
+		 {
+			 tx.afterThrowing(method, args, e.getTargetException());
+			 throw e;
+		 }
+		catch(Throwable e)
+		{
+			tx.afterThrowing(method, args, e);
+			throw e;
+		}
+		finally
+		{
+			tx.afterFinally(method, args);
+		}
+		
+	}
+	private static Object untxinvoke_(Object delegate, Method method, Object[] args,
+			MethodProxy proxy,BaseTXManager providerManagerInfo) throws Throwable
+	{
+		
+		Object obj = null;
+//		Interceptor tx = providerManagerInfo.getTransactionInterceptor(method);
+		try
+		{
+			
+			if(proxy == null)
+	        	obj = method.invoke(delegate, args);
+	        else
+	        	obj = method.invoke(delegate, args);
+			return obj;
+		}
+		catch(Throwable e)
+		{
+			throw e;
+		}
+		finally
+		{
+		}
+	}
 	private static Object invoke_(Object delegate, Method method, Object[] args,
 			MethodProxy proxy,BaseTXManager providerManagerInfo) throws Throwable
     {
 //        if (!serviceID.isRemote())
+//		try		
         {
-            Interceptor interceptor = providerManagerInfo.getTransactionInterceptor();
+            Interceptor txinterceptor = providerManagerInfo.getTransactionInterceptor(method);
+            Interceptor interceptor = providerManagerInfo.getInterceptorChain();
+            
+            Object obj = null;// 只返回delegate中方法返回的值
+            try
+            {
+            	if (interceptor != null)
+                    interceptor.before(method, args);
+            }
+            catch(Exception e)
+            {
+            	throw e;
+            }
+//            catch(Exception e)
+//            {
+//            	log.info("",e);
+//            }
             try
             {
 
-                Object obj = null;// 只返回delegate中方法返回的值
+               
                 // 如果不是同步方法，则无需同步调用其他接口方法
                 // log.debug("method.getName():" + method.getName());
                 //log.debug("providerManagerInfo.getSynchronizedMethod("
@@ -278,30 +360,40 @@ public class CGLibUtil {
                 // method.getName() + "):" +
                 // providerManagerInfo.getSynchronizedMethod
                 // (method.getName()));
-                if (interceptor != null)
-                    interceptor.before(method, args);
-                if(proxy == null)
-                	obj = method.invoke(delegate, args);
-                else
-                	obj = method.invoke(delegate, args);
-                if (interceptor != null)
-                    interceptor.after(method, args);
+                
+                
+            		if(txinterceptor != null)
+            		{
+            			txinvoke_( delegate,  method,  args,
+            					 proxy, providerManagerInfo,txinterceptor );
+            		}
+            		else
+            		{
+            			untxinvoke_( delegate,  method,  args,
+           					 proxy, providerManagerInfo);
+            		}
+
+            	
+	                if (interceptor != null)
+	                	try {
+							interceptor.after(method, args);
+						} catch (Throwable e) {
+							throw new AfterThrowable(e);
+						}
                 return obj;
 
+            }
+            catch(AfterThrowable e)
+            {
+            	throw e.getCause();
             }
             catch (InvocationTargetException e)
             {
                 //log.error(e);
                 if (interceptor != null)
                 {
-                    try
-                    {
-                        interceptor.afterThrowing(method, args, e.getTargetException());
-                    }
-                    catch (Exception ei)
-                    {
-                        ei.printStackTrace();
-                    }
+                    interceptor.afterThrowing(method, args, e.getTargetException());
+                    
                 }
 
                 // 将方法抛出的异常直接抛出方法异常
@@ -309,34 +401,28 @@ public class CGLibUtil {
             }
             catch (Throwable t)
             {
-                log.error(t);
-                try
-                {
-                    // t.printStackTrace();
-                    if (interceptor != null)
-                        interceptor.afterThrowing(method, args, t);
-                }
-                catch (Exception e)
-                {
-                    e.printStackTrace();
-                }
+                
+                if (interceptor != null)
+                	interceptor.afterThrowing(method, args, t);
+                
                 throw t;
             }
             finally
             {
-                try
+                if (interceptor != null)
                 {
-                    if (interceptor != null)
-                        interceptor.afterFinally(method, args);
+                       interceptor.afterFinally(method, args);
+                       interceptor = null;
+                }
 
-                }
-                catch (Exception e)
-                {
-                    e.printStackTrace();
-                }
-                interceptor = null;
+               
+                
             }
         }
+//		finally
+//		{
+//			
+//		}
       
     }
 	public static Object invokeSynTX(final Object delegate, final Method method, final Object[] args,
@@ -392,7 +478,7 @@ public class CGLibUtil {
 			MethodProxy proxy,CallContext callcontext,ServiceID serviceID,ProviderManagerInfo providerManagerInfo) throws Throwable {
 		if (!serviceID.isRemote())
         {
-            Interceptor interceptor = providerManagerInfo.getTransactionInterceptor();
+            Interceptor interceptor = providerManagerInfo.getSynTransactionInterceptor(method);
             try
             {
 
@@ -712,7 +798,7 @@ public class CGLibUtil {
     {
         if (!serviceID.isRemote())
         {
-            Interceptor interceptor = providerManagerInfo.getTransactionInterceptor();
+            Interceptor interceptor = providerManagerInfo.getSynTransactionInterceptor(method);
             try
             {
 

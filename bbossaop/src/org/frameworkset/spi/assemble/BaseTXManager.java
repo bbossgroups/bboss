@@ -22,7 +22,7 @@ public abstract class BaseTXManager implements java.io.Serializable,UNmodify
 
     protected List<InterceptorInfo> interceptors = new ArrayList<InterceptorInfo>();
 
-    protected boolean callorder_sequence = true;
+    protected boolean callorder_sequence = false;
     protected AOPMethods asyncMethods;
 
     /**
@@ -88,7 +88,7 @@ public abstract class BaseTXManager implements java.io.Serializable,UNmodify
 	 protected void setAsyncMethods(AOPMethods asyncMethods) {
 			this.asyncMethods = asyncMethods;
 		}
-    public Interceptor getTransactionInterceptor()
+    public Interceptor getSynTransactionInterceptor(Method method)
     {
 
         if (this.interceptors != null && this.interceptors.size() > 0)
@@ -101,13 +101,13 @@ public abstract class BaseTXManager implements java.io.Serializable,UNmodify
                 {
                     if (intercptor != null)
                     {
-                        TransactionInterceptor wrapInterceptor = new TransactionInterceptor(this.txs);
+                        TransactionInterceptor wrapInterceptor = new TransactionInterceptor(this.txs,method);
                         InterceptorChain inteceptor = new InterceptorChain(wrapInterceptor, intercptor, true);
                         return inteceptor;
                     }
                     else
                     {
-                        TransactionInterceptor wrapInterceptor = new TransactionInterceptor(this.txs);
+                        TransactionInterceptor wrapInterceptor = new TransactionInterceptor(this.txs,method);
 
                         return wrapInterceptor;
                     }
@@ -119,15 +119,40 @@ public abstract class BaseTXManager implements java.io.Serializable,UNmodify
             }
             else
             {
-                Interceptor intercptor = this.getSequenceInterceptor();
+                Interceptor intercptor = this.getSequenceInterceptor(method);
                 return intercptor;
 
             }
         }
         else if (this.enableTransaction())
         {
-            return new TransactionInterceptor(this.txs);
+            return new TransactionInterceptor(this.txs,method);
         }
+        return null;
+    }
+	 public Interceptor getTransactionInterceptor(Method method)
+    {
+
+        if (this.enableTransaction())
+        {  
+            TransactionInterceptor wrapInterceptor = new TransactionInterceptor(this.txs,method);
+            return wrapInterceptor;
+        }
+        return null;
+    }
+    /**
+     * 
+     * @return
+     */
+    public Interceptor getInterceptorChain()
+    {
+
+        if (this.interceptors != null && this.interceptors.size() > 0)
+        {
+            Interceptor intercptor = getChainInterceptor();
+            return intercptor;
+        }
+        
         return null;
     }
     private Object lock = new Object();
@@ -163,7 +188,7 @@ public abstract class BaseTXManager implements java.io.Serializable,UNmodify
     protected abstract void initAsyncMethods() ;
     protected abstract void initTransactions();
 
-    private Interceptor getSequenceInterceptor()
+    private Interceptor getSequenceInterceptor(Method method)
     {
         loadTXAnnotation();
         if (this.interceptors != null && interceptors.size() > 0)
@@ -186,25 +211,25 @@ public abstract class BaseTXManager implements java.io.Serializable,UNmodify
                 catch (ClassNotFoundException ex)
                 {
                     // ex.printStackTrace();
-                    log.error(ex);
+                    log.error("",ex);
                 }
                 catch (IllegalAccessException ex)
                 {
-                    log.error(ex);
+                    log.error("",ex);
                 }
                 catch (InstantiationException ex)
                 {
-                    log.error(ex);
+                    log.error("",ex);
                 }
                 catch (java.lang.NullPointerException ne)
                 {
-                    log.error(ne);
+                    log.error("",ne);
                 }
 
             }
             if (this.enableTransaction())
             {
-                TransactionInterceptor wrapInterceptor = new TransactionInterceptor(this.txs);
+                TransactionInterceptor wrapInterceptor = new TransactionInterceptor(this.txs,method);
                 InterceptorWrapper wraper = new InterceptorWrapper(wrapInterceptor, _t);
                 return wraper;
 
@@ -219,7 +244,7 @@ public abstract class BaseTXManager implements java.io.Serializable,UNmodify
         }
         else
         {
-            TransactionInterceptor wrapInterceptor = new TransactionInterceptor(this.txs);
+            TransactionInterceptor wrapInterceptor = new TransactionInterceptor(this.txs,method);
             return wrapInterceptor;
         }
 

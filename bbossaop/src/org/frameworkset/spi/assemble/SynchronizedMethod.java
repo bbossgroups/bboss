@@ -562,6 +562,8 @@ public class SynchronizedMethod implements java.io.Serializable {
 	 */
 	public boolean isRollbackException(Throwable throwable)
 	{
+		if(rollbackExceptions == null || rollbackExceptions.size() ==0)
+			return true;
 		String key = throwable.getClass().getName();
 		Boolean t = (Boolean)rollbackExceptionIndexs.get(key);
 		if(t != null)

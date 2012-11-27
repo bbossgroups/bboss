@@ -80,6 +80,8 @@ public class AOPMethods  implements java.io.Serializable,UNmodify
     
     private SynchronizedMethod containMethod(Method method)
     {
+    	if(aopMethods == null || aopMethods.size() == 0)
+    		return null;
         try
         {
 
@@ -128,7 +130,7 @@ public class AOPMethods  implements java.io.Serializable,UNmodify
         }
         catch (Exception e)
         {
-            e.printStackTrace();
+            log.info("",e);
             return null;
         }
     }

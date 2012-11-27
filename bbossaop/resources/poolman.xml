@@ -10,14 +10,14 @@
     <loadmetadata>false</loadmetadata>
     <jndiName>jdbc/derby-ds</jndiName>
     <driver>org.apache.derby.jdbc.EmbeddedDriver</driver>
-     <url>jdbc:derby:D:/workspace/bbossgroups-3.1/bboss-mvc/database/cimdb</url> 
+     <url>jdbc:derby:D:/bbossgroups-3.5.1/database/cimdb</url> 
     <username></username>   
     <password></password>
     <txIsolationLevel>READ_COMMITTED</txIsolationLevel>
     <nativeResults>true</nativeResults>
     <poolPreparedStatements>false</poolPreparedStatements>
     <initialConnections>2</initialConnections>    
-    <minimumSize>0</minimumSize>
+    <minimumSize>2</minimumSize>
     <maximumSize>10</maximumSize>
 	<!--控制connection达到maximumSize是否允许再创建新的connection
 		true：允许，缺省值

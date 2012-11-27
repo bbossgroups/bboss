@@ -658,6 +658,13 @@ public class ProviderParser extends DefaultHandler
             p.setDestroyMethod(destroyMethod);
             String initMethod = attributes.getValue("init-method");
             p.setInitMethod(initMethod);
+            //callorder_sequence标识组件配置的拦截器以顺序方式执行还是以堆栈方式执行,
+            //true:顺序方式执行，拦截器中的每个方法都是按照配置顺序执行，before、after、afterthrow、afterfinally都是按照先后顺序执行
+            //false:链式方式执行，拦截器中的每个方法都是按照配置堆栈方式执行执行，
+            //先按先后顺序执行所有拦截器的before方法，然后按逆序执行所有拦截器的after、afterthrow、afterfinally三个方法
+            //默认值为false
+            p
+            .setCallorder_sequence(getBoolean(attributes.getValue("callorder_sequence"), false));
             this.buildXpath(p);
             setFAttr(p, attributes);
             if(label != null && !label.equals(""))
@@ -779,7 +786,7 @@ public class ProviderParser extends DefaultHandler
             providerManger.setSinglable(getBoolean(attributes.getValue("singlable"), true));
             providerManger.setDefaultable(getBoolean(attributes.getValue("default"), false));
             providerManger
-                    .setCallorder_sequence(getBoolean(attributes.getValue("callorder_sequence"), true));
+                    .setCallorder_sequence(getBoolean(attributes.getValue("callorder_sequence"), false));
             managers.put(id, providerManger);
             traceStack.push(providerManger);
         }
