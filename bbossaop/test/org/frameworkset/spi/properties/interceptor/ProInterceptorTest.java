@@ -17,7 +17,6 @@
 package org.frameworkset.spi.properties.interceptor;
 
 import org.frameworkset.spi.BaseApplicationContext;
-import org.frameworkset.spi.BaseSPIManager;
 import org.frameworkset.spi.DefaultApplicationContext;
 import org.junit.Test;
 
