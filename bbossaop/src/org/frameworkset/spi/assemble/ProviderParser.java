@@ -156,106 +156,132 @@ public class ProviderParser extends DefaultHandler
 	    	return false;
     	}
     }
-    @SuppressWarnings("unchecked")
-	public void endElement(String s1, String s2, String name)
+    private void endProperty(Pro p,String s1, String s2, String name)
     {
-    	if (name.equals("p") || name.equals("property"))
-        {
-            Pro p = (Pro) traceStack.pop();
-           
-            if (p.getValue() == null)
+//    	Pro p = (Pro) traceStack.pop();
+    	boolean isinterceptor = (p instanceof InterceptorInfo);
+    	if(!isinterceptor)
+    	{
+	        if ( p.getValue() == null)
+	        {		
+	        	String _value = null;
+	        	if(this.isSOAApplicationContext)
+	        		_value = currentValue.toString();
+	        	else
+	        		_value = currentValue.toString().trim();
+	        	if(_value.length() > 0)
+	            {
+	        		p.setValue(_value);
+	            	currentValue.delete(0, currentValue.length());
+	            }
+	//            else if(p.getClazz() != null && !p.getClazz().equals("") 
+	//                    && (p.getRefid() == null || p.getRefid().equals("")))
+	            else if(isbean(p))
+	            {
+	                p.setBean(true);
+	                
+	            }
+	        }
+    	}
+    	else
+    	{
+    		if(isbean(p))
             {
-            	String _value = null;
-            	if(this.isSOAApplicationContext)
-            		_value = currentValue.toString();
-            	else
-            		_value = currentValue.toString().trim();
-            	if(_value.length() > 0)
-                {
-            		p.setValue(_value);
-                	currentValue.delete(0, currentValue.length());
-                }
-//                else if(p.getClazz() != null && !p.getClazz().equals("") 
-//                        && (p.getRefid() == null || p.getRefid().equals("")))
-                else if(isbean(p))
-                {
-                    p.setBean(true);
-                    
-                }
+                p.setBean(true);
+                
             }
-            if(traceStack.size() > 0)
+    	}
+        
+        if(traceStack.size() > 0)
+        {
+            Object value = this.traceStack.peek();
+            if(value instanceof Pro)
             {
-                Object value = this.traceStack.peek();
-                if(value instanceof Pro)
-                {
-                	Pro pro = (Pro)value;
-                	pro.addReferenceParam(p);
-                	
-                }
-                else if (value instanceof List)
-                {
-                    ProList<Pro> list = (ProList<Pro>) value;
-//                    list.add(p.getValue());
-                    list.add(p);
-                }
-                else if (value instanceof Map)
-                {
-                	ProMap<String,Pro> map = (ProMap<String,Pro>)value;
-//                    map.put(p.getName(), p.value);
-                    map.put(p.getName(), p);
-                    
-                }
-                else if (value instanceof ProArray)
-                {
-                	ProArray set = (ProArray)value;
-//                    set.add(p.value);
-                    set.addPro(p);
-                }
+            	if(!isinterceptor )
+            	{
+
+	            	Pro pro = (Pro)value;
+	            	pro.addReferenceParam(p);
+            	}
+            	else
+            	{
+	            	BaseTXManager providerManagerInfo = (BaseTXManager)value;
+                	providerManagerInfo.addInterceptor((InterceptorInfo)p);
+            	}
+            	
+            }
+            else if (value instanceof List)
+            {
+                ProList<Pro> list = (ProList<Pro>) value;
+//                list.add(p.getValue());
+                list.add(p);
+            }
+            else if (value instanceof Map)
+            {
+            	ProMap<String,Pro> map = (ProMap<String,Pro>)value;
+//                map.put(p.getName(), p.value);
+                map.put(p.getName(), p);
                 
-                else if(value instanceof Construction)
-                {
-                	Construction construction = (Construction)value;
-                	construction.addParam(p);
-                }
-                else if (value instanceof Set)
-                {
-                	ProSet<Pro> set = (ProSet<Pro>)value;
-//                    set.add(p.value);
-                    set.add(p);
-                }
-                
-                else if(value instanceof ProviderManagerInfo)
-                {
-                	ProviderManagerInfo providerManagerInfo = (ProviderManagerInfo) value;
-                	providerManagerInfo.addReference(p);
-//                	if(p.getName() != null)
-//                		p.setUuid(providerManagerInfo.getId() + Pro.id_mask + p.getName());
-//                	else
-//                	{
-//                		p.setUuid(providerManagerInfo.getId());
-//                	}
-                }
-                else
-                {
-                    this.properties.put(p.getName(), p);
-                }
+            }
+            else if (value instanceof ProArray)
+            {
+            	ProArray set = (ProArray)value;
+//                set.add(p.value);
+                set.addPro(p);
+            }
+            
+            else if(value instanceof Construction)
+            {
+            	Construction construction = (Construction)value;
+            	construction.addParam(p);
+            }
+            else if (value instanceof Set)
+            {
+            	ProSet<Pro> set = (ProSet<Pro>)value;
+//                set.add(p.value);
+                set.add(p);
+            }
+            
+            else if(value instanceof ProviderManagerInfo)
+            {
+            	ProviderManagerInfo providerManagerInfo = (ProviderManagerInfo) value;
+            	providerManagerInfo.addReference(p);
+//            	if(p.getName() != null)
+//            		p.setUuid(providerManagerInfo.getId() + Pro.id_mask + p.getName());
+//            	else
+//            	{
+//            		p.setUuid(providerManagerInfo.getId());
+//            	}
             }
             else
             {
                 this.properties.put(p.getName(), p);
             }
-//            /**
-//             * 初始化事务信息
-//             */
-//            p.initTransactions();
-            p.freeze();
-            p = null;
+        }
+        else
+        {
+            this.properties.put(p.getName(), p);
+        }
+//        /**
+//         * 初始化事务信息
+//         */
+//        p.initTransactions();
+        p.freeze();
+        p = null;
+
+    }
+    @SuppressWarnings("unchecked")
+	public void endElement(String s1, String s2, String name)
+    {
+    	if (name.equals("p") || name.equals("property"))
+        {
+    		Pro p = (Pro) traceStack.pop();
+    		endProperty(p, s1, s2, name);
 
         }
     	 else if (name.equals("l")||name.equals("list"))
          {
              ProList list = (ProList) this.traceStack.pop();
-
              Pro pro = (Pro) this.traceStack.peek();
 //             List l = java.util.Collections.unmodifiableList(list);
              list.freeze();
@@ -343,6 +369,11 @@ public class ProviderParser extends DefaultHandler
 
                 providerManagerInfo.addSynchronizedMethod(synchronizedMethod);
             }
+            else if(parent instanceof InterceptorInfo)
+            {
+            	InterceptorInfo txs = (InterceptorInfo) this.traceStack.peek();
+                txs.addInterceptMethod(synchronizedMethod);
+            }
             else
             {
                 Transactions txs = (Transactions) this.traceStack.peek();
@@ -384,6 +415,21 @@ public class ProviderParser extends DefaultHandler
         else if(name.equals("editor"))
         {
             
+        }
+        else if (name.equals("interceptor"))
+        {
+        	InterceptorInfo interceptor = (InterceptorInfo)this.traceStack.pop();
+        	this.endProperty(interceptor,s1, s2, name);
+        	
+//        	Object obj = this.traceStack.peek();
+//        	
+//        	BaseTXManager providerManagerInfo = (BaseTXManager) obj;
+//            InterceptorInfo interceptor = new InterceptorInfo();
+//            String clazz = attributes.getValue("class");
+//            interceptor.setClazz(clazz);
+//
+//            providerManagerInfo.addInterceptor(interceptor);
+
         }
 
        currentValue.delete(0, currentValue.length());
@@ -586,6 +632,93 @@ public class ProviderParser extends DefaultHandler
         }
 //    	return xpath;
     }
+    
+    private void startProperty(Pro p,String s1, String s2, String name, Attributes attributes)
+    {
+    	
+        String name_ = null;
+        String value = null;
+        String clazz = null;
+        if(this.isSOAApplicationContext)
+        {
+        	 name_ = attributes.getValue("n");
+        	 if(name_ == null)
+        	 {
+        		 name_ = attributes.getValue("name");
+        		 if(name_ == null || name_.equals(""))
+                 {
+                 	 String id = attributes.getValue("id");
+                 	 name_ = id;
+                 }
+        	 }              
+        	value = attributes.getValue("v");   
+        	if(value == null)
+        		value = attributes.getValue("value");
+        	 clazz = attributes.getValue("cs");
+	            if(clazz == null)
+	            	clazz = attributes.getValue("class");
+        }
+        else
+        {
+        	 name_ = attributes.getValue("name");                 
+             if(name_ == null || name_.equals(""))
+             {
+             	 String id = attributes.getValue("id");
+             	name_ = id;
+             }
+        	 value = attributes.getValue("value");
+        	 clazz = attributes.getValue("class");
+          
+        }
+        
+        if (name_ != null && !name_.equals(""))
+        {
+            p.setName(name_.trim());                
+        }
+
+        if (value != null)
+        {
+            p.setValue(value);
+        }
+        if (clazz != null && !clazz.equals(""))
+        {
+            p.setClazz(clazz);
+        }
+        String refid = attributes.getValue("refid");
+       
+        String label = attributes.getValue("label");
+        String factory_bean = attributes.getValue("factory-bean");
+        String factory_class = attributes.getValue("factory-class");
+        String factory_method = attributes.getValue("factory-method");
+        boolean singlable = getBoolean(attributes.getValue("singlable"), true);  
+        p.setConfigFile(this.file);
+        p.setSinglable(singlable);
+        p.setFactory_bean(factory_bean);
+        p.setFactory_class(factory_class);
+        p.setFactory_method(factory_method);
+        String destroyMethod = attributes.getValue("destroy-method");
+        p.setDestroyMethod(destroyMethod);
+        String initMethod = attributes.getValue("init-method");
+        p.setInitMethod(initMethod);
+        //callorder_sequence标识组件配置的拦截器以顺序方式执行还是以堆栈方式执行,
+        //true:顺序方式执行，拦截器中的每个方法都是按照配置顺序执行，before、after、afterthrow、afterfinally都是按照先后顺序执行
+        //false:链式方式执行，拦截器中的每个方法都是按照配置堆栈方式执行执行，
+        //先按先后顺序执行所有拦截器的before方法，然后按逆序执行所有拦截器的after、afterthrow、afterfinally三个方法
+        //默认值为false
+        p
+        .setCallorder_sequence(getBoolean(attributes.getValue("callorder_sequence"), false));
+        this.buildXpath(p);
+        setFAttr(p, attributes);
+        if(label != null && !label.equals(""))
+            p.setLabel(label);
+       
+        if (refid != null && !refid.equals(""))
+        {
+            p.setRefid(refid);
+        }
+        
+       
+    }
     public void startElement(String s1, String s2, String name, Attributes attributes)
     {
     	    	
@@ -593,82 +726,10 @@ public class ProviderParser extends DefaultHandler
         if (name.equals("p") || name.equals("property"))
         {    
 
-            Pro p = new Pro(applicationContext);
-            String name_ = null;
-            String value = null;
-            String clazz = null;
-            if(this.isSOAApplicationContext)
-            {
-            	 name_ = attributes.getValue("n");
-            	 if(name_ == null)
-            	 {
-            		 name_ = attributes.getValue("name");
-            		 if(name_ == null || name_.equals(""))
-                     {
-                     	 String id = attributes.getValue("id");
-                     	 name_ = id;
-                     }
-            	 }              
-            	value = attributes.getValue("v");   
-            	if(value == null)
-            		value = attributes.getValue("value");
-            	 clazz = attributes.getValue("cs");
-   	            if(clazz == null)
-   	            	clazz = attributes.getValue("class");
-            }
-            else
-            {
-            	 name_ = attributes.getValue("name");                 
-                 if(name_ == null || name_.equals(""))
-                 {
-                 	 String id = attributes.getValue("id");
-                 	name_ = id;
-                 }
-            	 value = attributes.getValue("value");
-            	 clazz = attributes.getValue("class");
-	          
-            }
-            
-            if (name_ != null && !name_.equals(""))
-            {
-                p.setName(name_.trim());                
-            }
+        	Pro p = new Pro(applicationContext);
+        	startProperty(p,s1, s2, name, attributes);
+        	this.traceStack.push(p);
 
-            if (value != null)
-            {
-                p.setValue(value);
-            }
-            if (clazz != null && !clazz.equals(""))
-            {
-                p.setClazz(clazz);
-            }
-            String refid = attributes.getValue("refid");
-           
-            String label = attributes.getValue("label");
-            String factory_bean = attributes.getValue("factory-bean");
-            String factory_class = attributes.getValue("factory-class");
-            String factory_method = attributes.getValue("factory-method");
-            boolean singlable = getBoolean(attributes.getValue("singlable"), true);  
-            p.setConfigFile(this.file);
-            p.setSinglable(singlable);
-            p.setFactory_bean(factory_bean);
-            p.setFactory_class(factory_class);
-            p.setFactory_method(factory_method);
-            String destroyMethod = attributes.getValue("destroy-method");
-            p.setDestroyMethod(destroyMethod);
-            String initMethod = attributes.getValue("init-method");
-            p.setInitMethod(initMethod);
-            this.buildXpath(p);
-            setFAttr(p, attributes);
-            if(label != null && !label.equals(""))
-                p.setLabel(label);
-           
-            if (refid != null && !refid.equals(""))
-            {
-                p.setRefid(refid);
-            }
-            
-            this.traceStack.push(p);
         }
         else if (name.equals("l")||name.equals("list"))
         {
@@ -779,7 +840,7 @@ public class ProviderParser extends DefaultHandler
             providerManger.setSinglable(getBoolean(attributes.getValue("singlable"), true));
             providerManger.setDefaultable(getBoolean(attributes.getValue("default"), false));
             providerManger
-                    .setCallorder_sequence(getBoolean(attributes.getValue("callorder_sequence"), true));
+                    .setCallorder_sequence(getBoolean(attributes.getValue("callorder_sequence"), false));
             managers.put(id, providerManger);
             traceStack.push(providerManger);
         }
@@ -874,14 +935,17 @@ public class ProviderParser extends DefaultHandler
 
         else if (name.equals("interceptor"))
         {
-        	Object obj = this.traceStack.peek();
-        	
-        	BaseTXManager providerManagerInfo = (BaseTXManager) obj;
-            InterceptorInfo interceptor = new InterceptorInfo();
-            String clazz = attributes.getValue("class");
-            interceptor.setClazz(clazz);
-
-            providerManagerInfo.addInterceptor(interceptor);
+        	InterceptorInfo interceptor = new InterceptorInfo(this.applicationContext);
+        	this.startProperty(interceptor, s1, s2, name, attributes);
+        	this.traceStack.push(interceptor);
+//        	Object obj = this.traceStack.peek();
+//        	
+//        	BaseTXManager providerManagerInfo = (BaseTXManager) obj;
+//            InterceptorInfo interceptor = new InterceptorInfo();
+//            String clazz = attributes.getValue("class");
+//            interceptor.setClazz(clazz);
+//
+//            providerManagerInfo.addInterceptor(interceptor);
 
         }
 

@@ -63,9 +63,9 @@ public class AOPMethods  implements java.io.Serializable,UNmodify
      * @param method
      * @return SynchronizedMethod 包含事务控制策略信息
      */
-    public SynchronizedMethod isTransactionMethod(Method method)
+    public SynchronizedMethod isTransactionMethod(Method method,String uuid)
     {
-        return containMethod(method);
+        return containMethod(method,uuid);
     }
     
     /**
@@ -73,17 +73,19 @@ public class AOPMethods  implements java.io.Serializable,UNmodify
      * @param method
      * @return
      */
-    public SynchronizedMethod isAsyncMethod(Method method)
+    public SynchronizedMethod isAsyncMethod(Method method,String uuid)
     {
-        return containMethod(method);
+        return containMethod(method,uuid);
     }
     
-    private SynchronizedMethod containMethod(Method method)
+    private SynchronizedMethod containMethod(Method method, String uuid)
     {
+    	if(aopMethods == null || aopMethods.size() == 0)
+    		return null;
         try
         {
-
-            String uuid = SynchronizedMethod.buildMethodUUID(method);
+        	if(uuid == null)
+        		uuid = SynchronizedMethod.buildMethodUUID(method);
             SynchronizedMethod match = (SynchronizedMethod) aopMethodInfoIDX.get(uuid);
             if (match == null)
             {
@@ -128,7 +130,7 @@ public class AOPMethods  implements java.io.Serializable,UNmodify
         }
         catch (Exception e)
         {
-            e.printStackTrace();
+            log.info("",e);
             return null;
         }
     }

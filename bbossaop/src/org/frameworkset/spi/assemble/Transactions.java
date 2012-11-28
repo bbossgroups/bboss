@@ -16,10 +16,7 @@
 package org.frameworkset.spi.assemble;
 
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.frameworkset.spi.UNmodify;
@@ -65,9 +62,9 @@ public class Transactions implements java.io.Serializable,UNmodify
      * @param method
      * @return SynchronizedMethod 包含事务控制策略信息
      */
-    public SynchronizedMethod isTransactionMethod(Method method)
+    public SynchronizedMethod isTransactionMethod(Method method,String muuid)
     {
-        return transationMethods.isTransactionMethod(method);
+        return transationMethods.isTransactionMethod(method,muuid);
     }
 
     public int size()

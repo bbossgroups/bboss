@@ -263,7 +263,7 @@ public class SynchronizedMethod implements java.io.Serializable {
     	}
     	catch(Exception e)
     	{
-    		log.error(e);
+    		log.error("",e);
     		return null;
     	}
     	
@@ -361,8 +361,8 @@ public class SynchronizedMethod implements java.io.Serializable {
         }
         catch(Exception e)
         {
-            e.printStackTrace();
-            log.error(e);
+          
+            log.error("",e);
             return null;
         }
     }
@@ -562,6 +562,8 @@ public class SynchronizedMethod implements java.io.Serializable {
 	 */
 	public boolean isRollbackException(Throwable throwable)
 	{
+		if(rollbackExceptions == null || rollbackExceptions.size() ==0)
+			return true;
 		String key = throwable.getClass().getName();
 		Boolean t = (Boolean)rollbackExceptionIndexs.get(key);
 		if(t != null)

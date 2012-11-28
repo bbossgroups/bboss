@@ -16,7 +16,9 @@
 
 package org.frameworkset.spi.properties.interceptor;
 
+import org.frameworkset.spi.BaseApplicationContext;
 import org.frameworkset.spi.BaseSPIManager;
+import org.frameworkset.spi.DefaultApplicationContext;
 import org.junit.Test;
 
 
@@ -32,9 +34,28 @@ import org.junit.Test;
 public class ProInterceptorTest
 {
 	@Test
+	public void testInterceptexecute() throws Exception
+	{
+		BaseApplicationContext context = DefaultApplicationContext.getApplicationContext("org/frameworkset/spi/properties/interceptor/interceptor.xml");
+		AI a = (AI)context.getBeanObject("test.interceptorbean");
+		a.test("duoduo");
+	}
+	
+	@Test
+	public void testInterceptMehodexecute() throws Exception
+	{
+		BaseApplicationContext context = DefaultApplicationContext.getApplicationContext("org/frameworkset/spi/properties/interceptor/interceptor.xml");
+		AI a = (AI)context.getBeanObject("test.interceptorbeanmethod");
+		a.test("duoduo");
+		a.test("duoduo");
+		a.notest("duoduo");
+	}
+	
+	@Test
 	public void testexecute() throws Exception
 	{
-		AI a = (AI)BaseSPIManager.getBeanObject("test.interceptorbean");
+		BaseApplicationContext context = DefaultApplicationContext.getApplicationContext("org/frameworkset/spi/properties/interceptor/interceptor.xml");
+		AI a = (AI)context.getBeanObject("test.bean");
 		a.test("duoduo");
 	}
 }

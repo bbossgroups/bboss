@@ -31,6 +31,7 @@ import com.frameworkset.proxy.Interceptor;
  * @version 1.0
  */
 public class InterceptorImpl implements Interceptor {
+	private A a;
 
 	public void after(Method method, Object[] args) throws Throwable {
 		System.out.println("Insterceptor.after(" + method.getName() + ", Object[] args)=" + args[0]);

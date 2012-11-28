@@ -30,4 +30,5 @@ public interface AI
 {
 	public void test(String msg)
 	;
+	public void notest(String msg);
 }

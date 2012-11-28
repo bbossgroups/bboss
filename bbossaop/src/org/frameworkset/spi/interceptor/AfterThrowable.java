@@ -14,33 +14,36 @@
  *  limitations under the License.
  */
 
-package org.frameworkset.spi.properties.interceptor;
-
+package org.frameworkset.spi.interceptor;
 
 /**
- * <p>Title: A.java</p> 
+ * <p>Title: AfterThrowable.java</p> 
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2010-1-28 обнГ10:21:08
+ * @Date 2012-11-27 обнГ7:04:56
  * @author biaoping.yin
  * @version 1.0
  */
-public class A implements AI
-{
+public class AfterThrowable extends Exception {
 
-	public void test(String msg)
-	{
-
-		System.out.println("A.test:" + msg);
-		
+	public AfterThrowable() {
+		// TODO Auto-generated constructor stub
 	}
-	
-	public void notest(String msg)
-	{
 
-		System.out.println("A.notest:" + msg);
-		
+	public AfterThrowable(String message) {
+		super(message);
+		// TODO Auto-generated constructor stub
+	}
+
+	public AfterThrowable(Throwable cause) {
+		super(cause);
+		// TODO Auto-generated constructor stub
+	}
+
+	public AfterThrowable(String message, Throwable cause) {
+		super(message, cause);
+		// TODO Auto-generated constructor stub
 	}
 
 }

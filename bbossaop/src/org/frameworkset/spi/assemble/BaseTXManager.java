@@ -2,11 +2,14 @@ package org.frameworkset.spi.assemble;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.frameworkset.spi.ProviderInterceptor;
 import org.frameworkset.spi.UNmodify;
+import org.frameworkset.spi.interceptor.DumyInterceptor;
 import org.frameworkset.spi.interceptor.InterceptorChain;
 import org.frameworkset.spi.interceptor.InterceptorWrapper;
 import org.frameworkset.spi.interceptor.TransactionInterceptor;
@@ -22,7 +25,7 @@ public abstract class BaseTXManager implements java.io.Serializable,UNmodify
 
     protected List<InterceptorInfo> interceptors = new ArrayList<InterceptorInfo>();
 
-    protected boolean callorder_sequence = true;
+    protected boolean callorder_sequence = false;
     protected AOPMethods asyncMethods;
 
     /**
@@ -38,20 +41,22 @@ public abstract class BaseTXManager implements java.io.Serializable,UNmodify
         this.txs = txs;
 
     }
-    public SynchronizedMethod isTransactionMethod(Method method)
+    public SynchronizedMethod isTransactionMethod(Method method,String muuid)
     {   
         this.loadTXAnnotation();
         if(txs == null)
                 return null;
-        return txs.isTransactionMethod(method);
+        return txs.isTransactionMethod(method,muuid);
     }
     
-    public SynchronizedMethod isAsyncMethod(Method method)
+    
+    
+    public SynchronizedMethod isAsyncMethod(Method method,String muuid)
     {   
         this.loadAsyncAnnotation();
         if(this.asyncMethods == null)
                 return null;
-        return this.asyncMethods.isAsyncMethod(method);
+        return this.asyncMethods.isAsyncMethod(method,muuid);
     }
     
     
@@ -88,26 +93,39 @@ public abstract class BaseTXManager implements java.io.Serializable,UNmodify
 	 protected void setAsyncMethods(AOPMethods asyncMethods) {
 			this.asyncMethods = asyncMethods;
 		}
-    public Interceptor getTransactionInterceptor()
-    {
 
-        if (this.interceptors != null && this.interceptors.size() > 0)
+    public Interceptor getSynTransactionInterceptor(Method method,String muuid)
+
+    
+    {
+    	
+        if (this.enableInterceptor())
         {
+        	if(muuid == null)
+        		muuid = SynchronizedMethod.buildMethodUUID(method);
             if (!callorder_sequence)
             {
-                Interceptor intercptor = getChainInterceptor();
+                Interceptor intercptor = getChainInterceptor( method, muuid);
 
                 if (this.enableTransaction())
                 {
                     if (intercptor != null)
                     {
-                        TransactionInterceptor wrapInterceptor = new TransactionInterceptor(this.txs);
+                    	SynchronizedMethod synmethod = txs.isTransactionMethod(method,muuid);
+                    	if(synmethod == null)
+                    		return intercptor;
+                        TransactionInterceptor wrapInterceptor = new TransactionInterceptor(synmethod);
+
                         InterceptorChain inteceptor = new InterceptorChain(wrapInterceptor, intercptor, true);
                         return inteceptor;
                     }
                     else
                     {
-                        TransactionInterceptor wrapInterceptor = new TransactionInterceptor(this.txs);
+                    	SynchronizedMethod synmethod = txs.isTransactionMethod(method,muuid);
+                    	if(synmethod == null)
+                    		return null;
+                        TransactionInterceptor wrapInterceptor = new TransactionInterceptor(synmethod);
+
 
                         return wrapInterceptor;
                     }
@@ -119,16 +137,79 @@ public abstract class BaseTXManager implements java.io.Serializable,UNmodify
             }
             else
             {
-                Interceptor intercptor = this.getSequenceInterceptor();
+
+                Interceptor intercptor = this.getSequenceInterceptor(method, muuid);
+
                 return intercptor;
 
             }
         }
         else if (this.enableTransaction())
         {
-            return new TransactionInterceptor(this.txs);
+        	SynchronizedMethod synmethod = txs.isTransactionMethod(method,muuid);
+        	if(synmethod == null)
+        		return null;
+            return new TransactionInterceptor(synmethod);
+
         }
         return null;
+    }
+//	 public Interceptor getTransactionInterceptor(Method method)
+//    {
+//
+//        if (this.enableTransaction())
+//        {  
+//            TransactionInterceptor wrapInterceptor = new TransactionInterceptor(this.txs,method);
+//            return wrapInterceptor;
+//        }
+//        return null;
+//    }
+    /**
+     * 
+     * @return
+     */
+//    public Interceptor getInterceptorChain(Method method,String methoduuid)
+//    {
+//
+//        if (this.interceptors != null && this.interceptors.size() > 0)
+//        {
+//            Interceptor intercptor = getChainInterceptor( method, methoduuid);
+//            return intercptor;
+//        }
+//        
+//        return null;
+//    }
+	 public Interceptor getTransactionInterceptor(Method method,String muuid)
+    {
+
+        if (this.enableTransaction())
+        {  
+        	SynchronizedMethod synmethod = txs.isTransactionMethod(method,muuid);
+        	if(synmethod == null)
+        		return null;
+            TransactionInterceptor wrapInterceptor = new TransactionInterceptor(synmethod);
+            return wrapInterceptor;
+        }
+        return null;
+    }
+	private Object InterceptorChainLock = new Object();
+	private Interceptor nullintercptor = new DumyInterceptor();
+	private Map<String,Interceptor> methodInterceptorMap = new HashMap<String,Interceptor>();
+	
+    /**
+     * 
+     * @return
+     */
+    public Interceptor getChainInterceptor(Method method,String methoduuid)
+    {
+    	return _getInterceptor( method, methoduuid, false);
+        
+        
+        
+    }
+    private Interceptor getSequenceInterceptor(Method method,String methoduuid)
+    {
+    	return _getInterceptor( method, methoduuid, true);
     }
     private Object lock = new Object();
     protected void loadTXAnnotation()
@@ -162,11 +243,60 @@ public abstract class BaseTXManager implements java.io.Serializable,UNmodify
     
     protected abstract void initAsyncMethods() ;
     protected abstract void initTransactions();
+    public boolean enableInterceptor()
+    {
+    	if(this.interceptors == null || this.interceptors.size() == 0)
+    		return false;
+    	return true;
+    }
+    private Interceptor _getInterceptor(Method method,String methoduuid,boolean sequence)
+    {
+    	if(!enableInterceptor())
+    		return null;
+    	if(methoduuid == null)
+    		methoduuid = SynchronizedMethod.buildMethodUUID(method);
+    	Interceptor intercptorChain = methodInterceptorMap.get(methoduuid);
+    	if(intercptorChain != null)
+    	{
+    		if(intercptorChain == nullintercptor)
+    			return null;
+    		else
+    		{
+    			return intercptorChain;
+    		}
+    	}
+    	    	
+        
+		synchronized(InterceptorChainLock)
+		{
+			intercptorChain = methodInterceptorMap.get(methoduuid);
+	    	if(intercptorChain != null)
+	    	{
+	    		if(intercptorChain == nullintercptor)
+	    			return null;
+	    		else
+	    		{
+	    			return intercptorChain;
+	    		}
+	    	}
+	    	if(!sequence)
+	    		intercptorChain = _getChainInterceptor( method,methoduuid);
+	    	else
+	    		intercptorChain = _getSequenceInterceptor( method,methoduuid);
+	    	if(intercptorChain == null)
+	    		methodInterceptorMap.put(methoduuid, nullintercptor);
+	    	else
+	    		methodInterceptorMap.put(methoduuid, intercptorChain);
+	    	
+            return intercptorChain;
+		}
+    }
+    
+    private Interceptor _getSequenceInterceptor(Method method,String muuid)
 
-    private Interceptor getSequenceInterceptor()
     {
         loadTXAnnotation();
-        if (this.interceptors != null && interceptors.size() > 0)
+        if (enableInterceptor())
         {
             int size = interceptors.size();
             List _t = new ArrayList(size);
@@ -177,34 +307,31 @@ public abstract class BaseTXManager implements java.io.Serializable,UNmodify
                 {
 
                     InterceptorInfo it = (InterceptorInfo) interceptors.get(i);
-                    Interceptor transactionInterceptor = (Interceptor) Class.forName(it.getClazz()).newInstance();
+                    if(!it.allWillBeIntercept() || it.isInterceptMethod(method, muuid )== null)//如果不是一个需要被本拦截器拦截的方法，则忽略该拦截器
+                    	continue;    
+//                    Interceptor transactionInterceptor = (Interceptor) Class.forName(it.getClazz()).newInstance();
+                    Interceptor transactionInterceptor = (Interceptor)it.getBean();
                     if (transactionInterceptor instanceof ProviderInterceptor)
                         ((ProviderInterceptor) transactionInterceptor).setProviderManagerInfo(this);
 
                     _t.add(transactionInterceptor);
                 }
-                catch (ClassNotFoundException ex)
+
+                catch (Exception ne)
                 {
-                    // ex.printStackTrace();
-                    log.error(ex);
-                }
-                catch (IllegalAccessException ex)
-                {
-                    log.error(ex);
-                }
-                catch (InstantiationException ex)
-                {
-                    log.error(ex);
-                }
-                catch (java.lang.NullPointerException ne)
-                {
-                    log.error(ne);
+
+
+                    log.error("",ne);
                 }
 
             }
             if (this.enableTransaction())
             {
-                TransactionInterceptor wrapInterceptor = new TransactionInterceptor(this.txs);
+            	SynchronizedMethod synmethod = txs.isTransactionMethod(method,muuid);
+            	if(synmethod == null)
+            		return new InterceptorWrapper(_t);
+                TransactionInterceptor wrapInterceptor = new TransactionInterceptor(synmethod);
+
                 InterceptorWrapper wraper = new InterceptorWrapper(wrapInterceptor, _t);
                 return wraper;
 
@@ -219,7 +346,10 @@ public abstract class BaseTXManager implements java.io.Serializable,UNmodify
         }
         else
         {
-            TransactionInterceptor wrapInterceptor = new TransactionInterceptor(this.txs);
+        	SynchronizedMethod synmethod = txs.isTransactionMethod(method,muuid);
+        	if(synmethod == null)
+        		return null;
+            TransactionInterceptor wrapInterceptor = new TransactionInterceptor(synmethod);
             return wrapInterceptor;
         }
 
@@ -230,9 +360,9 @@ public abstract class BaseTXManager implements java.io.Serializable,UNmodify
      * 
      * @return
      */
-    private Interceptor getChainInterceptor()
+    private Interceptor _getChainInterceptor(Method method,String methoduuid)
     {
-        if (this.interceptors != null && interceptors.size() > 0)
+        if (enableInterceptor())
         {
             int size = interceptors.size();
             Interceptor next = null;
@@ -242,7 +372,14 @@ public abstract class BaseTXManager implements java.io.Serializable,UNmodify
                 {
 
                     InterceptorInfo it = (InterceptorInfo) interceptors.get(i);
-                    Interceptor transactionInterceptor = (Interceptor) Class.forName(it.getClazz()).newInstance();
+                    if(!it.allWillBeIntercept() )//如果不是一个需要被本拦截器拦截的方法，则忽略该拦截器
+                    {
+                    	if( it.isInterceptMethod(method, methoduuid )== null)
+                    		continue;
+                    }
+                    
+//                    Interceptor transactionInterceptor = (Interceptor) Class.forName(it.getClazz()).newInstance();
+                    Interceptor transactionInterceptor = (Interceptor)it.getBean();
                     if (transactionInterceptor instanceof ProviderInterceptor)
                         ((ProviderInterceptor) transactionInterceptor).setProviderManagerInfo(this);
                     if (next != null)
@@ -255,22 +392,10 @@ public abstract class BaseTXManager implements java.io.Serializable,UNmodify
                         next = transactionInterceptor;
                     }
                 }
-                catch (ClassNotFoundException ex)
+
+                catch (Exception ne)
                 {
-                    // ex.printStackTrace();
-                    log.error("",ex);
-                }
-                catch (IllegalAccessException ex)
-                {
-                    log.error("",ex);
-                }
-                catch (InstantiationException ex)
-                {
-                    log.error("",ex);
-                }
-                catch (java.lang.NullPointerException ne)
-                {
-                    log.error(ne);
+                    log.info("",ne);
                 }
             }
             return next;

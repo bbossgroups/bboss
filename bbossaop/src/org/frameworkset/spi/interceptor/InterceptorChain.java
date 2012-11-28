@@ -17,6 +17,8 @@ package org.frameworkset.spi.interceptor;
 
 import java.lang.reflect.Method;
 
+import org.testng.log4testng.Logger;
+
 import com.frameworkset.proxy.Interceptor;
 
 /**
@@ -38,6 +40,7 @@ public class InterceptorChain implements Interceptor {
 	protected Interceptor next;
 	protected Interceptor current;
 	protected boolean istx = false;
+//	private static final Logger log = Logger.getLogger(InterceptorChain.class);
 
 	public InterceptorChain(Interceptor current,Interceptor next)
 	{
@@ -54,25 +57,27 @@ public class InterceptorChain implements Interceptor {
 		
 		try
 		{
-			
-			this.next.after(method, args);
+			if(next != null)
+				this.next.after(method, args);
+			this.current.after(method, args);
 		}
 		catch(Exception e)
 		{
-			e.printStackTrace();
+//			log.error("",e);
+			throw e;
 		}
 		finally
 		{
-			try
-			{
-				this.current.after(method, args);
-			}
-			catch(Exception e)
-			{
-				if(this.istx)
-					throw e;
-				e.printStackTrace();
-			}
+//			try
+//			{
+//				this.current.after(method, args);
+//			}
+//			catch(Exception e)
+//			{
+//				if(this.istx)
+//					throw e;
+//				log.error("",e);
+//			}
 		}
 
 	}
@@ -81,27 +86,30 @@ public class InterceptorChain implements Interceptor {
 		
 		try
 		{
-			this.next.afterFinally(method, args);
+			if(next != null)
+				this.next.afterFinally(method, args);
+			this.current.afterFinally(method, args);
 		}
 		catch(Exception e)
 		{
-			e.printStackTrace();
 			
+//			log.info("",e);
+			throw e;
 		}
 		finally
 		{
-			try
-			{
-				this.current.afterFinally(method, args);
-			}
-			catch(Exception e)
-			{
-				if(this.istx )
-					throw e;
-				
-				e.printStackTrace();
-				
-			}
+//			try
+//			{
+//				this.current.afterFinally(method, args);
+//			}
+//			catch(Exception e)
+//			{
+//				if(this.istx )
+//					throw e;
+//				
+//				
+//				
+//			}
 			
 		}
 
@@ -111,26 +119,28 @@ public class InterceptorChain implements Interceptor {
 		
 		try
 		{
-			this.next.afterThrowing(method, args, throwable);
+			if(next != null)
+				this.next.afterThrowing(method, args, throwable);
+			this.current.afterThrowing(method, args, throwable);
 		}
 		catch(Exception e)
 		{
-			
-			e.printStackTrace();
+			throw e;
+//			log.info("",e);
 		}
 		finally
 		{
 			
-			try
-			{
-				this.current.afterThrowing(method, args, throwable);
-			}
-			catch(Exception e)
-			{
-				if(this.istx)
-					throw e;
-				e.printStackTrace();
-			}
+//			try
+//			{
+//				this.current.afterThrowing(method, args, throwable);
+//			}
+//			catch(Exception e)
+//			{
+//				if(this.istx)
+//					throw e;
+//				log.info("",e);
+//			}
 			
 			
 		}
@@ -142,26 +152,27 @@ public class InterceptorChain implements Interceptor {
 		
 		try
 		{
-			this.next.afterThrowing(method, args, null);
+			if(next != null)
+				this.next.afterThrowing(method, args, null);
+			this.current.afterThrowing(method, args, null);
 		}
 		catch(Exception e)
-		{
-			
-			e.printStackTrace();
+		{	
+			throw e;
 		}
 		finally
 		{
 			
-			try
-			{
-				this.current.afterThrowing(method, args, null);
-			}
-			catch(Exception e)
-			{
-				if(this.istx)
-					throw e;
-				e.printStackTrace();
-			}
+//			try
+//			{
+//				this.current.afterThrowing(method, args, null);
+//			}
+//			catch(Exception e)
+//			{
+//				if(this.istx)
+//					throw e;
+//				log.info("",e);
+//			}
 			
 			
 		}
@@ -174,25 +185,21 @@ public class InterceptorChain implements Interceptor {
 		try
 		{
 			this.current.before(method, args);
+			if(next != null)
+				this.next.before(method, args);			
+		}
+		catch(InterruptionException e)
+		{
+			throw e;
 		}
 		catch(Exception e)
 		{
-			if(istx)
-				throw e;
-			e.printStackTrace();
+//			if(istx)
+//				throw e;
+//			log.info("",e);
+			throw e;
 		}
-		finally
-		{
-			try
-			{
-				this.next.before(method, args);
-			}
-			catch(Exception e)
-			{
-				e.printStackTrace();
-			}		
-			
-		}
+		
 	}
 	
 	

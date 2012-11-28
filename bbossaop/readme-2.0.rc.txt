@@ -118,6 +118,12 @@ classpath根目录下，例如classes目录。
 more details see my blog [http://blog.csdn.net/yin_bp]
 todo list:
 运行aop/ioc的最小依赖包整理
+#######update function list since bbossgroups-3.6 begin###########
+1.优化ioc框架中拦截器和事务拦截器机制
+2.将拦截器改为链式拦截器，并且全部改为单例模式
+3.拦截器上增加拦截方法匹配模式
+
+
 #######update function list since bbossgroups-3.5 begin###########
 ------2012-05-22-------------
 o 改进sql语句管理组件SQLUtil，将sql语句前后的空格去掉

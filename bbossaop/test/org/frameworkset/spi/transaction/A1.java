@@ -41,7 +41,8 @@ public class A1 implements AI{
 		DBUtil db = new DBUtil();
 		System.out.println("db.getNumIdle():" +db.getNumIdle());
 		System.out.println("db.getNumActive():" +db.getNumActive());
-		String id = db.getNextStringPrimaryKey("test");
+		db.executeDelete("delete from test");
+		String id = "aa";
 		db.executeInsert("insert into test(id,name) values('"+id+"','testTXInvoke()')");
 		db.executeInsert("insert into test1(A) values('testTXInvoke')");
 		System.out.println("1db.getNumActive():" +db.getNumActive());
