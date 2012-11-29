@@ -136,8 +136,7 @@ public class JDBCPool {
 				try {
 					this.dummyctx = (new DummyContextFactory()).getInitialContext(null);
 				} catch (NamingException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					log.info(e.getMessage());
 				}
 			}
 				
@@ -607,8 +606,8 @@ public class JDBCPool {
 					
 				}
 			} catch (NamingException e) {
-				log.error("通过JNDI名称[" + info.getExternaljndiName()
-						+ "]获取外部数据源失败:", e);
+				log.info("通过JNDI名称[" + info.getExternaljndiName()
+						+ "]获取外部数据源失败:"+e.getMessage());
 				// e.printStackTrace();
 			}
 
@@ -1860,7 +1859,7 @@ public class JDBCPool {
 
 		} catch (Exception e) {
 			
-			log.error(e);
+			log.info(e.getMessage());
 		}
 	}
 

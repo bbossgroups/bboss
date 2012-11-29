@@ -80,7 +80,7 @@ public class ContextUtil {
 				}
 			}
 			catch (NamingException e) {
-				log.error(e);
+				log.info(e.getMessage());
 				
 			}
 			catch (Exception e) {
@@ -95,7 +95,7 @@ public class ContextUtil {
 //					// TODO Auto-generated catch block
 //					e1.printStackTrace();
 //				}
-				log.error(e);
+				log.info(e.getMessage());
 			}
 			
 			
