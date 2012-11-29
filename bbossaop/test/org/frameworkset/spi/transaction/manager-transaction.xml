@@ -5,7 +5,7 @@
 <manager-config>
 	<property id="tx.a" singlable="true" class="org.frameworkset.spi.transaction.A1" >
 		<!--  
-			在下面的节点对provider的业务方法事务进行定义
+			在下面的节点对组件的业务方法事务进行定义
 			只要将需要进行事务控制的方法配置在transactions中即可
 		-->
 		<transactions>
@@ -87,9 +87,8 @@
 			<!--	通过模式方法进行声明式事务控制
 				pattern【testPatternTX[1-9.]*】表示以testPatternTX开头的所有方法		
 				 -->	
-			<method pattern="testPatternTX[1-9.]*">				
-				<param type="java.lang.String"/>
-			</method>			
+			<method pattern="testPatternTX[1-9.]*"/>				
+							
 			<!-- 
 				系统级别的异常java.lang.NullPointException，导致事务回滚
 			 -->

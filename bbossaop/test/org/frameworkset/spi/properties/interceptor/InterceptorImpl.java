@@ -32,7 +32,6 @@ import com.frameworkset.proxy.Interceptor;
  */
 public class InterceptorImpl implements Interceptor {
 	private A a;
-
 	public void after(Method method, Object[] args) throws Throwable {
 		System.out.println("Insterceptor.after(" + method.getName() + ", Object[] args)=" + args[0]);
 
@@ -53,10 +52,4 @@ public class InterceptorImpl implements Interceptor {
 
 
 	}
-
-	public void afterThrowing(Method arg0, Object[] arg1) throws Throwable {
-		// TODO Auto-generated method stub
-		
-	}
-
 }
