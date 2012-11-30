@@ -284,7 +284,7 @@ public class ConfigSQLExecutor  {
 
 
 	public void deleteBeans( String sqlname, List beans,GetCUDResult GetCUDResult) throws SQLException {
-		deleteBeans( null,sqlname, beans,GetCUDResult); 
+		deleteBeans( (String)null,sqlname, beans,GetCUDResult); 
 		
 	}
 
@@ -296,7 +296,7 @@ public class ConfigSQLExecutor  {
 //		List datas = new ArrayList();
 //		datas.add(bean);
 //		insertBeans( null,  sqlname,  datas);
-		insertBean( null,sqlname, bean);
+		insertBean( (String)null,sqlname, bean);
 	}
 	
 	public void insertBean( String sqlname, Object bean,GetCUDResult getCUDResult) throws SQLException {

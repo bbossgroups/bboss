@@ -1406,7 +1406,11 @@ public class PreparedDBUtil extends DBUtil {
 				GetCUDResult CUDResult = null;
 				if(getCUDResult)
 				{		
-					List<Object> morekeys = getGeneratedKeys(statement);
+					List<Object> morekeys = null;
+					if(Params.action == INSERT)
+					{
+						morekeys = getGeneratedKeys(statement);
+					}				
 					
 					if(morekeys != null && morekeys.size() == 1)
 						 CUDResult = new GetCUDResult(result,updatecount,morekeys.get(0));
