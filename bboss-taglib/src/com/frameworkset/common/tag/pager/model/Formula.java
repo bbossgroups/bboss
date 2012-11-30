@@ -1185,7 +1185,7 @@ public class Formula implements ModelObject
         	}
         	catch(Exception e)
         	{
-        		throw new FormulaException("attribute '" + variableName + "' is :" + t);
+        		throw new FormulaException("eval attribute '" + variableName + "' value failed:",e);
         	}
             
         }        

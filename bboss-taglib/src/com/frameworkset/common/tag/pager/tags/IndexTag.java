@@ -1868,7 +1868,9 @@ public final class IndexTag extends PagerTagSupport {
                     .append(gotopage_label)//跳转到
                     .append(go.toString())
                     .append(page_label); //页
-            		IMG image = new IMG();                
+            		IMG image = new IMG(); 
+            		image.setID(pagerjumpto);
+            		image.setName(pagerjumpto);
                     image.setSrc(buildPath(this.getImagedir(), this.go_image));
                     image.setAlt(gotopage_label);
                     if(this.imageextend != null)
@@ -1881,6 +1883,8 @@ public final class IndexTag extends PagerTagSupport {
             	}else{
             		
             		A a = new A();     
+            		a.setID(pagerjumpto);
+            		a.setName(pagerjumpto);
             		a.setOnClick(goTo);            
                     a.setTagText(gotopage_label);//跳转到
                     ret.append(a.toString()).append(go.toString()).append(page_label); //页
