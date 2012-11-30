@@ -33,7 +33,20 @@ public class GetCUDResult {
 	private Object result;
 	private Object updatecount;
 	private Object keys;
-
+	public GetCUDResult()
+	{
+		
+	}
+	
+	public void setGetCUDResult(GetCUDResult origine)
+	{
+		if(origine == null)
+			return;
+		this.result = origine.getResult();
+		this.keys = origine.getKeys();
+		this.updatecount = origine.getUpdatecount();
+	}
+	
 	public GetCUDResult(Object result,Object updatecount,Object keys) {
 		super();
 		this.result = result;
@@ -51,6 +64,18 @@ public class GetCUDResult {
 	}
 	public Object getKeys() {
 		return this.keys;
+	}
+
+	public void setResult(Object result) {
+		this.result = result;
+	}
+
+	public void setUpdatecount(Object updatecount) {
+		this.updatecount = updatecount;
+	}
+
+	public void setKeys(Object keys) {
+		this.keys = keys;
 	}
 	
 

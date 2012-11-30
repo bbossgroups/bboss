@@ -57,19 +57,19 @@ public class ConfigSQLExecutor  {
 			throw new NestedSQLException("名称为[" + sqlname + "]的sql语句不存在，请检查配置文件[" + context.getSQLFile() + "]配置是否正确.");
 		return sql;
 	}
-	public GetCUDResult insertBeans(String dbname, String sqlname, List beans) throws SQLException {
+	public void insertBeans(String dbname, String sqlname, List beans) throws SQLException {
 		
 		if(beans == null || beans.size() == 0)
-			return null;
+			return ;
 		String sql = getSql(dbname,sqlname);
-		return SQLExecutor.insertBeans( dbname,  sql,  beans);
+		SQLExecutor.insertBeans( dbname,  sql,  beans);
 	}
-	public GetCUDResult insertBeans(String dbname, String sqlname, List beans,boolean getCUDResult) throws SQLException {
+	public void insertBeans(String dbname, String sqlname, List beans,GetCUDResult getCUDResult) throws SQLException {
 		
 		if(beans == null || beans.size() == 0)
-			return null;
+			return ;
 		String sql = getSql(dbname,sqlname);
-		return SQLExecutor.insertBeans( dbname,  sql,  beans,getCUDResult);
+		SQLExecutor.insertBeans( dbname,  sql,  beans,getCUDResult);
 	}
 	
 	public Object update( String sqlname, Object... fields) throws SQLException {
@@ -175,160 +175,160 @@ public class ConfigSQLExecutor  {
 //		return execute(dbname, sql,PreparedDBUtil.INSERT, fields);
 	}
 
-	public GetCUDResult updateBeans(String dbname, String sqlname, List beans,boolean GetCUDResult) throws SQLException {
+	public void updateBeans(String dbname, String sqlname, List beans,GetCUDResult GetCUDResult) throws SQLException {
 		if(beans == null || beans.size() == 0)
-			return null;
+			return ;
 		String sql = getSql(dbname,sqlname);
-		return SQLExecutor.updateBeans(dbname,sql, beans,GetCUDResult);
+		SQLExecutor.updateBeans(dbname,sql, beans,GetCUDResult);
 //		execute( dbname,  sql,  beans,PreparedDBUtil.UPDATE);
 	}
 	
-	public GetCUDResult updateBeans(String dbname, String sqlname, List beans) throws SQLException {
+	public void updateBeans(String dbname, String sqlname, List beans) throws SQLException {
 		if(beans == null || beans.size() == 0)
-			return null;
+			return ;
 		String sql = getSql(dbname,sqlname);
-		return SQLExecutor.updateBeans(dbname,sql, beans);
+		SQLExecutor.updateBeans(dbname,sql, beans);
 //		execute( dbname,  sql,  beans,PreparedDBUtil.UPDATE);
 	}
 
 
 
-	public GetCUDResult deleteBeans(String dbname, String sqlname, List beans) throws SQLException {
+	public void deleteBeans(String dbname, String sqlname, List beans) throws SQLException {
 		if(beans == null || beans.size() == 0)
-			return null;
+			return ;
 		String sql = getSql(dbname,sqlname);
-		return SQLExecutor.deleteBeans(dbname,sql, beans);
+		SQLExecutor.deleteBeans(dbname,sql, beans);
 //		execute( dbname,  sql,  beans,PreparedDBUtil.DELETE);
 		
 	}
 	
-	public GetCUDResult deleteBeans(String dbname, String sqlname, List beans,boolean GetCUDResult) throws SQLException {
+	public void deleteBeans(String dbname, String sqlname, List beans,GetCUDResult GetCUDResult) throws SQLException {
 		if(beans == null || beans.size() == 0)
-			return null;
+			return ;
 		String sql = getSql(dbname,sqlname);
-		return SQLExecutor.deleteBeans(dbname,sql, beans,GetCUDResult);
+		SQLExecutor.deleteBeans(dbname,sql, beans,GetCUDResult);
 //		execute( dbname,  sql,  beans,PreparedDBUtil.DELETE);
 		
 	}
 
 
-	public Object insertBean(String dbname, String sqlname, Object bean) throws SQLException {
-		return insertBean(dbname, sqlname, bean,false);
+	public void insertBean(String dbname, String sqlname, Object bean) throws SQLException {
+		insertBean(dbname, sqlname, bean,(GetCUDResult)null);
 	}
-	public Object insertBean(String dbname, String sqlname, Object bean,boolean getCUDResult) throws SQLException {
+	public void insertBean(String dbname, String sqlname, Object bean,GetCUDResult getCUDResult) throws SQLException {
 		if(bean == null)
-			return null;
+			return ;
 //		List datas = new ArrayList();
 //		datas.add(bean);
 //		insertBeans( dbname,  sql,  datas);
 		String sql = getSql(dbname,sqlname);
-		return SQLExecutor.insertBean(dbname,sql, bean,getCUDResult);
+		SQLExecutor.insertBean(dbname,sql, bean,getCUDResult);
 	}
 
 
 
-	public  Object updateBean(String dbname, String sqlname, Object bean) throws SQLException {
+	public  void updateBean(String dbname, String sqlname, Object bean) throws SQLException {
 		if(bean == null )
-			return null;
+			return ;
 //		List datas = new ArrayList();
 //		datas.add(bean);
 //		updateBeans( dbname,  sql,  datas);
 		String sql = getSql(dbname,sqlname);
-		return SQLExecutor.updateBean(dbname,sql, bean);
+		SQLExecutor.updateBean(dbname,sql, bean);
 	}
 
 	
 
-	public Object deleteBean(String dbname, String sqlname, Object bean) throws SQLException {
+	public void deleteBean(String dbname, String sqlname, Object bean) throws SQLException {
 		
 		if(bean == null)
-			return null;
+			return ;
 //		List datas = new ArrayList();
 //		datas.add(bean);
 //		deleteBeans( dbname,  sql,  datas);
 		String sql = getSql(dbname,sqlname);
-		return SQLExecutor.deleteBean(dbname,sql, bean);
+		SQLExecutor.deleteBean(dbname,sql, bean);
 	}
 	
-	public GetCUDResult insertBeans(String sqlname, List beans) throws SQLException {
-		return insertBeans( null,sqlname, beans); 
+	public void insertBeans(String sqlname, List beans) throws SQLException {
+		insertBeans( null,sqlname, beans); 
 	}
 	
 	
 
 
 
-	public GetCUDResult updateBeans( String sqlname, List beans) throws SQLException {
-		return updateBeans( null,sqlname, beans); 
+	public void updateBeans( String sqlname, List beans) throws SQLException {
+		updateBeans( null,sqlname, beans); 
 	}
 
 
 
-	public GetCUDResult deleteBeans( String sqlname, List beans) throws SQLException {
-		return deleteBeans( null,sqlname, beans); 
+	public void deleteBeans( String sqlname, List beans) throws SQLException {
+		deleteBeans( null,sqlname, beans); 
 		
 	}
 	
-	public GetCUDResult insertBeans(String sqlname, List beans,boolean GetCUDResult) throws SQLException {
-		return insertBeans( null,sqlname, beans,GetCUDResult); 
+	public void insertBeans(String sqlname, List beans,GetCUDResult GetCUDResult) throws SQLException {
+		insertBeans( null,sqlname, beans,GetCUDResult); 
 	}
 	
 	
 
 
 
-	public GetCUDResult updateBeans( String sqlname, List beans,boolean GetCUDResult) throws SQLException {
-		return updateBeans( null,sqlname, beans,GetCUDResult); 
+	public void updateBeans( String sqlname, List beans,GetCUDResult GetCUDResult) throws SQLException {
+		updateBeans( null,sqlname, beans,GetCUDResult); 
 	}
 
 
 
-	public GetCUDResult deleteBeans( String sqlname, List beans,boolean GetCUDResult) throws SQLException {
-		return deleteBeans( null,sqlname, beans,GetCUDResult); 
+	public void deleteBeans( String sqlname, List beans,GetCUDResult GetCUDResult) throws SQLException {
+		deleteBeans( null,sqlname, beans,GetCUDResult); 
 		
 	}
 
 
 
-	public Object insertBean( String sqlname, Object bean) throws SQLException {
+	public void insertBean( String sqlname, Object bean) throws SQLException {
 		if(bean == null)
-			return null;
+			return ;
 //		List datas = new ArrayList();
 //		datas.add(bean);
 //		insertBeans( null,  sqlname,  datas);
-		return insertBean( null,sqlname, bean);
+		insertBean( null,sqlname, bean);
 	}
 	
-	public Object insertBean( String sqlname, Object bean,boolean getCUDResult) throws SQLException {
+	public void insertBean( String sqlname, Object bean,GetCUDResult getCUDResult) throws SQLException {
 		if(bean == null)
-			return null;
+			return ;
 //		List datas = new ArrayList();
 //		datas.add(bean);
 //		insertBeans( null,  sqlname,  datas);
-		return insertBean( null,sqlname, bean, getCUDResult);
+		insertBean( null,sqlname, bean, getCUDResult);
 	}
 
 
 
-	public Object updateBean( String sqlname, Object bean) throws SQLException {
+	public void updateBean( String sqlname, Object bean) throws SQLException {
 		if(bean == null )
-			return null;
+			return ;
 //		List datas = new ArrayList();
 //		datas.add(bean);
 //		updateBeans( null,  sqlname,  datas);
-		return updateBean( null,sqlname, bean);
+		updateBean( null,sqlname, bean);
 	}
 
 	
 
-	public Object deleteBean(String sqlname, Object bean) throws SQLException {
+	public void deleteBean(String sqlname, Object bean) throws SQLException {
 		
 		if(bean == null)
-			return null;
+			return ;
 //		List datas = new ArrayList();
 //		datas.add(bean);
 //		deleteBeans( null,  sqlname,  datas);
-		return deleteBean(null,sqlname, bean);
+		deleteBean(null,sqlname, bean);
 	}
 	
 	

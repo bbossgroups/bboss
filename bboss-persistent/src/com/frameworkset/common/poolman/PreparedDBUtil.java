@@ -1619,15 +1619,26 @@ public class PreparedDBUtil extends DBUtil {
 	 * @return
 	 * @throws SQLException
 	 */
-	public GetCUDResult executePreparedBatch() throws SQLException
+	public void executePreparedBatch() throws SQLException
 	{
 		if(this.batchparams == null || batchparams.size() == 0)
 		{
 //			throw new SQLException("Can not execute single prepared statement as batch prepared operation,Please call method executePrepared()!");
 			log.info("Can not execute single prepared statement as batch prepared operation,Please call method executePrepared()!");
-			return null;
+			return ;
 		}
-		return executePreparedBatch(null);
+		executePreparedBatch(null);
+	}
+	
+	public void executePreparedBatchGetCUDResult(GetCUDResult getCUDResult) throws SQLException
+	{
+		if(this.batchparams == null || batchparams.size() == 0)
+		{
+//			throw new SQLException("Can not execute single prepared statement as batch prepared operation,Please call method executePrepared()!");
+			log.info("Can not execute single prepared statement as batch prepared operation,Please call method executePrepared()!");
+			return ;
+		}
+		executePreparedBatch(null,getCUDResult);
 	}
 
 	public Object executePrepared(Connection con) throws SQLException
@@ -4448,9 +4459,9 @@ public class PreparedDBUtil extends DBUtil {
 		}
 		return ret.toString();
 	}
-	public GetCUDResult executePreparedBatch(Connection con_) throws SQLException
+	public void executePreparedBatch(Connection con_) throws SQLException
 	{
-		return executePreparedBatch(con_,false) ;
+		executePreparedBatch(con_,null) ;
 	}
 	/**
 	 * 执行预编译批出理操作,支持事务，如果con参数本身就是事务链接，则使用该事务链接
@@ -4463,20 +4474,20 @@ public class PreparedDBUtil extends DBUtil {
 	 * @return
 	 * @throws SQLException
 	 */
-	public GetCUDResult executePreparedBatch(Connection con_,boolean getCUDResult) throws SQLException
+	public void executePreparedBatch(Connection con_,GetCUDResult CUDResult) throws SQLException
 	{
 		if(this.batchparams == null || batchparams.size() == 0)
 		{
 //			throw new SQLException("Can not execute single prepared statement as batch prepared operation,Please call method executePrepared(Connection con)!");
 			log.info("Can not execute single prepared statement as batch prepared operation,Please call method executePrepared(Connection con)!");
-			return null;
+			return ;
 		}
 		StatementInfo stmtInfo = null;
 
 		
 		PreparedStatement statement = null;
 		List resources = null;
-		GetCUDResult CUDResult = null;
+//		GetCUDResult CUDResult = null;
 		try
 		{	
 			stmtInfo = new StatementInfo(this.prepareDBName,
@@ -4591,13 +4602,16 @@ public class PreparedDBUtil extends DBUtil {
 					
 						
 						
-						if(getCUDResult)
+						if(CUDResult != null)
 						{		
 							List<Object> morekeys = getGeneratedKeys(statement);
-							CUDResult = new GetCUDResult(ret,ret,morekeys);
+//							CUDResult = new GetCUDResult(ret,ret,morekeys);
+							CUDResult.setKeys(morekeys);
+							CUDResult.setResult(ret);
+							CUDResult.setUpdatecount(ret);
 						}
-						else
-							CUDResult = new GetCUDResult(ret,ret,null);
+//						else
+//							CUDResult = new GetCUDResult(ret,ret,null);
 					}
 					finally
 					{
@@ -4669,7 +4683,7 @@ public class PreparedDBUtil extends DBUtil {
 				
 			this.resetFromSetMethod(null);
 		}
-		return CUDResult;
+//		return CUDResult;
 
 	}
 

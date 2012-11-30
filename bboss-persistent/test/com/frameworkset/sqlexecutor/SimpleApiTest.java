@@ -910,10 +910,11 @@ public class SimpleApiTest {
 		Demo demo = new Demo();
 		demo.setId("aaa");
 		demo.setName("name");
-		Object delret = SQLExecutor.deleteBean("delete from demo where id=#[id]", demo);
-		Object ret = SQLExecutor.insertBean("insert into demo(id,name) values(#[id],#[name])", demo);
+		GetCUDResult getCUDResult = new GetCUDResult();  
+		SQLExecutor.deleteBean("delete from demo where id=#[id]", demo,getCUDResult);
+		SQLExecutor.insertBean("insert into demo(id,name) values(#[id],#[name])", demo,getCUDResult);
 		demo.setName("newname");
-		Object upret = SQLExecutor.updateBean("update demo set name=#[name] where id=#[id]", demo);
+		SQLExecutor.updateBean("update demo set name=#[name] where id=#[id]", demo,getCUDResult);
 		System.out.println();
 		
 	}
@@ -925,13 +926,15 @@ public class SimpleApiTest {
 		//主键被封装到GetCUDResult对象中返回
 		//下面的insertBean方法最后带了一个boolean类型参数，
 		//这个方法是专门为返回自增主键而新增的一个api，true表示返回自增主键，false，表示不返回，默认为false
-		GetCUDResult ret = (GetCUDResult)SQLExecutor.insertBean("insert into demo(name) values(#[name])", demo,true);
+		GetCUDResult ret = new GetCUDResult(); 
+		SQLExecutor.insertBean("insert into demo(name) values(#[name])", demo,ret);
 		//通过GetCUDResult对象的getKeys方法获取主键，并将主键设置到demo对象中
 		demo.setId((Long)ret.getKeys());
 		//更新刚添加的记录
 		demo.setName("newname");	
 		//upret是一个数字类型，表示更新成功的记录数
-		Object upret = SQLExecutor.updateBean("update demo set name=#[name] where id=#[id]", demo);
+		
+		SQLExecutor.updateBean("update demo set name=#[name] where id=#[id]", demo,ret);
 		System.out.println();
 		
 	}
@@ -953,7 +956,8 @@ public class SimpleApiTest {
 		//插入多条记录，并将成功插入的记录数和最后一条记录的主键值封装成GetCUDResult对象返回
 		//下面的insertBeans方法最后带了一个boolean类型参数，
 		//这个方法是专门为返回自增主键而新增的一个api，true表示返回自增主键，false，表示不返回，默认为false
-		GetCUDResult ret = SQLExecutor.insertBeans("insert into demo(name) values(#[name])", datas,true);
+		GetCUDResult ret = new GetCUDResult(); 
+		SQLExecutor.insertBeans("insert into demo(name) values(#[name])", datas,ret);
 		//获取自增主键列表（很遗憾，list中只有最后一条记录的主键，
 		//但是还是保留为List对象，以便后续有返回所有记录主键的解决方案后再以列表的方式返回这些主键）
 		List<Object> keys = (List<Object>)ret.getKeys();

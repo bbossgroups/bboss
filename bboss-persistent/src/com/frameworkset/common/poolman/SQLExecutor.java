@@ -355,27 +355,27 @@ public class SQLExecutor
 	}
 	
 	
-	public static GetCUDResult insertBeans(String dbname, String sql, List beans) throws SQLException {
+	public static void insertBeans(String dbname, String sql, List beans) throws SQLException {
 		
 		if(beans == null || beans.size() == 0)
-			return null;
-		return execute( dbname,  sql,  beans,PreparedDBUtil.INSERT);
+			return ;
+		execute( dbname,  sql,  beans,PreparedDBUtil.INSERT,(GetCUDResult)null);
 	}
 	
-	public static GetCUDResult insertBeans(String dbname, String sql, List beans,boolean getCUDResult) throws SQLException {
+	public static void insertBeans(String dbname, String sql, List beans,GetCUDResult getCUDResult) throws SQLException {
 		
 		if(beans == null || beans.size() == 0)
-			return null;
-		return execute( dbname,  sql,  beans,PreparedDBUtil.INSERT,getCUDResult);
+			return ;
+		execute( dbname,  sql,  beans,PreparedDBUtil.INSERT,getCUDResult);
 	}
 	
 	
-	public static GetCUDResult execute(String dbname, String sql, List beans,boolean isBatchOptimize,int action) throws SQLException
+	public static void execute(String dbname, String sql, List beans,boolean isBatchOptimize,int action) throws SQLException
 	{
-		return execute(dbname, sql, beans,isBatchOptimize,action,false) ;
+		execute(dbname, sql, beans,isBatchOptimize,action,(GetCUDResult)null) ;
 	}
 	
-	public static GetCUDResult execute(String dbname, String sql, List beans,boolean isBatchOptimize,int action,boolean getCUDResult) throws SQLException
+	public static void execute(String dbname, String sql, List beans,boolean isBatchOptimize,int action,GetCUDResult getCUDResult) throws SQLException
 	{
 		Connection con = null;
 		try
@@ -383,12 +383,12 @@ public class SQLExecutor
 			con = DBUtil.getConection(dbname);
 			List<SQLParams> batchsqlparams = SQLParams.convertBeansToSqlParams(beans,sql,dbname,action,con);
 			if(batchsqlparams == null)
-				return null;
+				return ;
 			PreparedDBUtil dbutil = new PreparedDBUtil();
 			dbutil.setBatchOptimize(isBatchOptimize);
 			dbutil.setPrepareDBName(dbname);
 			dbutil.addPreparedBatch(batchsqlparams);
-			return dbutil.executePreparedBatch(con,getCUDResult);
+			dbutil.executePreparedBatch(con,getCUDResult);
 		}
 		finally
 		{
@@ -492,14 +492,14 @@ public class SQLExecutor
 	
 	
 	
-	public static GetCUDResult execute(String dbname, String sql, List beans,int action) throws SQLException
+	public static void execute(String dbname, String sql, List beans,int action) throws SQLException
 	{
-		return execute(dbname, sql, beans,false,action);
+		execute(dbname, sql, beans,false,action,null);
 	}
 	
-	public static GetCUDResult execute(String dbname, String sql, List beans,int action,boolean getCUDResult) throws SQLException
+	public static void execute(String dbname, String sql, List beans,int action,GetCUDResult getCUDResult) throws SQLException
 	{
-		return execute(dbname, sql, beans,false,action,getCUDResult);
+		execute(dbname, sql, beans,false,action,getCUDResult);
 	}
 	
 	protected static Object execute(String dbname, String sql,int action, Object... fields) throws SQLException {
@@ -697,140 +697,192 @@ public class SQLExecutor
 		return execute(dbname, sql,PreparedDBUtil.INSERT, fields);
 	}
 
-	public static GetCUDResult updateBeans(String dbname, String sql, List beans) throws SQLException {
+	public static void updateBeans(String dbname, String sql, List beans) throws SQLException {
 		if(beans == null || beans.size() == 0)
-			return null;
-		return execute( dbname,  sql,  beans,PreparedDBUtil.UPDATE);
+			return ;
+		execute( dbname,  sql,  beans,PreparedDBUtil.UPDATE,(GetCUDResult)null);
 	}
 	
-	public static GetCUDResult updateBeans(String dbname, String sql, List beans,boolean GetCUDResult) throws SQLException {
+	public static void updateBeans(String dbname, String sql, List beans,GetCUDResult GetCUDResult) throws SQLException {
 		if(beans == null || beans.size() == 0)
-			return null;
-		return execute( dbname,  sql,  beans,PreparedDBUtil.UPDATE,GetCUDResult);
+			return ;
+		execute( dbname,  sql,  beans,PreparedDBUtil.UPDATE,GetCUDResult);
 	}
 
 
 
-	public static GetCUDResult deleteBeans(String dbname, String sql, List beans) throws SQLException {
+	public static void deleteBeans(String dbname, String sql, List beans) throws SQLException {
 		if(beans == null || beans.size() == 0)
-			return null;
-		return execute( dbname,  sql,  beans,PreparedDBUtil.DELETE);
+			return ;
+		execute( dbname,  sql,  beans,PreparedDBUtil.DELETE);
 		
 	}
 	
-	public static GetCUDResult deleteBeans(String dbname, String sql, List beans,boolean GetCUDResult) throws SQLException {
+	public static void deleteBeans(String dbname, String sql, List beans,GetCUDResult GetCUDResult) throws SQLException {
 		if(beans == null || beans.size() == 0)
-			return null;
-		return execute( dbname,  sql,  beans,PreparedDBUtil.DELETE, GetCUDResult);
+			return ;
+		execute( dbname,  sql,  beans,PreparedDBUtil.DELETE, GetCUDResult);
 		
 	}
 
 
 
-	public static Object insertBean(String dbname, String sql, Object bean) throws SQLException {
+	public static void insertBean(String dbname, String sql, Object bean) throws SQLException {
 		if(bean == null)
-			return null;
+			return ;
 //		List datas = new ArrayList();
 //		datas.add(bean);
 //		insertBeans( dbname,  sql,  datas);
-		return CUDexecute(dbname, sql, bean,PreparedDBUtil.INSERT);
+		CUDexecute(dbname, sql, bean,PreparedDBUtil.INSERT,false);
 	}
 	
-	public static Object insertBean(String dbname, String sql, Object bean,boolean getCUDResult) throws SQLException {
+	public static void insertBean(String dbname, String sql, Object bean,GetCUDResult getCUDResult) throws SQLException {
 		if(bean == null)
-			return null;
+			return ;
 //		List datas = new ArrayList();
 //		datas.add(bean);
 //		insertBeans( dbname,  sql,  datas);
-		return CUDexecute(dbname, sql, bean,PreparedDBUtil.INSERT,getCUDResult);
+		if(getCUDResult == null)
+		{
+			
+			CUDexecute(dbname, sql, bean,PreparedDBUtil.INSERT,false);
+		}
+		else
+		{
+			GetCUDResult getCUDResult_ = (GetCUDResult)CUDexecute(dbname, sql, bean,PreparedDBUtil.INSERT,true);
+			getCUDResult.setGetCUDResult(getCUDResult_);
+			
+		}
 	}
 
 
 
-	public static Object updateBean(String dbname, String sql, Object bean) throws SQLException {
+	public static void updateBean(String dbname, String sql, Object bean) throws SQLException {
 		if(bean == null )
-			return null;
+			return ;
 //		List datas = new ArrayList();
 //		datas.add(bean);
 //		updateBeans( dbname,  sql,  datas);
-		return CUDexecute(dbname, sql, bean,PreparedDBUtil.UPDATE);
+		CUDexecute(dbname, sql, bean,PreparedDBUtil.UPDATE,false);
 	}
-
 	
-
-	public static Object deleteBean(String dbname, String sql, Object bean) throws SQLException {
+	public static void updateBean(String dbname, String sql, Object bean,GetCUDResult getCUDResult) throws SQLException {
+		if(bean == null )
+			return ;
+//		List datas = new ArrayList();
+//		datas.add(bean);
+//		updateBeans( dbname,  sql,  datas);
 		
-		if(bean == null)
-			return null;
-//		List datas = new ArrayList();
-//		datas.add(bean);
-//		deleteBeans( dbname,  sql,  datas);
-		return CUDexecute(dbname, sql, bean,PreparedDBUtil.DELETE);
+		if(getCUDResult != null)
+		{
+			GetCUDResult getCUDResult_ = (GetCUDResult)CUDexecute(dbname, sql, bean,PreparedDBUtil.UPDATE,true);
+			getCUDResult.setGetCUDResult(getCUDResult_);
+		}
+		else
+			CUDexecute(dbname, sql, bean,PreparedDBUtil.UPDATE,false);
 	}
 	
-	public static GetCUDResult insertBeans(String sql, List beans) throws SQLException {
-		return insertBeans( null,sql, beans); 
-	}
-	
-	public static GetCUDResult insertBeans(String sql, List beans,boolean getCUDResult) throws SQLException {
-		return insertBeans( (String)null,sql, beans,getCUDResult); 
-	}
-	
-	
-
-
-
-	public static GetCUDResult updateBeans( String sql, List beans) throws SQLException {
-		return updateBeans( null,sql, beans); 
-	}
-
-
-
-	public static GetCUDResult deleteBeans( String sql, List beans) throws SQLException {
-		return deleteBeans( null,sql, beans); 
-		
-	}
-
-
-
-	public static Object insertBean( String sql, Object bean) throws SQLException {
-//		if(bean == null)
-//			return ;
-//		List datas = new ArrayList();
-//		datas.add(bean);
-//		insertBeans( null,  sql,  datas);
-		return insertBean( (String)null,sql, bean);
-	}
-	public static Object insertBean( String sql, Object bean,boolean getCUDResult) throws SQLException {
-//		if(bean == null)
-//			return ;
-//		List datas = new ArrayList();
-//		datas.add(bean);
-//		insertBeans( null,  sql,  datas);
-		return insertBean( (String)null,sql, bean,getCUDResult);
-	}
-
-
-
-	public static Object updateBean( String sql, Object bean) throws SQLException {
+	public static void updateBean( String sql, Object bean,GetCUDResult getCUDResult) throws SQLException {
 //		if(bean == null )
 //			return ;
 //		List datas = new ArrayList();
 //		datas.add(bean);
 //		updateBeans( null,  sql,  datas);
-		return updateBean( (String)null,sql, bean);
+		updateBean((String)null,  sql,  bean, getCUDResult);
+	}
+
+	public static void deleteBean( String sql, Object bean,GetCUDResult getCUDResult) throws SQLException {
+		deleteBean((String )null,sql, bean,getCUDResult) ;
+	}
+
+	public static void deleteBean(String dbname, String sql, Object bean) throws SQLException {
+		
+		if(bean == null)
+			return ;
+//		List datas = new ArrayList();
+//		datas.add(bean);
+//		deleteBeans( dbname,  sql,  datas);
+		CUDexecute(dbname, sql, bean,PreparedDBUtil.DELETE,false);
+	}
+	public static void deleteBean(String dbname, String sql, Object bean,GetCUDResult getCUDResult) throws SQLException {
+		
+		if(bean == null)
+			return ;
+//		List datas = new ArrayList();
+//		datas.add(bean);
+//		deleteBeans( dbname,  sql,  datas);
+		if(getCUDResult != null)
+		{
+			GetCUDResult getCUDResult_ = (GetCUDResult)CUDexecute(dbname, sql, bean,PreparedDBUtil.DELETE,true);
+			getCUDResult.setGetCUDResult(getCUDResult_);
+		}
+		else
+			CUDexecute(dbname, sql, bean,PreparedDBUtil.DELETE,false);
+	}
+	
+	public static void insertBeans(String sql, List beans) throws SQLException {
+		insertBeans( null,sql, beans); 
+	}
+	
+	public static void insertBeans(String sql, List beans,GetCUDResult getCUDResult) throws SQLException {
+		insertBeans( (String)null,sql, beans,getCUDResult); 
+	}
+	
+	
+
+
+
+	public static void updateBeans( String sql, List beans) throws SQLException {
+		updateBeans( null,sql, beans); 
+	}
+
+
+
+	public static void deleteBeans( String sql, List beans) throws SQLException {
+		deleteBeans( null,sql, beans); 
+		
+	}
+
+
+
+	public static void insertBean( String sql, Object bean) throws SQLException {
+//		if(bean == null)
+//			return ;
+//		List datas = new ArrayList();
+//		datas.add(bean);
+//		insertBeans( null,  sql,  datas);
+		insertBean( (String)null,sql, bean);
+	}
+	public static void insertBean( String sql, Object bean,GetCUDResult getCUDResult) throws SQLException {
+//		if(bean == null)
+//			return ;
+//		List datas = new ArrayList();
+//		datas.add(bean);
+//		insertBeans( null,  sql,  datas);
+		insertBean( (String)null,sql, bean,getCUDResult);
+	}
+
+
+
+	public static void updateBean( String sql, Object bean) throws SQLException {
+//		if(bean == null )
+//			return ;
+//		List datas = new ArrayList();
+//		datas.add(bean);
+//		updateBeans( null,  sql,  datas);
+		updateBean( (String)null,sql, bean);
 	}
 
 	
 
-	public static Object deleteBean(String sql, Object bean) throws SQLException {
+	public static void deleteBean(String sql, Object bean) throws SQLException {
 		
 //		if(bean == null)
 //			return ;
 //		List datas = new ArrayList();
 //		datas.add(bean);
 //		deleteBeans( null,  sql,  datas);
-		return deleteBean((String)null,sql, bean);
+		deleteBean((String)null,sql, bean);
 		
 	}
 	
