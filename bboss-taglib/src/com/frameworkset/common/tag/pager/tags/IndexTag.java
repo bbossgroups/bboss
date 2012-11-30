@@ -1850,7 +1850,7 @@ public final class IndexTag extends PagerTagSupport {
               promotion)
                      */
             
-            String pagerjumpto = uuid+".jumpto";
+            String pagerjumpto = uuid+".go";
             
             Input go = (Input) new Input()            
             .setName(gotopageid)            
