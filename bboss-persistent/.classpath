@@ -25,7 +25,6 @@
 	<classpathentry kind="lib" path="lib/commons-lang-2.4.jar"/>
 	<classpathentry kind="lib" path="lib/bboss-aop.jar" sourcepath="/bbossaop"/>
 	<classpathentry kind="lib" path="lib/cglib/cglib-nodep-2.2.jar"/>
-	<classpathentry kind="lib" path="lib/velocity/velocity-1.6.4-dep.jar"/>
 	<classpathentry kind="lib" path="lib/xjavadoc-1.1.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/bboss-util"/>
 	<classpathentry kind="lib" path="lib/jsp-api.jar"/>
@@ -38,5 +37,6 @@
 	<classpathentry kind="lib" path="lib-test/commons-logging-1.1.1.jar"/>
 	<classpathentry kind="lib" path="lib/dbcp/commons-dbcp-1.4.jar"/>
 	<classpathentry kind="lib" path="lib/dbcp/commons-pool-1.5.4.jar"/>
+	<classpathentry kind="lib" path="lib/velocity/velocity-1.7-dep.jar"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>

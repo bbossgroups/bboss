@@ -1,0 +1,79 @@
+<project name="bboss util" default="default" basedir=".">
+	<description>
+		bboss util build file
+	</description>
+	<tstamp prefix="start" />
+
+	<tstamp>
+		<format property="compile.timestamp" pattern="yyyy-MM-dd HH.mm.ss" />
+	</tstamp>
+
+
+
+	<!-- set global properties for this build -->
+	<property file="build.properties" />
+	<target name="init" description="create timestamp and directories">
+		<echo>Init...</echo>
+
+		<tstamp />
+		<delete dir="classes-bboss-velocity" />
+		
+		<delete dir="distrib" />
+		<mkdir dir="classes-bboss-velocity" />
+		
+		<mkdir dir="distrib" />
+	</target>
+	<target name="default" depends="complete" description="default = build distribution package" />
+
+	<!--
+		       ==========================
+		        Distribution jar package
+		       ==========================
+		  -->
+	<target name="distrib" depends="init,jar-bboss-velocity,copy-depends-liberary" description="copy jar file to distribution directory">
+		<echo>Construct the distribution package...</echo>
+	</target>
+
+	<target name="compile-bboss-velocity" description="compile the bboss-velocity source ">
+		<echo>compile the bboss-velocity source ...</echo>
+		<javac destdir="classes-bboss-velocity" target="1.5" source="1.5" deprecation="true" debug="${debug}" optimize="${optimize}" memorymaximumsize="256M" fork="true" verbose="yes">
+			<src path="src-velocity" />
+			<classpath id="cp-classes-bboss-velocity">
+				<fileset dir="lib/" includes="*.jar *.zip" />				
+				<fileset dir="lib/test" includes="*.jar" />
+			</classpath>
+		</javac>
+	</target>
+	<target name="jar-bboss-velocity" depends="compile-bboss-velocity" description="generate the bboss-taglib library bboss-velocity.jar">
+		<echo>Generate the bboss-velocity library bboss-velocity.jar ...</echo>
+		<jar jarfile="distrib/bboss-velocity.jar" basedir="classes-bboss-velocity" includes="**/*">
+			<manifest>
+				
+				<attribute name="Implementation-Version" value="${impl.version}" />
+				<attribute name="Specification-Version" value="${revision}" />
+				<attribute name="Implementation-Vendor" value="${impl.vendor}" />
+				<attribute name="Implementation-ProductID" value="${impl.productID}" />
+				<attribute name="Compile-Timestamp" value="${compile.timestamp}" />
+				<attribute name="Compile-User" value="${username}" />
+			</manifest>
+		</jar>
+	</target>
+	
+	
+	
+	<target name="copy-depends-liberary" description="copy depends liberarys">
+				<echo>copy depends liberarys ...</echo>
+				<copy todir="distrib/dependlibs">
+					<fileset dir="lib" includes="*.jar" />
+				</copy>
+				<copy todir="distrib/dependlibs/test">
+					<fileset dir="lib/test" includes="*.jar" />
+				</copy>	
+
+	</target>
+	
+	<target name="complete" depends="distrib" description="copy depends liberarys">
+			<delete dir="classes-bboss-velocity" />				
+	
+	</target>
+</project>

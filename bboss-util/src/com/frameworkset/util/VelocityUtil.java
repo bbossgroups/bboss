@@ -300,10 +300,7 @@ public class VelocityUtil implements Serializable{
 		} catch (ResourceNotFoundException e) {
 			e.printStackTrace();
 			return template;
-		} catch (IOException e) {
-			e.printStackTrace();
-			return template;
-		} catch (Exception e) {
+		}  catch (Exception e) {
 			e.printStackTrace();
 			return template;
 		}
@@ -333,10 +330,7 @@ public class VelocityUtil implements Serializable{
 		} catch (ResourceNotFoundException e) {
 			e.printStackTrace();
 			
-		} catch (IOException e) {
-			e.printStackTrace();
-			
-		} catch (Exception e) {
+		}catch (Exception e) {
 			e.printStackTrace();
 			
 		}
@@ -365,9 +359,6 @@ public class VelocityUtil implements Serializable{
 			e.printStackTrace();
 			return null;
 		} catch (ResourceNotFoundException e) {
-			e.printStackTrace();
-			return null;
-		} catch (IOException e) {
 			e.printStackTrace();
 			return null;
 		} catch (Exception e) {
@@ -400,10 +391,7 @@ public class VelocityUtil implements Serializable{
 		} catch (ResourceNotFoundException e) {
 			e.printStackTrace();
 			
-		} catch (IOException e) {
-			e.printStackTrace();
-			
-		} catch (Exception e) {
+		}  catch (Exception e) {
 			e.printStackTrace();
 			
 		}
@@ -431,9 +419,6 @@ public class VelocityUtil implements Serializable{
 			e.printStackTrace();
 			return null;
 		} catch (ResourceNotFoundException e) {
-			e.printStackTrace();
-			return null;
-		} catch (IOException e) {
 			e.printStackTrace();
 			return null;
 		} catch (Exception e) {
@@ -466,10 +451,7 @@ public class VelocityUtil implements Serializable{
 		} catch (ResourceNotFoundException e) {
 			e.printStackTrace();
 			
-		} catch (IOException e) {
-			e.printStackTrace();
-			
-		} catch (Exception e) {
+		}  catch (Exception e) {
 			e.printStackTrace();
 			
 		}
@@ -515,9 +497,6 @@ public class VelocityUtil implements Serializable{
 		} catch (ResourceNotFoundException e) {
 			e.printStackTrace();
 			return template;
-		} catch (IOException e) {
-			e.printStackTrace();
-			return template;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return template;
@@ -546,9 +525,6 @@ public class VelocityUtil implements Serializable{
 			e.printStackTrace();
 			
 		} catch (ResourceNotFoundException e) {
-			e.printStackTrace();
-			
-		} catch (IOException e) {
 			e.printStackTrace();
 			
 		} catch (Exception e) {
@@ -582,9 +558,6 @@ public class VelocityUtil implements Serializable{
 		} catch (ResourceNotFoundException e) {
 			e.printStackTrace();
 			return null;
-		} catch (IOException e) {
-			e.printStackTrace();
-			return null;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -613,9 +586,6 @@ public class VelocityUtil implements Serializable{
 			e.printStackTrace();
 			
 		} catch (ResourceNotFoundException e) {
-			e.printStackTrace();
-			
-		} catch (IOException e) {
 			e.printStackTrace();
 			
 		} catch (Exception e) {
@@ -648,9 +618,6 @@ public class VelocityUtil implements Serializable{
 		} catch (ResourceNotFoundException e) {
 			e.printStackTrace();
 			return null;
-		} catch (IOException e) {
-			e.printStackTrace();
-			return null;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -679,9 +646,6 @@ public class VelocityUtil implements Serializable{
 			e.printStackTrace();
 			
 		} catch (ResourceNotFoundException e) {
-			e.printStackTrace();
-			
-		} catch (IOException e) {
 			e.printStackTrace();
 			
 		} catch (Exception e) {

@@ -39,6 +39,7 @@ import java.io.InputStream;
 import java.io.OutputStreamWriter;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Array;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.security.AccessController;
@@ -2385,6 +2386,45 @@ outStr = "2010Äê02ÔÂ07ÈÕ11Ê±Ğí£¬ÖÜÁéÓ±±¨¾¯£ºÔÚ2Â·¹«½»³µÉÏ±»°ÇÇÔ£¬²¢×¥»ñÒ»ÃûÏÓÒÉÈ
 		return json2Object(jsonString,toclass,true);
 		
 	
+	}
+    
+    public static String tostring(Object data)
+    {
+    	StringBuffer ret = new StringBuffer();
+    	tostring(ret ,data);
+    	return ret.toString();
+    }
+    
+    public static void tostring(StringBuffer ret ,Object data)
+	{
+		if(data == null )
+		{
+			return ;
+		}
+		else if(!data.getClass().isArray())
+		{
+			ret.append(data.toString());
+		}
+		else
+		{
+			int size = Array.getLength(data);
+			ret.append("{");
+			for(int i = 0; i < size; i ++)
+			{
+				if(i == 0)
+				{
+					
+					
+				}
+				else
+				{
+					ret.append(",");
+				}
+				tostring(ret ,Array.get(data, i));
+			}
+			ret.append("}");
+		}
+		
 	}
 	
 }

@@ -19,20 +19,20 @@
 	<property name="sqltemplate"><![CDATA[select FIELDNAME from LISTBEAN where FIELDNAME=#[fieldName]]]>
 	</property>
 	<property name="sqltemplate-oracle"><![CDATA[select FIELDNAME from LISTBEAN where FIELDNAME=#[fieldName]  ]]></property>
-	<!-- 动态sql，如果FIELDNAME 不等于null，并且FIELDNAME不为""将FIELDNAME作为查询条件-->
+	<!-- 动态sql，如果FIELDNAME 不等于null，并且FIELDNAME不为""将FIELDNAME作为查询条件 -->
 	<property name="dynamicsqltemplate"><![CDATA[select *  from LISTBEAN  where 1=1 
 					#if($fieldName && !$fieldName.equals("")) and FIELDNAME = #[fieldName] #end  ]]>
 	</property>
-	
-	
-	<!-- 动态sql，如果id 不等于-1，并且id不为0将id作为查询条件-->
+
+
+	<!-- 动态sql，如果id 不等于-1，并且id不为0将id作为查询条件 -->
 	<property name="dynamicsqltemplateid"><![CDATA[select *  from LISTBEAN  where 1=1 
 					#if($id != -1 && $id != 0) and id = #[id] #end  ]]>
 	</property>
-	
+
 	<property name="updatesqltemplate"><![CDATA[update LISTBEAN  set FIELDNAME = #[fieldName] where id = #[id] ]]>
 	</property>
-	
+
 	<property name="queryFieldWithSQLParams"><![CDATA[select count(1)  from LISTBEAN ]]>
 	</property>
 </properties>

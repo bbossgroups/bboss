@@ -941,7 +941,7 @@ public class SimpleApiTest {
 	
 	public @Test void testAutoGenalKeys() throws SQLException
 	{
-		SQLExecutor.delete("delete from demo");
+//		SQLExecutor.delete("delete from demo");
 		//构建多条记录
 		List<AutoKeyDemo> datas = new ArrayList<AutoKeyDemo>();		
 		AutoKeyDemo demo = new AutoKeyDemo();		

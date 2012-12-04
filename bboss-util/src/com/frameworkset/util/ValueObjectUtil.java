@@ -2780,22 +2780,22 @@ public class ValueObjectUtil {
 			return null;
 		}
 		if (toType == long.class )
-			return new Long(0);
+			return 0l;
 		if (toType == int.class )
-			return new Integer(0);
+			return 0;
 		if (toType == float.class )
-			return new Float(0.0f);
+			return 0.0f;
 		if (toType == double.class )
-			return new Double(0.0d);
+			return 0.0d;
 		if (toType == boolean.class ) 
 
 		{
-			return new Boolean(false);
+			return false;
 		}
 		if (toType == short.class )
-			return new Short((short) 0);
+			return (short) 0;
 		if (toType == char.class )
-			return new Character('0');
+			return '0';
 		
 		if( toType == Long.class)
 			return null;
@@ -2821,7 +2821,7 @@ public class ValueObjectUtil {
 			return null;
 
 		if (toType == byte.class)
-			return new Byte((byte) 0);
+			return (byte) 0;
 		
 		if (toType == Byte.class)
 			return new Byte((byte) 0);

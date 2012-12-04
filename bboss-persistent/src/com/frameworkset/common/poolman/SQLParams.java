@@ -18,7 +18,6 @@ package com.frameworkset.common.poolman;
 import java.io.File;
 import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.sql.Blob;
 import java.sql.Clob;
 import java.sql.Connection;
@@ -105,6 +104,7 @@ public class SQLParams
     @Deprecated 
     private static final Map<String,String[][]> parserResults = new java.util.WeakHashMap<String,String[][]>();
     private static final Map<String,SQLStruction> parserSQLStructions = new java.util.WeakHashMap<String,SQLStruction>();
+    private static final Map<String,SQLStruction> parsertotalsizeSQLStructions = new java.util.WeakHashMap<String,SQLStruction>();
     public String getNewsql()
     {
         return newsql;
@@ -302,16 +302,16 @@ public class SQLParams
         if(totalsizesql != null)
         {
         	totalsizesql = this.evaluateSqlTemplate(vcontext,totalsizesql);
-	        SQLStruction totalsizesqlstruction =  parserSQLStructions.get(totalsizesql);
+	        SQLStruction totalsizesqlstruction =  parsertotalsizeSQLStructions.get(totalsizesql);
 	        if(totalsizesqlstruction == null)
 	        {
 	            synchronized(lock)
 	            {
-	            	totalsizesqlstruction =  parserSQLStructions.get(totalsizesql);
+	            	totalsizesqlstruction =  parsertotalsizeSQLStructions.get(totalsizesql);
 	                if(totalsizesqlstruction == null)
 	                {
 	                	totalsizesqlstruction = VariableHandler.parserSQLStruction(totalsizesql);
-	                	parserSQLStructions.put(totalsizesql,totalsizesqlstruction);
+	                	parsertotalsizeSQLStructions.put(totalsizesql,totalsizesqlstruction);
 	                }
 	            }
 	        }            
@@ -574,8 +574,7 @@ public class SQLParams
 		String dataformat = null;
 		Object value =  null;
 		Class type = null;
-		Class beantype = bean.getClass();
-		Method readMethod = null;
+	
 //		Method writeMethod = null;
 		String sqltype = null;
 		List<PropertieDescription> attributes = beanInfo.getPropertyDescriptors();

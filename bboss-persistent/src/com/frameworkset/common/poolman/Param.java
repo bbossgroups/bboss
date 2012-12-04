@@ -15,6 +15,7 @@
  */
 package com.frameworkset.common.poolman;
 
+import com.frameworkset.util.SimpleStringUtil;
 import com.frameworkset.util.VariableHandler;
 import com.frameworkset.util.VariableHandler.Variable;
 
@@ -155,26 +156,30 @@ public class Param
 	{
 		if(variable == null)
 		{
-			return new StringBuffer()
-			.append("[name=").append(name)
+			StringBuffer ret = new StringBuffer();
+			ret.append("[name=").append(name)
 			.append(",index=").append(index)
-			.append(",value=").append(data)
-			.append(",dataformat=").append(dataformat)
-			.append(",method=").append(method).append("]")
-			.toString();
+			.append(",value=");
+			SimpleStringUtil.tostring(ret,data);
+			ret.append(",dataformat=").append(dataformat)
+			.append(",method=").append(method).append("]");
+			return ret.toString();
 		}
 		else
 		{
-			return new StringBuffer()
-			.append("[name=").append(name)
+			StringBuffer ret = new StringBuffer();
+			ret.append("[name=").append(name)
 			.append(",index=").append(index)
-			.append(",value=").append(data)
-			.append(",variable=").append(variable.toString())
+			.append(",value=");
+			SimpleStringUtil.tostring(ret,data);
+			ret.append(",variable=").append(variable.toString())
 			.append(",dataformat=").append(dataformat)
-			.append(",method=").append(method).append("]")
-			.toString();
+			.append(",method=").append(method).append("]");
+			return ret.toString();
 		}
 	}
+	
+	
 	
 	public static String getParamType(int sqltype,boolean isnull)
 	{
