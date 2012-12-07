@@ -46,8 +46,10 @@ import java.util.Calendar;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.frameworkset.persitent.util.SQLInfo;
 import org.frameworkset.util.BigFile;
 
+import com.frameworkset.common.poolman.NewSQLInfo;
 import com.frameworkset.common.poolman.handle.NullRowHandler;
 import com.frameworkset.common.poolman.handle.RowHandler;
 import com.frameworkset.common.poolman.handle.XMLMark;
@@ -73,7 +75,7 @@ public class PreparedDBUtil extends DBUtil {
 	 * 批处理预编译操作参数集，
 	 * List<Params>
 	 */
-	private List<Params> batchparams;
+	protected List<Params> batchparams;
 	
 //	/**
 //	 * 批处理预编译操作参数集，如果在一次批处理预编操作中出现多条
@@ -86,7 +88,7 @@ public class PreparedDBUtil extends DBUtil {
 	 * 如果语句相同则放到一起，这样避免出现同一条sql语句存在多个preparedstatement句柄
 	 * 默认不排序，否则排序
 	 */
-	private boolean batchOptimize = false;
+	protected boolean batchOptimize = false;
 
 	private static Logger log = Logger.getLogger(PreparedDBUtil.class);
 
@@ -129,9 +131,9 @@ public class PreparedDBUtil extends DBUtil {
 	 */
 //	protected boolean outcon = true;
 
-	private long offset;
+	protected long offset;
 
-	private int pagesize;
+	protected int pagesize;
 
 	
 
@@ -1218,7 +1220,7 @@ public class PreparedDBUtil extends DBUtil {
 	{
 		if(this.batchparams != null && batchparams.size() > 0)
 			throw new SQLException("Can not execute batch prepared operations as single prepared operation,Please call method executePreparedBatch(Connection con)!");
-		if(Params.prepareselect_sql == null || Params.prepareselect_sql.equals(""))
+		if(Params.prepareSqlifo == null || Params.prepareSqlifo.getNewsql() == null || Params.prepareSqlifo.getNewsql().equals(""))
 		{
 			throw new SQLException("执行错误：请先设置预执行sql语句！");
 		}
@@ -1231,7 +1233,7 @@ public class PreparedDBUtil extends DBUtil {
 //		String[] preparedfields = null; 
 		List resources = null;
 		try {
-			stmtInfo = new StatementInfo(this.prepareDBName, this.Params.prepareselect_sql,
+			stmtInfo = new StatementInfo(this.prepareDBName, this.Params.prepareSqlifo,
 					
 					false, offset, this.pagesize, isRobotQuery(this.prepareDBName), con,oraclerownum,true);
 			stmtInfo.init();
@@ -1374,7 +1376,8 @@ public class PreparedDBUtil extends DBUtil {
 				statement = stmtInfo.preparePagineStatement(showsql);
 				if(Params.totalsize < 0)
 				{
-					stmtInfo.setTotalsizesql(Params.totalsizesql);
+					//@Fixme
+					stmtInfo.setTotalsizesql(Params.prepareSqlifo.getNewtotalsizesql());
 					statement_count = stmtInfo.prepareCountStatement( showsql);
 				}
 				else
@@ -2057,7 +2060,7 @@ public class PreparedDBUtil extends DBUtil {
      * @param sql
      * @throws SQLException
      */
-    public void preparedInsert(Params params,String sql) throws SQLException {
+    public void preparedInsert(Params params,NewSQLInfo sql) throws SQLException {
         preparedInsert( params,prepareDBName, sql);        
         
     }
@@ -2447,7 +2450,7 @@ public class PreparedDBUtil extends DBUtil {
 	 * @throws SQLException
 	 */
 	public void preparedInsert(String dbName, String sql) throws SQLException {
-	    preparedInsert((Params )null,dbName, sql);
+	    preparedInsert((Params )null,dbName, new NewSQLInfo(sql));
 		
 	}
 	
@@ -2458,7 +2461,7 @@ public class PreparedDBUtil extends DBUtil {
      * @param sql
      * @throws SQLException
      */
-    public void preparedInsert(Params params,String dbName, String sql) throws SQLException {
+    public void preparedInsert(Params params,String dbName, NewSQLInfo sql) throws SQLException {
         if(params == null)
             Params = this.buildParams();
         else
@@ -2468,6 +2471,18 @@ public class PreparedDBUtil extends DBUtil {
         
     }
     
+    /**
+     * 创建特定数据库的预编译插入语句
+     * 
+     * @param dbName
+     * @param sql
+     * @throws SQLException
+     */
+    public void preparedInsert(SQLParams params,String dbName, SQLInfo sql) throws SQLException {
+        params.buildParams(sql, dbName);
+        preparedInsert(params.getRealParams(),dbName, params.getNewsql());
+        
+    }
     /**
      * 创建特定数据库的预编译插入语句
      * 
@@ -2488,7 +2503,7 @@ public class PreparedDBUtil extends DBUtil {
      * @param sql
      * @throws SQLException
      */
-    public void preparedInsert(SQLParams params,String sql) throws SQLException {
+    public void preparedInsert(SQLParams params,SQLInfo sql) throws SQLException {
         preparedInsert(params,this.prepareDBName, sql);
         
     }
@@ -2507,11 +2522,20 @@ public class PreparedDBUtil extends DBUtil {
 //	}
 
 	
-	public void preparedSql(Params Params,String dbName, String sql) throws SQLException {
+//	public void preparedSql(Params Params,String dbName, NewSQLInfo sql) throws SQLException {
+////		
+//////		this.outcon = con == null ? false:true;
+////		this.prepareDBName = dbName;
+////		Params.prepareselect_sql = sql;
+//////		params = this.buildParams();
+//		preparedSql(Params,dbName, new SQLInfo (sql,false,false));
+//	}
+	
+	public void preparedSql(Params Params,String dbName, NewSQLInfo sql) throws SQLException {
 		
 //		this.outcon = con == null ? false:true;
 		this.prepareDBName = dbName;
-		Params.prepareselect_sql = sql;
+		Params.prepareSqlifo = sql;
 //		params = this.buildParams();
 	}
 
@@ -2673,7 +2697,7 @@ public class PreparedDBUtil extends DBUtil {
 	public void preparedUpdate(String sql) throws SQLException {
 		Params = this.buildParams();
 		Params.action = UPDATE;
-		preparedSql(Params,prepareDBName, sql);
+		preparedSql(Params,prepareDBName, new NewSQLInfo(sql));
 	}
 
 	/**
@@ -2684,7 +2708,7 @@ public class PreparedDBUtil extends DBUtil {
 	 */
 	public void preparedSelect(String sql) throws SQLException {
 
-	    preparedSelect((Params)null,sql);
+	    preparedSelect((Params)null,new NewSQLInfo(sql));
 	}
 	
 	/**
@@ -2693,7 +2717,7 @@ public class PreparedDBUtil extends DBUtil {
      * @param sql
      * @throws SQLException
      */
-    public void preparedSelect(Params params,String sql) throws SQLException {
+    public void preparedSelect(Params params,NewSQLInfo sql) throws SQLException {
 
         preparedSelect(params,prepareDBName, sql);
     }
@@ -2847,16 +2871,39 @@ public class PreparedDBUtil extends DBUtil {
 	public void preparedSelect(String prepareDBName, String sql)
 			throws SQLException {
 		Params = this.buildParams();
-		preparedSelect(Params ,prepareDBName, sql);
+		preparedSelect(Params ,prepareDBName, new NewSQLInfo(sql));
 	}
 	
-	/**
+//	/**
+//     * 创建预编译更新语句
+//     * 
+//     * @param sql
+//     * @throws SQLException
+//     */
+//    public void preparedSelect(Params params,String prepareDBName, String sql)
+//            throws SQLException {
+////        if(params == null)
+////        {
+////            Params = this.buildParams();
+////        }
+////        else
+////        {
+////            Params = params ; 
+////        }
+////        Params.action = SELECT_COMMON;
+////        Params.prepareselect_sql = sql;
+////        preparedSql(Params,prepareDBName, sql);
+//    	preparedSelect(params,prepareDBName, new SQLInfo (sql,false,false));
+//    }
+    
+    
+    /**
      * 创建预编译更新语句
      * 
      * @param sql
      * @throws SQLException
      */
-    public void preparedSelect(Params params,String prepareDBName, String sql)
+    public void preparedSelect(Params params,String prepareDBName, NewSQLInfo sql)
             throws SQLException {
         if(params == null)
         {
@@ -2867,7 +2914,7 @@ public class PreparedDBUtil extends DBUtil {
             Params = params ; 
         }
         Params.action = SELECT_COMMON;
-        Params.prepareselect_sql = sql;
+//        Params.prepareSqlifo = sql;
         preparedSql(Params,prepareDBName, sql);
     }
     
@@ -2886,7 +2933,7 @@ public class PreparedDBUtil extends DBUtil {
     	}
     	else
     	{
-    		preparedSelect((Params)null,prepareDBName, sql);
+    		preparedSelect((Params)null,prepareDBName, new NewSQLInfo(sql));
     	}
     }
 
@@ -2955,23 +3002,37 @@ public class PreparedDBUtil extends DBUtil {
 	 * @param sql
 	 * @throws SQLException
 	 */
-	public void preparedSelect(Params params,String prepareDBName, String sql, long offset,
+	public void preparedSelect(Params params,String prepareDBName, NewSQLInfo sql, long offset,
 			int pagesize,long totalsize) throws SQLException {
 		
 		preparedSelect(params,prepareDBName, sql, offset, pagesize, oraclerownum,totalsize);
 	}
 	
+	
+//	/**
+//	 * 预编译查询方法
+//	 * @mark
+//	 * @param sql
+//	 * @throws SQLException
+//	 */
+//	public void preparedSelect(Params params,String prepareDBName, SQLInfo sql, long offset,
+//			int pagesize,long totalsize) throws SQLException {
+//		
+//		preparedSelect(params,prepareDBName, sql, offset, pagesize, oraclerownum,totalsize);
+//	}
+	
 	/**
 	 * 预编译查询方法
-	 * 
+	 * preparedSelectWithTotalsizesql((Params)null,prepareDBName, sql, offset, pagesize,totalsizesql)
 	 * @param sql
 	 * @throws SQLException
 	 */
-	public void preparedSelectWithTotalsizesql(Params params,String prepareDBName, String sql, long offset,
-			int pagesize,String totalsizesql) throws SQLException {
+	public void preparedSelectWithTotalsizesql(Params params,String prepareDBName, NewSQLInfo sql, long offset,
+			int pagesize) throws SQLException {
 		
-		preparedSelectWithTotalsizesql(params,prepareDBName, sql, offset, pagesize, oraclerownum,totalsizesql);
+		preparedSelectWithTotalsizesql(params,prepareDBName, sql, offset, pagesize, oraclerownum);
 	}
+
 	
 	/**
 	 * 预编译查询方法
@@ -2979,7 +3040,7 @@ public class PreparedDBUtil extends DBUtil {
 	 * @param sql
 	 * @throws SQLException
 	 */
-	public void preparedSelect(Params params,String prepareDBName, String sql, long offset,
+	public void preparedSelect(Params params,String prepareDBName, NewSQLInfo sql, long offset,
 			int pagesize) throws SQLException {
 		
 		preparedSelect(params,prepareDBName, sql, offset, pagesize, oraclerownum,-1L);
@@ -2999,7 +3060,7 @@ public class PreparedDBUtil extends DBUtil {
     		preparedSelect(params.getRealParams(),prepareDBName, params.getNewsql(), offset, pagesize,totalsize);
     	}
     	else
-    		preparedSelect((Params)null,prepareDBName, sql, offset, pagesize,totalsize);
+    		preparedSelect((Params)null,prepareDBName, new NewSQLInfo(sql), offset, pagesize,totalsize);
     }
     
     /**
@@ -3013,10 +3074,10 @@ public class PreparedDBUtil extends DBUtil {
     	if( params != null)
     	{
     		params.buildParams(sql,totalsizesql,prepareDBName);
-    		preparedSelectWithTotalsizesql(params.getRealParams(),prepareDBName, params.getNewsql(), offset, pagesize,params.getNewtotalsizesql());
+    		preparedSelectWithTotalsizesql(params.getRealParams(),prepareDBName, params.getNewsql(), offset, pagesize);
     	}
     	else
-    		preparedSelectWithTotalsizesql((Params)null,prepareDBName, sql, offset, pagesize,totalsizesql);
+    		preparedSelectWithTotalsizesql((Params)null,prepareDBName, new NewSQLInfo(sql,totalsizesql), offset, pagesize);
     }
     
     /**
@@ -3033,7 +3094,7 @@ public class PreparedDBUtil extends DBUtil {
     		preparedSelect(params.getRealParams(),prepareDBName, params.getNewsql(), offset, pagesize,-1L);
     	}
     	else
-    		preparedSelect((Params)null,prepareDBName, sql, offset, pagesize,-1L);
+    		preparedSelect((Params)null,prepareDBName, new NewSQLInfo(sql), offset, pagesize,-1L);
     }
     
     
@@ -3100,11 +3161,26 @@ public class PreparedDBUtil extends DBUtil {
 	 * @mark
 	 * @param sql
 	 * @throws SQLException
+	 * preparedSelect(prepareDBName, sql, offset, pagesize, oraclerownum,totalsize);
 	 */
 	public void preparedSelect(String prepareDBName, String sql, long offset,
 			int pagesize, String oraclerownum,long totalsize) throws SQLException {
+		preparedSelect( prepareDBName, new SQLInfo( sql,false,false), offset,
+				pagesize, oraclerownum,totalsize);
+	}
+	
+	/**
+	 * 创建预编译查询语句
+	 * @mark
+	 * @param sql
+	 * @throws SQLException
+	 * preparedSelect(prepareDBName, sql, offset, pagesize, oraclerownum,totalsize);
+	 */
+	public void preparedSelect(String prepareDBName, SQLInfo sql, long offset,
+			int pagesize, String oraclerownum,long totalsize) throws SQLException {
 		Params = this.buildParams();
-		preparedSelect(Params ,prepareDBName, sql, offset,
+		
+		preparedSelect(Params ,prepareDBName, new NewSQLInfo(sql), offset,
 				pagesize, oraclerownum,totalsize);
 	}
 	
@@ -3113,12 +3189,27 @@ public class PreparedDBUtil extends DBUtil {
 	 * 
 	 * @param sql
 	 * @throws SQLException
+	 * preparedSelectWithTotalsizesql(prepareDBName, sql, offset, pagesize, oraclerownum,totalsizesql);
 	 */
 	public void preparedSelectWithTotalsizesql(String prepareDBName, String sql, long offset,
 			int pagesize, String oraclerownum,String totalsizesql) throws SQLException {
+		preparedSelectWithTotalsizesql(prepareDBName, new SQLInfo( sql,false,false), offset,
+				pagesize, oraclerownum,new SQLInfo( totalsizesql,false,false));
+	}
+	
+	/**
+	 * 创建预编译查询语句
+	 * preparedSelectWithTotalsizesql((Params)null,prepareDBName, sql, offset, pagesize,totalsizesql)
+	 * @param sql
+	 * @throws SQLException
+	 * preparedSelectWithTotalsizesql(prepareDBName, sql, offset, pagesize, oraclerownum,totalsizesql);
+	 */
+	public void preparedSelectWithTotalsizesql(String prepareDBName, SQLInfo sql, long offset,
+			int pagesize, String oraclerownum,SQLInfo totalsizesql) throws SQLException {
 		Params = this.buildParams();
-		preparedSelectWithTotalsizesql(Params ,prepareDBName, sql, offset,
-				pagesize, oraclerownum,totalsizesql);
+		
+		preparedSelectWithTotalsizesql(Params ,prepareDBName, new NewSQLInfo(sql,totalsizesql), offset,
+				pagesize, oraclerownum);
 	}
 	
 	/**
@@ -3130,9 +3221,35 @@ public class PreparedDBUtil extends DBUtil {
 	public void preparedSelect(String prepareDBName, String sql, long offset,
 			int pagesize, String oraclerownum) throws SQLException {
 		Params = this.buildParams();
-		preparedSelect(Params ,prepareDBName, sql, offset,
+		preparedSelect(Params ,prepareDBName, new NewSQLInfo(sql), offset,
 				pagesize, oraclerownum,-1L);
 	}
+	
+//	/**
+//	 * 创建预编译查询语句
+//	 * @mark
+//	 * @param sql
+//	 * @throws SQLException
+//	 */
+//	public void preparedSelect(Params params,String prepareDBName, NewSQLInfo sql, long offset,
+//			int pagesize, String oraclerownum,long totalsize) throws SQLException {
+////	    if(params == null)
+////            Params = this.buildParams();
+////        else
+////            Params = params;
+//////		Params = params;
+////		Params.action = SELECT;
+////		this.pagesize = pagesize;
+////		Params.totalsize = totalsize;
+////		this.offset = StatementInfo.rebuildOffset(offset, pagesize,totalsize);
+////		
+////		Params.prepareselect_sql = sql;
+////		this.oraclerownum = oraclerownum;
+////		
+////		preparedSql(Params,prepareDBName, sql);
+//		preparedSelect(params,prepareDBName, new SQLInfo (sql,false,false),offset,
+//				pagesize, oraclerownum,totalsize) ;
+//	}
 	
 	/**
 	 * 创建预编译查询语句
@@ -3140,7 +3257,7 @@ public class PreparedDBUtil extends DBUtil {
 	 * @param sql
 	 * @throws SQLException
 	 */
-	public void preparedSelect(Params params,String prepareDBName, String sql, long offset,
+	public void preparedSelect(Params params,String prepareDBName, NewSQLInfo sql, long offset,
 			int pagesize, String oraclerownum,long totalsize) throws SQLException {
 	    if(params == null)
             Params = this.buildParams();
@@ -3152,11 +3269,13 @@ public class PreparedDBUtil extends DBUtil {
 		Params.totalsize = totalsize;
 		this.offset = StatementInfo.rebuildOffset(offset, pagesize,totalsize);
 		
-		Params.prepareselect_sql = sql;
+		Params.prepareSqlifo = sql;
 		this.oraclerownum = oraclerownum;
 		
 		preparedSql(Params,prepareDBName, sql);
 	}
+	
+	
 	
 	/**
 	 * 创建预编译分页查询，额外增加分页总记录数sql语句
@@ -3164,8 +3283,8 @@ public class PreparedDBUtil extends DBUtil {
 	 * @param sql
 	 * @throws SQLException
 	 */
-	public void preparedSelectWithTotalsizesql(Params params,String prepareDBName, String sql, long offset,
-			int pagesize, String oraclerownum,String totalsizesql) throws SQLException {
+	public void preparedSelectWithTotalsizesql(Params params,String prepareDBName, NewSQLInfo sql, long offset,
+			int pagesize, String oraclerownum) throws SQLException {
 	    if(params == null)
             Params = this.buildParams();
         else
@@ -3174,9 +3293,9 @@ public class PreparedDBUtil extends DBUtil {
 		Params.action = SELECT;
 		this.offset = offset;
 		this.pagesize = pagesize;
-		Params.prepareselect_sql = sql;
+		Params.prepareSqlifo= sql;
 		this.oraclerownum = oraclerownum;
-		Params.totalsizesql = totalsizesql;
+//		Params.totalsizesql = totalsizesql;
 		preparedSql(Params,prepareDBName, sql);
 	}
 	
@@ -3186,7 +3305,7 @@ public class PreparedDBUtil extends DBUtil {
 	 * @param sql
 	 * @throws SQLException
 	 */
-	public void preparedSelect(Params params,String prepareDBName, String sql, long offset,
+	public void preparedSelect(Params params,String prepareDBName, NewSQLInfo sql, long offset,
 			int pagesize, String oraclerownum) throws SQLException {
 		preparedSelect(params,prepareDBName, sql, offset,
 				pagesize, oraclerownum,-1L);
@@ -3210,7 +3329,7 @@ public class PreparedDBUtil extends DBUtil {
         }
         else
         {
-        	preparedSelect((Params)null,prepareDBName, sql, offset,
+        	preparedSelect((Params)null,prepareDBName, new NewSQLInfo(sql), offset,
 	                pagesize, oraclerownum,totalsize);
         }
     }
@@ -3227,12 +3346,12 @@ public class PreparedDBUtil extends DBUtil {
         {
 	    	params.buildParams(sql,totalsizesql,prepareDBName);
 	        preparedSelectWithTotalsizesql(params.getRealParams(),prepareDBName, params.getNewsql(), offset,
-	                pagesize, oraclerownum,params.getNewtotalsizesql());
+	                pagesize, oraclerownum);
         }
         else
         {
-        	preparedSelectWithTotalsizesql((Params)null,prepareDBName, sql, offset,
-	                pagesize, oraclerownum,totalsizesql);
+        	preparedSelectWithTotalsizesql((Params)null,prepareDBName, new NewSQLInfo(sql,totalsizesql), offset,
+	                pagesize, oraclerownum);
         }
     }
     
@@ -3252,7 +3371,7 @@ public class PreparedDBUtil extends DBUtil {
         }
         else
         {
-        	preparedSelect((Params)null,prepareDBName, sql, offset,
+        	preparedSelect((Params)null,prepareDBName, new NewSQLInfo(sql), offset,
 	                pagesize, oraclerownum,-1L);
         }
     }
@@ -3337,24 +3456,54 @@ public class PreparedDBUtil extends DBUtil {
 		Params = this.buildParams();
 		Params.action = UPDATE;
 		
-		preparedSql(Params,dbName, sql);
+		preparedSql(Params,dbName, new NewSQLInfo(sql));
 	}
 	
-	/**
+//	/**
+//     * 创建特定数据库的预编译更新语句
+//     * 
+//     * @param dbName
+//     * @param sql
+//     * @throws SQLException
+//     */
+//    public void preparedUpdate(Params params,String dbName, String sql) throws SQLException {
+//    	preparedUpdate(params,dbName, new SQLInfo( sql,false,false));
+//    }
+    
+    /**
      * 创建特定数据库的预编译更新语句
      * 
      * @param dbName
      * @param sql
      * @throws SQLException
      */
-    public void preparedUpdate(Params params,String dbName, String sql) throws SQLException {
+    public void preparedUpdate(Params params,String dbName, NewSQLInfo sql) throws SQLException {
         if(params == null)
             Params = this.buildParams();
         else
             Params = params;
         Params.action = UPDATE;
         
-        preparedSql(Params,dbName, sql);
+        preparedSql(Params,dbName,sql);
+    }
+    
+    /**
+     * 创建特定数据库的预编译更新语句
+     * 
+     * @param dbName
+     * @param sql
+     * @throws SQLException
+     */
+    public void preparedUpdate(SQLParams params,String dbName, SQLInfo sql) throws SQLException {
+        if(params != null)
+        {
+        	params.buildParams(sql, dbName);        
+        	preparedUpdate(params.getRealParams(),dbName, params.getNewsql());
+        }
+        else
+        {
+        	preparedUpdate((Params)null,dbName, new NewSQLInfo(sql));
+        }
     }
     
     /**
@@ -3372,7 +3521,7 @@ public class PreparedDBUtil extends DBUtil {
         }
         else
         {
-        	preparedUpdate((Params)null,dbName, sql);
+        	preparedUpdate((Params)null,dbName, new NewSQLInfo(sql));
         }
     }
     /**
@@ -3382,7 +3531,7 @@ public class PreparedDBUtil extends DBUtil {
      * @param sql
      * @throws SQLException
      */
-    public void preparedUpdate(SQLParams params,String sql) throws SQLException {
+    public void preparedUpdate(SQLParams params,SQLInfo sql) throws SQLException {
                 
         preparedUpdate(params,this.prepareDBName, sql);
     }
@@ -3395,7 +3544,7 @@ public class PreparedDBUtil extends DBUtil {
      * @throws SQLException
      */
     public void preparedUpdate(Params params, String sql) throws SQLException {
-        preparedUpdate(params, this.prepareDBName,sql);
+        preparedUpdate(params, this.prepareDBName,new NewSQLInfo(sql));
     }
 
 //	/**
@@ -3425,7 +3574,7 @@ public class PreparedDBUtil extends DBUtil {
      * @throws SQLException
      */
     public void preparedDelete(Params params,String sql) throws SQLException {
-        preparedDelete(params,this.prepareDBName, sql);
+        preparedDelete(params,this.prepareDBName, new NewSQLInfo(sql));
     }
 
 //	/**
@@ -3447,17 +3596,28 @@ public class PreparedDBUtil extends DBUtil {
 	 * @throws SQLException
 	 */
 	public void preparedDelete(String dbName, String sql) throws SQLException {
-	    preparedDelete((Params)null,dbName, sql);
+	    preparedDelete((Params)null,dbName, new NewSQLInfo(sql));
 	}
 	
-	/**
+//	/**
+//     * 创建特定数据库预编译删除语句
+//     * 
+//     * @param dbName
+//     * @param sql
+//     * @throws SQLException
+//     */
+//    public void preparedDelete(Params params,String dbName, NewSQLInfo sql) throws SQLException {
+//    	preparedDelete(params,dbName, sql);
+//    }
+    
+    /**
      * 创建特定数据库预编译删除语句
      * 
      * @param dbName
      * @param sql
      * @throws SQLException
      */
-    public void preparedDelete(Params params,String dbName, String sql) throws SQLException {
+    public void preparedDelete(Params params,String dbName, NewSQLInfo sql) throws SQLException {
         if(params == null)
             Params = this.buildParams();
         else
@@ -3473,6 +3633,20 @@ public class PreparedDBUtil extends DBUtil {
      * @param sql
      * @throws SQLException
      */
+    public void preparedDelete(SQLParams params,String dbName, SQLInfo sql) throws SQLException {
+        if(params != null)
+        {
+        	params.buildParams(sql, dbName);
+        	preparedDelete(params.getRealParams(),dbName, params.getNewsql());
+        }
+        else
+        {
+        	preparedDelete((Params)null,dbName, new NewSQLInfo(sql));
+        }
+        
+        
+    }
+    
     public void preparedDelete(SQLParams params,String dbName, String sql) throws SQLException {
         if(params != null)
         {
@@ -3481,7 +3655,7 @@ public class PreparedDBUtil extends DBUtil {
         }
         else
         {
-        	preparedDelete((Params)null,dbName, sql);
+        	preparedDelete((Params)null,dbName, new NewSQLInfo(sql));
         }
         
         
@@ -3494,7 +3668,7 @@ public class PreparedDBUtil extends DBUtil {
      * @param sql
      * @throws SQLException
      */
-    public void preparedDelete(SQLParams params, String sql) throws SQLException {
+    public void preparedDelete(SQLParams params, SQLInfo sql) throws SQLException {
         preparedDelete(params, this.prepareDBName,  sql);
     }
 	protected Param buildParam()
@@ -4407,28 +4581,47 @@ public class PreparedDBUtil extends DBUtil {
 		}
 		batchparams.add(this.Params);
 //		batchparamsIDXBySQL.put(Params.prepareselect_sql, Params);
-		String old = this.Params.prepareselect_sql;
+		NewSQLInfo old = this.Params.prepareSqlifo;
 		Params = this.buildParams();
-		Params.prepareselect_sql = old;
+		Params.prepareSqlifo = old;
 		
 		
 	}
 	
-	public void addPreparedBatch(List<SQLParams> batchsqlparams) throws SQLException
+	public void addPreparedBatch(ListSQLParams batchsqlparams_) throws SQLException
 	{
-		if(batchsqlparams == null || batchsqlparams.size() == 0)
+		if(batchsqlparams_ == null || batchsqlparams_.getSqlparams() == null || batchsqlparams_.getSqlparams().size() == 0)
 			throw new SQLException("batchsqlparams == null || batchsqlparams.size() == 0");
 		if(this.batchparams == null)
 		{
 			batchparams = new ArrayList<Params>();
-//			batchparamsIDXBySQL = new HashMap();
 		}
+		List<SQLParams> batchsqlparams = batchsqlparams_.getSqlparams(); 
+		int i = 0;
+		boolean multiparser = batchsqlparams_.multiparser();
+		NewSQLInfo newsql = null;
 		for(SQLParams sqlParams:batchsqlparams)
 		{
-			sqlParams.buildParams( this.prepareDBName);
+			if(multiparser )
+			{
+				if(i == 0)
+				{
+					sqlParams.buildParams( this.prepareDBName);
+					newsql = sqlParams.getNewsql();
+					i ++;
+				}
+				else
+				{
+					sqlParams.buildParamsNewSQLInfo( this.prepareDBName,newsql);
+				}
+								
+			}
+			else
+				sqlParams.buildParams( this.prepareDBName);
 			this.Params = sqlParams.getRealParams();
-			this.Params.prepareselect_sql = sqlParams.getNewsql();
+			this.Params.prepareSqlifo = sqlParams.getNewsql();
 			batchparams.add(this.Params);
+			
 			
 		}
 		
@@ -4505,7 +4698,7 @@ public class PreparedDBUtil extends DBUtil {
 			{
 				java.util.Collections.sort(batchparams);
 			}
-			String old_sql = null;
+			NewSQLInfo old_sql = null;
 			boolean showsql = showsql(stmtInfo.getDbname());
 			
 			while(batchparams.size() > 0)
@@ -4520,13 +4713,13 @@ public class PreparedDBUtil extends DBUtil {
 				if(old_sql == null )
 				{
 					
-					old_sql = Params.prepareselect_sql;
+					old_sql = Params.prepareSqlifo;
 					if(showsql)
 					{
-						log.debug("Execute JDBC prepared batch statement:"+Params.prepareselect_sql);
+						log.debug("Execute JDBC prepared batch statement:"+Params.prepareSqlifo.getNewsql());
 					}
 					statement = stmtInfo
-							.prepareStatement(Params.prepareselect_sql);
+							.prepareStatement(Params.prepareSqlifo.getNewsql());
 					if(resources == null)
 						resources = new ArrayList();
 					setUpParams(Params,statement,resources);
@@ -4538,7 +4731,7 @@ public class PreparedDBUtil extends DBUtil {
 //					setUpParams(Params,statement);	
 //					statement.addBatch();
 //				}
-				else if(!old_sql.equals(Params.prepareselect_sql))
+				else if(!old_sql.equals(Params.prepareSqlifo))
 				{
 					try
 					{
@@ -4570,13 +4763,13 @@ public class PreparedDBUtil extends DBUtil {
 						}
 					}
 					
-					old_sql = Params.prepareselect_sql;
+					old_sql = Params.prepareSqlifo;
 					if(showsql)
 					{
-						log.debug("Execute JDBC prepared batch statement:"+Params.prepareselect_sql);
+						log.debug("Execute JDBC prepared batch statement:"+Params.prepareSqlifo.getNewsql());
 					}
 					statement = stmtInfo
-							.prepareStatement(Params.prepareselect_sql);
+							.prepareStatement(Params.prepareSqlifo.getNewsql());
 					if(resources == null)
 						resources = new ArrayList();
 					setUpParams(Params,statement,resources);	

@@ -16,6 +16,9 @@
 
 package org.frameworkset.persitent.util;
 
+import java.io.StringWriter;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -27,10 +30,14 @@ import org.frameworkset.spi.BaseApplicationContext;
 import org.frameworkset.spi.SOAFileApplicationContext;
 import org.frameworkset.spi.assemble.Pro;
 
+import com.frameworkset.common.poolman.sql.PoolManResultSetMetaData;
 import com.frameworkset.common.poolman.util.SQLManager;
 import com.frameworkset.util.DaemonThread;
 import com.frameworkset.util.ResourceInitial;
+import com.frameworkset.util.VariableHandler;
 import com.frameworkset.util.VelocityUtil;
+import com.frameworkset.util.VariableHandler.SQLStruction;
+import com.frameworkset.velocity.BBossVelocityUtil;
 
 /**
  * <p>
@@ -53,10 +60,18 @@ import com.frameworkset.util.VelocityUtil;
 public class SQLUtil {
 	private BaseApplicationContext sqlcontext;
 	private static Map<String,SQLUtil> sqlutils = new HashMap<String,SQLUtil>(); 
-	
+	private SQLCache cache = new SQLCache(); 
 	private static long refresh_interval = 5000;
 	private String defaultDBName = null;
-	private Map<String,String> sqls;
+	private Map<String,SQLInfo> sqls;
+
+//	/**
+//	 * sql语句velocity模板索引表，以sql语句的名称为索引
+//	 * 当sql文件重新加载时，这些模板也会被重置
+//	 */
+//	private Map<String,SQLTemplate> sqlVelocityTemplates;
+//	
+	
 	private static DaemonThread damon = null; 
 	/**
 	 * 
@@ -66,7 +81,7 @@ public class SQLUtil {
 		if(sqlcontext == null)
 			return;
 		sqls = null;
-		sqls = new HashMap<String,String>();
+		sqls = new HashMap<String,SQLInfo>();
 		Set keys = this.sqlcontext.getPropertyKeys();
 		if(keys != null && keys.size() > 0)
 		{
@@ -74,19 +89,35 @@ public class SQLUtil {
 			while(keys_it.hasNext())
 			{
 				String key = keys_it.next();
-				Object o = this.sqlcontext.getObjectProperty(key);
+				Pro pro = this.sqlcontext.getProBean(key);
+				Object o = pro.getObject();
 				if(o instanceof String)
 				{
+					
 					String value = (String)o;
+					
 					if(value != null)
 					{
+						boolean istpl = pro.getBooleanExtendAttribute("istpl",true);//标识sql语句是否为velocity模板
+						boolean multiparser = pro.getBooleanExtendAttribute("multiparser",false);//如果sql语句为velocity模板，则在批处理时是否需要每条记录都需要分析sql语句
+						SQLTemplate sqltpl = null;
 						value = value.trim();
-						sqls.put(key, value.trim());
+						SQLInfo sqlinfo = new SQLInfo(key, value, istpl,multiparser);
+						if(istpl)
+						{
+							sqltpl = new SQLTemplate(sqlinfo);
+							sqlinfo.setSqltpl(sqltpl);
+						}
+						
+						sqls.put(key, sqlinfo);
 					}
 				}
 			}
 		}
 	}
+	
+	
+	           
 	void reinit()
 	{
 		if(sqls != null)
@@ -94,6 +125,7 @@ public class SQLUtil {
 			this.sqls.clear();
 			sqls = null;
 		}
+		this.cache.clear();
 		String file = sqlcontext.getConfigfile();
 		sqlcontext.destroy(true);
 		sqlcontext = new SOAFileApplicationContext(file);		
@@ -129,6 +161,14 @@ public class SQLUtil {
 //		}
 		
 		
+	}
+	public SQLStruction getSQLStruction(String sql)
+	{
+		return this.cache.getSQLStruction(sql);
+	}
+	public SQLStruction getTotalsizeSQLStruction(String totalsizesql)
+	{
+		return this.cache.getTotalsizeSQLStruction(totalsizesql);
 	}
 	static class ResourceSQLRefresh implements ResourceInitial
 	{
@@ -221,11 +261,11 @@ public class SQLUtil {
 		return sqlUtil;
 	}
 
-	public String getSQL(String dbname, String sqlname) {
+	public SQLInfo getSQL(String dbname, String sqlname) {
 		String dbtype = SQLManager.getInstance().getDBAdapter(dbname)
 		.getDBTYPE();
 		
-		String sql = null;
+		SQLInfo sql = null;
 		if(dbtype != null)
 //			sql = sqlcontext.getProperty(sqlname + "-" + dbtype.toLowerCase());		
 			sql = sqls.get(sqlname + "-" + dbtype.toLowerCase());
@@ -245,7 +285,8 @@ public class SQLUtil {
 	public String getSQL(String dbname, String sqlname,Map variablevalues) {
 		String dbtype = SQLManager.getInstance().getDBAdapter(dbname)
 		.getDBTYPE();
-		String sql = null;
+		String newsql = null;
+		SQLInfo sql = null;
 		if(dbtype != null)
 //			sql = sqlcontext.getProperty(sqlname + "-" + dbtype.toLowerCase());
 			sql = sqls.get(sqlname + "-" + dbtype.toLowerCase());
@@ -258,23 +299,31 @@ public class SQLUtil {
 //			sql = sqlcontext.getProperty(sqlname + "-default");
 			sql = sqls.get(sqlname + "-default");
 		}
-		if(sql != null &&  variablevalues != null && variablevalues.size() > 0)
+		if(sql != null )
 		{
-			sql = VelocityUtil.evaluate(variablevalues, sqlcontext.getConfigfile()+"|"+sqlname, sql);
+			if(sql.istpl() )
+			{
+				StringWriter sw = new StringWriter();
+				sql.getSqltpl().merge(BBossVelocityUtil.buildVelocityContext(variablevalues),sw);
+				newsql = sw.toString();
+			}
+			else
+				newsql = sql.getSql();
+			
 		}
-		return sql;
+		return newsql;
 
 	}
 	
-	public String evaluateSQL(String name,String sql,Map variablevalues) {
-		
-		if(sql != null &&  variablevalues != null && variablevalues.size() > 0)
-		{
-			sql = VelocityUtil.evaluate(variablevalues, sqlcontext.getConfigfile()+"|"+name, sql);
-		}
-		return sql;
-
-	}
+//	public String evaluateSQL(String name,String sql,Map variablevalues) {
+//		
+//		if(sql != null &&  variablevalues != null && variablevalues.size() > 0)
+//		{
+//			sql = VelocityUtil.evaluate(variablevalues, sqlcontext.getConfigfile()+"|"+name, sql);
+//		}
+//		return sql;
+//
+//	}
 	
 	public String getSQL(String sqlname,Map variablevalues) {
 		return getSQL(null, sqlname,variablevalues) ;
@@ -308,7 +357,7 @@ public class SQLUtil {
 		return rets;
 	}
 
-	public String getSQL(String sqlname) {
+	public SQLInfo getSQL(String sqlname) {
 		return getSQL(null, sqlname);
 
 	}
@@ -332,6 +381,11 @@ public class SQLUtil {
 		}
 		return sqls;
 
+	}
+	
+	public PoolManResultSetMetaData getPoolManResultSetMetaData(String dbname,String sqlkey,ResultSetMetaData rsmetadata) throws SQLException
+	{
+		return this.cache.getPoolManResultSetMetaData(dbname, sqlkey, rsmetadata);
 	}
 
 	public List getListSQLs(String sqlname) {

@@ -18,8 +18,6 @@ package com.frameworkset.common.poolman.management;
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -42,7 +40,7 @@ import org.apache.log4j.Logger;
 
 import com.frameworkset.common.poolman.PoolManConstants;
 import com.frameworkset.util.ValueObjectUtil;
-import com.frameworkset.util.VelocityUtil;
+import com.frameworkset.velocity.BBossVelocityUtil;
 
 /**
  * This service configures ObjectPools by first looking for 'poolman.xml' in the
@@ -233,7 +231,7 @@ public class PoolManConfiguration implements Serializable {
 			this.genericObjects = handler.getGenericProperties();
 		} else {
 			initpooltemplates();
-			String poolconfig = VelocityUtil.evaluate(context, "",
+			String poolconfig = BBossVelocityUtil.evaluate(context, "",
 					pooltemplates);
 			InputStream in = null;
 			ByteArrayInputStream sr = null;

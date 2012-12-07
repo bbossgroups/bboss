@@ -60,8 +60,6 @@
 	<classpathentry kind="lib" path="lib/jms/commons-pool-1.5.4.jar"/>
 	<classpathentry kind="lib" path="lib/camel/camel-core-2.2.0.jar" sourcepath="/camel-core"/>
 	<classpathentry kind="lib" path="lib/camel/camel-jms-2.2.0.jar" sourcepath="/camel-jms"/>
-	<classpathentry kind="lib" path="lib/velocity-1.6.2-dep.jar"/>
-	<classpathentry kind="lib" path="lib/velocity-1.6.2.jar"/>
 	<classpathentry kind="lib" path="lib/mina/mina-core-2.0.0-RC1.jar" sourcepath="D:/workspace/mina-2.0.0-M6/src/mina-core"/>
 	<classpathentry kind="lib" path="lib/mina/mina-example-2.0.0-RC1.jar"/>
 	<classpathentry kind="lib" path="lib/mina/mina-filter-compression-2.0.0-RC1.jar"/>
@@ -103,5 +101,6 @@
 	<classpathentry kind="lib" path="lib/jms/activemq-web-5.5.0.jar"/>
 	<classpathentry kind="lib" path="lib/jms/activemq-xmpp-5.5.0.jar"/>
 	<classpathentry kind="lib" path="lib/netty/hessian-4.0.7.jar"/>
+	<classpathentry kind="lib" path="lib/bboss-velocity.jar" sourcepath="/bboss-velocity"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>

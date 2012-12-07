@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.frameworkset.persitent.util.SQLInfo;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -35,7 +36,7 @@ public class ConfigSQLExecutorTest {
 	{
 		executor = new ConfigSQLExecutor("com/frameworkset/sqlexecutor/sqlfile.xml");
 		try {
-			String sql = executor.getSql("sqltemplate");
+			SQLInfo sql = executor.getSql("sqltemplate");
 			sql = executor.getSql("bspf","sqltemplate");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

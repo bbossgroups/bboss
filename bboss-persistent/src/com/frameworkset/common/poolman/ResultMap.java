@@ -486,7 +486,7 @@ public class ResultMap {
 						if (param.parameterName == null) {
 							String msg = new StringBuffer(
 									"Build ValueObject for callablestatement[").append(
-									outparams.prepareselect_sql).append(
+									outparams.prepareSqlifo.getNewsql()).append(
 									"] need named binding variable,ignore handle ")
 									.append(param).append(".").toString();
 							log.warn(msg);
@@ -510,7 +510,7 @@ public class ResultMap {
 						} catch (Exception e) {
 							StringBuffer err = new StringBuffer(
 									"Build ValueObject for callablestatement[").append(
-									outparams.prepareselect_sql).append("] Get Param[")
+									outparams.prepareSqlifo.getNewsql()).append("] Get Param[")
 									.append(param).append("] from  ").append(cstmt)
 									.append(" to ").append(valueObject).append(".")
 									.append(attrName).append("[")
@@ -573,7 +573,7 @@ public class ResultMap {
 				} catch (Exception e) {
 					StringBuffer err = new StringBuffer(
 							"Build ValueObject for callablestatement[").append(
-							outparams.prepareselect_sql).append("] Get Param[")
+							outparams.prepareSqlifo.getNewsql()).append("] Get Param[")
 							.append(param).append("] from  ").append(cstmt)
 							.append(" to String failed:").append(
 									e.getMessage());

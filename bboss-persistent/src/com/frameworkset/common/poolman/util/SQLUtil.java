@@ -46,6 +46,7 @@ import org.apache.log4j.Logger;
 
 import com.frameworkset.common.poolman.DBUtil;
 import com.frameworkset.common.poolman.NestedSQLException;
+import com.frameworkset.common.poolman.NewSQLInfo;
 import com.frameworkset.common.poolman.PreparedDBUtil;
 import com.frameworkset.common.poolman.Record;
 import com.frameworkset.common.poolman.ResultMap;
@@ -707,7 +708,7 @@ public class SQLUtil implements Serializable{
 		StatementInfo stmtInfo = null;
 		try
 		{
-			stmtInfo = new StatementInfo(dbname_, sql_, goNative_,con_,!this.isAutoCommit());
+			stmtInfo = new StatementInfo(dbname_,new NewSQLInfo( sql_), goNative_,con_,!this.isAutoCommit());
 			ResultMap resultMap = innerExecuteJDBC(stmtInfo,
 					null,null,ResultMap.type_maparray);
 			return (Record[])resultMap.getCommonresult();

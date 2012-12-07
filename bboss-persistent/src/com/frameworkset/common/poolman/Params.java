@@ -45,7 +45,7 @@ public class Params implements java.lang.Comparable
 	 * 
 	 * totalsize和totalsizesql两个属性一次只能使用一个
 	 */
-	String totalsizesql;
+//	SQLInfo totalsizesql;
 	public Params()
 	{
 		params = new ArrayList<Param>();
@@ -86,7 +86,7 @@ public class Params implements java.lang.Comparable
 	 */
 	int action = -1;
 	
-	String prepareselect_sql;
+	NewSQLInfo prepareSqlifo;
 	
 	public int hashCode()
 	{
@@ -98,7 +98,7 @@ public class Params implements java.lang.Comparable
 		try
 		{
 			Params _o = (Params)other;
-			if(_o.prepareselect_sql.equals(this.prepareselect_sql))
+			if(_o.prepareSqlifo.getNewsql().equals(this.prepareSqlifo.getNewsql()))
 				return true;
 			else
 				return false;
@@ -117,16 +117,17 @@ public class Params implements java.lang.Comparable
 		conditions = null;
 		updateKeyInfo = null;
 		action = -1;
-		prepareselect_sql = null;
+//		prepareselect_sql = null;
+		prepareSqlifo = null;
 		totalsize = -1L;
-		totalsizesql = null;
+//		totalsizesql = null;
 	}
 
 	public int compareTo(Object other) {
 		try
 		{
 			Params _o = (Params)other;
-			return this.prepareselect_sql.compareTo(_o.prepareselect_sql);
+			return this.prepareSqlifo.getNewsql().compareTo(_o.prepareSqlifo.getNewsql());
 			
 		}
 		catch(Exception e)
@@ -142,20 +143,21 @@ public class Params implements java.lang.Comparable
 		params.bigdatas = this.bigdatas;
 		params.conditions = this.conditions;
 		params.params = this.params;
-		params.prepareselect_sql = this.prepareselect_sql;
+//		params.prepareselect_sql = this.prepareselect_sql;
 		params.updateKeyInfo = this.updateKeyInfo;
 		params.totalsize = this.totalsize;
-		params.totalsizesql = this.totalsizesql;
+//		params.totalsizesql = this.totalsizesql;
+		params.prepareSqlifo = this.prepareSqlifo;
 		return params;
 	}
 
-	public String getTotalsizesql() {
-		return totalsizesql;
-	}
-
-	public void setTotalsizesql(String totalsizesql) {
-		this.totalsizesql = totalsizesql;
-	}
+//	public SQLInfo getTotalsizesql() {
+//		return totalsizesql;
+//	}
+//
+//	public void setTotalsizesql(SQLInfo totalsizesql) {
+//		this.totalsizesql = totalsizesql;
+//	}
 
 	public long getTotalsize() {
 		return totalsize;

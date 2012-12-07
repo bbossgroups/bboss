@@ -13,16 +13,18 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.  
  */
-package com.frameworkset.velocity;
+package org.frameworkset.persitent.util;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
+import java.io.StringWriter;
 import java.io.Writer;
 import java.util.List;
+import java.util.Map;
 
-import org.frameworkset.persitent.util.SQLUtil;
+import com.frameworkset.velocity.BBossVelocityUtil;
 
 import bboss.org.apache.velocity.VelocityContext;
 import bboss.org.apache.velocity.context.Context;
@@ -42,11 +44,11 @@ import bboss.org.apache.velocity.runtime.resource.ResourceManager;
 
 /**
  * <p> SQLTemplate.java</p>
- * <p> Description: sqlËØ≠Âè•Ê®°Êùø</p>
+ * <p> Description: sql”Ôæ‰ƒ£∞Â</p>
  * <p> bboss workgroup </p>
  * <p> Copyright (c) 2009 </p>
  * 
- * @Date 2012-12-4 ‰∏ãÂçà7:31:55
+ * @Date 2012-12-4 œ¬ŒÁ7:31:55
  * @author biaoping.yin
  * @version 1.0
  */
@@ -57,18 +59,20 @@ public class SQLTemplate extends Resource
      * the scope object into the context.
      */
     private String scopeName = "template";
-    private String dbname ;
+    private SQLInfo sqlinfo;
     
     private boolean provideScope = false;
-    private SQLUtil sqlUtil;
+   private String sql;   
+   private boolean processed;
 
     private VelocityException errorCondition = null;
 
     /** Default constructor */
-    public SQLTemplate()
+    public SQLTemplate(SQLInfo sqlinfo)
     {
         super();
-        
+        this.sqlinfo = sqlinfo;        
+        this.setName(sqlinfo.getSqlname());
         setType(ResourceManager.RESOURCE_SQL);
     }
 
@@ -85,97 +89,113 @@ public class SQLTemplate extends Resource
     public boolean process()
         throws ResourceNotFoundException, ParseErrorException
     {
-        data = null;
-        
-        errorCondition = null;
-        Reader is = null;
-
-        /*
-         *  first, try to get the stream from the loader
-         */
-        try
-        {
-        	is = new StringReader(sqlUtil.getSQL(dbname, name));
-        }
-        catch( ResourceNotFoundException rnfe )
-        {
-            /*
-             *  remember and re-throw
-             */
-
-            errorCondition = rnfe;
-            throw rnfe;
-        }
-
-        /*
-         *  if that worked, lets protect in case a loader impl
-         *  forgets to throw a proper exception
-         */
-
-        if (is != null)
-        {
-            /*
-             *  now parse the template
-             */
-
-            try
-            {
-                BufferedReader br = new BufferedReader( is);
-                data = rsvc.parse( br, name);
-                initDocument();
-                return true;
-            }
-            
-            catch ( ParseException pex )
-            {
-                /*
-                 *  remember the error and convert
-                 */
-                errorCondition =  new ParseErrorException(pex, name);
-                throw errorCondition;
-            }
-            catch ( TemplateInitException pex )
-            {
-                errorCondition = new ParseErrorException( pex, name);
-                throw errorCondition;
-            }
-            /**
-             * pass through runtime exceptions
-             */
-            catch( RuntimeException e )
-            {
-                errorCondition = new VelocityException("Exception thrown processing Template "
-                    +getName(), e);
-                throw errorCondition;
-            }
-            finally
-            {
-                /*
-                 *  Make sure to close the inputstream when we are done.
-                 */
-                try
-                {
-                    is.close();
-                }
-                catch(IOException e)
-                {
-                    // If we are already throwing an exception then we want the original
-                    // exception to be continued to be thrown, otherwise, throw a new Exception.
-                    if (errorCondition == null)
-                    {
-                         throw new VelocityException(e);
-                    }                    
-                }
-            }
-        }
-        else
-        {
-            /*
-             *  is == null, therefore we have some kind of file issue
-             */
-            errorCondition = new ResourceNotFoundException("Unknown resource error for resource " + name );
-            throw errorCondition;
-        }
+    	if(processed)
+    		return true;
+    	synchronized(this)
+    	{
+    		if(processed)
+        		return true;
+    		
+	        data = null;
+	        
+	        errorCondition = null;
+	        Reader is = null;
+	
+	        /*
+	         *  first, try to get the stream from the loader
+	         */
+	        try
+	        {
+	        	is = new StringReader(sql);
+	        }
+	        catch( ResourceNotFoundException rnfe )
+	        {
+	            /*
+	             *  remember and re-throw
+	             */
+	
+	            errorCondition = rnfe;
+	            processed = true;
+	            throw rnfe;
+	        }
+	
+	        /*
+	         *  if that worked, lets protect in case a loader impl
+	         *  forgets to throw a proper exception
+	         */
+	
+	        if (is != null)
+	        {
+	            /*
+	             *  now parse the template
+	             */
+	
+	            try
+	            {
+	                BufferedReader br = new BufferedReader( is);
+	                data = rsvc.parse( br, name);
+	                initDocument();
+	                processed = true;
+	                return true;
+	            }
+	            
+	            catch ( ParseException pex )
+	            {
+	                /*
+	                 *  remember the error and convert
+	                 */
+	                errorCondition =  new ParseErrorException(pex, name);
+	                processed = true;
+	                throw errorCondition;
+	            }
+	            catch ( TemplateInitException pex )
+	            {
+	                errorCondition = new ParseErrorException( pex, name);
+	                processed = true;
+	                throw errorCondition;
+	            }
+	            /**
+	             * pass through runtime exceptions
+	             */
+	            catch( RuntimeException e )
+	            {
+	                errorCondition = new VelocityException("Exception thrown processing Template "
+	                    +getName(), e);
+	                processed = true;
+	                throw errorCondition;
+	            }
+	            finally
+	            {
+	            	processed = true;
+	                /*
+	                 *  Make sure to close the inputstream when we are done.
+	                 */
+	                try
+	                {
+	                    is.close();
+	                }
+	                catch(IOException e)
+	                {
+	                    // If we are already throwing an exception then we want the original
+	                    // exception to be continued to be thrown, otherwise, throw a new Exception.
+	                    if (errorCondition == null)
+	                    {
+	                         throw new VelocityException(e);
+	                    }                    
+	                }
+	                
+	            }
+	        }
+	        else
+	        {
+	            /*
+	             *  is == null, therefore we have some kind of file issue
+	             */
+	            errorCondition = new ResourceNotFoundException("Unknown resource error for resource " + name );
+	            processed = true;
+	            throw errorCondition;
+	        }
+    	}
     }
 
     /**
@@ -242,6 +262,16 @@ public class SQLTemplate extends Resource
     {
         merge(context, writer, null);
     }
+    
+    public String evaluate( Map variablevalues)
+            throws ResourceNotFoundException, ParseErrorException, MethodInvocationException
+    {
+    	StringWriter writer = new StringWriter();    	
+        merge(BBossVelocityUtil.buildVelocityContext(variablevalues), writer, null);
+        return writer.toString();
+    }
+    
+    
 
     
     /**
@@ -261,6 +291,7 @@ public class SQLTemplate extends Resource
     public void merge( Context context, Writer writer, List macroLibraries)
         throws ResourceNotFoundException, ParseErrorException, MethodInvocationException
     {
+    	process();
         /*
          *  we shouldn't have to do this, as if there is an error condition,
          *  the application code should never get a reference to the
@@ -397,12 +428,5 @@ public class SQLTemplate extends Resource
         }
     }
 
-	public String getDbname() {
-		return dbname;
-	}
-
-	public void setDbname(String dbname) {
-		this.dbname = dbname;
-	}
-
+	
 }

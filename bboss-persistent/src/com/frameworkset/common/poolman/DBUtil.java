@@ -842,7 +842,7 @@ public class DBUtil extends SQLUtil implements Serializable {
 		StatementInfo stmtInfo = null;
 		try
 		{
-			stmtInfo = new StatementInfo(dbname, sql,
+			stmtInfo = new StatementInfo(dbname, new NewSQLInfo(sql),
 			// Connection con,
 					goNative, offset, maxsize, isRobotQuery(dbname), con_,oraclerownum);
 
@@ -1302,7 +1302,7 @@ public class DBUtil extends SQLUtil implements Serializable {
 
 		try {
 			stmtInfo =  new StatementInfo(dbname_,
-					sql_,
+					new NewSQLInfo(sql_),
 					goNative_,
 					 con_,
 					 false);
@@ -2184,7 +2184,7 @@ public class DBUtil extends SQLUtil implements Serializable {
 		StatementInfo stmtInfo = null;
 		try {
 			
-			stmtInfo = new StatementInfo(dbname, sql,
+			stmtInfo = new StatementInfo(dbname, new NewSQLInfo(sql),
 					// Connection con,
 							false, offset, maxsize, robotquery, con,oraclerownum);
 			hashResults = doJDBC(stmtInfo, objectType, rowHandler);
@@ -3589,7 +3589,7 @@ public class DBUtil extends SQLUtil implements Serializable {
 		
 		StatementInfo stmtInfo = null;
 		try{
-			stmtInfo = new StatementInfo(dbname, sql, false,con,false);
+			stmtInfo = new StatementInfo(dbname, new NewSQLInfo(sql), false,con,false);
 			ResultMap resultMap = innerExecuteJDBC(stmtInfo,
 					objectType,rowhandler,ResultMap.type_objectarray);
 			return (Object[])resultMap.getCommonresult();
@@ -3643,7 +3643,7 @@ public class DBUtil extends SQLUtil implements Serializable {
 	
 	public Object[] executeSelectForObjectArray(String dbname,String sql,long offset,int pagesize,Class objectType,Connection con,RowHandler rowhandler) throws SQLException
 	{
-		StatementInfo stmtInfo = new StatementInfo(dbname, sql,
+		StatementInfo stmtInfo = new StatementInfo(dbname, new NewSQLInfo(sql),
 				// Connection con,
 						false, offset, pagesize, isRobotQuery(dbname), con,oraclerownum);
 		ResultMap resultMap = innerExecutePagineJDBC(stmtInfo, objectType, rowhandler, ResultMap.type_objectarray);
@@ -3680,7 +3680,7 @@ public class DBUtil extends SQLUtil implements Serializable {
         StatementInfo stmtInfo = null;
         try
         {
-            stmtInfo = new StatementInfo(dbname, sql, false,con,false);
+            stmtInfo = new StatementInfo(dbname, new NewSQLInfo(sql), false,con,false);
             ResultMap resultMap = innerExecuteJDBC(stmtInfo,
                     null,rowhandler,ResultMap.type_null);
 //            return (List)resultMap.getCommonresult();
@@ -3710,7 +3710,7 @@ public class DBUtil extends SQLUtil implements Serializable {
 	
 	public void executeSelectWithRowhandler(String dbname, String sql,long offset,int pagesize, Connection con,NullRowHandler rowhandler) throws SQLException
     {
-		StatementInfo stmtInfo = new StatementInfo(dbname, sql,
+		StatementInfo stmtInfo = new StatementInfo(dbname, new NewSQLInfo(sql),
 					
 							false, offset, pagesize, true, con,oraclerownum);
 			this.innerExecutePagineJDBC(stmtInfo, null, rowhandler, ResultMap.type_null);
@@ -3857,7 +3857,7 @@ public class DBUtil extends SQLUtil implements Serializable {
 		StatementInfo stmtInfo = null;
 		try
 		{
-			stmtInfo = new StatementInfo(dbname, sql, false,con,false);
+			stmtInfo = new StatementInfo(dbname, new NewSQLInfo(sql), false,con,false);
 			ResultMap resultMap = innerExecuteJDBC(stmtInfo,
 					objectType,rowhandler,ResultMap.type_objcet);
 			return (Object)resultMap.getCommonresult();
@@ -3900,7 +3900,7 @@ public class DBUtil extends SQLUtil implements Serializable {
 		StatementInfo stmtInfo = null;
 		try
 		{
-			stmtInfo = new StatementInfo(dbname, sql, false,con,false);
+			stmtInfo = new StatementInfo(dbname, new NewSQLInfo(sql), false,con,false);
 			ResultMap resultMap = innerExecuteJDBC(stmtInfo,
 					objectType,rowhandler,ResultMap.type_list);
 			return (List)resultMap.getCommonresult();
@@ -3931,7 +3931,7 @@ public class DBUtil extends SQLUtil implements Serializable {
 	{
 		StatementInfo stmtInfo = null;
 		try{
-			stmtInfo = new StatementInfo(dbname, sql, false,con,false);
+			stmtInfo = new StatementInfo(dbname, new NewSQLInfo(sql), false,con,false);
 			ResultMap resultMap = innerExecuteJDBC(stmtInfo,
 					XMLMark.class,rowhandler,ResultMap.type_xml);
 			return (String)resultMap.getCommonresult();
@@ -4006,7 +4006,7 @@ public class DBUtil extends SQLUtil implements Serializable {
 //	-----------------------
 	public String executeSelectForXML(String dbname,String sql,long offset,int pagesize,boolean robotquery , Connection con,RowHandler rowhandler) throws SQLException
 	{
-		StatementInfo stmtInfo = new StatementInfo(dbname, sql,
+		StatementInfo stmtInfo = new StatementInfo(dbname, new NewSQLInfo(sql),
 				// Connection con,
 						false, offset, pagesize, robotquery, con,oraclerownum);
 		ResultMap resultMap = innerExecutePagineJDBC(stmtInfo, XMLMark.class, rowhandler, ResultMap.type_xml);
@@ -4058,7 +4058,7 @@ public class DBUtil extends SQLUtil implements Serializable {
 	}
 	public List executeSelectForList(String dbname, String sql,  long offset, int pagesize, boolean robotquery,Connection con,Class objectType,RowHandler rowhandler) throws SQLException
 	{
-		StatementInfo stmtInfo = new StatementInfo(dbname, sql,
+		StatementInfo stmtInfo = new StatementInfo(dbname, new NewSQLInfo(sql),
 				// Connection con,
 						false, offset, pagesize, robotquery, con,oraclerownum);
 		ResultMap resultMap = this.innerExecutePagineJDBC(stmtInfo, objectType, rowhandler, ResultMap.type_list);
@@ -4078,7 +4078,7 @@ public class DBUtil extends SQLUtil implements Serializable {
 	}
 	public List executeSelectForOracleList(String dbname, String sql, long offset, int pagesize, String oraclerownum,Connection con,Class objectType,RowHandler rowhandler) throws SQLException
 	{
-		StatementInfo stmtInfo = new StatementInfo(dbname, sql,
+		StatementInfo stmtInfo = new StatementInfo(dbname, new NewSQLInfo(sql),
 				// Connection con,
 						false, offset, pagesize, isRobotQuery(dbname), con,oraclerownum);
 		ResultMap resultMap = this.innerExecutePagineJDBC(stmtInfo, objectType, rowhandler, ResultMap.type_list);

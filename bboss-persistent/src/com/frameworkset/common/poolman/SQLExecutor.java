@@ -21,6 +21,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.frameworkset.persitent.util.SQLInfo;
+
 import com.frameworkset.common.poolman.handle.FieldRowHandler;
 import com.frameworkset.common.poolman.handle.NullRowHandler;
 import com.frameworkset.common.poolman.handle.RowHandler;
@@ -200,7 +202,7 @@ public class SQLExecutor
 	        {
 	            if(this.getSQLParams().size() > 0)
 	            {
-	                dbutil.preparedInsert(this.getSQLParams(), this.getDbname(),this.getStatement());
+	                dbutil.preparedInsert(this.getSQLParams(), this.getDbname(), new SQLInfo(this.getStatement(),true,true));
 	            }
 	            else
 	            {
@@ -211,7 +213,7 @@ public class SQLExecutor
 	        {
 	            if(this.getSQLParams().size() > 0)
 	            {
-	                dbutil.preparedUpdate(this.getSQLParams(), this.getDbname(),this.getStatement());
+	                dbutil.preparedUpdate(this.getSQLParams(), this.getDbname(),new SQLInfo(this.getStatement(),true,true));
 	            }
 	            else
 	            {
@@ -223,7 +225,7 @@ public class SQLExecutor
 	        {
 	            if(this.getSQLParams().size() > 0)
 	            {
-	                dbutil.preparedDelete(this.getSQLParams(), this.getDbname(),this.getStatement());
+	                dbutil.preparedDelete(this.getSQLParams(), this.getDbname(),new SQLInfo(this.getStatement(),true,true));
 	            }
 	            else
 	            {
@@ -241,7 +243,7 @@ public class SQLExecutor
     			PreparedDBUtil dbutil = new PreparedDBUtil();
     			dbutil.setBatchOptimize(isBatchOptimize());
     			dbutil.setPrepareDBName(batchDBName);
-    			dbutil.addPreparedBatch(batchsqlparams);
+    			dbutil.addPreparedBatch(new ListSQLParams(batchsqlparams,null));
     			dbutil.executePreparedBatch();
     		}
     		else
@@ -381,13 +383,13 @@ public class SQLExecutor
 		try
 		{
 			con = DBUtil.getConection(dbname);
-			List<SQLParams> batchsqlparams = SQLParams.convertBeansToSqlParams(beans,sql,dbname,action,con);
+			List<SQLParams> batchsqlparams = SQLParams.convertBeansToSqlParams(beans,new SQLInfo(sql,true,true),dbname,action,con);
 			if(batchsqlparams == null)
 				return ;
 			PreparedDBUtil dbutil = new PreparedDBUtil();
 			dbutil.setBatchOptimize(isBatchOptimize);
 			dbutil.setPrepareDBName(dbname);
-			dbutil.addPreparedBatch(batchsqlparams);
+			dbutil.addPreparedBatch(new ListSQLParams(batchsqlparams,null));
 			dbutil.executePreparedBatch(con,getCUDResult);
 		}
 		finally
@@ -419,8 +421,9 @@ public class SQLExecutor
 		Connection con = null;
 		try
 		{
+			SQLInfo sqlinfo = new SQLInfo(sql,true,false);
 			con = DBUtil.getConection(dbname);
-			SQLParams batchsqlparams = SQLParams.convertBeanToSqlParams(bean,sql,dbname,action,con);
+			SQLParams batchsqlparams = SQLParams.convertBeanToSqlParams(bean,sqlinfo,dbname,action,con);
 			if(batchsqlparams == null)
 				return null;
 //			PreparedDBUtil dbutil = new PreparedDBUtil();
@@ -436,7 +439,7 @@ public class SQLExecutor
 	        {
 	            if(batchsqlparams.size() > 0)
 	            {
-	                dbutil.preparedInsert(batchsqlparams, dbname,sql);
+	                dbutil.preparedInsert(batchsqlparams, dbname,sqlinfo);
 	                return dbutil.executePrepared(con,getCUDResult);
 	            }
 	            else
@@ -448,7 +451,7 @@ public class SQLExecutor
 	        {
 	            if(batchsqlparams.size() > 0)
 	            {
-	                dbutil.preparedUpdate(batchsqlparams, dbname,sql);
+	                dbutil.preparedUpdate(batchsqlparams, dbname,sqlinfo);
 	                return dbutil.executePrepared(con,getCUDResult);
 	            }
 	            else
@@ -461,7 +464,7 @@ public class SQLExecutor
 	        {
 	            if(batchsqlparams.size() > 0)
 	            {
-	                dbutil.preparedDelete(batchsqlparams, dbname,sql);
+	                dbutil.preparedDelete(batchsqlparams, dbname,sqlinfo);
 	                return dbutil.executePrepared(con,getCUDResult);
 	            }
 	            else
@@ -1347,7 +1350,7 @@ public class SQLExecutor
 	{
 		
 		PreparedDBUtil dbutil = new PreparedDBUtil();
-		SQLParams params = SQLParams.convertBeanToSqlParams(bean, sql, dbname, PreparedDBUtil.SELECT, null);
+		SQLParams params = SQLParams.convertBeanToSqlParams(bean, new SQLInfo(sql,true,true), dbname, PreparedDBUtil.SELECT, null);
 		dbutil.preparedSelect(params,dbname, sql,offset,pagesize,totalsize);
 		ListInfo datas = new ListInfo();
 		datas.setDatas(dbutil.executePreparedForList(beanType));
@@ -1359,7 +1362,7 @@ public class SQLExecutor
 	{
 		
 		PreparedDBUtil dbutil = new PreparedDBUtil();
-		SQLParams params = SQLParams.convertBeanToSqlParams(bean, sql, dbname, PreparedDBUtil.SELECT, null);
+		SQLParams params = SQLParams.convertBeanToSqlParams(bean, new SQLInfo(sql,true,true), dbname, PreparedDBUtil.SELECT, null);
 		dbutil.preparedSelectWithTotalsizesql(params,dbname, sql,offset,pagesize,totalsizesql);
 		ListInfo datas = new ListInfo();
 		datas.setDatas(dbutil.executePreparedForList(beanType));
@@ -1382,7 +1385,7 @@ public class SQLExecutor
 	{
 		
 		PreparedDBUtil dbutil = new PreparedDBUtil();
-		SQLParams params = SQLParams.convertBeanToSqlParams(bean, sql, dbname, PreparedDBUtil.SELECT, null);
+		SQLParams params = SQLParams.convertBeanToSqlParams(bean, new SQLInfo(sql,true,true), dbname, PreparedDBUtil.SELECT, null);
 		dbutil.preparedSelect(params,dbname, sql,offset,pagesize,-1L);
 		ListInfo datas = new ListInfo();
 		datas.setDatas(dbutil.executePreparedForList(beanType));
@@ -1428,7 +1431,7 @@ public class SQLExecutor
 	{
 		
 		PreparedDBUtil dbutil = new PreparedDBUtil();
-		SQLParams params = SQLParams.convertBeanToSqlParams(bean, sql, dbname, PreparedDBUtil.SELECT, null);
+		SQLParams params = SQLParams.convertBeanToSqlParams(bean,  new SQLInfo(sql,true,true), dbname, PreparedDBUtil.SELECT, null);
 		dbutil.preparedSelect(params,dbname, sql);
 		
 		
@@ -1530,7 +1533,7 @@ public class SQLExecutor
 	{
 		
 		PreparedDBUtil dbutil = new PreparedDBUtil();
-		SQLParams params = SQLParams.convertBeanToSqlParams(bean, sql, dbname, PreparedDBUtil.SELECT, null);
+		SQLParams params = SQLParams.convertBeanToSqlParams(bean,  new SQLInfo(sql,true,true), dbname, PreparedDBUtil.SELECT, null);
 		dbutil.preparedSelect(params,dbname, sql);
 		
 		
@@ -1597,7 +1600,7 @@ public class SQLExecutor
 	{
 		
 		PreparedDBUtil dbutil = new PreparedDBUtil();
-		SQLParams params = SQLParams.convertBeanToSqlParams(bean, sql, dbname, PreparedDBUtil.SELECT, null);
+		SQLParams params = SQLParams.convertBeanToSqlParams(bean,  new SQLInfo(sql,true,true), dbname, PreparedDBUtil.SELECT, null);
 		dbutil.preparedSelect(params,dbname, sql);
 
 		
@@ -1611,7 +1614,7 @@ public class SQLExecutor
 	{
 		
 		PreparedDBUtil dbutil = new PreparedDBUtil();
-		SQLParams params = SQLParams.convertBeanToSqlParams(bean, sql, dbname, PreparedDBUtil.SELECT, null);
+		SQLParams params = SQLParams.convertBeanToSqlParams(bean,  new SQLInfo(sql,true,true), dbname, PreparedDBUtil.SELECT, null);
 		dbutil.preparedSelect(params,dbname, sql);
 		return (T)dbutil.executePreparedForObject(beanType);
 		 
@@ -1640,7 +1643,7 @@ public class SQLExecutor
 	{
 		
 		PreparedDBUtil dbutil = new PreparedDBUtil();
-		SQLParams params = SQLParams.convertBeanToSqlParams(bean, sql, dbname, PreparedDBUtil.SELECT, null);
+		SQLParams params = SQLParams.convertBeanToSqlParams(bean,  new SQLInfo(sql,true,true), dbname, PreparedDBUtil.SELECT, null);
 		dbutil.preparedSelect(params,dbname, sql,offset,pagesize,totalsize);
 		ListInfo datas = new ListInfo();
 		datas.setDatas(dbutil.executePreparedForList(beanType,rowhandler));
@@ -1652,7 +1655,7 @@ public class SQLExecutor
 	{
 		
 		PreparedDBUtil dbutil = new PreparedDBUtil();
-		SQLParams params = SQLParams.convertBeanToSqlParams(bean, sql, dbname, PreparedDBUtil.SELECT, null);
+		SQLParams params = SQLParams.convertBeanToSqlParams(bean,  new SQLInfo(sql,true,true), dbname, PreparedDBUtil.SELECT, null);
 		dbutil.preparedSelectWithTotalsizesql(params,dbname, sql,offset,pagesize,totalsizesql);
 		ListInfo datas = new ListInfo();
 		datas.setDatas(dbutil.executePreparedForList(beanType,rowhandler));
@@ -1675,7 +1678,7 @@ public class SQLExecutor
 	{
 		
 		PreparedDBUtil dbutil = new PreparedDBUtil();
-		SQLParams params = SQLParams.convertBeanToSqlParams(bean, sql, dbname, PreparedDBUtil.SELECT, null);
+		SQLParams params = SQLParams.convertBeanToSqlParams(bean,  new SQLInfo(sql,true,true), dbname, PreparedDBUtil.SELECT, null);
 		dbutil.preparedSelect(params,dbname, sql,offset,pagesize,-1L);
 		ListInfo datas = new ListInfo();
 		datas.setDatas(dbutil.executePreparedForList(beanType,rowhandler));
@@ -1719,7 +1722,7 @@ public class SQLExecutor
 	{
 		
 		PreparedDBUtil dbutil = new PreparedDBUtil();
-		SQLParams params = SQLParams.convertBeanToSqlParams(bean, sql, dbname, PreparedDBUtil.SELECT, null);
+		SQLParams params = SQLParams.convertBeanToSqlParams(bean,  new SQLInfo(sql,true,true), dbname, PreparedDBUtil.SELECT, null);
 		dbutil.preparedSelect(params,dbname, sql);
 		
 		return dbutil.executePreparedForList(beanType,rowhandler);		 
@@ -1730,7 +1733,7 @@ public class SQLExecutor
 	{
 		
 		PreparedDBUtil dbutil = new PreparedDBUtil();
-		SQLParams params = SQLParams.convertBeanToSqlParams(bean, sql, dbname, PreparedDBUtil.SELECT, null);
+		SQLParams params = SQLParams.convertBeanToSqlParams(bean,  new SQLInfo(sql,true,true), dbname, PreparedDBUtil.SELECT, null);
 		dbutil.preparedSelect(params,dbname, sql);		
 		return (T)dbutil.executePreparedForObject(beanType,rowhandler);
 		 
@@ -1761,7 +1764,7 @@ public class SQLExecutor
 	{
 		
 		PreparedDBUtil dbutil = new PreparedDBUtil();
-		SQLParams params = SQLParams.convertBeanToSqlParams(bean, sql, dbname, PreparedDBUtil.SELECT, null);
+		SQLParams params = SQLParams.convertBeanToSqlParams(bean,  new SQLInfo(sql,true,true), dbname, PreparedDBUtil.SELECT, null);
 		dbutil.preparedSelect(params,dbname, sql,offset,pagesize,totalsize);
 		dbutil.executePreparedWithRowHandler(rowhandler);
 		ListInfo datas = new ListInfo();
@@ -1774,7 +1777,7 @@ public class SQLExecutor
 	{
 		
 		PreparedDBUtil dbutil = new PreparedDBUtil();
-		SQLParams params = SQLParams.convertBeanToSqlParams(bean, sql, dbname, PreparedDBUtil.SELECT, null);
+		SQLParams params = SQLParams.convertBeanToSqlParams(bean,  new SQLInfo(sql,true,true), dbname, PreparedDBUtil.SELECT, null);
 		dbutil.preparedSelectWithTotalsizesql(params,dbname, sql,offset,pagesize,totalsizesql);
 		dbutil.executePreparedWithRowHandler(rowhandler);
 		ListInfo datas = new ListInfo();
@@ -1797,7 +1800,7 @@ public class SQLExecutor
 	{
 		
 		PreparedDBUtil dbutil = new PreparedDBUtil();
-		SQLParams params = SQLParams.convertBeanToSqlParams(bean, sql, dbname, PreparedDBUtil.SELECT, null);
+		SQLParams params = SQLParams.convertBeanToSqlParams(bean,  new SQLInfo(sql,true,true), dbname, PreparedDBUtil.SELECT, null);
 		dbutil.preparedSelect(params,dbname, sql,offset,pagesize,-1L);
 		dbutil.executePreparedWithRowHandler(rowhandler);
 		ListInfo datas = new ListInfo();
@@ -1835,7 +1838,7 @@ public class SQLExecutor
 	{
 		
 		PreparedDBUtil dbutil = new PreparedDBUtil();
-		SQLParams params = SQLParams.convertBeanToSqlParams(bean, sql, dbname, PreparedDBUtil.SELECT, null);
+		SQLParams params = SQLParams.convertBeanToSqlParams(bean,  new SQLInfo(sql,true,true), dbname, PreparedDBUtil.SELECT, null);
 		dbutil.preparedSelect(params,dbname, sql);
 		 dbutil.executePreparedWithRowHandler(rowhandler);		 
 	}

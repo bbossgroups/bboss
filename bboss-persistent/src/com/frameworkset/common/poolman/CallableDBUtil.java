@@ -2092,14 +2092,14 @@ public class CallableDBUtil extends PreparedDBUtil {
     public void prepareCallable(String sql)
     {
     	this.Params = this.buildCallableParams(CALL_PROCEDURE);
-    	Params.prepareselect_sql = sql;
+    	Params.prepareSqlifo = new NewSQLInfo(sql);
     }
     
     public void prepareCallable(String preparedDBName,String sql) 
     {
     	this.prepareDBName = preparedDBName;
     	this.Params = this.buildCallableParams(CALL_PROCEDURE);
-    	Params.prepareselect_sql = sql;
+    	Params.prepareSqlifo = new NewSQLInfo(sql);
     }
     
     /**
@@ -2112,7 +2112,7 @@ public class CallableDBUtil extends PreparedDBUtil {
     	if(calltype != CALL_FUNCTION && calltype != CALL_PROCEDURE)
     		throw new SQLException("CALL_TYPE error: Must be CALL_FUNCTION or CALL_PROCEDURE.");
     	this.Params = this.buildCallableParams(calltype);
-    	Params.prepareselect_sql = sql;
+    	Params.prepareSqlifo = new NewSQLInfo(sql);
     	
     }
     
@@ -2122,7 +2122,7 @@ public class CallableDBUtil extends PreparedDBUtil {
     		throw new SQLException("CALL_TYPE error: Must be CALL_FUNCTION or CALL_PROCEDURE.");
     	this.prepareDBName = preparedDBName;
     	this.Params = this.buildCallableParams(calltype);
-    	Params.prepareselect_sql = sql;
+    	Params.prepareSqlifo = new NewSQLInfo(sql);
     }
 	public void executeCallable() throws java.sql.SQLException
 	{
@@ -2211,7 +2211,7 @@ public class CallableDBUtil extends PreparedDBUtil {
 		try
 		{
 			stmtInfo = new StatementInfo(this.prepareDBName,
-					Params.prepareselect_sql,
+					Params.prepareSqlifo,
 					false,
 					 con_,
 					 false);
@@ -2254,7 +2254,7 @@ public class CallableDBUtil extends PreparedDBUtil {
 		{
 			try{
 				String error = new StringBuffer("Execute ")
-				.append(Params.prepareselect_sql).append(" on ")
+				.append(Params.prepareSqlifo.getNewsql()).append(" on ")
 				.append(prepareDBName)
 				.append(" failed:").append(e.getMessage()).toString();
 				System.out.println(error);

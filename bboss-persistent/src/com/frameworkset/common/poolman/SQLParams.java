@@ -17,10 +17,12 @@ package com.frameworkset.common.poolman;
 
 import java.io.File;
 import java.io.InputStream;
+import java.io.StringWriter;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.Blob;
 import java.sql.Clob;
 import java.sql.Connection;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Time;
 import java.util.ArrayList;
@@ -32,13 +34,17 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
-import org.apache.velocity.VelocityContext;
+import org.frameworkset.persitent.util.SQLCache;
+import org.frameworkset.persitent.util.SQLInfo;
 import org.frameworkset.util.BigFile;
 import org.frameworkset.util.ClassUtil;
 import org.frameworkset.util.ClassUtil.ClassInfo;
 import org.frameworkset.util.ClassUtil.PropertieDescription;
 import org.frameworkset.util.annotations.ValueConstants;
 
+import bboss.org.apache.velocity.VelocityContext;
+
+import com.frameworkset.common.poolman.sql.PoolManResultSetMetaData;
 import com.frameworkset.common.poolman.util.JDBCPool;
 import com.frameworkset.common.poolman.util.SQLManager;
 import com.frameworkset.orm.annotation.Column;
@@ -46,7 +52,7 @@ import com.frameworkset.orm.annotation.PrimaryKey;
 import com.frameworkset.util.VariableHandler;
 import com.frameworkset.util.VariableHandler.SQLStruction;
 import com.frameworkset.util.VariableHandler.Variable;
-import com.frameworkset.util.VelocityUtil;
+import com.frameworkset.velocity.BBossVelocityUtil;
 
 /**
  * <p>Title: SQLParams.java</p>
@@ -60,18 +66,19 @@ import com.frameworkset.util.VelocityUtil;
  */
 public class SQLParams
 {
+	
     private String pretoken = "#\\[";
     private String endtoken = "\\]";
     private Map<String,Param> sqlparams = null;
     private Params realParams = null;
-    private String newsql = null;
-    private String newtotalsizesql ;
+    private NewSQLInfo newsql = null;
+    
     private String dbname = null;
     private static Logger log = Logger.getLogger(SQLParams.class);
     /**
      * 用于预编译批处理操作
      */
-    private String oldsql = null;
+    private SQLInfo oldsql = null;
     
     public String getDbname()
     {
@@ -103,9 +110,13 @@ public class SQLParams
      */
     @Deprecated 
     private static final Map<String,String[][]> parserResults = new java.util.WeakHashMap<String,String[][]>();
-    private static final Map<String,SQLStruction> parserSQLStructions = new java.util.WeakHashMap<String,SQLStruction>();
-    private static final Map<String,SQLStruction> parsertotalsizeSQLStructions = new java.util.WeakHashMap<String,SQLStruction>();
-    public String getNewsql()
+    /**
+     * 默认的sql结构缓存器
+     */
+    private static final SQLCache sqlcache = new SQLCache();
+//    private static final Map<String,SQLStruction> parserSQLStructions = new java.util.WeakHashMap<String,SQLStruction>();
+//    private static final Map<String,SQLStruction> parsertotalsizeSQLStructions = new java.util.WeakHashMap<String,SQLStruction>();
+    public NewSQLInfo getNewsql()
     {
         return newsql;
     }
@@ -138,12 +149,17 @@ public class SQLParams
     {
     	buildParams(this.oldsql, dbname);
     }
+    public void buildParamsNewSQLInfo(String dbname,NewSQLInfo newsql) throws SetSQLParamException
+    {
+    	buildParams(this.oldsql, dbname,newsql);
+    }
+    
     
     private String evaluateSqlTemplate(VelocityContext vcontext,String sql)
     {
     	try {
     		//@Fixed me
-			String realsql = VelocityUtil.evaluate(vcontext,
+			String realsql = BBossVelocityUtil.evaluate(vcontext,
 					"evaluateSqlTemplate:" + sql, sql);
 			return realsql;
 		} catch (Exception e) {
@@ -183,13 +199,47 @@ public class SQLParams
             return;
         if(sqlparams == null || this.sqlparams.size() <=0)
         {
-            this.newsql = sql;
+            this.newsql = new NewSQLInfo(sql);
             return;
         }
         if(realParams == null)
         {
         	if(this.pretoken.equals("#\\[") && this.endtoken.equals("\\]"))
-        		buildParamsByVariableParser(sql,null,dbname);
+        		buildParamsByVariableParser(new SQLInfo(sql,true,true),null,dbname,(NewSQLInfo)null);
+        	else
+        		buildParamsByRegex( new SQLInfo(sql,true,true),null,dbname);
+            
+        }
+        
+    }
+    
+    public void buildParams(SQLInfo sql,String dbname) throws SetSQLParamException
+    {
+    	buildParams( sql,dbname,(NewSQLInfo)null);
+        
+    }
+    public void buildParams(SQLInfo sql,String dbname,NewSQLInfo firstnewsql) throws SetSQLParamException
+    {
+        if(realParams != null)
+            return;
+        if(sqlparams == null || this.sqlparams.size() <=0)
+        {
+        	if(firstnewsql != null)
+        	{
+        		this.newsql = firstnewsql;
+        		return;
+        	}
+        	else
+        	{
+	            this.newsql = new NewSQLInfo(sql.getSql());
+	            newsql.setOldsql(sql);
+	            return;
+        	}
+        }
+        if(realParams == null)
+        {
+        	if(this.pretoken.equals("#\\[") && this.endtoken.equals("\\]"))
+        		buildParamsByVariableParser(sql,null,dbname, firstnewsql);
         	else
         		buildParamsByRegex( sql,null,dbname);
             
@@ -203,14 +253,47 @@ public class SQLParams
             return;
         if(sqlparams == null || this.sqlparams.size() <=0)
         {
-            this.newsql = sql;
-            this.newtotalsizesql = totalsizesql;
+            this.newsql = new NewSQLInfo(sql);
+            newsql.setNewtotalsizesql(totalsizesql);
+            return;
+        }
+        if(realParams == null)
+        {
+        	if(totalsizesql == null)
+        	{
+	        	if(this.pretoken.equals("#\\[") && this.endtoken.equals("\\]"))
+	        		buildParamsByVariableParser(new SQLInfo(sql,true,true),null,dbname,(NewSQLInfo)null);
+	        	else
+	        		buildParamsByRegex( new SQLInfo(sql,true,true),null,dbname);
+        	}
+        	else
+        	{
+        		if(this.pretoken.equals("#\\[") && this.endtoken.equals("\\]"))
+	        		buildParamsByVariableParser(new SQLInfo(sql,true,true),new SQLInfo(totalsizesql,true,true),dbname,(NewSQLInfo)null);
+	        	else
+	        		buildParamsByRegex( new SQLInfo(sql,true,true),new SQLInfo(totalsizesql,true,true),dbname);
+        	}
+            
+        }
+        
+    }
+    
+    public void buildParams(SQLInfo sql,SQLInfo totalsizesql,String dbname) throws SetSQLParamException
+    {
+        if(realParams != null)
+            return;
+        if(sqlparams == null || this.sqlparams.size() <=0)
+        {
+            this.newsql = new NewSQLInfo(sql.getSql());
+            this.newsql .setNewtotalsizesql(totalsizesql.getSql());
+            this.newsql.setOldsql(sql);
+            this.newsql.setOldtotalsizesql(totalsizesql);
             return;
         }
         if(realParams == null)
         {
         	if(this.pretoken.equals("#\\[") && this.endtoken.equals("\\]"))
-        		buildParamsByVariableParser(sql,totalsizesql,dbname);
+        		buildParamsByVariableParser(sql,totalsizesql,dbname,(NewSQLInfo)null);
         	else
         		buildParamsByRegex( sql,totalsizesql,dbname);
             
@@ -218,11 +301,82 @@ public class SQLParams
         
     }
     
-    private void buildParamsByRegex(String sql,String totalsizesql,String dbname) throws SetSQLParamException
+//    private void buildParamsByRegex(String sql,String totalsizesql,String dbname) throws SetSQLParamException
+//    {
+//    	List<Param> _realParams = new ArrayList<Param>();   
+//    	VelocityContext vcontext = buildVelocityContext();
+//        sql = this.evaluateSqlTemplate(vcontext,sql);
+//        String[][] args =  parserResults.get(sql);
+//        if(args == null)
+//        {
+//            synchronized(lock)
+//            {
+//            	args =  parserResults.get(sql);
+//                if(args == null)
+//                {
+//                    args = VariableHandler.parser2ndSubstitution(sql, this.pretoken,this.endtoken, "?");
+//                    parserResults.put(sql,args);
+//                }
+//            }
+//        }            
+//        newsql = args[0][0];
+//        if(totalsizesql != null)
+//        {
+//        	totalsizesql = this.evaluateSqlTemplate(vcontext,totalsizesql);
+//	        String[][] totalsizesqlargs =  parserResults.get(totalsizesql);
+//	        if(totalsizesqlargs == null)
+//	        {
+//	            synchronized(lock)
+//	            {
+//	            	totalsizesqlargs =  parserResults.get(totalsizesql);
+//	                if(totalsizesqlargs == null)
+//	                {
+//	                	totalsizesqlargs = VariableHandler.parser2ndSubstitution(totalsizesql, this.pretoken,this.endtoken, "?");
+//	                    parserResults.put(totalsizesql,totalsizesqlargs);
+//	                }
+//	            }
+//	        }            
+//	        newtotalsizesql = totalsizesqlargs[0][0];
+//        }
+//        String vars[] = args[1];  
+//        if(vars.length == 0 )
+//        {
+//        	log.debug("预编译sql语句提示：指定了预编译参数,sql语句中没有包含符合要求的预编译变量，" + this);
+////            throw new SetSQLParamException("预编译sql语句非法：指定了预编译参数,sql语句中没有包含符合要求的预编译变量，" + this);
+//        }
+//        Param temp = null;
+//        for(int i = 0;i < vars.length; i ++)
+//        {
+//            temp = this.sqlparams.get(vars[i]);
+//            if(temp == null)
+//                throw new SetSQLParamException("未指定绑定变量的值：" 
+//                                                + vars[i] 
+//                                                + "\r\n" 
+//                                                + this);
+//            Param newparam = temp.clone();
+//            //绑定变量索引从1开始
+//            newparam.index = i + 1;
+//            _realParams.add(newparam);
+//        }
+//        
+//        this.realParams = new Params(_realParams);
+//    }
+    
+    private void buildParamsByRegex(SQLInfo sqlinfo,SQLInfo totalsizesqlinfo,String dbname) throws SetSQLParamException
     {
+    	String sql = null;
+    	String totalsizesql = null;
     	List<Param> _realParams = new ArrayList<Param>();   
-    	VelocityContext vcontext = buildVelocityContext();
-        sql = this.evaluateSqlTemplate(vcontext,sql);
+    	VelocityContext vcontext = null;
+    	if(sqlinfo.istpl())
+    	{
+    		vcontext = buildVelocityContext();
+    		StringWriter sw = new StringWriter();
+    		sqlinfo.getSqltpl().merge(vcontext, sw);
+    		sql = sw.toString();
+    		
+    	}
+//        sql = this.evaluateSqlTemplate(vcontext,sql);
         String[][] args =  parserResults.get(sql);
         if(args == null)
         {
@@ -236,10 +390,21 @@ public class SQLParams
                 }
             }
         }            
-        newsql = args[0][0];
-        if(totalsizesql != null)
+        newsql = new NewSQLInfo(args[0][0]);
+        newsql.setOldsql(sqlinfo);
+        if(totalsizesqlinfo != null)
         {
-        	totalsizesql = this.evaluateSqlTemplate(vcontext,totalsizesql);
+        	if(totalsizesqlinfo.istpl())
+        	{
+        		if(vcontext == null)
+        			vcontext = buildVelocityContext();
+        		StringWriter sw = new StringWriter();
+        		totalsizesqlinfo.getSqltpl().merge(vcontext, sw);
+        		totalsizesql = sw.toString();
+        		
+        	}
+//        	totalsizesql = this.evaluateSqlTemplate(vcontext,totalsizesql);
+        	
 	        String[][] totalsizesqlargs =  parserResults.get(totalsizesql);
 	        if(totalsizesqlargs == null)
 	        {
@@ -253,7 +418,9 @@ public class SQLParams
 	                }
 	            }
 	        }            
-	        newtotalsizesql = totalsizesqlargs[0][0];
+	        newsql.setNewtotalsizesql(totalsizesqlargs[0][0]);
+	        newsql.setOldtotalsizesql(totalsizesqlinfo);
+	        
         }
         String vars[] = args[1];  
         if(vars.length == 0 )
@@ -279,44 +446,68 @@ public class SQLParams
         this.realParams = new Params(_realParams);
     }
     
-    private void buildParamsByVariableParser(String sql,String totalsizesql,String dbname) throws SetSQLParamException
+    private void buildParamsByVariableParser(SQLInfo sqlinfo,SQLInfo totalsizesqlinfo,String dbname,NewSQLInfo firstnewsql) throws SetSQLParamException
     {
-    	List<Param> _realParams = new ArrayList<Param>();  
-    	VelocityContext vcontext = buildVelocityContext();//一个context是否可以被同时用于多次运算呢？
-        sql = this.evaluateSqlTemplate(vcontext,sql);
-      
-        SQLStruction sqlstruction =  parserSQLStructions.get(sql);
-        if(sqlstruction == null)
-        {
-            synchronized(lock)
-            {
-            	sqlstruction =  parserSQLStructions.get(sql);
-                if(sqlstruction == null)
-                {
-                	sqlstruction = VariableHandler.parserSQLStruction(sql);
-                	parserSQLStructions.put(sql,sqlstruction);
-                }
-            }
-        }            
-        newsql = sqlstruction.getSql();
-        if(totalsizesql != null)
-        {
-        	totalsizesql = this.evaluateSqlTemplate(vcontext,totalsizesql);
-	        SQLStruction totalsizesqlstruction =  parsertotalsizeSQLStructions.get(totalsizesql);
-	        if(totalsizesqlstruction == null)
+    	String sql = null;
+    	String totalsizesql = null;
+    	List<Param> _realParams = new ArrayList<Param>();
+    	SQLStruction sqlstruction =  null;
+    	if(firstnewsql == null)
+    	{
+	    	VelocityContext vcontext = null;
+	    	if(sqlinfo.istpl())
+	    	{
+		    	vcontext = buildVelocityContext();//一个context是否可以被同时用于多次运算呢？
+		    	StringWriter sw = new StringWriter();
+		       sqlinfo.getSqltpl().merge(vcontext,sw);
+		       sql = sw.toString();
+	    	}
+	    	else
+	    	{
+	    		sql = sqlinfo.getSql();
+	    	}
+	    	
+	    	if(sqlinfo.getSqlutil() == null)
+	    	{
+		        sqlstruction =  sqlcache.getSQLStruction(sql);
+	    	}
+	    	else
+	    	{
+	    		sqlstruction = sqlinfo.getSqlutil().getSQLStruction(sql);
+	    	}
+	        newsql = new NewSQLInfo(sqlstruction.getSql());
+	        newsql.setOldsql(sqlinfo);
+	        newsql.setSqlstruction(sqlstruction);
+	        if(totalsizesqlinfo != null)
 	        {
-	            synchronized(lock)
-	            {
-	            	totalsizesqlstruction =  parsertotalsizeSQLStructions.get(totalsizesql);
-	                if(totalsizesqlstruction == null)
-	                {
-	                	totalsizesqlstruction = VariableHandler.parserSQLStruction(totalsizesql);
-	                	parsertotalsizeSQLStructions.put(totalsizesql,totalsizesqlstruction);
-	                }
-	            }
-	        }            
-	        newtotalsizesql = totalsizesqlstruction.getSql();
-        }
+	        	if(totalsizesqlinfo.istpl())
+	        	{
+	        		if(vcontext == null)
+	        			vcontext = buildVelocityContext();
+	        		StringWriter sw = new StringWriter();
+	        		totalsizesqlinfo.getSqltpl().merge(vcontext,sw);
+	        		totalsizesql = sw.toString();
+	//        		totalsizesql = this.evaluateSqlTemplate(vcontext,totalsizesql);
+	        	}
+	        	SQLStruction totalsizesqlstruction =  null;
+	        	if(totalsizesqlinfo.getSqlutil() == null)//如果sql语句时从配置文件读取，则为每个配置文件定义了一个sql语句结构缓存容器
+	        	{
+			        totalsizesqlstruction =   sqlcache.getTotalsizeSQLStruction(totalsizesql);
+    
+	        	}
+	        	else{
+	        		totalsizesqlstruction = totalsizesqlinfo.getSqlutil().getTotalsizeSQLStruction(totalsizesql);
+	        	}
+	        	newsql.setOldtotalsizesql(totalsizesqlinfo);
+		        String newtotalsizesql = totalsizesqlstruction.getSql();
+		        newsql.setNewtotalsizesql(newtotalsizesql);
+	        }
+    	}
+    	else//对于配置文件中读取的sql语句进行批处理增删改时，如果sql语句中没有
+    	{
+    		this.newsql = firstnewsql;
+    		sqlstruction = this.newsql.getSqlstruction();
+    	}
 //        String vars[] = args[1];  
         if(!sqlstruction.hasVars())
         {
@@ -350,7 +541,7 @@ public class SQLParams
         	JDBCPool pool = SQLManager.getInstance().getPool(dbname);
         	if(pool != null && pool.showsql())
         	{
-        		log.debug("SQL INFO:" + this.toString() );
+        		log.info("SQL INFO:" + this.toString() );
         	}
         }
         
@@ -512,7 +703,24 @@ public class SQLParams
     	
     }
     
-    public static List<SQLParams> convertBeansToSqlParams(List beans,String sql,String dbname,int action
+//    public static List<SQLParams> convertBeansToSqlParams(List beans,String sql,String dbname,int action
+//    		,Connection con) throws SQLException
+//	{
+//		if(beans == null)
+//			return null;
+////		List<SQLParams> batchparams = new ArrayList<SQLParams>(beans.size());
+////		for(Object bean:beans)
+////		{
+////			SQLParams params = convertBeanToSqlParams(bean,sql,dbname,action,con);
+////			batchparams.add(params);
+////			
+////		}
+////		return batchparams;
+//		return convertBeansToSqlParams(beans,new SQLInfo(sql,true,false),dbname,action
+//	    		,con);
+//	}
+    
+    public static List<SQLParams> convertBeansToSqlParams(List beans,SQLInfo sql,String dbname,int action
     		,Connection con) throws SQLException
 	{
 		if(beans == null)
@@ -526,7 +734,22 @@ public class SQLParams
 		}
 		return batchparams;
 	}
-    public static SQLParams convertMaptoSqlParams(Map<String,Object> bean,String sql) throws SetSQLParamException
+//    public static SQLParams convertMaptoSqlParams(Map<String,Object> bean,String sql) throws SetSQLParamException
+//    {
+//    	if(bean == null || bean.size() == 0)
+//			return null;
+////    	SQLParams temp = new SQLParams();
+////		temp.setOldsql(sql);
+////		Iterator<Map.Entry<String,Object>> its = bean.entrySet().iterator();
+////		while(its.hasNext())
+////		{
+////			Map.Entry<String,Object> entrie = its.next();
+////			temp.addSQLParam(entrie.getKey(), entrie.getValue(), SQLParams.OBJECT);
+////		}		
+////		return temp;
+//    	return convertMaptoSqlParams(bean,new SQLInfo (sql,true,false));
+//    }
+    public static SQLParams convertMaptoSqlParams(Map<String,Object> bean,SQLInfo sql) throws SetSQLParamException
     {
     	if(bean == null || bean.size() == 0)
 			return null;
@@ -540,7 +763,7 @@ public class SQLParams
 		}		
 		return temp;
     }
-	public static SQLParams convertBeanToSqlParams(Object bean,String sql,String dbname,int action,Connection con) throws SQLException
+	public static SQLParams convertBeanToSqlParams(Object bean,SQLInfo sql,String dbname,int action,Connection con) throws SQLException
 	{
 		if(bean == null)
 			return null;
@@ -1071,9 +1294,12 @@ public class SQLParams
         return sqlparams != null ?this.sqlparams.size():0;
     }
 	public String getOldsql() {
-		return oldsql;
+		return oldsql.getSql();
 	}
 	public void setOldsql(String oldsql) {
+		this.oldsql = new SQLInfo(oldsql,true,true);
+	}
+	public void setOldsql(SQLInfo oldsql) {
 		this.oldsql = oldsql;
 	}
 	
@@ -1091,11 +1317,14 @@ public class SQLParams
 		sqlparams.sqlparams = this.sqlparams;		
 		return sqlparams;
 	}
-	public String getNewtotalsizesql() {
-		return newtotalsizesql;
-	}
-	public void setNewtotalsizesql(String newtotalsizesql) {
-		this.newtotalsizesql = newtotalsizesql;
+//	public String getNewtotalsizesql() {
+//		return newtotalsizesql;
+//	}
+//	public void setNewtotalsizesql(String newtotalsizesql) {
+//		this.newtotalsizesql = newtotalsizesql;
+//	}
+	public static SQLCache getSqlcache() {
+		return sqlcache;
 	}
 
 }

@@ -23,7 +23,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
@@ -35,10 +34,12 @@ import org.frameworkset.util.ClassUtil.ClassInfo;
 
 import com.frameworkset.common.poolman.handle.RowHandler;
 import com.frameworkset.common.poolman.handle.XMLRowHandler;
+import com.frameworkset.common.poolman.interceptor.InterceptorInf;
 import com.frameworkset.common.poolman.sql.PoolManResultSetMetaData;
 import com.frameworkset.common.poolman.util.JDBCPool;
 import com.frameworkset.common.poolman.util.SQLManager;
 import com.frameworkset.common.poolman.util.SQLUtil;
+import com.frameworkset.orm.adapter.DB;
 import com.frameworkset.orm.adapter.DB.PagineSql;
 import com.frameworkset.orm.transaction.JDBCTransaction;
 import com.frameworkset.orm.transaction.TransactionException;
@@ -48,6 +49,7 @@ public class StatementInfo {
 	private static final Logger log = Logger.getLogger(StatementInfo.class);
 	private String dbname;
 	private String sql;
+	private NewSQLInfo newsqlinfo;
 	private long totalsize = -1L;
 	private String totalsizesql;
 
@@ -74,35 +76,40 @@ public class StatementInfo {
 	
 //	private boolean neadGetGenerateKeys = false;
 
-	protected static Map<String,Map<String, SoftReference<PoolManResultSetMetaData>>> metas = new HashMap<String,Map<String, SoftReference<PoolManResultSetMetaData>>>();
+	
 	// protected String[] fields = null;
 
 	private PoolManResultSetMetaData meta = null;
 
-	public StatementInfo(String dbname_, String sql_, boolean goNative_,
+	public StatementInfo(String dbname_, NewSQLInfo sql_, boolean goNative_,
 			Connection con_, boolean needTransaction) {
 		this(dbname_, sql_, goNative_, -1, -1, SQLUtil.isRobotQuery(dbname_),
 				con_, needTransaction, null, false);
 	}
 
-	public StatementInfo(String dbname_, String sql_, boolean goNative_,
+	public StatementInfo(String dbname_, NewSQLInfo sql_, boolean goNative_,
 			long offset_, int maxsize_, boolean robotquery_, Connection con_,
 			String rownum, boolean prepared) {
 		this(dbname_, sql_, goNative_, offset_, maxsize_, robotquery_, con_,
 				false, rownum, prepared);
 	}
-
-	public StatementInfo(String dbname_, String sql_, boolean goNative_,
+	private InterceptorInf interceptorInf;
+	private DB dbadapter ;
+	private JDBCPool pool ;
+	public StatementInfo(String dbname_, NewSQLInfo sql_, boolean goNative_,
 			long offset_, int maxsize_, boolean robotquery_, Connection con_,
 			boolean needTransaction, String rownum, boolean prepared) {
 		this.dbname = dbname_;
 		if(this.dbname == null)
 			this.dbname = SQLManager.getInstance().getDefaultDBName();
-		
+		newsqlinfo = sql_;
 		/**
 		 * must be removed.
 		 */
-		sql = DBUtil.getInterceptorInf(dbname_).convertSQL(sql_, DBUtil.getDBAdapter(dbname_).getDBTYPE(), dbname_);
+		pool = SQLUtil.getSQLManager().getPool(dbname);
+		interceptorInf = pool.getInterceptor();
+		dbadapter = pool.getDbAdapter();
+		sql = interceptorInf.convertSQL(sql_.getNewsql(), dbadapter.getDBTYPE(), dbname_);
 //		this.sql = sql_;
 
 		this.goNative = goNative_;
@@ -135,7 +142,7 @@ public class StatementInfo {
 	 * @param robotquery_
 	 * @param con_
 	 */
-	public StatementInfo(String dbname_, String sql_, boolean goNative_,
+	public StatementInfo(String dbname_, NewSQLInfo sql_, boolean goNative_,
 			long offset_, int maxsize_, boolean robotquery_, Connection con_,
 			String rownum) {
 		this(dbname_, sql_, goNative_, offset_, maxsize_, robotquery_, con_,
@@ -143,7 +150,7 @@ public class StatementInfo {
 
 	}
 
-	public StatementInfo(String dbname_, String sql_, boolean goNative_,
+	public StatementInfo(String dbname_, NewSQLInfo sql_, boolean goNative_,
 			long offset_, int maxsize_, boolean robotquery_, Connection con_,
 			boolean neadTransaction, String rownum) {
 		this(dbname_, sql_, goNative_, offset_, maxsize_, robotquery_, con_,
@@ -205,7 +212,7 @@ public class StatementInfo {
 		 */
 		if(dbname == null)
 			dbname = SQLManager.getInstance().getDefaultDBName();
-		sql = DBUtil.getInterceptorInf(dbname).convertSQL(sql, DBUtil.getDBAdapter(dbname).getDBTYPE(), dbname);
+		sql = this.interceptorInf.convertSQL(sql, this.dbadapter.getDBTYPE(), dbname);
 		PreparedStatement pstmt = this.con.prepareStatement(sql,this.getScrollType(dbname),this.getCursorType(dbname));
 		this.statements.add(pstmt);
 		return pstmt;
@@ -914,7 +921,7 @@ public class StatementInfo {
 	 * @return
 	 */
 	public PagineSql getDBPagineSql(boolean prepared) {
-		return SQLManager.getInstance().getDBAdapter(this.dbname)
+		return this.dbadapter
 				.getDBPagineSql(sql, offset, maxsize,prepared);
 
 	}
@@ -927,7 +934,7 @@ public class StatementInfo {
 	 * @return
 	 */
 	public PagineSql getDBPagineSqlForOracle(boolean prepared) {
-		return SQLManager.getInstance().getDBAdapter(dbname)
+		return this.dbadapter
 				.getOracleDBPagineSql(sql, offset, maxsize, rownum, prepared);
 
 	}
@@ -945,38 +952,13 @@ public class StatementInfo {
 	}
 
 	public void cacheResultSetMetaData(ResultSet rs,boolean pagine) throws SQLException {
-		JDBCPool pool = DBUtil.getPool(this.dbname);
+//		JDBCPool pool = DBUtil.getPool(this.dbname);
+		String key = getSql();
+		if(pagine)
+			key = key + "__pagine" ;
 		if(pool.getJDBCPoolMetadata().cachequerymetadata())
 		{
-			Map<String, SoftReference<PoolManResultSetMetaData>> dbmetas = metas.get(pool.getDBName());
-			if(dbmetas == null)
-			{
-				synchronized(metas)
-				{
-					dbmetas = metas.get(pool.getDBName());
-					if(dbmetas == null)
-					{
-						dbmetas = new ConcurrentHashMap<String, SoftReference<PoolManResultSetMetaData>>();
-						metas.put(pool.getDBName(), dbmetas);
-					}
-				}
-			}
-			String key = getSql();
-			if(pagine)
-				key = key + "__pagine" ;
-			if (dbmetas.containsKey(key)) {
-				SoftReference<PoolManResultSetMetaData> wr =  dbmetas.get(key);
-				meta = (PoolManResultSetMetaData) wr.get();
-				if (meta == null) {
-					meta = PoolManResultSetMetaData.getCopy(rs.getMetaData());
-					SoftReference<PoolManResultSetMetaData> wr1 = new SoftReference<PoolManResultSetMetaData>(meta);
-					dbmetas.put(key, wr1);
-				}
-			} else {
-				meta = PoolManResultSetMetaData.getCopy(rs.getMetaData());
-				SoftReference<PoolManResultSetMetaData> wr = new SoftReference<PoolManResultSetMetaData>(meta);
-				dbmetas.put(key, wr);
-			}
+			meta = this.newsqlinfo.getPoolManResultSetMetaData(dbname, key, rs.getMetaData());			
 		}
 		else
 		{
@@ -1020,29 +1002,45 @@ public class StatementInfo {
 	{
 	    try
 	    {
-	        JDBCPool pool = ((JDBCPool)SQLUtil.getSQLManager().getPool(dbname));
+//	        JDBCPool pool = ((JDBCPool)SQLUtil.getSQLManager().getPool(dbname));
 	        
-	        return pool.getDbAdapter().getCusorType(pool.getDriver());
+	        return this.dbadapter.getCusorType(pool.getDriver());
 	    }
 	    catch(Exception e)
 	    {
-	        log.error(e);
+	        log.error(dbname,e);
 	        JDBCPool pool = ((JDBCPool)SQLUtil.getSQLManager().getPool(null));
 	        return pool.getDbAdapter().getCusorType(pool.getDriver());
 	    }
 	}
 	
+//	public int getScrollType(String dbname)
+//    {
+//        try
+//        {
+//            JDBCPool pool = ((JDBCPool)SQLUtil.getSQLManager().getPool(dbname));
+//            
+//            return pool.getDbAdapter().getSCROLLType(pool.getDriver());
+//        }
+//        catch(Exception e)
+//        {
+//            log.error(e);
+//            JDBCPool pool = ((JDBCPool)SQLUtil.getSQLManager().getPool(null));
+//            return pool.getDbAdapter().getSCROLLType(pool.getDriver());
+//        }
+//    }
+	
 	public int getScrollType(String dbname)
     {
         try
         {
-            JDBCPool pool = ((JDBCPool)SQLUtil.getSQLManager().getPool(dbname));
+//            JDBCPool pool = ((JDBCPool)SQLUtil.getSQLManager().getPool(dbname));
             
-            return pool.getDbAdapter().getSCROLLType(pool.getDriver());
+            return this.dbadapter.getSCROLLType(pool.getDriver());
         }
         catch(Exception e)
         {
-            log.error(e);
+            log.error(dbname,e);
             JDBCPool pool = ((JDBCPool)SQLUtil.getSQLManager().getPool(null));
             return pool.getDbAdapter().getSCROLLType(pool.getDriver());
         }
