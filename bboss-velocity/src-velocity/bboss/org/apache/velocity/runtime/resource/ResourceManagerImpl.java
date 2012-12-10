@@ -485,6 +485,13 @@ public class ResourceManagerImpl
 
         return resource;
     }
+    
+    public void initTemplate(Resource resource, String  encoding)
+    {
+    	resource.setRuntimeServices(rsvc);
+//        resource.setName(resourceName);
+        resource.setEncoding(encoding);
+    }
 
     /**
      * Takes an existing resource, and 'refreshes' it. This generally means that the source of the resource is checked for changes

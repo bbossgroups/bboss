@@ -23,6 +23,7 @@ import java.io.Reader;
 import java.util.Properties;
 
 import org.apache.commons.collections.ExtendedProperties;
+
 import bboss.org.apache.velocity.Template;
 import bboss.org.apache.velocity.app.event.EventCartridge;
 import bboss.org.apache.velocity.exception.ParseErrorException;
@@ -33,6 +34,7 @@ import bboss.org.apache.velocity.runtime.parser.ParseException;
 import bboss.org.apache.velocity.runtime.parser.node.Node;
 import bboss.org.apache.velocity.runtime.parser.node.SimpleNode;
 import bboss.org.apache.velocity.runtime.resource.ContentResource;
+import bboss.org.apache.velocity.runtime.resource.Resource;
 import bboss.org.apache.velocity.util.introspection.Introspector;
 import bboss.org.apache.velocity.util.introspection.Uberspect;
 
@@ -297,6 +299,16 @@ public class RuntimeSingleton implements RuntimeConstants
         throws ResourceNotFoundException, ParseErrorException
     {
         return ri.getTemplate( name );
+    }
+    
+    public static void initTemplate(Resource template)
+    {
+    	ri.initTemplate(template);
+    }
+    
+    public static void initTemplate(Resource template, String  encoding)
+    {
+    	ri.initTemplate(template,encoding);
     }
 
     /**

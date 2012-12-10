@@ -58,6 +58,7 @@ import bboss.org.apache.velocity.runtime.parser.Parser;
 import bboss.org.apache.velocity.runtime.parser.node.Node;
 import bboss.org.apache.velocity.runtime.parser.node.SimpleNode;
 import bboss.org.apache.velocity.runtime.resource.ContentResource;
+import bboss.org.apache.velocity.runtime.resource.Resource;
 import bboss.org.apache.velocity.runtime.resource.ResourceManager;
 import bboss.org.apache.velocity.util.ClassUtils;
 import bboss.org.apache.velocity.util.RuntimeServicesAware;
@@ -1513,6 +1514,11 @@ public class RuntimeInstance implements RuntimeConstants, RuntimeServices
     {
         return getTemplate(name, getDefaultEncoding());
     }
+    
+    public  void initTemplate(Resource template)
+    {
+    	this.initTemplate(template, getDefaultEncoding());
+    }
 
     /**
      * Returns a <code>Template</code> from the resource manager
@@ -1533,6 +1539,25 @@ public class RuntimeInstance implements RuntimeConstants, RuntimeServices
         return (Template)
                 resourceManager.getResource(name,
                     ResourceManager.RESOURCE_TEMPLATE, encoding);
+    }
+    
+    /**
+     * Returns a <code>Template</code> from the resource manager
+     *
+     * @param name The  name of the desired template.
+     * @param encoding Character encoding of the template
+     * @return     The template.
+     * @throws ResourceNotFoundException if template not found
+     *          from any available source.
+     * @throws ParseErrorException if template cannot be parsed due
+     *          to syntax (or other) error.
+     */
+    public void initTemplate(Resource template, String  encoding)
+        
+    {
+        requireInitialization();
+
+       resourceManager.initTemplate(template, encoding);
     }
 
     /**

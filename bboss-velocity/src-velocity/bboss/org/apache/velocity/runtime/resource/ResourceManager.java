@@ -69,6 +69,7 @@ public interface ResourceManager
      */
     public Resource getResource(String resourceName, int resourceType, String encoding )
         throws ResourceNotFoundException, ParseErrorException;
+    public void initTemplate(Resource template, String  encoding);
 
     /**
      *  Determines is a template exists, and returns name of the loader that

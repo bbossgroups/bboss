@@ -20,6 +20,7 @@ package bboss.org.apache.velocity.app;
  */
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -28,6 +29,7 @@ import java.io.Writer;
 import java.util.Properties;
 
 import org.apache.commons.collections.ExtendedProperties;
+
 import bboss.org.apache.velocity.Template;
 import bboss.org.apache.velocity.context.Context;
 import bboss.org.apache.velocity.exception.MethodInvocationException;
@@ -36,6 +38,7 @@ import bboss.org.apache.velocity.exception.ResourceNotFoundException;
 import bboss.org.apache.velocity.runtime.RuntimeConstants;
 import bboss.org.apache.velocity.runtime.RuntimeSingleton;
 import bboss.org.apache.velocity.runtime.log.Log;
+import bboss.org.apache.velocity.runtime.resource.Resource;
 
 /**
  * This class provides  services to the application
@@ -356,6 +359,16 @@ public class Velocity implements RuntimeConstants
         throws ResourceNotFoundException, ParseErrorException
     {
         return RuntimeSingleton.getTemplate( name );
+    }
+    
+    public static void initTemplate(Resource template)
+    {
+        RuntimeSingleton.initTemplate(template);
+    }
+    
+    public static void initTemplate(Resource template, String encoding)
+    {
+        RuntimeSingleton.initTemplate(template,  encoding);
     }
 
     /**
