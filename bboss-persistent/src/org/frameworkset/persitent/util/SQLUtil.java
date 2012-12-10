@@ -30,6 +30,8 @@ import org.frameworkset.spi.BaseApplicationContext;
 import org.frameworkset.spi.SOAFileApplicationContext;
 import org.frameworkset.spi.assemble.Pro;
 
+import bboss.org.apache.velocity.app.Velocity;
+
 import com.frameworkset.common.poolman.sql.PoolManResultSetMetaData;
 import com.frameworkset.common.poolman.util.SQLManager;
 import com.frameworkset.util.DaemonThread;
@@ -105,6 +107,7 @@ public class SQLUtil {
 						{
 							sqltpl = new SQLTemplate(sqlinfo);
 							sqlinfo.setSqltpl(sqltpl);
+							Velocity.initTemplate(sqltpl);
 						}
 						
 						sqls.put(key, sqlinfo);
