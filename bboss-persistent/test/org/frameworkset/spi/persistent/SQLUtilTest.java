@@ -20,7 +20,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.frameworkset.persitent.util.SQLInfo;
 import org.frameworkset.persitent.util.SQLUtil;
 import org.frameworkset.spi.assemble.Pro;
 import org.junit.Test;
@@ -68,11 +67,11 @@ public class SQLUtilTest {
 	public void testtestsqlvariable()
 	{
 		SQLUtil context = SQLUtil.getInstance("org/frameworkset/spi/persistent/test-sql.xml");
-		SQLInfo sql = context.getSQL("testsqlvariable");
+		String sql = context.getSQL("testsqlvariable");
 		Map variablevalues = new HashMap();
 		variablevalues.put("table_id_generator", "test");
 		variablevalues.put("table_id_type", "sequence");
-		System.out.println(sql.getSqltpl().m("testsqlvariable" , sql, variablevalues));
+		System.out.println(context.evaluateSQL("testsqlvariable" , sql, variablevalues));
 //		System.out.println(sql);
 		
 		
@@ -83,11 +82,11 @@ public class SQLUtilTest {
 	public void testtesterrorsqlvariable()
 	{
 		SQLUtil context = SQLUtil.getInstance("org/frameworkset/spi/persistent/test-sql.xml");
-		SQLInfo sql = context.getSQL("testerrsqlvariable");
+		String sql = context.getSQL("testerrsqlvariable");
 		Map variablevalues = new HashMap();
 		variablevalues.put("table_id_generator", "test");
 		variablevalues.put("table_id_type", "sequence");
-		System.out.println(sql.getSqltpl().evaluate(variablevalues));
+		System.out.println(context.evaluateSQL("testerrsqlvariable" , sql, variablevalues));
 		
 	}
 	

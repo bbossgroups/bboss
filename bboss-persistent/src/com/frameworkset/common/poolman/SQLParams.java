@@ -155,20 +155,7 @@ public class SQLParams
     }
     
     
-    private String evaluateSqlTemplate(VelocityContext vcontext,String sql)
-    {
-    	try {
-    		//@Fixed me
-			String realsql = BBossVelocityUtil.evaluate(vcontext,
-					"evaluateSqlTemplate:" + sql, sql);
-			return realsql;
-		} catch (Exception e) {
-			log.error(e.getMessage());
-			return sql;
-		}
-    	
-    	
-    }
+
     
     public  VelocityContext buildVelocityContext()
     {

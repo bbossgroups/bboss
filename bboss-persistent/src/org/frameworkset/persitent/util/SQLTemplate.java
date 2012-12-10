@@ -71,7 +71,8 @@ public class SQLTemplate extends Resource
     public SQLTemplate(SQLInfo sqlinfo)
     {
         super();
-        this.sqlinfo = sqlinfo;        
+        this.sqlinfo = sqlinfo;   
+        this.sql = this.sqlinfo.getSql();
         this.setName(sqlinfo.getSqlname());
         setType(ResourceManager.RESOURCE_SQL);
     }

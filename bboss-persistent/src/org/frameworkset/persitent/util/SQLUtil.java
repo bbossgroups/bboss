@@ -34,8 +34,6 @@ import com.frameworkset.common.poolman.sql.PoolManResultSetMetaData;
 import com.frameworkset.common.poolman.util.SQLManager;
 import com.frameworkset.util.DaemonThread;
 import com.frameworkset.util.ResourceInitial;
-import com.frameworkset.util.VariableHandler;
-import com.frameworkset.util.VelocityUtil;
 import com.frameworkset.util.VariableHandler.SQLStruction;
 import com.frameworkset.velocity.BBossVelocityUtil;
 
@@ -261,7 +259,7 @@ public class SQLUtil {
 		return sqlUtil;
 	}
 
-	public SQLInfo getSQL(String dbname, String sqlname) {
+	public SQLInfo getSQLInfo(String dbname, String sqlname) {
 		String dbtype = SQLManager.getInstance().getDBAdapter(dbname)
 		.getDBTYPE();
 		
@@ -278,6 +276,26 @@ public class SQLUtil {
 			sql = sqls.get(sqlname + "-default");
 		}		
 		return sql;
+
+	}
+	
+	public String getSQL(String dbname, String sqlname) {
+		String dbtype = SQLManager.getInstance().getDBAdapter(dbname)
+		.getDBTYPE();
+		
+		SQLInfo sql = null;
+		if(dbtype != null)
+//			sql = sqlcontext.getProperty(sqlname + "-" + dbtype.toLowerCase());		
+			sql = sqls.get(sqlname + "-" + dbtype.toLowerCase());
+		if (sql == null) {
+//			sql = sqlcontext.getProperty(sqlname);
+			sql = sqls.get(sqlname);
+		}
+		if (sql == null) {
+//			sql = sqlcontext.getProperty(sqlname + "-default");
+			sql = sqls.get(sqlname + "-default");
+		}		
+		return sql != null?sql.getSql():null;
 
 	}
 	
@@ -315,15 +333,15 @@ public class SQLUtil {
 
 	}
 	
-//	public String evaluateSQL(String name,String sql,Map variablevalues) {
-//		
-//		if(sql != null &&  variablevalues != null && variablevalues.size() > 0)
-//		{
-//			sql = VelocityUtil.evaluate(variablevalues, sqlcontext.getConfigfile()+"|"+name, sql);
-//		}
-//		return sql;
-//
-//	}
+	public String evaluateSQL(String name,String sql,Map variablevalues) {
+		
+		if(sql != null &&  variablevalues != null && variablevalues.size() > 0)
+		{
+			sql = BBossVelocityUtil.evaluate(variablevalues, sqlcontext.getConfigfile()+"|"+name, sql);
+		}
+		return sql;
+
+	}
 	
 	public String getSQL(String sqlname,Map variablevalues) {
 		return getSQL(null, sqlname,variablevalues) ;
@@ -357,7 +375,11 @@ public class SQLUtil {
 		return rets;
 	}
 
-	public SQLInfo getSQL(String sqlname) {
+	public SQLInfo getSQLInfo(String sqlname) {
+		return getSQLInfo(null, sqlname);
+
+	}
+	public String getSQL(String sqlname) {
 		return getSQL(null, sqlname);
 
 	}

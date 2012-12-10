@@ -53,7 +53,7 @@ public class ConfigSQLExecutor  {
 	}
 	public SQLInfo getSql(String dbname,String sqlname) throws SQLException
 	{
-		SQLInfo sql = context.getSQL(dbname, sqlname);
+		SQLInfo sql = context.getSQLInfo(dbname, sqlname);
 		if(sql == null)
 			throw new NestedSQLException("名称为[" + sqlname + "]的sql语句不存在，请检查配置文件[" + context.getSQLFile() + "]配置是否正确.");
 		return sql;
