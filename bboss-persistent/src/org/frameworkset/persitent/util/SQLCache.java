@@ -84,36 +84,66 @@ public class SQLCache {
 		return meta;
 	}
 	
-	public SQLStruction getSQLStruction(String sql)
+	public SQLStruction getSQLStruction(SQLInfo sqlinfo)
 	{
-		SQLStruction sqlstruction =  parserSQLStructions.get(sql);
+		String sql = sqlinfo.getSql();
+		String key = null;
+		if(sqlinfo.getSqlutil() == null)
+			key = sql;
+		else
+		{
+			if(sqlinfo.istpl() )
+			{
+				key = sql;
+			}
+			else
+			{
+				key = sqlinfo.getSqlname();
+			}
+		}
+		SQLStruction sqlstruction =  parserSQLStructions.get(key);
         if(sqlstruction == null)
         {
             synchronized(lock)
             {
-            	sqlstruction =  parserSQLStructions.get(sql);
+            	sqlstruction =  parserSQLStructions.get(key);
                 if(sqlstruction == null)
                 {
                 	sqlstruction = VariableHandler.parserSQLStruction(sql);
-                	parserSQLStructions.put(sql,sqlstruction);
+                	parserSQLStructions.put(key,sqlstruction);
                 }
             }
         }  
         return sqlstruction;
 	}
 	
-	public SQLStruction getTotalsizeSQLStruction(String totalsizesql)
+	public SQLStruction getTotalsizeSQLStruction(SQLInfo totalsizesqlinfo)
 	{
-		SQLStruction totalsizesqlstruction =  parsertotalsizeSQLStructions.get(totalsizesql);
+		String totalsizesql = totalsizesqlinfo.getSql();
+		String key = null;
+		if(totalsizesqlinfo.getSqlutil() == null)
+			key = totalsizesql;
+		else
+		{
+			if(totalsizesqlinfo.istpl() )
+			{
+				key = totalsizesql;
+			}
+			else
+			{
+				key = totalsizesqlinfo.getSqlname();
+			}
+		}
+		SQLStruction totalsizesqlstruction =  parsertotalsizeSQLStructions.get(key);
 	    if(totalsizesqlstruction == null)
 	    {
 	        synchronized(lock)
 	        {
-	        	totalsizesqlstruction =  parsertotalsizeSQLStructions.get(totalsizesql);
+	        	totalsizesqlstruction =  parsertotalsizeSQLStructions.get(key);
 	            if(totalsizesqlstruction == null)
 	            {
 	            	totalsizesqlstruction = VariableHandler.parserSQLStruction(totalsizesql);
-	            	parsertotalsizeSQLStructions.put(totalsizesql,totalsizesqlstruction);
+	            	parsertotalsizeSQLStructions.put(key,totalsizesqlstruction);
 	            }
 	        }
 	    } 

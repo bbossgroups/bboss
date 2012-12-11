@@ -45,7 +45,7 @@
 			</classpath>
 		</javac>
 		<copy todir="classes-bboss-velocity">
-			<fileset dir="src-velocity" includes="bboss-velocity.properties" />
+			<fileset dir="src-velocity" includes="**/*.properties" />
 		</copy>
 	</target>
 	<target name="jar-bboss-velocity" depends="compile-bboss-velocity" description="generate the bboss-taglib library bboss-velocity.jar">

@@ -107,7 +107,7 @@ public class SQLUtil {
 						{
 							sqltpl = new SQLTemplate(sqlinfo);
 							sqlinfo.setSqltpl(sqltpl);
-							Velocity.initTemplate(sqltpl);
+							BBossVelocityUtil.initTemplate(sqltpl);
 						}
 						
 						sqls.put(key, sqlinfo);
@@ -163,11 +163,11 @@ public class SQLUtil {
 		
 		
 	}
-	public SQLStruction getSQLStruction(String sql)
+	public SQLStruction getSQLStruction(SQLInfo sql)
 	{
 		return this.cache.getSQLStruction(sql);
 	}
-	public SQLStruction getTotalsizeSQLStruction(String totalsizesql)
+	public SQLStruction getTotalsizeSQLStruction(SQLInfo totalsizesql)
 	{
 		return this.cache.getTotalsizeSQLStruction(totalsizesql);
 	}

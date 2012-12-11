@@ -36,8 +36,8 @@ public class ConfigSQLExecutorTest {
 	{
 		executor = new ConfigSQLExecutor("com/frameworkset/sqlexecutor/sqlfile.xml");
 		try {
-			SQLInfo sql = executor.getSql("sqltemplate");
-			sql = executor.getSql("bspf","sqltemplate");
+			SQLInfo sql = executor.getSqlInfo("sqltemplate");
+			sql = executor.getSqlInfo("bspf","sqltemplate");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -11,6 +11,7 @@ import bboss.org.apache.velocity.app.Velocity;
 import bboss.org.apache.velocity.exception.MethodInvocationException;
 import bboss.org.apache.velocity.exception.ParseErrorException;
 import bboss.org.apache.velocity.exception.ResourceNotFoundException;
+import bboss.org.apache.velocity.runtime.resource.Resource;
 
 import com.frameworkset.util.SimpleStringUtil;
 import com.frameworkset.util.VelocityUtil;
@@ -95,10 +96,12 @@ public class BBossVelocityUtil {
 //						}
 //					});
 	             } catch (Exception ex) {
+//	            	 ex.printStackTrace();
+	            	 log.info("Init velocity failed from bboss-velocity.properties (系统找不到指定的文件。) 检查classpath中是否配置正确:"+ ex.getMessage(),ex) ;
 	             	try {
 	 					Velocity.init("bboss-velocity.properties");
 	 					inited = true;
-	 					log.info("Init velocity failed from bboss-velocity.properties (系统找不到指定的文件。) 检查classpath中是否配置正确:"+ ex.getMessage(),ex) ;
+	 					
 	 				} catch (Exception e) {
 	 					inited = true;
 	 					log.info("Init velocity failed from bboss-velocity.properties (系统找不到指定的文件。) 检查classpath中是否配置正确:"+ ex.getMessage(),e);
@@ -113,5 +116,16 @@ public class BBossVelocityUtil {
     	 }
     	 
     	 
+    }
+    public static void initTemplate(Resource template)
+    {
+    	init(null);
+    	Velocity.initTemplate(template);
+    }
+    
+    public static void initTemplate(Resource template,String encoding)
+    {
+    	init(null);
+    	Velocity.initTemplate(template, encoding);
     }
 }

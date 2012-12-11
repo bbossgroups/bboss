@@ -46,35 +46,46 @@ public class ConfigSQLExecutor  {
 	}
 	
 	
-   
-	public SQLInfo getSql(String sqlname) throws SQLException
+
+	public SQLInfo getSqlInfo(String sqlname) throws SQLException
 	{
-		return getSql(null,sqlname);
+		return getSqlInfo(null,sqlname);
 	}
-	public SQLInfo getSql(String dbname,String sqlname) throws SQLException
+	public SQLInfo getSqlInfo(String dbname,String sqlname) throws SQLException
 	{
 		SQLInfo sql = context.getSQLInfo(dbname, sqlname);
 		if(sql == null)
 			throw new NestedSQLException("名称为[" + sqlname + "]的sql语句不存在，请检查配置文件[" + context.getSQLFile() + "]配置是否正确.");
 		return sql;
 	}
+	public String getSql(String sqlname) throws SQLException
+	{
+		return getSql(null,sqlname);
+	}
+	public String getSql(String dbname,String sqlname) throws SQLException
+	{
+		SQLInfo sql = context.getSQLInfo(dbname, sqlname);
+		if(sql == null)
+			throw new NestedSQLException("名称为[" + sqlname + "]的sql语句不存在，请检查配置文件[" + context.getSQLFile() + "]配置是否正确.");
+		return sql.getSql();
+	}
 	public void insertBeans(String dbname, String sqlname, List beans) throws SQLException {
 		
 		if(beans == null || beans.size() == 0)
 			return ;
-		SQLInfo sql = getSql(dbname,sqlname);
+		SQLInfo sql = getSqlInfo(dbname,sqlname);
 		SQLInfoExecutor.insertBeans( dbname,  sql,  beans);
 	}
 	public void insertBeans(String dbname, String sqlname, List beans,GetCUDResult getCUDResult) throws SQLException {
 		
 		if(beans == null || beans.size() == 0)
 			return ;
-		SQLInfo sql = getSql(dbname,sqlname);
+		SQLInfo sql = getSqlInfo(dbname,sqlname);
 		SQLInfoExecutor.insertBeans( dbname,  sql,  beans,getCUDResult);
 	}
 	
 	public Object update( String sqlname, Object... fields) throws SQLException {
-		SQLInfo sql = getSql(null,sqlname);
+		SQLInfo sql = getSqlInfo(null,sqlname);
 		return SQLInfoExecutor.update(sql, fields);
 	}
 	
@@ -82,7 +93,7 @@ public class ConfigSQLExecutor  {
 
 
 	public Object delete(String sqlname, Object... fields) throws SQLException {
-		SQLInfo sql = getSql(null,sqlname);
+		SQLInfo sql = getSqlInfo(null,sqlname);
 		return SQLInfoExecutor.delete(sql, fields);
 		
 	}
@@ -98,51 +109,51 @@ public class ConfigSQLExecutor  {
 	
 	
 	public void deleteByKeys(String sqlname, int... fields) throws SQLException {
-		SQLInfo sql = getSql(null,sqlname);
+		SQLInfo sql = getSqlInfo(null,sqlname);
 		SQLInfoExecutor.deleteByKeys(sql, fields);
 //		executeBatch(null, sql,PreparedDBUtil.DELETE, fields);
 		
 	}
 	public  void deleteByKeysWithDBName(String dbname,String sqlname, int... fields) throws SQLException {
-		SQLInfo sql = getSql(dbname,sqlname);
+		SQLInfo sql = getSqlInfo(dbname,sqlname);
 		SQLInfoExecutor.deleteByKeysWithDBName(dbname,sql, fields);
 		
 	}
 	
 	public void deleteByLongKeys(String sqlname, long... fields) throws SQLException {
-		SQLInfo sql = getSql(null,sqlname);
+		SQLInfo sql = getSqlInfo(null,sqlname);
 		SQLInfoExecutor.deleteByLongKeys(sql, fields);
 //		executeBatch(null, sql,PreparedDBUtil.DELETE, fields);
 		
 	}
 	public void deleteByLongKeysWithDBName(String dbname,String sqlname, long... fields) throws SQLException {
-		SQLInfo sql = getSql(dbname,sqlname);
+		SQLInfo sql = getSqlInfo(dbname,sqlname);
 		SQLInfoExecutor.deleteByLongKeysWithDBName(dbname,sql, fields);
 //		executeBatch(dbname, sql,PreparedDBUtil.DELETE, fields);
 		
 	}
 	
 	public void deleteByKeys(String sqlname, String... fields) throws SQLException {
-		SQLInfo sql = getSql(null,sqlname);
+		SQLInfo sql = getSqlInfo(null,sqlname);
 		SQLInfoExecutor.deleteByKeys(sql, fields);
 //		executeBatch(null, sql,PreparedDBUtil.DELETE, fields);
 		
 	}
 	public void deleteByKeysWithDBName(String dbname,String sqlname, String... fields) throws SQLException {
-		SQLInfo sql = getSql(dbname,sqlname);
+		SQLInfo sql = getSqlInfo(dbname,sqlname);
 		SQLInfoExecutor.deleteByKeysWithDBName(dbname,sql, fields);
 //		executeBatch(dbname, sql,PreparedDBUtil.DELETE, fields);
 		
 	}
 	
 	public void deleteByShortKeys(String sqlname, short... fields) throws SQLException {
-		SQLInfo sql = getSql(null,sqlname);
+		SQLInfo sql = getSqlInfo(null,sqlname);
 		SQLInfoExecutor.deleteByShortKeys(sql, fields);
 //		executeBatch(null, sql,PreparedDBUtil.DELETE, fields);
 		
 	}
 	public void deleteByShortKeysWithDBName(String dbname,String sqlname, short... fields) throws SQLException {
-		SQLInfo sql = getSql(dbname,sqlname);
+		SQLInfo sql = getSqlInfo(dbname,sqlname);
 		SQLInfoExecutor.deleteByShortKeysWithDBName(dbname,sql, fields);
 //		executeBatch(dbname, sql,PreparedDBUtil.DELETE, fields);
 	}
@@ -150,19 +161,19 @@ public class ConfigSQLExecutor  {
 
 
 	public Object insert(String sqlname, Object... fields) throws SQLException {
-		SQLInfo sql = getSql(null,sqlname);
+		SQLInfo sql = getSqlInfo(null,sqlname);
 		return SQLInfoExecutor.insert(sql, fields);
 //		return execute(null, sql,PreparedDBUtil.INSERT, fields);
 	}
 	
 	public  Object updateWithDBName(String dbname, String sqlname, Object... fields) throws SQLException {
-		SQLInfo sql = getSql(dbname,sqlname);
+		SQLInfo sql = getSqlInfo(dbname,sqlname);
 		return SQLInfoExecutor.updateWithDBName(dbname,sql, fields);
 //		return execute(dbname, sql,PreparedDBUtil.UPDATE, fields);
 	}
 	
 	public  Object deleteWithDBName(String dbname, String sqlname, Object... fields) throws SQLException {
-		SQLInfo sql = getSql(dbname,sqlname);
+		SQLInfo sql = getSqlInfo(dbname,sqlname);
 		return SQLInfoExecutor.deleteWithDBName(dbname,sql, fields);
 //		return execute(dbname, sql,PreparedDBUtil.DELETE, fields);
 		
@@ -171,7 +182,7 @@ public class ConfigSQLExecutor  {
 
 
 	public  Object insertWithDBName(String dbname, String sqlname, Object... fields) throws SQLException {
-		SQLInfo sql = getSql(dbname,sqlname);
+		SQLInfo sql = getSqlInfo(dbname,sqlname);
 		return SQLInfoExecutor.insertWithDBName(dbname,sql, fields);
 //		return execute(dbname, sql,PreparedDBUtil.INSERT, fields);
 	}
@@ -179,7 +190,7 @@ public class ConfigSQLExecutor  {
 	public void updateBeans(String dbname, String sqlname, List beans,GetCUDResult GetCUDResult) throws SQLException {
 		if(beans == null || beans.size() == 0)
 			return ;
-		SQLInfo sql = getSql(dbname,sqlname);
+		SQLInfo sql = getSqlInfo(dbname,sqlname);
 		SQLInfoExecutor.updateBeans(dbname,sql, beans,GetCUDResult);
 //		execute( dbname,  sql,  beans,PreparedDBUtil.UPDATE);
 	}
@@ -187,7 +198,7 @@ public class ConfigSQLExecutor  {
 	public void updateBeans(String dbname, String sqlname, List beans) throws SQLException {
 		if(beans == null || beans.size() == 0)
 			return ;
-		SQLInfo sql = getSql(dbname,sqlname);
+		SQLInfo sql = getSqlInfo(dbname,sqlname);
 		SQLInfoExecutor.updateBeans(dbname,sql, beans);
 //		execute( dbname,  sql,  beans,PreparedDBUtil.UPDATE);
 	}
@@ -197,7 +208,7 @@ public class ConfigSQLExecutor  {
 	public void deleteBeans(String dbname, String sqlname, List beans) throws SQLException {
 		if(beans == null || beans.size() == 0)
 			return ;
-		SQLInfo sql = getSql(dbname,sqlname);
+		SQLInfo sql = getSqlInfo(dbname,sqlname);
 		SQLInfoExecutor.deleteBeans(dbname,sql, beans);
 //		execute( dbname,  sql,  beans,PreparedDBUtil.DELETE);
 		
@@ -206,7 +217,7 @@ public class ConfigSQLExecutor  {
 	public void deleteBeans(String dbname, String sqlname, List beans,GetCUDResult GetCUDResult) throws SQLException {
 		if(beans == null || beans.size() == 0)
 			return ;
-		SQLInfo sql = getSql(dbname,sqlname);
+		SQLInfo sql = getSqlInfo(dbname,sqlname);
 		SQLInfoExecutor.deleteBeans(dbname,sql, beans,GetCUDResult);
 //		execute( dbname,  sql,  beans,PreparedDBUtil.DELETE);
 		
@@ -222,7 +233,7 @@ public class ConfigSQLExecutor  {
 //		List datas = new ArrayList();
 //		datas.add(bean);
 //		insertBeans( dbname,  sql,  datas);
-		SQLInfo sql = getSql(dbname,sqlname);
+		SQLInfo sql = getSqlInfo(dbname,sqlname);
 		SQLInfoExecutor.insertBean(dbname,sql, bean,getCUDResult);
 	}
 
@@ -234,7 +245,7 @@ public class ConfigSQLExecutor  {
 //		List datas = new ArrayList();
 //		datas.add(bean);
 //		updateBeans( dbname,  sql,  datas);
-		SQLInfo sql = getSql(dbname,sqlname);
+		SQLInfo sql = getSqlInfo(dbname,sqlname);
 		SQLInfoExecutor.updateBean(dbname,sql, bean);
 	}
 
@@ -247,7 +258,7 @@ public class ConfigSQLExecutor  {
 //		List datas = new ArrayList();
 //		datas.add(bean);
 //		deleteBeans( dbname,  sql,  datas);
-		SQLInfo sql = getSql(dbname,sqlname);
+		SQLInfo sql = getSqlInfo(dbname,sqlname);
 		SQLInfoExecutor.deleteBean(dbname,sql, bean);
 	}
 	
@@ -352,21 +363,21 @@ public class ConfigSQLExecutor  {
 	public ListInfo queryListInfoWithDBName(Class<?> beanType,String dbname, String sqlname, long offset,int pagesize,Object... fields) throws SQLException
 	{
 		
-		SQLInfo sql = getSql(dbname, sqlname);
+		SQLInfo sql = getSqlInfo(dbname, sqlname);
 		return SQLInfoExecutor.queryListInfoWithDBName(beanType,dbname, sql, offset,pagesize,fields);  	 
 	}
 	
 	public ListInfo queryListInfoWithDBName2ndTotalsize(Class<?> beanType,String dbname, String sqlname, long offset,int pagesize,long totalsize,Object... fields) throws SQLException
 	{
 		
-		SQLInfo sql = getSql(dbname, sqlname);
+		SQLInfo sql = getSqlInfo(dbname, sqlname);
 		return SQLInfoExecutor.queryListInfoWithDBName2ndTotalsize(beanType,dbname, sql, offset,pagesize,totalsize,fields);  	 
 	}
 	public ListInfo queryListInfoWithDBName2ndTotalsizesql(Class<?> beanType,String dbname, String sqlname, long offset,int pagesize,String totalsizesqlname,Object... fields) throws SQLException
 	{
 		
-		SQLInfo sql = getSql(dbname, sqlname);
-		SQLInfo totalsizesql = this.getSql(dbname, totalsizesqlname);
+		SQLInfo sql = getSqlInfo(dbname, sqlname);
+		SQLInfo totalsizesql = this.getSqlInfo(dbname, totalsizesqlname);
 		return SQLInfoExecutor.queryListInfoWithDBName2ndTotalsizesql(beanType,dbname, sql, offset,pagesize,totalsizesql,fields);  	 
 	}
 	/**
@@ -402,7 +413,7 @@ public class ConfigSQLExecutor  {
 	
 	public <T> List<T> queryListWithDBName(Class<T> beanType,String dbname, String sqlname, Object... fields) throws SQLException
 	{		
-		SQLInfo sql = getSql(dbname, sqlname);
+		SQLInfo sql = getSqlInfo(dbname, sqlname);
 		return SQLInfoExecutor.queryListWithDBName( beanType, dbname,  sql, fields);
 	}
 	
@@ -410,7 +421,7 @@ public class ConfigSQLExecutor  {
 	public <T> T queryObjectWithDBName(Class<T> beanType,String dbname, String sqlname, Object... fields) throws SQLException
 	{
 		
-		SQLInfo sql = getSql(dbname, sqlname);
+		SQLInfo sql = getSqlInfo(dbname, sqlname);
 		return SQLInfoExecutor.queryObjectWithDBName( beanType, dbname,  sql, fields);
 		 
 	}
@@ -436,20 +447,20 @@ public class ConfigSQLExecutor  {
 	public ListInfo queryListInfoWithDBNameByRowHandler(RowHandler rowhandler,Class<?> beanType,String dbname, String sqlname, long offset,int pagesize,Object... fields) throws SQLException
 	{
 		
-		SQLInfo sql = getSql(dbname, sqlname);
+		SQLInfo sql = getSqlInfo(dbname, sqlname);
 		return SQLInfoExecutor.queryListInfoWithDBNameByRowHandler(rowhandler,beanType,dbname, sql, offset,pagesize,fields);  	  
 	}
 	public ListInfo queryListInfoWithDBName2ndTotalsizeByRowHandler(RowHandler rowhandler,Class<?> beanType,String dbname, String sqlname, long offset,int pagesize,long totalsize,Object... fields) throws SQLException
 	{
 		
-		SQLInfo sql = getSql(dbname, sqlname);
+		SQLInfo sql = getSqlInfo(dbname, sqlname);
 		return SQLInfoExecutor.queryListInfoWithDBName2ndTotalsizeByRowHandler(rowhandler,beanType,dbname, sql, offset,pagesize,totalsize,fields);  	  
 	}
 	public ListInfo queryListInfoWithDBName2ndTotalsizesqlByRowHandler(RowHandler rowhandler,Class<?> beanType,String dbname, String sqlname, long offset,int pagesize,String totalsizesqlname,Object... fields) throws SQLException
 	{
 		
-		SQLInfo sql = getSql(dbname, sqlname);
-		SQLInfo totalsizesql = this.getSql(dbname, totalsizesqlname);
+		SQLInfo sql = getSqlInfo(dbname, sqlname);
+		SQLInfo totalsizesql = this.getSqlInfo(dbname, totalsizesqlname);
 		return SQLInfoExecutor.queryListInfoWithDBName2ndTotalsizesqlByRowHandler(rowhandler,beanType,dbname, sql, offset,pagesize,totalsizesql,fields);  	  
 	}
 	/**
@@ -487,7 +498,7 @@ public class ConfigSQLExecutor  {
 	public <T> List<T> queryListWithDBNameByRowHandler(RowHandler rowhandler,Class<T> beanType,String dbname, String sqlname, Object... fields) throws SQLException
 	{
 		
-		SQLInfo sql = getSql(dbname, sqlname);
+		SQLInfo sql = getSqlInfo(dbname, sqlname);
 		return SQLInfoExecutor.queryListWithDBNameByRowHandler(  rowhandler, beanType, dbname,  sql,  fields);
 	}
 	
@@ -495,7 +506,7 @@ public class ConfigSQLExecutor  {
 	public <T> T queryObjectWithDBNameByRowHandler(RowHandler rowhandler,Class<T> beanType,String dbname, String sqlname, Object... fields) throws SQLException
 	{
 		
-		SQLInfo sql = getSql(dbname, sqlname);
+		SQLInfo sql = getSqlInfo(dbname, sqlname);
 		return SQLInfoExecutor.queryObjectWithDBNameByRowHandler(  rowhandler, beanType, dbname,  sql,  fields);
 		 
 	}
@@ -523,20 +534,20 @@ public class ConfigSQLExecutor  {
 	public ListInfo queryListInfoWithDBNameByNullRowHandler(NullRowHandler rowhandler,String dbname, String sqlname, long offset,int pagesize,Object... fields) throws SQLException
 	{
 		
-		SQLInfo sql = getSql(dbname, sqlname);
+		SQLInfo sql = getSqlInfo(dbname, sqlname);
 		return SQLInfoExecutor.queryListInfoWithDBNameByNullRowHandler(  rowhandler,dbname, sql, offset,pagesize,fields);  
 	}
 	public ListInfo queryListInfoWithDBName2ndTotalsizeByNullRowHandler(NullRowHandler rowhandler,String dbname, String sqlname, long offset,int pagesize,long totalsize,Object... fields) throws SQLException
 	{
 		
-		SQLInfo sql = getSql(dbname, sqlname);
+		SQLInfo sql = getSqlInfo(dbname, sqlname);
 		return SQLInfoExecutor.queryListInfoWithDBName2ndTotalsizeByNullRowHandler(  rowhandler,dbname, sql, offset,pagesize,totalsize,fields);  
 	}
 	public ListInfo queryListInfoWithDBName2ndTotalsizesqlByNullRowHandler(NullRowHandler rowhandler,String dbname, String sqlname, long offset,int pagesize,String totalsizesqlname,Object... fields) throws SQLException
 	{
 		
-		SQLInfo sql = getSql(dbname, sqlname);
-		SQLInfo totalsizesql = this.getSql(dbname, totalsizesqlname);
+		SQLInfo sql = getSqlInfo(dbname, sqlname);
+		SQLInfo totalsizesql = this.getSqlInfo(dbname, totalsizesqlname);
 		return SQLInfoExecutor.queryListInfoWithDBName2ndTotalsizesqlByNullRowHandler(  rowhandler,dbname, sql, offset,pagesize,totalsizesql,fields);  
 	}
 	/**
@@ -569,7 +580,7 @@ public class ConfigSQLExecutor  {
 	public void queryWithDBNameByNullRowHandler(NullRowHandler rowhandler,String dbname, String sqlname, Object... fields) throws SQLException
 	{
 		
-		SQLInfo sql = getSql(dbname, sqlname);
+		SQLInfo sql = getSqlInfo(dbname, sqlname);
 		SQLInfoExecutor.queryWithDBNameByNullRowHandler(  rowhandler, dbname,  sql,  fields);
 	}
 	
@@ -594,15 +605,15 @@ public class ConfigSQLExecutor  {
 	public ListInfo queryListInfoBeanWithDBName(Class<?> beanType,String dbname, String sqlname, long offset,int pagesize,long totalsize,Object bean) throws SQLException
 	{
 		
-		SQLInfo sql = getSql(dbname, sqlname);
+		SQLInfo sql = getSqlInfo(dbname, sqlname);
 		return SQLInfoExecutor.queryListInfoBeanWithDBName(  beanType, dbname,  sql,  offset, pagesize, totalsize,bean); 
 	}
 	
 	public ListInfo queryListInfoBeanWithDBName(Class<?> beanType,String dbname, String sqlname, long offset,int pagesize,String totalsizesqlname,Object bean) throws SQLException
 	{
 		
-		SQLInfo sql = getSql(dbname, sqlname);
-		SQLInfo totalsizesql = this.getSql(dbname, totalsizesqlname);
+		SQLInfo sql = getSqlInfo(dbname, sqlname);
+		SQLInfo totalsizesql = this.getSqlInfo(dbname, totalsizesqlname);
 		return SQLInfoExecutor.queryListInfoBeanWithDBName(  beanType, dbname,  sql,  offset, pagesize, totalsizesql,bean); 
 	}
 	
@@ -620,7 +631,7 @@ public class ConfigSQLExecutor  {
 	public ListInfo queryListInfoBeanWithDBName(Class<?> beanType,String dbname, String sqlname, long offset,int pagesize,Object bean) throws SQLException
 	{
 		
-		SQLInfo sql = getSql(dbname, sqlname);
+		SQLInfo sql = getSqlInfo(dbname, sqlname);
 		return SQLInfoExecutor.queryListInfoBeanWithDBName(  beanType, dbname,  sql,  offset, pagesize, -1L,bean); 
 	}
 	/**
@@ -660,14 +671,14 @@ public class ConfigSQLExecutor  {
 	public  String queryFieldBeanWithDBName(String dbname, String sqlname, Object bean) throws SQLException
 	{
 		
-		SQLInfo sql = getSql(dbname, sqlname);
+		SQLInfo sql = getSqlInfo(dbname, sqlname);
 		return SQLInfoExecutor.queryFieldBeanWithDBName(    dbname,  sql,  bean); 
 	}
 	
 	public  String queryFieldWithDBName(String dbname, String sqlname, Object... fields) throws SQLException
 	{
 		
-		SQLInfo sql = getSql(dbname, sqlname);
+		SQLInfo sql = getSqlInfo(dbname, sqlname);
 		return SQLInfoExecutor.queryFieldWithDBName(    dbname,  sql,  fields); 
 	}
 	
@@ -696,14 +707,14 @@ public class ConfigSQLExecutor  {
 	public <T> T queryTFieldBeanWithDBName(String dbname, Class<T> type,String sqlname, Object bean) throws SQLException
 	{
 		
-		SQLInfo sql = getSql(dbname, sqlname);
+		SQLInfo sql = getSqlInfo(dbname, sqlname);
 		return SQLInfoExecutor.queryTFieldBeanWithDBName(     dbname,  type, sql,  bean); 
 	}
 	
 	public <T> T queryTFieldWithDBName(String dbname, Class<T> type,String sqlname, Object... fields) throws SQLException
 	{
 		
-		SQLInfo sql = getSql(dbname, sqlname);
+		SQLInfo sql = getSqlInfo(dbname, sqlname);
 		return SQLInfoExecutor.queryTFieldWithDBName(     dbname,  type, sql,  fields); 
 	}
 	
@@ -732,14 +743,14 @@ public class ConfigSQLExecutor  {
 	public <T> T queryTFieldBeanWithDBName(String dbname, Class<T> type,FieldRowHandler<T> fieldRowHandler,String sqlname, Object bean) throws SQLException
 	{
 		
-		SQLInfo sql = getSql(dbname, sqlname);
+		SQLInfo sql = getSqlInfo(dbname, sqlname);
 		return SQLInfoExecutor.queryTFieldBeanWithDBName(     dbname,  type,fieldRowHandler, sql,  bean); 
 	}
 	
 	public <T> T queryTFieldWithDBName(String dbname, Class<T> type,FieldRowHandler<T> fieldRowHandler,String sqlname, Object... fields) throws SQLException
 	{
 		
-		SQLInfo sql = getSql(dbname, sqlname);
+		SQLInfo sql = getSqlInfo(dbname, sqlname);
 		return SQLInfoExecutor.queryTFieldWithDBName(     dbname,  type,fieldRowHandler, sql,  fields); 
 	}
 	
@@ -764,14 +775,14 @@ public class ConfigSQLExecutor  {
 	public <T> List<T> queryListBeanWithDBName(Class<T> beanType,String dbname, String sqlname, Object bean) throws SQLException
 	{
 		
-		SQLInfo sql = getSql(dbname, sqlname);
+		SQLInfo sql = getSqlInfo(dbname, sqlname);
 		return SQLInfoExecutor.queryListBeanWithDBName(   beanType,dbname, sql, bean); 
 	}
 	
 	public <T> T queryObjectBeanWithDBName(Class<T> beanType,String dbname, String sqlname, Object bean) throws SQLException
 	{
 		
-		SQLInfo sql = getSql(dbname, sqlname);
+		SQLInfo sql = getSqlInfo(dbname, sqlname);
 		return SQLInfoExecutor.queryObjectBeanWithDBName(   beanType,dbname, sql, bean); 
 		 
 	}
@@ -798,14 +809,14 @@ public class ConfigSQLExecutor  {
 	public ListInfo queryListInfoBeanWithDBNameByRowHandler(RowHandler rowhandler,Class<?> beanType,String dbname, String sqlname, long offset,int pagesize,long totalsize,Object  bean) throws SQLException
 	{
 		
-		SQLInfo sql = getSql(dbname, sqlname);
+		SQLInfo sql = getSqlInfo(dbname, sqlname);
 		return SQLInfoExecutor.queryListInfoBeanWithDBNameByRowHandler(  rowhandler,beanType,dbname, sql, offset,pagesize,totalsize,bean);  
 	}
 	public ListInfo queryListInfoBeanWithDBNameByRowHandler(RowHandler rowhandler,Class<?> beanType,String dbname, String sqlname, long offset,int pagesize,String totalsizesqlname,Object  bean) throws SQLException
 	{
 		
-		SQLInfo sql = getSql(dbname, sqlname);
-		SQLInfo totalsizesql = this.getSql(dbname, totalsizesqlname);
+		SQLInfo sql = getSqlInfo(dbname, sqlname);
+		SQLInfo totalsizesql = this.getSqlInfo(dbname, totalsizesqlname);
 		return SQLInfoExecutor.queryListInfoBeanWithDBNameByRowHandler(  rowhandler,beanType,dbname, sql, offset,pagesize,totalsizesql ,bean);  
 	}
 	/**
@@ -823,7 +834,7 @@ public class ConfigSQLExecutor  {
 	public ListInfo queryListInfoBeanWithDBNameByRowHandler(RowHandler rowhandler,Class<?> beanType,String dbname, String sqlname, long offset,int pagesize,Object  bean) throws SQLException
 	{
 		
-		SQLInfo sql = getSql(dbname, sqlname);
+		SQLInfo sql = getSqlInfo(dbname, sqlname);
 		return SQLInfoExecutor.queryListInfoBeanWithDBNameByRowHandler(  rowhandler,beanType,dbname, sql, offset,pagesize,-1L,bean);  
 	}
 	/**
@@ -866,7 +877,7 @@ public class ConfigSQLExecutor  {
 	public <T> List<T> queryListBeanWithDBNameByRowHandler(RowHandler rowhandler,Class<T> beanType,String dbname, String sqlname, Object bean) throws SQLException
 	{
 		
-		SQLInfo sql = getSql(dbname, sqlname);
+		SQLInfo sql = getSqlInfo(dbname, sqlname);
 		return SQLInfoExecutor.queryListBeanWithDBNameByRowHandler(  rowhandler, beanType, dbname,  sql,  bean);  
 	}
 	
@@ -874,7 +885,7 @@ public class ConfigSQLExecutor  {
 	public <T> T queryObjectBeanWithDBNameByRowHandler(RowHandler rowhandler,Class<T> beanType,String dbname, String sqlname, Object bean) throws SQLException
 	{
 		
-		SQLInfo sql = getSql(dbname, sqlname);
+		SQLInfo sql = getSqlInfo(dbname, sqlname);
 		return SQLInfoExecutor.queryObjectBeanWithDBNameByRowHandler(  rowhandler, beanType, dbname,  sql,  bean);  
 		 
 	}
@@ -903,14 +914,14 @@ public class ConfigSQLExecutor  {
 	public ListInfo queryListInfoBeanWithDBNameByNullRowHandler(NullRowHandler rowhandler,String dbname, String sqlname, long offset,int pagesize,long totalsize,Object bean) throws SQLException
 	{
 		
-		SQLInfo sql = getSql(dbname, sqlname);
+		SQLInfo sql = getSqlInfo(dbname, sqlname);
 		return SQLInfoExecutor.queryListInfoBeanWithDBNameByNullRowHandler(  rowhandler, dbname, sql, offset,pagesize,totalsize,bean);  	 
 	}
 	public ListInfo queryListInfoBeanWithDBNameByNullRowHandler(NullRowHandler rowhandler,String dbname, String sqlname, long offset,int pagesize,String totalsizesqlname,Object bean) throws SQLException
 	{
 		
-		SQLInfo sql = getSql(dbname, sqlname);
-		SQLInfo totalsizesql = this.getSql(dbname, totalsizesqlname);
+		SQLInfo sql = getSqlInfo(dbname, sqlname);
+		SQLInfo totalsizesql = this.getSqlInfo(dbname, totalsizesqlname);
 		return SQLInfoExecutor.queryListInfoBeanWithDBNameByNullRowHandler(  rowhandler, dbname, sql, offset,pagesize,totalsizesql,bean);  	 
 	}
 	/**
@@ -928,7 +939,7 @@ public class ConfigSQLExecutor  {
 	public ListInfo queryListInfoBeanWithDBNameByNullRowHandler(NullRowHandler rowhandler,String dbname, String sqlname, long offset,int pagesize,Object bean) throws SQLException
 	{
 		
-		SQLInfo sql = getSql(dbname, sqlname);
+		SQLInfo sql = getSqlInfo(dbname, sqlname);
 		return SQLInfoExecutor.queryListInfoBeanWithDBNameByNullRowHandler(  rowhandler, dbname, sql, offset,pagesize,-1L,bean);  	 
 	}
 	/**
@@ -960,7 +971,7 @@ public class ConfigSQLExecutor  {
 	public void queryBeanWithDBNameByNullRowHandler(NullRowHandler rowhandler,String dbname, String sqlname, Object bean) throws SQLException
 	{
 		
-		SQLInfo sql = getSql(dbname, sqlname);
+		SQLInfo sql = getSqlInfo(dbname, sqlname);
 		SQLInfoExecutor.queryBeanWithDBNameByNullRowHandler(  rowhandler,  dbname,  sql,  bean);  	 
 	}
 

@@ -248,7 +248,7 @@ public class RuntimeInstance implements RuntimeConstants, RuntimeServices
      *   <li>Velocimacro System</li>
      * </ul>
      */
-    public synchronized void init()
+    public synchronized void init()        
     {
         if (!initialized && !initializing)
         {

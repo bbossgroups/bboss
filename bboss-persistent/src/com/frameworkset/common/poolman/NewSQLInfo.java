@@ -89,7 +89,14 @@ public class NewSQLInfo
 	{
 		if(this.oldsql != null && this.oldsql.getSqlutil() != null)
 		{
-			return this.oldsql.getSqlutil().getPoolManResultSetMetaData(dbname, oldsql.getSqlname(), rsmetadata);
+			if(oldsql.istpl())//如果sql语句是一个
+			{
+				return this.oldsql.getSqlutil().getPoolManResultSetMetaData(dbname, sqlkey, rsmetadata);
+			}
+			else
+			{
+				return this.oldsql.getSqlutil().getPoolManResultSetMetaData(dbname, oldsql.getSqlname(), rsmetadata);
+			}
 		}
 		else
 		{
