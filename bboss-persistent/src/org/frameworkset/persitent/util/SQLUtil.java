@@ -103,6 +103,7 @@ public class SQLUtil {
 						SQLTemplate sqltpl = null;
 						value = value.trim();
 						SQLInfo sqlinfo = new SQLInfo(key, value, istpl,multiparser);
+						sqlinfo.setSqlutil(this);
 						if(istpl)
 						{
 							sqltpl = new SQLTemplate(sqlinfo);
@@ -163,13 +164,13 @@ public class SQLUtil {
 		
 		
 	}
-	public SQLStruction getSQLStruction(SQLInfo sql)
+	public SQLStruction getSQLStruction(SQLInfo sqlinfo,String newsql)
 	{
-		return this.cache.getSQLStruction(sql);
+		return this.cache.getSQLStruction(sqlinfo,newsql);
 	}
-	public SQLStruction getTotalsizeSQLStruction(SQLInfo totalsizesql)
+	public SQLStruction getTotalsizeSQLStruction(SQLInfo totalsizesqlinfo,String totalsizesql)
 	{
-		return this.cache.getTotalsizeSQLStruction(totalsizesql);
+		return this.cache.getTotalsizeSQLStruction(totalsizesqlinfo,totalsizesql);
 	}
 	static class ResourceSQLRefresh implements ResourceInitial
 	{

@@ -15,7 +15,6 @@
  */
 package com.frameworkset.common.poolman;
 
-import java.lang.ref.SoftReference;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -26,7 +25,6 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.log4j.Logger;
 import org.frameworkset.util.ClassUtil;

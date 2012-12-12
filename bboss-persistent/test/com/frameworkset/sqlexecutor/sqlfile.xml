@@ -35,4 +35,33 @@
 
 	<property name="queryFieldWithSQLParams"><![CDATA[select count(1)  from LISTBEAN ]]>
 	</property>
+	<property name="testsqlinfo"><![CDATA[select * from TD_APP_BOM where 1=1 
+			#if($bm && !$bm.equals(""))
+				and bm <> #[bm]
+			#end
+			#if($app_name_en && !$app_name_en.equals(""))
+				and app_name_en like #[app_name_en]
+			#end
+			#if($app_name && !$app_name.equals(""))
+				and app_name like #[app_name]
+			#end
+			#if($soft_level && !$soft_level.equals(""))
+				and soft_level=#[soft_level]
+			#end
+			#if($state && !$state.equals(""))
+				and state=#[state]
+			#end
+			#if($rd_type && !$rd_type.equals(""))
+				and rd_type=#[rd_type]
+			#end
+			#if($sortKey && !$sortKey.equals(""))
+			  	order by $sortKey 
+			  	#if($sortDESC )
+				  	desc
+				#else
+				 	asc
+				#end	
+			#else
+			 	order by bm 
+			#end]]></property>
 </properties>

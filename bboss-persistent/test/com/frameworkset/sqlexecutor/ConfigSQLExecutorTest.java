@@ -240,5 +240,14 @@ public class ConfigSQLExecutorTest {
 //		 System.out.println(result.size());
 		 
 	}
+	
+	@Test
+	public void testsqlinfo() throws SQLException
+	{
+		 Map datas = new HashMap();
+		 datas.put("bm","aaa");
+		List ret = executor.queryListBean(HashMap.class, "testsqlinfo", datas);
+		ret = executor.queryListBean(HashMap.class, "testsqlinfo", datas);
+	}
 
 }

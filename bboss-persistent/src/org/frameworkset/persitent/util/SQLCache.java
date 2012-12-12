@@ -67,26 +67,27 @@ public class SQLCache {
 				}
 			}
 		}
-		sqlkey = sqlkey + "__pagine" ;
-		if (dbmetas.containsKey(sqlkey)) {
-			SoftReference<PoolManResultSetMetaData> wr =  dbmetas.get(sqlkey);
+//		sqlkey = sqlkey + "__pagine" ;
+//		if (dbmetas.containsKey(sqlkey)) {
+		SoftReference<PoolManResultSetMetaData> wr =  dbmetas.get(sqlkey);
+		if (wr != null) {
 			meta = (PoolManResultSetMetaData) wr.get();
 			if (meta == null) {
 				meta = PoolManResultSetMetaData.getCopy(rsmetadata);
-				SoftReference<PoolManResultSetMetaData> wr1 = new SoftReference<PoolManResultSetMetaData>(meta);
+				SoftReference<PoolManResultSetMetaData> wr1 = new SoftReference<PoolManResultSetMetaData>(meta);				
 				dbmetas.put(sqlkey, wr1);
 			}
 		} else {
 			meta = PoolManResultSetMetaData.getCopy(rsmetadata);
-			SoftReference<PoolManResultSetMetaData> wr = new SoftReference<PoolManResultSetMetaData>(meta);
+			wr = new SoftReference<PoolManResultSetMetaData>(meta);
 			dbmetas.put(sqlkey, wr);
 		}
 		return meta;
 	}
 	
-	public SQLStruction getSQLStruction(SQLInfo sqlinfo)
+	public SQLStruction getSQLStruction(SQLInfo sqlinfo,String newsql)
 	{
-		String sql = sqlinfo.getSql();
+		String sql = newsql;
 		String key = null;
 		if(sqlinfo.getSqlutil() == null)
 			key = sql;
@@ -117,9 +118,9 @@ public class SQLCache {
         return sqlstruction;
 	}
 	
-	public SQLStruction getTotalsizeSQLStruction(SQLInfo totalsizesqlinfo)
+	public SQLStruction getTotalsizeSQLStruction(SQLInfo totalsizesqlinfo,String newtotalsizesql)
 	{
-		String totalsizesql = totalsizesqlinfo.getSql();
+		String totalsizesql = newtotalsizesql;
 		String key = null;
 		if(totalsizesqlinfo.getSqlutil() == null)
 			key = totalsizesql;

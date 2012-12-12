@@ -456,11 +456,11 @@ public class SQLParams
 	    	
 	    	if(sqlinfo.getSqlutil() == null)
 	    	{
-		        sqlstruction =  sqlcache.getSQLStruction(sqlinfo);
+		        sqlstruction =  sqlcache.getSQLStruction(sqlinfo,sql);
 	    	}
 	    	else
 	    	{
-	    		sqlstruction = sqlinfo.getSqlutil().getSQLStruction(sqlinfo);
+	    		sqlstruction = sqlinfo.getSqlutil().getSQLStruction(sqlinfo,sql);
 	    	}
 	        newsql = new NewSQLInfo(sqlstruction.getSql());
 	        newsql.setOldsql(sqlinfo);
@@ -479,11 +479,11 @@ public class SQLParams
 	        	SQLStruction totalsizesqlstruction =  null;
 	        	if(totalsizesqlinfo.getSqlutil() == null)//如果sql语句时从配置文件读取，则为每个配置文件定义了一个sql语句结构缓存容器
 	        	{
-			        totalsizesqlstruction =   sqlcache.getTotalsizeSQLStruction(totalsizesqlinfo);
+			        totalsizesqlstruction =   sqlcache.getTotalsizeSQLStruction(totalsizesqlinfo,totalsizesql);
     
 	        	}
 	        	else{
-	        		totalsizesqlstruction = totalsizesqlinfo.getSqlutil().getTotalsizeSQLStruction(totalsizesqlinfo);
+	        		totalsizesqlstruction = totalsizesqlinfo.getSqlutil().getTotalsizeSQLStruction(totalsizesqlinfo,totalsizesql);
 	        	}
 	        	newsql.setOldtotalsizesql(totalsizesqlinfo);
 		        String newtotalsizesql = totalsizesqlstruction.getSql();

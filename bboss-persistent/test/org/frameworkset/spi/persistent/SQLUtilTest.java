@@ -24,6 +24,8 @@ import org.frameworkset.persitent.util.SQLUtil;
 import org.frameworkset.spi.assemble.Pro;
 import org.junit.Test;
 
+import com.frameworkset.util.SimpleStringUtil;
+
 /**
  * <p>Title: SQLUtilTest.java</p> 
  * <p>Description: </p>
@@ -58,7 +60,7 @@ public class SQLUtilTest {
 	{
 		SQLUtil context = SQLUtil.getInstance("org/frameworkset/spi/persistent/test-sql.xml");
 		String[] rets = context.getPropertyKeys();
-		System.out.println(rets);
+		System.out.println(SimpleStringUtil.tostring(rets));
 		
 		
 	}

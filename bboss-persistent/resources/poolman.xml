@@ -13,8 +13,8 @@
     <driver>oracle.jdbc.driver.OracleDriver</driver>
     <url>jdbc:oracle:thin:@//10.0.15.134:1521/orcl</url> 
     
-    <username>sanyippdev</username>
-    <password>sanyippdev</password>
+    <username>sanygcmp</username>
+    <password>sanygcmp</password>
 
     <txIsolationLevel>READ_COMMITTED</txIsolationLevel>
     <nativeResults>true</nativeResults>
