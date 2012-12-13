@@ -171,7 +171,7 @@ public class UserService {
 		try {
 			String sql = "select userid from tb_user ";
 			tm.begin();
-			tm.begin(TransactionType.RW_TRANSACTION);
+			
 			PreparedDBUtil db = new PreparedDBUtil();
 			db.preparedSelect( sql);
 			List<User> users = db.executePreparedForList(User.class,new RowHandler<User>() {

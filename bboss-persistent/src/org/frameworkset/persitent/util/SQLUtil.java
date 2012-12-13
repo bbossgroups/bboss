@@ -30,8 +30,6 @@ import org.frameworkset.spi.BaseApplicationContext;
 import org.frameworkset.spi.SOAFileApplicationContext;
 import org.frameworkset.spi.assemble.Pro;
 
-import bboss.org.apache.velocity.app.Velocity;
-
 import com.frameworkset.common.poolman.sql.PoolManResultSetMetaData;
 import com.frameworkset.common.poolman.util.SQLManager;
 import com.frameworkset.util.DaemonThread;
@@ -58,13 +56,20 @@ import com.frameworkset.velocity.BBossVelocityUtil;
  * @version 1.0
  */
 public class SQLUtil {
-	private BaseApplicationContext sqlcontext;
-	private static Map<String,SQLUtil> sqlutils = new HashMap<String,SQLUtil>(); 
-	private SQLCache cache = new SQLCache(); 
-	private static long refresh_interval = 5000;
-	private String defaultDBName = null;
-	private Map<String,SQLInfo> sqls;
-
+	protected BaseApplicationContext sqlcontext;
+	protected static Map<String,SQLUtil> sqlutils = new HashMap<String,SQLUtil>(); 
+	protected SQLCache cache = new SQLCache(); 
+	protected static long refresh_interval = 5000;
+	protected String defaultDBName = null;
+	protected Map<String,SQLInfo> sqls;
+	
+	
+	
+	
+	 /**
+     * 默认的sql结构缓存器
+     */
+    private static final GloableSQLUtil globalSQLUtil = new GloableSQLUtil();
 //	/**
 //	 * sql语句velocity模板索引表，以sql语句的名称为索引
 //	 * 当sql文件重新加载时，这些模板也会被重置
@@ -244,6 +249,12 @@ public class SQLUtil {
 	}
 	
 
+	public SQLUtil() {
+		// TODO Auto-generated constructor stub
+	}
+
+
+
 	public static SQLUtil getInstance(String sqlfile) {
 		
 		SQLUtil sqlUtil = sqlutils.get(sqlfile);
@@ -323,18 +334,25 @@ public class SQLUtil {
 		}
 		if(sql != null )
 		{
-			if(sql.istpl() )
-			{
-				StringWriter sw = new StringWriter();
-				sql.getSqltpl().merge(BBossVelocityUtil.buildVelocityContext(variablevalues),sw);
-				newsql = sw.toString();
-			}
-			else
-				newsql = sql.getSql();
+			newsql = _getSQL(sql,variablevalues);
 			
 		}
 		return newsql;
 
+	}
+	
+	protected String _getSQL(SQLInfo sqlinfo,Map variablevalues)
+	{
+		String newsql = null;
+		if(sqlinfo.istpl() )
+		{
+			StringWriter sw = new StringWriter();
+			sqlinfo.getSqltpl().merge(BBossVelocityUtil.buildVelocityContext(variablevalues),sw);
+			newsql = sw.toString();
+		}
+		else
+			newsql = sqlinfo.getSql();
+		return newsql;
 	}
 	
 	public String evaluateSQL(String name,String sql,Map variablevalues) {
@@ -476,6 +494,12 @@ public class SQLUtil {
 		while(it.hasNext())
 			files.add(it.next());
 		return files;
+	}
+
+
+
+	public static GloableSQLUtil getGlobalSQLUtil() {
+		return globalSQLUtil;
 	}
 
 }

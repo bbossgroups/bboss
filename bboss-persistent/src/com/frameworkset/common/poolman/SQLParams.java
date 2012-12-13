@@ -22,7 +22,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.sql.Blob;
 import java.sql.Clob;
 import java.sql.Connection;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Time;
 import java.util.ArrayList;
@@ -34,8 +33,8 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
-import org.frameworkset.persitent.util.SQLCache;
 import org.frameworkset.persitent.util.SQLInfo;
+import org.frameworkset.persitent.util.SQLUtil;
 import org.frameworkset.util.BigFile;
 import org.frameworkset.util.ClassUtil;
 import org.frameworkset.util.ClassUtil.ClassInfo;
@@ -44,7 +43,6 @@ import org.frameworkset.util.annotations.ValueConstants;
 
 import bboss.org.apache.velocity.VelocityContext;
 
-import com.frameworkset.common.poolman.sql.PoolManResultSetMetaData;
 import com.frameworkset.common.poolman.util.JDBCPool;
 import com.frameworkset.common.poolman.util.SQLManager;
 import com.frameworkset.orm.annotation.Column;
@@ -52,7 +50,6 @@ import com.frameworkset.orm.annotation.PrimaryKey;
 import com.frameworkset.util.VariableHandler;
 import com.frameworkset.util.VariableHandler.SQLStruction;
 import com.frameworkset.util.VariableHandler.Variable;
-import com.frameworkset.velocity.BBossVelocityUtil;
 
 /**
  * <p>Title: SQLParams.java</p>
@@ -110,10 +107,7 @@ public class SQLParams
      */
     @Deprecated 
     private static final Map<String,String[][]> parserResults = new java.util.WeakHashMap<String,String[][]>();
-    /**
-     * 默认的sql结构缓存器
-     */
-    private static final SQLCache sqlcache = new SQLCache();
+ 
 //    private static final Map<String,SQLStruction> parserSQLStructions = new java.util.WeakHashMap<String,SQLStruction>();
 //    private static final Map<String,SQLStruction> parsertotalsizeSQLStructions = new java.util.WeakHashMap<String,SQLStruction>();
     public NewSQLInfo getNewsql()
@@ -456,7 +450,7 @@ public class SQLParams
 	    	
 	    	if(sqlinfo.getSqlutil() == null)
 	    	{
-		        sqlstruction =  sqlcache.getSQLStruction(sqlinfo,sql);
+		        sqlstruction =  SQLUtil.getGlobalSQLUtil().getSQLStruction(sqlinfo,sql);
 	    	}
 	    	else
 	    	{
@@ -479,7 +473,7 @@ public class SQLParams
 	        	SQLStruction totalsizesqlstruction =  null;
 	        	if(totalsizesqlinfo.getSqlutil() == null)//如果sql语句时从配置文件读取，则为每个配置文件定义了一个sql语句结构缓存容器
 	        	{
-			        totalsizesqlstruction =   sqlcache.getTotalsizeSQLStruction(totalsizesqlinfo,totalsizesql);
+			        totalsizesqlstruction =   SQLUtil.getGlobalSQLUtil().getTotalsizeSQLStruction(totalsizesqlinfo,totalsizesql);
     
 	        	}
 	        	else{
@@ -1310,8 +1304,6 @@ public class SQLParams
 //	public void setNewtotalsizesql(String newtotalsizesql) {
 //		this.newtotalsizesql = newtotalsizesql;
 //	}
-	public static SQLCache getSqlcache() {
-		return sqlcache;
-	}
+
 
 }

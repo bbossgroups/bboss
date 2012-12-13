@@ -89,7 +89,8 @@ public class SQLCache {
 	{
 		String sql = newsql;
 		String key = null;
-		if(sqlinfo.getSqlutil() == null)
+		if(sqlinfo.getSqlutil() == null 
+				|| sqlinfo.getSqlutil() == SQLUtil.getGlobalSQLUtil())
 			key = sql;
 		else
 		{
@@ -122,7 +123,8 @@ public class SQLCache {
 	{
 		String totalsizesql = newtotalsizesql;
 		String key = null;
-		if(totalsizesqlinfo.getSqlutil() == null)
+		if(totalsizesqlinfo.getSqlutil() == null 
+				|| totalsizesqlinfo.getSqlutil() == SQLUtil.getGlobalSQLUtil())
 			key = totalsizesql;
 		else
 		{

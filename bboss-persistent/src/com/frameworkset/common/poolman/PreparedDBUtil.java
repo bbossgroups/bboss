@@ -2508,6 +2508,18 @@ public class PreparedDBUtil extends DBUtil {
         
     }
     
+    /**
+     * 创建特定数据库的预编译插入语句
+     * 
+     * @param dbName
+     * @param sql
+     * @throws SQLException
+     */
+    public void preparedInsert(SQLParams params,String sql) throws SQLException {
+        preparedInsert(params,this.prepareDBName, sql);
+        
+    }
+    
 	
 //	/**
 //	 * 创建特定数据库的预编译插入语句
@@ -3543,6 +3555,18 @@ public class PreparedDBUtil extends DBUtil {
      * @param sql
      * @throws SQLException
      */
+    public void preparedUpdate(SQLParams params,String sql) throws SQLException {
+                
+        preparedUpdate(params,this.prepareDBName, sql);
+    }
+    
+    /**
+     * 创建特定数据库的预编译更新语句
+     * 
+     * @param dbName
+     * @param sql
+     * @throws SQLException
+     */
     public void preparedUpdate(Params params, String sql) throws SQLException {
         preparedUpdate(params, this.prepareDBName,new NewSQLInfo(sql));
     }
@@ -3669,6 +3693,17 @@ public class PreparedDBUtil extends DBUtil {
      * @throws SQLException
      */
     public void preparedDelete(SQLParams params, SQLInfo sql) throws SQLException {
+        preparedDelete(params, this.prepareDBName,  sql);
+    }
+    
+    /**
+     * 创建特定数据库预编译删除语句
+     * 
+     * @param dbName
+     * @param sql
+     * @throws SQLException
+     */
+    public void preparedDelete(SQLParams params, String sql) throws SQLException {
         preparedDelete(params, this.prepareDBName,  sql);
     }
 	protected Param buildParam()
@@ -4602,7 +4637,7 @@ public class PreparedDBUtil extends DBUtil {
 		NewSQLInfo newsql = null;
 		for(SQLParams sqlParams:batchsqlparams)
 		{
-			if(multiparser )
+			if(!multiparser )
 			{
 				if(i == 0)
 				{

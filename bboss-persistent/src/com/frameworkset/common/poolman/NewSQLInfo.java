@@ -19,6 +19,7 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 
 import org.frameworkset.persitent.util.SQLInfo;
+import org.frameworkset.persitent.util.SQLUtil;
 
 import com.frameworkset.common.poolman.sql.PoolManResultSetMetaData;
 import com.frameworkset.util.VariableHandler.SQLStruction;
@@ -100,7 +101,7 @@ public class NewSQLInfo
 		}
 		else
 		{
-			return SQLParams.getSqlcache().getPoolManResultSetMetaData(dbname, sqlkey, rsmetadata);
+			return SQLUtil.getGlobalSQLUtil().getPoolManResultSetMetaData(dbname, sqlkey, rsmetadata);
 		}
 	}
 	

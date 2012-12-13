@@ -21,7 +21,7 @@ import org.frameworkset.persitent.util.SQLInfo;
 
 public class ListSQLParams {
 	private List<SQLParams> sqlparams;
-	private boolean multiparser;
+	
 	private SQLInfo sql;
 	public ListSQLParams(List<SQLParams> sqlparams,SQLInfo sql) {
 		this.sqlparams = sqlparams;		
@@ -31,9 +31,7 @@ public class ListSQLParams {
 	public List<SQLParams> getSqlparams() {
 		return sqlparams;
 	}
-	public void setMultiparser(boolean multiparser) {
-		this.multiparser = multiparser;
-	}
+	
 	public boolean multiparser()
 	{
 		if(sql == null)
