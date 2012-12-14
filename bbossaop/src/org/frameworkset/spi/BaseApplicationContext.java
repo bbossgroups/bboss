@@ -2073,7 +2073,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 		if (log.isDebugEnabled()) {
 			log.debug("Unable to locate MessageSource with name '"
 					+ MESSAGE_SOURCE_BEAN_NAME + "': using default ["
-					+ this.messageSource + "]");
+					+ this.messageSource.getClass().getCanonicalName() + "]");
 		}
 	}
 

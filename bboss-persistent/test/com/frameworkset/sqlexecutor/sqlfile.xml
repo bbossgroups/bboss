@@ -30,12 +30,12 @@
 					#if($id != -1 && $id != 0) and id = #[id] #end  ]]>
 	</property>
 
-	<property name="updatesqltemplate"><![CDATA[update LISTBEAN  set FIELDNAME = #[fieldName] where id = #[id] ]]>
+	<property name="updatesqltemplate" istpl="false" mode="native"><![CDATA[update LISTBEAN  set FIELDNAME = #[fieldName] where id = #[id] ]]>
 	</property>
 
-	<property name="queryFieldWithSQLParams"><![CDATA[select count(1)  from LISTBEAN ]]>
+	<property name="queryFieldWithSQLParams" istpl="false" mode="native"><![CDATA[select count(1)  from LISTBEAN ]]>
 	</property>
-	<property name="testsqlinfo"><![CDATA[select * from TD_APP_BOM where 1=1 
+	<property name="testsqlinfo"  istpl="true"><![CDATA[select * from TD_APP_BOM where 1=1 
 			#if($bm && !$bm.equals(""))
 				and bm <> #[bm]
 			#end

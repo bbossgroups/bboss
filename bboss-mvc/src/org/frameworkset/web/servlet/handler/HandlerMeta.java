@@ -54,6 +54,18 @@ public  class HandlerMeta
 	public Object getHandler() {
 		return handler;
 	}
+	
+	/**
+	 * @return the handler name
+	 */
+	public String getHandlerName() {
+		if(handler == null)
+			return null;
+		if(handler instanceof String)
+			return (String)handler;
+		else
+			return handler.getClass().getCanonicalName();
+	}
 	/**
 	 * @return the pathNames
 	 */

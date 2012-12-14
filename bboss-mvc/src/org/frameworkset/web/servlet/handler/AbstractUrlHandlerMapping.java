@@ -167,7 +167,7 @@ public abstract class AbstractUrlHandlerMapping extends AbstractHandlerMapping{
 			}
 		}
 		if (handler != null ) {
-			logger.debug("Mapping [" + lookupPath + "] to handler '" + handler.getHandler().getHandler() + "'");
+			logger.debug("Mapping [" + lookupPath + "] to handler '" + handler.getHandler().getHandlerName() + "'");
 		}
 		else if (handler == null) {
 			logger.debug("No handler mapping found for [" + lookupPath + "]");
@@ -336,27 +336,27 @@ public abstract class AbstractUrlHandlerMapping extends AbstractHandlerMapping{
 		if (mappedHandler != null) {
 			if (mappedHandler.getHandler() != resolvedHandler.getHandler()) {
 				throw new IllegalStateException(
-						"Cannot map handler [" + handler.getHandler() + "] to URL path [" + urlPath +
-						"]: There is already handler [" + resolvedHandler.getHandler() + "] mapped.");
+						"Cannot map handler [" + handler.getHandlerName() + "] to URL path [" + urlPath +
+						"]: There is already handler [" + resolvedHandler.getHandlerName() + "] mapped.");
 			}
 		}
 		else {
 			if (urlPath.equals("/")) {
 				if (logger.isDebugEnabled()) {
-					logger.debug("Root mapping to handler [" + resolvedHandler.getHandler() + "]");
+					logger.debug("Root mapping to handler [" + resolvedHandler.getHandlerName() + "]");
 				}
 				setRootHandler(resolvedHandler);
 			}
 			else if (urlPath.equals("/*")) {
 				if (logger.isDebugEnabled()) {
-					logger.debug("Default mapping to handler [" + resolvedHandler.getHandler() + "]");
+					logger.debug("Default mapping to handler [" + resolvedHandler.getHandlerName() + "]");
 				}
 				setDefaultHandler(resolvedHandler);
 			}
 			else {
 				this.handlerMap.put(urlPath, resolvedHandler);
 				if (logger.isDebugEnabled()) {
-					logger.debug("Mapped URL path [" + urlPath + "] onto handler [" + resolvedHandler.getHandler() + "]");
+					logger.debug("Mapped URL path [" + urlPath + "] onto handler [" + resolvedHandler.getHandlerName() + "]");
 				}
 			}
 		}

@@ -107,7 +107,8 @@ public class StatementInfo {
 		pool = SQLUtil.getSQLManager().getPool(dbname);
 		interceptorInf = pool.getInterceptor();
 		dbadapter = pool.getDbAdapter();
-		sql = interceptorInf.convertSQL(sql_.getNewsql(), dbadapter.getDBTYPE(), dbname_);
+		if(sql_ != null)
+			sql = interceptorInf.convertSQL(sql_.getNewsql(), dbadapter.getDBTYPE(), dbname_);
 //		this.sql = sql_;
 
 		this.goNative = goNative_;

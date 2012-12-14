@@ -1251,7 +1251,7 @@ public class DispatchServlet extends HttpServlet {
 			if (logger.isDebugEnabled()) {
 				logger.debug("Unable to locate RequestToViewNameTranslator with name '" +
 						REQUEST_TO_VIEW_NAME_TRANSLATOR_BEAN_NAME +
-						"': using default [" + this.viewNameTranslator + "]");
+						"': using default [" + this.viewNameTranslator.getClass().getCanonicalName() + "]");
 			}
 		}
 	}
