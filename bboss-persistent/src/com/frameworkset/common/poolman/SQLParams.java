@@ -355,11 +355,23 @@ public class SQLParams
     	VelocityContext vcontext = null;
     	if(sqlinfo.istpl())
     	{
-    		vcontext = buildVelocityContext();
-    		StringWriter sw = new StringWriter();
-    		sqlinfo.getSqltpl().merge(vcontext, sw);
-    		sql = sw.toString();
+    		sqlinfo.getSqltpl().process();
+    		if(sqlinfo.istpl())
+    		{
+	    		vcontext = buildVelocityContext();
+	    		StringWriter sw = new StringWriter();
+	    		sqlinfo.getSqltpl().merge(vcontext, sw);
+	    		sql = sw.toString();
+    		}
+    		else
+    		{
+    			sql = sqlinfo.getSql();
+    		}
     		
+    	}
+    	else
+    	{
+    		sql = sqlinfo.getSql();
     	}
 //        sql = this.evaluateSqlTemplate(vcontext,sql);
         String[][] args =  parserResults.get(sql);
@@ -381,12 +393,24 @@ public class SQLParams
         {
         	if(totalsizesqlinfo.istpl())
         	{
-        		if(vcontext == null)
-        			vcontext = buildVelocityContext();
-        		StringWriter sw = new StringWriter();
-        		totalsizesqlinfo.getSqltpl().merge(vcontext, sw);
-        		totalsizesql = sw.toString();
+        		totalsizesqlinfo.getSqltpl().process();
+        		if(totalsizesqlinfo.istpl())
+        		{
+	        		if(vcontext == null)
+	        			vcontext = buildVelocityContext();
+	        		StringWriter sw = new StringWriter();
+	        		totalsizesqlinfo.getSqltpl().merge(vcontext, sw);
+	        		totalsizesql = sw.toString();
+        		}
+        		else
+        		{
+        			totalsizesql = totalsizesqlinfo.getSql();
+        		}
         		
+        	}
+        	else
+        	{
+        		totalsizesql = totalsizesqlinfo.getSql();
         	}
 //        	totalsizesql = this.evaluateSqlTemplate(vcontext,totalsizesql);
         	
@@ -430,6 +454,8 @@ public class SQLParams
         
         this.realParams = new Params(_realParams);
     }
+    
+
     
     private void buildParamsByVariableParser(SQLInfo sqlinfo,SQLInfo totalsizesqlinfo,String dbname,NewSQLInfo firstnewsql) throws SetSQLParamException
     {
@@ -477,12 +503,21 @@ public class SQLParams
 	        {
 	        	if(totalsizesqlinfo.istpl())
 	        	{
-	        		if(vcontext == null)
-	        			vcontext = buildVelocityContext();
-	        		StringWriter sw = new StringWriter();
-	        		totalsizesqlinfo.getSqltpl().merge(vcontext,sw);
-	        		totalsizesql = sw.toString();
-	//        		totalsizesql = this.evaluateSqlTemplate(vcontext,totalsizesql);
+	        		totalsizesqlinfo.getSqltpl().process();
+	        		if(totalsizesqlinfo.istpl())
+	        		{
+		        		if(vcontext == null)
+		        			vcontext = buildVelocityContext();
+		        		StringWriter sw = new StringWriter();
+		        		totalsizesqlinfo.getSqltpl().merge(vcontext,sw);
+		        		totalsizesql = sw.toString();
+	        		}
+	        		else
+	        			totalsizesql = totalsizesqlinfo.getSql();
+	        	}
+	        	else
+	        	{
+	        		totalsizesql = totalsizesqlinfo.getSql();
 	        	}
 	        	SQLStruction totalsizesqlstruction =  null;
 	        	if(totalsizesqlinfo.getSqlutil() == null)//如果sql语句时从配置文件读取，则为每个配置文件定义了一个sql语句结构缓存容器

@@ -30,6 +30,8 @@ import org.frameworkset.spi.BaseApplicationContext;
 import org.frameworkset.spi.SOAFileApplicationContext;
 import org.frameworkset.spi.assemble.Pro;
 
+import bboss.org.apache.velocity.VelocityContext;
+
 import com.frameworkset.common.poolman.sql.PoolManResultSetMetaData;
 import com.frameworkset.common.poolman.util.SQLManager;
 import com.frameworkset.util.DaemonThread;
@@ -341,18 +343,44 @@ public class SQLUtil {
 
 	}
 	
-	protected String _getSQL(SQLInfo sqlinfo,Map variablevalues)
+	public static String _getSQL(SQLInfo sqlinfo,Map variablevalues)
 	{
-		String newsql = null;
-		if(sqlinfo.istpl() )
-		{
-			StringWriter sw = new StringWriter();
-			sqlinfo.getSqltpl().merge(BBossVelocityUtil.buildVelocityContext(variablevalues),sw);
-			newsql = sw.toString();
-		}
-		else
-			newsql = sqlinfo.getSql();
-		return newsql;
+//		String newsql = null;
+//		if(sqlinfo.istpl() )
+//		{
+//			StringWriter sw = new StringWriter();
+//			sqlinfo.getSqltpl().merge(BBossVelocityUtil.buildVelocityContext(variablevalues),sw);
+//			newsql = sw.toString();
+//		}
+//		else
+//			newsql = sqlinfo.getSql();
+//		return newsql;
+		
+		
+		String sql = null;
+    	VelocityContext vcontext = null;
+    	if(sqlinfo.istpl())
+    	{
+    		sqlinfo.getSqltpl().process();//识别sql语句是不是真正的velocity sql模板
+    		if(sqlinfo.istpl())
+    		{
+    			vcontext = BBossVelocityUtil.buildVelocityContext(variablevalues);//一个context是否可以被同时用于多次运算呢？
+		    	
+		    	StringWriter sw = new StringWriter();
+		       sqlinfo.getSqltpl().merge(vcontext,sw);
+		       sql = sw.toString();
+    		}
+    		else
+    		{
+    			sql = sqlinfo.getSql();
+    		}
+	    	
+    	}
+    	else
+    	{
+    		sql = sqlinfo.getSql();
+    	}
+    	return sql;
 	}
 	
 	public String evaluateSQL(String name,String sql,Map variablevalues) {
