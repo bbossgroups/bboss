@@ -446,5 +446,9 @@ public class SimpleNode implements Node
     {
       return templateName;
     }
+
+	public Node[] getChildren() {
+		return children;
+	}
 }
 
