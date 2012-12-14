@@ -203,7 +203,8 @@ public class SQLExecutor
 	        {
 	            if(this.getSQLParams().size() > 0)
 	            {
-	                dbutil.preparedInsert(this.getSQLParams(), this.getDbname(), new SQLInfo(this.getStatement(),true,true));
+	            	
+	                dbutil.preparedInsert(this.getSQLParams(), this.getDbname(), SQLUtil.getGlobalSQLUtil().getSQLInfo(this.getStatement(),true,true));
 	            }
 	            else
 	            {
@@ -214,7 +215,7 @@ public class SQLExecutor
 	        {
 	            if(this.getSQLParams().size() > 0)
 	            {
-	                dbutil.preparedUpdate(this.getSQLParams(), this.getDbname(),new SQLInfo(this.getStatement(),true,true));
+	                dbutil.preparedUpdate(this.getSQLParams(), this.getDbname(),SQLUtil.getGlobalSQLUtil().getSQLInfo(this.getStatement(),true,true));
 	            }
 	            else
 	            {
@@ -226,7 +227,7 @@ public class SQLExecutor
 	        {
 	            if(this.getSQLParams().size() > 0)
 	            {
-	                dbutil.preparedDelete(this.getSQLParams(), this.getDbname(),new SQLInfo(this.getStatement(),true,true));
+	                dbutil.preparedDelete(this.getSQLParams(), this.getDbname(),SQLUtil.getGlobalSQLUtil().getSQLInfo(this.getStatement(),true,true));
 	            }
 	            else
 	            {
@@ -307,25 +308,25 @@ public class SQLExecutor
 		this.batchOptimize = batchOptimize;
 	}
 	
-	public static void init(SQLParams sqlparams,String statement,String pretoken,String endtoken,String action)
-	{
-//		this.sqlparams = new SQLParams();
-		sqlparams.setOldsql( statement);
-		if(action != null)
-		{
-			if(action.equals(ACTION_INSERT))
-				sqlparams.setAction(PreparedDBUtil.INSERT);
-			else if(action.equals(ACTION_DELETE))
-				sqlparams.setAction(PreparedDBUtil.DELETE);
-			else if(action.equals(ACTION_UPDATE))
-				sqlparams.setAction(PreparedDBUtil.UPDATE);
-		}
-		sqlparams.setPretoken(pretoken);
-		sqlparams.setEndtoken(endtoken);
-		//http://changsha.koubei.com/store/detail--storeId-b227fc4aee6e4862909ea7bf62556a7a
-		
-		
-	}
+//	public static void init(SQLParams sqlparams,String statement,String pretoken,String endtoken,String action)
+//	{
+////		this.sqlparams = new SQLParams();
+//		sqlparams.setOldsql( statement);
+//		if(action != null)
+//		{
+//			if(action.equals(ACTION_INSERT))
+//				sqlparams.setAction(PreparedDBUtil.INSERT);
+//			else if(action.equals(ACTION_DELETE))
+//				sqlparams.setAction(PreparedDBUtil.DELETE);
+//			else if(action.equals(ACTION_UPDATE))
+//				sqlparams.setAction(PreparedDBUtil.UPDATE);
+//		}
+//		sqlparams.setPretoken(pretoken);
+//		sqlparams.setEndtoken(endtoken);
+//		//http://changsha.koubei.com/store/detail--storeId-b227fc4aee6e4862909ea7bf62556a7a
+//		
+//		
+//	}
 	
 	public void init(String statement,String pretoken,String endtoken,String action)
 	{
@@ -344,7 +345,8 @@ public class SQLExecutor
 //		sqlparams.setEndtoken(endtoken);
 //		//http://changsha.koubei.com/store/detail--storeId-b227fc4aee6e4862909ea7bf62556a7a
 		
-		init(sqlparams, statement, pretoken, endtoken, action);
+		
+		SQLInfoExecutor.init(sqlparams, SQLUtil.getGlobalSQLUtil().getSQLInfo(statement,true,true), pretoken, endtoken, action);
 		
 		
 	}
@@ -377,120 +379,120 @@ public class SQLExecutor
 	}
 	
 	
-	public static void execute(String dbname, String sql, List beans,boolean isBatchOptimize,int action) throws SQLException
-	{
-		execute(dbname, sql, beans,isBatchOptimize,action,(GetCUDResult)null) ;
-	}
+//	public static void execute(String dbname, String sql, List beans,boolean isBatchOptimize,int action) throws SQLException
+//	{
+//		execute(dbname, sql, beans,isBatchOptimize,action,(GetCUDResult)null) ;
+//	}
 	
-	public static void execute(String dbname, String sql, List beans,boolean isBatchOptimize,int action,GetCUDResult getCUDResult) throws SQLException
-	{
-		Connection con = null;
-		try
-		{
-			con = DBUtil.getConection(dbname);
-			List<SQLParams> batchsqlparams = SQLParams.convertBeansToSqlParams(beans,new SQLInfo(sql,true,true),dbname,action,con);
-			if(batchsqlparams == null)
-				return ;
-			PreparedDBUtil dbutil = new PreparedDBUtil();
-			dbutil.setBatchOptimize(isBatchOptimize);
-			dbutil.setPrepareDBName(dbname);
-			dbutil.addPreparedBatch(new ListSQLParams(batchsqlparams,null));
-			dbutil.executePreparedBatch(con,getCUDResult);
-		}
-		finally
-		{
-			try {
-				if (con != null)
-					con.close();
-			} catch (Exception e) {
-				// TODO: handle exception
-			}
-		}
-	}
-	private static Object CUDexecute(String dbname, String sql, Object bean,int action) throws SQLException
-	{
-		return CUDexecute(dbname, sql, bean,action,false) ;
-	}
-	/**
-	 * 针对增删改三种类型DB操作的统一处理方法
-	 * @param dbname
-	 * @param sql
-	 * @param bean
-	 * @param isBatchOptimize
-	 * @param action
-	 * @return
-	 * @throws SQLException
-	 */
-	private static Object CUDexecute(String dbname, String sql, Object bean,int action,boolean getCUDResult) throws SQLException
-	{
-		Connection con = null;
-		try
-		{
-			SQLInfo sqlinfo = new SQLInfo(sql,true,false);
-			con = DBUtil.getConection(dbname);
-			SQLParams batchsqlparams = SQLParams.convertBeanToSqlParams(bean,sqlinfo,dbname,action,con);
-			if(batchsqlparams == null)
-				return null;
+//	public static void execute(String dbname, String sql, List beans,boolean isBatchOptimize,int action,GetCUDResult getCUDResult) throws SQLException
+//	{
+//		Connection con = null;
+//		try
+//		{
+//			con = DBUtil.getConection(dbname);
+//			List<SQLParams> batchsqlparams = SQLParams.convertBeansToSqlParams(beans,new SQLInfo(sql,true,true),dbname,action,con);
+//			if(batchsqlparams == null)
+//				return ;
 //			PreparedDBUtil dbutil = new PreparedDBUtil();
 //			dbutil.setBatchOptimize(isBatchOptimize);
 //			dbutil.setPrepareDBName(dbname);
-//			dbutil.addPreparedBatch(batchsqlparams);
-//			dbutil.executePreparedBatch(con);
-			
-			
-//			 action = action.toLowerCase();
-	        PreparedDBUtil dbutil = new PreparedDBUtil();
-	        if(action == PreparedDBUtil.INSERT)
-	        {
-	            if(batchsqlparams.size() > 0)
-	            {
-	                dbutil.preparedInsert(batchsqlparams, dbname,sqlinfo);
-	                return dbutil.executePrepared(con,getCUDResult);
-	            }
-	            else
-	            {
-	                return dbutil.executeInsert(dbname,sql,con);
-	            }
-	        }
-	        else if(action == PreparedDBUtil.UPDATE)
-	        {
-	            if(batchsqlparams.size() > 0)
-	            {
-	                dbutil.preparedUpdate(batchsqlparams, dbname,sqlinfo);
-	                return dbutil.executePrepared(con,getCUDResult);
-	            }
-	            else
-	            {
-	                return dbutil.executeUpdate(dbname,sql,con);
-	            }
-	                
-	        }
-	        else if(action == PreparedDBUtil.DELETE)
-	        {
-	            if(batchsqlparams.size() > 0)
-	            {
-	                dbutil.preparedDelete(batchsqlparams, dbname,sqlinfo);
-	                return dbutil.executePrepared(con,getCUDResult);
-	            }
-	            else
-	            {
-	                return dbutil.executeDelete(dbname,sql,con);
-	            }
-	        }
-	        else
-	            throw new SQLException("不支持的数据库操作：" + action);
-		        
-		}
-		finally
-		{
-			try {
-				if (con != null)
-					con.close();
-			} catch (Exception e) {
-				// TODO: handle exception
-			}
-		}
-	}
+//			dbutil.addPreparedBatch(new ListSQLParams(batchsqlparams,null));
+//			dbutil.executePreparedBatch(con,getCUDResult);
+//		}
+//		finally
+//		{
+//			try {
+//				if (con != null)
+//					con.close();
+//			} catch (Exception e) {
+//				// TODO: handle exception
+//			}
+//		}
+//	}
+//	private static Object CUDexecute(String dbname, String sql, Object bean,int action) throws SQLException
+//	{
+//		return CUDexecute(dbname, sql, bean,action,false) ;
+//	}
+//	/**
+//	 * 针对增删改三种类型DB操作的统一处理方法
+//	 * @param dbname
+//	 * @param sql
+//	 * @param bean
+//	 * @param isBatchOptimize
+//	 * @param action
+//	 * @return
+//	 * @throws SQLException
+//	 */
+//	private static Object CUDexecute(String dbname, String sql, Object bean,int action,boolean getCUDResult) throws SQLException
+//	{
+//		Connection con = null;
+//		try
+//		{
+//			SQLInfo sqlinfo = new SQLInfo(sql,true,false);
+//			con = DBUtil.getConection(dbname);
+//			SQLParams batchsqlparams = SQLParams.convertBeanToSqlParams(bean,sqlinfo,dbname,action,con);
+//			if(batchsqlparams == null)
+//				return null;
+////			PreparedDBUtil dbutil = new PreparedDBUtil();
+////			dbutil.setBatchOptimize(isBatchOptimize);
+////			dbutil.setPrepareDBName(dbname);
+////			dbutil.addPreparedBatch(batchsqlparams);
+////			dbutil.executePreparedBatch(con);
+//			
+//			
+////			 action = action.toLowerCase();
+//	        PreparedDBUtil dbutil = new PreparedDBUtil();
+//	        if(action == PreparedDBUtil.INSERT)
+//	        {
+//	            if(batchsqlparams.size() > 0)
+//	            {
+//	                dbutil.preparedInsert(batchsqlparams, dbname,sqlinfo);
+//	                return dbutil.executePrepared(con,getCUDResult);
+//	            }
+//	            else
+//	            {
+//	                return dbutil.executeInsert(dbname,sql,con);
+//	            }
+//	        }
+//	        else if(action == PreparedDBUtil.UPDATE)
+//	        {
+//	            if(batchsqlparams.size() > 0)
+//	            {
+//	                dbutil.preparedUpdate(batchsqlparams, dbname,sqlinfo);
+//	                return dbutil.executePrepared(con,getCUDResult);
+//	            }
+//	            else
+//	            {
+//	                return dbutil.executeUpdate(dbname,sql,con);
+//	            }
+//	                
+//	        }
+//	        else if(action == PreparedDBUtil.DELETE)
+//	        {
+//	            if(batchsqlparams.size() > 0)
+//	            {
+//	                dbutil.preparedDelete(batchsqlparams, dbname,sqlinfo);
+//	                return dbutil.executePrepared(con,getCUDResult);
+//	            }
+//	            else
+//	            {
+//	                return dbutil.executeDelete(dbname,sql,con);
+//	            }
+//	        }
+//	        else
+//	            throw new SQLException("不支持的数据库操作：" + action);
+//		        
+//		}
+//		finally
+//		{
+//			try {
+//				if (con != null)
+//					con.close();
+//			} catch (Exception e) {
+//				// TODO: handle exception
+//			}
+//		}
+//	}
 	
 	
 	
@@ -500,131 +502,17 @@ public class SQLExecutor
 	
 	
 	
-	public static void execute(String dbname, String sql, List beans,int action) throws SQLException
-	{
-		execute(dbname, sql, beans,false,action,null);
-	}
+//	public static void execute(String dbname, String sql, List beans,int action) throws SQLException
+//	{
+//		execute(dbname, sql, beans,false,action,null);
+//	}
+//	
+//	public static void execute(String dbname, String sql, List beans,int action,GetCUDResult getCUDResult) throws SQLException
+//	{
+//		execute(dbname, sql, beans,false,action,getCUDResult);
+//	}
 	
-	public static void execute(String dbname, String sql, List beans,int action,GetCUDResult getCUDResult) throws SQLException
-	{
-		execute(dbname, sql, beans,false,action,getCUDResult);
-	}
-	
-	protected static Object execute(String dbname, String sql,int action, Object... fields) throws SQLException {
-//		if(fields == null || fields.length == 0)
-//			return null;
-		PreparedDBUtil dbutil = new PreparedDBUtil();
-		if(action == PreparedDBUtil.INSERT)
-			dbutil.preparedInsert(dbname, sql);
-		else if(action == PreparedDBUtil.DELETE)
-			dbutil.preparedDelete(dbname, sql);
-		else if(action == PreparedDBUtil.UPDATE)
-			dbutil.preparedUpdate(dbname, sql);
-		else 
-			dbutil.preparedUpdate(dbname, sql);
-		if(fields != null && fields.length > 0)
-		{
-			for(int i = 0; i < fields.length ; i ++)
-			{
-				
-				Object field = fields[i];
-				dbutil.setObject(i + 1, field);
-			}
-		}
-		
-		
-		
-		return dbutil.executePrepared();	
-	}
-	
-	protected static void executeBatch(String dbname, String sql,int action, Object fields_) throws SQLException {
-//		if(fields == null || fields.length == 0)
-//			return ;
-		PreparedDBUtil dbutil = new PreparedDBUtil();
-		if(action == PreparedDBUtil.INSERT)
-			dbutil.preparedInsert(dbname, sql);
-		else if(action == PreparedDBUtil.DELETE)
-			dbutil.preparedDelete(dbname, sql);
-		else if(action == PreparedDBUtil.UPDATE)
-			dbutil.preparedUpdate(dbname, sql);
-		else 
-			dbutil.preparedUpdate(dbname, sql);
-		if(fields_ != null )
-		{
-			Class componetType = fields_.getClass().getComponentType();
-			if(componetType == int.class)
-			{
-				int[] fields = (int[])fields_;
-				if(fields != null && fields.length > 0)
-				{
-					
-					{
-						for(int i = 0; i < fields.length ; i ++)
-						{
-							
-							int field = fields[i];
-							dbutil.setInt(1, field);
-							dbutil.addPreparedBatch();
-							
-						}
-					}
-				}
-			}
-			else if(componetType == long.class)
-			{
-				long[] fields = (long[])fields_;
-				if(fields != null && fields.length > 0)
-				{
-					
-					{
-						for(int i = 0; i < fields.length ; i ++)
-						{
-							
-							long field = fields[i];
-							dbutil.setLong(1, field);
-							dbutil.addPreparedBatch();
-							
-						}
-					}
-				}
-			}
-			else if(componetType == String.class)
-			{
-				String[] fields = (String[])fields_;
-				if(fields != null && fields.length > 0)
-				{
-					
-					{
-						for(int i = 0; i < fields.length ; i ++)
-						{
-							
-							String field = fields[i];
-							dbutil.setString(1, field);
-							dbutil.addPreparedBatch();
-							
-						}
-					}
-				}
-			}
-			else if(componetType == short.class)
-			{
-				short[] fields = (short[])fields_;
-				if(fields != null && fields.length > 0)
-				{
-					for(int i = 0; i < fields.length ; i ++)
-					{	
-						short field = fields[i];
-						dbutil.setShort(1, field);
-						dbutil.addPreparedBatch();
-					}
-				}
-			}
-		}
-		
-		
-		
-		dbutil.executePreparedBatch();	
-	}
+//	
 	
 	
 	public static Object update( String sql, Object... fields) throws SQLException {

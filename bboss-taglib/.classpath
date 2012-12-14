@@ -31,5 +31,6 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/bboss-util"/>
 	<classpathentry kind="lib" path="lib/bboss-mvc.jar" sourcepath="/bboss-mvc"/>
 	<classpathentry kind="lib" path="lib/frameworkset-pool.jar"/>
+	<classpathentry kind="lib" path="lib/bboss-velocity.jar"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>

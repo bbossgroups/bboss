@@ -185,10 +185,11 @@ public class SQLParams
         }
         if(realParams == null)
         {
+        	SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,true,true);
         	if(this.pretoken.equals("#\\[") && this.endtoken.equals("\\]"))
-        		buildParamsByVariableParser(new SQLInfo(sql,true,true),null,dbname,(NewSQLInfo)null);
+        		buildParamsByVariableParser(sqlinfo,null,dbname,(NewSQLInfo)null);
         	else
-        		buildParamsByRegex( new SQLInfo(sql,true,true),null,dbname);
+        		buildParamsByRegex( sqlinfo,null,dbname);
             
         }
         
@@ -242,17 +243,20 @@ public class SQLParams
         {
         	if(totalsizesql == null)
         	{
+        		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,true,true);
 	        	if(this.pretoken.equals("#\\[") && this.endtoken.equals("\\]"))
-	        		buildParamsByVariableParser(new SQLInfo(sql,true,true),null,dbname,(NewSQLInfo)null);
+	        		buildParamsByVariableParser(sqlinfo,null,dbname,(NewSQLInfo)null);
 	        	else
-	        		buildParamsByRegex( new SQLInfo(sql,true,true),null,dbname);
+	        		buildParamsByRegex( sqlinfo,null,dbname);
         	}
         	else
         	{
+        		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,true,true);
+        		SQLInfo totalsizesqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(totalsizesql,true,true);
         		if(this.pretoken.equals("#\\[") && this.endtoken.equals("\\]"))
-	        		buildParamsByVariableParser(new SQLInfo(sql,true,true),new SQLInfo(totalsizesql,true,true),dbname,(NewSQLInfo)null);
+	        		buildParamsByVariableParser(sqlinfo,totalsizesqlinfo,dbname,(NewSQLInfo)null);
 	        	else
-	        		buildParamsByRegex( new SQLInfo(sql,true,true),new SQLInfo(totalsizesql,true,true),dbname);
+	        		buildParamsByRegex( sqlinfo,totalsizesqlinfo,dbname);
         	}
             
         }
@@ -438,10 +442,20 @@ public class SQLParams
 	    	VelocityContext vcontext = null;
 	    	if(sqlinfo.istpl())
 	    	{
-		    	vcontext = buildVelocityContext();//一个context是否可以被同时用于多次运算呢？
-		    	StringWriter sw = new StringWriter();
-		       sqlinfo.getSqltpl().merge(vcontext,sw);
-		       sql = sw.toString();
+	    		sqlinfo.getSqltpl().process();//识别sql语句是不是真正的velocity sql模板
+	    		if(sqlinfo.istpl())
+	    		{
+	    			vcontext = buildVelocityContext();//一个context是否可以被同时用于多次运算呢？
+			    	
+			    	StringWriter sw = new StringWriter();
+			       sqlinfo.getSqltpl().merge(vcontext,sw);
+			       sql = sw.toString();
+	    		}
+	    		else
+	    		{
+	    			sql = sqlinfo.getSql();
+	    		}
+		    	
 	    	}
 	    	else
 	    	{
@@ -1278,7 +1292,8 @@ public class SQLParams
 		return oldsql.getSql();
 	}
 	public void setOldsql(String oldsql) {
-		this.oldsql = new SQLInfo(oldsql,true,true);
+		
+		this.oldsql = SQLUtil.getGlobalSQLUtil().getSQLInfo(oldsql,true,true);
 	}
 	public void setOldsql(SQLInfo oldsql) {
 		this.oldsql = oldsql;

@@ -47,6 +47,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.frameworkset.persitent.util.SQLInfo;
+import org.frameworkset.persitent.util.SQLUtil;
 import org.frameworkset.util.BigFile;
 
 import com.frameworkset.common.poolman.NewSQLInfo;
@@ -3177,7 +3178,7 @@ public class PreparedDBUtil extends DBUtil {
 	 */
 	public void preparedSelect(String prepareDBName, String sql, long offset,
 			int pagesize, String oraclerownum,long totalsize) throws SQLException {
-		preparedSelect( prepareDBName, new SQLInfo( sql,false,false), offset,
+		preparedSelect( prepareDBName, SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,false,false), offset,
 				pagesize, oraclerownum,totalsize);
 	}
 	
@@ -3205,8 +3206,8 @@ public class PreparedDBUtil extends DBUtil {
 	 */
 	public void preparedSelectWithTotalsizesql(String prepareDBName, String sql, long offset,
 			int pagesize, String oraclerownum,String totalsizesql) throws SQLException {
-		preparedSelectWithTotalsizesql(prepareDBName, new SQLInfo( sql,false,false), offset,
-				pagesize, oraclerownum,new SQLInfo( totalsizesql,false,false));
+		preparedSelectWithTotalsizesql(prepareDBName, SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,false,false), offset,
+				pagesize, oraclerownum,SQLUtil.getGlobalSQLUtil().getSQLInfo(totalsizesql,false,false));
 	}
 	
 	/**

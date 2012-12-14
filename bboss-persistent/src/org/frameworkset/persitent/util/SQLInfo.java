@@ -58,6 +58,10 @@ public class SQLInfo {
 	{
 		return this.istpl;
 	}
+	public void setIstpl(boolean istpl)
+	{
+		this.istpl = istpl;
+	}
 	public boolean multiparser()
 	{
 		return multiparser;

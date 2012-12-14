@@ -24,8 +24,6 @@ import java.io.Writer;
 import java.util.List;
 import java.util.Map;
 
-import com.frameworkset.velocity.BBossVelocityUtil;
-
 import bboss.org.apache.velocity.VelocityContext;
 import bboss.org.apache.velocity.context.Context;
 import bboss.org.apache.velocity.context.InternalContextAdapterImpl;
@@ -38,9 +36,13 @@ import bboss.org.apache.velocity.runtime.RuntimeConstants;
 import bboss.org.apache.velocity.runtime.directive.Scope;
 import bboss.org.apache.velocity.runtime.directive.StopCommand;
 import bboss.org.apache.velocity.runtime.parser.ParseException;
+import bboss.org.apache.velocity.runtime.parser.node.ASTText;
+import bboss.org.apache.velocity.runtime.parser.node.Node;
 import bboss.org.apache.velocity.runtime.parser.node.SimpleNode;
 import bboss.org.apache.velocity.runtime.resource.Resource;
 import bboss.org.apache.velocity.runtime.resource.ResourceManager;
+
+import com.frameworkset.velocity.BBossVelocityUtil;
 
 /**
  * <p> SQLTemplate.java</p>
@@ -76,7 +78,35 @@ public class SQLTemplate extends Resource
         this.setName(sqlinfo.getSqlname());
         setType(ResourceManager.RESOURCE_SQL);
     }
-
+    /**
+     * 根据解析出的语法结构确定sql语句是否是velocity模板
+     * 如果不是则重置sqlinfo的istpl属性，相关的缓存就可以使用sqlname来作为key
+     * 同时避免每次都对token进行拼接，提升系统性能
+     */
+    private void rechecksqlistpl()
+    {
+    	if(data != null)
+    	{
+    		Node[] childrens = ((SimpleNode)data).getChildren();
+    		if(childrens != null && childrens.length > 0)
+    		{
+    			boolean switchcase = true;
+    			for(Node node:childrens)
+    			{
+    				if(!(node instanceof ASTText))
+    				{
+    					switchcase = false;
+    					break;
+    				}
+    			}
+    			if(switchcase)
+    			{
+    				this.sqlinfo.setIstpl(false);
+    			}
+    		}
+    		
+    	}
+    }
     /**
      *  gets the named resource as a stream, parses and inits
      *
@@ -137,6 +167,11 @@ public class SQLTemplate extends Resource
 	                data = rsvc.parse( br, name);
 	                initDocument();
 	                processed = true;
+	                try {
+						rechecksqlistpl();
+					} catch (Exception e) {
+						
+					}
 	                return true;
 	            }
 	            

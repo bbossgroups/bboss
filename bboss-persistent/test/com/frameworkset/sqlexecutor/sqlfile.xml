@@ -30,38 +30,14 @@
 					#if($id != -1 && $id != 0) and id = #[id] #end  ]]>
 	</property>
 
-	<property name="updatesqltemplate" istpl="false" mode="native"><![CDATA[update LISTBEAN  set FIELDNAME = #[fieldName] where id = #[id] ]]>
+	<property name="updatesqltemplate"><![CDATA[update LISTBEAN  set FIELDNAME = #[fieldName] where id = #[id] ]]>
 	</property>
 
-	<property name="queryFieldWithSQLParams" istpl="false" mode="native"><![CDATA[select count(1)  from LISTBEAN ]]>
+	<property name="queryFieldWithSQLParams"><![CDATA[select count(1)  from LISTBEAN ]]>
 	</property>
-	<property name="testsqlinfo"  istpl="true"><![CDATA[select * from TD_APP_BOM where 1=1 
-			#if($bm && !$bm.equals(""))
-				and bm <> #[bm]
-			#end
-			#if($app_name_en && !$app_name_en.equals(""))
-				and app_name_en like #[app_name_en]
-			#end
-			#if($app_name && !$app_name.equals(""))
-				and app_name like #[app_name]
-			#end
-			#if($soft_level && !$soft_level.equals(""))
-				and soft_level=#[soft_level]
-			#end
-			#if($state && !$state.equals(""))
-				and state=#[state]
-			#end
-			#if($rd_type && !$rd_type.equals(""))
-				and rd_type=#[rd_type]
-			#end
-			#if($sortKey && !$sortKey.equals(""))
-			  	order by $sortKey 
-			  	#if($sortDESC )
-				  	desc
-				#else
-				 	asc
-				#end	
-			#else
-			 	order by bm 
-			#end]]></property>
+	<!--
+		属性说明：istpl="true" multiparser="false"
+		istpl 标识sql语句中是否有velocity模板引擎语法，如果有则必须设置为true，默认为true
+	-->
+	<property name="testsqlinfo"  istpl="true" multiparser="false"><![CDATA[select * from TD_APP_BOM where 1=1 ]]></property>
 </properties>
