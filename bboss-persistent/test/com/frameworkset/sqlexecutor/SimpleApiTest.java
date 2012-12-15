@@ -908,11 +908,11 @@ public class SimpleApiTest {
 	public @Test void testReturnObject() throws SQLException
 	{
 		Demo demo = new Demo();
-		demo.setId("aaa");
 		demo.setName("name");
 		GetCUDResult getCUDResult = new GetCUDResult();  
 		SQLExecutor.deleteBean("delete from demo1 where id=#[id]", demo,getCUDResult);
-		SQLExecutor.insertBean("insert into demo1(id,name) values(#[id],#[name])", demo,getCUDResult);
+		SQLExecutor.insertBean("insert into demo1(name) values(#[name])", demo,getCUDResult);
+		demo.setId(((Long)(getCUDResult.getKeys())).intValue());
 		demo.setName("newname");
 		SQLExecutor.updateBean("update demo1 set name=#[name] where id=#[id]", demo,getCUDResult);
 		System.out.println();

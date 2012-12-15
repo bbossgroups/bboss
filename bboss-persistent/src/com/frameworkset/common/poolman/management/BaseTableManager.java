@@ -81,13 +81,13 @@ public abstract class BaseTableManager {
 				String table_name = rs.getString("table_name").trim();
 				if(trace.containsKey(table_name.toLowerCase()))
 				{
-					System.out.println("警告：tableinfo表中存在多条【" + table_name + "】的主键信息,只能保持一条记录，否则会影响与该表相关的业务的处理.") ;
+					log.info("警告：tableinfo表中存在多条【" + table_name + "】的主键信息,只能保持一条记录，否则会影响与该表相关的业务的处理.") ;
 				}
 				else
 				{
 					trace.put(table_name.toLowerCase(), token);
 				}
-				log.debug("    load table[" + table_name
+				log.info("    load table[" + table_name
 						+ "] information.......");
 //				System.out.println("    load table[" + table_name
 //						+ "] information.......");
@@ -186,7 +186,7 @@ public abstract class BaseTableManager {
 			}
 			return keyCache;
 		} catch (Exception e) {
-			log.warn("Load table infomation failed! " + e.getMessage()  + ". Please check table [tableinfo] in your database! ");
+			log.info("Load table infomation failed! " + e.getMessage()  + ". Please check table [tableinfo] in your database! ");
 			return null;
 		}
 
@@ -302,7 +302,7 @@ public abstract class BaseTableManager {
 
 			if (rs.next()) {
 				String table_name = rs.getString("table_name").trim();
-				log.debug("    load table[" + table_name
+				log.info("    load table[" + table_name
 						+ "] information.......");
 				String table_id_name = rs.getString("table_id_name").trim();
 				int table_id_increment = rs.getInt("table_id_increment");
@@ -470,9 +470,9 @@ public abstract class BaseTableManager {
 				}
 			} catch (Exception e) {
 				// 获取表的主键信息失败时自动跳过本表主键信息初始化
-				log.error("load pool[" + poolName
+				log.info("load pool[" + poolName
 						+ "] tables information failed!\r\nerror message:\r\n"
-						+ e.getMessage(),e);
+						,e);
 				// e.printStackTrace();
 				// continue;
 				// throw e;

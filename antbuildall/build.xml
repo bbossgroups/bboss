@@ -199,6 +199,14 @@
 		</antcall>
 	</target>
 	
+	<target name="build-bboss-velocity" description="build bboss velocity project">
+		<echo>build bboss velocity project</echo>
+		<ant dir="${bboss-velocity}" />
+		<echo>update bboss-velocity.jar</echo>
+		<antcall target="distrib-bboss-velocity-jars">
+		</antcall>
+	</target>
+	
 	<target name="build-bboss-soa" description="build bboss soa project">
 			<echo>build bboss soa project</echo>
 			<ant dir="${bboss-soa}" />
@@ -221,7 +229,7 @@
 		</target>
 
 	<target name="distrib-bboss-util-jars" description="distrib-bboss-util-jars">
-		<for list="${bbossupload-lib},${demoproject-lib},${active-ext-lib},${bboss-aop-lib},${bbossevent-lib},${cms_baseline-lib},${bboss-persistent-lib},${bboss-taglib-lib},${kettle-lib},${portallib},${casserverlib},${monitorconsole-lib},${monitorconsole-compilelib},${bboss-mvc-lib},${creatoresb-lib},${bboss-soa-lib},${bboss-clientproxy-lib},${mvc-lib},${persistent-lib},${xmlrequest-lib},${xmlserializable-lib},${bboss-plugin-hibernate-lib}" param="destdir">
+		<for list="${bbossupload-lib},${demoproject-lib},${active-ext-lib},${bboss-aop-lib},${bbossevent-lib},${cms_baseline-lib},${bboss-persistent-lib},${bboss-taglib-lib},${kettle-lib},${portallib},${casserverlib},${monitorconsole-lib},${monitorconsole-compilelib},${bboss-mvc-lib},${creatoresb-lib},${bboss-soa-lib},${bboss-clientproxy-lib},${mvc-lib},${persistent-lib},${xmlrequest-lib},${xmlserializable-lib},${bboss-plugin-hibernate-lib},${bboss-velocity-lib}" param="destdir">
 			<sequential>
 				<echo>@{destdir}-------------------------------</echo>
 				<antcall target="svn-update-procedure">
@@ -232,6 +240,21 @@
 			</sequential>
 		</for>
 	</target>
+	
+	<target name="distrib-bboss-velocity-jars" description="distrib-bboss-velocity-jars">
+		<for list="${bbossupload-lib},${demoproject-lib},${active-ext-lib},${bboss-aop-lib},${bbossevent-lib},${cms_baseline-lib},${bboss-persistent-lib},${bboss-taglib-lib},${kettle-lib},${portallib},${casserverlib},${monitorconsole-lib},${monitorconsole-compilelib},${bboss-mvc-lib},${creatoresb-lib},${bboss-soa-lib},${bboss-clientproxy-lib},${mvc-lib},${persistent-lib},${xmlrequest-lib},${xmlserializable-lib},${bboss-plugin-hibernate-lib}" param="destdir">
+			<sequential>
+				<echo>@{destdir}-------------------------------</echo>
+				<antcall target="svn-update-procedure">
+					<param name="sourcedir" value="${bboss-velocity}/distrib" />
+					<param name="filedir" value="@{destdir}" />
+					<param name="files" value="bboss-velocity.jar" />
+				</antcall>
+			</sequential>
+		</for>
+	</target>
+	
+	
 	
 	<target name="distrib-bboss-soa-jars" description="distrib-bboss-soa-jars">
 			<for list="${demoproject-lib},${portallib},${casserverlib},${active-ext-lib},${bboss-aop-lib},${cms_baseline-lib},${bboss-taglib-lib},${kettle-lib},${monitorconsole-lib},${monitorconsole-compilelib},${bboss-mvc-lib},${creatoresb-lib},${bboss-persistent-lib},${bboss-clientproxy-lib},${xmlserializable-lib}" param="destdir">
@@ -360,7 +383,7 @@ bbossaop<-cas server [bboss-aop.jar]
 			</sequential>
 		</for>
 
-		<for list="${bboss-soa-lib},${bboss-persistent-lib},${bbossupload-lib},${bboss-taglib-lib},${bboss-util-lib},${portallib},${casserverlib},${mvc-lib},${xmlrequest-lib},${xmlserializable-lib},${persistent-lib},${bboss-plugin-hibernate-lib}" param="destdir">
+		<for list="${bboss-soa-lib},${bboss-persistent-lib},${bbossupload-lib},${bboss-taglib-lib},${bboss-util-lib},${portallib},${casserverlib},${mvc-lib},${xmlrequest-lib},${xmlserializable-lib},${persistent-lib},${bboss-plugin-hibernate-lib},${bboss-velocity-lib}" param="destdir">
 			<sequential>
 				<echo>@{destdir}-------------------------------</echo>
 				<antcall target="svn-update-procedure">

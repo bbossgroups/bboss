@@ -322,13 +322,13 @@ function loadPageContent(pageurl, containerid, selector) {
 	containerid = convertValue(containerid, true);	
 	if (selector && selector != "") {
 		$("#" + containerid).load(pageurl + " #" + selector,function(){
-			setTable_grayCss();
+			//setTable_grayCss();
 			if($.parser)	$.parser.parse("#" + containerid);
 		});
 		
 	} else {
 		$("#" + containerid).load(pageurl,function(){
-			setTable_grayCss();
+			//setTable_grayCss();
 			if($.parser)	$.parser.parse("#" + containerid);
 		});
 	}

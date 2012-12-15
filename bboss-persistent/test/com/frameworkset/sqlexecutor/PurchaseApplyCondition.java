@@ -16,18 +16,19 @@
 package com.frameworkset.sqlexecutor;
 
 public class PurchaseApplyCondition {
-	private String material_code;
-	private String material_name_cn;
-	public String getMaterial_code() {
-		return material_code;
+	private String id;
+	private String bm;
+	public String getId() {
+		return id;
 	}
-	public void setMaterial_code(String material_code) {
-		this.material_code = material_code;
+	public void setId(String id) {
+		this.id = id;
 	}
-	public String getMaterial_name_cn() {
-		return material_name_cn;
+	public String getBm() {
+		return bm;
 	}
-	public void setMaterial_name_cn(String material_name_cn) {
-		this.material_name_cn = material_name_cn;
+	public void setBm(String bm) {
+		this.bm = bm;
 	}
+	
 }
