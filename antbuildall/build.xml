@@ -981,6 +981,7 @@ bbossaop<-cas server [bboss-aop.jar]
 		<antcall target="build-bboss-aop-only"/>
 		<antcall target="build-persistent"/>
 		<antcall target="build-bboss-soa"/>
+		<antcall target="build-bboss-velocity"/>
 		<antcall target="build-bboss-taglib-only"/>
 		<antcall target="build-bboss-mvc-only"/>
 		<antcall target="build-bboss-event-only"/>
@@ -993,6 +994,7 @@ bbossaop<-cas server [bboss-aop.jar]
 		<antcall target="build-bboss-aop-only"/>
 		<antcall target="build-persistent-jdk6"/>
 		<antcall target="build-bboss-soa"/>
+		<antcall target="build-bboss-velocity"/>
 		<antcall target="build-bboss-taglib-only"/>
 		<antcall target="build-bboss-mvc-only"/>
 		<antcall target="build-bboss-event-only"/>
@@ -1012,6 +1014,7 @@ bbossaop<-cas server [bboss-aop.jar]
 			<fileset dir="${bboss-mvc}/distrib" includes="*.jar,*.war" />
 			<fileset dir="${bbossevent}/distrib" includes="*.jar" />
 			<fileset dir="${bboss-aop}/distrib" includes="*.jar" />
+			<fileset dir="${bboss-velocity}/distrib" includes="*.jar" />
 		</copy>
 	</target>
 		
