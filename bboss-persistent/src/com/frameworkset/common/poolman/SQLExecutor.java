@@ -270,7 +270,7 @@ public class SQLExecutor
 		}
     	batchsqlparams.add(this.sqlparams);
 //		batchparamsIDXBySQL.put(Params.prepareselect_sql, Params);
-		String old = this.sqlparams.getOldsql();
+		SQLInfo old = this.sqlparams.getOldsql();
 		String oldendtoken = this.sqlparams.getEndtoken();
 		String oldpretoken = this.sqlparams.getPretoken();
 		

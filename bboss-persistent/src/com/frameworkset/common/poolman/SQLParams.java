@@ -1323,8 +1323,8 @@ public class SQLParams
     {
         return sqlparams != null ?this.sqlparams.size():0;
     }
-	public String getOldsql() {
-		return oldsql.getSql();
+	public SQLInfo getOldsql() {
+		return oldsql;
 	}
 	public void setOldsql(String oldsql) {
 		

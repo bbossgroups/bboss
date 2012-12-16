@@ -1375,8 +1375,8 @@ public class Pro<V> extends BaseTXManager implements Comparable<V>, BeanInf {
 				return Boolean.parseBoolean(ret.toString().toLowerCase());
 			return false;
 		} else {
-			log.info("Get Extend Attribute failed:name = " + name
-					+ " not exist in property[" + this.getName() + "]");
+//			log.info("Get Extend Attribute failed:name = " + name
+//					+ " not exist in property[" + this.getName() + "]");
 			return false;
 		}
 
@@ -1389,14 +1389,14 @@ public class Pro<V> extends BaseTXManager implements Comparable<V>, BeanInf {
 			ret = this.getExtendsAttributes().get(name);
 			if (ret != null)
 				return Boolean.parseBoolean(ret.toString().toLowerCase());
-			log.info("Get Extend Attribute failed:name = " + name
-					+ " not exist in property[" + this.getName()
-					+ "] return default value: " + defaultValue);
+//			log.info("Get Extend Attribute failed:name = " + name
+//					+ " not exist in property[" + this.getName()
+//					+ "] return default value: " + defaultValue);
 			return defaultValue;
 		} else {
-			log.info("Get Extend Attribute failed:name = " + name
-					+ " not exist in property[" + this.getName()
-					+ "] return default value: " + defaultValue);
+//			log.info("Get Extend Attribute failed:name = " + name
+//					+ " not exist in property[" + this.getName()
+//					+ "] return default value: " + defaultValue);
 			return defaultValue;
 		}
 
@@ -1417,8 +1417,8 @@ public class Pro<V> extends BaseTXManager implements Comparable<V>, BeanInf {
 		if (getExtendsAttributes() != null)
 			return this.getExtendsAttributes().get(name);
 		else {
-			log.info("Get Extend Attribute failed:name = " + name
-					+ " not exist in property[" + this.getName() + "]");
+//			log.info("Get Extend Attribute failed:name = " + name
+//					+ " not exist in property[" + this.getName() + "]");
 			return null;
 		}
 
@@ -1430,8 +1430,8 @@ public class Pro<V> extends BaseTXManager implements Comparable<V>, BeanInf {
 			Object value = this.getExtendsAttributes().get(name);
 			return value != null ? value : defaultValue;
 		} else {
-			log.info("Get Extend Attribute failed:name = " + name
-					+ " not exist in property[" + this.getName() + "]");
+//			log.info("Get Extend Attribute failed:name = " + name
+//					+ " not exist in property[" + this.getName() + "]");
 			return defaultValue;
 		}
 
@@ -1446,8 +1446,8 @@ public class Pro<V> extends BaseTXManager implements Comparable<V>, BeanInf {
 				return Integer.parseInt(ret.toString());
 			return -1;
 		} else {
-			log.info("Get Extend Attribute failed:name = " + name
-					+ " not exist in property[" + this.getName() + "]");
+//			log.info("Get Extend Attribute failed:name = " + name
+//					+ " not exist in property[" + this.getName() + "]");
 			return -1;
 		}
 
@@ -1462,8 +1462,8 @@ public class Pro<V> extends BaseTXManager implements Comparable<V>, BeanInf {
 				return Integer.parseInt(ret.toString());
 			return defaultValue;
 		} else {
-			log.info("Get Extend Attribute failed:name = " + name
-					+ " not exist in property[" + this.getName() + "]");
+//			log.info("Get Extend Attribute failed:name = " + name
+//					+ " not exist in property[" + this.getName() + "]");
 			return defaultValue;
 		}
 
@@ -1478,8 +1478,8 @@ public class Pro<V> extends BaseTXManager implements Comparable<V>, BeanInf {
 				return Long.parseLong(ret.toString());
 			return -1;
 		} else {
-			log.info("Get Extend Attribute failed:name = " + name
-					+ " not exist in property[" + this.getName() + "]");
+//			log.info("Get Extend Attribute failed:name = " + name
+//					+ " not exist in property[" + this.getName() + "]");
 			return -1;
 		}
 	}
@@ -1493,8 +1493,8 @@ public class Pro<V> extends BaseTXManager implements Comparable<V>, BeanInf {
 				return Long.parseLong(ret.toString());
 			return defaultValue;
 		} else {
-			log.info("Get Extend Attribute failed:name = " + name
-					+ " not exist in property[" + this.getName() + "]");
+//			log.info("Get Extend Attribute failed:name = " + name
+//					+ " not exist in property[" + this.getName() + "]");
 			return defaultValue;
 		}
 	}
