@@ -122,7 +122,7 @@ public class SQLParams
     public String toString()
     {
         StringBuffer ret = new StringBuffer();
-        ret.append("sql{").append(this.newsql).append("},params");
+        ret.append("sql{").append(this.newsql.getNewsql()).append("},params");
         if(sqlparams != null && sqlparams.size() > 0)
         {
             ret.append("{");
@@ -571,7 +571,7 @@ public class SQLParams
         	JDBCPool pool = SQLManager.getInstance().getPool(dbname);
         	if(pool != null && pool.showsql())
         	{
-        		log.info("SQL INFO:" + this.toString() );
+        		log.debug("SQL INFO:" + this.toString() );
         	}
         }
         

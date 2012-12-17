@@ -22,6 +22,12 @@ bboss-persistent<-cas server [frameworkset-pool.jar]
 
 to do list:
 无
+#######update function list since bbossgroups-3.6.2 begin###########
+o 动态sql解析优化，扩展velocity模板引擎
+o 存储过程内部处理机制优化，解决名称参数无法正确获取到输出参数的问题
+o 动态sql改造后，批处理功能问题修复
+o 数据库处理标签库，批处理参数标签对timestamp和date类型默认格式处理问题修复
+
 #######update function list since bbossgroups-3.6 begin###########
 o 采用多个proxool数据源时，alias属性必须保持唯一性
 o 扩展分页查询功能,3.6.0之后的版本ConfigSQLExecutor/SQLExecutor/PreparedDBUtil三个持久层组件中增加了两组分页接口，

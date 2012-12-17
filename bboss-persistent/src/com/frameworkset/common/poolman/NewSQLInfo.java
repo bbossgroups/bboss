@@ -51,6 +51,18 @@ public class NewSQLInfo
 		this.newsql = this.oldsql.getSql();
 		 
 	}
+	
+	public boolean equals(Object other)
+	{
+		if(other == null)
+			return false;
+		if(other instanceof NewSQLInfo)
+		{
+			return ((NewSQLInfo)other).getNewsql().equals(this.newsql);
+		}
+		else
+			return false;
+	}
 	private String newsql = null;
     private String newtotalsizesql ;
     private SQLInfo oldsql;

@@ -230,12 +230,12 @@
 		<url-pattern>/cxfservices/*</url-pattern>
 	</servlet-mapping>
 
-	<servlet>
+<!--	<servlet>
 		<display-name>rmiload</display-name>
 		<servlet-name>rmiload</servlet-name>
 		<servlet-class>org.frameworkset.spi.remote.rmi.RMIRegistServlet</servlet-class>
 		<load-on-startup>2</load-on-startup>
-	</servlet>
+	</servlet>-->
 
 	<servlet>
 		<display-name>RPCHttpServLet</display-name>

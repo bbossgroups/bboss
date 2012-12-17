@@ -91,6 +91,7 @@ public abstract class DB implements Serializable, IDMethod,Platform
 	public static final String NULL_SCHEMA = "NULL_SCHEMA";
     /** date format used in getDateString() */
     protected String date_format = "yyyy-MM-dd HH:mm:ss";
+    private static String java_date_format = "yyyy-MM-dd HH:mm:ss";
     protected String FORMART_YEAR = "yyyy";
     protected String FORMART_MONTH = "MM";
     protected String FORMART_DAY = "dd";
@@ -721,6 +722,10 @@ public abstract class DB implements Serializable, IDMethod,Platform
 	    {
 	        return this.date_format;
 	    }
+	    public String getJavaDateFormat()
+	    {
+	        return java_date_format;
+	    }
 	    
 	    public String to_char(String date,String format)
 	    {
@@ -739,7 +744,7 @@ public abstract class DB implements Serializable, IDMethod,Platform
 	    {
 	        if(format == null || format.equals(""))
 	        {
-	            format = this.getDateFormat();
+	            format = this.getJavaDateFormat();
 	        }
 	        SimpleDateFormat f = new SimpleDateFormat(format);
 	        Date _date = f.parse(date);
@@ -751,7 +756,7 @@ public abstract class DB implements Serializable, IDMethod,Platform
         {
             if(format == null || format.equals(""))
             {
-                format = this.getDateFormat();
+                format = this.getJavaDateFormat();
             }
             SimpleDateFormat f = new SimpleDateFormat(format);
             Date date = f.parse(timestamp);

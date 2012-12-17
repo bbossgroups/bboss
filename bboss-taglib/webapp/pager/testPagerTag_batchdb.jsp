@@ -9,7 +9,7 @@
 -->
 <%
 	
-
+    String insert = "insert into sqltest(batch,object_id) values('0','1')";
 	String sql = "update sqltest set batch='1' where object_id=1";
 	String sql1 = "update sqltest set batch='2' where object_id=1";
 	String sql2 = "update sqltest set batch='3' where object_id=1";
@@ -23,8 +23,9 @@
 	<body>
 		<table>
 			<pg:batchutil dbname="bspf" type="common">
+				<pg:statement sql="<%=insert%>" />
 				<pg:statement sql="<%=sql %>" />
-					<pg:statement sql="<%=sql1 %>" />
+				<pg:statement sql="<%=sql1 %>" />
 				<pg:statement sql="<%=sql2 %>" />				
 				<pg:statement sql="<%=sql3 %>" />
 				<pg:statement sql="<%=sql4 %>" />

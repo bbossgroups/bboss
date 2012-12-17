@@ -29,7 +29,8 @@ public class TestPreparedBatch {
 	/**
 	 * 测试单条语句
 	 */
-	public static void testSingleSTMTBatch()
+	@Test
+	public  void testSingleSTMTBatch()
 	{
 		PreparedDBUtil pre = new PreparedDBUtil();
 		try {
@@ -79,7 +80,7 @@ public class TestPreparedBatch {
 			for(int i = 10; i < 20; i ++)
 			{
 				pre.setString(1, "" +i);
-				pre.setString(2, "testMutiSTMTBatch()" + i);
+				pre.setString(2, "gggtestMutiSTMTBatch()" + i);
 				pre.addPreparedBatch();
 			}
 			
@@ -88,22 +89,18 @@ public class TestPreparedBatch {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			try
-            {
-                tm.rollback();
-            }
-            catch (RollbackException e1)
-            {
-                // TODO Auto-generated catch block
-                e1.printStackTrace();
-            }
 		}
+		finally
+		{
+			tm.release();
+		}
+		
 	}
 	
 	/**
 	 * 测试多条语句,并且通过pre.setBatchOptimize(true);方法进行优化执行预编译操作
 	 */
-	public static void testOptimizeMutiSTMTBatch()
+	public @Test void testOptimizeMutiSTMTBatch()
 	{
 		PreparedDBUtil pre = new PreparedDBUtil();
 		

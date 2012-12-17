@@ -613,7 +613,7 @@ public class ResultMap {
 								.getValueFromCallableStatement(cstmt,
 										_param.parameterName, _param.sqlType,
 										stmtInfo.getDbname());
-						data.put(_param.parameterName.toLowerCase(), object);
+						data.put(_param.parameterName, object);
 					} else {
 						Object object = ValueExchange
 								.getValueFromCallableStatement(cstmt,
@@ -637,7 +637,7 @@ public class ResultMap {
 		Record data = null;
 		if (outparams.outParams != null && outparams.outParams.size() > 0) {
 
-			data = new Record(outparams.outParams.size());
+			data = new CallRecord(outparams.outParams.size());
 			for (int i = 0; outparams.outParams != null
 					&& i < outparams.outParams.size(); i++) {
 				Object param = outparams.outParams.get(i);
@@ -648,7 +648,7 @@ public class ResultMap {
 								.getValueFromCallableStatement(cstmt,
 										_param.parameterName, _param.sqlType,
 										stmtInfo.getDbname());
-						data.put(_param.parameterName.toLowerCase(), object);
+						data.put(_param.parameterName, object);
 					} else {
 						Object object = ValueExchange
 								.getValueFromCallableStatement(cstmt,
@@ -913,7 +913,7 @@ public class ResultMap {
 							SchemaType schemaType = SQLUtil.getSchemaType(stmtInfo
 									.getDbname(), _param.sqlType);
 							record.append("        <column name=\"").append(
-									_param.parameterName.toLowerCase()).append(
+									_param.parameterName).append(
 									"\" type=\"").append(schemaType.getName())
 									.append("\" javatype=\"").append(
 											schemaType.getJavaType()).append("\"")

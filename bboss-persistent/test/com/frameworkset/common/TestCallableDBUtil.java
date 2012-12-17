@@ -4,6 +4,8 @@ import java.sql.SQLException;
 
 import javax.transaction.RollbackException;
 
+import org.junit.Test;
+
 import com.frameworkset.common.poolman.CallableDBUtil;
 import com.frameworkset.common.poolman.PreparedDBUtil;
 import com.frameworkset.common.poolman.Record;
@@ -12,21 +14,23 @@ import com.frameworkset.common.poolman.util.SQLResult;
 import com.frameworkset.orm.transaction.TransactionManager;
 
 public class TestCallableDBUtil {
-	public static void testTest_pWithPositionIndex()
+	public @Test void testTest_pWithPositionIndex()
 	{
 		CallableDBUtil callableDBUtil = new CallableDBUtil();
 		try
 		{
 //			callableDBUtil.execute("{call test_p(1,'ss',3,4)}");
-			callableDBUtil.prepareCallable("{call test_p(?,?,?,?)}");
+			callableDBUtil.prepareCallable("{call test_p(?,?,?,?,?)}");
 			callableDBUtil.setInt(1, 10);
 			callableDBUtil.registerOutParameter(2, java.sql.Types.VARCHAR);
 			callableDBUtil.registerOutParameter(3, java.sql.Types.VARCHAR);
 			callableDBUtil.registerOutParameter(4, java.sql.Types.INTEGER);
+			callableDBUtil.registerOutParameter(5, java.sql.Types.INTEGER);
 			callableDBUtil.executeCallable();
 			System.out.println("name1:" + callableDBUtil.getString(2));
 			System.out.println("name2:" + callableDBUtil.getString(3));
 			System.out.println("test:" + callableDBUtil.getInt(4));
+			System.out.println("nomath:" + callableDBUtil.getInt(5));
 			
 						
 		}
@@ -38,22 +42,23 @@ public class TestCallableDBUtil {
 		
 	}
 	
-	public static void testTest_pWithNameIndex()
+	public @Test void testTest_pWithNameIndex()
 	{
 		CallableDBUtil callableDBUtil = new CallableDBUtil();
 		try
 		{
-			callableDBUtil.prepareCallable("{call test_p(?,?,?,?)}");
+			callableDBUtil.prepareCallable("{call test_p(?,?,?,?,?)}");
 			//不允许的操作: Ordinal binding and Named binding cannot be combined!
 			callableDBUtil.setInt("id", 10);
 			callableDBUtil.registerOutParameter("name", java.sql.Types.VARCHAR);
 			callableDBUtil.registerOutParameter("name1", java.sql.Types.VARCHAR);
 			callableDBUtil.registerOutParameter("test", java.sql.Types.INTEGER);
-			
+			callableDBUtil.registerOutParameter("nomatch", java.sql.Types.INTEGER);
 			callableDBUtil.executeCallable();
 			System.out.println("name1:" + callableDBUtil.getString("name"));
 			System.out.println("name2:" + callableDBUtil.getString("name1"));
 			System.out.println("test:" + callableDBUtil.getInt("test"));
+			System.out.println("nomatch:" + callableDBUtil.getInt("nomatch"));
 					
 		}
 		catch(Exception e)
@@ -64,7 +69,7 @@ public class TestCallableDBUtil {
 		
 	}
 	
-	public static void testTest_pWithNameIndexForXMLString()
+	public @Test void testTest_pWithNameIndexForXMLString()
 	{
 		CallableDBUtil callableDBUtil = new CallableDBUtil();
 		try
@@ -93,17 +98,18 @@ public class TestCallableDBUtil {
 		
 	}
 	
-	public static void testTest_pWithNameIndexForXMLStringRowHandler()
+	public @Test void testTest_pWithNameIndexForXMLStringRowHandler()
 	{
 		CallableDBUtil callableDBUtil = new CallableDBUtil();
 		try
 		{
-			callableDBUtil.prepareCallable("{call test_p(?,?,?,?)}");
+			callableDBUtil.prepareCallable("{call test_p(?,?,?,?,?)}");
 			//不允许的操作: Ordinal binding and Named binding cannot be combined!
 			callableDBUtil.setInt("id", 10);
 			callableDBUtil.registerOutParameter("name", java.sql.Types.VARCHAR);
 			callableDBUtil.registerOutParameter("name1", java.sql.Types.VARCHAR);
 			callableDBUtil.registerOutParameter("test", java.sql.Types.INTEGER);
+			callableDBUtil.registerOutParameter("nomatch", java.sql.Types.INTEGER);
 			String xmlString = callableDBUtil.executeCallableForXML(new com.frameworkset.common.poolman.handle.RowHandler()
 			{
 				/**
@@ -132,7 +138,7 @@ public class TestCallableDBUtil {
 		
 	}
 	
-	public static void testTest_pWithNameIndexForObject()
+	public @Test void testTest_pWithNameIndexForObject()
 	{
 		CallableDBUtil callableDBUtil = new CallableDBUtil();
 		try
@@ -155,7 +161,7 @@ public class TestCallableDBUtil {
 		}		
 	}
 	
-	public static void testoldMethod()
+	public @Test void testoldMethod()
 	{
 		PreparedDBUtil callableDBUtil = new PreparedDBUtil();
 		try {
@@ -168,7 +174,7 @@ public class TestCallableDBUtil {
 		}
 	}
 	
-	public static void testTest_pWithNameIndexForObjectWithRowHandler()
+	public @Test void testTest_pWithNameIndexForObjectWithRowHandler()
 	{
 		CallableDBUtil callableDBUtil = new CallableDBUtil();
 		try
@@ -179,6 +185,7 @@ public class TestCallableDBUtil {
 			callableDBUtil.registerOutParameter("name", java.sql.Types.VARCHAR);
 			callableDBUtil.registerOutParameter("name1", java.sql.Types.VARCHAR);
 			callableDBUtil.registerOutParameter("test", java.sql.Types.INTEGER);
+			callableDBUtil.registerOutParameter("nomatch", java.sql.Types.INTEGER);
 			Test_p tets = (Test_p)callableDBUtil.executeCallableForObject(Test_p.class,new RowHandler(){
 
 				public void handleRow(Object rowValue, Record record) {
@@ -212,9 +219,9 @@ public class TestCallableDBUtil {
 	 * 中的事务就是分离的两个事务。 
 	 * @param i 为0时回滚事务，1时提交事务
 	 */
-	public static void testTest_pWithNameIndexForObjectTx(int i)
+	public @Test void testTest_pWithNameIndexForObjectTx()
 	{
-		
+		int i = 1;
 		TransactionManager tm = new TransactionManager();
 		try
 		{
@@ -226,6 +233,7 @@ public class TestCallableDBUtil {
 			callableDBUtil.registerOutParameter("name", java.sql.Types.VARCHAR);
 			callableDBUtil.registerOutParameter("name1", java.sql.Types.VARCHAR);
 			callableDBUtil.registerOutParameter("test", java.sql.Types.INTEGER);
+			callableDBUtil.registerOutParameter("nomatch", java.sql.Types.INTEGER);
 			Test_p tets = (Test_p)callableDBUtil.executeCallableForObject(Test_p.class);
 			
 			
@@ -287,7 +295,7 @@ public class TestCallableDBUtil {
 //		CallableDBUtil.debugStatus();	
 //		testoldMethod();
 		
-	    testTest_pWithNameIndexForXMLString();
+//	    testTest_pWithNameIndexForXMLString();
 	}
 
 }

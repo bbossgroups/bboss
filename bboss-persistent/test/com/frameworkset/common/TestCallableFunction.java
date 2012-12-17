@@ -2,12 +2,14 @@ package com.frameworkset.common;
 
 import javax.transaction.RollbackException;
 
+import org.junit.Test;
+
 import com.frameworkset.common.poolman.CallableDBUtil;
 import com.frameworkset.common.poolman.Record;
 import com.frameworkset.orm.transaction.TransactionManager;
 
 public class TestCallableFunction {
-	public static void testTest_fWithPositionIndex()
+	public @Test void testTest_fWithPositionIndex()
 	{
 		CallableDBUtil callableDBUtil = new CallableDBUtil();  
 		try
@@ -34,7 +36,7 @@ public class TestCallableFunction {
 	/**
 	 * 执行函数时不能通过命名方式绑定变量
 	 */
-	public static void testTest_fWithNameIndex()
+	public @Test void testTest_fWithNameIndex()
 	{
 		CallableDBUtil callableDBUtil = new CallableDBUtil();
 		try
@@ -58,7 +60,7 @@ public class TestCallableFunction {
 		
 	}
 	
-	public static void testTest_fWithNameIndexForXMLString()
+	public @Test void testTest_fWithNameIndexForXMLString()
 	{
 		CallableDBUtil callableDBUtil = new CallableDBUtil();
 		try
@@ -86,7 +88,7 @@ public class TestCallableFunction {
 	/**
 	 * 对于函数的调用使能使用顺序位置标识来绑定变量
 	 */
-	public static void testTest_fWithNameIndexForXMLStringRowHandler()
+	public @Test void testTest_fWithNameIndexForXMLStringRowHandler()
 	{
 		CallableDBUtil callableDBUtil = new CallableDBUtil();
 		try
@@ -124,7 +126,7 @@ public class TestCallableFunction {
 		
 	}
 	
-	public static void testTest_fWithNameIndexForObject()
+	public @Test void testTest_fWithNameIndexForObject()
 	{
 		CallableDBUtil callableDBUtil = new CallableDBUtil();
 		try
@@ -176,9 +178,9 @@ public class TestCallableFunction {
 	 * 中的事务就是分离的两个事务。 
 	 * @param i 为0时回滚事务，1时提交事务
 	 */
-	public static void testTest_fWithNameIndexForObjectTx(int i)
+	public @Test void testTest_fWithNameIndexForObjectTx()
 	{
-		
+		int i = 1;
 		TransactionManager tm = new TransactionManager();
 		try
 		{
@@ -205,28 +207,27 @@ public class TestCallableFunction {
 		}
 		catch(Exception e)
 		{
-			try {
-				tm.rollback();
-			} catch (RollbackException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+			
 			e.printStackTrace();
-		}		
+		}	
+		finally
+		{
+			tm.release();
+		}
 	}
 	
 	public static void main(String[] args)
 	{
-		System.out.println("1------------------------------------------testTest_fWithNameIndexForObject()");
-		testTest_fWithNameIndexForObject();
-		System.out.println("2------------------------------------------testTest_fWithNameIndexForObjectTx(1)");
-		testTest_fWithNameIndexForObjectTx(1);
-		System.out.println("3------------------------------------------testTest_fWithPositionIndex()");
-		testTest_fWithPositionIndex();
-		System.out.println("4------------------------------------------testTest_fWithNameIndexForXMLString()");
-		testTest_fWithNameIndexForXMLString();
-		System.out.println("5------------------------------------------testTest_fWithNameIndexForXMLStringRowHandler()");
-		testTest_fWithNameIndexForXMLStringRowHandler();
+//		System.out.println("1------------------------------------------testTest_fWithNameIndexForObject()");
+//		testTest_fWithNameIndexForObject();
+//		System.out.println("2------------------------------------------testTest_fWithNameIndexForObjectTx(1)");
+//		testTest_fWithNameIndexForObjectTx(1);
+//		System.out.println("3------------------------------------------testTest_fWithPositionIndex()");
+//		testTest_fWithPositionIndex();
+//		System.out.println("4------------------------------------------testTest_fWithNameIndexForXMLString()");
+//		testTest_fWithNameIndexForXMLString();
+//		System.out.println("5------------------------------------------testTest_fWithNameIndexForXMLStringRowHandler()");
+//		testTest_fWithNameIndexForXMLStringRowHandler();
 		
 		CallableDBUtil.debugStatus();
 	}

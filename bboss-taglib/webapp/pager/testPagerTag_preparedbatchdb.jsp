@@ -16,12 +16,9 @@ alter table SQLTEST add blobdata blob;
 	String created2 = "2010-03-14 12:43:54";
 	String created3 = "2010-03-15 12:43:54";
 	String created4 = "2010-03-18 12:43:54";
-	//String clobdata = "clobdata";
-	//byte[] blobdata = "clobdata".getBytes();
-	//<pg:sqlparam name="blobdata" value="<%=blobdata %>" type="blob" />
-	//<pg:sqlparam name="clobdata" value="<%=clobdata %>" type="clob" />
-	File blobdata = new java.io.File("D:/workspace/bbossgroup/bboss-taglib/lib/ecs-1.4.2.jar");
-	File clobdata = new java.io.File("D:/workspace/bbossgroup/bboss-taglib/readme.txt");
+	
+	java.io.File blobdata = new java.io.File("D:/workspace/bbossgroups-3.5/bboss-taglib/lib/ecs-1.4.2.jar");
+	java.io.File clobdata = new java.io.File("D:/workspace/bbossgroups-3.5/bboss-taglib/readme.txt");
 	
 	
 	String sql = "update sqltest set created=#[created],clobdata=#[clobdata],blobdata=#[blobdata] where object_id=#[object_id]";

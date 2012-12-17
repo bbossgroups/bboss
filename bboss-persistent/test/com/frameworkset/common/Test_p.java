@@ -5,6 +5,7 @@ public class Test_p {
 	private String name;
 	private String name1;
 	private int count = 0;
+	private int nomatch;
 	public String getName() {
 		return name;
 	}
@@ -19,7 +20,7 @@ public class Test_p {
 	}
 	public String toString()
 	{
-		return new StringBuffer().append("name=").append(name).append(",name1=").append(name1).append(",test=").append(test).toString();
+		return new StringBuffer().append("name=").append(name).append(",name1=").append(name1).append(",test=").append(test).append(",nomatch=").append(nomatch).toString();
 	}
 	public String getTest() {
 		return test;
@@ -32,6 +33,12 @@ public class Test_p {
 	}
 	public void setCount(int count) {
 		this.count = count;
+	}
+	public int getNomatch() {
+		return nomatch;
+	}
+	public void setNomatch(int nomatch) {
+		this.nomatch = nomatch;
 	}
 
 }
