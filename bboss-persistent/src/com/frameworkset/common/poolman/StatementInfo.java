@@ -302,7 +302,7 @@ public class StatementInfo {
 	}
 
 	public void errorHandle(Exception sqle) throws SQLException {
-		// sqle.printStackTrace();
+		
 		if (tx != null && !outcon) {
 			try {
 				tx.setRollbackOnly();

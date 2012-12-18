@@ -610,12 +610,24 @@ public class SQLParams
      */
     public void addSQLParam(String name, Object value, String type) throws SetSQLParamException
     {   
-        addSQLParam( name,  value, -100, type, null);
+        addSQLParam( name,  value, -100, type, (String)null,(String)null);
+    }
+    
+    /**
+     * 添加sql参数，由DefaultDataInfoImpl进行处理
+     * @param name
+     * @param value
+     * @param type
+     * @throws SetSQLParamException 
+     */
+    public void addSQLParamWithCharset(String name, Object value, String type,String charset) throws SetSQLParamException
+    {   
+        addSQLParam( name,  value, -100, type, (String)null,charset);
     }
     
     public void addSQLParam(String name, Object value,long size, String type) throws SetSQLParamException
     {   
-        addSQLParam( name,  value,  size,type, null);
+        addSQLParam( name,  value,  size,type, (String)null,(String)null);
     }
     
     public static final String STRING ="string";
@@ -825,6 +837,7 @@ public class SQLParams
 		params.setOldsql(sql);
 		String name = null;
 		String dataformat = null;
+		String charset = null;
 		Object value =  null;
 		Class type = null;
 	
@@ -929,6 +942,9 @@ public class SQLParams
 						dataformat = column.dataformat();
 						if(dataformat.equals(ValueConstants.DEFAULT_NONE) )
 							dataformat = null;
+						charset = column.charset();
+						if(!charset.equals(ValueConstants.DEFAULT_NONE) )
+							charset = null;
 						String type_ = column.type();
 						if(!type_.equals(ValueConstants.DEFAULT_NONE) )
 						{
@@ -956,11 +972,12 @@ public class SQLParams
 					}
 					
 					sqltype = SQLParams.getParamJavaType(name,type);
-					params.addSQLParam(name, value, sqltype, dataformat);
-					name = null; value = null; sqltype = null; 
-					dataformat = null;
+					params.addSQLParam(name, value, sqltype, dataformat,charset);
+					
 				}
-				
+				name = null; value = null; sqltype = null; 
+				dataformat = null;
+				charset = null;
 				
 				
 			} catch (SecurityException e) {
@@ -1174,16 +1191,35 @@ public class SQLParams
     
     public void addSQLParam(String name, Object value, String type,String dataformat) throws SetSQLParamException
     {
-    	addSQLParam(name, value, -100,type,dataformat) ;
+    	addSQLParam(name, value, -100,type,dataformat,(String)null) ;
+    }
+    
+    public void addSQLParam(String name, Object value, String type,String dataformat,String charset) throws SetSQLParamException
+    {
+    	addSQLParam(name, value, -100,type,dataformat,charset) ;
     }
     /**
      * 添加sql参数，由DefaultDataInfoImpl进行处理
      * @param name
      * @param value
      * @param type
+     * @param charset 指定clob字段读取文件时的字符集utf-8，或者gbk
      * @throws SetSQLParamException 
      */
     public void addSQLParam(String name, Object value, long size,String type,String dataformat) throws SetSQLParamException
+    {
+    	addSQLParam(name, value, size,type,dataformat,(String )null);
+        
+    }
+    /**
+     * 添加sql参数，由DefaultDataInfoImpl进行处理
+     * @param name
+     * @param value
+     * @param type
+     * @param charset 指定clob字段读取文件时的字符集utf-8，或者gbk
+     * @throws SetSQLParamException 
+     */
+    public void addSQLParam(String name, Object value, long size,String type,String dataformat,String charset) throws SetSQLParamException
     {   
         if(sqlparams == null)
         {
@@ -1215,6 +1251,7 @@ public class SQLParams
         	param.setData(new Object[] {data_,size});
         }
         param.setType(type);
+        param.setCharset(charset);
         String method = this.converttypeToMethod(type);
         param.setMethod(method);
         param.setDataformat(dataformat);

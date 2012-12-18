@@ -48,6 +48,7 @@ public class SQLParamTag extends BaseTag{
     private String type;  
     
     private String dataformat = null;
+    private String charset = null;
     
     public int doEndTag()throws JspException 
     {
@@ -55,6 +56,7 @@ public class SQLParamTag extends BaseTag{
         this.value = null;
         this.type = null;
         this.dataformat = null;
+        this.charset = null;
         return EVAL_PAGE;
     }
     
@@ -65,7 +67,7 @@ public class SQLParamTag extends BaseTag{
         {
             try
             {
-            	paramsContext.getSQLExecutor().addSQLParam(name, value,type,dataformat);
+            	paramsContext.getSQLExecutor().addSQLParam(name, value,type,dataformat,charset);
                 return EVAL_BODY_INCLUDE; 
             }
             catch (SetSQLParamException e)
@@ -87,6 +89,12 @@ public class SQLParamTag extends BaseTag{
 	}
 	public void setDataformat(String dataformat) {
 		this.dataformat = dataformat;
+	}
+	public String getCharset() {
+		return charset;
+	}
+	public void setCharset(String charset) {
+		this.charset = charset;
 	}
 
 }

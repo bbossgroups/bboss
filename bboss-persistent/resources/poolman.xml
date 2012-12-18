@@ -8,13 +8,19 @@
 
     <dbname>bspf</dbname>
 	<loadmetadata>false</loadmetadata>
-    <jndiName>jdbc/mysql-ds</jndiName>
-    <driver>com.mysql.jdbc.Driver</driver>
-
-     <url>jdbc:mysql://localhost:3306/cim</url> 
-
-    <username>root</username>
-    <password>123456</password>
+    <jndiName>bspf_datasource_jndiname</jndiName>
+     <autoprimarykey>false</autoprimarykey>
+     <cachequerymetadata>false</cachequerymetadata>
+    <driver>oracle.jdbc.driver.OracleDriver</driver>
+		  <!--<url>jdbc:oracle:thin:@202.197.40.177:1521:ora177</url>-->
+    <!--<url>jdbc:oracle:thin:@202.197.40.177:1521:ora177</url>-->
+    <!--<url>jdbc:oracle:thin:@//149.16.20.36:1521/hnds</url>-->
+     <url>jdbc:oracle:thin:@//10.0.15.134:1521/orcl</url> 
+     <!-- <url>jdbc:oracle:thin:@//localhost:1521/oa</url>  -->
+     
+    <!--<url>jdbc:oracle:thin:@//172.16.168.7:1521/oa</url>-->
+    <username>sanygcmp</username>
+    <password>sanygcmp</password>
 
     <txIsolationLevel>READ_COMMITTED</txIsolationLevel>
 
@@ -52,7 +58,7 @@
     <!-- 
     	数据库会话是否是readonly，缺省为false
      -->
-    <readOnly>false</readOnly>
+    <readOnly>true</readOnly>
 	
 	<!--
 		对应属性：timeBetweenEvictionRunsMillis
@@ -108,12 +114,10 @@
     <!-- 
     	链接有效性检查sql语句
      -->
-    <validationQuery>select 1</validationQuery>
-    
-    <autoprimarykey>false</autoprimarykey>
-	<showsql>false</showsql>
+    <validationQuery>select 1 from dual</validationQuery>
 
-  </datasource>
+
+  </datasource> 
   
  
 </poolman>

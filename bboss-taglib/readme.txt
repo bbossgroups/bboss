@@ -29,7 +29,37 @@ bboss-taglib<-bbossaop [frameworkset.jar]
 bboss-taglib<-cas server [frameworkset.jar]
 bboss-taglib<-portal [frameworkset.jar]
 bboss-taglib<-bboss-ws [frameworkset.jar]
+#######update function list since bbossgroups-3.6.2 begin###########
+同时SQLParamTag标签页增加charset属性用来指定对应的字符编码集，
+<pg:sqlparam name="clobdata" value="<%=clobdata %>" type="clobfile" charset="GBK"/>
+使用的实例如下：
+<%
+	int object_id = 1;
 
+	String created = "2010-03-12 12:43:54";
+	String created1 = "2010-03-13 12:43:54";
+	String created2 = "2010-03-14 12:43:54";
+	String created3 = "2010-03-15 12:43:54";
+	String created4 = "2010-03-18 12:43:54";
+	
+	java.io.File blobdata = new java.io.File("D:/workspace/bbossgroups-3.5/bboss-taglib/lib/ecs-1.4.2.jar");
+	java.io.File clobdata = new java.io.File("D:\\bbossgroups-3.5.1\\bboss-taglib\\readme.txt");
+	
+	
+	String sql = "update sqltest set created=#[created],clobdata=#[clobdata],blobdata=#[blobdata] where object_id=#[object_id]";//多条sql语句操作clob，blob会导致数据库记录行锁定
+	
+	
+%>
+<pg:batchutil dbname="bspf" type="prepared">
+				<pg:statement sql="<%=sql %>" pretoken="#\\[" endtoken="\\]">
+					<pg:batch>
+						<pg:sqlparam name="object_id" value="<%=object_id %>" type="int" />
+						<pg:sqlparam name="created" value="<%=created %>" type="timestamp" />
+						<pg:sqlparam name="blobdata" value="<%=blobdata %>" type="blobfile" />
+						<pg:sqlparam name="clobdata" value="<%=clobdata %>" type="clobfile" charset="GBK"/>
+					</pg:batch>
+				</pg:statement>		
+</pg:batchutil>					
 #######update function list since bbossgroups-3.6 begin###########
 o list/map标签增加softparser属性，针对sessionKey、requestKey、pagecontextKey进行classdataList数据对象缓存，
  避免重复使用时重复生成数据对象，默认值为true

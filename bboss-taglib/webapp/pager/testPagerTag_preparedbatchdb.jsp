@@ -18,10 +18,13 @@ alter table SQLTEST add blobdata blob;
 	String created4 = "2010-03-18 12:43:54";
 	
 	java.io.File blobdata = new java.io.File("D:/workspace/bbossgroups-3.5/bboss-taglib/lib/ecs-1.4.2.jar");
-	java.io.File clobdata = new java.io.File("D:/workspace/bbossgroups-3.5/bboss-taglib/readme.txt");
+	java.io.File clobdata = new java.io.File("D:\\bbossgroups-3.5.1\\bboss-taglib\\readme.txt");
 	
 	
-	String sql = "update sqltest set created=#[created],clobdata=#[clobdata],blobdata=#[blobdata] where object_id=#[object_id]";
+	String sql = "update sqltest set created=#[created],clobdata=#[clobdata],blobdata=#[blobdata] where object_id=#[object_id]";//多条sql语句操作clob，blob会导致数据库记录行锁定
+	String sql_1 = "update sqltest set created=#[created] where object_id=#[object_id]";
+	try
+	{
 %>
 <html>
 	<head>
@@ -38,39 +41,40 @@ alter table SQLTEST add blobdata blob;
 						<pg:sqlparam name="clobdata" value="<%=clobdata %>" type="clobfile" />
 					</pg:batch>
 				</pg:statement>
-				<pg:statement sql="<%=sql %>" pretoken="#\\[" endtoken="\\]">
+				<pg:statement sql="<%=sql_1 %>" pretoken="#\\[" endtoken="\\]">
 					<pg:batch>
 						<pg:sqlparam name="object_id" value="<%=object_id %>" type="int" />
 						<pg:sqlparam name="created" value="<%=created1 %>"
 							type="timestamp" />
-						<pg:sqlparam name="blobdata" value="<%=blobdata %>" type="blobfile" />
-						<pg:sqlparam name="clobdata" value="<%=clobdata %>" type="clobfile" />
+						
 					</pg:batch>
 				</pg:statement>
-				<pg:statement sql="<%=sql %>" pretoken="#\\[" endtoken="\\]">
+				<pg:statement sql="<%=sql_1 %>" pretoken="#\\[" endtoken="\\]">
 
 					<pg:sqlparam name="object_id" value="<%=object_id %>" type="int" />
 					<pg:sqlparam name="created" value="<%=created2 %>" type="timestamp" />
-					<pg:sqlparam name="blobdata" value="<%=blobdata %>" type="blobfile" />
-						<pg:sqlparam name="clobdata" value="<%=clobdata %>" type="clobfile" />
+					
 				</pg:statement>
-				<pg:statement sql="<%=sql %>" pretoken="#\\[" endtoken="\\]">
+				<pg:statement sql="<%=sql_1 %>" pretoken="#\\[" endtoken="\\]">
 					<pg:batch>
 						<pg:sqlparam name="object_id" value="<%=object_id %>" type="int" />
 						<pg:sqlparam name="created" value="<%=created3 %>"
 							type="timestamp" />
-							<pg:sqlparam name="blobdata" value="<%=blobdata %>" type="blobfile" />
-						<pg:sqlparam name="clobdata" value="<%=clobdata %>" type="clobfile" />
+						
 					</pg:batch>
 					<pg:batch>
 						<pg:sqlparam name="object_id" value="<%=object_id %>" type="int" />
 						<pg:sqlparam name="created" value="<%=created4 %>"
 							type="timestamp" />
-							<pg:sqlparam name="blobdata" value="<%=blobdata %>" type="blobfile" />
-						<pg:sqlparam name="clobdata" value="<%=clobdata %>" type="clobfile" />
+						
 					</pg:batch>
 				</pg:statement>
 			</pg:batchutil>
 		</table>
 	</body>
 </html>
+<%}
+							catch(Exception e){
+
+								e.printStackTrace();
+							}%>

@@ -57,6 +57,7 @@ import com.frameworkset.common.poolman.handle.XMLMark;
 import com.frameworkset.common.poolman.sql.PrimaryKey;
 import com.frameworkset.common.poolman.util.SQLManager;
 import com.frameworkset.common.poolman.util.StatementParser;
+import com.frameworkset.util.FileUtil;
 
 /**
  * ÷¥––‘§±‡sql”Ôæ‰
@@ -717,14 +718,30 @@ public class PreparedDBUtil extends DBUtil {
 						{
 							File data = null;
 							data = (File)param.data;
-							 in = new java.io.BufferedInputStream(new java.io.FileInputStream(data));
-							long len = data.length();
-							statement.setAsciiStream(param.index, in,(int)len);
-							if(statement_count != null)
+							if(param.getCharset() == null)
 							{
-			//					Reader reader = (Reader)data[0];
-								statement_count.setAsciiStream(param.index, in,(int)len);					
 								
+								 in = new java.io.BufferedInputStream(new java.io.FileInputStream(data));
+								long len = data.length();
+								statement.setAsciiStream(param.index, in,(int)len);
+								if(statement_count != null)
+								{
+				//					Reader reader = (Reader)data[0];
+									statement_count.setAsciiStream(param.index, in,(int)len);					
+									
+								}
+							}
+							else
+							{
+								String content = FileUtil.getFileContent(data, param.getCharset());
+								reader  = new java.io.StringReader(content);
+								statement.setCharacterStream(param.index, reader,content.length());
+								if(statement_count != null)
+								{
+				//					Reader reader = (Reader)data[0];
+									statement_count.setCharacterStream(param.index, reader,content.length());						
+									
+								}
 							}
 						}
 						else if(param.data instanceof BigFile)
@@ -757,7 +774,11 @@ public class PreparedDBUtil extends DBUtil {
 						else
 						{
 							 dataf = (InputStream)param.data;
-						    String d = getString( dataf);
+						    String d = null;
+						    if(param.getCharset() == null)
+						    	d = getString( dataf,(String)null);
+						    else
+						    	d = getString( dataf,param.getCharset());
 							reader  = new java.io.StringReader(d);
 							statement.setCharacterStream(param.index, reader,d.length());
 							if(statement_count != null)
@@ -4010,7 +4031,7 @@ public class PreparedDBUtil extends DBUtil {
 		
 		
 	}
-	public String getString(InputStream in) throws SQLException
+	public String getString(InputStream in,String charset) throws SQLException
 	{
 		
 		ByteArrayOutputStream out = null;
@@ -4024,7 +4045,14 @@ public class PreparedDBUtil extends DBUtil {
 				{
 					out.write(v, 0, i);
 				}
-				return new String(out.toByteArray());
+				if(charset == null)
+				{
+					return new String(out.toByteArray());
+				}
+				else
+				{
+					return new String(out.toByteArray(),charset);
+				}
 				
 			} catch (FileNotFoundException e) {
 				throw new NestedSQLException(e);

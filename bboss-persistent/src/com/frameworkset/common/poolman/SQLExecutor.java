@@ -130,11 +130,38 @@ public class SQLExecutor
      * @param type
      * @throws SetSQLParamException 
      */
+    public void addSQLParam(String name, Object value, String type,String dataformat,String charset) throws SetSQLParamException
+    {   
+        init();
+       
+        addSQLParam( sqlparams, name,  value,  type, dataformat,charset);
+    }
+    
+    /**
+     * 添加sql参数，由DefaultDataInfoImpl进行处理
+     * @param name
+     * @param value
+     * @param type
+     * @throws SetSQLParamException 
+     */
     public static void addSQLParam(SQLParams sqlparams,String name, Object value, String type,String dataformat) throws SetSQLParamException
     {   
 //        init();
        
         sqlparams.addSQLParam( name,  value,  type, dataformat);
+    }
+    /**
+     * 添加sql参数，由DefaultDataInfoImpl进行处理
+     * @param name
+     * @param value
+     * @param type
+     * @throws SetSQLParamException 
+     */
+    public static void addSQLParam(SQLParams sqlparams,String name, Object value, String type,String dataformat,String charset) throws SetSQLParamException
+    {   
+//        init();
+       
+        sqlparams.addSQLParam( name,  value,  type, dataformat,charset);
     }
     
     public String getDbname()

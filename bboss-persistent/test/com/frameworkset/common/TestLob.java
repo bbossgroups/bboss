@@ -144,16 +144,16 @@ public class TestLob {
         FILECONTENT CLOB(2147483647)
     )
 	 */
-	public void uploadClobFile(File file) throws Exception
+	public @Test void uploadClobFile() throws Exception
 	{
-
+		File file = new File("D:\\bbossgroups-3.5.1\\bboss-taglib\\readme.txt");
 		
 		String sql = "";
 		try {
 			sql = "INSERT INTO CLOBFILE (FILENAME,FILECONTENT,fileid,FILESIZE) VALUES(#[filename],#[FILECONTENT],#[FILEID],#[FILESIZE])";
 			SQLParams sqlparams = new SQLParams();
 			sqlparams.addSQLParam("filename", file.getName(), SQLParams.STRING);
-			sqlparams.addSQLParam("FILECONTENT", file,SQLParams.CLOBFILE);
+			sqlparams.addSQLParamWithCharset("FILECONTENT", file,SQLParams.CLOBFILE,"GBK");
 			sqlparams.addSQLParam("FILEID", UUID.randomUUID().toString(),SQLParams.STRING);
 			sqlparams.addSQLParam("FILESIZE", file.length(),SQLParams.LONG);
 			SQLExecutor.insertBean(sql, sqlparams);			

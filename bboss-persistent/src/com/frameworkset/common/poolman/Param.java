@@ -86,6 +86,7 @@ public class Param
 	public static final String setClob_int_File_String = "setClob(int i, File file, String string)";
 	private String type;
 	String method;
+	private String charset;
 	public String getMethod()
     {
         return method;
@@ -125,6 +126,8 @@ public class Param
         newparam.index = this.index;
         newparam.method = this.method;
         newparam.type = this.type;
+        newparam.charset = this.charset;
+        
         return newparam;
     }
     public Param clone(Variable variable)
@@ -140,6 +143,7 @@ public class Param
         newparam.index = this.index;
         newparam.method = this.method;
         newparam.type = this.type;
+        newparam.charset = this.charset;
         newparam.variable = variable; 
         return newparam;
     }
@@ -162,6 +166,7 @@ public class Param
 			.append(",value=");
 			SimpleStringUtil.tostring(ret,data);
 			ret.append(",dataformat=").append(dataformat)
+			.append(",charset=").append(this.charset== null?"":charset)
 			.append(",method=").append(method).append("]");
 			return ret.toString();
 		}
@@ -174,6 +179,7 @@ public class Param
 			SimpleStringUtil.tostring(ret,data);
 			ret.append(",variable=").append(variable.toString())
 			.append(",dataformat=").append(dataformat)
+			.append(",charset=").append(this.charset== null?"":charset)
 			.append(",method=").append(method).append("]");
 			return ret.toString();
 		}
@@ -264,6 +270,14 @@ public class Param
 
 	protected void setType(String type) {
 		this.type = type;
+	}
+
+	public String getCharset() {
+		return charset;
+	}
+
+	public void setCharset(String charset) {
+		this.charset = charset;
 	}
 	
 	

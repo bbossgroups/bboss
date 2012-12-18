@@ -27,7 +27,44 @@ o 动态sql解析优化，扩展velocity模板引擎
 o 存储过程内部处理机制优化，解决名称参数无法正确获取到输出参数的问题
 o 动态sql改造后，批处理功能问题修复
 o 数据库处理标签库，批处理参数标签对timestamp和date类型默认格式处理问题修复
+o SQLParams对象增加带charset参数的方法，以便对clob类型存入的File对象的内容进行正确的编码操作，解决文件内容编码与数据库编码不一致时出现的
+乱码问题：
+SQLParams.addSQLParamWithCharset("FILECONTENT", file,SQLParams.CLOBFILE,"GBK");
+使用方法如下：
+SQLParams sqlparams = new SQLParams();
+			sqlparams.addSQLParam("filename", file.getName(), SQLParams.STRING);
+			sqlparams.addSQLParamWithCharset("FILECONTENT", file,SQLParams.CLOBFILE,"GBK");
+			
+同时SQLParamTag标签页增加charset属性用来指定对应的字符编码集，
+<pg:sqlparam name="clobdata" value="<%=clobdata %>" type="clobfile" charset="GBK"/>
+使用的实例如下：
+<%
+	int object_id = 1;
 
+	String created = "2010-03-12 12:43:54";
+	String created1 = "2010-03-13 12:43:54";
+	String created2 = "2010-03-14 12:43:54";
+	String created3 = "2010-03-15 12:43:54";
+	String created4 = "2010-03-18 12:43:54";
+	
+	java.io.File blobdata = new java.io.File("D:/workspace/bbossgroups-3.5/bboss-taglib/lib/ecs-1.4.2.jar");
+	java.io.File clobdata = new java.io.File("D:\\bbossgroups-3.5.1\\bboss-taglib\\readme.txt");
+	
+	
+	String sql = "update sqltest set created=#[created],clobdata=#[clobdata],blobdata=#[blobdata] where object_id=#[object_id]";//多条sql语句操作clob，blob会导致数据库记录行锁定
+	
+	
+%>
+<pg:batchutil dbname="bspf" type="prepared">
+				<pg:statement sql="<%=sql %>" pretoken="#\\[" endtoken="\\]">
+					<pg:batch>
+						<pg:sqlparam name="object_id" value="<%=object_id %>" type="int" />
+						<pg:sqlparam name="created" value="<%=created %>" type="timestamp" />
+						<pg:sqlparam name="blobdata" value="<%=blobdata %>" type="blobfile" />
+						<pg:sqlparam name="clobdata" value="<%=clobdata %>" type="clobfile" charset="GBK"/>
+					</pg:batch>
+				</pg:statement>		
+</pg:batchutil>					
 #######update function list since bbossgroups-3.6 begin###########
 o 采用多个proxool数据源时，alias属性必须保持唯一性
 o 扩展分页查询功能,3.6.0之后的版本ConfigSQLExecutor/SQLExecutor/PreparedDBUtil三个持久层组件中增加了两组分页接口，
