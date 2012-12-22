@@ -46,6 +46,7 @@ public class Word2PDFMessageConverter <T> implements HttpMessageConverter<T>{
 	 * 指定全局临时文件目录
 	 */
 	private String tempDir;
+	private String flashpaperWorkDir;
 	private boolean openoffice = false;
 
 	@Override
@@ -88,6 +89,13 @@ public class Word2PDFMessageConverter <T> implements HttpMessageConverter<T>{
 				if(this.tempDir != null)
 				{
 					tmp.setTempdir(this.tempDir);
+				}
+			}
+			if(tmp.getFlashpaperWorkDir() == null)
+			{
+				if(this.flashpaperWorkDir != null)
+				{
+					tmp.setFlashpaperWorkDir(flashpaperWorkDir);
 				}
 			}
 			tmp._resonse(outputMessage, inputMessage);
