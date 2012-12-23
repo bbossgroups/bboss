@@ -61,6 +61,7 @@ import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.ListResourceBundle;
 import java.util.Properties;
 import java.util.Vector;
 import java.util.zip.ZipEntry;
@@ -70,6 +71,7 @@ import java.util.zip.ZipInputStream;
 
 public class FileUtil 
 {
+	private static final ListResourceBundle mimeTypes = new FileMIMETypes();
 	public static final String apppath;
 	static{
 		 URL location = (FileUtil.class).getProtectionDomain().getCodeSource().getLocation();
@@ -77,7 +79,32 @@ public class FileUtil
 		apppath = appDir.getParentFile().getPath();
 	}
 	
+	/**
+	 * 获取页面类型
+	 * @param fileName
+	 * @return
+	 */
+	public static String getMimeType(String fileExt) {
+		try {
+			return mimeTypes.getString(fileExt);
+		} catch (Exception e) {
+			return "";
+		}
+	}
 	
+	/**
+	 * 获取页面类型
+	 * @param fileName
+	 * @return
+	 */
+	public static String getMimeTypeByleName(String fileName) {
+		try {
+			String fileExt = FileUtil.getFileExtByFileName(fileName);			
+			return mimeTypes.getString(fileExt);
+		} catch (Exception e) {
+			return "";
+		}
+	}
 	
 	/**
 	 * determine the OS name

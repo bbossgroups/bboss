@@ -66,7 +66,7 @@ public class FileMessageConvertor<T> implements HttpMessageConverter<T>
 	{
 
 		// TODO Auto-generated method stub
-		return File.class.isAssignableFrom(clazz) || Blob.class.isAssignableFrom(clazz) 
+		return File.class.isAssignableFrom(clazz) || Blob.class.isAssignableFrom(clazz) || FileBlob.class.isAssignableFrom(clazz)
 				|| ClassPathResource.class.isAssignableFrom(clazz)
 				|| ServletContextResource.class.isAssignableFrom(clazz)
 				|| FileSystemResource.class.isAssignableFrom(clazz)
@@ -119,7 +119,20 @@ public class FileMessageConvertor<T> implements HttpMessageConverter<T>
 			FileBlob fb = (FileBlob)t;
 			try
 			{
-				StringUtil.sendFile(inputMessage.getServletRequest(), outputMessage.getResponse(), fb.getFileName(),fb.getData());
+				if(fb.isdownload())
+				{
+					if(!fb.isFile())
+						StringUtil.sendFile(inputMessage.getServletRequest(), outputMessage.getResponse(), fb.getFileName(),fb.getData());
+					else
+						StringUtil.sendFile(inputMessage.getServletRequest(), outputMessage.getResponse(), fb.getFileData());
+				}
+				else
+				{
+					if(!fb.isFile())
+						StringUtil.showFile(inputMessage.getServletRequest(), outputMessage.getResponse(), fb.getFileName(),fb.getData());
+					else
+						StringUtil.showFile(inputMessage.getServletRequest(), outputMessage.getResponse(), fb.getFileData());
+				}
 			}
 			catch (Exception e)
 			{

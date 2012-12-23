@@ -15,6 +15,7 @@
  */
 package org.frameworkset.http;
 
+import java.io.File;
 import java.sql.Blob;
 
 
@@ -30,6 +31,16 @@ import java.sql.Blob;
  */
 public class FileBlob
 {
+	private int rendtype = DOWNLOAD;
+	public int getRendtype() {
+		return rendtype;
+	}
+	public void setRendtype(int rendtype) {
+		this.rendtype = rendtype;
+	}
+
+	public static int BROWSER = 0;
+	public static int DOWNLOAD = 1;
 	public FileBlob(String fileName, Blob data)
 	{
 
@@ -37,22 +48,69 @@ public class FileBlob
 		this.fileName = fileName;
 		this.data = data;
 	}
+	public FileBlob( File data,int rendtype)
+	{
+
+		super();
+		this.fileName = data.getName();
+		this.data = data;
+		this.rendtype = rendtype;
+	}
+	
+	
+	public FileBlob( String file)
+	{
+
+		this(file,DOWNLOAD);
+	}
+	public FileBlob( File data)
+	{
+
+		this(data,DOWNLOAD);
+	}
+	
+	
+	public FileBlob( String file,int rendtype)
+	{
+
+		super();
+		File data = new File(file);
+		this.fileName = data.getName();
+		this.data = data;
+		this.rendtype = rendtype;
+	}
 
 	private String fileName;
-	private Blob data;
+	private Object data;
 	
 	public String getFileName()
 	{
 	
 		return fileName;
 	}
-	
-	
+	public boolean isdownload()
+	{
+		return this.rendtype == this.DOWNLOAD;
+	}
+	public boolean isFile()
+	{
+		if(this.data != null)
+		{
+			return data instanceof File;
+		}
+		return false;
+	}
 	
 	public Blob getData()
 	{
 	
-		return data;
+		return (Blob)data;
+	}
+	
+	public File getFileData()
+	{
+	
+		return (File)data;
 	}
 	
 	

@@ -13,6 +13,75 @@ todo
 6.mvc和gwt结合可行性研究
 
 #######update function list since bbossgroups-3.6 begin###########
+o 改进bboss mvc wordpdf插件
+增加工具类/bboss-plugin-wordpdf/src/org/frameworkset/http/converter/wordpdf/FileConvertor.java
+可以方便第实现word模板书签和值合并功能
+方便地借助Flashprinter实现word向pdf，swf的转换
+
+o 文件下载插件增加对FileBlob的支持
+FileBlob增加构造函数：
+public FileBlob( File data,int rendtype)
+public FileBlob( String file,int rendtype)
+两个构造函数含义是一致的，参数说明：
+第一个参数：下载或者浏览的文件对象或者文件路径
+第二个参数：标识文件是用来下载还是用来浏览，对应于FileBlob中的两个常量：FileBlob.BROWSER，FileBlob.DOWNLOAD，默认值为FileBlob.DOWNLOAD
+
+使用实例，控制器下载文件方法：
+	public @ResponseBody FileBlob downWordTemp() throws Exception  {
+		System.out.println("--------------程序执行到此处------------------");
+		String[] bookMarks = new String[] { "DealerName", "Name", "CgName",
+				"TypeName", "OrderQty", "CoolCode", "ChassisCode", "CustPrice",
+				"CustAmt", "sumall", "EarnestPayDays", "EarnestAmt",
+				"StageDate", "FirstAmt", "DepositPercent", "Deposit",
+				"ServiceChargePercent", "ServiceCharge", "NotarizationFee",
+				"InsuranceTerm", "Insurance", "ReinsuranceDeposit",
+				"FinanceAmt", "FinanceFC", "LackAmtPayDate",
+				"LackAmtFinalPayDate", "ReceiverName", "ReceiverID",   
+				"ReceiverTel", "Insurer","authoriate" };
+		String[] mapValue = new String[] { "工程机械有限公司", "工程机械有限公司",
+				"六桥车", "SY5419THB 52E(6)", "2", "风冷", "V09660ffff", "300.00",
+				"600.00", "陆万元整", "7", "100", "2000年8月31日", "60", "5", "3",
+				"10", "6", "10", "5", "10", "21", "540", "10", "2000年8月31日",
+				"2000年8月31日", "xxx", "430111199910102121", "13800138200", "xxxxx","bboss" };
+		String wordtemplate = "D:\\workspace\\microcredit\\plugin\\wordpdf\\anjie.doc";
+		String wordfile = "d:\\anjie_test.doc";
+		FileConvertor.getRealWord(wordtemplate, wordfile, bookMarks,mapValue);
+	
+		FileBlob fileblob = new FileBlob(wordfile,FileBlob.DOWNLOAD);
+		return fileblob;
+		
+		
+
+	}
+使用实例，控制器下载文件方法：
+	public @ResponseBody FileBlob downWordTemp() throws Exception  {
+		System.out.println("--------------程序执行到此处------------------");
+		String[] bookMarks = new String[] { "DealerName", "Name", "CgName",
+				"TypeName", "OrderQty", "CoolCode", "ChassisCode", "CustPrice",
+				"CustAmt", "sumall", "EarnestPayDays", "EarnestAmt",
+				"StageDate", "FirstAmt", "DepositPercent", "Deposit",
+				"ServiceChargePercent", "ServiceCharge", "NotarizationFee",
+				"InsuranceTerm", "Insurance", "ReinsuranceDeposit",
+				"FinanceAmt", "FinanceFC", "LackAmtPayDate",
+				"LackAmtFinalPayDate", "ReceiverName", "ReceiverID",   
+				"ReceiverTel", "Insurer","authoriate" };
+		String[] mapValue = new String[] { "工程机械有限公司", "工程机械有限公司",
+				"六桥车", "SY5419THB 52E(6)", "2", "风冷", "V09660ffff", "300.00",
+				"600.00", "陆万元整", "7", "100", "2000年8月31日", "60", "5", "3",
+				"10", "6", "10", "5", "10", "21", "540", "10", "2000年8月31日",
+				"2000年8月31日", "xxx", "430111199910102121", "13800138200", "xxxxx","bboss" };
+		String wordtemplate = "D:\\workspace\\microcredit\\plugin\\wordpdf\\anjie.doc";
+		String wordfile = "d:\\anjie_test.doc";
+		FileConvertor.getRealWord(wordtemplate, wordfile, bookMarks,mapValue);
+	
+		FileBlob fileblob = new FileBlob(wordfile,FileBlob.BROWSER);
+		return fileblob;
+		
+		
+
+	}	
+	
+注意我们这里使用了bboss 的word转pdf、swf插件FileConvertor	
 o list/map标签增加softparser属性，针对sessionKey、requestKey、pagecontextKey进行classdataList数据对象缓存，
  避免重复使用时重复生成数据对象，默认值为true
 o 解决mvc 文件上传组件ie6兼容性问题,commons-fileupload-1.2.2在ie6下文件上传报错导致无法文件上传

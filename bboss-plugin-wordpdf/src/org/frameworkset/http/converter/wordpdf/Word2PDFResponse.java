@@ -56,6 +56,8 @@ import com.lowagie.text.pdf.PdfReader;
  */
 public class Word2PDFResponse extends WordResponse {
 	private boolean isPDFTemp = false;
+	
+
 	private String pdfFile;
 	private String[] pdfMergeFiles;
 	private int mergeposition = MERGE_AFTER;
@@ -153,7 +155,7 @@ public class Word2PDFResponse extends WordResponse {
 	}
 
 	protected void render(HttpOutputMessage outputMessage,
-			HttpInputMessage inputMessage) {
+			HttpInputMessage inputMessage) throws Exception {
 		try {
 			if(this.isCache() )
 			{
@@ -239,7 +241,7 @@ public class Word2PDFResponse extends WordResponse {
 
 	
 
-	private File buildPDF() throws IOException {
+	private File buildPDF() throws Exception {
 		boolean needmerge = (this.pdfMergeFiles != null && this.pdfMergeFiles.length > 0);
 		if (needmerge) {
 			String tempfilename = gentempfile("pdf");
@@ -253,7 +255,7 @@ public class Word2PDFResponse extends WordResponse {
 			}
 			else
 			{
-				super.realWord2PDF(tempfilename);
+				super.realWord2PDF(tempfilename,this.getWaittimes());
 			}
 			
 			
@@ -276,7 +278,7 @@ public class Word2PDFResponse extends WordResponse {
 			}
 			else
 			{
-				return super.realWord2PDF(this.getPdfFile());
+				return super.realWord2PDF(this.getPdfFile(),this.getWaittimes());
 				
 			}
 		}
@@ -286,64 +288,65 @@ public class Word2PDFResponse extends WordResponse {
 
 
 	// ºÏ²¢pdf
-	protected boolean mergePdfFiles(String[] files, String newfile) {
-		boolean retValue = false;
-		Document document = null;
-		try {
-
-			if (this.mergeposition == MERGE_AFTER) {
-				PdfReader reader_ = new PdfReader(newfile);
-				document = new Document(new PdfReader(reader_).getPageSize(1));
-				PdfCopy copy = new PdfCopy(document, new FileOutputStream(
-						this.getPdfFile()));
-				document.open();
-				reader_ = new PdfReader(newfile);
-				int nf = reader_.getNumberOfPages();
-				for (int j = 1; j <= nf; j++) {
-
-					document.newPage();
-					PdfImportedPage page = copy.getImportedPage(reader_, j);
-					copy.addPage(page);
-				}
-				for (int i = 0; i < files.length; i++) {
-					reader_ = new PdfReader(files[i]);
-					int n = reader_.getNumberOfPages();
-					for (int j = 1; j <= n; j++) {
-						document.newPage();
-						PdfImportedPage page = copy.getImportedPage(reader_, j);
-						copy.addPage(page);
-					}
-				}
-			} else {
-				PdfReader reader_ = new PdfReader(files[0]);
-				document = new Document(new PdfReader(reader_).getPageSize(1));
-				PdfCopy copy = new PdfCopy(document, new FileOutputStream(
-						this.getPdfFile()));
-				document.open();
-				for (int i = 0; i < files.length; i++) {
-					PdfReader reader = new PdfReader(files[i]);
-					int n = reader.getNumberOfPages();
-					for (int j = 1; j <= n; j++) {
-						document.newPage();
-						PdfImportedPage page = copy.getImportedPage(reader, j);
-						copy.addPage(page);
-					}
-				}
-				reader_ = new PdfReader(newfile);
-				int nf = reader_.getNumberOfPages();
-				for (int j = 1; j <= nf; j++) {
-					document.newPage();
-					PdfImportedPage page = copy.getImportedPage(reader_, j);
-					copy.addPage(page);
-				}
-			}
-			retValue = true;
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			document.close();
-		}
-		return retValue;
+	protected boolean mergePdfFiles(String[] files, String newfile) throws Exception {
+		return FileConvertor.mergePdfFiles(files, newfile, getPdfFile(), mergeposition);
+//		boolean retValue = false;
+//		Document document = null;
+//		try {
+//
+//			if (this.mergeposition == MERGE_AFTER) {
+//				PdfReader reader_ = new PdfReader(newfile);
+//				document = new Document(new PdfReader(reader_).getPageSize(1));
+//				PdfCopy copy = new PdfCopy(document, new FileOutputStream(
+//						this.getPdfFile()));
+//				document.open();
+//				reader_ = new PdfReader(newfile);
+//				int nf = reader_.getNumberOfPages();
+//				for (int j = 1; j <= nf; j++) {
+//
+//					document.newPage();
+//					PdfImportedPage page = copy.getImportedPage(reader_, j);
+//					copy.addPage(page);
+//				}
+//				for (int i = 0; i < files.length; i++) {
+//					reader_ = new PdfReader(files[i]);
+//					int n = reader_.getNumberOfPages();
+//					for (int j = 1; j <= n; j++) {
+//						document.newPage();
+//						PdfImportedPage page = copy.getImportedPage(reader_, j);
+//						copy.addPage(page);
+//					}
+//				}
+//			} else {
+//				PdfReader reader_ = new PdfReader(files[0]);
+//				document = new Document(new PdfReader(reader_).getPageSize(1));
+//				PdfCopy copy = new PdfCopy(document, new FileOutputStream(
+//						this.getPdfFile()));
+//				document.open();
+//				for (int i = 0; i < files.length; i++) {
+//					PdfReader reader = new PdfReader(files[i]);
+//					int n = reader.getNumberOfPages();
+//					for (int j = 1; j <= n; j++) {
+//						document.newPage();
+//						PdfImportedPage page = copy.getImportedPage(reader, j);
+//						copy.addPage(page);
+//					}
+//				}
+//				reader_ = new PdfReader(newfile);
+//				int nf = reader_.getNumberOfPages();
+//				for (int j = 1; j <= nf; j++) {
+//					document.newPage();
+//					PdfImportedPage page = copy.getImportedPage(reader_, j);
+//					copy.addPage(page);
+//				}
+//			}
+//			retValue = true;
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		} finally {
+//			document.close();
+//		}
+//		return retValue;
 	}
 
 	public String getPdfFile() {

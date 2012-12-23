@@ -128,7 +128,7 @@ public class WordResponse {
 		
 	}
 	protected String gentempfile(String ext) {
-		String name = this.tempdir + "/"
+		String name = this.tempdir + "\\"
 				+ System.currentTimeMillis() + "." + ext;
 		return name;
 	}
@@ -224,7 +224,7 @@ public class WordResponse {
 			}
 		}
 	}
-	protected void _resonse(HttpOutputMessage outputMessage, HttpInputMessage inputMessage)
+	protected void _resonse(HttpOutputMessage outputMessage, HttpInputMessage inputMessage) throws Exception
 	{
 		try
 		{
@@ -249,7 +249,7 @@ public class WordResponse {
 		}
 	}
 	
-	protected void render(HttpOutputMessage outputMessage, HttpInputMessage inputMessage)
+	protected void render(HttpOutputMessage outputMessage, HttpInputMessage inputMessage) throws Exception
 	{
 		try {
 			if(this.isCache() )
@@ -356,119 +356,127 @@ public class WordResponse {
 		this.rendtype = rendtype;
 	}
 	
-	protected File getRealWord() throws IOException {
-		
-		/*
-		 * 1.将现有的word模板复制一份，保存为合同编号.doc 2.在新的文档里面插入动态值 3.转为pdf
-		 */
-//		String[] bookMarks = new String[] { "DealerName", "Name", "CgName",
-//				"TypeName", "OrderQty", "CoolCode", "ChassisCode", "CustPrice",
-//				"CustAmt", "sumall", "EarnestPayDays", "EarnestAmt",
-//				"StageDate", "FirstAmt", "DepositPercent", "Deposit",
-//				"ServiceChargePercent", "ServiceCharge", "NotarizationFee",
-//				"InsuranceTerm", "Insurance", "ReinsuranceDeposit",
-//				"FinanceAmt", "FinanceFC", "LackAmtPayDate",
-//				"LackAmtFinalPayDate", "ReceiverName", "ReceiverID",
-//				"ReceiverTel", "Insurer" };
-//		String[] mapValue = new String[] { "湖南三一工程机械有限公司", "湖南三一工程机械有限公司",
-//				"六桥泵车", "SY5419THB 52E(6)", "2", "风冷", "V09660", "300.00",
-//				"600.00", "陆佰万元整", "7", "100", "2012年8月31日", "60", "5", "3",
-//				"10", "6", "10", "5", "10", "21", "540", "10", "2012年8月31日",
-//				"2012年8月31日", "卿琳", "430111199910102121", "13800138200", "卿琳" };
-		// 1.将现有的word模板复制一份，保存为合同编号.doc
-		
-		if(getWordtemplate() != null && this.bookdatas != null && this.bookdatas.size() > 0)
-			{
-			FileInputStream template = null;
-	
-			FileOutputStream contract = null;
-			try {
-				template = new FileInputStream(getWordtemplate());
-	
-				contract = new FileOutputStream(getWordFile());
-				byte[] buf = new byte[32];
-				int hasRead = 0;
-				while ((hasRead = template.read(buf)) > 0) {
-					contract.write(buf, 0, hasRead);
-				}
-			} catch (IOException e) {
-				e.printStackTrace();
-			} finally {
-				if (null != template) {
-					template.close();
-				}
-				if (null != contract) {
-					contract.close();
-				}
-			}
-			// 2.在新的文档里面插入动态值
-			ActiveXComponent word = null;
-			Dispatch doc = null;
-			try
-			{
-				word = new ActiveXComponent("Word.Application");
-				word.setProperty("Visible", new Variant(false));
-				Dispatch documents = word.getProperty("Documents").toDispatch();
-				doc = Dispatch.call(documents, "Open", getWordFile()).toDispatch();
-				Dispatch activeDocument = word.getProperty("ActiveDocument")
-						.toDispatch();
-				Dispatch Marks = ActiveXComponent.call(activeDocument, "Bookmarks").toDispatch();
-				Set<String> keys = this.bookdatas.keySet();
-				for (String key:keys) {
-					boolean bookMarkExist = ActiveXComponent.call(Marks, "Exists", key)
-							.toBoolean(); // 查找标签
-					if (bookMarkExist) {
-		
-						Dispatch rangeItem = Dispatch.call(Marks, "Item", key)
-								.toDispatch();
-						Dispatch range = Dispatch.call(rangeItem, "Range").toDispatch();
-						Dispatch.put(range, "Text", new Variant(this.bookdatas.get(key)));// 插入书签的值
-					}
-				}
-				Dispatch.call(doc, "Save");			   	
-			   return new File(getWordFile()) ;
-			}
-			finally
-			{
-				if(doc != null)
-				{
-					try {
-						Dispatch.call(doc, "Close", new Variant(true));
-						doc = null;
-					} catch (Exception e) {
-						
-					}
-				}
-				
-				if (word != null) {
-					try {
-						Dispatch.call(word, "Quit");
-						word = null;
-					} catch (Exception e) {
-						
-					}
-				}
-			}
-		}
-		else
-		{
-			return new File(getWordFile()) ;
-		}
+	protected File getRealWord() throws Exception {
+		return FileConvertor.getRealWord(getWordtemplate(), getWordFile(), bookdatas);
+//		/*
+//		 * 1.将现有的word模板复制一份，保存为合同编号.doc 2.在新的文档里面插入动态值 3.转为pdf
+//		 */
+////		String[] bookMarks = new String[] { "DealerName", "Name", "CgName",
+////				"TypeName", "OrderQty", "CoolCode", "ChassisCode", "CustPrice",
+////				"CustAmt", "sumall", "EarnestPayDays", "EarnestAmt",
+////				"StageDate", "FirstAmt", "DepositPercent", "Deposit",
+////				"ServiceChargePercent", "ServiceCharge", "NotarizationFee",
+////				"InsuranceTerm", "Insurance", "ReinsuranceDeposit",
+////				"FinanceAmt", "FinanceFC", "LackAmtPayDate",
+////				"LackAmtFinalPayDate", "ReceiverName", "ReceiverID",
+////				"ReceiverTel", "Insurer" };
+////		String[] mapValue = new String[] { "湖南三一工程机械有限公司", "湖南三一工程机械有限公司",
+////				"六桥泵车", "SY5419THB 52E(6)", "2", "风冷", "V09660", "300.00",
+////				"600.00", "陆佰万元整", "7", "100", "2012年8月31日", "60", "5", "3",
+////				"10", "6", "10", "5", "10", "21", "540", "10", "2012年8月31日",
+////				"2012年8月31日", "卿琳", "430111199910102121", "13800138200", "卿琳" };
+//		// 1.将现有的word模板复制一份，保存为合同编号.doc
+//		
+//		if(getWordtemplate() != null && this.bookdatas != null && this.bookdatas.size() > 0)
+//			{
+//			FileInputStream template = null;
+//	
+//			FileOutputStream contract = null;
+//			try {
+//				template = new FileInputStream(getWordtemplate());
+//	
+//				contract = new FileOutputStream(getWordFile());
+//				byte[] buf = new byte[32];
+//				int hasRead = 0;
+//				while ((hasRead = template.read(buf)) > 0) {
+//					contract.write(buf, 0, hasRead);
+//				}
+//			} catch (IOException e) {
+//				e.printStackTrace();
+//			} finally {
+//				if (null != template) {
+//					template.close();
+//				}
+//				if (null != contract) {
+//					contract.close();
+//				}
+//			}
+//			// 2.在新的文档里面插入动态值
+//			ActiveXComponent word = null;
+//			Dispatch doc = null;
+//			try
+//			{
+//				word = new ActiveXComponent("Word.Application");
+//				word.setProperty("Visible", new Variant(false));
+//				Dispatch documents = word.getProperty("Documents").toDispatch();
+//				doc = Dispatch.call(documents, "Open", getWordFile()).toDispatch();
+//				Dispatch activeDocument = word.getProperty("ActiveDocument")
+//						.toDispatch();
+//				Dispatch Marks = ActiveXComponent.call(activeDocument, "Bookmarks").toDispatch();
+//				Set<String> keys = this.bookdatas.keySet();
+//				for (String key:keys) {
+//					boolean bookMarkExist = ActiveXComponent.call(Marks, "Exists", key)
+//							.toBoolean(); // 查找标签
+//					if (bookMarkExist) {
+//		
+//						Dispatch rangeItem = Dispatch.call(Marks, "Item", key)
+//								.toDispatch();
+//						Dispatch range = Dispatch.call(rangeItem, "Range").toDispatch();
+//						Dispatch.put(range, "Text", new Variant(this.bookdatas.get(key)));// 插入书签的值
+//					}
+//				}
+//				Dispatch.call(doc, "Save");			   	
+//			   return new File(getWordFile()) ;
+//			}
+//			finally
+//			{
+//				if(doc != null)
+//				{
+//					try {
+//						Dispatch.call(doc, "Close", new Variant(true));
+//						doc = null;
+//					} catch (Exception e) {
+//						
+//					}
+//				}
+//				
+//				if (word != null) {
+//					try {
+//						Dispatch.call(word, "Quit");
+//						word = null;
+//					} catch (Exception e) {
+//						
+//					}
+//				}
+//			}
+//		}
+//		else
+//		{
+//			return new File(getWordFile()) ;
+//		}
 
 		
 
 	}
 	static final int wdFormatPDF = 17;// PDF 格式 
 	static final int ppSaveAsPDF = 32;// PDF 格式 
+	private long waittimes = -1;
+	public long getWaittimes() {
+		return waittimes;
+	}
+
+	public void setWaittimes(long waittimes) {
+		this.waittimes = waittimes;
+	}
 	public  void flashPaperConvert(String sourcePath, String destPath) throws IOException{
 		String command = flashpaperWorkDir+"flashprinter.exe " + sourcePath     
-                + "\" -o " + destPath;     
+                + " -o " + destPath;     
       
         Process pro = Runtime.getRuntime().exec(command);     
 }
 
-	protected File realWord2PDF(String pdfpath) throws IOException {
-		
+	protected File realWord2PDF(String pdfpath,long waittimes) throws Exception {
+		return FileConvertor.realWordConvertor(flashpaperWorkDir, getWordtemplate(), getWordFile(), bookdatas, pdfpath, waittimes);
 		/*
 		 * 1.将现有的word模板复制一份，保存为合同编号.doc 2.在新的文档里面插入动态值 3.转为pdf
 		 */
@@ -488,105 +496,105 @@ public class WordResponse {
 //				"2012年8月31日", "卿琳", "430111199910102121", "13800138200", "卿琳" };
 		// 1.将现有的word模板复制一份，保存为合同编号.doc
 		
-		if(getWordtemplate() != null )
-		{
-//			if(this.bookdatas != null && this.bookdatas.size() > 0)
-			{
-				FileInputStream template = null;
-		
-				FileOutputStream contract = null;
-				try {
-					template = new FileInputStream(getWordtemplate());
-		
-					contract = new FileOutputStream(getWordFile());
-					byte[] buf = new byte[32];
-					int hasRead = 0;
-					while ((hasRead = template.read(buf)) > 0) {
-						contract.write(buf, 0, hasRead);
-					}
-				} catch (IOException e) {
-					e.printStackTrace();
-				} finally {
-					if (null != template) {
-						template.close();
-					}
-					if (null != contract) {
-						contract.close();
-					}
-				}
-			}
-			
-		}
-		
-//		else
+//		if(getWordtemplate() != null )
 //		{
-//			return new File(getWordFile()) ;
+////			if(this.bookdatas != null && this.bookdatas.size() > 0)
+//			{
+//				FileInputStream template = null;
+//		
+//				FileOutputStream contract = null;
+//				try {
+//					template = new FileInputStream(getWordtemplate());
+//		
+//					contract = new FileOutputStream(getWordFile());
+//					byte[] buf = new byte[32];
+//					int hasRead = 0;
+//					while ((hasRead = template.read(buf)) > 0) {
+//						contract.write(buf, 0, hasRead);
+//					}
+//				} catch (IOException e) {
+//					e.printStackTrace();
+//				} finally {
+//					if (null != template) {
+//						template.close();
+//					}
+//					if (null != contract) {
+//						contract.close();
+//					}
+//				}
+//			}
+//			
 //		}
-		
-		// 2.在新的文档里面插入动态值
-		ActiveXComponent word = null;
-		Dispatch doc = null;
-		Dispatch wordObject;
-		try
-		{
-			word = new ActiveXComponent("Word.Application");
-			wordObject = word.getObject();
-			Dispatch.put(wordObject, "Visible", new Variant(false));
-
-//			word.setProperty("Visible", new Variant(false));
-			Dispatch documents = word.getProperty("Documents").toDispatch();
+//		
+////		else
+////		{
+////			return new File(getWordFile()) ;
+////		}
+//		
+//		// 2.在新的文档里面插入动态值
+//		ActiveXComponent word = null;
+//		Dispatch doc = null;
+//		Dispatch wordObject;
+//		try
+//		{
+//			word = new ActiveXComponent("Word.Application");
+//			wordObject = word.getObject();
+//			Dispatch.put(wordObject, "Visible", new Variant(false));
+//
+////			word.setProperty("Visible", new Variant(false));
 //			Dispatch documents = word.getProperty("Documents").toDispatch();
-			doc = Dispatch.call(documents, "Open", getWordFile()).toDispatch();
+////			Dispatch documents = word.getProperty("Documents").toDispatch();
 //			doc = Dispatch.call(documents, "Open", getWordFile()).toDispatch();
-			if(this.bookdatas != null && this.bookdatas.size() > 0)
-			{
-				Dispatch activeDocument = word.getProperty("ActiveDocument")
-						.toDispatch();
-				Dispatch Marks = ActiveXComponent.call(activeDocument, "Bookmarks").toDispatch();
-				Set<String> keys = this.bookdatas.keySet();
-				for (String key:keys) {
-					boolean bookMarkExist = ActiveXComponent.call(Marks, "Exists", key)
-							.toBoolean(); // 查找标签
-					if (bookMarkExist) {
-		
-						Dispatch rangeItem = Dispatch.call(Marks, "Item", key)
-								.toDispatch();
-						Dispatch range = Dispatch.call(rangeItem, "Range").toDispatch();
-						Dispatch.put(range, "Text", new Variant(this.bookdatas.get(key)));// 插入书签的值
-					}
-				}
-			}
-			Dispatch.call(doc, "Save");	
-//			Dispatch.call(doc,//   
-//					               "SaveAs", //   
-//					               pdfpath, // FileName   
-//					               wdFormatPDF);   
-			flashPaperConvert(getWordFile(),pdfpath);
-   	
-		   return new File(pdfpath) ;
-		}
-		finally
-		{
-			if(doc != null)
-			{
-				try {
-					Dispatch.call(doc, "Close", new Variant(true));
-					doc = null;
-				} catch (Exception e) {
-					
-				}
-			}
-			
-			if (word != null) {
-				try {
-					Dispatch.call(word, "Quit");
-					word = null;
-				} catch (Exception e) {
-					
-				}
-			}
-		}
-
+////			doc = Dispatch.call(documents, "Open", getWordFile()).toDispatch();
+//			if(this.bookdatas != null && this.bookdatas.size() > 0)
+//			{
+//				Dispatch activeDocument = word.getProperty("ActiveDocument")
+//						.toDispatch();
+//				Dispatch Marks = ActiveXComponent.call(activeDocument, "Bookmarks").toDispatch();
+//				Set<String> keys = this.bookdatas.keySet();
+//				for (String key:keys) {
+//					boolean bookMarkExist = ActiveXComponent.call(Marks, "Exists", key)
+//							.toBoolean(); // 查找标签
+//					if (bookMarkExist) {
+//		
+//						Dispatch rangeItem = Dispatch.call(Marks, "Item", key)
+//								.toDispatch();
+//						Dispatch range = Dispatch.call(rangeItem, "Range").toDispatch();
+//						Dispatch.put(range, "Text", new Variant(this.bookdatas.get(key)));// 插入书签的值
+//					}
+//				}
+//			}
+//			Dispatch.call(doc, "Save");	
+////			Dispatch.call(doc,//   
+////					               "SaveAs", //   
+////					               pdfpath, // FileName   
+////					               wdFormatPDF);   
+//			
+//		}
+//		finally
+//		{
+//			if(doc != null)
+//			{
+//				try {
+//					Dispatch.call(doc, "Close", new Variant(true));
+//					doc = null;
+//				} catch (Exception e) {
+//					
+//				}
+//			}
+//			
+//			if (word != null) {
+//				try {
+//					Dispatch.call(word, "Quit");
+//					word = null;
+//				} catch (Exception e) {
+//					
+//				}
+//			}
+//		}
+//		flashPaperConvert(getWordFile(),pdfpath);
+//	   	
+//		   return new File(pdfpath) ;
 		
 
 	}

@@ -33,7 +33,7 @@
 package com.frameworkset.util;
 
 import java.io.File;
-import java.io.IOException;
+import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.RandomAccessFile;
@@ -416,6 +416,218 @@ outStr = "2010Äê02ÔÂ07ÈÕ11Ê±Ðí£¬ÖÜÁéÓ±±¨¾¯£ºÔÚ2Â·¹«½»³µÉÏ±»°ÇÇÔ£¬²¢×¥»ñÒ»ÃûÏÓÒÉÈ
          String name = StringUtil.handleCNName(filename,request);
          response.setContentType("Application");
          response.setHeader("Content-Disposition", "attachment; filename=" + name);
+//         response.setHeader("Content-Disposition", "attachment; filename=" + new String(filename.getBytes(),"ISO-8859-1").replaceAll(" ", "-"));
+//         response.setHeader("Accept-Ranges", "bytes");
+//         response.setHeader("Content-Length", Long.toString(rangeFinish - rangeStart + 1));
+//         response.setHeader("Content-Range", "bytes " + rangeStart + "-" + rangeFinish + "/" + fileSize);
+
+         // seek to the requested offset
+         
+
+         // send the file
+         byte buffer[] = new byte[1024];
+//         in.skip(rangeStart);
+         long len;
+         int totalRead = 0;
+//         boolean nomore = false;
+         while (true) {
+             len = in.read(buffer);
+             if(len > 0)
+             {
+	                out.write(buffer, 0, (int) len);
+	                totalRead += len;
+             }
+             else
+             {
+             	break;
+             }
+                 
+         }
+         out.flush();
+     }
+     catch(Exception e)
+     {
+     	
+     	throw e;
+     }
+     finally {
+     	try
+			{
+     		if(in != null)
+     			in.close();		
+			}
+			catch (Exception e)
+			{
+				
+			}
+         try
+			{
+         	if(out != null)
+         		out.close();
+			}
+			catch (Exception e)
+			{
+				
+			}
+     }
+ }
+ 
+ public static void showFile(HttpServletRequest request, HttpServletResponse response, String filename,InputStream in) throws Exception {
+     OutputStream out = null;
+//     InputStream in = null;
+     try {
+     	if(in == null)
+     		return;
+     	out = response.getOutputStream();
+     	
+
+         String name = StringUtil.handleCNName(filename,request);
+         response.setContentType(FileUtil.getMimeTypeByleName(name));
+         response.setHeader( "Content-Disposition", "inline; filename="+name); 
+//         response.setHeader("Content-Disposition", "attachment; filename=" + name);
+//         response.setHeader("Content-Disposition", "attachment; filename=" + new String(filename.getBytes(),"ISO-8859-1").replaceAll(" ", "-"));
+//         response.setHeader("Accept-Ranges", "bytes");
+//         response.setHeader("Content-Length", Long.toString(rangeFinish - rangeStart + 1));
+//         response.setHeader("Content-Range", "bytes " + rangeStart + "-" + rangeFinish + "/" + fileSize);
+
+         // seek to the requested offset
+         
+
+         // send the file
+         byte buffer[] = new byte[1024];
+//         in.skip(rangeStart);
+         long len;
+         int totalRead = 0;
+//         boolean nomore = false;
+         while (true) {
+             len = in.read(buffer);
+             if(len > 0)
+             {
+	                out.write(buffer, 0, (int) len);
+	                totalRead += len;
+             }
+             else
+             {
+             	break;
+             }
+                 
+         }
+         out.flush();
+     }
+     catch(Exception e)
+     {
+     	
+     	throw e;
+     }
+     finally {
+     	try
+			{
+     		if(in != null)
+     			in.close();		
+			}
+			catch (Exception e)
+			{
+				
+			}
+         try
+			{
+         	if(out != null)
+         		out.close();
+			}
+			catch (Exception e)
+			{
+				
+			}
+     }
+ }
+ 
+ public static void showFile(HttpServletRequest request, HttpServletResponse response, File file) throws Exception {
+	 if(file == null || !file.exists())
+  		return;
+     OutputStream out = null;
+     InputStream in = null;
+     String filename = file.getName();
+//     InputStream in = null;
+     try {
+     	
+     	out = response.getOutputStream();
+     	in = new java.io.BufferedInputStream(new FileInputStream(file));
+
+         String name = StringUtil.handleCNName(filename,request);
+         response.setContentType(FileUtil.getMimeTypeByleName(name));
+         response.setHeader( "Content-Disposition", "inline; filename="+name); 
+//         response.setHeader("Content-Disposition", "attachment; filename=" + name);
+//         response.setHeader("Content-Disposition", "attachment; filename=" + new String(filename.getBytes(),"ISO-8859-1").replaceAll(" ", "-"));
+//         response.setHeader("Accept-Ranges", "bytes");
+//         response.setHeader("Content-Length", Long.toString(rangeFinish - rangeStart + 1));
+//         response.setHeader("Content-Range", "bytes " + rangeStart + "-" + rangeFinish + "/" + fileSize);
+
+         // seek to the requested offset
+         
+
+         // send the file
+         byte buffer[] = new byte[1024];
+//         in.skip(rangeStart);
+         long len;
+         int totalRead = 0;
+//         boolean nomore = false;
+         while (true) {
+             len = in.read(buffer);
+             if(len > 0)
+             {
+	                out.write(buffer, 0, (int) len);
+	                totalRead += len;
+             }
+             else
+             {
+             	break;
+             }
+                 
+         }
+         out.flush();
+     }
+     catch(Exception e)
+     {
+     	
+     	throw e;
+     }
+     finally {
+     	try
+			{
+     		if(in != null)
+     			in.close();		
+			}
+			catch (Exception e)
+			{
+				
+			}
+         try
+			{
+         	if(out != null)
+         		out.close();
+			}
+			catch (Exception e)
+			{
+				
+			}
+     }
+ }
+ 
+ public static void showFile(HttpServletRequest request, HttpServletResponse response, String filename, Blob blob) throws Exception {
+	 if(blob == null )
+  		return;
+     OutputStream out = null;
+     InputStream in = null;
+//     InputStream in = null;
+     try {
+     	
+     	out = response.getOutputStream();
+     	in = new java.io.BufferedInputStream(blob.getBinaryStream());
+
+         String name = StringUtil.handleCNName(filename,request);
+         response.setContentType(FileUtil.getMimeTypeByleName(name));
+         response.setHeader( "Content-Disposition", "inline; filename="+name); 
+//         response.setHeader("Content-Disposition", "attachment; filename=" + name);
 //         response.setHeader("Content-Disposition", "attachment; filename=" + new String(filename.getBytes(),"ISO-8859-1").replaceAll(" ", "-"));
 //         response.setHeader("Accept-Ranges", "bytes");
 //         response.setHeader("Content-Length", Long.toString(rangeFinish - rangeStart + 1));

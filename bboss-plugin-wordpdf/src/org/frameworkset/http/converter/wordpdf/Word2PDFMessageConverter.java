@@ -48,6 +48,23 @@ public class Word2PDFMessageConverter <T> implements HttpMessageConverter<T>{
 	private String tempDir;
 	private String flashpaperWorkDir;
 	private boolean openoffice = false;
+	private long waittimes = -1;
+
+	public String getFlashpaperWorkDir() {
+		return flashpaperWorkDir;
+	}
+
+	public void setFlashpaperWorkDir(String flashpaperWorkDir) {
+		this.flashpaperWorkDir = flashpaperWorkDir;
+	}
+
+	public long getWaittimes() {
+		return waittimes;
+	}
+
+	public void setWaittimes(long waittimes) {
+		this.waittimes = waittimes;
+	}
 
 	@Override
 	public boolean canRead(Class<?> clazz, MediaType mediaType) {
@@ -98,7 +115,22 @@ public class Word2PDFMessageConverter <T> implements HttpMessageConverter<T>{
 					tmp.setFlashpaperWorkDir(flashpaperWorkDir);
 				}
 			}
-			tmp._resonse(outputMessage, inputMessage);
+			
+			if(tmp.getWaittimes() == -1)
+			{
+				if(this.getWaittimes() != -1)
+				{
+					tmp.setWaittimes(getWaittimes());
+				}
+			}
+			try {
+				tmp._resonse(outputMessage, inputMessage);
+			} catch (IOException e) {
+				throw e;
+			}
+			 catch (Exception e) {
+					throw new IOException(e);
+			}
 			
 		}
 	}
