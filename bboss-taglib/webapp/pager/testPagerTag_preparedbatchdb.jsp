@@ -38,7 +38,7 @@ alter table SQLTEST add blobdata blob;
 						<pg:sqlparam name="object_id" value="<%=object_id %>" type="int" />
 						<pg:sqlparam name="created" value="<%=created %>" type="timestamp" />
 						<pg:sqlparam name="blobdata" value="<%=blobdata %>" type="blobfile" />
-						<pg:sqlparam name="clobdata" value="<%=clobdata %>" type="clobfile" />
+						<pg:sqlparam name="clobdata" value="<%=clobdata %>" type="clobfile" charset="GBK"/>
 					</pg:batch>
 				</pg:statement>
 				<pg:statement sql="<%=sql_1 %>" pretoken="#\\[" endtoken="\\]">

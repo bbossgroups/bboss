@@ -268,9 +268,7 @@ public class Word2PDFResponse extends WordResponse {
 			{
 				File pdfFile = new File(this.getPdfFile());
 				File wordContract = this.getRealWord();
-				OfficeManager officeManager = new DefaultOfficeManagerConfiguration()
-						.buildOfficeManager();
-				officeManager.start();
+				
 				OfficeDocumentConverter converter = new OfficeDocumentConverter(
 						officeManager);
 				converter.convert(wordContract, pdfFile);

@@ -17,14 +17,12 @@ package org.frameworkset.http.converter.wordpdf;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -34,9 +32,6 @@ import org.frameworkset.http.HttpOutputMessage;
 import org.frameworkset.http.converter.HttpMessageNotWritableException;
 
 import com.frameworkset.util.StringUtil;
-import com.jacob.activeX.ActiveXComponent;
-import com.jacob.com.Dispatch;
-import com.jacob.com.Variant;
 
 /**
  * <p> WordResponse.java</p>
@@ -476,7 +471,7 @@ public class WordResponse {
 }
 
 	protected File realWord2PDF(String pdfpath,long waittimes) throws Exception {
-		return FileConvertor.realWordConvertor(flashpaperWorkDir, getWordtemplate(), getWordFile(), bookdatas, pdfpath, waittimes);
+		return FileConvertor.realWordConvertorByFlashPaper(flashpaperWorkDir, getWordtemplate(), getWordFile(), bookdatas, pdfpath, waittimes);
 		/*
 		 * 1.将现有的word模板复制一份，保存为合同编号.doc 2.在新的文档里面插入动态值 3.转为pdf
 		 */
