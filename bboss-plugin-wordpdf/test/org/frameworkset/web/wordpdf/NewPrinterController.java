@@ -85,7 +85,7 @@ public class NewPrinterController {
 				"10", "6", "10", "5", "10", "21", "540", "10", "2012年8月31日",
 				"2012年8月31日", "卿琳", "430111199910102121", "13800138200", "卿琳","bboss" };
 		String hetongbianhao="20121222";
-		String wordtemplate = "D:\\bbossgroups-3.5.1\\bboss-plugin-wordpdf\\plugin\\wordpdf\\anjie.doc";
+		String wordtemplate = "D:\\workspace\\microcredit\\plugin\\wordpdf\\anjie.doc";
 		String wordfile = "d:\\test\\anjie_test.doc";
 		String toswfpath = "d:\\test\\contract_"+hetongbianhao+".swf";
 		File f = new File(toswfpath);
@@ -117,13 +117,15 @@ public class NewPrinterController {
 				"10", "6", "10", "5", "10", "21", "540", "10", "2012年8月31日",
 				"2012年8月31日", "卿琳", "430111199910102121", "13800138200", "卿琳","bboss" };
 		String hetongbianhao="20121222";
-		String wordtemplate = "D:\\bbossgroups-3.5.1\\bboss-plugin-wordpdf\\plugin\\wordpdf\\anjie.doc";
+		String wordtemplate = "D:\\workspace\\microcredit\\plugin\\wordpdf\\anjie.doc";
 		String pdfpath = "d:\\test\\anjieswftools_"+hetongbianhao+".pdf";
 		String wordfile = "d:\\test\\anjie_testswftools"+hetongbianhao+".doc";
 		String toswfpath = "d:\\test\\contractswftools_"+hetongbianhao+".swf";
+		String officeHome = "E:\\Program Files\\OpenOffice.org 3";
 		File f = new File(toswfpath);
 		if(!f.exists())
 		{
+			FileConvertor.init( officeHome);
 			FileConvertor.getRealWord(wordtemplate, wordfile,bookMarks, bookdatas);
 			FileConvertor.wordToPDFByOpenOffice(wordfile, pdfpath);
 			FileConvertor.swftoolsConvert(swftoolWorkDir, pdfpath, toswfpath);

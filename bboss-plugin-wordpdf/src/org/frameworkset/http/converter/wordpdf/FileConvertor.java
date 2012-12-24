@@ -3,12 +3,12 @@ package org.frameworkset.http.converter.wordpdf;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.Map;
 import java.util.Set;
 
 import org.artofsolving.jodconverter.OfficeDocumentConverter;
 import org.artofsolving.jodconverter.office.DefaultOfficeManagerConfiguration;
+import org.artofsolving.jodconverter.office.OfficeException;
 import org.artofsolving.jodconverter.office.OfficeManager;
 
 import com.jacob.activeX.ActiveXComponent;
@@ -21,16 +21,34 @@ import com.lowagie.text.pdf.PdfReader;
 
 public class FileConvertor {
 	static OfficeManager officeManager ;
-	static void init()
+	public static void init(String officeHome)
 	{
 		if(officeManager == null)
 		{
 			synchronized(FileConvertor.class)
 			{
-				if(officeManager == null)
-				{
-					officeManager = new DefaultOfficeManagerConfiguration().buildOfficeManager();
-					officeManager.start();
+				try {
+					if(officeManager == null)
+					{
+						DefaultOfficeManagerConfiguration config = new DefaultOfficeManagerConfiguration();
+//					config.setOfficeHome("E:\\Program Files\\OpenOffice.org 3");
+						if(officeHome != null)
+							config.setOfficeHome(officeHome);
+						officeManager = config.buildOfficeManager();
+						officeManager.start();
+					}
+				} catch (NullPointerException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IllegalArgumentException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IllegalStateException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (OfficeException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
 			}
 		}
@@ -329,12 +347,19 @@ public class FileConvertor {
 		return new File(topath);
 
 	}
-
+	public static void assertInitOfficeManager()
+	{
+		if(officeManager == null)
+		{
+			throw new AssertInitOfficeManagerFailed("Openoffice not right inited.please call method FileConvertor.init(String officeHome).");
+		}
+	}
 	public static File wordToPDFByOpenOffice(String wordfile,String pdffile)
 	{
 		File pdfFile = new File(pdffile);
 		File wordContract = new File(wordfile);
-		init();
+		init(null);
+		assertInitOfficeManager();
 		OfficeDocumentConverter converter = new OfficeDocumentConverter(
 				officeManager);
 		converter.convert(wordContract, pdfFile);
