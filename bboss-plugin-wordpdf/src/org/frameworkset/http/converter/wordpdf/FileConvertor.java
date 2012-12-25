@@ -23,6 +23,7 @@ public class FileConvertor {
 	static OfficeManager officeManager ;
 	public static void init(String officeHome)
 	{
+		
 		if(officeManager == null)
 		{
 			synchronized(FileConvertor.class)

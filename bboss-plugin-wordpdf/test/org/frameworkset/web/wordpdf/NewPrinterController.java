@@ -1,5 +1,4 @@
 package org.frameworkset.web.wordpdf;
-
 import java.io.File;
 
 import org.frameworkset.http.FileBlob;
@@ -21,11 +20,11 @@ public class NewPrinterController {
 				"FinanceAmt", "FinanceFC", "LackAmtPayDate",
 				"LackAmtFinalPayDate", "ReceiverName", "ReceiverID",   
 				"ReceiverTel", "Insurer","authoriate" };
-		String[] mapValue = new String[] { "湖南三一工程机械有限公司", "湖南三一工程机械有限公司",
-				"六桥泵车", "SY5419THB 52E(6)", "2", "风冷", "V09660", "300.00",
+		String[] mapValue = new String[] { "公司", "公司",
+				"车", "dd 52E(6)", "2", "风冷", "V09660", "300.00",
 				"600.00", "陆佰万元整", "7", "100", "2012年8月31日", "60", "5", "3",
 				"10", "6", "10", "5", "10", "21", "540", "10", "2012年8月31日",
-				"2012年8月31日", "卿琳", "430111199910102121", "13800138200", "卿琳","bboss" };
+				"2012年8月31日", "琳", "430111199910102121", "13800138200", "琳","bboss" };
 		 
 		String wordtemplate = "D:\\workspace\\microcredit\\plugin\\wordpdf\\anjie.doc";
 		String wordfile = "d:\\anjie_test.doc";
@@ -52,11 +51,11 @@ public class NewPrinterController {
 				"FinanceAmt", "FinanceFC", "LackAmtPayDate",
 				"LackAmtFinalPayDate", "ReceiverName", "ReceiverID",   
 				"ReceiverTel", "Insurer","authoriate" };
-		String[] mapValue = new String[] { "湖南三一工程机械有限公司", "湖南三一工程机械有限公司",
-				"六桥泵车", "SY5419THB 52E(6)", "2", "风冷", "V09660", "300.00",
+		String[] mapValue = new String[] { "公司", "公司",
+				"车", "dd 52E(6)", "2", "风冷", "V09660", "300.00",
 				"600.00", "陆佰万元整", "7", "100", "2012年8月31日", "60", "5", "3",
 				"10", "6", "10", "5", "10", "21", "540", "10", "2012年8月31日",
-				"2012年8月31日", "卿琳", "430111199910102121", "13800138200", "卿琳","bboss" };
+				"2012年8月31日", "琳", "430111199910102121", "13800138200", "琳","bboss" };
 		
 		String wordtemplate = "D:\\workspace\\microcredit\\plugin\\wordpdf\\anjie.doc";
 		String wordfile = "d:\\anjie_test.doc";
@@ -79,11 +78,11 @@ public class NewPrinterController {
 				"FinanceAmt", "FinanceFC", "LackAmtPayDate",
 				"LackAmtFinalPayDate", "ReceiverName", "ReceiverID",   
 				"ReceiverTel", "Insurer","authoriate" };
-		String[] mapValue = new String[] { "湖南三一工程机械有限公司", "湖南三一工程机械有限公司",
-				"六桥泵车", "SY5419THB 52E(6)", "2", "风冷", "V09660", "300.00",
+		String[] mapValue = new String[] { "公司", "公司",
+				"车", "dd 52E(6)", "2", "风冷", "V09660", "300.00",
 				"600.00", "陆佰万元整", "7", "100", "2012年8月31日", "60", "5", "3",
 				"10", "6", "10", "5", "10", "21", "540", "10", "2012年8月31日",
-				"2012年8月31日", "卿琳", "430111199910102121", "13800138200", "卿琳","bboss" };
+				"2012年8月31日", "琳", "430111199910102121", "13800138200", "琳","bboss" };
 		String hetongbianhao="20121222";
 		String wordtemplate = "D:\\workspace\\microcredit\\plugin\\wordpdf\\anjie.doc";
 		String wordfile = "d:\\test\\anjie_test.doc";
@@ -111,11 +110,11 @@ public class NewPrinterController {
 				"FinanceAmt", "FinanceFC", "LackAmtPayDate",
 				"LackAmtFinalPayDate", "ReceiverName", "ReceiverID",   
 				"ReceiverTel", "Insurer","authoriate" };
-		String[] bookdatas = new String[] { "湖南三一工程机械有限公司", "湖南三一工程机械有限公司",
-				"六桥泵车", "SY5419THB 52E(6)", "2", "风冷", "V09660", "300.00",
+		String[] bookdatas = new String[] { "公司", "公司",
+				"车", "dd 52E(6)", "2", "风冷", "V09660", "300.00",
 				"600.00", "陆佰万元整", "7", "100", "2012年8月31日", "60", "5", "3",
 				"10", "6", "10", "5", "10", "21", "540", "10", "2012年8月31日",
-				"2012年8月31日", "卿琳", "430111199910102121", "13800138200", "卿琳","bboss" };
+				"2012年8月31日", "琳", "430111199910102121", "13800138200", "琳","bboss" };
 		String hetongbianhao="20121222";
 		String wordtemplate = "D:\\workspace\\microcredit\\plugin\\wordpdf\\anjie.doc";
 		String pdfpath = "d:\\test\\anjieswftools_"+hetongbianhao+".pdf";
@@ -155,11 +154,11 @@ public class NewPrinterController {
 				"FinanceAmt", "FinanceFC", "LackAmtPayDate",
 				"LackAmtFinalPayDate", "ReceiverName", "ReceiverID",   
 				"ReceiverTel", "Insurer","authoriate" };
-		String[] mapValue = new String[] { "湖南三一工程机械有限公司", "湖南三一工程机械有限公司",
-				"六桥泵车", "SY5419THB 52E(6)", "2", "风冷", "V09660", "300.00",
+		String[] mapValue = new String[] { "公司", "公司",
+				"车", "dd 52E(6)", "2", "风冷", "V09660", "300.00",
 				"600.00", "陆佰万元整", "7", "100", "2012年8月31日", "60", "5", "3",
 				"10", "6", "10", "5", "10", "21", "540", "10", "2012年8月31日",
-				"2012年8月31日", "卿琳", "430111199910102121", "13800138200", "卿琳","bboss" };
+				"2012年8月31日", "琳", "430111199910102121", "13800138200", "琳","bboss" };
 		String wordtemplate = "D:\\workspace\\microcredit\\plugin\\wordpdf\\anjie.doc";
 		String wordfile = "d:\\anjie_test.doc";
 		String pdftmp = "d:\\contracttemp.pdf";
@@ -185,11 +184,11 @@ public class NewPrinterController {
 				"FinanceAmt", "FinanceFC", "LackAmtPayDate",
 				"LackAmtFinalPayDate", "ReceiverName", "ReceiverID",   
 				"ReceiverTel", "Insurer","authoriate" };
-		String[] mapValue = new String[] { "湖南三一工程机械有限公司", "湖南三一工程机械有限公司",
-				"六桥泵车", "SY5419THB 52E(6)", "2", "风冷sdfsdf", "V09660ffff", "300.00",
+		String[] mapValue = new String[] { "公司", "公司",
+				"车", "dd 52E(6)", "2", "风冷sdfsdf", "V09660ffff", "300.00",
 				"600.00", "陆佰万元整", "7", "100", "2012年8月31日", "60", "5", "3",
 				"10", "6", "10", "5", "10", "21", "540", "10", "2012年8月31日",
-				"2012年8月31日", "卿琳", "430111199910102121", "13800138200", "卿琳","bboss" };
+				"2012年8月31日", "琳", "430111199910102121", "13800138200", "琳","bboss" };
 		String wordtemplate = "D:\\workspace\\microcredit\\plugin\\wordpdf\\anjie.doc";
 		String wordfile = "d:\\anjie_test.doc";
 		FileConvertor.getRealWord(wordtemplate, wordfile, bookMarks,mapValue);
@@ -211,11 +210,11 @@ public class NewPrinterController {
 				"FinanceAmt", "FinanceFC", "LackAmtPayDate",
 				"LackAmtFinalPayDate", "ReceiverName", "ReceiverID",   
 				"ReceiverTel", "Insurer","authoriate" };
-		String[] mapValue = new String[] { "湖南三一工程机械有限公司", "湖南三一工程机械有限公司",
-				"六桥泵车", "SY5419THB 52E(6)", "2", "风冷sdfsdf", "V09660ffff", "300.00",
+		String[] mapValue = new String[] { "公司", "公司",
+				"车", "dd 52E(6)", "2", "风冷sdfsdf", "V09660ffff", "300.00",
 				"600.00", "陆佰万元整", "7", "100", "2012年8月31日", "60", "5", "3",
 				"10", "6", "10", "5", "10", "21", "540", "10", "2012年8月31日",
-				"2012年8月31日", "卿琳", "430111199910102121", "13800138200", "卿琳","bboss" };
+				"2012年8月31日", "琳", "430111199910102121", "13800138200", "琳","bboss" };
 		String wordtemplate = "D:\\workspace\\microcredit\\plugin\\wordpdf\\anjie.doc";
 		String wordfile = "d:\\anjie_test.doc";
 		FileConvertor.getRealWord(wordtemplate, wordfile, bookMarks,mapValue);
@@ -238,11 +237,11 @@ public class NewPrinterController {
 				"FinanceAmt", "FinanceFC", "LackAmtPayDate",
 				"LackAmtFinalPayDate", "ReceiverName", "ReceiverID",   
 				"ReceiverTel", "Insurer","authoriate" };
-		String[] mapValue = new String[] { "湖南三一工程机械有限公司", "湖南三一工程机械有限公司",
-				"六桥泵车", "SY5419THB 52E(6)", "2", "风冷sdfsdf", "V09660ffff", "300.00",
+		String[] mapValue = new String[] { "公司", "公司",
+				"车", "dd 52E(6)", "2", "风冷sdfsdf", "V09660ffff", "300.00",
 				"600.00", "陆佰万元整", "7", "100", "2012年8月31日", "60", "5", "3",
 				"10", "6", "10", "5", "10", "21", "540", "10", "2012年8月31日",
-				"2012年8月31日", "卿琳", "430111199910102121", "13800138200", "卿琳","bboss" };
+				"2012年8月31日", "琳", "430111199910102121", "13800138200", "琳","bboss" };
 		String wordtemplate = "D:\\workspace\\microcredit\\plugin\\wordpdf\\anjie.doc";
 		String wordfile = "d:\\anjie_test.doc";
 		FileConvertor.getRealWord(wordtemplate, wordfile, bookMarks,mapValue);
