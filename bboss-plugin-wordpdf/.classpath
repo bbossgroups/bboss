@@ -17,5 +17,6 @@
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/jurt.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/ridl.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/unoil.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>
