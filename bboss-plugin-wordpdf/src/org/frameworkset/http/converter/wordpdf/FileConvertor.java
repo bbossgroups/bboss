@@ -160,6 +160,11 @@ public class FileConvertor {
 							Dispatch.put(range, "Text",
 									new Variant(bookdatas.get(key)));// 插入书签的值
 						}
+						else
+						{
+							System.out.println(
+				                    "Cannot find bookmark '" + key + "'");
+						}
 					}
 					Dispatch.call(doc, "Save");
 				}
@@ -388,6 +393,8 @@ public class FileConvertor {
 			                    bookmarkName + "'.");
 			            // Get the XTextRange associated with the specified bookmark.
 			            textRange = getBookmarkTextRange(bookmarksSupplier, bookmarkName);
+			            if(textRange == null)
+			            	continue;
 			            textContent = textRange.getText();
 			            // Create a text cursor then navigate to the text range.
 			            textCursor = textContent.createTextCursor();
@@ -530,6 +537,11 @@ public class FileConvertor {
 									.toDispatch();
 							Dispatch.put(range, "Text", new Variant(
 									bookdatas[i]));// 插入书签的值
+						}
+						else
+						{
+							System.out.println(
+				                    "Cannot find bookmark '" + key + "'");
 						}
 						i++;
 					}
@@ -751,6 +763,8 @@ public class FileConvertor {
 			                    bookmarkName + "'.");
 			            // Get the XTextRange associated with the specified bookmark.
 			            textRange = getBookmarkTextRange(bookmarksSupplier, bookmarkName);
+			            if(textRange == null)
+			            	continue;
 			            textContent = textRange.getText();
 			            // Create a text cursor then navigate to the text range.
 			            textCursor = textContent.createTextCursor();
@@ -851,8 +865,9 @@ public class FileConvertor {
         } catch (NoSuchElementException e) {
         }
         if (bmk == null) {
-            throw new java.lang.Exception(
+           System.out.println(
                     "Cannot find bookmark '" + bookmarkName + "'");
+           return null;
         }
 
         // Get the bookmark's XTextContent.  It allows objects to be

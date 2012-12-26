@@ -31,7 +31,7 @@
 		       ==========================
 		  -->
 	
-	<target name="distrib" depends="init,jar-bboss-wordpdf,jar-bboss-wordpdf-test,jar-sources,copy-depends-liberary" description="copy jar file to distribution directory">
+	<target name="distrib" depends="init,jar-bboss-wordpdf,jar-bboss-wordpdf-test,jar-sources,war" description="copy jar file to distribution directory">
 		<echo>Construct the distribution package...</echo>
 	</target>
 
@@ -45,7 +45,8 @@
 		
 			
 			<classpath id="cp-classes-bboss-wordpdf">
-				<fileset dir="lib-compile/" includes="**/*.jar *.zip" />	
+				<fileset dir="lib-compile/" includes="**/*.jar *.zip" />
+				<fileset dir="lib-depends/" includes="**/*.jar *.zip" />	
 				<fileset dir="WebRoot/WEB-INF/lib/" includes="**/*.jar *.zip" />						
 			</classpath>
 		</javac>
@@ -81,6 +82,7 @@
 				
 				<classpath id="cp-classes-bboss-wordpdf-test">
 					<fileset dir="lib-compile/" includes="**/*.jar *.zip" />	
+					<fileset dir="lib-depends/" includes="**/*.jar *.zip" />	
 					<fileset dir="WebRoot/WEB-INF/lib/" includes="**/*.jar *.zip" />				
 					<fileset dir="distrib/" includes="**/*.jar *.zip" />
 				</classpath>
@@ -118,14 +120,36 @@
 				</target>
 			
 		
-	<target name="copy-depends-liberary" description="copy depends liberarys">
-				<echo>copy depends liberarys ...</echo>
+	<target name="war" description="war resoures">
+				<echo>war resoures ...</echo>
 				<copy todir="distrib/WebRoot">
 					<fileset dir="WebRoot" includes="**/*" />
 				</copy>
 				<copy todir="distrib/WebRoot/WEB-INF/lib">
 					<fileset dir="distrib" includes="bboss-wordpdf-test.jar bboss-wordpdf.jar" />
 				</copy>	
+				<copy todir="distrib/WebRoot/WEB-INF/lib">
+					<fileset dir="lib-depends" includes="*.jar" />
+				</copy>	
+				<mkdir dir="distrib/WebRoot/WEB-INF/classes"></mkdir>
+				<copy todir="distrib/WebRoot/WEB-INF/classes">
+					<fileset dir="test" includes="log4j.properties" />
+				</copy>	
+				<war destfile="distrib/bboss-office.war" webxml="${distrib}/WebRoot/WEB-INF/web.xml">
+				  <fileset dir="${distrib}/WebRoot/"/>
+					<manifest>
+									
+									<attribute name="Implementation-Version" value="${impl.version}" />
+									<attribute name="Specification-Version" value="${revision}" />
+									<attribute name="Implementation-Vendor" value="${impl.vendor}" />
+									<attribute name="Implementation-ProductID" value="${impl.productID}" />
+									<attribute name="Compile-Timestamp" value="${compile.timestamp}" />
+									<attribute name="Compile-User" value="${username}" />
+								</manifest>
+				  
+				</war>
+				
+				<delete dir="${distrib}/WebRoot" />	
 
 	</target>
 	

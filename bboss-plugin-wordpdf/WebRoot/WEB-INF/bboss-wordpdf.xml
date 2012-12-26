@@ -5,8 +5,8 @@ bboss-wordpdf.xml
 -->
 <properties>
     <property name="/wordpdf/*.page"    		
-		f:flashpaperWorkDir="D:\FlashPaper2.2\"   
-		f:swftoolWorkDir="C:\Program Files\SWFTools\" 	
-		f:officeHome = "C:\Program Files\OpenOffice.org 3\"	
+		f:flashpaperWorkDir="D:\FlashPaper\FlashPaper2.2\"   
+		f:swftoolWorkDir="E:\SWFTools\" 	
+		f:officeHome = "E:\Program Files\OpenOffice.org 3\"	
     	class="org.frameworkset.web.wordpdf.NewPrinterController"/>
 </properties>
