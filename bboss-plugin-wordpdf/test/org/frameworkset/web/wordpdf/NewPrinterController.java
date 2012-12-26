@@ -8,6 +8,7 @@ import org.frameworkset.util.annotations.ResponseBody;
 public class NewPrinterController {
 	private String flashpaperWorkDir ;
 	private String swftoolWorkDir;
+	private String officeHome;
 	public @ResponseBody FileBlob getPDF() throws Exception  {
 		System.out.println("--------------程序执行到此处------------------");
 		
@@ -116,11 +117,11 @@ public class NewPrinterController {
 				"10", "6", "10", "5", "10", "21", "540", "10", "2012年8月31日",
 				"2012年8月31日", "琳", "430111199910102121", "13800138200", "琳","bboss" };
 		String hetongbianhao="20121222";
-		String wordtemplate = "D:\\workspace\\microcredit\\plugin\\wordpdf\\anjie.doc";
+		String wordtemplate = "D:\\bbossgroups-3.5.1\\bboss-plugin-wordpdf\\plugin\\wordpdf\\anjie.doc";
 		String pdfpath = "d:\\test\\anjieswftools_"+hetongbianhao+".pdf";
 		String wordfile = "d:\\test\\anjie_testswftools"+hetongbianhao+".doc";
 		String toswfpath = "d:\\test\\contractswftools_"+hetongbianhao+".swf";
-		String officeHome = "E:\\Program Files\\OpenOffice.org 3";
+//		String officeHome = "E:\\Program Files\\OpenOffice.org 3";
 		File f = new File(toswfpath);
 		if(!f.exists())
 		{
@@ -156,11 +157,11 @@ public class NewPrinterController {
 				"10", "6", "10", "5", "10", "21", "540", "10", "2012年8月31日",
 				"2012年8月31日", "琳", "430111199910102121", "13800138200", "琳","bboss" };
 		String hetongbianhao="20121222";
-		String wordtemplate = "D:\\workspace\\microcredit\\plugin\\wordpdf\\anjie.doc";
+		String wordtemplate = "D:\\bbossgroups-3.5.1\\bboss-plugin-wordpdf\\plugin\\wordpdf\\anjie.doc";
 		String pdfpath = "d:\\test\\anjieswftools_"+hetongbianhao+".pdf";
 		String wordfile = "d:\\test\\anjie_testswftools"+hetongbianhao+".doc";
 		String toswfpath = "d:\\test\\contractswftools_"+hetongbianhao+".swf";
-		String officeHome = "E:\\Program Files\\OpenOffice.org 3";
+//		String officeHome = "E:\\Program Files\\OpenOffice.org 3";
 		File f = new File(toswfpath);
 		if(!f.exists())
 		{

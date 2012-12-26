@@ -28,7 +28,6 @@ import com.sun.star.comp.helper.BootstrapException;
 import com.sun.star.container.NoSuchElementException;
 import com.sun.star.container.XNameAccess;
 import com.sun.star.frame.XComponentLoader;
-import com.sun.star.frame.XModel;
 import com.sun.star.frame.XStorable;
 import com.sun.star.lang.EventObject;
 import com.sun.star.lang.XComponent;
@@ -67,7 +66,7 @@ public class FileConvertor {
 			                throw new java.lang.Exception(e);
 			            }
 	        		 }
-	        	}
+	        	}	        	
 	        }
 	 }
 	public static void init(String officeHome)
@@ -232,7 +231,7 @@ public class FileConvertor {
 				initXComponentContext(null);
 				// 2.在新的文档里面插入动态值
 				XComponent document = null;
-				 XModel model = null;
+//				 XModel model = null;
 				
 	//	        FileConvertor.init(null);
 	
@@ -286,7 +285,7 @@ public class FileConvertor {
 		                    "WriterDoc: Create the document '" + wordfile +
 		                    "' based on template " + wordtemplate + ".");
 		
-		            String templateFileURL = filePathToURL(wordtemplate);
+		            String templateFileURL = filePathToURL(wordfile);
 		            document = loader.loadComponentFromURL(
 		                    templateFileURL,    // URL of templateFile.
 		                    "_blank",           // Target frame name (_blank creates new frame).
@@ -296,8 +295,8 @@ public class FileConvertor {
 		
 			        // Get the document window and frame.
 		
-			        model = (XModel) UnoRuntime.queryInterface(
-			                XModel.class, document);
+//			        model = (XModel) UnoRuntime.queryInterface(
+//			                XModel.class, document);
 			       
 		//	        XController c = model.getCurrentController();
 		//	        XFrame frame = c.getFrame();
@@ -452,12 +451,12 @@ public class FileConvertor {
 				}
 				finally
 				{
-					try {
-						if(model != null)
-							model.dispose();
-					} catch (Exception e) {
-						
-					}
+//					try {
+//						if(model != null)
+//							model.dispose();
+//					} catch (Exception e) {
+//						
+//					}
 					try {
 						if(document != null)
 							document.dispose();
@@ -599,7 +598,7 @@ public class FileConvertor {
 				initXComponentContext(null);
 				// 2.在新的文档里面插入动态值
 				XComponent document = null;
-				XModel model = null;
+//				XModel model = null;
 	//	        FileConvertor.init(null);
 	
 		        ////////////////////////////////////////////////////////////////////
@@ -652,9 +651,9 @@ public class FileConvertor {
 		                    "WriterDoc: Create the document '" + wordfile +
 		                    "' based on template " + wordtemplate + ".");
 		
-		            String templateFileURL = filePathToURL(wordtemplate);
+		            String templateFileURL = filePathToURL(wordfile);
 		            document = loader.loadComponentFromURL(
-		                    templateFileURL,    // URL of templateFile.
+		            		templateFileURL,    // URL of templateFile.
 		                    "_blank",           // Target frame name (_blank creates new frame).
 		                    0,                  // Search flags.
 		                    properties);        // Document attributes.
@@ -662,8 +661,8 @@ public class FileConvertor {
 		
 			        // Get the document window and frame.
 		
-			        model = (XModel) UnoRuntime.queryInterface(
-			                XModel.class, document);
+//			        model = (XModel) UnoRuntime.queryInterface(
+//			                XModel.class, document);
 		//	        XController c = model.getCurrentController();
 		//	        XFrame frame = c.getFrame();
 		//	        XWindow window = frame.getContainerWindow();
@@ -815,12 +814,12 @@ public class FileConvertor {
 				}
 				finally
 				{
-					try {
-						if(model != null)
-							model.dispose();
-					} catch (Exception e) {
-						
-					}
+//					try {
+//						if(model != null)
+//							model.dispose();
+//					} catch (Exception e) {
+//						
+//					}
 					try {
 						if(document != null)
 							document.dispose();

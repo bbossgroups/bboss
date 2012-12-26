@@ -62,6 +62,7 @@ import com.sun.star.uno.UnoRuntime;
 import com.sun.star.uno.XComponentContext;
 import com.sun.star.xml.dom.XDocument;
 /**
+ * http://wiki.openoffice.org/wiki/Documentation
  * http://www.oooforum.org/forum/viewtopic.phtml?t=61386&highlight=word+bookmark&sid=df064197efdc6c79cb5c0e1af159c866
  * An example of creating an OpenOffice Writer document.  This class
  * demonstrates techniques to do the following:
@@ -720,13 +721,15 @@ public class WriteDoc {
 				"10", "6", "10", "5", "10", "21", "540", "10", "2012年8月31日",
 				"2012年8月31日", "琳", "430111199910102121", "13800138200", "琳","bboss" };
 		String hetongbianhao="20121222";
-		String wordtemplate = "D:\\workspace\\microcredit\\plugin\\wordpdf\\anjie.doc";
+		String wordtemplate = "D:\\bbossgroups-3.5.1\\bboss-plugin-wordpdf\\plugin\\wordpdf\\anjie.doc";
 		String pdfpath = "d:\\test\\anjieswftools_"+hetongbianhao+".pdf";
 		String wordfile = "d:\\test\\anjie_testswftools"+hetongbianhao+".doc";
 		String toswfpath = "d:\\test\\contractswftools_"+hetongbianhao+".swf";
-		String officeHome = "E:\\Program Files\\OpenOffice.org 3";
+//		String officeHome = "E:\\Program Files\\OpenOffice.org 3";\
+		String officeHome = "C:\\Program Files\\OpenOffice.org 3\\";
 		File f = new File(toswfpath);
-		String swftoolWorkDir="E:\\SWFTools\\" ;
+//		String swftoolWorkDir="E:\\SWFTools\\" ;
+		String swftoolWorkDir="C:\\Program Files\\SWFTools\\" ;
 		if(!f.exists())
 		{
 			FileConvertor.initXComponentContext(officeHome);
