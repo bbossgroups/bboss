@@ -62,6 +62,7 @@ import com.sun.star.uno.UnoRuntime;
 import com.sun.star.uno.XComponentContext;
 import com.sun.star.xml.dom.XDocument;
 /**
+ * http://wiki.swftools.org/wiki/Installation#How_to_compile.2Flink_swftools_on_Unix.2FLinux.2FBSD.3F
  * http://wiki.openoffice.org/wiki/Documentation
  * http://www.oooforum.org/forum/viewtopic.phtml?t=61386&highlight=word+bookmark&sid=df064197efdc6c79cb5c0e1af159c866
  * An example of creating an OpenOffice Writer document.  This class

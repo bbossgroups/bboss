@@ -15,6 +15,7 @@ import org.artofsolving.jodconverter.office.DefaultOfficeManagerConfiguration;
 import org.artofsolving.jodconverter.office.OfficeException;
 import org.artofsolving.jodconverter.office.OfficeManager;
 
+import com.frameworkset.util.Util;
 import com.jacob.activeX.ActiveXComponent;
 import com.jacob.com.Dispatch;
 import com.jacob.com.Variant;
@@ -1082,8 +1083,18 @@ public class FileConvertor {
 			String sourcePath, String destPath) throws Exception
 	{
 		//pdf2swf.exe -t D:\anjie_test.pdf  -s flashversion=9 -o d:\anjie_test.swf
-		String command = swftoolsWorkDir + "pdf2swf.exe " + sourcePath
+		String osname = Util.getOS();
+		String command = null;
+		if(Util.isWindows(osname))
+		{
+			command = swftoolsWorkDir + "pdf2swf.exe " + sourcePath
 				+ " -s flashversion=9 -o " + destPath;
+		}
+		else
+		{
+			command = "."+swftoolsWorkDir + "pdf2swf " + sourcePath
+					+ " -s flashversion=9 -o " + destPath;
+		}
 
 		Process pro = Runtime.getRuntime().exec(command);
 		try {			

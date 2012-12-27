@@ -135,5 +135,59 @@ public class Util implements Serializable{
 				throw new NoClassDefFoundError(x1.getMessage());
 			}
 		}
+		
+		/**
+		 * determine the OS name
+		 * 
+		 * @return The name of the OS
+		 */
+		public static final String getOS() {
+			return System.getProperty("os.name");
+		}
+
+		/**
+		 * @return True if the OS is a Windows derivate.
+		 */
+		public static final boolean isWindows() {
+			return getOS().contains("Windows");
+		}
+
+		/**
+		 * @return True if the OS is a Linux derivate.
+		 */
+		public static final boolean isLinux() {
+			return getOS().contains("Linux");
+		}
+		
+		/**
+		 * @return True if the OS is a Linux derivate.
+		 */
+		public static final boolean isUnix() {
+			return getOS().contains("Unix");
+		}
+		
+		/**
+		 * @return True if the OS is a Windows derivate.
+		 */
+		public static final boolean isWindows(String osname) {
+			return osname.contains("Windows");
+		}
+
+		/**
+		 * @return True if the OS is a Linux derivate.
+		 */
+		public static final boolean isLinux(String osname) {
+			return osname.contains("Linux");
+		}
+		
+		/**
+		 * @return True if the OS is a Linux derivate.
+		 */
+		public static final boolean isUnix(String osname) {
+			return osname.contains("Unix");
+		}
+		
+		
+		
 
 }
