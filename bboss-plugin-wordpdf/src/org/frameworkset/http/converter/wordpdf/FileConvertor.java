@@ -63,6 +63,9 @@ public class FileConvertor {
 			            		context = Bootstrap.bootstrap();
 			            	else
 			            		context = BootstrapSocketConnector.bootstrap(oooExeFolder);
+			            	 System.out.println(
+			     	                "WriterDoc: Finshed Start up or connect to the remote service manager.");
+
 			            } catch (BootstrapException e) {
 			                throw new java.lang.Exception(e);
 			            }

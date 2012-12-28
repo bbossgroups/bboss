@@ -166,8 +166,11 @@ public class NewPrinterController {
 		File f = new File(toswfpath);
 		if(!f.exists())
 		{
-			FileConvertor.initXComponentContext(officeHome);
+			System.out.println("officeHome__________:" + officeHome);
 			FileConvertor.init( officeHome);
+			System.out.println("officeHome__________:" + officeHome);
+			FileConvertor.initXComponentContext(officeHome);
+			
 			FileConvertor.getRealWordByOpenoffice(wordtemplate, wordfile,bookMarks, bookdatas);
 			FileConvertor.wordToPDFByOpenOffice(wordfile, pdfpath);
 			FileConvertor.swftoolsConvert(swftoolWorkDir, pdfpath, toswfpath);
