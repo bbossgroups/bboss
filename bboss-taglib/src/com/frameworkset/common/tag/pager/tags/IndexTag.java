@@ -1850,7 +1850,7 @@ public final class IndexTag extends PagerTagSupport {
               promotion)
                      */
             
-            String pagerjumpto = uuid+".go";
+            String pagerjumpto = uuid+".jumpto";
             
             Input go = (Input) new Input()            
             .setName(gotopageid)            
@@ -1858,7 +1858,7 @@ public final class IndexTag extends PagerTagSupport {
             .setSize(2)
             .setClass("page_input");
             go.setID(gotopageid);            
-            go.setOnKeyDown("keydowngo(event,'"+ pagerjumpto + "')");
+            go.setOnKeyDown("___keydowngo(event,'"+ pagerjumpto + "')");
             
            
                   
