@@ -8,8 +8,64 @@ http://wiki.openoffice.org/w/images/7/7e/Installation_Guide_OOo3.pdf
 http://wiki.swftools.org/wiki/Main_Page#Installation_guides
 http://wiki.swftools.org/wiki/Installation
 在安装swftools 0.9.2时报错，转而安装swftools 0.9.1
-默认安装目录/usr/local/bin
+默认安装目录
 /usr/local/share/swftools
+http://www.foolabs.com/xpdf/download.html
+zlib 安装
+jpeg.c:462: error: conflicting types for ‘jpeg_load_from_mem’
+
+make[2]: g++: Command not found
+http://www.rpmfind.net/linux/rpm2html/search.php?query=gcc-c%2B%2B
+安装：gcc-c++-4.4.6-4.el6.i686.rpm libstdc++-devel-4.4.6-4.el6.i686.rpm
+
+s -Wformat -O -fomit-frame-pointer  modules/swfaction.c -o modules/swfaction.o
+In file included from modules/.././bitio.h:23,
+                 from modules/../rfxswf.h:37,
+                 from modules/swfaction.c:24:
+modules/.././types.h:39:2: error: #error "no way to define 64 bit integer"
+modules/.././types.h:42:2: error: #error "don't know how to define 32 bit integer"
+modules/.././types.h:45:2: error: #error "don't know how to define 16 bit integer"
+modules/.././types.h:48:2: error: #error "don't know how to define 8 bit integer"
+make[1]: *** [modules/swfaction.o] Error 1
+make[1]: Leaving directory `/opt/openoffice/tools/swftools-0.9.1/lib'
+make: *** [all] Error 2
+
+rm -f config.cache
+ LDFLAGS="-L/usr/local/lib" CPPFLAGS="-I/usr/local/include" ./configure
+
+Furthermore, a new installation of jpeglib (the following assumes it's in /usr/local/lib) often requires doing a: 
+ ranlib /usr/local/lib/libjpeg.a
+ ldconfig /usr/local/lib
+
+
+
+   编译解压并进入下载的swftools目录运行
+./configure（确保没有依赖软件包的错误）
+make
+make install
+     可能出现的异常
+修改一个源文件错误
+这个时候，遇到报错
+jpeg.c:463: error: conflicting types for ‘jpeg_load_from_mem’
+jpeg.h:15: error: previous declaration of ‘jpeg_load_from_mem’ was here
+make[1]: *** [jpeg.o] Error 1
+原来是函数的定义和头文件的声明有点冲突，解决方式比较简单，修改 swftools-0.9.1\swftools-0.9.1\lib\jpeg.c 的 463行：
+改为：
+int jpeg_load_from_mem(unsigned char*_data, int size, unsigned char**dest, int*width, int*height)
+继续即可，
+
+基于giflib 5.0.3安装swftools报以下错误
+pe -Wno-write-strings -Wformat -O -fomit-frame-pointer  gif2swf.c -o gif2swf.o
+gif2swf.c: In function ‘MovieAddFrame’:
+gif2swf.c:233: error: too few arguments to function ‘DGifOpenFileName’
+gif2swf.c:239: warning: implicit declaration of function ‘PrintGifError’
+gif2swf.c: In function ‘CheckInputFile’:
+gif2swf.c:491: error: too few arguments to function ‘DGifOpenFileName’
+make[1]: *** [gif2swf.o] Error 1
+make[1]: Leaving directory `/opt/openoffice/tools/swftools-0.9.1/src'
+make: *** [all] Error 2
+
+卸载giflib 5.0.3 安装giflib-4.1.6.tar.gz问题解决
 
 3.jdk安装
 下载linux版本jdk 64位
@@ -111,3 +167,12 @@ linux:
 注：linux下OpenOffice安装路径可能为2个，请注意此次使用的路径需要下有/ure/bin文件夹
 
 
+
+vmware ip配置
+
+Ethernet adapter VMware Network Adapter VMnet8:
+
+        Connection-specific DNS Suffix  . :
+        IP Address. . . . . . . . . . . . : 192.168.172.1
+        Subnet Mask . . . . . . . . . . . : 255.255.255.0
+        Default Gateway . . . . . . . . . :

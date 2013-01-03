@@ -189,11 +189,11 @@ function pageSubmit(formName, params, forwardurl, promotion, id, executeflag,
 		}
 	}
 }
-function keydowngo(event, goid) {
+function ___keydowngo(event, goid) {
 
 	if (event.keyCode == 13) {
 		document.getElementById(goid).onclick();
-		// $("#" + goid).live("click", function() { return false; });
+		
 	}
 
 	return false;
