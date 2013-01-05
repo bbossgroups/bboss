@@ -11,6 +11,7 @@ import java.util.Set;
 import ooo.connector.BootstrapSocketConnector;
 
 import org.artofsolving.jodconverter.OfficeDocumentConverter;
+import org.artofsolving.jodconverter.document.SimpleDocumentFormatRegistry;
 import org.artofsolving.jodconverter.office.DefaultOfficeManagerConfiguration;
 import org.artofsolving.jodconverter.office.OfficeException;
 import org.artofsolving.jodconverter.office.OfficeManager;
@@ -62,7 +63,7 @@ public class FileConvertor {
 			            	if(oooExeFolder == null)
 			            		context = Bootstrap.bootstrap();
 			            	else
-			            		context = BootstrapSocketConnector.bootstrap(oooExeFolder);
+			            		context = BootstrapSocketConnector.bootstrap(oooExeFolder);			            	
 			            	 System.out.println(
 			     	                "WriterDoc: Finshed Start up or connect to the remote service manager.");
 
@@ -1079,7 +1080,8 @@ public class FileConvertor {
 		assertInitOfficeManager();
 		OfficeDocumentConverter converter = new OfficeDocumentConverter(
 				officeManager);
-		converter.convert(wordContract, pdfFile);
+				
+		converter.convert(wordContract, pdfFile,converter.getFormatRegistry().getFormatByExtension("pdf"));
 		return pdfFile;
 	}
 	public static void swftoolsConvert(String swftoolsWorkDir,

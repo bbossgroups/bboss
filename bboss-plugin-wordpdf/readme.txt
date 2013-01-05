@@ -3,8 +3,9 @@
 http://wiki.openoffice.org/w/images/7/7e/Installation_Guide_OOo3.pdf
 默认安装目录：
 /opt/openoffice.org3
-2.linux下安装swftools
+2.linux下安装swftools下载freetype
 下载swftools 0.9.1版本
+http://www.swftools.org/swftools-0.9.1.tar.gz
 http://wiki.swftools.org/wiki/Main_Page#Installation_guides
 http://wiki.swftools.org/wiki/Installation
 在安装swftools 0.9.2时报错，转而安装swftools 0.9.1
@@ -92,6 +93,10 @@ CE> /opt/openoffice.org3/program/soffice.bin: /lib64/libc.so.6: version `GLIBC_2
 卸载OpenOffice
 yum remove openoffice.org-core 即可完全卸载 OpenOffice.org
 
+rpm -e 'rpm -qa |grep openoffice' 'rpm -qa |grep ooobasis'
+yum remove ooobasis3.4*
+yum remove openoffice.org3*
+
 安装OpenOffice from source：
 安装dmake
 安装ant
@@ -176,3 +181,43 @@ Ethernet adapter VMware Network Adapter VMnet8:
         IP Address. . . . . . . . . . . . : 192.168.172.1
         Subnet Mask . . . . . . . . . . . : 255.255.255.0
         Default Gateway . . . . . . . . . :
+        
+安装整理步骤：
+下载和安装VMWare9
+http://tieba.baidu.com/p/1954912175  
+redhat linux 6.3
+http://rhel.ieesee.net/uingei/rhel-server-6.3-i386-dvd.iso    
+zlib下载
+http://zlib.net/zlib-1.2.7.tar.gz
+先后安装：libstdc++-devel-4.4.6-4.el6.i686.rpm  gcc-c++-4.4.6-4.el6.i686.rpm （安装程序在redhat的iso文件中） 
+openoffice
+http://nchc.dl.sourceforge.net/project/openofficeorg.mirror/stable/3.4.1/Apache_OpenOffice_incubating_3.4.1_Linux_x86_install-rpm_en-US.tar.gz 
+http://nchc.dl.sourceforge.net/project/openofficeorg.mirror/localized/zh-CN/3.4.1/Apache_OpenOffice_incubating_3.4.1_Linux_x86_langpack-rpm_zh-CN.tar.gz
+swftools
+http://nchc.dl.sourceforge.net/project/giflib/giflib-4.x/giflib-4.1.6/giflib-4.1.6.tar.bz2
+http://www.ijg.org/files/jpegsrc.v8d.tar.gz
+http://nchc.dl.sourceforge.net/project/freetype/freetype2/2.4.11/freetype-2.4.11.tar.bz2
+http://mirror.neu.edu.cn/CTAN/support/xpdf/xpdf-3.03.tar.gz
+http://www.swftools.org/swftools-0.9.1.tar.gz
+http://mirror.neu.edu.cn/CTAN/support/xpdf/xpdf-chinese-simplified.tar.gz
+
+tomcat
+http://labs.mop.com/apache-mirror/tomcat/tomcat-7/v7.0.34/bin/apache-tomcat-7.0.34.tar.gz
+jdk
+http://download.oracle.com/otn-pub/java/jdk/7/jdk-7-linux-i586.rpm?AuthParam=1357270716_4f2a8c648b324a344e516c82720c5df1
+
+flash player linux
+http://fpdownload.macromedia.com/get/flashplayer/pdc/11.2.202.258/flash-plugin-11.2.202.258-release.i386.rpm
+bboss-wordpdf插件-构建
+执行bboss-wordpdf工程下的run.bat指令，构建完毕后在将distrib下的bboss-office.war拷贝到tomcat的webapps下即可，同时修改
+WEB-INF/bboss-wordpdf.xml中的属性：
+f:swftoolWorkDir="/usr/local/bin/" 	
+f:officeHome = "/opt/openoffice.org3/"	
+swftoolWorkDir的安装目录，下面必须包含pdf2swf指令
+officeHome安装目录，下面必须包含program目录
+
+同时将plugin/wordpdf/anjie.doc两个文件拷贝到/opt/tomcat/wordpdf目录下面。
+在/opt/tomcat下创建test目录
+
+启动tomcat，在浏览器中输入:http://localhost:8080/bboss-office/FlexPaper_2.0.3/index_ooo.html,即可查看效果，同时还需要在linux下安装flash player
+		
