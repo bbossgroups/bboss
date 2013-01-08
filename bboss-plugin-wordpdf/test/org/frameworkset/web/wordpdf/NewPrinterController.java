@@ -207,6 +207,29 @@ public class NewPrinterController {
 		
 
 	}
+	
+	public @ResponseBody FileBlob getWordToSWFByOpenOffice() throws Exception  {
+		System.out.println("--------------程序执行到此处------------------");
+		String hetongbianhao="20131222";
+		String pdfpath = "/opt/tomcat/test/anjieswftools_"+hetongbianhao+".swf";
+		String wordfile = "/opt/tomcat/wordpdf/anjie.doc";
+//		String officeHome = "E:\\Program Files\\OpenOffice.org 3";
+		{
+			System.out.println("officeHome__________:" + officeHome);
+			FileConvertor.init( officeHome);
+			System.out.println("officeHome__________:" + officeHome);
+			
+			FileConvertor.wordToPDFByOpenOffice(wordfile, pdfpath);
+//			FileConvertor.realWordConvertorBySWFTool( swftoolWorkDir,  wordtemplate,
+//					 wordfile,  bookMarks, bookdatas, pdfpath,
+//					 toswfpath);
+			
+		}
+		FileBlob fileblob = new FileBlob(pdfpath,FileBlob.DOWNLOAD);
+		return fileblob;
+		
+
+	}
 	public @ResponseBody File returnFile()
 	{
 		return new File("D:\\workspace\\bbossgroups-3.6.0\\bboss-plugin-wordpdf\\plugin\\wordpdf\\anjie.doc");

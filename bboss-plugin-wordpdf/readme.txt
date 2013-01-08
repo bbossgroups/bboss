@@ -38,7 +38,9 @@ Furthermore, a new installation of jpeglib (the following assumes it's in /usr/l
  ranlib /usr/local/lib/libjpeg.a
  ldconfig /usr/local/lib
 
-
+./soffice --invisible --convert-to pdf:writer_pdf_Export --outdir "/opt/tomcat/test" "/opt/tomcat/test/anjie_testswftools20121222.doc"
+./soffice --invisible --convert-to pdf:writer_pdf_Export --outdir "/opt/tomcat/test" "/opt/tomcat/wordpdf/anjie.doc"
+./soffice --invisible --convert-to swf:draw_flash_Export --outdir "/opt/tomcat/test" "/opt/tomcat/wordpdf/anjie.doc"
 
    编译解压并进入下载的swftools目录运行
 ./configure（确保没有依赖软件包的错误）
@@ -220,4 +222,24 @@ officeHome安装目录，下面必须包含program目录
 在/opt/tomcat下创建test目录
 
 启动tomcat，在浏览器中输入:http://localhost:8080/bboss-office/FlexPaper_2.0.3/index_ooo.html,即可查看效果，同时还需要在linux下安装flash player
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
+1.libreoffice安装：
+下载：
+安装程序
+中文包
+安装：
+解压
+rpm -ivh *.rpm
+rpm -ivh desktop
+
+解决word转pdf中文乱码问题
+拷贝字体：把Windows下的字体C:\Windows\Fonts下的所有文件拷贝到/usr/share/fonts/windows目录下
+授权
+cd /usr/share/fonts/windows
+chmod 644 -R .
+更新字体缓存：
+sudo fc-cache -fv
+
+
 		

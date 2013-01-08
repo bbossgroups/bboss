@@ -7,6 +7,6 @@ bboss-wordpdf.xml
     <property name="/wordpdf/*.page"    		
 		f:flashpaperWorkDir="D:\FlashPaper\FlashPaper2.2\"   
 		f:swftoolWorkDir="/usr/local/bin/" 	
-		f:officeHome = "/opt/openoffice.org3/"	
+		f:officeHome = "/opt/libreoffice3.6/"	
     	class="org.frameworkset.web.wordpdf.NewPrinterController"/>
 </properties>

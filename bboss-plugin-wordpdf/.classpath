@@ -4,7 +4,7 @@
 	<classpathentry kind="src" path="test"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/jacob.jar"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/jodconverter-core-3.0-beta-4.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/jodconverter-core-3.0-beta-4.jar" sourcepath="/jodconverter-core"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/PDFBox-0.7.3.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/pdfbox-app-1.6.0.jar"/>
 	<classpathentry kind="lib" path="lib-compile/jsp-api.jar"/>

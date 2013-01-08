@@ -11,7 +11,6 @@ import java.util.Set;
 import ooo.connector.BootstrapSocketConnector;
 
 import org.artofsolving.jodconverter.OfficeDocumentConverter;
-import org.artofsolving.jodconverter.document.SimpleDocumentFormatRegistry;
 import org.artofsolving.jodconverter.office.DefaultOfficeManagerConfiguration;
 import org.artofsolving.jodconverter.office.OfficeException;
 import org.artofsolving.jodconverter.office.OfficeManager;
@@ -1081,7 +1080,7 @@ public class FileConvertor {
 		OfficeDocumentConverter converter = new OfficeDocumentConverter(
 				officeManager);
 				
-		converter.convert(wordContract, pdfFile,converter.getFormatRegistry().getFormatByExtension("pdf"));
+		converter.convert(wordContract, pdfFile);
 		return pdfFile;
 	}
 	public static void swftoolsConvert(String swftoolsWorkDir,
@@ -1097,7 +1096,7 @@ public class FileConvertor {
 		}
 		else
 		{
-			command = "."+swftoolsWorkDir + "pdf2swf " + sourcePath
+			command = swftoolsWorkDir + "pdf2swf " + sourcePath
 					+ " -s flashversion=9 -o " + destPath;
 		}
 
