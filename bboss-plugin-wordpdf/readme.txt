@@ -227,7 +227,9 @@ officeHome安装目录，下面必须包含program目录
 1.libreoffice安装：
 下载：
 安装程序
+http://zh-cn.libreoffice.org/
 中文包
+http://zh-cn.libreoffice.org/
 安装：
 解压
 rpm -ivh *.rpm

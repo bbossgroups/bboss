@@ -14,6 +14,7 @@ import org.artofsolving.jodconverter.OfficeDocumentConverter;
 import org.artofsolving.jodconverter.office.DefaultOfficeManagerConfiguration;
 import org.artofsolving.jodconverter.office.OfficeException;
 import org.artofsolving.jodconverter.office.OfficeManager;
+import org.frameworkset.spi.BaseApplicationContext;
 
 import com.frameworkset.util.Util;
 import com.jacob.activeX.ActiveXComponent;
@@ -89,6 +90,18 @@ public class FileConvertor {
 							config.setOfficeHome(officeHome);
 						officeManager = config.buildOfficeManager();
 						officeManager.start();
+						BaseApplicationContext.addShutdownHook(new Runnable(){
+
+							@Override
+							public void run() {
+								if(officeManager != null)
+								{
+									officeManager.stop();
+								}
+								
+							}
+							
+						});
 					}
 				} catch (NullPointerException e) {
 					// TODO Auto-generated catch block
