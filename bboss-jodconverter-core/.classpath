@@ -4,7 +4,6 @@
 	<classpathentry kind="src" path="src-ext"/>
 	<classpathentry kind="lib" path="lib/commons-cli-1.1.jar"/>
 	<classpathentry kind="lib" path="lib/commons-io-1.4.jar"/>
-	<classpathentry kind="lib" path="lib/jodconverter-core-3.0-beta-4.jar"/>
 	<classpathentry kind="lib" path="lib/json-20090211.jar"/>
 	<classpathentry kind="lib" path="lib/juh-3.2.1.jar"/>
 	<classpathentry kind="lib" path="lib/jurt-3.2.1.jar"/>

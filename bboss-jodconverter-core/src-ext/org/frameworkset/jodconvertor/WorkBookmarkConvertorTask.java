@@ -23,12 +23,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import org.artofsolving.jodconverter.AbstractConversionTask;
-import org.artofsolving.jodconverter.OfficeDocumentUtils;
-import org.artofsolving.jodconverter.document.DocumentFamily;
-import org.artofsolving.jodconverter.document.DocumentFormat;
-import org.artofsolving.jodconverter.office.OfficeContext;
-import org.artofsolving.jodconverter.office.OfficeException;
+import bboss.org.artofsolving.jodconverter.AbstractConversionTask;
+import bboss.org.artofsolving.jodconverter.OfficeDocumentUtils;
+import bboss.org.artofsolving.jodconverter.document.DocumentFamily;
+import bboss.org.artofsolving.jodconverter.document.DocumentFormat;
+import bboss.org.artofsolving.jodconverter.office.OfficeContext;
+import bboss.org.artofsolving.jodconverter.office.OfficeException;
 
 import com.sun.star.container.NoSuchElementException;
 import com.sun.star.container.XNameAccess;
@@ -101,8 +101,18 @@ public class WorkBookmarkConvertorTask extends AbstractConversionTask {
 	@Override
 	protected Map<String, ?> getStoreProperties(File outputFile,
 			XComponent document) {
-		DocumentFamily family = OfficeDocumentUtils.getDocumentFamily(document);
-		return outputFormat.getStoreProperties(family);
+		
+		
+		Map<String, Object> loadProperties = new HashMap<String, Object>();
+		if (this.defaultStroreProperties!= null) {
+			loadProperties.putAll(defaultStroreProperties);
+		}
+		if (outputFormat != null) {
+			DocumentFamily family = OfficeDocumentUtils.getDocumentFamily(document);
+			
+			loadProperties.putAll( outputFormat.getStoreProperties(family));
+		}
+		return loadProperties;
 	}
 
 	protected void initInputFile()
