@@ -177,6 +177,15 @@ public class FileController {
 		File file = new File(request.getRealPath("/")+"vidiosdown/"+fileName);
 		return file;
 	}
+	
+	
+	@HandlerMapping(value = "/tool/download.htm")
+	public @ResponseBody File downloadToolFile(@RequestParam(decodeCharset="UTF-8")
+	String fileName, HttpServletRequest request)
+			throws IOException {
+		File file = new File(request.getRealPath("/")+"toolsdown/"+fileName);
+		return file;
+	}
 	   public static void sendFile(HttpServletRequest request, HttpServletResponse response, File file) throws IOException {
 	        OutputStream out = response.getOutputStream();
 	        RandomAccessFile raf = new RandomAccessFile(file, "r");
@@ -317,7 +326,44 @@ public class FileController {
 
 			return "files/downloadlist";
 		}
-	   
+	   @HandlerMapping(value="/tools/downloadList.htm")
+	   public String toolsDownList(ModelMap model,HttpServletRequest request) {
+			File file = new File(request.getRealPath("/")+"toolsdown");
+
+			List<UpFile> files = new ArrayList<UpFile>();
+			if (file.exists()) {
+				File[] fl = file.listFiles(new FileFilter(){
+
+					@Override
+					public boolean accept(File pathname) {
+						if(pathname.isDirectory() || pathname.getName().equals("Thumbs.db"))
+							return false;
+						else
+							return true;
+					}});
+				for (int i = 0; fl != null && i < fl.length; i++) {
+					if(fl[i].isDirectory())
+						continue;
+					UpFile uf = new UpFile();
+					uf.setFileName(fl[i].getName());
+					uf.setFileSize(fl[i].length());
+					String type = uf.getFileName().substring(
+							uf.getFileName().lastIndexOf("."),
+							uf.getFileName().length());
+
+					uf.setFileType(type);
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+					uf.setLastModified(sdf.format(new Date(fl[i].lastModified())));
+					files.add(uf);
+				}
+			}
+			if(files != null && files.size() > 0)
+				sortfile(files);
+			model.addAttribute("files", files);
+			model.addAttribute("filetype", "tool");
+
+			return "files/downloadlist";
+		}
 	   private void sortfile(List<UpFile> files)
 	   {
 		   Collections.sort(files, new Comparator<UpFile>() {

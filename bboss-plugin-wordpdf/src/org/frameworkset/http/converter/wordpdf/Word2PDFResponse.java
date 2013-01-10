@@ -16,25 +16,17 @@
 package org.frameworkset.http.converter.wordpdf;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
-import org.artofsolving.jodconverter.OfficeDocumentConverter;
-import org.artofsolving.jodconverter.office.DefaultOfficeManagerConfiguration;
-import org.artofsolving.jodconverter.office.OfficeManager;
 import org.frameworkset.http.HttpInputMessage;
 import org.frameworkset.http.HttpOutputMessage;
 import org.frameworkset.http.converter.HttpMessageNotWritableException;
 
 import com.frameworkset.util.StringUtil;
-import com.lowagie.text.Document;
-import com.lowagie.text.pdf.PdfCopy;
-import com.lowagie.text.pdf.PdfImportedPage;
-import com.lowagie.text.pdf.PdfReader;
 
 /**
  * <p>
@@ -63,22 +55,7 @@ public class Word2PDFResponse extends WordResponse {
 	private int mergeposition = MERGE_AFTER;
 	public static final int MERGE_BEFORE = 1;
 	public static final int MERGE_AFTER = 0;
-	static OfficeManager officeManager ;
-	static void init()
-	{
-		if(officeManager == null)
-		{
-			synchronized(Word2PDFResponse.class)
-			{
-				if(officeManager == null)
-				{
-					officeManager = new DefaultOfficeManagerConfiguration().buildOfficeManager();
-					officeManager.start();
-				}
-			}
-		}
-	}
-	
+
 	public Word2PDFResponse() {
 		super();
 	}
@@ -249,9 +226,7 @@ public class Word2PDFResponse extends WordResponse {
 			if(this.convter.isOpenoffice())
 			{
 				File wordContract = this.getRealWord();
-				OfficeDocumentConverter converter = new OfficeDocumentConverter(
-						officeManager);
-				converter.convert(wordContract, pdfFile);
+				FileConvertor.wordToPDFByOpenOffice(wordContract, pdfFile);
 			}
 			else
 			{
@@ -269,9 +244,7 @@ public class Word2PDFResponse extends WordResponse {
 				File pdfFile = new File(this.getPdfFile());
 				File wordContract = this.getRealWord();
 				
-				OfficeDocumentConverter converter = new OfficeDocumentConverter(
-						officeManager);
-				converter.convert(wordContract, pdfFile);
+				FileConvertor.wordToPDFByOpenOffice(wordContract, pdfFile);
 				return pdfFile;
 			}
 			else

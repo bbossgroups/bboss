@@ -733,7 +733,7 @@ public class WriteDoc {
 		String swftoolWorkDir="C:\\Program Files\\SWFTools\\" ;
 		if(!f.exists())
 		{
-			FileConvertor.initXComponentContext(officeHome);
+//			FileConvertor.initXComponentContext(officeHome);
 			FileConvertor.init( officeHome);
 			FileConvertor.getRealWordByOpenoffice(wordtemplate, wordfile,bookMarks, bookdatas);
 			FileConvertor.wordToPDFByOpenOffice(wordfile, pdfpath);

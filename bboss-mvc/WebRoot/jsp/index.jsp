@@ -262,6 +262,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					});
 			</script>
 		</div>
+		<h1>工具下载<a href="#top" name="8722">
+			<img border="0" src="<%=request.getContextPath() %>/jsp/top.gif" alt="Top">
+			</a></h1>
+			<div  class="shadow" style="width:860;">
+		       <div class="info" id="downloadToolList">
+     			</div>
+			<script type="text/javascript">
+				$(document).ready(function(){
+					  $("#downloadToolList").load("tools/downloadList.htm");
+					});
+			</script>
+		</div>
 		 <h1>bboss-mvc框架体系结构图<a href="#top" name="3723">
 			<img border="0" src="<%=request.getContextPath() %>/jsp/top.gif" alt="Top">
 			</a></h1>
