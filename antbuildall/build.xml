@@ -133,13 +133,42 @@
 		</antcall>
 	</target>
 	<target name="distrib-bboss-persistent-jars" description="distrib-bboss-persistent-jars">
-		<for list="${bbossupload-lib},${demoproject-lib},${portallib},${casserverlib},${active-ext-lib},${bboss-aop-lib},${cms_baseline-lib},${bboss-taglib-lib},${kettle-lib},${monitorconsole-lib},${monitorconsole-compilelib},${bboss-mvc-lib},${creatoresb-lib},${bboss-clientproxy-lib},${mvc-lib},${persistent-lib},${xmlrequest-lib},${bboss-plugin-hibernate-lib}" param="destdir">
+		<for list="${bboss-plugin-wordpdf-lib-depends},${bbossupload-lib},${demoproject-lib},${portallib},${casserverlib},${active-ext-lib},${bboss-aop-lib},${cms_baseline-lib},${bboss-taglib-lib},${kettle-lib},${monitorconsole-lib},${monitorconsole-compilelib},${bboss-mvc-lib},${creatoresb-lib},${bboss-clientproxy-lib},${mvc-lib},${persistent-lib},${xmlrequest-lib},${bboss-plugin-hibernate-lib}" param="destdir">
 			<sequential>
 				<echo>@{destdir}-------------------------------</echo>
 				<antcall target="svn-update-procedure">
 					<param name="sourcedir" value="${bboss-persistent}/distrib" />
 					<param name="filedir" value="@{destdir}" />
 					<param name="files" value="frameworkset-pool.jar" />
+				</antcall>
+			</sequential>
+		</for>
+	</target>
+	<target name="build-bboss-plugin-wordpdf" description="build bboss-plugin-wordpdf project">
+		<echo>build bboss-plugin-wordpdf project</echo>
+		<ant dir="${bboss-plugin-wordpdf}" />
+		
+		<antcall target="distrib-bboss-plugin-wordpdf-jars">
+		</antcall>
+	</target>
+	<target name="distrib-bboss-plugin-wordpdf-jars" description="distrib-bboss-plugin-wordpdf-jars">		
+	</target>
+	
+	<target name="build-bboss-jodconverter-core" description="build bboss-jodconverter-core project">
+		<echo>build bboss-jodconverter-core project</echo>
+		<ant dir="${bboss-jodconverter-core}" />
+		
+		<antcall target="distrib-bboss-jodconverter-core-jars">
+		</antcall>
+	</target>
+	<target name="distrib-bboss-jodconverter-core-jars" description="distrib-bboss-jodconverter-core-jars">		
+		<for list="${bboss-plugin-wordpdf-lib}" param="destdir">
+			<sequential>
+				<echo>@{destdir}-------------------------------</echo>
+				<antcall target="svn-update-procedure">
+					<param name="sourcedir" value="${bboss-jodconverter-core}/distrib" />
+					<param name="filedir" value="@{destdir}" />
+					<param name="files" value="bboss-jodconverter-core.jar,bboss-jodconverter-core-sources.jar" />
 				</antcall>
 			</sequential>
 		</for>
@@ -175,7 +204,20 @@
 					<param name="files" value="frameworkset.jar,ditchnet-tabs-taglib.jar" />
 				</antcall>
 			</sequential>
+			
 		</for>
+		<for list="${bboss-plugin-wordpdf-lib-depends}" param="destdir">
+			<sequential>
+				<echo>@{destdir}-------------------------------</echo>
+				<antcall target="svn-update-procedure">
+					<param name="sourcedir" value="${bboss-taglib}/distrib" />
+					<param name="filedir" value="@{destdir}" />
+					<param name="files" value="frameworkset.jar" />
+				</antcall>
+			</sequential>
+			
+		</for>
+		
 	</target>
 
 	<target name="build-bboss-util" description="build bboss util project">
@@ -229,7 +271,7 @@
 		</target>
 
 	<target name="distrib-bboss-util-jars" description="distrib-bboss-util-jars">
-		<for list="${bbossupload-lib},${demoproject-lib},${active-ext-lib},${bboss-aop-lib},${bbossevent-lib},${cms_baseline-lib},${bboss-persistent-lib},${bboss-taglib-lib},${kettle-lib},${portallib},${casserverlib},${monitorconsole-lib},${monitorconsole-compilelib},${bboss-mvc-lib},${creatoresb-lib},${bboss-soa-lib},${bboss-clientproxy-lib},${mvc-lib},${persistent-lib},${xmlrequest-lib},${xmlserializable-lib},${bboss-plugin-hibernate-lib},${bboss-velocity-lib}" param="destdir">
+		<for list="${bboss-plugin-wordpdf-lib-depends},${bbossupload-lib},${demoproject-lib},${active-ext-lib},${bboss-aop-lib},${bbossevent-lib},${cms_baseline-lib},${bboss-persistent-lib},${bboss-taglib-lib},${kettle-lib},${portallib},${casserverlib},${monitorconsole-lib},${monitorconsole-compilelib},${bboss-mvc-lib},${creatoresb-lib},${bboss-soa-lib},${bboss-clientproxy-lib},${mvc-lib},${persistent-lib},${xmlrequest-lib},${xmlserializable-lib},${bboss-plugin-hibernate-lib},${bboss-velocity-lib}" param="destdir">
 			<sequential>
 				<echo>@{destdir}-------------------------------</echo>
 				<antcall target="svn-update-procedure">
@@ -383,7 +425,7 @@ bbossaop<-cas server [bboss-aop.jar]
 			</sequential>
 		</for>
 
-		<for list="${bboss-soa-lib},${bboss-persistent-lib},${bbossupload-lib},${bboss-taglib-lib},${bboss-util-lib},${portallib},${casserverlib},${mvc-lib},${xmlrequest-lib},${xmlserializable-lib},${persistent-lib},${bboss-plugin-hibernate-lib},${bboss-velocity-lib}" param="destdir">
+		<for list="${bboss-plugin-wordpdf-lib-depends},${bboss-soa-lib},${bboss-persistent-lib},${bbossupload-lib},${bboss-taglib-lib},${bboss-util-lib},${portallib},${casserverlib},${mvc-lib},${xmlrequest-lib},${xmlserializable-lib},${persistent-lib},${bboss-plugin-hibernate-lib},${bboss-velocity-lib}" param="destdir">
 			<sequential>
 				<echo>@{destdir}-------------------------------</echo>
 				<antcall target="svn-update-procedure">
@@ -431,7 +473,7 @@ bbossaop<-cas server [bboss-aop.jar]
 	
 	
 	<target name="distrib-bboss-mvc-jars" description="distrib-bboss-mvc-jars">
-			<for list="${bbossupload-lib},${demoproject-lib},${cms_baseline-lib},${monitorconsole-compilelib},${monitorconsole-lib},${creatoresb-lib},${mvc-lib},${xmlrequest-lib},${bboss-taglib-lib}" param="destdir">
+			<for list="${bboss-plugin-wordpdf-lib-depends},${bbossupload-lib},${demoproject-lib},${cms_baseline-lib},${monitorconsole-compilelib},${monitorconsole-lib},${creatoresb-lib},${mvc-lib},${xmlrequest-lib},${bboss-taglib-lib}" param="destdir">
 				<sequential>
 					<echo>@{destdir}-------------------------------</echo>
 					<antcall target="svn-update-procedure">
@@ -998,6 +1040,10 @@ bbossaop<-cas server [bboss-aop.jar]
 		<antcall target="build-bboss-taglib-only"/>
 		<antcall target="build-bboss-mvc-only"/>
 		<antcall target="build-bboss-event-only"/>
+		<antcall target="bboss-jodconverter-core"/>
+		<antcall target="bboss-plugin-wordpdf"/>
+		
+		
 		<antcall target="move-all-jars"/>		
 	</target>
 	
@@ -1015,6 +1061,8 @@ bbossaop<-cas server [bboss-aop.jar]
 			<fileset dir="${bbossevent}/distrib" includes="*.jar" />
 			<fileset dir="${bboss-aop}/distrib" includes="*.jar" />
 			<fileset dir="${bboss-velocity}/distrib" includes="*.jar" />
+			<fileset dir="${bboss-jodconverter-core}/distrib" includes="*.jar" />
+			<fileset dir="${bboss-plugin-wordpdf}/distrib" includes="*.jar" />
 		</copy>
 	</target>
 		
