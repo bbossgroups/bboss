@@ -1,6 +1,6 @@
-<project name="bboss persistent" default="default" basedir=".">
+<project name="bboss wordpdf" default="default" basedir=".">
 	<description>
-		bboss persistent build file
+		bboss wordpdf build file
 	</description>
 	<tstamp prefix="start" />
 
@@ -50,7 +50,7 @@
 				<fileset dir="WebRoot/WEB-INF/lib/" includes="**/*.jar *.zip" />						
 			</classpath>
 		</javac>
-		<copy todir="classes-bboss-persistent" >
+		<copy todir="classes-bboss-wordpdf" >
 				<fileset dir="src" includes="**/*.xml" />
 		</copy>	
 	</target>
@@ -58,7 +58,7 @@
 	
 	
 	<target name="jar-bboss-wordpdf" depends="compile-bboss-wordpdf" description="generate the bboss-wordpdf library bboss-wordpdf.jar">
-				<echo>Generate the bboss-persistent library bboss-wordpdf.jar ...</echo>
+				<echo>Generate the bboss-wordpdf library bboss-wordpdf.jar ...</echo>
 				<jar jarfile="distrib/bboss-wordpdf.jar" basedir="classes-bboss-wordpdf" includes="**/*">
 					<manifest>
 						
@@ -89,7 +89,7 @@
 			</javac>
 		</target>
 	<target name="jar-bboss-wordpdf-test" depends="compile-bboss-wordpdf-test" description="generate the bboss-wordpdf test library bboss-wordpdf-test.jar">
-		<echo>Generate the bboss-persistent library frameworkset-pool-test.jar ...</echo>
+		<echo>Generate the bboss-wordpdf library frameworkset-pool-test.jar ...</echo>
 		<jar jarfile="distrib/bboss-wordpdf-test.jar" basedir="classes-bboss-wordpdf-test" includes="**/*">
 			<manifest>				
 				<attribute name="Implementation-Version" value="${impl.version}" />
@@ -105,7 +105,7 @@
 	
 	
 	<target name="jar-sources" description="jar sources">
-					<echo>Generate the bboss-persistent library sources.jar ...</echo>
+					<echo>Generate the bboss-wordpdf library sources.jar ...</echo>
 					<jar jarfile="distrib/bboss-wordpdf-sources.jar" >
 						<manifest>				
 							<attribute name="Implementation-Version" value="${impl.version}" />
