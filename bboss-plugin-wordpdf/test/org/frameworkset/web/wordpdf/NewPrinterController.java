@@ -140,7 +140,62 @@ public class NewPrinterController {
 		
 
 	}
-	
+	public @ResponseBody
+	FileBlob contractPrint()
+			throws Exception {
+		
+		String hetongbianhao = "123";
+		String newfilepath = "d:/test/";
+		String wordtemplate ="D:/workspace/bbossgroups-3.6.0/bboss-plugin-wordpdf/contract_mb.doc";
+		File file=new File(newfilepath +hetongbianhao);
+		if(!file.exists()){
+			file.mkdirs();
+		}
+		String pdfpath = newfilepath +hetongbianhao+"/"+hetongbianhao
+				+ ".pdf";
+		String wordfile = newfilepath+ hetongbianhao+"/"+hetongbianhao
+				+ ".doc";
+		String toswfpath = newfilepath+ hetongbianhao+"/"+hetongbianhao
+				+ ".swf";
+		File f = new File(toswfpath);
+		String[] bookMarks = new String[] { "s1", "s2", "s3", "s4", "s5", "s6",
+				"s7", "s8", "s9", "s10", "s11", "s12", "s13", "s14", "s15",
+				"s16", "s17", "s18", "s19", "s20", "s21", "s22" };
+		String s1 = "123";// 提取订单受理号信息
+		String s2 = "Custom_name";// 提取订单受理基础信息借款人信息
+		String s3 = "Identification_card()";// 提取订单受理基础信息下个人基本信息的身份证信息
+		String s4 = "Mobile_phone()";// 提取订单受理基础信息下个人基本信息的手机信息
+		String s5 = "Live_address()";// 提取订单受理基础信息下个人基本信息的现居住地址
+		String s6 = "" + "Loan_amount()";// 提取订单审批流程的总经理最终审批金额（大写）
+		String s7 = "" + "Loan_amount()";// 提取订单审批流程的总经理最终审批金额（小写）
+		String s8 = "" + "Time_limit()";// 提取订单审批流程的总经理最终审批贷款期限
+		String s9 = "Loan_purpose()";// 提取订单受理基础信息中的借款用途
+		String s10 = "" + "Interest_rate()";// 提取订单审批流程的总经理最终审批月利率
+		String s11 = "" + "Bank_name()";// 提取订单受理基础信息的开户行信息
+		String s12 = "Custom_name()";// 提取订单受理基础信息的借款人
+		String s13 = "Bank_account()";// 提取订单受理基础信息的银行账号
+		String s14 = "" + "Time_limit()";// 提取订单审批流程的总经理最终审批贷款期限
+		String s15 = "" + "Repayment_date()";// 提取订单受理基础信息的每月还款日
+		String s16 = "" + "Bank_name()";// 提取订单受理基础信息的开户行信息
+		String s17 = "Custom_name()";// 提取订单受理基础信息的借款人
+		String s18 = "Bank_account()";// 提取订单受理基础信息的银行账号
+		String s19 = "1%";// 提取字典表提取每日罚息利率为1‰
+		String s20 = "4%";// 提取字典表提取提前结清时，6个月之内的违约金4%
+		String s21 = "3%";// 提取字典表提取提前结清时，超过6个月的违约金为3%
+		String s22 = "1%";// 提取字典表刷卡手续费利率1%
+		String[] bookdatas = new String[] { s1, s2, s3, s4, s5, s6, s7, s8, s9,
+				s10, s11, s12, s13, s14, s15, s16, s17, s18, s19, s20, s21, s22 };
+		if (!f.exists()) {
+			//FileConvertor.initXComponentContext(openofficeHomeDir);
+			FileConvertor.init(officeHome);
+			FileConvertor.getRealWordByOpenoffice(wordtemplate, wordfile,
+					bookMarks, bookdatas);
+			FileConvertor.wordToPDFByOpenOffice(wordfile, pdfpath);
+			FileConvertor.swftoolsConvert(swftoolWorkDir, pdfpath, toswfpath);
+		}
+		FileBlob fileblob = new FileBlob(toswfpath, FileBlob.BROWSER);
+		return fileblob;
+	}
 	public @ResponseBody FileBlob getSWFTempAllUseOpenOffice() throws Exception  {
 		System.out.println("--------------程序执行到此处------------------");
 		String[] bookMarks = new String[] { "DealerName", "Name", "CgName",
@@ -158,10 +213,10 @@ public class NewPrinterController {
 				"10", "6", "10", "5", "10", "21", "540", "10", "2012年8月31日",
 				"2012年8月31日", "琳", "430111199910102121", "13800138200", "琳","bboss" };
 		String hetongbianhao="20121222";
-		String wordtemplate = "/opt/tomcat/wordpdf/anjie.doc";
-		String pdfpath = "/opt/tomcat/test/anjieswftools_"+hetongbianhao+".pdf";
-		String wordfile = "/opt/tomcat/test/anjie_testswftools"+hetongbianhao+".doc";
-		String toswfpath = "/opt/tomcat/test/contractswftools_"+hetongbianhao+".swf";
+		String wordtemplate = "D:/workspace/bbossgroups-3.6.0/bboss-plugin-wordpdf/plugin/wordpdf/anjie.doc";
+		String pdfpath = "d:/test/anjieswftools_"+hetongbianhao+".pdf";
+		String wordfile = "d:/test/anjie_testswftools"+hetongbianhao+".doc";
+		String toswfpath = "d:/test/contractswftools_"+hetongbianhao+".swf";
 //		String officeHome = "E:\\Program Files\\OpenOffice.org 3";
 		File f = new File(toswfpath);
 		if(!f.exists())

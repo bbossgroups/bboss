@@ -106,7 +106,7 @@ public class SQLUtil {
 					if(value != null)
 					{
 						boolean istpl = pro.getBooleanExtendAttribute("istpl",true);//标识sql语句是否为velocity模板
-						boolean multiparser = pro.getBooleanExtendAttribute("multiparser",false);//如果sql语句为velocity模板，则在批处理时是否需要每条记录都需要分析sql语句
+						boolean multiparser = pro.getBooleanExtendAttribute("multiparser",istpl);//如果sql语句为velocity模板，则在批处理时是否需要每条记录都需要分析sql语句
 						SQLTemplate sqltpl = null;
 						value = value.trim();
 						SQLInfo sqlinfo = new SQLInfo(key, value, istpl,multiparser);

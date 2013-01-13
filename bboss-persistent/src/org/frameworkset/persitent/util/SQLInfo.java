@@ -31,6 +31,13 @@ public class SQLInfo {
 	private SQLTemplate sqltpl;
 	private boolean istpl;
 	private boolean multiparser;
+	/**
+	 * @param multiparser the multiparser to set
+	 */
+	public void setMultiparser(boolean multiparser) {
+		this.multiparser = multiparser;
+	}
+
 	private SQLUtil sqlutil;
 	public SQLInfo(String sqlname, String sql,boolean istpl,boolean multiparser) {
 		super();		

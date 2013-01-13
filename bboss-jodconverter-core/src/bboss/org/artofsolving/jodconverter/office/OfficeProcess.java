@@ -184,6 +184,8 @@ class OfficeProcess {
 
     public Integer getExitCode() {
         try {
+        	if(process == null)
+        		return ManagedOfficeProcess.EXIT_CODE_NEW_INSTALLATION;
             return process.exitValue();
         } catch (IllegalThreadStateException exception) {
             return null;

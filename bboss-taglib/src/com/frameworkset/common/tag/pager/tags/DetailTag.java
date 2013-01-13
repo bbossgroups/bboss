@@ -200,16 +200,16 @@ public class DetailTag extends PagerDataSet implements FieldHelper{
 					
 				} catch (LoadDataException e) {
 					if(e.getCause() == null)
-						log.info(e.getMessage());
+						log.debug(e.getMessage());
 					else
-						log.info(e.getCause().getMessage());
+						log.debug(e.getCause().getMessage());
 //					return SKIP_BODY;
 				}
 				catch (Throwable e) {
 					if(e.getCause() == null)
-						log.info(e.getMessage());
+						log.debug(e.getMessage());
 					else
-						log.info(e.getCause().getMessage());
+						log.debug(e.getCause().getMessage());
 //					return SKIP_BODY;
 				}
 			}

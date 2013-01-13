@@ -2268,16 +2268,16 @@ public class PagerDataSet extends PagerTagSupport {
 				
 			} catch (LoadDataException e) {
 				if(e.getCause() == null)
-					log.warn(e.getMessage());
+					log.debug(e.getMessage());
 				else
-					log.warn(e.getCause().getMessage());
+					log.debug(e.getCause().getMessage());
 				return SKIP_BODY;
 			}
 			catch (Throwable e) {
 				if(e.getCause() == null)
-					log.warn(e.getMessage());
+					log.debug(e.getMessage());
 				else
-					log.warn(e.getCause().getMessage());
+					log.debug(e.getCause().getMessage());
 				return SKIP_BODY;
 			}
 		}

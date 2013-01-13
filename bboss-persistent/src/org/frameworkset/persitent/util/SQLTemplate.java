@@ -102,6 +102,7 @@ public class SQLTemplate extends Resource
     			if(switchcase)
     			{
     				this.sqlinfo.setIstpl(false);
+    				sqlinfo.setMultiparser(false);
     			}
     		}
     		

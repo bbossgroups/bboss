@@ -25,12 +25,14 @@ import java.util.concurrent.Future;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import bboss.org.artofsolving.jodconverter.util.PlatformUtils;
+
 import com.sun.star.frame.XDesktop;
 import com.sun.star.lang.DisposedException;
 
-class ManagedOfficeProcess {
+public class ManagedOfficeProcess {
 
-    private static final Integer EXIT_CODE_NEW_INSTALLATION = Integer.valueOf(81);
+    public static final Integer EXIT_CODE_NEW_INSTALLATION = Integer.valueOf(81);
 
     private final ManagedOfficeProcessSettings settings;
 
@@ -116,7 +118,8 @@ class ManagedOfficeProcess {
 
     private void doStartProcessAndConnect() throws OfficeException {
         try {
-            process.start();
+        	if(PlatformUtils.isLinux())
+        		process.start();
             new Retryable() {
                 protected void attempt() throws TemporaryException, Exception {
                     try {
@@ -157,6 +160,8 @@ class ManagedOfficeProcess {
     }
 
     private void doEnsureProcessExited() throws OfficeException {
+    	if(process == null )
+    		return;
         try {
             int exitCode = process.getExitCode(settings.getRetryInterval(), settings.getRetryTimeout());
             logger.info("process exited with code " + exitCode);
@@ -168,6 +173,8 @@ class ManagedOfficeProcess {
 
     private void doTerminateProcess() throws OfficeException {
         try {
+        	if(process == null )
+        		return;
             int exitCode = process.forciblyTerminate(settings.getRetryInterval(), settings.getRetryTimeout());
             logger.info("process forcibly terminated with code " + exitCode);
         } catch (Exception exception) {

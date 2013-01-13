@@ -130,7 +130,7 @@ public class WorkBookmarkConvertorTask extends AbstractConversionTask {
 			}
 		} catch (Exception e) {
 			// e.printStackTrace();
-			throw new OfficeException("模板模板复制出错：" + wordtemplate.getAbsolutePath()
+			throw new OfficeException("模板复制出错：" + wordtemplate.getAbsolutePath()
 					+ "->" + inputFile.getAbsolutePath(), e);
 		} finally {
 			if (null != template) {

@@ -1513,33 +1513,34 @@ public class PreparedDBUtil extends DBUtil {
 				return null;
 			}
 		} catch (SQLException e) {
-			try{
-				
-				log.error("Execute prepared sql[" + (stmtInfo != null?stmtInfo.getSql():null) + "] failed:" , e);
-			}
-			catch(Exception ei)
-			{
-				
-			}
+//			try{
+//				
+//				log.error("Execute prepared sql[" + (stmtInfo != null?stmtInfo.getSql():null) + "] failed:" , e);
+//			}
+//			catch(Exception ei)
+//			{
+//				
+//			}
 			
 			if(stmtInfo != null)
 				stmtInfo.errorHandle(e);
-			throw e;
+			
+			throw new NestedSQLException("Execute prepared sql[" + (stmtInfo != null?stmtInfo.getSql():null) + "] failed:",e);
 
 		} catch (Exception e) {
-			try{
-				log.error("Execute prepared sql[" + (stmtInfo != null?stmtInfo.getSql():null) + "] failed:" , e);
+//			try{
 //				log.error("Execute prepared sql[" + (stmtInfo != null?stmtInfo.getSql():null) + "] failed:" , e);
-			}
-			catch(Exception ei)
-			{
-				
-			}
+////				log.error("Execute prepared sql[" + (stmtInfo != null?stmtInfo.getSql():null) + "] failed:" , e);
+//			}
+//			catch(Exception ei)
+//			{
+//				
+//			}
 			if(stmtInfo != null)
 				stmtInfo.errorHandle(e);			
 
 			
-			throw new NestedSQLException(e.getMessage(),e);
+			throw new NestedSQLException("Execute prepared sql[" + (stmtInfo != null?stmtInfo.getSql():null) + "] failed:",e);
 		} finally {
 			if(resources != null)
 				releaseResources(resources);

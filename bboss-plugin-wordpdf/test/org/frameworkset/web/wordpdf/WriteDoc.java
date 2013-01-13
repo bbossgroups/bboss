@@ -34,6 +34,7 @@ import org.frameworkset.http.converter.wordpdf.FileConvertor;
 import org.frameworkset.web.wordpdf.Chart.ChartInsertionModeEnum;
 import org.junit.Test;
 
+import com.frameworkset.util.Util;
 import com.sun.star.beans.Property;
 import com.sun.star.beans.PropertyValue;
 import com.sun.star.beans.XPropertySet;
@@ -136,7 +137,7 @@ public class WriteDoc {
 
         // Get remote service manager.  We only need one instance regardless
         // of the number of documents we create.
-        String oooExeFolder = "C:/Program Files/OpenOffice.org 3/program/";
+        String oooExeFolder = "E:\\Program Files\\LibreOffice 3.6\\program";
         if (context == null) {
             try {
 //                context = Bootstrap.bootstrap();
@@ -411,7 +412,7 @@ public class WriteDoc {
         ////////////////////////////////////////////////////////////////////
 
         String imageFile =
-            "D:/subPro.process1.png";
+            "D:\\workspace\\bboss-cms\\test\\com\\sany\\activiti\\demo\\diagrams\\demo.png";
         String imageFileURL = filePathToURL(imageFile);
         ImageInsertionModeEnum imageInsertMode = null;
         bookmarkName = "DealerName";
@@ -749,17 +750,40 @@ public class WriteDoc {
 
     /**
      * @param args
+     * @throws IOException 
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
-        String templateDoc =
-            "D:/anjie.doc";
+//        String templateDoc =
+//            "D:/anjie.doc";
+//
+//        WriteDoc doc = new WriteDoc();
+//        try {
+//            doc.createDoc("My Document Title", templateDoc, true);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+    	
+//        }
+//    	String c = "E:\\Program Files\\LibreOffice 3.6\\program\\soffice.bin -accept=\"socket,host=localhost,port=2002;urp;StarOffice.Service.Manager\"";
+//    	Process pro_ = Runtime.getRuntime().exec(c);	
+//    	try {
+//			pro_.waitFor();
+//		} catch (InterruptedException e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
+//    	FileConvertor.init("E:\\Program Files\\LibreOffice 3.6\\program\\soffice -accept=\"socket,host=localhost,port=2002;urp;StarOffice.Service.Manager\"");
+    	String osname = Util.getOS();
+		String command = "E:\\SWFTools\\pdf2swf.exe d:\\test\\20121205006\\20121205006.pdf -s flashversion=9 -o d:\\test\\20121205006\\20121205006.swf";
+		
 
-        WriteDoc doc = new WriteDoc();
-        try {
-            doc.createDoc("My Document Title", templateDoc, true);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+		Process pro = Runtime.getRuntime().exec(command);
+//		try {			
+//			pro.waitFor();
+//		} catch (InterruptedException e) {
+////			// TODO Auto-generated catch block
+////			e.printStackTrace();
+//		}	
+        System.exit(1);
     }
 } 
