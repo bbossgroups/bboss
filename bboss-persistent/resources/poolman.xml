@@ -116,7 +116,7 @@
      -->
     <validationQuery>select 1 from dual</validationQuery>
 
-
+	<seqfunction>bboss_nextval</seqfunction>
   </datasource> 
   
  

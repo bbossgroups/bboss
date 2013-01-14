@@ -183,6 +183,21 @@ public class DBMM extends DB
 		return dbutil.getLong(0, 0);
 		
     }
+    
+    public long getNextValue(String seqfunctionname,String sequence,Connection con,String dbname) throws SQLException
+    {
+//    	long curValue = 0;
+    	
+    	PreparedDBUtil dbutil = new PreparedDBUtil();
+		if(seqfunctionname == null || seqfunctionname.equals(""))
+			dbutil.preparedSelect(dbname, sql_sequence);
+		else
+			dbutil.preparedSelect(dbname, "select " + seqfunctionname + "(?)");
+		dbutil.setString(1, sequence);
+		dbutil.executePrepared();
+		return dbutil.getLong(0, 0);
+		
+    }
 
     /**
      * Locks the specified table.

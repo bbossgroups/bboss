@@ -105,6 +105,7 @@ public class PrimaryKey
 	private boolean hasTableinfo = true;
 	
 	boolean synsequece = false;
+	private String seqfunction;
 
 	/**
 	 * 主键的生成机制
@@ -139,6 +140,7 @@ public class PrimaryKey
 		
 		JDBCPool pool = (JDBCPool) (SQLManager.getInstance().getPool(dbname));
 		synsequece = pool.getJDBCPoolMetadata().synsequence();
+		this.seqfunction = pool.getJDBCPoolMetadata().getSeqfunction();
 		try{
 			TableMetaData table = pool.getTableMetaData(con,tableName);
 			if(table != null)
@@ -226,6 +228,7 @@ public class PrimaryKey
 		this.curValue = curValue;
 		JDBCPool pool = (JDBCPool) (SQLManager.getInstance().getPool(dbname));
 		synsequece = pool.getJDBCPoolMetadata().synsequence();
+		this.seqfunction = pool.getJDBCPoolMetadata().getSeqfunction();
 		String mode = pool.getKeygenerate();
 		if (mode.trim().equalsIgnoreCase("auto"))
 			keygenerator_mode = 0;
@@ -283,6 +286,7 @@ public class PrimaryKey
 		this.curValue = curValue;
 		JDBCPool pool = (JDBCPool) (SQLManager.getInstance().getPool(dbname));
 		synsequece = pool.getJDBCPoolMetadata().synsequence();
+		this.seqfunction = pool.getJDBCPoolMetadata().getSeqfunction();
 		String mode = pool.getKeygenerate();
 		if (mode.trim().equalsIgnoreCase("auto"))
 			keygenerator_mode = 0;
@@ -471,7 +475,8 @@ public class PrimaryKey
 //							throw new SQLException("[select " + this.generator + ".nextval from dual] from [" + dbname + "] failed:retrun records is 0.");
 //						}
 //						curValue = dbutil.getInt(0,0);
-						curValue = this.dbAdapter.getNextValue(generator, con, this.dbname);
+						
+						curValue = this.dbAdapter.getNextValue(this.seqfunction,generator, con, this.dbname);
 						
 						if(this.synsequece && this.exist(con,curValue) )
 							continue;
@@ -613,7 +618,7 @@ public class PrimaryKey
 //						curValue = dbutil.getLong(0,0);
 //						if(this.synsequece && this.exist(con,curValue))
 //							continue;
-						curValue = this.dbAdapter.getNextValue(generator, con, this.dbname);
+						curValue = this.dbAdapter.getNextValue(this.seqfunction,generator, con, this.dbname);
 						if(this.synsequece && this.exist(con,curValue))
 							continue;
 							

@@ -39,6 +39,8 @@ public class JDBCPoolMetaData implements Serializable{
     private boolean emergencyCreates = PoolManConstants.DEFAULT_EMERGENCY_CREATES;
     private String maxWait = "30";//30秒  
     private String datasourceFile ;
+    /**自定义自增序列函数名称，和tableinfo中的sequence表主键配置结合使用*/
+    private String seqfunction;
 //    private boolean neadGetGenerateKeys;
     
     private String databaseProductName;
@@ -818,6 +820,7 @@ public class JDBCPoolMetaData implements Serializable{
 			this.setEnablejta(extenalInfo.isEnablejta());
 			this.setDatasourceFile(extenalInfo.getDatasourceFile());
 			this.setDatasourceParameters(getDatasourceParameters());
+			this.setSeqfunction(extenalInfo.getSeqfunction());
 //			this.setNeadGetGenerateKeys(extenalInfo.isNeadGetGenerateKeys());
 		}
 	}
@@ -954,6 +957,14 @@ public class JDBCPoolMetaData implements Serializable{
 		{
 			this.datasourceParameters = DatasourceUtil.getDataSourceParameters(this.datasourceFile);
 		}
+	}
+
+	public String getSeqfunction() {
+		return seqfunction;
+	}
+
+	public void setSeqfunction(String seqfunction) {
+		this.seqfunction = seqfunction;
 	}
 
 //	public boolean isNeadGetGenerateKeys() {

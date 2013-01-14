@@ -179,6 +179,31 @@ public abstract class DB implements Serializable, IDMethod,Platform
 		}
 		
     }
+    
+    public long getNextValue(String seqfunctionname,String sequence,Connection con,String dbname) throws SQLException
+    {
+    	long curValue = 0;
+    	PreparedDBUtil dbutil = new PreparedDBUtil();
+		try {
+//			if()
+			String sql = "select " + sequence + ".nextval from dual";
+			dbutil.preparedSelect(dbname, sql);
+			dbutil.executePrepared(con);
+			if(dbutil.size() <= 0)
+			{
+//				System.out.println("select " + this.generator + ".nextval from dual");
+				throw new SQLException("[select " + sequence
+						+ ".nextval from dual] from [" + dbname + "] failed:retrun records is 0.");
+			}
+			curValue = dbutil.getInt(0,0);
+			
+			return curValue;
+				
+		} catch (SQLException e) {
+			throw e;
+		}
+		
+    }
 
     /**
      * Returns the constant from the {@link
