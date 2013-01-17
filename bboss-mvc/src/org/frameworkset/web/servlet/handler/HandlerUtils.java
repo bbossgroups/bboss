@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.net.URLDecoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -213,7 +214,8 @@ public abstract class HandlerUtils {
 	 * method (to avoid potential stack overflow).
 	 */
 	public static boolean isHandlerMethod(Class<?> handlerType, Method method) {
-		
+		if(Modifier.isStatic(method.getModifiers()))
+			return false;
 		boolean ishandleMethod = containHandleAnnotations(method);
 		if (ishandleMethod)
 			return true;
