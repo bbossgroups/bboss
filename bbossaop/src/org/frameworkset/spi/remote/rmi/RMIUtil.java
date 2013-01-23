@@ -230,18 +230,18 @@ public class RMIUtil {
 			Naming.rebind(address,  rpcService);
 			return true;
 		} catch (RemoteException e) {
-			System.out.println("address="+address);
-			e.printStackTrace();
-			log.error(e);
+//			System.out.println("address="+address);
+//			e.printStackTrace();
+			log.error("address="+address,e);
 		} catch (MalformedURLException e) {
-			System.out.println("MalformedURLException address="+address);
-			e.printStackTrace();
-			log.error(e);
+//			System.out.println("MalformedURLException address="+address);
+//			e.printStackTrace();
+			log.error("MalformedURLException address="+address,e);
 		}
 		 catch (Exception e) {
-			 System.out.println("MalformedURLException address="+address);
-			 e.printStackTrace();
-				log.error(e);
+//			 System.out.println("MalformedURLException address="+address);
+//			 e.printStackTrace();
+				log.error("MalformedURLException address="+address,e);
 			}
 		 return false;
 	}
@@ -253,16 +253,14 @@ public class RMIUtil {
 			Naming.unbind(serviceaddress);
 			return true;
 		} catch (RemoteException e) {
-			log.error(e);
+			log.error("serviceaddress="+serviceaddress,e);
 		} catch (MalformedURLException e) {
-			log.error(e);
+			log.error("serviceaddress="+serviceaddress,e);
 		} catch (NotBoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.error("serviceaddress="+serviceaddress,e);
 		}
 		catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.error("serviceaddress="+serviceaddress,e);
 		}
 		return false;
 	}
@@ -280,14 +278,14 @@ public class RMIUtil {
 			}
 			return (T)Naming.lookup(address);
 		} catch (MalformedURLException e) {
-			log.error(e);
+			log.error(e.getMessage(),e);
 		} catch (RemoteException e) {
-			log.error(e);
+			log.error(e.getMessage(),e);
 		} catch (NotBoundException e) {
-			log.error(e);
+			log.error(e.getMessage(),e);
 		}
 		catch (Exception e) {
-			log.error(e);
+			log.error(e.getMessage(),e);
 		}
 		return null;
 	}
@@ -304,14 +302,14 @@ public class RMIUtil {
 			}
 			return Naming.lookup(address);
 		} catch (MalformedURLException e) {
-			log.error(e);
+			log.error(e.getMessage(),e);
 		} catch (RemoteException e) {
-			log.error(e);
+			log.error(e.getMessage(),e);
 		} catch (NotBoundException e) {
-			log.error(e);
+			log.error(e.getMessage(),e);
 		}
 		catch (Exception e) {
-			log.error(e);
+			log.error(e.getMessage(),e);
 		}
 		return null;
 	}

@@ -45,8 +45,25 @@ public class TestScheduleTaskService {
 
 	}
 	
+	@Test
+	public void testTaskServiceException()
+	{
+//		TaskService.getTaskService().startService();//org/frameworkset/task/quarts-task.xml
+//		TaskService.getTaskService().stopService();
+		
+		TaskService taskService = TaskService.getTaskService("org/frameworkset/task/task-quartz-exception.xml");
+		taskService.startService();
+//		taskService.deleteJob("workbroker", "default");
+//		taskService.startExecuteJob("default", "workbroker");
+//		taskService.updateExecuteJob("default", "workbroker");
+//		taskService.stopService();
+//		taskService.startService();
+		System.out.println();
+
+	}
+	
 	public static void main(String[] args){
-		new TestScheduleTaskService().testTaskService();
+		new TestScheduleTaskService().testTaskServiceException();
 	}
 
 }

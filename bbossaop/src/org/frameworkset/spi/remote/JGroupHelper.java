@@ -379,7 +379,7 @@ public class JGroupHelper
         }
         catch (Exception e)
         {
-            log.error("Shutdown remoteDispatcher failed.");
+            log.error("Shutdown remoteDispatcher failed.",e);
            
         }
 

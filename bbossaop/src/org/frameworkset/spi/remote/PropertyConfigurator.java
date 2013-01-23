@@ -108,16 +108,16 @@ public class PropertyConfigurator {
 	         return root;
 	      }
 	      catch(SAXParseException err) {
-	         logger_.error("Configurator SAXParse error: " + err.getMessage());
-	         err.printStackTrace();
+	         logger_.error("Configurator SAXParse error: " + err.getMessage(),err);
+//	         err.printStackTrace();
 	      }
 	      catch(SAXException e) {
-	         logger_.error("Configurator SAX error: " + e);
-	         e.printStackTrace();
+	         logger_.error("Configurator SAX error: " + e,e);
+//	         e.printStackTrace();
 	      }
 	      catch(Exception pce) {
-	         logger_.error("Configurator general error: " + pce);
-	         pce.printStackTrace();
+	         logger_.error("Configurator general error: " + pce,pce);
+//	         pce.printStackTrace();
 	      }
 	      return null;
 	   }

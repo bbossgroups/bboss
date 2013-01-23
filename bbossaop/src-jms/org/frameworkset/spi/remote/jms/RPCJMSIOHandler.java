@@ -163,11 +163,11 @@ public class RPCJMSIOHandler extends BaseRPCIOHandler implements org.frameworkse
             {
                 // TODO Auto-generated catch block
                 // e.printStackTrace();
-                log.error(e);
+                log.error(e.getMessage(),e);
             }
             catch (Exception e)
             {
-                log.error(e);
+                log.error(e.getMessage(),e);
             }
     	}
     	else if (msg instanceof ObjectMessage)
@@ -203,11 +203,11 @@ public class RPCJMSIOHandler extends BaseRPCIOHandler implements org.frameworkse
             {
                 // TODO Auto-generated catch block
                 // e.printStackTrace();
-                log.error(e);
+                log.error(e.getMessage(),e);
             }
             catch (Exception e)
             {
-                log.error(e);
+                log.error(e.getMessage(),e);
             }
         }
         else
@@ -262,7 +262,7 @@ public class RPCJMSIOHandler extends BaseRPCIOHandler implements org.frameworkse
         }
         catch(Exception e)
         {
-            log.error(e);
+            log.error(e.getMessage(),e);
         }
         
         try
@@ -274,7 +274,7 @@ public class RPCJMSIOHandler extends BaseRPCIOHandler implements org.frameworkse
         }
         catch(Exception e)
         {
-            log.error(e);
+            log.error(e.getMessage(),e);
         }
         
         jms_rpc_started = false;

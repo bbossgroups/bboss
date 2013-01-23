@@ -322,14 +322,14 @@ public class ProArray implements Serializable{
 									}
 								}
 							} catch (NegativeArraySizeException e) {
-								log.error(e);
+								log.error(e.getMessage(),e);
 								componentArray = this;
 							} catch (ClassNotFoundException e) {
-								log.error(e);
+								log.error(e.getMessage(),e);
 								componentArray = this;
 							}
 							catch (Exception e) {
-								log.error(e);
+								log.error(e.getMessage(),e);
 								componentArray = this;
 							}
 							

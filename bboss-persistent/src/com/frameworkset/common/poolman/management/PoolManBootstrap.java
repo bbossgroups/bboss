@@ -100,7 +100,7 @@ public class PoolManBootstrap implements java.io.Serializable{
         }
         catch(Exception e)
         {
-            log.error(e);
+            log.error(e.getMessage(),e);
         }
     }
    
@@ -161,7 +161,7 @@ public class PoolManBootstrap implements java.io.Serializable{
         try {
             config.loadConfiguration(null);
         } catch (Exception ex) {
-            log.error("Start(configFile) loadConfiguration error: " + ex.getMessage());
+            log.error("Start(configFile) loadConfiguration error: " + ex.getMessage(),ex);
             //throw ex;
         }
 
@@ -172,7 +172,7 @@ public class PoolManBootstrap implements java.io.Serializable{
             try {
                 deployer.deployConfiguration(config);
             } catch (Exception ex1) {
-                log.error("Start(configFile) deployConfiguration error: " + ex1.getMessage());
+                log.error("Start(configFile) deployConfiguration error: " + ex1.getMessage(),ex1);
                 //throw ex1;
             }
         }
@@ -223,7 +223,7 @@ public class PoolManBootstrap implements java.io.Serializable{
         try {
             config.loadConfiguration(null);
         } catch (Exception ex) {
-            log.error("Start(configFile) loadConfiguration error: " + ex.getMessage());
+            log.error("Start(configFile) loadConfiguration error: " + ex.getMessage(),ex);
             //throw ex;
         }
 
@@ -234,7 +234,7 @@ public class PoolManBootstrap implements java.io.Serializable{
             try {
                 deployer.deployConfiguration(config);
             } catch (Exception ex1) {
-                log.error("Start(configFile) deployConfiguration error: " + ex1.getMessage());
+                log.error("Start(configFile) deployConfiguration error: " + ex1.getMessage(),ex1);
                 //throw ex1;
             }
         }
@@ -285,7 +285,7 @@ public class PoolManBootstrap implements java.io.Serializable{
         try {
             config.loadConfiguration(null);
         } catch (Exception ex) {
-            log.error("Start(configFile) loadConfiguration error: " + ex.getMessage());
+//            log.error("Start(configFile) loadConfiguration error: " + ex.getMessage());
             throw ex;
         }
 
@@ -293,7 +293,7 @@ public class PoolManBootstrap implements java.io.Serializable{
             try {
                 deployer.deployConfiguration(config,dbname);
             } catch (Exception ex2) {
-                log.error("LocalPoolDeployer deployConfiguration error: " + ex2.getMessage(),ex2);
+//                log.error("LocalPoolDeployer deployConfiguration error: " + ex2.getMessage(),ex2);
                 throw ex2;
             }
        

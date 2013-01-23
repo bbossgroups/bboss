@@ -43,19 +43,19 @@ public class DefaultScheduleService extends ScheduleService implements Serializa
 		} catch (InstantiationException e) {
 			// TODO Auto-generated catch block
 //			e.printStackTrace();
-			log.error(e);
+			log.error(e.getMessage(),e);
 		} catch (IllegalAccessException e) {
 			// TODO Auto-generated catch block
-			log.error(e);
+			log.error(e.getMessage(),e);
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
-			log.error(e);
+			log.error(e.getMessage(),e);
 		}
 		
 		catch (ParseException ex1) {
-			log.error(ex1);
+			log.error(ex1.getMessage(),ex1);
 	    } catch (SchedulerException ex) {
-	    	log.error(ex);
+	    	log.error(ex.getMessage(),ex);
 	    }
 
 	}

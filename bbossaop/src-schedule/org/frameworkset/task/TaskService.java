@@ -15,10 +15,14 @@ import org.frameworkset.spi.DefaultApplicationContext;
 import org.frameworkset.spi.assemble.Pro;
 import org.frameworkset.spi.assemble.ProList;
 import org.frameworkset.spi.assemble.ProMap;
+import org.quartz.Calendar;
 import org.quartz.JobDetail;
+import org.quartz.JobListener;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.quartz.SchedulerFactory;
+import org.quartz.SchedulerListener;
+import org.quartz.TriggerListener;
 import org.quartz.impl.SchedulerRepository;
 import org.quartz.impl.StdSchedulerFactory;
 
@@ -205,13 +209,29 @@ public class TaskService implements Service {
 			jobinfo.addParameter(name, parameter.getTrueValue());
 		}
 	}
-
+	private void buildCalender(Pro pro) throws Exception
+	{
+		Calendar calendar = null;
+		Object value = pro.getObject();
+		String name = pro.getName();
+		if(value instanceof String)
+		{
+			calendar = CalendarBuilderUtil.calendarBuilder((String)value);
+		}
+		else if(value instanceof BaseCalendarBuilder)
+		{
+			name = ((BaseCalendarBuilder)value).getCalendarName();
+			calendar = ((BaseCalendarBuilder)value).buildCalendar();
+		}
+		scheduler.addCalendar(name,calendar,false,false);
+	}
 	public synchronized void startService() {
 
 		if (started)
 			return;
 		taskContext = DefaultApplicationContext.getApplicationContext(taskconfig);
 		Pro taskconfig = taskContext.getProBean("taskconfig");
+		
 		if (!taskconfig.getBooleanExtendAttribute("enable")) {
 			log.debug("Scheduler not enable.");
 			return;
@@ -231,13 +251,77 @@ public class TaskService implements Service {
 				scheduler = createScheduler(factory,quartz.getString("org.quartz.scheduler.instanceName"));
 			}
 			
+			ProMap calender = taskContext.getMapProperty("quartz.config.calendar");
+			if(calender != null && calender.size() >0)
+			{
+				Iterator iterator = calender.entrySet().iterator();
+				while(iterator.hasNext())
+				{
+					Map.Entry pro = (Map.Entry)iterator.next();
+					buildCalender((Pro)pro.getValue());
+				}
+			}
+			ProList schedulerlistener = taskContext.getListProperty("quartz.config.schedulerlistener");
+			if(schedulerlistener != null && schedulerlistener.size() >0)
+			{
+				Iterator iterator = schedulerlistener.iterator();
+				while(iterator.hasNext())
+				{
+					Pro pro = (Pro)iterator.next();
+					scheduler.addSchedulerListener((SchedulerListener)pro.getObject());
+				}
+			}
 			
+			
+			ProList globaljoblistener = taskContext.getListProperty("quartz.config.globaljoblistener");
+			if(globaljoblistener != null && globaljoblistener.size() >0)
+			{
+				Iterator iterator = globaljoblistener.iterator();
+				while(iterator.hasNext())
+				{
+					Pro pro = (Pro)iterator.next();
+					scheduler.addGlobalJobListener((JobListener)pro.getObject());
+				}
+			}
+			
+			
+			ProList joblistener = taskContext.getListProperty("quartz.config.joblistener");
+			if(joblistener != null && joblistener.size() >0)
+			{
+				Iterator iterator = joblistener.iterator();
+				while(iterator.hasNext())
+				{
+					Pro pro = (Pro)iterator.next();
+					scheduler.addJobListener((JobListener)pro.getObject());
+				}
+			}
+			
+			ProList globaltriggerlistener = taskContext.getListProperty("quartz.config.globaltriggerlistener");
+			if(globaltriggerlistener != null && globaltriggerlistener.size() >0)
+			{
+				Iterator iterator = globaltriggerlistener.iterator();
+				while(iterator.hasNext())
+				{
+					Pro pro = (Pro)iterator.next();
+					scheduler.addGlobalTriggerListener((TriggerListener)pro.getObject());
+				}
+			}
+			ProList triggerlistener = taskContext.getListProperty("quartz.config.triggerlistener");
+			if(triggerlistener != null && triggerlistener.size() >0)
+			{
+				Iterator iterator = triggerlistener.iterator();
+				while(iterator.hasNext())
+				{
+					Pro pro = (Pro)iterator.next();
+					scheduler.addTriggerListener((TriggerListener)pro.getObject());
+				}
+			}
 			scheduler.start();
 			started = true;
 			log.debug("Scheduler started.");
 
 		} catch (Exception ex) {
-			log.error("Scheduler failed:" + ex);
+			log.error("Scheduler failed:" + ex.getMessage(),ex);
 			return;
 		}
 
@@ -256,8 +340,8 @@ public class TaskService implements Service {
 				instance.startService(scheduler);
 				instance.startupConfigedService(scheduler);
 			} catch (Exception e) {
-				log.error("Scheduler failed:" + e + ",scheduleServiceInfo : "
-						+ scheduleServiceInfo);
+				log.error("Scheduler failed:" + e.getMessage() + ",scheduleServiceInfo : "
+						+ scheduleServiceInfo,e);
 				continue;
 			}
 
@@ -440,7 +524,7 @@ public class TaskService implements Service {
 				scheduleServiceInfo.getScheduleService(this).startExecuteJob(scheduler, jobInfo);
 			}  catch (Exception e) {
 
-				log.error(e);
+				log.error(e.getMessage(),e);
 
 			}
 		}
@@ -490,7 +574,7 @@ public class TaskService implements Service {
 				scheduleServiceInfo.getScheduleService(this).updateJobAndTriger(scheduler, jobInfo);
 			}  catch (Exception e) {
 
-				log.error(e);
+				log.error(e.getMessage(),e);
 
 			}
 			// catch (SchedulerException e)

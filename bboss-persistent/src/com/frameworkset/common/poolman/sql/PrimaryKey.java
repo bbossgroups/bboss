@@ -44,6 +44,7 @@ import java.util.UUID;
 
 import org.apache.log4j.Logger;
 
+import com.frameworkset.common.poolman.NestedSQLException;
 import com.frameworkset.common.poolman.PreparedDBUtil;
 import com.frameworkset.common.poolman.util.JDBCPool;
 import com.frameworkset.common.poolman.util.SQLManager;
@@ -802,15 +803,18 @@ public class PrimaryKey
 		}
 		catch (SQLException e)
 		{
-			log.error("同步当前缓冲中表[" + tableName + "]的主键[" + primaryKeyName
-					+ "]最大值与数据库该表主键最大值失败，系统采用自动产生的主键：" + e.getMessage());
-			throw e;
+//			log.error("同步当前缓冲中表[" + tableName + "]的主键[" + primaryKeyName
+//					+ "]最大值与数据库该表主键最大值失败，系统采用自动产生的主键：" + e.getMessage());
+			throw new NestedSQLException("同步当前缓冲中表[" + tableName + "]的主键[" + primaryKeyName
+					+ "]最大值与数据库该表主键最大值失败，系统采用自动产生的主键：", e);
 		} catch (TransactionException e) {
 			
-			e.printStackTrace();
-			log.error("同步当前缓冲中表[" + tableName + "]的主键[" + primaryKeyName
-					+ "]最大值与数据库该表主键最大值失败，系统采用自动产生的主键：" + e.getMessage());
-			throw new SQLException(e.getMessage());
+//			e.printStackTrace();
+//			log.error("同步当前缓冲中表[" + tableName + "]的主键[" + primaryKeyName
+//					+ "]最大值与数据库该表主键最大值失败，系统采用自动产生的主键：" + e.getMessage());
+			throw new NestedSQLException("同步当前缓冲中表[" + tableName + "]的主键[" + primaryKeyName
+					+ "]最大值与数据库该表主键最大值失败，系统采用自动产生的主键：" , e);
+//			throw new SQLException(e.getMessage());
 		}
 		finally
 		{

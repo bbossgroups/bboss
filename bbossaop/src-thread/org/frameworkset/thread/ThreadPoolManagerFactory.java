@@ -499,16 +499,16 @@ public class ThreadPoolManagerFactory
                     }
                     catch (InstantiationException e)
                     {
-                        log.error(e);
+                        log.error(e.getMessage(),e);
                         // e.printStackTrace();
                     }
                     catch (IllegalAccessException e)
                     {
-                        log.error(e);
+                        log.error(e.getMessage(),e);
                     }
                     catch (ClassNotFoundException e)
                     {
-                        log.error(e);
+                        log.error(e.getMessage(),e);
                     }
             }
             log.info(name + ".initdelayTime:" + waitParam.initdelayTime);

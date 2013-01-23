@@ -47,9 +47,9 @@ public class RPCRequestHandler implements RequestHandler
 			                     Object[].class,
 			                     Class[].class});
 		} catch (SecurityException e) {
-			log.error(e);
+			log.error(e.getMessage(),e);
 		} catch (NoSuchMethodException e) {
-			log.error(e);
+			log.error(e.getMessage(),e);
 		}
 	}
 	/**

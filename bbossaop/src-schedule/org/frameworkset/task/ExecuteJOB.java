@@ -1,8 +1,10 @@
 package org.frameworkset.task;
 
 import java.io.Serializable;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.quartz.Job;
 import org.quartz.JobDataMap;
 import org.quartz.JobExecutionContext;
@@ -20,7 +22,7 @@ import org.quartz.JobExecutionException;
  */
 public class ExecuteJOB implements Job, Serializable{
 
-
+	private static final Logger log = Logger.getLogger(ExecuteJOB.class);
     /**
      * execute
      *
@@ -29,9 +31,15 @@ public class ExecuteJOB implements Job, Serializable{
      */
     public void execute(JobExecutionContext jobExecutionContext) throws
             JobExecutionException {
-        JobDataMap data = jobExecutionContext.getJobDetail().getJobDataMap();
-        Execute action = (Execute)data.get("action");
-        Map parameters = (Map)data.get("parameters");
-        action.execute(parameters);
+        try {
+			JobDataMap data = jobExecutionContext.getJobDetail().getJobDataMap();
+			Execute action = (Execute)data.get("action");
+			Map parameters = (Map)data.get("parameters");
+			action.execute(parameters);
+		} catch (IllegalArgumentException e) {
+			log.error(e.getMessage(),e);
+		} catch (Throwable e) {
+			log.error(e.getMessage(),e);
+		}
     }
 }

@@ -378,8 +378,8 @@ public abstract class BaseTableManager {
 						// e.printStackTrace();
 						// 获取表的主键信息失败时自动跳过本表主键信息初始化
 						log.error("    load table[" + table_name
-								+ "] failed!\r\nerror message:\r\n"
-								+ e.getMessage());
+								+ "] failed:"
+								+ e.getMessage(),e);
 	
 					}
 				}

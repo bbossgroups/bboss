@@ -16,32 +16,20 @@
 
 package org.frameworkset.task;
 
+import org.frameworkset.spi.ApplicationContextAware;
+import org.quartz.Calendar;
+
 /**
- * <p>Title: MethodJob.java</p> 
+ * <p>Title: CalendarBuilder.java</p> 
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2011-1-20 обнГ11:27:58
+ * @Date 2013-1-23 ионГ10:09:08
  * @author biaoping.yin
  * @version 1.0
  */
-public class MethodJob {
-	public void action()
-	{
-		System.out.println("execute action");
-		
-	}
-	
-	public void actionexception() throws Exception
-	{
-		throw new Exception("execute action exception");
-		
-	}
-	
-	public void action(String hello)
-	{
-		System.out.println("execute action:" + hello);
-		
-	}
+public interface CalendarBuilder extends ApplicationContextAware{
+	public String getCalendarName();
+	public Calendar buildCalendar();
 
 }

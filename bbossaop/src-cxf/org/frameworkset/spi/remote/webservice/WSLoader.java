@@ -47,17 +47,17 @@ public class WSLoader {
 		try {
 			loadDefaultWebService( classLoader);
 		} catch (Exception e) {
-			logger.error(e);
+			logger.error(e.getMessage(),e);
 		}
 		try {
 			loadModulesWebService( classLoader);
 		} catch (Exception e) {
-			logger.error(e);
+			logger.error(e.getMessage(),e);
 		}
 		try {
 			loadMvcWebService( classLoader);
 		} catch (Exception e) {
-			logger.error(e);
+			logger.error(e.getMessage(),e);
 		}
 		
 	}

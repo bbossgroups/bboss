@@ -16,32 +16,38 @@
 
 package org.frameworkset.task;
 
+import org.frameworkset.spi.ApplicationContextAware;
+import org.frameworkset.spi.BaseApplicationContext;
+import org.frameworkset.spi.BeanInfoAware;
+import org.quartz.JobListener;
+
+import com.frameworkset.spi.assemble.BeanInstanceException;
+
 /**
- * <p>Title: MethodJob.java</p> 
+ * <p>Title: BaseJobListener.java</p> 
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2011-1-20 ÏÂÎç11:27:58
+ * @Date 2013-1-23 ÉÏÎç10:31:34
  * @author biaoping.yin
  * @version 1.0
  */
-public class MethodJob {
-	public void action()
-	{
-		System.out.println("execute action");
-		
-	}
+public abstract class BaseJobListener  extends BeanInfoAware  implements ApplicationContextAware,JobListener {
+	protected BaseApplicationContext applicationContext;
 	
-	public void actionexception() throws Exception
-	{
-		throw new Exception("execute action exception");
-		
+
+	public void setApplicationContext(BaseApplicationContext applicationContext)
+			throws BeanInstanceException {
+		this.applicationContext = applicationContext;
+
 	}
-	
-	public void action(String hello)
-	{
-		System.out.println("execute action:" + hello);
-		
+	public BaseJobListener() {
+		// TODO Auto-generated constructor stub
 	}
+	public String getName()
+	{
+		return super.beaninfo.getName();
+	}
+
 
 }

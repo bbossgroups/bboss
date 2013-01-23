@@ -1,0 +1,198 @@
+<!-- 
+	任务调度
+-->
+<properties>
+	<property name="quartz.config">
+		<map>
+			<property name="org.quartz.scheduler.instanceName" value="testQuartzScheduler" />
+			<property name="org.quartz.scheduler.rmi.export" value="false" />
+			<property name="org.quartz.scheduler.rmi.proxy" value="false" />
+			<property name="org.quartz.scheduler.wrapJobExecutionInUserTransaction" value="false" />
+			<property name="org.quartz.threadPool.class" value="org.quartz.simpl.SimpleThreadPool" />
+			<property name="org.quartz.threadPool.threadCount" value="1" />
+			<property name="org.quartz.threadPool.threadPriority" value="5" />
+			<property name="org.quartz.threadPool.threadsInheritContextClassLoaderOfInitializingThread" value="true" />
+			<property name="org.quartz.jobStore.misfireThreshold" value="6000" />
+			<property name="org.quartz.jobStore.class" value="org.quartz.simpl.RAMJobStore" />
+		</map>
+		<!-- for cluster -->
+		
+	</property>
+	
+	<!--
+		quartz引擎监听器配置
+		-->
+	<property name="quartz.config.schedulerlistener">
+		<list componentType="bean">
+			<property name="DefaultSchedulerlistener" class="org.frameworkset.task.DefaultSchedulerListener"/>
+		</list>
+	</property>
+	<!--
+		任务全局监听器配置
+		-->
+	<property name="quartz.config.globaljoblistener">
+		<list componentType="bean">
+			
+		</list>
+		<!-- for cluster -->
+		
+	</property>
+	<!--
+		任务监听器配置
+		-->
+	<property name="quartz.config.joblistener">
+		<list componentType="bean">
+			<property name="DefaultJobListener" class="org.frameworkset.task.DefaultJobListener"/>
+		</list>
+		<!-- for cluster -->
+		
+	</property>
+	<!--
+		任务全局Trigger监听器配置
+		-->
+	<property name="quartz.config.globaltriggerlistener">
+		<list componentType="bean">
+			<!--<property name="GlobleTriggerListener" class="org.frameworkset.task.GlobalTriggerListener"/>-->
+		</list>
+		<!-- for cluster -->
+		
+	</property>
+	<!--
+		任务Trigger监听器配置
+		-->
+	<property name="quartz.config.triggerlistener">
+		<list componentType="bean">
+			<property name="DefaultTriggerListener" class="org.frameworkset.task.DefaultTriggerListener"/>
+		</list>
+		<!-- for cluster -->
+		
+	</property>
+	<!--
+		任务日历配置
+		AnnualCalendar
+		CronCalendar
+		DailyCalendar
+		HolidayCalendar
+		MonthlyCalendar
+		WeeklyCalendar
+		-->
+	<property name="quartz.config.calendar">
+		<map>
+			<property name="2012year">
+				<![CDATA[ 
+				//法定节日是以每年为周期的，所以使用AnnualCalendar
+				AnnualCalendar holidays = new AnnualCalendar();
+				//五一劳动节
+				java.util.Calendar laborDay = new GregorianCalendar();
+				laborDay.add(java.util.Calendar.MONTH,5);
+				laborDay.add(java.util.Calendar.DATE,1);
+				holidays.setDayExcluded(laborDay, true); //排除的日期，如果设置为false则为包含
+				//国庆节
+				java.util.Calendar nationalDay = new GregorianCalendar();
+				nationalDay.add(java.util.Calendar.MONTH,10);
+				nationalDay.add(java.util.Calendar.DATE,1);
+				holidays.setDayExcluded(nationalDay, true);//排除该日期
+				return holidays;
+					]]>
+			</property>
+			<property name="2013year" class="org.frameworkset.task.TestCalendarBuilder"/>
+		</map>
+		<!-- for cluster -->
+		
+	</property>
+	
+	
+
+	<property name="taskconfig" enable="true">
+		<list>
+			<property name="定时任务执行器" taskid="default"
+				class="org.frameworkset.task.DefaultScheduleService" used="true">
+				<!--
+					可执行的任务项
+					属性说明：
+					name：任务项名称
+					id:任务项标识,将作为作业在quartz任务引擎中的唯一标识
+					action:具体的任务执行处理程序,实现org.frameworkset.task.Execute接口
+					cron_time：	cron格式的时间表达式，用来管理任务执行的生命周期，相关的规则请参照日期管理控件quartz的说明文档
+					shouldRecover:集群环境下属性必须设置为 true，当Quartz服务被中止后，再次启动或集群中其他机器接手任务时会尝试恢复执行之前未完成的所有任务。
+					used 是否使用
+					true 加载，缺省值
+					false 不加载	  
+					子元素说明：
+					parameter:设置任务执行的参数，name标识参数名称，value指定参数的值
+				-->
+				<list>
+					
+					<!-- 组件方式指定任务执行程序,通过bean-name指定任务程序组件，method指定要执行的方法
+					通过
+					construction指定方法的参数值，多个参数按照参数的顺序指定
+					多个property属性即可。
+					joblistenername="test JobListener"
+						trigger:simple,cron,DateInterval,NthIncludedDay  缺省值为cron
+						所有时间采用yyyy-MM-dd HH:mm:ss格式配置
+						cron 属性集：
+							timeZone 时区标识
+							volatility boolean 是否持久化任务
+							shouldRecover
+							description
+							durability boolean 任务失效后是否保留
+							cronb_time
+						simple 属性集：
+							startTime 例如：startTime="2013-01-23 16:29:00"
+							endTime 
+							repeatCount 
+							repeatInterval The number of milliseconds to pause between the repeat firing.
+							volatility boolean 是否持久化任务
+							shouldRecover
+							description
+							durability boolean 任务失效后是否保留
+                        DateInterval 属性集
+							startTime
+							endTime
+							intervalUnit  { SECOND, MINUTE, HOUR, DAY, WEEK, MONTH, YEAR }
+							repeatInterval
+							volatility boolean 是否持久化任务
+							shouldRecover
+							description
+							durability boolean 任务失效后是否保留
+
+						NthIncludedDay 属性集
+							startTime
+							endTime 
+							fireAtTime HH:MM[:SS]
+							intervalType   WEEKLY MONTHLY YEARLY
+							N 第几
+							timeZone 时区标识
+							volatility boolean 是否持久化任务
+							shouldRecover
+							description
+							durability boolean 任务失效后是否保留
+						-->
+					<property name="beanmethodjobnoargs" jobid="beanmethodjobnoargs"						
+						bean-name="methodjob"
+						method="actionexception"
+						calendar="2012year"
+						joblistenername="DefaultJobListener"
+						triggerlistenername="DefaultTriggerListener"
+						trigger="cron"
+						cronb_time="2 * * * * ?" used="false"
+						shouldRecover="false"/>		
+					<property name="simplebeanmethodjobnoargs" jobid="simplebeanmethodjobnoargs"						
+						bean-name="methodjob"
+						method="actionexception"
+						calendar="2013year"
+						triggerlistenername="DefaultTriggerListener"
+						trigger="simple"
+						startTime="2013-01-23 16:29:00"
+						repeatCount="2"
+						repeatInterval="2000"
+						used="true" 
+						shouldRecover="false"/>					
+					
+				</list>
+			</property>
+		</list>
+	</property>
+	
+	<property name="methodjob" class="org.frameworkset.task.MethodJob"/>
+</properties>

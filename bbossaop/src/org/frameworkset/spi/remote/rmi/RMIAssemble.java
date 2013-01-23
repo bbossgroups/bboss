@@ -76,12 +76,12 @@ public class RMIAssemble {
 		try {
 			loadModulesRMIService();
 		} catch (Exception e) {
-			logger.error(e);
+			logger.error(e.getMessage(),e);
 		}
 		try {
 			loadMvcRMIService();
 		} catch (Exception e) {
-			logger.error(e);
+			logger.error(e.getMessage(),e);
 		}
 		
 	}

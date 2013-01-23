@@ -66,7 +66,7 @@ public class PoolManager implements Serializable {
             try {
                 return (JDBCPool) pools.get(name);
             } catch (Exception e) {
-                log.error(e);
+                log.error(e.getMessage(),e);
             }
         }
         log.info("ERROR: Could not locate " + name +
@@ -86,7 +86,7 @@ public class PoolManager implements Serializable {
             try {
                 return (JDBCPool) pools.get(name);
             } catch (Exception e) {
-            	log.error(e);
+            	log.error(e.getMessage(),e);
             }
         }
         return null;
@@ -126,7 +126,7 @@ public class PoolManager implements Serializable {
 					defaultpool.stopPool();
 				} catch (Exception e) {
 					
-					log.error(e);
+					log.error(e.getMessage(),e);
 				}
         		this.defaultpool = newpool;
         	}
@@ -193,7 +193,7 @@ public class PoolManager implements Serializable {
 					pool.closeAllResources();
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
-					log.error(e);
+					log.error(e.getMessage(),e);
 				}
             }
         }

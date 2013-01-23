@@ -296,8 +296,8 @@ public class SynchronizedMethod implements java.io.Serializable {
     	}
     	catch(Exception e)
     	{
-    		e.printStackTrace();
-    		log.error(e);
+//    		e.printStackTrace();
+    		log.error(e.getMessage(),e);
     		return null;
     	}
     }
@@ -463,8 +463,8 @@ public class SynchronizedMethod implements java.io.Serializable {
 		}
 		catch(Exception e)
 		{
-			e.printStackTrace();
-			log.error(e);
+//			e.printStackTrace();
+			log.error(e.getMessage(),e);
 			return false;
 		}
     	
@@ -630,7 +630,7 @@ public class SynchronizedMethod implements java.io.Serializable {
 				
 				t = new Boolean( true);
 				rollbackExceptionIndexs.put(key, t);
-				log.error(e);
+				log.error(e.getMessage(),e);
 				return true;
 			}
 		}

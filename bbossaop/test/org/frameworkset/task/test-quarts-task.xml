@@ -39,6 +39,7 @@
 				-->
 				<list>
 					<property name="workbroker" jobid="workbroker"
+						joblistenername="test TriggerListener"
 						action="org.frameworkset.task.TestJob"
 						cronb_time="2 * * * * ?" used="true"
 						shouldRecover="false"

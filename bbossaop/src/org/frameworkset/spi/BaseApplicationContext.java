@@ -603,7 +603,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 				try {
 					et.destroy();
 				} catch (Exception e) {
-					log.error(e);
+					log.error(e.getMessage(),e);
 				}
 			}
 		}
@@ -618,11 +618,11 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 					Method m = value.getClass().getDeclaredMethod(method);
 					m.invoke(value);
 				} catch (SecurityException e) {
-					log.error(e);
+					log.error(e.getMessage(),e);
 				} catch (NoSuchMethodException e) {
 					log.error(e);
 				} catch (Exception e) {
-					log.error(e);
+					log.error(e.getMessage(),e);
 				}
 			}
 		}

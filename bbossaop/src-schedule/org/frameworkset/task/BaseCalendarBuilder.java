@@ -16,32 +16,38 @@
 
 package org.frameworkset.task;
 
+import org.frameworkset.spi.BaseApplicationContext;
+import org.frameworkset.spi.BeanInfoAware;
+
+import com.frameworkset.spi.assemble.BeanInstanceException;
+
 /**
- * <p>Title: MethodJob.java</p> 
+ * <p>Title: BaseCalendarBuilder.java</p> 
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2011-1-20 обнГ11:27:58
+ * @Date 2013-1-23 ионГ10:26:24
  * @author biaoping.yin
  * @version 1.0
  */
-public class MethodJob {
-	public void action()
-	{
-		System.out.println("execute action");
-		
+public abstract class BaseCalendarBuilder extends BeanInfoAware implements CalendarBuilder {
+	protected BaseApplicationContext applicationContext;
+	public BaseCalendarBuilder() {
+		// TODO Auto-generated constructor stub
 	}
+
+	public void setApplicationContext(BaseApplicationContext applicationContext)
+			throws BeanInstanceException {
+		this.applicationContext = applicationContext;
+
+	}
+
+	public String getCalendarName() {
+
+		return super.beaninfo.getName();
+	}
+
 	
-	public void actionexception() throws Exception
-	{
-		throw new Exception("execute action exception");
-		
-	}
 	
-	public void action(String hello)
-	{
-		System.out.println("execute action:" + hello);
-		
-	}
 
 }

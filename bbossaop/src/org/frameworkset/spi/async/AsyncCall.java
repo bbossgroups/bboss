@@ -261,7 +261,7 @@ public class AsyncCall {
 					t.get(task.getAsyncMethod().getAsyncTimeout(), TimeUnit.MICROSECONDS);
 				}
 			} catch (Exception e) {				
-				log.error(e);
+				log.error(e.getMessage(),e);
 			}
 		}
 	}
@@ -346,7 +346,7 @@ public class AsyncCall {
 					
 					
 				} catch (Exception e) {
-					log.error(e);
+					log.error(e.getMessage(),e);
 					continue;
 				}
 
@@ -368,7 +368,7 @@ public class AsyncCall {
 					callbackexecutor.execute(new AsynCallbackRunnable(callService));
 					
 				} catch (Exception e) {
-					log.error(e);
+					log.error(e.getMessage(),e);
 					continue;
 				}
 

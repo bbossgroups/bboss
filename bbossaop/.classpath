@@ -72,7 +72,6 @@
 	<classpathentry kind="lib" path="lib/mina/mina-transport-serial-2.0.0-RC1.jar"/>
 	<classpathentry kind="lib" path="lib/http/httpcore-4.0.1.jar" sourcepath="D:/workspace/httpcomponents-core-4.0.1"/>
 	<classpathentry kind="lib" path="lib/http/httpcore-nio-4.0.1.jar" sourcepath="/httpcore-nio"/>
-	<classpathentry kind="lib" path="lib/quartz/quartz-all-1.8.4.jar"/>
 	<classpathentry kind="lib" path="/bboss-persistent/lib/derby/derby.jar"/>
 	<classpathentry kind="lib" path="/bboss-persistent/lib/derby/derbyclient.jar"/>
 	<classpathentry kind="lib" path="lib/cglib/cglib-nodep-2.2.jar"/>
@@ -102,5 +101,7 @@
 	<classpathentry kind="lib" path="lib/jms/activemq-xmpp-5.5.0.jar"/>
 	<classpathentry kind="lib" path="lib/netty/hessian-4.0.7.jar"/>
 	<classpathentry kind="lib" path="lib/bboss-velocity.jar" sourcepath="/bboss-velocity"/>
+	<classpathentry kind="lib" path="lib/quartz/quartz-1.8.6.jar" sourcepath="/quartz"/>
+	<classpathentry kind="lib" path="lib/bsh/bsh-2.0b4.jar"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>

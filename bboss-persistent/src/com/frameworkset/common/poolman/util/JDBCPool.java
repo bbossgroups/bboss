@@ -288,7 +288,7 @@ public class JDBCPool {
 				log.debug("Init DBAdapter from driver:" + driver);
 				dbAdapter = DBFactory.create(driver);
 			} catch (InstantiationException ex) {
-				log.error(ex.getMessage());
+				log.error(ex.getMessage(),ex);
 			}
 		} 
 		else
@@ -297,7 +297,7 @@ public class JDBCPool {
 				log.debug("Init DBAdapter from dbtype:" + dbtype);
 				dbAdapter = DBFactory.create(dbtype);
 			} catch (InstantiationException ex1) {
-				log.error(ex1.getMessage());
+				log.error(ex1.getMessage(),ex1);
 			}
 		}
 	}

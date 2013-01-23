@@ -45,12 +45,18 @@ public class MethodInvokerJob implements Job, Serializable{
 			 MethodInvoker action = (MethodInvoker)data.get("JobMethod");
 			 action.invoker();
 		} catch (IllegalArgumentException e) {
-			log.error(e);
+			log.error(e.getMessage(),e);
 		} catch (IllegalAccessException e) {
-			log.error(e);
+			log.error(e.getMessage(),e);
 		} catch (InvocationTargetException e) {
-			log.error(e.getTargetException());
+			log.error(e.getTargetException().getMessage(),e.getTargetException());
+//			throw new JobExecutionException(e.getTargetException());
+		} catch (Throwable e) {
+//			log.error(e);
+			log.error(e.getMessage(),e);			
 		}
+		 
+		 
 		 
 //	        Map parameters = (Map)data.get("parameters");
 		

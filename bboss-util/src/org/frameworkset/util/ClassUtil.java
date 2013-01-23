@@ -350,7 +350,7 @@ public class ClassUtil
 				}
 				catch(Exception e)
 				{
-					log.error(e);
+					log.error(e.getMessage(),e);
 				}
 				if(retmethods == null)
 					declaredMethods = NULL_M;
@@ -382,7 +382,7 @@ public class ClassUtil
 		    			}
 		    			catch(Exception e)
 		    			{
-		    				log.error(e);
+		    				log.error(e.getMessage(),e);
 //		    				declaredFields =NULL;
 		    			}
 		    			List<PropertieDescription> retpropertyDescriptors = null;
@@ -393,6 +393,7 @@ public class ClassUtil
     	    			}
     	    			catch(Exception e)
     	    			{
+    	    				log.error(e.getMessage(),e);
     	    				retpropertyDescriptors = NULL_P;
     	    			}
 		    			

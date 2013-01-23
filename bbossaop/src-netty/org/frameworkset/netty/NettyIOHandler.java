@@ -169,7 +169,7 @@ public class NettyIOHandler extends BaseRPCIOHandler implements ChannelUpstreamH
 	                         break;
 	                 }
 				} catch (Exception e1) {
-					log.error(e1);
+					log.error(e1.getMessage(),e1);
 				}
                
 //                if (channel.getParent() != null) {

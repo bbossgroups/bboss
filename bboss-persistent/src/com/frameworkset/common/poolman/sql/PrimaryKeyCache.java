@@ -124,7 +124,7 @@ public class PrimaryKeyCache {
 	public PrimaryKey loaderPrimaryKey(Connection con,String tableName) {
 		try {
 			
-			System.out.println("开始装载表【" + tableName +"】的主键信息到缓冲。");
+			log.debug("开始装载表【" + tableName +"】的主键信息到缓冲。");
 //			PrimaryKey key = this.getIDTable(tableName);
 //			if(key != null)
 //			{
@@ -136,18 +136,18 @@ public class PrimaryKeyCache {
 			if (key != null)
 			{
 				id_tables.put(key.getTableName().trim().toLowerCase(), key);
-				System.out.println("完成装载表【" + tableName +"】的主键信息。");
+				log.debug("完成装载表【" + tableName +"】的主键信息。");
 			}
 			else
 			{
 				id_tables.put(tableName.trim().toLowerCase(),NULL_);
-				System.out.println("完成装载表【" + tableName +"】的主键信息,NULL_,");
+				log.debug("完成装载表【" + tableName +"】的主键信息,NULL_,");
 			}
 			
 			return key;
 		} catch (Exception ex) {
-			ex.printStackTrace();
-			log.error(ex);
+//			ex.printStackTrace();
+			log.error(ex.getMessage(),ex);
 		}
 		return null;
 	}
