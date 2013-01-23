@@ -19,7 +19,6 @@ package org.frameworkset.task;
 import org.apache.log4j.Logger;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
-import org.quartz.JobListener;
 
 import com.frameworkset.util.StringUtil;
 

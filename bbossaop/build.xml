@@ -43,6 +43,7 @@
 	<path id="cp-bboss-aop">
 
 		<fileset dir="lib/" includes="*.jar *.zip" />
+		<fileset dir="lib/bsh/" includes="*.jar *.zip" />
 		<fileset dir="lib/test/" includes="*.jar *.zip" />
 		<fileset dir="lib/camel/" includes="**/*.jar *.zip" />
 		<fileset dir="lib/cxf/" includes="*.jar *.zip" />

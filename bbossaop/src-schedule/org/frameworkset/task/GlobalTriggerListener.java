@@ -19,9 +19,6 @@ package org.frameworkset.task;
 import org.apache.log4j.Logger;
 import org.quartz.JobExecutionContext;
 import org.quartz.Trigger;
-import org.quartz.TriggerListener;
-
-import sun.org.mozilla.javascript.internal.Context;
 
 /**
  * <p>Title: GlobalTriggerListener.java</p> 

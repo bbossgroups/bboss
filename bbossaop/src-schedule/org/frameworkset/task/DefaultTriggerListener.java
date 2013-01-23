@@ -19,7 +19,6 @@ package org.frameworkset.task;
 import org.apache.log4j.Logger;
 import org.quartz.JobExecutionContext;
 import org.quartz.Trigger;
-import org.quartz.TriggerListener;
 
 /**
  * <p>Title: DefaultTriggerListener.java</p> 
