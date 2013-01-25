@@ -258,7 +258,11 @@ public class TaskService implements Service {
 				while(iterator.hasNext())
 				{
 					Map.Entry pro = (Map.Entry)iterator.next();
-					buildCalender((Pro)pro.getValue());
+					try {
+						buildCalender((Pro)pro.getValue());
+					} catch (Exception e) {
+						log.error("º”‘ÿ»’¿˙ ß∞‹!",e);
+					}
 				}
 			}
 			ProList schedulerlistener = taskContext.getListProperty("quartz.config.schedulerlistener");
@@ -268,7 +272,11 @@ public class TaskService implements Service {
 				while(iterator.hasNext())
 				{
 					Pro pro = (Pro)iterator.next();
-					scheduler.addSchedulerListener((SchedulerListener)pro.getObject());
+					try {
+						scheduler.addSchedulerListener((SchedulerListener)pro.getObject());
+					} catch (Exception e) {
+						log.error("º”‘ÿSchedulerListener ß∞‹!",e);
+					}
 				}
 			}
 			
@@ -280,7 +288,11 @@ public class TaskService implements Service {
 				while(iterator.hasNext())
 				{
 					Pro pro = (Pro)iterator.next();
-					scheduler.addGlobalJobListener((JobListener)pro.getObject());
+					try {
+						scheduler.addGlobalJobListener((JobListener)pro.getObject());
+					} catch (Exception e) {
+						log.error("º”‘ÿGlobalJobListener ß∞‹!",e);
+					}
 				}
 			}
 			
@@ -292,7 +304,11 @@ public class TaskService implements Service {
 				while(iterator.hasNext())
 				{
 					Pro pro = (Pro)iterator.next();
-					scheduler.addJobListener((JobListener)pro.getObject());
+					try {
+						scheduler.addJobListener((JobListener)pro.getObject());
+					} catch (Exception e) {
+						log.error("º”‘ÿJobListener ß∞‹!",e);
+					}
 				}
 			}
 			
@@ -303,7 +319,11 @@ public class TaskService implements Service {
 				while(iterator.hasNext())
 				{
 					Pro pro = (Pro)iterator.next();
-					scheduler.addGlobalTriggerListener((TriggerListener)pro.getObject());
+					try {
+						scheduler.addGlobalTriggerListener((TriggerListener)pro.getObject());
+					} catch (Exception e) {
+						log.error("º”‘ÿGlobalTriggerListener ß∞‹!",e);
+					}
 				}
 			}
 			ProList triggerlistener = taskContext.getListProperty("quartz.config.triggerlistener");
@@ -313,7 +333,11 @@ public class TaskService implements Service {
 				while(iterator.hasNext())
 				{
 					Pro pro = (Pro)iterator.next();
-					scheduler.addTriggerListener((TriggerListener)pro.getObject());
+					try {
+						scheduler.addTriggerListener((TriggerListener)pro.getObject());
+					} catch (Exception e) {
+						log.error("º”‘ÿTriggerListener ß∞‹!",e);
+					}
 				}
 			}
 			scheduler.start();
