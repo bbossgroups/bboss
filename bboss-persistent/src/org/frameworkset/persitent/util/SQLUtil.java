@@ -116,6 +116,7 @@ public class SQLUtil {
 							sqltpl = new SQLTemplate(sqlinfo);
 							sqlinfo.setSqltpl(sqltpl);
 							BBossVelocityUtil.initTemplate(sqltpl);
+							sqltpl.process();
 						}
 						
 						sqls.put(key, sqlinfo);

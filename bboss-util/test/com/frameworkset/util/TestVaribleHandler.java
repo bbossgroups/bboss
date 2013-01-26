@@ -332,5 +332,21 @@ public class TestVaribleHandler
     	
     	 
     }
+    @org.junit.Test
+    public void testListBeanField()
+    {
+    	String sql = "select * from TD_ORDER_REPAYMENT_PLAN where order_id in(#[orders[0]->order_id] )";
+    	SQLStruction ss = VariableHandler.parserSQLStruction(sql);
+    	System.out.println();
+    }
+    
+    @org.junit.Test
+    public void testListBeanField1()
+    {
+    	String sql = "select * from TD_ORDER_REPAYMENT_PLAN where order_id in(#[orders[0]->order_id[0]],#[orders2[0]->order_id[0]] )";
+    	SQLStruction ss = VariableHandler.parserSQLStruction(sql);
+    	System.out.println();
+    }
+    	
     
 }

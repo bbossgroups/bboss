@@ -677,16 +677,42 @@ public class VariableHandler
 								if(!ref_start)
 								{
 									ref_start = true;
-									header = new Variable();
-									header.setPosition(varcount);
-									header.setVariableName(var.toString());
-//									variables.add(header);
-									var.setLength(0);
-									//fixed
-									tokens.add(token.toString());
-									token.setLength(0);
-									varcount++;
-									hh = header;
+									if(index_start)
+									{
+										index_start = false;
+										indexs = null;
+										var.setLength(0);
+									}
+									else 
+									{
+										if(header == null)
+										{
+											header = new Variable();
+											header.setPosition(varcount);
+											header.setVariableName(var.toString());
+		//									variables.add(header);
+											var.setLength(0);
+											//fixed
+											tokens.add(token.toString());
+											token.setLength(0);
+											varcount++;
+											hh = header;
+										}
+										else
+										{
+											if(var.length() > 0)
+											{
+												variable = new Variable();
+												//variable.setPosition(varcount);
+												variable.setVariableName(var.toString());
+												var.setLength(0);
+												indexs = null;
+												header.setNext(variable);
+												variable.setParent(header);
+												header = variable;
+											}
+										}
+									}
 								}
 								else
 								{

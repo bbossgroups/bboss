@@ -29,8 +29,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.management.RuntimeErrorException;
-
 import org.apache.log4j.Logger;
 import org.frameworkset.soa.annotation.ExcludeField;
 
@@ -91,13 +89,26 @@ public class ClassUtil
 					 int mode = this.field.getModifiers();
 					 if( !Modifier.isFinal(mode) 
 								&& !Modifier.isStatic(mode)
-								&& !Modifier.isPublic(mode)
 								)
 					 {
-						this.field.setAccessible(true);
-						canwrite = true;
-						canread = true;
+						 if(!Modifier.isPublic(mode))
+						 {
+							 this.field.setAccessible(true);
+							 
+						 }
+						 canwrite = true;
+						 canread = true;
+						
 					 }
+					 if(Modifier.isPublic(mode))
+					 {
+						 canread = true;
+						 if(!Modifier.isFinal(mode))
+						 {
+							 canwrite = true;
+						 }
+					 }
+					
 				}
 			}
 			
