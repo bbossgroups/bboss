@@ -34,7 +34,6 @@
 		<list componentType="bean">
 			
 		</list>
-		<!-- for cluster -->
 		
 	</property>
 	<!--
@@ -44,7 +43,6 @@
 		<list componentType="bean">
 			<property name="DefaultJobListener" class="org.frameworkset.task.DefaultJobListener"/>
 		</list>
-		<!-- for cluster -->
 		
 	</property>
 	<!--
@@ -54,7 +52,6 @@
 		<list componentType="bean">
 			<!--<property name="GlobleTriggerListener" class="org.frameworkset.task.GlobalTriggerListener"/>-->
 		</list>
-		<!-- for cluster -->
 		
 	</property>
 	<!--
@@ -64,7 +61,6 @@
 		<list componentType="bean">
 			<property name="DefaultTriggerListener" class="org.frameworkset.task.DefaultTriggerListener"/>
 		</list>
-		<!-- for cluster -->
 		
 	</property>
 	<!--
@@ -97,7 +93,6 @@
 			</property>
 			<property name="2013year" class="org.frameworkset.task.TestCalendarBuilder"/>
 		</map>
-		<!-- for cluster -->
 		
 	</property>
 	
@@ -175,7 +170,7 @@
 						joblistenername="DefaultJobListener"
 						triggerlistenername="DefaultTriggerListener"
 						trigger="cron"
-						cronb_time="2 * * * * ?" used="false"
+						cronb_time="2 * * * * ?" used="true"
 						shouldRecover="false"/>		
 					<property name="simplebeanmethodjobnoargs" jobid="simplebeanmethodjobnoargs"						
 						bean-name="methodjob"
@@ -186,7 +181,7 @@
 						startTime="2013-01-23 16:29:00"
 						repeatCount="2"
 						repeatInterval="2000"
-						used="true" 
+						used="false" 
 						shouldRecover="false"/>					
 					
 				</list>

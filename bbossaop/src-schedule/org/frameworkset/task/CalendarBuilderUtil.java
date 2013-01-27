@@ -32,7 +32,7 @@ import bsh.Interpreter;
  */
 public class CalendarBuilderUtil {
 
-	private final static String header = "import java.util.GregorianCalendar;import org.quartz.Calendar;import org.quartz.impl.calendar.AnnualCalendar;";
+	private final static String header = "import java.util.GregorianCalendar;import org.quartz.Calendar;import org.quartz.impl.calendar.*;";
 	public static Calendar calendarBuilder(String buildscript) throws Exception {
 		Interpreter interpreter = new Interpreter();
 		StringBuilder excuteCode = new StringBuilder();
