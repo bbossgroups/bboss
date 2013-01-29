@@ -1,11 +1,9 @@
 package org.frameworkset.task;
 
 import java.io.Serializable;
-import java.text.ParseException;
 
 import org.apache.log4j.Logger;
 import org.quartz.Scheduler;
-import org.quartz.SchedulerException;
 
 /**
  * 
@@ -40,21 +38,8 @@ public class DefaultScheduleService extends ScheduleService implements Serializa
 			{
 				installMethodInvokerJob(scheduler,jobInfo);
 			}
-		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
-//			e.printStackTrace();
-			log.error(e.getMessage(),e);
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			log.error(e.getMessage(),e);
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			log.error(e.getMessage(),e);
-		}
-		
-		catch (ParseException ex1) {
-			log.error(ex1.getMessage(),ex1);
-	    } catch (SchedulerException ex) {
+		} 
+		 catch (Exception ex) {
 	    	log.error(ex.getMessage(),ex);
 	    }
 
@@ -66,7 +51,7 @@ public class DefaultScheduleService extends ScheduleService implements Serializa
 	}
 
 	public void updateTriger(Scheduler scheduler, SchedulejobInfo jobInfo) {
-		// TODO Auto-generated method stub
+		
 
 	}
 

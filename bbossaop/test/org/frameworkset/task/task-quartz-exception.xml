@@ -170,7 +170,7 @@
 						joblistenername="DefaultJobListener"
 						triggerlistenername="DefaultTriggerListener"
 						trigger="cron"
-						cronb_time="2 * * * * ?" used="true"
+						cronb_time="2 * * * * ?" used="false"
 						shouldRecover="false"/>		
 					<property name="simplebeanmethodjobnoargs" jobid="simplebeanmethodjobnoargs"						
 						bean-name="methodjob"
@@ -178,16 +178,36 @@
 						calendar="2013year"
 						triggerlistenername="DefaultTriggerListener"
 						trigger="simple"
+						
 						startTime="2013-01-23 16:29:00"
 						repeatCount="2"
 						repeatInterval="2000"
 						used="false" 
 						shouldRecover="false"/>					
+					<property name="simplebeanmethodjobnoargs-triggerbuilderclass" jobid="simplebeanmethodjobnoargs-triggerbuilderclass"						
+						bean-name="methodjob"
+						method="actionexception"
+						calendar="2013year"
+						triggerlistenername="DefaultTriggerListener"
+						trigger="builder"
+						triggerbuilder-class="org.frameworkset.task.TestTiggerBuilder"						
+						used="true" 
+						shouldRecover="false"/>
+					<property name="simplebeanmethodjobnoargs-triggerbuilderbean" jobid="simplebeanmethodjobnoargs-triggerbuilderbean"						
+						bean-name="methodjob"
+						method="actionexception"
+						calendar="2013year"
+						triggerlistenername="DefaultTriggerListener"
+						trigger="builder"
+						triggerbuilder-bean="testTiggerBuilder"
+						used="true" 
+						shouldRecover="false"/>
 					
 				</list>
 			</property>
 		</list>
 	</property>
+	<property name="testTiggerBuilder" class="org.frameworkset.task.TestTiggerBuilder"/>
 	
 	<property name="methodjob" class="org.frameworkset.task.MethodJob"/>
 </properties>

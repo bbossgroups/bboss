@@ -92,6 +92,9 @@ public class SchedulejobInfo implements java.io.Serializable {
 	public ScheduleServiceInfo getParent() {
 		return parent;
 	}
+	public ScheduleServiceInfo getScheduleServiceInfo() {
+		return parent;
+	}
 	public void setParent(ScheduleServiceInfo parent) {
 		this.parent = parent;
 	}

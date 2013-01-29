@@ -1,7 +1,6 @@
 package org.frameworkset.task;
 
 import java.io.Serializable;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -67,8 +66,7 @@ public abstract class ScheduleService implements Serializable{
 		}
 		
 	}
-	protected void installMethodInvokerJob(Scheduler scheduler,SchedulejobInfo jobInfo) throws InstantiationException, IllegalAccessException,
-	ClassNotFoundException, ParseException, SchedulerException
+	protected void installMethodInvokerJob(Scheduler scheduler,SchedulejobInfo jobInfo) throws Exception
 	{
 		log.info("启动作业组["+(jobInfo.getParent() !=null?jobInfo.getParent().getId():"")+"]中的方法作业["+jobInfo.getId()+"]开始。");
 		JobDetail jobDetail = new JobDetail(jobInfo.getId(),
@@ -121,7 +119,7 @@ public abstract class ScheduleService implements Serializable{
 		else
 			return temp;
 	}
-	protected Trigger buildTrigger(SchedulejobInfo jobInfo) throws ParseException  
+	protected Trigger buildTrigger(SchedulejobInfo jobInfo) throws Exception  
 	{
 		String triggertype = jobInfo.getJobPro().getStringExtendAttribute("trigger", "cron");
 		Trigger rtrigger = null; 
@@ -138,7 +136,6 @@ public abstract class ScheduleService implements Serializable{
 			}
 			rtrigger = trigger; 
 		}
-		
 		else if(triggertype.equals("simple"))
 		{
 			String s_startTime = jobInfo.getJobPro().getStringExtendAttribute("startTime");
@@ -272,6 +269,26 @@ public abstract class ScheduleService implements Serializable{
 			rtrigger = NthIncludedDayTrigger;
 //			setNextFireCutoffInterval(int)
 		}
+		else if(triggertype.equals("builder"))
+		{
+			String triggerbuilder_bean = jobInfo.getJobPro().getStringExtendAttribute("triggerbuilder-bean");
+			String triggerbuilder_class = jobInfo.getJobPro().getStringExtendAttribute("triggerbuilder-class");
+			if(!StringUtil.isEmpty(triggerbuilder_bean))
+			{
+				TriggerBuilder rtrigger_builder = jobInfo.getJobPro().getApplicationContext().getTBeanObject(triggerbuilder_bean,TriggerBuilder.class);
+				rtrigger = rtrigger_builder.builder(jobInfo);
+			}
+			else if(!StringUtil.isEmpty(triggerbuilder_bean))
+			{
+				try {
+					TriggerBuilder rtrigger_builder = (TriggerBuilder) Class.forName(triggerbuilder_class).newInstance();
+					rtrigger = rtrigger_builder.builder(jobInfo);
+				} catch (Exception e) {
+					
+					throw e;
+				}
+			}
+		}
 			
 		String triggerlistenername = jobInfo.getJobPro().getStringExtendAttribute("triggerlistenername");
 		if(!StringUtil.isEmpty(triggerlistenername) )
@@ -291,8 +308,7 @@ public abstract class ScheduleService implements Serializable{
 		}			
 		return rtrigger;
 	}
-	protected void installExecuteJob(Scheduler scheduler,SchedulejobInfo jobInfo) throws InstantiationException, IllegalAccessException,
-																		ClassNotFoundException, ParseException, SchedulerException
+	protected void installExecuteJob(Scheduler scheduler,SchedulejobInfo jobInfo) throws Exception
 	{
 		log.info("启动作业组["+(jobInfo.getParent() !=null?jobInfo.getParent().getId():"")+"]中的作业["+jobInfo.getId()+"]开始。");
 		JobDetail jobDetail = new JobDetail(jobInfo.getId(),
@@ -372,27 +388,13 @@ public abstract class ScheduleService implements Serializable{
 				{
 					installMethodInvokerJob(scheduler,jobInfo);
 				}
-			} catch (InstantiationException e) {
+			} catch (Exception e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
-				continue;
-			} catch (IllegalAccessException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				continue;
-			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				log.error(e.getMessage(),e);
 				continue;
 			}
 			
-			catch (ParseException ex1) {
-	            ex1.printStackTrace();
-	            continue;
-	        } catch (SchedulerException ex) {
-	           ex.printStackTrace();
-	           continue;
-	        }
+			
 		} 
 	}
 	
@@ -409,7 +411,7 @@ public abstract class ScheduleService implements Serializable{
 			else
 				return false;
 		} catch (SchedulerException e) {
-			e.printStackTrace();			
+			log.error(e.getMessage(),e);	
 			return false;
 		}
 		
