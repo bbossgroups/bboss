@@ -50,7 +50,7 @@
 		-->
 	<property name="quartz.config.globaltriggerlistener">
 		<list componentType="bean">
-			<!--<property name="GlobleTriggerListener" class="org.frameworkset.task.GlobalTriggerListener"/>-->
+			<property name="GlobleTriggerListener" class="org.frameworkset.task.GlobalTriggerListener"/>
 		</list>
 		
 	</property>
@@ -199,7 +199,15 @@
 						repeatCount="2"
 						repeatInterval="2000"
 						used="false" 
-						shouldRecover="false"/>					
+						shouldRecover="false"/>
+					<property name="repeatsimplebeanmethodjobnoargs" jobid="repeatsimplebeanmethodjobnoargs"						
+						bean-name="methodjob"
+						method="actionexception"
+						trigger="simple"
+						repeatInterval="10000"
+						used="true" 
+						shouldRecover="false"/>	
+										
 					<property name="simplebeanmethodjobnoargs-triggerbuilderclass" jobid="simplebeanmethodjobnoargs-triggerbuilderclass"						
 						bean-name="methodjob"
 						method="actionexception"
@@ -207,7 +215,7 @@
 						triggerlistenername="DefaultTriggerListener"
 						trigger="builder"
 						triggerbuilder-class="org.frameworkset.task.TestTiggerBuilder"						
-						used="true" 
+						used="false" 
 						shouldRecover="false"/>
 					<property name="simplebeanmethodjobnoargs-triggerbuilderbean" jobid="simplebeanmethodjobnoargs-triggerbuilderbean"						
 						bean-name="methodjob"
@@ -216,7 +224,7 @@
 						triggerlistenername="DefaultTriggerListener"
 						trigger="builder"
 						triggerbuilder-bean="testTiggerBuilder"
-						used="true" 
+						used="false" 
 						shouldRecover="false"/>
 					
 				</list>

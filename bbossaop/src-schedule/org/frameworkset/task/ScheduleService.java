@@ -157,7 +157,7 @@ public abstract class ScheduleService implements Serializable{
 				endTime = format.parse(s_endTime);
 			}
 	        String s_repeatCount = jobInfo.getJobPro().getStringExtendAttribute("repeatCount");
-	        int repeatCount = 0; 
+	        int repeatCount = -1; 
 	        if(!StringUtil.isEmpty(s_repeatCount) )
 			{
 	        	repeatCount = Integer.parseInt(s_repeatCount);
