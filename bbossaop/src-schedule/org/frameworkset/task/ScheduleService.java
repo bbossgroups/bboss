@@ -278,7 +278,7 @@ public abstract class ScheduleService implements Serializable{
 				TriggerBuilder rtrigger_builder = jobInfo.getJobPro().getApplicationContext().getTBeanObject(triggerbuilder_bean,TriggerBuilder.class);
 				rtrigger = rtrigger_builder.builder(jobInfo);
 			}
-			else if(!StringUtil.isEmpty(triggerbuilder_bean))
+			else if(!StringUtil.isEmpty(triggerbuilder_class))
 			{
 				try {
 					TriggerBuilder rtrigger_builder = (TriggerBuilder) Class.forName(triggerbuilder_class).newInstance();

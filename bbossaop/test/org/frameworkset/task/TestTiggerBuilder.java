@@ -67,7 +67,7 @@ public class TestTiggerBuilder implements TriggerBuilder {
 		}
         else
         {
-        	repeatCount = 3;
+        	repeatCount = 5;
         }
         String s_repeatInterval = jobInfo.getJobPro().getStringExtendAttribute("repeatInterval");
         long repeatInterval = 0;

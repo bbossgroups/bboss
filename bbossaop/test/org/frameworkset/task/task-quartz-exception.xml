@@ -162,6 +162,22 @@
 							shouldRecover
 							description
 							durability boolean 任务失效后是否保留
+						builder 
+							builder类型是bboss提供的一种动态获取任务配置的触发器类型，trigger由实现接口org.frameworkset.task.TriggerBuilder的组件方法创建：
+								public Trigger builder(SchedulejobInfo jobInfo) throws Exception;
+						        方法参数可以读取到任务的各种静态配置属性，这些属性可以是cron ，simple，DateInterval，NthIncludedDay四种类型中的属性集
+						        取决于方法返回的Trigger类型（cron ，simple，DateInterval，NthIncludedDay）
+								同时还可以从其他诸如数据库表中读取和加载任务作业属性，如果这些属性发生变化，还可以重启作业实时加载变化后的配置
+							属性集
+								自动继承cron ，simple，DateInterval，NthIncludedDay四种类型中的属性集，特有的属性如下：
+								triggerbuilder-bean 指定trigger生成器为一个bboss ioc 组件
+								triggerbuilder-class 指定trigger生成器的实现类class路径
+						    用法
+							当任务时间周期发生变化时，可以调用TaskService接口重启相应的任务：
+							更新默认组的作业
+							public void updateExecuteJob(String jobname);
+							更新指定作业组的任务
+							public void updateExecuteJob(String groupid, String jobname)
 						-->
 					<property name="beanmethodjobnoargs" jobid="beanmethodjobnoargs"						
 						bean-name="methodjob"
