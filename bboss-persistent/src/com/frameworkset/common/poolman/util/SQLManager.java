@@ -15,7 +15,7 @@
  */
 package com.frameworkset.common.poolman.util;
 
-import java.io.Serializable;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -36,7 +36,7 @@ import com.frameworkset.orm.adapter.DB;
 import com.frameworkset.orm.transaction.TXDataSource;
 
 
-public class SQLManager extends PoolManager implements Serializable{
+public class SQLManager extends PoolManager{
 
 	private static Logger log = Logger.getLogger(SQLManager.class);
 
@@ -533,6 +533,7 @@ public class SQLManager extends PoolManager implements Serializable{
 		
 	}
 	
+	
 	public static void startPool(String poolname,String driver,String jdbcurl,String username,String password,String readOnly,String validationQuery)
 	{
 //		JDBCPool pool = SQLUtil.getSQLManager().getPoolIfExist(poolname);
@@ -558,6 +559,11 @@ public class SQLManager extends PoolManager implements Serializable{
 //		values.put("validationquery", validationQuery);
 //		
 //		PoolManBootstrap.startFromTemplte(values);
+		startPool( poolname, driver, jdbcurl, username, password, readOnly, validationQuery,false);
+	}
+	public static void startPool(String poolname,String driver,String jdbcurl,String username,String password,String readOnly,String validationQuery,boolean encryptdbinfo)
+	{
+
 		startPool( poolname, driver, jdbcurl, username, password,
 	    		 readOnly,
 	    		 "READ_COMMITTED",
@@ -568,7 +574,7 @@ public class SQLManager extends PoolManager implements Serializable{
 	    		10,
 	    		true,
 	    		false,
-	    		null,false
+	    		null,false,encryptdbinfo
 	    		);
 	}
 	
@@ -582,7 +588,7 @@ public class SQLManager extends PoolManager implements Serializable{
     		int maximumSize,
     		boolean usepool,
     		boolean  external,
-    		String externaljndiName ,boolean showsql       		
+    		String externaljndiName ,boolean showsql ,boolean encryptdbinfo      		
     		)
 	{
 		JDBCPool pool = SQLUtil.getSQLManager().getPoolIfExist(poolname);
@@ -590,8 +596,7 @@ public class SQLManager extends PoolManager implements Serializable{
 		{
 			if(pool.getStatus().equals("start"))
 			{
-//				throw new IllegalStateException("连接池[" + poolname + "]已经启动。无需再启动,或者请停止后再启动.");
-				log.warn("连接池[" + poolname + "]已经启动。无需再启动,或者请停止后再启动.");
+				log.debug("连接池[" + poolname + "]已经启动。无需再启动,或者请停止后再启动.");
 				return;
 			}
 				
@@ -643,6 +648,7 @@ public class SQLManager extends PoolManager implements Serializable{
 		values.put("usepool", usepool+"");
 		values.put("external", external+"");
 		values.put("showsql", showsql+"");
+		values.put("encryptdbinfo", encryptdbinfo+"");
 		
 		boolean testWhileidle = true;
 		values.put("testWhileidle", testWhileidle+"");
@@ -663,6 +669,33 @@ public class SQLManager extends PoolManager implements Serializable{
 		if(externaljndiName != null && !externaljndiName.equals(""))
 			values.put("externaljndiName", externaljndiName);
 		PoolManBootstrap.startFromTemplte(values);
+	}
+	
+	public static void startPool(String poolname,String driver,String jdbcurl,String username,String password,
+    		String readOnly,
+    		String txIsolationLevel,
+    		String validationQuery,
+    		String jndiName,   
+    		int initialConnections,
+    		int minimumSize,
+    		int maximumSize,
+    		boolean usepool,
+    		boolean  external,
+    		String externaljndiName ,boolean showsql       		
+    		)
+	{
+		startPool( poolname, driver, jdbcurl, username, password,
+	    		 readOnly,
+	    		 txIsolationLevel,
+	    		 validationQuery,
+	    		 jndiName,   
+	    		 initialConnections,
+	    		 minimumSize,
+	    		 maximumSize,
+	    		 usepool,
+	    		  external,
+	    		 externaljndiName , showsql ,false     		
+	    		);
 	}
 	
 	public JDBCPoolMetaData getJDBCPoolMetaData(String dbname)

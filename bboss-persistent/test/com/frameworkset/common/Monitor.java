@@ -166,6 +166,35 @@ public class Monitor
     	}
 	}
     @Test
+	public void testEncryptStartPool()
+	{
+    	TransactionManager tm = new TransactionManager();
+    	try
+    	{
+    		DBUtil dbutil = new DBUtil();
+    		String name = "db", driver="oracle.jdbc.driver.OracleDriver", jdbcurl="jdbc:oracle:thin:@//10.0.15.134:1521/orcl", username="sanygcmp", password="sanygcmp", readOnly="true", validationQuery="select 1 from dual";
+    		com.frameworkset.common.poolman.security.DESCipher aa = new com.frameworkset.common.poolman.security.DESCipher();
+    		password = aa.encrypt(password);
+    		DBUtil.startPool("db", driver, jdbcurl, username, password, readOnly, validationQuery,true);
+    		tm.begin();
+    		
+    		dbutil.executeSelect("db","Select 1 from dual");
+    		tm.commit();
+    		System.out.println("dbutil.size():" + dbutil.size());
+    		DBUtil.stopPool("db");
+    		PreparedDBUtil db = new PreparedDBUtil();
+    		db.preparedSelect("db","Select 1 from dual");
+    		db.executePrepared();
+    		
+//    		dbutil.executeSelect("db","Select 1 from dual");
+    		
+    	}
+    	catch(Exception e)
+    	{
+    		e.printStackTrace();
+    	}
+	}
+    @Test
     public void testDBStatusStatic() throws SQLException
     {
     	int numactive = DBUtil.getNumActive("mysql");
