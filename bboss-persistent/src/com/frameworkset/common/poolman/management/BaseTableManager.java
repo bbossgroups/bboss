@@ -65,16 +65,24 @@ public abstract class BaseTableManager {
 
 		ResultSet rs = null;
 		Map trace = new HashMap();
-		log.debug("load pool[" + poolName + "] tables information.......");
+		
 		try {
 			PrimaryKeyCache keyCache = new PrimaryKeyCache(poolName);
 			con = SQLManager.getInstance().requestConnection(poolName);
-			DB dbAdapter = SQLManager.getInstance().getDBAdapter(poolName);
-
+			log.info("load pool[" + poolName + "] tables information.......");
 			stmt = con.createStatement();
+			try {
+				rs = stmt.executeQuery(queryTableInfoSql);
+			} catch (Exception e1) {
+				log.info("Ignore load table infomation !Check table [tableinfo] in your database! ");
+				return null;
+			}
+			DB dbAdapter = SQLManager.getInstance().getDBAdapter(poolName);
+			
 			q_pstmt = con.createStatement();
+			
 			u_pstmt = con.prepareStatement(updateTableInfoSql);
-			rs = stmt.executeQuery(queryTableInfoSql);
+			
 			// 创建数据库链接池的主键缓冲池
 			
 			while (rs.next()) {
