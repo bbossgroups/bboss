@@ -127,6 +127,7 @@ public class PoolManBootstrap implements java.io.Serializable{
         }
 
         else {
+        	DBFactory.addDBAdaptors(config.getAdaptors());
             deployer = new LocalPoolDeployer();
             try {
 //                deployer.deployConfiguration(config, values);
