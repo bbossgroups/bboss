@@ -1,0 +1,110 @@
+<project name="bboss hessian" default="default" basedir=".">
+	<description>
+		bboss hessian build file
+	</description>
+	<tstamp prefix="start" />
+
+	<tstamp>
+		<format property="compile.timestamp" pattern="yyyy-MM-dd HH.mm.ss" />
+	</tstamp>
+
+
+
+	<!-- set global properties for this build -->
+	<property file="build.properties" />
+	<target name="init" description="create timestamp and directories">
+		<echo>Init...</echo>
+
+		<tstamp />
+		<delete dir="classes-bboss-hessian" />
+		
+		<delete dir="distrib" />
+		<mkdir dir="classes-bboss-hessian" />
+	
+		<mkdir dir="distrib" />
+	</target>
+	<target name="default" depends="complete" description="default = build distribution package" />
+
+	<!--
+		       ==========================
+		        Distribution jar package
+		       ==========================
+		  -->
+	<target name="distrib" depends="init,jar-frameworkset-hessian,jar-frameworkset-hessian-test,copy-depends-liberary" description="copy jar file to distribution directory">
+		<echo>Construct the distribution package...</echo>
+	</target>
+
+	<target name="compile-frameworkset-hessian" description="compile the bboss-hessian source ">
+		<echo>compile the frameworkset-hessian source ...</echo>
+		<javac destdir="classes-bboss-hessian" target="1.5" source="1.5" deprecation="true" debug="${debug}" optimize="${optimize}" memorymaximumsize="256M" fork="true" verbose="yes">
+			<src path="src" />
+			
+			
+			<classpath id="cp-classes-bboss-hessian">
+				<fileset dir="lib-compile/" includes="**/*.jar" />				
+				
+			</classpath>
+		</javac>
+	</target>
+	<target name="jar-frameworkset-hessian" depends="compile-frameworkset-hessian" description="generate the bboss-hessian library bboss-hessian.jar">
+		<echo>Generate the bboss-hessian library bboss-hessian.jar ...</echo>
+		<jar jarfile="distrib/bboss-hessian.jar" basedir="classes-bboss-hessian" includes="**/*">
+			<manifest>
+				
+				<attribute name="Implementation-Version" value="${impl.version}" />
+				<attribute name="Specification-Version" value="${revision}" />
+				<attribute name="Implementation-Vendor" value="${impl.vendor}" />
+				<attribute name="Implementation-ProductID" value="${impl.productID}" />
+				<attribute name="Compile-Timestamp" value="${compile.timestamp}" />
+				<attribute name="Compile-User" value="${username}" />
+			</manifest>
+		</jar>
+	</target>
+	
+	
+	<target name="compile-frameworkset-hessian-test" description="compile the bboss-hessian source ">
+		<echo>compile the frameworkset-hessian source ...</echo>
+		<delete dir="classes-bboss-hessian" />
+		<mkdir dir="classes-bboss-hessian" />
+		<javac destdir="classes-bboss-hessian" target="1.5" source="1.5" deprecation="true" debug="${debug}" optimize="${optimize}" memorymaximumsize="256M" fork="true" verbose="yes">
+			<src path="test" />
+			
+			
+			<classpath id="cp-classes-bboss-hessian">
+				<fileset dir="lib-compile/" includes="**/*.jar" />				
+				
+			</classpath>
+		</javac>
+		<copy todir="classes-bboss-hessian">
+					<fileset dir="test" includes="**/*.xml" />
+		</copy>
+	</target>
+	<target name="jar-frameworkset-hessian-test" depends="compile-frameworkset-hessian-test" description="generate the bboss-hessian library bboss-hessian-test.jar">
+		<echo>Generate the bboss-hessian-test library bboss-hessian-test.jar ...</echo>
+		<jar jarfile="distrib/bboss-hessian-test.jar" basedir="classes-bboss-hessian" includes="**/*">
+			<manifest>
+				
+				<attribute name="Implementation-Version" value="${impl.version}" />
+				<attribute name="Specification-Version" value="${revision}" />
+				<attribute name="Implementation-Vendor" value="${impl.vendor}" />
+				<attribute name="Implementation-ProductID" value="${impl.productID}" />
+				<attribute name="Compile-Timestamp" value="${compile.timestamp}" />
+				<attribute name="Compile-User" value="${username}" />
+			</manifest>
+		</jar>
+	</target>
+	
+	
+	
+	<target name="copy-depends-liberary" description="copy depends liberarys">
+				<echo>copy depends liberarys ...</echo>
+				<copy todir="distrib/dependlibs">
+					<fileset dir="lib-compile" includes="**/*.jar" excludes="javaee.jar junit-4.6.jar"/>
+				</copy>
+	</target>
+	
+	<target name="complete" depends="distrib" description="copy depends liberarys">
+			<delete dir="classes-bboss-hessian" />				
+		
+	</target>
+</project>
