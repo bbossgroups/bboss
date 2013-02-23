@@ -157,7 +157,7 @@ public abstract class ScheduleService implements Serializable{
 				endTime = format.parse(s_endTime);
 			}
 	        String s_repeatCount = jobInfo.getJobPro().getStringExtendAttribute("repeatCount");
-	        int repeatCount = 0; 
+	        int repeatCount = -1; 
 	        if(!StringUtil.isEmpty(s_repeatCount) )
 			{
 	        	repeatCount = Integer.parseInt(s_repeatCount);
@@ -278,7 +278,7 @@ public abstract class ScheduleService implements Serializable{
 				TriggerBuilder rtrigger_builder = jobInfo.getJobPro().getApplicationContext().getTBeanObject(triggerbuilder_bean,TriggerBuilder.class);
 				rtrigger = rtrigger_builder.builder(jobInfo);
 			}
-			else if(!StringUtil.isEmpty(triggerbuilder_bean))
+			else if(!StringUtil.isEmpty(triggerbuilder_class))
 			{
 				try {
 					TriggerBuilder rtrigger_builder = (TriggerBuilder) Class.forName(triggerbuilder_class).newInstance();

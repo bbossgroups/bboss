@@ -139,7 +139,7 @@ public class SchedulejobInfo implements java.io.Serializable {
 		this.methodConstruction = methodConstruction;
 	}
 
-	protected Pro getJobPro() {
+	public Pro getJobPro() {
 		return jobPro;
 	}
 

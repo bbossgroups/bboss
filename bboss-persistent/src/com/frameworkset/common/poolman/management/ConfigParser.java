@@ -151,10 +151,12 @@ public class ConfigParser extends DefaultHandler{
         		!name.equals("showsql") &&
         		!name.equals("externaljndiName")&&
         		!name.equals("enablejta") &&
-        		!name.equals("datasourceFile"))
+        		!name.equals("usepool") &&
+        		!name.equals("encryptdbinfo") &&
+        		!name.equals("datasourceFile") )
             
         {
-        	log.warn("解析文件时[" + this.file + "]遇到元素[" + name + "]，忽略处理。");
+        	log.debug("解析文件时[" + this.file + "]遇到元素[" + name + "]，忽略处理。");
         }
 
     }

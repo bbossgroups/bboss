@@ -39,6 +39,7 @@ public class TestScheduleTaskService {
 		taskService.deleteJob("workbroker", "default");
 		taskService.startExecuteJob("default", "workbroker");
 		taskService.updateExecuteJob("default", "workbroker");
+		
 		taskService.stopService();
 		taskService.startService();
 		System.out.println();
@@ -53,6 +54,7 @@ public class TestScheduleTaskService {
 		
 		TaskService taskService = TaskService.getTaskService("org/frameworkset/task/task-quartz-exception.xml");
 		taskService.startService();
+		taskService.updateExecuteJob("simplebeanmethodjobnoargs-triggerbuilderbean");
 //		taskService.deleteJob("workbroker", "default");
 //		taskService.startExecuteJob("default", "workbroker");
 //		taskService.updateExecuteJob("default", "workbroker");

@@ -8,6 +8,7 @@
 	<loadmetadata>false</loadmetadata>
     <jndiName><![CDATA[${dbname_datasource_jndiname}]]></jndiName>
      <autoprimarykey>false</autoprimarykey>
+	<encryptdbinfo>${encryptdbinfo}</encryptdbinfo>
      <cachequerymetadata>${cachequerymetadata}</cachequerymetadata>
     <driver><![CDATA[${driver}]]></driver>
 

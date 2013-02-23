@@ -340,6 +340,29 @@ public class TaskService implements Service {
 					}
 				}
 			}
+			
+
+			List<ScheduleServiceInfo> scheduleServices = this
+					.getScheduleServiceInfos(taskconfig);
+			for (int i = 0; scheduleServices != null && i < scheduleServices.size(); i++) {
+				ScheduleServiceInfo scheduleServiceInfo = scheduleServices.get(i);
+				if (!scheduleServiceInfo.isUsed())
+					continue;
+	//			String clazz = scheduleServiceInfo.getClazz();
+				try {
+	//				ScheduleService instance = (ScheduleService) Class.forName(
+	//						clazz).newInstance();
+	//				instance.init(scheduleServiceInfo);
+					ScheduleService instance = scheduleServiceInfo.getScheduleService(this);
+					instance.startService(scheduler);
+					instance.startupConfigedService(scheduler);
+				} catch (Exception e) {
+					log.error("Scheduler failed:" + e.getMessage() + ",scheduleServiceInfo : "
+							+ scheduleServiceInfo,e);
+					continue;
+				}
+	
+			}
 			scheduler.start();
 			started = true;
 			log.debug("Scheduler started.");
@@ -348,28 +371,7 @@ public class TaskService implements Service {
 			log.error("Scheduler failed:" + ex.getMessage(),ex);
 			return;
 		}
-
-		List<ScheduleServiceInfo> scheduleServices = this
-				.getScheduleServiceInfos(taskconfig);
-		for (int i = 0; scheduleServices != null && i < scheduleServices.size(); i++) {
-			ScheduleServiceInfo scheduleServiceInfo = scheduleServices.get(i);
-			if (!scheduleServiceInfo.isUsed())
-				continue;
-//			String clazz = scheduleServiceInfo.getClazz();
-			try {
-//				ScheduleService instance = (ScheduleService) Class.forName(
-//						clazz).newInstance();
-//				instance.init(scheduleServiceInfo);
-				ScheduleService instance = scheduleServiceInfo.getScheduleService(this);
-				instance.startService(scheduler);
-				instance.startupConfigedService(scheduler);
-			} catch (Exception e) {
-				log.error("Scheduler failed:" + e.getMessage() + ",scheduleServiceInfo : "
-						+ scheduleServiceInfo,e);
-				continue;
-			}
-
-		}
+		
 		
 
 		if (scheduler == null) {
@@ -553,7 +555,11 @@ public class TaskService implements Service {
 			}
 		}
 	}
-	
+	/**
+	 * 更新指定作业组的任务
+	 * @param groupid
+	 * @param jobname
+	 */
 	public void updateExecuteJob(String groupid, String jobname) {
 		ScheduleServiceInfo scheduleServiceInfo = schedulerServiceIndex
 		.get(groupid);
@@ -569,6 +575,14 @@ public class TaskService implements Service {
 			return ;
 		}
 		updateExecuteJob( groupid,  jobInfo);
+	}
+	
+	/**
+	 * 更新默认组的作业
+	 * @param jobname
+	 */
+	public void updateExecuteJob(String jobname) {
+		updateExecuteJob("default", jobname);
 	}
 
 	/**

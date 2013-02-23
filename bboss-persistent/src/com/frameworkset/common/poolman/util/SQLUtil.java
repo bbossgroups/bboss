@@ -1504,7 +1504,7 @@ public class SQLUtil implements Serializable{
         public static void startPool(String dbname) throws Exception
         {
         	
-            SQLUtil.getSQLManager().startPool(dbname);
+        	SQLManager.startPool(dbname);
         }
         
         public static String statusCheck(String dbname)
@@ -1518,6 +1518,38 @@ public class SQLUtil implements Serializable{
         	SQLManager.startPool(poolname, driver, jdbcurl, username, password, readOnly, validationQuery);
     	}
         
+        public static void startPool(String poolname,String driver,String jdbcurl,String username,String password,String readOnly,String validationQuery,boolean encryptdbinfo)
+    	{
+        	SQLManager.startPool(poolname, driver, jdbcurl, username, password, readOnly, validationQuery,encryptdbinfo);
+    	}
+        
+        
+        public static void startPool(String poolname,String driver,String jdbcurl,String username,String password,
+        		String readOnly,
+        		String txIsolationLevel,
+        		String validationQuery,
+        		String jndiName,   
+        		int initialConnections,
+        		int minimumSize,
+        		int maximumSize,
+        		boolean usepool,
+        		boolean  external,
+        		String externaljndiName        ,boolean showsql		,boolean encryptdbinfo
+        		)
+    	{
+        	SQLManager.startPool( poolname, driver, jdbcurl, username, password,
+            		 readOnly,
+            		 txIsolationLevel,
+            		 validationQuery,
+            		 jndiName,   
+            		 initialConnections,
+            		 minimumSize,
+            		 maximumSize,
+            		 usepool,
+            		  external,
+            		 externaljndiName ,showsql , encryptdbinfo      		
+            		);
+    	}
         
         public static void startPool(String poolname,String driver,String jdbcurl,String username,String password,
         		String readOnly,

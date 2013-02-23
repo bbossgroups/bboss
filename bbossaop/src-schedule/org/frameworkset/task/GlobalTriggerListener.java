@@ -31,14 +31,14 @@ import org.quartz.Trigger;
  */
 public class GlobalTriggerListener extends BaseTriggerListener {
 	private static Logger log = Logger.getLogger(GlobalTriggerListener.class);
+	
 	public GlobalTriggerListener() {
 		// TODO Auto-generated constructor stub
 	}
-
 	
 
 	public void triggerFired(Trigger trigger, JobExecutionContext context) {
-		log.info("Global trigger Fired:[" + trigger.toString()+"],["+context.toString()+"]");
+		log.info("Default Global trigger Fired:["+context.toString()+"]");
 
 	}
 
@@ -48,13 +48,13 @@ public class GlobalTriggerListener extends BaseTriggerListener {
 	}
 
 	public void triggerMisfired(Trigger trigger) {
-		log.info("Global trigger Misfired:[" + trigger.toString()+"]");
+		log.info("Default Global trigger Misfired:[" + trigger.toString()+"]");
 
 	}
 
 	public void triggerComplete(Trigger trigger, JobExecutionContext context,
 			int triggerInstructionCode) {
-		log.info("Global trigger Complete:[" + trigger.toString()+"],["+context.toString()+"],[triggerInstructionCode="+triggerInstructionCode+"]");
+		log.info("Default Global trigger Complete:ºÄÊ±"+context.getJobRunTime()+" milliseconds,["+context.toString()+"],[triggerInstructionCode="+triggerInstructionCode+"]");
 
 	}
 
