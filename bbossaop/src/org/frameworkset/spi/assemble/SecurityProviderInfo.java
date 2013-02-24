@@ -798,4 +798,9 @@ public class SecurityProviderInfo implements java.io.Serializable,BeanInf
 		return null;
 	}
 
+	public Class getFactoryClass() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

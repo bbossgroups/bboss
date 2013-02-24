@@ -1345,6 +1345,47 @@ public class Pro<V> extends BaseTXManager implements Comparable<V>, BeanInf {
 		// TODO Auto-generated method stub
 		return this.getType();
 	}
+	 private Class factoryClass;
+	 public Class getFactoryClass()
+	 {
+		 try {
+
+				if (factoryClass != null)
+					return factoryClass;
+				if (factory_class == null || factory_class.equals(""))
+					return null;
+				// return cls = String.class;
+				synchronized (this) {
+					if (factoryClass != null)
+						return factoryClass;
+					// if(clazz.equals("int") )
+					// return cls = int.class;
+					// if(clazz.equals("integer") )
+					// return cls = Integer.class;
+					// if(clazz.equals("float") )
+					// return cls = float.class;
+					// if(clazz.equals("double") )
+					// return cls = double.class;
+					// if(clazz.equals("short") )
+					// return cls = short.class;
+					// if(clazz.equals("char") )
+					// return cls = char.class;
+					// if(clazz.equals("string") )
+					// return cls = String.class;
+					// if(clazz.equals("boolean") )
+					// return cls = boolean.class;
+
+					factoryClass = BeanAccembleHelper.getClass(this.getFactory_class());
+				}
+				return factoryClass;
+			}
+
+			catch (ClassNotFoundException e) {
+				throw new BeanInstanceException(e);
+			} catch (Exception e) {
+				throw new BeanInstanceException(e);
+			}
+	 }
 
 	public int compareTo(V o) {
 		if(o == null)

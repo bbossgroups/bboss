@@ -20,6 +20,7 @@ public interface BeanInf
     public BaseApplicationContext getApplicationContext();
     
     public String getFactory_class();
+    public Class getFactoryClass();
     public String getFactory_method();
     public String getFactory_bean();
     

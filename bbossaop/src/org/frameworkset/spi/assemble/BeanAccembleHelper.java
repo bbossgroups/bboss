@@ -4,6 +4,7 @@ import java.beans.IntrospectionException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -388,13 +389,27 @@ public class BeanAccembleHelper<V> {
 	
 	
 
-	@SuppressWarnings("unchecked")
-	private V initbean(BeanInf providerManagerInfo, CallContext context) {
+	/**
+	 * 
+	 * @param providerManagerInfo
+	 * @param context
+	 * @param ignoreconstruction 工厂模式实例化工厂实例时需要忽略构造函数，因为构造函数是作为工厂方法创建组件实例的参数
+	 * @return
+	 */
+	private V initbean(BeanInf providerManagerInfo, CallContext context,boolean ignoreconstruction) {
 		try {
-			Class<V> cls = providerManagerInfo.getBeanClass();
+			
+			Class<V> cls = null;
+			if(!ignoreconstruction)
+				cls = providerManagerInfo.getBeanClass();
+			else
+			{
+				cls = providerManagerInfo.getFactoryClass();
+				return (V)context.getLoopContext().setCurrentObj(cls.newInstance());
+			}
 			if (providerManagerInfo.getConstruction() == null
 					|| providerManagerInfo.getConstructorParams() == null
-					|| providerManagerInfo.getConstructorParams().size() == 0) {
+					|| providerManagerInfo.getConstructorParams().size() == 0 ) {
 				return (V)context.getLoopContext().setCurrentObj(cls.newInstance());
 			}
 			List<Pro> params = providerManagerInfo.getConstructorParams();
@@ -1127,7 +1142,8 @@ public class BeanAccembleHelper<V> {
 	
 	
 	/**
-	 * 通过工厂对象创建组件实例
+	 * 通过工厂类创建组件实例,工厂方法如果是静态的直接调用静态方法创建所需组件；
+	 * 如果是非静态的安照普通组件处理，即先获取工厂对象实例，然后再创建组件
 	 * @param providerManagerInfo
 	 * @param factory
 	 * @param context
@@ -1153,7 +1169,15 @@ public class BeanAccembleHelper<V> {
 					 * 如果有旧的还需要保存旧的callContext
 					 */
 //					return (V) method.invoke(null);
-					return this.invokerMethod(providerManagerInfo, null, method, null, context);
+
+					 int mode = method.getModifiers();
+					 if( Modifier.isStatic(mode))//静态方法
+						 return this.invokerMethod(providerManagerInfo, null, method, null, context);
+					 else//非静态方法
+					 {
+						 Object factoryInf = getBeanFromClass( providerManagerInfo,  context,true);//先获取工厂类实例
+						 return this.invokerMethod(providerManagerInfo, factoryInf, method, null, context);//然后调用工厂类实例方法创建组件实例
+					 }
 				}
 				catch(CurrentlyInCreationException e)
 				{
@@ -1203,8 +1227,16 @@ public class BeanAccembleHelper<V> {
 			 */
 			
 //			V bean =  (V)method.invoke(null,values);
-			V bean = invokerMethod(providerManagerInfo, null, method, values, context);
-			return bean;
+			 int mode = method.getModifiers();
+			 if( Modifier.isStatic(mode))//静态方法
+			 {
+				 return invokerMethod(providerManagerInfo, null, method, values, context);
+			 }
+			 else //非静态方法
+			 {
+				 Object factoryInf = getBeanFromClass( providerManagerInfo,  context,true);//先获取工厂类实例
+				 return invokerMethod(providerManagerInfo, factoryInf, method, values, context);//然后调用工厂类实例方法创建组件实例
+			 }
 			
 			/**
 			 * 清理本地线程
@@ -1450,16 +1482,23 @@ public class BeanAccembleHelper<V> {
 //		}
 //    }
     
-   
+    private V getBeanFromClass(BeanInf providerManagerInfo, CallContext callcontext)
+    {
+    	return  getBeanFromClass( providerManagerInfo,  callcontext,false);
+    }
 	
-	private V getBeanFromClass(BeanInf providerManagerInfo, CallContext callcontext)
+	private V getBeanFromClass(BeanInf providerManagerInfo, CallContext callcontext,boolean ignoreconstruction)
 	{
 		V instance = null;
 		try {
 			
-			Class<V> cls = providerManagerInfo.getBeanClass();
+			Class<V> cls = null;
+			if(!ignoreconstruction)
+				cls = providerManagerInfo.getBeanClass();
+			else
+				cls = providerManagerInfo.getFactoryClass();
 			
-			instance = initbean(providerManagerInfo, callcontext);
+			instance = initbean(providerManagerInfo, callcontext,ignoreconstruction);
 
 //			BeanInfo beanInfo = Introspector.getBeanInfo(cls);
 //			PropertyDescriptor[] attributes = beanInfo.getPropertyDescriptors();

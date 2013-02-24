@@ -78,5 +78,11 @@ public class TestCase {
 		
 		
 	}
+	@Test
+	public void test()
+	{
+		TestBean bean3 = context.getTBeanObject("testbeanCreateByArgsUseFactoryClassButNoStatic",TestBean.class);
+		System.out.println();
+	}
 
 }
