@@ -45,7 +45,10 @@
 			    System.out.println("Hello: " + basic.hello("John"));
 				
 			    通过bboss-ioc配置和获取客户端	
-				<property name="clientservice" factory-class="com.caucho.hessian.client.HessianProxyFactory" factory-method="create">
+				<property name="clientservice" factory-class="com.caucho.hessian.client.HessianProxyFactory" 
+					f:connectionTimeout="360000"
+					f:readTimeout="36000"
+					factory-method="create">
 					<construction>
 						<property value="org.frameworkset.spi.remote.hession.server.ServiceInf"/>		
 						<property value="http://localhost:8080/context/hessian?service=basicservice"/>	

@@ -88,7 +88,7 @@ public class BSServletRequestListener implements javax.servlet.ServletRequestLis
 
 			
 			
-			if(isInterceptResource(uri))
+//			if(isInterceptResource(uri))
 			{
 		
 				boolean state = TransactionManager.destroyTransaction();
@@ -114,7 +114,7 @@ public class BSServletRequestListener implements javax.servlet.ServletRequestLis
 
 			
 			
-			if(isInterceptResource(uri))
+//			if(isInterceptResource(uri))
 			{	
 				boolean state = TransactionManager.destroyTransaction();
 				if(state){

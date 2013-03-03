@@ -1069,7 +1069,7 @@ public class BeanAccembleHelper<V> {
 				 * 如果有旧的还需要保存旧的callContext
 				 */
 //				return (V) method.invoke(factory, null);
-				return new MethodInvoker(false, instance, null, method_);
+				return new MethodInvoker(false, instance, null, method_,providerManagerInfo);
 				
 				/**
 				 * 清理本地线程
@@ -1100,7 +1100,7 @@ public class BeanAccembleHelper<V> {
 			}
 	
 
-			return new MethodInvoker(false, instance, values, method_);
+			return new MethodInvoker(false, instance, values, method_,providerManagerInfo);
 			
 			
 			
@@ -1295,7 +1295,7 @@ public class BeanAccembleHelper<V> {
 					 * 如果有旧的还需要保存旧的callContext
 					 */
 //					return (V) method.invoke(null);
-					return new MethodInvoker(true, instance, null, method_);
+					return new MethodInvoker(true, instance, null, method_,providerManagerInfo);
 				}
 				catch(CurrentlyInCreationException e)
 				{
@@ -1338,7 +1338,7 @@ public class BeanAccembleHelper<V> {
 
 			}
 			
-			return new MethodInvoker(true, instance, values, method_);
+			return new MethodInvoker(true, instance, values, method_,providerManagerInfo);
 			
 			
 		}catch (BeanInstanceException e) {

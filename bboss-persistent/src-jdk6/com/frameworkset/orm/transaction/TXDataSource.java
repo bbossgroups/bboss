@@ -17,10 +17,12 @@ package com.frameworkset.orm.transaction;
 
 import java.io.PrintWriter;
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
+import com.frameworkset.common.poolman.util.JDBCPool;
 import com.frameworkset.common.poolman.util.SQLUtil;
 
 /**
@@ -37,9 +39,16 @@ import com.frameworkset.common.poolman.util.SQLUtil;
 public class TXDataSource implements DataSource{
 	
 	private DataSource datasource;
-	public TXDataSource(DataSource datasource) {
+	private JDBCPool pool;
+	public TXDataSource(DataSource datasource,JDBCPool pool) {
 		this.datasource = datasource;
+		this.pool = pool;
     }
+	
+	public String getDatabaseSchema(DatabaseMetaData databaseMetaData) throws Throwable
+	{
+		return this.pool.getDatabaseSchema(databaseMetaData);
+	}
 
 	public Connection getConnection() throws SQLException {
 		// TODO Auto-generated method stub

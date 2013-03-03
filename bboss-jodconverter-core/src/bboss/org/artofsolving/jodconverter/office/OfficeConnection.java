@@ -22,7 +22,8 @@ import java.net.ConnectException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.logging.Logger;
+
+import org.apache.log4j.Logger;
 
 import com.sun.star.beans.XPropertySet;
 import com.sun.star.bridge.XBridge;
@@ -65,7 +66,7 @@ class OfficeConnection implements OfficeContext {
         }
     };
 
-    private final Logger logger = Logger.getLogger(getClass().getName());
+    private final static Logger logger = Logger.getLogger(OfficeConnection.class);
 
     public OfficeConnection(UnoUrl unoUrl) {
         this.unoUrl = unoUrl;
@@ -76,7 +77,7 @@ class OfficeConnection implements OfficeContext {
     }
 
     public void connect() throws ConnectException {
-        logger.fine(String.format("connecting with connectString '%s'", unoUrl));
+        logger.info(String.format("connecting with connectString '%s'", unoUrl));
         try {
             XComponentContext localContext = Bootstrap.createInitialComponentContext(null);
             XMultiComponentFactory localServiceManager = localContext.getServiceManager();
@@ -108,7 +109,7 @@ class OfficeConnection implements OfficeContext {
     }
 
     public synchronized void disconnect() {
-        logger.fine(String.format("disconnecting: '%s'", unoUrl));
+        logger.info(String.format("disconnecting: '%s'", unoUrl));
         bridgeComponent.dispose();
     }
 

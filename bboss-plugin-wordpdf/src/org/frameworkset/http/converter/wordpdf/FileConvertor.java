@@ -1091,37 +1091,47 @@ public class FileConvertor {
 	{
 		//pdf2swf.exe -t D:\anjie_test.pdf  -s flashversion=9 -o d:\anjie_test.swf
 		String osname = Util.getOS();
-		String command = null;
+		StringBuffer command = new StringBuffer();
 		if(Util.isWindows(osname))
 		{
-			command = swftoolsWorkDir + "pdf2swf.exe " + sourcePath
-				+ " -s flashversion=9 -o " + destPath;
+			command.append(swftoolsWorkDir).append("pdf2swf.exe " ).append( sourcePath
+					).append( " -s flashversion=9 -o " ).append( destPath);
 		}
 		else
 		{
-			command = swftoolsWorkDir + "pdf2swf " + sourcePath
-					+ " -s flashversion=9 -o " + destPath;
+			command .append( swftoolsWorkDir ).append( "pdf2swf " ).append( sourcePath
+					).append( " -s flashversion=9 -o " ).append( destPath);
 		}
 
-		Process pro = Runtime.getRuntime().exec(command);
+		Process pro = Runtime.getRuntime().exec(command.toString());
 		try {			
 			pro.waitFor();
 		} catch (InterruptedException e) {
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();
 		}
+		catch (Throwable e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+			throw new Exception(command.toString(),e);
+		}
 	}
 	public static void flashPaperConvert(String flashpaperWorkDir,
 			String sourcePath, String destPath,long waittimes) throws Exception {
-		String command = flashpaperWorkDir + "flashprinter.exe " + sourcePath
-				+ " -o " + destPath;
+		StringBuffer command = new StringBuffer(flashpaperWorkDir ).append( "flashprinter.exe " ).append( sourcePath
+				).append( " -o " ).append( destPath);
 
-		Process pro = Runtime.getRuntime().exec(command);
+		Process pro = Runtime.getRuntime().exec(command.toString());
 		try {
 			pro.waitFor();
 		} catch (InterruptedException e) {
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();
+		}
+		catch (Throwable e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+			throw new Exception(command.toString(),e);
 		}
 		
 		File file = new File(destPath);

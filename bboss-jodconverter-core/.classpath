@@ -11,5 +11,6 @@
 	<classpathentry kind="lib" path="lib/unoil-3.2.1.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="sigar/sigar.jar"/>
+	<classpathentry kind="lib" path="lib/log4j-1.2.16.jar"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>
