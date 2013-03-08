@@ -22,8 +22,8 @@ import java.net.ConnectException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
+import org.apache.log4j.Logger;
 
 import bboss.org.artofsolving.jodconverter.util.PlatformUtils;
 
@@ -41,7 +41,7 @@ public class ManagedOfficeProcess {
 
     private ExecutorService executor = Executors.newSingleThreadExecutor(new NamedThreadFactory("OfficeProcessThread"));
 
-    private final Logger logger = Logger.getLogger(getClass().getName());
+    private final Logger logger = Logger.getLogger(ManagedOfficeProcess.class);
 
     public ManagedOfficeProcess(ManagedOfficeProcessSettings settings) throws OfficeException {
         this.settings = settings;
@@ -110,16 +110,22 @@ public class ManagedOfficeProcess {
                     doEnsureProcessExited();
                     doStartProcessAndConnect();
                 } catch (OfficeException officeException) {
-                    logger.log(Level.SEVERE, "could not restart process", officeException);
+                    logger.error( "could not restart process", officeException);
                 }
             } 
          });
     }
-
+    private static class OSFlag
+    {
+    	boolean iswindow = false;
+    }
     private void doStartProcessAndConnect() throws OfficeException {
         try {
+        	final OSFlag isWindow = new OSFlag();
         	if(PlatformUtils.isLinux())
         		process.start();
+        	else
+        		isWindow.iswindow = true;
             new Retryable() {
                 protected void attempt() throws TemporaryException, Exception {
                     try {
@@ -132,9 +138,25 @@ public class ManagedOfficeProcess {
                         } else if (exitCode.equals(EXIT_CODE_NEW_INSTALLATION)) {
                             // restart and retry later
                             // see http://code.google.com/p/jodconverter/issues/detail?id=84
-                            logger.log(Level.WARNING, "office process died with exit code 81; restarting it");
-                            process.start(true);
-                            throw new TemporaryException(connectException);
+                            logger.warn( "office process died with exit code 81; restarting it");
+                            if(!isWindow.iswindow)
+                            {
+                            	process.start(true);
+                            	throw new TemporaryException(connectException);
+                            }
+                            else
+                            {
+                            	process.start();
+                            	isWindow.iswindow = false;
+                            	try {
+									connection.connect();
+								} catch (Exception e) {
+									process.start(true);
+									connection.connect();
+								}
+                            	
+                            }
+                            
                         } else {
                             throw new OfficeException("office process died with exit code " + exitCode);
                         }
@@ -150,6 +172,7 @@ public class ManagedOfficeProcess {
         try {
             XDesktop desktop = OfficeUtils.cast(XDesktop.class, connection.getService(OfficeUtils.SERVICE_DESKTOP));
             desktop.terminate();
+            
         } catch (DisposedException disposedException) {
             // expected
         } catch (Exception exception) {

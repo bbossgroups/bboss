@@ -26,9 +26,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Logger;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.log4j.Logger;
+
 import bboss.org.artofsolving.jodconverter.process.ProcessManager;
 import bboss.org.artofsolving.jodconverter.process.ProcessQuery;
 import bboss.org.artofsolving.jodconverter.util.PlatformUtils;
@@ -45,7 +46,7 @@ class OfficeProcess {
     private Process process;
     private long pid = PID_UNKNOWN;
 
-    private final Logger logger = Logger.getLogger(getClass().getName());
+    private final Logger logger = Logger.getLogger(OfficeProcess.class);
 
     public OfficeProcess(File officeHome, UnoUrl unoUrl, String[] runAsArgs, File templateProfileDir, File workDir, ProcessManager processManager) {
         this.officeHome = officeHome;
@@ -76,8 +77,15 @@ class OfficeProcess {
         	command.addAll(Arrays.asList(runAsArgs));
         }
         command.add(executable.getAbsolutePath());
-        command.add("-accept=" + unoUrl.getAcceptString() + ";urp;");
-        command.add("-env:UserInstallation=" + OfficeUtils.toUrl(instanceProfileDir));
+        if (!PlatformUtils.isWindows())
+        	command.add("-accept=" + unoUrl.getAcceptString() + ";urp;");
+        else
+        	command.add("-accept=\"" + unoUrl.getAcceptString() + ";urp;\"");
+        if (PlatformUtils.isWindows())
+        	command.add("-env:UserInstallation=\"" + OfficeUtils.toUrl(instanceProfileDir) + "\"");
+        else        	
+            command.add("-env:UserInstallation=" + OfficeUtils.toUrl(instanceProfileDir) + "");
+        System.out.println("instanceProfileDir--------------:"+instanceProfileDir);
         command.add("-headless");
         command.add("-nocrashreport");
         command.add("-nodefault");
@@ -87,7 +95,16 @@ class OfficeProcess {
         command.add("-norestore");
         ProcessBuilder processBuilder = new ProcessBuilder(command);
         if (PlatformUtils.isWindows()) {
-            addBasisAndUrePaths(processBuilder);
+        	if(this.officeHome != null)
+        	{
+        		if(officeHome.getAbsolutePath().toLowerCase().contains("libre"))
+        			addLiberofficeBasisAndUrePaths(processBuilder);
+        		else
+        			addBasisAndUrePaths(processBuilder);
+        	}
+        	else
+        		addBasisAndUrePaths(processBuilder);
+        		
         }
         logger.info(String.format("starting process with acceptString '%s' and profileDir '%s'", unoUrl, instanceProfileDir));
         process = processBuilder.start();
@@ -96,13 +113,21 @@ class OfficeProcess {
     }
 
     private File getInstanceProfileDir(File workDir, UnoUrl unoUrl) {
-        String dirName = ".jodconverter_" + unoUrl.getAcceptString().replace(',', '_').replace('=', '-');
-        return new File(workDir, dirName);
+    	if (PlatformUtils.isWindows())
+    	{
+	        String dirName = "libre.jodconverter_" + unoUrl.getAcceptString().replace(',', '_').replace('=', '-');
+	        return new File(workDir, dirName);
+    	}
+    	else
+    	{
+    		String dirName = ".jodconverter_" + unoUrl.getAcceptString().replace(',', '_').replace('=', '-');
+   	        return new File(workDir, dirName);
+       	} 
     }
 
     private void prepareInstanceProfileDir() throws OfficeException {
         if (instanceProfileDir.exists()) {
-            logger.warning(String.format("profile dir '%s' already exists; deleting", instanceProfileDir));
+            logger.warn(String.format("profile dir '%s' already exists; deleting", instanceProfileDir));
             deleteProfileDir();
         }
         if (templateProfileDir != null) {
@@ -121,9 +146,9 @@ class OfficeProcess {
             } catch (IOException ioException) {
                 File oldProfileDir = new File(instanceProfileDir.getParentFile(), instanceProfileDir.getName() + ".old." + System.currentTimeMillis());
                 if (instanceProfileDir.renameTo(oldProfileDir)) {
-                    logger.warning("could not delete profileDir: " + ioException.getMessage() + "; renamed it to " + oldProfileDir);
+                    logger.warn("could not delete profileDir: " + ioException.getMessage() + "; renamed it to " + oldProfileDir);
                 } else {
-                    logger.severe("could not delete profileDir: " + ioException.getMessage());
+                    logger.warn("could not delete profileDir: " + ioException.getMessage());
                 }
             }
         }
@@ -133,7 +158,7 @@ class OfficeProcess {
         // see http://wiki.services.openoffice.org/wiki/ODF_Toolkit/Efforts/Three-Layer_OOo
         File basisLink = new File(officeHome, "basis-link");
         if (!basisLink.isFile()) {
-            logger.fine("no %OFFICE_HOME%/basis-link found; assuming it's OOo 2.x and we don't need to append URE and Basic paths");
+            logger.info("no %OFFICE_HOME%/basis-link found; assuming it's OOo 2.x and we don't need to append URE and Basic paths");
             return;
         }
         String basisLinkText = FileUtils.readFileToString(basisLink).trim();
@@ -153,7 +178,35 @@ class OfficeProcess {
             }
         }
         String path = environment.get(pathKey) + ";" + ureBin.getAbsolutePath() + ";" + basisProgram.getAbsolutePath();
-        logger.fine(String.format("setting %s to \"%s\"", pathKey, path));
+        logger.info(String.format("setting %s to \"%s\"", pathKey, path));
+        environment.put(pathKey, path);
+    }
+    
+    private void addLiberofficeBasisAndUrePaths(ProcessBuilder processBuilder) throws IOException {
+        // see http://wiki.services.openoffice.org/wiki/ODF_Toolkit/Efforts/Three-Layer_OOo
+//        File basisLink = new File(officeHome, "basis-link");
+//        if (!basisLink.isFile()) {
+//            logger.fine("no %OFFICE_HOME%/basis-link found; assuming it's OOo 2.x and we don't need to append URE and Basic paths");
+//            return;
+//        }
+//        String basisLinkText = FileUtils.readFileToString(basisLink).trim();
+        File basisHome =officeHome;
+        File basisProgram = new File(basisHome, "program");
+        File ureLink = new File(basisHome, "URE");
+//        String ureLinkText = FileUtils.readFileToString(ureLink).trim();
+//        File ureHome = new File(basisHome, ureLinkText);
+        File ureBin = new File(ureLink, "bin");
+        Map<String,String> environment = processBuilder.environment();
+        // Windows environment variables are case insensitive but Java maps are not :-/
+        // so let's make sure we modify the existing key
+        String pathKey = "PATH";
+        for (String key : environment.keySet()) {
+            if ("PATH".equalsIgnoreCase(key)) {
+                pathKey = key;
+            }
+        }
+        String path = environment.get(pathKey) + ";" + ureBin.getAbsolutePath() + ";" + basisProgram.getAbsolutePath();
+        logger.info(String.format("setting %s to \"%s\"", pathKey, path));
         environment.put(pathKey, path);
     }
 
@@ -170,6 +223,8 @@ class OfficeProcess {
         
         protected void attempt() throws TemporaryException, Exception {
             try {
+            	if(process == null)
+            		return;
                 exitCode = process.exitValue();
             } catch (IllegalThreadStateException illegalThreadStateException) {
                 throw new TemporaryException(illegalThreadStateException);
