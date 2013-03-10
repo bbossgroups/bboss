@@ -25,24 +25,27 @@
 				String url = "http://localhost:8080/context/hessian?container=bboss.hessian.mvc&containertype=mvc&service=basicservice";//指定容器标识和容器类型及服务标识
 				url = "http://localhost:8080/context/hessian?service=basicservice";//默认获取mvc容器中的组件
 				url参数说明：
-				containertype 容器类型 
+				container：服务端ioc容器标识，一般是ioc容器根xml文件对应的类包路径，
+						   例如：org/frameworkset/spi/remote/hession/server/hessian-service.xml
+			               mvc类型容器值为bboss.hessian.mvc(也是container的默认值)
+				containertype： 容器类型 
 					mvc mvc容器
-					simple DefaultApplicationContext 
-				    application ApplicationContext
-				
-				bin模式客户端代理
+					simple 对应ioc容器类型为DefaultApplicationContext 
+				    其他值 对应ioc容器类型为ApplicationContext
+				service：服务标识，ioc组件的名称
+				创建bin模式客户端代理
 			    HessianProxyFactory factory = new HessianProxyFactory();
 			    ServiceInf basic = (ServiceInf) factory.create(org.frameworkset.spi.remote.hession.server.ServiceInf.class, url);
 			
 			    System.out.println("Hello: " + basic.hello("John"));
-				xml模式客户端代理
+				创建xml模式客户端代理
 			    BurlapProxyFactory factory = new BurlapProxyFactory();
 			    ServiceInf basic = (ServiceInf) factory.create(org.frameworkset.spi.remote.hession.server.ServiceInf.class, url);
 			
 			    System.out.println("Hello: " + basic.hello("John"));
 				
 			    通过bboss-ioc配置和获取客户端	
-				<property name="clientservice" class="com.caucho.hessian.client.HessianProxyFactory" factory-method="create">
+				<property name="clientservice" factory-class="com.caucho.hessian.client.HessianProxyFactory" factory-method="create">
 					<construction>
 						<property value="org.frameworkset.spi.remote.hession.server.ServiceInf"/>		
 						<property value="http://localhost:8080/context/hessian?service=basicservice"/>	
@@ -53,7 +56,9 @@
 				ServiceInf basic = context.getTBeanObject("clientservice", ServiceInf.class);
 				]]>
 	</description>
-	<property name="basicservice" class="org.frameworkset.spi.remote.hession.server.BasicService"/>	
+	<!--bboss管理的组件即hessian服务-->
+	<property name="basicservice" class="org.frameworkset.spi.remote.hession.server.BasicService"/>
+	<!--可以指定专有的hessian组件服务属性-->	
 	<property name="basicservice_mutx" class="org.frameworkset.spi.remote.hession.server.BasicService"
 		hessian:api="org.frameworkset.spi.remote.hession.server.ServiceInf"
 	    hessian:serializable="bin"
