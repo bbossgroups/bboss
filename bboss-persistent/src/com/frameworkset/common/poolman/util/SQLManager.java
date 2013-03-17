@@ -166,7 +166,7 @@ public class SQLManager extends PoolManager{
     	{
     		DataSource datasource = pool.getDataSource();
     		if(!(datasource instanceof TXDataSource))
-    			return new TXDataSource( pool.getDataSource());
+    			return new TXDataSource( pool.getDataSource(),pool);
     		else
     			return datasource;
     	}
@@ -186,7 +186,7 @@ public class SQLManager extends PoolManager{
     	{
     		if(ds instanceof TXDataSource)
     			return ds;
-    		return new TXDataSource( ds);
+    		return new TXDataSource( ds,null);
     	}
     	throw new IllegalArgumentException("获取数据源失败：ds is null");
     }

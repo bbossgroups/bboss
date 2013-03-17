@@ -554,7 +554,7 @@ public class JDBCPool {
 			}
 			if(this.info.isEnablejta())
 			{
-				this.datasource = new TXDataSource(datasource);
+				this.datasource = new TXDataSource(datasource,this);
 			}
 			
 			
@@ -598,7 +598,7 @@ public class JDBCPool {
 //								}
 //								else
 								{
-									this.datasource = new TXDataSource(datasource);
+									this.datasource = new TXDataSource(datasource,this);
 								}
 							}
 						}
@@ -1162,7 +1162,10 @@ public class JDBCPool {
 			SQLManager.getInstance().getPool(externalDBName).updateTableMetaData(tableName);
 		}
 	}
-
+	public String getDatabaseSchema(DatabaseMetaData databaseMetaData) throws Throwable
+	{
+		return getSchemaName_( databaseMetaData,this.getDbAdapter().getSchema(info));
+	}
 	/**
 	 * 初始化数据库元数据
 	 * 

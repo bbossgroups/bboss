@@ -26,6 +26,8 @@ import org.quartz.JobDataMap;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
+import com.frameworkset.orm.transaction.TransactionManager;
+
 
 /**
  * <p>Title: MethodInvokerJob.java</p> 
@@ -43,7 +45,31 @@ public class MethodInvokerJob implements Job, Serializable{
 		 try {
 			 JobDataMap data = jobExecutionContext.getJobDetail().getJobDataMap();
 			 MethodInvoker action = (MethodInvoker)data.get("JobMethod");
+			 try
+		    	{
+				 
+		    		boolean state = TransactionManager.destroyTransaction();
+					if(state){
+						log.debug("A DB transaction leaked before Job ["+ action.getProviderManagerInfo().getStringExtendAttribute("jobid") +"] been forcibly destoried. ");
+					}
+		    	}
+				catch(Throwable e)
+				{
+					
+				}
 			 action.invoker();
+			 try
+		    	{
+				 
+		    		boolean state = TransactionManager.destroyTransaction();
+					if(state){
+						log.debug("A DB transaction leaked in Job ["+ action.getProviderManagerInfo().getStringExtendAttribute("jobid") +"] been forcibly destoried. ");
+					}
+		    	}
+				catch(Throwable e)
+				{
+					
+				}
 		} catch (IllegalArgumentException e) {
 			log.error(e.getMessage(),e);
 		} catch (IllegalAccessException e) {

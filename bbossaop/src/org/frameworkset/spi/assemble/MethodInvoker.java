@@ -33,23 +33,28 @@ public class MethodInvoker {
 	private Object instance;
 	private Object[] argments;
 	private Method method;
+	private Pro providerManagerInfo;
 	public boolean isClassMethod()
 	{
 		return this.isClassMethod;
 	}
 	public MethodInvoker(boolean isClassMethod, Object instance, Object[] argments,
-			Method method) {
+			Method method,Pro providerManagerInfo) {
 		super();
 		this.isClassMethod = isClassMethod;
 		this.instance = instance;
 		this.argments = argments;
 		this.method = method;
+		this.providerManagerInfo = providerManagerInfo;
 	}
 	
 	public void invoker() throws IllegalArgumentException, 
 								IllegalAccessException, InvocationTargetException
 	{
 		this.method.invoke(instance, argments);
+	}
+	public Pro getProviderManagerInfo() {
+		return providerManagerInfo;
 	}
 
 }
