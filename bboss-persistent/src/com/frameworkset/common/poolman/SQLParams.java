@@ -69,6 +69,7 @@ public class SQLParams
     private Map<String,Param> sqlparams = null;
     private Params realParams = null;
     private NewSQLInfo newsql = null;
+   
     
     private String dbname = null;
     private static Logger log = Logger.getLogger(SQLParams.class);
@@ -76,6 +77,7 @@ public class SQLParams
      * 用于预编译批处理操作
      */
     private SQLInfo oldsql = null;
+    private boolean frommap = false;
     
     public String getDbname()
     {
@@ -178,11 +180,11 @@ public class SQLParams
     {
         if(realParams != null)
             return;
-        if(sqlparams == null || this.sqlparams.size() <=0)
-        {
-            this.newsql = new NewSQLInfo(sql);
-            return;
-        }
+//        if(sqlparams == null || this.sqlparams.size() <=0)
+//        {
+//            this.newsql = new NewSQLInfo(sql);
+//            return;
+//        }
         if(realParams == null)
         {
         	SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,true,true);
@@ -204,20 +206,20 @@ public class SQLParams
     {
         if(realParams != null)
             return;
-        if(sqlparams == null || this.sqlparams.size() <=0)
-        {
-        	if(firstnewsql != null)
-        	{
-        		this.newsql = firstnewsql;
-        		return;
-        	}
-        	else
-        	{
-	            this.newsql = new NewSQLInfo(sql.getSql());
-	            newsql.setOldsql(sql);
-	            return;
-        	}
-        }
+//        if(sqlparams == null || this.sqlparams.size() <=0)
+//        {
+//        	if(firstnewsql != null)
+//        	{
+//        		this.newsql = firstnewsql;
+//        		return;
+//        	}
+//        	else
+//        	{
+//	            this.newsql = new NewSQLInfo(sql.getSql());
+//	            newsql.setOldsql(sql);
+//	            return;
+//        	}
+//        }
         if(realParams == null)
         {
         	if(this.pretoken.equals("#\\[") && this.endtoken.equals("\\]"))
@@ -233,13 +235,13 @@ public class SQLParams
     {
         if(realParams != null)
             return;
-        if(sqlparams == null || this.sqlparams.size() <=0)
-        {
-            this.newsql = new NewSQLInfo(sql);
-            newsql.setNewtotalsizesql(totalsizesql);
-            return;
-        }
-        if(realParams == null)
+//        if(sqlparams == null || this.sqlparams.size() <=0)
+//        {
+//            this.newsql = new NewSQLInfo(sql);
+//            newsql.setNewtotalsizesql(totalsizesql);
+//            return;
+//        }
+//        if(realParams == null)
         {
         	if(totalsizesql == null)
         	{
@@ -267,15 +269,15 @@ public class SQLParams
     {
         if(realParams != null)
             return;
-        if(sqlparams == null || this.sqlparams.size() <=0)
-        {
-            this.newsql = new NewSQLInfo(sql.getSql());
-            this.newsql .setNewtotalsizesql(totalsizesql.getSql());
-            this.newsql.setOldsql(sql);
-            this.newsql.setOldtotalsizesql(totalsizesql);
-            return;
-        }
-        if(realParams == null)
+//        if(sqlparams == null || this.sqlparams.size() <=0)
+//        {
+//            this.newsql = new NewSQLInfo(sql.getSql());
+//            this.newsql .setNewtotalsizesql(totalsizesql.getSql());
+//            this.newsql.setOldsql(sql);
+//            this.newsql.setOldtotalsizesql(totalsizesql);
+//            return;
+//        }
+//        if(realParams == null)
         {
         	if(this.pretoken.equals("#\\[") && this.endtoken.equals("\\]"))
         		buildParamsByVariableParser(sql,totalsizesql,dbname,(NewSQLInfo)null);
@@ -541,7 +543,7 @@ public class SQLParams
 //        String vars[] = args[1];  
         if(!sqlstruction.hasVars())
         {
-        	log.debug("预编译sql语句提示：指定了预编译参数,sql语句中没有包含符合要求的预编译变量，" + this.toString());
+        	//log.debug("预编译sql语句提示：指定了预编译参数,sql语句中没有包含符合要求的预编译变量，" + this.toString());
 //            throw new SetSQLParamException("预编译sql语句非法：指定了预编译参数,sql语句中没有包含符合要求的预编译变量，" + this);
         }
         else
@@ -794,8 +796,17 @@ public class SQLParams
     public static SQLParams convertMaptoSqlParams(Map<String,Object> bean,SQLInfo sql) throws SetSQLParamException
     {
     	if(bean == null || bean.size() == 0)
-			return null;
+    	{
+//			return null;
+    		SQLParams temp = new SQLParams();
+        	temp.setFrommap(true);
+    		temp.setOldsql(sql);
+    		return temp;
+    	}
+//    	if(bean.size() == 0)
+//			return null;
     	SQLParams temp = new SQLParams();
+    	temp.setFrommap(true);
 		temp.setOldsql(sql);
 		Iterator<Map.Entry<String,Object>> its = bean.entrySet().iterator();
 		while(its.hasNext())
@@ -808,7 +819,13 @@ public class SQLParams
 	public static SQLParams convertBeanToSqlParams(Object bean,SQLInfo sql,String dbname,int action,Connection con) throws SQLException
 	{
 		if(bean == null)
-			return null;
+		{
+//			return null;
+			SQLParams temp = new SQLParams();
+        	temp.setFrommap(true);
+    		temp.setOldsql(sql);
+    		return temp;
+		}
 		if(bean instanceof SQLParams)
 		{
 			SQLParams temp = (SQLParams)bean;
@@ -1391,6 +1408,12 @@ public class SQLParams
 //	public void setNewtotalsizesql(String newtotalsizesql) {
 //		this.newtotalsizesql = newtotalsizesql;
 //	}
+	public boolean isFrommap() {
+		return frommap;
+	}
+	public void setFrommap(boolean frommap) {
+		this.frommap = frommap;
+	}
 
 
 }

@@ -19,7 +19,7 @@
 			padding:5px;
 		}
 	</style>
-	<script type="text/javascript" src="../include/jquery-1.4.4.min.js"></script>
+	<script type="text/javascript" src="../include/jquery-1.4.2.min.js"></script>
 	<script type="text/javascript" src="../include/jquery.easyui.min.js"></script>
 	<script type="text/javascript" src="../include/jquery-easyui-portal/jquery.portal.js"></script>
 	<script>
