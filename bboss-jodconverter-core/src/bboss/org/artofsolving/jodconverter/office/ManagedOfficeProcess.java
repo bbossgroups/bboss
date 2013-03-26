@@ -123,7 +123,25 @@ public class ManagedOfficeProcess {
         try {
         	final OSFlag isWindow = new OSFlag();
         	if(PlatformUtils.isLinux())
-        		process.start();
+        	{
+        		try {
+					process.start();
+				} catch (Exception officeException) {
+					logger.error( "Start libreoffice failed,Try connect an external soffice service.", officeException);
+					new Retryable() {
+		                protected void attempt() throws TemporaryException, Exception {
+		                    try {
+		                        connection.connect();
+		                    } catch (ConnectException connectException) {
+		                            throw new OfficeException("office process died with exit code ");
+		                        
+		                    }
+		                }
+		            }.execute(settings.getRetryInterval(), settings.getRetryTimeout());
+		            return;
+				}
+        	}
+
         	else
         		isWindow.iswindow = true;
             new Retryable() {
