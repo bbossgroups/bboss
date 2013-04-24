@@ -1691,6 +1691,20 @@ public class PagerDataSet extends PagerTagSupport {
 	}
 	public static final String softparser_cache_pre = "com.frameworkset.common.tag.pager.tags.softparser.";
 
+	protected String buildColnameKey(String colName)
+	{
+		
+		StringBuffer buf = new StringBuffer();
+		if(this.index >= 0)
+		{
+			buf.append(index).append(".").append( this.getRowidByIndex(index) ).append(".").append(colName);
+		}
+		else
+		{						
+			buf.append(this.stack.size() - 1).append(".").append( this.rowid ).append( "." ).append( colName);
+		}
+		return buf.toString();
+	}
 	protected boolean softparsered()
 	{
 		if (theClassDataList == null)
@@ -1698,7 +1712,7 @@ public class PagerDataSet extends PagerTagSupport {
 //			theClassDataList = new ClassDataList();
 			if(this.softparser)
 			{
-				if(!StringUtil.isEmpty(this.requestKey))
+				if(!StringUtil.isEmpty(this.requestKey)) //对于直接指定的请求属性进行缓冲处理
 				{
 					String cachekey = softparser_cache_pre +requestKey;
 					theClassDataList = (ClassDataList)request.getAttribute(cachekey);
@@ -1708,7 +1722,7 @@ public class PagerDataSet extends PagerTagSupport {
 					request.setAttribute(cachekey,theClassDataList);
 					
 				}
-				else if(!StringUtil.isEmpty(this.sessionKey))
+				else if(!StringUtil.isEmpty(this.sessionKey))//对于直接指定的session属性进行缓冲处理
 				{
 					
 					if(this.session != null)
@@ -1721,7 +1735,7 @@ public class PagerDataSet extends PagerTagSupport {
 						session.setAttribute(cachekey,theClassDataList);
 					}
 				}
-				else if(!StringUtil.isEmpty(this.pageContextKey))
+				else if(!StringUtil.isEmpty(this.pageContextKey))//对于直接指定的pageContext属性进行缓冲处理
 				{
 					
 					String cachekey = softparser_cache_pre +pageContextKey;
@@ -1731,6 +1745,18 @@ public class PagerDataSet extends PagerTagSupport {
 					theClassDataList = new ClassDataList();
 					pageContext.setAttribute(cachekey,theClassDataList);
 					
+				}
+				
+				else if(this.colName != null )//如果对应的集合来自于外层或者本层对象属性对应的map或者list或者数组
+				{
+					String key = buildColnameKey(colName);
+				
+					String cachekey = softparser_cache_pre +key;
+					theClassDataList = (ClassDataList)request.getAttribute(cachekey);
+					if(theClassDataList != null)
+						return true;
+					theClassDataList = new ClassDataList();
+					request.setAttribute(cachekey,theClassDataList);
 				}
 				else
 				{
