@@ -130,11 +130,13 @@ public abstract class PagerTagSupport extends BaseTag {
 			}
 			else if(this instanceof PagerDataSet)
 			{
-				if(pagerTag != null)
+				if(pagerTag != null && ((PagerDataSet)this).usedwithpagerTag())
 				{
 					PagerDataSet listTag = (PagerDataSet) findAncestorWithClass(this, PagerDataSet.class);
-					if(listTag == null)
+					if(listTag == null )
+					{
 						pagerContext = pagerTag.pagerContext;
+					}
 				}
 				else
 				{

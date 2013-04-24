@@ -3330,6 +3330,12 @@ public class PagerDataSet extends PagerTagSupport {
 		this.softparser = softparser;
 	}
     
+	
+	public boolean usedwithpagerTag()
+	{
+		return this.requestKey == null && this.pageContextKey == null && this.sessionKey == null && this.statement == null
+				&& this.colName == null;
+	}
    
     
 
