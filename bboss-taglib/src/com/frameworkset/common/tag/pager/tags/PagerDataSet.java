@@ -1700,8 +1700,12 @@ public class PagerDataSet extends PagerTagSupport {
 			buf.append(index).append(".").append( this.getRowidByIndex(index) ).append(".").append(colName);
 		}
 		else
-		{						
-			buf.append(this.stack.size() - 1).append(".").append( this.rowid ).append( "." ).append( colName);
+		{				
+			int idx = this.stack.size() - 2;
+			if(idx >= 0)
+				buf.append(idx).append(".").append( this.getRowidByIndex(idx)  ).append( "." ).append( colName);
+			else
+				buf.append( colName);
 		}
 		return buf.toString();
 	}
