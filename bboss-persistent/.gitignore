@@ -4,3 +4,6 @@
 /build-jdk5.log
 /build-jdk6.log
 /common.log
+/classes-bboss-persistent
+/classes-bboss-persistent-test
+/build-jdk7.log

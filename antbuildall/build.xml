@@ -132,6 +132,20 @@
 		<antcall target="distrib-bboss-persistent-jars">
 		</antcall>
 	</target>
+	<target name="build-persistent-jdk7" description="build bboss persistent project">
+		<echo>build bboss persistent project</echo>
+		<ant dir="${bboss-persistent}" antfile="build-jdk17.xml"/>
+		<echo>update ${portallib}/frameworkset-pool.jar</echo>
+		<echo>update ${casserverlib}/frameworkset-pool.jar</echo>
+		<echo>update ${active-ext-lib}/frameworkset-pool.jar</echo>
+		<echo>update ${bboss-ws-lib}/frameworkset-pool.jar</echo>
+		<echo>update ${bboss-aop-lib}/frameworkset-pool.jar</echo>
+		<echo>update ${cms_baseline-lib}/frameworkset-pool.jar</echo>
+		<echo>update ${bboss-taglib-lib}/frameworkset-pool.jar</echo>
+		<echo>update ${kettle-lib}/frameworkset-pool.jar</echo>
+		<antcall target="distrib-bboss-persistent-jars">
+		</antcall>
+	</target>
 	<target name="distrib-bboss-persistent-jars" description="distrib-bboss-persistent-jars">
 		<for list="${bboss-plugin-wordpdf-lib-depends},${bbossupload-lib},${demoproject-lib},${portallib},${casserverlib},${active-ext-lib},${bboss-aop-lib},${cms_baseline-lib},${bboss-taglib-lib},${kettle-lib},${monitorconsole-lib},${monitorconsole-compilelib},${bboss-mvc-lib},${creatoresb-lib},${bboss-clientproxy-lib},${mvc-lib},${persistent-lib},${xmlrequest-lib},${bboss-plugin-hibernate-lib}" param="destdir">
 			<sequential>
@@ -1047,6 +1061,22 @@ bbossaop<-cas server [bboss-aop.jar]
 		<antcall target="build-bboss-util"/>
 		<antcall target="build-bboss-aop-only"/>
 		<antcall target="build-persistent-jdk6"/>
+		<antcall target="build-bboss-soa"/>
+		<antcall target="build-bboss-velocity"/>
+		<antcall target="build-bboss-taglib-only"/>
+		<antcall target="build-bboss-mvc-only"/>
+		<antcall target="build-bboss-event-only"/>
+		<antcall target="build-bboss-jodconverter-core"/>
+		<antcall target="build-bboss-plugin-wordpdf"/>
+		<antcall target="build-bboss-plugin-hessian"/>		
+		<antcall target="move-all-jars"/>		
+	</target>
+	
+	<target name="build-all-jdk7" description="build bboss all project">
+		<echo>build bboss all project</echo>		
+		<antcall target="build-bboss-util"/>
+		<antcall target="build-bboss-aop-only"/>
+		<antcall target="build-persistent-jdk7"/>
 		<antcall target="build-bboss-soa"/>
 		<antcall target="build-bboss-velocity"/>
 		<antcall target="build-bboss-taglib-only"/>
