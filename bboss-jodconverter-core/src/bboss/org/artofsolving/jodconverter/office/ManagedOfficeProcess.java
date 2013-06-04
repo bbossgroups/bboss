@@ -141,7 +141,6 @@ public class ManagedOfficeProcess {
 		            return;
 				}
         	}
-
         	else
         		isWindow.iswindow = true;
             new Retryable() {

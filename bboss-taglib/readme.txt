@@ -30,6 +30,9 @@ bboss-taglib<-cas server [frameworkset.jar]
 bboss-taglib<-portal [frameworkset.jar]
 bboss-taglib<-bboss-ws [frameworkset.jar]
 #######update function list since bbossgroups-3.6.2 begin###########
+标签list、map容器缓冲机制完善
+增加对index 和colName的缓存处理
+
 同时SQLParamTag标签页增加charset属性用来指定对应的字符编码集，
 <pg:sqlparam name="clobdata" value="<%=clobdata %>" type="clobfile" charset="GBK"/>
 使用的实例如下：

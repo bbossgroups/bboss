@@ -16,6 +16,7 @@
 package org.frameworkset.spi.assemble;
 
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -334,7 +335,10 @@ public class ServiceProviderManager {
             factory.setNamespaceAware(false);
             factory.setValidating(false);
             SAXParser parser = factory.newSAXParser();
-            parser.parse(url, handler);
+            if(managerImport.isClasspathBase())
+            	parser.parse(url, handler);
+            else
+            	parser.parse(new File(url), handler);
 
             this.addMangers(handler.getManagers());
             this.addProperties(handler.getProperties());
