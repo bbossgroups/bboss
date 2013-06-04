@@ -22,6 +22,11 @@ bboss-persistent<-cas server [frameworkset-pool.jar]
 
 to do list:
 无
+#######update function list since bbossgroups-3.7.0 begin###########
+o 升级jdk1.7兼容性改造
+如果jdk是1.5版本，则eclipse工程中要使用src-jdk5目录
+如果jdk是1.6版本，则eclipse工程中要使用src-jdk6目录
+如果jdk是1.7版本，则eclipse工程中要使用src-jdk7目录
 #######update function list since bbossgroups-3.6.2 begin###########
 o 动态sql解析优化，扩展velocity模板引擎
 o 存储过程内部处理机制优化，解决名称参数无法正确获取到输出参数的问题
