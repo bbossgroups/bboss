@@ -6,7 +6,6 @@
 	<classpathentry kind="lib" path="lib/frameworkset-pool.jar" sourcepath="/bboss-persistent"/>
 	<classpathentry kind="lib" path="lib/frameworkset-util.jar" sourcepath="/bboss-util"/>
 	<classpathentry kind="lib" path="lib/jakarta-oro-2.0.8.jar"/>
-	<classpathentry kind="lib" path="lib/velocity-1.6.2.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="lib" path="lib/cglib-2.2.jar"/>
 	<classpathentry kind="lib" path="lib/log4j-1.2.14.jar"/>
