@@ -1,48 +1,66 @@
-.pagination{
-	zoom:1;
+.pagination {
+  zoom: 1;
 }
-.pagination table{
-	float:left;
-	height:30px;
+.pagination table {
+  float: left;
+  height: 30px;
 }
-.pagination-btn-separator{
-	float:left;
-	height:24px;
-	border-left:1px solid #ccc;
-	border-right:1px solid #fff;
-	margin:3px 1px;
+.pagination td {
+  border: 0;
 }
-.pagination-num{
-	border:1px solid #ccc;
-	margin:0 2px;
+.pagination-btn-separator {
+  float: left;
+  height: 24px;
+  border-left: 1px solid #ccc;
+  border-right: 1px solid #fff;
+  margin: 3px 1px;
 }
-.pagination-page-list{
-	margin:0px 6px;
+.pagination .pagination-num {
+  border-width: 1px;
+  border-style: solid;
+  margin: 0 2px;
+  padding: 2px;
+  width: 2em;
+  height: auto;
 }
-.pagination-info{
-	float:right;
-	padding-right:6px;
-	padding-top:8px;
-	font-size:12px;
+.pagination-page-list {
+  margin: 0px 6px;
+  padding: 1px 2px;
+  width: auto;
+  height: auto;
+  border-width: 1px;
+  border-style: solid;
 }
-.pagination span{
-	font-size:12px;
+.pagination-info {
+  float: right;
+  margin: 0 6px 0 0;
+  padding: 0;
+  height: 30px;
+  line-height: 30px;
+  font-size: 12px;
 }
-.pagination-first{
-	background:url('images/pagination_first.gif') no-repeat;
+.pagination span {
+  font-size: 12px;
 }
-.pagination-prev{
-	background:url('images/pagination_prev.gif') no-repeat;
+.pagination-first {
+  background: url('images/pagination_icons.png') no-repeat 0 0;
 }
-.pagination-next{
-	background:url('images/pagination_next.gif') no-repeat;
+.pagination-prev {
+  background: url('images/pagination_icons.png') no-repeat -16px 0;
 }
-.pagination-last{
-	background:url('images/pagination_last.gif') no-repeat;
+.pagination-next {
+  background: url('images/pagination_icons.png') no-repeat -32px 0;
 }
-.pagination-load{
-	background:url('images/pagination_load.png') no-repeat;
+.pagination-last {
+  background: url('images/pagination_icons.png') no-repeat -48px 0;
 }
-.pagination-loading{
-	background:url('images/pagination_loading.gif') no-repeat;
+.pagination-load {
+  background: url('images/pagination_icons.png') no-repeat -64px 0;
+}
+.pagination-loading {
+  background: url('images/loading.gif') no-repeat;
+}
+.pagination-page-list,
+.pagination .pagination-num {
+  border-color: #95B8E7;
 }

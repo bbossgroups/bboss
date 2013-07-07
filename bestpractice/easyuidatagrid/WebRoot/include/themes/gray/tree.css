@@ -1,126 +1,157 @@
-.tree{
-	font-size:12px;
-	margin:0;
-	padding:0;
-	list-style-type:none;
+.tree {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
 }
-.tree li{
-	white-space:nowrap;
+.tree li {
+  white-space: nowrap;
 }
-.tree li ul{
-	list-style-type:none;
-	margin:0;
-	padding:0;
+.tree li ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
 }
-.tree-node{
-	height:18px;
-	white-space:nowrap;
-	cursor:pointer;
+.tree-node {
+  height: 18px;
+  white-space: nowrap;
+  cursor: pointer;
 }
-.tree-indent{
-	display:inline-block;
-	width:16px;
-	height:18px;
-	vertical-align:middle;
+.tree-hit {
+  cursor: pointer;
 }
-.tree-hit{
-	cursor:pointer;
+.tree-expanded,
+.tree-collapsed,
+.tree-folder,
+.tree-file,
+.tree-checkbox,
+.tree-indent {
+  display: inline-block;
+  width: 16px;
+  height: 18px;
+  vertical-align: top;
+  overflow: hidden;
 }
-.tree-expanded{
-	display:inline-block;
-	width:16px;
-	height:18px;
-	vertical-align:middle;
-	background:url('images/tree_arrows.gif') no-repeat -18px 0px;
+.tree-expanded {
+  background: url('images/tree_icons.png') no-repeat -18px 0px;
 }
-.tree-expanded-hover{
-	background:url('images/tree_arrows.gif') no-repeat -50px 0px;
+.tree-expanded-hover {
+  background: url('images/tree_icons.png') no-repeat -50px 0px;
 }
-.tree-collapsed{
-	display:inline-block;
-	width:16px;
-	height:18px;
-	vertical-align:middle;
-	background:url('images/tree_arrows.gif') no-repeat 0px 0px;
+.tree-collapsed {
+  background: url('images/tree_icons.png') no-repeat 0px 0px;
 }
-.tree-collapsed-hover{
-	background:url('images/tree_arrows.gif') no-repeat -32px 0px;
+.tree-collapsed-hover {
+  background: url('images/tree_icons.png') no-repeat -32px 0px;
 }
-.tree-folder{
-	display:inline-block;
-	background:url('images/tree_folder.gif') no-repeat;
-	width:16px;
-	height:18px;
-	vertical-align:middle;
+.tree-lines .tree-expanded,
+.tree-lines .tree-root-first .tree-expanded {
+  background: url('images/tree_icons.png') no-repeat -144px 0;
 }
-.tree-folder-open{
-	background:url('images/tree_folder_open.gif') no-repeat;
+.tree-lines .tree-collapsed,
+.tree-lines .tree-root-first .tree-collapsed {
+  background: url('images/tree_icons.png') no-repeat -128px 0;
 }
-.tree-file{
-	display:inline-block;
-	background:url('images/tree_file.gif') no-repeat;
-	width:16px;
-	height:18px;
-	vertical-align:middle;
+.tree-lines .tree-node-last .tree-expanded,
+.tree-lines .tree-root-one .tree-expanded {
+  background: url('images/tree_icons.png') no-repeat -80px 0;
 }
-.tree-loading{
-	background:url('images/tree_loading.gif') no-repeat;
+.tree-lines .tree-node-last .tree-collapsed,
+.tree-lines .tree-root-one .tree-collapsed {
+  background: url('images/tree_icons.png') no-repeat -64px 0;
 }
-.tree-title{
-	display:inline-block;
-	text-decoration:none;
-	vertical-align:middle;
-	padding:1px 2px 1px 2px;
-	white-space:nowrap;
+.tree-line {
+  background: url('images/tree_icons.png') no-repeat -176px 0;
 }
-
-.tree-node-hover{
-	background:#fafafa;
+.tree-join {
+  background: url('images/tree_icons.png') no-repeat -192px 0;
 }
-.tree-node-selected{
-	background:#FBEC88;
+.tree-joinbottom {
+  background: url('images/tree_icons.png') no-repeat -160px 0;
 }
-.tree-checkbox{
-	display:inline-block;
-	width:16px;
-	height:18px;
-	vertical-align:middle;
+.tree-folder {
+  background: url('images/tree_icons.png') no-repeat -208px 0;
 }
-.tree-checkbox0{
-	background:url('images/tree_checkbox_0.gif') no-repeat;
+.tree-folder-open {
+  background: url('images/tree_icons.png') no-repeat -224px 0;
 }
-.tree-checkbox1{
-	background:url('images/tree_checkbox_1.gif') no-repeat;
+.tree-file {
+  background: url('images/tree_icons.png') no-repeat -240px 0;
 }
-.tree-checkbox2{
-	background:url('images/tree_checkbox_2.gif') no-repeat;
+.tree-loading {
+  background: url('images/loading.gif') no-repeat center center;
 }
-.tree-node-proxy{
-	font-size:12px;
-	padding:1px 2px 1px 18px;
-	background:#fafafa;
-	border:1px solid #ccc;
+.tree-checkbox0 {
+  background: url('images/tree_icons.png') no-repeat -208px -18px;
 }
-.tree-dnd-yes{
-	background:url('images/tree_dnd_yes.png') no-repeat 0 center;
+.tree-checkbox1 {
+  background: url('images/tree_icons.png') no-repeat -224px -18px;
 }
-.tree-dnd-no{
-	background:url('images/tree_dnd_no.png') no-repeat 0 center;
+.tree-checkbox2 {
+  background: url('images/tree_icons.png') no-repeat -240px -18px;
 }
-.tree-node-top{
-	border-top:1px dotted red;
+.tree-title {
+  font-size: 12px;
+  display: inline-block;
+  text-decoration: none;
+  vertical-align: top;
+  white-space: nowrap;
+  padding: 0 2px;
+  height: 18px;
+  line-height: 18px;
 }
-.tree-node-bottom{
-	border-bottom:1px dotted red;
+.tree-node-proxy {
+  font-size: 12px;
+  line-height: 20px;
+  padding: 0 2px 0 20px;
+  border-width: 1px;
+  border-style: solid;
+  z-index: 9900000;
 }
-.tree-node-append .tree-title{
-	border:1px dotted red;
+.tree-dnd-icon {
+  display: inline-block;
+  position: absolute;
+  width: 16px;
+  height: 18px;
+  left: 2px;
+  top: 50%;
+  margin-top: -9px;
 }
-.tree-editor{
-	border:1px solid #ccc;
-	font-size:12px;
-	line-height:16px;
-	width:80px;
-	position:absolute;
-	top:0;
+.tree-dnd-yes {
+  background: url('images/tree_icons.png') no-repeat -256px 0;
+}
+.tree-dnd-no {
+  background: url('images/tree_icons.png') no-repeat -256px -18px;
+}
+.tree-node-top {
+  border-top: 1px dotted red;
+}
+.tree-node-bottom {
+  border-bottom: 1px dotted red;
+}
+.tree-node-append .tree-title {
+  border: 1px dotted red;
+}
+.tree-editor {
+  border: 1px solid #ccc;
+  font-size: 12px;
+  height: 14px !important;
+  height: 18px;
+  line-height: 14px;
+  padding: 1px 2px;
+  width: 80px;
+  position: absolute;
+  top: 0;
+}
+.tree-node-proxy {
+  background-color: #ffffff;
+  color: #000000;
+  border-color: #D3D3D3;
+}
+.tree-node-hover {
+  background: #e2e2e2;
+  color: #000000;
+}
+.tree-node-selected {
+  background: #0092DC;
+  color: #fff;
 }
