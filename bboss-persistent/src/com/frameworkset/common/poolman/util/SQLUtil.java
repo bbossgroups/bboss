@@ -1428,6 +1428,20 @@ public class SQLUtil implements Serializable{
 	{
 		debugStatus(SQLUtil.getPool().getDBName());
 	}
+	
+	public static void refreshDatabaseMetaData()
+	{
+		List<String> pools = getAllPoolNames();
+		for(int i =0 ; pools != null && i < pools.size(); i++)
+		{
+			String name = pools.get(i);
+			try {
+				getPool(name).refreshDatabaseMetaData();
+			} catch (Exception e) {
+				log.error("刷新数据库连接池"+name+"对应的db元数据失败:", e);
+			}
+		}
+	}
 	public static void debugStatus(String DBName)
 	{
 		System.out.println(new StringBuffer("[").append(DBName).append("] idle connenctions:").append(SQLUtil.getNumIdle(DBName)));

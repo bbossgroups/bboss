@@ -1166,6 +1166,82 @@ public class JDBCPool {
 	{
 		return getSchemaName_( databaseMetaData,this.getDbAdapter().getSchema(info));
 	}
+	
+	public void refreshDatabaseMetaData()
+	{
+		ResultSet rs = null;
+		
+		DatabaseMetaData metaData = null;
+		
+		Connection con = null;
+		try {
+			tableMetaDatasindexByTablename.clear();
+			tableMetaDatas.clear();
+			con = requestConnection();
+
+			metaData = con.getMetaData();
+			String schemaName = getSchemaName_( metaData,this.getDbAdapter().getSchema(info));
+//			String schemaName = this.getDbAdapter().getSchema(info);
+//			if(schemaName == null)
+//				schemaName = metaData.getUserName();
+			// rs =
+			// metaData.getTables(null,"sysmanager".toUpperCase(),"td_sm_job".toUpperCase(),new
+			// String[] {"TABLE"});
+			rs = metaData.getTables(null, schemaName, "%",
+					new String[] { "TABLE", "VIEW" });
+			while (rs.next()) {
+				String tableName = rs.getString("TABLE_NAME");
+				if (tableName.startsWith("BIN$"))
+					continue;
+				if (tableMetaDatasindexByTablename.containsKey(tableName
+						.toLowerCase())) {
+					System.out.println("table [" + tableName + "] 已经加载，忽略！");
+					continue;
+				}
+				log.debug("load table[" + tableName + "]'s metadata.");
+				// System.out.println();
+				// System.out.println("TABLE_SCHEM:"+rs.getString("TABLE_SCHEM"));
+				// System.out.println("tableName:"+tableName);
+				TableMetaData tableMetaData = buildTableMetaData(con,rs,metaData ,true);
+				if(tableMetaData == null)
+					continue;
+				//
+				// ResultSet rs4 =
+				// metaData.getExportedKeys(null,null,tableName);
+
+				// this.tableMetaData.put(rsMeta.)
+				this.tableMetaDatasindexByTablename.put(
+						tableName.toLowerCase(), tableMetaData);
+				tableMetaDatas.add(tableMetaData);
+			}
+			rs.close();
+
+			// metaData.
+		} catch (SQLException e) {
+			e.printStackTrace();
+			// TODO Auto-generated catch block
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		finally {
+			try {
+				if (rs != null)
+					rs.close();
+			} catch (Exception e) {
+
+			}
+			
+			try {
+				if (con != null)
+					con.close();
+			} catch (Exception e) {
+
+			}
+
+		}
+	}
 	/**
 	 * 初始化数据库元数据
 	 * 
