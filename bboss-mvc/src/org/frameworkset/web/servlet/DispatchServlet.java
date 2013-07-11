@@ -737,13 +737,11 @@ public class DispatchServlet extends HttpServlet {
 		int interceptorIndex = -1;
 
 		// Expose current LocaleResolver and request as LocaleContext.
-		LocaleContext previousLocaleContext = LocaleContextHolder.getLocaleContext();
-		LocaleContextHolder.setLocaleContext(buildLocaleContext(request), this.threadContextInheritable);
+		LocaleContext previousLocaleContext = null;
 
 		// Expose current RequestAttributes to current thread.
-		RequestAttributes previousRequestAttributes = RequestContextHolder.getRequestAttributes();
-		ServletRequestAttributes requestAttributes = new ServletRequestAttributes(request);
-		RequestContextHolder.setRequestAttributes(requestAttributes, this.threadContextInheritable);
+		RequestAttributes previousRequestAttributes = null;
+		ServletRequestAttributes requestAttributes = null;
 
 		if (logger.isTraceEnabled()) {
 			logger.trace("Bound request context to thread: " + request);
@@ -751,6 +749,16 @@ public class DispatchServlet extends HttpServlet {
 		PageContext pageContext = null;
 		JspFactory fac= null;
 		try {
+			
+			previousLocaleContext = LocaleContextHolder.getLocaleContext();
+			LocaleContextHolder.setLocaleContext(buildLocaleContext(request), this.threadContextInheritable);
+
+			// Expose current RequestAttributes to current thread.
+			previousRequestAttributes = RequestContextHolder.getRequestAttributes();
+			fac=JspFactory.getDefaultFactory();
+			pageContext=fac.getPageContext(this, request,response, null, false, JspWriter.DEFAULT_BUFFER <= 0?8192:JspWriter.DEFAULT_BUFFER, true); 
+			requestAttributes = new ServletRequestAttributes(request, response,pageContext);
+			RequestContextHolder.setRequestAttributes(requestAttributes, this.threadContextInheritable);
 			ModelAndView mv = null;
 			boolean errorView = false;
 
@@ -782,8 +790,7 @@ public class DispatchServlet extends HttpServlet {
 
 				// Actually invoke the handler.
 				HandlerAdapter ha = getHandlerAdapter(mappedHandler.getHandler());
-				fac=JspFactory.getDefaultFactory();
-				pageContext=fac.getPageContext(this, request,response, null, false, JspWriter.DEFAULT_BUFFER <= 0?8192:JspWriter.DEFAULT_BUFFER, true); 
+				
 //				if(this.messageConverters != null && messageConverters.length > 0)
 //				{
 //					try
@@ -863,8 +870,12 @@ public class DispatchServlet extends HttpServlet {
 
 		finally {
 			// Clean up any resources used by a multipart request.
-			if (processedRequest != request) {
-				cleanupMultipart(processedRequest);
+			try {
+				if (processedRequest != request) {
+					cleanupMultipart(processedRequest);
+				}
+			} catch (Exception e) {
+				
 			}
 
 			// Reset thread-bound context.
@@ -919,7 +930,7 @@ public class DispatchServlet extends HttpServlet {
 			{
 				if(exMv.getView() != null && exMv.getView() instanceof AbstractUrlBasedView)
 				{
-					//����path:����·��
+					//
 					AbstractUrlBasedView view = (AbstractUrlBasedView) exMv.getView();
 					String url = view.getUrl();
 					if(UrlBasedViewResolver.isPathVariable(url))

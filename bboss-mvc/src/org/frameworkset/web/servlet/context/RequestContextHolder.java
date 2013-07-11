@@ -90,6 +90,21 @@ public static RequestAttributes getRequestAttributes() {
 }
 
 /**
+ * Return the RequestContainer currently bound to the thread.
+ * @return the RequestContainer currently bound to the thread,
+ * or <code>null</code> if none bound
+ */
+public static RequestContainer getRequestContainer() {
+	RequestContainer attributes = (RequestContainer) requestAttributesHolder.get();
+	if (attributes == null) {
+		attributes = (RequestContainer) inheritableRequestAttributesHolder.get();
+	}
+	return attributes;
+}
+
+
+
+/**
  * Return the RequestAttributes currently bound to the thread.
  * <p>Exposes the previously bound RequestAttributes instance, if any.
  * Falls back to the current JSF FacesContext, if any.
