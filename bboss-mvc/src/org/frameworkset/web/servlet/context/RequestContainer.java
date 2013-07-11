@@ -17,6 +17,7 @@ package org.frameworkset.web.servlet.context;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.PageContext;
 
 /**
@@ -32,4 +33,5 @@ public interface RequestContainer {
 	public HttpServletResponse getResponse();
 	public PageContext getPageContext();
 	public HttpServletRequest getRequest() ;
+	public HttpSession getSession(boolean create) ;
 }
