@@ -6,6 +6,9 @@ if ($.fn.pagination){
 if ($.fn.datagrid){
 	$.fn.datagrid.defaults.loadMsg = '正在处理，请稍待。。。';
 }
+if ($.fn.treegrid && $.fn.datagrid){
+	$.fn.treegrid.defaults.loadMsg = $.fn.datagrid.defaults.loadMsg;
+}
 if ($.messager){
 	$.messager.defaults.ok = '确定';
 	$.messager.defaults.cancel = '取消';
@@ -15,6 +18,7 @@ if ($.fn.validatebox){
 	$.fn.validatebox.defaults.rules.email.message = '请输入有效的电子邮件地址';
 	$.fn.validatebox.defaults.rules.url.message = '请输入有效的URL地址';
 	$.fn.validatebox.defaults.rules.length.message = '输入内容长度必须介于{0}和{1}之间';
+	$.fn.validatebox.defaults.rules.remote.message = '请修正该字段';
 }
 if ($.fn.numberbox){
 	$.fn.numberbox.defaults.missingMessage = '该输入项为必输项';
@@ -24,6 +28,9 @@ if ($.fn.combobox){
 }
 if ($.fn.combotree){
 	$.fn.combotree.defaults.missingMessage = '该输入项为必输项';
+}
+if ($.fn.combogrid){
+	$.fn.combogrid.defaults.missingMessage = '该输入项为必输项';
 }
 if ($.fn.calendar){
 	$.fn.calendar.defaults.weeks = ['日','一','二','三','四','五','六'];
@@ -41,6 +48,7 @@ if ($.fn.datebox){
 		return y+'-'+(m<10?('0'+m):m)+'-'+(d<10?('0'+d):d);
 	};
 	$.fn.datebox.defaults.parser = function(s){
+		if (!s) return new Date();
 		var ss = s.split('-');
 		var y = parseInt(ss[0],10);
 		var m = parseInt(ss[1],10);

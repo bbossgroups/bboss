@@ -21,9 +21,11 @@ import java.util.Iterator;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionBindingEvent;
 import javax.servlet.http.HttpSessionBindingListener;
+import javax.servlet.jsp.PageContext;
 
 import org.frameworkset.util.Assert;
 import org.frameworkset.web.util.WebUtils;
@@ -52,6 +54,25 @@ public class ServletRequestAttributes  extends AbstractRequestAttributes {
 	private final HttpServletRequest request;
 
 	private volatile HttpSession session;
+	
+	private volatile PageContext pageContext;
+	
+	private HttpServletResponse response;
+
+	/**
+	 * @return the response
+	 */
+	public HttpServletResponse getResponse() {
+		return response;
+	}
+
+	/**
+	 * @return the pageContext
+	 */
+	public PageContext getPageContext() {
+		return pageContext;
+	}
+
 
 	private final Map sessionAttributesToUpdate = new HashMap();
 
@@ -60,9 +81,16 @@ public class ServletRequestAttributes  extends AbstractRequestAttributes {
 	 * Create a new ServletRequestAttributes instance for the given request.
 	 * @param request current HTTP request
 	 */
-	public ServletRequestAttributes(HttpServletRequest request) {
+	public ServletRequestAttributes(HttpServletRequest request,HttpServletResponse response,PageContext pageContext) {
 		Assert.notNull(request, "Request must not be null");
 		this.request = request;
+		this.pageContext = pageContext;
+		this.response = response;
+	}
+	
+	public ServletRequestAttributes(HttpServletRequest request) {
+		
+		this(request,null,null);
 	}
 
 
@@ -77,7 +105,7 @@ public class ServletRequestAttributes  extends AbstractRequestAttributes {
 	 * Exposes the {@link HttpSession} that we're wrapping.
 	 * @param allowCreate whether to allow creation of a new session if none exists yet
 	 */
-	protected final HttpSession getSession(boolean allowCreate) {
+	public final HttpSession getSession(boolean allowCreate) {
 		if (isRequestActive()) {
 			return this.request.getSession(allowCreate);
 		}
@@ -89,6 +117,14 @@ public class ServletRequestAttributes  extends AbstractRequestAttributes {
 			}
 			return this.session;
 		}
+	}
+	
+	/**
+	 * Exposes the {@link HttpSession} that we're wrapping.
+	 * @param allowCreate whether to allow creation of a new session if none exists yet
+	 */
+	public final HttpSession getSession() {
+		return getSession(true) ;
 	}
 
 

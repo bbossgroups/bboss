@@ -16,6 +16,10 @@
 package org.frameworkset.web.servlet.context;
 
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.servlet.jsp.PageContext;
 
 import org.frameworkset.spi.support.NamedInheritableThreadLocal;
 import org.frameworkset.spi.support.NamedThreadLocal;
@@ -87,6 +91,47 @@ public static RequestAttributes getRequestAttributes() {
 		attributes = (RequestAttributes) inheritableRequestAttributesHolder.get();
 	}
 	return attributes;
+}
+
+/**
+ * Return the RequestContainer currently bound to the thread.
+ * @return the RequestContainer currently bound to the thread,
+ * or <code>null</code> if none bound
+ */
+public static RequestContainer getRequestContainer() {
+	RequestContainer attributes = (RequestContainer) requestAttributesHolder.get();
+	if (attributes == null) {
+		attributes = (RequestContainer) inheritableRequestAttributesHolder.get();
+	}
+	return attributes;
+}
+
+
+public static HttpServletResponse getResponse()
+{
+	RequestContainer requestContainer = getRequestContainer();
+	return requestContainer != null?requestContainer.getResponse():null;
+}
+public static PageContext getPageContext()
+{
+	RequestContainer requestContainer = getRequestContainer();
+	return requestContainer != null?requestContainer.getPageContext():null;
+}
+public static HttpServletRequest getRequest() 
+{
+	RequestContainer requestContainer = getRequestContainer();
+	return requestContainer != null?requestContainer.getRequest():null;
+}
+public static HttpSession getSession(boolean create) 
+{
+	RequestContainer requestContainer = getRequestContainer();
+	return requestContainer != null?requestContainer.getSession(create):null;
+}
+
+public static HttpSession getSession() 
+{
+	RequestContainer requestContainer = getRequestContainer();
+	return requestContainer != null?requestContainer.getSession():null;
 }
 
 /**
