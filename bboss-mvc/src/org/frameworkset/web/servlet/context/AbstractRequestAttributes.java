@@ -30,7 +30,7 @@ import org.frameworkset.util.Assert;
  * @author biaoping.yin
  * @version 1.0
  */
-public abstract class AbstractRequestAttributes  implements RequestAttributes {
+public abstract class AbstractRequestAttributes  implements RequestAttributes,RequestContainer {
 
 	/** Map from attribute name String to destruction callback Runnable */
 	protected final Map requestDestructionCallbacks = new LinkedHashMap(8);

@@ -23,7 +23,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.frameworkset.web.servlet.context.RequestContainer;
 import org.frameworkset.web.servlet.context.ServletRequestAttributes;
 
 import com.frameworkset.util.StringUtil;
@@ -37,7 +36,7 @@ import com.frameworkset.util.StringUtil;
  * @author biaoping.yin
  * @version 1.0
  */
-public class ServletWebRequest  extends ServletRequestAttributes implements NativeWebRequest,RequestContainer {
+public class ServletWebRequest  extends ServletRequestAttributes implements NativeWebRequest {
 
 	private static final String HEADER_IF_MODIFIED_SINCE = "If-Modified-Since";
 

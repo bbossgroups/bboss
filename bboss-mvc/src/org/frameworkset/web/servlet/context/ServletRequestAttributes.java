@@ -118,6 +118,14 @@ public class ServletRequestAttributes  extends AbstractRequestAttributes {
 			return this.session;
 		}
 	}
+	
+	/**
+	 * Exposes the {@link HttpSession} that we're wrapping.
+	 * @param allowCreate whether to allow creation of a new session if none exists yet
+	 */
+	public final HttpSession getSession() {
+		return getSession(true) ;
+	}
 
 
 	public Object getAttribute(String name, int scope) {

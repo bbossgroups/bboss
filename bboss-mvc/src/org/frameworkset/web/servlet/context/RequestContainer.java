@@ -34,4 +34,5 @@ public interface RequestContainer {
 	public PageContext getPageContext();
 	public HttpServletRequest getRequest() ;
 	public HttpSession getSession(boolean create) ;
+	public HttpSession getSession() ;
 }

@@ -128,7 +128,11 @@ public static HttpSession getSession(boolean create)
 	return requestContainer != null?requestContainer.getSession(create):null;
 }
 
-
+public static HttpSession getSession() 
+{
+	RequestContainer requestContainer = getRequestContainer();
+	return requestContainer != null?requestContainer.getSession():null;
+}
 
 /**
  * Return the RequestAttributes currently bound to the thread.
