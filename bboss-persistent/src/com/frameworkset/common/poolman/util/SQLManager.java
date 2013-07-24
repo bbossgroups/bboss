@@ -153,6 +153,19 @@ public class SQLManager extends PoolManager{
     	throw new IllegalArgumentException("获取数据源失败："+dbname +"不存在，请检查配置文件poolman.xml中是否配置了相应的数据源。");
     }
     
+    /**
+     * 根据dbname获取数据源
+     * @param dbname
+     * @return
+     */
+    public static DataSource getDatasource()
+    {
+    	JDBCPool pool = SQLManager.getInstance().getPool(null);
+    	if(pool != null)
+    		return pool.getDataSource();
+    	throw new IllegalArgumentException("获取数据源失败：请检查配置文件poolman.xml中是否配置了相应的数据源。");
+    }
+    
     
     /**
      * 根据dbname获取数据源
@@ -171,6 +184,25 @@ public class SQLManager extends PoolManager{
     			return datasource;
     	}
     	throw new IllegalArgumentException("获取数据源失败："+dbname +"不存在，请检查配置文件poolman.xml中是否配置了相应的数据源。");
+    }
+    
+    /**
+     * 根据dbname获取数据源
+     * @param dbname
+     * @return
+     */
+    public static DataSource getTXDatasource()
+    {
+    	JDBCPool pool = SQLManager.getInstance().getPool(null);
+    	if(pool != null)
+    	{
+    		DataSource datasource = pool.getDataSource();
+    		if(!(datasource instanceof TXDataSource))
+    			return new TXDataSource( pool.getDataSource(),pool);
+    		else
+    			return datasource;
+    	}
+    	throw new IllegalArgumentException("获取数据源失败：请检查配置文件poolman.xml中是否配置了相应的数据源。");
     }
     
     
