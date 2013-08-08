@@ -538,13 +538,14 @@ public abstract class HandlerUtils {
 //					paramValue = ValueObjectUtil.getDefaultValue(type);
 //				} else 
 				{
+					String paramname = methodParameter_.getRequestParameterName();
 					bind(request, response, pageContext, handlerMethod, model,
-							command, ct, validators, messageConverters);
+							command, ct, validators, messageConverters, paramname);
 					paramValue = command;
 				}
 			} else if (Set.class.isAssignableFrom(type)) {// 如果是Set数据集
 				Set command = new TreeSet();
-
+				String paramname = methodParameter_.getRequestParameterName();
 				Class ct = methodInfo.getGenericParameterType(position);// 获取元素类型
 //				if (ct == null) {
 //					model.getErrors().rejectValue(
@@ -556,7 +557,7 @@ public abstract class HandlerUtils {
 //				} else 
 				{
 					bind(request, response, pageContext, handlerMethod, model,
-							command, ct, validators, messageConverters);
+							command, ct, validators, messageConverters, paramname );
 					paramValue = command;
 				}
 			} else if (isMultipartFile(type)) {
@@ -2462,16 +2463,16 @@ public abstract class HandlerUtils {
 				if (List.class.isAssignableFrom(type)) {// 如果是列表数据集
 					List command = new ArrayList();
 					Class ct = property.getPropertyGenericType();// 获取元素类型
-					if (ct == null) {
-						model.getErrors().rejectValue(
-								name,
-								"evaluateAnnotationsValue.error",
-								"没有获取到集合对象类型,请检查属性是否指定了集合泛型："
-										+ property.getName());
-						return ValueObjectUtil.getDefaultValue(type);
-					}
+//					if (ct == null) {
+//						model.getErrors().rejectValue(
+//								name,
+//								"evaluateAnnotationsValue.error",
+//								"没有获取到集合对象类型,请检查属性是否指定了集合泛型："
+//										+ property.getName());
+//						return ValueObjectUtil.getDefaultValue(type);
+//					}
 					bind(request, response, pageContext, handlerMethod, model,
-							command, ct, null, messageConverters);
+							command, ct, null, messageConverters,name);
 					value = command;
 					if (holder.needAddData()) {
 						holder.addData(name, value);
@@ -2480,16 +2481,16 @@ public abstract class HandlerUtils {
 				} else if (Set.class.isAssignableFrom(type)) {// 如果是Set数据集
 					Set command = new TreeSet();
 					Class ct = property.getPropertyGenericType();// 获取元素类型
-					if (ct == null) {
-						model.getErrors().rejectValue(
-								name,
-								"evaluateAnnotationsValue.error",
-								"没有获取到集合对象类型,请检查是否指定了集合泛型："
-										+ property.getName());
-						return ValueObjectUtil.getDefaultValue(type);
-					}
+//					if (ct == null) {
+//						model.getErrors().rejectValue(
+//								name,
+//								"evaluateAnnotationsValue.error",
+//								"没有获取到集合对象类型,请检查是否指定了集合泛型："
+//										+ property.getName());
+//						return ValueObjectUtil.getDefaultValue(type);
+//					}
 					bind(request, response, pageContext, handlerMethod, model,
-							command, ct, null, messageConverters);
+							command, ct, null, messageConverters,name);
 					value = command;
 					if (holder.needAddData()) {
 						holder.addData(name, value);
@@ -2649,10 +2650,10 @@ public abstract class HandlerUtils {
 			HttpServletResponse response, PageContext pageContext,
 			MethodData handlerMethod, ModelMap model, Collection command,
 			Class objectType, Validator[] validators,
-			HttpMessageConverter[] messageConverters) throws Exception {
+			HttpMessageConverter[] messageConverters,String paramname) throws Exception {
 		logger.debug("Binding request parameters onto  Controller Parameter Object.");
 		ServletRequestDataBinder binder = createBinder(request, command,
-				objectType, (BindingResult) model.getErrors());
+				objectType, (BindingResult) model.getErrors(), paramname);
 
 		binder.bind(request, response, pageContext, handlerMethod, model,
 				messageConverters);
@@ -2734,9 +2735,9 @@ public abstract class HandlerUtils {
 
 	public static ServletRequestDataBinder createBinder(
 			HttpServletRequest request, Collection command, Class objecttype,
-			BindingResult bindingResult) throws Exception {
+			BindingResult bindingResult,String paramname) throws Exception {
 		ServletRequestDataBinder binder = new ServletRequestDataBinder(command,
-				getCommandName(command), objecttype);
+				getCommandName(command), objecttype, paramname);
 		binder.setBindingResult(bindingResult);
 		// bindingResult.pushNestedPath(command.getClass().getName());
 		// initBinder(request, binder);

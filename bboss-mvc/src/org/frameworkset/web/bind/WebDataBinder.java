@@ -112,11 +112,12 @@ public class WebDataBinder  {//extends DataBinder {
 		this.objectName = objectName;
 	}
 	
-	public WebDataBinder(Collection target, String objectName,Class objectType) {
+	public WebDataBinder(Collection target, String objectName,Class objectType,String paramname) {
 //		super(target, objectName);
 		this.targetContainer = target;
 		this.objectName = objectName;
 		this.objectType = objectType; 
+		this.paramName = paramname;
 	}
 	public WebDataBinder(Map target, String mapKeyName,Class mapKeyType,String objectName,Class objectType) {
 //		super(target, objectName);
