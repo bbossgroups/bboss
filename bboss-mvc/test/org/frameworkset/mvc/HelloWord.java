@@ -274,10 +274,10 @@ public class HelloWord
 	}
 	
 	
-	public String sayHelloStringList(@RequestParam(name = "name") List yourname, ModelMap model)
+	public String sayHelloStringList( List name, ModelMap model)
 	{
 
-		model.addAttribute("serverHelloListBean", yourname);
+		model.addAttribute("serverHelloListBean", name);
 
 		return "path:sayHello";
 	}
