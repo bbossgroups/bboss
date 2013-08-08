@@ -440,6 +440,7 @@ public class WebDataBinder  {//extends DataBinder {
 		CallHolder holder = new CallHolder();
 		holder.isCollection =  true;
 		
+
 		if(holder.isCollection)//集合类型（List,Map）,如果没有数据记录，则直接返回，修复没有数据情况下返回一条空记录的问题
 		{
 		
@@ -483,6 +484,7 @@ public class WebDataBinder  {//extends DataBinder {
 			
 		
 		
+
 
 
 		
