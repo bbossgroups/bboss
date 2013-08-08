@@ -201,9 +201,16 @@ public class WebDataBinder  {//extends DataBinder {
 					 handlerMethod, model,this.getTarget(),messageConverters);
 		else
 		{
-//			Object target = this.getTarget();
-			createTransferObject( request, response, pageContext,
-					 handlerMethod, model,this.getTarget(),messageConverters);
+			Object target = this.getTarget();
+			if(target != null) //集合指定泛型类型并且泛型类型为po对象
+			{
+				createTransferObject( request, response, pageContext,
+						 handlerMethod, model,target,messageConverters);
+			}
+			else //集合指定泛型类型并且泛型类型为基础对象，或者集合没有指定泛型类型
+			{
+				
+			}
 //			BeanInfo beanInfo = null;
 //			try {
 //				beanInfo = Introspector.getBeanInfo(this.objectType);
@@ -404,6 +411,171 @@ public class WebDataBinder  {//extends DataBinder {
 		public SimpleDateFormat getDateformat(String name) {
 			return this.dateformats.get(name);
 		}
+
+		
+		
+	}
+	
+	
+	/**
+	 * added by biaoping.yin 2005.8.13
+	 * 集合对应的泛型是基础数据类型/枚举类型/附件类型 或者没有指定类型
+	 */
+	public  void createTransferObject(
+			HttpServletRequest request,HttpServletResponse response,PageContext pageContext,
+			MethodData handlerMethod,ModelMap model,HttpMessageConverter[] messageConverters)
+	{		
+//		BeanInfo beanInfo = null;
+//		try {
+//			beanInfo = Introspector.getBeanInfo(whichToVO.getClass());
+//			
+//		} catch (Exception e) {
+//			model.getErrors().reject("createTransferObject.getBeanInfo.error",whichToVO.getClass().getCanonicalName() + ":"+e.getMessage());
+////			throw new PropertyAccessException(new PropertyChangeEvent(whichToVO, "",
+////				     null, null),"获取bean 信息失败",e);
+//			return ;
+//		} 
+//		ClassInfo beanInfo = ClassUtil.getClassInfo(whichToVO.getClass());
+		CallHolder holder = new CallHolder();
+		holder.isCollection =  true;
+		
+		Object mapKey = null;
+		if(holder.isCollection)//集合类型（List,Map）,如果没有数据记录，则直接返回，修复没有数据情况下返回一条空记录的问题
+		{
+			boolean hasdata = false;
+		
+				
+				String name = property.getName();
+				
+				Class type = property.getPropertyType();
+				if(!HandlerUtils.isMultipartFile(type))
+				{
+					String[] values = request.getParameterValues(name);
+					
+					if(values != null && values.length > 0)
+					{
+						hasdata = true;
+						break;
+					}
+				}
+				else
+				{
+					if(!HandlerUtils.isIgnoreFieldNameMultipartFile(type))
+					{
+						if(request instanceof MultipartHttpServletRequest)
+						{
+							MultipartFile[] values = ((MultipartHttpServletRequest)request).getFiles(name);
+							if(values != null && values.length > 0)
+							{
+								hasdata = true;
+								break;
+							}
+						}
+					}
+					else
+					{
+						if(request instanceof MultipartHttpServletRequest)
+						{
+							MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest)request;
+							MultipartFile[] values = multipartRequest.getFirstFieldFiles();
+							if(values != null && values.length > 0)
+							{
+								hasdata = true;
+								break;
+							}
+//							Iterator<String> filenames = multipartRequest.getFileNames();
+//							if(filenames == null)
+//								break;
+//							while(filenames.hasNext())
+//							{
+//								MultipartFile[] values = multipartRequest.getFiles(filenames.next());
+//								
+//								if(values != null && values.length > 0)
+//								{
+//									hasdata = true;
+//									break;
+//								}
+//							}
+						}
+					}
+					
+				}
+				if(!hasdata)
+					return;
+				
+			}
+			
+			
+		
+		do
+		{
+			if(holder.getPosition() > 0)
+				try {
+					whichToVO = HandlerUtils.newCommandObject(objectType);
+				} catch (Exception e1) {
+					e1.printStackTrace();
+					break;
+				}
+			
+			
+			for(int in = 0; attributes != null && in < attributes.size(); in ++)
+			{
+				PropertieDescription property = attributes.get(in);
+				if(!property.canwrite())
+				{
+					continue;
+				}
+//				Method writeMethod = property.getWriteMethod();
+//				if(writeMethod == null)
+//					continue;
+				
+				Object value = null;
+				try {
+
+					value = HandlerUtils.buildPropertyValue(property, request, response, pageContext, 
+							handlerMethod, model, messageConverters, holder,whichToVO.getClass());
+					if(this.mapKeyName != null && this.mapKeyName.equals(property.getName()))//如果是map对象绑定，则需要设置map key的值
+						mapKey = ValueObjectUtil.typeCast(value, this.mapKeyType);
+//					writeMethod.invoke(whichToVO, new Object[]{value});
+					property.setValue(whichToVO, value);
+					
+				} catch (IllegalArgumentException e) {
+					//rejectValue(String field, String errorCode, String[] rejectvalue,Class fieldtype,String defaultMessage);
+//						model.getErrors().rejectValue(property.getName(), "buildPropertyValue.error",e.getMessage());
+					model.getErrors().rejectValue(property.getName(), "buildPropertyValue.error", String.valueOf(value),property.getPropertyType(),null);
+//						return ValueObjectUtil.getDefaultValue(property.getPropertyType());
+//						throw new PropertyAccessException(new PropertyChangeEvent(whichToVO, property.getName(),
+//							     null,null),"设置属性失败",e);
+				} catch (IllegalAccessException e) {
+					
+//						throw new PropertyAccessException(new PropertyChangeEvent(whichToVO, property.getName(),
+//							     null, null),"设置属性失败",e);
+//						model.getErrors().rejectValue(property.getName(), "buildPropertyValue.error",e.getMessage());
+					model.getErrors().rejectValue(property.getName(), "buildPropertyValue.error", String.valueOf(value),property.getPropertyType(),null);
+				} catch (InvocationTargetException e) {
+					
+//						throw new PropertyAccessException(new PropertyChangeEvent(whichToVO, property.getName(),
+//							     null, null),"设置属性失败",e);
+//						model.getErrors().rejectValue(property.getName(), "buildPropertyValue.error",e.getMessage());
+					model.getErrors().rejectValue(property.getName(), "buildPropertyValue.error", String.valueOf(value),property.getPropertyType(),null);
+				} catch (Exception e) {
+					e.printStackTrace();
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//						model.getErrors().rejectValue(property.getName(), "buildPropertyValue.error",e.getMessage());
+					model.getErrors().rejectValue(property.getName(), "buildPropertyValue.error", String.valueOf(value),property.getPropertyType(),null);
+				}
+			}
+			if(holder.isCollection())
+			{
+				if(targetContainer != null )
+					targetContainer.add(whichToVO);
+				else if(mapKey != null)
+					this.targetMapContainer.put(mapKey, whichToVO);
+				holder.increamentPosition();
+			}
+		}while(this.isCollection() && !holder.lasted() );
+
 
 		
 		
@@ -664,9 +836,19 @@ public class WebDataBinder  {//extends DataBinder {
 	private Object getTarget() throws Exception {
 		if(this.targetContainer == null && this.targetMapContainer == null)
 			return target;
-		else
+		else if(objectType != null )//应该没有问题
 		{
-			return HandlerUtils.newCommandObject(objectType);
+			if(!ValueObjectUtil.isBasePrimaryType(objectType) 
+					&& !HandlerUtils.isMultipartFile(objectType))
+				return HandlerUtils.newCommandObject(objectType);
+			else //集合对应的泛型是基础数据类型/枚举类型/附件类型
+			{
+				return null;
+			}
+		}
+		else //是集合但是集合没有指定泛型
+		{
+			return null;
 		}
 	}
 

@@ -60,6 +60,7 @@ import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
@@ -5306,6 +5307,11 @@ public class ValueObjectUtil {
     	}
     	return false;
     	
+    }
+    
+    public static boolean isCollectionType(Class type)
+    {
+    	return Collection.class.isAssignableFrom(type);
     }
 	
 }

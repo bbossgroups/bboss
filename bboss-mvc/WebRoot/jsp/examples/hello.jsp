@@ -525,7 +525,7 @@
 			</form>
 			
 			<h3>
-				Hello World List<PO> bind  Example.
+				Hello World List PO bind  Example.
 			</h3>
 			<form action="sayHelloBeanList.page" method="post">
 			<pg:dtoken/>
@@ -575,6 +575,76 @@
 							来自服务器的问候：
 							<pg:list requestKey="serverHelloListBean" >
 							    <pg:cell colName="name"/>
+								<pg:equal expression="{rowid} + {offset}" expressionValue="{rowcount}-1">总记录最后一行</pg:equal>
+								
+								<pg:equal expression="{rowid}" expressionValue="{pagesize}-1">当页数据最后一行</pg:equal>
+								页面记录数：<pg:pagesize/>
+							</pg:list>
+						</td>
+						
+
+						
+					</tr>
+					<tr>
+						<td><input type="submit" name="确定" value="确定"></td>						
+					</tr>
+				</tbody>
+			</table>
+				
+			</form>
+			
+			
+			<h3>
+				Hello World List String bind  Example.
+			</h3>
+			<form action="sayHelloStringList.page" method="post">
+			<pg:dtoken/>
+			<table cellspacing="0" >
+				<tbody>
+					<tr>
+						
+						
+
+						<td>
+							请输入您的名字：
+						<input name="name" type="text">
+						</td>
+					</tr>
+					
+					<tr>
+						
+						
+
+						<td>
+							请输入您的名字：
+						<input name="name" type="text">
+						</td>
+					</tr>
+					
+					<tr>
+						
+						
+
+						<td>
+							请输入您的名字：
+						<input name="name" type="text">
+						</td>
+					</tr>
+					
+					<tr>
+						
+						
+
+						<td>
+							请输入您的名字：
+						<input name="name" type="text">
+						</td>
+					</tr>
+					<tr>
+						<td>
+							来自服务器的问候：
+							<pg:list requestKey="serverHelloListBean" >
+							    <pg:cell />
 								<pg:equal expression="{rowid} + {offset}" expressionValue="{rowcount}-1">总记录最后一行</pg:equal>
 								
 								<pg:equal expression="{rowid}" expressionValue="{pagesize}-1">当页数据最后一行</pg:equal>
