@@ -569,6 +569,8 @@ public class ValueObjectUtil {
 	public final static Object typeCast(Object obj, Class toType,String dateformat)
 			throws NoSupportTypeCastException, NumberFormatException,
 			IllegalArgumentException {
+		if(toType == null)
+			return obj;
 		if (obj == null)
 			return null;
 		return typeCast(obj, obj.getClass(), toType,dateformat);
@@ -4632,6 +4634,7 @@ public class ValueObjectUtil {
 //		System.out.println();
 		System.out.println(ValueObjectUtil.typecompare(0,"0"));
 		System.out.println(ValueObjectUtil.typecompare(0,0));
+		Class clazz = List.class; 
 //		try {
 //			Test[] temp = ValueObjectUtil.convertStringsToEnumArray(new String[]{"A","B","C"}, Test.class);
 //			System.out.println(temp.getClass().getComponentType());
@@ -5328,6 +5331,67 @@ public class ValueObjectUtil {
 			String v = values[i];
 			targetContainer.add(ValueObjectUtil.typeCast(v, elementType));
 		}
+		
+	}
+	
+	/**
+	 * @param values
+	 * @param targetContainer
+	 * @param objectType
+	 */
+	public static void typeCastCollection(Object values,
+			Collection targetContainer, Class elementType,String dateformat) {
+		if(values == null)
+			return;
+		if(values.getClass().isArray())
+		{
+			for(int i = 0 ;  i < Array.getLength(values);i ++)
+			{
+				Object v = Array.get(values,i);
+				targetContainer.add(ValueObjectUtil.typeCast(v, elementType,dateformat));
+			}
+		}
+		else
+		{
+			targetContainer.add(ValueObjectUtil.typeCast(values, elementType));
+		}
+		
+	}
+	public static Collection createCollection(Class targetContainerType)
+	{
+		if (List.class.isAssignableFrom(targetContainerType)) {
+			List valueto = new java.util.ArrayList();
+			return valueto;
+		}
+		else //if (Set.class.isAssignableFrom(targetContainerType)) 
+		{			
+			Set valueto = new java.util.TreeSet();
+			return valueto;
+		}
+	}
+	/**
+	 * @param values
+	 * @param targetContainer
+	 * @param objectType
+	 */
+	public static Object typeCastCollection(Object values,
+			Class targetContainerType, Class elementType,String dateformat) {
+		if(values == null)
+			return null;
+		Collection targetContainer = createCollection( targetContainerType);
+		if(values.getClass().isArray())
+		{
+			for(int i = 0 ;  i < Array.getLength(values);i ++)
+			{
+				Object v = Array.get(values,i);
+				targetContainer.add(ValueObjectUtil.typeCast(v, elementType,dateformat));
+			}
+		}
+		else
+		{
+			targetContainer.add(ValueObjectUtil.typeCast(values, elementType,dateformat));
+		}
+		return targetContainer;
 		
 	}
 

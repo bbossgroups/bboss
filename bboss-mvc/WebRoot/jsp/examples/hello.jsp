@@ -104,11 +104,11 @@
 					<tr>
 						<td>
 							来自服务器的问候：
-							<pg:empty requestKey="serverHello">
+							<pg:empty requestKey="sayHelloString">
 								没有名字，不问候。
 							</pg:empty>
-							<pg:notempty requestKey="serverHello">
-								<common:request name="serverHello"/>
+							<pg:notempty requestKey="sayHelloString">
+								<common:request name="sayHelloString"/>
 							</pg:notempty>
 						</td>
 					</tr>
@@ -643,7 +643,77 @@
 					<tr>
 						<td>
 							来自服务器的问候：
-							<pg:list requestKey="serverHelloListBean" >
+							<pg:list requestKey="sayHelloStringList" >
+							    <pg:cell />
+								<pg:equal expression="{rowid} + {offset}" expressionValue="{rowcount}-1">总记录最后一行</pg:equal>
+								
+								<pg:equal expression="{rowid}" expressionValue="{pagesize}-1">当页数据最后一行</pg:equal>
+								页面记录数：<pg:pagesize/>
+							</pg:list>
+						</td>
+						
+
+						
+					</tr>
+					<tr>
+						<td><input type="submit" name="确定" value="确定"></td>						
+					</tr>
+				</tbody>
+			</table>
+				
+			</form>
+			
+			
+			<h3>
+				Hello World List int bind  Example.
+			</h3>
+			<form action="sayHelloIntList.page" method="post">
+			<pg:dtoken/>
+			<table cellspacing="0" >
+				<tbody>
+					<tr>
+						
+						
+
+						<td>
+							请输入您的数字：
+						<input name="name" type="text">
+						</td>
+					</tr>
+					
+					<tr>
+						
+						
+
+						<td>
+							请输入您的数字：
+						<input name="name" type="text">
+						</td>
+					</tr>
+					
+					<tr>
+						
+						
+
+						<td>
+							请输入您的数字：
+						<input name="name" type="text">
+						</td>
+					</tr>
+					
+					<tr>
+						
+						
+
+						<td>
+							请输入您的数字：
+						<input name="name" type="text">
+						</td>
+					</tr>
+					<tr>
+						<td>
+							来自服务器的数字问候：
+							<pg:list requestKey="sayHelloIntList" >
 							    <pg:cell />
 								<pg:equal expression="{rowid} + {offset}" expressionValue="{rowcount}-1">总记录最后一行</pg:equal>
 								
@@ -664,7 +734,161 @@
 			</form>
 			
 			<h3>
-				Hello World Map<String,PO> bind  Example.
+				Hello World List int bind  Example with param mapping.
+			</h3>
+			<form action="sayHelloIntListWithNameMapping.page" method="post">
+			<pg:dtoken/>
+			<table cellspacing="0" >
+				<tbody>
+					<tr>
+						
+						
+
+						<td>
+							请输入您的数字：
+						<input name="name" type="text">
+						</td>
+					</tr>
+					
+					<tr>
+						
+						
+
+						<td>
+							请输入您的数字：
+						<input name="name" type="text">
+						</td>
+					</tr>
+					
+					<tr>
+						
+						
+
+						<td>
+							请输入您的数字：
+						<input name="name" type="text">
+						</td>
+					</tr>
+					
+					<tr>
+						
+						
+
+						<td>
+							请输入您的数字：
+						<input name="name" type="text">
+						</td>
+					</tr>
+					<tr>
+						<td>
+							来自服务器的数字问候：
+							<pg:list requestKey="sayHelloIntListWithNameMapping" >
+							    <pg:cell />
+								<pg:equal expression="{rowid} + {offset}" expressionValue="{rowcount}-1">总记录最后一行</pg:equal>
+								
+								<pg:equal expression="{rowid}" expressionValue="{pagesize}-1">当页数据最后一行</pg:equal>
+								页面记录数：<pg:pagesize/>
+							</pg:list>
+						</td>
+						
+
+						
+					</tr>
+					<tr>
+						<td><input type="submit" name="确定" value="确定"></td>						
+					</tr>
+				</tbody>
+			</table>
+				
+			</form>
+			
+			
+			<h3>
+				Hello World List enum bind  Example .
+			</h3>
+			<form action="sayHelloEnumList.page" method="post">
+			<pg:dtoken/>
+			<table cellspacing="0" >
+				<tbody>
+					<tr>
+						
+						
+
+						<td>
+							请输入您的性别：
+						<select name="sex" id="sex">
+							<option value="F">F</option>
+							<option value="M">M</option>
+							<option value="UN">UN</option>
+							</select>
+						</td>
+					</tr>
+					
+					<tr>
+						
+						
+
+						<td>
+							请输入您的性别：
+						<select name="sex" id="sex">
+							<option value="F">F</option>
+							<option value="M">M</option>
+							<option value="UN">UN</option>
+							</select>
+						</td>
+					</tr>
+					
+					<tr>
+						
+						
+
+						<td>
+							请输入您的性别：
+						<select name="sex" id="sex">
+							<option value="F">F</option>
+							<option value="M">M</option>
+							<option value="UN">UN</option>
+							</select>
+						</td>
+					</tr>
+					
+					<tr>
+						
+						
+
+						<td>
+							请输入您的性别：
+						<select name="sex" id="sex">
+							<option value="F">F</option>
+							<option value="M">M</option>
+							<option value="UN">UN</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							来自服务器的性别问候：
+							<pg:list requestKey="sayHelloEnumList" >
+							    <pg:cell />
+								<pg:equal expression="{rowid} + {offset}" expressionValue="{rowcount}-1">总记录最后一行</pg:equal>
+								
+								<pg:equal expression="{rowid}" expressionValue="{pagesize}-1">当页数据最后一行</pg:equal>
+								页面记录数：<pg:pagesize/>
+							</pg:list>
+						</td>
+						
+
+						
+					</tr>
+					<tr>
+						<td><input type="submit" name="确定" value="确定"></td>						
+					</tr>
+				</tbody>
+			</table>
+				
+			</form>
+			<h3>
+				Hello World Map String,PO bind  Example.
 			</h3>
 			<form action="sayHelloBeanMap.page" method="post">
 			<pg:dtoken/>
@@ -741,7 +965,7 @@
 					<tr>
 						<td>
 							来自服务器的问候：
-							<pg:map requestKey="serverHelloMapBean" >
+							<pg:map requestKey="sayHelloBeanMap" >
 									<ul>
 							       <li> mapkey: <pg:mapkey/></li>
 									 <li>name属性值：<pg:cell colName="name"/></li>
@@ -755,6 +979,148 @@
 					</tr>
 					<tr>
 						<td><input type="submit" name="确定" value="确定"></td>						
+					</tr>
+				</tbody>
+			</table>
+				
+			</form>
+			
+			<h3>
+				Hello World Bean with list property bind  Example.
+			</h3>
+			<form action="listExampleBean.page" method="post">
+			<pg:dtoken/>
+			<table cellspacing="0" >
+				<tbody>
+				
+						
+						<tr>
+						
+						
+
+						<td>
+							请输入您的名字：
+						<input name="name" type="text">
+						</td>
+						<td>
+							请输入您的age：
+						<input name="age" type="text">
+						</td>
+					</tr>
+					
+					<tr>
+						
+						
+
+						<td>
+							请输入您的名字：
+						<input name="name" type="text">
+						</td>
+						<td>
+							请输入您的age：
+						<input name="age" type="text">
+						</td>
+					</tr>
+					
+					<tr>
+						
+						
+
+						<td>
+							请输入您的名字：
+						<input name="name" type="text">
+						</td>
+						
+						<td>
+							请输入您的age：
+						<input name="age" type="text">
+						</td>
+					</tr>
+					
+					<tr>
+						
+						
+
+						<td>
+							请输入您的名字：
+						<input name="name" type="text">
+						</td>
+						<td>
+							请输入您的age：
+						<input name="age" type="text">
+						</td>
+					</tr>
+
+						<td>
+							请输入您的名字：
+						<input name="name" type="text">
+						</td>
+						<td>
+							请输入您的age：
+						<input name="age" type="text">
+						</td>
+					</tr>
+					<tr>
+						<td>
+							来自服务器的问候：
+							<pg:beaninfo requestKey="listExampleBean" >
+									<ul>							      
+									 <pg:list colName="name"><li>name属性值：<pg:cell/></li></pg:list>
+									  <pg:list colName="names"><li>names属性值：<pg:cell/></li></pg:list>
+									   <pg:list colName="age"><li>age属性值：<pg:cell/></li></pg:list>
+									   <pg:list colName="ages"><li>ages属性值：<pg:cell/></li></pg:list>
+									</ul>
+							</pg:beaninfo>
+						</td>
+						
+
+						
+					</tr>
+					<tr>
+						<td><input type="submit" name="确定" value="确定"></td>						
+					</tr>
+				</tbody>
+			</table>
+				
+			</form>
+			
+			<h3>
+				Hello World Map String bind  Example.
+			</h3>
+			<form action="sayHelloStringMap.page" method="post">
+			<pg:dtoken/>
+			<table cellspacing="0" >
+				<tbody>
+				
+						
+						
+					<tr>
+						<td>
+							请输入您的名字：
+						<input name="name" type="text">
+						</td>
+						<td>
+							请输入您的性别：
+						<input name="sex" type="text">
+						</td>
+					</tr>
+					<tr>
+						<td>
+							来自服务器的问候：
+							<pg:map requestKey="sayHelloStringMap" >
+									<ul>
+							       <li> mapkey: <pg:mapkey/></li>
+									 <li>value属性值：<pg:cell/></li>
+									
+									</ul>
+							</pg:map>
+						</td>
+						
+
+						
+					</tr>
+					<tr>
+						<td><input type="submit" name="sub" value="确定"></td>						
 					</tr>
 				</tbody>
 			</table>

@@ -523,7 +523,7 @@ public abstract class HandlerUtils {
 		if (methodParameters != null && methodParameters.size() > 0) {
 			return _evaluateMethodArg(methodParameter_, request, response,
 					pageContext, handlerMethod, model, pathVarDatas,
-					validators, messageConverters, type);
+					validators, messageConverters, type,methodInfo);
 		} else {
 			Object paramValue = null;
 			if (List.class.isAssignableFrom(type)) {// 如果是列表数据集
@@ -581,7 +581,7 @@ public abstract class HandlerUtils {
 			HttpServletRequest request, HttpServletResponse response,
 			PageContext pageContext, MethodData handlerMethod, ModelMap model,
 			Map pathVarDatas, Validator[] validators,
-			HttpMessageConverter[] messageConverters, Class type)
+			HttpMessageConverter[] messageConverters, Class type,MethodInfo methodInfo)
 			throws Exception {
 		Object paramValue = null;
 		Object defaultValue = null;
@@ -768,8 +768,18 @@ public abstract class HandlerUtils {
 				try {
 					if (userEditor) {
 						if (editor == null)
-							paramValue = ValueObjectUtil.typeCast(paramValue,
-									type, dateformat);
+						{
+							if(!ValueObjectUtil.isCollectionType(type))
+							{
+								paramValue = ValueObjectUtil.typeCast(paramValue,
+										type, dateformat);
+							}
+							else
+							{
+								Class elementType = methodInfo.getGenericParameterType(methodParameter_.getParameterIndex());
+								paramValue = ValueObjectUtil.typeCastCollection(paramValue, type, elementType, dateformat);
+							}
+						}
 						else
 							paramValue = ValueObjectUtil.typeCast(paramValue,
 									editor);
@@ -1839,7 +1849,7 @@ public abstract class HandlerUtils {
 	private static Object evaluateAnnotationsValue(Annotation[] annotations,
 			Map pathVarDatas, HttpServletRequest request, String name,
 			PageContext pageContext, MethodData handlerMethod, ModelMap model,
-			Class type, CallHolder holder) throws Exception {
+			Class type, CallHolder holder,Class elementType) throws Exception {
 		Object value = null;
 		boolean required = false;
 		EditorInf editor = null;
@@ -2030,7 +2040,16 @@ public abstract class HandlerUtils {
 		if (useEditor) {
 			try {
 				if (editor == null)
-					value = ValueObjectUtil.typeCast(value, type, dateformat);
+				{
+					if(!ValueObjectUtil.isCollectionType(type))
+					{
+						value = ValueObjectUtil.typeCast(value, type, dateformat);
+					}
+					else
+					{						
+						value = ValueObjectUtil.typeCastCollection(value, type, elementType, dateformat);	
+					}
+				}
 				else
 					value = ValueObjectUtil.typeCast(value, editor);
 			} catch (Exception e) {
@@ -2552,9 +2571,10 @@ public abstract class HandlerUtils {
 			} else {
 				Annotation[] annotations = field.getAnnotations();
 				try {
+					Class ct = ValueObjectUtil.isCollectionType(type)?property.getPropertyGenericType():null;// 获取元素类型
 					value = evaluateAnnotationsValue(annotations, pathVarDatas,
 							request, name, pageContext, handlerMethod, model,
-							type, holder);
+							type, holder,ct);
 					useEditor = false;
 					return value;
 				} catch (Exception e) {
@@ -2569,7 +2589,11 @@ public abstract class HandlerUtils {
 		if (useEditor) {
 			try {
 				if (editor == null)
+				{
+					
 					value = ValueObjectUtil.typeCast(value, type);
+					
+				}
 				else
 					value = ValueObjectUtil.typeCast(value, editor);
 			} catch (Exception e) {

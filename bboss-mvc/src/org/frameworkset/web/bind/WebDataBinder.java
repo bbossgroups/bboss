@@ -211,7 +211,9 @@ public class WebDataBinder  {//extends DataBinder {
 			}
 			else //集合指定泛型类型并且泛型类型为基础对象，或者集合没有指定泛型类型
 			{
-				
+				createTransferObject(
+						 request, response, pageContext,
+						 handlerMethod, model, messageConverters);
 			}
 //			BeanInfo beanInfo = null;
 //			try {
@@ -749,7 +751,7 @@ public class WebDataBinder  {//extends DataBinder {
 			return target;
 		else if(objectType != null )//应该没有问题
 		{
-			if(!ValueObjectUtil.isBasePrimaryType(objectType) 
+			if(!ValueObjectUtil.isPrimaryType(objectType) 
 					&& !HandlerUtils.isMultipartFile(objectType))
 				return HandlerUtils.newCommandObject(objectType);
 			else //集合对应的泛型是基础数据类型/枚举类型/附件类型
