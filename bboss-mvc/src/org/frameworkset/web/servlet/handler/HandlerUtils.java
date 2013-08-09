@@ -150,6 +150,7 @@ public abstract class HandlerUtils {
 	public static final String DEFAULT_COMMAND_NAME = "command";
 	public static final String USE_MVC_DENCODE_KEY = "org.frameworkset.web.servlet.handler.HandlerUtils.USE_MVC_DENCODE_KEY";
 	public static final Boolean TRUE = new Boolean(true);
+	public static final PathMatcher pathMatcher = new AntPathMatcher();
 
 	public static boolean isExcludehandleMethod(Class<?> handlerType,
 			Method method) {
@@ -1019,24 +1020,34 @@ public abstract class HandlerUtils {
 				paramValue = model;
 				// userEditor = false;
 			} else if (Map.class.isAssignableFrom(type)) {
-				if (methodParameter == null || methodParameter.getMapKey() == null) {
+				MapKey mapKey = methodParameter.getMapKey();
+				if (methodParameter == null || mapKey == null) {
 					paramValue = buildParameterMaps(request);
-				} else if (methodParameter.getMapKey() != null) {
-					Map command = new HashMap();
-					Class[] ct = methodInfo.getGenericParameterTypes(i);// 获取元素类型
-					if (ct == null) {
-						model.getErrors().rejectValue(
-								methodParameter.getRequestParameterName(),
-								"evaluateAnnotationsValue.error",
-								"没有获取到集合参数对象类型,请检查控制器方法：" + method.getName()
-										+ "是否指定了集合泛型参数。");
-						paramValue = ValueObjectUtil.getDefaultValue(type);
-					} else {
-						bind(request, response, pageContext, handlerMethod,
-								model, command, ct[0], ct[1], methodParameter
-										.getMapKey().value(), validators,
-								messageConverters);
-						paramValue = command;
+				}
+				else if (mapKey != null) 
+				{
+					if(!mapKey.value().equals(""))
+					{
+						Map command = new HashMap();
+						Class[] ct = methodInfo.getGenericParameterTypes(i);// 获取元素类型
+						if (ct == null) {
+							model.getErrors().rejectValue(
+									methodParameter.getRequestParameterName(),
+									"evaluateAnnotationsValue.error",
+									"没有获取到集合参数对象类型,请检查控制器方法：" + method.getName()
+											+ "是否指定了集合泛型参数。");
+							paramValue = ValueObjectUtil.getDefaultValue(type);
+						} else {
+							bind(request, response, pageContext, handlerMethod,
+									model, command, ct[0], ct[1], methodParameter
+											.getMapKey().value(), validators,
+									messageConverters);
+							paramValue = command;
+						}
+					}
+					else
+					{
+						paramValue = buildParameterMaps(request,mapKey.pattern());
 					}
 				}
 			} else if (methodParameter != null) {
@@ -1129,7 +1140,29 @@ public abstract class HandlerUtils {
 		return map;
 
 	}
+	
+	public static Map buildParameterMaps(HttpServletRequest request,String namepattern) {
+		Map map = new HashMap(request.getParameterMap().size());
+		Enumeration<String> enums = request.getParameterNames();
+		while (enums.hasMoreElements()) {
+			String key = enums.nextElement();
+			if(!pathMatcher.match(namepattern, key))
+				continue;
+			String[] parameters = request.getParameterValues(key);
+			if (parameters != null) {
+				if (parameters.length == 1)
+					map.put(key, parameters[0]);
+				else if (parameters.length > 1)
+					map.put(key, parameters);
 
+			}
+		}
+		return map;
+
+	}
+	
+	
+	
 	// public static Object[] buildMethodCallArgs(HttpServletRequest request,
 	// HttpServletResponse response, PageContext pageContext,
 	// MethodData handlerMethod, ModelMap model, Validator[] validators,
@@ -2454,25 +2487,34 @@ public abstract class HandlerUtils {
 					mapKey = field.getAnnotation(MapKey.class);
 				if (mapKey == null) {
 					value = buildParameterMaps(request);
-				} else {
-					Map command = new HashMap();
-
-					Class[] ct = property.getPropertyGenericTypes();// 获取元素类型
-					if (ct == null) {
-						model.getErrors().rejectValue(
-								name,
-								"evaluateAnnotationsValue.error",
-								"没有获取到集合对象类型,请检查属性" + property.getName()
-										+ "或者属性set方法是否指定了集合泛型.");
-						return ValueObjectUtil.getDefaultValue(type);
+				}
+				else 
+				{
+					if(!mapKey.value().equals(""))
+					{
+						Map command = new HashMap();
+	
+						Class[] ct = property.getPropertyGenericTypes();// 获取元素类型
+						if (ct == null) {
+							model.getErrors().rejectValue(
+									name,
+									"evaluateAnnotationsValue.error",
+									"没有获取到集合对象类型,请检查属性" + property.getName()
+											+ "或者属性set方法是否指定了集合泛型.");
+							return ValueObjectUtil.getDefaultValue(type);
+						}
+						// MapKey mapKey = field.getAnnotation(MapKey.class);
+						bind(request, response, pageContext, handlerMethod, model,
+								command, ct[0], ct[1], mapKey.value(), null,
+								messageConverters);
+						value = command;
+						if (holder.needAddData()) {
+							holder.addData(name, value);
+						}
 					}
-					// MapKey mapKey = field.getAnnotation(MapKey.class);
-					bind(request, response, pageContext, handlerMethod, model,
-							command, ct[0], ct[1], mapKey.value(), null,
-							messageConverters);
-					value = command;
-					if (holder.needAddData()) {
-						holder.addData(name, value);
+					else
+					{
+						value = buildParameterMaps(request,mapKey.pattern());
 					}
 				}
 				useEditor = false;

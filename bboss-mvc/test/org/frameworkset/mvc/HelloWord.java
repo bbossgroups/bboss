@@ -314,6 +314,14 @@ public class HelloWord
 		model.addAttribute("sayHelloStringMap", params);
 		return "path:sayHello";
 	}
+	
+	public String sayHelloStringMapWithFilter(@MapKey(pattern="pre.cc.*",value="") Map params,
+			ModelMap model)
+	{
+
+		model.addAttribute("sayHelloStringMap", params);
+		return "path:sayHello";
+	}
 
 	public String sayHelloArray(
 			@RequestParam(name = "name") String[] yournames, ModelMap model)
