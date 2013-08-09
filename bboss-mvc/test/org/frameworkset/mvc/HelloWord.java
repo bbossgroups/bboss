@@ -315,11 +315,17 @@ public class HelloWord
 		return "path:sayHello";
 	}
 	
-	public String sayHelloStringMapWithFilter(@MapKey(pattern="pre.cc.*",value="") Map params,
+	/**
+	 * 补充mapkey注解pattern属性的测试用例：
+	 * @param params
+	 * @param model
+	 * @return
+	 */
+	public String sayHelloStringMapWithFilter(@MapKey(pattern="pre.cc.*") Map params,
 			ModelMap model)
 	{
 
-		model.addAttribute("sayHelloStringMap", params);
+		model.addAttribute("sayHelloStringMapWithFilter", params);
 		return "path:sayHello";
 	}
 

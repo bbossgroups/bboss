@@ -1128,6 +1128,60 @@
 			</form>
 			
 			<h3>
+				Hello World Map String with pattern bind  Example.
+			</h3>
+			<form action="sayHelloStringMapWithFilter.page" method="post">
+			<pg:dtoken/>
+			<table cellspacing="0" >
+				<tbody>
+				
+						
+						
+					<tr>
+						<td>
+							请输入您的名字：
+						<input name="name" type="text">
+						</td>
+						<td>
+							请输入您的性别：
+						<input name="sex" type="text">
+						</td>
+						
+						<td>
+							请输入您的模式名：
+						<input name="pre.cc.name" type="text">
+						</td>
+						
+						
+						<td>
+							请输入您的模式性别：
+						<input name="pre.cc.sex" type="text">
+						</td>
+					</tr>
+					<tr>
+						<td>
+							来自服务器的问候：
+							<pg:map requestKey="sayHelloStringMapWithFilter" >
+									<ul>
+							       <li> mapkey: <pg:mapkey/></li>
+									 <li>value属性值：<pg:cell/></li>
+									
+									</ul>
+							</pg:map>
+						</td>
+						
+
+						
+					</tr>
+					<tr>
+						<td><input type="submit" name="sub" value="确定"></td>						
+					</tr>
+				</tbody>
+			</table>
+				
+			</form>
+			
+			<h3>
 				Hello World Array bind  Example.
 			</h3>
 			<form action="sayHelloArray.page" method="post">
