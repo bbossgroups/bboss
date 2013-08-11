@@ -38,5 +38,6 @@ import java.lang.annotation.Target;
 @Documented
 public @interface MapKey
 {
-	String value() ;
+	String value() default "";
+	String pattern() default "";
 }

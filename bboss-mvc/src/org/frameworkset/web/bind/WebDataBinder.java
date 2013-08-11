@@ -56,6 +56,7 @@ public class WebDataBinder  {//extends DataBinder {
 
 	private  String objectName;
 	private Class objectType;
+	private String paramName;
 	
 	private BindingResult bindingResult;
 
@@ -111,11 +112,12 @@ public class WebDataBinder  {//extends DataBinder {
 		this.objectName = objectName;
 	}
 	
-	public WebDataBinder(Collection target, String objectName,Class objectType) {
+	public WebDataBinder(Collection target, String objectName,Class objectType,String paramname) {
 //		super(target, objectName);
 		this.targetContainer = target;
 		this.objectName = objectName;
 		this.objectType = objectType; 
+		this.paramName = paramname;
 	}
 	public WebDataBinder(Map target, String mapKeyName,Class mapKeyType,String objectName,Class objectType) {
 //		super(target, objectName);
@@ -201,9 +203,18 @@ public class WebDataBinder  {//extends DataBinder {
 					 handlerMethod, model,this.getTarget(),messageConverters);
 		else
 		{
-//			Object target = this.getTarget();
-			createTransferObject( request, response, pageContext,
-					 handlerMethod, model,this.getTarget(),messageConverters);
+			Object target = this.getTarget();
+			if(target != null) //集合指定泛型类型并且泛型类型为po对象
+			{
+				createTransferObject( request, response, pageContext,
+						 handlerMethod, model,target,messageConverters);
+			}
+			else //集合指定泛型类型并且泛型类型为基础对象，或者集合没有指定泛型类型
+			{
+				createTransferObject(
+						 request, response, pageContext,
+						 handlerMethod, model, messageConverters);
+			}
 //			BeanInfo beanInfo = null;
 //			try {
 //				beanInfo = Introspector.getBeanInfo(this.objectType);
@@ -404,6 +415,80 @@ public class WebDataBinder  {//extends DataBinder {
 		public SimpleDateFormat getDateformat(String name) {
 			return this.dateformats.get(name);
 		}
+
+		
+		
+	}
+	
+	
+	/**
+	 * added by biaoping.yin 2005.8.13
+	 * 集合对应的泛型是基础数据类型/枚举类型/附件类型 或者没有指定类型
+	 */
+	public  void createTransferObject(
+			HttpServletRequest request,HttpServletResponse response,PageContext pageContext,
+			MethodData handlerMethod,ModelMap model,HttpMessageConverter[] messageConverters)
+	{		
+//		BeanInfo beanInfo = null;
+//		try {
+//			beanInfo = Introspector.getBeanInfo(whichToVO.getClass());
+//			
+//		} catch (Exception e) {
+//			model.getErrors().reject("createTransferObject.getBeanInfo.error",whichToVO.getClass().getCanonicalName() + ":"+e.getMessage());
+////			throw new PropertyAccessException(new PropertyChangeEvent(whichToVO, "",
+////				     null, null),"获取bean 信息失败",e);
+//			return ;
+//		} 
+//		ClassInfo beanInfo = ClassUtil.getClassInfo(whichToVO.getClass());
+		CallHolder holder = new CallHolder();
+		holder.isCollection =  true;
+		
+
+		if(holder.isCollection)//集合类型（List,Map）,如果没有数据记录，则直接返回，修复没有数据情况下返回一条空记录的问题
+		{
+		
+				
+				if(this.objectType == null)
+				{
+					String[] values = request.getParameterValues(this.paramName);
+					
+					if(values != null && values.length > 0)
+					{
+						for(int i = 0; i < values.length; i ++)
+						{
+							this.targetContainer.add(values[i]);
+						}
+					}
+				}
+				else if(HandlerUtils.isMultipartFile(objectType))
+				
+				{
+					MultipartFile[] values = ((MultipartHttpServletRequest)request).getFiles(paramName);
+					if(values != null && values.length > 0)
+					{
+						for(int i = 0; i < values.length; i ++)
+						{
+							this.targetContainer.add(values[i]);
+						}
+					}
+				}
+				else
+				{
+					String[] values = request.getParameterValues(this.paramName);
+					if(values != null && values.length > 0)
+						 ValueObjectUtil.typeCastCollection(values,targetContainer,
+								this.objectType);
+				}
+				
+				
+				
+			}
+			
+			
+		
+		
+
+
 
 		
 		
@@ -664,9 +749,19 @@ public class WebDataBinder  {//extends DataBinder {
 	private Object getTarget() throws Exception {
 		if(this.targetContainer == null && this.targetMapContainer == null)
 			return target;
-		else
+		else if(objectType != null )//应该没有问题
 		{
-			return HandlerUtils.newCommandObject(objectType);
+			if(!ValueObjectUtil.isPrimaryType(objectType) 
+					&& !HandlerUtils.isMultipartFile(objectType))
+				return HandlerUtils.newCommandObject(objectType);
+			else //集合对应的泛型是基础数据类型/枚举类型/附件类型
+			{
+				return null;
+			}
+		}
+		else //是集合但是集合没有指定泛型
+		{
+			return null;
 		}
 	}
 

@@ -587,7 +587,10 @@ public class MethodInfo {
 				}
 				else
 				{
-					return null;
+					MethodParameter temp = new MethodParameter(method,parampostion);
+					temp.setParameterName(methodparamname);
+					temp.setPrimaryType(isprimary);
+					return temp;
 				}
 				
 			}
@@ -677,9 +680,19 @@ public class MethodInfo {
 					temp.setPrimaryType(isprimary);
 					paramNames[i] = temp;
 				}
+				else if(ValueObjectUtil.isCollectionType(paramTypes[i])  && !methodparamName.equals(""))
+				{
+					MethodParameter temp = new MethodParameter(method,i);
+					temp.setParameterName(methodparamName);
+					temp.setPrimaryType(false);
+					paramNames[i] = temp;
+				}
 				else
 				{
-					paramNames[i] = null;
+					MethodParameter temp = new MethodParameter(method,i);
+					temp.setParameterName(methodparamName);
+					temp.setPrimaryType(false);
+					paramNames[i] = temp;
 				}
 			}
 			else

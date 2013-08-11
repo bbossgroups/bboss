@@ -59,8 +59,8 @@ public class ServletRequestDataBinder  extends WebDataBinder {
 
 
 	public ServletRequestDataBinder(Collection command, String commandName,
-			Class objecttype) {
-		super(command, commandName,objecttype);
+			Class objecttype,String paramname) {
+		super(command, commandName,objecttype, paramname);
 	}
 	//Class mapkeytype,Class objectType,String mapkeyName,
 	public ServletRequestDataBinder(Map command, String commandName,

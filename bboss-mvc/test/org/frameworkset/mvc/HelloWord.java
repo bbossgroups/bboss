@@ -143,9 +143,9 @@ public class HelloWord
 	{
 
 		if (yourname != null && !"".equals(yourname))
-			model.addAttribute("serverHello", "服务器向您[" + yourname + "]问好！");
+			model.addAttribute("sayHelloString", "服务器向您[" + yourname + "]问好！");
 		else
-			model.addAttribute("serverHello", "请输入您的名字！");
+			model.addAttribute("sayHelloString", "请输入您的名字！");
 		return "path:sayHello";
 	}
 
@@ -269,15 +269,40 @@ public class HelloWord
 			@MapKey("name") Map<String, ExampleBean> mapBeans, ModelMap model)
 	{
 
-		model.addAttribute("serverHelloMapBean", mapBeans);
+		model.addAttribute("sayHelloBeanMap", mapBeans);
 		return "path:sayHello";
 	}
 	
 	
-	public String sayHelloStringList(@RequestParam(name = "name") List yourname, ModelMap model)
+	public String sayHelloStringList( List name, ModelMap model)
 	{
 
-		model.addAttribute("serverHelloListBean", yourname);
+		model.addAttribute("sayHelloStringList", name);
+
+		return "path:sayHello";
+	}
+	
+	
+	public String sayHelloIntListWithNameMapping(@RequestParam(name = "name") List<Integer> names, ModelMap model)
+	{
+
+		model.addAttribute("sayHelloIntListWithNameMapping", names);
+
+		return "path:sayHello";
+	}
+	
+	public String sayHelloIntList(List<Integer> name, ModelMap model)
+	{
+
+		model.addAttribute("sayHelloIntList", name);
+
+		return "path:sayHello";
+	}
+	
+	public String sayHelloEnumList(List<SexType> sex, ModelMap model)
+	{
+
+		model.addAttribute("sayHelloEnumList", sex);
 
 		return "path:sayHello";
 	}
@@ -286,7 +311,21 @@ public class HelloWord
 			ModelMap model)
 	{
 
-		model.addAttribute("serverHelloMapBean", params);
+		model.addAttribute("sayHelloStringMap", params);
+		return "path:sayHello";
+	}
+	
+	/**
+	 * 补充mapkey注解pattern属性的测试用例：
+	 * @param params
+	 * @param model
+	 * @return
+	 */
+	public String sayHelloStringMapWithFilter(@MapKey(pattern="pre.cc.*") Map params,
+			ModelMap model)
+	{
+
+		model.addAttribute("sayHelloStringMapWithFilter", params);
 		return "path:sayHello";
 	}
 
@@ -366,6 +405,13 @@ public class HelloWord
 	public String index()
 	{
 
+		return "path:sayHello";
+	}
+	
+	
+	public String listExampleBean(ListExampleBean listExampleBean,ModelMap model)
+	{
+		model.addAttribute("listExampleBean", listExampleBean);
 		return "path:sayHello";
 	}
 }
