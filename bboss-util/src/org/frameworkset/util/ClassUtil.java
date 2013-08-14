@@ -31,6 +31,7 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.frameworkset.soa.annotation.ExcludeField;
+import org.frameworkset.util.annotations.RequestParam;
 
 import com.frameworkset.util.ValueObjectUtil;
 
@@ -57,6 +58,31 @@ public class ClassUtil
 	{
 		return parameterNameDiscoverer;
 	}
+	
+	public static class Var
+	{
+		private boolean isvar ;
+		private int position;
+		private String name;
+		public int getPosition() {
+			return position;
+		}
+		public void setPosition(int position) {
+			this.position = position;
+		}
+		public String getName() {
+			return name;
+		}
+		public void setName(String name) {
+			this.name = name;
+		}
+		public boolean isIsvar() {
+			return isvar;
+		}
+		public void setIsvar(boolean isvar) {
+			this.isvar = isvar;
+		}
+	}
 	public static class PropertieDescription
 	{
 		private Class propertyType;		
@@ -68,6 +94,15 @@ public class ClassUtil
 		private boolean canwrite = false;
 		private boolean canread = false;
 		private boolean canseriable = true;
+		private Class[] writeMethodPropertyGenericType;
+		private Class propertyGenericType;
+		private Annotation[] annotations;
+		private String requestParamName;
+		/**
+		 * 参数名称由常量和变量部分组成，变量var中包含了变量对应的request参数名称和变量在整个参数名称中所处的位置
+		 */
+		private List<Var> requestParamNameToken;
+		
 		
 		private boolean oldAccessible = false;
 		public PropertieDescription(Class propertyType,Field field, Method writeMethod,Method readMethod,
@@ -134,31 +169,130 @@ public class ClassUtil
 				canseriable = false;
 			}
 			
+			if(this.writeMethod != null)
+			{
+				this.writeMethodPropertyGenericType = ClassUtils.getPropertyGenericTypes(writeMethod);
+			}
+			else if(field != null)
+			{
+				this.writeMethodPropertyGenericType =  ClassUtils.genericTypes(this.field);
+			}
+			
+			if(this.writeMethod != null)
+			{
+				this.propertyGenericType = ClassUtils.getPropertyGenericType(this.writeMethod);
+			}
+			else if(this.field != null)
+			{
+				this.propertyGenericType = ClassUtils.genericType(this.field);
+			}
+			if(this.field != null)
+			{
+				annotations = this.field.getAnnotations();
+				initParam();
+			}
+			
 				
+		}
+		
+		private void initParam()
+		{
+			if(this.annotations == null || this.annotations.length == 0)
+				return;
+			for(int i = 0; i < this.annotations.length; i ++)
+			{
+				Annotation a = this.annotations[i];
+				if(a instanceof RequestParam)
+				{
+					RequestParam rp = (RequestParam)a;
+					if(rp.name() == null || rp.name().equals(""))
+					{
+						break;
+					}
+					String name = rp.name();
+					int vstart = name.indexOf("${");
+					if(vstart  < 0)
+					{
+						this.requestParamName = name;
+					}
+					else
+					{
+						Var var = new Var();
+						if(vstart == 0)
+						{
+							
+							
+							var.setIsvar(true);
+							int end = name.indexOf("}");
+							var.setName(name.substring(2,end));
+							this.requestParamNameToken.add(var);
+							if(end == name.length() - 1)
+							{
+								break;
+							}
+							else
+							{
+								var = new Var();
+								
+								var.setName(name.substring(end + 1));
+								this.requestParamNameToken.add(var);
+							}
+							
+						}
+						else
+						{
+							
+							var.setName(name.substring(0,vstart));
+							this.requestParamNameToken.add(var);
+							int end = name.indexOf("}");
+							var = new Var();
+							var.setIsvar(true);
+							var.setName(name.substring(vstart + 2,end));
+							this.requestParamNameToken.add(var);
+							if(end == name.length() - 1)
+							{
+								break;
+							}
+							else
+							{
+								var = new Var();								
+								var.setName(name.substring(end + 1));
+								this.requestParamNameToken.add(var);
+							}
+						}
+						
+						
+					}
+					break;
+					
+				}
+			}
 		}
 		
 		public Class[] getPropertyGenericTypes()
 		{
-			if(this.writeMethod != null)
-			{
-				return ClassUtils.getPropertyGenericTypes(writeMethod);
-			}
-			else
-			{
-				return ClassUtils.genericTypes(this.field);
-			}
+//			if(this.writeMethod != null)
+//			{
+//				return ClassUtils.getPropertyGenericTypes(writeMethod);
+//			}
+//			else
+//			{
+//				return ClassUtils.genericTypes(this.field);
+//			}
+			return writeMethodPropertyGenericType;
 		}
 		
 		public Class getPropertyGenericType()
 		{
-			if(this.writeMethod != null)
-			{
-				return ClassUtils.getPropertyGenericType(writeMethod);
-			}
-			else
-			{
-				return ClassUtils.genericType(this.field);
-			}
+//			if(this.writeMethod != null)
+//			{
+//				return ClassUtils.getPropertyGenericType(writeMethod);
+//			}
+//			else
+//			{
+//				return ClassUtils.genericType(this.field);
+//			}
+			return this.propertyGenericType;
 		}
 		
 		public <T extends Annotation> T findAnnotation(Class<T> type)
@@ -170,9 +304,10 @@ public class ClassUtil
 		
 		public Annotation[] findAnnotations()
 		{
-			if(this.field != null)
-				return this.field.getAnnotations();
-			return null;
+//			if(this.field != null)
+//				return this.field.getAnnotations();
+//			return null;
+			return annotations;
 		}
 		
 		public boolean canread()
@@ -255,6 +390,19 @@ public class ClassUtil
 		public void setReadMethod(Method readMethod) {
 			this.readMethod = readMethod;
 		}
+
+		public String getRequestParamName() {
+			return requestParamName;
+		}
+
+		public Annotation[] getAnnotations() {
+			return annotations;
+		}
+
+		public List<Var> getRequestParamNameToken() {
+			return requestParamNameToken;
+		}
+
 	}
 	public static class ClassInfo
 	{
