@@ -83,10 +83,8 @@
 			</table>
 				
 			</form>
-	
-		
 			<h3>
-				Hello World String bind Example.
+				Hello World String  bind Example.
 			</h3>
 			<form action="sayHelloString.page" method="post">
 			<pg:dtoken/>
@@ -97,6 +95,7 @@
 						
 
 						<td>
+						
 							请输入您的名字：
 						<input name="name" type="text">
 						</td>
@@ -109,6 +108,42 @@
 							</pg:empty>
 							<pg:notempty requestKey="sayHelloString">
 								<common:request name="sayHelloString"/>
+							</pg:notempty>
+						</td>
+					</tr>
+					<tr>
+						<td><input type="submit" name="确定" value="确定"></td>						
+					</tr>
+				</tbody>
+			</table>
+				
+			</form>
+		
+			<h3>
+				Hello World String with name variable bind Example.
+			</h3>
+			<form action="sayHelloStringVar.page" method="post">
+			<pg:dtoken/>
+			<table cellspacing="0" >
+				<tbody>
+					<tr>
+						
+						
+
+						<td>
+						<input name="id" value="0" type="hidden"/>
+							请输入您的名字：
+						<input name="name0" type="text">
+						</td>
+					</tr>
+					<tr>
+						<td>
+							来自服务器的问候：
+							<pg:empty requestKey="sayHelloStringVar">
+								没有名字，不问候。
+							</pg:empty>
+							<pg:notempty requestKey="sayHelloStringVar">
+								<common:request name="sayHelloStringVar"/>
 							</pg:notempty>
 						</td>
 					</tr>
@@ -264,8 +299,24 @@
 						
 
 						<td>
+						<input name="id" type="hidden" value="0">
 							请输入您的名字：
 						<input name="name" type="text">
+						</td>
+						
+						
+					</tr>
+					
+					<tr>
+						
+						
+
+						<td>
+						
+							喜好：
+						<input name="favovate0" type="radio" checked="true"  value="0"> 乒乓球
+						<input name="favovate0" type="radio" value="1"> 篮球
+						<input name="favovate0" type="radio" value="2"> 排球
 						</td>
 						
 						
@@ -277,7 +328,12 @@
 								没有名字，不问候。
 							</pg:null>
 							<pg:notnull actual="${serverHelloBean}">
-								<common:request name="serverHelloBean" property="name"/>
+								<pg:beaninfo requestKey="serverHelloBean" >
+									姓名：<pg:cell colName="name"/>
+									爱好：<pg:equal colName="favovate" value="0">乒乓球</pg:equal>
+									<pg:equal colName="favovate" value="1">篮球</pg:equal>
+									<pg:equal colName="favovate" value="2">排球</pg:equal>
+								</pg:beaninfo>
 							</pg:notnull>
 							
 						</td>
@@ -285,6 +341,8 @@
 
 						
 					</tr>
+					
+					
 					<tr>
 						<td><input type="submit" name="确定" value="确定"></td>						
 					</tr>
@@ -536,9 +594,24 @@
 						
 
 						<td>
+						<input name="id" type="hidden" value="0">
 							请输入您的名字：
 						<input name="name" type="text">
 						</td>
+					</tr>
+					<tr>
+						
+						
+
+						<td>
+						
+							喜好：
+						<input name="favovate0" type="radio" checked="true"  value="0"> 乒乓球
+						<input name="favovate0" type="radio" value="1"> 篮球
+						<input name="favovate0" type="radio" value="2"> 排球
+						</td>
+						
+						
 					</tr>
 					
 					<tr>
@@ -546,39 +619,81 @@
 						
 
 						<td>
+						<input name="id" type="hidden" value="1">
 							请输入您的名字：
 						<input name="name" type="text">
 						</td>
 					</tr>
-					
+					<tr>
+						
+						
+
+						<td>
+						
+							喜好：
+						<input name="favovate1" type="radio" checked="true"  value="0"> 乒乓球
+						<input name="favovate1" type="radio" value="1"> 篮球
+						<input name="favovate1" type="radio" value="2"> 排球
+						</td>
+						
+						
+					</tr>
 					<tr>
 						
 						
 
 						<td>
 							请输入您的名字：
+							<input name="id" type="hidden" value="2">
 						<input name="name" type="text">
 						</td>
 					</tr>
-					
+					<tr>
+						
+						
+
+						<td>
+						
+							喜好：
+						<input name="favovate2" type="radio" checked="true"  value="0"> 乒乓球
+						<input name="favovate2" type="radio" value="1"> 篮球
+						<input name="favovate2" type="radio" value="2"> 排球
+						</td>
+						
+						
+					</tr>
 					<tr>
 						
 						
 
 						<td>
 							请输入您的名字：
+							<input name="id" type="hidden" value="3">
 						<input name="name" type="text">
 						</td>
 					</tr>
 					<tr>
+						
+						
+
 						<td>
-							来自服务器的问候：
+						
+							喜好：
+						<input name="favovate3" type="radio" checked="true"  value="0"> 乒乓球
+						<input name="favovate3" type="radio" value="1"> 篮球
+						<input name="favovate3" type="radio" value="2"> 排球
+						</td>
+						
+						
+					</tr>
+					<tr>
+						<td>
+							
 							<pg:list requestKey="serverHelloListBean" >
-							    <pg:cell colName="name"/>
-								<pg:equal expression="{rowid} + {offset}" expressionValue="{rowcount}-1">总记录最后一行</pg:equal>
-								
-								<pg:equal expression="{rowid}" expressionValue="{pagesize}-1">当页数据最后一行</pg:equal>
-								页面记录数：<pg:pagesize/>
+							    姓名：<pg:cell colName="name"/>
+									爱好：<pg:equal colName="favovate" value="0">乒乓球</pg:equal>
+									<pg:equal colName="favovate" value="1">篮球</pg:equal>
+									<pg:equal colName="favovate" value="2">排球</pg:equal>
 							</pg:list>
 						</td>
 						
@@ -896,18 +1011,33 @@
 				<tbody>
 				
 						
-						<tr>
+					
+					
+					<tr>
 						
 						
 
 						<td>
+						<input name="id" type="hidden" value="0">
 							请输入您的名字：
 						<input name="name" type="text">
-						</td>
-						<td>
 							请输入您的性别：
 						<input name="sex" type="text">
 						</td>
+					</tr>
+					<tr>
+						
+						
+
+						<td>
+						
+							喜好：
+						<input name="favovate0" type="radio" checked="true"  value="0"> 乒乓球
+						<input name="favovate0" type="radio" value="1"> 篮球
+						<input name="favovate0" type="radio" value="2"> 排球
+						</td>
+						
+						
 					</tr>
 					
 					<tr>
@@ -915,52 +1045,76 @@
 						
 
 						<td>
+						<input name="id" type="hidden" value="1">
 							请输入您的名字：
 						<input name="name" type="text">
-						</td>
-						<td>
-							请输入您的性别：
+						请输入您的性别：
 						<input name="sex" type="text">
 						</td>
 					</tr>
-					
+					<tr>
+						
+						
+
+						<td>
+						
+							喜好：
+						<input name="favovate1" type="radio" checked="true"  value="0"> 乒乓球
+						<input name="favovate1" type="radio" value="1"> 篮球
+						<input name="favovate1" type="radio" value="2"> 排球
+						</td>
+						
+						
+					</tr>
 					<tr>
 						
 						
 
 						<td>
 							请输入您的名字：
-						<input name="name" type="text">
-						</td>
-						
-						<td>
-							请输入您的性别：
+							<input name="id" type="hidden" value="2">
+						<input name="name" type="text">	请输入您的性别：
 						<input name="sex" type="text">
 						</td>
 					</tr>
-					
+					<tr>
+						
+						
+
+						<td>
+						
+							喜好：
+						<input name="favovate2" type="radio" checked="true"  value="0"> 乒乓球
+						<input name="favovate2" type="radio" value="1"> 篮球
+						<input name="favovate2" type="radio" value="2"> 排球
+						</td>
+						
+						
+					</tr>
 					<tr>
 						
 						
 
 						<td>
 							请输入您的名字：
-						<input name="name" type="text">
-						</td>
-						<td>
-							请输入您的性别：
+							<input name="id" type="hidden" value="3">
+						<input name="name" type="text">	请输入您的性别：
 						<input name="sex" type="text">
 						</td>
 					</tr>
+					<tr>
+						
+						
 
 						<td>
-							请输入您的名字：
-						<input name="name" type="text">
+						
+							喜好：
+						<input name="favovate3" type="radio" checked="true"  value="0"> 乒乓球
+						<input name="favovate3" type="radio" value="1"> 篮球
+						<input name="favovate3" type="radio" value="2"> 排球
 						</td>
-						<td>
-							请输入您的性别：
-						<input name="sex" type="text">
-						</td>
+						
+						
 					</tr>
 					<tr>
 						<td>
@@ -970,6 +1124,12 @@
 							       <li> mapkey: <pg:mapkey/></li>
 									 <li>name属性值：<pg:cell colName="name"/></li>
 									 <li>sex属性值：<pg:cell colName="sex"/></li>
+									 
+									
+									<li>爱好：<pg:equal colName="favovate" value="0">乒乓球</pg:equal>
+									<pg:equal colName="favovate" value="1">篮球</pg:equal>
+									<pg:equal colName="favovate" value="2">排球</pg:equal>
+									</li>
 									</ul>
 							</pg:map>
 						</td>

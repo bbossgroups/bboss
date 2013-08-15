@@ -148,6 +148,17 @@ public class HelloWord
 			model.addAttribute("sayHelloString", "请输入您的名字！");
 		return "path:sayHello";
 	}
+	
+	public String sayHelloStringVar(@RequestParam(name = "name${id}") String yourname,
+			ModelMap model)
+	{
+
+		if (yourname != null && !"".equals(yourname))
+			model.addAttribute("sayHelloStringVar", "服务器向您[" + yourname + "]问好！");
+		else
+			model.addAttribute("sayHelloStringVar", "请输入您的名字！");
+		return "path:sayHello";
+	}
 
 	public String sayHelloTime(
 			@RequestParam(name = "d12", dateformat = "yyyy-MM-dd") java.util.Date d12,
