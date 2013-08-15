@@ -30,6 +30,7 @@ import org.frameworkset.util.ClassUtil;
 import org.frameworkset.util.ClassUtils;
 import org.frameworkset.util.MethodParameter;
 import org.frameworkset.util.ParameterNameDiscoverer;
+import org.frameworkset.util.ParameterUtil;
 import org.frameworkset.util.beans.BeansException;
 
 import com.frameworkset.util.BeanUtils;
@@ -416,7 +417,19 @@ public class MethodInfo {
 				if(param.editor() != null && !param.editor().equals(""))
 					paramAnno.setEditor((EditorInf)BeanUtils.instantiateClass(param.editor()));
 				if(!param.name().equals(""))
-					paramAnno.setParameterName(param.name());
+				{
+					String paramname = param.name();
+					int vstart = paramname.indexOf("${");
+					if(vstart < 0)
+					{
+						paramAnno.setParameterName(paramname);
+					}
+					else
+					{
+						paramAnno.setRequestParamNameToken(ParameterUtil.evalVars(vstart, paramname));
+						paramAnno.setNamevariabled(true);
+					}
+				}
 				else
 					paramAnno.setParameterName(methodparamname);
 				paramAnno.setDataBindScope(Scope.REQUEST_PARAM);

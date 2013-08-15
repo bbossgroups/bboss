@@ -98,6 +98,21 @@ public class ClassUtil
 		private Class propertyGenericType;
 		private Annotation[] annotations;
 		private String requestParamName;
+		private String origineRequestParamName;
+		private boolean namevariabled = false;
+		private RequestParam requestParam ;
+		public RequestParam getRequestParam() {
+			return requestParam;
+		}
+
+		public boolean isNamevariabled() {
+			return namevariabled;
+		}
+
+		public String getOrigineRequestParamName() {
+			return origineRequestParamName;
+		}
+
 		/**
 		 * 参数名称由常量和变量部分组成，变量var中包含了变量对应的request参数名称和变量在整个参数名称中所处的位置
 		 */
@@ -204,12 +219,13 @@ public class ClassUtil
 				Annotation a = this.annotations[i];
 				if(a instanceof RequestParam)
 				{
-					RequestParam rp = (RequestParam)a;
-					if(rp.name() == null || rp.name().equals(""))
+					requestParam = (RequestParam)a;
+					if(requestParam.name() == null || requestParam.name().equals(""))
 					{
-						break;
+						this.requestParamName = name;
 					}
-					String name = rp.name();
+					String name = requestParam.name();
+					this.origineRequestParamName = name;
 					int vstart = name.indexOf("${");
 					if(vstart  < 0)
 					{
@@ -217,49 +233,8 @@ public class ClassUtil
 					}
 					else
 					{
-						Var var = new Var();
-						if(vstart == 0)
-						{
-							
-							
-							var.setIsvar(true);
-							int end = name.indexOf("}");
-							var.setName(name.substring(2,end));
-							this.requestParamNameToken.add(var);
-							if(end == name.length() - 1)
-							{
-								break;
-							}
-							else
-							{
-								var = new Var();
-								
-								var.setName(name.substring(end + 1));
-								this.requestParamNameToken.add(var);
-							}
-							
-						}
-						else
-						{
-							
-							var.setName(name.substring(0,vstart));
-							this.requestParamNameToken.add(var);
-							int end = name.indexOf("}");
-							var = new Var();
-							var.setIsvar(true);
-							var.setName(name.substring(vstart + 2,end));
-							this.requestParamNameToken.add(var);
-							if(end == name.length() - 1)
-							{
-								break;
-							}
-							else
-							{
-								var = new Var();								
-								var.setName(name.substring(end + 1));
-								this.requestParamNameToken.add(var);
-							}
-						}
+						this.namevariabled = true;
+						this.requestParamNameToken = ParameterUtil.evalVars(vstart, name);
 						
 						
 					}

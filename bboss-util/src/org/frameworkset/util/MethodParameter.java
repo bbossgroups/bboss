@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 
+import org.frameworkset.util.ClassUtil.Var;
 import org.frameworkset.util.annotations.Attribute;
 import org.frameworkset.util.annotations.CookieValue;
 import org.frameworkset.util.annotations.MapKey;
@@ -77,8 +78,44 @@ public class MethodParameter {
 
 	private ParameterNameDiscoverer parameterNameDiscoverer;
 
+	/**
+	 * 请求参数名称
+	 */
 	private String parameterName;
 	
+	private String origineRequestParamName;
+	public void setOrigineRequestParamName(String origineRequestParamName) {
+		this.origineRequestParamName = origineRequestParamName;
+	}
+
+	private boolean namevariabled = false;
+	
+
+	public void setNamevariabled(boolean namevariabled) {
+		this.namevariabled = namevariabled;
+	}
+
+	public boolean isNamevariabled() {
+		return namevariabled;
+	}
+
+	public String getOrigineRequestParamName() {
+		return origineRequestParamName;
+	}
+
+	/**
+	 * 参数名称由常量和变量部分组成，变量var中包含了变量对应的request参数名称和变量在整个参数名称中所处的位置
+	 */
+	private List<Var> requestParamNameToken;
+	
+	public List<Var> getRequestParamNameToken() {
+		return requestParamNameToken;
+	}
+
+	public void setRequestParamNameToken(List<Var> requestParamNameToken) {
+		this.requestParamNameToken = requestParamNameToken;
+	}
+
 	private boolean dataBeanBind;
 	private Scope requestScope = null;
 

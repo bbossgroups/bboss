@@ -70,6 +70,7 @@ import org.frameworkset.util.GenericTypeResolver;
 import org.frameworkset.util.LinkedMultiValueMap;
 import org.frameworkset.util.MethodParameter;
 import org.frameworkset.util.MultiValueMap;
+import org.frameworkset.util.ParameterUtil;
 import org.frameworkset.util.PathMatcher;
 import org.frameworkset.util.ReflectionUtils;
 import org.frameworkset.util.annotations.AnnotationUtils;
@@ -595,7 +596,7 @@ public abstract class HandlerUtils {
 		String dateformat = null;
 
 		for (MethodParameter methodParameter : methodParameters) {
-			String requestParamName = methodParameter.getRequestParameterName();
+			String requestParamName = ParameterUtil.getParameterName(methodParameter,  request, 0);
 			defaultValue = methodParameter.getDefaultValue();
 			editor = methodParameter.getEditor();
 			if (!isrequired)
@@ -1864,6 +1865,129 @@ public abstract class HandlerUtils {
 		}
 		return value;
 	}
+	/**
+	 * 单独获取名称为变量表达式的参数的值
+	 * @param property
+	 * @param request
+	 * @param name
+	 * @param model
+	 * @param type
+	 * @param holder
+	 * @param elementType
+	 * @return
+	 * @throws Exception
+	 */
+	private static Object getNamedParameterValue(PropertieDescription property,
+			 HttpServletRequest request, String name, ModelMap model,
+			Class type, CallHolder holder,Class elementType) throws Exception
+	{
+		boolean required = false;
+		EditorInf editor = null;
+		boolean useEditor = true;
+		int curpostion = holder.getPosition();
+		Object defaultValue = null;
+		String dateformat = null;
+		Object value = null;
+		RequestParam param = property.getRequestParam();
+		if (!isMultipartFile(type)) {
+			dateformat = param.dateformat();
+			if (dateformat.equals(ValueConstants.DEFAULT_NONE))
+				dateformat = null;
+			String decodeCharset = param.decodeCharset();
+			String charset = param.charset();
+			String convertcharset = param.convertcharset();
+			if (decodeCharset.equals(ValueConstants.DEFAULT_NONE)) {
+				decodeCharset = null;
+			} else {
+				request.setAttribute(USE_MVC_DENCODE_KEY, TRUE);
+			}
+			if (charset.equals(ValueConstants.DEFAULT_NONE)) {
+				charset = null;
+			}
+			if (convertcharset.equals(ValueConstants.DEFAULT_NONE)) {
+				convertcharset = null;
+			}
+
+			request.setAttribute(USE_MVC_DENCODE_KEY, null);
+			if (param.editor() != null && !param.editor().equals(""))
+				editor = (EditorInf) BeanUtils.instantiateClass(param
+						.editor());
+			String paramName = ParameterUtil.getParameterName(property, name, request, curpostion);
+//			String[] values = !param.name().equals("") ? request
+//					.getParameterValues(param.name()) : request
+//					.getParameterValues(name);
+			String[] values = request.getParameterValues(paramName);
+			// boolean needAddData = holder.needAddData();
+			value = getRequestData(values, holder, type, decodeCharset,
+					charset, convertcharset, editor,property.isNamevariabled());
+
+			if (!required)
+				required = param.required();
+			defaultValue = param.defaultvalue();
+			
+		} else {
+			MultipartFile[] values = null;
+			String paramName = ParameterUtil.getParameterName(property, name, request, curpostion);
+			if (!HandlerUtils.isIgnoreFieldNameMultipartFile(type)) {
+//				values = !param.name().equals("") ? ((MultipartHttpServletRequest) request)
+//						.getFiles(param.name())
+//						: ((MultipartHttpServletRequest) request)
+//								.getFiles(name);
+				values = ((MultipartHttpServletRequest) request).getFiles(paramName);
+
+			} else {
+				values = ((MultipartHttpServletRequest) request)
+						.getFirstFieldFiles();
+			}
+			value = getRequestData(values, holder, type,property.isNamevariabled());
+			if (param.editor() != null && !param.editor().equals(""))
+				editor = (EditorInf) BeanUtils.instantiateClass(param
+						.editor());
+			if (!required)
+				required = param.required();
+			
+		}
+		if (defaultValue != null
+				&& defaultValue.equals(ValueConstants.DEFAULT_NONE))
+			defaultValue = null;
+		if (value == null)
+			value = defaultValue;
+		if (useEditor) {
+			try {
+				if (editor == null)
+				{
+					if(!ValueObjectUtil.isCollectionType(type))
+					{
+						value = ValueObjectUtil.typeCast(value, type, dateformat);
+					}
+					else
+					{						
+						value = ValueObjectUtil.typeCastCollection(value, type, elementType, dateformat);	
+					}
+				}
+				else
+					value = ValueObjectUtil.typeCast(value, editor);
+			} catch (Exception e) {
+				Exception error = raiseMissingParameterException(name, type,
+						value, e);
+				model.getErrors().rejectValue(name,
+						"ValueObjectUtil.typeCast.error",
+						String.valueOf(value), type, error.getMessage());
+				return ValueObjectUtil.getDefaultValue(type);
+			}
+
+		}
+		
+		if (value == null && required) {
+			Exception e = raiseMissingParameterException(name, type);
+			model.getErrors().rejectValue(name, "value.required.null",
+					e.getMessage());
+			return ValueObjectUtil.getDefaultValue(type);
+
+		}
+		
+		return value;
+	}
 
 	/**
 	 * 指定了多个注解类型的属性，可以选择性地从不同的注解方式获取属性的值
@@ -1879,7 +2003,7 @@ public abstract class HandlerUtils {
 	 * @return
 	 * @throws Exception
 	 */
-	private static Object evaluateAnnotationsValue(Annotation[] annotations,
+	private static Object evaluateAnnotationsValue(PropertieDescription property,
 			Map pathVarDatas, HttpServletRequest request, String name,
 			PageContext pageContext, MethodData handlerMethod, ModelMap model,
 			Class type, CallHolder holder,Class elementType) throws Exception {
@@ -1890,6 +2014,7 @@ public abstract class HandlerUtils {
 		boolean touched = false;
 		Object defaultValue = null;
 		String dateformat = null;
+		Annotation[] annotations = property.getAnnotations();
 		for (Annotation anno : annotations) {
 
 			if (anno instanceof PathVariable) {
@@ -1933,39 +2058,43 @@ public abstract class HandlerUtils {
 					if (param.editor() != null && !param.editor().equals(""))
 						editor = (EditorInf) BeanUtils.instantiateClass(param
 								.editor());
-					String[] values = !param.name().equals("") ? request
-							.getParameterValues(param.name()) : request
-							.getParameterValues(name);
+					String paramName = ParameterUtil.getParameterName(property, name, request, 0);
+//					String[] values = !param.name().equals("") ? request
+//							.getParameterValues(param.name()) : request
+//							.getParameterValues(name);
+					String[] values = request.getParameterValues(paramName);
 					// boolean needAddData = holder.needAddData();
 					value = getRequestData(values, holder, type, decodeCharset,
-							charset, convertcharset, editor);
+							charset, convertcharset, editor,property.isNamevariabled());
 
 					if (!required)
 						required = param.required();
 					defaultValue = param.defaultvalue();
-					if (holder.needAddData()) {
+					if (!property.isNamevariabled() && holder.needAddData() ) {
 						holder.addData(name, values, true, editor, required,
 								defaultValue, dateformat);
 					}
 				} else {
 					MultipartFile[] values = null;
+					String paramName = ParameterUtil.getParameterName(property, name, request, 0);
 					if (!HandlerUtils.isIgnoreFieldNameMultipartFile(type)) {
-						values = !param.name().equals("") ? ((MultipartHttpServletRequest) request)
-								.getFiles(param.name())
-								: ((MultipartHttpServletRequest) request)
-										.getFiles(name);
+//						values = !param.name().equals("") ? ((MultipartHttpServletRequest) request)
+//								.getFiles(param.name())
+//								: ((MultipartHttpServletRequest) request)
+//										.getFiles(name);
+						values = ((MultipartHttpServletRequest) request).getFiles(paramName);
 
 					} else {
 						values = ((MultipartHttpServletRequest) request)
 								.getFirstFieldFiles();
 					}
-					value = getRequestData(values, holder, type);
+					value = getRequestData(values, holder, type,property.isNamevariabled());
 					if (param.editor() != null && !param.editor().equals(""))
 						editor = (EditorInf) BeanUtils.instantiateClass(param
 								.editor());
 					if (!required)
 						required = param.required();
-					if (holder.needAddData()) {
+					if (!property.isNamevariabled() && holder.needAddData()) {
 						holder.addData(name, values, true, editor, required);
 					}
 				}
@@ -2066,7 +2195,7 @@ public abstract class HandlerUtils {
 			dateformat = null;
 		}
 
-		if (!touched && holder.needAddData()) {
+		if (!property.isNamevariabled() && !touched && holder.needAddData()) {
 			holder.addData(name, value, editor, required, defaultValue);
 		}
 
@@ -2117,10 +2246,10 @@ public abstract class HandlerUtils {
 	 * @return
 	 */
 	public static Object getRequestData(MultipartFile values[],
-			CallHolder holder, Class type) {
+			CallHolder holder, Class type,boolean isNamevariabled) {
 		Object value = null;
 		if (values != null) {
-			if (holder.isCollection()) {
+			if (!isNamevariabled && holder.isCollection()) {
 				if (holder.getPosition() == 0)
 					holder.setCounts(values.length);
 				if (values.length > 0) {
@@ -2163,10 +2292,10 @@ public abstract class HandlerUtils {
 	 */
 	public static Object getRequestData(String values[], CallHolder holder,
 			Class type, String decodeCharset, String charset,
-			String convertcharset, EditorInf editor) {
+			String convertcharset, EditorInf editor,boolean namevariabled) {
 		Object value = null;
 		if (values != null) {
-			if (holder.isCollection()) {
+			if (!namevariabled && holder.isCollection()) {
 				if (holder.getPosition() == 0)
 					holder.setCounts(values.length);
 				if (values.length > 0) {
@@ -2431,10 +2560,28 @@ public abstract class HandlerUtils {
 			// editor = holder.getEditor(name);
 			// required = holder.isRequired(name);
 			// }
-			// 解决问题：List<Bean>中如果bean有日期类型并且指定了日期格式，对应多条记录情况下格式化日期报错的问题
-			value = buildArrayPositionData(property, request, response,
-					pageContext, handlerMethod, model, messageConverters,
-					holder, objectType, pathVarDatas);
+			if(!property.isNamevariabled())
+			{
+				// 解决问题：List<Bean>中如果bean有日期类型并且指定了日期格式，对应多条记录情况下格式化日期报错的问题			
+				value = buildArrayPositionData(property, request, response,
+						pageContext, handlerMethod, model, messageConverters,
+						holder, objectType, pathVarDatas);
+			}
+			else
+			{
+				/**
+				 * Class ct = ValueObjectUtil.isCollectionType(type)?property.getPropertyGenericType():null;// 获取元素类型
+					value = evaluateAnnotationsValue(property, pathVarDatas,
+							request, name, pageContext, handlerMethod, model,
+							type, holder,ct);
+					useEditor = false;
+					return value;
+				 */
+				Class ct = ValueObjectUtil.isCollectionType(type)?property.getPropertyGenericType():null;// 获取元素类型
+				value = getNamedParameterValue( property,
+						   request,  name,  model,
+						 type,  holder, ct) ;
+			}
 			return value;
 		} else {
 
@@ -2518,8 +2665,8 @@ public abstract class HandlerUtils {
 					}
 				}
 				useEditor = false;
-			} else if (field.getAnnotations() == null
-					|| field.getAnnotations().length == 0
+			} else if (property.getAnnotations() == null
+					|| property.getAnnotations().length == 0
 					|| !hasParameterAnnotation(field)) {
 				if (List.class.isAssignableFrom(type)) {// 如果是列表数据集
 					List command = new ArrayList();
@@ -2561,7 +2708,7 @@ public abstract class HandlerUtils {
 					if (!isMultipartFile(type)) {
 						String[] values = request.getParameterValues(name);
 						value = getRequestData(values, holder, type, null,
-								null, null, null);
+								null, null, null,false);
 						if (holder.needAddData()) {
 							holder.addData(name, values, true, null, false);
 						}
@@ -2571,7 +2718,7 @@ public abstract class HandlerUtils {
 									.isIgnoreFieldNameMultipartFile(type)) {
 								MultipartFile[] values = ((MultipartHttpServletRequest) request)
 										.getFiles(name);
-								value = getRequestData(values, holder, type);
+								value = getRequestData(values, holder, type,false);
 								if (holder.needAddData()) {
 									holder.addData(name, values, true, null,
 											false);
@@ -2579,7 +2726,7 @@ public abstract class HandlerUtils {
 							} else {
 								MultipartFile[] values = ((MultipartHttpServletRequest) request)
 										.getFirstFieldFiles();
-								value = getRequestData(values, holder, type);
+								value = getRequestData(values, holder, type,false);
 								if (holder.needAddData()) {
 									holder.addData(name, values, true, null,
 											false);
@@ -2611,10 +2758,10 @@ public abstract class HandlerUtils {
 				}
 				useEditor = false;
 			} else {
-				Annotation[] annotations = field.getAnnotations();
+				Annotation[] annotations = property.getAnnotations();
 				try {
 					Class ct = ValueObjectUtil.isCollectionType(type)?property.getPropertyGenericType():null;// 获取元素类型
-					value = evaluateAnnotationsValue(annotations, pathVarDatas,
+					value = evaluateAnnotationsValue(property, pathVarDatas,
 							request, name, pageContext, handlerMethod, model,
 							type, holder,ct);
 					useEditor = false;
