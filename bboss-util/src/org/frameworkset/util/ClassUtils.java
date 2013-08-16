@@ -1342,7 +1342,7 @@ public class ClassUtils
 		{
 
 			Type zzz = ((ParameterizedType) type).getActualTypeArguments()[0];
-			return (Class) zzz;
+			return zzz instanceof Class?(Class) zzz:null;
 
 		}
 
@@ -1367,7 +1367,7 @@ public class ClassUtils
 		{
 
 			Type zzz = ((ParameterizedType) type).getActualTypeArguments()[0];
-			return (Class) zzz;
+			return zzz instanceof Class?(Class) zzz:null;
 
 		}
 
@@ -1399,10 +1399,13 @@ public class ClassUtils
 				int i = 0;
 				for (Type zzz : ptypes)
 				{
-					genericParameterTypes[i] = (Class) zzz;
-					i++;
+					if(zzz instanceof Class)
+					{
+						genericParameterTypes[i] = (Class) zzz;
+						i++;
+					}
 				}
-				return genericParameterTypes;
+				return resizeClasses(genericParameterTypes,i);
 
 			}
 		}
@@ -1435,15 +1438,30 @@ public class ClassUtils
 			int i = 0;
 			for (Type zzz : ptypes)
 			{
-				genericParameterTypes[i] = (Class) zzz;
-				i++;
+				if(zzz instanceof Class)
+				{
+				
+					genericParameterTypes[i] = (Class) zzz;
+					i++;
+				}
 			}
-			return genericParameterTypes;
+			return resizeClasses(genericParameterTypes,i);
 
 		}
 		
 		return null;
 
+	}
+	private static Class[] resizeClasses(Class[] clazzes,int i)
+	{
+		if(i == clazzes.length || i == 0)
+			return clazzes;
+		Class[] newclazzes = new Class[i];
+		for(int j = 0; j < i; j ++)
+		{
+			newclazzes[j] = clazzes[j];
+		}
+		return newclazzes;
 	}
 
 	public static Class getPropertyGenericType(Method writeMethod)
