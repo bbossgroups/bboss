@@ -334,6 +334,11 @@
 		<antcall target="distrib-bboss-mvc-jars" />
 		<antcall target="distrib-bboss-mvc-resources" />
 	</target>
+	
+	<target name="build-bboss-mvc-only-noresources" description="build bboss-mvc project">
+			<ant dir="${bboss-mvc}" />
+			<antcall target="distrib-bboss-mvc-jars" />
+		</target>
 		
 	
 

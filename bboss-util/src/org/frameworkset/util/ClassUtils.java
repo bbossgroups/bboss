@@ -1456,7 +1456,7 @@ public class ClassUtils
 	{
 		if(i == clazzes.length || i == 0)
 			return clazzes;
-		Class[] newclazzes = new Class[i - 1];
+		Class[] newclazzes = new Class[i];
 		for(int j = 0; j < i; j ++)
 		{
 			newclazzes[j] = clazzes[j];
