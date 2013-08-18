@@ -35,21 +35,38 @@ public class EmptyTag extends MatchTag
 	@Override
 	protected boolean match()
 	{
-		if(this.actualValue == null || this.actualValue.equals(""))
+		if(this.actualValue == null )
 			return true;
-		if(actualValue instanceof Collection )
+		if(actualValue instanceof String  )
+		{
+			if(this.actualValue.equals(""))
+				return true;
+			else
+				return false;
+		}
+		else if(actualValue instanceof Collection )
 		{
 			if(((Collection)actualValue).size() == 0)
 				return true;
 			else
 				return false;
 		}
-		if(actualValue instanceof Map )
+		else if(actualValue instanceof Map )
 		{
 			if( ((Map)actualValue).size() == 0)
 				return true;
 			else
 				return false;
+		}
+		else if(actualValue instanceof com.frameworkset.util.ListInfo)
+		{
+			if(((com.frameworkset.util.ListInfo)actualValue).getTotalSize() <= 0)
+			{
+				return true;
+			}
+			else
+				return false;
+				
 		}
 		return false;
 	}

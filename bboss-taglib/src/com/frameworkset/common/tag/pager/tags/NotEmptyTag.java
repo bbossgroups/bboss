@@ -37,8 +37,14 @@ public class NotEmptyTag extends MatchTag
 	{
 		if(this.actualValue != null )
 		{
-			
-			if(actualValue instanceof Collection )
+			if(this.actualValue instanceof String)
+			{
+				if(!this.actualValue.equals(""))
+					return true;
+				else
+					return false;
+			}
+			else if(actualValue instanceof Collection )
 			{
 				if( ((Collection)actualValue).size()> 0)
 					return true;
@@ -50,8 +56,17 @@ public class NotEmptyTag extends MatchTag
 					return true;
 				return false;
 			}
-			else if(!this.actualValue.equals(""))
-				return true;
+			else if(actualValue instanceof com.frameworkset.util.ListInfo)
+			{
+				if(((com.frameworkset.util.ListInfo)actualValue).getTotalSize() <= 0)
+				{
+					return false;
+				}
+				else
+					return true;
+					
+			}
+			
 		}
 		return false;		
 	}
