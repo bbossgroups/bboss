@@ -15,6 +15,7 @@
  */
 package com.frameworkset.common.tag.pager.tags;
 
+import java.lang.reflect.Array;
 import java.util.Collection;
 import java.util.Map;
 
@@ -58,13 +59,27 @@ public class NotEmptyTag extends MatchTag
 			}
 			else if(actualValue instanceof com.frameworkset.util.ListInfo)
 			{
-				if(((com.frameworkset.util.ListInfo)actualValue).getTotalSize() <= 0)
+				com.frameworkset.util.ListInfo listinfo = (com.frameworkset.util.ListInfo)actualValue;
+				if(listinfo.getTotalSize() <= 0)
+				{
+					if(listinfo.getSize() <= 0)
+						return false;
+					else
+						return true;
+				}
+				else
+					return true;
+					
+			}
+			else if(actualValue.getClass().isArray())
+			{
+				int length = Array.getLength(actualValue);
+				if(length <= 0)
 				{
 					return false;
 				}
 				else
 					return true;
-					
 			}
 			
 		}
