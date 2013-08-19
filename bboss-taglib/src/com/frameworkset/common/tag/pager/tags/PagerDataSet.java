@@ -2276,7 +2276,7 @@ public class PagerDataSet extends PagerTagSupport {
 			pagerContext.setSortKey(t_sortKey);
 
 		// pagerContext.setDataInfo();
-
+		pagerContext.setActual(this.actual);
 		pagerContext.init();
 		// if(!this.isList)
 		// {
@@ -2584,6 +2584,7 @@ public class PagerDataSet extends PagerTagSupport {
 		this.autosort = false;
 		this.needClear = false;
 		sessionKey = null;
+		this.actual = null;
 
 		requestKey = null;
 

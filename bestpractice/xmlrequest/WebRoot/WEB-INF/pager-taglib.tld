@@ -548,6 +548,10 @@
 			<name>softparser</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
+		<attribute>
+			<name>actual</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
 			<!-- 
 		jqueryÄÚÈÝÈÝÆ÷
 		 -->
@@ -751,6 +755,10 @@
 		-->
 		<attribute>
 			<name>softparser</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>actual</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!--

@@ -73,6 +73,15 @@ public class PagerContext
 	protected String dbname;
 	protected String cookieid;
 	private boolean inited = false;
+	private Object actual;
+	public Object getActual() {
+		return actual;
+	}
+
+	public void setActual(Object actual) {
+		this.actual = actual;
+	}
+
 	private Tag tag;
 	private SQLExecutor sqlExecutor;
 
@@ -176,6 +185,7 @@ public class PagerContext
 	 */
 	protected static final String SESSION_SCOPE = "session";
 	protected static final String REQUEST_SCOPE = "request";
+	protected static final String ACTUAL_SCOPE = "actual";
 	protected static final String PAGECONTEXT_SCOPE = "pageContext";
 	protected static final String COLUMN_SCOPE = "column";
 	protected static final String DB_SCOPE = "db";
@@ -1428,6 +1438,18 @@ public class PagerContext
 				}
 
 			}
+			else if (this.actual != null) {
+
+				try {
+					load(ACTUAL_SCOPE);
+					// data = request.getAttribute(listTag.requestKey);
+				} catch (LoadDataException e) {
+//					log.info(e.getMessage());
+					// return SKIP_BODY;
+					throw e;
+				}
+
+			}
 
 			else if (sessionKey != null)
 				try {
@@ -1446,6 +1468,7 @@ public class PagerContext
 					throw e2;
 				}
 			}
+			
 			
 			else if (this.tag instanceof CMSListTag) {
 				CMSListTag cmsListTag = (CMSListTag) tag;
@@ -1530,11 +1553,17 @@ public class PagerContext
 
 	protected void load(String scope) throws LoadDataException {
 		Object data = null;
-		if (scope.equals(REQUEST_SCOPE)) {
+		if (scope.equals(REQUEST_SCOPE) ) {
 
 			// dataInfo = (Collection)request.getAttribute(requestKey);
 			data = request.getAttribute(requestKey);
-		} else if (scope.equals(DB_SCOPE)) {
+		}
+		else if(scope.equals(ACTUAL_SCOPE))
+		{
+			data = this.actual;
+		}
+		
+		else if (scope.equals(DB_SCOPE)) {
 			this.dataInfo = new DefaultDataInfoImpl();
 			/**
 			 * 如果是直接的缺省的数据库实现，调用该实现的初始化方法， 否则调用通用的初始化方法
