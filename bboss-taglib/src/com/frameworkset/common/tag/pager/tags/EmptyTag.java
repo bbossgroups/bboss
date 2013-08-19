@@ -15,6 +15,7 @@
  */
 package com.frameworkset.common.tag.pager.tags;
 
+import java.lang.reflect.Array;
 import java.util.Collection;
 import java.util.Map;
 
@@ -35,19 +36,50 @@ public class EmptyTag extends MatchTag
 	@Override
 	protected boolean match()
 	{
-		if(this.actualValue == null || this.actualValue.equals(""))
+		if(this.actualValue == null )
 			return true;
-		if(actualValue instanceof Collection )
+		if(actualValue instanceof String  )
+		{
+			if(this.actualValue.equals(""))
+				return true;
+			else
+				return false;
+		}
+		else if(actualValue instanceof Collection )
 		{
 			if(((Collection)actualValue).size() == 0)
 				return true;
 			else
 				return false;
 		}
-		if(actualValue instanceof Map )
+		else if(actualValue instanceof Map )
 		{
 			if( ((Map)actualValue).size() == 0)
 				return true;
+			else
+				return false;
+		}
+		else if(actualValue instanceof com.frameworkset.util.ListInfo)
+		{
+			com.frameworkset.util.ListInfo listinfo = (com.frameworkset.util.ListInfo)actualValue;
+			if(listinfo.getTotalSize() <= 0 )
+			{
+				if(listinfo.getSize() <= 0)
+					return true;
+				else
+					return false;
+			}
+			else
+				return false;
+				
+		}
+		else if(actualValue.getClass().isArray())
+		{
+			int length = Array.getLength(actualValue);
+			if(length <= 0)
+			{
+				return true;
+			}
 			else
 				return false;
 		}

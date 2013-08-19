@@ -43,6 +43,7 @@ import com.frameworkset.util.StringUtil;
 public abstract class AuthenticateFilter extends TokenFilter{
 	public static final String accesscontrol_check_result = "com.frameworkset.platform.security.accesscontrol_check_result";
 	public static final String accesscontrol_check_result_ok = "ok";
+	public static final String accesscontrol_check_result_free = "free";
 	public static final String accesscontrol_check_result_fail = "fail";
 	
 	
@@ -304,6 +305,7 @@ public abstract class AuthenticateFilter extends TokenFilter{
 		else
 		{
 			request.setAttribute(accesscontrol_check_result, accesscontrol_check_result_ok);
+			request.setAttribute(accesscontrol_permissioncheck_result, accesscontrol_permissioncheck_result_ok);
 			return true;
 		}
 		
