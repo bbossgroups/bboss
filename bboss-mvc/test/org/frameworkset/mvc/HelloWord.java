@@ -174,7 +174,11 @@ public class HelloWord
 		return "path:sayHello";
 
 	}
-
+	public String dataListBeanBind(List<DateBean> dates,ModelMap model)
+	{
+		model.put("dataListBeanBind", dates);
+		return "path:sayHello";
+	}
 	public String sayHelloTimes(
 			@RequestParam(name = "d12s", dateformat = "yyyy-MM-dd") java.util.Date[] d12,
 			@RequestParam(name = "stringdates", dateformat = "yyyy-MM-dd") java.sql.Date[] stringdate,

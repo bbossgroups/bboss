@@ -157,6 +157,73 @@
 			
 			
 			<h3>
+				Hello World Time List bean bind Example.
+			</h3>
+			<form action="dataListBeanBind.page" method="post">
+			<pg:dtoken/>
+			<table cellspacing="0" >
+				<tbody>
+					<tr>
+						
+						
+
+						<td colspan="2">
+							请输入您的幸运日期：<input name="id" value="1" type="text">
+						
+						</td>
+					</tr>
+					<tr >
+	   
+					    <td align="right">					   
+					     <input id="d12s" name="d12s" type="text"
+				        onclick="WdatePicker()" src="<%=request.getContextPath() %>/jsp/datepicker/My97DatePicker/skin/datePicker.gif" width="16" height="22" align="absmiddle"/>
+					    </td>
+					    <td>
+					   <input id="d13s" name="d13s" type="text"
+				        onclick="WdatePicker()" src="<%=request.getContextPath() %>/jsp/datepicker/My97DatePicker/skin/datePicker.gif" width="16" height="22" align="absmiddle"/>
+					   </td>
+					   </tr>
+					   
+					   <tr>
+						
+						
+
+						<td colspan="2">
+							请输入您的幸运日期：<input name="id" value="2" type="text">
+						
+						</td>
+					</tr>
+					<tr >
+	   
+					    <td align="right">			
+					     <input id="d12s" name="d12s" type="text"
+				        onclick="WdatePicker()" src="<%=request.getContextPath() %>/jsp/datepicker/My97DatePicker/skin/datePicker.gif" width="16" height="22" align="absmiddle"/>		   
+					    </td>
+					    <td>
+					   <input id="d13s" name="d13s" type="text"
+				        onclick="WdatePicker()" src="<%=request.getContextPath() %>/jsp/datepicker/My97DatePicker/skin/datePicker.gif" width="16" height="22" align="absmiddle"/>
+					   </td>
+					   </tr>
+					   <tr>
+						<td colspan="2">
+							来自服务器的日期问候：
+							<pg:list actual="${dataListBeanBind}">
+								<pg:cell colName="id"/>
+								<pg:cell colName="d12" dateformat="yyyy-MM-dd"/>
+								<pg:cell colName="d13" dateformat="yyyy-MM-dd"/>
+							</pg:list>
+							
+						</td>
+						
+
+						
+					</tr>
+					<tr>
+						<td><input type="submit" name="确定" value="确定"></td>						
+					</tr>
+			    </tbody>
+			</table>
+			<h3>
 				Hello World Time bind Example.
 			</h3>
 			<form action="sayHelloTime.page" method="post">
@@ -179,7 +246,7 @@
 					    </td>
 					    <td>
 					   <input id="d12" name="d12" type="text"
-				        onclick="WdatePicker({el:'d12'})" src="<%=request.getContextPath() %>/jsp/datepicker/My97DatePicker/skin/datePicker.gif" width="16" height="22" align="absmiddle"/>
+				        onclick="WdatePicker()" src="<%=request.getContextPath() %>/jsp/datepicker/My97DatePicker/skin/datePicker.gif" width="16" height="22" align="absmiddle"/>
 					   </td>
 					   </tr>
 						
@@ -244,7 +311,7 @@
 					    </td>
 					    <td>
 					   <input id="d12s" name="d12s" type="text"
-				        onclick="WdatePicker({el:'d12s'})" src="<%=request.getContextPath() %>/jsp/datepicker/My97DatePicker/skin/datePicker.gif" width="16" height="22" align="absmiddle"/>
+				        onclick="WdatePicker()" src="<%=request.getContextPath() %>/jsp/datepicker/My97DatePicker/skin/datePicker.gif" width="16" height="22" align="absmiddle"/>
 					   </td>
 					   </tr>
 						
