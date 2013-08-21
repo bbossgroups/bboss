@@ -224,19 +224,22 @@ public class ClassUtil
 					{
 						this.requestParamName = name;
 					}
-					String name = requestParam.name();
-					this.origineRequestParamName = name;
-					int vstart = name.indexOf("${");
-					if(vstart  < 0)
-					{
-						this.requestParamName = name;
-					}
 					else
 					{
-						this.namevariabled = true;
-						this.requestParamNameToken = ParameterUtil.evalVars(vstart, name);
-						
-						
+						String name = requestParam.name();
+						this.origineRequestParamName = name;
+						int vstart = name.indexOf("${");
+						if(vstart  < 0)
+						{
+							this.requestParamName = name;
+						}
+						else
+						{
+							this.namevariabled = true;
+							this.requestParamNameToken = ParameterUtil.evalVars(vstart, name);
+							
+							
+						}
 					}
 					break;
 					

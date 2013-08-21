@@ -210,7 +210,8 @@
 							<pg:list actual="${dataListBeanBind}">
 								<pg:cell colName="id"/>
 								<pg:cell colName="d12" dateformat="yyyy-MM-dd"/>
-								<pg:cell colName="d13" dateformat="yyyy-MM-dd"/>
+								<pg:cell colName="d14" dateformat="yyyy-MM-dd"/>
+								<pg:cell colName="d13s" dateformat="yyyy-MM-dd"/>
 							</pg:list>
 							
 						</td>
