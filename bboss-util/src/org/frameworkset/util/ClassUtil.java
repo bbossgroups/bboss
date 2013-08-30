@@ -33,6 +33,8 @@ import org.apache.log4j.Logger;
 import org.frameworkset.soa.annotation.ExcludeField;
 import org.frameworkset.util.annotations.RequestParam;
 
+import com.frameworkset.orm.annotation.Column;
+import com.frameworkset.orm.annotation.PrimaryKey;
 import com.frameworkset.util.ValueObjectUtil;
 
 
@@ -101,6 +103,8 @@ public class ClassUtil
 		private String origineRequestParamName;
 		private boolean namevariabled = false;
 		private RequestParam requestParam ;
+		private PrimaryKey pk;
+		private Column column;
 		public RequestParam getRequestParam() {
 			return requestParam;
 		}
@@ -120,6 +124,7 @@ public class ClassUtil
 		
 		
 		private boolean oldAccessible = false;
+		private String uperName;
 		public PropertieDescription(Class propertyType,Field field, Method writeMethod,Method readMethod,
 				String name)
 		{
@@ -127,6 +132,8 @@ public class ClassUtil
 			this.propertyType = propertyType;
 			this.writeMethod = writeMethod;
 			this.name = name;
+			if(name != null)
+				this.uperName = name.toUpperCase();
 			this.field = field;
 			
 			this.readMethod = readMethod;
@@ -243,6 +250,14 @@ public class ClassUtil
 					}
 					break;
 					
+				}
+				else if(a instanceof PrimaryKey)
+				{
+					pk = (PrimaryKey)a;
+				}
+				else if(a instanceof Column )
+				{
+					column = (Column )a;
 				}
 			}
 		}
@@ -379,6 +394,18 @@ public class ClassUtil
 
 		public List<Var> getRequestParamNameToken() {
 			return requestParamNameToken;
+		}
+
+		public PrimaryKey getPk() {
+			return pk;
+		}
+
+		public Column getColumn() {
+			return column;
+		}
+
+		public String getUperName() {
+			return uperName;
 		}
 
 	}

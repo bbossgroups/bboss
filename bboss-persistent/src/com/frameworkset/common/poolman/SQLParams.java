@@ -909,7 +909,7 @@ public class SQLParams
 //	//					continue;
 //					}
 					name = property.getName();
-					PrimaryKey pka = property.findAnnotation(PrimaryKey.class);
+					PrimaryKey pka = property.getPk();
 					if( pka != null)
 					{
 						if(pka.auto() && action == PreparedDBUtil.INSERT)
@@ -953,7 +953,7 @@ public class SQLParams
 						}
 					}
 					
-					Column column = property.findAnnotation(Column.class);
+					Column column = property.getColumn();
 					if(column != null)
 					{
 						dataformat = column.dataformat();

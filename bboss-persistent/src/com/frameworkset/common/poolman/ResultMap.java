@@ -214,6 +214,7 @@ public class ResultMap {
 				for (int n = 0; attributes != null && n < attributes.size(); n++) {
 					PropertieDescription attribute = attributes.get(n);
 					String attrName = attribute.getName();
+					String upname = attribute.getUperName();
 	//				if(attrName.equals("class"))
 	//					continue;
 					String annotationName = null;
@@ -225,36 +226,38 @@ public class ResultMap {
 	//					if(field != null)
 						{
 							
-							PrimaryKey apk = attribute.findAnnotation(PrimaryKey.class);
+							PrimaryKey apk = attribute.getPk();
 							if(apk != null)
 							{
 	//							PrimaryKey apk = field.getAnnotation(PrimaryKey.class);
 								annotationName = apk.name();
 								if(annotationName == null 
-										|| annotationName.equals(ValueConstants.DEFAULT_NONE) || annotationName.equals(""))
+										 || annotationName.equals(""))
 								{
 									
 								}
 								else
 								{
 									attrName = annotationName;
+									upname = annotationName.toUpperCase();
 								}
 								
 							}
 							else 
 							{
-								Column cl = attribute.findAnnotation(Column.class);
+								Column cl = attribute.getColumn();
 								if(cl != null)
 								{
 									annotationName = cl.name();
 									if(annotationName == null 
-											|| annotationName.equals(ValueConstants.DEFAULT_NONE) || annotationName.equals(""))
+											|| annotationName.equals(""))
 									{
 										
 									}
 									else
 									{
 										attrName = annotationName;
+										upname = annotationName.toUpperCase();
 									}
 								}
 							}
@@ -268,7 +271,7 @@ public class ResultMap {
 						String columnName = stmtInfo.getMeta().getColumnLabelUpper(cidx);
 						
 		
-						if (!attrName.equalsIgnoreCase(columnName))
+						if (!upname.equals(columnName))
 							continue;
 		
 						Class type = attribute.getPropertyType();
@@ -443,13 +446,13 @@ public class ResultMap {
 					String annotationName = null;
 					try {
 	
-						PrimaryKey apk = attribute.findAnnotation(PrimaryKey.class);
+						PrimaryKey apk = attribute.getPk();
 						if(apk != null)
 						{
 							
 							annotationName = apk.name();
 							if(annotationName == null 
-									|| annotationName.equals(ValueConstants.DEFAULT_NONE) || annotationName.equals(""))
+									|| annotationName.equals(""))
 							{
 								
 							}
@@ -461,12 +464,12 @@ public class ResultMap {
 						}
 						else 
 						{
-							Column cl = attribute.findAnnotation(Column.class);
+							Column cl = attribute.getColumn();
 							if(cl != null)
 							{
 								annotationName = cl.name();
 								if(annotationName == null 
-										|| annotationName.equals(ValueConstants.DEFAULT_NONE) || annotationName.equals(""))
+										|| annotationName.equals(""))
 								{
 									
 								}
