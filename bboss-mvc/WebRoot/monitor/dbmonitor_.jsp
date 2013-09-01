@@ -70,7 +70,73 @@
 						if(exterJNDI != null && !"".equals(exterJNDI)){
 							isExternal = true;
 						}
+						if(metadata.getDatasourceFile() != null)
+						{
 					%>
+					<tr><td colspan="3">
+						
+						数据源对应文件：<a href="configfileDetail.jsp?selected=<%=metadata.getDatasourceFile() %>&classType=configfile&nodeMemo=&nodePath=<%=metadata.getDatasourceFile() %>" target="ds"><%=metadata.getDatasourceFile() %></a>
+						
+						<%if(metadata.getDatasourceFile().startsWith("druid") ) {%>
+						   <a href="../druid/index.html" target="m">查看监控信息</a>
+						<%} %>
+						
+						
+						
+					</td>
+					</tr>
+						<tr>
+						<table border="1">
+						<caption>数据库：<%=poolname %>的配置信息</caption>
+						<tr>
+						<th>配置属性名</th>
+						<th>属性对应值</th>
+						<th>缺省值</th>
+						<th>描述</th>
+						</tr>
+						
+						<tr>
+						<td>dbname</td>
+						<td height="25"><%=metadata.getDbname() %></td>
+						<td>无缺省值</td>
+						<td>数据库名称</td>
+						</tr>
+						
+						
+						
+						<tr>
+						<td>loadmetadata</td>
+						<td height="25"><%=metadata.getLoadmetadata() %></td>
+						<td>false</td>
+						<td>是否加载数据库源数据</td>
+						</tr>
+						<tr>
+						<td>showsql</td>
+						<td height="25"><%=metadata.isShowsql() %></td>
+						<td>false</td>
+						<td>是否在后台输出执行的sql语句，true输出执行的sql语句
+						</td>
+						</tr>
+						
+						
+						
+						<tr>
+						<td>enablejta</td>
+						<td height="25"><%=metadata.isEnablejta() %></td>
+						<td>false</td>
+						<td>是否启用jta datasource，如果启用将在jndi context中注册一个
+						  TXDatasource
+						  jta datasource的jndiname为 jndiName属性指定的值
+						  默认为不启用，该属性在托管第三方数据源时有用
+						  当enablejta == true时，必须在poolman.xml文件中指定jndiName属性
+						</td>
+						</tr>
+						</table>
+						</tr>	
+					  <%} 
+						else
+						{
+					  %>
 					<tr><td colspan="3">
 						<%if(!isExternal){ %>
 						数据源：<%=poolname %> 的链接情况
@@ -397,6 +463,7 @@
 						
 						</table>
 						</tr>
+						<%} %>
 						
 						
 						<tr>
