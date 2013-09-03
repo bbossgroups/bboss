@@ -4,7 +4,10 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.frameworkset.util.ClassUtil;
+
 import com.frameworkset.common.poolman.handle.RowHandlerException;
+import com.frameworkset.common.poolman.util.JDBCPool;
 
 /*
  *  An addition to the PoolMan Java Object Pooling and Caching Library
@@ -61,6 +64,10 @@ public class PoolManResultSetMetaData implements java.sql.ResultSetMetaData, jav
     private int[] _precision;
     private String[] _schemaName;
     private boolean[] _caseSensitive;
+    /**
+     * 存储符合java规范java属性名称，转换规则为：aaa_bb_cc-->aaaBbCc
+     */
+    private String columnJavaName[];
     
     /**
      * 执行查询时，保存相同的字段出现在查询字段列表中的位置信息
@@ -157,7 +164,10 @@ public class PoolManResultSetMetaData implements java.sql.ResultSetMetaData, jav
         _caseSensitive = new boolean[_columnCount];
         samecols = new HashMap();
         
-        
+        if(JDBCPool.nameMapping)
+        {
+        	columnJavaName = new String[_columnCount];
+        }
         Map testM = new HashMap(); 
         
 
@@ -184,6 +194,10 @@ public class PoolManResultSetMetaData implements java.sql.ResultSetMetaData, jav
 
             _columnLabel[c] = other.getColumnLabel(c + 1);
             _columnLabel_upper[c] =  _columnLabel[c].toUpperCase();
+           if(JDBCPool.nameMapping)
+           {
+        	   this.columnJavaName[c] = ClassUtil.genJavaName(_columnLabel[c]); 
+           }
 //            Integer idx = new Integer(c);
             WrapInteger wi = (WrapInteger)testM.get(_columnLabel_upper[c]);
             if(wi == null)
@@ -300,6 +314,10 @@ public class PoolManResultSetMetaData implements java.sql.ResultSetMetaData, jav
     
     public java.lang.String getColumnLabelUpper(int column) {
         return _columnLabel_upper[column - 1];
+    }
+    
+    public java.lang.String getColumnJavaName(int column) {
+        return this.columnJavaName[column - 1];
     }
 
     public boolean isAutoIncrement(int column) throws java.sql.SQLException {
@@ -503,6 +521,9 @@ public class PoolManResultSetMetaData implements java.sql.ResultSetMetaData, jav
 	public boolean isWrapperFor(Class<?> iface) throws SQLException {
 		// TODO Auto-generated method stub
 		return false;
+	}
+	public String[] getColumnJavaName() {
+		return columnJavaName;
 	}
 
 }

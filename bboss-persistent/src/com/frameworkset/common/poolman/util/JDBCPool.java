@@ -73,6 +73,24 @@ public class JDBCPool {
 	public static String TABLE_TYPE_ALL = "ALL";
 	private DataSource datasource;
 	
+	public static final boolean nameMapping ;
+	static {
+		boolean namemp = false;
+		try {
+			Properties  p = BaseApplicationContext.fillProperties();
+			String aaa = p.getProperty("column.nameMapping","false");
+			if(aaa.trim().equals("true"))
+			{
+				namemp = true;
+			}
+			
+		} catch (Exception e) {
+			
+		}
+		nameMapping = namemp;
+	}
+	
+	
 
 //	protected JDBCPoolMetaData metadata;
 

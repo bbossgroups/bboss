@@ -1056,4 +1056,46 @@ public class ClassUtil
 		return csinfo.getDeclaredMethods();
 	}
 	
+	public static String genJavaName(String tableColumn)
+	{
+		int idx = tableColumn.indexOf('_');
+		if(idx == -1)
+			return null;
+		String tableColumn_ = tableColumn.toLowerCase();
+		int length = tableColumn.length();
+		StringBuffer ret = new StringBuffer();
+		
+		for(int i = 0; i < length; i ++)
+		{
+			
+			char c = tableColumn_.charAt(i);
+			if(i < idx)
+			{
+				ret.append(c);
+				
+			}
+			else if(i > idx)
+			{
+				if(c == '_')
+				{
+					idx = i;
+				}
+				else if(i == idx + 1)
+				{
+					if(idx != 0)
+						ret.append(String.valueOf(c).toUpperCase());
+					else
+						ret.append(c);
+				}
+				else 
+				{
+					ret.append(c);
+				}
+					
+			}
+			
+		}
+		return ret.toString();
+	}
+	
 }

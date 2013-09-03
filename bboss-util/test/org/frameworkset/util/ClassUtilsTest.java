@@ -127,6 +127,17 @@ public class ClassUtilsTest
 	}
 	
 	@org.junit.Test
+	public void testFieldnameGen()
+	{
+		String parentfield = ClassUtil.genJavaName("aa_bb_cc");
+		
+		parentfield = ClassUtil.genJavaName("_bb_cc");
+		parentfield = ClassUtil.genJavaName("_bb");
+		parentfield = ClassUtil.genJavaName("BB");
+		System.out.println();
+	}
+	
+	@org.junit.Test
 	public void testProGet()
 	{
 		PropertieDescription parentfield = ClassUtil.getPropertyDescriptor(Test.class, "parentfield");

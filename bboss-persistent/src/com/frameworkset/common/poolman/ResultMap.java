@@ -29,14 +29,15 @@ import org.frameworkset.util.BigFile;
 import org.frameworkset.util.ClassUtil;
 import org.frameworkset.util.ClassUtil.ClassInfo;
 import org.frameworkset.util.ClassUtil.PropertieDescription;
-import org.frameworkset.util.annotations.ValueConstants;
 
 import com.frameworkset.common.poolman.handle.FieldRowHandler;
 import com.frameworkset.common.poolman.handle.RowHandler;
 import com.frameworkset.common.poolman.handle.ValueExchange;
 import com.frameworkset.common.poolman.handle.XMLMark;
 import com.frameworkset.common.poolman.handle.XMLRowHandler;
+import com.frameworkset.common.poolman.sql.PoolManResultSetMetaData;
 import com.frameworkset.common.poolman.sql.PoolManResultSetMetaData.WrapInteger;
+import com.frameworkset.common.poolman.util.JDBCPool;
 import com.frameworkset.common.poolman.util.SQLUtil;
 import com.frameworkset.orm.annotation.Column;
 import com.frameworkset.orm.annotation.PrimaryKey;
@@ -211,15 +212,18 @@ public class ResultMap {
 	//			}
 				
 				List<PropertieDescription> attributes = beanInfo.getPropertyDescriptors();
+				PoolManResultSetMetaData meta = stmtInfo.getMeta();
 				for (int n = 0; attributes != null && n < attributes.size(); n++) {
 					PropertieDescription attribute = attributes.get(n);
 					String attrName = attribute.getName();
 					String upname = attribute.getUperName();
+					
 	//				if(attrName.equals("class"))
 	//					continue;
 					String annotationName = null;
 					if(BigFile.class.isAssignableFrom(attribute.getPropertyType()) )//不支持大字段转换为BigFile接口
 						continue;
+					boolean userAnnotation = false;
 					try {
 						
 	//					Field field = classinfo.getDeclaredField(attrName);
@@ -240,6 +244,7 @@ public class ResultMap {
 								{
 									attrName = annotationName;
 									upname = annotationName.toUpperCase();
+									userAnnotation = true;
 								}
 								
 							}
@@ -258,6 +263,7 @@ public class ResultMap {
 									{
 										attrName = annotationName;
 										upname = annotationName.toUpperCase();
+										userAnnotation = true;
 									}
 								}
 							}
@@ -265,14 +271,33 @@ public class ResultMap {
 					} catch (Exception e1) {
 						log.info(attribute.getName() + " is not a field of bean[" +valueObjectType.getClass().getCanonicalName() + "].");
 					} 
-					for (int i = 0; i < stmtInfo.getMeta().getColumnCounts(); i++) {
+					for (int i = 0; i < meta.getColumnCounts(); i++) {
 						
 						int cidx = i+1;
-						String columnName = stmtInfo.getMeta().getColumnLabelUpper(cidx);
+						String columnName = meta.getColumnLabelUpper(cidx);
 						
 		
 						if (!upname.equals(columnName))
-							continue;
+						{
+							if(!userAnnotation && JDBCPool.nameMapping)
+							{
+								String javaName = meta.getColumnJavaName(cidx);
+								if(javaName != null )
+								{
+									if(!attrName.equals(javaName))
+										continue;
+								}
+								else
+								{
+									continue;
+								}
+								
+							}
+							else
+							{
+								continue;
+							}
+						}
 		
 						Class type = attribute.getPropertyType();
 						Object propsVal = null;
