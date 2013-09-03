@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="compilelib/catalina.jar"/>
+	<classpathentry kind="lib" path="compilelib/jsp-api.jar"/>
+	<classpathentry kind="lib" path="compilelib/servlet-api.jar"/>
+	<classpathentry kind="lib" path="compilelib/tomcat-coyote.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path="WebRoot/WEB-INF/classes"/>
+</classpath>
