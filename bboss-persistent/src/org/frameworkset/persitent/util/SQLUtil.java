@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.log4j.Logger;
 import org.frameworkset.spi.BaseApplicationContext;
 import org.frameworkset.spi.SOAFileApplicationContext;
 import org.frameworkset.spi.assemble.Pro;
@@ -59,12 +60,72 @@ import com.frameworkset.velocity.BBossVelocityUtil;
  */
 public class SQLUtil {
 	protected BaseApplicationContext sqlcontext;
+	private static Logger log = Logger.getLogger(SQLUtil.class);
 	protected static Map<String,SQLUtil> sqlutils = new HashMap<String,SQLUtil>(); 
 	protected SQLCache cache = new SQLCache(); 
 	protected static long refresh_interval = 5000;
 	protected String defaultDBName = null;
 	protected Map<String,SQLInfo> sqls;
+	protected Map<String,SQLRef> sqlrefs;
+	protected boolean hasrefs;
 	
+	public static class SQLRef
+	{
+		public SQLRef(String sqlname, String sqlfile, String name) {
+			super();
+			this.sqlname = sqlname;
+			this.sqlfile = sqlfile;
+			this.name = name;
+		}
+		private SQLUtil sqlutil;
+		private String sqlname;
+		private String sqlfile;
+		private String name;
+		public String getSqlname() {
+			return sqlname;
+		}
+		public String getSqlfile() {
+			return sqlfile;
+		}
+		public String getName() {
+			return name;
+		}
+		public SQLInfo getSQLInfo(String dbname)
+		{
+			if(sqlutil == null)
+			{
+				init();
+			}
+			return this.sqlutil.getSQLInfo(dbname, sqlname);
+		}
+		private synchronized void init()
+		{
+			if(sqlutil == null)
+			{
+				this.sqlutil = SQLUtil.getInstance(sqlfile);
+			}
+		}
+		public String getSQL(String dbname) {
+			if(sqlutil == null)
+			{
+				init();
+			}
+			return this.sqlutil.getSQL(dbname, sqlname);
+		}
+		public String getSQL(String dbname, Map variablevalues) {
+			if(sqlutil == null)
+			{
+				init();
+			}
+			return this.sqlutil.getSQL(dbname, sqlname, variablevalues);
+		}
+		
+	}
+	
+	public Map<String,SQLRef> getSQLRefers()
+	{
+		return this.sqlrefs;
+	}
 	
 	
 	
@@ -88,7 +149,9 @@ public class SQLUtil {
 		if(sqlcontext == null)
 			return;
 		sqls = null;
+		sqlrefs = null;
 		sqls = new HashMap<String,SQLInfo>();
+		sqlrefs = new HashMap<String,SQLRef> ();
 		Set keys = this.sqlcontext.getPropertyKeys();
 		if(keys != null && keys.size() > 0)
 		{
@@ -97,33 +160,55 @@ public class SQLUtil {
 			{
 				String key = keys_it.next();
 				Pro pro = this.sqlcontext.getProBean(key);
-				Object o = pro.getObject();
-				if(o instanceof String)
+				String sqlfile = (String)pro.getExtendAttribute("sqlfile");
+				if(sqlfile == null)
 				{
-					
-					String value = (String)o;
-					
-					if(value != null)
+					Object o = pro.getObject();
+					if(o instanceof String)
 					{
-						boolean istpl = pro.getBooleanExtendAttribute("istpl",true);//标识sql语句是否为velocity模板
-						boolean multiparser = pro.getBooleanExtendAttribute("multiparser",istpl);//如果sql语句为velocity模板，则在批处理时是否需要每条记录都需要分析sql语句
-						SQLTemplate sqltpl = null;
-						value = value.trim();
-						SQLInfo sqlinfo = new SQLInfo(key, value, istpl,multiparser);
-						sqlinfo.setSqlutil(this);
-						if(istpl)
-						{
-							sqltpl = new SQLTemplate(sqlinfo);
-							sqlinfo.setSqltpl(sqltpl);
-							BBossVelocityUtil.initTemplate(sqltpl);
-							sqltpl.process();
-						}
 						
-						sqls.put(key, sqlinfo);
+						String value = (String)o;
+						
+						if(value != null)
+						{
+							boolean istpl = pro.getBooleanExtendAttribute("istpl",true);//标识sql语句是否为velocity模板
+							boolean multiparser = pro.getBooleanExtendAttribute("multiparser",istpl);//如果sql语句为velocity模板，则在批处理时是否需要每条记录都需要分析sql语句
+							SQLTemplate sqltpl = null;
+							value = value.trim();
+							SQLInfo sqlinfo = new SQLInfo(key, value, istpl,multiparser);
+							sqlinfo.setSqlutil(this);
+							if(istpl)
+							{
+								sqltpl = new SQLTemplate(sqlinfo);
+								sqlinfo.setSqltpl(sqltpl);
+								BBossVelocityUtil.initTemplate(sqltpl);
+								sqltpl.process();
+							}
+							
+							sqls.put(key, sqlinfo);
+						}
+					}
+				}
+				else
+				{
+					String sqlname = (String)pro.getExtendAttribute("sqlname");
+					if(sqlname == null)
+					{
+						log.warn(sqlcontext.getConfigfile()+"中name="+key+"的sql被配置为对"+sqlfile+"中的sql引用，但是没有通过sqlname设置要引用的sql语句!");
+					}
+					else
+					{
+						sqlrefs.put(key, new SQLRef(sqlname,sqlfile,key));
+						hasrefs = true;
 					}
 				}
 			}
 		}
+	}
+	
+	public boolean hasrefs()
+	{
+		return this.hasrefs;
 	}
 	
 	
@@ -134,6 +219,11 @@ public class SQLUtil {
 		{
 			this.sqls.clear();
 			sqls = null;
+		}
+		if(sqlrefs != null)
+		{
+			this.sqlrefs.clear();
+			sqlrefs = null;
 		}
 		this.cache.clear();
 		String file = sqlcontext.getConfigfile();
@@ -276,12 +366,28 @@ public class SQLUtil {
 		
 		return sqlUtil;
 	}
+	
+	private SQLInfo getReferSQLInfo(String dbname, String sqlname)
+	{
+		SQLRef ref = this.sqlrefs.get(sqlname);
+		if(ref != null)
+			return ref.getSQLInfo(dbname);
+		else
+			return null;
+	}
 
 	public SQLInfo getSQLInfo(String dbname, String sqlname) {
+		SQLInfo sql = null;
+		if(this.hasrefs)
+		{
+			sql = this.getReferSQLInfo(dbname, sqlname);
+			if(sql != null)
+				return sql;
+		}
 		String dbtype = SQLManager.getInstance().getDBAdapter(dbname)
 		.getDBTYPE();
 		
-		SQLInfo sql = null;
+		
 		if(dbtype != null)
 //			sql = sqlcontext.getProperty(sqlname + "-" + dbtype.toLowerCase());		
 			sql = sqls.get(sqlname + "-" + dbtype.toLowerCase());
@@ -296,8 +402,22 @@ public class SQLUtil {
 		return sql;
 
 	}
-	
+	private String getReferSQL(String dbname, String sqlname)
+	{
+		SQLRef ref = this.sqlrefs.get(sqlname);
+		if(ref != null)
+			return ref.getSQL(dbname);
+		else
+			return null;
+	}
 	public String getSQL(String dbname, String sqlname) {
+		
+		if(this.hasrefs)
+		{
+			String sql = this.getReferSQL(dbname, sqlname);
+			if(sql != null)
+				return sql;
+		}
 		String dbtype = SQLManager.getInstance().getDBAdapter(dbname)
 		.getDBTYPE();
 		
@@ -316,9 +436,22 @@ public class SQLUtil {
 		return sql != null?sql.getSql():null;
 
 	}
-	
+	private String getReferSQL(String dbname, String sqlname,Map variablevalues)
+	{
+		SQLRef ref = this.sqlrefs.get(sqlname);
+		if(ref != null)
+			return ref.getSQL(dbname,variablevalues);
+		else
+			return null;
+	}
 	
 	public String getSQL(String dbname, String sqlname,Map variablevalues) {
+		if(this.hasrefs)
+		{
+			String sql = this.getReferSQL(dbname, sqlname,variablevalues);
+			if(sql != null)
+				return sql;
+		}
 		String dbtype = SQLManager.getInstance().getDBAdapter(dbname)
 		.getDBTYPE();
 		String newsql = null;
@@ -383,7 +516,13 @@ public class SQLUtil {
     	}
     	return sql;
 	}
-	
+	/**
+	 * mark 1
+	 * @param name
+	 * @param sql
+	 * @param variablevalues
+	 * @return
+	 */
 	public String evaluateSQL(String name,String sql,Map variablevalues) {
 		
 		if(sql != null &&  variablevalues != null && variablevalues.size() > 0)
@@ -456,6 +595,14 @@ public class SQLUtil {
 
 	}
 	
+	/**
+	 * 
+	 * @param dbname
+	 * @param sqlkey
+	 * @param rsmetadata
+	 * @return
+	 * @throws SQLException
+	 */
 	public PoolManResultSetMetaData getPoolManResultSetMetaData(String dbname,String sqlkey,ResultSetMetaData rsmetadata) throws SQLException
 	{
 		return this.cache.getPoolManResultSetMetaData(dbname, sqlkey, rsmetadata);

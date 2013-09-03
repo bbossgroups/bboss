@@ -4,12 +4,12 @@
 <%@page import="java.lang.reflect.Method"%>
 <%@page import="org.frameworkset.web.servlet.context.WebApplicationContext"%>
 <%@page import="java.util.Map"%>
-<%@page import="java.util.Iterator"%><%
+<%@page import="java.util.Iterator,org.frameworkset.persitent.util.SQLUtil.SQLRef"%><%
 /**
  * 
- * <p>Title: ¹ÜÀí·şÎñÃ÷Ï¸ĞÅÏ¢ÏÔÊ¾Ò³Ãæ</p>
+ * <p>Title: ç®¡ç†æœåŠ¡æ˜ç»†ä¿¡æ¯æ˜¾ç¤ºé¡µé¢</p>
  *
- * <p>Description: ¹ÜÀí·şÎñÃ÷Ï¸ĞÅÏ¢ÏÔÊ¾Ò³Ãæ</p>
+ * <p>Description: ç®¡ç†æœåŠ¡æ˜ç»†ä¿¡æ¯æ˜¾ç¤ºé¡µé¢</p>
  *
  * <p>Copyright: Copyright (c) 2008</p>
  *
@@ -19,7 +19,7 @@
  * @version 1.0
  */
  %>
-<%@ page language="java" contentType="text/html; charset=GBK" session="false"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" session="false"%>
 <%@page import="org.frameworkset.spi.assemble.*,java.util.*,org.frameworkset.spi.BaseApplicationContext"%>
 <%@ taglib prefix="tab" uri="/WEB-INF/tabpane-taglib.tld" %>		
 
@@ -30,14 +30,17 @@
 	BaseApplicationContext context = sqlutil.getSqlcontext();
 	
 	java.util.Set<String> keys = context.getPropertyKeys();
+	 Map<String,org.frameworkset.persitent.util.SQLUtil.SQLRef> refs = sqlutil.getSQLRefers();
 	Iterator<String> its = keys == null ? null:keys.iterator();
+	String sqlname = request.getParameter("sqlname");
 	
-	
+	if(sqlname == null)
+		sqlname = "";
 	
 %>
 <html>
 	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=GBK">
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title><%=context.getConfigfile() %></title>
 		<link rel="stylesheet" type="text/css" href="<%=rootpath%>/sysmanager/css/treeview.css">
 <%@ include file="/include/css.jsp"%>
@@ -49,41 +52,41 @@
 	<body class="contentbodymargin" scroll="yes">
 	
 		<table class="thin" >
-			<tr><td colspan="3" class="headercolor">SQLÎÄ¼ş¸ÅÒªĞÅÏ¢</td></tr>
+			<tr><td colspan="3" class="headercolor">SQLæ–‡ä»¶æ¦‚è¦ä¿¡æ¯</td></tr>
 			<tr>
-			<td  width="20%">SQLÎÄ¼şÃû³Æ£º<%=selected.substring(4) %></td>
+			<td  width="20%">SQLæ–‡ä»¶åç§°ï¼š<%=selected.substring(4) %></td>
 			
 			</tr>
 			<tr>
 			
-			<td  width="20%">SQLÎÄ¼ş¸üĞÂ¼ì²â»úÖÆ£º<%=sqlutil.getRefresh_interval() > 0?"¿ªÆô":"¹Ø±Õ" %></td>
+			<td  width="20%">SQLæ–‡ä»¶æ›´æ–°æ£€æµ‹æœºåˆ¶ï¼š<%=sqlutil.getRefresh_interval() > 0?"å¼€å¯":"å…³é—­" %></td>
 			
 			</tr>
 			<tr>
 			
-			<td width="50%">SQLÎÄ¼ş¸üĞÂ¼ì²âÊ±¼ä¼ä¸ô£º<%=sqlutil.getRefresh_interval() +"" %></td>
+			<td width="50%">SQLæ–‡ä»¶æ›´æ–°æ£€æµ‹æ—¶é—´é—´éš”ï¼š<%=sqlutil.getRefresh_interval() +"" %></td>
 			</tr>
 			<tr>
 			
-			<td width="50%">¿ªÆôSQLÎÄ¼ş¸üĞÂ¼ì²â»úÖÆºÍ¼ì²âÊ±¼ä¼ä¸ôÅäÖÃ·½·¨£º<br>
-			ÔÚbboss-aop.jar°üÖĞµÄaop.propertiesÎÄ¼şÖĞ£¬ÅäÖÃ²ÎÊısqlfile.refresh_interval<br>
+			<td width="50%">å¼€å¯SQLæ–‡ä»¶æ›´æ–°æ£€æµ‹æœºåˆ¶å’Œæ£€æµ‹æ—¶é—´é—´éš”é…ç½®æ–¹æ³•ï¼š<br>
+			åœ¨bboss-aop.jaråŒ…ä¸­çš„aop.propertiesæ–‡ä»¶ä¸­ï¼Œé…ç½®å‚æ•°sqlfile.refresh_interval<br>
 			sqlfile.refresh_interval=5000<br>
-			µ¥Î»ÎªºÁÃë£¬Èç¹ûÅäÖÃÎª0»òÕß¸ºÊı£¬Ôò¹Ø±ÕË¢ĞÂ»úÖÆ
+			å•ä½ä¸ºæ¯«ç§’ï¼Œå¦‚æœé…ç½®ä¸º0æˆ–è€…è´Ÿæ•°ï¼Œåˆ™å…³é—­åˆ·æ–°æœºåˆ¶
 			</td>
 			</tr>
 			
 			<tr>
 			
-			<td width="50%">SQLÎÄ¼şÈİÆ÷ÀàĞÍ£º<%=context.getClass().getCanonicalName() %></td>
+			<td width="50%">SQLæ–‡ä»¶å®¹å™¨ç±»å‹ï¼š<%=context.getClass().getCanonicalName() %></td>
 			</tr>
 			
 		</table>
 		<table class="thin" >
-			<tr><td colspan="3" class="headercolor">SQLÅäÖÃĞÅÏ¢</td></tr>
+			<tr><td colspan="3" class="headercolor">SQLé…ç½®ä¿¡æ¯</td></tr>
 			<tr>
-			<td class="headercolor" >SQLÃû³Æ</td>
+			<td class="headercolor" >SQLåç§°</td>
 			<td class="headercolor" >sql</td>
-			<td class="headercolor" >ÃèÊö</td>
+			<td class="headercolor" >æè¿°</td>
 			</tr>
 			<%while(its != null && its.hasNext() ){
 				Pro pro = context.getProBean(its.next());
@@ -91,12 +94,58 @@
 			 %>
 			<tr>
 			<td class="headercolor"><%=pro.getName() %></td>
-			<td wrap><%=pro.getValue() %></td>
-			<td width="40"><%=pro.getDescription() == null?"":pro.getDescription() %></td>
+			<td wrap <%if(pro.getName().equals(sqlname))
+			{
+				%>
+				 style="background-color:yellow;"
+				<%
+			}%>><%=pro.getValue() %></td>
+			<td width="40" <%if(pro.getName().equals(sqlname))
+			{
+				%>
+				 style="background-color:yellow"
+				<%
+			}%>><%=pro.getDescription() == null?"":pro.getDescription() %></td>
 			</tr>
 			<%} %>
-		</table>
-	
+		
+		<%if(sqlutil.hasrefs()) {%>
+		
+			<tr><td colspan="10" class="headercolor">å¼•ç”¨SQLé…ç½®ä¿¡æ¯</td></tr>
+			<tr>
+			<td class="headercolor" >SQLåç§°</td>
+			<td class="headercolor" >è¢«å¼•ç”¨sqlfile</td>
+			<td class="headercolor" >å¼•ç”¨SQLåç§°</td>
+			
+			
+			</tr>
+			<%
+			Iterator<Map.Entry<String, SQLRef>> refit = refs.entrySet().iterator();
+			while( refit.hasNext() ){
+				Map.Entry<String, SQLRef> entry = refit.next();
+				SQLRef ref = entry.getValue();
+				
+			 %>
+			<tr>
+			<td class="headercolor"><%=ref.getName() %></td>
+			<td wrap <%if(ref.getName().equals(sqlname))
+			{
+				%>
+				 style="background-color:yellow"
+				<%
+			}%>><a href="sqlconfigfileDetail.jsp?selected=sql:<%=ref.getSqlfile() %>&classType=sqlapplicationmodule&sqlname=<%=ref.getSqlname() %>" target="_blank">
+			
+			<%=ref.getSqlfile() %></a></td>
+			<td width="40" <%if(ref.getName().equals(sqlname))
+			{
+				%>
+				 style="background-color:yellow"
+				<%
+			}%>><%=ref.getSqlname() %></td>
+			</tr>
+			<%} %>
+		
+	<%} %></table>
 
 	</body>
 </html>

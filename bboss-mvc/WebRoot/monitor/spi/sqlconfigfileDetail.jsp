@@ -4,7 +4,7 @@
 <%@page import="java.lang.reflect.Method"%>
 <%@page import="org.frameworkset.web.servlet.context.WebApplicationContext"%>
 <%@page import="java.util.Map"%>
-<%@page import="java.util.Iterator"%><%
+<%@page import="java.util.Iterator,org.frameworkset.persitent.util.SQLUtil.SQLRef"%><%
 /**
  * 
  * <p>Title: 管理服务明细信息显示页面</p>
@@ -30,9 +30,12 @@
 	BaseApplicationContext context = sqlutil.getSqlcontext();
 	
 	java.util.Set<String> keys = context.getPropertyKeys();
+	 Map<String,org.frameworkset.persitent.util.SQLUtil.SQLRef> refs = sqlutil.getSQLRefers();
 	Iterator<String> its = keys == null ? null:keys.iterator();
+	String sqlname = request.getParameter("sqlname");
 	
-	
+	if(sqlname == null)
+		sqlname = "";
 	
 %>
 <html>
@@ -91,12 +94,58 @@
 			 %>
 			<tr>
 			<td class="headercolor"><%=pro.getName() %></td>
-			<td wrap><%=pro.getValue() %></td>
-			<td width="40"><%=pro.getDescription() == null?"":pro.getDescription() %></td>
+			<td wrap <%if(pro.getName().equals(sqlname))
+			{
+				%>
+				 style="background-color:yellow;"
+				<%
+			}%>><%=pro.getValue() %></td>
+			<td width="40" <%if(pro.getName().equals(sqlname))
+			{
+				%>
+				 style="background-color:yellow"
+				<%
+			}%>><%=pro.getDescription() == null?"":pro.getDescription() %></td>
 			</tr>
 			<%} %>
-		</table>
-	
+		
+		<%if(sqlutil.hasrefs()) {%>
+		
+			<tr><td colspan="10" class="headercolor">引用SQL配置信息</td></tr>
+			<tr>
+			<td class="headercolor" >SQL名称</td>
+			<td class="headercolor" >被引用sqlfile</td>
+			<td class="headercolor" >引用SQL名称</td>
+			
+			
+			</tr>
+			<%
+			Iterator<Map.Entry<String, SQLRef>> refit = refs.entrySet().iterator();
+			while( refit.hasNext() ){
+				Map.Entry<String, SQLRef> entry = refit.next();
+				SQLRef ref = entry.getValue();
+				
+			 %>
+			<tr>
+			<td class="headercolor"><%=ref.getName() %></td>
+			<td wrap <%if(ref.getName().equals(sqlname))
+			{
+				%>
+				 style="background-color:yellow"
+				<%
+			}%>><a href="sqlconfigfileDetail.jsp?selected=sql:<%=ref.getSqlfile() %>&classType=sqlapplicationmodule&sqlname=<%=ref.getSqlname() %>" target="_blank">
+			
+			<%=ref.getSqlfile() %></a></td>
+			<td width="40" <%if(ref.getName().equals(sqlname))
+			{
+				%>
+				 style="background-color:yellow"
+				<%
+			}%>><%=ref.getSqlname() %></td>
+			</tr>
+			<%} %>
+		
+	<%} %></table>
 
 	</body>
 </html>

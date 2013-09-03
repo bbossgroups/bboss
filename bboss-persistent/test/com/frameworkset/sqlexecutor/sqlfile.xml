@@ -40,4 +40,16 @@
 		istpl 标识sql语句中是否有velocity模板引擎语法，如果有则必须设置为true，默认为true
 	-->
 	<property name="testsqlinfo"  istpl="true" multiparser="false"><![CDATA[select * from TD_APP_BOM where 1=1 ]]></property>
+	
+	<!-- 
+	bboss持久层框架支持夸模块容器引用sql，就是如果本模块的sql语句和另外一个模块的sql语句一样，则可以通过sqlname和sqlfile来进行引用：
+	sqlfile:引用的sql文件
+	sqlname：引用sqlfile中对于的sql语句的名称
+	
+	建议不要从sql语句级别引用sql应该从业务层组件引用调用模式来实现，类似于模块之间的接口调用关系
+	 -->
+	<property name="queryCountMaterialList" 
+		sqlname="queryCountMaterialList" 
+		sqlfile="com/frameworkset/sqlexecutor/purchaseApply.xml"/>
+	
 </properties>

@@ -20,7 +20,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import org.frameworkset.util.annotations.ValueConstants;
+
 
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
@@ -29,7 +29,7 @@ public @interface PrimaryKey {
 	 * Ö÷¼üÃû³Æ
 	 * @return
 	 */
-	String name() default ValueConstants.DEFAULT_NONE;
+	String name() default "";
 	String pkname();
 	
 	boolean auto() default false;
