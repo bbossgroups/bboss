@@ -156,7 +156,7 @@ public class StringUtil extends SimpleStringUtil {
 	public static String getRealPath(HttpServletRequest request, String path,boolean usebase) {
 		String contextPath = request.getContextPath();
 
-		if (contextPath == null ) {
+		if (contextPath == null || contextPath.equals("") || contextPath.equals("/")) {
 //			System.out.println("StringUtil.getRealPath() contextPath:"
 //					+ contextPath);
 			if(usebase)//如果需要检测上下文路径为空串，那么如果path第一个字符不是/，那么需要补充字符/到第一个位置
