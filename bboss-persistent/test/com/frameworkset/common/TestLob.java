@@ -167,6 +167,41 @@ public class TestLob {
 		
 	}
 	
+		/**
+	 * CREATE
+    TABLE CLOBFILE
+    (
+        FILEID VARCHAR(100),
+        FILENAME VARCHAR(100),
+        FILESIZE BIGINT,
+        FILECONTENT CLOB(2147483647)
+    )
+	 */
+	public @Test void updateClobFile() throws Exception
+	{
+		File file = new File("D:\\bbossgroups-3.5.1\\bboss-taglib\\readme.txt");
+		String sql = "";
+		TransactionManager tm = new TransactionManager();
+		try {
+			tm.begin();
+			SQLExecutor.queryField("select 1 as ss from CLOBFILE where fieldid=? for update nowait","11");//锁定记录
+			sql = "update CLOBFILE set FILECONTENT=#[FILECONTENT]) where fileid = #[FILEID])";
+			SQLParams sqlparams = new SQLParams();
+			sqlparams.addSQLParamWithCharset("FILECONTENT", file,SQLParams.CLOBFILE,"GBK");
+			sqlparams.addSQLParam("FILEID", "11",SQLParams.STRING);
+			SQLExecutor.updateBean(sql, sqlparams);			
+			tm.commit();
+		} catch (Exception ex) {
+			throw new Exception("上传附件关联临控指令布控信息附件失败：" + ex);
+		} 
+		finally
+		{
+			tm.release();
+		}
+		
+		
+	}
+	
 	/**
 	 * 上传附件
 	 * @param inputStream

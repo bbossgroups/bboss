@@ -244,7 +244,7 @@ public class SimpleStringUtil  {
 	public static String getRealPath(String contextPath, String path,boolean usebase) {
 		
 		
-		if (contextPath == null || contextPath.equals("")) {
+		if (contextPath == null || contextPath.equals("") || contextPath.equals("/")) {
 //			System.out.println("SimpleStringUtil.getRealPath() contextPath:"
 //					+ contextPath);
 			if(usebase)//如果需要检测上下文路径为空串，那么如果path第一个字符不是/，那么需要补充字符/到第一个位置

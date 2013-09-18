@@ -156,7 +156,7 @@ public class StringUtil extends SimpleStringUtil {
 	public static String getRealPath(HttpServletRequest request, String path,boolean usebase) {
 		String contextPath = request.getContextPath();
 
-		if (contextPath == null ) {
+		if (contextPath == null || contextPath.equals("") || contextPath.equals("/")) {
 //			System.out.println("StringUtil.getRealPath() contextPath:"
 //					+ contextPath);
 			if(usebase)//Èç¹ûĞèÒª¼ì²âÉÏÏÂÎÄÂ·¾¶Îª¿Õ´®£¬ÄÇÃ´Èç¹ûpathµÚÒ»¸ö×Ö·û²»ÊÇ/£¬ÄÇÃ´ĞèÒª²¹³ä×Ö·û/µ½µÚÒ»¸öÎ»ÖÃ
@@ -798,14 +798,22 @@ outStr = "2010Äê02ÔÂ07ÈÕ11Ê±Ğí£¬ÖÜÁéÓ±±¨¾¯£ºÔÚ2Â·¹«½»³µÉÏ±»°ÇÇÔ£¬²¢×¥»ñÒ»ÃûÏÓÒÉÈ
  
   public static String getClientIP(HttpServletRequest request)
   {
-//	  String ip=request.getHeader("X-Forwarded-For");   
-//	  if(ip == null || ip.length() == 0) {   //»ñÈ¡weblogicÖĞÉèÖÃµÄÍ·²¿ĞÅÏ¢
-//		  ip=request.getHeader("WL-Proxy-Client-IP");
-//	  }   
-//	  if(ip == null || ip.length() == 0) {   
-//		  ip=request.getRemoteAddr();   
-//	  }
-	  String ip=request.getRemoteAddr();   
+
+	  String ip = request.getHeader("X-Forwarded-For");  
+      if(ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {  
+         ip = request.getHeader("Proxy-Client-IP");  
+     }  
+      if(ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {  
+         ip = request.getHeader("WL-Proxy-Client-IP");  
+      }  
+     if(ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {  
+          ip = request.getRemoteAddr();  
+     }  
+     else
+     {
+    	 String[] temp = ip.split(",");//¶àÖØ·´Ïò´úÀí»áÓĞ¶à¸öÖĞ¼ä´úÀíip
+    	 ip = temp[0];
+     }
 	  
 	  return ip;
 
