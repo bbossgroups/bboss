@@ -241,9 +241,20 @@ public class SimpleStringUtil  {
 
 	}
 	
+	public static boolean isHttpUrl(String path)
+	{
+		if(path == null)
+			return false;
+		return path.startsWith("http://") 
+				||  path.startsWith("https://") 
+				||  path.startsWith("ftp://")   
+				||  path.startsWith("tps://")  ;
+	}
+	
 	public static String getRealPath(String contextPath, String path,boolean usebase) {
 		
-		
+		if(isHttpUrl(path))
+			return path;
 		if (contextPath == null || contextPath.equals("") || contextPath.equals("/")) {
 //			System.out.println("SimpleStringUtil.getRealPath() contextPath:"
 //					+ contextPath);
