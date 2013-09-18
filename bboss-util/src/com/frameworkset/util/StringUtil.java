@@ -129,6 +129,8 @@ public class StringUtil extends SimpleStringUtil {
 		addCookieValue( request, response , name, value,3600 * 24);
 	}
 	public static String getRealPath(HttpServletRequest request, String path) {
+		if(isHttpUrl(path))
+			return path;
 		String contextPath = request.getContextPath();
 
 		if (contextPath == null) {
@@ -154,6 +156,8 @@ public class StringUtil extends SimpleStringUtil {
 	}
 	
 	public static String getRealPath(HttpServletRequest request, String path,boolean usebase) {
+		if(isHttpUrl(path))
+			return path;
 		String contextPath = request.getContextPath();
 
 		if (contextPath == null || contextPath.equals("") || contextPath.equals("/")) {
