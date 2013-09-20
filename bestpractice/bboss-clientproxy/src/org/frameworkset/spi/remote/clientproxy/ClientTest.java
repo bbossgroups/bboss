@@ -20,6 +20,7 @@ import java.util.concurrent.atomic.AtomicLong;
 
 import org.frameworkset.spi.ClientProxyContext;
 import org.frameworkset.spi.DefaultApplicationContext;
+import org.frameworkset.spi.remote.webservice.JaxWsProxyFactory;
 import org.junit.Test;
 
 /**
@@ -255,8 +256,75 @@ public class ClientTest {
 		String ssss  = WSService.helloworld(ss);
 		long e = System.currentTimeMillis();
 		long interval = (e-s);
-		System.out.println(interval);
+		System.out.println(interval+ssss);
 	}
+	
+	@Test
+	public void testDemoWebService()
+	{
+		
+		WSServiceInMVC WSService = ClientProxyContext.getWebMVCClientBean(
+				"(webservice::http://localhost:8080/demo/cxfservices)" +
+				"/mysfirstmvcwsservice?user=admin&password=123456",
+				WSServiceInMVC.class);
+		WSService.sayMvsHello("你好，多多");
+		String ss = "你好，多多,你好，多多你好，多多你好，多多你好，多多你好，多多你好，多多你好，多多你好，多多你好，多多你好，多多你好，多多你好，多多" +
+				"你好，多多你好，多多你好，多多你好，多多你好，多多你好，多多你好，多多你好，多多";
+		long s = System.currentTimeMillis();
+		String ssss  = WSService.sayMvsHello(ss);
+		long e = System.currentTimeMillis();
+		long interval = (e-s);
+		System.out.println(interval+ssss);
+		
+		
+		WSServiceInMVC wsservice = JaxWsProxyFactory.getWSClient("http://localhost:8080/" +
+				"demo/cxfservices/mysfirstMVCwsservicePort",WSServiceInMVC.class);
+		wsservice.sayMvsHello("你好，多多");
+		
+		 s = System.currentTimeMillis();
+		 ssss  = wsservice.sayMvsHello(ss);
+		 e = System.currentTimeMillis();
+		 interval = (e-s);
+		System.out.println(interval+ssss);
+		
+		
+		WSServiceInMVC pdp = ClientProxyContext.getWebMVCClientBean(
+				"(webservice::http://localhost:8080/SanyPDP/cxfservices)" +
+				"/appBomService?user=admin&password=123456",
+				WSServiceInMVC.class);
+		
+		ssss = pdp.sayMvsHello("多多");
+		 s = System.currentTimeMillis();
+		 ssss = pdp.sayMvsHello("多多");
+		 e = System.currentTimeMillis();
+		 interval = (e-s);
+		System.out.println(interval+ssss);
+	}
+	
+	@Test
+	public void testPDPWebService()
+	{
+		
+		WSServiceInMVC WSService = ClientProxyContext.getWebMVCClientBean(
+				"(webservice::http://localhost:8080/SanyPDP/cxfservices)" +
+				"/appBomService?user=admin&password=123456",
+				WSServiceInMVC.class);
+		WSService.sayMvsHello("你好，多多");
+		String ss = "你好，多多,你好，多多你好，多多你好，多多你好，多多你好，多多你好，多多你好，多多你好，多多你好，多多你好，多多你好，多多你好，多多" +
+				"你好，多多你好，多多你好，多多你好，多多你好，多多你好，多多你好，多多你好，多多";
+		long s = System.currentTimeMillis();
+		String ssss  = WSService.sayMvsHello(ss);
+		long e = System.currentTimeMillis();
+		long interval = (e-s);
+		System.out.println(interval+ssss);
+		
+		
+	}
+	
+	
+	
+	
+	
 	
 	
 	public static void testNetty()

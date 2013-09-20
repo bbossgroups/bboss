@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=GBK" session="false"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" session="false"%>
 
 <%
 	String id = request.getParameter("id");
@@ -6,7 +6,7 @@
 <html>
 
 <head>
-<title>spi№ЬАн</title>
+<title>spiз®Ўзђ†</title>
 </head>
 <frameset name="userId" value="" cols="30%,70%" frameborder="no" border="1" framespacing="3" style="width:100%;height:100%;">
   <frame src="spitree.jsp" name="spiTree" id="spiTree" />

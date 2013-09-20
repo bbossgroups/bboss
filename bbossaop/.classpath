@@ -24,25 +24,6 @@
 	<classpathentry kind="lib" path="lib/frameworkset-pool.jar" sourcepath="/bboss-persistent"/>
 	<classpathentry kind="lib" path="lib/jakarta-oro-2.0.8.jar"/>
 	<classpathentry kind="lib" path="lib/ojdbc14.jar"/>
-	<classpathentry kind="lib" path="lib/cxf/cxf-2.2.4.jar" sourcepath="D:/opensource/webservice/apache-cxf-2.2.4-src/apache-cxf-2.2.4-src"/>
-	<classpathentry kind="lib" path="lib/cxf/geronimo-activation_1.1_spec-1.0.2.jar"/>
-	<classpathentry kind="lib" path="lib/cxf/geronimo-annotation_1.0_spec-1.1.1.jar"/>
-	<classpathentry kind="lib" path="lib/cxf/geronimo-javamail_1.4_spec-1.6.jar"/>
-	<classpathentry kind="lib" path="lib/cxf/geronimo-jaxws_2.1_spec-1.0.jar"/>
-	<classpathentry kind="lib" path="lib/cxf/geronimo-stax-api_1.0_spec-1.0.1.jar"/>
-	<classpathentry kind="lib" path="lib/cxf/geronimo-ws-metadata_2.0_spec-1.1.2.jar"/>
-	<classpathentry kind="lib" path="lib/cxf/jaxb-api-2.1.jar"/>
-	<classpathentry kind="lib" path="lib/cxf/jaxb-impl-2.1.12.jar"/>
-	<classpathentry kind="lib" path="lib/cxf/jaxb-xjc-2.1.12.jar"/>
-	<classpathentry kind="lib" path="lib/cxf/neethi-2.0.4.jar"/>
-	<classpathentry kind="lib" path="lib/cxf/saaj-api-1.3.jar"/>
-	<classpathentry kind="lib" path="lib/cxf/saaj-impl-1.3.2.jar"/>
-	<classpathentry kind="lib" path="lib/cxf/wsdl4j-1.6.2.jar"/>
-	<classpathentry kind="lib" path="lib/cxf/wstx-asl-3.2.8.jar"/>
-	<classpathentry kind="lib" path="lib/cxf/xml-resolver-1.2.jar"/>
-	<classpathentry kind="lib" path="lib/cxf/XmlSchema-1.4.5.jar"/>
-	<classpathentry kind="lib" path="lib/cxf/geronimo-jms_1.1_spec-1.1.1.jar"/>
-	<classpathentry kind="lib" path="lib/cxf/geronimo-servlet_2.5_spec-1.2.jar"/>
 	<classpathentry kind="src" path="src-log"/>
 	<classpathentry kind="lib" path="lib/test/junit-4.6.jar"/>
 	<classpathentry kind="lib" path="lib/encrypt/commons-codec-1.1.jar"/>
@@ -79,7 +60,6 @@
 	<classpathentry kind="lib" path="lib/asm/asm-commons-3.1.jar"/>
 	<classpathentry kind="lib" path="lib/asm/asm-util-3.1.jar"/>
 	<classpathentry kind="lib" path="lib/asm/jarjar.jar"/>
-	<classpathentry kind="lib" path="lib/jms/geronimo-j2ee-management_1.0_spec-1.0.jar"/>
 	<classpathentry kind="lib" path="lib/mina/test/log4j-1.2.16.jar"/>
 	<classpathentry kind="lib" path="lib/frameworkset-util.jar" sourcepath="/bboss-util"/>
 	<classpathentry kind="lib" path="lib/bboss-soa.jar" sourcepath="/bboss-soa"/>
@@ -103,5 +83,21 @@
 	<classpathentry kind="lib" path="lib/bboss-velocity.jar" sourcepath="/bboss-velocity"/>
 	<classpathentry kind="lib" path="lib/quartz/quartz-1.8.6.jar" sourcepath="/quartz"/>
 	<classpathentry kind="lib" path="lib/bsh/bsh-2.0b4.jar"/>
+	<classpathentry kind="lib" path="lib/cxf/cxf-2.7.6.jar" sourcepath="D:/d/opensource/cxf/apache-cxf-2.7.6-src">
+		<attributes>
+			<attribute name="source_encoding" value="UTF-8"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/cxf/geronimo-jaxws_2.2_spec-1.1.jar"/>
+	<classpathentry kind="lib" path="lib/cxf/geronimo-jms_1.1_spec-1.1.1.jar"/>
+	<classpathentry kind="lib" path="lib/cxf/geronimo-servlet_3.0_spec-1.0.jar"/>
+	<classpathentry kind="lib" path="lib/cxf/javax.ws.rs-api-2.0-m10.jar"/>
+	<classpathentry kind="lib" path="lib/cxf/jaxb-api-2.2.6.jar"/>
+	<classpathentry kind="lib" path="lib/cxf/jaxb-impl-2.2.6.jar"/>
+	<classpathentry kind="lib" path="lib/cxf/jaxb-xjc-2.2.6.jar"/>
+	<classpathentry kind="lib" path="lib/cxf/neethi-3.0.2.jar"/>
+	<classpathentry kind="lib" path="lib/cxf/wsdl4j-1.6.3.jar"/>
+	<classpathentry kind="lib" path="lib/cxf/xml-resolver-1.2.jar"/>
+	<classpathentry kind="lib" path="lib/cxf/xmlschema-core-2.0.3.jar"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>

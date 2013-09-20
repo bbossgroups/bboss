@@ -1,9 +1,9 @@
 <%
 /**
  * 
- * <p>Title: SPI¹ÜÀíÅäÖÃÎÄ¼þÃ÷Ï¸ÐÅÏ¢ÏÔÊ¾Ò³Ãæ</p>
+ * <p>Title: SPIç®¡ç†é…ç½®æ–‡ä»¶æ˜Žç»†ä¿¡æ¯æ˜¾ç¤ºé¡µé¢</p>
  *
- * <p>Description: SPI¹ÜÀíÅäÖÃÎÄ¼þÃ÷Ï¸ÐÅÏ¢ÏÔÊ¾Ò³Ãæ</p>
+ * <p>Description: SPIç®¡ç†é…ç½®æ–‡ä»¶æ˜Žç»†ä¿¡æ¯æ˜¾ç¤ºé¡µé¢</p>
  *
  * <p>Copyright: Copyright (c) 2008</p>
  *
@@ -13,7 +13,7 @@
  * @version 1.0
  */
  %>
-<%@ page language="java" contentType="text/html; charset=GBK" session="false"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" session="false"%>
 <%@page import="org.frameworkset.spi.BaseApplicationContext,org.frameworkset.spi.assemble.Pro"%>
 <%@page import="org.frameworkset.spi.assemble.LinkConfigFile"%>
 <%@page import="java.util.List"%>
@@ -34,9 +34,9 @@
 	
 	if(lnk != null){
 	
-		//×ÓÎÄ¼þ
+		//å­æ–‡ä»¶
 		list = lnk.getLinkConfigFiles();
-		//¹ÜÀí·þÎñ
+		//ç®¡ç†æœåŠ¡
 		map = lnk.getMgrServices();
 		pros = lnk.getProperties();
 		
@@ -45,7 +45,7 @@
 %>
 <html>
 	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=GBK">
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		
 		<link rel="stylesheet" type="text/css" href="<%=rootpath%>/sysmanager/css/treeview.css">
 <%@ include file="/include/css.jsp"%>
@@ -57,20 +57,20 @@
 	<body class="contentbodymargin" scroll="auto">
 	<table height="10%"  width="100%" border="0" cellpadding="0" cellspacing="0" class="thin">
 	<tr><td>
-		<%if(selected != null){out.println("ÅäÖÃÎÄ¼þ£º" + selected); }
+		<%if(selected != null){out.println("é…ç½®æ–‡ä»¶ï¼š" + selected); }
 		  else
 		  {
-		  out.println("ÇëÑ¡Ôñspi¹ÜÀí½Úµã£¡");
+		  out.println("è¯·é€‰æ‹©spiç®¡ç†èŠ‚ç‚¹ï¼");
 		  return;
 		  }%>
 	</td></tr>
 	<tr><td>
-		<%if(selected != null){out.println("ÈÝÆ÷±êÊ¶£º" + nodePath); }
+		<%if(selected != null){out.println("å®¹å™¨æ ‡è¯†ï¼š" + nodePath); }
 		 %>
 	</td></tr>
 	
 	<tr><td>
-		<%if(selected != null){out.println("ÈÝÆ÷ÀàÐÍ£º" + contextbase.getClass().getCanonicalName()); }
+		<%if(selected != null){out.println("å®¹å™¨ç±»åž‹ï¼š" + contextbase.getClass().getCanonicalName()); }
 		 %>
 	</td></tr>
 	</table >
@@ -78,13 +78,13 @@
 	<tab:tabContainer id="compsitents" skin="amethyst">
 	
 	
-	<tab:tabPane id="bussinessbeans" tabTitle="ÒµÎñ×é¼þ" >		
+	<tab:tabPane id="bussinessbeans" tabTitle="ä¸šåŠ¡ç»„ä»¶" >		
 	<table class="thin" width="100%">
 	<tr>
-	<td class="headercolor">ÒµÎñ×é¼þID</td>
-	<td class="headercolor">ÒµÎñ×é¼þÃ÷Ï¸</td>  
-	<td class="headercolor">ÒµÎñ×é¼þÀàÐÍ</td>
-	<td class="headercolor">ÒµÎñ×é¼þÃèÊö</td>
+	<td class="headercolor">ä¸šåŠ¡ç»„ä»¶ID</td>
+	<td class="headercolor">ä¸šåŠ¡ç»„ä»¶æ˜Žç»†</td>  
+	<td class="headercolor">ä¸šåŠ¡ç»„ä»¶ç±»åž‹</td>
+	<td class="headercolor">ä¸šåŠ¡ç»„ä»¶æè¿°</td>
 	</tr>
 	<%if(pros != null && !pros.isEmpty()){ 
 		Iterator iterator = pros.keySet().iterator();
@@ -119,7 +119,7 @@
 		out.print("name=" + pro.getName() + "<br>");
 				
 		out.print("refid=" + pro.getRefid() + "<br>");
-		out.print("ÒýÓÃÀàÐÍ£º" );out.print("×é¼þ»òÕßÊôÐÔÒýÓÃ");
+		out.print("å¼•ç”¨ç±»åž‹ï¼š" );out.print("ç»„ä»¶æˆ–è€…å±žæ€§å¼•ç”¨");
 		
 	 %></a>
 	 <%} else if(pro.isServiceRef()) {
@@ -129,7 +129,7 @@
 		out.print("name=" + pro.getName() + "<br>");
 		
 		out.print("refid=" + pro.getRefid() + "<br>");
-		out.print("ÒýÓÃÀàÐÍ£º" );out.print("¹ÜÀí·þÎñÒýÓÃ");
+		out.print("å¼•ç”¨ç±»åž‹ï¼š" );out.print("ç®¡ç†æœåŠ¡å¼•ç”¨");
 		
 	 %></a>
 	 <%}%>
@@ -161,7 +161,7 @@
 		if(pro.getLabel() != null)
 			out.print("label=" + pro.getLabel() + "<br>");
 		if(pro.getEditorString() != null)
-			out.print("ÊôÐÔ±à¼­Æ÷£º" + pro.getEditorString() + "<br>");	
+			out.print("å±žæ€§ç¼–è¾‘å™¨ï¼š" + pro.getEditorString() + "<br>");	
 		
 		
 		
@@ -175,15 +175,15 @@
 	<td ><%
 		if(pro.isBean())
 		{
-			out.print("×é¼þ");
+			out.print("ç»„ä»¶");
 		}
 		else if(pro.isRefereced())
 		{
-			out.print("ÒýÓÃ");
+			out.print("å¼•ç”¨");
 		}
 		else
 		{
-			out.print("È«¾ÖÊôÐÔ");
+			out.print("å…¨å±€å±žæ€§");
 		}
 	 %></td>
 	 <td ><%
@@ -193,23 +193,23 @@
 	</tr>
 	<% 
 	   }
-	   out.print("<tr><td colspan='4'>×Ü¹²ÅäÖÃÁË" + pros.size() + "¸öÒµÎñ×é¼þ£¡</td></tr>");	
+	   out.print("<tr><td colspan='4'>æ€»å…±é…ç½®äº†" + pros.size() + "ä¸ªä¸šåŠ¡ç»„ä»¶ï¼</td></tr>");	
 	  }else{ 
 	%>
-	<tr><td colspan="2">Ã»ÓÐÅäÖÃÒµÎñ×é¼þ£¡</td></tr>
+	<tr><td colspan="2">æ²¡æœ‰é…ç½®ä¸šåŠ¡ç»„ä»¶ï¼</td></tr>
 	<%} %>
 	</table>		
 	</tab:tabPane>
 	
-	<tab:tabPane id="subfiles" tabTitle="×ÓÄ£¿éÎÄ¼þ" lazeload="true" >
+	<tab:tabPane id="subfiles" tabTitle="å­æ¨¡å—æ–‡ä»¶" lazeload="true" >
 	<table class="thin" width="100%">
 	<tr height=100% width="100%"><td height=100% width="100%">
 	
 	<fieldset height=100% width="100%">
-	<LEGEND align=left><strong>&nbsp;¹ÜÀí·þÎñ×ÓÄ£¿éÎÄ¼þ&nbsp;</strong></LEGEND>
+	<LEGEND align=left><strong>&nbsp;ç®¡ç†æœåŠ¡å­æ¨¡å—æ–‡ä»¶&nbsp;</strong></LEGEND>
 	<table height=100% width="100%" border="0" cellpadding="0" cellspacing="0" class="table">
 	
-	<tr ><td class="headercolor">×ÓÄ£¿éÎÄ¼þµØÖ·</td><td class="headercolor">Ã÷Ï¸²é¿´</td></tr>
+	<tr ><td class="headercolor">å­æ¨¡å—æ–‡ä»¶åœ°å€</td><td class="headercolor">æ˜Žç»†æŸ¥çœ‹</td></tr>
 	<%if(list != null && list.size() > 0){
 		for(int i = 0; i < list.size(); i++){
 			LinkConfigFile linkConfigFile = (LinkConfigFile)list.get(i);
@@ -217,14 +217,14 @@
 	%>
 	<tr>
 		<td><%=path %></td>
-		<td><a href="configfileDetail.jsp?selected=<%=path %>&nodePath=<%=nodePath %>" target="_blank" name="fileDetail" >Ã÷Ï¸²é¿´</a></td>
+		<td><a href="configfileDetail.jsp?selected=<%=path %>&nodePath=<%=nodePath %>" target="_blank" name="fileDetail" >æ˜Žç»†æŸ¥çœ‹</a></td>
 	</tr>
 	<%
 		}
-		out.print("<tr><td colspan='2'>×Ü¹²ÅäÖÃÁË" + list.size() + "¸ö¹ÜÀí·þÎñ×ÓÄ£¿éÎÄ¼þ£¡</td></tr>");
+		out.print("<tr><td colspan='2'>æ€»å…±é…ç½®äº†" + list.size() + "ä¸ªç®¡ç†æœåŠ¡å­æ¨¡å—æ–‡ä»¶ï¼</td></tr>");
 	  }else{ 
 	%>
-	<tr height=100% width="100%"><td height=100% width="100%" colspan="2">Ã»ÓÐÅäÖÃ¹ÜÀí·þÎñ×ÓÄ£¿éÎÄ¼þ£¡</td></tr>
+	<tr height=100% width="100%"><td height=100% width="100%" colspan="2">æ²¡æœ‰é…ç½®ç®¡ç†æœåŠ¡å­æ¨¡å—æ–‡ä»¶ï¼</td></tr>
 	<%} %>
 	</table>
 	
@@ -232,15 +232,15 @@
 	</td></tr>
 	</table>
 	</tab:tabPane>
-	<tab:tabPane id="managers" tabTitle="¹ÜÀí·þÎñ">
+	<tab:tabPane id="managers" tabTitle="ç®¡ç†æœåŠ¡">
 	<table class="thin" width="100%">
 	<tr height=100% width="100%"><td height=100% width="100%">
 	<fieldset height=100% width="100%">
-	<LEGEND align=left><strong>&nbsp;¹ÜÀí·þÎñ&nbsp;</strong></LEGEND>
+	<LEGEND align=left><strong>&nbsp;ç®¡ç†æœåŠ¡&nbsp;</strong></LEGEND>
 	<table width="100%" border="0" cellpadding="0" cellspacing="0" class="table">
 	<tr>
-	<td class="headercolor">¹ÜÀí·þÎñID</td>
-	<td class="headercolor">¹ÜÀí·þÎñÃ÷Ï¸</td>
+	<td class="headercolor">ç®¡ç†æœåŠ¡ID</td>
+	<td class="headercolor">ç®¡ç†æœåŠ¡æ˜Žç»†</td>
 	</tr>
 	<%if(map != null && !map.isEmpty()){ 
 		Iterator iterator = map.keySet().iterator();
@@ -249,14 +249,14 @@
 	%>
 	<tr>
 	<td><%=key %></td>
-	<td><a href="managerserviceDetail.jsp?selected=<%=key %>" target="_blank" name="serviceDetail"  >Ã÷Ï¸²é¿´</a></td>
+	<td><a href="managerserviceDetail.jsp?selected=<%=key %>" target="_blank" name="serviceDetail"  >æ˜Žç»†æŸ¥çœ‹</a></td>
 	</tr>
 	<% 
 	   }
-	   out.print("<tr><td colspan='2'>×Ü¹²ÅäÖÃÁË" + map.size() + "¸ö¹ÜÀí·þÎñ£¡</td></tr>");	
+	   out.print("<tr><td colspan='2'>æ€»å…±é…ç½®äº†" + map.size() + "ä¸ªç®¡ç†æœåŠ¡ï¼</td></tr>");	
 	  }else{ 
 	%>
-	<tr><td colspan="2">Ã»ÓÐÅäÖÃ¹ÜÀí·þÎñ£¡</td></tr>
+	<tr><td colspan="2">æ²¡æœ‰é…ç½®ç®¡ç†æœåŠ¡ï¼</td></tr>
 	<%} %>
 	</table>
 	</fieldset>

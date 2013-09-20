@@ -1,7 +1,7 @@
 <%
 /*
- * <p>Title: ¼à¿Ø·şÎñÆ÷×´Ì¬</p>
- * <p>Description: ·şÎñÆ÷ÔËĞĞÊÇ·ñÕı³£</p>
+ * <p>Title: ç›‘æ§æœåŠ¡å™¨çŠ¶æ€</p>
+ * <p>Description: æœåŠ¡å™¨è¿è¡Œæ˜¯å¦æ­£å¸¸</p>
  * <p>Copyright: Copyright (c) 2008</p>
  * <p>Company: chinacreator</p>
  * @Date 2008-9-8
@@ -9,9 +9,9 @@
  * @version 1.0
  */
  %>
-<%@ page session="false" contentType="text/html; charset=GBK" language="java" %>
+<%@ page session="false" contentType="text/html; charset=UTF-8" language="java" %>
 <%@ page import="java.util.*" %>
-<%@page import="com.chinacreator.remote.Utils"%>
+<%@page import="com.frameworkset.platform.remote.Utils"%>
 <%@page import="org.frameworkset.spi.remote.RPCAddress"%>	
 <%
 String path = request.getContextPath();
@@ -22,7 +22,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <head>
     <base href="<%=basePath%>">
 <%@ include file="/include/css.jsp"%>
-    <title>ËùÓĞ·şÎñÆ÷×´Ì¬ĞÅÏ¢</title>
+    <title>æ‰€æœ‰æœåŠ¡å™¨çŠ¶æ€ä¿¡æ¯</title>
 
 	<script type="text/javascript" languge="Javascript">
 	function flushButton(){
@@ -37,10 +37,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<div style="width:100%;height:100%;overflow:auto">
 	<form  name="LogForm"  method="post">
 	<table width="100%" height="" border="0" cellpadding="0" cellspacing="1" class="thin">
-	<caption>¼à¿ØËùÓĞ·şÎñÆ÷×´Ì¬¼à¿Ø<div align="right" ><input type="button" value="Ë¢ĞÂÒ³Ãæ" class="input" onclick="flushButton()"></div></caption>
+	<caption>ç›‘æ§æ‰€æœ‰æœåŠ¡å™¨çŠ¶æ€ç›‘æ§<div align="right" ><input type="button" value="åˆ·æ–°é¡µé¢" class="input" onclick="flushButton()"></div></caption>
 	<tr>
-	<th>·şÎñÆ÷Ãû</th>
-	<th>·şÎñ×´Ì¬</th>
+	<th>æœåŠ¡å™¨å</th>
+	<th>æœåŠ¡çŠ¶æ€</th>
 	</tr>
 	<% 
 		List<RPCAddress> servers = Utils.getAppservers();

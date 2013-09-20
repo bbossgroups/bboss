@@ -353,7 +353,11 @@ public class ServiceProviderManager {
             	this.batchLoad(handler.getMangerimports(), linkconfigFile);
 
         } catch (Exception e) {
-            if (parentFile == null) {
+        	if(configFile.equals(defaultConfigFile))
+        	{
+        		 log.debug("从文件[" + defaultConfigFile+ "]装载管理服务失败，请检查文件是否存在，或者是否被正确定义。");
+        	}
+        	else if (parentFile == null) {
                 log.error("从文件[" + url + "]装载管理服务失败，请检查文件是否存在，或者是否被正确定义。",e);
             } else {
                 log.error("从文件[" + parentFile + "@" + url + "]装载管理服务失败，请检查文件是否存在，或者是否被正确定义。",e);
