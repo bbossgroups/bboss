@@ -123,7 +123,7 @@ public class RequestContext {
 			throw e;
 		}
 		catch (Exception e) {
-			throw new SecurityException("" + securityContext);
+			throw new SecurityException("" + securityContext,e);
 		}
 	}
 

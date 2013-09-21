@@ -16,6 +16,10 @@
 
 package org.frameworkset.spi.remote.webservice;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.net.URL;
+
 import javax.xml.ws.Endpoint;
 import javax.xml.ws.soap.SOAPBinding;
 
@@ -24,6 +28,7 @@ import org.apache.log4j.Logger;
 import org.frameworkset.spi.BaseApplicationContext;
 import org.frameworkset.spi.assemble.Pro;
 import org.frameworkset.spi.assemble.ProList;
+import org.frameworkset.spi.assemble.ServiceProviderManager;
 
 
 
@@ -105,7 +110,7 @@ public class WSLoader {
                  }
                  catch(Exception e)
                  {
-                    logger.warn(e);
+                    logger.warn(e.getMessage(),e);
                  }
                  
              }
@@ -121,18 +126,55 @@ public class WSLoader {
 	{
 		
 		try {
-			org.frameworkset.spi.BaseApplicationContext context = org.frameworkset.spi.DefaultApplicationContext
-					.getApplicationContext("org/frameworkset/spi/ws/webserivce-modules.xml");
-			WebServicePublisherUtil.loaderContextWebServices((BaseApplicationContext) context
-					.getBeanObject("webapplicationcontext"),classLoader);
+//			org.frameworkset.spi.BaseApplicationContext context = org.frameworkset.spi.DefaultApplicationContext
+//					.getApplicationContext("org/frameworkset/spi/ws/webserivce-modules.xml");
+			Class clas = Class.forName("org.frameworkset.web.servlet.support.WebApplicationContextUtils");
+			Method m = clas.getMethod("getWebApplicationContext", null);
+			org.frameworkset.spi.BaseApplicationContext context = (BaseApplicationContext)m.invoke(null, null);
+			WebServicePublisherUtil.loaderContextWebServices(context,classLoader);
 		} catch (Exception e) {
-			logger.warn(e);
+			logger.warn(e.getMessage(),e);
 		}
 	}
-	
-	
+	  private static ClassLoader getTCL() throws IllegalAccessException, InvocationTargetException {
+	        Method method = null;
+	        try {
+	            method = (java.lang.Thread.class).getMethod("getContextClassLoader", null);
+	        } catch (NoSuchMethodException e) {
+	            return null;
+	        }
+	        return (ClassLoader)method.invoke(Thread.currentThread(), null);
+	    }
+	private boolean fileexist()
+	{/////
+		
+		String configFile = "org/frameworkset/spi/ws/webserivce-modules.xml";
+		 URL confURL = ServiceProviderManager.class.getClassLoader().getResource(configFile);
+         if (confURL == null)
+             confURL = ServiceProviderManager.class.getClassLoader().getResource("/" + configFile);
+
+         try {
+			if (confURL == null)
+			     confURL = getTCL().getResource(configFile);
+			 if (confURL == null)
+			     confURL = getTCL().getResource("/" + configFile);
+			 if (confURL == null)
+			     confURL = ClassLoader.getSystemResource(configFile);
+			 if (confURL == null)
+			     confURL = ClassLoader.getSystemResource("/" + configFile);
+		} catch (Exception e) {
+			return false;
+		}
+
+         if (confURL == null) 
+        	 return false;
+         return true;
+	}
 	private  void loadModulesWebService(ClassLoader classLoader)
 	{
+		
+		if(!fileexist())
+			return;
 		org.frameworkset.spi.BaseApplicationContext context = org.frameworkset.spi.DefaultApplicationContext
 		.getApplicationContext("org/frameworkset/spi/ws/webserivce-modules.xml");
 		String[] cxf_webservices_modules = context.getStringArray("cxf.webservices.modules");

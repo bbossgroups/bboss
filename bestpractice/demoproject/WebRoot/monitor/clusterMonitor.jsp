@@ -1,7 +1,7 @@
 <%
 /*
- * <p>Title: ¼à¿ØÊı¾İ¿âµÄÊ¹ÓÃÁ´½ÓÇé¿ö</p>
- * <p>Description: Êı¾İ¿âÁ´½ÓµÄ¾ßÌåÇé¿ö</p>
+ * <p>Title: ç›‘æ§æ•°æ®åº“çš„ä½¿ç”¨é“¾æ¥æƒ…å†µ</p>
+ * <p>Description: æ•°æ®åº“é“¾æ¥çš„å…·ä½“æƒ…å†µ</p>
  * <p>Copyright: Copyright (c) 2008</p>
  * <p>Company: chinacreator</p>
  * @Date 2008-9-8
@@ -9,13 +9,13 @@
  * @version 1.0
  */
  %>
-<%@ page session="false" contentType="text/html; charset=GBK" language="java" %>
+<%@ page session="false" contentType="text/html; charset=UTF-8" language="java" %>
 <%@ page import="com.frameworkset.common.poolman.DBUtil"%>
-<%@page import="com.chinacreator.security.AccessControl"%>
+<%@page import="com.frameworkset.platform.security.AccessControl"%>
 <%@page import="java.util.*"%>
 <%@page import="java.util.Enumeration,
 				com.frameworkset.common.poolman.util.JDBCPoolMetaData"%>
-<%@page import="com.chinacreator.remote.Utils"%>
+<%@page import="com.frameworkset.platform.remote.Utils"%>
 <%@page import="java.util.Iterator"%>
 <%@page import="org.frameworkset.spi.remote.RPCAddress"%>
 <%@page import="org.frameworkset.spi.remote.RPCResponse"%>	
@@ -25,12 +25,12 @@
 	//System.out.println("ip = " + accessControl.getlocalIpAdd());
 	
 	boolean isCluster = Utils.clusterstarted();
-	//System.out.println("ÊÇ·ñÆôÓÃÁË¼¯Èº £º " + isCluster);
+	//System.out.println("æ˜¯å¦å¯ç”¨äº†é›†ç¾¤ ï¼š " + isCluster);
 	%>
 <html>
 	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=GBK">
-		<title>poolmanÁ¬½Ó³ØÊ¹ÓÃÇé¿öÓëÅäÖÃĞÅÏ¢</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>poolmanè¿æ¥æ± ä½¿ç”¨æƒ…å†µä¸é…ç½®ä¿¡æ¯</title>
 <%@ include file="/include/css.jsp"%>
 		<tab:tabConfig/>	
 		<script src="../../inc/js/func.js"></script>
@@ -46,7 +46,7 @@
 	<div style="width:100%;height:100%;overflow:auto">
 	<form  name="LogForm"  method="post">
 	<table width="100%" height="" border="0" cellpadding="0" cellspacing="1" class="thin">
-	<caption>¼¯ÈºËùÓĞ·şÎñÆ÷Êı¾İ¿âÁ´½ÓÊ¹ÓÃÇé¿ö±í<div align="right"><input type="button" class="input" value="Ë¢ĞÂÒ³Ãæ" onclick="flushBotton()"></div></caption>
+	<caption>é›†ç¾¤æ‰€æœ‰æœåŠ¡å™¨æ•°æ®åº“é“¾æ¥ä½¿ç”¨æƒ…å†µè¡¨<div align="right"><input type="button" class="input" value="åˆ·æ–°é¡µé¢" onclick="flushBotton()"></div></caption>
 	
 	<%
 	if(Utils.clusterstarted()){
@@ -55,10 +55,10 @@
 		
 		
 		//String[] ipPort = new String[vector.size()];
-	 	//»ñÈ¡¼¯ÈºÖĞÃ¿Ì¨·şÎñÆ÷µÄÁ´½Ó³ØµÄÁ´½ÓÊ¹ÓÃÇé¿ö
+	 	//è·å–é›†ç¾¤ä¸­æ¯å°æœåŠ¡å™¨çš„é“¾æ¥æ± çš„é“¾æ¥ä½¿ç”¨æƒ…å†µ
 	    //Map<ip:port,Map<dbname,Object[idleconnections,usedconnections,maxusedconnections]>>
 		Map map = Utils.getDataSourceStatus();
-		//·şÎñÆ÷ipÓÚ¶Ë¿Ú
+		//æœåŠ¡å™¨ipäºç«¯å£
 		List<RPCAddress> appServers = Utils.getAppservers();
 		Set servers = map.entrySet();
 		//System.out.println("servers.size() = " + servers.size());
@@ -77,7 +77,7 @@
 		
 		//	Map objMap = (Map)rsp.getValue();
 			if(objMap == null){
-				out.println("¸Ã·şÎñÆ÷ÍË³ö~~~¡¤");
+				out.println("è¯¥æœåŠ¡å™¨é€€å‡º~~~Â·");
 				break;
 			}
 			Set poolmans = objMap.entrySet();
@@ -89,12 +89,12 @@
 			</tr>
 			<tr class="tr">
 		
-				<td align="center" height="25" class="detailtitle">Êı¾İ¿âÃû³Æ</td>
-				<td align="center" height="25" class="detailtitle">¿ÕÏĞÁ¬½Ó</td>
-				<td align="center" height="25" class="detailtitle">ÕıÔÚÊ¹ÓÃÁ¬½Ó</td>
-				<td align="center" height="25" class="detailtitle">Ê¹ÓÃÁ¬½Ó¸ß·åÖµ</td>
-				<td align="center" height="25" class="detailtitle">ÔÊĞíµÄ×î´óÁ´½ÓÊı</td>
-				<td align="center" height="25" class="detailtitle">×îĞ¡Á´½ÓÊı</td>
+				<td align="center" height="25" class="detailtitle">æ•°æ®åº“åç§°</td>
+				<td align="center" height="25" class="detailtitle">ç©ºé—²è¿æ¥</td>
+				<td align="center" height="25" class="detailtitle">æ­£åœ¨ä½¿ç”¨è¿æ¥</td>
+				<td align="center" height="25" class="detailtitle">ä½¿ç”¨è¿æ¥é«˜å³°å€¼</td>
+				<td align="center" height="25" class="detailtitle">å…è®¸çš„æœ€å¤§é“¾æ¥æ•°</td>
+				<td align="center" height="25" class="detailtitle">æœ€å°é“¾æ¥æ•°</td>
 			</tr>
 			<%
 			while(itObjMap.hasNext()){

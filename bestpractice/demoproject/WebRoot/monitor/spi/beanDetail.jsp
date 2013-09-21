@@ -7,9 +7,9 @@
 <%@page import="java.util.Iterator"%><%@page import="java.net.URLEncoder"%><%
 /**
  * 
- * <p>Title: ¹ÜÀí·þÎñÃ÷Ï¸ÐÅÏ¢ÏÔÊ¾Ò³Ãæ</p>
+ * <p>Title: ç®¡ç†æœåŠ¡æ˜Žç»†ä¿¡æ¯æ˜¾ç¤ºé¡µé¢</p>
  *
- * <p>Description: ¹ÜÀí·þÎñÃ÷Ï¸ÐÅÏ¢ÏÔÊ¾Ò³Ãæ</p>
+ * <p>Description: ç®¡ç†æœåŠ¡æ˜Žç»†ä¿¡æ¯æ˜¾ç¤ºé¡µé¢</p>
  *
  * <p>Copyright: Copyright (c) 2008</p>
  *
@@ -19,7 +19,7 @@
  * @version 1.0
  */
  %>
-<%@ page language="java" contentType="text/html; charset=GBK" session="false"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" session="false"%>
 <%@page import="org.frameworkset.spi.assemble.*,org.frameworkset.spi.BaseApplicationContext"%>
 <%@ taglib prefix="tab" uri="/WEB-INF/tabpane-taglib.tld" %>		
 
@@ -37,7 +37,7 @@
 	}
 	
 	//String classType = request.getParameter("classType");
-	//¹ÜÀí·þÎñÃ÷Ï¸ÐÅÏ¢
+	//ç®¡ç†æœåŠ¡æ˜Žç»†ä¿¡æ¯
 	String proParentPath = request.getParameter("proParentPath");
 	Pro providerManagerInfo =  null;
 	if(proParentPath != null)
@@ -46,19 +46,19 @@
 		providerManagerInfo = context.getProBean(selected) ;
 	if(providerManagerInfo == null)
 	{
-		out.print("·ÇÈ«¾Öbean×é¼þ");
+		out.print("éžå…¨å±€beanç»„ä»¶");
 		return ;
 	}
-	//·þÎñÃû³Æ
+	//æœåŠ¡åç§°
 	String name = proParentPath == null ?selected:proParentPath + "[" + selected + "]";
 	String pro_name = providerManagerInfo.getName() == null?"":providerManagerInfo.getName() ;
 	
-	//ÊÇ·ñÊÇµ¥ÊµÀýÄ£Ê½
+	//æ˜¯å¦æ˜¯å•å®žä¾‹æ¨¡å¼
 	boolean isSinglable = providerManagerInfo.isSinglable();
 	
-	//interceptor-¹ÜÀí·þÎñÆ÷µÄÀ¹½ØÆ÷
+	//interceptor-ç®¡ç†æœåŠ¡å™¨çš„æ‹¦æˆªå™¨
 	String interceptor = providerManagerInfo.getTransactionInterceptorClass();
-	interceptor = interceptor==null?"Ã»ÓÐÅäÖÃ":interceptor;
+	interceptor = interceptor==null?"æ²¡æœ‰é…ç½®":interceptor;
 	
 	String beanclazz = providerManagerInfo.getClazz() == null?"":providerManagerInfo.getClazz();
 	String factory_bean = providerManagerInfo.getFactory_bean() == null?"":providerManagerInfo.getFactory_bean();
@@ -73,7 +73,7 @@
 %>
 <html>
 	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=GBK">
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title><%=pro_name %></title>
 		<link rel="stylesheet" type="text/css" href="<%=rootpath%>/sysmanager/css/treeview.css">
 <%@ include file="/include/css.jsp"%>
@@ -85,11 +85,11 @@
 	<body class="contentbodymargin" scroll="no">
 	<div style="width:100%;height:100%;overflow:auto">
 	<table class="thin" width="100%">
-		<tr><td colspan="3" class="headercolor">ÒµÎñ×é¼þËùÊôÈÝÆ÷ÐÅÏ¢</td></tr>
+		<tr><td colspan="3" class="headercolor">ä¸šåŠ¡ç»„ä»¶æ‰€å±žå®¹å™¨ä¿¡æ¯</td></tr>
 		<tr>
-		<td class="headercolor" width="20%">ÈÝÆ÷±êÊ¶</td>
-		<td class="headercolor" width="30%">ÈÝÆ÷ÀàÐÍ</td>
-		<td class="headercolor" width="50%">×é¼þËùÊôÅäÖÃÎÄ¼þ</td>
+		<td class="headercolor" width="20%">å®¹å™¨æ ‡è¯†</td>
+		<td class="headercolor" width="30%">å®¹å™¨ç±»åž‹</td>
+		<td class="headercolor" width="50%">ç»„ä»¶æ‰€å±žé…ç½®æ–‡ä»¶</td>
 		</tr>
 		<tr>
 		<td width="20%"><%=!isWebApplicationContext?nodePath:nodePath+"("+context.getConfigfile()+")" %></td>
@@ -98,33 +98,33 @@
 		</tr>
 	</table>
 	<table class="thin" width="100%">
-		<tr><td colspan="3" class="headercolor">ÒµÎñ×é¼þÊôÐÔÅäÖÃÐÅÏ¢</td></tr>
+		<tr><td colspan="3" class="headercolor">ä¸šåŠ¡ç»„ä»¶å±žæ€§é…ç½®ä¿¡æ¯</td></tr>
 		<tr>
-		<td class="headercolor" width="20%">ÅäÖÃÊôÐÔÃû</td>
-		<td class="headercolor" width="30%">ÊôÐÔ¶ÔÓ¦Öµ</td>
+		<td class="headercolor" width="20%">é…ç½®å±žæ€§å</td>
+		<td class="headercolor" width="30%">å±žæ€§å¯¹åº”å€¼</td>
 		
-		<td class="headercolor" width="50%">ÃèÊö</td>
+		<td class="headercolor" width="50%">æè¿°</td>
 		</tr>
 		<tr>
-		<td width="20%">name</td><td width="30%"><%=pro_name %></td><td width="50%">name-×é¼þÃû³Æ/±êÊ¶</td>
-		</tr>
-		
-		<tr>
-		<td width="20%">×é¼þ¶¨ÒåÂ·¾¶</td><td width="20%"><%=name %></td><td width="50%">×é¼þ¶¨ÒåÂ·¾¶ÐÅÏ¢</td>
-		
+		<td width="20%">name</td><td width="30%"><%=pro_name %></td><td width="50%">name-ç»„ä»¶åç§°/æ ‡è¯†</td>
 		</tr>
 		
 		<tr>
-		<td width="20%">singlable</td><td width="30%"><%=isSinglable %></td><td width="50%">singlable-ÊÇ·ñÊÇµ¥ÊµÀýÄ£Ê½</td>
-		</tr>
-		
-		<tr>
-		<td width="20%">interceptor</td><td width="20%"><%=interceptor %></td><td width="50%">interceptor-×é¼þµÄÀ¹½ØÆ÷</td>
+		<td width="20%">ç»„ä»¶å®šä¹‰è·¯å¾„</td><td width="20%"><%=name %></td><td width="50%">ç»„ä»¶å®šä¹‰è·¯å¾„ä¿¡æ¯</td>
 		
 		</tr>
 		
 		<tr>
-		<td width="20%">class</td><td width="20%"><%=beanclazz %></td><td width="50%">class-×é¼þÊµÏÖÀà</td>
+		<td width="20%">singlable</td><td width="30%"><%=isSinglable %></td><td width="50%">singlable-æ˜¯å¦æ˜¯å•å®žä¾‹æ¨¡å¼</td>
+		</tr>
+		
+		<tr>
+		<td width="20%">interceptor</td><td width="20%"><%=interceptor %></td><td width="50%">interceptor-ç»„ä»¶çš„æ‹¦æˆªå™¨</td>
+		
+		</tr>
+		
+		<tr>
+		<td width="20%">class</td><td width="20%"><%=beanclazz %></td><td width="50%">class-ç»„ä»¶å®žçŽ°ç±»</td>
 		
 		</tr>
 		
@@ -142,30 +142,30 @@
 				}
 				out.print(factory_bean); 
 								
-			}%></td><td width="50%">factory_bean-×é¼þÊµÏÖ¹¤³§´´½¨Àà</td>
+			}%></td><td width="50%">factory_bean-ç»„ä»¶å®žçŽ°å·¥åŽ‚åˆ›å»ºç±»</td>
 		
 		</tr>
 		<tr>
-		<td width="20%">factory_clazz</td><td width="20%"><%=factory_clazz %></td><td width="50%">factory_clazz-×é¼þÊµÏÖ¹¤³§´´½¨Àà</td>
+		<td width="20%">factory_clazz</td><td width="20%"><%=factory_clazz %></td><td width="50%">factory_clazz-ç»„ä»¶å®žçŽ°å·¥åŽ‚åˆ›å»ºç±»</td>
 		
 		</tr>
 		<tr>
-		<td width="20%">factory_method</td><td width="20%"><%=factory_method %></td><td width="50%">factory_method-×é¼þÊµÏÖ¹¤³§´´½¨Àà</td>
-		
-		</tr>
-		
-		<tr>
-		<td width="20%">init_method</td><td width="20%"><%=init_method %></td><td width="50%">init_method-×é¼þÊµÀý±»´´½¨Ê±£¬»áµ÷ÓÃµÄ·½·¨</td>
+		<td width="20%">factory_method</td><td width="20%"><%=factory_method %></td><td width="50%">factory_method-ç»„ä»¶å®žçŽ°å·¥åŽ‚åˆ›å»ºç±»</td>
 		
 		</tr>
 		
 		<tr>
-		<td width="20%">destroy_method</td><td width="20%"><%=destroy_method %></td><td width="50%">destroy_method-×é¼þÊµÀý±»Ïú»ÙÊ±£¬»áµ÷ÓÃµÄ·½·¨</td>
+		<td width="20%">init_method</td><td width="20%"><%=init_method %></td><td width="50%">init_method-ç»„ä»¶å®žä¾‹è¢«åˆ›å»ºæ—¶ï¼Œä¼šè°ƒç”¨çš„æ–¹æ³•</td>
+		
+		</tr>
+		
+		<tr>
+		<td width="20%">destroy_method</td><td width="20%"><%=destroy_method %></td><td width="50%">destroy_method-ç»„ä»¶å®žä¾‹è¢«é”€æ¯æ—¶ï¼Œä¼šè°ƒç”¨çš„æ–¹æ³•</td>
 		
 		</tr>
 	</table>
 	<tab:tabContainer id="beanifoDetail" skin="amethyst">
-		<tab:tabPane id="reference" tabTitle="ÊôÐÔ×¢Èë" lazeload="true" >
+		<tab:tabPane id="reference" tabTitle="å±žæ€§æ³¨å…¥" lazeload="true" >
 			<% 
 				List referencesList = providerManagerInfo.getReferences();
 				
@@ -173,15 +173,15 @@
 			<table class="thin" width="100%">
 			<tr><td colspan="4">
 				
-				refid-ÒýÓÃµÄ¹ÜÀí·þÎñµÄid£¬¶ÔÓ¦manager½ÚµãµÄidÊôÐÔ£¬±ØÑ¡ÊôÐÔ<br>
+				refid-å¼•ç”¨çš„ç®¡ç†æœåŠ¡çš„idï¼Œå¯¹åº”managerèŠ‚ç‚¹çš„idå±žæ€§ï¼Œå¿…é€‰å±žæ€§<br>
 				
-				value-¶ÔÓ¦×Ö¶ÎfieldnameµÄÖµ<br>
+				value-å¯¹åº”å­—æ®µfieldnameçš„å€¼<br>
 			</td></tr>
 			<tr>
-				<td class="headercolor">×Ö¶ÎÃû³Æ</td>
-				<td class="headercolor">×Ö¶ÎÃû³ÆµÄÖµ</td>
-				<td class="headercolor">ÅäÖÃÀàÐÍ</td>
-				<td class="headercolor">ÃèÊö</td>
+				<td class="headercolor">å­—æ®µåç§°</td>
+				<td class="headercolor">å­—æ®µåç§°çš„å€¼</td>
+				<td class="headercolor">é…ç½®ç±»åž‹</td>
+				<td class="headercolor">æè¿°</td>
 			</tr>
 			<% 
 			    
@@ -286,15 +286,15 @@
 	<td ><%
 		if(pro.isBean())
 		{
-			out.print("×é¼þ");
+			out.print("ç»„ä»¶");
 		}
 		else if(pro.isRefereced())
 		{
-			out.print("ÒýÓÃ");
+			out.print("å¼•ç”¨");
 		}
 		else
 		{
-			out.print("È«¾ÖÊôÐÔ");
+			out.print("å…¨å±€å±žæ€§");
 		}
 	 %></td>
 	 <td ><%
@@ -303,16 +303,16 @@
 	</tr>
 	<% 
 	   }
-	   out.print("<tr><td colspan='4'>×Ü¹²ÅäÖÃÁË" + referencesList.size() + "¸öÊôÐÔ×¢Èë²ÎÊý£¡</td></tr>");	
+	   out.print("<tr><td colspan='4'>æ€»å…±é…ç½®äº†" + referencesList.size() + "ä¸ªå±žæ€§æ³¨å…¥å‚æ•°ï¼</td></tr>");	
 	  }else{ 
 	%>
-	<tr><td colspan="4">Ã»ÓÐÊôÐÔ×¢Èë²ÎÊý£¡</td></tr>
+	<tr><td colspan="4">æ²¡æœ‰å±žæ€§æ³¨å…¥å‚æ•°ï¼</td></tr>
 	<%} %>
 					
 					</table>
 					
 		</tab:tabPane>
-		<tab:tabPane id="construction" tabTitle="¹¹Ôìº¯ÊýÅäÖÃ" >
+		<tab:tabPane id="construction" tabTitle="æž„é€ å‡½æ•°é…ç½®" >
 				<% 
 					Construction construction = providerManagerInfo.getConstruction();
 					if(construction == null)
@@ -321,7 +321,7 @@
 						
 						<table class="thin" width="100%">
 				<tr><td colspan="4">
-					Ã»ÓÐ¶¨Òå¹¹Ôìº¯Êý
+					æ²¡æœ‰å®šä¹‰æž„é€ å‡½æ•°
 				</td></tr></table>
 						<%
 						
@@ -333,14 +333,14 @@
 					%>
 					<table class="thin" width="100%">
 					<tr><td colspan="4">
-						fieldname-¶ÔÓ¦µÄ¹ÜÀí·þÎñÌá¹©ÕßÖÐµÄ×Ö¶ÎÃû³Æ£¬±ØÑ¡ÊôÐÔ<br>						
-						value-¶ÔÓ¦×Ö¶ÎfieldnameµÄÖµ<br>
+						fieldname-å¯¹åº”çš„ç®¡ç†æœåŠ¡æä¾›è€…ä¸­çš„å­—æ®µåç§°ï¼Œå¿…é€‰å±žæ€§<br>						
+						value-å¯¹åº”å­—æ®µfieldnameçš„å€¼<br>
 					</td></tr>
 					<tr>
-						<td class="headercolor">×Ö¶ÎÃû³Æ</td>
-						<td class="headercolor">×Ö¶ÎÃû³ÆµÄÖµ</td>
-						<td class="headercolor">ÀàÐÍ</td>
-						<td class="headercolor">ÃèÊö</td>
+						<td class="headercolor">å­—æ®µåç§°</td>
+						<td class="headercolor">å­—æ®µåç§°çš„å€¼</td>
+						<td class="headercolor">ç±»åž‹</td>
+						<td class="headercolor">æè¿°</td>
 					</tr>
 					<% 
 					    
@@ -397,7 +397,7 @@
 		out.print("name=" + (_name == null?key:_name) + "<br>");
 		
 		out.print("refid=" + pro.getRefid() + "<br>");
-		//out.print("ÒýÓÃÀàÐÍ£º" );out.print("×é¼þ»òÕßÊôÐÔÒýÓÃ");
+		//out.print("å¼•ç”¨ç±»åž‹ï¼š" );out.print("ç»„ä»¶æˆ–è€…å±žæ€§å¼•ç”¨");
 		
 	 %></a>
 	 <%} else if(pro.isServiceRef()) {
@@ -407,7 +407,7 @@
 		out.print("name=" +(_name == null?key:_name) + "<br>");
 		
 		out.print("refid=" + pro.getRefid() + "<br>");
-		//out.print("ÒýÓÃÀàÐÍ£º" );out.print("¹ÜÀí·þÎñÒýÓÃ");
+		//out.print("å¼•ç”¨ç±»åž‹ï¼š" );out.print("ç®¡ç†æœåŠ¡å¼•ç”¨");
 		
 	 %></a>
 	 <%}%>
@@ -440,7 +440,7 @@
 			out.print("class=" + pro.getClazz() + "<br>");		
 		if(pro.getRefid() != null)
 			out.print("refid=" + pro.getRefid() + "<br>");
-		//out.print("ÒýÓÃÀàÐÍ£º" );out.print("×é¼þ»òÕßÊôÐÔÒýÓÃ");
+		//out.print("å¼•ç”¨ç±»åž‹ï¼š" );out.print("ç»„ä»¶æˆ–è€…å±žæ€§å¼•ç”¨");
 		
 	 %></a>
 	<%
@@ -450,15 +450,15 @@
 	<td ><%
 		if(pro.isBean())
 		{
-			out.print("×é¼þ");
+			out.print("ç»„ä»¶");
 		}
 		else if(pro.isRefereced())
 		{
-			out.print("ÒýÓÃ");
+			out.print("å¼•ç”¨");
 		}
 		else
 		{
-			out.print("È«¾ÖÊôÐÔ");
+			out.print("å…¨å±€å±žæ€§");
 		}
 	 %></td>
 	 <td ><%
@@ -467,10 +467,10 @@
 	</tr>
 	<% 
 	   }
-	   out.print("<tr><td colspan='4'>×Ü¹²ÅäÖÃÁË" + constructionparams.size() + "¸ö¹¹Ôìº¯Êý²ÎÊý£¡</td></tr>");	
+	   out.print("<tr><td colspan='4'>æ€»å…±é…ç½®äº†" + constructionparams.size() + "ä¸ªæž„é€ å‡½æ•°å‚æ•°ï¼</td></tr>");	
 	  }else{ 
 	%>
-	<tr><td colspan="2">Ã»ÓÐ¹¹Ôìº¯Êý²ÎÊý£¡</td></tr>
+	<tr><td colspan="2">æ²¡æœ‰æž„é€ å‡½æ•°å‚æ•°ï¼</td></tr>
 	<%} %>
 					
 					</table>
@@ -483,31 +483,31 @@
 		
 		
 		
-		<tab:tabPane id="transactions" tabTitle="ÊÂÎñ·½·¨" lazeload="true" >
+		<tab:tabPane id="transactions" tabTitle="äº‹åŠ¡æ–¹æ³•" lazeload="true" >
 		<% 
 			List transactionMethodsList = providerManagerInfo.getTransactionMethods();
 		%>
 			<table class="thin" width="100%">
 			<tr>
 			<td colspan="4">
-				¶¨ÒåÐèÒª½øÐÐÊÂÎñ¿ØÖÆµÄ·½·¨<br>
-				ÊôÐÔËµÃ÷£º<br>
-				name-·½·¨Ãû³Æ£¬¿ÉÒÔÊÇÒ»¸öÕýÔò±í´ïÊ½£¬ÕýÔò±í´ïÊ½µÄÓï·¨Çë²Î¿¼jakarta-oroµÄÏà¹ØÎÄµµ£¬Èç¹ûÊ¹ÓÃ<br>
-				ÕýÔò±í´ïÊ½µÄÇé¿öÊ±£¬Ôò·½·¨ÖÐÉùÃ÷µÄ·½·¨²ÎÊý½«±»ºöÂÔ£¬µ«ÊÇ»Ø¹öÒì³£ÓÐÐ§¡£<br>
-				pattern-·½·¨Ãû³ÆµÄÕýÔò±í´ïÊ½Æ¥ÅäÄ£Ê½£¬Ä£Ê½Æ¥ÅäµÄË³ÐòÊÜÅäÖÃÎ»ÖÃµÄÓ°Ïì£¬Èç¹ûÅäÖÃÔÚºóÃæ»òÕßÖÐ¼ä£¬<br>
-						ÄÇÃ´»áÏÈÖ´ÐÐÖ®Ç°µÄ·½·¨Æ¥Åä£¬Èç¹ûÆ¥ÅäÉÏÁË¾Í²»»á¶Ô¸ÃÄ£Ê½·½·¨½øÐÐÆ¥ÅäÁË£¬·ñÔòÖ´ÐÐÆ¥Åä²Ù×÷¡£<br>
-						Èç¹ûÆ¥ÅäÉÏÌØ¶¨µÄ·½·¨Ãû³Æ£¬ÄÇÃ´Õâ¸ö·½·¨¾ÍÊÇÐèÒª½øÐÐÊÂÎñ¿ØÖÆµÄ·½·¨<br>
-						ÀýÈç£ºÄ£Ê½testInt.*Æ¥Åä½Ó¿ÚÖÐÒÔtestInt¿ªÍ·µÄÈÎºÎ·½·¨<br>
-				txtype-ÐèÒª¿ØÖÆµÄÊÂÎñÀàÐÍ£¬È¡Öµ·¶Î§£º<br>
-				NEW_TRANSACTION£¬<br>
-				REQUIRED_TRANSACTION£¬<br>
-				MAYBE_TRANSACTION£¬<br>
-				NO_TRANSACTION£¬<br>
+				å®šä¹‰éœ€è¦è¿›è¡Œäº‹åŠ¡æŽ§åˆ¶çš„æ–¹æ³•<br>
+				å±žæ€§è¯´æ˜Žï¼š<br>
+				name-æ–¹æ³•åç§°ï¼Œå¯ä»¥æ˜¯ä¸€ä¸ªæ­£åˆ™è¡¨è¾¾å¼ï¼Œæ­£åˆ™è¡¨è¾¾å¼çš„è¯­æ³•è¯·å‚è€ƒjakarta-oroçš„ç›¸å…³æ–‡æ¡£ï¼Œå¦‚æžœä½¿ç”¨<br>
+				æ­£åˆ™è¡¨è¾¾å¼çš„æƒ…å†µæ—¶ï¼Œåˆ™æ–¹æ³•ä¸­å£°æ˜Žçš„æ–¹æ³•å‚æ•°å°†è¢«å¿½ç•¥ï¼Œä½†æ˜¯å›žæ»šå¼‚å¸¸æœ‰æ•ˆã€‚<br>
+				pattern-æ–¹æ³•åç§°çš„æ­£åˆ™è¡¨è¾¾å¼åŒ¹é…æ¨¡å¼ï¼Œæ¨¡å¼åŒ¹é…çš„é¡ºåºå—é…ç½®ä½ç½®çš„å½±å“ï¼Œå¦‚æžœé…ç½®åœ¨åŽé¢æˆ–è€…ä¸­é—´ï¼Œ<br>
+						é‚£ä¹ˆä¼šå…ˆæ‰§è¡Œä¹‹å‰çš„æ–¹æ³•åŒ¹é…ï¼Œå¦‚æžœåŒ¹é…ä¸Šäº†å°±ä¸ä¼šå¯¹è¯¥æ¨¡å¼æ–¹æ³•è¿›è¡ŒåŒ¹é…äº†ï¼Œå¦åˆ™æ‰§è¡ŒåŒ¹é…æ“ä½œã€‚<br>
+						å¦‚æžœåŒ¹é…ä¸Šç‰¹å®šçš„æ–¹æ³•åç§°ï¼Œé‚£ä¹ˆè¿™ä¸ªæ–¹æ³•å°±æ˜¯éœ€è¦è¿›è¡Œäº‹åŠ¡æŽ§åˆ¶çš„æ–¹æ³•<br>
+						ä¾‹å¦‚ï¼šæ¨¡å¼testInt.*åŒ¹é…æŽ¥å£ä¸­ä»¥testIntå¼€å¤´çš„ä»»ä½•æ–¹æ³•<br>
+				txtype-éœ€è¦æŽ§åˆ¶çš„äº‹åŠ¡ç±»åž‹ï¼Œå–å€¼èŒƒå›´ï¼š<br>
+				NEW_TRANSACTIONï¼Œ<br>
+				REQUIRED_TRANSACTIONï¼Œ<br>
+				MAYBE_TRANSACTIONï¼Œ<br>
+				NO_TRANSACTIONï¼Œ<br>
 				RW_TRANSACTION
 			</td>
 			</tr>
 			<%if(transactionMethodsList == null || transactionMethodsList.size() == 0){ %>
-			<tr><td>Ã»ÓÐ¶¨ÒåÐèÒª½øÐÐÊÂÎñ¿ØÖÆµÄ·½·¨£¡</td></tr>
+			<tr><td>æ²¡æœ‰å®šä¹‰éœ€è¦è¿›è¡Œäº‹åŠ¡æŽ§åˆ¶çš„æ–¹æ³•ï¼</td></tr>
 			<%} %>
 			</table>
 			
@@ -515,15 +515,15 @@
 				
 				for(int i = 0; transactionMethodsList != null && i < transactionMethodsList.size(); i++){
 					SynchronizedMethod synchronizedMethod = (SynchronizedMethod)transactionMethodsList.get(i);
-					//·½·¨Ãû³Æ£¬nameºÍpattern²»ÄÜÍ¬Ê±³öÏÖ
+					//æ–¹æ³•åç§°ï¼Œnameå’Œpatternä¸èƒ½åŒæ—¶å‡ºçŽ°
 					String methodName = synchronizedMethod.getMethodName();
-					//pattern-Æ¥Åä·½·¨Ãû³ÆµÄÕýÔò±í´ïÊ½
+					//pattern-åŒ¹é…æ–¹æ³•åç§°çš„æ­£åˆ™è¡¨è¾¾å¼
 					String pattern = synchronizedMethod.getPattern();
-					//txtype-ÐèÒª¿ØÖÆµÄÊÂÎñÀàÐÍ£¬È¡Öµ·¶Î§£ºNEW_TRANSACTION£¬REQUIRED_TRANSACTION£¬MAYBE_TRANSACTION£¬NO_TRANSACTION
+					//txtype-éœ€è¦æŽ§åˆ¶çš„äº‹åŠ¡ç±»åž‹ï¼Œå–å€¼èŒƒå›´ï¼šNEW_TRANSACTIONï¼ŒREQUIRED_TRANSACTIONï¼ŒMAYBE_TRANSACTIONï¼ŒNO_TRANSACTION
 					String txtype = synchronizedMethod.getTxtype() == null?"": synchronizedMethod.getTxtype().toString();
-					//»Ø¹öÒì³£
+					//å›žæ»šå¼‚å¸¸
 					List rollbackExceptionsList = synchronizedMethod.getRollbackExceptions();
-					//²ÎÊýÁÐ±í
+					//å‚æ•°åˆ—è¡¨
 					List paramList = synchronizedMethod.getParams();
 			%>
 			<table class="thin" width="100%">
@@ -546,22 +546,22 @@
 				}
 				out.print(")");
 				if(pattern != null && paramList != null){
-					out.print("<br>ÕýÔò±í´ïÊ½Æ¥ÅäµÄ·½·¨²»ÐèÒªÅäÖÃ²ÎÊý£¡");
+					out.print("<br>æ­£åˆ™è¡¨è¾¾å¼åŒ¹é…çš„æ–¹æ³•ä¸éœ€è¦é…ç½®å‚æ•°ï¼");
 				} 
 			%>
 			</strong></td>
 			</tr>
 			<tr>
-			<td width="200">ÊÂÎñÀàÐÍ</td><td colspan="3"><%=txtype %></td>
+			<td width="200">äº‹åŠ¡ç±»åž‹</td><td colspan="3"><%=txtype %></td>
 			</tr>
 			<tr>
-			<td width="200" rowspan="<%=rollbackExceptionsList.size()+1 %>">ÊÂÎñ»Ø¹öÒì³£</td>
-			<td class="headercolor">Òì³£Àà</td><td class="headercolor" >Òì³£¼ì²â·¶Î§</td><td class="headercolor" >ÃèÊö</td>
+			<td width="200" rowspan="<%=rollbackExceptionsList.size()+1 %>">äº‹åŠ¡å›žæ»šå¼‚å¸¸</td>
+			<td class="headercolor">å¼‚å¸¸ç±»</td><td class="headercolor" >å¼‚å¸¸æ£€æµ‹èŒƒå›´</td><td class="headercolor" >æè¿°</td>
 			</tr>
 			<%if(rollbackExceptionsList != null && rollbackExceptionsList.size() > 0) {
 				for(int ep = 0; ep < rollbackExceptionsList.size(); ep++){
 					RollbackException rollbackException = (RollbackException)rollbackExceptionsList.get(ep);
-					//Òì³£Àà
+					//å¼‚å¸¸ç±»
 					String epClass = rollbackException.getExceptionName();
 					//INSTANCEOF = 1; IMPLEMENTS = 0;
 					String type = "INSTANCEOF";
@@ -574,10 +574,10 @@
 			<td>
 			<%
 				if(type.equals("IMPLEMENTS")){
-					out.print("IMPLEMENTSÖ»¼ì²âÒì³£Àà±¾Éí£¬ºöÂÔÒì³£ÀàµÄ×ÓÀà");
+					out.print("IMPLEMENTSåªæ£€æµ‹å¼‚å¸¸ç±»æœ¬èº«ï¼Œå¿½ç•¥å¼‚å¸¸ç±»çš„å­ç±»");
 				}
 				else if(type.equals("INSTANCEOF")){
-					out.print("INSTANCEOF¼ì²éÒì³£Àà±¾Éí¼°ÆäËùÓÐ×ÓÀà");
+					out.print("INSTANCEOFæ£€æŸ¥å¼‚å¸¸ç±»æœ¬èº«åŠå…¶æ‰€æœ‰å­ç±»");
 				} 
 				
 			%>
@@ -586,7 +586,7 @@
 			<%}
 			}else{ %>
 			<tr>
-			<td colspan="4" align="center">Ã»ÓÐÅäÖÃ»Ø¹öÒì³£</td>
+			<td colspan="4" align="center">æ²¡æœ‰é…ç½®å›žæ»šå¼‚å¸¸</td>
 			</tr>
 			<%} %>
 			</table>
@@ -599,20 +599,20 @@
 		
 		
 		
-		<tab:tabPane id="interceptor" tabTitle="À¹½ØÆ÷" lazeload="true" >
+		<tab:tabPane id="interceptor" tabTitle="æ‹¦æˆªå™¨" lazeload="true" >
 			<% 
 				List interceptorsList = providerManagerInfo.getInterceptors();
 				
 			%>
 			<table class="thin" width="100%">
 			<tr><td>
-				class-À¹½ØÆ÷µÄÊµÏÖÀà£¬ËùÓÐµÄÀ¹½ØÆ÷¶¼±ØÐëÊµÏÖ<br>
-		      	com.frameworkset.proxy.Interceptor½Ó¿Ú<br>
-		      	Ä¿Ç°ÏµÍ³ÖÐÌá¹©ÁËÒÔÏÂÈ±Ê¡À¹½ØÆ÷£º<br>
-		      	Êý¾Ý¿âÊÂÎñ¹ÜÀíÀ¹½ØÆ÷£¨org.frameworkset.spi.<br>
-		      	interceptor.TransactionInterceptor£©,Ö§³Ö¶ÔÉùÃ÷Ê½ÊÂÎñµÄ¹ÜÀí<br>
+				class-æ‹¦æˆªå™¨çš„å®žçŽ°ç±»ï¼Œæ‰€æœ‰çš„æ‹¦æˆªå™¨éƒ½å¿…é¡»å®žçŽ°<br>
+		      	com.frameworkset.proxy.InterceptoræŽ¥å£<br>
+		      	ç›®å‰ç³»ç»Ÿä¸­æä¾›äº†ä»¥ä¸‹ç¼ºçœæ‹¦æˆªå™¨ï¼š<br>
+		      	æ•°æ®åº“äº‹åŠ¡ç®¡ç†æ‹¦æˆªå™¨ï¼ˆorg.frameworkset.spi.<br>
+		      	interceptor.TransactionInterceptorï¼‰,æ”¯æŒå¯¹å£°æ˜Žå¼äº‹åŠ¡çš„ç®¡ç†<br>
 			</td></tr>
-			<tr><td class="headercolor">À¹½ØÆ÷Àà</td></tr>
+			<tr><td class="headercolor">æ‹¦æˆªå™¨ç±»</td></tr>
 			<%
 				if(interceptorsList != null && interceptorsList.size() > 0){
 					for(int ip = 0; ip < interceptorsList.size(); ip ++){
@@ -624,7 +624,7 @@
 					}
 				}else{
 			%>
-			<tr><td>Ã»ÓÐÅäÖÃÀ¹½ØÆ÷£¡</td></tr>
+			<tr><td>æ²¡æœ‰é…ç½®æ‹¦æˆªå™¨ï¼</td></tr>
 			<%	
 				} 
 			%>
@@ -632,14 +632,42 @@
 			</table>
 		</tab:tabPane>
 		
-		<tab:tabPane id="mvcpaths" tabTitle="mvcÂ·¾¶Ó³Éä" lazeload="true" >
+		<tab:tabPane id="mvcpaths" tabTitle="mvcè·¯å¾„æ˜ å°„" lazeload="true" >
 			<% 
 				Map mvcpaths = providerManagerInfo.getMvcpaths();
 				
 			%>
 			<table class="thin" width="100%">
 			
-			<tr><td class="headercolor">Ó³ÉäÃû³Æ</td><td class="headercolor">Ó³ÉäÂ·¾¶</td></tr>
+			<tr><td class="headercolor">æ˜ å°„åç§°</td><td class="headercolor">æ˜ å°„è·¯å¾„</td></tr>
+			<%
+				if(mvcpaths != null && mvcpaths.size() > 0)
+				{
+					Iterator its = mvcpaths.keySet().iterator();
+					while(its.hasNext())
+					{
+						String namepath = (String)its.next();
+			%>
+			<tr><td><%=namepath %></td><td><%=mvcpaths.get(namepath) %></td></tr>		
+			<%
+					}
+				}else{
+			%>
+			<tr><td></td></tr>
+			<%	
+				} 
+			%>
+			
+			</table>
+			
+			<% 
+			//mvcæŽ§åˆ¶å™¨æ–¹æ³•ä¿¡æ¯
+				Map mvcpaths = providerManagerInfo.getMvcpaths();
+				
+			%>
+			<table class="thin" width="100%">
+			
+			<tr><td class="headercolor">æ˜ å°„åç§°</td><td class="headercolor">æ˜ å°„è·¯å¾„</td></tr>
 			<%
 				if(mvcpaths != null && mvcpaths.size() > 0)
 				{
@@ -661,14 +689,14 @@
 			</table>
 		</tab:tabPane>
 		
-		<tab:tabPane id="extendattrs" tabTitle="À©Õ¹ÊôÐÔ" lazeload="true" >
+		<tab:tabPane id="extendattrs" tabTitle="æ‰©å±•å±žæ€§" lazeload="true" >
 			<% 
 				Map extendattrs = providerManagerInfo.getExtendsAttributes();
 				
 			%>
 			<table class="thin" width="100%">
 			
-			<tr><td class="headercolor">À©Õ¹ÊôÐÔÃû³Æ</td><td class="headercolor">À©Õ¹ÊôÐÔÖµ</td></tr>
+			<tr><td class="headercolor">æ‰©å±•å±žæ€§åç§°</td><td class="headercolor">æ‰©å±•å±žæ€§å€¼</td></tr>
 			<%
 				if(extendattrs != null && extendattrs.size() > 0)
 				{
@@ -690,14 +718,14 @@
 			</table>
 		</tab:tabPane>
 		
-		<tab:tabPane id="webservices" tabTitle="webserviceÊôÐÔ" lazeload="true" >
+		<tab:tabPane id="webservices" tabTitle="webserviceå±žæ€§" lazeload="true" >
 			<% 
 				Map webservices = providerManagerInfo.getWSAttributes();
 				
 			%>
 			<table class="thin" width="100%">
 			
-			<tr><td class="headercolor">webserviceÊôÐÔÃû³Æ</td><td class="headercolor">webserviceÊôÐÔÖµ</td></tr>
+			<tr><td class="headercolor">webserviceå±žæ€§åç§°</td><td class="headercolor">webserviceå±žæ€§å€¼</td></tr>
 			<%
 				if(webservices != null && webservices.size() > 0)
 				{
@@ -706,7 +734,7 @@
 					{
 						String namepath = (String)its.next();
 			%>
-			<tr><td><%=namepath %></td><td><%=webservices.get(namepath) %></td></tr>		
+			<tr><td><%=namepath %></td><td><a href="<%=request.getContextPath()%>/cxfservices/<%=webservices.get(namepath) %>?wsdl" target="webservice"><%=webservices.get(namepath) %></a></td></tr>		
 			<%
 					}
 				}else{
@@ -719,14 +747,14 @@
 			</table>
 		</tab:tabPane>
 		
-		<tab:tabPane id="rmiattrs" tabTitle="rmiÅäÖÃÊôÐÔ" >
+		<tab:tabPane id="rmiattrs" tabTitle="rmié…ç½®å±žæ€§" >
 		<% 
 				Map rmiattrs = providerManagerInfo.getRMIAttributes();
 				
 			%>
 			<table class="thin" width="100%">
 			
-			<tr><td class="headercolor">rmi·þÎñÊôÐÔÃû³Æ</td><td class="headercolor">rmi·þÎñÊôÐÔÖµ</td></tr>
+			<tr><td class="headercolor">rmiæœåŠ¡å±žæ€§åç§°</td><td class="headercolor">rmiæœåŠ¡å±žæ€§å€¼</td></tr>
 			<%
 				if(rmiattrs != null && rmiattrs.size() > 0)
 				{

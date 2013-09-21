@@ -14,7 +14,7 @@
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/bboss-schedule.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/bboss-soa.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/bboss-tlq.jar"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/bboss-ws.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/bboss-ws.jar" sourcepath="/bbossaop"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/cglib-nodep-2.2.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/cms.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/commons-io-2.0.jar"/>
@@ -30,9 +30,28 @@
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/jgroups.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/jstl-1.2.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/log4j-1.2.14.jar"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/velocity-1.6.4-dep.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="compilelib/jsp-api.jar"/>
 	<classpathentry kind="lib" path="compilelib/servlet-api.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/geronimo-jaxws_2.2_spec-1.1.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/geronimo-jms_1.1_spec-1.1.1.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/javax.ws.rs-api-2.0-m10.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/cxf-2.7.6.jar" sourcepath="D:/d/opensource/cxf/apache-cxf-2.7.6-src">
+		<attributes>
+			<attribute name="source_encoding" value="UTF-8"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/bboss-velocity.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/cglib-2.2.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/commons-fileupload.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/jaxb-api-2.2.6.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/jaxb-impl-2.2.6.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/jaxb-xjc-2.2.6.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/neethi-3.0.2.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/wsdl4j-1.6.3.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/xml-resolver-1.2.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/xmlschema-core-2.0.3.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/woodstox-core-asl-4.2.0.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/stax2-api-3.1.1.jar"/>
 	<classpathentry kind="output" path="WebRoot/WEB-INF/classes"/>
 </classpath>
