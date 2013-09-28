@@ -36,7 +36,6 @@
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/stream-1.0.1.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/syndication-1.0.0.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/text-2.0.8.jar"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/velocity-tools-view-2.0.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/xmlbeans-2.4.0.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/bboss-aop.jar" sourcepath="/bbossaop"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/bboss-rmi.jar"/>
@@ -74,7 +73,6 @@
 	<classpathentry kind="lib" path="lib-compile/jsf-impl.jar"/>
 	<classpathentry kind="lib" path="lib-compile/jsp-api.jar"/>
 	<classpathentry kind="lib" path="lib-compile/servlet-api.jar"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/velocity-1.6.4-dep.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/commons-fileupload.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/cxf-2.7.6.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/geronimo-jaxws_2.2_spec-1.1.jar"/>
@@ -89,5 +87,6 @@
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/xmlschema-core-2.0.3.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/commons-lang-2.6.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/commons-logging-1.1.1.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/bboss-velocity.jar"/>
 	<classpathentry kind="output" path="WebRoot/WEB-INF/classes"/>
 </classpath>

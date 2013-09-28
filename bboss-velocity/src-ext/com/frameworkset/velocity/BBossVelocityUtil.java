@@ -14,10 +14,10 @@ import bboss.org.apache.velocity.exception.ResourceNotFoundException;
 import bboss.org.apache.velocity.runtime.resource.Resource;
 
 import com.frameworkset.util.SimpleStringUtil;
-import com.frameworkset.util.VelocityUtil;
+
 
 public class BBossVelocityUtil {
-	private static Logger log = Logger.getLogger(VelocityUtil.class);
+	private static Logger log = Logger.getLogger(BBossVelocityUtil.class);
 	public static VelocityContext buildVelocityContext(Map<String,Object> context)
     {
     	VelocityContext context_ = new VelocityContext();
@@ -75,7 +75,7 @@ public class BBossVelocityUtil {
         		 return;
 	    	 try {
 	    		 
-	    	       java.util.Properties pros =SimpleStringUtil.getProperties("/bboss-velocity.properties", VelocityUtil.class);
+	    	       java.util.Properties pros =SimpleStringUtil.getProperties("/bboss-velocity.properties", BBossVelocityUtil.class);
 	    	       
 //	    	      
 	             

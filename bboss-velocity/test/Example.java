@@ -30,7 +30,8 @@ import bboss.org.apache.velocity.exception.ParseErrorException;
 import bboss.org.apache.velocity.exception.ResourceNotFoundException;
 
 import com.frameworkset.util.SimpleStringUtil;
-import com.frameworkset.util.VelocityUtil;
+import com.frameworkset.velocity.BBossVelocityUtil;
+
 
 /**
  * This class is a simple demonstration of how the Velocity Template Engine
@@ -122,7 +123,7 @@ public class Example
 	    	 try {
 	    		
 	    	        
-	    	       java.util.Properties pros =SimpleStringUtil.getProperties("/bboss-velocity.properties", VelocityUtil.class);
+	    	       java.util.Properties pros =SimpleStringUtil.getProperties("/bboss-velocity.properties", BBossVelocityUtil.class);
 
 	             
 	
