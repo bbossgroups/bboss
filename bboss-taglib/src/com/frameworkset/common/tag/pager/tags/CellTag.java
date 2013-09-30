@@ -111,8 +111,11 @@ public class CellTag  extends PagerTagSupport {
 	
 	protected String replace ;
 	
-	
-
+	/**
+	 * true
+	 * false
+	 */
+	protected boolean trim ;
 	/**
 	 * 包含cell标签的dataSet
 	 */
@@ -193,11 +196,18 @@ public class CellTag  extends PagerTagSupport {
 		String outStr = null;
 		if(!this.actualseted)
 		{
+			
 			outStr = this.getOutStr();
+			
+				
 		}
 		else
 		{
 			outStr = (this.actual == null?null:String.valueOf(this.actual));
+			if(trim && outStr != null)
+			{
+				outStr = outStr.trim();
+			}
 		}
 		if(outStr != null)
 		{
@@ -685,6 +695,10 @@ public class CellTag  extends PagerTagSupport {
 
 	protected String getOutStr() {
 		String outStr = getOut();
+		if(trim && outStr != null)
+		{
+			outStr = outStr.trim();
+		}
 		return outStr;
 //		//PagerDataSet dataSet = this.searchDataSet(this,PagerDataSet.class);
 //		//在setMeta方法中初始化t_formula对象
@@ -1132,6 +1146,7 @@ public class CellTag  extends PagerTagSupport {
 		this.replace = null;
 		this.actual = null;
 		this.actualseted = false;
+		this.trim = false;
 		
 		int ret = super.doEndTag();
 		return ret;
@@ -1188,5 +1203,15 @@ public class CellTag  extends PagerTagSupport {
 
 	public void setEncodecount(int encodecount) {
 		this.encodecount = encodecount;
+	}
+
+
+	public boolean getTrim() {
+		return trim;
+	}
+
+
+	public void setTrim(boolean trim) {
+		this.trim = trim;
 	}
 }

@@ -3603,6 +3603,11 @@
 			<name>setcolor</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
+		<!-- trim:true false default false -->
+		<attribute>
+			<name>trim</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
 	</tag>
 	<!--
 		功能说明：tdmore标签，可生成频道概览的more链接，并且将链接放到tr和td元素中 @param String
@@ -4378,6 +4383,11 @@
 		</attribute>
 		<attribute>
 			<name>id</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<!-- trim:true false default false -->
+		<attribute>
+			<name>trim</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
