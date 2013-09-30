@@ -1133,6 +1133,11 @@
 			<name>actual</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
+		<!-- trim:true false default false -->
+		<attribute>
+			<name>trim</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
 	</tag>
 	
 	<!--
