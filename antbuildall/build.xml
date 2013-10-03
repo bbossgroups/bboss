@@ -293,7 +293,7 @@
 	</target>
 	
 	<target name="distrib-bboss-velocity-jars" description="distrib-bboss-velocity-jars">
-		<for list="${bbossupload-lib},${demoproject-lib},${active-ext-lib},${bboss-aop-lib},${bbossevent-lib},${cms_baseline-lib},${bboss-persistent-lib}/velocity,${bboss-taglib-lib},${kettle-lib},${portallib},${casserverlib},${monitorconsole-lib},${monitorconsole-compilelib},${bboss-mvc-lib},${creatoresb-lib},${bboss-soa-lib},${bboss-clientproxy-lib},${mvc-lib},${persistent-lib},${xmlrequest-lib},${xmlserializable-lib},${bboss-plugin-hibernate-lib}" param="destdir">
+		<for list="${bboss-util-lib},${bbossupload-lib},${demoproject-lib},${active-ext-lib},${bboss-aop-lib},${bbossevent-lib},${cms_baseline-lib},${bboss-persistent-lib}/velocity,${bboss-taglib-lib},${kettle-lib},${portallib},${casserverlib},${monitorconsole-lib},${monitorconsole-compilelib},${bboss-mvc-lib},${creatoresb-lib},${bboss-soa-lib},${bboss-clientproxy-lib},${mvc-lib},${persistent-lib},${xmlrequest-lib},${xmlserializable-lib},${bboss-plugin-hibernate-lib}" param="destdir">
 			<sequential>
 				<echo>@{destdir}-------------------------------</echo>
 				<antcall target="svn-update-procedure">
