@@ -15,6 +15,8 @@
  */
 package org.frameworkset.mvc;
 
+import java.util.Date;
+
 import org.frameworkset.util.annotations.RequestParam;
 
 
@@ -35,6 +37,9 @@ public class ExampleBean
 	private String sex = null;
 	@RequestParam(name="favovate${id}")
 	private int favovate ;
+	
+	@RequestParam(dateformat="yyyy-MM-dd")
+	private Date testDate ;
 
 	
 	public String getName()

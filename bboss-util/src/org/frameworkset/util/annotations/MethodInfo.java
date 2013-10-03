@@ -31,6 +31,13 @@ import org.frameworkset.util.ClassUtils;
 import org.frameworkset.util.MethodParameter;
 import org.frameworkset.util.ParameterNameDiscoverer;
 import org.frameworkset.util.ParameterUtil;
+import org.frameworkset.util.annotations.wraper.AttributeWraper;
+import org.frameworkset.util.annotations.wraper.CookieValueWraper;
+import org.frameworkset.util.annotations.wraper.PagerParamWraper;
+import org.frameworkset.util.annotations.wraper.PathVariableWraper;
+import org.frameworkset.util.annotations.wraper.RequestHeaderWraper;
+import org.frameworkset.util.annotations.wraper.RequestParamWraper;
+import org.frameworkset.util.annotations.wraper.ResponseBodyWraper;
 import org.frameworkset.util.beans.BeansException;
 
 import com.frameworkset.util.BeanUtils;
@@ -66,7 +73,7 @@ public class MethodInfo {
 	private HandlerMapping typeLevelMapping;
 	private AssertDToken assertDToken;
 	private boolean responsebody = false;
-	private ResponseBody responsebodyAnno ;
+	private ResponseBodyWraper responsebodyAnno ;
 	private MediaType responseMediaType;
 	private HttpMethod[] requestMethods;
 	private String[] paths;
@@ -118,9 +125,11 @@ public class MethodInfo {
 		this.requiredDToken = assertDToken != null;
 		mapping = method.getAnnotation(HandlerMapping.class);
 		
-		this.responsebodyAnno = method.getAnnotation(ResponseBody.class);
-		if(responsebodyAnno != null)
+		ResponseBody body = method.getAnnotation(ResponseBody.class);
+//		this.responsebodyAnno = method.getAnnotation(ResponseBody.class);
+		if(body != null)
 		{
+			responsebodyAnno = new ResponseBodyWraper(body);
 			responsebody = true;
 			this.responseMediaType = convertMediaType();
 		}
@@ -143,9 +152,11 @@ public class MethodInfo {
 		mapping = method.getAnnotation(HandlerMapping.class);
 		this.assertDToken = method.getAnnotation(AssertDToken.class);
 		this.requiredDToken = assertDToken != null;
-		this.responsebodyAnno = method.getAnnotation(ResponseBody.class);
-		if(responsebodyAnno != null)
+		ResponseBody body = method.getAnnotation(ResponseBody.class);
+//		this.responsebodyAnno = method.getAnnotation(ResponseBody.class);
+		if(body != null)
 		{
+			this.responsebodyAnno = new ResponseBodyWraper(body);
 			responsebody = true;
 			this.responseMediaType = convertMediaType();
 		}
@@ -173,16 +184,16 @@ public class MethodInfo {
 		{
 			String type = responsebodyAnno.datatype();
 			String charset = this.responsebodyAnno.charset();
-			if(type.equals(ValueConstants.DEFAULT_NONE))
+			if(type == null)
 			{
-				if(!charset.equals(ValueConstants.DEFAULT_NONE))
+				if(charset != null)
 				{
 					temp = new MediaType("text","html",Charset.forName(charset));
 				}
 			}
 			else if(type.equals("json"))
 			{
-				if(!charset.equals(ValueConstants.DEFAULT_NONE))
+				if(charset != null)
 				{
 					temp = new MediaType("application","json",Charset.forName(charset));
 				}
@@ -191,7 +202,7 @@ public class MethodInfo {
 			}
 			else if(type.equals("jsonp"))
 			{
-				if(!charset.equals(ValueConstants.DEFAULT_NONE))
+				if(charset != null)
 				{
 					temp = new MediaType("application","jsonp",Charset.forName(charset));
 				}
@@ -201,7 +212,7 @@ public class MethodInfo {
 			
 			else if(type.equals("xml"))
 			{
-				if(!charset.equals(ValueConstants.DEFAULT_NONE))
+				if(charset != null)
 				{
 					temp = new MediaType("application","xml",Charset.forName(charset));
 				}
@@ -210,7 +221,7 @@ public class MethodInfo {
 			}
 			else if(type.equals("javascript"))
 			{
-				if(!charset.equals(ValueConstants.DEFAULT_NONE))
+				if(charset != null)
 				{
 					temp = new MediaType("application","javascript",Charset.forName(charset));
 				}
@@ -366,9 +377,11 @@ public class MethodInfo {
 		this.method = method;
 		this.assertDToken = method.getAnnotation(AssertDToken.class);
 		this.requiredDToken = assertDToken != null;
-		this.responsebodyAnno = method.getAnnotation(ResponseBody.class);
-		if(responsebodyAnno != null)
+		ResponseBody body = method.getAnnotation(ResponseBody.class);
+		
+		if(body != null)
 		{
+			this.responsebodyAnno = new ResponseBodyWraper(body);
 			responsebody = true;
 			this.responseMediaType = convertMediaType();
 		}
@@ -412,7 +425,7 @@ public class MethodInfo {
 			else if(annotation instanceof RequestParam)
 			{
 				paramAnno  = new MethodParameter(method,parampostion);
-				RequestParam param = (RequestParam)annotation;
+				RequestParamWraper param = new RequestParamWraper((RequestParam)annotation);
 				paramAnno.setRequestParam(param);
 				if(param.editor() != null && !param.editor().equals(""))
 					paramAnno.setEditor((EditorInf)BeanUtils.instantiateClass(param.editor()));
@@ -435,7 +448,7 @@ public class MethodInfo {
 				paramAnno.setDataBindScope(Scope.REQUEST_PARAM);
 				paramAnno.setRequired(param.required());
 				String aa = param.defaultvalue();
-				if(!aa.equals(ValueConstants.DEFAULT_NONE))
+				if(aa != null)
 					paramAnno.setDefaultValue(aa);
 				mutilMethodParamAnnotations.add(paramAnno);
 				continue;
@@ -455,15 +468,15 @@ public class MethodInfo {
 			{
 				this.setPagerMethod(true);
 				paramAnno  = new MethodParameter(method,parampostion);
-				PagerParam param = (PagerParam)annotation;
+				PagerParamWraper param = new PagerParamWraper((PagerParam)annotation);
+				paramAnno.setPagerParam((param));
 				if(param.editor() != null && !param.editor().equals(""))
 					paramAnno.setEditor((EditorInf)BeanUtils.instantiateClass(param.editor()));
 				if(param.name().equals(PagerParam.PAGE_SIZE))
 				{
 					this.setDefinePageSize(true);
 					String id = param.id();
-					if(id.equals(ValueConstants.DEFAULT_NONE))
-						id = null;	
+					
 					paramAnno.setParamNamePrefix(id);
 					paramAnno.setParameterName(param.name());
 					
@@ -471,7 +484,7 @@ public class MethodInfo {
 				else
 				{
 					String id = param.id();
-					if(param.id().equals(ValueConstants.DEFAULT_NONE))
+					if(param.id() == null)
 						id = PagerParam.DEFAULT_ID;	
 					if(param.name().startsWith(id))
 						paramAnno.setParameterName(param.name());
@@ -483,7 +496,7 @@ public class MethodInfo {
 				paramAnno.setDataBindScope(Scope.PAGER_PARAM);
 				paramAnno.setRequired(param.required());
 				String aa = param.defaultvalue();
-				if(!aa.equals(ValueConstants.DEFAULT_NONE))
+				if(aa != null)
 					paramAnno.setDefaultValue(aa);
 				mutilMethodParamAnnotations.add(paramAnno);
 				continue;
@@ -492,8 +505,8 @@ public class MethodInfo {
 			else if(annotation instanceof PathVariable)
 			{
 				paramAnno  = new MethodParameter(method,parampostion);
-				PathVariable param = (PathVariable)annotation;
-				paramAnno.setPathVariable(param);
+				PathVariableWraper param = new PathVariableWraper((PathVariable)annotation);
+				paramAnno.setPathVariable((param));
 				if(param.editor() != null && !param.editor().equals(""))
 					paramAnno.setEditor((EditorInf)BeanUtils.instantiateClass(param.editor()));
 //				paramAnno.setParameterName(param.value());
@@ -503,7 +516,7 @@ public class MethodInfo {
 					paramAnno.setParameterName(methodparamname);
 				paramAnno.setDataBindScope(Scope.PATHVARIABLE);
 				String aa = param.defaultvalue();
-				if(!aa.equals(ValueConstants.DEFAULT_NONE))
+				if(aa != null)
 					paramAnno.setDefaultValue(aa);
 				mutilMethodParamAnnotations.add(paramAnno);
 				continue;
@@ -512,8 +525,8 @@ public class MethodInfo {
 			else if(annotation instanceof CookieValue)
 			{
 				paramAnno  = new MethodParameter(method,parampostion);
-				CookieValue param = (CookieValue)annotation;
-				paramAnno.setCookieValue(param);
+				CookieValueWraper param = new CookieValueWraper((CookieValue)annotation);
+				paramAnno.setCookieValue((param));
 				if(param.editor() != null && !param.editor().equals(""))
 					paramAnno.setEditor((EditorInf)BeanUtils.instantiateClass(param.editor()));
 				if(!param.name().equals(""))
@@ -524,7 +537,7 @@ public class MethodInfo {
 				paramAnno.setDataBindScope(Scope.COOKIE);
 				
 				String aa = param.defaultvalue();
-				if(!aa.equals(ValueConstants.DEFAULT_NONE))
+				if(aa != null)
 					paramAnno.setDefaultValue(aa);
 				mutilMethodParamAnnotations.add(paramAnno);
 				continue;
@@ -532,7 +545,7 @@ public class MethodInfo {
 			else if(annotation instanceof RequestHeader)
 			{
 				paramAnno  = new MethodParameter(method,parampostion);
-				RequestHeader param = (RequestHeader)annotation;
+				RequestHeaderWraper param = new RequestHeaderWraper((RequestHeader)annotation);
 				paramAnno.setRequestHeader(param);
 				if(param.editor() != null && !param.editor().equals(""))
 					paramAnno.setEditor((EditorInf)BeanUtils.instantiateClass(param.editor()));
@@ -543,7 +556,7 @@ public class MethodInfo {
 //				paramAnno.setParameterName(param.name());
 				paramAnno.setDataBindScope(Scope.REQUEST_HEADER);
 				String aa = param.defaultvalue();
-				if(!aa.equals(ValueConstants.DEFAULT_NONE))
+				if(aa != null)
 					paramAnno.setDefaultValue(aa);
 				mutilMethodParamAnnotations.add(paramAnno);
 				continue;
@@ -553,7 +566,7 @@ public class MethodInfo {
 			else if(annotation instanceof Attribute)
 			{
 				paramAnno  = new MethodParameter(method,parampostion);
-				Attribute param = (Attribute)annotation;
+				AttributeWraper param = new AttributeWraper((Attribute)annotation);
 				paramAnno.setAttribute(param);
 				paramAnno.setRequired(param.required());
 				if(param.editor() != null && !param.editor().equals(""))
@@ -578,7 +591,7 @@ public class MethodInfo {
 				else if(param.scope() == AttributeScope.MODEL_ATTRIBUTE)
 					paramAnno.setDataBindScope(Scope.MODEL_ATTRIBUTE);
 				String aa = param.defaultvalue();
-				if(!aa.equals(ValueConstants.DEFAULT_NONE))
+				if(aa != null)
 					paramAnno.setDefaultValue(aa);
 				mutilMethodParamAnnotations.add(paramAnno);
 				continue;
@@ -826,14 +839,14 @@ public class MethodInfo {
 	}
 
 	
-	public ResponseBody getResponsebodyAnno()
+	public ResponseBodyWraper getResponsebodyAnno()
 	{
 	
 		return responsebodyAnno;
 	}
 
 	
-	public void setResponsebodyAnno(ResponseBody responsebodyAnno)
+	public void setResponsebodyAnno(ResponseBodyWraper responsebodyAnno)
 	{
 	
 		this.responsebodyAnno = responsebodyAnno;

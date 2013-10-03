@@ -31,23 +31,24 @@
  *****************************************************************************/
 
 package com.frameworkset.util;
-import java.beans.BeanInfo;
 import java.beans.Introspector;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyDescriptor;
 import java.io.Serializable;
-import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
-import org.frameworkset.util.annotations.RequestParam;
+import org.frameworkset.util.ClassUtil;
+import org.frameworkset.util.ClassUtil.ClassInfo;
+import org.frameworkset.util.ClassUtil.PropertieDescription;
 import org.frameworkset.util.beans.PropertyAccessException;
 
 
@@ -306,25 +307,27 @@ public class TransferObjectFactory
 		if (completeVO == null || whichToVO == null)
 			return null;
 		
-		BeanInfo beanInfo = null;
+		ClassInfo beanInfo = null;
 		try {
-			beanInfo = Introspector.getBeanInfo(whichToVO.getClass());
+			beanInfo = ClassUtil.getClassInfo(whichToVO.getClass());
 		} catch (Exception e) {
 			throw new PropertyAccessException(new PropertyChangeEvent(whichToVO, "",
 				     null, null),"获取bean 信息失败",e);
 		}
-		PropertyDescriptor[] attributes = beanInfo.getPropertyDescriptors();
-		Set keys = completeVO.keySet();
+		 List<PropertieDescription> attributes = beanInfo.getPropertyDescriptors();
+		Set keys = completeVO.entrySet();
 		Iterator keyItr = keys.iterator();
 		while(keyItr.hasNext())
 		{
-			String name = String.valueOf(keyItr.next());
-			for(PropertyDescriptor property :attributes)
+			Map.Entry entry = (Map.Entry)keyItr.next();
+			String name = String.valueOf(entry.getKey());
+			Object pvalue = entry.getValue();
+			for(PropertieDescription property :attributes)
 			{
 				if(name.equals(property.getName()))
 				{
 					Class type = property.getPropertyType();
-					Object pvalue = completeVO.get(name);
+//					Object pvalue = completeVO.get(name);
 					
 					Object value = null;
 					Method writeMethod = property.getWriteMethod();
@@ -332,7 +335,7 @@ public class TransferObjectFactory
 //					if (editor == null) 
 					if(pvalue != null)
 					{
-						EditorInf editor = TransferObjectFactory.getParamEditor(writeMethod);
+						EditorInf editor = property.getWriteMethodEditor();
 						if(editor == null)
 							value = ValueObjectUtil.typeCast(pvalue, pvalue
 									.getClass(), type);
@@ -370,27 +373,27 @@ public class TransferObjectFactory
 		
 		return whichToVO;
 	}
-	public final static EditorInf getParamEditor(Method writeMethod)
-	{
-		if(writeMethod == null)
-			return null;
-		Annotation[] annotations = writeMethod.getAnnotations();
-		if(annotations == null || annotations.length == 0)
-			return null;
-		for(Annotation annotation:annotations)
-		{
-			if(annotation instanceof RequestParam)
-			{
-				RequestParam param = (RequestParam)annotation;
-				String editor = param.editor();					
-				if(editor != null && !editor.equals(""))
-				{
-					return (EditorInf) BeanUtils.instantiateClass(editor);
-				}
-			}
-		}
-		return null;
-	}
+//	public final static EditorInf getParamEditor(Method writeMethod)
+//	{
+//		if(writeMethod == null)
+//			return null;
+//		Annotation[] annotations = writeMethod.getAnnotations();
+//		if(annotations == null || annotations.length == 0)
+//			return null;
+//		for(Annotation annotation:annotations)
+//		{
+//			if(annotation instanceof RequestParam)
+//			{
+//				RequestParam param = (RequestParam)annotation;
+//				String editor = param.editor();					
+//				if(editor != null && !editor.equals(""))
+//				{
+//					return (EditorInf) BeanUtils.instantiateClass(editor);
+//				}
+//			}
+//		}
+//		return null;
+//	}
 	
 	/**
 	 * added by biaoping.yin 2005.8.13
