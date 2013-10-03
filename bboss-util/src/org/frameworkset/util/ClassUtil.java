@@ -31,10 +31,24 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.frameworkset.soa.annotation.ExcludeField;
+import org.frameworkset.util.annotations.Attribute;
+import org.frameworkset.util.annotations.CookieValue;
+import org.frameworkset.util.annotations.DataBind;
+import org.frameworkset.util.annotations.PathVariable;
+import org.frameworkset.util.annotations.RequestBody;
+import org.frameworkset.util.annotations.RequestHeader;
 import org.frameworkset.util.annotations.RequestParam;
+import org.frameworkset.util.annotations.wraper.AttributeWraper;
+import org.frameworkset.util.annotations.wraper.ColumnWraper;
+import org.frameworkset.util.annotations.wraper.CookieValueWraper;
+import org.frameworkset.util.annotations.wraper.PathVariableWraper;
+import org.frameworkset.util.annotations.wraper.RequestHeaderWraper;
+import org.frameworkset.util.annotations.wraper.RequestParamWraper;
 
 import com.frameworkset.orm.annotation.Column;
 import com.frameworkset.orm.annotation.PrimaryKey;
+import com.frameworkset.util.BeanUtils;
+import com.frameworkset.util.EditorInf;
 import com.frameworkset.util.ValueObjectUtil;
 
 
@@ -85,10 +99,43 @@ public class ClassUtil
 			this.isvar = isvar;
 		}
 	}
+	public final static EditorInf getParamEditor(RequestParamWraper param)
+	{
+		if(param == null)
+			return null;
+		
+		String editor = param.editor();					
+		if(editor != null && !editor.equals(""))
+		{
+			return (EditorInf) BeanUtils.instantiateClass(editor);
+		}
+		
+		return null;
+	}
+	public final static RequestParamWraper getWriterMethodRequestParam(Method writeMethod)
+	{
+		if(writeMethod == null)
+			return null;
+		Annotation[] annotations = writeMethod.getAnnotations();
+		if(annotations == null || annotations.length == 0)
+			return null;
+		for(Annotation annotation:annotations)
+		{
+			if(annotation instanceof RequestParam)
+			{
+				RequestParam param = (RequestParam)annotation;
+				return new RequestParamWraper(param);
+			}
+		}
+		return null;
+	}
 	public static class PropertieDescription
 	{
 		private Class propertyType;		
 		private Method writeMethod;
+		
+		private RequestParamWraper  writeMethodRequestParam;
+		private EditorInf writeMethodEditor;
 		private Method readMethod;
 		private Field field;
 		private String name;
@@ -102,10 +149,26 @@ public class ClassUtil
 		private String requestParamName;
 		private String origineRequestParamName;
 		private boolean namevariabled = false;
-		private RequestParam requestParam ;
+		private RequestParamWraper requestParam ;
+		private AttributeWraper attribute;
 		private PrimaryKey pk;
-		private Column column;
-		public RequestParam getRequestParam() {
+		private ColumnWraper column;
+		private CookieValueWraper cookie;
+		private RequestHeaderWraper header;
+		private PathVariableWraper pathVariable;
+		private RequestBody requestBody;
+		private DataBind dataBind;
+		/**
+		 * if (field.isAnnotationPresent(RequestBody.class)
+				|| field.isAnnotationPresent(DataBind.class)
+				|| field.isAnnotationPresent(PathVariable.class)
+				|| field.isAnnotationPresent(RequestParam.class)
+				|| field.isAnnotationPresent(Attribute.class)
+				|| field.isAnnotationPresent(CookieValue.class)
+				|| field.isAnnotationPresent(RequestHeader.class))
+		 * @return
+		 */
+		public RequestParamWraper getRequestParam() {
 			return requestParam;
 		}
 
@@ -199,7 +262,15 @@ public class ClassUtil
 			{
 				this.writeMethodPropertyGenericType =  ClassUtils.genericTypes(this.field);
 			}
-			
+			if(this.writeMethod != null)
+			{
+				writeMethodRequestParam = getWriterMethodRequestParam( writeMethod);
+				try {
+					this.writeMethodEditor = getParamEditor(writeMethodRequestParam);
+				} catch (Exception e) {
+					log.error("get writeMethodEditor error!", e);
+				}
+			}
 			if(this.writeMethod != null)
 			{
 				this.propertyGenericType = ClassUtils.getPropertyGenericType(this.writeMethod);
@@ -211,22 +282,22 @@ public class ClassUtil
 			if(this.field != null)
 			{
 				annotations = this.field.getAnnotations();
-				initParam();
+				initParam(this.field.getAnnotations());
 			}
 			
 				
 		}
 		
-		private void initParam()
+		private void initParam(Annotation[] annotations)
 		{
-			if(this.annotations == null || this.annotations.length == 0)
+			if(annotations == null || annotations.length == 0)
 				return;
-			for(int i = 0; i < this.annotations.length; i ++)
+			for(int i = 0; i < annotations.length; i ++)
 			{
-				Annotation a = this.annotations[i];
+				Annotation a = annotations[i];
 				if(a instanceof RequestParam)
 				{
-					requestParam = (RequestParam)a;
+					requestParam = new RequestParamWraper((RequestParam)a);
 					if(requestParam.name() == null || requestParam.name().equals(""))
 					{
 						this.requestParamName = name;
@@ -257,7 +328,31 @@ public class ClassUtil
 				}
 				else if(a instanceof Column )
 				{
-					column = (Column )a;
+					column = new ColumnWraper((Column )a);
+				}
+				else if(a instanceof Attribute )
+				{
+					attribute = new AttributeWraper((Attribute )a);
+				}
+				else if(a instanceof RequestHeader )
+				{
+					header = new RequestHeaderWraper((RequestHeader )a);
+				}
+				else if(a instanceof PathVariable )
+				{
+					pathVariable = new PathVariableWraper((PathVariable )a);
+				}
+				else if(a instanceof DataBind )
+				{
+					dataBind = ((DataBind )a);
+				}
+				else if(a instanceof RequestBody )
+				{
+					requestBody = ((RequestBody )a);
+				}
+				else if(a instanceof CookieValue )
+				{
+					cookie = new CookieValueWraper ((CookieValue )a);
 				}
 			}
 		}
@@ -295,13 +390,13 @@ public class ClassUtil
 			return null;
 		}
 		
-		public Annotation[] findAnnotations()
-		{
-//			if(this.field != null)
-//				return this.field.getAnnotations();
-//			return null;
-			return annotations;
-		}
+//		public Annotation[] findAnnotations()
+//		{
+////			if(this.field != null)
+////				return this.field.getAnnotations();
+////			return null;
+//			return annotations;
+//		}
 		
 		public boolean canread()
 		{
@@ -388,9 +483,9 @@ public class ClassUtil
 			return requestParamName;
 		}
 
-		public Annotation[] getAnnotations() {
-			return annotations;
-		}
+//		public Annotation[] getAnnotations() {
+//			return annotations;
+//		}
 
 		public List<Var> getRequestParamNameToken() {
 			return requestParamNameToken;
@@ -400,12 +495,48 @@ public class ClassUtil
 			return pk;
 		}
 
-		public Column getColumn() {
+		public ColumnWraper getColumn() {
 			return column;
 		}
 
 		public String getUperName() {
 			return uperName;
+		}
+
+		public Annotation[] getAnnotations() {
+			return annotations;
+		}
+
+		public CookieValueWraper getCookie() {
+			return cookie;
+		}
+
+		public RequestHeaderWraper getHeader() {
+			return header;
+		}
+
+		public AttributeWraper getAttribute() {
+			return attribute;
+		}
+
+		public RequestParamWraper getWriteMethodRequestParam() {
+			return writeMethodRequestParam;
+		}
+
+		public EditorInf getWriteMethodEditor() {
+			return writeMethodEditor;
+		}
+
+		public PathVariableWraper getPathVariable() {
+			return pathVariable;
+		}
+
+		public DataBind getDataBind() {
+			return dataBind;
+		}
+
+		public RequestBody getRequestBody() {
+			return requestBody;
 		}
 
 	}

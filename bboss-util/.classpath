@@ -19,6 +19,6 @@
 	<classpathentry kind="lib" path="lib/jhighlight-1.0.jar"/>
 	<classpathentry kind="lib" path="lib/jackson-all-1.6.2.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
-	<classpathentry kind="lib" path="lib/velocity-1.7.jar" sourcepath="D:/workspace/velocity-1.7/src/java"/>
+	<classpathentry kind="lib" path="lib/bboss-velocity.jar"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>

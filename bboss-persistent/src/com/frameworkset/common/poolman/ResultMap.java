@@ -29,6 +29,7 @@ import org.frameworkset.util.BigFile;
 import org.frameworkset.util.ClassUtil;
 import org.frameworkset.util.ClassUtil.ClassInfo;
 import org.frameworkset.util.ClassUtil.PropertieDescription;
+import org.frameworkset.util.annotations.wraper.ColumnWraper;
 
 import com.frameworkset.common.poolman.handle.FieldRowHandler;
 import com.frameworkset.common.poolman.handle.RowHandler;
@@ -250,7 +251,7 @@ public class ResultMap {
 							}
 							else 
 							{
-								Column cl = attribute.getColumn();
+								ColumnWraper cl = attribute.getColumn();
 								if(cl != null)
 								{
 									annotationName = cl.name();
@@ -489,7 +490,7 @@ public class ResultMap {
 						}
 						else 
 						{
-							Column cl = attribute.getColumn();
+							ColumnWraper cl = attribute.getColumn();
 							if(cl != null)
 							{
 								annotationName = cl.name();

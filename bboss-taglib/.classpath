@@ -12,8 +12,6 @@
 	<classpathentry kind="lib" path="lib/commons-modeler.jar"/>
 	<classpathentry kind="lib" path="lib/ojdbc14.jar"/>
 	<classpathentry kind="lib" path="lib/xjavadoc-1.1.jar"/>
-	<classpathentry kind="lib" path="lib/velocity-1.6.1.jar"/>
-	<classpathentry kind="lib" path="lib/velocity-1.6.1-dep.jar"/>
 	<classpathentry kind="lib" path="lib/ecs-1.4.2.jar" sourcepath="/ecs"/>
 	<classpathentry kind="lib" path="lib/htmlparser-1.5-20050925.jar"/>
 	<classpathentry kind="lib" path="lib/turbine-2.3.jar"/>

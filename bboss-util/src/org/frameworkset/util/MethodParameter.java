@@ -22,15 +22,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 import org.frameworkset.util.ClassUtil.Var;
-import org.frameworkset.util.annotations.Attribute;
-import org.frameworkset.util.annotations.CookieValue;
 import org.frameworkset.util.annotations.MapKey;
-import org.frameworkset.util.annotations.PathVariable;
-import org.frameworkset.util.annotations.RequestHeader;
-import org.frameworkset.util.annotations.RequestParam;
 import org.frameworkset.util.annotations.Scope;
+import org.frameworkset.util.annotations.wraper.AttributeWraper;
+import org.frameworkset.util.annotations.wraper.CookieValueWraper;
+import org.frameworkset.util.annotations.wraper.PagerParamWraper;
+import org.frameworkset.util.annotations.wraper.PathVariableWraper;
+import org.frameworkset.util.annotations.wraper.RequestHeaderWraper;
+import org.frameworkset.util.annotations.wraper.RequestParamWraper;
 
 import com.frameworkset.util.EditorInf;
 
@@ -127,8 +127,10 @@ public class MethodParameter {
 	private Map typeVariableMap;
 	
 	private String paramNamePrefix;
-	private RequestParam requestParam;
-	private RequestHeader requestHeader;
+	private RequestParamWraper requestParam;
+	private RequestHeaderWraper requestHeader;
+	private AttributeWraper attribute;
+	private PagerParamWraper pagerParam;
 
 	private MapKey	mapKey;
 	
@@ -539,58 +541,58 @@ public class MethodParameter {
 	/**
 	 * @return the requestParam
 	 */
-	public RequestParam getRequestParam() {
+	public RequestParamWraper getRequestParam() {
 		return requestParam;
 	}
 
 	/**
 	 * @param requestParam the requestParam to set
 	 */
-	public void setRequestParam(RequestParam requestParam) {
+	public void setRequestParam(RequestParamWraper requestParam) {
 		this.requestParam = requestParam;
 	}
-	private PathVariable pathVariable;
-	public void setPathVariable(PathVariable param) {
+	private PathVariableWraper pathVariable;
+	public void setPathVariable(PathVariableWraper param) {
 		pathVariable = param;
 		
 	}
 	
-	private CookieValue cookieValue;
+	private CookieValueWraper cookieValue;
 	
 
 	/**
 	 * @return the pathVariable
 	 */
-	public PathVariable getPathVariable() {
+	public PathVariableWraper getPathVariable() {
 		return pathVariable;
 	}
 
 	/**
 	 * @return the cookieValue
 	 */
-	public CookieValue getCookieValue() {
+	public CookieValueWraper getCookieValue() {
 		return cookieValue;
 	}
 
 	/**
 	 * @param cookieValue the cookieValue to set
 	 */
-	public void setCookieValue(CookieValue cookieValue) {
+	public void setCookieValue(CookieValueWraper cookieValue) {
 		this.cookieValue = cookieValue;
 	}
-	private Attribute attribute;
+//	private AttributeWraper attribute;
 
 	/**
 	 * @return the attribute
 	 */
-	public Attribute getAttribute() {
+	public AttributeWraper getAttribute() {
 		return attribute;
 	}
 
 	/**
 	 * @param attribute the attribute to set
 	 */
-	public void setAttribute(Attribute attribute) {
+	public void setAttribute(AttributeWraper attribute) {
 		this.attribute = attribute;
 	}
 	
@@ -599,14 +601,14 @@ public class MethodParameter {
 	/**
 	 * @return the requestHeader
 	 */
-	public RequestHeader getRequestHeader() {
+	public RequestHeaderWraper getRequestHeader() {
 		return requestHeader;
 	}
 
 	/**
 	 * @param requestHeader the requestHeader to set
 	 */
-	public void setRequestHeader(RequestHeader requestHeader) {
+	public void setRequestHeader(RequestHeaderWraper requestHeader) {
 		this.requestHeader = requestHeader;
 	}
 
@@ -630,6 +632,14 @@ public class MethodParameter {
 
 	public void setPrimaryType(boolean isPrimaryType) {
 		this.primaryType = isPrimaryType;
+	}
+
+	public PagerParamWraper getPagerParam() {
+		return pagerParam;
+	}
+
+	public void setPagerParam(PagerParamWraper pagerParam) {
+		this.pagerParam = pagerParam;
 	}
 
 

@@ -25,11 +25,12 @@ import javax.servlet.jsp.JspWriter;
 
 import org.apache.ecs.html.Link;
 import org.apache.ecs.html.Script;
-import org.apache.velocity.Template;
-import org.apache.velocity.VelocityContext;
-import org.apache.velocity.exception.MethodInvocationException;
-import org.apache.velocity.exception.ParseErrorException;
-import org.apache.velocity.exception.ResourceNotFoundException;
+
+import bboss.org.apache.velocity.Template;
+import bboss.org.apache.velocity.VelocityContext;
+import bboss.org.apache.velocity.exception.MethodInvocationException;
+import bboss.org.apache.velocity.exception.ParseErrorException;
+import bboss.org.apache.velocity.exception.ResourceNotFoundException;
 
 import com.frameworkset.common.tag.BaseTag;
 import com.frameworkset.util.VelocityUtil;
@@ -137,11 +138,7 @@ public class PageConfig extends BaseTag
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
-            catch (IOException e)
-            {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
+            
             return "";//启用右键菜单，第一次输出右键菜单js脚本，加载时出现异常返回""
         }
         

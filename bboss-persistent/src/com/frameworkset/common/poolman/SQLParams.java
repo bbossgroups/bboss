@@ -40,12 +40,12 @@ import org.frameworkset.util.ClassUtil;
 import org.frameworkset.util.ClassUtil.ClassInfo;
 import org.frameworkset.util.ClassUtil.PropertieDescription;
 import org.frameworkset.util.annotations.ValueConstants;
+import org.frameworkset.util.annotations.wraper.ColumnWraper;
 
 import bboss.org.apache.velocity.VelocityContext;
 
 import com.frameworkset.common.poolman.util.JDBCPool;
 import com.frameworkset.common.poolman.util.SQLManager;
-import com.frameworkset.orm.annotation.Column;
 import com.frameworkset.orm.annotation.PrimaryKey;
 import com.frameworkset.util.VariableHandler;
 import com.frameworkset.util.VariableHandler.SQLStruction;
@@ -953,17 +953,13 @@ public class SQLParams
 						}
 					}
 					
-					Column column = property.getColumn();
+					ColumnWraper column = property.getColumn();
 					if(column != null)
 					{
 						dataformat = column.dataformat();
-						if(dataformat.equals(ValueConstants.DEFAULT_NONE) )
-							dataformat = null;
 						charset = column.charset();
-						if(!charset.equals(ValueConstants.DEFAULT_NONE) )
-							charset = null;
 						String type_ = column.type();
-						if(!type_.equals(ValueConstants.DEFAULT_NONE) )
+						if(type_ != null )
 						{
 							if(type_.equals("clob"))
 							{

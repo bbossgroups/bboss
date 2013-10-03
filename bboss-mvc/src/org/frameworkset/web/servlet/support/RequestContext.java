@@ -870,7 +870,7 @@ public class RequestContext {
 	public static int getCustomPageSize(Object defauleValue)
 	{
 		int default_ = HandlerMapping.DEFAULT_PAGE_SIZE;
-		if(defauleValue == null || defauleValue.equals(ValueConstants.DEFAULT_NONE) )
+		if(defauleValue == null  )
 			default_ = HandlerMapping.DEFAULT_PAGE_SIZE;
 		else {
 			try {

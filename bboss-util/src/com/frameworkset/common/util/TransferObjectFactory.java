@@ -76,10 +76,10 @@ public class TransferObjectFactory
 				completeVO,
 				whichToVO);
 	}
-	public final static EditorInf getParamEditor(Method writeMethod)
-	{
-		return com.frameworkset.util.TransferObjectFactory. getParamEditor(writeMethod);
-	}
+//	public final static EditorInf getParamEditor(Method writeMethod)
+//	{
+//		return com.frameworkset.util.TransferObjectFactory. getParamEditor(writeMethod);
+//	}
 	/**
 	 * added by biaoping.yin 2005.8.13
 	 * 将Hashtable中包含的属性值复制到对象中,对应属性的名称和类型必须一致

@@ -1,8 +1,11 @@
 package org.frameworkset.web.multipart;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -77,21 +80,51 @@ public abstract class AbstractMultipartHttpServletRequest extends RequestMethodH
 	}
 	
 	@Override
+	/**
+	 * 返回界面上所有文件
+	 */
 	public MultipartFile[] getFirstFieldFiles() {
-		Iterator<String> filenames = getFileNames();
-		if(filenames == null)
-			return null;
-		while(filenames.hasNext())
+		if(this.multipartFiles == null)
 		{
-			MultipartFile[] values = getFiles(filenames.next());
-			
+			return null;
+		}
+		Iterator<Entry<String, MultipartFile[]>> entries = this.multipartFiles.entrySet().iterator();
+		List<MultipartFile> ret = new ArrayList<MultipartFile>(multipartFiles.size());
+		int i = 0;
+		while(entries.hasNext())
+		{
+			Entry<String, MultipartFile[]> entry = entries.next();
+			MultipartFile[] values = entry.getValue();
 			if(values != null && values.length > 0)
 			{
-				return values; 
+				for(MultipartFile value:values)
+				{
+					if(value.getSize() == 0)
+						continue;
+					i ++;
+					ret.add(value);
+				}
 				
 			}
 		}
-		return null;
+		
+		return ret.toArray(new MultipartFile[i]);
+//		Iterator<String> filenames = getFileNames();
+//		if(filenames == null)
+//			return null;
+//		while(filenames.hasNext())
+//		{
+//			MultipartFile[] values = getFiles(filenames.next());
+//			
+//			if(values != null && values.length > 0)
+//			{
+//				return values; 
+//				
+//			}
+//		}
+//		
+//		
+//		return null;
 	}
 
 }

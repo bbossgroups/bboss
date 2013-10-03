@@ -369,5 +369,13 @@ public abstract class AnnotationUtils {
 		}
 		return retdatas;
 	}
+	
+	public static String converDefaultValue(String defaultValue)
+	{
+		if(ValueConstants.DEFAULT_NONE.equals(defaultValue))
+			return null;
+		return defaultValue;
+				
+	}
 
 }

@@ -92,6 +92,11 @@ import org.frameworkset.util.annotations.RequestParam;
 import org.frameworkset.util.annotations.ResponseBody;
 import org.frameworkset.util.annotations.Scope;
 import org.frameworkset.util.annotations.ValueConstants;
+import org.frameworkset.util.annotations.wraper.AttributeWraper;
+import org.frameworkset.util.annotations.wraper.CookieValueWraper;
+import org.frameworkset.util.annotations.wraper.PathVariableWraper;
+import org.frameworkset.util.annotations.wraper.RequestHeaderWraper;
+import org.frameworkset.util.annotations.wraper.RequestParamWraper;
 import org.frameworkset.web.HttpMediaTypeNotAcceptableException;
 import org.frameworkset.web.HttpMediaTypeNotSupportedException;
 import org.frameworkset.web.HttpSessionRequiredException;
@@ -282,7 +287,7 @@ public abstract class HandlerUtils {
 		return false;
 	}
 
-	private static Object evaluateStringParam(RequestParam requestParam,
+	private static Object evaluateStringParam(RequestParamWraper requestParam,
 			HttpServletRequest request, String requestParamName, Class type,
 			EditorInf editor) {
 		Object paramValue = null;
@@ -290,16 +295,8 @@ public abstract class HandlerUtils {
 		String decodeCharset = requestParam.decodeCharset();
 		String charset = requestParam.charset();
 		String convertcharset = requestParam.convertcharset();
-		if (decodeCharset.equals(ValueConstants.DEFAULT_NONE)) {
-			decodeCharset = null;
-		} else {
+		if (decodeCharset != null){
 			request.setAttribute(USE_MVC_DENCODE_KEY, TRUE);
-		}
-		if (charset.equals(ValueConstants.DEFAULT_NONE)) {
-			charset = null;
-		}
-		if (convertcharset.equals(ValueConstants.DEFAULT_NONE)) {
-			convertcharset = null;
 		}
 		String[] values = request.getParameterValues(requestParamName);
 		request.setAttribute(USE_MVC_DENCODE_KEY, null);
@@ -424,7 +421,7 @@ public abstract class HandlerUtils {
 		return paramValue;
 	}
 
-	private static Object evaluateMultipartFileParam(RequestParam requestParam,
+	private static Object evaluateMultipartFileParam(RequestParamWraper requestParam,
 			HttpServletRequest request, String requestParamName, Class type) {
 		Object paramValue = null;
 		if (request instanceof MultipartHttpServletRequest) {
@@ -602,11 +599,11 @@ public abstract class HandlerUtils {
 			if (!isrequired)
 				isrequired = methodParameter.isRequired();
 			if (methodParameter.getDataBindScope() == Scope.REQUEST_PARAM) {
-				RequestParam requestParam = methodParameter.getRequestParam();
+				RequestParamWraper requestParam = methodParameter.getRequestParam();
 				if (!isMultipartFile(type)) {
 					dateformat = requestParam.dateformat();
-					if (dateformat.equals(ValueConstants.DEFAULT_NONE))
-						dateformat = null;
+//					if (dateformat.equals(ValueConstants.DEFAULT_NONE))
+//						dateformat = null;
 					paramValue = evaluateStringParam(requestParam, request,
 							requestParamName, type, editor);
 				} else {
@@ -624,8 +621,6 @@ public abstract class HandlerUtils {
 			} else if (methodParameter.getDataBindScope() == Scope.PATHVARIABLE) {
 				if (methodParameter.getPathVariable() != null) {
 					dateformat = methodParameter.getPathVariable().dateformat();
-					if (dateformat.equals(ValueConstants.DEFAULT_NONE))
-						dateformat = null;
 
 				}
 				if (pathVarDatas != null) {
@@ -636,16 +631,7 @@ public abstract class HandlerUtils {
 								.charset();
 						String convertcharset = methodParameter
 								.getPathVariable().convertcharset();
-						if (decodeCharset.equals(ValueConstants.DEFAULT_NONE)) {
-							decodeCharset = null;
-						}
 
-						if (charset.equals(ValueConstants.DEFAULT_NONE)) {
-							charset = null;
-						}
-						if (convertcharset.equals(ValueConstants.DEFAULT_NONE)) {
-							convertcharset = null;
-						}
 
 						String paramValue_ = (String) pathVarDatas
 								.get(requestParamName);
@@ -678,8 +664,6 @@ public abstract class HandlerUtils {
 			} else if (methodParameter.getDataBindScope() == Scope.PAGECONTEXT_APPLICATION_SCOPE) {
 				if (methodParameter.getAttribute() != null) {
 					dateformat = methodParameter.getAttribute().dateformat();
-					if (dateformat.equals(ValueConstants.DEFAULT_NONE))
-						dateformat = null;
 
 				}
 				paramValue = pageContext.getAttribute(requestParamName,
@@ -688,8 +672,6 @@ public abstract class HandlerUtils {
 			} else if (methodParameter.getDataBindScope() == Scope.PAGECONTEXT_PAGE_SCOPE) {
 				if (methodParameter.getAttribute() != null) {
 					dateformat = methodParameter.getAttribute().dateformat();
-					if (dateformat.equals(ValueConstants.DEFAULT_NONE))
-						dateformat = null;
 
 				}
 				paramValue = pageContext.getAttribute(requestParamName,
@@ -698,8 +680,6 @@ public abstract class HandlerUtils {
 			} else if (methodParameter.getDataBindScope() == Scope.PAGECONTEXT_REQUEST_SCOPE) {
 				if (methodParameter.getAttribute() != null) {
 					dateformat = methodParameter.getAttribute().dateformat();
-					if (dateformat.equals(ValueConstants.DEFAULT_NONE))
-						dateformat = null;
 
 				}
 				paramValue = pageContext.getAttribute(requestParamName,
@@ -708,8 +688,6 @@ public abstract class HandlerUtils {
 			} else if (methodParameter.getDataBindScope() == Scope.PAGECONTEXT_SESSION_SCOPE) {
 				if (methodParameter.getAttribute() != null) {
 					dateformat = methodParameter.getAttribute().dateformat();
-					if (dateformat.equals(ValueConstants.DEFAULT_NONE))
-						dateformat = null;
 
 				}
 				paramValue = pageContext.getAttribute(requestParamName,
@@ -718,8 +696,6 @@ public abstract class HandlerUtils {
 			} else if (methodParameter.getDataBindScope() == Scope.COOKIE) {
 				if (methodParameter.getCookieValue() != null) {
 					dateformat = methodParameter.getCookieValue().dateformat();
-					if (dateformat.equals(ValueConstants.DEFAULT_NONE))
-						dateformat = null;
 
 				}
 				paramValue = resolveCookieValue(methodParameter, request);
@@ -735,8 +711,6 @@ public abstract class HandlerUtils {
 				if (methodParameter.getRequestHeader() != null) {
 					dateformat = methodParameter.getRequestHeader()
 							.dateformat();
-					if (dateformat.equals(ValueConstants.DEFAULT_NONE))
-						dateformat = null;
 
 				}
 				paramValue = resolveRequestHeader(methodParameter, request);
@@ -1731,140 +1705,140 @@ public abstract class HandlerUtils {
 				+ "' of type [" + paramType.getName() + "]");
 	}
 
-	private static boolean hasParameterAnnotation(Field field) {
-		Annotation[] annons = field.getAnnotations();
-		if (field.isAnnotationPresent(RequestBody.class)
-				|| field.isAnnotationPresent(DataBind.class)
-				|| field.isAnnotationPresent(PathVariable.class)
-				|| field.isAnnotationPresent(RequestParam.class)
-				|| field.isAnnotationPresent(Attribute.class)
-				|| field.isAnnotationPresent(CookieValue.class)
-				|| field.isAnnotationPresent(RequestHeader.class))
+	private static boolean hasParameterAnnotation(PropertieDescription field) {
+		
+		if (field.getRequestBody() != null
+				|| field.getDataBind() != null
+				|| field.getPathVariable() != null//.isAnnotationPresent(PathVariable.class)
+				|| field.getRequestParam() != null//isAnnotationPresent(RequestParam.class)
+				|| field.getAttribute() != null//isAnnotationPresent(Attribute.class)
+				|| field.getCookie() != null//isAnnotationPresent(CookieValue.class)
+				|| field.getHeader() != null)
 
 			return true;
 		return false;
 	}
 
-	/**
-	 * 指定了多个注解类型的属性，可以选择性地从不同的注解方式获取属性的值
-	 * 
-	 * @param writeMethod
-	 * @param annotations
-	 * @param pathVarDatas
-	 * @param request
-	 * @param pageContext
-	 * @param handlerMethod
-	 * @param model
-	 * @param type
-	 * @return
-	 * @throws Exception
-	 */
-	private static Object evaluateArrayPositionAnnotationsValue(
-			Annotation[] annotations, Map pathVarDatas,
-			HttpServletRequest request, String name, PageContext pageContext,
-			MethodData handlerMethod, ModelMap model, Class type, Object value)
-			throws Exception {
-
-		boolean required = false;
-		EditorInf editor = null;
-		boolean useEditor = true;
-		// boolean touched = false;
-		Object defaultValue = null;
-		String dateformat = null;
-		for (Annotation anno : annotations) {
-
-			if (anno instanceof PathVariable) {
-
-				useEditor = false;
-			} else if (anno instanceof RequestParam) {
-				RequestParam param = (RequestParam) anno;
-				if (!isMultipartFile(type)) {
-					dateformat = param.dateformat();
-					if (dateformat.equals(ValueConstants.DEFAULT_NONE))
-						dateformat = null;
-					// String decodeCharset = param.decodeCharset();
-					// String charset = param.charset();
-					// String convertcharset = param.convertcharset();
-					// if(decodeCharset.equals(ValueConstants.DEFAULT_NONE))
-					// {
-					// decodeCharset = null;
-					// }
-					// else
-					// {
-					// request.setAttribute(USE_MVC_DENCODE_KEY, TRUE);
-					// }
-					// if(charset.equals(ValueConstants.DEFAULT_NONE))
-					// {
-					// charset = null;
-					// }
-					// if(convertcharset.equals(ValueConstants.DEFAULT_NONE))
-					// {
-					// convertcharset = null;
-					// }
-					//
-					// request.setAttribute(USE_MVC_DENCODE_KEY, null);
-
-					if (param.editor() != null && !param.editor().equals(""))
-						editor = (EditorInf) BeanUtils.instantiateClass(param
-								.editor());
-					if (!required)
-						required = param.required();
-					defaultValue = param.defaultvalue();
-
-				} else {
-
-				}
-
-				useEditor = true;
-
-			} else if (anno instanceof Attribute) {
-
-				useEditor = false;
-
-			} else if (anno instanceof CookieValue) {
-
-				useEditor = false;
-
-			} else if (anno instanceof RequestHeader) {
-
-				useEditor = false;
-
-			}
-			if (defaultValue != null
-					&& defaultValue.equals(ValueConstants.DEFAULT_NONE))
-				defaultValue = null;
-			if (value == null)
-				value = defaultValue;
-			if (value != null)
-				break;
-			dateformat = null;
-		}
-
-		if (useEditor) {
-			try {
-				if (editor == null)
-					value = ValueObjectUtil.typeCast(value, type, dateformat);
-				else
-					value = ValueObjectUtil.typeCast(value, editor);
-			} catch (Exception e) {
-				Exception error = raiseMissingParameterException(name, type,
-						value, e);
-				model.getErrors().rejectValue(name,
-						"ValueObjectUtil.typeCast.error",
-						String.valueOf(value), type, error.getMessage());
-				return ValueObjectUtil.getDefaultValue(type);
-			}
-
-		}
-		if (value == null && required) {
-			Exception e = raiseMissingParameterException(name, type);
-			model.getErrors().rejectValue(name, "value.required.null",
-					e.getMessage());
-			return ValueObjectUtil.getDefaultValue(type);
-
-		}
-		return value;
-	}
+//	/**
+//	 * 指定了多个注解类型的属性，可以选择性地从不同的注解方式获取属性的值
+//	 * 
+//	 * @param writeMethod
+//	 * @param annotations
+//	 * @param pathVarDatas
+//	 * @param request
+//	 * @param pageContext
+//	 * @param handlerMethod
+//	 * @param model
+//	 * @param type
+//	 * @return
+//	 * @throws Exception
+//	 */
+//	private static Object evaluateArrayPositionAnnotationsValue(
+//			Annotation[] annotations, Map pathVarDatas,
+//			HttpServletRequest request, String name, PageContext pageContext,
+//			MethodData handlerMethod, ModelMap model, Class type, Object value)
+//			throws Exception {
+//
+//		boolean required = false;
+//		EditorInf editor = null;
+//		boolean useEditor = true;
+//		// boolean touched = false;
+//		Object defaultValue = null;
+//		String dateformat = null;
+//		for (Annotation anno : annotations) {
+//
+//			if (anno instanceof PathVariable) {
+//
+//				useEditor = false;
+//			} else if (anno instanceof RequestParam) {
+//				RequestParam param = (RequestParam) anno;
+//				if (!isMultipartFile(type)) {
+//					dateformat = param.dateformat();
+//					if (dateformat.equals(ValueConstants.DEFAULT_NONE))
+//						dateformat = null;
+//					// String decodeCharset = param.decodeCharset();
+//					// String charset = param.charset();
+//					// String convertcharset = param.convertcharset();
+//					// if(decodeCharset.equals(ValueConstants.DEFAULT_NONE))
+//					// {
+//					// decodeCharset = null;
+//					// }
+//					// else
+//					// {
+//					// request.setAttribute(USE_MVC_DENCODE_KEY, TRUE);
+//					// }
+//					// if(charset.equals(ValueConstants.DEFAULT_NONE))
+//					// {
+//					// charset = null;
+//					// }
+//					// if(convertcharset.equals(ValueConstants.DEFAULT_NONE))
+//					// {
+//					// convertcharset = null;
+//					// }
+//					//
+//					// request.setAttribute(USE_MVC_DENCODE_KEY, null);
+//
+//					if (param.editor() != null && !param.editor().equals(""))
+//						editor = (EditorInf) BeanUtils.instantiateClass(param
+//								.editor());
+//					if (!required)
+//						required = param.required();
+//					defaultValue = param.defaultvalue();
+//
+//				} else {
+//
+//				}
+//
+//				useEditor = true;
+//
+//			} else if (anno instanceof Attribute) {
+//
+//				useEditor = false;
+//
+//			} else if (anno instanceof CookieValue) {
+//
+//				useEditor = false;
+//
+//			} else if (anno instanceof RequestHeader) {
+//
+//				useEditor = false;
+//
+//			}
+//			if (defaultValue != null
+//					&& defaultValue.equals(ValueConstants.DEFAULT_NONE))
+//				defaultValue = null;
+//			if (value == null)
+//				value = defaultValue;
+//			if (value != null)
+//				break;
+//			dateformat = null;
+//		}
+//
+//		if (useEditor) {
+//			try {
+//				if (editor == null)
+//					value = ValueObjectUtil.typeCast(value, type, dateformat);
+//				else
+//					value = ValueObjectUtil.typeCast(value, editor);
+//			} catch (Exception e) {
+//				Exception error = raiseMissingParameterException(name, type,
+//						value, e);
+//				model.getErrors().rejectValue(name,
+//						"ValueObjectUtil.typeCast.error",
+//						String.valueOf(value), type, error.getMessage());
+//				return ValueObjectUtil.getDefaultValue(type);
+//			}
+//
+//		}
+//		if (value == null && required) {
+//			Exception e = raiseMissingParameterException(name, type);
+//			model.getErrors().rejectValue(name, "value.required.null",
+//					e.getMessage());
+//			return ValueObjectUtil.getDefaultValue(type);
+//
+//		}
+//		return value;
+//	}
 	/**
 	 * 单独获取名称为变量表达式的参数的值
 	 * @param property
@@ -1888,24 +1862,14 @@ public abstract class HandlerUtils {
 		Object defaultValue = null;
 		String dateformat = null;
 		Object value = null;
-		RequestParam param = property.getRequestParam();
+		RequestParamWraper param = property.getRequestParam();
 		if (!isMultipartFile(type)) {
 			dateformat = param.dateformat();
-			if (dateformat.equals(ValueConstants.DEFAULT_NONE))
-				dateformat = null;
 			String decodeCharset = param.decodeCharset();
 			String charset = param.charset();
 			String convertcharset = param.convertcharset();
-			if (decodeCharset.equals(ValueConstants.DEFAULT_NONE)) {
-				decodeCharset = null;
-			} else {
+			if (decodeCharset != null) {
 				request.setAttribute(USE_MVC_DENCODE_KEY, TRUE);
-			}
-			if (charset.equals(ValueConstants.DEFAULT_NONE)) {
-				charset = null;
-			}
-			if (convertcharset.equals(ValueConstants.DEFAULT_NONE)) {
-				convertcharset = null;
 			}
 
 			request.setAttribute(USE_MVC_DENCODE_KEY, null);
@@ -1947,9 +1911,6 @@ public abstract class HandlerUtils {
 				required = param.required();
 			
 		}
-		if (defaultValue != null
-				&& defaultValue.equals(ValueConstants.DEFAULT_NONE))
-			defaultValue = null;
 		if (value == null)
 			value = defaultValue;
 		if (useEditor) {
@@ -2015,43 +1976,20 @@ public abstract class HandlerUtils {
 		Object defaultValue = null;
 		String dateformat = null;
 		Annotation[] annotations = property.getAnnotations();
-		for (Annotation anno : annotations) {
+//		for (Annotation anno : annotations) 
+		
 
-			if (anno instanceof PathVariable) {
-				PathVariable param = (PathVariable) anno;
-				if (pathVarDatas != null) {
-					if (!param.value().equals(""))
-						value = pathVarDatas.get(param.value());
-					else
-						value = pathVarDatas.get(name);
-				}
-				if (param.editor() != null && !param.editor().equals(""))
-					editor = (EditorInf) BeanUtils.instantiateClass(param
-							.editor());
-				defaultValue = param.defaultvalue();
-				dateformat = param.dateformat();
-				if (dateformat.equals(ValueConstants.DEFAULT_NONE))
-					dateformat = null;
-				useEditor = true;
-			} else if (anno instanceof RequestParam) {
-				RequestParam param = (RequestParam) anno;
+			
+			if ( property.getRequestParam() != null) {
+				
+				RequestParamWraper param = property.getRequestParam();
 				if (!isMultipartFile(type)) {
 					dateformat = param.dateformat();
-					if (dateformat.equals(ValueConstants.DEFAULT_NONE))
-						dateformat = null;
 					String decodeCharset = param.decodeCharset();
 					String charset = param.charset();
 					String convertcharset = param.convertcharset();
-					if (decodeCharset.equals(ValueConstants.DEFAULT_NONE)) {
-						decodeCharset = null;
-					} else {
+					if (decodeCharset != null){
 						request.setAttribute(USE_MVC_DENCODE_KEY, TRUE);
-					}
-					if (charset.equals(ValueConstants.DEFAULT_NONE)) {
-						charset = null;
-					}
-					if (convertcharset.equals(ValueConstants.DEFAULT_NONE)) {
-						convertcharset = null;
 					}
 
 					request.setAttribute(USE_MVC_DENCODE_KEY, null);
@@ -2101,8 +2039,27 @@ public abstract class HandlerUtils {
 				touched = true;
 				useEditor = true;
 
-			} else if (anno instanceof Attribute) {
-				Attribute param = (Attribute) anno;
+			} 
+			if (value == null && property.getPathVariable() != null) {
+				dateformat = null;
+				PathVariableWraper param = property.getPathVariable();
+				if (pathVarDatas != null) {
+					if (!param.value().equals(""))
+						value = pathVarDatas.get(param.value());
+					else
+						value = pathVarDatas.get(name);
+				}
+				if (param.editor() != null && !param.editor().equals(""))
+					editor = (EditorInf) BeanUtils.instantiateClass(param
+							.editor());
+				defaultValue = param.defaultvalue();
+				dateformat = param.dateformat();
+				useEditor = true;
+			}
+			
+			if (value == null && property.getAttribute() != null) {
+				dateformat = null;
+				AttributeWraper param = property.getAttribute();
 				String paramName = !param.name().equals("") ? param.name()
 						: name;
 				if (!required)
@@ -2136,8 +2093,6 @@ public abstract class HandlerUtils {
 
 				}
 				dateformat = param.dateformat();
-				if (dateformat.equals(ValueConstants.DEFAULT_NONE))
-					dateformat = null;
 				if (param.editor() != null && !param.editor().equals(""))
 					editor = (EditorInf) BeanUtils.instantiateClass(param
 							.editor());
@@ -2145,31 +2100,30 @@ public abstract class HandlerUtils {
 
 				useEditor = true;
 
-			} else if (anno instanceof CookieValue) {
-				CookieValue param = (CookieValue) anno;
+			}
+			if (value == null && property.getCookie() != null) {
+				dateformat = null;
+				CookieValueWraper param = property.getCookie();
 				dateformat = param.dateformat();
-				if (dateformat.equals(ValueConstants.DEFAULT_NONE))
-					dateformat = null;
 				if (!required)
 					required = param.required();
 				if (param.editor() != null && !param.editor().equals(""))
 					editor = (EditorInf) BeanUtils.instantiateClass(param
 							.editor());
 				defaultValue = param.defaultvalue();
-				if (defaultValue.equals(ValueConstants.DEFAULT_NONE))
-					defaultValue = null;
 				String paramName = !param.name().equals("") ? param.name()
 						: name;
 				value = resolveCookieValue(type, paramName, request);
 				useEditor = true;
 
-			} else if (anno instanceof RequestHeader) {
+			}
+			if (value == null && property.getHeader() != null) {
+				dateformat = null;
 
 				// value = resolveRequestHeader(methodParameter, request);
-				RequestHeader param = (RequestHeader) anno;
+				RequestHeaderWraper param =  property.getHeader();
 				dateformat = param.dateformat();
-				if (dateformat.equals(ValueConstants.DEFAULT_NONE))
-					dateformat = null;
+				
 				required = param.required();
 				if (param.editor() != null && !param.editor().equals(""))
 					editor = (EditorInf) BeanUtils.instantiateClass(param
@@ -2185,15 +2139,9 @@ public abstract class HandlerUtils {
 				useEditor = true;
 
 			}
-			if (defaultValue != null
-					&& defaultValue.equals(ValueConstants.DEFAULT_NONE))
-				defaultValue = null;
 			if (value == null)
 				value = defaultValue;
-			if (value != null)
-				break;
-			dateformat = null;
-		}
+		
 
 		if (!property.isNamevariabled() && !touched && holder.needAddData()) {
 			holder.addData(name, value, editor, required, defaultValue);
@@ -2665,9 +2613,7 @@ public abstract class HandlerUtils {
 					}
 				}
 				useEditor = false;
-			} else if (property.getAnnotations() == null
-					|| property.getAnnotations().length == 0
-					|| !hasParameterAnnotation(field)) {
+			} else if (!hasParameterAnnotation(property)) {
 				if (List.class.isAssignableFrom(type)) {// 如果是列表数据集
 					List command = new ArrayList();
 					Class ct = property.getPropertyGenericType();// 获取元素类型

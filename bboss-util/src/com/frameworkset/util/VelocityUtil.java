@@ -1,7 +1,6 @@
 package com.frameworkset.util;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
 import java.io.Serializable;
@@ -15,12 +14,13 @@ import java.util.Map;
 import java.util.Properties;
 
 import org.apache.log4j.Logger;
-import org.apache.velocity.Template;
-import org.apache.velocity.VelocityContext;
-import org.apache.velocity.app.Velocity;
-import org.apache.velocity.exception.MethodInvocationException;
-import org.apache.velocity.exception.ParseErrorException;
-import org.apache.velocity.exception.ResourceNotFoundException;
+
+import bboss.org.apache.velocity.Template;
+import bboss.org.apache.velocity.VelocityContext;
+import bboss.org.apache.velocity.app.Velocity;
+import bboss.org.apache.velocity.exception.MethodInvocationException;
+import bboss.org.apache.velocity.exception.ParseErrorException;
+import bboss.org.apache.velocity.exception.ResourceNotFoundException;
 //import org.frameworkset.spi.BaseApplicationContext;
 
 
@@ -195,13 +195,13 @@ public class VelocityUtil implements Serializable{
 	    	        }
 //	    	        File configurationFile = new File(appDir, "/classes/velocity.properties");
 //	    	        log.debug("configurationFile.getAbsolutePath():"+configurationFile.getAbsolutePath());
-	    	        log.debug("velocity.properties:"+ VelocityUtil.class.getResource("/velocity.properties"));
+	    	        log.debug("velocity.properties:"+ VelocityUtil.class.getResource("/bboss-velocity.properties"));
 	    	        log.debug("file.resource.loader.path:"+ templatePath);
-	    	       java.util.Properties pros =SimpleStringUtil.getProperties("/velocity.properties", VelocityUtil.class);
+	    	       java.util.Properties pros =SimpleStringUtil.getProperties("/bboss-velocity.properties", VelocityUtil.class);
 	    	       
 //	    	       pros.load(new java.io.FileInputStream(configurationFile));
 	    	       String loadclass =(String) pros.get("file.resource.loader.class");
-	    	       if(loadclass != null && loadclass.equals("org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader"))
+	    	       if(loadclass != null && loadclass.equals("bboss.org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader"))
 	    	       {
 //	    	    	   templatePath = "/";
 	    	    	   VERSION_OLD = false;
