@@ -24,6 +24,7 @@ import java.io.Writer;
 import java.util.Properties;
 
 import org.apache.commons.collections.ExtendedProperties;
+
 import bboss.org.apache.velocity.Template;
 import bboss.org.apache.velocity.app.event.EventCartridge;
 import bboss.org.apache.velocity.context.Context;
@@ -172,6 +173,38 @@ public interface RuntimeServices extends RuntimeLogger
      * @throws ParseException
      */
     public  SimpleNode parse( Reader reader, String templateName )
+        throws ParseException;
+    
+    /**
+     * Parse the input SQL and return the root of
+     * AST node structure.
+     * <br><br>
+     *  In the event that it runs out of parsers in the
+     *  pool, it will create and let them be GC'd
+     *  dynamically, logging that it has to do that.  This
+     *  is considered an exceptional condition.  It is
+     *  expected that the user will set the
+     *  PARSER_POOL_SIZE property appropriately for their
+     *  application.  We will revisit this.
+     *
+     * @param reader inputstream retrieved by a resource loader
+     * @param templateName name of the template being parsed
+     * @return The AST representing the template.
+     * @throws ParseException
+     */
+    public  SimpleNode parseSQL( Reader reader, String SQL )
+        throws ParseException;
+    
+    /**
+     *  Parse the input and return the root of the AST node structure.
+     *
+     * @param reader Reader retrieved by a resource loader
+     * @param templateName name of the template being parsed
+     * @param dumpNamespace flag to dump the Velocimacro namespace for this template
+     * @return A root node representing the template as an AST tree.
+     * @throws ParseException When the template could not be parsed.
+     */
+    public SimpleNode parseSQL(Reader reader, String templateName, boolean dumpNamespace)
         throws ParseException;
 
     /**

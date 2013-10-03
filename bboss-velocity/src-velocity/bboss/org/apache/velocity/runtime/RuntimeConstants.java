@@ -357,7 +357,7 @@ public interface RuntimeConstants
      */
 
     /** Default Runtime properties. */
-    String DEFAULT_RUNTIME_PROPERTIES = "bboss/org/apache/velocity/runtime/defaults/velocity.properties";
+    String DEFAULT_RUNTIME_PROPERTIES = "bboss-velocity.properties";//"bboss/org/apache/velocity/runtime/defaults/velocity.properties";
 
     /** Default Runtime properties. */
     String DEFAULT_RUNTIME_DIRECTIVES = "bboss/org/apache/velocity/runtime/defaults/directive.properties";
