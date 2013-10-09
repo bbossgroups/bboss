@@ -227,7 +227,7 @@ public class VelocityUtil implements Serializable{
 //							
 //						}
 //					});
-	             } catch (Exception ex) {
+	             } catch (Throwable ex) {
 	             	try {
 	 					Velocity.init("velocity.properties");
 	 					inited = true;
