@@ -608,7 +608,7 @@ public class WebDataBinder  {//extends DataBinder {
 			for(int in = 0; attributes != null && in < attributes.size(); in ++)
 			{
 				PropertieDescription property = attributes.get(in);
-				if(!property.canwrite())
+				if(!property.canwrite() || property.getIgnoreBind() != null)
 				{
 					continue;
 				}
