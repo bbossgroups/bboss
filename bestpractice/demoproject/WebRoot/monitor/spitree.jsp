@@ -40,7 +40,7 @@
     			   includeRootNode="true"
     			   href="#"
     			   target="configfileDetail" 
-    			   mode="static"> 
+    			   mode="static-dynamic"> 
     			   <tree:treedata treetype="org.frameworkset.spi.monitor.SPITree"
     	                   scope="request"
     	                   rootid="0"  

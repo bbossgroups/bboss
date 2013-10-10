@@ -34,6 +34,7 @@ import org.frameworkset.soa.annotation.ExcludeField;
 import org.frameworkset.util.annotations.Attribute;
 import org.frameworkset.util.annotations.CookieValue;
 import org.frameworkset.util.annotations.DataBind;
+import org.frameworkset.util.annotations.IgnoreBind;
 import org.frameworkset.util.annotations.PathVariable;
 import org.frameworkset.util.annotations.RequestBody;
 import org.frameworkset.util.annotations.RequestHeader;
@@ -158,6 +159,11 @@ public class ClassUtil
 		private PathVariableWraper pathVariable;
 		private RequestBody requestBody;
 		private DataBind dataBind;
+		private IgnoreBind ignoreBind;
+		public IgnoreBind getIgnoreBind() {
+			return ignoreBind;
+		}
+
 		/**
 		 * if (field.isAnnotationPresent(RequestBody.class)
 				|| field.isAnnotationPresent(DataBind.class)
@@ -353,6 +359,10 @@ public class ClassUtil
 				else if(a instanceof CookieValue )
 				{
 					cookie = new CookieValueWraper ((CookieValue )a);
+				}
+				else if(a instanceof IgnoreBind)
+				{
+					this.ignoreBind = (IgnoreBind)a;
 				}
 			}
 		}

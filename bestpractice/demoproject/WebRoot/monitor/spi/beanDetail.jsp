@@ -659,34 +659,6 @@
 			%>
 			
 			</table>
-			
-			<% 
-			//mvc控制器方法信息
-				Map mvcpaths = providerManagerInfo.getMvcpaths();
-				
-			%>
-			<table class="thin" width="100%">
-			
-			<tr><td class="headercolor">映射名称</td><td class="headercolor">映射路径</td></tr>
-			<%
-				if(mvcpaths != null && mvcpaths.size() > 0)
-				{
-					Iterator its = mvcpaths.keySet().iterator();
-					while(its.hasNext())
-					{
-						String namepath = (String)its.next();
-			%>
-			<tr><td><%=namepath %></td><td><%=mvcpaths.get(namepath) %></td></tr>		
-			<%
-					}
-				}else{
-			%>
-			<tr><td></td></tr>
-			<%	
-				} 
-			%>
-			
-			</table>
 		</tab:tabPane>
 		
 		<tab:tabPane id="extendattrs" tabTitle="扩展属性" lazeload="true" >
