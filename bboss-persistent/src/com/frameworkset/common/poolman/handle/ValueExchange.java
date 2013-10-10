@@ -36,7 +36,7 @@ import com.frameworkset.util.ValueObjectUtil;
  * <p>
  * Description:
  * </p>
- * æ•°æ®äº¤æ¢ï¼Œå®ç°æ•°æ®åº“è®°å½•å­—æ®µçš„å€¼å’Œjavaä¸­æ•°æ®ç±»å‹å€¼çš„è½¬æ¢
+ * Êı¾İ½»»»£¬ÊµÏÖÊı¾İ¿â¼ÇÂ¼×Ö¶ÎµÄÖµºÍjavaÖĞÊı¾İÀàĞÍÖµµÄ×ª»»
  * <p>
  * Copyright: Copyright (c) 2007
  * </p>
@@ -138,7 +138,7 @@ public class ValueExchange {
 //		 */
 //			case Types.BIGINT:
 //				/**
-//				 * å¤„ç†longç±»å‹çš„å­—æ®µæ—¶éœ€è¦ï¼Œå½“åº”ç”¨ç¨‹åºå‘longå½¢å­—æ®µä¸­å­˜æ”¾å¤§æ–‡æœ¬æ—¶éœ€è¦ï¼Œå­˜æ”¾Reader
+//				 * ´¦ÀílongÀàĞÍµÄ×Ö¶ÎÊ±ĞèÒª£¬µ±Ó¦ÓÃ³ÌĞòÏòlongĞÎ×Ö¶ÎÖĞ´æ·Å´óÎÄ±¾Ê±ĞèÒª£¬´æ·ÅReader
 //				 * res.getCharacterStream();
 //				 */
 ////				Object reader = null;
@@ -166,7 +166,7 @@ public class ValueExchange {
 //				return handler;
 //
 //		/**********************************************************************
-//	     * Types.DOUBLE Types.FLOAT  double ???? Types.FLOAT ä¸ºä»€ä¹ˆè¦å½’ç»“ä¸ºdoubleè€Œä¸æ˜¯float
+//	     * Types.DOUBLE Types.FLOAT  double ???? Types.FLOAT ÎªÊ²Ã´Òª¹é½áÎªdouble¶ø²»ÊÇfloat
 //	     **********************************************************************/					
 //		
 //		/**
@@ -250,7 +250,7 @@ public class ValueExchange {
 ////					break;
 ////				try {
 //					// not sure about this fix, so be overly cautious
-//					// åˆ¤æ–­æ˜¯å¦æœ‰ä¸­æ–‡å¦‚æœæœ‰ä¸­æ–‡åˆ™ï¼Œæœ‰äº›æ•°æ®åº“éœ€è¦å¤„ç†è°ƒåé¢å¤šä½™çš„ç©ºæ ¼ï¼Œæ¯”å¦‚oracle
+//					// ÅĞ¶ÏÊÇ·ñÓĞÖĞÎÄÈç¹ûÓĞÖĞÎÄÔò£¬ÓĞĞ©Êı¾İ¿âĞèÒª´¦Àíµ÷ºóÃæ¶àÓàµÄ¿Õ¸ñ£¬±ÈÈçoracle
 //				handler = typeHandlerFactory.getTypeHandler(String.class,"CLOB");
 //				return handler;
 ////					value = cstmt.getString(i);
@@ -262,9 +262,9 @@ public class ValueExchange {
 ////					// _e.printStackTrace();
 ////					// System.out.println("column :" + i + " " +
 ////					// meta.getColumnLabel(i));
-////					// æ•è·å¼‚å¸¸ï¼šæœ‰äº›æ•°æ®åº“ä¸­ï¼ˆä¾‹å¦‚mssql
-////					// server2000ï¼‰è¡¨å­—æ®µçš„å€¼ä¸ºç©ºçš„æƒ…å†µä¸‹è°ƒç”¨res.getObject(i)ä¼šæŠ¥
-////					// è¯»å–é›¶å­—èŠ‚å¼‚å¸¸ï¼Œé€ æˆæ•°æ®è¯»å–å¤±è´¥
+////					// ²¶»ñÒì³££ºÓĞĞ©Êı¾İ¿âÖĞ£¨ÀıÈçmssql
+////					// server2000£©±í×Ö¶ÎµÄÖµÎª¿ÕµÄÇé¿öÏÂµ÷ÓÃres.getObject(i)»á±¨
+////					// ¶ÁÈ¡Áã×Ö½ÚÒì³££¬Ôì³ÉÊı¾İ¶ÁÈ¡Ê§°Ü
 ////					try {
 ////						value = cstmt.getObject(i);
 ////					} catch (Exception e) {
@@ -439,9 +439,9 @@ public class ValueExchange {
 //			default:
 //			// System.out.println("column :" + i + " " +
 //			// meta.getColumnLabel(i));
-//			// æ•è·å¼‚å¸¸ï¼šæœ‰äº›æ•°æ®åº“ä¸­ï¼ˆä¾‹å¦‚mssql
-//			// server2000ï¼‰è¡¨å­—æ®µçš„å€¼ä¸ºç©ºçš„æƒ…å†µä¸‹è°ƒç”¨res.getObject(i)ä¼šæŠ¥
-//			// è¯»å–é›¶å­—èŠ‚å¼‚å¸¸ï¼Œé€ æˆæ•°æ®è¯»å–å¤±è´¥
+//			// ²¶»ñÒì³££ºÓĞĞ©Êı¾İ¿âÖĞ£¨ÀıÈçmssql
+//			// server2000£©±í×Ö¶ÎµÄÖµÎª¿ÕµÄÇé¿öÏÂµ÷ÓÃres.getObject(i)»á±¨
+//			// ¶ÁÈ¡Áã×Ö½ÚÒì³££¬Ôì³ÉÊı¾İ¶ÁÈ¡Ê§°Ü
 //				handler = typeHandlerFactory.getTypeHandler(Object.class, "OBJECT");
 //				return handler;
 //		}
@@ -626,7 +626,7 @@ public class ValueExchange {
 			case Types.CHAR:
 				try {
 					// not sure about this fix, so be overly cautious
-					// åˆ¤æ–­æ˜¯å¦æœ‰ä¸­æ–‡å¦‚æœæœ‰ä¸­æ–‡åˆ™ï¼Œæœ‰äº›æ•°æ®åº“éœ€è¦å¤„ç†è°ƒåé¢å¤šä½™çš„ç©ºæ ¼ï¼Œæ¯”å¦‚oracle
+					// ÅĞ¶ÏÊÇ·ñÓĞÖĞÎÄÈç¹ûÓĞÖĞÎÄÔò£¬ÓĞĞ©Êı¾İ¿âĞèÒª´¦Àíµ÷ºóÃæ¶àÓàµÄ¿Õ¸ñ£¬±ÈÈçoracle
 
 					value = cstmt.getString(i);
 					
@@ -637,9 +637,9 @@ public class ValueExchange {
 					// _e.printStackTrace();
 					// System.out.println("column :" + i + " " +
 					// meta.getColumnLabel(i));
-					// æ•è·å¼‚å¸¸ï¼šæœ‰äº›æ•°æ®åº“ä¸­ï¼ˆä¾‹å¦‚mssql
-					// server2000ï¼‰è¡¨å­—æ®µçš„å€¼ä¸ºç©ºçš„æƒ…å†µä¸‹è°ƒç”¨res.getObject(i)ä¼šæŠ¥
-					// è¯»å–é›¶å­—èŠ‚å¼‚å¸¸ï¼Œé€ æˆæ•°æ®è¯»å–å¤±è´¥
+					// ²¶»ñÒì³££ºÓĞĞ©Êı¾İ¿âÖĞ£¨ÀıÈçmssql
+					// server2000£©±í×Ö¶ÎµÄÖµÎª¿ÕµÄÇé¿öÏÂµ÷ÓÃres.getObject(i)»á±¨
+					// ¶ÁÈ¡Áã×Ö½ÚÒì³££¬Ôì³ÉÊı¾İ¶ÁÈ¡Ê§°Ü
 					try {
 						value = cstmt.getObject(i);
 					} catch (Exception e) {
@@ -649,7 +649,7 @@ public class ValueExchange {
 				break;
 			case Types.BIGINT:
 				/**
-				 * å¤„ç†longç±»å‹çš„å­—æ®µæ—¶éœ€è¦ï¼Œå½“åº”ç”¨ç¨‹åºå‘longå½¢å­—æ®µä¸­å­˜æ”¾å¤§æ–‡æœ¬æ—¶éœ€è¦ï¼Œå­˜æ”¾Reader
+				 * ´¦ÀílongÀàĞÍµÄ×Ö¶ÎÊ±ĞèÒª£¬µ±Ó¦ÓÃ³ÌĞòÏòlongĞÎ×Ö¶ÎÖĞ´æ·Å´óÎÄ±¾Ê±ĞèÒª£¬´æ·ÅReader
 				 * res.getCharacterStream();
 				 */
 				Object reader = null;
@@ -706,9 +706,9 @@ public class ValueExchange {
 			default:
 				// System.out.println("column :" + i + " " +
 				// meta.getColumnLabel(i));
-				// æ•è·å¼‚å¸¸ï¼šæœ‰äº›æ•°æ®åº“ä¸­ï¼ˆä¾‹å¦‚mssql
-				// server2000ï¼‰è¡¨å­—æ®µçš„å€¼ä¸ºç©ºçš„æƒ…å†µä¸‹è°ƒç”¨res.getObject(i)ä¼šæŠ¥
-				// è¯»å–é›¶å­—èŠ‚å¼‚å¸¸ï¼Œé€ æˆæ•°æ®è¯»å–å¤±è´¥
+				// ²¶»ñÒì³££ºÓĞĞ©Êı¾İ¿âÖĞ£¨ÀıÈçmssql
+				// server2000£©±í×Ö¶ÎµÄÖµÎª¿ÕµÄÇé¿öÏÂµ÷ÓÃres.getObject(i)»á±¨
+				// ¶ÁÈ¡Áã×Ö½ÚÒì³££¬Ôì³ÉÊı¾İ¶ÁÈ¡Ê§°Ü
 				try {
 					value = cstmt.getObject(i);
 				} catch (Exception e) {
@@ -739,7 +739,7 @@ public class ValueExchange {
 			case Types.CHAR:
 				try {
 					// not sure about this fix, so be overly cautious
-					// åˆ¤æ–­æ˜¯å¦æœ‰ä¸­æ–‡å¦‚æœæœ‰ä¸­æ–‡åˆ™ï¼Œæœ‰äº›æ•°æ®åº“éœ€è¦å¤„ç†è°ƒåé¢å¤šä½™çš„ç©ºæ ¼ï¼Œæ¯”å¦‚oracle
+					// ÅĞ¶ÏÊÇ·ñÓĞÖĞÎÄÈç¹ûÓĞÖĞÎÄÔò£¬ÓĞĞ©Êı¾İ¿âĞèÒª´¦Àíµ÷ºóÃæ¶àÓàµÄ¿Õ¸ñ£¬±ÈÈçoracle
 
 					value = cstmt.getString(paramName);
 					
@@ -750,9 +750,9 @@ public class ValueExchange {
 					// _e.printStackTrace();
 					// System.out.println("column :" + i + " " +
 					// meta.getColumnLabel(i));
-					// æ•è·å¼‚å¸¸ï¼šæœ‰äº›æ•°æ®åº“ä¸­ï¼ˆä¾‹å¦‚mssql
-					// server2000ï¼‰è¡¨å­—æ®µçš„å€¼ä¸ºç©ºçš„æƒ…å†µä¸‹è°ƒç”¨res.getObject(i)ä¼šæŠ¥
-					// è¯»å–é›¶å­—èŠ‚å¼‚å¸¸ï¼Œé€ æˆæ•°æ®è¯»å–å¤±è´¥
+					// ²¶»ñÒì³££ºÓĞĞ©Êı¾İ¿âÖĞ£¨ÀıÈçmssql
+					// server2000£©±í×Ö¶ÎµÄÖµÎª¿ÕµÄÇé¿öÏÂµ÷ÓÃres.getObject(i)»á±¨
+					// ¶ÁÈ¡Áã×Ö½ÚÒì³££¬Ôì³ÉÊı¾İ¶ÁÈ¡Ê§°Ü
 					try {
 						value = cstmt.getObject(paramName);
 					} catch (Exception e) {
@@ -762,7 +762,7 @@ public class ValueExchange {
 				break;
 			case Types.BIGINT:
 				/**
-				 * å¤„ç†longç±»å‹çš„å­—æ®µæ—¶éœ€è¦ï¼Œå½“åº”ç”¨ç¨‹åºå‘longå½¢å­—æ®µä¸­å­˜æ”¾å¤§æ–‡æœ¬æ—¶éœ€è¦ï¼Œå­˜æ”¾Reader
+				 * ´¦ÀílongÀàĞÍµÄ×Ö¶ÎÊ±ĞèÒª£¬µ±Ó¦ÓÃ³ÌĞòÏòlongĞÎ×Ö¶ÎÖĞ´æ·Å´óÎÄ±¾Ê±ĞèÒª£¬´æ·ÅReader
 				 * res.getCharacterStream();
 				 */
 				Object reader = null;
@@ -811,9 +811,9 @@ public class ValueExchange {
 			default:
 				// System.out.println("column :" + i + " " +
 				// meta.getColumnLabel(i));
-				// æ•è·å¼‚å¸¸ï¼šæœ‰äº›æ•°æ®åº“ä¸­ï¼ˆä¾‹å¦‚mssql
-				// server2000ï¼‰è¡¨å­—æ®µçš„å€¼ä¸ºç©ºçš„æƒ…å†µä¸‹è°ƒç”¨res.getObject(i)ä¼šæŠ¥
-				// è¯»å–é›¶å­—èŠ‚å¼‚å¸¸ï¼Œé€ æˆæ•°æ®è¯»å–å¤±è´¥
+				// ²¶»ñÒì³££ºÓĞĞ©Êı¾İ¿âÖĞ£¨ÀıÈçmssql
+				// server2000£©±í×Ö¶ÎµÄÖµÎª¿ÕµÄÇé¿öÏÂµ÷ÓÃres.getObject(i)»á±¨
+				// ¶ÁÈ¡Áã×Ö½ÚÒì³££¬Ôì³ÉÊı¾İ¶ÁÈ¡Ê§°Ü
 				try {
 					value = cstmt.getObject(paramName);
 				} catch (Exception e) {
@@ -1122,7 +1122,7 @@ public class ValueExchange {
 			case Types.CHAR:
 				try {
 					// not sure about this fix, so be overly cautious
-					// åˆ¤æ–­æ˜¯å¦æœ‰ä¸­æ–‡å¦‚æœæœ‰ä¸­æ–‡åˆ™ï¼Œæœ‰äº›æ•°æ®åº“éœ€è¦å¤„ç†è°ƒåé¢å¤šä½™çš„ç©ºæ ¼ï¼Œæ¯”å¦‚oracle
+					// ÅĞ¶ÏÊÇ·ñÓĞÖĞÎÄÈç¹ûÓĞÖĞÎÄÔò£¬ÓĞĞ©Êı¾İ¿âĞèÒª´¦Àíµ÷ºóÃæ¶àÓàµÄ¿Õ¸ñ£¬±ÈÈçoracle
 
 					value = res.getString(i);
 					
@@ -1133,9 +1133,9 @@ public class ValueExchange {
 //					// _e.printStackTrace();
 //					// System.out.println("column :" + i + " " +
 //					// meta.getColumnLabel(i));
-//					// æ•è·å¼‚å¸¸ï¼šæœ‰äº›æ•°æ®åº“ä¸­ï¼ˆä¾‹å¦‚mssql
-//					// server2000ï¼‰è¡¨å­—æ®µçš„å€¼ä¸ºç©ºçš„æƒ…å†µä¸‹è°ƒç”¨res.getObject(i)ä¼šæŠ¥
-//					// è¯»å–é›¶å­—èŠ‚å¼‚å¸¸ï¼Œé€ æˆæ•°æ®è¯»å–å¤±è´¥
+//					// ²¶»ñÒì³££ºÓĞĞ©Êı¾İ¿âÖĞ£¨ÀıÈçmssql
+//					// server2000£©±í×Ö¶ÎµÄÖµÎª¿ÕµÄÇé¿öÏÂµ÷ÓÃres.getObject(i)»á±¨
+//					// ¶ÁÈ¡Áã×Ö½ÚÒì³££¬Ôì³ÉÊı¾İ¶ÁÈ¡Ê§°Ü
 //					value = res.getObject(i);
 					throw _e;
 					
@@ -1144,9 +1144,9 @@ public class ValueExchange {
 //					// _e.printStackTrace();
 //					// System.out.println("column :" + i + " " +
 //					// meta.getColumnLabel(i));
-//					// æ•è·å¼‚å¸¸ï¼šæœ‰äº›æ•°æ®åº“ä¸­ï¼ˆä¾‹å¦‚mssql
-//					// server2000ï¼‰è¡¨å­—æ®µçš„å€¼ä¸ºç©ºçš„æƒ…å†µä¸‹è°ƒç”¨res.getObject(i)ä¼šæŠ¥
-//					// è¯»å–é›¶å­—èŠ‚å¼‚å¸¸ï¼Œé€ æˆæ•°æ®è¯»å–å¤±è´¥
+//					// ²¶»ñÒì³££ºÓĞĞ©Êı¾İ¿âÖĞ£¨ÀıÈçmssql
+//					// server2000£©±í×Ö¶ÎµÄÖµÎª¿ÕµÄÇé¿öÏÂµ÷ÓÃres.getObject(i)»á±¨
+//					// ¶ÁÈ¡Áã×Ö½ÚÒì³££¬Ôì³ÉÊı¾İ¶ÁÈ¡Ê§°Ü
 //					value = res.getObject(i);
 					throw new NestedSQLException(_e);
 					
@@ -1154,7 +1154,7 @@ public class ValueExchange {
 				break;
 			case Types.BIGINT:
 				/**
-				 * å¤„ç†longç±»å‹çš„å­—æ®µæ—¶éœ€è¦ï¼Œå½“åº”ç”¨ç¨‹åºå‘longå½¢å­—æ®µä¸­å­˜æ”¾å¤§æ–‡æœ¬æ—¶éœ€è¦ï¼Œå­˜æ”¾Reader
+				 * ´¦ÀílongÀàĞÍµÄ×Ö¶ÎÊ±ĞèÒª£¬µ±Ó¦ÓÃ³ÌĞòÏòlongĞÎ×Ö¶ÎÖĞ´æ·Å´óÎÄ±¾Ê±ĞèÒª£¬´æ·ÅReader
 				 * res.getCharacterStream();
 				 */
 //				Object reader = null;
@@ -1212,9 +1212,9 @@ public class ValueExchange {
 			default:
 				// System.out.println("column :" + i + " " +
 				// meta.getColumnLabel(i));
-				// æ•è·å¼‚å¸¸ï¼šæœ‰äº›æ•°æ®åº“ä¸­ï¼ˆä¾‹å¦‚mssql
-				// server2000ï¼‰è¡¨å­—æ®µçš„å€¼ä¸ºç©ºçš„æƒ…å†µä¸‹è°ƒç”¨res.getObject(i)ä¼šæŠ¥
-				// è¯»å–é›¶å­—èŠ‚å¼‚å¸¸ï¼Œé€ æˆæ•°æ®è¯»å–å¤±è´¥
+				// ²¶»ñÒì³££ºÓĞĞ©Êı¾İ¿âÖĞ£¨ÀıÈçmssql
+				// server2000£©±í×Ö¶ÎµÄÖµÎª¿ÕµÄÇé¿öÏÂµ÷ÓÃres.getObject(i)»á±¨
+				// ¶ÁÈ¡Áã×Ö½ÚÒì³££¬Ôì³ÉÊı¾İ¶ÁÈ¡Ê§°Ü
 				
 				value = res.getObject(i);
 				
@@ -1233,12 +1233,12 @@ public class ValueExchange {
 		return value;
 	}
 	/**
-	 * æ•°å­—è½¬åŒ–ä¸ºæ±‰å­—
+	 * Êı×Ö×ª»¯Îªºº×Ö
 	 * @param column
 	 * @return
 	 */
 	public static String numberToCN(String column){
-		 char[] cnNumbers={'é›¶','å£¹','è´°','å','è‚†','ä¼','é™†','æŸ’','æŒ','ç–'};
+		 char[] cnNumbers={'Áã','Ò¼','·¡','Èş','ËÁ','Îé','Â½','Æâ','°Æ','¾Á'};
 	
 		 if(!"".equals(column)){
 			 StringBuffer stringbuffer = new StringBuffer();
@@ -1260,10 +1260,10 @@ public class ValueExchange {
 	}
 	public static String toStringNumber(double value,String length,String precision,int numbertocn,String pattern)
 	{
-		//å…ˆåˆ¤æ–­å€¼æ˜¯å¦ä¸ºç©º
+		//ÏÈÅĞ¶ÏÖµÊÇ·ñÎª¿Õ
 
 		String ret = "";
-		// å…ˆå®Œæˆå¯¹æ•´æ•°çš„å¤„ç†
+		// ÏÈÍê³É¶ÔÕûÊıµÄ´¦Àí
 		if(numbertocn==1){
 			return numberToCN(String.valueOf(value));
 		}else if(pattern != null && !"".equals(pattern)){
@@ -1275,7 +1275,7 @@ public class ValueExchange {
 			ret = value + "";
 		}
 		
-//		//æ¥ç€åšé•¿åº¦ã€ç²¾åº¦å¤„ç†
+//		//½Ó×Å×ö³¤¶È¡¢¾«¶È´¦Àí
 //		StringBuffer fmt=new StringBuffer();
 
 //		int i;
@@ -1349,7 +1349,7 @@ public class ValueExchange {
 	}
 	
 	public static String toStringDate(Date date, String dataformat) {
-		//è¿›è¡Œè½¬æ¢å‡½æ•°å¤„ç†
+		//½øĞĞ×ª»»º¯Êı´¦Àí
 		if(date == null)
 			return null;
 		if(dataformat != null && !"".equals(dataformat)){
@@ -1361,10 +1361,10 @@ public class ValueExchange {
 	
 	public static String toStringInteger(int value, String length,
 			int numbertocn, String dataformat) {
-		//å…ˆåˆ¤æ–­å€¼æ˜¯å¦ä¸ºç©º
+		//ÏÈÅĞ¶ÏÖµÊÇ·ñÎª¿Õ
 
 		String ret = "";
-		// å…ˆå®Œæˆå¯¹æ•´æ•°çš„å¤„ç†
+		// ÏÈÍê³É¶ÔÕûÊıµÄ´¦Àí
 		if(numbertocn == 1){
 			return numberToCN(String.valueOf(value));
 		}else if(dataformat != null && !"".equals(dataformat)){
@@ -1373,7 +1373,7 @@ public class ValueExchange {
 		}
 		else
 			ret = value + "";
-//		//æ¥ç€åšé•¿åº¦å¤„ç†
+//		//½Ó×Å×ö³¤¶È´¦Àí
 //		StringBuffer fmt=new StringBuffer();
 //		int i;
 //		DecimalFormat form;
@@ -1395,10 +1395,10 @@ public class ValueExchange {
 	public static String toStringBigNumber(BigDecimal bigDecimal,
 			String length, int numbertocn,
 			String dataformat) {
-		//å…ˆåˆ¤æ–­å€¼æ˜¯å¦ä¸ºç©º
+		//ÏÈÅĞ¶ÏÖµÊÇ·ñÎª¿Õ
 
 		String ret = "";
-		// å…ˆå®Œæˆå¯¹æ•´æ•°çš„å¤„ç†
+		// ÏÈÍê³É¶ÔÕûÊıµÄ´¦Àí
 		if(numbertocn == 1){
 			return numberToCN(String.valueOf(bigDecimal));
 		}else if(dataformat != null && !"".equals(dataformat)){
@@ -1409,7 +1409,7 @@ public class ValueExchange {
 			ret = bigDecimal + "";
 		
 //		
-//		//æ¥ç€åšé•¿åº¦å¤„ç†
+//		//½Ó×Å×ö³¤¶È´¦Àí
 //		StringBuffer retbuffer = new StringBuffer(ret);
 //		int length_ = 0;
 //		if(length != null && !"".equals(length)){
@@ -1461,7 +1461,7 @@ public class ValueExchange {
 
 	public static String toStringTimeStamp(Timestamp timestamp,
 			String dataformat) {
-		//è¿›è¡Œè½¬æ¢å‡½æ•°å¤„ç†
+		//½øĞĞ×ª»»º¯Êı´¦Àí
 		if(timestamp == null)
 			return null;
 		if(dataformat != null && !"".equals(dataformat)){
