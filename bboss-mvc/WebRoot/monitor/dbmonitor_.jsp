@@ -20,6 +20,14 @@
 <%
 
 	String userAccount = "admin";
+	String selectedds = request.getParameter("ds") ;
+	if(selectedds != null && !selectedds.equals(""))
+		selectedds = "数据库："+selectedds+" 的链接情况";
+	else
+	{
+		selectedds = "";
+	}
+	
 	
 %>
 
@@ -46,7 +54,7 @@
 		
 	
 	
-	<tab:tabContainer id="singleMonitorinfo">
+	<tab:tabContainer id="singleMonitorinfo" selectedTabPaneId="<%%=selectedds %>">
 	<% 
 		//List poollist = new ArrayList();
 		DBUtil dbUtil = new DBUtil();
