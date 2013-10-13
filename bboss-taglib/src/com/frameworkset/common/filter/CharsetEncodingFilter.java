@@ -42,11 +42,31 @@ public class CharsetEncodingFilter implements Filter {
     private String ResponseEncoding = null;
     private String mode = "0";
     private boolean checkiemodeldialog;
+    private static String[] wallfilterrules;
+    private String[] wallwhilelist;
+    private static String[] wallfilterrules_default = new String[]{"<script","%3Cscript","script","<img","%3Cimg","alert(","alert%28","eval(","eval%28","style=","style%3D",
+    	"javascript","update ","drop ","delete ","insert ","create ","select ","truncate "};
     
     public void init(FilterConfig arg0) throws ServletException {
         this.config = arg0;
         this.RequestEncoding = config.getInitParameter("RequestEncoding");
         this.ResponseEncoding = config.getInitParameter("ResponseEncoding");
+        String wallfilterrules_ = config.getInitParameter("wallfilterrules");
+        String wallwhilelist_ = config.getInitParameter("wallwhilelist");
+        
+        String defaultwall = config.getInitParameter("defaultwall");
+        if(wallwhilelist_ != null )
+        {
+        	wallwhilelist = wallwhilelist_.split(",");
+        }
+        if(wallfilterrules_ != null )
+        {
+        	wallfilterrules = wallfilterrules_.split(",");
+        }
+        else if(defaultwall != null && defaultwall.equals("true"))
+        {
+        	wallfilterrules = wallfilterrules_default;
+        }
         String _checkiemodeldialog = config.getInitParameter("checkiemodeldialog");
         if(_checkiemodeldialog != null && _checkiemodeldialog.equals("true"))
         	this.checkiemodeldialog = true;
@@ -90,7 +110,7 @@ public class CharsetEncodingFilter implements Filter {
         {
 
             CharacterEncodingHttpServletRequestWrapper mrequestw = new
-                CharacterEncodingHttpServletRequestWrapper(request, RequestEncoding,checkiemodeldialog);
+                CharacterEncodingHttpServletRequestWrapper(request, RequestEncoding,checkiemodeldialog,wallfilterrules,wallwhilelist);
             CharacterEncodingHttpServletResponseWrapper wresponsew = new
                 CharacterEncodingHttpServletResponseWrapper(response, ResponseEncoding);
             fc.doFilter(mrequestw, wresponsew);
@@ -106,7 +126,7 @@ public class CharsetEncodingFilter implements Filter {
         else
         {
             CharacterEncodingHttpServletRequestWrapper mrequestw = new
-                CharacterEncodingHttpServletRequestWrapper(request, this.RequestEncoding,checkiemodeldialog);
+                CharacterEncodingHttpServletRequestWrapper(request, this.RequestEncoding,checkiemodeldialog,wallfilterrules,wallwhilelist);
             CharacterEncodingHttpServletResponseWrapper wresponsew = new
                 CharacterEncodingHttpServletResponseWrapper(response, ResponseEncoding);
             fc.doFilter(mrequestw, wresponsew);

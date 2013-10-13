@@ -22,10 +22,13 @@ public class CharacterEncodingHttpServletRequestWrapper
     private boolean checkiemodeldialog;
     private static final String system_encoding = System.getProperty("sun.jnu.encoding");
     public static final String USE_MVC_DENCODE_KEY = "org.frameworkset.web.servlet.handler.HandlerUtils.USE_MVC_DENCODE_KEY";
-    
+    private String[] wallfilterrules;
+    private String[] wallwhilelist;
 
-    public CharacterEncodingHttpServletRequestWrapper(HttpServletRequest request, String encoding,boolean checkiemodeldialog) {
+    public CharacterEncodingHttpServletRequestWrapper(HttpServletRequest request, String encoding,boolean checkiemodeldialog,String[] wallfilterrules,String[] wallwhilelist) {
         super(request);
+        this.wallfilterrules = wallfilterrules;
+        this.wallwhilelist = wallwhilelist;
         String agent = request.getHeader("User-Agent");
         if(agent != null)
         	isie = agent.contains("MSIE ");
@@ -70,7 +73,46 @@ public class CharacterEncodingHttpServletRequestWrapper
     		return null;
     	return values[0];
     }
+    
 
+    private boolean iswhilename(String name)
+    {
+    	if(this.wallwhilelist == null || this.wallwhilelist.length == 0)
+    		return true;
+    	for(String whilename:this.wallwhilelist)
+    	{
+    		if(whilename.equals(name))
+    			return true;
+    	}
+    	return false;
+    }
+    private void wallfilter(String name,String[] values)
+    {
+    	if(this.wallfilterrules == null || this.wallfilterrules.length == 0 || values == null || values.length == 0 || iswhilename(name))
+    		return;
+    	
+    	int j = 0;
+    	for(String value:values)
+    	{
+	    	if(value == null || value.equals(""))
+	    	{
+	    		j++;
+	    		continue;
+	    	}
+	    	
+	    	for(int i = 0;i <wallfilterrules.length; i ++)
+	    	{
+	    	
+	    		if(value.indexOf(wallfilterrules[i]) > 0)
+	    		{
+	    			values[j] = null;
+	    			break;
+	    		}
+	    	}
+	    	j++;
+	    	
+    	}
+    }
     public String[] getParameterValues(String name) {
     	
     	  
@@ -118,19 +160,23 @@ public class CharacterEncodingHttpServletRequestWrapper
                     	clone[i] = tempArray[i];
                     }
                 }
+                this.wallfilter(name,clone);
                 parameters.put(name,clone);
                 return clone;
             }
             else
             {
+            	this.wallfilter(name,tempArray);
             	parameters.put(name,tempArray);
             	return tempArray;
             }
             
         }
         catch (Exception e) {
-            e.printStackTrace();
-            return super.getParameterValues(name) ;
+        	String[] tempArray = super.getParameterValues(name);
+        	this.wallfilter(name,tempArray);
+        	parameters.put(name,tempArray);
+            return tempArray ;
         }
     }
     
