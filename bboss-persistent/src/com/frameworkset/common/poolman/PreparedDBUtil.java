@@ -66,8 +66,25 @@ import com.frameworkset.util.FileUtil;
  */
 public class PreparedDBUtil extends DBUtil {
 	
-	
-	
+	/**
+	 * more分页查询，不会计算总记录数，如果没有记录那么返回的ListInfo的datas的size为0,
+	 * 提升性能，同时前台标签库也会做响应的调整
+	 */
+    private boolean more = false;
+   
+    
+    /**
+	 * @return the more
+	 */
+	public boolean isMore() {
+		return more;
+	}
+	/**
+	 * @param more the more to set
+	 */
+	public void setMore(boolean more) {
+		this.more = more;
+	}
 	/**
 	 * 执行单条预编译sql时参数封装对象
 	 */
@@ -1396,15 +1413,18 @@ public class PreparedDBUtil extends DBUtil {
 				}
 				
 				statement = stmtInfo.preparePagineStatement(showsql);
-				if(Params.totalsize < 0)
+				if(!this.more)
 				{
-					//@Fixme
-					stmtInfo.setTotalsizesql(Params.prepareSqlifo.getNewtotalsizesql());
-					statement_count = stmtInfo.prepareCountStatement( showsql);
-				}
-				else
-				{
-					stmtInfo.setTotalsize(Params.totalsize);
+					if(Params.totalsize < 0)
+					{
+						//@Fixme
+						stmtInfo.setTotalsizesql(Params.prepareSqlifo.getNewtotalsizesql());
+						statement_count = stmtInfo.prepareCountStatement( showsql);
+					}
+					else
+					{
+						stmtInfo.setTotalsize(Params.totalsize);
+					}
 				}
 				
 
@@ -1463,16 +1483,21 @@ public class PreparedDBUtil extends DBUtil {
 				setUpParams(Params,statement,statement_count,resources);
 				long start = stmtInfo.getPaginesql().getStart();
 				long end = stmtInfo.getPaginesql().getEnd();
-				if(start >= 0)
+				int startidx = 0;
+				int endidx = 0;
+				boolean haspaginsql = start >= 0;
+				if(haspaginsql)
 				{
-					int startidx = Params.params != null?Params.params.size():0;
-					statement.setLong(startidx+1, start);
-					statement.setLong(startidx+2, end);
+					startidx = Params.params != null?Params.params.size():0;
+					startidx = startidx + 1;
+					endidx = startidx + 1;
+					statement.setLong(startidx, start);
+					statement.setLong(endidx, end);
 				}
 				ResultMap resultMap =  this.doPrepareSelect(stmtInfo,
 						   statement,
 						   statement_count,
-						   objectType,rowhandler,type);
+						   objectType,rowhandler,type,startidx,endidx, haspaginsql);
 				if(type == ResultMap.type_maparray)
 				{
 					
@@ -1876,52 +1901,90 @@ public class PreparedDBUtil extends DBUtil {
 	protected ResultMap doPrepareSelect(StatementInfo stmtInfo,
 									   PreparedStatement statement,
 									   PreparedStatement statement_count,
-									   Class objectType,RowHandler rowhandler,int result_type) throws SQLException {
+									   Class objectType,RowHandler rowhandler,int result_type,int startidx,int endidx
+									   ,boolean haspaginsql) throws SQLException {
 
 		
 		try {
 			ResultMap resultMap = new ResultMap();
 			ResultSet res = null;
 			ResultSet rs = null;
-			if(stmtInfo.getTotalsize() < 0)
+			if(!more)
 			{
-				try
+				if(stmtInfo.getTotalsize() < 0)
 				{
-					rs = statement_count.executeQuery();
-	//				stmtInfo.addResultSet(rs);
-					if (rs.next()) {
-						totalSize = rs.getInt(1);
-					}
-					this.offset = stmtInfo.rebuildOffset(totalSize);
-				}
-				finally//就近关闭
-				{
-					if(rs != null)
+					try
 					{
-						try {
-							rs.close();
-						} catch (Exception e) {
-							
-						}
-						rs = null;
-					}
-					if(statement_count != null)
-					{
-						try {
-							statement_count.close();
-							statement_count = null;
-						} catch (Exception e) {
-							
+						if(statement_count != null)
+						{
+							rs = statement_count.executeQuery();
+			//				stmtInfo.addResultSet(rs);
+							if (rs.next()) {
+								totalSize = rs.getInt(1);
+							}
+							long oldoffset = this.offset;
+							this.offset = stmtInfo.rebuildOffset(totalSize);
+							if(this.offset < oldoffset)//重置数据获取范围
+							{
+								if(haspaginsql)//支持sql分页的数据库才需要重置数据范围
+									stmtInfo.resetPostion(statement,startidx,endidx,this.offset);
+//								statement.setLong(startidx, this.offset);
+//								statement.setLong(endidx, totalSize - 1);
+								
+							}
 						}
 					}
+					finally//就近关闭
+					{
+						if(rs != null)
+						{
+							try {
+								rs.close();
+							} catch (Exception e) {
+								
+							}
+							rs = null;
+						}
+						if(statement_count != null)
+						{
+							try {
+								statement_count.close();
+								statement_count = null;
+							} catch (Exception e) {
+								
+							}
+						}
+					}
+				}
+				else
+				{
+					this.totalSize = stmtInfo.getTotalsize();
+				}
+				if (totalSize > 0) {
+	
+					res = statement.executeQuery();
+					stmtInfo.addResultSet(res);
+					stmtInfo.absolute(res);
+					stmtInfo.cacheResultSetMetaData( res,true);				
+					this.meta = stmtInfo.getMeta();
+					if(rowhandler != null)
+						rowhandler.init(meta, stmtInfo.getDbname());
+					resultMap = stmtInfo.buildResultMap(res, objectType, rowhandler, stmtInfo.getMaxsize(), true, result_type);
+	
+				}		
+				else //如果没有数据，则需要获取源数据
+				{
+					res = statement.executeQuery();
+					stmtInfo.addResultSet(res);
+					stmtInfo.absolute(res);
+					stmtInfo.cacheResultSetMetaData( res,true);	
+					if(rowhandler != null)
+						rowhandler.init(meta, stmtInfo.getDbname());
+					this.meta = stmtInfo.getMeta();
 				}
 			}
-			else
+			else//more操作直接基于传递过来的offset和maxsize查询数据库，如果数据size为0，则需要在listinfo中进行特殊值设置，考虑没有值的情况的处理
 			{
-				this.totalSize = stmtInfo.getTotalsize();
-			}
-			if (totalSize > 0) {
-
 				res = statement.executeQuery();
 				stmtInfo.addResultSet(res);
 				stmtInfo.absolute(res);
@@ -1930,17 +1993,6 @@ public class PreparedDBUtil extends DBUtil {
 				if(rowhandler != null)
 					rowhandler.init(meta, stmtInfo.getDbname());
 				resultMap = stmtInfo.buildResultMap(res, objectType, rowhandler, stmtInfo.getMaxsize(), true, result_type);
-
-			}		
-			else //如果没有数据，则需要获取源数据
-			{
-				res = statement.executeQuery();
-				stmtInfo.addResultSet(res);
-				stmtInfo.absolute(res);
-				stmtInfo.cacheResultSetMetaData( res,true);	
-				if(rowhandler != null)
-					rowhandler.init(meta, stmtInfo.getDbname());
-				this.meta = stmtInfo.getMeta();
 			}
 			return resultMap;
 

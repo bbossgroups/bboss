@@ -1103,6 +1103,31 @@ public class SQLInfoExecutor {
 		datas.setTotalSize(dbutil.getLongTotalSize());
 		return datas;		 
 	}
+	
+	/**
+	 * 
+	 * @param beanType
+	 * @param dbname
+	 * @param sql
+	 * @param offset
+	 * @param pagesize
+	 * @param bean
+	 * @return
+	 * @throws SQLException
+	 */
+	public static ListInfo moreListInfoBeanWithDBName(Class<?> beanType,String dbname, SQLInfo sql, long offset,int pagesize,Object bean) throws SQLException
+	{
+		
+		SQLInfoDBUtil dbutil = new SQLInfoDBUtil();
+		SQLParams params = SQLParams.convertBeanToSqlParams(bean, sql, dbname, PreparedDBUtil.SELECT, null);
+		dbutil.setMore(true);
+		dbutil.preparedSelect(params,dbname, sql,offset,pagesize,-1L);
+		ListInfo datas = new ListInfo();
+		datas.setDatas(dbutil.executePreparedForList(beanType));
+//		datas.setTotalSize(dbutil.getLongTotalSize());
+		datas.setMore(true);
+		return datas;		 
+	}
 	/**
 	 * 
 	 * @param beanType

@@ -974,7 +974,182 @@ public class ConfigSQLExecutor  {
 		SQLInfo sql = getSqlInfo(dbname, sqlname);
 		SQLInfoExecutor.queryBeanWithDBNameByNullRowHandler(  rowhandler,  dbname,  sql,  bean);  	 
 	}
-
+	
+	/**
+	 * more分页查询，不会计算总记录数，如果没有记录那么返回的ListInfo的datas的size为0,
+	 * 提升性能，同时前台标签库也会做响应的调整
+	 */
+	/**
+	 * 
+	 * @param rowhandler
+	 * @param beanType
+	 * @param dbname
+	 * @param sqlname
+	 * @param offset
+	 * @param pagesize
+	 * @param fields
+	 * @return
+	 * @throws SQLException
+	 */
+	public ListInfo moreListInfoWithDBNameByRowHandler(RowHandler rowhandler,Class<?> beanType,String dbname, String sqlname, long offset,int pagesize,Object... fields) throws SQLException
+	{
+		
+		SQLInfo sql = getSqlInfo(dbname, sqlname);
+		return SQLInfoExecutor.queryListInfoWithDBNameByRowHandler(rowhandler,beanType,dbname, sql, offset,pagesize,fields);  	  
+	}
+	
+	/**
+	 * 
+	 * @param rowhandler
+	 * @param dbname
+	 * @param sqlname
+	 * @param offset
+	 * @param pagesize
+	 * @param fields
+	 * @return
+	 * @throws SQLException
+	 */
+	public ListInfo moreListInfoWithDBNameByNullRowHandler(NullRowHandler rowhandler,String dbname, String sqlname, long offset,int pagesize,Object... fields) throws SQLException
+	{
+		
+		SQLInfo sql = getSqlInfo(dbname, sqlname);
+		return SQLInfoExecutor.queryListInfoWithDBNameByNullRowHandler(  rowhandler,dbname, sql, offset,pagesize,fields);  
+	}
+	
+		/**
+	 * 
+	 * @param beanType
+	 * @param dbname
+	 * @param sqlname
+	 * @param offset
+	 * @param pagesize
+	 * @param fields
+	 * @return
+	 * @throws SQLException
+	 */
+	public ListInfo moreListInfoWithDBName(Class<?> beanType,String dbname, String sqlname, long offset,int pagesize,Object... fields) throws SQLException
+	{
+		
+		SQLInfo sql = getSqlInfo(dbname, sqlname);
+		return SQLInfoExecutor.queryListInfoWithDBName(beanType,dbname, sql, offset,pagesize,fields);  	 
+	}
+	
+		/**
+	 * 
+	 * @param rowhandler
+	 * @param beanType
+	 * @param sql
+	 * @param offset
+	 * @param pagesize
+	 * @param fields
+	 * @return
+	 * @throws SQLException
+	 */
+	public ListInfo moreListInfoByRowHandler(RowHandler rowhandler,Class<?> beanType, String sql, long offset,int pagesize,Object... fields) throws SQLException
+	{
+		return moreListInfoWithDBNameByRowHandler( rowhandler,beanType, null,sql, offset,pagesize,fields);		 
+	}
+	
+		/**
+	 * 
+	 * @param rowhandler
+	 * @param sql
+	 * @param offset
+	 * @param pagesize
+	 * @param fields
+	 * @return
+	 * @throws SQLException
+	 */
+	public ListInfo moreListInfoByNullRowHandler(NullRowHandler rowhandler, String sql, long offset,int pagesize,Object... fields) throws SQLException
+	{
+		return moreListInfoWithDBNameByNullRowHandler( rowhandler, null,sql, offset,pagesize,fields);		 
+	}
+	
+		/**
+	 * 
+	 * @param rowhandler
+	 * @param beanType
+	 * @param dbname
+	 * @param sqlname
+	 * @param offset
+	 * @param pagesize
+	 * @param bean
+	 * @return
+	 * @throws SQLException
+	 */
+	public ListInfo moreListInfoBeanWithDBNameByRowHandler(RowHandler rowhandler,Class<?> beanType,String dbname, String sqlname, long offset,int pagesize,Object  bean) throws SQLException
+	{
+		
+		SQLInfo sql = getSqlInfo(dbname, sqlname);
+		return SQLInfoExecutor.queryListInfoBeanWithDBNameByRowHandler(  rowhandler,beanType,dbname, sql, offset,pagesize,-1L,bean);  
+	}
+	
+		/**
+	 * 
+	 * @param rowhandler
+	 * @param dbname
+	 * @param sqlname
+	 * @param offset
+	 * @param pagesize
+	 * @param totalsize
+	 * @param bean
+	 * @return
+	 * @throws SQLException
+	 */
+	public ListInfo moreListInfoBeanWithDBNameByNullRowHandler(NullRowHandler rowhandler,String dbname, String sqlname, long offset,int pagesize,Object bean) throws SQLException
+	{
+		
+		SQLInfo sql = getSqlInfo(dbname, sqlname);
+		return SQLInfoExecutor.queryListInfoBeanWithDBNameByNullRowHandler(  rowhandler, dbname, sql, offset,pagesize,-1L,bean);  	 
+	}
+	
+		/**
+	 * 
+	 * @param beanType
+	 * @param dbname
+	 * @param sqlname
+	 * @param offset
+	 * @param pagesize
+	 * @param bean
+	 * @return
+	 * @throws SQLException
+	 */
+	public ListInfo moreListInfoBeanWithDBName(Class<?> beanType,String dbname, String sqlname, long offset,int pagesize,Object bean) throws SQLException
+	{
+		
+		SQLInfo sql = getSqlInfo(dbname, sqlname);
+		return SQLInfoExecutor.moreListInfoBeanWithDBName(  beanType, dbname,  sql,  offset, pagesize, bean); 
+	}
+	
+		public ListInfo moreListInfoBeanByRowHandler(RowHandler rowhandler,Class<?> beanType, String sql, long offset,int pagesize,Object bean) throws SQLException
+	{
+		return moreListInfoBeanWithDBNameByRowHandler( rowhandler,beanType, null,sql, offset,pagesize,-1L,bean);		 
+	}
+	
+		public ListInfo moreListInfoBeanByNullRowHandler(NullRowHandler rowhandler, String sql, long offset,int pagesize,Object bean) throws SQLException
+	{
+		return moreListInfoBeanWithDBNameByNullRowHandler( rowhandler, null,sql, offset,pagesize,-1L,bean);		 
+	}
+	
+		public ListInfo moreListInfoBean(Class<?> beanType, String sql, long offset,int pagesize,Object bean) throws SQLException
+	{
+		return moreListInfoBeanWithDBName(beanType, null,sql, offset,pagesize,-1L,bean);		 
+	}
+	
+		/**
+	 * 
+	 * @param beanType
+	 * @param sql
+	 * @param offset
+	 * @param pagesize
+	 * @param fields
+	 * @return
+	 * @throws SQLException
+	 */
+	public ListInfo moreListInfo(Class<?> beanType, String sql, long offset,int pagesize,Object... fields) throws SQLException
+	{
+		return moreListInfoWithDBName(beanType, null,sql, offset,pagesize,fields);		 
+	}
 	
 	
 

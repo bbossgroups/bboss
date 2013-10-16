@@ -39,6 +39,7 @@ import java.sql.Blob;
 import java.sql.CallableStatement;
 import java.sql.Clob;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -592,6 +593,12 @@ public abstract class DB implements Serializable, IDMethod,Platform
 		
 		return new PagineSql(sql,-1L,-1L,offset,maxsize,prepared);
 	}
+	
+	public void resetPostion( PreparedStatement statement,int startidx,int endidx,long offset,int maxsize) throws SQLException
+    {
+//    	statement.setLong(startidx, offset);
+//		statement.setLong(endidx, maxsize);
+    }
 	
 //	public String getDBPagineSql(String sql, long offset, int maxsize) {
 //		

@@ -33,6 +33,7 @@ package com.frameworkset.orm.adapter;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -436,6 +437,12 @@ public class DBMM extends DB
 			newsql = new StringBuffer().append(sql).append(" limit ").append(offset).append(",").append(maxsize);
 		return new PagineSql(newsql.toString(),offset,(long)maxsize,offset, maxsize, prepared);
 	}
+	
+	public void resetPostion( PreparedStatement statement,int startidx,int endidx,long offset,int maxsize) throws SQLException
+    {
+    	statement.setLong(startidx, offset);
+		statement.setLong(endidx, maxsize);
+    }
 	public Object getLONGVARBINARY(CallableStatement cstmt,int parameterIndex) throws SQLException
     {
         return    cstmt.getBlob(parameterIndex);

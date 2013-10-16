@@ -45,7 +45,25 @@ public class ListInfo implements Serializable{
     */
     private List datas;
     private Object[] dbDatas;
-
+    /**
+	 * more分页查询，不会计算总记录数，如果没有记录那么返回的ListInfo的datas的size为0,
+	 * 提升性能，同时前台标签库也会做响应的调整
+	 */
+    private boolean more = false;
+   
+    
+    /**
+	 * @return the more
+	 */
+	public boolean isMore() {
+		return more;
+	}
+	/**
+	 * @param more the more to set
+	 */
+	public void setMore(boolean more) {
+		this.more = more;
+	}
     public ListInfo()
    {
 

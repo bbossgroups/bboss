@@ -69,9 +69,8 @@ public class SQLParams
     private Map<String,Param> sqlparams = null;
     private Params realParams = null;
     private NewSQLInfo newsql = null;
-   
-    
-    private String dbname = null;
+
+	private String dbname = null;
     private static Logger log = Logger.getLogger(SQLParams.class);
     /**
      * 用于预编译批处理操作
