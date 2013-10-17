@@ -128,6 +128,8 @@ public interface DataInfo
      */
     public int getDataSize();
     
+    public int getDataResultSize();
+    
     /**
      * 获取对象类型的数据
      * @return

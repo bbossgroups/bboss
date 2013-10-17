@@ -262,6 +262,24 @@ public abstract class DataInfoImpl implements DataInfo
 			return 0;
 		return listInfo.getSize();
 	}
+	
+	/**
+	 * 获取当前页面的记录条数
+	 */
+	public int getDataResultSize()
+	{
+	    if(first)
+		{
+		    if(!listMode)
+		        listInfo = getDataList(sortKey,desc,offSet,pageItemsize);
+		    else
+		        listInfo = getDataList(sortKey,desc);
+		    first = false;
+		}
+		if(listInfo == null )
+			return 0;
+		return listInfo.getResultSize();
+	}
 
 	/**
 	 * 对列表进行分页操作,数据源是一个列表

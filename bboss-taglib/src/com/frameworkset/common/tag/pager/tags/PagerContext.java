@@ -1282,10 +1282,10 @@ public class PagerContext
 					long lastPagerNumber = getLastPageNumber();
 					if (newPageCount > lastPagerNumber) {
 						offset = lastPagerNumber * getMaxPageItems();
-						/**
-						 * 重新获取数据，如果数据库底层能够处理这个问题，将不需要重新获取数据
-						 */
-						setDataInfo();
+//						/**
+//						 * 重新获取数据，如果数据库底层能够处理这个问题，将不需要重新获取数据
+//						 */
+//						setDataInfo();
 					}
 				}
 				
@@ -1951,13 +1951,23 @@ public class PagerContext
 	}
 
 	/**
-	 * 输出当前页面记录条数
+	 * 输出当前页面实际结果集记录数
 	 * 
 	 * @see com.frameworkset.common.tag.pager.tags.PagerInfo#getDataSize()
 	 */
 	public int getDataSize() {
 
 		return dataInfo == null ? 0 : dataInfo.getDataSize();
+	}
+	
+	/**
+	 * 输出当前页面数据库原始记录条数，可能经过应用程序处理数据记录会发生变化，可以通过getDataSize方法获取实际当页记录数
+	 * 
+	 * @see com.frameworkset.common.tag.pager.tags.PagerInfo#getDataSize()
+	 */
+	public int getDataResultSize() {
+
+		return dataInfo == null ? 0 : dataInfo.getDataResultSize();
 	}
 
 	/**

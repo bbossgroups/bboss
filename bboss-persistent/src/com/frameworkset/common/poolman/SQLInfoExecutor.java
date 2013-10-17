@@ -671,6 +671,7 @@ public class SQLInfoExecutor {
 		datas.setDatas(dbutil.executePreparedForList(beanType));
 //		datas.setTotalSize(dbutil.getLongTotalSize());
 		datas.setMore(true);
+		datas.setResultSize(dbutil.size());
 		return datas;		 
 	}
 	public static ListInfo queryListInfoWithDBName2ndTotalsize(Class<?> beanType,String dbname, SQLInfo sql, long offset,int pagesize,long totalsize,Object... fields) throws SQLException
@@ -861,6 +862,7 @@ public class SQLInfoExecutor {
 		datas.setDatas(dbutil.executePreparedForList(beanType,rowhandler));
 //		datas.setTotalSize(dbutil.getLongTotalSize());
 		datas.setMore(true);
+		datas.setResultSize(dbutil.size());
 		return datas;		 
 	}
 	
@@ -1056,6 +1058,7 @@ public class SQLInfoExecutor {
 		
 //		datas.setTotalSize(dbutil.getLongTotalSize());
 		datas.setMore(true);
+		datas.setResultSize(dbutil.size());
 		return datas;		 
 	}
 	public static ListInfo queryListInfoWithDBName2ndTotalsizeByNullRowHandler(NullRowHandler rowhandler,String dbname, SQLInfo sql, long offset,int pagesize,long totalsize,Object... fields) throws SQLException
@@ -1232,6 +1235,7 @@ public class SQLInfoExecutor {
 		datas.setDatas(dbutil.executePreparedForList(beanType));
 //		datas.setTotalSize(dbutil.getLongTotalSize());
 		datas.setMore(true);
+		datas.setResultSize(dbutil.size());
 		return datas;		 
 	}
 	/**
@@ -1517,6 +1521,7 @@ public class SQLInfoExecutor {
 		datas.setDatas(dbutil.executePreparedForList(beanType,rowhandler));
 //		datas.setTotalSize(dbutil.getLongTotalSize());
 		datas.setMore(true);
+		datas.setResultSize(dbutil.size());
 		return datas;		 
 	}
 	
@@ -1666,6 +1671,7 @@ public class SQLInfoExecutor {
 		
 //		datas.setTotalSize(dbutil.getLongTotalSize());
 		datas.setMore(true);
+		datas.setResultSize(dbutil.size());
 		return datas;		 
 	}
 	

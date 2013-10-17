@@ -88,6 +88,8 @@ public class DefaultDataInfoImpl implements DataInfo {
             int pageItemsize, boolean listMode,HttpServletRequest request) {
 
     }
+    
+    
 
     /**
      * 初始化获取分页/列表数据的必要参数
@@ -206,6 +208,21 @@ public class DefaultDataInfoImpl implements DataInfo {
             return 0;
         return listInfo.getTotalSize();
     }
+    
+    public int getDataResultSize()
+    {
+    	if(first)
+        {
+            if(!listMode)
+                listInfo = getDataFromDB(sql,dbName,offSet,pageItemsize);
+            else
+                listInfo = getListItemsFromDB(sql,dbName);
+            first = false;
+        }
+        if(listInfo == null)
+            return 0;
+        return listInfo.getResultSize();
+    }
 
     /**
 	* 分页显示时从数据库获取每页的数据项，完成实际访问数据库的操作
@@ -232,6 +249,7 @@ public class DefaultDataInfoImpl implements DataInfo {
 	            Hashtable[] tables = (Hashtable[])dbUtil.executeSelectForObjectArray(dbName,sql,offSet,pageItemsize,Record.class);            
                 listInfo.setArrayDatas(tables);
                 listInfo.setTotalSize(dbUtil.getLongTotalSize());
+                listInfo.setResultSize(dbUtil.size());
                 return listInfo;
 	        }
 	        else
@@ -241,6 +259,7 @@ public class DefaultDataInfoImpl implements DataInfo {
 	            Hashtable[] tables = (Hashtable[])dbUtil.executePreparedForObjectArray(Record.class);            
                 listInfo.setArrayDatas(tables);
                 listInfo.setTotalSize(dbUtil.getLongTotalSize());
+                listInfo.setResultSize(dbUtil.size());
                 return listInfo;
 	        }
         } catch (SQLException e) {
@@ -269,6 +288,7 @@ public class DefaultDataInfoImpl implements DataInfo {
 	            
                 Hashtable[] tables = (Hashtable[])dbUtil.executeSelectForObjectArray(dbName,sql,Record.class);
                 listInfo.setArrayDatas(tables);
+                listInfo.setResultSize(dbUtil.size());
                 return listInfo;
             }
 	        else
@@ -280,6 +300,7 @@ public class DefaultDataInfoImpl implements DataInfo {
                 Hashtable[] tables = (Hashtable[])dbUtil.executePreparedForObjectArray(Record.class);  
                 listInfo.setArrayDatas(tables);
                 listInfo.setMore(this.moreQuery);
+                listInfo.setResultSize(dbUtil.size());
                 return listInfo;
 	        }
         } catch (SQLException e) {
@@ -320,6 +341,8 @@ public class DefaultDataInfoImpl implements DataInfo {
         				|| listInfo.getArrayDatas() == null
         					?0:listInfo.getArrayDatas().length;
     }
+    
+    
 
 	public Object getObjectData() {
 		throw new UnsupportedOperationException("getObjectData()");

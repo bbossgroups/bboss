@@ -18,3 +18,5 @@ bbossgroups-3.7.3 release futures
 
 1.offset重新设置后，statement中位置没有正确处理
 2.增加一组more接口，相应的分页标签逻辑也要处理
+3.识别最后一页，more查询漏洞
+4.tagnumer ，more查询漏洞

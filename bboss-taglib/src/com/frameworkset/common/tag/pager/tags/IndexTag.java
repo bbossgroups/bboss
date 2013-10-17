@@ -1156,13 +1156,13 @@ public final class IndexTag extends PagerTagSupport {
             	}
             	else
             	{
-            		if(pagerContext.getDataSize() < pagerContext.getMaxPageItems())//最后一页
+            		if(pagerContext.getDataResultSize() < pagerContext.getMaxPageItems())//最后一页
             		{
             			if(currentPage > 1)
             			{
 	            			start = Math.max(0, currentPage - tagnumber);
 	            			if(start == 0) start = 1;
-	            			end = currentPage;
+	            			end = currentPage+1;
             			}
             			else
             			{
@@ -1204,75 +1204,70 @@ public final class IndexTag extends PagerTagSupport {
 //                    if(start<=0) start = 1;
 //                }
 //            }
-            
-            for(int i=start;i<end;i++){
-                if(totalPage>1){
-                    if((i - 1) ==currentPage){
-                    	if(aindex)
-                    	{
-                    		if(this.numberpre == null)
-                    			output.append("<span class='current_page'><a href='#'>").append(i).append("</a></span> ");
-                    		else
-                    			output.append("<span class='current_page'><a href='#'>").append(this.numberpre).append(i).append(this.numberend).append("</a></span> ");
-                    	}
-                    	else
-                    	{
-                    		if(this.numberpre == null)
-                    			output.append("<span class='current_page'>").append(i).append("</span> ");
-                    		else
-                    			output.append("<span class='current_page'>").append(this.numberpre).append(i).append(this.numberend).append("</span> ");
-                    	}
-                    }else{
-//                        Context loop = new VelocityContext();       
-                        A a = new A();
-                        if(this.numberpre == null)
-                        {
-                        	a.setTagText(String.valueOf(i));
-                        }
-                        else
-                        {
-                        	a.setTagText(this.numberpre +i+this.numberend);
-                        }
-                        
-                        String url = getCenterPageUrl((i-1) * this.pagerContext.getMaxPageItems(),this.pagerContext.getSortKey());
-                        if(pagerContext.getForm() != null)
-                        {
-                            a.setHref(url);
-                        }
-                        else
-                        {
-                        	if(pagerContext.getContainerid() != null && !pagerContext.getContainerid().equals(""))
-                        	{
-                        		a.setHref("#");
-                        		a.setOnClick(getJqueryUrl(url,pagerContext.getContainerid(),pagerContext.getSelector()));
-                        	}
-                        	else
-                        	{
-                        		a.setHref(url);
-                        	}
-                            	
-                        }
-                        if(centerextend != null)
-                            a.setExtend(centerextend);
-                        if(this.classname != null && !this.classname.equals(""))
-                            a.setClass(classname);
-//                        if(this.style != null && !this.style.equals(""))
-//                            a.setStyle(style);
-//                        loop.put("count",i+"");
-//                        long off = (i-1) * this.pagerContext.getMaxPageItems();
-//                        loop.put("currentpath",);  
-//                        loop.put("classname",this.classname);   
-//                        loop.put("style",this.style);   
-//                        output.append(CMSTagUtil.loadTemplate("publish/newsTurnPage/content-loop.vm",loop));
-                        output.append(a);
-                    }
-                }else{
-    //              Context loop = new VelocityContext();       
-    //              loop.put("count"," ");
-    //              loop.put("currentpath",getCurrentPath(i));              
-    //              output.append(CMSTagUtil.loadTemplate("publish/newsTurnPage/content-loop.vm",loop));
-                }
-            }   
+            if((!pagerContext.isMore() && totalPage>1) || pagerContext.isMore()){
+	            for(int i=start;i<end;i++){	                
+	                if((i - 1) ==currentPage){
+	                	if(aindex)
+	                	{
+	                		if(this.numberpre == null)
+	                			output.append("<span class='current_page'><a href='#'>").append(i).append("</a></span> ");
+	                		else
+	                			output.append("<span class='current_page'><a href='#'>").append(this.numberpre).append(i).append(this.numberend).append("</a></span> ");
+	                	}
+	                	else
+	                	{
+	                		if(this.numberpre == null)
+	                			output.append("<span class='current_page'>").append(i).append("</span> ");
+	                		else
+	                			output.append("<span class='current_page'>").append(this.numberpre).append(i).append(this.numberend).append("</span> ");
+	                	}
+	                }else{
+	//                        Context loop = new VelocityContext();       
+	                    A a = new A();
+	                    if(this.numberpre == null)
+	                    {
+	                    	a.setTagText(String.valueOf(i));
+	                    }
+	                    else
+	                    {
+	                    	a.setTagText(this.numberpre +i+this.numberend);
+	                    }
+	                    
+	                    String url = getCenterPageUrl((i-1) * this.pagerContext.getMaxPageItems(),this.pagerContext.getSortKey());
+	                    if(pagerContext.getForm() != null)
+	                    {
+	                        a.setHref(url);
+	                    }
+	                    else
+	                    {
+	                    	if(pagerContext.getContainerid() != null && !pagerContext.getContainerid().equals(""))
+	                    	{
+	                    		a.setHref("#");
+	                    		a.setOnClick(getJqueryUrl(url,pagerContext.getContainerid(),pagerContext.getSelector()));
+	                    	}
+	                    	else
+	                    	{
+	                    		a.setHref(url);
+	                    	}
+	                        	
+	                    }
+	                    if(centerextend != null)
+	                        a.setExtend(centerextend);
+	                    if(this.classname != null && !this.classname.equals(""))
+	                        a.setClass(classname);
+	//                        if(this.style != null && !this.style.equals(""))
+	//                            a.setStyle(style);
+	//                        loop.put("count",i+"");
+	//                        long off = (i-1) * this.pagerContext.getMaxPageItems();
+	//                        loop.put("currentpath",);  
+	//                        loop.put("classname",this.classname);   
+	//                        loop.put("style",this.style);   
+	//                        output.append(CMSTagUtil.loadTemplate("publish/newsTurnPage/content-loop.vm",loop));
+	                    output.append(a);
+	                }
+	                
+	            }   
+            }
         }
     }
 	/**

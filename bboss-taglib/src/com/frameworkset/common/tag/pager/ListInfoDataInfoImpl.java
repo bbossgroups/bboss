@@ -69,5 +69,13 @@ public class ListInfoDataInfoImpl implements DataInfo {
 	public boolean isMore() {
 		return listInfo.isMore();
 	}
+	/* (non-Javadoc)
+	 * @see com.frameworkset.common.tag.pager.DataInfo#getDataResultSize()
+	 */
+	@Override
+	public int getDataResultSize() {
+		// TODO Auto-generated method stub
+		return this.listInfo.getResultSize();
+	}
 
 }
