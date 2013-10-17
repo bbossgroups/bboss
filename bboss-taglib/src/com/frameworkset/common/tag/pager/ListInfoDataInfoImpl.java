@@ -65,5 +65,9 @@ public class ListInfoDataInfoImpl implements DataInfo {
 		throw new UnsupportedOperationException("ListInfoDataInfoImpl.initial(String sql, String dbName, long offSet,int pageItemsize, boolean listMode, HttpServletRequest request,SQLParams params)");
 
 	}
+	@Override
+	public boolean isMore() {
+		return listInfo.isMore();
+	}
 
 }

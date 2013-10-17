@@ -48,7 +48,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 
 
-public interface DataInfo extends Serializable
+public interface DataInfo
 {
     /**
      * 初始化获取分页/列表数据的必要参数
@@ -142,6 +142,11 @@ public interface DataInfo extends Serializable
 //          String sortKey,
 //          boolean desc,
             HttpServletRequest request,SQLParams params);
+    /**
+     * 识别当前查询是否是more分页，如果是more分页则标签库无需设置总记录数信息 
+     * @return
+     */
+    public boolean isMore();
     
 //    public boolean isdbdata();
     

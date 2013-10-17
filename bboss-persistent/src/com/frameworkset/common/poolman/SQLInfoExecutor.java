@@ -638,6 +638,41 @@ public class SQLInfoExecutor {
 		datas.setTotalSize(dbutil.getLongTotalSize());
 		return datas;		 
 	}
+	
+	/**
+	 * 
+	 * @param beanType
+	 * @param dbname
+	 * @param sql
+	 * @param offset
+	 * @param pagesize
+	 * @param fields
+	 * @return
+	 * @throws SQLException
+	 */
+	public static ListInfo moreListInfoWithDBName(Class<?> beanType,String dbname, SQLInfo sql, long offset,int pagesize,Object... fields) throws SQLException
+	{
+		
+		SQLInfoDBUtil dbutil = new SQLInfoDBUtil();
+		dbutil.setMore(true);
+		dbutil.preparedSelect(dbname, sql,offset,pagesize);
+		if(fields != null && fields.length > 0)
+		{
+			for(int i = 0; i < fields.length ; i ++)
+			{
+				
+				Object field = fields[i];
+				dbutil.setObject(i + 1, field);
+			}
+		}
+		
+		
+		ListInfo datas = new ListInfo();
+		datas.setDatas(dbutil.executePreparedForList(beanType));
+//		datas.setTotalSize(dbutil.getLongTotalSize());
+		datas.setMore(true);
+		return datas;		 
+	}
 	public static ListInfo queryListInfoWithDBName2ndTotalsize(Class<?> beanType,String dbname, SQLInfo sql, long offset,int pagesize,long totalsize,Object... fields) throws SQLException
 	{
 		
@@ -790,6 +825,42 @@ public class SQLInfoExecutor {
 		ListInfo datas = new ListInfo();
 		datas.setDatas(dbutil.executePreparedForList(beanType,rowhandler));
 		datas.setTotalSize(dbutil.getLongTotalSize());
+		return datas;		 
+	}
+	
+	/**
+	 * 
+	 * @param rowhandler
+	 * @param beanType
+	 * @param dbname
+	 * @param sql
+	 * @param offset
+	 * @param pagesize
+	 * @param fields
+	 * @return
+	 * @throws SQLException
+	 */
+	public static ListInfo moreListInfoWithDBNameByRowHandler(RowHandler rowhandler,Class<?> beanType,String dbname, SQLInfo sql, long offset,int pagesize,Object... fields) throws SQLException
+	{
+		
+		SQLInfoDBUtil dbutil = new SQLInfoDBUtil();
+		dbutil.setMore(true);
+		dbutil.preparedSelect(dbname, sql,offset,pagesize);
+		if(fields != null && fields.length > 0)
+		{
+			for(int i = 0; i < fields.length ; i ++)
+			{
+				
+				Object field = fields[i];
+				dbutil.setObject(i + 1, field);
+			}
+		}
+		
+		
+		ListInfo datas = new ListInfo();
+		datas.setDatas(dbutil.executePreparedForList(beanType,rowhandler));
+//		datas.setTotalSize(dbutil.getLongTotalSize());
+		datas.setMore(true);
 		return datas;		 
 	}
 	
@@ -950,6 +1021,41 @@ public class SQLInfoExecutor {
 		ListInfo datas = new ListInfo();
 		
 		datas.setTotalSize(dbutil.getLongTotalSize());
+		return datas;		 
+	}
+	
+	/**
+	 * 
+	 * @param rowhandler
+	 * @param dbname
+	 * @param sql
+	 * @param offset
+	 * @param pagesize
+	 * @param fields
+	 * @return
+	 * @throws SQLException
+	 */
+	public static ListInfo moreListInfoWithDBNameByNullRowHandler(NullRowHandler rowhandler,String dbname, SQLInfo sql, long offset,int pagesize,Object... fields) throws SQLException
+	{
+		
+		SQLInfoDBUtil dbutil = new SQLInfoDBUtil();
+		dbutil.setMore(true);
+		dbutil.preparedSelect(dbname, sql,offset,pagesize);
+		if(fields != null && fields.length > 0)
+		{
+			for(int i = 0; i < fields.length ; i ++)
+			{
+				
+				Object field = fields[i];
+				dbutil.setObject(i + 1, field);
+			}
+		}
+		
+		dbutil.executePreparedWithRowHandler(rowhandler);
+		ListInfo datas = new ListInfo();
+		
+//		datas.setTotalSize(dbutil.getLongTotalSize());
+		datas.setMore(true);
 		return datas;		 
 	}
 	public static ListInfo queryListInfoWithDBName2ndTotalsizeByNullRowHandler(NullRowHandler rowhandler,String dbname, SQLInfo sql, long offset,int pagesize,long totalsize,Object... fields) throws SQLException
@@ -1387,6 +1493,33 @@ public class SQLInfoExecutor {
 		return datas;		 
 	}
 	
+	/**
+	 * 
+	 * @param rowhandler
+	 * @param beanType
+	 * @param dbname
+	 * @param sql
+	 * @param offset
+	 * @param pagesize
+	 * @param totalsize
+	 * @param bean
+	 * @return
+	 * @throws SQLException
+	 */
+	public static ListInfo moreListInfoBeanWithDBNameByRowHandler(RowHandler rowhandler,Class<?> beanType,String dbname, SQLInfo sql, long offset,int pagesize,Object  bean) throws SQLException
+	{
+		
+		SQLInfoDBUtil dbutil = new SQLInfoDBUtil();
+		SQLParams params = SQLParams.convertBeanToSqlParams(bean, sql, dbname, PreparedDBUtil.SELECT, null);
+		dbutil.setMore(true);
+		dbutil.preparedSelect(params,dbname, sql,offset,pagesize,-1);
+		ListInfo datas = new ListInfo();
+		datas.setDatas(dbutil.executePreparedForList(beanType,rowhandler));
+//		datas.setTotalSize(dbutil.getLongTotalSize());
+		datas.setMore(true);
+		return datas;		 
+	}
+	
 	public static ListInfo queryListInfoBeanWithDBNameByRowHandler(RowHandler rowhandler,Class<?> beanType,String dbname, SQLInfo sql, long offset,int pagesize,SQLInfo totalsizesql,Object  bean) throws SQLException
 	{
 		
@@ -1508,6 +1641,59 @@ public class SQLInfoExecutor {
 		datas.setTotalSize(dbutil.getLongTotalSize());
 		return datas;		 
 	}
+	
+	/**
+	 * 
+	 * @param rowhandler
+	 * @param dbname
+	 * @param sql
+	 * @param offset
+	 * @param pagesize
+	 * @param totalsize
+	 * @param bean
+	 * @return
+	 * @throws SQLException
+	 */
+	public static ListInfo moreListInfoBeanWithDBNameByNullRowHandler(NullRowHandler rowhandler,String dbname, SQLInfo sql, long offset,int pagesize,Object bean) throws SQLException
+	{
+		
+		SQLInfoDBUtil dbutil = new SQLInfoDBUtil();
+		dbutil.setMore(true);
+		SQLParams params = SQLParams.convertBeanToSqlParams(bean, sql, dbname, PreparedDBUtil.SELECT, null);
+		dbutil.preparedSelect(params,dbname, sql,offset,pagesize,-1);
+		dbutil.executePreparedWithRowHandler(rowhandler);
+		ListInfo datas = new ListInfo();
+		
+//		datas.setTotalSize(dbutil.getLongTotalSize());
+		datas.setMore(true);
+		return datas;		 
+	}
+	
+//	/**
+//	 * 
+//	 * @param rowhandler
+//	 * @param dbname
+//	 * @param sql
+//	 * @param offset
+//	 * @param pagesize
+//	 * @param totalsize
+//	 * @param bean
+//	 * @return
+//	 * @throws SQLException
+//	 */
+//	public static ListInfo moreListInfoBeanWithDBNameByNullRowHandler(NullRowHandler rowhandler,String dbname, SQLInfo sql, long offset,int pagesize,Object bean) throws SQLException
+//	{
+//		
+//		SQLInfoDBUtil dbutil = new SQLInfoDBUtil();
+//		dbutil.setMore(true);
+//		SQLParams params = SQLParams.convertBeanToSqlParams(bean, sql, dbname, PreparedDBUtil.SELECT, null);
+//		dbutil.preparedSelect(params,dbname, sql,offset,pagesize,-1);
+//		dbutil.executePreparedWithRowHandler(rowhandler);
+//		ListInfo datas = new ListInfo();
+////		datas.setTotalSize(dbutil.getLongTotalSize());
+//		datas.setMore(true);
+//		return datas;		 
+//	}
 	
 	public static ListInfo queryListInfoBeanWithDBNameByNullRowHandler(NullRowHandler rowhandler,String dbname, SQLInfo sql, long offset,int pagesize,SQLInfo totalsizesql,Object bean) throws SQLException
 	{

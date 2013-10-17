@@ -386,7 +386,7 @@ public final class IndexTag extends PagerTagSupport {
         }
         if( switchcase[8] == 0)
         {
-        	if(enable_page_total_size)
+        	if(enable_page_total_size && !pagerContext.isMore())
         		ret.append(total_label)//共
         		.append("<span class='Total'>").append(!pagerContext.ListMode()?pagerContext.getItemCount():pagerContext.getDataSize()).append("</span>").append(total_records_label);//条记录  
         }
@@ -394,13 +394,23 @@ public final class IndexTag extends PagerTagSupport {
 		//ret.append("<div align=\"right\">");
 		if (switchcase[0] == 0) {
 			long serial =
-				Math.min(pagerContext.getPageNumber() + 1, pagerContext.getPageCount());
-            if(!pagerContext.isWapflag())
-			    ret.append("<span class='current'>" + serial + "</span>/");
-            else
-                ret.append("<span class='current'>" + serial + "</span>/");
+					!pagerContext.isMore()?Math.min(pagerContext.getPageNumber() + 1, pagerContext.getPageCount()):pagerContext.getPageNumber() + 1;
+			if(!pagerContext.isMore())
+			{
+	            if(!pagerContext.isWapflag())
+				    ret.append("<span class='current'>" + serial + "</span>/");
+	            else
+	                ret.append("<span class='current'>" + serial + "</span>/");
+			}
+			else
+			{
+				if(!pagerContext.isWapflag())
+				    ret.append("<span class='current'>第" + serial + "页</span>");
+	            else
+	                ret.append("<span class='current'>第" + serial + "页</span>");
+			}
 		}
-		if (switchcase[1] == 0) {
+		if (switchcase[1] == 0 && !pagerContext.isMore()) {
             if(!pagerContext.isWapflag())
                 ret.append(
                 		pagerContext.getPageCount()).append(total_page_label);//" 页"
@@ -424,7 +434,7 @@ public final class IndexTag extends PagerTagSupport {
             else
                 ret.append(this.getWapPrevContent()).append("	");
 		}
-		if(this.tagnumber > 0)
+		if(this.tagnumber > 0)//待处理
         {
             StringBuffer center = new StringBuffer();
             
@@ -438,15 +448,23 @@ public final class IndexTag extends PagerTagSupport {
             else
                 ret.append(this.getWapNextContent()).append("	");
 		if (switchcase[5] == 0)
-            if(!pagerContext.isWapflag())
-    			ret.append("<span class='next'>"+this.getLastContent()).append("</span>");
-            else
-                ret.append(this.getWapLastContent()).append("	");
+		{
+			if(!pagerContext.isMore())
+			{
+	            if(!pagerContext.isWapflag())
+	    			ret.append("<span class='next'>"+this.getLastContent()).append("</span>");
+	            else
+	                ret.append(this.getWapLastContent()).append("	");
+			}
+		}
 		if (switchcase[6] == 0)
-            if(!pagerContext.isWapflag())
-    			ret.append(this.getGoContent());
-            else
-               	ret.append(this.getWapGoContent());
+			if(!pagerContext.isMore())
+			{
+	            if(!pagerContext.isWapflag())
+	    			ret.append(this.getGoContent());
+	            else
+	               	ret.append(this.getWapGoContent());
+			}
 		
 		
 		if (switchcase.length > 7 )
@@ -1117,22 +1135,61 @@ public final class IndexTag extends PagerTagSupport {
             if(tagnumber<=2) tagnumber = 3;
 //            if(tagnumber>3)
             {
-                if(currentPage>tagnumber){
-                    start = (int)currentPage-(int)Math.floor(tagnumber/2);          
-                }else{
-                    if((currentPage%tagnumber)>=(int)Math.floor(tagnumber/2) || currentPage%tagnumber==0 )
-                        start = (int)currentPage-(int)Math.floor(tagnumber/2);
-                    
-                }
-                start = start<=0?1:start;           
-                /* 尾页 */
-                end = (int)this.tagnumber + start  ;
-                if(end > totalPage) {
-                    //页码是从1开始的
-                    end = (int)totalPage + 1;
-                    start = end - (int)this.tagnumber;
-                    if(start<=0) start = 1;
-                }
+            	if(!pagerContext.isMore())
+            	{
+	                if(currentPage>tagnumber ){
+	                    start = (int)currentPage-(int)Math.floor(tagnumber/2);          
+	                }else{
+	                    if((currentPage%tagnumber)>=(int)Math.floor(tagnumber/2) || currentPage%tagnumber==0 )
+	                        start = (int)currentPage-(int)Math.floor(tagnumber/2);
+	                    
+	                }
+	                start = start<=0?1:start;           
+	                /* 尾页 */
+	                end = (int)this.tagnumber + start  ;
+	                if(end > totalPage) {
+	                    //页码是从1开始的
+	                    end = (int)totalPage + 1;
+	                    start = end - (int)this.tagnumber;
+	                    if(start<=0) start = 1;
+	                }
+            	}
+            	else
+            	{
+            		if(pagerContext.getDataSize() < pagerContext.getMaxPageItems())//最后一页
+            		{
+            			if(currentPage > 1)
+            			{
+	            			start = Math.max(0, currentPage - tagnumber);
+	            			if(start == 0) start = 1;
+	            			end = currentPage;
+            			}
+            			else
+            			{
+            				start = 0;
+	            			end = 0;
+            			}
+            		}
+            		else
+            		{
+	            		if(currentPage>tagnumber ){
+		                    start = (int)currentPage-(int)Math.floor(tagnumber/2);          
+		                }else{
+		                    if((currentPage%tagnumber)>=(int)Math.floor(tagnumber/2) || currentPage%tagnumber==0 )
+		                        start = (int)currentPage-(int)Math.floor(tagnumber/2);
+		                    
+		                }
+		                start = start<=0?1:start;           
+		                /* 尾页 */
+		                end = (int)this.tagnumber + start  ;
+//		                if(end > totalPage) {
+//		                    //页码是从1开始的
+//		                    end = (int)totalPage + 1;
+//		                    start = end - (int)this.tagnumber;
+//		                    if(start<=0) start = 1;
+//		                }
+            		}
+            	}
             }
 //            else{
 //                if(tagnumber<=2) tagnumber = 3;

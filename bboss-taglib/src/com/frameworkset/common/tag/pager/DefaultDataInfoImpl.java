@@ -66,6 +66,10 @@ public class DefaultDataInfoImpl implements DataInfo {
 	protected boolean first = true;
 	private static final Logger log = Logger.getLogger(DefaultDataInfoImpl.class);
 	/**
+	 * 标识查询是否是more查询
+	 */
+	private boolean moreQuery;
+	/**
 	 * 预编译处理参数
 	 */
     private SQLParams params;
@@ -271,9 +275,11 @@ public class DefaultDataInfoImpl implements DataInfo {
 	        {
 	          //定义数据库访问对象
                 PreparedDBUtil dbUtil = new PreparedDBUtil();
+                dbUtil.setMore(this.moreQuery);
                 dbUtil.preparedSelect(params.copy(), dbName, sql);
                 Hashtable[] tables = (Hashtable[])dbUtil.executePreparedForObjectArray(Record.class);  
                 listInfo.setArrayDatas(tables);
+                listInfo.setMore(this.moreQuery);
                 return listInfo;
 	        }
         } catch (SQLException e) {
@@ -317,5 +323,28 @@ public class DefaultDataInfoImpl implements DataInfo {
 
 	public Object getObjectData() {
 		throw new UnsupportedOperationException("getObjectData()");
+	}
+
+	public boolean isMoreQuery() {
+		return moreQuery;
+	}
+
+	public void setMoreQuery(boolean moreQuery) {
+		this.moreQuery = moreQuery;
+	}
+
+	@Override
+	public boolean isMore() {
+		if(first)
+        {
+            if(!listMode)
+                listInfo = getDataFromDB(sql,dbName,offSet,pageItemsize);
+            else
+                listInfo = getListItemsFromDB(sql,dbName);
+            first = false;
+        }
+        if(listInfo == null)
+            return moreQuery;
+        return listInfo.isMore();
 	}
 }
