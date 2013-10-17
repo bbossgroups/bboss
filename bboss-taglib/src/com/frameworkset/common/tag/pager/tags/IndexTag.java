@@ -1160,14 +1160,15 @@ public final class IndexTag extends PagerTagSupport {
             		{
             			if(currentPage > 1)
             			{
-	            			start = Math.max(0, currentPage - tagnumber);
+	            			start = Math.max(0, currentPage - tagnumber) ;
 	            			if(start == 0) start = 1;
-	            			end = currentPage+1;
+	            			else start =start+1;
+	            			end = start + tagnumber +1;
             			}
             			else
             			{
-            				start = 0;
-	            			end = 0;
+            				start = 1;
+	            			end = 1;
             			}
             		}
             		else
