@@ -796,7 +796,7 @@ public class PagerContext
 		else
 		{
 			//µ±Ò³¼ÇÂ¼Êý
-			if(this.getDataSize() < this.getMaxPageItems()) 
+			if(this.getDataResultSize() < this.getMaxPageItems()) 
 				return false;
 			else
 				return true;
