@@ -32,15 +32,6 @@
 
 package com.frameworkset.common.tag.pager.tags;
 
-import com.frameworkset.common.poolman.SQLExecutor;
-import com.frameworkset.common.tag.BaseTag;
-import com.frameworkset.common.tag.pager.DataInfo;
-import com.frameworkset.common.tag.pager.model.MetaDatas;
-import com.frameworkset.common.tag.pager.parser.PagerTagExport;
-import com.frameworkset.common.tag.pager.parser.ParseException;
-import com.frameworkset.common.tag.pager.parser.TagExportParser;
-import com.frameworkset.util.ListInfo;
-
 import java.io.OutputStream;
 import java.util.Stack;
 
@@ -51,12 +42,21 @@ import javax.servlet.jsp.JspTagException;
 
 import org.apache.log4j.Logger;
 
+import com.frameworkset.common.poolman.SQLExecutor;
+import com.frameworkset.common.tag.BaseTag;
+import com.frameworkset.common.tag.pager.DataInfo;
+import com.frameworkset.common.tag.pager.model.MetaDatas;
+import com.frameworkset.common.tag.pager.parser.PagerTagExport;
+import com.frameworkset.common.tag.pager.parser.ParseException;
+import com.frameworkset.common.tag.pager.parser.TagExportParser;
+
 /**
  * @author biaoping.yin
  * @version 1.0 2005-2-3
  */
 public class PagerTag extends BaseTag implements FieldHelper, PagerInfo {
 	private final static Logger log = Logger.getLogger(PagerTag.class);
+	protected boolean moreQuery = false;
 //	protected String pretoken = "#\\[";
 //    protected String endtoken = "\\]";
     /**
@@ -387,7 +387,7 @@ public class PagerTag extends BaseTag implements FieldHelper, PagerInfo {
 		// pageContext.setAttribute("pager_info_" + id,this);
 		// }
 		pagerContext.setIsList(this.isList);
-
+		pagerContext.setMoreQuery(moreQuery);
 		pagerContext.setField(this.field);
 		pagerContext.setForm(this.form);
 		pagerContext.setId(this.getId());
@@ -576,7 +576,7 @@ public class PagerTag extends BaseTag implements FieldHelper, PagerInfo {
 //		pretoken= null;
 //        endtoken= null;
         sqlparamskey = "sql.params.key";
-        
+       
 		//		
 		// if (REQUEST.equals(scope)) {
 		//			
@@ -664,7 +664,7 @@ public class PagerTag extends BaseTag implements FieldHelper, PagerInfo {
 		
 		this.containerid = null;
 		this.selector = null;
-
+		 this.moreQuery = false;
 		super.release();
 	}
 
@@ -1017,6 +1017,14 @@ public class PagerTag extends BaseTag implements FieldHelper, PagerInfo {
     {
         this.selector = selector;
     }
+
+	public boolean isMoreQuery() {
+		return moreQuery;
+	}
+
+	public void setMoreQuery(boolean moreQuery) {
+		this.moreQuery = moreQuery;
+	}
 
  
 }

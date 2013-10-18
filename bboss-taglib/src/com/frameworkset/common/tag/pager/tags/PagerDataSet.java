@@ -83,6 +83,7 @@ public class PagerDataSet extends PagerTagSupport {
 //    protected String pretoken = "#\\[";
 //    protected String endtoken = "\\]";
 //	protected boolean flag = false;
+	protected boolean moreQuery = false;
 	/**
 	 * 如果通过title标签设置排序字段，通过该属性来
 	 * 控制是否自动对当前页数据排序，还是在数据加载器中手工构造sql语句对全部数据排序
@@ -2170,7 +2171,7 @@ public class PagerDataSet extends PagerTagSupport {
 		// log.debug("DoStartTag pager_info_" + id);
 		// pageContext.setAttribute("pager_info_" + id,this);
 		// }
-		
+		pagerContext.setMoreQuery(moreQuery);
 		pagerContext.setIsList(this.isList);
 		pagerContext.setField(this.field);
 		pagerContext.setForm(this.form);
@@ -2591,6 +2592,7 @@ public class PagerDataSet extends PagerTagSupport {
 		pageContextKey = null;
 		this.containerid = null;
         this.selector = null;
+        this.moreQuery = false;
 		/**
 		 * added by biaoping.yin on 20080912 end.
 		 */		
@@ -3340,6 +3342,14 @@ public class PagerDataSet extends PagerTagSupport {
 	{
 		return this.requestKey == null && this.pageContextKey == null && this.sessionKey == null && this.statement == null
 				&& this.colName == null;
+	}
+
+	public boolean isMoreQuery() {
+		return moreQuery;
+	}
+
+	public void setMoreQuery(boolean moreQuery) {
+		this.moreQuery = moreQuery;
 	}
    
     

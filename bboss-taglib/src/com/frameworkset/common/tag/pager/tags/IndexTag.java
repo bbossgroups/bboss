@@ -386,7 +386,7 @@ public final class IndexTag extends PagerTagSupport {
         }
         if( switchcase[8] == 0)
         {
-        	if(enable_page_total_size)
+        	if(enable_page_total_size && !pagerContext.isMore())
         		ret.append(total_label)//共
         		.append("<span class='Total'>").append(!pagerContext.ListMode()?pagerContext.getItemCount():pagerContext.getDataSize()).append("</span>").append(total_records_label);//条记录  
         }
@@ -394,13 +394,23 @@ public final class IndexTag extends PagerTagSupport {
 		//ret.append("<div align=\"right\">");
 		if (switchcase[0] == 0) {
 			long serial =
-				Math.min(pagerContext.getPageNumber() + 1, pagerContext.getPageCount());
-            if(!pagerContext.isWapflag())
-			    ret.append("<span class='current'>" + serial + "</span>/");
-            else
-                ret.append("<span class='current'>" + serial + "</span>/");
+					!pagerContext.isMore()?Math.min(pagerContext.getPageNumber() + 1, pagerContext.getPageCount()):pagerContext.getPageNumber() + 1;
+			if(!pagerContext.isMore())
+			{
+	            if(!pagerContext.isWapflag())
+				    ret.append("<span class='current'>" + serial + "</span>/");
+	            else
+	                ret.append("<span class='current'>" + serial + "</span>/");
+			}
+			else
+			{
+				if(!pagerContext.isWapflag())
+				    ret.append("<span class='current'>第" + serial + "页</span>");
+	            else
+	                ret.append("<span class='current'>第" + serial + "页</span>");
+			}
 		}
-		if (switchcase[1] == 0) {
+		if (switchcase[1] == 0 && !pagerContext.isMore()) {
             if(!pagerContext.isWapflag())
                 ret.append(
                 		pagerContext.getPageCount()).append(total_page_label);//" 页"
@@ -424,7 +434,7 @@ public final class IndexTag extends PagerTagSupport {
             else
                 ret.append(this.getWapPrevContent()).append("	");
 		}
-		if(this.tagnumber > 0)
+		if(this.tagnumber > 0)//待处理
         {
             StringBuffer center = new StringBuffer();
             
@@ -438,15 +448,23 @@ public final class IndexTag extends PagerTagSupport {
             else
                 ret.append(this.getWapNextContent()).append("	");
 		if (switchcase[5] == 0)
-            if(!pagerContext.isWapflag())
-    			ret.append("<span class='next'>"+this.getLastContent()).append("</span>");
-            else
-                ret.append(this.getWapLastContent()).append("	");
+		{
+			if(!pagerContext.isMore())
+			{
+	            if(!pagerContext.isWapflag())
+	    			ret.append("<span class='next'>"+this.getLastContent()).append("</span>");
+	            else
+	                ret.append(this.getWapLastContent()).append("	");
+			}
+		}
 		if (switchcase[6] == 0)
-            if(!pagerContext.isWapflag())
-    			ret.append(this.getGoContent());
-            else
-               	ret.append(this.getWapGoContent());
+			if(!pagerContext.isMore())
+			{
+	            if(!pagerContext.isWapflag())
+	    			ret.append(this.getGoContent());
+	            else
+	               	ret.append(this.getWapGoContent());
+			}
 		
 		
 		if (switchcase.length > 7 )
@@ -1117,22 +1135,62 @@ public final class IndexTag extends PagerTagSupport {
             if(tagnumber<=2) tagnumber = 3;
 //            if(tagnumber>3)
             {
-                if(currentPage>tagnumber){
-                    start = (int)currentPage-(int)Math.floor(tagnumber/2);          
-                }else{
-                    if((currentPage%tagnumber)>=(int)Math.floor(tagnumber/2) || currentPage%tagnumber==0 )
-                        start = (int)currentPage-(int)Math.floor(tagnumber/2);
-                    
-                }
-                start = start<=0?1:start;           
-                /* 尾页 */
-                end = (int)this.tagnumber + start  ;
-                if(end > totalPage) {
-                    //页码是从1开始的
-                    end = (int)totalPage + 1;
-                    start = end - (int)this.tagnumber;
-                    if(start<=0) start = 1;
-                }
+            	if(!pagerContext.isMore())
+            	{
+	                if(currentPage>tagnumber ){
+	                    start = (int)currentPage-(int)Math.floor(tagnumber/2);          
+	                }else{
+	                    if((currentPage%tagnumber)>=(int)Math.floor(tagnumber/2) || currentPage%tagnumber==0 )
+	                        start = (int)currentPage-(int)Math.floor(tagnumber/2);
+	                    
+	                }
+	                start = start<=0?1:start;           
+	                /* 尾页 */
+	                end = (int)this.tagnumber + start  ;
+	                if(end > totalPage) {
+	                    //页码是从1开始的
+	                    end = (int)totalPage + 1;
+	                    start = end - (int)this.tagnumber;
+	                    if(start<=0) start = 1;
+	                }
+            	}
+            	else
+            	{
+            		if(pagerContext.getDataResultSize() < pagerContext.getMaxPageItems())//最后一页
+            		{
+            			if(currentPage > 1)
+            			{
+	            			start = Math.max(0, currentPage - tagnumber) ;
+	            			if(start == 0) start = 1;
+	            			else start =start+1;
+	            			end = start + tagnumber +1;
+            			}
+            			else
+            			{
+            				start = 1;
+	            			end = 1;
+            			}
+            		}
+            		else
+            		{
+	            		if(currentPage>tagnumber ){
+		                    start = (int)currentPage-(int)Math.floor(tagnumber/2);          
+		                }else{
+		                    if((currentPage%tagnumber)>=(int)Math.floor(tagnumber/2) || currentPage%tagnumber==0 )
+		                        start = (int)currentPage-(int)Math.floor(tagnumber/2);
+		                    
+		                }
+		                start = start<=0?1:start;           
+		                /* 尾页 */
+		                end = (int)this.tagnumber + start  ;
+//		                if(end > totalPage) {
+//		                    //页码是从1开始的
+//		                    end = (int)totalPage + 1;
+//		                    start = end - (int)this.tagnumber;
+//		                    if(start<=0) start = 1;
+//		                }
+            		}
+            	}
             }
 //            else{
 //                if(tagnumber<=2) tagnumber = 3;
@@ -1147,75 +1205,70 @@ public final class IndexTag extends PagerTagSupport {
 //                    if(start<=0) start = 1;
 //                }
 //            }
-            
-            for(int i=start;i<end;i++){
-                if(totalPage>1){
-                    if((i - 1) ==currentPage){
-                    	if(aindex)
-                    	{
-                    		if(this.numberpre == null)
-                    			output.append("<span class='current_page'><a href='#'>").append(i).append("</a></span> ");
-                    		else
-                    			output.append("<span class='current_page'><a href='#'>").append(this.numberpre).append(i).append(this.numberend).append("</a></span> ");
-                    	}
-                    	else
-                    	{
-                    		if(this.numberpre == null)
-                    			output.append("<span class='current_page'>").append(i).append("</span> ");
-                    		else
-                    			output.append("<span class='current_page'>").append(this.numberpre).append(i).append(this.numberend).append("</span> ");
-                    	}
-                    }else{
-//                        Context loop = new VelocityContext();       
-                        A a = new A();
-                        if(this.numberpre == null)
-                        {
-                        	a.setTagText(String.valueOf(i));
-                        }
-                        else
-                        {
-                        	a.setTagText(this.numberpre +i+this.numberend);
-                        }
-                        
-                        String url = getCenterPageUrl((i-1) * this.pagerContext.getMaxPageItems(),this.pagerContext.getSortKey());
-                        if(pagerContext.getForm() != null)
-                        {
-                            a.setHref(url);
-                        }
-                        else
-                        {
-                        	if(pagerContext.getContainerid() != null && !pagerContext.getContainerid().equals(""))
-                        	{
-                        		a.setHref("#");
-                        		a.setOnClick(getJqueryUrl(url,pagerContext.getContainerid(),pagerContext.getSelector()));
-                        	}
-                        	else
-                        	{
-                        		a.setHref(url);
-                        	}
-                            	
-                        }
-                        if(centerextend != null)
-                            a.setExtend(centerextend);
-                        if(this.classname != null && !this.classname.equals(""))
-                            a.setClass(classname);
-//                        if(this.style != null && !this.style.equals(""))
-//                            a.setStyle(style);
-//                        loop.put("count",i+"");
-//                        long off = (i-1) * this.pagerContext.getMaxPageItems();
-//                        loop.put("currentpath",);  
-//                        loop.put("classname",this.classname);   
-//                        loop.put("style",this.style);   
-//                        output.append(CMSTagUtil.loadTemplate("publish/newsTurnPage/content-loop.vm",loop));
-                        output.append(a);
-                    }
-                }else{
-    //              Context loop = new VelocityContext();       
-    //              loop.put("count"," ");
-    //              loop.put("currentpath",getCurrentPath(i));              
-    //              output.append(CMSTagUtil.loadTemplate("publish/newsTurnPage/content-loop.vm",loop));
-                }
-            }   
+            if((!pagerContext.isMore() && totalPage>1) || pagerContext.isMore()){
+	            for(int i=start;i<end;i++){	                
+	                if((i - 1) ==currentPage){
+	                	if(aindex)
+	                	{
+	                		if(this.numberpre == null)
+	                			output.append("<span class='current_page'><a href='#'>").append(i).append("</a></span> ");
+	                		else
+	                			output.append("<span class='current_page'><a href='#'>").append(this.numberpre).append(i).append(this.numberend).append("</a></span> ");
+	                	}
+	                	else
+	                	{
+	                		if(this.numberpre == null)
+	                			output.append("<span class='current_page'>").append(i).append("</span> ");
+	                		else
+	                			output.append("<span class='current_page'>").append(this.numberpre).append(i).append(this.numberend).append("</span> ");
+	                	}
+	                }else{
+	//                        Context loop = new VelocityContext();       
+	                    A a = new A();
+	                    if(this.numberpre == null)
+	                    {
+	                    	a.setTagText(String.valueOf(i));
+	                    }
+	                    else
+	                    {
+	                    	a.setTagText(this.numberpre +i+this.numberend);
+	                    }
+	                    
+	                    String url = getCenterPageUrl((i-1) * this.pagerContext.getMaxPageItems(),this.pagerContext.getSortKey());
+	                    if(pagerContext.getForm() != null)
+	                    {
+	                        a.setHref(url);
+	                    }
+	                    else
+	                    {
+	                    	if(pagerContext.getContainerid() != null && !pagerContext.getContainerid().equals(""))
+	                    	{
+	                    		a.setHref("#");
+	                    		a.setOnClick(getJqueryUrl(url,pagerContext.getContainerid(),pagerContext.getSelector()));
+	                    	}
+	                    	else
+	                    	{
+	                    		a.setHref(url);
+	                    	}
+	                        	
+	                    }
+	                    if(centerextend != null)
+	                        a.setExtend(centerextend);
+	                    if(this.classname != null && !this.classname.equals(""))
+	                        a.setClass(classname);
+	//                        if(this.style != null && !this.style.equals(""))
+	//                            a.setStyle(style);
+	//                        loop.put("count",i+"");
+	//                        long off = (i-1) * this.pagerContext.getMaxPageItems();
+	//                        loop.put("currentpath",);  
+	//                        loop.put("classname",this.classname);   
+	//                        loop.put("style",this.style);   
+	//                        output.append(CMSTagUtil.loadTemplate("publish/newsTurnPage/content-loop.vm",loop));
+	                    output.append(a);
+	                }
+	                
+	            }   
+            }
         }
     }
 	/**

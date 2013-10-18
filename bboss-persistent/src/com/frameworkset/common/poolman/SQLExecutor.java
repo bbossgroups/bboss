@@ -16,7 +16,6 @@
 
 package com.frameworkset.common.poolman;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +27,6 @@ import com.frameworkset.common.poolman.handle.FieldRowHandler;
 import com.frameworkset.common.poolman.handle.NullRowHandler;
 import com.frameworkset.common.poolman.handle.RowHandler;
 import com.frameworkset.util.ListInfo;
-import com.frameworkset.util.ValueObjectUtil;
 
 /**
  * <p>Title: SQLExecutor.java</p> 
@@ -1862,6 +1860,199 @@ public class SQLExecutor
 //		 dbutil.executePreparedWithRowHandler(rowhandler);
 		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,true,false);
 		SQLInfoExecutor.queryBeanWithDBNameByNullRowHandler( rowhandler, dbname,  sqlinfo,  bean);
+	}
+	
+	/**
+	 * more分页查询，不会计算总记录数，如果没有记录那么返回的ListInfo的datas的size为0,
+	 * 提升性能，同时前台标签库也会做响应的调整
+	 */
+	/**
+	 * 
+	 * @param rowhandler
+	 * @param beanType
+	 * @param dbname
+	 * @param sqlname
+	 * @param offset
+	 * @param pagesize
+	 * @param fields
+	 * @return
+	 * @throws SQLException
+	 */
+	public ListInfo moreListInfoWithDBNameByRowHandler(RowHandler rowhandler,Class<?> beanType,String dbname, String sql, long offset,int pagesize,Object... fields) throws SQLException
+	{
+		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,false,false);		
+//		return SQLInfoExecutor.queryListInfoWithDBNameByRowHandler(  rowhandler, beanType, dbname, sqlinfo, offset,pagesize,fields);
+		
+//		SQLInfo sql = getSqlInfo(dbname, sqlname);
+		return SQLInfoExecutor.moreListInfoWithDBNameByRowHandler(rowhandler,beanType,dbname, sqlinfo, offset,pagesize,fields);  	  
+	}
+	
+	/**
+	 * 
+	 * @param rowhandler
+	 * @param dbname
+	 * @param sqlname
+	 * @param offset
+	 * @param pagesize
+	 * @param fields
+	 * @return
+	 * @throws SQLException
+	 */
+	public ListInfo moreListInfoWithDBNameByNullRowHandler(NullRowHandler rowhandler,String dbname, String sql, long offset,int pagesize,Object... fields) throws SQLException
+	{
+		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,false,false);
+		
+//		return SQLInfoExecutor.queryListInfoWithDBNameByNullRowHandler(   rowhandler, dbname,  sqlinfo,  offset, pagesize, fields);
+//		SQLInfo sql = getSqlInfo(dbname, sqlname);
+		return SQLInfoExecutor.moreListInfoWithDBNameByNullRowHandler(  rowhandler,dbname, sqlinfo, offset,pagesize,fields);  
+	}
+	
+		/**
+	 * 
+	 * @param beanType
+	 * @param dbname
+	 * @param sqlname
+	 * @param offset
+	 * @param pagesize
+	 * @param fields
+	 * @return
+	 * @throws SQLException
+	 */
+	public ListInfo moreListInfoWithDBName(Class<?> beanType,String dbname, String sql, long offset,int pagesize,Object... fields) throws SQLException
+	{
+		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,false,false);
+//		return SQLInfoExecutor.queryListInfoWithDBName(  beanType, dbname,  sqlinfo,  offset, pagesize, fields);
+//		SQLInfo sql = getSqlInfo(dbname, sqlname);
+		return SQLInfoExecutor.moreListInfoWithDBName(beanType,dbname, sqlinfo, offset,pagesize,fields);  	 
+	}
+	
+		/**
+	 * 
+	 * @param rowhandler
+	 * @param beanType
+	 * @param sql
+	 * @param offset
+	 * @param pagesize
+	 * @param fields
+	 * @return
+	 * @throws SQLException
+	 */
+	public ListInfo moreListInfoByRowHandler(RowHandler rowhandler,Class<?> beanType, String sql, long offset,int pagesize,Object... fields) throws SQLException
+	{
+		return moreListInfoWithDBNameByRowHandler( rowhandler,beanType, null,sql, offset,pagesize,fields);		 
+	}
+	
+		/**
+	 * 
+	 * @param rowhandler
+	 * @param sql
+	 * @param offset
+	 * @param pagesize
+	 * @param fields
+	 * @return
+	 * @throws SQLException
+	 */
+	public ListInfo moreListInfoByNullRowHandler(NullRowHandler rowhandler, String sqlname, long offset,int pagesize,Object... fields) throws SQLException
+	{
+		return moreListInfoWithDBNameByNullRowHandler( rowhandler, null,sqlname, offset,pagesize,fields);		 
+	}
+	
+		/**
+	 * 
+	 * @param rowhandler
+	 * @param beanType
+	 * @param dbname
+	 * @param sqlname
+	 * @param offset
+	 * @param pagesize
+	 * @param bean
+	 * @return
+	 * @throws SQLException
+	 */
+	public ListInfo moreListInfoBeanWithDBNameByRowHandler(RowHandler rowhandler,Class<?> beanType,String dbname, String sql, long offset,int pagesize,Object  bean) throws SQLException
+	{
+		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,true,false);
+//		return SQLInfoExecutor.queryListInfoBeanWithDBNameByRowHandler(  rowhandler,beanType,dbname, sqlinfo, offset,pagesize,bean);
+//		SQLInfo sql = getSqlInfo(dbname, sqlname);
+		return SQLInfoExecutor.moreListInfoBeanWithDBNameByRowHandler(  rowhandler,beanType,dbname, sqlinfo, offset,pagesize,bean);  
+	}
+	
+		/**
+	 * 
+	 * @param rowhandler
+	 * @param dbname
+	 * @param sqlname
+	 * @param offset
+	 * @param pagesize
+	 * @param totalsize
+	 * @param bean
+	 * @return
+	 * @throws SQLException
+	 */
+	public ListInfo moreListInfoBeanWithDBNameByNullRowHandler(NullRowHandler rowhandler,String dbname, String sql, long offset,int pagesize,Object bean) throws SQLException
+	{
+		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,true,false);
+//		return SQLInfoExecutor.queryListInfoBeanWithDBNameByNullRowHandler( rowhandler, dbname,  sqlinfo,  offset, pagesize, bean);	 
+//		SQLInfo sql = getSqlInfo(dbname, sqlname);
+		return SQLInfoExecutor.moreListInfoBeanWithDBNameByNullRowHandler(  rowhandler, dbname, sqlinfo, offset,pagesize,bean);  	 
+	}
+	
+		/**
+	 * 
+	 * @param beanType
+	 * @param dbname
+	 * @param sqlname
+	 * @param offset
+	 * @param pagesize
+	 * @param bean
+	 * @return
+	 * @throws SQLException
+	 */
+	public ListInfo moreListInfoBeanWithDBName(Class<?> beanType,String dbname, String sql, long offset,int pagesize,Object bean) throws SQLException
+	{
+		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,true,false);
+//		return SQLInfoExecutor.queryListInfoBeanWithDBName( beanType, dbname,  sqlinfo,  offset, pagesize,  bean);
+//		SQLInfo sql = getSqlInfo(dbname, sqlname);
+		return SQLInfoExecutor.moreListInfoBeanWithDBName(  beanType, dbname,  sqlinfo,  offset, pagesize, bean); 
+	}
+	
+		public ListInfo moreListInfoBeanByRowHandler(RowHandler rowhandler,Class<?> beanType, String sql, long offset,int pagesize,Object bean) throws SQLException
+	{
+			SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,true,false);
+//			return SQLInfoExecutor.queryListInfoBeanWithDBNameByRowHandler(  rowhandler,beanType,dbname, sqlinfo, offset,pagesize,totalsize,bean);	 
+			return SQLInfoExecutor.moreListInfoBeanWithDBNameByRowHandler(  rowhandler,beanType,(String)null, sqlinfo, offset,pagesize,bean);  		 
+	}
+	
+		public ListInfo moreListInfoBeanByNullRowHandler(NullRowHandler rowhandler, String sql, long offset,int pagesize,Object bean) throws SQLException
+	{
+			
+			SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,true,false);
+//			return SQLInfoExecutor.queryListInfoBeanWithDBNameByNullRowHandler( rowhandler, dbname,  sqlinfo,  offset, pagesize, totalsize, bean);
+//			SQLInfo sql = getSqlInfo(null, sqlname);
+			return SQLInfoExecutor.moreListInfoBeanWithDBNameByNullRowHandler(  rowhandler, (String)null, sqlinfo, offset,pagesize,bean);  	
+	}
+	
+		public ListInfo moreListInfoBean(Class<?> beanType, String sql, long offset,int pagesize,Object bean) throws SQLException
+	{
+			SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,true,false);
+//			return SQLInfoExecutor.queryListInfoBeanWithDBName( beanType, dbname,  sqlinfo,  offset, pagesize, totalsize, bean);
+//			SQLInfo sql = getSqlInfo(null, sqlname);
+			return SQLInfoExecutor.moreListInfoBeanWithDBName(  beanType, (String)null,  sqlinfo,  offset, pagesize, bean); 
+	}
+	
+		/**
+	 * 
+	 * @param beanType
+	 * @param sql
+	 * @param offset
+	 * @param pagesize
+	 * @param fields
+	 * @return
+	 * @throws SQLException
+	 */
+	public ListInfo moreListInfo(Class<?> beanType, String sqlname, long offset,int pagesize,Object... fields) throws SQLException
+	{
+		return moreListInfoWithDBName(beanType, null,sqlname, offset,pagesize,fields);		 
 	}
 	
 	

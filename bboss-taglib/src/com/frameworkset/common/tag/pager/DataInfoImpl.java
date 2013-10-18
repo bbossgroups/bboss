@@ -148,6 +148,24 @@ public abstract class DataInfoImpl implements DataInfo
 	protected abstract ListInfo getDataList(String sortKey,
 									 boolean desc);
 	/**
+	 * 识别查询是否是more分页查询
+	 * @return
+	 */
+	public boolean isMore()
+	{
+		if(first)
+		{
+		    if(!listMode)
+		        listInfo = getDataList(sortKey,desc,offSet,pageItemsize);
+		    else
+		        listInfo = getDataList(sortKey,desc);
+		    first = false;
+		}
+		if(listInfo == null)
+			return false;
+		return listInfo.isMore();
+	}
+	/**
 	 * tag中调用以下方法获取分页时的总的数据条数，以便计算页面总数
 	 */
 	public long getItemCount()
@@ -243,6 +261,24 @@ public abstract class DataInfoImpl implements DataInfo
 		if(listInfo == null )
 			return 0;
 		return listInfo.getSize();
+	}
+	
+	/**
+	 * 获取当前页面的记录条数
+	 */
+	public int getDataResultSize()
+	{
+	    if(first)
+		{
+		    if(!listMode)
+		        listInfo = getDataList(sortKey,desc,offSet,pageItemsize);
+		    else
+		        listInfo = getDataList(sortKey,desc);
+		    first = false;
+		}
+		if(listInfo == null )
+			return 0;
+		return listInfo.getResultSize();
 	}
 
 	/**

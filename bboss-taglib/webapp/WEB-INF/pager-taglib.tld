@@ -17,6 +17,16 @@
 		<tagclass>com.frameworkset.common.tag.pager.tags.PagerTag</tagclass>
 		<teiclass>com.frameworkset.common.tag.pager.tags.PagerTagExtraInfo</teiclass>
 		<bodycontent>JSP</bodycontent>
+		
+		<!-- 
+		moreQuery 如果分页查询时more查询，则设置为true，默认为false
+		more查询将影响index标签的展示效果，不会处理总记录数，因此
+		index标签将不再有总记录数输出，下一页溢时直接阻止查询并返回空值
+		 -->
+		<attribute>
+			<name>moreQuery</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
 			<!-- 
 		jquery内容容器
 		 -->
@@ -542,6 +552,18 @@
 		<tagclass>com.frameworkset.common.tag.pager.tags.PagerDataSet</tagclass>
 		<teiclass>com.frameworkset.common.tag.pager.tags.PagerDataSetExtraInfo</teiclass>
 		<bodycontent>JSP</bodycontent>
+		<!-- 
+		moreQuery 如果分页查询时more查询，则设置为true，默认为false
+		more查询将影响index标签的展示效果，不会处理总记录数，因此
+		index标签将不再有总记录数输出，下一页或者跳转没有获取到数据时直接阻止查询并返回空值
+		没有尾页的输出		
+		每页跳转输出
+		每页总记录数和总页数输出
+		 -->
+		<attribute>
+			<name>moreQuery</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
 		<!--
 			针对sessionKey、requestKey、pagecontextKey进行classdataList数据对象缓存，
  			避免重复使用时重复生成数据对象，默认值为true

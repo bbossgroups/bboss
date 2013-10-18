@@ -30,6 +30,12 @@ public class ListInfo implements Serializable{
 
     /**获取数据总数*/
     private long totalSize;
+    /**
+     * 实际从数据库查询到的记录数，这个数字可能和应用层调用getSize()方法
+     * 得到的数据不一致，因为应用程序可能会修改数据集中的数据（增加或者删除记录）
+     * 所以more查询时计算是否达到运算的最后一条记录时需要使用resultSize
+     */
+    private int resultSize;
     /***/
     private Serializable object;
     
@@ -45,7 +51,25 @@ public class ListInfo implements Serializable{
     */
     private List datas;
     private Object[] dbDatas;
-
+    /**
+	 * more分页查询，不会计算总记录数，如果没有记录那么返回的ListInfo的datas的size为0,
+	 * 提升性能，同时前台标签库也会做响应的调整
+	 */
+    private boolean more = false;
+   
+    
+    /**
+	 * @return the more
+	 */
+	public boolean isMore() {
+		return more;
+	}
+	/**
+	 * @param more the more to set
+	 */
+	public void setMore(boolean more) {
+		this.more = more;
+	}
     public ListInfo()
    {
 
@@ -121,7 +145,10 @@ public class ListInfo implements Serializable{
     public long getTotalSize() {
         return totalSize;
     }
-    
+    /**
+     * 获取最终结果集中的当页记录数
+     * @return
+     */
     public int getSize()
     {
     	if(!isdbdata())
@@ -134,6 +161,8 @@ public class ListInfo implements Serializable{
     		return this.dbDatas != null ?this.dbDatas.length:0;
     	}
     }
+    
+    
 
 
 
@@ -161,5 +190,18 @@ public class ListInfo implements Serializable{
 	 */
 	public void setMaxPageItems(int maxPageItems) {
 		this.maxPageItems = maxPageItems;
+	}
+	/**
+	 * 获取原始查询数据库得到的当页记录数据
+	 * @return the resultSize
+	 */
+	public int getResultSize() {
+		return resultSize;
+	}
+	/**
+	 * @param resultSize the resultSize to set
+	 */
+	public void setResultSize(int resultSize) {
+		this.resultSize = resultSize;
 	}
 }

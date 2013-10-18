@@ -911,6 +911,11 @@ public class StatementInfo {
 		return this.getOffset();
 
 	}
+	
+	public void resetPostion( PreparedStatement statement,int startidx,int endidx,long offset) throws SQLException
+	{
+		this.dbadapter.resetPostion( statement,startidx,endidx,this.getOffset(),this.getMaxsize());
+	}
 
 	/**
 	 * 获取指定数据库的分页数据sql语句

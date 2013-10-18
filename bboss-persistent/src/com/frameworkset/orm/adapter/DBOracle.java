@@ -481,6 +481,12 @@ public class DBOracle extends DB
                   (offset + 1));
         return new PagineSql(ret.toString(),offset + maxsize,offset + 1,offset, maxsize, prepared);
     }
+    
+    public void resetPostion( PreparedStatement statement,int startidx,int endidx,long offset,int maxsize) throws SQLException
+    {
+    	statement.setLong(startidx, offset + maxsize);
+		statement.setLong(endidx, offset + 1);
+    }
 
     /**
      * 获取受限制结果条数的sql语句，要求selectSql的语法，按oracle自定义受限语句语法，例如 SELECT

@@ -70,6 +70,15 @@ public class PagerContext
 	 * 数据库查询语句属性
 	 */
 	protected String statement = "";
+	/**
+	 * 用于定义标签属性
+	 */
+	protected boolean moreQuery = false;
+	/**
+	 * 用于定义最终的实际的more值（从moreQuery和listInfo获取值：标签设置了moreQuery属性并且是数据库查询则取moreQuery的值，如果从listInfo识别则取listInfo中isMore值）
+	 */
+	protected boolean more = false;
+	
 	protected String dbname;
 	protected String cookieid;
 	private boolean inited = false;
@@ -485,7 +494,9 @@ public class PagerContext
 	 */
 	private static final int DEFAULT_MAX_ITEMS = Integer.MAX_VALUE,
 			DEFAULT_MAX_PAGE_ITEMS = 10, DEFAULT_MAX_INDEX_PAGES = 10;
-
+	/**
+	 * 每页显示的最大记录条数
+	 */
 	private int maxPageItems = DEFAULT_MAX_PAGE_ITEMS;
 	/**
 	 * 保持pager标签和list标签maxPageItems属性设定的页面记录大小
@@ -777,7 +788,21 @@ public class PagerContext
 	 * @return boolean
 	 */
 	public final boolean hasNextPage() {
-		return (getItemCount() > getNextOffset());
+		if(!this.isMore())
+		{
+			boolean hasNextPage = (getItemCount() > getNextOffset());
+			return hasNextPage;
+		}
+		else
+		{
+			//当页记录数
+			if(this.getDataResultSize() < this.getMaxPageItems()) 
+				return false;
+			else
+				return true;
+			
+			
+		}
 	}
 
 	/**
@@ -1252,14 +1277,18 @@ public class PagerContext
 					offset = Math.max(0l, Long.parseLong(offsetParam));
 				setDataInfo();
 				long newPageCount = pageNumber(offset);
-				long lastPagerNumber = getLastPageNumber();
-				if (newPageCount > lastPagerNumber) {
-					offset = lastPagerNumber * getMaxPageItems();
-					/**
-					 * 重新获取数据，如果数据库底层能够处理这个问题，将不需要重新获取数据
-					 */
-					setDataInfo();
+				if(!this.isMore())
+				{
+					long lastPagerNumber = getLastPageNumber();
+					if (newPageCount > lastPagerNumber) {
+						offset = lastPagerNumber * getMaxPageItems();
+//						/**
+//						 * 重新获取数据，如果数据库底层能够处理这个问题，将不需要重新获取数据
+//						 */
+//						setDataInfo();
+					}
 				}
+				
 				if (context != null && !(context instanceof ContentContext)) {
 					context.setOffset(offset);
 					/**
@@ -1340,6 +1369,7 @@ public class PagerContext
 	public final int getMaxPageItems() {
 		return maxPageItems;
 	}
+	
 
 	/**
 	 * 初始化数据获取接口
@@ -1354,16 +1384,21 @@ public class PagerContext
 			// 检测是否设置数据库查询语句，如果设置则直接构建针对数据库实现的缺省DataInfo接口，
 			// 否则从request缓冲中获取DataInfo接口
 			if (statement != null && !statement.equals("")) {
-				dataInfo = new DefaultDataInfoImpl();
+				DefaultDataInfoImpl dataInfo_ = new DefaultDataInfoImpl();
+				this.dataInfo = dataInfo_;
 				try {
+					dataInfo_.setMoreQuery(moreQuery);
+					this.setMore(moreQuery);
 					dataInfo.initial(statement, dbname, getOffset(),
 							getMaxPageItems(), ListMode(), request, this
 									.getSQLParams());
 				} catch (SetSQLParamException e) {
 					throw new LoadDataException(e);
 				}
-				if (!ListMode()) {
-					setItems(dataInfo.getItemCount());
+				if (!ListMode() ) {
+					long totalsize = dataInfo.getItemCount();
+					if(!dataInfo.isMore())
+						setItems(totalsize);
 				}
 			} else {
 				Object dataInfo_temp =  request.getAttribute(dataType);
@@ -1397,7 +1432,11 @@ public class PagerContext
 				}
 				// 如果是分页模式设置记录总数
 				if (dataInfo != null && !ListMode()) {
-					setItems(dataInfo.getItemCount());
+					
+					long totalsize = dataInfo.getItemCount();
+					this.setMore(dataInfo.isMore());
+					if(!dataInfo.isMore())
+						setItems(totalsize);
 				}
 
 			}
@@ -1564,12 +1603,16 @@ public class PagerContext
 		}
 		
 		else if (scope.equals(DB_SCOPE)) {
-			this.dataInfo = new DefaultDataInfoImpl();
+//			this.dataInfo = new DefaultDataInfoImpl();
 			/**
 			 * 如果是直接的缺省的数据库实现，调用该实现的初始化方法， 否则调用通用的初始化方法
 			 */
 
+			DefaultDataInfoImpl dataInfo_ = new DefaultDataInfoImpl();
+			this.dataInfo = dataInfo_;
 			try {
+				dataInfo_.setMoreQuery(moreQuery);
+				this.setMore(moreQuery);
 				dataInfo.initial(this.statement, this.dbname, getOffset(),
 						getMaxPageItems(), this.ListMode(),
 						// String sortKey,
@@ -1581,7 +1624,9 @@ public class PagerContext
 			//			
 			// 如果是分页模式设置记录总数
 			if (!ListMode()) {
-				setItems(dataInfo.getItemCount());
+				long totalsize = dataInfo.getItemCount();
+				if(!dataInfo.isMore())
+					setItems(totalsize);
 			}
 			return;
 		} else if (session != null && scope.equals(SESSION_SCOPE)) {
@@ -1674,7 +1719,9 @@ public class PagerContext
 				this.dataInfo = new ListInfoDataInfoImpl((ListInfo)data);
 				// 如果是分页模式设置记录总数
 				if (!ListMode()) {
-					setItems(dataInfo.getItemCount());
+					long totalsize = dataInfo.getItemCount();
+					if(!dataInfo.isMore())
+						setItems(totalsize);
 				}
 			}
 			else
@@ -1904,13 +1951,23 @@ public class PagerContext
 	}
 
 	/**
-	 * 输出当前页面记录条数
+	 * 输出当前页面实际结果集记录数
 	 * 
 	 * @see com.frameworkset.common.tag.pager.tags.PagerInfo#getDataSize()
 	 */
 	public int getDataSize() {
 
 		return dataInfo == null ? 0 : dataInfo.getDataSize();
+	}
+	
+	/**
+	 * 输出当前页面数据库原始记录条数，可能经过应用程序处理数据记录会发生变化，可以通过getDataSize方法获取实际当页记录数
+	 * 
+	 * @see com.frameworkset.common.tag.pager.tags.PagerInfo#getDataSize()
+	 */
+	public int getDataResultSize() {
+
+		return dataInfo == null ? 0 : dataInfo.getDataResultSize();
 	}
 
 	/**
@@ -2117,4 +2174,20 @@ public class PagerContext
 			return (String)request.getAttribute(HandlerMapping_PAGER_COOKIEID);
 		}
 	 /**********************bboss mvc分页结合功能需要的方法 结束**************************************************/
+
+	public boolean isMoreQuery() {
+		return moreQuery;
+	}
+
+	public void setMoreQuery(boolean moreQuery) {
+		this.moreQuery = moreQuery;
+	}
+
+	public boolean isMore() {
+		return more;
+	}
+
+	public void setMore(boolean more) {
+		this.more = more;
+	}
 }
