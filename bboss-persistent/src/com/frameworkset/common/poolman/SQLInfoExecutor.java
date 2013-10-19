@@ -133,7 +133,8 @@ public class SQLInfoExecutor {
 		Connection con = null;
 		try
 		{
-			con = DBUtil.getConection(dbname);
+			if(action ==  PreparedDBUtil.INSERT)//如果bean中使用PrimaryKey注解，并且要求自动设置主键，则要求后续所有的操作共用同一个connection来完成所有操作，以便提升系统性能
+				con = DBUtil.getConection(dbname);
 			SQLParams batchsqlparams = SQLParams.convertBeanToSqlParams(bean,sql,dbname,action,con);
 			if(batchsqlparams == null)
 				return null;

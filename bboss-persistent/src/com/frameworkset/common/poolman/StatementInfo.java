@@ -40,6 +40,7 @@ import com.frameworkset.common.poolman.util.SQLUtil;
 import com.frameworkset.orm.adapter.DB;
 import com.frameworkset.orm.adapter.DB.PagineSql;
 import com.frameworkset.orm.transaction.JDBCTransaction;
+import com.frameworkset.orm.transaction.TXConnection;
 import com.frameworkset.orm.transaction.TransactionException;
 import com.frameworkset.orm.transaction.TransactionManager;
 
@@ -186,6 +187,13 @@ public class StatementInfo {
 					}
 				}
 			}
+			else
+			{
+				if(this.con != null && this.con instanceof TXConnection)
+				{
+					tx = TransactionManager.getTransaction();
+				}
+			}
 		} catch (Exception e) {
 			throw e;
 		}
@@ -301,51 +309,111 @@ public class StatementInfo {
 		return paginesql;
 	}
 
+//	public void errorHandle(Exception sqle) throws SQLException {
+//		
+//		if (tx != null && !outcon) {
+//			try {
+//				tx.setRollbackOnly();
+//			} catch (Exception ei) {
+//
+//			}
+//		} else if (!outcon && con != null) {
+//			if (this.needTransaction) {
+//
+//				try {
+//					con.rollback();
+//				} catch (Exception e) {
+//
+//				}
+//				try {
+//					con.setAutoCommit(this.oldautocommit);
+//				} catch (Exception e) {
+//
+//				}
+//			}
+//		}
+//
+//		// if(!outcon)
+//		// {
+//		// if (tx == null) {
+//		// // if (!isAutoCommit())
+//		// // preparedCon.rollback();
+//		// } else {
+//		// try {
+//		// tx.setRollbackOnly();
+//		// } catch (IllegalStateException e1) {
+//		// // TODO Auto-generated catch block
+//		// e1.printStackTrace();
+//		// } catch (SystemException e1) {
+//		// // TODO Auto-generated catch block
+//		// e1.printStackTrace();
+//		// }
+//		// }
+//		// }
+//		// log.error("预编译执行报错", sqle);
+//		// throw e;
+//		if (sqle instanceof SQLException)
+//			throw (SQLException) sqle;
+//		else
+//			throw new NestedSQLException(sqle.getMessage(), sqle);
+//
+//	}
+	
 	public void errorHandle(Exception sqle) throws SQLException {
 		
-		if (tx != null && !outcon) {
-			try {
-				tx.setRollbackOnly();
-			} catch (Exception ei) {
-
-			}
-		} else if (!outcon && con != null) {
-			if (this.needTransaction) {
-
+		if(outcon )//使用外部链接
+		{
+			
+			if(tx != null && this.con != null && this.con instanceof TXConnection)
+			{
 				try {
-					con.rollback();
-				} catch (Exception e) {
-
-				}
-				try {
-					con.setAutoCommit(this.oldautocommit);
-				} catch (Exception e) {
+					tx.setRollbackOnly();
+				} catch (Exception ei) {
 
 				}
 			}
 		}
+		else//没有使用外部链接
+		{
+			if (tx != null) {
+				try {
+					tx.setRollbackOnly();
+				} catch (Exception ei) {
+	
+				}
+			} 
+			else if (con != null) {
+				if (this.needTransaction) {	
+					try {
+						con.rollback();
+					} catch (Exception e) {
+	
+					}
+					try {
+						con.setAutoCommit(this.oldautocommit);
+					} catch (Exception e) {
+	
+					}
+				}
+			}
+		}
 
-		// if(!outcon)
-		// {
-		// if (tx == null) {
-		// // if (!isAutoCommit())
-		// // preparedCon.rollback();
-		// } else {
-		// try {
-		// tx.setRollbackOnly();
-		// } catch (IllegalStateException e1) {
-		// // TODO Auto-generated catch block
-		// e1.printStackTrace();
-		// } catch (SystemException e1) {
-		// // TODO Auto-generated catch block
-		// e1.printStackTrace();
-		// }
-		// }
-		// }
-		// log.error("预编译执行报错", sqle);
-		// throw e;
+		
 		if (sqle instanceof SQLException)
 			throw (SQLException) sqle;
+		else if(sqle instanceof TransactionException)
+		{
+			Throwable e = ((TransactionException)sqle).getCause();
+			if(e == null)
+			{
+				throw new NestedSQLException(sqle.getMessage(), sqle);
+			}
+			else if(e instanceof SQLException)
+				throw (SQLException)e;
+			else
+				throw new NestedSQLException(sqle.getMessage(), sqle);
+				
+		}
 		else
 			throw new NestedSQLException(sqle.getMessage(), sqle);
 
