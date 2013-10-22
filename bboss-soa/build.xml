@@ -41,7 +41,7 @@
 			
 			
 			<classpath id="cp-classes-bboss-soa">
-				<fileset dir="lib/" includes="**/*.jar" />				
+						
 				
 			</classpath>
 		</javac>
@@ -65,9 +65,7 @@
 	
 	<target name="copy-depends-liberary" description="copy depends liberarys">
 				<echo>copy depends liberarys ...</echo>
-				<copy todir="distrib/dependlibs">
-					<fileset dir="lib" includes="**/*.jar" excludes="j2ee.jar jsp-api.jar servlet-api.jar junit.jar"/>
-				</copy>
+				
 	</target>
 	
 	<target name="complete" depends="distrib" description="copy depends liberarys">

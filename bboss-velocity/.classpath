@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src-velocity"/>
-	<classpathentry kind="src" path="test"/>
-	<classpathentry kind="src" path="src-ext"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/test/hsqldb-1.7.1.jar"/>
 	<classpathentry kind="lib" path="lib/antlr-2.7.5.jar"/>
@@ -18,7 +16,5 @@
 	<classpathentry kind="lib" path="lib/werken-xpath-0.9.4.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="lib" path="lib/test/ant-1.5.3.jar"/>
-	<classpathentry kind="lib" path="lib/bboss-aop.jar"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/bboss-util"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>

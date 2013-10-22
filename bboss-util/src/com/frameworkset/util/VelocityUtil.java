@@ -22,6 +22,7 @@ import bboss.org.apache.velocity.exception.MethodInvocationException;
 import bboss.org.apache.velocity.exception.ParseErrorException;
 import bboss.org.apache.velocity.exception.ResourceNotFoundException;
 //import org.frameworkset.spi.BaseApplicationContext;
+import bboss.org.apache.velocity.runtime.resource.Resource;
 
 
 //
@@ -196,7 +197,7 @@ public class VelocityUtil implements Serializable{
 //	    	        File configurationFile = new File(appDir, "/classes/velocity.properties");
 //	    	        log.debug("configurationFile.getAbsolutePath():"+configurationFile.getAbsolutePath());
 	    	        log.debug("velocity.properties:"+ VelocityUtil.class.getResource("/bboss-velocity.properties"));
-	    	        log.debug("file.resource.loader.path:"+ templatePath);
+//	    	        log.debug("file.resource.loader.path:"+ templatePath);
 	    	       java.util.Properties pros =SimpleStringUtil.getProperties("/bboss-velocity.properties", VelocityUtil.class);
 	    	       
 //	    	       pros.load(new java.io.FileInputStream(configurationFile));
@@ -656,7 +657,17 @@ public class VelocityUtil implements Serializable{
     	
     }
     
+    public static void initTemplate(Resource template)
+    {
+    	init(null);
+    	Velocity.initTemplate(template);
+    }
     
+    public static void initTemplate(Resource template,String encoding)
+    {
+    	init(null);
+    	Velocity.initTemplate(template, encoding);
+    }
 
     public static void main(String[] args) {
         VelocityUtil velocityutil = new VelocityUtil();

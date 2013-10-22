@@ -58,6 +58,7 @@
 		<fileset dir="lib/cglib" includes="*.jar *.zip" />
 		<fileset dir="lib/asm" includes="*.jar *.zip" />
 		<fileset dir="lib/http" includes="*.jar *.zip" />
+		<fileset dir="testlib/" includes="*.jar *.zip" />
 		<fileset dir="${distrib}" includes="**/*.jar **/*.zip" />
 
 	</path>
