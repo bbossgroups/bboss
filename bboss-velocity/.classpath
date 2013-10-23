@@ -16,5 +16,5 @@
 	<classpathentry kind="lib" path="lib/werken-xpath-0.9.4.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="lib" path="lib/test/ant-1.5.3.jar"/>
-	<classpathentry kind="output" path="classes1"/>
+	<classpathentry kind="output" path="classes"/>
 </classpath>
