@@ -47,7 +47,7 @@ import org.apache.ecs.html.Option;
 import org.apache.ecs.html.Script;
 import org.apache.ecs.html.Select;
 import org.frameworkset.spi.ApplicationContext;
-import org.frameworkset.web.servlet.support.RequestContextUtils;
+import org.frameworkset.util.I18NUtil;
 
 import com.frameworkset.common.tag.TagUtil;
 import com.frameworkset.common.tag.pager.config.PageConfig;
@@ -369,7 +369,7 @@ public final class IndexTag extends PagerTagSupport {
             if(!pagerContext.isWapflag())
 			    ret.append(this.getScript());
 		}
-		Locale locale = RequestContextUtils.getRequestContextLocal(request);
+		Locale locale = I18NUtil.getRequestContextLocal(request);
 		String total_label = TagUtil.tagmessageSource.getMessage("bboss.tag.pager.total",locale) ;
 		String total_page_label = TagUtil.tagmessageSource.getMessage("bboss.tag.pager.total.page",locale) ;
 		String total_records_label = TagUtil.tagmessageSource.getMessage("bboss.tag.pager.total.records",locale) ;
@@ -535,7 +535,7 @@ public final class IndexTag extends PagerTagSupport {
 			}
 			select.addElement(option);
 		}
-		Locale locale = RequestContextUtils.getRequestContextLocal(request);
+		Locale locale = I18NUtil.getRequestContextLocal(request);
 		String everypage_label = TagUtil.tagmessageSource.getMessage("bboss.tag.pager.everypageshow",locale) ;
 		String everypagerecords_label = TagUtil.tagmessageSource.getMessage("bboss.tag.pager.everypageshow.records",locale) ;
 		return new StringBuffer(" <span class='pages1'>").append(everypage_label)//√ø“≥œ‘ æ
@@ -640,7 +640,7 @@ public final class IndexTag extends PagerTagSupport {
     
 	private String getFirstContent() {
 		String firstUrl = pagerContext.getPageUrl(getJumpPage(PagerConst.FIRST_PAGE));
-		Locale locale = RequestContextUtils.getRequestContextLocal(request);
+		Locale locale = I18NUtil.getRequestContextLocal(request);
 		String firstpage_label = TagUtil.tagmessageSource.getMessage("bboss.tag.pager.firstpage",locale) ;
 		if (firstUrl.equals(""))
 		{
@@ -851,7 +851,7 @@ public final class IndexTag extends PagerTagSupport {
     
 	private String getPrevContent() {
 		
-		Locale locale = RequestContextUtils.getRequestContextLocal(request);
+		Locale locale = I18NUtil.getRequestContextLocal(request);
 		String prepage_label = TagUtil.tagmessageSource.getMessage("bboss.tag.pager.prepage",locale) ;
 		if (!pagerContext.hasPrevPage())
 		{
@@ -1004,7 +1004,7 @@ public final class IndexTag extends PagerTagSupport {
 	 */
 
 	private String getNextContent() {
-		Locale locale = RequestContextUtils.getRequestContextLocal(request);
+		Locale locale = I18NUtil.getRequestContextLocal(request);
 		String nextpage_label = TagUtil.tagmessageSource.getMessage("bboss.tag.pager.nextpage",locale) ;
 		if (pagerContext.hasNextPage()) {
 			long offset = pagerContext.getNextOffset();
@@ -1276,7 +1276,7 @@ public final class IndexTag extends PagerTagSupport {
 	 * @return String
 	 */
 	private String getLastContent() {
-		 String lastpage_label = TagUtil.tagmessageSource.getMessage("bboss.tag.pager.lastpage",RequestContextUtils.getRequestContextLocal(request)) ;
+		 String lastpage_label = TagUtil.tagmessageSource.getMessage("bboss.tag.pager.lastpage",I18NUtil.getRequestContextLocal(request)) ;
 	    
 		String lastUrl = pagerContext.getPageUrl(getJumpPage(PagerConst.LAST_PAGE));
 		if (lastUrl.equals(""))
@@ -1723,7 +1723,7 @@ public final class IndexTag extends PagerTagSupport {
         //System.out.println("pagerContext.getPageCount():"+pagerContext.getPageCount());
         String uuid = UUID.randomUUID().toString();
         String gotopageid = uuid+".go";
-        Locale locale = RequestContextUtils.getRequestContextLocal(request);
+        Locale locale = I18NUtil.getRequestContextLocal(request);
         String gotopage_label = TagUtil.tagmessageSource.getMessage("bboss.tag.pager.gotopage",locale) ;
         String page_label = TagUtil.tagmessageSource.getMessage("bboss.tag.pager.page",locale) ;
         String gopageerror_msg = TagUtil.tagmessageSource.getMessage("bboss.tag.pager.gopageerror_msg",locale) ;

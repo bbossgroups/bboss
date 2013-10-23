@@ -29,7 +29,7 @@ import javax.servlet.jsp.JspException;
 
 import org.ditchnet.jsp.util.JspResponseWriter;
 import org.ditchnet.xml.Xhtml;
-import org.frameworkset.web.servlet.support.RequestContextUtils;
+import org.frameworkset.util.I18NUtil;
 
 import com.frameworkset.common.tag.BaseBodyTag;
 
@@ -133,7 +133,7 @@ public final class TabPaneTag extends BaseBodyTag {
 			tab.setTabTitle(this.tabTitle);
 		else
 		{
-			tab.setTabTitle( RequestContextUtils.getI18nMessage(tabTitleCode,(String)tabTitle, request));
+			tab.setTabTitle( I18NUtil.getI18nMessage(tabTitleCode,(String)tabTitle, request));
 		}
 		
 		getTabContainer().addChild(tab);

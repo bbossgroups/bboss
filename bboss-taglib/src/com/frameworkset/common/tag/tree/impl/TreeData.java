@@ -38,7 +38,7 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.JspException;
 
 import org.apache.log4j.Logger;
-import org.frameworkset.web.servlet.support.RequestContextUtils;
+import org.frameworkset.util.I18NUtil;
 
 import com.frameworkset.common.tag.BaseTag;
 import com.frameworkset.common.tag.tree.COMTree;
@@ -418,7 +418,7 @@ public class TreeData extends BaseTag {
 		}
 		else
 		{	
-			return RequestContextUtils.getI18nMessage(this.getRootNameCode(), this.rootName, request);
+			return I18NUtil.getI18nMessage(this.getRootNameCode(), this.rootName, request);
 		}
 	}
 

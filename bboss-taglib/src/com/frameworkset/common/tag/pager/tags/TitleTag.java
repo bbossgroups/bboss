@@ -43,9 +43,7 @@ import org.apache.ecs.html.A;
 import org.apache.ecs.html.Span;
 import org.apache.ecs.html.TD;
 import org.apache.ecs.html.TH;
-import org.frameworkset.spi.support.MessageSource;
-import org.frameworkset.web.servlet.support.RequestContextUtils;
-import org.frameworkset.web.servlet.support.WebApplicationContextUtils;
+import org.frameworkset.util.I18NUtil;
 
 import com.frameworkset.util.StringUtil;
 
@@ -482,7 +480,7 @@ public class TitleTag  extends PagerTagSupport
 //		MessageSource source = WebApplicationContextUtils.getWebApplicationContext();
 //		
 //		return source.getMessage(this.titlecode, RequestContextUtils.getRequestContextLocal(request));
-		return RequestContextUtils.getI18nMessage(titlecode, this.title,request);
+		return I18NUtil.getI18nMessage(titlecode, this.title,request);
 	}
 	/**
 	 * @see com.frameworkset.common.tag.BaseTag#generateContent()

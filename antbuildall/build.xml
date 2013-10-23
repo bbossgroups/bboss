@@ -487,7 +487,7 @@ bbossaop<-cas server [bboss-aop.jar]
 	
 	
 	<target name="distrib-bboss-mvc-jars" description="distrib-bboss-mvc-jars">
-			<for list="${bboss-plugin-wordpdf-lib-depends},${bboss-plugin-hessian-lib},${bbossupload-lib},${demoproject-lib},${cms_baseline-lib},${monitorconsole-compilelib},${monitorconsole-lib},${creatoresb-lib},${mvc-lib},${xmlrequest-lib},${bboss-taglib-lib}" param="destdir">
+			<for list="${bboss-plugin-wordpdf-lib-depends},${bboss-plugin-hessian-lib},${bbossupload-lib},${demoproject-lib},${cms_baseline-lib},${monitorconsole-compilelib},${monitorconsole-lib},${creatoresb-lib},${mvc-lib},${xmlrequest-lib}" param="destdir">
 				<sequential>
 					<echo>@{destdir}-------------------------------</echo>
 					<antcall target="svn-update-procedure">
