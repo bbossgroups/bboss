@@ -29,7 +29,7 @@ import org.frameworkset.spi.remote.RPCMethodCall;
 
 import com.frameworkset.orm.annotation.TransactionType;
 import com.frameworkset.orm.transaction.TransactionException;
-import com.frameworkset.orm.transaction.TransactionManager;
+
 import com.frameworkset.util.RegexUtil;
 
 /**
@@ -89,7 +89,7 @@ public class SynchronizedMethod implements java.io.Serializable {
     /**
      * 事务类型
      */
-    private TransactionType txtype = TransactionManager.REQUIRED_TRANSACTION;
+    private TransactionType txtype = TransactionType.REQUIRED_TRANSACTION;
     
 //    private Map 
     
@@ -488,24 +488,24 @@ public class SynchronizedMethod implements java.io.Serializable {
 //		txtype_s = txtype;
 		if(txtype.equals("NEW_TRANSACTION"))
 		{
-			this.txtype = TransactionManager.NEW_TRANSACTION;
+			this.txtype = TransactionType.NEW_TRANSACTION;
 		}
 		else if(txtype.equals("REQUIRED_TRANSACTION"))
 		{
-			this.txtype = TransactionManager.REQUIRED_TRANSACTION;
+			this.txtype = TransactionType.REQUIRED_TRANSACTION;
 		}
 		else if(txtype.equals("MAYBE_TRANSACTION"))
 		{
-			this.txtype = TransactionManager.MAYBE_TRANSACTION;
+			this.txtype = TransactionType.MAYBE_TRANSACTION;
 		}
 		else if(txtype.equals("NO_TRANSACTION"))
 		{
-			this.txtype = TransactionManager.NO_TRANSACTION;
+			this.txtype = TransactionType.NO_TRANSACTION;
 		}
 		
 		else if(txtype.equals("RW_TRANSACTION"))
         {
-            this.txtype = TransactionManager.RW_TRANSACTION;
+            this.txtype = TransactionType.RW_TRANSACTION;
         }
 			
 	

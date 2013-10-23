@@ -62,7 +62,7 @@ public class Test {
 //                System.out.println(object);
                 
             }
-        	javax.transaction.SystemException s;
+        	
 //            long e = System.currentTimeMillis();
 
 //            System.out.println((e - s) / 1000 + "√Î");
@@ -85,7 +85,7 @@ public class Test {
                 System.out.println(object);
                 
             }
-                javax.transaction.SystemException s;
+               
 //            long e = System.currentTimeMillis();
 
 //            System.out.println((e - s) / 1000 + "√Î");

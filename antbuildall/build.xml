@@ -420,7 +420,7 @@ bbossaop<-cas server [bboss-aop.jar]
 				<antcall target="svn-update-procedure">
 					<param name="sourcedir" value="${bboss-aop}/distrib" />
 					<param name="filedir" value="@{destdir}" />
-					<param name="files" value="bboss-aop.jar,bboss-camel.jar,bboss-mina.jar,bboss-jms.jar,bboss-ws.jar,jgroups.jar,bboss-schedule.jar,bboss-tlq.jar,bboss-rmi.jar,bboss-http.jar" />
+					<param name="files" value="bboss-aop.jar,bboss-camel.jar,bboss-mina.jar,bboss-jms.jar,bboss-ws.jar,jgroups.jar,bboss-tlq.jar,bboss-rmi.jar,bboss-http.jar" />
 				</antcall>
 			</sequential>
 		</for>

@@ -83,6 +83,7 @@
 				<classpath id="cp-classes-bboss-persistent-test">
 					<fileset dir="lib/" includes="**/*.jar *.zip" />				
 					<fileset dir="distrib/" includes="**/*.jar *.zip" />
+					<fileset dir="lib-test/" includes="**/*.jar *.zip" />	
 				</classpath>
 			</javac>
 		</target>

@@ -35,8 +35,8 @@
 	<classpathentry kind="lib" path="lib/dbcp/commons-dbcp-1.4.jar"/>
 	<classpathentry kind="lib" path="lib/dbcp/commons-pool-1.5.4.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/bboss-velocity"/>
-	<classpathentry kind="lib" path="lib/bboss-aop.jar"/>
 	<classpathentry kind="lib" path="lib-test/jsp-api.jar"/>
 	<classpathentry kind="lib" path="lib-test/servlet-api.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/bbossaop"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>

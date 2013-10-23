@@ -21,3 +21,4 @@ bbossgroups-3.7.3 release futures
 3.识别最后一页，more查询漏洞
 4.tagnumer ，more查询漏洞
 5.去掉持久层与soa的依赖关系
+6.去掉aop对持久层的依赖关系

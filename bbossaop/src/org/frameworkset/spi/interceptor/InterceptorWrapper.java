@@ -32,14 +32,14 @@ import com.frameworkset.proxy.Interceptor;
  */
 public class InterceptorWrapper implements Interceptor {
 	List interceptors;
-	TransactionInterceptor txnterceptor;
+	Interceptor txnterceptor;
 	public InterceptorWrapper(List interceptors)
 	{
 		this.interceptors = interceptors;
 	}
 	
 
-	public InterceptorWrapper(TransactionInterceptor txnterceptor, List interceptors) {
+	public InterceptorWrapper(Interceptor txnterceptor, List interceptors) {
 		this.txnterceptor = txnterceptor;
 		this.interceptors = interceptors;
 	}

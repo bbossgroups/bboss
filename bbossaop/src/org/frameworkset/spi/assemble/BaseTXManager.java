@@ -11,18 +11,33 @@ import org.frameworkset.spi.ProviderInterceptor;
 import org.frameworkset.spi.UNmodify;
 import org.frameworkset.spi.interceptor.DumyInterceptor;
 import org.frameworkset.spi.interceptor.InterceptorChain;
+import org.frameworkset.spi.interceptor.InterceptorFacttory;
 import org.frameworkset.spi.interceptor.InterceptorWrapper;
-import org.frameworkset.spi.interceptor.TransactionInterceptor;
 
 import com.frameworkset.proxy.Interceptor;
 
 public abstract class BaseTXManager implements java.io.Serializable,UNmodify
 {
     private static Logger log = Logger.getLogger(ProviderManagerInfo.class);
-
+    private static InterceptorFacttory interceptorFacttory;
+    static
+    {
+    	try {
+			interceptorFacttory = (InterceptorFacttory) Class.forName("org.frameworkset.spi.interceptor.InterceptorFacttoryImpl").newInstance();
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
     protected Transactions txs;
     
-
+    
     protected List<InterceptorInfo> interceptors = new ArrayList<InterceptorInfo>();
 
     protected boolean callorder_sequence = false;
@@ -114,7 +129,7 @@ public abstract class BaseTXManager implements java.io.Serializable,UNmodify
                     	SynchronizedMethod synmethod = txs.isTransactionMethod(method,muuid);
                     	if(synmethod == null)
                     		return intercptor;
-                        TransactionInterceptor wrapInterceptor = new TransactionInterceptor(synmethod);
+                        Interceptor wrapInterceptor = interceptorFacttory.getInterceptor(synmethod);
 
                         InterceptorChain inteceptor = new InterceptorChain(wrapInterceptor, intercptor, true);
                         return inteceptor;
@@ -124,7 +139,7 @@ public abstract class BaseTXManager implements java.io.Serializable,UNmodify
                     	SynchronizedMethod synmethod = txs.isTransactionMethod(method,muuid);
                     	if(synmethod == null)
                     		return null;
-                        TransactionInterceptor wrapInterceptor = new TransactionInterceptor(synmethod);
+                        Interceptor wrapInterceptor = interceptorFacttory.getInterceptor(synmethod);
 
 
                         return wrapInterceptor;
@@ -149,7 +164,7 @@ public abstract class BaseTXManager implements java.io.Serializable,UNmodify
         	SynchronizedMethod synmethod = txs.isTransactionMethod(method,muuid);
         	if(synmethod == null)
         		return null;
-            return new TransactionInterceptor(synmethod);
+            return interceptorFacttory.getInterceptor(synmethod);//new TransactionInterceptor(synmethod);
 
         }
         return null;
@@ -187,7 +202,7 @@ public abstract class BaseTXManager implements java.io.Serializable,UNmodify
         	SynchronizedMethod synmethod = txs.isTransactionMethod(method,muuid);
         	if(synmethod == null)
         		return null;
-            TransactionInterceptor wrapInterceptor = new TransactionInterceptor(synmethod);
+            Interceptor wrapInterceptor = interceptorFacttory.getInterceptor(synmethod);//new TransactionInterceptor(synmethod);
             return wrapInterceptor;
         }
         return null;
@@ -330,7 +345,7 @@ public abstract class BaseTXManager implements java.io.Serializable,UNmodify
             	SynchronizedMethod synmethod = txs.isTransactionMethod(method,muuid);
             	if(synmethod == null)
             		return new InterceptorWrapper(_t);
-                TransactionInterceptor wrapInterceptor = new TransactionInterceptor(synmethod);
+                Interceptor wrapInterceptor = interceptorFacttory.getInterceptor(synmethod);//new TransactionInterceptor(synmethod);
 
                 InterceptorWrapper wraper = new InterceptorWrapper(wrapInterceptor, _t);
                 return wraper;
@@ -349,7 +364,7 @@ public abstract class BaseTXManager implements java.io.Serializable,UNmodify
         	SynchronizedMethod synmethod = txs.isTransactionMethod(method,muuid);
         	if(synmethod == null)
         		return null;
-            TransactionInterceptor wrapInterceptor = new TransactionInterceptor(synmethod);
+            Interceptor wrapInterceptor = interceptorFacttory.getInterceptor(synmethod);//new TransactionInterceptor(synmethod);
             return wrapInterceptor;
         }
 

@@ -22,7 +22,6 @@ import org.frameworkset.spi.remote.TestBase;
 import org.frameworkset.spi.security.SecurityManager;
 import org.junit.Test;
 
-import com.frameworkset.common.poolman.handle.ValueExchange;
 import com.frameworkset.util.ValueObjectUtil;
 
 
