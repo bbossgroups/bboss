@@ -20,3 +20,4 @@ bbossgroups-3.7.3 release futures
 2.增加一组more接口，相应的分页标签逻辑也要处理
 3.识别最后一页，more查询漏洞
 4.tagnumer ，more查询漏洞
+5.去掉持久层与soa的依赖关系

@@ -308,7 +308,7 @@
 	
 	
 	<target name="distrib-bboss-soa-jars" description="distrib-bboss-soa-jars">
-			<for list="${demoproject-lib},${portallib},${casserverlib},${active-ext-lib},${bboss-aop-lib},${cms_baseline-lib},${bboss-taglib-lib},${kettle-lib},${monitorconsole-lib},${monitorconsole-compilelib},${bboss-mvc-lib},${creatoresb-lib},${bboss-persistent-lib},${bboss-clientproxy-lib},${xmlserializable-lib}" param="destdir">
+			<for list="${demoproject-lib},${portallib},${casserverlib},${active-ext-lib},${bboss-aop-lib},${cms_baseline-lib},${bboss-taglib-lib},${kettle-lib},${monitorconsole-lib},${monitorconsole-compilelib},${bboss-mvc-lib},${creatoresb-lib},${bboss-clientproxy-lib},${xmlserializable-lib}" param="destdir">
 				<sequential>
 					<echo>@{destdir}-------------------------------</echo>
 					<antcall target="svn-update-procedure">

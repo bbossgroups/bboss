@@ -18,8 +18,6 @@ import javax.servlet.ServletRequestEvent;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
-import org.frameworkset.spi.ApplicationContext;
-import org.frameworkset.spi.assemble.Pro;
 
 import com.frameworkset.orm.transaction.TransactionManager;
 
@@ -41,44 +39,44 @@ public class BSServletRequestListener implements javax.servlet.ServletRequestLis
 {
 	private static final Logger log = Logger.getLogger(BSServletRequestListener.class);
 	
-	private static String[] interceptorURIs ;
-	private static final String[] defaultinterceptorURIs = new String[]{".jsp",".do",".page"};
-	public static boolean isInterceptResource(String uri)
-	{
-		init_();
-		for(String type:interceptorURIs)
-		{
-			if(uri.endsWith(type))
-				return true;
-		}
-		return false;
-		
-	}
-	private static final Object lock = new Object();
-	private static void init_()
-	{
-		if(interceptorURIs == null )
-		{
-			synchronized(lock)
-			{
-				if(interceptorURIs == null )
-				{
-					ApplicationContext context = ApplicationContext.getApplicationContext();
-					Pro pro = context.getProBean("transaction.leakcheck.files");
-					if(pro == null)
-						interceptorURIs = defaultinterceptorURIs;
-					else
-					{
-						String[] temp = (String[])pro.getTrueValue();
-						if(temp  == null || temp.length == 0)
-							interceptorURIs = defaultinterceptorURIs;
-						else
-							interceptorURIs = temp;
-					}
-				}
-			}
-		}
-	}
+//	private static String[] interceptorURIs ;
+//	private static final String[] defaultinterceptorURIs = new String[]{".jsp",".do",".page"};
+//	public static boolean isInterceptResource(String uri)
+//	{
+//		init_();
+//		for(String type:interceptorURIs)
+//		{
+//			if(uri.endsWith(type))
+//				return true;
+//		}
+//		return false;
+//		
+//	}
+//	private static final Object lock = new Object();
+//	private static void init_()
+//	{
+//		if(interceptorURIs == null )
+//		{
+//			synchronized(lock)
+//			{
+//				if(interceptorURIs == null )
+//				{
+//					ApplicationContext context = ApplicationContext.getApplicationContext();
+//					Pro pro = context.getProBean("transaction.leakcheck.files");
+//					if(pro == null)
+//						interceptorURIs = defaultinterceptorURIs;
+//					else
+//					{
+//						String[] temp = (String[])pro.getTrueValue();
+//						if(temp  == null || temp.length == 0)
+//							interceptorURIs = defaultinterceptorURIs;
+//						else
+//							interceptorURIs = temp;
+//					}
+//				}
+//			}
+//		}
+//	}
 	public void requestDestroyed(ServletRequestEvent requestEvent) {
 	
 		if(requestEvent.getServletRequest() instanceof HttpServletRequest )

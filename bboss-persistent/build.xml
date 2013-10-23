@@ -43,7 +43,8 @@
 			<src path="src-jdk5" />
 			<src path="listener" />
 			<classpath id="cp-classes-bboss-persistent">
-				<fileset dir="lib/" includes="**/*.jar *.zip" />				
+				<fileset dir="lib/" includes="**/*.jar *.zip" />
+				<fileset dir="lib-test/" includes="**/*.jar *.zip" />			
 			</classpath>
 		</javac>
 		<copy todir="classes-bboss-persistent" >
@@ -108,6 +109,7 @@
 					<fileset dir="src" includes="**/*"/>
 					<fileset dir="src-jdk5" includes="**/*"/>
 					<fileset dir="listener" includes="**/*"/>
+					
 				</jar>
 			</target>
 		
