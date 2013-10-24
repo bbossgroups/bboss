@@ -42,11 +42,11 @@ public class I18nImpl implements I18n{
 		return RequestContextUtils.getRequestContextLocal( request);
 	}
 
-	@Override
-	public String getI18nMessage(String code, HttpServletRequest request) {
-		// TODO Auto-generated method stub
-		return RequestContextUtils.getI18nMessage(code, request);
-	}
+//	@Override
+//	public String getI18nMessage(String code, HttpServletRequest request) {
+//		// TODO Auto-generated method stub
+//		return RequestContextUtils.getI18nMessage(code, request);
+//	}
 
 	@Override
 	public String getI18nMessage(String code, String defaultMessage,

@@ -19,6 +19,8 @@ import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.log4j.Logger;
+import org.frameworkset.util.i18n.DefaultI18N;
 import org.frameworkset.util.i18n.I18n;
 
 /**
@@ -32,20 +34,15 @@ import org.frameworkset.util.i18n.I18n;
  * @version 1.0
  */
 public class I18NUtil {
+	private static Logger log = Logger.getLogger(I18NUtil.class);
 	private static I18n i18n;
 	static
 	{
 		try {
 			i18n = (I18n) Class.forName("org.frameworkset.web.servlet.i18n.I18nImpl").newInstance();
-		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (Exception e) {
+			log.warn("class org.frameworkset.web.servlet.i18n.I18nImpl not found in classpath,use DefaultI18N. ");
+			i18n = new DefaultI18N();
 		}
 	}
 	public I18NUtil() {

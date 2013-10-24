@@ -20,17 +20,35 @@ import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * <p>I18n.java</p>
+ * <p>DefaultI18N.java</p>
  * <p> Description: </p>
  * <p> bboss workgroup </p>
  * <p> Copyright (c) 2005-2013 </p>
  * 
- * @Date 2013年10月23日
+ * @Date 2013年10月24日
  * @author biaoping.yin
  * @version 1.0
  */
-public interface I18n {
-	public Locale getRequestContextLocal(HttpServletRequest request);
-//	public String getI18nMessage(String code,HttpServletRequest request);
-	public String getI18nMessage(String code,String defaultMessage,HttpServletRequest request);
+public class DefaultI18N implements I18n {
+
+	public DefaultI18N() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public Locale getRequestContextLocal(HttpServletRequest request) {
+		// TODO Auto-generated method stub
+		return  request.getLocale();
+	}
+
+//	public String getI18nMessage(String code, HttpServletRequest request) {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
+
+	public String getI18nMessage(String code, String defaultMessage,
+			HttpServletRequest request) {
+		// TODO Auto-generated method stub
+		return defaultMessage;
+	}
+
 }

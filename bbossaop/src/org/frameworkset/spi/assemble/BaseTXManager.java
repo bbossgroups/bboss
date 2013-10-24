@@ -9,6 +9,7 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 import org.frameworkset.spi.ProviderInterceptor;
 import org.frameworkset.spi.UNmodify;
+import org.frameworkset.spi.interceptor.DummyInterceptorFacttory;
 import org.frameworkset.spi.interceptor.DumyInterceptor;
 import org.frameworkset.spi.interceptor.InterceptorChain;
 import org.frameworkset.spi.interceptor.InterceptorFacttory;
@@ -24,15 +25,10 @@ public abstract class BaseTXManager implements java.io.Serializable,UNmodify
     {
     	try {
 			interceptorFacttory = (InterceptorFacttory) Class.forName("org.frameworkset.spi.interceptor.InterceptorFacttoryImpl").newInstance();
-		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (Exception e) {
+			log.warn("class org.frameworkset.spi.interceptor.InterceptorFacttoryImpl not found in classpath,use DummyInterceptorFacttory. ");
+			interceptorFacttory = new DummyInterceptorFacttory();
+			
 		}
     }
     protected Transactions txs;
