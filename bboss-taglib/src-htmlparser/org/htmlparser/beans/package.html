@@ -1,0 +1,55 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!--
+ HTMLParser Library $Name: v1_5 $ - A java-based parser for HTML
+ http://sourceforge.org/projects/htmlparser
+ Copyright (C) 2004 Somik Raha
+
+ Revision Control Information
+
+ $Source: /cvsroot/htmlparser/htmlparser/src/org/htmlparser/beans/package.html,v $
+ $Author: derrickoswald $
+ $Date: 2005/04/12 11:27:41 $
+ $Revision: 1.21 $
+
+ This library is free software; you can redistribute it and/or
+ modify it under the terms of the GNU Lesser General Public
+ License as published by the Free Software Foundation; either
+ version 2.1 of the License, or (at your option) any later version.
+
+ This library is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ Lesser General Public License for more details.
+
+ You should have received a copy of the GNU Lesser General Public
+ License along with this library; if not, write to the Free Software
+ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+-->
+</head>
+<body bgcolor="white">
+The beans package contains Java Beans using the HTML Parser.
+<p>There are visual and non-visual beans, the former follow the naming
+pattern HTMLxxx.
+<ul>
+<li>{@link org.htmlparser.beans.BeanyBaby} is an example application using the StringBean and LinkBean.</li>
+<li>{@link org.htmlparser.beans.FilterBean} is a bean accepting a filter and returning a
+{@link org.htmlparser.util.NodeList NodeList}.</li>
+<li>{@link org.htmlparser.beans.LinkBean} is a bean returning an array of URLs from a page.</li>
+<li>{@link org.htmlparser.beans.StringBean} is a bean returning the text of a page.</li>
+<li>{@link org.htmlparser.beans.HTMLLinkBean} is a GUI bean showing the URLs from a page.</li>
+<li>{@link org.htmlparser.beans.HTMLTextBean} is a GUI bean showing the text of a page.</li>
+</ul>
+</p>
+<p>For a quick look at the output of these beans, run beanybaby or filterbuilder:
+<pre>
+<code>
+bin/beanybaby [url]
+bin/filterbuilder [url]
+</code>
+</pre>
+<!-- Put @see and @since tags down here. -->
+
+</body>
+</html>

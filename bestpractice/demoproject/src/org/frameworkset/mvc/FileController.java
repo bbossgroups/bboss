@@ -26,8 +26,6 @@ import org.frameworkset.web.multipart.IgnoreFieldNameMultipartFile;
 import org.frameworkset.web.multipart.MultipartFile;
 import org.frameworkset.web.servlet.ModelMap;
 
-import com.frameworkset.platform.cms.templatemanager.FileResource;
-import com.frameworkset.platform.cms.util.FileUtil;
 import com.frameworkset.util.StringUtil;
 
 /**

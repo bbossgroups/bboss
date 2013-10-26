@@ -6,7 +6,6 @@
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/bboss-aop.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/bboss-mvc.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/cglib-nodep-2.2.jar"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/cms.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/ditchnet-tabs-taglib.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/ecs-1.4.2.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/frameworkset-pool.jar"/>

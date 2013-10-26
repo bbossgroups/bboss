@@ -1,0 +1,58 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<HTML>
+<HEAD>
+<!--
+ HTMLParser Library $Name: v1_5 $ - A java-based parser for HTML
+ http://sourceforge.org/projects/htmlparser
+ Copyright (C) 2004 Somik Raha
+
+ Revision Control Information
+
+ $Source: /cvsroot/htmlparser/htmlparser/src/org/htmlparser/nodeDecorators/package.html,v $
+ $Author: derrickoswald $
+ $Date: 2005/04/10 23:20:43 $
+ $Revision: 1.2 $
+
+ This library is free software; you can redistribute it and/or
+ modify it under the terms of the GNU Lesser General Public
+ License as published by the Free Software Foundation; either
+ version 2.1 of the License, or (at your option) any later version.
+
+ This library is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ Lesser General Public License for more details.
+
+ You should have received a copy of the GNU Lesser General Public
+ License along with this library; if not, write to the Free Software
+ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+-->
+<TITLE>Node Decorators Package</TITLE>
+</HEAD>
+<BODY>
+The nodeDecorators package contains classes that use the Decorator pattern.
+<p><b>Deprecated.</b>&nbsp;<i>Use either prototypes or dynamic proxies instead.<br>
+Use either direct subclasses of the appropriate node and set them on the
+{@link org.htmlparser.PrototypicalNodeFactory PrototypicalNodeFactory},
+or use a dynamic proxy implementing the required node type interface.</i></p>
+<p>The nodeDecorators package contains example decorators that alter node behaviour.
+For example, the DecodingNode class overrides the toPlainTextString() method
+of all nodes it wraps and applies the Translate class decode() method to the
+original node output:
+<pre>
+StringBuffer content = new StringBuffer (1024);
+StringNodeFactory factory = new StringNodeFactory ();
+factory.setDecode (true);
+createParser ("http://whatever");
+parser.setNodeFactory (factory);
+NodeIterator iterator = parser.elements ();
+while (iterator.hasMoreNodes ())
+    content.append (iterator.nextNode ().toPlainTextString ());
+System.out.println (content.toString ());
+</pre>
+Decorators are a powerful way of performing the same operation on every node.</p>
+@see org.htmlparser.StringNodeFactory
+@see org.htmlparser.nodeDecorators.AbstractNodeDecorator
+</BODY>
+</HTML>

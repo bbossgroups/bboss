@@ -17,7 +17,6 @@
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/commons-io-2.0.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/derby.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/derbyclient.jar"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/cms.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/frameworkset.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/ecs-1.4.2.jar"/>
 	<classpathentry kind="lib" path="/bboss-mvc/lib-compile/jsp-api.jar"/>

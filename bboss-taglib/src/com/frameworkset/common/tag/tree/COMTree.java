@@ -46,6 +46,8 @@ import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.PageContext;
 
 import org.apache.log4j.Logger;
+import org.frameworkset.security.AccessControlInf;
+import org.frameworkset.security.SecurityUtil;
 
 import com.frameworkset.common.tag.BaseTag;
 import com.frameworkset.common.tag.tree.impl.Tree;
@@ -55,7 +57,6 @@ import com.frameworkset.common.tag.tree.itf.IExpandListenerAdapter;
 import com.frameworkset.common.tag.tree.itf.ISelectListener;
 import com.frameworkset.common.tag.tree.itf.ITree;
 import com.frameworkset.common.tag.tree.itf.ITreeNode;
-import com.frameworkset.platform.security.AccessControl;
 
 
 
@@ -73,7 +74,7 @@ public abstract class COMTree extends Tree {
      */
     protected transient PageContext pageContext;
 
-    protected transient AccessControl accessControl = null;
+    protected transient AccessControlInf accessControl = null;
 
     protected transient HttpServletRequest request = null;
     //(HttpServletRequest) pageContext.getRequest();
@@ -137,12 +138,13 @@ public abstract class COMTree extends Tree {
              */
             if(BaseTag.ENABLE_TAG_SECURITY)
             {   
-                accessControl = AccessControl.getAccessControl();
-                if(accessControl == null)
-                {
-                	accessControl = AccessControl.getInstance();
-                	accessControl.checkAccess(request,response,out,false);
-                }
+//                accessControl = AccessControl.getAccessControl();
+//                if(accessControl == null)
+//                {
+//                	accessControl = AccessControl.getInstance();
+//                	accessControl.checkAccess(request,response,out,false);
+//                }
+            	accessControl = SecurityUtil.getAccessControl(request, response, out);
             }
 
         }

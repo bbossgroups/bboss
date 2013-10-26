@@ -29,7 +29,8 @@ import org.apache.log4j.Logger;
 import com.frameworkset.common.tag.exception.FormulaException;
 import com.frameworkset.common.tag.pager.model.Field;
 import com.frameworkset.common.tag.pager.model.Formula;
-import com.frameworkset.platform.cms.driver.htmlconverter.CmsLinkProcessor;
+import com.frameworkset.platform.cms.driver.htmlconverter.CmsLinkProcessorInf;
+import com.frameworkset.platform.cms.driver.htmlconverter.CmsLinkProcessorUtil;
 import com.frameworkset.platform.cms.driver.jsp.CMSServletRequest;
 import com.frameworkset.platform.cms.driver.jsp.InternalImplConverter;
 import com.frameworkset.util.RegexUtil;
@@ -248,11 +249,14 @@ public class CellTag  extends PagerTagSupport {
 			{
 				
 				String encoding = "";
-				CmsLinkProcessor processor = new CmsLinkProcessor(null,
-						  CmsLinkProcessor.REPLACE_LINKS,
+//				CmsLinkProcessorInf processor = new CmsLinkProcessor(null,
+//						CmsLinkProcessorInf.REPLACE_LINKS,
+//						  encoding);
+				CmsLinkProcessorInf processor = CmsLinkProcessorUtil.getCmsLinkProcessor(null,
+						CmsLinkProcessorInf.REPLACE_LINKS,
 						  encoding);
-				processor.setHandletype(CmsLinkProcessor.PROCESS_CONTENT);
 				
+				processor.setHandletype(CmsLinkProcessorInf.PROCESS_CONTENT);
 				content = processor.process(content,encoding);
 			}
 			

@@ -7,11 +7,10 @@ import java.util.Map;
 
 import javax.servlet.jsp.PageContext;
 
+
+
 import com.frameworkset.common.tag.tree.COMTree;
 import com.frameworkset.common.tag.tree.itf.ITreeNode;
-import com.frameworkset.platform.cms.templatemanager.FileResource;
-import com.frameworkset.platform.cms.templatemanager.TemplateManagerException;
-import com.frameworkset.platform.cms.util.FileUtil;
 
 public class FolderTree extends COMTree {
 
@@ -37,7 +36,7 @@ public class FolderTree extends COMTree {
 
 	}
 	public List getDirectoryResource(String uri)
-			throws TemplateManagerException {
+			 {
 		
 		List fileResources = new ArrayList();
 		File[] subFiles = FileUtil.getSubDirectories(rootPath, uri);
@@ -90,7 +89,7 @@ public class FolderTree extends COMTree {
 			
 			
 			fileresources = getDirectoryResource(parentPath);
-		} catch (TemplateManagerException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		

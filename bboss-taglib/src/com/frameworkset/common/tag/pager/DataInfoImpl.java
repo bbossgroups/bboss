@@ -38,9 +38,11 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.frameworkset.security.AccessControlInf;
+import org.frameworkset.security.SecurityUtil;
+
 import com.frameworkset.common.poolman.SQLParams;
 import com.frameworkset.common.tag.BaseTag;
-import com.frameworkset.platform.security.AccessControl;
 import com.frameworkset.util.ListInfo;
 
 /**
@@ -65,7 +67,7 @@ public abstract class DataInfoImpl implements DataInfo
     long offSet;
 	protected transient HttpServletRequest request = null;
 	protected transient  HttpSession session = null;
-    protected transient  AccessControl accessControl = null;
+    protected transient  AccessControlInf accessControl = null;
 	protected boolean listMode = false;
 	boolean first;
 
@@ -94,12 +96,13 @@ public abstract class DataInfoImpl implements DataInfo
 		 */
 		if(BaseTag.ENABLE_TAG_SECURITY)
 		{
-                    accessControl = AccessControl.getAccessControl();
-                    if(accessControl == null)
-                    {
-                    	accessControl = AccessControl.getInstance();
-                    	accessControl.checkAccess(request,null,null,false);
-                    }
+//                    accessControl = AccessControl.getAccessControl();
+//                    if(accessControl == null)
+//                    {
+//                    	accessControl = AccessControl.getInstance();
+//                    	accessControl.checkAccess(request,null,null,false);
+//                    }
+			accessControl = SecurityUtil.getAccessControl(request, null, null);
 		}
 		listInfo = null;
 		this.listMode = listMode;

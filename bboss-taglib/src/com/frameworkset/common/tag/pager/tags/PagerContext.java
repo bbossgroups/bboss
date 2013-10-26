@@ -22,19 +22,14 @@ import org.frameworkset.util.ClassUtil.PropertieDescription;
 import com.frameworkset.common.poolman.SQLExecutor;
 import com.frameworkset.common.poolman.SQLParams;
 import com.frameworkset.common.poolman.SetSQLParamException;
-import com.frameworkset.common.tag.CMSTagUtil;
-import com.frameworkset.common.tag.html.CMSListTag;
 import com.frameworkset.common.tag.pager.DataInfo;
 import com.frameworkset.common.tag.pager.DefaultDataInfoImpl;
 import com.frameworkset.common.tag.pager.IgnoreParam;
 import com.frameworkset.common.tag.pager.ListInfoDataInfoImpl;
 import com.frameworkset.common.tag.pager.ObjectDataInfoImpl;
 import com.frameworkset.common.tag.pager.parser.PagerTagExport;
-import com.frameworkset.platform.cms.driver.context.ContentContext;
-import com.frameworkset.platform.cms.driver.context.PagineContext;
-import com.frameworkset.platform.cms.driver.dataloader.CMSBaseListData;
-import com.frameworkset.platform.cms.driver.dataloader.CMSDataLoadException;
-import com.frameworkset.platform.cms.driver.dataloader.CMSDetailDataLoader;
+import com.frameworkset.platform.cms.driver.callback.CMSCallBack;
+import com.frameworkset.platform.cms.driver.callback.CMSCallBackUtil;
 import com.frameworkset.platform.cms.driver.jsp.CMSServletRequest;
 import com.frameworkset.platform.cms.driver.jsp.InternalImplConverter;
 import com.frameworkset.util.ListInfo;
@@ -1237,27 +1232,29 @@ public class PagerContext
 
 	final void initContext() throws LoadDataException {
 		String offsetParam = null;
-		PagineContext context = null;
+//		PagineContext context = null;
 		/**
 		 * 如果是内容管理系统发布频道概览的情况，offset参数通过发布的上下文传提过来
 		 */
 		CMSServletRequest cmsrequest = InternalImplConverter
 				.getInternalRequest(request);
+		CMSCallBack cmsCallBack = null;
 		if (cmsrequest != null && !ListMode()) {
-
-			context = (PagineContext) cmsrequest.getContext();
-			if (!(context instanceof ContentContext)) /**
-			 * 
-			 * 如果当前环境是在发布文档，则文档中不允许进行概览分页，但是在项目中有的情况下用分页的属性来获取文档的头几条 这种情况是不允许的
-			 */
-			{
-				context.setMaxPageItems(this.getMaxPageItems());
-				offsetParam = context.getOffset() + "";
-			} else {
-				context.getPublishMonitor().addFailedMessage(
-						"文档细览页面中的概览标签不允许将isList设置为false",
-						context.getPublisher());
-			}
+			cmsCallBack = CMSCallBackUtil.getCMSCallBack(cmsrequest);
+			offsetParam = cmsCallBack.initContext(this.getMaxPageItems());
+//			context = (PagineContext) cmsrequest.getContext();
+//			if (!(context instanceof ContentContext)) /**
+//			 * 
+//			 * 如果当前环境是在发布文档，则文档中不允许进行概览分页，但是在项目中有的情况下用分页的属性来获取文档的头几条 这种情况是不允许的
+//			 */
+//			{
+//				context.setMaxPageItems(this.getMaxPageItems());
+//				offsetParam = context.getOffset() + "";
+//			} else {
+//				context.getPublishMonitor().addFailedMessage(
+//						"文档细览页面中的概览标签不允许将isList设置为false",
+//						context.getPublisher());
+//			}
 		} else {
 			offsetParam = request.getParameter(idOffsetParam);
 			if (offsetParam == null) {
@@ -1288,17 +1285,21 @@ public class PagerContext
 //						setDataInfo();
 					}
 				}
-				
-				if (context != null && !(context instanceof ContentContext)) {
-					context.setOffset(offset);
-					/**
-					 * 如果当前的页码和offset有变化需要更新context中的值
-					 */
-					context.setCurrentPageNumber((int) newPageCount);
-					context.setTotalSize(this.getTotalSize());
-				} else if (context instanceof ContentContext) {
-					// context.getPublishMonitor().addFailedMessage("文档细览页面中的概览标签不允许将isList设置为false",context.getPublisher());
+				if(cmsCallBack == null && cmsrequest != null)
+				{
+					cmsCallBack = CMSCallBackUtil.getCMSCallBack(cmsrequest);
+					cmsCallBack.initContextData(offset,(int)newPageCount, this.getTotalSize());
 				}
+//				if (context != null && !(context instanceof ContentContext)) {
+//					context.setOffset(offset);
+//					/**
+//					 * 如果当前的页码和offset有变化需要更新context中的值
+//					 */
+//					context.setCurrentPageNumber((int) newPageCount);
+//					context.setTotalSize(this.getTotalSize());
+//				} else if (context instanceof ContentContext) {
+//					// context.getPublishMonitor().addFailedMessage("文档细览页面中的概览标签不允许将isList设置为false",context.getPublisher());
+//				}
 
 				// if (isOffset) 于2004/4/30注释
 				itemCount = offset;
@@ -1378,6 +1379,7 @@ public class PagerContext
 	 *            接口在配置文件对应的名称属性
 	 */
 	public void setDataInfo() throws LoadDataException {
+	
 		
 		if (this.tag instanceof PagerTag) {
 			String dataType = this.getData();
@@ -1509,47 +1511,50 @@ public class PagerContext
 			}
 			
 			
-			else if (this.tag instanceof CMSListTag) {
-				CMSListTag cmsListTag = (CMSListTag) tag;
-				CMSBaseListData dataInfo = CMSTagUtil
-						.getCMSBaseListData(cmsListTag.getDatatype());
-				/**
-				* 最新cms需要放开注释的代码 
-				* https://github.com/bbossgroups/bboss-cms.git
-				* */
-				Map<String,Object> params = cmsListTag.getParams();
-				if(params != null)
-				{
-					if(!params.containsKey("doctype") && cmsListTag.getDocType() != null)
-					{
-						params.put("doctype", cmsListTag.getDocType() );
-					}
-					else 
-					{
-						
-					}
-					dataInfo.setOutlineInfo(cmsListTag.getSite(), cmsListTag
-							.getChannel(), cmsListTag.getCount(), params);
-
-				
-				}
-				else
-				{
-					dataInfo.setOutlineInfo(cmsListTag.getSite(), cmsListTag
-							.getChannel(), cmsListTag.getCount(), cmsListTag.getDocType());
-				}
-				/**
-				* 旧的cms使用以下代码，后续需要屏蔽dataInfo.setOutlineInfo(cmsListTag.getSite(), cmsListTag
-						.getChannel(), cmsListTag.getCount());
-				
-				dataInfo.setOutlineInfo(cmsListTag.getSite(), cmsListTag
-						.getChannel(), cmsListTag.getCount());*/
-				if (cmsListTag.getDocumentid() != null)
-					dataInfo.setDocumentid(cmsListTag.getDocumentid());
-
-				dataInfo.initial(getSortKey(), this.desc, getOffset(),
-						getMaxPageItems(), this.ListMode(), request);
-				this.dataInfo = dataInfo;
+			else if (CMSCallBackUtil.isCMSListTag(tag)) {
+				CMSCallBack callback = CMSCallBackUtil.getCMSCallBack();
+				this.dataInfo = callback.getCMSDataInfo(tag,request,getSortKey(), this.desc, getOffset(),
+						getMaxPageItems(), this.ListMode());
+//				CMSListTag cmsListTag = (CMSListTag) tag;
+//				CMSBaseListData dataInfo = CMSTagUtil
+//						.getCMSBaseListData(cmsListTag.getDatatype());
+//				/**
+//				* 最新cms需要放开注释的代码 
+//				* https://github.com/bbossgroups/bboss-cms.git
+//				* */
+//				Map<String,Object> params = cmsListTag.getParams();
+//				if(params != null)
+//				{
+//					if(!params.containsKey("doctype") && cmsListTag.getDocType() != null)
+//					{
+//						params.put("doctype", cmsListTag.getDocType() );
+//					}
+//					else 
+//					{
+//						
+//					}
+//					dataInfo.setOutlineInfo(cmsListTag.getSite(), cmsListTag
+//							.getChannel(), cmsListTag.getCount(), params);
+//
+//				
+//				}
+//				else
+//				{
+//					dataInfo.setOutlineInfo(cmsListTag.getSite(), cmsListTag
+//							.getChannel(), cmsListTag.getCount(), cmsListTag.getDocType());
+//				}
+//				/**
+//				* 旧的cms使用以下代码，后续需要屏蔽dataInfo.setOutlineInfo(cmsListTag.getSite(), cmsListTag
+//						.getChannel(), cmsListTag.getCount());
+//				
+//				dataInfo.setOutlineInfo(cmsListTag.getSite(), cmsListTag
+//						.getChannel(), cmsListTag.getCount());*/
+//				if (cmsListTag.getDocumentid() != null)
+//					dataInfo.setDocumentid(cmsListTag.getDocumentid());
+//
+//				dataInfo.initial(getSortKey(), this.desc, getOffset(),
+//						getMaxPageItems(), this.ListMode(), request);
+//				this.dataInfo = dataInfo;
 				// 如果是分页模式设置记录总数
 				if (!ListMode()) {
 					setItems(dataInfo.getItemCount());
@@ -1659,22 +1664,26 @@ public class PagerContext
 		} else if (scope.equals(CELL_SCOPE)) {
 			if(request instanceof CMSServletRequest)
 			{
+				
 				CMSServletRequest cmsRequest = (CMSServletRequest) request;
-				// CMSDetailDataLoader dataLoader =
-				// (CMSDetailDataLoader)request.getAttribute("dataset."
-				// + cmsRequest.getContext().getID());
-	
-				CMSDetailDataLoader dataLoader = cmsRequest.getContext()
-						.getCMSDetailDataLoader();
-				try {
-					if (dataLoader == null)
-						return;
-					data = dataLoader.getContent((ContentContext) cmsRequest
-							.getContext());
-				} catch (CMSDataLoadException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				CMSCallBack callback = CMSCallBackUtil.getCMSCallBack(cmsRequest);
+				data = callback.getCMSCellData();
+						
+//				// CMSDetailDataLoader dataLoader =
+//				// (CMSDetailDataLoader)request.getAttribute("dataset."
+//				// + cmsRequest.getContext().getID());
+//	
+//				CMSDetailDataLoader dataLoader = cmsRequest.getContext()
+//						.getCMSDetailDataLoader();
+//				try {
+//					if (dataLoader == null)
+//						return;
+//					data = dataLoader.getContent((ContentContext) cmsRequest
+//							.getContext());
+//				} catch (CMSDataLoadException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
 			}
 			else
 			{

@@ -210,7 +210,7 @@
 				<antcall target="svn-update-procedure">
 					<param name="sourcedir" value="${bboss-taglib}/distrib" />
 					<param name="filedir" value="@{destdir}" />
-					<param name="files" value="frameworkset.jar,ditchnet-tabs-taglib.jar" />
+					<param name="files" value="frameworkset.jar,ditchnet-tabs-taglib.jar,htmlparser-1.5-20050925.jar" />
 				</antcall>
 			</sequential>
 			
@@ -499,9 +499,9 @@ bbossaop<-cas server [bboss-aop.jar]
 			</for>
 		</target>
 	<target name="distrib-bboss-mvc-resources" description="distrib-bboss-mvc-resources">
-			<for list="${demoproject}/WebRoot/WEB-INF,${bbossupload}/WebRoot/WEB-INF,${mvc}/WebRoot/WEB-INF,${xmlrequest}/WebRoot/WEB-INF" param="destdir">
+			<!--<for list="${demoproject}/WebRoot/WEB-INF,${bbossupload}/WebRoot/WEB-INF,${mvc}/WebRoot/WEB-INF,${xmlrequest}/WebRoot/WEB-INF" param="destdir">
 				<sequential>
-					<echo>@{destdir}-------------------------------</echo>
+					<echo>@{destdir}</echo>
 					<antcall target="svn-update-procedure">
 						<param name="sourcedir" value="${bboss-mvc}/WebRoot/WEB-INF" />
 						<param name="filedir" value="@{destdir}" />
@@ -511,14 +511,14 @@ bbossaop<-cas server [bboss-aop.jar]
 			</for>
 			<for list="${demoproject}/WebRoot/include,${bbossupload}/WebRoot/include,${mvc}/WebRoot/include,${xmlrequest}/WebRoot/include" param="destdir">
 				<sequential>
-					<echo>@{destdir}-------------------------------</echo>
+					<echo>@{destdir}</echo>
 					<antcall target="svn-update-procedure">
 						<param name="sourcedir" value="${bboss-mvc}/WebRoot/include" />
 						<param name="filedir" value="@{destdir}" />
 						<param name="files" value="jquery-1.4.2.min.js,jquery.easyui.min.js,pager.js,pager_custom.js" />
 					</antcall>
 				</sequential>
-			</for>
+			</for>-->
 		</target>	
 		
 

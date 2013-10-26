@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!--
+ HTMLParser Library $Name: v1_5 $ - A java-based parser for HTML
+ http://sourceforge.org/projects/htmlparser
+ Copyright (C) 2004 Derrick Oswald
+
+ Revision Control Information
+
+ $Source: /cvsroot/htmlparser/htmlparser/src/org/htmlparser/http/package.html,v $
+ $Author: derrickoswald $
+ $Date: 2005/04/10 23:20:43 $
+ $Revision: 1.2 $
+
+ This library is free software; you can redistribute it and/or
+ modify it under the terms of the GNU Lesser General Public
+ License as published by the Free Software Foundation; either
+ version 2.1 of the License, or (at your option) any later version.
+
+ This library is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ Lesser General Public License for more details.
+
+ You should have received a copy of the GNU Lesser General Public
+ License along with this library; if not, write to the Free Software
+ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+-->
+</head>
+<body>
+The http package is responsible for HTTP connections to servers.
+The Lexer and Parser provide many ways to supply text to be parsed,
+but this package only deals with cases where a URL is supplied as a
+string, with the expectation that the Lexer or Parser will perform
+the HTTP connection.
+<p>The {@link org.htmlparser.http.ConnectionManager} class adds
+<ul>
+<li>cookie</li>
+<li>proxy</li>
+<li>password protected URL</li>
+</ul>
+capabilities when accessing the internet via the 
+<a href="http://www.ietf.org/rfc/rfc2616.txt">HTTP protocol</a>.
+Each of these capabilities requires conditioning the HTTP connection.
+<p>The {@link org.htmlparser.http.ConnectionMonitor} interface is a callback
+mechanism for the ConnectionManager to notify an interested application
+when an HTTP connection is made. Example uses may include conditioning the
+connection further, accessing HTTP header information, or providing reporting
+or statistical functions. Callbacks are not performed for FileURLConnections,
+which are also handled by the connection manager.
+<p>The {@link org.htmlparser.http.Cookie} class is a container for
+cookie data received and sent in HTTP requests and responses. It may be
+necessary to prime the ConnectionManager with cookies received via a
+login procedure in order to access protected HTML content.
+<p>
+A typical use of this package, might look something like this:
+<pre>
+ConnectionManager manager = Parser.getConnectionManager ();
+// set up proxying
+manager.setProxyHost ("proxyhost.mycompany.com");
+manager.setProxyPort (8888);
+manager.setProxyUser ("FredBarnes");
+manager.setProxyPassword ("secret");
+// set up cookies
+Cookie cookie = new Cookie ("USER", "FreddyBaby");
+manager.setCookie (cookie, "www.freshmeat.net");
+cookie = new Cookie ("PHPSESSID", "e5dbeb6152e70d99427f2458d8969f8b");
+cookie.setDomain (".freshmeat.net");
+manager.setCookie (cookie, null);
+// set up security to access a password protected URL
+manager.setUser ("FredB");
+manager.setPassword ("holy$cow");
+// set up an inner class for callbacks
+ConnectionMonitor monitor = new ConnectionMonitor ()
+    {
+        public void preConnect (HttpURLConnection connection)
+ 	{
+            System.out.println (ConnectionManager.getRequestHeader (connection));
+	}
+	public void postConnect (HttpURLConnection connection)
+	{
+            System.out.println (ConnectionManager.getResponseHeader (connection));
+	}
+    };
+manager.setMonitor (monitor);
+// perform the connection
+Parser parser = new Parser ("http://frehmeat.net");
+</pre>
+The ConnectionManager used by the Parser class is actually held by the 
+{@link org.htmlparser.lexer.Page#mConnectionManager Page} class.
+It is accessible from the Parser (or the Page class) via
+{@link org.htmlparser.Parser#getConnectionManager getConnectionManager()}.
+It is a static (singleton) instance so that subsequent connections made by the
+parser will use the contents of the cookie jar from previous connections.
+By default, cookie processing is not enabled. It can be enabled by either
+setting a cookie or using
+{@link org.htmlparser.http.ConnectionManager#setCookieProcessingEnabled setCookieProcessingEnabled()}.
+</body>
+</html>

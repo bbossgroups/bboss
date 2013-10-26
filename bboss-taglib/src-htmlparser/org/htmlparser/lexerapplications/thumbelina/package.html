@@ -1,0 +1,78 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<HTML>
+<HEAD>
+<!--
+ HTMLParser Library $Name: v1_5 $ - A java-based parser for HTML
+ http://sourceforge.org/projects/htmlparser
+ Copyright (C) 2004 Somik Raha
+
+ Revision Control Information
+
+ $Source: /cvsroot/htmlparser/htmlparser/src/org/htmlparser/lexerapplications/thumbelina/package.html,v $
+ $Author: derrickoswald $
+ $Date: 2004/01/02 16:24:54 $
+ $Revision: 1.2 $
+
+ This library is free software; you can redistribute it and/or
+ modify it under the terms of the GNU Lesser General Public
+ License as published by the Free Software Foundation; either
+ version 2.1 of the License, or (at your option) any later version.
+
+ This library is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ Lesser General Public License for more details.
+
+ You should have received a copy of the GNU Lesser General Public
+ License along with this library; if not, write to the Free Software
+ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+-->
+<TITLE>Thumbelina</TITLE>
+</HEAD>
+<BODY>
+Extract the images behind thumbnail images.
+This package is a demonstration of filtering the tags that are produced by the
+Lexer package.  In this case the idea is to find links to known types of image
+file (.gif, .png and .jpg) that have as the link text a reference to a smaller
+or lower resolution image, often called a thumbnail image; hence the name.
+<p>
+Besides a lot of support code to provide a user interface, the heart of the
+process is found in <code>Thumbelina.extractImageLinks()</code>, which has a wee
+state machine that notes when an &lt;IMG&gt; tag is discovered within the body
+of an &lt;A&gt;&lt;/A&gt; tag pair. This triggers a fetch of the
+<code>HREF</code> (image file).
+<p>
+The fetch is performed in the background by the <code>ToolKit</code> image
+loading code which runs 4 threads (on my machine). When an image is received it
+is added to the list of pending images. This list is drained by the
+<code>Sequencer</code> as it presents images at fixed intervals.
+<p>
+The <code>TileSet</code> and <code>Picture</code> classes provide a framework
+for displaying the various sizes of image that arrive in a random way, while
+still being able to repaint the panel when required.
+<p>
+The images are only retained in memory long enough to get covered over by
+subsequent images, but in general, the manipulation of images is a memory
+intensive task which requires a higher than normal limit on the maximum
+heap memory, i.e. use the <code>-Xms256M</code> command line switch to
+avoid <code>java.lang.OutOfMemoryError</code> messages.
+<p>
+The rest is just the UI code, that can be altered by intrepid programmers as
+they see fit.
+<p>
+<b>TODO</b>
+<li>Fix race condition that background thread adds new URL's after a reset.</li>
+<li>Send output to log window instead of URL's in titlebar.</li>
+<li>Add pending list items as greyed out items to the history list.</li>
+<li>Make status bar a pipeline with valves and limit switches (better on/off buttons).</li>
+<li>Fix race condition that sometimes doesn't resize PicturePanel with frame.</li>
+<li>Tree view.</li>
+<li>Drag and drop support.</li>
+<li>JavaHelp.</li>
+<li>Allow filter configuration.</li>
+<li>Handle OutOfMemoryError more gracefully (trap System.err?).</li>
+<li>Add more background threads.</li>
+<li>Find out how to honour reset on the image fetcher threads.</li>
+</BODY>
+</HTML>
