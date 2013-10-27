@@ -28,7 +28,7 @@ import org.junit.Test;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2008</p>
- * @Date 2009-11-9 ÏÂÎç04:50:08
+ * @Date 2009-11-9 ä¸‹åˆ04:50:08
  * @author biaoping.yin
  * @version 1.0
  */
@@ -70,7 +70,7 @@ public class TestClient extends TestBase
     }
     
     /**
-     * ²âÊÔµØÖ·ÊÇ·ñ¿ÉÁ¬Í¨
+     * æµ‹è¯•åœ°å€æ˜¯å¦å¯è¿é€š
      */
     public static void testValidateAddress()
     {
@@ -103,37 +103,37 @@ public class TestClient extends TestBase
 //      TestDamone t = new TestDamone();
 //      t.start();
         /**
-         * ²âÊÔµ¥Ïß³Ìµ÷ÓÃ
+         * æµ‹è¯•å•çº¿ç¨‹è°ƒç”¨
          */
 //      testWebserviceRPC();
 //      testWebserviceRPC();
 //      testWebserviceAuthenticatedFailedRPC();
         
         /**
-         * ÎŞ·µ»ØÖµ²âÊÔ
+         * æ— è¿”å›å€¼æµ‹è¯•
          */
 //        testNoReturnWebserviceRPC();
 //    	testSameAddress();
             /**
-             * ²âÊÔ¶àÏß³Ìµ÷ÓÃ
+             * æµ‹è¯•å¤šçº¿ç¨‹è°ƒç”¨
              */
 //      testMutiThreadWebserviceRPC();
         
         /**
-         * Ğ£ÑéµØÖ·ÊÇ·ñ¿ÉÁ¬Í¨
+         * æ ¡éªŒåœ°å€æ˜¯å¦å¯è¿é€š
          */
 //      testValidateAddress();
         /**
-         * ²âÊÔWebservice¶à²¥µ÷ÓÃ
+         * æµ‹è¯•Webserviceå¤šæ’­è°ƒç”¨
          */
 //      testMuticastWebserviceRPC(); 
 
         /**
-         * ²âÊÔ±¾µØµ÷ÓÃ
+         * æµ‹è¯•æœ¬åœ°è°ƒç”¨
          */
 //      testWebserviceLocal();
         /**
-         * ²âÊÔWebserviceÁ¬½ÓÆ÷´´½¨¹¦ÄÜ
+         * æµ‹è¯•Webserviceè¿æ¥å™¨åˆ›å»ºåŠŸèƒ½
          */
 //      testClinentTransport();
 //           System.exit(0);
@@ -152,7 +152,7 @@ public class TestClient extends TestBase
                 System.out.println("testInf.getCount():" + i + " = "+testInf.getCount());
             
             long end = System.currentTimeMillis();
-            System.out.println("ÏûºÄÊ±¼ä£º" + (end - start) / 1000 + "Ãë");
+            System.out.println("æ¶ˆè€—æ—¶é—´ï¼š" + (end - start) / 1000 + "ç§’");
             
             
             
@@ -169,7 +169,7 @@ public class TestClient extends TestBase
                 System.out.println("testInf.getCount():" + i + " = "+testInf.getCount());
             
             long end = System.currentTimeMillis();
-            System.out.println("ÏûºÄÊ±¼ä£º" + (end - start) / 1000 + "Ãë");
+            System.out.println("æ¶ˆè€—æ—¶é—´ï¼š" + (end - start) / 1000 + "ç§’");
             
             
             
@@ -183,10 +183,10 @@ public class TestClient extends TestBase
             long start = System.currentTimeMillis();
             
             for(int i = 0; i < 10; i ++)
-                testInf.sayHello("Òü±êÆ½");
+                testInf.sayHello("å°¹æ ‡å¹³");
             
             long end = System.currentTimeMillis();
-            System.out.println("ÏûºÄÊ±¼ä£º" + (end - start) / 1000 + "Ãë");
+            System.out.println("æ¶ˆè€—æ—¶é—´ï¼š" + (end - start) / 1000 + "ç§’");
             
             
             
@@ -203,7 +203,7 @@ public class TestClient extends TestBase
 //                System.out.println("testInf.getCount():" + i + " = "+testInf.getCount());
 //            
 //            long end = System.currentTimeMillis();
-//            System.out.println("ÏûºÄÊ±¼ä£º" + (end - start) / 1000 + "Ãë");
+//            System.out.println("æ¶ˆè€—æ—¶é—´ï¼š" + (end - start) / 1000 + "ç§’");
         for(int i = 0; i < 10; i ++)
         {
             Thread t = new Thread(new RunWebserviceRPC(i));
@@ -230,7 +230,7 @@ public class TestClient extends TestBase
                 System.out.println("testInf.getCount():" + i + " = "+testInf.getCount());
             
             long end = System.currentTimeMillis();
-            System.out.println("ÈÎÎñ¡¾" + i + "¡¿ÏûºÄÊ±¼ä£º" + (end - start) / 1000 + "Ãë");
+            System.out.println("ä»»åŠ¡ã€" + i + "ã€‘æ¶ˆè€—æ—¶é—´ï¼š" + (end - start) / 1000 + "ç§’");
             
         }
         
@@ -242,7 +242,7 @@ public class TestClient extends TestBase
     }
     
     /**
-     * ¶à²¥·şÎñµ÷ÓÃ
+     * å¤šæ’­æœåŠ¡è°ƒç”¨
      */
     @Test
     public void testMuticastWebserviceRPC()
@@ -263,7 +263,7 @@ public class TestClient extends TestBase
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-            //µÈ¼ÛµÄµ÷ÓÃ·½·¨
+            //ç­‰ä»·çš„è°ƒç”¨æ–¹æ³•
             
 //            Object ret_8080 = context.getRPCResult("http://localhost:8080/WebRoot/cxfservices", ret,Target.BROADCAST_TYPE_WEBSERVICE);
 //            Object ret_8088 = context.getRPCResult("http://localhost:8088/WebRoot/cxfservices", ret,Target.BROADCAST_TYPE_WEBSERVICE);

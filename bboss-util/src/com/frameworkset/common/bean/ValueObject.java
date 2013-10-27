@@ -17,12 +17,12 @@ import java.io.Serializable;
 public abstract class ValueObject implements Serializable
 {	
 	/**
-	 * »ñÈ¡Öµ¶ÔÏóµÄ¹Ø¼ü×Ö
-	 * @return ·µ»ØÖµ¶ÔÏóµÄ¹Ø¼ü×Ö
+	 * è·å–å€¼å¯¹è±¡çš„å…³é”®å­—
+	 * @return è¿”å›å€¼å¯¹è±¡çš„å…³é”®å­—
 	 */
 	public abstract Object getKey();
 	/**
-	 * ÉèÖÃÖµ¶ÔÏóµÄ¹Ø¼ü×Ö 
+	 * è®¾ç½®å€¼å¯¹è±¡çš„å…³é”®å­— 
 	 */	
 	public abstract void setKey(Object key);
 	

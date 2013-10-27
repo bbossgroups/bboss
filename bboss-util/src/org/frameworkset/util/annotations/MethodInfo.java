@@ -50,7 +50,7 @@ import com.frameworkset.util.ValueObjectUtil;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2010-10-16 ����07:26:01
+ * @Date 2010-10-16 下午07:26:01
  * @author biaoping.yin
  * @version 1.0
  */
@@ -58,11 +58,11 @@ public class MethodInfo {
 	private Method method;
 	
 	/**
-	 * �Ƿ��Ƿ�ҳ����
+	 * 是否是分页方法
 	 */
 	private boolean pagerMethod = false;
 	/**
-	 * �Ƿ�ָ��ҳ���С����
+	 * 是否指定页面大小参数
 	 */
 	private boolean definePageSize = false;
 	
@@ -83,27 +83,27 @@ public class MethodInfo {
 	private boolean[] databind;
 	private String[] baseurls ;
 	/**
-	 * ������עmvc����������ǿ��Ҫ����ж�̬����У�飬����ͻ�������û�и������ƻ��������Ѿ����ϣ���ôֱ�Ӿܾ�
-	 * ���� 
+	 * 用来标注mvc控制器方法强制要求进行动态令牌校验，如果客户端请求没有附带令牌或者令牌已经作废，那么直接拒绝
+	 * 请求 
 	 * 
-	 * ��ֹ��վ�����������ز��� bboss��ֹ��վ����������Ļ������£� ���ö�̬���ƺ�session���ϵķ�ʽ�����ͻ������ƣ�һ���������һ��Ψһ���� 
-				����ʶ����ÿͻ������ƺͷ����session��ʶ��ϵķ�ʽ�����б�����ͻ������ƺͷ����������ȷƥ�䣬���������ʣ�������Ϊ�û�Ϊ�Ƿ��û�����ֹ�û����ʲ���ת�� 
-				redirectpath������Ӧ�ĵ�ַ��Ĭ��Ϊ/login.jsp�� ���ƴ洢����ͨ������tokenstoreָ�����������֣��ڴ�洢��session�洢��Ĭ��Ϊsession�洢��������ʧЧ��ƥ�������ʧЧ�����߳�ʱʧЧ����ϵͳ�Զ����ʧЧ�����ƣ�����session��ʽ 
-				�洢����ʱ������ͻ���ҳ��û������session����ô���ƻ��ǻ�洢���ڴ��С� �����������ڣ��ͻ��˵������ڷ����������д����������ʧЧ��ƥ�������ʧЧ�����߳�ʱʧЧ����ϵͳ�Զ����ʧЧ�����ƣ� 
-				���ͻ��˲�û����ȷ�ύ���󣬻ᵼ�·�������ƴ����Ϊ�������ƣ���Ҫ��ʱ�����Щ �������ƣ�������ƴ洢��session�У���ô���Ƶ��������ں�session���������ڱ���һ�£��������������ƣ� 
-				������ƴ洢���ڴ��У���ô���Ƶ���������ƹ�������Լ���ʱɨ���������ʱɨ��ʱ����Ϊ��tokenscaninterval����ָ������λΪ���룬Ĭ��Ϊ30���ӣ��������ʱ����tokendualtime����ָ����Ĭ��Ϊ1��Сʱ 
-				����ͨ��enableToken��������ָ���Ƿ��������Ƽ����ƣ�true��⣬false����⣬Ĭ��Ϊfalse����� enableToken�Ƿ��������Ƽ����ƣ�true 
-				���ã�false �����ã�Ĭ��Ϊ������
+	 * 防止跨站请求过滤器相关参数 bboss防止跨站请求过滤器的机制如下： 采用动态令牌和session相结合的方式产生客户端令牌，一次请求产生一个唯一令牌 
+				令牌识别采用客户端令牌和服务端session标识混合的方式进行判别，如果客户端令牌和服务端令牌正确匹配，则允许访问，否则认为用户为非法用户并阻止用户访问并跳转到 
+				redirectpath参数对应的地址，默认为/login.jsp。 令牌存储机制通过参数tokenstore指定，包括两种，内存存储和session存储，默认为session存储，当令牌失效（匹配后立即失效，或者超时失效）后，系统自动清除失效的令牌；采用session方式 
+				存储令牌时，如果客户端页面没有启用session，那么令牌还是会存储在内存中。 令牌生命周期：客户端的令牌在服务器端留有存根，当令牌失效（匹配后立即失效，或者超时失效）后，系统自动清除失效的令牌； 
+				当客户端并没有正确提交请求，会导致服务端令牌存根变为垃圾令牌，需要定时清除这些 垃圾令牌；如果令牌存储在session中，那么令牌的生命周期和session的生命周期保持一致，无需额外清除机制； 
+				如果令牌存储在内存中，那么令牌的清除由令牌管理组件自己定时扫描清除，定时扫描时间间隔为由tokenscaninterval参数指定，单位为毫秒，默认为30分钟，存根保存时间由tokendualtime参数指定，默认为1个小时 
+				可以通过enableToken参数配置指定是否启用令牌检测机制，true检测，false不检测，默认为false不检测 enableToken是否启用令牌检测机制，true 
+				启用，false 不启用，默认为不启用
 	 */
 	private boolean requiredDToken = false;
 	
 	/**
-	 * ��ſ��Ʒ��������ķ�����������
-	 * �Ա���з����List<Object>���͵Ĳ��������ݰ�
+	 * 存放控制方法参数的泛型数据类型
+	 * 以便进行方便的List<Object>类型的参数的数据绑定
 	 * ParameterizedType
-	 * ���������ֱ�Ӻͷ����Ĳ���λ��������Ӧ��0,1,...,n
-	 * �����Ӧλ���ϵ���List<Object>���͵����ݣ���ô��ŵ�ֵ����Object�ľ�������
-	 * ������null
+	 * 数组的索引直接和方法的参数位置索引对应：0,1,...,n
+	 * 如果对应位置上的有List<Object>类型的数据，那么存放的值就是Object的具体类型
+	 * 否则存放null
 	 */
 //	private Class[] genericParameterTypes;
 	
@@ -464,7 +464,7 @@ public class MethodInfo {
 //				mutilMethodParamAnnotations.add(paramAnno);
 				break;
 			}
-			else if(annotation instanceof PagerParam)//��ҳ������Ϣ
+			else if(annotation instanceof PagerParam)//分页参数信息
 			{
 				this.setPagerMethod(true);
 				paramAnno  = new MethodParameter(method,parampostion);
@@ -683,8 +683,8 @@ public class MethodInfo {
 		ParameterNameDiscoverer parameterNameDiscoverer = ClassUtil.getParameterNameDiscoverer();
 		String[] temp_paramNames = parameterNameDiscoverer.getParameterNames(getMethod());
 		/**
-		 * �������û��ָ���κ�ע�⣬����û��ͨ��asm��ȡ��������������
-		 * ��ֱ�ӷ���
+		 * 如果方法没有指定任何注解，并且没有通过asm获取到方法参数名称
+		 * 则直接返回
 		 */
 		if((temp_paramNames == null || temp_paramNames.length == 0 ) 
 				&& (annotations == null || annotations.length ==0))
@@ -741,7 +741,7 @@ public class MethodInfo {
 		if(paramNames != null)
 		{
 			 if(this.paramNames.length < index + 1 )
-				 throw new BeansException("�Ƿ���param index ["+index+"]��paramNames length is " + paramNames.length);
+				 throw new BeansException("非法的param index ["+index+"]：paramNames length is " + paramNames.length);
 			return paramNames[index].getEditor();
 		}
 		return null;
@@ -750,7 +750,7 @@ public class MethodInfo {
 		if(paramNames != null )
 		{
 			if(this.paramNames.length < index + 1 )
-				 throw new BeansException("�Ƿ���paramNames index ["+index+"]��paramNames length is " + paramNames.length);
+				 throw new BeansException("非法的paramNames index ["+index+"]：paramNames length is " + paramNames.length);
 			return paramNames[index].getRequestParameterName();
 		}
 		return null;
@@ -766,7 +766,7 @@ public class MethodInfo {
 		if(databind != null)
 		{
 			 if(this.databind.length < index + 1 )
-				 throw new BeansException("�Ƿ���databind index ["+index+"]��databind length is " + databind.length);
+				 throw new BeansException("非法的databind index ["+index+"]：databind length is " + databind.length);
 		}
 		return this.databind[index];
 	}

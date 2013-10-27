@@ -41,7 +41,7 @@ public class SimpleApiTest {
 		lb.setFieldLength(20);
 		lb.setIsvalidated(6);
 		
-		//用List存放Bean，在某特定的连接池中进行crud操作
+		//鐢↙ist瀛樻斁Bean锛屽湪鏌愮壒瀹氱殑杩炴帴姹犱腑杩涜crud鎿嶄綔
 		List<ListBean> beans = new ArrayList<ListBean>();
 		beans.add(lb);
 		
@@ -76,7 +76,7 @@ public class SimpleApiTest {
 	@Test
 	public void updateOpera() throws SQLException
 	{
-		//在某特定的连接池中直接crud对象
+		//鍦ㄦ煇鐗瑰畾鐨勮繛鎺ユ睜涓洿鎺rud瀵硅薄
 		ListBean bean = new ListBean();
 		bean.setId(88);
 		bean.setFieldLable("tttt");
@@ -115,7 +115,7 @@ public class SimpleApiTest {
 	
 	@Test
 	public void deleteOpera() throws SQLException
-	{   //在特定的连接池中对数组对象进行crud
+	{   //鍦ㄧ壒瀹氱殑杩炴帴姹犱腑瀵规暟缁勫璞¤繘琛宑rud
 		ListBean lb = new ListBean();
 		lb.setId(85);
 		lb.setFieldLable("tttt");

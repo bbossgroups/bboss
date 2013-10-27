@@ -38,7 +38,7 @@ public class DesktopController {
 	{
 //		response.setContentType("text/html; charset=UTF-8");
 		String ret = "[" + 
-    "['3m Co¶à¶à',71.72,0.02,0.03,'9/1 12:00am']," + 
+    "['3m Coå¤šå¤š',71.72,0.02,0.03,'9/1 12:00am']," + 
     "['Alcoa Inc',29.01,0.42,1.47,'9/1 12:00am']," + 
     " ['American Express Company',52.55,0.01,0.02,'9/1 12:00am']," + 
     "['American International Group, Inc.',64.13,0.31,0.49,'9/1 12:00am']," + 

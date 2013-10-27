@@ -48,7 +48,7 @@ import org.frameworkset.spi.serviceidentity.TargetImpl;
  * Copyright (c) 2007
  * </p>
  * 
- * @Date 2009-11-11 ÏÂÎç10:26:14
+ * @Date 2009-11-11 ä¸‹åˆ10:26:14
  * @author biaoping.yin
  * @version 1.0
  */
@@ -61,17 +61,17 @@ public class RPCJMSIOHandler extends BaseRPCIOHandler implements org.frameworkse
     private JMSConnectionFactory connectionFactory;
 
     /**
-     * ¼àÌıÔ¶³ÌÇëÇóÏûÏ¢µÄÄ¿±êµØÖ·
+     * ç›‘å¬è¿œç¨‹è¯·æ±‚æ¶ˆæ¯çš„ç›®æ ‡åœ°å€
      */
     private String destination;
 
     /**
-     * ¼àÌıÏìÓ¦ÏûÏ¢µÄÄ¿±êµØÖ·
+     * ç›‘å¬å“åº”æ¶ˆæ¯çš„ç›®æ ‡åœ°å€
      */
     private String replyto;
     
     /**
-     * ·şÎñÆ÷±êÊ¶£¬×öÎª½ÓÊÕÔ¶³Ì·şÎñµ÷ÓÃ£¨ÇëÇóºÍÏìÓ¦£©µÄ¹ıÂËÌõ¼ş
+     * æœåŠ¡å™¨æ ‡è¯†ï¼Œåšä¸ºæ¥æ”¶è¿œç¨‹æœåŠ¡è°ƒç”¨ï¼ˆè¯·æ±‚å’Œå“åº”ï¼‰çš„è¿‡æ»¤æ¡ä»¶
      * 
      * 
      */
@@ -96,7 +96,7 @@ public class RPCJMSIOHandler extends BaseRPCIOHandler implements org.frameworkse
     }
 
     /**
-     * ÎªÁËÈ·±£·şÎñÆ÷ÒÑ¾­Æô¶¯£¬Ö´ĞĞ¸Ã·½·¨
+     * ä¸ºäº†ç¡®ä¿æœåŠ¡å™¨å·²ç»å¯åŠ¨ï¼Œæ‰§è¡Œè¯¥æ–¹æ³•
      */
     private void enforceStartup()
     {
@@ -144,7 +144,7 @@ public class RPCJMSIOHandler extends BaseRPCIOHandler implements org.frameworkse
                     case Header.REQ:
                         if (rsp != null)
                         {
-                        	//»Ø¸´ÏûÏ¢
+                        	//å›å¤æ¶ˆæ¯
                             TextMessage response = this.reply.createTextMessage((String)Util.getEncoder().encoder(rsp));
                             RPCAddress src_address = rpcmsg.getSrc_addr();
                             response.setJMSCorrelationID(src_address.getServer_uuid());
@@ -184,7 +184,7 @@ public class RPCJMSIOHandler extends BaseRPCIOHandler implements org.frameworkse
                     case Header.REQ:
                         if (rsp != null)
                         {
-                        	//»Ø¸´ÏûÏ¢
+                        	//å›å¤æ¶ˆæ¯
                             ObjectMessage response = this.reply.createObjectMessage();
                             RPCAddress src_address = rpcmsg.getSrc_addr();
                             response.setJMSCorrelationID(src_address.getServer_uuid());
@@ -234,16 +234,16 @@ public class RPCJMSIOHandler extends BaseRPCIOHandler implements org.frameworkse
         
 //        if(MQUtil.rpc_jms_enable)
         {
-            System.out.println("Æô¶¯jms Ô¶³ÌÇëÇó½ÓÊÕºÍÏìÓ¦½ÓÊÕ¶ÓÁĞ¿ªÊ¼......");
+            System.out.println("å¯åŠ¨jms è¿œç¨‹è¯·æ±‚æ¥æ”¶å’Œå“åº”æ¥æ”¶é˜Ÿåˆ—å¼€å§‹......");
             
             this.request = new JMSTemplate(this.connectionFactory.getConectionFactory(),this.destination);
             InnerMessageListener requestListener = new InnerMessageListener();
             this.reply = new JMSTemplate(this.connectionFactory.getConectionFactory(),this.replyto);
             InnerMessageListener responseListener = new InnerMessageListener();
             request.getConsumerWithSelector("JMSCorrelationID='" + this.server_uuid + "'").setMessageListener(requestListener);
-            System.out.println("Æô¶¯jms Ô¶³ÌÇëÇó½ÓÊÕ¶ÓÁĞ[rpc.request.queue="+ this.destination +"]Íê±Ï£¬JMSCorrelationID='" + this.server_uuid + "'");
+            System.out.println("å¯åŠ¨jms è¿œç¨‹è¯·æ±‚æ¥æ”¶é˜Ÿåˆ—[rpc.request.queue="+ this.destination +"]å®Œæ¯•ï¼ŒJMSCorrelationID='" + this.server_uuid + "'");
             reply.getConsumerWithSelector("JMSCorrelationID='" + this.server_uuid + "'").setMessageListener(responseListener);
-            System.out.println("Æô¶¯jms Ô¶³ÌÏìÓ¦½ÓÊÕ¶ÓÁĞ[rpc.reponse.queue="+ this.replyto +"]Íê±Ï£¬JMSCorrelationID='" + this.server_uuid + "'");
+            System.out.println("å¯åŠ¨jms è¿œç¨‹å“åº”æ¥æ”¶é˜Ÿåˆ—[rpc.reponse.queue="+ this.replyto +"]å®Œæ¯•ï¼ŒJMSCorrelationID='" + this.server_uuid + "'");
             
             this.jms_rpc_started = true; 
         }
@@ -255,10 +255,10 @@ public class RPCJMSIOHandler extends BaseRPCIOHandler implements org.frameworkse
             return;
         try
         {
-            System.out.println("Í£Ö¹jms Ô¶³ÌÇëÇó½ÓÊÕ¶ÓÁĞ[rpc.request.queue="+ this.destination +"]¿ªÊ¼£¬JMSCorrelationID='" + this.server_uuid + "'");
+            System.out.println("åœæ­¢jms è¿œç¨‹è¯·æ±‚æ¥æ”¶é˜Ÿåˆ—[rpc.request.queue="+ this.destination +"]å¼€å§‹ï¼ŒJMSCorrelationID='" + this.server_uuid + "'");
             this.request.stop();
             
-            System.out.println("Í£Ö¹jms Ô¶³ÌÇëÇó½ÓÊÕ¶ÓÁĞ[rpc.request.queue="+ this.destination +"]Íê±Ï£¬JMSCorrelationID='" + this.server_uuid + "'");
+            System.out.println("åœæ­¢jms è¿œç¨‹è¯·æ±‚æ¥æ”¶é˜Ÿåˆ—[rpc.request.queue="+ this.destination +"]å®Œæ¯•ï¼ŒJMSCorrelationID='" + this.server_uuid + "'");
         }
         catch(Exception e)
         {
@@ -267,9 +267,9 @@ public class RPCJMSIOHandler extends BaseRPCIOHandler implements org.frameworkse
         
         try
         {
-            System.out.println("Í£Ö¹jms Ô¶³ÌÏìÓ¦½ÓÊÕ¶ÓÁĞ[rpc.reponse.queue="+ this.replyto +"]¿ªÊ¼£¬JMSCorrelationID='" + this.server_uuid + "'");
+            System.out.println("åœæ­¢jms è¿œç¨‹å“åº”æ¥æ”¶é˜Ÿåˆ—[rpc.reponse.queue="+ this.replyto +"]å¼€å§‹ï¼ŒJMSCorrelationID='" + this.server_uuid + "'");
             this.reply.stop();
-            System.out.println("Í£Ö¹jms Ô¶³ÌÏìÓ¦½ÓÊÕ¶ÓÁĞ[rpc.reponse.queue="+ this.replyto +"]Íê±Ï£¬JMSCorrelationID='" + this.server_uuid + "'");
+            System.out.println("åœæ­¢jms è¿œç¨‹å“åº”æ¥æ”¶é˜Ÿåˆ—[rpc.reponse.queue="+ this.replyto +"]å®Œæ¯•ï¼ŒJMSCorrelationID='" + this.server_uuid + "'");
             
         }
         catch(Exception e)

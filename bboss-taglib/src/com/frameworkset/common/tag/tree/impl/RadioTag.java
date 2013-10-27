@@ -40,7 +40,7 @@ import javax.servlet.jsp.JspException;
 import com.frameworkset.common.tag.BaseTag;
 
 /**
- * ÉèÖÃµ¥Ñ¡°´Å¥±êÇ©
+ * è®¾ç½®å•é€‰æŒ‰é’®æ ‡ç­¾
  * @author biaoping.yin
  * created on 2005-3-25
  * version 1.0
@@ -88,7 +88,7 @@ public class RadioTag extends BaseTag {
 	}
 
 	/**
-	 * @return µ¥Ñ¡¿òµÄÄ¬ÈÏÑ¡ÖĞÖµ
+	 * @return å•é€‰æ¡†çš„é»˜è®¤é€‰ä¸­å€¼
 	 */
 	public String getDefaultValue() {
 		return defaultValue;

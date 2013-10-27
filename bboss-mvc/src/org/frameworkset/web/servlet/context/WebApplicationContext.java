@@ -154,9 +154,9 @@ public class WebApplicationContext extends DefaultApplicationContext implements 
 	
 //	
 //	/**
-//	 * ¼ÓÔØbboss-mvcÅäÖÃÎÄ¼ş£¬°üÀ¨Ïà¹Øview£¬theme£¬resource£¬controlerµÈµÈµÄÅäÖÃ£¬configfileÅäÖÃÎÄ¼ş¼°Æä
-//	 * µ¼ÈëµÄÆäËû×ÓÅäÖÃÎÄ¼ş¹«ÓÃÒ»¸ö×é¼ş¹ÜÀíÈİÆ÷£¬¸ÃÈİÆ÷ÖĞ¶ÔÓ¦µÄËùÓĞ×é¼şºÍÊôĞÔºÍÆäËû×é¼ş¹ÜÀíÈİÆ÷ÖĞµÄ×é¼şºÍÊôĞÔ
-//	 * »¥Ïà¸ôÀë£¬²»´æÔÚ¿çÈİÆ÷ÒÀÀµ¹ØÏµ¡£
+//	 * åŠ è½½bboss-mvcé…ç½®æ–‡ä»¶ï¼ŒåŒ…æ‹¬ç›¸å…³viewï¼Œthemeï¼Œresourceï¼Œcontrolerç­‰ç­‰çš„é…ç½®ï¼Œconfigfileé…ç½®æ–‡ä»¶åŠå…¶
+//	 * å¯¼å…¥çš„å…¶ä»–å­é…ç½®æ–‡ä»¶å…¬ç”¨ä¸€ä¸ªç»„ä»¶ç®¡ç†å®¹å™¨ï¼Œè¯¥å®¹å™¨ä¸­å¯¹åº”çš„æ‰€æœ‰ç»„ä»¶å’Œå±æ€§å’Œå…¶ä»–ç»„ä»¶ç®¡ç†å®¹å™¨ä¸­çš„ç»„ä»¶å’Œå±æ€§
+//	 * äº’ç›¸éš”ç¦»ï¼Œä¸å­˜åœ¨è·¨å®¹å™¨ä¾èµ–å…³ç³»ã€‚
 //	 * 
 //	 * @return
 //	 */
@@ -183,9 +183,9 @@ public class WebApplicationContext extends DefaultApplicationContext implements 
 //	}
 	
 	/**
-	 * ¼ÓÔØbboss-mvcÅäÖÃÎÄ¼ş£¬°üÀ¨Ïà¹Øview£¬theme£¬resource£¬controlerµÈµÈµÄÅäÖÃ£¬configfileÅäÖÃÎÄ¼ş¼°Æä
-	 * µ¼ÈëµÄÆäËû×ÓÅäÖÃÎÄ¼ş¹«ÓÃÒ»¸ö×é¼ş¹ÜÀíÈİÆ÷£¬¸ÃÈİÆ÷ÖĞ¶ÔÓ¦µÄËùÓĞ×é¼şºÍÊôĞÔºÍÆäËû×é¼ş¹ÜÀíÈİÆ÷ÖĞµÄ×é¼şºÍÊôĞÔ
-	 * »¥Ïà¸ôÀë£¬²»´æÔÚ¿çÈİÆ÷ÒÀÀµ¹ØÏµ¡£
+	 * åŠ è½½bboss-mvcé…ç½®æ–‡ä»¶ï¼ŒåŒ…æ‹¬ç›¸å…³viewï¼Œthemeï¼Œresourceï¼Œcontrolerç­‰ç­‰çš„é…ç½®ï¼Œconfigfileé…ç½®æ–‡ä»¶åŠå…¶
+	 * å¯¼å…¥çš„å…¶ä»–å­é…ç½®æ–‡ä»¶å…¬ç”¨ä¸€ä¸ªç»„ä»¶ç®¡ç†å®¹å™¨ï¼Œè¯¥å®¹å™¨ä¸­å¯¹åº”çš„æ‰€æœ‰ç»„ä»¶å’Œå±æ€§å’Œå…¶ä»–ç»„ä»¶ç®¡ç†å®¹å™¨ä¸­çš„ç»„ä»¶å’Œå±æ€§
+	 * äº’ç›¸éš”ç¦»ï¼Œä¸å­˜åœ¨è·¨å®¹å™¨ä¾èµ–å…³ç³»ã€‚
 	 * 
 	 * @return
 	 */
@@ -222,9 +222,9 @@ public class WebApplicationContext extends DefaultApplicationContext implements 
 				if(docbase == null)
 				{
 					try {
-//						System.out.print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$servletContext.getResource(/).getFile()£º"+servletContext.getResource("/").getFile());
-						System.out.print("servletContext.getRealPath(/)£º"+servletContext.getRealPath("/"));
-//						System.out.print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$servletContext.getResource(/).getPath()£º"+servletContext.getResource("/").getPath());
+//						System.out.print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$servletContext.getResource(/).getFile()ï¼š"+servletContext.getResource("/").getFile());
+						System.out.print("servletContext.getRealPath(/)ï¼š"+servletContext.getRealPath("/"));
+//						System.out.print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$servletContext.getResource(/).getPath()ï¼š"+servletContext.getResource("/").getPath());
 						docbase = servletContext.getResource("/").getPath();
 					} catch (MalformedURLException e) {
 						// TODO Auto-generated catch block

@@ -28,7 +28,7 @@ import org.frameworkset.spi.remote.Util;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2009-11-10 ÏÂÎç11:37:59
+ * @Date 2009-11-10 ä¸‹åˆ11:37:59
  * @author biaoping.yin
  * @version 1.0
  */
@@ -36,7 +36,7 @@ public class WSUtil
 {
 
     /**
-     * ±ê¼ÇÊÇ·ñÆôÓÃwebservice·şÎñ£¬ÎªfalseÊ±£¬Æô¶¯cxfµÄserverlet½«Ê§Ğ§
+     * æ ‡è®°æ˜¯å¦å¯ç”¨webserviceæœåŠ¡ï¼Œä¸ºfalseæ—¶ï¼Œå¯åŠ¨cxfçš„serverletå°†å¤±æ•ˆ
      */
         public static boolean webservice_enable = BaseSPIManager.getBooleanProperty("rpc.webservice.enable",true);
         

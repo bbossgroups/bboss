@@ -1,13 +1,13 @@
-<?xml version="1.0" encoding='gb2312'?>
+<?xml version="1.0" encoding='UTF-8'?>
 <manager-config>
 	<manager id="a" singlable="false">
 		<!--
-			»ùÓÚÊý¾Ý¿âµÄÓÃ»§¹ÜÀíÊµÏÖ
-			ÊôÐÔÃèÊö£º
-			type£º´ú±íÊý¾Ý´æ´¢µÄÀàÐÍ,ÀýÈçDB£¬LDAP,ACTIVEDIRECTORYµÈµÈ
-			default:È±Ê¡ÊµÏÖ
-			class£ºÊµÏÖÀà´úÂë
-			used£º±êÊ¶ÊÇ·ñÊ¹ÓÃ
+			åŸºäºŽæ•°æ®åº“çš„ç”¨æˆ·ç®¡ç†å®žçŽ°
+			å±žæ€§æè¿°ï¼š
+			typeï¼šä»£è¡¨æ•°æ®å­˜å‚¨çš„ç±»åž‹,ä¾‹å¦‚DBï¼ŒLDAP,ACTIVEDIRECTORYç­‰ç­‰
+			default:ç¼ºçœå®žçŽ°
+			classï¼šå®žçŽ°ç±»ä»£ç 
+			usedï¼šæ ‡è¯†æ˜¯å¦ä½¿ç”¨
 		-->
 		<provider type="DB" default="true"
 			class="org.frameworkset.spi.reference.A" />
@@ -18,12 +18,12 @@
 	
 	<manager id="clazz" singlable="false">
 		<!--
-			»ùÓÚÊý¾Ý¿âµÄÓÃ»§¹ÜÀíÊµÏÖ
-			ÊôÐÔÃèÊö£º
-			type£º´ú±íÊý¾Ý´æ´¢µÄÀàÐÍ,ÀýÈçDB£¬LDAP,ACTIVEDIRECTORYµÈµÈ
-			default:È±Ê¡ÊµÏÖ
-			class£ºÊµÏÖÀà´úÂë
-			used£º±êÊ¶ÊÇ·ñÊ¹ÓÃ
+			åŸºäºŽæ•°æ®åº“çš„ç”¨æˆ·ç®¡ç†å®žçŽ°
+			å±žæ€§æè¿°ï¼š
+			typeï¼šä»£è¡¨æ•°æ®å­˜å‚¨çš„ç±»åž‹,ä¾‹å¦‚DBï¼ŒLDAP,ACTIVEDIRECTORYç­‰ç­‰
+			default:ç¼ºçœå®žçŽ°
+			classï¼šå®žçŽ°ç±»ä»£ç 
+			usedï¼šæ ‡è¯†æ˜¯å¦ä½¿ç”¨
 		-->
 		<provider type="DB" default="true"
 			class="org.frameworkset.spi.reference.A" />
@@ -33,12 +33,12 @@
 	</manager>
 	<manager id="b" singlable="false">
 		<!--
-			»ùÓÚÊý¾Ý¿âµÄÓÃ»§¹ÜÀíÊµÏÖ
-			ÊôÐÔÃèÊö£º
-			type£º´ú±íÊý¾Ý´æ´¢µÄÀàÐÍ,ÀýÈçDB£¬LDAP,ACTIVEDIRECTORYµÈµÈ
-			default:È±Ê¡ÊµÏÖ
-			class£ºÊµÏÖÀà´úÂë
-			used£º±êÊ¶ÊÇ·ñÊ¹ÓÃ
+			åŸºäºŽæ•°æ®åº“çš„ç”¨æˆ·ç®¡ç†å®žçŽ°
+			å±žæ€§æè¿°ï¼š
+			typeï¼šä»£è¡¨æ•°æ®å­˜å‚¨çš„ç±»åž‹,ä¾‹å¦‚DBï¼ŒLDAP,ACTIVEDIRECTORYç­‰ç­‰
+			default:ç¼ºçœå®žçŽ°
+			classï¼šå®žçŽ°ç±»ä»£ç 
+			usedï¼šæ ‡è¯†æ˜¯å¦ä½¿ç”¨
 		-->
 		<provider type="DB" default="true"
 			class="org.frameworkset.spi.reference.B" />
@@ -46,12 +46,12 @@
 	</manager>
 	<manager id="c" singlable="false">
 		<!--
-			»ùÓÚÊý¾Ý¿âµÄÓÃ»§¹ÜÀíÊµÏÖ
-			ÊôÐÔÃèÊö£º
-			type£º´ú±íÊý¾Ý´æ´¢µÄÀàÐÍ,ÀýÈçDB£¬LDAP,ACTIVEDIRECTORYµÈµÈ
-			default:È±Ê¡ÊµÏÖ
-			class£ºÊµÏÖÀà´úÂë
-			used£º±êÊ¶ÊÇ·ñÊ¹ÓÃ
+			åŸºäºŽæ•°æ®åº“çš„ç”¨æˆ·ç®¡ç†å®žçŽ°
+			å±žæ€§æè¿°ï¼š
+			typeï¼šä»£è¡¨æ•°æ®å­˜å‚¨çš„ç±»åž‹,ä¾‹å¦‚DBï¼ŒLDAP,ACTIVEDIRECTORYç­‰ç­‰
+			default:ç¼ºçœå®žçŽ°
+			classï¼šå®žçŽ°ç±»ä»£ç 
+			usedï¼šæ ‡è¯†æ˜¯å¦ä½¿ç”¨
 		-->
 		<reference fieldname="d" refid="d" />
 		<reference fieldname="int_i" value="10"/> 
@@ -61,12 +61,12 @@
 	
 	<manager id="d" singlable="false">
 		<!--
-			»ùÓÚÊý¾Ý¿âµÄÓÃ»§¹ÜÀíÊµÏÖ
-			ÊôÐÔÃèÊö£º
-			type£º´ú±íÊý¾Ý´æ´¢µÄÀàÐÍ,ÀýÈçDB£¬LDAP,ACTIVEDIRECTORYµÈµÈ
-			default:È±Ê¡ÊµÏÖ
-			class£ºÊµÏÖÀà´úÂë
-			used£º±êÊ¶ÊÇ·ñÊ¹ÓÃ
+			åŸºäºŽæ•°æ®åº“çš„ç”¨æˆ·ç®¡ç†å®žçŽ°
+			å±žæ€§æè¿°ï¼š
+			typeï¼šä»£è¡¨æ•°æ®å­˜å‚¨çš„ç±»åž‹,ä¾‹å¦‚DBï¼ŒLDAP,ACTIVEDIRECTORYç­‰ç­‰
+			default:ç¼ºçœå®žçŽ°
+			classï¼šå®žçŽ°ç±»ä»£ç 
+			usedï¼šæ ‡è¯†æ˜¯å¦ä½¿ç”¨
 			<reference fieldname="a" refid="a"/>
 		-->
 		<reference fieldname="a" refid="a"/>

@@ -29,10 +29,10 @@ import org.frameworkset.spi.remote.RPCHelper;
 
 /**
  * <p>Title: RPCValidator.java</p> 
- * <p>Description: Ğ£ÑéµØÖ·ÊÇ·ñ¿ÉÓÃ</p>
+ * <p>Description: æ ¡éªŒåœ°å€æ˜¯å¦å¯ç”¨</p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2010-5-15 ÏÂÎç11:45:19
+ * @Date 2010-5-15 ä¸‹åˆ11:45:19
  * @author biaoping.yin
  * @version 1.0
  */
@@ -117,7 +117,7 @@ public class RPCValidator {
 	}
 	
 	/**
-	* ÑéÖ¤Ô¶³Ì¶Ë¿ÚºÍIP,²ÉÓÃÄ¬ÈÏµÈ´ı3Ãë
+	* éªŒè¯è¿œç¨‹ç«¯å£å’ŒIP,é‡‡ç”¨é»˜è®¤ç­‰å¾…3ç§’
 	* 
 	* @param ipAddress
 	* @param port
@@ -130,7 +130,7 @@ public class RPCValidator {
 	}
 
 	/**
-	* ÑéÖ¤Ô¶³Ì¶Ë¿ÚºÍIP
+	* éªŒè¯è¿œç¨‹ç«¯å£å’ŒIP
 	* 
 	* @param ipAddress
 	* @param port
@@ -154,7 +154,7 @@ public class RPCValidator {
 	}
 
 	/**
-	* ÑéÖ¤Ô¶³ÌIP£¬²ÉÓÃÄ¬ÈÏµÈ´ı3Ãë
+	* éªŒè¯è¿œç¨‹IPï¼Œé‡‡ç”¨é»˜è®¤ç­‰å¾…3ç§’
 	* 
 	* @param ipAddress
 	* @return
@@ -167,7 +167,7 @@ public class RPCValidator {
 	}
 
 	/**
-	* ÑéÖ¤Ô¶³ÌIP
+	* éªŒè¯è¿œç¨‹IP
 	* 
 	* @param ipAddress
 	* @param delayTime

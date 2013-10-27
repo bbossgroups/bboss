@@ -22,7 +22,7 @@ package org.frameworkset.spi.remote.mina.conf;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2009-10-11 œ¬ŒÁ10:03:51
+ * @Date 2009-10-11 ‰∏ãÂçà10:03:51
  * @author biaoping.yin
  * @version 1.0
  */

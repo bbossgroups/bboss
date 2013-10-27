@@ -14,13 +14,13 @@ import com.frameworkset.common.tag.pager.TextSpliting;
  * <p>Title: TextPagerTag</p>
  *
  * <p>Description:
- *      ÎÄ±¾·ÖÒ³±êÇ©,ÊôĞÔÈçÏÂ£º
-            scope£­textµÄÓĞĞ§·¶Î§£¬·Ö±ğrequest¡¢session¡¢pageContext£¬È±Ê¡Îªrequest
-            parameter¡ªrequest²ÎÊıÃû³Æ
-            attribute£­ÊôĞÔÃû³Æ£¬Óërequest¡¢session¡¢pageContext×éºÏÊ¹ÓÃ
-            text£­ÎÄ±¾Öµ£¬Ö±½ÓÖ¸¶¨´ı·ÖÒ³µÄÎÄ±¾£¬Èç¹û²»Ö¸¶¨Ôò°´Ïà¹ØÊôĞÔ´Órequest¡¢session¡¢pageCongtextÖĞ»ñÈ¡ÊôĞÔÖµ
-            size£­Ã¿Ò³ÏÔÊ¾µÄÎÄ±¾¶Î³¤¶È£¬È±Ê¡Îª200
-            id£­±êÇ©±êÊ¶
+ *      æ–‡æœ¬åˆ†é¡µæ ‡ç­¾,å±æ€§å¦‚ä¸‹ï¼š
+            scopeï¼textçš„æœ‰æ•ˆèŒƒå›´ï¼Œåˆ†åˆ«requestã€sessionã€pageContextï¼Œç¼ºçœä¸ºrequest
+            parameterâ€”requestå‚æ•°åç§°
+            attributeï¼å±æ€§åç§°ï¼Œä¸requestã€sessionã€pageContextç»„åˆä½¿ç”¨
+            textï¼æ–‡æœ¬å€¼ï¼Œç›´æ¥æŒ‡å®šå¾…åˆ†é¡µçš„æ–‡æœ¬ï¼Œå¦‚æœä¸æŒ‡å®šåˆ™æŒ‰ç›¸å…³å±æ€§ä»requestã€sessionã€pageCongtextä¸­è·å–å±æ€§å€¼
+            sizeï¼æ¯é¡µæ˜¾ç¤ºçš„æ–‡æœ¬æ®µé•¿åº¦ï¼Œç¼ºçœä¸º200
+            idï¼æ ‡ç­¾æ ‡è¯†
 </p>
  *
  * <p>Copyright: Copyright (c) 2005</p>
@@ -33,30 +33,30 @@ import com.frameworkset.common.tag.pager.TextSpliting;
 public class TextPagerTag extends BaseTag {
     private Logger log = Logger.getLogger(TextPagerTag.class);
     /**
-     * ÇëÇó·¶Î§
-     * request È±Ê¡
+     * è¯·æ±‚èŒƒå›´
+     * request ç¼ºçœ
      * session
      * pageContext
      */
     private String scope;
-    /**request²ÎÊıÃû³Æ£¬Óërequest×éºÏÊ¹ÓÃ*/
+    /**requestå‚æ•°åç§°ï¼Œä¸requestç»„åˆä½¿ç”¨*/
     private String parameter;
-    /**ÊôĞÔÃû³Æ£¬Óërequest¡¢session¡¢pageContext×éºÏÊ¹ÓÃ*/
+    /**å±æ€§åç§°ï¼Œä¸requestã€sessionã€pageContextç»„åˆä½¿ç”¨*/
     private String attribute;
-    /**ÎÄ±¾*/
+    /**æ–‡æœ¬*/
     private String text;
 
     /**
-     * Ã¿Ò³ÏÔÊ¾µÄÎÄ±¾¶Î³¤¶È
+     * æ¯é¡µæ˜¾ç¤ºçš„æ–‡æœ¬æ®µé•¿åº¦
      */
     private int size = 200;
 
     /**
-     * µ±Ç°Ò³ÃæºÅÂë
+     * å½“å‰é¡µé¢å·ç 
      */
     private int pageNumber;
 
-    /**·ÖÒ³ĞÅÏ¢*/
+    /**åˆ†é¡µä¿¡æ¯*/
     private TextListInfo listInfo;
 
     private StringBuffer pageURI;

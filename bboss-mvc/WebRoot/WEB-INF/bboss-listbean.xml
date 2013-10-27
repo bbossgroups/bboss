@@ -1,13 +1,13 @@
-<?xml version="1.0" encoding='gb2312'?>
+<?xml version="1.0" encoding='UTF-8'?>
 <!-- 
 bboss-listbean.xml
-描述：对象列表和对象数组控制器demo
+鎻忚堪锛氬璞″垪琛ㄥ拰瀵硅薄鏁扮粍鎺у埗鍣╠emo
 -->
 <properties>
     <property name="/databind/*.htm" class="org.frameworkset.spi.mvc.ListBeanBindController"
      f:executor="attr:listBeanBindController.configexecutor"
     />
-    	<!--数据库操作通用辅助类 -->	
+    	<!--鏁版嵁搴撴搷浣滈�氱敤杈呭姪绫� -->	
 	<property name="listBeanBindController.configexecutor" class="com.frameworkset.common.poolman.ConfigSQLExecutor">
 		<construction>
 			<property value="org/frameworkset/spi/mvc/listbeanbinddeme.xml"/>

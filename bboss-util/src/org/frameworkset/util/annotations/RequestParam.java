@@ -35,7 +35,7 @@ import java.lang.annotation.Target;
 @Documented
 public @interface RequestParam {
 	/**
-	 * ²ÎÊıÃû³Æ£¬Ä¬ÈÏÎª""
+	 * å‚æ•°åç§°ï¼Œé»˜è®¤ä¸º""
 	 * @return
 	 */
 	String name() default "";
@@ -43,28 +43,28 @@ public @interface RequestParam {
 	boolean required() default false;
 	String editor() default "";
 	/**
-     * Êı¾İ¸ñÊ½
+     * æ•°æ®æ ¼å¼
      */
 	String dataformat() default "";
 	/**
-	 * ÈÕÆÚ¸ñÊ½
+	 * æ—¥æœŸæ ¼å¼
      */
 	String dateformat() default "";
 	String defaultvalue() default ValueConstants.DEFAULT_NONE;
 	/**
-	 * ½âÂë×Ö·û¼¯
+	 * è§£ç å­—ç¬¦é›†
 	 * @return
 	 */
 	String decodeCharset() default ValueConstants.DEFAULT_NONE;
 	
 	/**
-	 * ²ÎÊıÔ­Ê¼×Ö·û¼¯
+	 * å‚æ•°åŸå§‹å­—ç¬¦é›†
 	 * @return
 	 */
 	String charset() default ValueConstants.DEFAULT_NONE;
 	
 	/**
-	 * ²ÎÊı×ª»»×Ö·û¼¯
+	 * å‚æ•°è½¬æ¢å­—ç¬¦é›†
 	 * @return
 	 */
 	String convertcharset() default ValueConstants.DEFAULT_NONE;

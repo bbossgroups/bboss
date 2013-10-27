@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="gb2312" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 
 <!DOCTYPE taglib PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.1//EN" "http://java.sun.com/j2ee/dtds/web-jsptaglibrary_1_1.dtd">
 
@@ -82,7 +82,7 @@
         </attribute>
    </tag>
    
-   <!-- »ñÈ¡sessionÖÐ¶¨ÒåµÄÖ¸¶¨Ãû³ÆµÄ±äÁ¿Öµ -->
+   <!-- èŽ·å–sessionä¸­å®šä¹‰çš„æŒ‡å®šåç§°çš„å˜é‡å€¼ -->
    <tag>
         <name>session</name>
         <tagclass>com.frameworkset.common.tag.Session</tagclass>
@@ -93,7 +93,7 @@
             <required>ture</required>
             <rtexprvalue>true</rtexprvalue>
    		</attribute>
-   		<!--Èç¹ûsessionÖÐ´æ·ÅµÄÊÇÒ»¸öÖµ¶ÔÏó£¬ÄÇÃ´»ñÈ¡Öµ¶ÔÏóÖÐµÄÊôÐÔÖµ-->
+   		<!--å¦‚æžœsessionä¸­å­˜æ”¾çš„æ˜¯ä¸€ä¸ªå€¼å¯¹è±¡ï¼Œé‚£ä¹ˆèŽ·å–å€¼å¯¹è±¡ä¸­çš„å±žæ€§å€¼-->
    		<attribute>
             <name>property</name>
             <required>false</required>

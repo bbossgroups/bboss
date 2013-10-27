@@ -13,7 +13,7 @@ import java.io.FileFilter;
  *
  * <p>Copyright: Copyright (c) 2006</p>
  *
- * <p>Company: ÈıÒ»¼¯ÍÅ</p>
+ * <p>Company: ä¸‰ä¸€é›†å›¢</p>
  *
  * @author biaoping.yin
  * @version 1.0
@@ -97,14 +97,14 @@ public class FileUtil  {
 	}
 	
 	/**
-	 * »ñÈ¡Ä³¸öÂ·¾¶ÏÂµÄËùÓĞÎÄ¼ş(²»°üÀ¨ÎÄ¼ş¼Ğ)
+	 * è·å–æŸä¸ªè·¯å¾„ä¸‹çš„æ‰€æœ‰æ–‡ä»¶(ä¸åŒ…æ‹¬æ–‡ä»¶å¤¹)
 	 */
 	public static File[] getSubFiles(String parentpath){
 		return getSubFiles(parentpath,(String)null);
 	}		
 	
 	/**
-	 * »ñÈ¡Ä³¸öÂ·¾¶ÏÂµÄËùÓĞÎÄ¼ş(²»°üÀ¨ÎÄ¼ş¼Ğ)
+	 * è·å–æŸä¸ªè·¯å¾„ä¸‹çš„æ‰€æœ‰æ–‡ä»¶(ä¸åŒ…æ‹¬æ–‡ä»¶å¤¹)
 	 */	
 	public static File[] getSubFiles(String parentpath,String uri)
 	{
@@ -153,7 +153,7 @@ public class FileUtil  {
 			files = file.listFiles();
 		}
 		
-		//Ô¤·À´«µİ½øÀ´µÄFileFilterÃ»ÓĞ°ÑÎÄ¼ş¹ıÂËµô
+		//é¢„é˜²ä¼ é€’è¿›æ¥çš„FileFilteræ²¡æœ‰æŠŠæ–‡ä»¶è¿‡æ»¤æ‰
 		int rLen = 0;
 		for(int i=0;files!=null&&i<files.length;i++){
 			if(files[i].isFile()){
@@ -167,7 +167,7 @@ public class FileUtil  {
 	}
 	
 	/**
-	 * ²Î¿¼getSubDirectorieAndFiles(String parentpath,String uri,FileFilter fileFilter)·½·¨
+	 * å‚è€ƒgetSubDirectorieAndFiles(String parentpath,String uri,FileFilter fileFilter)æ–¹æ³•
 	 */
 	public static File[] getSubDirectorieAndFiles(String parentpath)
 	{
@@ -175,7 +175,7 @@ public class FileUtil  {
 	}
 
 	/**
-	 * ²Î¿¼getSubDirectorieAndFiles(String parentpath,String uri,FileFilter fileFilter)·½·¨
+	 * å‚è€ƒgetSubDirectorieAndFiles(String parentpath,String uri,FileFilter fileFilter)æ–¹æ³•
 	 */
 	public static File[] getSubDirectorieAndFiles(String parentpath,String uri)
 	{
@@ -183,7 +183,7 @@ public class FileUtil  {
 	}
 	
 	/**
-	 * ²Î¿¼getSubDirectorieAndFiles(String parentpath,String uri,FileFilter fileFilter)·½·¨
+	 * å‚è€ƒgetSubDirectorieAndFiles(String parentpath,String uri,FileFilter fileFilter)æ–¹æ³•
 	 */
 	public static File[] getSubDirectorieAndFiles(String parentpath,FileFilter fileFilter)
 	{
@@ -191,10 +191,10 @@ public class FileUtil  {
 	}
 	
 	/**
-	 * »ñÈ¡Ä³¸öÂ·¾¶ÏÂµÄÎÄ¼ş
-	 * @param parentpath ¾ø¶ÔÂ·¾¶ 
-	 * @param uri Ïà¶ÔÓë parentpathµÄÏà¶ÔÂ·¾¶
-	 * @param fileFilter ¹ıÂËÄ³Ğ©ÎÄ¼ş,Õâ¸öÈ¨Á¦½»¸øÁËÊ¹ÓÃ¸Ã·½·¨µÄÓÃ»§
+	 * è·å–æŸä¸ªè·¯å¾„ä¸‹çš„æ–‡ä»¶
+	 * @param parentpath ç»å¯¹è·¯å¾„ 
+	 * @param uri ç›¸å¯¹ä¸ parentpathçš„ç›¸å¯¹è·¯å¾„
+	 * @param fileFilter è¿‡æ»¤æŸäº›æ–‡ä»¶,è¿™ä¸ªæƒåŠ›äº¤ç»™äº†ä½¿ç”¨è¯¥æ–¹æ³•çš„ç”¨æˆ·
 	 * @return
 	 */
 	public static File[] getSubDirectorieAndFiles(String parentpath,String uri,FileFilter fileFilter)

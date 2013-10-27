@@ -40,7 +40,7 @@ public abstract class BaseTXManager implements java.io.Serializable,UNmodify
     protected AOPMethods asyncMethods;
 
     /**
-     * ÓÃ»§ÊÇ·ñ×Ô¼º¶¨ÒåÁËÀ¹½ØÆ÷
+     * ç”¨æˆ·æ˜¯å¦è‡ªå·±å®šä¹‰äº†æ‹¦æˆªå™¨
      */
     protected boolean usedCustomInterceptor = false;
 
@@ -318,7 +318,7 @@ public abstract class BaseTXManager implements java.io.Serializable,UNmodify
                 {
 
                     InterceptorInfo it = (InterceptorInfo) interceptors.get(i);
-                    if(!it.allWillBeIntercept() || it.isInterceptMethod(method, muuid )== null)//Èç¹û²»ÊÇÒ»¸öĞèÒª±»±¾À¹½ØÆ÷À¹½ØµÄ·½·¨£¬ÔòºöÂÔ¸ÃÀ¹½ØÆ÷
+                    if(!it.allWillBeIntercept() || it.isInterceptMethod(method, muuid )== null)//å¦‚æœä¸æ˜¯ä¸€ä¸ªéœ€è¦è¢«æœ¬æ‹¦æˆªå™¨æ‹¦æˆªçš„æ–¹æ³•ï¼Œåˆ™å¿½ç•¥è¯¥æ‹¦æˆªå™¨
                     	continue;    
 //                    Interceptor transactionInterceptor = (Interceptor) Class.forName(it.getClazz()).newInstance();
                     Interceptor transactionInterceptor = (Interceptor)it.getBean();
@@ -367,7 +367,7 @@ public abstract class BaseTXManager implements java.io.Serializable,UNmodify
     }
 
     /**
-     * ¹¹½¨À¹½ØÆ÷Á´±í£¬¸ù¾İÀ¹½ØÆ÷ÅäÖÃµÄË³Ğò¹¹ÔìÁ´½Ó£¬ÅäÖÃÔÚÇ°µÄÏÈµ÷ÓÃ¡£
+     * æ„å»ºæ‹¦æˆªå™¨é“¾è¡¨ï¼Œæ ¹æ®æ‹¦æˆªå™¨é…ç½®çš„é¡ºåºæ„é€ é“¾æ¥ï¼Œé…ç½®åœ¨å‰çš„å…ˆè°ƒç”¨ã€‚
      * 
      * @return
      */
@@ -383,7 +383,7 @@ public abstract class BaseTXManager implements java.io.Serializable,UNmodify
                 {
 
                     InterceptorInfo it = (InterceptorInfo) interceptors.get(i);
-                    if(!it.allWillBeIntercept() )//Èç¹û²»ÊÇÒ»¸öĞèÒª±»±¾À¹½ØÆ÷À¹½ØµÄ·½·¨£¬ÔòºöÂÔ¸ÃÀ¹½ØÆ÷
+                    if(!it.allWillBeIntercept() )//å¦‚æœä¸æ˜¯ä¸€ä¸ªéœ€è¦è¢«æœ¬æ‹¦æˆªå™¨æ‹¦æˆªçš„æ–¹æ³•ï¼Œåˆ™å¿½ç•¥è¯¥æ‹¦æˆªå™¨
                     {
                     	if( it.isInterceptMethod(method, methoduuid )== null)
                     		continue;

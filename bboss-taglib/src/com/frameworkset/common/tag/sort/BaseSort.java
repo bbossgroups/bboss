@@ -40,7 +40,7 @@ import java.util.Comparator;
 import java.util.List;
 
 /**
- * ½â¾ö¼¯ºÏµÄÅÅĞòÎÊÌâ 
+ * è§£å†³é›†åˆçš„æ’åºé—®é¢˜ 
  * @author biaoping.yin
  * 2005-3-25
  * version 1.0
@@ -55,7 +55,7 @@ public class BaseSort  implements Serializable
     }
     
     /**
-     * @param list - ´ıÅÅĞòµÄ¼¯ºÏ
+     * @param list - å¾…æ’åºçš„é›†åˆ
      * @param comparator
      */
     public void sortCollection(List list, Comparator comparator) 

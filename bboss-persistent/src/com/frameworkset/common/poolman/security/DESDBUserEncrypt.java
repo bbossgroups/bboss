@@ -19,10 +19,10 @@ package com.frameworkset.common.poolman.security;
  * 
  * <p>Title: DESDBInfoEncrypt.java</p>
  *
- * <p>Description: 采用des算法对数据库用户名进行加密和解密操作</p>
+ * <p>Description: 閲囩敤des绠楁硶瀵规暟鎹簱鐢ㄦ埛鍚嶈繘琛屽姞瀵嗗拰瑙ｅ瘑鎿嶄綔</p>
  *
  * <p>Copyright: Copyright (c) 2007</p>
- * @Date 2012-3-14 下午3:25:14
+ * @Date 2012-3-14 涓嬪崍3:25:14
  * @author biaoping.yin
  * @version 1.0
  */

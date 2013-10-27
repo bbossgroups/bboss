@@ -19,12 +19,12 @@ package com.frameworkset.common.poolman.security;
  * 4
  * <p>Title: BaseDBInfoEncrypt.java</p>
  *
- * <p>Description: Ä¬ÈÏdb¼ÓÃÜ²å¼şÊµÏÖÀà£¬¶ÔÊı¾İ²»¼ÓÃÜ£¬Ó¦ÓÃÏµÍ³¿ÉÒÔ¼Ì³Ğ¸ÃÀà
- * ÊµÏÖÀïÃæµÄ¼Ó½âÃÜ½Ó¿Ú£¬ÊµÏÖdecryptºÍencrypt·½·¨
+ * <p>Description: é»˜è®¤dbåŠ å¯†æ’ä»¶å®ç°ç±»ï¼Œå¯¹æ•°æ®ä¸åŠ å¯†ï¼Œåº”ç”¨ç³»ç»Ÿå¯ä»¥ç»§æ‰¿è¯¥ç±»
+ * å®ç°é‡Œé¢çš„åŠ è§£å¯†æ¥å£ï¼Œå®ç°decryptå’Œencryptæ–¹æ³•
  * </p>
  *
  * <p>Copyright: Copyright (c) 2007</p>
- * @Date 2012-3-14 ÏÂÎç3:12:16
+ * @Date 2012-3-14 ä¸‹åˆ3:12:16
  * @author biaoping.yin
  * @version 1.0
  */

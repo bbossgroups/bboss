@@ -51,7 +51,7 @@ public class HelloWord
 {
 	public String listmap(ModelMap model)
 	{
-		//½«ËùÓĞµÄkey·Åµ½nameListÖĞ
+		//å°†æ‰€æœ‰çš„keyæ”¾åˆ°nameListä¸­
 		List<String> nameList = new ArrayList<String>();
 		nameList.add("handlerModel");
 		nameList.add("applyUnionModel");
@@ -62,65 +62,65 @@ public class HelloWord
 		nameList.add("billItemModel");
 		nameList.add("billAttachment");
 		nameList.add("billSapModel");
-		//¹¹ÔìÃ¿¸ökey¶ÔÓ¦µÄList<ExampleBean>Êı¾İ²¢·Åµ½Map<String,List<ExampleBean>> billDataMap±äÁ¿ÖĞ
+		//æ„é€ æ¯ä¸ªkeyå¯¹åº”çš„List<ExampleBean>æ•°æ®å¹¶æ”¾åˆ°Map<String,List<ExampleBean>> billDataMapå˜é‡ä¸­
 		Map<String,List<ExampleBean>> billDataMap = new HashMap<String,List<ExampleBean>>();
-		List<ExampleBean> datas = new ArrayList<ExampleBean>();//¶¨ÒåList<ExampleBean>¼¯ºÏ£¬ÎªÁËÊ¾ÀıµÄ¼òµ¥£¬Ã¿¸ö¼¯ºÏÖĞÖ»·ÅÒ»¸öExampleBeanÀàĞÍ¶ÔÏó
+		List<ExampleBean> datas = new ArrayList<ExampleBean>();//å®šä¹‰List<ExampleBean>é›†åˆï¼Œä¸ºäº†ç¤ºä¾‹çš„ç®€å•ï¼Œæ¯ä¸ªé›†åˆä¸­åªæ”¾ä¸€ä¸ªExampleBeanç±»å‹å¯¹è±¡
 		ExampleBean bean = new ExampleBean();
 		bean.setName("handlerModel");
-		bean.setSex("ÄĞ");
+		bean.setSex("ç”·");
 		datas.add(bean);
-		billDataMap.put("handlerModel",datas);//putÊı¾İµ½mapÖĞ
+		billDataMap.put("handlerModel",datas);//putæ•°æ®åˆ°mapä¸­
 		datas = new ArrayList<ExampleBean>();
 		bean = new ExampleBean();
 		bean.setName("applyUnionModel");
-		bean.setSex("Å®");
+		bean.setSex("å¥³");
 		datas.add(bean);
-		billDataMap.put("applyUnionModel",datas);//putÊı¾İµ½mapÖĞ
+		billDataMap.put("applyUnionModel",datas);//putæ•°æ®åˆ°mapä¸­
 		datas = new ArrayList<ExampleBean>();
 		bean = new ExampleBean();
 		bean.setName("billLoanModel");
-		bean.setSex("ÄĞ");
+		bean.setSex("ç”·");
 		datas.add(bean);
-		billDataMap.put("billLoanModel",datas);//putÊı¾İµ½mapÖĞ
+		billDataMap.put("billLoanModel",datas);//putæ•°æ®åˆ°mapä¸­
 		datas = new ArrayList<ExampleBean>();
 		bean = new ExampleBean();
 		bean.setName("loanPayModel");
-		bean.setSex("Å®");
+		bean.setSex("å¥³");
 		datas.add(bean);
-		billDataMap.put("loanPayModel",datas);//putÊı¾İµ½mapÖĞ
+		billDataMap.put("loanPayModel",datas);//putæ•°æ®åˆ°mapä¸­
 		datas = new ArrayList<ExampleBean>();
 		bean = new ExampleBean();
 		bean.setName("budgetModel");
-		bean.setSex("ÄĞ");
+		bean.setSex("ç”·");
 		datas.add(bean);
-		billDataMap.put("budgetModel",datas);//putÊı¾İµ½mapÖĞ
+		billDataMap.put("budgetModel",datas);//putæ•°æ®åˆ°mapä¸­
 		datas = new ArrayList<ExampleBean>();
 		bean = new ExampleBean();
 		bean.setName("outgoModel");
-		bean.setSex("Å®");
+		bean.setSex("å¥³");
 		datas.add(bean);
-		billDataMap.put("outgoModel",datas);//putÊı¾İµ½mapÖĞ
+		billDataMap.put("outgoModel",datas);//putæ•°æ®åˆ°mapä¸­
 		datas = new ArrayList<ExampleBean>();
 		bean = new ExampleBean();
 		bean.setName("billItemModel");
-		bean.setSex("Å®");
+		bean.setSex("å¥³");
 		datas.add(bean);
-		billDataMap.put("billItemModel",datas);//putÊı¾İµ½mapÖĞ
+		billDataMap.put("billItemModel",datas);//putæ•°æ®åˆ°mapä¸­
 		datas = new ArrayList<ExampleBean>();
 		bean = new ExampleBean();
 		bean.setName("billAttachment");
-		bean.setSex("ÄĞ");
+		bean.setSex("ç”·");
 		datas.add(bean);
-		billDataMap.put("billAttachment",datas);//putÊı¾İµ½mapÖĞ
+		billDataMap.put("billAttachment",datas);//putæ•°æ®åˆ°mapä¸­
 		datas = new ArrayList<ExampleBean>();
 		bean = new ExampleBean();
 		bean.setName("billSapModel");
-		bean.setSex("Î´Öª");
+		bean.setSex("æœªçŸ¥");
 		datas.add(bean);
-		billDataMap.put("billSapModel",datas);//putÊı¾İµ½mapÖĞ	
-		model.addAttribute("nameList", nameList);//½«Ãû³ÆÁĞ±í·Åµ½¿ØÖÆÆ÷Êı¾İÈİÆ÷ÖĞ	
-		model.addAttribute("billDataMap", billDataMap);//½«mapÊı¾İ·Åµ½¿ØÖÆÆ÷Êı¾İÈİÆ÷ÖĞ
-		return "path:listmap";//Ìø×ªµ½Êı¾İÕ¹Ê¾Ò³Ãæ
+		billDataMap.put("billSapModel",datas);//putæ•°æ®åˆ°mapä¸­	
+		model.addAttribute("nameList", nameList);//å°†åç§°åˆ—è¡¨æ”¾åˆ°æ§åˆ¶å™¨æ•°æ®å®¹å™¨ä¸­	
+		model.addAttribute("billDataMap", billDataMap);//å°†mapæ•°æ®æ”¾åˆ°æ§åˆ¶å™¨æ•°æ®å®¹å™¨ä¸­
+		return "path:listmap";//è·³è½¬åˆ°æ•°æ®å±•ç¤ºé¡µé¢
 	}
 	@AssertDToken
 	public String sayHelloNumber(@RequestParam(name = "name") int ynum,
@@ -129,11 +129,11 @@ public class HelloWord
 
 		if (ynum != 0)
 		{
-			model.addAttribute("serverHelloNumber", "ĞÒÔËÊı×ÖÎª[" + ynum + "]£¡");
+			model.addAttribute("serverHelloNumber", "å¹¸è¿æ•°å­—ä¸º[" + ynum + "]ï¼");
 		}
 		else
-			model.addAttribute("serverHelloNumber", "ĞÒÔËÊı×ÖÎª[" + ynum
-					+ "]£¡£¬ºÃÏñÓĞµã²»¶ÔÅ¶¡£");
+			model.addAttribute("serverHelloNumber", "å¹¸è¿æ•°å­—ä¸º[" + ynum
+					+ "]ï¼ï¼Œå¥½åƒæœ‰ç‚¹ä¸å¯¹å“¦ã€‚");
 
 		return "path:sayHello";
 	}
@@ -143,9 +143,9 @@ public class HelloWord
 	{
 
 		if (yourname != null && !"".equals(yourname))
-			model.addAttribute("sayHelloString", "·şÎñÆ÷ÏòÄú[" + yourname + "]ÎÊºÃ£¡");
+			model.addAttribute("sayHelloString", "æœåŠ¡å™¨å‘æ‚¨[" + yourname + "]é—®å¥½ï¼");
 		else
-			model.addAttribute("sayHelloString", "ÇëÊäÈëÄúµÄÃû×Ö£¡");
+			model.addAttribute("sayHelloString", "è¯·è¾“å…¥æ‚¨çš„åå­—ï¼");
 		return "path:sayHello";
 	}
 	
@@ -154,9 +154,9 @@ public class HelloWord
 	{
 
 		if (yourname != null && !"".equals(yourname))
-			model.addAttribute("sayHelloStringVar", "·şÎñÆ÷ÏòÄú[" + yourname + "]ÎÊºÃ£¡");
+			model.addAttribute("sayHelloStringVar", "æœåŠ¡å™¨å‘æ‚¨[" + yourname + "]é—®å¥½ï¼");
 		else
-			model.addAttribute("sayHelloStringVar", "ÇëÊäÈëÄúµÄÃû×Ö£¡");
+			model.addAttribute("sayHelloStringVar", "è¯·è¾“å…¥æ‚¨çš„åå­—ï¼");
 		return "path:sayHello";
 	}
 
@@ -331,7 +331,7 @@ public class HelloWord
 	}
 	
 	/**
-	 * ²¹³ämapkey×¢½âpatternÊôĞÔµÄ²âÊÔÓÃÀı£º
+	 * è¡¥å……mapkeyæ³¨è§£patternå±æ€§çš„æµ‹è¯•ç”¨ä¾‹ï¼š
 	 * @param params
 	 * @param model
 	 * @return
@@ -353,7 +353,7 @@ public class HelloWord
 	}
 
 	/**
-	 * ²âÊÔµ¥¸ö×Ö·û´®ÏòÃ¶¾ÙÀàĞÍÖµ×ª»»
+	 * æµ‹è¯•å•ä¸ªå­—ç¬¦ä¸²å‘æšä¸¾ç±»å‹å€¼è½¬æ¢
 	 * 
 	 * @param type
 	 * @param response
@@ -368,24 +368,24 @@ public class HelloWord
 		{
 			if (type == SexType.F)
 			{
-				return "Å®";
+				return "å¥³";
 			}
 			else if (type == SexType.M)
 			{
-				return "ÄĞ";
+				return "ç”·";
 			}
 			else if (type == SexType.UN)
 			{
-				return "Î´Öª";
+				return "æœªçŸ¥";
 			}
 
 		}
 
-		return "Î´Öª";
+		return "æœªçŸ¥";
 	}
 
 	/**
-	 * ²âÊÔµ¥¸ö×Ö·û´®ÏòÃ¶¾ÙÀàĞÍÖµ×ª»»
+	 * æµ‹è¯•å•ä¸ªå­—ç¬¦ä¸²å‘æšä¸¾ç±»å‹å€¼è½¬æ¢
 	 * 
 	 * @param type
 	 * @param response
@@ -402,19 +402,19 @@ public class HelloWord
 			if (types[0] == SexType.F)
 			{
 
-				return "Å®";
+				return "å¥³";
 			}
 			else if (types[0] == SexType.M)
 			{
 
-				return "ÄĞ";
+				return "ç”·";
 			}
 			else if (types[0] == SexType.UN)
 			{
-				return "Î´Öª";
+				return "æœªçŸ¥";
 			}
 		}
-		return "Î´Öª";
+		return "æœªçŸ¥";
 	}
 
 	public String index()

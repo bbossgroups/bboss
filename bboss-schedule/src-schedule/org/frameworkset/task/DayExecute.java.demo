@@ -31,15 +31,15 @@ public class DayExecute implements Execute, Serializable
         
         String typeDesc = (String)parameters.get("typeDesc");
         if(typeDesc == null || typeDesc.equals(""))
-        	typeDesc = "ÈÕ³Ì°²ÅÅ";
+        	typeDesc = "æ—¥ç¨‹å®‰æ’";
         String url = (String)parameters.get("url");
         if(url == null || url.equals(""))
         	url = "/sysmanager/remind_list.jsp";
-        content = "Ö÷Ìâ£º" + topic + '\n' + " µØµã£º" + place + '\n' + "ÈÕ³Ì¿ªÊ¼Ê±¼ä£º"
-                + beginTime + '\n' + "ÈÕ³Ì½áÊøÊ±¼ä:" + endTime;
+        content = "ä¸»é¢˜ï¼š" + topic + '\n' + " åœ°ç‚¹ï¼š" + place + '\n' + "æ—¥ç¨‹å¼€å§‹æ—¶é—´ï¼š"
+                + beginTime + '\n' + "æ—¥ç¨‹ç»“æŸæ—¶é—´:" + endTime;
         RemindManagerImpl rmi = new RemindManagerImpl();
-        //·¢ËÍÌáĞÑ
-        rmi.sendRemindInfoByUserId("ÈÕ³Ì",isSys,isEmail,isMessage,Integer.parseInt(userID),content,type,typeDesc,url);
+        //å‘é€æé†’
+        rmi.sendRemindInfoByUserId("æ—¥ç¨‹",isSys,isEmail,isMessage,Integer.parseInt(userID),content,type,typeDesc,url);
     }
 
 }

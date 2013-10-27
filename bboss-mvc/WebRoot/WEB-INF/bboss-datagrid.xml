@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding='gb2312'?>
+<?xml version="1.0" encoding='UTF-8'?>
 <!-- 
 bboss-demo.xml
-ÃèÊö£ºÅäÖÃÓÃ»§¹ÜÀí¿ØÖÆÆ÷
+æè¿°ï¼šé…ç½®ç”¨æˆ·ç®¡ç†æŽ§åˆ¶å™¨
 -->
 <properties>
     
@@ -10,15 +10,15 @@ bboss-demo.xml
     		  path:tojson="/jsp/datagrid/page/returnJson.jsp"
 			    class="org.frameworkset.lfg.datagrid.DatagridControllerImpl" singlable="true"/>
 	
-	<!-- Í¨ÓÃÊý¾Ý·ÃÎÊ×îµ×²ãÊµÏÖÀà -->		    
+	<!-- é€šç”¨æ•°æ®è®¿é—®æœ€åº•å±‚å®žçŽ°ç±» -->		    
     <property name="defaultCommonCRUDDaoImpl"
     			class="org.frameworkset.lfg.datagrid.dao.CommonCRUDDaoImpl" singlable="true"/>
     
-    <!-- Í¨ÓÃÊý¾Ý·ÃÎÊÊµÏÖÀà -->		    
+    <!-- é€šç”¨æ•°æ®è®¿é—®å®žçŽ°ç±» -->		    
     <property name="defaultCommonDaoImpl" f:sqlfile="sqls/sqlfile.xml"
     			class="org.frameworkset.lfg.datagrid.dao.CommonDaoImpl" singlable="true"/>			
 	
-   <!-- ÓÃ»§Ö»ÐèÒªÅäÖÃÕâÀï¾ÍÐÐÁË£¬ÆäËû²»ÓÃ¹Ü ÒÔÏÂbean±»tableInfoConfigµÄ×¢ÈëÒýÓÃ -->  
+   <!-- ç”¨æˆ·åªéœ€è¦é…ç½®è¿™é‡Œå°±è¡Œäº†ï¼Œå…¶ä»–ä¸ç”¨ç®¡ ä»¥ä¸‹beanè¢«tableInfoConfigçš„æ³¨å…¥å¼•ç”¨ -->  
    <property name="CAN_BE_TABLE_NAME" class="org.frameworkset.lfg.datagrid.bean.TableInfoBean"
    				f:tableName="TA_REPORT_DATA_1"
    				f:dbname="">   

@@ -25,7 +25,7 @@ import com.frameworkset.common.poolman.util.SQLManager;
 
 /**
  * <p>SQL.java</p>
- * <p> Description: 获取sql语句，对应不同的数据库库类型的sql语句，尤其是insert语句</p>
+ * <p> Description: 鑾峰彇sql璇彞锛屽搴斾笉鍚岀殑鏁版嵁搴撳簱绫诲瀷鐨剆ql璇彞锛屽挨鍏舵槸insert璇彞</p>
  * <p> bboss workgroup </p>
  * <p> Copyright (c) 2009 </p>
  * 

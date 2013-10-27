@@ -29,7 +29,7 @@ import com.frameworkset.util.ValueObjectUtil;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2010-3-26 ÏÂÎç02:04:21
+ * @Date 2010-3-26 ä¸‹åˆ02:04:21
  * @author biaoping.yin,gao.tang
  * @version 1.0
  */
@@ -44,7 +44,7 @@ public abstract class ScheduleService implements Serializable{
 	}
 	
 	/**
-	 * ×°ÔØÈÎÎñÏîµÄ
+	 * è£…è½½ä»»åŠ¡é¡¹çš„
 	 * @param scheduler
 	 * @throws ScheduleServiceException
 	 */
@@ -68,7 +68,7 @@ public abstract class ScheduleService implements Serializable{
 	}
 	protected void installMethodInvokerJob(Scheduler scheduler,SchedulejobInfo jobInfo) throws Exception
 	{
-		log.info("Æô¶¯×÷Òµ×é["+(jobInfo.getParent() !=null?jobInfo.getParent().getId():"")+"]ÖĞµÄ·½·¨×÷Òµ["+jobInfo.getId()+"]¿ªÊ¼¡£");
+		log.info("å¯åŠ¨ä½œä¸šç»„["+(jobInfo.getParent() !=null?jobInfo.getParent().getId():"")+"]ä¸­çš„æ–¹æ³•ä½œä¸š["+jobInfo.getId()+"]å¼€å§‹ã€‚");
 		JobDetail jobDetail = new JobDetail(jobInfo.getId(),
                 //Scheduler.DEFAULT_GROUP,
 				scheduleServiceInfo.getId(),
@@ -108,7 +108,7 @@ public abstract class ScheduleService implements Serializable{
 		
 		Trigger trigger = this.buildTrigger(jobInfo);
 		scheduler.scheduleJob(jobDetail,trigger);
-		log.info("Æô¶¯×÷Òµ×é["+(jobInfo.getParent() !=null?jobInfo.getParent().getId():"")+"]ÖĞµÄ·½·¨×÷Òµ["+jobInfo.getId()+"]Íê±Ï¡£");
+		log.info("å¯åŠ¨ä½œä¸šç»„["+(jobInfo.getParent() !=null?jobInfo.getParent().getId():"")+"]ä¸­çš„æ–¹æ³•ä½œä¸š["+jobInfo.getId()+"]å®Œæ¯•ã€‚");
 	}
 	protected IntervalUnit getIntervalUnit(String intervalUnit)
 	{
@@ -310,7 +310,7 @@ public abstract class ScheduleService implements Serializable{
 	}
 	protected void installExecuteJob(Scheduler scheduler,SchedulejobInfo jobInfo) throws Exception
 	{
-		log.info("Æô¶¯×÷Òµ×é["+(jobInfo.getParent() !=null?jobInfo.getParent().getId():"")+"]ÖĞµÄ×÷Òµ["+jobInfo.getId()+"]¿ªÊ¼¡£");
+		log.info("å¯åŠ¨ä½œä¸šç»„["+(jobInfo.getParent() !=null?jobInfo.getParent().getId():"")+"]ä¸­çš„ä½œä¸š["+jobInfo.getId()+"]å¼€å§‹ã€‚");
 		JobDetail jobDetail = new JobDetail(jobInfo.getId(),
                 //Scheduler.DEFAULT_GROUP,
 				scheduleServiceInfo.getId(),
@@ -353,7 +353,7 @@ public abstract class ScheduleService implements Serializable{
 		
 		Trigger trigger = this.buildTrigger(jobInfo);
 		scheduler.scheduleJob(jobDetail,trigger);
-		log.info("Æô¶¯×÷Òµ×é["+(jobInfo.getParent() !=null?jobInfo.getParent().getId():"")+"]ÖĞµÄ×÷Òµ["+jobInfo.getId()+"]Íê±Ï¡£");
+		log.info("å¯åŠ¨ä½œä¸šç»„["+(jobInfo.getParent() !=null?jobInfo.getParent().getId():"")+"]ä¸­çš„ä½œä¸š["+jobInfo.getId()+"]å®Œæ¯•ã€‚");
 	}
 	
 	public void startupConfigedService(Scheduler scheduler)

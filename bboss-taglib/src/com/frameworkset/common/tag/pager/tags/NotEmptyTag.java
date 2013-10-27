@@ -22,7 +22,7 @@ import java.util.Map;
 
 /**
  * <p>NotEmptyTag.java</p>
- * <p> Description: ÅĞ¶ÏÖ¸¶¨×Ö¶ÎµÄÖµ¼È²»ÊÇnullÒ²²»ÊÇ¿Õ´®£¬ÔòÖ´ĞĞ±êÇ©ÌåµÃÄÚÈİ</p>
+ * <p> Description: åˆ¤æ–­æŒ‡å®šå­—æ®µçš„å€¼æ—¢ä¸æ˜¯nullä¹Ÿä¸æ˜¯ç©ºä¸²ï¼Œåˆ™æ‰§è¡Œæ ‡ç­¾ä½“å¾—å†…å®¹</p>
  * <p> bboss workgroup </p>
  * <p> Copyright (c) 2009 </p>
  * 

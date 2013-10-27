@@ -28,7 +28,7 @@ import org.jasypt.encryption.pbe.config.SimplePBEConfig;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2010-2-20 œ¬ŒÁ05:21:03
+ * @Date 2010-2-20 ‰∏ãÂçà05:21:03
  * @author biaoping.yin
  * @version 1.0
  */

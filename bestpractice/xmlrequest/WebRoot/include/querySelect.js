@@ -1,17 +1,17 @@
 /*
-	²éÑ¯selectÁĞ±í¿òÖĞµÄÊı¾İ selectÃû³Æ±ØĞëÎª"allist"
+	æŸ¥è¯¢selectåˆ—è¡¨æ¡†ä¸­çš„æ•°æ® selectåç§°å¿…é¡»ä¸º"allist"
 	
 */
 
-/*´æ·ÅselectË÷ÒıÊı×é*/
+/*å­˜æ”¾selectç´¢å¼•æ•°ç»„*/
 var eleArray = new Array();
-/*Ä£ºı²éÑ¯ÏÂÒ»Ìõ¼ÇÂ¼*/
+/*æ¨¡ç³ŠæŸ¥è¯¢ä¸‹ä¸€æ¡è®°å½•*/
 var next = 0;
 function blurryQuary(){
 	var count = 0;
 	var seRole = document.all("selectRoles").value;
 	if(seRole==""){
-		alert("²éÑ¯Ìõ¼ş²»ÄÜÎª¿Õ£¡");
+		alert("æŸ¥è¯¢æ¡ä»¶ä¸èƒ½ä¸ºç©ºï¼");
 		return false;
 	}
 	var obj = document.all("allist");
@@ -30,7 +30,7 @@ function blurryQuary(){
  		document.all.nextQue.style.display="";
 		next ++;
 	}else{
-		alert("Ã»ÓĞ·ûºÏµÄÌõ¼ş");
+		alert("æ²¡æœ‰ç¬¦åˆçš„æ¡ä»¶");
 		return false;
 	}
 }
@@ -46,13 +46,13 @@ function nextQuery(){
 		obj.options[curCount].selected = true;
 		next++;
 	}else{
-		alert("²éÑ¯Íê³É£¡");
+		alert("æŸ¥è¯¢å®Œæˆï¼");
 		onBlurryQueryChange();
 		next = 0;
 	}
 }
 
-/**ÎÄ±¾ÊôĞÔ¸Ä±ä**/
+/**æ–‡æœ¬å±æ€§æ”¹å˜**/
 function onBlurryQueryChange()
 {
  count = 0;
@@ -75,8 +75,8 @@ function enterKeydowngo(){
   <tr>
   	<td width="40%" align="left">
   		<input name="selectRoles" type="text" value="" onkeydown="enterKeydowngo()" onpropertychange="onBlurryQueryChange()" ondblclick=""  />
-  		<input name="que" type="button" value="²éÑ¯" onclick="blurryQuary()" class="input" />
-  		<input name="nextQue" style="display:none" type="button" value="²éÕÒÏÂÒ»¸ö" onclick="nextQuery()" class="input" />
+  		<input name="que" type="button" value="æŸ¥è¯¢" onclick="blurryQuary()" class="input" />
+  		<input name="nextQue" style="display:none" type="button" value="æŸ¥æ‰¾ä¸‹ä¸€ä¸ª" onclick="nextQuery()" class="input" />
   	</td>
     <td width="20%" align="center">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
     <td width="40%" align="left">

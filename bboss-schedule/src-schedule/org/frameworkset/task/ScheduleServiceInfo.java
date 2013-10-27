@@ -11,7 +11,7 @@ import java.util.Map;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2010-3-26 ÏÂÎç02:04:36
+ * @Date 2010-3-26 ä¸‹åˆ02:04:36
  * @author biaoping.yin,gao.tang
  * @version 1.0
  */

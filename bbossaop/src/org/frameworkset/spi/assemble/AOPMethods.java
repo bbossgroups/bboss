@@ -30,7 +30,7 @@ import org.frameworkset.spi.UNmodify;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2011-4-20 ÏÂÎç03:21:57
+ * @Date 2011-4-20 ä¸‹åˆ03:21:57
  * @author biaoping.yin
  * @version 1.0
  */
@@ -39,12 +39,12 @@ public class AOPMethods  implements java.io.Serializable,UNmodify
     private static Logger log = Logger.getLogger(Transactions.class);
 
     /**
-     * ÊÂÎñ·½·¨ĞÅÏ¢ List<SynchronizedMethod>
+     * äº‹åŠ¡æ–¹æ³•ä¿¡æ¯ List<SynchronizedMethod>
      */
     private List<SynchronizedMethod> aopMethods;
 
     /**
-     * ±êÊ¶·½·¨ÊÇ·ñÊÇÉùÃ÷Ê½ÊÂÎñ·½·¨ Map<methoduuid,SynchronizedMethod>
+     * æ ‡è¯†æ–¹æ³•æ˜¯å¦æ˜¯å£°æ˜å¼äº‹åŠ¡æ–¹æ³• Map<methoduuid,SynchronizedMethod>
      */
     private Map aopMethodInfoIDX;
 
@@ -58,10 +58,10 @@ public class AOPMethods  implements java.io.Serializable,UNmodify
     }
 
     /**
-     * ÅĞ¶Ï·½·¨ÊÇ·ñÊÇĞèÒª½øĞĞÊÂÎñ¿ØÖÆ,Èç¹ûÊÇÔò·µ»Ø°üº¬ÊÂÎñ¿ØÖÆ²ßÂÔĞÅÏ¢µÄ·½·¨¶ÔÏó£¬ ²»ÊÇ¾Í·µ»Ønull
+     * åˆ¤æ–­æ–¹æ³•æ˜¯å¦æ˜¯éœ€è¦è¿›è¡Œäº‹åŠ¡æ§åˆ¶,å¦‚æœæ˜¯åˆ™è¿”å›åŒ…å«äº‹åŠ¡æ§åˆ¶ç­–ç•¥ä¿¡æ¯çš„æ–¹æ³•å¯¹è±¡ï¼Œ ä¸æ˜¯å°±è¿”å›null
      * 
      * @param method
-     * @return SynchronizedMethod °üº¬ÊÂÎñ¿ØÖÆ²ßÂÔĞÅÏ¢
+     * @return SynchronizedMethod åŒ…å«äº‹åŠ¡æ§åˆ¶ç­–ç•¥ä¿¡æ¯
      */
     public SynchronizedMethod isTransactionMethod(Method method,String uuid)
     {
@@ -69,7 +69,7 @@ public class AOPMethods  implements java.io.Serializable,UNmodify
     }
     
     /**
-     * ÅĞ¶Ï¸ø¶¨µÄ·½·¨ÊÇ·ñÊÇÒì²½µ÷ÓÃ·½·¨£¬Èç¹ûÊÇÔò½«Òì²½·½·¨ĞÅÏ¢·µ»Ø¸øµ÷ÓÃ³ÌĞò
+     * åˆ¤æ–­ç»™å®šçš„æ–¹æ³•æ˜¯å¦æ˜¯å¼‚æ­¥è°ƒç”¨æ–¹æ³•ï¼Œå¦‚æœæ˜¯åˆ™å°†å¼‚æ­¥æ–¹æ³•ä¿¡æ¯è¿”å›ç»™è°ƒç”¨ç¨‹åº
      * @param method
      * @return
      */

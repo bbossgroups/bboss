@@ -24,7 +24,7 @@ import org.frameworkset.util.annotations.PathVariable;
  * <p> bboss workgroup </p>
  * <p> Copyright (c) 2005-2013 </p>
  * 
- * @Date 2013Äê10ÔÂ3ÈÕ
+ * @Date 2013å¹´10æœˆ3æ—¥
  * @author biaoping.yin
  * @version 1.0
  */
@@ -33,24 +33,24 @@ public class PathVariableWraper {
 	private String editor;
 	private String defaultvalue;
 	/**
-	 * ½âÂë×Ö·û¼¯
+	 * è§£ç å­—ç¬¦é›†
 	 * @return
 	 */
 	private String decodeCharset;
 	
 	/**
-	 * ²ÎÊıÔ­Ê¼×Ö·û¼¯
+	 * å‚æ•°åŸå§‹å­—ç¬¦é›†
 	 * @return
 	 */
 	private String charset;
 	
 	/**
-	 * ²ÎÊı×ª»»×Ö·û¼¯
+	 * å‚æ•°è½¬æ¢å­—ç¬¦é›†
 	 * @return
 	 */
 	private String convertcharset;
 	/**
-	 * Ö¸¶¨ÈÕÆÚ¸ñÊ½
+	 * æŒ‡å®šæ—¥æœŸæ ¼å¼
 	 * @return
 	 */
 	private String dateformat;
@@ -59,24 +59,24 @@ public class PathVariableWraper {
 		 editor = pv.editor();
 		 defaultvalue = AnnotationUtils.converDefaultValue(pv.defaultvalue());
 		/**
-		 * ½âÂë×Ö·û¼¯
+		 * è§£ç å­—ç¬¦é›†
 		 * @return
 		 */
 		 decodeCharset = AnnotationUtils.converDefaultValue(pv.decodeCharset());
 		
 		/**
-		 * ²ÎÊıÔ­Ê¼×Ö·û¼¯
+		 * å‚æ•°åŸå§‹å­—ç¬¦é›†
 		 * @return
 		 */
 		 charset = AnnotationUtils.converDefaultValue(pv.charset());
 		
 		/**
-		 * ²ÎÊı×ª»»×Ö·û¼¯
+		 * å‚æ•°è½¬æ¢å­—ç¬¦é›†
 		 * @return
 		 */
 		 convertcharset = AnnotationUtils.converDefaultValue(pv.convertcharset());
 		/**
-		 * Ö¸¶¨ÈÕÆÚ¸ñÊ½
+		 * æŒ‡å®šæ—¥æœŸæ ¼å¼
 		 * @return
 		 */
 		 dateformat = AnnotationUtils.converDefaultValue(pv.dateformat());
@@ -92,7 +92,7 @@ public class PathVariableWraper {
 		return this.defaultvalue;
 	}
 	/**
-	 * ½âÂë×Ö·û¼¯
+	 * è§£ç å­—ç¬¦é›†
 	 * @return
 	 */
 	public String decodeCharset(){
@@ -100,7 +100,7 @@ public class PathVariableWraper {
 	}
 	
 	/**
-	 * ²ÎÊıÔ­Ê¼×Ö·û¼¯
+	 * å‚æ•°åŸå§‹å­—ç¬¦é›†
 	 * @return
 	 */
 	public String charset(){
@@ -108,14 +108,14 @@ public class PathVariableWraper {
 	}
 	
 	/**
-	 * ²ÎÊı×ª»»×Ö·û¼¯
+	 * å‚æ•°è½¬æ¢å­—ç¬¦é›†
 	 * @return
 	 */
 	public String convertcharset(){
 		return this.convertcharset;
 	}
 	/**
-	 * Ö¸¶¨ÈÕÆÚ¸ñÊ½
+	 * æŒ‡å®šæ—¥æœŸæ ¼å¼
 	 * @return
 	 */
 	public String dateformat(){

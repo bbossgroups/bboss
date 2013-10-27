@@ -25,7 +25,7 @@ import com.frameworkset.util.VariableHandler.Variable;
  * 
  * <p>Title: PreparedDBUtil.java</p>
  *
- * <p>Description: Ô¤±àÒë²ÎÊı·â×°¶ÔÏó</p>
+ * <p>Description: é¢„ç¼–è¯‘å‚æ•°å°è£…å¯¹è±¡</p>
  *
  * <p>
  * bboss workgroup
@@ -34,14 +34,14 @@ import com.frameworkset.util.VariableHandler.Variable;
  * Copyright (c) 2007
  * </p>
  * 
- * @Date 2009-6-1 ÏÂÎç08:58:51
+ * @Date 2009-6-1 ä¸‹åˆ08:58:51
  * @author biaoping.yin
  * @version 1.0
  */
 public class Param
 {
 	/**
-	 * ¶¨Òå²ÎÊı¶ÔÓ¦µÄ·½·¨,×Ü¹²35¸ö·½·¨
+	 * å®šä¹‰å‚æ•°å¯¹åº”çš„æ–¹æ³•,æ€»å…±35ä¸ªæ–¹æ³•
 	 */
 	public static final String SET_ARRAY_INT_ARRAY = "setArray(int, Array)";
 	/**setAsciiStream(int i, InputStream x, int length)*/
@@ -152,8 +152,8 @@ public class Param
 	String dataformat;
 	String name;
 	/**
-	 * ÒıÓÃ±äÁ¿£¬ÊÊÓÃÓÚ±äÁ¿ÒıÓÃ£¬list£¬set£¬map£¬Êı×éÒÔ¼°¶à¼¶
-	 * ±äÁ¿ÒıÓÃ
+	 * å¼•ç”¨å˜é‡ï¼Œé€‚ç”¨äºå˜é‡å¼•ç”¨ï¼Œlistï¼Œsetï¼Œmapï¼Œæ•°ç»„ä»¥åŠå¤šçº§
+	 * å˜é‡å¼•ç”¨
 	 */
 	Variable variable;
 	public String toString()

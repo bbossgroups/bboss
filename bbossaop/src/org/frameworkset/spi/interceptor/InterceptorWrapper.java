@@ -23,7 +23,7 @@ import com.frameworkset.proxy.Interceptor;
 /**
  * 
  * <p>Title: InterceptorWrapper.java</p> 
- * <p>Description: °´ÕÕÀ¹½ØÆ÷µÄË³ĞòÖ´ĞĞËùÓĞµÄÀ¹½ØÆ÷</p>
+ * <p>Description: æŒ‰ç…§æ‹¦æˆªå™¨çš„é¡ºåºæ‰§è¡Œæ‰€æœ‰çš„æ‹¦æˆªå™¨</p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
  * @Date Dec 14, 2008 2:31:54 PM

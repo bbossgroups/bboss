@@ -17,7 +17,7 @@ import org.frameworkset.spi.serviceidentity.TargetImpl;
  * Title: RPCAddress.java
  * </p>
  * <p>
- * Description: Ìá¹©Ô¶³Ì·şÎñµÄµØÖ·ĞÅÏ¢£¬°üÀ¨ipºÍ¶Ë¿Ú
+ * Description: æä¾›è¿œç¨‹æœåŠ¡çš„åœ°å€ä¿¡æ¯ï¼ŒåŒ…æ‹¬ipå’Œç«¯å£
  * </p>
  * <p>
  * bboss workgroup
@@ -26,7 +26,7 @@ import org.frameworkset.spi.serviceidentity.TargetImpl;
  * Copyright (c) 2007
  * </p>
  * 
- * @Date 2009-8-31 ÉÏÎç09:43:25
+ * @Date 2009-8-31 ä¸Šåˆ09:43:25
  * @author biaoping.yin
  * @version 1.0
  */
@@ -35,12 +35,12 @@ public class RPCAddress implements Externalizable, Comparable<RPCAddress>, Clone
     private String ip;
     
     /**
-     * webserviceĞ­ÒéµØÖ·ÉÏÏÂÎÄ
+     * webserviceåè®®åœ°å€ä¸Šä¸‹æ–‡
      */
     private String webserviceurl = null;   
     
     /**
-     * jms·şÎñÆ÷µØÖ·±êÊ¶
+     * jmsæœåŠ¡å™¨åœ°å€æ ‡è¯†
      */
     private String server_uuid = null;
     
@@ -55,7 +55,7 @@ public class RPCAddress implements Externalizable, Comparable<RPCAddress>, Clone
 	private transient InetAddress ipAddress;
     
     /**
-     * ¶ÔÓ¦µÄwebserviceµØÖ·ÉÏÏÂÎÄ
+     * å¯¹åº”çš„webserviceåœ°å€ä¸Šä¸‹æ–‡
      */
     private String contextpath;
 
@@ -102,7 +102,7 @@ public class RPCAddress implements Externalizable, Comparable<RPCAddress>, Clone
 	}
 
 	/**
-     * Ô¶³ÌµØÖ·¶ÔÓ¦µÄÍ¨Ñ¶Ğ­Òé£ºmina£¬jgroup£¬jms£¬webservice£¬rmiµÈµÈ
+     * è¿œç¨‹åœ°å€å¯¹åº”çš„é€šè®¯åè®®ï¼šminaï¼Œjgroupï¼Œjmsï¼Œwebserviceï¼Œrmiç­‰ç­‰
      */
     private String protocol;
 

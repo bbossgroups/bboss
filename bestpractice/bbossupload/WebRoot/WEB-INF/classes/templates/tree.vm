@@ -245,7 +245,7 @@
       
       	var icon0 = $('img[name="icon0_'  + eventNode + '"]');
       	var icon1 = $('img[name="icon1_'  + eventNode + '"]');
-      	if(node_.is(':visible')) //ÅĞ¶Ï½ÚµãÊÇ·ñ¿É¼û
+      	if(node_.is(':visible')) //åˆ¤æ–­èŠ‚ç‚¹æ˜¯å¦å¯è§
       	{
       		icon0.attr("src",$("#icon_" + eventNode).attr("collapsedimg"));
 		    icon1.attr("src",$("#icon_" + eventNode).attr("closedimg")); 
@@ -257,7 +257,7 @@
 		  
       	}
       	node_.toggle();    
-      	 // if(!$("#div_parent_" + eventNode)) return;//Èç¹ûÊÂ¼ş½Úµã²»´æÔÚ£¬ÔòÖ±½Ó·µ»Ø
+      	 // if(!$("#div_parent_" + eventNode)) return;//å¦‚æœäº‹ä»¶èŠ‚ç‚¹ä¸å­˜åœ¨ï¼Œåˆ™ç›´æ¥è¿”å›
       	  
 	      //if(Element.visible("div_parent_" + eventNode)) 
 	      //{
@@ -446,7 +446,7 @@
 	       }
       }
       /**
-      * »ñÈ¡½ÚµãµÄËùÓĞ¸¸½Úµã±êÊ¶ÒÔ\#\#·Ö¸î
+      * è·å–èŠ‚ç‚¹çš„æ‰€æœ‰çˆ¶èŠ‚ç‚¹æ ‡è¯†ä»¥\#\#åˆ†å‰²
       */
       function getFatherids(checkNode)
       {
@@ -531,7 +531,7 @@
 	 	if(fatherids && fatherids != "")
 		{
 	   		var fathers = fatherids.split("\#\#");
-	        if(checked) //µ±Ç°½ÚµãÎªÑ¡ÖĞ×´Ì¬
+	        if(checked) //å½“å‰èŠ‚ç‚¹ä¸ºé€‰ä¸­çŠ¶æ€
 	        {
 	         	if(fathers.length)
 	         	{

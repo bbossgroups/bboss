@@ -32,18 +32,18 @@ public interface AI {
 	public void testSameName1()throws Exception;
 	public void testSameName1(String msg)throws Exception;
 	/**
-	 * »ìºÏÒì³£²âÊÔ£¬¼´°üº¬ÊµÀıÒì³££¬Ò²°üº¬×ÓÀàºÍÊµÀıÒì³£
-	 * ËùÓĞµÄÒì³£¶¼½«µ¼ÖÂÊÂÎñ»Ø¹ö
+	 * æ··åˆå¼‚å¸¸æµ‹è¯•ï¼Œå³åŒ…å«å®ä¾‹å¼‚å¸¸ï¼Œä¹ŸåŒ…å«å­ç±»å’Œå®ä¾‹å¼‚å¸¸
+	 * æ‰€æœ‰çš„å¼‚å¸¸éƒ½å°†å¯¼è‡´äº‹åŠ¡å›æ»š
 	 */
 	public void testTXWithSpecialExceptions(String type) throws Exception;
 	/**
-	 * Ö»ÒªÊÇÌØ¶¨ÊµÀıµÄÒì³£¾Í»á»Ø¹ö
+	 * åªè¦æ˜¯ç‰¹å®šå®ä¾‹çš„å¼‚å¸¸å°±ä¼šå›æ»š
 	 * @param type
 	 * @throws Exception
 	 */
 	public void testTXWithInstanceofExceptions(String type) throws Exception;
 	/**
-	 * Ö»ÓĞÒì³£±¾ÉíµÄÊµÀıÒì³£²Å´¥·¢ÊÂÎñµÄ»Ø¹ö
+	 * åªæœ‰å¼‚å¸¸æœ¬èº«çš„å®ä¾‹å¼‚å¸¸æ‰è§¦å‘äº‹åŠ¡çš„å›æ»š
 	 * @param type
 	 * @throws Exception
 	 */

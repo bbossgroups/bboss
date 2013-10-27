@@ -6,7 +6,7 @@ import java.util.ListResourceBundle;
  * 
  * <p>Title: com.frameworkset.platform.cms.driver.util.FileMIMETypes.java</p>
  *
- * <p>Description: 存放文件mime类别信息，用于生成各种类别的文件</p>
+ * <p>Description: 瀛樻斁鏂囦欢mime绫诲埆淇℃伅锛岀敤浜庣敓鎴愬悇绉嶇被鍒殑鏂囦欢</p>
  *
  * <p>Copyright: Copyright (c) 2007</p>
  *

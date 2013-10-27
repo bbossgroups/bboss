@@ -8,8 +8,8 @@
 	</tr>
 	<tr>
 	<td align="right">
-		<input type="button" id="queryBtn" name="queryBtn" value="²éÑ¯" onclick="blurryQuary('blurryValue','queryBtn','nextBtn','${rootid}')"  class="input">
-		<input style="display:none" id="nextBtn" name="nextBtn" type="button" value="²éÕÒÏÂÒ»¸ö" onclick="nextNodes('queryBtn','nextBtn','${rootid}')" class="input">
+		<input type="button" id="queryBtn" name="queryBtn" value="æŸ¥è¯¢" onclick="blurryQuary('blurryValue','queryBtn','nextBtn','${rootid}')"  class="input">
+		<input style="display:none" id="nextBtn" name="nextBtn" type="button" value="æŸ¥æ‰¾ä¸‹ä¸€ä¸ª" onclick="nextNodes('queryBtn','nextBtn','${rootid}')" class="input">
 		</td>
 	</tr>
 	</table>

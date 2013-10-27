@@ -10,7 +10,7 @@ public class WSClient {
 	public static void main(String[] args) {
 		WSServiceInMVC wsservice = JaxWsProxyFactory.getWSClient("http://localhost:8080/" +
 				"demo/cxfservices/mysfirstMVCwsservicePort",WSServiceInMVC.class);
-		System.out.print(wsservice.sayMvsHello("¶à¶à"));
+		System.out.print(wsservice.sayMvsHello("å¤šå¤š"));
 
 	}
 

@@ -34,7 +34,7 @@ package com.frameworkset.common.util;
 
 /**
  * @author biaoping.yin
- * ÎÄ¼ş´¦ÀíÊµÓÃÀà
+ * æ–‡ä»¶å¤„ç†å®ç”¨ç±»
  */
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -45,7 +45,7 @@ public class FileUtil {
 	}
 
 	/**
-	 * Description:¶ÁÈ¡ÎÄ¼şµÄÄÚÈİ£¬½«Æä±£´æÔÚStringBuffer¶ÔÏóÖĞ·µ»Ø£¬
+	 * Description:è¯»å–æ–‡ä»¶çš„å†…å®¹ï¼Œå°†å…¶ä¿å­˜åœ¨StringBufferå¯¹è±¡ä¸­è¿”å›ï¼Œ
 	 * @param file
 	 * @return StringBuffer
 	 * @throws Exception
@@ -69,7 +69,7 @@ public class FileUtil {
 	}
 
 	/**
-	 * Description:»ñÈ¡ÊôĞÔÎÄ¼şµÄÀàÈİ
+	 * Description:è·å–å±æ€§æ–‡ä»¶çš„ç±»å®¹
 	 * @param propsFile
 	 * @return  Properties
 	 * @throws Exception
@@ -79,9 +79,9 @@ public class FileUtil {
 		return getProperties(propsFile, false);
 	}
 	/** 
-	 * Description:»ñÈ¡ÊôĞÔÎÄ¼şµÄÄÚÈİ£¬²¢ÇÒ¸ù¾İaddToSystemPropsµÄÖµÊÇ·ñ×°ÔØÏµÍ³ÊôĞÔ
+	 * Description:è·å–å±æ€§æ–‡ä»¶çš„å†…å®¹ï¼Œå¹¶ä¸”æ ¹æ®addToSystemPropsçš„å€¼æ˜¯å¦è£…è½½ç³»ç»Ÿå±æ€§
 	 * @param propsFile
-	 * @param addToSystemProps true:×°ÔØÏµÍ³ÊôĞÔ£¬false²»×°ÔØÏµÍ³ÊôĞÔ
+	 * @param addToSystemProps true:è£…è½½ç³»ç»Ÿå±æ€§ï¼Œfalseä¸è£…è½½ç³»ç»Ÿå±æ€§
 	 * @return Properties
 	 * @throws Exception
 	 * Properties

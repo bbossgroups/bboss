@@ -38,24 +38,24 @@ public @interface PathVariable {
 	String editor() default "";
 	String defaultvalue() default ValueConstants.DEFAULT_NONE;
 	/**
-	 * ½âÂë×Ö·û¼¯
+	 * è§£ç å­—ç¬¦é›†
 	 * @return
 	 */
 	String decodeCharset() default ValueConstants.DEFAULT_NONE;
 	
 	/**
-	 * ²ÎÊıÔ­Ê¼×Ö·û¼¯
+	 * å‚æ•°åŸå§‹å­—ç¬¦é›†
 	 * @return
 	 */
 	String charset() default ValueConstants.DEFAULT_NONE;
 	
 	/**
-	 * ²ÎÊı×ª»»×Ö·û¼¯
+	 * å‚æ•°è½¬æ¢å­—ç¬¦é›†
 	 * @return
 	 */
 	String convertcharset() default ValueConstants.DEFAULT_NONE;
 	/**
-	 * Ö¸¶¨ÈÕÆÚ¸ñÊ½
+	 * æŒ‡å®šæ—¥æœŸæ ¼å¼
 	 * @return
 	 */
 	String dateformat() default ValueConstants.DEFAULT_NONE;

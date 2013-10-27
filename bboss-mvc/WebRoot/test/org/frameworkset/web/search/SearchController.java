@@ -99,7 +99,7 @@ public class SearchController implements InitializingBean, DisposableBean {
 			hits = searcher.search(query, maxpage + startindex); // run the
 			
 			long end = System.currentTimeMillis();
-			times = (end - start) + "毫秒";
+			times = (end - start) + "姣";
 			
 			// query
 			if (hits.totalHits == 0) { // if we got no results tell the user
@@ -199,7 +199,7 @@ public class SearchController implements InitializingBean, DisposableBean {
 	}
 	
 	/**
-	 * 错误处理方法
+	 * 閿欒澶勭悊鏂规硶
 	 * @param request
 	 * @param response
 	 * @param error

@@ -28,7 +28,7 @@ import org.junit.Test;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2011-10-20 ÏÂÎç01:12:19
+ * @Date 2011-10-20 ä¸‹åˆ01:12:19
  * @author biaoping.yin
  * @version 1.0
  */
@@ -42,45 +42,45 @@ public class ClientTest {
 //	@Before
 	public void init()
 	{
-		//»ñÈ¡mvcÈİÆ÷ÖĞ×é¼şµÄÔ¶³Ì·şÎñµ÷ÓÃ½Ó¿Ú£¬mvcÈİÆ÷ÓÉ·şÎñ¶Ëmvc¿ò¼Ü×Ô¶¯³õÊ¼»¯
+		//è·å–mvcå®¹å™¨ä¸­ç»„ä»¶çš„è¿œç¨‹æœåŠ¡è°ƒç”¨æ¥å£ï¼Œmvcå®¹å™¨ç”±æœåŠ¡ç«¯mvcæ¡†æ¶è‡ªåŠ¨åˆå§‹åŒ–
 		mvcinf = ClientProxyContext.getWebMVCClientBean(
 				"(http::localhost:8080/bboss-mvc/http.rpc)" +
 				"/client.proxy.demo",
 				ClientInf.class);
 		
-		//»ñÈ¡ApplicationContextÀàĞÍÈİÆ÷ÖĞ×é¼şµÄÔ¶³Ì·şÎñµ÷ÓÃ½Ó¿Ú
-		//ApplicationContextÈİÆ÷±ØĞëÊÇÒÔÏÂ·½Ê½´´½¨
+		//è·å–ApplicationContextç±»å‹å®¹å™¨ä¸­ç»„ä»¶çš„è¿œç¨‹æœåŠ¡è°ƒç”¨æ¥å£
+		//ApplicationContextå®¹å™¨å¿…é¡»æ˜¯ä»¥ä¸‹æ–¹å¼åˆ›å»º
 //		ApplicationContext context = ApplicationContext.getApplicationContext("org/frameworkset/web/ws/testwsmodule.xml");
 		WSService = ClientProxyContext.getSimpleClientBean("org/frameworkset/web/ws/testwsmodule.xml", 
 				"(http::localhost:8080/bboss-mvc/http.rpc)" +
 				"/mysfirstwsservice?user=admin&password=123456", 
 				WSService.class);
 		
-		//»ñÈ¡·şÎñÆ÷¶ËÄ¬ÈÏÈİÆ÷ÖĞ×é¼şµÄÔ¶³Ì·şÎñµ÷ÓÃ½Ó¿Ú
-		//·şÎñÆ÷¶ËÄ¬ÈÏÈİÆ÷manager-provider.xml±ØĞëÊÇÒÔÏÂ·½Ê½´´½¨
+		//è·å–æœåŠ¡å™¨ç«¯é»˜è®¤å®¹å™¨ä¸­ç»„ä»¶çš„è¿œç¨‹æœåŠ¡è°ƒç”¨æ¥å£
+		//æœåŠ¡å™¨ç«¯é»˜è®¤å®¹å™¨manager-provider.xmlå¿…é¡»æ˜¯ä»¥ä¸‹æ–¹å¼åˆ›å»º
 //		ApplicationContext context = ApplicationContext.getApplicationContext();
-		//ÒÔÏÂÊÇ´«Í³µÄÔ¶³Ì·şÎñ»ñÈ¡·½Ê½£¬±ØĞëÒªÇó±¾µØÓĞÏàÓ¦µÄ½Ó¿ÚºÍ×é¼şÊµÏÖÒÔ¼°ÅäÖÃÎÄ¼ş£¬ĞÂµÄapiÒÑ¾­Ïû³ıÁËÕâÖÖÏŞÖÆ
+		//ä»¥ä¸‹æ˜¯ä¼ ç»Ÿçš„è¿œç¨‹æœåŠ¡è·å–æ–¹å¼ï¼Œå¿…é¡»è¦æ±‚æœ¬åœ°æœ‰ç›¸åº”çš„æ¥å£å’Œç»„ä»¶å®ç°ä»¥åŠé…ç½®æ–‡ä»¶ï¼Œæ–°çš„apiå·²ç»æ¶ˆé™¤äº†è¿™ç§é™åˆ¶
 //		context.getTBeanObject("(http::localhost:8080/bboss-mvc/http.rpc)" +
 //				"/client.proxy.simpledemo?user=admin&password=123456",  ClientInf.class);
 		defaultinf = ClientProxyContext.getApplicationClientBean( "(http::localhost:8080/bboss-mvc/http.rpc)" +
 				"/client.proxy.simpledemo?user=admin&password=123456", ClientInf.class);
 		
-		//»ñÈ¡¿Í»§¶Ëµ÷ÓÃ´úÀí½Ó¿Ú
-		//·şÎñÆ÷¶ËÈİÆ÷org/frameworkset/spi/ws/webserivce-modules.xml±ØĞëÊÇÒÔÏÂ·½Ê½´´½¨
+		//è·å–å®¢æˆ·ç«¯è°ƒç”¨ä»£ç†æ¥å£
+		//æœåŠ¡å™¨ç«¯å®¹å™¨org/frameworkset/spi/ws/webserivce-modules.xmlå¿…é¡»æ˜¯ä»¥ä¸‹æ–¹å¼åˆ›å»º
 //		DefaultApplicationContext context = DefaultApplicationContext.getApplicationContext("org/frameworkset/spi/ws/webserivce-modules.xml");
-		simpleinf = ClientProxyContext.getSimpleClientBean("org/frameworkset/spi/ws/webserivce-modules.xml",//ÈİÆ÷±êÊ¶
-		                                                            "(http::localhost:8080/bboss-mvc/http.rpc)/client.proxy.simpledemo?user=admin&password=123456",//·şÎñ×é¼şµØÖ· 
-		                                                            ClientInf.class);//·şÎñ½Ó¿Ú
+		simpleinf = ClientProxyContext.getSimpleClientBean("org/frameworkset/spi/ws/webserivce-modules.xml",//å®¹å™¨æ ‡è¯†
+		                                                            "(http::localhost:8080/bboss-mvc/http.rpc)/client.proxy.simpledemo?user=admin&password=123456",//æœåŠ¡ç»„ä»¶åœ°å€ 
+		                                                            ClientInf.class);//æœåŠ¡æ¥å£
 		TestInf TestInf = ClientProxyContext.getWebMVCClientBean(
 		                                				"(http::localhost:8080/bboss-mvc/http.rpc)" +
 		                                				"//dateconvert/*.html?user=admin&password=123456",
 		                                				TestInf.class);
 		
-		//»·¾³Ô¤ÈÈ
-		mvcinf.helloworld("aaaa£¬¶à¶à");
-		WSService.sayHello("aaaa£¬¶à¶à");
-		simpleinf.helloworld("aaaa£¬¶à¶à");
-		defaultinf.helloworld("aaaa£¬¶à¶à");
+		//ç¯å¢ƒé¢„çƒ­
+		mvcinf.helloworld("aaaaï¼Œå¤šå¤š");
+		WSService.sayHello("aaaaï¼Œå¤šå¤š");
+		simpleinf.helloworld("aaaaï¼Œå¤šå¤š");
+		defaultinf.helloworld("aaaaï¼Œå¤šå¤š");
 		String test = TestInf.dateconvert();
 		System.out.println();
 	}
@@ -93,8 +93,8 @@ public class ClientTest {
 	public void testMvcClient()
 	{
 		long s = System.currentTimeMillis();
-		//½øĞĞÔ¶³Ì·½·¨µ÷ÓÃ,²¢Êä³öµ÷ÓÃ½á¹û
-		String re = (mvcinf.helloworld("aaaa£¬¶à¶à"));
+		//è¿›è¡Œè¿œç¨‹æ–¹æ³•è°ƒç”¨,å¹¶è¾“å‡ºè°ƒç”¨ç»“æœ
+		String re = (mvcinf.helloworld("aaaaï¼Œå¤šå¤š"));
 		long e = System.currentTimeMillis();
 		System.out.println("testMvcClient:" +re + "," + (e -s));
 		
@@ -107,8 +107,8 @@ public class ClientTest {
 	{
 		
 		long s = System.currentTimeMillis();
-		//½øĞĞÔ¶³Ì·½·¨µ÷ÓÃ,²¢Êä³öµ÷ÓÃ½á¹û
-		String re = WSService.sayHello("aaaa£¬¶à¶à");
+		//è¿›è¡Œè¿œç¨‹æ–¹æ³•è°ƒç”¨,å¹¶è¾“å‡ºè°ƒç”¨ç»“æœ
+		String re = WSService.sayHello("aaaaï¼Œå¤šå¤š");
 		long e = System.currentTimeMillis();
 		System.out.println("testWSServiceClient:" +re + "," + (e -s));
 	}
@@ -117,8 +117,8 @@ public class ClientTest {
 	public void testDefaultApplicationClient()
 	{
 		long s = System.currentTimeMillis();
-		//½øĞĞÔ¶³Ì·½·¨µ÷ÓÃ,²¢Êä³öµ÷ÓÃ½á¹û
-		String re = (defaultinf.helloworld("aaaa£¬¶à¶à"));
+		//è¿›è¡Œè¿œç¨‹æ–¹æ³•è°ƒç”¨,å¹¶è¾“å‡ºè°ƒç”¨ç»“æœ
+		String re = (defaultinf.helloworld("aaaaï¼Œå¤šå¤š"));
 		long e = System.currentTimeMillis();
 		System.out.println("testDefaultApplicationClient:" +re + "," + (e -s));
 	}
@@ -128,8 +128,8 @@ public class ClientTest {
 	public void testSimpleClient()
 	{
 		long s = System.currentTimeMillis();
-		//½øĞĞÔ¶³Ì·½·¨µ÷ÓÃ,²¢Êä³öµ÷ÓÃ½á¹û
-		String re = (simpleinf.helloworld("aaaa£¬¶à¶à"));
+		//è¿›è¡Œè¿œç¨‹æ–¹æ³•è°ƒç”¨,å¹¶è¾“å‡ºè°ƒç”¨ç»“æœ
+		String re = (simpleinf.helloworld("aaaaï¼Œå¤šå¤š"));
 		long e = System.currentTimeMillis();
 		System.out.println("testSimpleClient:" +re + "," + (e -s));
 		
@@ -138,11 +138,11 @@ public class ClientTest {
 	public void testAopFactoryPattern()
 	{
 		 
-		//¶¨ÒåÈİÆ÷¶ÔÏó
+		//å®šä¹‰å®¹å™¨å¯¹è±¡
 		DefaultApplicationContext context = DefaultApplicationContext.getApplicationContext("org/frameworkset/spi/remote/clientproxy/consumer.xml");
-		//»ñÈ¡¿Í»§¶Ë×é¼şÊµÀı
+		//è·å–å®¢æˆ·ç«¯ç»„ä»¶å®ä¾‹
 		ClientInf client = context.getTBeanObject("clientservice", ClientInf.class);
-		//·¢ÆğÔ¶³Ì·½·¨µ÷ÓÃ
+		//å‘èµ·è¿œç¨‹æ–¹æ³•è°ƒç”¨
 		client.helloworld("aaa");
 	}
 	@Test
@@ -153,8 +153,8 @@ public class ClientTest {
 				"/mysfirstwsservice?user=admin&password=123456", 
 				WSService.class);
 		WSService.sayHello("aaa");
-		String ss = "ÄãºÃ£¬¶à¶à,ÄãºÃ£¬¶à¶àÄãºÃ£¬¶à¶àÄãºÃ£¬¶à¶àÄãºÃ£¬¶à¶àÄãºÃ£¬¶à¶àÄãºÃ£¬¶à¶àÄãºÃ£¬¶à¶àÄãºÃ£¬¶à¶àÄãºÃ£¬¶à¶àÄãºÃ£¬¶à¶àÄãºÃ£¬¶à¶àÄãºÃ£¬¶à¶à" +
-				"ÄãºÃ£¬¶à¶àÄãºÃ£¬¶à¶àÄãºÃ£¬¶à¶àÄãºÃ£¬¶à¶àÄãºÃ£¬¶à¶àÄãºÃ£¬¶à¶àÄãºÃ£¬¶à¶àÄãºÃ£¬¶à¶à";
+		String ss = "ä½ å¥½ï¼Œå¤šå¤š,ä½ å¥½ï¼Œå¤šå¤šä½ å¥½ï¼Œå¤šå¤šä½ å¥½ï¼Œå¤šå¤šä½ å¥½ï¼Œå¤šå¤šä½ å¥½ï¼Œå¤šå¤šä½ å¥½ï¼Œå¤šå¤šä½ å¥½ï¼Œå¤šå¤šä½ å¥½ï¼Œå¤šå¤šä½ å¥½ï¼Œå¤šå¤šä½ å¥½ï¼Œå¤šå¤šä½ å¥½ï¼Œå¤šå¤šä½ å¥½ï¼Œå¤šå¤š" +
+				"ä½ å¥½ï¼Œå¤šå¤šä½ å¥½ï¼Œå¤šå¤šä½ å¥½ï¼Œå¤šå¤šä½ å¥½ï¼Œå¤šå¤šä½ å¥½ï¼Œå¤šå¤šä½ å¥½ï¼Œå¤šå¤šä½ å¥½ï¼Œå¤šå¤šä½ å¥½ï¼Œå¤šå¤š";
 		long s = System.currentTimeMillis();
 		String ret = WSService.sayHello(ss);
 		long e = System.currentTimeMillis();
@@ -231,9 +231,9 @@ public class ClientTest {
 				"(netty::192.168.1.22:12347)" +
 				"/rpc.test", 
 				RPCTestInf.class);
-		WSService.sayHelloWorld("ÄãºÃ£¬¶à¶à");
-		String ss = "ÄãºÃ£¬¶à¶à,ÄãºÃ£¬¶à¶àÄãºÃ£¬¶à¶àÄãºÃ£¬¶à¶àÄãºÃ£¬¶à¶àÄãºÃ£¬¶à¶àÄãºÃ£¬¶à¶àÄãºÃ£¬¶à¶àÄãºÃ£¬¶à¶àÄãºÃ£¬¶à¶àÄãºÃ£¬¶à¶àÄãºÃ£¬¶à¶àÄãºÃ£¬¶à¶à" +
-				"ÄãºÃ£¬¶à¶àÄãºÃ£¬¶à¶àÄãºÃ£¬¶à¶àÄãºÃ£¬¶à¶àÄãºÃ£¬¶à¶àÄãºÃ£¬¶à¶àÄãºÃ£¬¶à¶àÄãºÃ£¬¶à¶à";
+		WSService.sayHelloWorld("ä½ å¥½ï¼Œå¤šå¤š");
+		String ss = "ä½ å¥½ï¼Œå¤šå¤š,ä½ å¥½ï¼Œå¤šå¤šä½ å¥½ï¼Œå¤šå¤šä½ å¥½ï¼Œå¤šå¤šä½ å¥½ï¼Œå¤šå¤šä½ å¥½ï¼Œå¤šå¤šä½ å¥½ï¼Œå¤šå¤šä½ å¥½ï¼Œå¤šå¤šä½ å¥½ï¼Œå¤šå¤šä½ å¥½ï¼Œå¤šå¤šä½ å¥½ï¼Œå¤šå¤šä½ å¥½ï¼Œå¤šå¤šä½ å¥½ï¼Œå¤šå¤š" +
+				"ä½ å¥½ï¼Œå¤šå¤šä½ å¥½ï¼Œå¤šå¤šä½ å¥½ï¼Œå¤šå¤šä½ å¥½ï¼Œå¤šå¤šä½ å¥½ï¼Œå¤šå¤šä½ å¥½ï¼Œå¤šå¤šä½ å¥½ï¼Œå¤šå¤šä½ å¥½ï¼Œå¤šå¤š";
 		long s = System.currentTimeMillis();
 		String resustl = WSService.sayHelloWorld(ss);
 		long e = System.currentTimeMillis();
@@ -249,9 +249,9 @@ public class ClientTest {
 				"(webservice::http://localhost:8080/bboss-mvc/cxfservices)" +
 				"/client.proxy.demo",
 				ClientInf.class);
-		WSService.helloworld("ÄãºÃ£¬¶à¶à");
-		String ss = "ÄãºÃ£¬¶à¶à,ÄãºÃ£¬¶à¶àÄãºÃ£¬¶à¶àÄãºÃ£¬¶à¶àÄãºÃ£¬¶à¶àÄãºÃ£¬¶à¶àÄãºÃ£¬¶à¶àÄãºÃ£¬¶à¶àÄãºÃ£¬¶à¶àÄãºÃ£¬¶à¶àÄãºÃ£¬¶à¶àÄãºÃ£¬¶à¶àÄãºÃ£¬¶à¶à" +
-				"ÄãºÃ£¬¶à¶àÄãºÃ£¬¶à¶àÄãºÃ£¬¶à¶àÄãºÃ£¬¶à¶àÄãºÃ£¬¶à¶àÄãºÃ£¬¶à¶àÄãºÃ£¬¶à¶àÄãºÃ£¬¶à¶à";
+		WSService.helloworld("ä½ å¥½ï¼Œå¤šå¤š");
+		String ss = "ä½ å¥½ï¼Œå¤šå¤š,ä½ å¥½ï¼Œå¤šå¤šä½ å¥½ï¼Œå¤šå¤šä½ å¥½ï¼Œå¤šå¤šä½ å¥½ï¼Œå¤šå¤šä½ å¥½ï¼Œå¤šå¤šä½ å¥½ï¼Œå¤šå¤šä½ å¥½ï¼Œå¤šå¤šä½ å¥½ï¼Œå¤šå¤šä½ å¥½ï¼Œå¤šå¤šä½ å¥½ï¼Œå¤šå¤šä½ å¥½ï¼Œå¤šå¤šä½ å¥½ï¼Œå¤šå¤š" +
+				"ä½ å¥½ï¼Œå¤šå¤šä½ å¥½ï¼Œå¤šå¤šä½ å¥½ï¼Œå¤šå¤šä½ å¥½ï¼Œå¤šå¤šä½ å¥½ï¼Œå¤šå¤šä½ å¥½ï¼Œå¤šå¤šä½ å¥½ï¼Œå¤šå¤šä½ å¥½ï¼Œå¤šå¤š";
 		long s = System.currentTimeMillis();
 		String ssss  = WSService.helloworld(ss);
 		long e = System.currentTimeMillis();
@@ -267,9 +267,9 @@ public class ClientTest {
 				"(webservice::http://localhost:8080/demo/cxfservices)" +
 				"/mysfirstmvcwsservice?user=admin&password=123456",
 				WSServiceInMVC.class);
-		WSService.sayMvsHello("ÄãºÃ£¬¶à¶à");
-		String ss = "ÄãºÃ£¬¶à¶à,ÄãºÃ£¬¶à¶àÄãºÃ£¬¶à¶àÄãºÃ£¬¶à¶àÄãºÃ£¬¶à¶àÄãºÃ£¬¶à¶àÄãºÃ£¬¶à¶àÄãºÃ£¬¶à¶àÄãºÃ£¬¶à¶àÄãºÃ£¬¶à¶àÄãºÃ£¬¶à¶àÄãºÃ£¬¶à¶àÄãºÃ£¬¶à¶à" +
-				"ÄãºÃ£¬¶à¶àÄãºÃ£¬¶à¶àÄãºÃ£¬¶à¶àÄãºÃ£¬¶à¶àÄãºÃ£¬¶à¶àÄãºÃ£¬¶à¶àÄãºÃ£¬¶à¶àÄãºÃ£¬¶à¶à";
+		WSService.sayMvsHello("ä½ å¥½ï¼Œå¤šå¤š");
+		String ss = "ä½ å¥½ï¼Œå¤šå¤š,ä½ å¥½ï¼Œå¤šå¤šä½ å¥½ï¼Œå¤šå¤šä½ å¥½ï¼Œå¤šå¤šä½ å¥½ï¼Œå¤šå¤šä½ å¥½ï¼Œå¤šå¤šä½ å¥½ï¼Œå¤šå¤šä½ å¥½ï¼Œå¤šå¤šä½ å¥½ï¼Œå¤šå¤šä½ å¥½ï¼Œå¤šå¤šä½ å¥½ï¼Œå¤šå¤šä½ å¥½ï¼Œå¤šå¤šä½ å¥½ï¼Œå¤šå¤š" +
+				"ä½ å¥½ï¼Œå¤šå¤šä½ å¥½ï¼Œå¤šå¤šä½ å¥½ï¼Œå¤šå¤šä½ å¥½ï¼Œå¤šå¤šä½ å¥½ï¼Œå¤šå¤šä½ å¥½ï¼Œå¤šå¤šä½ å¥½ï¼Œå¤šå¤šä½ å¥½ï¼Œå¤šå¤š";
 		long s = System.currentTimeMillis();
 		String ssss  = WSService.sayMvsHello(ss);
 		long e = System.currentTimeMillis();
@@ -279,7 +279,7 @@ public class ClientTest {
 		
 		WSServiceInMVC wsservice = JaxWsProxyFactory.getWSClient("http://localhost:8080/" +
 				"demo/cxfservices/mysfirstMVCwsservicePort",WSServiceInMVC.class);
-		wsservice.sayMvsHello("ÄãºÃ£¬¶à¶à");
+		wsservice.sayMvsHello("ä½ å¥½ï¼Œå¤šå¤š");
 		
 		 s = System.currentTimeMillis();
 		 ssss  = wsservice.sayMvsHello(ss);
@@ -293,9 +293,9 @@ public class ClientTest {
 				"/appBomService?user=admin&password=123456",
 				WSServiceInMVC.class);
 		
-		ssss = pdp.sayMvsHello("¶à¶à");
+		ssss = pdp.sayMvsHello("å¤šå¤š");
 		 s = System.currentTimeMillis();
-		 ssss = pdp.sayMvsHello("¶à¶à");
+		 ssss = pdp.sayMvsHello("å¤šå¤š");
 		 e = System.currentTimeMillis();
 		 interval = (e-s);
 		System.out.println(interval+ssss);
@@ -309,9 +309,9 @@ public class ClientTest {
 				"(webservice::http://localhost:8080/SanyPDP/cxfservices)" +
 				"/appBomService?user=admin&password=123456",
 				WSServiceInMVC.class);
-		WSService.sayMvsHello("ÄãºÃ£¬¶à¶à");
-		String ss = "ÄãºÃ£¬¶à¶à,ÄãºÃ£¬¶à¶àÄãºÃ£¬¶à¶àÄãºÃ£¬¶à¶àÄãºÃ£¬¶à¶àÄãºÃ£¬¶à¶àÄãºÃ£¬¶à¶àÄãºÃ£¬¶à¶àÄãºÃ£¬¶à¶àÄãºÃ£¬¶à¶àÄãºÃ£¬¶à¶àÄãºÃ£¬¶à¶àÄãºÃ£¬¶à¶à" +
-				"ÄãºÃ£¬¶à¶àÄãºÃ£¬¶à¶àÄãºÃ£¬¶à¶àÄãºÃ£¬¶à¶àÄãºÃ£¬¶à¶àÄãºÃ£¬¶à¶àÄãºÃ£¬¶à¶àÄãºÃ£¬¶à¶à";
+		WSService.sayMvsHello("ä½ å¥½ï¼Œå¤šå¤š");
+		String ss = "ä½ å¥½ï¼Œå¤šå¤š,ä½ å¥½ï¼Œå¤šå¤šä½ å¥½ï¼Œå¤šå¤šä½ å¥½ï¼Œå¤šå¤šä½ å¥½ï¼Œå¤šå¤šä½ å¥½ï¼Œå¤šå¤šä½ å¥½ï¼Œå¤šå¤šä½ å¥½ï¼Œå¤šå¤šä½ å¥½ï¼Œå¤šå¤šä½ å¥½ï¼Œå¤šå¤šä½ å¥½ï¼Œå¤šå¤šä½ å¥½ï¼Œå¤šå¤šä½ å¥½ï¼Œå¤šå¤š" +
+				"ä½ å¥½ï¼Œå¤šå¤šä½ å¥½ï¼Œå¤šå¤šä½ å¥½ï¼Œå¤šå¤šä½ å¥½ï¼Œå¤šå¤šä½ å¥½ï¼Œå¤šå¤šä½ å¥½ï¼Œå¤šå¤šä½ å¥½ï¼Œå¤šå¤šä½ å¥½ï¼Œå¤šå¤š";
 		long s = System.currentTimeMillis();
 		String ssss  = WSService.sayMvsHello(ss);
 		long e = System.currentTimeMillis();
@@ -333,9 +333,9 @@ public class ClientTest {
 				"(netty::192.168.1.22:12347)" +
 				"/rpc.test", 
 				RPCTestInf.class);
-		WSService.sayHelloWorld("ÄãºÃ£¬¶à¶à");
+		WSService.sayHelloWorld("ä½ å¥½ï¼Œå¤šå¤š");
 		long s = System.currentTimeMillis();
-		WSService.sayHelloWorld("ÄãºÃ£¬¶à¶à");
+		WSService.sayHelloWorld("ä½ å¥½ï¼Œå¤šå¤š");
 		long e = System.currentTimeMillis();
 		long interval = (e-s);
 		System.out.println(interval);
@@ -422,7 +422,7 @@ public class ClientTest {
 //			long s = System.currentTimeMillis();
 			while(true)
 			{
-				String re = WSService.sayHello("¶à¶à");
+				String re = WSService.sayHello("å¤šå¤š");
 				System.out.println(re);
 //				longcount.incrementAndGet();
 //				e = System.currentTimeMillis() -s;
@@ -455,7 +455,7 @@ public class ClientTest {
 //			long s = System.currentTimeMillis();
 			while(true)
 			{
-				String re = WSService.sayHelloWorld("ÄãºÃ,¶à¶à");
+				String re = WSService.sayHelloWorld("ä½ å¥½,å¤šå¤š");
 //				longcount.incrementAndGet();
 //				e = System.currentTimeMillis() -s;
 //				System.out.println(re);

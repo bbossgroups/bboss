@@ -17,13 +17,13 @@ package org.frameworkset.web.multipart;
 
 /**
  * <p> IgnoreFieldNameMultipartFile.java</p>
- * <p> Description: Èç¹û²ÎÊıÀàĞÍÖ¸¶¨ÎªIgnoreFieldNameMultipartFile£¬Ôò²»¹Ü²ÎÊıÃû³ÆÊÇ·ñºÍ¸½¼ş
- * ¶ÔÓ¦µÄinputÔªËØÊÇ·ñÏà·û£¬Ö±½Ó½«ÉÏ´«¸½¼ş¶ÔÏó»òÕß¶ÔÏóÊı×éÖ±½Ó¸³¸ø¸Ã²ÎÊı
+ * <p> Description: å¦‚æœå‚æ•°ç±»å‹æŒ‡å®šä¸ºIgnoreFieldNameMultipartFileï¼Œåˆ™ä¸ç®¡å‚æ•°åç§°æ˜¯å¦å’Œé™„ä»¶
+ * å¯¹åº”çš„inputå…ƒç´ æ˜¯å¦ç›¸ç¬¦ï¼Œç›´æ¥å°†ä¸Šä¼ é™„ä»¶å¯¹è±¡æˆ–è€…å¯¹è±¡æ•°ç»„ç›´æ¥èµ‹ç»™è¯¥å‚æ•°
  * </p>
  * <p> bboss workgroup </p>
  * <p> Copyright (c) 2009 </p>
  * 
- * @Date 2012-5-15 ÏÂÎç3:21:04
+ * @Date 2012-5-15 ä¸‹åˆ3:21:04
  * @author biaoping.yin
  * @version 1.0
  */

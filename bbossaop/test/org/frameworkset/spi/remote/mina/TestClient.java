@@ -36,7 +36,7 @@ import org.junit.Test;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2009-10-7 œ¬ŒÁ10:00:29
+ * @Date 2009-10-7 ‰∏ãÂçà10:00:29
  * @author biaoping.yin
  * @version 1.0
  */
@@ -46,7 +46,7 @@ public class TestClient  extends TestBase
 	public  void testWithParameter()
 	{
 //		RPCTestInf testInf = (RPCTestInf)context.getBeanObject("(192.168.11.102:1186)/rpc.test");
-		RPCTestInf testInf = (RPCTestInf)context.getBeanObject("(mina::192.168.1.22:12346)/rpc.test?parameterKey=∂‡∂‡");
+		RPCTestInf testInf = (RPCTestInf)context.getBeanObject("(mina::192.168.1.22:12346)/rpc.test?parameterKey=Â§öÂ§ö");
 		
 		for(int i = 0; i < 10; i ++)
 		{
@@ -103,7 +103,7 @@ public class TestClient  extends TestBase
         }
         
         /**
-         * ≤‚ ‘µÿ÷∑ «∑Òø…¡¨Õ®
+         * ÊµãËØïÂú∞ÂùÄÊòØÂê¶ÂèØËøûÈÄö
          */
         public static void testValidateAddress()
         {
@@ -120,34 +120,34 @@ public class TestClient  extends TestBase
 //	    TestDamone t = new TestDamone();
 //	    t.start();
 	    /**
-	     * ≤‚ ‘µ•œﬂ≥Ãµ˜”√
+	     * ÊµãËØïÂçïÁ∫øÁ®ãË∞ÉÁî®
 	     */
 //	    testMinaRPC();
 	    
 	    /**
-	     * Œﬁ∑µªÿ÷µ≤‚ ‘
+	     * Êó†ËøîÂõûÂÄºÊµãËØï
 	     */
 //	    testNoReturnMinaRPC();
 		/**
-		 * ≤‚ ‘∂‡œﬂ≥Ãµ˜”√
+		 * ÊµãËØïÂ§öÁ∫øÁ®ãË∞ÉÁî®
 		 */
 //	    testMutiThreadMinaRPC();
 	    
 	    /**
-	     * –£—Èµÿ÷∑ «∑Òø…¡¨Õ®
+	     * Ê†°È™åÂú∞ÂùÄÊòØÂê¶ÂèØËøûÈÄö
 	     */
 //	    testValidateAddress();
 	    /**
-	     * ≤‚ ‘mina∂‡≤•µ˜”√
+	     * ÊµãËØïminaÂ§öÊí≠Ë∞ÉÁî®
 	     */
 //	    testMuticastMinaRPC(); 
 
 	    /**
-	     * ≤‚ ‘±æµÿµ˜”√
+	     * ÊµãËØïÊú¨Âú∞Ë∞ÉÁî®
 	     */
 //	    testMinaLocal();
 	    /**
-	     * ≤‚ ‘mina¡¨Ω”∆˜¥¥Ω®π¶ƒ‹
+	     * ÊµãËØïminaËøûÊé•Âô®ÂàõÂª∫ÂäüËÉΩ
 	     */
 //	    testClinentTransport();
 //	         System.exit(0);
@@ -169,8 +169,8 @@ public class TestClient  extends TestBase
 	    
 	    ExecutorService executor = java.util.concurrent.Executors.newCachedThreadPool();
 	    executor.execute(task);
-        Object ret = task.get();//“ª÷±µ»¥˝∑µªÿΩ·π˚
-        //Object ret = task.get(1000,TimeUnit.MICROSECONDS);//µ»¥˝1√Î£¨1√Î÷”ƒ⁄∑µªÿΩ·π˚’˝≥££¨≥¨π˝“ª√Î∫Û√ª∑µªÿΩ·π˚≈◊≥ˆTimeoutException“Ï≥£
+        Object ret = task.get();//‰∏ÄÁõ¥Á≠âÂæÖËøîÂõûÁªìÊûú
+        //Object ret = task.get(1000,TimeUnit.MICROSECONDS);//Á≠âÂæÖ1ÁßíÔºå1ÁßíÈíüÂÜÖËøîÂõûÁªìÊûúÊ≠£Â∏∏ÔºåË∂ÖËøá‰∏ÄÁßíÂêéÊ≤°ËøîÂõûÁªìÊûúÊäõÂá∫TimeoutExceptionÂºÇÂ∏∏
         
 	}
 	
@@ -188,7 +188,7 @@ public class TestClient  extends TestBase
 		    System.out.println("testInf.getCount():" + i + " = "+testInf.getCount());
 		
 		long end = System.currentTimeMillis();
-		System.out.println("œ˚∫ƒ ±º‰£∫" + (end - start) / 1000 + "√Î");
+		System.out.println("Ê∂àËÄóÊó∂Èó¥Ôºö" + (end - start) / 1000 + "Áßí");
 		
 		
 		
@@ -202,10 +202,10 @@ public class TestClient  extends TestBase
                 long start = System.currentTimeMillis();
                 
                 for(int i = 0; i < 1; i ++)
-                    testInf.sayHello("“¸±Í∆Ω");
+                    testInf.sayHello("Â∞πÊ†áÂπ≥");
                 
                 long end = System.currentTimeMillis();
-                System.out.println("œ˚∫ƒ ±º‰£∫" + (end - start) / 1000 + "√Î");
+                System.out.println("Ê∂àËÄóÊó∂Èó¥Ôºö" + (end - start) / 1000 + "Áßí");
                 
                 
                 
@@ -229,7 +229,7 @@ public class TestClient  extends TestBase
 //                    System.out.println("testInf.getCount():" + i + " = "+testInf.getCount());
 //                
 //                long end = System.currentTimeMillis();
-//                System.out.println("œ˚∫ƒ ±º‰£∫" + (end - start) / 1000 + "√Î");
+//                System.out.println("Ê∂àËÄóÊó∂Èó¥Ôºö" + (end - start) / 1000 + "Áßí");
 	    for(int i = 0; i < 10; i ++)
 	    {
 	        Thread t = new Thread(new RunMinaRPC(i));
@@ -256,7 +256,7 @@ public class TestClient  extends TestBase
                     System.out.println("testInf.getCount():" + i + " = "+testInf.getCount());
                 
                 long end = System.currentTimeMillis();
-                System.out.println("»ŒŒÒ°æ" + i + "°øœ˚∫ƒ ±º‰£∫" + (end - start) / 1000 + "√Î");
+                System.out.println("‰ªªÂä°„Äê" + i + "„ÄëÊ∂àËÄóÊó∂Èó¥Ôºö" + (end - start) / 1000 + "Áßí");
                 
             }
 	    
@@ -268,7 +268,7 @@ public class TestClient  extends TestBase
 	}
 	
 	/**
-	 * ∂‡≤•∑˛ŒÒµ˜”√
+	 * Â§öÊí≠ÊúçÂä°Ë∞ÉÁî®
 	 */
 	@Test
 	public void testMuticastMinaRPC()
@@ -289,7 +289,7 @@ public class TestClient  extends TestBase
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-                //µ»º€µƒµ˜”√∑Ω∑®
+                //Á≠â‰ª∑ÁöÑË∞ÉÁî®ÊñπÊ≥ï
                 
 //                Object ret_12345 = context.getRPCResult("127.0.0.1:12345", ret,Target.BROADCAST_TYPE_MINA);
 //                Object ret_12346 = context.getRPCResult("127.0.0.1:12346", ret,Target.BROADCAST_TYPE_MINA);

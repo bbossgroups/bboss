@@ -31,15 +31,15 @@ import org.frameworkset.spi.serviceidentity.ServiceIDUtil;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2011-5-11 ÉÏÎç11:25:51
+ * @Date 2011-5-11 ä¸Šåˆ11:25:51
  * @author biaoping.yin
  * @version 1.0
  */
 public class DefaultApplicationContext extends BaseApplicationContext {
 	private static Logger log = Logger.getLogger(DefaultApplicationContext.class);
 	/**
-	 * »ñÈ¡Ö¸¶¨¸ùÅäÖÃÎÄ¼şÉÏÏÂÎÄbean×é¼ş¹ÜÀíÈİÆ÷£¬ÅäÖÃÎÄ¼ş´Ó²ÎÊıconfigfile¶ÔÓ¦ÅäÖÃÎÄ¼ş¿ªÊ¼
-	 * ²»Í¬µÄÉÏÏÂÎÄ¼ş»·¾³ÈİÆ÷»¥Ïà¸ôÀë£¬×é¼ş¼ä²»´æÔÚÒÀÀµ¹ØÏµ£¬ÊôĞÔÒ²²»´æÔÚÈÎºÎÒıÓÃ¹ØÏµ¡£
+	 * è·å–æŒ‡å®šæ ¹é…ç½®æ–‡ä»¶ä¸Šä¸‹æ–‡beanç»„ä»¶ç®¡ç†å®¹å™¨ï¼Œé…ç½®æ–‡ä»¶ä»å‚æ•°configfileå¯¹åº”é…ç½®æ–‡ä»¶å¼€å§‹
+	 * ä¸åŒçš„ä¸Šä¸‹æ–‡ä»¶ç¯å¢ƒå®¹å™¨äº’ç›¸éš”ç¦»ï¼Œç»„ä»¶é—´ä¸å­˜åœ¨ä¾èµ–å…³ç³»ï¼Œå±æ€§ä¹Ÿä¸å­˜åœ¨ä»»ä½•å¼•ç”¨å…³ç³»ã€‚
 	 * 
 	 * @return
 	 */
@@ -127,7 +127,7 @@ public class DefaultApplicationContext extends BaseApplicationContext {
 	}
 	
 	/**
-	 * ¿ÉÒÔÓÃÓÚÍâ²¿ÎÄ¼ş¼ÓÔØ£¬ÀàËÆÓÚ¹¹Ôìº¯Êı
+	 * å¯ä»¥ç”¨äºå¤–éƒ¨æ–‡ä»¶åŠ è½½ï¼Œç±»ä¼¼äºæ„é€ å‡½æ•°
 	 * public DefaultApplicationContext(String configfile)
 	 * @param configfile
 	 */

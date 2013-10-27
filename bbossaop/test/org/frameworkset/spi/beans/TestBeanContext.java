@@ -25,10 +25,10 @@ import org.junit.Test;
 
 /**
  * <p>Title: TestBeanContext.java</p> 
- * <p>Description: ²âÊÔ¶ÀÁ¢µÄÅäÖÃÎÄ¼şÉÏÏÂÎÄµÄbean¹¤³§Àà</p>
+ * <p>Description: æµ‹è¯•ç‹¬ç«‹çš„é…ç½®æ–‡ä»¶ä¸Šä¸‹æ–‡çš„beanå·¥å‚ç±»</p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2010-3-21 ÏÂÎç08:43:44
+ * @Date 2010-3-21 ä¸‹åˆ08:43:44
  * @author biaoping.yin
  * @version 1.0
  */
@@ -86,7 +86,7 @@ public class TestBeanContext {
 	{
 		BaseApplicationContext context = DefaultApplicationContext.getApplicationContext("org/frameworkset/spi/beans/manager-beans.xml");
 		BeanInfoAwareTest convertor = context.getTBeanObject("test.beaninfoawary",BeanInfoAwareTest.class);
-		//´Ó×é¼şÊµÀıÖĞ»ñÈ¡×é¼şÅäÖÃÔªÊı¾İ¶ÔÏó
+		//ä»ç»„ä»¶å®ä¾‹ä¸­è·å–ç»„ä»¶é…ç½®å…ƒæ•°æ®å¯¹è±¡
 		Pro beaninfo = convertor.getBeaninfo();
 
 	    

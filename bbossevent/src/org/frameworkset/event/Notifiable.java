@@ -19,24 +19,24 @@ import java.util.List;
 
 
 /**
- * ÊÂ¼ş·¢ËÍÕß
+ * äº‹ä»¶å‘é€è€…
  *
  * @author biaoping.yin
  * @version 1.0
  */
 public interface Notifiable {
 	/**
-	 * Description ×¢²á¼àÌıÆ÷·½·¨
-	 * @param listener ĞèÒª×¢²áµÄ¼àÌıÆ÷
+	 * Description æ³¨å†Œç›‘å¬å™¨æ–¹æ³•
+	 * @param listener éœ€è¦æ³¨å†Œçš„ç›‘å¬å™¨
 	 * void
 	 */
 	public void addListener(Listener listener);
 	
 	/**
-	 * Description ×¢²á¼àÌıÆ÷·½·¨
-	 * @param listener ĞèÒª×¢²áµÄ¼àÌıÆ÷
-	 * @remote ¼àÌı±¾µØÊÂ¼şºÍÔ¶³ÌÊÂ¼ş±êÊ¶£¬ÎªtrueÊ±¼àÌıÔ¶³ÌÊÂ¼ş
-	 *         Èç¹ûÏµÍ³ÖĞÃ»ÓĞÆô¶¯¼¯Èº»ò¶àÊµÀı¹¦ÄÜÊ±
+	 * Description æ³¨å†Œç›‘å¬å™¨æ–¹æ³•
+	 * @param listener éœ€è¦æ³¨å†Œçš„ç›‘å¬å™¨
+	 * @remote ç›‘å¬æœ¬åœ°äº‹ä»¶å’Œè¿œç¨‹äº‹ä»¶æ ‡è¯†ï¼Œä¸ºtrueæ—¶ç›‘å¬è¿œç¨‹äº‹ä»¶
+	 *         å¦‚æœç³»ç»Ÿä¸­æ²¡æœ‰å¯åŠ¨é›†ç¾¤æˆ–å¤šå®ä¾‹åŠŸèƒ½æ—¶
 	 * void
 	 * @deprecated
 	 * @see public void addListener(Listener listener,int listenerType);
@@ -45,19 +45,19 @@ public interface Notifiable {
 	
 	
 	/**
-	 * Description ×¢²á¼àÌıÆ÷·½·¨
-	 * @param listener ĞèÒª×¢²áµÄ¼àÌıÆ÷
-	 * @param List<ResourceChangeEventType> ¼àÌıÆ÷ĞèÒª¼àÌıµÄÏûÏ¢ÀàĞÍ
+	 * Description æ³¨å†Œç›‘å¬å™¨æ–¹æ³•
+	 * @param listener éœ€è¦æ³¨å†Œçš„ç›‘å¬å™¨
+	 * @param List<ResourceChangeEventType> ç›‘å¬å™¨éœ€è¦ç›‘å¬çš„æ¶ˆæ¯ç±»å‹
 	 * void
 	 */
 	public void addListener(Listener listener,List eventtypes);
 	/**
-	 * Description ×¢²á¼àÌıÆ÷·½·¨
-	 * @param listener ĞèÒª×¢²áµÄ¼àÌıÆ÷
-	 * @param List<ResourceChangeEventType> ¼àÌıÆ÷ĞèÒª¼àÌıµÄÏûÏ¢ÀàĞÍ
-	 * @parema boolean remote Çø·Ö¼àÌıÆ÷ÊÇ·ñ¼àÌıÔ¶³ÌÊÂ¼ş£¬
-	 * 					true-¼àÌı±¾µØºÍÔ¶³ÌÊÂ¼ş
-	 * 					false-²»¼àÌı£¬Ö»¼àÌı±¾µØÊÂ¼ş
+	 * Description æ³¨å†Œç›‘å¬å™¨æ–¹æ³•
+	 * @param listener éœ€è¦æ³¨å†Œçš„ç›‘å¬å™¨
+	 * @param List<ResourceChangeEventType> ç›‘å¬å™¨éœ€è¦ç›‘å¬çš„æ¶ˆæ¯ç±»å‹
+	 * @parema boolean remote åŒºåˆ†ç›‘å¬å™¨æ˜¯å¦ç›‘å¬è¿œç¨‹äº‹ä»¶ï¼Œ
+	 * 					true-ç›‘å¬æœ¬åœ°å’Œè¿œç¨‹äº‹ä»¶
+	 * 					false-ä¸ç›‘å¬ï¼Œåªç›‘å¬æœ¬åœ°äº‹ä»¶
 	 * void
 	 * @deprecated 
 	 * @see public void addListener(Listener listener,List eventtypes,int listenerType)
@@ -68,35 +68,35 @@ public interface Notifiable {
 	
 	/**
 	 * 
-	 * @param listener ĞèÒª×¢²áµÄ¼àÌıÆ÷
-	 * @param eventtypes List<ResourceChangeEventType> ¼àÌıÆ÷ĞèÒª¼àÌıµÄÏûÏ¢ÀàĞÍ
-	 * @param listenerType ÊÂ¼ş¼àÌıÆ÷ÀàĞÍ
+	 * @param listener éœ€è¦æ³¨å†Œçš„ç›‘å¬å™¨
+	 * @param eventtypes List<ResourceChangeEventType> ç›‘å¬å™¨éœ€è¦ç›‘å¬çš„æ¶ˆæ¯ç±»å‹
+	 * @param listenerType äº‹ä»¶ç›‘å¬å™¨ç±»å‹
 	 * 
 	 */
 	public void addListener(Listener listener,List eventtypes,int listenerType);
 	
 	/**
 	 * 
-	 * @param listener ĞèÒª×¢²áµÄ¼àÌıÆ÷£¬¼àÌıËùÓĞÀàĞÍµÄÊÂ¼ş
+	 * @param listener éœ€è¦æ³¨å†Œçš„ç›‘å¬å™¨ï¼Œç›‘å¬æ‰€æœ‰ç±»å‹çš„äº‹ä»¶
 	 * 
-	 * @param listenerType ÊÂ¼ş¼àÌıÆ÷ÀàĞÍ
+	 * @param listenerType äº‹ä»¶ç›‘å¬å™¨ç±»å‹
 	 * 
 	 */
 	public void addListener(Listener listener,int listenerType);
 
 	/**
-	 * Description µ±ÊÂ¼ş·¢ÉúÊ±£¬µ÷ÓÃ¸Ã·½·¨Í¨ÖªËùÓĞµÄ¼àÌıÆ÷£¬ÏµÍ³¸ù¾İsynchronizable
-         *             ²ÎÊı¿ØÖÆÏûÏ¢Í¬²½ºÍÒì²½´¦ÀíÏûÏ¢»úÖÆ
-	 * @param source ÊÂ¼şÔ´
-         * @param synchronizable ¿ØÖÆÏûÏ¢Í¬²½ºÍÒì²½´¦ÀíÏûÏ¢»úÖÆ£¬falseÒì²½´¦Àí£¬trueÍ¬²½·½Ê½´¦Àí
+	 * Description å½“äº‹ä»¶å‘ç”Ÿæ—¶ï¼Œè°ƒç”¨è¯¥æ–¹æ³•é€šçŸ¥æ‰€æœ‰çš„ç›‘å¬å™¨ï¼Œç³»ç»Ÿæ ¹æ®synchronizable
+         *             å‚æ•°æ§åˆ¶æ¶ˆæ¯åŒæ­¥å’Œå¼‚æ­¥å¤„ç†æ¶ˆæ¯æœºåˆ¶
+	 * @param source äº‹ä»¶æº
+         * @param synchronizable æ§åˆ¶æ¶ˆæ¯åŒæ­¥å’Œå¼‚æ­¥å¤„ç†æ¶ˆæ¯æœºåˆ¶ï¼Œfalseå¼‚æ­¥å¤„ç†ï¼ŒtrueåŒæ­¥æ–¹å¼å¤„ç†
 	 * void
 	 */
 	public void change(Event source,boolean synchronizable);
 
     /**
-     * Description µ±ÊÂ¼ş·¢ÉúÊ±£¬µ÷ÓÃ¸Ã·½·¨Í¨ÖªËùÓĞµÄ¼àÌıÆ÷
-     *             ,ÏµÍ³½«ÒÔÍ¬²½µÄ·½Ê½´¦ÀíÊÂ¼şÏûÏ¢
-     * @param source ÊÂ¼şÔ´
+     * Description å½“äº‹ä»¶å‘ç”Ÿæ—¶ï¼Œè°ƒç”¨è¯¥æ–¹æ³•é€šçŸ¥æ‰€æœ‰çš„ç›‘å¬å™¨
+     *             ,ç³»ç»Ÿå°†ä»¥åŒæ­¥çš„æ–¹å¼å¤„ç†äº‹ä»¶æ¶ˆæ¯
+     * @param source äº‹ä»¶æº
      * void
      */
     public void change(Event source);

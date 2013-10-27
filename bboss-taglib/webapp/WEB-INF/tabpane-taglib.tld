@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="GBK"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE taglib
   PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.1//EN"
   "http://java.sun.com/j2ee/dtds/web-jsptaglibrary_1_2.dtd">
@@ -13,11 +13,11 @@
   <shortname>tab</shortname>
   <uri>tabpane-taglib</uri>
   
-	<!-- tabpane container£¬×÷Îª³éÌë±êÇ©tabpaneµÄÈÝÆ÷£¬ÐèÒª×¢Òâ£º
-					id ÊôÐÔµÄÖµ±ØÐë±£Ö¤Ó¦ÓÃÈ«¾ÖÎ¨Ò»ÐÔ£¬ÓÈÆäÊÇÔÚÆôÓÃcookieµÄÊ±ºò£¬
-					selectedTabPaneId ÊôÐÔÓÃÀ´ÉèÖÃÈ±Ê¡Ñ¡ÖÐµÄ³éÌë±êÇ©tabpane£¬ÆäÖµÎª¶ÔÓ¦tabpaneµÄidµÄÊôÐÔÖµ
-					enablecookie ÉèÖÃÊÇ·ñÔÚcookieÖÐ¼ÇÂ¼ÉÏ´ÎÑ¡ÖÐµÄtabpaneÃæ°å£¬¼ÇÂ¼Ö®ºó£¬ÏÂ´ÎÔÙ½øÈë¸ÃÒ³ÃæÊ±Ä¬ÈÏÑ¡ÖÐµÄ³éÌë±êÇ©¾ÍÊÇ
-					             cookieÖÐ¼ÇÂ¼µÄtabpane£¬Èç¹ûÔÊÐí¼ÇÂ¼cookie£¬ÄÇÃ´container ±êÇ©µÄidÊôÐÔ±ØÐë±£³ÖÈ«¾ÖÎ¨Ò»ÐÔ£¬·ñÔò¾Í»áÏà»¥¸ÉÈÅ¡£
+	<!-- tabpane containerï¼Œä½œä¸ºæŠ½å±‰æ ‡ç­¾tabpaneçš„å®¹å™¨ï¼Œéœ€è¦æ³¨æ„ï¼š
+					id å±žæ€§çš„å€¼å¿…é¡»ä¿è¯åº”ç”¨å…¨å±€å”¯ä¸€æ€§ï¼Œå°¤å…¶æ˜¯åœ¨å¯ç”¨cookieçš„æ—¶å€™ï¼Œ
+					selectedTabPaneId å±žæ€§ç”¨æ¥è®¾ç½®ç¼ºçœé€‰ä¸­çš„æŠ½å±‰æ ‡ç­¾tabpaneï¼Œå…¶å€¼ä¸ºå¯¹åº”tabpaneçš„idçš„å±žæ€§å€¼
+					enablecookie è®¾ç½®æ˜¯å¦åœ¨cookieä¸­è®°å½•ä¸Šæ¬¡é€‰ä¸­çš„tabpaneé¢æ¿ï¼Œè®°å½•ä¹‹åŽï¼Œä¸‹æ¬¡å†è¿›å…¥è¯¥é¡µé¢æ—¶é»˜è®¤é€‰ä¸­çš„æŠ½å±‰æ ‡ç­¾å°±æ˜¯
+					             cookieä¸­è®°å½•çš„tabpaneï¼Œå¦‚æžœå…è®¸è®°å½•cookieï¼Œé‚£ä¹ˆcontainer æ ‡ç­¾çš„idå±žæ€§å¿…é¡»ä¿æŒå…¨å±€å”¯ä¸€æ€§ï¼Œå¦åˆ™å°±ä¼šç›¸äº’å¹²æ‰°ã€‚
 	-->
 	<tag>
 		<name>tabContainer</name>
@@ -43,7 +43,7 @@
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
-		<!-- ÊÇ·ñÆôÓÃcookie -->
+		<!-- æ˜¯å¦å¯ç”¨cookie -->
 		<attribute>
 			<name>enablecookie</name>
 			<required>false</required>
@@ -56,7 +56,7 @@
 		<tagclass>org.ditchnet.jsp.taglib.tabs.handler.TabPaneTag</tagclass>
 		<bodycontent>JSP</bodycontent>
 		<!--
-			id:×ÊÔ´±êÊ¶£¬Èç¹ûenablesecurityÉèÖÃÎªtrue£¬Ôòid½«×÷ÎªtapaneµÄ×ÊÔ´±êÊ¶		
+			id:èµ„æºæ ‡è¯†ï¼Œå¦‚æžœenablesecurityè®¾ç½®ä¸ºtrueï¼Œåˆ™idå°†ä½œä¸ºtapaneçš„èµ„æºæ ‡è¯†		
 		-->
 		<attribute>
 			<name>id</name>
@@ -69,9 +69,9 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!-- 
-		tabTitleCode:ÓÃÀ´Ö¸¶¨tab±êÌâµÄ¹ú¼Ê»¯code£¬Èç¹ûÖ¸¶¨ÁËtabTitleCodeÊôÐÔ£¬ÄÇÃ´¾Í´ÓmvcÅäÖÃµÄ¹ú¼Ê»¯
-		ÊôÐÔÎÄ¼þÖÐ»ñÈ¡¶ÔÓ¦µÄ¹ú¼Ê»¯´úÂëÊä³ö¡£
-		Èç¹ûÃ»ÓÐÖ¸¶¨ÏàÓ¦µÄcodeÊôÐÔ£¬ÄÇÃ´Êä³ötabTitle¶ÔÓ¦µÄÖµ£¬Èç¹ûtabTitleÒ²Ã»ÓÐÖ¸¶¨ÔòÖ±½ÓÔòÖ±½ÓÊä³ötabTitleCodeÊôÐÔ
+		tabTitleCode:ç”¨æ¥æŒ‡å®štabæ ‡é¢˜çš„å›½é™…åŒ–codeï¼Œå¦‚æžœæŒ‡å®šäº†tabTitleCodeå±žæ€§ï¼Œé‚£ä¹ˆå°±ä»Žmvcé…ç½®çš„å›½é™…åŒ–
+		å±žæ€§æ–‡ä»¶ä¸­èŽ·å–å¯¹åº”çš„å›½é™…åŒ–ä»£ç è¾“å‡ºã€‚
+		å¦‚æžœæ²¡æœ‰æŒ‡å®šç›¸åº”çš„codeå±žæ€§ï¼Œé‚£ä¹ˆè¾“å‡ºtabTitleå¯¹åº”çš„å€¼ï¼Œå¦‚æžœtabTitleä¹Ÿæ²¡æœ‰æŒ‡å®šåˆ™ç›´æŽ¥åˆ™ç›´æŽ¥è¾“å‡ºtabTitleCodeå±žæ€§
 		 -->
 		<attribute>
 			<name>tabTitleCode</name>
@@ -80,9 +80,9 @@
 		</attribute>
 		
 		<!--
-			lazeload:ÊÇ·ñÐèÒªÑÓ³Ù¼ÓÔØiframeÒ³Ãæ£¬
-			         true±íÊ¾ÑÓ³Ù¼ÓÔØ£¬false±íÊ¾½øÈëÊ±¼ÓÔØ£¬Ä¬ÈÏÎªfalse
-			          ¸ÃÊôÐÔÖ»ÓÐÔÚtabPane±êÇ©ÖÐÄÚÇ¶iframe±êÇ©Ê±²Å»áÉúÐ§
+			lazeload:æ˜¯å¦éœ€è¦å»¶è¿ŸåŠ è½½iframeé¡µé¢ï¼Œ
+			         trueè¡¨ç¤ºå»¶è¿ŸåŠ è½½ï¼Œfalseè¡¨ç¤ºè¿›å…¥æ—¶åŠ è½½ï¼Œé»˜è®¤ä¸ºfalse
+			          è¯¥å±žæ€§åªæœ‰åœ¨tabPaneæ ‡ç­¾ä¸­å†…åµŒiframeæ ‡ç­¾æ—¶æ‰ä¼šç”Ÿæ•ˆ
 		-->
 		<attribute>
 			<name>lazeload</name>
@@ -91,7 +91,7 @@
 		</attribute>
 		
 		<!--
-			enablesecurity:ÊÇ·ñÐèÒªÈ¨ÏÞboolean¿ØÖÆ±äÁ¿£¬È±Ê¡Îªfalse£¬²»ÐèÒª£¬Èç¹ûÐèÒªÔòÉèÖÃÎªtrue			
+			enablesecurity:æ˜¯å¦éœ€è¦æƒé™booleanæŽ§åˆ¶å˜é‡ï¼Œç¼ºçœä¸ºfalseï¼Œä¸éœ€è¦ï¼Œå¦‚æžœéœ€è¦åˆ™è®¾ç½®ä¸ºtrue			
 		-->
 		<attribute>
 			<name>enablesecurity</name>
@@ -100,7 +100,7 @@
 		</attribute>
 		
 		<!--
-			action:²Ù×÷±êÊ¶£¬Èç¹ûenablesecurityÉèÖÃÎªtrue£¬ÔòÖ¸¶¨ÐèÒª¿ØÖÆtapaneµÄ²Ù×÷		
+			action:æ“ä½œæ ‡è¯†ï¼Œå¦‚æžœenablesecurityè®¾ç½®ä¸ºtrueï¼Œåˆ™æŒ‡å®šéœ€è¦æŽ§åˆ¶tapaneçš„æ“ä½œ		
 		-->
 		<attribute>
 			<name>action</name>
@@ -111,7 +111,7 @@
 	
 		
 		<!--
-			resourceType:×ÊÔ´ÀàÐÍ£¬Èç¹ûenablesecurityÉèÖÃÎªtrue£¬ÔòÖ¸¶¨ÐèÒª¿ØÖÆtapaneµÄ×ÊÔ´ÀàÐÍ		
+			resourceType:èµ„æºç±»åž‹ï¼Œå¦‚æžœenablesecurityè®¾ç½®ä¸ºtrueï¼Œåˆ™æŒ‡å®šéœ€è¦æŽ§åˆ¶tapaneçš„èµ„æºç±»åž‹		
 		-->
 		<attribute>
 			<name>resourceType</name>

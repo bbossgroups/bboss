@@ -38,9 +38,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * ·â×°Êı¾İĞÅÏ¢
- * items´æ·ÅÊı¾İ×ÜÊı
- * datas´æ·ÅËùĞèµÄÊı¾İ¼¯ºÏ
+ * å°è£…æ•°æ®ä¿¡æ¯
+ * itemså­˜æ”¾æ•°æ®æ€»æ•°
+ * dataså­˜æ”¾æ‰€éœ€çš„æ•°æ®é›†åˆ
  * @author biaoping.yin
  * 2005-3-25
  * version 1.0
@@ -48,7 +48,7 @@ import java.util.Map;
 
 public class ListInfo extends com.frameworkset.util.ListInfo
 {
-    /**Ç°Ì¨ºóÌ¨Í¨ÓÃµÄ·ÖÒ³Êı¾İ·â×°¶ÔÏó*/
+    /**å‰å°åå°é€šç”¨çš„åˆ†é¡µæ•°æ®å°è£…å¯¹è±¡*/
     private com.frameworkset.util.ListInfo listInfo;
 
 

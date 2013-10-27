@@ -23,7 +23,7 @@ import com.caucho.hessian.client.HessianProxyFactory;
  * <p> bboss workgroup </p>
  * <p> Copyright (c) 2009 </p>
  * 
- * @Date 2013-2-20 ÏÂÎç4:50:36
+ * @Date 2013-2-20 ä¸‹åˆ4:50:36
  * @author biaoping.yin
  * @version 1.0
  */

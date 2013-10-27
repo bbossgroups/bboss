@@ -32,7 +32,7 @@ import org.quartz.impl.StdSchedulerFactory;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2010-3-26 ÏÂÎç02:04:47
+ * @Date 2010-3-26 ä¸‹åˆ02:04:47
  * @author biaoping.yin,gao.tang
  * @version 1.0
  */
@@ -261,7 +261,7 @@ public class TaskService implements Service {
 					try {
 						buildCalender((Pro)pro.getValue());
 					} catch (Exception e) {
-						log.error("¼ÓÔØÈÕÀúÊ§°Ü!",e);
+						log.error("åŠ è½½æ—¥å†å¤±è´¥!",e);
 					}
 				}
 			}
@@ -275,7 +275,7 @@ public class TaskService implements Service {
 					try {
 						scheduler.addSchedulerListener((SchedulerListener)pro.getObject());
 					} catch (Exception e) {
-						log.error("¼ÓÔØSchedulerListenerÊ§°Ü!",e);
+						log.error("åŠ è½½SchedulerListenerå¤±è´¥!",e);
 					}
 				}
 			}
@@ -291,7 +291,7 @@ public class TaskService implements Service {
 					try {
 						scheduler.addGlobalJobListener((JobListener)pro.getObject());
 					} catch (Exception e) {
-						log.error("¼ÓÔØGlobalJobListenerÊ§°Ü!",e);
+						log.error("åŠ è½½GlobalJobListenerå¤±è´¥!",e);
 					}
 				}
 			}
@@ -307,7 +307,7 @@ public class TaskService implements Service {
 					try {
 						scheduler.addJobListener((JobListener)pro.getObject());
 					} catch (Exception e) {
-						log.error("¼ÓÔØJobListenerÊ§°Ü!",e);
+						log.error("åŠ è½½JobListenerå¤±è´¥!",e);
 					}
 				}
 			}
@@ -322,7 +322,7 @@ public class TaskService implements Service {
 					try {
 						scheduler.addGlobalTriggerListener((TriggerListener)pro.getObject());
 					} catch (Exception e) {
-						log.error("¼ÓÔØGlobalTriggerListenerÊ§°Ü!",e);
+						log.error("åŠ è½½GlobalTriggerListenerå¤±è´¥!",e);
 					}
 				}
 			}
@@ -336,7 +336,7 @@ public class TaskService implements Service {
 					try {
 						scheduler.addTriggerListener((TriggerListener)pro.getObject());
 					} catch (Exception e) {
-						log.error("¼ÓÔØTriggerListenerÊ§°Ü!",e);
+						log.error("åŠ è½½TriggerListenerå¤±è´¥!",e);
 					}
 				}
 			}
@@ -375,7 +375,7 @@ public class TaskService implements Service {
 		
 
 		if (scheduler == null) {
-			log.debug("Ã»ÓĞÆô¶¯¼Æ»®Ö´ĞĞÒıÇæ£¬Æô¶¯ÈÎÎñ·şÎñÊ§°Ü!");
+			log.debug("æ²¡æœ‰å¯åŠ¨è®¡åˆ’æ‰§è¡Œå¼•æ“ï¼Œå¯åŠ¨ä»»åŠ¡æœåŠ¡å¤±è´¥!");
 			return;
 
 		}
@@ -509,13 +509,13 @@ public class TaskService implements Service {
 		.get(groupid);
 		if(scheduleServiceInfo == null)
 		{
-			log.debug("×÷Òµ×é" + groupid + "²»´æÔÚ£¬ºöÂÔ×÷Òµ"+jobname+"Æô¶¯.");
+			log.debug("ä½œä¸šç»„" + groupid + "ä¸å­˜åœ¨ï¼Œå¿½ç•¥ä½œä¸š"+jobname+"å¯åŠ¨.");
 			return ;
 		}
 		SchedulejobInfo jobInfo = scheduleServiceInfo.getScheduleService(this).getSchedulejobInfoByID(jobname);
 		if(jobInfo == null)
 		{
-			log.debug("×÷Òµ×é" + groupid + "ÖĞ²»´æÔÚ¶ÔÓ¦µÄ×÷Òµ£¬ºöÂÔ×÷Òµ"+jobname+"Æô¶¯.");
+			log.debug("ä½œä¸šç»„" + groupid + "ä¸­ä¸å­˜åœ¨å¯¹åº”çš„ä½œä¸šï¼Œå¿½ç•¥ä½œä¸š"+jobname+"å¯åŠ¨.");
 			return ;
 		}
 //		if(jobInfo == null)
@@ -526,7 +526,7 @@ public class TaskService implements Service {
 		
 	}
 	/**
-	 * Æô¶¯Ò»¸öÈÎÎñ
+	 * å¯åŠ¨ä¸€ä¸ªä»»åŠ¡
 	 * 
 	 * @param jobInfo
 	 */
@@ -534,7 +534,7 @@ public class TaskService implements Service {
 		if (!started)
 			startService();
 		if (scheduler == null) {
-			log.debug("Ã»ÓĞÆô¶¯¼Æ»®Ö´ĞĞÒıÇæ·şÎñ£¬Æô¶¯ÈÎÎñ·şÎñÊ§°Ü!");
+			log.debug("æ²¡æœ‰å¯åŠ¨è®¡åˆ’æ‰§è¡Œå¼•æ“æœåŠ¡ï¼Œå¯åŠ¨ä»»åŠ¡æœåŠ¡å¤±è´¥!");
 			return;
 
 		}
@@ -556,7 +556,7 @@ public class TaskService implements Service {
 		}
 	}
 	/**
-	 * ¸üĞÂÖ¸¶¨×÷Òµ×éµÄÈÎÎñ
+	 * æ›´æ–°æŒ‡å®šä½œä¸šç»„çš„ä»»åŠ¡
 	 * @param groupid
 	 * @param jobname
 	 */
@@ -565,20 +565,20 @@ public class TaskService implements Service {
 		.get(groupid);
 		if(scheduleServiceInfo == null)
 		{
-			log.debug("×÷Òµ×é" + groupid + "²»´æÔÚ£¬ºöÂÔ×÷Òµ"+jobname+"¸üĞÂ²Ù×÷.");
+			log.debug("ä½œä¸šç»„" + groupid + "ä¸å­˜åœ¨ï¼Œå¿½ç•¥ä½œä¸š"+jobname+"æ›´æ–°æ“ä½œ.");
 			return ;
 		}
 		SchedulejobInfo jobInfo = scheduleServiceInfo.getScheduleService(this).getSchedulejobInfoByID(jobname);
 		if(jobInfo == null)
 		{
-			log.debug("×÷Òµ×é" + groupid + "ÖĞ²»´æÔÚ¶ÔÓ¦µÄ×÷Òµ£¬ºöÂÔ×÷Òµ"+jobname+"¸üĞÂ²Ù×÷.");
+			log.debug("ä½œä¸šç»„" + groupid + "ä¸­ä¸å­˜åœ¨å¯¹åº”çš„ä½œä¸šï¼Œå¿½ç•¥ä½œä¸š"+jobname+"æ›´æ–°æ“ä½œ.");
 			return ;
 		}
 		updateExecuteJob( groupid,  jobInfo);
 	}
 	
 	/**
-	 * ¸üĞÂÄ¬ÈÏ×éµÄ×÷Òµ
+	 * æ›´æ–°é»˜è®¤ç»„çš„ä½œä¸š
 	 * @param jobname
 	 */
 	public void updateExecuteJob(String jobname) {
@@ -586,7 +586,7 @@ public class TaskService implements Service {
 	}
 
 	/**
-	 * ¸üĞÂÒ»¸öÈÎÎñÏî
+	 * æ›´æ–°ä¸€ä¸ªä»»åŠ¡é¡¹
 	 * 
 	 * @param jobInfo
 	 */
@@ -595,7 +595,7 @@ public class TaskService implements Service {
 		if (!started)
 			startService();
 		if (scheduler == null) {
-			log.debug("Ã»ÓĞÆô¶¯¼Æ»®Ö´ĞĞÒıÇæ£¬Æô¶¯ÈÎÎñ·şÎñÊ§°Ü!");
+			log.debug("æ²¡æœ‰å¯åŠ¨è®¡åˆ’æ‰§è¡Œå¼•æ“ï¼Œå¯åŠ¨ä»»åŠ¡æœåŠ¡å¤±è´¥!");
 			return;
 
 		}
@@ -631,12 +631,12 @@ public class TaskService implements Service {
 	}
 
 	/**
-	 * »Ö¸´ËùÓĞ´¥·¢Æ÷
+	 * æ¢å¤æ‰€æœ‰è§¦å‘å™¨
 	 * 
 	 */
 	public void resumeAll() {
 		if (scheduler == null) {
-			log.debug("Ã»ÓĞÆô¶¯¼Æ»®Ö´ĞĞÒıÇæ£¬Æô¶¯ÈÎÎñ·şÎñÊ§°Ü!");
+			log.debug("æ²¡æœ‰å¯åŠ¨è®¡åˆ’æ‰§è¡Œå¼•æ“ï¼Œå¯åŠ¨ä»»åŠ¡æœåŠ¡å¤±è´¥!");
 			return;
 
 		}
@@ -689,14 +689,14 @@ public class TaskService implements Service {
 	}
 
 	/**
-	 * »Ö¸´Ò»¸öÈÎÎñ
+	 * æ¢å¤ä¸€ä¸ªä»»åŠ¡
 	 * 
 	 * @param name
 	 * @param groupid
 	 */
 	public void resumeJob(String name, String groupid) {
 		if (scheduler == null) {
-			log.debug("Ã»ÓĞÆô¶¯¼Æ»®Ö´ĞĞÒıÇæ£¬Æô¶¯ÈÎÎñ·şÎñÊ§°Ü!");
+			log.debug("æ²¡æœ‰å¯åŠ¨è®¡åˆ’æ‰§è¡Œå¼•æ“ï¼Œå¯åŠ¨ä»»åŠ¡æœåŠ¡å¤±è´¥!");
 			return;
 
 		}
@@ -714,12 +714,12 @@ public class TaskService implements Service {
 	}
 
 	/**
-	 * ÔİÍ£ËùÓĞ´¥·¢Æ÷
+	 * æš‚åœæ‰€æœ‰è§¦å‘å™¨
 	 * 
 	 */
 	public void pauseAll() {
 		if (scheduler == null) {
-			log.debug("Ã»ÓĞÆô¶¯¼Æ»®Ö´ĞĞÒıÇæ£¬Æô¶¯ÈÎÎñ·şÎñÊ§°Ü!");
+			log.debug("æ²¡æœ‰å¯åŠ¨è®¡åˆ’æ‰§è¡Œå¼•æ“ï¼Œå¯åŠ¨ä»»åŠ¡æœåŠ¡å¤±è´¥!");
 			return;
 
 		}
@@ -732,7 +732,7 @@ public class TaskService implements Service {
 	}
 
 	/**
-	 * É¾³ıÒ»¸öÈÎÎñ
+	 * åˆ é™¤ä¸€ä¸ªä»»åŠ¡
 	 * 
 	 * @param jobname
 	 * @param groupid
@@ -740,11 +740,11 @@ public class TaskService implements Service {
 	public void deleteJob(String jobname, String groupid) {
 
 		if (scheduler == null) {
-			log.debug("Ã»ÓĞÆô¶¯¼Æ»®Ö´ĞĞÒıÇæ£¬Æô¶¯ÈÎÎñ·şÎñÊ§°Ü!");
+			log.debug("æ²¡æœ‰å¯åŠ¨è®¡åˆ’æ‰§è¡Œå¼•æ“ï¼Œå¯åŠ¨ä»»åŠ¡æœåŠ¡å¤±è´¥!");
 			return;
 
 		}
-		// schedulerServiceIndex fIXME schedulerServiceIndex Õâ¸ömapÃ»ÓĞÇå³ı
+		// schedulerServiceIndex fIXME schedulerServiceIndex è¿™ä¸ªmapæ²¡æœ‰æ¸…é™¤
 		ScheduleServiceInfo scheduleServiceInfo = schedulerServiceIndex.get(groupid);
 		if (scheduleServiceInfo != null && scheduleServiceInfo.isUsed()) {
 			try {
@@ -758,7 +758,7 @@ public class TaskService implements Service {
 	}
 
 	/**
-	 * ÔİÍ£Ò»¸öÈÎÎñ
+	 * æš‚åœä¸€ä¸ªä»»åŠ¡
 	 * 
 	 * @param jobname
 	 * @param groupid
@@ -766,7 +766,7 @@ public class TaskService implements Service {
 	public void pauseJob(String jobname, String groupid) {
 
 		if (scheduler == null) {
-			log.debug("Ã»ÓĞÆô¶¯¼Æ»®Ö´ĞĞÒıÇæ£¬Æô¶¯ÈÎÎñ·şÎñÊ§°Ü!");
+			log.debug("æ²¡æœ‰å¯åŠ¨è®¡åˆ’æ‰§è¡Œå¼•æ“ï¼Œå¯åŠ¨ä»»åŠ¡æœåŠ¡å¤±è´¥!");
 			return;
 
 		}
@@ -783,14 +783,14 @@ public class TaskService implements Service {
 	}
 
 	/**
-	 * È¡ÏûÒ»¸ö´¥·¢Æ÷
+	 * å–æ¶ˆä¸€ä¸ªè§¦å‘å™¨
 	 * 
 	 * @param triggerName
 	 * @param triggerGroup
 	 */
 	public void unscheduleJob(String triggerName, String triggerGroup) {
 		if (scheduler == null) {
-			log.debug("Ã»ÓĞÆô¶¯¼Æ»®Ö´ĞĞÒıÇæ·şÎñ£¬Æô¶¯ÈÎÎñ·şÎñÊ§°Ü!");
+			log.debug("æ²¡æœ‰å¯åŠ¨è®¡åˆ’æ‰§è¡Œå¼•æ“æœåŠ¡ï¼Œå¯åŠ¨ä»»åŠ¡æœåŠ¡å¤±è´¥!");
 			return;
 
 		}
@@ -807,12 +807,12 @@ public class TaskService implements Service {
 	}
 
 	/**
-	 * ÖÕÖ¹ÕıÔÚÖ´ĞĞµÄ´¥·¢Æ÷
+	 * ç»ˆæ­¢æ­£åœ¨æ‰§è¡Œçš„è§¦å‘å™¨
 	 * 
 	 */
 	public void standbyScheduler() {
 		if (scheduler == null) {
-			log.debug("Ã»ÓĞÆô¶¯¼Æ»®Ö´ĞĞÒıÇæ·şÎñ£¬Æô¶¯ÈÎÎñ·şÎñÊ§°Ü!");
+			log.debug("æ²¡æœ‰å¯åŠ¨è®¡åˆ’æ‰§è¡Œå¼•æ“æœåŠ¡ï¼Œå¯åŠ¨ä»»åŠ¡æœåŠ¡å¤±è´¥!");
 			return;
 
 		}
@@ -825,14 +825,14 @@ public class TaskService implements Service {
 	}
 
 	/**
-	 * Á¢¿ÌÖ´ĞĞÒ»´Î´¥·¢Æ÷
+	 * ç«‹åˆ»æ‰§è¡Œä¸€æ¬¡è§¦å‘å™¨
 	 * 
 	 * @param jobName
 	 * @param groupName
 	 */
 	public void triggerJob(String jobName, String groupName) {
 		if (scheduler == null) {
-			log.debug("Ã»ÓĞÆô¶¯¼Æ»®Ö´ĞĞÒıÇæ·şÎñ£¬Æô¶¯ÈÎÎñ·şÎñÊ§°Ü!");
+			log.debug("æ²¡æœ‰å¯åŠ¨è®¡åˆ’æ‰§è¡Œå¼•æ“æœåŠ¡ï¼Œå¯åŠ¨ä»»åŠ¡æœåŠ¡å¤±è´¥!");
 			return;
 
 		}
@@ -867,7 +867,7 @@ public class TaskService implements Service {
 	}
 
 	/**
-	 * °´ÕÕ´«¹ıÀ´µÄ²ÎÊıÁ¢¿ÌÖ´ĞĞÒ»´Î´¥·¢Æ÷
+	 * æŒ‰ç…§ä¼ è¿‡æ¥çš„å‚æ•°ç«‹åˆ»æ‰§è¡Œä¸€æ¬¡è§¦å‘å™¨
 	 * 
 	 * @param jobName
 	 * @param groupName
@@ -875,7 +875,7 @@ public class TaskService implements Service {
 	 */
 	public void triggerJob(String jobName, String groupName, Map parameters) {
 		if (scheduler == null) {
-			log.debug("Ã»ÓĞÆô¶¯¼Æ»®Ö´ĞĞÒıÇæ·şÎñ£¬Æô¶¯ÈÎÎñ·şÎñÊ§°Ü!");
+			log.debug("æ²¡æœ‰å¯åŠ¨è®¡åˆ’æ‰§è¡Œå¼•æ“æœåŠ¡ï¼Œå¯åŠ¨ä»»åŠ¡æœåŠ¡å¤±è´¥!");
 			return;
 
 		}

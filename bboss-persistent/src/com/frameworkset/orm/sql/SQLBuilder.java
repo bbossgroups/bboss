@@ -84,7 +84,7 @@ public class SQLBuilder {
 	}
 
     /**
-     * »ñÈ¡É¾³ıÌõ¼ş
+     * è·å–åˆ é™¤æ¡ä»¶
      * @param dbName String
      * @param primayKeys List
      * @return String
@@ -122,7 +122,7 @@ public class SQLBuilder {
     }
 
     /**
-     * ¹¹½¨±í´ïÊ½
+     * æ„å»ºè¡¨è¾¾å¼
      * @param colName
      * @param value
      * @param javaType

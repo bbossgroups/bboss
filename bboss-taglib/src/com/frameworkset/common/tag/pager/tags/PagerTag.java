@@ -60,21 +60,21 @@ public class PagerTag extends BaseTag implements FieldHelper, PagerInfo {
 //	protected String pretoken = "#\\[";
 //    protected String endtoken = "\\]";
     /**
-     * jqueryÄÚÈİÈİÆ÷
+     * jqueryå†…å®¹å®¹å™¨
      */
     private String containerid ;
     
     /**
-     * jqueryÄÚÈİÑ¡ÔñÆ÷
+     * jqueryå†…å®¹é€‰æ‹©å™¨
      */
     private String selector;
 	/**
-	 * ±êÊ¶ÊÇ·ñÊÇwapÓ¦ÓÃ
+	 * æ ‡è¯†æ˜¯å¦æ˜¯wapåº”ç”¨
 	 */
 	private boolean wapflag = false;
 
 	// /**
-	// * ±£´æÒ³ÃæÉÏËùÓĞµÄIndexTagµÄ±êÇ© Movied to PagerContext
+	// * ä¿å­˜é¡µé¢ä¸Šæ‰€æœ‰çš„IndexTagçš„æ ‡ç­¾ Movied to PagerContext
 	// */
 	// Stack indexs;
 	// static final String PARAMETER = "parameter";
@@ -83,34 +83,34 @@ public class PagerTag extends BaseTag implements FieldHelper, PagerInfo {
 
 	static final String DEFAULT_ID = "pager";
 
-	/** ´¦ÀíÉÏÏÂ·­Ò³´¥·¢formÌá½»ÊÂ¼ş£¬±¾ÊôĞÔÖ¸¶¨ĞèÒªÌá½»µÄform±íµ¥Ãû³Æ */
+	/** å¤„ç†ä¸Šä¸‹ç¿»é¡µè§¦å‘formæäº¤äº‹ä»¶ï¼Œæœ¬å±æ€§æŒ‡å®šéœ€è¦æäº¤çš„formè¡¨å•åç§° */
 	private String form = null;
 
-	/** µ±ĞèÒª±£´æÊı¾İÊ±ÊÇ·ñÌáÊ¾±£´æ£¬ÓëformÊôĞÔÅäºÏÊ¹ÓÃ */
+	/** å½“éœ€è¦ä¿å­˜æ•°æ®æ—¶æ˜¯å¦æç¤ºä¿å­˜ï¼Œä¸formå±æ€§é…åˆä½¿ç”¨ */
 	private boolean promotion = false;
 	
-	/**±íµ¥Ìá½»Ö®Ç°ĞèÒªÖ´ĞĞµÄÊÂ¼ş*/
+	/**è¡¨å•æäº¤ä¹‹å‰éœ€è¦æ‰§è¡Œçš„äº‹ä»¶*/
 	private String commitevent = null;
 
 	private String sortKey = null;
 
 	/**
-	 * Èç¹ûĞèÒªµ¼³öÊı¾İµ½xml£¬pdf,word,excel,csvÊ± ÉèÖÃ±¾ÊôĞÔÎªtrue£¬·ñÔòÎªfalse
+	 * å¦‚æœéœ€è¦å¯¼å‡ºæ•°æ®åˆ°xmlï¼Œpdf,word,excel,csvæ—¶ è®¾ç½®æœ¬å±æ€§ä¸ºtrueï¼Œå¦åˆ™ä¸ºfalse
 	 */
 	private boolean exportMeta = false;
 
 	/**
-	 * ´æ·ÅÒ³Ãæµ¼³öµ½ÎÄ¼şÊ±ËùÓĞ²ÎÊı£¬µ±exportMetaÎªtrueÊ±ÉèÖÃ±¾±äÁ¿
+	 * å­˜æ”¾é¡µé¢å¯¼å‡ºåˆ°æ–‡ä»¶æ—¶æ‰€æœ‰å‚æ•°ï¼Œå½“exportMetaä¸ºtrueæ—¶è®¾ç½®æœ¬å˜é‡
 	 */
 	protected MetaDatas metaDatas = null;
 
 	/**
-	 * Êä³öÊı¾İµ½ÎÄ¼şÊ±ĞèÒª±£´æÒ³ÃæÉÏµÄÊı¾İ¼¯ºÏ¶ÑÕ»
+	 * è¾“å‡ºæ•°æ®åˆ°æ–‡ä»¶æ—¶éœ€è¦ä¿å­˜é¡µé¢ä¸Šçš„æ•°æ®é›†åˆå †æ ˆ
 	 */
 	protected Stack dataSets;
 
 	/**
-	 * ÏÔÊ¾µÄÊı¾İ×Ö¶ÎÃû³Æ
+	 * æ˜¾ç¤ºçš„æ•°æ®å­—æ®µåç§°
 	 */
 	public static final int DEFAULT_MAX_ITEMS = Integer.MAX_VALUE,
 			DEFAULT_MAX_PAGE_ITEMS = 10, DEFAULT_MAX_INDEX_PAGES = 10;
@@ -128,14 +128,14 @@ public class PagerTag extends BaseTag implements FieldHelper, PagerInfo {
 			CENTER = "center", FORWARD = "forward", HALF_FULL = "half-full";
 
 	/*
-	 * Tag Properties ¶¨ÒåÌø×ªµÄurl
+	 * Tag Properties å®šä¹‰è·³è½¬çš„url
 	 */
 	private String url = null;
 
 	private String index = null;
 
 	// /**
-	// * items:×ÜµÄ¼ÇÂ¼ÌõÊı to pagercontext
+	// * items:æ€»çš„è®°å½•æ¡æ•° to pagercontext
 	// */
 	// private long items = 0;
 	private int maxItems = DEFAULT_MAX_ITEMS;
@@ -157,25 +157,25 @@ public class PagerTag extends BaseTag implements FieldHelper, PagerInfo {
 	// private StringBuffer uri = null;
 	// private int params = 0;
 	// /**
-	// * offset£ºµ±Ç°Ò³ÃæµÚÒ»Ìõ¼ÇÂ¼idÖµ,
-	// * ÀıÈçoffset=80±íÊ¾µ±Ç°Ò³ÃæµÚÒ»Ìõ¼ÇÂ¼idÖµÎª80
+	// * offsetï¼šå½“å‰é¡µé¢ç¬¬ä¸€æ¡è®°å½•idå€¼,
+	// * ä¾‹å¦‚offset=80è¡¨ç¤ºå½“å‰é¡µé¢ç¬¬ä¸€æ¡è®°å½•idå€¼ä¸º80
 	// */
 	// private long offset = 0; to pagercontext
 	// private long itemCount = 0; to pagercontext
 	private String data = null;
 
 	/**
-	 * Êı¾İ¿â²éÑ¯Óï¾äÊôĞÔ
+	 * æ•°æ®åº“æŸ¥è¯¢è¯­å¥å±æ€§
 	 */
 	private String statement = "";
 
 	/**
-	 * Êı¾İ¿âÁ¬½Ó³ØÃû³Æ
+	 * æ•°æ®åº“è¿æ¥æ± åç§°
 	 */
 	private String dbname = "";
 
 	// /**
-	// * pageNumber£ºµ±Ç°ÊÇÔÚµÚ¼¸Ò³
+	// * pageNumberï¼šå½“å‰æ˜¯åœ¨ç¬¬å‡ é¡µ
 	// */
 	//
 	// private long pageNumber = 0;
@@ -186,17 +186,17 @@ public class PagerTag extends BaseTag implements FieldHelper, PagerInfo {
 	// }
 
 	// /**
-	// * pageNumberInteger£º·â×°µ±Ç°Ò³Ò³ÂëµÄ¶ÔÏó
+	// * pageNumberIntegerï¼šå°è£…å½“å‰é¡µé¡µç çš„å¯¹è±¡
 	// */
 	// private Long pageNumberInteger = null;
 
 	/**
-	 * idOffsetParam£º¶¨Òå´ÓrequestÖĞ»ñÈ¡offsetÖµµÃÊôĞÔÃû³Æ£¬ÀıÈç£ºpager.offset
+	 * idOffsetParamï¼šå®šä¹‰ä»requestä¸­è·å–offsetå€¼å¾—å±æ€§åç§°ï¼Œä¾‹å¦‚ï¼špager.offset
 	 */
 	private String idOffsetParam = DEFAULT_ID + OFFSET_PARAM;
 
 	/**
-	 * ·ÖÎöĞèÒªµ¼³ö²ÎÊıµÄ·ÖÎöÀà
+	 * åˆ†æéœ€è¦å¯¼å‡ºå‚æ•°çš„åˆ†æç±»
 	 */
 	private PagerTagExport pagerTagExport = null;
 
@@ -229,7 +229,7 @@ public class PagerTag extends BaseTag implements FieldHelper, PagerInfo {
 	}
 
 	/**
-	 * ÉèÖÃÅÅĞò¹Ø¼ü×Ö
+	 * è®¾ç½®æ’åºå…³é”®å­—
 	 * 
 	 * @param string
 	 */
@@ -242,7 +242,7 @@ public class PagerTag extends BaseTag implements FieldHelper, PagerInfo {
 	}
 
 	// /**
-	// * »ñÈ¡ÅÅĞò¹Ø¼ü×Ö Movied to PagerContext
+	// * è·å–æ’åºå…³é”®å­— Movied to PagerContext
 	// * Description:
 	// * @return
 	// * String
@@ -357,7 +357,7 @@ public class PagerTag extends BaseTag implements FieldHelper, PagerInfo {
 	
 	protected String sqlparamskey = "sql.params.key";
 	/**
-	 * ±êÇ©¿ªÊ¼Ê±Ö´ĞĞÒÔÏÂ·½·¨
+	 * æ ‡ç­¾å¼€å§‹æ—¶æ‰§è¡Œä»¥ä¸‹æ–¹æ³•
 	 */
 	public int doStartTag() throws JspException {
 		// log.debug("id:" + id);
@@ -367,12 +367,12 @@ public class PagerTag extends BaseTag implements FieldHelper, PagerInfo {
 		pageContext.setAttribute(pager_infoName, this);
 		HttpServletRequest request = this.getHttpServletRequest();
 		HttpServletResponse response = this.getHttpServletResponse();
-		// ³õÊ¼»¯Ò³ÃæÉÏÏÂÎÄĞÅÏ¢
+		// åˆå§‹åŒ–é¡µé¢ä¸Šä¸‹æ–‡ä¿¡æ¯
 		this.pagerContext = new PagerContext(request, response,
 				this.pageContext,this);
 
 		// /*
-		// * idµÄÖµÎª¡°pager¡°,±¸·İÏÈÇ°µÄÒ³ÃæµÃÉÏÏÂÎÄ»·¾³£¬È»ºóÔÙ½«µ±Ç°µÃÉÏÏÂÎÄÉèÖÃµ½request»òpageContextÖĞ
+		// * idçš„å€¼ä¸ºâ€œpagerâ€œ,å¤‡ä»½å…ˆå‰çš„é¡µé¢å¾—ä¸Šä¸‹æ–‡ç¯å¢ƒï¼Œç„¶åå†å°†å½“å‰å¾—ä¸Šä¸‹æ–‡è®¾ç½®åˆ°requestæˆ–pageContextä¸­
 		// */
 		// if(REQUEST.equals(scope))
 		// {
@@ -454,7 +454,7 @@ public class PagerTag extends BaseTag implements FieldHelper, PagerInfo {
 		// offset = 0;
 		// itemCount = 0;
 
-		// ÉèÖÃÊÇ·ñÊÇÉıĞò»¹ÊÇ½µĞò
+		// è®¾ç½®æ˜¯å¦æ˜¯å‡åºè¿˜æ˜¯é™åº
 		String desc_key = pagerContext.getKey("desc");
 
 		String t_desc = request.getParameter(desc_key);
@@ -464,15 +464,15 @@ public class PagerTag extends BaseTag implements FieldHelper, PagerInfo {
 			desc = true;
 
 		pagerContext.setDesc(desc);
-		// ÉèÖÃÅÅĞò¹Ø¼ü×Ö£¬Ê×ÏÈÍ¨¹ırequest.getParameter»ñÈ¡
+		// è®¾ç½®æ’åºå…³é”®å­—ï¼Œé¦–å…ˆé€šè¿‡request.getParameterè·å–
 
 		String sortKey_key = pagerContext.getKey("sortKey");
 
 		String t_sortKey = request.getParameter(sortKey_key);
-		// Èç¹û»ñÈ¡µ½µÄsortKeyÎª¿ÕÊ±£¬Í¨¹ırequest.getAttribute»ñÈ¡
+		// å¦‚æœè·å–åˆ°çš„sortKeyä¸ºç©ºæ—¶ï¼Œé€šè¿‡request.getAttributeè·å–
 		if (t_sortKey == null)
 			t_sortKey = (String) request.getAttribute(sortKey_key);
-		// Èç¹ûÉÏÃæ»ñÈ¡µ½µÄsortKey²»ÎªnullÊ±£¬ÉèÖÃsortKey
+		// å¦‚æœä¸Šé¢è·å–åˆ°çš„sortKeyä¸ä¸ºnullæ—¶ï¼Œè®¾ç½®sortKey
 		if (t_sortKey != null)
 			pagerContext.setSortKey(t_sortKey);
 
@@ -497,16 +497,16 @@ public class PagerTag extends BaseTag implements FieldHelper, PagerInfo {
 
 		// //addParam("sortKey",getSortKey());
 		// //:log
-		// if(!pagerContext.ListMode())//:logÈç¹ûÊÇ·ÖÒ³Ä£Ê½£¬³õÊ¼»¯ÉÏÏÂÎÄ
+		// if(!pagerContext.ListMode())//:logå¦‚æœæ˜¯åˆ†é¡µæ¨¡å¼ï¼Œåˆå§‹åŒ–ä¸Šä¸‹æ–‡
 		// {
 		// pagerContext.initContext();
 		// }
 		//
-		// else//:logÈç¹ûÊÇÁĞ±íÄ£Ê½£¬Ö±½ÓÉèÖÃdataInfoĞÅÏ¢¼´¿É
+		// else//:logå¦‚æœæ˜¯åˆ—è¡¨æ¨¡å¼ï¼Œç›´æ¥è®¾ç½®dataInfoä¿¡æ¯å³å¯
 		// pagerContext.setDataInfo(pagerContext.getData());
 
 		// /**
-		// * Èç¹ûĞèÒªµ¼³öÊı¾İµ½ÎÄ¼ş£¬µ÷ÓÃ±¾·½·¨½øĞĞ³õÊ¼»¯
+		// * å¦‚æœéœ€è¦å¯¼å‡ºæ•°æ®åˆ°æ–‡ä»¶ï¼Œè°ƒç”¨æœ¬æ–¹æ³•è¿›è¡Œåˆå§‹åŒ–
 		// */
 		// this.setMeta();
 
@@ -556,9 +556,9 @@ public class PagerTag extends BaseTag implements FieldHelper, PagerInfo {
 	// }
 
 	/**
-	 * »ñÈ¡Êı¾İ»ñÈ¡ÀàÔÚrequestÖĞµÄ´æ·ÅÃû³Æ
+	 * è·å–æ•°æ®è·å–ç±»åœ¨requestä¸­çš„å­˜æ”¾åç§°
 	 * 
-	 * @return String Êı¾İ»ñÈ¡ÀàÔÚrequestÖĞµÄ´æ·ÅÃû³Æ
+	 * @return String æ•°æ®è·å–ç±»åœ¨requestä¸­çš„å­˜æ”¾åç§°
 	 */
 	public String getData() {
 
@@ -567,7 +567,7 @@ public class PagerTag extends BaseTag implements FieldHelper, PagerInfo {
 
 	public int doEndTag() throws JspException {
 		/**
-		 * »Ö¸´ÉÏÏÂÎÄ»·¾³¾ÉµÃÉÏÏÂÎÄ»·¾³£¬Çå³ıÊı¾İ»ñÈ¡½Ó¿Ú
+		 * æ¢å¤ä¸Šä¸‹æ–‡ç¯å¢ƒæ—§å¾—ä¸Šä¸‹æ–‡ç¯å¢ƒï¼Œæ¸…é™¤æ•°æ®è·å–æ¥å£
 		 */
 		this.pagerContext.release();
 		this.commitevent = null;
@@ -622,7 +622,7 @@ public class PagerTag extends BaseTag implements FieldHelper, PagerInfo {
 		// pageNumberInteger = null;
 
 		/**
-		 * return EVAL_PAGE:¼ÌĞø·ÖÎö½áÊø±êÇ©ºóµÄÒ³Ãæ´úÂë
+		 * return EVAL_PAGE:ç»§ç»­åˆ†æç»“æŸæ ‡ç­¾åçš„é¡µé¢ä»£ç 
 		 */
 		// try
 		// {
@@ -727,7 +727,7 @@ public class PagerTag extends BaseTag implements FieldHelper, PagerInfo {
 	boolean isList = false;
 
 	// /** Movied to PagerContext
-	// * @return boolean ÅĞ¶ÏÊÇ·ñÊÇÁĞ±íÄ£Ê½
+	// * @return boolean åˆ¤æ–­æ˜¯å¦æ˜¯åˆ—è¡¨æ¨¡å¼
 	// */
 	// boolean ListMode() {
 	// // if(isList == null || isList.trim().length() == 0)
@@ -743,8 +743,8 @@ public class PagerTag extends BaseTag implements FieldHelper, PagerInfo {
 	}
 
 	// /**
-	// * »ñÈ¡Êı¾İ»ñÈ¡ÀàÔÚrequestÖĞµÄ´æ·ÅÃû³Æ
-	// * @return String Êı¾İ»ñÈ¡ÀàÔÚrequestÖĞµÄ´æ·ÅÃû³Æ
+	// * è·å–æ•°æ®è·å–ç±»åœ¨requestä¸­çš„å­˜æ”¾åç§°
+	// * @return String æ•°æ®è·å–ç±»åœ¨requestä¸­çš„å­˜æ”¾åç§°
 	// */
 	// public String getData() {
 	//
@@ -778,7 +778,7 @@ public class PagerTag extends BaseTag implements FieldHelper, PagerInfo {
 	}
 
 	// /**
-	// * »ñÈ¡Ò³Ãæ²éÑ¯²ÎÊı Movied to PagerContext
+	// * è·å–é¡µé¢æŸ¥è¯¢å‚æ•° Movied to PagerContext
 	// * @return String
 	// */
 	// public String getQueryString()
@@ -786,7 +786,7 @@ public class PagerTag extends BaseTag implements FieldHelper, PagerInfo {
 	// return queryString == null?"":queryString.toString();
 	// }
 	// /**
-	// * Description:»ñÈ¡Ò³Ãæ²éÑ¯µÄ²ÎÊı Movied to PagerContext
+	// * Description:è·å–é¡µé¢æŸ¥è¯¢çš„å‚æ•° Movied to PagerContext
 	// * @return
 	// * StringBuffer
 	// */
@@ -810,7 +810,7 @@ public class PagerTag extends BaseTag implements FieldHelper, PagerInfo {
 	// }
 
 	// /**
-	// * Description:»ñÈ¡Ò³Ãæ²éÑ¯µÄ²ÎÊı Movied to PagerContext
+	// * Description:è·å–é¡µé¢æŸ¥è¯¢çš„å‚æ•° Movied to PagerContext
 	// * @return
 	// * StringBuffer
 	// */
@@ -908,7 +908,7 @@ public class PagerTag extends BaseTag implements FieldHelper, PagerInfo {
 	}
 
 	/**
-	 * Êä³öµ±Ç°Ò³Ãæ¼ÇÂ¼ÌõÊı
+	 * è¾“å‡ºå½“å‰é¡µé¢è®°å½•æ¡æ•°
 	 * 
 	 * @see com.frameworkset.common.tag.pager.tags.PagerInfo#getDataSize()
 	 */

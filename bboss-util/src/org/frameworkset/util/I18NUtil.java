@@ -29,7 +29,7 @@ import org.frameworkset.util.i18n.I18n;
  * <p> bboss workgroup </p>
  * <p> Copyright (c) 2005-2013 </p>
  * 
- * @Date 2013Äê10ÔÂ23ÈÕ
+ * @Date 2013å¹´10æœˆ23æ—¥
  * @author biaoping.yin
  * @version 1.0
  */
@@ -50,7 +50,7 @@ public class I18NUtil {
 	}
 	
 	/**
-	 * ¸ù¾İcode´ÓmvcµÄ¹ú¼Ê»¯ÅäÖÃÎÄ¼şÖĞ»ñÈ¡¶ÔÓ¦ÓïÑÔµÄ´úÂëÖµ
+	 * æ ¹æ®codeä»mvcçš„å›½é™…åŒ–é…ç½®æ–‡ä»¶ä¸­è·å–å¯¹åº”è¯­è¨€çš„ä»£ç å€¼
 	 * @param code
 	 * @param request
 	 * @return
@@ -62,7 +62,7 @@ public class I18NUtil {
 		
 	}
 	/**
-	 * ¸ù¾İcode´ÓmvcµÄ¹ú¼Ê»¯ÅäÖÃÎÄ¼şÖĞ»ñÈ¡¶ÔÓ¦ÓïÑÔµÄ´úÂëÖµ,Èç¹û´úÂëÖµÎª¿Õ£¬Ôò·µ»ØdefaultMessage
+	 * æ ¹æ®codeä»mvcçš„å›½é™…åŒ–é…ç½®æ–‡ä»¶ä¸­è·å–å¯¹åº”è¯­è¨€çš„ä»£ç å€¼,å¦‚æœä»£ç å€¼ä¸ºç©ºï¼Œåˆ™è¿”å›defaultMessage
 	 * @param code
 	 * @param defaultMessage
 	 * @param request

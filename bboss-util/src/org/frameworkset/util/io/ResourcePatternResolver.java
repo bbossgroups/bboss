@@ -25,7 +25,7 @@ import java.io.IOException;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2010-9-24 œ¬ŒÁ07:25:31
+ * @Date 2010-9-24 ‰∏ãÂçà07:25:31
  * @author biaoping.yin
  * @version 1.0
  */

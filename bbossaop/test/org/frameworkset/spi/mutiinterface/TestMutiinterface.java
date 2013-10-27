@@ -69,9 +69,9 @@ public class TestMutiinterface {
     	
     	
     	long end2 = System.currentTimeMillis();
-    	System.out.println("ºÄÊ±:"+(end - start));
-    	System.out.println("ºÄÊ± 1:"+(end1 - start1));
-    	System.out.println("ºÄÊ± 2:"+(end2 - start2));
+    	System.out.println("è€—æ—¶:"+(end - start));
+    	System.out.println("è€—æ—¶ 1:"+(end1 - start1));
+    	System.out.println("è€—æ—¶ 2:"+(end2 - start2));
     }
 
 }

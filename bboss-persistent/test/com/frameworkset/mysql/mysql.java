@@ -140,7 +140,7 @@ public class mysql
 	
 	
 	/**
-     * µÚÒ»ÖÖ²åÈëblob×Ö¶ÎµÄ·½·¨£¬Í¨ÓÃµÄÄ£Ê½
+     * ç¬¬ä¸€ç§æ’å…¥blobå­—æ®µçš„æ–¹æ³•ï¼Œé€šç”¨çš„æ¨¡å¼
 	 * @throws Exception 
 	 */
     @Test
@@ -151,7 +151,7 @@ public class mysql
 			dbUtil.preparedInsert("mysql", "insert into test(id,blobname) values(?,?)");
 			
 			dbUtil.setString(1, DBUtil.getNextStringPrimaryKey("test"));
-			dbUtil.setBlob(2, new java.io.File("resources/lob/manager.rar"));//Ö±½Ó½«ÎÄ¼ş´æ´¢µ½´ó×Ö¶ÎÖĞ
+			dbUtil.setBlob(2, new java.io.File("resources/lob/manager.rar"));//ç›´æ¥å°†æ–‡ä»¶å­˜å‚¨åˆ°å¤§å­—æ®µä¸­
 			
 			dbUtil.executePrepared();
 			
@@ -168,7 +168,7 @@ public class mysql
 //	
 	
 	/**
-	 * Õë¶Ôoracle Blob×Ö¶ÎµÄ²åÈë²Ù×÷
+	 * é’ˆå¯¹oracle Blobå­—æ®µçš„æ’å…¥æ“ä½œ
 	 */
     @Test
 	public void testBigBlobWrite() throws Exception
@@ -176,18 +176,18 @@ public class mysql
 		PreparedDBUtil dbUtil = new PreparedDBUtil();
 		TransactionManager tm = new TransactionManager();
 		try {
-			//Æô¶¯ÊÂÎñ
+			//å¯åŠ¨äº‹åŠ¡
 			tm.begin();
-			//ÏÈ²åÈëÒ»Ìõ¼ÇÂ¼,blob×Ö¶Î³õÊ¼»¯Îªempty_lob
+			//å…ˆæ’å…¥ä¸€æ¡è®°å½•,blobå­—æ®µåˆå§‹åŒ–ä¸ºempty_lob
 			dbUtil.preparedInsert("mysql", "insert into test(id,blobname) values(?,?)");
 			String id = DBUtil.getNextStringPrimaryKey("test");
 			dbUtil.setString(1, id);
-			dbUtil.setNull(2,java.sql.Types.BLOB);//ÏÈÉèÖÃ¿ÕµÄblob×Ö¶Î
+			dbUtil.setNull(2,java.sql.Types.BLOB);//å…ˆè®¾ç½®ç©ºçš„blobå­—æ®µ
 			
 			
 			dbUtil.executePrepared();
 			
-			//²éÕÒ¸Õ²ÅµÄ²åÈëµÄ¼ÇÂ¼£¬ĞŞ¸Äblob×Ö¶ÎµÄÖµÎªÒ»¸öÎÄ¼ş
+			//æŸ¥æ‰¾åˆšæ‰çš„æ’å…¥çš„è®°å½•ï¼Œä¿®æ”¹blobå­—æ®µçš„å€¼ä¸ºä¸€ä¸ªæ–‡ä»¶
 			dbUtil = new PreparedDBUtil();
 			dbUtil.preparedUpdate("mysql","update test set  blobname =? where id = ?");
 			dbUtil.setBlob(1, new java.io.File("resources/lob/manager.rar"));
@@ -225,7 +225,7 @@ public class mysql
 //	
 //	
 	/**
-	 * ´ó×Ö¶ÎµÄ¶ÁÈ¡
+	 * å¤§å­—æ®µçš„è¯»å–
 	 */
     @Test
 	public void testBlobFileRead()  throws Exception
@@ -234,7 +234,7 @@ public class mysql
 		PreparedDBUtil dbUtil = new PreparedDBUtil();
 		try {
 
-			//²éÑ¯´ó×Ö¶ÎÄÚÈİ²¢ÇÒ½«´ó×Ö¶Î´æ·Åµ½ÎÄ¼şÖĞ
+			//æŸ¥è¯¢å¤§å­—æ®µå†…å®¹å¹¶ä¸”å°†å¤§å­—æ®µå­˜æ”¾åˆ°æ–‡ä»¶ä¸­
 			dbUtil.preparedSelect("mysql", "select id,blobname from test");
 
 			dbUtil.executePreparedWithRowHandler(new NullRowHandler(){
@@ -261,7 +261,7 @@ public class mysql
 	}
     
     /**
-     * ´ó×Ö¶ÎµÄ¶ÁÈ¡
+     * å¤§å­—æ®µçš„è¯»å–
      */
     @Test
     public void testBlobRead()  throws Exception
@@ -272,7 +272,7 @@ public class mysql
         PreparedDBUtil dbUtil = new PreparedDBUtil();
         try {
 
-            //²éÑ¯´ó×Ö¶ÎÄÚÈİ²¢ÇÒ½«´ó×Ö¶Î´æ·Åµ½ÎÄ¼şÖĞ
+            //æŸ¥è¯¢å¤§å­—æ®µå†…å®¹å¹¶ä¸”å°†å¤§å­—æ®µå­˜æ”¾åˆ°æ–‡ä»¶ä¸­
             dbUtil.preparedSelect("mysql", "select id,blobname from test");
 
             dbUtil.executePreparedWithRowHandler(new NullRowHandler(){
@@ -299,7 +299,7 @@ public class mysql
     }
 //	
 	/**
-	 * clob×Ö¶ÎµÄĞ´Èë
+	 * clobå­—æ®µçš„å†™å…¥
 	 */
     @Test
 	public void testClobWrite()  throws Exception
@@ -309,7 +309,7 @@ public class mysql
 			dbUtil.preparedInsert("mysql",  "insert into test(id,clobname) values(?,?)");
 			
 			dbUtil.setString(1, DBUtil.getNextStringPrimaryKey("test"));
-			dbUtil.setClob(2,"clobvalue");//Ö±½Ó½«×Ö·û´®´æ´¢µ½clob×Ö¶ÎÖĞ
+			dbUtil.setClob(2,"clobvalue");//ç›´æ¥å°†å­—ç¬¦ä¸²å­˜å‚¨åˆ°clobå­—æ®µä¸­
 			dbUtil.executePrepared();
 			
 		} catch (Exception e) {
@@ -325,7 +325,7 @@ public class mysql
 	}
 	
 	/**
-	 * Õë¶Ôoracle Clob×Ö¶ÎµÄ²åÈë²Ù×÷
+	 * é’ˆå¯¹oracle Clobå­—æ®µçš„æ’å…¥æ“ä½œ
 	 */
     @Test
 	public void testBigClobWrite()  throws Exception
@@ -333,18 +333,18 @@ public class mysql
 		PreparedDBUtil dbUtil = new PreparedDBUtil();
 		TransactionManager tm = new TransactionManager();
 		try {
-			//Æô¶¯ÊÂÎñ
+			//å¯åŠ¨äº‹åŠ¡
 			tm.begin();
-			//ÏÈ²åÈëÒ»Ìõ¼ÇÂ¼,blob×Ö¶Î³õÊ¼»¯Îªempty_lob
+			//å…ˆæ’å…¥ä¸€æ¡è®°å½•,blobå­—æ®µåˆå§‹åŒ–ä¸ºempty_lob
 			dbUtil.preparedInsert("mysql",  "insert into test(id,clobname) values(?,?)");
 			String id = DBUtil.getNextStringPrimaryKey("test");
 			dbUtil.setString(1, id);
-			dbUtil.setNull(2,java.sql.Types.CLOB);//ÏÈÉèÖÃ¿ÕµÄblob×Ö¶Î
+			dbUtil.setNull(2,java.sql.Types.CLOB);//å…ˆè®¾ç½®ç©ºçš„blobå­—æ®µ
 			
 			
 			dbUtil.executePrepared();
 			
-			//²éÕÒ¸Õ²ÅµÄ²åÈëµÄ¼ÇÂ¼£¬ĞŞ¸Äblob×Ö¶ÎµÄÖµÎªÒ»¸öÎÄ¼ş
+			//æŸ¥æ‰¾åˆšæ‰çš„æ’å…¥çš„è®°å½•ï¼Œä¿®æ”¹blobå­—æ®µçš„å€¼ä¸ºä¸€ä¸ªæ–‡ä»¶
 			dbUtil = new PreparedDBUtil();
 			dbUtil.preparedUpdate("mysql", "update test set clobname =? where id = ?");
 			dbUtil.setClob(1, new java.io.File("resources/lob/route.txt"));
@@ -380,14 +380,14 @@ public class mysql
 	}
 //	
 	/**
-	 * clob×Ö¶ÎµÄ¶ÁÈ¡
+	 * clobå­—æ®µçš„è¯»å–
 	 */
     @Test
 	public void testClobFileRead()  throws Exception
 	{
 		PreparedDBUtil dbUtil = new PreparedDBUtil();
 		try {
-			//²éÑ¯´ó×Ö¶ÎÄÚÈİ²¢ÇÒ½«´ó×Ö¶Î´æ·Åµ½ÎÄ¼şÖĞ
+			//æŸ¥è¯¢å¤§å­—æ®µå†…å®¹å¹¶ä¸”å°†å¤§å­—æ®µå­˜æ”¾åˆ°æ–‡ä»¶ä¸­
 			dbUtil.preparedSelect( "mysql", "select id,clobname from test");
 			dbUtil.executePreparedWithRowHandler(new NullRowHandler(){
 
@@ -401,9 +401,9 @@ public class mysql
 //			for(int i = 0; i < dbUtil.size(); i ++)
 //			{
 //				
-//				dbUtil.getFile(i, "clobname", new java.io.File("resources/lob/route" + i + ".txt")); //¶ÁÈ¡clob×Ö¶Îµ½ÎÄ¼şÖĞ
-////				String clobvalue = dbUtil.getString(i, "clobname");//»ñÈ¡clob×Ö¶Îµ½×Ö·û´®±äÁ¿ÖĞ
-////				Clob clob = dbUtil.getClob(i, "clobname");//»ñÈ¡clob×Ö¶ÎÖµµ½clobÀàĞÍ±äÁ¿ÖĞ
+//				dbUtil.getFile(i, "clobname", new java.io.File("resources/lob/route" + i + ".txt")); //è¯»å–clobå­—æ®µåˆ°æ–‡ä»¶ä¸­
+////				String clobvalue = dbUtil.getString(i, "clobname");//è·å–clobå­—æ®µåˆ°å­—ç¬¦ä¸²å˜é‡ä¸­
+////				Clob clob = dbUtil.getClob(i, "clobname");//è·å–clobå­—æ®µå€¼åˆ°clobç±»å‹å˜é‡ä¸­
 //			}
 			
 		} catch (Exception e) {
@@ -420,7 +420,7 @@ public class mysql
 	
     
     /**
-     * clob×Ö¶ÎµÄ¶ÁÈ¡
+     * clobå­—æ®µçš„è¯»å–
      */
     @Test
     public void testClobRead()  throws Exception
@@ -429,7 +429,7 @@ public class mysql
         this.testBigClobWrite();
         PreparedDBUtil dbUtil = new PreparedDBUtil();
         try {
-            //²éÑ¯´ó×Ö¶ÎÄÚÈİ²¢ÇÒ½«´ó×Ö¶Î´æ·Åµ½ÎÄ¼şÖĞ
+            //æŸ¥è¯¢å¤§å­—æ®µå†…å®¹å¹¶ä¸”å°†å¤§å­—æ®µå­˜æ”¾åˆ°æ–‡ä»¶ä¸­
             dbUtil.preparedSelect( "mysql", "select id,clobname from test");
             dbUtil.executePreparedWithRowHandler(new NullRowHandler(){
 
@@ -444,9 +444,9 @@ public class mysql
 //          for(int i = 0; i < dbUtil.size(); i ++)
 //          {
 //              
-//              dbUtil.getFile(i, "clobname", new java.io.File("resources/lob/route" + i + ".txt")); //¶ÁÈ¡clob×Ö¶Îµ½ÎÄ¼şÖĞ
-////                String clobvalue = dbUtil.getString(i, "clobname");//»ñÈ¡clob×Ö¶Îµ½×Ö·û´®±äÁ¿ÖĞ
-////                Clob clob = dbUtil.getClob(i, "clobname");//»ñÈ¡clob×Ö¶ÎÖµµ½clobÀàĞÍ±äÁ¿ÖĞ
+//              dbUtil.getFile(i, "clobname", new java.io.File("resources/lob/route" + i + ".txt")); //è¯»å–clobå­—æ®µåˆ°æ–‡ä»¶ä¸­
+////                String clobvalue = dbUtil.getString(i, "clobname");//è·å–clobå­—æ®µåˆ°å­—ç¬¦ä¸²å˜é‡ä¸­
+////                Clob clob = dbUtil.getClob(i, "clobname");//è·å–clobå­—æ®µå€¼åˆ°clobç±»å‹å˜é‡ä¸­
 //          }
             
         } catch (Exception e) {

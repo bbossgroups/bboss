@@ -21,7 +21,7 @@ package org.frameworkset.spi.support;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2010-9-24 ÏÂÎç04:53:29
+ * @Date 2010-9-24 ä¸‹åˆ04:53:29
  * @author biaoping.yin
  * @version 1.0
  */

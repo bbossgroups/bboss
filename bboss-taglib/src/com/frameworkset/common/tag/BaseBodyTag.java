@@ -43,10 +43,10 @@ import javax.servlet.jsp.tagext.BodyTagSupport;
 import javax.servlet.jsp.tagext.TryCatchFinally;
 
 /**
- * Ò»¸ö´Ójavax.servlet.jsp.tagext.BodyTagSupport¼Ì³Ğ¡¢ÊµÏÖTagOutput½Ó¿ÚµÄ³éÏóÀà¡£
- * ×ÓÀà±ØĞëÊµÏÖ³éÏó·½·¨writer(OutputStream),¿Í»§³ÌĞòµ÷ÓÃwrite·½·¨½«tagµÄÄÚÈİÊä³öµ½
+ * ä¸€ä¸ªä»javax.servlet.jsp.tagext.BodyTagSupportç»§æ‰¿ã€å®ç°TagOutputæ¥å£çš„æŠ½è±¡ç±»ã€‚
+ * å­ç±»å¿…é¡»å®ç°æŠ½è±¡æ–¹æ³•writer(OutputStream),å®¢æˆ·ç¨‹åºè°ƒç”¨writeæ–¹æ³•å°†tagçš„å†…å®¹è¾“å‡ºåˆ°
  * outputstream.
- * ×ÓÀà±ØĞëÊµÏÖ³éÏó·½·¨generateContent(),Ìá¹©¸÷×Ô²úÉúÊä³öÄÚÈİµÄ»úÖÆ
+ * å­ç±»å¿…é¡»å®ç°æŠ½è±¡æ–¹æ³•generateContent(),æä¾›å„è‡ªäº§ç”Ÿè¾“å‡ºå†…å®¹çš„æœºåˆ¶
  * @author biaoping.yin
  */
 public abstract class BaseBodyTag extends BodyTagSupport  implements TryCatchFinally

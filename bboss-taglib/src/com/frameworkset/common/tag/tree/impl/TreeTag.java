@@ -66,7 +66,7 @@ public class TreeTag extends ContextMenuTag {
 	private static final long serialVersionUID = 1L;
 	private static final Logger log = Logger.getLogger(TreeTag.class);
 	/**
-	 * ¶¨ÒåÃ¿¿ÃÊ÷µÄÃû³Æ£¬±ØĞëÊÇÓ¢ÎÄ£¬±£³ÖÔÚÏµÍ³ÖĞµÄÎ¨Ò»ĞÔ
+	 * å®šä¹‰æ¯æ£µæ ‘çš„åç§°ï¼Œå¿…é¡»æ˜¯è‹±æ–‡ï¼Œä¿æŒåœ¨ç³»ç»Ÿä¸­çš„å”¯ä¸€æ€§
 	 */
 	protected String tree = null;
 
@@ -87,51 +87,51 @@ public class TreeTag extends ContextMenuTag {
 	
 
     /**
-     * Ë«ÊÂ¼ş¿ØÖÆ±äÁ¿£¬µã»÷½ÚµãÊ±ÊÇ·ñÕ¹¿ª½ÚµãµÄÏÂÒ»¼¶Ä¿Â¼£¬Ç°ÌáÌõ¼şÊÇ½ÚµãÒªÓĞÏÂÒ»¼¶Ä¿Â¼
-     * false£ºÎª²»Õ¹¿ª£¬trueÎªÕ¹¿ª£¬È±Ê¡Îªfalse
+     * åŒäº‹ä»¶æ§åˆ¶å˜é‡ï¼Œç‚¹å‡»èŠ‚ç‚¹æ—¶æ˜¯å¦å±•å¼€èŠ‚ç‚¹çš„ä¸‹ä¸€çº§ç›®å½•ï¼Œå‰ææ¡ä»¶æ˜¯èŠ‚ç‚¹è¦æœ‰ä¸‹ä¸€çº§ç›®å½•
+     * falseï¼šä¸ºä¸å±•å¼€ï¼Œtrueä¸ºå±•å¼€ï¼Œç¼ºçœä¸ºfalse
      */
     private boolean doubleEvent = false;
 	/**
-	 * ÏÔÊ¾Ä£Ê½
-	 * tree£ºÊ÷½á¹¹ÏÔÊ¾ËùÓĞÊı¾İ
-	 * list£ºÁĞ±íÄ£Ê½ÏÔÊ¾ËùÓĞÊı¾İ
+	 * æ˜¾ç¤ºæ¨¡å¼
+	 * treeï¼šæ ‘ç»“æ„æ˜¾ç¤ºæ‰€æœ‰æ•°æ®
+	 * listï¼šåˆ—è¡¨æ¨¡å¼æ˜¾ç¤ºæ‰€æœ‰æ•°æ®
 	 */
 	protected String showmode = "tree";
 
-	//ÊÇ·ñ²ÉÓÃjenKov tag
+	//æ˜¯å¦é‡‡ç”¨jenKov tag
 	protected String isjenkov = "false";
 
 	/**
-     * ¿ØÖÆÊ÷µÄÕÛµş¹¦ÄÜ£º
-     * false£º²»ÕÛµş
-     * true£ºÕÛµş
-     * È±Ê¡Öµ£ºtrue
+     * æ§åˆ¶æ ‘çš„æŠ˜å åŠŸèƒ½ï¼š
+     * falseï¼šä¸æŠ˜å 
+     * trueï¼šæŠ˜å 
+     * ç¼ºçœå€¼ï¼štrue
      */
 
     protected boolean collapse = true;
 
 	/**
-	 * ¶¨ÒåÊ÷Êı¾İ»º³å×÷ÓÃ·¶Î§£º
+	 * å®šä¹‰æ ‘æ•°æ®ç¼“å†²ä½œç”¨èŒƒå›´ï¼š
 	 * request
 	 * session
 	 * pageContext
-	 * È±Ê¡Îªsession
+	 * ç¼ºçœä¸ºsession
 	 *
 	 */
 	private String scope = "session";
 
 	/**
-	 * À©Õ¹´®£¬ÔÚÊ÷½Úµã¼ÓÒ»Ğ©ÌØÊâ¹¦ÄÜÊ±,±ÈÈçjsº¯Êı¹¦ÄÜµÈµÈ£¬ÉèÖÃ¸ÃÊôĞÔ
+	 * æ‰©å±•ä¸²ï¼Œåœ¨æ ‘èŠ‚ç‚¹åŠ ä¸€äº›ç‰¹æ®ŠåŠŸèƒ½æ—¶,æ¯”å¦‚jså‡½æ•°åŠŸèƒ½ç­‰ç­‰ï¼Œè®¾ç½®è¯¥å±æ€§
 	 */
 	protected String extendString;
 
 	/**
-		 * Ê÷µÄÍ¼Æ¬Â·¾¶
+		 * æ ‘çš„å›¾ç‰‡è·¯å¾„
 		 */
 	protected String imageFolder = "/images/";
 
 	/**
-	 * ¸´Ñ¡¿òÃû³ÆÉèÖÃ
+	 * å¤é€‰æ¡†åç§°è®¾ç½®
 	 */
 	private String checkBox = null;
 	private String[] checkBoxDefaultValue = null;
@@ -139,16 +139,16 @@ public class TreeTag extends ContextMenuTag {
     private boolean nowrap = true;
     private boolean enablecontextmenu = false;
     /**
-     * ¿ØÖÆÊ÷µÄ¶¯¾²Ì¬ĞĞÎªÊôĞÔ
+     * æ§åˆ¶æ ‘çš„åŠ¨é™æ€è¡Œä¸ºå±æ€§
      */
     private boolean dynamic = true;
     
     /**
-     * ¿ØÖÆÊ÷µÄÊı¾İ¼ÓÔØ»úÖÆ£º
-     *      static£º¾²Ì¬½áºÏ¼ÓÔØ
-     *      static-dynamic:¶¯¾²Ì¬½áºÏ¼ÓÔØ
-     *      dynamic£º´¿¶¯Ì¬µÄÊ÷
-     *      È±Ê¡Öµ£ºdynamic 
+     * æ§åˆ¶æ ‘çš„æ•°æ®åŠ è½½æœºåˆ¶ï¼š
+     *      staticï¼šé™æ€ç»“åˆåŠ è½½
+     *      static-dynamic:åŠ¨é™æ€ç»“åˆåŠ è½½
+     *      dynamicï¼šçº¯åŠ¨æ€çš„æ ‘
+     *      ç¼ºçœå€¼ï¼šdynamic 
      */
     private String mode = null;
    
@@ -158,7 +158,7 @@ public class TreeTag extends ContextMenuTag {
 		this.checkBoxExtention = checkBoxExtention;
 	}
 	/**
-	 * µ¥Ñ¡°´Å¥Ãû³ÆÉèÖÃ
+	 * å•é€‰æŒ‰é’®åç§°è®¾ç½®
 	 */
 	private String radio = null;
 	private String radioDefaultValue = null;
@@ -180,7 +180,7 @@ public class TreeTag extends ContextMenuTag {
 		jquery = false;
             
 		/**
-		 * ¶¨ÒåÃ¿¿ÃÊ÷µÄÃû³Æ£¬±ØĞëÊÇÓ¢ÎÄ£¬±£³ÖÔÚÏµÍ³ÖĞµÄÎ¨Ò»ĞÔ
+		 * å®šä¹‰æ¯æ£µæ ‘çš„åç§°ï¼Œå¿…é¡»æ˜¯è‹±æ–‡ï¼Œä¿æŒåœ¨ç³»ç»Ÿä¸­çš„å”¯ä¸€æ€§
 		 */
 		tree = null;
 
@@ -201,51 +201,51 @@ public class TreeTag extends ContextMenuTag {
 		
 
 	    /**
-	     * Ë«ÊÂ¼ş¿ØÖÆ±äÁ¿£¬µã»÷½ÚµãÊ±ÊÇ·ñÕ¹¿ª½ÚµãµÄÏÂÒ»¼¶Ä¿Â¼£¬Ç°ÌáÌõ¼şÊÇ½ÚµãÒªÓĞÏÂÒ»¼¶Ä¿Â¼
-	     * false£ºÎª²»Õ¹¿ª£¬trueÎªÕ¹¿ª£¬È±Ê¡Îªfalse
+	     * åŒäº‹ä»¶æ§åˆ¶å˜é‡ï¼Œç‚¹å‡»èŠ‚ç‚¹æ—¶æ˜¯å¦å±•å¼€èŠ‚ç‚¹çš„ä¸‹ä¸€çº§ç›®å½•ï¼Œå‰ææ¡ä»¶æ˜¯èŠ‚ç‚¹è¦æœ‰ä¸‹ä¸€çº§ç›®å½•
+	     * falseï¼šä¸ºä¸å±•å¼€ï¼Œtrueä¸ºå±•å¼€ï¼Œç¼ºçœä¸ºfalse
 	     */
 	    doubleEvent = false;
 		/**
-		 * ÏÔÊ¾Ä£Ê½
-		 * tree£ºÊ÷½á¹¹ÏÔÊ¾ËùÓĞÊı¾İ
-		 * list£ºÁĞ±íÄ£Ê½ÏÔÊ¾ËùÓĞÊı¾İ
+		 * æ˜¾ç¤ºæ¨¡å¼
+		 * treeï¼šæ ‘ç»“æ„æ˜¾ç¤ºæ‰€æœ‰æ•°æ®
+		 * listï¼šåˆ—è¡¨æ¨¡å¼æ˜¾ç¤ºæ‰€æœ‰æ•°æ®
 		 */
 		showmode = "tree";
 
-		//ÊÇ·ñ²ÉÓÃjenKov tag
+		//æ˜¯å¦é‡‡ç”¨jenKov tag
 		isjenkov = "false";
 
 		/**
-	     * ¿ØÖÆÊ÷µÄÕÛµş¹¦ÄÜ£º
-	     * false£º²»ÕÛµş
-	     * true£ºÕÛµş
-	     * È±Ê¡Öµ£ºtrue
+	     * æ§åˆ¶æ ‘çš„æŠ˜å åŠŸèƒ½ï¼š
+	     * falseï¼šä¸æŠ˜å 
+	     * trueï¼šæŠ˜å 
+	     * ç¼ºçœå€¼ï¼štrue
 	     */
 
 	    collapse = true;
 
 		/**
-		 * ¶¨ÒåÊ÷Êı¾İ»º³å×÷ÓÃ·¶Î§£º
+		 * å®šä¹‰æ ‘æ•°æ®ç¼“å†²ä½œç”¨èŒƒå›´ï¼š
 		 * request
 		 * session
 		 * pageContext
-		 * È±Ê¡Îªsession
+		 * ç¼ºçœä¸ºsession
 		 *
 		 */
 		scope = "session";
 
 		/**
-		 * À©Õ¹´®£¬ÔÚÊ÷½Úµã¼ÓÒ»Ğ©ÌØÊâ¹¦ÄÜÊ±,±ÈÈçjsº¯Êı¹¦ÄÜµÈµÈ£¬ÉèÖÃ¸ÃÊôĞÔ
+		 * æ‰©å±•ä¸²ï¼Œåœ¨æ ‘èŠ‚ç‚¹åŠ ä¸€äº›ç‰¹æ®ŠåŠŸèƒ½æ—¶,æ¯”å¦‚jså‡½æ•°åŠŸèƒ½ç­‰ç­‰ï¼Œè®¾ç½®è¯¥å±æ€§
 		 */
 		extendString = null;
 
 		/**
-			 * Ê÷µÄÍ¼Æ¬Â·¾¶
+			 * æ ‘çš„å›¾ç‰‡è·¯å¾„
 			 */
 		imageFolder = "/images/";
 
 		/**
-		 * ¸´Ñ¡¿òÃû³ÆÉèÖÃ
+		 * å¤é€‰æ¡†åç§°è®¾ç½®
 		 */
 		checkBox = null;
 		checkBoxDefaultValue = null;
@@ -253,21 +253,21 @@ public class TreeTag extends ContextMenuTag {
 	    nowrap = true;
 	    enablecontextmenu = false;
 	    /**
-	     * ¿ØÖÆÊ÷µÄ¶¯¾²Ì¬ĞĞÎªÊôĞÔ
+	     * æ§åˆ¶æ ‘çš„åŠ¨é™æ€è¡Œä¸ºå±æ€§
 	     */
 	    dynamic = true;
 	    
 	    /**
-	     * ¿ØÖÆÊ÷µÄÊı¾İ¼ÓÔØ»úÖÆ£º
-	     *      static£º¾²Ì¬½áºÏ¼ÓÔØ
-	     *      static-dynamic:¶¯¾²Ì¬½áºÏ¼ÓÔØ
-	     *      dynamic£º´¿¶¯Ì¬µÄÊ÷
-	     *      È±Ê¡Öµ£ºdynamic 
+	     * æ§åˆ¶æ ‘çš„æ•°æ®åŠ è½½æœºåˆ¶ï¼š
+	     *      staticï¼šé™æ€ç»“åˆåŠ è½½
+	     *      static-dynamic:åŠ¨é™æ€ç»“åˆåŠ è½½
+	     *      dynamicï¼šçº¯åŠ¨æ€çš„æ ‘
+	     *      ç¼ºçœå€¼ï¼šdynamic 
 	     */
 	    mode = null;
 		
 		/**
-		 * µ¥Ñ¡°´Å¥Ãû³ÆÉèÖÃ
+		 * å•é€‰æŒ‰é’®åç§°è®¾ç½®
 		 */
 		radio = null;
 		radioDefaultValue = null;
@@ -283,22 +283,22 @@ public class TreeTag extends ContextMenuTag {
 	}
 
 	/**
-	 * ÉèÖÃÊ÷µÄÍ¼Æ¬Â·¾¶
+	 * è®¾ç½®æ ‘çš„å›¾ç‰‡è·¯å¾„
 	 */
 	public void setImageFolder(String folder) {
 		this.imageFolder = folder;
 	}
 
 	/**
-	 * »ñÈ¡Ê÷µÄÍ¼Æ¬Â·¾¶
+	 * è·å–æ ‘çš„å›¾ç‰‡è·¯å¾„
 	 */
 	public String getImageFolder() {
 		return this.imageFolder == null ? "/images/" : imageFolder;
 	}
 
 	/**
-	 * ¿ÉÊ¹ÓÃcheckbox±êÇ©
-	 * @return ¸´Ñ¡¿òÃû³Æ
+	 * å¯ä½¿ç”¨checkboxæ ‡ç­¾
+	 * @return å¤é€‰æ¡†åç§°
 	 */
 	public String getCheckBox() {
 		return checkBox;
@@ -498,11 +498,11 @@ public class TreeTag extends ContextMenuTag {
 		return new Boolean(isjenkov).booleanValue();
 	}
 	/**
-	 * TreeTagÊÇ¾­¹ıĞŞ¸ÄjenKovÖĞµÄTreeTagµÃÀ´µÄ£¬
-	 * ÎªÁË±£ÁôÔ­ÓĞµÄjenKovÊ÷µÄÓÃ·¨£¬²ÉÓÃÁËÁ½ÖÖmode£¬
-	 * ¸ù¾İisJenkovµÄÖµÅĞ¶Ï²ÉÓÃÄÄÖÖmode£º
-	 * true : Ê¹ÓÃjenkov¶¨ÒåµÄÊ÷
-	 * false: Ê¹ÓÃĞŞ¸ÄºóµÄÊ÷
+	 * TreeTagæ˜¯ç»è¿‡ä¿®æ”¹jenKovä¸­çš„TreeTagå¾—æ¥çš„ï¼Œ
+	 * ä¸ºäº†ä¿ç•™åŸæœ‰çš„jenKovæ ‘çš„ç”¨æ³•ï¼Œé‡‡ç”¨äº†ä¸¤ç§modeï¼Œ
+	 * æ ¹æ®isJenkovçš„å€¼åˆ¤æ–­é‡‡ç”¨å“ªç§modeï¼š
+	 * true : ä½¿ç”¨jenkovå®šä¹‰çš„æ ‘
+	 * false: ä½¿ç”¨ä¿®æ”¹åçš„æ ‘
 
 	 */
 
@@ -530,7 +530,7 @@ public class TreeTag extends ContextMenuTag {
 	
 	
 				if (obj == null) {
-					log.info("ÕÒ²»µ½Ö¸¶¨ÀàĞÍµÄÊ÷:" + getTree());
+					log.info("æ‰¾ä¸åˆ°æŒ‡å®šç±»å‹çš„æ ‘:" + getTree());
 					return EVAL_PAGE;
 				}
 				
@@ -556,7 +556,7 @@ public class TreeTag extends ContextMenuTag {
 	    					this.treeIterator =
 	    						tree.iterator(parent_indent);
 	//                        request.setAttribute(this.getTree() + "_generateContent",generateContent());
-	                        //¶¯¾²½áºÏµÄÊ÷¼ÓÔØÄ£Ê½
+	                        //åŠ¨é™ç»“åˆçš„æ ‘åŠ è½½æ¨¡å¼
 	    					
                             
                             
@@ -596,7 +596,7 @@ public class TreeTag extends ContextMenuTag {
 		}
 		return EVAL_PAGE;
 	}
-    //Ç¨ÒÆprototypeµ½jqueryÊ±½âÊÍ
+    //è¿ç§»prototypeåˆ°jqueryæ—¶è§£é‡Š
 //    private void updateFather(ITreeNode node,String sons) throws IOException
 //    {
 //        StringBuffer script = new StringBuffer();
@@ -653,7 +653,7 @@ public class TreeTag extends ContextMenuTag {
     
 
     /**
-     * »ñÈ¡¸¸µÄindent
+     * è·å–çˆ¶çš„indent
      * @return
      */
     public static  String getParent_indent(HttpServletRequest request)
@@ -699,7 +699,7 @@ public class TreeTag extends ContextMenuTag {
 
 		if(selfHref == null || selfHref.trim().equals(""))
 		{
-		    //Ã»ÓĞ¼ÇÂ¼Ò³ÃæµÄÇëÇó²ÎÊı£¬ÔÚÄ³Ğ©Çé¿öÏÂ½«Ôì³ÉÊ÷ÏÔÊ¾²»ÕıÈ·
+		    //æ²¡æœ‰è®°å½•é¡µé¢çš„è¯·æ±‚å‚æ•°ï¼Œåœ¨æŸäº›æƒ…å†µä¸‹å°†é€ æˆæ ‘æ˜¾ç¤ºä¸æ­£ç¡®
 			selfHref = request.getRequestURI();
 		}
        
@@ -727,7 +727,7 @@ public class TreeTag extends ContextMenuTag {
             
             if(parent_indent == null)
             {
-            	//Èç¹ûÃ»ÓĞÓĞÓÒ¼ü²Ëµ¥²¢ÇÒÊÇ¾²Ì¬Ò³Ãæ£¬ÔòĞèÒªµ¥¶ÀÌí¼Óprototypeº¯Êı¿â½Å±¾
+            	//å¦‚æœæ²¡æœ‰æœ‰å³é”®èœå•å¹¶ä¸”æ˜¯é™æ€é¡µé¢ï¼Œåˆ™éœ€è¦å•ç‹¬æ·»åŠ prototypeå‡½æ•°åº“è„šæœ¬
 //            	if(!this.enablecontextmenu) //jquery
 //            	    if(!this.isJquery())
 //                        NodeHelper.getPrototypeScript(ret,request,this.enablecontextmenu);
@@ -750,7 +750,7 @@ public class TreeTag extends ContextMenuTag {
 		}
 		else if(itree.isStatic())
 		{
-//			Èç¹ûÃ»ÓĞÓĞÓÒ¼ü²Ëµ¥²¢ÇÒÊÇ¾²Ì¬Ò³Ãæ£¬ÔòĞèÒªµ¥¶ÀÌí¼Óprototypeº¯Êı¿â½Å±¾
+//			å¦‚æœæ²¡æœ‰æœ‰å³é”®èœå•å¹¶ä¸”æ˜¯é™æ€é¡µé¢ï¼Œåˆ™éœ€è¦å•ç‹¬æ·»åŠ prototypeå‡½æ•°åº“è„šæœ¬
 //        	if(!this.enablecontextmenu)
 //        	    if(!this.isJquery())
 //                    NodeHelper.getPrototypeScript(ret,request,this.enablecontextmenu);
@@ -774,11 +774,11 @@ public class TreeTag extends ContextMenuTag {
 				(ITreeIteratorElement) this.treeIterator.next();
 			NodeHelper helper = new NodeHelper(node, request,sonids);
             /**
-             * ÉèÖÃ¸´Ñ¡¿òÑ¡ÖĞÊ±ÊÇ·ñµİ¹éÑ¡ÖĞ
+             * è®¾ç½®å¤é€‰æ¡†é€‰ä¸­æ—¶æ˜¯å¦é€’å½’é€‰ä¸­
              */
 //            helper.setRecursive(this.isRecursive());
             /**
-             * ÉèÖÃ¸´Ñ¡¿òµÄonchangeÊÂ¼ş
+             * è®¾ç½®å¤é€‰æ¡†çš„onchangeäº‹ä»¶
              */
             
             helper.setTree(this.itree);
@@ -798,7 +798,7 @@ public class TreeTag extends ContextMenuTag {
 			helper.setRadioExtention(getRadioExtention());
 			helper.setNowrap(this.isNowrap());
             helper.setDoubleEvent(isDoubleEvent());
-			//¼ÇÂ¼Ò³Ãæ²ÎÊı
+			//è®°å½•é¡µé¢å‚æ•°
 			helper.setParams(params.toString());
 
 			helper.setScope(this.getScope());
@@ -889,7 +889,7 @@ public class TreeTag extends ContextMenuTag {
 	}
 
 	/**
-	 * ²Î¼ûcheckbox±êÇ©
+	 * å‚è§checkboxæ ‡ç­¾
 	 * @return String
 	 */
 	public String[] getCheckBoxDefaultValue() {
@@ -911,7 +911,7 @@ public class TreeTag extends ContextMenuTag {
 	}
 
 	/**
-	 * ²Î¼ûcheckbox±êÇ©
+	 * å‚è§checkboxæ ‡ç­¾
 	 * @return String
 	 */
 	public String getCheckBoxExtention() {

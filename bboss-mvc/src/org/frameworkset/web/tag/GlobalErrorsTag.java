@@ -21,7 +21,7 @@ import org.frameworkset.spi.support.validate.ObjectError;
 
 /**
  * <p>Title: GlobalErrors.java</p> 
- * <p>Description: 全局错误信息标签</p>
+ * <p>Description: 鍏ㄥ眬閿欒淇℃伅鏍囩</p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2008-2010</p>
  * @Date 2011-1-9

@@ -31,20 +31,20 @@ import org.frameworkset.util.annotations.ResponseBody;
 
 public class LoginNameQuery {
 	@HandlerMapping(value="/query/loginnamequery/{loginname}")
-	public @ResponseBody(charset="GBK") 
+	public @ResponseBody(charset="UTF-8") 
 				String  loginnamequery(@PathVariable(value="loginname",decodeCharset="UTF-8") String loginname)
 	{
 		
 			
 			if(loginname == null || loginname.trim().equals(""))			
-				return "²éÑ¯ÖĞµÄÓÃ»§ÃûÎª¿Õ£¬ÇëÖØĞÂÊäÈëÓÃ»§Ãû";
+				return "æŸ¥è¯¢ä¸­çš„ç”¨æˆ·åä¸ºç©ºï¼Œè¯·é‡æ–°è¾“å…¥ç”¨æˆ·å";
 			
-			if(loginname.equals("¶à¶à"))
+			if(loginname.equals("å¤šå¤š"))
 			{
-				return "ÓÃ»§Ãû["+loginname+"]´æÔÚ¡£";
+				return "ç”¨æˆ·å["+loginname+"]å­˜åœ¨ã€‚";
 			}
 			else
-				return "ÓÃ»§Ãû["+loginname+"]²»´æÔÚ¡£";
+				return "ç”¨æˆ·å["+loginname+"]ä¸å­˜åœ¨ã€‚";
 			
 			
 		

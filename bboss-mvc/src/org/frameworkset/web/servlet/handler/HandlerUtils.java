@@ -180,7 +180,7 @@ public abstract class HandlerUtils {
 				.getAnnotation(ExcludeMethod.class) != null;
 		if (isExcludehandleMethod)
 			return true;
-		Field[] fields = ClassUtil.getDeclaredFields(handlerType);// ÅĞ¶Á·½·¨ÊÇ·ñÎª×Ö¶ÎµÄget/set·½·¨£¬Èç¹ûÊÇÔò·½·¨²»ÊÇ¿ØÖÆÆ÷·½·¨
+		Field[] fields = ClassUtil.getDeclaredFields(handlerType);// åˆ¤è¯»æ–¹æ³•æ˜¯å¦ä¸ºå­—æ®µçš„get/setæ–¹æ³•ï¼Œå¦‚æœæ˜¯åˆ™æ–¹æ³•ä¸æ˜¯æ§åˆ¶å™¨æ–¹æ³•
 
 		for (int i = 0; fields != null && i < fields.length; i++) {
 			Field f = fields[i];
@@ -525,14 +525,14 @@ public abstract class HandlerUtils {
 					validators, messageConverters, type,methodInfo);
 		} else {
 			Object paramValue = null;
-			if (List.class.isAssignableFrom(type)) {// Èç¹ûÊÇÁĞ±íÊı¾İ¼¯
+			if (List.class.isAssignableFrom(type)) {// å¦‚æœæ˜¯åˆ—è¡¨æ•°æ®é›†
 				List command = new ArrayList();
-				Class ct = methodInfo.getGenericParameterType(position);// »ñÈ¡ÔªËØÀàĞÍ
+				Class ct = methodInfo.getGenericParameterType(position);// è·å–å…ƒç´ ç±»å‹
 //				if (ct == null) {
 //					model.getErrors().rejectValue(
 //							methodParameter_.getRequestParameterName(),
 //							"evaluateAnnotationsValue.error",
-//							"Ã»ÓĞ»ñÈ¡µ½¼¯ºÏ²ÎÊı¶ÔÏóÀàĞÍ,Çë¼ì²éÊÇ·ñÖ¸¶¨ÁË¼¯ºÏ·ºĞÍ£º"
+//							"æ²¡æœ‰è·å–åˆ°é›†åˆå‚æ•°å¯¹è±¡ç±»å‹,è¯·æ£€æŸ¥æ˜¯å¦æŒ‡å®šäº†é›†åˆæ³›å‹ï¼š"
 //									+ methodInfo.getMethod().getName());
 //					paramValue = ValueObjectUtil.getDefaultValue(type);
 //				} else 
@@ -542,15 +542,15 @@ public abstract class HandlerUtils {
 							command, ct, validators, messageConverters, paramname);
 					paramValue = command;
 				}
-			} else if (Set.class.isAssignableFrom(type)) {// Èç¹ûÊÇSetÊı¾İ¼¯
+			} else if (Set.class.isAssignableFrom(type)) {// å¦‚æœæ˜¯Setæ•°æ®é›†
 				Set command = new TreeSet();
 				String paramname = methodParameter_.getRequestParameterName();
-				Class ct = methodInfo.getGenericParameterType(position);// »ñÈ¡ÔªËØÀàĞÍ
+				Class ct = methodInfo.getGenericParameterType(position);// è·å–å…ƒç´ ç±»å‹
 //				if (ct == null) {
 //					model.getErrors().rejectValue(
 //							methodParameter_.getRequestParameterName(),
 //							"evaluateAnnotationsValue.error",
-//							"Ã»ÓĞ»ñÈ¡µ½¼¯ºÏ²ÎÊı¶ÔÏóÀàĞÍ,Çë¼ì²éÊÇ·ñÖ¸¶¨ÁË¼¯ºÏ·ºĞÍ»òÕßÍ¨¹ı×¢½âÖ¸¶¨°ó¶¨±äÁ¿£º"
+//							"æ²¡æœ‰è·å–åˆ°é›†åˆå‚æ•°å¯¹è±¡ç±»å‹,è¯·æ£€æŸ¥æ˜¯å¦æŒ‡å®šäº†é›†åˆæ³›å‹æˆ–è€…é€šè¿‡æ³¨è§£æŒ‡å®šç»‘å®šå˜é‡ï¼š"
 //									+ methodInfo.getMethod().getName());
 //					paramValue = ValueObjectUtil.getDefaultValue(type);
 //				} else 
@@ -819,7 +819,7 @@ public abstract class HandlerUtils {
 	}
 
 	/**
-	 * ´¦Àí»ù´¡Êı¾İÀàĞÍ°ó¶¨£¬¸½¼şÈçºÎ¿¼ÂÇÄØ£¬Èç¹ûÃ»ÓĞ×¢½âĞŞÊÎ ×îºÃÒ²ÊÇ°´ÕÕ»ù´¡ÀàĞÍµÄ·½Ê½À´´¦Àí
+	 * å¤„ç†åŸºç¡€æ•°æ®ç±»å‹ç»‘å®šï¼Œé™„ä»¶å¦‚ä½•è€ƒè™‘å‘¢ï¼Œå¦‚æœæ²¡æœ‰æ³¨è§£ä¿®é¥° æœ€å¥½ä¹Ÿæ˜¯æŒ‰ç…§åŸºç¡€ç±»å‹çš„æ–¹å¼æ¥å¤„ç†
 	 * 
 	 * @param methodParameter_
 	 * @param request
@@ -879,7 +879,7 @@ public abstract class HandlerUtils {
 	}
 
 	/**
-	 * ¼ÆËã·ÖÒ³²ÎÊıµÄÖµ
+	 * è®¡ç®—åˆ†é¡µå‚æ•°çš„å€¼
 	 * 
 	 * @param methodParameter
 	 * @param request
@@ -890,7 +890,7 @@ public abstract class HandlerUtils {
 		Object paramValue = null;
 		String name = methodParameter.getRequestParameterName();
 		if (name.equals(PagerParam.PAGE_SIZE)) {
-			// »ñÈ¡Ò³Ãæsize
+			// è·å–é¡µé¢size
 			String cookieid = RequestContext.getPagerSizeCookieID(request,
 					methodParameter.getParamNamePrefix());
 			int defaultSize = RequestContext.getPagerSize(request,
@@ -1004,13 +1004,13 @@ public abstract class HandlerUtils {
 					if(!mapKey.value().equals(""))
 					{
 						Map command = new HashMap();
-						Class[] ct = methodInfo.getGenericParameterTypes(i);// »ñÈ¡ÔªËØÀàĞÍ
+						Class[] ct = methodInfo.getGenericParameterTypes(i);// è·å–å…ƒç´ ç±»å‹
 						if (ct == null) {
 							model.getErrors().rejectValue(
 									methodParameter.getRequestParameterName(),
 									"evaluateAnnotationsValue.error",
-									"Ã»ÓĞ»ñÈ¡µ½¼¯ºÏ²ÎÊı¶ÔÏóÀàĞÍ,Çë¼ì²é¿ØÖÆÆ÷·½·¨£º" + method.getName()
-											+ "ÊÇ·ñÖ¸¶¨ÁË¼¯ºÏ·ºĞÍ²ÎÊı¡£");
+									"æ²¡æœ‰è·å–åˆ°é›†åˆå‚æ•°å¯¹è±¡ç±»å‹,è¯·æ£€æŸ¥æ§åˆ¶å™¨æ–¹æ³•ï¼š" + method.getName()
+											+ "æ˜¯å¦æŒ‡å®šäº†é›†åˆæ³›å‹å‚æ•°ã€‚");
 							paramValue = ValueObjectUtil.getDefaultValue(type);
 						} else {
 							bind(request, response, pageContext, handlerMethod,
@@ -1041,13 +1041,13 @@ public abstract class HandlerUtils {
 				continue;
 			}
 
-			// else if (List.class.isAssignableFrom(type)) {//Èç¹ûÊÇÁĞ±íÊı¾İ¼¯
+			// else if (List.class.isAssignableFrom(type)) {//å¦‚æœæ˜¯åˆ—è¡¨æ•°æ®é›†
 			// List command = new ArrayList();
-			// Class ct = methodInfo.getGenericParameterType(i);//»ñÈ¡ÔªËØÀàĞÍ
+			// Class ct = methodInfo.getGenericParameterType(i);//è·å–å…ƒç´ ç±»å‹
 			// if(ct == null)
 			// {
 			// model.getErrors().rejectValue(methodParameter.getRequestParameterName(),
-			// "evaluateAnnotationsValue.error","Ã»ÓĞ»ñÈ¡µ½¼¯ºÏ²ÎÊı¶ÔÏóÀàĞÍ,Çë¼ì²éÊÇ·ñÖ¸¶¨ÁË¼¯ºÏ·ºĞÍ£º" +
+			// "evaluateAnnotationsValue.error","æ²¡æœ‰è·å–åˆ°é›†åˆå‚æ•°å¯¹è±¡ç±»å‹,è¯·æ£€æŸ¥æ˜¯å¦æŒ‡å®šäº†é›†åˆæ³›å‹ï¼š" +
 			// method.getName());
 			// paramValue = ValueObjectUtil.getDefaultValue(type);
 			// }
@@ -1058,14 +1058,14 @@ public abstract class HandlerUtils {
 			// paramValue = command;
 			// }
 			// }
-			// else if (Set.class.isAssignableFrom(type)) {//Èç¹ûÊÇSetÊı¾İ¼¯
+			// else if (Set.class.isAssignableFrom(type)) {//å¦‚æœæ˜¯Setæ•°æ®é›†
 			// Set command = new TreeSet();
 			//
-			// Class ct = methodInfo.getGenericParameterType(i);//»ñÈ¡ÔªËØÀàĞÍ
+			// Class ct = methodInfo.getGenericParameterType(i);//è·å–å…ƒç´ ç±»å‹
 			// if(ct == null)
 			// {
 			// model.getErrors().rejectValue(methodParameter.getRequestParameterName(),
-			// "evaluateAnnotationsValue.error","Ã»ÓĞ»ñÈ¡µ½¼¯ºÏ²ÎÊı¶ÔÏóÀàĞÍ,Çë¼ì²éÊÇ·ñÖ¸¶¨ÁË¼¯ºÏ·ºĞÍ»òÕßÍ¨¹ı×¢½âÖ¸¶¨°ó¶¨±äÁ¿£º"
+			// "evaluateAnnotationsValue.error","æ²¡æœ‰è·å–åˆ°é›†åˆå‚æ•°å¯¹è±¡ç±»å‹,è¯·æ£€æŸ¥æ˜¯å¦æŒ‡å®šäº†é›†åˆæ³›å‹æˆ–è€…é€šè¿‡æ³¨è§£æŒ‡å®šç»‘å®šå˜é‡ï¼š"
 			// + method.getName());
 			// paramValue = ValueObjectUtil.getDefaultValue(type);
 			// }
@@ -1720,7 +1720,7 @@ public abstract class HandlerUtils {
 	}
 
 //	/**
-//	 * Ö¸¶¨ÁË¶à¸ö×¢½âÀàĞÍµÄÊôĞÔ£¬¿ÉÒÔÑ¡ÔñĞÔµØ´Ó²»Í¬µÄ×¢½â·½Ê½»ñÈ¡ÊôĞÔµÄÖµ
+//	 * æŒ‡å®šäº†å¤šä¸ªæ³¨è§£ç±»å‹çš„å±æ€§ï¼Œå¯ä»¥é€‰æ‹©æ€§åœ°ä»ä¸åŒçš„æ³¨è§£æ–¹å¼è·å–å±æ€§çš„å€¼
 //	 * 
 //	 * @param writeMethod
 //	 * @param annotations
@@ -1840,7 +1840,7 @@ public abstract class HandlerUtils {
 //		return value;
 //	}
 	/**
-	 * µ¥¶À»ñÈ¡Ãû³ÆÎª±äÁ¿±í´ïÊ½µÄ²ÎÊıµÄÖµ
+	 * å•ç‹¬è·å–åç§°ä¸ºå˜é‡è¡¨è¾¾å¼çš„å‚æ•°çš„å€¼
 	 * @param property
 	 * @param request
 	 * @param name
@@ -1951,7 +1951,7 @@ public abstract class HandlerUtils {
 	}
 
 	/**
-	 * Ö¸¶¨ÁË¶à¸ö×¢½âÀàĞÍµÄÊôĞÔ£¬¿ÉÒÔÑ¡ÔñĞÔµØ´Ó²»Í¬µÄ×¢½â·½Ê½»ñÈ¡ÊôĞÔµÄÖµ
+	 * æŒ‡å®šäº†å¤šä¸ªæ³¨è§£ç±»å‹çš„å±æ€§ï¼Œå¯ä»¥é€‰æ‹©æ€§åœ°ä»ä¸åŒçš„æ³¨è§£æ–¹å¼è·å–å±æ€§çš„å€¼
 	 * 
 	 * @param writeMethod
 	 * @param annotations
@@ -2183,7 +2183,7 @@ public abstract class HandlerUtils {
 	}
 
 	/**
-	 * ¶àÎÄ¼ş¸½¼şÉÏ´«²ÎÊı»ñÈ¡
+	 * å¤šæ–‡ä»¶é™„ä»¶ä¸Šä¼ å‚æ•°è·å–
 	 * 
 	 * @param values
 	 * @param holder
@@ -2228,7 +2228,7 @@ public abstract class HandlerUtils {
 	}
 
 	/**
-	 * ÆÕÍ¨Request²ÎÊı´¦Àí
+	 * æ™®é€šRequestå‚æ•°å¤„ç†
 	 * 
 	 * @param values
 	 * @param holder
@@ -2294,15 +2294,15 @@ public abstract class HandlerUtils {
 					}
 				} else {
 					if (values.length > 0) {
-						if (editor == null)// Ä¬ÈÏ·µ»Ø¶àÌõÖµ
+						if (editor == null)// é»˜è®¤è¿”å›å¤šæ¡å€¼
 						{
 							value = _getRequestDatas(values, decodeCharset,
 									charset, convertcharset);
-						} else if (editor instanceof ArrayEditorInf)// ArrayEditorInf£¬·µ»Ø¶àÌõÖµ
+						} else if (editor instanceof ArrayEditorInf)// ArrayEditorInfï¼Œè¿”å›å¤šæ¡å€¼
 						{
 							value = _getRequestDatas(values, decodeCharset,
 									charset, convertcharset);
-						} else// EditorInf£¬Ö»·µ»ØµÚÒ»ÌõÖµ
+						} else// EditorInfï¼Œåªè¿”å›ç¬¬ä¸€æ¡å€¼
 						{
 							value = _getRequestData(values, decodeCharset,
 									charset, convertcharset);
@@ -2510,7 +2510,7 @@ public abstract class HandlerUtils {
 			// }
 			if(!property.isNamevariabled())
 			{
-				// ½â¾öÎÊÌâ£ºList<Bean>ÖĞÈç¹ûbeanÓĞÈÕÆÚÀàĞÍ²¢ÇÒÖ¸¶¨ÁËÈÕÆÚ¸ñÊ½£¬¶ÔÓ¦¶àÌõ¼ÇÂ¼Çé¿öÏÂ¸ñÊ½»¯ÈÕÆÚ±¨´íµÄÎÊÌâ			
+				// è§£å†³é—®é¢˜ï¼šList<Bean>ä¸­å¦‚æœbeanæœ‰æ—¥æœŸç±»å‹å¹¶ä¸”æŒ‡å®šäº†æ—¥æœŸæ ¼å¼ï¼Œå¯¹åº”å¤šæ¡è®°å½•æƒ…å†µä¸‹æ ¼å¼åŒ–æ—¥æœŸæŠ¥é”™çš„é—®é¢˜			
 				value = buildArrayPositionData(property, request, response,
 						pageContext, handlerMethod, model, messageConverters,
 						holder, objectType, pathVarDatas);
@@ -2518,14 +2518,14 @@ public abstract class HandlerUtils {
 			else
 			{
 				/**
-				 * Class ct = ValueObjectUtil.isCollectionType(type)?property.getPropertyGenericType():null;// »ñÈ¡ÔªËØÀàĞÍ
+				 * Class ct = ValueObjectUtil.isCollectionType(type)?property.getPropertyGenericType():null;// è·å–å…ƒç´ ç±»å‹
 					value = evaluateAnnotationsValue(property, pathVarDatas,
 							request, name, pageContext, handlerMethod, model,
 							type, holder,ct);
 					useEditor = false;
 					return value;
 				 */
-				Class ct = ValueObjectUtil.isCollectionType(type)?property.getPropertyGenericType():null;// »ñÈ¡ÔªËØÀàĞÍ
+				Class ct = ValueObjectUtil.isCollectionType(type)?property.getPropertyGenericType():null;// è·å–å…ƒç´ ç±»å‹
 				value = getNamedParameterValue( property,
 						   request,  name,  model,
 						 type,  holder, ct) ;
@@ -2589,13 +2589,13 @@ public abstract class HandlerUtils {
 					{
 						Map command = new HashMap();
 	
-						Class[] ct = property.getPropertyGenericTypes();// »ñÈ¡ÔªËØÀàĞÍ
+						Class[] ct = property.getPropertyGenericTypes();// è·å–å…ƒç´ ç±»å‹
 						if (ct == null) {
 							model.getErrors().rejectValue(
 									name,
 									"evaluateAnnotationsValue.error",
-									"Ã»ÓĞ»ñÈ¡µ½¼¯ºÏ¶ÔÏóÀàĞÍ,Çë¼ì²éÊôĞÔ" + property.getName()
-											+ "»òÕßÊôĞÔset·½·¨ÊÇ·ñÖ¸¶¨ÁË¼¯ºÏ·ºĞÍ.");
+									"æ²¡æœ‰è·å–åˆ°é›†åˆå¯¹è±¡ç±»å‹,è¯·æ£€æŸ¥å±æ€§" + property.getName()
+											+ "æˆ–è€…å±æ€§setæ–¹æ³•æ˜¯å¦æŒ‡å®šäº†é›†åˆæ³›å‹.");
 							return ValueObjectUtil.getDefaultValue(type);
 						}
 						// MapKey mapKey = field.getAnnotation(MapKey.class);
@@ -2614,14 +2614,14 @@ public abstract class HandlerUtils {
 				}
 				useEditor = false;
 			} else if (!hasParameterAnnotation(property)) {
-				if (List.class.isAssignableFrom(type)) {// Èç¹ûÊÇÁĞ±íÊı¾İ¼¯
+				if (List.class.isAssignableFrom(type)) {// å¦‚æœæ˜¯åˆ—è¡¨æ•°æ®é›†
 					List command = new ArrayList();
-					Class ct = property.getPropertyGenericType();// »ñÈ¡ÔªËØÀàĞÍ
+					Class ct = property.getPropertyGenericType();// è·å–å…ƒç´ ç±»å‹
 //					if (ct == null) {
 //						model.getErrors().rejectValue(
 //								name,
 //								"evaluateAnnotationsValue.error",
-//								"Ã»ÓĞ»ñÈ¡µ½¼¯ºÏ¶ÔÏóÀàĞÍ,Çë¼ì²éÊôĞÔÊÇ·ñÖ¸¶¨ÁË¼¯ºÏ·ºĞÍ£º"
+//								"æ²¡æœ‰è·å–åˆ°é›†åˆå¯¹è±¡ç±»å‹,è¯·æ£€æŸ¥å±æ€§æ˜¯å¦æŒ‡å®šäº†é›†åˆæ³›å‹ï¼š"
 //										+ property.getName());
 //						return ValueObjectUtil.getDefaultValue(type);
 //					}
@@ -2632,14 +2632,14 @@ public abstract class HandlerUtils {
 						holder.addData(name, value);
 					}
 					useEditor = false;
-				} else if (Set.class.isAssignableFrom(type)) {// Èç¹ûÊÇSetÊı¾İ¼¯
+				} else if (Set.class.isAssignableFrom(type)) {// å¦‚æœæ˜¯Setæ•°æ®é›†
 					Set command = new TreeSet();
-					Class ct = property.getPropertyGenericType();// »ñÈ¡ÔªËØÀàĞÍ
+					Class ct = property.getPropertyGenericType();// è·å–å…ƒç´ ç±»å‹
 //					if (ct == null) {
 //						model.getErrors().rejectValue(
 //								name,
 //								"evaluateAnnotationsValue.error",
-//								"Ã»ÓĞ»ñÈ¡µ½¼¯ºÏ¶ÔÏóÀàĞÍ,Çë¼ì²éÊÇ·ñÖ¸¶¨ÁË¼¯ºÏ·ºĞÍ£º"
+//								"æ²¡æœ‰è·å–åˆ°é›†åˆå¯¹è±¡ç±»å‹,è¯·æ£€æŸ¥æ˜¯å¦æŒ‡å®šäº†é›†åˆæ³›å‹ï¼š"
 //										+ property.getName());
 //						return ValueObjectUtil.getDefaultValue(type);
 //					}
@@ -2706,7 +2706,7 @@ public abstract class HandlerUtils {
 			} else {
 				Annotation[] annotations = property.getAnnotations();
 				try {
-					Class ct = ValueObjectUtil.isCollectionType(type)?property.getPropertyGenericType():null;// »ñÈ¡ÔªËØÀàĞÍ
+					Class ct = ValueObjectUtil.isCollectionType(type)?property.getPropertyGenericType():null;// è·å–å…ƒç´ ç±»å‹
 					value = evaluateAnnotationsValue(property, pathVarDatas,
 							request, name, pageContext, handlerMethod, model,
 							type, holder,ct);
@@ -2987,13 +2987,13 @@ public abstract class HandlerUtils {
 
 		String[] paths = null;
 		HandlerMapping mapping = null;
-		if (iscontroller)// Â·¾¶¶ÔÓ¦urlµØÖ·Ö±½Ó½âÎöÂ·¾¶
+		if (iscontroller)// è·¯å¾„å¯¹åº”urlåœ°å€ç›´æ¥è§£æè·¯å¾„
 		{
 			paths = beanName.split(",");
 
-		} else// ·ñÔòÅĞ¶Ï×é¼şÊÇ·ñÊ¹ÓÃÁËHandlerMapping×¢½âºÍController×¢½â
+		} else// å¦åˆ™åˆ¤æ–­ç»„ä»¶æ˜¯å¦ä½¿ç”¨äº†HandlerMappingæ³¨è§£å’ŒControlleræ³¨è§£
 		{
-			// »ñÈ¡Àà¼¶urlºÍcontrollerÓ³Éä¹ØÏµ
+			// è·å–ç±»çº§urlå’Œcontrolleræ˜ å°„å…³ç³»
 			mapping = AnnotationUtils.findAnnotation(handlerType,
 					HandlerMapping.class);
 			if (mapping != null) {
@@ -3036,7 +3036,7 @@ public abstract class HandlerUtils {
 			return StringUtil.toStringArray(urls);
 		} else {
 			// actual paths specified by @HandlerMapping at method level
-			// ¶ÔÓ¦ÉèÖÃÁËcontroller×¢½âµÄ¿ØÖÆÆ÷£¬ÒªÇóÀïÃæµÄurl´¦Àí·½·¨±ØĞëÉèÖÃHandleMaping×¢½â²¢ÇÒÖÆ¶¨ÏàÓ¦µÄurl·ñÔòºöÂÔÏàÓ¦µÄ·½·¨
+			// å¯¹åº”è®¾ç½®äº†controlleræ³¨è§£çš„æ§åˆ¶å™¨ï¼Œè¦æ±‚é‡Œé¢çš„urlå¤„ç†æ–¹æ³•å¿…é¡»è®¾ç½®HandleMapingæ³¨è§£å¹¶ä¸”åˆ¶å®šç›¸åº”çš„urlå¦åˆ™å¿½ç•¥ç›¸åº”çš„æ–¹æ³•
 			return determineUrlsForHandlerMethods(handlerType);
 		}
 		// }
@@ -3112,7 +3112,7 @@ public abstract class HandlerUtils {
 		// while(methods.hasNext())
 		// {
 		// urls.addAll(this.getUrl(path, restful, methods.next()));
-		// urls.add(path); 20110511×¢ÊÍµô£¬Ã»ÓĞ¿¼ÂÇrestful·ç¸ñµØÖ·
+		// urls.add(path); 20110511æ³¨é‡Šæ‰ï¼Œæ²¡æœ‰è€ƒè™‘restfulé£æ ¼åœ°å€
 		// if (this.useDefaultSuffixPattern && path.indexOf('.') == -1) {
 		// urls.add(path + ".*");
 		// }
@@ -3582,7 +3582,7 @@ public abstract class HandlerUtils {
 				ModelAndView mav = (ModelAndView) returnValue;
 				if (mav.getView() != null
 						&& mav.getView() instanceof AbstractUrlBasedView) {
-					// ´¦Àípath:ÀàĞÍÂ·¾¶
+					// å¤„ç†path:ç±»å‹è·¯å¾„
 					AbstractUrlBasedView view = (AbstractUrlBasedView) mav
 							.getView();
 					String url = view.getUrl();
@@ -3609,7 +3609,7 @@ public abstract class HandlerUtils {
 			} else if (returnValue instanceof View) {
 
 				if (returnValue instanceof AbstractUrlBasedView) {
-					// ´¦Àípath:ÀàĞÍÂ·¾¶
+					// å¤„ç†path:ç±»å‹è·¯å¾„
 					AbstractUrlBasedView view = (AbstractUrlBasedView) returnValue;
 					String url = view.getUrl();
 					if (UrlBasedViewResolver.isPathVariable(url)) {

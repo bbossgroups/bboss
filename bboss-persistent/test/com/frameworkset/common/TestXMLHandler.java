@@ -99,7 +99,7 @@ public class TestXMLHandler {
                 
                 public String getEncoding() {
                     // TODO Auto-generated method stub
-                    return "gbk";
+                    return "UTF-8";
                 }
 
                

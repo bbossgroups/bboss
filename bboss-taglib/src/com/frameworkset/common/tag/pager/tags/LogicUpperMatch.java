@@ -44,7 +44,7 @@ public class LogicUpperMatch extends MatchTag {
 
 
 	/**
-	 *  Description: ÅĞ¶ÏÊÇ·ñ´óÓÚ
+	 *  Description: åˆ¤æ–­æ˜¯å¦å¤§äº
 	 * @return boolean
 	 * @see com.frameworkset.common.tag.pager.tags.MatchTag#match()
 	 */

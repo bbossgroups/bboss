@@ -23,11 +23,11 @@ import java.lang.annotation.Target;
 
 /**
  * <p> ExcludeMethod.java</p>
- * <p> Description: 标注方法不是mvc控制器方法，添加了ExcludeMethod注解的方法就不会被加入到mvc控制器的方法注册表中</p>
+ * <p> Description: 鏍囨敞鏂规硶涓嶆槸mvc鎺у埗鍣ㄦ柟娉曪紝娣诲姞浜咵xcludeMethod娉ㄨВ鐨勬柟娉曞氨涓嶄細琚姞鍏ュ埌mvc鎺у埗鍣ㄧ殑鏂规硶娉ㄥ唽琛ㄤ腑</p>
  * <p> bboss workgroup </p>
  * <p> Copyright (c) 2009 </p>
  * 
- * @Date 2012-10-3 下午3:25:17
+ * @Date 2012-10-3 涓嬪崍3:25:17
  * @author biaoping.yin
  * @version 3.6.0
  */

@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=GBK"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"%>
 <%@ taglib uri="/WEB-INF/pager-taglib.tld" prefix="pg"%>
 <%@ taglib uri="/WEB-INF/treetag.tld" prefix="tree"%>
 
@@ -45,7 +45,7 @@ backColor {
 	<SCRIPT language="JavaScript" SRC="../../sysmanager/scripts/validateForm.js"></SCRIPT>
 	<SCRIPT LANGUAGE="JavaScript"> 
 	
-		//¸øStringÌí¼Ótrim·½·¨ 
+		//ç»™Stringæ·»åŠ trimæ–¹æ³• 
 String.prototype.trim = function(){
 	return this.replace(/(^\s*)|(\s*$)/g, "");
 }	
@@ -62,7 +62,7 @@ function checkedUser(){
 			users.push(name+"="+userInfos[i].value+"=1")
 		}
 	  } 
-	 <%@ page language="java" contentType="text/html; charset=GBK"%>
+	 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
 <%@ taglib uri="/WEB-INF/pager-taglib.tld" prefix="pg"%>
 <%@ taglib uri="/WEB-INF/treetag.tld" prefix="tree"%>
 
@@ -103,7 +103,7 @@ function checkedUser(){
 	<SCRIPT language="JavaScript" SRC="sysmanager/scripts/validateForm.js"></SCRIPT>
 	<SCRIPT LANGUAGE="JavaScript"> 
 	//alert("<%=txtReceiver%>");
-		//¸øStringÌí¼Ótrim·½·¨ 
+		//ç»™Stringæ·»åŠ trimæ–¹æ³• 
        String.prototype.trim = function(){
           return this.replace(/(^\s*)|(\s*$)/g, "");
          }	
@@ -177,7 +177,7 @@ function checkedUser(){
 
 				<fieldset style="width: 90%;">
 					<LEGEND align=center>
-						<FONT size="2">Ñ¡ÔñÈËÔ±</FONT>
+						<FONT size="2">é€‰æ‹©äººå‘˜</FONT>
 					</LEGEND>
 					<table width="100%" height="35" border="0" align="left"
 						cellpadding="0" cellspacing="1" class="table">
@@ -193,7 +193,7 @@ function checkedUser(){
 											uprecursive="false" />
 									<tree:treedata
 										treetype="com.chinacreator.xzsp.baseservice.menu.ActUsersTree"
-										scope="request" rootid="0" rootName="»ú¹¹ÈËÔ±Ê÷" expandLevel="1"
+										scope="request" rootid="0" rootName="æœºæ„äººå‘˜æ ‘" expandLevel="1"
 										showRootHref="false" needObserver="false" />
 								</tree:tree>
 							</td>
@@ -204,9 +204,9 @@ function checkedUser(){
 				<br />
 				<br />
 				<button onclick="checkedUser()">
-					È·¶¨
+					ç¡®å®š
 				</button>&nbsp;&nbsp;
-				<button onclick="javascript:window.close()">È¡Ïû</button>
+				<button onclick="javascript:window.close()">å–æ¶ˆ</button>
 
 			</form>
 
@@ -274,7 +274,7 @@ function init(){
 											uprecursive="false" />
 									<tree:treedata
 										treetype="com.chinacreator.xzsp.baseservice.menu.ActUsersTree"
-										scope="request" rootid="0"  rootName="ĞĞÕşÉóÅúÊµÊ©Ä£ĞÍ»ú¹¹" expandLevel="1"
+										scope="request" rootid="0"  rootName="è¡Œæ”¿å®¡æ‰¹å®æ–½æ¨¡å‹æœºæ„" expandLevel="1"
 										showRootHref="false" needObserver="false" />
 								</tree:tree>
 							</td>
@@ -290,9 +290,9 @@ function init(){
 				<br />
 				<br />
 				<button onClick="checkedUser()">
-					È·¶¨
+					ç¡®å®š
 				</button>&nbsp;&nbsp;
-				<button onClick="javascript:window.close()">È¡Ïû</button> 
+				<button onClick="javascript:window.close()">å–æ¶ˆ</button> 
 				</td>
 			</tr>
 			</table>

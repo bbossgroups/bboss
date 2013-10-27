@@ -1,34 +1,34 @@
 https://github.com/bbossgroups/bbossgroups-3.5.git
 todo
 
-1.urlÖØĞ´¹æÔò¿ÉÒÔÔÚÒÔÏÂ¼¶±ğÖ¸¶¨£º
-	È«¾Ö·¶Î§¼¶±ğ
-	¿ØÖÆÆ÷¼¶±ğ
-	¿ØÖÆÆ÷·½·¨¼¶±ğ
+1.urlé‡å†™è§„åˆ™å¯ä»¥åœ¨ä»¥ä¸‹çº§åˆ«æŒ‡å®šï¼š
+	å…¨å±€èŒƒå›´çº§åˆ«
+	æ§åˆ¶å™¨çº§åˆ«
+	æ§åˆ¶å™¨æ–¹æ³•çº§åˆ«
 
-2.Ìí¼ÓÀ¹½ØÆ÷¹¦ÄÜ
-À¹½ØÆ÷·ÖÎª2¸ö²ã´Î£¬-£¬»ùÓÚ¿ò¼Ü¼¶±ğµÄÀ¹½ØÆ÷£¬Õâ¸öÊÇÈ«¾ÖÀ¹½ØÆ÷£¬ÊÇµ¥ÊµÀıÄ£Ê½µÄ
+2.æ·»åŠ æ‹¦æˆªå™¨åŠŸèƒ½
+æ‹¦æˆªå™¨åˆ†ä¸º2ä¸ªå±‚æ¬¡ï¼Œ-ï¼ŒåŸºäºæ¡†æ¶çº§åˆ«çš„æ‹¦æˆªå™¨ï¼Œè¿™ä¸ªæ˜¯å…¨å±€æ‹¦æˆªå™¨ï¼Œæ˜¯å•å®ä¾‹æ¨¡å¼çš„
 
-3.¹ú¼Ê»¯¹¦ÄÜÍêÉÆ
-6.mvcºÍgwt½áºÏ¿ÉĞĞĞÔÑĞ¾¿
+3.å›½é™…åŒ–åŠŸèƒ½å®Œå–„
+6.mvcå’Œgwtç»“åˆå¯è¡Œæ€§ç ”ç©¶
 
 #######update function list since bbossgroups-3.6 begin###########
-o ¸Ä½øbboss mvc wordpdf²å¼ş
-Ôö¼Ó¹¤¾ßÀà/bboss-plugin-wordpdf/src/org/frameworkset/http/converter/wordpdf/FileConvertor.java
-¿ÉÒÔ·½±ãµÚÊµÏÖwordÄ£°åÊéÇ©ºÍÖµºÏ²¢¹¦ÄÜ
-·½±ãµØ½èÖúFlashprinterÊµÏÖwordÏòpdf£¬swfµÄ×ª»»
+o æ”¹è¿›bboss mvc wordpdfæ’ä»¶
+å¢åŠ å·¥å…·ç±»/bboss-plugin-wordpdf/src/org/frameworkset/http/converter/wordpdf/FileConvertor.java
+å¯ä»¥æ–¹ä¾¿ç¬¬å®ç°wordæ¨¡æ¿ä¹¦ç­¾å’Œå€¼åˆå¹¶åŠŸèƒ½
+æ–¹ä¾¿åœ°å€ŸåŠ©Flashprinterå®ç°wordå‘pdfï¼Œswfçš„è½¬æ¢
 
-o ÎÄ¼şÏÂÔØ²å¼şÔö¼Ó¶ÔFileBlobµÄÖ§³Ö
-FileBlobÔö¼Ó¹¹Ôìº¯Êı£º
+o æ–‡ä»¶ä¸‹è½½æ’ä»¶å¢åŠ å¯¹FileBlobçš„æ”¯æŒ
+FileBlobå¢åŠ æ„é€ å‡½æ•°ï¼š
 public FileBlob( File data,int rendtype)
 public FileBlob( String file,int rendtype)
-Á½¸ö¹¹Ôìº¯Êıº¬ÒåÊÇÒ»ÖÂµÄ£¬²ÎÊıËµÃ÷£º
-µÚÒ»¸ö²ÎÊı£ºÏÂÔØ»òÕßä¯ÀÀµÄÎÄ¼ş¶ÔÏó»òÕßÎÄ¼şÂ·¾¶
-µÚ¶ş¸ö²ÎÊı£º±êÊ¶ÎÄ¼şÊÇÓÃÀ´ÏÂÔØ»¹ÊÇÓÃÀ´ä¯ÀÀ£¬¶ÔÓ¦ÓÚFileBlobÖĞµÄÁ½¸ö³£Á¿£ºFileBlob.BROWSER£¬FileBlob.DOWNLOAD£¬Ä¬ÈÏÖµÎªFileBlob.DOWNLOAD
+ä¸¤ä¸ªæ„é€ å‡½æ•°å«ä¹‰æ˜¯ä¸€è‡´çš„ï¼Œå‚æ•°è¯´æ˜ï¼š
+ç¬¬ä¸€ä¸ªå‚æ•°ï¼šä¸‹è½½æˆ–è€…æµè§ˆçš„æ–‡ä»¶å¯¹è±¡æˆ–è€…æ–‡ä»¶è·¯å¾„
+ç¬¬äºŒä¸ªå‚æ•°ï¼šæ ‡è¯†æ–‡ä»¶æ˜¯ç”¨æ¥ä¸‹è½½è¿˜æ˜¯ç”¨æ¥æµè§ˆï¼Œå¯¹åº”äºFileBlobä¸­çš„ä¸¤ä¸ªå¸¸é‡ï¼šFileBlob.BROWSERï¼ŒFileBlob.DOWNLOADï¼Œé»˜è®¤å€¼ä¸ºFileBlob.DOWNLOAD
 
-Ê¹ÓÃÊµÀı£¬¿ØÖÆÆ÷ÏÂÔØÎÄ¼ş·½·¨£º
+ä½¿ç”¨å®ä¾‹ï¼Œæ§åˆ¶å™¨ä¸‹è½½æ–‡ä»¶æ–¹æ³•ï¼š
 	public @ResponseBody FileBlob downWordTemp() throws Exception  {
-		System.out.println("--------------³ÌĞòÖ´ĞĞµ½´Ë´¦------------------");
+		System.out.println("--------------ç¨‹åºæ‰§è¡Œåˆ°æ­¤å¤„------------------");
 		String[] bookMarks = new String[] { "DealerName", "Name", "CgName",
 				"TypeName", "OrderQty", "CoolCode", "ChassisCode", "CustPrice",
 				"CustAmt", "sumall", "EarnestPayDays", "EarnestAmt",
@@ -38,11 +38,11 @@ public FileBlob( String file,int rendtype)
 				"FinanceAmt", "FinanceFC", "LackAmtPayDate",
 				"LackAmtFinalPayDate", "ReceiverName", "ReceiverID",   
 				"ReceiverTel", "Insurer","authoriate" };
-		String[] mapValue = new String[] { "¹¤³Ì»úĞµÓĞÏŞ¹«Ë¾", "¹¤³Ì»úĞµÓĞÏŞ¹«Ë¾",
-				"ÁùÇÅ³µ", "SY5419THB 52E(6)", "2", "·çÀä", "V09660ffff", "300.00",
-				"600.00", "Â½ÍòÔªÕû", "7", "100", "2000Äê8ÔÂ31ÈÕ", "60", "5", "3",
-				"10", "6", "10", "5", "10", "21", "540", "10", "2000Äê8ÔÂ31ÈÕ",
-				"2000Äê8ÔÂ31ÈÕ", "xxx", "430111199910102121", "13800138200", "xxxxx","bboss" };
+		String[] mapValue = new String[] { "å·¥ç¨‹æœºæ¢°æœ‰é™å…¬å¸", "å·¥ç¨‹æœºæ¢°æœ‰é™å…¬å¸",
+				"å…­æ¡¥è½¦", "SY5419THB 52E(6)", "2", "é£å†·", "V09660ffff", "300.00",
+				"600.00", "é™†ä¸‡å…ƒæ•´", "7", "100", "2000å¹´8æœˆ31æ—¥", "60", "5", "3",
+				"10", "6", "10", "5", "10", "21", "540", "10", "2000å¹´8æœˆ31æ—¥",
+				"2000å¹´8æœˆ31æ—¥", "xxx", "430111199910102121", "13800138200", "xxxxx","bboss" };
 		String wordtemplate = "D:\\workspace\\microcredit\\plugin\\wordpdf\\anjie.doc";
 		String wordfile = "d:\\anjie_test.doc";
 		FileConvertor.getRealWord(wordtemplate, wordfile, bookMarks,mapValue);
@@ -53,9 +53,9 @@ public FileBlob( String file,int rendtype)
 		
 
 	}
-Ê¹ÓÃÊµÀı£¬¿ØÖÆÆ÷ÏÂÔØÎÄ¼ş·½·¨£º
+ä½¿ç”¨å®ä¾‹ï¼Œæ§åˆ¶å™¨ä¸‹è½½æ–‡ä»¶æ–¹æ³•ï¼š
 	public @ResponseBody FileBlob downWordTemp() throws Exception  {
-		System.out.println("--------------³ÌĞòÖ´ĞĞµ½´Ë´¦------------------");
+		System.out.println("--------------ç¨‹åºæ‰§è¡Œåˆ°æ­¤å¤„------------------");
 		String[] bookMarks = new String[] { "DealerName", "Name", "CgName",
 				"TypeName", "OrderQty", "CoolCode", "ChassisCode", "CustPrice",
 				"CustAmt", "sumall", "EarnestPayDays", "EarnestAmt",
@@ -65,11 +65,11 @@ public FileBlob( String file,int rendtype)
 				"FinanceAmt", "FinanceFC", "LackAmtPayDate",
 				"LackAmtFinalPayDate", "ReceiverName", "ReceiverID",   
 				"ReceiverTel", "Insurer","authoriate" };
-		String[] mapValue = new String[] { "¹¤³Ì»úĞµÓĞÏŞ¹«Ë¾", "¹¤³Ì»úĞµÓĞÏŞ¹«Ë¾",
-				"ÁùÇÅ³µ", "SY5419THB 52E(6)", "2", "·çÀä", "V09660ffff", "300.00",
-				"600.00", "Â½ÍòÔªÕû", "7", "100", "2000Äê8ÔÂ31ÈÕ", "60", "5", "3",
-				"10", "6", "10", "5", "10", "21", "540", "10", "2000Äê8ÔÂ31ÈÕ",
-				"2000Äê8ÔÂ31ÈÕ", "xxx", "430111199910102121", "13800138200", "xxxxx","bboss" };
+		String[] mapValue = new String[] { "å·¥ç¨‹æœºæ¢°æœ‰é™å…¬å¸", "å·¥ç¨‹æœºæ¢°æœ‰é™å…¬å¸",
+				"å…­æ¡¥è½¦", "SY5419THB 52E(6)", "2", "é£å†·", "V09660ffff", "300.00",
+				"600.00", "é™†ä¸‡å…ƒæ•´", "7", "100", "2000å¹´8æœˆ31æ—¥", "60", "5", "3",
+				"10", "6", "10", "5", "10", "21", "540", "10", "2000å¹´8æœˆ31æ—¥",
+				"2000å¹´8æœˆ31æ—¥", "xxx", "430111199910102121", "13800138200", "xxxxx","bboss" };
 		String wordtemplate = "D:\\workspace\\microcredit\\plugin\\wordpdf\\anjie.doc";
 		String wordfile = "d:\\anjie_test.doc";
 		FileConvertor.getRealWord(wordtemplate, wordfile, bookMarks,mapValue);
@@ -81,19 +81,19 @@ public FileBlob( String file,int rendtype)
 
 	}	
 	
-×¢ÒâÎÒÃÇÕâÀïÊ¹ÓÃÁËbboss µÄword×ªpdf¡¢swf²å¼şFileConvertor	
-o list/map±êÇ©Ôö¼ÓsoftparserÊôĞÔ£¬Õë¶ÔsessionKey¡¢requestKey¡¢pagecontextKey½øĞĞclassdataListÊı¾İ¶ÔÏó»º´æ£¬
- ±ÜÃâÖØ¸´Ê¹ÓÃÊ±ÖØ¸´Éú³ÉÊı¾İ¶ÔÏó£¬Ä¬ÈÏÖµÎªtrue
-o ½â¾ömvc ÎÄ¼şÉÏ´«×é¼şie6¼æÈİĞÔÎÊÌâ,commons-fileupload-1.2.2ÔÚie6ÏÂÎÄ¼şÉÏ´«±¨´íµ¼ÖÂÎŞ·¨ÎÄ¼şÉÏ´«
-½â¾ö°ì·¨£¬½«common file uploadµÄ°æ±¾»ØÍËµ½1.2£¬¾­²âÊÔÎÊÌâ½â¾ö
-o Ìí¼Ó×¢½âorg.frameworkset.web.servlet.handler.annotations.ExcludeMethod£¬±ê×¢·½·¨²»ÊÇmvc¿ØÖÆÆ÷·½·¨£¬Ìí¼ÓÁËExcludeMethod×¢½âµÄ·½·¨¾Í²»»á±»¼ÓÈëµ½mvc¿ØÖÆÆ÷µÄ·½·¨×¢²á±íÖĞ
-o ÍêÉÆ¿ØÖÆÆ÷·½·¨½âÎöËã·¨£¬ÅÅ³ıÊôĞÔµÄget/set·½·¨£¬¼ÓÇ¿ÏµÍ³°²È«ĞÔ
+æ³¨æ„æˆ‘ä»¬è¿™é‡Œä½¿ç”¨äº†bboss çš„wordè½¬pdfã€swfæ’ä»¶FileConvertor	
+o list/mapæ ‡ç­¾å¢åŠ softparserå±æ€§ï¼Œé’ˆå¯¹sessionKeyã€requestKeyã€pagecontextKeyè¿›è¡ŒclassdataListæ•°æ®å¯¹è±¡ç¼“å­˜ï¼Œ
+ é¿å…é‡å¤ä½¿ç”¨æ—¶é‡å¤ç”Ÿæˆæ•°æ®å¯¹è±¡ï¼Œé»˜è®¤å€¼ä¸ºtrue
+o è§£å†³mvc æ–‡ä»¶ä¸Šä¼ ç»„ä»¶ie6å…¼å®¹æ€§é—®é¢˜,commons-fileupload-1.2.2åœ¨ie6ä¸‹æ–‡ä»¶ä¸Šä¼ æŠ¥é”™å¯¼è‡´æ— æ³•æ–‡ä»¶ä¸Šä¼ 
+è§£å†³åŠæ³•ï¼Œå°†common file uploadçš„ç‰ˆæœ¬å›é€€åˆ°1.2ï¼Œç»æµ‹è¯•é—®é¢˜è§£å†³
+o æ·»åŠ æ³¨è§£org.frameworkset.web.servlet.handler.annotations.ExcludeMethodï¼Œæ ‡æ³¨æ–¹æ³•ä¸æ˜¯mvcæ§åˆ¶å™¨æ–¹æ³•ï¼Œæ·»åŠ äº†ExcludeMethodæ³¨è§£çš„æ–¹æ³•å°±ä¸ä¼šè¢«åŠ å…¥åˆ°mvcæ§åˆ¶å™¨çš„æ–¹æ³•æ³¨å†Œè¡¨ä¸­
+o å®Œå–„æ§åˆ¶å™¨æ–¹æ³•è§£æç®—æ³•ï¼Œæ’é™¤å±æ€§çš„get/setæ–¹æ³•ï¼ŒåŠ å¼ºç³»ç»Ÿå®‰å…¨æ€§
 #######update function list since bbossgroups-3.5 begin###########
-o Ôö¼Ólocale±êÇ©,ÓÃÀ´Êä³ö¹ú¼Ò´úÂë£¬Ê¹ÓÃ·½·¨£º
+o å¢åŠ localeæ ‡ç­¾,ç”¨æ¥è¾“å‡ºå›½å®¶ä»£ç ï¼Œä½¿ç”¨æ–¹æ³•ï¼š
 <pg:locale/>
-Êä³ö£ºen_US,zh_CNµÈµÈ
-o mvc¹ú¼Ê»¯ÅäÖÃµ÷Õû
-ÔÚweb.xmlÎÄ¼şµÄDispatchServletÖĞÔö¼ÓÒÔÏÂÅäÖÃ
+è¾“å‡ºï¼šen_US,zh_CNç­‰ç­‰
+o mvcå›½é™…åŒ–é…ç½®è°ƒæ•´
+åœ¨web.xmlæ–‡ä»¶çš„DispatchServletä¸­å¢åŠ ä»¥ä¸‹é…ç½®
 <init-param>
 			<param-name>messagesources</param-name>
 			<param-value>/WEB-INF/messages,/WEB-INF/messages1</param-value>
@@ -102,10 +102,10 @@ o mvc¹ú¼Ê»¯ÅäÖÃµ÷Õû
 			<param-name>useCodeAsDefaultMessage</param-name>
 			<param-value>true</param-value>
 		</init-param>
-messagesourcesÓÃÀ´Ö¸¶¨¹ú¼Ê»¯ÅäÖÃÎÄ¼şÇåµ¥
-useCodeAsDefaultMessageÓÃÀ´Ö¸¶¨Èç¹ûÃ»ÓĞÔÚÏàÓ¦µÄÅäÖÃÎÄ¼şÖĞÕÒµ½ÏàÓ¦µÄcode¶ÔÓ¦µÄÅäÖÃÏîÊÇ·ñÖ±½ÓÊä³öcode£¬Ä¬ÈÏÖµÎªtrue
-ÎªtrueÊ±Êä³ö£¬false²»Êä³ö	
-ÍêÕûµÄÅäÖÃÈçÏÂ£º
+messagesourcesç”¨æ¥æŒ‡å®šå›½é™…åŒ–é…ç½®æ–‡ä»¶æ¸…å•
+useCodeAsDefaultMessageç”¨æ¥æŒ‡å®šå¦‚æœæ²¡æœ‰åœ¨ç›¸åº”çš„é…ç½®æ–‡ä»¶ä¸­æ‰¾åˆ°ç›¸åº”çš„codeå¯¹åº”çš„é…ç½®é¡¹æ˜¯å¦ç›´æ¥è¾“å‡ºcodeï¼Œé»˜è®¤å€¼ä¸ºtrue
+ä¸ºtrueæ—¶è¾“å‡ºï¼Œfalseä¸è¾“å‡º	
+å®Œæ•´çš„é…ç½®å¦‚ä¸‹ï¼š
 <servlet>
 		<servlet-name>mvcdispather</servlet-name>
 		<servlet-class>org.frameworkset.web.servlet.DispatchServlet</servlet-class>
@@ -123,13 +123,13 @@ useCodeAsDefaultMessageÓÃÀ´Ö¸¶¨Èç¹ûÃ»ÓĞÔÚÏàÓ¦µÄÅäÖÃÎÄ¼şÖĞÕÒµ½ÏàÓ¦µÄcode¶ÔÓ¦µÄÅäÖ
 		</init-param>
 		<load-on-startup>0</load-on-startup>
 	</servlet>
-o mvc¿ØÖÆÆ÷·½·¨ÏìÓ¦²å¼şMappingJacksonHttpMessageConverterÖ§³ÖjsonpÊı¾İÏìÓ¦£¨¿çÕ¾¿çÓòÍ¨Ñ¶Ğ­Òé£©
-Ê¹ÓÃ·½·¨ÈçÏÂ£º
-·şÎñÆ÷¶Ë£º
-·şÎñÆ÷¶Ë²¿ÊğÔÚÊµÀı¹¤³Ì£ºbestpractice\demoprojectÖĞ£¬·şÎñ¶Ë³ÌĞòÎª/demoproject/src/org/frameworkset/mvc/HelloWord.java
+o mvcæ§åˆ¶å™¨æ–¹æ³•å“åº”æ’ä»¶MappingJacksonHttpMessageConverteræ”¯æŒjsonpæ•°æ®å“åº”ï¼ˆè·¨ç«™è·¨åŸŸé€šè®¯åè®®ï¼‰
+ä½¿ç”¨æ–¹æ³•å¦‚ä¸‹ï¼š
+æœåŠ¡å™¨ç«¯ï¼š
+æœåŠ¡å™¨ç«¯éƒ¨ç½²åœ¨å®ä¾‹å·¥ç¨‹ï¼šbestpractice\demoprojectä¸­ï¼ŒæœåŠ¡ç«¯ç¨‹åºä¸º/demoproject/src/org/frameworkset/mvc/HelloWord.java
 
-·şÎñ¶Ë¿ØÖÆÆ÷·½·¨Í¨¹ıÖÆ¶¨×¢½â@ResponseBodyµÄdatatypeÊôĞÔÎªjsonpÀ´Ö¸Ê¾mvc¿ò¼ÜĞèÒª½«ÏìÓ¦Öµ×ª»»Îªjsonpº¯Êı+json²ÎÊıÊı¾İµÄºÏ·¨JavaScript½Å±¾·µ»Øµ½¿Í»§¶Ë
-ÒÔ±ãÊµÏÖ¿çÕ¾¿çÓòÇëÇó½»»¥£¬HelloWord.javaÌá¹©ÁËÁ½¸ö·½·¨Ò»¸öÊÇÓ¦ÓÃÓÚÊ¹ÓÃjqueryµÄÇëÇó£¬Ò»¸öÓ¦ÓÃÓÚJavaScript±ê¼ÇÇëÇó
+æœåŠ¡ç«¯æ§åˆ¶å™¨æ–¹æ³•é€šè¿‡åˆ¶å®šæ³¨è§£@ResponseBodyçš„datatypeå±æ€§ä¸ºjsonpæ¥æŒ‡ç¤ºmvcæ¡†æ¶éœ€è¦å°†å“åº”å€¼è½¬æ¢ä¸ºjsonpå‡½æ•°+jsonå‚æ•°æ•°æ®çš„åˆæ³•JavaScriptè„šæœ¬è¿”å›åˆ°å®¢æˆ·ç«¯
+ä»¥ä¾¿å®ç°è·¨ç«™è·¨åŸŸè¯·æ±‚äº¤äº’ï¼ŒHelloWord.javaæä¾›äº†ä¸¤ä¸ªæ–¹æ³•ä¸€ä¸ªæ˜¯åº”ç”¨äºä½¿ç”¨jqueryçš„è¯·æ±‚ï¼Œä¸€ä¸ªåº”ç”¨äºJavaScriptæ ‡è®°è¯·æ±‚
 public @ResponseBody(datatype="jsonp") JsonpBean jsonpwithjquery()
 	{
 		JsonpBean jsonpbean = new JsonpBean();
@@ -145,67 +145,67 @@ public @ResponseBody(datatype="jsonp") JsonpBean jsonpwithjquery()
 		jsonpbean.setSymbol("IBM");
 		return jsonpbean;
 	}
-	·Ö±ğ¶ÔÓ¦ÇëÇóµØÖ·Îª£º
+	åˆ†åˆ«å¯¹åº”è¯·æ±‚åœ°å€ä¸ºï¼š
 	http://localhost:8081/demoproject/examples/jsonpwithjquery.page
 	http://localhost:8081/demoproject/examples/jsonp.page	
-¿Í»§¶ËÊµÏÖ:
-¿Í»§¶ËÓ¦ÓÃºÍ·şÎñÆ÷Ó¦ÓÃÊôÓÚÁ½¸ö²»Í¬Õ¾µã»òÕß²»Í¬ÓòÃû£¬
-¿Í»§¶Ë²¿ÊğÔÚbboss-mvcµÄwebÓ¦ÓÃÖĞ,¶ÔÓ¦µÄ·ÃÎÊµØÖ·Îª£º
+å®¢æˆ·ç«¯å®ç°:
+å®¢æˆ·ç«¯åº”ç”¨å’ŒæœåŠ¡å™¨åº”ç”¨å±äºä¸¤ä¸ªä¸åŒç«™ç‚¹æˆ–è€…ä¸åŒåŸŸåï¼Œ
+å®¢æˆ·ç«¯éƒ¨ç½²åœ¨bboss-mvcçš„webåº”ç”¨ä¸­,å¯¹åº”çš„è®¿é—®åœ°å€ä¸ºï¼š
 http://localhost:8081/bboss-mvc/jsp/jsonp/testjsonp.jsp
-testjsonp.jspÏà¹ØµÄ´úÂëÈçÏÂ£º
-<!-- ÆÕÍ¨µÄjsonpµ÷ÓÃÊ¾Àı¿ªÊ¼£¬¶¨Òå¿çÓò»Øµ÷º¯Êı -->
+testjsonp.jspç›¸å…³çš„ä»£ç å¦‚ä¸‹ï¼š
+<!-- æ™®é€šçš„jsonpè°ƒç”¨ç¤ºä¾‹å¼€å§‹ï¼Œå®šä¹‰è·¨åŸŸå›è°ƒå‡½æ•° -->
 	<script type="text/javascript">
         	function jsonpCallback(result)
         	{
-				alert("aaa:" + result.symbol);//µ¯³ö¿çÕ¾ ÇëÇó·µ»ØµÄjsonÊı¾İ¶ÔÏóµÄsymbolÊôĞÔµÄÖµ
+				alert("aaa:" + result.symbol);//å¼¹å‡ºè·¨ç«™ è¯·æ±‚è¿”å›çš„jsonæ•°æ®å¯¹è±¡çš„symbolå±æ€§çš„å€¼
         	}
     	</script>
-    <!-- ÆÕÍ¨µÄjsonpµ÷ÓÃÊ¾Àı£¬ÏòÁíÒ»¸öÓ¦ÓÃdemoproject·¢ÆğmvcÇëÇó£¬²¢Ö¸²ÎÊıcallback£¨²ÎÊıÃû×Ö¿ÉÈÎÒâÖ¸¶¨£©Ö¸¶¨»Øµ÷º¯ÊıjsonpCallback-->
+    <!-- æ™®é€šçš„jsonpè°ƒç”¨ç¤ºä¾‹ï¼Œå‘å¦ä¸€ä¸ªåº”ç”¨demoprojectå‘èµ·mvcè¯·æ±‚ï¼Œå¹¶æŒ‡å‚æ•°callbackï¼ˆå‚æ•°åå­—å¯ä»»æ„æŒ‡å®šï¼‰æŒ‡å®šå›è°ƒå‡½æ•°jsonpCallback-->
 	<script type="text/javascript" src="http://localhost:8081/demoproject/examples/jsonp.page?jsonp_callback=jsonpCallback"></script>
-	<!-- ÆÕÍ¨µÄjsonpµ÷ÓÃÊ¾Àı½áÊø-->
+	<!-- æ™®é€šçš„jsonpè°ƒç”¨ç¤ºä¾‹ç»“æŸ-->
 	
-	<!-- ²ÉÓÃjqueryÊµÏÖjsonpµ÷ÓÃÊ¾Àı¿ªÊ¼-->
+	<!-- é‡‡ç”¨jqueryå®ç°jsonpè°ƒç”¨ç¤ºä¾‹å¼€å§‹-->
 	<script src="<%=request.getContextPath() %>/include/jquery-1.4.2.min.js" type="text/javascript"></script>   
-	<!-- ²ÉÓÃjqueryÊµÏÖjsonpµ÷ÓÃÊ¾Àı--> 
+	<!-- é‡‡ç”¨jqueryå®ç°jsonpè°ƒç”¨ç¤ºä¾‹--> 
 	<script type="text/javascript">
         $(function() {
             $.getJSON("http://localhost:8081/demoproject/examples/jsonpwithjquery.page?jsonp_callback=?", function(data) {
-            	alert("bbb:" + data.symbol);//µ¯³ö¿çÕ¾ ÇëÇó·µ»ØµÄjsonÊı¾İ¶ÔÏóµÄsymbolÊôĞÔµÄÖµ
+            	alert("bbb:" + data.symbol);//å¼¹å‡ºè·¨ç«™ è¯·æ±‚è¿”å›çš„jsonæ•°æ®å¯¹è±¡çš„symbolå±æ€§çš„å€¼
             });
             //jsonp1337140657188({"postalcodes":[{"adminName2":"Westchester","adminCode2":"119","postalcode":"10504","adminCode1":"NY","countryCode":"US","lng":-73.700942,"placeName":"Armonk","lat":41.136002,"adminName1":"New York"}]});
             $.getJSON("http://www.geonames.org/postalCodeLookupJSON?postalcode=10504&country=US&callback=?", function(data) {
-            	alert( data.postalcodes[0].adminName2);//ÕâÊÇÒ»¸ö»¥ÁªÍø¿çÓòµ÷ÓÃµÄÊµÀı£¬È·±£ÄÜ¹»ÉÏÍø£¬µ¯³ö¿çÕ¾ ÇëÇó·µ»ØµÄjsonÊı¾İ¶ÔÏóÊı×éÊôĞÔµÄµÚÒ»¸öÔªËØµÄÊôĞÔadminName2µÄÖµ
+            	alert( data.postalcodes[0].adminName2);//è¿™æ˜¯ä¸€ä¸ªäº’è”ç½‘è·¨åŸŸè°ƒç”¨çš„å®ä¾‹ï¼Œç¡®ä¿èƒ½å¤Ÿä¸Šç½‘ï¼Œå¼¹å‡ºè·¨ç«™ è¯·æ±‚è¿”å›çš„jsonæ•°æ®å¯¹è±¡æ•°ç»„å±æ€§çš„ç¬¬ä¸€ä¸ªå…ƒç´ çš„å±æ€§adminName2çš„å€¼
             }); 
         });        
     </script>
-	<!-- ²ÉÓÃjqueryÊµÏÖjsonpµ÷ÓÃÊ¾Àı½áÊø-->
+	<!-- é‡‡ç”¨jqueryå®ç°jsonpè°ƒç”¨ç¤ºä¾‹ç»“æŸ-->
 
-ÎÒÃÇbboss mvc¶ÔjsonpÌá¹©ÁËÄ¬ÈÏµÄÖ§³Ö£¬·şÎñ¶ËjsonÊı¾İÇëÇó·Ö±ğ´øÁË²ÎÊıjsonp_callback
+æˆ‘ä»¬bboss mvcå¯¹jsonpæä¾›äº†é»˜è®¤çš„æ”¯æŒï¼ŒæœåŠ¡ç«¯jsonæ•°æ®è¯·æ±‚åˆ†åˆ«å¸¦äº†å‚æ•°jsonp_callback
 http://localhost:8081/demoproject/examples/jsonpwithjquery.page?jsonp_callback=?
-jsonpCallback=?£¬ÊÇÒòÎªÊ¹ÓÃÁËjqueryµÄ$.getJSON·½·¨À´·¢Æğ¸ÃÇëÇó£¬»Øµ÷º¯ÊıÊÇ¸öÄäÃûº¯Êı£¬jquery¿ò¼Ü»áÎª¸ÃÄäÃûº¯Êı²úÉúÒ»¸öËæ»úº¯ÊıÃû³Æ£¬È»ºó½«?Ìæ»»ÎªÊµ¼ÊµÄº¯ÊıÃû³Æ
-Ìá½»¸ø·şÎñÆ÷¶Ë
+jsonpCallback=?ï¼Œæ˜¯å› ä¸ºä½¿ç”¨äº†jqueryçš„$.getJSONæ–¹æ³•æ¥å‘èµ·è¯¥è¯·æ±‚ï¼Œå›è°ƒå‡½æ•°æ˜¯ä¸ªåŒ¿åå‡½æ•°ï¼Œjqueryæ¡†æ¶ä¼šä¸ºè¯¥åŒ¿åå‡½æ•°äº§ç”Ÿä¸€ä¸ªéšæœºå‡½æ•°åç§°ï¼Œç„¶åå°†?æ›¿æ¢ä¸ºå®é™…çš„å‡½æ•°åç§°
+æäº¤ç»™æœåŠ¡å™¨ç«¯
 http://localhost:8081/demoproject/examples/jsonp.page?jsonp_callback=jsonpCallback
-jsonp_callback=jsonpCallback£¬¿ÉÒÔ¿´³öÎÒÃÇÒÑ¾­Ö±½ÓÖ¸¶¨ÁË»Øµ÷º¯ÊıµÄÃû³Æ£¬¾ÍÊÇÖ®Ç°¶¨ÒåµÄÊµÃûº¯ÊıjsonpCallback()
+jsonp_callback=jsonpCallbackï¼Œå¯ä»¥çœ‹å‡ºæˆ‘ä»¬å·²ç»ç›´æ¥æŒ‡å®šäº†å›è°ƒå‡½æ•°çš„åç§°ï¼Œå°±æ˜¯ä¹‹å‰å®šä¹‰çš„å®åå‡½æ•°jsonpCallback()
 
-ĞèÒªËµÃ÷µÄÊÇ£¬»Øµ÷º¯Êı¶ÔÓ¦µÄ²ÎÊıÃû³Æjsonp_callbackÊÇMappingJacksonHttpMessageConverterÄÚÖÃµÄÄ¬ÈÏµÄ»Øµ÷º¯Êı²ÎÊıÃû³Æ£¬
-ÎÒÃÇ¿ÉÒÔÈ«¾ÖµØ¸Ä±äÕâ¸ö²ÎÊıµÄÃû³Æ£¬ÔÚbboss-mvc.xmlÎÄ¼şÖĞÔÚMappingJacksonHttpMessageConverter²å¼şÉÏĞŞ¸Äf:jsonpCallbackÊôĞÔµÄÖµ¼´¿É£º
+éœ€è¦è¯´æ˜çš„æ˜¯ï¼Œå›è°ƒå‡½æ•°å¯¹åº”çš„å‚æ•°åç§°jsonp_callbackæ˜¯MappingJacksonHttpMessageConverterå†…ç½®çš„é»˜è®¤çš„å›è°ƒå‡½æ•°å‚æ•°åç§°ï¼Œ
+æˆ‘ä»¬å¯ä»¥å…¨å±€åœ°æ”¹å˜è¿™ä¸ªå‚æ•°çš„åç§°ï¼Œåœ¨bboss-mvc.xmlæ–‡ä»¶ä¸­åœ¨MappingJacksonHttpMessageConverteræ’ä»¶ä¸Šä¿®æ”¹f:jsonpCallbackå±æ€§çš„å€¼å³å¯ï¼š
 <property class="org.frameworkset.http.converter.json.MappingJacksonHttpMessageConverter"
 					f:jsonpCallback="jsonp_callback"/>
 
 	
-Ö´ĞĞÊµÀı£º
-ÎÒÃÇÖ»ĞèÒª½«bboss-mvcÏÂµÄWebRootºÍbestpractice\demoproject\WebRoot¶ÔÓ¦µÄÓ¦ÓÃ²¿Êğµ½tomcat²¢Æô¶¯tomcat£¬È»ºóÔÚä¯ÀÀÆ÷ÖĞÊäÈë
+æ‰§è¡Œå®ä¾‹ï¼š
+æˆ‘ä»¬åªéœ€è¦å°†bboss-mvcä¸‹çš„WebRootå’Œbestpractice\demoproject\WebRootå¯¹åº”çš„åº”ç”¨éƒ¨ç½²åˆ°tomcatå¹¶å¯åŠ¨tomcatï¼Œç„¶ååœ¨æµè§ˆå™¨ä¸­è¾“å…¥
 http://localhost:8081/bboss-mvc/jsp/jsonp/testjsonp.jsp
-¼È¿ÉÒÔ¿´µ½Êµ¼ÊµÄĞ§¹û	
-o org.frameworkset.http.converter.FileMessageConvertor²å¼şÖ§³ÖÏÂÔØResource½Ó¿Ú¶ÔÓ¦µÄ×ÊÔ´
-Ä¿Ç°Ö§³ÖResource½Ó¿ÚµÄÒÔÏÂÊµÏÖ£º
-ClassPathResource -- ÊÊÓÃÓÚÓ¦classpathÏÂÃæµÄ×ÊÔ´
-ServletContextResource --ÊÊÓÃÓÚwebÓ¦ÓÃ¸ùÄ¿Â¼¼°×ÓÄ¿Â¼ÏÂµÄ×ÊÔ´
-FileSystemResource --ÊÊÓÃÓÚÎÄ¼şÏµÍ³ÖĞÎÄ¼ş×ÊÔ´
-UrlResource --ÊÊÓÃÓÚurlÁ¬½Ó¶ÔÓ¦×ÊÔ´
-ByteArrayResource--ÊÊÓÃÓÚ¶ş½øÖÆ×ÊÔ´
+æ—¢å¯ä»¥çœ‹åˆ°å®é™…çš„æ•ˆæœ	
+o org.frameworkset.http.converter.FileMessageConvertoræ’ä»¶æ”¯æŒä¸‹è½½Resourceæ¥å£å¯¹åº”çš„èµ„æº
+ç›®å‰æ”¯æŒResourceæ¥å£çš„ä»¥ä¸‹å®ç°ï¼š
+ClassPathResource -- é€‚ç”¨äºåº”classpathä¸‹é¢çš„èµ„æº
+ServletContextResource --é€‚ç”¨äºwebåº”ç”¨æ ¹ç›®å½•åŠå­ç›®å½•ä¸‹çš„èµ„æº
+FileSystemResource --é€‚ç”¨äºæ–‡ä»¶ç³»ç»Ÿä¸­æ–‡ä»¶èµ„æº
+UrlResource --é€‚ç”¨äºurlè¿æ¥å¯¹åº”èµ„æº
+ByteArrayResource--é€‚ç”¨äºäºŒè¿›åˆ¶èµ„æº
 
-Ê¹ÓÃ·½·¨ÈçÏÂ£º
+ä½¿ç”¨æ–¹æ³•å¦‚ä¸‹ï¼š
 public @ResponseBody
 	Resource exportExeclTemplate(HttpServletRequest request, HttpServletResponse response, String excelType,
 			String module) throws Exception {
@@ -217,56 +217,56 @@ public @ResponseBody
 	}
 
 ------2012-05-15-------------
-o ¸½¼şÉÏ´«¹¦ÄÜÍêÉÆ£º
-1.Ö§³Öhtml5¸½¼şÉÏ´«£¬Ä¿Ç°Ö»Ö§³Öµ¥´ÎÉÏ´«Ò»¸öÎÄ¼ş
-2.Ôö¼ÓIgnoreFieldNameMultipartFile½Ó¿ÚÓÃÀ´±êÊ¶²»ÖªµÀinput fileµÄÃû³ÆµÄÇé¿öÏÂ£¬½«ÉÏ´«µÄ¸½¼şÓë·½·¨²ÎÊı»òÕß¶ÔÏóÊôĞÔ½øĞĞ°ó¶¨
+o é™„ä»¶ä¸Šä¼ åŠŸèƒ½å®Œå–„ï¼š
+1.æ”¯æŒhtml5é™„ä»¶ä¸Šä¼ ï¼Œç›®å‰åªæ”¯æŒå•æ¬¡ä¸Šä¼ ä¸€ä¸ªæ–‡ä»¶
+2.å¢åŠ IgnoreFieldNameMultipartFileæ¥å£ç”¨æ¥æ ‡è¯†ä¸çŸ¥é“input fileçš„åç§°çš„æƒ…å†µä¸‹ï¼Œå°†ä¸Šä¼ çš„é™„ä»¶ä¸æ–¹æ³•å‚æ•°æˆ–è€…å¯¹è±¡å±æ€§è¿›è¡Œç»‘å®š
 public @ResponseBody String upload(IgnoreFieldNameMultipartFile[] filedata,String testparam) throws IllegalStateException, IOException
 public @ResponseBody String upload(IgnoreFieldNameMultipartFile filedata,String testparam) throws IllegalStateException, IOException
-ÏêÇéÇë²é¿´²âÊÔÓÃÀı£º
+è¯¦æƒ…è¯·æŸ¥çœ‹æµ‹è¯•ç”¨ä¾‹ï¼š
 \bestpractice\demoproject\src\org\frameworkset\mvc\FileController.java
 \bestpractice\demoproject\WebRoot\xheditor\demos\demo08.jsp
 
 ------2012-05-08------------- 
-o mvc¹ú¼Ê»¯¹¦ÄÜÍêÉÆ£º
-Ôö¼Óorg.frameworkset.web.servlet.i18n.SessionLocalResolverÀà£¬ÒÔ±ã´ÓsessionÖĞ»ñÈ¡ÓÃ»§µÇÂ¼Ê±´æ´¢µÄLocale¶ÔÏó£¬Ä¬ÈÏµÄkeyÎª
+o mvcå›½é™…åŒ–åŠŸèƒ½å®Œå–„ï¼š
+å¢åŠ org.frameworkset.web.servlet.i18n.SessionLocalResolverç±»ï¼Œä»¥ä¾¿ä»sessionä¸­è·å–ç”¨æˆ·ç™»å½•æ—¶å­˜å‚¨çš„Localeå¯¹è±¡ï¼Œé»˜è®¤çš„keyä¸º
 org.frameworkset.web.servlet.i18n.SESSION_LOCAL_KEY
-Èç¹ûÓÃ»§ĞèÒªÊ¹ÓÃSessionLocalResolver±ØĞëÔÚbboss-mvc.xmlÎÄ¼şÖĞÔö¼ÓÒÔÏÂÅäÖÃ£º
+å¦‚æœç”¨æˆ·éœ€è¦ä½¿ç”¨SessionLocalResolverå¿…é¡»åœ¨bboss-mvc.xmlæ–‡ä»¶ä¸­å¢åŠ ä»¥ä¸‹é…ç½®ï¼š
  <property name="localeResolver" class="org.frameworkset.web.servlet.i18n.SessionLocalResolver"/>
-ÒÔ±ã¸²¸ÇÄ¬ÈÏµÄLocalResolver×é¼şorg.frameworkset.web.servlet.i18n.AcceptHeaderLocaleResolver(Ä¬ÈÏ¸ù¾İ¿Í»§¶ËËù´¦µÄLocaleÀ´½âÎöÏàÓ¦µÄcode)
+ä»¥ä¾¿è¦†ç›–é»˜è®¤çš„LocalResolverç»„ä»¶org.frameworkset.web.servlet.i18n.AcceptHeaderLocaleResolver(é»˜è®¤æ ¹æ®å®¢æˆ·ç«¯æ‰€å¤„çš„Localeæ¥è§£æç›¸åº”çš„code)
 
-mvc¹ú¼Ê»¯±êÇ©µÄÊ¹ÓÃ·½Ê½£º
+mvcå›½é™…åŒ–æ ‡ç­¾çš„ä½¿ç”¨æ–¹å¼ï¼š
 <pg:message  code="probe.jsp.wrongparams"/>
 
-mvc¹ú¼Ê»¯×é¼şmessageSourceµÄ»ñÈ¡·½·¨£º
+mvcå›½é™…åŒ–ç»„ä»¶messageSourceçš„è·å–æ–¹æ³•ï¼š
 org.frameworkset.spi.support.MessageSource messageSource = org.frameworkset.web.servlet.support.WebApplicationContextUtils.getWebApplicationContext();
-ÏêÇéÇë²Î¿¼²âÊÔjspÒ³Ãæ£º/bboss-mvc/WebRoot/jsp/demo.jsp
+è¯¦æƒ…è¯·å‚è€ƒæµ‹è¯•jspé¡µé¢ï¼š/bboss-mvc/WebRoot/jsp/demo.jsp
 
-mvc¹ú¼Ê»¯ÅäÖÃÎÄ¼şÂ·¾¶Ä¬ÈÏÎª
+mvcå›½é™…åŒ–é…ç½®æ–‡ä»¶è·¯å¾„é»˜è®¤ä¸º
 /bboss-mvc/WebRoot/WEB-INF/messages.properties
 /bboss-mvc/WebRoot/WEB-INF/messages_zh_CN.properties
 /bboss-mvc/WebRoot/WEB-INF/messages_en_US.properties
-µÈµÈ
-Èç¹ûÒª¸²¸ÇÄ¬ÈÏµÄÅäÖÃ£¬ÇëĞŞ¸Äbboss-mvc.jar/org/frameworkset/web/servlet/DispatcherServlet.propertiesÎÄ¼şÄÚÈİ£º
+ç­‰ç­‰
+å¦‚æœè¦è¦†ç›–é»˜è®¤çš„é…ç½®ï¼Œè¯·ä¿®æ”¹bboss-mvc.jar/org/frameworkset/web/servlet/DispatcherServlet.propertiesæ–‡ä»¶å†…å®¹ï¼š
 messageSource.basename=/WEB-INF/messages
-ÕâÀï²»ĞèÒª´ø¹ú¼Ò±êÊ¶£¬ÏµÍ³»á×Ô¶¯ÔÚ/WEB-INF/Ä¿Â¼ÏÂ²éÕÒ¶ÔÓ¦¹ú¼ÒÓïÑÔµÄÅäÖÃÎÄ¼ş£¬Èç¹ûÓĞ¶à¸öÅäÖÃÎÄ¼ş¿ÉÒÔÓÃ¶ººÅ·Ö¸î£¬ÀıÈç£º
+è¿™é‡Œä¸éœ€è¦å¸¦å›½å®¶æ ‡è¯†ï¼Œç³»ç»Ÿä¼šè‡ªåŠ¨åœ¨/WEB-INF/ç›®å½•ä¸‹æŸ¥æ‰¾å¯¹åº”å›½å®¶è¯­è¨€çš„é…ç½®æ–‡ä»¶ï¼Œå¦‚æœæœ‰å¤šä¸ªé…ç½®æ–‡ä»¶å¯ä»¥ç”¨é€—å·åˆ†å‰²ï¼Œä¾‹å¦‚ï¼š
 messageSource.basename=/WEB-INF/messages,/WEB-INF/messages1,/WEB-INF/messages2
 
-¹ú¼Ê»¯ÅäÖÃÎÄ¼şÈÈ¼ÓÔØ»úÖÆÅäÖÃ£º
-Ä¬ÈÏ5Ãë¼ì²âÎÄ¼şÊÇ·ñ¸Ä¶¯£¬Èç¹ûÓĞ¸Ä¶¯mvc¿ò¼Ü»áÖØĞÂ¼ÓÔØÓĞĞŞ¸ÄµÄÎÄ¼ş£¬Ã»ÓĞĞŞ¸ÄµÄÎÄ¼ş²»»áÖØĞÂ¼ÓÔØ
-Èç¹ûÏëÆÁ±Î¸Ä»úÖÆÇëĞŞ¸Äbboss-aop.jar/aop.propertiesÎÄ¼şµÄÑ¡Ïî
-#¹ú¼Ê»¯ÊôĞÔÎÄ¼ş±ä¸ü¼ì²âÊ±¼ä¼ä¸ô£¬µ¥Î»ÎªºÁÃë£¬Ä¬ÈÏÎª5Ãë¼ä¸ô
+å›½é™…åŒ–é…ç½®æ–‡ä»¶çƒ­åŠ è½½æœºåˆ¶é…ç½®ï¼š
+é»˜è®¤5ç§’æ£€æµ‹æ–‡ä»¶æ˜¯å¦æ”¹åŠ¨ï¼Œå¦‚æœæœ‰æ”¹åŠ¨mvcæ¡†æ¶ä¼šé‡æ–°åŠ è½½æœ‰ä¿®æ”¹çš„æ–‡ä»¶ï¼Œæ²¡æœ‰ä¿®æ”¹çš„æ–‡ä»¶ä¸ä¼šé‡æ–°åŠ è½½
+å¦‚æœæƒ³å±è”½æ”¹æœºåˆ¶è¯·ä¿®æ”¹bboss-aop.jar/aop.propertiesæ–‡ä»¶çš„é€‰é¡¹
+#å›½é™…åŒ–å±æ€§æ–‡ä»¶å˜æ›´æ£€æµ‹æ—¶é—´é—´éš”ï¼Œå•ä½ä¸ºæ¯«ç§’ï¼Œé»˜è®¤ä¸º5ç§’é—´éš”
 resourcefile.refresh_interval=5000
-Èô¹û>0ÔòÆôÓÃÈÈ¼ÓÔØ»úÖÆ£¬<=0ÔòÆÁ±ÎÈÈ¼ÓÔØ»úÖÆ£¬¿ª·¢»·¾³Çë¿ªÆô£¬Éú²ú»·¾³Çë¹Ø±Õ
-o ¸Ä½øbeaninfo£¬list±êÇ©Òì³£´¦Àí·½Ê½£¬½«ÏµÍ³¼¶Òì³£Êä³öµ½ÈÕÖ¾ÎÄ¼şÖĞ£¬ÈÕÖ¾¼¶±ğÎªinfo¼¶
-o bboss mvc Õ¾µã×ÊÔ´ÏÂÔØ¿ÉÒÔµã»÷ÎÄ¼şÃû³ÆÏÂÔØ
-o ½«¹ÙÍøµÄÎÄ¼ş×ÊÔ´ÏÂÔØÁĞ±í°´ÕÕÎÄ¼şÃû³Æ½øĞĞÅÅĞò
-o Ôö¼Ó°²È«ÈÏÖ¤¹ıÂËÆ÷,·Ï³ımvc°²È«ÈÏÖ¤À¹½ØÆ÷,¸Ã¹ıÂËÆ÷¾ßÓĞÒÔÏÂÊôĞÔ£º
-	preventDispatchLoop = false;//Ñ­»·Ìø×ª¼ì²â¿ª¹Ø£¬trueÆôÓÃ£¬false½ûÓÃ£¬Ä¬ÈÏÎªfalse
-	http10Compatible = true; //whether to stay compatible with HTTP 1.0 clients,true±êÊ¶¼æÈİ£¬false±êÊ¶²»¼æÈİ£¬Ä¬ÈÏÎªtrue
-	redirecturl = "/login.jsp"; //Ö¸¶¨¼ì²âÊ§°ÜÖØ¶¨ÏòµØÖ·£¬Ä¬ÈÏÎªlogin.jsp,¼´°²È«ÈÏÖ¤¼ì²âÊ§°ÜÌø×ªÏòÖ¸¶¨µÄÒ³Ãæ
+è‹¥æœ>0åˆ™å¯ç”¨çƒ­åŠ è½½æœºåˆ¶ï¼Œ<=0åˆ™å±è”½çƒ­åŠ è½½æœºåˆ¶ï¼Œå¼€å‘ç¯å¢ƒè¯·å¼€å¯ï¼Œç”Ÿäº§ç¯å¢ƒè¯·å…³é—­
+o æ”¹è¿›beaninfoï¼Œlistæ ‡ç­¾å¼‚å¸¸å¤„ç†æ–¹å¼ï¼Œå°†ç³»ç»Ÿçº§å¼‚å¸¸è¾“å‡ºåˆ°æ—¥å¿—æ–‡ä»¶ä¸­ï¼Œæ—¥å¿—çº§åˆ«ä¸ºinfoçº§
+o bboss mvc ç«™ç‚¹èµ„æºä¸‹è½½å¯ä»¥ç‚¹å‡»æ–‡ä»¶åç§°ä¸‹è½½
+o å°†å®˜ç½‘çš„æ–‡ä»¶èµ„æºä¸‹è½½åˆ—è¡¨æŒ‰ç…§æ–‡ä»¶åç§°è¿›è¡Œæ’åº
+o å¢åŠ å®‰å…¨è®¤è¯è¿‡æ»¤å™¨,åºŸé™¤mvcå®‰å…¨è®¤è¯æ‹¦æˆªå™¨,è¯¥è¿‡æ»¤å™¨å…·æœ‰ä»¥ä¸‹å±æ€§ï¼š
+	preventDispatchLoop = false;//å¾ªç¯è·³è½¬æ£€æµ‹å¼€å…³ï¼Œtrueå¯ç”¨ï¼Œfalseç¦ç”¨ï¼Œé»˜è®¤ä¸ºfalse
+	http10Compatible = true; //whether to stay compatible with HTTP 1.0 clients,trueæ ‡è¯†å…¼å®¹ï¼Œfalseæ ‡è¯†ä¸å…¼å®¹ï¼Œé»˜è®¤ä¸ºtrue
+	redirecturl = "/login.jsp"; //æŒ‡å®šæ£€æµ‹å¤±è´¥é‡å®šå‘åœ°å€ï¼Œé»˜è®¤ä¸ºlogin.jsp,å³å®‰å…¨è®¤è¯æ£€æµ‹å¤±è´¥è·³è½¬å‘æŒ‡å®šçš„é¡µé¢
 
 	/**
-	 * Ìø×ª·½Ê½£¬ÓĞÒÔÏÂÈı¸öÖµ£¬Ä¬ÈÏÎªredirect
+	 * è·³è½¬æ–¹å¼ï¼Œæœ‰ä»¥ä¸‹ä¸‰ä¸ªå€¼ï¼Œé»˜è®¤ä¸ºredirect
 	 * include
 	 * redirect
 	 * forward
@@ -274,13 +274,13 @@ o Ôö¼Ó°²È«ÈÏÖ¤¹ıÂËÆ÷,·Ï³ımvc°²È«ÈÏÖ¤À¹½ØÆ÷,¸Ã¹ıÂËÆ÷¾ßÓĞÒÔÏÂÊôĞÔ£º
 	directtype = "redirect";
 
 	
-	//Ã÷È·Ö¸³öĞèÒª¼ì²âµÄÒ³Ãæ·¶Î§£¬¶à¸öÓÃ¶ººÅ·Ö¸ô£¬¿ÉÑ¡£¬Èç¹ûÃ»ÓĞÅäÖÃÔòÉ¨ÃèËùÓĞÒ³Ãæ£¨ºöÂÔpatternsExcludeÖ¸¶¨µÄÏà¹ØÒ³Ãæ£©
-	//¿ÉÒÔÊÇÖ¸¶¨°üº¬Í¨Åä·û*µÄÒ³ÃæµØÖ·£¬ÓÃÀ´Ä£ºıÆ¥Åä¶à¸öÒ³Ãæ
+	//æ˜ç¡®æŒ‡å‡ºéœ€è¦æ£€æµ‹çš„é¡µé¢èŒƒå›´ï¼Œå¤šä¸ªç”¨é€—å·åˆ†éš”ï¼Œå¯é€‰ï¼Œå¦‚æœæ²¡æœ‰é…ç½®åˆ™æ‰«ææ‰€æœ‰é¡µé¢ï¼ˆå¿½ç•¥patternsExcludeæŒ‡å®šçš„ç›¸å…³é¡µé¢ï¼‰
+	//å¯ä»¥æ˜¯æŒ‡å®šåŒ…å«é€šé…ç¬¦*çš„é¡µé¢åœ°å€ï¼Œç”¨æ¥æ¨¡ç³ŠåŒ¹é…å¤šä¸ªé¡µé¢
 	patternsInclude;
-	//Ã÷È·Ö¸³ö²»ĞèÒª¼ì²âµÄÒ³Ãæ·¶Î§£¬¶à¸öÓÃ¶ººÅ·Ö¸ô£¬¿ÉÑ¡£¬Èç¹ûÃ»ÓĞÅäÖÃÔòÉ¨ÃèËùÓĞÒ³Ãæ»òÕßÉ¨ÃèpatternsIncludeÖ¸¶¨µÄÒ³Ãæ
-	//¿ÉÒÔÊÇÖ¸¶¨°üº¬Í¨Åä·û*µÄÒ³ÃæµØÖ·£¬ÓÃÀ´Ä£ºıÆ¥Åä¶à¸öÒ³Ãæ
+	//æ˜ç¡®æŒ‡å‡ºä¸éœ€è¦æ£€æµ‹çš„é¡µé¢èŒƒå›´ï¼Œå¤šä¸ªç”¨é€—å·åˆ†éš”ï¼Œå¯é€‰ï¼Œå¦‚æœæ²¡æœ‰é…ç½®åˆ™æ‰«ææ‰€æœ‰é¡µé¢æˆ–è€…æ‰«æpatternsIncludeæŒ‡å®šçš„é¡µé¢
+	//å¯ä»¥æ˜¯æŒ‡å®šåŒ…å«é€šé…ç¬¦*çš„é¡µé¢åœ°å€ï¼Œç”¨æ¥æ¨¡ç³ŠåŒ¹é…å¤šä¸ªé¡µé¢
 	patternsExclude;
-ÅäÖÃ·½·¨ÈçÏÂ£º
+é…ç½®æ–¹æ³•å¦‚ä¸‹ï¼š
  <filter> 
     <filter-name>securityFilter</filter-name> 
     <filter-class>org.frameworkset.web.interceptor.MyFirstAuthFilter</filter-class> 
@@ -300,7 +300,7 @@ o Ôö¼Ó°²È«ÈÏÖ¤¹ıÂËÆ÷,·Ï³ımvc°²È«ÈÏÖ¤À¹½ØÆ÷,¸Ã¹ıÂËÆ÷¾ßÓĞÒÔÏÂÊôĞÔ£º
     </init-param>     
   </filter> 
 
-//ÒªÉ¨ÃèµÄÒ³Ãæ¹æÔòÅäÖÃ
+//è¦æ‰«æçš„é¡µé¢è§„åˆ™é…ç½®
   <filter-mapping> 
     <filter-name>securityFilter</filter-name> 
     <url-pattern>*.jsp</url-pattern> 
@@ -327,45 +327,45 @@ o Ôö¼Ó°²È«ÈÏÖ¤¹ıÂËÆ÷,·Ï³ımvc°²È«ÈÏÖ¤À¹½ØÆ÷,¸Ã¹ıÂËÆ÷¾ßÓĞÒÔÏÂÊôĞÔ£º
     </filter-mapping>
     
     
-o ¸Ä½øStringHttpMessageConverter×ª»»Æ÷£¬Ôö¼ÓresponseCharsetÊôĞÔ£¬ÓÃÓÚÈ«¾ÖÖ¸¶¨@ResponseBody StringÀàĞÍÏàÓ¦µÄ×Ö·û±àÂë£¬
-Ä¬ÈÏÖµÎª"ISO-8859-1"£¬Ê¹ÓÃ·½·¨Îªf:responseCharset="UTF-8"£¬ÀıÈç£º
+o æ”¹è¿›StringHttpMessageConverterè½¬æ¢å™¨ï¼Œå¢åŠ responseCharsetå±æ€§ï¼Œç”¨äºå…¨å±€æŒ‡å®š@ResponseBody Stringç±»å‹ç›¸åº”çš„å­—ç¬¦ç¼–ç ï¼Œ
+é»˜è®¤å€¼ä¸º"ISO-8859-1"ï¼Œä½¿ç”¨æ–¹æ³•ä¸ºf:responseCharset="UTF-8"ï¼Œä¾‹å¦‚ï¼š
 <property class="org.frameworkset.http.converter.StringHttpMessageConverter" f:responseCharset="UTF-8"/>
-ÕâÑùÒÔÏÂµÄÏìÓ¦×Ö·û´®½«²ÉÓÃUTF-8±àÂëÊä³ö£º
+è¿™æ ·ä»¥ä¸‹çš„å“åº”å­—ç¬¦ä¸²å°†é‡‡ç”¨UTF-8ç¼–ç è¾“å‡ºï¼š
 public  @ResponseBody String queryMutiSex(SexType[] sex)
 {
-	return "ÄãºÃ";//½«ÒÔUTF-8±àÂë
+	return "ä½ å¥½";//å°†ä»¥UTF-8ç¼–ç 
 }
 
-Èç¹ûÔÚ¿ØÖÆÆ÷·½·¨¼¶±ğÖ¸¶¨ÁË×Ö·û±àÂë£¬Ôò½«¸²¸ÇStringHttpMessageConverter×ª»»Æ÷ÉÏµÄ×Ö·û±àÂë,ÀıÈç£º
-public  @ResponseBody(charset="GBK") String queryMutiSex(SexType[] sex)
+å¦‚æœåœ¨æ§åˆ¶å™¨æ–¹æ³•çº§åˆ«æŒ‡å®šäº†å­—ç¬¦ç¼–ç ï¼Œåˆ™å°†è¦†ç›–StringHttpMessageConverterè½¬æ¢å™¨ä¸Šçš„å­—ç¬¦ç¼–ç ,ä¾‹å¦‚ï¼š
+public  @ResponseBody(charset="UTF-8") String queryMutiSex(SexType[] sex)
 {
-	return "ÄãºÃ";//½«ÒÔGBKÏìÓ¦±àÂë
+	return "ä½ å¥½";//å°†ä»¥UTF-8å“åº”ç¼–ç 
 }
 
 
 #######update function list since bbossgroups-3.4 begin###########
 ------2012-2-7------------
-o ¼¯ºÏÀàĞÍ£¨List,Map£©,Èç¹ûÃ»ÓĞÊı¾İ¼ÇÂ¼£¬ÔòÖ±½Ó·µ»Ø£¬ĞŞ¸´Ã»ÓĞÊı¾İÇé¿öÏÂ·µ»ØÒ»Ìõ¿Õ¼ÇÂ¼µÄÎÊÌâ
+o é›†åˆç±»å‹ï¼ˆList,Mapï¼‰,å¦‚æœæ²¡æœ‰æ•°æ®è®°å½•ï¼Œåˆ™ç›´æ¥è¿”å›ï¼Œä¿®å¤æ²¡æœ‰æ•°æ®æƒ…å†µä¸‹è¿”å›ä¸€æ¡ç©ºè®°å½•çš„é—®é¢˜
 ------2011-12-11------------
-o ¸üĞÂ×îĞÂµÄbboss aop¿ò¼Ü£¬¿ØÖÆÆ÷ĞèÒª×¢ÈëµÄÒµÎñ×é¼ş²»ÔÙĞèÒªset·½·¨
-o ¸Ä½øÒÔÏÂ×¢½â£¬name»òÕßvalueÊôĞÔ²»ÔÙÊÇ±ØĞëÑ¡Ïî£¬Èç¹ûÃ»ÓĞÖ¸¶¨nameÊôĞÔ£¬ÔòÊ¹ÓÃ
-·½·¨²ÎÊıÃû³Æ×÷ÎªnameÊôĞÔµÄÖµ£º
+o æ›´æ–°æœ€æ–°çš„bboss aopæ¡†æ¶ï¼Œæ§åˆ¶å™¨éœ€è¦æ³¨å…¥çš„ä¸šåŠ¡ç»„ä»¶ä¸å†éœ€è¦setæ–¹æ³•
+o æ”¹è¿›ä»¥ä¸‹æ³¨è§£ï¼Œnameæˆ–è€…valueå±æ€§ä¸å†æ˜¯å¿…é¡»é€‰é¡¹ï¼Œå¦‚æœæ²¡æœ‰æŒ‡å®šnameå±æ€§ï¼Œåˆ™ä½¿ç”¨
+æ–¹æ³•å‚æ•°åç§°ä½œä¸ºnameå±æ€§çš„å€¼ï¼š
 RequestParam
 PathVariable
 CookieValue
 RequestHeader
 Attribute
 
-ÎªÁËÈ·±£ÄÜ¹»ÕıÈ·»ñÈ¡µ½mvc¿ØÖÆÆ÷·½·¨µÄ²ÎÊıÃû³Æ£¬±ØĞëÔÚ±àÒëjava´úÂëÊ±±£Ö¤ÔÚclassÎÄ¼şÖĞÉú´æjava±¾µØ±äÁ¿±í
-eclipse¹¤¾ßÄ¬ÈÏ»áÉú³É£¬ant±àÒë¹¤¾ßÒ²»áÉú³É¡£
-Í¬Ê±³ıÁËPathVariable×¢½â£¬ÒÔÏÂ×¢½â²»ÔÚÊÇ¿ØÖÆÆ÷·½·¨²ÎÊıµÄ±ØĞë×¢½â£¬Èç¹ûÃ»ÓĞÖ¸¶¨£¬»ù´¡ÀàĞÍ²ÎÊı½«Ö±½ÓÓÃ·½·¨Ãû³Æ´ÓrequestÖĞ»ñÈ¡Ïà¹ØÊôĞÔµÄÖµ£º
+ä¸ºäº†ç¡®ä¿èƒ½å¤Ÿæ­£ç¡®è·å–åˆ°mvcæ§åˆ¶å™¨æ–¹æ³•çš„å‚æ•°åç§°ï¼Œå¿…é¡»åœ¨ç¼–è¯‘javaä»£ç æ—¶ä¿è¯åœ¨classæ–‡ä»¶ä¸­ç”Ÿå­˜javaæœ¬åœ°å˜é‡è¡¨
+eclipseå·¥å…·é»˜è®¤ä¼šç”Ÿæˆï¼Œantç¼–è¯‘å·¥å…·ä¹Ÿä¼šç”Ÿæˆã€‚
+åŒæ—¶é™¤äº†PathVariableæ³¨è§£ï¼Œä»¥ä¸‹æ³¨è§£ä¸åœ¨æ˜¯æ§åˆ¶å™¨æ–¹æ³•å‚æ•°çš„å¿…é¡»æ³¨è§£ï¼Œå¦‚æœæ²¡æœ‰æŒ‡å®šï¼ŒåŸºç¡€ç±»å‹å‚æ•°å°†ç›´æ¥ç”¨æ–¹æ³•åç§°ä»requestä¸­è·å–ç›¸å…³å±æ€§çš„å€¼ï¼š
 RequestParam
 PathVariable
 RequestHeader
 Attribute
 CookieValue
 
-bbossÖĞ½ç¶¨µÄ»ù´¡Êı¾İÀàĞÍÈçÏÂ£º
+bbossä¸­ç•Œå®šçš„åŸºç¡€æ•°æ®ç±»å‹å¦‚ä¸‹ï¼š
 		String.class,int.class ,Integer.class,
 		long.class,Long.class,
 		java.sql.Timestamp.class,java.sql.Date.class,java.util.Date.class,
@@ -380,31 +380,31 @@ bbossÖĞ½ç¶¨µÄ»ù´¡Êı¾İÀàĞÍÈçÏÂ£º
 		BigDecimal.class
 
 ------2011-11-2------------
-o ¸Ä½øjason×ª»»Æ÷£¬±ÜÃâºÍÎÄ¼şÏÂÔØ×ª»»Æ÷µÄ³åÍ»
+o æ”¹è¿›jasonè½¬æ¢å™¨ï¼Œé¿å…å’Œæ–‡ä»¶ä¸‹è½½è½¬æ¢å™¨çš„å†²çª
 #######update function list since bbossgroups-3.3 begin###########
 ------2011-09-29-----------
-o ÍêÉÆspi×é¼ş¼à¿ØÄ£¿é
+o å®Œå–„spiç»„ä»¶ç›‘æ§æ¨¡å—
 ------2011-09-22-------------
-o Öµ¶ÔÏóÊôĞÔÖĞÈç¹û°üº¬MultipartFileÀàĞÍÊ±£¬ÔÊĞí±íµ¥²»ÊÇ¸½¼şÉÏ´«±íµ¥£¬ºöÂÔMultipartFileµÄ°ó¶¨²Ù×÷
-¸ø³öÓÑºÃÌáÊ¾£º
+o å€¼å¯¹è±¡å±æ€§ä¸­å¦‚æœåŒ…å«MultipartFileç±»å‹æ—¶ï¼Œå…è®¸è¡¨å•ä¸æ˜¯é™„ä»¶ä¸Šä¼ è¡¨å•ï¼Œå¿½ç•¥MultipartFileçš„ç»‘å®šæ“ä½œ
+ç»™å‡ºå‹å¥½æç¤ºï¼š
 EvaluateMultipartFileParamWithNoName for type["+ type.getCanonicalName() +"] fail: form is not a multipart form,please check you form config.
 ------2011-09-18-------------
-o ĞÂÔö¿ò¼Ü¼à¿ØÊµÀı£¬·ÃÎÊµØÖ·£º
+o æ–°å¢æ¡†æ¶ç›‘æ§å®ä¾‹ï¼Œè®¿é—®åœ°å€ï¼š
 http://localhost:8080/bboss-mvc/monitor/spiFrame.jsp
-¿ÉÒÔ¶Ô¿ò¼Ü¹ÜÀíµÄ×é¼ş¡¢mvc¿ØÖÆÆ÷¡¢È«¾ÖÅäÖÃÊôĞÔ¡¢sqlfileÖĞµÄsqlÓï¾äµÈÅäÖÃĞÅÏ¢½øĞĞ¼à¿Ø
+å¯ä»¥å¯¹æ¡†æ¶ç®¡ç†çš„ç»„ä»¶ã€mvcæ§åˆ¶å™¨ã€å…¨å±€é…ç½®å±æ€§ã€sqlfileä¸­çš„sqlè¯­å¥ç­‰é…ç½®ä¿¡æ¯è¿›è¡Œç›‘æ§
 ------2011-09-14-------------
-o È¥µô¿ØÖÆÆ÷·½·¨²ÎÊıÀàĞÍMultipartFile¡¢MultipartFile[]±ØĞëºÍRequestParam×¢½âÒ»ÆğÊ¹ÓÃµÄÏŞÖÆ
+o å»æ‰æ§åˆ¶å™¨æ–¹æ³•å‚æ•°ç±»å‹MultipartFileã€MultipartFile[]å¿…é¡»å’ŒRequestParamæ³¨è§£ä¸€èµ·ä½¿ç”¨çš„é™åˆ¶
 #######update function list since bbossgroups-3.2 begin###########
 ------2011-07-24-------------
-o ¿ØÖÆÆ÷·½·¨²ÎÊı°ó¶¨»úÖÆÔö¼ÓMultipartFile¡¢MultipartFile[]ÀàĞÍ°ó¶¨Ö§³Ö,±ØĞëºÍRequestParam×¢½âÒ»ÆğÊ¹ÓÃ£¬Ê¹ÓÃ·½·¨ÈçÏÂ£º
+o æ§åˆ¶å™¨æ–¹æ³•å‚æ•°ç»‘å®šæœºåˆ¶å¢åŠ MultipartFileã€MultipartFile[]ç±»å‹ç»‘å®šæ”¯æŒ,å¿…é¡»å’ŒRequestParamæ³¨è§£ä¸€èµ·ä½¿ç”¨ï¼Œä½¿ç”¨æ–¹æ³•å¦‚ä¸‹ï¼š
 public String uploadFileWithMultipartFile(@RequestParam(name="upload1")  MultipartFile file,
 			ModelMap model)
 public String uploadFileWithMultipartFiles(@RequestParam(name="upload1")  MultipartFile[] files,
 			ModelMap model)
-o PO¶ÔÏóÊôĞÔÊı¾İ°ó¶¨»úÖÆÔö¼ÓMultipartFile¡¢MultipartFile[]ÀàĞÍ°ó¶¨Ö§³Ö,¿ÉÒÔºÍRequestParam×¢½âÒ»ÆğÊ¹ÓÃ£¬Ò²¿ÉÒÔÖ±½ÓÓëÊôĞÔÃû³ÆÖ±½Ó°ó¶¨£¬Ê¹ÓÃ·½·¨ÈçÏÂ£º
+o POå¯¹è±¡å±æ€§æ•°æ®ç»‘å®šæœºåˆ¶å¢åŠ MultipartFileã€MultipartFile[]ç±»å‹ç»‘å®šæ”¯æŒ,å¯ä»¥å’ŒRequestParamæ³¨è§£ä¸€èµ·ä½¿ç”¨ï¼Œä¹Ÿå¯ä»¥ç›´æ¥ä¸å±æ€§åç§°ç›´æ¥ç»‘å®šï¼Œä½¿ç”¨æ–¹æ³•å¦‚ä¸‹ï¼š
 public String uploadFileWithFileBean(FileBean files)
 
-FileBeanÊÇÒ»¸ö×Ô¶¨ÒåµÄjava bean£¬½á¹¹ÈçÏÂ£º
+FileBeanæ˜¯ä¸€ä¸ªè‡ªå®šä¹‰çš„java beanï¼Œç»“æ„å¦‚ä¸‹ï¼š
 public class FileBean
 {
 	private MultipartFile upload1;
@@ -412,19 +412,19 @@ public class FileBean
 	private MultipartFile[] uploads;
 	@RequestParam(name="upload1")
 	private MultipartFile anupload;
-	//Ê¡ÂÔÊôĞÔµÄget/set·½·¨
+	//çœç•¥å±æ€§çš„get/setæ–¹æ³•
 }	
-o ÍêÉÆ@ResponseBody×¢½â£¬Ôö¼ÓÖ±½Ó¶ÔÎÄ¼şÏÂÔØ¹¦ÄÜµÄÖ§³Ö£¬Ö»Òª¿ØÖÆÆ÷·½·¨·µ»ØFile¶ÔÏó¼´¿É
-o ÍêÉÆÈÏÖ¤À¹½ØÆ÷¹¦ÄÜ£¬Ôö¼ÓÈÏÖ¤Ê§°ÜºóÌø×ªÒ³ÃæµÄ·½Ê½ÎªredirectºÍforwardÁ½ÖÖ£¬¿ÉÒÔÔÚÀ¹½ØÆ÷ÉÏÅäÖÃdirecttypeÊôĞÔ
- À´ÊµÏÖ¾ßÌåµÄÌø×ª·½Ê½£º
+o å®Œå–„@ResponseBodyæ³¨è§£ï¼Œå¢åŠ ç›´æ¥å¯¹æ–‡ä»¶ä¸‹è½½åŠŸèƒ½çš„æ”¯æŒï¼Œåªè¦æ§åˆ¶å™¨æ–¹æ³•è¿”å›Fileå¯¹è±¡å³å¯
+o å®Œå–„è®¤è¯æ‹¦æˆªå™¨åŠŸèƒ½ï¼Œå¢åŠ è®¤è¯å¤±è´¥åè·³è½¬é¡µé¢çš„æ–¹å¼ä¸ºredirectå’Œforwardä¸¤ç§ï¼Œå¯ä»¥åœ¨æ‹¦æˆªå™¨ä¸Šé…ç½®directtypeå±æ€§
+ æ¥å®ç°å…·ä½“çš„è·³è½¬æ–¹å¼ï¼š
  <property class="org.frameworkset.web.interceptor.MyFirstInterceptor">
-     			<!-- ÅäÖÃÈÏÖ¤¼ì²éÀ¹½ØÆ÷À¹½ØurlÄ£Ê½¹æÔò -->
+     			<!-- é…ç½®è®¤è¯æ£€æŸ¥æ‹¦æˆªå™¨æ‹¦æˆªurlæ¨¡å¼è§„åˆ™ -->
      			<property name="patternsInclude">
      				<list componentType="string">
      					<property value="/**/*.htm"/>
      				</list>
      			</property>
-     			<!-- ÅäÖÃÈÏÖ¤¼ì²éÀ¹½ØÆ÷²»À¹½ØurlÄ£Ê½¹æÔò -->
+     			<!-- é…ç½®è®¤è¯æ£€æŸ¥æ‹¦æˆªå™¨ä¸æ‹¦æˆªurlæ¨¡å¼è§„åˆ™ -->
      			<property name="patternsExclude">
      				<list componentType="string">
      					<property value="/*.html"/>
@@ -433,22 +433,22 @@ o ÍêÉÆÈÏÖ¤À¹½ØÆ÷¹¦ÄÜ£¬Ôö¼ÓÈÏÖ¤Ê§°ÜºóÌø×ªÒ³ÃæµÄ·½Ê½ÎªredirectºÍforwardÁ½ÖÖ£¬¿ÉÒÔÔ
      			<property name="redirecturl" value="/login.jsp"/>
      			<property name="directtype" value="forward"/>
      		</property>
-o ĞŞ¸´mvc·ÖÒ³Ìø×ªÒ³ÂëÎª¸ºÊıÊ±£¬²»ÄÜÕı³£·ÖÒ³µÄÎÊÌâ
-o ĞŞ¸´ResponseBodyÖ¸¶¨Êı¾İ·µ»ØÀàĞÍºÍ×Ö·û¼¯²»ÉúĞ§µÄÎÊÌâ
+o ä¿®å¤mvcåˆ†é¡µè·³è½¬é¡µç ä¸ºè´Ÿæ•°æ—¶ï¼Œä¸èƒ½æ­£å¸¸åˆ†é¡µçš„é—®é¢˜
+o ä¿®å¤ResponseBodyæŒ‡å®šæ•°æ®è¿”å›ç±»å‹å’Œå­—ç¬¦é›†ä¸ç”Ÿæ•ˆçš„é—®é¢˜
 #######update function list since bbossgroups-3.1 begin###########
 ------2011-06-09------------
-o ×¢½â¿ØÖÆÆ÷¿ÉÒÔ²»ÓÃÌí¼Ó×¢½â@ControllerÒ²¿ÉÒÔ±»¿ò¼ÜÊ¶±ğÁË
+o æ³¨è§£æ§åˆ¶å™¨å¯ä»¥ä¸ç”¨æ·»åŠ æ³¨è§£@Controllerä¹Ÿå¯ä»¥è¢«æ¡†æ¶è¯†åˆ«äº†
 ------2011-06-06------------
-o ÍêÉÆresponsebody×¢½â¹¦ÄÜ,Ôö¼ÓdatatypeºÍcharsetÁ½¸öÊôĞÔ
-datatype£ºjson,xmlµÈÖµ£¬ÓÃÀ´Ö¸³öÊä³öÊı¾İµÄcontentÀàĞÍ
-charset£ºÓÃÀ´Ö¸³öreponseÏìÓ¦×Ö·û±àÂë
-ÏêÏ¸Ê¹ÓÃ·½·¨Çë²Î¿¼²âÊÔÓÃÀı
+o å®Œå–„responsebodyæ³¨è§£åŠŸèƒ½,å¢åŠ datatypeå’Œcharsetä¸¤ä¸ªå±æ€§
+datatypeï¼šjson,xmlç­‰å€¼ï¼Œç”¨æ¥æŒ‡å‡ºè¾“å‡ºæ•°æ®çš„contentç±»å‹
+charsetï¼šç”¨æ¥æŒ‡å‡ºreponseå“åº”å­—ç¬¦ç¼–ç 
+è¯¦ç»†ä½¿ç”¨æ–¹æ³•è¯·å‚è€ƒæµ‹è¯•ç”¨ä¾‹
 org.frameworkset.web.enumtest.EnumConvertController
 org.frameworkset.web.http.converter.json.JsonController
 ------2011-05-28------------
-o Ö§³ÖMap<Key,PO>ÀàĞÍ²ÎÊı°ó¶¨»úÖÆ£¬Í¨¹ıÕâÖÖ»úÖÆ¿ÉÒÔ·Ç³£·½±ãµØ½«±íµ¥Ìá½»¹ıÀ´µÄÒ»¸ö¶ÔÏó¼¯ºÏÊı¾İ
-¸ù¾İkey¶ÔÓ¦µÄ×Ö¶ÎÖµ£¬ĞÎ³ÉMapË÷Òı¶ÔÏó¡£
-Ê¹ÓÃ·½·¨ÈçÏÂ£º
+o æ”¯æŒMap<Key,PO>ç±»å‹å‚æ•°ç»‘å®šæœºåˆ¶ï¼Œé€šè¿‡è¿™ç§æœºåˆ¶å¯ä»¥éå¸¸æ–¹ä¾¿åœ°å°†è¡¨å•æäº¤è¿‡æ¥çš„ä¸€ä¸ªå¯¹è±¡é›†åˆæ•°æ®
+æ ¹æ®keyå¯¹åº”çš„å­—æ®µå€¼ï¼Œå½¢æˆMapç´¢å¼•å¯¹è±¡ã€‚
+ä½¿ç”¨æ–¹æ³•å¦‚ä¸‹ï¼š
 public String mapbean(@MapKey("fieldName") Map<String,ListBean> beans, ModelMap model) {
 		String sql = "INSERT INTO LISTBEAN (" + "ID," + "FIELDNAME,"
 				+ "FIELDLABLE," + "FIELDTYPE," + "SORTORDER,"
@@ -481,31 +481,31 @@ public String mapbean(@MapKey("fieldName") Map<String,ListBean> beans, ModelMap 
 
 		return "path:mapbean";
 	}
-	ÏêÇéÇë²Î¿¼²âÊÔÓÃÀı£º
+	è¯¦æƒ…è¯·å‚è€ƒæµ‹è¯•ç”¨ä¾‹ï¼š
 	/bboss-mvc/WebRoot/WEB-INF/bboss-mapbean.xml
 ------2011-05-11------------
-o ÍêÉÆrestfulÊµÏÖ»úÖÆ£¬¿ÉÒÔÖ§³Ö¶Ô¿ØÖÆÆ÷·½·¨¼¶±ğµÄrestfulÈ«µØÖ·Ó³Éä¹ØÏµ²¢ĞŞ¸´ÁË²¿·ÖÈ±Ïİ£¬3.0°æ±¾ĞèÒª¸ù¾İÀà¼¶±ğºÍ·½·¨¼¶±ğµØÖ·×éºÏ²ÅÄÜÊµÏÖ
-  restful·ç¸ñµÄ¹¦ÄÜ£¬¶øÇÒ´æÔÚÈ±Ïİ¡£
+o å®Œå–„restfulå®ç°æœºåˆ¶ï¼Œå¯ä»¥æ”¯æŒå¯¹æ§åˆ¶å™¨æ–¹æ³•çº§åˆ«çš„restfulå…¨åœ°å€æ˜ å°„å…³ç³»å¹¶ä¿®å¤äº†éƒ¨åˆ†ç¼ºé™·ï¼Œ3.0ç‰ˆæœ¬éœ€è¦æ ¹æ®ç±»çº§åˆ«å’Œæ–¹æ³•çº§åˆ«åœ°å€ç»„åˆæ‰èƒ½å®ç°
+  restfulé£æ ¼çš„åŠŸèƒ½ï¼Œè€Œä¸”å­˜åœ¨ç¼ºé™·ã€‚
 #######update function list since bbossgroups-3.1 end###########
 #######update function list since bbossgroups-3.0 begin###########
 ------2011-04-30------------
-o °ó¶¨²ÎÊı×¢½âÖ¸¶¨ÈÕÆÚ×ª»»¸ñÊ½£¬ÒÔ±ã±£Ö¤°´Ô­Ê¼Êı¾İ¸ñÊ½½«²ÎÊı×ª»»ÎªÕıÈ·µÄÈÕÆÚ
-o ¿ÉÒÔ½«ÈÕÆÚÀàĞÍ(java.util.Date/java.sql.Date/java.sql.Timestamp)×ª»»ÎªlongÀàĞÍÊı¾İ£¬Ò²¿ÉÒÔ½«longÊı¾İ×ª»»ÎªÈÕÆÚÀàĞÍ(java.util.Date/java.sql.Date/java.sql.Timestamp)£¬
-Ò²¿ÉÒÔ½øĞĞlongÊı×éºÍÈÕÆÚÀàĞÍ(java.util.Date/java.sql.Date/java.sql.Timestamp)Êı×éµÄÏà»¥×ª»»
-o ĞŞ¸´mvc¿ò¼Ü¿ØÖÆÆ÷×é¼ş½âÎöÒì³££º
+o ç»‘å®šå‚æ•°æ³¨è§£æŒ‡å®šæ—¥æœŸè½¬æ¢æ ¼å¼ï¼Œä»¥ä¾¿ä¿è¯æŒ‰åŸå§‹æ•°æ®æ ¼å¼å°†å‚æ•°è½¬æ¢ä¸ºæ­£ç¡®çš„æ—¥æœŸ
+o å¯ä»¥å°†æ—¥æœŸç±»å‹(java.util.Date/java.sql.Date/java.sql.Timestamp)è½¬æ¢ä¸ºlongç±»å‹æ•°æ®ï¼Œä¹Ÿå¯ä»¥å°†longæ•°æ®è½¬æ¢ä¸ºæ—¥æœŸç±»å‹(java.util.Date/java.sql.Date/java.sql.Timestamp)ï¼Œ
+ä¹Ÿå¯ä»¥è¿›è¡Œlongæ•°ç»„å’Œæ—¥æœŸç±»å‹(java.util.Date/java.sql.Date/java.sql.Timestamp)æ•°ç»„çš„ç›¸äº’è½¬æ¢
+o ä¿®å¤mvcæ¡†æ¶æ§åˆ¶å™¨ç»„ä»¶è§£æå¼‚å¸¸ï¼š
 	java.lang.IllegalArgumentException: Class must not be null
 	at org.frameworkset.util.Assert.notNull(Assert.java:112)
 	at org.frameworkset.util.annotations.AnnotationUtils.findAnnotation(AnnotationUtils.java:129)
 	at org.frameworkset.web.servlet.handler.HandlerUtils.determineUrlsForHandler(HandlerUtils.java:1965)
 
 ------2011-04-14------------
-o mvcÖĞ´«µİ¸ø·ÖÒ³±êÇ©µÄµ¼º½Â·¾¶ĞŞ¸ÄÎª´øÉÏÏÂÎÄµÄ¾ø¶ÔµØÖ·£¬ÒÔÃâÔÚÊ¹ÓÃjqueryÄ£Ê½¾Ö²¿·ÖÒ³Ê±£¬Ö÷Ò³ÃæµÄÏà¶ÔµØÖ·ºÍ·ÖÒ³¶ÔÓ¦µÄÒ³ÃæµÄÏà¶ÔÂ·¾¶²»Ò»ÖÂÊ±£¬²»ÄÜÕıÈ·µØ
-½øĞĞ·ÖÒ³µ¼º½
+o mvcä¸­ä¼ é€’ç»™åˆ†é¡µæ ‡ç­¾çš„å¯¼èˆªè·¯å¾„ä¿®æ”¹ä¸ºå¸¦ä¸Šä¸‹æ–‡çš„ç»å¯¹åœ°å€ï¼Œä»¥å…åœ¨ä½¿ç”¨jqueryæ¨¡å¼å±€éƒ¨åˆ†é¡µæ—¶ï¼Œä¸»é¡µé¢çš„ç›¸å¯¹åœ°å€å’Œåˆ†é¡µå¯¹åº”çš„é¡µé¢çš„ç›¸å¯¹è·¯å¾„ä¸ä¸€è‡´æ—¶ï¼Œä¸èƒ½æ­£ç¡®åœ°
+è¿›è¡Œåˆ†é¡µå¯¼èˆª
 ------2011-04-13------------
-o ¿ØÖÆÆ÷·½·¨ÖĞÔö¼ÓMapÀàĞÍ²ÎÊı°ó¶¨»úÖÆ£¬¿ÉÒÔ½«requestÖĞµÄ²ÎÊı×ª»»ÎªMap¶ÔÏó£¬µ±²ÎÊıÊÇÊı×éÊ±´æÈëÊı×éÖµ£¬·ñÔò´æÈëµ¥¸öÖµ
+o æ§åˆ¶å™¨æ–¹æ³•ä¸­å¢åŠ Mapç±»å‹å‚æ•°ç»‘å®šæœºåˆ¶ï¼Œå¯ä»¥å°†requestä¸­çš„å‚æ•°è½¬æ¢ä¸ºMapå¯¹è±¡ï¼Œå½“å‚æ•°æ˜¯æ•°ç»„æ—¶å­˜å…¥æ•°ç»„å€¼ï¼Œå¦åˆ™å­˜å…¥å•ä¸ªå€¼
 ------2011-04-06------------
-o ÍêÉÆmvc¿ò¼ÜÅäÖÃÎÄ¼şµ¼Èë·½Ê½
-¿ÉÒÔÓÃ,ºÅ·Ö¸ôµ¼Èë¸÷¸öÎÄ¼ş,ÀıÈç£º
+o å®Œå–„mvcæ¡†æ¶é…ç½®æ–‡ä»¶å¯¼å…¥æ–¹å¼
+å¯ä»¥ç”¨,å·åˆ†éš”å¯¼å…¥å„ä¸ªæ–‡ä»¶,ä¾‹å¦‚ï¼š
 <servlet>
 	<servlet-name>mvcdispather</servlet-name>
 	<servlet-class>org.frameworkset.web.servlet.DispatchServlet</servlet-class>
@@ -514,18 +514,18 @@ o ÍêÉÆmvc¿ò¼ÜÅäÖÃÎÄ¼şµ¼Èë·½Ê½
 		<param-value>/WEB-INF/bboss-*.xml,
 					/WEB-INF/conf/bboss-*.xml</param-value>
 	</init-param>
-¡£¡£¡£¡£¡£¡£
+ã€‚ã€‚ã€‚ã€‚ã€‚ã€‚
 </servlet>
 
 ------2011-04-05------------
-o ¿ØÖÆÆ÷·½·¨Ôö¼ÓÃ¶¾ÙÀàĞÍ£¬Ã¶¾ÙÊı×éÀàĞÍ²ÎÊıµÄ°ó¶¨¹¦ÄÜ
+o æ§åˆ¶å™¨æ–¹æ³•å¢åŠ æšä¸¾ç±»å‹ï¼Œæšä¸¾æ•°ç»„ç±»å‹å‚æ•°çš„ç»‘å®šåŠŸèƒ½
 ------2011-03-31------------
-o Ìø×ªÂ·¾¶¿ÉÒÔÍ¨¹ıpath£ºÔªËØÖ±½ÓÖ¸¶¨£¬¶øÎŞĞè×¢Èë
-¾ßÌåÊ¹ÓÃ·½·¨£¬²Î¿¼demo
+o è·³è½¬è·¯å¾„å¯ä»¥é€šè¿‡pathï¼šå…ƒç´ ç›´æ¥æŒ‡å®šï¼Œè€Œæ— éœ€æ³¨å…¥
+å…·ä½“ä½¿ç”¨æ–¹æ³•ï¼Œå‚è€ƒdemo
 WebRoot/WEB-INF/bboss-path.xml
 ------2011-03-24------------
-o ĞŞ¸´RequestContext.getPathWithinHandlerMappingPath(request)»ñÈ¡Æ¥ÅäÂ·¾¶Ê±£¬×÷ÎªÏà¹ØÒ³ÃæµÄÏà¶ÔµØÖ·Ê±£¬±¨404´íÎóÎÊÌâ£¬ĞŞ¸ÄµÄ³ÌĞòÈçÏÂ£º
-ĞŞ¸´Ö®Ç°
+o ä¿®å¤RequestContext.getPathWithinHandlerMappingPath(request)è·å–åŒ¹é…è·¯å¾„æ—¶ï¼Œä½œä¸ºç›¸å…³é¡µé¢çš„ç›¸å¯¹åœ°å€æ—¶ï¼ŒæŠ¥404é”™è¯¯é—®é¢˜ï¼Œä¿®æ”¹çš„ç¨‹åºå¦‚ä¸‹ï¼š
+ä¿®å¤ä¹‹å‰
 
 org.frameworkset.web.servlet.support.RequestContext
 
@@ -535,7 +535,7 @@ public static String getPathWithinHandlerMappingPath(HttpServletRequest request)
 	return (String) request
 	.getAttribute(org.frameworkset.web.servlet.HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE);
 }
-	ĞŞ¸ÄÖ®ºó
+	ä¿®æ”¹ä¹‹å
 	public static String getPathWithinHandlerMappingPath(HttpServletRequest request)
 	{
 		String urlpath = (String) request
@@ -552,47 +552,47 @@ public static String getPathWithinHandlerMappingPath(HttpServletRequest request)
 
 ------2011-03-02------------
  
-o ĞŞ¸ÄÎÄ¼şÉÏ´«ÖĞÎÄ×Ö·ûÂÒÂëÎÊÌâ£¬swfuploadÍ³Ò»²ÉÓÃutf-8±àÂë£¬Òò´Ë½«
-jquery.MultiFileµÄ±àÂëÒ²ÖÆ¶¨Îªutf-8
-ÉÏ´«µÄjspÒ³ÃæµÄ±àÂëÍ³Ò»ÖÆ¶¨Îªutf-8
+o ä¿®æ”¹æ–‡ä»¶ä¸Šä¼ ä¸­æ–‡å­—ç¬¦ä¹±ç é—®é¢˜ï¼Œswfuploadç»Ÿä¸€é‡‡ç”¨utf-8ç¼–ç ï¼Œå› æ­¤å°†
+jquery.MultiFileçš„ç¼–ç ä¹Ÿåˆ¶å®šä¸ºutf-8
+ä¸Šä¼ çš„jspé¡µé¢çš„ç¼–ç ç»Ÿä¸€åˆ¶å®šä¸ºutf-8
 
 #######update function list since bbossgroups-3.0 end###########
 bbossgroups 2.1----bboss-mvc
 
 ***************************************************
-2010-11-24 bboss-mvc ¿ò¼Ü¹¦ÄÜÌØĞÔ
+2010-11-24 bboss-mvc æ¡†æ¶åŠŸèƒ½ç‰¹æ€§
 ***************************************************
-o µ¥·½·¨Æ¥Åäcontroller
-o ¶à·½·¨Æ¥Åäcontroller
-o ×¢½âcontroller
+o å•æ–¹æ³•åŒ¹é…controller
+o å¤šæ–¹æ³•åŒ¹é…controller
+o æ³¨è§£controller
 o restful controller
-o ¹ú¼Ê»¯
-o Ö÷Ìâ
-o Êı¾İĞ£ÑéĞÅÏ¢Õ¹Ê¾±êÇ©
-o Êı¾İ¿âĞ£Ñé¿ò¼Ü
-o json/rss/atom Ö§³Ö
-o ·ÖÒ³Ö§³Ö
+o å›½é™…åŒ–
+o ä¸»é¢˜
+o æ•°æ®æ ¡éªŒä¿¡æ¯å±•ç¤ºæ ‡ç­¾
+o æ•°æ®åº“æ ¡éªŒæ¡†æ¶
+o json/rss/atom æ”¯æŒ
+o åˆ†é¡µæ”¯æŒ
 
 
-o ÏûÏ¢×ª»»Æ÷¹¦ÄÜÌí¼Ó
-	o ÊôĞÔ×¢Èë
-	o ²ÎÊı×¢Èë
-o À¹½ØÆ÷	
-o ²ÎÊıĞ£Ñé
- ²ÎÊı·Ç·¨ĞÔĞ£Ñé
-Ğ£ÑéĞÅÏ¢·´À¡
-Ğ£Ñé»ØĞ´
-Ğ£Ñé¹æÔò
-Êı¾İ°ó¶¨
-Ğ£Ñé´íÎó»ØĞ´
-Ğ£ÑéÊ§°ÜÌø×ªÒ³ÃæÉèÖÃºÍÉúĞ§
+o æ¶ˆæ¯è½¬æ¢å™¨åŠŸèƒ½æ·»åŠ 
+	o å±æ€§æ³¨å…¥
+	o å‚æ•°æ³¨å…¥
+o æ‹¦æˆªå™¨	
+o å‚æ•°æ ¡éªŒ
+ å‚æ•°éæ³•æ€§æ ¡éªŒ
+æ ¡éªŒä¿¡æ¯åé¦ˆ
+æ ¡éªŒå›å†™
+æ ¡éªŒè§„åˆ™
+æ•°æ®ç»‘å®š
+æ ¡éªŒé”™è¯¯å›å†™
+æ ¡éªŒå¤±è´¥è·³è½¬é¡µé¢è®¾ç½®å’Œç”Ÿæ•ˆ
 
-±¨±íÊµÏÖ
+æŠ¥è¡¨å®ç°
 
-¶àÎÄ¼şÉÏ´«
+å¤šæ–‡ä»¶ä¸Šä¼ 
 
-²»Í¬µÄÓ¦ÓÃ·şÎñÆ÷jar°ü¼ÓÔØ£º
-ÔÚÒÔÏÂ·şÎñÆÚ²âÊÔÍ¨¹ı£ºtomcat 6.0£¬weblogic 11(¶¯Ì¬¿âÎ´²âÊÔ)£¬websphere 7£¬apusic
-Î´Í¨¹ı·şÎñÆ÷£ºren
+ä¸åŒçš„åº”ç”¨æœåŠ¡å™¨jaråŒ…åŠ è½½ï¼š
+åœ¨ä»¥ä¸‹æœåŠ¡æœŸæµ‹è¯•é€šè¿‡ï¼štomcat 6.0ï¼Œweblogic 11(åŠ¨æ€åº“æœªæµ‹è¯•)ï¼Œwebsphere 7ï¼Œapusic
+æœªé€šè¿‡æœåŠ¡å™¨ï¼šren
 
 

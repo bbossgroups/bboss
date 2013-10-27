@@ -58,7 +58,7 @@
 	<target name="compile-bboss-mvc" depends="init" description="compile the bboss-mvc source ">
 		<echo>compile the bboss-mvc source ...</echo>
 
-		<javac destdir="${classes-bboss-aop}" target="1.5" source="1.5" deprecation="true" debug="${debug}" optimize="${optimize}" memorymaximumsize="256M" fork="true" verbose="yes">
+		<javac encoding="UTF-8" destdir="${classes-bboss-aop}" target="1.5" source="1.5" deprecation="true" debug="${debug}" optimize="${optimize}" memorymaximumsize="256M" fork="true" verbose="yes">
 			<src path="src" />
 			<src path="src-jarloaders" />
 		
@@ -98,7 +98,7 @@
 
 	<target name="compile-bboss-mvc-test" description="compile the bboss-mvc-test source ">
 		<echo>compile the bboss-mvc-test source ...</echo>
-		<javac destdir="${classes-bboss-aop-test}" target="1.5" source="1.5" deprecation="true" debug="${debug}" optimize="${optimize}" memorymaximumsize="256M" fork="true" verbose="yes">
+		<javac encoding="UTF-8" destdir="${classes-bboss-aop-test}" target="1.5" source="1.5" deprecation="true" debug="${debug}" optimize="${optimize}" memorymaximumsize="256M" fork="true" verbose="yes">
 			<src path="test" />
 			<classpath refid="cp-bboss-aop" />
 		</javac>

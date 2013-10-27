@@ -50,7 +50,7 @@ public final class ParamTag extends PagerTagSupport {
 	private String name  = null;
 	private String value = null;
 	/**
-	 * ±àÂë´ÎÊı£¬Á¬Ğø±àÂë´ÎÊı
+	 * ç¼–ç æ¬¡æ•°ï¼Œè¿ç»­ç¼–ç æ¬¡æ•°
 	 */
 	private int encodecount = 1;
 
@@ -122,9 +122,9 @@ public final class ParamTag extends PagerTagSupport {
 		}
 		else 
 		/**
-		µ±param±êÇ©³öÏÖÔÚlist±êÇ©ÖĞÊ±£¬
-		½øĞĞÒÔÏÂ´¦Àí¡£Èç¹ûµ±´æÔÚpager±êÇ©£¬²¢ÇÒ½«paramÒ²·ÅÔÚlist±êÇ©ÖĞ£¬ÕâÖÖÇé¿öÊÇ·Ç·¨µÄ
-		µ«ÊÇ³ÌĞòÃ»ÓĞ×öÏàÓ¦µÄÅĞ¶Ï¡£
+		å½“paramæ ‡ç­¾å‡ºç°åœ¨listæ ‡ç­¾ä¸­æ—¶ï¼Œ
+		è¿›è¡Œä»¥ä¸‹å¤„ç†ã€‚å¦‚æœå½“å­˜åœ¨pageræ ‡ç­¾ï¼Œå¹¶ä¸”å°†paramä¹Ÿæ”¾åœ¨listæ ‡ç­¾ä¸­ï¼Œè¿™ç§æƒ…å†µæ˜¯éæ³•çš„
+		ä½†æ˜¯ç¨‹åºæ²¡æœ‰åšç›¸åº”çš„åˆ¤æ–­ã€‚
 		*/
 		{
 			PagerDataSet listTag = (PagerDataSet) findAncestorWithClass(this, PagerDataSet.class);

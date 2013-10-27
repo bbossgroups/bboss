@@ -46,7 +46,7 @@ import org.frameworkset.spi.remote.mina.client.ClinentTransport;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2009-10-7 ÏÂÎç05:06:40
+ * @Date 2009-10-7 ä¸‹åˆ05:06:40
  * @author biaoping.yin
  * @version 1.0
  */
@@ -75,7 +75,7 @@ public class MinaRPCServer
 	}
 	public boolean validateAddress(RPCAddress address)
 	{
-	    //Ê×ÏÈÅĞ¶ÏµØÖ·ÊÇ·ñÔÚµØÖ··¶Î§ÖĞ
+	    //é¦–å…ˆåˆ¤æ–­åœ°å€æ˜¯å¦åœ¨åœ°å€èŒƒå›´ä¸­
 	    
 	    return ClinentTransport.validateAddress(address);
 	}
@@ -147,7 +147,7 @@ public class MinaRPCServer
 		        // This socket acceptor will handle incoming connections
 		        acceptor = new NioSocketAcceptor();
 		        /**
-		         * Ôö¼ÓsslµÄ¼¼ÊõÖ§³Ö
+		         * å¢åŠ sslçš„æŠ€æœ¯æ”¯æŒ
 		         */
 		        ProMap commons = Util.defaultContext.getMapProperty("rpc.protocol.mina.params");
 		        boolean enablessl = Util.defaultContext.getMapProperty("rpc.protocol.mina.params").getBoolean("enablessl",false);
@@ -158,7 +158,7 @@ public class MinaRPCServer
 		                ProMap ssls =  Util.defaultContext.getMapProperty("rpc.protocol.mina.ssl.server");
 		                if(ssls == null)
 		                {
-		                    throw new MinaRunException("ÆôÓÃÁËsslÄ£Ê½£¬ µ«ÊÇÃ»ÓĞÖ¸¶¨rpc.protocol.mina.ssl.server ²ÎÊı£¬Çë¼ì²éÎÄ¼şorg/frameworkset/spi/manager-rpc-mina.xmlÊÇ·ñÕıÈ·ÉèÖÃÁË¸Ã²ÎÊı¡£");
+		                    throw new MinaRunException("å¯ç”¨äº†sslæ¨¡å¼ï¼Œ ä½†æ˜¯æ²¡æœ‰æŒ‡å®šrpc.protocol.mina.ssl.server å‚æ•°ï¼Œè¯·æ£€æŸ¥æ–‡ä»¶org/frameworkset/spi/manager-rpc-mina.xmlæ˜¯å¦æ­£ç¡®è®¾ç½®äº†è¯¥å‚æ•°ã€‚");
 		                }
 		                String keyStore = ssls.getString("keyStore");
 		                String keyStorePassword = ssls.getString("keyStorePassword");
@@ -177,16 +177,16 @@ public class MinaRPCServer
 		                
 		                
 		                
-		                /** ÉèÖÃ¼ÓÃÜ¹ıÂËÆ÷ **/
+		                /** è®¾ç½®åŠ å¯†è¿‡æ»¤å™¨ **/
 		                acceptor.getFilterChain().addLast("SSL", sslFilter);
 		            }
 		            catch (GeneralSecurityException e)
 		            {
-		                throw new MinaRunException("ÆôÓÃÁËsslÄ£Ê½£¬ Çë¼ì²éÎÄ¼şorg/frameworkset/spi/manager-rpc-mina.xmlÊÇ·ñÕıÈ·ÉèÖÃÁË¿Í·ş¶ËµÄssl²ÎÊırpc.protocol.mina.ssl.server¡£",e);
+		                throw new MinaRunException("å¯ç”¨äº†sslæ¨¡å¼ï¼Œ è¯·æ£€æŸ¥æ–‡ä»¶org/frameworkset/spi/manager-rpc-mina.xmlæ˜¯å¦æ­£ç¡®è®¾ç½®äº†å®¢æœç«¯çš„sslå‚æ•°rpc.protocol.mina.ssl.serverã€‚",e);
 		            }
 		            catch (IOException e)
 		            {
-		                throw new MinaRunException("ÆôÓÃÁËsslÄ£Ê½£¬ Çë¼ì²éÎÄ¼şorg/frameworkset/spi/manager-rpc-mina.xmlÊÇ·ñÕıÈ·ÉèÖÃÁË¿Í·ş¶ËµÄssl²ÎÊırpc.protocol.mina.ssl.server¡£",e);
+		                throw new MinaRunException("å¯ç”¨äº†sslæ¨¡å¼ï¼Œ è¯·æ£€æŸ¥æ–‡ä»¶org/frameworkset/spi/manager-rpc-mina.xmlæ˜¯å¦æ­£ç¡®è®¾ç½®äº†å®¢æœç«¯çš„sslå‚æ•°rpc.protocol.mina.ssl.serverã€‚",e);
 		            }
 		            catch(MinaRunException e)
 		            {
@@ -194,7 +194,7 @@ public class MinaRPCServer
 		            }
 		            catch (Exception e)
 		            {
-		                throw new MinaRunException("ÆôÓÃÁËsslÄ£Ê½£¬ Çë¼ì²éÎÄ¼şorg/frameworkset/spi/manager-rpc-mina.xmlÊÇ·ñÕıÈ·ÉèÖÃÁË¿Í·ş¶ËµÄssl²ÎÊırpc.protocol.mina.ssl.server¡£",e);
+		                throw new MinaRunException("å¯ç”¨äº†sslæ¨¡å¼ï¼Œ è¯·æ£€æŸ¥æ–‡ä»¶org/frameworkset/spi/manager-rpc-mina.xmlæ˜¯å¦æ­£ç¡®è®¾ç½®äº†å®¢æœç«¯çš„sslå‚æ•°rpc.protocol.mina.ssl.serverã€‚",e);
 		            }
 		        }
 		        // add an IoFilter .  This class is responsible for converting the incoming and 

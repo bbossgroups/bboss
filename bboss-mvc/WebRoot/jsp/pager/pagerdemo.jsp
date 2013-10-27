@@ -1,13 +1,13 @@
-<%@ page contentType="text/html; charset=GBK" language="java" %>
+<%@ page contentType="text/html; charset=UTF-8" language="java" %>
 <%@ taglib uri="/WEB-INF/pager-taglib.tld" prefix="pg"%>
 <%@ page import="org.frameworkset.web.servlet.support.RequestContext" %>
 
 <!-- 
-	������ͨ����������ȡ��ҳ�б����ݣ������ṩ��ѯ����
+	测试在通过控制器获取分页列表数据，并且提供查询功能
 -->
 <html>
 <head>
-<title>������ͨ����������ȡ��ҳ�б����ݣ������ṩ��ѯ����</title>
+<title>测试在通过控制器获取分页列表数据，并且提供查询功能</title>
 </head>
 <link rel="stylesheet"
 			href="${pageContext.request.contextPath}/css/classic/tables.css"
@@ -27,20 +27,20 @@
 <body>
 	<table class="genericTbl">
 				<tr class="cms_report_tr">
-						<!--���÷�ҳ��ͷ-->
+						<!--设置分页表头-->
 					<form action="<%=RequestContext.getPathWithinHandlerMappingPath(request)%>" method="post">
-						<th  style="width:20%" class="order1 sorted">�����������</th>
-						<th  style="width:5%" colspan="100"><input type="text" name="TABLE_NAME" value="<%=request.getParameter("TABLE_NAME") %>"><input type="submit" name="��ѯ" value="��ѯ"></th>
+						<th  style="width:20%" class="order1 sorted">请输入表名：</th>
+						<th  style="width:5%" colspan="100"><input type="text" name="TABLE_NAME" value="<%=request.getParameter("TABLE_NAME") %>"><input type="submit" name="查询" value="查询"></th>
 					</form>
 				</tr>
 						
 	    
-				<!--��ҳ��ʾ��ʼ,��ҳ��ǩ��ʼ��-->
+				<!--分页显示开始,分页标签初始化-->
 				<pg:pager scope="request" data="pagedata" 
 						  isList="false">
 				<pg:param name="TABLE_NAME"/>
 					<tr class="cms_report_tr">
-						<!--���÷�ҳ��ͷ-->
+						<!--设置分页表头-->
 
 						<th width="2%" align=center style="width:5%" class="order1 sorted">
 						<input class="checkbox" 
@@ -63,7 +63,7 @@
 						
 
 					<td width="2%" align=center style="width:5%">
-						û������
+						没有数据
 					</td>
 					</tr>				
 				</pg:notify>

@@ -1,30 +1,30 @@
-<?xml version="1.0" encoding='gb2312'?>
+<?xml version="1.0" encoding='UTF-8'?>
 <!-- 
-	bboss-mvcÈ«¾ÖÅäÖÃÎÄ¼þ
-	ÃèÊö£ºÅäÖÃbboss-mvcµÄËùÓÐcontrollerÅäÖÃÎÄ¼þ
-	     Ö¸¶¨ÕâÐ©controllerËùÔÚµÄ¸ùÄ¿Â¼
+	bboss-mvcå…¨å±€é…ç½®æ–‡ä»¶
+	æè¿°ï¼šé…ç½®bboss-mvcçš„æ‰€æœ‰controlleré…ç½®æ–‡ä»¶
+	     æŒ‡å®šè¿™äº›controlleræ‰€åœ¨çš„æ ¹ç›®å½•
 -->
 <properties>
 	
 	<!-- 
-		µ¼ÈëmvcµÄÏà¹ØÎÄ¼þ,ÊôÐÔËµÃ÷£º
-		docbase£ºÅäÖÃÎÄ¼þ¶ÔÓ¦µÄ¸ùÄ¿Â¼£¬Ä¬ÈÏÎªclasspath£¬ÕâÖÖÇé¿öÎÞÐèÖ¸¶¨docbaseÊôÐÔ£¬Èç¹ûÓÃ»§ÐèÒª
-		classpathÖ®ÍâµÄÄ¿Â¼£¬¿ÉÒÔÍ¨¹ýdocbaseÊôÐÔÀ´Ö¸¶¨£¬ÀýÈç£º
-		docbase="web::/WEB-INF/"  Ïà¶ÔwebÓ¦ÓÃÉÏÏÂÎÄµÄ´æ´¢Â·¾¶
-		docbase="classpath::/WEB-INF/"  Ïà¶ÔjavacÓ¦ÓÃÉÏÏÂÎÄµÄ´æ´¢Â·¾¶
+		å¯¼å…¥mvcçš„ç›¸å…³æ–‡ä»¶,å±žæ€§è¯´æ˜Žï¼š
+		docbaseï¼šé…ç½®æ–‡ä»¶å¯¹åº”çš„æ ¹ç›®å½•ï¼Œé»˜è®¤ä¸ºclasspathï¼Œè¿™ç§æƒ…å†µæ— éœ€æŒ‡å®šdocbaseå±žæ€§ï¼Œå¦‚æžœç”¨æˆ·éœ€è¦
+		classpathä¹‹å¤–çš„ç›®å½•ï¼Œå¯ä»¥é€šè¿‡docbaseå±žæ€§æ¥æŒ‡å®šï¼Œä¾‹å¦‚ï¼š
+		docbase="web::/WEB-INF/"  ç›¸å¯¹webåº”ç”¨ä¸Šä¸‹æ–‡çš„å­˜å‚¨è·¯å¾„
+		docbase="classpath::/WEB-INF/"  ç›¸å¯¹javacåº”ç”¨ä¸Šä¸‹æ–‡çš„å­˜å‚¨è·¯å¾„
 		
-		ÒÔÏÂÁ½ÖÖÇé¿öÐèÒªÖ¸¶¨docbaseÊôÐÔ£º
-			µ¼ÈëµÄÎÄ¼þ²»ÔÚclasspath»·¾³ÏÂÃæ£¬²ÅÐèÒªÖ¸¶¨docbaseÊôÐÔ
-			Í¬Ê±Òªµ¼ÈëÖ¸¶¨Ä¿Â¼ÏÂµÄ¶à¸öÎÄ¼þ£¨¼´Ê¹ÎÄ¼þÔÚclasspath»·¾³ÏÂ£©
+		ä»¥ä¸‹ä¸¤ç§æƒ…å†µéœ€è¦æŒ‡å®šdocbaseå±žæ€§ï¼š
+			å¯¼å…¥çš„æ–‡ä»¶ä¸åœ¨classpathçŽ¯å¢ƒä¸‹é¢ï¼Œæ‰éœ€è¦æŒ‡å®šdocbaseå±žæ€§
+			åŒæ—¶è¦å¯¼å…¥æŒ‡å®šç›®å½•ä¸‹çš„å¤šä¸ªæ–‡ä»¶ï¼ˆå³ä½¿æ–‡ä»¶åœ¨classpathçŽ¯å¢ƒä¸‹ï¼‰
 			
-		Ò»´Îmanagerimportµ¼ÈëµÄËùÓÐ×é¼þºÍµ±Ç°ÅäÖÃÎÄ¼þ¹«ÓÃÒ»¸ö×é¼þ¹ÜÀíÈÝÆ÷
+		ä¸€æ¬¡managerimportå¯¼å…¥çš„æ‰€æœ‰ç»„ä»¶å’Œå½“å‰é…ç½®æ–‡ä»¶å…¬ç”¨ä¸€ä¸ªç»„ä»¶ç®¡ç†å®¹å™¨
 	 -->
 	 <!-- 
-	 ÔÚwebÓ¦ÓÃµÄÉÏÏÂÎÄ¸ùÄ¿Â¼ÏÂ²éÕÒ·ûºÏbboss-mvc-*.xmlÄ£Ê½µÄÅäÖÃÎÄ¼þ	 
+	 åœ¨webåº”ç”¨çš„ä¸Šä¸‹æ–‡æ ¹ç›®å½•ä¸‹æŸ¥æ‰¾ç¬¦åˆbboss-mvc-*.xmlæ¨¡å¼çš„é…ç½®æ–‡ä»¶	 
 	  -->
 <!--	<managerimport docbase="web::/WEB-INF/" file="bboss-mvc-*.xml" />-->
 	 <!-- 
-	 ÔÚclasspathÄ¿Â¼ÏÂ²éÕÒ·ûºÏbboss-mvc-*.xmlÄ£Ê½µÄÅäÖÃÎÄ¼þ	 
+	 åœ¨classpathç›®å½•ä¸‹æŸ¥æ‰¾ç¬¦åˆbboss-mvc-*.xmlæ¨¡å¼çš„é…ç½®æ–‡ä»¶	 
 	  -->
 <!--	<managerimport docbase="classpath::/conf/" file="bboss-mvc-*.xml" />-->
 	
@@ -46,30 +46,30 @@
     
 
 	<!-- 
-		beanNameHandlerMappingÊ¶±ðÆ÷£¬Í¨¹ý×é¼þÃû³ÆÊ¶±ðurlºÍcontroller µÄÓ³Éä¹ØÏµ
-		ËùÓÐµÄHandlerMappingÊ¶±ðÆ÷£¨urlºÍcontroller µÄÓ³Éä¹ØÏµÊ¶±ð£©¹²ÓÃÍ³Ò»µÄurlºÍController
-		Ó³Éä×¢²á±íhandlerUrlMappingRegisterTable
+		beanNameHandlerMappingè¯†åˆ«å™¨ï¼Œé€šè¿‡ç»„ä»¶åç§°è¯†åˆ«urlå’Œcontroller çš„æ˜ å°„å…³ç³»
+		æ‰€æœ‰çš„HandlerMappingè¯†åˆ«å™¨ï¼ˆurlå’Œcontroller çš„æ˜ å°„å…³ç³»è¯†åˆ«ï¼‰å…±ç”¨ç»Ÿä¸€çš„urlå’ŒController
+		æ˜ å°„æ³¨å†Œè¡¨handlerUrlMappingRegisterTable
 	 -->
     <property name="beanNameHandlerMapping" class="org.frameworkset.web.servlet.handler.BeanNameUrlHandlerMapping" singlable="true">
         <property name="alwaysUseFullPath" value="true"/>
         <property name="handlerMap" refid="attr:handlerUrlMappingRegisterTable"/>
     </property>
     <!-- 
-		beanNameHandlerMappingÊ¶±ðÆ÷£¬Í¨¹ýjava×¢½âÊ¶±ðurlºÍcontroller µÄÓ³Éä¹ØÏµ
-		ËùÓÐµÄHandlerMappingÊ¶±ðÆ÷£¨urlºÍcontroller µÄÓ³Éä¹ØÏµÊ¶±ð£©¹²ÓÃÍ³Ò»µÄurlºÍController
-		Ó³Éä×¢²á±íhandlerUrlMappingRegisterTable
+		beanNameHandlerMappingè¯†åˆ«å™¨ï¼Œé€šè¿‡javaæ³¨è§£è¯†åˆ«urlå’Œcontroller çš„æ˜ å°„å…³ç³»
+		æ‰€æœ‰çš„HandlerMappingè¯†åˆ«å™¨ï¼ˆurlå’Œcontroller çš„æ˜ å°„å…³ç³»è¯†åˆ«ï¼‰å…±ç”¨ç»Ÿä¸€çš„urlå’ŒController
+		æ˜ å°„æ³¨å†Œè¡¨handlerUrlMappingRegisterTable
 	 -->
     <property name="annotationHandlerMapping" class="org.frameworkset.web.servlet.handler.annotations.DefaultAnnotationHandlerMapping" singlable="true">
         <property name="alwaysUseFullPath" value="true"/>
         <property name="handlerMap" refid="attr:handlerUrlMappingRegisterTable"/>
     </property>
-    <!-- urlºÍcontrollerÓ³Éä¹ØÏµ±í£¬´æ´¢ËùÓÐµÄurlºÍcontrollerÖ®¼äµÄÓ³Éä¹ØÏµ -->
+    <!-- urlå’Œcontrolleræ˜ å°„å…³ç³»è¡¨ï¼Œå­˜å‚¨æ‰€æœ‰çš„urlå’Œcontrollerä¹‹é—´çš„æ˜ å°„å…³ç³» -->
      <property name="handlerUrlMappingRegisterTable"
          class="org.frameworkset.web.servlet.handler.HandlerUrlMappingRegisterTable" singlable="true"/>        
      
     
     <!-- 
-    	handlerMapping¹ÜÀíËùÓÐÀàÐÍµÄurlºÍControllerÊ¶±ðÆ÷£¨Ä¿Ç°ÓÐbeanNameUrlÊ¶±ðÆ÷ºÍjava×¢½âÊ¶±ðÆ÷£©
+    	handlerMappingç®¡ç†æ‰€æœ‰ç±»åž‹çš„urlå’ŒControllerè¯†åˆ«å™¨ï¼ˆç›®å‰æœ‰beanNameUrlè¯†åˆ«å™¨å’Œjavaæ³¨è§£è¯†åˆ«å™¨ï¼‰
      -->
     <property name="handlerMapping" class="org.frameworkset.web.servlet.handler.HandlerMappingsTable" singlable="true">       
         <property name="handlerMappings">
@@ -80,11 +80,11 @@
         	<editor class="org.frameworkset.web.servlet.handler.HandlerMappingsTableEditor"/>
         </property>
         <!-- 
-        	scanAllMappings:¿ØÖÆ±äÁ¿£¬Éè¶¨ÊÇ·ñËÑË÷ËùÓÐµÄurlºÍControllerÊ¶±ðÆ÷À´»ñÈ¡ÌØ¶¨ÇëÇó
-        	url¶ÔÓ¦µÄController
-        	  trueËÑË÷£¬Ä¬ÈÏÖµ
-        	  falseÖ»ËùËÑµÚÒ»¸ömaping
-        	ÓÉÓÚbeanNameHandlerMappingºÍannotationHandlerMapping¹²ÏíÒ»¸öÓ³Éä¹ØÏµ±í£¬ËùÓÐÉè¶¨Îªfalse
+        	scanAllMappings:æŽ§åˆ¶å˜é‡ï¼Œè®¾å®šæ˜¯å¦æœç´¢æ‰€æœ‰çš„urlå’ŒControllerè¯†åˆ«å™¨æ¥èŽ·å–ç‰¹å®šè¯·æ±‚
+        	urlå¯¹åº”çš„Controller
+        	  trueæœç´¢ï¼Œé»˜è®¤å€¼
+        	  falseåªæ‰€æœç¬¬ä¸€ä¸ªmaping
+        	ç”±äºŽbeanNameHandlerMappingå’ŒannotationHandlerMappingå…±äº«ä¸€ä¸ªæ˜ å°„å…³ç³»è¡¨ï¼Œæ‰€æœ‰è®¾å®šä¸ºfalse
          -->
         <property name="scanAllMappings" value="false"/>
     </property>
@@ -109,7 +109,7 @@
      	</list>        
      </property> 
      
-     <!-- ÅäÖÃÈ«¾Ö¿ØÖÆÆ÷·½·¨À¹½ØÆ÷ -->
+     <!-- é…ç½®å…¨å±€æŽ§åˆ¶å™¨æ–¹æ³•æ‹¦æˆªå™¨ -->
      <property name="org.frameworkset.web.servlet.gloabel.HandlerInterceptors" >
      	<list componentType="bean">
      		

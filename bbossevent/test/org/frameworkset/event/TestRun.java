@@ -36,7 +36,7 @@ public class TestRun {
 	{
 		JGroupHelper.getJGroupHelper().start();
 //		ExampleListener listener = new ExampleListener();
-//		//调用init方法注册监听器，这样就能收到事件发布器发布的事件
+//		//璋冪敤init鏂规硶娉ㄥ唽鐩戝惉鍣紝杩欐牱灏辫兘鏀跺埌浜嬩欢鍙戝竷鍣ㄥ彂甯冪殑浜嬩欢
 //		listener.init();
 //		
 ////		ExampleEventPublish.publishEventtype1();

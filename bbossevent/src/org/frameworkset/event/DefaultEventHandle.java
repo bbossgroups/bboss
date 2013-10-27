@@ -19,7 +19,7 @@ package org.frameworkset.event;
  * 
  * <p>Title: DefaultEventHandle.java</p>
  *
- * <p>Description: 缺省的事务处理框架类</p>
+ * <p>Description: 缂虹渷鐨勪簨鍔″鐞嗘鏋剁被</p>
  *
  * <p>Copyright (c) 2009</p>
  *

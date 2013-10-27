@@ -25,18 +25,18 @@ import java.util.Map;
  * 
  * <p>Title: LinkConfigFile.java</p>
  *
- * <p>Description: ÅäÖÃÎÄ¼şÅäÖÃĞÅÏ¢
- * °üº¬ÅäÖÃÎÄ¼şÂ·¾¶£¬µ¼Èë¸ÃÅäÖÃÎÄ¼şµÄÅäÖÃĞÅÏ¢ 
- * ÒÔ¼°ÔÚÅäÖÃÎÄ¼şÖĞµÄ¹ÜÀí·şÎñË÷Òı
+ * <p>Description: é…ç½®æ–‡ä»¶é…ç½®ä¿¡æ¯
+ * åŒ…å«é…ç½®æ–‡ä»¶è·¯å¾„ï¼Œå¯¼å…¥è¯¥é…ç½®æ–‡ä»¶çš„é…ç½®ä¿¡æ¯ 
+ * ä»¥åŠåœ¨é…ç½®æ–‡ä»¶ä¸­çš„ç®¡ç†æœåŠ¡ç´¢å¼•
  * 
- * ÊµÏÖ¶ÔËùÓĞ¹ÜÀí·şÎñµÄ¼à¿ØºÍ¹ÜÀí
+ * å®ç°å¯¹æ‰€æœ‰ç®¡ç†æœåŠ¡çš„ç›‘æ§å’Œç®¡ç†
  * </p>
  *
  * <p>Copyright: Copyright (c) 2007</p>
  *
  * <p>bboss workgroup</p>
  * @Date Aug 20, 2008 10:36:22 AM
- * @author biaoping.yin,Òü±êÆ½
+ * @author biaoping.yin,å°¹æ ‡å¹³
  * @version 1.0
  */
 public class LinkConfigFile {
@@ -50,31 +50,31 @@ public class LinkConfigFile {
 	}
 	
 	/**
-	 * ÅäÖÃÎÄ¼şÍêÕûÂ·¾¶
+	 * é…ç½®æ–‡ä»¶å®Œæ•´è·¯å¾„
 	 */
 	private String fullPath = null;
 	/**
-	 * ÅäÖÃÎÄ¼şÏà¶ÔÂ·¾¶
+	 * é…ç½®æ–‡ä»¶ç›¸å¯¹è·¯å¾„
 	 */
 	private String configFile ;
 	private Map properties = new HashMap();
 	
 	/**
-	 * ÅäÖÃÎÄ¼şÏà¶ÔÂ·¾¶µØÖ·
+	 * é…ç½®æ–‡ä»¶ç›¸å¯¹è·¯å¾„åœ°å€
 	 */
 	private String relativePath ;
 	/**
-	 * µ¼ÈëÅäÖÃÎÄ¼şconfigFileµÄÅäÖÃÎÄ¼şÅäÖÃĞÅÏ¢
+	 * å¯¼å…¥é…ç½®æ–‡ä»¶configFileçš„é…ç½®æ–‡ä»¶é…ç½®ä¿¡æ¯
 	 */
 	private LinkConfigFile parent;
 	
 	/**
-	 * ÅäÖÃÎÄ¼ş¶ÔÓ¦µÄËùÓĞ¹ÜÀí·şÎñ
+	 * é…ç½®æ–‡ä»¶å¯¹åº”çš„æ‰€æœ‰ç®¡ç†æœåŠ¡
 	 * Map<mgrid,ProviderManagerInfo>
 	 */
 	private Map mgrServices = null;
 	/**
-	 * ÅäÖÃÎÄ¼şµ¼ÈëµÄ¹ÜÀíÅäÖÃÎÄ¼ş
+	 * é…ç½®æ–‡ä»¶å¯¼å…¥çš„ç®¡ç†é…ç½®æ–‡ä»¶
 	 * List<LinkConfigFile>
 	 */
 	private List linkConfigFiles = null;
@@ -156,7 +156,7 @@ public class LinkConfigFile {
 	}
 	
 	/**
-	 * ÅäÖÃÎÄ¼şµÄ±êÊ¶
+	 * é…ç½®æ–‡ä»¶çš„æ ‡è¯†
 	 * @return
 	 */
 	public String getIdentity()

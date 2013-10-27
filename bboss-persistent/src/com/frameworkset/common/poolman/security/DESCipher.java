@@ -24,10 +24,10 @@ import javax.crypto.Cipher;
  * 
  * <p>Title: DESCipher.java</p>
  *
- * <p>Description: Ò»¸ö²ÉÓÃDESËã·¨µÄ¼ÓÃÜ½âÃÜÀà,¿ÉÒÔÍ¨¹ıÉèÖÃÃÜÔ¿»òÊ¹ÓÃÄ¬ÈÏÃÜÔ¿£¬¶Ô×Ö·û´®ºÍ×Ö½ÚÊı×é½øĞĞ¼ÓÃÜºÍ½âÃÜÔËËã¡£</p>
+ * <p>Description: ä¸€ä¸ªé‡‡ç”¨DESç®—æ³•çš„åŠ å¯†è§£å¯†ç±»,å¯ä»¥é€šè¿‡è®¾ç½®å¯†é’¥æˆ–ä½¿ç”¨é»˜è®¤å¯†é’¥ï¼Œå¯¹å­—ç¬¦ä¸²å’Œå­—èŠ‚æ•°ç»„è¿›è¡ŒåŠ å¯†å’Œè§£å¯†è¿ç®—ã€‚</p>
  *
  * <p>Copyright: Copyright (c) 2007</p>
- * @Date 2012-3-14 ÏÂÎç3:23:03
+ * @Date 2012-3-14 ä¸‹åˆ3:23:03
  * @author biaoping.yin
  * @version 1.0
  */
@@ -40,12 +40,12 @@ public class DESCipher {
     private Cipher decryptCipher = null;
 
     /**
-     * ½«²ÎÊı×Ö½ÚÊı×é×ª»»Îª16½øÖÆÖµ±íÊ¾×éºÏ¶ø³ÉµÄ×Ö·û´®¡£
+     * å°†å‚æ•°å­—èŠ‚æ•°ç»„è½¬æ¢ä¸º16è¿›åˆ¶å€¼è¡¨ç¤ºç»„åˆè€Œæˆçš„å­—ç¬¦ä¸²ã€‚
      * 
-     * @param byte[] ĞèÒª×ª»»µÄbyteÊı×é
-     * @return String ×ª»»ºóµÄ×Ö·û´®
+     * @param byte[] éœ€è¦è½¬æ¢çš„byteæ•°ç»„
+     * @return String è½¬æ¢åçš„å­—ç¬¦ä¸²
      * @throws Exception
-     *             JAVAÒì³£
+     *             JAVAå¼‚å¸¸
      */
     public static String byteGrpToHexStr(byte[] arrB) throws Exception {
         int iLen = arrB.length;
@@ -64,13 +64,13 @@ public class DESCipher {
     }
 
     /**
-     * ½«²ÎÊı16½øÖÆÖµ±íÊ¾×éºÏ¶ø³ÉµÄ×Ö·û´®×ª»»Îª×Ö½ÚÊı×é¡£
+     * å°†å‚æ•°16è¿›åˆ¶å€¼è¡¨ç¤ºç»„åˆè€Œæˆçš„å­—ç¬¦ä¸²è½¬æ¢ä¸ºå­—èŠ‚æ•°ç»„ã€‚
      * 
      * @param String
-     *            ĞèÒª×ª»»µÄ×Ö·û´®
-     * @return byte[] ×ª»»ºóµÄbyteÊı×é
+     *            éœ€è¦è½¬æ¢çš„å­—ç¬¦ä¸²
+     * @return byte[] è½¬æ¢åçš„byteæ•°ç»„
      * @throws Exception
-     *             JAVAÒì³£
+     *             JAVAå¼‚å¸¸
      */
     public static byte[] hexStrToByteGrp(String strIn) throws Exception {
         byte[] arrB = strIn.getBytes();
@@ -84,7 +84,7 @@ public class DESCipher {
     }
 
     /**
-     * Ä¬ÈÏ¹¹Ôì·½·¨£¬Ê¹ÓÃÄ¬ÈÏÃÜÔ¿
+     * é»˜è®¤æ„é€ æ–¹æ³•ï¼Œä½¿ç”¨é»˜è®¤å¯†é’¥
      * 
      * @throws Exception
      */
@@ -93,12 +93,12 @@ public class DESCipher {
     }
 
     /**
-     * Ö¸¶¨ÃÜÔ¿¹¹Ôì·½·¨
+     * æŒ‡å®šå¯†é’¥æ„é€ æ–¹æ³•
      * 
      * @param String
-     *            Ö¸¶¨µÄÃÜÔ¿
+     *            æŒ‡å®šçš„å¯†é’¥
      * @throws Exception
-     *             JAVAÒì³£
+     *             JAVAå¼‚å¸¸
      */
     public DESCipher(String strKey) throws Exception {
         Security.addProvider(new com.sun.crypto.provider.SunJCE());
@@ -110,64 +110,64 @@ public class DESCipher {
     }
 
     /**
-     * ¼ÓÃÜ×Ö½ÚÊı×é
+     * åŠ å¯†å­—èŠ‚æ•°ç»„
      * 
-     * @param byte[] Ğè¼ÓÃÜµÄ×Ö½ÚÊı×é
-     * @return byte[] ¼ÓÃÜºóµÄ×Ö½ÚÊı×é
+     * @param byte[] éœ€åŠ å¯†çš„å­—èŠ‚æ•°ç»„
+     * @return byte[] åŠ å¯†åçš„å­—èŠ‚æ•°ç»„
      * @throws Exception
-     *             JAVAÒì³£
+     *             JAVAå¼‚å¸¸
      */
     public byte[] encrypt(byte[] arrB) throws Exception {
         return encryptCipher.doFinal(arrB);
     }
 
     /**
-     * ¼ÓÃÜ×Ö·û´®
-     * ½«×Ö·û´®×ª»»Îª×Ö½ÚÊı×éºóÖØÓÃencrypt(byte[])·½·¨½øĞĞ¼ÓÃÜ£¬²¢½«µÃµ½×Ö½ÚÊı×é×ª»»Îª×Ö·û´®·µ»Ø
+     * åŠ å¯†å­—ç¬¦ä¸²
+     * å°†å­—ç¬¦ä¸²è½¬æ¢ä¸ºå­—èŠ‚æ•°ç»„åé‡ç”¨encrypt(byte[])æ–¹æ³•è¿›è¡ŒåŠ å¯†ï¼Œå¹¶å°†å¾—åˆ°å­—èŠ‚æ•°ç»„è½¬æ¢ä¸ºå­—ç¬¦ä¸²è¿”å›
      * 
      * @param String
-     *            Ğè¼ÓÃÜµÄ×Ö·û´®
-     * @return String ¼ÓÃÜºóµÄ×Ö·û´®
+     *            éœ€åŠ å¯†çš„å­—ç¬¦ä¸²
+     * @return String åŠ å¯†åçš„å­—ç¬¦ä¸²
      * @throws Exception
-     *             JAVAÒì³£
+     *             JAVAå¼‚å¸¸
      */
     public String encrypt(String strIn) throws Exception {
         return byteGrpToHexStr(encrypt(strIn.getBytes()));
     }
 
     /**
-     * ½âÃÜ×Ö½ÚÊı×é
+     * è§£å¯†å­—èŠ‚æ•°ç»„
      * 
-     * @param byte[] Ğè½âÃÜµÄ×Ö½ÚÊı×é
-     * @return byte[] ½âÃÜºóµÄ×Ö½ÚÊı×é
+     * @param byte[] éœ€è§£å¯†çš„å­—èŠ‚æ•°ç»„
+     * @return byte[] è§£å¯†åçš„å­—èŠ‚æ•°ç»„
      * @throws Exception
-     *             JAVAÒì³£
+     *             JAVAå¼‚å¸¸
      */
     public byte[] decrypt(byte[] arrB) throws Exception {
         return decryptCipher.doFinal(arrB);
     }
 
     /**
-     * ½âÃÜ×Ö·û´®
-     * ½«²ÎÊı×Ö·û´®×ª»»Îª×Ö½ÚÊı×éºóÖØÓÃdecrypt(String)·½·¨½øĞĞ½âÃÜ£¬²¢½«µÃµ½µÄ½âÃÜ×Ö·ûÊı×é×ª»»Îª×Ö·û´®ºó·µ»Ø¡£
+     * è§£å¯†å­—ç¬¦ä¸²
+     * å°†å‚æ•°å­—ç¬¦ä¸²è½¬æ¢ä¸ºå­—èŠ‚æ•°ç»„åé‡ç”¨decrypt(String)æ–¹æ³•è¿›è¡Œè§£å¯†ï¼Œå¹¶å°†å¾—åˆ°çš„è§£å¯†å­—ç¬¦æ•°ç»„è½¬æ¢ä¸ºå­—ç¬¦ä¸²åè¿”å›ã€‚
      * 
      * @param String
-     *            Ğè½âÃÜµÄ×Ö·û´®
-     * @return String ½âÃÜºóµÄ×Ö·û´®
+     *            éœ€è§£å¯†çš„å­—ç¬¦ä¸²
+     * @return String è§£å¯†åçš„å­—ç¬¦ä¸²
      * @throws Exception
-     *             JAVAÒì³£
+     *             JAVAå¼‚å¸¸
      */
     public String decrypt(String strIn) throws Exception {
         return new String(decrypt(hexStrToByteGrp(strIn)));
     }
 
     /**
-     * ´ÓÖ¸¶¨×Ö·û´®Éú³ÉÃÜÔ¿£¬ÃÜÔ¿ËùĞèµÄ×Ö½ÚÊı×é³¤¶ÈÎª8Î» ²»×ã8Î»Ê±ºóÃæ²¹0£¬³¬³ö8Î»Ö»È¡Ç°8Î»
+     * ä»æŒ‡å®šå­—ç¬¦ä¸²ç”Ÿæˆå¯†é’¥ï¼Œå¯†é’¥æ‰€éœ€çš„å­—èŠ‚æ•°ç»„é•¿åº¦ä¸º8ä½ ä¸è¶³8ä½æ—¶åé¢è¡¥0ï¼Œè¶…å‡º8ä½åªå–å‰8ä½
      * 
-     * @param byte[] ¹¹³É¸Ã×Ö·û´®µÄ×Ö½ÚÊı×é
-     * @return Key Éú³ÉµÄÃÜÔ¿
+     * @param byte[] æ„æˆè¯¥å­—ç¬¦ä¸²çš„å­—èŠ‚æ•°ç»„
+     * @return Key ç”Ÿæˆçš„å¯†é’¥
      * @throws Exception
-     *             JAVAÒì³£
+     *             JAVAå¼‚å¸¸
      */
     private Key getKey(byte[] arrBTmp) throws Exception {
         byte[] arrB = new byte[8];

@@ -23,7 +23,7 @@ public interface MultipartRequest {
 	MultipartFile[] getFiles(String name);
 	
 	/**
-	 * »ñÈ¡µÚÒ»¸öfile inputÔªËØ¶ÔÓ¦µÄ¸½¼şÊı×é
+	 * è·å–ç¬¬ä¸€ä¸ªfile inputå…ƒç´ å¯¹åº”çš„é™„ä»¶æ•°ç»„
 	 * @return
 	 */
 	MultipartFile[] getFirstFieldFiles();

@@ -26,7 +26,7 @@ import org.quartz.impl.calendar.AnnualCalendar;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2013-1-23 ÉÏÎç10:12:47
+ * @Date 2013-1-23 ä¸Šåˆ10:12:47
  * @author biaoping.yin
  * @version 1.0
  */
@@ -39,18 +39,18 @@ public class TestCalendarBuilder extends BaseCalendarBuilder {
 
 
 	public Calendar buildCalendar() {
-		//·¨¶¨½ÚÈÕÊÇÒÔÃ¿ÄêÎªÖÜÆÚµÄ£¬ËùÒÔÊ¹ÓÃAnnualCalendar
+		//æ³•å®šèŠ‚æ—¥æ˜¯ä»¥æ¯å¹´ä¸ºå‘¨æœŸçš„ï¼Œæ‰€ä»¥ä½¿ç”¨AnnualCalendar
 		AnnualCalendar holidays = new AnnualCalendar();
-		//ÎåÒ»ÀÍ¶¯½Ú
+		//äº”ä¸€åŠ³åŠ¨èŠ‚
 		java.util.Calendar laborDay = new GregorianCalendar();
 		laborDay.add(java.util.Calendar.MONTH,5);
 		laborDay.add(java.util.Calendar.DATE,1);
-		holidays.setDayExcluded(laborDay, true); //ÅÅ³ıµÄÈÕÆÚ£¬Èç¹ûÉèÖÃÎªfalseÔòÎª°üº¬
-		//¹úÇì½Ú
+		holidays.setDayExcluded(laborDay, true); //æ’é™¤çš„æ—¥æœŸï¼Œå¦‚æœè®¾ç½®ä¸ºfalseåˆ™ä¸ºåŒ…å«
+		//å›½åº†èŠ‚
 		java.util.Calendar nationalDay = new GregorianCalendar();
 		nationalDay.add(java.util.Calendar.MONTH,10);
 		nationalDay.add(java.util.Calendar.DATE,1);
-		holidays.setDayExcluded(nationalDay, true);//ÅÅ³ı¸ÃÈÕÆÚ
+		holidays.setDayExcluded(nationalDay, true);//æ’é™¤è¯¥æ—¥æœŸ
 		return holidays;
 		
 	}

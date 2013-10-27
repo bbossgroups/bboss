@@ -24,7 +24,7 @@ import org.frameworkset.spi.remote.RPCHelper;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2009-11-23 œ¬ŒÁ04:14:33
+ * @Date 2009-11-23 ‰∏ãÂçà04:14:33
  * @author biaoping.yin
  * @version 1.0
  */

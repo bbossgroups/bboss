@@ -10,7 +10,7 @@ import com.frameworkset.util.StringUtil;
 /**
  * <p>Title: TextCellTag</p>
  *
- * <p>Description: 输出文本的当前段</p>
+ * <p>Description: 杈撳嚭鏂囨湰鐨勫綋鍓嶆</p>
  *
  * <p>Copyright: Copyright (c) 2005</p>
  *

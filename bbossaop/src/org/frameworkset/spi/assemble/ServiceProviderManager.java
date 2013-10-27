@@ -45,7 +45,7 @@ import org.frameworkset.spi.assemble.callback.AssembleCallback;
  * </p>
  * 
  * <p>
- * Description: ·şÎñÌá¹©Õß¹ÜÀíÀà
+ * Description: æœåŠ¡æä¾›è€…ç®¡ç†ç±»
  * </p>
  * 
  * <p>
@@ -57,27 +57,27 @@ import org.frameworkset.spi.assemble.callback.AssembleCallback;
  * </p>
  * 
  * @Date Aug 13, 2008 9:27:36 AM
- * @author biaoping.yin,Òü±êÆ½
+ * @author biaoping.yin,å°¹æ ‡å¹³
  * @version 1.0
  */
 public class ServiceProviderManager {
     private static Logger log = Logger.getLogger(ServiceProviderManager.class);
     /**
-     * ÊôĞÔÒıÓÃµÄ·´ÏòË÷Òı¼¯ºÏ
+     * å±æ€§å¼•ç”¨çš„åå‘ç´¢å¼•é›†åˆ
      */
     
     public Map<String,Set> reverseAttrRefids = new HashMap<String,Set>();
     
     /**
-     * ·şÎñÒıÓÃµÄ·´ÏòË÷Òı¼¯ºÏ
+     * æœåŠ¡å¼•ç”¨çš„åå‘ç´¢å¼•é›†åˆ
      */
     public Map<String,Set> reverseServiceRefids = new HashMap<String,Set>();
     /**
-     * ÊôĞÔÒıÓÃ±êÊ¶µÄÇ°×º
+     * å±æ€§å¼•ç”¨æ ‡è¯†çš„å‰ç¼€
      */
     public static final String ATTRIBUTE_PREFIX = "attr:";
     /**
-     * ·şÎñÒıÓÃ±êÊ¶µÄÇ°×º£¬Èç¹ûÒıÓÃ±êÊ¶ÖĞ²»´øÇ°×ºÊ±Ä¬ÈÏÎª·şÎñÒıÓÃ
+     * æœåŠ¡å¼•ç”¨æ ‡è¯†çš„å‰ç¼€ï¼Œå¦‚æœå¼•ç”¨æ ‡è¯†ä¸­ä¸å¸¦å‰ç¼€æ—¶é»˜è®¤ä¸ºæœåŠ¡å¼•ç”¨
      */
     public static final String SERVICE_PREFIX = "service:";
 
@@ -87,28 +87,28 @@ public class ServiceProviderManager {
     private Map<String,Pro> properties = new HashMap<String,Pro>();
 
     /**
-     * ¶ÔÒÑ¾­·ÖÎö¹ıµÄÅäÖÃÎÄ¼ş½øĞĞ¼ÇÂ¼£¬±ÜÃâÖØ¸´·ÖÎöÅäÖÃÎÄ¼ş
+     * å¯¹å·²ç»åˆ†æè¿‡çš„é…ç½®æ–‡ä»¶è¿›è¡Œè®°å½•ï¼Œé¿å…é‡å¤åˆ†æé…ç½®æ–‡ä»¶
      */
     private Map parsedList;
     private static final Object trace = new Object();
 
     /**
-     * ¹ÜÀí·şÎñÅäÖÃÎÄ¼ş¸ú×ÙÆ÷ÁĞ±í,¶¥¼¶ÎÄ¼ş List<LinkConfigFile>
+     * ç®¡ç†æœåŠ¡é…ç½®æ–‡ä»¶è·Ÿè¸ªå™¨åˆ—è¡¨,é¡¶çº§æ–‡ä»¶ List<LinkConfigFile>
      */
     private List traceFiles;
     
      
     /**
-     * ¸ù¾İid½¨Á¢µÄproviderManagerË÷Òı±í Map<managerid,ProviderManagerInfo>
+     * æ ¹æ®idå»ºç«‹çš„providerManagerç´¢å¼•è¡¨ Map<managerid,ProviderManagerInfo>
      */
     private Map managers;
 
     private ProviderManagerInfo defaultProviderManagerInfo;
 
     /**
-     * ĞèÒªµ¼ÈëµÄ¹ÜÀí·şÎñÅäÖÃÎÄ¼şÁĞ±í£¬ÕâĞ©ÎÄ¼şµÄÂ·¾¶±ØĞëÏà¶ÔÓÚ config-manager.xmlÎÄ¼şµÄµØÖ·£¬ÀıÈç£º
-     * Èç¹ûconfig-manager.xmlÎÄ¼şµÄ´æ·ÅÄ¿Â¼Îªd:/cms/WEB-INF/classes/
-     * managerimportµÄfileÊôĞÔÉèÖÃÎªhnds/hnds-dingshui.xml,ÄÇÃ´¸Ãµ¼ÈëÎÄ¼şµÄÕæÊµµØÖ·Îª
+     * éœ€è¦å¯¼å…¥çš„ç®¡ç†æœåŠ¡é…ç½®æ–‡ä»¶åˆ—è¡¨ï¼Œè¿™äº›æ–‡ä»¶çš„è·¯å¾„å¿…é¡»ç›¸å¯¹äº config-manager.xmlæ–‡ä»¶çš„åœ°å€ï¼Œä¾‹å¦‚ï¼š
+     * å¦‚æœconfig-manager.xmlæ–‡ä»¶çš„å­˜æ”¾ç›®å½•ä¸ºd:/cms/WEB-INF/classes/
+     * managerimportçš„fileå±æ€§è®¾ç½®ä¸ºhnds/hnds-dingshui.xml,é‚£ä¹ˆè¯¥å¯¼å…¥æ–‡ä»¶çš„çœŸå®åœ°å€ä¸º
      * d:/cms/WEB-INF/classes/hnds/hnds-dingshui.xml Map<path,LinkConfigFile>
      */
     private Map managerimports;
@@ -134,7 +134,7 @@ public class ServiceProviderManager {
 ////
 ////         catch (Exception e) {
 ////             e.printStackTrace();
-////             log.error("Load [" + defaultConfigFile + "]Ê§°Ü", e);
+////             log.error("Load [" + defaultConfigFile + "]å¤±è´¥", e);
 ////         }
 //    	this.init(defaultConfigFile);
 //    }
@@ -154,7 +154,7 @@ public class ServiceProviderManager {
 //
 //         catch (Exception e) {
 //             e.printStackTrace();
-//             log.error("Load [" + defaultConfigFile + "]Ê§°Ü", e);
+//             log.error("Load [" + defaultConfigFile + "]å¤±è´¥", e);
 //         }
     }
     
@@ -184,7 +184,7 @@ public class ServiceProviderManager {
 
         catch (Exception e) {
             e.printStackTrace();
-            log.error("Load [" + defaultConfigFile + "]Ê§°Ü", e);
+            log.error("Load [" + defaultConfigFile + "]å¤±è´¥", e);
         }
 		
 	}
@@ -209,7 +209,7 @@ public class ServiceProviderManager {
 
          catch (Exception e) {
              e.printStackTrace();
-             log.error("Load [" + defaultConfigFile + "]Ê§°Ü", e);
+             log.error("Load [" + defaultConfigFile + "]å¤±è´¥", e);
          }
     }
     
@@ -234,7 +234,7 @@ public class ServiceProviderManager {
 
          catch (Exception e) {
              e.printStackTrace();
-             log.error("Load [" + defaultConfigFile + "]Ê§°Ü", e);
+             log.error("Load [" + defaultConfigFile + "]å¤±è´¥", e);
          }
     }
 
@@ -247,7 +247,7 @@ public class ServiceProviderManager {
     }
 
     /**
-     * ½âÎö²¢¼ÓÔØimportsÅäÖÃÎÄ¼şÁĞ±íÖĞµÄ°üº¬µÄ¹ÜÀí·şÎñ£¬parentFileÊÇÖ¸µ¼ÈëÕâĞ©ÅäÖÃÎÄ¼şµÄÅäÖÃÎÄ¼ş£¬±ãÓÚÏµÍ³ ½øĞĞµ÷ÊÔºÍ¸ú×Ù
+     * è§£æå¹¶åŠ è½½importsé…ç½®æ–‡ä»¶åˆ—è¡¨ä¸­çš„åŒ…å«çš„ç®¡ç†æœåŠ¡ï¼ŒparentFileæ˜¯æŒ‡å¯¼å…¥è¿™äº›é…ç½®æ–‡ä»¶çš„é…ç½®æ–‡ä»¶ï¼Œä¾¿äºç³»ç»Ÿ è¿›è¡Œè°ƒè¯•å’Œè·Ÿè¸ª
      * 
      * @param imports
      * @param parentFile
@@ -355,12 +355,12 @@ public class ServiceProviderManager {
         } catch (Exception e) {
         	if(configFile.equals(defaultConfigFile))
         	{
-        		 log.debug("´ÓÎÄ¼ş[" + defaultConfigFile+ "]×°ÔØ¹ÜÀí·şÎñÊ§°Ü£¬Çë¼ì²éÎÄ¼şÊÇ·ñ´æÔÚ£¬»òÕßÊÇ·ñ±»ÕıÈ·¶¨Òå¡£");
+        		 log.debug("ä»æ–‡ä»¶[" + defaultConfigFile+ "]è£…è½½ç®¡ç†æœåŠ¡å¤±è´¥ï¼Œè¯·æ£€æŸ¥æ–‡ä»¶æ˜¯å¦å­˜åœ¨ï¼Œæˆ–è€…æ˜¯å¦è¢«æ­£ç¡®å®šä¹‰ã€‚");
         	}
         	else if (parentFile == null) {
-                log.error("´ÓÎÄ¼ş[" + url + "]×°ÔØ¹ÜÀí·şÎñÊ§°Ü£¬Çë¼ì²éÎÄ¼şÊÇ·ñ´æÔÚ£¬»òÕßÊÇ·ñ±»ÕıÈ·¶¨Òå¡£",e);
+                log.error("ä»æ–‡ä»¶[" + url + "]è£…è½½ç®¡ç†æœåŠ¡å¤±è´¥ï¼Œè¯·æ£€æŸ¥æ–‡ä»¶æ˜¯å¦å­˜åœ¨ï¼Œæˆ–è€…æ˜¯å¦è¢«æ­£ç¡®å®šä¹‰ã€‚",e);
             } else {
-                log.error("´ÓÎÄ¼ş[" + parentFile + "@" + url + "]×°ÔØ¹ÜÀí·şÎñÊ§°Ü£¬Çë¼ì²éÎÄ¼şÊÇ·ñ´æÔÚ£¬»òÕßÊÇ·ñ±»ÕıÈ·¶¨Òå¡£",e);
+                log.error("ä»æ–‡ä»¶[" + parentFile + "@" + url + "]è£…è½½ç®¡ç†æœåŠ¡å¤±è´¥ï¼Œè¯·æ£€æŸ¥æ–‡ä»¶æ˜¯å¦å­˜åœ¨ï¼Œæˆ–è€…æ˜¯å¦è¢«æ­£ç¡®å®šä¹‰ã€‚",e);
             }
             // e.printStackTrace();
         }
@@ -387,7 +387,7 @@ public class ServiceProviderManager {
             this.addProperties(handler.getProperties());
             handler = null;
         } catch (Exception e) {
-            log.error("½âÎö±¨ÎÄÄÚÈİ³ö´í[" + content + "]£¬Çë¼ì²é±¨ÎÄÊÇ·ñ±»ÕıÈ·¶¨Òå¡£",e);
+            log.error("è§£ææŠ¥æ–‡å†…å®¹å‡ºé”™[" + content + "]ï¼Œè¯·æ£€æŸ¥æŠ¥æ–‡æ˜¯å¦è¢«æ­£ç¡®å®šä¹‰ã€‚",e);
         }
         finally
         {
@@ -429,7 +429,7 @@ public class ServiceProviderManager {
             this.addProperties(handler.getProperties());
             handler = null;
         } catch (Exception e) {
-            log.error("½âÎö±¨ÎÄÄÚÈİ³ö´í[" + in + "]£¬Çë¼ì²é±¨ÎÄÊÇ·ñ±»ÕıÈ·¶¨Òå¡£",e);
+            log.error("è§£ææŠ¥æ–‡å†…å®¹å‡ºé”™[" + in + "]ï¼Œè¯·æ£€æŸ¥æŠ¥æ–‡æ˜¯å¦è¢«æ­£ç¡®å®šä¹‰ã€‚",e);
         }
         finally
         {
@@ -470,7 +470,7 @@ public class ServiceProviderManager {
             this.addProperties(handler.getProperties());
             handler = null;
         } catch (Exception e) {
-            log.error("½âÎö±¨ÎÄÄÚÈİ³ö´í[" + contentFile.toString() + "]£¬Çë¼ì²é±¨ÎÄÊÇ·ñ±»ÕıÈ·¶¨Òå¡£",e);
+            log.error("è§£ææŠ¥æ–‡å†…å®¹å‡ºé”™[" + contentFile.toString() + "]ï¼Œè¯·æ£€æŸ¥æŠ¥æ–‡æ˜¯å¦è¢«æ­£ç¡®å®šä¹‰ã€‚",e);
         }
         finally
         {
@@ -532,7 +532,7 @@ public class ServiceProviderManager {
     }
 
     /**
-     * ·µ»ØÒ»¼¶ÅäÖÃÎÄ¼şÇåµ¥
+     * è¿”å›ä¸€çº§é…ç½®æ–‡ä»¶æ¸…å•
      * 
      * @return
      */
@@ -541,7 +541,7 @@ public class ServiceProviderManager {
     }
 
     /**
-     * ·µ»Ø¸ø¶¨±êÊ¶µÄ¹ÜÀí·şÎñÅäÖÃÎÄ¼şĞÅÏ¢
+     * è¿”å›ç»™å®šæ ‡è¯†çš„ç®¡ç†æœåŠ¡é…ç½®æ–‡ä»¶ä¿¡æ¯
      * 
      * @param id
      * @return
@@ -561,14 +561,14 @@ public class ServiceProviderManager {
             return null;
         String value = (String)pro.getValue();
 //        if(value == null)
-//            throw new AssembleException("ÅäÖÃÎÄ¼şÃ»ÓĞÖ¸¶¨ÊôĞÔ[" + name + "]£¡");
+//            throw new AssembleException("é…ç½®æ–‡ä»¶æ²¡æœ‰æŒ‡å®šå±æ€§[" + name + "]ï¼");
         return value;
     }
     
     public Object getObjectProperty(String name) {
         return getObjectProperty(name,null);
 //        if(value == null)
-//            throw new AssembleException("ÅäÖÃÎÄ¼şÃ»ÓĞÖ¸¶¨ÊôĞÔ[" + name + "]£¡");
+//            throw new AssembleException("é…ç½®æ–‡ä»¶æ²¡æœ‰æŒ‡å®šå±æ€§[" + name + "]ï¼");
         
     }
     
@@ -576,7 +576,7 @@ public class ServiceProviderManager {
         Pro pro = this.properties.get(name);
         if(pro == null)
         {
-            log.debug("ÅäÖÃÎÄ¼ş["+applicationContext.getConfigfile() +"]ÖĞÃ»ÓĞÖ¸¶¨ÊôĞÔ[" + name + "]£¡·µ»ØÈ±Ê¡Öµ" + defaultValue);
+            log.debug("é…ç½®æ–‡ä»¶["+applicationContext.getConfigfile() +"]ä¸­æ²¡æœ‰æŒ‡å®šå±æ€§[" + name + "]ï¼è¿”å›ç¼ºçœå€¼" + defaultValue);
             return defaultValue;
         }
         
@@ -587,24 +587,24 @@ public class ServiceProviderManager {
     public ProSet getSetProperty(String name) {
         Pro value = this.properties.get(name);
         if (value == null) {
-            log.debug("ÅäÖÃÎÄ¼ş["+applicationContext.getConfigfile() +"]ÖĞÃ»ÓĞÖ¸¶¨ÊôĞÔ[" + name + "]£¡");
+            log.debug("é…ç½®æ–‡ä»¶["+applicationContext.getConfigfile() +"]ä¸­æ²¡æœ‰æŒ‡å®šå±æ€§[" + name + "]ï¼");
             return null;
         }
        return value.getSet(); 
 //        if(value == null)
-//            throw new AssembleException("ÅäÖÃÎÄ¼şÃ»ÓĞÖ¸¶¨ÊôĞÔ[" + name + "]£¡");
+//            throw new AssembleException("é…ç½®æ–‡ä»¶æ²¡æœ‰æŒ‡å®šå±æ€§[" + name + "]ï¼");
         
     }
     
     public ProSet getSetProperty(String name,ProSet defaultValue) {
         Pro value = this.properties.get(name);
         if (value == null) {
-            log.debug("ÅäÖÃÎÄ¼ş["+applicationContext.getConfigfile() +"]ÖĞÃ»ÓĞÖ¸¶¨ÊôĞÔ[" + name + "]£¡");
+            log.debug("é…ç½®æ–‡ä»¶["+applicationContext.getConfigfile() +"]ä¸­æ²¡æœ‰æŒ‡å®šå±æ€§[" + name + "]ï¼");
             return defaultValue;
         }
        return value.getSet(defaultValue);
 //        if(value == null)
-//            throw new AssembleException("ÅäÖÃÎÄ¼şÃ»ÓĞÖ¸¶¨ÊôĞÔ[" + name + "]£¡");
+//            throw new AssembleException("é…ç½®æ–‡ä»¶æ²¡æœ‰æŒ‡å®šå±æ€§[" + name + "]ï¼");
         
     }
     
@@ -612,24 +612,24 @@ public class ServiceProviderManager {
         Pro value = this.properties.get(name);
         if (value == null) {
             
-            log.debug("ÅäÖÃÎÄ¼ş["+applicationContext.getConfigfile() +"]ÖĞÃ»ÓĞÖ¸¶¨ÊôĞÔ[" + name + "]£¡");
+            log.debug("é…ç½®æ–‡ä»¶["+applicationContext.getConfigfile() +"]ä¸­æ²¡æœ‰æŒ‡å®šå±æ€§[" + name + "]ï¼");
             return null;
         }
        return value.getList();
 //        if(value == null)
-//            throw new AssembleException("ÅäÖÃÎÄ¼şÃ»ÓĞÖ¸¶¨ÊôĞÔ[" + name + "]£¡");
+//            throw new AssembleException("é…ç½®æ–‡ä»¶æ²¡æœ‰æŒ‡å®šå±æ€§[" + name + "]ï¼");
         
     }
     
     public ProList getListProperty(String name,ProList defaultValue) {
         Pro value = this.properties.get(name);
         if (value == null) {
-            log.debug("ÅäÖÃÎÄ¼ş["+applicationContext.getConfigfile() +"]ÖĞÃ»ÓĞÖ¸¶¨ÊôĞÔ[" + name + "]£¡");
+            log.debug("é…ç½®æ–‡ä»¶["+applicationContext.getConfigfile() +"]ä¸­æ²¡æœ‰æŒ‡å®šå±æ€§[" + name + "]ï¼");
             return defaultValue;
         }
        return value.getList(defaultValue);
 //        if(value == null)
-//            throw new AssembleException("ÅäÖÃÎÄ¼şÃ»ÓĞÖ¸¶¨ÊôĞÔ[" + name + "]£¡");
+//            throw new AssembleException("é…ç½®æ–‡ä»¶æ²¡æœ‰æŒ‡å®šå±æ€§[" + name + "]ï¼");
         
     }
     
@@ -637,19 +637,19 @@ public class ServiceProviderManager {
     public ProMap getMapProperty(String name) {
         Pro value = this.properties.get(name);
         if (value == null) {
-            log.debug("ÅäÖÃÎÄ¼ş["+applicationContext.getConfigfile() +"]ÖĞÃ»ÓĞÖ¸¶¨ÊôĞÔ[" + name + "]£¡");
+            log.debug("é…ç½®æ–‡ä»¶["+applicationContext.getConfigfile() +"]ä¸­æ²¡æœ‰æŒ‡å®šå±æ€§[" + name + "]ï¼");
             return null;
         }
        return value.getMap();        
 //        if(value == null)
-//            throw new AssembleException("ÅäÖÃÎÄ¼şÃ»ÓĞÖ¸¶¨ÊôĞÔ[" + name + "]£¡");
+//            throw new AssembleException("é…ç½®æ–‡ä»¶æ²¡æœ‰æŒ‡å®šå±æ€§[" + name + "]ï¼");
         
     }
     
     public ProMap getMapProperty(String name,ProMap defaultValue) {
         Pro value = this.properties.get(name);
         if (value == null) {
-            log.debug("ÅäÖÃÎÄ¼ş["+applicationContext.getConfigfile() +"]ÖĞÃ»ÓĞÖ¸¶¨ÊôĞÔ[" + name + "]£¡");
+            log.debug("é…ç½®æ–‡ä»¶["+applicationContext.getConfigfile() +"]ä¸­æ²¡æœ‰æŒ‡å®šå±æ€§[" + name + "]ï¼");
             return defaultValue;
         }
        return value.getMap();
@@ -659,19 +659,19 @@ public class ServiceProviderManager {
     public ProArray getArrayProperty(String name) {
         Pro value = this.properties.get(name);
         if (value == null) {
-            log.debug("ÅäÖÃÎÄ¼ş["+applicationContext.getConfigfile() +"]ÖĞÃ»ÓĞÖ¸¶¨ÊôĞÔ[" + name + "]£¡");
+            log.debug("é…ç½®æ–‡ä»¶["+applicationContext.getConfigfile() +"]ä¸­æ²¡æœ‰æŒ‡å®šå±æ€§[" + name + "]ï¼");
             return null;
         }
        return value.getArray();        
 //        if(value == null)
-//            throw new AssembleException("ÅäÖÃÎÄ¼şÃ»ÓĞÖ¸¶¨ÊôĞÔ[" + name + "]£¡");
+//            throw new AssembleException("é…ç½®æ–‡ä»¶æ²¡æœ‰æŒ‡å®šå±æ€§[" + name + "]ï¼");
         
     }
     
     public ProArray getArrayProperty(String name,ProArray defaultValue) {
         Pro value = this.properties.get(name);
         if (value == null) {
-            log.debug("ÅäÖÃÎÄ¼ş["+applicationContext.getConfigfile() +"]ÖĞÃ»ÓĞÖ¸¶¨ÊôĞÔ[" + name + "]£¡");
+            log.debug("é…ç½®æ–‡ä»¶["+applicationContext.getConfigfile() +"]ä¸­æ²¡æœ‰æŒ‡å®šå±æ€§[" + name + "]ï¼");
             return defaultValue;
         }
        return value.getArray(defaultValue);
@@ -680,7 +680,7 @@ public class ServiceProviderManager {
     public int getIntProperty(String name) {
         Pro value = this.properties.get(name);
         if (value == null) {
-            throw new AssembleException("ÅäÖÃÎÄ¼ş["+applicationContext.getConfigfile() +"]ÖĞÃ»ÓĞÖ¸¶¨ÊôĞÔ[" + name + "]£¡");
+            throw new AssembleException("é…ç½®æ–‡ä»¶["+applicationContext.getConfigfile() +"]ä¸­æ²¡æœ‰æŒ‡å®šå±æ€§[" + name + "]ï¼");
         }
        return value.getInt();
         
@@ -692,7 +692,7 @@ public class ServiceProviderManager {
     public long getLongProperty(String name) {
         Pro value = this.properties.get(name);
         if (value == null) {
-            throw new AssembleException("ÅäÖÃÎÄ¼ş["+applicationContext.getConfigfile() +"]ÖĞÃ»ÓĞÖ¸¶¨ÊôĞÔ[" + name + "]£¡");
+            throw new AssembleException("é…ç½®æ–‡ä»¶["+applicationContext.getConfigfile() +"]ä¸­æ²¡æœ‰æŒ‡å®šå±æ€§[" + name + "]ï¼");
         }
        return value.getLong();
         
@@ -716,7 +716,7 @@ public class ServiceProviderManager {
     public boolean getBooleanProperty(String name) {
         Pro value = this.properties.get(name);
         if (value == null) {
-            throw new AssembleException("ÅäÖÃÎÄ¼ş["+applicationContext.getConfigfile() +"]ÖĞÃ»ÓĞÖ¸¶¨ÊôĞÔ[" + name + "]£¡");
+            throw new AssembleException("é…ç½®æ–‡ä»¶["+applicationContext.getConfigfile() +"]ä¸­æ²¡æœ‰æŒ‡å®šå±æ€§[" + name + "]ï¼");
         }
        return value.getBoolean();
     }
@@ -725,14 +725,14 @@ public class ServiceProviderManager {
     {
         Pro pro = this.properties.get(name);
         if(pro == null){
-            log.debug("ÅäÖÃÎÄ¼ş["+applicationContext.getConfigfile() +"]ÖĞÃ»ÓĞÖ¸¶¨ÊôĞÔ[" + name + "]£¡");
+            log.debug("é…ç½®æ–‡ä»¶["+applicationContext.getConfigfile() +"]ä¸­æ²¡æœ‰æŒ‡å®šå±æ€§[" + name + "]ï¼");
             return null;
         }
         return pro;
     }
     
     /**
-     * ¸ù¾İÒıÓÃµÄÎ¬¶È»ñÈ¡Æä¶ÔÓ¦µÄPro¶ÔÏó
+     * æ ¹æ®å¼•ç”¨çš„ç»´åº¦è·å–å…¶å¯¹åº”çš„Proå¯¹è±¡
      * @param refid
      * @return
      */
@@ -755,7 +755,7 @@ public class ServiceProviderManager {
     		}
     		else
     		{
-    			if(pro.isRefereced())//Èç¹ûÈÎÈ»ÊÇÒ»¸öÒıÓÃ¹ØÏµ£¬¼ÌĞø²éÕÒµ½Êµ¼ÊµÄ¶ÔÏópro£¬È»ºóÔÚ¼ÌĞøÏÂÒ»¸ö»·½ÚµÄÒıÓÃ¹ØÏµ²éÕÒ
+    			if(pro.isRefereced())//å¦‚æœä»»ç„¶æ˜¯ä¸€ä¸ªå¼•ç”¨å…³ç³»ï¼Œç»§ç»­æŸ¥æ‰¾åˆ°å®é™…çš„å¯¹è±¡proï¼Œç„¶ååœ¨ç»§ç»­ä¸‹ä¸€ä¸ªç¯èŠ‚çš„å¼•ç”¨å…³ç³»æŸ¥æ‰¾
     			{
     				pro = getInnerPropertyBean(pro.getRefidLink(),pro.getRefid());
     			}
@@ -772,13 +772,13 @@ public class ServiceProviderManager {
     			}
     			if(pro == null)
     			{
-    				 log.debug("ÅäÖÃÎÄ¼ş["+applicationContext.getConfigfile() +"]ÖĞÃ»ÓĞÖ¸¶¨ÊôĞÔ[" + strrefid + "]£¡");
+    				 log.debug("é…ç½®æ–‡ä»¶["+applicationContext.getConfigfile() +"]ä¸­æ²¡æœ‰æŒ‡å®šå±æ€§[" + strrefid + "]ï¼");
     		         return null;
     			}
     		}
     		
 	        List<Index> indexs = refid.getIndexs();
-	        if(indexs != null && indexs.size() > 0)//ÄÚ²¿¶ÔÏó£º¹¹ÔìÆ÷£¬list/array/set
+	        if(indexs != null && indexs.size() > 0)//å†…éƒ¨å¯¹è±¡ï¼šæ„é€ å™¨ï¼Œlist/array/set
 	        {
 	        	for(int i = 0;i < indexs.size(); i ++)
 	        	{
@@ -812,7 +812,7 @@ public class ServiceProviderManager {
 	        		
 	        	}
 	        }
-	        else//ÊôĞÔÒıÓÃ
+	        else//å±æ€§å¼•ç”¨
 	        {
 	        	
 	        }
@@ -822,7 +822,7 @@ public class ServiceProviderManager {
 	        
         
         if(pro == null){
-            log.debug("ÅäÖÃÎÄ¼ş["+applicationContext.getConfigfile() +"]ÖĞÃ»ÓĞÖ¸¶¨ÊôĞÔ[" + strrefid + "]£¡");
+            log.debug("é…ç½®æ–‡ä»¶["+applicationContext.getConfigfile() +"]ä¸­æ²¡æœ‰æŒ‡å®šå±æ€§[" + strrefid + "]ï¼");
             return null;
         }
         return pro;
@@ -831,7 +831,7 @@ public class ServiceProviderManager {
     public String getProperty(String name, String defaultValue) {
         String value = getProperty(name);
         if (value == null) {
-            log.debug("ÅäÖÃÎÄ¼ş["+applicationContext.getConfigfile() +"]ÖĞÃ»ÓĞÖ¸¶¨ÊôĞÔ[" + name + "]£¡·µ»ØÈ±Ê¡Öµ" + defaultValue);
+            log.debug("é…ç½®æ–‡ä»¶["+applicationContext.getConfigfile() +"]ä¸­æ²¡æœ‰æŒ‡å®šå±æ€§[" + name + "]ï¼è¿”å›ç¼ºçœå€¼" + defaultValue);
             return defaultValue;
         }
         return value;
@@ -840,7 +840,7 @@ public class ServiceProviderManager {
     public int getIntProperty(String name, int defaultValue) {
         Pro value = this.properties.get(name);
         if (value == null) {
-            log.debug("ÅäÖÃÎÄ¼ş["+applicationContext.getConfigfile() +"]ÖĞÃ»ÓĞÖ¸¶¨ÊôĞÔ[" + name + "]£¡");
+            log.debug("é…ç½®æ–‡ä»¶["+applicationContext.getConfigfile() +"]ä¸­æ²¡æœ‰æŒ‡å®šå±æ€§[" + name + "]ï¼");
             return defaultValue;
         }
        return value.getInt(defaultValue);
@@ -850,7 +850,7 @@ public class ServiceProviderManager {
     public boolean getBooleanProperty(String name, boolean defaultValue) {
         Pro value = this.properties.get(name);
         if (value == null) {
-            log.debug("ÅäÖÃÎÄ¼ş["+applicationContext.getConfigfile() +"]ÖĞÃ»ÓĞÖ¸¶¨ÊôĞÔ[" + name + "]£¡");
+            log.debug("é…ç½®æ–‡ä»¶["+applicationContext.getConfigfile() +"]ä¸­æ²¡æœ‰æŒ‡å®šå±æ€§[" + name + "]ï¼");
             return defaultValue;
         }
        return value.getBoolean();
@@ -862,7 +862,7 @@ public class ServiceProviderManager {
         Pro pro = this.properties.get(name);
         if(pro == null)
         {
-            log.debug("ÅäÖÃÎÄ¼ş["+applicationContext.getConfigfile() +"]ÖĞÃ»ÓĞÖ¸¶¨ÊôĞÔ[" + name + "]£¡·µ»ØÈ±Ê¡Öµ" + defaultValue);
+            log.debug("é…ç½®æ–‡ä»¶["+applicationContext.getConfigfile() +"]ä¸­æ²¡æœ‰æŒ‡å®šå±æ€§[" + name + "]ï¼è¿”å›ç¼ºçœå€¼" + defaultValue);
             return defaultValue;
         }
         
@@ -918,7 +918,7 @@ public class ServiceProviderManager {
 		
 		 Pro value = this.properties.get(key);
 	        if (value == null) {
-	            throw new AssembleException("ÅäÖÃÎÄ¼ş["+applicationContext.getConfigfile() +"]ÖĞÃ»ÓĞÖ¸¶¨ÊôĞÔ[" + key + "]£¡");
+	            throw new AssembleException("é…ç½®æ–‡ä»¶["+applicationContext.getConfigfile() +"]ä¸­æ²¡æœ‰æŒ‡å®šå±æ€§[" + key + "]ï¼");
 	        }
 	       return value.getStringArray();
 	}

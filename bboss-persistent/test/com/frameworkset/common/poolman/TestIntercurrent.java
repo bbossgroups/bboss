@@ -17,7 +17,7 @@ package com.frameworkset.common.poolman;
 
 
 /**
- * 测试poolman数据库链接池并发插入操作
+ * 娴嬭瘯poolman鏁版嵁搴撻摼鎺ユ睜骞跺彂鎻掑叆鎿嶄綔
  * @author biaoping.yin
  * created on 2005-3-30
  * version 1.0 

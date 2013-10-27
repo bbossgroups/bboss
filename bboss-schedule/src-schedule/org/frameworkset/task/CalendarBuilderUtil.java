@@ -26,7 +26,7 @@ import bsh.Interpreter;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2013-1-23 上午11:10:31
+ * @Date 2013-1-23 涓婂崍11:10:31
  * @author biaoping.yin
  * @version 1.0
  */
@@ -36,7 +36,7 @@ public class CalendarBuilderUtil {
 	public static Calendar calendarBuilder(String buildscript) throws Exception {
 		Interpreter interpreter = new Interpreter();
 		StringBuilder excuteCode = new StringBuilder();
-		//判断是否有自定义导入的类
+		//鍒ゆ柇鏄惁鏈夎嚜瀹氫箟瀵煎叆鐨勭被
 		if(header != null && !"".equals(header)){
 			excuteCode.append(header);
 		}

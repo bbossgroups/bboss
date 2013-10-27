@@ -26,7 +26,7 @@ import java.util.Set;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2011-1-19 ÏÂÎç12:34:18
+ * @Date 2011-1-19 ä¸‹åˆ12:34:18
  * @author biaoping.yin
  * @version 1.0
  */

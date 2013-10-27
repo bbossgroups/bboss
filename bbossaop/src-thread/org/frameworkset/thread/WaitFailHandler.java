@@ -17,7 +17,7 @@ package org.frameworkset.thread;
 public interface WaitFailHandler<T>
 {
     /**
-     * µÈ´ıÖØÊÔÊ§°Üºó£¬¶Ô±»¶ªÆúµÄÈÎÎñÖ´ĞĞÌØÊâ´¦Àí·½·¨
+     * ç­‰å¾…é‡è¯•å¤±è´¥åï¼Œå¯¹è¢«ä¸¢å¼ƒçš„ä»»åŠ¡æ‰§è¡Œç‰¹æ®Šå¤„ç†æ–¹æ³•
      * @param r
      */
     public void failhandler(T r);

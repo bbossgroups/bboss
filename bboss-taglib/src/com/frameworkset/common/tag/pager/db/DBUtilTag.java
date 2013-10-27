@@ -22,10 +22,10 @@ import javax.servlet.jsp.JspException;
 
 /**
  * <p>Title: DBUtilTag.java</p> 
- * <p>Description: Ö´ĞĞÊı¾İ¿â²Ù×÷±êÇ©£¬Ö§³ÖÔ¤±àÒë²åÈë£¬É¾³ı£¬ĞŞ¸Ä²Ù×÷</p>
+ * <p>Description: æ‰§è¡Œæ•°æ®åº“æ“ä½œæ ‡ç­¾ï¼Œæ”¯æŒé¢„ç¼–è¯‘æ’å…¥ï¼Œåˆ é™¤ï¼Œä¿®æ”¹æ“ä½œ</p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2008</p>
- * @Date 2010-3-11 ÏÂÎç01:38:53
+ * @Date 2010-3-11 ä¸‹åˆ01:38:53
  * @author biaoping.yin
  * @version 1.0
  */

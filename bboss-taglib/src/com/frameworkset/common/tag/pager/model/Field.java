@@ -33,7 +33,7 @@ package com.frameworkset.common.tag.pager.model;
 
 
 /**
- * ¶¨ÒåÎÄµµÖĞµÄÒªÏÔÊ¾×Ö¶ÎĞÅÏ¢
+ * å®šä¹‰æ–‡æ¡£ä¸­çš„è¦æ˜¾ç¤ºå­—æ®µä¿¡æ¯
  * @author biaoping.yin
  * created on 2005-5-18
  * version 1.0 
@@ -41,34 +41,34 @@ package com.frameworkset.common.tag.pager.model;
 public class Field extends UniqueHelper implements ModelObject{
     
     /**
-     * ×Ö¶ÎÃû³Æ£¬¿ÉÎªÊı¾İ¿â±í×Ó¶Î£¬Ò²¿ÉÒÔÎª¶ÔÏóÖĞµÄÊôĞÔ×Ö¶Î
+     * å­—æ®µåç§°ï¼Œå¯ä¸ºæ•°æ®åº“è¡¨å­æ®µï¼Œä¹Ÿå¯ä»¥ä¸ºå¯¹è±¡ä¸­çš„å±æ€§å­—æ®µ
      */
     private String field;
     
     private int colid = -1;
     
     /**
-     * ×Ö¶Î¶ÔÓ¦µÄ±íÍ·±êÌâ
+     * å­—æ®µå¯¹åº”çš„è¡¨å¤´æ ‡é¢˜
      */
     private String title;
     /**
-     * ×Ö¶ÎÊä³ö¸ñÊ½
+     * å­—æ®µè¾“å‡ºæ ¼å¼
      */
     private String numerFormat;
     
     /**
-     * ×Ö¶ÎÊä³öÈÕÆÚ¸ñÊ½
+     * å­—æ®µè¾“å‡ºæ—¥æœŸæ ¼å¼
      */
     private String dateFormat;
     
     /**
-     * ×Ö¶ÎÖµµÄ¼ÆËã¹«Ê½
+     * å­—æ®µå€¼çš„è®¡ç®—å…¬å¼
      */
     private Formula formula;
     
     /**
-     * ×Ö¶ÎÎªÃ¶¾ÙÀàĞÍÊ±£¬±£´æÃ¿¸öÖµËù¶ÔÓ¦µÄÕæÖµ£¬±ÈÈç
-     * Öµ"1"¶ÔÓ¦µÄÕæÖµÎª"ÄĞ",Öµ"0"¶ÔÓ¦µÄÕæÖµÎª"Å®"
+     * å­—æ®µä¸ºæšä¸¾ç±»å‹æ—¶ï¼Œä¿å­˜æ¯ä¸ªå€¼æ‰€å¯¹åº”çš„çœŸå€¼ï¼Œæ¯”å¦‚
+     * å€¼"1"å¯¹åº”çš„çœŸå€¼ä¸º"ç”·",å€¼"0"å¯¹åº”çš„çœŸå€¼ä¸º"å¥³"
      */
     private TrueValue trueValue;
     

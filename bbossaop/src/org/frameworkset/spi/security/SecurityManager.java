@@ -21,7 +21,7 @@ package org.frameworkset.spi.security;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2010-2-5 下午04:32:22
+ * @Date 2010-2-5 涓嬪崍04:32:22
  * @author biaoping.yin
  * @version 1.0
  */
@@ -32,13 +32,13 @@ public interface SecurityManager
 	public static final String USER_PASSWORD_KEY="password";
     public boolean checkUser(SecurityContext context) throws Exception;
     /**
-     * 加密方法
+     * 鍔犲瘑鏂规硶
      * @param value
      * @return
      */
     public byte[] encode(byte[] value)  throws Exception;
     /**
-     * 解密方法
+     * 瑙ｅ瘑鏂规硶
      * @param value
      * @return
      */

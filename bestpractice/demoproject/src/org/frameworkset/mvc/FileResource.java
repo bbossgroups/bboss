@@ -53,7 +53,7 @@ public class FileResource implements java.io.Serializable {
 	}
 
 	/**
-	 * 这个文件是不是模�?
+	 * 杩欎釜鏂囦欢鏄笉鏄ā鏉?
 	 */
 	public boolean isTemplate() {
 		return isTemplate;
@@ -61,21 +61,21 @@ public class FileResource implements java.io.Serializable {
 
 	
 	/**
-	 * 这个实例代表的是�?��文件还是�?��文件�?
+	 * 杩欎釜瀹炰緥浠ｈ〃鐨勬槸涓?釜鏂囦欢杩樻槸涓?釜鏂囦欢澶?
 	 */
 	public boolean isDirectory() {
 		return isDirectory;
 	}
 	
 	/**
-	 * 这个文件是否被加�?
+	 * 杩欎釜鏂囦欢鏄惁琚姞閿?
 	 */
 	public boolean isLock() {
 		return isLock;
 	}
 	
 	/**
-	 * 这个文件或文件夹的相对路�?
+	 * 杩欎釜鏂囦欢鎴栨枃浠跺す鐨勭浉瀵硅矾寰?
 	 */
 	public String getUri() {
 		return uri;
@@ -106,7 +106,7 @@ public class FileResource implements java.io.Serializable {
 	}
 	
 	/**
-	 * 这个文件资源能不能成为模�?
+	 * 杩欎釜鏂囦欢璧勬簮鑳戒笉鑳芥垚涓烘ā鏉?
 	 * @return
 	 */
 	public boolean canbeTemplate(){
@@ -133,7 +133,7 @@ public class FileResource implements java.io.Serializable {
 		return false;
 	}
 	/**
-	 * 文件资源的类�?每个类型在templateManage/image目录下有个相应的gif文件 
+	 * 鏂囦欢璧勬簮鐨勭被鍨?姣忎釜绫诲瀷鍦╰emplateManage/image鐩綍涓嬫湁涓浉搴旂殑gif鏂囦欢 
 	 */
 	public String getType(){
 		if(isDirectory)

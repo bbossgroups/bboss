@@ -38,7 +38,7 @@ import org.frameworkset.spi.assemble.ServiceProviderManager;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2011-4-23 ÏÂÎç05:04:15
+ * @Date 2011-4-23 ä¸‹åˆ05:04:15
  * @author biaoping.yin
  * @version 1.0
  */
@@ -96,7 +96,7 @@ public class WSLoader {
                      Object webservice = pro.getBeanObject();
                      String mtom = pro.getStringExtendAttribute("mtom");
                      /**
-                      * tomcatÈİÆ÷ÏÂÕâ¶ÎÊÇÃ»ÓĞÎÊÌâµÄ£¬µ«ÊÇÔÚweblogicÏÂ¾Í»áÓĞÎÊÌâ£¬ËùÓĞ¸ÄÎªÒÔÏÂ·½Ê½·¢²¼·şÎñ£º
+                      * tomcatå®¹å™¨ä¸‹è¿™æ®µæ˜¯æ²¡æœ‰é—®é¢˜çš„ï¼Œä½†æ˜¯åœ¨weblogicä¸‹å°±ä¼šæœ‰é—®é¢˜ï¼Œæ‰€æœ‰æ”¹ä¸ºä»¥ä¸‹æ–¹å¼å‘å¸ƒæœåŠ¡ï¼š
                       * ProviderImpl providerimpl = new ProviderImpl();
                       * Endpoint ep = providerimpl.createAndPublishEndpoint(WebServicePublisherUtil.convertServicePort( servicePort_, classLoader), webservice);
                       */
@@ -120,7 +120,7 @@ public class WSLoader {
 	
 	
 	/**
-	 * ĞèÒªÈ·±£mvc·ÖÅÉÆ÷ÔÚwebservice·şÎñÒıÇæÖ®Ç°Æô¶¯£¬·ñÔò»ñÈ¡²»µ½ÈÎºÎÔÚmvc¿ò¼ÜÖĞÅäÖÃµÄwebservice·şÎñ
+	 * éœ€è¦ç¡®ä¿mvcåˆ†æ´¾å™¨åœ¨webserviceæœåŠ¡å¼•æ“ä¹‹å‰å¯åŠ¨ï¼Œå¦åˆ™è·å–ä¸åˆ°ä»»ä½•åœ¨mvcæ¡†æ¶ä¸­é…ç½®çš„webserviceæœåŠ¡
 	 */
 	private  void loadMvcWebService(ClassLoader classLoader)
 	{
@@ -182,7 +182,7 @@ public class WSLoader {
 			return ;
 		org.frameworkset.spi.BaseApplicationContext context_ = null;
 		/**
-		 * Ô¤¼ÓÔØËùÓĞwsÄ£¿éÓ¦ÓÃÉÏÏÂÎÄ
+		 * é¢„åŠ è½½æ‰€æœ‰wsæ¨¡å—åº”ç”¨ä¸Šä¸‹æ–‡
 		 */
 		for(String t:cxf_webservices_modules)
 		{
@@ -190,7 +190,7 @@ public class WSLoader {
 //			loaderContextWebServices(context_);
 		}
 		/**
-		 * ÌáÈ¡Ã¿¸öÄ£¿éÉÏÏÂÎÄÖĞµÄwebservice·şÎñ²¢¼ÓÔØÖ®
+		 * æå–æ¯ä¸ªæ¨¡å—ä¸Šä¸‹æ–‡ä¸­çš„webserviceæœåŠ¡å¹¶åŠ è½½ä¹‹
 		 */
 		for(String t:cxf_webservices_modules)
 		{

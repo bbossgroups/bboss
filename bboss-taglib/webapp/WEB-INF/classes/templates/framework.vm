@@ -8,10 +8,10 @@
 function send_requestout_framework(url){
 
 	var http_requestout_framework = false;
-	//¿ªÊ¼³õÊ¼»¯XMLHttpRequest¶ÔÏó
+	//å¼€å§‹åˆå§‹åŒ–XMLHttpRequestå¯¹è±¡
 	if(window.XMLHttpRequest){//Mozilla
 		http_requestout_framework = new XMLHttpRequest();
-		if(http_requestout_framework.overrideMimeType){//ÉèÖÃMIMEÀà±ğ
+		if(http_requestout_framework.overrideMimeType){//è®¾ç½®MIMEç±»åˆ«
 			http_requestout_framework.overrideMimeType("text/xml");						
 		}
 	}
@@ -26,7 +26,7 @@ function send_requestout_framework(url){
 		}
 	}
 	if(!http_requestout_framework){
-		alert("²»ÄÜ´´½¨XMLHttpRequest¶ÔÏó");
+		alert("ä¸èƒ½åˆ›å»ºXMLHttpRequestå¯¹è±¡");
 		return false;
 	}
 	
@@ -70,7 +70,7 @@ function framework_exit(){
 	<frame name="perspective_topbar" title="${perspective_toolbar_title}"
 		src="${perspective_toolbar_url}" marginwidth=0 marginheight=0
 		scrolling="no" frameborder=0 noresize>
-	<!--ĞŞ¸ÄÄ£°åÎÄ¼şÒÑÊÊÓ¦£¬ËæĞèÓ¦±äµÄÖ÷Ìå¿ò¼Ü-->
+	<!--ä¿®æ”¹æ¨¡æ¿æ–‡ä»¶å·²é€‚åº”ï¼Œéšéœ€åº”å˜çš„ä¸»ä½“æ¡†æ¶-->
 	<frame name="perspective_main" title="${perspective_main_title}"
 		src="${perspective_main_url}" marginwidth=0 marginheight=0
 		scrolling="no" frameborder=0 noresize>

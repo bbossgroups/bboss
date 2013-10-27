@@ -1,9 +1,9 @@
-//Ð£ÑéÊÇ·ñÊÇÒ»¸öºÏ·¨µÄÃû×Ö
+//æ ¡éªŒæ˜¯å¦æ˜¯ä¸€ä¸ªåˆæ³•çš„åå­—
 Validator.isName = function(str){
-	var reg = /^[\w\u4e00-\u9fa5£¬¡¢£»¡®¡¯¡°¡±¡¾¡¿]+$/g;
+	var reg = /^[\w\u4e00-\u9fa5ï¼Œã€ï¼›â€˜â€™â€œâ€ã€ã€‘]+$/g;
 	return reg.test(str);
 }
-//¼ì²âÊÇ·ñÊÇÒ»¸öºÏ·¨µÄÖ¸±êÃû³Æ	
+//æ£€æµ‹æ˜¯å¦æ˜¯ä¸€ä¸ªåˆæ³•çš„æŒ‡æ ‡åç§°	
 Validator.isItemName = function(str){
 	var reg1 = /^[\S]+$/g;	
 	var reg2 = /^[^%\'\",;:=+-\\{\\}\[\].]+$/g;

@@ -21,10 +21,10 @@ import com.frameworkset.util.EditorInf;
  * 
  * <p>Title: DecryptEditor.java</p>
  *
- * <p>Description: ╤тпео╒╫Ьпп╫Бцэ╣дйТпт╠Ю╪╜фВё╛жВр╙сц╩╖╤тсза╛╫сЁьук╨епео╒╫Ьпп╪сцэ╣доЮ╧ь╡ывВ</p>
+ * <p>Description: Е╞╧Д©║Ф│╞Х©⌡Х║▄Х╖ёЕ╞├Г └Е╠·Ф─╖Г╪√Х╬▒Е≥╗О╪▄Д╦╩Х╕│Г■╗Ф┬╥Е╞╧Д╨▌Х©·Ф▌╔Ф╠═Х╢╕Е▐╥Д©║Ф│╞Х©⌡Х║▄Е┼═Е╞├Г └Г⌡╦Е┘ЁФ⌠█Д╫°</p>
  *
  * <p>Copyright: Copyright (c) 2007</p>
- * @Date 2012-7-31 ионГ11:15:40
+ * @Date 2012-7-31 Д╦┼Е█┬11:15:40
  * @author biaoping.yin
  * @version 1.0
  */

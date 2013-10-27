@@ -14,13 +14,13 @@ public class TestGeneryKey {
 			
 //			tm.begin();
 //			dbUtil.getConection();
-			dbUtil.executeInsert("insert into test_t(name) values('²âÊÔ')");
-			dbUtil.executeInsert("insert into test_t(name) values('²âÊÔ')");
-			dbUtil.executeInsert("insert into test_t(name) values('²âÊÔ')");
-			dbUtil.executeInsert("insert into test_t(name) values('²âÊÔ')");
-			dbUtil.executeInsert("insert into test_t(name) values('²âÊÔ')");
-			dbUtil.executeInsert("insert into test_t(name) values('²âÊÔ')");
-			dbUtil.executeInsert("insert into test_t(name) values('²âÊÔ')");
+			dbUtil.executeInsert("insert into test_t(name) values('æµ‹è¯•')");
+			dbUtil.executeInsert("insert into test_t(name) values('æµ‹è¯•')");
+			dbUtil.executeInsert("insert into test_t(name) values('æµ‹è¯•')");
+			dbUtil.executeInsert("insert into test_t(name) values('æµ‹è¯•')");
+			dbUtil.executeInsert("insert into test_t(name) values('æµ‹è¯•')");
+			dbUtil.executeInsert("insert into test_t(name) values('æµ‹è¯•')");
+			dbUtil.executeInsert("insert into test_t(name) values('æµ‹è¯•')");
 			System.out.println(dbUtil.getNextPrimaryKey("test_t"));
 //			tm.commit();
 		} catch (SQLException e) {

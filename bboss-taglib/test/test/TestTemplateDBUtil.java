@@ -18,9 +18,9 @@ import com.frameworkset.common.poolman.TemplateDBUtil;
  *
  * <p>Copyright: Copyright (c) 2007</p>
  *
- * <p>Company: ºşÄÏ¿Æ´´ĞÅÏ¢¹É·İÓĞÏŞ¹«Ë¾</p>
+ * <p>Company: æ¹–å—ç§‘åˆ›ä¿¡æ¯è‚¡ä»½æœ‰é™å…¬å¸</p>
  * @Date Jul 24, 2008 11:09:41 AM
- * @author biaoping.yin,Òü±êÆ½
+ * @author biaoping.yin,å°¹æ ‡å¹³
  * @version 1.0
  */
 public class TestTemplateDBUtil {
@@ -131,7 +131,7 @@ public class TestTemplateDBUtil {
 						try {
 							
 								db = new PreparedDBUtil();
-								//²åÈë²Ù×÷
+								//æ’å…¥æ“ä½œ
 								db.preparedInsert("bspf",
 												"insert into td_reg_bank_acc_bak (create_acc_time,starttime,endtime) values(?,?,?)");
 								Date today = new Date(new java.util.Date().getTime());
@@ -162,7 +162,7 @@ public class TestTemplateDBUtil {
 								System.out.println("starttime:"+db.getDate(0, "starttime"));
 								System.out.println("endtime:"+db.getDate(0, "endtime"));
 								System.out.println("after insert common select end.");
-								//¸üĞÂ²Ù×÷
+								//æ›´æ–°æ“ä½œ
 								db = new PreparedDBUtil();
 								
 								db.preparedUpdate("bspf",
@@ -172,7 +172,7 @@ public class TestTemplateDBUtil {
 								db.setDate(3, null);
 								db.setString(4, id);
 								db.executePrepared();
-								//²éÑ¯²Ù×÷
+								//æŸ¥è¯¢æ“ä½œ
 								db = new PreparedDBUtil();
 								db.preparedSelect("bspf",
 								"select create_acc_time,starttime,endtime from td_reg_bank_acc_bak where id=?");
@@ -185,20 +185,20 @@ public class TestTemplateDBUtil {
 								System.out.println("starttime:"+db.getDate(0, "starttime"));
 								System.out.println("endtime:"+db.getDate(0, "endtime"));
 								System.out.println("after update common select end.");
-								//É¾³ı²Ù×÷
+								//åˆ é™¤æ“ä½œ
 								db = new PreparedDBUtil();
 								db.preparedDelete("bspf",
 								"delete  from td_reg_bank_acc_bak where id=?");
 								
 								db.setString(1, id);
 								db.executePrepared();
-								//É¾³ıºó²éÑ¯
+								//åˆ é™¤åæŸ¥è¯¢
 								db = new PreparedDBUtil();
 								db.preparedSelect("bspf",
 								"select create_acc_time,starttime,endtime from td_reg_bank_acc_bak where id=?");								
 								db.setString(1, id);
 								db.executePrepared();
-								System.out.println("after delete common select£º");
+								System.out.println("after delete common selectï¼š");
 								System.out.println(db.size());
 								
 								db = new PreparedDBUtil();
@@ -207,7 +207,7 @@ public class TestTemplateDBUtil {
 								
 								db.setString(1, id);
 								db.executePrepared();
-								System.out.println("after delete pagine select£º");
+								System.out.println("after delete pagine selectï¼š");
 								System.out.println("db.size():"+db.size());
 								System.out.println("db.getTotalSize():" +db.getLongTotalSize());
 								
@@ -217,7 +217,7 @@ public class TestTemplateDBUtil {
 								
 								
 								db.executePrepared();
-								System.out.println(" pagine select£º");
+								System.out.println(" pagine selectï¼š");
 								System.out.println("db.size():"+db.size());
 								System.out.println("db.getTotalSize():" +db.getLongTotalSize());
 						} finally {
@@ -242,7 +242,7 @@ public class TestTemplateDBUtil {
 						try {
 							
 								db = new PreparedDBUtil();
-								//²åÈë²Ù×÷
+								//æ’å…¥æ“ä½œ
 								db.preparedInsert("bspf",
 												"insert into testprepared (id,create_acc_time,starttime,endtime) values(?,?,?,?)");
 								Date today = new Date(new java.util.Date().getTime());
@@ -275,7 +275,7 @@ public class TestTemplateDBUtil {
 								System.out.println("starttime:"+db.getDate(0, "starttime"));
 								System.out.println("endtime:"+db.getDate(0, "endtime"));
 								System.out.println("after insert common select end.");
-								//¸üĞÂ²Ù×÷
+								//æ›´æ–°æ“ä½œ
 								db = new PreparedDBUtil();
 								
 								db.preparedUpdate("bspf",
@@ -285,7 +285,7 @@ public class TestTemplateDBUtil {
 								db.setDate(3, null);
 								db.setString(4, id);
 								db.executePrepared();
-								//²éÑ¯²Ù×÷
+								//æŸ¥è¯¢æ“ä½œ
 								db = new PreparedDBUtil();
 								db.preparedSelect("bspf",
 								"select create_acc_time,starttime,endtime from testprepared where id=?");
@@ -298,20 +298,20 @@ public class TestTemplateDBUtil {
 								System.out.println("starttime:"+db.getDate(0, "starttime"));
 								System.out.println("endtime:"+db.getDate(0, "endtime"));
 								System.out.println("after update common select end.");
-								//É¾³ı²Ù×÷
+								//åˆ é™¤æ“ä½œ
 								db = new PreparedDBUtil();
 								db.preparedDelete("bspf",
 								"delete  from testprepared where id=?");
 								
 								db.setString(1, id);
 								db.executePrepared();
-								//É¾³ıºó²éÑ¯
+								//åˆ é™¤åæŸ¥è¯¢
 								db = new PreparedDBUtil();
 								db.preparedSelect("bspf",
 								"select create_acc_time,starttime,endtime from testprepared where id=?");								
 								db.setString(1, id);
 								db.executePrepared();
-								System.out.println("after delete common select£º");
+								System.out.println("after delete common selectï¼š");
 								System.out.println(db.size());
 								
 								db = new PreparedDBUtil();
@@ -320,7 +320,7 @@ public class TestTemplateDBUtil {
 								
 								db.setString(1, id);
 								db.executePrepared();
-								System.out.println("after delete pagine select£º");
+								System.out.println("after delete pagine selectï¼š");
 								System.out.println("db.size():"+db.size());
 								System.out.println("db.getTotalSize():" +db.getLongTotalSize());
 								
@@ -330,7 +330,7 @@ public class TestTemplateDBUtil {
 								
 								
 								db.executePrepared();
-								System.out.println(" pagine select£º");
+								System.out.println(" pagine selectï¼š");
 								System.out.println("db.size():"+db.size());
 								System.out.println("db.getTotalSize():" +db.getLongTotalSize());
 						} finally {
@@ -355,7 +355,7 @@ public class TestTemplateDBUtil {
 						try {
 							
 								db = new PreparedDBUtil();
-								//²åÈë²Ù×÷
+								//æ’å…¥æ“ä½œ
 								db.preparedInsert(
 												"insert into td_reg_bank_acc_bak (create_acc_time,starttime,endtime) values(?,?,?)");
 								Date today = new Date(new java.util.Date().getTime());
@@ -386,7 +386,7 @@ public class TestTemplateDBUtil {
 								System.out.println("starttime:"+db.getDate(0, "starttime"));
 								System.out.println("endtime:"+db.getDate(0, "endtime"));
 								System.out.println("after insert common select end.");
-								//¸üĞÂ²Ù×÷
+								//æ›´æ–°æ“ä½œ
 								db = new PreparedDBUtil();
 								
 								db.preparedUpdate(
@@ -396,7 +396,7 @@ public class TestTemplateDBUtil {
 								db.setDate(3, null);
 								db.setString(4, id);
 								db.executePrepared();
-								//²éÑ¯²Ù×÷
+								//æŸ¥è¯¢æ“ä½œ
 								db = new PreparedDBUtil();
 								db.preparedSelect(
 								"select create_acc_time,starttime,endtime from td_reg_bank_acc_bak where id=?");
@@ -409,20 +409,20 @@ public class TestTemplateDBUtil {
 								System.out.println("starttime:"+db.getDate(0, "starttime"));
 								System.out.println("endtime:"+db.getDate(0, "endtime"));
 								System.out.println("after update common select end.");
-								//É¾³ı²Ù×÷
+								//åˆ é™¤æ“ä½œ
 								db = new PreparedDBUtil();
 								db.preparedDelete(
 								"delete  from td_reg_bank_acc_bak where id=?");
 								
 								db.setString(1, id);
 								db.executePrepared();
-								//É¾³ıºó²éÑ¯
+								//åˆ é™¤åæŸ¥è¯¢
 								db = new PreparedDBUtil();
 								db.preparedSelect(
 								"select create_acc_time,starttime,endtime from td_reg_bank_acc_bak where id=?");								
 								db.setString(1, id);
 								db.executePrepared();
-								System.out.println("after delete common select£º");
+								System.out.println("after delete common selectï¼š");
 								System.out.println(db.size());
 								
 								db = new PreparedDBUtil();
@@ -431,7 +431,7 @@ public class TestTemplateDBUtil {
 								
 								db.setString(1, id);
 								db.executePrepared();
-								System.out.println("after delete pagine select£º");
+								System.out.println("after delete pagine selectï¼š");
 								System.out.println("db.size():"+db.size());
 								System.out.println("db.getTotalSize():" +db.getLongTotalSize());
 								
@@ -441,7 +441,7 @@ public class TestTemplateDBUtil {
 								
 								
 								db.executePrepared();
-								System.out.println(" pagine select£º");
+								System.out.println(" pagine selectï¼š");
 								System.out.println("db.size():"+db.size());
 								System.out.println("db.getTotalSize():" +db.getLongTotalSize());
 						} finally {

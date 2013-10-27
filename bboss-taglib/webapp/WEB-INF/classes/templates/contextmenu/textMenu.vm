@@ -3,8 +3,8 @@
 <script language='javascript'>
 
 //---------------------------------------------->
-// 		[µ¯³öÊ½¹¦ÄÜ²Ëµ¥]
-//		×÷Õß£ºbiaoping.yin
+// 		[å¼¹å‡ºå¼åŠŸèƒ½èœå•]
+//		ä½œè€…ï¼šbiaoping.yin
 ////---------------------------------------------->
 
 var MenuCount=0;
@@ -37,7 +37,7 @@ function windowOnload()
 }
 
 //---------------------------------
-//	³õÊ¼»¯ÊÂ¼ş
+//	åˆå§‹åŒ–äº‹ä»¶
 //---------------------------------
 function InitializedDocEvent()
 {
@@ -113,7 +113,7 @@ function MenuItem(label,jscmd,icon)
 	
 	this.item = oMenuItem;	
 	
-	//Ìí¼Ó²Ëµ¥µÄµã»÷¶¯×÷
+	//æ·»åŠ èœå•çš„ç‚¹å‡»åŠ¨ä½œ
 	this.menuclick = menuclick;
 }
 
@@ -307,12 +307,12 @@ function addMenu(childMenu)
 {
 	if(this.parentMenu == null)
 	{
-		alert("²Ëµ¥ÌõÄ¿»¹Ã»ÓĞ±»Ìí¼Óµ½²Ëµ¥.");
+		alert("èœå•æ¡ç›®è¿˜æ²¡æœ‰è¢«æ·»åŠ åˆ°èœå•.");
 		return false;
 	}
 	else if(this.parentMenu.stringId == childMenu.stringId)
 	{
-		alert("²Ëµ¥ÌõÄ¿µÄ¸¸²Ëµ¥Óë×Ó²Ëµ¥ÏàÍ¬.");
+		alert("èœå•æ¡ç›®çš„çˆ¶èœå•ä¸å­èœå•ç›¸åŒ.");
 		return false;
 	}
 	this.item.rows[0].detachEvent("onclick",this.runJsCmd);
@@ -557,7 +557,7 @@ function setMainMenu(menu)
 	}
 	else
 	{
-		alert("Menu¸¸¶ÔÏó²»Îª¿Õ.ÎŞ·¨³ÉÎªÖ÷²Ëµ¥");
+		alert("Menuçˆ¶å¯¹è±¡ä¸ä¸ºç©º.æ— æ³•æˆä¸ºä¸»èœå•");
 	}
 }
 
@@ -640,7 +640,7 @@ function InitializedTextMenu(srcElement)
 	if(id == null || id == "")
 	    return null;
 	var params = srcElement.params;
-	//±êÊ¶µ±Ç°½ÚµãÊÇ·ñ	
+	//æ ‡è¯†å½“å‰èŠ‚ç‚¹æ˜¯å¦	
 	var openNode = srcElement.openNode;
 	var expandNode = srcElement.expandNode;
 	
@@ -655,7 +655,7 @@ function InitializedTextMenu(srcElement)
     }
 }
 /**
- * ÓÒ¼ü²Ëµ¥µã»÷ÊÂ¼ş
+ * å³é”®èœå•ç‚¹å‡»äº‹ä»¶
  */
 function menuclick(linkUrl,target_t)
 {
@@ -724,7 +724,7 @@ function textMenu()
 	
 }
 /**
- * ÎªÁ¬½ÓÌí¼Ó²ÎÊı
+ * ä¸ºè¿æ¥æ·»åŠ å‚æ•°
  */
 function refactorLink(linkUrl,params)
 {
@@ -741,7 +741,7 @@ function refactorLink(linkUrl,params)
 }
 
 /**
- * ÅĞ¶Ïµ±Ç°µÄµØÖ·ÊÇ·ñÊÇjavascriptº¯Êı
+ * åˆ¤æ–­å½“å‰çš„åœ°å€æ˜¯å¦æ˜¯javascriptå‡½æ•°
  */
 function isJavsscriptFun(linkUrl)
 {
@@ -751,10 +751,10 @@ function isJavsscriptFun(linkUrl)
 }
 
 /**
- * openLink,expandLink,expandLabel¼¸¸ö²ÎÊıÓÃÀ´ÖÆ¶¨´ò¿ªºÍÕÛµşÏîµÄÁ´½ÓºÍ±êÌâ£¬
- * ËûÃÇÍ¨¹ıÓÒ¼ü²Ëµ¥µÄÊÂ¼şÔªËØÖ±½Ó»ñÈ¡:
- * 		openLink,expandLinkÉèÖÃ´ò¿ªºÍÕÛµş/Õ¹¿ªµÄÁ´½ÓµØÖ·£¬
- * 		expandLabel¸ù¾İÕÛµşºÍÕ¹¿ªµÃ¾ßÌå¶¯×÷À´ÉèÖÃÕÛµşÕ¹¿ª²Ëµ¥µÄ±êÌâ
+ * openLink,expandLink,expandLabelå‡ ä¸ªå‚æ•°ç”¨æ¥åˆ¶å®šæ‰“å¼€å’ŒæŠ˜å é¡¹çš„é“¾æ¥å’Œæ ‡é¢˜ï¼Œ
+ * ä»–ä»¬é€šè¿‡å³é”®èœå•çš„äº‹ä»¶å…ƒç´ ç›´æ¥è·å–:
+ * 		openLink,expandLinkè®¾ç½®æ‰“å¼€å’ŒæŠ˜å /å±•å¼€çš„é“¾æ¥åœ°å€ï¼Œ
+ * 		expandLabelæ ¹æ®æŠ˜å å’Œå±•å¼€å¾—å…·ä½“åŠ¨ä½œæ¥è®¾ç½®æŠ˜å å±•å¼€èœå•çš„æ ‡é¢˜
  */
 function buildMenu(menu,params,openNode,expandNode,expandLabel)
 {
@@ -846,7 +846,7 @@ function getContextMenuByID(identity)
 }
 
 /**
- *  ¹¹½¨²Ëµ¥ĞÅÏ¢»º³åÇø
+ *  æ„å»ºèœå•ä¿¡æ¯ç¼“å†²åŒº
  *
  */
 function Menu(identity)

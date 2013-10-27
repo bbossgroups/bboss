@@ -42,7 +42,7 @@ import com.caucho.hessian.server.HessianSkeleton;
  * <p> bboss workgroup </p>
  * <p> Copyright (c) 2009 </p>
  * 
- * @Date 2013-2-21 ÏÂÎç3:45:05
+ * @Date 2013-2-21 ä¸‹åˆ3:45:05
  * @author biaoping.yin
  * @version 1.0
  */

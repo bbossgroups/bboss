@@ -22,42 +22,42 @@ import org.junit.Test;
 
 public class TestSyn {
 	/**
-	 * ÔÚÄ¬ÈÏµÄÌá¹©ÕßÉÏÃæÖ´ÐÐËùÓÐµÄÍ¬²½·½·¨
+	 * åœ¨é»˜è®¤çš„æä¾›è€…ä¸Šé¢æ‰§è¡Œæ‰€æœ‰çš„åŒæ­¥æ–¹æ³•
 	 */
 	@Test
 	public void testSynmethod()
 	{
 		try {
 			AI a = (AI)BaseSPIManager.getProvider("syn.a");
-			//²âÊÔ²»´ø²ÎÊýºÍ´ø²ÎÊýµÄÍ¬ÃûÍ¬²½·½·¨£¬Í¬Ê±ÔÚÄ¬ÈÏdbºÍldapÁ½¸öÌá¹©ÕßÉÏÃæÖ´ÐÐ
+			//æµ‹è¯•ä¸å¸¦å‚æ•°å’Œå¸¦å‚æ•°çš„åŒååŒæ­¥æ–¹æ³•ï¼ŒåŒæ—¶åœ¨é»˜è®¤dbå’Œldapä¸¤ä¸ªæä¾›è€…ä¸Šé¢æ‰§è¡Œ
 			a.testSynInvoke();
 			a.testSynInvoke("hello word.");
 			
-			//²âÊÔ·ÇÍ¬²½·½·¨£¬Ö»ÔÚÄ¬ÈÏµÄÌá¹©ÕßÉÏÃæÖ´ÐÐ±¾·½·¨
+			//æµ‹è¯•éžåŒæ­¥æ–¹æ³•ï¼Œåªåœ¨é»˜è®¤çš„æä¾›è€…ä¸Šé¢æ‰§è¡Œæœ¬æ–¹æ³•
 			a.testNoSynInvoke();
 			
 			
 			
-			//²âÊÔ³¡¾°£º
-			//½Ó¿ÚÖÐ¶¨ÒåÁËÁ½¸ötestSameName·½·¨£¬Ò»¸ö´ø²ÎÊý£¨²»ÐèÒªÍ¬²½µ÷ÓÃ£©£¬Ò»¸ö²»´ø²ÎÊý£¨ÐèÒªÍ¬²½µ÷ÓÃ£©
+			//æµ‹è¯•åœºæ™¯ï¼š
+			//æŽ¥å£ä¸­å®šä¹‰äº†ä¸¤ä¸ªtestSameNameæ–¹æ³•ï¼Œä¸€ä¸ªå¸¦å‚æ•°ï¼ˆä¸éœ€è¦åŒæ­¥è°ƒç”¨ï¼‰ï¼Œä¸€ä¸ªä¸å¸¦å‚æ•°ï¼ˆéœ€è¦åŒæ­¥è°ƒç”¨ï¼‰
 			a.testSameName();
 			a.testSameName("hello word.");
 			
-			//²âÊÔ³¡¾°£º
-			//½Ó¿ÚÖÐ¶¨ÒåÁËÁ½¸ötestSameName1·½·¨£¬Ò»¸ö´ø²ÎÊý£¨ÐèÒªÍ¬²½µ÷ÓÃ£©£¬Ò»¸ö²»´ø²ÎÊý£¨²»ÐèÒªÍ¬²½µ÷ÓÃ£©
+			//æµ‹è¯•åœºæ™¯ï¼š
+			//æŽ¥å£ä¸­å®šä¹‰äº†ä¸¤ä¸ªtestSameName1æ–¹æ³•ï¼Œä¸€ä¸ªå¸¦å‚æ•°ï¼ˆéœ€è¦åŒæ­¥è°ƒç”¨ï¼‰ï¼Œä¸€ä¸ªä¸å¸¦å‚æ•°ï¼ˆä¸éœ€è¦åŒæ­¥è°ƒç”¨ï¼‰
 			a.testSameName1();
 			a.testSameName1("hello word.");
 			
-			//²âÊÔ´ø·µ»ØÖµµÄÍ¬²½·½·¨£¬Í¬Ê±ÔÚÄ¬ÈÏdbºÍldapÁ½¸öÌá¹©ÕßÉÏÃæÖ´ÐÐ£¬
-			//µ«Ö»·µ»ØÄ¬ÈÏÌá¹©Õß·½·¨µÄ·µ»ØÖµ
+			//æµ‹è¯•å¸¦è¿”å›žå€¼çš„åŒæ­¥æ–¹æ³•ï¼ŒåŒæ—¶åœ¨é»˜è®¤dbå’Œldapä¸¤ä¸ªæä¾›è€…ä¸Šé¢æ‰§è¡Œï¼Œ
+			//ä½†åªè¿”å›žé»˜è®¤æä¾›è€…æ–¹æ³•çš„è¿”å›žå€¼
 			System.out.println(a.testSynInvokeWithReturn());
 			a.testInt(111);
 			a.testInt(22);
 			a.testInt(33);
 			a.testInt(44);
 			
-			//²âÊÔÅ×³öÒì³£²¢ÇÒÓÐ·µ»ØÖµµÄÍ¬²½·½·¨£¬Í¬Ê±ÔÚÄ¬ÈÏdbºÍldapÁ½¸öÌá¹©ÕßÉÏÃæÖ´ÐÐ£¬²»¹ÜÊÇ·ñÓÐÒì³££¬ËùÓÐµÄ·½·¨¶¼»á
-			//Ö´ÐÐÒ»±é£¬Ä¬ÈÏÌá¹©ÕßµÄ·½·¨Å×³öÒì³££¬¶øldapÀàÐÍµÄÌá¹©ÕßÖ´ÐÐÕýÈ·
+			//æµ‹è¯•æŠ›å‡ºå¼‚å¸¸å¹¶ä¸”æœ‰è¿”å›žå€¼çš„åŒæ­¥æ–¹æ³•ï¼ŒåŒæ—¶åœ¨é»˜è®¤dbå’Œldapä¸¤ä¸ªæä¾›è€…ä¸Šé¢æ‰§è¡Œï¼Œä¸ç®¡æ˜¯å¦æœ‰å¼‚å¸¸ï¼Œæ‰€æœ‰çš„æ–¹æ³•éƒ½ä¼š
+			//æ‰§è¡Œä¸€éï¼Œé»˜è®¤æä¾›è€…çš„æ–¹æ³•æŠ›å‡ºå¼‚å¸¸ï¼Œè€Œldapç±»åž‹çš„æä¾›è€…æ‰§è¡Œæ­£ç¡®
 			System.out.println(a.testSynInvokeWithException());
 		
 		} catch (SPIException e) {
@@ -76,13 +76,13 @@ public class TestSyn {
 			
 			
 			
-			//²âÊÔ³¡¾°£º
-			//½Ó¿ÚÖÐ¶¨ÒåÁËÁ½¸ötestSameName·½·¨£¬Ò»¸ö´ø²ÎÊý£¨²»ÐèÒªÍ¬²½µ÷ÓÃ£©£¬Ò»¸ö²»´ø²ÎÊý£¨ÐèÒªÍ¬²½µ÷ÓÃ£©
+			//æµ‹è¯•åœºæ™¯ï¼š
+			//æŽ¥å£ä¸­å®šä¹‰äº†ä¸¤ä¸ªtestSameNameæ–¹æ³•ï¼Œä¸€ä¸ªå¸¦å‚æ•°ï¼ˆä¸éœ€è¦åŒæ­¥è°ƒç”¨ï¼‰ï¼Œä¸€ä¸ªä¸å¸¦å‚æ•°ï¼ˆéœ€è¦åŒæ­¥è°ƒç”¨ï¼‰
 			a.testSameName();
 			a.testSameName("hello word.");
 			
-			//²âÊÔ³¡¾°£º
-			//½Ó¿ÚÖÐ¶¨ÒåÁËÁ½¸ötestSameName1·½·¨£¬Ò»¸ö´ø²ÎÊý£¨ÐèÒªÍ¬²½µ÷ÓÃ£©£¬Ò»¸ö²»´ø²ÎÊý£¨²»ÐèÒªÍ¬²½µ÷ÓÃ£©
+			//æµ‹è¯•åœºæ™¯ï¼š
+			//æŽ¥å£ä¸­å®šä¹‰äº†ä¸¤ä¸ªtestSameName1æ–¹æ³•ï¼Œä¸€ä¸ªå¸¦å‚æ•°ï¼ˆéœ€è¦åŒæ­¥è°ƒç”¨ï¼‰ï¼Œä¸€ä¸ªä¸å¸¦å‚æ•°ï¼ˆä¸éœ€è¦åŒæ­¥è°ƒç”¨ï¼‰
 			a.testSameName1();
 			a.testSameName1("hello word.");
 			
@@ -100,29 +100,29 @@ public class TestSyn {
 	{
 		try {
 			AI a = (AI)BaseSPIManager.getProvider("syn.a","ldap");
-			//²âÊÔ²»´ø²ÎÊýºÍ´ø²ÎÊýµÄÍ¬ÃûÍ¬²½·½·¨£¬Í¬Ê±ÔÚÄ¬ÈÏdbºÍldapÁ½¸öÌá¹©ÕßÉÏÃæÖ´ÐÐ
+			//æµ‹è¯•ä¸å¸¦å‚æ•°å’Œå¸¦å‚æ•°çš„åŒååŒæ­¥æ–¹æ³•ï¼ŒåŒæ—¶åœ¨é»˜è®¤dbå’Œldapä¸¤ä¸ªæä¾›è€…ä¸Šé¢æ‰§è¡Œ
 			a.testSynInvoke();
 			a.testSynInvoke("hello word.");
 			
-			//²âÊÔ·ÇÍ¬²½·½·¨£¬Ö»ÔÚldapÌá¹©ÕßÉÏÃæÖ´ÐÐ±¾·½·¨
+			//æµ‹è¯•éžåŒæ­¥æ–¹æ³•ï¼Œåªåœ¨ldapæä¾›è€…ä¸Šé¢æ‰§è¡Œæœ¬æ–¹æ³•
 			a.testNoSynInvoke();
 			
-			//²âÊÔ³¡¾°£º
-			//½Ó¿ÚÖÐ¶¨ÒåÁËÁ½¸ötestSameName·½·¨£¬Ò»¸ö´ø²ÎÊý£¨²»ÐèÒªÍ¬²½µ÷ÓÃ£©£¬Ò»¸ö²»´ø²ÎÊý£¨ÐèÒªÍ¬²½µ÷ÓÃ£©
+			//æµ‹è¯•åœºæ™¯ï¼š
+			//æŽ¥å£ä¸­å®šä¹‰äº†ä¸¤ä¸ªtestSameNameæ–¹æ³•ï¼Œä¸€ä¸ªå¸¦å‚æ•°ï¼ˆä¸éœ€è¦åŒæ­¥è°ƒç”¨ï¼‰ï¼Œä¸€ä¸ªä¸å¸¦å‚æ•°ï¼ˆéœ€è¦åŒæ­¥è°ƒç”¨ï¼‰
 			a.testSameName();
 			a.testSameName("hello word.");
 			
-			//²âÊÔ³¡¾°£º
-			//½Ó¿ÚÖÐ¶¨ÒåÁËÁ½¸ötestSameName1·½·¨£¬Ò»¸ö´ø²ÎÊý£¨ÐèÒªÍ¬²½µ÷ÓÃ£©£¬Ò»¸ö²»´ø²ÎÊý£¨²»ÐèÒªÍ¬²½µ÷ÓÃ£©
+			//æµ‹è¯•åœºæ™¯ï¼š
+			//æŽ¥å£ä¸­å®šä¹‰äº†ä¸¤ä¸ªtestSameName1æ–¹æ³•ï¼Œä¸€ä¸ªå¸¦å‚æ•°ï¼ˆéœ€è¦åŒæ­¥è°ƒç”¨ï¼‰ï¼Œä¸€ä¸ªä¸å¸¦å‚æ•°ï¼ˆä¸éœ€è¦åŒæ­¥è°ƒç”¨ï¼‰
 			a.testSameName1();
 			a.testSameName1("hello word.");
 			
-			//²âÊÔ´ø·µ»ØÖµµÄÍ¬²½·½·¨£¬Í¬Ê±ÔÚÄ¬ÈÏdbºÍldapÁ½¸öÌá¹©ÕßÉÏÃæÖ´ÐÐ£¬
-			//µ«Ö»·µ»ØldapÌá¹©Õß·½·¨µÄ·µ»ØÖµ
+			//æµ‹è¯•å¸¦è¿”å›žå€¼çš„åŒæ­¥æ–¹æ³•ï¼ŒåŒæ—¶åœ¨é»˜è®¤dbå’Œldapä¸¤ä¸ªæä¾›è€…ä¸Šé¢æ‰§è¡Œï¼Œ
+			//ä½†åªè¿”å›žldapæä¾›è€…æ–¹æ³•çš„è¿”å›žå€¼
 			System.out.println(a.testSynInvokeWithReturn());
 			
-			//²âÊÔÅ×³öÒì³£²¢ÇÒÓÐ·µ»ØÖµµÄÍ¬²½·½·¨£¬Í¬Ê±ÔÚÄ¬ÈÏdbºÍldapÁ½¸öÌá¹©ÕßÉÏÃæÖ´ÐÐ£¬²»¹ÜÊÇ·ñÓÐÒì³££¬ËùÓÐµÄ·½·¨¶¼»á
-			//Ö´ÐÐÒ»±é£¬Ä¬ÈÏÌá¹©ÕßµÄ·½·¨Å×³öÒì³££¬¶øldapÀàÐÍµÄÌá¹©ÕßÖ´ÐÐÕýÈ·
+			//æµ‹è¯•æŠ›å‡ºå¼‚å¸¸å¹¶ä¸”æœ‰è¿”å›žå€¼çš„åŒæ­¥æ–¹æ³•ï¼ŒåŒæ—¶åœ¨é»˜è®¤dbå’Œldapä¸¤ä¸ªæä¾›è€…ä¸Šé¢æ‰§è¡Œï¼Œä¸ç®¡æ˜¯å¦æœ‰å¼‚å¸¸ï¼Œæ‰€æœ‰çš„æ–¹æ³•éƒ½ä¼š
+			//æ‰§è¡Œä¸€éï¼Œé»˜è®¤æä¾›è€…çš„æ–¹æ³•æŠ›å‡ºå¼‚å¸¸ï¼Œè€Œldapç±»åž‹çš„æä¾›è€…æ‰§è¡Œæ­£ç¡®
 			System.out.println(a.testSynInvokeWithException());
 			a.testInt(22);
 		} catch (SPIException e) {
@@ -142,13 +142,13 @@ public class TestSyn {
 			AI a = (AI)BaseSPIManager.getProvider("syn.a","ldap");
 			
 			
-			//²âÊÔ³¡¾°£º
-			//½Ó¿ÚÖÐ¶¨ÒåÁËÁ½¸ötestSameName·½·¨£¬Ò»¸ö´ø²ÎÊý£¨²»ÐèÒªÍ¬²½µ÷ÓÃ£©£¬Ò»¸ö²»´ø²ÎÊý£¨ÐèÒªÍ¬²½µ÷ÓÃ£©
+			//æµ‹è¯•åœºæ™¯ï¼š
+			//æŽ¥å£ä¸­å®šä¹‰äº†ä¸¤ä¸ªtestSameNameæ–¹æ³•ï¼Œä¸€ä¸ªå¸¦å‚æ•°ï¼ˆä¸éœ€è¦åŒæ­¥è°ƒç”¨ï¼‰ï¼Œä¸€ä¸ªä¸å¸¦å‚æ•°ï¼ˆéœ€è¦åŒæ­¥è°ƒç”¨ï¼‰
 			a.testSameName();
 			a.testSameName("hello word.");
 			
-			//²âÊÔ³¡¾°£º
-			//½Ó¿ÚÖÐ¶¨ÒåÁËÁ½¸ötestSameName1·½·¨£¬Ò»¸ö´ø²ÎÊý£¨ÐèÒªÍ¬²½µ÷ÓÃ£©£¬Ò»¸ö²»´ø²ÎÊý£¨²»ÐèÒªÍ¬²½µ÷ÓÃ£©
+			//æµ‹è¯•åœºæ™¯ï¼š
+			//æŽ¥å£ä¸­å®šä¹‰äº†ä¸¤ä¸ªtestSameName1æ–¹æ³•ï¼Œä¸€ä¸ªå¸¦å‚æ•°ï¼ˆéœ€è¦åŒæ­¥è°ƒç”¨ï¼‰ï¼Œä¸€ä¸ªä¸å¸¦å‚æ•°ï¼ˆä¸éœ€è¦åŒæ­¥è°ƒç”¨ï¼‰
 			a.testSameName1();
 			a.testSameName1("hello word.");
 			

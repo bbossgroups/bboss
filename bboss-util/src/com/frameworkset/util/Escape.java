@@ -119,7 +119,7 @@ public class Escape {
     }
     
     public static void main(String[] args) {
-        String stest = "–W";
+        String stest = "æœ©";
         System.out.println(stest);
         System.out.println(escape(stest));
         System.out.println(unescape(escape(stest)));

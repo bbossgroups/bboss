@@ -24,9 +24,9 @@ import org.frameworkset.spi.assemble.BeanAccembleHelper.LoopObject;
  *
  * <p>Description: 
  * This context is used to defend loopioc.
- * ÒÀÀµ×¢ÈëµÄÉÏÏÂÎÄĞÅÏ¢£¬
- * Èç¹û×¢ÈëÀàÓë±»×¢ÈëÀàÖ®¼ä´æÔÚÑ­»·×¢ÈëµÄÇé¿ö£¬ÔòÏµÍ³×Ô¶¯±¨´í£¬ÊÇ·ñ´æÔÚÑ­»·×¢Èë
- * ÊÇÍ¨¹ıÉÏÏÂÎÄĞÅÏ¢À´ÅĞ¶ÏµÄ
+ * ä¾èµ–æ³¨å…¥çš„ä¸Šä¸‹æ–‡ä¿¡æ¯ï¼Œ
+ * å¦‚æœæ³¨å…¥ç±»ä¸è¢«æ³¨å…¥ç±»ä¹‹é—´å­˜åœ¨å¾ªç¯æ³¨å…¥çš„æƒ…å†µï¼Œåˆ™ç³»ç»Ÿè‡ªåŠ¨æŠ¥é”™ï¼Œæ˜¯å¦å­˜åœ¨å¾ªç¯æ³¨å…¥
+ * æ˜¯é€šè¿‡ä¸Šä¸‹æ–‡ä¿¡æ¯æ¥åˆ¤æ–­çš„
  * 
  * 
  * 
@@ -37,14 +37,14 @@ import org.frameworkset.spi.assemble.BeanAccembleHelper.LoopObject;
  *
  * <p>bboss workgroup</p>
  * @Date Aug 14, 2008 4:37:33 PM
- * @author biaoping.yin,Òü±êÆ½
+ * @author biaoping.yin,å°¹æ ‡å¹³
  * @version 1.0
  */
 public class Context {
 	Context parent;
 	String refid;
 	/**
-	 * ±£´æÓ¦ÓÃµÄ
+	 * ä¿å­˜åº”ç”¨çš„
 	 */
 	private Object currentObj;
 	boolean isroot = false;

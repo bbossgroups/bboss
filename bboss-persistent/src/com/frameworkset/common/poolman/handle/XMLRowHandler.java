@@ -14,7 +14,7 @@ import com.frameworkset.orm.engine.model.SchemaType;
  * 
  * <p>Title: XMLRowHandler.java</p>
  *
- * <p>Description: xmlĞĞ´¦ÀíÆ÷</p>
+ * <p>Description: xmlè¡Œå¤„ç†å™¨</p>
  *
  * <p>Copyright: Copyright (c) 2007</p>
  *
@@ -26,13 +26,13 @@ import com.frameworkset.orm.engine.model.SchemaType;
 public class XMLRowHandler extends BaseRowHandler<StringBuffer> {
        
         /**
-         * rowValueÀàĞÍÎªStringBuffer
+         * rowValueç±»å‹ä¸ºStringBuffer
          */
 	public void handleRow(StringBuffer rowValue,Record origine) 
 	{
 	    if(meta == null)
             {
-                throw new RowHandlerException("Ô´Êı¾İ¶ÔÏó[meta]Î´³õÊ¼»¯,ÎŞ·¨½øĞĞĞĞ´¦Àí.");
+                throw new RowHandlerException("æºæ•°æ®å¯¹è±¡[meta]æœªåˆå§‹åŒ–,æ— æ³•è¿›è¡Œè¡Œå¤„ç†.");
             }
 	    StringBuffer record = (StringBuffer)rowValue;
 	    record.append("    <record>\r\n");
@@ -59,8 +59,8 @@ public class XMLRowHandler extends BaseRowHandler<StringBuffer> {
 //                                                    schemaType.getJavaType()).append("\"")
 //                                    .append(">\r\n")
 //                                    .append("\t\t\t<![CDATA[")
-//                                    // .append(ResultMap.getStringFromObject(object))//ĞèÒª×ª»»³ÉStringÀàĞÍ
-//                                    .append(object)// ĞèÒª×ª»»³ÉStringÀàĞÍ
+//                                    // .append(ResultMap.getStringFromObject(object))//éœ€è¦è½¬æ¢æˆStringç±»å‹
+//                                    .append(object)// éœ€è¦è½¬æ¢æˆStringç±»å‹
 //                                    .append("]]>\r\n").append(
 //                                                    "\t\t</column>");                                    
                     
@@ -75,8 +75,8 @@ public class XMLRowHandler extends BaseRowHandler<StringBuffer> {
 	
 	
 	/**
-	 * ·µ»Øxml´®µÄ¸ù½ÚµãÃû³Æ
-	 * È±Ê¡Îªrecords£¬ÓÃ»§¿ÉÒÔÀ©Õ¹Õâ¸ö·½·¨
+	 * è¿”å›xmlä¸²çš„æ ¹èŠ‚ç‚¹åç§°
+	 * ç¼ºçœä¸ºrecordsï¼Œç”¨æˆ·å¯ä»¥æ‰©å±•è¿™ä¸ªæ–¹æ³•
 	 * @return
 	 */
 	public String getRootName()
@@ -85,19 +85,19 @@ public class XMLRowHandler extends BaseRowHandler<StringBuffer> {
 	}
 	
 	/**
-         * ·µ»ØxmlµÄ±àÂë×Ö·û¼¯
-         * È±Ê¡Îªgb2312£¬ÓÃ»§¿ÉÒÔÀ©Õ¹Õâ¸ö·½·¨
+         * è¿”å›xmlçš„ç¼–ç å­—ç¬¦é›†
+         * ç¼ºçœä¸ºUTF-8ï¼Œç”¨æˆ·å¯ä»¥æ‰©å±•è¿™ä¸ªæ–¹æ³•
          * @return
          */
         public String getEncoding()
         {
-            return "gb2312";
+            return "UTF-8";
         }
         
         
         /**
-         * ·µ»ØxmlÓï·¨µÄ°æ±¾ºÅ
-         * È±Ê¡Îª1.0£¬ÓÃ»§¿ÉÒÔÀ©Õ¹Õâ¸ö·½·¨
+         * è¿”å›xmlè¯­æ³•çš„ç‰ˆæœ¬å·
+         * ç¼ºçœä¸º1.0ï¼Œç”¨æˆ·å¯ä»¥æ‰©å±•è¿™ä¸ªæ–¹æ³•
          * @return
          */
         public String getVersion()
@@ -130,7 +130,7 @@ public class XMLRowHandler extends BaseRowHandler<StringBuffer> {
 //                                                            .append("\"")
 //                                                            .append(">\r\n")
 //                                                            .append("\t\t\t<![CDATA[")                                                            
-//                                                            .append(value)// ĞèÒª×ª»»³ÉStringÀàĞÍ
+//                                                            .append(value)// éœ€è¦è½¬æ¢æˆStringç±»å‹
 //                                                            .append("]]>\r\n")
 //                                                            .append("\t\t</")
 //                                                            .append(columnNodeName)
@@ -167,7 +167,7 @@ public class XMLRowHandler extends BaseRowHandler<StringBuffer> {
           if(value != null)
           {
               record.append("\r\n\t    <![CDATA[")                                                            
-                      .append(value)// ĞèÒª×ª»»³ÉStringÀàĞÍ
+                      .append(value)// éœ€è¦è½¬æ¢æˆStringç±»å‹
                       .append("]]>\r\n")
                       .append("\t</")
                       .append(columnNodeName)

@@ -111,8 +111,8 @@ public class ListDataInfoFactory {
 		{
 			Object obj = map.get(type);
 			/**
-			 * Èç¹û¶ÔÓ¦µÄÀàÐÍÃ»ÓÐ¼ÓÔØ½øÀ´£¬Ôò¿ÉÖ´ÐÐÒÔÏÂµÄ´úÂë¼ÓÔØ£¬
-			 * Èç¹ûÀàÐÍÃ»ÓÐÔÚÊôÐÔÎÄ¼þÖÐÅäÖÃ£¬ÔòÌáÊ¾µ½treedata.propertiesÖÐ½øÐÐÅäÖÃ
+			 * å¦‚æžœå¯¹åº”çš„ç±»åž‹æ²¡æœ‰åŠ è½½è¿›æ¥ï¼Œåˆ™å¯æ‰§è¡Œä»¥ä¸‹çš„ä»£ç åŠ è½½ï¼Œ
+			 * å¦‚æžœç±»åž‹æ²¡æœ‰åœ¨å±žæ€§æ–‡ä»¶ä¸­é…ç½®ï¼Œåˆ™æç¤ºåˆ°treedata.propertiesä¸­è¿›è¡Œé…ç½®
 			 */
 			if(obj == null)
 			{

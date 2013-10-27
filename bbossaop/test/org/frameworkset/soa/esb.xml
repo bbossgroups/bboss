@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="gbk"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <esb>
 	<call>
 		<p n="soamethodcall" cs="org.frameworkset.soa.SOAMethodCall">

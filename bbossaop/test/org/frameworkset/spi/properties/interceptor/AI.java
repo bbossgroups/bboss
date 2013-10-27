@@ -22,7 +22,7 @@ package org.frameworkset.spi.properties.interceptor;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2010-1-28 ÏÂÎç10:21:27
+ * @Date 2010-1-28 ä¸‹åˆ10:21:27
  * @author biaoping.yin
  * @version 1.0
  */

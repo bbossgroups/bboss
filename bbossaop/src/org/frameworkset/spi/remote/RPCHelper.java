@@ -60,7 +60,7 @@ import bboss.org.jgroups.util.RspList;
  * Copyright (c) 2007
  * </p>
  * 
- * @Date 2009-4-20 ÏÂÎç05:28:32
+ * @Date 2009-4-20 ä¸‹åˆ05:28:32
  * @author biaoping.yin
  * @version 1.0
  */
@@ -139,24 +139,24 @@ public class RPCHelper
     public boolean httpenabled = false;
     public boolean webserviceenabled = false;
 
-    public Object rpcService(ServiceID serviceID,// ·şÎñ±êÊ¶
-            Method method,// ĞèÒªÔÚ·şÎñÉÏµ÷ÓÃµÄ·½·¨
-            Object[] parameters ,CallContext callContext// ·şÎñ²ÎÊı
+    public Object rpcService(ServiceID serviceID,// æœåŠ¡æ ‡è¯†
+            Method method,// éœ€è¦åœ¨æœåŠ¡ä¸Šè°ƒç”¨çš„æ–¹æ³•
+            Object[] parameters ,CallContext callContext// æœåŠ¡å‚æ•°
     ) throws Throwable
     {
 
         Target target = serviceID.getTarget();
-        return innerRpcService(serviceID,// ·şÎñ±êÊ¶
-                method,// ĞèÒªÔÚ·şÎñÉÏµ÷ÓÃµÄ·½·¨
-                parameters ,callContext,// ·şÎñ²ÎÊı
+        return innerRpcService(serviceID,// æœåŠ¡æ ‡è¯†
+                method,// éœ€è¦åœ¨æœåŠ¡ä¸Šè°ƒç”¨çš„æ–¹æ³•
+                parameters ,callContext,// æœåŠ¡å‚æ•°
                 target
         ) ;
     }
     
     
-    private Object innerRpcService(ServiceID serviceID,// ·şÎñ±êÊ¶
-            Method method,// ĞèÒªÔÚ·şÎñÉÏµ÷ÓÃµÄ·½·¨
-            Object[] parameters ,CallContext callContext,// ·şÎñ²ÎÊı
+    private Object innerRpcService(ServiceID serviceID,// æœåŠ¡æ ‡è¯†
+            Method method,// éœ€è¦åœ¨æœåŠ¡ä¸Šè°ƒç”¨çš„æ–¹æ³•
+            Object[] parameters ,CallContext callContext,// æœåŠ¡å‚æ•°
             Target target
     ) throws Throwable
     {
@@ -164,76 +164,76 @@ public class RPCHelper
 //        Target target = serviceID.getTarget();
         if (target.protocol_jgroup())
         {
-            return rpcJGroupService(serviceID,// ·şÎñ±êÊ¶
-                    method,// ĞèÒªÔÚ·şÎñÉÏµ÷ÓÃµÄ·½·¨
-                    parameters // ·şÎñ²ÎÊı
+            return rpcJGroupService(serviceID,// æœåŠ¡æ ‡è¯†
+                    method,// éœ€è¦åœ¨æœåŠ¡ä¸Šè°ƒç”¨çš„æ–¹æ³•
+                    parameters // æœåŠ¡å‚æ•°
                     ,callContext
             );
         }
         else if (target.protocol_mina())
         {
-            return rpcMinaService(serviceID,// ·şÎñ±êÊ¶
-                    method,// ĞèÒªÔÚ·şÎñÉÏµ÷ÓÃµÄ·½·¨
-                    parameters // ·şÎñ²ÎÊı
+            return rpcMinaService(serviceID,// æœåŠ¡æ ‡è¯†
+                    method,// éœ€è¦åœ¨æœåŠ¡ä¸Šè°ƒç”¨çš„æ–¹æ³•
+                    parameters // æœåŠ¡å‚æ•°
                     ,callContext
             );
         }
         else if (target.protocol_netty())
         {
-            return rpcNettyService(serviceID,// ·şÎñ±êÊ¶
-                    method,// ĞèÒªÔÚ·şÎñÉÏµ÷ÓÃµÄ·½·¨
-                    parameters // ·şÎñ²ÎÊı
+            return rpcNettyService(serviceID,// æœåŠ¡æ ‡è¯†
+                    method,// éœ€è¦åœ¨æœåŠ¡ä¸Šè°ƒç”¨çš„æ–¹æ³•
+                    parameters // æœåŠ¡å‚æ•°
                     ,callContext
             );
         }
         else if (target.protocol_jms())
         {
-//            throw new RemoteException("²»Ö§³ÖµÄĞ­ÒéÀàĞÍ [target][" + target.getStringTargets() + "]");
-        	return rpcJMSService( serviceID,// ·şÎñ±êÊ¶
-               	                      method,// ĞèÒªÔÚ·şÎñÉÏµ÷ÓÃµÄ·½·¨
-               	                      parameters // ·şÎñ²ÎÊı
+//            throw new RemoteException("ä¸æ”¯æŒçš„åè®®ç±»å‹ [target][" + target.getStringTargets() + "]");
+        	return rpcJMSService( serviceID,// æœåŠ¡æ ‡è¯†
+               	                      method,// éœ€è¦åœ¨æœåŠ¡ä¸Šè°ƒç”¨çš„æ–¹æ³•
+               	                      parameters // æœåŠ¡å‚æ•°
                	                   ,callContext
                	             );
         }
         else if (target.protocol_webservice())
         {
-        	return rpcWebServiceService( serviceID,// ·şÎñ±êÊ¶
-        	                      method,// ĞèÒªÔÚ·şÎñÉÏµ÷ÓÃµÄ·½·¨
-        	                      parameters // ·şÎñ²ÎÊı
+        	return rpcWebServiceService( serviceID,// æœåŠ¡æ ‡è¯†
+        	                      method,// éœ€è¦åœ¨æœåŠ¡ä¸Šè°ƒç”¨çš„æ–¹æ³•
+        	                      parameters // æœåŠ¡å‚æ•°
         	                      ,callContext
         	             );
-//            throw new RemoteException("²»Ö§³ÖµÄĞ­ÒéÀàĞÍ [target][" + target.getStringTargets() + "]");
+//            throw new RemoteException("ä¸æ”¯æŒçš„åè®®ç±»å‹ [target][" + target.getStringTargets() + "]");
         }
         
         else if (target.protocol_rmi())
         {
-        	return rpcRMIService( serviceID,// ·şÎñ±êÊ¶
-        	                      method,// ĞèÒªÔÚ·şÎñÉÏµ÷ÓÃµÄ·½·¨
-        	                      parameters // ·şÎñ²ÎÊı
+        	return rpcRMIService( serviceID,// æœåŠ¡æ ‡è¯†
+        	                      method,// éœ€è¦åœ¨æœåŠ¡ä¸Šè°ƒç”¨çš„æ–¹æ³•
+        	                      parameters // æœåŠ¡å‚æ•°
         	                      ,callContext
         	             );
-//            throw new RemoteException("²»Ö§³ÖµÄĞ­ÒéÀàĞÍ [target][" + target.getStringTargets() + "]");
+//            throw new RemoteException("ä¸æ”¯æŒçš„åè®®ç±»å‹ [target][" + target.getStringTargets() + "]");
         }
         else if (target.protocol_http())
         {
-        	return rpcHTTPService( serviceID,// ·şÎñ±êÊ¶
-        	                      method,// ĞèÒªÔÚ·şÎñÉÏµ÷ÓÃµÄ·½·¨
-        	                      parameters // ·şÎñ²ÎÊı
+        	return rpcHTTPService( serviceID,// æœåŠ¡æ ‡è¯†
+        	                      method,// éœ€è¦åœ¨æœåŠ¡ä¸Šè°ƒç”¨çš„æ–¹æ³•
+        	                      parameters // æœåŠ¡å‚æ•°
         	                      ,callContext
         	             );
-//            throw new RemoteException("²»Ö§³ÖµÄĞ­ÒéÀàĞÍ [target][" + target.getStringTargets() + "]");
+//            throw new RemoteException("ä¸æ”¯æŒçš„åè®®ç±»å‹ [target][" + target.getStringTargets() + "]");
         }
         else if (target.protocol_rest())
         {
-        	return rpcRestService( serviceID,// ·şÎñ±êÊ¶
-               	                      method,// ĞèÒªÔÚ·şÎñÉÏµ÷ÓÃµÄ·½·¨
-               	                      parameters // ·şÎñ²ÎÊı
+        	return rpcRestService( serviceID,// æœåŠ¡æ ‡è¯†
+               	                      method,// éœ€è¦åœ¨æœåŠ¡ä¸Šè°ƒç”¨çš„æ–¹æ³•
+               	                      parameters // æœåŠ¡å‚æ•°
                	                      ,callContext
                	             );
         }
         else 
         {
-            throw new RemoteException("²»Ö§³ÖµÄĞ­ÒéÀàĞÍ [target][" + target.getStringTargets() + "]");
+            throw new RemoteException("ä¸æ”¯æŒçš„åè®®ç±»å‹ [target][" + target.getStringTargets() + "]");
         }
     }
     
@@ -243,7 +243,7 @@ public class RPCHelper
     	
     	Target target = serviceID.getRestfulTarget();
     	/**
-    	 * ¹¹½¨ÌØ¶¨×é¼ş¹ÜÀíÈİÆ÷Ô¶³ÌÇëÇóµ÷ÓÃÉÏÏÂÎÄÖĞ²ÎÊıÍ·ĞÅÏ¢ºÍ°²È«ÉÏÏÂÎÄĞÅÏ¢
+    	 * æ„å»ºç‰¹å®šç»„ä»¶ç®¡ç†å®¹å™¨è¿œç¨‹è¯·æ±‚è°ƒç”¨ä¸Šä¸‹æ–‡ä¸­å‚æ•°å¤´ä¿¡æ¯å’Œå®‰å…¨ä¸Šä¸‹æ–‡ä¿¡æ¯
     	 * @fixed biaoping.yin 2010-10-11 begin
     	 */
     	ServiceID restServiceID = serviceID.getRestServiceID();
@@ -254,15 +254,15 @@ public class RPCHelper
     	/**
     	 * @fixed biaoping.yin 2010-10-11 end
     	 */
-    	 return innerRpcService(serviceID,// ·şÎñ±êÊ¶
-                 method,// ĞèÒªÔÚ·şÎñÉÏµ÷ÓÃµÄ·½·¨
-                 parameters ,callContext,// ·şÎñ²ÎÊı
+    	 return innerRpcService(serviceID,// æœåŠ¡æ ‡è¯†
+                 method,// éœ€è¦åœ¨æœåŠ¡ä¸Šè°ƒç”¨çš„æ–¹æ³•
+                 parameters ,callContext,// æœåŠ¡å‚æ•°
                  target
          ) ;
 	}
 
 	/**
-     * ½«Í¨ÓÃµØÖ·ÁĞ±í×ª»»ÎªjgroupµØÖ·ÁĞ±í
+     * å°†é€šç”¨åœ°å€åˆ—è¡¨è½¬æ¢ä¸ºjgroupåœ°å€åˆ—è¡¨
      * @param addresses
      * @return
      */
@@ -272,15 +272,15 @@ public class RPCHelper
     	for(RPCAddress address :addresses)
     	{
     		if(address.getOrigineAddress() == null)
-    			throw new IllegalArgumentException("address[" + address.getServer_uuid() + "]²»´æÔÚ.");
+    			throw new IllegalArgumentException("address[" + address.getServer_uuid() + "]ä¸å­˜åœ¨.");
     		ret.add((Address)address.getOrigineAddress());
     	}
     	return ret;
     }
 
-    private Object rpcJGroupService(ServiceID serviceID,// ·şÎñ±êÊ¶
-            Method method,// ĞèÒªÔÚ·şÎñÉÏµ÷ÓÃµÄ·½·¨
-            Object[] parameters // ·şÎñ²ÎÊı
+    private Object rpcJGroupService(ServiceID serviceID,// æœåŠ¡æ ‡è¯†
+            Method method,// éœ€è¦åœ¨æœåŠ¡ä¸Šè°ƒç”¨çš„æ–¹æ³•
+            Object[] parameters // æœåŠ¡å‚æ•°
             ,CallContext callContext
     ) throws Throwable
     {
@@ -320,9 +320,9 @@ public class RPCHelper
     }
 
     @SuppressWarnings("unchecked")
-    public Object rpcMinaService(ServiceID serviceID,// ·şÎñ±êÊ¶
-            Method method,// ĞèÒªÔÚ·şÎñÉÏµ÷ÓÃµÄ·½·¨
-            Object[] parameters // ·şÎñ²ÎÊı
+    public Object rpcMinaService(ServiceID serviceID,// æœåŠ¡æ ‡è¯†
+            Method method,// éœ€è¦åœ¨æœåŠ¡ä¸Šè°ƒç”¨çš„æ–¹æ³•
+            Object[] parameters // æœåŠ¡å‚æ•°
             ,CallContext callContext) throws Throwable
     {
 
@@ -373,16 +373,16 @@ public class RPCHelper
 //            //			
 //
 //        }
-	    	return _rpcService(serviceID,// ·şÎñ±êÊ¶
-	    	            method,// ĞèÒªÔÚ·şÎñÉÏµ÷ÓÃµÄ·½·¨
-	    	            parameters, // ·şÎñ²ÎÊı
+	    	return _rpcService(serviceID,// æœåŠ¡æ ‡è¯†
+	    	            method,// éœ€è¦åœ¨æœåŠ¡ä¸Šè°ƒç”¨çš„æ–¹æ³•
+	    	            parameters, // æœåŠ¡å‚æ•°
 	    	    		Target.BROADCAST_TYPE_MINA,callContext);
     }
     
     @SuppressWarnings("unchecked")
-    public Object rpcNettyService(ServiceID serviceID,// ·şÎñ±êÊ¶
-            Method method,// ĞèÒªÔÚ·şÎñÉÏµ÷ÓÃµÄ·½·¨
-            Object[] parameters // ·şÎñ²ÎÊı
+    public Object rpcNettyService(ServiceID serviceID,// æœåŠ¡æ ‡è¯†
+            Method method,// éœ€è¦åœ¨æœåŠ¡ä¸Šè°ƒç”¨çš„æ–¹æ³•
+            Object[] parameters // æœåŠ¡å‚æ•°
             ,CallContext callContext) throws Throwable
     {
 
@@ -433,9 +433,9 @@ public class RPCHelper
 //            //            
 //
 //        }
-            return _rpcService(serviceID,// ·şÎñ±êÊ¶
-                        method,// ĞèÒªÔÚ·şÎñÉÏµ÷ÓÃµÄ·½·¨
-                        parameters, // ·şÎñ²ÎÊı
+            return _rpcService(serviceID,// æœåŠ¡æ ‡è¯†
+                        method,// éœ€è¦åœ¨æœåŠ¡ä¸Šè°ƒç”¨çš„æ–¹æ³•
+                        parameters, // æœåŠ¡å‚æ•°
                         Target.BROADCAST_TYPE_NETTY,callContext);
     }
     
@@ -443,84 +443,84 @@ public class RPCHelper
     
     
     @SuppressWarnings("unchecked")
-    public Object rpcWebServiceService(ServiceID serviceID,// ·şÎñ±êÊ¶
-            Method method,// ĞèÒªÔÚ·şÎñÉÏµ÷ÓÃµÄ·½·¨
-            Object[] parameters // ·şÎñ²ÎÊı
+    public Object rpcWebServiceService(ServiceID serviceID,// æœåŠ¡æ ‡è¯†
+            Method method,// éœ€è¦åœ¨æœåŠ¡ä¸Šè°ƒç”¨çš„æ–¹æ³•
+            Object[] parameters // æœåŠ¡å‚æ•°
             ,CallContext callContext
     ) throws Throwable
     {
 
 
-	    	return _rpcService(serviceID,// ·şÎñ±êÊ¶
-	    	            method,// ĞèÒªÔÚ·şÎñÉÏµ÷ÓÃµÄ·½·¨
-	    	            parameters, // ·şÎñ²ÎÊı
+	    	return _rpcService(serviceID,// æœåŠ¡æ ‡è¯†
+	    	            method,// éœ€è¦åœ¨æœåŠ¡ä¸Šè°ƒç”¨çš„æ–¹æ³•
+	    	            parameters, // æœåŠ¡å‚æ•°
 	    	    		Target.BROADCAST_TYPE_WEBSERVICE,callContext);
     }
     
     @SuppressWarnings("unchecked")
-    public Object rpcJMSService(ServiceID serviceID,// ·şÎñ±êÊ¶
-            Method method,// ĞèÒªÔÚ·şÎñÉÏµ÷ÓÃµÄ·½·¨
-            Object[] parameters // ·şÎñ²ÎÊı
+    public Object rpcJMSService(ServiceID serviceID,// æœåŠ¡æ ‡è¯†
+            Method method,// éœ€è¦åœ¨æœåŠ¡ä¸Šè°ƒç”¨çš„æ–¹æ³•
+            Object[] parameters // æœåŠ¡å‚æ•°
             ,CallContext callContext
     ) throws Throwable
     {
 
 
-	    	return _rpcService(serviceID,// ·şÎñ±êÊ¶
-	    	            method,// ĞèÒªÔÚ·şÎñÉÏµ÷ÓÃµÄ·½·¨
-	    	            parameters, // ·şÎñ²ÎÊı
+	    	return _rpcService(serviceID,// æœåŠ¡æ ‡è¯†
+	    	            method,// éœ€è¦åœ¨æœåŠ¡ä¸Šè°ƒç”¨çš„æ–¹æ³•
+	    	            parameters, // æœåŠ¡å‚æ•°
 	    	    		Target.BROADCAST_TYPE_JMS,callContext);
     }
     
     @SuppressWarnings("unchecked")
-    public Object rpcRMIService(ServiceID serviceID,// ·şÎñ±êÊ¶
-            Method method,// ĞèÒªÔÚ·şÎñÉÏµ÷ÓÃµÄ·½·¨
-            Object[] parameters // ·şÎñ²ÎÊı
+    public Object rpcRMIService(ServiceID serviceID,// æœåŠ¡æ ‡è¯†
+            Method method,// éœ€è¦åœ¨æœåŠ¡ä¸Šè°ƒç”¨çš„æ–¹æ³•
+            Object[] parameters // æœåŠ¡å‚æ•°
             ,CallContext callContext
     ) throws Throwable
     {
 
 
-	    	return _rpcService(serviceID,// ·şÎñ±êÊ¶
-	    	            method,// ĞèÒªÔÚ·şÎñÉÏµ÷ÓÃµÄ·½·¨
-	    	            parameters, // ·şÎñ²ÎÊı
+	    	return _rpcService(serviceID,// æœåŠ¡æ ‡è¯†
+	    	            method,// éœ€è¦åœ¨æœåŠ¡ä¸Šè°ƒç”¨çš„æ–¹æ³•
+	    	            parameters, // æœåŠ¡å‚æ•°
 	    	    		Target.BROADCAST_TYPE_RMI,callContext);
     }
     
-    public Object rpcHTTPService(ServiceID serviceID,// ·şÎñ±êÊ¶
-            Method method,// ĞèÒªÔÚ·şÎñÉÏµ÷ÓÃµÄ·½·¨
-            Object[] parameters // ·şÎñ²ÎÊı
+    public Object rpcHTTPService(ServiceID serviceID,// æœåŠ¡æ ‡è¯†
+            Method method,// éœ€è¦åœ¨æœåŠ¡ä¸Šè°ƒç”¨çš„æ–¹æ³•
+            Object[] parameters // æœåŠ¡å‚æ•°
             ,CallContext callContext
     ) throws Throwable
     {
 
 
-	    	return _rpcService(serviceID,// ·şÎñ±êÊ¶
-	    	            method,// ĞèÒªÔÚ·şÎñÉÏµ÷ÓÃµÄ·½·¨
-	    	            parameters, // ·şÎñ²ÎÊı
+	    	return _rpcService(serviceID,// æœåŠ¡æ ‡è¯†
+	    	            method,// éœ€è¦åœ¨æœåŠ¡ä¸Šè°ƒç”¨çš„æ–¹æ³•
+	    	            parameters, // æœåŠ¡å‚æ•°
 	    	    		Target.BROADCAST_TYPE_HTTP,callContext);
     }
     
     @SuppressWarnings("unchecked")
-    public Object rpcEJBService(ServiceID serviceID,// ·şÎñ±êÊ¶
-            Method method,// ĞèÒªÔÚ·şÎñÉÏµ÷ÓÃµÄ·½·¨
-            Object[] parameters // ·şÎñ²ÎÊı
+    public Object rpcEJBService(ServiceID serviceID,// æœåŠ¡æ ‡è¯†
+            Method method,// éœ€è¦åœ¨æœåŠ¡ä¸Šè°ƒç”¨çš„æ–¹æ³•
+            Object[] parameters // æœåŠ¡å‚æ•°
             ,CallContext callContext
     ) throws Throwable
     {
 
 
-	    	return _rpcService(serviceID,// ·şÎñ±êÊ¶
-	    	            method,// ĞèÒªÔÚ·şÎñÉÏµ÷ÓÃµÄ·½·¨
-	    	            parameters, // ·şÎñ²ÎÊı
+	    	return _rpcService(serviceID,// æœåŠ¡æ ‡è¯†
+	    	            method,// éœ€è¦åœ¨æœåŠ¡ä¸Šè°ƒç”¨çš„æ–¹æ³•
+	    	            parameters, // æœåŠ¡å‚æ•°
 	    	    		Target.BROADCAST_TYPE_EJB,callContext);
     }
     
     
     @SuppressWarnings("unchecked")
-    public Object _rpcService(ServiceID serviceID,// ·şÎñ±êÊ¶
-            Method method,// ĞèÒªÔÚ·şÎñÉÏµ÷ÓÃµÄ·½·¨
-            Object[] parameters, // ·şÎñ²ÎÊı
+    public Object _rpcService(ServiceID serviceID,// æœåŠ¡æ ‡è¯†
+            Method method,// éœ€è¦åœ¨æœåŠ¡ä¸Šè°ƒç”¨çš„æ–¹æ³•
+            Object[] parameters, // æœåŠ¡å‚æ•°
     		String protocol,CallContext callContext) throws Throwable
     {
 
@@ -662,7 +662,7 @@ public class RPCHelper
     }
     
     /**
-     * ½«jgroupµÄ½á¹û¼¯×ª»»ÎªRPCResponseListµÄÍ¨ÓÃÀàĞÍ
+     * å°†jgroupçš„ç»“æœé›†è½¬æ¢ä¸ºRPCResponseListçš„é€šç”¨ç±»å‹
      * @param rsp_list
      * @return
      */
@@ -676,7 +676,7 @@ public class RPCHelper
     		Map<RPCAddress,RPCResponse> rsps_=new HashMap<RPCAddress,RPCResponse>();
     		for(Rsp rsp :rsps)
     		{
-    			//jgroupsµÄµØÖ·ÒÑÎ¨Ò»±êÊ¶Îª×¼
+    			//jgroupsçš„åœ°å€å·²å”¯ä¸€æ ‡è¯†ä¸ºå‡†
 //    			Address ipaddr = (Address)JGroupHelper.getJGroupHelper().getPhysicalAddress(rsp.getSender()); 
     			
                 RPCAddress rpcaddr = new RPCAddress(rsp.getSender().toString(),Target.BROADCAST_TYPE_JRGOUP);
@@ -718,8 +718,8 @@ public class RPCHelper
     }
 
     /**
-     * Æô¶¯¸÷Ğ­Òé·şÎñ£¬Ğ­ÒéÅäÖÃÔÚÎÄ¼ş£º org/frameworkset/spi/manager-rpc-service.xml
-     * rpc.startup.protocolÊôĞÔÖĞ <property name="rpc.startup.protocol"
+     * å¯åŠ¨å„åè®®æœåŠ¡ï¼Œåè®®é…ç½®åœ¨æ–‡ä»¶ï¼š org/frameworkset/spi/manager-rpc-service.xml
+     * rpc.startup.protocolå±æ€§ä¸­ <property name="rpc.startup.protocol"
      * value="mina,jgroup"/>
      */
 
@@ -886,7 +886,7 @@ public class RPCHelper
     public List<RPCAddress> getAllNodes(String protocol)
     {
         List<RPCAddress> nodes = null;
-        //Ä¿Ç°ÏµÍ³Ö»Ìá¹©Á½ÖÖĞ­ÒéÊµÏÖ£ºminaºÍjgroup
+        //ç›®å‰ç³»ç»Ÿåªæä¾›ä¸¤ç§åè®®å®ç°ï¼šminaå’Œjgroup
         if(protocol.equals(Target.BROADCAST_TYPE_JRGOUP))
         {
             try
@@ -909,9 +909,9 @@ public class RPCHelper
         }
         else
         {
-            //minaĞ­ÒéÖĞ±¾µØÎŞĞèÆô¶¯Ô¶³Ì·şÎñmina£¬¼´¿É»ñÈ¡Æä¼à¿ØµÄËùÓĞµÄÔ¶³Ì·şÎñÆ÷µØÖ·£¬ÕâÒ»µãºÍ
-            //jroup²»Ò»Ñù£¬jgroup±ØĞëÆô¶¯Ô¶³ÌjgroupĞ­Òé²ÅÄÜ»ñÈ¡µ½ËùÓĞµÄ·şÎñÆ÷µØÖ·
-            //»ñÈ¡µ½µÄÔ¶³ÌµØÖ·ÊÇ·ñ¿ÉÒÔÊ¹ÓÃ»¹ĞèÒª¶ÔµØÖ·½øĞĞĞ£Ñé²ÅĞĞ
+            //minaåè®®ä¸­æœ¬åœ°æ— éœ€å¯åŠ¨è¿œç¨‹æœåŠ¡minaï¼Œå³å¯è·å–å…¶ç›‘æ§çš„æ‰€æœ‰çš„è¿œç¨‹æœåŠ¡å™¨åœ°å€ï¼Œè¿™ä¸€ç‚¹å’Œ
+            //jroupä¸ä¸€æ ·ï¼Œjgroupå¿…é¡»å¯åŠ¨è¿œç¨‹jgroupåè®®æ‰èƒ½è·å–åˆ°æ‰€æœ‰çš„æœåŠ¡å™¨åœ°å€
+            //è·å–åˆ°çš„è¿œç¨‹åœ°å€æ˜¯å¦å¯ä»¥ä½¿ç”¨è¿˜éœ€è¦å¯¹åœ°å€è¿›è¡Œæ ¡éªŒæ‰è¡Œ
             nodes = Util.getAllAddress(protocol);
             if(nodes == null)
                 nodes = new ArrayList<RPCAddress>(0);
@@ -922,8 +922,8 @@ public class RPCHelper
     }
     
     /**
-     * Ğ£ÑéÔ¶³ÌµØÖ·£¬ÊÇ·ñ¿ÉÒÔÊ¹ÓÃ     * 
-     * Ä¿Ç°ÏµÍ³Ö»Ìá¹©Á½ÖÖĞ­ÒéÊµÏÖ£ºminaºÍjgroup
+     * æ ¡éªŒè¿œç¨‹åœ°å€ï¼Œæ˜¯å¦å¯ä»¥ä½¿ç”¨     * 
+     * ç›®å‰ç³»ç»Ÿåªæä¾›ä¸¤ç§åè®®å®ç°ï¼šminaå’Œjgroup
      * @param address
      * @return
      */
@@ -961,8 +961,8 @@ public class RPCHelper
     }
     
     /**
-     * Ğ£ÑéÔ¶³ÌµØÖ·£¬ÊÇ·ñ¿ÉÒÔÊ¹ÓÃ     * 
-     * Ä¿Ç°ÏµÍ³Ö»Ìá¹©Á½ÖÖĞ­ÒéÊµÏÖ£ºminaºÍjgroup
+     * æ ¡éªŒè¿œç¨‹åœ°å€ï¼Œæ˜¯å¦å¯ä»¥ä½¿ç”¨     * 
+     * ç›®å‰ç³»ç»Ÿåªæä¾›ä¸¤ç§åè®®å®ç°ï¼šminaå’Œjgroup
      * @param address
      * @return
      */
@@ -1000,10 +1000,10 @@ public class RPCHelper
     }
     
     /**
-     * ¸ù¾İÔ¶³Ìµ÷ÓÃÄ¿±êipµØÖ·ºÍ¶Ë¿Ú»ñÈ¡¶ÔÓ¦·şÎñÆ÷ÖĞ·µ»ØµÄ½á¹û
-     * ÊÊÓÃÓÚminaºÍjgroupĞ­Òé
-     * ÆäËûĞ­ÒéÓ¦¸ÃÍ¨¹ıÌØ¶¨Ğ­ÒéµÄ½Ó¿ÚºÍ´øĞ­ÒéµÄgetRPCResult·½·¨»ñÈ¡
-     * ¶ÔÓ¦·şÎñÆ÷µÄ½Ó¿Ú
+     * æ ¹æ®è¿œç¨‹è°ƒç”¨ç›®æ ‡ipåœ°å€å’Œç«¯å£è·å–å¯¹åº”æœåŠ¡å™¨ä¸­è¿”å›çš„ç»“æœ
+     * é€‚ç”¨äºminaå’Œjgroupåè®®
+     * å…¶ä»–åè®®åº”è¯¥é€šè¿‡ç‰¹å®šåè®®çš„æ¥å£å’Œå¸¦åè®®çš„getRPCResultæ–¹æ³•è·å–
+     * å¯¹åº”æœåŠ¡å™¨çš„æ¥å£
      * 
      * @param ip
      * @param port
@@ -1066,11 +1066,11 @@ public class RPCHelper
     }
     
     /**
-     * ¸ù¾İurlµØÖ·»ñÈ¡¶ÔÓ¦µÄ½á¹ûÖµ
+     * æ ¹æ®urlåœ°å€è·å–å¯¹åº”çš„ç»“æœå€¼
      * 
-     * @param url ¶ÔÓ¦µÄÔ¶³ÌµØÖ·url
-     * @param values ¶à²¥µ÷ÓÃ·µ»ØµÄ½á¹û¼¯
-     * @param protocol rpc¶ÔÓ¦µÄÔ¶³ÌĞ­Òé£¬
+     * @param url å¯¹åº”çš„è¿œç¨‹åœ°å€url
+     * @param values å¤šæ’­è°ƒç”¨è¿”å›çš„ç»“æœé›†
+     * @param protocol rpcå¯¹åº”çš„è¿œç¨‹åè®®ï¼Œ
      * @see org.frameworkset.remote.Target.BROADCAST_TYPE_MUTICAST
             org.frameworkset.remote.Target.BROADCAST_TYPE_UNICAST        
         org.frameworkset.remote.Target.BROADCAST_TYPE_JRGOUP    
@@ -1157,11 +1157,11 @@ public class RPCHelper
          
     }
     /**
-     * ¸ù¾İurlµØÖ·»ñÈ¡¶ÔÓ¦µÄ½á¹ûÖµ
+     * æ ¹æ®urlåœ°å€è·å–å¯¹åº”çš„ç»“æœå€¼
      * 
-     * @param url ¶ÔÓ¦µÄÔ¶³ÌµØÖ·url
-     * @param values ¶à²¥µ÷ÓÃ·µ»ØµÄ½á¹û¼¯
-     * @param protocol rpc¶ÔÓ¦µÄÔ¶³ÌĞ­Òé£¬
+     * @param url å¯¹åº”çš„è¿œç¨‹åœ°å€url
+     * @param values å¤šæ’­è°ƒç”¨è¿”å›çš„ç»“æœé›†
+     * @param protocol rpcå¯¹åº”çš„è¿œç¨‹åè®®ï¼Œ
      * @see org.frameworkset.remote.Target.BROADCAST_TYPE_MUTICAST
             org.frameworkset.remote.Target.BROADCAST_TYPE_UNICAST        
         org.frameworkset.remote.Target.BROADCAST_TYPE_JRGOUP    
@@ -1237,7 +1237,7 @@ public class RPCHelper
 
     public static ServiceID buildServiceID(Map<String,ServiceID> serviceids,String serviceid, int serviceType, String providertype,BaseApplicationContext applicationcontext)
     {
-        if(!serviceid.startsWith("(rest::"))//rest·ç¸ñµÄµØÖ·²»×ö»º³å
+        if(!serviceid.startsWith("(rest::"))//resté£æ ¼çš„åœ°å€ä¸åšç¼“å†²
         {
             String key = serviceid ;
             if(providertype != null)

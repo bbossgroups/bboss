@@ -18,7 +18,7 @@ git remote add origin https://github.com/bbossgroups/bboss-cms.git
 git push -u origin master
 
 ---------------------------------
-bboss-tablib¹ØÁª¹¤³Ì£º
+bboss-tablibå…³è”å·¥ç¨‹ï¼š
 ---------------------------------
 bboss-taglib->common_old_dbcp [frameworkset-pool.jar]
 bboss-taglib->bbossaop [bboss-aop.jar]
@@ -30,12 +30,12 @@ bboss-taglib<-cas server [frameworkset.jar]
 bboss-taglib<-portal [frameworkset.jar]
 bboss-taglib<-bboss-ws [frameworkset.jar]
 #######update function list since bbossgroups-3.6.2 begin###########
-±êÇ©list¡¢mapÈİÆ÷»º³å»úÖÆÍêÉÆ
-Ôö¼Ó¶Ôindex ºÍcolNameµÄ»º´æ´¦Àí
+æ ‡ç­¾listã€mapå®¹å™¨ç¼“å†²æœºåˆ¶å®Œå–„
+å¢åŠ å¯¹index å’ŒcolNameçš„ç¼“å­˜å¤„ç†
 
-Í¬Ê±SQLParamTag±êÇ©Ò³Ôö¼ÓcharsetÊôĞÔÓÃÀ´Ö¸¶¨¶ÔÓ¦µÄ×Ö·û±àÂë¼¯£¬
-<pg:sqlparam name="clobdata" value="<%=clobdata %>" type="clobfile" charset="GBK"/>
-Ê¹ÓÃµÄÊµÀıÈçÏÂ£º
+åŒæ—¶SQLParamTagæ ‡ç­¾é¡µå¢åŠ charsetå±æ€§ç”¨æ¥æŒ‡å®šå¯¹åº”çš„å­—ç¬¦ç¼–ç é›†ï¼Œ
+<pg:sqlparam name="clobdata" value="<%=clobdata %>" type="clobfile" charset="UTF-8"/>
+ä½¿ç”¨çš„å®ä¾‹å¦‚ä¸‹ï¼š
 <%
 	int object_id = 1;
 
@@ -49,7 +49,7 @@ bboss-taglib<-bboss-ws [frameworkset.jar]
 	java.io.File clobdata = new java.io.File("D:\\bbossgroups-3.5.1\\bboss-taglib\\readme.txt");
 	
 	
-	String sql = "update sqltest set created=#[created],clobdata=#[clobdata],blobdata=#[blobdata] where object_id=#[object_id]";//¶àÌõsqlÓï¾ä²Ù×÷clob£¬blob»áµ¼ÖÂÊı¾İ¿â¼ÇÂ¼ĞĞËø¶¨
+	String sql = "update sqltest set created=#[created],clobdata=#[clobdata],blobdata=#[blobdata] where object_id=#[object_id]";//å¤šæ¡sqlè¯­å¥æ“ä½œclobï¼Œblobä¼šå¯¼è‡´æ•°æ®åº“è®°å½•è¡Œé”å®š
 	
 	
 %>
@@ -59,78 +59,78 @@ bboss-taglib<-bboss-ws [frameworkset.jar]
 						<pg:sqlparam name="object_id" value="<%=object_id %>" type="int" />
 						<pg:sqlparam name="created" value="<%=created %>" type="timestamp" />
 						<pg:sqlparam name="blobdata" value="<%=blobdata %>" type="blobfile" />
-						<pg:sqlparam name="clobdata" value="<%=clobdata %>" type="clobfile" charset="GBK"/>
+						<pg:sqlparam name="clobdata" value="<%=clobdata %>" type="clobfile" charset="UTF-8"/>
 					</pg:batch>
 				</pg:statement>		
 </pg:batchutil>					
 #######update function list since bbossgroups-3.6 begin###########
-o list/map±êÇ©Ôö¼ÓsoftparserÊôĞÔ£¬Õë¶ÔsessionKey¡¢requestKey¡¢pagecontextKey½øĞĞclassdataListÊı¾İ¶ÔÏó»º´æ£¬
- ±ÜÃâÖØ¸´Ê¹ÓÃÊ±ÖØ¸´Éú³ÉÊı¾İ¶ÔÏó£¬Ä¬ÈÏÖµÎªtrue
-o ½â¾ömap±êÇ©Ö¸¶¨keycolName²»Æğ×÷ÓÃµÄbug
-o ±êÇ©¿â±í´ïÊ½ÖĞÔö¼ÓÁËcurrentcell£¬mapkeyÁ½¸ö±í´ïÊ½ÄÚÖÃ±äÁ¿£¬ËùÓĞ±í´ïÊ½ÄÚÖÃ¾ßÌåº¬ÒåÈçÏÂ£º
-rowid£º¿ÉÒÔÔÚ±í´ïÊ½ÖĞ»ñÈ¡µ±Ç°¼ÇÂ¼¼¯µÄĞĞºÅ£¬´øÒ³ÃæÆ«ÒÆÁ¿£¬Ç°Ãæ¿É´øÍâÃæ¼¯ºÏµÄË÷ÒıºÅ£¬Ë÷ÒıºÅ´Ó×îÍâ²ã¼¯ºÏÒÔ0¿ªÊ¼,ÒÀ´Î¼Ó1
-offset£ºÔÚ±í´ïÊ½ÖĞ»ñÈ¡µ±Ç°Ò³Ãæ¼ÇÂ¼µÄÆğÊ¼Î»ÖÃ£¬·ÖÒ³Ê±ÓĞÓÃ
-rowcount :±£´æ×Ü¼ÇÂ¼Êı
-pagesize£º±£´æµ±Ò³ÏÔÊ¾µÄ×î¶à¼ÍÂ¼Êı
-mapkey£º ±£´æmapµü´úµ±Ç°µÄkeyÖµ
-currentcell£º±£´ælist/arrayÑ­»·ÖĞµ±Ç°µÄÖµ
+o list/mapæ ‡ç­¾å¢åŠ softparserå±æ€§ï¼Œé’ˆå¯¹sessionKeyã€requestKeyã€pagecontextKeyè¿›è¡ŒclassdataListæ•°æ®å¯¹è±¡ç¼“å­˜ï¼Œ
+ é¿å…é‡å¤ä½¿ç”¨æ—¶é‡å¤ç”Ÿæˆæ•°æ®å¯¹è±¡ï¼Œé»˜è®¤å€¼ä¸ºtrue
+o è§£å†³mapæ ‡ç­¾æŒ‡å®škeycolNameä¸èµ·ä½œç”¨çš„bug
+o æ ‡ç­¾åº“è¡¨è¾¾å¼ä¸­å¢åŠ äº†currentcellï¼Œmapkeyä¸¤ä¸ªè¡¨è¾¾å¼å†…ç½®å˜é‡ï¼Œæ‰€æœ‰è¡¨è¾¾å¼å†…ç½®å…·ä½“å«ä¹‰å¦‚ä¸‹ï¼š
+rowidï¼šå¯ä»¥åœ¨è¡¨è¾¾å¼ä¸­è·å–å½“å‰è®°å½•é›†çš„è¡Œå·ï¼Œå¸¦é¡µé¢åç§»é‡ï¼Œå‰é¢å¯å¸¦å¤–é¢é›†åˆçš„ç´¢å¼•å·ï¼Œç´¢å¼•å·ä»æœ€å¤–å±‚é›†åˆä»¥0å¼€å§‹,ä¾æ¬¡åŠ 1
+offsetï¼šåœ¨è¡¨è¾¾å¼ä¸­è·å–å½“å‰é¡µé¢è®°å½•çš„èµ·å§‹ä½ç½®ï¼Œåˆ†é¡µæ—¶æœ‰ç”¨
+rowcount :ä¿å­˜æ€»è®°å½•æ•°
+pagesizeï¼šä¿å­˜å½“é¡µæ˜¾ç¤ºçš„æœ€å¤šçºªå½•æ•°
+mapkeyï¼š ä¿å­˜mapè¿­ä»£å½“å‰çš„keyå€¼
+currentcellï¼šä¿å­˜list/arrayå¾ªç¯ä¸­å½“å‰çš„å€¼
 
 #######update function list since bbossgroups-3.5.1 begin###########
-o bboss3.6.0·ÖÖ§Ïà¶ÔÓÚÖ®Ç°µÄ·ÖÖ§°æ±¾£¨bboss3.5.1·ÖÖ§ºÍmaster·ÖÖ§)µÄ×î´ó±ä»¯Îª£º
-¸ü»»cms.jarÖĞ³ÌĞò°üÂ·¾¶
-com.chinacreatorÎª
+o bboss3.6.0åˆ†æ”¯ç›¸å¯¹äºä¹‹å‰çš„åˆ†æ”¯ç‰ˆæœ¬ï¼ˆbboss3.5.1åˆ†æ”¯å’Œmasteråˆ†æ”¯)çš„æœ€å¤§å˜åŒ–ä¸ºï¼š
+æ›´æ¢cms.jarä¸­ç¨‹åºåŒ…è·¯å¾„
+com.chinacreatorä¸º
 com.frameworkset.platform
-ÕâÑù¾ÍºÍbboss-cms[https://github.com/bbossgroups/bboss-cms.git]¹¤³Ì±£³ÖÒ»ÖÂ
+è¿™æ ·å°±å’Œbboss-cms[https://github.com/bbossgroups/bboss-cms.git]å·¥ç¨‹ä¿æŒä¸€è‡´
 
-bboss3.5.1·ÖÖ§ºÍmaster·ÖÖ§ÈÎÈ»±£Áô¶Ôcom.chinacreatorµÄÖ§³Ö¡£
+bboss3.5.1åˆ†æ”¯å’Œmasteråˆ†æ”¯ä»»ç„¶ä¿ç•™å¯¹com.chinacreatorçš„æ”¯æŒã€‚
 
 #######update function list since bbossgroups-3.5 begin###########
-o cmsµ¼º½Ë÷ÒıÑùÊ½µ÷Õû£¬ÆµµÀµ¼º½µ÷Õû
-o ĞŞ¸´notempty±êÇ©µ±collection¼¯ºÏÔªËØÎª0Ê±²»ÄÜÕı³£¹¤×÷µÄÈ±Ïİ
-o treedata±êÇ©Ôö¼ÓrootNameCodeÊôĞÔÓÃÀ´Ö¸¶¨Ê÷¸ù½Úµã¹ú¼Ê»¯Ãû³Æ
-o titile±êÇ©Ôö¼ÓtitlecodeÊôĞÔ£º
-<!--±êÌâ¹ú¼Ê»¯´úÂë£¬Èç¹û´úÂëÔÚmvc¹ú¼Ê»¯Ïà¹ØÅäÖÃÎÄ¼şÖĞ²»´æÔÚ£¬ÔòÊä³öcode-->
+o cmså¯¼èˆªç´¢å¼•æ ·å¼è°ƒæ•´ï¼Œé¢‘é“å¯¼èˆªè°ƒæ•´
+o ä¿®å¤notemptyæ ‡ç­¾å½“collectioné›†åˆå…ƒç´ ä¸º0æ—¶ä¸èƒ½æ­£å¸¸å·¥ä½œçš„ç¼ºé™·
+o treedataæ ‡ç­¾å¢åŠ rootNameCodeå±æ€§ç”¨æ¥æŒ‡å®šæ ‘æ ¹èŠ‚ç‚¹å›½é™…åŒ–åç§°
+o titileæ ‡ç­¾å¢åŠ titlecodeå±æ€§ï¼š
+<!--æ ‡é¢˜å›½é™…åŒ–ä»£ç ï¼Œå¦‚æœä»£ç åœ¨mvcå›½é™…åŒ–ç›¸å…³é…ç½®æ–‡ä»¶ä¸­ä¸å­˜åœ¨ï¼Œåˆ™è¾“å‡ºcode-->
 		<attribute>
 			<name>titlecode</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
-o tabPane±êÇ©Ôö¼ÓtabTitleCodeÊôĞÔ
+o tabPaneæ ‡ç­¾å¢åŠ tabTitleCodeå±æ€§
 <!-- 
-		tabTitleCode:ÓÃÀ´Ö¸¶¨tab±êÌâµÄ¹ú¼Ê»¯code£¬Èç¹ûÖ¸¶¨ÁËtabTitleCodeÊôĞÔ£¬ÄÇÃ´¾Í´ÓmvcÅäÖÃµÄ¹ú¼Ê»¯
-		ÊôĞÔÎÄ¼şÖĞ»ñÈ¡¶ÔÓ¦µÄ¹ú¼Ê»¯´úÂëÊä³ö¡£
-		Èç¹ûÃ»ÓĞÖ¸¶¨ÏàÓ¦µÄcodeÊôĞÔ£¬ÄÇÃ´Êä³ötabTitle¶ÔÓ¦µÄÖµ£¬Èç¹ûtabTitleÒ²Ã»ÓĞÖ¸¶¨ÔòÖ±½ÓÔòÖ±½ÓÊä³ötabTitleCodeÊôĞÔ
+		tabTitleCode:ç”¨æ¥æŒ‡å®štabæ ‡é¢˜çš„å›½é™…åŒ–codeï¼Œå¦‚æœæŒ‡å®šäº†tabTitleCodeå±æ€§ï¼Œé‚£ä¹ˆå°±ä»mvcé…ç½®çš„å›½é™…åŒ–
+		å±æ€§æ–‡ä»¶ä¸­è·å–å¯¹åº”çš„å›½é™…åŒ–ä»£ç è¾“å‡ºã€‚
+		å¦‚æœæ²¡æœ‰æŒ‡å®šç›¸åº”çš„codeå±æ€§ï¼Œé‚£ä¹ˆè¾“å‡ºtabTitleå¯¹åº”çš„å€¼ï¼Œå¦‚æœtabTitleä¹Ÿæ²¡æœ‰æŒ‡å®šåˆ™ç›´æ¥åˆ™ç›´æ¥è¾“å‡ºtabTitleCodeå±æ€§
 		 -->
 		<attribute>
 			<name>tabTitleCode</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>		
-o ÓÅ»¯COMTreeºÍDataInfoImplÖĞ»ñÈ¡accesscontrol°²È«·ÃÎÊ¿ØÖÆ¶ÔÏóµÄ·½·¨£¬ÌáÉıĞÔÄÜ
-o ĞŞ¸ÄÔÚ·ÇjqueryÄ£Ê½ÏÂindex±êÇ©ÉèÖÃtagnumberÊôĞÔºó£¬ÏàÓ¦µÄÒ³ÂëÉÏÃæÃ»ÓĞ³¬Á´½ÓµÄbug
+o ä¼˜åŒ–COMTreeå’ŒDataInfoImplä¸­è·å–accesscontrolå®‰å…¨è®¿é—®æ§åˆ¶å¯¹è±¡çš„æ–¹æ³•ï¼Œæå‡æ€§èƒ½
+o ä¿®æ”¹åœ¨éjqueryæ¨¡å¼ä¸‹indexæ ‡ç­¾è®¾ç½®tagnumberå±æ€§åï¼Œç›¸åº”çš„é¡µç ä¸Šé¢æ²¡æœ‰è¶…é“¾æ¥çš„bug
 <pg:index tagnumber="5" sizescope="10,20,50,100"/>
-o ¸Ä½øbeaninfo£¬list±êÇ©Òì³£´¦Àí·½Ê½£¬½«ÏµÍ³¼¶Òì³£Êä³öµ½ÈÕÖ¾ÎÄ¼şÖĞ£¬ÈÕÖ¾¼¶±ğÎªinfo¼¶
-o index±êÇ©Ôö¼ÓusegoimageÊôĞÔ£¬ÎªtrueÊ±Ìø×ªµ½ºóÃæ½«³öÏÖgoÌõÆ¬°´Å¥£¬false²»³öÏÖ£¬Ä¬ÈÏ²»³öÏÖ
-±êÇ©¿â£ºconvert±êÇ©¸Ä½ø£¬Ö§³Ö¸÷ÖÖÀàĞÍµÄkey£¬Ö®Ç°Ö»Ö§³ÖStringÀàĞÍµÄkey£¬ÏÖÔÚÖ§³ÖÊı×ÖÀàĞÍµÄkey
-o cell±êÇ©Ôö¼ÓencodecountÊôĞÔ£¬ÓÃÀ´Ö¸¶¨ÓÃutf-8±àÂëÊä³öµÄ´ÎÊı£¬ÓĞĞ©Çé¿öÏÂĞèÒª±àÂë2´Î
-Ê¹ÓÃ·½·¨£º
-Ê×ÏÈ¼ì²écell±êÇ©ÖĞÊÇ·ñ°üº¬ÁËÒÔÏÂÊôĞÔ¶¨Òå£¬Èç¹ûÃ»ÓĞÔò¼Óµ½pager-taglib.tldÎÄ¼şÖĞ
+o æ”¹è¿›beaninfoï¼Œlistæ ‡ç­¾å¼‚å¸¸å¤„ç†æ–¹å¼ï¼Œå°†ç³»ç»Ÿçº§å¼‚å¸¸è¾“å‡ºåˆ°æ—¥å¿—æ–‡ä»¶ä¸­ï¼Œæ—¥å¿—çº§åˆ«ä¸ºinfoçº§
+o indexæ ‡ç­¾å¢åŠ usegoimageå±æ€§ï¼Œä¸ºtrueæ—¶è·³è½¬åˆ°åé¢å°†å‡ºç°goæ¡ç‰‡æŒ‰é’®ï¼Œfalseä¸å‡ºç°ï¼Œé»˜è®¤ä¸å‡ºç°
+æ ‡ç­¾åº“ï¼šconvertæ ‡ç­¾æ”¹è¿›ï¼Œæ”¯æŒå„ç§ç±»å‹çš„keyï¼Œä¹‹å‰åªæ”¯æŒStringç±»å‹çš„keyï¼Œç°åœ¨æ”¯æŒæ•°å­—ç±»å‹çš„key
+o cellæ ‡ç­¾å¢åŠ encodecountå±æ€§ï¼Œç”¨æ¥æŒ‡å®šç”¨utf-8ç¼–ç è¾“å‡ºçš„æ¬¡æ•°ï¼Œæœ‰äº›æƒ…å†µä¸‹éœ€è¦ç¼–ç 2æ¬¡
+ä½¿ç”¨æ–¹æ³•ï¼š
+é¦–å…ˆæ£€æŸ¥cellæ ‡ç­¾ä¸­æ˜¯å¦åŒ…å«äº†ä»¥ä¸‹å±æ€§å®šä¹‰ï¼Œå¦‚æœæ²¡æœ‰åˆ™åŠ åˆ°pager-taglib.tldæ–‡ä»¶ä¸­
 		<attribute>
 			<name>encodecount</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
-Ê¹ÓÃ·½·¨£º
- <a href="<%=request.getContextPath() %>/file/downloadFile.htm?fileName=<pg:cell encode="true" encodecount="2" colName="fileName"/>">ÏÂÔØ´ËÎÄ¼ş</a>
+ä½¿ç”¨æ–¹æ³•ï¼š
+ <a href="<%=request.getContextPath() %>/file/downloadFile.htm?fileName=<pg:cell encode="true" encodecount="2" colName="fileName"/>">ä¸‹è½½æ­¤æ–‡ä»¶</a>
  
- ·şÎñ¶Ë¿ØÖÆÆ÷·½·¨»ñÈ¡¸Ã²ÎÊıµÄ·½·¨£º
+ æœåŠ¡ç«¯æ§åˆ¶å™¨æ–¹æ³•è·å–è¯¥å‚æ•°çš„æ–¹æ³•ï¼š
  public @ResponseBody File downloadFile(@RequestParam(decodeCharset="UTF-8")
 	String fileName, HttpServletRequest request)	
-ÔÚRequestParam×¢½âÖĞÖ¸¶¨decodeCharsetÎªUTF-8¼´¿É
+åœ¨RequestParamæ³¨è§£ä¸­æŒ‡å®šdecodeCharsetä¸ºUTF-8å³å¯
 
-ĞŞ¸Ä³ÌĞò
+ä¿®æ”¹ç¨‹åº
 CellTag.java
 
-o ÍêÉÆ×Ö·û¹ıÂËÆ÷£¬utf-8±àÂëÊ±£¬get·½Ê½ÏÂ£¬ÔÚieä¯ÀÀÆ÷ÖĞ¿ÉÒÔ×Ô¶¯Ê¶±ğÖĞÎÄ²ÎÊı£¬ÎŞĞèÔÚjsÖĞescape±àÂë¼´¿É½â¾öÖĞÎÄÂÒÂëÎÊÌâ
-¿ÉÒÔÔÚ¹ıÂËÆ÷ÅäÖÃÖĞÖ¸¶¨checkiemodeldialog³õÊ¼»¯²ÎÊıÎªfalseÀ´½ûÓÃ¸Ã¹¦ÄÜ£¬Ä¬ÈÏÖµÎªfalse£¬Èç¹ûÒª¿ªÆôÔò¸ÄÎªtrue£º
+o å®Œå–„å­—ç¬¦è¿‡æ»¤å™¨ï¼Œutf-8ç¼–ç æ—¶ï¼Œgetæ–¹å¼ä¸‹ï¼Œåœ¨ieæµè§ˆå™¨ä¸­å¯ä»¥è‡ªåŠ¨è¯†åˆ«ä¸­æ–‡å‚æ•°ï¼Œæ— éœ€åœ¨jsä¸­escapeç¼–ç å³å¯è§£å†³ä¸­æ–‡ä¹±ç é—®é¢˜
+å¯ä»¥åœ¨è¿‡æ»¤å™¨é…ç½®ä¸­æŒ‡å®šcheckiemodeldialogåˆå§‹åŒ–å‚æ•°ä¸ºfalseæ¥ç¦ç”¨è¯¥åŠŸèƒ½ï¼Œé»˜è®¤å€¼ä¸ºfalseï¼Œå¦‚æœè¦å¼€å¯åˆ™æ”¹ä¸ºtrueï¼š
     <filter>  
         <filter-name>encodingFilter</filter-name>  
         <filter-class>com.frameworkset.common.filter.CharsetEncodingFilter</filter-class>
@@ -140,8 +140,8 @@ o ÍêÉÆ×Ö·û¹ıÂËÆ÷£¬utf-8±àÂëÊ±£¬get·½Ê½ÏÂ£¬ÔÚieä¯ÀÀÆ÷ÖĞ¿ÉÒÔ×Ô¶¯Ê¶±ğÖĞÎÄ²ÎÊı£¬ÎŞĞè
 	    </init-param>
 	    //other init parameters.
     </filter>  
-o BaseTagºÍBaseBodyTagÊµÏÖTryCatchFinally½Ó¿Ú
-o Âß¼­±È½Ï±êÇ©¸Ä½ø£¬³ıÁË½øĞĞ×Ö·û´®±È½ÏÍâ»¹ÄÜ½øĞĞÊı×Ö±È½Ï£¬Ö»ÒªÊµ¼ÊÖµÊÇÊı×ÖÓÅÏÈ½øĞĞÊı×Ö±È½Ï£¬±È½ÏÊ§°ÜºóÔÙ½øĞĞ×Ö·û´®±È½Ï
+o BaseTagå’ŒBaseBodyTagå®ç°TryCatchFinallyæ¥å£
+o é€»è¾‘æ¯”è¾ƒæ ‡ç­¾æ”¹è¿›ï¼Œé™¤äº†è¿›è¡Œå­—ç¬¦ä¸²æ¯”è¾ƒå¤–è¿˜èƒ½è¿›è¡Œæ•°å­—æ¯”è¾ƒï¼Œåªè¦å®é™…å€¼æ˜¯æ•°å­—ä¼˜å…ˆè¿›è¡Œæ•°å­—æ¯”è¾ƒï¼Œæ¯”è¾ƒå¤±è´¥åå†è¿›è¡Œå­—ç¬¦ä¸²æ¯”è¾ƒ
 LogicELMatch
 LogicEUMatch
 LogicLowerMatch
@@ -149,28 +149,28 @@ LogicMatchTag
 LogicNotMatchTag
 LogicUpperMatch
 
-Ä¿Ç°Ö»Ö§³ÖÊı×ÖºÍString£¬ÈÕÆÚÀàĞÍµÄ±È½Ï£¬¸´ÔÓÀàĞÍ²»ÄÜÊ¹ÓÃ¸Ä·½·¨½øĞĞ±È½Ï
+ç›®å‰åªæ”¯æŒæ•°å­—å’ŒStringï¼Œæ—¥æœŸç±»å‹çš„æ¯”è¾ƒï¼Œå¤æ‚ç±»å‹ä¸èƒ½ä½¿ç”¨æ”¹æ–¹æ³•è¿›è¡Œæ¯”è¾ƒ
 
 #######update function list since bbossgroups-3.4 begin###########
 ------2011-12-11------------
-o ¸üĞÂ×îĞÂµÄframeworkset-util.jar£¬cell±êÇ©¶ÁÈ¡µÄbeanµÄÊôĞÔ²»ÔÙĞèÒªget·½·¨
+o æ›´æ–°æœ€æ–°çš„frameworkset-util.jarï¼Œcellæ ‡ç­¾è¯»å–çš„beançš„å±æ€§ä¸å†éœ€è¦getæ–¹æ³•
 ------2011-11-20------------
-o µ÷Õûjquery-1.4.2.min.jsµÄload·½·¨Ö§³ÖÊı×é²ÎÊıµÄ´«µİ
-o µ÷Õûpager.jsµÄloadPageContent·½·¨Ö§³ÖÊı×é²ÎÊıµÄ´«µİ
-o ·ÖÒ³²ÎÊı´«µİÖ§³Ömap£¬beanÖĞ°üº¬Êı¾İ²ÎÊı´«µİ£¬Ö§³ÖÊı×é²ÎÊı´«µİ£¬Í¨¹ıÒÔÏÂ±êÇ©ÊµÏÖ£º
-params±êÇ©£º<pg:params name="userName" />
-beanparams±êÇ©£º<pg:beanparams name="user"/>
+o è°ƒæ•´jquery-1.4.2.min.jsçš„loadæ–¹æ³•æ”¯æŒæ•°ç»„å‚æ•°çš„ä¼ é€’
+o è°ƒæ•´pager.jsçš„loadPageContentæ–¹æ³•æ”¯æŒæ•°ç»„å‚æ•°çš„ä¼ é€’
+o åˆ†é¡µå‚æ•°ä¼ é€’æ”¯æŒmapï¼Œbeanä¸­åŒ…å«æ•°æ®å‚æ•°ä¼ é€’ï¼Œæ”¯æŒæ•°ç»„å‚æ•°ä¼ é€’ï¼Œé€šè¿‡ä»¥ä¸‹æ ‡ç­¾å®ç°ï¼š
+paramsæ ‡ç­¾ï¼š<pg:params name="userName" />
+beanparamsæ ‡ç­¾ï¼š<pg:beanparams name="user"/>
 
-Èç¹ûÒªÊ¹ÓÃÕâÁ½¸ö±êÇ©£¬ĞèÒª¸üĞÂÒÔÏÂ³ÌĞò£º
+å¦‚æœè¦ä½¿ç”¨è¿™ä¸¤ä¸ªæ ‡ç­¾ï¼Œéœ€è¦æ›´æ–°ä»¥ä¸‹ç¨‹åºï¼š
 /WEB-INF/lib/frameworkset.jar
 /include/jquery-1.4.2.min.js
 /include/pager.js
 
 
-Í¬Ê±ĞèÒª¼ì²épager-taglib.tldÖĞÊÇ·ñ¶¨ÒåÁËÒ»ÏÂparams±êÇ©ºÍbeanparams±êÇ©£º
+åŒæ—¶éœ€è¦æ£€æŸ¥pager-taglib.tldä¸­æ˜¯å¦å®šä¹‰äº†ä¸€ä¸‹paramsæ ‡ç­¾å’Œbeanparamsæ ‡ç­¾ï¼š
 
 <!--
-		¹¦ÄÜËµÃ÷£ºÎª·ÖÒ³ÁĞ±í±êÇ©ÖĞ×Ô¶¯ÉèÖÃµÄ³¬Á´½ÓÌí¼Ó²ÎÊıÊı×é
+		åŠŸèƒ½è¯´æ˜ï¼šä¸ºåˆ†é¡µåˆ—è¡¨æ ‡ç­¾ä¸­è‡ªåŠ¨è®¾ç½®çš„è¶…é“¾æ¥æ·»åŠ å‚æ•°æ•°ç»„
 	-->
 	<tag>
 		<name>params</name>
@@ -194,7 +194,7 @@ beanparams±êÇ©£º<pg:beanparams name="user"/>
 	
 	
 	<!--
-		¹¦ÄÜËµÃ÷£ºÎª·ÖÒ³ÁĞ±í±êÇ©ÖĞ×Ô¶¯ÉèÖÃµÄ³¬Á´½ÓÌí¼Ó²ÎÊı£¬²ÎÊıÀ´×Ôjava¶ÔÏóÊôĞÔ»òÕßMapÖĞ¼üÖµ¶Ô
+		åŠŸèƒ½è¯´æ˜ï¼šä¸ºåˆ†é¡µåˆ—è¡¨æ ‡ç­¾ä¸­è‡ªåŠ¨è®¾ç½®çš„è¶…é“¾æ¥æ·»åŠ å‚æ•°ï¼Œå‚æ•°æ¥è‡ªjavaå¯¹è±¡å±æ€§æˆ–è€…Mapä¸­é”®å€¼å¯¹
 	-->
 	<tag>
 		<name>beanparams</name>
@@ -216,28 +216,28 @@ beanparams±êÇ©£º<pg:beanparams name="user"/>
 		</attribute>
 	</tag>
 ------2011-11-18------------
-o Ôö¼Óparams,beanparams±êÇ©
-params:Îª·ÖÒ³ÁĞ±í±êÇ©ÖĞ×Ô¶¯ÉèÖÃµÄ³¬Á´½ÓÌí¼Ó²ÎÊıÊı×é
-beanparams:Îª·ÖÒ³ÁĞ±í±êÇ©ÖĞ×Ô¶¯ÉèÖÃµÄ³¬Á´½ÓÌí¼Ó²ÎÊı£¬²ÎÊıÀ´×Ôjava¶ÔÏóÊôĞÔ»òÕßMapÖĞ¼üÖµ¶Ô
-beanÊôĞÔ¿ÉÒÔÖ¸¶¨com.frameworkset.common.tag.pager.IgnoreParam×¢½â£¬beanparams±êÇ©»áºöÂÔ´øÓĞ
-IgnoreParam×¢½âµÄÊôĞÔ
+o å¢åŠ params,beanparamsæ ‡ç­¾
+params:ä¸ºåˆ†é¡µåˆ—è¡¨æ ‡ç­¾ä¸­è‡ªåŠ¨è®¾ç½®çš„è¶…é“¾æ¥æ·»åŠ å‚æ•°æ•°ç»„
+beanparams:ä¸ºåˆ†é¡µåˆ—è¡¨æ ‡ç­¾ä¸­è‡ªåŠ¨è®¾ç½®çš„è¶…é“¾æ¥æ·»åŠ å‚æ•°ï¼Œå‚æ•°æ¥è‡ªjavaå¯¹è±¡å±æ€§æˆ–è€…Mapä¸­é”®å€¼å¯¹
+beanå±æ€§å¯ä»¥æŒ‡å®šcom.frameworkset.common.tag.pager.IgnoreParamæ³¨è§£ï¼Œbeanparamsæ ‡ç­¾ä¼šå¿½ç•¥å¸¦æœ‰
+IgnoreParamæ³¨è§£çš„å±æ€§
 
 ------2011-11-2------------
-o ĞŞ¸Äcovert±êÇ©¿ÕÖ¸ÕëÒì³£
+o ä¿®æ”¹covertæ ‡ç­¾ç©ºæŒ‡é’ˆå¼‚å¸¸
 
 
 #######update function list since bbossgroups-3.3 begin###########
 ------2011-10-14------------
-o ÍêÉÆconvert±êÇ©£¬½«ÖµÈ«²¿×ª»»Îª×Ö·û´®£¬Ö»ÔÊĞíMap¶ÔÏóÖĞ´æ·ÅµÄÊı¾İµÄkeyÊÇ×Ö·û´®
-o ÍêÉÆcell±êÇ©¼°Æä×Ó±êÇ©ĞÔÄÜ£¬¸Ä½øÊ¹ÓÃ·´Éä»úÖÆµÄ·½·¨
+o å®Œå–„convertæ ‡ç­¾ï¼Œå°†å€¼å…¨éƒ¨è½¬æ¢ä¸ºå­—ç¬¦ä¸²ï¼Œåªå…è®¸Mapå¯¹è±¡ä¸­å­˜æ”¾çš„æ•°æ®çš„keyæ˜¯å­—ç¬¦ä¸²
+o å®Œå–„cellæ ‡ç­¾åŠå…¶å­æ ‡ç­¾æ€§èƒ½ï¼Œæ”¹è¿›ä½¿ç”¨åå°„æœºåˆ¶çš„æ–¹æ³•
 #######update function list since bbossgroups-3.2 begin###########
 ------2011-08-06------------
-o ±êÇ©¿âcell±êÇ©£¬Âß¼­±êÇ©µÄexpressionºÍexpressionValue±í´ïÊ½ÖĞÔö¼Órowcount±äÁ¿µÄÖ§³Ö
+o æ ‡ç­¾åº“cellæ ‡ç­¾ï¼Œé€»è¾‘æ ‡ç­¾çš„expressionå’ŒexpressionValueè¡¨è¾¾å¼ä¸­å¢åŠ rowcountå˜é‡çš„æ”¯æŒ
 ------2011-07-31------------
-o Ôö¼ÓmapºÍmapkeyÁ½¸ö±êÇ©£¬ÓÃÀ´Ñ­»·µü´úÕ¹Ê¾mapÖĞµÄvalue¶ÔÏóÖµ»òÕßvalue¶ÔÏóÖĞµÄÊı¾İÖµÒÔ¼°mapkeyÖµ
-Ê¹ÓÃ·½·¨ÈçÏÂ£º
+o å¢åŠ mapå’Œmapkeyä¸¤ä¸ªæ ‡ç­¾ï¼Œç”¨æ¥å¾ªç¯è¿­ä»£å±•ç¤ºmapä¸­çš„valueå¯¹è±¡å€¼æˆ–è€…valueå¯¹è±¡ä¸­çš„æ•°æ®å€¼ä»¥åŠmapkeyå€¼
+ä½¿ç”¨æ–¹æ³•å¦‚ä¸‹ï¼š
 <table>
-	    <h3>map<String,po>¶ÔÏóĞÅÏ¢µü´ú¹¦ÄÜ</h3>
+	    <h3>map<String,po>å¯¹è±¡ä¿¡æ¯è¿­ä»£åŠŸèƒ½</h3>
 		<pg:map requestKey="mapbeans">
 		
 			<tr class="cms_data_tr">
@@ -257,7 +257,7 @@ o Ôö¼ÓmapºÍmapkeyÁ½¸ö±êÇ©£¬ÓÃÀ´Ñ­»·µü´úÕ¹Ê¾mapÖĞµÄvalue¶ÔÏóÖµ»òÕßvalue¶ÔÏóÖĞµÄÊı
 	</table>
 	
 	<table>
-	    <h3>map<String,String>×Ö·û´®ĞÅÏ¢µü´ú¹¦ÄÜ</h3>
+	    <h3>map<String,String>å­—ç¬¦ä¸²ä¿¡æ¯è¿­ä»£åŠŸèƒ½</h3>
 		<pg:map requestKey="mapstrings">
 		
 			<tr class="cms_data_tr">
@@ -274,20 +274,20 @@ o Ôö¼ÓmapºÍmapkeyÁ½¸ö±êÇ©£¬ÓÃÀ´Ñ­»·µü´úÕ¹Ê¾mapÖĞµÄvalue¶ÔÏóÖµ»òÕßvalue¶ÔÏóÖĞµÄÊı
 		
 	</table>
 ------2011-07-19------------
-o cell±êÇ©Ìá¹©actualÊôĞÔ£¬¿ÉÒÔÖ±½ÓÊä³ö¸ÄÊôĞÔÉè¶¨µÄÖµ£¬Öµ¿ÉÒÔÎªel±í´ïÊ½µÄÖµ
+o cellæ ‡ç­¾æä¾›actualå±æ€§ï¼Œå¯ä»¥ç›´æ¥è¾“å‡ºæ”¹å±æ€§è®¾å®šçš„å€¼ï¼Œå€¼å¯ä»¥ä¸ºelè¡¨è¾¾å¼çš„å€¼
 ------2011-07-13------------
-o ĞŞ¸ÄemptyºÍnotemptyÁ½¸öÂß¼­±êÇ©Ôö¼Ó¶ÔCollectionºÍMap¶ÔÏóµÄÎªemptyÅĞ¶ÏÖ§³Ö
-o ĞŞ¸Ärowcount±êÇ©£¬È¥³ı¶àÓàµÄ¿Õ¸ñ
-o ÍêÉÆ±êÇ©ÅÅĞò¹¦ÄÜ²¹¶¡
-Ôö¼ÓÏàÓ¦µÄÖ¸Ê¾¼ıÍ·£¬±êÊ¶ÉıĞòºÍ½µĞò
-Ïà¹ØÎÄ¼ş
+o ä¿®æ”¹emptyå’Œnotemptyä¸¤ä¸ªé€»è¾‘æ ‡ç­¾å¢åŠ å¯¹Collectionå’ŒMapå¯¹è±¡çš„ä¸ºemptyåˆ¤æ–­æ”¯æŒ
+o ä¿®æ”¹rowcountæ ‡ç­¾ï¼Œå»é™¤å¤šä½™çš„ç©ºæ ¼
+o å®Œå–„æ ‡ç­¾æ’åºåŠŸèƒ½è¡¥ä¸
+å¢åŠ ç›¸åº”çš„æŒ‡ç¤ºç®­å¤´ï¼Œæ ‡è¯†å‡åºå’Œé™åº
+ç›¸å…³æ–‡ä»¶
 /bboss-mvc/WebRoot/include/pager.css
 WebRoot\WEB-INF\lib\frameworkset.jar
-¾ßÌåµÄÊ¹ÓÃ·½·¨²Î¿¼¡¶»ùÓÚ»ù´¡¿ò¼Ü¿ª·¢Ô¼¶¨.doc¡·ÖĞµÄÕÂ½Ú3.5	·ÖÒ³×Ö¶ÎÅÅĞòÉè¶¨
+å…·ä½“çš„ä½¿ç”¨æ–¹æ³•å‚è€ƒã€ŠåŸºäºåŸºç¡€æ¡†æ¶å¼€å‘çº¦å®š.docã€‹ä¸­çš„ç« èŠ‚3.5	åˆ†é¡µå­—æ®µæ’åºè®¾å®š
 
 #######update function list since bbossgroups-3.1 begin###########
 ------2011-06-04------------
-o Âß¼­±êÇ©¿ÉÒÔ¶ÀÁ¢ÓÚlistºÍbeaninfo±êÇ©Ê¹ÓÃ,Ôö¼ÓÒÔÏÂÊôĞÔ£º
+o é€»è¾‘æ ‡ç­¾å¯ä»¥ç‹¬ç«‹äºlistå’Œbeaninfoæ ‡ç­¾ä½¿ç”¨,å¢åŠ ä»¥ä¸‹å±æ€§ï¼š
 		<attribute>
 			<name>requestKey</name>
 			<rtexprvalue>true</rtexprvalue>
@@ -308,52 +308,52 @@ o Âß¼­±êÇ©¿ÉÒÔ¶ÀÁ¢ÓÚlistºÍbeaninfo±êÇ©Ê¹ÓÃ,Ôö¼ÓÒÔÏÂÊôĞÔ£º
 			<name>actual</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
-Í¨¹ıÒÔÉÏÊôĞÔ£¬¿ÉÒÔ·½±ãµØÖÆ¶¨Âß¼­±êÇ©µÄÆÚÍûÖµ£¬
-requestKey£ºÖ¸¶¨´ÓrequestµÄattributeÊôĞÔÖĞ»ñÈ¡Êµ¼ÊÖµ£¬
-sessionKey£ºÖ¸¶¨´ÓsessionµÄattributeÊôĞÔÖĞ»ñÈ¡Êµ¼ÊÖµ£¬
-pageContextKey£ºÖ¸¶¨´ÓpageContextµÄattributeÊôĞÔÖĞ»ñÈ¡Êµ¼ÊÖµ£¬
-parameter:Ö¸¶¨´ÓrequestµÄparameterÖĞ»ñÈ¡Êµ¼ÊÖµ
-actual:Ö±½ÓÖ¸¶¨Êµ¼ÊÖµ£¬¿ÉÒÔÊÇ¾ßÌåµÄÖµ£¬Ò²¿ÉÒÔÊÇÒ»¸öel±äÁ¿
-ÉÏÊöÊôĞÔ»¹¿ÉÒÔºÍpropertyÊôĞÔ½áºÏÆğÀ´»ñÈ¡Öµ¶ÔÏóÖĞµÄÊôĞÔÖµ
+é€šè¿‡ä»¥ä¸Šå±æ€§ï¼Œå¯ä»¥æ–¹ä¾¿åœ°åˆ¶å®šé€»è¾‘æ ‡ç­¾çš„æœŸæœ›å€¼ï¼Œ
+requestKeyï¼šæŒ‡å®šä»requestçš„attributeå±æ€§ä¸­è·å–å®é™…å€¼ï¼Œ
+sessionKeyï¼šæŒ‡å®šä»sessionçš„attributeå±æ€§ä¸­è·å–å®é™…å€¼ï¼Œ
+pageContextKeyï¼šæŒ‡å®šä»pageContextçš„attributeå±æ€§ä¸­è·å–å®é™…å€¼ï¼Œ
+parameter:æŒ‡å®šä»requestçš„parameterä¸­è·å–å®é™…å€¼
+actual:ç›´æ¥æŒ‡å®šå®é™…å€¼ï¼Œå¯ä»¥æ˜¯å…·ä½“çš„å€¼ï¼Œä¹Ÿå¯ä»¥æ˜¯ä¸€ä¸ªelå˜é‡
+ä¸Šè¿°å±æ€§è¿˜å¯ä»¥å’Œpropertyå±æ€§ç»“åˆèµ·æ¥è·å–å€¼å¯¹è±¡ä¸­çš„å±æ€§å€¼
 ------2011-06-04------------
-o requestºÍsession±êÇ©Ôö¼ÓÈÕÆÚdateformat¸ñÊ½ÊôĞÔ
+o requestå’Œsessionæ ‡ç­¾å¢åŠ æ—¥æœŸdateformatæ ¼å¼å±æ€§
 
 ------2011-06-03------------
-o ĞŞ¸´config±êÇ©enablecontextmenuÊôĞÔ²»ÄÜÕı³£¹¤×÷µÄÂ©¶´
+o ä¿®å¤configæ ‡ç­¾enablecontextmenuå±æ€§ä¸èƒ½æ­£å¸¸å·¥ä½œçš„æ¼æ´
 ------2011-05-26------------
-o ĞÂÔöemptyºÍnotemptyÁ½¸öÂß¼­±êÇ©Ê¹ÓÃ·½·¨ºÍnull¡¢notnullÒ»Ñù
-emptyÅĞ¶ÏÖ¸¶¨µÄ×Ö¶ÎµÄÖµÊÇ·ñÊÇnull£¬»òÕß¿Õ´®£¬Èç¹ûÌõ¼ş³ÉÁ¢£¬ÔòÖ´ĞĞ±êÇ©ÌåÖĞµÄÂß¼­
-notemptyÅĞ¶ÏÖ¸¶¨µÄ×Ö¶ÎµÄÖµ¼È²»ÊÇnullÒ²²»ÊÇ¿Õ´®£¬ÔòÖ´ĞĞ±êÇ©ÌåµÃÄÚÈİ
+o æ–°å¢emptyå’Œnotemptyä¸¤ä¸ªé€»è¾‘æ ‡ç­¾ä½¿ç”¨æ–¹æ³•å’Œnullã€notnullä¸€æ ·
+emptyåˆ¤æ–­æŒ‡å®šçš„å­—æ®µçš„å€¼æ˜¯å¦æ˜¯nullï¼Œæˆ–è€…ç©ºä¸²ï¼Œå¦‚æœæ¡ä»¶æˆç«‹ï¼Œåˆ™æ‰§è¡Œæ ‡ç­¾ä½“ä¸­çš„é€»è¾‘
+notemptyåˆ¤æ–­æŒ‡å®šçš„å­—æ®µçš„å€¼æ—¢ä¸æ˜¯nullä¹Ÿä¸æ˜¯ç©ºä¸²ï¼Œåˆ™æ‰§è¡Œæ ‡ç­¾ä½“å¾—å†…å®¹
 ------2011-05-24------------
-o ĞŞ¸ÄnullºÍnotnull±êÇ©²»ÄÜÕıÈ·¹¤×÷µÄÎÊÌâ
-o ĞŞ¸´detail±êÇ©µÄÌáÊ¾ĞÅÏ¢²»ÊÇºÜÕıÈ·µÄÎÊÌâ£»
+o ä¿®æ”¹nullå’Œnotnullæ ‡ç­¾ä¸èƒ½æ­£ç¡®å·¥ä½œçš„é—®é¢˜
+o ä¿®å¤detailæ ‡ç­¾çš„æç¤ºä¿¡æ¯ä¸æ˜¯å¾ˆæ­£ç¡®çš„é—®é¢˜ï¼›
 
 #######update function list since bbossgroups-3.1 end###########
 
 
 #######update function list since bbossgroups-3.0 begin###########
-to do list£º
-Âß¼­±êÇ©Í¨ÓÃ»¯£¬²»¾ÖÏŞÓëlist±êÇ©ÖĞÊ¹ÓÃ
-ÔËĞĞ±êÇ©¿âµÄ×îĞ¡ÒÀÀµ°üÕûÀí
+to do listï¼š
+é€»è¾‘æ ‡ç­¾é€šç”¨åŒ–ï¼Œä¸å±€é™ä¸listæ ‡ç­¾ä¸­ä½¿ç”¨
+è¿è¡Œæ ‡ç­¾åº“çš„æœ€å°ä¾èµ–åŒ…æ•´ç†
 ------2011-04-25------------
-o ĞŞ¸Ä×Ö·û´®¹ıÂËÆ÷£¬½â¾öjquery»òÕßajaxÊı¾İÇëÇóÊ±£¬·ÖÒ³²éÑ¯µÄÖĞÎÄÂÒÂëÎÊÌâ£¬¸Ä½ø×Ö·û´®¹ıÂËÆ÷µÄĞÔÄÜ
+o ä¿®æ”¹å­—ç¬¦ä¸²è¿‡æ»¤å™¨ï¼Œè§£å†³jqueryæˆ–è€…ajaxæ•°æ®è¯·æ±‚æ—¶ï¼Œåˆ†é¡µæŸ¥è¯¢çš„ä¸­æ–‡ä¹±ç é—®é¢˜ï¼Œæ”¹è¿›å­—ç¬¦ä¸²è¿‡æ»¤å™¨çš„æ€§èƒ½
 ------2011-04-20------------
-o ĞÂÔöconvert±êÇ©£¬Ö§³Ö×ÖµäÊı¾İÖµÏòÃû³ÆµÄ×ª»»
-ÆäÖĞµÄdatasÎªÒ»¸ömapÊôĞÔÓ³ÉäÖµ£¬name¶ÔÓ¦ÓÚkey£¬convert±êÇ©Í¨¹ıname»ñÈ¡µ½¶ÔÓ¦µÄÊôĞÔÖµ
-È»ºóÏÔÊ¾µ½Ò³ÃæÉÏ£¬Èç¹û¶ÔÓ¦µÄÖµÃ»ÓĞÄÇÃ´Êä³ödefaultValue¶ÔÓ¦µÄÖµ£¬Èç¹ûÃ»ÓĞÉèÖÃdefaultValue
-ÄÇÃ´Ö±½ÓÊä³öname¡£
+o æ–°å¢convertæ ‡ç­¾ï¼Œæ”¯æŒå­—å…¸æ•°æ®å€¼å‘åç§°çš„è½¬æ¢
+å…¶ä¸­çš„datasä¸ºä¸€ä¸ªmapå±æ€§æ˜ å°„å€¼ï¼Œnameå¯¹åº”äºkeyï¼Œconvertæ ‡ç­¾é€šè¿‡nameè·å–åˆ°å¯¹åº”çš„å±æ€§å€¼
+ç„¶åæ˜¾ç¤ºåˆ°é¡µé¢ä¸Šï¼Œå¦‚æœå¯¹åº”çš„å€¼æ²¡æœ‰é‚£ä¹ˆè¾“å‡ºdefaultValueå¯¹åº”çš„å€¼ï¼Œå¦‚æœæ²¡æœ‰è®¾ç½®defaultValue
+é‚£ä¹ˆç›´æ¥è¾“å‡ºnameã€‚
 <pg:convert convertData="datas" colName="name" defaultValue=""/>
 pager-taglib.tld
 frameworkset.jar
 ------2011-04-18------------
-o ½â¾öÖ÷Ò³ÃæÍ¨¹ıajax·½Ê½¼ÓÔØ¶à¸ö·ÖÒ³Ò³ÃæÊ±£¬Ìø×ª¹¦ÄÜ²»ÄÜÕı³£Ê¹ÓÃµÄÎÊÌâ
+o è§£å†³ä¸»é¡µé¢é€šè¿‡ajaxæ–¹å¼åŠ è½½å¤šä¸ªåˆ†é¡µé¡µé¢æ—¶ï¼Œè·³è½¬åŠŸèƒ½ä¸èƒ½æ­£å¸¸ä½¿ç”¨çš„é—®é¢˜
 pager.js
 frameworkset.jar
 ------2011-04-14------------
-o mvcÖĞ´«µİ¸ø·ÖÒ³±êÇ©µÄÂ·¾¶ĞŞ¸ÄÎª´øÉÏÏÂÎÄµÄ¾ø¶ÔµØÖ·£¬ÒÔÃâÖ÷Ò³ÃæµÄÏà¶ÔµØÖ·ºÍ·ÖÒ³¶ÔÓ¦µÄÒ³ÃæµÄÏà¶ÔÂ·¾¶²»Ò»ÖÂÊ±£¬²»ÄÜ·ÖÒ³
+o mvcä¸­ä¼ é€’ç»™åˆ†é¡µæ ‡ç­¾çš„è·¯å¾„ä¿®æ”¹ä¸ºå¸¦ä¸Šä¸‹æ–‡çš„ç»å¯¹åœ°å€ï¼Œä»¥å…ä¸»é¡µé¢çš„ç›¸å¯¹åœ°å€å’Œåˆ†é¡µå¯¹åº”çš„é¡µé¢çš„ç›¸å¯¹è·¯å¾„ä¸ä¸€è‡´æ—¶ï¼Œä¸èƒ½åˆ†é¡µ
 ------2011-03-24------------
-o ĞŞ¸´mvcÊµÏÖ·ÖÒ³¹¦ÄÜÊ±£¬Í¨¹ıhandleMapping×¢½âÖ¸¶¨µÄurlÂ·¾¶ÎŞ·¨½øĞĞ·ÖÒ³µÄbug£¬ĞŞ¸ÄµÄ³ÌĞòÈçÏÂ£º
-ĞŞ¸´Ö®Ç°
+o ä¿®å¤mvcå®ç°åˆ†é¡µåŠŸèƒ½æ—¶ï¼Œé€šè¿‡handleMappingæ³¨è§£æŒ‡å®šçš„urlè·¯å¾„æ— æ³•è¿›è¡Œåˆ†é¡µçš„bugï¼Œä¿®æ”¹çš„ç¨‹åºå¦‚ä¸‹ï¼š
+ä¿®å¤ä¹‹å‰
 com.frameworkset.common.tag.pager.tags.PagerContext
    public static String getPathwithinHandlerMapping(HttpServletRequest request)
 	{
@@ -363,7 +363,7 @@ com.frameworkset.common.tag.pager.tags.PagerContext
 		
 			 
 	}  
-	ĞŞ¸´Ö®ºó
+	ä¿®å¤ä¹‹å
   com.frameworkset.common.tag.pager.tags.PagerContext
    public static String getPathwithinHandlerMapping(HttpServletRequest request)
 	{
@@ -377,18 +377,18 @@ com.frameworkset.common.tag.pager.tags.PagerContext
 			 
 	}  
 ------2011-03-20------------
-o ¸Ä½øÓÒ¼ü²Ëµ¥¹¦ÄÜ£¬ÌáÉıÓÒ¼ü²Ëµ¥ĞÔÄÜ£¬Éæ¼°µÄ¹¦ÄÜÓĞ£ºÊ¹ÓÃÓÒ¼ü²Ëµ¥µÄÊ÷±êÇ©ºÍÊ¹ÓÃÓÒ¼ü²Ëµ¥µÄÁĞ±í¡¢·ÖÒ³±êÇ©£¬ÒÔ¼°ËùÓĞÆäËûÏà¹ØµÄÒ³Ãæ
-ĞŞ¸ÄµÄ³ÌĞòÓĞ£º
+o æ”¹è¿›å³é”®èœå•åŠŸèƒ½ï¼Œæå‡å³é”®èœå•æ€§èƒ½ï¼Œæ¶‰åŠçš„åŠŸèƒ½æœ‰ï¼šä½¿ç”¨å³é”®èœå•çš„æ ‘æ ‡ç­¾å’Œä½¿ç”¨å³é”®èœå•çš„åˆ—è¡¨ã€åˆ†é¡µæ ‡ç­¾ï¼Œä»¥åŠæ‰€æœ‰å…¶ä»–ç›¸å…³çš„é¡µé¢
+ä¿®æ”¹çš„ç¨‹åºæœ‰ï¼š
 1.bboss-tablib/src/com/frameworkset/common/tag/contextmenu/ContextMenuTag.java
 2./bboss-tablib/webapp/WEB-INF/templates/contextmenu/popscript.vm
-3.jar°ü£ºframeworkset.jar
+3.jaråŒ…ï¼šframeworkset.jar
 ------2011-03-06------------
-o ĞŞ¸´Ê÷±êÇ©¸´Ñ¡¿òµã»÷ÊÂ¼şfirefox¼æÈİĞÔÎÊÌâ
-o ĞŞ¸´Ê÷±êÇ©Ä¬ÈÏÑ¡ÖĞ½ÚµãÉÏÃæÉèÖÃµã»÷ÊÂ¼şÊ±BooleanÖµÏòString×ª»»Òì³£ÎÊÌâ
+o ä¿®å¤æ ‘æ ‡ç­¾å¤é€‰æ¡†ç‚¹å‡»äº‹ä»¶firefoxå…¼å®¹æ€§é—®é¢˜
+o ä¿®å¤æ ‘æ ‡ç­¾é»˜è®¤é€‰ä¸­èŠ‚ç‚¹ä¸Šé¢è®¾ç½®ç‚¹å‡»äº‹ä»¶æ—¶Booleanå€¼å‘Stringè½¬æ¢å¼‚å¸¸é—®é¢˜
 
 ------2011-03-06------------
  
-o list ºÍcell±êÇ©×éºÏ¶ÔStringºÍÊı×Ö¡¢ÈÕÆÚÁĞ±íÊı¾İ½øĞĞÊä³ö
+o list å’Œcellæ ‡ç­¾ç»„åˆå¯¹Stringå’Œæ•°å­—ã€æ—¥æœŸåˆ—è¡¨æ•°æ®è¿›è¡Œè¾“å‡º
 
 #######update function list since bbossgroups-3.0 end###########
 ------------------------------------------------------------------
@@ -397,23 +397,23 @@ update function list in bbossgroups-2.0-rc2 since bbossgroups-2.0-rc1
 2011-02-12
 ------------------------------------------------------------------
 
-o ·ÖÒ³±êÇ©Óëmvc¿ò¼Ü½áºÏ£¬Í¨¹ımvcµÄ¿ØÖÆÆ÷·½·¨Ö±½Ó¿ÉÒÔ¸ø·ÖÒ³±êÇ©Ìá¹©Êı¾İ
-o Ôö¼ÓnotcontainÕânotmatchÁ½¸öÕıÔò±í´ïÊ½Âß¼­ÅĞ¶Ï±êÇ©£¬ºÍcontain¡¢matchÁ½¸öÂß¼­ÅĞ¶Ï±êÇ©µÄ¹¦ÄÜÏà·´
+o åˆ†é¡µæ ‡ç­¾ä¸mvcæ¡†æ¶ç»“åˆï¼Œé€šè¿‡mvcçš„æ§åˆ¶å™¨æ–¹æ³•ç›´æ¥å¯ä»¥ç»™åˆ†é¡µæ ‡ç­¾æä¾›æ•°æ®
+o å¢åŠ notcontainè¿™notmatchä¸¤ä¸ªæ­£åˆ™è¡¨è¾¾å¼é€»è¾‘åˆ¤æ–­æ ‡ç­¾ï¼Œå’Œcontainã€matchä¸¤ä¸ªé€»è¾‘åˆ¤æ–­æ ‡ç­¾çš„åŠŸèƒ½ç›¸å
 
 ------------------------------------------------------------------
 2010-09-03
 ------------------------------------------------------------------
-¡£com.frameworkset.common.tag.pager.ObjectDataInfoImpl¶ÔÏóÃ»ÓĞÊµÏÖÒÔÏÂ·½·¨£º
+ã€‚com.frameworkset.common.tag.pager.ObjectDataInfoImplå¯¹è±¡æ²¡æœ‰å®ç°ä»¥ä¸‹æ–¹æ³•ï¼š
 public long getItemCount() 
 public int getDataSize()
-µ¼ÖÂµ÷ÓÃÊ±Å×³öÒì³£¡£
+å¯¼è‡´è°ƒç”¨æ—¶æŠ›å‡ºå¼‚å¸¸ã€‚
 
-ÊµÏÖÉÏÊöÁ½¸ö·½·¨ºó£¬¹¦ÄÜÕı³£¡£
+å®ç°ä¸Šè¿°ä¸¤ä¸ªæ–¹æ³•åï¼ŒåŠŸèƒ½æ­£å¸¸ã€‚
 ------------------------------------------------------------------
 2010-09-03
 ------------------------------------------------------------------
-o ·ÖÒ³±êÇ©Ôö¼ÓÉèÖÃÒ³Ãæsize¹¦ÄÜ,»ğºüä¯ÀÀÆ÷¼æÈİĞÔĞŞ¸Ä
-ĞŞ¸Ä³ÌĞò£º
+o åˆ†é¡µæ ‡ç­¾å¢åŠ è®¾ç½®é¡µé¢sizeåŠŸèƒ½,ç«ç‹æµè§ˆå™¨å…¼å®¹æ€§ä¿®æ”¹
+ä¿®æ”¹ç¨‹åºï¼š
 frameworkset.jar
 /bboss-tablib/src/com/frameworkset/common/tag/pager/tags/IndexTag.java
 /bboss-tablib/src/com/frameworkset/common/tag/pager/tags/PagerContext.java
@@ -422,13 +422,13 @@ frameworkset.jar
 /bboss-tablib/webapp/include/pager_custom.js
 /bboss-tablib/webapp/include/pager.js
 
-±êÇ©¶¨ÒåÎÄ¼ş/bboss-tablib/webapp/WEB-INF/pager-taglib.tldÎªindex±êÇ©Ìí¼ÓsizescopeÊôĞÔ
+æ ‡ç­¾å®šä¹‰æ–‡ä»¶/bboss-tablib/webapp/WEB-INF/pager-taglib.tldä¸ºindexæ ‡ç­¾æ·»åŠ sizescopeå±æ€§
 <!-- 
-		ÉèÖÃÒ³ÃæÏÔÊ¾¼ÇÂ¼·¶Î§£¬Ä¬ÈÏÎª
+		è®¾ç½®é¡µé¢æ˜¾ç¤ºè®°å½•èŒƒå›´ï¼Œé»˜è®¤ä¸º
 		"5","10","20","30","40","50","60","70","80","90","100"
-		ÓÃ»§¿ÉÒÔ×Ô¶¨ÒåÕâ¸ö·¶Î§£¬ÒÔ¶ººÅ·Ö¸ô¼´¿É
-		Èç¹ûÔÚpager±êÇ©ºÍlist±êÇ©ÉÏÖ¸¶¨µÄmaxPageItemsÊôĞÔ¶ÔÓ¦µÄÒ³Ãæ¼ÇÂ¼ÌõÊı²»ÔÚsizescope·¶Î§ÖĞ£¬ÄÇÃ´
-		½«°ÑmaxPageItems×÷ÎªµÚÒ»¸öÑ¡Ïî¼ÓÈëµ½sizescopeÖĞ
+		ç”¨æˆ·å¯ä»¥è‡ªå®šä¹‰è¿™ä¸ªèŒƒå›´ï¼Œä»¥é€—å·åˆ†éš”å³å¯
+		å¦‚æœåœ¨pageræ ‡ç­¾å’Œlistæ ‡ç­¾ä¸ŠæŒ‡å®šçš„maxPageItemså±æ€§å¯¹åº”çš„é¡µé¢è®°å½•æ¡æ•°ä¸åœ¨sizescopeèŒƒå›´ä¸­ï¼Œé‚£ä¹ˆ
+		å°†æŠŠmaxPageItemsä½œä¸ºç¬¬ä¸€ä¸ªé€‰é¡¹åŠ å…¥åˆ°sizescopeä¸­
 		 -->
 		<attribute>
 			<name>sizescope</name>
@@ -436,9 +436,9 @@ frameworkset.jar
 		</attribute>
 
 
-Ê¹ÓÃjqueryÏà¹ØµÄÑùÊ½£¬±í¸ñµÄÊó±êÒÆ¶¯Óëµã»÷ÑùÊ½£º
+ä½¿ç”¨jqueryç›¸å…³çš„æ ·å¼ï¼Œè¡¨æ ¼çš„é¼ æ ‡ç§»åŠ¨ä¸ç‚¹å‡»æ ·å¼ï¼š
 
-table_gray±í¸ñÑùÊ½
+table_grayè¡¨æ ¼æ ·å¼
 .table_gray{
 border:1px solid #4eadf7;
 border-collapse:collapse;
@@ -463,17 +463,17 @@ background:url(images/th_updown.png) right no-repeat;
 padding-right:6px;
 }
 
-//ÆæÊıĞĞÑùÊ½
+//å¥‡æ•°è¡Œæ ·å¼
 .space_color{
 background-color:#d7edfd;
 }
 
-//¹â±êÒÆ¶¯µ½µÄĞĞÑùÊ½
+//å…‰æ ‡ç§»åŠ¨åˆ°çš„è¡Œæ ·å¼
 tr.highlight {
 	background: #C8F3FB;
 }
 
-//ĞĞÑ¡ÖĞµÄÑùÊ½
+//è¡Œé€‰ä¸­çš„æ ·å¼
 tr.selected {
 	background: #FF8C05;
 	color: #fff;
@@ -482,13 +482,13 @@ tr.selected {
 ------------------------------------------------------------------
 2010-09-01
 ------------------------------------------------------------------
-o ĞŞ¸Ä¹ıÂËÆ÷com.frameworkset.common.filter.CharacterEncodingHttpServletRequestWrapper£¬½â¾öÌØ¶¨Çé¿öÏÂÖĞÎÄÂÒÂë
-±ÈÈç£º
-·¢ÆğÇëÇó£ºhttp://localhost:8080/test/test.jsp?key=¶à¶à
-ÏÈÖ´ĞĞÒÔÏÂÓï¾ä
-String values[] = request.getParameterValues("key");//µÃµ½µÄvaluesÎªÖĞÎÄÊı×é£º{"¶à¶à"}
-È»ºóÔÙÖ´ĞĞÒÔÏÂÓï¾ä
-String values = request.getParameter("key");//µÃµ½µÄÖµÎªÖĞÎÄÂÒÂë
+o ä¿®æ”¹è¿‡æ»¤å™¨com.frameworkset.common.filter.CharacterEncodingHttpServletRequestWrapperï¼Œè§£å†³ç‰¹å®šæƒ…å†µä¸‹ä¸­æ–‡ä¹±ç 
+æ¯”å¦‚ï¼š
+å‘èµ·è¯·æ±‚ï¼šhttp://localhost:8080/test/test.jsp?key=å¤šå¤š
+å…ˆæ‰§è¡Œä»¥ä¸‹è¯­å¥
+String values[] = request.getParameterValues("key");//å¾—åˆ°çš„valuesä¸ºä¸­æ–‡æ•°ç»„ï¼š{"å¤šå¤š"}
+ç„¶åå†æ‰§è¡Œä»¥ä¸‹è¯­å¥
+String values = request.getParameter("key");//å¾—åˆ°çš„å€¼ä¸ºä¸­æ–‡ä¹±ç 
 
 
 ------------------------------------------------------------------
@@ -496,14 +496,14 @@ update function list in bbossgroups-2.0-rc since bbossgroups-1.0
 ------------------------------------------------------------------
 2010-07-31
 ------------------------------------------------------------------
-o Ôö¼Ó²Ëµ¥Ïî½ûÓÃµÄÌáÊ¾¹¦ÄÜ
+o å¢åŠ èœå•é¡¹ç¦ç”¨çš„æç¤ºåŠŸèƒ½
 ------------------------------------------------------------------
 update function list in bbossgroups-1.0 
 ------------------------------------------------------------------
-o pager±êÇ©¿âÖĞ ĞÂÔöcsslink±êÇ©ºÍjscript±êÇ©£¬config±êÇ©
- Í¨¹ıcsslink±êÇ©µ¼ÈëµÄcssÎÄ¼şÄÜ¹»×Ô¶¯È¥ÖØ¹¦ÄÜ£¬Ò²¾ÍÊÇ±ÜÃâÔÚÒ³ÃæÉÏÖØ¸´µ¼ÈëÍ¬Ò»¸öcssÎÄ¼ş
-Í¨¹ıjscript±êÇ©µ¼ÈëµÄjsÎÄ¼şÄÜ¹»×Ô¶¯È¥ÖØ¹¦ÄÜ £¬Ò²¾ÍÊÇ±ÜÃâÔÚÒ³ÃæÉÏÖØ¸´µ¼ÈëÍ¬Ò»¸öjsÎÄ¼ş
-Í¨¹ıcongfig±êÇ©Ä¬ÈÏµ¼ÈëÒ³ÃæjsºÍcssÎÄ¼ş£¨ÄÜ¹»×Ô¶¯È¥ÖØ¹¦ÄÜ £¬Ò²¾ÍÊÇ±ÜÃâÔÚÒ³ÃæÉÏÖØ¸´µ¼ÈëÒÔÏÂjs£¬cssÎÄ¼ş£©£º
+o pageræ ‡ç­¾åº“ä¸­ æ–°å¢csslinkæ ‡ç­¾å’Œjscriptæ ‡ç­¾ï¼Œconfigæ ‡ç­¾
+ é€šè¿‡csslinkæ ‡ç­¾å¯¼å…¥çš„cssæ–‡ä»¶èƒ½å¤Ÿè‡ªåŠ¨å»é‡åŠŸèƒ½ï¼Œä¹Ÿå°±æ˜¯é¿å…åœ¨é¡µé¢ä¸Šé‡å¤å¯¼å…¥åŒä¸€ä¸ªcssæ–‡ä»¶
+é€šè¿‡jscriptæ ‡ç­¾å¯¼å…¥çš„jsæ–‡ä»¶èƒ½å¤Ÿè‡ªåŠ¨å»é‡åŠŸèƒ½ ï¼Œä¹Ÿå°±æ˜¯é¿å…åœ¨é¡µé¢ä¸Šé‡å¤å¯¼å…¥åŒä¸€ä¸ªjsæ–‡ä»¶
+é€šè¿‡congfigæ ‡ç­¾é»˜è®¤å¯¼å…¥é¡µé¢jså’Œcssæ–‡ä»¶ï¼ˆèƒ½å¤Ÿè‡ªåŠ¨å»é‡åŠŸèƒ½ ï¼Œä¹Ÿå°±æ˜¯é¿å…åœ¨é¡µé¢ä¸Šé‡å¤å¯¼å…¥ä»¥ä¸‹jsï¼Œcssæ–‡ä»¶ï¼‰ï¼š
 
 	/include/pager.js
 	/include/jquery-1.4.2.min.js
@@ -512,66 +512,66 @@ o pager±êÇ©¿âÖĞ ĞÂÔöcsslink±êÇ©ºÍjscript±êÇ©£¬config±êÇ©
 	/include/themes/icon.css
 	/include/jquery.easyui.min.js
 	
-Ê¹ÓÃ·½·¨£º
+ä½¿ç”¨æ–¹æ³•ï¼š
 
 <pg:csslink src="contextpath/ccc.css"/>
 <pg:jscript src="contextpath/ccc.js"/>
 
 <pg:config/>
-firefox¼æÈİĞÔÎÊÌâĞŞ¸Ä£º
-o ĞŞ¸Ätabs.jsÎÄ¼ş£¬ĞŞ¸´tabpaneÔÚ»ğºüÏÂµÄÎÊÌâ£¬»ğºüÏÂ²»Ö§³ÖÖ±½ÓÒÔid.attrnameµÄ·½Ê½»ñÈ¡ÊôĞÔÖµ
-o tree±êÇ©£º
+firefoxå…¼å®¹æ€§é—®é¢˜ä¿®æ”¹ï¼š
+o ä¿®æ”¹tabs.jsæ–‡ä»¶ï¼Œä¿®å¤tabpaneåœ¨ç«ç‹ä¸‹çš„é—®é¢˜ï¼Œç«ç‹ä¸‹ä¸æ”¯æŒç›´æ¥ä»¥id.attrnameçš„æ–¹å¼è·å–å±æ€§å€¼
+o treeæ ‡ç­¾ï¼š
 /bboss-tablib/src/com/frameworkset/common/tag/tree/impl/NodeHelper.java
-o ÓÒ¼ü²Ëµ¥
-½â¾öÓÒ¼ü²Ëµ¥ÔÚfirefoxä¯ÀÀÆ÷ÏÂÎŞ·¨Õı³£ÏÔÊ¾ÎÊÌâ
-½â¾öÎŞ·¨Õ¹Ê¾¶à¼¶ÓÒ¼ü²Ëµ¥µÄÎÊÌâ
-¸Ä½øÓÒ¼ü²Ëµ¥Ìí¼Ó½Ó¿ÚÈçÏÂ£º
+o å³é”®èœå•
+è§£å†³å³é”®èœå•åœ¨firefoxæµè§ˆå™¨ä¸‹æ— æ³•æ­£å¸¸æ˜¾ç¤ºé—®é¢˜
+è§£å†³æ— æ³•å±•ç¤ºå¤šçº§å³é”®èœå•çš„é—®é¢˜
+æ”¹è¿›å³é”®èœå•æ·»åŠ æ¥å£å¦‚ä¸‹ï¼š
 			Menu menu = new Menu();
 			menu.addContextMenuItem(Menu.MENU_OPEN);
 			menu.addContextMenuItem(Menu.MENU_EXPAND);
-			menu.addContextMenuItem("Ìí¼Ó","javascript:edit('Ìí¼Ó')",Menu.icon_edit);
+			menu.addContextMenuItem("æ·»åŠ ","javascript:edit('æ·»åŠ ')",Menu.icon_edit);
 			
 			menu.addSeperate();
-			menu.addContextMenuItem("±à¼­±à¼­±à¼­±à¼­","javascript:edit('±à¼­')",Menu.icon_add);
+			menu.addContextMenuItem("ç¼–è¾‘ç¼–è¾‘ç¼–è¾‘ç¼–è¾‘","javascript:edit('ç¼–è¾‘')",Menu.icon_add);
 			
 			Menu.ContextMenuItem sitemenuitem2 = menu.addContextMenuItem("sitemenuitem2","javascript:edit('sitemenuitem2')",Menu.icon_ok);
-			sitemenuitem2.addSubContextMenuItem("×Ómenusubmenuitem_","javascript:edit('×Ómenusubmenuitem_')",Menu.icon_ok);	
-			sitemenuitem2.addSubContextMenuItem("×Ócut","javascript:edit('×Ócut')",Menu.icon_cut);				
-			sitemenuitem2.addSubContextMenuItem("×Óicon_back","javascript:edit('×Óicon_back')",Menu.icon_back);
-			sitemenuitem2.addSubContextMenuItem("×Óicon_cancel","javascript:edit('×Óicon_cancel')",Menu.icon_cancel);
-			sitemenuitem2.addSubContextMenuItem("×Óicon_help","javascript:edit('×Óicon_help')",Menu.icon_help);
-			sitemenuitem2.addSubContextMenuItem("×Óicon_no","javascript:edit('×Óicon_no')",Menu.icon_no);
-			sitemenuitem2.addSubContextMenuItem("×Óicon_print","javascript:edit('×Óicon_print')",Menu.icon_print);
-			sitemenuitem2.addSubContextMenuItem("×Óicon_redo","javascript:edit('×Óicon_redo')",Menu.icon_redo);
-			sitemenuitem2.addSubContextMenuItem("×Óicon_reload","javascript:edit('icon_reload')",Menu.icon_reload);
+			sitemenuitem2.addSubContextMenuItem("å­menusubmenuitem_","javascript:edit('å­menusubmenuitem_')",Menu.icon_ok);	
+			sitemenuitem2.addSubContextMenuItem("å­cut","javascript:edit('å­cut')",Menu.icon_cut);				
+			sitemenuitem2.addSubContextMenuItem("å­icon_back","javascript:edit('å­icon_back')",Menu.icon_back);
+			sitemenuitem2.addSubContextMenuItem("å­icon_cancel","javascript:edit('å­icon_cancel')",Menu.icon_cancel);
+			sitemenuitem2.addSubContextMenuItem("å­icon_help","javascript:edit('å­icon_help')",Menu.icon_help);
+			sitemenuitem2.addSubContextMenuItem("å­icon_no","javascript:edit('å­icon_no')",Menu.icon_no);
+			sitemenuitem2.addSubContextMenuItem("å­icon_print","javascript:edit('å­icon_print')",Menu.icon_print);
+			sitemenuitem2.addSubContextMenuItem("å­icon_redo","javascript:edit('å­icon_redo')",Menu.icon_redo);
+			sitemenuitem2.addSubContextMenuItem("å­icon_reload","javascript:edit('icon_reload')",Menu.icon_reload);
 			sitemenuitem2.addSubContextMenuItem("icon_remove","javascript:edit('icon_remove')",Menu.icon_remove);
 			sitemenuitem2.addSubContextMenuItem("icon_save","javascript:edit('icon_save')",Menu.icon_save);
 			sitemenuitem2.addSubContextMenuItem("icon_search","javascript:edit('icon_search')",Menu.icon_search);
 			sitemenuitem2.addSubContextMenuItem("icon_undo","javascript:edit('icon_undo')",Menu.icon_undo);
-			ContextMenuItem third = sitemenuitem2.addSubContextMenuItem("µÚ¶ş²ã","javascript:edit('icon_undo')",Menu.icon_undo);
-			third.addSubContextMenuItem("Èı²ã", "javascript:edit('icon_undo')",Menu.icon_undo);
+			ContextMenuItem third = sitemenuitem2.addSubContextMenuItem("ç¬¬äºŒå±‚","javascript:edit('icon_undo')",Menu.icon_undo);
+			third.addSubContextMenuItem("ä¸‰å±‚", "javascript:edit('icon_undo')",Menu.icon_undo);
 ----------------------------------------
 1.0.2 - 2010-4-22
 ----------------------------------------
-o cell±êÇ©¸ÄÔì
-Ö§³ÖlongĞÍµÄ×Ö¶ÎÖ±½Ó×ª»»Îªjava.util.DateÀàĞÍ
+o cellæ ‡ç­¾æ”¹é€ 
+æ”¯æŒlongå‹çš„å­—æ®µç›´æ¥è½¬æ¢ä¸ºjava.util.Dateç±»å‹
 ----------------------------------------
 1.0.2 - 2010-4-22
 ----------------------------------------
-o bugĞŞ¸Ä
-bug 1 jqueryÌØÊâ×Ö·û×ªÒå
+o bugä¿®æ”¹
+bug 1 jqueryç‰¹æ®Šå­—ç¬¦è½¬ä¹‰
 /bboss-tablib/webapp/include/pager.js
 /bboss-tablib/webapp/WEB-INF/templates/tree.vm
 
 var ret = object.replace(/:/g,"\\:");
     	ret = ret.replace(/\./g,"\\.");
     	
-bug 2 ²ÉÓÃjqueryºó£¬µ±Ê÷ÖĞÖ»ÓĞÒ»¸ö½Úµã£¬²¢ÇÒ²»Õ¹Ê¾¸ù½ÚµãÊ±£¬Éú³ÉµÄÊ÷½Å±¾ÖĞ¶àÉú³ÉÁËÒ»¸ö</div>
+bug 2 é‡‡ç”¨jqueryåï¼Œå½“æ ‘ä¸­åªæœ‰ä¸€ä¸ªèŠ‚ç‚¹ï¼Œå¹¶ä¸”ä¸å±•ç¤ºæ ¹èŠ‚ç‚¹æ—¶ï¼Œç”Ÿæˆçš„æ ‘è„šæœ¬ä¸­å¤šç”Ÿæˆäº†ä¸€ä¸ª</div>
 ----------------------------------------
 1.0.2 - 2010-4-15
 ----------------------------------------
 
-o ½Å±¾¿ØÖÆµ÷Õû
+o è„šæœ¬æ§åˆ¶è°ƒæ•´
 /cms_baseline/sourcecode/cms/WebRoot/WEB-INF/templates/contextmenu/popmenu.vm
 /bboss-tablib/src/com/frameworkset/common/tag/contextmenu/ContextMenuTag.java
 /bboss-tablib/src/com/frameworkset/common/tag/pager/config/PageConfig.java
@@ -581,7 +581,7 @@ o ½Å±¾¿ØÖÆµ÷Õû
 ----------------------------------------
 1.0.2 - 2010-4-14
 ----------------------------------------
-o ±êÇ©¿âjquery¸ÄÔì£¬ÓÒ¼ü²Ëµ¥ĞŞ¸Ä£ºcreatorcim»¹Î´Í¬²½
+o æ ‡ç­¾åº“jqueryæ”¹é€ ï¼Œå³é”®èœå•ä¿®æ”¹ï¼šcreatorcimè¿˜æœªåŒæ­¥
 /bboss-tablib/src/com/frameworkset/common/tag/pager/config/PageConfig.java
 /cms_baseline/sourcecode/cms/WebRoot/include/pager.js
 /cms_baseline/sourcecode/cms/WebRoot/WEB-INF/templates/contextmenu/parentpopmenu.vm
@@ -593,23 +593,23 @@ o ±êÇ©¿âjquery¸ÄÔì£¬ÓÒ¼ü²Ëµ¥ĞŞ¸Ä£ºcreatorcim»¹Î´Í¬²½
 ----------------------------------------
 1.0.2 - 2010-3-11
 ----------------------------------------
-o ·ÖÒ³Ìø×ªÅÅĞòÅÅĞòbugĞŞ¸´£¬sorkeyÎªnullÊ±£¬Ìí¼ÓÁËÈçÏÂ¸ñÊ½µÄ²ÎÊı£ºsortkey=null,½øĞĞÅĞ¶Ïºó²»¼Ó¾Í¿ÉÒÔ
+o åˆ†é¡µè·³è½¬æ’åºæ’åºbugä¿®å¤ï¼Œsorkeyä¸ºnullæ—¶ï¼Œæ·»åŠ äº†å¦‚ä¸‹æ ¼å¼çš„å‚æ•°ï¼šsortkey=null,è¿›è¡Œåˆ¤æ–­åä¸åŠ å°±å¯ä»¥
 /bboss-tablib/src/com/frameworkset/common/tag/pager/tags/IndexTag.java
 /bboss-tablib/webapp/include/pager.js
 
 
-o ĞŞ¸ÄÊ÷±êÇ©µİ¹éÑ¡Ôñbug
-ÏòÉÏµİ¹é
-ÏòÏÂµİ¹é
-ÏòÉÏ²¿·Öµİ¹é
+o ä¿®æ”¹æ ‘æ ‡ç­¾é€’å½’é€‰æ‹©bug
+å‘ä¸Šé€’å½’
+å‘ä¸‹é€’å½’
+å‘ä¸Šéƒ¨åˆ†é€’å½’
 /WEB-INF/templates/tree.vm
-o pager±êÇ©jquery¸ÄÔì
+o pageræ ‡ç­¾jqueryæ”¹é€ 
 
-µ¼º½Á´½ÓÈ«²¿ĞèÒª¸ÄÔìÎªjqueryÄ£Ê½
-titleÅÅĞòÁ´½Ó¸ÄÔìÎªjqueryÄ£Ê½
-Ôö¼Ójquery²éÑ¯Ä£Ê½±êÇ©×é£¨Î´Íê³É£©
+å¯¼èˆªé“¾æ¥å…¨éƒ¨éœ€è¦æ”¹é€ ä¸ºjqueryæ¨¡å¼
+titleæ’åºé“¾æ¥æ”¹é€ ä¸ºjqueryæ¨¡å¼
+å¢åŠ jqueryæŸ¥è¯¢æ¨¡å¼æ ‡ç­¾ç»„ï¼ˆæœªå®Œæˆï¼‰
 
-Ïà¹ØµÄÎÄ¼ş£º
+ç›¸å…³çš„æ–‡ä»¶ï¼š
 /bboss-tablib/webapp/WEB-INF/pager-taglib.tld
 /bboss-tablib/webapp/include/pager.js
 /bboss-tablib/src/com/frameworkset/common/tag/pager/tags/IndexTag.java
@@ -621,31 +621,31 @@ titleÅÅĞòÁ´½Ó¸ÄÔìÎªjqueryÄ£Ê½
 
 
 
-o Ê÷±êÇ©prototype.jsÇ¨ÒÆµ½jquery
-ĞŞ¸ÄÎÄ¼ş/creatorcim/cimconsole/WEB-INF/templates/contextmenu/popmenu.vm£¬ÓÉprototype.js»»µ½jquery
-ÄÚÈİ<script language="javascript" src="${contextpath}/include/jquery-1.4.2.min.js"></script>
+o æ ‘æ ‡ç­¾prototype.jsè¿ç§»åˆ°jquery
+ä¿®æ”¹æ–‡ä»¶/creatorcim/cimconsole/WEB-INF/templates/contextmenu/popmenu.vmï¼Œç”±prototype.jsæ¢åˆ°jquery
+å†…å®¹<script language="javascript" src="${contextpath}/include/jquery-1.4.2.min.js"></script>
 
-ĞŞ¸Ä/WEB-INF/templates/tree.vmÄ£°åÎÄ¼ş½«ËùÓĞµÄprototyeÄÚÈİÌæ»»ÎªjqueryÄÚÈİ
+ä¿®æ”¹/WEB-INF/templates/tree.vmæ¨¡æ¿æ–‡ä»¶å°†æ‰€æœ‰çš„prototyeå†…å®¹æ›¿æ¢ä¸ºjqueryå†…å®¹
 
-ĞÂÔö³ÌĞò±êÇ©config
+æ–°å¢ç¨‹åºæ ‡ç­¾config
 com.frameworkset.common.tag.pager.config.PageConfig
 
-/bboss-tablib/webapp/WEB-INF/pager-taglib.tldÔö¼ÓÒÔÏÂ±êÇ©ÅäÖÃ
+/bboss-tablib/webapp/WEB-INF/pager-taglib.tldå¢åŠ ä»¥ä¸‹æ ‡ç­¾é…ç½®
 <tag>
 		<name>config</name>
 		<tagclass>com.frameworkset.common.tag.pager.config.PageConfig</tagclass>
 		<bodycontent>JSP</bodycontent>
 		
 	</tag>
-Ò³ÃæÒıÓÃ·½·¨£º<pg:config/>£¬±êÇ©Ö´ĞĞºóÊä³öÒÔÏÂÄÚÈİ£º
+é¡µé¢å¼•ç”¨æ–¹æ³•ï¼š<pg:config/>ï¼Œæ ‡ç­¾æ‰§è¡Œåè¾“å‡ºä»¥ä¸‹å†…å®¹ï¼š
 <script src="/cimconsole/include/jquery-1.4.2.min.js" type="text/javascript"></script>
 <link rel="stylesheet" type="text/css" href="/cimconsole/include/treeview.css"/>
 
-ĞŞ¸Ä³ÌĞò
+ä¿®æ”¹ç¨‹åº
 /bboss-tablib/src/com/frameworkset/common/tag/tree/impl/ListNodeHelper.java
 /bboss-tablib/src/com/frameworkset/common/tag/tree/impl/NodeHelper.java
 /bboss-tablib/src/com/frameworkset/common/tag/tree/impl/TreeTag.java
-ÆÁ±Îprototype½Å±¾µÄÍ¶·Å£¬¸ÄÎªÍ¶·ÅÒÔÏÂ½Å±¾£º
+å±è”½prototypeè„šæœ¬çš„æŠ•æ”¾ï¼Œæ”¹ä¸ºæŠ•æ”¾ä»¥ä¸‹è„šæœ¬ï¼š
 <script src="/cimconsole/include/jquery-1.4.2.min.js" type="text/javascript"></script>
 <link rel="stylesheet" type="text/css" href="/cimconsole/include/treeview.css"/>
 
@@ -654,16 +654,16 @@ com.frameworkset.common.tag.pager.config.PageConfig
 //            	if(!this.enablecontextmenu) //jquery
 //            		NodeHelper.getPrototypeScript(ret,request.getContextPath()); 
 
-<a firsted="true" name="icon_root" ĞŞ¸ÄÎª<a firsted="true" id="icon_root"
+<a firsted="true" name="icon_root" ä¿®æ”¹ä¸º<a firsted="true" id="icon_root"
 
-ĞŞ¸Ätree±êÇ©Ôö¼ÓjqueryÊôĞÔ
+ä¿®æ”¹treeæ ‡ç­¾å¢åŠ jqueryå±æ€§
  <!-- 
-        	ÊÇ·ñjquery×°ÔØ,true-ÊÇ£¬false-²»ÊÇ
-        	Ä¬ÈÏÖµ£ºfalse;
-        	ÎªfalseÊ±,±êÇ©¿â½«×Ô¶¯ÎªÒ³ÃæÒıÈëÒÔÏÂÑùÊ½ºÍ½Å±¾£¬·ñÔò²»µ¼Èë
+        	æ˜¯å¦jqueryè£…è½½,true-æ˜¯ï¼Œfalse-ä¸æ˜¯
+        	é»˜è®¤å€¼ï¼šfalse;
+        	ä¸ºfalseæ—¶,æ ‡ç­¾åº“å°†è‡ªåŠ¨ä¸ºé¡µé¢å¼•å…¥ä»¥ä¸‹æ ·å¼å’Œè„šæœ¬ï¼Œå¦åˆ™ä¸å¯¼å…¥
         	<script src="/cimconsole/include/jquery-1.4.2.min.js" type="text/javascript"></script>
 <link rel="stylesheet" type="text/css" href="/cimconsole/include/treeview.css"/>
-        	trueÊ±£¬ÉÏÊöÑùÊ½ºÍ½Å±¾½«Í¨¹ıÍâ²¿µ¼Èë
+        	trueæ—¶ï¼Œä¸Šè¿°æ ·å¼å’Œè„šæœ¬å°†é€šè¿‡å¤–éƒ¨å¯¼å…¥
          -->
         <attribute> 
             <name>jquery</name>
@@ -672,45 +672,45 @@ com.frameworkset.common.tag.pager.config.PageConfig
         </attribute>
 
 
-o ĞÂÔöÖ´ĞĞÊı¾İ¿âÔ¤±àÒëÄ£°å²Ù×÷Ïà¹Ø±êÇ©
+o æ–°å¢æ‰§è¡Œæ•°æ®åº“é¢„ç¼–è¯‘æ¨¡æ¿æ“ä½œç›¸å…³æ ‡ç­¾
 
-dbutil-Ö´ĞĞÊı¾İ¿âÔö¡¢É¾¡¢¸Ä²Ù×÷£¨Ô¤±àÒëºÍÆÕÍ¨£©
-sqlparams-ÓÃÓÚÖ§³ÖÔÚpager±êÇ©£¬beaninfo±êÇ©£¬list±êÇ©ÉÏÖ´ĞĞÔ¤±àÒë²Ù×÷µÄ°ó¶¨±äÁ¿¼¯ºÏ£¬Í¬Ê±¿ÉÒÔÖ¸¶¨sql°ó¶¨±äÁ¿µÄ¶¨ÒåÓï·¨·Ö½ç·û¡£
+dbutil-æ‰§è¡Œæ•°æ®åº“å¢ã€åˆ ã€æ”¹æ“ä½œï¼ˆé¢„ç¼–è¯‘å’Œæ™®é€šï¼‰
+sqlparams-ç”¨äºæ”¯æŒåœ¨pageræ ‡ç­¾ï¼Œbeaninfoæ ‡ç­¾ï¼Œlistæ ‡ç­¾ä¸Šæ‰§è¡Œé¢„ç¼–è¯‘æ“ä½œçš„ç»‘å®šå˜é‡é›†åˆï¼ŒåŒæ—¶å¯ä»¥æŒ‡å®šsqlç»‘å®šå˜é‡çš„å®šä¹‰è¯­æ³•åˆ†ç•Œç¬¦ã€‚
 
-batchutil-Ö´ĞĞÔ¤±àÒëÅú´¦Àí¡¢ÆÕÍ¨Åú´¦Àí²Ù×÷
-statement-Ö¸¶¨batchutilÒªÖ´ĞĞµÄÅú´¦ÀíÓï¾ä£¬¿ÉÒÔÊÇÔ¤±àÒësqlÓï¾ä£¬Ò²¿ÉÒÔÊÇÆÕÍ¨sqlÓï¾ä
-batch-Ö¸¶¨statementÖ¸¶¨µÄÔ¤±àÒësqlÓï¾äµÄÒ»×é°ó¶¨±äÁ¿
-sqlparam-ÓÃÀ´Ö¸¶¨Ô¤±àÒë²Ù×÷µÄsql°ó¶¨±äÁ¿²ÎÊıµÄÖµ¡¢Êı¾İÀàĞÍ¡¢Êı¾İ¸ñÊ½£¬Ö»ÄÜÄÚÖÃÔÚdbutil£¬sqlparams£¬statement,batchÈı¸ö±êÇ©ÖĞ¡£
+batchutil-æ‰§è¡Œé¢„ç¼–è¯‘æ‰¹å¤„ç†ã€æ™®é€šæ‰¹å¤„ç†æ“ä½œ
+statement-æŒ‡å®šbatchutilè¦æ‰§è¡Œçš„æ‰¹å¤„ç†è¯­å¥ï¼Œå¯ä»¥æ˜¯é¢„ç¼–è¯‘sqlè¯­å¥ï¼Œä¹Ÿå¯ä»¥æ˜¯æ™®é€šsqlè¯­å¥
+batch-æŒ‡å®šstatementæŒ‡å®šçš„é¢„ç¼–è¯‘sqlè¯­å¥çš„ä¸€ç»„ç»‘å®šå˜é‡
+sqlparam-ç”¨æ¥æŒ‡å®šé¢„ç¼–è¯‘æ“ä½œçš„sqlç»‘å®šå˜é‡å‚æ•°çš„å€¼ã€æ•°æ®ç±»å‹ã€æ•°æ®æ ¼å¼ï¼Œåªèƒ½å†…ç½®åœ¨dbutilï¼Œsqlparamsï¼Œstatement,batchä¸‰ä¸ªæ ‡ç­¾ä¸­ã€‚
 
-dbutil±êÇ©µÄÊôĞÔËµÃ÷ÈçÏÂ£º
+dbutilæ ‡ç­¾çš„å±æ€§è¯´æ˜å¦‚ä¸‹ï¼š
 
-	statement£ºÖ¸¶¨ÒªÖ´ĞĞµÄsqlÓï¾ä£¬¿ÉÒÔÆÕÍ¨sqlÓï¾ä£¬Ò²¿ÉÒÔÊÇ´ø°ó¶¨±äÁ¿µÄsqlÄ£°åÓï¾ä£¬±ØĞëÒªĞ´µÄÊôĞÔ
-	dbname£ºÖ¸¶¨Êı¾İ¿âÁ¬½Ó³ØÃû³Æ£¬¿ÉÑ¡ÊôĞÔ£¬Ä¬ÈÏÎªpoolmanÖĞÅäÖÃµÄµÚÒ»¸öÁ¬½Ó³Ø
-	pretoken£ºÖ¸¶¨Ô¤±àÒësqlÓï¾äµÄ°ó¶¨±äÁ¿¶¨ÒåÇ°ÖÃ·Ö½ç·û£¬±ØĞëÓëºóÖÃ·Ö½ç·ûendtokenÒ»ÆğÖ¸¶¨¡£¿ÉÑ¡ÊôĞÔ£¬Ä¬ÈÏÎª#[
-	endtoken£ºÖ¸¶¨Ô¤±àÒësqlÓï¾äµÄ°ó¶¨±äÁ¿¶¨ÒåºóÖÃ·Ö½ç·û£¬±ØĞëÓëÇ°ÖÃ·Ö½ç·ûpretokenÒ»ÆğÖ¸¶¨¡£¿ÉÑ¡ÊôĞÔ£¬Ä¬ÈÏÎª]
-	action:Ö¸¶¨sql¶ÔÓ¦Êı¾İ¿â²Ù×÷ÀàĞÍ£¬°üÀ¨£ºdelete,insert,update,±ØÌîÑ¡Ïî		
-	result:Ö¸¶¨Êı¾İ¿â²Ù×÷½á¹û´æ´¢±äÁ¿µÄÃû³Æ£¬¿ÉÑ¡ÊôĞÔ£¬Ä¬ÈÏÖµ±äÁ¿Ãû³ÆÎª£ºdbutil_result
+	statementï¼šæŒ‡å®šè¦æ‰§è¡Œçš„sqlè¯­å¥ï¼Œå¯ä»¥æ™®é€šsqlè¯­å¥ï¼Œä¹Ÿå¯ä»¥æ˜¯å¸¦ç»‘å®šå˜é‡çš„sqlæ¨¡æ¿è¯­å¥ï¼Œå¿…é¡»è¦å†™çš„å±æ€§
+	dbnameï¼šæŒ‡å®šæ•°æ®åº“è¿æ¥æ± åç§°ï¼Œå¯é€‰å±æ€§ï¼Œé»˜è®¤ä¸ºpoolmanä¸­é…ç½®çš„ç¬¬ä¸€ä¸ªè¿æ¥æ± 
+	pretokenï¼šæŒ‡å®šé¢„ç¼–è¯‘sqlè¯­å¥çš„ç»‘å®šå˜é‡å®šä¹‰å‰ç½®åˆ†ç•Œç¬¦ï¼Œå¿…é¡»ä¸åç½®åˆ†ç•Œç¬¦endtokenä¸€èµ·æŒ‡å®šã€‚å¯é€‰å±æ€§ï¼Œé»˜è®¤ä¸º#[
+	endtokenï¼šæŒ‡å®šé¢„ç¼–è¯‘sqlè¯­å¥çš„ç»‘å®šå˜é‡å®šä¹‰åç½®åˆ†ç•Œç¬¦ï¼Œå¿…é¡»ä¸å‰ç½®åˆ†ç•Œç¬¦pretokenä¸€èµ·æŒ‡å®šã€‚å¯é€‰å±æ€§ï¼Œé»˜è®¤ä¸º]
+	action:æŒ‡å®šsqlå¯¹åº”æ•°æ®åº“æ“ä½œç±»å‹ï¼ŒåŒ…æ‹¬ï¼šdelete,insert,update,å¿…å¡«é€‰é¡¹		
+	result:æŒ‡å®šæ•°æ®åº“æ“ä½œç»“æœå­˜å‚¨å˜é‡çš„åç§°ï¼Œå¯é€‰å±æ€§ï¼Œé»˜è®¤å€¼å˜é‡åç§°ä¸ºï¼šdbutil_result
 
-sqlparams±êÇ©ÊôĞÔËµÃ÷ÈçÏÂ£º
-	pretoken£ºÖ¸¶¨Ô¤±àÒësqlÓï¾äµÄ°ó¶¨±äÁ¿¶¨ÒåÇ°ÖÃ·Ö½ç·û£¬±ØĞëÓëºóÖÃ·Ö½ç·ûendtokenÒ»ÆğÖ¸¶¨¡£¿ÉÑ¡ÊôĞÔ£¬Ä¬ÈÏÎª#[
-	endtoken£ºÖ¸¶¨Ô¤±àÒësqlÓï¾äµÄ°ó¶¨±äÁ¿¶¨ÒåºóÖÃ·Ö½ç·û£¬±ØĞëÓëÇ°ÖÃ·Ö½ç·ûpretokenÒ»ÆğÖ¸¶¨¡£¿ÉÑ¡ÊôĞÔ£¬Ä¬ÈÏÎª]
-	sqlparamskey:Ö¸¶¨½«²ÎÊı´æ´¢ÔÚrequest ÊôĞÔ¼¯ÖĞµÄ±äÁ¿Ãû³Æ£¬ÓÃÀ´ºÍpager£¬beaninfo£¬list±êÇ©ÉèÖÃºÃÄ£°åsqlµÄ°ó¶¨±äÁ¿²ÎÊıÖµ
-	sqlparams±ØĞëºÍpager£¬beaninfo£¬list±êÇ©Ò»ÆğÊ¹ÓÃ
+sqlparamsæ ‡ç­¾å±æ€§è¯´æ˜å¦‚ä¸‹ï¼š
+	pretokenï¼šæŒ‡å®šé¢„ç¼–è¯‘sqlè¯­å¥çš„ç»‘å®šå˜é‡å®šä¹‰å‰ç½®åˆ†ç•Œç¬¦ï¼Œå¿…é¡»ä¸åç½®åˆ†ç•Œç¬¦endtokenä¸€èµ·æŒ‡å®šã€‚å¯é€‰å±æ€§ï¼Œé»˜è®¤ä¸º#[
+	endtokenï¼šæŒ‡å®šé¢„ç¼–è¯‘sqlè¯­å¥çš„ç»‘å®šå˜é‡å®šä¹‰åç½®åˆ†ç•Œç¬¦ï¼Œå¿…é¡»ä¸å‰ç½®åˆ†ç•Œç¬¦pretokenä¸€èµ·æŒ‡å®šã€‚å¯é€‰å±æ€§ï¼Œé»˜è®¤ä¸º]
+	sqlparamskey:æŒ‡å®šå°†å‚æ•°å­˜å‚¨åœ¨request å±æ€§é›†ä¸­çš„å˜é‡åç§°ï¼Œç”¨æ¥å’Œpagerï¼Œbeaninfoï¼Œlistæ ‡ç­¾è®¾ç½®å¥½æ¨¡æ¿sqlçš„ç»‘å®šå˜é‡å‚æ•°å€¼
+	sqlparamså¿…é¡»å’Œpagerï¼Œbeaninfoï¼Œlistæ ‡ç­¾ä¸€èµ·ä½¿ç”¨
 	
-batchutil±êÇ©ÊôĞÔËµÃ÷ÈçÏÂ£º
-		dbname-Åú´¦Àí²Ù×÷¶ÔÓ¦µÄÊı¾İ¿âÁ¬½Ó³ØµÄÃû³Æ£¬¿ÉÑ¡ÊôĞÔ£¬Ä¬ÈÏÎªpoolmanÖĞÅäÖÃµÄµÚÒ»¸öÁ¬½Ó³Ø
-		type-Åú´¦Àí²Ù×÷ÀàĞÍ£¬È¡Öµ·¶Î§common,prepared,¿ÉÑ¡ÊôĞÔ£¬Ä¬ÈÏÖµÎªprepared
-		batchOptimize-ÓÅ»¯Ô¤±àÒëÅú´¦Àí²Ù×÷¿ØÖÆ±äÁ¿
+batchutilæ ‡ç­¾å±æ€§è¯´æ˜å¦‚ä¸‹ï¼š
+		dbname-æ‰¹å¤„ç†æ“ä½œå¯¹åº”çš„æ•°æ®åº“è¿æ¥æ± çš„åç§°ï¼Œå¯é€‰å±æ€§ï¼Œé»˜è®¤ä¸ºpoolmanä¸­é…ç½®çš„ç¬¬ä¸€ä¸ªè¿æ¥æ± 
+		type-æ‰¹å¤„ç†æ“ä½œç±»å‹ï¼Œå–å€¼èŒƒå›´common,prepared,å¯é€‰å±æ€§ï¼Œé»˜è®¤å€¼ä¸ºprepared
+		batchOptimize-ä¼˜åŒ–é¢„ç¼–è¯‘æ‰¹å¤„ç†æ“ä½œæ§åˆ¶å˜é‡
 		
-statement±êÇ©ÊôĞÔËµÃ÷ÈçÏÂ£º
-	sql-Ö¸¶¨Åú´¦ÀíµÄsqlÓï¾ä£¬¿ÉÒÔÊ¹Ô¤±àÒësqlÓï¾äºÍÆÕÍ¨sqlÓï¾ä
-	pretoken-Ö¸¶¨Ô¤±àÒësqlÓï¾äµÄ°ó¶¨±äÁ¿¶¨ÒåÇ°ÖÃ·Ö½ç·û£¬±ØĞëÓëºóÖÃ·Ö½ç·ûendtokenÒ»ÆğÖ¸¶¨¡£¿ÉÑ¡ÊôĞÔ£¬Ä¬ÈÏÎª#[
-	endtoken-Ö¸¶¨Ô¤±àÒësqlÓï¾äµÄ°ó¶¨±äÁ¿¶¨ÒåºóÖÃ·Ö½ç·û£¬±ØĞëÓëÇ°ÖÃ·Ö½ç·ûpretokenÒ»ÆğÖ¸¶¨¡£¿ÉÑ¡ÊôĞÔ£¬Ä¬ÈÏÎª]
+statementæ ‡ç­¾å±æ€§è¯´æ˜å¦‚ä¸‹ï¼š
+	sql-æŒ‡å®šæ‰¹å¤„ç†çš„sqlè¯­å¥ï¼Œå¯ä»¥ä½¿é¢„ç¼–è¯‘sqlè¯­å¥å’Œæ™®é€šsqlè¯­å¥
+	pretoken-æŒ‡å®šé¢„ç¼–è¯‘sqlè¯­å¥çš„ç»‘å®šå˜é‡å®šä¹‰å‰ç½®åˆ†ç•Œç¬¦ï¼Œå¿…é¡»ä¸åç½®åˆ†ç•Œç¬¦endtokenä¸€èµ·æŒ‡å®šã€‚å¯é€‰å±æ€§ï¼Œé»˜è®¤ä¸º#[
+	endtoken-æŒ‡å®šé¢„ç¼–è¯‘sqlè¯­å¥çš„ç»‘å®šå˜é‡å®šä¹‰åç½®åˆ†ç•Œç¬¦ï¼Œå¿…é¡»ä¸å‰ç½®åˆ†ç•Œç¬¦pretokenä¸€èµ·æŒ‡å®šã€‚å¯é€‰å±æ€§ï¼Œé»˜è®¤ä¸º]
 		
-sqlparam ÊôĞÔËµÃ÷£º
-	name£º°ó¶¨±äÁ¿Ãû³Æ£¬±ØĞëºÍÔ¤±àÒësqlÄ£°åÖĞµÄ±äÁ¿Ãû³Æ±£³ÖÒ»ÖÂ£¬±ØÑ¡Ïî
-	value£º±äÁ¿Öµ£¬±ØÑ¡Ïî
-	type£º±äÁ¿ÀàĞÍ£¬¿ÉÑ¡Ïî£¬Ä¬ÈÏÖµÎªstring,¶ÔÓ¦µÄÈ¡Öµ·¶Î§ÈçÏÂ£º
+sqlparam å±æ€§è¯´æ˜ï¼š
+	nameï¼šç»‘å®šå˜é‡åç§°ï¼Œå¿…é¡»å’Œé¢„ç¼–è¯‘sqlæ¨¡æ¿ä¸­çš„å˜é‡åç§°ä¿æŒä¸€è‡´ï¼Œå¿…é€‰é¡¹
+	valueï¼šå˜é‡å€¼ï¼Œå¿…é€‰é¡¹
+	typeï¼šå˜é‡ç±»å‹ï¼Œå¯é€‰é¡¹ï¼Œé»˜è®¤å€¼ä¸ºstring,å¯¹åº”çš„å–å€¼èŒƒå›´å¦‚ä¸‹ï¼š
 			bigdecimal
         	boolean
         	byte
@@ -728,39 +728,39 @@ sqlparam ÊôĞÔËµÃ÷£º
 			clob
 			blobfile
 			clobfile
-	dataformat£ºÊı¾İ¸ñÊ½£¬Ö÷ÒªÓÃÀ´Ö¸¶¨ÈÕÆÚÀàĞÍ(date,time,timestamp)µÄ´æ´¢¸ñÊ½
+	dataformatï¼šæ•°æ®æ ¼å¼ï¼Œä¸»è¦ç”¨æ¥æŒ‡å®šæ—¥æœŸç±»å‹(date,time,timestamp)çš„å­˜å‚¨æ ¼å¼
  
 
-ÌØ±ğËµÃ÷£º
-Õâpretoken ¡¢endtokenÁ½¸öÊôĞÔÖ÷ÒªÓÃÀ´Ö§³ÅÔÚ±êÇ©Ô¤±àÒë²éÑ¯¹¦ÄÜÊ±¶¨ÒåsqlÓï¾ä±äÁ¿µÄÓï·¨
-ÀıÈç£º
+ç‰¹åˆ«è¯´æ˜ï¼š
+è¿™pretoken ã€endtokenä¸¤ä¸ªå±æ€§ä¸»è¦ç”¨æ¥æ”¯æ’‘åœ¨æ ‡ç­¾é¢„ç¼–è¯‘æŸ¥è¯¢åŠŸèƒ½æ—¶å®šä¹‰sqlè¯­å¥å˜é‡çš„è¯­æ³•
+ä¾‹å¦‚ï¼š
 pretoken = "#\\["
 endtoken = "\\]"
-ÉÏÃæµÄ±äÁ¿Öµ¾ÍÊÇÄ¬ÈÏµÄ±äÁ¿·Ö½ç·û£¬¿ª·¢ÈËÔ±¿ÉÒÔÖ¸¶¨×Ô¼ºµÄ·Ö½ç·û
+ä¸Šé¢çš„å˜é‡å€¼å°±æ˜¯é»˜è®¤çš„å˜é‡åˆ†ç•Œç¬¦ï¼Œå¼€å‘äººå‘˜å¯ä»¥æŒ‡å®šè‡ªå·±çš„åˆ†ç•Œç¬¦
 
-ºóĞø½«ÒªÊµÏÖµÄ¹¦ÄÜ£º
-Ôö¼Ó´æ´¢¹ı³Ì£¬º¯ÊıÖ´ĞĞ±êÇ©
+åç»­å°†è¦å®ç°çš„åŠŸèƒ½ï¼š
+å¢åŠ å­˜å‚¨è¿‡ç¨‹ï¼Œå‡½æ•°æ‰§è¡Œæ ‡ç­¾
 
-Ê¹ÓÃÊµÀı£¬²Î¿¼²âÊÔÓÃÀı£º
+ä½¿ç”¨å®ä¾‹ï¼Œå‚è€ƒæµ‹è¯•ç”¨ä¾‹ï¼š
 beaninfo:/bboss-tablib/webapp/pager/testDetailTag_prepareddb.jsp
 list:/bboss-tablib/webapp/pager/testListPagertag_prepareddb.jsp
 pager:/bboss-tablib/webapp/pager/testPagerTag_prepareddb.jsp
 dbutil:
-	ĞÂÔö-/bboss-tablib/webapp/pager/testPagerTag_preparedInsert.jsp
-	É¾³ı-/bboss-tablib/webapp/pager/testPagerTag_preparedDeletedb.jsp
-	¸üĞÂ-/bboss-tablib/webapp/pager/testPagerTag_preparedUpdatedb.jsp
+	æ–°å¢-/bboss-tablib/webapp/pager/testPagerTag_preparedInsert.jsp
+	åˆ é™¤-/bboss-tablib/webapp/pager/testPagerTag_preparedDeletedb.jsp
+	æ›´æ–°-/bboss-tablib/webapp/pager/testPagerTag_preparedUpdatedb.jsp
 
 batchutil:
-	ÆÕÍ¨Åú´¦Àí²Ù×÷-/bboss-tablib/webapp/pager/testPagerTag_batchdb.jsp
-	Ô¤±àÒëÅú´¦Àí²Ù×÷-/bboss-tablib/webapp/pager/testPagerTag_preparedbatchdb.jsp
+	æ™®é€šæ‰¹å¤„ç†æ“ä½œ-/bboss-tablib/webapp/pager/testPagerTag_batchdb.jsp
+	é¢„ç¼–è¯‘æ‰¹å¤„ç†æ“ä½œ-/bboss-tablib/webapp/pager/testPagerTag_preparedbatchdb.jsp
 
-o À©Õ¹·ÖÒ³£¬ÁĞ±í£¬ÏêÏ¸ĞÅÏ¢Ò³ÃæÖ±½ÓÉèÖÃstatementÖ´ĞĞÊı¾İ¿â²éÑ¯¹¦ÄÜ£¬Ôö¼ÓÔ¤±àÒë²éÑ¯·½Ê½
+o æ‰©å±•åˆ†é¡µï¼Œåˆ—è¡¨ï¼Œè¯¦ç»†ä¿¡æ¯é¡µé¢ç›´æ¥è®¾ç½®statementæ‰§è¡Œæ•°æ®åº“æŸ¥è¯¢åŠŸèƒ½ï¼Œå¢åŠ é¢„ç¼–è¯‘æŸ¥è¯¢æ–¹å¼
 
-o beaninfo±êÇ©£¬pager±êÇ©£¬list±êÇ©Ôö¼ÓÒÔÏÂÊôĞÔ£º
-sqlparamskey:Ö¸¶¨½«°ó¶¨±äÁ¿²ÎÊı´æ´¢ÔÚrequest ÊôĞÔ¼¯ÖĞµÄ±äÁ¿Ãû³Æ£¬ÒÔ±ãpager£¬beaninfo£¬list±êÇ©»ñÈ¡sqlµÄ°ó¶¨±äÁ¿²ÎÊıÖµ
+o beaninfoæ ‡ç­¾ï¼Œpageræ ‡ç­¾ï¼Œlistæ ‡ç­¾å¢åŠ ä»¥ä¸‹å±æ€§ï¼š
+sqlparamskey:æŒ‡å®šå°†ç»‘å®šå˜é‡å‚æ•°å­˜å‚¨åœ¨request å±æ€§é›†ä¸­çš„å˜é‡åç§°ï¼Œä»¥ä¾¿pagerï¼Œbeaninfoï¼Œlistæ ‡ç­¾è·å–sqlçš„ç»‘å®šå˜é‡å‚æ•°å€¼
 
 
-ÉÏÊö¹¦ÄÜÏà¹ØµÄÎÄ¼ş£º
+ä¸Šè¿°åŠŸèƒ½ç›¸å…³çš„æ–‡ä»¶ï¼š
 /bboss-tablib/webapp/WEB-INF/pager-taglib.tld
 frameworkset.jar
 frameworkset-pool.jar
@@ -770,25 +770,25 @@ bboss-aop.jar
 ----------------------------------------
 1.0.2 - 2010-1-7
 ----------------------------------------
-o Ôö¼Óant¹¹½¨½Å±¾:build.xml£¬build.properties
-o Ôö¼Ó±êÇ©¿â²âÊÔÓÃÀıwarÓ¦ÓÃwebappÄ¿Â¼
-o Ôö¼ÓdistribÄ¿Â¼´æ·Å·¢²¼ºóµÄÏà¹ØÎÄ¼ş
+o å¢åŠ antæ„å»ºè„šæœ¬:build.xmlï¼Œbuild.properties
+o å¢åŠ æ ‡ç­¾åº“æµ‹è¯•ç”¨ä¾‹waråº”ç”¨webappç›®å½•
+o å¢åŠ distribç›®å½•å­˜æ”¾å‘å¸ƒåçš„ç›¸å…³æ–‡ä»¶
 
 ----------------------------------------
 1.0.2 - 2010-1-4
 ----------------------------------------
-o Ìí¼Ótabpane±êÇ©¿âÔ´ÂëÄ¿Â¼
-o Ê÷±êÇ©¿âtreetag.tldÖĞĞÂÔö±êÇ©query£¬¶¨ÒåÈçÏÂ£º
+o æ·»åŠ tabpaneæ ‡ç­¾åº“æºç ç›®å½•
+o æ ‘æ ‡ç­¾åº“treetag.tldä¸­æ–°å¢æ ‡ç­¾queryï¼Œå®šä¹‰å¦‚ä¸‹ï¼š
 <!-- 
-	 	ÊµÏÖÊ÷±êÇ©µÄ²éÑ¯¹¦ÄÜ£¬ÊÊÓÃÓÚ¾²Ì¬Ê÷ºÍ¶¯¾²½áºÏµÄÊ÷
-		Ö»ÄÜ²éÕÒÒÑ¾­Õ¹Ê¾³öÀ´µÄÊ÷½Úµã
+	 	å®ç°æ ‘æ ‡ç­¾çš„æŸ¥è¯¢åŠŸèƒ½ï¼Œé€‚ç”¨äºé™æ€æ ‘å’ŒåŠ¨é™ç»“åˆçš„æ ‘
+		åªèƒ½æŸ¥æ‰¾å·²ç»å±•ç¤ºå‡ºæ¥çš„æ ‘èŠ‚ç‚¹
 	  -->
 	 <tag>
 		<name>query</name>
         <tagclass>com.frameworkset.common.tag.tree.impl.QueryTag</tagclass>		
         <bodycontent>JSP</bodycontent>
         <!-- 
-        	rootid:Ö¸¶¨Ê÷µÄ¸ù½Úµãid£¬Ä¬ÈÏÖµÎª0£¬¶ÔÓ¦ÓÚtreedataµÄrootidÊôĞÔÖµ
+        	rootid:æŒ‡å®šæ ‘çš„æ ¹èŠ‚ç‚¹idï¼Œé»˜è®¤å€¼ä¸º0ï¼Œå¯¹åº”äºtreedataçš„rootidå±æ€§å€¼
          -->        
         <attribute>
           <name>rootid</name>
@@ -796,8 +796,8 @@ o Ê÷±êÇ©¿âtreetag.tldÖĞĞÂÔö±êÇ©query£¬¶¨ÒåÈçÏÂ£º
           <rtexprvalue>true</rtexprvalue>
         </attribute>
         <!-- 
-        	templatepath:Êä³ö²éÑ¯¿ò¡¢²éÑ¯°´Å¥µÄvelocityÄ£°å½Å±¾ÎÄ¼şÂ·¾¶£¬Ïà¶ÔÓÚvelocityÄ£°åÎÄ¼ş¼ĞµÄ¸ùÄ¿Â¼
-        	ÀıÈç£ºÄ£°åÄ¿Â¼Îªd:/templates/treequery.vm,ÄÇÃ´templatepathµÄÖµ¾ÍÎªtreequery.vm
+        	templatepath:è¾“å‡ºæŸ¥è¯¢æ¡†ã€æŸ¥è¯¢æŒ‰é’®çš„velocityæ¨¡æ¿è„šæœ¬æ–‡ä»¶è·¯å¾„ï¼Œç›¸å¯¹äºvelocityæ¨¡æ¿æ–‡ä»¶å¤¹çš„æ ¹ç›®å½•
+        	ä¾‹å¦‚ï¼šæ¨¡æ¿ç›®å½•ä¸ºd:/templates/treequery.vm,é‚£ä¹ˆtemplatepathçš„å€¼å°±ä¸ºtreequery.vm
          -->        
         <attribute>
           <name>templatepath</name>
@@ -805,18 +805,18 @@ o Ê÷±êÇ©¿âtreetag.tldÖĞĞÂÔö±êÇ©query£¬¶¨ÒåÈçÏÂ£º
           <rtexprvalue>true</rtexprvalue>
         </attribute>
 	 </tag>
-Ê¹ÓÃ·½·¨£º
-	 <tree:query/> <!-- rootidÄ¬ÈÏÎª0£¬templatepathÄ¬ÈÏÎªtreequery.vm -->
-	 <tree:query rootid="0"/> <!-- templatepathÄ¬ÈÏÎªtreequery.vm -->
-	 <tree:query templatepath="treequery.vm"/> <!-- rootidÄ¬ÈÏÎª0 -->
+ä½¿ç”¨æ–¹æ³•ï¼š
+	 <tree:query/> <!-- rootidé»˜è®¤ä¸º0ï¼Œtemplatepathé»˜è®¤ä¸ºtreequery.vm -->
+	 <tree:query rootid="0"/> <!-- templatepathé»˜è®¤ä¸ºtreequery.vm -->
+	 <tree:query templatepath="treequery.vm"/> <!-- rootidé»˜è®¤ä¸º0 -->
 	 <tree:query rootid="0" templatepath="treequery.vm"/>
 
 
 2009.12.7
 ---------------------------------------------------------------------------------
-o ĞŞ¸Äindex±êÇ©£¬Ôö¼ÓÒ³Ãæ·¶Î§ÉèÖÃ
+o ä¿®æ”¹indexæ ‡ç­¾ï¼Œå¢åŠ é¡µé¢èŒƒå›´è®¾ç½®
 <!-- 
-			ÖĞ¼äÒ³ÃæÑùÊ½Ãû³Æ
+			ä¸­é—´é¡µé¢æ ·å¼åç§°
 		 -->
 		<attribute>
 			<name>classname</name>
@@ -825,7 +825,7 @@ o ĞŞ¸Äindex±êÇ©£¬Ôö¼ÓÒ³Ãæ·¶Î§ÉèÖÃ
 		</attribute>
 		
 		<!-- 
-			Õ¹Ê¾µÄÖĞ¼äÒ³ÃæÊı£¬Ä¬ÈÏÎª-1,¼´²»Õ¹Ê¾ÖĞ¼äÒ³
+			å±•ç¤ºçš„ä¸­é—´é¡µé¢æ•°ï¼Œé»˜è®¤ä¸º-1,å³ä¸å±•ç¤ºä¸­é—´é¡µ
 		 -->
 		<attribute>
 			<name>tagnumber</name>
@@ -834,26 +834,26 @@ o ĞŞ¸Äindex±êÇ©£¬Ôö¼ÓÒ³Ãæ·¶Î§ÉèÖÃ
 		</attribute>
 		
 		<!-- 
-			ÖĞ¼äÒ³À©Õ¹ÊôĞÔ
+			ä¸­é—´é¡µæ‰©å±•å±æ€§
 		 -->
 		<attribute>
 			<name>centerextend</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
-ĞŞ¸ÄµÄ³ÌĞò
+ä¿®æ”¹çš„ç¨‹åº
 WebRoot/WEB-INF/pager-taglib.tld
 /bboss-taglib/src/com/frameworkset/common/tag/pager/tags/IndexTag.java		
 
-Ê¹ÓÃ·½·¨£º<pg:index tagnumber="10"/>
+ä½¿ç”¨æ–¹æ³•ï¼š<pg:index tagnumber="10"/>
 
-o ĞŞ¸Äindex±êÇ©Ìí¼ÓÒÔÏÂÊôĞÔ£º
+o ä¿®æ”¹indexæ ‡ç­¾æ·»åŠ ä»¥ä¸‹å±æ€§ï¼š
 <!--
-			¿ØÖÆÒ³ÃæÊÇÊ¹ÓÃpager.js»¹ÊÇpager_custom.js
-			ÎªtrueÊ±Ê¹ÓÃpager_custom.js£¬ÕâÊ±ÒªÇóÒ³ÃæÉÏÒªÓĞÒÔÏÂform±íµ¥£º
+			æ§åˆ¶é¡µé¢æ˜¯ä½¿ç”¨pager.jsè¿˜æ˜¯pager_custom.js
+			ä¸ºtrueæ—¶ä½¿ç”¨pager_custom.jsï¼Œè¿™æ—¶è¦æ±‚é¡µé¢ä¸Šè¦æœ‰ä»¥ä¸‹formè¡¨å•ï¼š
 			   <form name="com.frameworkset.goform" method="post"></form>
-			ÎªfalseÊ±Ê¹ÓÃpager.js
-			±¾ÊôĞÔµÄÄ¬ÈÏÖµÎªfalse
+			ä¸ºfalseæ—¶ä½¿ç”¨pager.js
+			æœ¬å±æ€§çš„é»˜è®¤å€¼ä¸ºfalse
 		-->
 		<attribute>
 			<name>custom</name>
@@ -861,10 +861,10 @@ o ĞŞ¸Äindex±êÇ©Ìí¼ÓÒÔÏÂÊôĞÔ£º
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 <!-- 
-			µ¼º½°´Å¥ÊÇ·ñÊ¹ÓÃÍ¼Æ¬,Ä¬ÈÏÖµÎªfalse
-			Ö»ÓĞuseimage=trueÊ±£¬imagedirºÍimageextend²ÅÆğ×÷ÓÃ
-			Èç¹ûuseimage=trueÊ±£¬Ã»ÓĞÖ¸¶¨imagedirºÍimageextendÊôĞÔ£¬ÄÇÃ´²ÉÓÃÄ¬ÈÏÊôĞÔ
-			Ê¹ÓÃ·½·¨
+			å¯¼èˆªæŒ‰é’®æ˜¯å¦ä½¿ç”¨å›¾ç‰‡,é»˜è®¤å€¼ä¸ºfalse
+			åªæœ‰useimage=trueæ—¶ï¼Œimagedirå’Œimageextendæ‰èµ·ä½œç”¨
+			å¦‚æœuseimage=trueæ—¶ï¼Œæ²¡æœ‰æŒ‡å®šimagedirå’Œimageextendå±æ€§ï¼Œé‚£ä¹ˆé‡‡ç”¨é»˜è®¤å±æ€§
+			ä½¿ç”¨æ–¹æ³•
 			<pg:index useimage="true" imagedir="/include/images" imageextend=" border=0 " tagnumber="-1"/>
 		 -->
 		<attribute>
@@ -873,12 +873,12 @@ o ĞŞ¸Äindex±êÇ©Ìí¼ÓÒÔÏÂÊôĞÔ£º
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!-- 
-			µ¼º½°´Å¥Í¼Æ¬´æ·ÅÄ¿Â¼£¬´æ·ÅµÄÍ¼Æ¬Ãû³ÆÎª£º
-			 first.gif-Ê× Ò³
-    		 next.gif-ÏÂÒ»Ò³
-    		 pre.gif-ÉÏÒ»Ò³
-    		 last.gif-Î² Ò³
-    		Ä¬ÈÏÖµÎª£º/include/images
+			å¯¼èˆªæŒ‰é’®å›¾ç‰‡å­˜æ”¾ç›®å½•ï¼Œå­˜æ”¾çš„å›¾ç‰‡åç§°ä¸ºï¼š
+			 first.gif-é¦– é¡µ
+    		 next.gif-ä¸‹ä¸€é¡µ
+    		 pre.gif-ä¸Šä¸€é¡µ
+    		 last.gif-å°¾ é¡µ
+    		é»˜è®¤å€¼ä¸ºï¼š/include/images
 		 -->
 		<attribute>
 			<name>imagedir</name>
@@ -886,7 +886,7 @@ o ĞŞ¸Äindex±êÇ©Ìí¼ÓÒÔÏÂÊôĞÔ£º
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!-- 
-			µ¼º½Í¼Æ¬µÄÀ©Õ¹ÊôĞÔ´®£¬Ä¬ÈÏÖµÎª£º" border=0 "
+			å¯¼èˆªå›¾ç‰‡çš„æ‰©å±•å±æ€§ä¸²ï¼Œé»˜è®¤å€¼ä¸ºï¼š" border=0 "
 		 -->
 		<attribute>
 			<name>imageextend</name>
@@ -894,23 +894,23 @@ o ĞŞ¸Äindex±êÇ©Ìí¼ÓÒÔÏÂÊôĞÔ£º
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 
-ĞŞ¸ÄµÄ³ÌĞò
+ä¿®æ”¹çš„ç¨‹åº
 WebRoot/WEB-INF/pager-taglib.tld
 /bboss-taglib/src/com/frameworkset/common/tag/pager/tags/IndexTag.java
 
-Éı¼¶·½·¨
+å‡çº§æ–¹æ³•
 ---------------------------------------------------------
-1.ÔÚpager-taglib.tldµÄindex±êÇ©ÖĞÌí¼ÓÒÔÏÂÊôĞÔ£º
+1.åœ¨pager-taglib.tldçš„indexæ ‡ç­¾ä¸­æ·»åŠ ä»¥ä¸‹å±æ€§ï¼š
 
 <tag>
 		<name>index</name>
-		¡£¡£¡£¡£¡£
+		ã€‚ã€‚ã€‚ã€‚ã€‚
 		<!--
-			¿ØÖÆÒ³ÃæÊÇÊ¹ÓÃpager.js»¹ÊÇpager_custom.js
-			ÎªtrueÊ±Ê¹ÓÃpager_custom.js£¬ÕâÊ±ÒªÇóÒ³ÃæÉÏÒªÓĞÒÔÏÂform±íµ¥£º
+			æ§åˆ¶é¡µé¢æ˜¯ä½¿ç”¨pager.jsè¿˜æ˜¯pager_custom.js
+			ä¸ºtrueæ—¶ä½¿ç”¨pager_custom.jsï¼Œè¿™æ—¶è¦æ±‚é¡µé¢ä¸Šè¦æœ‰ä»¥ä¸‹formè¡¨å•ï¼š
 			   <form name="com.frameworkset.goform" method="post"></form>
-			ÎªfalseÊ±Ê¹ÓÃpager.js
-			±¾ÊôĞÔµÄÄ¬ÈÏÖµÎªfalse
+			ä¸ºfalseæ—¶ä½¿ç”¨pager.js
+			æœ¬å±æ€§çš„é»˜è®¤å€¼ä¸ºfalse
 		-->
 		<attribute>
 			<name>custom</name>
@@ -918,10 +918,10 @@ WebRoot/WEB-INF/pager-taglib.tld
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 <!-- 
-			µ¼º½°´Å¥ÊÇ·ñÊ¹ÓÃÍ¼Æ¬,Ä¬ÈÏÖµÎªfalse
-			Ö»ÓĞuseimage=trueÊ±£¬imagedirºÍimageextend²ÅÆğ×÷ÓÃ
-			Èç¹ûuseimage=trueÊ±£¬Ã»ÓĞÖ¸¶¨imagedirºÍimageextendÊôĞÔ£¬ÄÇÃ´²ÉÓÃÄ¬ÈÏÊôĞÔ
-			Ê¹ÓÃ·½·¨
+			å¯¼èˆªæŒ‰é’®æ˜¯å¦ä½¿ç”¨å›¾ç‰‡,é»˜è®¤å€¼ä¸ºfalse
+			åªæœ‰useimage=trueæ—¶ï¼Œimagedirå’Œimageextendæ‰èµ·ä½œç”¨
+			å¦‚æœuseimage=trueæ—¶ï¼Œæ²¡æœ‰æŒ‡å®šimagedirå’Œimageextendå±æ€§ï¼Œé‚£ä¹ˆé‡‡ç”¨é»˜è®¤å±æ€§
+			ä½¿ç”¨æ–¹æ³•
 			<pg:index useimage="true" imagedir="/include/images" imageextend=" border=0 " tagnumber="-1"/>
 		 -->
 		<attribute>
@@ -930,12 +930,12 @@ WebRoot/WEB-INF/pager-taglib.tld
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!-- 
-			µ¼º½°´Å¥Í¼Æ¬´æ·ÅÄ¿Â¼£¬´æ·ÅµÄÍ¼Æ¬Ãû³ÆÎª£º
-			 first.gif-Ê× Ò³
-    		 next.gif-ÏÂÒ»Ò³
-    		 pre.gif-ÉÏÒ»Ò³
-    		 last.gif-Î² Ò³
-    		Ä¬ÈÏÖµÎª£º/include/images
+			å¯¼èˆªæŒ‰é’®å›¾ç‰‡å­˜æ”¾ç›®å½•ï¼Œå­˜æ”¾çš„å›¾ç‰‡åç§°ä¸ºï¼š
+			 first.gif-é¦– é¡µ
+    		 next.gif-ä¸‹ä¸€é¡µ
+    		 pre.gif-ä¸Šä¸€é¡µ
+    		 last.gif-å°¾ é¡µ
+    		é»˜è®¤å€¼ä¸ºï¼š/include/images
 		 -->
 		<attribute>
 			<name>imagedir</name>
@@ -943,7 +943,7 @@ WebRoot/WEB-INF/pager-taglib.tld
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!-- 
-			µ¼º½Í¼Æ¬µÄÀ©Õ¹ÊôĞÔ´®£¬Ä¬ÈÏÖµÎª£º" border=0 "
+			å¯¼èˆªå›¾ç‰‡çš„æ‰©å±•å±æ€§ä¸²ï¼Œé»˜è®¤å€¼ä¸ºï¼š" border=0 "
 		 -->
 		<attribute>
 			<name>imageextend</name>
@@ -952,7 +952,7 @@ WebRoot/WEB-INF/pager-taglib.tld
 		</attribute>
 
 <!-- 
-			ÖĞ¼äÒ³ÃæÑùÊ½Ãû³Æ
+			ä¸­é—´é¡µé¢æ ·å¼åç§°
 		 -->
 		<attribute>
 			<name>classname</name>
@@ -961,7 +961,7 @@ WebRoot/WEB-INF/pager-taglib.tld
 		</attribute>
 		
 		<!-- 
-			Õ¹Ê¾µÄÖĞ¼äÒ³ÃæÊı£¬Ä¬ÈÏÎª-1,¼´²»Õ¹Ê¾ÖĞ¼äÒ³
+			å±•ç¤ºçš„ä¸­é—´é¡µé¢æ•°ï¼Œé»˜è®¤ä¸º-1,å³ä¸å±•ç¤ºä¸­é—´é¡µ
 		 -->
 		<attribute>
 			<name>tagnumber</name>
@@ -970,7 +970,7 @@ WebRoot/WEB-INF/pager-taglib.tld
 		</attribute>
 		
 		<!-- 
-			ÖĞ¼äÒ³À©Õ¹ÊôĞÔ
+			ä¸­é—´é¡µæ‰©å±•å±æ€§
 		 -->
 		<attribute>
 			<name>centerextend</name>
@@ -981,12 +981,12 @@ WebRoot/WEB-INF/pager-taglib.tld
 	.......		
 	</tag>
 	
-2.	½«IndexTag.classÀà·ÅÈëframeworkset.jarµÄÂ·¾¶£ºcom\frameworkset\common\tag\pager\tags Ìæ»»Ô­À´Àà¼´¿É
+2.	å°†IndexTag.classç±»æ”¾å…¥frameworkset.jarçš„è·¯å¾„ï¼šcom\frameworkset\common\tag\pager\tags æ›¿æ¢åŸæ¥ç±»å³å¯
 ---------------------------------------------------------------------------------------------
 bboss taglib v1.0.1
 2009.10.13 
 ---------------------------------------------------------------------------------------------
-o Ôö¼Óaop¿ò¼ÜÅäÖÃ
+o å¢åŠ aopæ¡†æ¶é…ç½®
 Adding: bboss-taglib\lib\bboss-aop.jar  application/octet-stream
 Adding: bboss-taglib\lib\bboss-event.jar  application/octet-stream
 Modified: bboss-taglib\lib\frameworkset-pool.jar  
@@ -997,9 +997,9 @@ Modified: bboss-taglib\lib\frameworkset-pool.jar
 -------------------------------------------------------------------------
 fixed bug 1#:
 dataSet is null exception.beaninfo tag's stack is same as the dataset(list tag).cms outline tag use the same stack as list tag.
-½â¾ö±äÁ¿dataSetµÄÖµÃ»ÓĞÕıÈ·ÉèÖÃµÄÎÊÌâ£¬
-this.removeVariable();·½·¨±ØĞëÔÚrecoverParentDataSet();Ö®Ç°µ÷ÓÃ
+è§£å†³å˜é‡dataSetçš„å€¼æ²¡æœ‰æ­£ç¡®è®¾ç½®çš„é—®é¢˜ï¼Œ
+this.removeVariable();æ–¹æ³•å¿…é¡»åœ¨recoverParentDataSet();ä¹‹å‰è°ƒç”¨
 
-declareÊôĞÔËµÃ÷£º
-declareÓÃÀ´¿ØÖÆ£¬ÊÇ·ñÉùÃ÷ĞÂµÄdataSet±äÁ¿ºÍrowid±äÁ¿£¬ÓÃÔÚlistÇ¶Ì×Ê¹ÓÃµÄÇé¿ö¡£
-          ±êÇ©¿âÖĞÊ¼ÖÕ»áÉùÃ÷ÕâĞ©±äÁ¿
+declareå±æ€§è¯´æ˜ï¼š
+declareç”¨æ¥æ§åˆ¶ï¼Œæ˜¯å¦å£°æ˜æ–°çš„dataSetå˜é‡å’Œrowidå˜é‡ï¼Œç”¨åœ¨liståµŒå¥—ä½¿ç”¨çš„æƒ…å†µã€‚
+          æ ‡ç­¾åº“ä¸­å§‹ç»ˆä¼šå£°æ˜è¿™äº›å˜é‡

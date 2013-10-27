@@ -81,7 +81,7 @@ public abstract class AuthenticateFilter extends TokenFilter{
 	 * redirect
 	 * forward
 	 * include
-	 * È¨ÏŞ¼ì²â¶¨Ïò·½·¨ÔİÊ±²»ÓÃ£¬ºÍÈÏÖ¤¼ì²â¹«ÓÃdirecttypeÊôĞÔ
+	 * æƒé™æ£€æµ‹å®šå‘æ–¹æ³•æš‚æ—¶ä¸ç”¨ï¼Œå’Œè®¤è¯æ£€æµ‹å…¬ç”¨directtypeå±æ€§
 	 */
 	protected String permissiondirecttype = "redirect";
 	
@@ -275,7 +275,7 @@ public abstract class AuthenticateFilter extends TokenFilter{
 	{
 //    	String requesturipath = WebUtils.getHANDLER_Mappingpath(request);
     	String requesturipath = getPathUrl(request);
-		//×ö¿ØÖÆÂß¼­¼ì²â£¬Èç¹û¼ì²âÊ§°Ü£¬ÔòÖ´ĞĞÏÂÊöÂß¼­£¬·ñÔòÖ´ĞĞÕı³£µÄ¿ØÖÆÆ÷·½·¨		
+		//åšæ§åˆ¶é€»è¾‘æ£€æµ‹ï¼Œå¦‚æœæ£€æµ‹å¤±è´¥ï¼Œåˆ™æ‰§è¡Œä¸‹è¿°é€»è¾‘ï¼Œå¦åˆ™æ‰§è¡Œæ­£å¸¸çš„æ§åˆ¶å™¨æ–¹æ³•		
 		if(needCheck(requesturipath) )
 		{			
 			boolean checkresult = check(request,
@@ -318,7 +318,7 @@ public abstract class AuthenticateFilter extends TokenFilter{
 	{
 //    	String requesturipath = WebUtils.getHANDLER_Mappingpath(request);
     	String requesturipath = getPathUrl(request);
-		//×ö¿ØÖÆÂß¼­¼ì²â£¬Èç¹û¼ì²âÊ§°Ü£¬ÔòÖ´ĞĞÏÂÊöÂß¼­£¬·ñÔòÖ´ĞĞÕı³£µÄ¿ØÖÆÆ÷·½·¨		
+		//åšæ§åˆ¶é€»è¾‘æ£€æµ‹ï¼Œå¦‚æœæ£€æµ‹å¤±è´¥ï¼Œåˆ™æ‰§è¡Œä¸‹è¿°é€»è¾‘ï¼Œå¦åˆ™æ‰§è¡Œæ­£å¸¸çš„æ§åˆ¶å™¨æ–¹æ³•		
 		if(needCheck(requesturipath,this.permissionExclude,this.permissionInclude) )
 		{			
 			boolean checkresult = checkPermission(request,
@@ -507,7 +507,7 @@ public abstract class AuthenticateFilter extends TokenFilter{
 		
 	}
 	
-	/*************Filter½Ó¿ÚÊµÏÖ¿ªÊ¼********************/
+	/*************Filteræ¥å£å®ç°å¼€å§‹********************/
 	public void destroy() {
 		
 		
@@ -519,18 +519,18 @@ public abstract class AuthenticateFilter extends TokenFilter{
 			
 			if(arg0 instanceof HttpServletRequest)
 			{
-				if(!checkTokenExist((HttpServletRequest )arg0,(HttpServletResponse )arg1))//ÁîÅÆ¼ì²é£¬Èç¹ûµ±Ç°ÁîÅÆÒÑ¾­Ê§Ğ§ÔòÖ±½ÓÌø×ªµ½µÇÂ¼Ò³£¬·ñÔò¼ÌĞø½øĞĞºóÈ¥°²È«ÈÏÖ¤¼ì²é
+				if(!checkTokenExist((HttpServletRequest )arg0,(HttpServletResponse )arg1))//ä»¤ç‰Œæ£€æŸ¥ï¼Œå¦‚æœå½“å‰ä»¤ç‰Œå·²ç»å¤±æ•ˆåˆ™ç›´æ¥è·³è½¬åˆ°ç™»å½•é¡µï¼Œå¦åˆ™ç»§ç»­è¿›è¡Œåå»å®‰å…¨è®¤è¯æ£€æŸ¥
 				{
 					return ;
 				}
-				boolean result = preHandle((HttpServletRequest)arg0, (HttpServletResponse)arg1, null);//ÈÏÖ¤¼ì²â
+				boolean result = preHandle((HttpServletRequest)arg0, (HttpServletResponse)arg1, null);//è®¤è¯æ£€æµ‹
 				if(result)
 				{
-					if(!this.isEnablePermissionCheck())//Èç¹ûÃ»ÓĞÆôÓÃÈ¨ÏŞ¼ì²âÔòºöÂÔÒ³ÃæÈ¨ÏŞ¼ì²â£¬¼ÌĞøºóĞø´¦ÀíÁ÷³Ì
+					if(!this.isEnablePermissionCheck())//å¦‚æœæ²¡æœ‰å¯ç”¨æƒé™æ£€æµ‹åˆ™å¿½ç•¥é¡µé¢æƒé™æ£€æµ‹ï¼Œç»§ç»­åç»­å¤„ç†æµç¨‹
 						arg2.doFilter(arg0, arg1);
 					else
 					{
-						result = prepermissionHandle((HttpServletRequest)arg0, (HttpServletResponse)arg1, null);//È¨ÏŞ¼ì²â
+						result = prepermissionHandle((HttpServletRequest)arg0, (HttpServletResponse)arg1, null);//æƒé™æ£€æµ‹
 						if(result)
 							arg2.doFilter(arg0, arg1);
 					}
@@ -655,5 +655,5 @@ public abstract class AuthenticateFilter extends TokenFilter{
 		this.authorfailedurl = authorfailedurl;
 	} 
 	
-	/*************Filter½Ó¿ÚÊµÏÖ½áÊø********************/
+	/*************Filteræ¥å£å®ç°ç»“æŸ********************/
 }

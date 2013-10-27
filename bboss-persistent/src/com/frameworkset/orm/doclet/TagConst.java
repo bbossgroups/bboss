@@ -18,7 +18,7 @@ package com.frameworkset.orm.doclet;
 /**
  * <p>Title: </p>
  *
- * <p>Description: ×Ô¶¨ÒåµÄ±ê¼ÇÃû³ÆºÍÊôĞÔ³£Á¿</p>
+ * <p>Description: è‡ªå®šä¹‰çš„æ ‡è®°åç§°å’Œå±æ€§å¸¸é‡</p>
  *
  * <p>Copyright: Copyright (c) 2005</p>
  *

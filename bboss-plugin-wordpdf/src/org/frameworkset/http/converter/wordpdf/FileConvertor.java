@@ -101,7 +101,7 @@ public class FileConvertor {
 			Map<String, Object> bookdatas) throws Exception {
 
 		/*
-		 * 1.½«ÏÖÓĞµÄwordÄ£°å¸´ÖÆÒ»·İ£¬±£´æÎªºÏÍ¬±àºÅ.doc 2.ÔÚĞÂµÄÎÄµµÀïÃæ²åÈë¶¯Ì¬Öµ 3.×ªÎªpdf
+		 * 1.å°†ç°æœ‰çš„wordæ¨¡æ¿å¤åˆ¶ä¸€ä»½ï¼Œä¿å­˜ä¸ºåˆåŒç¼–å·.doc 2.åœ¨æ–°çš„æ–‡æ¡£é‡Œé¢æ’å…¥åŠ¨æ€å€¼ 3.è½¬ä¸ºpdf
 		 */
 
 
@@ -128,7 +128,7 @@ public class FileConvertor {
 					contract.close();
 				}
 			}
-			// 2.ÔÚĞÂµÄÎÄµµÀïÃæ²åÈë¶¯Ì¬Öµ
+			// 2.åœ¨æ–°çš„æ–‡æ¡£é‡Œé¢æ’å…¥åŠ¨æ€å€¼
 			ActiveXComponent word = null;
 			Dispatch doc = null;
 			try {
@@ -145,7 +145,7 @@ public class FileConvertor {
 					Set<String> keys = bookdatas.keySet();
 					for (String key : keys) {
 						boolean bookMarkExist = ActiveXComponent.call(Marks,
-								"Exists", key).toBoolean(); // ²éÕÒ±êÇ©
+								"Exists", key).toBoolean(); // æŸ¥æ‰¾æ ‡ç­¾
 						if (bookMarkExist) {
 
 							Dispatch rangeItem = Dispatch.call(Marks, "Item",
@@ -153,7 +153,7 @@ public class FileConvertor {
 							Dispatch range = Dispatch.call(rangeItem, "Range")
 									.toDispatch();
 							Dispatch.put(range, "Text",
-									new Variant(bookdatas.get(key)));// ²åÈëÊéÇ©µÄÖµ
+									new Variant(bookdatas.get(key)));// æ’å…¥ä¹¦ç­¾çš„å€¼
 						}
 						else
 						{
@@ -197,12 +197,12 @@ public class FileConvertor {
 				officeManager);
 		return converter.getRealWordFromWordTemplateWithMapdatas(wordtemplate, wordfile, bookdatas);
 //		/*
-//		 * 1.½«ÏÖÓĞµÄwordÄ£°å¸´ÖÆÒ»·İ£¬±£´æÎªºÏÍ¬±àºÅ.doc 2.ÔÚĞÂµÄÎÄµµÀïÃæ²åÈë¶¯Ì¬Öµ 3.×ªÎªpdf
+//		 * 1.å°†ç°æœ‰çš„wordæ¨¡æ¿å¤åˆ¶ä¸€ä»½ï¼Œä¿å­˜ä¸ºåˆåŒç¼–å·.doc 2.åœ¨æ–°çš„æ–‡æ¡£é‡Œé¢æ’å…¥åŠ¨æ€å€¼ 3.è½¬ä¸ºpdf
 //		 */
 //
 //
 //		/*
-//		 * 1.½«ÏÖÓĞµÄwordÄ£°å¸´ÖÆÒ»·İ£¬±£´æÎªºÏÍ¬±àºÅ.doc 2.ÔÚĞÂµÄÎÄµµÀïÃæ²åÈë¶¯Ì¬Öµ 3.×ªÎªpdf
+//		 * 1.å°†ç°æœ‰çš„wordæ¨¡æ¿å¤åˆ¶ä¸€ä»½ï¼Œä¿å­˜ä¸ºåˆåŒç¼–å·.doc 2.åœ¨æ–°çš„æ–‡æ¡£é‡Œé¢æ’å…¥åŠ¨æ€å€¼ 3.è½¬ä¸ºpdf
 //		 */
 //	
 //		if (wordtemplate != null) {
@@ -233,7 +233,7 @@ public class FileConvertor {
 //			{
 //				
 //				initXComponentContext(null);
-//				// 2.ÔÚĞÂµÄÎÄµµÀïÃæ²åÈë¶¯Ì¬Öµ
+//				// 2.åœ¨æ–°çš„æ–‡æ¡£é‡Œé¢æ’å…¥åŠ¨æ€å€¼
 //				XComponent document = null;
 ////				 XModel model = null;
 //				
@@ -482,7 +482,7 @@ public class FileConvertor {
 			String[] bookMarks, String[] bookdatas) throws Exception {
 
 		/*
-		 * 1.½«ÏÖÓĞµÄwordÄ£°å¸´ÖÆÒ»·İ£¬±£´æÎªºÏÍ¬±àºÅ.doc 2.ÔÚĞÂµÄÎÄµµÀïÃæ²åÈë¶¯Ì¬Öµ 3.×ªÎªpdf
+		 * 1.å°†ç°æœ‰çš„wordæ¨¡æ¿å¤åˆ¶ä¸€ä»½ï¼Œä¿å­˜ä¸ºåˆåŒç¼–å·.doc 2.åœ¨æ–°çš„æ–‡æ¡£é‡Œé¢æ’å…¥åŠ¨æ€å€¼ 3.è½¬ä¸ºpdf
 		 */
 
 
@@ -510,7 +510,7 @@ public class FileConvertor {
 					contract.close();
 				}
 			}
-			// 2.ÔÚĞÂµÄÎÄµµÀïÃæ²åÈë¶¯Ì¬Öµ
+			// 2.åœ¨æ–°çš„æ–‡æ¡£é‡Œé¢æ’å…¥åŠ¨æ€å€¼
 			ActiveXComponent word = null;
 			Dispatch doc = null;
 			try {
@@ -527,7 +527,7 @@ public class FileConvertor {
 					int i = 0;
 					for (String key : bookMarks) {
 						boolean bookMarkExist = ActiveXComponent.call(Marks,
-								"Exists", key).toBoolean(); // ²éÕÒ±êÇ©
+								"Exists", key).toBoolean(); // æŸ¥æ‰¾æ ‡ç­¾
 						if (bookMarkExist) {
 
 							Dispatch rangeItem = Dispatch.call(Marks, "Item",
@@ -535,7 +535,7 @@ public class FileConvertor {
 							Dispatch range = Dispatch.call(rangeItem, "Range")
 									.toDispatch();
 							Dispatch.put(range, "Text", new Variant(
-									bookdatas[i]));// ²åÈëÊéÇ©µÄÖµ
+									bookdatas[i]));// æ’å…¥ä¹¦ç­¾çš„å€¼
 						}
 						else
 						{
@@ -580,7 +580,7 @@ public class FileConvertor {
 				officeManager);
 		return converter.getRealWordFromWordTemplateWithArraydatas(wordtemplate, wordfile, bookMarks, bookdatas);
 //		/*
-//		 * 1.½«ÏÖÓĞµÄwordÄ£°å¸´ÖÆÒ»·İ£¬±£´æÎªºÏÍ¬±àºÅ.doc 2.ÔÚĞÂµÄÎÄµµÀïÃæ²åÈë¶¯Ì¬Öµ 3.×ªÎªpdf
+//		 * 1.å°†ç°æœ‰çš„wordæ¨¡æ¿å¤åˆ¶ä¸€ä»½ï¼Œä¿å­˜ä¸ºåˆåŒç¼–å·.doc 2.åœ¨æ–°çš„æ–‡æ¡£é‡Œé¢æ’å…¥åŠ¨æ€å€¼ 3.è½¬ä¸ºpdf
 //		 */
 //	
 //		if (wordtemplate != null) {
@@ -611,7 +611,7 @@ public class FileConvertor {
 //			{
 //				
 //				initXComponentContext(null);
-//				// 2.ÔÚĞÂµÄÎÄµµÀïÃæ²åÈë¶¯Ì¬Öµ
+//				// 2.åœ¨æ–°çš„æ–‡æ¡£é‡Œé¢æ’å…¥åŠ¨æ€å€¼
 //				XComponent document = null;
 ////				XModel model = null;
 //	//	        FileConvertor.init(null);

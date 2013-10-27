@@ -34,12 +34,12 @@ import com.frameworkset.util.ValueObjectUtil;
  * Copyright (c) 2007
  * </p>
  * 
- * @Date 2009-9-19 ÏÂÎç11:01:17
+ * @Date 2009-9-19 ä¸‹åˆ11:01:17
  * @author biaoping.yin
  * @version 1.0
  */
 public class Pro<V> extends BaseTXManager implements Comparable<V>, BeanInf {
-	/** ¶¨Òåproperty½ÚµãµÄ¹Ì¶¨ÊôĞÔ */
+	/** å®šä¹‰propertyèŠ‚ç‚¹çš„å›ºå®šå±æ€§ */
 	public static String[] fixattrs = new String[] { "name", "n","label", "value","v",
 			"class","cs", "refid", "singlable", "init-method", "destroy-method",
 			"factory-bean", "factory-class", "factory-method" };
@@ -47,7 +47,7 @@ public class Pro<V> extends BaseTXManager implements Comparable<V>, BeanInf {
 	public static final String REF_TOKEN = "->";
 	
 	/**
-	 * ÄÚÖÃµÄÊôĞÔÇ°×º±êÊ¶
+	 * å†…ç½®çš„å±æ€§å‰ç¼€æ ‡è¯†
 	 */
 	public static String[] fixattrprefics = new String[] { "f:", "path:", "ws:","s:","rmi:"};
 	public static String soa_type_attribute = "s:t";
@@ -77,9 +77,9 @@ public class Pro<V> extends BaseTXManager implements Comparable<V>, BeanInf {
 	// public final static String id_mask = "#~#";
 	//    
 	// /**
-	// * ÊôĞÔÈ«¾ÖÎ¨Ò»±êÊ¶
-	// * id Ò»¼¶±êÊ¶
-	// * containid#~#id ÈİÆ÷ÖĞµÄ±êÊ¶+±äÁ¿µÄ±êÊ¶£¬Èç¹û±äÁ¿µÄ±êÊ¶²»´æÔÚ£¬ÔòÒÔÈİÆ÷µÄ±êÊ¶Îª×¼
+	// * å±æ€§å…¨å±€å”¯ä¸€æ ‡è¯†
+	// * id ä¸€çº§æ ‡è¯†
+	// * containid#~#id å®¹å™¨ä¸­çš„æ ‡è¯†+å˜é‡çš„æ ‡è¯†ï¼Œå¦‚æœå˜é‡çš„æ ‡è¯†ä¸å­˜åœ¨ï¼Œåˆ™ä»¥å®¹å™¨çš„æ ‡è¯†ä¸ºå‡†
 	// *
 	// */
 	// private String uuid;
@@ -107,19 +107,19 @@ public class Pro<V> extends BaseTXManager implements Comparable<V>, BeanInf {
 
 	private boolean isfreeze = false;
 	/**
-	 * init-method£¬destroy-
-	 * methodÁ½¸öÊôĞÔ·Ö±ğ¶ÔÓ¦aop¿ò¼ÜÌá¹©µÄÁ½¸öInitializingBeanºÍDisposableBean
-	 * ÊµÏÖµÄ·½·¨£¬Èç¹û×é¼şÒÑ¾­ÊµÏÖÁËInitializingBean¾Í²»ĞèÒªÖ¸¶¨init-methodÊôĞÔ
-	 * Èç¹û×é¼şÊµÏÖÁËDisposableBean½Ó¿Ú¾Í²»ĞèÒªÖ¸¶¨destroy-methodÊôĞÔ
+	 * init-methodï¼Œdestroy-
+	 * methodä¸¤ä¸ªå±æ€§åˆ†åˆ«å¯¹åº”aopæ¡†æ¶æä¾›çš„ä¸¤ä¸ªInitializingBeanå’ŒDisposableBean
+	 * å®ç°çš„æ–¹æ³•ï¼Œå¦‚æœç»„ä»¶å·²ç»å®ç°äº†InitializingBeanå°±ä¸éœ€è¦æŒ‡å®šinit-methodå±æ€§
+	 * å¦‚æœç»„ä»¶å®ç°äº†DisposableBeanæ¥å£å°±ä¸éœ€è¦æŒ‡å®šdestroy-methodå±æ€§
 	 */
 
 	/**
-	 * beanÏú»Ù·½·¨£¬µ¥ÁĞÄ£Ê½Ê±Ê¹ÓÃ
+	 * beané”€æ¯æ–¹æ³•ï¼Œå•åˆ—æ¨¡å¼æ—¶ä½¿ç”¨
 	 */
 	private String destroyMethod = null;
 
 	/**
-	 * bean³õÊ¼»¯·½·¨
+	 * beanåˆå§‹åŒ–æ–¹æ³•
 	 */
 	private String initMethod = null;
 
@@ -194,7 +194,7 @@ public class Pro<V> extends BaseTXManager implements Comparable<V>, BeanInf {
 	}
 
 	/**
-	 * À©Õ¹ÊôĞÔ¼¯
+	 * æ‰©å±•å±æ€§é›†
 	 */
 	private Map<String, Object> extendsAttributes = new HashMap<String, Object>();
 
@@ -266,12 +266,12 @@ public class Pro<V> extends BaseTXManager implements Comparable<V>, BeanInf {
 	}
 
 	/**
-	 * ±¾·½·¨·µ»ØÔ­Ê¼µÄbean×é¼ş
+	 * æœ¬æ–¹æ³•è¿”å›åŸå§‹çš„beanç»„ä»¶
 	 * @param context
 	 * @return
 	 */
 	public Object getBean(CallContext context) {
-		if (this.isSinglable()) // µ¥ÁĞÄ£Ê½
+		if (this.isSinglable()) // å•åˆ—æ¨¡å¼
 		{
 			if (beaninstance == null) {
 				synchronized (this) {
@@ -300,7 +300,7 @@ public class Pro<V> extends BaseTXManager implements Comparable<V>, BeanInf {
 	}
 	
 	/**
-	 * ±¾·½·¨´øioc¹¦ÄÜµÄbean×é¼ş
+	 * æœ¬æ–¹æ³•å¸¦iocåŠŸèƒ½çš„beanç»„ä»¶
 	 * @param context
 	 * @return
 	 */
@@ -317,7 +317,7 @@ public class Pro<V> extends BaseTXManager implements Comparable<V>, BeanInf {
 	}
 
 	public <T> T getBean(CallContext context, Class<T> type) {
-		if (this.isSinglable()) // µ¥ÁĞÄ£Ê½
+		if (this.isSinglable()) // å•åˆ—æ¨¡å¼
 		{
 			if (beaninstance == null) {
 				synchronized (this) {
@@ -375,13 +375,13 @@ public class Pro<V> extends BaseTXManager implements Comparable<V>, BeanInf {
 	
 
 	/**
-	 * ÖµÀàĞÍ
+	 * å€¼ç±»å‹
 	 */
 	private String clazz;
 	private String description;
 
 	/**
-	 * ÊôĞÔ±à¼­Æ÷ĞÅÏ¢
+	 * å±æ€§ç¼–è¾‘å™¨ä¿¡æ¯
 	 */
 	private Editor editor; 
 
@@ -428,7 +428,7 @@ public class Pro<V> extends BaseTXManager implements Comparable<V>, BeanInf {
 	private boolean isserviceRef = false;
 
 	// /**
-	// * ¶ÔÓ¦µÄ×Ö¶ÎÃû³Æ
+	// * å¯¹åº”çš„å­—æ®µåç§°
 	// */
 	// private String fieldname;
 
@@ -551,7 +551,7 @@ public class Pro<V> extends BaseTXManager implements Comparable<V>, BeanInf {
 		try {
 			return Integer.parseInt(value.toString());
 		} catch (Exception e) {
-			throw new AssembleException("ÊôĞÔ[" + name + "]²»ÊÇÕûĞÍÊı¾İ£¡value=" + value);
+			throw new AssembleException("å±æ€§[" + name + "]ä¸æ˜¯æ•´å‹æ•°æ®ï¼value=" + value);
 		}
 
 	}
@@ -564,7 +564,7 @@ public class Pro<V> extends BaseTXManager implements Comparable<V>, BeanInf {
 		try {
 			return Long.parseLong(value.toString());
 		} catch (Exception e) {
-			throw new AssembleException("ÊôĞÔ[" + name + "]²»ÊÇÕûĞÍÊı¾İ£¡value=" + value);
+			throw new AssembleException("å±æ€§[" + name + "]ä¸æ˜¯æ•´å‹æ•°æ®ï¼value=" + value);
 		}
 
 	}
@@ -581,7 +581,7 @@ public class Pro<V> extends BaseTXManager implements Comparable<V>, BeanInf {
 		try {
 			return Integer.parseInt(value.toString());
 		} catch (Exception e) {
-			throw new AssembleException("ÊôĞÔ[" + name + "]²»ÊÇÕûĞÍÊı¾İ£¡value=" + value);
+			throw new AssembleException("å±æ€§[" + name + "]ä¸æ˜¯æ•´å‹æ•°æ®ï¼value=" + value);
 		}
 	}
 
@@ -592,20 +592,20 @@ public class Pro<V> extends BaseTXManager implements Comparable<V>, BeanInf {
 		try {
 			return Long.parseLong(value.toString());
 		} catch (Exception e) {
-			throw new AssembleException("ÊôĞÔ[" + name + "]²»ÊÇÕûĞÍÊı¾İ£¡value=" + value);
+			throw new AssembleException("å±æ€§[" + name + "]ä¸æ˜¯æ•´å‹æ•°æ®ï¼value=" + value);
 		}
 	}
 
 	public boolean getBoolean() {
 		Object value = this.getTrueValue();
 		if (value == null) {
-			throw new AssembleException("ÅäÖÃÎÄ¼şÃ»ÓĞÖ¸¶¨ÊôĞÔ[" + name + "]µÄÖµ¡£");
+			throw new AssembleException("é…ç½®æ–‡ä»¶æ²¡æœ‰æŒ‡å®šå±æ€§[" + name + "]çš„å€¼ã€‚");
 		}
 		String t = value.toString();
 		if (t.equals("")
 				|| (!t.equalsIgnoreCase("true") && !t.equalsIgnoreCase("false"))) {
-			throw new AssembleException("ÅäÖÃÎÄ¼şÖ¸¶¨ÊôĞÔ[" + name
-					+ "]µÄÖµ²»ÊÇbooleanÖµ£ºvalue=" + value);
+			throw new AssembleException("é…ç½®æ–‡ä»¶æŒ‡å®šå±æ€§[" + name
+					+ "]çš„å€¼ä¸æ˜¯booleanå€¼ï¼švalue=" + value);
 		}
 
 		try {
@@ -613,7 +613,7 @@ public class Pro<V> extends BaseTXManager implements Comparable<V>, BeanInf {
 			return ivalue;
 
 		} catch (Exception e) {
-			throw new AssembleException("ÊôĞÔ[" + name + "]²»ÊÇ²¼¶ûĞÍÊı¾İ£¡value="
+			throw new AssembleException("å±æ€§[" + name + "]ä¸æ˜¯å¸ƒå°”å‹æ•°æ®ï¼value="
 					+ value);
 		}
 
@@ -622,21 +622,21 @@ public class Pro<V> extends BaseTXManager implements Comparable<V>, BeanInf {
 	public boolean getBoolean(boolean defaultValue) {
 		Object value = this.getTrueValue();
 		if (value == null) {
-			log.info("ÅäÖÃÎÄ¼şÃ»ÓĞÖ¸¶¨ÊôĞÔ[" + name + "]µÄÖµ¡£");
+			log.info("é…ç½®æ–‡ä»¶æ²¡æœ‰æŒ‡å®šå±æ€§[" + name + "]çš„å€¼ã€‚");
 			return defaultValue;
 		}
 		String t = value.toString();
 		if (t.equals("")
 				|| (!t.equalsIgnoreCase("true") && !t.equalsIgnoreCase("false"))) {
-			throw new AssembleException("ÅäÖÃÎÄ¼şÖ¸¶¨ÊôĞÔ[" + name
-					+ "]µÄÖµ²»ÊÇbooleanÖµ£ºvalue=" + value);
+			throw new AssembleException("é…ç½®æ–‡ä»¶æŒ‡å®šå±æ€§[" + name
+					+ "]çš„å€¼ä¸æ˜¯booleanå€¼ï¼švalue=" + value);
 		}
 		try {
 			boolean ivalue = Boolean.parseBoolean(t);
 			return ivalue;
 
 		} catch (Exception e) {
-			throw new AssembleException("ÊôĞÔ[" + name + "]²»ÊÇ²¼¶ûĞÍÊı¾İ£¡value="
+			throw new AssembleException("å±æ€§[" + name + "]ä¸æ˜¯å¸ƒå°”å‹æ•°æ®ï¼value="
 					+ value);
 		}
 
@@ -682,7 +682,7 @@ public class Pro<V> extends BaseTXManager implements Comparable<V>, BeanInf {
 	}
 	
 	/**
-	 * ±¾·½·¨·µ»Ø´øioc¹¦ÄÜµÄÖµ
+	 * æœ¬æ–¹æ³•è¿”å›å¸¦iocåŠŸèƒ½çš„å€¼
 	 * @param context
 	 * @return
 	 */
@@ -723,7 +723,7 @@ public class Pro<V> extends BaseTXManager implements Comparable<V>, BeanInf {
 		 		  			convertcontainer,true);
 //		Object retvalue = null;
 //		if (value != null) {
-//			if (!convertcontainer) {//Èç¹û²»ĞèÒª½«ÈİÆ÷×ª»»ÎªÊµ¼ÊÀàĞÍÄÇÃ´Ö±½Ó·µ»Ø¶ÔÓ¦µÄÖµ
+//			if (!convertcontainer) {//å¦‚æœä¸éœ€è¦å°†å®¹å™¨è½¬æ¢ä¸ºå®é™…ç±»å‹é‚£ä¹ˆç›´æ¥è¿”å›å¯¹åº”çš„å€¼
 //				retvalue = value;
 //			} else if (value instanceof ProList) {
 //				String soatype = this.getSOAAttribute(soa_type_attribute);
@@ -868,7 +868,7 @@ public class Pro<V> extends BaseTXManager implements Comparable<V>, BeanInf {
 			boolean convertcontainer,boolean useeditor) {
 		Object retvalue = null;
 		if (value != null) {
-			if (!convertcontainer) {//Èç¹û²»ĞèÒª½«ÈİÆ÷×ª»»ÎªÊµ¼ÊÀàĞÍÄÇÃ´Ö±½Ó·µ»Ø¶ÔÓ¦µÄÖµ
+			if (!convertcontainer) {//å¦‚æœä¸éœ€è¦å°†å®¹å™¨è½¬æ¢ä¸ºå®é™…ç±»å‹é‚£ä¹ˆç›´æ¥è¿”å›å¯¹åº”çš„å€¼
 				retvalue = value;
 			} else if (value instanceof ProList) {
 				String soatype = this.getSOAAttribute(soa_type_attribute);
@@ -1017,7 +1017,7 @@ public class Pro<V> extends BaseTXManager implements Comparable<V>, BeanInf {
 		  			convertcontainer,false);
 //		Object retvalue = null;
 //		if (value != null) {
-//			if (!convertcontainer) {//Èç¹û²»ĞèÒª½«ÈİÆ÷×ª»»ÎªÊµ¼ÊÀàĞÍÄÇÃ´Ö±½Ó·µ»Ø¶ÔÓ¦µÄÖµ
+//			if (!convertcontainer) {//å¦‚æœä¸éœ€è¦å°†å®¹å™¨è½¬æ¢ä¸ºå®é™…ç±»å‹é‚£ä¹ˆç›´æ¥è¿”å›å¯¹åº”çš„å€¼
 //				retvalue = value;
 //			} else if (value instanceof ProList) {
 //				retvalue = ((ProList) value).getComponentList();
@@ -1202,7 +1202,7 @@ public class Pro<V> extends BaseTXManager implements Comparable<V>, BeanInf {
 	}
 
 	/**
-	 * ÊôĞÔ²ÎÊı
+	 * å±æ€§å‚æ•°
 	 */
 	private List<Pro> references = new ArrayList<Pro>();
 
@@ -1212,7 +1212,7 @@ public class Pro<V> extends BaseTXManager implements Comparable<V>, BeanInf {
 	}
 
 	/**
-	 * ¹¹Ôìº¯Êı²ÎÊı
+	 * æ„é€ å‡½æ•°å‚æ•°
 	 */
 	// private List<Pro> constructorParams = new ArrayList<Pro>();
 	public List<Pro> getConstructorParams() {
@@ -1323,7 +1323,7 @@ public class Pro<V> extends BaseTXManager implements Comparable<V>, BeanInf {
 	}
 
 	public Object getRefValue(CallContext context, Object defaultValue) {
-		if (this.isSinglable()) // µ¥ÁĞÄ£Ê½
+		if (this.isSinglable()) // å•åˆ—æ¨¡å¼
 		{
 			if (beaninstance == null) {
 				synchronized (this) {
@@ -1632,7 +1632,7 @@ public class Pro<V> extends BaseTXManager implements Comparable<V>, BeanInf {
 	}
 
 	/**
-	 * ¼ÓÔØÒì²½µ÷ÓÃµÄ·½·¨ĞÅÏ¢
+	 * åŠ è½½å¼‚æ­¥è°ƒç”¨çš„æ–¹æ³•ä¿¡æ¯
 	 */
 	protected void initAsyncMethods() {
 		if (!this.isBean())
@@ -1671,7 +1671,7 @@ public class Pro<V> extends BaseTXManager implements Comparable<V>, BeanInf {
 		try {
 			return (String[])value;
 		} catch (Exception e) {
-			throw new AssembleException("ÊôĞÔ[" + name + "]²»ÊÇString[]ĞÍÊı¾İ£¡value=" + value);
+			throw new AssembleException("å±æ€§[" + name + "]ä¸æ˜¯String[]å‹æ•°æ®ï¼value=" + value);
 		}
 	}
 
@@ -1682,7 +1682,7 @@ public class Pro<V> extends BaseTXManager implements Comparable<V>, BeanInf {
 		try {
 			return (String[])value;
 		} catch (Exception e) {
-			throw new AssembleException("ÊôĞÔ[" + name + "]²»ÊÇString[]ĞÍÊı¾İ£¡value=" + value);
+			throw new AssembleException("å±æ€§[" + name + "]ä¸æ˜¯String[]å‹æ•°æ®ï¼value=" + value);
 		}
 	}
 

@@ -18,7 +18,7 @@ package org.frameworkset.log;
 
 
 /**
- * <p> 通用日志记录接口 </p>
+ * <p> 閫氱敤鏃ュ織璁板綍鎺ュ彛 </p>
  * <p> Description: </p>
  * <p> bboss workgroup </p>
  * <p> Copyright (c) 2009 </p>

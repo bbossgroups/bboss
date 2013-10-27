@@ -21,7 +21,7 @@ package com.frameworkset.derby;
  * <p>Description: </p>
  *
  * <p>Copyright: Copyright (c) 2007</p>
- * @Date 2010-1-22 ÏÂÎç05:47:11
+ * @Date 2010-1-22 ä¸‹åˆ05:47:11
  * @author biaoping.yin
  * @version 1.0
  */

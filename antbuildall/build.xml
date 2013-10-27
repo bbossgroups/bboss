@@ -133,7 +133,7 @@
 		</antcall>
 	</target>
 	<target name="distrib-bboss-persistent-jars" description="distrib-bboss-persistent-jars">
-		<for list="${bboss-plugin-wordpdf-lib-depends},${bbossupload-lib},${demoproject-lib},${portallib},${casserverlib},${active-ext-lib},${cms_baseline-lib},${bboss-taglib-lib},${kettle-lib},${monitorconsole-lib},${monitorconsole-compilelib},${bboss-mvc-lib},${creatoresb-lib},${mvc-lib},${persistent-lib},${xmlrequest-lib},${bboss-plugin-hibernate-lib}" param="destdir">
+		<for list="${bboss-schedule-lib},${bboss-plugin-wordpdf-lib-depends},${bbossupload-lib},${demoproject-lib},${portallib},${casserverlib},${active-ext-lib},${cms_baseline-lib},${bboss-taglib-lib},${kettle-lib},${monitorconsole-lib},${monitorconsole-compilelib},${bboss-mvc-lib},${creatoresb-lib},${mvc-lib},${persistent-lib},${xmlrequest-lib},${bboss-plugin-hibernate-lib}" param="destdir">
 			<sequential>
 				<echo>@{destdir}-------------------------------</echo>
 				<antcall target="svn-update-procedure">
@@ -250,6 +250,15 @@
 		</antcall>
 	</target>
 	
+	<target name="build-bboss-schedule" description="build bboss schedule project">
+			<echo>build bboss schedule project</echo>
+			<ant dir="${bboss-schedule}" />
+			
+			<echo>update frameworkset-schedule.jar</echo>
+			<antcall target="distrib-bboss-schedule-jars">
+			</antcall>
+		</target>
+	
 	<target name="build-bboss-velocity" description="build bboss velocity project">
 		<echo>build bboss velocity project</echo>
 		<ant dir="${bboss-velocity}" />
@@ -280,7 +289,7 @@
 		</target>
 
 	<target name="distrib-bboss-util-jars" description="distrib-bboss-util-jars">
-		<for list="${bboss-plugin-wordpdf-lib-depends},${bboss-plugin-hessian-lib},${bbossupload-lib},${demoproject-lib},${active-ext-lib},${bboss-aop-lib},${bbossevent-lib},${cms_baseline-lib},${bboss-persistent-lib},${bboss-taglib-lib},${kettle-lib},${portallib},${casserverlib},${monitorconsole-lib},${monitorconsole-compilelib},${bboss-mvc-lib},${creatoresb-lib},${bboss-clientproxy-lib},${mvc-lib},${persistent-lib},${xmlrequest-lib},${xmlserializable-lib},${bboss-plugin-hibernate-lib}" param="destdir">
+		<for list="${bboss-schedule-lib},${bboss-plugin-wordpdf-lib-depends},${bboss-plugin-hessian-lib},${bbossupload-lib},${demoproject-lib},${active-ext-lib},${bboss-aop-lib},${bbossevent-lib},${cms_baseline-lib},${bboss-persistent-lib},${bboss-taglib-lib},${kettle-lib},${portallib},${casserverlib},${monitorconsole-lib},${monitorconsole-compilelib},${bboss-mvc-lib},${creatoresb-lib},${bboss-clientproxy-lib},${mvc-lib},${persistent-lib},${xmlrequest-lib},${xmlserializable-lib},${bboss-plugin-hibernate-lib}" param="destdir">
 			<sequential>
 				<echo>@{destdir}-------------------------------</echo>
 				<antcall target="svn-update-procedure">
@@ -292,6 +301,18 @@
 		</for>
 	</target>
 	
+	<target name="distrib-bboss-schedule-jars" description="distrib-bboss-schedule-jars">
+			<for list="${cms_baseline-lib}" param="destdir">
+				<sequential>
+					<echo>@{destdir}-------------------------------</echo>
+					<antcall target="svn-update-procedure">
+						<param name="sourcedir" value="${bboss-schedule}/distrib" />
+						<param name="filedir" value="@{destdir}" />
+						<param name="files" value="bboss-schedule.jar" />
+					</antcall>
+				</sequential>
+			</for>
+		</target>
 	<target name="distrib-bboss-velocity-jars" description="distrib-bboss-velocity-jars">
 		<for list="${bboss-util-lib},${bbossupload-lib},${demoproject-lib},${active-ext-lib},${bboss-aop-lib},${bbossevent-lib},${cms_baseline-lib},${bboss-persistent-lib}/velocity,${bboss-taglib-lib},${kettle-lib},${portallib},${casserverlib},${monitorconsole-lib},${monitorconsole-compilelib},${bboss-mvc-lib},${creatoresb-lib},${bboss-clientproxy-lib},${mvc-lib},${persistent-lib},${xmlrequest-lib},${xmlserializable-lib},${bboss-plugin-hibernate-lib}" param="destdir">
 			<sequential>
@@ -439,7 +460,7 @@ bbossaop<-cas server [bboss-aop.jar]
 			</sequential>
 		</for>
 
-		<for list="${bboss-plugin-wordpdf-lib-depends},${bboss-plugin-hessian-lib},${bboss-persistent-lib},${bbossupload-lib},${bboss-taglib-lib},${portallib},${casserverlib},${mvc-lib},${xmlrequest-lib},${xmlserializable-lib},${persistent-lib},${bboss-plugin-hibernate-lib}" param="destdir">
+		<for list="${bboss-schedule-lib},${bboss-plugin-wordpdf-lib-depends},${bboss-plugin-hessian-lib},${bboss-persistent-lib},${bbossupload-lib},${bboss-taglib-lib},${portallib},${casserverlib},${mvc-lib},${xmlrequest-lib},${xmlserializable-lib},${persistent-lib},${bboss-plugin-hibernate-lib}" param="destdir">
 			<sequential>
 				<echo>@{destdir}-------------------------------</echo>
 				<antcall target="svn-update-procedure">
@@ -1038,12 +1059,15 @@ bbossaop<-cas server [bboss-aop.jar]
 		<antcall target="build-persistent"/>
 		<antcall target="build-bboss-soa"/>
 		<antcall target="build-bboss-velocity"/>
+		
+		
 		<antcall target="build-bboss-taglib-only"/>
 		<antcall target="build-bboss-mvc-only"/>
 		<antcall target="build-bboss-event-only"/>
 		<antcall target="build-bboss-jodconverter-core"/>
 		<antcall target="build-bboss-plugin-wordpdf"/>
 		<antcall target="build-bboss-plugin-hessian"/>
+		<antcall target="build-bboss-schedule"/>
 		<antcall target="move-all-jars"/>		
 	</target>
 	
@@ -1058,6 +1082,7 @@ bbossaop<-cas server [bboss-aop.jar]
 		<antcall target="build-bboss-mvc-only"/>
 		<antcall target="build-bboss-event-only"/>
 		<antcall target="build-bboss-jodconverter-core"/>
+		<antcall target="build-bboss-schedule"/>
 		<antcall target="build-bboss-plugin-wordpdf"/>
 		<antcall target="build-bboss-plugin-hessian"/>		
 		<antcall target="move-all-jars"/>		
@@ -1080,6 +1105,7 @@ bbossaop<-cas server [bboss-aop.jar]
 			<fileset dir="${bboss-jodconverter-core}/distrib" includes="*.jar" />
 			<fileset dir="${bboss-plugin-wordpdf}/distrib" includes="*.jar" />
 			<fileset dir="${bboss-plugin-hessian}/distrib" includes="*.jar" />
+			<fileset dir="${bboss-schedule}/distrib" includes="*.jar" />
 		</copy>
 	</target>
 		

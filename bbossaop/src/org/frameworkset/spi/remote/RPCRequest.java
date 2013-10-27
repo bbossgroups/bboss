@@ -43,7 +43,7 @@ import org.frameworkset.spi.remote.annotations.GuardedBy;
  * Copyright (c) 2007
  * </p>
  * 
- * @Date 2009-10-7 ÏÂÎç05:35:32
+ * @Date 2009-10-7 ä¸‹åˆ05:35:32
  * @author biaoping.yin
  * @version 1.0
  */
@@ -319,7 +319,7 @@ public class RPCRequest implements java.io.Serializable, ResponseCollector
     }
 
     // /**
-    // * ¹Ø±Õ¶ÌÁ¬½Ó
+    // * å…³é—­çŸ­è¿æ¥
     // */
     // private void closeShortConnection()
     // {

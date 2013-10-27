@@ -35,7 +35,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * ¶¨ÒåÒ³ÃæÉÏÒªÏÔÊ¾µÄËùÓĞ×Ö¶ÎÓò
+ * å®šä¹‰é¡µé¢ä¸Šè¦æ˜¾ç¤ºçš„æ‰€æœ‰å­—æ®µåŸŸ
  * @author biaoping.yin
  * created on 2005-5-25
  * version 1.0
@@ -45,12 +45,12 @@ public class MetaDatas extends UniqueHelper implements ModelObject{
     private List dataModels = new ArrayList();
     
     /**
-     * µ±Êä³öÎŞ¼ÇÂ¼Ê±£¬Ìá¹©ÎŞ¼ÇÂ¼µÄÌáÊ¾ĞÅÏ¢
+     * å½“è¾“å‡ºæ— è®°å½•æ—¶ï¼Œæä¾›æ— è®°å½•çš„æç¤ºä¿¡æ¯
      */
     private Notification notification;
 
     /**
-     * Ìí¼ÓÒ³ÃæµÄÏÔÊ¾×Ö¶Î
+     * æ·»åŠ é¡µé¢çš„æ˜¾ç¤ºå­—æ®µ
      * @param field
      */
     public void addMetaField(Field field)
@@ -70,7 +70,7 @@ public class MetaDatas extends UniqueHelper implements ModelObject{
                 return field;
 
         }
-        throw new FieldException("fieldName£º" + fieldName + " not found!");
+        throw new FieldException("fieldNameï¼š" + fieldName + " not found!");
 
     }
 
@@ -91,12 +91,12 @@ public class MetaDatas extends UniqueHelper implements ModelObject{
                 return field;
 
         }
-        throw new DataModelException("DataModel£º" + fieldName + " not found!");
+        throw new DataModelException("DataModelï¼š" + fieldName + " not found!");
 
     }
 
     /**
-     * ÅĞ¶ÏÊÇ·ñÓĞdataSetÄ£ĞÍ
+     * åˆ¤æ–­æ˜¯å¦æœ‰dataSetæ¨¡å‹
      * @return boolean
      */
     public boolean hasDataModel()
@@ -107,7 +107,7 @@ public class MetaDatas extends UniqueHelper implements ModelObject{
     }
 
     /**
-     * ÅĞ¶ÏÊÇ·ñÓĞ×Ö¶ÎÔªÊı¾İ
+     * åˆ¤æ–­æ˜¯å¦æœ‰å­—æ®µå…ƒæ•°æ®
      * @return boolean
      */
     public boolean hasMetaField()

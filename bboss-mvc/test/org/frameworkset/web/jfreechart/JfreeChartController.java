@@ -73,10 +73,10 @@ public class JfreeChartController {
 			"chartinfo");
 //			chart.createBufferedImage(width, height, info);
 
-			// »ñÈ¡ÈÈµãmap
+			// è·å–çƒ­ç‚¹map
 			String strimg = ChartUtilities.getImageMap("maphot", info);
 
-			// ½âÎöxml
+			// è§£æxml
 			SAXReader reader = new SAXReader();
 			StringReader r = new StringReader(strimg);
 
@@ -91,7 +91,7 @@ public class JfreeChartController {
 			}
 
 			strimg = document.asXML();
-			response.setContentType("text/html; charset=GBK");
+			response.setContentType("text/html; charset=UTF-8");
 			response.getWriter().print(strimg);
 
 		} catch (IOException e) {
@@ -117,34 +117,34 @@ public class JfreeChartController {
 
 		response.setHeader("Content-type", "image/png");
 
-		XYDataset dataset = this.createDateSet();// ½¨Á¢Êı¾İ¼¯
+		XYDataset dataset = this.createDateSet();// å»ºç«‹æ•°æ®é›†
 		String fileName = null;
-		// ½¨Á¢JFreeChart
+		// å»ºç«‹JFreeChart
 		JFreeChart chart = ChartFactory.createTimeSeriesChart(
-				"JFreeChartÊ±¼äÇúÏßĞòÁĞÍ¼", "Date", "Price", dataset, true, false,
+				"JFreeChartæ—¶é—´æ›²çº¿åºåˆ—å›¾", "Date", "Price", dataset, true, false,
 				false);
-		// ÉèÖÃJFreeChartµÄÏÔÊ¾ÊôĞÔ,¶ÔÍ¼ĞÎÍâ²¿²¿·Ö½øĞĞµ÷Õû
+		// è®¾ç½®JFreeChartçš„æ˜¾ç¤ºå±æ€§,å¯¹å›¾å½¢å¤–éƒ¨éƒ¨åˆ†è¿›è¡Œè°ƒæ•´
 
-		// chart.setBackgroundPaint(Color.pink);// ÉèÖÃÇúÏßÍ¼±³¾°É« ÉèÖÃ×ÖÌå´óĞ¡£¬ĞÎ×´
-		Font font = new Font("ËÎÌå", Font.BOLD, 16);
-		TextTitle title = new TextTitle("JFreeChartÊ±¼äÇúÏßĞòÁĞÍ¼", font);
+		// chart.setBackgroundPaint(Color.pink);// è®¾ç½®æ›²çº¿å›¾èƒŒæ™¯è‰² è®¾ç½®å­—ä½“å¤§å°ï¼Œå½¢çŠ¶
+		Font font = new Font("å®‹ä½“", Font.BOLD, 16);
+		TextTitle title = new TextTitle("JFreeChartæ—¶é—´æ›²çº¿åºåˆ—å›¾", font);
 		chart.setTitle(title);
-		// ¸±±êÌâ
-		TextTitle subtitle = new TextTitle(" ", new Font("ºÚÌå", Font.BOLD, 12));
+		// å‰¯æ ‡é¢˜
+		TextTitle subtitle = new TextTitle(" ", new Font("é»‘ä½“", Font.BOLD, 12));
 		chart.addSubtitle(subtitle);
-		chart.setTitle(title); // ±êÌâ
+		chart.setTitle(title); // æ ‡é¢˜
 
-		// ÉèÖÃÍ¼Ê¾±êÌâ×Ö·û
-		// TimeSeries s1 = new TimeSeries("ÀúÊ·ÇúÏß", Day.class);¸ÃÖĞÎÄ×Ö·û
+		// è®¾ç½®å›¾ç¤ºæ ‡é¢˜å­—ç¬¦
+		// TimeSeries s1 = new TimeSeries("å†å²æ›²çº¿", Day.class);è¯¥ä¸­æ–‡å­—ç¬¦
 		LegendTitle legengTitle = chart.getLegend();
 		legengTitle.setItemFont(font);
 
-		// XYPlot plot = (XYPlot) chart.getPlot();// »ñÈ¡Í¼ĞÎµÄ»­²¼
-		// plot.setBackgroundPaint(Color.lightGray);// ÉèÖÃÍø¸ñ±³¾°É«
-		// plot.setDomainGridlinePaint(Color.green);// ÉèÖÃÍø¸ñÊúÏß(DomainÖá)ÑÕÉ«
-		// plot.setRangeGridlinePaint(Color.green);// ÉèÖÃÍø¸ñºáÏßÑÕÉ«
+		// XYPlot plot = (XYPlot) chart.getPlot();// è·å–å›¾å½¢çš„ç”»å¸ƒ
+		// plot.setBackgroundPaint(Color.lightGray);// è®¾ç½®ç½‘æ ¼èƒŒæ™¯è‰²
+		// plot.setDomainGridlinePaint(Color.green);// è®¾ç½®ç½‘æ ¼ç«–çº¿(Domainè½´)é¢œè‰²
+		// plot.setRangeGridlinePaint(Color.green);// è®¾ç½®ç½‘æ ¼æ¨ªçº¿é¢œè‰²
 		// plot.setAxisOffset(new RectangleInsets(5.0, 5.0, 5.0, 5.0));//
-		// ÉèÖÃÇúÏßÍ¼ÓëxyÖáµÄ¾àÀë
+		// è®¾ç½®æ›²çº¿å›¾ä¸xyè½´çš„è·ç¦»
 		// plot.setDomainCrosshairVisible(true);
 		// plot.setRangeCrosshairVisible(true);
 
@@ -172,22 +172,22 @@ public class JfreeChartController {
 			XYLineAndShapeRenderer renderer = (XYLineAndShapeRenderer) r;
 			renderer.setBaseShapesVisible(true);
 			renderer.setBaseShapesFilled(true);
-			renderer.setShapesVisible(true);// ÉèÖÃÇúÏßÊÇ·ñÏÔÊ¾Êı¾İµã
+			renderer.setShapesVisible(true);// è®¾ç½®æ›²çº¿æ˜¯å¦æ˜¾ç¤ºæ•°æ®ç‚¹
 		}
-		// ÉèÖÃYÖá
+		// è®¾ç½®Yè½´
 
 		NumberAxis numAxis = (NumberAxis) chart.getXYPlot().getRangeAxis();
 		NumberFormat numFormater = NumberFormat.getNumberInstance();
 		numFormater.setMinimumFractionDigits(2);
 		numAxis.setNumberFormatOverride(numFormater);
 
-		// ÉèÖÃÌáÊ¾ĞÅÏ¢
+		// è®¾ç½®æç¤ºä¿¡æ¯
 		StandardXYToolTipGenerator tipGenerator = new StandardXYToolTipGenerator(
-				"ÀúÊ·ĞÅÏ¢({1} 16:00,{2})", new SimpleDateFormat("MM-dd"),
+				"å†å²ä¿¡æ¯({1} 16:00,{2})", new SimpleDateFormat("MM-dd"),
 				numFormater);
 		r.setToolTipGenerator(tipGenerator);
 
-		// ÉèÖÃXÖá£¨ÈÕÆÚÖá£©
+		// è®¾ç½®Xè½´ï¼ˆæ—¥æœŸè½´ï¼‰
 		DateAxis axis = (DateAxis) chart.getXYPlot().getDomainAxis();
 		axis.setDateFormatOverride(new SimpleDateFormat("MM-dd"));
 		ChartRenderingInfo info = new ChartRenderingInfo(
@@ -208,14 +208,14 @@ public class JfreeChartController {
 	}
 
 	/**
-	 * ½¨Á¢Éú³ÉÍ¼ĞÎËùĞèµÄÊı¾İ¼¯
+	 * å»ºç«‹ç”Ÿæˆå›¾å½¢æ‰€éœ€çš„æ•°æ®é›†
 	 * 
-	 * @return ·µ»ØÊı¾İ¼¯
+	 * @return è¿”å›æ•°æ®é›†
 	 */
 	private XYDataset createDateSet() {
-		TimeSeriesCollection dataset = new TimeSeriesCollection();// Ê±¼äÇúÏßÊı¾İ¼¯ºÏ
-		TimeSeries s1 = new TimeSeries("ÀúÊ·ÇúÏß", Day.class);// ´´½¨Ê±¼äÊı¾İÔ´£¬Ã¿Ò»¸ö//TimeSeriesÔÚÍ¼ÉÏÊÇÒ»ÌõÇúÏß
-		// s1.add(new Day(day,month,year),value),Ìí¼ÓÊı¾İµãĞÅÏ¢
+		TimeSeriesCollection dataset = new TimeSeriesCollection();// æ—¶é—´æ›²çº¿æ•°æ®é›†åˆ
+		TimeSeries s1 = new TimeSeries("å†å²æ›²çº¿", Day.class);// åˆ›å»ºæ—¶é—´æ•°æ®æºï¼Œæ¯ä¸€ä¸ª//TimeSeriesåœ¨å›¾ä¸Šæ˜¯ä¸€æ¡æ›²çº¿
+		// s1.add(new Day(day,month,year),value),æ·»åŠ æ•°æ®ç‚¹ä¿¡æ¯
 		s1.add(new Day(1, 2, 2009), 123.51);
 		s1.add(new Day(2, 2, 2009), 122.1);
 		s1.add(new Day(3, 2, 2009), 120.86);
@@ -254,10 +254,10 @@ public class JfreeChartController {
 			ChartRenderingInfo info = (ChartRenderingInfo) request.getSession().getAttribute("chartbarinfor");
 			chart.createBufferedImage(width, height, info);
 
-			// »ñÈ¡ÈÈµãmap
+			// è·å–çƒ­ç‚¹map
 			String strimg = ChartUtilities.getImageMap("mapbarhot", info);
 System.out.println(strimg);
-			// ½âÎöxml
+			// è§£æxml
 			SAXReader reader = new SAXReader();
 			StringReader r = new StringReader(strimg);
 
@@ -272,7 +272,7 @@ System.out.println(strimg);
 			}
 
 			strimg = document.asXML();
-			response.setContentType("text/html; charset=GBK");
+			response.setContentType("text/html; charset=UTF-8");
 			response.getWriter().print(strimg);
 
 		} catch (IOException e) {
@@ -296,16 +296,16 @@ System.out.println(strimg);
 		int backgroundColor = toIntHex(request.getParameter("bc"), 0xFFFFFF);
 		int gridColor = toIntHex(request.getParameter("gc"), 0);
 		response.setHeader("Content-type", "image/png");
-		CategoryDataset dataset = createDataset();// ½¨Á¢Êı¾İ¼¯
+		CategoryDataset dataset = createDataset();// å»ºç«‹æ•°æ®é›†
 
-		JFreeChart chart = ChartFactory.createBarChart("¶àÖÖ²úÆ·³öÊÛÍ³¼Æ", // Í¼Æ¬±êÌâ
-				"category", // ºá×ø±ê±êÌâ
-				"number", // ×İ×ø±ê±êÌâ
-				dataset, // ÓÃÓÚ³öÍ¼µÄÊı¾İ¼¯
-				PlotOrientation.VERTICAL, // Öù×Ó·½Ïò
-				true, // ÊÇ·ñ°üº¬Legend
-				true, // ÊÇ·ñ°üº¬tooltips
-				true); // ÊÇ·ñ°üº¬urls
+		JFreeChart chart = ChartFactory.createBarChart("å¤šç§äº§å“å‡ºå”®ç»Ÿè®¡", // å›¾ç‰‡æ ‡é¢˜
+				"category", // æ¨ªåæ ‡æ ‡é¢˜
+				"number", // çºµåæ ‡æ ‡é¢˜
+				dataset, // ç”¨äºå‡ºå›¾çš„æ•°æ®é›†
+				PlotOrientation.VERTICAL, // æŸ±å­æ–¹å‘
+				true, // æ˜¯å¦åŒ…å«Legend
+				true, // æ˜¯å¦åŒ…å«tooltips
+				true); // æ˜¯å¦åŒ…å«urls
 //		 chart.setBackgroundPaint(Color.WHITE);
 
 //		if (chart != null) {
@@ -326,68 +326,68 @@ System.out.println(strimg);
 //			chart.getXYPlot().setDomainAxis(1, new DateAxis());
 //			chart.getXYPlot().setInsets(new RectangleInsets(-15, 0, 0, 10));
 //		}
-		// ÉèÖÃ±êÌâ×ÖÌå
-		chart.getTitle().setFont(new Font(" ËÎÌå ", Font.CENTER_BASELINE, 12));
+		// è®¾ç½®æ ‡é¢˜å­—ä½“
+		chart.getTitle().setFont(new Font(" å®‹ä½“ ", Font.CENTER_BASELINE, 12));
 
 		CategoryPlot plot = chart.getCategoryPlot();
 
 		/**//*
-			 * //Ã»ÓĞÊı¾İÊ±ÏÔÊ¾µÄÏûÏ¢ plot.setNoDataMessage("Êı¾İ»¹Î´Â¼Èë£¡");
-			 * plot.setNoDataMessageFont(new Font("ËÎÌå", Font.CENTER_BASELINE,
+			 * //æ²¡æœ‰æ•°æ®æ—¶æ˜¾ç¤ºçš„æ¶ˆæ¯ plot.setNoDataMessage("æ•°æ®è¿˜æœªå½•å…¥ï¼");
+			 * plot.setNoDataMessageFont(new Font("å®‹ä½“", Font.CENTER_BASELINE,
 			 * 15));
 			 */
 
-		// ºá×ø±êÉèÖÃ
+		// æ¨ªåæ ‡è®¾ç½®
 		CategoryAxis domainAxis = plot.getDomainAxis();
-		// ÉèÖÃºá×ø±êÉÏÏÔÊ¾¸÷¸öÒµÎñ×ÓÏîµÄ×ÖÌå
-		domainAxis.setTickLabelFont(new Font(" ËÎÌå ", Font.PLAIN, 9));
+		// è®¾ç½®æ¨ªåæ ‡ä¸Šæ˜¾ç¤ºå„ä¸ªä¸šåŠ¡å­é¡¹çš„å­—ä½“
+		domainAxis.setTickLabelFont(new Font(" å®‹ä½“ ", Font.PLAIN, 9));
 		plot.setDomainAxis(domainAxis);
 
-		// ×İ×ø±êÉèÖÃ
+		// çºµåæ ‡è®¾ç½®
 		ValueAxis rangeAxis = (ValueAxis) plot.getRangeAxis();
-		// ÉèÖÃ×î¸ßµÄÒ»¸ö Item ÓëÍ¼Æ¬¶¥¶ËµÄ¾àÀë
+		// è®¾ç½®æœ€é«˜çš„ä¸€ä¸ª Item ä¸å›¾ç‰‡é¡¶ç«¯çš„è·ç¦»
 		rangeAxis.setUpperMargin(0.15);
-		// ÉèÖÃ×îµÍµÄÒ»¸ö Item ÓëÍ¼Æ¬µ×¶ËµÄ¾àÀë
+		// è®¾ç½®æœ€ä½çš„ä¸€ä¸ª Item ä¸å›¾ç‰‡åº•ç«¯çš„è·ç¦»
 		rangeAxis.setLowerMargin(0.15);
 		plot.setRangeAxis(rangeAxis);
 
 		BarRenderer renderer = new BarRenderer();
 		renderer.setBaseOutlinePaint(Color.BLACK);
 		/**//*
-			 * // ÉèÖÃÍ¼ÉÏµÄÎÄ×Ö renderer.setSeriesItemLabelFont(0, font);
+			 * // è®¾ç½®å›¾ä¸Šçš„æ–‡å­— renderer.setSeriesItemLabelFont(0, font);
 			 * renderer.setSeriesItemLabelFont(1, font);
 			 */
-		// ÉèÖÃlegendµÄ×ÖÌå
-		renderer.setBaseLegendTextFont(new Font(" ËÎÌå ",
+		// è®¾ç½®legendçš„å­—ä½“
+		renderer.setBaseLegendTextFont(new Font(" å®‹ä½“ ",
 				Font.LAYOUT_RIGHT_TO_LEFT, 10));
-		// ÉèÖÃ Wall µÄÑÕÉ«
+		// è®¾ç½® Wall çš„é¢œè‰²
 		// renderer.setWallPaint(Color.gray);
-		// ÉèÖÃÃ¿ÖÖÖùµÄÑÕÉ«
+		// è®¾ç½®æ¯ç§æŸ±çš„é¢œè‰²
 		renderer.setSeriesPaint(0, new Color(133, 210, 38));
 		renderer.setSeriesPaint(1, new Color(0, 131, 249));
-		// ÉèÖÃÖùµÄ Outline ÑÕÉ«
+		// è®¾ç½®æŸ±çš„ Outline é¢œè‰²
 		renderer.setSeriesOutlinePaint(0, Color.BLACK);
 		renderer.setSeriesOutlinePaint(1, Color.BLACK);
-		// ÉèÖÃÃ¿¸öÆ½ĞĞÖùµÄÖ®¼ä¾àÀë
+		// è®¾ç½®æ¯ä¸ªå¹³è¡ŒæŸ±çš„ä¹‹é—´è·ç¦»
 		renderer.setItemMargin(0.03);
 
-		// ÏÔÊ¾Ã¿¸öÖùµÄÊıÖµ£¬²¢ĞŞ¸Ä¸ÃÊıÖµµÄ×ÖÌåÊôĞÔ
+		// æ˜¾ç¤ºæ¯ä¸ªæŸ±çš„æ•°å€¼ï¼Œå¹¶ä¿®æ”¹è¯¥æ•°å€¼çš„å­—ä½“å±æ€§
 		renderer
 				.setBaseItemLabelGenerator(new StandardCategoryItemLabelGenerator());
-		// ×¢Òâ£º´Ë¾äºÜ¹Ø¼ü£¬ÈôÎŞ´Ë¾ä£¬ÄÇÊı×ÖµÄÏÔÊ¾»á±»¸²¸Ç£¬¸øÈËÊı×ÖÃ»ÓĞÏÔÊ¾³öÀ´µÄÎÊÌâ
+		// æ³¨æ„ï¼šæ­¤å¥å¾ˆå…³é”®ï¼Œè‹¥æ— æ­¤å¥ï¼Œé‚£æ•°å­—çš„æ˜¾ç¤ºä¼šè¢«è¦†ç›–ï¼Œç»™äººæ•°å­—æ²¡æœ‰æ˜¾ç¤ºå‡ºæ¥çš„é—®é¢˜
 		renderer.setBasePositiveItemLabelPosition(new ItemLabelPosition(
 				ItemLabelAnchor.OUTSIDE12, TextAnchor.BASELINE_CENTER));
-		// ÉèÖÃÖùĞÎÍ¼ÉÏµÄÎÄ×ÖÆ«ÀëÖµ
+		// è®¾ç½®æŸ±å½¢å›¾ä¸Šçš„æ–‡å­—åç¦»å€¼
 		renderer.setItemLabelAnchorOffset(10D);
 		renderer.setBaseItemLabelsVisible(true);
-		renderer.setBaseItemLabelFont(new Font("ËÎÌå", Font.PLAIN,
+		renderer.setBaseItemLabelFont(new Font("å®‹ä½“", Font.PLAIN,
 				9));
 
 		plot.setRenderer(renderer);
 
-		// ÉèÖÃÖùµÄÍ¸Ã÷¶È
+		// è®¾ç½®æŸ±çš„é€æ˜åº¦
 		plot.setForegroundAlpha(0.6f);
-		// ÉèÖÃºá×ø±êºÍ×İ×ø±êµÄÏÔÊ¾Î»ÖÃ
+		// è®¾ç½®æ¨ªåæ ‡å’Œçºµåæ ‡çš„æ˜¾ç¤ºä½ç½®
 		plot.setDomainAxisLocation(AxisLocation.BOTTOM_OR_LEFT);
 		plot.setRangeAxisLocation(AxisLocation.BOTTOM_OR_LEFT);
 
@@ -429,46 +429,46 @@ System.out.println(strimg);
 	 public  void piechart3D(HttpServletRequest request,HttpServletResponse response){   
 	        PieDataset dataset = getDataSet();   
 	        JFreeChart chart = ChartFactory.createPieChart3D(   
-	                " ÏîÄ¿½ø¶È·Ö²¼",// Í¼±í±êÌâ   
+	                " é¡¹ç›®è¿›åº¦åˆ†å¸ƒ",// å›¾è¡¨æ ‡é¢˜   
 	                dataset,// data   
 	                true,// include legend   
 	                true, false);   
 	        PiePlot3D plot = (PiePlot3D) chart.getPlot();   
-	        // Í¼Æ¬ÖĞÏÔÊ¾°Ù·Ö±È:Ä¬ÈÏ·½Ê½   
+	        // å›¾ç‰‡ä¸­æ˜¾ç¤ºç™¾åˆ†æ¯”:é»˜è®¤æ–¹å¼   
 	        plot.setLabelGenerator(new StandardPieSectionLabelGenerator(   
 	                StandardPieToolTipGenerator.DEFAULT_TOOLTIP_FORMAT));   
-	        // Í¼Æ¬ÖĞÏÔÊ¾°Ù·Ö±È:×Ô¶¨Òå·½Ê½£¬{0} ±íÊ¾Ñ¡Ïî£¬ {1} ±íÊ¾ÊıÖµ£¬   
-	        //{2} ±íÊ¾ËùÕ¼±ÈÀı ,Ğ¡ÊıµãºóÁ½Î»   
+	        // å›¾ç‰‡ä¸­æ˜¾ç¤ºç™¾åˆ†æ¯”:è‡ªå®šä¹‰æ–¹å¼ï¼Œ{0} è¡¨ç¤ºé€‰é¡¹ï¼Œ {1} è¡¨ç¤ºæ•°å€¼ï¼Œ   
+	        //{2} è¡¨ç¤ºæ‰€å æ¯”ä¾‹ ,å°æ•°ç‚¹åä¸¤ä½   
 	        plot.setLabelGenerator(new StandardPieSectionLabelGenerator(   
 	                "{0}={1}({2})", NumberFormat.getNumberInstance(),   
 	                new DecimalFormat("0.00%")));   
-	        // Í¼ÀıÏÔÊ¾°Ù·Ö±È:×Ô¶¨Òå·½Ê½£¬ {0} ±íÊ¾Ñ¡Ïî£¬ {1} ±íÊ¾ÊıÖµ£¬ {2} ±íÊ¾ËùÕ¼±ÈÀı   
+	        // å›¾ä¾‹æ˜¾ç¤ºç™¾åˆ†æ¯”:è‡ªå®šä¹‰æ–¹å¼ï¼Œ {0} è¡¨ç¤ºé€‰é¡¹ï¼Œ {1} è¡¨ç¤ºæ•°å€¼ï¼Œ {2} è¡¨ç¤ºæ‰€å æ¯”ä¾‹   
 	        plot.setLegendLabelGenerator(new StandardPieSectionLabelGenerator(   
 	                        "{0}"));   
-	        // Ö¸¶¨Í¼Æ¬µÄÍ¸Ã÷¶È(0.0-1.0)   
+	        // æŒ‡å®šå›¾ç‰‡çš„é€æ˜åº¦(0.0-1.0)   
 	        plot.setForegroundAlpha(1.0f);   
-	        // Ö¸¶¨ÏÔÊ¾µÄ±ıÍ¼ÉÏÔ²ĞÎ(true)»¹ÍÖÔ²ĞÎ(false)   
+	        // æŒ‡å®šæ˜¾ç¤ºçš„é¥¼å›¾ä¸Šåœ†å½¢(true)è¿˜æ¤­åœ†å½¢(false)   
 	        plot.setCircular(true);   
-	        // ÉèÖÃÍ¼ÉÏ·ÖÀà±êÇ©labelµÄ×ÖÌå£¬½â¾öÖĞÎÄÂÒÂë   
-	        plot.setLabelFont(new Font("ºÚÌå", Font.PLAIN, 12));   
-	        // ÉèÖÃÍ¼ÉÏ·ÖÀà±êÇ©labelµÄ×î´ó¿í¶È£¬Ïà¶ÔÓëplotµÄ°Ù·Ö±È   
+	        // è®¾ç½®å›¾ä¸Šåˆ†ç±»æ ‡ç­¾labelçš„å­—ä½“ï¼Œè§£å†³ä¸­æ–‡ä¹±ç    
+	        plot.setLabelFont(new Font("é»‘ä½“", Font.PLAIN, 12));   
+	        // è®¾ç½®å›¾ä¸Šåˆ†ç±»æ ‡ç­¾labelçš„æœ€å¤§å®½åº¦ï¼Œç›¸å¯¹ä¸plotçš„ç™¾åˆ†æ¯”   
 	        plot.setMaximumLabelWidth(0.2);   
-	        // ÉèÖÃ3D±ıÍ¼µÄZÖá¸ß¶È£¨0.0¡«1.0£©   
+	        // è®¾ç½®3Dé¥¼å›¾çš„Zè½´é«˜åº¦ï¼ˆ0.0ï½1.0ï¼‰   
 	        plot.setDepthFactor(0.07);   
-	        //ÉèÖÃÆğÊ¼½Ç¶È£¬Ä¬ÈÏÖµÎª90£¬µ±Îª0Ê±£¬ÆğÊ¼ÖµÔÚ3µãÖÓ·½Ïò   
+	        //è®¾ç½®èµ·å§‹è§’åº¦ï¼Œé»˜è®¤å€¼ä¸º90ï¼Œå½“ä¸º0æ—¶ï¼Œèµ·å§‹å€¼åœ¨3ç‚¹é’Ÿæ–¹å‘   
 	        plot.setStartAngle(45);   
 	  
-	        // ÉèÖÃÍ¼±êÌâµÄ×ÖÌå£¬½â¾öÖĞÎÄÂÒÂë   
+	        // è®¾ç½®å›¾æ ‡é¢˜çš„å­—ä½“ï¼Œè§£å†³ä¸­æ–‡ä¹±ç    
 	        TextTitle textTitle = chart.getTitle();   
-	        textTitle.setFont(new Font("ºÚÌå", Font.PLAIN, 20));   
+	        textTitle.setFont(new Font("é»‘ä½“", Font.PLAIN, 20));   
 	  
-	        // ÉèÖÃ±³¾°É«Îª°×É«   
+	        // è®¾ç½®èƒŒæ™¯è‰²ä¸ºç™½è‰²   
 	        chart.setBackgroundPaint(Color.white);   
-	        // ÉèÖÃLegend²¿·Ö×ÖÌå£¬½â¾öÖĞÎÄÂÒÂë   
-	        chart.getLegend().setItemFont(new Font("ËÎÌå", Font.PLAIN, 12));   
+	        // è®¾ç½®Legendéƒ¨åˆ†å­—ä½“ï¼Œè§£å†³ä¸­æ–‡ä¹±ç    
+	        chart.getLegend().setItemFont(new Font("å®‹ä½“", Font.PLAIN, 12));   
 	        ChartRenderingInfo info = new ChartRenderingInfo(
 					new StandardEntityCollection());
-	        // Êä³öÍ¼Æ¬µ½ÎÄ¼ş   
+	        // è¾“å‡ºå›¾ç‰‡åˆ°æ–‡ä»¶   
 	        try {
 				int width = 500, height = 300;
 				response.getOutputStream().write(
@@ -493,10 +493,10 @@ System.out.println(strimg);
 				ChartRenderingInfo info = (ChartRenderingInfo) request.getSession().getAttribute("chartpieinfo3D");
 				chart.createBufferedImage(width, height, info);
 
-				// »ñÈ¡ÈÈµãmap
+				// è·å–çƒ­ç‚¹map
 				String strimg = ChartUtilities.getImageMap("mappiehot3D", info);
 	System.out.println(strimg);
-				// ½âÎöxml
+				// è§£æxml
 				SAXReader reader = new SAXReader();
 				StringReader r = new StringReader(strimg);
 
@@ -511,7 +511,7 @@ System.out.println(strimg);
 				}
 
 				strimg = document.asXML();
-				response.setContentType("text/html; charset=GBK");
+				response.setContentType("text/html; charset=UTF-8");
 				response.getWriter().print(strimg);
 
 			} catch (IOException e) {
@@ -526,48 +526,48 @@ System.out.println(strimg);
 	 
 	    public  void piechart(HttpServletRequest request,HttpServletResponse response){   
 	        PieDataset dataset = getDataSet();   
-	        JFreeChart chart = ChartFactory.createPieChart(" ÏîÄ¿½ø¶È·Ö²¼",// Í¼±í±êÌâ   
+	        JFreeChart chart = ChartFactory.createPieChart(" é¡¹ç›®è¿›åº¦åˆ†å¸ƒ",// å›¾è¡¨æ ‡é¢˜   
 	                dataset,// data   
 	                true,// include legend   
 	                true, false);   
 	        PiePlot plot = (PiePlot) chart.getPlot();   
-	        // Í¼Æ¬ÖĞÏÔÊ¾°Ù·Ö±È:Ä¬ÈÏ·½Ê½   
+	        // å›¾ç‰‡ä¸­æ˜¾ç¤ºç™¾åˆ†æ¯”:é»˜è®¤æ–¹å¼   
 	        plot.setLabelGenerator(new StandardPieSectionLabelGenerator(   
 	                StandardPieToolTipGenerator.DEFAULT_TOOLTIP_FORMAT));   
-	        // Í¼Æ¬ÖĞÏÔÊ¾°Ù·Ö±È:×Ô¶¨Òå·½Ê½£¬{0} ±íÊ¾Ñ¡Ïî£¬ {1} ±íÊ¾ÊıÖµ£¬   
-	        //{2} ±íÊ¾ËùÕ¼±ÈÀı ,Ğ¡ÊıµãºóÁ½Î»   
+	        // å›¾ç‰‡ä¸­æ˜¾ç¤ºç™¾åˆ†æ¯”:è‡ªå®šä¹‰æ–¹å¼ï¼Œ{0} è¡¨ç¤ºé€‰é¡¹ï¼Œ {1} è¡¨ç¤ºæ•°å€¼ï¼Œ   
+	        //{2} è¡¨ç¤ºæ‰€å æ¯”ä¾‹ ,å°æ•°ç‚¹åä¸¤ä½   
 	        plot.setLabelGenerator(new StandardPieSectionLabelGenerator(   
 	                "{0}={1}({2})", NumberFormat.getNumberInstance(),   
 	                new DecimalFormat("0.00%")));   
-	        // Í¼ÀıÏÔÊ¾°Ù·Ö±È:×Ô¶¨Òå·½Ê½£¬ {0} ±íÊ¾Ñ¡Ïî£¬ {1} ±íÊ¾ÊıÖµ£¬ {2} ±íÊ¾ËùÕ¼±ÈÀı   
+	        // å›¾ä¾‹æ˜¾ç¤ºç™¾åˆ†æ¯”:è‡ªå®šä¹‰æ–¹å¼ï¼Œ {0} è¡¨ç¤ºé€‰é¡¹ï¼Œ {1} è¡¨ç¤ºæ•°å€¼ï¼Œ {2} è¡¨ç¤ºæ‰€å æ¯”ä¾‹   
 	        plot.setLegendLabelGenerator(new StandardPieSectionLabelGenerator(   
 	                        "{0}"));   
-	        // Ö¸¶¨Í¼Æ¬µÄÍ¸Ã÷¶È(0.0-1.0)   
+	        // æŒ‡å®šå›¾ç‰‡çš„é€æ˜åº¦(0.0-1.0)   
 	        plot.setForegroundAlpha(1.0f);   
-	        // Ö¸¶¨ÏÔÊ¾µÄ±ıÍ¼ÉÏÔ²ĞÎ(true)»¹ÍÖÔ²ĞÎ(false)   
+	        // æŒ‡å®šæ˜¾ç¤ºçš„é¥¼å›¾ä¸Šåœ†å½¢(true)è¿˜æ¤­åœ†å½¢(false)   
 	        plot.setCircular(true);   
-	        // ÉèÖÃÍ¼ÉÏ·ÖÀà±êÇ©labelµÄ×ÖÌå£¬½â¾öÖĞÎÄÂÒÂë   
-	        plot.setLabelFont(new Font("ºÚÌå", Font.PLAIN, 12));   
-	        // ÉèÖÃÍ¼ÉÏ·ÖÀà±êÇ©labelµÄ×î´ó¿í¶È£¬Ïà¶ÔÓëplotµÄ°Ù·Ö±È   
+	        // è®¾ç½®å›¾ä¸Šåˆ†ç±»æ ‡ç­¾labelçš„å­—ä½“ï¼Œè§£å†³ä¸­æ–‡ä¹±ç    
+	        plot.setLabelFont(new Font("é»‘ä½“", Font.PLAIN, 12));   
+	        // è®¾ç½®å›¾ä¸Šåˆ†ç±»æ ‡ç­¾labelçš„æœ€å¤§å®½åº¦ï¼Œç›¸å¯¹ä¸plotçš„ç™¾åˆ†æ¯”   
 	        plot.setMaximumLabelWidth(0.2);   
-	        //ÉèÖÃÆğÊ¼½Ç¶È£¬Ä¬ÈÏÖµÎª90£¬µ±Îª0Ê±£¬ÆğÊ¼ÖµÔÚ3µãÖÓ·½Ïò   
+	        //è®¾ç½®èµ·å§‹è§’åº¦ï¼Œé»˜è®¤å€¼ä¸º90ï¼Œå½“ä¸º0æ—¶ï¼Œèµ·å§‹å€¼åœ¨3ç‚¹é’Ÿæ–¹å‘   
 	        plot.setStartAngle(45);   
 	  
 	        /**  
-	         * ÉèÖÃÄ³Ò»¿éÍ¹³ö£¬µÚÒ»¸ö²ÎÊıÎªdataSetµÄkey£¬´Ë·½·¨Ö»ÔÚPiePlotÖĞÓĞĞ§  
+	         * è®¾ç½®æŸä¸€å—å‡¸å‡ºï¼Œç¬¬ä¸€ä¸ªå‚æ•°ä¸ºdataSetçš„keyï¼Œæ­¤æ–¹æ³•åªåœ¨PiePlotä¸­æœ‰æ•ˆ  
 	         */  
-	        plot.setExplodePercent(" ÔËÎ¬", 0.2);   
+	        plot.setExplodePercent(" è¿ç»´", 0.2);   
 	  
-	        // ÉèÖÃÍ¼±êÌâµÄ×ÖÌå£¬½â¾öÖĞÎÄÂÒÂë   
+	        // è®¾ç½®å›¾æ ‡é¢˜çš„å­—ä½“ï¼Œè§£å†³ä¸­æ–‡ä¹±ç    
 	        TextTitle textTitle = chart.getTitle();   
-	        textTitle.setFont(new Font("ºÚÌå", Font.PLAIN, 20));   
+	        textTitle.setFont(new Font("é»‘ä½“", Font.PLAIN, 20));   
 	  
-	        // ÉèÖÃ±³¾°É«Îª°×É«   
+	        // è®¾ç½®èƒŒæ™¯è‰²ä¸ºç™½è‰²   
 //	        chart.setBackgroundPaint(Color.white);   
-	        // ÉèÖÃLegend²¿·Ö×ÖÌå£¬½â¾öÖĞÎÄÂÒÂë   
-	        chart.getLegend().setItemFont(new Font("ËÎÌå", Font.PLAIN, 12));   
+	        // è®¾ç½®Legendéƒ¨åˆ†å­—ä½“ï¼Œè§£å†³ä¸­æ–‡ä¹±ç    
+	        chart.getLegend().setItemFont(new Font("å®‹ä½“", Font.PLAIN, 12));   
 	  
-	        // Êä³öÍ¼Æ¬µ½ÎÄ¼ş   
+	        // è¾“å‡ºå›¾ç‰‡åˆ°æ–‡ä»¶   
 	        ChartRenderingInfo info = new ChartRenderingInfo(
 					new StandardEntityCollection());
 			try {
@@ -594,10 +594,10 @@ System.out.println(strimg);
 				ChartRenderingInfo info = (ChartRenderingInfo) request.getSession().getAttribute("chartpieinfo");
 				chart.createBufferedImage(width, height, info);
 
-				// »ñÈ¡ÈÈµãmap
+				// è·å–çƒ­ç‚¹map
 				String strimg = ChartUtilities.getImageMap("mappiehot", info);
 	System.out.println(strimg);
-				// ½âÎöxml
+				// è§£æxml
 				SAXReader reader = new SAXReader();
 				StringReader r = new StringReader(strimg);
 
@@ -612,7 +612,7 @@ System.out.println(strimg);
 				}
 
 				strimg = document.asXML();
-				response.setContentType("text/html; charset=GBK");
+				response.setContentType("text/html; charset=UTF-8");
 				response.getWriter().print(strimg);
 
 			} catch (IOException e) {
@@ -626,13 +626,13 @@ System.out.println(strimg);
 	    
 	    public  PieDataset getDataSet() {   
 	        DefaultPieDataset dataset = new DefaultPieDataset();   
-	        dataset.setValue(" ÊĞ³¡Ç°ÆÚ", new Double(10));   
-	        dataset.setValue(" Á¢Ïî", new Double(15));   
-	        dataset.setValue(" ¼Æ»®", new Double(10));   
-	        dataset.setValue(" ĞèÇóÓëÉè¼Æ", new Double(10));   
-	        dataset.setValue(" Ö´ĞĞ¿ØÖÆ", new Double(35));   
-	        dataset.setValue(" ÊÕÎ²", new Double(10));   
-	        dataset.setValue(" ÔËÎ¬", new Double(10));   
+	        dataset.setValue(" å¸‚åœºå‰æœŸ", new Double(10));   
+	        dataset.setValue(" ç«‹é¡¹", new Double(15));   
+	        dataset.setValue(" è®¡åˆ’", new Double(10));   
+	        dataset.setValue(" éœ€æ±‚ä¸è®¾è®¡", new Double(10));   
+	        dataset.setValue(" æ‰§è¡Œæ§åˆ¶", new Double(35));   
+	        dataset.setValue(" æ”¶å°¾", new Double(10));   
+	        dataset.setValue(" è¿ç»´", new Double(10));   
 	        return dataset;   
 	    }  
 	
@@ -642,28 +642,28 @@ System.out.println(strimg);
 	
 	  public void chartbar2(HttpServletRequest request,HttpServletResponse response){
 		  JFreeChart chart=ChartFactory.createBarChart3D(
-	                "Í¼ÊéÏúÁ¿Í³¼ÆÍ¼",
-	                "Í¼Êé",//Ä¿Â¼ÖáµÄÏÔÊ¾±êÇ©
-	                "ÏúÁ¿",//ÊıÖµÖáµÄÏÔÊ¾±êÇ©
+	                "å›¾ä¹¦é”€é‡ç»Ÿè®¡å›¾",
+	                "å›¾ä¹¦",//ç›®å½•è½´çš„æ˜¾ç¤ºæ ‡ç­¾
+	                "é”€é‡",//æ•°å€¼è½´çš„æ˜¾ç¤ºæ ‡ç­¾
 	                getDataSet1(),
-	                PlotOrientation.VERTICAL,//ÉèÖÃÍ¼±í·½Ïò
+	                PlotOrientation.VERTICAL,//è®¾ç½®å›¾è¡¨æ–¹å‘
 	                false,
 	                false,
 	                false        
 	        );
 	        
-	        //ÉèÖÃ±êÌâ
-	        chart.setTitle(new TextTitle("Í¼ÊéÏúÁ¿Í³¼ÆÍ¼",new Font("ºÚÌå",Font.ITALIC,22)));
-	        //ÉèÖÃÍ¼±í²¿·Ö
+	        //è®¾ç½®æ ‡é¢˜
+	        chart.setTitle(new TextTitle("å›¾ä¹¦é”€é‡ç»Ÿè®¡å›¾",new Font("é»‘ä½“",Font.ITALIC,22)));
+	        //è®¾ç½®å›¾è¡¨éƒ¨åˆ†
 	        CategoryPlot plot=(CategoryPlot)chart.getPlot();
 	        
-	        CategoryAxis categoryAxis=plot.getDomainAxis();//È¡µÃºáÖá
-	        categoryAxis.setLabelFont(new Font("ËÎÌå",Font.BOLD,22));//ÉèÖÃºáÖáÏÔÊ¾±êÇ©µÄ×ÖÌå
-	        categoryAxis.setCategoryLabelPositions(CategoryLabelPositions.UP_45);//·ÖÀà±êÇ©ÒÔ£´£µ¶ÈÇãĞ±
-	        categoryAxis.setTickLabelFont(new Font("ËÎÌå",Font.BOLD,18));//·ÖÀà±êÇ©×ÖÌå
+	        CategoryAxis categoryAxis=plot.getDomainAxis();//å–å¾—æ¨ªè½´
+	        categoryAxis.setLabelFont(new Font("å®‹ä½“",Font.BOLD,22));//è®¾ç½®æ¨ªè½´æ˜¾ç¤ºæ ‡ç­¾çš„å­—ä½“
+	        categoryAxis.setCategoryLabelPositions(CategoryLabelPositions.UP_45);//åˆ†ç±»æ ‡ç­¾ä»¥ï¼”ï¼•åº¦å€¾æ–œ
+	        categoryAxis.setTickLabelFont(new Font("å®‹ä½“",Font.BOLD,18));//åˆ†ç±»æ ‡ç­¾å­—ä½“
 	        
-	        NumberAxis numberAxis=(NumberAxis)plot.getRangeAxis();//È¡µÃ×İÖá
-	        numberAxis.setLabelFont(new Font("ËÎÌå",Font.BOLD,42));//ÉèÖÃ×İÖáÏÔÊ¾±êÇ©×ÖÌå
+	        NumberAxis numberAxis=(NumberAxis)plot.getRangeAxis();//å–å¾—çºµè½´
+	        numberAxis.setLabelFont(new Font("å®‹ä½“",Font.BOLD,42));//è®¾ç½®çºµè½´æ˜¾ç¤ºæ ‡ç­¾å­—ä½“
 	        ChartRenderingInfo info = new ChartRenderingInfo(
 					new StandardEntityCollection());
 			try {
@@ -689,10 +689,10 @@ System.out.println(strimg);
 				ChartRenderingInfo info = (ChartRenderingInfo) request.getSession().getAttribute("chartbarinfo1");
 				chart.createBufferedImage(width, height, info);
 
-				// »ñÈ¡ÈÈµãmap
+				// è·å–çƒ­ç‚¹map
 				String strimg = ChartUtilities.getImageMap("mapbarhot2", info);
 	System.out.println(strimg);
-				// ½âÎöxml
+				// è§£æxml
 				SAXReader reader = new SAXReader();
 				StringReader r = new StringReader(strimg);
 
@@ -707,7 +707,7 @@ System.out.println(strimg);
 				}
 
 				strimg = document.asXML();
-				response.setContentType("text/html; charset=GBK");
+				response.setContentType("text/html; charset=UTF-8");
 				response.getWriter().print(strimg);
 
 			} catch (IOException e) {
@@ -720,9 +720,9 @@ System.out.println(strimg);
 		}
 	   public CategoryDataset getDataSet1(){
 	        DefaultCategoryDataset dataset=new DefaultCategoryDataset();
-	        dataset.addValue(47000,"", "Spring2.0±¦µä");
-	        dataset.addValue(38000,"","ÇáÁ¿¼¶µÄJ2EE");
-	        dataset.addValue(31000, "", "JavaScriptÈ¨ÍşÖ¸ÄÏ");
+	        dataset.addValue(47000,"", "Spring2.0å®å…¸");
+	        dataset.addValue(38000,"","è½»é‡çº§çš„J2EE");
+	        dataset.addValue(31000, "", "JavaScriptæƒå¨æŒ‡å—");
 	        dataset.addValue(25000, "", "Ajax In Action");
 	        return dataset;
 	    }

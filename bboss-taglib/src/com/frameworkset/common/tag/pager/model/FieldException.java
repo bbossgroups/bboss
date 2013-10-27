@@ -32,7 +32,7 @@
 package com.frameworkset.common.tag.pager.model;
 
 /**
- * ×Ö¶Î´¦ÀíÒì³£
+ * å­—æ®µå¤„ç†å¼‚å¸¸
  * @author biaoping.yin
  * created on 2005-5-25
  * version 1.0 

@@ -60,7 +60,7 @@ import org.frameworkset.spi.remote.mina.server.RPCServerIoHandler;
  * Copyright (c) 2007
  * </p>
  * 
- * @Date 2009-10-12 ÏÂÎç09:41:15
+ * @Date 2009-10-12 ä¸‹åˆ09:41:15
  * @author biaoping.yin
  * @version 1.0
  */
@@ -108,7 +108,7 @@ public class ClinentTransport
 //    }
     
     /**
-     * Ğ£ÑéµØÖ·ÊÇ·ñÓĞĞ§
+     * æ ¡éªŒåœ°å€æ˜¯å¦æœ‰æ•ˆ
      * @param address
      * @return
      */
@@ -300,16 +300,16 @@ public class ClinentTransport
     }
 
     /**
-     * ÊÇ·ñÊ¹ÓÃ³¤Á¬½Ó
+     * æ˜¯å¦ä½¿ç”¨é•¿è¿æ¥
      * 
      * @param host
-     *            Á¬½ÓµÄÖ÷»úµØÖ·
+     *            è¿æ¥çš„ä¸»æœºåœ°å€
      * @param port
-     *            Á¬½ÓµÄ¶Ë¿ÚµØÖ·
+     *            è¿æ¥çš„ç«¯å£åœ°å€
      * @param corr
-     *            Ğ­×÷´¦ÀíÆ÷
+     *            åä½œå¤„ç†å™¨
      * @param longconnection
-     *            ÊÇ·ñÊ¹ÓÃ³¤Á¬½Ó
+     *            æ˜¯å¦ä½¿ç”¨é•¿è¿æ¥
      */
     private ClinentTransport(RPCAddress rpcaddress, IoHandler corr)
     {
@@ -320,7 +320,7 @@ public class ClinentTransport
         
         connector = new NioSocketConnector();
         /**
-         * Ôö¼ÓsslµÄ¼¼ÊõÖ§³Ö
+         * å¢åŠ sslçš„æŠ€æœ¯æ”¯æŒ
          */
         ProMap commons = Util.defaultContext.getMapProperty("rpc.protocol.mina.params");
         boolean enablessl = Util.defaultContext.getMapProperty("rpc.protocol.mina.params").getBoolean("enablessl",false);
@@ -331,7 +331,7 @@ public class ClinentTransport
                 ProMap ssls =  Util.defaultContext.getMapProperty("rpc.protocol.mina.ssl.client");
                 if(ssls == null)
                 {
-                    throw new MinaRunException("ÆôÓÃÁËsslÄ£Ê½£¬ µ«ÊÇÃ»ÓĞÖ¸¶¨rpc.protocol.mina.ssl.client ²ÎÊı£¬Çë¼ì²éÎÄ¼şorg/frameworkset/spi/manager-rpc-mina.xmlÊÇ·ñÕıÈ·ÉèÖÃÁË¸Ã²ÎÊı¡£");
+                    throw new MinaRunException("å¯ç”¨äº†sslæ¨¡å¼ï¼Œ ä½†æ˜¯æ²¡æœ‰æŒ‡å®šrpc.protocol.mina.ssl.client å‚æ•°ï¼Œè¯·æ£€æŸ¥æ–‡ä»¶org/frameworkset/spi/manager-rpc-mina.xmlæ˜¯å¦æ­£ç¡®è®¾ç½®äº†è¯¥å‚æ•°ã€‚");
                 }
                 String keyStore = ssls.getString("keyStore");
                 String keyStorePassword = ssls.getString("keyStorePassword");
@@ -340,23 +340,23 @@ public class ClinentTransport
                 SslFilter sslFilter = new SslFilter(SSLHelper.createSSLContext(keyStore, keyStorePassword, trustStore, trustStorePassword));
                 
 
-                /** ÉèÖÃÎª¿Í»§¶ËÄ£Ê½ **/
+                /** è®¾ç½®ä¸ºå®¢æˆ·ç«¯æ¨¡å¼ **/
                 sslFilter.setUseClientMode(true);
                 String[] enabledCipherSuites = (String[])commons.getObject("enabledCipherSuites",SSLHelper.enabledCipherSuites);
                 sslFilter.setEnabledCipherSuites(enabledCipherSuites);
                 String[] protocols = (String[])commons.getObject("enabledProtocols");
                 if(protocols != null)
                     sslFilter.setEnabledProtocols(protocols);
-                /** ÉèÖÃ¼ÓÃÜ¹ıÂËÆ÷ **/
+                /** è®¾ç½®åŠ å¯†è¿‡æ»¤å™¨ **/
                 connector.getFilterChain().addLast("SSL", sslFilter);
             }
             catch (GeneralSecurityException e)
             {
-                throw new MinaRunException("ÆôÓÃÁËsslÄ£Ê½£¬ Çë¼ì²éÎÄ¼şorg/frameworkset/spi/manager-rpc-mina.xmlÊÇ·ñÕıÈ·ÉèÖÃÁË¿Í·ş¶ËµÄssl²ÎÊırpc.protocol.mina.ssl.client¡£",e);
+                throw new MinaRunException("å¯ç”¨äº†sslæ¨¡å¼ï¼Œ è¯·æ£€æŸ¥æ–‡ä»¶org/frameworkset/spi/manager-rpc-mina.xmlæ˜¯å¦æ­£ç¡®è®¾ç½®äº†å®¢æœç«¯çš„sslå‚æ•°rpc.protocol.mina.ssl.clientã€‚",e);
             }
             catch (IOException e)
             {
-                throw new MinaRunException("ÆôÓÃÁËsslÄ£Ê½£¬ Çë¼ì²éÎÄ¼şorg/frameworkset/spi/manager-rpc-mina.xmlÊÇ·ñÕıÈ·ÉèÖÃÁË¿Í·ş¶ËµÄssl²ÎÊırpc.protocol.mina.ssl.client¡£",e);
+                throw new MinaRunException("å¯ç”¨äº†sslæ¨¡å¼ï¼Œ è¯·æ£€æŸ¥æ–‡ä»¶org/frameworkset/spi/manager-rpc-mina.xmlæ˜¯å¦æ­£ç¡®è®¾ç½®äº†å®¢æœç«¯çš„sslå‚æ•°rpc.protocol.mina.ssl.clientã€‚",e);
             }
             catch(MinaRunException e)
             {
@@ -364,7 +364,7 @@ public class ClinentTransport
             }
             catch (Exception e)
             {
-                throw new MinaRunException("ÆôÓÃÁËsslÄ£Ê½£¬ Çë¼ì²éÎÄ¼şorg/frameworkset/spi/manager-rpc-mina.xmlÊÇ·ñÕıÈ·ÉèÖÃÁË¿Í·ş¶ËµÄssl²ÎÊırpc.protocol.mina.ssl.client¡£",e);
+                throw new MinaRunException("å¯ç”¨äº†sslæ¨¡å¼ï¼Œ è¯·æ£€æŸ¥æ–‡ä»¶org/frameworkset/spi/manager-rpc-mina.xmlæ˜¯å¦æ­£ç¡®è®¾ç½®äº†å®¢æœç«¯çš„sslå‚æ•°rpc.protocol.mina.ssl.clientã€‚",e);
             }
         }
         connector.getFilterChain().addLast("codec", new ProtocolCodecFilter(new ObjectSerializationCodecFactory()));
@@ -385,7 +385,7 @@ public class ClinentTransport
     private boolean dummy = false;
     
     /**
-     * ÊÇ²»ÊÇÄ£ÄâÁ¬½ÓÆ÷£¬true-ÊÇ£¬false-·ñ
+     * æ˜¯ä¸æ˜¯æ¨¡æ‹Ÿè¿æ¥å™¨ï¼Œtrue-æ˜¯ï¼Œfalse-å¦
      * @return
      */
     public boolean isdummy()

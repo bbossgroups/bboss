@@ -57,7 +57,7 @@ import com.frameworkset.util.SimpleStringUtil;
  * Copyright (c) 2007
  * </p>
  * 
- * @Date 2012-5-6 ÏÂÎç8:47:20
+ * @Date 2012-5-6 ä¸‹åˆ8:47:20
  * @author biaoping.yin
  * @version 1.0
  */
@@ -77,10 +77,10 @@ public class HotDeployResourceBundleMessageSource extends AbstractMessageSource
 	private boolean fallbackToSystemLocale = true;
 	private ClassLoader bundleClassLoader;
 	/**
-	 * ÊÇ·ñĞèÒª¶ÔHotDeployResourceBundleMessageSourceÊµÀı¹ÜÀíµÄ×ÊÔ´ÎÄ¼şÆôÓÃÈÈ¼ÓÔØ»úÖÆ
-	 * true ÆôÓÃ
-	 * false ¹Ø±Õ
-	 * Ä¬ÈÏÆôÓÃ
+	 * æ˜¯å¦éœ€è¦å¯¹HotDeployResourceBundleMessageSourceå®ä¾‹ç®¡ç†çš„èµ„æºæ–‡ä»¶å¯ç”¨çƒ­åŠ è½½æœºåˆ¶
+	 * true å¯ç”¨
+	 * false å…³é—­
+	 * é»˜è®¤å¯ç”¨
 	 */
 	private boolean changemonitor = true;
 
@@ -814,8 +814,8 @@ public class HotDeployResourceBundleMessageSource extends AbstractMessageSource
 		return result;
 	}
 	/**
-	 * ÊôĞÔÎÄ¼ş±ä¸ü¼ì²âÊ±¼ä¼ä¸ô£¬µ¥Î»ÎªºÁÃë£¬Ä¬ÈÏÎª5Ãë¼ä¸ô
-	 * ÔÚÅäÖÃÊôĞÔÎÄ¼şÊ±È«¾ÖÖ¸¶¨
+	 * å±æ€§æ–‡ä»¶å˜æ›´æ£€æµ‹æ—¶é—´é—´éš”ï¼Œå•ä½ä¸ºæ¯«ç§’ï¼Œé»˜è®¤ä¸º5ç§’é—´éš”
+	 * åœ¨é…ç½®å±æ€§æ–‡ä»¶æ—¶å…¨å±€æŒ‡å®š
 	 */
 	private static long refresh_interval = 5000;
 	private static DaemonThread damon = null; 
@@ -892,7 +892,7 @@ public class HotDeployResourceBundleMessageSource extends AbstractMessageSource
 	}
 	
 	/**
-	 * ×¢Ïú¹ú¼Ê»¯×ÊÔ´
+	 * æ³¨é”€å›½é™…åŒ–èµ„æº
 	 */
 	public void destroy()
 	{

@@ -45,7 +45,7 @@ import com.frameworkset.common.tag.tree.COMTree;
 import com.frameworkset.common.tag.tree.TreeFactory;
 
 /**
- * ÉèÖÃ»ñÈ¡Ê÷µÄ½ÚµãÊı¾İĞÅÏ¢£¬Îª¹¹ÔìÊ÷½Úµã¹¹ÔìÊ÷½Úµã
+ * è®¾ç½®è·å–æ ‘çš„èŠ‚ç‚¹æ•°æ®ä¿¡æ¯ï¼Œä¸ºæ„é€ æ ‘èŠ‚ç‚¹æ„é€ æ ‘èŠ‚ç‚¹
  * @author biaoping.yin
  * created on 2005-3-25
  * version 1.0
@@ -55,79 +55,79 @@ public class TreeData extends BaseTag {
 
 	private boolean enablecontextmenu = false;
 	/**
-		 * Ê÷¸ù½Úµãcheckbox µÄÖµ
+		 * æ ‘æ ¹èŠ‚ç‚¹checkbox çš„å€¼
 		 */
 	
 
 	private String checkboxValue;
 
 	/**
-	 * ¶¨ÒåÊ÷Êı¾İ»º³å×÷ÓÃ·¶Î§£º
+	 * å®šä¹‰æ ‘æ•°æ®ç¼“å†²ä½œç”¨èŒƒå›´ï¼š
 	 * request
 	 * session
 	 * pageContext
-	 * È±Ê¡Îªsession
+	 * ç¼ºçœä¸ºsession
 	 *
 	 */
 	private String scope = "session";
 
 	/**
-	 * Ê÷¸ù½Úµãradio°´Å¥Öµ
+	 * æ ‘æ ¹èŠ‚ç‚¹radioæŒ‰é’®å€¼
 	 */
 	private String radioValue;
 	private final static Logger log = Logger.getLogger(TreeData.class);
 	/**
-	 * Ê÷¸ù½Úµãid
+	 * æ ‘æ ¹èŠ‚ç‚¹id
 	 */
 	private String rootid = "-1";
 	/**
-	 * Ê÷¸ù½ÚµãÃû³Æ
+	 * æ ‘æ ¹èŠ‚ç‚¹åç§°
 	 */
-	private String rootName = "¸ù½Úµã";
+	private String rootName = "æ ¹èŠ‚ç‚¹";
 	
 	private String rootNameCode;
 	/**
-	 * Ê÷Ä¬ÈÏÕ¹¿ª²ã¼¶
+	 * æ ‘é»˜è®¤å±•å¼€å±‚çº§
 	 */
 	private String expandLevel = "1";
 
 	/**
-	 * µ¥Ñ¡Ä£Ê½£¬true:µ¥Ñ¡£¬false:¶àÑ¡
+	 * å•é€‰æ¨¡å¼ï¼Œtrue:å•é€‰ï¼Œfalse:å¤šé€‰
 	 */
 	private String singleSelection = "false";
 	/**
-	 * ÊÇ·ñÊµÊ±¼à¿ØÃ¿¸ö½ÚµãµÄĞÅÏ¢£¬°üÀ¨½ÚµãÊÇ·ñ´æÔÚ¡¢½ÚµãµÄÃû³Æ¡¢ÓĞÃ»ÓĞ¶ù×ÓµÈĞÅÏ¢
-	 * true£ºÊµÊ±
-	 * false:Ã¿´ÎÖ»¸ú×Ùµ±Ç°½ÚµãµÄĞÅÏ¢
+	 * æ˜¯å¦å®æ—¶ç›‘æ§æ¯ä¸ªèŠ‚ç‚¹çš„ä¿¡æ¯ï¼ŒåŒ…æ‹¬èŠ‚ç‚¹æ˜¯å¦å­˜åœ¨ã€èŠ‚ç‚¹çš„åç§°ã€æœ‰æ²¡æœ‰å„¿å­ç­‰ä¿¡æ¯
+	 * trueï¼šå®æ—¶
+	 * false:æ¯æ¬¡åªè·Ÿè¸ªå½“å‰èŠ‚ç‚¹çš„ä¿¡æ¯
 	 */
 	private boolean needObserver = false;
 
 	/**
-	 * ±¾ÊôĞÔ¿ØÖÆÊÇ·ñ¼°Ê±Ë¢ĞÂ´¥·¢Ä³¸öÊÂ¼şµÄ½¹µã½ÚµãĞÅÏ¢
+	 * æœ¬å±æ€§æ§åˆ¶æ˜¯å¦åŠæ—¶åˆ·æ–°è§¦å‘æŸä¸ªäº‹ä»¶çš„ç„¦ç‚¹èŠ‚ç‚¹ä¿¡æ¯
 	 */
 	protected boolean refreshNode = true;
 
 	private String treetype = "1";
 
 	/**
-	 * À©Õ¹Ìõ¼ş£¬Í¨¹ı¸ÃÌõ¼şÀ´¹ıÂËÊ÷µÄ½Úµã
+	 * æ‰©å±•æ¡ä»¶ï¼Œé€šè¿‡è¯¥æ¡ä»¶æ¥è¿‡æ»¤æ ‘çš„èŠ‚ç‚¹
 	 */
 	private String extCondition = "";
 
 	private String showRootHref = "true";
 
 	/**
-	 * ¶¨Òå¸ù½Úµã±¸×¢ĞÅÏ¢
+	 * å®šä¹‰æ ¹èŠ‚ç‚¹å¤‡æ³¨ä¿¡æ¯
 	 */
 	private String memo = "";
 	
 	/**
-	 * Ö¸¶¨ÊÇ·ñ¶ÔÊ÷½Úµã½øĞĞÅÅĞò,È±Ê¡Îªtrue
+	 * æŒ‡å®šæ˜¯å¦å¯¹æ ‘èŠ‚ç‚¹è¿›è¡Œæ’åº,ç¼ºçœä¸ºtrue
 	 */
 	private boolean sortable = false;
 
     /**
-     * ¸ùÂ·¾¶¶ÔÓ¦µÄÎÄ¼şÂ·¾¶
+     * æ ¹è·¯å¾„å¯¹åº”çš„æ–‡ä»¶è·¯å¾„
      */
     private String path = null;
     
@@ -144,7 +144,7 @@ public class TreeData extends BaseTag {
 //		this.radioValue = null;
 //		this.refreshNode = true;
 //		this.rootid = "-1";
-		this.rootName = "¸ù½Úµã";
+		this.rootName = "æ ¹èŠ‚ç‚¹";
 //		this.scope = "session";  
 //		this.showRootHref = "true" ;
 //		this.singleSelection = "false";
@@ -156,7 +156,7 @@ public class TreeData extends BaseTag {
 	}
 
 	/**
-	 * ¸ù½Úµã¸´Ñ¡¿òµÄÖµ
+	 * æ ¹èŠ‚ç‚¹å¤é€‰æ¡†çš„å€¼
 	 * @return String
 	 */
 	public String getCheckboxValue() {
@@ -203,7 +203,7 @@ public class TreeData extends BaseTag {
 
 	public int doStartTag() {
 		TreeTag parent = (TreeTag) this.getParent();
-		//ÉèÖÃ»º³åÊı¾İÓĞĞ§·¶Î§
+		//è®¾ç½®ç¼“å†²æ•°æ®æœ‰æ•ˆèŒƒå›´
 		parent.setScope(getScope());
 		parent.setEnablecontextmenu(this.isEnablecontextmenu());
 		String key = parent.getTree();
@@ -214,13 +214,13 @@ public class TreeData extends BaseTag {
 		COMTree comTree  = null;
 		HttpSession session = this.getSession();
 		HttpServletRequest request = this.getHttpServletRequest();
-		//´ÓsessionÖĞ»ñÈ¡com tree
+		//ä»sessionä¸­è·å–com tree
 		if(session != null &&getScope().equals("session"))
 			comTree = (COMTree) session.getAttribute(key);
-		//´ÓpageContextÖĞ»ñÈ¡com tree
+		//ä»pageContextä¸­è·å–com tree
 		else if(getScope().equals("pageContext"))
 			comTree = (COMTree) pageContext.getAttribute(key);
-		//´Órequest_sessionÖĞ»ñÈ¡com treeÊµÀı
+		//ä»request_sessionä¸­è·å–com treeå®ä¾‹
 
 //		else if(session != null &&request_scope != null && request_scope.equals("request"))
 		else if(request_scope != null && request_scope.equals("request"))
@@ -239,8 +239,8 @@ public class TreeData extends BaseTag {
             comTree.setSortable(this.isSortable());
             
             /**
-             * Èç¹ûµÚÒ»´Î¹¹½¨¶¯¾²½áºÏµÄÓÒ¼ü²Ëµ¥ĞèÒª¹¹½¨ËùÓĞµÄÀàĞÍÓÒ¼ü²Ëµ¥£¬
-             * ·ñÔòĞèÒªÇå³ıÖ®Ç°¹¹½¨µÄËùÓĞ½ÚµãÀàĞÍµÄÓÒ¼ü²Ëµ¥
+             * å¦‚æœç¬¬ä¸€æ¬¡æ„å»ºåŠ¨é™ç»“åˆçš„å³é”®èœå•éœ€è¦æ„å»ºæ‰€æœ‰çš„ç±»å‹å³é”®èœå•ï¼Œ
+             * å¦åˆ™éœ€è¦æ¸…é™¤ä¹‹å‰æ„å»ºçš„æ‰€æœ‰èŠ‚ç‚¹ç±»å‹çš„å³é”®èœå•
              */
 	        if( parent_indent == null)
 	        	comTree.buildContextMenusWraper();
@@ -249,7 +249,7 @@ public class TreeData extends BaseTag {
 	        
             
         }
-		//Èç¹ûÃû³ÆÎªkeyµÄÊ÷ÒÑ¾­ÔÚsessionÖĞ´æÔÚ£¬ÔòÅĞ¶ÏÌõ¼şÊÇ·ñÏàÍ¬£¬Èç¹û²»ÏàÍ¬£¬ĞèÒªÖØĞÂ³õÊ¼»¯Ê÷
+		//å¦‚æœåç§°ä¸ºkeyçš„æ ‘å·²ç»åœ¨sessionä¸­å­˜åœ¨ï¼Œåˆ™åˆ¤æ–­æ¡ä»¶æ˜¯å¦ç›¸åŒï¼Œå¦‚æœä¸ç›¸åŒï¼Œéœ€è¦é‡æ–°åˆå§‹åŒ–æ ‘
         
 		if (comTree != null
 			&& extCondition != null
@@ -266,7 +266,7 @@ public class TreeData extends BaseTag {
 				e.printStackTrace();
 				System.out.println("getExpandLevel():" + getExpandLevel());
 			}
-			//Èç¹û²»ÔÊĞíÕÛµş²Ù×÷£¬Ôò½«Ê÷µÄÄ¬ÈÏÕ¹¿ª²ã¼¶Ôö¼Ó100
+			//å¦‚æœä¸å…è®¸æŠ˜å æ“ä½œï¼Œåˆ™å°†æ ‘çš„é»˜è®¤å±•å¼€å±‚çº§å¢åŠ 100
 			if(!parent.isCollapse())
 			    level += 100;
 			if(parent.getMode() == null)
@@ -291,7 +291,7 @@ public class TreeData extends BaseTag {
 				getMemo(),getRadioValue(),getCheckboxValue(),path);
 			comTree.setSingleSelectionMode(singleSelection());
 		}
-		//Èç¹ûÃû³ÆÎªkeyµÄÊ÷ÔÚsessionÖĞ²»´æÔÚ£¬³õÊ¼»¯ÏàÓ¦ÀàĞÍµÄÊ÷£¬²¢´æ·Åµ½sessionÖĞ£¬Ãû³ÆÎªkey
+		//å¦‚æœåç§°ä¸ºkeyçš„æ ‘åœ¨sessionä¸­ä¸å­˜åœ¨ï¼Œåˆå§‹åŒ–ç›¸åº”ç±»å‹çš„æ ‘ï¼Œå¹¶å­˜æ”¾åˆ°sessionä¸­ï¼Œåç§°ä¸ºkey
 		if (comTree == null) {
 			String type = getTreetype();
 			comTree = (COMTree) TreeFactory.getTreeData(type);
@@ -307,7 +307,7 @@ public class TreeData extends BaseTag {
 			if (extCondition != null)
 				comTree.setExtCondition(extCondition);
 			int level = Integer.parseInt(getExpandLevel());
-//			Èç¹û²»ÔÊĞíÕÛµş²Ù×÷£¬Ôò½«Ê÷µÄÄ¬ÈÏÕ¹¿ª²ã¼¶Ôö¼Ó100
+//			å¦‚æœä¸å…è®¸æŠ˜å æ“ä½œï¼Œåˆ™å°†æ ‘çš„é»˜è®¤å±•å¼€å±‚çº§å¢åŠ 100
 			if(!parent.isCollapse())
 			    level += 100;
 			
@@ -343,10 +343,10 @@ public class TreeData extends BaseTag {
 			}
 			comTree.setSingleSelectionMode(singleSelection());
 			
-			//»º³åÒÑ³õÊ¼»¯µÄcom treeµ½sessionÖĞ
+			//ç¼“å†²å·²åˆå§‹åŒ–çš„com treeåˆ°sessionä¸­
 			if(session != null && getScope().equals("session"))
 				session.setAttribute(key, comTree);
-			//»º³åÒÑ³õÊ¼»¯µÄcom treeµ½request_session ÖĞ
+			//ç¼“å†²å·²åˆå§‹åŒ–çš„com treeåˆ°request_session ä¸­
 //			else if(session != null && getScope().equals("request"))
 //				session.setAttribute(key, comTree);
 			else if( getScope().equals("request"))

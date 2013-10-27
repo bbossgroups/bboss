@@ -30,7 +30,7 @@ import java.util.TreeSet;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2009-10-10 ÏÂÎç10:44:23
+ * @Date 2009-10-10 ä¸‹åˆ10:44:23
  * @author biaoping.yin
  * @version 1.0
  */

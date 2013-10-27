@@ -21,7 +21,7 @@ package org.frameworkset.spi.interceptor;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2012-11-27 ÏÂÎç7:04:56
+ * @Date 2012-11-27 ä¸‹åˆ7:04:56
  * @author biaoping.yin
  * @version 1.0
  */

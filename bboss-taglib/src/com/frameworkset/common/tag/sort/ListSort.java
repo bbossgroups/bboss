@@ -38,7 +38,7 @@ import java.util.List;
 
 import com.frameworkset.common.tag.pager.DataComparatorImpl;
 /**
- * ¸ºÔğÅÅĞò£¬ÊµÏÖ¶Ô¸÷ÖÖ¼¯ºÏµÄÅÅĞò  
+ * è´Ÿè´£æ’åºï¼Œå®ç°å¯¹å„ç§é›†åˆçš„æ’åº  
  * @author biaoping.yin
  * 2005-3-25
  * version 1.0
@@ -47,12 +47,12 @@ import com.frameworkset.common.tag.pager.DataComparatorImpl;
 public class ListSort extends BaseSort 
 {
 	/**
-	 * ClassData¼¯ºÏÅÅĞò±È½ÏÆ÷
+	 * ClassDataé›†åˆæ’åºæ¯”è¾ƒå™¨
 	 */
     public DataComparatorImpl theDataComparatorImpl = DataComparatorImpl.newInstance();
     
     /**
-     * ¹¹½¨Æ÷
+     * æ„å»ºå™¨
      */
     public ListSort() 
     {
@@ -60,12 +60,12 @@ public class ListSort extends BaseSort
     }
     
     /**
-     * ÊµÏÖ¶ÔListÖĞClassDataµÄÅÅĞò¹¦ÄÜ
-     * desc²ÎÊı¾ö¶¨ÅÅĞòµÄÖÈĞò£º
-     * true :½µĞò
-     * false:ÉıĞò
+     * å®ç°å¯¹Listä¸­ClassDataçš„æ’åºåŠŸèƒ½
+     * descå‚æ•°å†³å®šæ’åºçš„ç§©åºï¼š
+     * true :é™åº
+     * false:å‡åº
      * 
-     * sortKey²ÎÊı£ºÅÅĞò×Ö¶Î
+     * sortKeyå‚æ•°ï¼šæ’åºå­—æ®µ
      * @param classDatas
      * @param sortKey
      * @param desc

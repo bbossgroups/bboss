@@ -24,7 +24,7 @@ import org.frameworkset.spi.DefaultApplicationContext;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2012-1-5 œ¬ŒÁ5:04:40
+ * @Date 2012-1-5 ‰∏ãÂçà5:04:40
  * @author biaoping.yin
  * @version 1.0
  */

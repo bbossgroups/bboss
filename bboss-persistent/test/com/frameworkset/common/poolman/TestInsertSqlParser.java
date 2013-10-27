@@ -32,15 +32,15 @@ public class TestInsertSqlParser {
     
     public static void main(String[] args) throws MalformedPatternException
     {
-        String insert = "Insert  into  oa_meetingpromptsound ( soundCode , soundName , soundFileName ) values ( '¡£.Òü±êÆ½','bb','d()d' )";
+        String insert = "Insert  into  oa_meetingpromptsound ( soundCode , soundName , soundFileName ) values ( 'ã€‚.å°¹æ ‡å¹³','bb','d()d' )";
         //String pattern = "(insert) \\t*(into) \\s*([a-z0-9A-Z_\\-]+)\\s*\\([a-z0-9A-Z_\\-]+\\s*,\\s*[a-z0-9A-Z_\\-]+)";
         //String pattern = "(insert)\\s+(into)\\s+([a-z0-9A-Z_\\-]+)\\s*(\\([^\\)]\\))\\s+([^\\s])";
-        String patternStr = "(insert)\\s+" + 		//½âÎöinsert¹Ø¼ü´Ê
-        		         "(into)\\s+" +   			//½âÎöinto¹Ø¼ü´Ê
-        		         "([^\\(]+)\\s*" + 			//½âÎö±íÃû³Æ
-        		         "(\\([^\\)]+\\))\\s+" +	//½âÎö±í×Ö¶Î        		         
-        		         "(values)\\s*" + 			//½âÎövalue¹Ø¼ü´Ê        		         
-        		         "(\\(.+)";					//½âÎö×Ö¶ÎÖµ
+        String patternStr = "(insert)\\s+" + 		//è§£æinsertå…³é”®è¯
+        		         "(into)\\s+" +   			//è§£æintoå…³é”®è¯
+        		         "([^\\(]+)\\s*" + 			//è§£æè¡¨åç§°
+        		         "(\\([^\\)]+\\))\\s+" +	//è§£æè¡¨å­—æ®µ        		         
+        		         "(values)\\s*" + 			//è§£ævalueå…³é”®è¯        		         
+        		         "(\\(.+)";					//è§£æå­—æ®µå€¼
         		         
         PatternCompiler compiler = new Perl5Compiler(); 
         Pattern pattern = compiler.compile(patternStr,Perl5Compiler.CASE_INSENSITIVE_MASK);

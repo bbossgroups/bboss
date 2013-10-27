@@ -34,7 +34,7 @@ package com.frameworkset.common.tag.export;
 import java.io.Writer;
 
 /**
- * 导出列表数据到CSV文件
+ * 瀵煎嚭鍒楄〃鏁版嵁鍒癈SV鏂囦欢
  * @author biaoping.yin
  * created on 2005-3-13
  * version 1.0 

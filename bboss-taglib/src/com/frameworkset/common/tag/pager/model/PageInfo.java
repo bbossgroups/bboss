@@ -36,38 +36,38 @@ import com.frameworkset.common.tag.pager.DataInfo;
 
 
 /**
- * ±£´æËùÓĞµÄÒ³Ãæ²ÎÊı
+ * ä¿å­˜æ‰€æœ‰çš„é¡µé¢å‚æ•°
  * @author biaoping.yin
  * created on 2005-5-18
  * version 1.0
  */
 public class PageInfo implements ModelObject{
-    /**Ã¿Ò³ÏÔÊ¾µÄ¼ÇÂ¼ÌõÊı*/
+    /**æ¯é¡µæ˜¾ç¤ºçš„è®°å½•æ¡æ•°*/
     protected int maxPageItems = 0;
-    /**¼ÇÂ¼×ÜÊı*/
+    /**è®°å½•æ€»æ•°*/
     protected long totalSize = 0;
-    /**±êÊ¶ÁĞ±íÄ£Ê½*/
+    /**æ ‡è¯†åˆ—è¡¨æ¨¡å¼*/
     protected boolean isList = false;
-    /**Êı¾İ¿â²éÑ¯Óï¾ä*/
+    /**æ•°æ®åº“æŸ¥è¯¢è¯­å¥*/
     protected String statement ;
-    /**Êı¾İ¿âÁ´½Ó³ØÃû³Æ*/
+    /**æ•°æ®åº“é“¾æ¥æ± åç§°*/
     protected String dbName;
-    /**ÅÅĞò×Ö¶Î*/
+    /**æ’åºå­—æ®µ*/
     protected String sortKey;
-    /**Ò³Ãæ²éÑ¯²ÎÊı*/
+    /**é¡µé¢æŸ¥è¯¢å‚æ•°*/
     protected String queryString;
     /**
-     * ·ÖÒ³Ê±£¬¿ØÖÆÊÇ·ñµ¼³öÈ«²¿Êı¾İ£¬
+     * åˆ†é¡µæ—¶ï¼Œæ§åˆ¶æ˜¯å¦å¯¼å‡ºå…¨éƒ¨æ•°æ®ï¼Œ
      */
     private boolean eportAll = false;
 
     /**
-     * ¶¨ÒåÒ³ÃæÉÏÒªÏÔÊ¾µÄËùÓĞ×Ö¶ÎÓò
+     * å®šä¹‰é¡µé¢ä¸Šè¦æ˜¾ç¤ºçš„æ‰€æœ‰å­—æ®µåŸŸ
      */
     protected MetaDatas metaDatas = null;
-    /**Ò³ºÅ*/
+    /**é¡µå·*/
 	private Object pageNumberInteger;
-	/**Ò³Âë*/
+	/**é¡µç */
 	private long pageNumber;
 
 	private DataInfo dataInfo ;
@@ -156,7 +156,7 @@ public class PageInfo implements ModelObject{
         this.eportAll = eportAll;
     }
     /**
-	 * ¹¦ÄÜËµÃ÷£º¼ÆËãµ±Ç°Ò³Ãæ±àºÅ
+	 * åŠŸèƒ½è¯´æ˜ï¼šè®¡ç®—å½“å‰é¡µé¢ç¼–å·
 	 * @param offset
 	 * @return long
 	 */
@@ -165,7 +165,7 @@ public class PageInfo implements ModelObject{
 	}
 
 	/**
-	 * »ñÈ¡Ò³Ãæ×ÜÊıÁ¿
+	 * è·å–é¡µé¢æ€»æ•°é‡
 	 *
 	 * @return int
 	 */
@@ -174,7 +174,7 @@ public class PageInfo implements ModelObject{
 		return pageNumber(getTotalSize());
 	}
 	/**
-	 * »ñÈ¡×îºóÒ»Ò³µÄÒ³Âë£¬±ÈÈç¹²ÓĞ5Ò³£¬·µ»Ø4¡£Èç¹ûÖ»ÓĞ0Ò³Ôò·µ»Ø0£»
+	 * è·å–æœ€åä¸€é¡µçš„é¡µç ï¼Œæ¯”å¦‚å…±æœ‰5é¡µï¼Œè¿”å›4ã€‚å¦‚æœåªæœ‰0é¡µåˆ™è¿”å›0ï¼›
 	 * @return int
 	 */
 	public long getLastPageNumber()
@@ -194,12 +194,12 @@ public class PageInfo implements ModelObject{
 			{
 				offset =  lastPagerNumber * getMaxPageItems();
 				/**
-				 * ÖØĞÂ»ñÈ¡Êı¾İ£¬Èç¹ûÊı¾İ¿âµ×²ãÄÜ¹»´¦ÀíÕâ¸öÎÊÌâ£¬½«²»ĞèÒªÖØĞÂ»ñÈ¡Êı¾İ
+				 * é‡æ–°è·å–æ•°æ®ï¼Œå¦‚æœæ•°æ®åº“åº•å±‚èƒ½å¤Ÿå¤„ç†è¿™ä¸ªé—®é¢˜ï¼Œå°†ä¸éœ€è¦é‡æ–°è·å–æ•°æ®
 				 */
 				//setDataInfo(getData());
 			}
 
-			//if (isOffset) ÓÚ2004/4/30×¢ÊÍ
+			//if (isOffset) äº2004/4/30æ³¨é‡Š
 			//itemCount = offset;
 
 		}
@@ -208,11 +208,11 @@ public class PageInfo implements ModelObject{
 			ignore.printStackTrace();
 		}
 		/**
-		 * µ±Ç°µÚ¼¸Ò³,´ÓÁã¿ªÊ¼
+		 * å½“å‰ç¬¬å‡ é¡µ,ä»é›¶å¼€å§‹
 		 */
 		pageNumber = pageNumber(offset);
 		/**
-		 * µ±Ç°Ò³Âë£¬´Ó1¿ªÊ¼
+		 * å½“å‰é¡µç ï¼Œä»1å¼€å§‹
 		 */
 		pageNumberInteger = new Long(1+pageNumber);
 	}

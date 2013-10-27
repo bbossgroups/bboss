@@ -4,7 +4,7 @@ package com.frameworkset.common.tag.pager.tags;
 public class LogicTrueTag  extends MatchTag {
 
 	/**
-	 *  Description: 大于等于
+	 *  Description: 澶т簬绛変簬
 	 * @return boolean
 	 * @see com.frameworkset.common.tag.pager.tags.MatchTag#match()
 	 */

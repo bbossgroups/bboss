@@ -171,12 +171,12 @@ public class HandlerMethodInvoker {
 				logger.debug("Invoking request handler method: "
 						+ handlerMethod.getMethodInfo().getMethod());
 			}
-			if(!implicitModel.hasErrors())//Ã»ÓĞÊı¾İ°ó¶¨´íÎó
+			if(!implicitModel.hasErrors())//æ²¡æœ‰æ•°æ®ç»‘å®šé”™è¯¯
 			{
 				return doInvokeMethod(handlerMethod.getMethodInfo().getMethod(),
 						handler, args);
 			}
-			else//ÓĞ°ó¶¨Êı¾İ´íÎó
+			else//æœ‰ç»‘å®šæ•°æ®é”™è¯¯
 			{
 				return doInvokeMethod(handlerMethod.getMethodInfo().getMethod(),
 						handler, args);

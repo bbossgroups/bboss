@@ -25,7 +25,7 @@ import com.frameworkset.common.poolman.PreparedDBUtil.UpdateKeyInfo;
  * 
  * <p>Title: Params</p>
  *
- * <p>Description: µ¥ÌõÔ¤±àÓï¾äµÄµÄ²ÎÊıĞÅÏ¢</p>
+ * <p>Description: å•æ¡é¢„ç¼–è¯­å¥çš„çš„å‚æ•°ä¿¡æ¯</p>
  *
  * <p>Copyright: Copyright (c) 2007</p>
  *
@@ -37,13 +37,13 @@ import com.frameworkset.common.poolman.PreparedDBUtil.UpdateKeyInfo;
 public class Params implements java.lang.Comparable
 {
 	/**
-	 * Ö¸¶¨·ÖÒ³×Ü¼ÇÂ¼Êı£¬Í¨¹ıÍâ²¿´«Èë£¬ÌáÉı·ÖÒ³²éÑ¯ĞÔÄÜ
+	 * æŒ‡å®šåˆ†é¡µæ€»è®°å½•æ•°ï¼Œé€šè¿‡å¤–éƒ¨ä¼ å…¥ï¼Œæå‡åˆ†é¡µæŸ¥è¯¢æ€§èƒ½
 	 */
 	long totalsize = -1L;
 	/**
-	 * Ö¸¶¨·ÖÒ³²éÑ¯sqlÓï¾ä£¬Í¨¹ıÍâ²¿´«Èë£¬ÌáÉı·ÖÒ³²éÑ¯ĞÔÄÜ
+	 * æŒ‡å®šåˆ†é¡µæŸ¥è¯¢sqlè¯­å¥ï¼Œé€šè¿‡å¤–éƒ¨ä¼ å…¥ï¼Œæå‡åˆ†é¡µæŸ¥è¯¢æ€§èƒ½
 	 * 
-	 * totalsizeºÍtotalsizesqlÁ½¸öÊôĞÔÒ»´ÎÖ»ÄÜÊ¹ÓÃÒ»¸ö
+	 * totalsizeå’Œtotalsizesqlä¸¤ä¸ªå±æ€§ä¸€æ¬¡åªèƒ½ä½¿ç”¨ä¸€ä¸ª
 	 */
 //	SQLInfo totalsizesql;
 	public Params()
@@ -58,7 +58,7 @@ public class Params implements java.lang.Comparable
         
     }
 	/**
-	 * Ô¤±àÒë²ÎÊıÁĞ±í,µ¥¶ÀµÄÔ¤±àÓï¾ä²ÎÊı
+	 * é¢„ç¼–è¯‘å‚æ•°åˆ—è¡¨,å•ç‹¬çš„é¢„ç¼–è¯­å¥å‚æ•°
 	 * List<Param>
 	 */
 	List<Param> params ;
@@ -66,23 +66,23 @@ public class Params implements java.lang.Comparable
 	
 	
 	/**
-	 * Clob /BlobµÈÒ»ÏµÁĞ´ó×Ö¶ÎÏà¹ØÊôĞÔ¶¨Òå
+	 * Clob /Blobç­‰ä¸€ç³»åˆ—å¤§å­—æ®µç›¸å…³å±æ€§å®šä¹‰
 	 */
 
 	List bigdatas = null;
 
 	/**
-	 * ÅúÁ¿¸üĞÂClob /BlobÒ»ÏµÁĞ´ó×Ö¶Î¼ÇÂ¼ÄÚÈİÊ±£¬±£´æ¸üĞÂ¼ÇÂ¼µÄÌõ¼ş
+	 * æ‰¹é‡æ›´æ–°Clob /Blobä¸€ç³»åˆ—å¤§å­—æ®µè®°å½•å†…å®¹æ—¶ï¼Œä¿å­˜æ›´æ–°è®°å½•çš„æ¡ä»¶
 	 */
 	List conditions = null;
 
 	/**
-	 * ¸üĞÂÊı¾İ¿â¼ÇÂ¼Ê±µÄÖ÷¼üĞÅÏ¢
+	 * æ›´æ–°æ•°æ®åº“è®°å½•æ—¶çš„ä¸»é”®ä¿¡æ¯
 	 */
 	UpdateKeyInfo updateKeyInfo;
 	
 	/**
-	 * -1:ÎŞº¬Òå 0:insert 1:update 2:delete
+	 * -1:æ— å«ä¹‰ 0:insert 1:update 2:delete
 	 */
 	int action = -1;
 	

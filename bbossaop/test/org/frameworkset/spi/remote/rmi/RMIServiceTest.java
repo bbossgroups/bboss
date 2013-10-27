@@ -24,7 +24,7 @@ import java.rmi.server.UnicastRemoteObject;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2011-5-18 œ¬ŒÁ05:09:21
+ * @Date 2011-5-18 ‰∏ãÂçà05:09:21
  * @author biaoping.yin
  * @version 1.0
  */
@@ -36,7 +36,7 @@ public class RMIServiceTest extends UnicastRemoteObject implements RMIServiceTes
 	
 	public String sayHello(String name) throws RemoteException
 	{
-		System.out.println("ƒ„∫√£¨" + name);
-		return "from server:ƒ„∫√£¨" + name;
+		System.out.println("‰Ω†Â•ΩÔºå" + name);
+		return "from server:‰Ω†Â•ΩÔºå" + name;
 	}
 }

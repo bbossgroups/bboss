@@ -5,14 +5,14 @@ lib--bboss-event framework depends jars
 dist--bboss-event release package.
 
 ---------------------------------
-bbossevent¹ØÁª¹¤³Ì£º
+bbosseventå…³è”å·¥ç¨‹ï¼š
 ---------------------------------
 bbossevent<-cms_baseline [bboss-event.jar]
 
 bbossevent->bboss-aop [bboss-aop.jar,bboss-camel.jar,bboss-mina.jar,bboss-jms.jar,bboss-ws.jar]
 bbossevent->bboss-util [frameworkset-util.jar]
 
-bbossevent->bboss-persistent [frameworkset-pool.jar] ÒòÎªaop¿ò¼ÜÖĞµÄÊÂÎñ×¢½âÒÀÀµÁË³Ö¾Ã²ã¿ò¼Ü
+bbossevent->bboss-persistent [frameworkset-pool.jar] å› ä¸ºaopæ¡†æ¶ä¸­çš„äº‹åŠ¡æ³¨è§£ä¾èµ–äº†æŒä¹…å±‚æ¡†æ¶
 
 
 ------------------------------------------------------------------
@@ -20,54 +20,54 @@ update function list in bbossgroups-2.0-rc2 bbossgroups-2.0-rc1 since bbossgroup
 ------------------------------------------------------------------
 2010-10-09
 ------------------------------------------------------------------
-o ĞŞ¸ÄÖ´ĞĞÊÂ¼ş¼àÌıÆ÷handle·½·¨£¬ĞŞ¸ÄÔ¶³ÌÊÂ¼ş´¦ÀíÂß¼­
+o ä¿®æ”¹æ‰§è¡Œäº‹ä»¶ç›‘å¬å™¨handleæ–¹æ³•ï¼Œä¿®æ”¹è¿œç¨‹äº‹ä»¶å¤„ç†é€»è¾‘
 ------------------------------------------------------------------
 2010-09-26
 ------------------------------------------------------------------
-o ĞŞ¸ÄÖ´ĞĞÊÂ¼ş¼àÌıÆ÷handle·½·¨£¬Ôö¼Ó¶Ôhandle·½·¨Å×³öµÄÒì³£µÄ´¦Àí
+o ä¿®æ”¹æ‰§è¡Œäº‹ä»¶ç›‘å¬å™¨handleæ–¹æ³•ï¼Œå¢åŠ å¯¹handleæ–¹æ³•æŠ›å‡ºçš„å¼‚å¸¸çš„å¤„ç†
 ------------------------------------------------------------------
 ------------------------------------------------------------------
 2010-09-13
 ------------------------------------------------------------------
-o ĞŞ¸Ä²âÊÔÓÃÀı£¬±£³ÖÓëaop¿ò¼ÜµÄ×îĞÂ°æ±¾apiÍ¬²½£¨Ö÷ÒªÊÇjgroupsµÄapi·¢ÉúÁË±ä»¯£©
+o ä¿®æ”¹æµ‹è¯•ç”¨ä¾‹ï¼Œä¿æŒä¸aopæ¡†æ¶çš„æœ€æ–°ç‰ˆæœ¬apiåŒæ­¥ï¼ˆä¸»è¦æ˜¯jgroupsçš„apiå‘ç”Ÿäº†å˜åŒ–ï¼‰
 ------------------------------------------------------------------
 2010-08-30
 ------------------------------------------------------------------
-o ĞŞ¸ÄÒì²½ÊÂ¼ş´¦Àí£¬Ôö¼ÓÊÂ¼ş¶ÓÁĞ»úÖÆ£¬·ÀÖ¹ÊÂ¼ş¶Ñ»ıÔì³ÉÏß³Ì³Ø´¦ÀíÃ¦µÄÎÊÌâ
+o ä¿®æ”¹å¼‚æ­¥äº‹ä»¶å¤„ç†ï¼Œå¢åŠ äº‹ä»¶é˜Ÿåˆ—æœºåˆ¶ï¼Œé˜²æ­¢äº‹ä»¶å †ç§¯é€ æˆçº¿ç¨‹æ± å¤„ç†å¿™çš„é—®é¢˜
 
-/bbossevent/resources/event-service-assemble.xmlÔö¼ÓÒÔÏÂÊôĞÔÅäÖÃevent.block.queue.size
+/bbossevent/resources/event-service-assemble.xmlå¢åŠ ä»¥ä¸‹å±æ€§é…ç½®event.block.queue.size
 <property name="event.block.queue.size" value="200"/>
-Ïß³Ì³Øevent.threadpoolµÄÊ§°ÜµÈ´ı´¦Àí±»ÉèÖÃÎª£º
+çº¿ç¨‹æ± event.threadpoolçš„å¤±è´¥ç­‰å¾…å¤„ç†è¢«è®¾ç½®ä¸ºï¼š
 <property name="waitFailHandler" value="org.frameworkset.event.EventHandle$WaiterFailedHandler"/>
 
 update function list:
 ------------------------------
  1.0.2 - 2010-03-16
 ------------------------------
-o ĞŞ¸ÄEvent£¬Listener,EventImplÈı¸öÀà£¬Ö§³Öjava·ºĞÍ
+o ä¿®æ”¹Eventï¼ŒListener,EventImplä¸‰ä¸ªç±»ï¼Œæ”¯æŒjavaæ³›å‹
 ------------------------------
  1.0.2 - 2010-02-21
 ------------------------------
-o Éı¼¶jgroup 2.8.0 GA
-o Ìæ»»log4j.jar Îªlog4j-1.2.14.jar
-o Éı¼¶aop¿ò¼Ü£º°²È«¡¢ÈÏÖ¤¡¢¼ÓÃÜ
-o Ìí¼Óframeworkset-pool.jar
-o ÒÆ³ıjg-magic-map.xmlÎÄ¼ş£¬¸ÃÎÄ¼şÒÑ¾­´ò°üµ½jgroups.jarÖĞ
+o å‡çº§jgroup 2.8.0 GA
+o æ›¿æ¢log4j.jar ä¸ºlog4j-1.2.14.jar
+o å‡çº§aopæ¡†æ¶ï¼šå®‰å…¨ã€è®¤è¯ã€åŠ å¯†
+o æ·»åŠ frameworkset-pool.jar
+o ç§»é™¤jg-magic-map.xmlæ–‡ä»¶ï¼Œè¯¥æ–‡ä»¶å·²ç»æ‰“åŒ…åˆ°jgroups.jarä¸­
 ------------------------------
  1.0.2 - 2010-03-07
 ------------------------------
-o ½«Ïß³Ì³ØÒÆÈëbboss aop¿ò¼ÜÖĞ
-o Ô¶³ÌÊÂ¼şEventTargetµØÖ·Ö§³ÖÒÔÏÂ4ÖÖ·½·¨£º
-1.Ä¬ÈÏrpcĞ­ÒéeventTarget£¨Ê¹ÓÃÓÚminaºÍjgroupĞ­Òé£©
+o å°†çº¿ç¨‹æ± ç§»å…¥bboss aopæ¡†æ¶ä¸­
+o è¿œç¨‹äº‹ä»¶EventTargetåœ°å€æ”¯æŒä»¥ä¸‹4ç§æ–¹æ³•ï¼š
+1.é»˜è®¤rpcåè®®eventTargetï¼ˆä½¿ç”¨äºminaå’Œjgroupåè®®ï¼‰
 EventTarget defualtprotocoltarget = new EventTarget("192.168.11.102",1186);
-2.Ö¸¶¨rpcĞ­ÒéµÄeventTarget£¨Ê¹ÓÃÓÚminaºÍjgroupĞ­Òé£©
+2.æŒ‡å®šrpcåè®®çš„eventTargetï¼ˆä½¿ç”¨äºminaå’Œjgroupåè®®ï¼‰
 EventTarget target = new EventTarget("jgroup","192.168.11.102",1186);
-3.Ö¸¶¨Ä¿±êÎïÀíurlµÄµØÖ·Ğ­Òé(ÊÊÓÃÓÚmina£¬jgroup£¬jms£¬webserviceĞ­Òé)
+3.æŒ‡å®šç›®æ ‡ç‰©ç†urlçš„åœ°å€åè®®(é€‚ç”¨äºminaï¼Œjgroupï¼Œjmsï¼Œwebserviceåè®®)
 EventTarget target = new EventTarget("jgroup::192.168.11.102:1186");
-4.Ö¸¶¨Èº·¢µØÖ·ÁĞ±í
+4.æŒ‡å®šç¾¤å‘åœ°å€åˆ—è¡¨
 EventTarget target = new EventTarget("jgroup::192.168.11.102:1186;192.168.11.102:1187");
 
-Ê¹ÓÃ·½·¨£º
+ä½¿ç”¨æ–¹æ³•ï¼š
     EventTarget target = new EventTarget("jgroup","192.168.11.102",1186);
 		Event event = new EventImpl("hello world type2 with target[" + target +"].",
 								ExampleEventType.type2withtarget,
@@ -103,30 +103,30 @@ EventTarget target = new EventTarget("jgroup::192.168.11.102:1186;192.168.11.102
 ------------------------------
  1.0.2 - 2010-01-07
 ------------------------------
-o Ìí¼Óant¹¹½¨½Å±¾ºÍÊôĞÔÎÄ¼ş£ºbuild.xml,build.properties
+o æ·»åŠ antæ„å»ºè„šæœ¬å’Œå±æ€§æ–‡ä»¶ï¼šbuild.xml,build.properties
 
 ------------------------------
  1.0.2 - 2009-06-01
 ------------------------------
-o Ìí¼Óant¹¹½¨½Å±¾ºÍÊôĞÔÎÄ¼ş£ºbuild.xml,build.properties
-o ÖØĞ´java.util.concurrent Ïß³Ì³Ø¹¦ÄÜ£º
+o æ·»åŠ antæ„å»ºè„šæœ¬å’Œå±æ€§æ–‡ä»¶ï¼šbuild.xml,build.properties
+o é‡å†™java.util.concurrent çº¿ç¨‹æ± åŠŸèƒ½ï¼š
 /bbossevent/src/org/frameworkset/thread/ThreadPoolExecutor.java
 /bbossevent/src/org/frameworkset/thread/RejectedExecutionHandler.java
 /bbossevent/src/manager-provider.xml
-org/frameworkset/thread/ThreadPoolManagerFactory$InnerThreadPoolExecutorÀàÔö¼Ó·½·¨£º
+org/frameworkset/thread/ThreadPoolManagerFactory$InnerThreadPoolExecutorç±»å¢åŠ æ–¹æ³•ï¼š
 public boolean busy(RejectCallback rejectcallback, BaseLogger log)
-²ÎÊıËµÃ÷£º
-rejectcallback--»Øµ÷·½·¨£¬ÓÃÀ´ÅĞ±ğÏß³ÌÒÑ¾­Ã¦µÈ´ıÁË¶àÉÙ´Î£¬ÒÔ±ã¼ÆËãºÍÍ³¼ÆÃ¿´ÎµÄµÈ´ıÊ±¼ä
-log-²ÎÊı£¬ÈÕÖ¾¼ÇÂ¼½Ó¿Ú£¬Í¨¹ılog¿ÉÒÔ½«Ã¿´ÎµÈ´ıµÄĞÅÏ¢Êä³öµÄÇ°¶Ë¿ØÖÆÌ¨
+å‚æ•°è¯´æ˜ï¼š
+rejectcallback--å›è°ƒæ–¹æ³•ï¼Œç”¨æ¥åˆ¤åˆ«çº¿ç¨‹å·²ç»å¿™ç­‰å¾…äº†å¤šå°‘æ¬¡ï¼Œä»¥ä¾¿è®¡ç®—å’Œç»Ÿè®¡æ¯æ¬¡çš„ç­‰å¾…æ—¶é—´
+log-å‚æ•°ï¼Œæ—¥å¿—è®°å½•æ¥å£ï¼Œé€šè¿‡logå¯ä»¥å°†æ¯æ¬¡ç­‰å¾…çš„ä¿¡æ¯è¾“å‡ºçš„å‰ç«¯æ§åˆ¶å°
 
-o ÊÂ¼ş¿ò¼ÜÖĞµÄÏß³Ì³ØÍêÉÆ
-  ¸Ä½øÏß³Ì³Ø¹¦ÄÜ£¬ÍêÉÆÈÎÎñ¾Ü¾ø²ßÂÔÖĞµÄWaitPolicy£¬Ôö¼Ódelaytime£¬maxWait,waitFailHandlerÊôĞÔ£¬ÒÔ±ãÊµÏÖµÈ´ıÊ±¼äµİÔö²ßÂÔ£¬²¢Ìá¹©×î´óµÈ´ı´ÎÊı
-  Èç¹û³¬¹ı×î´óµÈ´ı´ÎÊı²¢ÇÒÅäÖÃÁËwaitFailHandlerÊôĞÔÖ±½Ó½«ÈÎÎñ·¢¸øwaitFailHandler´¦ÀíÆ÷£¬·ñÔò¶ªÆúÈÎÎñ¡£
+o äº‹ä»¶æ¡†æ¶ä¸­çš„çº¿ç¨‹æ± å®Œå–„
+  æ”¹è¿›çº¿ç¨‹æ± åŠŸèƒ½ï¼Œå®Œå–„ä»»åŠ¡æ‹’ç»ç­–ç•¥ä¸­çš„WaitPolicyï¼Œå¢åŠ delaytimeï¼ŒmaxWait,waitFailHandlerå±æ€§ï¼Œä»¥ä¾¿å®ç°ç­‰å¾…æ—¶é—´é€’å¢ç­–ç•¥ï¼Œå¹¶æä¾›æœ€å¤§ç­‰å¾…æ¬¡æ•°
+  å¦‚æœè¶…è¿‡æœ€å¤§ç­‰å¾…æ¬¡æ•°å¹¶ä¸”é…ç½®äº†waitFailHandlerå±æ€§ç›´æ¥å°†ä»»åŠ¡å‘ç»™waitFailHandlerå¤„ç†å™¨ï¼Œå¦åˆ™ä¸¢å¼ƒä»»åŠ¡ã€‚
  
- ¿ÉÒÔ·½±ãµØÅäÖÃ¶à¸öÏß³Ì³Ø£¬ÏêÏ¸ĞÅÏ¢¿ÉÒÔ²Î¿¼src/event-service-assemble.xmlÖĞµÄÅäÖÃ£º
+ å¯ä»¥æ–¹ä¾¿åœ°é…ç½®å¤šä¸ªçº¿ç¨‹æ± ï¼Œè¯¦ç»†ä¿¡æ¯å¯ä»¥å‚è€ƒsrc/event-service-assemble.xmlä¸­çš„é…ç½®ï¼š
  
  <!-- 
-			×î´óµÈ´ı5´Î£¬Ã¿´ÎÑÓÊ±³¤10%
+			æœ€å¤§ç­‰å¾…5æ¬¡ï¼Œæ¯æ¬¡å»¶æ—¶é•¿10%
 		 -->
 		<property name="event.threadpool">
 			<map>
@@ -137,10 +137,10 @@ o ÊÂ¼ş¿ò¼ÜÖĞµÄÏß³Ì³ØÍêÉÆ
 				TimeUnit.MICROSECONDS
 				TimeUnit.MILLISECONDS
 				TimeUnit.NANOSECONDS
-				Ê±¼äµ¥Î»ÊÊÓÃÓÚÒÔÏÂ²ÎÊı£º
+				æ—¶é—´å•ä½é€‚ç”¨äºä»¥ä¸‹å‚æ•°ï¼š
 				keepAliveTime
 				waitTime
-				delayTime£¨µ±delayTimeÎªÕûÊıÊ±¼ä¶ø²»ÊÇ°Ù·Ö±ÈÊ±ÓĞĞ§£©
+				delayTimeï¼ˆå½“delayTimeä¸ºæ•´æ•°æ—¶é—´è€Œä¸æ˜¯ç™¾åˆ†æ¯”æ—¶æœ‰æ•ˆï¼‰
 				 -->
 				<property name="timeUnit" value="TimeUnit.SECONDS"/>
 				<property name="keepAliveTime" value="40"/>		
@@ -158,17 +158,17 @@ o ÊÂ¼ş¿ò¼ÜÖĞµÄÏß³Ì³ØÍêÉÆ
 				
 				<!-- 
 				RejectedExecutionHandler
-				±ØĞëÊµÏÖjava.util.concurrent.RejectedExecutionHandler½Ó¿Ú
-				Ä¿Ç°ÏµÍ³Ìá¹©ÒÔÏÂÈ±Ê¡ÊµÏÖ£º
-				org.frameworkset.thread.WaitPolicy  Ñ­»·µÈ´ıevent.threadpool.waitTimeÖ¸¶¨µÄÊ±¼ä£¬µ¥Î»ÎªÃë
-				java.util.concurrent.ThreadPoolExecutor$DiscardPolicy Ö±½Ó¶ªÆúÈÎÎñ£¬²»Å×³öÒì³£
-				java.util.concurrent.ThreadPoolExecutor$AbortPolicy Ö±½Ó¶ªÆúÈÎÎñ£¬Å×³öÒì³£RejectedExecutionException
-				java.util.concurrent.ThreadPoolExecutor$CallerRunsPolicy Ö±½ÓÔËĞĞ
-				java.util.concurrent.ThreadPoolExecutor$DiscardOldestPolicy ·ÅÈë¶ÓÁĞ£¬½«×îÀÏµÄÈÎÎñÉ¾³ı
+				å¿…é¡»å®ç°java.util.concurrent.RejectedExecutionHandleræ¥å£
+				ç›®å‰ç³»ç»Ÿæä¾›ä»¥ä¸‹ç¼ºçœå®ç°ï¼š
+				org.frameworkset.thread.WaitPolicy  å¾ªç¯ç­‰å¾…event.threadpool.waitTimeæŒ‡å®šçš„æ—¶é—´ï¼Œå•ä½ä¸ºç§’
+				java.util.concurrent.ThreadPoolExecutor$DiscardPolicy ç›´æ¥ä¸¢å¼ƒä»»åŠ¡ï¼Œä¸æŠ›å‡ºå¼‚å¸¸
+				java.util.concurrent.ThreadPoolExecutor$AbortPolicy ç›´æ¥ä¸¢å¼ƒä»»åŠ¡ï¼ŒæŠ›å‡ºå¼‚å¸¸RejectedExecutionException
+				java.util.concurrent.ThreadPoolExecutor$CallerRunsPolicy ç›´æ¥è¿è¡Œ
+				java.util.concurrent.ThreadPoolExecutor$DiscardOldestPolicy æ”¾å…¥é˜Ÿåˆ—ï¼Œå°†æœ€è€çš„ä»»åŠ¡åˆ é™¤
 				 -->
 				<property name="rejectedExecutionHandler" value="org.frameworkset.thread.WaitPolicy"/>
 				<!-- 
-					ÒÔÏÂ²ÎÊıÖ»ÓĞÔÚÅäÖÃµÄorg.frameworkset.thread.WaitPolicy²ßÂÔÊ±²ÅĞèÒªÅäÖÃ
+					ä»¥ä¸‹å‚æ•°åªæœ‰åœ¨é…ç½®çš„org.frameworkset.thread.WaitPolicyç­–ç•¥æ—¶æ‰éœ€è¦é…ç½®
 				 -->
 				<property name="waitTime" value="1"/>
 				<property name="delayTime" value="10%"/>
@@ -177,10 +177,10 @@ o ÊÂ¼ş¿ò¼ÜÖĞµÄÏß³Ì³ØÍêÉÆ
 			</map>
 		</property> 
 		
-		¾ßÌåÊ¹ÓÃ·½·¨ÈçÏÂ£º
+		å…·ä½“ä½¿ç”¨æ–¹æ³•å¦‚ä¸‹ï¼š
 		 
-		 ThreadPoolExecutor executer = ThreadPoolManagerFactory.getThreadPoolExecutor("event.threadpool");//»ñÈ¡ÊµÀı
-		 Èç¹û¶ÔÓ¦µÄ"event.threadpool"Ã»ÓĞ±»ÅäÖÃ£¬ÄÇÃ´½«Ê¹ÓÃÄ¬ÈÏµÄÏß³Ì³Ø²ÎÊıÅäÖÃ£º
+		 ThreadPoolExecutor executer = ThreadPoolManagerFactory.getThreadPoolExecutor("event.threadpool");//è·å–å®ä¾‹
+		 å¦‚æœå¯¹åº”çš„"event.threadpool"æ²¡æœ‰è¢«é…ç½®ï¼Œé‚£ä¹ˆå°†ä½¿ç”¨é»˜è®¤çš„çº¿ç¨‹æ± å‚æ•°é…ç½®ï¼š
 		 	defaultPoolparams.put("corePoolSize", "5");
 		    defaultPoolparams.put("maximumPoolSize", "10");
 		    defaultPoolparams.put("keepAliveTime", "30");
@@ -194,9 +194,9 @@ o ÊÂ¼ş¿ò¼ÜÖĞµÄÏß³Ì³ØÍêÉÆ
 		    defaultPoolparams.put("maxWaits","10");
 		 
         for(int i = 0; i < 50 ; i ++)
-            executer.execute(new WaitRun());//Í¨¹ıÏß³Ì³ØÖ´ĞĞÈÎÎñ
+            executer.execute(new WaitRun());//é€šè¿‡çº¿ç¨‹æ± æ‰§è¡Œä»»åŠ¡
            
-        ÈÎÎñ¶¨ÒåÈçÏÂ£º
+        ä»»åŠ¡å®šä¹‰å¦‚ä¸‹ï¼š
         public static class WaitRun extends DelayThread
     {
 
@@ -207,7 +207,7 @@ o ÊÂ¼ş¿ò¼ÜÖĞµÄÏß³Ì³ØÍêÉÆ
         }
 
     }
-    waitFailHandler ´¦Àí¶¨ÒåÀà
+    waitFailHandler å¤„ç†å®šä¹‰ç±»
       public static class WaitFailHandlerTest implements WaitFailHandler<WaitRun>
     {
 
@@ -222,17 +222,17 @@ o ÊÂ¼ş¿ò¼ÜÖĞµÄÏß³Ì³ØÍêÉÆ
 	
 	
   
-o ÊÂ¼ş¹ÜÀí¿ò¼ÜÔ¶³ÌÊÂ¼şÎŞ·¨·¢ËÍµÄÎÊÌâ
-Ô­ÒòÊÇ£º
+o äº‹ä»¶ç®¡ç†æ¡†æ¶è¿œç¨‹äº‹ä»¶æ— æ³•å‘é€çš„é—®é¢˜
+åŸå› æ˜¯ï¼š
 
-/bbossaop/src/org/frameworkset/remote/Target.javaÀàÃ»ÓĞĞòÁĞ»¯µ¼ÖÂÆä×ÓÀà
-/bbossevent/src/org/frameworkset/event/EventTarget.javaÔÚ·¢ËÍÊ±ÎŞ·¨Ê¶±ğ¸¸ÀàtargetÖĞµÄ¶ÔÏó
+/bbossaop/src/org/frameworkset/remote/Target.javaç±»æ²¡æœ‰åºåˆ—åŒ–å¯¼è‡´å…¶å­ç±»
+/bbossevent/src/org/frameworkset/event/EventTarget.javaåœ¨å‘é€æ—¶æ— æ³•è¯†åˆ«çˆ¶ç±»targetä¸­çš„å¯¹è±¡
 
-½â¾ö°ì·¨Éı¼¶bboss-aop¿ò¼Ü
+è§£å†³åŠæ³•å‡çº§bboss-aopæ¡†æ¶
 
-o Éı¼¶frameworkset-pool.jar 
-½«com.frameworkset.common.poolman.sql.PrimaryKeyCacheÖĞµÄÈ«¾Ö±äÁ¿
-  Map id_tablesµÄ³õÊ¼»¯·½Ê½¸ÄÎª²¢·¢map£¬ÒÔÃâ³öÏÖ¶àÏß³Ì°²È«ĞÔÎÊÌâ¡£
+o å‡çº§frameworkset-pool.jar 
+å°†com.frameworkset.common.poolman.sql.PrimaryKeyCacheä¸­çš„å…¨å±€å˜é‡
+  Map id_tablesçš„åˆå§‹åŒ–æ–¹å¼æ”¹ä¸ºå¹¶å‘mapï¼Œä»¥å…å‡ºç°å¤šçº¿ç¨‹å®‰å…¨æ€§é—®é¢˜ã€‚
   
   public PrimaryKeyCache(String dbname) {
 		this.dbname = dbname;
@@ -244,11 +244,11 @@ o Éı¼¶frameworkset-pool.jar
 ------------------------------
  1.0.1 - 2009-05-17
 ------------------------------
-o ±ê×¼µÄÊÂ¼ş¹ÜÀí¿ò¼Ü
-o Ö§³ÖÔ¶³ÌÊÂ¼ş
-  Ö§³Öµã¶ÔµãºÍ¶àµãÔ¶³ÌÊÂ¼ş¹ã²¥ºÍ½ÓÊÕ¹¦ÄÜ
-  ¿É¾²Ì¬Ö¸¶¨ÊÂ¼ş¹ã²¥µÄÍøÂç½Úµã¼¯£¬Ò²¿ÉÒÔÈ±Ê¡Ïò¼¯ÈºÖĞµÄËùÓĞ½Úµã·¢ËÍÊÂ¼şÏûÏ¢
-o Ö§³ÖÍ¬²½ºÍÒì²½Á½ÖÖÊÂ¼ş·¢ËÍ»úÖÆ
+o æ ‡å‡†çš„äº‹ä»¶ç®¡ç†æ¡†æ¶
+o æ”¯æŒè¿œç¨‹äº‹ä»¶
+  æ”¯æŒç‚¹å¯¹ç‚¹å’Œå¤šç‚¹è¿œç¨‹äº‹ä»¶å¹¿æ’­å’Œæ¥æ”¶åŠŸèƒ½
+  å¯é™æ€æŒ‡å®šäº‹ä»¶å¹¿æ’­çš„ç½‘ç»œèŠ‚ç‚¹é›†ï¼Œä¹Ÿå¯ä»¥ç¼ºçœå‘é›†ç¾¤ä¸­çš„æ‰€æœ‰èŠ‚ç‚¹å‘é€äº‹ä»¶æ¶ˆæ¯
+o æ”¯æŒåŒæ­¥å’Œå¼‚æ­¥ä¸¤ç§äº‹ä»¶å‘é€æœºåˆ¶
   
 
 First version of bboss-event-1.0.1 released.

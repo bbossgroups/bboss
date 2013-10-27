@@ -16,8 +16,8 @@ import java.io.Serializable;
 public interface PagerInfo extends Serializable {
     
     /**
-     * ·µ»ØÒ³ÃæµÄÊı¾İÌõÊı
-     * @return Êı¾İÌõÊı
+     * è¿”å›é¡µé¢çš„æ•°æ®æ¡æ•°
+     * @return æ•°æ®æ¡æ•°
      */
     public int getDataSize();
 

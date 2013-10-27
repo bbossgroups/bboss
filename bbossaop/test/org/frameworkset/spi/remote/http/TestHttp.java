@@ -27,7 +27,7 @@ import org.junit.Test;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2010-9-12 ÏÂÎç09:17:45
+ * @Date 2010-9-12 ä¸‹åˆ09:17:45
  * @author biaoping.yin
  * @version 1.0
  */
@@ -45,7 +45,7 @@ public class TestHttp extends TestBase{
 		    System.out.println("testInf.getCount():" + i + " = "+testInf.getCount());
 		
 		long end = System.currentTimeMillis();
-		System.out.println("ÏûºÄÊ±¼ä£º" + (end - start)  + "ºÁÃë");
+		System.out.println("æ¶ˆè€—æ—¶é—´ï¼š" + (end - start)  + "æ¯«ç§’");
 		
 	}
 	
@@ -61,7 +61,7 @@ public class TestHttp extends TestBase{
 		    System.out.println("testInf.getCount():" + i + " = "+testInf.getCount());
 		
 		long end = System.currentTimeMillis();
-		System.out.println("ÏûºÄÊ±¼ä£º" + (end - start)  + "ºÁÃë");
+		System.out.println("æ¶ˆè€—æ—¶é—´ï¼š" + (end - start)  + "æ¯«ç§’");
 		
 	}
 	
@@ -78,7 +78,7 @@ public class TestHttp extends TestBase{
 				System.out.println("testInf.getCount():" + i + " = "
 						+ testInf.getCount());
 			long end = System.currentTimeMillis();
-			System.out.println("ÏûºÄÊ±¼ä£º" + (end - start) + "ºÁÃë");
+			System.out.println("æ¶ˆè€—æ—¶é—´ï¼š" + (end - start) + "æ¯«ç§’");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -110,7 +110,7 @@ public class TestHttp extends TestBase{
 		}
 		
 		long end = System.currentTimeMillis();
-		System.out.println("ÏûºÄÊ±¼ä£º" + (end - start)  + "ºÁÃë");
+		System.out.println("æ¶ˆè€—æ—¶é—´ï¼š" + (end - start)  + "æ¯«ç§’");
 		
 	}
 	@Test
@@ -125,7 +125,7 @@ public class TestHttp extends TestBase{
 		    System.out.println("testInf.getCount():" + i + " = "+testInf.getCount());
 		
 		long end = System.currentTimeMillis();
-		System.out.println("ÏûºÄÊ±¼ä£º" + (end - start) / 1000 + "Ãë");
+		System.out.println("æ¶ˆè€—æ—¶é—´ï¼š" + (end - start) / 1000 + "ç§’");
 		
 	}
 	
@@ -143,7 +143,7 @@ public class TestHttp extends TestBase{
 		    System.out.println("testInf.getString():" + i + " = "+testInf.getParameter());
 		
 		long end = System.currentTimeMillis();
-		System.out.println("ÏûºÄÊ±¼ä£º" + (end - start)  + "ºÀÃë");
+		System.out.println("æ¶ˆè€—æ—¶é—´ï¼š" + (end - start)  + "è±ªç§’");
 		
 	}
 	@Test
@@ -158,7 +158,7 @@ public class TestHttp extends TestBase{
 		    System.out.println("testInf.getCount():" + i + " = "+testInf.getCount());
 		
 		long end = System.currentTimeMillis();
-		System.out.println("ÏûºÄÊ±¼ä£º" + (end - start)  + "ºÁÃë");
+		System.out.println("æ¶ˆè€—æ—¶é—´ï¼š" + (end - start)  + "æ¯«ç§’");
 		
 	}
 	
@@ -172,7 +172,7 @@ public class TestHttp extends TestBase{
 		    System.out.println("testInf.getCount():" + i + " = "+testInf.getCount());
 		
 		long end = System.currentTimeMillis();
-		System.out.println("ÏûºÄÊ±¼ä£º" + (end - start) / 1000 + "Ãë");
+		System.out.println("æ¶ˆè€—æ—¶é—´ï¼š" + (end - start) / 1000 + "ç§’");
 		
 	}
 	

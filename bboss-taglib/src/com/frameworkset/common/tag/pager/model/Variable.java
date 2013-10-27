@@ -32,19 +32,19 @@
 package com.frameworkset.common.tag.pager.model;
 
 /**
- * ±äÁ¿ĞÅÏ¢
+ * å˜é‡ä¿¡æ¯
  * @author biaoping.yin
  * created on 2005-5-21 
  * version 1.0
  */
 public class Variable implements ModelObject{
-    /**±äÁ¿Ãû³Æ*/
+    /**å˜é‡åç§°*/
 	String name;
 	
-	/**±äÁ¿ÀàĞÍ*/
+	/**å˜é‡ç±»å‹*/
 	String type;
 	
-	/**±äÁ¿µÄÖµ*/
+	/**å˜é‡çš„å€¼*/
 	Object value;
     /**
      * @return Returns the name.

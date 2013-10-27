@@ -2,8 +2,6 @@ package com.frameworkset.velocity;
 
 import java.util.Map;
 
-import org.apache.log4j.Logger;
-
 import bboss.org.apache.velocity.VelocityContext;
 import bboss.org.apache.velocity.runtime.resource.Resource;
 

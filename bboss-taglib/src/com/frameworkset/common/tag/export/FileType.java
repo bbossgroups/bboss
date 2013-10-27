@@ -32,7 +32,7 @@
 package com.frameworkset.common.tag.export;
 
 /**
- * 定义文件类型
+ * 瀹氫箟鏂囦欢绫诲瀷
  * @author biaoping.yin
  * created on 2005-5-25
  * version 1.0 

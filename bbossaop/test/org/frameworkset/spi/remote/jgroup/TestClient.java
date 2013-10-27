@@ -31,7 +31,7 @@ import org.junit.Test;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2009-11-7 ÏÂÎç11:23:47
+ * @Date 2009-11-7 ä¸‹åˆ11:23:47
  * @author biaoping.yin
  * @version 1.0
  */
@@ -73,7 +73,7 @@ public class TestClient extends TestBase
     }
     
     /**
-     * ²âÊÔµØÖ·ÊÇ·ñ¿ÉÁ¬Í¨
+     * æµ‹è¯•åœ°å€æ˜¯å¦å¯è¿é€š
      */
     public static void testValidateAddress()
     {
@@ -99,41 +99,41 @@ public static void main(String[] args)
 //    TestDamone t = new TestDamone();
 //    t.start();
 	/**
-	 * all×é²¥µ÷ÓÃ
+	 * allç»„æ’­è°ƒç”¨
 	 */
 //	testJGroupAll();
 //	testJGroupAllWithParameter();
 //	testJGroupSelfProtocolRPC();
 	/**
-	 * ²âÊÔ´øjgroupĞ­ÒéÍ·µÄrpcµ÷ÓÃ
+	 * æµ‹è¯•å¸¦jgroupåè®®å¤´çš„rpcè°ƒç”¨
 	 */
 //	testJGroupProtocolRPC();
 //	testValidateAddress();
 //	testGetPyaddress();
     /**
-     * ²âÊÔµ¥Ïß³Ìµ÷ÓÃ
+     * æµ‹è¯•å•çº¿ç¨‹è°ƒç”¨
      */
 //    testJGroupRPC();
 	/**
-	 * ²âÊÔ¶àÏß³Ìµ÷ÓÃ
+	 * æµ‹è¯•å¤šçº¿ç¨‹è°ƒç”¨
 	 */
 //    testMutiThreadJGroupRPC();
     
     /**
-     * Ğ£ÑéµØÖ·ÊÇ·ñ¿ÉÁ¬Í¨
+     * æ ¡éªŒåœ°å€æ˜¯å¦å¯è¿é€š
      */
 //    testValidateAddress();
     /**
-     * ²âÊÔJGroup¶à²¥µ÷ÓÃ
+     * æµ‹è¯•JGroupå¤šæ’­è°ƒç”¨
      */
 //    testMuticastJGroupRPC(); 
 
     /**
-     * ²âÊÔ±¾µØµ÷ÓÃ
+     * æµ‹è¯•æœ¬åœ°è°ƒç”¨
      */
 //    testJGroupLocal();
     /**
-     * ²âÊÔJGroupÁ¬½ÓÆ÷´´½¨¹¦ÄÜ
+     * æµ‹è¯•JGroupè¿æ¥å™¨åˆ›å»ºåŠŸèƒ½
      */
 //    testClinentTransport();
 //         System.exit(0);
@@ -153,7 +153,7 @@ public  void testJGroupProtocolRPC()
 	    System.out.println("testInf.getCount():" + i + " = "+testInf.getCount());
 	
 	long end = System.currentTimeMillis();
-	System.out.println("ÏûºÄÊ±¼ä£º" + (end - start) / 1000 + "Ãë");
+	System.out.println("æ¶ˆè€—æ—¶é—´ï¼š" + (end - start) / 1000 + "ç§’");
 	
 	
 	
@@ -171,7 +171,7 @@ public   void testJGroupSelfProtocolRPC()
 	    System.out.println("testInf.getCount():" + i + " = "+testInf.getCount());
 	
 	long end = System.currentTimeMillis();
-	System.out.println("ÏûºÄÊ±¼ä£º" + (end - start) / 1000 + "Ãë");
+	System.out.println("æ¶ˆè€—æ—¶é—´ï¼š" + (end - start) / 1000 + "ç§’");
 	
 	
 	
@@ -188,7 +188,7 @@ public   void testMutiThreadJGroupRPC()
 //                System.out.println("testInf.getCount():" + i + " = "+testInf.getCount());
 //            
 //            long end = System.currentTimeMillis();
-//            System.out.println("ÏûºÄÊ±¼ä£º" + (end - start) / 1000 + "Ãë");
+//            System.out.println("æ¶ˆè€—æ—¶é—´ï¼š" + (end - start) / 1000 + "ç§’");
     for(int i = 0; i < 10; i ++)
     {
         Thread t = new Thread(new RunJGroupRPC(i));
@@ -215,7 +215,7 @@ public   void testMutiThreadJGroupRPC()
                 System.out.println("testInf.getCount():" + i + " = "+testInf.getCount());
             
             long end = System.currentTimeMillis();
-            System.out.println("ÈÎÎñ¡¾" + i + "¡¿ÏûºÄÊ±¼ä£º" + (end - start) / 1000 + "Ãë");
+            System.out.println("ä»»åŠ¡ã€" + i + "ã€‘æ¶ˆè€—æ—¶é—´ï¼š" + (end - start) / 1000 + "ç§’");
             
         }
     
@@ -227,7 +227,7 @@ public static void testSingleTimeout()
 }
 
 /**
- * ¶à²¥·şÎñµ÷ÓÃ
+ * å¤šæ’­æœåŠ¡è°ƒç”¨
  */
 @Test
 public   void testMuticastJGroupRPC()
@@ -251,7 +251,7 @@ public   void testMuticastJGroupRPC()
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-          //µÈ¼ÛµÄµ÷ÓÃ·½·¨
+          //ç­‰ä»·çš„è°ƒç”¨æ–¹æ³•
             
             
             
@@ -278,7 +278,7 @@ public   void testJGroupLocal()
 public   void testJGroupAll()
 {
 //	RPCTestInf testInf = (RPCTestInf)context.getBeanObject("(192.168.11.102:1186)/rpc.test");
-	RPCTestInf testInf = (RPCTestInf)context.getBeanObject("(jgroup::all)/rpc.test?parameterKey=¶à¶à");
+	RPCTestInf testInf = (RPCTestInf)context.getBeanObject("(jgroup::all)/rpc.test?parameterKey=å¤šå¤š");
 	
 	for(int i = 0; i < 10; i ++)
 	{

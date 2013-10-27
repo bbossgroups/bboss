@@ -29,7 +29,7 @@ import com.frameworkset.orm.transaction.TransactionManager;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2010-1-19 ÏÂÎç05:17:43
+ * @Date 2010-1-19 ä¸‹åˆ05:17:43
  * @author biaoping.yin
  * @version 1.0
  */

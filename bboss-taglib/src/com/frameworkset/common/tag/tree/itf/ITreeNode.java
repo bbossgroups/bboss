@@ -120,20 +120,20 @@ public interface ITreeNode extends AttachElement{
     public void setHasChildren(boolean hasChildren);
 
     /**
-     * ÉèÖÃ½áµãµÄ¸¸½áµã
+     * è®¾ç½®ç»“ç‚¹çš„çˆ¶ç»“ç‚¹
      * @param fNode
      */
     public void setParent(ITreeNode fNode);
     /**
-     * »ñÈ¡½áµãµÄ¸¸½áµã
+     * è·å–ç»“ç‚¹çš„çˆ¶ç»“ç‚¹
      * @return ITreeNode
      */
     public ITreeNode getParent();
 
     /**
-     * »ñÈ¡ÊÇ·ñÎª½ÚµãÌí¼Ó³¬Á´½ÓµÄÊôĞÔ
-     * true£ºÌí¼Ó
-     * false£º²»Ìí¼Ó
+     * è·å–æ˜¯å¦ä¸ºèŠ‚ç‚¹æ·»åŠ è¶…é“¾æ¥çš„å±æ€§
+     * trueï¼šæ·»åŠ 
+     * falseï¼šä¸æ·»åŠ 
      * Description:
      * @return
      * boolean
@@ -141,9 +141,9 @@ public interface ITreeNode extends AttachElement{
     public boolean getShowHref();
 
 	/**
-	 * ÉèÖÃ½ÚµãÊÇ·ñÌí¼Ó³¬Á´½ÓµÄÊôĞÔ
-	 * true£ºÌí¼Ó
-	 * false£º²»Ìí¼Ó
+	 * è®¾ç½®èŠ‚ç‚¹æ˜¯å¦æ·»åŠ è¶…é“¾æ¥çš„å±æ€§
+	 * trueï¼šæ·»åŠ 
+	 * falseï¼šä¸æ·»åŠ 
 	 * Description:
 	 * @return
 	 * boolean
@@ -151,41 +151,41 @@ public interface ITreeNode extends AttachElement{
 	public void setShowHref(boolean showHref);
 
 	/**
-	 * Îª½ÚµãÌí¼Ó±¸×¢
+	 * ä¸ºèŠ‚ç‚¹æ·»åŠ å¤‡æ³¨
 	 * @param memo
 	 */
 	public void setMemo(String memo);
 	/**
-	 * »ñÈ¡½Úµã±¸×¢
+	 * è·å–èŠ‚ç‚¹å¤‡æ³¨
 	 * @return String
 	 */
 	public String getMemo();
 
 	/**
-	 * »ñÈ¡µ¥Ñ¡°´Å¥µÄÖµ
+	 * è·å–å•é€‰æŒ‰é’®çš„å€¼
 	 * @return String
 	 */
 	public String getRadioValue();
 
 	/**
-	 * ÉèÖÃµ¥Ñ¡°´Å¥µÄÖµ
+	 * è®¾ç½®å•é€‰æŒ‰é’®çš„å€¼
 	 *
 	 */
 	public void setRadioValue(String value);
 
 	/**
-	 * »ñÈ¡¸´Ñ¡¿òµÄÖµ
-	 * @return ½ÚµãÇ°¸´Ñ¡¿òµÄÖµ
+	 * è·å–å¤é€‰æ¡†çš„å€¼
+	 * @return èŠ‚ç‚¹å‰å¤é€‰æ¡†çš„å€¼
 	 */
 	public String getCheckboxValue();
 
 	/**
-	 * ÉèÖÃ¸´Ñ¡¿òµÄÖµ
+	 * è®¾ç½®å¤é€‰æ¡†çš„å€¼
 	 */
 	public void setCheckboxValue(String value);
 
 	/**
-	 * ÅĞ¶ÏÊÇ·ñÊÇ¸ù½Úµã
+	 * åˆ¤æ–­æ˜¯å¦æ˜¯æ ¹èŠ‚ç‚¹
 	 * Description:
 	 * @return
 	 * boolean
@@ -194,12 +194,12 @@ public interface ITreeNode extends AttachElement{
 
 	/**
 	 * 	added by biaoping.yin on 2005-02-04
-	 *  »ñÈ¡¶ù×ÓÊıÁ¿
+	 *  è·å–å„¿å­æ•°é‡
 	 */
 	public int childrenSize();
 
     /**
-     * »ñÈ¡Â·¾¶
+     * è·å–è·¯å¾„
      * @return String
      */
     public String getPath() ;
@@ -220,7 +220,7 @@ public interface ITreeNode extends AttachElement{
 	public void setTree(Tree tree);
 	
 	/**
-	 * »ñÈ¡½ÚµãµÄ×óĞÖµÜ£¬µ±½ÚµãÔÚ×î×ó±ßÊ±·µ»Ønull
+	 * è·å–èŠ‚ç‚¹çš„å·¦å…„å¼Ÿï¼Œå½“èŠ‚ç‚¹åœ¨æœ€å·¦è¾¹æ—¶è¿”å›null
 	 * @return
 	 */
 	public ITreeNode getLeftNode();
@@ -228,7 +228,7 @@ public interface ITreeNode extends AttachElement{
 	public void setLeftNode(ITreeNode leftNode);
 	
 	/**
-	 * »ñÈ¡½ÚµãµÄÓÒĞÖµÜ£¬µ±½ÚµãÔÚ×îÓÒ±ßÊ±·µ»Ønull
+	 * è·å–èŠ‚ç‚¹çš„å³å…„å¼Ÿï¼Œå½“èŠ‚ç‚¹åœ¨æœ€å³è¾¹æ—¶è¿”å›null
 	 * @return
 	 */
 	public ITreeNode getRightNode();
@@ -242,7 +242,7 @@ public interface ITreeNode extends AttachElement{
 	public void addSonid(String sonid);
 	
 	/**
-	 * ¶ù×Ó½Úµã»áµ÷ÓÃ
+	 * å„¿å­èŠ‚ç‚¹ä¼šè°ƒç”¨
 	 * @return
 	 */
 	public StringBuffer getFatherids() ;

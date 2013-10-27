@@ -38,7 +38,7 @@ import java.util.Map;
 
 import com.frameworkset.util.EditorInf;
 /**
- * ÊµÏÖ¶ÔÏóÖ®¼äÊôĞÔÖµµÄ¸´ÖÆ¹¦ÄÜ£¬mapÓë¶ÔÏóÖ®¼äÊôĞÔÖµµÄ¿½±´£¬hashTable/propertiesÓë¶ÔÏóÖ®¼äÊôĞÔÖµµÄ¿½±´
+ * å®ç°å¯¹è±¡ä¹‹é—´å±æ€§å€¼çš„å¤åˆ¶åŠŸèƒ½ï¼Œmapä¸å¯¹è±¡ä¹‹é—´å±æ€§å€¼çš„æ‹·è´ï¼ŒhashTable/propertiesä¸å¯¹è±¡ä¹‹é—´å±æ€§å€¼çš„æ‹·è´
  * @author biaoping.yin
  * @version 1.0
  */
@@ -63,9 +63,9 @@ public class TransferObjectFactory
 	}
 	/**
 	 * added by biaoping.yin 2005.8.13
-	 * ½«mapÖĞ°üº¬µÄÊôĞÔÖµ¸´ÖÆµ½¶ÔÏóÖĞ,¶ÔÓ¦ÊôĞÔµÄÃû³ÆºÍÀàĞÍ±ØĞëÒ»ÖÂ
-	 * @param completeVO ÓĞÊôĞÔÖµµÄmap¶ÔÏó
-	 * @param whichToVO ¿Õ¶ÔÏó
+	 * å°†mapä¸­åŒ…å«çš„å±æ€§å€¼å¤åˆ¶åˆ°å¯¹è±¡ä¸­,å¯¹åº”å±æ€§çš„åç§°å’Œç±»å‹å¿…é¡»ä¸€è‡´
+	 * @param completeVO æœ‰å±æ€§å€¼çš„mapå¯¹è±¡
+	 * @param whichToVO ç©ºå¯¹è±¡
 	 * @return Object
 	 */
 	public static Object createTransferObject(
@@ -82,9 +82,9 @@ public class TransferObjectFactory
 //	}
 	/**
 	 * added by biaoping.yin 2005.8.13
-	 * ½«HashtableÖĞ°üº¬µÄÊôĞÔÖµ¸´ÖÆµ½¶ÔÏóÖĞ,¶ÔÓ¦ÊôĞÔµÄÃû³ÆºÍÀàĞÍ±ØĞëÒ»ÖÂ
-	 * @param completeVO ÓĞÊôĞÔÖµµÄHashtable¶ÔÏó
-	 * @param whichToVO ¿Õ¶ÔÏó
+	 * å°†Hashtableä¸­åŒ…å«çš„å±æ€§å€¼å¤åˆ¶åˆ°å¯¹è±¡ä¸­,å¯¹åº”å±æ€§çš„åç§°å’Œç±»å‹å¿…é¡»ä¸€è‡´
+	 * @param completeVO æœ‰å±æ€§å€¼çš„Hashtableå¯¹è±¡
+	 * @param whichToVO ç©ºå¯¹è±¡
 	 * @return Object
 	 */
 	public static Object createTransferObject(
@@ -95,9 +95,9 @@ public class TransferObjectFactory
 	}
 	/**
 	 * added by biaoping.yin 2004.5.20
-	 * ½«Ò»¸ö¶ÔÏóÊôĞÔ¸´ÖÆµ½ÁíÒ»¸ö¶ÔÏóÖĞ,¶ÔÓ¦ÊôĞÔµÄÃû³ÆºÍÀàĞÍ±ØĞëÒ»ÖÂ
-	 * @param completeVO ÓĞÊôĞÔÖµµÄ¶ÔÏó
-	 * @param whichToVO ¿Õ¶ÔÏó
+	 * å°†ä¸€ä¸ªå¯¹è±¡å±æ€§å¤åˆ¶åˆ°å¦ä¸€ä¸ªå¯¹è±¡ä¸­,å¯¹åº”å±æ€§çš„åç§°å’Œç±»å‹å¿…é¡»ä¸€è‡´
+	 * @param completeVO æœ‰å±æ€§å€¼çš„å¯¹è±¡
+	 * @param whichToVO ç©ºå¯¹è±¡
 	 * @return Object
 	 */
 	public static Object createTransferObject(

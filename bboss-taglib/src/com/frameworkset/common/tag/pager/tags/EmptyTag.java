@@ -22,7 +22,7 @@ import java.util.Map;
 
 /**
  * <p>EmptyTag.java</p>
- * <p> Description: 判断指定的字段的值是否是null或者是空串，如果条件成立，则执行标签体得逻辑</p>
+ * <p> Description: 鍒ゆ柇鎸囧畾鐨勫瓧娈电殑鍊兼槸鍚︽槸null鎴栬�呮槸绌轰覆锛屽鏋滄潯浠舵垚绔嬶紝鍒欐墽琛屾爣绛句綋寰楅�昏緫</p>
  * <p> bboss workgroup </p>
  * <p> Copyright (c) 2009 </p>
  * 

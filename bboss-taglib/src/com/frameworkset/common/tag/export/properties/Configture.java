@@ -41,13 +41,13 @@ import java.util.List;
  * version 1.0
  */
 public class Configture {
-	/**描述信息*/
+	/**鎻忚堪淇℃伅*/
 	private String description;
 	
-	/**版本信息*/
+	/**鐗堟湰淇℃伅*/
 	private String version;
 	
-	/**所有的导出配置列表*/
+	/**鎵�鏈夌殑瀵煎嚭閰嶇疆鍒楄〃*/
 	private List exportConfigs = new ArrayList();
 	
 	public void addExportConfig(ExportConfig export)

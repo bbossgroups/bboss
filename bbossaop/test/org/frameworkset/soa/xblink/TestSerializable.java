@@ -85,7 +85,7 @@ public class TestSerializable
 			}
 			long end = System.currentTimeMillis();
 			
-			System.out.println("Ö´ĞĞxtream beantoxml "+count+"´Î£¬ºÄÊ±:"+(end - start)+"ºÁÃë");
+			System.out.println("æ‰§è¡Œxtream beantoxml "+count+"æ¬¡ï¼Œè€—æ—¶:"+(end - start)+"æ¯«ç§’");
 		}
 		catch (Exception e)
 		{
@@ -107,7 +107,7 @@ public class TestSerializable
 			}
 			long end = System.currentTimeMillis();
 			
-			System.out.println("Ö´ĞĞxtream beantoxml "+count+"´Î£¬ºÄÊ±:"+(end - start)+"ºÁÃë");
+			System.out.println("æ‰§è¡Œxtream beantoxml "+count+"æ¬¡ï¼Œè€—æ—¶:"+(end - start)+"æ¯«ç§’");
 		}
 		catch (Exception e)
 		{
@@ -128,7 +128,7 @@ public class TestSerializable
 			}
 			long end = System.currentTimeMillis();
 			
-			System.out.println("Ö´ĞĞxStream xmltobean "+count+"´Î£¬ºÄÊ±:"+(end - start)+"ºÁÃë");
+			System.out.println("æ‰§è¡ŒxStream xmltobean "+count+"æ¬¡ï¼Œè€—æ—¶:"+(end - start)+"æ¯«ç§’");
 		}
 		catch (Exception e)
 		{
@@ -151,7 +151,7 @@ public class TestSerializable
 			}
 			long end = System.currentTimeMillis();
 			
-			System.out.println("Ö´ĞĞbboss beantoxml "+count+"´Î£¬ºÄÊ±:"+(end - start)+"ºÁÃë");
+			System.out.println("æ‰§è¡Œbboss beantoxml "+count+"æ¬¡ï¼Œè€—æ—¶:"+(end - start)+"æ¯«ç§’");
 		}
 		catch (Exception e)
 		{
@@ -172,7 +172,7 @@ public class TestSerializable
 			}
 			long end = System.currentTimeMillis();
 			
-			System.out.println("Ö´ĞĞbboss beantoxml "+count+"´Î£¬ºÄÊ±:"+(end - start)+"ºÁÃë");
+			System.out.println("æ‰§è¡Œbboss beantoxml "+count+"æ¬¡ï¼Œè€—æ—¶:"+(end - start)+"æ¯«ç§’");
 		}
 		catch (Exception e)
 		{
@@ -284,13 +284,13 @@ public class TestSerializable
 	@Test
 	public void testFullBBossSerializable1() throws Exception
 	{
-		//¼ÓÔØÅäÖÃÎÄ¼ş£¬¹¹½¨Ò»¸ö×é¼şÈİÆ÷¶ÔÏó
+		//åŠ è½½é…ç½®æ–‡ä»¶ï¼Œæ„å»ºä¸€ä¸ªç»„ä»¶å®¹å™¨å¯¹è±¡
 		BaseApplicationContext context = DefaultApplicationContext.getApplicationContext("org/frameworkset/soa/xblink/testcontainref.xml");
-		//»ñÈ¡×é¼ştest1
+		//è·å–ç»„ä»¶test1
 		Test1 test1 = context.getTBeanObject("test1",  Test1.class);
-		//ÖØĞÂ½«×é¼şĞòÁĞ»¯Îªxml´®
+		//é‡æ–°å°†ç»„ä»¶åºåˆ—åŒ–ä¸ºxmlä¸²
 		String ss = ObjectSerializable.toXML(test1);
-		//½«xml´®ss×ª»»Îª¶ÔÏótest_
+		//å°†xmlä¸²ssè½¬æ¢ä¸ºå¯¹è±¡test_
 		Test1 test1_ =  (Test1)ObjectSerializable.toBean(ss,Test1.class);
 		System.out.println();
 		
@@ -385,7 +385,7 @@ public class TestSerializable
 			}
 			long end = System.currentTimeMillis();
 			
-			System.out.println("Ö´ĞĞbboss xmltobean "+count+"´Î£¬ºÄÊ±:"+(end - start)+"ºÁÃë");
+			System.out.println("æ‰§è¡Œbboss xmltobean "+count+"æ¬¡ï¼Œè€—æ—¶:"+(end - start)+"æ¯«ç§’");
 		}
 		catch (Exception e)
 		{
@@ -427,8 +427,8 @@ public class TestSerializable
 		joe.setFirstname("Joe");
 		joe.setDataDoubleArray(datadoubleArray);
 //		joe.setLastname("Walnes");
-		//ÓÃÀ´ÑéÖ¤bbossºÍXstreamÊÇ·ñ»á°´ÕÕnullÖµ´«µİ£¬Ò²¾ÍÊÇËµlastnameÓĞÄ¬ÈÏÖµ"ssss"
-		//ÕâÑùÎÒÃÇÊÖ¶¯°ÑlastnameÉèÖÃÎªnull£¬ÀíÂÛÉÏÀ´Ëµ·´ĞòÁĞ»¯ºójoeÖĞµÄlastnameÓ¦¸ÃÊÇnull¶ø²»ÊÇÄ¬ÈÏÖµ"ssss"
+		//ç”¨æ¥éªŒè¯bbosså’ŒXstreamæ˜¯å¦ä¼šæŒ‰ç…§nullå€¼ä¼ é€’ï¼Œä¹Ÿå°±æ˜¯è¯´lastnameæœ‰é»˜è®¤å€¼"ssss"
+		//è¿™æ ·æˆ‘ä»¬æ‰‹åŠ¨æŠŠlastnameè®¾ç½®ä¸ºnullï¼Œç†è®ºä¸Šæ¥è¯´ååºåˆ—åŒ–åjoeä¸­çš„lastnameåº”è¯¥æ˜¯nullè€Œä¸æ˜¯é»˜è®¤å€¼"ssss"
 		joe.setBirthdate(new Date());
 		Date[] updates = new Date[]{new Date(),new Date()};
 		joe.setUpdatedate(updates);
@@ -446,7 +446,7 @@ public class TestSerializable
 		
 		try
 		{
-			//Ô¤ÈÈbbossºÍxstream
+			//é¢„çƒ­bbosså’Œxstream
 			String xml = ObjectSerializable.toXML(joe);
 			
 			
@@ -459,12 +459,12 @@ public class TestSerializable
 			Person p = (Person)xStream.fromXML(xmlXstream);
 			System.out.println(xmlXstream);
 			
-			System.out.println();System.out.println("bbossĞòÁĞ»¯²âÊÔÓÃÀı¿ªÊ¼");System.out.println();
+			System.out.println();System.out.println("bbossåºåˆ—åŒ–æµ‹è¯•ç”¨ä¾‹å¼€å§‹");System.out.println();
 			
 			long start = System.currentTimeMillis();			
 			ObjectSerializable.toXML(joe);			
 			long end = System.currentTimeMillis();			
-			System.out.println("Ö´ĞĞbboss beantoxml 1´Î£¬ºÄÊ±:"+(end - start) +"ºÁÃë");
+			System.out.println("æ‰§è¡Œbboss beantoxml 1æ¬¡ï¼Œè€—æ—¶:"+(end - start) +"æ¯«ç§’");
 			
 			
 			convertBeanToXml(10,joe);
@@ -477,38 +477,38 @@ public class TestSerializable
 			
 			
 			convertBeanToXml(10000,joe);
-			System.out.println();System.out.println("xstreamĞòÁĞ»¯²âÊÔÓÃÀı¿ªÊ¼");System.out.println();
+			System.out.println();System.out.println("xstreamåºåˆ—åŒ–æµ‹è¯•ç”¨ä¾‹å¼€å§‹");System.out.println();
 			start = System.currentTimeMillis();			
 				xStream.toXML(joe);			
 				 end = System.currentTimeMillis();			
-				System.out.println("Ö´ĞĞXStream beantoxml 1´Î£¬ºÄÊ±:"+(end - start) +"ºÁÃë");
+				System.out.println("æ‰§è¡ŒXStream beantoxml 1æ¬¡ï¼Œè€—æ—¶:"+(end - start) +"æ¯«ç§’");
 				
 			convertBeanToXStreamXml(10,joe);
 			convertBeanToXStreamXml(100,joe);
 			convertBeanToXStreamXml(1000,joe);
 			convertBeanToXStreamXml(10000,joe);
 			
-			System.out.println();System.out.println("bboss·´ĞòÁĞ»¯²âÊÔÓÃÀı¿ªÊ¼");System.out.println();
+			System.out.println();System.out.println("bbossååºåˆ—åŒ–æµ‹è¯•ç”¨ä¾‹å¼€å§‹");System.out.println();
 			start = System.currentTimeMillis();
 			person =  ObjectSerializable.toBean(xml, Person.class);
 			end = System.currentTimeMillis();			
-			System.out.println("Ö´ĞĞbboss xmltobean 1´Î£¬ºÄÊ±:"+(end - start)+"ºÀÃë");			
+			System.out.println("æ‰§è¡Œbboss xmltobean 1æ¬¡ï¼Œè€—æ—¶:"+(end - start)+"è±ªç§’");			
 			convertXMLToBean(10,xml);			
 			convertXMLToBean(100,xml);
 			convertXMLToBean(1000,xml);
 			convertXMLToBean(10000,xml);
 			
-			System.out.println();System.out.println("xstream·´ĞòÁĞ»¯²âÊÔÓÃÀı¿ªÊ¼");System.out.println();
+			System.out.println();System.out.println("xstreamååºåˆ—åŒ–æµ‹è¯•ç”¨ä¾‹å¼€å§‹");System.out.println();
 			start = System.currentTimeMillis();
 			xStream.fromXML(xmlXstream);
 			end = System.currentTimeMillis();			
-			System.out.println("Ö´ĞĞXStream xmltobean 1´Î£¬ºÄÊ±:"+(end - start)+"ºÀÃë");
+			System.out.println("æ‰§è¡ŒXStream xmltobean 1æ¬¡ï¼Œè€—æ—¶:"+(end - start)+"è±ªç§’");
 			convertXStreamXMLToBean(10,xmlXstream);
 			convertXStreamXMLToBean(100,xmlXstream);
 			convertXStreamXMLToBean(1000,xmlXstream);
 			convertXStreamXMLToBean(10000,xmlXstream);
 			
-			//²âÊÔÓÃÀı½áÊø
+			//æµ‹è¯•ç”¨ä¾‹ç»“æŸ
 			
 			
 		}
@@ -550,8 +550,8 @@ public class TestSerializable
 		joe.setFirstname("Joe");
 		joe.setDataDoubleArray(datadoubleArray);
 //		joe.setLastname("Walnes");
-		//ÓÃÀ´ÑéÖ¤bbossºÍXstreamÊÇ·ñ»á°´ÕÕnullÖµ´«µİ£¬Ò²¾ÍÊÇËµlastnameÓĞÄ¬ÈÏÖµ"ssss"
-		//ÕâÑùÎÒÃÇÊÖ¶¯°ÑlastnameÉèÖÃÎªnull£¬ÀíÂÛÉÏÀ´Ëµ·´ĞòÁĞ»¯ºójoeÖĞµÄlastnameÓ¦¸ÃÊÇnull¶ø²»ÊÇÄ¬ÈÏÖµ"ssss"
+		//ç”¨æ¥éªŒè¯bbosså’ŒXstreamæ˜¯å¦ä¼šæŒ‰ç…§nullå€¼ä¼ é€’ï¼Œä¹Ÿå°±æ˜¯è¯´lastnameæœ‰é»˜è®¤å€¼"ssss"
+		//è¿™æ ·æˆ‘ä»¬æ‰‹åŠ¨æŠŠlastnameè®¾ç½®ä¸ºnullï¼Œç†è®ºä¸Šæ¥è¯´ååºåˆ—åŒ–åjoeä¸­çš„lastnameåº”è¯¥æ˜¯nullè€Œä¸æ˜¯é»˜è®¤å€¼"ssss"
 		joe.setBirthdate(new Date());
 		Date[] updates = new Date[]{new Date(),new Date()};
 		joe.setUpdatedate(updates);
@@ -569,7 +569,7 @@ public class TestSerializable
 		
 		try
 		{
-			//Ô¤ÈÈbbossºÍxstream
+			//é¢„çƒ­bbosså’Œxstream
 			String xml = ObjectSerializable.toXML(joe);
 			
 			
@@ -580,7 +580,7 @@ public class TestSerializable
 			String xmlXstream = xStream.toXML(joe);
 			System.out.println("xmlXstream:"+xmlXstream.getBytes().length);
 			
-			//²âÊÔÓÃÀı½áÊø
+			//æµ‹è¯•ç”¨ä¾‹ç»“æŸ
 			
 			
 		}
@@ -609,19 +609,19 @@ public class TestSerializable
 		
 		try
 		{
-			//Ô¤ÈÈbbossºÍxstream
+			//é¢„çƒ­bbosså’Œxstream
 			String xml = ObjectSerializable.toXML(test1);
 			Test1 test1_ =  (Test1)ObjectSerializable.toBean(xml,Test1.class);
 			String xmlXstream = xStream.toXML(test1);
 			Test1 p = (Test1)xStream.fromXML(xmlXstream);
 			System.out.println(xmlXstream);
 			
-			System.out.println();System.out.println("bbossĞòÁĞ»¯²âÊÔÓÃÀı¿ªÊ¼");System.out.println();
+			System.out.println();System.out.println("bbossåºåˆ—åŒ–æµ‹è¯•ç”¨ä¾‹å¼€å§‹");System.out.println();
 			
 			long start = System.currentTimeMillis();			
 			ObjectSerializable.toXML(test1);			
 			long end = System.currentTimeMillis();			
-			System.out.println("Ö´ĞĞbboss beantoxml 1´Î£¬ºÄÊ±:"+(end - start) +"ºÁÃë");
+			System.out.println("æ‰§è¡Œbboss beantoxml 1æ¬¡ï¼Œè€—æ—¶:"+(end - start) +"æ¯«ç§’");
 			
 			
 			convertBeanToXml(10,test1);
@@ -634,38 +634,38 @@ public class TestSerializable
 			
 			
 			convertBeanToXml(10000,test1);
-			System.out.println();System.out.println("xstreamĞòÁĞ»¯²âÊÔÓÃÀı¿ªÊ¼");System.out.println();
+			System.out.println();System.out.println("xstreamåºåˆ—åŒ–æµ‹è¯•ç”¨ä¾‹å¼€å§‹");System.out.println();
 			start = System.currentTimeMillis();			
 				xStream.toXML(test1);			
 				 end = System.currentTimeMillis();			
-				System.out.println("Ö´ĞĞXStream beantoxml 1´Î£¬ºÄÊ±:"+(end - start) +"ºÁÃë");
+				System.out.println("æ‰§è¡ŒXStream beantoxml 1æ¬¡ï¼Œè€—æ—¶:"+(end - start) +"æ¯«ç§’");
 				
 			convertBeanToXStreamXml(10,test1);
 			convertBeanToXStreamXml(100,test1);
 			convertBeanToXStreamXml(1000,test1);
 			convertBeanToXStreamXml(10000,test1);
 			
-			System.out.println();System.out.println("bboss·´ĞòÁĞ»¯²âÊÔÓÃÀı¿ªÊ¼");System.out.println();
+			System.out.println();System.out.println("bbossååºåˆ—åŒ–æµ‹è¯•ç”¨ä¾‹å¼€å§‹");System.out.println();
 			start = System.currentTimeMillis();
 			test1 =  ObjectSerializable.toBean(xml, Test1.class);
 			end = System.currentTimeMillis();			
-			System.out.println("Ö´ĞĞbboss xmltobean 1´Î£¬ºÄÊ±:"+(end - start)+"ºÀÃë");			
+			System.out.println("æ‰§è¡Œbboss xmltobean 1æ¬¡ï¼Œè€—æ—¶:"+(end - start)+"è±ªç§’");			
 			convertXMLToBean(10,xml);			
 			convertXMLToBean(100,xml);
 			convertXMLToBean(1000,xml);
 			convertXMLToBean(10000,xml);
 			
-			System.out.println();System.out.println("xstream·´ĞòÁĞ»¯²âÊÔÓÃÀı¿ªÊ¼");System.out.println();
+			System.out.println();System.out.println("xstreamååºåˆ—åŒ–æµ‹è¯•ç”¨ä¾‹å¼€å§‹");System.out.println();
 			start = System.currentTimeMillis();
 			xStream.fromXML(xmlXstream);
 			end = System.currentTimeMillis();			
-			System.out.println("Ö´ĞĞXStream xmltobean 1´Î£¬ºÄÊ±:"+(end - start)+"ºÀÃë");
+			System.out.println("æ‰§è¡ŒXStream xmltobean 1æ¬¡ï¼Œè€—æ—¶:"+(end - start)+"è±ªç§’");
 			convertXStreamXMLToBean(10,xmlXstream);
 			convertXStreamXMLToBean(100,xmlXstream);
 			convertXStreamXMLToBean(1000,xmlXstream);
 			convertXStreamXMLToBean(10000,xmlXstream);
 			
-			//²âÊÔÓÃÀı½áÊø
+			//æµ‹è¯•ç”¨ä¾‹ç»“æŸ
 			
 			
 		}
@@ -694,8 +694,8 @@ public class TestSerializable
 		
 		try
 		{
-			String bigcontent = FileUtil.getFileContent(new File("D:\\workspace\\bbossgroups-3.2\\bboss-soa\\test\\org\\frameworkset\\soa\\testxstream.xml"), "GBK");
-			//Ô¤ÈÈbbossºÍxstream
+			String bigcontent = FileUtil.getFileContent(new File("D:\\workspace\\bbossgroups-3.2\\bboss-soa\\test\\org\\frameworkset\\soa\\testxstream.xml"), "UTF-8");
+			//é¢„çƒ­bbosså’Œxstream
 			test1.setXmlvalue(bigcontent);
 			String xml = ObjectSerializable.toXML(test1);
 			Test1 test1_ =  (Test1)ObjectSerializable.toBean(xml,Test1.class);
@@ -703,12 +703,12 @@ public class TestSerializable
 			Test1 p = (Test1)xStream.fromXML(xmlXstream);
 			System.out.println(xmlXstream);
 			
-			System.out.println();System.out.println("bbossĞòÁĞ»¯²âÊÔÓÃÀı¿ªÊ¼");System.out.println();
+			System.out.println();System.out.println("bbossåºåˆ—åŒ–æµ‹è¯•ç”¨ä¾‹å¼€å§‹");System.out.println();
 			
 			long start = System.currentTimeMillis();			
 			ObjectSerializable.toXML(test1);			
 			long end = System.currentTimeMillis();			
-			System.out.println("Ö´ĞĞbboss beantoxml 1´Î£¬ºÄÊ±:"+(end - start) +"ºÁÃë");
+			System.out.println("æ‰§è¡Œbboss beantoxml 1æ¬¡ï¼Œè€—æ—¶:"+(end - start) +"æ¯«ç§’");
 			
 			
 			convertBeanToXml(10,test1);
@@ -721,38 +721,38 @@ public class TestSerializable
 			
 			
 			convertBeanToXml(10000,test1);
-			System.out.println();System.out.println("xstreamĞòÁĞ»¯²âÊÔÓÃÀı¿ªÊ¼");System.out.println();
+			System.out.println();System.out.println("xstreamåºåˆ—åŒ–æµ‹è¯•ç”¨ä¾‹å¼€å§‹");System.out.println();
 			start = System.currentTimeMillis();			
 				xStream.toXML(test1);			
 				 end = System.currentTimeMillis();			
-				System.out.println("Ö´ĞĞXStream beantoxml 1´Î£¬ºÄÊ±:"+(end - start) +"ºÁÃë");
+				System.out.println("æ‰§è¡ŒXStream beantoxml 1æ¬¡ï¼Œè€—æ—¶:"+(end - start) +"æ¯«ç§’");
 				
 			convertBeanToXStreamXml(10,test1);
 			convertBeanToXStreamXml(100,test1);
 			convertBeanToXStreamXml(1000,test1);
 			convertBeanToXStreamXml(10000,test1);
 			
-			System.out.println();System.out.println("bboss·´ĞòÁĞ»¯²âÊÔÓÃÀı¿ªÊ¼");System.out.println();
+			System.out.println();System.out.println("bbossååºåˆ—åŒ–æµ‹è¯•ç”¨ä¾‹å¼€å§‹");System.out.println();
 			start = System.currentTimeMillis();
 			test1 =  ObjectSerializable.toBean(xml, Test1.class);
 			end = System.currentTimeMillis();			
-			System.out.println("Ö´ĞĞbboss xmltobean 1´Î£¬ºÄÊ±:"+(end - start)+"ºÀÃë");			
+			System.out.println("æ‰§è¡Œbboss xmltobean 1æ¬¡ï¼Œè€—æ—¶:"+(end - start)+"è±ªç§’");			
 			convertXMLToBean(10,xml);			
 			convertXMLToBean(100,xml);
 			convertXMLToBean(1000,xml);
 			convertXMLToBean(10000,xml);
 			
-			System.out.println();System.out.println("xstream·´ĞòÁĞ»¯²âÊÔÓÃÀı¿ªÊ¼");System.out.println();
+			System.out.println();System.out.println("xstreamååºåˆ—åŒ–æµ‹è¯•ç”¨ä¾‹å¼€å§‹");System.out.println();
 			start = System.currentTimeMillis();
 			xStream.fromXML(xmlXstream);
 			end = System.currentTimeMillis();			
-			System.out.println("Ö´ĞĞXStream xmltobean 1´Î£¬ºÄÊ±:"+(end - start)+"ºÀÃë");
+			System.out.println("æ‰§è¡ŒXStream xmltobean 1æ¬¡ï¼Œè€—æ—¶:"+(end - start)+"è±ªç§’");
 			convertXStreamXMLToBean(10,xmlXstream);
 			convertXStreamXMLToBean(100,xmlXstream);
 			convertXStreamXMLToBean(1000,xmlXstream);
 			convertXStreamXMLToBean(10000,xmlXstream);
 			
-			//²âÊÔÓÃÀı½áÊø
+			//æµ‹è¯•ç”¨ä¾‹ç»“æŸ
 			
 			
 		}
@@ -781,8 +781,8 @@ public class TestSerializable
 		
 		try
 		{
-			String bigcontent = FileUtil.getFileContent(new File("D:\\workspace\\bbossgroups-3.2\\bboss-soa\\test\\org\\frameworkset\\soa\\testxstream.xml"), "GBK");
-			//Ô¤ÈÈbbossºÍxstream
+			String bigcontent = FileUtil.getFileContent(new File("D:\\workspace\\bbossgroups-3.2\\bboss-soa\\test\\org\\frameworkset\\soa\\testxstream.xml"), "UTF-8");
+			//é¢„çƒ­bbosså’Œxstream
 			test1.setXmlvalue(bigcontent);
 			String xml = ObjectSerializable.toXML(test1);
 			System.out.println("bboss:"+xml.getBytes().length);
@@ -793,7 +793,7 @@ public class TestSerializable
 			
 			
 			
-			//²âÊÔÓÃÀı½áÊø
+			//æµ‹è¯•ç”¨ä¾‹ç»“æŸ
 			
 			
 		}
@@ -821,8 +821,8 @@ public class TestSerializable
 		
 		try
 		{
-			String bigcontent = FileUtil.getFileContent(new File("D:\\workspace\\bbossgroups-3.2\\bboss-soa\\test\\org\\frameworkset\\soa\\testxstream.xml"), "GBK");
-			//Ô¤ÈÈbbossºÍxstream
+			String bigcontent = FileUtil.getFileContent(new File("D:\\workspace\\bbossgroups-3.2\\bboss-soa\\test\\org\\frameworkset\\soa\\testxstream.xml"), "UTF-8");
+			//é¢„çƒ­bbosså’Œxstream
 			test1.setXmlvalue(bigcontent);
 			String xml = ObjectSerializable.toXML(test1);
 			System.out.println("bboss:"+xml.getBytes().length);
@@ -836,7 +836,7 @@ public class TestSerializable
 			
 			
 			
-			//²âÊÔÓÃÀı½áÊø
+			//æµ‹è¯•ç”¨ä¾‹ç»“æŸ
 			
 			
 		}
@@ -864,8 +864,8 @@ public class TestSerializable
 		test3.setTest2(test2);
 		try
 		{
-			String bigcontent = FileUtil.getFileContent(new File("D:\\workspace\\bbossgroups-3.2\\bboss-soa\\test\\org\\frameworkset\\soa\\testxstream.xml"), "GBK");
-			//Ô¤ÈÈbbossºÍxstream
+			String bigcontent = FileUtil.getFileContent(new File("D:\\workspace\\bbossgroups-3.2\\bboss-soa\\test\\org\\frameworkset\\soa\\testxstream.xml"), "UTF-8");
+			//é¢„çƒ­bbosså’Œxstream
 			test1.setXmlvalue(bigcontent);
 			long s = System.currentTimeMillis();
 			String xml = ObjectSerializable.toXML(test1);
@@ -890,7 +890,7 @@ public class TestSerializable
 			 e = System.currentTimeMillis();
 				System.out.println("hessian de times:" + (e - s));
 			
-			//²âÊÔÓÃÀı½áÊø
+			//æµ‹è¯•ç”¨ä¾‹ç»“æŸ
 			
 			
 		}
@@ -909,7 +909,7 @@ public class TestSerializable
 
 		PhoneNumber fax = new PhoneNumber();
 		fax.setCode(123);
-		fax.setNumber("<aaaa>9999-999ÖĞÎÄÂÒÂë</bbbb>");
+		fax.setNumber("<aaaa>9999-999ä¸­æ–‡ä¹±ç </bbbb>");
 
 	   Set dataSet = new TreeSet();
 	   dataSet.add("aa");
@@ -932,8 +932,8 @@ public class TestSerializable
 		joe.setFirstname("Joe");
 		joe.setDataDoubleArray(datadoubleArray);
 //		joe.setLastname("Walnes");
-		//ÓÃÀ´ÑéÖ¤bbossºÍXstreamÊÇ·ñ»á°´ÕÕnullÖµ´«µİ£¬Ò²¾ÍÊÇËµlastnameÓĞÄ¬ÈÏÖµ"ssss"
-		//ÕâÑùÎÒÃÇÊÖ¶¯°ÑlastnameÉèÖÃÎªnull£¬ÀíÂÛÉÏÀ´Ëµ·´ĞòÁĞ»¯ºójoeÖĞµÄlastnameÓ¦¸ÃÊÇnull¶ø²»ÊÇÄ¬ÈÏÖµ"ssss"
+		//ç”¨æ¥éªŒè¯bbosså’ŒXstreamæ˜¯å¦ä¼šæŒ‰ç…§nullå€¼ä¼ é€’ï¼Œä¹Ÿå°±æ˜¯è¯´lastnameæœ‰é»˜è®¤å€¼"ssss"
+		//è¿™æ ·æˆ‘ä»¬æ‰‹åŠ¨æŠŠlastnameè®¾ç½®ä¸ºnullï¼Œç†è®ºä¸Šæ¥è¯´ååºåˆ—åŒ–åjoeä¸­çš„lastnameåº”è¯¥æ˜¯nullè€Œä¸æ˜¯é»˜è®¤å€¼"ssss"
 		joe.setBirthdate(new Date());
 		Date[] updates = new Date[]{new Date(),new Date()};
 		joe.setUpdatedate(updates);
@@ -951,7 +951,7 @@ public class TestSerializable
 		
 		try
 		{
-			//Ô¤ÈÈbbossºÍxstream
+			//é¢„çƒ­bbosså’Œxstream
 			String xml = ObjectSerializable.toXML(joe);
 			
 			
@@ -960,7 +960,7 @@ public class TestSerializable
 			System.out.println();
 			
 			
-			//²âÊÔÓÃÀı½áÊø
+			//æµ‹è¯•ç”¨ä¾‹ç»“æŸ
 			
 			
 		}
@@ -980,8 +980,8 @@ public class TestSerializable
 	@Test
 	public void testBigData() throws IOException
 	{
-		//Õâ¸öÎÄ¼şÖĞÄÚÈİÓĞ47565 ×Ö½Ú£¬Ô¼47kµÄÊı¾İ
-		String bigcontent = FileUtil.getFileContent(new File("D:\\workspace\\bbossgroups-3.2\\bboss-soa\\test\\org\\frameworkset\\soa\\testxstream.xml"), "GBK");
+		//è¿™ä¸ªæ–‡ä»¶ä¸­å†…å®¹æœ‰47565 å­—èŠ‚ï¼Œçº¦47kçš„æ•°æ®
+		String bigcontent = FileUtil.getFileContent(new File("D:\\workspace\\bbossgroups-3.2\\bboss-soa\\test\\org\\frameworkset\\soa\\testxstream.xml"), "UTF-8");
 		PhoneNumber phone = new PhoneNumber();
 		phone.setCode(123);
 		phone.setNumber("1234-456");
@@ -1008,8 +1008,8 @@ public class TestSerializable
 		Person joe = new Person();
 		joe.setFirstname("Joe");
 //		joe.setLastname("Walnes");
-		//ÓÃÀ´ÑéÖ¤bbossºÍXstreamÊÇ·ñ»á°´ÕÕnullÖµ´«µİ£¬Ò²¾ÍÊÇËµlastnameÓĞÄ¬ÈÏÖµ"ssss"
-		//ÕâÑùÎÒÃÇÊÖ¶¯°ÑlastnameÉèÖÃÎªnull£¬ÀíÂÛÉÏÀ´Ëµ·´ĞòÁĞ»¯ºójoeÖĞµÄlastnameÓ¦¸ÃÊÇnull¶ø²»ÊÇÄ¬ÈÏÖµ"ssss"
+		//ç”¨æ¥éªŒè¯bbosså’ŒXstreamæ˜¯å¦ä¼šæŒ‰ç…§nullå€¼ä¼ é€’ï¼Œä¹Ÿå°±æ˜¯è¯´lastnameæœ‰é»˜è®¤å€¼"ssss"
+		//è¿™æ ·æˆ‘ä»¬æ‰‹åŠ¨æŠŠlastnameè®¾ç½®ä¸ºnullï¼Œç†è®ºä¸Šæ¥è¯´ååºåˆ—åŒ–åjoeä¸­çš„lastnameåº”è¯¥æ˜¯nullè€Œä¸æ˜¯é»˜è®¤å€¼"ssss"
 		
 		joe.setLastname(null);
 		joe.setPhone(phone);
@@ -1023,7 +1023,7 @@ public class TestSerializable
 		
 		try
 		{
-			//Ô¤ÈÈbbossºÍxstream
+			//é¢„çƒ­bbosså’Œxstream
 			String xml = ObjectSerializable.toXML(joe);
 			
 			
@@ -1034,12 +1034,12 @@ public class TestSerializable
 			Person p = (Person)xStream.fromXML(xmlXstream);
 			System.out.println(xmlXstream);
 			
-			System.out.println();System.out.println("bbossĞòÁĞ»¯²âÊÔÓÃÀı¿ªÊ¼");System.out.println();
+			System.out.println();System.out.println("bbossåºåˆ—åŒ–æµ‹è¯•ç”¨ä¾‹å¼€å§‹");System.out.println();
 			
 			long start = System.currentTimeMillis();			
 			ObjectSerializable.toXML(joe);			
 			long end = System.currentTimeMillis();			
-			System.out.println("Ö´ĞĞbboss beantoxml 1´Î£¬ºÄÊ±:"+(end - start) +"ºÁÃë");
+			System.out.println("æ‰§è¡Œbboss beantoxml 1æ¬¡ï¼Œè€—æ—¶:"+(end - start) +"æ¯«ç§’");
 			
 			
 			convertBeanToXml(10,joe);
@@ -1052,38 +1052,38 @@ public class TestSerializable
 			
 			
 			convertBeanToXml(10000,joe);
-			System.out.println();System.out.println("xstreamĞòÁĞ»¯²âÊÔÓÃÀı¿ªÊ¼");System.out.println();
+			System.out.println();System.out.println("xstreamåºåˆ—åŒ–æµ‹è¯•ç”¨ä¾‹å¼€å§‹");System.out.println();
 			start = System.currentTimeMillis();			
 				xStream.toXML(joe);			
 				 end = System.currentTimeMillis();			
-				System.out.println("Ö´ĞĞXStream beantoxml 1´Î£¬ºÄÊ±:"+(end - start) +"ºÁÃë");
+				System.out.println("æ‰§è¡ŒXStream beantoxml 1æ¬¡ï¼Œè€—æ—¶:"+(end - start) +"æ¯«ç§’");
 				
 			convertBeanToXStreamXml(10,joe);
 			convertBeanToXStreamXml(100,joe);
 			convertBeanToXStreamXml(1000,joe);
 			convertBeanToXStreamXml(10000,joe);
 			
-			System.out.println();System.out.println("bboss·´ĞòÁĞ»¯²âÊÔÓÃÀı¿ªÊ¼");System.out.println();
+			System.out.println();System.out.println("bbossååºåˆ—åŒ–æµ‹è¯•ç”¨ä¾‹å¼€å§‹");System.out.println();
 			start = System.currentTimeMillis();
 			person =  ObjectSerializable.toBean( xml, Person.class);
 			end = System.currentTimeMillis();			
-			System.out.println("Ö´ĞĞbboss xmltobean 1´Î£¬ºÄÊ±:"+(end - start)+"ºÀÃë");			
+			System.out.println("æ‰§è¡Œbboss xmltobean 1æ¬¡ï¼Œè€—æ—¶:"+(end - start)+"è±ªç§’");			
 			convertXMLToBean(10,xml);			
 			convertXMLToBean(100,xml);
 			convertXMLToBean(1000,xml);
 			convertXMLToBean(10000,xml);
 			
-			System.out.println();System.out.println("xstream·´ĞòÁĞ»¯²âÊÔÓÃÀı¿ªÊ¼");System.out.println();
+			System.out.println();System.out.println("xstreamååºåˆ—åŒ–æµ‹è¯•ç”¨ä¾‹å¼€å§‹");System.out.println();
 			start = System.currentTimeMillis();
 			xStream.fromXML(xmlXstream);
 			end = System.currentTimeMillis();			
-			System.out.println("Ö´ĞĞXStream xmltobean 1´Î£¬ºÄÊ±:"+(end - start)+"ºÀÃë");
+			System.out.println("æ‰§è¡ŒXStream xmltobean 1æ¬¡ï¼Œè€—æ—¶:"+(end - start)+"è±ªç§’");
 			convertXStreamXMLToBean(10,xmlXstream);
 			convertXStreamXMLToBean(100,xmlXstream);
 			convertXStreamXMLToBean(1000,xmlXstream);
 			convertXStreamXMLToBean(10000,xmlXstream);
 			
-			//²âÊÔÓÃÀı½áÊø
+			//æµ‹è¯•ç”¨ä¾‹ç»“æŸ
 			
 			
 		}
@@ -1103,7 +1103,7 @@ public class TestSerializable
 	@Test
 	public void testFileData() throws IOException
 	{
-		//Õâ¸öÎÄ¼şÖĞÄÚÈİÓĞ47565 ×Ö½Ú£¬Ô¼47kµÄÊı¾İ
+		//è¿™ä¸ªæ–‡ä»¶ä¸­å†…å®¹æœ‰47565 å­—èŠ‚ï¼Œçº¦47kçš„æ•°æ®
 		File fileData = new File("D:\\workspace\\bbossgroups-3.2\\bboss-soa\\test\\org\\frameworkset\\soa\\testxstream.xml");
 		PhoneNumber phone = new PhoneNumber();
 		phone.setCode(123);
@@ -1132,8 +1132,8 @@ public class TestSerializable
 		joe.setFileData(fileData);
 		joe.setFirstname("Joe");
 //		joe.setLastname("Walnes");
-		//ÓÃÀ´ÑéÖ¤bbossºÍXstreamÊÇ·ñ»á°´ÕÕnullÖµ´«µİ£¬Ò²¾ÍÊÇËµlastnameÓĞÄ¬ÈÏÖµ"ssss"
-		//ÕâÑùÎÒÃÇÊÖ¶¯°ÑlastnameÉèÖÃÎªnull£¬ÀíÂÛÉÏÀ´Ëµ·´ĞòÁĞ»¯ºójoeÖĞµÄlastnameÓ¦¸ÃÊÇnull¶ø²»ÊÇÄ¬ÈÏÖµ"ssss"
+		//ç”¨æ¥éªŒè¯bbosså’ŒXstreamæ˜¯å¦ä¼šæŒ‰ç…§nullå€¼ä¼ é€’ï¼Œä¹Ÿå°±æ˜¯è¯´lastnameæœ‰é»˜è®¤å€¼"ssss"
+		//è¿™æ ·æˆ‘ä»¬æ‰‹åŠ¨æŠŠlastnameè®¾ç½®ä¸ºnullï¼Œç†è®ºä¸Šæ¥è¯´ååºåˆ—åŒ–åjoeä¸­çš„lastnameåº”è¯¥æ˜¯nullè€Œä¸æ˜¯é»˜è®¤å€¼"ssss"
 		
 		joe.setLastname(null);
 		joe.setPhone(phone);
@@ -1147,7 +1147,7 @@ public class TestSerializable
 		
 		try
 		{
-			//Ô¤ÈÈbbossºÍxstream
+			//é¢„çƒ­bbosså’Œxstream
 			String xml = ObjectSerializable.toXML(joe);
 			
 			
@@ -1158,12 +1158,12 @@ public class TestSerializable
 			Person p = (Person)xStream.fromXML(xmlXstream);
 			System.out.println(xmlXstream);
 			
-			System.out.println();System.out.println("bbossĞòÁĞ»¯²âÊÔÓÃÀı¿ªÊ¼");System.out.println();
+			System.out.println();System.out.println("bbossåºåˆ—åŒ–æµ‹è¯•ç”¨ä¾‹å¼€å§‹");System.out.println();
 			
 			long start = System.currentTimeMillis();			
 			ObjectSerializable.toXML(joe);			
 			long end = System.currentTimeMillis();			
-			System.out.println("Ö´ĞĞbboss beantoxml 1´Î£¬ºÄÊ±:"+(end - start) +"ºÁÃë");
+			System.out.println("æ‰§è¡Œbboss beantoxml 1æ¬¡ï¼Œè€—æ—¶:"+(end - start) +"æ¯«ç§’");
 			
 			
 			convertBeanToXml(10,joe);
@@ -1176,38 +1176,38 @@ public class TestSerializable
 			
 			
 			convertBeanToXml(10000,joe);
-			System.out.println();System.out.println("xstreamĞòÁĞ»¯²âÊÔÓÃÀı¿ªÊ¼");System.out.println();
+			System.out.println();System.out.println("xstreamåºåˆ—åŒ–æµ‹è¯•ç”¨ä¾‹å¼€å§‹");System.out.println();
 			start = System.currentTimeMillis();			
 				xStream.toXML(joe);			
 				 end = System.currentTimeMillis();			
-				System.out.println("Ö´ĞĞXStream beantoxml 1´Î£¬ºÄÊ±:"+(end - start) +"ºÁÃë");
+				System.out.println("æ‰§è¡ŒXStream beantoxml 1æ¬¡ï¼Œè€—æ—¶:"+(end - start) +"æ¯«ç§’");
 				
 			convertBeanToXStreamXml(10,joe);
 			convertBeanToXStreamXml(100,joe);
 			convertBeanToXStreamXml(1000,joe);
 			convertBeanToXStreamXml(10000,joe);
 			
-			System.out.println();System.out.println("bboss·´ĞòÁĞ»¯²âÊÔÓÃÀı¿ªÊ¼");System.out.println();
+			System.out.println();System.out.println("bbossååºåˆ—åŒ–æµ‹è¯•ç”¨ä¾‹å¼€å§‹");System.out.println();
 			start = System.currentTimeMillis();
 			person =  ObjectSerializable.toBean( xml, Person.class);
 			end = System.currentTimeMillis();			
-			System.out.println("Ö´ĞĞbboss xmltobean 1´Î£¬ºÄÊ±:"+(end - start)+"ºÀÃë");			
+			System.out.println("æ‰§è¡Œbboss xmltobean 1æ¬¡ï¼Œè€—æ—¶:"+(end - start)+"è±ªç§’");			
 			convertXMLToBean(10,xml);			
 			convertXMLToBean(100,xml);
 			convertXMLToBean(1000,xml);
 			convertXMLToBean(10000,xml);
 			
-			System.out.println();System.out.println("xstream·´ĞòÁĞ»¯²âÊÔÓÃÀı¿ªÊ¼");System.out.println();
+			System.out.println();System.out.println("xstreamååºåˆ—åŒ–æµ‹è¯•ç”¨ä¾‹å¼€å§‹");System.out.println();
 			start = System.currentTimeMillis();
 			xStream.fromXML(xmlXstream);
 			end = System.currentTimeMillis();			
-			System.out.println("Ö´ĞĞXStream xmltobean 1´Î£¬ºÄÊ±:"+(end - start)+"ºÀÃë");
+			System.out.println("æ‰§è¡ŒXStream xmltobean 1æ¬¡ï¼Œè€—æ—¶:"+(end - start)+"è±ªç§’");
 			convertXStreamXMLToBean(10,xmlXstream);
 			convertXStreamXMLToBean(100,xmlXstream);
 			convertXStreamXMLToBean(1000,xmlXstream);
 			convertXStreamXMLToBean(10000,xmlXstream);
 			
-			//²âÊÔÓÃÀı½áÊø
+			//æµ‹è¯•ç”¨ä¾‹ç»“æŸ
 			
 			
 		}

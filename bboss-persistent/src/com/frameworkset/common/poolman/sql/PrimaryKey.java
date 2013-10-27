@@ -54,8 +54,8 @@ import com.frameworkset.orm.transaction.TransactionException;
 import com.frameworkset.orm.transaction.TransactionManager;
 
 /**
- * ·â×°±íµÄÖ÷¼üĞÅÏ¢ ¿ÉÄÜ³öÏÖµÄÎÊÌâ£º 1.Èç¹ûÍ¨¹ıÆäËûµÄ·½Ê½ÍùÊı¾İ¿âµÄÏàÍ¬±íÖĞ²åÈëÊı¾İ£¬»áÔì³ÉÖ÷¼ü³åÍ»
- * 2.Èç¹û²»Í¬µÄÓ¦ÓÃÍ¬Ê±ÍùÍ¬Ò»¸öÊı¾İ¿âµÄÏàÍ¬±íÖĞ²åÈëÊı¾İ£¬»áÔì³ÉÖ÷¼ü³åÍ»
+ * å°è£…è¡¨çš„ä¸»é”®ä¿¡æ¯ å¯èƒ½å‡ºç°çš„é—®é¢˜ï¼š 1.å¦‚æœé€šè¿‡å…¶ä»–çš„æ–¹å¼å¾€æ•°æ®åº“çš„ç›¸åŒè¡¨ä¸­æ’å…¥æ•°æ®ï¼Œä¼šé€ æˆä¸»é”®å†²çª
+ * 2.å¦‚æœä¸åŒçš„åº”ç”¨åŒæ—¶å¾€åŒä¸€ä¸ªæ•°æ®åº“çš„ç›¸åŒè¡¨ä¸­æ’å…¥æ•°æ®ï¼Œä¼šé€ æˆä¸»é”®å†²çª
  * 
  * @author biaoping.yin created on 2005-3-29 version 1.0
  */
@@ -63,31 +63,31 @@ public class PrimaryKey
 {
 	private static Logger log = Logger.getLogger(PrimaryKey.class);
 
-	/** ¶àÖ÷¼üÊ±Ö÷¼ü¼°Æäµ±Ç°Öµ±£´æÔÚ±¾±äÁ¿ÖĞ */
+	/** å¤šä¸»é”®æ—¶ä¸»é”®åŠå…¶å½“å‰å€¼ä¿å­˜åœ¨æœ¬å˜é‡ä¸­ */
 	private Map primaryKeys;
 
-	/** ±íµÄ×ÔÔöÖµ */
+	/** è¡¨çš„è‡ªå¢å€¼ */
 	private int increment = 1;
 
-	/** ±íµÄÖ÷¼üÃû³Æ */
+	/** è¡¨çš„ä¸»é”®åç§° */
 	private String primaryKeyName;
 
-	/** ±íµÄÃû³Æ */
+	/** è¡¨çš„åç§° */
 	private String tableName;
 
-	/** ±íµÄÖ÷¼üµ±Ç°Öµ */
+	/** è¡¨çš„ä¸»é”®å½“å‰å€¼ */
 	private long curValue;
 
-	/** ±íµÄÖ÷¼üÀàĞÍ£¬È±Ê¡Îªint */
+	/** è¡¨çš„ä¸»é”®ç±»å‹ï¼Œç¼ºçœä¸ºint */
 	private String type = "int";
 	
 	private String metaType = "int";
 
-	/** Êı¾İ¿âÁ¬½Ó³ØµÄÃû³Æ */
+	/** æ•°æ®åº“è¿æ¥æ± çš„åç§° */
 	private String dbname = null;
 
 	/**
-	 * Êı¾İ¿â±íÖ÷¼üµÄÇ°×º£¬¸ÃÊôĞÔÖ»ÓĞÔÚÖ÷¼üÀàĞÍÎªstringÊ±²ÅÆğ×÷ÓÃ£¬ÀıÈç£º Éè¶¨±íaµÄÖ÷¼üidµÄÀàĞÍÎªstring Ôò¿ÉÖ¸¶¨Ö÷¼üÎª
+	 * æ•°æ®åº“è¡¨ä¸»é”®çš„å‰ç¼€ï¼Œè¯¥å±æ€§åªæœ‰åœ¨ä¸»é”®ç±»å‹ä¸ºstringæ—¶æ‰èµ·ä½œç”¨ï¼Œä¾‹å¦‚ï¼š è®¾å®šè¡¨açš„ä¸»é”®idçš„ç±»å‹ä¸ºstring åˆ™å¯æŒ‡å®šä¸»é”®ä¸º
 	 * 
 	 */
 	private String prefix = "";
@@ -97,7 +97,7 @@ public class PrimaryKey
 	private String maxSql = "";
 
 	/**
-	 * Éú³ÉÊı¾İ¿â±íÖ÷¼üÄ£Ê½ 0:±íÊ¾×Ô¶¯ 1£º±íÊ¾¸´ºÏ
+	 * ç”Ÿæˆæ•°æ®åº“è¡¨ä¸»é”®æ¨¡å¼ 0:è¡¨ç¤ºè‡ªåŠ¨ 1ï¼šè¡¨ç¤ºå¤åˆ
 	 */
 	private int keygenerator_mode = 0;
 	
@@ -109,26 +109,26 @@ public class PrimaryKey
 	private String seqfunction;
 
 	/**
-	 * Ö÷¼üµÄÉú³É»úÖÆ
+	 * ä¸»é”®çš„ç”Ÿæˆæœºåˆ¶
 	 */
 	private String generator;
 	
 	private String select ;
 
 	/**
-	 * ¹¹Ôìº¯Êı£¬¹¹½¨±íµÄ»ù±¾ĞÅÏ¢
+	 * æ„é€ å‡½æ•°ï¼Œæ„å»ºè¡¨çš„åŸºæœ¬ä¿¡æ¯
 	 * 
-	 * @param Connection con ÓÉbiaoping.yinÌí¼Ó
+	 * @param Connection con ç”±biaoping.yinæ·»åŠ 
 	 * @param dbname
-	 *            ±íËùÊôµÄÊı¾İ¿âÁ´½Ó³Ø
+	 *            è¡¨æ‰€å±çš„æ•°æ®åº“é“¾æ¥æ± 
 	 * @param tableName
-	 *            ±íµÄÃû³Æ
+	 *            è¡¨çš„åç§°
 	 * @param primaryKeyName
-	 *            ±íµÄÖ÷¼üÃû³Æ
+	 *            è¡¨çš„ä¸»é”®åç§°
 	 * @param increment
-	 *            ±íÖ÷¼ü×ÔÔöÖµ
+	 *            è¡¨ä¸»é”®è‡ªå¢å€¼
 	 * @param curValue
-	 *            ±íÖ÷¼üµ±Ç°Öµ
+	 *            è¡¨ä¸»é”®å½“å‰å€¼
 	 */
 	public PrimaryKey(String dbname, String tableName, String primaryKeyName,
 			Object customKey,Connection con)
@@ -351,7 +351,7 @@ public class PrimaryKey
 	//        	
 	// if(prefix == null || prefix.trim().equals("") )
 	// {
-	// log.debug("tableinfoÖĞÃ»ÓĞÖ¸¶¨[" + table_name + "]µÄÖ÷¼üÇ°×º'table_id_prefix'×Ö¶Î");
+	// log.debug("tableinfoä¸­æ²¡æœ‰æŒ‡å®š[" + table_name + "]çš„ä¸»é”®å‰ç¼€'table_id_prefix'å­—æ®µ");
 	// }
 	// else
 	// {
@@ -367,8 +367,8 @@ public class PrimaryKey
 	// }
 	// catch(Exception e)
 	// {
-	// log.error("tableinfoÖĞÃ»ÓĞÖ¸¶¨[" + table_name +
-	// "]µÄÖ÷¼üÇ°×º'table_id_prefix'×Ö¶Î,Ö÷¼üÖµÎª["+ temp_id + "]²»ÊÇºÏ·¨µÄÊı×Ö¡£");
+	// log.error("tableinfoä¸­æ²¡æœ‰æŒ‡å®š[" + table_name +
+	// "]çš„ä¸»é”®å‰ç¼€'table_id_prefix'å­—æ®µ,ä¸»é”®å€¼ä¸º["+ temp_id + "]ä¸æ˜¯åˆæ³•çš„æ•°å­—ã€‚");
 	// //e.printStackTrace();
 	// new_table_id_value = 0;
 	// }
@@ -440,7 +440,7 @@ public class PrimaryKey
  	}
 
 	/**
-	 * Éú³É±íµÄÖ÷¼üÖµ
+	 * ç”Ÿæˆè¡¨çš„ä¸»é”®å€¼
 	 * 
 	 * @return Sequence
 	 * @throws SQLException 
@@ -450,7 +450,7 @@ public class PrimaryKey
 		return generateObjectKey(null);
 	}
 	/**
-	 * Éú³É±íµÄÖ÷¼üÖµ
+	 * ç”Ÿæˆè¡¨çš„ä¸»é”®å€¼
 	 * 
 	 * @return Sequence
 	 * @throws SQLException 
@@ -537,7 +537,7 @@ public class PrimaryKey
 				{
 					switch (keygenerator_mode)
 					{
-						case 0:// ×Ô¶¯Ä£Ê½
+						case 0:// è‡ªåŠ¨æ¨¡å¼
 			
 							curValue += increment;
 			
@@ -591,12 +591,12 @@ public class PrimaryKey
 		 return  generateObjectKey(type, prefix,null);
 	}
 	/**
-	 * ¸ù¾İÖ÷¼üÀàĞÍºÍÖ÷¼üµÄÇ°×ºÉú³É±íµÄÖ÷¼ü
+	 * æ ¹æ®ä¸»é”®ç±»å‹å’Œä¸»é”®çš„å‰ç¼€ç”Ÿæˆè¡¨çš„ä¸»é”®
 	 * 
 	 * @param type
-	 *            ±íµÄÖ÷¼üÀàĞÍ
+	 *            è¡¨çš„ä¸»é”®ç±»å‹
 	 * @param prefix
-	 *            ±íµÄÖ÷¼üÇ°×º
+	 *            è¡¨çš„ä¸»é”®å‰ç¼€
 	 * @return
 	 * @throws SQLException 
 	 */
@@ -606,7 +606,7 @@ public class PrimaryKey
 		
 			Sequence sequence = new Sequence();
 
-			if (type.equals("sequence")) //²»ĞèÒªËø
+			if (type.equals("sequence")) //ä¸éœ€è¦é”
 			{
 				long curValue = this.curValue;
 //				String sql = "select " + this.generator + ".nextval from dual";
@@ -674,13 +674,13 @@ public class PrimaryKey
                 sequence.setSequence(this.curValue);
                 return sequence;
             }
-			else //ĞèÒªËø
+			else //éœ€è¦é”
 			{
 				synchronized (this)
 				{
 					switch (keygenerator_mode)
 					{
-						case 0:// ×Ô¶¯Ä£Ê½
+						case 0:// è‡ªåŠ¨æ¨¡å¼
 							curValue += increment;
 							break;
 						case 1:
@@ -728,7 +728,7 @@ public class PrimaryKey
 	}
 
 	// /**
-	// * Éú³É±íµÄÖ÷¼üÖµ
+	// * ç”Ÿæˆè¡¨çš„ä¸»é”®å€¼
 	// * @return long
 	// */
 	// public long generateKey()
@@ -738,7 +738,7 @@ public class PrimaryKey
 	//
 	// switch(keygenerator_mode)
 	// {
-	// case 0://×Ô¶¯Ä£Ê½
+	// case 0://è‡ªåŠ¨æ¨¡å¼
 	// curValue += increment;
 	// break;
 	// case 1:
@@ -754,7 +754,7 @@ public class PrimaryKey
 	// }
 
 	/**
-	 * Í¬²½µ±Ç°»º³åÖĞ´æ·ÅµÄ¶ÔÓ¦±íµÄ×î´óÖµÓëÊı¾İ¿â±íÖĞ×î´óÖµ
+	 * åŒæ­¥å½“å‰ç¼“å†²ä¸­å­˜æ”¾çš„å¯¹åº”è¡¨çš„æœ€å¤§å€¼ä¸æ•°æ®åº“è¡¨ä¸­æœ€å¤§å€¼
 	 * @throws SQLException 
 	 */
 	protected void synchroDB(Connection con) throws SQLException
@@ -803,17 +803,17 @@ public class PrimaryKey
 		}
 		catch (SQLException e)
 		{
-//			log.error("Í¬²½µ±Ç°»º³åÖĞ±í[" + tableName + "]µÄÖ÷¼ü[" + primaryKeyName
-//					+ "]×î´óÖµÓëÊı¾İ¿â¸Ã±íÖ÷¼ü×î´óÖµÊ§°Ü£¬ÏµÍ³²ÉÓÃ×Ô¶¯²úÉúµÄÖ÷¼ü£º" + e.getMessage());
-			throw new NestedSQLException("Í¬²½µ±Ç°»º³åÖĞ±í[" + tableName + "]µÄÖ÷¼ü[" + primaryKeyName
-					+ "]×î´óÖµÓëÊı¾İ¿â¸Ã±íÖ÷¼ü×î´óÖµÊ§°Ü£¬ÏµÍ³²ÉÓÃ×Ô¶¯²úÉúµÄÖ÷¼ü£º", e);
+//			log.error("åŒæ­¥å½“å‰ç¼“å†²ä¸­è¡¨[" + tableName + "]çš„ä¸»é”®[" + primaryKeyName
+//					+ "]æœ€å¤§å€¼ä¸æ•°æ®åº“è¯¥è¡¨ä¸»é”®æœ€å¤§å€¼å¤±è´¥ï¼Œç³»ç»Ÿé‡‡ç”¨è‡ªåŠ¨äº§ç”Ÿçš„ä¸»é”®ï¼š" + e.getMessage());
+			throw new NestedSQLException("åŒæ­¥å½“å‰ç¼“å†²ä¸­è¡¨[" + tableName + "]çš„ä¸»é”®[" + primaryKeyName
+					+ "]æœ€å¤§å€¼ä¸æ•°æ®åº“è¯¥è¡¨ä¸»é”®æœ€å¤§å€¼å¤±è´¥ï¼Œç³»ç»Ÿé‡‡ç”¨è‡ªåŠ¨äº§ç”Ÿçš„ä¸»é”®ï¼š", e);
 		} catch (TransactionException e) {
 			
 //			e.printStackTrace();
-//			log.error("Í¬²½µ±Ç°»º³åÖĞ±í[" + tableName + "]µÄÖ÷¼ü[" + primaryKeyName
-//					+ "]×î´óÖµÓëÊı¾İ¿â¸Ã±íÖ÷¼ü×î´óÖµÊ§°Ü£¬ÏµÍ³²ÉÓÃ×Ô¶¯²úÉúµÄÖ÷¼ü£º" + e.getMessage());
-			throw new NestedSQLException("Í¬²½µ±Ç°»º³åÖĞ±í[" + tableName + "]µÄÖ÷¼ü[" + primaryKeyName
-					+ "]×î´óÖµÓëÊı¾İ¿â¸Ã±íÖ÷¼ü×î´óÖµÊ§°Ü£¬ÏµÍ³²ÉÓÃ×Ô¶¯²úÉúµÄÖ÷¼ü£º" , e);
+//			log.error("åŒæ­¥å½“å‰ç¼“å†²ä¸­è¡¨[" + tableName + "]çš„ä¸»é”®[" + primaryKeyName
+//					+ "]æœ€å¤§å€¼ä¸æ•°æ®åº“è¯¥è¡¨ä¸»é”®æœ€å¤§å€¼å¤±è´¥ï¼Œç³»ç»Ÿé‡‡ç”¨è‡ªåŠ¨äº§ç”Ÿçš„ä¸»é”®ï¼š" + e.getMessage());
+			throw new NestedSQLException("åŒæ­¥å½“å‰ç¼“å†²ä¸­è¡¨[" + tableName + "]çš„ä¸»é”®[" + primaryKeyName
+					+ "]æœ€å¤§å€¼ä¸æ•°æ®åº“è¯¥è¡¨ä¸»é”®æœ€å¤§å€¼å¤±è´¥ï¼Œç³»ç»Ÿé‡‡ç”¨è‡ªåŠ¨äº§ç”Ÿçš„ä¸»é”®ï¼š" , e);
 //			throw new SQLException(e.getMessage());
 		}
 		finally
@@ -871,7 +871,7 @@ public class PrimaryKey
 	}
 
 	/**
-	 * »Ö¸´±íµÄÖ÷¼üÖµ£¬µ±Òì³£·¢Éú»ò²åÈë²»³É¹¦Ê±Ö´ĞĞ¸Ã·½·¨
+	 * æ¢å¤è¡¨çš„ä¸»é”®å€¼ï¼Œå½“å¼‚å¸¸å‘ç”Ÿæˆ–æ’å…¥ä¸æˆåŠŸæ—¶æ‰§è¡Œè¯¥æ–¹æ³•
 	 * 
 	 * @return long
 	 */
@@ -910,7 +910,7 @@ public class PrimaryKey
 	}
 
 	/**
-	 * µ±Êı¾İ²åÈë²Ù×÷³É¹¦µÄÊ±ºòÉèÖÃµ±Ç°µÄÖ÷¼üÖµµ½»º³åºÍtableinfo±íÖĞ
+	 * å½“æ•°æ®æ’å…¥æ“ä½œæˆåŠŸçš„æ—¶å€™è®¾ç½®å½“å‰çš„ä¸»é”®å€¼åˆ°ç¼“å†²å’Œtableinfoè¡¨ä¸­
 	 * 
 	 * @param newValue
 	 * @param stmt
@@ -921,7 +921,7 @@ public class PrimaryKey
 			String updateSql) throws SQLException
 	{
 		{
-			// µ±ĞÂÖµ±ÈÔ­À´µÄÖµÒªĞ¡Ê±²ÅÖ´ĞĞ¸üĞÂ²Ù×÷£¬·ñÔò²»Ö´ĞĞ
+			// å½“æ–°å€¼æ¯”åŸæ¥çš„å€¼è¦å°æ—¶æ‰æ‰§è¡Œæ›´æ–°æ“ä½œï¼Œå¦åˆ™ä¸æ‰§è¡Œ
 			if (curValue < newValue)
 			{
 				//stmt.executeUpdate(updateSql);
@@ -932,8 +932,8 @@ public class PrimaryKey
 	
 //	private final static String update = "update tableinfo set table_id_value=? where upper(table_name)=? and table_id_value <?"  ;
 	/**
-	 * ¸üĞÂ±íµÄÖ÷¼ü£¬µ±µ¥¶À»ñÈ¡Êı¾İ¿âµÄÖ÷¼üÊ±£¬ĞèÒªÔÚÉú³ÉÖ÷¼üºóµ÷ÓÃ±¾·½·¨
-	 * ÒÔ±ãÍ¬²½tableinfo±íÖĞµÄĞÅÏ¢
+	 * æ›´æ–°è¡¨çš„ä¸»é”®ï¼Œå½“å•ç‹¬è·å–æ•°æ®åº“çš„ä¸»é”®æ—¶ï¼Œéœ€è¦åœ¨ç”Ÿæˆä¸»é”®åè°ƒç”¨æœ¬æ–¹æ³•
+	 * ä»¥ä¾¿åŒæ­¥tableinfoè¡¨ä¸­çš„ä¿¡æ¯
 	 * @throws SQLException 
 	 *
 	 */

@@ -1,9 +1,9 @@
-<%@ page contentType="text/html; charset=GBK" language="java" import="java.sql.*,java.util.List" errorPage=""%>
+<%@ page contentType="text/html; charset=UTF-8" language="java" import="java.sql.*,java.util.List" errorPage=""%>
 <%@ taglib uri="/WEB-INF/pager-taglib.tld" prefix="pg"%>
 <!-- 
-	²âÊÔÔÚdbutil±êÇ©ÉÏÖ±½ÓÖ´ÐÐÊý¾Ý¿âÉ¾³ý²Ù×÷-Ô¤±àÒë²Ù×÷
-	statement:Êý¾Ý¿âdeleteÓï¾ä
-	dbname:²éÑ¯µÄÏàÓ¦Êý¾Ý¿âÃû³Æ£¬ÔÚpoolman.xmlÎÄ¼þÖÐ½øÐÐÅäÖÃ
+	æµ‹è¯•åœ¨dbutilæ ‡ç­¾ä¸Šç›´æŽ¥æ‰§è¡Œæ•°æ®åº“åˆ é™¤æ“ä½œ-é¢„ç¼–è¯‘æ“ä½œ
+	statement:æ•°æ®åº“deleteè¯­å¥
+	dbname:æŸ¥è¯¢çš„ç›¸åº”æ•°æ®åº“åç§°ï¼Œåœ¨poolman.xmlæ–‡ä»¶ä¸­è¿›è¡Œé…ç½®
 	
 -->
 <%
@@ -13,7 +13,7 @@
  %>
 <html>
 <head>
-<title>²âÊÔÔÚdbutil±êÇ©ÉÏÖ±½ÓÖ´ÐÐÊý¾Ý¿âdelete²Ù×÷</title>
+<title>æµ‹è¯•åœ¨dbutilæ ‡ç­¾ä¸Šç›´æŽ¥æ‰§è¡Œæ•°æ®åº“deleteæ“ä½œ</title>
 </head>
 <body>
 	<table>

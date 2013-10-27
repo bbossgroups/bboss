@@ -910,7 +910,7 @@ public class GenericObjectPool extends BaseObjectPool implements ObjectPool {
         return _numActive;
     }
     /**
-     * ·ÇÍ¬²½·½·¨µÄµ÷ÓÃ£¬ÎªÍâ²¿¼à¿ØÊ±Ê¹ÓÃ
+     * éåŒæ­¥æ–¹æ³•çš„è°ƒç”¨ï¼Œä¸ºå¤–éƒ¨ç›‘æ§æ—¶ä½¿ç”¨
      */
     public int getNumActive_() {
         assertOpen();
@@ -919,7 +919,7 @@ public class GenericObjectPool extends BaseObjectPool implements ObjectPool {
     
     
     /**
-     * »ñÈ¡²¢·¢×î´óÊ¹ÓÃÁ´½ÓÊı£¬¼ÇÂ¼Á´½Ó³Øµ½Ä¿Ç°ÎªÖ¹²¢·¢Ê¹ÓÃÁ´½ÓµÄ×î´óÊıÄ¿
+     * è·å–å¹¶å‘æœ€å¤§ä½¿ç”¨é“¾æ¥æ•°ï¼Œè®°å½•é“¾æ¥æ± åˆ°ç›®å‰ä¸ºæ­¢å¹¶å‘ä½¿ç”¨é“¾æ¥çš„æœ€å¤§æ•°ç›®
      * @return
      */
     public int getMaxNumActive() {
@@ -927,7 +927,7 @@ public class GenericObjectPool extends BaseObjectPool implements ObjectPool {
         return this._numMaxActive;
     }
     /**
-     * ·ÇÍ¬²½·½·¨µÄµ÷ÓÃ£¬ÎªÍâ²¿¼à¿ØÊ±Ê¹ÓÃ
+     * éåŒæ­¥æ–¹æ³•çš„è°ƒç”¨ï¼Œä¸ºå¤–éƒ¨ç›‘æ§æ—¶ä½¿ç”¨
      */
     public int getNumIdle_() {
         assertOpen();

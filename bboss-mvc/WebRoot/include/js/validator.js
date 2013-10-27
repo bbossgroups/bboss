@@ -1,5 +1,5 @@
 /**
- * @fileoverview ±íµ¥ÑéÖ¤Àà
+ * @fileoverview è¡¨å•éªŒè¯ç±»
  * @author creator | creator
  * @version 0.1
  */
@@ -7,38 +7,38 @@
 
     /**
      * @constructor
-     * @param {Object} ±íµ¥ÑéÖ¤Àà ¹¹Ôìº¯Êı
+     * @param {Object} è¡¨å•éªŒè¯ç±» æ„é€ å‡½æ•°
      * @author xs
      */
     var $vdt = function(config){
 		/**
-		* ÀàÖ¸Õë£¬µ±Ç°Àà
+		* ç±»æŒ‡é’ˆï¼Œå½“å‰ç±»
 		* @type {Object}
 		*/	
         var me = this;
 		
 		/**
-		* ÀàÅäÖÃ¶ÔÏó, ËùÓĞµÄÑéÖ¤¹æÔò¼°ÌáÊ¾ĞÅÏ¢¶¼ÊÇ´ÓÕâÀï¶ÁÈ¡
+		* ç±»é…ç½®å¯¹è±¡, æ‰€æœ‰çš„éªŒè¯è§„åˆ™åŠæç¤ºä¿¡æ¯éƒ½æ˜¯ä»è¿™é‡Œè¯»å–
 		* @type {Object}
 		*/			
         this.opt = config;
 
 		/**
-		* ¶ÔÏó»ñµÃ½¹µãÊ±µÄÑùÊ½´¦Àí
+		* å¯¹è±¡è·å¾—ç„¦ç‚¹æ—¶çš„æ ·å¼å¤„ç†
 		* @type {String}
 		*/		
 		this.focFun = function(node) {
 			me.setState(node, 1);
 		};
 		/**
-		* ÑéÖ¤³ö´íÊ±µÄÑùÊ½´¦Àí
+		* éªŒè¯å‡ºé”™æ—¶çš„æ ·å¼å¤„ç†
 		* @type {String}
 		*/			
         this.errFun = function(node) {
 			me.setState(node, 2);
 		};
 		/**
-		* ÑéÖ¤ÕıÈ·Ê±µÄÑùÊ½´¦Àí
+		* éªŒè¯æ­£ç¡®æ—¶çš„æ ·å¼å¤„ç†
 		* @type {String}
 		*/
         this.finFun = function(node) {
@@ -46,20 +46,20 @@
 		};
 
 		/**
-		* ·Ö¸ô·ûºÅ
+		* åˆ†éš”ç¬¦å·
 		* @type {String}
 		*/
 		var splitSign = ':';
 		
 		/**
-		 * ÉèÖÃ±íµ¥ÏîµÄÑùÊ½
-         * @param {Object} ±íµ¥¶ÔÏó
-         * @param {Num} ×´Ì¬ÀàĞÍ 0-Ä¬ÈÏ 1-ÂÌ 2-ºì
+		 * è®¾ç½®è¡¨å•é¡¹çš„æ ·å¼
+         * @param {Object} è¡¨å•å¯¹è±¡
+         * @param {Num} çŠ¶æ€ç±»å‹ 0-é»˜è®¤ 1-ç»¿ 2-çº¢
 		 */
 		this.setState = function(node, type) {
 			var input = node;
 			while(node && node != document) {
-				//tagNameÊÇ·ñ¶¨Òå
+				//tagNameæ˜¯å¦å®šä¹‰
 				if(node.tagName){
 					if(node.tagName.toLowerCase() == "span" && hasClass(node, "input")) {
 						switch(type) {
@@ -87,9 +87,9 @@
 		};
 		
 	   /**
-		 * Ä¬ÈÏÑéÖ¤º¯Êı(ÕıÔòÑéÖ¤Ä£Ê½)
-         * @param {Object} ±íµ¥¶ÔÏó
-         * @param {Object} Validator ÒıÓÃÊµÀı
+		 * é»˜è®¤éªŒè¯å‡½æ•°(æ­£åˆ™éªŒè¯æ¨¡å¼)
+         * @param {Object} è¡¨å•å¯¹è±¡
+         * @param {Object} Validator å¼•ç”¨å®ä¾‹
 		 */
 		this.defaultRegFn = function(e, v){
 			//trace( 'regFlag:'+ this.regFlag +' ||' +this.reg + '|this.reg.test('+e.value+'):' + this.reg.test(e.value));
@@ -101,15 +101,15 @@
         };
 
 	   /**
-		 * Ä¬ÈÏÑéÖ¤º¯Êı(·¶Î§ÑéÖ¤Ä£Ê½)
-         * @param {Object} ±íµ¥¶ÔÏó
-         * @param {Object} Validator ÒıÓÃÊµÀı
+		 * é»˜è®¤éªŒè¯å‡½æ•°(èŒƒå›´éªŒè¯æ¨¡å¼)
+         * @param {Object} è¡¨å•å¯¹è±¡
+         * @param {Object} Validator å¼•ç”¨å®ä¾‹
 		 */
 		this.defaultRangeFn = function(e, v){
 			var len = e.value.getBytes();
 			if(!len) return '';
 			var alt = (e.alt || e.getAttribute("alt"));
-			var range =  /³¤¶È{(.+?)}/.exec(alt)[1];
+			var range =  /é•¿åº¦{(.+?)}/.exec(alt)[1];
 			var l = range.split('-')[0];
 			var r = range.split('-')[1];
 			if(len < l || len > r) return this.msg.replace('{range}', range);
@@ -117,27 +117,27 @@
         };
 
 	   /**
-		 * Ä¬ÈÏÑéÖ¤º¯Êı(ÑéÖ¤ÊÇ·ñÓëÄ¿±êÖµÏàÍ¬[Ò»°ãÓÃÓÚÈ·ÈÏÃÜÂë])
-         * @param {Object} ±íµ¥¶ÔÏó
-         * @param {Object} Validator ÒıÓÃÊµÀı
+		 * é»˜è®¤éªŒè¯å‡½æ•°(éªŒè¯æ˜¯å¦ä¸ç›®æ ‡å€¼ç›¸åŒ[ä¸€èˆ¬ç”¨äºç¡®è®¤å¯†ç ])
+         * @param {Object} è¡¨å•å¯¹è±¡
+         * @param {Object} Validator å¼•ç”¨å®ä¾‹
 		 */
 		this.defaultSameFn = function(e, v){
 			var val = e.value;
 			if(!val) return '';
 			var alt = (e.alt || e.getAttribute("alt"));
-			var id =  /ÏàÍ¬{(.+?)}/.exec(alt)[1];
+			var id =  /ç›¸åŒ{(.+?)}/.exec(alt)[1];
 			if(!$(id)) return '';
 			return ($(id).value != val)?this.msg:'';
         };
         
         /**
-         * Àà³õÊ¼»¯£¬¸ù¾İ±íµ¥ÃûÎª±íµ¥ÏÂĞèÒªÑéÖ¤µÄ¶ÔÏóÌí¼ÓÊÂ¼ş
-         * @param {String} ±íµ¥id
+         * ç±»åˆå§‹åŒ–ï¼Œæ ¹æ®è¡¨å•åä¸ºè¡¨å•ä¸‹éœ€è¦éªŒè¯çš„å¯¹è±¡æ·»åŠ äº‹ä»¶
+         * @param {String} è¡¨å•id
          */
         this.init = function(id){
 			var fm = $(id);
 			if(!fm) {
-				alert('±íµ¥ [' + id + '] Î´ÕÒµ½£¡');
+				alert('è¡¨å• [' + id + '] æœªæ‰¾åˆ°ï¼');
 				return;
 			}
             var fe = fm.elements;
@@ -149,18 +149,18 @@
                     cur.onfocus = this.chkFocus;
                     cur.onblur = this.check;
 					/**
-					 * Èç¹ûÊÇÃÜÂë£¬ÔòÔö¼Ó°ó¶¨ÊäÈë¶¯×÷µÄÊÂ¼ş£¬ÓÃÀ´ÅĞ¶ÏÃÜÂëÇ¿¶È
+					 * å¦‚æœæ˜¯å¯†ç ï¼Œåˆ™å¢åŠ ç»‘å®šè¾“å…¥åŠ¨ä½œçš„äº‹ä»¶ï¼Œç”¨æ¥åˆ¤æ–­å¯†ç å¼ºåº¦
 					 */
 					if (cur.id.toLowerCase() == "password") {
 						cur.onkeydown = this.chkKeyboard;
 						cur.onkeyup = this.chkKeyboard;
 					}
 					if (cur.id.toLowerCase() == "door") {
-						cur.value = "µã´ËÏÔÊ¾ÑéÖ¤Âë";
+						cur.value = "ç‚¹æ­¤æ˜¾ç¤ºéªŒè¯ç ";
 						cur.style.color = "#999999";
 					}
 					/**
-					 * µ±Ç°ÀàÖ¸Õë´«µİ¸ø±íµ¥Óò¶ÔÏó£¬ÒÔ±ãµ÷ÓÃ
+					 * å½“å‰ç±»æŒ‡é’ˆä¼ é€’ç»™è¡¨å•åŸŸå¯¹è±¡ï¼Œä»¥ä¾¿è°ƒç”¨
 					 * @type {Object}
 					 */
                     cur.v = this;
@@ -172,18 +172,18 @@
 
 
         /**
-         * ÅĞ¶Ïµ±Ç°ĞèÒªÊ¹ÓÃ¹æÔòµÄ¶ÔÏó
-         * @param {String} altÖµÖĞµ±Ç°¹æÔòÃû
-         * @param {Object} µ±Ç°¹æÔòÅäÖÃ¶ÔÏó
+         * åˆ¤æ–­å½“å‰éœ€è¦ä½¿ç”¨è§„åˆ™çš„å¯¹è±¡
+         * @param {String} altå€¼ä¸­å½“å‰è§„åˆ™å
+         * @param {Object} å½“å‰è§„åˆ™é…ç½®å¯¹è±¡
          */
 		this.getCur = function(c, conf){
 			var cur = conf[c];
-			if (c.indexOf('³¤¶È')!=-1){
-				cur = conf['³¤¶È'];
+			if (c.indexOf('é•¿åº¦')!=-1){
+				cur = conf['é•¿åº¦'];
 				cur.fn = this.defaultRangeFn;
 			}
-			if (c.indexOf('ÏàÍ¬')!=-1){
-				cur = conf['ÏàÍ¬'];
+			if (c.indexOf('ç›¸åŒ')!=-1){
+				cur = conf['ç›¸åŒ'];
 				cur.fn = this.defaultSameFn;
 			}
 			if(!cur) return null;
@@ -192,9 +192,9 @@
 		};
         
         /**
-         * ¸ù¾İ¶ÔÏóaltÊôĞÔ²ÎÊıÉèÖÃ¼°configµÄÅäÖÃ½øĞĞ±íµ¥ÔªËØÑéÖ¤
-         * @param {Object} fireFox µÄÊÂ¼şÔ´(ÔİÊ±Ã»ÓÃµ½)
-         * @param {Object} ¼ì²éÖ¸¶¨µÄ±íµ¥¶ÔÏó
+         * æ ¹æ®å¯¹è±¡altå±æ€§å‚æ•°è®¾ç½®åŠconfigçš„é…ç½®è¿›è¡Œè¡¨å•å…ƒç´ éªŒè¯
+         * @param {Object} fireFox çš„äº‹ä»¶æº(æš‚æ—¶æ²¡ç”¨åˆ°)
+         * @param {Object} æ£€æŸ¥æŒ‡å®šçš„è¡¨å•å¯¹è±¡
          */		
         this.check = function(e, el){
             var el = el || this;
@@ -232,7 +232,7 @@
         };
 
         /**
-         * ¶ÔÏó»ñÈ¡½¹µãÊ±Ö´ĞĞµÄÊÂ¼ş
+         * å¯¹è±¡è·å–ç„¦ç‚¹æ—¶æ‰§è¡Œçš„äº‹ä»¶
          */
         this.chkFocus = function(){
 			if(this.type == 'password' || this.type == 'text') {
@@ -253,7 +253,7 @@
 						if (!$isVisible($("passW"))) $show($("passW"));
 					}
 					if (el.id == "door") {
-						if (el.value == "µã´ËÏÔÊ¾ÑéÖ¤Âë") {
+						if (el.value == "ç‚¹æ­¤æ˜¾ç¤ºéªŒè¯ç ") {
 							el.value = "";
 							el.style.color = "#000000";
 						}
@@ -267,7 +267,7 @@
         };
 		
 		/**
-         * ¶ÔÏó¼üÅÌÊäÈëÊ±Ö´ĞĞµÄÊÂ¼ş
+         * å¯¹è±¡é”®ç›˜è¾“å…¥æ—¶æ‰§è¡Œçš„äº‹ä»¶
          */
 		this.chkKeyboard = function(){
             var el = this;
@@ -297,7 +297,7 @@
         };
 
         /**
-         * Ìá½»Ê±½«±íµ¥ÏÂËùÓĞĞèÒªÑéÖ¤µÄÔªËØ¶¼¼ì²éÒ»±é£¬ÒÔ±£Ö¤Êı¾İÈ«²¿ºÏ¸ñ
+         * æäº¤æ—¶å°†è¡¨å•ä¸‹æ‰€æœ‰éœ€è¦éªŒè¯çš„å…ƒç´ éƒ½æ£€æŸ¥ä¸€éï¼Œä»¥ä¿è¯æ•°æ®å…¨éƒ¨åˆæ ¼
          */
         this.checkSubmit = function(e){
 			var fm = this;
@@ -326,14 +326,14 @@
 				flag = false;
 			};
 			if(!flag){
-				alert("ÄúÌîĞ´µÄĞÅÏ¢ÓĞÎó£¬Çë¸ù¾İÒ³Ãæºì×Ö¸ü¸Ä£¡");
+				alert("æ‚¨å¡«å†™çš„ä¿¡æ¯æœ‰è¯¯ï¼Œè¯·æ ¹æ®é¡µé¢çº¢å­—æ›´æ”¹ï¼");
 				flag = false;
 			}
 			return flag;
         };
 		
         /**
-         * ¸ù¾İ´íÎóÀàĞÍÏÔÊ¾ÏàÓ¦µÄ´íÎóÌáÊ¾
+         * æ ¹æ®é”™è¯¯ç±»å‹æ˜¾ç¤ºç›¸åº”çš„é”™è¯¯æç¤º
          */					
         this.showErr = function(e, msg){
 			var alt	= (e.alt || e.getAttribute("alt")).split(splitSign);
@@ -341,7 +341,7 @@
 			var args   = alt[1];
 			var msg = msg.replace('{name}', name);
 			/**
-	         *  ¸ù¾İalt²ÎÊı£¬ÅĞ¶Ï´íÎóÌáÊ¾Êä³öÔÚÄÄ
+	         *  æ ¹æ®altå‚æ•°ï¼Œåˆ¤æ–­é”™è¯¯æç¤ºè¾“å‡ºåœ¨å“ª
 	         */
 			var eid, errArea ;
 			if(args.indexOf('errArea')!=-1) var eid = /errArea{(.+?)}/.exec(alt)[1];
@@ -358,7 +358,7 @@
                 var etips = e.errNode;
             }
 	        /**
-	         *  ¸ù¾İmsgÅĞ¶ÏÊÇ·ñÏÔÊ¾´íÎóÌáÊ¾
+	         *  æ ¹æ®msgåˆ¤æ–­æ˜¯å¦æ˜¾ç¤ºé”™è¯¯æç¤º
 	         */
 			switch(msg) {
 				case "hide":
@@ -389,7 +389,7 @@
     };
 
 	/**
-	 *  ×¢²áÈ«¾Ö¶ÔÏó
+	 *  æ³¨å†Œå…¨å±€å¯¹è±¡
 	 */	
     if (window.Validator == null) window.Validator = $vdt;
 })();

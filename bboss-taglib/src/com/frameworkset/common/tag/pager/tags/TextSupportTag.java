@@ -5,7 +5,7 @@ import com.frameworkset.common.tag.BaseTag;
 /**
  * <p>Title: TextSupportTag</p>
  *
- * <p>Description: ³õÊ¼»¯ÎÄ±¾·ÖÒ³±êÇ©</p>
+ * <p>Description: åˆå§‹åŒ–æ–‡æœ¬åˆ†é¡µæ ‡ç­¾</p>
  *
  * <p>Copyright: Copyright (c) 2005</p>
  *

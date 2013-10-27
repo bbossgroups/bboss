@@ -33,7 +33,7 @@ package com.frameworkset.common.tag.pager.model;
 
 
 /**
- * 数据模型
+ * 鏁版嵁妯″瀷
  * @author biaoping.yin
  * created on 2005-5-27
  * version 1.0

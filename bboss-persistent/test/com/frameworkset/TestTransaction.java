@@ -230,8 +230,8 @@ public class TestTransaction {
         try {
             tm.begin();
             
-            //½øĞĞÒ»ÏµÁĞdb²Ù×÷            
-            //±ØĞëµ÷ÓÃcommit            
+            //è¿›è¡Œä¸€ç³»åˆ—dbæ“ä½œ            
+            //å¿…é¡»è°ƒç”¨commit            
             tm.commit();
         }
         catch (Exception e) {            
@@ -248,10 +248,10 @@ public class TestTransaction {
         try {
             tm.begin(TransactionManager.RW_TRANSACTION);
             
-            //½øĞĞÒ»ÏµÁĞdb²Ù×÷
+            //è¿›è¡Œä¸€ç³»åˆ—dbæ“ä½œ
             
-            //×¢Òâ¶ÔÓÚRW_TRANSACTIONÊÂÎñ¿ÉÒÔ²»µ÷ÓÃcommit·½·¨£¬tm.releasenolog()
-            //·½·¨»áÊÍ·ÅÊÂÎñ£¬µ÷ÓÃcommitÒ²¿ÉÒÔ
+            //æ³¨æ„å¯¹äºRW_TRANSACTIONäº‹åŠ¡å¯ä»¥ä¸è°ƒç”¨commitæ–¹æ³•ï¼Œtm.releasenolog()
+            //æ–¹æ³•ä¼šé‡Šæ”¾äº‹åŠ¡ï¼Œè°ƒç”¨commitä¹Ÿå¯ä»¥
             
             tm.commit();
         }
@@ -578,29 +578,29 @@ public class TestTransaction {
 		{
 			case Status.STATUS_ACTIVE:
 				
-				System.out.println(action + "-ÊÂÎñ×´Ì¬£ºStatus.STATUS_ACTIVE" );
+				System.out.println(action + "-äº‹åŠ¡çŠ¶æ€ï¼šStatus.STATUS_ACTIVE" );
 				break;
 			case Status.STATUS_COMMITTED:
-				System.out.println(action + "-ÊÂÎñ×´Ì¬£ºStatus.STATUS_COMMITTED" );
+				System.out.println(action + "-äº‹åŠ¡çŠ¶æ€ï¼šStatus.STATUS_COMMITTED" );
 				break;
 			case Status.STATUS_COMMITTING:
-				System.out.println(action + "-ÊÂÎñ×´Ì¬£ºStatus.STATUS_COMMITTING" );
+				System.out.println(action + "-äº‹åŠ¡çŠ¶æ€ï¼šStatus.STATUS_COMMITTING" );
 				break;
 			case Status.STATUS_MARKED_ROLLBACK:
-				System.out.println(action + "-ÊÂÎñ×´Ì¬£ºStatus.STATUS_MARKED_ROLLBACK" );
+				System.out.println(action + "-äº‹åŠ¡çŠ¶æ€ï¼šStatus.STATUS_MARKED_ROLLBACK" );
 				break;
 			case Status.STATUS_NO_TRANSACTION:
-				System.out.println(action + "-ÊÂÎñ×´Ì¬£ºStatus.STATUS_NO_TRANSACTION" );
+				System.out.println(action + "-äº‹åŠ¡çŠ¶æ€ï¼šStatus.STATUS_NO_TRANSACTION" );
 				break;
 			case Status.STATUS_ROLLEDBACK:
-				System.out.println(action + "-ÊÂÎñ×´Ì¬£ºStatus.STATUS_ROLLEDBACK" );
+				System.out.println(action + "-äº‹åŠ¡çŠ¶æ€ï¼šStatus.STATUS_ROLLEDBACK" );
 				break;
 			case Status.STATUS_ROLLING_BACK:
-				System.out.println(action + "-ÊÂÎñ×´Ì¬£ºStatus.STATUS_ROLLING_BACK" );
+				System.out.println(action + "-äº‹åŠ¡çŠ¶æ€ï¼šStatus.STATUS_ROLLING_BACK" );
 				break;
 				
 			case Status.STATUS_UNKNOWN:
-				System.out.println(action + "-ÊÂÎñ×´Ì¬£ºStatus.STATUS_UNKNOWN" );
+				System.out.println(action + "-äº‹åŠ¡çŠ¶æ€ï¼šStatus.STATUS_UNKNOWN" );
 				break;
 		}
 	}
@@ -621,8 +621,8 @@ public class TestTransaction {
 			stmt1 = con1.createStatement();
 			stmt.executeQuery("select * from test where name='biaoping.yinfasdfasdf' for update");
 			//stmt.execute("commit");
-//			stmt1.execute("delete from test where name='biaoping.yinfasdfasdf'");//stmt1½«µ¼ÖÂÏµÍ³¹ÒÆğ
-			stmt.execute("delete from test where name='biaoping.yinfasdfasdf'");//stmt1½«µ¼ÖÂÏµÍ³¹ÒÆğ
+//			stmt1.execute("delete from test where name='biaoping.yinfasdfasdf'");//stmt1å°†å¯¼è‡´ç³»ç»ŸæŒ‚èµ·
+			stmt.execute("delete from test where name='biaoping.yinfasdfasdf'");//stmt1å°†å¯¼è‡´ç³»ç»ŸæŒ‚èµ·
 			//stmt.execute("commit");
 			con.commit();
 			
@@ -812,17 +812,17 @@ public class TestTransaction {
 		TransactionManager tm = new TransactionManager();
 		
 		try {
-			//¿ªÊ¼ÊÂÎñ,ÔÚbeginºÍcommitÖ®¼äµÄ¸÷ÖÖÊı¾İ¿â²Ù×÷¶¼°üº¬ÔÚÊÂÎñÖĞ,³ı·ÇÖĞ¼äÓĞÊÂÎñµÄ¹ÒÆğºÍÖĞ¶Ï,µ«ÊÇÖĞ¶Ï»Ö¸´ºóÊÂÎñ½«¼ÌĞø,
-			//»òÕßÁíÍâÔÚÊÂÎñÖ´ĞĞ¹ı³ÌÈç¹û¿ªÆôÁËĞÂµÄÊÂÎñ,Ôòµ±Ç°ÊÂÎñ½«±»ÖĞ¶Ï
+			//å¼€å§‹äº‹åŠ¡,åœ¨beginå’Œcommitä¹‹é—´çš„å„ç§æ•°æ®åº“æ“ä½œéƒ½åŒ…å«åœ¨äº‹åŠ¡ä¸­,é™¤éä¸­é—´æœ‰äº‹åŠ¡çš„æŒ‚èµ·å’Œä¸­æ–­,ä½†æ˜¯ä¸­æ–­æ¢å¤åäº‹åŠ¡å°†ç»§ç»­,
+			//æˆ–è€…å¦å¤–åœ¨äº‹åŠ¡æ‰§è¡Œè¿‡ç¨‹å¦‚æœå¼€å¯äº†æ–°çš„äº‹åŠ¡,åˆ™å½“å‰äº‹åŠ¡å°†è¢«ä¸­æ–­
 			tm.begin();
 			log("delete before",tm.getStatus());
 			
 			
 			DBUtil dbUtil = new DBUtil();
-			//Ö´ĞĞÁ½¸öÉ¾³ı²Ù×÷,Èç¹ûÒ»¸öÊ§°ÜÕû¸öÊÂÎñ¾Í»Ø¹ö
+			//æ‰§è¡Œä¸¤ä¸ªåˆ é™¤æ“ä½œ,å¦‚æœä¸€ä¸ªå¤±è´¥æ•´ä¸ªäº‹åŠ¡å°±å›æ»š
 			dbUtil.executeDelete("delete from test");
 			dbUtil.executeDelete("delete from test1");
-			//¹ÒÆğÊÂÎñ,¹ÒÆğºóµÄÊı¾İ¿â²Ù×÷½«²»ÊÜÊÂÎñ¿ØÖÆÖ±µ½ÊÂÎñ±»»Ö¸´
+			//æŒ‚èµ·äº‹åŠ¡,æŒ‚èµ·åçš„æ•°æ®åº“æ“ä½œå°†ä¸å—äº‹åŠ¡æ§åˆ¶ç›´åˆ°äº‹åŠ¡è¢«æ¢å¤
 			JDBCTransaction tx = tm.suspend();
 			try
 			{
@@ -832,13 +832,13 @@ public class TestTransaction {
 			{
 				
 			}
-			//»Ö¸´ÊÂÎñ,Ö®ºóµÄÊÂÎñ½«¼ÓÈëÖ®Ç°±»ÖĞ¶ÏµÄÊÂÎñµ±ÖĞ
+			//æ¢å¤äº‹åŠ¡,ä¹‹åçš„äº‹åŠ¡å°†åŠ å…¥ä¹‹å‰è¢«ä¸­æ–­çš„äº‹åŠ¡å½“ä¸­
 			tm.resume(tx);
 			log("delete after",tm.getStatus());
 			
 			dbUtil.executeInsert("insert into test1(name) values('biaoping.yin1')");
 			
-			//Ìá½»ÊÂÎñ
+			//æäº¤äº‹åŠ¡
 			tm.commit();
 			log("delete commit",tm.getStatus());
 			
@@ -849,7 +849,7 @@ public class TestTransaction {
 			log("delete rollback before",tm.getStatus());
 			
 			try {
-				//»Ø¹öÊÂÎñ
+				//å›æ»šäº‹åŠ¡
 				tm.rollback();
 			} catch (RollbackException e1) {
 				// TODO Auto-generated catch block

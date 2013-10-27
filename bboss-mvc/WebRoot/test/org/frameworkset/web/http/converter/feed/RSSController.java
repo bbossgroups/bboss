@@ -50,7 +50,7 @@ public class RSSController {
 	{
 		 Channel channel = new Channel("rss_2.0");
 		  channel.setTitle("The test of RSS generator(Rome)");
-		  channel.setDescription("²âÊÔÆµµÀ");
+		  channel.setDescription("æµ‹è¯•é¢‘é“");
 		  channel.setLink("http://www.stefli.com/");
 		  channel.setTtl(5);
 		  channel.setLanguage("en_US");

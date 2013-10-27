@@ -28,7 +28,7 @@ import org.apache.camel.impl.DefaultComponent;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2009-10-25 œ¬ŒÁ10:50:31
+ * @Date 2009-10-25 ‰∏ãÂçà10:50:31
  * @author biaoping.yin
  * @version 1.0
  */

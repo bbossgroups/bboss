@@ -13,7 +13,7 @@ import com.frameworkset.orm.transaction.TransactionManager;
 
 public class PreparedAndBatchTestWithConnection {
 	/**
-	 * Ö´ĞĞÔ¤±àÒë¸üĞÂ²Ù×÷,ÊÍ·ÅÊı¾İ¿â×ÊÔ´ÊµÀı
+	 * æ‰§è¡Œé¢„ç¼–è¯‘æ›´æ–°æ“ä½œ,é‡Šæ”¾æ•°æ®åº“èµ„æºå®ä¾‹
 	 * 
 	 * @throws SQLException
 	 */
@@ -36,8 +36,8 @@ public class PreparedAndBatchTestWithConnection {
 							.getTime()));
 					// if(true && i < 50)
 					// {
-					// //´Ë´¦Å×³öÒµÎñÒì³££¬±ØĞëÔÚÏàÓ¦µÄÒì³£´¦Àí¿é»òÕßfinally¿éÖĞµ÷ÓÃdb.resetPrepare()·½·¨À´ÊÍ·ÅÊı¾İ¿â×ÊÔ´
-					// //Èç¹ûÃ»ÓĞÊÍ·ÅÔò»áµ¼ÖÂÏµÍ³ÔËĞĞÒ»¶ÎÊ±ºòºóÅ×³öÒÔÏÂÒì³££º
+					// //æ­¤å¤„æŠ›å‡ºä¸šåŠ¡å¼‚å¸¸ï¼Œå¿…é¡»åœ¨ç›¸åº”çš„å¼‚å¸¸å¤„ç†å—æˆ–è€…finallyå—ä¸­è°ƒç”¨db.resetPrepare()æ–¹æ³•æ¥é‡Šæ”¾æ•°æ®åº“èµ„æº
+					// //å¦‚æœæ²¡æœ‰é‡Šæ”¾åˆ™ä¼šå¯¼è‡´ç³»ç»Ÿè¿è¡Œä¸€æ®µæ—¶å€™åæŠ›å‡ºä»¥ä¸‹å¼‚å¸¸ï¼š
 					// //Cannot get a connection, pool error Timeout waiting for
 					// idle object
 					// throw new Exception("e");
@@ -59,7 +59,7 @@ public class PreparedAndBatchTestWithConnection {
 	}
 
 	/**
-	 * °üº¬ÔÚÊÂÎñ»·¾³ÖĞµÄÔ¤±àÒë²Ù×÷£¬Ö´ĞĞÅ×³öÒì³£ºó
+	 * åŒ…å«åœ¨äº‹åŠ¡ç¯å¢ƒä¸­çš„é¢„ç¼–è¯‘æ“ä½œï¼Œæ‰§è¡ŒæŠ›å‡ºå¼‚å¸¸å
 	 * 
 	 * @throws SQLException
 	 */
@@ -97,7 +97,7 @@ public class PreparedAndBatchTestWithConnection {
 
 				
 			}
-			tm.commit();// ÊÂÎñÌá½»ºó×Ô¶¯ÊÍ·ÅÏµÍ³×ÊÔ´
+			tm.commit();// äº‹åŠ¡æäº¤åè‡ªåŠ¨é‡Šæ”¾ç³»ç»Ÿèµ„æº
 		} catch (RollbackException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -388,7 +388,7 @@ public class PreparedAndBatchTestWithConnection {
 			}
 			for(int i =0 ; i < 10000; i ++)
 			{
-				System.out.println("Ö´ĞĞÒµÎñÂß¼­10000´Î£ºµÚ" +i +"´Î" );
+				System.out.println("æ‰§è¡Œä¸šåŠ¡é€»è¾‘10000æ¬¡ï¼šç¬¬" +i +"æ¬¡" );
 			}
 //			tm.commit();
 		} catch (Exception e) {
@@ -404,8 +404,8 @@ public class PreparedAndBatchTestWithConnection {
 			con.close();
 		}
 		long end = System.currentTimeMillis();
-		System.out.println("Ö´ĞĞselectpaginetest·½·¨ºÄÊ±£º" + (end - start) / 1000
-				+ "Ãë");
+		System.out.println("æ‰§è¡Œselectpaginetestæ–¹æ³•è€—æ—¶ï¼š" + (end - start) / 1000
+				+ "ç§’");
 
 	}
 
@@ -456,8 +456,8 @@ public class PreparedAndBatchTestWithConnection {
 			}
 		}
 		long end = System.currentTimeMillis();
-		System.out.println("Ö´ĞĞbatchWithTXTest·½·¨ºÄÊ±£º" + (end - start) / 1000
-				+ "Ãë");
+		System.out.println("æ‰§è¡ŒbatchWithTXTestæ–¹æ³•è€—æ—¶ï¼š" + (end - start) / 1000
+				+ "ç§’");
 	}
 
 	public static void batchTest() throws Exception {
@@ -474,7 +474,7 @@ public class PreparedAndBatchTestWithConnection {
 					db.addBatch("delete from TD_REG_BANK_ACC_bak where id=951");
 					db.addBatch("delete from TD_REG_BANK_ACC_bak where id=951");
 					// if(i < 55)
-					// //´Ë´¦Å×³öÒµÎñÒì³££¬ĞèÒªÔÚÏàÓ¦µÄÒì³£´¦Àí¿é»òfinally¿éÖĞµ÷ÓÃdb.resetBatch()·½·¨ÊÍ·ÅÊı¾İ¿â×ÊÔ´
+					// //æ­¤å¤„æŠ›å‡ºä¸šåŠ¡å¼‚å¸¸ï¼Œéœ€è¦åœ¨ç›¸åº”çš„å¼‚å¸¸å¤„ç†å—æˆ–finallyå—ä¸­è°ƒç”¨db.resetBatch()æ–¹æ³•é‡Šæ”¾æ•°æ®åº“èµ„æº
 					// throw new Exception("batch");
 					db.addBatch("delete from TD_REG_BANK_ACC_bak where id=951");
 					db.addBatch("delete from TD_REG_BANK_ACC_bak where id=951");
@@ -485,9 +485,9 @@ public class PreparedAndBatchTestWithConnection {
 
 	} catch (Exception e) {
 		e.printStackTrace();
-		db.resetBatch();// ÔÚÏàÓ¦µÄÒì³£´¦Àí¿é»òfinally¿éÖĞµ÷ÓÃdb.resetBatch()·½·¨ÊÍ·ÅÊı¾İ¿â×ÊÔ´
+		db.resetBatch();// åœ¨ç›¸åº”çš„å¼‚å¸¸å¤„ç†å—æˆ–finallyå—ä¸­è°ƒç”¨db.resetBatch()æ–¹æ³•é‡Šæ”¾æ•°æ®åº“èµ„æº
 	} finally {
-		// finally¿éÖĞµ÷ÓÃdb.resetBatch()·½·¨ÊÍ·ÅÊı¾İ¿â×ÊÔ´£¬È·±£×ÊÔ´ÄÜ¹»Õı³£»ØÊÕ
+		// finallyå—ä¸­è°ƒç”¨db.resetBatch()æ–¹æ³•é‡Šæ”¾æ•°æ®åº“èµ„æºï¼Œç¡®ä¿èµ„æºèƒ½å¤Ÿæ­£å¸¸å›æ”¶
 		if(db != null)
 			db.resetBatch();
 	
@@ -1074,11 +1074,11 @@ public class PreparedAndBatchTestWithConnection {
 			}
 			end = System.currentTimeMillis();
 			
-			System.out.println("³É¹¦£º" + success + "´Î");
-			System.out.println("Ê§°Ü£º" + failed + "´Î");
-			System.out.println("×ÜÊı£º" + total + "´Î");
+			System.out.println("æˆåŠŸï¼š" + success + "æ¬¡");
+			System.out.println("å¤±è´¥ï¼š" + failed + "æ¬¡");
+			System.out.println("æ€»æ•°ï¼š" + total + "æ¬¡");
 			
-			System.out.println("´øÁ¬½ÓÖ´ĞĞÊ±¼ä£º" + (end - time) / 1000 + "Ãë");
+			System.out.println("å¸¦è¿æ¥æ‰§è¡Œæ—¶é—´ï¼š" + (end - time) / 1000 + "ç§’");
 			System.out.println();
 
 		}

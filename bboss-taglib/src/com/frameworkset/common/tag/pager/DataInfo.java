@@ -40,8 +40,8 @@ import java.io.Serializable;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * ÒµÎñ×é¼ş±ØĞëÊµÏÖµÄ3¸ö½Ó¿ÚÓÃÀ´»ñÈ¡¾ßÌåÒµÎñµÄÊı¾İ¼¯ºÏ£¬Îª·ÖÒ³TagÌá¹©Êı¾İ
- * »ñÈ¡Öµ¶ÔÏóµÄClass¾ä±ú
+ * ä¸šåŠ¡ç»„ä»¶å¿…é¡»å®ç°çš„3ä¸ªæ¥å£ç”¨æ¥è·å–å…·ä½“ä¸šåŠ¡çš„æ•°æ®é›†åˆï¼Œä¸ºåˆ†é¡µTagæä¾›æ•°æ®
+ * è·å–å€¼å¯¹è±¡çš„Classå¥æŸ„
  * @author biaoping.yin
  * 2005-3-25
  * version 1.0
@@ -51,11 +51,11 @@ import javax.servlet.http.HttpServletRequest;
 public interface DataInfo
 {
     /**
-     * ³õÊ¼»¯»ñÈ¡·ÖÒ³/ÁĞ±íÊı¾İµÄ±ØÒª²ÎÊı
-     * @param sortKey ÅÅĞò×Ö¶Î
-     * @param desc ÅÅĞòË³Ğò£¬true±íÊ¾½µĞò£¬false±íÊ¾ÉıĞò
-     * @param offSet »ñÈ¡·ÖÒ³Êı¾İÊ±£¬ÓÃ¸Ã²ÎÊıÉèÖÃ»ñÈ¡Êı¾İµÄÆğµã
-     * @param pageItemsize »ñÈ¡·ÖÒ³Êı¾İÊ±£¬ÓÃ¸Ã²ÎÊıÉèÖÃ»ñÈ¡Êı¾İµÄÌõÊı
+     * åˆå§‹åŒ–è·å–åˆ†é¡µ/åˆ—è¡¨æ•°æ®çš„å¿…è¦å‚æ•°
+     * @param sortKey æ’åºå­—æ®µ
+     * @param desc æ’åºé¡ºåºï¼Œtrueè¡¨ç¤ºé™åºï¼Œfalseè¡¨ç¤ºå‡åº
+     * @param offSet è·å–åˆ†é¡µæ•°æ®æ—¶ï¼Œç”¨è¯¥å‚æ•°è®¾ç½®è·å–æ•°æ®çš„èµ·ç‚¹
+     * @param pageItemsize è·å–åˆ†é¡µæ•°æ®æ—¶ï¼Œç”¨è¯¥å‚æ•°è®¾ç½®è·å–æ•°æ®çš„æ¡æ•°
      */
 	public void initial(String sortKey,
 							boolean desc,
@@ -65,12 +65,12 @@ public interface DataInfo
 							HttpServletRequest request);
 
 	/**
-     * ³õÊ¼»¯»ñÈ¡·ÖÒ³/ÁĞ±íÊı¾İµÄ±ØÒª²ÎÊı
-     * @param sql Êı¾İ¿â²éÑ¯Óï¾ä
-     * @param dbName Êı¾İ¿âÁ¬½Ó³ØÃû³Æ
+     * åˆå§‹åŒ–è·å–åˆ†é¡µ/åˆ—è¡¨æ•°æ®çš„å¿…è¦å‚æ•°
+     * @param sql æ•°æ®åº“æŸ¥è¯¢è¯­å¥
+     * @param dbName æ•°æ®åº“è¿æ¥æ± åç§°
 
-     * @param offSet »ñÈ¡·ÖÒ³Êı¾İÊ±£¬ÓÃ¸Ã²ÎÊıÉèÖÃ»ñÈ¡Êı¾İµÄÆğµã
-     * @param pageItemsize »ñÈ¡·ÖÒ³Êı¾İÊ±£¬ÓÃ¸Ã²ÎÊıÉèÖÃ»ñÈ¡Êı¾İµÄÌõÊı
+     * @param offSet è·å–åˆ†é¡µæ•°æ®æ—¶ï¼Œç”¨è¯¥å‚æ•°è®¾ç½®è·å–æ•°æ®çš„èµ·ç‚¹
+     * @param pageItemsize è·å–åˆ†é¡µæ•°æ®æ—¶ï¼Œç”¨è¯¥å‚æ•°è®¾ç½®è·å–æ•°æ®çš„æ¡æ•°
      */
 	public void initial(String sql,
 	        		    String dbName,
@@ -83,55 +83,55 @@ public interface DataInfo
 
 
     /**
-     * Èç¹û·ÖÒ³tagÖ»ÊÇ×÷ÎªÁĞ±íÀ´ÊµÏÖÊ±£¬µ÷ÓÃ¸Ã·½·¨»ñÈ¡
-     * ÒªÏÔÊ¾µÄÁĞ±íÊı¾İ
+     * å¦‚æœåˆ†é¡µtagåªæ˜¯ä½œä¸ºåˆ—è¡¨æ¥å®ç°æ—¶ï¼Œè°ƒç”¨è¯¥æ–¹æ³•è·å–
+     * è¦æ˜¾ç¤ºçš„åˆ—è¡¨æ•°æ®
      * @return Object
      */
 	public Object getListItems();
 
 
     /**
-     * ·ÖÒ³ÏÔÊ¾Ê±´ÓÊı¾İ¿â»ñÈ¡Ã¿Ò³µÄÊı¾İÏî
+     * åˆ†é¡µæ˜¾ç¤ºæ—¶ä»æ•°æ®åº“è·å–æ¯é¡µçš„æ•°æ®é¡¹
      * @return Hashtable[]
      */
 	public Object[] getPageItemsFromDB();
 
 	/**
-     * Èç¹û·ÖÒ³tagÖ»ÊÇ×÷ÎªÁĞ±íÀ´ÊµÏÖÊ±£¬µ÷ÓÃ¸Ã·½·¨´ÓÊı¾İ¿âÖĞ»ñÈ¡
-     * ÒªÏÔÊ¾µÄÁĞ±íÊı¾İ
+     * å¦‚æœåˆ†é¡µtagåªæ˜¯ä½œä¸ºåˆ—è¡¨æ¥å®ç°æ—¶ï¼Œè°ƒç”¨è¯¥æ–¹æ³•ä»æ•°æ®åº“ä¸­è·å–
+     * è¦æ˜¾ç¤ºçš„åˆ—è¡¨æ•°æ®
      * @return java.util.List
      */
 	public Object[] getListItemsFromDB();
 
 
     /**
-     * ·ÖÒ³ÏÔÊ¾Ê±»ñÈ¡Ã¿Ò³µÄÊı¾İÏî
+     * åˆ†é¡µæ˜¾ç¤ºæ—¶è·å–æ¯é¡µçš„æ•°æ®é¡¹
      * @return Object
      */
 	public Object getPageItems();
 
     /**
-     * »ñÈ¡Öµ¶ÔÏóµÄClass¾ä±ú
+     * è·å–å€¼å¯¹è±¡çš„Classå¥æŸ„
      * @return java.lang.Class
      */
     public Class getVOClass();
 
     /**
-     * »ñÈ¡Êı¾İÔ´ÖĞÊı¾İµÄ×ÜÊı,·ÖÒ³Ê±µ÷ÓÃ
+     * è·å–æ•°æ®æºä¸­æ•°æ®çš„æ€»æ•°,åˆ†é¡µæ—¶è°ƒç”¨
      * @return int
      */
     public long getItemCount();
 
     /**
-     * »ñÈ¡µ±Ç°Ò³Ãæ¼ÇÂ¼Êı
-     * @return µ±Ç°Ò³Ãæ¼ÇÂ¼Êı
+     * è·å–å½“å‰é¡µé¢è®°å½•æ•°
+     * @return å½“å‰é¡µé¢è®°å½•æ•°
      */
     public int getDataSize();
     
     public int getDataResultSize();
     
     /**
-     * »ñÈ¡¶ÔÏóÀàĞÍµÄÊı¾İ
+     * è·å–å¯¹è±¡ç±»å‹çš„æ•°æ®
      * @return
      */
     public Object getObjectData();
@@ -145,7 +145,7 @@ public interface DataInfo
 //          boolean desc,
             HttpServletRequest request,SQLParams params);
     /**
-     * Ê¶±ğµ±Ç°²éÑ¯ÊÇ·ñÊÇmore·ÖÒ³£¬Èç¹ûÊÇmore·ÖÒ³Ôò±êÇ©¿âÎŞĞèÉèÖÃ×Ü¼ÇÂ¼ÊıĞÅÏ¢ 
+     * è¯†åˆ«å½“å‰æŸ¥è¯¢æ˜¯å¦æ˜¯moreåˆ†é¡µï¼Œå¦‚æœæ˜¯moreåˆ†é¡µåˆ™æ ‡ç­¾åº“æ— éœ€è®¾ç½®æ€»è®°å½•æ•°ä¿¡æ¯ 
      * @return
      */
     public boolean isMore();

@@ -34,7 +34,7 @@ import com.frameworkset.util.StringUtil;
  * <p> bboss workgroup </p>
  * <p> Copyright (c) 2009 </p>
  * 
- * @Date 2012-5-14 ÏÂÎç3:25:35
+ * @Date 2012-5-14 ä¸‹åˆ3:25:35
  * @author biaoping.yin
  * @version 1.0
  */

@@ -72,7 +72,7 @@ public class TreeIterator implements Iterator, Serializable{
     protected TreeNodeStack stack           = new TreeNodeStack();
     protected int           level           = 0;
     /**
-     * ¶¯¾²Ì¬Éú³ÉÊ÷½ÚµãÊ±£¬ÓÃÀ´¼ÇÂ¼µ±Ç°µã»÷µÄ½ÚµãindentÖµ
+     * åŠ¨é™æ€ç”Ÿæˆæ ‘èŠ‚ç‚¹æ—¶ï¼Œç”¨æ¥è®°å½•å½“å‰ç‚¹å‡»çš„èŠ‚ç‚¹indentå€¼
      */
     protected String parent_indent					= "";
     
@@ -101,8 +101,8 @@ public class TreeIterator implements Iterator, Serializable{
     }
     
     /**
-     * ×ª»»×Ö·û´®indentÎªbooleanÖµÁĞ±í£¬ÀıÈç£º
-     * 010101£­£­¡·false,true,false,true,false,true
+     * è½¬æ¢å­—ç¬¦ä¸²indentä¸ºbooleanå€¼åˆ—è¡¨ï¼Œä¾‹å¦‚ï¼š
+     * 010101ï¼ï¼ã€‹false,true,false,true,false,true
      * @param parentIndent
      * @return
      */
@@ -169,9 +169,9 @@ public class TreeIterator implements Iterator, Serializable{
     }
 
     public Object next(){
-    	//»ñÈ¡¶ÑÕ»¶¥²ãµÃÊ÷½Úµã
+    	//è·å–å †æ ˆé¡¶å±‚å¾—æ ‘èŠ‚ç‚¹
         ITreeIteratorElement element = (ITreeIteratorElement) this.stack.pop();
-		//Èç¹ûelementÊÇÕ¹¿ªµÄ£¬ÄÇÃ´Ôò¶ù×Ó½ÚµãÑ¹Õ»
+		//å¦‚æœelementæ˜¯å±•å¼€çš„ï¼Œé‚£ä¹ˆåˆ™å„¿å­èŠ‚ç‚¹å‹æ ˆ
         if(this.tree.isExpanded(element.getNode().getId()) 
         		|| tree.isStatic()){
             pushChildren(element);

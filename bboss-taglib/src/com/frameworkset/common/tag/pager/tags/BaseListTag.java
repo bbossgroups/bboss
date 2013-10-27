@@ -43,11 +43,11 @@ import com.frameworkset.common.tag.pager.DataInfo;
 /**
  * 
  * 
- * ·ÖÒ³/ÁĞ±ítagËùÏÔÊ¾µÄÊı¾İÊÇÍ¨¹ıÊµÏÖ
- * com.frameworkset.common.tag.pager.DataInfoµÄÀà¶ÔÏóÌá¹©¡£
- * ·ÖÒ³/ÁĞ±ítag»á´ÓrequestÖĞÉèÖÃµÄdataInfoÊôĞÔÖĞ»ñÈ¡¸ÃÀà¶ÔÏó£¬
- * BaseListTagµÄ×÷ÓÃÊÇ°Ñ¸ÄÀà¶ÔÏó´æ·Åµ½dataInfoÊôĞÔÖĞ£¬ 
- * Èç¹ûdataInfoÊôĞÔÃû³ÆÎª¿ÕÄ¬ÈÏÃû³ÆÎª¡°dataInfo¡±
+ * åˆ†é¡µ/åˆ—è¡¨tagæ‰€æ˜¾ç¤ºçš„æ•°æ®æ˜¯é€šè¿‡å®ç°
+ * com.frameworkset.common.tag.pager.DataInfoçš„ç±»å¯¹è±¡æä¾›ã€‚
+ * åˆ†é¡µ/åˆ—è¡¨tagä¼šä»requestä¸­è®¾ç½®çš„dataInfoå±æ€§ä¸­è·å–è¯¥ç±»å¯¹è±¡ï¼Œ
+ * BaseListTagçš„ä½œç”¨æ˜¯æŠŠæ”¹ç±»å¯¹è±¡å­˜æ”¾åˆ°dataInfoå±æ€§ä¸­ï¼Œ 
+ * å¦‚æœdataInfoå±æ€§åç§°ä¸ºç©ºé»˜è®¤åç§°ä¸ºâ€œdataInfoâ€
  * 
  * @author biaoping.yin
  * @version 1.0
@@ -56,14 +56,14 @@ import com.frameworkset.common.tag.pager.DataInfo;
 public abstract class BaseListTag extends BaseTag{
 	
 	/**
-	 * Êı¾İ»ñÈ¡½Ó¿ÚÔÚÅäÖÃÎÄ¼şÖĞ´æ·ÅµÄkeyÃû³Æ
+	 * æ•°æ®è·å–æ¥å£åœ¨é…ç½®æ–‡ä»¶ä¸­å­˜æ”¾çš„keyåç§°
 	 */   
 	protected String dataInfo;
-	/**ÉèÖÃÊı¾İÌáÈ¡¶ÔÏó´æ·Åµ½requestÖĞµÄÊôĞÔÃû³Æ,È±Ê¡ÖµÎªdataInfoµÄÖµ*/
+	/**è®¾ç½®æ•°æ®æå–å¯¹è±¡å­˜æ”¾åˆ°requestä¸­çš„å±æ€§åç§°,ç¼ºçœå€¼ä¸ºdataInfoçš„å€¼*/
 	protected String keyName;
 	/**
-	 * ÉèÖÃÊı¾İÌáÈ¡¶ÔÏó´æ·Åµ½requestÖĞµÄÊôĞÔÃû³Æ
-	 * @return dataInfo Êı¾İÌáÈ¡¶ÔÏó´æ·Åµ½requestÖĞµÄÊôĞÔÃû³Æ
+	 * è®¾ç½®æ•°æ®æå–å¯¹è±¡å­˜æ”¾åˆ°requestä¸­çš„å±æ€§åç§°
+	 * @return dataInfo æ•°æ®æå–å¯¹è±¡å­˜æ”¾åˆ°requestä¸­çš„å±æ€§åç§°
 	 */
 	public String getDataInfo() {
 		if(dataInfo == null)
@@ -72,7 +72,7 @@ public abstract class BaseListTag extends BaseTag{
 	}
 
 	/**
-	 * ÉèÖÃÊı¾İÌáÈ¡¶ÔÏó´æ·Åµ½requestÖĞµÄÊôĞÔÃû³Æ
+	 * è®¾ç½®æ•°æ®æå–å¯¹è±¡å­˜æ”¾åˆ°requestä¸­çš„å±æ€§åç§°
 	 * @param string
 	 */
 	public void setDataInfo(String string) {
@@ -80,8 +80,8 @@ public abstract class BaseListTag extends BaseTag{
 	}
 	
 	/**
-	 * ³õÊ¼»¯·ÖÒ³ÁĞ±íµÄÊı¾İ»ñÈ¡½Ó¿Ú
-	 * @param dataInfo ¾ßÌåµÄDataInfo½Ó¿ÚµÄÊµÏÖÀà
+	 * åˆå§‹åŒ–åˆ†é¡µåˆ—è¡¨çš„æ•°æ®è·å–æ¥å£
+	 * @param dataInfo å…·ä½“çš„DataInfoæ¥å£çš„å®ç°ç±»
 	 */
 	public void initDatainfo(DataInfo dataInfo)
 	{		

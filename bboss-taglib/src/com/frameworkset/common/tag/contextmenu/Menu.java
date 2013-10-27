@@ -25,7 +25,7 @@ public class Menu implements Serializable,Comparable{
 	private static final long serialVersionUID = 7601500738484270118L;
 	protected List contextMenuItems = new ArrayList();	
 	protected String identity;
-//	//Ò³ÃæÉÏÉú³ÉµÄÃ¿¸öJS¶ÔÏóÃû×Ö peng.yang
+//	//é¡µé¢ä¸Šç”Ÿæˆçš„æ¯ä¸ªJSå¯¹è±¡åå­— peng.yang
 //	protected String jsObjectId;
 	public final static Menu.ContextMenuItem MENU_OPEN = new Menu.ContextMenuItem();
     public final static Menu.ContextMenuItem MENU_EXPAND = new Menu.ContextMenuItem();
@@ -48,7 +48,7 @@ public class Menu implements Serializable,Comparable{
 	public static final String icon_back = "icon-back";
 	
 	/**
-	 * ÅĞ¶ÏÓÒ¼ü²Ëµ¥ÊÇ¸ù¾İ½Úµã±¾Éí²úÉú»¹ÊÇ¸ù¾İ½ÚµãÀàĞÍ²úÉú
+	 * åˆ¤æ–­å³é”®èœå•æ˜¯æ ¹æ®èŠ‚ç‚¹æœ¬èº«äº§ç”Ÿè¿˜æ˜¯æ ¹æ®èŠ‚ç‚¹ç±»å‹äº§ç”Ÿ
 	 */
 	protected boolean generateByNode = false;
 	
@@ -89,7 +89,7 @@ public class Menu implements Serializable,Comparable{
 		
 		private String disableMsg;
 		/**
-		 * ±êÊ¶ÊÇ·ñ½ûÓÃ¸Ã²Ëµ¥Ïî
+		 * æ ‡è¯†æ˜¯å¦ç¦ç”¨è¯¥èœå•é¡¹
 		 */
 		protected boolean disabled = false;
 		public String getIcon() {
@@ -156,7 +156,7 @@ public class Menu implements Serializable,Comparable{
 		}
 		
 		/**
-		 * Ìí¼ÓÓÒ¼ü²Ëµ¥Ïî
+		 * æ·»åŠ å³é”®èœå•é¡¹
 		 * @see com.frameworkset.common.tag.tree.itf.ITreeNode#addContextMenuItem(com.frameworkset.common.tag.tree.impl.TreeNode.ContextMenuItem)
 		 */
 		public ContextMenuItem addSubContextMenuItem(String name,String link,String target,String icon,String clazz,boolean disabled) {
@@ -173,7 +173,7 @@ public class Menu implements Serializable,Comparable{
 		}
 		
 		/**
-		 * Ìí¼ÓÓÒ¼ü²Ëµ¥Ïî
+		 * æ·»åŠ å³é”®èœå•é¡¹
 		 * @see com.frameworkset.common.tag.tree.itf.ITreeNode#addContextMenuItem(com.frameworkset.common.tag.tree.impl.TreeNode.ContextMenuItem)
 		 */
 		public ContextMenuItem addSubContextMenuItem(String name,String link,String target,String icon,String clazz) {
@@ -189,7 +189,7 @@ public class Menu implements Serializable,Comparable{
 		}
 		
 		/**
-		 * Ìí¼ÓÓÒ¼ü²Ëµ¥Ïî
+		 * æ·»åŠ å³é”®èœå•é¡¹
 		 * @see com.frameworkset.common.tag.tree.itf.ITreeNode#addContextMenuItem(com.frameworkset.common.tag.tree.impl.TreeNode.ContextMenuItem)
 		 */
 		public ContextMenuItem addSubContextMenuItem(String name,String link,String target,String icon) {
@@ -205,7 +205,7 @@ public class Menu implements Serializable,Comparable{
 		}
 		
 		/**
-		 * Ìí¼ÓÓÒ¼ü²Ëµ¥Ïî
+		 * æ·»åŠ å³é”®èœå•é¡¹
 		 * @see com.frameworkset.common.tag.tree.itf.ITreeNode#addContextMenuItem(com.frameworkset.common.tag.tree.impl.TreeNode.ContextMenuItem)
 		 */
 		public ContextMenuItem addSubContextMenuItem(String name,String link,String icon) {
@@ -221,7 +221,7 @@ public class Menu implements Serializable,Comparable{
 		}
 		
 		/**
-		 * Ìí¼ÓÓÒ¼ü²Ëµ¥Ïî
+		 * æ·»åŠ å³é”®èœå•é¡¹
 		 * @see com.frameworkset.common.tag.tree.itf.ITreeNode#addContextMenuItem(com.frameworkset.common.tag.tree.impl.TreeNode.ContextMenuItem)
 		 */
 		public ContextMenuItem addSubContextMenuItem(String name,String link) {
@@ -257,14 +257,14 @@ public class Menu implements Serializable,Comparable{
 	
 
 	/**
-	 * Ìí¼ÓÓÒ¼ü²Ëµ¥Ïî
+	 * æ·»åŠ å³é”®èœå•é¡¹
 	 * @see com.frameworkset.common.tag.tree.itf.ITreeNode#addContextMenuItem(com.frameworkset.common.tag.tree.impl.TreeNode.ContextMenuItem)
 	 */
 	public void addContextMenuItem(ContextMenuItem contextmenu) {
 		this.contextMenuItems.add(contextmenu);
 	}
 	/**
-	 * Ìí¼ÓÓÒ¼ü²Ëµ¥Ïî
+	 * æ·»åŠ å³é”®èœå•é¡¹
 	 * @see com.frameworkset.common.tag.tree.itf.ITreeNode#addContextMenuItem(com.frameworkset.common.tag.tree.impl.TreeNode.ContextMenuItem)
 	 */
 	public ContextMenuItem addContextMenuItem(String name,String link,String target,String icon,String clazz,boolean disabled) {
@@ -280,7 +280,7 @@ public class Menu implements Serializable,Comparable{
 	}
 	
 	/**
-	 * Ìí¼ÓÓÒ¼ü²Ëµ¥Ïî
+	 * æ·»åŠ å³é”®èœå•é¡¹
 	 * @see com.frameworkset.common.tag.tree.itf.ITreeNode#addContextMenuItem(com.frameworkset.common.tag.tree.impl.TreeNode.ContextMenuItem)
 	 */
 	public ContextMenuItem addContextMenuItem(String name,String link,String target,String icon,String clazz) {
@@ -296,7 +296,7 @@ public class Menu implements Serializable,Comparable{
 	}
 	
 	/**
-	 * Ìí¼ÓÓÒ¼ü²Ëµ¥Ïî
+	 * æ·»åŠ å³é”®èœå•é¡¹
 	 * @see com.frameworkset.common.tag.tree.itf.ITreeNode#addContextMenuItem(com.frameworkset.common.tag.tree.impl.TreeNode.ContextMenuItem)
 	 */
 	public ContextMenuItem addContextMenuItem(String name,String link,String target,String icon) {
@@ -311,7 +311,7 @@ public class Menu implements Serializable,Comparable{
 	}
 	
 	/**
-	 * Ìí¼ÓÓÒ¼ü²Ëµ¥Ïî
+	 * æ·»åŠ å³é”®èœå•é¡¹
 	 * @see com.frameworkset.common.tag.tree.itf.ITreeNode#addContextMenuItem(com.frameworkset.common.tag.tree.impl.TreeNode.ContextMenuItem)
 	 */
 	public ContextMenuItem addContextMenuItem(String name,String link,String icon) {
@@ -326,7 +326,7 @@ public class Menu implements Serializable,Comparable{
 	}
 	
 	/**
-	 * Ìí¼ÓÓÒ¼ü²Ëµ¥Ïî
+	 * æ·»åŠ å³é”®èœå•é¡¹
 	 * @see com.frameworkset.common.tag.tree.itf.ITreeNode#addContextMenuItem(com.frameworkset.common.tag.tree.impl.TreeNode.ContextMenuItem)
 	 */
 	public ContextMenuItem addContextMenuItem(String name,String link) {
@@ -339,7 +339,7 @@ public class Menu implements Serializable,Comparable{
 	}
 	
 	/**
-	 * Ìí¼ÓÓÊ¼ş²Ëµ¥ÏîµÄ·Ö¸ôÏß
+	 * æ·»åŠ é‚®ä»¶èœå•é¡¹çš„åˆ†éš”çº¿
 	 */
 	public void addSeperate() {
 		this.contextMenuItems.add(seperate);		

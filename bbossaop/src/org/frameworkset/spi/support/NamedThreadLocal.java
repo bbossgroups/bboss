@@ -25,7 +25,7 @@ import org.frameworkset.util.Assert;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2010-9-24 ÏÂÎç04:59:51
+ * @Date 2010-9-24 ä¸‹åˆ04:59:51
  * @author biaoping.yin
  * @version 1.0
  */

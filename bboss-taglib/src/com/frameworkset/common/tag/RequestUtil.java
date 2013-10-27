@@ -50,7 +50,7 @@ public class RequestUtil extends BaseTag {
 	}
 
 	/**
-	 * ÊôĞÔ»òÕß²ÎÊıÃû³Æ
+	 * å±æ€§æˆ–è€…å‚æ•°åç§°
 	 */
 	private String name;
 	private String property;
@@ -65,12 +65,12 @@ public class RequestUtil extends BaseTag {
 	private String defaultValue = null;
 
 	/**
-		 * ¶ÔÊä³ö½øĞĞ±àÂë
+		 * å¯¹è¾“å‡ºè¿›è¡Œç¼–ç 
 		 */
 	private String encode = null;
 
 	/**
-	 * ¶ÔÊä³ö½øĞĞ½âÂë
+	 * å¯¹è¾“å‡ºè¿›è¡Œè§£ç 
 	 */
 	private String decode = null;
 
@@ -80,11 +80,11 @@ public class RequestUtil extends BaseTag {
 //		HttpSession session = request.getSession(false) ;
 		if (name != null)
 			try {
-				//»ñÈ¡¶ÔÏóÊôĞÔµÄÖµ
+				//è·å–å¯¹è±¡å±æ€§çš„å€¼
 				if (property != null)
 					outStr = this.getBeanValue();
 				else
-					//»ñÈ¡²ÎÊıÖµ
+					//è·å–å‚æ•°å€¼
 					outStr = this.getParameter(name);
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -93,14 +93,14 @@ public class RequestUtil extends BaseTag {
 
 		if (method != null && method.trim().length() > 0) {
 			try {
-				//·½·¨ÓĞ²ÎÊıÊ±
+				//æ–¹æ³•æœ‰å‚æ•°æ—¶
 				if (getParameter() != null)
 					outStr =
 						 ValueObjectUtil.getValueByMethodName(
 							request,
 							method,
 							new Object[] { getParameter()});
-				//·½·¨ÎŞ²ÎÊıÊ±
+				//æ–¹æ³•æ— å‚æ•°æ—¶
 				else
 					outStr =
 						 (ValueObjectUtil
@@ -117,7 +117,7 @@ public class RequestUtil extends BaseTag {
 				outStr = (getParameterValue(parameter));
 
 			} catch (Exception e1) {
-				// TODO ×Ô¶¯Éú³É catch ¿é
+				// TODO è‡ªåŠ¨ç”Ÿæˆ catch å—
 				e1.printStackTrace();
 				return SKIP_BODY;
 			}
@@ -128,7 +128,7 @@ public class RequestUtil extends BaseTag {
 				outStr = (getAttributeValue(attribute));
 
 			} catch (Exception e1) {
-				// TODO ×Ô¶¯Éú³É catch ¿é
+				// TODO è‡ªåŠ¨ç”Ÿæˆ catch å—
 				return SKIP_BODY;
 			}
 		}
@@ -302,7 +302,7 @@ public class RequestUtil extends BaseTag {
 	}
 
 	/**
-	 * @return ²ÎÊıµÄÈ±Ê¡Öµ
+	 * @return å‚æ•°çš„ç¼ºçœå€¼
 	 */
 	public String getDefaultValue() {
 		return defaultValue;
@@ -316,8 +316,8 @@ public class RequestUtil extends BaseTag {
 	}
 
 	/**
-	 * Description: ÊÇ·ñ±àÂë£¬¡°true¡± or ¡°false¡±  default :false
-	 * @return ÊÇ·ñ±àÂë£º¡°true¡± or ¡°false¡±
+	 * Description: æ˜¯å¦ç¼–ç ï¼Œâ€œtrueâ€ or â€œfalseâ€  default :false
+	 * @return æ˜¯å¦ç¼–ç ï¼šâ€œtrueâ€ or â€œfalseâ€
 	 * String
 	 */
 	public String getDecode() {

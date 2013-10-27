@@ -23,7 +23,7 @@ import com.frameworkset.util.EditorInf;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2010-2-21 ����05:50:42
+ * @Date 2010-2-21 下午05:50:42
  * @author biaoping.yin
  * @version 1.0
  */
@@ -36,13 +36,13 @@ public class ProEditor implements EditorInf<String>
     public String getValueFromObject(Object fromValue)
     {          
         if(fromValue == null)
-            return "δ֪";
+            return "未知";
         if(fromValue.equals("0"))
-            return "��";
+            return "男";
         else if(fromValue.equals("1"))
-            return "Ů";
+            return "女";
         else 
-            return "δ֪";
+            return "未知";
     }
     
     /* (non-Javadoc)
@@ -51,12 +51,12 @@ public class ProEditor implements EditorInf<String>
     public String getValueFromString(String fromValue)
     {   
         if(fromValue == null)
-            return "δ֪";
+            return "未知";
         if(fromValue.equals("0"))
-            return "��";
+            return "男";
         else if(fromValue.equals("1"))
-            return "Ů";
+            return "女";
         else 
-            return "δ֪";
+            return "未知";
     }
 }

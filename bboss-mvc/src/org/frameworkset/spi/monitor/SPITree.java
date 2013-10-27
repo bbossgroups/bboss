@@ -37,7 +37,7 @@ import com.frameworkset.util.StringUtil;
  * 
  * <p>Title: SPITree.java</p>
  *
- * <p>Description: SPI¼à¿ØÊ÷</p>
+ * <p>Description: SPIç›‘æŽ§æ ‘</p>
  *
  * <p>Copyright: Copyright (c) 2007</p>
  *

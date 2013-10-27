@@ -36,15 +36,15 @@ import com.frameworkset.util.ValueObjectUtil;
 
 
 /**
- * ÅĞ¶Ïµ±Ç°ÁĞµÄÖµÊÇ·ñĞ¡ÓÚ»òµÈÓÚvalueÊôĞÔÖ¸¶¨µÄÔ¤ÉèÖµ
- * Èç¹ûÅĞ¶Ï³ÉÁ¢£¬ÔòÖ´ĞĞ±êÇ©Ìå£¬·ñÔòÌø¹ı
+ * åˆ¤æ–­å½“å‰åˆ—çš„å€¼æ˜¯å¦å°äºæˆ–ç­‰äºvalueå±æ€§æŒ‡å®šçš„é¢„è®¾å€¼
+ * å¦‚æœåˆ¤æ–­æˆç«‹ï¼Œåˆ™æ‰§è¡Œæ ‡ç­¾ä½“ï¼Œå¦åˆ™è·³è¿‡
  * @author biaoping.ying
  * @version 1.0
  *  2004-9-15
  */
 public class LogicELMatch extends MatchTag {
 	/**
-	 *  Description: Ğ¡ÓÚµÈÓÚ
+	 *  Description: å°äºç­‰äº
 	 * @return boolean
 	 * @see com.frameworkset.common.tag.pager.tags.MatchTag#match()
 	 */

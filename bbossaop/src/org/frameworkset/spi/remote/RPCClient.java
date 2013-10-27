@@ -41,7 +41,7 @@ import org.frameworkset.spi.security.SecurityContext;
  * Copyright (c) 2007
  * </p>
  * 
- * @Date 2009-10-7 下午05:28:38
+ * @Date 2009-10-7 涓嬪崍05:28:38
  * @author biaoping.yin
  * @version 1.0
  */
@@ -323,7 +323,7 @@ public final class RPCClient
 		}
 		catch (Exception t)
 		{
-			throw new RuntimeException("调用远程服务失败，请确认服务器已经启动或者检查网络是否联通： " + _req, t);
+			throw new RuntimeException("璋冪敤杩滅▼鏈嶅姟澶辫触锛岃纭鏈嶅姟鍣ㄥ凡缁忓惎鍔ㄦ垨鑰呮鏌ョ綉缁滄槸鍚﹁仈閫氾細 " + _req, t);
 		}
 
 		if (resultMode == RPCRequest.GET_NONE)

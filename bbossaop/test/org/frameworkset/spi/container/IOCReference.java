@@ -25,7 +25,7 @@ import org.frameworkset.spi.remote.restful.RestfulServiceConvertor;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2012-8-4 ÏÂÎç2:17:18
+ * @Date 2012-8-4 ä¸‹åˆ2:17:18
  * @author biaoping.yin
  * @version 1.0
  */
@@ -33,10 +33,10 @@ public class IOCReference {
 
 	public void test()
 	{
-		//³õÊ¼»¯iocÈİÆ÷¶ÔÏó£¬ÔÚ¸ÃÈİÆ÷¶ÔÏóÖĞ¶¨ÒåÁËÈı¸öÍâ²¿iocÈİÆ÷×é¼şµÄÒıÓÃ×é¼ş
+		//åˆå§‹åŒ–iocå®¹å™¨å¯¹è±¡ï¼Œåœ¨è¯¥å®¹å™¨å¯¹è±¡ä¸­å®šä¹‰äº†ä¸‰ä¸ªå¤–éƒ¨iocå®¹å™¨ç»„ä»¶çš„å¼•ç”¨ç»„ä»¶
 		BaseApplicationContext context = DefaultApplicationContext
 						.getApplicationContext("org/frameworkset/spi/container/iocreference.xml");
-		//¿çioc×é¼şÊµÀı»ñÈ¡·½·¨Ê¾Àı
+		//è·¨iocç»„ä»¶å®ä¾‹è·å–æ–¹æ³•ç¤ºä¾‹
 		RestfulServiceConvertor convertor = context.getTBeanObject("test_refbean_from_outnerapplicationcontext",RestfulServiceConvertor.class);
 		RestfulServiceConvertor convertor1 = context.getTBeanObject("test_refbean_from_mvcapplicationcontext",RestfulServiceConvertor.class);
 		RestfulServiceConvertor convertor2 = context.getTBeanObject("test_refbean_from_outnerdefaultapplicationcontext",RestfulServiceConvertor.class);

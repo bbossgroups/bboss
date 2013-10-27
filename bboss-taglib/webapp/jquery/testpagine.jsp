@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset=GBK" language="java" %>
+<%@ page contentType="text/html; charset=UTF-8" language="java" %>
 <%@ taglib prefix="tab" uri="/WEB-INF/tabpane-taglib.tld"%>
 <tab:tabConfig />
 <script>

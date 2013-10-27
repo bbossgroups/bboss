@@ -3,31 +3,31 @@ package com.frameworkset.orm.annotation;
 public enum TransactionType
     {
         /**
-         * Ê¼ÖÕ´´½¨ÐÂÊÂÎñ
+         * å§‹ç»ˆåˆ›å»ºæ–°äº‹åŠ¡
          */
         NEW_TRANSACTION,
         
         /**
-         * Èç¹ûÃ»ÓÐÊÂÎñ´´½¨ÐÂÊÂÎñ£¬ÓÐÊÂÎñ¼ÓÈëµ±Ç°ÊÂÎñ
+         * å¦‚æžœæ²¡æœ‰äº‹åŠ¡åˆ›å»ºæ–°äº‹åŠ¡ï¼Œæœ‰äº‹åŠ¡åŠ å…¥å½“å‰äº‹åŠ¡
          */
         REQUIRED_TRANSACTION,
         /**
-         * ÓÐÊÂÎñ¾Í¼ÓÈëÊÂÎñ£¬Ã»ÓÐ²»´´½¨ÊÂÎñ,Ä¬ÈÏÇé¿ö
+         * æœ‰äº‹åŠ¡å°±åŠ å…¥äº‹åŠ¡ï¼Œæ²¡æœ‰ä¸åˆ›å»ºäº‹åŠ¡,é»˜è®¤æƒ…å†µ
          */
         MAYBE_TRANSACTION,
         /**
-         * Ã»ÓÐÊÂÎñ
+         * æ²¡æœ‰äº‹åŠ¡
          */
         NO_TRANSACTION,
         
         /**
-         * Î´ÖªÊÂÎñÀàÐÍ
+         * æœªçŸ¥äº‹åŠ¡ç±»åž‹
          */
         UNKNOWN_TRANSACTION,
         
         /**
-         * ¶ÁÐ´ÊÂÎñÀàÐÍ£¬Ö§³ÖÊý¾Ý¿â¶ÁÐ´²Ù×÷£¬ÊÂÎñÖÐËù×öµÄ²Ù×÷
-         * ÆäËûÊÂÎñ¶¼¿ÉÒÔ¿´µ½
+         * è¯»å†™äº‹åŠ¡ç±»åž‹ï¼Œæ”¯æŒæ•°æ®åº“è¯»å†™æ“ä½œï¼Œäº‹åŠ¡ä¸­æ‰€åšçš„æ“ä½œ
+         * å…¶ä»–äº‹åŠ¡éƒ½å¯ä»¥çœ‹åˆ°
          */
         RW_TRANSACTION
         

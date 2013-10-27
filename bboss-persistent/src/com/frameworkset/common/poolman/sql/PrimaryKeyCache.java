@@ -40,21 +40,21 @@ import org.apache.log4j.Logger;
 import com.frameworkset.common.poolman.management.BaseTableManager;
 
 /**
- * »º³åÊı¾İ¿âµÄÖ÷¼üĞÅÏ¢
+ * ç¼“å†²æ•°æ®åº“çš„ä¸»é”®ä¿¡æ¯
  * 
  * @author biaoping.yin created on 2005-3-29 version 1.0
  */
 public class PrimaryKeyCache {
 	private static Logger log = Logger.getLogger(PrimaryKeyCache.class);
 
-	// Êı¾İ¿âÁ´½Ó³ØÃû³Æ
+	// æ•°æ®åº“é“¾æ¥æ± åç§°
 	private String dbname;
 
 	// private static PrimaryKeyCache primaryKeyCache;
 	private Map id_tables;
 	
 	/**
-	 * Ã»ÓĞÔÚtableinfoÖĞ´æ·ÅÖ÷¼üµÄĞÅÏ¢µÄ±íµÄÖ÷¼üĞÅÏ¢ÓÃNULL_À´Ìæ»»
+	 * æ²¡æœ‰åœ¨tableinfoä¸­å­˜æ”¾ä¸»é”®çš„ä¿¡æ¯çš„è¡¨çš„ä¸»é”®ä¿¡æ¯ç”¨NULL_æ¥æ›¿æ¢
 	 */
 	private static final PrimaryKey NULL_ = new PrimaryKey();
 
@@ -108,7 +108,7 @@ public class PrimaryKeyCache {
 	}
 	
 	/**
-	 * ¶¯Ì¬Ôö¼Ó±íµÄÖ÷¼üĞÅÏ¢µ½ÏµÍ³»º³åÖĞ
+	 * åŠ¨æ€å¢åŠ è¡¨çš„ä¸»é”®ä¿¡æ¯åˆ°ç³»ç»Ÿç¼“å†²ä¸­
 	 * @param tableName
 	 * @return
 	 */
@@ -117,18 +117,18 @@ public class PrimaryKeyCache {
 	}
 	
 	/**
-	 * ¶¯Ì¬Ôö¼Ó±íµÄÖ÷¼üĞÅÏ¢µ½ÏµÍ³»º³åÖĞ
+	 * åŠ¨æ€å¢åŠ è¡¨çš„ä¸»é”®ä¿¡æ¯åˆ°ç³»ç»Ÿç¼“å†²ä¸­
 	 * @param tableName
 	 * @return
 	 */
 	public PrimaryKey loaderPrimaryKey(Connection con,String tableName) {
 		try {
 			
-			log.debug("¿ªÊ¼×°ÔØ±í¡¾" + tableName +"¡¿µÄÖ÷¼üĞÅÏ¢µ½»º³å¡£");
+			log.debug("å¼€å§‹è£…è½½è¡¨ã€" + tableName +"ã€‘çš„ä¸»é”®ä¿¡æ¯åˆ°ç¼“å†²ã€‚");
 //			PrimaryKey key = this.getIDTable(tableName);
 //			if(key != null)
 //			{
-//				System.out.println("±í¡¾" + tableName +"¡¿µÄÖ÷¼üĞÅÏ¢ÒÑ¾­´æÔÚ£¬ÎŞĞè×°ÔØ£¡");
+//				System.out.println("è¡¨ã€" + tableName +"ã€‘çš„ä¸»é”®ä¿¡æ¯å·²ç»å­˜åœ¨ï¼Œæ— éœ€è£…è½½ï¼");
 //				return key;
 //			}
 			PrimaryKey key = BaseTableManager.getPoolTableInfo(dbname,con,
@@ -136,12 +136,12 @@ public class PrimaryKeyCache {
 			if (key != null)
 			{
 				id_tables.put(key.getTableName().trim().toLowerCase(), key);
-				log.debug("Íê³É×°ÔØ±í¡¾" + tableName +"¡¿µÄÖ÷¼üĞÅÏ¢¡£");
+				log.debug("å®Œæˆè£…è½½è¡¨ã€" + tableName +"ã€‘çš„ä¸»é”®ä¿¡æ¯ã€‚");
 			}
 			else
 			{
 				id_tables.put(tableName.trim().toLowerCase(),NULL_);
-				log.debug("Íê³É×°ÔØ±í¡¾" + tableName +"¡¿µÄÖ÷¼üĞÅÏ¢,NULL_,");
+				log.debug("å®Œæˆè£…è½½è¡¨ã€" + tableName +"ã€‘çš„ä¸»é”®ä¿¡æ¯,NULL_,");
 			}
 			
 			return key;

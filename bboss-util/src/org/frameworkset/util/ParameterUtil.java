@@ -49,12 +49,12 @@ public class ParameterUtil {
 			
 			if(name.length() == 0)
 			{
-				name.append("×ª»»²ÎÊıÃû³Æ±í´ïÊ½").append(property.getOrigineRequestParamName()).append("Ê§°Ü£º");
+				name.append("è½¬æ¢å‚æ•°åç§°è¡¨è¾¾å¼").append(property.getOrigineRequestParamName()).append("å¤±è´¥ï¼š");
 				for(Var var:vars)
 				{
 					if(var.isIsvar())
 					{
-						name.append("Ã»ÓĞÃû³ÆÎª").append(var.getName()).append("requestÇëÇó²ÎÊı;");			
+						name.append("æ²¡æœ‰åç§°ä¸º").append(var.getName()).append("requestè¯·æ±‚å‚æ•°;");			
 						
 						
 					}
@@ -100,12 +100,12 @@ public class ParameterUtil {
 			
 			if(name.length() == 0)
 			{
-				name.append("×ª»»²ÎÊıÃû³Æ±í´ïÊ½").append(parameter.getOrigineRequestParamName()).append("Ê§°Ü£º");
+				name.append("è½¬æ¢å‚æ•°åç§°è¡¨è¾¾å¼").append(parameter.getOrigineRequestParamName()).append("å¤±è´¥ï¼š");
 				for(Var var:vars)
 				{
 					if(var.isIsvar())
 					{
-						name.append("Ã»ÓĞÃû³ÆÎª").append(var.getName()).append("requestÇëÇó²ÎÊı;");			
+						name.append("æ²¡æœ‰åç§°ä¸º").append(var.getName()).append("requestè¯·æ±‚å‚æ•°;");			
 						
 						
 					}

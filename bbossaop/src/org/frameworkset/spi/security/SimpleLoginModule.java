@@ -22,7 +22,7 @@ package org.frameworkset.spi.security;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2010-2-20 ÏÂÎç05:18:33
+ * @Date 2010-2-20 ä¸‹åˆ05:18:33
  * @author biaoping.yin
  * @version 1.0
  */

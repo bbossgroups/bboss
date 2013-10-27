@@ -24,8 +24,8 @@ import javax.jms.JMSException;
  * Title: JMSTemplate.java
  * </p>
  * <p>
- * Description: JMS模板方法
- * 包含
+ * Description: JMS妯℃澘鏂规硶
+ * 鍖呭惈
  * </p>
  * <p>
  * bboss workgroup
@@ -34,7 +34,7 @@ import javax.jms.JMSException;
  * Copyright (c) 2007
  * </p>
  * 
- * @Date 2009-11-19 下午01:32:48
+ * @Date 2009-11-19 涓嬪崍01:32:48
  * @author biaoping.yin
  * @version 1.0
  */

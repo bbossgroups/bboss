@@ -1,6 +1,6 @@
 /**
- * ÊÊÓÃÓÚÌø×ªº¯Êıµ¯³öĞÂÒ³ÃæºÍĞÂ´°¿ÚµÄÇé¿ö ÔÚindex±êÇ©µÄcustomÊôĞÔ±»ÉèÖÃÎªtrueÊ± ·ÖÒ³±êÇ©Ê¹ÓÃÕâ¸öjsÎÄ¼ş£¬·ñÔòÊ¹ÓÃpager.js
- * Ê¹ÓÃÕâ¸öÎÄ¼şÊ±£¬ÓÃ»§±ØĞëÔÚjspÒ³ÃæÌí¼Ó form: <form name="com.frameworkset.goform"
+ * é€‚ç”¨äºè·³è½¬å‡½æ•°å¼¹å‡ºæ–°é¡µé¢å’Œæ–°çª—å£çš„æƒ…å†µ åœ¨indexæ ‡ç­¾çš„customå±æ€§è¢«è®¾ç½®ä¸ºtrueæ—¶ åˆ†é¡µæ ‡ç­¾ä½¿ç”¨è¿™ä¸ªjsæ–‡ä»¶ï¼Œå¦åˆ™ä½¿ç”¨pager.js
+ * ä½¿ç”¨è¿™ä¸ªæ–‡ä»¶æ—¶ï¼Œç”¨æˆ·å¿…é¡»åœ¨jspé¡µé¢æ·»åŠ  form: <form name="com.frameworkset.goform"
  * method="post"></form>
  */
 
@@ -8,7 +8,7 @@ var  commitevent ;
 
  
 /**
- * url:Ò³ÃæµØÖ· pages:µ±Ç°Ò³Ãæ×ÜÊı maxPageItem:Ã¿Ò³ÏÔÊ¾µÄ×î´ó¼ÇÂ¼Êı hasParam:ÅĞ¶Ïµ±Ç°Ò³µØÖ·ÊÇ·ñ´ø²ÎÊı
+ * url:é¡µé¢åœ°å€ pages:å½“å‰é¡µé¢æ€»æ•° maxPageItem:æ¯é¡µæ˜¾ç¤ºçš„æœ€å¤§è®°å½•æ•° hasParam:åˆ¤æ–­å½“å‰é¡µåœ°å€æ˜¯å¦å¸¦å‚æ•°
  * containerid, selector, url, pages, maxPageItem, hasParam, sortKey, desc, id,
  */
 function goTo(gotopageid,gopageerror_msg,containerid, selector, url,
@@ -54,7 +54,7 @@ function goTo(gotopageid,gopageerror_msg,containerid, selector, url,
 		alert(gopageerror_msg);
 		return;
     }
-    // Èç¹ûÌø×ªÒ³±È×ÜÒ³Êı´óÊ±£¬½«Ìø×ªÒ³Ö¸¶¨Îªpages
+    // å¦‚æœè·³è½¬é¡µæ¯”æ€»é¡µæ•°å¤§æ—¶ï¼Œå°†è·³è½¬é¡µæŒ‡å®šä¸ºpages
     
     if(pages < goPage)
     {
@@ -104,13 +104,13 @@ function goTo(gotopageid,gopageerror_msg,containerid, selector, url,
 }
 
  /**
-	 * ÊµÏÖ·ÖÒ³±êÇ©ÖĞ·­Ò³°´Å¥Ìá½»±íµ¥¹¦ÄÜ formName:±íµ¥Ãû³Æ params:Ò³Ãæ²ÎÊı forwardurl:Ìø×ªÒ³Ãæ
-	 * promotion:ÊÇ·ñÌáÊ¾ĞÅÏ¢
+	 * å®ç°åˆ†é¡µæ ‡ç­¾ä¸­ç¿»é¡µæŒ‰é’®æäº¤è¡¨å•åŠŸèƒ½ formName:è¡¨å•åç§° params:é¡µé¢å‚æ•° forwardurl:è·³è½¬é¡µé¢
+	 * promotion:æ˜¯å¦æç¤ºä¿¡æ¯
 	 */
 function pageSubmit(formName,params,forwardurl,promotion,id)
 {
 		 
-    // Èç¹ûĞèÒªÌáÊ¾ÊÇ·ñ±£´æÒ³ÃæÊı¾İµÄĞŞ¸Ä£¬Ôòµ¯³öÌáÊ¾´°¿Ú£¬
+    // å¦‚æœéœ€è¦æç¤ºæ˜¯å¦ä¿å­˜é¡µé¢æ•°æ®çš„ä¿®æ”¹ï¼Œåˆ™å¼¹å‡ºæç¤ºçª—å£ï¼Œ
     var paramsName = "PAGE_QUERY_STRING";
     if(id)
         paramsName = id + ".PAGE_QUERY_STRING";
@@ -121,7 +121,7 @@ function pageSubmit(formName,params,forwardurl,promotion,id)
     if(promotion && flag)
     {
     	
-        if(!confirm("ÊÇ·ñ±£´æµ±Ç°Ò³ÃæĞŞ¸ÄµÄÊı¾İ£¿\r\nÊÇ£¬µã»÷'È·¶¨'£»·ñ£¬µã»÷'È¡Ïû'."))
+        if(!confirm("æ˜¯å¦ä¿å­˜å½“å‰é¡µé¢ä¿®æ”¹çš„æ•°æ®ï¼Ÿ\r\næ˜¯ï¼Œç‚¹å‡»'ç¡®å®š'ï¼›å¦ï¼Œç‚¹å‡»'å–æ¶ˆ'."))
 		{		
 			
             location.replace(forwardurl);            
@@ -254,14 +254,14 @@ function convertValue(object,needconvert)
 }
 
 /**
- * jquery·½Ê½¼ÓÔØÒ³Ãæ·ÖÒ³ÄÚÈİ
+ * jqueryæ–¹å¼åŠ è½½é¡µé¢åˆ†é¡µå†…å®¹
  * 
  * @param pageurl
- *            Ò³ÃæµØÖ·
+ *            é¡µé¢åœ°å€
  * @param containerid
- *            ´æ·ÅÒ³ÃæÄÚÈİµÄÈİÆ÷
+ *            å­˜æ”¾é¡µé¢å†…å®¹çš„å®¹å™¨
  * @param selector
- *            Ñ¡ÔñÒ³ÃæÄÚÈİ·¶Î§µÄÑ¡ÔñÆ÷
+ *            é€‰æ‹©é¡µé¢å†…å®¹èŒƒå›´çš„é€‰æ‹©å™¨
  * @return
  */
 function loadPageContent(pageurl, containerid, selector) {
@@ -312,11 +312,11 @@ function ___parserParams(queryString)
 		return null;
 	}
 	
-	// Èç¹ûÁ´½ÓÃ»ÓĞ²ÎÊı£¬»òÕßÁ´½ÓÖĞ²»´æÔÚÎÒÃÇÒª»ñÈ¡µÄ²ÎÊı£¬Ö±½Ó·µ»Ø¿Õ
+	// å¦‚æœé“¾æ¥æ²¡æœ‰å‚æ•°ï¼Œæˆ–è€…é“¾æ¥ä¸­ä¸å­˜åœ¨æˆ‘ä»¬è¦è·å–çš„å‚æ•°ï¼Œç›´æ¥è¿”å›ç©º
 	var params = new Array();
 	
 
-	// ·ÖÀë²ÎÊı¶Ô ?key=value&key2=value2
+	// åˆ†ç¦»å‚æ•°å¯¹ ?key=value&key2=value2
 	var parameters = queryString.split("&");
 	if(parameters.length)
 	{
@@ -324,11 +324,11 @@ function ___parserParams(queryString)
 		var datas = "{";
 		for(var i=0; i<parameters.length; i++)
 		{
-			// »ñÈ¡µÈºÅÎ»ÖÃ
+			// è·å–ç­‰å·ä½ç½®
 			pos = parameters[i].indexOf('=');
 			if(pos == -1) { continue; }
 	
-			// »ñÈ¡name ºÍ value
+			// è·å–name å’Œ value
 			if(i > 0)
 				datas += ",";
 			datas += "'"+parameters[i].substring(0, pos)+"'";
@@ -343,7 +343,7 @@ function ___parserParams(queryString)
 		var pos = parameters.indexOf('=');
 		if(pos == -1) { return null }
 
-		// »ñÈ¡name ºÍ value
+		// è·å–name å’Œ value
 		datas += "{'" + parameters.substring(0, pos);
 		datas += "':";
 		datas += "'" + parameters.substring(pos + 1)+ "'}";
@@ -367,10 +367,10 @@ function _____parseObj( strData ){
 }
 
 /**
- * ÇĞ»»Ò³Ãæ¼ÇÂ¼´óĞ¡º¯Êı
+ * åˆ‡æ¢é¡µé¢è®°å½•å¤§å°å‡½æ•°
  * 
  * @param cookieid
- *            ´æ·ÅÒ³Ãæ¼ÇÂ¼´óĞ¡µÄcookieÃû³Æ
+ *            å­˜æ”¾é¡µé¢è®°å½•å¤§å°çš„cookieåç§°
  */
 function __chagePageSize(event, cookieid, selectkey,pageurl,selector,containerid) {
 	if (event) {
@@ -378,7 +378,7 @@ function __chagePageSize(event, cookieid, selectkey,pageurl,selector,containerid
 		var select_ = event.srcElement || event.target;
 
 		var pagesize = select_.options[select_.selectedIndex].value;
-		// var Days = 100; //´Ë cookie ½«±»±£´æ 30 Ìì
+		// var Days = 100; //æ­¤ cookie å°†è¢«ä¿å­˜ 30 å¤©
 		// var exp = new Date(); //new Date("December 31, 9998");
 		// exp.setTime(exp.getTime() + Days*24*60*60*1000);
 		// document.cookie = name + "="+ pagesize +";expires="+
@@ -455,8 +455,8 @@ if (typeof value != 'undefined') {
 }
 
 /**
- * ÉèÖÃ±í¸ñµÄÊó±êÒÆ¶¯¼°µã»÷ÑùÊ½
- * ±í¸ñID»òclass£¬ÀıÈç£ºsetTable_grayCss(".table_gray") || setTable_grayCss("#tbid") 
+ * è®¾ç½®è¡¨æ ¼çš„é¼ æ ‡ç§»åŠ¨åŠç‚¹å‡»æ ·å¼
+ * è¡¨æ ¼IDæˆ–classï¼Œä¾‹å¦‚ï¼šsetTable_grayCss(".table_gray") || setTable_grayCss("#tbid") 
  * @return
  */
 function setTable_grayCss(idorClass) {
@@ -468,7 +468,7 @@ function setTable_grayCss(idorClass) {
 	   function() {$(this).removeClass('highlight');}
 	);
 
-	// ¸´Ñ¡¿ò 
+	// å¤é€‰æ¡† 
 
 	$(idorClass + ' tbody tr').click(
 	   function() {

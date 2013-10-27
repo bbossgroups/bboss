@@ -27,7 +27,7 @@ import com.frameworkset.util.EditorInf;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2010-11-11 œ¬ŒÁ10:31:46
+ * @Date 2010-11-11 ‰∏ãÂçà10:31:46
  * @author biaoping.yin
  * @version 1.0
  */

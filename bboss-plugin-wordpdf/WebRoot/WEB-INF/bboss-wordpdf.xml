@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding='gb2312'?>
+<?xml version="1.0" encoding='UTF-8'?>
 <!-- 
 bboss-wordpdf.xml
-描述：wordpdf插件演示demo
+鎻忚堪锛歸ordpdf鎻掍欢婕旂ずdemo
 -->
 <properties>
     <property name="/wordpdf/*.page"    		

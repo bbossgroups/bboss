@@ -26,7 +26,7 @@ import org.frameworkset.spi.assemble.RefID.Index;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2012-1-2 ÏÂÎç10:02:32
+ * @Date 2012-1-2 ä¸‹åˆ10:02:32
  * @author biaoping.yin
  * @version 1.0
  */
@@ -89,7 +89,7 @@ public class RefIDUtil {
 //				i ++;
 				if(indexs == null)
 					indexs = new ArrayList<Index>(1);
-				if(i < len && tokens[i+1] != '[') //Èç¹ûºóÐø×Ö·û»¹ÊÇ[¿ªÍ·£¬Ôò¼ÌÐø¼ÆËãÏÂÒ»Î¬Ë÷Òý±êÊ¶£¬
+				if(i < len && tokens[i+1] != '[') //å¦‚æžœåŽç»­å­—ç¬¦è¿˜æ˜¯[å¼€å¤´ï¼Œåˆ™ç»§ç»­è®¡ç®—ä¸‹ä¸€ç»´ç´¢å¼•æ ‡è¯†ï¼Œ
 				{
 					
 //					index.append(tokens[i]);
@@ -133,7 +133,7 @@ public class RefIDUtil {
 //				i ++;
 				if(indexs == null)
 					indexs = new ArrayList<Index>(1);
-				if(i < len && tokens[i+1] != '{') //Èç¹ûºóÐø×Ö·û»¹ÊÇ[¿ªÍ·£¬Ôò¼ÌÐø¼ÆËãÏÂÒ»Î¬Ë÷Òý±êÊ¶£¬
+				if(i < len && tokens[i+1] != '{') //å¦‚æžœåŽç»­å­—ç¬¦è¿˜æ˜¯[å¼€å¤´ï¼Œåˆ™ç»§ç»­è®¡ç®—ä¸‹ä¸€ç»´ç´¢å¼•æ ‡è¯†ï¼Œ
 				{
 					
 					

@@ -21,20 +21,20 @@ package org.frameworkset.spi.security;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2010-2-4 下午04:28:07
+ * @Date 2010-2-4 涓嬪崍04:28:07
  * @author biaoping.yin
  * @version 1.0
  */
 public interface EncryptModule
 {
     /**
-     * 加密方法
+     * 鍔犲瘑鏂规硶
      * @param value
      * @return
      */
     public byte[] encode(byte[] value)  throws SecurityException;
     /**
-     * 解密方法
+     * 瑙ｅ瘑鏂规硶
      * @param value
      * @return
      */

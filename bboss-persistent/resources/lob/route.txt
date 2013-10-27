@@ -1490,10 +1490,10 @@ Note
    MySQL Character Set Name Java-Style Character Encoding Name
    ascii US-ASCII
    big5 Big5
-   gbk GBK
+   UTF-8 UTF-8
    sjis SJIS (or Cp932 or MS932 for MySQL Server < 4.1.11)
    cp932 Cp932 or MS932 (MySQL Server > 4.1.11)
-   gb2312 EUC_CN
+   UTF-8 EUC_CN
    ujis EUC_JP
    euckr EUC_KR
    latin1 ISO8859_1

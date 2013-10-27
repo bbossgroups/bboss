@@ -20,8 +20,8 @@ import java.io.Serializable;
 /**
  * <p>Title: PoolManBootstrapMBean</p>
  *
- * <p>Description: ͨ��PoolManBootstrapMBeanʵ�ֶ�pool���ӳصĶ�̬�������綯̬������
- * ��̬װ�أ���̬ע���ȵ�</p>
+ * <p>Description: 通过PoolManBootstrapMBean实现对pool链接池的动态管理比如动态启动，
+ * 动态装载，动态注销等等</p>
  *
  * <p>Copyright: Copyright (c) 2005</p>
  *
@@ -32,11 +32,11 @@ import java.io.Serializable;
  */
 public interface PoolManBootstrapMBean extends Serializable{
 
-    /**��������poolman*/
+    /**重新启动poolman*/
     public void reStart(String configFile) throws Exception;
-    /**����poolman*/
+    /**启动poolman*/
     public void start(String configFile) throws Exception;
-    /**ֹͣpoolman*/
+    /**停止poolman*/
     public void stop() throws Exception;
 
 }

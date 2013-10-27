@@ -3,16 +3,16 @@ package com.frameworkset.common.tag.pager.tags;
 import com.frameworkset.util.RegexUtil;
 
 /**
- * Âß¼­°üº¬±êÇ©£¬
- * ÅĞ¶Ïµ±Ç°µÄÖµÊÇ·ñºÍpatternÊôĞÔ¶ÔÓ¦ÕıÔò±í´ïÊ½Ïà°üº¬£¬°üº¬ÔòÖ´ĞĞ±êÇ©ÌåÖĞµÄ´úÂë
- * ·ñÔò²»Ö´ĞĞ
+ * é€»è¾‘åŒ…å«æ ‡ç­¾ï¼Œ
+ * åˆ¤æ–­å½“å‰çš„å€¼æ˜¯å¦å’Œpatternå±æ€§å¯¹åº”æ­£åˆ™è¡¨è¾¾å¼ç›¸åŒ…å«ï¼ŒåŒ…å«åˆ™æ‰§è¡Œæ ‡ç­¾ä½“ä¸­çš„ä»£ç 
+ * å¦åˆ™ä¸æ‰§è¡Œ
  * <p>Title: LogicContainTag</p>
  *
  * <p>Description: </p>
  *
  * <p>Copyright: Copyright (c) 2006</p>
  *
- * <p>Company: ³¤É³¿Æ´´¼ÆËã»úÏµÍ³¼¯³ÉÓĞÏŞ¹«Ë¾</p>
+ * <p>Company: é•¿æ²™ç§‘åˆ›è®¡ç®—æœºç³»ç»Ÿé›†æˆæœ‰é™å…¬å¸</p>
  * @Date 2007-12-6 20:26:14
  * @author biaoping.yin
  * @version 1.0

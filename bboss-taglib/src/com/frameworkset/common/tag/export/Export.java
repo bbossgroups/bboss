@@ -32,20 +32,20 @@
 package com.frameworkset.common.tag.export;
 
 /**
- * �����ݵ�������ͬ��ʽ���ļ���,Ŀǰϵͳ��ȱʡʵ�������¼��ָ�ʽ�ļ������ɣ�
+ * 将数据导出到不同格式的文件中,目前系统中缺省实现了如下几种格式文件的生成：
  * 	1.excel
  * 	2.pdf
  * 	3.xml
  * 	4.csv
  *  5.word
- * �û����Ը���ʵ�����ʵ���Զ����ʽ�ļ���������
+ * 用户可以根据实际情况实现自定义格式文件的生成类
  * @author biaoping.yin
  * created on 2005-3-13
  * version 1.0
  */
 public interface Export {
     /**
-     * �������ݵ���ͬ��ʽ�ļ��ķ������ɽӿ�ʵ������ʵ��
+     * 导出数据到不同格式文件的方法，由接口实现类来实现
      * @return Object
      */
     public Object export(Object out);

@@ -35,7 +35,7 @@ package com.frameworkset.common.tag.pager.tags;
 import com.frameworkset.util.ValueObjectUtil;
 
 /**
- * Èç¹û¶ÔÏóÊôĞÔÖµÓë¸ø¶¨valueÖµ²»Æ¥ÅäÊ±Êä³ö±¾±êÇ©µÃÄÚÈİ£¬·ñÔò²»Êä³ö
+ * å¦‚æœå¯¹è±¡å±æ€§å€¼ä¸ç»™å®švalueå€¼ä¸åŒ¹é…æ—¶è¾“å‡ºæœ¬æ ‡ç­¾å¾—å†…å®¹ï¼Œå¦åˆ™ä¸è¾“å‡º
  * @author biaoping.ying
  * @version 1.0
  * 2004-9-14
@@ -45,7 +45,7 @@ public class LogicNotMatchTag extends MatchTag {
 
 
 	/**
-	 *  Description: ²»µÈÓÚ
+	 *  Description: ä¸ç­‰äº
 	 * @return boolean
 	 * @see com.frameworkset.common.tag.pager.tags.MatchTag#match()
 	 */

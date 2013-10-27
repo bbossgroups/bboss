@@ -36,7 +36,7 @@ import javax.servlet.jsp.JspException;
 import com.frameworkset.common.tag.BaseTag;
 
 /**
- * ¼ÇÂ¼Ê÷µÄÒ»Ğ©²ÎÊı
+ * è®°å½•æ ‘çš„ä¸€äº›å‚æ•°
  * @author biaoping.yin
  * created on 2005-7-8
  * version 1.0

@@ -147,7 +147,7 @@ public final class TabPaneTag extends BaseBodyTag {
 	}
 	
 	/**
-	 * ÖØÖÃËùÓÐµÄÊôÐÔ
+	 * é‡ç½®æ‰€æœ‰çš„å±žæ€§
 	 *
 	 */
 	void reset()
@@ -177,7 +177,7 @@ public final class TabPaneTag extends BaseBodyTag {
 			out.attribute(Xhtml.Attr.STYLE,"display:block;");
 		} else {
 			out.attribute(Xhtml.Attr.STYLE,"display:none;");
-			//Èç¹ûÆôÓÃÑÓ³Ù¼ÓÔØ£¬ÔòÌí¼ÓÒ»¸öhiddenÔªËØ£¬´æ·Å¸ÃÃæ°åÄÚµÄËùÓÐiframeÒ³ÃæµÄidÓësrc
+			//å¦‚æžœå¯ç”¨å»¶è¿ŸåŠ è½½ï¼Œåˆ™æ·»åŠ ä¸€ä¸ªhiddenå…ƒç´ ï¼Œå­˜æ”¾è¯¥é¢æ¿å†…çš„æ‰€æœ‰iframeé¡µé¢çš„idä¸Žsrc
 			if(this.lazeload && this.listIFrame != null
 					&& this.listIFrame.size() > 0){
 				String iframeStr = "";

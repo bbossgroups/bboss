@@ -21,7 +21,7 @@ package org.frameworkset.task;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2011-1-23 ÏÂÎç05:27:22
+ * @Date 2011-1-23 ä¸‹åˆ05:27:22
  * @author biaoping.yin
  * @version 1.0
  */

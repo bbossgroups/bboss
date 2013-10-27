@@ -1,16 +1,16 @@
-¸üĞÂ£º½«datagrid\demo\ÏÂÃæµÄjsp£¬cssÈ«²¿ÍøÉÏÒÆ¶¯ÁËÒ»²ã£¬Í¬Ê±½«ÎÄ¼ş¼ĞjspĞŞ¸ÄÎªpage
-¸üĞÂ£º½«jquery.easyui-1.2.2Éı¼¶µ½ÁËjquery-easyui-1.2.3£¬Ìæ»»ÁË¼¸ºõËùÓĞ×Ô´øÎÄ¼ş¼Ğ£¬
-	µ«ÊÇdatagrid\themes\icon.css±£ÁôÁËÔ­À´µÄ¸ü¸Ä£¬Í¬Ê±±£ÁôÔ­À´µÄdatagrid\themes\iconsÏÂÃæ×Ô¼º·ÅÈëµÄÒ»Ğ©Í¼Æ¬
-²é¿´£ºdatagrid\locale\easyui-lang-zh_CN.js ºº»¯
-ĞŞ¸Ä£ºdatagrid\themes\icon.css Ôö¼ÓÁËÀïÃæ¼¸¸öÍ¼±ê
-Ôö¼Ó£ºdatagrid\themes\icons Ôö¼ÓÏÂÃæ¼¸¸öĞ¡Í¼±ê
-Ôö¼Ó£ºdatagrid\js Ôö¼ÓÁËÕû¸öÎÄ¼ş¼Ğ
-Ôö¼Ó£ºdatagrid\demo\jsp Ôö¼ÓÁËÏÂÃæÕû¸öÄ¿Â¼
-Ôö¼Ó£ºdatagrid\demo Ôö¼ÓÁËÏÂÃæµÄdatagrid_editer2_no other table.jsp
-Ôö¼Ó£ºdatagrid\demo Ôö¼ÓÁËÏÂÃæµÄdatagrid_editer1_no_js.jsp
-Ôö¼Ó£ºdatagrid\demo Ôö¼ÓÁËÏÂÃæµÄreturnJson.jsp
-Ôö¼Ó£ºdatagrid\demo Ôö¼ÓÁËÏÂÃæµÄdatagrid_editer.jsp
+æ›´æ–°ï¼šå°†datagrid\demo\ä¸‹é¢çš„jspï¼Œcsså…¨éƒ¨ç½‘ä¸Šç§»åŠ¨äº†ä¸€å±‚ï¼ŒåŒæ—¶å°†æ–‡ä»¶å¤¹jspä¿®æ”¹ä¸ºpage
+æ›´æ–°ï¼šå°†jquery.easyui-1.2.2å‡çº§åˆ°äº†jquery-easyui-1.2.3ï¼Œæ›¿æ¢äº†å‡ ä¹æ‰€æœ‰è‡ªå¸¦æ–‡ä»¶å¤¹ï¼Œ
+	ä½†æ˜¯datagrid\themes\icon.cssä¿ç•™äº†åŸæ¥çš„æ›´æ”¹ï¼ŒåŒæ—¶ä¿ç•™åŸæ¥çš„datagrid\themes\iconsä¸‹é¢è‡ªå·±æ”¾å…¥çš„ä¸€äº›å›¾ç‰‡
+æŸ¥çœ‹ï¼šdatagrid\locale\easyui-lang-zh_CN.js æ±‰åŒ–
+ä¿®æ”¹ï¼šdatagrid\themes\icon.css å¢åŠ äº†é‡Œé¢å‡ ä¸ªå›¾æ ‡
+å¢åŠ ï¼šdatagrid\themes\icons å¢åŠ ä¸‹é¢å‡ ä¸ªå°å›¾æ ‡
+å¢åŠ ï¼šdatagrid\js å¢åŠ äº†æ•´ä¸ªæ–‡ä»¶å¤¹
+å¢åŠ ï¼šdatagrid\demo\jsp å¢åŠ äº†ä¸‹é¢æ•´ä¸ªç›®å½•
+å¢åŠ ï¼šdatagrid\demo å¢åŠ äº†ä¸‹é¢çš„datagrid_editer2_no other table.jsp
+å¢åŠ ï¼šdatagrid\demo å¢åŠ äº†ä¸‹é¢çš„datagrid_editer1_no_js.jsp
+å¢åŠ ï¼šdatagrid\demo å¢åŠ äº†ä¸‹é¢çš„returnJson.jsp
+å¢åŠ ï¼šdatagrid\demo å¢åŠ äº†ä¸‹é¢çš„datagrid_editer.jsp
 
-Ôö¼Ó£ºWEB-INF\lib\json-lib-2.4-jdk15.jar
-Ôö¼Ó£ºWEB-INF\lib\ezmorph-1.0.4.jar
-Ôö¼Ó£ºWEB-INF\lib\commons-beanutils-1.7.jar
+å¢åŠ ï¼šWEB-INF\lib\json-lib-2.4-jdk15.jar
+å¢åŠ ï¼šWEB-INF\lib\ezmorph-1.0.4.jar
+å¢åŠ ï¼šWEB-INF\lib\commons-beanutils-1.7.jar

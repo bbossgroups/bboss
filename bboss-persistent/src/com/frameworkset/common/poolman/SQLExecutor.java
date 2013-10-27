@@ -33,14 +33,14 @@ import com.frameworkset.util.ListInfo;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2008</p>
- * @Date 2010-3-11 ÏÂÎç01:46:25
+ * @Date 2010-3-11 ä¸‹åˆ01:46:25
  * @author biaoping.yin
  * @version 1.0
  */
 public class SQLExecutor
 {
     /**
-     * Êı¾İ¿â²éÑ¯Óï¾äÊôĞÔ
+     * æ•°æ®åº“æŸ¥è¯¢è¯­å¥å±æ€§
      */
     protected String statement ;    
 //    protected String pretoken;
@@ -56,19 +56,19 @@ public class SQLExecutor
     
 
     /**
-	 * Åú´¦ÀíÔ¤±àÒë²Ù×÷²ÎÊı¼¯£¬
+	 * æ‰¹å¤„ç†é¢„ç¼–è¯‘æ“ä½œå‚æ•°é›†ï¼Œ
 	 * List<Params>
 	 */
 	private List<SQLParams> batchsqlparams;
 	/**
-	 * Åú´¦ÀíÔ¤±àÒë²Ù×÷²ÎÊı¼¯£¬
+	 * æ‰¹å¤„ç†é¢„ç¼–è¯‘æ“ä½œå‚æ•°é›†ï¼Œ
 	 * List<String>
 	 */
 	private List<String> batchsqls;
 	private String batchtype=BATCH_COMMON;
 	
     /**
-     * Ô¤±àÒë²ÎÊıÁĞ±í,µ¥¶ÀµÄÔ¤±àÓï¾ä²ÎÊı
+     * é¢„ç¼–è¯‘å‚æ•°åˆ—è¡¨,å•ç‹¬çš„é¢„ç¼–è¯­å¥å‚æ•°
      * Map<String,Param>
      */
     protected SQLParams sqlparams ;
@@ -82,14 +82,14 @@ public class SQLExecutor
         {
             if((this.getPretoken() == null && this.getEndtoken()!= null) ||
                     (getPretoken() != null && getEndtoken() == null))
-                throw new SetSQLParamException("·Ç·¨µÄ°ó¶¨±äÁ¿·Ö¸î·ûÉèÖÃ:pretoken = " + getPretoken() + "endtoken =" + getEndtoken() );            
+                throw new SetSQLParamException("éæ³•çš„ç»‘å®šå˜é‡åˆ†å‰²ç¬¦è®¾ç½®:pretoken = " + getPretoken() + "endtoken =" + getEndtoken() );            
         }
         
         return this.sqlparams;
     }
     
     /**
-     * Ìí¼Ósql²ÎÊı£¬ÓÉDefaultDataInfoImpl½øĞĞ´¦Àí
+     * æ·»åŠ sqlå‚æ•°ï¼Œç”±DefaultDataInfoImplè¿›è¡Œå¤„ç†
      * @param name
      * @param value
      * @param type
@@ -108,7 +108,7 @@ public class SQLExecutor
         }
     }
     /**
-     * Ìí¼Ósql²ÎÊı£¬ÓÉDefaultDataInfoImpl½øĞĞ´¦Àí
+     * æ·»åŠ sqlå‚æ•°ï¼Œç”±DefaultDataInfoImplè¿›è¡Œå¤„ç†
      * @param name
      * @param value
      * @param type
@@ -122,7 +122,7 @@ public class SQLExecutor
     }
     
     /**
-     * Ìí¼Ósql²ÎÊı£¬ÓÉDefaultDataInfoImpl½øĞĞ´¦Àí
+     * æ·»åŠ sqlå‚æ•°ï¼Œç”±DefaultDataInfoImplè¿›è¡Œå¤„ç†
      * @param name
      * @param value
      * @param type
@@ -136,7 +136,7 @@ public class SQLExecutor
     }
     
     /**
-     * Ìí¼Ósql²ÎÊı£¬ÓÉDefaultDataInfoImpl½øĞĞ´¦Àí
+     * æ·»åŠ sqlå‚æ•°ï¼Œç”±DefaultDataInfoImplè¿›è¡Œå¤„ç†
      * @param name
      * @param value
      * @param type
@@ -149,7 +149,7 @@ public class SQLExecutor
         sqlparams.addSQLParam( name,  value,  type, dataformat);
     }
     /**
-     * Ìí¼Ósql²ÎÊı£¬ÓÉDefaultDataInfoImpl½øĞĞ´¦Àí
+     * æ·»åŠ sqlå‚æ•°ï¼Œç”±DefaultDataInfoImplè¿›è¡Œå¤„ç†
      * @param name
      * @param value
      * @param type
@@ -260,7 +260,7 @@ public class SQLExecutor
 	            }
 	        }
 	        else
-	            throw new SQLException("²»Ö§³ÖµÄÊı¾İ¿â²Ù×÷£º" + action);
+	            throw new SQLException("ä¸æ”¯æŒçš„æ•°æ®åº“æ“ä½œï¼š" + action);
 	        return dbutil.executePrepared();
     	}
     	else
@@ -439,7 +439,7 @@ public class SQLExecutor
 //		return CUDexecute(dbname, sql, bean,action,false) ;
 //	}
 //	/**
-//	 * Õë¶ÔÔöÉ¾¸ÄÈıÖÖÀàĞÍDB²Ù×÷µÄÍ³Ò»´¦Àí·½·¨
+//	 * é’ˆå¯¹å¢åˆ æ”¹ä¸‰ç§ç±»å‹DBæ“ä½œçš„ç»Ÿä¸€å¤„ç†æ–¹æ³•
 //	 * @param dbname
 //	 * @param sql
 //	 * @param bean
@@ -505,7 +505,7 @@ public class SQLExecutor
 //	            }
 //	        }
 //	        else
-//	            throw new SQLException("²»Ö§³ÖµÄÊı¾İ¿â²Ù×÷£º" + action);
+//	            throw new SQLException("ä¸æ”¯æŒçš„æ•°æ®åº“æ“ä½œï¼š" + action);
 //		        
 //		}
 //		finally
@@ -1863,8 +1863,8 @@ public class SQLExecutor
 	}
 	
 	/**
-	 * more·ÖÒ³²éÑ¯£¬²»»á¼ÆËã×Ü¼ÇÂ¼Êı£¬Èç¹ûÃ»ÓĞ¼ÇÂ¼ÄÇÃ´·µ»ØµÄListInfoµÄdatasµÄsizeÎª0,
-	 * ÌáÉıĞÔÄÜ£¬Í¬Ê±Ç°Ì¨±êÇ©¿âÒ²»á×öÏìÓ¦µÄµ÷Õû
+	 * moreåˆ†é¡µæŸ¥è¯¢ï¼Œä¸ä¼šè®¡ç®—æ€»è®°å½•æ•°ï¼Œå¦‚æœæ²¡æœ‰è®°å½•é‚£ä¹ˆè¿”å›çš„ListInfoçš„datasçš„sizeä¸º0,
+	 * æå‡æ€§èƒ½ï¼ŒåŒæ—¶å‰å°æ ‡ç­¾åº“ä¹Ÿä¼šåšå“åº”çš„è°ƒæ•´
 	 */
 	/**
 	 * 

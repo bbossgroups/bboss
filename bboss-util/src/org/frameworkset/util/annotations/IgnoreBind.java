@@ -10,7 +10,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 /**
- * ºöÂÔbeanÊôĞÔ²ÎÊı°ó¶¨
+ * å¿½ç•¥beanå±æ€§å‚æ•°ç»‘å®š
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2008</p>
  * @Date 2010-10-24

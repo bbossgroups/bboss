@@ -1,14 +1,14 @@
-<%@ page contentType="text/html; charset=GBK" language="java" %>
+<%@ page contentType="text/html; charset=UTF-8" language="java" %>
 <%@ taglib uri="/WEB-INF/pager-taglib.tld" prefix="pg"%>
 <%@ taglib uri="/WEB-INF/commontag.tld" prefix="common"%>
 <%@ page import="org.frameworkset.web.servlet.support.RequestContext" %>
 
 <!-- 
-	������ͨ�����ݼ�������ȡ��ҳ�б����ݣ������ṩ��ѯ����
+	测试在通过数据加载器获取分页列表数据，并且提供查询功能
 -->
 <html>
 <head>
-<title>������ͨ�����ݼ�������ȡ��ҳ�б����ݣ������ṩ��ѯ����</title>
+<title>测试在通过数据加载器获取分页列表数据，并且提供查询功能</title>
 </head>
 <link rel="shortcut icon"
 			href="${pageContext.request.contextPath}/css/favicon.gif">
@@ -31,37 +31,37 @@
 	<table class="genericTbl">
 			<tr >
 				<form action="/bboss-mvc/pagerqueryuser.htm" method="post">
-					<td  style="width:20%" class="order1 sorted">�������û�����</td>
+					<td  style="width:20%" class="order1 sorted">请输入用户名：</td>
 					<td  style="width:5%" colspan="100"><input type="text" name="userName" value="<common:request name="userName" defaultValue=""/>">
-							<input type="submit" name="��ѯ" value="��ѯ"></td>
+							<input type="submit" name="查询" value="查询"></td>
 				</form>
 			</tr>
-				<!--��ҳ��ʾ��ʼ,��ҳ��ǩ��ʼ��-->
+				<!--分页显示开始,分页标签初始化-->
 			<pg:pager scope="request" data="users" 
 						  isList="false">
 				<pg:param name="userName"/>
 					<tr >
-						<!--���÷�ҳ��ͷ-->
+						<!--设置分页表头-->
 
 						<th  width="2%" align=center  class="order1 sorted">
-						ȫѡ<input class="checkbox" 
+						全选<input class="checkbox" 
 							type="checkBox" hidefocus=true 
 							name="checkBoxAll" 
 							onClick="checkAll('checkBoxAll','ID')"> 
 						</th>
 						<th width="8%" class="order1 sorted">
-							�û�id					</th>
+							用户id					</th>
 						<th width="8%" class="order1 sorted">
-							�û�����					</th>
+							用户名称					</th>
 						<th width="8%" class="order1 sorted">
-							�û�����					</th>
+							用户口令					</th>
 						
 					</tr>
 				
 				<pg:notify>
 					<tr >
 						<td width="2%" align=center colspan="100" style="width:5%" class="order1 sorted">
-							û���û�
+							没有用户
 						</td>
 					</tr>				
 				</pg:notify>

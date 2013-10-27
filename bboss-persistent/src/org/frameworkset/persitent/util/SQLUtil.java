@@ -54,7 +54,7 @@ import com.frameworkset.velocity.BBossVelocityUtil;
  * Copyright (c) 2007
  * </p>
  * 
- * @Date 2010-7-12 ÏÂÎç07:38:55
+ * @Date 2010-7-12 ä¸‹åˆ07:38:55
  * @author biaoping.yin
  * @version 1.0
  */
@@ -130,12 +130,12 @@ public class SQLUtil {
 	
 	
 	 /**
-     * Ä¬ÈÏµÄsql½á¹¹»º´æÆ÷
+     * é»˜è®¤çš„sqlç»“æ„ç¼“å­˜å™¨
      */
     private static final GloableSQLUtil globalSQLUtil = new GloableSQLUtil();
 //	/**
-//	 * sqlÓï¾ävelocityÄ£°åË÷Òı±í£¬ÒÔsqlÓï¾äµÄÃû³ÆÎªË÷Òı
-//	 * µ±sqlÎÄ¼şÖØĞÂ¼ÓÔØÊ±£¬ÕâĞ©Ä£°åÒ²»á±»ÖØÖÃ
+//	 * sqlè¯­å¥velocityæ¨¡æ¿ç´¢å¼•è¡¨ï¼Œä»¥sqlè¯­å¥çš„åç§°ä¸ºç´¢å¼•
+//	 * å½“sqlæ–‡ä»¶é‡æ–°åŠ è½½æ—¶ï¼Œè¿™äº›æ¨¡æ¿ä¹Ÿä¼šè¢«é‡ç½®
 //	 */
 //	private Map<String,SQLTemplate> sqlVelocityTemplates;
 //	
@@ -171,8 +171,8 @@ public class SQLUtil {
 						
 						if(value != null)
 						{
-							boolean istpl = pro.getBooleanExtendAttribute("istpl",true);//±êÊ¶sqlÓï¾äÊÇ·ñÎªvelocityÄ£°å
-							boolean multiparser = pro.getBooleanExtendAttribute("multiparser",istpl);//Èç¹ûsqlÓï¾äÎªvelocityÄ£°å£¬ÔòÔÚÅú´¦ÀíÊ±ÊÇ·ñĞèÒªÃ¿Ìõ¼ÇÂ¼¶¼ĞèÒª·ÖÎösqlÓï¾ä
+							boolean istpl = pro.getBooleanExtendAttribute("istpl",true);//æ ‡è¯†sqlè¯­å¥æ˜¯å¦ä¸ºvelocityæ¨¡æ¿
+							boolean multiparser = pro.getBooleanExtendAttribute("multiparser",istpl);//å¦‚æœsqlè¯­å¥ä¸ºvelocityæ¨¡æ¿ï¼Œåˆ™åœ¨æ‰¹å¤„ç†æ—¶æ˜¯å¦éœ€è¦æ¯æ¡è®°å½•éƒ½éœ€è¦åˆ†æsqlè¯­å¥
 							SQLTemplate sqltpl = null;
 							value = value.trim();
 							SQLInfo sqlinfo = new SQLInfo(key, value, istpl,multiparser);
@@ -194,7 +194,7 @@ public class SQLUtil {
 					String sqlname = (String)pro.getExtendAttribute("sqlname");
 					if(sqlname == null)
 					{
-						log.warn(sqlcontext.getConfigfile()+"ÖĞname="+key+"µÄsql±»ÅäÖÃÎª¶Ô"+sqlfile+"ÖĞµÄsqlÒıÓÃ£¬µ«ÊÇÃ»ÓĞÍ¨¹ısqlnameÉèÖÃÒªÒıÓÃµÄsqlÓï¾ä!");
+						log.warn(sqlcontext.getConfigfile()+"ä¸­name="+key+"çš„sqlè¢«é…ç½®ä¸ºå¯¹"+sqlfile+"ä¸­çš„sqlå¼•ç”¨ï¼Œä½†æ˜¯æ²¡æœ‰é€šè¿‡sqlnameè®¾ç½®è¦å¼•ç”¨çš„sqlè¯­å¥!");
 					}
 					else
 					{
@@ -495,10 +495,10 @@ public class SQLUtil {
     	VelocityContext vcontext = null;
     	if(sqlinfo.istpl())
     	{
-    		sqlinfo.getSqltpl().process();//Ê¶±ğsqlÓï¾äÊÇ²»ÊÇÕæÕıµÄvelocity sqlÄ£°å
+    		sqlinfo.getSqltpl().process();//è¯†åˆ«sqlè¯­å¥æ˜¯ä¸æ˜¯çœŸæ­£çš„velocity sqlæ¨¡æ¿
     		if(sqlinfo.istpl())
     		{
-    			vcontext = BBossVelocityUtil.buildVelocityContext(variablevalues);//Ò»¸öcontextÊÇ·ñ¿ÉÒÔ±»Í¬Ê±ÓÃÓÚ¶à´ÎÔËËãÄØ£¿
+    			vcontext = BBossVelocityUtil.buildVelocityContext(variablevalues);//ä¸€ä¸ªcontextæ˜¯å¦å¯ä»¥è¢«åŒæ—¶ç”¨äºå¤šæ¬¡è¿ç®—å‘¢ï¼Ÿ
 		    	
 		    	StringWriter sw = new StringWriter();
 		       sqlinfo.getSqltpl().merge(vcontext,sw);

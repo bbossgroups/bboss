@@ -61,8 +61,8 @@ import com.frameworkset.util.SimpleStringUtil;
 
 /**
  * @author biaoping.yin
- * ¸ÄÀà³ä·ÖÊ¹ÓÃjava.lang.reflectionÖĞÌá¹©µÄ¹¦ÄÜ£¬Ìá¹©ÒÔÏÂ¹¤¾ß£º
- * ´Ó¶ÔÏóÖĞ»ñÈ¡¶ÔÓ¦ÊôĞÔµÄÖµ
+ * æ”¹ç±»å……åˆ†ä½¿ç”¨java.lang.reflectionä¸­æä¾›çš„åŠŸèƒ½ï¼Œæä¾›ä»¥ä¸‹å·¥å…·ï¼š
+ * ä»å¯¹è±¡ä¸­è·å–å¯¹åº”å±æ€§çš„å€¼
  */
 public class ValueObjectUtil implements Serializable{
 	private static final Logger log = Logger.getLogger(ValueObjectUtil.class);
@@ -70,7 +70,7 @@ public class ValueObjectUtil implements Serializable{
 	
 
 	/**
-	 * Description:»ñÈ¡¶ÔÏóobjµÄpropertyÊôĞÔÖµ
+	 * Description:è·å–å¯¹è±¡objçš„propertyå±æ€§å€¼
 	 * @param obj
 	 * @param property
 	 * @return
@@ -81,10 +81,10 @@ public class ValueObjectUtil implements Serializable{
 	}
 
 	/**
-	 * Description:»ñÈ¡¶ÔÏóobjµÄpropertyÊôĞÔÖµ,paramsÎª²ÎÊıÊı×é
+	 * Description:è·å–å¯¹è±¡objçš„propertyå±æ€§å€¼,paramsä¸ºå‚æ•°æ•°ç»„
 	 * @param obj
 	 * @param property
-	 * @param params »ñÈ¡ÊôĞÔ·½·¨ÖµµÄ²ÎÊı
+	 * @param params è·å–å±æ€§æ–¹æ³•å€¼çš„å‚æ•°
 	 * @return
 	 * Object
 	 */
@@ -104,11 +104,11 @@ public class ValueObjectUtil implements Serializable{
 	}
 
 	/**
-	 * Description:¸ù¾İ·½·¨Ãû³Æ»ñÈ¡£¬
-	 * ÔÚ¶ÔÏóobjÉÏµ÷ÓÃ¸Ä·½·¨²¢ÇÒ·µ»Øµ÷ÓÃµÄ·µ»ØÖµ
+	 * Description:æ ¹æ®æ–¹æ³•åç§°è·å–ï¼Œ
+	 * åœ¨å¯¹è±¡objä¸Šè°ƒç”¨æ”¹æ–¹æ³•å¹¶ä¸”è¿”å›è°ƒç”¨çš„è¿”å›å€¼
 	 * @param obj
-	 * @param methodName ·½·¨Ãû³Æ
-	 * @param params ·½·¨µÄ²ÎÊı
+	 * @param methodName æ–¹æ³•åç§°
+	 * @param params æ–¹æ³•çš„å‚æ•°
 	 * @return
 	 * Object
 	 */
@@ -124,12 +124,12 @@ public class ValueObjectUtil implements Serializable{
 	}
 
 	/**
-	 * Description:¸ù¾İ·½·¨Ãû³Æ»ñÈ¡£¬
-	 * ÔÚ¶ÔÏóobjÉÏµ÷ÓÃ¸Ä·½·¨²¢ÇÒ·µ»Øµ÷ÓÃµÄ·µ»ØÖµ
+	 * Description:æ ¹æ®æ–¹æ³•åç§°è·å–ï¼Œ
+	 * åœ¨å¯¹è±¡objä¸Šè°ƒç”¨æ”¹æ–¹æ³•å¹¶ä¸”è¿”å›è°ƒç”¨çš„è¿”å›å€¼
 	 * @param obj
-	 * @param methodName ·½·¨Ãû³Æ
-	 * @param params ·½·¨µÄ²ÎÊı
-	 * @param paramsTtype ·½·¨µÄ²ÎÊıÀàĞÍ
+	 * @param methodName æ–¹æ³•åç§°
+	 * @param params æ–¹æ³•çš„å‚æ•°
+	 * @param paramsTtype æ–¹æ³•çš„å‚æ•°ç±»å‹
 	 * @return
 	 * Object
 	 */
@@ -155,10 +155,10 @@ public class ValueObjectUtil implements Serializable{
 	}
 
 	/**
-	 * Description:ÊµÏÖÔÚ¶ÔÏóµ÷ÓÃmethod²¢Îª¸Ã·½·¨´«Èë²ÎÊıÊı×éparams
-	 * @param obj ¶ÔÏó
-	 * @param method ´ıµ÷ÓÃµÄ·½·¨
-	 * @param params ²ÎÊıÊı×é
+	 * Description:å®ç°åœ¨å¯¹è±¡è°ƒç”¨methodå¹¶ä¸ºè¯¥æ–¹æ³•ä¼ å…¥å‚æ•°æ•°ç»„params
+	 * @param obj å¯¹è±¡
+	 * @param method å¾…è°ƒç”¨çš„æ–¹æ³•
+	 * @param params å‚æ•°æ•°ç»„
 	 * @return Object
 	 * @throws Exception
 	 * Object
@@ -170,7 +170,7 @@ public class ValueObjectUtil implements Serializable{
 
 
 	/**
-	 * »ñÈ¡fieldNameµÄgetter·½·¨Ãû³Æ
+	 * è·å–fieldNameçš„getteræ–¹æ³•åç§°
 	 * @param fieldName
 	 * @return String
 	 */
@@ -199,7 +199,7 @@ public class ValueObjectUtil implements Serializable{
 	}
 
 	/**
-	 * »ñÈ¡fieldNameµÄsetter·½·¨
+	 * è·å–fieldNameçš„setteræ–¹æ³•
 	 * @param fieldName
 	 * @return String
 	 */
@@ -221,7 +221,7 @@ public class ValueObjectUtil implements Serializable{
 		
 		else if(type == toType) 
 			return true;
-		else if(toType.isAssignableFrom(type))//¼ì²étoTypeÊÇ²»ÊÇtypeµÄ¸¸Àà»òÕßÊÇtypeËùÊµÏÖµÄ½Ó¿Ú
+		else if(toType.isAssignableFrom(type))//æ£€æŸ¥toTypeæ˜¯ä¸æ˜¯typeçš„çˆ¶ç±»æˆ–è€…æ˜¯typeæ‰€å®ç°çš„æ¥å£
 		{
 			return true;
 		}
@@ -261,9 +261,9 @@ public class ValueObjectUtil implements Serializable{
 		
 	}
 	/**
-	 * ½«obj¶ÔÏó´ÓÀàĞÍtype×ª»»µ½ÀàĞÍtoType
-	 * Ö§³Ö×Ö·û´®ÏòÆäËû»ù±¾ÀàĞĞ×ª»»:
-	 * Ö§³ÖµÄÀàĞÍ:
+	 * å°†objå¯¹è±¡ä»ç±»å‹typeè½¬æ¢åˆ°ç±»å‹toType
+	 * æ”¯æŒå­—ç¬¦ä¸²å‘å…¶ä»–åŸºæœ¬ç±»è¡Œè½¬æ¢:
+	 * æ”¯æŒçš„ç±»å‹:
 	 * int,char,short,double,float,long,boolean,byte
 	 * java.sql.Date,java.util.Date,
 	 * Integer
@@ -290,7 +290,7 @@ public class ValueObjectUtil implements Serializable{
 		if(isSameType(type,toType))
 			return obj;
 		
-		if(type.isAssignableFrom(toType)) //typeÊÇtoTypeµÄ¸¸Àà£¬¸¸ÀàÏò×ÓÀà×ª»»µÄ¹ı³Ì£¬Õâ¸ö×ª»»¹ı³ÌÊÇ²»°²È«µÄ
+		if(type.isAssignableFrom(toType)) //typeæ˜¯toTypeçš„çˆ¶ç±»ï¼Œçˆ¶ç±»å‘å­ç±»è½¬æ¢çš„è¿‡ç¨‹ï¼Œè¿™ä¸ªè½¬æ¢è¿‡ç¨‹æ˜¯ä¸å®‰å…¨çš„
 		{
 //			return shell(toType,obj);
 			if(!java.util.Date.class.isAssignableFrom(type))
@@ -408,24 +408,24 @@ public class ValueObjectUtil implements Serializable{
 //			|| !type.getName().startsWith("[")
 //			&& toType.getName().startsWith("["))
 			throw new IllegalArgumentException(
-				new StringBuffer("ÀàĞÍÎŞ·¨×ª»»,²»Ö§³Ö[")
+				new StringBuffer("ç±»å‹æ— æ³•è½¬æ¢,ä¸æ”¯æŒ[")
 					.append(type.getName())
-					.append("]Ïò[")
+					.append("]å‘[")
 					.append(toType.getName())
-					.append("]×ª»»")
+					.append("]è½¬æ¢")
 					.toString());
 		}
 		Object arrayObj;
 
 		/**
-		 * »ù±¾ÀàĞÍ×ª»»
+		 * åŸºæœ¬ç±»å‹è½¬æ¢
 		 */
 		if (!type.isArray()) {
 			arrayObj = basicTypeCast(obj, type, toType);
 		}
 
 		/**
-		 * ×Ö·û´®Êı×éÏòÆäËûÀàĞÍÊı×éÖ®¼ä×ª»»
+		 * å­—ç¬¦ä¸²æ•°ç»„å‘å…¶ä»–ç±»å‹æ•°ç»„ä¹‹é—´è½¬æ¢
 		 */
 		else {
 
@@ -451,7 +451,7 @@ public class ValueObjectUtil implements Serializable{
 	}
 
 	/**
-	 * Description:»ù±¾µÄÊı¾İÀàĞÍ×ªà÷
+	 * Description:åŸºæœ¬çš„æ•°æ®ç±»å‹è½¬åœœ
 	 * @param obj
 	 * @param type
 	 * @param toType
@@ -471,26 +471,26 @@ public class ValueObjectUtil implements Serializable{
 		if (isSameType(type,toType ))
 			return obj;
 		
-		if(type.isAssignableFrom(toType)) //typeÊÇtoTypeµÄ¸¸Àà£¬¸¸ÀàÏò×ÓÀà×ª»»µÄ¹ı³Ì£¬Õâ¸ö×ª»»¹ı³ÌÊÇ²»°²È«µÄ
+		if(type.isAssignableFrom(toType)) //typeæ˜¯toTypeçš„çˆ¶ç±»ï¼Œçˆ¶ç±»å‘å­ç±»è½¬æ¢çš„è¿‡ç¨‹ï¼Œè¿™ä¸ªè½¬æ¢è¿‡ç¨‹æ˜¯ä¸å®‰å…¨çš„
 		{
 			if(!java.util.Date.class.isAssignableFrom(type))
 				return shell(toType,obj);
 		}
 		/**
-		 * Èç¹ûobjµÄÀàĞÍ²»ÊÇStringĞÍÊ±Ö±½ÓÅ×Òì³£,
-		 * ²»Ö§³Ö·Ç×Ö·û´®ºÍ×Ö·û´®Êı×éµÄÀàĞÍ×ª»»
+		 * å¦‚æœobjçš„ç±»å‹ä¸æ˜¯Stringå‹æ—¶ç›´æ¥æŠ›å¼‚å¸¸,
+		 * ä¸æ”¯æŒéå­—ç¬¦ä¸²å’Œå­—ç¬¦ä¸²æ•°ç»„çš„ç±»å‹è½¬æ¢
 		 */
 //		if (type != String.class)
 //			throw new NoSupportTypeCastException(
-//				new StringBuffer("²»Ö§³Ö[")
+//				new StringBuffer("ä¸æ”¯æŒ[")
 //					.append(type)
-//					.append("]Ïò[")
+//					.append("]å‘[")
 //					.append(toType)
-//					.append("]µÄ×ª»»")
+//					.append("]çš„è½¬æ¢")
 //					.toString());
 		/*******************************************
-		 * ×Ö·û´®Ïò»ù±¾ÀàĞÍ¼°Æä°ü×°Æ÷×ª»»		   *
-		 * Èç¹ûobj²»ÊÇÏàÓ¦µÃÊı¾İ¸ñÊ½,½«Å×³ö		   *
+		 * å­—ç¬¦ä¸²å‘åŸºæœ¬ç±»å‹åŠå…¶åŒ…è£…å™¨è½¬æ¢		   *
+		 * å¦‚æœobjä¸æ˜¯ç›¸åº”å¾—æ•°æ®æ ¼å¼,å°†æŠ›å‡º		   *
 		 * NumberFormatException				   *
 		 ******************************************/
 		if (toType == long.class || toType == Long.class)
@@ -512,7 +512,7 @@ public class ValueObjectUtil implements Serializable{
 			return new Byte(obj.toString());
 		
 
-		//Èç¹ûÊÇ×Ö·û´®ÔòÖ±½Ó·µ»Øobj.toString()
+		//å¦‚æœæ˜¯å­—ç¬¦ä¸²åˆ™ç›´æ¥è¿”å›obj.toString()
 		if (toType == String.class)
 		{
             if (obj instanceof java.util.Date)
@@ -520,7 +520,7 @@ public class ValueObjectUtil implements Serializable{
             return obj.toString();
         }
 		/**
-		 * ×Ö·û´®Ïòjava.util.DateºÍjava.sql.Date ÀàĞÍ×ª»»
+		 * å­—ç¬¦ä¸²å‘java.util.Dateå’Œjava.sql.Date ç±»å‹è½¬æ¢
 		 */
 		if (toType == java.util.Date.class)
 		{			
@@ -553,17 +553,17 @@ public class ValueObjectUtil implements Serializable{
 		}
 
 		throw new NoSupportTypeCastException(
-			new StringBuffer("²»Ö§³Ö[")
+			new StringBuffer("ä¸æ”¯æŒ[")
 				.append(type)
-				.append("]Ïò[")
+				.append("]å‘[")
 				.append(toType)
-				.append("]µÄ×ª»»")
+				.append("]çš„è½¬æ¢")
 				.toString());
 
 	}
 	/**
-	 * Êı×éÀàĞÍ×ª»»
-	 * Ö§³Ö×Ö·û´®Êı×éÏòÒ»ÏÂÀàĞÍÊı×éµÃ×Ô¶¯×ª»»:
+	 * æ•°ç»„ç±»å‹è½¬æ¢
+	 * æ”¯æŒå­—ç¬¦ä¸²æ•°ç»„å‘ä¸€ä¸‹ç±»å‹æ•°ç»„å¾—è‡ªåŠ¨è½¬æ¢:
 	 *	int[]
 	 *	Integer[]
 	 *	long[]
@@ -598,11 +598,11 @@ public class ValueObjectUtil implements Serializable{
 			return obj;
 //		if (type != String[].class)
 //			throw new NoSupportTypeCastException(
-//				new StringBuffer("²»Ö§³Ö[")
+//				new StringBuffer("ä¸æ”¯æŒ[")
 //					.append(type)
-//					.append("]Ïò[")
+//					.append("]å‘[")
 //					.append(toType)
-//					.append("]µÄ×ª»»")
+//					.append("]çš„è½¬æ¢")
 //					.toString());
 
 		if (toType == long[].class) {
@@ -737,7 +737,7 @@ public class ValueObjectUtil implements Serializable{
 			return ret;
 		}
 
-		//Èç¹ûÊÇ×Ö·û´®ÔòÖ±½Ó·µ»Øobj.toString()
+		//å¦‚æœæ˜¯å­—ç¬¦ä¸²åˆ™ç›´æ¥è¿”å›obj.toString()
 		if (toType == String[].class) {
 		{
 			if(obj.getClass() == java.util.Date[].class)
@@ -753,7 +753,7 @@ public class ValueObjectUtil implements Serializable{
 			//			return ret;
 		}
 		/**
-		 * ×Ö·û´®Ïòjava.util.DateºÍjava.sql.Date ÀàĞÍ×ª»»
+		 * å­—ç¬¦ä¸²å‘java.util.Dateå’Œjava.sql.Date ç±»å‹è½¬æ¢
 		 */
 		if (toType == java.util.Date.class) {
 			String[] values = (String[]) obj;
@@ -765,11 +765,11 @@ public class ValueObjectUtil implements Serializable{
 		}
 
 		throw new NoSupportTypeCastException(
-			new StringBuffer("²»Ö§³Ö[")
+			new StringBuffer("ä¸æ”¯æŒ[")
 				.append(type)
-				.append("]Ïò[")
+				.append("]å‘[")
 				.append(toType)
-				.append("]µÄ×ª»»")
+				.append("]çš„è½¬æ¢")
 				.toString());
 
 	}

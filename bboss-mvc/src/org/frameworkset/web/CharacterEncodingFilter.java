@@ -40,7 +40,7 @@ import javax.servlet.http.HttpServletResponse;
             org.frameworkset.web.CharacterEncodingFilter</filter-class>  
         <init-param>  
             <param-name>encoding</param-name>  
-            <param-value>GBK</param-value>  
+            <param-value>UTF-8</param-value>  
         </init-param>  
         <init-param>  
             <param-name>forceEncoding</param-name>  

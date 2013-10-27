@@ -7,7 +7,7 @@ import java.util.List;
  * <p>Title: ListInfo</p>
  *
  * <p>Description:
- *    ·â×°·ÖÒ³ĞÅÏ¢
+ *    å°è£…åˆ†é¡µä¿¡æ¯
  * </p>
  *
  * <p>Copyright: Copyright (c) 2005</p>
@@ -18,42 +18,42 @@ import java.util.List;
  * @version 1.0
  */
 public class ListInfo implements Serializable{
-    /**ÊÇ·ñÏÔÊ¾ËùÓĞµÄÊı¾İ*/
+    /**æ˜¯å¦æ˜¾ç¤ºæ‰€æœ‰çš„æ•°æ®*/
     private boolean showAll = false;
     /*
-    * ÏÔÊ¾µÄÊı¾İ×Ö¶ÎÃû³Æ
+    * æ˜¾ç¤ºçš„æ•°æ®å­—æ®µåç§°
 	 */
 	public static final int DEFAULT_MAX_ITEMS = Integer.MAX_VALUE,
 			DEFAULT_MAX_PAGE_ITEMS = 10, DEFAULT_MAX_INDEX_PAGES = 10;
     
     private int maxPageItems = DEFAULT_MAX_PAGE_ITEMS;
 
-    /**»ñÈ¡Êı¾İ×ÜÊı*/
+    /**è·å–æ•°æ®æ€»æ•°*/
     private long totalSize;
     /**
-     * Êµ¼Ê´ÓÊı¾İ¿â²éÑ¯µ½µÄ¼ÇÂ¼Êı£¬Õâ¸öÊı×Ö¿ÉÄÜºÍÓ¦ÓÃ²ãµ÷ÓÃgetSize()·½·¨
-     * µÃµ½µÄÊı¾İ²»Ò»ÖÂ£¬ÒòÎªÓ¦ÓÃ³ÌĞò¿ÉÄÜ»áĞŞ¸ÄÊı¾İ¼¯ÖĞµÄÊı¾İ£¨Ôö¼Ó»òÕßÉ¾³ı¼ÇÂ¼£©
-     * ËùÒÔmore²éÑ¯Ê±¼ÆËãÊÇ·ñ´ïµ½ÔËËãµÄ×îºóÒ»Ìõ¼ÇÂ¼Ê±ĞèÒªÊ¹ÓÃresultSize
+     * å®é™…ä»æ•°æ®åº“æŸ¥è¯¢åˆ°çš„è®°å½•æ•°ï¼Œè¿™ä¸ªæ•°å­—å¯èƒ½å’Œåº”ç”¨å±‚è°ƒç”¨getSize()æ–¹æ³•
+     * å¾—åˆ°çš„æ•°æ®ä¸ä¸€è‡´ï¼Œå› ä¸ºåº”ç”¨ç¨‹åºå¯èƒ½ä¼šä¿®æ”¹æ•°æ®é›†ä¸­çš„æ•°æ®ï¼ˆå¢åŠ æˆ–è€…åˆ é™¤è®°å½•ï¼‰
+     * æ‰€ä»¥moreæŸ¥è¯¢æ—¶è®¡ç®—æ˜¯å¦è¾¾åˆ°è¿ç®—çš„æœ€åä¸€æ¡è®°å½•æ—¶éœ€è¦ä½¿ç”¨resultSize
      */
     private int resultSize;
     /***/
     private Serializable object;
     
     /**
-     * ÅĞ¶ÏÊı¾İ¼¯ºÏÊÇ·ñÊÇÖ±½Ó´ÓdbutilÖĞ»ñÈ¡
-     * ÎªtrueÊ±±íÊ¾Ö±½Ó´ÓdbutilÖĞ»ñÈ¡µ½µÄÊı¾İ
+     * åˆ¤æ–­æ•°æ®é›†åˆæ˜¯å¦æ˜¯ç›´æ¥ä»dbutilä¸­è·å–
+     * ä¸ºtrueæ—¶è¡¨ç¤ºç›´æ¥ä»dbutilä¸­è·å–åˆ°çš„æ•°æ®
      */
     private boolean isdbdata = false;
 
 
    /**
-    * ·ÖÅúÈ¡³öµ±Ç°Ò³µÄ¼ÇÂ¼¼¯ºÏ
+    * åˆ†æ‰¹å–å‡ºå½“å‰é¡µçš„è®°å½•é›†åˆ
     */
     private List datas;
     private Object[] dbDatas;
     /**
-	 * more·ÖÒ³²éÑ¯£¬²»»á¼ÆËã×Ü¼ÇÂ¼Êı£¬Èç¹ûÃ»ÓĞ¼ÇÂ¼ÄÇÃ´·µ»ØµÄListInfoµÄdatasµÄsizeÎª0,
-	 * ÌáÉıĞÔÄÜ£¬Í¬Ê±Ç°Ì¨±êÇ©¿âÒ²»á×öÏìÓ¦µÄµ÷Õû
+	 * moreåˆ†é¡µæŸ¥è¯¢ï¼Œä¸ä¼šè®¡ç®—æ€»è®°å½•æ•°ï¼Œå¦‚æœæ²¡æœ‰è®°å½•é‚£ä¹ˆè¿”å›çš„ListInfoçš„datasçš„sizeä¸º0,
+	 * æå‡æ€§èƒ½ï¼ŒåŒæ—¶å‰å°æ ‡ç­¾åº“ä¹Ÿä¼šåšå“åº”çš„è°ƒæ•´
 	 */
     private boolean more = false;
    
@@ -146,7 +146,7 @@ public class ListInfo implements Serializable{
         return totalSize;
     }
     /**
-     * »ñÈ¡×îÖÕ½á¹û¼¯ÖĞµÄµ±Ò³¼ÇÂ¼Êı
+     * è·å–æœ€ç»ˆç»“æœé›†ä¸­çš„å½“é¡µè®°å½•æ•°
      * @return
      */
     public int getSize()
@@ -192,7 +192,7 @@ public class ListInfo implements Serializable{
 		this.maxPageItems = maxPageItems;
 	}
 	/**
-	 * »ñÈ¡Ô­Ê¼²éÑ¯Êı¾İ¿âµÃµ½µÄµ±Ò³¼ÇÂ¼Êı¾İ
+	 * è·å–åŸå§‹æŸ¥è¯¢æ•°æ®åº“å¾—åˆ°çš„å½“é¡µè®°å½•æ•°æ®
 	 * @return the resultSize
 	 */
 	public int getResultSize() {

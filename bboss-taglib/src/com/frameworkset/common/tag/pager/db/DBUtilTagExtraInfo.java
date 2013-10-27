@@ -25,7 +25,7 @@ import javax.servlet.jsp.tagext.VariableInfo;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2008</p>
- * @Date 2010-3-11 œ¬ŒÁ03:21:01
+ * @Date 2010-3-11 ‰∏ãÂçà03:21:01
  * @author biaoping.yin
  * @version 1.0
  */
@@ -36,7 +36,7 @@ public class DBUtilTagExtraInfo extends TagExtraInfo
         if(result == null || result.equals(""))
             result = "dbutil_result";
 //      String id = (String)tagData.getAttribute("id");
-        //System.out.println("id£∫" + id);
+        //System.out.println("idÔºö" + id);
 //      String export = tagData.getAttributeString("export");
 //      if (export != null) {
 //          try {

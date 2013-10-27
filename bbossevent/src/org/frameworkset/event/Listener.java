@@ -16,7 +16,7 @@
 package org.frameworkset.event;
 
 /**
- * ¼àÌıÆ÷
+ * ç›‘å¬å™¨
  * 
  * @author biaoping.yin
  * @version 1.0
@@ -24,23 +24,23 @@ package org.frameworkset.event;
 public interface Listener<T>  {
 
 	/**
-	 * Description:µ±¼àÌıÆ÷¼ì²âµ½ÏàÓ¦µÄÊÂ¼şÊ±£¬µ÷ÓÃ±¾·½·¨
-	 * ¶ÔÊÂ¼ş½øĞĞÏàÓ¦´¦Àí
+	 * Description:å½“ç›‘å¬å™¨æ£€æµ‹åˆ°ç›¸åº”çš„äº‹ä»¶æ—¶ï¼Œè°ƒç”¨æœ¬æ–¹æ³•
+	 * å¯¹äº‹ä»¶è¿›è¡Œç›¸åº”å¤„ç†
 	 * @param e
 	 * void
 	 */
 	public void handle(Event<T> e);	
 	/**
-	 * ±¾µØÀàĞÍ¼àÌıÆ÷
+	 * æœ¬åœ°ç±»å‹ç›‘å¬å™¨
 	 */
 	public static final int LOCAL = 0;
 	/**
-	 * Ô¶³ÌÊÂ¼ş¼àÌıÆ÷
+	 * è¿œç¨‹äº‹ä»¶ç›‘å¬å™¨
 	 */
 	public static final int REMOTE = 1;
 	
 	/**
-	 * ±¾µØºÍÔ¶³ÌÊÂ¼ş¼àÌıÆ÷
+	 * æœ¬åœ°å’Œè¿œç¨‹äº‹ä»¶ç›‘å¬å™¨
 	 */
 	public static final int LOCAL_REMOTE = 2;
 	

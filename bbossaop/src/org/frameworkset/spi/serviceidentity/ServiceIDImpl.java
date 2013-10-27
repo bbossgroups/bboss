@@ -40,7 +40,7 @@ import bboss.org.jgroups.blocks.GroupRequest;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2011-5-11 ÉÏÎç10:37:09
+ * @Date 2011-5-11 ä¸Šåˆ10:37:09
  * @author biaoping.yin
  * @version 1.0
  */
@@ -60,7 +60,7 @@ public class ServiceIDImpl extends BaseServiceIDImpl{
             {
                 boolean started = JGroupHelper.getJGroupHelper().clusterstarted();
                 if (!started)
-                    throw new RemoteException("Ô¶³Ì¹ÜÀí×é¼şÃ»ÓĞÕı³£Æô¶¯¡£ÎŞ·¨µ÷ÓÃÔ¶³Ì·şÎñ[" + serviceID + "]");
+                    throw new RemoteException("è¿œç¨‹ç®¡ç†ç»„ä»¶æ²¡æœ‰æ­£å¸¸å¯åŠ¨ã€‚æ— æ³•è°ƒç”¨è¿œç¨‹æœåŠ¡[" + serviceID + "]");
                 return started;
             }
             else if (target.protocol_mina())
@@ -94,7 +94,7 @@ public class ServiceIDImpl extends BaseServiceIDImpl{
             }
             else
             {
-                throw new RuntimeException("Î´Ö§³ÖµÄµØÖ·£º" + target);
+                throw new RuntimeException("æœªæ”¯æŒçš„åœ°å€ï¼š" + target);
             }
         }
         catch (RemoteException e)
@@ -108,7 +108,7 @@ public class ServiceIDImpl extends BaseServiceIDImpl{
 
         catch (Exception e)
         {
-            log.error("ÅĞ¶Ï rpcservice(" + target + ")ÊÇ·ñÆô¶¯Ê§°Ü£º", e);
+            log.error("åˆ¤æ–­ rpcservice(" + target + ")æ˜¯å¦å¯åŠ¨å¤±è´¥ï¼š", e);
             return false;
         }
 
@@ -143,9 +143,9 @@ public class ServiceIDImpl extends BaseServiceIDImpl{
             Address address = (Address) JGroupHelper.getJGroupHelper().getLocalAddress();
             if (this.compared(address, target))
             {
-                if(fromrest)//restful·ç¸ñµØÖ·´¦Àí
+                if(fromrest)//restfulé£æ ¼åœ°å€å¤„ç†
                 {
-                    //¼ÌĞø¼ÆËãÏÂ¸öµØÖ·
+                    //ç»§ç»­è®¡ç®—ä¸‹ä¸ªåœ°å€
 //                    if(this.nextRestNode.equals(Target.REST_LOCAL))
 //                    {
 //                        isremote = false;
@@ -176,9 +176,9 @@ public class ServiceIDImpl extends BaseServiceIDImpl{
             
             if (compared(Util.getRPCIOHandler(Target.BROADCAST_TYPE_MINA).getLocalAddress(), target))
             {
-                if(fromrest)//restful·ç¸ñµØÖ·´¦Àí
+                if(fromrest)//restfulé£æ ¼åœ°å€å¤„ç†
                 {
-                    //¼ÌĞø¼ÆËãÏÂ¸öµØÖ·
+                    //ç»§ç»­è®¡ç®—ä¸‹ä¸ªåœ°å€
 //                    if(this.nextRestNode.equals(Target.REST_LOCAL))
 //                    {
 //                        isremote = false;
@@ -209,9 +209,9 @@ public class ServiceIDImpl extends BaseServiceIDImpl{
             
             if (compared(Util.getRPCIOHandler(Target.BROADCAST_TYPE_NETTY).getLocalAddress(), target))
             {
-                if(fromrest)//restful·ç¸ñµØÖ·´¦Àí
+                if(fromrest)//restfulé£æ ¼åœ°å€å¤„ç†
                 {
-                    //¼ÌĞø¼ÆËãÏÂ¸öµØÖ·
+                    //ç»§ç»­è®¡ç®—ä¸‹ä¸ªåœ°å€
 //                    if(this.nextRestNode.equals(Target.REST_LOCAL))
 //                    {
 //                        isremote = false;
@@ -240,9 +240,9 @@ public class ServiceIDImpl extends BaseServiceIDImpl{
         {
             if (this.compared(Util.getRPCIOHandler(Target.BROADCAST_TYPE_JMS).getLocalAddress(), target))
             {
-                if(fromrest)//restful·ç¸ñµØÖ·´¦Àí
+                if(fromrest)//restfulé£æ ¼åœ°å€å¤„ç†
                 {
-                    //¼ÌĞø¼ÆËãÏÂ¸öµØÖ·
+                    //ç»§ç»­è®¡ç®—ä¸‹ä¸ªåœ°å€
 //                    if(this.nextRestNode.equals(Target.REST_LOCAL))
 //                    {
 //                        isremote = false;
@@ -272,9 +272,9 @@ public class ServiceIDImpl extends BaseServiceIDImpl{
         {
             if (this.compared(Util.getRPCIOHandler(Target.BROADCAST_TYPE_WEBSERVICE).getLocalAddress(), target))
             {
-                if(fromrest)//restful·ç¸ñµØÖ·´¦Àí
+                if(fromrest)//restfulé£æ ¼åœ°å€å¤„ç†
                 {
-                    //¼ÌĞø¼ÆËãÏÂ¸öµØÖ·
+                    //ç»§ç»­è®¡ç®—ä¸‹ä¸ªåœ°å€
 //                    if(this.nextRestNode.equals(Target.REST_LOCAL))
 //                    {
 //                        isremote = false;
@@ -319,7 +319,7 @@ public class ServiceIDImpl extends BaseServiceIDImpl{
         }
         else
         {
-            throw new RuntimeException("Î´Ö§³ÖĞ­ÒéµÄµØÖ·£º" + target);
+            throw new RuntimeException("æœªæ”¯æŒåè®®çš„åœ°å€ï¼š" + target);
         }
     }
 
@@ -457,7 +457,7 @@ public class ServiceIDImpl extends BaseServiceIDImpl{
         }
         else
         {
-            throw new RuntimeException("Î´Ö§³ÖĞ­ÒéµÄµØÖ·£º" + target);
+            throw new RuntimeException("æœªæ”¯æŒåè®®çš„åœ°å€ï¼š" + target);
         }
 
     }
@@ -540,10 +540,10 @@ public class ServiceIDImpl extends BaseServiceIDImpl{
 
     public static void main(String[] args)
     {
-    	//Ä¬ÈÏµÄÔ¶³Ì·şÎñµ÷ÓÃ±êÊ¶
+    	//é»˜è®¤çš„è¿œç¨‹æœåŠ¡è°ƒç”¨æ ‡è¯†
         String serviceid = "(17:1010;18:1020)/serviceid";
         
-        //webserviceÔ¶³Ì·şÎñµ÷ÓÃ±êÊ¶
+        //webserviceè¿œç¨‹æœåŠ¡è°ƒç”¨æ ‡è¯†
         serviceid = "(webservice::http://17:1010/webroot/;http://17:1010/webroot/)/serviceid";
 
 //        serviceid = "(all)/serviceid";

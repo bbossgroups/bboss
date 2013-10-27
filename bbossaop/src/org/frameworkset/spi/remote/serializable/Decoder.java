@@ -18,10 +18,10 @@ package org.frameworkset.spi.remote.serializable;
 
 /**
  * <p>Title: Decoder.java</p> 
- * <p>Description: ½âÂëÆ÷</p>
+ * <p>Description: è§£ç å™¨</p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2011-12-7 ÏÂÎç4:23:41
+ * @Date 2011-12-7 ä¸‹åˆ4:23:41
  * @author biaoping.yin
  * @version 1.0
  */

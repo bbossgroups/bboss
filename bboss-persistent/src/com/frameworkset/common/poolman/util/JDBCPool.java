@@ -99,12 +99,12 @@ public class JDBCPool {
 	private JDBCPoolMetaData info;
 
 	/**
-	 * Æô¶¯Ê±¼ä
+	 * å¯åŠ¨æ—¶é—´
 	 */
 	private long startTime;
 
 	/**
-	 * Í£Ö¹Ê±¼ä
+	 * åœæ­¢æ—¶é—´
 	 */
 	private long stopTime;
 
@@ -177,7 +177,7 @@ public class JDBCPool {
 	public final static String defaultInterceptor_s = "com.frameworkset.common.poolman.interceptor.DummyInterceptor";
 	
 	/**
-	 * Á´½Ó³ØµÄÊÊÅäÆ÷
+	 * é“¾æ¥æ± çš„é€‚é…å™¨
 	 */
 	private DB dbAdapter;
 
@@ -194,7 +194,7 @@ public class JDBCPool {
 			TableMetaData table = (TableMetaData) tableMetaDatasindexByTablename
 					.get(tableName.toLowerCase());
 			if (table == null) {
-				// Èç¹ûÊı¾İ¿âÔªÊı¾İÃ»ÓĞÆôÓÃÔªÊı¾İ¼ÓÔØ»úÖÆ£¬Ôò¶¯Ì¬¼ÓÔØÆäÊı¾İ
+				// å¦‚æœæ•°æ®åº“å…ƒæ•°æ®æ²¡æœ‰å¯ç”¨å…ƒæ•°æ®åŠ è½½æœºåˆ¶ï¼Œåˆ™åŠ¨æ€åŠ è½½å…¶æ•°æ®
 				if (this.info.getLoadmetadata().equalsIgnoreCase("false")) {
 					synchronized (tableMetaDatasindexByTablename) {
 						table = (TableMetaData) tableMetaDatasindexByTablename
@@ -324,14 +324,14 @@ public class JDBCPool {
 	
 	
 	/**
-	 * ³õÊ¼»¯Êı¾İ¿âÊÊÅäÆ÷
+	 * åˆå§‹åŒ–æ•°æ®åº“é€‚é…å™¨
 	 */
 	private void initDBAdapter() {
 		if(!this.info.isExternal())
 		{
 			_initAdaptor();
 		}
-		else //´ÓÍâ²¿Êı¾İÔ´³õÊ¼»¯dbadaptor
+		else //ä»å¤–éƒ¨æ•°æ®æºåˆå§‹åŒ–dbadaptor
 		{
 			String external = this.info.getExternaljndiName();
 			JDBCPool ep = null; 
@@ -552,13 +552,13 @@ public class JDBCPool {
 	{
 		try {
 			DataSource _datasource = null;
-			if(StringUtil.isEmpty(this.info.getDatasourceFile()))//Ã»ÓĞÖ¸¶¨IOCÊı¾İÔ´ÅäÖÃÎÄ¼ş£¬Ö±½Ó³õÊ¼»¯ÄÚÖÃÊı¾İÔ´apache dbcp
+			if(StringUtil.isEmpty(this.info.getDatasourceFile()))//æ²¡æœ‰æŒ‡å®šIOCæ•°æ®æºé…ç½®æ–‡ä»¶ï¼Œç›´æ¥åˆå§‹åŒ–å†…ç½®æ•°æ®æºapache dbcp
 			{
 				Properties p = getProperties();
 				_datasource =  BasicDataSourceFactory
 						.createDataSource(p);
 			}
-			else //´ÓiocÅäÖÃÎÄ¼şÖĞ»ñÈ¡Êı¾İÔ´ÊµÀı
+			else //ä»iocé…ç½®æ–‡ä»¶ä¸­è·å–æ•°æ®æºå®ä¾‹
 			{
 				_datasource =  DatasourceUtil.getDataSource(info.getDatasourceFile());
 			}
@@ -592,7 +592,7 @@ public class JDBCPool {
 
 			try {
 				// Context ctx = new InitialContext();
-				if(this.externalDBName == null)//Èç¹ûÒıÓÃµÄÊÇpoolman.xmlÎÄ¼şÖĞ¶¨ÒåµÄÊı¾İÔ´externalDBName²»»áÎª¿Õ£¬externalDBNameÎª¿Õ±íÊ¾±íÊ¾Íâ²¿Êı¾İÔ´Ê¼ÈİÆ÷Êı¾İÔ´»òÕßÍâ²¿Êı¾İÔ´
+				if(this.externalDBName == null)//å¦‚æœå¼•ç”¨çš„æ˜¯poolman.xmlæ–‡ä»¶ä¸­å®šä¹‰çš„æ•°æ®æºexternalDBNameä¸ä¼šä¸ºç©ºï¼ŒexternalDBNameä¸ºç©ºè¡¨ç¤ºè¡¨ç¤ºå¤–éƒ¨æ•°æ®æºå§‹å®¹å™¨æ•°æ®æºæˆ–è€…å¤–éƒ¨æ•°æ®æº
 				{
 					DataSource _datasource = find(this.info.getExternaljndiName(),info);
 					
@@ -624,8 +624,8 @@ public class JDBCPool {
 					
 				}
 			} catch (NamingException e) {
-				log.info("Í¨¹ıJNDIÃû³Æ[" + info.getExternaljndiName()
-						+ "]»ñÈ¡Íâ²¿Êı¾İÔ´Ê§°Ü:"+e.getMessage());
+				log.info("é€šè¿‡JNDIåç§°[" + info.getExternaljndiName()
+						+ "]è·å–å¤–éƒ¨æ•°æ®æºå¤±è´¥:"+e.getMessage());
 				// e.printStackTrace();
 			}
 
@@ -872,7 +872,7 @@ public class JDBCPool {
 	}
 
 	/**
-	 * Èç¹ûÊı¾İ¿â±íµÄÔªÊı¾İ·¢ÉúÁË±ä»¯£¬ÔòÖØĞÂ×°ÔØÕâĞ©Êı¾İ
+	 * å¦‚æœæ•°æ®åº“è¡¨çš„å…ƒæ•°æ®å‘ç”Ÿäº†å˜åŒ–ï¼Œåˆ™é‡æ–°è£…è½½è¿™äº›æ•°æ®
 	 * 
 	 * @param tableName
 	 */
@@ -993,7 +993,7 @@ public class JDBCPool {
 					columnrs.close();
 	
 					/**
-					 * ¹¹½¨Ö÷¼üĞÅÏ¢
+					 * æ„å»ºä¸»é”®ä¿¡æ¯
 					 */
 					primaryKeysrs = metaData.getPrimaryKeys(null, schemaName, tableName);
 					while (primaryKeysrs.next()) {
@@ -1033,7 +1033,7 @@ public class JDBCPool {
 					}
 					primaryKeysrs.close();
 					/**
-					 * ¹¹½¨Íâ¼üĞÅÏ¢
+					 * æ„å»ºå¤–é”®ä¿¡æ¯
 					 */
 					foreignrs = metaData.getImportedKeys(null, schemaName, tableName);
 					while (foreignrs.next()) {
@@ -1213,7 +1213,7 @@ public class JDBCPool {
 					continue;
 				if (tableMetaDatasindexByTablename.containsKey(tableName
 						.toLowerCase())) {
-					System.out.println("table [" + tableName + "] ÒÑ¾­¼ÓÔØ£¬ºöÂÔ£¡");
+					System.out.println("table [" + tableName + "] å·²ç»åŠ è½½ï¼Œå¿½ç•¥ï¼");
 					continue;
 				}
 				log.debug("load table[" + tableName + "]'s metadata.");
@@ -1261,7 +1261,7 @@ public class JDBCPool {
 		}
 	}
 	/**
-	 * ³õÊ¼»¯Êı¾İ¿âÔªÊı¾İ
+	 * åˆå§‹åŒ–æ•°æ®åº“å…ƒæ•°æ®
 	 * 
 	 */
 	private void initDatabaseMetaData(Connection con) {
@@ -1292,7 +1292,7 @@ public class JDBCPool {
 					continue;
 				if (tableMetaDatasindexByTablename.containsKey(tableName
 						.toLowerCase())) {
-					System.out.println("table [" + tableName + "] ÒÑ¾­¼ÓÔØ£¬ºöÂÔ£¡");
+					System.out.println("table [" + tableName + "] å·²ç»åŠ è½½ï¼Œå¿½ç•¥ï¼");
 					continue;
 				}
 				log.debug("load table[" + tableName + "]'s metadata.");
@@ -1342,8 +1342,8 @@ public class JDBCPool {
 	}
 
 	/**
-	 * ³õÊ¼»¯Êı¾İ¿âÔªÊı¾İ added by biaoping.yin on 20080529
-	 * »ñÈ¡µ½µÄ±íÔªÊı¾İ½«±»Ö±½ÓË¢ĞÂµ½»º³åÇøÖĞ
+	 * åˆå§‹åŒ–æ•°æ®åº“å…ƒæ•°æ® added by biaoping.yin on 20080529
+	 * è·å–åˆ°çš„è¡¨å…ƒæ•°æ®å°†è¢«ç›´æ¥åˆ·æ–°åˆ°ç¼“å†²åŒºä¸­
 	 */
 	public TableMetaData getTableMetaDataFromDatabase(
 			String tableName)
@@ -1370,7 +1370,7 @@ public class JDBCPool {
 		return tableTypes;
 	}
 	/**
-	 * »ñÈ¡±í¼¯ºÏĞÅÏ¢
+	 * è·å–è¡¨é›†åˆä¿¡æ¯
 	 */
 	public List<TableMetaData> getTablesFromDatabase(String tableNamePattern)
 	{
@@ -1378,7 +1378,7 @@ public class JDBCPool {
 	}
 	
 	/**
-	 * »ñÈ¡±í¼¯ºÏĞÅÏ¢
+	 * è·å–è¡¨é›†åˆä¿¡æ¯
 	 */
 	public List<TableMetaData> getTablesFromDatabase(String tableNamePattern,String tableTypes[])
 	{
@@ -1399,7 +1399,7 @@ public class JDBCPool {
 		return getTablesFromDatabase(con,tableNamePattern,null);
 	}
 	/**
-	 * »ñÈ¡±í¼¯ºÏĞÅÏ¢
+	 * è·å–è¡¨é›†åˆä¿¡æ¯
 	 * @param con
 	 * @param tableName
 	 * @return
@@ -1408,7 +1408,7 @@ public class JDBCPool {
 		return getTablesFromDatabase(con,tableNamePattern,tableTypes,false);
 	}
 	/**
-	 * »ñÈ¡±í¼¯ºÏĞÅÏ¢
+	 * è·å–è¡¨é›†åˆä¿¡æ¯
 	 */
 	public List<TableMetaData> getTablesFromDatabase()
 	{
@@ -1416,7 +1416,7 @@ public class JDBCPool {
 	}
 	
 	/**
-	 * »ñÈ¡±í¼¯ºÏĞÅÏ¢
+	 * è·å–è¡¨é›†åˆä¿¡æ¯
 	 */
 	public List<TableMetaData> getTablesFromDatabase(String tabletypes[])
 	{
@@ -1426,7 +1426,7 @@ public class JDBCPool {
 	
 	
 	/**
-	 * »ñÈ¡±í¼¯ºÏĞÅÏ¢
+	 * è·å–è¡¨é›†åˆä¿¡æ¯
 	 */
 	public List<TableMetaData> getTablesFromDatabase(String tableNamePattern,boolean loadColumns)
 	{
@@ -1434,7 +1434,7 @@ public class JDBCPool {
 	}
 	
 	/**
-	 * »ñÈ¡±í¼¯ºÏĞÅÏ¢
+	 * è·å–è¡¨é›†åˆä¿¡æ¯
 	 */
 	public List<TableMetaData> getTablesFromDatabase(String tableNamePattern,String tableTypes[],boolean loadColumns)
 	{
@@ -1455,7 +1455,7 @@ public class JDBCPool {
 		return getTablesFromDatabase(con,tableNamePattern,null,loadColumns);
 	}
 	/**
-	 * »ñÈ¡±í¼¯ºÏĞÅÏ¢
+	 * è·å–è¡¨é›†åˆä¿¡æ¯
 	 * @param con
 	 * @param tableName
 	 * @return
@@ -1536,7 +1536,7 @@ public class JDBCPool {
 		return tableMetaDatas;
 	}
 	/**
-	 * »ñÈ¡±í¼¯ºÏĞÅÏ¢
+	 * è·å–è¡¨é›†åˆä¿¡æ¯
 	 */
 	public List<TableMetaData> getTablesFromDatabase(boolean loadColumns)
 	{
@@ -1544,7 +1544,7 @@ public class JDBCPool {
 	}
 	
 	/**
-	 * »ñÈ¡±í¼¯ºÏĞÅÏ¢
+	 * è·å–è¡¨é›†åˆä¿¡æ¯
 	 */
 	public List<TableMetaData> getTablesFromDatabase(String tabletypes[],boolean loadColumns)
 	{
@@ -1672,7 +1672,7 @@ public class JDBCPool {
 			}
 	
 			/**
-			 * ¹¹½¨Ö÷¼üĞÅÏ¢
+			 * æ„å»ºä¸»é”®ä¿¡æ¯
 			 */
 			try {
 				primaryKeysrs = metaData.getPrimaryKeys(null, schemaName, tableName);
@@ -1722,7 +1722,7 @@ public class JDBCPool {
 	
 			try {
 				/**
-				 * ¹¹½¨Íâ¼üĞÅÏ¢
+				 * æ„å»ºå¤–é”®ä¿¡æ¯
 				 */
 				foreignrs = metaData.getImportedKeys(null, schemaName, tableName);
 				while (foreignrs.next()) {
@@ -1821,8 +1821,8 @@ public class JDBCPool {
 		return schemaName;
 	}
 	/**
-	 * ³õÊ¼»¯Êı¾İ¿âÔªÊı¾İ added by biaoping.yin on 20080529
-	 * »ñÈ¡µ½µÄ±íÔªÊı¾İ½«±»Ö±½ÓË¢ĞÂµ½»º³åÇøÖĞ
+	 * åˆå§‹åŒ–æ•°æ®åº“å…ƒæ•°æ® added by biaoping.yin on 20080529
+	 * è·å–åˆ°çš„è¡¨å…ƒæ•°æ®å°†è¢«ç›´æ¥åˆ·æ–°åˆ°ç¼“å†²åŒºä¸­
 	 */
 	public TableMetaData getTableMetaDataFromDatabase(Connection con,
 			String tableName) {
@@ -2012,7 +2012,7 @@ public class JDBCPool {
 	}
 
 	/**
-	 * ÅĞ¶ÏjndiNameÊÇ·ñ´æÔÚ
+	 * åˆ¤æ–­jndiNameæ˜¯å¦å­˜åœ¨
 	 * 
 	 * @param ctx
 	 * @param jndiName
@@ -2130,7 +2130,7 @@ public class JDBCPool {
 	}
 
 	/**
-	 * added by biaoping.yin on 20050601 »ñÈ¡Êı¾İ¿âÖ÷¼üÉú³ÉÄ£Ê½
+	 * added by biaoping.yin on 20050601 è·å–æ•°æ®åº“ä¸»é”®ç”Ÿæˆæ¨¡å¼
 	 * 
 	 * @return String
 	 */
@@ -2145,7 +2145,7 @@ public class JDBCPool {
 	}
 
 	/**
-	 * added by biaoping.yin on 20050601 »ñÈ¡Êı¾İ¿âµÄÀàĞÍ
+	 * added by biaoping.yin on 20050601 è·å–æ•°æ®åº“çš„ç±»å‹
 	 * 
 	 * @return String
 	 */
@@ -2184,8 +2184,8 @@ public class JDBCPool {
 
 	/**
 	 * Retrieves a PooledConnection impl and returns its Handle. 
-	 * Ö±½Ó´ÓÔ­Ê¼³ØÖĞ»ñÈ¡connection£¬Èç¹ûdatasource ÊÇÒ»¸öTXDataSource
-	 * ÄÇÃ´ĞèÒª²éÕÒTXDataSourceÄÚ²¿°üº¬µÄÔ­Ê¼Êı¾İÔ´£¬È»ºó´ÓÖĞ»ñÈ¡¶ÔÓ¦µÄconnection
+	 * ç›´æ¥ä»åŸå§‹æ± ä¸­è·å–connectionï¼Œå¦‚æœdatasource æ˜¯ä¸€ä¸ªTXDataSource
+	 * é‚£ä¹ˆéœ€è¦æŸ¥æ‰¾TXDataSourceå†…éƒ¨åŒ…å«çš„åŸå§‹æ•°æ®æºï¼Œç„¶åä»ä¸­è·å–å¯¹åº”çš„connection
 	 */
 	public Connection requestConnection() throws SQLException {
 		if(datasource != null)
@@ -2222,7 +2222,7 @@ public class JDBCPool {
 
 
 	/**
-	 * »ñÈ¡µ±Ç°Á´½Ó³ØÖĞÕıÔÚÊ¹ÓÃµÄÁ´½Ó ½Ó¿ÚÖ»¶ÔÄÚ²¿Êı¾İÔ´ÓĞÓÃ£¬Íâ²¿Êı¾İÔ´·µ»Ø-1
+	 * è·å–å½“å‰é“¾æ¥æ± ä¸­æ­£åœ¨ä½¿ç”¨çš„é“¾æ¥ æ¥å£åªå¯¹å†…éƒ¨æ•°æ®æºæœ‰ç”¨ï¼Œå¤–éƒ¨æ•°æ®æºè¿”å›-1
 	 * 
 	 * @return
 	 */
@@ -2239,9 +2239,9 @@ public class JDBCPool {
 	}
 	
 	/**
-	 * »ñÈ¡µ±Ç°Á´½Ó³ØÖĞÕıÔÚÊ¹ÓÃµÄÁ´½Ó ½Ó¿ÚÖ»¶ÔÄÚ²¿Êı¾İÔ´ÓĞÓÃ£¬Íâ²¿Êı¾İÔ´·µ»Ø-1
-	 * ·ÇÁ¬½Ó³ØÊı¾İÔ´ÎªÊµÏÖ¸Ã¹¦ÄÜ
-	 * @deprecated ½÷É÷Ê¹ÓÃ±¾½Ó¿Ú
+	 * è·å–å½“å‰é“¾æ¥æ± ä¸­æ­£åœ¨ä½¿ç”¨çš„é“¾æ¥ æ¥å£åªå¯¹å†…éƒ¨æ•°æ®æºæœ‰ç”¨ï¼Œå¤–éƒ¨æ•°æ®æºè¿”å›-1
+	 * éè¿æ¥æ± æ•°æ®æºä¸ºå®ç°è¯¥åŠŸèƒ½
+	 * @deprecated è°¨æ…ä½¿ç”¨æœ¬æ¥å£
 	 * @return
 	 */
 	public List getTraceObjects() {
@@ -2262,7 +2262,7 @@ public class JDBCPool {
 	}
 
 	/**
-	 * »ñÈ¡²¢·¢×î´óÊ¹ÓÃÁ´½ÓÊı£¬¼ÇÂ¼Á´½Ó³Øµ½Ä¿Ç°ÎªÖ¹²¢·¢Ê¹ÓÃÁ´½ÓµÄ×î´óÊıÄ¿£¬ Íâ²¿Êı¾İÔ´·µ»Ø-1
+	 * è·å–å¹¶å‘æœ€å¤§ä½¿ç”¨é“¾æ¥æ•°ï¼Œè®°å½•é“¾æ¥æ± åˆ°ç›®å‰ä¸ºæ­¢å¹¶å‘ä½¿ç”¨é“¾æ¥çš„æœ€å¤§æ•°ç›®ï¼Œ å¤–éƒ¨æ•°æ®æºè¿”å›-1
 	 * 
 	 * @return
 	 */
@@ -2279,8 +2279,8 @@ public class JDBCPool {
 	}
 
 	/**
-	 * »ñÈ¡µ±Ç°Á´½Ó³ØÖĞ¿ÕÏĞµÄÁ´½ÓÊı ½Ó¿ÚÖ»¶ÔÄÚ²¿Êı¾İÔ´ÓĞÓÃ£¬Íâ²¿Êı¾İÔ´·µ»Ø-1
-	 * ·ÇÁ¬½Ó³ØÊı¾İÔ´ÎªÊµÏÖ¸Ã¹¦ÄÜ
+	 * è·å–å½“å‰é“¾æ¥æ± ä¸­ç©ºé—²çš„é“¾æ¥æ•° æ¥å£åªå¯¹å†…éƒ¨æ•°æ®æºæœ‰ç”¨ï¼Œå¤–éƒ¨æ•°æ®æºè¿”å›-1
+	 * éè¿æ¥æ± æ•°æ®æºä¸ºå®ç°è¯¥åŠŸèƒ½
 	 * @return
 	 */
 	public int getNumIdle() {
@@ -2412,7 +2412,7 @@ public class JDBCPool {
 	}
 
 	/**
-	 * »ñÈ¡Êı¾İ¿âÊÊÅäÆ÷
+	 * è·å–æ•°æ®åº“é€‚é…å™¨
 	 * 
 	 * @return DB
 	 */

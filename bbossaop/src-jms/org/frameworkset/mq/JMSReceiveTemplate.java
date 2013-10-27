@@ -27,7 +27,7 @@ import javax.jms.TopicSubscriber;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2010-1-13 œ¬ŒÁ04:11:12
+ * @Date 2010-1-13 ‰∏ãÂçà04:11:12
  * @author biaoping.yin
  * @version 1.0
  */

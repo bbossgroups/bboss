@@ -20,12 +20,12 @@ import org.frameworkset.spi.assemble.Pro;
 
 /**
  * <p>Title: BeanInfoAware.java</p> 
- * <p>Description: Ïò×é¼şÖĞ×¢Èë×é¼ş¶ÔÓ¦propertyÔªÊı¾İĞÅÏ¢£¬ÒÔ±ã×é¼ş×ÔĞĞ»ñÈ¡Ïà¹ØµÄÅäÖÃĞÅÏ¢
- * Ò»°ãºÍorg.frameworkset.spi.InitializingBean½Ó¿ÚÅäºÏÊ¹ÓÃ
+ * <p>Description: å‘ç»„ä»¶ä¸­æ³¨å…¥ç»„ä»¶å¯¹åº”propertyå…ƒæ•°æ®ä¿¡æ¯ï¼Œä»¥ä¾¿ç»„ä»¶è‡ªè¡Œè·å–ç›¸å…³çš„é…ç½®ä¿¡æ¯
+ * ä¸€èˆ¬å’Œorg.frameworkset.spi.InitializingBeanæ¥å£é…åˆä½¿ç”¨
  * </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2012-3-2 ÉÏÎç09:48:03
+ * @Date 2012-3-2 ä¸Šåˆ09:48:03
  * @author biaoping.yin
  * @version 1.0
  */

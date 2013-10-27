@@ -24,7 +24,7 @@ import org.frameworkset.spi.async.annotation.Result;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2011-4-20 ÏÂÎç05:18:54
+ * @Date 2011-4-20 ä¸‹åˆ05:18:54
  * @author biaoping.yin
  * @version 1.0
  */
@@ -38,8 +38,8 @@ public class AsynbeanTest {
 	}
 	
 	/**
-	 * 5Ãë³¬Ê±£¬µ«ÊÇ²»·µ»Ø½á¹û£¬Ò²²»Ö¸¶¨»Øµ÷º¯Êı£¨ÕâÖÖÄ£Ê½Ã»ÓĞÊµ¼ÊÒâÒå£¬Ö»ÊÇÔÚµ÷ÓÃµÄÊ±ºò³¬¹ı5Ãë
-	 * ºó¸ø³ö³¬Ê±Òì³££©
+	 * 5ç§’è¶…æ—¶ï¼Œä½†æ˜¯ä¸è¿”å›ç»“æœï¼Œä¹Ÿä¸æŒ‡å®šå›è°ƒå‡½æ•°ï¼ˆè¿™ç§æ¨¡å¼æ²¡æœ‰å®é™…æ„ä¹‰ï¼Œåªæ˜¯åœ¨è°ƒç”¨çš„æ—¶å€™è¶…è¿‡5ç§’
+	 * åç»™å‡ºè¶…æ—¶å¼‚å¸¸ï¼‰
 	 * @param message
 	 * @return
 	 */
@@ -52,7 +52,7 @@ public class AsynbeanTest {
 	}
 	
 	/**
-	 * ĞèÒª·µ»Ø½á¹û£¬µÈ5Ãë³¬Ê±
+	 * éœ€è¦è¿”å›ç»“æœï¼Œç­‰5ç§’è¶…æ—¶
 	 * @param message
 	 */
 	@Async(timeout=5000,result=Result.YES)

@@ -56,12 +56,12 @@ public class UnpoolTest {
 			SQLExecutor.insert("insert into dual(col1) values(1)");
 			String file = SQLExecutor.queryField("select col1 from dual");
 			tm.getTransaction().printStackTrace();
-			System.out.println("»î¶¯Á¬½ÓÊý:"+DBUtil.getNumActive());
-			System.out.println("»î¶¯¸ß·åÁ¬½ÓÊý:"+DBUtil.getMaxNumActive());
+			System.out.println("æ´»åŠ¨è¿žæŽ¥æ•°:"+DBUtil.getNumActive());
+			System.out.println("æ´»åŠ¨é«˜å³°è¿žæŽ¥æ•°:"+DBUtil.getMaxNumActive());
 			List t = DBUtil.getPool().getTraceObjects();
 			((AbandonedTrace)t.get(0)).printStackTrace();
 			tm.commit();
-			System.out.println("col1£º"+file);
+			System.out.println("col1ï¼š"+file);
 		} catch (Exception e) {
 			try {
 				tm.rollback();

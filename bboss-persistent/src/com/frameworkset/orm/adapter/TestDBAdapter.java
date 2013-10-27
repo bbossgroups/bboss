@@ -33,10 +33,10 @@ public class TestDBAdapter {
     public static void main(String[] args) {
         TestDBAdapter testdbadapter = new TestDBAdapter();
         try {
-            //¸ù¾İÈÕÆÚ»ñÈ¡²»Í¬Êı¾İ¿âµÄÈÕÆÚ×ª»»º¯Êı,ÆäÖĞcom.frameworkset.orm.adapter.DBFactory.DBOracle±íÊ¾Êı¾İ¿âÀàĞÍ³£Á¿
+            //æ ¹æ®æ—¥æœŸè·å–ä¸åŒæ•°æ®åº“çš„æ—¥æœŸè½¬æ¢å‡½æ•°,å…¶ä¸­com.frameworkset.orm.adapter.DBFactory.DBOracleè¡¨ç¤ºæ•°æ®åº“ç±»å‹å¸¸é‡
             Date date = new Date();
             System.out.println(com.frameworkset.orm.adapter.DBFactory.create(com.frameworkset.orm.adapter.DBFactory.DBOracle).getDateString(date));
-            //¸ù¾İÈÕÆÚ×Ö·û´®»ñÈ¡²»Í¬Êı¾İ¿âµÄÈÕÆÚ×ª»»º¯Êı£¬ÆäÖĞcom.frameworkset.orm.adapter.DBFactory.DBOracle±íÊ¾Êı¾İ¿âÀàĞÍ³£Á¿
+            //æ ¹æ®æ—¥æœŸå­—ç¬¦ä¸²è·å–ä¸åŒæ•°æ®åº“çš„æ—¥æœŸè½¬æ¢å‡½æ•°ï¼Œå…¶ä¸­com.frameworkset.orm.adapter.DBFactory.DBOracleè¡¨ç¤ºæ•°æ®åº“ç±»å‹å¸¸é‡
             String date_str = "11-04-2006 09:27:31";
             System.out.println(com.frameworkset.orm.adapter.DBFactory.create(com.frameworkset.orm.adapter.DBFactory.DBOracle).getDateString(date_str));
         } catch (InstantiationException ex) {

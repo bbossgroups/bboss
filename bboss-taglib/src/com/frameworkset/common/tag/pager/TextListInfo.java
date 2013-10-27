@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * <p>Title: TextListInfo</p>
  *
- * <p>Description: ÊÖ»úwapÍøÕ¾ÎÄ±¾·ÖÒ³Êı¾İ£¬°üÀ¨Ò³Ãæ×ÜÊıÁ¿£¬µ±Ò³ÏÔÊ¾µÄÎÄ×Ö</p>
+ * <p>Description: æ‰‹æœºwapç½‘ç«™æ–‡æœ¬åˆ†é¡µæ•°æ®ï¼ŒåŒ…æ‹¬é¡µé¢æ€»æ•°é‡ï¼Œå½“é¡µæ˜¾ç¤ºçš„æ–‡å­—</p>
  *
  * <p>Copyright: Copyright (c) 2005</p>
  *
@@ -15,10 +15,10 @@ import java.io.Serializable;
  * @version 1.0
  */
 public class TextListInfo implements Serializable{
-    /**Ò³Ãæ×Ü¼ÇÂ¼Êı*/
+    /**é¡µé¢æ€»è®°å½•æ•°*/
     private int total;
     private int curPage;
-    /**µ±Ç°Ò³ÃæÏÔÊ¾µÄÎÄ±¾*/
+    /**å½“å‰é¡µé¢æ˜¾ç¤ºçš„æ–‡æœ¬*/
     private String curValue;
 
     public static void main(String[] args) {

@@ -40,8 +40,8 @@ import com.frameworkset.orm.platform.PlatformConst;
 /**
  * <p>Title: ORMappingManager</p>
  *
- * <p>Description: ¹ÜÀí¶ÔÏóºÍ±í¹ØÏµ
- *                 ²¢ÇÒ¿É¶Ô¶ÔÏóºÍ±íµÄÓ³Éä¹ØÏµ½øĞĞ³Ö¾Ã»¯,¿É´Ó³Ö¾Ã»¯ÎÄ¼şÖĞ»Ö¸´¸Ã¶ÔÏó
+ * <p>Description: ç®¡ç†å¯¹è±¡å’Œè¡¨å…³ç³»
+ *                 å¹¶ä¸”å¯å¯¹å¯¹è±¡å’Œè¡¨çš„æ˜ å°„å…³ç³»è¿›è¡ŒæŒä¹…åŒ–,å¯ä»æŒä¹…åŒ–æ–‡ä»¶ä¸­æ¢å¤è¯¥å¯¹è±¡
  *              </p>
  *
  * <p>Copyright: Copyright (c) 2005</p>
@@ -65,7 +65,7 @@ public class ORMappingManager implements java.io.Serializable{
     }
     static
     {
-        //³õÊ¼»¯ÄäÃûÊı¾İ¿â
+        //åˆå§‹åŒ–åŒ¿åæ•°æ®åº“
         if(!dataBases.containsKey(ANONYMITY_DATABASE_NAME))
         {
             Database anonymityDatabase = new Database(ANONYMITY_DATABASE_TYPE);
@@ -81,7 +81,7 @@ public class ORMappingManager implements java.io.Serializable{
     }
 
     /**
-     * Èç¹û¹ÜÀí¶ÔÏóµÄÀà¶¨ÒåÒÑ¾­×öÁËĞŞ¸ÄÄÇÃ´±ØĞëÉ¾³ıÔ­À´µÄ»º³å¶ÔÏóÈ»ºóÖØĞÂ½øĞĞ»º³å
+     * å¦‚æœç®¡ç†å¯¹è±¡çš„ç±»å®šä¹‰å·²ç»åšäº†ä¿®æ”¹é‚£ä¹ˆå¿…é¡»åˆ é™¤åŸæ¥çš„ç¼“å†²å¯¹è±¡ç„¶åé‡æ–°è¿›è¡Œç¼“å†²
      */
     private static void synchronizePersist()
     {
@@ -89,7 +89,7 @@ public class ORMappingManager implements java.io.Serializable{
         cachFile.deleteOnExit();
     }
     /**
-     * Èç¹û¹ÜÀí¶ÔÏóµÄÀà¶¨ÒåÒÑ¾­×öÁËĞŞ¸ÄÄÇÃ´±ØĞëÉ¾³ıÔ­À´µÄ»º³å¶ÔÏóÈ»ºóÖØĞÂ½øĞĞ»º³å
+     * å¦‚æœç®¡ç†å¯¹è±¡çš„ç±»å®šä¹‰å·²ç»åšäº†ä¿®æ”¹é‚£ä¹ˆå¿…é¡»åˆ é™¤åŸæ¥çš„ç¼“å†²å¯¹è±¡ç„¶åé‡æ–°è¿›è¡Œç¼“å†²
      */
     private static void synchronizePersist(String path)
     {
@@ -98,9 +98,9 @@ public class ORMappingManager implements java.io.Serializable{
     }
 
     /**
-     * »ñÈ¡o/r mapping¹ÜÀí¶ÔÏóµÄÊµÀı£¬¹ÜÀí¶ÔÏóÎïÀí´æ´¢ÎÄ¼şµÄÎïÀíÂ·¾¶ÎªÈ±Ê¡µÄclasspath¸ùÂ·¾¶
-     * »ñÈ¡ÊµÀıÊ±Ê×ÏÈ´Ó´æ´¢ÎÄ¼şÖĞ»Ö¸´¸Ã¶ÔÏó£¬Èç¹û¹ÜÀí¶ÔÏóÃ»ÓĞÔÚ´æ´¢ÎÄ¼şÖĞ£¬ÔòÖØĞÂ´´½¨¸Ã¶ÔÏó
-     * @param path String ³Ö¾Ã»¯¹ÜÀí¶ÔÏóÊµÀıµÄÎïÀíÂ·¾¶
+     * è·å–o/r mappingç®¡ç†å¯¹è±¡çš„å®ä¾‹ï¼Œç®¡ç†å¯¹è±¡ç‰©ç†å­˜å‚¨æ–‡ä»¶çš„ç‰©ç†è·¯å¾„ä¸ºç¼ºçœçš„classpathæ ¹è·¯å¾„
+     * è·å–å®ä¾‹æ—¶é¦–å…ˆä»å­˜å‚¨æ–‡ä»¶ä¸­æ¢å¤è¯¥å¯¹è±¡ï¼Œå¦‚æœç®¡ç†å¯¹è±¡æ²¡æœ‰åœ¨å­˜å‚¨æ–‡ä»¶ä¸­ï¼Œåˆ™é‡æ–°åˆ›å»ºè¯¥å¯¹è±¡
+     * @param path String æŒä¹…åŒ–ç®¡ç†å¯¹è±¡å®ä¾‹çš„ç‰©ç†è·¯å¾„
      * @return ORMappingManager
      */
 
@@ -128,9 +128,9 @@ public class ORMappingManager implements java.io.Serializable{
        return instance;
     }
     /**
-     * »ñÈ¡o/r mapping¹ÜÀí¶ÔÏóµÄÊµÀı£¬´«Èëpath²ÎÊıÎª°üº¬¹ÜÀí¶ÔÏóÎïÀí´æ´¢ÎÄ¼şµÄÎïÀíÂ·¾¶
-     * »ñÈ¡ÊµÀıÊ±Ê×ÏÈ´Ó´æ´¢ÎÄ¼şÖĞ»Ö¸´¸Ã¶ÔÏó£¬Èç¹û¹ÜÀí¶ÔÏóÃ»ÓĞÔÚ´æ´¢ÎÄ¼şÖĞ£¬ÔòÖØĞÂ´´½¨¸Ã¶ÔÏó
-     * @param path String ³Ö¾Ã»¯¹ÜÀí¶ÔÏóÊµÀıµÄÎïÀíÂ·¾¶
+     * è·å–o/r mappingç®¡ç†å¯¹è±¡çš„å®ä¾‹ï¼Œä¼ å…¥pathå‚æ•°ä¸ºåŒ…å«ç®¡ç†å¯¹è±¡ç‰©ç†å­˜å‚¨æ–‡ä»¶çš„ç‰©ç†è·¯å¾„
+     * è·å–å®ä¾‹æ—¶é¦–å…ˆä»å­˜å‚¨æ–‡ä»¶ä¸­æ¢å¤è¯¥å¯¹è±¡ï¼Œå¦‚æœç®¡ç†å¯¹è±¡æ²¡æœ‰åœ¨å­˜å‚¨æ–‡ä»¶ä¸­ï¼Œåˆ™é‡æ–°åˆ›å»ºè¯¥å¯¹è±¡
+     * @param path String æŒä¹…åŒ–ç®¡ç†å¯¹è±¡å®ä¾‹çš„ç‰©ç†è·¯å¾„
      * @return ORMappingManager
      */
     public static ORMappingManager getInstance(String path)
@@ -158,7 +158,7 @@ public class ORMappingManager implements java.io.Serializable{
     }
 
     /**
-     * ´´½¨ÄäÃûÊı¾İ¿â
+     * åˆ›å»ºåŒ¿åæ•°æ®åº“
      * @return Database
      */
     public Database creatAnonymityDataBase()
@@ -168,9 +168,9 @@ public class ORMappingManager implements java.io.Serializable{
     }
 
     /**
-     * ´´½¨¶ÔÓ¦Ãû³ÆºÍÀàĞÍµÄÊı¾İ¿â
-     * @param dbName String Êı¾İ¿âÁ¬½Ó³ØµÄÃû³Æ
-     * @param dbType String Êı¾İ¿âÀàĞÍ£¬¾ßÌåµÄÖµ¿É²Î¿´PlatformConstÀàÖĞËù¶¨ÒåµÄÊı¾İ¿âÀàĞÍ
+     * åˆ›å»ºå¯¹åº”åç§°å’Œç±»å‹çš„æ•°æ®åº“
+     * @param dbName String æ•°æ®åº“è¿æ¥æ± çš„åç§°
+     * @param dbType String æ•°æ®åº“ç±»å‹ï¼Œå…·ä½“çš„å€¼å¯å‚çœ‹PlatformConstç±»ä¸­æ‰€å®šä¹‰çš„æ•°æ®åº“ç±»å‹
      * @return Database
      */
     public Database creatDataBase(String dbName, String dbType)
@@ -197,8 +197,8 @@ public class ORMappingManager implements java.io.Serializable{
     }
 
     /**
-     * ´´½¨¸ø¶¨Ãû³ÆµÄÊı¾İ¿â
-     * @param dbName String ¶ÔÓ¦Êı¾İ¿âÁ¬½Ó³ØÖĞµÄÃû³Æ
+     * åˆ›å»ºç»™å®šåç§°çš„æ•°æ®åº“
+     * @param dbName String å¯¹åº”æ•°æ®åº“è¿æ¥æ± ä¸­çš„åç§°
      * @return Database
      */
     public Database creatDataBase(String dbName)
@@ -223,7 +223,7 @@ public class ORMappingManager implements java.io.Serializable{
     }
 
     /**
-     * ´´½¨È±Ê¡Êı¾İ¿âÊµÀı
+     * åˆ›å»ºç¼ºçœæ•°æ®åº“å®ä¾‹
      * @return Database
      */
     public Database creatDefaultDataBase()
@@ -246,8 +246,8 @@ public class ORMappingManager implements java.io.Serializable{
     }
 
     /**
-     * »ñÈ¡¸ø¶¨Ãû³ÆµÄÊı¾İ¿â
-     * @param dbName String Êı¾İ¿âÁ¬½Ó³ØÃû³Æ
+     * è·å–ç»™å®šåç§°çš„æ•°æ®åº“
+     * @param dbName String æ•°æ®åº“è¿æ¥æ± åç§°
      * @return Database
      * @throws ORMappingException
      */
@@ -261,7 +261,7 @@ public class ORMappingManager implements java.io.Serializable{
     }
 
     /**
-     * »ñÈ¡¸øÄäÃûÊı¾İ¿â
+     * è·å–ç»™åŒ¿åæ•°æ®åº“
      *
      * @return Database
      * @throws ORMappingException
@@ -270,12 +270,12 @@ public class ORMappingManager implements java.io.Serializable{
         throws ORMappingException
     {
         if(!dataBases.containsKey(this.ANONYMITY_DATABASE_NAME))
-            throw new ORMappingException("Can not get ANONYMITY_DATABASE£¡");
+            throw new ORMappingException("Can not get ANONYMITY_DATABASEï¼");
         return (Database) dataBases.get(ANONYMITY_DATABASE_NAME);
     }
 
     /**
-     * »ñÈ¡È±Ê¡Êı¾İ¿â     *
+     * è·å–ç¼ºçœæ•°æ®åº“     *
      * @return Database
      * @throws ORMappingException
      */
@@ -292,7 +292,7 @@ public class ORMappingManager implements java.io.Serializable{
 
 
     /**
-     * ´´½¨Êı¾İ¿â±í¶ÔÏó
+     * åˆ›å»ºæ•°æ®åº“è¡¨å¯¹è±¡
      * @return Table
      */
     public Table creatTable()
@@ -301,7 +301,7 @@ public class ORMappingManager implements java.io.Serializable{
     }
 
     /**
-     * ´´½¨¸ø¶¨Êı¾İ¿â±íÃûµÄ±í
+     * åˆ›å»ºç»™å®šæ•°æ®åº“è¡¨åçš„è¡¨
      * @param tableName String
      * @return Table
      * @throws ORMappingException
@@ -315,7 +315,7 @@ public class ORMappingManager implements java.io.Serializable{
     }
 
     /**
-     * ´´½¨Êı¾İ¿â±íÁĞ¶ÔÏó
+     * åˆ›å»ºæ•°æ®åº“è¡¨åˆ—å¯¹è±¡
      * @return Column
      */
     public Column creatColumn()
@@ -325,7 +325,7 @@ public class ORMappingManager implements java.io.Serializable{
     }
 
     /**
-     * ´´½¨¸ø¶¨Êı¾İ¿â±íÁĞÃûµÄÁĞ¶ÔÏó
+     * åˆ›å»ºç»™å®šæ•°æ®åº“è¡¨åˆ—åçš„åˆ—å¯¹è±¡
      * @param name String
      * @return Column
      * @throws ORMappingException
@@ -338,7 +338,7 @@ public class ORMappingManager implements java.io.Serializable{
     }
 
     /**
-     * ³Ö¾Ã»¯Êı¾İ¿â¹ÜÀí¶ÔÏóµ½ÎÄ¼şORMappingManager.CacheÖĞ
+     * æŒä¹…åŒ–æ•°æ®åº“ç®¡ç†å¯¹è±¡åˆ°æ–‡ä»¶ORMappingManager.Cacheä¸­
      * @throws IOException
      */
     public void cache() throws IOException {
@@ -350,7 +350,7 @@ public class ORMappingManager implements java.io.Serializable{
     }
 
     /**
-     * ³Ö¾Ã»¯Êı¾İ¿â¹ÜÀí¶ÔÏóµ½Â·¾¶pathÏÂµÄÎÄ¼şORMappingManager.CacheÖĞ
+     * æŒä¹…åŒ–æ•°æ®åº“ç®¡ç†å¯¹è±¡åˆ°è·¯å¾„pathä¸‹çš„æ–‡ä»¶ORMappingManager.Cacheä¸­
      * @param cachePath String
      * @throws IOException
      */
@@ -371,7 +371,7 @@ public class ORMappingManager implements java.io.Serializable{
 
 
     /**
-     * ´ÓÎïÀíÎÄ¼şORMappingManager.CacheÖĞ»Ö¸´¹ÜÀí¶ÔÏó
+     * ä»ç‰©ç†æ–‡ä»¶ORMappingManager.Cacheä¸­æ¢å¤ç®¡ç†å¯¹è±¡
      * @return ORMappingManager
      * @throws IOException
      * @throws ClassNotFoundException
@@ -387,7 +387,7 @@ public class ORMappingManager implements java.io.Serializable{
     }
 
     /**
-     * ´ÓÂ·¾¶pathÏÂµÄÎÄ¼şORMappingManager.CacheÖĞ»Ö¸´¹ÜÀí¶ÔÏó
+     * ä»è·¯å¾„pathä¸‹çš„æ–‡ä»¶ORMappingManager.Cacheä¸­æ¢å¤ç®¡ç†å¯¹è±¡
      * @param path String
      * @return ORMappingManager
      * @throws IOException
@@ -402,12 +402,12 @@ public class ORMappingManager implements java.io.Serializable{
     }
 
     /**
-     * ÖØÖÃÊı¾İ¿âĞÅÏ¢
+     * é‡ç½®æ•°æ®åº“ä¿¡æ¯
      */
     public void reset()
     {
         dataBases.clear();
-        //³õÊ¼»¯ÄäÃûÊı¾İ¿â
+        //åˆå§‹åŒ–åŒ¿åæ•°æ®åº“
         //if(!dataBases.containsKey(ANONYMITY_DATABASE_NAME))
         {
             Database anonymityDatabase = new Database(ANONYMITY_DATABASE_TYPE);
@@ -418,7 +418,7 @@ public class ORMappingManager implements java.io.Serializable{
 
     }
     /**
-     * ´ÓxmlÎÄ¼şÖĞ¼ÓÔØÊı¾İ¿âÊµÀı£¬½«Êı¾İ¿âÃèÊöÎÄ¼ş×ª»»ÎªÊı¾İ¿â
+     * ä»xmlæ–‡ä»¶ä¸­åŠ è½½æ•°æ®åº“å®ä¾‹ï¼Œå°†æ•°æ®åº“æè¿°æ–‡ä»¶è½¬æ¢ä¸ºæ•°æ®åº“
      * @param xmlPath String
      * @return ORMappingManager
      */
@@ -482,9 +482,9 @@ public class ORMappingManager implements java.io.Serializable{
     }
 
     /**
-     * ¸ù¾İschemaÎÄ¼şµÄÃû³Æ»ñÈ¡Êı¾İ¿âÀàĞÍ£¬ÀıÈçÓĞ¡®Oracle_bsf.xml¡¯µÄÃèÊöÎÄ¼ş£¬
-     * ÄÇÃ´»ñÈ¡µÄÊı¾İ¿âÀàĞÍ¾ÍÊÇOracle
-     * Èç¹ûÃ»ÓĞ°üº¬Êı¾İ¿âÀàĞÍĞÅÏ¢£¬È±Ê¡µÄÊı¾İ¿âÀàĞÍ½«»á±»·µ»Ø£¨PlatformConst.PLATFORM_DEFAULT£©¡£
+     * æ ¹æ®schemaæ–‡ä»¶çš„åç§°è·å–æ•°æ®åº“ç±»å‹ï¼Œä¾‹å¦‚æœ‰â€˜Oracle_bsf.xmlâ€™çš„æè¿°æ–‡ä»¶ï¼Œ
+     * é‚£ä¹ˆè·å–çš„æ•°æ®åº“ç±»å‹å°±æ˜¯Oracle
+     * å¦‚æœæ²¡æœ‰åŒ…å«æ•°æ®åº“ç±»å‹ä¿¡æ¯ï¼Œç¼ºçœçš„æ•°æ®åº“ç±»å‹å°†ä¼šè¢«è¿”å›ï¼ˆPlatformConst.PLATFORM_DEFAULTï¼‰ã€‚
      * @param schema String
      * @return String
      */
@@ -499,7 +499,7 @@ public class ORMappingManager implements java.io.Serializable{
 
 
     /**
-     * ÅĞ¶ÏÄ¿Â¼ÖĞÊÇ·ñ°üº¬ĞèÒª´¦ÀíµÄÊı¾İ¿âÃèÊöÎÄ¼ş
+     * åˆ¤æ–­ç›®å½•ä¸­æ˜¯å¦åŒ…å«éœ€è¦å¤„ç†çš„æ•°æ®åº“æè¿°æ–‡ä»¶
      * @param dir File
      * @return boolean
      */
@@ -513,7 +513,7 @@ public class ORMappingManager implements java.io.Serializable{
     }
 
     /**
-     * ½«Êı¾İ¿âÊµÀı£¬Êı¾İ¿â±íÒÔ¼°±íµÄÁĞ»º³åµ½xmlÎÄ¼şÖĞ
+     * å°†æ•°æ®åº“å®ä¾‹ï¼Œæ•°æ®åº“è¡¨ä»¥åŠè¡¨çš„åˆ—ç¼“å†²åˆ°xmlæ–‡ä»¶ä¸­
      * @param xmlPath String
      * @return ORMappingManager
      */

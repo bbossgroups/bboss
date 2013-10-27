@@ -18,7 +18,7 @@ public class TestConnection {
 			Connection con = DBUtil.getConection();
 			long end = System.currentTimeMillis();
 			max = max < (end - s)?(end -s):max;
-			System.out.println("»ñÈ¡connectionºÄÊ±£º" + (end - s)  + "ºÁÃë.");
+			System.out.println("èŽ·å–connectionè€—æ—¶ï¼š" + (end - s)  + "æ¯«ç§’.");
 			con.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -32,19 +32,19 @@ public class TestConnection {
 	{
 		try {
 			long s = System.currentTimeMillis();
-			System.out.println("»ñÈ¡connectionÇ°¿ÕÏÐ£º" +DBUtil.getNumIdle()  + "¸ö.");
+			System.out.println("èŽ·å–connectionå‰ç©ºé—²ï¼š" +DBUtil.getNumIdle()  + "ä¸ª.");
 			TransactionManager tm = new TransactionManager();
 			tm.begin();
 			Connection con = DBUtil.getConection();
 			Connection connn = DBUtil.getDataSource(null).getConnection();
-			System.out.println("»ñÈ¡connectionºÄÊ±¿ÕÏÐ£º" +DBUtil.getNumIdle()  + "¸ö.");
+			System.out.println("èŽ·å–connectionè€—æ—¶ç©ºé—²ï¼š" +DBUtil.getNumIdle()  + "ä¸ª.");
 			Connection con1 = DBUtil.getConection();
 			long end = System.currentTimeMillis();
-			System.out.println("»ñÈ¡connection1ºÄÊ±¿ÕÏÐ£º" +DBUtil.getNumIdle()  + "¸ö.");
+			System.out.println("èŽ·å–connection1è€—æ—¶ç©ºé—²ï¼š" +DBUtil.getNumIdle()  + "ä¸ª.");
 			con.close();
 			con1.close();
 			tm.commit();
-			System.out.println("»ñÈ¡connection1ºó¿ÕÏÐ£º" +DBUtil.getNumIdle()  + "¸ö.");
+			System.out.println("èŽ·å–connection1åŽç©ºé—²ï¼š" +DBUtil.getNumIdle()  + "ä¸ª.");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -97,7 +97,7 @@ public class TestConnection {
 	{
 
 		public void run() {
-			System.out.println("»ñÈ¡Á´½ÓµÄ×î³¤Ê±¼ä£º" + max + "ºÁÃë.");
+			System.out.println("èŽ·å–é“¾æŽ¥çš„æœ€é•¿æ—¶é—´ï¼š" + max + "æ¯«ç§’.");
 			
 		}
 		

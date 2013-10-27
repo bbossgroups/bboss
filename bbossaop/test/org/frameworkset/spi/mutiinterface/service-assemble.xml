@@ -1,13 +1,13 @@
-<?xml version="1.0" encoding='gb2312'?>
+<?xml version="1.0" encoding='UTF-8'?>
 
 <manager-config>
 	<manager id="mutiinfservice" singlable="true" >
 		<!--
-			事件管理远程服务
-			属性描述：
-			type：不同provider实现的标识
-			class：实现类代码
-			used：标识是否使用，默认为false
+			浜嬩欢绠＄悊杩滅▼鏈嶅姟
+			灞炴�ф弿杩帮細
+			type锛氫笉鍚宲rovider瀹炵幇鐨勬爣璇�
+			class锛氬疄鐜扮被浠ｇ爜
+			used锛氭爣璇嗘槸鍚︿娇鐢紝榛樿涓篺alse
 		-->
 		<provider type="default" class="org.frameworkset.spi.mutiinterface.TestImpl" />
 	</manager>

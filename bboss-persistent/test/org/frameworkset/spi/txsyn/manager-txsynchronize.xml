@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding='gb2312'?>
+<?xml version="1.0" encoding='UTF-8'?>
 <manager-config>
 	<manager id="txsyn.a" 
 		singlable="true">
@@ -16,8 +16,8 @@
 			</method>		
 		</synchronize>
 		<!--  
-			在下面的节点对provider的业务方法事务进行定义
-			只要将需要进行事务控制的方法配置在transactions中即可
+			鍦ㄤ笅闈㈢殑鑺傜偣瀵筽rovider鐨勪笟鍔℃柟娉曚簨鍔¤繘琛屽畾涔�
+			鍙灏嗛渶瑕佽繘琛屼簨鍔℃帶鍒剁殑鏂规硶閰嶇疆鍦╰ransactions涓嵆鍙�
 		-->
 		<transactions>
 			<method name="testTXSynFailed"/>

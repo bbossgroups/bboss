@@ -10,7 +10,7 @@ import java.util.Map;
 /**
  * <p>Title: ProxyFactory</p>
  *
- * <p>Description: ´´½¨¶¯Ì¬´úÀí½Ó¿Ú¹¤³§Àà</p>
+ * <p>Description: åˆ›å»ºåŠ¨æ€ä»£ç†æ¥å£å·¥å‚ç±»</p>
  *
  * <p>Copyright: Copyright (c) 2005</p>
  *
@@ -21,7 +21,7 @@ import java.util.Map;
  */
 public class ProxyFactory {
     /**
-     * »º³åÒµÎñ×é¼şÊµÏÖµÄËùÓĞ½Ó¿Ú£¬±ÜÃâÃ¿´Î´´½¨Ê±¶¼ÖØĞÂµİ¹é»ñÈ¡classÀàÊµÏÖµÄËùÓĞ½Ó¿Ú
+     * ç¼“å†²ä¸šåŠ¡ç»„ä»¶å®ç°çš„æ‰€æœ‰æ¥å£ï¼Œé¿å…æ¯æ¬¡åˆ›å»ºæ—¶éƒ½é‡æ–°é€’å½’è·å–classç±»å®ç°çš„æ‰€æœ‰æ¥å£
      */
     private static Map<Class,Class[]> classInfs = new HashMap<Class,Class[]>();
 	private static Class[] getClassArray(List set)
@@ -102,7 +102,7 @@ public class ProxyFactory {
     	}
     }
     /**
-     * »ñÈ¡ÀàµÄËùÓĞ½Ó¿Ú£¬°üÀ¨¸¸ÀàµÄ½Ó¿Ú
+     * è·å–ç±»çš„æ‰€æœ‰æ¥å£ï¼ŒåŒ…æ‹¬çˆ¶ç±»çš„æ¥å£
      * @param clazz
      * @return
      */

@@ -55,9 +55,9 @@ import com.frameworkset.util.ValueObjectUtil;
 
 /**
  * <p>ClassUtil.java</p>
- * <p> Description: ĞèÒª×¢Òâ
- * boolean ÀàĞÍÊôĞÔµÄget/set·½·¨µÄÉú³É·½Ê½
- * ÒÑ¾­boolean±äÁ¿µÄÃüÃû·½Ê½£¬²»ÒªÔÚÇ°ÃæÌí¼ÓisÇ°×º£¬²»ÒªÃüÃû³ÉisXXXX£¬ÕâÑù´¦Àí»áÓĞÎÊÌâµÄ
+ * <p> Description: éœ€è¦æ³¨æ„
+ * boolean ç±»å‹å±æ€§çš„get/setæ–¹æ³•çš„ç”Ÿæˆæ–¹å¼
+ * å·²ç»booleanå˜é‡çš„å‘½åæ–¹å¼ï¼Œä¸è¦åœ¨å‰é¢æ·»åŠ iså‰ç¼€ï¼Œä¸è¦å‘½åæˆisXXXXï¼Œè¿™æ ·å¤„ç†ä¼šæœ‰é—®é¢˜çš„
  * </p>
  * <p> bboss workgroup </p>
  * <p> Copyright (c) 2009 </p>
@@ -187,7 +187,7 @@ public class ClassUtil
 		}
 
 		/**
-		 * ²ÎÊıÃû³ÆÓÉ³£Á¿ºÍ±äÁ¿²¿·Ö×é³É£¬±äÁ¿varÖĞ°üº¬ÁË±äÁ¿¶ÔÓ¦µÄrequest²ÎÊıÃû³ÆºÍ±äÁ¿ÔÚÕû¸ö²ÎÊıÃû³ÆÖĞËù´¦µÄÎ»ÖÃ
+		 * å‚æ•°åç§°ç”±å¸¸é‡å’Œå˜é‡éƒ¨åˆ†ç»„æˆï¼Œå˜é‡varä¸­åŒ…å«äº†å˜é‡å¯¹åº”çš„requestå‚æ•°åç§°å’Œå˜é‡åœ¨æ•´ä¸ªå‚æ•°åç§°ä¸­æ‰€å¤„çš„ä½ç½®
 		 */
 		private List<Var> requestParamNameToken;
 		
@@ -553,17 +553,17 @@ public class ClassUtil
 	public static class ClassInfo
 	{
 		/**
-		 * declaredFields±£´æÁËÀàclazzÒÔ¼°¸¸ÀàÖĞµÄËùÓĞÊôĞÔ×Ö¶Î¶¨Òå£¬Èç¹û×ÓÀàÖĞºÍ¸¸Àà±äÁ¿
-		 * ÖØÃû£¬Ôò°²Ë³°üº¬ÔÚÊı×éÖĞ£¬ÕâÖÖÇé¿öÊÇ²»ÔÊĞíµÄ±ØĞë¹ıÂËµô£¬Ò²¾ÍÊÇËµ×ÓÀàÖĞÓĞÁËºÍ¸¸ÀàÖĞÏàÍ¬Ç©ÃûµÄ·½·¨£¬Ôò×Ô¶¯¹ıÂËµô
+		 * declaredFieldsä¿å­˜äº†ç±»clazzä»¥åŠçˆ¶ç±»ä¸­çš„æ‰€æœ‰å±æ€§å­—æ®µå®šä¹‰ï¼Œå¦‚æœå­ç±»ä¸­å’Œçˆ¶ç±»å˜é‡
+		 * é‡åï¼Œåˆ™å®‰é¡ºåŒ…å«åœ¨æ•°ç»„ä¸­ï¼Œè¿™ç§æƒ…å†µæ˜¯ä¸å…è®¸çš„å¿…é¡»è¿‡æ»¤æ‰ï¼Œä¹Ÿå°±æ˜¯è¯´å­ç±»ä¸­æœ‰äº†å’Œçˆ¶ç±»ä¸­ç›¸åŒç­¾åçš„æ–¹æ³•ï¼Œåˆ™è‡ªåŠ¨è¿‡æ»¤æ‰
 		 */
 	    private volatile transient Field[] declaredFields;
 	    
 //	    private volatile transient Map<String ,PropertieDescription> propertyDescriptors;
 	    private volatile transient List<PropertieDescription> propertyDescriptors;
 	    /**
-		 * declaredMethods±£´æÁËÀàclazzÒÔ¼°¸¸ÀàÖĞµÄËùÓĞpublic·½·¨¶¨Òå£¬Èç¹û×ÓÀàÖĞºÍ¸¸Àà·½·¨¶¨Òå
-		 * ÏñÍ¬(³éÏó·½·¨ÊµÏÖ£¬¹ıÔØµÈµÈ)£¬Ôò°²Ë³Ğò°üº¬ÔÚÊı×éÖĞ£¬ÕâÖÖÇé¿öÊÇ²»ÔÊĞíµÄ±ØĞë¹ıÂËµô£¬
-		 * Ò²¾ÍÊÇËµ×ÓÀàÖĞÓĞÁËºÍ¸¸ÀàÖĞÏàÍ¬Ç©ÃûµÄ·½·¨£¬Ôò×Ô¶¯¹ıÂËµô
+		 * declaredMethodsä¿å­˜äº†ç±»clazzä»¥åŠçˆ¶ç±»ä¸­çš„æ‰€æœ‰publicæ–¹æ³•å®šä¹‰ï¼Œå¦‚æœå­ç±»ä¸­å’Œçˆ¶ç±»æ–¹æ³•å®šä¹‰
+		 * åƒåŒ(æŠ½è±¡æ–¹æ³•å®ç°ï¼Œè¿‡è½½ç­‰ç­‰)ï¼Œåˆ™å®‰é¡ºåºåŒ…å«åœ¨æ•°ç»„ä¸­ï¼Œè¿™ç§æƒ…å†µæ˜¯ä¸å…è®¸çš„å¿…é¡»è¿‡æ»¤æ‰ï¼Œ
+		 * ä¹Ÿå°±æ˜¯è¯´å­ç±»ä¸­æœ‰äº†å’Œçˆ¶ç±»ä¸­ç›¸åŒç­¾åçš„æ–¹æ³•ï¼Œåˆ™è‡ªåŠ¨è¿‡æ»¤æ‰
 		 */
 	    private volatile transient Method[] declaredMethods;
 	    
@@ -571,11 +571,11 @@ public class ClassUtil
 
 	    private Class clazz;
 	    /**
-	     * Ê¶±ğclassÊÇ·ñÊÇ»ù±¾Êı¾İÀàĞÍ»òÕß»ù±¾Êı¾İÀàĞÍÊı×é
+	     * è¯†åˆ«classæ˜¯å¦æ˜¯åŸºæœ¬æ•°æ®ç±»å‹æˆ–è€…åŸºæœ¬æ•°æ®ç±»å‹æ•°ç»„
 	     */
 	    private boolean primary;
 	    /**
-	     * Ê¶±ğclassÊÇ·ñÊÇ»ù±¾Êı¾İÀàĞÍ
+	     * è¯†åˆ«classæ˜¯å¦æ˜¯åŸºæœ¬æ•°æ®ç±»å‹
 	     */
 	    private boolean baseprimary;
 	    
@@ -629,7 +629,7 @@ public class ClassUtil
 	 
 	    private Object declaredMethodLock = new Object();
 	    /**
-	     * »ñÈ¡ÀàµÄ¹«¹²·½·¨Êı×é£¬°üÀ¨ÀàÒÔ¼°¸¸ÀàµÄpublic·½·¨
+	     * è·å–ç±»çš„å…¬å…±æ–¹æ³•æ•°ç»„ï¼ŒåŒ…æ‹¬ç±»ä»¥åŠçˆ¶ç±»çš„publicæ–¹æ³•
 	     * @return
 	     */
 	    public Method[] getDeclaredMethods()
@@ -726,7 +726,7 @@ public class ClassUtil
 	    	return propertyDescriptors ;
 	    }
 	    /**
-	     * ¸ù¾İ·½·¨Ãû³ÆºÍ·½·¨²ÎÊıÀàĞÍÅĞ¶ÏÊÇ·ñÊÇÍ¬Ò»¸ö·½·¨
+	     * æ ¹æ®æ–¹æ³•åç§°å’Œæ–¹æ³•å‚æ•°ç±»å‹åˆ¤æ–­æ˜¯å¦æ˜¯åŒä¸€ä¸ªæ–¹æ³•
 	     * @param method
 	     * @param other
 	     * @return
@@ -789,7 +789,7 @@ public class ClassUtil
 		    		{
 		    			for(Method f:methods)
 		    			{
-		    				if(!containMethod(lfs,f))//¹ıÂËÖØÔØ·½·¨ºÍ³éÏó·½·¨£¬»òÕß½Ó¿Ú·½·¨
+		    				if(!containMethod(lfs,f))//è¿‡æ»¤é‡è½½æ–¹æ³•å’ŒæŠ½è±¡æ–¹æ³•ï¼Œæˆ–è€…æ¥å£æ–¹æ³•
 		    					lfs.add(f);
 			    		}
 		    		}
@@ -948,8 +948,8 @@ public class ClassUtil
 	    	return copys;
 	    }
 	    /**
-	     * Èç¹û°üº¬Ãû³ÆÎªnameµÄ×Ö¶Î£¬ÓÉÓÚ¸Ã×Ö¶ÎÔÚBeanInfoÖĞÒÑ¾­´æÔÚ£¬Ôò½«¸Ã×Ö¶Î´Ófileds¸±±¾ÖĞÒÆ³ı£¬ÒÔ±ã½«
-	     * ×îºóÊ£ÏÂµÄ×Ö¶ÎÉú³Éget/set·½·¨
+	     * å¦‚æœåŒ…å«åç§°ä¸ºnameçš„å­—æ®µï¼Œç”±äºè¯¥å­—æ®µåœ¨BeanInfoä¸­å·²ç»å­˜åœ¨ï¼Œåˆ™å°†è¯¥å­—æ®µä»filedså‰¯æœ¬ä¸­ç§»é™¤ï¼Œä»¥ä¾¿å°†
+	     * æœ€åå‰©ä¸‹çš„å­—æ®µç”Ÿæˆget/setæ–¹æ³•
 	     * @param name
 	     * @param fields
 	     * @return

@@ -25,7 +25,7 @@ import com.frameworkset.common.poolman.PreparedDBUtil;
  * <p>Description: </p>
  *
  * <p>Copyright: Copyright (c) 2007</p>
- * @Date 2010-1-29 œ¬ŒÁ06:19:39
+ * @Date 2010-1-29 ‰∏ãÂçà06:19:39
  * @author biaoping.yin
  * @version 1.0
  */

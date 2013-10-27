@@ -8,7 +8,7 @@ import java.util.List;
  * <p>Title: ListInfo</p>
  *
  * <p>Description:
- *    封装分页信息
+ *    灏佽鍒嗛〉淇℃伅
  * </p>
  *
  * <p>Copyright: Copyright (c) 2005</p>
@@ -19,17 +19,17 @@ import java.util.List;
  * @version 1.0
  */
 public class ListInfo implements Serializable{
-    /**是否显示所有的数据*/
+    /**鏄惁鏄剧ず鎵�鏈夌殑鏁版嵁*/
     private boolean showAll = false;
 
-    /**获取数据总数*/
+    /**鑾峰彇鏁版嵁鎬绘暟*/
     private long totalSize;
     /***/
     private Serializable object;
 
 
    /**
-    * 分批取出当前页的记录集合
+    * 鍒嗘壒鍙栧嚭褰撳墠椤电殑璁板綍闆嗗悎
     */
     private List datas;
     private Hashtable[] dbDatas;

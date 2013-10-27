@@ -35,7 +35,7 @@ public abstract class WebMessageSourceUtil extends MessageSourceUtil {
 		return getMessageSource(basenames,servletContext,true);
 	}
 	/**
-	 * web×ÊÔ´¼ÓÔØ
+	 * webèµ„æºåŠ è½½
 	 * @param basenames
 	 * @param servletContext
 	 * @return

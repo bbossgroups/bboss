@@ -42,7 +42,7 @@ public class NotNullMatchTag extends MatchTag {
 
 
 	/**
-	 *  Description: ÅĞ¶ÏÊôĞÔ·Çnull
+	 *  Description: åˆ¤æ–­å±æ€§énull
 	 * @return boolean
 	 * @see com.frameworkset.common.tag.pager.tags.MatchTag#match()
 	 */

@@ -19,13 +19,13 @@ package com.frameworkset.common.poolman;
  * 
  * <p>Title: CUDResult.java</p>
  *
- * <p>Description: ±£´æÊı¾İ¿âÔöÉ¾¸ÄµÄ½á¹ûĞÅÏ¢£¬GetCUDResultµÄÊôĞÔº¬ÒåÈçÏÂ£º
-	 * result£º²Ù×÷½á¹û£¬Èç¹ûÊı¾İÔ´autoprimarykeyÎªtrue£¬²¢ÇÒÔÚtableinfo±íÖĞ±£´æÁË±íµÄÖ÷¼üĞÅÏ¢resultÎª×ÔÔöµÄÖ÷¼ü£¬·´Ö®resultÎª¸üĞÂµÄ¼ÇÂ¼Êı
-	 * updateCount:¸üĞÂµÄ¼ÇÂ¼Êı
-	 * keys:×Ô¶¯²úÉúµÄÖ÷¼ü£¬Èç¹ûÖ»ÓĞÒ»Ìõ¼ÇÂ¼ÔòÎªÆÕÍ¨¶ÔÏó£¬Èç¹ûÓĞ¶àÌõ¼ÇÂ¼ÔòÎªList<Object>ÀàĞÍ</p>
+ * <p>Description: ä¿å­˜æ•°æ®åº“å¢åˆ æ”¹çš„ç»“æœä¿¡æ¯ï¼ŒGetCUDResultçš„å±æ€§å«ä¹‰å¦‚ä¸‹ï¼š
+	 * resultï¼šæ“ä½œç»“æœï¼Œå¦‚æœæ•°æ®æºautoprimarykeyä¸ºtrueï¼Œå¹¶ä¸”åœ¨tableinfoè¡¨ä¸­ä¿å­˜äº†è¡¨çš„ä¸»é”®ä¿¡æ¯resultä¸ºè‡ªå¢çš„ä¸»é”®ï¼Œåä¹‹resultä¸ºæ›´æ–°çš„è®°å½•æ•°
+	 * updateCount:æ›´æ–°çš„è®°å½•æ•°
+	 * keys:è‡ªåŠ¨äº§ç”Ÿçš„ä¸»é”®ï¼Œå¦‚æœåªæœ‰ä¸€æ¡è®°å½•åˆ™ä¸ºæ™®é€šå¯¹è±¡ï¼Œå¦‚æœæœ‰å¤šæ¡è®°å½•åˆ™ä¸ºList<Object>ç±»å‹</p>
  *
  * <p>Copyright: Copyright (c) 2007</p>
- * @Date 2012-11-15 ÏÂÎç2:23:17
+ * @Date 2012-11-15 ä¸‹åˆ2:23:17
  * @author biaoping.yin
  * @version 1.0
  */

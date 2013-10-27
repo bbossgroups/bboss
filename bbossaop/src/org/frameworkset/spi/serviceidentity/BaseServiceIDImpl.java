@@ -34,7 +34,7 @@ import org.frameworkset.spi.remote.Target;
  * Copyright (c) 2007
  * </p>
  * 
- * @Date 2011-5-11 上午11:42:45
+ * @Date 2011-5-11 涓婂崍11:42:45
  * @author biaoping.yin
  * @version 1.0
  */
@@ -54,7 +54,7 @@ public abstract class BaseServiceIDImpl implements ServiceID {
 	protected String sourceip;
 
 	/**
-	 * 多个远程调用时，返回的结果集类型 result_object = 0; result_first = 1; result_map = 2;
+	 * 澶氫釜杩滅▼璋冪敤鏃讹紝杩斿洖鐨勭粨鏋滈泦绫诲瀷 result_object = 0; result_first = 1; result_map = 2;
 	 * result_rsplist = 3; result_list = 4;
 	 */
 	protected transient int resultType = result_rsplist;

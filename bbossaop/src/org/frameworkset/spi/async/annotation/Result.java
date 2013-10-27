@@ -21,7 +21,7 @@ package org.frameworkset.spi.async.annotation;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2011-4-20 ÏÂÎç02:46:30
+ * @Date 2011-4-20 ä¸‹åˆ02:46:30
  * @author biaoping.yin
  * @version 1.0
  */

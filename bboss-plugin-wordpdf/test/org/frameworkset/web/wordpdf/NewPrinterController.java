@@ -10,7 +10,7 @@ public class NewPrinterController {
 	private String swftoolWorkDir;
 	private String officeHome;
 	public @ResponseBody FileBlob getPDF() throws Exception  {
-		System.out.println("--------------³ÌĞòÖ´ĞĞµ½´Ë´¦------------------");
+		System.out.println("--------------ç¨‹åºæ‰§è¡Œåˆ°æ­¤å¤„------------------");
 		
 		String[] bookMarks = new String[] { "DealerName", "Name", "CgName",
 				"TypeName", "OrderQty", "CoolCode", "ChassisCode", "CustPrice",
@@ -21,11 +21,11 @@ public class NewPrinterController {
 				"FinanceAmt", "FinanceFC", "LackAmtPayDate",
 				"LackAmtFinalPayDate", "ReceiverName", "ReceiverID",   
 				"ReceiverTel", "Insurer","authoriate" };
-		String[] mapValue = new String[] { "¹«Ë¾", "¹«Ë¾",
-				"³µ", "dd 52E(6)", "2", "·çÀä", "V09660", "300.00",
-				"600.00", "Â½°ÛÍòÔªÕû", "7", "100", "2012Äê8ÔÂ31ÈÕ", "60", "5", "3",
-				"10", "6", "10", "5", "10", "21", "540", "10", "2012Äê8ÔÂ31ÈÕ",
-				"2012Äê8ÔÂ31ÈÕ", "ÁÕ", "430111199910102121", "13800138200", "ÁÕ","bboss" };
+		String[] mapValue = new String[] { "å…¬å¸", "å…¬å¸",
+				"è½¦", "dd 52E(6)", "2", "é£å†·", "V09660", "300.00",
+				"600.00", "é™†ä½°ä¸‡å…ƒæ•´", "7", "100", "2012å¹´8æœˆ31æ—¥", "60", "5", "3",
+				"10", "6", "10", "5", "10", "21", "540", "10", "2012å¹´8æœˆ31æ—¥",
+				"2012å¹´8æœˆ31æ—¥", "ç³", "430111199910102121", "13800138200", "ç³","bboss" };
 		 
 		String wordtemplate = "D:\\workspace\\bbossgroups-3.6.0\\bboss-plugin-wordpdf\\plugin\\wordpdf\\anjie.doc";
 		String wordfile = "d:\\anjie_test.doc";
@@ -42,7 +42,7 @@ public class NewPrinterController {
 
 	}
 	public @ResponseBody FileBlob getPDFTemp() throws Exception  {
-		System.out.println("--------------³ÌĞòÖ´ĞĞµ½´Ë´¦------------------");
+		System.out.println("--------------ç¨‹åºæ‰§è¡Œåˆ°æ­¤å¤„------------------");
 		String[] bookMarks = new String[] { "DealerName", "Name", "CgName",
 				"TypeName", "OrderQty", "CoolCode", "ChassisCode", "CustPrice",
 				"CustAmt", "sumall", "EarnestPayDays", "EarnestAmt",
@@ -52,11 +52,11 @@ public class NewPrinterController {
 				"FinanceAmt", "FinanceFC", "LackAmtPayDate",
 				"LackAmtFinalPayDate", "ReceiverName", "ReceiverID",   
 				"ReceiverTel", "Insurer","authoriate" };
-		String[] mapValue = new String[] { "¹«Ë¾", "¹«Ë¾",
-				"³µ", "dd 52E(6)", "2", "·çÀä", "V09660", "300.00",
-				"600.00", "Â½°ÛÍòÔªÕû", "7", "100", "2012Äê8ÔÂ31ÈÕ", "60", "5", "3",
-				"10", "6", "10", "5", "10", "21", "540", "10", "2012Äê8ÔÂ31ÈÕ",
-				"2012Äê8ÔÂ31ÈÕ", "ÁÕ", "430111199910102121", "13800138200", "ÁÕ","bboss" };
+		String[] mapValue = new String[] { "å…¬å¸", "å…¬å¸",
+				"è½¦", "dd 52E(6)", "2", "é£å†·", "V09660", "300.00",
+				"600.00", "é™†ä½°ä¸‡å…ƒæ•´", "7", "100", "2012å¹´8æœˆ31æ—¥", "60", "5", "3",
+				"10", "6", "10", "5", "10", "21", "540", "10", "2012å¹´8æœˆ31æ—¥",
+				"2012å¹´8æœˆ31æ—¥", "ç³", "430111199910102121", "13800138200", "ç³","bboss" };
 		
 		String wordtemplate = "D:\\workspace\\bbossgroups-3.6.0\\bboss-plugin-wordpdf\\plugin\\wordpdf\\anjie.doc";
 		String wordfile = "d:\\anjie_test.doc";
@@ -69,7 +69,7 @@ public class NewPrinterController {
 
 	}
 	public @ResponseBody FileBlob getSWFTemp() throws Exception  {
-		System.out.println("--------------³ÌĞòÖ´ĞĞµ½´Ë´¦------------------");
+		System.out.println("--------------ç¨‹åºæ‰§è¡Œåˆ°æ­¤å¤„------------------");
 		String[] bookMarks = new String[] { "DealerName", "Name", "CgName",
 				"TypeName", "OrderQty", "CoolCode", "ChassisCode", "CustPrice",
 				"CustAmt", "sumall", "EarnestPayDays", "EarnestAmt",
@@ -79,11 +79,11 @@ public class NewPrinterController {
 				"FinanceAmt", "FinanceFC", "LackAmtPayDate",
 				"LackAmtFinalPayDate", "ReceiverName", "ReceiverID",   
 				"ReceiverTel", "Insurer","authoriate" };
-		String[] mapValue = new String[] { "¹«Ë¾", "¹«Ë¾",
-				"³µ", "dd 52E(6)", "2", "·çÀä", "V09660", "300.00",
-				"600.00", "Â½°ÛÍòÔªÕû", "7", "100", "2012Äê8ÔÂ31ÈÕ", "60", "5", "3",
-				"10", "6", "10", "5", "10", "21", "540", "10", "2012Äê8ÔÂ31ÈÕ",
-				"2012Äê8ÔÂ31ÈÕ", "ÁÕ", "430111199910102121", "13800138200", "ÁÕ","bboss" };
+		String[] mapValue = new String[] { "å…¬å¸", "å…¬å¸",
+				"è½¦", "dd 52E(6)", "2", "é£å†·", "V09660", "300.00",
+				"600.00", "é™†ä½°ä¸‡å…ƒæ•´", "7", "100", "2012å¹´8æœˆ31æ—¥", "60", "5", "3",
+				"10", "6", "10", "5", "10", "21", "540", "10", "2012å¹´8æœˆ31æ—¥",
+				"2012å¹´8æœˆ31æ—¥", "ç³", "430111199910102121", "13800138200", "ç³","bboss" };
 		String hetongbianhao="20121222";
 		String wordtemplate = "D:\\workspace\\bbossgroups-3.6.0\\bboss-plugin-wordpdf\\plugin\\wordpdf\\anjie.doc";
 		String wordfile = "d:\\test\\anjie_test.doc";
@@ -101,7 +101,7 @@ public class NewPrinterController {
 
 	}
 	public @ResponseBody FileBlob getSWFTempUseOpenOffice() throws Exception  {
-		System.out.println("--------------³ÌĞòÖ´ĞĞµ½´Ë´¦------------------");
+		System.out.println("--------------ç¨‹åºæ‰§è¡Œåˆ°æ­¤å¤„------------------");
 		String[] bookMarks = new String[] { "DealerName", "Name", "CgName",
 				"TypeName", "OrderQty", "CoolCode", "ChassisCode", "CustPrice",
 				"CustAmt", "sumall", "EarnestPayDays", "EarnestAmt",
@@ -111,11 +111,11 @@ public class NewPrinterController {
 				"FinanceAmt", "FinanceFC", "LackAmtPayDate",
 				"LackAmtFinalPayDate", "ReceiverName", "ReceiverID",   
 				"ReceiverTel", "Insurer","authoriate" };
-		String[] bookdatas = new String[] { "¹«Ë¾", "¹«Ë¾",
-				"³µ", "dd 52E(6)", "2", "·çÀä", "V09660", "300.00",
-				"600.00", "Â½°ÛÍòÔªÕû", "7", "100", "2012Äê8ÔÂ31ÈÕ", "60", "5", "3",
-				"10", "6", "10", "5", "10", "21", "540", "10", "2012Äê8ÔÂ31ÈÕ",
-				"2012Äê8ÔÂ31ÈÕ", "ÁÕ", "430111199910102121", "13800138200", "ÁÕ","bboss" };
+		String[] bookdatas = new String[] { "å…¬å¸", "å…¬å¸",
+				"è½¦", "dd 52E(6)", "2", "é£å†·", "V09660", "300.00",
+				"600.00", "é™†ä½°ä¸‡å…ƒæ•´", "7", "100", "2012å¹´8æœˆ31æ—¥", "60", "5", "3",
+				"10", "6", "10", "5", "10", "21", "540", "10", "2012å¹´8æœˆ31æ—¥",
+				"2012å¹´8æœˆ31æ—¥", "ç³", "430111199910102121", "13800138200", "ç³","bboss" };
 		String hetongbianhao="20121222";
 		String wordtemplate = "D:\\workspace\\bbossgroups-3.6.0\\bboss-plugin-wordpdf\\plugin\\wordpdf\\anjie.doc";
 		String pdfpath = "d:\\test\\anjieswftools_"+hetongbianhao+".pdf";
@@ -161,28 +161,28 @@ public class NewPrinterController {
 		String[] bookMarks = new String[] { "s1", "s2", "s3", "s4", "s5", "s6",
 				"s7", "s8", "s9", "s10", "s11", "s12", "s13", "s14", "s15",
 				"s16", "s17", "s18", "s19", "s20", "s21", "s22" };
-		String s1 = "123";// ÌáÈ¡¶©µ¥ÊÜÀíºÅĞÅÏ¢
-		String s2 = "Custom_name";// ÌáÈ¡¶©µ¥ÊÜÀí»ù´¡ĞÅÏ¢½è¿îÈËĞÅÏ¢
-		String s3 = "Identification_card()";// ÌáÈ¡¶©µ¥ÊÜÀí»ù´¡ĞÅÏ¢ÏÂ¸öÈË»ù±¾ĞÅÏ¢µÄÉí·İÖ¤ĞÅÏ¢
-		String s4 = "Mobile_phone()";// ÌáÈ¡¶©µ¥ÊÜÀí»ù´¡ĞÅÏ¢ÏÂ¸öÈË»ù±¾ĞÅÏ¢µÄÊÖ»úĞÅÏ¢
-		String s5 = "Live_address()";// ÌáÈ¡¶©µ¥ÊÜÀí»ù´¡ĞÅÏ¢ÏÂ¸öÈË»ù±¾ĞÅÏ¢µÄÏÖ¾Ó×¡µØÖ·
-		String s6 = "" + "Loan_amount()";// ÌáÈ¡¶©µ¥ÉóÅúÁ÷³ÌµÄ×Ü¾­Àí×îÖÕÉóÅú½ğ¶î£¨´óĞ´£©
-		String s7 = "" + "Loan_amount()";// ÌáÈ¡¶©µ¥ÉóÅúÁ÷³ÌµÄ×Ü¾­Àí×îÖÕÉóÅú½ğ¶î£¨Ğ¡Ğ´£©
-		String s8 = "" + "Time_limit()";// ÌáÈ¡¶©µ¥ÉóÅúÁ÷³ÌµÄ×Ü¾­Àí×îÖÕÉóÅú´û¿îÆÚÏŞ
-		String s9 = "Loan_purpose()";// ÌáÈ¡¶©µ¥ÊÜÀí»ù´¡ĞÅÏ¢ÖĞµÄ½è¿îÓÃÍ¾
-		String s10 = "" + "Interest_rate()";// ÌáÈ¡¶©µ¥ÉóÅúÁ÷³ÌµÄ×Ü¾­Àí×îÖÕÉóÅúÔÂÀûÂÊ
-		String s11 = "" + "Bank_name()";// ÌáÈ¡¶©µ¥ÊÜÀí»ù´¡ĞÅÏ¢µÄ¿ª»§ĞĞĞÅÏ¢
-		String s12 = "Custom_name()";// ÌáÈ¡¶©µ¥ÊÜÀí»ù´¡ĞÅÏ¢µÄ½è¿îÈË
-		String s13 = "Bank_account()";// ÌáÈ¡¶©µ¥ÊÜÀí»ù´¡ĞÅÏ¢µÄÒøĞĞÕËºÅ
-		String s14 = "" + "Time_limit()";// ÌáÈ¡¶©µ¥ÉóÅúÁ÷³ÌµÄ×Ü¾­Àí×îÖÕÉóÅú´û¿îÆÚÏŞ
-		String s15 = "" + "Repayment_date()";// ÌáÈ¡¶©µ¥ÊÜÀí»ù´¡ĞÅÏ¢µÄÃ¿ÔÂ»¹¿îÈÕ
-		String s16 = "" + "Bank_name()";// ÌáÈ¡¶©µ¥ÊÜÀí»ù´¡ĞÅÏ¢µÄ¿ª»§ĞĞĞÅÏ¢
-		String s17 = "Custom_name()";// ÌáÈ¡¶©µ¥ÊÜÀí»ù´¡ĞÅÏ¢µÄ½è¿îÈË
-		String s18 = "Bank_account()";// ÌáÈ¡¶©µ¥ÊÜÀí»ù´¡ĞÅÏ¢µÄÒøĞĞÕËºÅ
-		String s19 = "1%";// ÌáÈ¡×Öµä±íÌáÈ¡Ã¿ÈÕ·£Ï¢ÀûÂÊÎª1¡ë
-		String s20 = "4%";// ÌáÈ¡×Öµä±íÌáÈ¡ÌáÇ°½áÇåÊ±£¬6¸öÔÂÖ®ÄÚµÄÎ¥Ô¼½ğ4%
-		String s21 = "3%";// ÌáÈ¡×Öµä±íÌáÈ¡ÌáÇ°½áÇåÊ±£¬³¬¹ı6¸öÔÂµÄÎ¥Ô¼½ğÎª3%
-		String s22 = "1%";// ÌáÈ¡×Öµä±íË¢¿¨ÊÖĞø·ÑÀûÂÊ1%
+		String s1 = "123";// æå–è®¢å•å—ç†å·ä¿¡æ¯
+		String s2 = "Custom_name";// æå–è®¢å•å—ç†åŸºç¡€ä¿¡æ¯å€Ÿæ¬¾äººä¿¡æ¯
+		String s3 = "Identification_card()";// æå–è®¢å•å—ç†åŸºç¡€ä¿¡æ¯ä¸‹ä¸ªäººåŸºæœ¬ä¿¡æ¯çš„èº«ä»½è¯ä¿¡æ¯
+		String s4 = "Mobile_phone()";// æå–è®¢å•å—ç†åŸºç¡€ä¿¡æ¯ä¸‹ä¸ªäººåŸºæœ¬ä¿¡æ¯çš„æ‰‹æœºä¿¡æ¯
+		String s5 = "Live_address()";// æå–è®¢å•å—ç†åŸºç¡€ä¿¡æ¯ä¸‹ä¸ªäººåŸºæœ¬ä¿¡æ¯çš„ç°å±…ä½åœ°å€
+		String s6 = "" + "Loan_amount()";// æå–è®¢å•å®¡æ‰¹æµç¨‹çš„æ€»ç»ç†æœ€ç»ˆå®¡æ‰¹é‡‘é¢ï¼ˆå¤§å†™ï¼‰
+		String s7 = "" + "Loan_amount()";// æå–è®¢å•å®¡æ‰¹æµç¨‹çš„æ€»ç»ç†æœ€ç»ˆå®¡æ‰¹é‡‘é¢ï¼ˆå°å†™ï¼‰
+		String s8 = "" + "Time_limit()";// æå–è®¢å•å®¡æ‰¹æµç¨‹çš„æ€»ç»ç†æœ€ç»ˆå®¡æ‰¹è´·æ¬¾æœŸé™
+		String s9 = "Loan_purpose()";// æå–è®¢å•å—ç†åŸºç¡€ä¿¡æ¯ä¸­çš„å€Ÿæ¬¾ç”¨é€”
+		String s10 = "" + "Interest_rate()";// æå–è®¢å•å®¡æ‰¹æµç¨‹çš„æ€»ç»ç†æœ€ç»ˆå®¡æ‰¹æœˆåˆ©ç‡
+		String s11 = "" + "Bank_name()";// æå–è®¢å•å—ç†åŸºç¡€ä¿¡æ¯çš„å¼€æˆ·è¡Œä¿¡æ¯
+		String s12 = "Custom_name()";// æå–è®¢å•å—ç†åŸºç¡€ä¿¡æ¯çš„å€Ÿæ¬¾äºº
+		String s13 = "Bank_account()";// æå–è®¢å•å—ç†åŸºç¡€ä¿¡æ¯çš„é“¶è¡Œè´¦å·
+		String s14 = "" + "Time_limit()";// æå–è®¢å•å®¡æ‰¹æµç¨‹çš„æ€»ç»ç†æœ€ç»ˆå®¡æ‰¹è´·æ¬¾æœŸé™
+		String s15 = "" + "Repayment_date()";// æå–è®¢å•å—ç†åŸºç¡€ä¿¡æ¯çš„æ¯æœˆè¿˜æ¬¾æ—¥
+		String s16 = "" + "Bank_name()";// æå–è®¢å•å—ç†åŸºç¡€ä¿¡æ¯çš„å¼€æˆ·è¡Œä¿¡æ¯
+		String s17 = "Custom_name()";// æå–è®¢å•å—ç†åŸºç¡€ä¿¡æ¯çš„å€Ÿæ¬¾äºº
+		String s18 = "Bank_account()";// æå–è®¢å•å—ç†åŸºç¡€ä¿¡æ¯çš„é“¶è¡Œè´¦å·
+		String s19 = "1%";// æå–å­—å…¸è¡¨æå–æ¯æ—¥ç½šæ¯åˆ©ç‡ä¸º1â€°
+		String s20 = "4%";// æå–å­—å…¸è¡¨æå–æå‰ç»“æ¸…æ—¶ï¼Œ6ä¸ªæœˆä¹‹å†…çš„è¿çº¦é‡‘4%
+		String s21 = "3%";// æå–å­—å…¸è¡¨æå–æå‰ç»“æ¸…æ—¶ï¼Œè¶…è¿‡6ä¸ªæœˆçš„è¿çº¦é‡‘ä¸º3%
+		String s22 = "1%";// æå–å­—å…¸è¡¨åˆ·å¡æ‰‹ç»­è´¹åˆ©ç‡1%
 		String[] bookdatas = new String[] { s1, s2, s3, s4, s5, s6, s7, s8, s9,
 				s10, s11, s12, s13, s14, s15, s16, s17, s18, s19, s20, s21, s22 };
 		if (!f.exists()) {
@@ -197,7 +197,7 @@ public class NewPrinterController {
 		return fileblob;
 	}
 	public @ResponseBody FileBlob getSWFTempAllUseOpenOffice() throws Exception  {
-		System.out.println("--------------³ÌĞòÖ´ĞĞµ½´Ë´¦------------------");
+		System.out.println("--------------ç¨‹åºæ‰§è¡Œåˆ°æ­¤å¤„------------------");
 		String[] bookMarks = new String[] { "DealerName", "Name", "CgName",
 				"TypeName", "OrderQty", "CoolCode", "ChassisCode", "CustPrice",
 				"CustAmt", "sumall", "EarnestPayDays", "EarnestAmt",
@@ -207,11 +207,11 @@ public class NewPrinterController {
 				"FinanceAmt", "FinanceFC", "LackAmtPayDate",
 				"LackAmtFinalPayDate", "ReceiverName", "ReceiverID",   
 				"ReceiverTel", "Insurer","authoriate" };
-		String[] bookdatas = new String[] { "¹«Ë¾", "¹«Ë¾",
-				"³µ", "dd 52E(6)", "2", "·çÀä", "V09660", "300.00",
-				"600.00", "Â½°ÛÍòÔªÕû", "7", "100", "2012Äê8ÔÂ31ÈÕ", "60", "5", "3",
-				"10", "6", "10", "5", "10", "21", "540", "10", "2012Äê8ÔÂ31ÈÕ",
-				"2012Äê8ÔÂ31ÈÕ", "ÁÕ", "430111199910102121", "13800138200", "ÁÕ","bboss" };
+		String[] bookdatas = new String[] { "å…¬å¸", "å…¬å¸",
+				"è½¦", "dd 52E(6)", "2", "é£å†·", "V09660", "300.00",
+				"600.00", "é™†ä½°ä¸‡å…ƒæ•´", "7", "100", "2012å¹´8æœˆ31æ—¥", "60", "5", "3",
+				"10", "6", "10", "5", "10", "21", "540", "10", "2012å¹´8æœˆ31æ—¥",
+				"2012å¹´8æœˆ31æ—¥", "ç³", "430111199910102121", "13800138200", "ç³","bboss" };
 		String hetongbianhao = "20121222";
 	    String wordtemplate = "/opt/tomcat/wordpdf/anjie.doc";
 	    String pdfpath = "/opt/tomcat/test/anjieswftools_" + hetongbianhao + ".pdf";
@@ -240,7 +240,7 @@ public class NewPrinterController {
 	}
 	
 	public @ResponseBody FileBlob getWordToPDFByOpenOffice() throws Exception  {
-		System.out.println("--------------³ÌĞòÖ´ĞĞµ½´Ë´¦------------------");
+		System.out.println("--------------ç¨‹åºæ‰§è¡Œåˆ°æ­¤å¤„------------------");
 		String hetongbianhao="20131222";
 		String pdfpath = "/opt/tomcat/test/anjieswftools_"+hetongbianhao+".pdf";
 		String wordfile = "/opt/tomcat/wordpdf/anjie.doc";
@@ -263,7 +263,7 @@ public class NewPrinterController {
 	}
 	
 	public @ResponseBody FileBlob getWordToSWFByOpenOffice() throws Exception  {
-		System.out.println("--------------³ÌĞòÖ´ĞĞµ½´Ë´¦------------------");
+		System.out.println("--------------ç¨‹åºæ‰§è¡Œåˆ°æ­¤å¤„------------------");
 		String hetongbianhao="20131222";
 		String pdfpath = "/opt/tomcat/test/anjieswftools_"+hetongbianhao+".swf";
 		String wordfile = "/opt/tomcat/wordpdf/anjie.doc";
@@ -289,7 +289,7 @@ public class NewPrinterController {
 		return new File("D:\\workspace\\bbossgroups-3.6.0\\bboss-plugin-wordpdf\\plugin\\wordpdf\\anjie.doc");
 	}
 	public @ResponseBody FileBlob downPDFTemp() throws Exception  {
-		System.out.println("--------------³ÌĞòÖ´ĞĞµ½´Ë´¦------------------");
+		System.out.println("--------------ç¨‹åºæ‰§è¡Œåˆ°æ­¤å¤„------------------");
 		
 		String[] bookMarks = new String[] { "DealerName", "Name", "CgName",
 				"TypeName", "OrderQty", "CoolCode", "ChassisCode", "CustPrice",
@@ -300,11 +300,11 @@ public class NewPrinterController {
 				"FinanceAmt", "FinanceFC", "LackAmtPayDate",
 				"LackAmtFinalPayDate", "ReceiverName", "ReceiverID",   
 				"ReceiverTel", "Insurer","authoriate" };
-		String[] mapValue = new String[] { "¹«Ë¾", "¹«Ë¾",
-				"³µ", "dd 52E(6)", "2", "·çÀä", "V09660", "300.00",
-				"600.00", "Â½°ÛÍòÔªÕû", "7", "100", "2012Äê8ÔÂ31ÈÕ", "60", "5", "3",
-				"10", "6", "10", "5", "10", "21", "540", "10", "2012Äê8ÔÂ31ÈÕ",
-				"2012Äê8ÔÂ31ÈÕ", "ÁÕ", "430111199910102121", "13800138200", "ÁÕ","bboss" };
+		String[] mapValue = new String[] { "å…¬å¸", "å…¬å¸",
+				"è½¦", "dd 52E(6)", "2", "é£å†·", "V09660", "300.00",
+				"600.00", "é™†ä½°ä¸‡å…ƒæ•´", "7", "100", "2012å¹´8æœˆ31æ—¥", "60", "5", "3",
+				"10", "6", "10", "5", "10", "21", "540", "10", "2012å¹´8æœˆ31æ—¥",
+				"2012å¹´8æœˆ31æ—¥", "ç³", "430111199910102121", "13800138200", "ç³","bboss" };
 		String wordtemplate = "D:\\workspace\\bbossgroups-3.6.0\\bboss-plugin-wordpdf\\plugin\\wordpdf\\anjie.doc";
 		String wordfile = "d:\\anjie_test.doc";
 		String pdftmp = "d:\\contracttemp.pdf";
@@ -320,7 +320,7 @@ public class NewPrinterController {
 
 	}
 	public @ResponseBody FileBlob getWord() throws Exception  {
-		System.out.println("--------------³ÌĞòÖ´ĞĞµ½´Ë´¦------------------");
+		System.out.println("--------------ç¨‹åºæ‰§è¡Œåˆ°æ­¤å¤„------------------");
 		String[] bookMarks = new String[] { "DealerName", "Name", "CgName",
 				"TypeName", "OrderQty", "CoolCode", "ChassisCode", "CustPrice",
 				"CustAmt", "sumall", "EarnestPayDays", "EarnestAmt",
@@ -330,11 +330,11 @@ public class NewPrinterController {
 				"FinanceAmt", "FinanceFC", "LackAmtPayDate",
 				"LackAmtFinalPayDate", "ReceiverName", "ReceiverID",   
 				"ReceiverTel", "Insurer","authoriate" };
-		String[] mapValue = new String[] { "¹«Ë¾", "¹«Ë¾",
-				"³µ", "dd 52E(6)", "2", "·çÀäsdfsdf", "V09660ffff", "300.00",
-				"600.00", "Â½°ÛÍòÔªÕû", "7", "100", "2012Äê8ÔÂ31ÈÕ", "60", "5", "3",
-				"10", "6", "10", "5", "10", "21", "540", "10", "2012Äê8ÔÂ31ÈÕ",
-				"2012Äê8ÔÂ31ÈÕ", "ÁÕ", "430111199910102121", "13800138200", "ÁÕ","bboss" };
+		String[] mapValue = new String[] { "å…¬å¸", "å…¬å¸",
+				"è½¦", "dd 52E(6)", "2", "é£å†·sdfsdf", "V09660ffff", "300.00",
+				"600.00", "é™†ä½°ä¸‡å…ƒæ•´", "7", "100", "2012å¹´8æœˆ31æ—¥", "60", "5", "3",
+				"10", "6", "10", "5", "10", "21", "540", "10", "2012å¹´8æœˆ31æ—¥",
+				"2012å¹´8æœˆ31æ—¥", "ç³", "430111199910102121", "13800138200", "ç³","bboss" };
 		String wordtemplate = "D:\\workspace\\bbossgroups-3.6.0\\bboss-plugin-wordpdf\\plugin\\wordpdf\\anjie.doc";
 		String wordfile = "d:\\anjie_test.doc";
 		FileConvertor.getRealWord(wordtemplate, wordfile, bookMarks,mapValue);
@@ -346,7 +346,7 @@ public class NewPrinterController {
 	}
 	
 	public @ResponseBody FileBlob getWordTemp() throws Exception  {
-		System.out.println("--------------³ÌĞòÖ´ĞĞµ½´Ë´¦------------------");
+		System.out.println("--------------ç¨‹åºæ‰§è¡Œåˆ°æ­¤å¤„------------------");
 		String[] bookMarks = new String[] { "DealerName", "Name", "CgName",
 				"TypeName", "OrderQty", "CoolCode", "ChassisCode", "CustPrice",
 				"CustAmt", "sumall", "EarnestPayDays", "EarnestAmt",
@@ -356,11 +356,11 @@ public class NewPrinterController {
 				"FinanceAmt", "FinanceFC", "LackAmtPayDate",
 				"LackAmtFinalPayDate", "ReceiverName", "ReceiverID",   
 				"ReceiverTel", "Insurer","authoriate" };
-		String[] mapValue = new String[] { "¹«Ë¾", "¹«Ë¾",
-				"³µ", "dd 52E(6)", "2", "·çÀäsdfsdf", "V09660ffff", "300.00",
-				"600.00", "Â½°ÛÍòÔªÕû", "7", "100", "2012Äê8ÔÂ31ÈÕ", "60", "5", "3",
-				"10", "6", "10", "5", "10", "21", "540", "10", "2012Äê8ÔÂ31ÈÕ",
-				"2012Äê8ÔÂ31ÈÕ", "ÁÕ", "430111199910102121", "13800138200", "ÁÕ","bboss" };
+		String[] mapValue = new String[] { "å…¬å¸", "å…¬å¸",
+				"è½¦", "dd 52E(6)", "2", "é£å†·sdfsdf", "V09660ffff", "300.00",
+				"600.00", "é™†ä½°ä¸‡å…ƒæ•´", "7", "100", "2012å¹´8æœˆ31æ—¥", "60", "5", "3",
+				"10", "6", "10", "5", "10", "21", "540", "10", "2012å¹´8æœˆ31æ—¥",
+				"2012å¹´8æœˆ31æ—¥", "ç³", "430111199910102121", "13800138200", "ç³","bboss" };
 		String wordtemplate = "D:\\workspace\\bbossgroups-3.6.0\\bboss-plugin-wordpdf\\plugin\\wordpdf\\anjie.doc";
 		String wordfile = "d:\\anjie_test.doc";
 		FileConvertor.getRealWord(wordtemplate, wordfile, bookMarks,mapValue);
@@ -373,7 +373,7 @@ public class NewPrinterController {
 	}
 	
 	public @ResponseBody FileBlob downWordTemp() throws Exception  {
-		System.out.println("--------------³ÌĞòÖ´ĞĞµ½´Ë´¦------------------");
+		System.out.println("--------------ç¨‹åºæ‰§è¡Œåˆ°æ­¤å¤„------------------");
 		String[] bookMarks = new String[] { "DealerName", "Name", "CgName",
 				"TypeName", "OrderQty", "CoolCode", "ChassisCode", "CustPrice",
 				"CustAmt", "sumall", "EarnestPayDays", "EarnestAmt",
@@ -383,11 +383,11 @@ public class NewPrinterController {
 				"FinanceAmt", "FinanceFC", "LackAmtPayDate",
 				"LackAmtFinalPayDate", "ReceiverName", "ReceiverID",   
 				"ReceiverTel", "Insurer","authoriate" };
-		String[] mapValue = new String[] { "¹«Ë¾", "¹«Ë¾",
-				"³µ", "dd 52E(6)", "2", "·çÀäsdfsdf", "V09660ffff", "300.00",
-				"600.00", "Â½°ÛÍòÔªÕû", "7", "100", "2012Äê8ÔÂ31ÈÕ", "60", "5", "3",
-				"10", "6", "10", "5", "10", "21", "540", "10", "2012Äê8ÔÂ31ÈÕ",
-				"2012Äê8ÔÂ31ÈÕ", "ÁÕ", "430111199910102121", "13800138200", "ÁÕ","bboss" };
+		String[] mapValue = new String[] { "å…¬å¸", "å…¬å¸",
+				"è½¦", "dd 52E(6)", "2", "é£å†·sdfsdf", "V09660ffff", "300.00",
+				"600.00", "é™†ä½°ä¸‡å…ƒæ•´", "7", "100", "2012å¹´8æœˆ31æ—¥", "60", "5", "3",
+				"10", "6", "10", "5", "10", "21", "540", "10", "2012å¹´8æœˆ31æ—¥",
+				"2012å¹´8æœˆ31æ—¥", "ç³", "430111199910102121", "13800138200", "ç³","bboss" };
 		String wordtemplate = "D:\\workspace\\bbossgroups-3.6.0\\bboss-plugin-wordpdf\\plugin\\wordpdf\\anjie.doc";
 		String wordfile = "d:\\anjie_test.doc";
 		FileConvertor.getRealWord(wordtemplate, wordfile, bookMarks,mapValue);
@@ -401,6 +401,6 @@ public class NewPrinterController {
 	public static void main(String[] args)
 	{
 		FileConvertor.init("E:\\Program Files\\LibreOffice 3.6");
-		FileConvertor.wordToPDFByOpenOffice("D:\\workspace\\SanyPDP\\ÎÄµµ\\¶şÎ¬ÌõÂë\\GSP-MMS\\LmGzjMaterialBarcodeMaintAction.do.htm", "d:\\mms.pdf");
+		FileConvertor.wordToPDFByOpenOffice("D:\\workspace\\SanyPDP\\æ–‡æ¡£\\äºŒç»´æ¡ç \\GSP-MMS\\LmGzjMaterialBarcodeMaintAction.do.htm", "d:\\mms.pdf");
 	}
 }

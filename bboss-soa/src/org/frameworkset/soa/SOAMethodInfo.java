@@ -18,10 +18,10 @@ package org.frameworkset.soa;
 
 /**
  * <p>Title: SOAMethodInfo.java</p> 
- * <p>Description: ÃèÊö·şÎñµ÷ÓÃÖĞ</p>
+ * <p>Description: æè¿°æœåŠ¡è°ƒç”¨ä¸­</p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2008</p>
- * @Date 2011-5-10 ÉÏÎç11:39:10
+ * @Date 2011-5-10 ä¸Šåˆ11:39:10
  * @author biaoping.yin
  * @version 1.0
  */

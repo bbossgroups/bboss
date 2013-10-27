@@ -19,7 +19,7 @@ package com.frameworkset.common.tag.pager.tags;
 
 /**
  * <p>MapKeyTag.java</p>
- * <p> Description: map±êÇ©½áºÏÊ¹ÓÃ£¬·µ»Øµ±Ç°mapÔªËØ¶ÔÓ¦µÄkeyÖµ</p>
+ * <p> Description: mapæ ‡ç­¾ç»“åˆä½¿ç”¨ï¼Œè¿”å›å½“å‰mapå…ƒç´ å¯¹åº”çš„keyå€¼</p>
  * <p> bboss workgroup </p>
  * <p> Copyright (c) 2009 </p>
  * 

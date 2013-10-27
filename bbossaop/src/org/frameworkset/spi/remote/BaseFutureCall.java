@@ -20,10 +20,10 @@ import java.util.concurrent.Callable;
 
 /**
  * <p>Title: BaseFutureCall.java</p> 
- * <p>Description: ÇëÇó·¢ËÍ³ÌĞò</p>
+ * <p>Description: è¯·æ±‚å‘é€ç¨‹åº</p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2008</p>
- * @Date 2009-11-9 ÏÂÎç01:06:51
+ * @Date 2009-11-9 ä¸‹åˆ01:06:51
  * @author biaoping.yin
  * @version 1.0
  */

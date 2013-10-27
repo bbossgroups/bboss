@@ -104,7 +104,7 @@ public class ResultMap {
 			functionResult = rs.getObject(1);
 		}
 
-		if (valueobjectType == Map.class || valueobjectType == List.class)// Ó³ÉäÎªmap¶ÔÏó
+		if (valueobjectType == Map.class || valueobjectType == List.class)// æ˜ å°„ä¸ºmapå¯¹è±¡
 		{
 
 			Record record = buildMap(cstmt, outparams, stmtInfo);
@@ -134,7 +134,7 @@ public class ResultMap {
 			}
 		}
 
-		else if (valueobjectType == XMLMark.class)// Ó³ÉäÎªxml¸ñÊ½»¯´®
+		else if (valueobjectType == XMLMark.class)// æ˜ å°„ä¸ºxmlæ ¼å¼åŒ–ä¸²
 		{
 //		    if(rowHander == null)
 //		    {
@@ -142,7 +142,7 @@ public class ResultMap {
 //		    }
 		    this.commonresult = buildXMLString(cstmt, outparams, stmtInfo,
 					rowHander);
-		} else // Ó³ÉäÎªÆÕÍ¨µÄÖµ¶ÔÏó,ÎªÖµ¶ÔÏóÊ±£¬ÒªÇóout²ÎÊıÈ«²¿Í¨¹ıoutparameterÃû³Æ×¢²á£¬²»ÄÜÍ¨¹ıÎ»ÖÃË÷ÒıÀ´Ö¸¶¨
+		} else // æ˜ å°„ä¸ºæ™®é€šçš„å€¼å¯¹è±¡,ä¸ºå€¼å¯¹è±¡æ—¶ï¼Œè¦æ±‚outå‚æ•°å…¨éƒ¨é€šè¿‡outparameteråç§°æ³¨å†Œï¼Œä¸èƒ½é€šè¿‡ä½ç½®ç´¢å¼•æ¥æŒ‡å®š
 		{
 			
 			this.commonresult = buildValueObject(cstmt, valueobjectType,
@@ -193,7 +193,7 @@ public class ResultMap {
 		if( !ismap)
 		{
 			
-//			if(!String.class.isAssignableFrom(valueObjectType))//Èç¹ûÒªÇó·µ»Ø×Ö·û´®ÀàĞÍµÄÊı¾İ£¬ÔòÖ±½Ó·µ»ØStringÀàĞÍµÄÖµ
+//			if(!String.class.isAssignableFrom(valueObjectType))//å¦‚æœè¦æ±‚è¿”å›å­—ç¬¦ä¸²ç±»å‹çš„æ•°æ®ï¼Œåˆ™ç›´æ¥è¿”å›Stringç±»å‹çš„å€¼
 //			ClassInfo beanInfo = ClassUtil.getClassInfo(valueObjectType);
 			if(!beanInfo.isPrimary())
 			{
@@ -222,7 +222,7 @@ public class ResultMap {
 	//				if(attrName.equals("class"))
 	//					continue;
 					String annotationName = null;
-					if(BigFile.class.isAssignableFrom(attribute.getPropertyType()) )//²»Ö§³Ö´ó×Ö¶Î×ª»»ÎªBigFile½Ó¿Ú
+					if(BigFile.class.isAssignableFrom(attribute.getPropertyType()) )//ä¸æ”¯æŒå¤§å­—æ®µè½¬æ¢ä¸ºBigFileæ¥å£
 						continue;
 					boolean userAnnotation = false;
 					try {
@@ -449,7 +449,7 @@ public class ResultMap {
 		}
 		if( !Map.class.isAssignableFrom(valueObjectType))
 		{
-//			if(!String.class.isAssignableFrom(valueObjectType))//Èç¹ûÒªÇó·µ»ØStringÀàĞÍ£¬Ö±½Ó°´ÕÕStringÀàĞÍ½øĞĞ´¦Àí
+//			if(!String.class.isAssignableFrom(valueObjectType))//å¦‚æœè¦æ±‚è¿”å›Stringç±»å‹ï¼Œç›´æ¥æŒ‰ç…§Stringç±»å‹è¿›è¡Œå¤„ç†
 			if(!isprimaryType)
 			{
 				try {
@@ -467,7 +467,7 @@ public class ResultMap {
 					String attrName = attribute.getName();
 	//				if(attrName.equals("class"))
 	//					continue;
-					if(BigFile.class.isAssignableFrom(attribute.getPropertyType()) )//²»Ö§³Ö´ó×Ö¶Î×ª»»ÎªBigFile½Ó¿Ú
+					if(BigFile.class.isAssignableFrom(attribute.getPropertyType()) )//ä¸æ”¯æŒå¤§å­—æ®µè½¬æ¢ä¸ºBigFileæ¥å£
 						continue;
 					String annotationName = null;
 					try {
@@ -546,7 +546,7 @@ public class ResultMap {
 									.append(type.getName()).append("] failed:").append(
 											e.getMessage());
 							log.error(err.toString(), e);
-							// ´¦ÀíÒ»¸ö¾ÍÍâ²¿²ÎÊıÌŞ³ıÒ»¸ö
+							// å¤„ç†ä¸€ä¸ªå°±å¤–éƒ¨å‚æ•°å‰”é™¤ä¸€ä¸ª
 							outparams.outParams.remove(i);
 							break;
 						}
@@ -562,7 +562,7 @@ public class ResultMap {
 							}
 	//						attribute.getWriteMethod().invoke(valueObject,
 	//								new Object[] { propsVal });
-							// ´¦ÀíÒ»¸ö¾ÍÍâ²¿²ÎÊıÌŞ³ıÒ»¸ö
+							// å¤„ç†ä¸€ä¸ªå°±å¤–éƒ¨å‚æ•°å‰”é™¤ä¸€ä¸ª
 							outparams.outParams.remove(i);
 							break;
 						} catch (Exception e) {
@@ -573,7 +573,7 @@ public class ResultMap {
 											e.getMessage());
 	//						System.out.println(err);
 							log.error(err.toString(), e);
-							// ´¦ÀíÒ»¸ö¾ÍÍâ²¿²ÎÊıÌŞ³ıÒ»¸ö
+							// å¤„ç†ä¸€ä¸ªå°±å¤–éƒ¨å‚æ•°å‰”é™¤ä¸€ä¸ª
 							outparams.outParams.remove(i);
 							break;
 						}
@@ -709,7 +709,7 @@ public class ResultMap {
 						.getColumnType(i), stmtInfo.getDbname());
 
 				
-				// ½«ÊôĞÔÃû³ÆÈ«²¿×ª»»Îª´óĞ´£¬Í³Ò»²»Í¬Êı¾İ¿âÖ®¼äµÄ²îÒì
+				// å°†å±æ€§åç§°å…¨éƒ¨è½¬æ¢ä¸ºå¤§å†™ï¼Œç»Ÿä¸€ä¸åŒæ•°æ®åº“ä¹‹é—´çš„å·®å¼‚
 				if (value != null)
 				{
 				    
@@ -729,7 +729,7 @@ public class ResultMap {
 //				        wi.getColumnName();
 				    }
 //				    /**
-//				     * Ö±½ÓÒÔÁĞË÷Òı´æ·ÅÊı¾İ£¬ÁĞË÷Òı´Ó0
+//				     * ç›´æ¥ä»¥åˆ—ç´¢å¼•å­˜æ”¾æ•°æ®ï¼Œåˆ—ç´¢å¼•ä»0
 //				     */
 //				    record.put(new Integer(i-1),
 //                                                value);
@@ -790,7 +790,7 @@ public class ResultMap {
 						.getColumnType(i), stmtInfo.getDbname());
 		
 				
-				// ½«ÊôĞÔÃû³ÆÈ«²¿×ª»»Îª´óĞ´£¬Í³Ò»²»Í¬Êı¾İ¿âÖ®¼äµÄ²îÒì
+				// å°†å±æ€§åç§°å…¨éƒ¨è½¬æ¢ä¸ºå¤§å†™ï¼Œç»Ÿä¸€ä¸åŒæ•°æ®åº“ä¹‹é—´çš„å·®å¼‚
 				if (value != null)
 				{
 				    
@@ -810,7 +810,7 @@ public class ResultMap {
 		//		        wi.getColumnName();
 				    }
 		//		    /**
-		//		     * Ö±½ÓÒÔÁĞË÷Òı´æ·ÅÊı¾İ£¬ÁĞË÷Òı´Ó0
+		//		     * ç›´æ¥ä»¥åˆ—ç´¢å¼•å­˜æ”¾æ•°æ®ï¼Œåˆ—ç´¢å¼•ä»0
 		//		     */
 		//		    record.put(new Integer(i-1),
 		//                                        value);
@@ -868,8 +868,8 @@ public class ResultMap {
 //							schemaType.getJavaType()).append("\"")
 //					.append(">\r\n")
 //					.append("\t\t\t<![CDATA[")
-//					// .append(ResultMap.getStringFromObject(object))//ĞèÒª×ª»»³ÉStringÀàĞÍ
-//					.append(object)// ĞèÒª×ª»»³ÉStringÀàĞÍ
+//					// .append(ResultMap.getStringFromObject(object))//éœ€è¦è½¬æ¢æˆStringç±»å‹
+//					.append(object)// éœ€è¦è½¬æ¢æˆStringç±»å‹
 //					.append("]]>\r\n").append(
 //							"\t\t</column>");
 //					
@@ -890,9 +890,9 @@ public class ResultMap {
 
 			boolean isxmlhandler = rowHander != null && rowHander instanceof XMLRowHandler; 
 	                XMLRowHandler xhdl = null;
-	                if(!isxmlhandler) //ĞĞ´¦ÀíÆ÷²»ÊÇ´ÓXMLRowHandler´¦ÀíÆ÷¼Ì³ĞÊ±½øÈëÕâ¸ö·ÖÖ§
+	                if(!isxmlhandler) //è¡Œå¤„ç†å™¨ä¸æ˜¯ä»XMLRowHandlerå¤„ç†å™¨ç»§æ‰¿æ—¶è¿›å…¥è¿™ä¸ªåˆ†æ”¯
 	                {
-        			records.append("<?xml version=\"1.0\" encoding=\"gb2312\"?>\r\n");
+        			records.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n");
         			records.append("<records>\r\n");
 	                }
 	                else
@@ -948,8 +948,8 @@ public class ResultMap {
 											schemaType.getJavaType()).append("\"")
 									.append(">\r\n")
 									.append("            <![CDATA[")
-									// .append(ResultMap.getStringFromObject(object))//ĞèÒª×ª»»³ÉStringÀàĞÍ
-									.append(object)// ĞèÒª×ª»»³ÉStringÀàĞÍ
+									// .append(ResultMap.getStringFromObject(object))//éœ€è¦è½¬æ¢æˆStringç±»å‹
+									.append(object)// éœ€è¦è½¬æ¢æˆStringç±»å‹
 									.append("]]>\r\n").append(
 											"        </column>\r\n");
 							// data.put(_param.parameterName, object);
@@ -968,7 +968,7 @@ public class ResultMap {
 									.append(schemaType.getJavaType()).append("\"")
 									.append(">\r\n")
 									.append("            <![CDATA[")
-									// .append(ResultMap.getStringFromObject(object))//ĞèÒª×ª»»³ÉStringÀàĞÍ
+									// .append(ResultMap.getStringFromObject(object))//éœ€è¦è½¬æ¢æˆStringç±»å‹
 									.append(object).append("]]>\r\n").append(
 											"        </column>\r\n");
 							// data.put(new Integer(_param.index), object);

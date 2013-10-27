@@ -25,7 +25,7 @@ import javax.transaction.SystemException;
  * 
  * <p>Title: TXConnection.java</p>
  *
- * <p>Description: ¿Í»§³ÌĞòÖ±½Ó</p>
+ * <p>Description: å®¢æˆ·ç¨‹åºç›´æ¥</p>
  *
  * <p>
  * bboss workgroup
@@ -34,7 +34,7 @@ import javax.transaction.SystemException;
  * Copyright (c) 2007
  * </p>
  * 
- * @Date 2009-6-1 ÏÂÎç08:58:51
+ * @Date 2009-6-1 ä¸‹åˆ08:58:51
  * @author biaoping.yin
  * @version 1.0
  */
@@ -47,7 +47,7 @@ public class TXConnection extends InnerConnection implements Connection {
 	}
 	
 	/**
-	 * »ñÈ¡ÄÚ²¿Á´½Ó
+	 * è·å–å†…éƒ¨é“¾æ¥
 	 */
 	public Connection getInnerConnection()
 	{
@@ -64,7 +64,7 @@ public class TXConnection extends InnerConnection implements Connection {
 	}
 	
 	/**
-	 * ÔÚÊÂÎñ»·¾³ÏÂ£¬²»×öÈÎºÎ´¦Àí
+	 * åœ¨äº‹åŠ¡ç¯å¢ƒä¸‹ï¼Œä¸åšä»»ä½•å¤„ç†
 	 */
 	public void commit() throws SQLException {
 		
@@ -73,7 +73,7 @@ public class TXConnection extends InnerConnection implements Connection {
 	}
 	
 	/**
-	 * ÖØÔØ¸¸Àà·½·¨£¬ÉèÖÃÊÂÎñµÄ×´Ì¬±êÊ¶Îª»Ø¹ö×´Ì¬
+	 * é‡è½½çˆ¶ç±»æ–¹æ³•ï¼Œè®¾ç½®äº‹åŠ¡çš„çŠ¶æ€æ ‡è¯†ä¸ºå›æ»šçŠ¶æ€
 	 */
 	public void rollback() throws SQLException {
 		JDBCTransaction tx = TransactionManager.getTransaction();

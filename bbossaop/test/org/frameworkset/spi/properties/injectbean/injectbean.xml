@@ -1,75 +1,75 @@
-<?xml version="1.0" encoding='gb2312'?>
+<?xml version="1.0" encoding='UTF-8'?>
 <manager-config>
 <description>
 <![CDATA[
-	ÒÀÀµ×¢ÈëÅäÖÃÎÄ¼ş,±¾²âÊÔÓÃÀı²âÊÔÒÔÏÂ¹¦ÄÜµã£º
-		²âÊÔÆÕÍ¨bean µÄÊôĞÔÒÀÀµ×¢ÈëºÍ·şÎñÒÀÀµ×¢ÈëµÄ¹¦ÄÜ(·ÖÎªÁ½ÖÖÄ£Ê½·ç¸ñµÄÊôĞÔÒÀÀµ×¢Èë)
-		²âÊÔÆÕÍ¨bean µÄ¹¹½¨º¯ÊıÒÀÀµ×¢ÈëºÍ·şÎñÒÀÀµ×¢ÈëµÄ¹¦ÄÜ
-		¶şÕßµÄÖ÷ÒªÇø±ğ¾ÍÊÇ£º¹¹½¨º¯ÊıÒÀÀµ×¢ÈëĞèÒªÓÃconstructionÔªËØ½«×¢ÈëµÄÊôĞÔ°üº¬½øÈ¥¾Í¿ÉÒÔÁË
-		ÉùÃ÷Ê½ÊÂÎñ¹ÜÀí
+	ä¾èµ–æ³¨å…¥é…ç½®æ–‡ä»¶,æœ¬æµ‹è¯•ç”¨ä¾‹æµ‹è¯•ä»¥ä¸‹åŠŸèƒ½ç‚¹ï¼š
+		æµ‹è¯•æ™®é€šbean çš„å±æ€§ä¾èµ–æ³¨å…¥å’ŒæœåŠ¡ä¾èµ–æ³¨å…¥çš„åŠŸèƒ½(åˆ†ä¸ºä¸¤ç§æ¨¡å¼é£æ ¼çš„å±æ€§ä¾èµ–æ³¨å…¥)
+		æµ‹è¯•æ™®é€šbean çš„æ„å»ºå‡½æ•°ä¾èµ–æ³¨å…¥å’ŒæœåŠ¡ä¾èµ–æ³¨å…¥çš„åŠŸèƒ½
+		äºŒè€…çš„ä¸»è¦åŒºåˆ«å°±æ˜¯ï¼šæ„å»ºå‡½æ•°ä¾èµ–æ³¨å…¥éœ€è¦ç”¨constructionå…ƒç´ å°†æ³¨å…¥çš„å±æ€§åŒ…å«è¿›å»å°±å¯ä»¥äº†
+		å£°æ˜å¼äº‹åŠ¡ç®¡ç†
 		
-	ÅäÖÃÈçÏÂ£º
+	é…ç½®å¦‚ä¸‹ï¼š
 	
-	o ÊôĞÔbean--inject.test.injectbean,beanµÄÀàĞÍclass Îª
+	o å±æ€§bean--inject.test.injectbean,beançš„ç±»å‹class ä¸º
 		org.frameworkset.spi.properties.injectbean.InjectService
-		¶ÔÓ¦µÄÅäÖÃÎª£º
+		å¯¹åº”çš„é…ç½®ä¸ºï¼š
 		<property name="inject.test.injectbean" 
 		class="org.frameworkset.spi.properties.injectbean.InjectService">
-		ÏÂÃæÃèÊöÈçºÎ¶ÔInjectServiceÖĞÊôĞÔÍê³ÉÒÀÀµ×¢Èë£º
-			test_int:£ºint
+		ä¸‹é¢æè¿°å¦‚ä½•å¯¹InjectServiceä¸­å±æ€§å®Œæˆä¾èµ–æ³¨å…¥ï¼š
+			test_int:ï¼šint
 			test_inject::org.frameworkset.spi.properties.injectbean.injectbean.Inject
 			refattr::int
 			test_refattr::string
 			refservice::org.frameworkset.spi.properties.injectbean.ServiceImpl
 		
-	o InjectServiceÖĞ¶¨ÒåÁË×Ö¶Îtest_int ÀàĞÍÎªint£¬ÔÚÕâÀï×¢ÈëÖµÎª0,ÅäÖÃÎª£º
+	o InjectServiceä¸­å®šä¹‰äº†å­—æ®µtest_int ç±»å‹ä¸ºintï¼Œåœ¨è¿™é‡Œæ³¨å…¥å€¼ä¸º0,é…ç½®ä¸ºï¼š
 		<property name="test_int" 
 				      value="0" class="int"/>
-	o InjectServiceÖĞ¶¨ÒåÁË×Ö¶Îtest_inject£¬ÀàĞÍÎªorg.frameworkset.spi.properties.injectbean.injectbean.Inject
-	   ÏµÍ³¼ÓÔØInjectServiceÊôĞÔµÄÊ±ºò»á×¢Èëorg.frameworkset.spi.properties.injectbean.InjectµÄÊµÀı¶ÔÏó
+	o InjectServiceä¸­å®šä¹‰äº†å­—æ®µtest_injectï¼Œç±»å‹ä¸ºorg.frameworkset.spi.properties.injectbean.injectbean.Inject
+	   ç³»ç»ŸåŠ è½½InjectServiceå±æ€§çš„æ—¶å€™ä¼šæ³¨å…¥org.frameworkset.spi.properties.injectbean.Injectçš„å®ä¾‹å¯¹è±¡
 		<property name="test_inject" 
 				  class="org.frameworkset.spi.properties.injectbean.Inject"/>
-	o InjectServiceÖĞ¶¨ÒåÁË×Ö¶Îrefattr,ÆäÀàĞÍÎªint£¬ÏµÍ³½«×¢ÈëÍâ²¿ÊôĞÔtest_refattrµÄÖµÀ´Ìî³ärefattrµÄÖµ
+	o InjectServiceä¸­å®šä¹‰äº†å­—æ®µrefattr,å…¶ç±»å‹ä¸ºintï¼Œç³»ç»Ÿå°†æ³¨å…¥å¤–éƒ¨å±æ€§test_refattrçš„å€¼æ¥å¡«å……refattrçš„å€¼
 		
 		<property name="refattr" 
 			      refid="attr:test_refattr" class="int"/>
-	 Íâ²¿ÊôĞÔtest_refattrµÄ¶¨ÒåÎª
+	 å¤–éƒ¨å±æ€§test_refattrçš„å®šä¹‰ä¸º
 		 <property name="test_refattr" 
 				      value="1000" class="string"/>
-	ÎÒÃÇ¿´µ½Íâ²¿ÊôĞÔtest_refattrµÄÖµÀàĞÍºÍrefattrµÄÖµÀàĞÍ²»Ò»ÖÂ£¬Ò»¸öÎªint£¬Ò»¸öÎªstring£¬aop¿ò¼ÜÔÚ×¢ÈëÖµµÄÊ±ºò½«×Ô¶¯½øĞĞÖµ×ª»»
+	æˆ‘ä»¬çœ‹åˆ°å¤–éƒ¨å±æ€§test_refattrçš„å€¼ç±»å‹å’Œrefattrçš„å€¼ç±»å‹ä¸ä¸€è‡´ï¼Œä¸€ä¸ªä¸ºintï¼Œä¸€ä¸ªä¸ºstringï¼Œaopæ¡†æ¶åœ¨æ³¨å…¥å€¼çš„æ—¶å€™å°†è‡ªåŠ¨è¿›è¡Œå€¼è½¬æ¢
 	
-	o InjectServiceÖĞ¶¨ÒåÁËrefserviceÊôĞÔ£¬ÊôĞÔÖµÍ¨¹ıÒıÓÃÍâ²¿ÊôĞÔÖµattr:test_refserviceÀ´×¢Èë£¬ÊôĞÔÀàĞÍºÍÊôĞÔtest_refservice¶ÔÓ¦µÄÖµÀàĞÍÒ»ÖÂ
+	o InjectServiceä¸­å®šä¹‰äº†refserviceå±æ€§ï¼Œå±æ€§å€¼é€šè¿‡å¼•ç”¨å¤–éƒ¨å±æ€§å€¼attr:test_refserviceæ¥æ³¨å…¥ï¼Œå±æ€§ç±»å‹å’Œå±æ€§test_refserviceå¯¹åº”çš„å€¼ç±»å‹ä¸€è‡´
 	
 		<property name="refservice" 
 				      refid="attr:test_refservice"/>
-		Íâ²¿ÊôĞÔ¶¨Òå£º<property name="test_refservice" 
+		å¤–éƒ¨å±æ€§å®šä¹‰ï¼š<property name="test_refservice" 
 			      refid="service:test_serivce"/> 
-			      ÕâÀïtest_refserviceµÄÖµÓÖÊÇÒıÓÃÁËÍâ²¿·şÎñservice:test_serivce£¬ÆäÖµÀàĞÍºÍ·şÎñservice:test_serivceµÄÀàĞÍÒ»ÖÂ
+			      è¿™é‡Œtest_refserviceçš„å€¼åˆæ˜¯å¼•ç”¨äº†å¤–éƒ¨æœåŠ¡service:test_serivceï¼Œå…¶å€¼ç±»å‹å’ŒæœåŠ¡service:test_serivceçš„ç±»å‹ä¸€è‡´
     
-    o InjectServiceÖĞ¶¨ÒåÁËrefservice_directÊôĞÔ£¬ÖµÖ±½ÓÒıÓÃÁËÍâ²¿·şÎñservice:test_serivce£¬ÀàĞÍÓëÍâ²¿·şÎñservice:test_serivceµÄÖµÀàĞÍÒ»ÖÂ
+    o InjectServiceä¸­å®šä¹‰äº†refservice_directå±æ€§ï¼Œå€¼ç›´æ¥å¼•ç”¨äº†å¤–éƒ¨æœåŠ¡service:test_serivceï¼Œç±»å‹ä¸å¤–éƒ¨æœåŠ¡service:test_serivceçš„å€¼ç±»å‹ä¸€è‡´
 	
 	<property name="refservice_direct" 
 			      refid="service:test_serivce"/>	
-	Íâ²¿·şÎñ¶¨ÒåÈçÏÂ£º
+	å¤–éƒ¨æœåŠ¡å®šä¹‰å¦‚ä¸‹ï¼š
 		<manager id="test_serivce" singlable="true">
 			<provider type="default" class="org.frameworkset.spi.properties.injectbean" />
 		</manager>
 		
-	o È«¾ÖÊôĞÔtest_refattr¶¨ÒåÎªstringÀàĞÍ£¬ÖµÎª1000
+	o å…¨å±€å±æ€§test_refattrå®šä¹‰ä¸ºstringç±»å‹ï¼Œå€¼ä¸º1000
 		<property name="test_refattr" 
 			      value="1000" class="string"/>
 			      
-	o È«¾ÖÊôĞÔtest_refserviceÒıÓÃ·şÎñservice:test_serivce,ÀàĞÍÓë·şÎñservice:test_serivceµÄÀàĞÍ±£³ÖÒ»ÖÂ
+	o å…¨å±€å±æ€§test_refserviceå¼•ç”¨æœåŠ¡service:test_serivce,ç±»å‹ä¸æœåŠ¡service:test_serivceçš„ç±»å‹ä¿æŒä¸€è‡´
 		<property name="test_refservice" 
 				      refid="service:test_serivce"/>
-	o ·şÎñtest_serivceÎªµ¥ÊµÀıÄ£Ê½£¬·şÎñµÄÊµÏÖÀàÎªorg.frameworkset.spi.properties.injectbean.ServiceImpl			      
+	o æœåŠ¡test_serivceä¸ºå•å®ä¾‹æ¨¡å¼ï¼ŒæœåŠ¡çš„å®ç°ç±»ä¸ºorg.frameworkset.spi.properties.injectbean.ServiceImpl			      
 	
  ]]>
 </description>
 
 <properties>
 	<!-- 
-		ÄÚÇ¶ÔªËØ·ç¸ñÊôĞÔÒÀÀµ×¢Èë
+		å†…åµŒå…ƒç´ é£æ ¼å±æ€§ä¾èµ–æ³¨å…¥
 	 -->
 	<property name="inject.p.injectbean" 
 		class="org.frameworkset.spi.properties.injectbean.InjectService">
@@ -87,7 +87,7 @@
 	</property>
 	
 	<!--
-	ÔªËØÊôĞÔ·ç¸ñÊôĞÔÒÀÀµ×¢Èë
+	å…ƒç´ å±æ€§é£æ ¼å±æ€§ä¾èµ–æ³¨å…¥
 	-->
 	<property name="inject.f.injectbean" 
 			class="org.frameworkset.spi.properties.injectbean.InjectService" 
@@ -102,7 +102,7 @@
 					  class="org.frameworkset.spi.properties.injectbean.Inject"/>        
 	</property>
 	<!-- 
-		¹¹Ôìº¯ÊıÒÀÀµ×¢Èë
+		æ„é€ å‡½æ•°ä¾èµ–æ³¨å…¥
 	 -->
 	<property name="inject.c.injectbean" 
 		class="org.frameworkset.spi.properties.injectbean.InjectService">
@@ -121,18 +121,18 @@
 		</construction>
 		<transactions>
 			<!-- 
-				¶¨ÒåĞèÒª½øĞĞÊÂÎñ¿ØÖÆµÄ·½·¨
-				ÊôĞÔËµÃ÷£º
-				name-·½·¨Ãû³Æ£¬¿ÉÒÔÊÇÒ»¸öÕıÔò±í´ïÊ½£¬ÕıÔò±í´ïÊ½µÄÓï·¨Çë²Î¿¼jakarta-oroµÄÏà¹ØÎÄµµ£¬Èç¹ûÊ¹ÓÃ
-				ÕıÔò±í´ïÊ½µÄÇé¿öÊ±£¬Ôò·½·¨ÖĞÉùÃ÷µÄ·½·¨²ÎÊı½«±»ºöÂÔ£¬µ«ÊÇ»Ø¹öÒì³£ÓĞĞ§¡£
-				pattern-·½·¨Ãû³ÆµÄÕıÔò±í´ïÊ½Æ¥ÅäÄ£Ê½£¬Ä£Ê½Æ¥ÅäµÄË³ĞòÊÜÅäÖÃÎ»ÖÃµÄÓ°Ïì£¬Èç¹ûÅäÖÃÔÚºóÃæ»òÕßÖĞ¼ä£¬
-						ÄÇÃ´»áÏÈÖ´ĞĞÖ®Ç°µÄ·½·¨Æ¥Åä£¬Èç¹ûÆ¥ÅäÉÏÁË¾Í²»»á¶Ô¸ÃÄ£Ê½·½·¨½øĞĞÆ¥ÅäÁË£¬·ñÔòÖ´ĞĞÆ¥Åä²Ù×÷¡£
-						Èç¹ûÆ¥ÅäÉÏÌØ¶¨µÄ·½·¨Ãû³Æ£¬ÄÇÃ´Õâ¸ö·½·¨¾ÍÊÇĞèÒª½øĞĞÊÂÎñ¿ØÖÆµÄ·½·¨
-						ÀıÈç£ºÄ£Ê½testInt.*Æ¥Åä½Ó¿ÚÖĞÒÔtestInt¿ªÍ·µÄÈÎºÎ·½·¨
-				txtype-ĞèÒª¿ØÖÆµÄÊÂÎñÀàĞÍ£¬È¡Öµ·¶Î§£º
-				NEW_TRANSACTION£¬
-				REQUIRED_TRANSACTION£¬
-				MAYBE_TRANSACTION£¬
+				å®šä¹‰éœ€è¦è¿›è¡Œäº‹åŠ¡æ§åˆ¶çš„æ–¹æ³•
+				å±æ€§è¯´æ˜ï¼š
+				name-æ–¹æ³•åç§°ï¼Œå¯ä»¥æ˜¯ä¸€ä¸ªæ­£åˆ™è¡¨è¾¾å¼ï¼Œæ­£åˆ™è¡¨è¾¾å¼çš„è¯­æ³•è¯·å‚è€ƒjakarta-oroçš„ç›¸å…³æ–‡æ¡£ï¼Œå¦‚æœä½¿ç”¨
+				æ­£åˆ™è¡¨è¾¾å¼çš„æƒ…å†µæ—¶ï¼Œåˆ™æ–¹æ³•ä¸­å£°æ˜çš„æ–¹æ³•å‚æ•°å°†è¢«å¿½ç•¥ï¼Œä½†æ˜¯å›æ»šå¼‚å¸¸æœ‰æ•ˆã€‚
+				pattern-æ–¹æ³•åç§°çš„æ­£åˆ™è¡¨è¾¾å¼åŒ¹é…æ¨¡å¼ï¼Œæ¨¡å¼åŒ¹é…çš„é¡ºåºå—é…ç½®ä½ç½®çš„å½±å“ï¼Œå¦‚æœé…ç½®åœ¨åé¢æˆ–è€…ä¸­é—´ï¼Œ
+						é‚£ä¹ˆä¼šå…ˆæ‰§è¡Œä¹‹å‰çš„æ–¹æ³•åŒ¹é…ï¼Œå¦‚æœåŒ¹é…ä¸Šäº†å°±ä¸ä¼šå¯¹è¯¥æ¨¡å¼æ–¹æ³•è¿›è¡ŒåŒ¹é…äº†ï¼Œå¦åˆ™æ‰§è¡ŒåŒ¹é…æ“ä½œã€‚
+						å¦‚æœåŒ¹é…ä¸Šç‰¹å®šçš„æ–¹æ³•åç§°ï¼Œé‚£ä¹ˆè¿™ä¸ªæ–¹æ³•å°±æ˜¯éœ€è¦è¿›è¡Œäº‹åŠ¡æ§åˆ¶çš„æ–¹æ³•
+						ä¾‹å¦‚ï¼šæ¨¡å¼testInt.*åŒ¹é…æ¥å£ä¸­ä»¥testIntå¼€å¤´çš„ä»»ä½•æ–¹æ³•
+				txtype-éœ€è¦æ§åˆ¶çš„äº‹åŠ¡ç±»å‹ï¼Œå–å€¼èŒƒå›´ï¼š
+				NEW_TRANSACTIONï¼Œ
+				REQUIRED_TRANSACTIONï¼Œ
+				MAYBE_TRANSACTIONï¼Œ
 				NO_TRANSACTION
 			-->
 			<method name="getRefattr" txtype="NEW_TRANSACTION">
@@ -141,7 +141,7 @@
 			
 			
 			 	<!-- 
-				ÏµÍ³¼¶±ğµÄÒì³£java.lang.NullPointException£¬µ¼ÖÂÊÂÎñ»Ø¹ö
+				ç³»ç»Ÿçº§åˆ«çš„å¼‚å¸¸java.lang.NullPointExceptionï¼Œå¯¼è‡´äº‹åŠ¡å›æ»š
 			 -->
 			
 			
@@ -169,18 +169,18 @@
 		</construction>
 		<transactions>
 			<!-- 
-				¶¨ÒåĞèÒª½øĞĞÊÂÎñ¿ØÖÆµÄ·½·¨
-				ÊôĞÔËµÃ÷£º
-				name-·½·¨Ãû³Æ£¬¿ÉÒÔÊÇÒ»¸öÕıÔò±í´ïÊ½£¬ÕıÔò±í´ïÊ½µÄÓï·¨Çë²Î¿¼jakarta-oroµÄÏà¹ØÎÄµµ£¬Èç¹ûÊ¹ÓÃ
-				ÕıÔò±í´ïÊ½µÄÇé¿öÊ±£¬Ôò·½·¨ÖĞÉùÃ÷µÄ·½·¨²ÎÊı½«±»ºöÂÔ£¬µ«ÊÇ»Ø¹öÒì³£ÓĞĞ§¡£
-				pattern-·½·¨Ãû³ÆµÄÕıÔò±í´ïÊ½Æ¥ÅäÄ£Ê½£¬Ä£Ê½Æ¥ÅäµÄË³ĞòÊÜÅäÖÃÎ»ÖÃµÄÓ°Ïì£¬Èç¹ûÅäÖÃÔÚºóÃæ»òÕßÖĞ¼ä£¬
-						ÄÇÃ´»áÏÈÖ´ĞĞÖ®Ç°µÄ·½·¨Æ¥Åä£¬Èç¹ûÆ¥ÅäÉÏÁË¾Í²»»á¶Ô¸ÃÄ£Ê½·½·¨½øĞĞÆ¥ÅäÁË£¬·ñÔòÖ´ĞĞÆ¥Åä²Ù×÷¡£
-						Èç¹ûÆ¥ÅäÉÏÌØ¶¨µÄ·½·¨Ãû³Æ£¬ÄÇÃ´Õâ¸ö·½·¨¾ÍÊÇĞèÒª½øĞĞÊÂÎñ¿ØÖÆµÄ·½·¨
-						ÀıÈç£ºÄ£Ê½testInt.*Æ¥Åä½Ó¿ÚÖĞÒÔtestInt¿ªÍ·µÄÈÎºÎ·½·¨
-				txtype-ĞèÒª¿ØÖÆµÄÊÂÎñÀàĞÍ£¬È¡Öµ·¶Î§£º
-				NEW_TRANSACTION£¬
-				REQUIRED_TRANSACTION£¬
-				MAYBE_TRANSACTION£¬
+				å®šä¹‰éœ€è¦è¿›è¡Œäº‹åŠ¡æ§åˆ¶çš„æ–¹æ³•
+				å±æ€§è¯´æ˜ï¼š
+				name-æ–¹æ³•åç§°ï¼Œå¯ä»¥æ˜¯ä¸€ä¸ªæ­£åˆ™è¡¨è¾¾å¼ï¼Œæ­£åˆ™è¡¨è¾¾å¼çš„è¯­æ³•è¯·å‚è€ƒjakarta-oroçš„ç›¸å…³æ–‡æ¡£ï¼Œå¦‚æœä½¿ç”¨
+				æ­£åˆ™è¡¨è¾¾å¼çš„æƒ…å†µæ—¶ï¼Œåˆ™æ–¹æ³•ä¸­å£°æ˜çš„æ–¹æ³•å‚æ•°å°†è¢«å¿½ç•¥ï¼Œä½†æ˜¯å›æ»šå¼‚å¸¸æœ‰æ•ˆã€‚
+				pattern-æ–¹æ³•åç§°çš„æ­£åˆ™è¡¨è¾¾å¼åŒ¹é…æ¨¡å¼ï¼Œæ¨¡å¼åŒ¹é…çš„é¡ºåºå—é…ç½®ä½ç½®çš„å½±å“ï¼Œå¦‚æœé…ç½®åœ¨åé¢æˆ–è€…ä¸­é—´ï¼Œ
+						é‚£ä¹ˆä¼šå…ˆæ‰§è¡Œä¹‹å‰çš„æ–¹æ³•åŒ¹é…ï¼Œå¦‚æœåŒ¹é…ä¸Šäº†å°±ä¸ä¼šå¯¹è¯¥æ¨¡å¼æ–¹æ³•è¿›è¡ŒåŒ¹é…äº†ï¼Œå¦åˆ™æ‰§è¡ŒåŒ¹é…æ“ä½œã€‚
+						å¦‚æœåŒ¹é…ä¸Šç‰¹å®šçš„æ–¹æ³•åç§°ï¼Œé‚£ä¹ˆè¿™ä¸ªæ–¹æ³•å°±æ˜¯éœ€è¦è¿›è¡Œäº‹åŠ¡æ§åˆ¶çš„æ–¹æ³•
+						ä¾‹å¦‚ï¼šæ¨¡å¼testInt.*åŒ¹é…æ¥å£ä¸­ä»¥testIntå¼€å¤´çš„ä»»ä½•æ–¹æ³•
+				txtype-éœ€è¦æ§åˆ¶çš„äº‹åŠ¡ç±»å‹ï¼Œå–å€¼èŒƒå›´ï¼š
+				NEW_TRANSACTIONï¼Œ
+				REQUIRED_TRANSACTIONï¼Œ
+				MAYBE_TRANSACTIONï¼Œ
 				NO_TRANSACTION
 			-->
 					
@@ -191,11 +191,11 @@
 			
 			
 			<!-- 			    
-					¶¨ÒåÊ¹ÊÂÎñ»Ø¹öµÄÒì³£,Èç¹ûÃ»ÓĞÃ÷È·ÉùÃ÷ĞèÒª»Ø¹öÊÂÎñµÄÒì³££¬ÄÇÃ´µ±ÓĞÒì³£·¢ÉúÊ±£¬ÊÂÎñ¹ÜÀí¿ò¼Ü½«×Ô¶¯»Ø¹öµ±Ç°ÊÂÎñ
-					class-Òì³£µÄÍêÕûÀàÂ·¾¶
-					type-ÊÇ·ñ¼ì²âÀàĞÍÒì³£µÄ×ÓÀà¿ØÖÆ±êÊ¶£¬
-					IMPLEMENTSÖ»¼ì²âÒì³£Àà±¾Éí£¬ºöÂÔÒì³£ÀàµÄ×ÓÀà£»
-					INSTANCEOF¼ì²éÒì³£Àà±¾Ê¡¼°ÆäËùÓĞ×ÓÀà
+					å®šä¹‰ä½¿äº‹åŠ¡å›æ»šçš„å¼‚å¸¸,å¦‚æœæ²¡æœ‰æ˜ç¡®å£°æ˜éœ€è¦å›æ»šäº‹åŠ¡çš„å¼‚å¸¸ï¼Œé‚£ä¹ˆå½“æœ‰å¼‚å¸¸å‘ç”Ÿæ—¶ï¼Œäº‹åŠ¡ç®¡ç†æ¡†æ¶å°†è‡ªåŠ¨å›æ»šå½“å‰äº‹åŠ¡
+					class-å¼‚å¸¸çš„å®Œæ•´ç±»è·¯å¾„
+					type-æ˜¯å¦æ£€æµ‹ç±»å‹å¼‚å¸¸çš„å­ç±»æ§åˆ¶æ ‡è¯†ï¼Œ
+					IMPLEMENTSåªæ£€æµ‹å¼‚å¸¸ç±»æœ¬èº«ï¼Œå¿½ç•¥å¼‚å¸¸ç±»çš„å­ç±»ï¼›
+					INSTANCEOFæ£€æŸ¥å¼‚å¸¸ç±»æœ¬çœåŠå…¶æ‰€æœ‰å­ç±»
 					
 				-->
 			<method name="testTXWithSpecialExceptions">
@@ -210,21 +210,21 @@
 			
 			<!-- 
 					
-					Èç¹ûÉæ¼°µÄ·½·¨Ãû³ÆÊÇÒ»¸öÕıÔò±í´ïÊ½µÄÆ¥ÅäÄ£Ê½£¬ÔòÎŞĞèÅäÖÃ·½·¨²ÎÊı 
-					Èç¹ûÖ¸¶¨µÄ·½·¨Ã»ÓĞ²ÎÊıÔòÎŞĞèÖ¸¶¨²ÎÊı
-					×¢Òâ²ÎÊı³öÏÖµÄÎ»ÖÃË³ĞòºÍÊµ¼Ê·½·¨¶¨ÒåµÄ²ÎÊıË³Ğò±£³ÖÒ»ÖÂ
-					Ä£Ê½Îª* ±íÊ¾Æ¥ÅäËùÓĞµÄ·½·¨
+					å¦‚æœæ¶‰åŠçš„æ–¹æ³•åç§°æ˜¯ä¸€ä¸ªæ­£åˆ™è¡¨è¾¾å¼çš„åŒ¹é…æ¨¡å¼ï¼Œåˆ™æ— éœ€é…ç½®æ–¹æ³•å‚æ•° 
+					å¦‚æœæŒ‡å®šçš„æ–¹æ³•æ²¡æœ‰å‚æ•°åˆ™æ— éœ€æŒ‡å®šå‚æ•°
+					æ³¨æ„å‚æ•°å‡ºç°çš„ä½ç½®é¡ºåºå’Œå®é™…æ–¹æ³•å®šä¹‰çš„å‚æ•°é¡ºåºä¿æŒä¸€è‡´
+					æ¨¡å¼ä¸º* è¡¨ç¤ºåŒ¹é…æ‰€æœ‰çš„æ–¹æ³•
 				-->
 				
 			<!-- 
-				Í¨¹ıÄ£Ê½·½·¨½øĞĞÉùÃ÷Ê½ÊÂÎñ¿ØÖÆ£¬Í¬Ê±ÉùÃ÷ÁËĞèÒª»Ø¹öÊÂÎñµÄÒì³£
-				pattern¡¾testPatternTX[1-9.]*¡¿±íÊ¾ÒÔtestPatternTX¿ªÍ·µÄËùÓĞ·½·¨
+				é€šè¿‡æ¨¡å¼æ–¹æ³•è¿›è¡Œå£°æ˜å¼äº‹åŠ¡æ§åˆ¶ï¼ŒåŒæ—¶å£°æ˜äº†éœ€è¦å›æ»šäº‹åŠ¡çš„å¼‚å¸¸
+				patternã€testPatternTX[1-9.]*ã€‘è¡¨ç¤ºä»¥testPatternTXå¼€å¤´çš„æ‰€æœ‰æ–¹æ³•
 			 -->
 			 
 		
 			 
-			<!--	Í¨¹ıÄ£Ê½·½·¨½øĞĞÉùÃ÷Ê½ÊÂÎñ¿ØÖÆ
-				pattern¡¾testPatternTX[1-9.]*¡¿±íÊ¾ÒÔtestPatternTX¿ªÍ·µÄËùÓĞ·½·¨		
+			<!--	é€šè¿‡æ¨¡å¼æ–¹æ³•è¿›è¡Œå£°æ˜å¼äº‹åŠ¡æ§åˆ¶
+				patternã€testPatternTX[1-9.]*ã€‘è¡¨ç¤ºä»¥testPatternTXå¼€å¤´çš„æ‰€æœ‰æ–¹æ³•		
 				 -->	
 			<method pattern="testPatternTX[1-9.]*">				
 				<param type="java.lang.String"/>
@@ -232,7 +232,7 @@
 			
 			
 			 	<!-- 
-				ÏµÍ³¼¶±ğµÄÒì³£java.lang.NullPointException£¬µ¼ÖÂÊÂÎñ»Ø¹ö
+				ç³»ç»Ÿçº§åˆ«çš„å¼‚å¸¸java.lang.NullPointExceptionï¼Œå¯¼è‡´äº‹åŠ¡å›æ»š
 			 -->
 			
 			
@@ -254,9 +254,9 @@
 	</manager>	
 	
 	<!-- 
-		ÊôĞÔ±à¼­Æ÷Ê¾Àı
-		Í¨¹ıorg.frameworkset.spi.properties.injectbean.ProEditor½«ÊôĞÔsexµÄ
-		Öµ×ª»»Îªºº×ÖĞÔ±ğ
+		å±æ€§ç¼–è¾‘å™¨ç¤ºä¾‹
+		é€šè¿‡org.frameworkset.spi.properties.injectbean.ProEditorå°†å±æ€§sexçš„
+		å€¼è½¬æ¢ä¸ºæ±‰å­—æ€§åˆ«
 	 -->
 	<property name="inject.editor.injectbean.0" 
 		class="org.frameworkset.spi.properties.injectbean.EditorService">
@@ -266,9 +266,9 @@
 	</property>
 	
 	<!-- 
-		ÊôĞÔ±à¼­Æ÷Ê¾Àı
-		Í¨¹ıorg.frameworkset.spi.properties.injectbean.ProEditor½«ÊôĞÔsexµÄ
-		Öµ×ª»»Îªºº×ÖĞÔ±ğ
+		å±æ€§ç¼–è¾‘å™¨ç¤ºä¾‹
+		é€šè¿‡org.frameworkset.spi.properties.injectbean.ProEditorå°†å±æ€§sexçš„
+		å€¼è½¬æ¢ä¸ºæ±‰å­—æ€§åˆ«
 	 -->
 	<property name="inject.editor.injectbean.1" 
 		class="org.frameworkset.spi.properties.injectbean.EditorService">
@@ -278,9 +278,9 @@
 	</property>
 	
 	<!-- 
-		ÊôĞÔ±à¼­Æ÷Ê¾Àı
-		Í¨¹ıorg.frameworkset.spi.properties.injectbean.ProEditor½«ÊôĞÔsexµÄ
-		Öµ×ª»»Îªºº×ÖĞÔ±ğ
+		å±æ€§ç¼–è¾‘å™¨ç¤ºä¾‹
+		é€šè¿‡org.frameworkset.spi.properties.injectbean.ProEditorå°†å±æ€§sexçš„
+		å€¼è½¬æ¢ä¸ºæ±‰å­—æ€§åˆ«
 	 -->
 	<property name="inject.editor.injectbean.2" 
 		class="org.frameworkset.spi.properties.injectbean.EditorService">

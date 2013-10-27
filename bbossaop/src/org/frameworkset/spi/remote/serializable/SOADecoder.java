@@ -25,7 +25,7 @@ import org.frameworkset.soa.ObjectSerializable;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2011-12-7 下午4:26:40
+ * @Date 2011-12-7 涓嬪崍4:26:40
  * @author biaoping.yin
  * @version 1.0
  */
@@ -40,7 +40,7 @@ public class SOADecoder  implements Decoder{
 		{
 			return ObjectSerializable.toBean((InputStream)msg, Object.class);
 		}
-		else //直接返回
+		else //鐩存帴杩斿洖
 			return msg;
 			
 	}

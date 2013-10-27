@@ -141,7 +141,7 @@ public class SQLManager extends PoolManager{
     }
 
     /**
-     * ¸ù¾İdbname»ñÈ¡Êı¾İÔ´
+     * æ ¹æ®dbnameè·å–æ•°æ®æº
      * @param dbname
      * @return
      */
@@ -150,11 +150,11 @@ public class SQLManager extends PoolManager{
     	JDBCPool pool = SQLManager.getInstance().getPool(dbname);
     	if(pool != null)
     		return pool.getDataSource();
-    	throw new IllegalArgumentException("»ñÈ¡Êı¾İÔ´Ê§°Ü£º"+dbname +"²»´æÔÚ£¬Çë¼ì²éÅäÖÃÎÄ¼şpoolman.xmlÖĞÊÇ·ñÅäÖÃÁËÏàÓ¦µÄÊı¾İÔ´¡£");
+    	throw new IllegalArgumentException("è·å–æ•°æ®æºå¤±è´¥ï¼š"+dbname +"ä¸å­˜åœ¨ï¼Œè¯·æ£€æŸ¥é…ç½®æ–‡ä»¶poolman.xmlä¸­æ˜¯å¦é…ç½®äº†ç›¸åº”çš„æ•°æ®æºã€‚");
     }
     
     /**
-     * ¸ù¾İdbname»ñÈ¡Êı¾İÔ´
+     * æ ¹æ®dbnameè·å–æ•°æ®æº
      * @param dbname
      * @return
      */
@@ -163,12 +163,12 @@ public class SQLManager extends PoolManager{
     	JDBCPool pool = SQLManager.getInstance().getPool(null);
     	if(pool != null)
     		return pool.getDataSource();
-    	throw new IllegalArgumentException("»ñÈ¡Êı¾İÔ´Ê§°Ü£ºÇë¼ì²éÅäÖÃÎÄ¼şpoolman.xmlÖĞÊÇ·ñÅäÖÃÁËÏàÓ¦µÄÊı¾İÔ´¡£");
+    	throw new IllegalArgumentException("è·å–æ•°æ®æºå¤±è´¥ï¼šè¯·æ£€æŸ¥é…ç½®æ–‡ä»¶poolman.xmlä¸­æ˜¯å¦é…ç½®äº†ç›¸åº”çš„æ•°æ®æºã€‚");
     }
     
     
     /**
-     * ¸ù¾İdbname»ñÈ¡Êı¾İÔ´
+     * æ ¹æ®dbnameè·å–æ•°æ®æº
      * @param dbname
      * @return
      */
@@ -183,11 +183,11 @@ public class SQLManager extends PoolManager{
     		else
     			return datasource;
     	}
-    	throw new IllegalArgumentException("»ñÈ¡Êı¾İÔ´Ê§°Ü£º"+dbname +"²»´æÔÚ£¬Çë¼ì²éÅäÖÃÎÄ¼şpoolman.xmlÖĞÊÇ·ñÅäÖÃÁËÏàÓ¦µÄÊı¾İÔ´¡£");
+    	throw new IllegalArgumentException("è·å–æ•°æ®æºå¤±è´¥ï¼š"+dbname +"ä¸å­˜åœ¨ï¼Œè¯·æ£€æŸ¥é…ç½®æ–‡ä»¶poolman.xmlä¸­æ˜¯å¦é…ç½®äº†ç›¸åº”çš„æ•°æ®æºã€‚");
     }
     
     /**
-     * ¸ù¾İdbname»ñÈ¡Êı¾İÔ´
+     * æ ¹æ®dbnameè·å–æ•°æ®æº
      * @param dbname
      * @return
      */
@@ -202,12 +202,12 @@ public class SQLManager extends PoolManager{
     		else
     			return datasource;
     	}
-    	throw new IllegalArgumentException("»ñÈ¡Êı¾İÔ´Ê§°Ü£ºÇë¼ì²éÅäÖÃÎÄ¼şpoolman.xmlÖĞÊÇ·ñÅäÖÃÁËÏàÓ¦µÄÊı¾İÔ´¡£");
+    	throw new IllegalArgumentException("è·å–æ•°æ®æºå¤±è´¥ï¼šè¯·æ£€æŸ¥é…ç½®æ–‡ä»¶poolman.xmlä¸­æ˜¯å¦é…ç½®äº†ç›¸åº”çš„æ•°æ®æºã€‚");
     }
     
     
     /**
-     * ½«ds×ª»»ÎªTXDatasourceÊÂÎñ´úÀíÊı¾İÔ´
+     * å°†dsè½¬æ¢ä¸ºTXDatasourceäº‹åŠ¡ä»£ç†æ•°æ®æº
      * @param dbname
      * @return
      */
@@ -220,7 +220,7 @@ public class SQLManager extends PoolManager{
     			return ds;
     		return new TXDataSource( ds,null);
     	}
-    	throw new IllegalArgumentException("»ñÈ¡Êı¾İÔ´Ê§°Ü£ºds is null");
+    	throw new IllegalArgumentException("è·å–æ•°æ®æºå¤±è´¥ï¼šds is null");
     }
   
     /**
@@ -388,8 +388,8 @@ public class SQLManager extends PoolManager{
     }
 
     /**
-     * »ñÈ¡È±Ê¡µÄÊı¾İ¿âÁ¬½Ó³ØÃû³Æ
-     * @return String È±Ê¡µÄÊı¾İ¿âÃû³Æ
+     * è·å–ç¼ºçœçš„æ•°æ®åº“è¿æ¥æ± åç§°
+     * @return String ç¼ºçœçš„æ•°æ®åº“åç§°
      */
     public String getDefaultDBName()
     {
@@ -398,8 +398,8 @@ public class SQLManager extends PoolManager{
     }
     
     /**
-     * »ñÈ¡È±Ê¡µÄÊı¾İ¿âÁ¬½Ó³ØÃû³Æ
-     * @return String È±Ê¡µÄÊı¾İ¿âÃû³Æ
+     * è·å–ç¼ºçœçš„æ•°æ®åº“è¿æ¥æ± åç§°
+     * @return String ç¼ºçœçš„æ•°æ®åº“åç§°
      */
     public String getDefaultDBNameIfExist()
     {
@@ -411,7 +411,7 @@ public class SQLManager extends PoolManager{
 
 
 	/**
-	 * »ñÈ¡Êı¾İ¿âÊÊÅäÆ÷
+	 * è·å–æ•°æ®åº“é€‚é…å™¨
 	 * @return DB
 	 */
 	public DB getDBAdapter()
@@ -420,7 +420,7 @@ public class SQLManager extends PoolManager{
 	}
 
 	/**
-	 * »ñÈ¡¸ø¶¨Êı¾İ¿âÃû³ÆµÄÊı¾İ¿âÊÊÅäÆ÷
+	 * è·å–ç»™å®šæ•°æ®åº“åç§°çš„æ•°æ®åº“é€‚é…å™¨
 	 * @return DB
 	 */
 	public DB getDBAdapter(String dbName)
@@ -491,7 +491,7 @@ public class SQLManager extends PoolManager{
         		pool.stopPool();
         	else
         	{
-        		log.warn("ºöÂÔÍâ²¿Êı¾İÔ´["+dbname+"]µÄÍ£Ö¹²Ù×÷");
+        		log.warn("å¿½ç•¥å¤–éƒ¨æ•°æ®æº["+dbname+"]çš„åœæ­¢æ“ä½œ");
         	}
         }
         
@@ -520,10 +520,10 @@ public class SQLManager extends PoolManager{
 		{
 			if(pool.getStatus().equals("start"))
 			{
-				log.warn("Á¬½Ó³Ø[" + pool.getDBName() + "]ÒÑ¾­Æô¶¯¡£ÎŞĞèÔÙÆô¶¯,»òÕßÇëÍ£Ö¹ºóÔÙÆô¶¯.");
+				log.warn("è¿æ¥æ± [" + pool.getDBName() + "]å·²ç»å¯åŠ¨ã€‚æ— éœ€å†å¯åŠ¨,æˆ–è€…è¯·åœæ­¢åå†å¯åŠ¨.");
 				return;
 			}
-//				throw new IllegalStateException("Á¬½Ó³Ø[" + pool.getDBName() + "]ÒÑ¾­Æô¶¯¡£ÎŞĞèÔÙÆô¶¯,»òÕßÇëÍ£Ö¹ºóÔÙÆô¶¯.");
+//				throw new IllegalStateException("è¿æ¥æ± [" + pool.getDBName() + "]å·²ç»å¯åŠ¨ã€‚æ— éœ€å†å¯åŠ¨,æˆ–è€…è¯·åœæ­¢åå†å¯åŠ¨.");
 				
 		}
 //		if(pool != null && pool.isExternal())
@@ -573,8 +573,8 @@ public class SQLManager extends PoolManager{
 //		{
 //			if(pool.getStatus().equals("start"))
 //			{
-////				throw new IllegalStateException("Á¬½Ó³Ø[" + poolname + "]ÒÑ¾­Æô¶¯¡£ÎŞĞèÔÙÆô¶¯,»òÕßÇëÍ£Ö¹ºóÔÙÆô¶¯.");
-//				log.warn("Á¬½Ó³Ø[" + poolname + "]ÒÑ¾­Æô¶¯¡£ÎŞĞèÔÙÆô¶¯,»òÕßÇëÍ£Ö¹ºóÔÙÆô¶¯.");
+////				throw new IllegalStateException("è¿æ¥æ± [" + poolname + "]å·²ç»å¯åŠ¨ã€‚æ— éœ€å†å¯åŠ¨,æˆ–è€…è¯·åœæ­¢åå†å¯åŠ¨.");
+//				log.warn("è¿æ¥æ± [" + poolname + "]å·²ç»å¯åŠ¨ã€‚æ— éœ€å†å¯åŠ¨,æˆ–è€…è¯·åœæ­¢åå†å¯åŠ¨.");
 //				return;
 //			}
 //				
@@ -628,7 +628,7 @@ public class SQLManager extends PoolManager{
 		{
 			if(pool.getStatus().equals("start"))
 			{
-				log.debug("Á¬½Ó³Ø[" + poolname + "]ÒÑ¾­Æô¶¯¡£ÎŞĞèÔÙÆô¶¯,»òÕßÇëÍ£Ö¹ºóÔÙÆô¶¯.");
+				log.debug("è¿æ¥æ± [" + poolname + "]å·²ç»å¯åŠ¨ã€‚æ— éœ€å†å¯åŠ¨,æˆ–è€…è¯·åœæ­¢åå†å¯åŠ¨.");
 				return;
 			}
 				

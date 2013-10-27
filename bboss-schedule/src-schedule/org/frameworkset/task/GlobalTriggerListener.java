@@ -25,7 +25,7 @@ import org.quartz.Trigger;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2013-1-22 œ¬ŒÁ4:25:18
+ * @Date 2013-1-22 ‰∏ãÂçà4:25:18
  * @author biaoping.yin
  * @version 1.0
  */
@@ -54,7 +54,7 @@ public class GlobalTriggerListener extends BaseTriggerListener {
 
 	public void triggerComplete(Trigger trigger, JobExecutionContext context,
 			int triggerInstructionCode) {
-		log.info("Default Global trigger Complete:∫ƒ ±"+context.getJobRunTime()+" milliseconds,["+context.toString()+"],[triggerInstructionCode="+triggerInstructionCode+"]");
+		log.info("Default Global trigger Complete:ËÄóÊó∂"+context.getJobRunTime()+" milliseconds,["+context.toString()+"],[triggerInstructionCode="+triggerInstructionCode+"]");
 
 	}
 

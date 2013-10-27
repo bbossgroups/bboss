@@ -42,18 +42,18 @@ public class TreeWithContextMenu1  extends COMTree {
 		List<TreeNode> nodes = node.getSons();
 		Map params = null;
 		/**
-		 * ÔÚÌí¼ÓÃ¿¸ö½ÚµãÊ±½«½ÚµãµÄËùÓĞ²ÎÊı·ÅÖÃµ½Ò»¸öMap¶ÔÏóÖĞ£¬µ«ÊÇÒÔÏÂµÄ¼¸¸öÃû³ÆÊÇÊ÷ÖĞ±£ÁôµÄ²ÎÊıÃû³Æ£¬²»ÄÜ×÷ÎªÆäËû²ÎÊı£º
-			node_recursive:Ö¸¶¨ÌØ¶¨Ê÷½ÚµãµÄ¸´Ñ¡¿òÊÇ·ñ¾ßÓĞµİ¹éÑ¡ÔñµÄ¹¦ÄÜ£¬ÖµÀàĞÍBoolean
-			node_uprecursive:Ö¸¶¨ÌØ¶¨Ê÷½ÚµãµÄ¸´Ñ¡¿òÊÇ·ñ¾ßÓĞµİ¹éÑ¡ÔñÉÏ¼¶¸´Ñ¡¿òµÄ¹¦ÄÜ£¬ÖµÀàĞÍBoolean
-			node_partuprecursive£ºbooleanÖµ£¬Ö¸¶¨ÌØ¶¨½ÚµãµÄ¸´Ñ¡¿òÊÇ·ñ¾ßÓĞ²¿·Öµİ¹é
-			node_checkboxname£ºµ¥¶ÀÖ¸¶¨½ÚµãÇ°µÄµÄ¸´Ñ¡¿òµÄÃû³Æ
-			nodeLink:Ö¸¶¨Ã¿¸öÊ÷½ÚµãµÄÁ´½ÓµØÖ·£¬¿ÉÒÔÊÇjavascriptº¯Êı£¬Ò²¿ÉÒÔÊÇ³¬Á´½Ó
-			node_linktarget£ºÖ¸¶¨Ã¿¸ö½ÚµãÁ´½ÓµØÖ·µ¯³ö´°¿ÚÃû³Æ
-			node_radioname£º¶¨ÒåÃ¿¸ö½Úµãµ¥Ñ¡¿òÃû³Æ
-			node_checkboxchecked :booleanÖµ ±êÊ¶¸´Ñ¡¿òÊÇ·ñÑ¡ÖĞ
-			node_checkboxdisabled£ºbooleanÖµ ±êÊ¶½ÚµãÇ°µÄ¸´Ñ¡¿òÊÇ·ñ±»½ûÓÃ
-			node_radiochecked£ºbooleanÖµ ±êÊ¶½ÚµãÇ°µÄµ¥Ñ¡°´Å¥ÊÇ·ñ±»Ñ¡ÖĞ
-			node_radiodisabled£ºbooleanÖµ ±êÊ¶½ÚµãÇ°µÄµ¥Ñ¡°´Å¥ÊÇ·ñ±»½ûÓÃ
+		 * åœ¨æ·»åŠ æ¯ä¸ªèŠ‚ç‚¹æ—¶å°†èŠ‚ç‚¹çš„æ‰€æœ‰å‚æ•°æ”¾ç½®åˆ°ä¸€ä¸ªMapå¯¹è±¡ä¸­ï¼Œä½†æ˜¯ä»¥ä¸‹çš„å‡ ä¸ªåç§°æ˜¯æ ‘ä¸­ä¿ç•™çš„å‚æ•°åç§°ï¼Œä¸èƒ½ä½œä¸ºå…¶ä»–å‚æ•°ï¼š
+			node_recursive:æŒ‡å®šç‰¹å®šæ ‘èŠ‚ç‚¹çš„å¤é€‰æ¡†æ˜¯å¦å…·æœ‰é€’å½’é€‰æ‹©çš„åŠŸèƒ½ï¼Œå€¼ç±»å‹Boolean
+			node_uprecursive:æŒ‡å®šç‰¹å®šæ ‘èŠ‚ç‚¹çš„å¤é€‰æ¡†æ˜¯å¦å…·æœ‰é€’å½’é€‰æ‹©ä¸Šçº§å¤é€‰æ¡†çš„åŠŸèƒ½ï¼Œå€¼ç±»å‹Boolean
+			node_partuprecursiveï¼šbooleanå€¼ï¼ŒæŒ‡å®šç‰¹å®šèŠ‚ç‚¹çš„å¤é€‰æ¡†æ˜¯å¦å…·æœ‰éƒ¨åˆ†é€’å½’
+			node_checkboxnameï¼šå•ç‹¬æŒ‡å®šèŠ‚ç‚¹å‰çš„çš„å¤é€‰æ¡†çš„åç§°
+			nodeLink:æŒ‡å®šæ¯ä¸ªæ ‘èŠ‚ç‚¹çš„é“¾æ¥åœ°å€ï¼Œå¯ä»¥æ˜¯javascriptå‡½æ•°ï¼Œä¹Ÿå¯ä»¥æ˜¯è¶…é“¾æ¥
+			node_linktargetï¼šæŒ‡å®šæ¯ä¸ªèŠ‚ç‚¹é“¾æ¥åœ°å€å¼¹å‡ºçª—å£åç§°
+			node_radionameï¼šå®šä¹‰æ¯ä¸ªèŠ‚ç‚¹å•é€‰æ¡†åç§°
+			node_checkboxchecked :booleanå€¼ æ ‡è¯†å¤é€‰æ¡†æ˜¯å¦é€‰ä¸­
+			node_checkboxdisabledï¼šbooleanå€¼ æ ‡è¯†èŠ‚ç‚¹å‰çš„å¤é€‰æ¡†æ˜¯å¦è¢«ç¦ç”¨
+			node_radiocheckedï¼šbooleanå€¼ æ ‡è¯†èŠ‚ç‚¹å‰çš„å•é€‰æŒ‰é’®æ˜¯å¦è¢«é€‰ä¸­
+			node_radiodisabledï¼šbooleanå€¼ æ ‡è¯†èŠ‚ç‚¹å‰çš„å•é€‰æŒ‰é’®æ˜¯å¦è¢«ç¦ç”¨
 		 */
 //		Map<paramname,paramvalue> params = new HashMap();
 		for(int i = 0; i < nodes.size(); i ++)
@@ -67,67 +67,67 @@ public class TreeWithContextMenu1  extends COMTree {
 					treetype+son.getUid(), //treeid 
 					treetype+son.getUid(), //tree node name
 	                null,// node type
-	                true, //show href,true Ê±Ê÷½Úµã½«´ø³¬Á´½Ó£¬falseÊ±²»´ø³¬Á´½Ó
+	                true, //show href,true æ—¶æ ‘èŠ‚ç‚¹å°†å¸¦è¶…é“¾æ¥ï¼Œfalseæ—¶ä¸å¸¦è¶…é“¾æ¥
 	                curLevel, //current level
-	                (String) null,//±¸×¢
-	                (String) son.getUid(), //radio value,µ¥Ñ¡¿ò°´Å¥
-	                (String) son.getUid(), //¸´Ñ¡¿òµÄÖµ
-	                params  //Îª½ÚµãÁ¬½ÓÖ¸¶¨urlµÄ²ÎÊı<paramname,paramvalue>
+	                (String) null,//å¤‡æ³¨
+	                (String) son.getUid(), //radio value,å•é€‰æ¡†æŒ‰é’®
+	                (String) son.getUid(), //å¤é€‰æ¡†çš„å€¼
+	                params  //ä¸ºèŠ‚ç‚¹è¿æ¥æŒ‡å®šurlçš„å‚æ•°<paramname,paramvalue>
 	                );
 			Menu menu = new Menu();
 			menu.addContextMenuItem(Menu.MENU_OPEN);
 			
 			menu.addContextMenuItem(Menu.MENU_EXPAND);
-			menu.addContextMenuItem("Ìí¼Ó","javascript:edit('Ìí¼Ó')",Menu.icon_edit);
+			menu.addContextMenuItem("æ·»åŠ ","javascript:edit('æ·»åŠ ')",Menu.icon_edit);
 			//Menu.ContextMenuItem sitemenuitem0 = new Menu.ContextMenuItem();
-			//sitemenuitem0.setName("±à¼­±à¼­±à¼­±à¼­");
-			//sitemenuitem0.setLink("javascript:edit('±à¼­')");
+			//sitemenuitem0.setName("ç¼–è¾‘ç¼–è¾‘ç¼–è¾‘ç¼–è¾‘");
+			//sitemenuitem0.setLink("javascript:edit('ç¼–è¾‘')");
 			//sitemenuitem0.setIcon(Menu.icon_edit);
 			//menu.addContextMenuItem(sitemenuitem0);
 			menu.addSeperate();
-			menu.addContextMenuItem("±à¼­±à¼­±à¼­±à¼­","javascript:edit('±à¼­')",Menu.icon_add);
+			menu.addContextMenuItem("ç¼–è¾‘ç¼–è¾‘ç¼–è¾‘ç¼–è¾‘","javascript:edit('ç¼–è¾‘')",Menu.icon_add);
 			
 			Menu.ContextMenuItem sitemenuitem2 = menu.addContextMenuItem("sitemenuitem2","javascript:edit('sitemenuitem2')",Menu.icon_ok);
-			sitemenuitem2.addSubContextMenuItem("×Ómenusubmenuitem_","javascript:edit('×Ómenusubmenuitem_')",Menu.icon_ok);	
-			sitemenuitem2.addSubContextMenuItem("×Ócut","javascript:edit('×Ócut')",Menu.icon_cut);				
-			sitemenuitem2.addSubContextMenuItem("×Óicon_back","javascript:edit('×Óicon_back')",Menu.icon_back);
-			sitemenuitem2.addSubContextMenuItem("×Óicon_cancel","javascript:edit('×Óicon_cancel')",Menu.icon_cancel);
-			sitemenuitem2.addSubContextMenuItem("×Óicon_help","javascript:edit('×Óicon_help')",Menu.icon_help);
-			sitemenuitem2.addSubContextMenuItem("×Óicon_no","javascript:edit('×Óicon_no')",Menu.icon_no);
-			sitemenuitem2.addSubContextMenuItem("×Óicon_print","javascript:edit('×Óicon_print')",Menu.icon_print);
-			sitemenuitem2.addSubContextMenuItem("×Óicon_redo","javascript:edit('×Óicon_redo')",Menu.icon_redo);
-			sitemenuitem2.addSubContextMenuItem("×Óicon_reload","javascript:edit('icon_reload')",Menu.icon_reload);
+			sitemenuitem2.addSubContextMenuItem("å­menusubmenuitem_","javascript:edit('å­menusubmenuitem_')",Menu.icon_ok);	
+			sitemenuitem2.addSubContextMenuItem("å­cut","javascript:edit('å­cut')",Menu.icon_cut);				
+			sitemenuitem2.addSubContextMenuItem("å­icon_back","javascript:edit('å­icon_back')",Menu.icon_back);
+			sitemenuitem2.addSubContextMenuItem("å­icon_cancel","javascript:edit('å­icon_cancel')",Menu.icon_cancel);
+			sitemenuitem2.addSubContextMenuItem("å­icon_help","javascript:edit('å­icon_help')",Menu.icon_help);
+			sitemenuitem2.addSubContextMenuItem("å­icon_no","javascript:edit('å­icon_no')",Menu.icon_no);
+			sitemenuitem2.addSubContextMenuItem("å­icon_print","javascript:edit('å­icon_print')",Menu.icon_print);
+			sitemenuitem2.addSubContextMenuItem("å­icon_redo","javascript:edit('å­icon_redo')",Menu.icon_redo);
+			sitemenuitem2.addSubContextMenuItem("å­icon_reload","javascript:edit('icon_reload')",Menu.icon_reload);
 			sitemenuitem2.addSubContextMenuItem("icon_remove","javascript:edit('icon_remove')",Menu.icon_remove);
 			sitemenuitem2.addSubContextMenuItem("icon_save","javascript:edit('icon_save')",Menu.icon_save);
 			sitemenuitem2.addSubContextMenuItem("icon_search","javascript:edit('icon_search')",Menu.icon_search);
 			sitemenuitem2.addSubContextMenuItem("icon_undo","javascript:edit('icon_undo')",Menu.icon_undo);
-			ContextMenuItem third = sitemenuitem2.addSubContextMenuItem("µÚ¶ş²ã","javascript:edit('icon_undo')",Menu.icon_undo);
-			third.addSubContextMenuItem("Èı²ã", "javascript:edit('icon_undo')",Menu.icon_undo);
-//			//¹¹½¨Ò»¸ö×Ó²Ëµ¥
+			ContextMenuItem third = sitemenuitem2.addSubContextMenuItem("ç¬¬äºŒå±‚","javascript:edit('icon_undo')",Menu.icon_undo);
+			third.addSubContextMenuItem("ä¸‰å±‚", "javascript:edit('icon_undo')",Menu.icon_undo);
+//			//æ„å»ºä¸€ä¸ªå­èœå•
 //			Menu submenu = new Menu();
-//			submenu.setIdentity("submenu_" + son.getUid());//±£Ö¤Ã¿¸ö×Ó²Ëµ¥µÄidµÄÎ¨Ò»ĞÔ£¬Ã¿¸ö½ÚµãµÄ×Ó²Ëµ¥¶¼ÒªÎ¨Ò»
+//			submenu.setIdentity("submenu_" + son.getUid());//ä¿è¯æ¯ä¸ªå­èœå•çš„idçš„å”¯ä¸€æ€§ï¼Œæ¯ä¸ªèŠ‚ç‚¹çš„å­èœå•éƒ½è¦å”¯ä¸€
 //			Menu.ContextMenuItem submenuitem1 = new Menu.ContextMenuItem();
-//			submenuitem1.setName("×Ó²Ëµ¥1");
-//			submenuitem1.setLink("javascript:edit('×Ó²Ëµ¥1')");
+//			submenuitem1.setName("å­èœå•1");
+//			submenuitem1.setLink("javascript:edit('å­èœå•1')");
 //			submenuitem1.setIcon(request.getContextPath() + "/tree/tree_images/edit.gif");
 //			submenu.addContextMenuItem(submenuitem1);
 //			
 //			Menu.ContextMenuItem submenuitem2 = new Menu.ContextMenuItem();
-//			submenuitem2.setName("×Ó²Ëµ¥2");
-//			submenuitem2.setLink("javascript:edit('×Ó²Ëµ¥2')");
+//			submenuitem2.setName("å­èœå•2");
+//			submenuitem2.setLink("javascript:edit('å­èœå•2')");
 //			submenuitem2.setIcon(request.getContextPath() + "/tree/tree_images/edit.gif");
 //			submenu.addContextMenuItem(submenuitem2);
 //			
 //			Menu.ContextMenuItem cascade = new Menu.ContextMenuItem();
 //		
-//			cascade.setName("¶à¼¶²Ëµ¥ÑİÊ¾");
+//			cascade.setName("å¤šçº§èœå•æ¼”ç¤º");
 //			cascade.setSubMenu(submenu);
 //			
 //			
 //			
 //			menu.addContextMenuItem(cascade);
 			
-//			//ÅĞ¶ÏÊÇ·ñÓĞÄ£°å¹ÜÀíµÄÈ¨ÏŞ
+//			//åˆ¤æ–­æ˜¯å¦æœ‰æ¨¡æ¿ç®¡ç†çš„æƒé™
 //			
 //			super.addContextMenuOfType(menu);
 			

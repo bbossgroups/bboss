@@ -27,7 +27,7 @@ import com.frameworkset.platform.cms.driver.jsp.CMSServletRequest;
 
 /**
  * <p>PageSizeTag.java</p>
- * <p> Description: »ñÈ¡Ò³Ãæ¼ÇÂ¼Êı</p>
+ * <p> Description: è·å–é¡µé¢è®°å½•æ•°</p>
  * <p> bboss workgroup </p>
  * <p> Copyright (c) 2009 </p>
  * 

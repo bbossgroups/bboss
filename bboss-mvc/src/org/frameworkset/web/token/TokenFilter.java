@@ -18,21 +18,21 @@ import com.frameworkset.util.StringUtil;
 
 
 /**
- * ��ֹ��վ���������
- * bboss��ֹ��վ����������Ļ������£�
- * ���ö�̬���ƺ�session���ϵķ�ʽ�����ͻ������ƣ�һ���������һ��Ψһ����
- * ����ʶ����ÿͻ������ƺͷ����session��ʶ��ϵķ�ʽ�����б�����ͻ������ƺͷ����������ȷƥ�䣬���������ʣ�������Ϊ�û�Ϊ�Ƿ��û�����ֹ�û����ʲ���ת��
- * redirectpath������Ӧ�ĵ�ַ��Ĭ��Ϊ/login.jsp��
+ * 防止跨站请求过滤器
+ * bboss防止跨站请求过滤器的机制如下：
+ * 采用动态令牌和session相结合的方式产生客户端令牌，一次请求产生一个唯一令牌
+ * 令牌识别采用客户端令牌和服务端session标识混合的方式进行判别，如果客户端令牌和服务端令牌正确匹配，则允许访问，否则认为用户为非法用户并阻止用户访问并跳转到
+ * redirectpath参数对应的地址，默认为/login.jsp。
  * 
- * ���ƴ洢����ͨ������tokenstoreָ�����������֣��ڴ�洢��session�洢��Ĭ��Ϊsession�洢��������ʧЧ��ƥ�������ʧЧ�����߳�ʱʧЧ����ϵͳ�Զ����ʧЧ�����ƣ�����session��ʽ
- * �洢����ʱ������ͻ���ҳ��û������session����ô���ƻ��ǻ�洢���ڴ��С�
+ * 令牌存储机制通过参数tokenstore指定，包括两种，内存存储和session存储，默认为session存储，当令牌失效（匹配后立即失效，或者超时失效）后，系统自动清除失效的令牌；采用session方式
+ * 存储令牌时，如果客户端页面没有启用session，那么令牌还是会存储在内存中。
  * 
- * �����������ڣ��ͻ��˵������ڷ����������д����������ʧЧ��ƥ�������ʧЧ�����߳�ʱʧЧ����ϵͳ�Զ����ʧЧ�����ƣ�
- * ���ͻ��˲�û����ȷ�ύ���󣬻ᵼ�·�������ƴ����Ϊ�������ƣ���Ҫ��ʱ�����Щ
- * �������ƣ�������ƴ洢��session�У���ô���Ƶ��������ں�session���������ڱ���һ�£��������������ƣ�
- * ������ƴ洢���ڴ��У���ô���Ƶ���������ƹ�������Լ���ʱɨ���������ʱɨ��ʱ����Ϊ��tokenscaninterval����ָ������λΪ���룬Ĭ��Ϊ30���ӣ��������ʱ����tokendualtime����ָ����Ĭ��Ϊ1��Сʱ
+ * 令牌生命周期：客户端的令牌在服务器端留有存根，当令牌失效（匹配后立即失效，或者超时失效）后，系统自动清除失效的令牌；
+ * 当客户端并没有正确提交请求，会导致服务端令牌存根变为垃圾令牌，需要定时清除这些
+ * 垃圾令牌；如果令牌存储在session中，那么令牌的生命周期和session的生命周期保持一致，无需额外清除机制；
+ * 如果令牌存储在内存中，那么令牌的清除由令牌管理组件自己定时扫描清除，定时扫描时间间隔为由tokenscaninterval参数指定，单位为毫秒，默认为30分钟，存根保存时间由tokendualtime参数指定，默认为1个小时
  * 
- * ����ͨ��enableToken��������ָ���Ƿ��������Ƽ����ƣ�true��⣬false����⣬Ĭ��Ϊfalse�����
+ * 可以通过enableToken参数配置指定是否启用令牌检测机制，true检测，false不检测，默认为false不检测
  * 
  * @author biaoping.yin
  *
@@ -45,10 +45,10 @@ public class TokenFilter implements Filter{
 	protected boolean enableToken = false;
 	/**
 	 * tokenstore
-	 * ָ�����ƴ洢���ƣ�Ŀǰ�ṩ���ֻ��ƣ�
-	 * mem��������ֱ�Ӵ洢���ڴ�ռ���
-	 * session�������ƴ洢��session��
-	 * Ĭ�ϴ洢��session��
+	 * 指定令牌存储机制，目前提供两种机制：
+	 * mem：将令牌直接存储在内存空间中
+	 * session：将令牌存储在session中
+	 * 默认存储在session中
 	 */
 	protected String tokenstore = "session";
 //	protected String tokenstore = "mem";
@@ -130,7 +130,7 @@ public class TokenFilter implements Filter{
 	public void doFilter(ServletRequest arg0, ServletResponse arg1,
 			FilterChain arg2) throws IOException, ServletException {
 		try {
-			if(!checkTokenExist((HttpServletRequest )arg0,(HttpServletResponse )arg1))//���Ƽ�飬�����ǰ�����Ѿ�ʧЧ��ֱ����ת����¼ҳ������������к�ȥ��ȫ��֤���
+			if(!checkTokenExist((HttpServletRequest )arg0,(HttpServletResponse )arg1))//令牌检查，如果当前令牌已经失效则直接跳转到登录页，否则继续进行后去安全认证检查
 			{
 				return ;
 			}
@@ -146,7 +146,7 @@ public class TokenFilter implements Filter{
 	}
 	protected boolean checkTokenExist(HttpServletRequest request,HttpServletResponse response) throws Exception
 	{
-		if(!this.enableToken)//���û���������ƻ��ƣ���ֱ���������ƴ���
+		if(!this.enableToken)//如果没有启用令牌机制，则直接声明令牌存在
 			return true;
 		if(!this.memTokenManager.firstRequest(request))
 		{

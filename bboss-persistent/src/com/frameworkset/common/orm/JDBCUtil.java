@@ -34,8 +34,8 @@ package com.frameworkset.common.orm;
 import com.frameworkset.common.poolman.DBUtil;
 
 /**
- * ÊµÏÖ¼òµ¥µÄ¹ØÏµÊı¾İÏò¶ÔÏóÊı¾İµÄ×ª»»¹¦ÄÜ
- * ´ÓDBUtil¼Ì³ĞÁËËùÓĞµÄÊı¾İ¿â·ÃÎÊ·½·¨
+ * å®ç°ç®€å•çš„å…³ç³»æ•°æ®å‘å¯¹è±¡æ•°æ®çš„è½¬æ¢åŠŸèƒ½
+ * ä»DBUtilç»§æ‰¿äº†æ‰€æœ‰çš„æ•°æ®åº“è®¿é—®æ–¹æ³•
  * @author biaoping.yin
  * created on 2005-8-28 
  * version 1.0

@@ -23,10 +23,10 @@ import java.lang.annotation.Target;
 /**
  * <p>Title: Transaction.java</p>
  *
- * <p>Description: 事务管理注解</p>
+ * <p>Description: 浜嬪姟绠＄悊娉ㄨВ</p>
  *
  * <p>Copyright: Copyright (c) 2007</p>
- * @Date 2010-1-19 上午11:24:04
+ * @Date 2010-1-19 涓婂崍11:24:04
  * @author biaoping.yin
  * @version 1.0
  */

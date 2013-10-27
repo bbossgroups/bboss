@@ -37,18 +37,18 @@ public class TestTX {
 		"/manager-transaction.xml");
 	}
 	/**
-	 * Í¨¹ýaop²âÊÔÉùÃ÷Ê½ÊÂÎñ¹ÜÀí¹¦ÄÜ£¬
-	 * ÊÂÎñÒ»Ö´ÐÐ³É¹¦
-	 * ÊÂÎñ¶þÖ´ÐÐÊ§°Ü
+	 * é€šè¿‡aopæµ‹è¯•å£°æ˜Žå¼äº‹åŠ¡ç®¡ç†åŠŸèƒ½ï¼Œ
+	 * äº‹åŠ¡ä¸€æ‰§è¡ŒæˆåŠŸ
+	 * äº‹åŠ¡äºŒæ‰§è¡Œå¤±è´¥
 	 */
 	@Test
 	public void testTX()
 	{
 		try {
 			A1 a = context.getTBeanObject("tx.a",A1.class);
-			//ÊÂÎñÒ»
+			//äº‹åŠ¡ä¸€
 			a.testTXInvoke();
-			//ÊÂÎñ¶þ
+			//äº‹åŠ¡äºŒ
 			a.testTXInvoke("hello.");
 			
 		} catch (SPIException e) {
@@ -61,10 +61,10 @@ public class TestTX {
 	}
 	
 	/**
-	 * Í¨¹ýaop²âÊÔÉùÃ÷Ê½ÊÂÎñ¹ÜÀí¹¦ÄÜ£¬¶ÔÉùÃ÷µÄ²»Í¬ÀàÐÍµÄÊÂÎñ½øÐÐ×éºÏ²âÊÔ
-	 * Ê×ÏÈ¹¹ÔìÍâ²¿ÊÂÎñ¶Ô²»Í¬µÄÊÂÎñ½øÐÐ½»²æ²âÊÔ
-	 * ÊÂÎñÒ»Ö´ÐÐ³É¹¦
-	 * ÊÂÎñ¶þÖ´ÐÐ³É¹¦
+	 * é€šè¿‡aopæµ‹è¯•å£°æ˜Žå¼äº‹åŠ¡ç®¡ç†åŠŸèƒ½ï¼Œå¯¹å£°æ˜Žçš„ä¸åŒç±»åž‹çš„äº‹åŠ¡è¿›è¡Œç»„åˆæµ‹è¯•
+	 * é¦–å…ˆæž„é€ å¤–éƒ¨äº‹åŠ¡å¯¹ä¸åŒçš„äº‹åŠ¡è¿›è¡Œäº¤å‰æµ‹è¯•
+	 * äº‹åŠ¡ä¸€æ‰§è¡ŒæˆåŠŸ
+	 * äº‹åŠ¡äºŒæ‰§è¡ŒæˆåŠŸ
 	 */
 	@Test
 	public void testTRANSACTION_TYPEWithOuterTX()
@@ -91,13 +91,13 @@ public class TestTX {
 					tm.begin(TransactionManager.REQUIRED_TRANSACTION);
 					
 			}
-			System.out.println("testNEW_TRANSACTION()Íâ²¿ÊÂÎñÀàÐÍ£º" + tm.getCurrenttxtypeName());
-			System.out.println("testNEW_TRANSACTION()Íâ²¿ÊÂÎñ¶ÔÏó£º" + TransactionManager.getTransaction());
+			System.out.println("testNEW_TRANSACTION()å¤–éƒ¨äº‹åŠ¡ç±»åž‹ï¼š" + tm.getCurrenttxtypeName());
+			System.out.println("testNEW_TRANSACTION()å¤–éƒ¨äº‹åŠ¡å¯¹è±¡ï¼š" + TransactionManager.getTransaction());
 			AI a = (AI)context.getBeanObject("tx.a");
 			
 			try
 			{
-				//ÊÂÎñÒ» REQUIRED_TRANSACTION£¬ÊÂÎñÓëÍâ²¿ÊÂÎñ±£³ÖÒ»ÖÂ ÄÚÍâ²¿³É¹¦Ôò³É¹¦
+				//äº‹åŠ¡ä¸€ REQUIRED_TRANSACTIONï¼Œäº‹åŠ¡ä¸Žå¤–éƒ¨äº‹åŠ¡ä¿æŒä¸€è‡´ å†…å¤–éƒ¨æˆåŠŸåˆ™æˆåŠŸ
 				a.testTXInvoke();
 			}
 			catch(Exception e)
@@ -106,7 +106,7 @@ public class TestTX {
 			}
 			try
 			{
-				//ÊÂÎñ¶þ NEW_TRANSACTION ÄÚ²¿Ê§°Ü£¬²»Ó°ÏìÍâ²¿ÊÂÎñ
+				//äº‹åŠ¡äºŒ NEW_TRANSACTION å†…éƒ¨å¤±è´¥ï¼Œä¸å½±å“å¤–éƒ¨äº‹åŠ¡
 				a.testTXInvoke("hello.");
 			}
 			catch(Exception e)
@@ -116,7 +116,7 @@ public class TestTX {
 			
 			try
 			{
-				//ÊÂÎñÈý REQUIRED_TRANSACTION,ÊÂÎñÓëÍâ²¿ÊÂÎñ±£³ÖÒ»ÖÂ ÄÚÍâ²¿³É¹¦Ôò³É¹¦,ÄÚ²¿ÊÂÎñÊ§°Ü
+				//äº‹åŠ¡ä¸‰ REQUIRED_TRANSACTION,äº‹åŠ¡ä¸Žå¤–éƒ¨äº‹åŠ¡ä¿æŒä¸€è‡´ å†…å¤–éƒ¨æˆåŠŸåˆ™æˆåŠŸ,å†…éƒ¨äº‹åŠ¡å¤±è´¥
 				a.testTXInvokeWithReturn();
 			}
 			catch(Exception e)
@@ -127,8 +127,8 @@ public class TestTX {
 			
 			try
 			{
-				//ÊÂÎñËÄ MAYBE_TRANSACTION£¬ÓëÍâ²¿ÊÂÎñÒ»ÖÂ£¬Íâ²¿ÊÂÎñÌá½»³É¹¦£¬Ôò³É¹¦
-				//ÄÚ²¿Ö´ÐÐÊ§°Ü£¬µ¼ÖÂÍâ²¿ÊÂÎñÊ§°Ü£¬Òò´ËËùÓÐÓëÍâ²¿ÊÂÎñÏà¹ØµÄÊÂÎñ¶¼»áÊ§°Ü
+				//äº‹åŠ¡å›› MAYBE_TRANSACTIONï¼Œä¸Žå¤–éƒ¨äº‹åŠ¡ä¸€è‡´ï¼Œå¤–éƒ¨äº‹åŠ¡æäº¤æˆåŠŸï¼Œåˆ™æˆåŠŸ
+				//å†…éƒ¨æ‰§è¡Œå¤±è´¥ï¼Œå¯¼è‡´å¤–éƒ¨äº‹åŠ¡å¤±è´¥ï¼Œå› æ­¤æ‰€æœ‰ä¸Žå¤–éƒ¨äº‹åŠ¡ç›¸å…³çš„äº‹åŠ¡éƒ½ä¼šå¤±è´¥
 				a.testTXInvokeWithException();
 			}
 			catch(Exception e)
@@ -136,10 +136,10 @@ public class TestTX {
 				e.printStackTrace();
 			}
 			
-			//ÊÂÎñËÄ MAYBE_TRANSACTION
+			//äº‹åŠ¡å›› MAYBE_TRANSACTION
 			try
 			{
-				//ÊÂÎñÎå NO_TRANSACTION£¬ÓëÍâ²¿ÊÂÎñÎÞ¹Ø£¬Ã»ÓÐÊÂÎñ»·¾³£¬ÄÚ²¿Ö´ÐÐ³É¹¦Ôò³É¹¦£¬·ñÔòÊ§°Ü
+				//äº‹åŠ¡äº” NO_TRANSACTIONï¼Œä¸Žå¤–éƒ¨äº‹åŠ¡æ— å…³ï¼Œæ²¡æœ‰äº‹åŠ¡çŽ¯å¢ƒï¼Œå†…éƒ¨æ‰§è¡ŒæˆåŠŸåˆ™æˆåŠŸï¼Œå¦åˆ™å¤±è´¥
 				a.testSameName();
 			}
 			catch(Exception e)
@@ -172,16 +172,16 @@ public class TestTX {
 	
 	
 	/**
-	 * Í¨¹ýaop²âÊÔÉùÃ÷Ê½ÊÂÎñ¹ÜÀí¹¦ÄÜ£¬¶ÔÉùÃ÷µÄ²»Í¬ÀàÐÍµÄÊÂÎñ½øÐÐ×éºÏ²âÊÔ
-	 * ¶Ô²»Í¬µÄÊÂÎñ½øÐÐ½»²æ²âÊÔ
-	 * ¸Ã·½·¨Ã»ÓÐÍâ²¿ÊÂÎñ
-	 * ²âÊÔ½á¹ûtest±í¼ÇÂ¼£º
+	 * é€šè¿‡aopæµ‹è¯•å£°æ˜Žå¼äº‹åŠ¡ç®¡ç†åŠŸèƒ½ï¼Œå¯¹å£°æ˜Žçš„ä¸åŒç±»åž‹çš„äº‹åŠ¡è¿›è¡Œç»„åˆæµ‹è¯•
+	 * å¯¹ä¸åŒçš„äº‹åŠ¡è¿›è¡Œäº¤å‰æµ‹è¯•
+	 * è¯¥æ–¹æ³•æ²¡æœ‰å¤–éƒ¨äº‹åŠ¡
+	 * æµ‹è¯•ç»“æžœtestè¡¨è®°å½•ï¼š
 
 testTXInvoke()	test185		(HugeBlob)
 testTXInvokeWithException()	test188		(HugeBlob)
 testSameName()	test189		(HugeBlob)
 
-test1±í½á¹û
+test1è¡¨ç»“æžœ
 testTXInvoke
 	 */
 	@Test
@@ -193,7 +193,7 @@ testTXInvoke
 			
 			try
 			{
-				//ÊÂÎñÒ» REQUIRED_TRANSACTION
+				//äº‹åŠ¡ä¸€ REQUIRED_TRANSACTION
 				a.testTXInvoke();
 			}
 			catch(Exception e)
@@ -202,7 +202,7 @@ testTXInvoke
 			}
 			try
 			{
-				//ÊÂÎñ¶þ NEW_TRANSACTION ÄÚ²¿Ê§°Ü
+				//äº‹åŠ¡äºŒ NEW_TRANSACTION å†…éƒ¨å¤±è´¥
 				a.testTXInvoke("hello.");
 			}
 			catch(Exception e)
@@ -212,7 +212,7 @@ testTXInvoke
 			
 			try
 			{
-				//ÊÂÎñÈý REQUIRED_TRANSACTION,
+				//äº‹åŠ¡ä¸‰ REQUIRED_TRANSACTION,
 				a.testTXInvokeWithReturn();
 			}
 			catch(Exception e)
@@ -223,7 +223,7 @@ testTXInvoke
 			
 			try
 			{
-				//ÊÂÎñËÄ MAYBE_TRANSACTION
+				//äº‹åŠ¡å›› MAYBE_TRANSACTION
 				a.testTXInvokeWithException();
 			}
 			catch(Exception e)
@@ -234,7 +234,7 @@ testTXInvoke
 			
 			try
 			{
-				//ÊÂÎñÎå NO_TRANSACTION£¬Ã»ÓÐÊÂÎñ»·¾³£¬ÄÚ²¿Ö´ÐÐ³É¹¦Ôò³É¹¦£¬·ñÔòÊ§°Ü
+				//äº‹åŠ¡äº” NO_TRANSACTIONï¼Œæ²¡æœ‰äº‹åŠ¡çŽ¯å¢ƒï¼Œå†…éƒ¨æ‰§è¡ŒæˆåŠŸåˆ™æˆåŠŸï¼Œå¦åˆ™å¤±è´¥
 				a.testSameName();
 			}
 			catch(Exception e)
@@ -261,7 +261,7 @@ testTXInvoke
 	{
 		try {
 			AI a = (AI)context.getBeanObject("tx.a");
-			//ÊÂÎñÒ»
+			//äº‹åŠ¡ä¸€
 			System.out.println("a.testTXInvokeWithReturn():" +a.testTXInvokeWithReturn());
 		} catch (SPIException e) {
 			// TODO Auto-generated catch block
@@ -274,12 +274,12 @@ testTXInvoke
 	}
 
 	/**
-	 * Í¨¹ýaop²âÊÔÉùÃ÷Ê½ÊÂÎñ¹ÜÀí¹¦ÄÜ£¬Í¬Ê±ÔÚÍâ²ãÓÖÇ¶ÁËÒ»²ãÊÂÎñÕâÑùÊÂÎñÒ»ºÍÊÂÎñ¶þ
-	 * ÓÐ±»°üº¬ÔÚÁËÍâ²ãÊÂÎñÖÐ
-	 * ÊÂÎñÒ»Ö´ÐÐ³É¹¦
-	 * ÊÂÎñ¶þÖ´ÐÐÊ§°Ü
+	 * é€šè¿‡aopæµ‹è¯•å£°æ˜Žå¼äº‹åŠ¡ç®¡ç†åŠŸèƒ½ï¼ŒåŒæ—¶åœ¨å¤–å±‚åˆåµŒäº†ä¸€å±‚äº‹åŠ¡è¿™æ ·äº‹åŠ¡ä¸€å’Œäº‹åŠ¡äºŒ
+	 * æœ‰è¢«åŒ…å«åœ¨äº†å¤–å±‚äº‹åŠ¡ä¸­
+	 * äº‹åŠ¡ä¸€æ‰§è¡ŒæˆåŠŸ
+	 * äº‹åŠ¡äºŒæ‰§è¡Œå¤±è´¥
 	 * 
-	 * Õû¸öÍâ²ãÊÂÎñÖ´ÐÐÊ§°Ü£¬ÊÂÎñÒ»ºÍÊÂÎñ¶þ¶¼±»»Ø¹ö
+	 * æ•´ä¸ªå¤–å±‚äº‹åŠ¡æ‰§è¡Œå¤±è´¥ï¼Œäº‹åŠ¡ä¸€å’Œäº‹åŠ¡äºŒéƒ½è¢«å›žæ»š
 	 */
 	@Test
 	public void testOutTX()
@@ -288,9 +288,9 @@ testTXInvoke
 		try {
 			tm.begin();
 			AI a = (AI)context.getBeanObject("tx.a");
-			//ÊÂÎñÒ»
+			//äº‹åŠ¡ä¸€
 			a.testTXInvoke();
-			//ÊÂÎñ¶þ
+			//äº‹åŠ¡äºŒ
 			a.testTXInvoke("hello.");
 			tm.commit();
 		} catch (SPIException e) {
@@ -458,7 +458,7 @@ testTXInvoke
 	
 	
 	/**
-	 * ²âÊÔÄ£Ê½·½·¨ÊÂÎñ¿ØÖÆ
+	 * æµ‹è¯•æ¨¡å¼æ–¹æ³•äº‹åŠ¡æŽ§åˆ¶
 	 */
 	@Test
 	public void testPatternTX()

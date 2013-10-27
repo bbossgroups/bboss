@@ -31,7 +31,7 @@ import com.caucho.burlap.server.BurlapSkeleton;
  * <p> bboss workgroup </p>
  * <p> Copyright (c) 2009 </p>
  * 
- * @Date 2013-2-21 ÏÂÎç4:40:10
+ * @Date 2013-2-21 ä¸‹åˆ4:40:10
  * @author biaoping.yin
  * @version 1.0
  */

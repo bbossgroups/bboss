@@ -19,7 +19,7 @@ import org.frameworkset.soa.annotation.ExcludeField;
 
 /**
  * <p>Title: TransientFieldBean.java</p> 
- * <p>Description:ÓÃÀ´²âÊÔ</p>
+ * <p>Description:ç”¨æ¥æµ‹è¯•</p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2008</p>
  * @Date 2012-1-4
@@ -27,12 +27,12 @@ import org.frameworkset.soa.annotation.ExcludeField;
  * @version 1.0
  */
 public class TransientFieldBean {
-	private transient String transientField;//±»ºöÂÔ
-	private static String staticFiled;//¾²Ì¬£¬±»ºöÂÔ
-	private static final String finalField = "123456"; //³£Á¿£¬±»ºöÂÔ
-	private String onlyField ;//Ã»ÓĞset/get·½·¨£¬Í¨¹ı¹¹Ôìº¯Êı³õÊ¼»¯£¬ÄÜ±»ĞòÁĞ»¯
+	private transient String transientField;//è¢«å¿½ç•¥
+	private static String staticFiled;//é™æ€ï¼Œè¢«å¿½ç•¥
+	private static final String finalField = "123456"; //å¸¸é‡ï¼Œè¢«å¿½ç•¥
+	private String onlyField ;//æ²¡æœ‰set/getæ–¹æ³•ï¼Œé€šè¿‡æ„é€ å‡½æ•°åˆå§‹åŒ–ï¼Œèƒ½è¢«åºåˆ—åŒ–
 	@ExcludeField
-	private String excludeField = null;//ÓĞget/set·½·¨£¬µ«ÊÇÓĞ@ExcludeField×¢½â£¬ËùÒÔ±»ºöÂÔ£¬²»±»ĞòÁĞ»¯
+	private String excludeField = null;//æœ‰get/setæ–¹æ³•ï¼Œä½†æ˜¯æœ‰@ExcludeFieldæ³¨è§£ï¼Œæ‰€ä»¥è¢«å¿½ç•¥ï¼Œä¸è¢«åºåˆ—åŒ–
 	public TransientFieldBean()
 	{
 		

@@ -45,7 +45,7 @@ import javax.naming.directory.InvalidAttributesException;
  * <p>Description: </p>
  *
  * <p>Copyright: Copyright (c) 2007</p>
- * @Date 2009-4-2 œ¬ŒÁ04:03:20
+ * @Date 2009-4-2 ‰∏ãÂçà04:03:20
  * @author biaoping.yin
  * @version 1.0
  */

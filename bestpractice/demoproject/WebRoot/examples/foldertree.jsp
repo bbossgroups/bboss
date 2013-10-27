@@ -1,6 +1,6 @@
 <%
 /**
- * ¼òµ¥µÄ²âÊÔÊ÷
+ * ç®€å•çš„æµ‹è¯•æ ‘
  */
  %>
 
@@ -12,7 +12,7 @@
 	 String rootPath = org.frameworkset.mvc.FileController.getWorkFoldPath();
 %>
 <%@ taglib uri="/WEB-INF/treetag.tld" prefix="tree" %>
-<%@ page language="java" contentType="text/html; charset=GBK"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"%>
 
 <%
 String treetype = request.getParameter("treetype");
@@ -20,7 +20,7 @@ String id = treetype+"root";
 %>
 <html>
 	<head>
-		<title>¼òµ¥µÄ²âÊÔÊ÷</title>
+		<title>ç®€å•çš„æµ‹è¯•æ ‘</title>
 		<style type="text/css">
 .a_bg_color{
 	color: white;
@@ -29,7 +29,7 @@ String id = treetype+"root";
 }
 </style>
 	<!--  
-	ÒıÈëÑùÊ½ÎÄ¼ş
+	å¼•å…¥æ ·å¼æ–‡ä»¶
 	-->
 	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/include/treeview.css">
 	</head>
@@ -39,14 +39,14 @@ String id = treetype+"root";
 		    	
 		        <tr><td>
 		        <!-- 
-		        	Í¨¹ıÒ»ÕûÌ×µÄÊ÷±êÇ©£¬Éú³ÉÊ÷
-		        	tree ÊôĞÔÖ¸¶¨Ê÷µÄÎ¨Ò»Ãû³Æ
-		        	imageFolder Ö¸¶¨Ê÷½ÚµãµÄÍ¼±êÄ¿Â¼
-		        	collapse Ö¸¶¨Ê÷½ÚµãÊÇ·ñÈ«²¿ÆÌ¿ª£¬²¢ÇÒ²»ÄÜÕÛµş£¬true¿ÉÒÔÕÛµş£¬falseÈ«²¿Õ¹¿ªµ«ÊÇ²»ÄÜÕÛµş
-		        	includeRootNode ÊÇ·ñ°üº¬¸ù½Úµã
-		        	href ½ÚµãÈ«¾ÖurlµØÖ·
-		        	target ½Úµãurlµ¯³ö´°¿Ú
-		        	mode ¿ØÖÆÊ÷µÄÕ¹Ê¾Ä£Ê½£¬Îª¶¯¾²Ä£Ê½
+		        	é€šè¿‡ä¸€æ•´å¥—çš„æ ‘æ ‡ç­¾ï¼Œç”Ÿæˆæ ‘
+		        	tree å±æ€§æŒ‡å®šæ ‘çš„å”¯ä¸€åç§°
+		        	imageFolder æŒ‡å®šæ ‘èŠ‚ç‚¹çš„å›¾æ ‡ç›®å½•
+		        	collapse æŒ‡å®šæ ‘èŠ‚ç‚¹æ˜¯å¦å…¨éƒ¨é“ºå¼€ï¼Œå¹¶ä¸”ä¸èƒ½æŠ˜å ï¼Œtrueå¯ä»¥æŠ˜å ï¼Œfalseå…¨éƒ¨å±•å¼€ä½†æ˜¯ä¸èƒ½æŠ˜å 
+		        	includeRootNode æ˜¯å¦åŒ…å«æ ¹èŠ‚ç‚¹
+		        	href èŠ‚ç‚¹å…¨å±€urlåœ°å€
+		        	target èŠ‚ç‚¹urlå¼¹å‡ºçª—å£
+		        	mode æ§åˆ¶æ ‘çš„å±•ç¤ºæ¨¡å¼ï¼Œä¸ºåŠ¨é™æ¨¡å¼
 		         -->
 		         <tree:tree tree="simple_tree"
 		    	           node="simple_tree.node"
@@ -58,21 +58,21 @@ String id = treetype+"root";
 		    			   > 
 		    		          
 		                  
-		                   <!-- Ö¸¶¨Ê÷µÄÊı¾İ¼ÓÔØÆ÷ºÍ¸ù½ÚµãĞÅÏ¢
-		                   		treetype-Êı¾İ¼ÓÔØÆ÷µÄÊµÏÖÀà£¬ÕâÀïÊÇtest.tree.TestTree
-		                   		scope Êı¾İ¼ÓÔØÆ÷¶ÔÏóµÄ´æ´¢·¶Î§£¬Ò»°ãÊÇrequest¼¶±ğ
+		                   <!-- æŒ‡å®šæ ‘çš„æ•°æ®åŠ è½½å™¨å’Œæ ¹èŠ‚ç‚¹ä¿¡æ¯
+		                   		treetype-æ•°æ®åŠ è½½å™¨çš„å®ç°ç±»ï¼Œè¿™é‡Œæ˜¯test.tree.TestTree
+		                   		scope æ•°æ®åŠ è½½å™¨å¯¹è±¡çš„å­˜å‚¨èŒƒå›´ï¼Œä¸€èˆ¬æ˜¯requestçº§åˆ«
 		                   		
-		                   		Ö¸¶¨¸ù½ÚµãµÄĞÅÏ¢£º
-		                   		rootid ¸ù½ÚµãµÄid
-		                   		rootName ¸ù½ÚµãµÄÃû³Æ
+		                   		æŒ‡å®šæ ¹èŠ‚ç‚¹çš„ä¿¡æ¯ï¼š
+		                   		rootid æ ¹èŠ‚ç‚¹çš„id
+		                   		rootName æ ¹èŠ‚ç‚¹çš„åç§°
 		                   		
-		                   		expandLevel Ä¬ÈÏÕ¹¿ª¶àÉÙ¼¶
-		                   		enablecontextmenu ÊÇ·ñÆôÓÃÓÒ¼ü²Ëµ¥£¬trueÆôÓÃ£¬false²»ÆôÓÃ
+		                   		expandLevel é»˜è®¤å±•å¼€å¤šå°‘çº§
+		                   		enablecontextmenu æ˜¯å¦å¯ç”¨å³é”®èœå•ï¼Œtrueå¯ç”¨ï¼Œfalseä¸å¯ç”¨
 		                    -->
 		    			   <tree:treedata treetype="org.frameworkset.mvc.FolderTree"
 		    	                   scope="request"
 		    	                   rootid="<%=rootPath %>"  
-		    	                   rootName="×ÊÔ´¹ÜÀí"
+		    	                   rootName="èµ„æºç®¡ç†"
 		    	                   expandLevel="2"
 		    	                   showRootHref="true"
 		    	                   needObserver="false"

@@ -18,10 +18,10 @@ package org.frameworkset.soa;
 
 /**
  * <p>Title: MethodCall.java</p> 
- * <p>Description: ÓÃÀ´ÃèÊösoaµ÷ÓÃµÄ·½·¨ĞÅÏ¢</p>
+ * <p>Description: ç”¨æ¥æè¿°soaè°ƒç”¨çš„æ–¹æ³•ä¿¡æ¯</p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2008</p>
- * @Date 2011-5-10 ÉÏÎç11:16:20
+ * @Date 2011-5-10 ä¸Šåˆ11:16:20
  * @author biaoping.yin
  * @version 1.0
  */

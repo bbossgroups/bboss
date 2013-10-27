@@ -50,7 +50,7 @@ import com.frameworkset.util.SimpleStringUtil;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2010-9-24 œ¬ŒÁ10:14:57
+ * @Date 2010-9-24 ‰∏ãÂçà10:14:57
  * @author biaoping.yin
  * @version 1.0
  */

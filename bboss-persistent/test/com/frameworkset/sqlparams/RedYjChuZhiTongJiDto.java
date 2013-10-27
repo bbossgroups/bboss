@@ -6,24 +6,24 @@ import java.util.Date;
 
 
 /**
- * ºìÉ«Ô¤¾¯´¦ÖÃ¹¤×÷Í³¼Æ´«Öµ¶ÔÏó
- * @author Ö£ÇÉÎ°
+ * çº¢è‰²é¢„è­¦å¤„ç½®å·¥ä½œç»Ÿè®¡ä¼ å€¼å¯¹è±¡
+ * @author éƒ‘å·§ä¼Ÿ
  *
  */
 public class RedYjChuZhiTongJiDto {
 	
-	private int tjType;		//Í³¼ÆÀàĞÍ
-	private String startDate;  //¿ªÊ¼ÈÕÆÚ
-	private String endDate;    //½áÊøÈÕÆÚ
+	private int tjType;		//ç»Ÿè®¡ç±»å‹
+	private String startDate;  //å¼€å§‹æ—¥æœŸ
+	private String endDate;    //ç»“æŸæ—¥æœŸ
 	
-	private String rxtsjStartDate; //ÈëÏµÍ³¿â¿ªÊ¼Ê±¼ä
-	private String rxtsjEndDate;  //ÈëÏµÍ³¿â½áÊøÊ±¼ä
-	private String yjfbsjStartDate;  //Ô¤¾¯·¢²¼¿ªÊ¼Ê±¼ä
-	private String yjfbsjEndDate;   //Ô¤¾¯·¢²¼½áÊøÊ±¼ä
+	private String rxtsjStartDate; //å…¥ç³»ç»Ÿåº“å¼€å§‹æ—¶é—´
+	private String rxtsjEndDate;  //å…¥ç³»ç»Ÿåº“ç»“æŸæ—¶é—´
+	private String yjfbsjStartDate;  //é¢„è­¦å‘å¸ƒå¼€å§‹æ—¶é—´
+	private String yjfbsjEndDate;   //é¢„è­¦å‘å¸ƒç»“æŸæ—¶é—´
 	
-	private int year;  //Äê
-	private int jiDu; //¼¾¶È
-	private int isDate; //ÊÇ·ñÊÇÈÕÆÚÀàĞÍ
+	private int year;  //å¹´
+	private int jiDu; //å­£åº¦
+	private int isDate; //æ˜¯å¦æ˜¯æ—¥æœŸç±»å‹
 	
 	
 	
@@ -69,7 +69,7 @@ public class RedYjChuZhiTongJiDto {
 			startDate = null;
 			this.rxtsjStartDate = null;
 			this.yjfbsjStartDate = null;
-			throw new RuntimeException("ÈÕÆÚ¸ñÊ½´íÎó");
+			throw new RuntimeException("æ—¥æœŸæ ¼å¼é”™è¯¯");
 		}
 		
 	}
@@ -86,7 +86,7 @@ public class RedYjChuZhiTongJiDto {
 			endDate = null;
 			this.rxtsjEndDate = null;
 			this.yjfbsjEndDate = null;
-			throw new RuntimeException("ÈÕÆÚ¸ñÊ½´íÎó");
+			throw new RuntimeException("æ—¥æœŸæ ¼å¼é”™è¯¯");
 		}
 	}
 	
@@ -116,10 +116,10 @@ public class RedYjChuZhiTongJiDto {
 	}
 	
 	/**
-	 * ½«ÈÕÆÚ×Ö·û´®ÓÉÒ»ÖÖÈÕÆÚ¸ñÊ½×ªÎªÁíÒ»ÖÖÈÕÆÚ¸ñÊ½
+	 * å°†æ—¥æœŸå­—ç¬¦ä¸²ç”±ä¸€ç§æ—¥æœŸæ ¼å¼è½¬ä¸ºå¦ä¸€ç§æ—¥æœŸæ ¼å¼
 	 * @param strDate
-	 * @param originalFmt Ô­ÓĞÈÕÆÚ¸ñÊ½
-	 * @param fmt Òª×ª»»µÄÈÕÆÚ¸ñÊ½
+	 * @param originalFmt åŸæœ‰æ—¥æœŸæ ¼å¼
+	 * @param fmt è¦è½¬æ¢çš„æ—¥æœŸæ ¼å¼
 	 * @return
 	 * @throws ParseException
 	 */

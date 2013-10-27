@@ -24,7 +24,7 @@ import org.frameworkset.util.annotations.RequestHeader;
  * <p> bboss workgroup </p>
  * <p> Copyright (c) 2005-2013 </p>
  * 
- * @Date 2013Äê10ÔÂ3ÈÕ
+ * @Date 2013å¹´10æœˆ3æ—¥
  * @author biaoping.yin
  * @version 1.0
  */

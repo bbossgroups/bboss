@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="gb2312"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE taglib PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.1//EN"
                         "http://java.sun.com/j2ee/dtds/web-jsptaglibrary_1_2.dtd">
 <taglib>
@@ -8,9 +8,9 @@
 	<uri>pager-taglib</uri>
 	<info>bbossgroups taglib.</info>
 	<!--
-		¹¦ÄÜËµÃ÷£º¿É·ÖÒ³ÏÔÊ¾´óÅúÁ¿Êı¾İ£¬ÁĞ±íÏÔÊ¾´óÅúÁ¿Êı¾İ ±ØĞëÉèÖÃdataÊôĞÔ£¬dataÊôĞÔÉèÖÃrequestÖĞ»º³åÊı¾İ»ñÈ¡ÀàµÄkeyÖµ£¬
-		ËùÒÔpager±êÇ©±ØĞëÓëlistdata ±êÇ©Ò»ÆğÊ¹ÓÃ²ÅÄÜÍê³É·ÖÒ³ÁĞ±íÏÔÊ¾¹¦ÄÜ pager tagµÄdataÊôĞÔÖµ±ØĞëÒªÓëlistdata
-		tagµÄkeyName»òdataInfoÊôĞÔÒ»ÖÂ£¬·ñÔò½«²»ÏÔÊ¾Êı¾İ ÄÚÖÃ±äÁ¿£ºpager_info
+		åŠŸèƒ½è¯´æ˜ï¼šå¯åˆ†é¡µæ˜¾ç¤ºå¤§æ‰¹é‡æ•°æ®ï¼Œåˆ—è¡¨æ˜¾ç¤ºå¤§æ‰¹é‡æ•°æ® å¿…é¡»è®¾ç½®dataå±æ€§ï¼Œdataå±æ€§è®¾ç½®requestä¸­ç¼“å†²æ•°æ®è·å–ç±»çš„keyå€¼ï¼Œ
+		æ‰€ä»¥pageræ ‡ç­¾å¿…é¡»ä¸listdata æ ‡ç­¾ä¸€èµ·ä½¿ç”¨æ‰èƒ½å®Œæˆåˆ†é¡µåˆ—è¡¨æ˜¾ç¤ºåŠŸèƒ½ pager tagçš„dataå±æ€§å€¼å¿…é¡»è¦ä¸listdata
+		tagçš„keyNameæˆ–dataInfoå±æ€§ä¸€è‡´ï¼Œå¦åˆ™å°†ä¸æ˜¾ç¤ºæ•°æ® å†…ç½®å˜é‡ï¼špager_info
 	-->
 	<tag>
 		<name>pager</name>
@@ -18,35 +18,35 @@
 		<teiclass>com.frameworkset.common.tag.pager.tags.PagerTagExtraInfo</teiclass>
 		<bodycontent>JSP</bodycontent>
 		<!-- 
-		moreQuery Èç¹û·ÖÒ³²éÑ¯Ê±more²éÑ¯£¬ÔòÉèÖÃÎªtrue£¬Ä¬ÈÏÎªfalse
-		more²éÑ¯½«Ó°Ïìindex±êÇ©µÄÕ¹Ê¾Ğ§¹û£¬²»»á´¦Àí×Ü¼ÇÂ¼Êı£¬Òò´Ë
-		index±êÇ©½«²»ÔÙÓĞ×Ü¼ÇÂ¼ÊıÊä³ö£¬ÏÂÒ»Ò³»òÕßÌø×ªÃ»ÓĞ»ñÈ¡µ½Êı¾İÊ±Ö±½Ó×èÖ¹²éÑ¯²¢·µ»Ø¿ÕÖµ
-		Ã»ÓĞÎ²Ò³µÄÊä³ö		
-		Ã¿Ò³Ìø×ªÊä³ö
-		Ã¿Ò³×Ü¼ÇÂ¼ÊıºÍ×ÜÒ³ÊıÊä³ö
+		moreQuery å¦‚æœåˆ†é¡µæŸ¥è¯¢æ—¶moreæŸ¥è¯¢ï¼Œåˆ™è®¾ç½®ä¸ºtrueï¼Œé»˜è®¤ä¸ºfalse
+		moreæŸ¥è¯¢å°†å½±å“indexæ ‡ç­¾çš„å±•ç¤ºæ•ˆæœï¼Œä¸ä¼šå¤„ç†æ€»è®°å½•æ•°ï¼Œå› æ­¤
+		indexæ ‡ç­¾å°†ä¸å†æœ‰æ€»è®°å½•æ•°è¾“å‡ºï¼Œä¸‹ä¸€é¡µæˆ–è€…è·³è½¬æ²¡æœ‰è·å–åˆ°æ•°æ®æ—¶ç›´æ¥é˜»æ­¢æŸ¥è¯¢å¹¶è¿”å›ç©ºå€¼
+		æ²¡æœ‰å°¾é¡µçš„è¾“å‡º		
+		æ¯é¡µè·³è½¬è¾“å‡º
+		æ¯é¡µæ€»è®°å½•æ•°å’Œæ€»é¡µæ•°è¾“å‡º
 		 -->
 		<attribute>
 			<name>moreQuery</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 			<!-- 
-		jqueryÄÚÈİÈİÆ÷
+		jqueryå†…å®¹å®¹å™¨
 		 -->
 		<attribute>
 			<name>containerid</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!-- 
-		jqueryÄÚÈİÑ¡ÔñÆ÷
+		jqueryå†…å®¹é€‰æ‹©å™¨
 		 -->
 		<attribute>
 			<name>selector</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		
-		<!--±êÊ¶ÊÇ·ñÊÇwapÍøÒ³
-			true£ºÊÇwapÍøÒ³
-			false£º²»ÊÇwapÍøÒ³£¬È±Ê¡Öµ
+		<!--æ ‡è¯†æ˜¯å¦æ˜¯wapç½‘é¡µ
+			trueï¼šæ˜¯wapç½‘é¡µ
+			falseï¼šä¸æ˜¯wapç½‘é¡µï¼Œç¼ºçœå€¼
 		-->
 		<attribute>
 			<name>wapflag</name>
@@ -60,7 +60,7 @@
 			<name>url</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
-		<!--Ö¸¶¨ÅÅĞòË³Ğò-->
+		<!--æŒ‡å®šæ’åºé¡ºåº-->
 		<attribute>
 			<name>desc</name>
 			<rtexprvalue>true</rtexprvalue>
@@ -97,32 +97,32 @@
 			<name>scope</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
-		<!--ÒÔ¶ººÅ·Ö¸ôµÄ×Ö¶ÎÊôĞÔ¼¯ºÏ-->
+		<!--ä»¥é€—å·åˆ†éš”çš„å­—æ®µå±æ€§é›†åˆ-->
 		<attribute>
 			<name>field</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
-		<!--ÒÔ¶ººÅ·Ö¸ôµÄ×Ö¶ÎÊôĞÔ¶ÔÓ¦µÄ±êÌâ¼¯ºÏ-->
+		<!--ä»¥é€—å·åˆ†éš”çš„å­—æ®µå±æ€§å¯¹åº”çš„æ ‡é¢˜é›†åˆ-->
 		<attribute>
 			<name>title</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
-		<!--ÒÔ¶ººÅ·Ö¸ôµÄ×Ö¶ÎÊôĞÔ¶ÔÓ¦µÄ±êÌâÏÔÊ¾µÄ¿í¶È¼¯ºÏ-->
+		<!--ä»¥é€—å·åˆ†éš”çš„å­—æ®µå±æ€§å¯¹åº”çš„æ ‡é¢˜æ˜¾ç¤ºçš„å®½åº¦é›†åˆ-->
 		<attribute>
 			<name>width</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
-		<!--Ö¸¶¨È±Ê¡µÄÅÅĞò¹Ø¼ü×Ö-->
+		<!--æŒ‡å®šç¼ºçœçš„æ’åºå…³é”®å­—-->
 		<attribute>
 			<name>sortKey</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!--
-			¿ØÖÆ·ÖÒ³/ÁĞ±í¿ª¹Ø
-			true:ÎªÁĞ±í
-			false:Îª·ÖÒ³
+			æ§åˆ¶åˆ†é¡µ/åˆ—è¡¨å¼€å…³
+			true:ä¸ºåˆ—è¡¨
+			false:ä¸ºåˆ†é¡µ
 			
-			È±Ê¡£ºfalse
+			ç¼ºçœï¼šfalse
 		-->
 		<attribute>
 			<name>isList</name>
@@ -133,35 +133,35 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!--
-			·ÖÒ³±êÇ©Ò³Ãæµ¼º½Ê±Ìá½»µÄform±íµ¥Ãû³Æ
+			åˆ†é¡µæ ‡ç­¾é¡µé¢å¯¼èˆªæ—¶æäº¤çš„formè¡¨å•åç§°
 		-->
 		<attribute>
 			<name>form</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!--
-			·ÖÒ³µ¼º½formÌá½»Ç°µÄÌáÊ¾ĞÅÏ¢
+			åˆ†é¡µå¯¼èˆªformæäº¤å‰çš„æç¤ºä¿¡æ¯
 		-->
 		<attribute>
 			<name>promotion</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!--
-			·ÖÒ³µ¼º½formÌá½»Ç°µÄĞèÒªÖ´ĞĞµÄÊÂ¼ş
+			åˆ†é¡µå¯¼èˆªformæäº¤å‰çš„éœ€è¦æ‰§è¡Œçš„äº‹ä»¶
 		-->
 		<attribute>
 			<name>commitevent</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!--
-			Ö¸¶¨Êı¾İ¿â²éÑ¯Óï¾ä£¬»òÕß´æ´¢¹ı³Ì
+			æŒ‡å®šæ•°æ®åº“æŸ¥è¯¢è¯­å¥ï¼Œæˆ–è€…å­˜å‚¨è¿‡ç¨‹
 		-->
 		<attribute>
 			<name>statement</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!--
-			Ö¸¶¨Êı¾İ¿âÁ´½Ó³ØµÄÃû³Æ
+			æŒ‡å®šæ•°æ®åº“é“¾æ¥æ± çš„åç§°
 		-->
 		<attribute>
 			<name>dbname</name>
@@ -174,15 +174,15 @@
 		</attribute>
 		
 		<!--
-			ÊÇ·ñ½«Êı¾İµ¼³öµ½ÎÄ¼ş true:µ¼³ö false£º²»µ¼³ö È±Ê¡Öµ£ºfalse µ¼³öµÄÎÄ¼ş°üÀ¨£ºword,excel,xml,pdf,csv
+			æ˜¯å¦å°†æ•°æ®å¯¼å‡ºåˆ°æ–‡ä»¶ true:å¯¼å‡º falseï¼šä¸å¯¼å‡º ç¼ºçœå€¼ï¼šfalse å¯¼å‡ºçš„æ–‡ä»¶åŒ…æ‹¬ï¼šword,excel,xml,pdf,csv
 		-->
 		<attribute>
 			<name>exportMeta</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!--
-			¶¨Òåpager±êÇ©ÄÚÖÃ±äÁ¿pager_infoµÄ±äÁ¿Ãû³Æ£¬Èç¹ûpager±êÇ©Ç¶Ì×Ê¹ÓÃÊ±ÄÚ²¿µÄpager¶¼ÒªÖ¸¶¨×ÔÉíµÄ±äÁ¿Ãû³Æ
-			¸Ã±äÁ¿¶¨ÒåÁËÒÔÏÂ·½·¨£¬ÓÃÀ´·µ»ØÒ³ÃæµÄ×ÜÊı¾İÌõÊı public int getDataSize(); ÀıÈç£º <pg:pager ...
+			å®šä¹‰pageræ ‡ç­¾å†…ç½®å˜é‡pager_infoçš„å˜é‡åç§°ï¼Œå¦‚æœpageræ ‡ç­¾åµŒå¥—ä½¿ç”¨æ—¶å†…éƒ¨çš„pageréƒ½è¦æŒ‡å®šè‡ªèº«çš„å˜é‡åç§°
+			è¯¥å˜é‡å®šä¹‰äº†ä»¥ä¸‹æ–¹æ³•ï¼Œç”¨æ¥è¿”å›é¡µé¢çš„æ€»æ•°æ®æ¡æ•° public int getDataSize(); ä¾‹å¦‚ï¼š <pg:pager ...
 			pager_infoName="pager_info1" ...> .... pager_info1.getDataSize();
 			.... </pg:pager>
 		-->
@@ -192,7 +192,7 @@
 		</attribute>
 	</tag>
 	<!--
-		¹¦ÄÜËµÃ÷£ºÎª·ÖÒ³ÁĞ±í±êÇ©ÖĞ×Ô¶¯ÉèÖÃµÄ³¬Á´½ÓÌí¼Ó²ÎÊı
+		åŠŸèƒ½è¯´æ˜ï¼šä¸ºåˆ†é¡µåˆ—è¡¨æ ‡ç­¾ä¸­è‡ªåŠ¨è®¾ç½®çš„è¶…é“¾æ¥æ·»åŠ å‚æ•°
 	-->
 	<tag>
 		<name>param</name>
@@ -212,8 +212,8 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!--
-			type:1.parameter Í¨¹ırequest.getParameter(name)È¡Öµ; 2.attribute
-			Í¨¹ırequest.getAttribute(name)È¡Öµ;
+			type:1.parameter é€šè¿‡request.getParameter(name)å–å€¼; 2.attribute
+			é€šè¿‡request.getAttribute(name)å–å€¼;
 		-->
 		<attribute>
 			<name>type</name>
@@ -234,7 +234,7 @@
 	</tag>
 	
 	<!--
-		¹¦ÄÜËµÃ÷£ºÎª·ÖÒ³ÁĞ±í±êÇ©ÖĞ×Ô¶¯ÉèÖÃµÄ³¬Á´½ÓÌí¼Ó²ÎÊıÊı×é
+		åŠŸèƒ½è¯´æ˜ï¼šä¸ºåˆ†é¡µåˆ—è¡¨æ ‡ç­¾ä¸­è‡ªåŠ¨è®¾ç½®çš„è¶…é“¾æ¥æ·»åŠ å‚æ•°æ•°ç»„
 	-->
 	<tag>
 		<name>params</name>
@@ -262,7 +262,7 @@
 	
 	
 	<!--
-		¹¦ÄÜËµÃ÷£ºÎª·ÖÒ³ÁĞ±í±êÇ©ÖĞ×Ô¶¯ÉèÖÃµÄ³¬Á´½ÓÌí¼Ó²ÎÊı£¬²ÎÊıÀ´×Ôjava¶ÔÏóÊôĞÔ»òÕßMapÖĞ¼üÖµ¶Ô
+		åŠŸèƒ½è¯´æ˜ï¼šä¸ºåˆ†é¡µåˆ—è¡¨æ ‡ç­¾ä¸­è‡ªåŠ¨è®¾ç½®çš„è¶…é“¾æ¥æ·»åŠ å‚æ•°ï¼Œå‚æ•°æ¥è‡ªjavaå¯¹è±¡å±æ€§æˆ–è€…Mapä¸­é”®å€¼å¯¹
 	-->
 	<tag>
 		<name>beanparams</name>
@@ -288,7 +288,7 @@
 		</attribute>
 	</tag>
 	<!--
-		¹¦ÄÜËµÃ÷£ºÏÔÊ¾ÉÏÏÂ·­Ò³£¬Ìø×ª°´Å¥
+		åŠŸèƒ½è¯´æ˜ï¼šæ˜¾ç¤ºä¸Šä¸‹ç¿»é¡µï¼Œè·³è½¬æŒ‰é’®
 	-->
 	<tag>
 		<name>index</name>
@@ -299,34 +299,34 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!--
-			¿ØÖÆµ¼º½¼üÊÇ·ñ³öÏÖµÃÊôĞÔ£º000000000£¨9Î»£© ·Ö±ğ¶ÔÓ¦ÓÚ"µÚ¼¸Ò³"¡¢¡°¹²¼¸Ò³¡±¡¢¡°Ê×Ò³¡±¡¢¡°ÏÂÒ»Ò³¡±¡¢¡°ÉÏÒ»Ò³¡±¡¢¡°Î²Ò³¡±¡¢¡°Ìø×ªµ½¡±£¬
-			¡°Ã¿Ò³ÏÔÊ¾¼¸Ìõ¼ÇÂ¼¡±,"¹²¶àÉÙÌõ¼ÇÂ¼"
-			¶ÔÓ¦µÃÎ»ÖÃÉÏµÄÖµÎª0Ê±±êÊ¾ÏÔÊ¾¸Ã°´Å¥£¬Îª1Ê±²»ÏÔÊ¾
+			æ§åˆ¶å¯¼èˆªé”®æ˜¯å¦å‡ºç°å¾—å±æ€§ï¼š000000000ï¼ˆ9ä½ï¼‰ åˆ†åˆ«å¯¹åº”äº"ç¬¬å‡ é¡µ"ã€â€œå…±å‡ é¡µâ€ã€â€œé¦–é¡µâ€ã€â€œä¸‹ä¸€é¡µâ€ã€â€œä¸Šä¸€é¡µâ€ã€â€œå°¾é¡µâ€ã€â€œè·³è½¬åˆ°â€ï¼Œ
+			â€œæ¯é¡µæ˜¾ç¤ºå‡ æ¡è®°å½•â€,"å…±å¤šå°‘æ¡è®°å½•"
+			å¯¹åº”å¾—ä½ç½®ä¸Šçš„å€¼ä¸º0æ—¶æ ‡ç¤ºæ˜¾ç¤ºè¯¥æŒ‰é’®ï¼Œä¸º1æ—¶ä¸æ˜¾ç¤º
 		-->
 		<attribute>
 			<name>export</name>
 		</attribute>
 		<!--
-			¶¨ÒåË÷Òı·ç¸ñ£º
-			Öµ£ºV-´¹Ö±
-			H-Ë®Æ½
+			å®šä¹‰ç´¢å¼•é£æ ¼ï¼š
+			å€¼ï¼šV-å‚ç›´
+			H-æ°´å¹³
 		-->
 		<attribute>
 			<name>style</name>
 		</attribute>
 		<!--
-			¿ØÖÆÒ³ÃæÊÇÊ¹ÓÃpager.js»¹ÊÇpager_custom.js
-			ÎªtrueÊ±Ê¹ÓÃpager_custom.js£¬ÕâÊ±ÒªÇóÒ³ÃæÉÏÒªÓĞÒÔÏÂform±íµ¥£º <form
+			æ§åˆ¶é¡µé¢æ˜¯ä½¿ç”¨pager.jsè¿˜æ˜¯pager_custom.js
+			ä¸ºtrueæ—¶ä½¿ç”¨pager_custom.jsï¼Œè¿™æ—¶è¦æ±‚é¡µé¢ä¸Šè¦æœ‰ä»¥ä¸‹formè¡¨å•ï¼š <form
 			name="com.frameworkset.goform" method="post"></form>
-			ÎªfalseÊ±Ê¹ÓÃpager.js ±¾ÊôĞÔµÄÄ¬ÈÏÖµÎªfalse
+			ä¸ºfalseæ—¶ä½¿ç”¨pager.js æœ¬å±æ€§çš„é»˜è®¤å€¼ä¸ºfalse
 		-->
 		<attribute>
 			<name>custom</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!--
-			µ¼º½°´Å¥ÊÇ·ñÊ¹ÓÃÍ¼Æ¬,Ä¬ÈÏÖµÎªfalse Ö»ÓĞuseimage=trueÊ±£¬imagedirºÍimageextend²ÅÆğ×÷ÓÃ
-			Èç¹ûuseimage=trueÊ±£¬Ã»ÓĞÖ¸¶¨imagedirºÍimageextendÊôĞÔ£¬ÄÇÃ´²ÉÓÃÄ¬ÈÏÊôĞÔ Ê¹ÓÃ·½·¨ <pg:index
+			å¯¼èˆªæŒ‰é’®æ˜¯å¦ä½¿ç”¨å›¾ç‰‡,é»˜è®¤å€¼ä¸ºfalse åªæœ‰useimage=trueæ—¶ï¼Œimagedirå’Œimageextendæ‰èµ·ä½œç”¨
+			å¦‚æœuseimage=trueæ—¶ï¼Œæ²¡æœ‰æŒ‡å®šimagedirå’Œimageextendå±æ€§ï¼Œé‚£ä¹ˆé‡‡ç”¨é»˜è®¤å±æ€§ ä½¿ç”¨æ–¹æ³• <pg:index
 			useimage="true" imagedir="/include/images" imageextend=" border=0 "/>
 		-->
 		<attribute>
@@ -334,36 +334,36 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!--
-			µ¼º½°´Å¥Í¼Æ¬´æ·ÅÄ¿Â¼£¬´æ·ÅµÄÍ¼Æ¬Ãû³ÆÎª£º first.gif-Ê× Ò³ next.gif-ÏÂÒ»Ò³ pre.gif-ÉÏÒ»Ò³
-			last.gif-Î² Ò³ Ä¬ÈÏÖµÎª£º/include/images
+			å¯¼èˆªæŒ‰é’®å›¾ç‰‡å­˜æ”¾ç›®å½•ï¼Œå­˜æ”¾çš„å›¾ç‰‡åç§°ä¸ºï¼š first.gif-é¦– é¡µ next.gif-ä¸‹ä¸€é¡µ pre.gif-ä¸Šä¸€é¡µ
+			last.gif-å°¾ é¡µ é»˜è®¤å€¼ä¸ºï¼š/include/images
 		-->
 		<attribute>
 			<name>imagedir</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!-- 
-			µ¼º½Í¼Æ¬µÄÀ©Õ¹ÊôĞÔ´®£¬Ä¬ÈÏÖµÎª£º" border=0 "
+			å¯¼èˆªå›¾ç‰‡çš„æ‰©å±•å±æ€§ä¸²ï¼Œé»˜è®¤å€¼ä¸ºï¼š" border=0 "
 		 -->
 		<attribute>
 			<name>imageextend</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!-- 
-			ÖĞ¼äÒ³ÃæÑùÊ½Ãû³Æ
+			ä¸­é—´é¡µé¢æ ·å¼åç§°
 		 -->
 		<attribute>
 			<name>classname</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!-- 
-			Õ¹Ê¾µÄÖĞ¼äÒ³ÃæÊı£¬Ä¬ÈÏÎª-1,¼´²»Õ¹Ê¾ÖĞ¼äÒ³
+			å±•ç¤ºçš„ä¸­é—´é¡µé¢æ•°ï¼Œé»˜è®¤ä¸º-1,å³ä¸å±•ç¤ºä¸­é—´é¡µ
 		 -->
 		<attribute>
 			<name>tagnumber</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!-- 
-			ÖĞ¼äÒ³À©Õ¹ÊôĞÔ
+			ä¸­é—´é¡µæ‰©å±•å±æ€§
 		 -->
 		<attribute>
 			<name>centerextend</name>
@@ -371,11 +371,11 @@
 		</attribute>
 		
 		<!-- 
-		ÉèÖÃÒ³ÃæÏÔÊ¾¼ÇÂ¼·¶Î§£¬Ä¬ÈÏÎª
+		è®¾ç½®é¡µé¢æ˜¾ç¤ºè®°å½•èŒƒå›´ï¼Œé»˜è®¤ä¸º
 		"5","10","20","30","40","50","60","70","80","90","100"
-		ÓÃ»§¿ÉÒÔ×Ô¶¨ÒåÕâ¸ö·¶Î§£¬ÒÔ¶ººÅ·Ö¸ô¼´¿É
-		Èç¹ûÔÚpager±êÇ©ºÍlist±êÇ©ÉÏÖ¸¶¨µÄmaxPageItemsÊôĞÔ¶ÔÓ¦µÄÒ³Ãæ¼ÇÂ¼ÌõÊı²»ÔÚsizescope·¶Î§ÖĞ£¬ÄÇÃ´
-		½«°ÑmaxPageItems×÷ÎªµÚÒ»¸öÑ¡Ïî¼ÓÈëµ½sizescopeÖĞ
+		ç”¨æˆ·å¯ä»¥è‡ªå®šä¹‰è¿™ä¸ªèŒƒå›´ï¼Œä»¥é€—å·åˆ†éš”å³å¯
+		å¦‚æœåœ¨pageræ ‡ç­¾å’Œlistæ ‡ç­¾ä¸ŠæŒ‡å®šçš„maxPageItemså±æ€§å¯¹åº”çš„é¡µé¢è®°å½•æ¡æ•°ä¸åœ¨sizescopeèŒƒå›´ä¸­ï¼Œé‚£ä¹ˆ
+		å°†æŠŠmaxPageItemsä½œä¸ºç¬¬ä¸€ä¸ªé€‰é¡¹åŠ å…¥åˆ°sizescopeä¸­
 		 -->
 		<attribute>
 			<name>sizescope</name>
@@ -383,28 +383,28 @@
 		</attribute>
 		
 		<!-- 
-			go°´Å¥ÊÇ·ñ²ÉÓÃÍ¼Æ¬£¬true¼°²ÉÓÃÍ¼Æ¬£¬falseÈÎÈ»²ÉÓÃÎÄ×Ö£¬Ä¬ÈÏÖµÎªtrue
+			goæŒ‰é’®æ˜¯å¦é‡‡ç”¨å›¾ç‰‡ï¼ŒtrueåŠé‡‡ç”¨å›¾ç‰‡ï¼Œfalseä»»ç„¶é‡‡ç”¨æ–‡å­—ï¼Œé»˜è®¤å€¼ä¸ºtrue
 		 -->
 		<attribute>
 			<name>usegoimage</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	<!-- 
-		ÉÏÏÂ·­Ò³Èç¹ûÃ»ÓĞÁ¬½ÓÊ±£¬ÊÇ·ñÌí¼Óa±ê¼Ç
-        true£¨Ä¬ÈÏÖµ£© Ìí¼Ó£¬false²»Ìí¼Ó
+		ä¸Šä¸‹ç¿»é¡µå¦‚æœæ²¡æœ‰è¿æ¥æ—¶ï¼Œæ˜¯å¦æ·»åŠ aæ ‡è®°
+        trueï¼ˆé»˜è®¤å€¼ï¼‰ æ·»åŠ ï¼Œfalseä¸æ·»åŠ 
 		 -->
 		<attribute>
 			<name>aindex</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!-- 
-		Êı×ÖÒ³ÃæË÷ÒıÇ°×º
+		æ•°å­—é¡µé¢ç´¢å¼•å‰ç¼€
 		 -->
 		<attribute>
 			<name>numberpre</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
-		<!-- Êı×ÖÒ³ÃæË÷Òıºó×º -->
+		<!-- æ•°å­—é¡µé¢ç´¢å¼•åç¼€ -->
 		<attribute>
 			<name>numberend</name>
 			<rtexprvalue>true</rtexprvalue>
@@ -412,7 +412,7 @@
 		
 	</tag>
 	<!--
-		¹¦ÄÜËµÃ÷£ºÏÔÊ¾·ÖÒ³ÁĞ±í±íÍ·±êÇ©
+		åŠŸèƒ½è¯´æ˜ï¼šæ˜¾ç¤ºåˆ†é¡µåˆ—è¡¨è¡¨å¤´æ ‡ç­¾
 	-->
 	<tag>
 		<name>header</name>
@@ -471,7 +471,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!-- 
-			html tr±êÇ©µÄ¸½¼Ó´®£¬¿ÉÒÔÖ¸¶¨ĞèÒª¸½¼ÓÔÚtrÉÏµÄÆäËû×Ô¶¨ÒåÊôĞÔºÍº¯Êı
+			html træ ‡ç­¾çš„é™„åŠ ä¸²ï¼Œå¯ä»¥æŒ‡å®šéœ€è¦é™„åŠ åœ¨trä¸Šçš„å…¶ä»–è‡ªå®šä¹‰å±æ€§å’Œå‡½æ•°
 		 -->
 		<attribute>
 			<name>extend</name>
@@ -479,8 +479,8 @@
 		</attribute>
 	</tag>
 	<!--
-		¹¦ÄÜËµÃ÷£ºÏÔÊ¾·ÖÒ³ÁĞ±í±íÍ·Ïî±êÇ© ÉèÖÃsortÊôĞÔµÄÖµÎª"true",¿ÉÒÔ°²¸ÃÁĞËù¶ÔÓ¦µÄÊôĞÔ¶Ôµ±Ç°Ò³ÃæÊı¾İÅÅĞò
-		£¨±£Áô°´¸ÃÁĞ¶ÓÓ¦µÄÊı¾İ¿â×Ö¶ÎÅÅĞòµÄ¹¦ÄÜ£©
+		åŠŸèƒ½è¯´æ˜ï¼šæ˜¾ç¤ºåˆ†é¡µåˆ—è¡¨è¡¨å¤´é¡¹æ ‡ç­¾ è®¾ç½®sortå±æ€§çš„å€¼ä¸º"true",å¯ä»¥å®‰è¯¥åˆ—æ‰€å¯¹åº”çš„å±æ€§å¯¹å½“å‰é¡µé¢æ•°æ®æ’åº
+		ï¼ˆä¿ç•™æŒ‰è¯¥åˆ—é˜Ÿåº”çš„æ•°æ®åº“å­—æ®µæ’åºçš„åŠŸèƒ½ï¼‰
 	-->
 	<tag>
 		<name>title</name>
@@ -494,12 +494,12 @@
 			<name>title</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
-		<!--±êÌâ¹ú¼Ê»¯´úÂë£¬Èç¹û´úÂëÔÚmvc¹ú¼Ê»¯Ïà¹ØÅäÖÃÎÄ¼şÖĞ²»´æÔÚ£¬ÔòÊä³öcode-->
+		<!--æ ‡é¢˜å›½é™…åŒ–ä»£ç ï¼Œå¦‚æœä»£ç åœ¨mvcå›½é™…åŒ–ç›¸å…³é…ç½®æ–‡ä»¶ä¸­ä¸å­˜åœ¨ï¼Œåˆ™è¾“å‡ºcode-->
 		<attribute>
 			<name>titlecode</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
-		<!--Ö¸¶¨±êÌâËù¶ÔÓ¦µÄÊôĞÔ×Ö¶ÎÁĞË÷Òı-->
+		<!--æŒ‡å®šæ ‡é¢˜æ‰€å¯¹åº”çš„å±æ€§å­—æ®µåˆ—ç´¢å¼•-->
 		<attribute>
 			<name>colid</name>
 			<rtexprvalue>true</rtexprvalue>
@@ -528,13 +528,13 @@
 			<name>colspan</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
-		<!--Ö¸¶¨±êÌâËù¶ÔÓ¦µÄÊôĞÔ×Ö¶ÎÃû³Æ-->
+		<!--æŒ‡å®šæ ‡é¢˜æ‰€å¯¹åº”çš„å±æ€§å­—æ®µåç§°-->
 		<attribute>
 			<name>colName</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!-- 
-		titleÔªËØÀàĞÍ£º
+		titleå…ƒç´ ç±»å‹ï¼š
 		type-td
 		     th
 		 -->
@@ -544,8 +544,8 @@
 		</attribute>
 	</tag>
 	<!--
-		¹¦ÄÜ£ºÑ­»·Êä³öÁĞ±íÊı¾İ£¬¿ÉÇ¶Ì×list tag Èç¹ûÊÇÇ¶Ì×ÁĞ±íÔò¿ÉÉèÖÃÈçÏÂÊôĞÔ£º
-		colName,property,sortKey,desc£¬±ØĞëÉèÖÃcolNameÊôĞÔ
+		åŠŸèƒ½ï¼šå¾ªç¯è¾“å‡ºåˆ—è¡¨æ•°æ®ï¼Œå¯åµŒå¥—list tag å¦‚æœæ˜¯åµŒå¥—åˆ—è¡¨åˆ™å¯è®¾ç½®å¦‚ä¸‹å±æ€§ï¼š
+		colName,property,sortKey,descï¼Œå¿…é¡»è®¾ç½®colNameå±æ€§
 	-->
 	<tag>
 		<name>list</name>
@@ -553,20 +553,20 @@
 		<teiclass>com.frameworkset.common.tag.pager.tags.PagerDataSetExtraInfo</teiclass>
 		<bodycontent>JSP</bodycontent>
 		<!-- 
-		moreQuery Èç¹û·ÖÒ³²éÑ¯Ê±more²éÑ¯£¬ÔòÉèÖÃÎªtrue£¬Ä¬ÈÏÎªfalse
-		more²éÑ¯½«Ó°Ïìindex±êÇ©µÄÕ¹Ê¾Ğ§¹û£¬²»»á´¦Àí×Ü¼ÇÂ¼Êı£¬Òò´Ë
-		index±êÇ©½«²»ÔÙÓĞ×Ü¼ÇÂ¼ÊıÊä³ö£¬ÏÂÒ»Ò³»òÕßÌø×ªÃ»ÓĞ»ñÈ¡µ½Êı¾İÊ±Ö±½Ó×èÖ¹²éÑ¯²¢·µ»Ø¿ÕÖµ
-		Ã»ÓĞÎ²Ò³µÄÊä³ö		
-		Ã¿Ò³Ìø×ªÊä³ö
-		Ã¿Ò³×Ü¼ÇÂ¼ÊıºÍ×ÜÒ³ÊıÊä³ö
+		moreQuery å¦‚æœåˆ†é¡µæŸ¥è¯¢æ—¶moreæŸ¥è¯¢ï¼Œåˆ™è®¾ç½®ä¸ºtrueï¼Œé»˜è®¤ä¸ºfalse
+		moreæŸ¥è¯¢å°†å½±å“indexæ ‡ç­¾çš„å±•ç¤ºæ•ˆæœï¼Œä¸ä¼šå¤„ç†æ€»è®°å½•æ•°ï¼Œå› æ­¤
+		indexæ ‡ç­¾å°†ä¸å†æœ‰æ€»è®°å½•æ•°è¾“å‡ºï¼Œä¸‹ä¸€é¡µæˆ–è€…è·³è½¬æ²¡æœ‰è·å–åˆ°æ•°æ®æ—¶ç›´æ¥é˜»æ­¢æŸ¥è¯¢å¹¶è¿”å›ç©ºå€¼
+		æ²¡æœ‰å°¾é¡µçš„è¾“å‡º		
+		æ¯é¡µè·³è½¬è¾“å‡º
+		æ¯é¡µæ€»è®°å½•æ•°å’Œæ€»é¡µæ•°è¾“å‡º
 		 -->
 		<attribute>
 			<name>moreQuery</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!--
-			Õë¶ÔsessionKey¡¢requestKey¡¢pagecontextKey½øĞĞclassdataListÊı¾İ¶ÔÏó»º´æ£¬
- 			±ÜÃâÖØ¸´Ê¹ÓÃÊ±ÖØ¸´Éú³ÉÊı¾İ¶ÔÏó£¬Ä¬ÈÏÖµÎªtrue
+			é’ˆå¯¹sessionKeyã€requestKeyã€pagecontextKeyè¿›è¡ŒclassdataListæ•°æ®å¯¹è±¡ç¼“å­˜ï¼Œ
+ 			é¿å…é‡å¤ä½¿ç”¨æ—¶é‡å¤ç”Ÿæˆæ•°æ®å¯¹è±¡ï¼Œé»˜è®¤å€¼ä¸ºtrue
 		-->
 		<attribute>
 			<name>softparser</name>
@@ -577,14 +577,14 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 			<!-- 
-		jqueryÄÚÈİÈİÆ÷
+		jqueryå†…å®¹å®¹å™¨
 		 -->
 		<attribute>
 			<name>containerid</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!-- 
-		jqueryÄÚÈİÑ¡ÔñÆ÷
+		jqueryå†…å®¹é€‰æ‹©å™¨
 		 -->
 		<attribute>
 			<name>selector</name>
@@ -592,7 +592,7 @@
 		</attribute>
 		
 		<!--
-			ÁĞ±í±êÊ¶
+			åˆ—è¡¨æ ‡è¯†
 		-->
 		<attribute>
 			<name>id</name>
@@ -610,13 +610,13 @@
 			<name>property</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
-		<!--Ö¸¶¨È±Ê¡µÄÅÅĞò¹Ø¼ü×Ö-->
+		<!--æŒ‡å®šç¼ºçœçš„æ’åºå…³é”®å­—-->
 		<attribute>
 			<name>sortKey</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!--
-			²éÕÒ×æÏÈ(list)Ë÷Òı
+			æŸ¥æ‰¾ç¥–å…ˆ(list)ç´¢å¼•
 		-->
 		<attribute>
 			<name>index</name>
@@ -639,21 +639,21 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!--
-			ÊÇ·ñÉùÃ÷Íâ²¿±äÁ¿
-			true:ÉùÃ÷£¬È±Ê¡Öµ
-			false£º²»ÉùÃ÷
+			æ˜¯å¦å£°æ˜å¤–éƒ¨å˜é‡
+			true:å£°æ˜ï¼Œç¼ºçœå€¼
+			falseï¼šä¸å£°æ˜
 		-->
 		<attribute>
 			<name>declare</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
-		<!--Ö¸¶¨È±Ê¡µÄÅÅĞòË³Ğò-->
+		<!--æŒ‡å®šç¼ºçœçš„æ’åºé¡ºåº-->
 		<attribute>
 			<name>desc</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!--
-			Ö¸¶¨Êı¾İ¿â²éÑ¯Óï¾ä£¬»òÕß´æ´¢¹ı³Ì£¬
+			æŒ‡å®šæ•°æ®åº“æŸ¥è¯¢è¯­å¥ï¼Œæˆ–è€…å­˜å‚¨è¿‡ç¨‹ï¼Œ
 			Added on 2007.2.1 by biaoping.yin
 		-->
 		<attribute>
@@ -661,7 +661,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!--
-			Ö¸¶¨Êı¾İ¿âÁ´½Ó³ØµÄÃû³Æ 
+			æŒ‡å®šæ•°æ®åº“é“¾æ¥æ± çš„åç§° 
 			Added on 2007.2.1 PM by biaoping.yin
 		-->
 		<attribute>
@@ -676,7 +676,7 @@
 		</attribute>
 		
 		<!--
-			ÎªlistÌí¼Ó·ÖÒ³¹¦ÄÜµÄÏà¹ØÊôĞÔ¶¨Òå¿ªÊ¼ ±êÊ¶ÊÇ·ñÊÇwapÍøÒ³ true£ºÊÇwapÍøÒ³ false£º²»ÊÇwapÍøÒ³£¬È±Ê¡Öµ
+			ä¸ºlistæ·»åŠ åˆ†é¡µåŠŸèƒ½çš„ç›¸å…³å±æ€§å®šä¹‰å¼€å§‹ æ ‡è¯†æ˜¯å¦æ˜¯wapç½‘é¡µ trueï¼šæ˜¯wapç½‘é¡µ falseï¼šä¸æ˜¯wapç½‘é¡µï¼Œç¼ºçœå€¼
 		-->
 		<attribute>
 			<name>wapflag</name>
@@ -691,50 +691,50 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!--
-			¿ØÖÆ·ÖÒ³/ÁĞ±í¿ª¹Ø
-			true:ÎªÁĞ±í
-			false:Îª·ÖÒ³
+			æ§åˆ¶åˆ†é¡µ/åˆ—è¡¨å¼€å…³
+			true:ä¸ºåˆ—è¡¨
+			false:ä¸ºåˆ†é¡µ
 			
-			È±Ê¡£ºfalse
+			ç¼ºçœï¼šfalse
 		-->
 		<attribute>
 			<name>isList</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!--
-			·ÖÒ³±êÇ©Ò³Ãæµ¼º½Ê±Ìá½»µÄform±íµ¥Ãû³Æ
+			åˆ†é¡µæ ‡ç­¾é¡µé¢å¯¼èˆªæ—¶æäº¤çš„formè¡¨å•åç§°
 		-->
 		<attribute>
 			<name>form</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!--
-			·ÖÒ³µ¼º½formÌá½»Ç°µÄÌáÊ¾ĞÅÏ¢
+			åˆ†é¡µå¯¼èˆªformæäº¤å‰çš„æç¤ºä¿¡æ¯
 		-->
 		<attribute>
 			<name>promotion</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
-		<!--ÒÔ¶ººÅ·Ö¸ôµÄ×Ö¶ÎÊôĞÔ¼¯ºÏ-->
+		<!--ä»¥é€—å·åˆ†éš”çš„å­—æ®µå±æ€§é›†åˆ-->
 		<attribute>
 			<name>field</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
-		<!--ÒÔ¶ººÅ·Ö¸ôµÄ×Ö¶ÎÊôĞÔ¶ÔÓ¦µÄ±êÌâ¼¯ºÏ-->
+		<!--ä»¥é€—å·åˆ†éš”çš„å­—æ®µå±æ€§å¯¹åº”çš„æ ‡é¢˜é›†åˆ-->
 		<attribute>
 			<name>title</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
-		<!--ÒÔ¶ººÅ·Ö¸ôµÄ×Ö¶ÎÊôĞÔ¶ÔÓ¦µÄ±êÌâÏÔÊ¾µÄ¿í¶È¼¯ºÏ-->
+		<!--ä»¥é€—å·åˆ†éš”çš„å­—æ®µå±æ€§å¯¹åº”çš„æ ‡é¢˜æ˜¾ç¤ºçš„å®½åº¦é›†åˆ-->
 		<attribute>
 			<name>width</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!--
-			ÎªlistÌí¼Ó·ÖÒ³¹¦ÄÜµÄÏà¹ØÊôĞÔ¶¨Òå½áÊø Ö¸¶¨list±êÇ©ÄÚ²¿±äÁ¿dataSetµÄ±äÁ¿Ãû³Æ,È±Ê¡ÎªdataSet
-			dataSetÌá¹©ÒÔÏÂ·½·¨£º getString(propertyName); getInt(propertyName);
+			ä¸ºlistæ·»åŠ åˆ†é¡µåŠŸèƒ½çš„ç›¸å…³å±æ€§å®šä¹‰ç»“æŸ æŒ‡å®šlistæ ‡ç­¾å†…éƒ¨å˜é‡dataSetçš„å˜é‡åç§°,ç¼ºçœä¸ºdataSet
+			dataSetæä¾›ä»¥ä¸‹æ–¹æ³•ï¼š getString(propertyName); getInt(propertyName);
 			getString(propertyName,defaultvalue);
-			getInt(propertyName,defaultvalue); getDate(propertyName); ÀıÈç£º
+			getInt(propertyName,defaultvalue); getDate(propertyName); ä¾‹å¦‚ï¼š
 			<pg:list ... dataSetName="dataSet1" ...> ...
 			dataSet1.getString("name"); ... </pg:list>
 		-->
@@ -743,7 +743,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!--
-			Ö¸¶¨list±êÇ©ÄÚ²¿±äÁ¿rowidµÄ±äÁ¿Ãû³Æ,È±Ê¡Îª"rowid" ÀıÈç£º <pg:list ... rowidName="rowid1"
+			æŒ‡å®šlistæ ‡ç­¾å†…éƒ¨å˜é‡rowidçš„å˜é‡åç§°,ç¼ºçœä¸º"rowid" ä¾‹å¦‚ï¼š <pg:list ... rowidName="rowid1"
 			...> ... out.println(rowid1); ... </pg:list>
 		-->
 		<attribute>
@@ -751,10 +751,10 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!--
-			ÎªlistÌí¼Ó·ÖÒ³¹¦ÄÜµÄÏà¹ØÊôĞÔ¶¨Òå½áÊø /** * Èç¹ûÍ¨¹ıtitle±êÇ©ÉèÖÃÅÅĞò×Ö¶Î£¬Í¨¹ı¸ÃÊôĞÔÀ´ *
-			¿ØÖÆÊÇ·ñ×Ô¶¯¶Ôµ±Ç°Ò³Êı¾İÅÅĞò£¬»¹ÊÇÔÚÊı¾İ¼ÓÔØÆ÷ÖĞÊÖ¹¤¹¹ÔìsqlÓï¾ä¶ÔÈ«²¿Êı¾İÅÅĞò * true-×Ô¶¯ÅÅĞò£¬È±Ê¡Öµ *
-			false-ÔÚÊı¾İ¼ÓÔØÆ÷ÖĞÊÖ¹¤¹¹ÔìsqlÓï¾ä¶ÔÈ«²¿Êı¾İÅÅĞò,Èç¹ûÊı¾İ¼ÓÔØÆ÷Ã»ÓĞ½«titleÖ¸¶¨µÄÅÅĞò×Ö¶Î×÷ÎªsqlµÄÅÅĞò×Ö¶Î£¬ÄÇÃ´ *
-			Ö¸¶¨µÄÅÅĞò×Ö¶Î½«²»Æğ×÷ÓÃ */
+			ä¸ºlistæ·»åŠ åˆ†é¡µåŠŸèƒ½çš„ç›¸å…³å±æ€§å®šä¹‰ç»“æŸ /** * å¦‚æœé€šè¿‡titleæ ‡ç­¾è®¾ç½®æ’åºå­—æ®µï¼Œé€šè¿‡è¯¥å±æ€§æ¥ *
+			æ§åˆ¶æ˜¯å¦è‡ªåŠ¨å¯¹å½“å‰é¡µæ•°æ®æ’åºï¼Œè¿˜æ˜¯åœ¨æ•°æ®åŠ è½½å™¨ä¸­æ‰‹å·¥æ„é€ sqlè¯­å¥å¯¹å…¨éƒ¨æ•°æ®æ’åº * true-è‡ªåŠ¨æ’åºï¼Œç¼ºçœå€¼ *
+			false-åœ¨æ•°æ®åŠ è½½å™¨ä¸­æ‰‹å·¥æ„é€ sqlè¯­å¥å¯¹å…¨éƒ¨æ•°æ®æ’åº,å¦‚æœæ•°æ®åŠ è½½å™¨æ²¡æœ‰å°†titleæŒ‡å®šçš„æ’åºå­—æ®µä½œä¸ºsqlçš„æ’åºå­—æ®µï¼Œé‚£ä¹ˆ *
+			æŒ‡å®šçš„æ’åºå­—æ®µå°†ä¸èµ·ä½œç”¨ */
 		-->
 		<attribute>
 			<name>autosort</name>
@@ -762,10 +762,10 @@
 		</attribute>
 	</tag>
 	<!--
-		¹¦ÄÜ£ºÑ­»·Êä³ömapÖĞµÄÊı¾İ£¬Ã¿´ÎÑ­»·Õ¹Ê¾mapÖĞµÄÒ»¸ö¶ÔÏó£¬¶ÔÏóµÄÊôĞÔÍ¨¹ıcell±êÇ©Êä³ö
-		Èç¹ûĞèÒª»ñÈ¡¶ÔÓ¦µÄÊôĞÔµÄkey¿ÉÒÔÍ¨¹ımapkey±êÇ©»ñÈ¡
-		¿ÉÇ¶Ì×map£¬beaninfo list tag Èç¹ûÊÇÇ¶Ì×ÁĞ±íÔò¿ÉÉèÖÃÈçÏÂÊôĞÔ£º
-		colName,property,sortKey,desc£¬±ØĞëÉèÖÃcolNameÊôĞÔ
+		åŠŸèƒ½ï¼šå¾ªç¯è¾“å‡ºmapä¸­çš„æ•°æ®ï¼Œæ¯æ¬¡å¾ªç¯å±•ç¤ºmapä¸­çš„ä¸€ä¸ªå¯¹è±¡ï¼Œå¯¹è±¡çš„å±æ€§é€šè¿‡cellæ ‡ç­¾è¾“å‡º
+		å¦‚æœéœ€è¦è·å–å¯¹åº”çš„å±æ€§çš„keyå¯ä»¥é€šè¿‡mapkeyæ ‡ç­¾è·å–
+		å¯åµŒå¥—mapï¼Œbeaninfo list tag å¦‚æœæ˜¯åµŒå¥—åˆ—è¡¨åˆ™å¯è®¾ç½®å¦‚ä¸‹å±æ€§ï¼š
+		colName,property,sortKey,descï¼Œå¿…é¡»è®¾ç½®colNameå±æ€§
 	-->
 	<tag>
 		<name>map</name>
@@ -774,8 +774,8 @@
 		<bodycontent>JSP</bodycontent>
 		
 		<!--
-			Õë¶ÔsessionKey¡¢requestKey¡¢pagecontextKey½øĞĞclassdataListÊı¾İ¶ÔÏó»º´æ£¬
- 			±ÜÃâÖØ¸´Ê¹ÓÃÊ±ÖØ¸´Éú³ÉÊı¾İ¶ÔÏó£¬Ä¬ÈÏÖµÎªtrue
+			é’ˆå¯¹sessionKeyã€requestKeyã€pagecontextKeyè¿›è¡ŒclassdataListæ•°æ®å¯¹è±¡ç¼“å­˜ï¼Œ
+ 			é¿å…é‡å¤ä½¿ç”¨æ—¶é‡å¤ç”Ÿæˆæ•°æ®å¯¹è±¡ï¼Œé»˜è®¤å€¼ä¸ºtrue
 		-->
 		<attribute>
 			<name>softparser</name>
@@ -786,7 +786,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!--
-			ÁĞ±í±êÊ¶
+			åˆ—è¡¨æ ‡è¯†
 		-->
 		<attribute>
 			<name>id</name>
@@ -801,13 +801,13 @@
 			<name>property</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
-		<!--Ö¸¶¨È±Ê¡µÄÅÅĞò¹Ø¼ü×Ö-->
+		<!--æŒ‡å®šç¼ºçœçš„æ’åºå…³é”®å­—-->
 		<attribute>
 			<name>sortKey</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!--
-			²éÕÒ×æÏÈ(map»òÕßlist£¬beaninfo)Ë÷Òı
+			æŸ¥æ‰¾ç¥–å…ˆ(mapæˆ–è€…listï¼Œbeaninfo)ç´¢å¼•
 		-->
 		<attribute>
 			<name>index</name>
@@ -830,21 +830,21 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!--
-			ÊÇ·ñÉùÃ÷Íâ²¿±äÁ¿
-			true:ÉùÃ÷£¬È±Ê¡Öµ
-			false£º²»ÉùÃ÷
+			æ˜¯å¦å£°æ˜å¤–éƒ¨å˜é‡
+			true:å£°æ˜ï¼Œç¼ºçœå€¼
+			falseï¼šä¸å£°æ˜
 		-->
 		<attribute>
 			<name>declare</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
-		<!--Ö¸¶¨È±Ê¡µÄÅÅĞòË³Ğò-->
+		<!--æŒ‡å®šç¼ºçœçš„æ’åºé¡ºåº-->
 		<attribute>
 			<name>desc</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!--
-			Ö¸¶¨Êı¾İ¿â²éÑ¯Óï¾ä£¬»òÕß´æ´¢¹ı³Ì£¬
+			æŒ‡å®šæ•°æ®åº“æŸ¥è¯¢è¯­å¥ï¼Œæˆ–è€…å­˜å‚¨è¿‡ç¨‹ï¼Œ
 			Added on 2007.2.1 by biaoping.yin
 		-->
 		<attribute>
@@ -852,7 +852,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!--
-			Ö¸¶¨Êı¾İ¿âÁ´½Ó³ØµÄÃû³Æ 
+			æŒ‡å®šæ•°æ®åº“é“¾æ¥æ± çš„åç§° 
 			Added on 2007.2.1 PM by biaoping.yin
 		-->
 		<attribute>
@@ -874,10 +874,10 @@
 		
 		
 		<!--
-			ÎªmapÌí¼Ó·ÖÒ³¹¦ÄÜµÄÏà¹ØÊôĞÔ¶¨Òå½áÊø Ö¸¶¨list±êÇ©ÄÚ²¿±äÁ¿dataSetµÄ±äÁ¿Ãû³Æ,È±Ê¡ÎªdataSet
-			dataSetÌá¹©ÒÔÏÂ·½·¨£º getString(propertyName); getInt(propertyName);
+			ä¸ºmapæ·»åŠ åˆ†é¡µåŠŸèƒ½çš„ç›¸å…³å±æ€§å®šä¹‰ç»“æŸ æŒ‡å®šlistæ ‡ç­¾å†…éƒ¨å˜é‡dataSetçš„å˜é‡åç§°,ç¼ºçœä¸ºdataSet
+			dataSetæä¾›ä»¥ä¸‹æ–¹æ³•ï¼š getString(propertyName); getInt(propertyName);
 			getString(propertyName,defaultvalue);
-			getInt(propertyName,defaultvalue); getDate(propertyName); ÀıÈç£º
+			getInt(propertyName,defaultvalue); getDate(propertyName); ä¾‹å¦‚ï¼š
 			<pg:list ... dataSetName="dataSet1" ...> ...
 			dataSet1.getString("name"); ... </pg:list>
 		-->
@@ -886,7 +886,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!--
-			Ö¸¶¨map±êÇ©ÄÚ²¿±äÁ¿rowidµÄ±äÁ¿Ãû³Æ,È±Ê¡Îª"rowid" ÀıÈç£º <pg:map ... rowidName="rowid1"
+			æŒ‡å®šmapæ ‡ç­¾å†…éƒ¨å˜é‡rowidçš„å˜é‡åç§°,ç¼ºçœä¸º"rowid" ä¾‹å¦‚ï¼š <pg:map ... rowidName="rowid1"
 			...> ... out.println(rowid1); ... </pg:map>
 		-->
 		<attribute>
@@ -894,26 +894,26 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!--
-		ÊÇ·ñ×Ô¶¯ÅÉÑ¶
+		æ˜¯å¦è‡ªåŠ¨æ´¾è®¯
 		-->
 		<attribute>
 			<name>autosort</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
-		<!-- Ö¸¶¨mapÊı¾İ¿âkey£¬´ÓmapÖĞ»ñÈ¡key¶ÔÓ¦µÄvalue£¬map±êÇ©ÖĞÄÚÖÃµÄcell±êÇ©¡¢Âß¼­±êÇ©¡¢list±êÇ©
-		¶¼¿ÉÒÔÕ¹Ê¾value¶ÔÏóÖĞ°üº¬µÄÊı¾İ -->
+		<!-- æŒ‡å®šmapæ•°æ®åº“keyï¼Œä»mapä¸­è·å–keyå¯¹åº”çš„valueï¼Œmapæ ‡ç­¾ä¸­å†…ç½®çš„cellæ ‡ç­¾ã€é€»è¾‘æ ‡ç­¾ã€listæ ‡ç­¾
+		éƒ½å¯ä»¥å±•ç¤ºvalueå¯¹è±¡ä¸­åŒ…å«çš„æ•°æ® -->
 		<attribute>
 			<name>key</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
-		<!-- Ö¸¶¨mapËù¶ÔÓ¦µÄÍâÎ§ÈİÆ÷ÖĞ¶ÔÏóÖĞµÄÊôĞÔÃû³Æ£¬keyµÄÓÉ¸ÃÊôĞÔ¶ÔÓ¦µÄÖµÖ¸¶¨£¬map±êÇ©È»ºó»ñÈ¡key¶ÔÓ¦µÄvalue£¬map±êÇ©ÖĞÄÚÖÃµÄcell±êÇ©¡¢Âß¼­±êÇ©¡¢list±êÇ©
-		¶¼¿ÉÒÔÕ¹Ê¾value¶ÔÏóÖĞ°üº¬µÄÊı¾İ -->
+		<!-- æŒ‡å®šmapæ‰€å¯¹åº”çš„å¤–å›´å®¹å™¨ä¸­å¯¹è±¡ä¸­çš„å±æ€§åç§°ï¼Œkeyçš„ç”±è¯¥å±æ€§å¯¹åº”çš„å€¼æŒ‡å®šï¼Œmapæ ‡ç­¾ç„¶åè·å–keyå¯¹åº”çš„valueï¼Œmapæ ‡ç­¾ä¸­å†…ç½®çš„cellæ ‡ç­¾ã€é€»è¾‘æ ‡ç­¾ã€listæ ‡ç­¾
+		éƒ½å¯ä»¥å±•ç¤ºvalueå¯¹è±¡ä¸­åŒ…å«çš„æ•°æ® -->
 		<attribute>
 			<name>keycolName</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
-		<!-- Ö¸¶¨mapËù¶ÔÓ¦µÄÍâÎ§ÈİÆ÷ÖĞ¶ÔÏó×÷ÎªkeyÖµ£¬map±êÇ©È»ºó»ñÈ¡key¶ÔÓ¦µÄvalue£¬map±êÇ©ÖĞÄÚÖÃµÄcell±êÇ©¡¢Âß¼­±êÇ©¡¢list±êÇ©
-		¶¼¿ÉÒÔÕ¹Ê¾value¶ÔÏóÖĞ°üº¬µÄÊı¾İ -->
+		<!-- æŒ‡å®šmapæ‰€å¯¹åº”çš„å¤–å›´å®¹å™¨ä¸­å¯¹è±¡ä½œä¸ºkeyå€¼ï¼Œmapæ ‡ç­¾ç„¶åè·å–keyå¯¹åº”çš„valueï¼Œmapæ ‡ç­¾ä¸­å†…ç½®çš„cellæ ‡ç­¾ã€é€»è¾‘æ ‡ç­¾ã€listæ ‡ç­¾
+		éƒ½å¯ä»¥å±•ç¤ºvalueå¯¹è±¡ä¸­åŒ…å«çš„æ•°æ® -->
 		<attribute>
 			<name>keycell</name>
 			<rtexprvalue>true</rtexprvalue>
@@ -927,14 +927,14 @@
 		
 	</tag>	
 	<!--
-		¹¦ÄÜ£ºÓÃÀ´ÏÔÊ¾¶ÔÏóµÄÏêÏ¸ĞÅÏ¢£¬°üÀ¨×Ö¶ÎÖµ£¬¶ÔÏóÖĞ°üº¬µÄ¼¯ºÏ£¨list/set/mapµÈµÈ£©ÖĞµÄ¶ÔÏóµÄËùÓĞĞÅÏ¢
-		ËùÒªÏÔÊ¾µÄ¶ÔÏó¿ÉÒÔ´Órequest,session,pageContextÖĞ»ñÈ¡£¬ÊÂÏÈ½«¶ÔÏóÉèÖÃµ½ÉÏÊö¶ÔÏóµÄÊôĞÔÖĞ ÊôĞÔÖµÍ¨¹ıÇ¶Ì×cell
-		tagÏÔÊ¾£¬¼¯ºÏÍ¨¹ıÇ¶Ì×list tagÏÔÊ¾. ±¾±êÇ©»¹¿É×÷Îª·ÖÒ³/ÁĞ±íµÄÄÚÇ¶±êÇ©Ê¹ÓÃ£¬µ±ÊôĞÔÎªjavabeanÊ±ÓÃÀ´ÏÔÊ¾ÆäÏêÏ¸ĞÅÏ¢ ÊôĞÔ£º
-		sessionKey£º Ö¸¶¨´æ·Å¶ÔÏóµÄsession key requestKey: Ö¸¶¨´æ·Å¶ÔÏóµÄrequest ÊôĞÔkey
-		pageContextKey: Ö¸¶¨´æ·Å¶ÔÏóµÄpageContext ÊôĞÔkey needClear:
-		¿ØÖÆdetail±êÇ©½áÊøÊ±ÊÇ·ñÇå³ş´æ·ÅÔÚsession/request/pageContextÖĞµÄ¶ÔÏó,
-		trueÇå³ı£¬false²»Çå³ı,Ä¬ÈÏÎª²»Çå³ş colName: ±êÇ©×÷Îª·ÖÒ³/ÁĞ±íµÄÄÚÇ¶±êÇ©Ê¹ÓÃ property:
-		±êÇ©×÷Îª·ÖÒ³/ÁĞ±íµÄÄÚÇ¶±êÇ©Ê¹ÓÃ
+		åŠŸèƒ½ï¼šç”¨æ¥æ˜¾ç¤ºå¯¹è±¡çš„è¯¦ç»†ä¿¡æ¯ï¼ŒåŒ…æ‹¬å­—æ®µå€¼ï¼Œå¯¹è±¡ä¸­åŒ…å«çš„é›†åˆï¼ˆlist/set/mapç­‰ç­‰ï¼‰ä¸­çš„å¯¹è±¡çš„æ‰€æœ‰ä¿¡æ¯
+		æ‰€è¦æ˜¾ç¤ºçš„å¯¹è±¡å¯ä»¥ä»request,session,pageContextä¸­è·å–ï¼Œäº‹å…ˆå°†å¯¹è±¡è®¾ç½®åˆ°ä¸Šè¿°å¯¹è±¡çš„å±æ€§ä¸­ å±æ€§å€¼é€šè¿‡åµŒå¥—cell
+		tagæ˜¾ç¤ºï¼Œé›†åˆé€šè¿‡åµŒå¥—list tagæ˜¾ç¤º. æœ¬æ ‡ç­¾è¿˜å¯ä½œä¸ºåˆ†é¡µ/åˆ—è¡¨çš„å†…åµŒæ ‡ç­¾ä½¿ç”¨ï¼Œå½“å±æ€§ä¸ºjavabeanæ—¶ç”¨æ¥æ˜¾ç¤ºå…¶è¯¦ç»†ä¿¡æ¯ å±æ€§ï¼š
+		sessionKeyï¼š æŒ‡å®šå­˜æ”¾å¯¹è±¡çš„session key requestKey: æŒ‡å®šå­˜æ”¾å¯¹è±¡çš„request å±æ€§key
+		pageContextKey: æŒ‡å®šå­˜æ”¾å¯¹è±¡çš„pageContext å±æ€§key needClear:
+		æ§åˆ¶detailæ ‡ç­¾ç»“æŸæ—¶æ˜¯å¦æ¸…æ¥šå­˜æ”¾åœ¨session/request/pageContextä¸­çš„å¯¹è±¡,
+		trueæ¸…é™¤ï¼Œfalseä¸æ¸…é™¤,é»˜è®¤ä¸ºä¸æ¸…æ¥š colName: æ ‡ç­¾ä½œä¸ºåˆ†é¡µ/åˆ—è¡¨çš„å†…åµŒæ ‡ç­¾ä½¿ç”¨ property:
+		æ ‡ç­¾ä½œä¸ºåˆ†é¡µ/åˆ—è¡¨çš„å†…åµŒæ ‡ç­¾ä½¿ç”¨
 	-->
 	<tag>
 		<name>beaninfo</name>
@@ -966,7 +966,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!--
-			¶¨Òå·¶Î§£ºsession£¬request£¬pageContext£¬cms£¨ÄÚÈİ¹ÜÀíÔö¼Ó£©£¬db
+			å®šä¹‰èŒƒå›´ï¼šsessionï¼Œrequestï¼ŒpageContextï¼Œcmsï¼ˆå†…å®¹ç®¡ç†å¢åŠ ï¼‰ï¼Œdb
 			
 		-->
 		<attribute>
@@ -974,51 +974,51 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!--
-			²éÕÒ×æÏÈ(list)Ë÷Òı
+			æŸ¥æ‰¾ç¥–å…ˆ(list)ç´¢å¼•
 		-->
 		<attribute>
 			<name>index</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!--
-			¶¨Òå²éÑ¯Êı¾İ¿âµÄ²éÑ¯Óï¾ä
+			å®šä¹‰æŸ¥è¯¢æ•°æ®åº“çš„æŸ¥è¯¢è¯­å¥
 		-->
 		<attribute>
 			<name>statement</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!--
-			¶¨Òå²éÑ¯µÄÊı¾İ¿âÁ¬½Ó³ØÃû³Æ
+			å®šä¹‰æŸ¥è¯¢çš„æ•°æ®åº“è¿æ¥æ± åç§°
 		-->
 		<attribute>
 			<name>dbname</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!--
-			¶¨ÒåÏêÏ¸Ò³ÃæÏÔÊ¾Êı¾İÊôĞÔ¼¯ºÏ£¬ÒÔ¶ººÅ·Ö¸ô
+			å®šä¹‰è¯¦ç»†é¡µé¢æ˜¾ç¤ºæ•°æ®å±æ€§é›†åˆï¼Œä»¥é€—å·åˆ†éš”
 		-->
 		<attribute>
 			<name>field</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!--
-			¶¨ÒåÏêÏ¸Ò³Ãæ±êÌâÏÔÊ¾¿í¶È¼¯ºÏ£¬ÒÔ¶ººÅ·Ö¸ô
+			å®šä¹‰è¯¦ç»†é¡µé¢æ ‡é¢˜æ˜¾ç¤ºå®½åº¦é›†åˆï¼Œä»¥é€—å·åˆ†éš”
 		-->
 		<attribute>
 			<name>width</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!--
-			¶¨ÒåÏêÏ¸Ò³ÃæÏÔÊ¾±êÌâ¼¯ºÏ£¬ÒÔ¶ººÅ·Ö¸ô
+			å®šä¹‰è¯¦ç»†é¡µé¢æ˜¾ç¤ºæ ‡é¢˜é›†åˆï¼Œä»¥é€—å·åˆ†éš”
 		-->
 		<attribute>
 			<name>title</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!--
-			ÊÇ·ñÉùÃ÷Íâ²¿±äÁ¿
-			true:ÉùÃ÷£¬È±Ê¡Öµ
-			false£º²»ÉùÃ÷
+			æ˜¯å¦å£°æ˜å¤–éƒ¨å˜é‡
+			true:å£°æ˜ï¼Œç¼ºçœå€¼
+			falseï¼šä¸å£°æ˜
 		-->
 		<attribute>
 			<name>declare</name>
@@ -1036,7 +1036,7 @@
 		
 	</tag>
 	<!--
-		¹¦ÄÜ£º¼ÇÂ¼±£´æµ±Ç°·ÖÒ³ÁĞ±íÒ³Ãæ²ÎÊı µ±ÓÃ»§´Ó·ÖÒ³ÁĞ±íÒ³ÃæÌø×ªµ½ÆäËûÒ³ÃæÍê³É²Ù×÷ÒªÇó·µ»Ø·ÖÒ³ÁĞ±íµÄµ±Ç°Ò³ÃæÊ±£¬´Ó±¾±êÇ©»ñÈ¡Ô­À´Ò³ÃæµÄ²ÎÊı¼´¿É
+		åŠŸèƒ½ï¼šè®°å½•ä¿å­˜å½“å‰åˆ†é¡µåˆ—è¡¨é¡µé¢å‚æ•° å½“ç”¨æˆ·ä»åˆ†é¡µåˆ—è¡¨é¡µé¢è·³è½¬åˆ°å…¶ä»–é¡µé¢å®Œæˆæ“ä½œè¦æ±‚è¿”å›åˆ†é¡µåˆ—è¡¨çš„å½“å‰é¡µé¢æ—¶ï¼Œä»æœ¬æ ‡ç­¾è·å–åŸæ¥é¡µé¢çš„å‚æ•°å³å¯
 	-->
 	<tag>
 		<name>querystring</name>
@@ -1053,7 +1053,7 @@
 		<bodycontent>JSP</bodycontent>
 	</tag>
 	<!--
-		¹¦ÄÜËµÃ÷£ºÏÔÊ¾Ã¿¸ö×Ö¶ÎÊôĞÔµÄÖµ
+		åŠŸèƒ½è¯´æ˜ï¼šæ˜¾ç¤ºæ¯ä¸ªå­—æ®µå±æ€§çš„å€¼
 	-->
 	<tag>
 		<name>cell</name>
@@ -1076,14 +1076,14 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!--
-			²éÕÒ×æÏÈ(list)Ë÷Òı
+			æŸ¥æ‰¾ç¥–å…ˆ(list)ç´¢å¼•
 		-->
 		<attribute>
 			<name>index</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!--
-			Êä³öÈÕÆÚ¸ñÊ½ dateformat; Êä³öÊı×Ö¸ñÊ½ numerformat;
+			è¾“å‡ºæ—¥æœŸæ ¼å¼ dateformat; è¾“å‡ºæ•°å­—æ ¼å¼ numerformat;
 		-->
 		<attribute>
 			<name>dateformat</name>
@@ -1094,9 +1094,9 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!--
-			Ö¸¶¨µ¥Ôª¸ñÊä³öµÄÄ¬ÈÏÖµ
-			µ±Ç°µÄÖµÎªnullÊ±£¬Êä³öÖ¸¶¨µÄÄ¬ÈÏÖµ£¬
-			Èç¹û²»Ö¸¶¨Ä¬ÈÏÖµ½«Ö±½ÓÊä³önull¡£
+			æŒ‡å®šå•å…ƒæ ¼è¾“å‡ºçš„é»˜è®¤å€¼
+			å½“å‰çš„å€¼ä¸ºnullæ—¶ï¼Œè¾“å‡ºæŒ‡å®šçš„é»˜è®¤å€¼ï¼Œ
+			å¦‚æœä¸æŒ‡å®šé»˜è®¤å€¼å°†ç›´æ¥è¾“å‡ºnullã€‚
 		-->
 		<attribute>
 			<name>defaultValue</name>
@@ -1115,19 +1115,19 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!--
-			ÇóÖµ±í´ïÊ½:Èç¹ûÉèÖÃ±í´ïÊ½£¬½«Í¨¹ı±í´ïÊ½Çó½âcell±êÇ©µÄÊä³ö ±í´ïÊ½Ö§³ÖµÄ»ù±¾²Ù×÷ÓĞ£ºÚ¤£¬³Ë·¨£¬³ı·¨£¬ÇóÓà£¬¼Ó/¼õ£¬×Ö·û´®µÄ¼Ó²Ù×÷
-			±í´ïÊ½Ö§³ÖµÄ¾ÛºÏ²Ù×÷ÓĞ£ºÇóºÍ£¬ÇóÆ½¾ùÖµ£¬¼ÆÊı ²Ù×÷Êı£º¿ÉÒÔÎª±äÁ¿£¬ÕûÊı£¬Ğ¡Êı£¬×Ö·û´®
-			ÆäÖĞ±äÁ¿ÊÇÖ¸ÁĞ±í/·ÖÒ³/Ò³ÃæÏêÏ¸ĞÅÏ¢ÖĞµÄ¶ÔÏóÊôĞÔÃû³Æ£¬ÎªÈçÏÂĞÎÊ½£º {variable name} ±í´ïÊ½ÖĞÓÃ"{"ºÍ"}"À´±êÊ¶±äÁ¿
-			ÀıÈç£º 2 * 2 2 + 2 * 3 2 - 2 / 3 2 - 3 % 2 2* {var1} / {var2}
-			sum({var1}) avg({var1}) count({var1}) ÉÏÊö²Ù×÷¿ÉÒÔÈÎÒâ×éºÏ
+			æ±‚å€¼è¡¨è¾¾å¼:å¦‚æœè®¾ç½®è¡¨è¾¾å¼ï¼Œå°†é€šè¿‡è¡¨è¾¾å¼æ±‚è§£cellæ ‡ç­¾çš„è¾“å‡º è¡¨è¾¾å¼æ”¯æŒçš„åŸºæœ¬æ“ä½œæœ‰ï¼šå†¥ï¼Œä¹˜æ³•ï¼Œé™¤æ³•ï¼Œæ±‚ä½™ï¼ŒåŠ /å‡ï¼Œå­—ç¬¦ä¸²çš„åŠ æ“ä½œ
+			è¡¨è¾¾å¼æ”¯æŒçš„èšåˆæ“ä½œæœ‰ï¼šæ±‚å’Œï¼Œæ±‚å¹³å‡å€¼ï¼Œè®¡æ•° æ“ä½œæ•°ï¼šå¯ä»¥ä¸ºå˜é‡ï¼Œæ•´æ•°ï¼Œå°æ•°ï¼Œå­—ç¬¦ä¸²
+			å…¶ä¸­å˜é‡æ˜¯æŒ‡åˆ—è¡¨/åˆ†é¡µ/é¡µé¢è¯¦ç»†ä¿¡æ¯ä¸­çš„å¯¹è±¡å±æ€§åç§°ï¼Œä¸ºå¦‚ä¸‹å½¢å¼ï¼š {variable name} è¡¨è¾¾å¼ä¸­ç”¨"{"å’Œ"}"æ¥æ ‡è¯†å˜é‡
+			ä¾‹å¦‚ï¼š 2 * 2 2 + 2 * 3 2 - 2 / 3 2 - 3 % 2 2* {var1} / {var2}
+			sum({var1}) avg({var1}) count({var1}) ä¸Šè¿°æ“ä½œå¯ä»¥ä»»æ„ç»„åˆ
 		-->
 		<attribute>
 			<name>expression</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!--
-			¿É¸ù¾İmaxlength½ØÈ¡×Ö¶Î½øĞĞÊä³ö
-			,Í¬Ê±¶ÔÓÚ½Øµ÷µÄ²¿·Ö¿ÉÒÔÍ¨¹ıreplaceÊôĞÔÖµ½øĞĞÌæ´ú
+			å¯æ ¹æ®maxlengthæˆªå–å­—æ®µè¿›è¡Œè¾“å‡º
+			,åŒæ—¶å¯¹äºæˆªè°ƒçš„éƒ¨åˆ†å¯ä»¥é€šè¿‡replaceå±æ€§å€¼è¿›è¡Œæ›¿ä»£
 		-->
 		<attribute>
 			<name>maxlength</name>
@@ -1138,7 +1138,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!--
-			½«htmlÖĞ±ê¼ÇÓïÑÔ×Ö·û×ª»»Îª×ªÒå·û &->&amp; "->&quot; <->&lt; >->&gt; '->&#146; \
+			å°†htmlä¸­æ ‡è®°è¯­è¨€å­—ç¬¦è½¬æ¢ä¸ºè½¬ä¹‰ç¬¦ &->&amp; "->&quot; <->&lt; >->&gt; '->&#146; \
 			->&nbsp; \n-><br> \t->&nbsp;&nbsp;&nbsp;&nbsp;
 		-->
 		<attribute>
@@ -1146,7 +1146,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!--
-			½«html×ªÒåµÄ×Ö·û´®»¹Ô­ &amp;->& &quot;->\" &lt;->< &gt;->> &#146;->' &nbsp;->\
+			å°†htmlè½¬ä¹‰çš„å­—ç¬¦ä¸²è¿˜åŸ &amp;->& &quot;->\" &lt;->< &gt;->> &#146;->' &nbsp;->\
 			<br>->\n &nbsp;&nbsp;&nbsp;&nbsp;->\t
 		-->
 		<attribute>
@@ -1165,7 +1165,7 @@
 	</tag>
 	
 	<!--
-		¹¦ÄÜËµÃ÷£ºÏÔÊ¾Ã¿¸ö×Ö¶ÎÊôĞÔµÄÖµ
+		åŠŸèƒ½è¯´æ˜ï¼šæ˜¾ç¤ºæ¯ä¸ªå­—æ®µå±æ€§çš„å€¼
 	-->
 	<tag>
 		<name>convert</name>
@@ -1188,14 +1188,14 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!--
-			²éÕÒ×æÏÈ(list)Ë÷Òı
+			æŸ¥æ‰¾ç¥–å…ˆ(list)ç´¢å¼•
 		-->
 		<attribute>
 			<name>index</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!--
-			Êä³öÈÕÆÚ¸ñÊ½ dateformat; Êä³öÊı×Ö¸ñÊ½ numerformat;
+			è¾“å‡ºæ—¥æœŸæ ¼å¼ dateformat; è¾“å‡ºæ•°å­—æ ¼å¼ numerformat;
 		-->
 		<attribute>
 			<name>dateformat</name>
@@ -1206,9 +1206,9 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!--
-			Ö¸¶¨µ¥Ôª¸ñÊä³öµÄÄ¬ÈÏÖµ
-			µ±Ç°µÄÖµÎªnullÊ±£¬Êä³öÖ¸¶¨µÄÄ¬ÈÏÖµ£¬
-			Èç¹û²»Ö¸¶¨Ä¬ÈÏÖµ½«Ö±½ÓÊä³önull¡£
+			æŒ‡å®šå•å…ƒæ ¼è¾“å‡ºçš„é»˜è®¤å€¼
+			å½“å‰çš„å€¼ä¸ºnullæ—¶ï¼Œè¾“å‡ºæŒ‡å®šçš„é»˜è®¤å€¼ï¼Œ
+			å¦‚æœä¸æŒ‡å®šé»˜è®¤å€¼å°†ç›´æ¥è¾“å‡ºnullã€‚
 		-->
 		<attribute>
 			<name>defaultValue</name>
@@ -1223,19 +1223,19 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!--
-			ÇóÖµ±í´ïÊ½:Èç¹ûÉèÖÃ±í´ïÊ½£¬½«Í¨¹ı±í´ïÊ½Çó½âcell±êÇ©µÄÊä³ö ±í´ïÊ½Ö§³ÖµÄ»ù±¾²Ù×÷ÓĞ£ºÚ¤£¬³Ë·¨£¬³ı·¨£¬ÇóÓà£¬¼Ó/¼õ£¬×Ö·û´®µÄ¼Ó²Ù×÷
-			±í´ïÊ½Ö§³ÖµÄ¾ÛºÏ²Ù×÷ÓĞ£ºÇóºÍ£¬ÇóÆ½¾ùÖµ£¬¼ÆÊı ²Ù×÷Êı£º¿ÉÒÔÎª±äÁ¿£¬ÕûÊı£¬Ğ¡Êı£¬×Ö·û´®
-			ÆäÖĞ±äÁ¿ÊÇÖ¸ÁĞ±í/·ÖÒ³/Ò³ÃæÏêÏ¸ĞÅÏ¢ÖĞµÄ¶ÔÏóÊôĞÔÃû³Æ£¬ÎªÈçÏÂĞÎÊ½£º {variable name} ±í´ïÊ½ÖĞÓÃ"{"ºÍ"}"À´±êÊ¶±äÁ¿
-			ÀıÈç£º 2 * 2 2 + 2 * 3 2 - 2 / 3 2 - 3 % 2 2* {var1} / {var2}
-			sum({var1}) avg({var1}) count({var1}) ÉÏÊö²Ù×÷¿ÉÒÔÈÎÒâ×éºÏ
+			æ±‚å€¼è¡¨è¾¾å¼:å¦‚æœè®¾ç½®è¡¨è¾¾å¼ï¼Œå°†é€šè¿‡è¡¨è¾¾å¼æ±‚è§£cellæ ‡ç­¾çš„è¾“å‡º è¡¨è¾¾å¼æ”¯æŒçš„åŸºæœ¬æ“ä½œæœ‰ï¼šå†¥ï¼Œä¹˜æ³•ï¼Œé™¤æ³•ï¼Œæ±‚ä½™ï¼ŒåŠ /å‡ï¼Œå­—ç¬¦ä¸²çš„åŠ æ“ä½œ
+			è¡¨è¾¾å¼æ”¯æŒçš„èšåˆæ“ä½œæœ‰ï¼šæ±‚å’Œï¼Œæ±‚å¹³å‡å€¼ï¼Œè®¡æ•° æ“ä½œæ•°ï¼šå¯ä»¥ä¸ºå˜é‡ï¼Œæ•´æ•°ï¼Œå°æ•°ï¼Œå­—ç¬¦ä¸²
+			å…¶ä¸­å˜é‡æ˜¯æŒ‡åˆ—è¡¨/åˆ†é¡µ/é¡µé¢è¯¦ç»†ä¿¡æ¯ä¸­çš„å¯¹è±¡å±æ€§åç§°ï¼Œä¸ºå¦‚ä¸‹å½¢å¼ï¼š {variable name} è¡¨è¾¾å¼ä¸­ç”¨"{"å’Œ"}"æ¥æ ‡è¯†å˜é‡
+			ä¾‹å¦‚ï¼š 2 * 2 2 + 2 * 3 2 - 2 / 3 2 - 3 % 2 2* {var1} / {var2}
+			sum({var1}) avg({var1}) count({var1}) ä¸Šè¿°æ“ä½œå¯ä»¥ä»»æ„ç»„åˆ
 		-->
 		<attribute>
 			<name>expression</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!--
-			¿É¸ù¾İmaxlength½ØÈ¡×Ö¶Î½øĞĞÊä³ö
-			,Í¬Ê±¶ÔÓÚ½Øµ÷µÄ²¿·Ö¿ÉÒÔÍ¨¹ıreplaceÊôĞÔÖµ½øĞĞÌæ´ú
+			å¯æ ¹æ®maxlengthæˆªå–å­—æ®µè¿›è¡Œè¾“å‡º
+			,åŒæ—¶å¯¹äºæˆªè°ƒçš„éƒ¨åˆ†å¯ä»¥é€šè¿‡replaceå±æ€§å€¼è¿›è¡Œæ›¿ä»£
 		-->
 		<attribute>
 			<name>maxlength</name>
@@ -1246,7 +1246,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!--
-			½«htmlÖĞ±ê¼ÇÓïÑÔ×Ö·û×ª»»Îª×ªÒå·û &->&amp; "->&quot; <->&lt; >->&gt; '->&#146; \
+			å°†htmlä¸­æ ‡è®°è¯­è¨€å­—ç¬¦è½¬æ¢ä¸ºè½¬ä¹‰ç¬¦ &->&amp; "->&quot; <->&lt; >->&gt; '->&#146; \
 			->&nbsp; \n-><br> \t->&nbsp;&nbsp;&nbsp;&nbsp;
 		-->
 		<attribute>
@@ -1254,7 +1254,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!--
-			½«html×ªÒåµÄ×Ö·û´®»¹Ô­ &amp;->& &quot;->\" &lt;->< &gt;->> &#146;->' &nbsp;->\
+			å°†htmlè½¬ä¹‰çš„å­—ç¬¦ä¸²è¿˜åŸ &amp;->& &quot;->\" &lt;->< &gt;->> &#146;->' &nbsp;->\
 			<br>->\n &nbsp;&nbsp;&nbsp;&nbsp;->\t
 		-->
 		<attribute>
@@ -1293,10 +1293,10 @@
 		</attribute>
 	</tag>
 	<!--
-		¹¦ÄÜËµÃ÷£º´ÓÊôĞÔÎÄ¼şlistdata.propertyÖĞ»ñÈ¡Îª·ÖÒ³ºÍÁĞ±ítagÌá¹©Êı¾İµÄÀàÎÄ¼şÃû£¨keyÎªdataInfoÊôĞÔÖ¸¶¨µÄÖµ£©³Æ´®£¬
-		Í¬Ê±´´½¨ÆäÊµÀı£¬²¢½«¸ÃÊµÀıÔÚrequestÖĞ»º³åÆğÀ´£¬»º³åµÄ·½Ê½ÓĞÁ½ÖÖ:
-		1.Èç¹û±êÇ©ÉèÖÃÁËÊôĞÔkeyName,ÄÇÃ´Êı¾İ»ñÈ¡ÀàÊµÀı½«»º³åkeyÎªµ½keyNameÖ¸¶¨µÄÖµµÄrequestÊôĞÔÖĞ
-		2.Èç¹ûÃ»ÓĞÉèÖÃÊôĞÔkeyName,ÄÇÃ´Êı¾İ»ñÈ¡ÀàÊµÀı½«»º³åµ½keyÎªdataInfoÖ¸¶¨µÄÖµµÄrequestÊôĞÔÖĞ
+		åŠŸèƒ½è¯´æ˜ï¼šä»å±æ€§æ–‡ä»¶listdata.propertyä¸­è·å–ä¸ºåˆ†é¡µå’Œåˆ—è¡¨tagæä¾›æ•°æ®çš„ç±»æ–‡ä»¶åï¼ˆkeyä¸ºdataInfoå±æ€§æŒ‡å®šçš„å€¼ï¼‰ç§°ä¸²ï¼Œ
+		åŒæ—¶åˆ›å»ºå…¶å®ä¾‹ï¼Œå¹¶å°†è¯¥å®ä¾‹åœ¨requestä¸­ç¼“å†²èµ·æ¥ï¼Œç¼“å†²çš„æ–¹å¼æœ‰ä¸¤ç§:
+		1.å¦‚æœæ ‡ç­¾è®¾ç½®äº†å±æ€§keyName,é‚£ä¹ˆæ•°æ®è·å–ç±»å®ä¾‹å°†ç¼“å†²keyä¸ºåˆ°keyNameæŒ‡å®šçš„å€¼çš„requestå±æ€§ä¸­
+		2.å¦‚æœæ²¡æœ‰è®¾ç½®å±æ€§keyName,é‚£ä¹ˆæ•°æ®è·å–ç±»å®ä¾‹å°†ç¼“å†²åˆ°keyä¸ºdataInfoæŒ‡å®šçš„å€¼çš„requestå±æ€§ä¸­
 	-->
 	<tag>
 		<name>listdata</name>
@@ -1313,8 +1313,8 @@
 		</attribute>
 	</tag>
 	<!--
-		¹¦ÄÜËµÃ÷£ºÅĞ¶ÏÊôĞÔµÄÖµÓëvalueÊôĞÔÖ¸¶¨µÄÖµÏàµÈ
-		Èç¹ûÅĞ¶Ï³ÉÁ¢£¬ÔòÖ´ĞĞ±êÇ©ÌåÄÚÈİ£¬·ñÔò²»Ö´ĞĞ
+		åŠŸèƒ½è¯´æ˜ï¼šåˆ¤æ–­å±æ€§çš„å€¼ä¸valueå±æ€§æŒ‡å®šçš„å€¼ç›¸ç­‰
+		å¦‚æœåˆ¤æ–­æˆç«‹ï¼Œåˆ™æ‰§è¡Œæ ‡ç­¾ä½“å†…å®¹ï¼Œå¦åˆ™ä¸æ‰§è¡Œ
 	-->
 	<tag>
 		<name>equal</name>
@@ -1345,20 +1345,20 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!--
-			ÇóÊµ¼ÊÖµ±í´ïÊ½ ±í´ïÊ½Ö§³ÖµÄ»ù±¾²Ù×÷ÓĞ£ºÚ¤£¬³Ë·¨£¬³ı·¨£¬ÇóÓà£¬¼Ó/¼õ£¬×Ö·û´®µÄ¼Ó²Ù×÷ ±í´ïÊ½Ö§³ÖµÄ¾ÛºÏ²Ù×÷ÓĞ£ºÇóºÍ£¬ÇóÆ½¾ùÖµ£¬¼ÆÊı
-			²Ù×÷Êı£º¿ÉÒÔÎª±äÁ¿£¬ÕûÊı£¬Ğ¡Êı£¬×Ö·û´® ÆäÖĞ±äÁ¿ÊÇÖ¸ÁĞ±í/·ÖÒ³/Ò³ÃæÏêÏ¸ĞÅÏ¢ÖĞµÄ¶ÔÏóÊôĞÔÃû³Æ£¬ÎªÈçÏÂĞÎÊ½£º {variable name}
-			±í´ïÊ½ÖĞÓÃ"{"ºÍ"}"À´±êÊ¶±äÁ¿ ÀıÈç£º 2 * 2 2 + 2 * 3 2 - 2 / 3 2 - 3 % 2 2* {var1} /
-			{var2} sum({var1}) avg({var1}) count({var1}) ÉÏÊö²Ù×÷¿ÉÒÔÈÎÒâ×éºÏ
+			æ±‚å®é™…å€¼è¡¨è¾¾å¼ è¡¨è¾¾å¼æ”¯æŒçš„åŸºæœ¬æ“ä½œæœ‰ï¼šå†¥ï¼Œä¹˜æ³•ï¼Œé™¤æ³•ï¼Œæ±‚ä½™ï¼ŒåŠ /å‡ï¼Œå­—ç¬¦ä¸²çš„åŠ æ“ä½œ è¡¨è¾¾å¼æ”¯æŒçš„èšåˆæ“ä½œæœ‰ï¼šæ±‚å’Œï¼Œæ±‚å¹³å‡å€¼ï¼Œè®¡æ•°
+			æ“ä½œæ•°ï¼šå¯ä»¥ä¸ºå˜é‡ï¼Œæ•´æ•°ï¼Œå°æ•°ï¼Œå­—ç¬¦ä¸² å…¶ä¸­å˜é‡æ˜¯æŒ‡åˆ—è¡¨/åˆ†é¡µ/é¡µé¢è¯¦ç»†ä¿¡æ¯ä¸­çš„å¯¹è±¡å±æ€§åç§°ï¼Œä¸ºå¦‚ä¸‹å½¢å¼ï¼š {variable name}
+			è¡¨è¾¾å¼ä¸­ç”¨"{"å’Œ"}"æ¥æ ‡è¯†å˜é‡ ä¾‹å¦‚ï¼š 2 * 2 2 + 2 * 3 2 - 2 / 3 2 - 3 % 2 2* {var1} /
+			{var2} sum({var1}) avg({var1}) count({var1}) ä¸Šè¿°æ“ä½œå¯ä»¥ä»»æ„ç»„åˆ
 		-->
 		<attribute>
 			<name>expression</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!--
-			ÇóÆÚÍûÖµ±í´ïÊ½ ±í´ïÊ½Ö§³ÖµÄ»ù±¾²Ù×÷ÓĞ£ºÚ¤£¬³Ë·¨£¬³ı·¨£¬ÇóÓà£¬¼Ó/¼õ£¬×Ö·û´®µÄ¼Ó²Ù×÷ ±í´ïÊ½Ö§³ÖµÄ¾ÛºÏ²Ù×÷ÓĞ£ºÇóºÍ£¬ÇóÆ½¾ùÖµ£¬¼ÆÊı
-			²Ù×÷Êı£º¿ÉÒÔÎª±äÁ¿£¬ÕûÊı£¬Ğ¡Êı£¬×Ö·û´® ÆäÖĞ±äÁ¿ÊÇÖ¸ÁĞ±í/·ÖÒ³/Ò³ÃæÏêÏ¸ĞÅÏ¢ÖĞµÄ¶ÔÏóÊôĞÔÃû³Æ£¬ÎªÈçÏÂĞÎÊ½£º {variable name}
-			±í´ïÊ½ÖĞÓÃ"{"ºÍ"}"À´±êÊ¶±äÁ¿ ÀıÈç£º 2 * 2 2 + 2 * 3 2 - 2 / 3 2 - 3 % 2 2* {var1} /
-			{var2} sum({var1}) avg({var1}) count({var1}) ÉÏÊö²Ù×÷¿ÉÒÔÈÎÒâ×éºÏ
+			æ±‚æœŸæœ›å€¼è¡¨è¾¾å¼ è¡¨è¾¾å¼æ”¯æŒçš„åŸºæœ¬æ“ä½œæœ‰ï¼šå†¥ï¼Œä¹˜æ³•ï¼Œé™¤æ³•ï¼Œæ±‚ä½™ï¼ŒåŠ /å‡ï¼Œå­—ç¬¦ä¸²çš„åŠ æ“ä½œ è¡¨è¾¾å¼æ”¯æŒçš„èšåˆæ“ä½œæœ‰ï¼šæ±‚å’Œï¼Œæ±‚å¹³å‡å€¼ï¼Œè®¡æ•°
+			æ“ä½œæ•°ï¼šå¯ä»¥ä¸ºå˜é‡ï¼Œæ•´æ•°ï¼Œå°æ•°ï¼Œå­—ç¬¦ä¸² å…¶ä¸­å˜é‡æ˜¯æŒ‡åˆ—è¡¨/åˆ†é¡µ/é¡µé¢è¯¦ç»†ä¿¡æ¯ä¸­çš„å¯¹è±¡å±æ€§åç§°ï¼Œä¸ºå¦‚ä¸‹å½¢å¼ï¼š {variable name}
+			è¡¨è¾¾å¼ä¸­ç”¨"{"å’Œ"}"æ¥æ ‡è¯†å˜é‡ ä¾‹å¦‚ï¼š 2 * 2 2 + 2 * 3 2 - 2 / 3 2 - 3 % 2 2* {var1} /
+			{var2} sum({var1}) avg({var1}) count({var1}) ä¸Šè¿°æ“ä½œå¯ä»¥ä»»æ„ç»„åˆ
 		-->
 		<attribute>
 			<name>expressionValue</name>
@@ -1392,8 +1392,8 @@
 	</tag>
 	
 	<!--
-		¹¦ÄÜËµÃ÷£ºÖµÎªtrue»òÕß¶ÔÏó²»Îª¿Õ£¬½«·µ»Øtrue
-		Èç¹ûÅĞ¶Ï³ÉÁ¢£¬ÔòÖ´ĞĞ±êÇ©ÌåÄÚÈİ£¬·ñÔò²»Ö´ĞĞ
+		åŠŸèƒ½è¯´æ˜ï¼šå€¼ä¸ºtrueæˆ–è€…å¯¹è±¡ä¸ä¸ºç©ºï¼Œå°†è¿”å›true
+		å¦‚æœåˆ¤æ–­æˆç«‹ï¼Œåˆ™æ‰§è¡Œæ ‡ç­¾ä½“å†…å®¹ï¼Œå¦åˆ™ä¸æ‰§è¡Œ
 	-->
 	<tag>
 		<name>true</name>
@@ -1437,10 +1437,10 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!--
-			ÇóÊµ¼ÊÖµ±í´ïÊ½ ±í´ïÊ½Ö§³ÖµÄ»ù±¾²Ù×÷ÓĞ£ºÚ¤£¬³Ë·¨£¬³ı·¨£¬ÇóÓà£¬¼Ó/¼õ£¬×Ö·û´®µÄ¼Ó²Ù×÷ ±í´ïÊ½Ö§³ÖµÄ¾ÛºÏ²Ù×÷ÓĞ£ºÇóºÍ£¬ÇóÆ½¾ùÖµ£¬¼ÆÊı
-			²Ù×÷Êı£º¿ÉÒÔÎª±äÁ¿£¬ÕûÊı£¬Ğ¡Êı£¬×Ö·û´® ÆäÖĞ±äÁ¿ÊÇÖ¸ÁĞ±í/·ÖÒ³/Ò³ÃæÏêÏ¸ĞÅÏ¢ÖĞµÄ¶ÔÏóÊôĞÔÃû³Æ£¬ÎªÈçÏÂĞÎÊ½£º {variable name}
-			±í´ïÊ½ÖĞÓÃ"{"ºÍ"}"À´±êÊ¶±äÁ¿ ÀıÈç£º 2 * 2 2 + 2 * 3 2 - 2 / 3 2 - 3 % 2 2* {var1} /
-			{var2} sum({var1}) avg({var1}) count({var1}) ÉÏÊö²Ù×÷¿ÉÒÔÈÎÒâ×éºÏ
+			æ±‚å®é™…å€¼è¡¨è¾¾å¼ è¡¨è¾¾å¼æ”¯æŒçš„åŸºæœ¬æ“ä½œæœ‰ï¼šå†¥ï¼Œä¹˜æ³•ï¼Œé™¤æ³•ï¼Œæ±‚ä½™ï¼ŒåŠ /å‡ï¼Œå­—ç¬¦ä¸²çš„åŠ æ“ä½œ è¡¨è¾¾å¼æ”¯æŒçš„èšåˆæ“ä½œæœ‰ï¼šæ±‚å’Œï¼Œæ±‚å¹³å‡å€¼ï¼Œè®¡æ•°
+			æ“ä½œæ•°ï¼šå¯ä»¥ä¸ºå˜é‡ï¼Œæ•´æ•°ï¼Œå°æ•°ï¼Œå­—ç¬¦ä¸² å…¶ä¸­å˜é‡æ˜¯æŒ‡åˆ—è¡¨/åˆ†é¡µ/é¡µé¢è¯¦ç»†ä¿¡æ¯ä¸­çš„å¯¹è±¡å±æ€§åç§°ï¼Œä¸ºå¦‚ä¸‹å½¢å¼ï¼š {variable name}
+			è¡¨è¾¾å¼ä¸­ç”¨"{"å’Œ"}"æ¥æ ‡è¯†å˜é‡ ä¾‹å¦‚ï¼š 2 * 2 2 + 2 * 3 2 - 2 / 3 2 - 3 % 2 2* {var1} /
+			{var2} sum({var1}) avg({var1}) count({var1}) ä¸Šè¿°æ“ä½œå¯ä»¥ä»»æ„ç»„åˆ
 		-->
 		<attribute>
 			<name>expression</name>
@@ -1455,8 +1455,8 @@
 	</tag>
 	
 	<!--
-		¹¦ÄÜËµÃ÷£ºÖµÎªfalse»òÕß¶ÔÏóÎª¿Õ£¬½«·µ»Øtrue
-		Èç¹ûÅĞ¶Ï³ÉÁ¢£¬ÔòÖ´ĞĞ±êÇ©ÌåÄÚÈİ£¬·ñÔò²»Ö´ĞĞ
+		åŠŸèƒ½è¯´æ˜ï¼šå€¼ä¸ºfalseæˆ–è€…å¯¹è±¡ä¸ºç©ºï¼Œå°†è¿”å›true
+		å¦‚æœåˆ¤æ–­æˆç«‹ï¼Œåˆ™æ‰§è¡Œæ ‡ç­¾ä½“å†…å®¹ï¼Œå¦åˆ™ä¸æ‰§è¡Œ
 	-->
 	<tag>
 		<name>false</name>
@@ -1500,10 +1500,10 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!--
-			ÇóÊµ¼ÊÖµ±í´ïÊ½ ±í´ïÊ½Ö§³ÖµÄ»ù±¾²Ù×÷ÓĞ£ºÚ¤£¬³Ë·¨£¬³ı·¨£¬ÇóÓà£¬¼Ó/¼õ£¬×Ö·û´®µÄ¼Ó²Ù×÷ ±í´ïÊ½Ö§³ÖµÄ¾ÛºÏ²Ù×÷ÓĞ£ºÇóºÍ£¬ÇóÆ½¾ùÖµ£¬¼ÆÊı
-			²Ù×÷Êı£º¿ÉÒÔÎª±äÁ¿£¬ÕûÊı£¬Ğ¡Êı£¬×Ö·û´® ÆäÖĞ±äÁ¿ÊÇÖ¸ÁĞ±í/·ÖÒ³/Ò³ÃæÏêÏ¸ĞÅÏ¢ÖĞµÄ¶ÔÏóÊôĞÔÃû³Æ£¬ÎªÈçÏÂĞÎÊ½£º {variable name}
-			±í´ïÊ½ÖĞÓÃ"{"ºÍ"}"À´±êÊ¶±äÁ¿ ÀıÈç£º 2 * 2 2 + 2 * 3 2 - 2 / 3 2 - 3 % 2 2* {var1} /
-			{var2} sum({var1}) avg({var1}) count({var1}) ÉÏÊö²Ù×÷¿ÉÒÔÈÎÒâ×éºÏ
+			æ±‚å®é™…å€¼è¡¨è¾¾å¼ è¡¨è¾¾å¼æ”¯æŒçš„åŸºæœ¬æ“ä½œæœ‰ï¼šå†¥ï¼Œä¹˜æ³•ï¼Œé™¤æ³•ï¼Œæ±‚ä½™ï¼ŒåŠ /å‡ï¼Œå­—ç¬¦ä¸²çš„åŠ æ“ä½œ è¡¨è¾¾å¼æ”¯æŒçš„èšåˆæ“ä½œæœ‰ï¼šæ±‚å’Œï¼Œæ±‚å¹³å‡å€¼ï¼Œè®¡æ•°
+			æ“ä½œæ•°ï¼šå¯ä»¥ä¸ºå˜é‡ï¼Œæ•´æ•°ï¼Œå°æ•°ï¼Œå­—ç¬¦ä¸² å…¶ä¸­å˜é‡æ˜¯æŒ‡åˆ—è¡¨/åˆ†é¡µ/é¡µé¢è¯¦ç»†ä¿¡æ¯ä¸­çš„å¯¹è±¡å±æ€§åç§°ï¼Œä¸ºå¦‚ä¸‹å½¢å¼ï¼š {variable name}
+			è¡¨è¾¾å¼ä¸­ç”¨"{"å’Œ"}"æ¥æ ‡è¯†å˜é‡ ä¾‹å¦‚ï¼š 2 * 2 2 + 2 * 3 2 - 2 / 3 2 - 3 % 2 2* {var1} /
+			{var2} sum({var1}) avg({var1}) count({var1}) ä¸Šè¿°æ“ä½œå¯ä»¥ä»»æ„ç»„åˆ
 		-->
 		<attribute>
 			<name>expression</name>
@@ -1517,7 +1517,7 @@
 		
 	</tag>
 	<!--
-		¹¦ÄÜËµÃ÷£ºÂß¼­Æ¥Åä±êÇ©£¬ ÅĞ¶Ïµ±Ç°µÄÖµÊÇ·ñºÍpatternÊôĞÔ¶ÔÓ¦ÕıÔò±í´ïÊ½ÏàÆ¥Åä£¬Æ¥ÅäÔòÖ´ĞĞ±êÇ©ÌåÖĞµÄ´úÂë ·ñÔò²»Ö´ĞĞ
+		åŠŸèƒ½è¯´æ˜ï¼šé€»è¾‘åŒ¹é…æ ‡ç­¾ï¼Œ åˆ¤æ–­å½“å‰çš„å€¼æ˜¯å¦å’Œpatternå±æ€§å¯¹åº”æ­£åˆ™è¡¨è¾¾å¼ç›¸åŒ¹é…ï¼ŒåŒ¹é…åˆ™æ‰§è¡Œæ ‡ç­¾ä½“ä¸­çš„ä»£ç  å¦åˆ™ä¸æ‰§è¡Œ
 	-->
 	<tag>
 		<name>match</name>
@@ -1544,17 +1544,17 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!--
-			ÇóÊµ¼ÊÖµ±í´ïÊ½ ±í´ïÊ½Ö§³ÖµÄ»ù±¾²Ù×÷ÓĞ£ºÚ¤£¬³Ë·¨£¬³ı·¨£¬ÇóÓà£¬¼Ó/¼õ£¬×Ö·û´®µÄ¼Ó²Ù×÷ ±í´ïÊ½Ö§³ÖµÄ¾ÛºÏ²Ù×÷ÓĞ£ºÇóºÍ£¬ÇóÆ½¾ùÖµ£¬¼ÆÊı
-			²Ù×÷Êı£º¿ÉÒÔÎª±äÁ¿£¬ÕûÊı£¬Ğ¡Êı£¬×Ö·û´® ÆäÖĞ±äÁ¿ÊÇÖ¸ÁĞ±í/·ÖÒ³/Ò³ÃæÏêÏ¸ĞÅÏ¢ÖĞµÄ¶ÔÏóÊôĞÔÃû³Æ£¬ÎªÈçÏÂĞÎÊ½£º {variable name}
-			±í´ïÊ½ÖĞÓÃ"{"ºÍ"}"À´±êÊ¶±äÁ¿ ÀıÈç£º 2 * 2 2 + 2 * 3 2 - 2 / 3 2 - 3 % 2 2* {var1} /
-			{var2} sum({var1}) avg({var1}) count({var1}) ÉÏÊö²Ù×÷¿ÉÒÔÈÎÒâ×éºÏ
+			æ±‚å®é™…å€¼è¡¨è¾¾å¼ è¡¨è¾¾å¼æ”¯æŒçš„åŸºæœ¬æ“ä½œæœ‰ï¼šå†¥ï¼Œä¹˜æ³•ï¼Œé™¤æ³•ï¼Œæ±‚ä½™ï¼ŒåŠ /å‡ï¼Œå­—ç¬¦ä¸²çš„åŠ æ“ä½œ è¡¨è¾¾å¼æ”¯æŒçš„èšåˆæ“ä½œæœ‰ï¼šæ±‚å’Œï¼Œæ±‚å¹³å‡å€¼ï¼Œè®¡æ•°
+			æ“ä½œæ•°ï¼šå¯ä»¥ä¸ºå˜é‡ï¼Œæ•´æ•°ï¼Œå°æ•°ï¼Œå­—ç¬¦ä¸² å…¶ä¸­å˜é‡æ˜¯æŒ‡åˆ—è¡¨/åˆ†é¡µ/é¡µé¢è¯¦ç»†ä¿¡æ¯ä¸­çš„å¯¹è±¡å±æ€§åç§°ï¼Œä¸ºå¦‚ä¸‹å½¢å¼ï¼š {variable name}
+			è¡¨è¾¾å¼ä¸­ç”¨"{"å’Œ"}"æ¥æ ‡è¯†å˜é‡ ä¾‹å¦‚ï¼š 2 * 2 2 + 2 * 3 2 - 2 / 3 2 - 3 % 2 2* {var1} /
+			{var2} sum({var1}) avg({var1}) count({var1}) ä¸Šè¿°æ“ä½œå¯ä»¥ä»»æ„ç»„åˆ
 		-->
 		<attribute>
 			<name>expression</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!--
-			Ö¸¶¨ÕıÔò±í´ïÊ½Æ¥ÅäÄ£Ê½
+			æŒ‡å®šæ­£åˆ™è¡¨è¾¾å¼åŒ¹é…æ¨¡å¼
 		-->
 		<attribute>
 			<name>pattern</name>
@@ -1589,7 +1589,7 @@
 	
 	
 	<!--
-		¹¦ÄÜËµÃ÷£ºÂß¼­Æ¥Åä±êÇ©£¬ ÅĞ¶Ïµ±Ç°µÄÖµÊÇ·ñºÍpatternÊôĞÔ¶ÔÓ¦ÕıÔò±í´ïÊ½ÏàÆ¥Åä£¬²»Æ¥ÅäÔòÖ´ĞĞ±êÇ©ÌåÖĞµÄ´úÂë ·ñÔò²»Ö´ĞĞ
+		åŠŸèƒ½è¯´æ˜ï¼šé€»è¾‘åŒ¹é…æ ‡ç­¾ï¼Œ åˆ¤æ–­å½“å‰çš„å€¼æ˜¯å¦å’Œpatternå±æ€§å¯¹åº”æ­£åˆ™è¡¨è¾¾å¼ç›¸åŒ¹é…ï¼Œä¸åŒ¹é…åˆ™æ‰§è¡Œæ ‡ç­¾ä½“ä¸­çš„ä»£ç  å¦åˆ™ä¸æ‰§è¡Œ
 	-->
 	<tag>
 		<name>notmatch</name>
@@ -1616,17 +1616,17 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!--
-			ÇóÊµ¼ÊÖµ±í´ïÊ½ ±í´ïÊ½Ö§³ÖµÄ»ù±¾²Ù×÷ÓĞ£ºÚ¤£¬³Ë·¨£¬³ı·¨£¬ÇóÓà£¬¼Ó/¼õ£¬×Ö·û´®µÄ¼Ó²Ù×÷ ±í´ïÊ½Ö§³ÖµÄ¾ÛºÏ²Ù×÷ÓĞ£ºÇóºÍ£¬ÇóÆ½¾ùÖµ£¬¼ÆÊı
-			²Ù×÷Êı£º¿ÉÒÔÎª±äÁ¿£¬ÕûÊı£¬Ğ¡Êı£¬×Ö·û´® ÆäÖĞ±äÁ¿ÊÇÖ¸ÁĞ±í/·ÖÒ³/Ò³ÃæÏêÏ¸ĞÅÏ¢ÖĞµÄ¶ÔÏóÊôĞÔÃû³Æ£¬ÎªÈçÏÂĞÎÊ½£º {variable name}
-			±í´ïÊ½ÖĞÓÃ"{"ºÍ"}"À´±êÊ¶±äÁ¿ ÀıÈç£º 2 * 2 2 + 2 * 3 2 - 2 / 3 2 - 3 % 2 2* {var1} /
-			{var2} sum({var1}) avg({var1}) count({var1}) ÉÏÊö²Ù×÷¿ÉÒÔÈÎÒâ×éºÏ
+			æ±‚å®é™…å€¼è¡¨è¾¾å¼ è¡¨è¾¾å¼æ”¯æŒçš„åŸºæœ¬æ“ä½œæœ‰ï¼šå†¥ï¼Œä¹˜æ³•ï¼Œé™¤æ³•ï¼Œæ±‚ä½™ï¼ŒåŠ /å‡ï¼Œå­—ç¬¦ä¸²çš„åŠ æ“ä½œ è¡¨è¾¾å¼æ”¯æŒçš„èšåˆæ“ä½œæœ‰ï¼šæ±‚å’Œï¼Œæ±‚å¹³å‡å€¼ï¼Œè®¡æ•°
+			æ“ä½œæ•°ï¼šå¯ä»¥ä¸ºå˜é‡ï¼Œæ•´æ•°ï¼Œå°æ•°ï¼Œå­—ç¬¦ä¸² å…¶ä¸­å˜é‡æ˜¯æŒ‡åˆ—è¡¨/åˆ†é¡µ/é¡µé¢è¯¦ç»†ä¿¡æ¯ä¸­çš„å¯¹è±¡å±æ€§åç§°ï¼Œä¸ºå¦‚ä¸‹å½¢å¼ï¼š {variable name}
+			è¡¨è¾¾å¼ä¸­ç”¨"{"å’Œ"}"æ¥æ ‡è¯†å˜é‡ ä¾‹å¦‚ï¼š 2 * 2 2 + 2 * 3 2 - 2 / 3 2 - 3 % 2 2* {var1} /
+			{var2} sum({var1}) avg({var1}) count({var1}) ä¸Šè¿°æ“ä½œå¯ä»¥ä»»æ„ç»„åˆ
 		-->
 		<attribute>
 			<name>expression</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!--
-			Ö¸¶¨ÕıÔò±í´ïÊ½Æ¥ÅäÄ£Ê½
+			æŒ‡å®šæ­£åˆ™è¡¨è¾¾å¼åŒ¹é…æ¨¡å¼
 		-->
 		<attribute>
 			<name>pattern</name>
@@ -1659,8 +1659,8 @@
 		</attribute>
 	</tag>
 	<!--
-		¹¦ÄÜËµÃ÷£ºÅĞ¶Ï¼ÆËãÊôĞÔ»òÕßexpressionÊôĞÔ¶ÔÓ¦µÄ±í´ïÊ½µÃµ½ÖµÊÇ·ñ°üº¬
-		ÔÚscopeÊôĞÔ»ò±í´ïÊ½¶ÔÓ¦µÄÖµ·¶Î§Ö®ÄÚ£¬Öµ·¶Î§ÒÔ¶ººÅ·Ö¸ô£¬Èç¹û°üº¬ÔòÖ´ĞĞin±êÇ©Ìå¶ÔÓ¦µÄ´úÂë£¬·ñÔò²»Ö´ĞĞ
+		åŠŸèƒ½è¯´æ˜ï¼šåˆ¤æ–­è®¡ç®—å±æ€§æˆ–è€…expressionå±æ€§å¯¹åº”çš„è¡¨è¾¾å¼å¾—åˆ°å€¼æ˜¯å¦åŒ…å«
+		åœ¨scopeå±æ€§æˆ–è¡¨è¾¾å¼å¯¹åº”çš„å€¼èŒƒå›´ä¹‹å†…ï¼Œå€¼èŒƒå›´ä»¥é€—å·åˆ†éš”ï¼Œå¦‚æœåŒ…å«åˆ™æ‰§è¡Œinæ ‡ç­¾ä½“å¯¹åº”çš„ä»£ç ï¼Œå¦åˆ™ä¸æ‰§è¡Œ
 	-->
 	<tag>
 		<name>in</name>
@@ -1687,18 +1687,18 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!--
-			ÇóÊµ¼ÊÖµ±í´ïÊ½ ±í´ïÊ½Ö§³ÖµÄ»ù±¾²Ù×÷ÓĞ£ºÚ¤£¬³Ë·¨£¬³ı·¨£¬ÇóÓà£¬¼Ó/¼õ£¬×Ö·û´®µÄ¼Ó²Ù×÷ ±í´ïÊ½Ö§³ÖµÄ¾ÛºÏ²Ù×÷ÓĞ£ºÇóºÍ£¬ÇóÆ½¾ùÖµ£¬¼ÆÊı
-			²Ù×÷Êı£º¿ÉÒÔÎª±äÁ¿£¬ÕûÊı£¬Ğ¡Êı£¬×Ö·û´® ÆäÖĞ±äÁ¿ÊÇÖ¸ÁĞ±í/·ÖÒ³/Ò³ÃæÏêÏ¸ĞÅÏ¢ÖĞµÄ¶ÔÏóÊôĞÔÃû³Æ£¬ÎªÈçÏÂĞÎÊ½£º {variable name}
-			±í´ïÊ½ÖĞÓÃ"{"ºÍ"}"À´±êÊ¶±äÁ¿ ÀıÈç£º 2 * 2 2 + 2 * 3 2 - 2 / 3 2 - 3 % 2 2* {var1} /
-			{var2} sum({var1}) avg({var1}) count({var1}) ÉÏÊö²Ù×÷¿ÉÒÔÈÎÒâ×éºÏ
+			æ±‚å®é™…å€¼è¡¨è¾¾å¼ è¡¨è¾¾å¼æ”¯æŒçš„åŸºæœ¬æ“ä½œæœ‰ï¼šå†¥ï¼Œä¹˜æ³•ï¼Œé™¤æ³•ï¼Œæ±‚ä½™ï¼ŒåŠ /å‡ï¼Œå­—ç¬¦ä¸²çš„åŠ æ“ä½œ è¡¨è¾¾å¼æ”¯æŒçš„èšåˆæ“ä½œæœ‰ï¼šæ±‚å’Œï¼Œæ±‚å¹³å‡å€¼ï¼Œè®¡æ•°
+			æ“ä½œæ•°ï¼šå¯ä»¥ä¸ºå˜é‡ï¼Œæ•´æ•°ï¼Œå°æ•°ï¼Œå­—ç¬¦ä¸² å…¶ä¸­å˜é‡æ˜¯æŒ‡åˆ—è¡¨/åˆ†é¡µ/é¡µé¢è¯¦ç»†ä¿¡æ¯ä¸­çš„å¯¹è±¡å±æ€§åç§°ï¼Œä¸ºå¦‚ä¸‹å½¢å¼ï¼š {variable name}
+			è¡¨è¾¾å¼ä¸­ç”¨"{"å’Œ"}"æ¥æ ‡è¯†å˜é‡ ä¾‹å¦‚ï¼š 2 * 2 2 + 2 * 3 2 - 2 / 3 2 - 3 % 2 2* {var1} /
+			{var2} sum({var1}) avg({var1}) count({var1}) ä¸Šè¿°æ“ä½œå¯ä»¥ä»»æ„ç»„åˆ
 		-->
 		<attribute>
 			<name>expression</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!--
-			in£¬notin±êÇ©Æ¥ÅäµÄ·¶Î§Ã¶¾ÙÖµ
-	 		¿ÉÒÔÊÇ±äÁ¿±í´ïÊ½£¬ÀıÈç£º{xxxscope}
+			inï¼Œnotinæ ‡ç­¾åŒ¹é…çš„èŒƒå›´æšä¸¾å€¼
+	 		å¯ä»¥æ˜¯å˜é‡è¡¨è¾¾å¼ï¼Œä¾‹å¦‚ï¼š{xxxscope}
 		-->
 		<attribute>
 			<name>scope</name>
@@ -1731,8 +1731,8 @@
 		</attribute>
 	</tag>
 	<!--
-		¹¦ÄÜËµÃ÷£ºÅĞ¶Ï¼ÆËãÊôĞÔ»òÕßexpressionÊôĞÔ¶ÔÓ¦µÄ±í´ïÊ½µÃµ½ÖµÊÇ·ñ°üº¬
-		ÔÚscopeÊôĞÔ»ò±í´ïÊ½¶ÔÓ¦µÄÖµ·¶Î§Ö®ÄÚ£¬Öµ·¶Î§ÒÔ¶ººÅ·Ö¸ô£¬Èç¹û²»°üº¬ÔòÖ´ĞĞnotin±êÇ©Ìå¶ÔÓ¦µÄ´úÂë£¬·ñÔò²»Ö´ĞĞ
+		åŠŸèƒ½è¯´æ˜ï¼šåˆ¤æ–­è®¡ç®—å±æ€§æˆ–è€…expressionå±æ€§å¯¹åº”çš„è¡¨è¾¾å¼å¾—åˆ°å€¼æ˜¯å¦åŒ…å«
+		åœ¨scopeå±æ€§æˆ–è¡¨è¾¾å¼å¯¹åº”çš„å€¼èŒƒå›´ä¹‹å†…ï¼Œå€¼èŒƒå›´ä»¥é€—å·åˆ†éš”ï¼Œå¦‚æœä¸åŒ…å«åˆ™æ‰§è¡Œnotinæ ‡ç­¾ä½“å¯¹åº”çš„ä»£ç ï¼Œå¦åˆ™ä¸æ‰§è¡Œ
 	-->
 	<tag>
 		<name>notin</name>
@@ -1759,18 +1759,18 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!--
-			ÇóÊµ¼ÊÖµ±í´ïÊ½ ±í´ïÊ½Ö§³ÖµÄ»ù±¾²Ù×÷ÓĞ£ºÚ¤£¬³Ë·¨£¬³ı·¨£¬ÇóÓà£¬¼Ó/¼õ£¬×Ö·û´®µÄ¼Ó²Ù×÷ ±í´ïÊ½Ö§³ÖµÄ¾ÛºÏ²Ù×÷ÓĞ£ºÇóºÍ£¬ÇóÆ½¾ùÖµ£¬¼ÆÊı
-			²Ù×÷Êı£º¿ÉÒÔÎª±äÁ¿£¬ÕûÊı£¬Ğ¡Êı£¬×Ö·û´® ÆäÖĞ±äÁ¿ÊÇÖ¸ÁĞ±í/·ÖÒ³/Ò³ÃæÏêÏ¸ĞÅÏ¢ÖĞµÄ¶ÔÏóÊôĞÔÃû³Æ£¬ÎªÈçÏÂĞÎÊ½£º {variable name}
-			±í´ïÊ½ÖĞÓÃ"{"ºÍ"}"À´±êÊ¶±äÁ¿ ÀıÈç£º 2 * 2 2 + 2 * 3 2 - 2 / 3 2 - 3 % 2 2* {var1} /
-			{var2} sum({var1}) avg({var1}) count({var1}) ÉÏÊö²Ù×÷¿ÉÒÔÈÎÒâ×éºÏ
+			æ±‚å®é™…å€¼è¡¨è¾¾å¼ è¡¨è¾¾å¼æ”¯æŒçš„åŸºæœ¬æ“ä½œæœ‰ï¼šå†¥ï¼Œä¹˜æ³•ï¼Œé™¤æ³•ï¼Œæ±‚ä½™ï¼ŒåŠ /å‡ï¼Œå­—ç¬¦ä¸²çš„åŠ æ“ä½œ è¡¨è¾¾å¼æ”¯æŒçš„èšåˆæ“ä½œæœ‰ï¼šæ±‚å’Œï¼Œæ±‚å¹³å‡å€¼ï¼Œè®¡æ•°
+			æ“ä½œæ•°ï¼šå¯ä»¥ä¸ºå˜é‡ï¼Œæ•´æ•°ï¼Œå°æ•°ï¼Œå­—ç¬¦ä¸² å…¶ä¸­å˜é‡æ˜¯æŒ‡åˆ—è¡¨/åˆ†é¡µ/é¡µé¢è¯¦ç»†ä¿¡æ¯ä¸­çš„å¯¹è±¡å±æ€§åç§°ï¼Œä¸ºå¦‚ä¸‹å½¢å¼ï¼š {variable name}
+			è¡¨è¾¾å¼ä¸­ç”¨"{"å’Œ"}"æ¥æ ‡è¯†å˜é‡ ä¾‹å¦‚ï¼š 2 * 2 2 + 2 * 3 2 - 2 / 3 2 - 3 % 2 2* {var1} /
+			{var2} sum({var1}) avg({var1}) count({var1}) ä¸Šè¿°æ“ä½œå¯ä»¥ä»»æ„ç»„åˆ
 		-->
 		<attribute>
 			<name>expression</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!--
-			in£¬notin±êÇ©Æ¥ÅäµÄ·¶Î§Ã¶¾ÙÖµ
-	 		¿ÉÒÔÊÇ±äÁ¿±í´ïÊ½£¬ÀıÈç£º{xxxscope}
+			inï¼Œnotinæ ‡ç­¾åŒ¹é…çš„èŒƒå›´æšä¸¾å€¼
+	 		å¯ä»¥æ˜¯å˜é‡è¡¨è¾¾å¼ï¼Œä¾‹å¦‚ï¼š{xxxscope}
 		-->
 		<attribute>
 			<name>scope</name>
@@ -1803,7 +1803,7 @@
 		</attribute>
 	</tag>
 	<!--
-		¹¦ÄÜËµÃ÷£ºÂß¼­°üº¬±êÇ©£¬ ÅĞ¶Ïµ±Ç°µÄÖµÊÇ·ñºÍpatternÊôĞÔ¶ÔÓ¦ÕıÔò±í´ïÊ½Ïà°üº¬£¬°üº¬ÔòÖ´ĞĞ±êÇ©ÌåÖĞµÄ´úÂë ·ñÔò²»Ö´ĞĞ
+		åŠŸèƒ½è¯´æ˜ï¼šé€»è¾‘åŒ…å«æ ‡ç­¾ï¼Œ åˆ¤æ–­å½“å‰çš„å€¼æ˜¯å¦å’Œpatternå±æ€§å¯¹åº”æ­£åˆ™è¡¨è¾¾å¼ç›¸åŒ…å«ï¼ŒåŒ…å«åˆ™æ‰§è¡Œæ ‡ç­¾ä½“ä¸­çš„ä»£ç  å¦åˆ™ä¸æ‰§è¡Œ
 	-->
 	<tag>
 		<name>contain</name>
@@ -1830,17 +1830,17 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!--
-			ÇóÊµ¼ÊÖµ±í´ïÊ½ ±í´ïÊ½Ö§³ÖµÄ»ù±¾²Ù×÷ÓĞ£ºÚ¤£¬³Ë·¨£¬³ı·¨£¬ÇóÓà£¬¼Ó/¼õ£¬×Ö·û´®µÄ¼Ó²Ù×÷ ±í´ïÊ½Ö§³ÖµÄ¾ÛºÏ²Ù×÷ÓĞ£ºÇóºÍ£¬ÇóÆ½¾ùÖµ£¬¼ÆÊı
-			²Ù×÷Êı£º¿ÉÒÔÎª±äÁ¿£¬ÕûÊı£¬Ğ¡Êı£¬×Ö·û´® ÆäÖĞ±äÁ¿ÊÇÖ¸ÁĞ±í/·ÖÒ³/Ò³ÃæÏêÏ¸ĞÅÏ¢ÖĞµÄ¶ÔÏóÊôĞÔÃû³Æ£¬ÎªÈçÏÂĞÎÊ½£º {variable name}
-			±í´ïÊ½ÖĞÓÃ"{"ºÍ"}"À´±êÊ¶±äÁ¿ ÀıÈç£º 2 * 2 2 + 2 * 3 2 - 2 / 3 2 - 3 % 2 2* {var1} /
-			{var2} sum({var1}) avg({var1}) count({var1}) ÉÏÊö²Ù×÷¿ÉÒÔÈÎÒâ×éºÏ
+			æ±‚å®é™…å€¼è¡¨è¾¾å¼ è¡¨è¾¾å¼æ”¯æŒçš„åŸºæœ¬æ“ä½œæœ‰ï¼šå†¥ï¼Œä¹˜æ³•ï¼Œé™¤æ³•ï¼Œæ±‚ä½™ï¼ŒåŠ /å‡ï¼Œå­—ç¬¦ä¸²çš„åŠ æ“ä½œ è¡¨è¾¾å¼æ”¯æŒçš„èšåˆæ“ä½œæœ‰ï¼šæ±‚å’Œï¼Œæ±‚å¹³å‡å€¼ï¼Œè®¡æ•°
+			æ“ä½œæ•°ï¼šå¯ä»¥ä¸ºå˜é‡ï¼Œæ•´æ•°ï¼Œå°æ•°ï¼Œå­—ç¬¦ä¸² å…¶ä¸­å˜é‡æ˜¯æŒ‡åˆ—è¡¨/åˆ†é¡µ/é¡µé¢è¯¦ç»†ä¿¡æ¯ä¸­çš„å¯¹è±¡å±æ€§åç§°ï¼Œä¸ºå¦‚ä¸‹å½¢å¼ï¼š {variable name}
+			è¡¨è¾¾å¼ä¸­ç”¨"{"å’Œ"}"æ¥æ ‡è¯†å˜é‡ ä¾‹å¦‚ï¼š 2 * 2 2 + 2 * 3 2 - 2 / 3 2 - 3 % 2 2* {var1} /
+			{var2} sum({var1}) avg({var1}) count({var1}) ä¸Šè¿°æ“ä½œå¯ä»¥ä»»æ„ç»„åˆ
 		-->
 		<attribute>
 			<name>expression</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!--
-			Ö¸¶¨ÕıÔò±í´ïÊ½Æ¥ÅäÄ£Ê½
+			æŒ‡å®šæ­£åˆ™è¡¨è¾¾å¼åŒ¹é…æ¨¡å¼
 		-->
 		<attribute>
 			<name>pattern</name>
@@ -1874,7 +1874,7 @@
 	</tag>
 	
 	<!--
-		¹¦ÄÜËµÃ÷£ºÂß¼­°üº¬±êÇ©£¬ ÅĞ¶Ïµ±Ç°µÄÖµÊÇ·ñºÍpatternÊôĞÔ¶ÔÓ¦ÕıÔò±í´ïÊ½Ïà°üº¬£¬²»°üº¬ÔòÖ´ĞĞ±êÇ©ÌåÖĞµÄ´úÂë ·ñÔò²»Ö´ĞĞ
+		åŠŸèƒ½è¯´æ˜ï¼šé€»è¾‘åŒ…å«æ ‡ç­¾ï¼Œ åˆ¤æ–­å½“å‰çš„å€¼æ˜¯å¦å’Œpatternå±æ€§å¯¹åº”æ­£åˆ™è¡¨è¾¾å¼ç›¸åŒ…å«ï¼Œä¸åŒ…å«åˆ™æ‰§è¡Œæ ‡ç­¾ä½“ä¸­çš„ä»£ç  å¦åˆ™ä¸æ‰§è¡Œ
 	-->
 	<tag>
 		<name>notcontain</name>
@@ -1901,17 +1901,17 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!--
-			ÇóÊµ¼ÊÖµ±í´ïÊ½ ±í´ïÊ½Ö§³ÖµÄ»ù±¾²Ù×÷ÓĞ£ºÚ¤£¬³Ë·¨£¬³ı·¨£¬ÇóÓà£¬¼Ó/¼õ£¬×Ö·û´®µÄ¼Ó²Ù×÷ ±í´ïÊ½Ö§³ÖµÄ¾ÛºÏ²Ù×÷ÓĞ£ºÇóºÍ£¬ÇóÆ½¾ùÖµ£¬¼ÆÊı
-			²Ù×÷Êı£º¿ÉÒÔÎª±äÁ¿£¬ÕûÊı£¬Ğ¡Êı£¬×Ö·û´® ÆäÖĞ±äÁ¿ÊÇÖ¸ÁĞ±í/·ÖÒ³/Ò³ÃæÏêÏ¸ĞÅÏ¢ÖĞµÄ¶ÔÏóÊôĞÔÃû³Æ£¬ÎªÈçÏÂĞÎÊ½£º {variable name}
-			±í´ïÊ½ÖĞÓÃ"{"ºÍ"}"À´±êÊ¶±äÁ¿ ÀıÈç£º 2 * 2 2 + 2 * 3 2 - 2 / 3 2 - 3 % 2 2* {var1} /
-			{var2} sum({var1}) avg({var1}) count({var1}) ÉÏÊö²Ù×÷¿ÉÒÔÈÎÒâ×éºÏ
+			æ±‚å®é™…å€¼è¡¨è¾¾å¼ è¡¨è¾¾å¼æ”¯æŒçš„åŸºæœ¬æ“ä½œæœ‰ï¼šå†¥ï¼Œä¹˜æ³•ï¼Œé™¤æ³•ï¼Œæ±‚ä½™ï¼ŒåŠ /å‡ï¼Œå­—ç¬¦ä¸²çš„åŠ æ“ä½œ è¡¨è¾¾å¼æ”¯æŒçš„èšåˆæ“ä½œæœ‰ï¼šæ±‚å’Œï¼Œæ±‚å¹³å‡å€¼ï¼Œè®¡æ•°
+			æ“ä½œæ•°ï¼šå¯ä»¥ä¸ºå˜é‡ï¼Œæ•´æ•°ï¼Œå°æ•°ï¼Œå­—ç¬¦ä¸² å…¶ä¸­å˜é‡æ˜¯æŒ‡åˆ—è¡¨/åˆ†é¡µ/é¡µé¢è¯¦ç»†ä¿¡æ¯ä¸­çš„å¯¹è±¡å±æ€§åç§°ï¼Œä¸ºå¦‚ä¸‹å½¢å¼ï¼š {variable name}
+			è¡¨è¾¾å¼ä¸­ç”¨"{"å’Œ"}"æ¥æ ‡è¯†å˜é‡ ä¾‹å¦‚ï¼š 2 * 2 2 + 2 * 3 2 - 2 / 3 2 - 3 % 2 2* {var1} /
+			{var2} sum({var1}) avg({var1}) count({var1}) ä¸Šè¿°æ“ä½œå¯ä»¥ä»»æ„ç»„åˆ
 		-->
 		<attribute>
 			<name>expression</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!--
-			Ö¸¶¨ÕıÔò±í´ïÊ½Æ¥ÅäÄ£Ê½
+			æŒ‡å®šæ­£åˆ™è¡¨è¾¾å¼åŒ¹é…æ¨¡å¼
 		-->
 		<attribute>
 			<name>pattern</name>
@@ -1944,8 +1944,8 @@
 		</attribute>
 	</tag>
 	<!--
-		¹¦ÄÜËµÃ÷£ºÅĞ¶ÏÊôĞÔµÄÖµÓëvalueÊôĞÔÖ¸¶¨µÄÖµÏàµÈ»òÕßĞ¡ÓÚ¸ÃÖµ
-		Èç¹ûÅĞ¶Ï³ÉÁ¢£¬ÔòÖ´ĞĞ±êÇ©ÌåÄÚÈİ£¬·ñÔò²»Ö´ĞĞ
+		åŠŸèƒ½è¯´æ˜ï¼šåˆ¤æ–­å±æ€§çš„å€¼ä¸valueå±æ€§æŒ‡å®šçš„å€¼ç›¸ç­‰æˆ–è€…å°äºè¯¥å€¼
+		å¦‚æœåˆ¤æ–­æˆç«‹ï¼Œåˆ™æ‰§è¡Œæ ‡ç­¾ä½“å†…å®¹ï¼Œå¦åˆ™ä¸æ‰§è¡Œ
 	-->
 	<tag>
 		<name>equalandlower</name>
@@ -1976,20 +1976,20 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!--
-			ÇóÊµ¼ÊÖµ±í´ïÊ½ ±í´ïÊ½Ö§³ÖµÄ»ù±¾²Ù×÷ÓĞ£ºÚ¤£¬³Ë·¨£¬³ı·¨£¬ÇóÓà£¬¼Ó/¼õ£¬×Ö·û´®µÄ¼Ó²Ù×÷ ±í´ïÊ½Ö§³ÖµÄ¾ÛºÏ²Ù×÷ÓĞ£ºÇóºÍ£¬ÇóÆ½¾ùÖµ£¬¼ÆÊı
-			²Ù×÷Êı£º¿ÉÒÔÎª±äÁ¿£¬ÕûÊı£¬Ğ¡Êı£¬×Ö·û´® ÆäÖĞ±äÁ¿ÊÇÖ¸ÁĞ±í/·ÖÒ³/Ò³ÃæÏêÏ¸ĞÅÏ¢ÖĞµÄ¶ÔÏóÊôĞÔÃû³Æ£¬ÎªÈçÏÂĞÎÊ½£º {variable name}
-			±í´ïÊ½ÖĞÓÃ"{"ºÍ"}"À´±êÊ¶±äÁ¿ ÀıÈç£º 2 * 2 2 + 2 * 3 2 - 2 / 3 2 - 3 % 2 2* {var1} /
-			{var2} sum({var1}) avg({var1}) count({var1}) ÉÏÊö²Ù×÷¿ÉÒÔÈÎÒâ×éºÏ
+			æ±‚å®é™…å€¼è¡¨è¾¾å¼ è¡¨è¾¾å¼æ”¯æŒçš„åŸºæœ¬æ“ä½œæœ‰ï¼šå†¥ï¼Œä¹˜æ³•ï¼Œé™¤æ³•ï¼Œæ±‚ä½™ï¼ŒåŠ /å‡ï¼Œå­—ç¬¦ä¸²çš„åŠ æ“ä½œ è¡¨è¾¾å¼æ”¯æŒçš„èšåˆæ“ä½œæœ‰ï¼šæ±‚å’Œï¼Œæ±‚å¹³å‡å€¼ï¼Œè®¡æ•°
+			æ“ä½œæ•°ï¼šå¯ä»¥ä¸ºå˜é‡ï¼Œæ•´æ•°ï¼Œå°æ•°ï¼Œå­—ç¬¦ä¸² å…¶ä¸­å˜é‡æ˜¯æŒ‡åˆ—è¡¨/åˆ†é¡µ/é¡µé¢è¯¦ç»†ä¿¡æ¯ä¸­çš„å¯¹è±¡å±æ€§åç§°ï¼Œä¸ºå¦‚ä¸‹å½¢å¼ï¼š {variable name}
+			è¡¨è¾¾å¼ä¸­ç”¨"{"å’Œ"}"æ¥æ ‡è¯†å˜é‡ ä¾‹å¦‚ï¼š 2 * 2 2 + 2 * 3 2 - 2 / 3 2 - 3 % 2 2* {var1} /
+			{var2} sum({var1}) avg({var1}) count({var1}) ä¸Šè¿°æ“ä½œå¯ä»¥ä»»æ„ç»„åˆ
 		-->
 		<attribute>
 			<name>expression</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!--
-			ÇóÆÚÍûÖµ±í´ïÊ½ ±í´ïÊ½Ö§³ÖµÄ»ù±¾²Ù×÷ÓĞ£ºÚ¤£¬³Ë·¨£¬³ı·¨£¬ÇóÓà£¬¼Ó/¼õ£¬×Ö·û´®µÄ¼Ó²Ù×÷ ±í´ïÊ½Ö§³ÖµÄ¾ÛºÏ²Ù×÷ÓĞ£ºÇóºÍ£¬ÇóÆ½¾ùÖµ£¬¼ÆÊı
-			²Ù×÷Êı£º¿ÉÒÔÎª±äÁ¿£¬ÕûÊı£¬Ğ¡Êı£¬×Ö·û´® ÆäÖĞ±äÁ¿ÊÇÖ¸ÁĞ±í/·ÖÒ³/Ò³ÃæÏêÏ¸ĞÅÏ¢ÖĞµÄ¶ÔÏóÊôĞÔÃû³Æ£¬ÎªÈçÏÂĞÎÊ½£º {variable name}
-			±í´ïÊ½ÖĞÓÃ"{"ºÍ"}"À´±êÊ¶±äÁ¿ ÀıÈç£º 2 * 2 2 + 2 * 3 2 - 2 / 3 2 - 3 % 2 2* {var1} /
-			{var2} sum({var1}) avg({var1}) count({var1}) ÉÏÊö²Ù×÷¿ÉÒÔÈÎÒâ×éºÏ
+			æ±‚æœŸæœ›å€¼è¡¨è¾¾å¼ è¡¨è¾¾å¼æ”¯æŒçš„åŸºæœ¬æ“ä½œæœ‰ï¼šå†¥ï¼Œä¹˜æ³•ï¼Œé™¤æ³•ï¼Œæ±‚ä½™ï¼ŒåŠ /å‡ï¼Œå­—ç¬¦ä¸²çš„åŠ æ“ä½œ è¡¨è¾¾å¼æ”¯æŒçš„èšåˆæ“ä½œæœ‰ï¼šæ±‚å’Œï¼Œæ±‚å¹³å‡å€¼ï¼Œè®¡æ•°
+			æ“ä½œæ•°ï¼šå¯ä»¥ä¸ºå˜é‡ï¼Œæ•´æ•°ï¼Œå°æ•°ï¼Œå­—ç¬¦ä¸² å…¶ä¸­å˜é‡æ˜¯æŒ‡åˆ—è¡¨/åˆ†é¡µ/é¡µé¢è¯¦ç»†ä¿¡æ¯ä¸­çš„å¯¹è±¡å±æ€§åç§°ï¼Œä¸ºå¦‚ä¸‹å½¢å¼ï¼š {variable name}
+			è¡¨è¾¾å¼ä¸­ç”¨"{"å’Œ"}"æ¥æ ‡è¯†å˜é‡ ä¾‹å¦‚ï¼š 2 * 2 2 + 2 * 3 2 - 2 / 3 2 - 3 % 2 2* {var1} /
+			{var2} sum({var1}) avg({var1}) count({var1}) ä¸Šè¿°æ“ä½œå¯ä»¥ä»»æ„ç»„åˆ
 		-->
 		<attribute>
 			<name>expressionValue</name>
@@ -2021,8 +2021,8 @@
 		</attribute>
 	</tag>
 	<!--
-		¹¦ÄÜËµÃ÷£ºÅĞ¶ÏÊôĞÔµÄÖµÓëvalueÊôĞÔÖ¸¶¨µÄÖµÏàµÈ»òÕß´óÓÚ¸ÃÖµ
-		Èç¹ûÅĞ¶Ï³ÉÁ¢£¬ÔòÖ´ĞĞ±êÇ©ÌåÄÚÈİ£¬·ñÔò²»Ö´ĞĞ
+		åŠŸèƒ½è¯´æ˜ï¼šåˆ¤æ–­å±æ€§çš„å€¼ä¸valueå±æ€§æŒ‡å®šçš„å€¼ç›¸ç­‰æˆ–è€…å¤§äºè¯¥å€¼
+		å¦‚æœåˆ¤æ–­æˆç«‹ï¼Œåˆ™æ‰§è¡Œæ ‡ç­¾ä½“å†…å®¹ï¼Œå¦åˆ™ä¸æ‰§è¡Œ
 	-->
 	<tag>
 		<name>equalandupper</name>
@@ -2053,20 +2053,20 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!--
-			ÇóÊµ¼ÊÖµ±í´ïÊ½ ±í´ïÊ½Ö§³ÖµÄ»ù±¾²Ù×÷ÓĞ£ºÚ¤£¬³Ë·¨£¬³ı·¨£¬ÇóÓà£¬¼Ó/¼õ£¬×Ö·û´®µÄ¼Ó²Ù×÷ ±í´ïÊ½Ö§³ÖµÄ¾ÛºÏ²Ù×÷ÓĞ£ºÇóºÍ£¬ÇóÆ½¾ùÖµ£¬¼ÆÊı
-			²Ù×÷Êı£º¿ÉÒÔÎª±äÁ¿£¬ÕûÊı£¬Ğ¡Êı£¬×Ö·û´® ÆäÖĞ±äÁ¿ÊÇÖ¸ÁĞ±í/·ÖÒ³/Ò³ÃæÏêÏ¸ĞÅÏ¢ÖĞµÄ¶ÔÏóÊôĞÔÃû³Æ£¬ÎªÈçÏÂĞÎÊ½£º {variable name}
-			±í´ïÊ½ÖĞÓÃ"{"ºÍ"}"À´±êÊ¶±äÁ¿ ÀıÈç£º 2 * 2 2 + 2 * 3 2 - 2 / 3 2 - 3 % 2 2* {var1} /
-			{var2} sum({var1}) avg({var1}) count({var1}) ÉÏÊö²Ù×÷¿ÉÒÔÈÎÒâ×éºÏ
+			æ±‚å®é™…å€¼è¡¨è¾¾å¼ è¡¨è¾¾å¼æ”¯æŒçš„åŸºæœ¬æ“ä½œæœ‰ï¼šå†¥ï¼Œä¹˜æ³•ï¼Œé™¤æ³•ï¼Œæ±‚ä½™ï¼ŒåŠ /å‡ï¼Œå­—ç¬¦ä¸²çš„åŠ æ“ä½œ è¡¨è¾¾å¼æ”¯æŒçš„èšåˆæ“ä½œæœ‰ï¼šæ±‚å’Œï¼Œæ±‚å¹³å‡å€¼ï¼Œè®¡æ•°
+			æ“ä½œæ•°ï¼šå¯ä»¥ä¸ºå˜é‡ï¼Œæ•´æ•°ï¼Œå°æ•°ï¼Œå­—ç¬¦ä¸² å…¶ä¸­å˜é‡æ˜¯æŒ‡åˆ—è¡¨/åˆ†é¡µ/é¡µé¢è¯¦ç»†ä¿¡æ¯ä¸­çš„å¯¹è±¡å±æ€§åç§°ï¼Œä¸ºå¦‚ä¸‹å½¢å¼ï¼š {variable name}
+			è¡¨è¾¾å¼ä¸­ç”¨"{"å’Œ"}"æ¥æ ‡è¯†å˜é‡ ä¾‹å¦‚ï¼š 2 * 2 2 + 2 * 3 2 - 2 / 3 2 - 3 % 2 2* {var1} /
+			{var2} sum({var1}) avg({var1}) count({var1}) ä¸Šè¿°æ“ä½œå¯ä»¥ä»»æ„ç»„åˆ
 		-->
 		<attribute>
 			<name>expression</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!--
-			ÇóÆÚÍûÖµ±í´ïÊ½ ±í´ïÊ½Ö§³ÖµÄ»ù±¾²Ù×÷ÓĞ£ºÚ¤£¬³Ë·¨£¬³ı·¨£¬ÇóÓà£¬¼Ó/¼õ£¬×Ö·û´®µÄ¼Ó²Ù×÷ ±í´ïÊ½Ö§³ÖµÄ¾ÛºÏ²Ù×÷ÓĞ£ºÇóºÍ£¬ÇóÆ½¾ùÖµ£¬¼ÆÊı
-			²Ù×÷Êı£º¿ÉÒÔÎª±äÁ¿£¬ÕûÊı£¬Ğ¡Êı£¬×Ö·û´® ÆäÖĞ±äÁ¿ÊÇÖ¸ÁĞ±í/·ÖÒ³/Ò³ÃæÏêÏ¸ĞÅÏ¢ÖĞµÄ¶ÔÏóÊôĞÔÃû³Æ£¬ÎªÈçÏÂĞÎÊ½£º {variable name}
-			±í´ïÊ½ÖĞÓÃ"{"ºÍ"}"À´±êÊ¶±äÁ¿ ÀıÈç£º 2 * 2 2 + 2 * 3 2 - 2 / 3 2 - 3 % 2 2* {var1} /
-			{var2} sum({var1}) avg({var1}) count({var1}) ÉÏÊö²Ù×÷¿ÉÒÔÈÎÒâ×éºÏ
+			æ±‚æœŸæœ›å€¼è¡¨è¾¾å¼ è¡¨è¾¾å¼æ”¯æŒçš„åŸºæœ¬æ“ä½œæœ‰ï¼šå†¥ï¼Œä¹˜æ³•ï¼Œé™¤æ³•ï¼Œæ±‚ä½™ï¼ŒåŠ /å‡ï¼Œå­—ç¬¦ä¸²çš„åŠ æ“ä½œ è¡¨è¾¾å¼æ”¯æŒçš„èšåˆæ“ä½œæœ‰ï¼šæ±‚å’Œï¼Œæ±‚å¹³å‡å€¼ï¼Œè®¡æ•°
+			æ“ä½œæ•°ï¼šå¯ä»¥ä¸ºå˜é‡ï¼Œæ•´æ•°ï¼Œå°æ•°ï¼Œå­—ç¬¦ä¸² å…¶ä¸­å˜é‡æ˜¯æŒ‡åˆ—è¡¨/åˆ†é¡µ/é¡µé¢è¯¦ç»†ä¿¡æ¯ä¸­çš„å¯¹è±¡å±æ€§åç§°ï¼Œä¸ºå¦‚ä¸‹å½¢å¼ï¼š {variable name}
+			è¡¨è¾¾å¼ä¸­ç”¨"{"å’Œ"}"æ¥æ ‡è¯†å˜é‡ ä¾‹å¦‚ï¼š 2 * 2 2 + 2 * 3 2 - 2 / 3 2 - 3 % 2 2* {var1} /
+			{var2} sum({var1}) avg({var1}) count({var1}) ä¸Šè¿°æ“ä½œå¯ä»¥ä»»æ„ç»„åˆ
 		-->
 		<attribute>
 			<name>expressionValue</name>
@@ -2098,8 +2098,8 @@
 		</attribute>
 	</tag>
 	<!--
-		¹¦ÄÜËµÃ÷£ºÅĞ¶ÏÊôĞÔµÄÖµÊÇ·ñ´óÓÚvalueÊôĞÔÖ¸¶¨µÄÖµ
-		Èç¹ûÅĞ¶Ï³ÉÁ¢£¬ÔòÖ´ĞĞ±êÇ©ÌåÄÚÈİ£¬·ñÔò²»Ö´ĞĞ
+		åŠŸèƒ½è¯´æ˜ï¼šåˆ¤æ–­å±æ€§çš„å€¼æ˜¯å¦å¤§äºvalueå±æ€§æŒ‡å®šçš„å€¼
+		å¦‚æœåˆ¤æ–­æˆç«‹ï¼Œåˆ™æ‰§è¡Œæ ‡ç­¾ä½“å†…å®¹ï¼Œå¦åˆ™ä¸æ‰§è¡Œ
 	-->
 	<tag>
 		<name>upper</name>
@@ -2130,20 +2130,20 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!--
-			ÇóÊµ¼ÊÖµ±í´ïÊ½ ±í´ïÊ½Ö§³ÖµÄ»ù±¾²Ù×÷ÓĞ£ºÚ¤£¬³Ë·¨£¬³ı·¨£¬ÇóÓà£¬¼Ó/¼õ£¬×Ö·û´®µÄ¼Ó²Ù×÷ ±í´ïÊ½Ö§³ÖµÄ¾ÛºÏ²Ù×÷ÓĞ£ºÇóºÍ£¬ÇóÆ½¾ùÖµ£¬¼ÆÊı
-			²Ù×÷Êı£º¿ÉÒÔÎª±äÁ¿£¬ÕûÊı£¬Ğ¡Êı£¬×Ö·û´® ÆäÖĞ±äÁ¿ÊÇÖ¸ÁĞ±í/·ÖÒ³/Ò³ÃæÏêÏ¸ĞÅÏ¢ÖĞµÄ¶ÔÏóÊôĞÔÃû³Æ£¬ÎªÈçÏÂĞÎÊ½£º {variable name}
-			±í´ïÊ½ÖĞÓÃ"{"ºÍ"}"À´±êÊ¶±äÁ¿ ÀıÈç£º 2 * 2 2 + 2 * 3 2 - 2 / 3 2 - 3 % 2 2* {var1} /
-			{var2} sum({var1}) avg({var1}) count({var1}) ÉÏÊö²Ù×÷¿ÉÒÔÈÎÒâ×éºÏ
+			æ±‚å®é™…å€¼è¡¨è¾¾å¼ è¡¨è¾¾å¼æ”¯æŒçš„åŸºæœ¬æ“ä½œæœ‰ï¼šå†¥ï¼Œä¹˜æ³•ï¼Œé™¤æ³•ï¼Œæ±‚ä½™ï¼ŒåŠ /å‡ï¼Œå­—ç¬¦ä¸²çš„åŠ æ“ä½œ è¡¨è¾¾å¼æ”¯æŒçš„èšåˆæ“ä½œæœ‰ï¼šæ±‚å’Œï¼Œæ±‚å¹³å‡å€¼ï¼Œè®¡æ•°
+			æ“ä½œæ•°ï¼šå¯ä»¥ä¸ºå˜é‡ï¼Œæ•´æ•°ï¼Œå°æ•°ï¼Œå­—ç¬¦ä¸² å…¶ä¸­å˜é‡æ˜¯æŒ‡åˆ—è¡¨/åˆ†é¡µ/é¡µé¢è¯¦ç»†ä¿¡æ¯ä¸­çš„å¯¹è±¡å±æ€§åç§°ï¼Œä¸ºå¦‚ä¸‹å½¢å¼ï¼š {variable name}
+			è¡¨è¾¾å¼ä¸­ç”¨"{"å’Œ"}"æ¥æ ‡è¯†å˜é‡ ä¾‹å¦‚ï¼š 2 * 2 2 + 2 * 3 2 - 2 / 3 2 - 3 % 2 2* {var1} /
+			{var2} sum({var1}) avg({var1}) count({var1}) ä¸Šè¿°æ“ä½œå¯ä»¥ä»»æ„ç»„åˆ
 		-->
 		<attribute>
 			<name>expression</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!--
-			ÇóÆÚÍûÖµ±í´ïÊ½ ±í´ïÊ½Ö§³ÖµÄ»ù±¾²Ù×÷ÓĞ£ºÚ¤£¬³Ë·¨£¬³ı·¨£¬ÇóÓà£¬¼Ó/¼õ£¬×Ö·û´®µÄ¼Ó²Ù×÷ ±í´ïÊ½Ö§³ÖµÄ¾ÛºÏ²Ù×÷ÓĞ£ºÇóºÍ£¬ÇóÆ½¾ùÖµ£¬¼ÆÊı
-			²Ù×÷Êı£º¿ÉÒÔÎª±äÁ¿£¬ÕûÊı£¬Ğ¡Êı£¬×Ö·û´® ÆäÖĞ±äÁ¿ÊÇÖ¸ÁĞ±í/·ÖÒ³/Ò³ÃæÏêÏ¸ĞÅÏ¢ÖĞµÄ¶ÔÏóÊôĞÔÃû³Æ£¬ÎªÈçÏÂĞÎÊ½£º {variable name}
-			±í´ïÊ½ÖĞÓÃ"{"ºÍ"}"À´±êÊ¶±äÁ¿ ÀıÈç£º 2 * 2 2 + 2 * 3 2 - 2 / 3 2 - 3 % 2 2* {var1} /
-			{var2} sum({var1}) avg({var1}) count({var1}) ÉÏÊö²Ù×÷¿ÉÒÔÈÎÒâ×éºÏ
+			æ±‚æœŸæœ›å€¼è¡¨è¾¾å¼ è¡¨è¾¾å¼æ”¯æŒçš„åŸºæœ¬æ“ä½œæœ‰ï¼šå†¥ï¼Œä¹˜æ³•ï¼Œé™¤æ³•ï¼Œæ±‚ä½™ï¼ŒåŠ /å‡ï¼Œå­—ç¬¦ä¸²çš„åŠ æ“ä½œ è¡¨è¾¾å¼æ”¯æŒçš„èšåˆæ“ä½œæœ‰ï¼šæ±‚å’Œï¼Œæ±‚å¹³å‡å€¼ï¼Œè®¡æ•°
+			æ“ä½œæ•°ï¼šå¯ä»¥ä¸ºå˜é‡ï¼Œæ•´æ•°ï¼Œå°æ•°ï¼Œå­—ç¬¦ä¸² å…¶ä¸­å˜é‡æ˜¯æŒ‡åˆ—è¡¨/åˆ†é¡µ/é¡µé¢è¯¦ç»†ä¿¡æ¯ä¸­çš„å¯¹è±¡å±æ€§åç§°ï¼Œä¸ºå¦‚ä¸‹å½¢å¼ï¼š {variable name}
+			è¡¨è¾¾å¼ä¸­ç”¨"{"å’Œ"}"æ¥æ ‡è¯†å˜é‡ ä¾‹å¦‚ï¼š 2 * 2 2 + 2 * 3 2 - 2 / 3 2 - 3 % 2 2* {var1} /
+			{var2} sum({var1}) avg({var1}) count({var1}) ä¸Šè¿°æ“ä½œå¯ä»¥ä»»æ„ç»„åˆ
 		-->
 		<attribute>
 			<name>expressionValue</name>
@@ -2199,20 +2199,20 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!--
-			ÇóÊµ¼ÊÖµ±í´ïÊ½ ±í´ïÊ½Ö§³ÖµÄ»ù±¾²Ù×÷ÓĞ£ºÚ¤£¬³Ë·¨£¬³ı·¨£¬ÇóÓà£¬¼Ó/¼õ£¬×Ö·û´®µÄ¼Ó²Ù×÷ ±í´ïÊ½Ö§³ÖµÄ¾ÛºÏ²Ù×÷ÓĞ£ºÇóºÍ£¬ÇóÆ½¾ùÖµ£¬¼ÆÊı
-			²Ù×÷Êı£º¿ÉÒÔÎª±äÁ¿£¬ÕûÊı£¬Ğ¡Êı£¬×Ö·û´® ÆäÖĞ±äÁ¿ÊÇÖ¸ÁĞ±í/·ÖÒ³/Ò³ÃæÏêÏ¸ĞÅÏ¢ÖĞµÄ¶ÔÏóÊôĞÔÃû³Æ£¬ÎªÈçÏÂĞÎÊ½£º {variable name}
-			±í´ïÊ½ÖĞÓÃ"{"ºÍ"}"À´±êÊ¶±äÁ¿ ÀıÈç£º 2 * 2 2 + 2 * 3 2 - 2 / 3 2 - 3 % 2 2* {var1} /
-			{var2} sum({var1}) avg({var1}) count({var1}) ÉÏÊö²Ù×÷¿ÉÒÔÈÎÒâ×éºÏ
+			æ±‚å®é™…å€¼è¡¨è¾¾å¼ è¡¨è¾¾å¼æ”¯æŒçš„åŸºæœ¬æ“ä½œæœ‰ï¼šå†¥ï¼Œä¹˜æ³•ï¼Œé™¤æ³•ï¼Œæ±‚ä½™ï¼ŒåŠ /å‡ï¼Œå­—ç¬¦ä¸²çš„åŠ æ“ä½œ è¡¨è¾¾å¼æ”¯æŒçš„èšåˆæ“ä½œæœ‰ï¼šæ±‚å’Œï¼Œæ±‚å¹³å‡å€¼ï¼Œè®¡æ•°
+			æ“ä½œæ•°ï¼šå¯ä»¥ä¸ºå˜é‡ï¼Œæ•´æ•°ï¼Œå°æ•°ï¼Œå­—ç¬¦ä¸² å…¶ä¸­å˜é‡æ˜¯æŒ‡åˆ—è¡¨/åˆ†é¡µ/é¡µé¢è¯¦ç»†ä¿¡æ¯ä¸­çš„å¯¹è±¡å±æ€§åç§°ï¼Œä¸ºå¦‚ä¸‹å½¢å¼ï¼š {variable name}
+			è¡¨è¾¾å¼ä¸­ç”¨"{"å’Œ"}"æ¥æ ‡è¯†å˜é‡ ä¾‹å¦‚ï¼š 2 * 2 2 + 2 * 3 2 - 2 / 3 2 - 3 % 2 2* {var1} /
+			{var2} sum({var1}) avg({var1}) count({var1}) ä¸Šè¿°æ“ä½œå¯ä»¥ä»»æ„ç»„åˆ
 		-->
 		<attribute>
 			<name>expression</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!--
-			ÇóÆÚÍûÖµ±í´ïÊ½ ±í´ïÊ½Ö§³ÖµÄ»ù±¾²Ù×÷ÓĞ£ºÚ¤£¬³Ë·¨£¬³ı·¨£¬ÇóÓà£¬¼Ó/¼õ£¬×Ö·û´®µÄ¼Ó²Ù×÷ ±í´ïÊ½Ö§³ÖµÄ¾ÛºÏ²Ù×÷ÓĞ£ºÇóºÍ£¬ÇóÆ½¾ùÖµ£¬¼ÆÊı
-			²Ù×÷Êı£º¿ÉÒÔÎª±äÁ¿£¬ÕûÊı£¬Ğ¡Êı£¬×Ö·û´® ÆäÖĞ±äÁ¿ÊÇÖ¸ÁĞ±í/·ÖÒ³/Ò³ÃæÏêÏ¸ĞÅÏ¢ÖĞµÄ¶ÔÏóÊôĞÔÃû³Æ£¬ÎªÈçÏÂĞÎÊ½£º {variable name}
-			±í´ïÊ½ÖĞÓÃ"{"ºÍ"}"À´±êÊ¶±äÁ¿ ÀıÈç£º 2 * 2 2 + 2 * 3 2 - 2 / 3 2 - 3 % 2 2* {var1} /
-			{var2} sum({var1}) avg({var1}) count({var1}) ÉÏÊö²Ù×÷¿ÉÒÔÈÎÒâ×éºÏ
+			æ±‚æœŸæœ›å€¼è¡¨è¾¾å¼ è¡¨è¾¾å¼æ”¯æŒçš„åŸºæœ¬æ“ä½œæœ‰ï¼šå†¥ï¼Œä¹˜æ³•ï¼Œé™¤æ³•ï¼Œæ±‚ä½™ï¼ŒåŠ /å‡ï¼Œå­—ç¬¦ä¸²çš„åŠ æ“ä½œ è¡¨è¾¾å¼æ”¯æŒçš„èšåˆæ“ä½œæœ‰ï¼šæ±‚å’Œï¼Œæ±‚å¹³å‡å€¼ï¼Œè®¡æ•°
+			æ“ä½œæ•°ï¼šå¯ä»¥ä¸ºå˜é‡ï¼Œæ•´æ•°ï¼Œå°æ•°ï¼Œå­—ç¬¦ä¸² å…¶ä¸­å˜é‡æ˜¯æŒ‡åˆ—è¡¨/åˆ†é¡µ/é¡µé¢è¯¦ç»†ä¿¡æ¯ä¸­çš„å¯¹è±¡å±æ€§åç§°ï¼Œä¸ºå¦‚ä¸‹å½¢å¼ï¼š {variable name}
+			è¡¨è¾¾å¼ä¸­ç”¨"{"å’Œ"}"æ¥æ ‡è¯†å˜é‡ ä¾‹å¦‚ï¼š 2 * 2 2 + 2 * 3 2 - 2 / 3 2 - 3 % 2 2* {var1} /
+			{var2} sum({var1}) avg({var1}) count({var1}) ä¸Šè¿°æ“ä½œå¯ä»¥ä»»æ„ç»„åˆ
 		-->
 		<attribute>
 			<name>expressionValue</name>
@@ -2264,20 +2264,20 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!--
-			ÇóÊµ¼ÊÖµ±í´ïÊ½ ±í´ïÊ½Ö§³ÖµÄ»ù±¾²Ù×÷ÓĞ£ºÚ¤£¬³Ë·¨£¬³ı·¨£¬ÇóÓà£¬¼Ó/¼õ£¬×Ö·û´®µÄ¼Ó²Ù×÷ ±í´ïÊ½Ö§³ÖµÄ¾ÛºÏ²Ù×÷ÓĞ£ºÇóºÍ£¬ÇóÆ½¾ùÖµ£¬¼ÆÊı
-			²Ù×÷Êı£º¿ÉÒÔÎª±äÁ¿£¬ÕûÊı£¬Ğ¡Êı£¬×Ö·û´® ÆäÖĞ±äÁ¿ÊÇÖ¸ÁĞ±í/·ÖÒ³/Ò³ÃæÏêÏ¸ĞÅÏ¢ÖĞµÄ¶ÔÏóÊôĞÔÃû³Æ£¬ÎªÈçÏÂĞÎÊ½£º {variable name}
-			±í´ïÊ½ÖĞÓÃ"{"ºÍ"}"À´±êÊ¶±äÁ¿ ÀıÈç£º 2 * 2 2 + 2 * 3 2 - 2 / 3 2 - 3 % 2 2* {var1} /
-			{var2} sum({var1}) avg({var1}) count({var1}) ÉÏÊö²Ù×÷¿ÉÒÔÈÎÒâ×éºÏ
+			æ±‚å®é™…å€¼è¡¨è¾¾å¼ è¡¨è¾¾å¼æ”¯æŒçš„åŸºæœ¬æ“ä½œæœ‰ï¼šå†¥ï¼Œä¹˜æ³•ï¼Œé™¤æ³•ï¼Œæ±‚ä½™ï¼ŒåŠ /å‡ï¼Œå­—ç¬¦ä¸²çš„åŠ æ“ä½œ è¡¨è¾¾å¼æ”¯æŒçš„èšåˆæ“ä½œæœ‰ï¼šæ±‚å’Œï¼Œæ±‚å¹³å‡å€¼ï¼Œè®¡æ•°
+			æ“ä½œæ•°ï¼šå¯ä»¥ä¸ºå˜é‡ï¼Œæ•´æ•°ï¼Œå°æ•°ï¼Œå­—ç¬¦ä¸² å…¶ä¸­å˜é‡æ˜¯æŒ‡åˆ—è¡¨/åˆ†é¡µ/é¡µé¢è¯¦ç»†ä¿¡æ¯ä¸­çš„å¯¹è±¡å±æ€§åç§°ï¼Œä¸ºå¦‚ä¸‹å½¢å¼ï¼š {variable name}
+			è¡¨è¾¾å¼ä¸­ç”¨"{"å’Œ"}"æ¥æ ‡è¯†å˜é‡ ä¾‹å¦‚ï¼š 2 * 2 2 + 2 * 3 2 - 2 / 3 2 - 3 % 2 2* {var1} /
+			{var2} sum({var1}) avg({var1}) count({var1}) ä¸Šè¿°æ“ä½œå¯ä»¥ä»»æ„ç»„åˆ
 		-->
 		<attribute>
 			<name>expression</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!--
-			ÇóÆÚÍûÖµ±í´ïÊ½ ±í´ïÊ½Ö§³ÖµÄ»ù±¾²Ù×÷ÓĞ£ºÚ¤£¬³Ë·¨£¬³ı·¨£¬ÇóÓà£¬¼Ó/¼õ£¬×Ö·û´®µÄ¼Ó²Ù×÷ ±í´ïÊ½Ö§³ÖµÄ¾ÛºÏ²Ù×÷ÓĞ£ºÇóºÍ£¬ÇóÆ½¾ùÖµ£¬¼ÆÊı
-			²Ù×÷Êı£º¿ÉÒÔÎª±äÁ¿£¬ÕûÊı£¬Ğ¡Êı£¬×Ö·û´® ÆäÖĞ±äÁ¿ÊÇÖ¸ÁĞ±í/·ÖÒ³/Ò³ÃæÏêÏ¸ĞÅÏ¢ÖĞµÄ¶ÔÏóÊôĞÔÃû³Æ£¬ÎªÈçÏÂĞÎÊ½£º {variable name}
-			±í´ïÊ½ÖĞÓÃ"{"ºÍ"}"À´±êÊ¶±äÁ¿ ÀıÈç£º 2 * 2 2 + 2 * 3 2 - 2 / 3 2 - 3 % 2 2* {var1} /
-			{var2} sum({var1}) avg({var1}) count({var1}) ÉÏÊö²Ù×÷¿ÉÒÔÈÎÒâ×éºÏ
+			æ±‚æœŸæœ›å€¼è¡¨è¾¾å¼ è¡¨è¾¾å¼æ”¯æŒçš„åŸºæœ¬æ“ä½œæœ‰ï¼šå†¥ï¼Œä¹˜æ³•ï¼Œé™¤æ³•ï¼Œæ±‚ä½™ï¼ŒåŠ /å‡ï¼Œå­—ç¬¦ä¸²çš„åŠ æ“ä½œ è¡¨è¾¾å¼æ”¯æŒçš„èšåˆæ“ä½œæœ‰ï¼šæ±‚å’Œï¼Œæ±‚å¹³å‡å€¼ï¼Œè®¡æ•°
+			æ“ä½œæ•°ï¼šå¯ä»¥ä¸ºå˜é‡ï¼Œæ•´æ•°ï¼Œå°æ•°ï¼Œå­—ç¬¦ä¸² å…¶ä¸­å˜é‡æ˜¯æŒ‡åˆ—è¡¨/åˆ†é¡µ/é¡µé¢è¯¦ç»†ä¿¡æ¯ä¸­çš„å¯¹è±¡å±æ€§åç§°ï¼Œä¸ºå¦‚ä¸‹å½¢å¼ï¼š {variable name}
+			è¡¨è¾¾å¼ä¸­ç”¨"{"å’Œ"}"æ¥æ ‡è¯†å˜é‡ ä¾‹å¦‚ï¼š 2 * 2 2 + 2 * 3 2 - 2 / 3 2 - 3 % 2 2* {var1} /
+			{var2} sum({var1}) avg({var1}) count({var1}) ä¸Šè¿°æ“ä½œå¯ä»¥ä»»æ„ç»„åˆ
 		-->
 		<attribute>
 			<name>expressionValue</name>
@@ -2308,7 +2308,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
-	<!-- emptyÅĞ¶ÏÖ¸¶¨µÄ×Ö¶ÎµÄÖµÊÇ·ñÊÇnull£¬»òÕß¿Õ´®£¬Èç¹ûÌõ¼ş³ÉÁ¢£¬ÔòÖ´ĞĞ±êÇ©ÌåÖĞµÄÂß¼­ -->
+	<!-- emptyåˆ¤æ–­æŒ‡å®šçš„å­—æ®µçš„å€¼æ˜¯å¦æ˜¯nullï¼Œæˆ–è€…ç©ºä¸²ï¼Œå¦‚æœæ¡ä»¶æˆç«‹ï¼Œåˆ™æ‰§è¡Œæ ‡ç­¾ä½“ä¸­çš„é€»è¾‘ -->
 	<tag>
 		<name>empty</name>
 		<tagclass>com.frameworkset.common.tag.pager.tags.EmptyTag</tagclass>
@@ -2334,20 +2334,20 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!--
-			ÇóÊµ¼ÊÖµ±í´ïÊ½ ±í´ïÊ½Ö§³ÖµÄ»ù±¾²Ù×÷ÓĞ£ºÚ¤£¬³Ë·¨£¬³ı·¨£¬ÇóÓà£¬¼Ó/¼õ£¬×Ö·û´®µÄ¼Ó²Ù×÷ ±í´ïÊ½Ö§³ÖµÄ¾ÛºÏ²Ù×÷ÓĞ£ºÇóºÍ£¬ÇóÆ½¾ùÖµ£¬¼ÆÊı
-			²Ù×÷Êı£º¿ÉÒÔÎª±äÁ¿£¬ÕûÊı£¬Ğ¡Êı£¬×Ö·û´® ÆäÖĞ±äÁ¿ÊÇÖ¸ÁĞ±í/·ÖÒ³/Ò³ÃæÏêÏ¸ĞÅÏ¢ÖĞµÄ¶ÔÏóÊôĞÔÃû³Æ£¬ÎªÈçÏÂĞÎÊ½£º {variable name}
-			±í´ïÊ½ÖĞÓÃ"{"ºÍ"}"À´±êÊ¶±äÁ¿ ÀıÈç£º 2 * 2 2 + 2 * 3 2 - 2 / 3 2 - 3 % 2 2* {var1} /
-			{var2} sum({var1}) avg({var1}) count({var1}) ÉÏÊö²Ù×÷¿ÉÒÔÈÎÒâ×éºÏ
+			æ±‚å®é™…å€¼è¡¨è¾¾å¼ è¡¨è¾¾å¼æ”¯æŒçš„åŸºæœ¬æ“ä½œæœ‰ï¼šå†¥ï¼Œä¹˜æ³•ï¼Œé™¤æ³•ï¼Œæ±‚ä½™ï¼ŒåŠ /å‡ï¼Œå­—ç¬¦ä¸²çš„åŠ æ“ä½œ è¡¨è¾¾å¼æ”¯æŒçš„èšåˆæ“ä½œæœ‰ï¼šæ±‚å’Œï¼Œæ±‚å¹³å‡å€¼ï¼Œè®¡æ•°
+			æ“ä½œæ•°ï¼šå¯ä»¥ä¸ºå˜é‡ï¼Œæ•´æ•°ï¼Œå°æ•°ï¼Œå­—ç¬¦ä¸² å…¶ä¸­å˜é‡æ˜¯æŒ‡åˆ—è¡¨/åˆ†é¡µ/é¡µé¢è¯¦ç»†ä¿¡æ¯ä¸­çš„å¯¹è±¡å±æ€§åç§°ï¼Œä¸ºå¦‚ä¸‹å½¢å¼ï¼š {variable name}
+			è¡¨è¾¾å¼ä¸­ç”¨"{"å’Œ"}"æ¥æ ‡è¯†å˜é‡ ä¾‹å¦‚ï¼š 2 * 2 2 + 2 * 3 2 - 2 / 3 2 - 3 % 2 2* {var1} /
+			{var2} sum({var1}) avg({var1}) count({var1}) ä¸Šè¿°æ“ä½œå¯ä»¥ä»»æ„ç»„åˆ
 		-->
 		<attribute>
 			<name>expression</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!--
-			ÇóÆÚÍûÖµ±í´ïÊ½ ±í´ïÊ½Ö§³ÖµÄ»ù±¾²Ù×÷ÓĞ£ºÚ¤£¬³Ë·¨£¬³ı·¨£¬ÇóÓà£¬¼Ó/¼õ£¬×Ö·û´®µÄ¼Ó²Ù×÷ ±í´ïÊ½Ö§³ÖµÄ¾ÛºÏ²Ù×÷ÓĞ£ºÇóºÍ£¬ÇóÆ½¾ùÖµ£¬¼ÆÊı
-			²Ù×÷Êı£º¿ÉÒÔÎª±äÁ¿£¬ÕûÊı£¬Ğ¡Êı£¬×Ö·û´® ÆäÖĞ±äÁ¿ÊÇÖ¸ÁĞ±í/·ÖÒ³/Ò³ÃæÏêÏ¸ĞÅÏ¢ÖĞµÄ¶ÔÏóÊôĞÔÃû³Æ£¬ÎªÈçÏÂĞÎÊ½£º {variable name}
-			±í´ïÊ½ÖĞÓÃ"{"ºÍ"}"À´±êÊ¶±äÁ¿ ÀıÈç£º 2 * 2 2 + 2 * 3 2 - 2 / 3 2 - 3 % 2 2* {var1} /
-			{var2} sum({var1}) avg({var1}) count({var1}) ÉÏÊö²Ù×÷¿ÉÒÔÈÎÒâ×éºÏ
+			æ±‚æœŸæœ›å€¼è¡¨è¾¾å¼ è¡¨è¾¾å¼æ”¯æŒçš„åŸºæœ¬æ“ä½œæœ‰ï¼šå†¥ï¼Œä¹˜æ³•ï¼Œé™¤æ³•ï¼Œæ±‚ä½™ï¼ŒåŠ /å‡ï¼Œå­—ç¬¦ä¸²çš„åŠ æ“ä½œ è¡¨è¾¾å¼æ”¯æŒçš„èšåˆæ“ä½œæœ‰ï¼šæ±‚å’Œï¼Œæ±‚å¹³å‡å€¼ï¼Œè®¡æ•°
+			æ“ä½œæ•°ï¼šå¯ä»¥ä¸ºå˜é‡ï¼Œæ•´æ•°ï¼Œå°æ•°ï¼Œå­—ç¬¦ä¸² å…¶ä¸­å˜é‡æ˜¯æŒ‡åˆ—è¡¨/åˆ†é¡µ/é¡µé¢è¯¦ç»†ä¿¡æ¯ä¸­çš„å¯¹è±¡å±æ€§åç§°ï¼Œä¸ºå¦‚ä¸‹å½¢å¼ï¼š {variable name}
+			è¡¨è¾¾å¼ä¸­ç”¨"{"å’Œ"}"æ¥æ ‡è¯†å˜é‡ ä¾‹å¦‚ï¼š 2 * 2 2 + 2 * 3 2 - 2 / 3 2 - 3 % 2 2* {var1} /
+			{var2} sum({var1}) avg({var1}) count({var1}) ä¸Šè¿°æ“ä½œå¯ä»¥ä»»æ„ç»„åˆ
 		-->
 		<attribute>
 			<name>expressionValue</name>
@@ -2374,7 +2374,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
-	<!-- notemptyÅĞ¶ÏÖ¸¶¨µÄ×Ö¶ÎµÄÖµ¼È²»ÊÇnullÒ²²»ÊÇ¿Õ´®£¬ÔòÖ´ĞĞ±êÇ©ÌåµÃÄÚÈİ -->
+	<!-- notemptyåˆ¤æ–­æŒ‡å®šçš„å­—æ®µçš„å€¼æ—¢ä¸æ˜¯nullä¹Ÿä¸æ˜¯ç©ºä¸²ï¼Œåˆ™æ‰§è¡Œæ ‡ç­¾ä½“å¾—å†…å®¹ -->
 	<tag>
 		<name>notempty</name>
 		<tagclass>com.frameworkset.common.tag.pager.tags.NotEmptyTag</tagclass>
@@ -2400,20 +2400,20 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!--
-			ÇóÊµ¼ÊÖµ±í´ïÊ½ ±í´ïÊ½Ö§³ÖµÄ»ù±¾²Ù×÷ÓĞ£ºÚ¤£¬³Ë·¨£¬³ı·¨£¬ÇóÓà£¬¼Ó/¼õ£¬×Ö·û´®µÄ¼Ó²Ù×÷ ±í´ïÊ½Ö§³ÖµÄ¾ÛºÏ²Ù×÷ÓĞ£ºÇóºÍ£¬ÇóÆ½¾ùÖµ£¬¼ÆÊı
-			²Ù×÷Êı£º¿ÉÒÔÎª±äÁ¿£¬ÕûÊı£¬Ğ¡Êı£¬×Ö·û´® ÆäÖĞ±äÁ¿ÊÇÖ¸ÁĞ±í/·ÖÒ³/Ò³ÃæÏêÏ¸ĞÅÏ¢ÖĞµÄ¶ÔÏóÊôĞÔÃû³Æ£¬ÎªÈçÏÂĞÎÊ½£º {variable name}
-			±í´ïÊ½ÖĞÓÃ"{"ºÍ"}"À´±êÊ¶±äÁ¿ ÀıÈç£º 2 * 2 2 + 2 * 3 2 - 2 / 3 2 - 3 % 2 2* {var1} /
-			{var2} sum({var1}) avg({var1}) count({var1}) ÉÏÊö²Ù×÷¿ÉÒÔÈÎÒâ×éºÏ
+			æ±‚å®é™…å€¼è¡¨è¾¾å¼ è¡¨è¾¾å¼æ”¯æŒçš„åŸºæœ¬æ“ä½œæœ‰ï¼šå†¥ï¼Œä¹˜æ³•ï¼Œé™¤æ³•ï¼Œæ±‚ä½™ï¼ŒåŠ /å‡ï¼Œå­—ç¬¦ä¸²çš„åŠ æ“ä½œ è¡¨è¾¾å¼æ”¯æŒçš„èšåˆæ“ä½œæœ‰ï¼šæ±‚å’Œï¼Œæ±‚å¹³å‡å€¼ï¼Œè®¡æ•°
+			æ“ä½œæ•°ï¼šå¯ä»¥ä¸ºå˜é‡ï¼Œæ•´æ•°ï¼Œå°æ•°ï¼Œå­—ç¬¦ä¸² å…¶ä¸­å˜é‡æ˜¯æŒ‡åˆ—è¡¨/åˆ†é¡µ/é¡µé¢è¯¦ç»†ä¿¡æ¯ä¸­çš„å¯¹è±¡å±æ€§åç§°ï¼Œä¸ºå¦‚ä¸‹å½¢å¼ï¼š {variable name}
+			è¡¨è¾¾å¼ä¸­ç”¨"{"å’Œ"}"æ¥æ ‡è¯†å˜é‡ ä¾‹å¦‚ï¼š 2 * 2 2 + 2 * 3 2 - 2 / 3 2 - 3 % 2 2* {var1} /
+			{var2} sum({var1}) avg({var1}) count({var1}) ä¸Šè¿°æ“ä½œå¯ä»¥ä»»æ„ç»„åˆ
 		-->
 		<attribute>
 			<name>expression</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!--
-			ÇóÆÚÍûÖµ±í´ïÊ½ ±í´ïÊ½Ö§³ÖµÄ»ù±¾²Ù×÷ÓĞ£ºÚ¤£¬³Ë·¨£¬³ı·¨£¬ÇóÓà£¬¼Ó/¼õ£¬×Ö·û´®µÄ¼Ó²Ù×÷ ±í´ïÊ½Ö§³ÖµÄ¾ÛºÏ²Ù×÷ÓĞ£ºÇóºÍ£¬ÇóÆ½¾ùÖµ£¬¼ÆÊı
-			²Ù×÷Êı£º¿ÉÒÔÎª±äÁ¿£¬ÕûÊı£¬Ğ¡Êı£¬×Ö·û´® ÆäÖĞ±äÁ¿ÊÇÖ¸ÁĞ±í/·ÖÒ³/Ò³ÃæÏêÏ¸ĞÅÏ¢ÖĞµÄ¶ÔÏóÊôĞÔÃû³Æ£¬ÎªÈçÏÂĞÎÊ½£º {variable name}
-			±í´ïÊ½ÖĞÓÃ"{"ºÍ"}"À´±êÊ¶±äÁ¿ ÀıÈç£º 2 * 2 2 + 2 * 3 2 - 2 / 3 2 - 3 % 2 2* {var1} /
-			{var2} sum({var1}) avg({var1}) count({var1}) ÉÏÊö²Ù×÷¿ÉÒÔÈÎÒâ×éºÏ
+			æ±‚æœŸæœ›å€¼è¡¨è¾¾å¼ è¡¨è¾¾å¼æ”¯æŒçš„åŸºæœ¬æ“ä½œæœ‰ï¼šå†¥ï¼Œä¹˜æ³•ï¼Œé™¤æ³•ï¼Œæ±‚ä½™ï¼ŒåŠ /å‡ï¼Œå­—ç¬¦ä¸²çš„åŠ æ“ä½œ è¡¨è¾¾å¼æ”¯æŒçš„èšåˆæ“ä½œæœ‰ï¼šæ±‚å’Œï¼Œæ±‚å¹³å‡å€¼ï¼Œè®¡æ•°
+			æ“ä½œæ•°ï¼šå¯ä»¥ä¸ºå˜é‡ï¼Œæ•´æ•°ï¼Œå°æ•°ï¼Œå­—ç¬¦ä¸² å…¶ä¸­å˜é‡æ˜¯æŒ‡åˆ—è¡¨/åˆ†é¡µ/é¡µé¢è¯¦ç»†ä¿¡æ¯ä¸­çš„å¯¹è±¡å±æ€§åç§°ï¼Œä¸ºå¦‚ä¸‹å½¢å¼ï¼š {variable name}
+			è¡¨è¾¾å¼ä¸­ç”¨"{"å’Œ"}"æ¥æ ‡è¯†å˜é‡ ä¾‹å¦‚ï¼š 2 * 2 2 + 2 * 3 2 - 2 / 3 2 - 3 % 2 2* {var1} /
+			{var2} sum({var1}) avg({var1}) count({var1}) ä¸Šè¿°æ“ä½œå¯ä»¥ä»»æ„ç»„åˆ
 		-->
 		<attribute>
 			<name>expressionValue</name>
@@ -2441,8 +2441,8 @@
 		</attribute>
 	</tag>
 	<!--
-		¹¦ÄÜËµÃ÷£ºÅĞ¶ÏÊôĞÔµÄÖµÊÇ·ñĞ¡ÓÚvalueÊôĞÔÖ¸¶¨µÄÖµ
-		Èç¹ûÅĞ¶Ï³ÉÁ¢£¬ÔòÖ´ĞĞ±êÇ©ÌåÄÚÈİ£¬·ñÔò²»Ö´ĞĞ
+		åŠŸèƒ½è¯´æ˜ï¼šåˆ¤æ–­å±æ€§çš„å€¼æ˜¯å¦å°äºvalueå±æ€§æŒ‡å®šçš„å€¼
+		å¦‚æœåˆ¤æ–­æˆç«‹ï¼Œåˆ™æ‰§è¡Œæ ‡ç­¾ä½“å†…å®¹ï¼Œå¦åˆ™ä¸æ‰§è¡Œ
 	-->
 	<tag>
 		<name>lower</name>
@@ -2473,20 +2473,20 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!--
-			ÇóÊµ¼ÊÖµ±í´ïÊ½ ±í´ïÊ½Ö§³ÖµÄ»ù±¾²Ù×÷ÓĞ£ºÚ¤£¬³Ë·¨£¬³ı·¨£¬ÇóÓà£¬¼Ó/¼õ£¬×Ö·û´®µÄ¼Ó²Ù×÷ ±í´ïÊ½Ö§³ÖµÄ¾ÛºÏ²Ù×÷ÓĞ£ºÇóºÍ£¬ÇóÆ½¾ùÖµ£¬¼ÆÊı
-			²Ù×÷Êı£º¿ÉÒÔÎª±äÁ¿£¬ÕûÊı£¬Ğ¡Êı£¬×Ö·û´® ÆäÖĞ±äÁ¿ÊÇÖ¸ÁĞ±í/·ÖÒ³/Ò³ÃæÏêÏ¸ĞÅÏ¢ÖĞµÄ¶ÔÏóÊôĞÔÃû³Æ£¬ÎªÈçÏÂĞÎÊ½£º {variable name}
-			±í´ïÊ½ÖĞÓÃ"{"ºÍ"}"À´±êÊ¶±äÁ¿ ÀıÈç£º 2 * 2 2 + 2 * 3 2 - 2 / 3 2 - 3 % 2 2* {var1} /
-			{var2} sum({var1}) avg({var1}) count({var1}) ÉÏÊö²Ù×÷¿ÉÒÔÈÎÒâ×éºÏ
+			æ±‚å®é™…å€¼è¡¨è¾¾å¼ è¡¨è¾¾å¼æ”¯æŒçš„åŸºæœ¬æ“ä½œæœ‰ï¼šå†¥ï¼Œä¹˜æ³•ï¼Œé™¤æ³•ï¼Œæ±‚ä½™ï¼ŒåŠ /å‡ï¼Œå­—ç¬¦ä¸²çš„åŠ æ“ä½œ è¡¨è¾¾å¼æ”¯æŒçš„èšåˆæ“ä½œæœ‰ï¼šæ±‚å’Œï¼Œæ±‚å¹³å‡å€¼ï¼Œè®¡æ•°
+			æ“ä½œæ•°ï¼šå¯ä»¥ä¸ºå˜é‡ï¼Œæ•´æ•°ï¼Œå°æ•°ï¼Œå­—ç¬¦ä¸² å…¶ä¸­å˜é‡æ˜¯æŒ‡åˆ—è¡¨/åˆ†é¡µ/é¡µé¢è¯¦ç»†ä¿¡æ¯ä¸­çš„å¯¹è±¡å±æ€§åç§°ï¼Œä¸ºå¦‚ä¸‹å½¢å¼ï¼š {variable name}
+			è¡¨è¾¾å¼ä¸­ç”¨"{"å’Œ"}"æ¥æ ‡è¯†å˜é‡ ä¾‹å¦‚ï¼š 2 * 2 2 + 2 * 3 2 - 2 / 3 2 - 3 % 2 2* {var1} /
+			{var2} sum({var1}) avg({var1}) count({var1}) ä¸Šè¿°æ“ä½œå¯ä»¥ä»»æ„ç»„åˆ
 		-->
 		<attribute>
 			<name>expression</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!--
-			ÇóÆÚÍûÖµ±í´ïÊ½ ±í´ïÊ½Ö§³ÖµÄ»ù±¾²Ù×÷ÓĞ£ºÚ¤£¬³Ë·¨£¬³ı·¨£¬ÇóÓà£¬¼Ó/¼õ£¬×Ö·û´®µÄ¼Ó²Ù×÷ ±í´ïÊ½Ö§³ÖµÄ¾ÛºÏ²Ù×÷ÓĞ£ºÇóºÍ£¬ÇóÆ½¾ùÖµ£¬¼ÆÊı
-			²Ù×÷Êı£º¿ÉÒÔÎª±äÁ¿£¬ÕûÊı£¬Ğ¡Êı£¬×Ö·û´® ÆäÖĞ±äÁ¿ÊÇÖ¸ÁĞ±í/·ÖÒ³/Ò³ÃæÏêÏ¸ĞÅÏ¢ÖĞµÄ¶ÔÏóÊôĞÔÃû³Æ£¬ÎªÈçÏÂĞÎÊ½£º {variable name}
-			±í´ïÊ½ÖĞÓÃ"{"ºÍ"}"À´±êÊ¶±äÁ¿ ÀıÈç£º 2 * 2 2 + 2 * 3 2 - 2 / 3 2 - 3 % 2 2* {var1} /
-			{var2} sum({var1}) avg({var1}) count({var1}) ÉÏÊö²Ù×÷¿ÉÒÔÈÎÒâ×éºÏ
+			æ±‚æœŸæœ›å€¼è¡¨è¾¾å¼ è¡¨è¾¾å¼æ”¯æŒçš„åŸºæœ¬æ“ä½œæœ‰ï¼šå†¥ï¼Œä¹˜æ³•ï¼Œé™¤æ³•ï¼Œæ±‚ä½™ï¼ŒåŠ /å‡ï¼Œå­—ç¬¦ä¸²çš„åŠ æ“ä½œ è¡¨è¾¾å¼æ”¯æŒçš„èšåˆæ“ä½œæœ‰ï¼šæ±‚å’Œï¼Œæ±‚å¹³å‡å€¼ï¼Œè®¡æ•°
+			æ“ä½œæ•°ï¼šå¯ä»¥ä¸ºå˜é‡ï¼Œæ•´æ•°ï¼Œå°æ•°ï¼Œå­—ç¬¦ä¸² å…¶ä¸­å˜é‡æ˜¯æŒ‡åˆ—è¡¨/åˆ†é¡µ/é¡µé¢è¯¦ç»†ä¿¡æ¯ä¸­çš„å¯¹è±¡å±æ€§åç§°ï¼Œä¸ºå¦‚ä¸‹å½¢å¼ï¼š {variable name}
+			è¡¨è¾¾å¼ä¸­ç”¨"{"å’Œ"}"æ¥æ ‡è¯†å˜é‡ ä¾‹å¦‚ï¼š 2 * 2 2 + 2 * 3 2 - 2 / 3 2 - 3 % 2 2* {var1} /
+			{var2} sum({var1}) avg({var1}) count({var1}) ä¸Šè¿°æ“ä½œå¯ä»¥ä»»æ„ç»„åˆ
 		-->
 		<attribute>
 			<name>expressionValue</name>
@@ -2518,8 +2518,8 @@
 		</attribute>
 	</tag>
 	<!--
-		¹¦ÄÜËµÃ÷£ºÅĞ¶Ï¸ø¶¨×Ö¶ÎµÄÖµÊÇ·ñÓëvalueÊôĞÔµÄÖµ²»ÏàµÈ£¬
-		Èç¹ûÅĞ¶Ï³ÉÁ¢£¬ÔòÖ´ĞĞ±êÇ©ÌåÄÚµÄÄÚÈİ£¬·ñÔòÌø¹ı±êÇ©ÌåÄÚÈİ
+		åŠŸèƒ½è¯´æ˜ï¼šåˆ¤æ–­ç»™å®šå­—æ®µçš„å€¼æ˜¯å¦ä¸valueå±æ€§çš„å€¼ä¸ç›¸ç­‰ï¼Œ
+		å¦‚æœåˆ¤æ–­æˆç«‹ï¼Œåˆ™æ‰§è¡Œæ ‡ç­¾ä½“å†…çš„å†…å®¹ï¼Œå¦åˆ™è·³è¿‡æ ‡ç­¾ä½“å†…å®¹
 	-->
 	<tag>
 		<name>notequal</name>
@@ -2550,20 +2550,20 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!--
-			ÇóÊµ¼ÊÖµ±í´ïÊ½ ±í´ïÊ½Ö§³ÖµÄ»ù±¾²Ù×÷ÓĞ£ºÚ¤£¬³Ë·¨£¬³ı·¨£¬ÇóÓà£¬¼Ó/¼õ£¬×Ö·û´®µÄ¼Ó²Ù×÷ ±í´ïÊ½Ö§³ÖµÄ¾ÛºÏ²Ù×÷ÓĞ£ºÇóºÍ£¬ÇóÆ½¾ùÖµ£¬¼ÆÊı
-			²Ù×÷Êı£º¿ÉÒÔÎª±äÁ¿£¬ÕûÊı£¬Ğ¡Êı£¬×Ö·û´® ÆäÖĞ±äÁ¿ÊÇÖ¸ÁĞ±í/·ÖÒ³/Ò³ÃæÏêÏ¸ĞÅÏ¢ÖĞµÄ¶ÔÏóÊôĞÔÃû³Æ£¬ÎªÈçÏÂĞÎÊ½£º {variable name}
-			±í´ïÊ½ÖĞÓÃ"{"ºÍ"}"À´±êÊ¶±äÁ¿ ÀıÈç£º 2 * 2 2 + 2 * 3 2 - 2 / 3 2 - 3 % 2 2* {var1} /
-			{var2} sum({var1}) avg({var1}) count({var1}) ÉÏÊö²Ù×÷¿ÉÒÔÈÎÒâ×éºÏ
+			æ±‚å®é™…å€¼è¡¨è¾¾å¼ è¡¨è¾¾å¼æ”¯æŒçš„åŸºæœ¬æ“ä½œæœ‰ï¼šå†¥ï¼Œä¹˜æ³•ï¼Œé™¤æ³•ï¼Œæ±‚ä½™ï¼ŒåŠ /å‡ï¼Œå­—ç¬¦ä¸²çš„åŠ æ“ä½œ è¡¨è¾¾å¼æ”¯æŒçš„èšåˆæ“ä½œæœ‰ï¼šæ±‚å’Œï¼Œæ±‚å¹³å‡å€¼ï¼Œè®¡æ•°
+			æ“ä½œæ•°ï¼šå¯ä»¥ä¸ºå˜é‡ï¼Œæ•´æ•°ï¼Œå°æ•°ï¼Œå­—ç¬¦ä¸² å…¶ä¸­å˜é‡æ˜¯æŒ‡åˆ—è¡¨/åˆ†é¡µ/é¡µé¢è¯¦ç»†ä¿¡æ¯ä¸­çš„å¯¹è±¡å±æ€§åç§°ï¼Œä¸ºå¦‚ä¸‹å½¢å¼ï¼š {variable name}
+			è¡¨è¾¾å¼ä¸­ç”¨"{"å’Œ"}"æ¥æ ‡è¯†å˜é‡ ä¾‹å¦‚ï¼š 2 * 2 2 + 2 * 3 2 - 2 / 3 2 - 3 % 2 2* {var1} /
+			{var2} sum({var1}) avg({var1}) count({var1}) ä¸Šè¿°æ“ä½œå¯ä»¥ä»»æ„ç»„åˆ
 		-->
 		<attribute>
 			<name>expression</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!--
-			ÇóÆÚÍûÖµ±í´ïÊ½ ±í´ïÊ½Ö§³ÖµÄ»ù±¾²Ù×÷ÓĞ£ºÚ¤£¬³Ë·¨£¬³ı·¨£¬ÇóÓà£¬¼Ó/¼õ£¬×Ö·û´®µÄ¼Ó²Ù×÷ ±í´ïÊ½Ö§³ÖµÄ¾ÛºÏ²Ù×÷ÓĞ£ºÇóºÍ£¬ÇóÆ½¾ùÖµ£¬¼ÆÊı
-			²Ù×÷Êı£º¿ÉÒÔÎª±äÁ¿£¬ÕûÊı£¬Ğ¡Êı£¬×Ö·û´® ÆäÖĞ±äÁ¿ÊÇÖ¸ÁĞ±í/·ÖÒ³/Ò³ÃæÏêÏ¸ĞÅÏ¢ÖĞµÄ¶ÔÏóÊôĞÔÃû³Æ£¬ÎªÈçÏÂĞÎÊ½£º {variable name}
-			±í´ïÊ½ÖĞÓÃ"{"ºÍ"}"À´±êÊ¶±äÁ¿ ÀıÈç£º 2 * 2 2 + 2 * 3 2 - 2 / 3 2 - 3 % 2 2* {var1} /
-			{var2} sum({var1}) avg({var1}) count({var1}) ÉÏÊö²Ù×÷¿ÉÒÔÈÎÒâ×éºÏ
+			æ±‚æœŸæœ›å€¼è¡¨è¾¾å¼ è¡¨è¾¾å¼æ”¯æŒçš„åŸºæœ¬æ“ä½œæœ‰ï¼šå†¥ï¼Œä¹˜æ³•ï¼Œé™¤æ³•ï¼Œæ±‚ä½™ï¼ŒåŠ /å‡ï¼Œå­—ç¬¦ä¸²çš„åŠ æ“ä½œ è¡¨è¾¾å¼æ”¯æŒçš„èšåˆæ“ä½œæœ‰ï¼šæ±‚å’Œï¼Œæ±‚å¹³å‡å€¼ï¼Œè®¡æ•°
+			æ“ä½œæ•°ï¼šå¯ä»¥ä¸ºå˜é‡ï¼Œæ•´æ•°ï¼Œå°æ•°ï¼Œå­—ç¬¦ä¸² å…¶ä¸­å˜é‡æ˜¯æŒ‡åˆ—è¡¨/åˆ†é¡µ/é¡µé¢è¯¦ç»†ä¿¡æ¯ä¸­çš„å¯¹è±¡å±æ€§åç§°ï¼Œä¸ºå¦‚ä¸‹å½¢å¼ï¼š {variable name}
+			è¡¨è¾¾å¼ä¸­ç”¨"{"å’Œ"}"æ¥æ ‡è¯†å˜é‡ ä¾‹å¦‚ï¼š 2 * 2 2 + 2 * 3 2 - 2 / 3 2 - 3 % 2 2* {var1} /
+			{var2} sum({var1}) avg({var1}) count({var1}) ä¸Šè¿°æ“ä½œå¯ä»¥ä»»æ„ç»„åˆ
 		-->
 		<attribute>
 			<name>expressionValue</name>
@@ -2595,31 +2595,31 @@
 		</attribute>
 	</tag>
 	<!--
-		¹¦ÄÜËµÃ÷£ºÏÔÊ¾·ÖÒ³/ÁĞ±íÖĞÊı¾İµÄĞĞºÅ
+		åŠŸèƒ½è¯´æ˜ï¼šæ˜¾ç¤ºåˆ†é¡µ/åˆ—è¡¨ä¸­æ•°æ®çš„è¡Œå·
 	-->
 	<tag>
 		<name>rowid</name>
 		<tagclass>com.frameworkset.common.tag.pager.tags.RowIDTag</tagclass>
 		<bodycontent>empty</bodycontent>
 		<!--
-			ÕûÊıÀàĞÍ£º¶ÔÊä³öµÄrowid×öµ÷Õû£» Èç¹ûoffset£½true£¬ÔòrowidÎªrowid + inscreament + offset
-			·ñÔòÎªrowid + inscreament
+			æ•´æ•°ç±»å‹ï¼šå¯¹è¾“å‡ºçš„rowidåšè°ƒæ•´ï¼› å¦‚æœoffsetï¼trueï¼Œåˆ™rowidä¸ºrowid + inscreament + offset
+			å¦åˆ™ä¸ºrowid + inscreament
 		-->
 		<attribute>
 			<name>increament</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!--
-			²éÕÒ×æÏÈ(list)Ë÷Òı
+			æŸ¥æ‰¾ç¥–å…ˆ(list)ç´¢å¼•
 		-->
 		<attribute>
 			<name>index</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!--
-			¿ØÖÆĞĞºÅÊÇ·ñ»ùÓÚ×Ü¼ÇÂ¼Êı»¹ÊÇµ±Ç°Ò³ÃæµÄ¼ÇÂ¼Êı£¬ÀıÈç£º
-			×Ü¼ÇÂ¼ÊıÎª1000£¬µ±Ç°Ò³ÃæÆğµãÎª100Ìõ£¬Ôò¸ù¾İoffsetµÄÖµÀ´¾ö¶¨rowidµÄÖµ£¬
-			Èç¹ûoffset=true£¬ÔòÖµÎªrowidÎª100£¬ Èç¹ûoffset=false,ÔòrowidµÄÖµÎª0
+			æ§åˆ¶è¡Œå·æ˜¯å¦åŸºäºæ€»è®°å½•æ•°è¿˜æ˜¯å½“å‰é¡µé¢çš„è®°å½•æ•°ï¼Œä¾‹å¦‚ï¼š
+			æ€»è®°å½•æ•°ä¸º1000ï¼Œå½“å‰é¡µé¢èµ·ç‚¹ä¸º100æ¡ï¼Œåˆ™æ ¹æ®offsetçš„å€¼æ¥å†³å®šrowidçš„å€¼ï¼Œ
+			å¦‚æœoffset=trueï¼Œåˆ™å€¼ä¸ºrowidä¸º100ï¼Œ å¦‚æœoffset=false,åˆ™rowidçš„å€¼ä¸º0
 		-->
 		<attribute>
 			<name>offset</name>
@@ -2627,7 +2627,7 @@
 		</attribute>
 	</tag>
 	<!-- 
-	¼ÇÂ¼×ÜÌõÊı
+	è®°å½•æ€»æ¡æ•°
 	 -->
 	<tag>
 		<name>rowcount</name>
@@ -2639,7 +2639,7 @@
 		</attribute>
 	</tag>
 	<!-- 
-	µ±Ò³Êı¾İÌõÊı
+	å½“é¡µæ•°æ®æ¡æ•°
 	 -->
 	<tag>
 		<name>pagesize</name>
@@ -2651,7 +2651,7 @@
 		</attribute>
 	</tag>
 	<!--
-		¸ù¾İÁĞ±í·ÖÒ³ÊÇ·ñÓĞÊı¾İÀ´Êä³öÏàÓ¦µÄÌáÊ¾ĞÅÏ¢
+		æ ¹æ®åˆ—è¡¨åˆ†é¡µæ˜¯å¦æœ‰æ•°æ®æ¥è¾“å‡ºç›¸åº”çš„æç¤ºä¿¡æ¯
 	-->
 	<tag>
 		<name>notify</name>
@@ -2670,7 +2670,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!--
-			²éÕÒ×æÏÈ(list)Ë÷Òı
+			æŸ¥æ‰¾ç¥–å…ˆ(list)ç´¢å¼•
 		-->
 		<attribute>
 			<name>index</name>
@@ -2678,8 +2678,8 @@
 		</attribute>
 	</tag>
 	<!-- 
-		sql²ÎÊı±êÇ©£¬ÓÃÀ´ÉèÖÃÔ¤±àÒë²ÎÊı
-		¿ÉÒÔÄÚÖÃÔÚlist±êÇ©£¬beaninfo±êÇ©£¬pager±êÇ©ÖĞ
+		sqlå‚æ•°æ ‡ç­¾ï¼Œç”¨æ¥è®¾ç½®é¢„ç¼–è¯‘å‚æ•°
+		å¯ä»¥å†…ç½®åœ¨listæ ‡ç­¾ï¼Œbeaninfoæ ‡ç­¾ï¼Œpageræ ‡ç­¾ä¸­
 	 -->
 	<tag>
 		<name>sqlparam</name>
@@ -2713,8 +2713,8 @@
 	</tag>
 	
 	<!-- 
-		dbutil±êÇ©£¬ÓÃÀ´Ö´ĞĞÊı¾İ¿âÉÏµÄÔ¤±àÒëĞÂÔö¡¢Ô¤±àÒëĞŞ¸ÄºÍÔ¤±àÒëÉ¾³ı²Ù×÷£¬Ä¿Ç°²»Ö§³ÖÆÕÍ¨µÄĞÂÔö£¬É¾³ı£¬ĞŞ¸Ä²Ù×÷
-		Ô¤±àÒë²ÎÊıÍ¨¹ısqlparam±êÇ©À´Ö¸¶¨
+		dbutilæ ‡ç­¾ï¼Œç”¨æ¥æ‰§è¡Œæ•°æ®åº“ä¸Šçš„é¢„ç¼–è¯‘æ–°å¢ã€é¢„ç¼–è¯‘ä¿®æ”¹å’Œé¢„ç¼–è¯‘åˆ é™¤æ“ä½œï¼Œç›®å‰ä¸æ”¯æŒæ™®é€šçš„æ–°å¢ï¼Œåˆ é™¤ï¼Œä¿®æ”¹æ“ä½œ
+		é¢„ç¼–è¯‘å‚æ•°é€šè¿‡sqlparamæ ‡ç­¾æ¥æŒ‡å®š
 	 -->
 	<tag>
 		<name>dbutil</name>
@@ -2838,11 +2838,11 @@
 	
 	
 	<!--
-		ÎÄ±¾·ÖÒ³±êÇ©,ÊôĞÔÈçÏÂ£º scope£­textµÄÓĞĞ§·¶Î§£¬·Ö±ğrequest¡¢session¡¢pageContext£¬È±Ê¡Îªrequest
-		parameter\u2014request²ÎÊıÃû³Æ
-		attribute£­ÊôĞÔÃû³Æ£¬Óërequest¡¢session¡¢pageContext×éºÏÊ¹ÓÃ
-		text£­ÎÄ±¾Öµ£¬Ö±½ÓÖ¸¶¨´ı·ÖÒ³µÄÎÄ±¾£¬Èç¹û²»Ö¸¶¨Ôò°´Ïà¹ØÊôĞÔ´Órequest¡¢session¡¢pageCongtextÖĞ»ñÈ¡ÊôĞÔÖµ
-		size£­Ã¿Ò³ÏÔÊ¾µÄÎÄ±¾¶Î³¤¶È£¬È±Ê¡Îª200 id£­±êÇ©±êÊ¶
+		æ–‡æœ¬åˆ†é¡µæ ‡ç­¾,å±æ€§å¦‚ä¸‹ï¼š scopeï¼textçš„æœ‰æ•ˆèŒƒå›´ï¼Œåˆ†åˆ«requestã€sessionã€pageContextï¼Œç¼ºçœä¸ºrequest
+		parameter\u2014requestå‚æ•°åç§°
+		attributeï¼å±æ€§åç§°ï¼Œä¸requestã€sessionã€pageContextç»„åˆä½¿ç”¨
+		textï¼æ–‡æœ¬å€¼ï¼Œç›´æ¥æŒ‡å®šå¾…åˆ†é¡µçš„æ–‡æœ¬ï¼Œå¦‚æœä¸æŒ‡å®šåˆ™æŒ‰ç›¸å…³å±æ€§ä»requestã€sessionã€pageCongtextä¸­è·å–å±æ€§å€¼
+		sizeï¼æ¯é¡µæ˜¾ç¤ºçš„æ–‡æœ¬æ®µé•¿åº¦ï¼Œç¼ºçœä¸º200 idï¼æ ‡ç­¾æ ‡è¯†
 	-->
 	<tag>
 		<name>textpager</name>
@@ -2884,9 +2884,9 @@
 		<bodycontent>JSP</bodycontent>
 	</tag>
 	<!--
-		ÎÄ±¾·ÖÒ³¼ÇÂ¼²ÎÊı±êÇ©£¬ÊôĞÔÈçÏÂ name£º²ÎÊıÃû³Æ value£º²ÎÊı
-		parameter£ºrequest²ÎÊıµÄÃû³Æ£¬²ÎÊıµÄÖµÍ¨¹ırequestÇëÇó²ÎÊı»ñÈ¡
-		attribute:requestÊôĞÔµÄÃû³Æ£¬²ÎÊıµÄÖµÍ¨¹ırequestÖĞµÄÊôĞÔÃû³Æ»ñÈ¡
+		æ–‡æœ¬åˆ†é¡µè®°å½•å‚æ•°æ ‡ç­¾ï¼Œå±æ€§å¦‚ä¸‹ nameï¼šå‚æ•°åç§° valueï¼šå‚æ•°
+		parameterï¼šrequestå‚æ•°çš„åç§°ï¼Œå‚æ•°çš„å€¼é€šè¿‡requestè¯·æ±‚å‚æ•°è·å–
+		attribute:requestå±æ€§çš„åç§°ï¼Œå‚æ•°çš„å€¼é€šè¿‡requestä¸­çš„å±æ€§åç§°è·å–
 	-->
 	<tag>
 		<name>textparam</name>
@@ -2910,12 +2910,12 @@
 		</attribute>
 	</tag>
 	<!--
-		ÄÚÈİ¹ÜÀí±êÇ©¶¨Òå¿ªÊ¼ ¹¦ÄÜËµÃ÷£ºÍ¼Æ¬ĞÂÎÅ±êÇ© @param String datatype:Êı¾İ¼ÓÔØÆ÷ @param String
-		m_second:Í¼Æ¬Ö®¼äÇĞ»»µÄËÙ¶È(µ¥Î»ms) È±Ê¡ 7600ms @param String count:Í¼Æ¬ÏÔÊ¾ÊıÁ¿ È±Ê¡5
-		@param String channel:ÆµµÀÃû³Æ @param String site:Õ¾µãÓ¢ÎÄÃû³Æ @param String
-		target:Á´½Ó´ò¿ªÎ»ÖÃ @param String isMarquee:Í¼Æ¬ÏÂ·½ÎÄ×ÖÊÇ·ñ¹ö¶¯ È±Ê¡ ²»¹ö¶¯ @param String
-		imgWidth:Í¼Æ¬¿í¶È(px) @param String imgHeight:Í¼Æ¬¸ß¶È(px) @param String
-		isLatest: true: »ñµÃÍ¼Æ¬ĞÂÎÅÆµµÀÏÂËùÓĞ×î½ü·¢²¼Í¼Æ¬ false: »ñµÃÆÕÍ¨ÆµµÀÏÂËùÓĞ·¢²¼µÄ´øÖ÷ÌâÍ¼Æ¬µÄÎÄµµÍ¼Æ¬
+		å†…å®¹ç®¡ç†æ ‡ç­¾å®šä¹‰å¼€å§‹ åŠŸèƒ½è¯´æ˜ï¼šå›¾ç‰‡æ–°é—»æ ‡ç­¾ @param String datatype:æ•°æ®åŠ è½½å™¨ @param String
+		m_second:å›¾ç‰‡ä¹‹é—´åˆ‡æ¢çš„é€Ÿåº¦(å•ä½ms) ç¼ºçœ 7600ms @param String count:å›¾ç‰‡æ˜¾ç¤ºæ•°é‡ ç¼ºçœ5
+		@param String channel:é¢‘é“åç§° @param String site:ç«™ç‚¹è‹±æ–‡åç§° @param String
+		target:é“¾æ¥æ‰“å¼€ä½ç½® @param String isMarquee:å›¾ç‰‡ä¸‹æ–¹æ–‡å­—æ˜¯å¦æ»šåŠ¨ ç¼ºçœ ä¸æ»šåŠ¨ @param String
+		imgWidth:å›¾ç‰‡å®½åº¦(px) @param String imgHeight:å›¾ç‰‡é«˜åº¦(px) @param String
+		isLatest: true: è·å¾—å›¾ç‰‡æ–°é—»é¢‘é“ä¸‹æ‰€æœ‰æœ€è¿‘å‘å¸ƒå›¾ç‰‡ false: è·å¾—æ™®é€šé¢‘é“ä¸‹æ‰€æœ‰å‘å¸ƒçš„å¸¦ä¸»é¢˜å›¾ç‰‡çš„æ–‡æ¡£å›¾ç‰‡
 	-->
 	
 	<tag>
@@ -2923,7 +2923,7 @@
 		<tagclass>com.frameworkset.common.tag.contextmenu.ContextMenuTag</tagclass>
 		<bodycontent>JSP</bodycontent>
 		<!-- 
-			contextmenu»º³åµÄkey
+			contextmenuç¼“å†²çš„key
 		-->
 		<attribute>
 			<name>context</name>
@@ -2931,14 +2931,14 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!--
-			/** * contextmenu¶ÔÏó»º³åµÄ·¶Î§£º * request È±Ê¡Öµ * session * pageContext */
+			/** * contextmenuå¯¹è±¡ç¼“å†²çš„èŒƒå›´ï¼š * request ç¼ºçœå€¼ * session * pageContext */
 		-->
 		<attribute>
 			<name>scope</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<!--
-			enablecontextmenu ÊÇ·ñÔÊĞíÓÒ¼ü²Ëµ¥¿ØÖÆÏî true:ÔÊĞí false£º²»ÔÊĞí£¬È±Ê¡Öµ
+			enablecontextmenu æ˜¯å¦å…è®¸å³é”®èœå•æ§åˆ¶é¡¹ true:å…è®¸ falseï¼šä¸å…è®¸ï¼Œç¼ºçœå€¼
 		-->
 		<attribute>
 			<name>enablecontextmenu</name>
@@ -2950,43 +2950,43 @@
 		</attribute>
 	</tag>
 	
-	<!-- ÄÚÈİ¹ÜÀí±êÇ©¶¨Òå½áÊø -->
+	<!-- å†…å®¹ç®¡ç†æ ‡ç­¾å®šä¹‰ç»“æŸ -->
 	
 	<!-- 
-	µ¼ÈëÒ³ÃæjsºÍcssÎÄ¼ş£º
+	å¯¼å…¥é¡µé¢jså’Œcssæ–‡ä»¶ï¼š
 	/include/pager.js
 	/include/jquery-1.4.2.min.js
 	/include/treeview.css
 	/include/themes/default/easyui.css
 	/include/themes/icon.css
 	/include/jquery.easyui.min.js
-	Èç¹ûÒ³ÃæÉÏ·ÅÖÃconfig±êÇ©ºó¾Í»áÒıÈëÉÏÊöÎÄ¼ş
-	config±êÇ©ºÍcsslink£¬jscript±êÇ©¶¼ÄÜ¹»×Ô¶¯È¥ÖØ
+	å¦‚æœé¡µé¢ä¸Šæ”¾ç½®configæ ‡ç­¾åå°±ä¼šå¼•å…¥ä¸Šè¿°æ–‡ä»¶
+	configæ ‡ç­¾å’Œcsslinkï¼Œjscriptæ ‡ç­¾éƒ½èƒ½å¤Ÿè‡ªåŠ¨å»é‡
 	 -->
 	<tag>
 		<name>config</name>
 		<tagclass>com.frameworkset.common.tag.pager.config.PageConfig</tagclass>
 		<bodycontent>JSP</bodycontent>
 		<!-- 
-		¿ØÖÆÊÇ·ñÉú³ÉÓÒ¼ü²Ëµ¥µÄjavascript½Å±¾£ºenablecontextmenu = true£¬Éú³É£¬false-²»Éú³É
+		æ§åˆ¶æ˜¯å¦ç”Ÿæˆå³é”®èœå•çš„javascriptè„šæœ¬ï¼šenablecontextmenu = trueï¼Œç”Ÿæˆï¼Œfalse-ä¸ç”Ÿæˆ
 		 -->
 		<attribute>
 			<name>enablecontextmenu</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
-		<!-- ÊÇ·ñÊä³öÊ÷ÑùÊ½ -->
+		<!-- æ˜¯å¦è¾“å‡ºæ ‘æ ·å¼ -->
 		<attribute>
 			<name>enabletree</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
-	<!-- Í¨¹ıcsslink±êÇ©µ¼ÈëµÄcssÎÄ¼şÄÜ¹»×Ô¶¯È¥ÖØ¹¦ÄÜ -->
+	<!-- é€šè¿‡csslinkæ ‡ç­¾å¯¼å…¥çš„cssæ–‡ä»¶èƒ½å¤Ÿè‡ªåŠ¨å»é‡åŠŸèƒ½ -->
 	<tag>
 		<name>csslink</name>
 		<tagclass>com.frameworkset.common.tag.pager.config.LinkTag</tagclass>
 		<bodycontent>JSP</bodycontent>
 		<!-- 
-		Éú³ÉlinkÔªËØ£º
+		ç”Ÿæˆlinkå…ƒç´ ï¼š
 		<link rel="stylesheet" type="text/css" href="${contextpath}/include/themes/default/easyui.css">
 		 -->
 		<attribute>
@@ -2995,13 +2995,13 @@
 			<required>true</required>
 		</attribute>
 	</tag>
-	<!-- Í¨¹ıjscript±êÇ©µ¼ÈëµÄjsÎÄ¼şÄÜ¹»×Ô¶¯È¥ÖØ¹¦ÄÜ -->
+	<!-- é€šè¿‡jscriptæ ‡ç­¾å¯¼å…¥çš„jsæ–‡ä»¶èƒ½å¤Ÿè‡ªåŠ¨å»é‡åŠŸèƒ½ -->
 	<tag>
 		<name>jscript</name>
 		<tagclass>com.frameworkset.common.tag.pager.config.ScriptTag</tagclass>
 		<bodycontent>JSP</bodycontent>
 		<!-- 
-		Éú³ÉscriptÔªËØ£º
+		ç”Ÿæˆscriptå…ƒç´ ï¼š
 		<script type="text/javascript" src="${contextpath}/include/jquery-1.4.2.min.js"></script>
 		 -->
 		<attribute>
@@ -3011,7 +3011,7 @@
 		</attribute>
 	</tag>
 	<!-- 
-	¶¨Òåbboss mvc±êÇ©¿ªÊ¼
+	å®šä¹‰bboss mvcæ ‡ç­¾å¼€å§‹
 	 -->
 	 
 	 <tag>
@@ -3234,19 +3234,19 @@
 		<tag-class>org.frameworkset.web.token.DTokenTag</tag-class>
 		<body-content>JSP</body-content>
 		<description>
-			Éú³É¶¯Ì¬ÁîÅÆ±êÇ©£¬ÓÃÀ´·ÀÖ¹¿çÕ¾Î±Ôì¹¥»÷
+			ç”ŸæˆåŠ¨æ€ä»¤ç‰Œæ ‡ç­¾ï¼Œç”¨æ¥é˜²æ­¢è·¨ç«™ä¼ªé€ æ”»å‡»
 		</description>
 		<attribute>
 			<name>element</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<description>
-					²ÎÊıÓĞ4¸öÖµ£¨Èç¹ûÃ»ÓĞÖ¸¶¨Ä¬ÈÏÎªinputÀàĞÍ£©£º
-				  json Êä³öjson±í´ïÊ½£¬Ãû³ÆºÍÖµµÄ·Ö¸ô·ûÄ¬ÈÏÎª'ºÅ£¬Èç¹ûÒªÖ¸¶¨Îª"ºÅ£¬ÄÇÃ´ĞèÒª
-				  Í¨¹ıjsonsplit²ÎÊıÀ´Ö¸¶¨				  
-				  inputÊä³öinput hidden				  
-				  param(µÈºÅ±í´ïÊ½)
-				  token-Ö»Éú³ÉÁîÅÆ±¾Éí
+					å‚æ•°æœ‰4ä¸ªå€¼ï¼ˆå¦‚æœæ²¡æœ‰æŒ‡å®šé»˜è®¤ä¸ºinputç±»å‹ï¼‰ï¼š
+				  json è¾“å‡ºjsonè¡¨è¾¾å¼ï¼Œåç§°å’Œå€¼çš„åˆ†éš”ç¬¦é»˜è®¤ä¸º'å·ï¼Œå¦‚æœè¦æŒ‡å®šä¸º"å·ï¼Œé‚£ä¹ˆéœ€è¦
+				  é€šè¿‡jsonsplitå‚æ•°æ¥æŒ‡å®š				  
+				  inputè¾“å‡ºinput hidden				  
+				  param(ç­‰å·è¡¨è¾¾å¼)
+				  token-åªç”Ÿæˆä»¤ç‰Œæœ¬èº«
 			</description>
 		</attribute>
 		<attribute>
@@ -3254,7 +3254,7 @@
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<description>
-			Éú³É¶¯Ì¬ÁîÅÆ±êÇ©£¬ÓÃÀ´·ÀÖ¹¿çÕ¾Î±Ôì¹¥»÷
+			ç”ŸæˆåŠ¨æ€ä»¤ç‰Œæ ‡ç­¾ï¼Œç”¨æ¥é˜²æ­¢è·¨ç«™ä¼ªé€ æ”»å‡»
 		</description>
 		</attribute>
 		
@@ -3263,9 +3263,9 @@
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<description>
-				ÁîÅÆËùÊô´°ÌåÎ¨Ò»±êÊ¶£¬Ò»¸ö´°ÌåÖ»ĞèÒªÒ»¸öÁîÅÆ£¬Èç¹ûÔÚÍ¬Ò»¸ö´°Ìå
-			 ÖĞdttoken±êÇ©ĞèÒª³öÏÖ¶à´Î£¬±ÈÈçÔÚÂß¼­ÅĞ¶ÏÖĞ³öÏÖ¶à´Î£¬ÄÇÃ´¾ÍĞèÒªÖ¸¶¨
-			 fidÊôĞÔ£¬³ı´ËÒÔÍâ¶¼²»ĞèÒªÖ¸¶¨fidÊôĞÔ
+				ä»¤ç‰Œæ‰€å±çª—ä½“å”¯ä¸€æ ‡è¯†ï¼Œä¸€ä¸ªçª—ä½“åªéœ€è¦ä¸€ä¸ªä»¤ç‰Œï¼Œå¦‚æœåœ¨åŒä¸€ä¸ªçª—ä½“
+			 ä¸­dttokenæ ‡ç­¾éœ€è¦å‡ºç°å¤šæ¬¡ï¼Œæ¯”å¦‚åœ¨é€»è¾‘åˆ¤æ–­ä¸­å‡ºç°å¤šæ¬¡ï¼Œé‚£ä¹ˆå°±éœ€è¦æŒ‡å®š
+			 fidå±æ€§ï¼Œé™¤æ­¤ä»¥å¤–éƒ½ä¸éœ€è¦æŒ‡å®šfidå±æ€§
 			</description>
 		</attribute>
 		
@@ -3274,7 +3274,7 @@
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<description>
-				±êÊ¶ÊÇ·ñÔÚ·şÎñÆ÷¶Ë±£´æÁîÅÆ£¬±£´æ»úÖÆÓÉtokenFilterµÄtokenstore²ÎÊıÖ¸¶¨
+				æ ‡è¯†æ˜¯å¦åœ¨æœåŠ¡å™¨ç«¯ä¿å­˜ä»¤ç‰Œï¼Œä¿å­˜æœºåˆ¶ç”±tokenFilterçš„tokenstoreå‚æ•°æŒ‡å®š
 			</description>
 		</attribute>
 	</tag>
@@ -3283,12 +3283,12 @@
 		<tag-class>org.frameworkset.web.token.AssertDTokenTag</tag-class>
 		<body-content>JSP</body-content>
 		<description>
-			ÓÃÓÚÔÚÒ³ÃæÉÏÅĞ¶ÏÁîÅÆ±»¿Í»§¶Ë´«»Ø²¢ÇÒĞ£ÑéÁîÅÆÊÇ·ñÕıÈ·
-			Èç¹ûÃ»ÓĞÆôÓÃ¶¯Ì¬ÁîÅÆ»úÖÆ£¬¸Ã±êÇ©ÎŞĞ§
-			Èç¹ûÆôÓÃÁË£¬assertdtokenÅĞ¶ÏÁîÅÆÊÇ·ñ±»¿Í»§¶Ë´«»Ø²¢ÇÒĞ£ÑéÁîÅÆÊÇ·ñÕıÈ·
-			Èç¹ûÃ»ÓĞ´«»ØÔò¾Ü¾ø·ÃÎÊ£¬Èç¹û´«»ØµÄÁîÅÆÒÑ¾­Ê§Ğ§Ôò¾Ü¾ø·ÃÎÊ
+			ç”¨äºåœ¨é¡µé¢ä¸Šåˆ¤æ–­ä»¤ç‰Œè¢«å®¢æˆ·ç«¯ä¼ å›å¹¶ä¸”æ ¡éªŒä»¤ç‰Œæ˜¯å¦æ­£ç¡®
+			å¦‚æœæ²¡æœ‰å¯ç”¨åŠ¨æ€ä»¤ç‰Œæœºåˆ¶ï¼Œè¯¥æ ‡ç­¾æ— æ•ˆ
+			å¦‚æœå¯ç”¨äº†ï¼Œassertdtokenåˆ¤æ–­ä»¤ç‰Œæ˜¯å¦è¢«å®¢æˆ·ç«¯ä¼ å›å¹¶ä¸”æ ¡éªŒä»¤ç‰Œæ˜¯å¦æ­£ç¡®
+			å¦‚æœæ²¡æœ‰ä¼ å›åˆ™æ‹’ç»è®¿é—®ï¼Œå¦‚æœä¼ å›çš„ä»¤ç‰Œå·²ç»å¤±æ•ˆåˆ™æ‹’ç»è®¿é—®
 		</description>
 	</tag>		
-	<!-- ¶¨Òåbboss mvc±êÇ©½áÊø -->
+	<!-- å®šä¹‰bboss mvcæ ‡ç­¾ç»“æŸ -->
 	
 </taglib>

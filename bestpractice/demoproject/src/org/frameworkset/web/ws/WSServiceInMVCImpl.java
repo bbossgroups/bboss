@@ -34,12 +34,12 @@ import org.frameworkset.spi.remote.clientproxy.WSServiceInMVC;
 public class WSServiceInMVCImpl implements WSServiceInMVC {
 
 	public String sayMvsHello(@WebParam(name="duoduo") String duoduo) {
-		System.out.println("MVC»¶Ó­Äú!" + duoduo);
-		return "MVC»¶Ó­Äú!" + duoduo;
+		System.out.println("MVCæ¬¢è¿Žæ‚¨!" + duoduo);
+		return "MVCæ¬¢è¿Žæ‚¨!" + duoduo;
 	}
 	@WebMethod(exclude=true)
 	public String sayMvsHello_(@WebParam(name="duoduo") String duoduo) {
-		System.out.println("MVC»¶Ó­Äú!" + duoduo);
-		return "MVC»¶Ó­Äú!" + duoduo;
+		System.out.println("MVCæ¬¢è¿Žæ‚¨!" + duoduo);
+		return "MVCæ¬¢è¿Žæ‚¨!" + duoduo;
 	}
 }

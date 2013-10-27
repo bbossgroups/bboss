@@ -48,7 +48,7 @@ import com.frameworkset.util.EditorInf;
  * Copyright (c) 2007
  * </p>
  * 
- * @Date 2010-10-13 下午08:58:46
+ * @Date 2010-10-13 涓嬪崍08:58:46
  * @author biaoping.yin
  * @version 1.0
  */
@@ -79,7 +79,7 @@ public class MethodParameter {
 	private ParameterNameDiscoverer parameterNameDiscoverer;
 
 	/**
-	 * 请求参数名称
+	 * 璇锋眰鍙傛暟鍚嶇О
 	 */
 	private String parameterName;
 	
@@ -104,7 +104,7 @@ public class MethodParameter {
 	}
 
 	/**
-	 * 参数名称由常量和变量部分组成，变量var中包含了变量对应的request参数名称和变量在整个参数名称中所处的位置
+	 * 鍙傛暟鍚嶇О鐢卞父閲忓拰鍙橀噺閮ㄥ垎缁勬垚锛屽彉閲弙ar涓寘鍚簡鍙橀噺瀵瑰簲鐨剅equest鍙傛暟鍚嶇О鍜屽彉閲忓湪鏁翠釜鍙傛暟鍚嶇О涓墍澶勭殑浣嶇疆
 	 */
 	private List<Var> requestParamNameToken;
 	
@@ -137,7 +137,7 @@ public class MethodParameter {
 	private boolean primaryType;
 	
 	/**
-	 * 标识参数是否被多个不同类型的注解所注解
+	 * 鏍囪瘑鍙傛暟鏄惁琚涓笉鍚岀被鍨嬬殑娉ㄨВ鎵�娉ㄨВ
 	 */
 	private boolean multiAnnotations = false;
 	

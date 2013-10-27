@@ -40,7 +40,7 @@ import org.frameworkset.spi.security.SecurityException;
  * Copyright (c) 2007
  * </p>
  * 
- * @Date 2010-7-25 ÏÂÎç01:42:23
+ * @Date 2010-7-25 ä¸‹åˆ01:42:23
  * @author biaoping.yin
  * @version 1.0
  */
@@ -83,7 +83,7 @@ public class RequestContext {
 	}
 
 	/**
-	 * Ö´ĞĞÔ¶³Ìµ÷ÓÃµÄ×¼±¸¹¦ÄÜ£¬×öÈÏÖ¤ºÍ¼øÈ¨
+	 * æ‰§è¡Œè¿œç¨‹è°ƒç”¨çš„å‡†å¤‡åŠŸèƒ½ï¼Œåšè®¤è¯å’Œé‰´æƒ
 	 * 
 	 * @param method_call
 	 * @throws Throwable
@@ -102,12 +102,12 @@ public class RequestContext {
 						securityContext = new SecurityContext();
 					// SecurityContext.setSecurityContext(securityContext);
 				} else {
-					throw new SecurityException("È¨ÏŞ¼ì²âÊ§°Ü,µ±Ç°ÓÃ»§ÎŞ·¨Ö´ĞĞ·şÎñ²Ù×÷£º"
+					throw new SecurityException("æƒé™æ£€æµ‹å¤±è´¥,å½“å‰ç”¨æˆ·æ— æ³•æ‰§è¡ŒæœåŠ¡æ“ä½œï¼š"
 							+ securityContext);
 				}
 			} else {
 
-				throw new SecurityException("ÈÏÖ¤Ê§°Ü,Çë¼ì²éÓÃ»§Æ¾Ö¤ĞÅÏ¢ÊÇ·ñÕıÈ·£º"
+				throw new SecurityException("è®¤è¯å¤±è´¥,è¯·æ£€æŸ¥ç”¨æˆ·å‡­è¯ä¿¡æ¯æ˜¯å¦æ­£ç¡®ï¼š"
 						+ securityContext);
 			}
 			if (headers != null && headers.size() > 0) {
@@ -142,16 +142,16 @@ public class RequestContext {
 	}
 
 	/**
-	 * ·ÃÎÊµÄ·½·¨±êÊ¶£¬ÓÃÀ´½øĞĞÈ¨ÏŞ¿ØÖÆ
+	 * è®¿é—®çš„æ–¹æ³•æ ‡è¯†ï¼Œç”¨æ¥è¿›è¡Œæƒé™æ§åˆ¶
 	 */
 	private String methodop;
 	/**
-	 * ·ÃÎÊµÄ·şÎñ±êÊ¶£¬ÓÃÀ´½øĞĞÈ¨ÏŞ¿ØÖÆ
+	 * è®¿é—®çš„æœåŠ¡æ ‡è¯†ï¼Œç”¨æ¥è¿›è¡Œæƒé™æ§åˆ¶
 	 */
 	private String serviceid;
 
 	/**
-	 * Ó¦ÓÃÖ´ĞĞ»·¾³ÉèÖÃµÄÉÏÏÂÎÄĞÅÏ¢
+	 * åº”ç”¨æ‰§è¡Œç¯å¢ƒè®¾ç½®çš„ä¸Šä¸‹æ–‡ä¿¡æ¯
 	 */
 	private UtilMap callparameters = new UtilMap();
 

@@ -19,62 +19,62 @@ package com.frameworkset.common.poolman.security;
  * 
  * <p>Title: DBInfoEncrypt.java</p>
  *
- * <p>Description: 用来对数据库信息进行加密的抽象类，应用系统可以通过该插件对数据库地址，账号，口令信息进行加密
+ * <p>Description: 鐢ㄦ潵瀵规暟鎹簱淇℃伅杩涜鍔犲瘑鐨勬娊璞＄被锛屽簲鐢ㄧ郴缁熷彲浠ラ�氳繃璇ユ彃浠跺鏁版嵁搴撳湴鍧�锛岃处鍙凤紝鍙ｄ护淇℃伅杩涜鍔犲瘑
  * </p>
  *
  * <p>Copyright: Copyright (c) 2007</p>
- * @Date 2012-3-14 下午3:08:09
+ * @Date 2012-3-14 涓嬪崍3:08:09
  * @author biaoping.yin
  * @version 1.0
  */
 public interface DBInfoEncrypt {
 	/**
-	 * 加密数据接口
+	 * 鍔犲瘑鏁版嵁鎺ュ彛
 	 * @param data
 	 * @return
 	 */
 	public abstract String encrypt(String data);
 	/**
-	 * 解密数据接口
+	 * 瑙ｅ瘑鏁版嵁鎺ュ彛
 	 * @param data
 	 * @return
 	 */
 	public abstract String decrypt(String data);
 	
 	/**
-	 * 加密数据接口
+	 * 鍔犲瘑鏁版嵁鎺ュ彛
 	 * @param data
 	 * @return
 	 */
 	public abstract String encryptDBUrl(String url);
 	/**
-	 * 解密数据接口
+	 * 瑙ｅ瘑鏁版嵁鎺ュ彛
 	 * @param data
 	 * @return
 	 */
 	public abstract String decryptDBUrl(String url);
 	
 	/**
-	 * 加密数据接口
+	 * 鍔犲瘑鏁版嵁鎺ュ彛
 	 * @param data
 	 * @return
 	 */
 	public abstract String encryptDBPassword(String password);
 	/**
-	 * 解密数据接口
+	 * 瑙ｅ瘑鏁版嵁鎺ュ彛
 	 * @param data
 	 * @return
 	 */
 	public abstract String decryptDBPassword(String password);
 	
 	/**
-	 * 加密数据接口
+	 * 鍔犲瘑鏁版嵁鎺ュ彛
 	 * @param data
 	 * @return
 	 */
 	public abstract String encryptDBUser(String user);
 	/**
-	 * 解密数据接口
+	 * 瑙ｅ瘑鏁版嵁鎺ュ彛
 	 * @param data
 	 * @return
 	 */

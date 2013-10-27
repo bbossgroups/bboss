@@ -25,7 +25,7 @@ import org.frameworkset.spi.assemble.ManagerImport;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2010-10-3 ÏÂÎç11:03:41
+ * @Date 2010-10-3 ä¸‹åˆ11:03:41
  * @author biaoping.yin
  * @version 1.0
  */

@@ -29,24 +29,24 @@ public class MemTokenManager {
 	private final Map<MemToken,Object> temptokens = new HashMap<MemToken,Object>();
 	private TokenFilter tokenFilter;
 	/**
-	 * bboss¿çÕ¾¹¥»÷tokenµÄ²ÎÊıÃû³Æ£¬Ã¿¸ö¿Í»§¶ËÒ³ÃæÍ¨¹ıÕâ¸öÃû³Æ½«token´«»Ø·şÎñ¶Ë½øĞĞ
-	 * Ğ£Ñé
+	 * bbossè·¨ç«™æ”»å‡»tokençš„å‚æ•°åç§°ï¼Œæ¯ä¸ªå®¢æˆ·ç«¯é¡µé¢é€šè¿‡è¿™ä¸ªåç§°å°†tokenä¼ å›æœåŠ¡ç«¯è¿›è¡Œ
+	 * æ ¡éªŒ
 	 */
 	public static final String temptoken_param_name = "_dt_token_";
 	private static final String temptoken_request_attribute = "org.frameworkset.web.token.bboss_csrf_Token"; 
 	public static final String temptoken_request_validateresult_key = "temptoken_request_validateresult_key";
 	/**
-	 * ÁîÅÆĞ£Ñé³É¹¦
+	 * ä»¤ç‰Œæ ¡éªŒæˆåŠŸ
 	 */
 	public static final Integer temptoken_request_validateresult_ok = new Integer(1);
 	/**
-	 * ÁîÅÆĞ£ÑéÊ§°Ü
+	 * ä»¤ç‰Œæ ¡éªŒå¤±è´¥
 	 */
 	public static final Integer temptoken_request_validateresult_fail = new Integer(0);
 	/**
-	 * ÎŞÁîÅÆ×´Ì¬£¬Õâ¸ö×´Ì¬ÅäºÏ¿ØÖÆÆ÷·½·¨µÄAssertDToken×¢½âºÍjspÒ³ÃæÉÏµÄAssertDTokenTagÒ»ÆğÊ¹ÓÃ£¬Èç¹û¿ØÖÆÆ÷·½·¨AssertDToken×¢½â»òÕßjspÒ³ÃæÉèÖÃÁËAssertDTokenTag±êÇ©£¬ÔòÒªÇó±ØĞëÊ¹ÓÃÁîÅÆ
-	 * Èç¹û¿Í»§¶ËÃ»ÓĞ´«ÊäÁîÅÆ£¬Ôò¾Ü¾øÇëÇó¡£
-	 * AssertDTokenºÍAssertDTokenTagÖ÷ÒªÓÃÀ´·ÀÖ¹¿Í»§¶Ë°ÑÁîÅÆÈ¥µôºóÆÛÆ­·şÎñÆ÷½øĞĞ·ÃÎÊ
+	 * æ— ä»¤ç‰ŒçŠ¶æ€ï¼Œè¿™ä¸ªçŠ¶æ€é…åˆæ§åˆ¶å™¨æ–¹æ³•çš„AssertDTokenæ³¨è§£å’Œjspé¡µé¢ä¸Šçš„AssertDTokenTagä¸€èµ·ä½¿ç”¨ï¼Œå¦‚æœæ§åˆ¶å™¨æ–¹æ³•AssertDTokenæ³¨è§£æˆ–è€…jspé¡µé¢è®¾ç½®äº†AssertDTokenTagæ ‡ç­¾ï¼Œåˆ™è¦æ±‚å¿…é¡»ä½¿ç”¨ä»¤ç‰Œ
+	 * å¦‚æœå®¢æˆ·ç«¯æ²¡æœ‰ä¼ è¾“ä»¤ç‰Œï¼Œåˆ™æ‹’ç»è¯·æ±‚ã€‚
+	 * AssertDTokenå’ŒAssertDTokenTagä¸»è¦ç”¨æ¥é˜²æ­¢å®¢æˆ·ç«¯æŠŠä»¤ç‰Œå»æ‰åæ¬ºéª—æœåŠ¡å™¨è¿›è¡Œè®¿é—®
 	 */
 	public static final Integer temptoken_request_validateresult_nodtoken = new Integer(2);
 	private final Object c = new Object();
@@ -59,21 +59,21 @@ public class MemTokenManager {
 	
 	/**
 	 * tokenstore
-	 * Ö¸¶¨ÁîÅÆ´æ´¢»úÖÆ£¬Ä¿Ç°Ìá¹©Á½ÖÖ»úÖÆ£º
-	 * mem£º½«ÁîÅÆÖ±½Ó´æ´¢ÔÚÄÚ´æ¿Õ¼äÖĞ
-	 * session£º½«ÁîÅÆ´æ´¢ÔÚsessionÖĞ
-	 * Ä¬ÈÏ´æ´¢ÔÚsessionÖĞ
+	 * æŒ‡å®šä»¤ç‰Œå­˜å‚¨æœºåˆ¶ï¼Œç›®å‰æä¾›ä¸¤ç§æœºåˆ¶ï¼š
+	 * memï¼šå°†ä»¤ç‰Œç›´æ¥å­˜å‚¨åœ¨å†…å­˜ç©ºé—´ä¸­
+	 * sessionï¼šå°†ä»¤ç‰Œå­˜å‚¨åœ¨sessionä¸­
+	 * é»˜è®¤å­˜å‚¨åœ¨sessionä¸­
 	 */
 	protected String tokenstore = "session";
 	protected int tokenstore_i = tokenstore_in_session;
 	/**
-	 * ÁîÅÆ³ÖĞøÊ±¼ä,Ä¬ÈÏÎª1¸öĞ¡Ê±
+	 * ä»¤ç‰ŒæŒç»­æ—¶é—´,é»˜è®¤ä¸º1ä¸ªå°æ—¶
 	 */
 	private long tokendualtime = 3600000;
 	/**
-	 * ÁîÅÆ³¬Ê±¼ì²âÊ±¼ä¼ä¸ô£¬Ä¬ÈÏÎª-1£¬²»¼ì²â
-	 * Èç¹ûĞèÒª¼ì²â£¬ÄÇÃ´Ö»ÒªÁîÅÆ³ÖĞøÊ±¼ä³¬¹ıtokendualtime
-	 * ¶ÔÓ¦µÄÊ±¼ä½«»á±»Çå³ı
+	 * ä»¤ç‰Œè¶…æ—¶æ£€æµ‹æ—¶é—´é—´éš”ï¼Œé»˜è®¤ä¸º-1ï¼Œä¸æ£€æµ‹
+	 * å¦‚æœéœ€è¦æ£€æµ‹ï¼Œé‚£ä¹ˆåªè¦ä»¤ç‰ŒæŒç»­æ—¶é—´è¶…è¿‡tokendualtime
+	 * å¯¹åº”çš„æ—¶é—´å°†ä¼šè¢«æ¸…é™¤
 	 */
 	private long tokenscaninterval = 1800000;
 	
@@ -152,7 +152,7 @@ public class MemTokenManager {
 	}
 	
 	/**
-	 * Èç¹û¶¯Ì¬ÁîÅÆĞ£Ñé³É¹¦»òÕßÁîÅÆÃ»ÓĞÉèÖÃ·µ»Øtrue
+	 * å¦‚æœåŠ¨æ€ä»¤ç‰Œæ ¡éªŒæˆåŠŸæˆ–è€…ä»¤ç‰Œæ²¡æœ‰è®¾ç½®è¿”å›true
 	 * @param result
 	 * @return
 	 */
@@ -161,8 +161,8 @@ public class MemTokenManager {
 		return result == temptoken_request_validateresult_ok || result == temptoken_request_validateresult_nodtoken;
 	}
 	/**
-	 * ÅĞ¶ÏÁîÅÆÊÇ·ñÓĞĞ§£¬Ò»´ÎÇëÇóÖ»ÅĞ¶ÏÒ»´Î£¬±ÜÃâ¶à´ÎÅĞ¶Ï
-	 * Í¬Ê±¼ÇÂ¼ÅĞ¶Ï½á¹û£¬ÒÔ±ãºóĞø´¦Àí²Ù×÷»ñÈ¡Õâ¸ö½á¹û½øĞĞÏàÓ¦µÄ´¦Àí
+	 * åˆ¤æ–­ä»¤ç‰Œæ˜¯å¦æœ‰æ•ˆï¼Œä¸€æ¬¡è¯·æ±‚åªåˆ¤æ–­ä¸€æ¬¡ï¼Œé¿å…å¤šæ¬¡åˆ¤æ–­
+	 * åŒæ—¶è®°å½•åˆ¤æ–­ç»“æœï¼Œä»¥ä¾¿åç»­å¤„ç†æ“ä½œè·å–è¿™ä¸ªç»“æœè¿›è¡Œç›¸åº”çš„å¤„ç†
 	 * @param request
 	 * @return
 	 */
@@ -197,7 +197,7 @@ public class MemTokenManager {
 	}
 	public static final String temptoken_param_name_word = temptoken_param_name + "=";
 	/**
-	 * Îªurl×·¼Ó¶¯Ì¬ÁîÅÆ²ÎÊı
+	 * ä¸ºurlè¿½åŠ åŠ¨æ€ä»¤ç‰Œå‚æ•°
 	 * @param url
 	 * @return
 	 */
@@ -224,7 +224,7 @@ public class MemTokenManager {
 	}
 	
 	/**
-	 * ÅĞ¶ÏÁîÅÆÊÇ·ñÉèÖÃ²¢ÇÒĞ£Ñé³É¹¦
+	 * åˆ¤æ–­ä»¤ç‰Œæ˜¯å¦è®¾ç½®å¹¶ä¸”æ ¡éªŒæˆåŠŸ
 	 * @param result
 	 * @return
 	 */
@@ -236,7 +236,7 @@ public class MemTokenManager {
 	}
 	
 	/**
-	 * ÅĞ¶ÏÁîÅÆÊÇ·ñÉèÖÃ²¢ÇÒĞ£Ñé³É¹¦
+	 * åˆ¤æ–­ä»¤ç‰Œæ˜¯å¦è®¾ç½®å¹¶ä¸”æ ¡éªŒæˆåŠŸ
 	 * @param result
 	 * @return
 	 */
@@ -287,7 +287,7 @@ public class MemTokenManager {
 		{
 			k = temptoken_request_attribute+ "_" + fid;
 			tmp = (String)request.getAttribute(k);
-			if(tmp != null)//Èç¹ûÒÑ¾­Éú²útoken£¬ÔòÖ±½Ó·µ»ØÉú²úµÄtoke£¬ÎŞĞèÖØ¸´Éú²útoken
+			if(tmp != null)//å¦‚æœå·²ç»ç”Ÿäº§tokenï¼Œåˆ™ç›´æ¥è¿”å›ç”Ÿäº§çš„tokeï¼Œæ— éœ€é‡å¤ç”Ÿäº§token
 				return tmp;
 		}
 		
@@ -309,7 +309,7 @@ public class MemTokenManager {
 		}
 		if(fid != null)
 		{
-			request.setAttribute(k, tmp);//½«²úÉúµÄtoken´æÈërequest£¬±ÜÃâÒ»¸ö´°¿ÚÉú³ÉÁ½¸ö²»Í¬µÄtoken
+			request.setAttribute(k, tmp);//å°†äº§ç”Ÿçš„tokenå­˜å…¥requestï¼Œé¿å…ä¸€ä¸ªçª—å£ç”Ÿæˆä¸¤ä¸ªä¸åŒçš„token
 		}
 		return tmp;
 	}
@@ -434,7 +434,7 @@ public class MemTokenManager {
 		return buildDToken(elementType,jsonsplit,request,fid,true);
 	}
 	/**
-	 * Éú³ÉÒş²ØÓòÁîÅÆ,Êä³öÖµÎª£º
+	 * ç”Ÿæˆéšè—åŸŸä»¤ç‰Œ,è¾“å‡ºå€¼ä¸ºï¼š
 	 * <input type="hidden" name="_dt_token_" value="-1518435257">
 	 * @param request
 	 * @return
@@ -444,10 +444,10 @@ public class MemTokenManager {
 		return buildDToken("input",null,request,null,true);
 	}
 	/**
-	 * Éú³Éjson´®ÁîÅÆ
-	 * Èç¹ûjsonsplitÎª'£¬ÔòÊä³öÖµÎª£º
+	 * ç”Ÿæˆjsonä¸²ä»¤ç‰Œ
+	 * å¦‚æœjsonsplitä¸º'ï¼Œåˆ™è¾“å‡ºå€¼ä¸ºï¼š
 	 * _dt_token_:'1518435257'
-	 * Èç¹ûÈç¹ûjsonsplitÎª",ÔòÊä³öÖµÎª£º
+	 * å¦‚æœå¦‚æœjsonsplitä¸º",åˆ™è¾“å‡ºå€¼ä¸ºï¼š
 	 * _dt_token_:"1518435257"
 	 * @param jsonsplit
 	 * @param request
@@ -458,8 +458,8 @@ public class MemTokenManager {
 		return buildDToken("json","'",request,null,true);
 	}
 	/**
-	 * Éú³Éurl²ÎÊı´®ÁîÅÆ
-	 * Êä³öÖµÎª£º
+	 * ç”Ÿæˆurlå‚æ•°ä¸²ä»¤ç‰Œ
+	 * è¾“å‡ºå€¼ä¸ºï¼š
 	 * _dt_token_=1518435257
 	 * @param request
 	 * @return
@@ -469,8 +469,8 @@ public class MemTokenManager {
 		return buildDToken("param",null,request,null,true);
 	}
 	/**
-	 * Ö»Éú³ÉÁîÅÆ£¬¶ÔÓÚÕâÖÖ·½Ê½£¬¿Í»§¶Ë±ØĞë½«¸ÃtokenÒÔ²ÎÊıÃû_dt_token_´«»Ø·şÎñ¶Ë£¬·ñÔò²»Æğ×÷ÓÃ
-	 * Êä³öÖµÎª£º
+	 * åªç”Ÿæˆä»¤ç‰Œï¼Œå¯¹äºè¿™ç§æ–¹å¼ï¼Œå®¢æˆ·ç«¯å¿…é¡»å°†è¯¥tokenä»¥å‚æ•°å_dt_token_ä¼ å›æœåŠ¡ç«¯ï¼Œå¦åˆ™ä¸èµ·ä½œç”¨
+	 * è¾“å‡ºå€¼ä¸ºï¼š
 	 * 1518435257
 	 * @param request
 	 * @return
@@ -493,11 +493,11 @@ public class MemTokenManager {
 		{
 			buffer.append(temptoken_param_name).append(":").append(jsonsplit).append(this.genToken(request,fid,cache)).append(jsonsplit);
 		}
-		else if(elementType.equals("param"))//²ÎÊı
+		else if(elementType.equals("param"))//å‚æ•°
 		{
 			buffer.append(temptoken_param_name).append("=").append(this.genToken(request,fid,cache));
 		}
-		else if(elementType.equals("token"))//Ö»Êä³ötoken
+		else if(elementType.equals("token"))//åªè¾“å‡ºtoken
 		{
 			buffer.append(this.genToken(request,fid,cache));
 		}

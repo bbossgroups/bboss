@@ -24,7 +24,7 @@ import javax.servlet.jsp.PageContext;
  * <p> bboss workgroup </p>
  * <p> Copyright (c) 2005-2013 </p>
  * 
- * @Date 2013Äê10ÔÂ26ÈÕ
+ * @Date 2013å¹´10æœˆ26æ—¥
  * @author biaoping.yin
  * @version 1.0
  */

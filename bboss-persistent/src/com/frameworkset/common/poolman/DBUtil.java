@@ -55,11 +55,11 @@ import com.frameworkset.orm.transaction.JDBCTransaction;
 /**
  * @author biaoping.yin 2005-3-24 version 1.0
  * 
- * À©³äSQLUtil£¬ÊµÏÖ·ÖÒ³²éÑ¯µÄ¹¦ÄÜ,Ö´ĞĞÊı¾İ¿âÅú´¦Àí²Ù×÷
+ * æ‰©å……SQLUtilï¼Œå®ç°åˆ†é¡µæŸ¥è¯¢çš„åŠŸèƒ½,æ‰§è¡Œæ•°æ®åº“æ‰¹å¤„ç†æ“ä½œ
  */
 public class DBUtil extends SQLUtil implements Serializable {
 	/**
-	 * ±£ÁôÁ´½ÓÖ®Ç°µÄÊÂÎñ×´Ì¬£º preparedCon batchCon
+	 * ä¿ç•™é“¾æ¥ä¹‹å‰çš„äº‹åŠ¡çŠ¶æ€ï¼š preparedCon batchCon
 	 * 
 	 */
 	protected boolean oldcommited = true;   
@@ -71,7 +71,7 @@ public class DBUtil extends SQLUtil implements Serializable {
 //	}
 //	
 	// /**
-	// * ´æ·ÅÖ´ĞĞ´óÊÂÎñµÄÊı¾İ¿âÁ´½Ó
+	// * å­˜æ”¾æ‰§è¡Œå¤§äº‹åŠ¡çš„æ•°æ®åº“é“¾æ¥
 	// */
 	// private static ThreadLocal threadLocal = new ThreadLocal();
 
@@ -79,62 +79,62 @@ public class DBUtil extends SQLUtil implements Serializable {
 
 	protected String oraclerownum;
 
-	/** È±Ê¡µÄÊı¾İ¿âÁ´½Ó³ØÃû³Æ */
+	/** ç¼ºçœçš„æ•°æ®åº“é“¾æ¥æ± åç§° */
 	// protected final static String DEFAULT_DBNAME = "oa";
-//	/** Ö´ĞĞÅú´¦Àí²åÈë£¬É¾³ı£¬¸üĞÂ²Ù×÷±êÊ¶±äÁ¿ */
+//	/** æ‰§è¡Œæ‰¹å¤„ç†æ’å…¥ï¼Œåˆ é™¤ï¼Œæ›´æ–°æ“ä½œæ ‡è¯†å˜é‡ */
 //	protected boolean batchStart = true;
 
-//	/** Ö´ĞĞÅú´¦Àí²åÈë£¬É¾³ı£¬¸üĞÂÓï¾ä¾ä±ú */
+//	/** æ‰§è¡Œæ‰¹å¤„ç†æ’å…¥ï¼Œåˆ é™¤ï¼Œæ›´æ–°è¯­å¥å¥æŸ„ */
 //	protected Statement batchStmt;
 //
-//	/** Ö´ĞĞÅú´¦Àí²åÈë£¬É¾³ı£¬¸üĞÂ²Ù×÷Êı¾İ¿âÁ¬½Ó¾ä±ú */
+//	/** æ‰§è¡Œæ‰¹å¤„ç†æ’å…¥ï¼Œåˆ é™¤ï¼Œæ›´æ–°æ“ä½œæ•°æ®åº“è¿æ¥å¥æŸ„ */
 //	protected Connection batchCon;
 	
-//	/**±êÊ¶Åú´¦ÀíÁ´½ÓÊÇ·ñÊ¹ÓÃÍâ²¿Á´½Ó,È±Ê¡Îªfalse*/
+//	/**æ ‡è¯†æ‰¹å¤„ç†é“¾æ¥æ˜¯å¦ä½¿ç”¨å¤–éƒ¨é“¾æ¥,ç¼ºçœä¸ºfalse*/
 //	protected boolean outbatchcon = false;
 
 //	protected String batchDBName = SQLManager.getInstance().getDefaultDBName();
 	protected String batchDBName = null;
 
 	/**
-	 * ¿ØÖÆÊı¾İ¿â²éÑ¯ÊÇ·ñÊÇ·Ö¿éµÄÊı¾İ¿â²éÑ¯
+	 * æ§åˆ¶æ•°æ®åº“æŸ¥è¯¢æ˜¯å¦æ˜¯åˆ†å—çš„æ•°æ®åº“æŸ¥è¯¢
 	 */
 	protected boolean isRobustQuery = false;
 
-	/** Ã¿¿éÊı¾İµÄ×î´ósize */
+	/** æ¯å—æ•°æ®çš„æœ€å¤§size */
 	protected int fetchsize = 0;
 
-	/** ¶¨ÒåÃ¿´Î·Ö¿é²éÑ¯µÄÆğÊ¼µØÖ· */
+	/** å®šä¹‰æ¯æ¬¡åˆ†å—æŸ¥è¯¢çš„èµ·å§‹åœ°å€ */
 	protected int fetchoffset = 0;
 
-	/** ¼ÇÂ¼µ±Ç°ĞĞºÅ */
+	/** è®°å½•å½“å‰è¡Œå· */
 	protected int fetcholdrowid = 0;
 
 	/**
-	 * ±£´æ·Ö¿éÊı¾İ²éÑ¯µÄÊı¾İ¿âÁ´½Ó³ØµÄÃû³Æ
+	 * ä¿å­˜åˆ†å—æ•°æ®æŸ¥è¯¢çš„æ•°æ®åº“é“¾æ¥æ± çš„åç§°
 	 */
 //	protected String fetchdbName = SQLManager.getInstance().getDefaultDBName();
 	protected String fetchdbName = null;
 
 	/**
-	 * ±£´æ·Ö¿éÊı¾İ¿â²éÑ¯Óï¾ä
+	 * ä¿å­˜åˆ†å—æ•°æ®åº“æŸ¥è¯¢è¯­å¥
 	 */
 	protected String fetchsql;
 
-//	/** ´æ·ÅÖ´ĞĞÅú´¦ÀíÃüÁîºóµÄ½á¹û¼¯ */
+//	/** å­˜æ”¾æ‰§è¡Œæ‰¹å¤„ç†å‘½ä»¤åçš„ç»“æœé›† */
 //	protected List batchResult;
 //
-//	/** ´æ·ÅÖ´ĞĞÅú´¦Àí²åÈëÃüÁîºóµÄ±íµÄ¸üĞÂÓï¾ä¼¯ */
+//	/** å­˜æ”¾æ‰§è¡Œæ‰¹å¤„ç†æ’å…¥å‘½ä»¤åçš„è¡¨çš„æ›´æ–°è¯­å¥é›† */
 //	protected Set batchUpdateSqls;
 
-	/** ±£´æÃ¿´Î²éÑ¯µÄ½á¹û¼¯ */
+	/** ä¿å­˜æ¯æ¬¡æŸ¥è¯¢çš„ç»“æœé›† */
 	protected Record[] allResults;
 	
 	/**
-	 * Åú´¦ÀísqlsÓï¾äÁĞ±í£¬Ïû³ıÇ¶Ì×»ñÈ¡Á´½ÓºÍÁ´½ÓĞ¹Â¶µÄÎÊÌâ
-	 * ĞŞ¸ÄaddBatch·½·¨ÖĞµÄ´¦ÀíÂß¼­£¬²»´´½¨Êı¾İ¿âÁ´½Ó£¬Ö»ÊÇ½«sqlÓï¾äÌí¼Óµ½
-	 * batchSQLS±äÁ¿ÖĞ£¬ËùÓĞµÄÊı¾İ¿â²Ù×÷Í³Ò»·Åµ½executeBatch·½·¨ÖĞÖ´ĞĞ
-	 * Í¬Ê±À©Õ¹executeBatch·½·¨£º
+	 * æ‰¹å¤„ç†sqlsè¯­å¥åˆ—è¡¨ï¼Œæ¶ˆé™¤åµŒå¥—è·å–é“¾æ¥å’Œé“¾æ¥æ³„éœ²çš„é—®é¢˜
+	 * ä¿®æ”¹addBatchæ–¹æ³•ä¸­çš„å¤„ç†é€»è¾‘ï¼Œä¸åˆ›å»ºæ•°æ®åº“é“¾æ¥ï¼Œåªæ˜¯å°†sqlè¯­å¥æ·»åŠ åˆ°
+	 * batchSQLSå˜é‡ä¸­ï¼Œæ‰€æœ‰çš„æ•°æ®åº“æ“ä½œç»Ÿä¸€æ”¾åˆ°executeBatchæ–¹æ³•ä¸­æ‰§è¡Œ
+	 * åŒæ—¶æ‰©å±•executeBatchæ–¹æ³•ï¼š
 	 * executeBatch()
 	 * executeBatch(String dbname)
 	 * executeBatch(String dbname,java.sql.Connection con)
@@ -149,7 +149,7 @@ public class DBUtil extends SQLUtil implements Serializable {
 	}
 	
 	/**
-	 * ÒÑ¾­·ÏÆú
+	 * å·²ç»åºŸå¼ƒ
 	 * @param con
 	 * @deprecated 
 	 */
@@ -160,33 +160,33 @@ public class DBUtil extends SQLUtil implements Serializable {
 //			this.outbatchcon = true;
 	}
 
-	/** ·ÖÒ³²éÑ¯Ê±£¬±£´æ¼ÇÂ¼×ÜÌõÊı */
+	/** åˆ†é¡µæŸ¥è¯¢æ—¶ï¼Œä¿å­˜è®°å½•æ€»æ¡æ•° */
 	protected long totalSize = 0;
 
 	
 
-	/** ·µ»ØÃ¿´Î²éÑ¯Êı¾İ¿â»ñÈ¡µÄÊµ¼Ê¼ÇÂ¼ÌõÊı */
+	/** è¿”å›æ¯æ¬¡æŸ¥è¯¢æ•°æ®åº“è·å–çš„å®é™…è®°å½•æ¡æ•° */
 	public int size() {
-		// Èç¹ûÊÇrobust²éÑ¯½«·µ»Ø×ÜµÄ¼ÇÂ¼ÌõÊı£¬È»ºó·Ö¿é·µ»ØÊı¾İ
+		// å¦‚æœæ˜¯robustæŸ¥è¯¢å°†è¿”å›æ€»çš„è®°å½•æ¡æ•°ï¼Œç„¶ååˆ†å—è¿”å›æ•°æ®
 		return isRobustQuery ? (int)totalSize : size;
 	}
 	
-	/** ·µ»ØÃ¿´Î²éÑ¯Êı¾İ¿â»ñÈ¡µÄÊµ¼Ê¼ÇÂ¼ÌõÊı */
+	/** è¿”å›æ¯æ¬¡æŸ¥è¯¢æ•°æ®åº“è·å–çš„å®é™…è®°å½•æ¡æ•° */
 	public long longsize() {
-		// Èç¹ûÊÇrobust²éÑ¯½«·µ»Ø×ÜµÄ¼ÇÂ¼ÌõÊı£¬È»ºó·Ö¿é·µ»ØÊı¾İ
+		// å¦‚æœæ˜¯robustæŸ¥è¯¢å°†è¿”å›æ€»çš„è®°å½•æ¡æ•°ï¼Œç„¶ååˆ†å—è¿”å›æ•°æ®
 		return isRobustQuery ? totalSize : size;
 	}
 
 	/**
 	 * @deprecated
 	 * please use method getLongTotalSize()
-	 * »ñÈ¡¼ÇÂ¼×ÜÌõÊı 
+	 * è·å–è®°å½•æ€»æ¡æ•° 
 	 */
 	
 	public int getTotalSize() {
 		return (int)this.totalSize;
 	}
-	/** »ñÈ¡¼ÇÂ¼×ÜÌõÊı */
+	/** è·å–è®°å½•æ€»æ¡æ•° */
 	public long getLongTotalSize() {
 		return this.totalSize;
 	}
@@ -194,30 +194,30 @@ public class DBUtil extends SQLUtil implements Serializable {
 	
 
 	/**
-	 * ÅĞ¶ÏÊÇ·ñ¿ªÊ±½øĞĞÏÂÒ»¸öÊı¾İ¿éµÄ»ñÈ¡¹¤×÷
+	 * åˆ¤æ–­æ˜¯å¦å¼€æ—¶è¿›è¡Œä¸‹ä¸€ä¸ªæ•°æ®å—çš„è·å–å·¥ä½œ
 	 * 
 	 * @param rowid
-	 *            µ±Ç°ĞĞºÅ
+	 *            å½“å‰è¡Œå·
 	 * @throws SQLException
 	 */
 	private void assertLoaded(int rowid) throws SQLException {
-		// Èç¹û·Ö¿é»ñÈ¡Êı¾İ£¬ÅĞ¶ÏÊÇ·ñ¿ªÊ±½øĞĞÏÂÒ»¸öÊı¾İ¿éµÄ»ñÈ¡¹¤×÷£¬
-		// Èç¹ûÊÇÔò»ñÈ¡£¬·ñÔò²»×÷ÈÎºÎ²Ù×÷
+		// å¦‚æœåˆ†å—è·å–æ•°æ®ï¼Œåˆ¤æ–­æ˜¯å¦å¼€æ—¶è¿›è¡Œä¸‹ä¸€ä¸ªæ•°æ®å—çš„è·å–å·¥ä½œï¼Œ
+		// å¦‚æœæ˜¯åˆ™è·å–ï¼Œå¦åˆ™ä¸ä½œä»»ä½•æ“ä½œ
 		if (this.isRobustQuery) {
 			URLEncoder d;
 			// d.encode("");
-			// Èç¹ûĞĞºÅÎ´·¢Éú±ä»¯Ê±Ö±½Ó·µ»Ø
+			// å¦‚æœè¡Œå·æœªå‘ç”Ÿå˜åŒ–æ—¶ç›´æ¥è¿”å›
 			if (rowid == fetcholdrowid)
 				return;
 
-			// ¶¨ÒåÊı¾İ¿é±ß½ç
+			// å®šä¹‰æ•°æ®å—è¾¹ç•Œ
 			int bound = this.fetchoffset + fetchsize;
 			int newOffset = fetchoffset;
-			// Èç¹û½á¹û¼¯Ö®Ç°Ã»ÓĞ»ñÈ¡Ê±,
-			// Èç¹ûÒÑ¾­»ñÈ¡¹ıµ«ÊÇÓÖ»ØÍËµ½fetchoffsetÖ®Ç°µÄÄ³Ğ©¼ÇÂ¼Ê±
-			// Èç¹ûĞèÒª»ñÈ¡fetchoffset + fetchsizeÖ®ºóµÄ¼ÇÂ¼Ê±
-			// Èç¹ûĞèÒª»ñÈ¡fetchoffset + fetchsizeµÄ¼ÇÂ¼ÒÑ¾­È¡ÍêÊ±
-			// ¶¼ĞèÒªÖ´ĞĞ·½·¨executeSelect(fetchdbName,fetchsql,newOffset,fetchsize)´ÓÊı¾İ¿âÖĞ»ñÈ¡Êı¾İ
+			// å¦‚æœç»“æœé›†ä¹‹å‰æ²¡æœ‰è·å–æ—¶,
+			// å¦‚æœå·²ç»è·å–è¿‡ä½†æ˜¯åˆå›é€€åˆ°fetchoffsetä¹‹å‰çš„æŸäº›è®°å½•æ—¶
+			// å¦‚æœéœ€è¦è·å–fetchoffset + fetchsizeä¹‹åçš„è®°å½•æ—¶
+			// å¦‚æœéœ€è¦è·å–fetchoffset + fetchsizeçš„è®°å½•å·²ç»å–å®Œæ—¶
+			// éƒ½éœ€è¦æ‰§è¡Œæ–¹æ³•executeSelect(fetchdbName,fetchsql,newOffset,fetchsize)ä»æ•°æ®åº“ä¸­è·å–æ•°æ®
 
 			if (this.allResults == null) {
 				newOffset = rowid - rowid % fetchsize;
@@ -238,24 +238,24 @@ public class DBUtil extends SQLUtil implements Serializable {
 			// newOffset:"+newOffset);
 			// }
 
-			// Èç¹ûµ±Ç°¿éµÄÊı¾İÒÑ¾­¶ÁÈ¡Íê±Ï²¢ÇÒ»¹ÓĞÊı¾İ¿é£¬¼ÌĞø´ÓÊı¾İ¿âÖĞ»ñÈ¡ÏÂÒ»¸ö¿éÊı¾İ
+			// å¦‚æœå½“å‰å—çš„æ•°æ®å·²ç»è¯»å–å®Œæ¯•å¹¶ä¸”è¿˜æœ‰æ•°æ®å—ï¼Œç»§ç»­ä»æ•°æ®åº“ä¸­è·å–ä¸‹ä¸€ä¸ªå—æ•°æ®
 			if (newOffset != fetchoffset) {
 				this.executeSelect(fetchdbName, fetchsql, newOffset,
 						this.fetchsize);
-				// ÉèÖÃÏÂ´Î»ñÈ¡Êı¾İµÄÆğµã
+				// è®¾ç½®ä¸‹æ¬¡è·å–æ•°æ®çš„èµ·ç‚¹
 				fetchoffset = newOffset;
 			}
-			// Èç¹ûĞĞºÅ·¢Éú±ä»¯£¬¼ÇÂ¼±ä»¯ºóµÄĞĞºÅ
+			// å¦‚æœè¡Œå·å‘ç”Ÿå˜åŒ–ï¼Œè®°å½•å˜åŒ–åçš„è¡Œå·
 			fetcholdrowid = rowid;
 
 		}
 	}
 
 	/**
-	 * Èç¹û²ÉÓÃ·Ö¿é»ñÈ¡Êı¾İÄ£Ê½ÔòĞèÒªÖØĞÂ¼ÆËãĞĞºÅ£¬·ñÔò²»ĞèÒª£¬½«¼ÆËãºÃµÄĞĞºÅ·µ»Ø
+	 * å¦‚æœé‡‡ç”¨åˆ†å—è·å–æ•°æ®æ¨¡å¼åˆ™éœ€è¦é‡æ–°è®¡ç®—è¡Œå·ï¼Œå¦åˆ™ä¸éœ€è¦ï¼Œå°†è®¡ç®—å¥½çš„è¡Œå·è¿”å›
 	 * 
 	 * @param rowid
-	 * @return int ĞÂ¼ÆËãĞĞºÅ
+	 * @return int æ–°è®¡ç®—è¡Œå·
 	 */
 	private int getTrueRowid(int rowid) {
 		if (!isRobustQuery)
@@ -267,9 +267,9 @@ public class DBUtil extends SQLUtil implements Serializable {
 	/**
 	 * 
 	 * @param rowid
-	 *            ´Ó0¿ªÊ¼
+	 *            ä»0å¼€å§‹
 	 * @param column
-	 *            ´Ó0¿ªÊ¼
+	 *            ä»0å¼€å§‹
 	 * @return float
 	 */
 	public float getFloat(int rowid, int column) throws SQLException {
@@ -286,9 +286,9 @@ public class DBUtil extends SQLUtil implements Serializable {
 	/**
 	 * 
 	 * @param rowid
-	 *            ´Ó0¿ªÊ¼
+	 *            ä»0å¼€å§‹
 	 * @param column
-	 *            ´Ó0¿ªÊ¼
+	 *            ä»0å¼€å§‹
 	 * @return String
 	 */
 	public String getValue(int rowid, int column) {
@@ -321,9 +321,9 @@ public class DBUtil extends SQLUtil implements Serializable {
 	/**
 	 * 
 	 * @param rowid
-	 *            ´Ó0¿ªÊ¼
+	 *            ä»0å¼€å§‹
 	 * @param column
-	 *            ´Ó0¿ªÊ¼
+	 *            ä»0å¼€å§‹
 	 * @return String
 	 */
 	public String getString(int rowid, int column, String defalueValue)
@@ -340,9 +340,9 @@ public class DBUtil extends SQLUtil implements Serializable {
 	/**
 	 * 
 	 * @param rowid
-	 *            ´Ó0¿ªÊ¼
+	 *            ä»0å¼€å§‹
 	 * @param column
-	 *            ´Ó0¿ªÊ¼
+	 *            ä»0å¼€å§‹
 	 * @return String
 	 * @throws SQLException
 	 */
@@ -360,9 +360,9 @@ public class DBUtil extends SQLUtil implements Serializable {
 	/**
 	 * 
 	 * @param rowid
-	 *            ´Ó0¿ªÊ¼
+	 *            ä»0å¼€å§‹
 	 * @param column
-	 *            ´Ó0¿ªÊ¼
+	 *            ä»0å¼€å§‹
 	 * @return String
 	 */
 	public String getString(int rowid, int column) throws SQLException {
@@ -386,7 +386,7 @@ public class DBUtil extends SQLUtil implements Serializable {
 	/**
 	 * 
 	 * @param rowid
-	 *            ´Ó0¿ªÊ¼
+	 *            ä»0å¼€å§‹
 	 * @param field
 	 * @return String
 	 */
@@ -404,7 +404,7 @@ public class DBUtil extends SQLUtil implements Serializable {
 	/**
 	 * 
 	 * @param rowid
-	 *            ´Ó0¿ªÊ¼
+	 *            ä»0å¼€å§‹
 	 * @param field
 	 * @return String
 	 */
@@ -426,7 +426,7 @@ public class DBUtil extends SQLUtil implements Serializable {
 	/**
 	 * 
 	 * @param rowid
-	 *            ´Ó0¿ªÊ¼
+	 *            ä»0å¼€å§‹
 	 * @param field
 	 * @return int
 	 */
@@ -450,7 +450,7 @@ public class DBUtil extends SQLUtil implements Serializable {
 	/**
 	 * 
 	 * @param rowid
-	 *            ´Ó0¿ªÊ¼
+	 *            ä»0å¼€å§‹
 	 * @param column
 	 *            start from zero
 	 * @return int
@@ -476,7 +476,7 @@ public class DBUtil extends SQLUtil implements Serializable {
 	/**
 	 * 
 	 * @param rowid
-	 *            ´Ó0¿ªÊ¼
+	 *            ä»0å¼€å§‹
 	 * @param field
 	 * @return float
 	 */
@@ -498,7 +498,7 @@ public class DBUtil extends SQLUtil implements Serializable {
 	/**
 	 * 
 	 * @param rowid
-	 *            ´Ó0¿ªÊ¼
+	 *            ä»0å¼€å§‹
 	 * @param field
 	 * @return double
 	 */
@@ -520,9 +520,9 @@ public class DBUtil extends SQLUtil implements Serializable {
 	/**
 	 * 
 	 * @param rowid
-	 *            ´ÓÁã¿ªÊ¼
+	 *            ä»é›¶å¼€å§‹
 	 * @param column
-	 *            ´ÓÁã¿ªÊ¼
+	 *            ä»é›¶å¼€å§‹
 	 * @return double
 	 */
 
@@ -545,7 +545,7 @@ public class DBUtil extends SQLUtil implements Serializable {
 	/**
 	 * 
 	 * @param rowid
-	 *            ´Ó0¿ªÊ¼
+	 *            ä»0å¼€å§‹
 	 * @param field
 	 * @return long
 	 */
@@ -572,9 +572,9 @@ public class DBUtil extends SQLUtil implements Serializable {
 	/**
 	 * 
 	 * @param rowid
-	 *            ´ÓÁã¿ªÊ¼
+	 *            ä»é›¶å¼€å§‹
 	 * @param column
-	 *            ´ÓÁã¿ªÊ¼
+	 *            ä»é›¶å¼€å§‹
 	 * @return long
 	 * @throws SQLException
 	 */
@@ -601,7 +601,7 @@ public class DBUtil extends SQLUtil implements Serializable {
 	/**
 	 * 
 	 * @param rowid
-	 *            ´Ó0¿ªÊ¼
+	 *            ä»0å¼€å§‹
 	 * @param field
 	 * @return byte[]
 	 */
@@ -621,9 +621,9 @@ public class DBUtil extends SQLUtil implements Serializable {
 	/**
 	 * 
 	 * @param rowid
-	 *            ´ÓÁã¿ªÊ¼
+	 *            ä»é›¶å¼€å§‹
 	 * @param column
-	 *            ´ÓÁã¿ªÊ¼
+	 *            ä»é›¶å¼€å§‹
 	 * @return byte[]
 	 * @throws SQLException
 	 */
@@ -642,7 +642,7 @@ public class DBUtil extends SQLUtil implements Serializable {
 
 	/**
 	 * @param rowid
-	 *            ´Ó0¿ªÊ¼
+	 *            ä»0å¼€å§‹
 	 * @param field
 	 * @return String
 	 */
@@ -663,7 +663,7 @@ public class DBUtil extends SQLUtil implements Serializable {
 
 	/**
 	 * @param rowid
-	 *            ´Ó0¿ªÊ¼
+	 *            ä»0å¼€å§‹
 	 * @param field
 	 * @return String
 	 */
@@ -685,7 +685,7 @@ public class DBUtil extends SQLUtil implements Serializable {
 	/**
 	 * 
 	 * @param rowid
-	 *            ´Ó0¿ªÊ¼
+	 *            ä»0å¼€å§‹
 	 * @param field
 	 * @return Object
 	 */
@@ -693,8 +693,8 @@ public class DBUtil extends SQLUtil implements Serializable {
 		inrange(rowid, field);
 		return allResults[getTrueRowid(rowid)].getObject(field);
 
-//		throw new SQLException("»ñÈ¡×Ö¶Î[" + field
-//				+ "]µÄÖµÊ§°Ü£º×Ö¶Î¿ÉÄÜ³öÏÖ¶à´Î£¬»òÕß±¾×Ö¶ÎÃ»ÓĞ°üº¬ÔÚ¶ÔÓ¦µÄsqlÓï¾äÖĞ£¬Çë¼ì²éÄãµÄsqlÓï¾äÊÇ·ñÕıÈ·");
+//		throw new SQLException("è·å–å­—æ®µ[" + field
+//				+ "]çš„å€¼å¤±è´¥ï¼šå­—æ®µå¯èƒ½å‡ºç°å¤šæ¬¡ï¼Œæˆ–è€…æœ¬å­—æ®µæ²¡æœ‰åŒ…å«åœ¨å¯¹åº”çš„sqlè¯­å¥ä¸­ï¼Œè¯·æ£€æŸ¥ä½ çš„sqlè¯­å¥æ˜¯å¦æ­£ç¡®");
 
 	}
 	
@@ -751,9 +751,9 @@ public class DBUtil extends SQLUtil implements Serializable {
 	/**
 	 * 
 	 * @param rowid
-	 *            ´Ó0¿ªÊ¼
+	 *            ä»0å¼€å§‹
 	 * @param column
-	 *            ´Ó0¿ªÊ¼
+	 *            ä»0å¼€å§‹
 	 * @return Object
 	 */
 	public Object getObject(int rowid, int column) throws SQLException {
@@ -764,7 +764,7 @@ public class DBUtil extends SQLUtil implements Serializable {
 
 	/**
 	 * @param rowid
-	 *            ´ÓÁã¿ªÊ¼
+	 *            ä»é›¶å¼€å§‹
 	 * @param field
 	 * @return Date
 	 */
@@ -774,12 +774,12 @@ public class DBUtil extends SQLUtil implements Serializable {
 	}
 
 	/**
-	 * ¸ù¾İĞĞidºÍÁĞid»ñÈ¡×Ö¶ÎÖµ
+	 * æ ¹æ®è¡Œidå’Œåˆ—idè·å–å­—æ®µå€¼
 	 * 
 	 * @param rowid
-	 *            ´Ó0¿ªÊ¼
+	 *            ä»0å¼€å§‹
 	 * @param column
-	 *            ´ÓÁã¿ªÊ¼
+	 *            ä»é›¶å¼€å§‹
 	 * @return Date
 	 */
 
@@ -801,7 +801,7 @@ public class DBUtil extends SQLUtil implements Serializable {
 
 
 	/**
-	 * ½«ËùÓĞµÄ×Ö¶ÎÃû³Æ×ª»»Îª´óĞ´
+	 * å°†æ‰€æœ‰çš„å­—æ®µåç§°è½¬æ¢ä¸ºå¤§å†™
 	 * 
 	 */
 //	private void fieldsToUPPERCASE() {
@@ -816,20 +816,20 @@ public class DBUtil extends SQLUtil implements Serializable {
 
 	/**
 	 * Executes a statement and returns results in the form of a Hashtable
-	 * array. ±¾·½·¨Ö´ĞĞÍê±ÏºóÎŞĞè¶Ô½á¹û¼¯½øĞĞ»º³å
+	 * array. æœ¬æ–¹æ³•æ‰§è¡Œå®Œæ¯•åæ— éœ€å¯¹ç»“æœé›†è¿›è¡Œç¼“å†²
 	 * 
 	 * @param dbname
-	 *            Êı¾İ¿âÁ¬½Ó³ØÃû³Æ
+	 *            æ•°æ®åº“è¿æ¥æ± åç§°
 	 * @param sql
-	 *            Êı¾İ²éÑ¯»òÕß¸üĞÂÓï¾ä
+	 *            æ•°æ®æŸ¥è¯¢æˆ–è€…æ›´æ–°è¯­å¥
 	 * 
 	 * @param goNative
-	 *            ÊÇ·ñÊ¹ÓÃÔ­Ê¼µÄÊı¾İ¿âapi
+	 *            æ˜¯å¦ä½¿ç”¨åŸå§‹çš„æ•°æ®åº“api
 	 * @param offset
-	 *            ·µ»Ø¼ÇÂ¼µÄÆğÊ¼µØÖ·
+	 *            è¿”å›è®°å½•çš„èµ·å§‹åœ°å€
 	 * @param maxsize
-	 *            ·µ»Ø¼ÇÂ¼ÌõÊı
-	 * @return ½á¹û¼¯
+	 *            è¿”å›è®°å½•æ¡æ•°
+	 * @return ç»“æœé›†
 	 * @throws SQLException
 	 */
 
@@ -879,10 +879,10 @@ public class DBUtil extends SQLUtil implements Serializable {
 			stmtInfo.init();
 			
 			/**
-			 * ÖÕÓÚ½â¾öÁË 
-                            Ô­ÒòÊÇStatement stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY); 
-                               Õâ¾ä»°´íĞ´³ÉÁËStatement stmt=conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_UPDATABLE);
-                               com.microsoft.sqlserver.jdbc.SQLServerException: ²»Ö§³Ö´ËÓÎ±êÀàĞÍ/²¢·¢×éºÏ¡£ 
+			 * ç»ˆäºè§£å†³äº† 
+                            åŸå› æ˜¯Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY); 
+                               è¿™å¥è¯é”™å†™æˆäº†Statement stmt=conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_UPDATABLE);
+                               com.microsoft.sqlserver.jdbc.SQLServerException: ä¸æ”¯æŒæ­¤æ¸¸æ ‡ç±»å‹/å¹¶å‘ç»„åˆã€‚ 
 			 */
 			
 //			s = stmtInfo.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
@@ -975,20 +975,20 @@ public class DBUtil extends SQLUtil implements Serializable {
 
 	/**
 	 * Executes a statement and returns results in the form of a Hashtable
-	 * array. ±¾·½·¨Ö´ĞĞÍê±ÏºóÎŞĞè¶Ô½á¹û¼¯½øĞĞ»º³å
+	 * array. æœ¬æ–¹æ³•æ‰§è¡Œå®Œæ¯•åæ— éœ€å¯¹ç»“æœé›†è¿›è¡Œç¼“å†²
 	 * 
 	 * @param dbname
-	 *            Êı¾İ¿âÁ¬½Ó³ØÃû³Æ
+	 *            æ•°æ®åº“è¿æ¥æ± åç§°
 	 * @param sql
-	 *            Êı¾İ²éÑ¯»òÕß¸üĞÂÓï¾ä
+	 *            æ•°æ®æŸ¥è¯¢æˆ–è€…æ›´æ–°è¯­å¥
 	 * 
 	 * @param goNative
-	 *            ÊÇ·ñÊ¹ÓÃÔ­Ê¼µÄÊı¾İ¿âapi
+	 *            æ˜¯å¦ä½¿ç”¨åŸå§‹çš„æ•°æ®åº“api
 	 * @param offset
-	 *            ·µ»Ø¼ÇÂ¼µÄÆğÊ¼µØÖ·
+	 *            è¿”å›è®°å½•çš„èµ·å§‹åœ°å€
 	 * @param maxsize
-	 *            ·µ»Ø¼ÇÂ¼ÌõÊı
-	 * @return ½á¹û¼¯
+	 *            è¿”å›è®°å½•æ¡æ•°
+	 * @return ç»“æœé›†
 	 * @throws SQLException
 	 */
 	
@@ -1078,13 +1078,13 @@ public class DBUtil extends SQLUtil implements Serializable {
 	
 
 	/**
-	 * Íùdbname¶ÔÓ¦µÄÊı¾İ¿âÖĞ²åÈë¼ÇÂ¼
+	 * å¾€dbnameå¯¹åº”çš„æ•°æ®åº“ä¸­æ’å…¥è®°å½•
 	 * 
 	 * @param dbname
-	 *            Êı¾İ¿âÁ´½Ó³ØÃû³Æ
+	 *            æ•°æ®åº“é“¾æ¥æ± åç§°
 	 * @param sql
-	 *            ²åÈëÓï¾ä
-	 * @return Object Ö÷¼ü
+	 *            æ’å…¥è¯­å¥
+	 * @return Object ä¸»é”®
 	 * @throws SQLException
 	 */
 	public Object executeInsert(String dbname, String sql) throws SQLException {
@@ -1094,13 +1094,13 @@ public class DBUtil extends SQLUtil implements Serializable {
 	}
 	
 	/**
-	 * Íùdbname¶ÔÓ¦µÄÊı¾İ¿âÖĞ²åÈë¼ÇÂ¼
+	 * å¾€dbnameå¯¹åº”çš„æ•°æ®åº“ä¸­æ’å…¥è®°å½•
 	 * 
 	 * @param dbname
-	 *            Êı¾İ¿âÁ´½Ó³ØÃû³Æ
+	 *            æ•°æ®åº“é“¾æ¥æ± åç§°
 	 * @param sql
-	 *            ²åÈëÓï¾ä
-	 * @return Object Ö÷¼ü
+	 *            æ’å…¥è¯­å¥
+	 * @return Object ä¸»é”®
 	 * @throws SQLException
 	 */
 	public Object executeInsert(String dbname, String sql,Connection con) throws SQLException {
@@ -1119,10 +1119,10 @@ public class DBUtil extends SQLUtil implements Serializable {
 	}
 
 	/**
-	 * Ö´ĞĞÉ¾³ı²Ù×÷
+	 * æ‰§è¡Œåˆ é™¤æ“ä½œ
 	 * 
 	 * @param sql
-	 * @return É¾³ıĞÅÏ¢
+	 * @return åˆ é™¤ä¿¡æ¯
 	 * @throws SQLException
 	 */
 	public Object executeDelete(String sql) throws SQLException {
@@ -1133,13 +1133,13 @@ public class DBUtil extends SQLUtil implements Serializable {
 	}
 
 	/**
-	 * Ö´ĞĞÉ¾³ı²Ù×÷
+	 * æ‰§è¡Œåˆ é™¤æ“ä½œ
 	 * 
 	 * @param sql
-	 *            É¾³ıÓï¾ä
+	 *            åˆ é™¤è¯­å¥
 	 * @param dbName
-	 *            Êı¾İ¿âÁ¬½Ó³ØÃû³Æ
-	 * @return É¾³ıĞÅÏ¢
+	 *            æ•°æ®åº“è¿æ¥æ± åç§°
+	 * @return åˆ é™¤ä¿¡æ¯
 	 * @throws SQLException
 	 */
 	public Object executeDelete(String dbName, String sql, Connection con)
@@ -1151,13 +1151,13 @@ public class DBUtil extends SQLUtil implements Serializable {
 	}
 
 	/**
-	 * Ö´ĞĞÉ¾³ı²Ù×÷
+	 * æ‰§è¡Œåˆ é™¤æ“ä½œ
 	 * 
 	 * @param sql
-	 *            É¾³ıÓï¾ä
+	 *            åˆ é™¤è¯­å¥
 	 * @param dbName
-	 *            Êı¾İ¿âÁ¬½Ó³ØÃû³Æ
-	 * @return É¾³ıĞÅÏ¢
+	 *            æ•°æ®åº“è¿æ¥æ± åç§°
+	 * @return åˆ é™¤ä¿¡æ¯
 	 * @throws SQLException
 	 */
 	public Object executeDelete(String dbName, String sql) throws SQLException {
@@ -1168,13 +1168,13 @@ public class DBUtil extends SQLUtil implements Serializable {
 	}
 
 	/**
-	 * Ö´ĞĞÉ¾³ı²Ù×÷
+	 * æ‰§è¡Œåˆ é™¤æ“ä½œ
 	 * 
 	 * @param sql
-	 *            É¾³ıÓï¾ä
+	 *            åˆ é™¤è¯­å¥
 	 * @param goNative
-	 *            ÊÇ·ñÊ¹ÓÃÔ­Ê¼Êı¾İ¿âÁ¬½Ó
-	 * @return É¾³ıĞÅÏ¢
+	 *            æ˜¯å¦ä½¿ç”¨åŸå§‹æ•°æ®åº“è¿æ¥
+	 * @return åˆ é™¤ä¿¡æ¯
 	 * @throws SQLException
 	 */
 	public Object executeDelete(String sql, boolean goNative, Connection con)
@@ -1187,15 +1187,15 @@ public class DBUtil extends SQLUtil implements Serializable {
 	}
 
 	/**
-	 * Ö´ĞĞÉ¾³ıÓï¾ä¡£
+	 * æ‰§è¡Œåˆ é™¤è¯­å¥ã€‚
 	 * 
 	 * @param dbName
-	 *            Êı¾İ¿âÁ´½Ó³ØÃû³Æ
+	 *            æ•°æ®åº“é“¾æ¥æ± åç§°
 	 * @param sql
-	 *            Êı¾İ¿âÉ¾³ıÓï¾ä
+	 *            æ•°æ®åº“åˆ é™¤è¯­å¥
 	 * @param goNative
-	 *            ÊÇ·ñÊ¹ÓÃÔ­Ê¼µÄÊı¾İ¿âÁ´½Ó
-	 * @return É¾³ıĞÅÏ¢
+	 *            æ˜¯å¦ä½¿ç”¨åŸå§‹çš„æ•°æ®åº“é“¾æ¥
+	 * @return åˆ é™¤ä¿¡æ¯
 	 * @throws SQLException
 	 */
 	public Object executeDelete(String dbName, String sql, boolean goNative,
@@ -1207,14 +1207,14 @@ public class DBUtil extends SQLUtil implements Serializable {
 	}
 
 	/**
-	 * ÓÅ»¯´óÊı¾İ±íÊı¾İµÄ²éÑ¯£¬ ¸ù¾İfethchsizeµÄ´óĞ¡¾ö¶¨Ã¿ÅúÊı¾İ»ñÈ¡¼ÇÂ¼µÄÌõÊı ÌáÉıÊı¾İ¿â²éÑ¯µÄĞ§ÂÊ
+	 * ä¼˜åŒ–å¤§æ•°æ®è¡¨æ•°æ®çš„æŸ¥è¯¢ï¼Œ æ ¹æ®fethchsizeçš„å¤§å°å†³å®šæ¯æ‰¹æ•°æ®è·å–è®°å½•çš„æ¡æ•° æå‡æ•°æ®åº“æŸ¥è¯¢çš„æ•ˆç‡
 	 * 
 	 * @param dbName
-	 *            Êı¾İ¿âÁ¬½Ó³ØµÄÃû³Æ
+	 *            æ•°æ®åº“è¿æ¥æ± çš„åç§°
 	 * @param sql
-	 *            ´ı²éÑ¯µÄsqlÓï¾ä
+	 *            å¾…æŸ¥è¯¢çš„sqlè¯­å¥
 	 * @param fetchsize
-	 *            Ã¿ÅúÊı¾İ×î´óµÄÊı¾İÌõÊı
+	 *            æ¯æ‰¹æ•°æ®æœ€å¤§çš„æ•°æ®æ¡æ•°
 	 * @throws SQLException
 	 */
 	public void executeSelect(String dbName, String sql, int fetchsize)
@@ -1228,12 +1228,12 @@ public class DBUtil extends SQLUtil implements Serializable {
 	}
 
 	/**
-	 * ÓÅ»¯´óÊı¾İ±íÊı¾İµÄ²éÑ¯£¬ ¸ù¾İfethchsizeµÄ´óĞ¡¾ö¶¨Ã¿ÅúÊı¾İ»ñÈ¡¼ÇÂ¼µÄÌõÊı ÌáÉıÊı¾İ¿â²éÑ¯µÄĞ§ÂÊ
+	 * ä¼˜åŒ–å¤§æ•°æ®è¡¨æ•°æ®çš„æŸ¥è¯¢ï¼Œ æ ¹æ®fethchsizeçš„å¤§å°å†³å®šæ¯æ‰¹æ•°æ®è·å–è®°å½•çš„æ¡æ•° æå‡æ•°æ®åº“æŸ¥è¯¢çš„æ•ˆç‡
 	 * 
 	 * @param sql
-	 *            ´ı²éÑ¯µÄsqlÓï¾ä
+	 *            å¾…æŸ¥è¯¢çš„sqlè¯­å¥
 	 * @param fetchsize
-	 *            Ã¿ÅúÊı¾İ×î´óµÄÊı¾İÌõÊı
+	 *            æ¯æ‰¹æ•°æ®æœ€å¤§çš„æ•°æ®æ¡æ•°
 	 * @throws SQLException
 	 */
 	public void executeSelect(String sql, int fetchsize) throws SQLException {
@@ -1241,7 +1241,7 @@ public class DBUtil extends SQLUtil implements Serializable {
 	}
 
 	/**
-	 * ÖØÖÃfetch²ÎÊı
+	 * é‡ç½®fetchå‚æ•°
 	 * 
 	 */
 	public void resetFetch() {
@@ -1258,7 +1258,7 @@ public class DBUtil extends SQLUtil implements Serializable {
 	}
 
 	/**
-	 * ÖØÖÃ·ÖÒ³¡¢ÁĞ±í²ÎÊı
+	 * é‡ç½®åˆ†é¡µã€åˆ—è¡¨å‚æ•°
 	 * 
 	 */
 	public void resetPager() {
@@ -1270,7 +1270,7 @@ public class DBUtil extends SQLUtil implements Serializable {
 	}
 
 	/**
-	 * ÖØÖÃÅú´¦Àí²ÎÊı
+	 * é‡ç½®æ‰¹å¤„ç†å‚æ•°
 	 * 
 	 */
 	public void resetBatch() {
@@ -1285,13 +1285,13 @@ public class DBUtil extends SQLUtil implements Serializable {
 	}
 
 	/**
-	 * Ö´ĞĞÊı¾İ¿â²åÈë²Ù×÷£¬
+	 * æ‰§è¡Œæ•°æ®åº“æ’å…¥æ“ä½œï¼Œ
 	 * 
 	 * @param dbname
 	 * @param sql
 	 * 
 	 * @param goNative
-	 * @return ²úÉúµÄÊı¾İ¿âÖ÷¼ü
+	 * @return äº§ç”Ÿçš„æ•°æ®åº“ä¸»é”®
 	 * @throws SQLException
 	 */
 	public Object doJDBCInsert(String sql_, String dbname_, boolean goNative_,Connection con_)
@@ -1394,11 +1394,11 @@ public class DBUtil extends SQLUtil implements Serializable {
 	}
 
 	/**
-	 * Ö´ĞĞÊı¾İ¿â²éÑ¯²Ù×÷
+	 * æ‰§è¡Œæ•°æ®åº“æŸ¥è¯¢æ“ä½œ
 	 * 
 	 * @param sql
-	 *            ²éÑ¯Óï¾ä
-	 * @return hashÊı×é£¬·â×°²éÑ¯½á¹û
+	 *            æŸ¥è¯¢è¯­å¥
+	 * @return hashæ•°ç»„ï¼Œå°è£…æŸ¥è¯¢ç»“æœ
 	 * @throws SQLException
 	 * @deprecated
 	 */
@@ -1407,11 +1407,11 @@ public class DBUtil extends SQLUtil implements Serializable {
 	}
 
 	/**
-	 * Ö´ĞĞÊı¾İ¿â²éÑ¯²Ù×÷
+	 * æ‰§è¡Œæ•°æ®åº“æŸ¥è¯¢æ“ä½œ
 	 * 
 	 * @param sql
-	 *            ²éÑ¯Óï¾ä
-	 * @return hashÊı×é£¬·â×°²éÑ¯½á¹û
+	 *            æŸ¥è¯¢è¯­å¥
+	 * @return hashæ•°ç»„ï¼Œå°è£…æŸ¥è¯¢ç»“æœ
 	 * @throws SQLException
 	 *  @deprecated
 	 */
@@ -1421,12 +1421,12 @@ public class DBUtil extends SQLUtil implements Serializable {
 	}
 
 	/**
-	 * Ö´ĞĞÊı¾İ¿â²éÑ¯²Ù×÷
+	 * æ‰§è¡Œæ•°æ®åº“æŸ¥è¯¢æ“ä½œ
 	 * 
 	 * @param sql
-	 *            ²éÑ¯Óï¾ä
+	 *            æŸ¥è¯¢è¯­å¥
 	 * @param fields
-	 *            ²éÑ¯×Ö¶ÎÊı×é
+	 *            æŸ¥è¯¢å­—æ®µæ•°ç»„
 	 * @throws SQLException
 	 *  @deprecated
 	 */
@@ -1441,12 +1441,12 @@ public class DBUtil extends SQLUtil implements Serializable {
 	}
 
 	/**
-	 * Ö´ĞĞÊı¾İ¿â²éÑ¯²Ù×÷
+	 * æ‰§è¡Œæ•°æ®åº“æŸ¥è¯¢æ“ä½œ
 	 * 
 	 * @param sql
-	 *            ²éÑ¯Óï¾ä
+	 *            æŸ¥è¯¢è¯­å¥
 	 * @param fields
-	 *            ²éÑ¯×Ö¶ÎÊı×é
+	 *            æŸ¥è¯¢å­—æ®µæ•°ç»„
 	 * @throws SQLException
 	 *  @deprecated
 	 */
@@ -1456,10 +1456,10 @@ public class DBUtil extends SQLUtil implements Serializable {
 	}
 
 	/**
-	 * Ö´ĞĞÊı¾İ¿â²éÑ¯²Ù×÷
+	 * æ‰§è¡Œæ•°æ®åº“æŸ¥è¯¢æ“ä½œ
 	 * 
 	 * @param sql
-	 *            ²éÑ¯Óï¾ä
+	 *            æŸ¥è¯¢è¯­å¥
 	 * @throws SQLException
 	 */
 	public void executeSelect(String sql) throws SQLException {
@@ -1467,10 +1467,10 @@ public class DBUtil extends SQLUtil implements Serializable {
 	}
 
 	/**
-	 * Ö´ĞĞÊı¾İ¿â²éÑ¯²Ù×÷
+	 * æ‰§è¡Œæ•°æ®åº“æŸ¥è¯¢æ“ä½œ
 	 * 
 	 * @param sql
-	 *            ²éÑ¯Óï¾ä
+	 *            æŸ¥è¯¢è¯­å¥
 	 * @throws SQLException
 	 */
 	public void executeSelect(String sql, Connection con) throws SQLException {
@@ -1478,10 +1478,10 @@ public class DBUtil extends SQLUtil implements Serializable {
 	}
 
 	/**
-	 * Ö´ĞĞÊı¾İ¿â²éÑ¯²Ù×÷£¬
+	 * æ‰§è¡Œæ•°æ®åº“æŸ¥è¯¢æ“ä½œï¼Œ
 	 * 
 	 * @param sql
-	 *            ²éÑ¯Óï¾ä
+	 *            æŸ¥è¯¢è¯­å¥
 	 * @throws SQLException
 	 */
 	public void executeSelectLimit(String sql, int limit) throws SQLException {
@@ -1490,12 +1490,12 @@ public class DBUtil extends SQLUtil implements Serializable {
 	}
 
 	/**
-	 * Ö´ĞĞoracleÌØ¶¨¸ßĞ§Êı¾İ¿â²éÑ¯²Ù×÷£¬±¾·½·¨ÀûÓÃoracle×ÔÉíÌá¹©µÄ»úÖÆ£¬ÌáÉıoracleµÄ¸ßĞ§È¡top nÌõ¼ÇÂ¼²éÑ¯
-	 * »ñÈ¡¸ßĞ§µÄoracle²éÑ¯Óï¾ä£¬sqlÖĞÒÑ¾­Ğ´ºÃROW_NUMBER() OVER ( ORDER BY cjrq ) rownum
-	 * ·ñÔò²»ÄÜµ÷ÓÃ±¾·½·¨Éú³ÉoralceµÄ·ÖÒ³Óï¾ä,ÆäÖĞrownum¾Í¶ÔÓ¦ÁË±¾·½·¨µÄ²ÎÊırownum
+	 * æ‰§è¡Œoracleç‰¹å®šé«˜æ•ˆæ•°æ®åº“æŸ¥è¯¢æ“ä½œï¼Œæœ¬æ–¹æ³•åˆ©ç”¨oracleè‡ªèº«æä¾›çš„æœºåˆ¶ï¼Œæå‡oracleçš„é«˜æ•ˆå–top næ¡è®°å½•æŸ¥è¯¢
+	 * è·å–é«˜æ•ˆçš„oracleæŸ¥è¯¢è¯­å¥ï¼Œsqlä¸­å·²ç»å†™å¥½ROW_NUMBER() OVER ( ORDER BY cjrq ) rownum
+	 * å¦åˆ™ä¸èƒ½è°ƒç”¨æœ¬æ–¹æ³•ç”Ÿæˆoralceçš„åˆ†é¡µè¯­å¥,å…¶ä¸­rownumå°±å¯¹åº”äº†æœ¬æ–¹æ³•çš„å‚æ•°rownum
 	 * 
 	 * @param sql
-	 *            ²éÑ¯Óï¾ä
+	 *            æŸ¥è¯¢è¯­å¥
 	 * @throws SQLException
 	 */
 	public void executeSelectLimitForOracle(String sql, int limit, String rownum)
@@ -1505,14 +1505,14 @@ public class DBUtil extends SQLUtil implements Serializable {
 	}
 
 	/**
-	 * Ö´ĞĞÏŞÖÆÊı¾İ¿â½á¹ûÊıµÄÊı¾İ¿â²éÑ¯²Ù×÷
+	 * æ‰§è¡Œé™åˆ¶æ•°æ®åº“ç»“æœæ•°çš„æ•°æ®åº“æŸ¥è¯¢æ“ä½œ
 	 * 
 	 * @param dbName
-	 *            Êı¾İ¿âÁ´½Ó³ØÃû³Æ
+	 *            æ•°æ®åº“é“¾æ¥æ± åç§°
 	 * @param sql
-	 *            ²éÑ¯Óï¾ä
+	 *            æŸ¥è¯¢è¯­å¥
 	 * @param limit
-	 *            ¼ÇÂ¼ÌõÊı
+	 *            è®°å½•æ¡æ•°
 	 * @throws SQLException
 	 */
 	public void executeSelectLimit(String dbName, String sql, int limit)
@@ -1524,14 +1524,14 @@ public class DBUtil extends SQLUtil implements Serializable {
 	}
 
 	/**
-	 * Ö´ĞĞÏŞÖÆÊı¾İ¿â½á¹ûÊıµÄÊı¾İ¿â²éÑ¯²Ù×÷
+	 * æ‰§è¡Œé™åˆ¶æ•°æ®åº“ç»“æœæ•°çš„æ•°æ®åº“æŸ¥è¯¢æ“ä½œ
 	 * 
 	 * @param dbName
-	 *            Êı¾İ¿âÁ´½Ó³ØÃû³Æ
+	 *            æ•°æ®åº“é“¾æ¥æ± åç§°
 	 * @param sql
-	 *            ²éÑ¯Óï¾ä
+	 *            æŸ¥è¯¢è¯­å¥
 	 * @param limit
-	 *            ¼ÇÂ¼ÌõÊı
+	 *            è®°å½•æ¡æ•°
 	 * @throws SQLException
 	 */
 	public void executeSelectLimit(String dbName, String sql, int limit,
@@ -1545,14 +1545,14 @@ public class DBUtil extends SQLUtil implements Serializable {
 	}
 
 	/**
-	 * Ö´ĞĞoracle¸ßĞ§ÌØ¶¨ÏŞÖÆÊı¾İ¿â½á¹ûÊıµÄÊı¾İ¿â²éÑ¯²Ù×÷
+	 * æ‰§è¡Œoracleé«˜æ•ˆç‰¹å®šé™åˆ¶æ•°æ®åº“ç»“æœæ•°çš„æ•°æ®åº“æŸ¥è¯¢æ“ä½œ
 	 * 
 	 * @param dbName
-	 *            Êı¾İ¿âÁ´½Ó³ØÃû³Æ
+	 *            æ•°æ®åº“é“¾æ¥æ± åç§°
 	 * @param sql
-	 *            ²éÑ¯Óï¾ä
+	 *            æŸ¥è¯¢è¯­å¥
 	 * @param limit
-	 *            ¼ÇÂ¼ÌõÊı
+	 *            è®°å½•æ¡æ•°
 	 * @throws SQLException
 	 */
 	public void executeSelectLimitForOracle(String dbName, String sql,
@@ -1566,14 +1566,14 @@ public class DBUtil extends SQLUtil implements Serializable {
 	}
 
 	/**
-	 * Ö´ĞĞoracle¸ßĞ§ÌØ¶¨ÏŞÖÆÊı¾İ¿â½á¹ûÊıµÄÊı¾İ¿â²éÑ¯²Ù×÷
+	 * æ‰§è¡Œoracleé«˜æ•ˆç‰¹å®šé™åˆ¶æ•°æ®åº“ç»“æœæ•°çš„æ•°æ®åº“æŸ¥è¯¢æ“ä½œ
 	 * 
 	 * @param dbName
-	 *            Êı¾İ¿âÁ´½Ó³ØÃû³Æ
+	 *            æ•°æ®åº“é“¾æ¥æ± åç§°
 	 * @param sql
-	 *            ²éÑ¯Óï¾ä
+	 *            æŸ¥è¯¢è¯­å¥
 	 * @param limit
-	 *            ¼ÇÂ¼ÌõÊı
+	 *            è®°å½•æ¡æ•°
 	 * @throws SQLException
 	 */
 	public void executeSelectLimitForOracle(String dbName, String sql,
@@ -1592,12 +1592,12 @@ public class DBUtil extends SQLUtil implements Serializable {
 	}
 
 	/**
-	 * Ö´ĞĞÊı¾İ¿â²éÑ¯²Ù×÷
+	 * æ‰§è¡Œæ•°æ®åº“æŸ¥è¯¢æ“ä½œ
 	 * 
 	 * @param dbName
-	 *            Êı¾İ¿âÁ´½Ó³ØÃû³Æ
+	 *            æ•°æ®åº“é“¾æ¥æ± åç§°
 	 * @param sql
-	 *            ²éÑ¯Óï¾ä
+	 *            æŸ¥è¯¢è¯­å¥
 	 * @throws SQLException
 	 */
 	public void executeSelect(String dbName, String sql) throws SQLException {
@@ -1609,12 +1609,12 @@ public class DBUtil extends SQLUtil implements Serializable {
 	}
 
 	/**
-	 * Ö´ĞĞÊı¾İ¿â²éÑ¯²Ù×÷
+	 * æ‰§è¡Œæ•°æ®åº“æŸ¥è¯¢æ“ä½œ
 	 * 
 	 * @param dbName
-	 *            Êı¾İ¿âÁ´½Ó³ØÃû³Æ
+	 *            æ•°æ®åº“é“¾æ¥æ± åç§°
 	 * @param sql
-	 *            ²éÑ¯Óï¾ä
+	 *            æŸ¥è¯¢è¯­å¥
 	 * @throws SQLException
 	 */
 	public void executeSelect(String dbName, String sql, Connection con)
@@ -1632,13 +1632,13 @@ public class DBUtil extends SQLUtil implements Serializable {
 	}
 
 	/**
-	 * Ö´ĞĞÊı¾İ¿â²éÑ¯²Ù×÷
+	 * æ‰§è¡Œæ•°æ®åº“æŸ¥è¯¢æ“ä½œ
 	 * 
 	 * @param dbName
-	 *            ²éÑ¯µÄÊı¾İ¿âÁ¬½Ó³Ø
+	 *            æŸ¥è¯¢çš„æ•°æ®åº“è¿æ¥æ± 
 	 * @param sql
-	 *            ²éÑ¯Óï¾ä
-	 * @return hashÊı×é£¬·â×°²éÑ¯½á¹û
+	 *            æŸ¥è¯¢è¯­å¥
+	 * @return hashæ•°ç»„ï¼Œå°è£…æŸ¥è¯¢ç»“æœ
 	 * @throws SQLException
 	 *  @deprecated
 	 */
@@ -1648,13 +1648,13 @@ public class DBUtil extends SQLUtil implements Serializable {
 	}
 
 	/**
-	 * Ö´ĞĞÊı¾İ¿â²éÑ¯²Ù×÷
+	 * æ‰§è¡Œæ•°æ®åº“æŸ¥è¯¢æ“ä½œ
 	 * 
 	 * @param dbName
-	 *            ²éÑ¯µÄÊı¾İ¿âÁ¬½Ó³Ø
+	 *            æŸ¥è¯¢çš„æ•°æ®åº“è¿æ¥æ± 
 	 * @param sql
-	 *            ²éÑ¯Óï¾ä
-	 * @return hashÊı×é£¬·â×°²éÑ¯½á¹û
+	 *            æŸ¥è¯¢è¯­å¥
+	 * @return hashæ•°ç»„ï¼Œå°è£…æŸ¥è¯¢ç»“æœ
 	 * @throws SQLException
 	 *  @deprecated
 	 */
@@ -1664,14 +1664,14 @@ public class DBUtil extends SQLUtil implements Serializable {
 	}
 
 	/**
-	 * Ö´ĞĞÊı¾İ¿â²éÑ¯²Ù×÷
+	 * æ‰§è¡Œæ•°æ®åº“æŸ¥è¯¢æ“ä½œ
 	 * 
 	 * @param dbName
-	 *            ²éÑ¯µÄÊı¾İ¿âÁ¬½Ó³Ø
+	 *            æŸ¥è¯¢çš„æ•°æ®åº“è¿æ¥æ± 
 	 * @param sql
-	 *            ²éÑ¯Óï¾ä
+	 *            æŸ¥è¯¢è¯­å¥
 	 * @param fields
-	 *            ²éÑ¯×Ö¶ÎÊı×é
+	 *            æŸ¥è¯¢å­—æ®µæ•°ç»„
 	 * @throws SQLException
 	 *  @deprecated
 	 */
@@ -1681,14 +1681,14 @@ public class DBUtil extends SQLUtil implements Serializable {
 	}
 
 	/**
-	 * Ö´ĞĞÊı¾İ¿â²éÑ¯²Ù×÷
+	 * æ‰§è¡Œæ•°æ®åº“æŸ¥è¯¢æ“ä½œ
 	 * 
 	 * @param dbName
-	 *            ²éÑ¯µÄÊı¾İ¿âÁ¬½Ó³Ø
+	 *            æŸ¥è¯¢çš„æ•°æ®åº“è¿æ¥æ± 
 	 * @param sql
-	 *            ²éÑ¯Óï¾ä
+	 *            æŸ¥è¯¢è¯­å¥
 	 * @param fields
-	 *            ²éÑ¯×Ö¶ÎÊı×é
+	 *            æŸ¥è¯¢å­—æ®µæ•°ç»„
 	 * @throws SQLException
 	 *  @deprecated
 	 */
@@ -1701,15 +1701,15 @@ public class DBUtil extends SQLUtil implements Serializable {
 	}
 
 	/**
-	 * Ö´ĞĞ·ÖÒ³²éÑ¯²Ù×÷
+	 * æ‰§è¡Œåˆ†é¡µæŸ¥è¯¢æ“ä½œ
 	 * 
 	 * @param sql
-	 *            ²éÑ¯Óï¾ä
+	 *            æŸ¥è¯¢è¯­å¥
 	 * @param offset
-	 *            ·ÖÒ³²ÎÊı£­£­»ñÈ¡¼ÇÂ¼µÄÆğÊ¼Î»ÖÃ
+	 *            åˆ†é¡µå‚æ•°ï¼ï¼è·å–è®°å½•çš„èµ·å§‹ä½ç½®
 	 * @param maxsize
-	 *            ·ÖÒ³²ÎÊı£­£­»ñÈ¡×î´ó¼ÇÂ¼ÊıÁ¿
-	 * @return hashÊı×é£¬·â×°²éÑ¯½á¹û
+	 *            åˆ†é¡µå‚æ•°ï¼ï¼è·å–æœ€å¤§è®°å½•æ•°é‡
+	 * @return hashæ•°ç»„ï¼Œå°è£…æŸ¥è¯¢ç»“æœ
 	 * @throws SQLException
 	 *  @deprecated
 	 */
@@ -1719,15 +1719,15 @@ public class DBUtil extends SQLUtil implements Serializable {
 	}
 
 	/**
-	 * Ö´ĞĞ·ÖÒ³²éÑ¯²Ù×÷
+	 * æ‰§è¡Œåˆ†é¡µæŸ¥è¯¢æ“ä½œ
 	 * 
 	 * @param sql
-	 *            ²éÑ¯Óï¾ä
+	 *            æŸ¥è¯¢è¯­å¥
 	 * @param offset
-	 *            ·ÖÒ³²ÎÊı£­£­»ñÈ¡¼ÇÂ¼µÄÆğÊ¼Î»ÖÃ
+	 *            åˆ†é¡µå‚æ•°ï¼ï¼è·å–è®°å½•çš„èµ·å§‹ä½ç½®
 	 * @param maxsize
-	 *            ·ÖÒ³²ÎÊı£­£­»ñÈ¡×î´ó¼ÇÂ¼ÊıÁ¿
-	 * @return hashÊı×é£¬·â×°²éÑ¯½á¹û
+	 *            åˆ†é¡µå‚æ•°ï¼ï¼è·å–æœ€å¤§è®°å½•æ•°é‡
+	 * @return hashæ•°ç»„ï¼Œå°è£…æŸ¥è¯¢ç»“æœ
 	 * @throws SQLException
 	 *  @deprecated
 	 */
@@ -1738,15 +1738,15 @@ public class DBUtil extends SQLUtil implements Serializable {
 	}
 
 	/**
-	 * Ö´ĞĞ·ÖÒ³²éÑ¯²Ù×÷
+	 * æ‰§è¡Œåˆ†é¡µæŸ¥è¯¢æ“ä½œ
 	 * 
 	 * @param sql
-	 *            ²éÑ¯Óï¾ä
+	 *            æŸ¥è¯¢è¯­å¥
 	 * @param offset
-	 *            ·ÖÒ³²ÎÊı£­£­»ñÈ¡¼ÇÂ¼µÄÆğÊ¼Î»ÖÃ
+	 *            åˆ†é¡µå‚æ•°ï¼ï¼è·å–è®°å½•çš„èµ·å§‹ä½ç½®
 	 * @param maxsize
-	 *            ·ÖÒ³²ÎÊı£­£­»ñÈ¡×î´ó¼ÇÂ¼ÊıÁ¿
-	 * @return hashÊı×é£¬·â×°²éÑ¯½á¹û
+	 *            åˆ†é¡µå‚æ•°ï¼ï¼è·å–æœ€å¤§è®°å½•æ•°é‡
+	 * @return hashæ•°ç»„ï¼Œå°è£…æŸ¥è¯¢ç»“æœ
 	 * @throws SQLException
 	 *  @deprecated
 	 */
@@ -1757,15 +1757,15 @@ public class DBUtil extends SQLUtil implements Serializable {
 	}
 
 	/**
-	 * Ö´ĞĞ·ÖÒ³²éÑ¯²Ù×÷
+	 * æ‰§è¡Œåˆ†é¡µæŸ¥è¯¢æ“ä½œ
 	 * 
 	 * @param sql
-	 *            ²éÑ¯Óï¾ä
+	 *            æŸ¥è¯¢è¯­å¥
 	 * @param offset
-	 *            ·ÖÒ³²ÎÊı£­£­»ñÈ¡¼ÇÂ¼µÄÆğÊ¼Î»ÖÃ
+	 *            åˆ†é¡µå‚æ•°ï¼ï¼è·å–è®°å½•çš„èµ·å§‹ä½ç½®
 	 * @param maxsize
-	 *            ·ÖÒ³²ÎÊı£­£­»ñÈ¡×î´ó¼ÇÂ¼ÊıÁ¿
-	 * @return hashÊı×é£¬·â×°²éÑ¯½á¹û
+	 *            åˆ†é¡µå‚æ•°ï¼ï¼è·å–æœ€å¤§è®°å½•æ•°é‡
+	 * @return hashæ•°ç»„ï¼Œå°è£…æŸ¥è¯¢ç»“æœ
 	 * @throws SQLException
 	 *  @deprecated
 	 */
@@ -1780,17 +1780,17 @@ public class DBUtil extends SQLUtil implements Serializable {
 	}
 
 	/**
-	 * Ö´ĞĞ·ÖÒ³²éÑ¯²Ù×÷
+	 * æ‰§è¡Œåˆ†é¡µæŸ¥è¯¢æ“ä½œ
 	 * 
 	 * @param dbName
-	 *            ²éÑ¯µÄÊı¾İ¿âÁ¬½Ó³Ø
+	 *            æŸ¥è¯¢çš„æ•°æ®åº“è¿æ¥æ± 
 	 * @param sql
-	 *            ²éÑ¯Óï¾ä
+	 *            æŸ¥è¯¢è¯­å¥
 	 * @param offset
-	 *            ·ÖÒ³²ÎÊı£­£­»ñÈ¡¼ÇÂ¼µÄÆğÊ¼Î»ÖÃ
+	 *            åˆ†é¡µå‚æ•°ï¼ï¼è·å–è®°å½•çš„èµ·å§‹ä½ç½®
 	 * @param maxsize
-	 *            ·ÖÒ³²ÎÊı£­£­»ñÈ¡×î´ó¼ÇÂ¼ÊıÁ¿
-	 * @return hashÊı×é£¬·â×°²éÑ¯½á¹û
+	 *            åˆ†é¡µå‚æ•°ï¼ï¼è·å–æœ€å¤§è®°å½•æ•°é‡
+	 * @return hashæ•°ç»„ï¼Œå°è£…æŸ¥è¯¢ç»“æœ
 	 * @throws SQLException
 	 *  @deprecated
 	 */
@@ -1800,17 +1800,17 @@ public class DBUtil extends SQLUtil implements Serializable {
 	}
 
 	/**
-	 * Ö´ĞĞ·ÖÒ³²éÑ¯²Ù×÷
+	 * æ‰§è¡Œåˆ†é¡µæŸ¥è¯¢æ“ä½œ
 	 * 
 	 * @param dbName
-	 *            ²éÑ¯µÄÊı¾İ¿âÁ¬½Ó³Ø
+	 *            æŸ¥è¯¢çš„æ•°æ®åº“è¿æ¥æ± 
 	 * @param sql
-	 *            ²éÑ¯Óï¾ä
+	 *            æŸ¥è¯¢è¯­å¥
 	 * @param offset
-	 *            ·ÖÒ³²ÎÊı£­£­»ñÈ¡¼ÇÂ¼µÄÆğÊ¼Î»ÖÃ
+	 *            åˆ†é¡µå‚æ•°ï¼ï¼è·å–è®°å½•çš„èµ·å§‹ä½ç½®
 	 * @param maxsize
-	 *            ·ÖÒ³²ÎÊı£­£­»ñÈ¡×î´ó¼ÇÂ¼ÊıÁ¿
-	 * @return hashÊı×é£¬·â×°²éÑ¯½á¹û
+	 *            åˆ†é¡µå‚æ•°ï¼ï¼è·å–æœ€å¤§è®°å½•æ•°é‡
+	 * @return hashæ•°ç»„ï¼Œå°è£…æŸ¥è¯¢ç»“æœ
 	 * @throws SQLException
 	 *  @deprecated
 	 */
@@ -1820,17 +1820,17 @@ public class DBUtil extends SQLUtil implements Serializable {
 	}
 
 	/**
-	 * Ö´ĞĞ·ÖÒ³²éÑ¯²Ù×÷
+	 * æ‰§è¡Œåˆ†é¡µæŸ¥è¯¢æ“ä½œ
 	 * 
 	 * @param dbName
-	 *            ²éÑ¯µÄÊı¾İ¿âÁ¬½Ó³Ø
+	 *            æŸ¥è¯¢çš„æ•°æ®åº“è¿æ¥æ± 
 	 * @param sql
-	 *            ²éÑ¯Óï¾ä
+	 *            æŸ¥è¯¢è¯­å¥
 	 * @param offset
-	 *            ·ÖÒ³²ÎÊı£­£­»ñÈ¡¼ÇÂ¼µÄÆğÊ¼Î»ÖÃ
+	 *            åˆ†é¡µå‚æ•°ï¼ï¼è·å–è®°å½•çš„èµ·å§‹ä½ç½®
 	 * @param maxsize
-	 *            ·ÖÒ³²ÎÊı£­£­»ñÈ¡×î´ó¼ÇÂ¼ÊıÁ¿
-	 * @return hashÊı×é£¬·â×°²éÑ¯½á¹û
+	 *            åˆ†é¡µå‚æ•°ï¼ï¼è·å–æœ€å¤§è®°å½•æ•°é‡
+	 * @return hashæ•°ç»„ï¼Œå°è£…æŸ¥è¯¢ç»“æœ
 	 * @throws SQLException
 	 */
 	public void executeSelect(String dbName, String sql, long offset,
@@ -1839,17 +1839,17 @@ public class DBUtil extends SQLUtil implements Serializable {
 	}
 
 	/**
-	 * Ö´ĞĞ·ÖÒ³²éÑ¯²Ù×÷
+	 * æ‰§è¡Œåˆ†é¡µæŸ¥è¯¢æ“ä½œ
 	 * 
 	 * @param dbName
-	 *            ²éÑ¯µÄÊı¾İ¿âÁ¬½Ó³Ø
+	 *            æŸ¥è¯¢çš„æ•°æ®åº“è¿æ¥æ± 
 	 * @param sql
-	 *            ²éÑ¯Óï¾ä
+	 *            æŸ¥è¯¢è¯­å¥
 	 * @param offset
-	 *            ·ÖÒ³²ÎÊı£­£­»ñÈ¡¼ÇÂ¼µÄÆğÊ¼Î»ÖÃ
+	 *            åˆ†é¡µå‚æ•°ï¼ï¼è·å–è®°å½•çš„èµ·å§‹ä½ç½®
 	 * @param maxsize
-	 *            ·ÖÒ³²ÎÊı£­£­»ñÈ¡×î´ó¼ÇÂ¼ÊıÁ¿
-	 * @return hashÊı×é£¬·â×°²éÑ¯½á¹û
+	 *            åˆ†é¡µå‚æ•°ï¼ï¼è·å–æœ€å¤§è®°å½•æ•°é‡
+	 * @return hashæ•°ç»„ï¼Œå°è£…æŸ¥è¯¢ç»“æœ
 	 * @throws SQLException
 	 */
 	public void executeSelect(String dbName, String sql, long offset,
@@ -1861,20 +1861,20 @@ public class DBUtil extends SQLUtil implements Serializable {
 
 	/**
 	 * 
-	 * Ö´ĞĞ·ÖÒ³²éÑ¯²Ù×÷,
+	 * æ‰§è¡Œåˆ†é¡µæŸ¥è¯¢æ“ä½œ,
 	 * 
 	 * @param dbName
-	 *            ²éÑ¯µÄÊı¾İ¿âÁ¬½Ó³Ø
+	 *            æŸ¥è¯¢çš„æ•°æ®åº“è¿æ¥æ± 
 	 * @param sql
-	 *            ²éÑ¯Óï¾ä
+	 *            æŸ¥è¯¢è¯­å¥
 	 * @param offset
-	 *            ·ÖÒ³²ÎÊı£­£­»ñÈ¡¼ÇÂ¼µÄÆğÊ¼Î»ÖÃ
+	 *            åˆ†é¡µå‚æ•°ï¼ï¼è·å–è®°å½•çš„èµ·å§‹ä½ç½®
 	 * @param maxsize
-	 *            ·ÖÒ³²ÎÊı£­£­»ñÈ¡×î´ó¼ÇÂ¼ÊıÁ¿
+	 *            åˆ†é¡µå‚æ•°ï¼ï¼è·å–æœ€å¤§è®°å½•æ•°é‡
 	 * 
 	 * 
 	 * @param robotquery
-	 *            Çø·ÖÊÇ·ñÊÇ
+	 *            åŒºåˆ†æ˜¯å¦æ˜¯
 	 * @throws SQLException
 	 */
 	public void executeSelect(String dbName, String sql, long offset,
@@ -1886,20 +1886,20 @@ public class DBUtil extends SQLUtil implements Serializable {
 	
 	/**
 	 * 
-	 * Ö´ĞĞ·ÖÒ³²éÑ¯²Ù×÷,
+	 * æ‰§è¡Œåˆ†é¡µæŸ¥è¯¢æ“ä½œ,
 	 * 
 	 * @param dbName
-	 *            ²éÑ¯µÄÊı¾İ¿âÁ¬½Ó³Ø
+	 *            æŸ¥è¯¢çš„æ•°æ®åº“è¿æ¥æ± 
 	 * @param sql
-	 *            ²éÑ¯Óï¾ä
+	 *            æŸ¥è¯¢è¯­å¥
 	 * @param offset
-	 *            ·ÖÒ³²ÎÊı£­£­»ñÈ¡¼ÇÂ¼µÄÆğÊ¼Î»ÖÃ
+	 *            åˆ†é¡µå‚æ•°ï¼ï¼è·å–è®°å½•çš„èµ·å§‹ä½ç½®
 	 * @param maxsize
-	 *            ·ÖÒ³²ÎÊı£­£­»ñÈ¡×î´ó¼ÇÂ¼ÊıÁ¿
+	 *            åˆ†é¡µå‚æ•°ï¼ï¼è·å–æœ€å¤§è®°å½•æ•°é‡
 	 * 
 	 * 
 	 * @param robotquery
-	 *            Çø·ÖÊÇ·ñÊÇ
+	 *            åŒºåˆ†æ˜¯å¦æ˜¯
 	 * @throws SQLException
 	 */
 	public void executeSelect(String dbName, String sql, long offset,
@@ -1911,9 +1911,9 @@ public class DBUtil extends SQLUtil implements Serializable {
 	}
 
 	/**
-	 * ÔÚÖ¸¶¨dbNameµÄÊı¾İ¿âÖĞÖ´ĞĞ·ÖÒ³²éÑ¯²Ù×÷£¬±¾·½·¨ÀûÓÃoracle×ÔÉíÌá¹©µÄ·ÖÒ³»úÖÆ£¬ÌáÉıoracleµÄ¸ßĞ§·ÖÒ³²éÑ¯
-	 * »ñÈ¡¸ßĞ§µÄoracle·ÖÒ³Óï¾ä£¬sqlÖĞÒÑ¾­Ğ´ºÃROW_NUMBER() OVER ( ORDER BY cjrq ) rownum
-	 * ·ñÔò²»ÄÜµ÷ÓÃ±¾·½·¨Éú³ÉoralceµÄ·ÖÒ³Óï¾ä,ÆäÖĞrownum¾Í¶ÔÓ¦ÁË±¾·½·¨µÄ²ÎÊırownum ÀıÈç£º String sql = "select
+	 * åœ¨æŒ‡å®šdbNameçš„æ•°æ®åº“ä¸­æ‰§è¡Œåˆ†é¡µæŸ¥è¯¢æ“ä½œï¼Œæœ¬æ–¹æ³•åˆ©ç”¨oracleè‡ªèº«æä¾›çš„åˆ†é¡µæœºåˆ¶ï¼Œæå‡oracleçš„é«˜æ•ˆåˆ†é¡µæŸ¥è¯¢
+	 * è·å–é«˜æ•ˆçš„oracleåˆ†é¡µè¯­å¥ï¼Œsqlä¸­å·²ç»å†™å¥½ROW_NUMBER() OVER ( ORDER BY cjrq ) rownum
+	 * å¦åˆ™ä¸èƒ½è°ƒç”¨æœ¬æ–¹æ³•ç”Ÿæˆoralceçš„åˆ†é¡µè¯­å¥,å…¶ä¸­rownumå°±å¯¹åº”äº†æœ¬æ–¹æ³•çš„å‚æ•°rownum ä¾‹å¦‚ï¼š String sql = "select
 	 * name,row_number() over (order by id,name) rownum_ from test"; DBUtil
 	 * dbUtil = new DBUtil();
 	 * dbUtil.executeSelectForOracle("bspf",sql,offset,maxsize,"rownum_"); .....
@@ -1921,16 +1921,16 @@ public class DBUtil extends SQLUtil implements Serializable {
 	 * 
 	 * 
 	 * @param dbName
-	 *            ²éÑ¯µÄÊı¾İ¿âÁ¬½Ó³Ø
+	 *            æŸ¥è¯¢çš„æ•°æ®åº“è¿æ¥æ± 
 	 * @param sql
-	 *            ²éÑ¯Óï¾ä
+	 *            æŸ¥è¯¢è¯­å¥
 	 * @param offset
-	 *            ·ÖÒ³²ÎÊı£­£­»ñÈ¡¼ÇÂ¼µÄÆğÊ¼Î»ÖÃ
+	 *            åˆ†é¡µå‚æ•°ï¼ï¼è·å–è®°å½•çš„èµ·å§‹ä½ç½®
 	 * @param maxsize
-	 *            ·ÖÒ³²ÎÊı£­£­»ñÈ¡×î´ó¼ÇÂ¼ÊıÁ¿
+	 *            åˆ†é¡µå‚æ•°ï¼ï¼è·å–æœ€å¤§è®°å½•æ•°é‡
 	 * @param rownum
-	 *            oracleµÄĞĞºÅ±ğÃû£¬ÓÃÓÚÌáÉıoracleµÄ¸ßĞ§·ÖÒ³²éÑ¯
-	 * @return hashÊı×é£¬·â×°²éÑ¯½á¹û
+	 *            oracleçš„è¡Œå·åˆ«åï¼Œç”¨äºæå‡oracleçš„é«˜æ•ˆåˆ†é¡µæŸ¥è¯¢
+	 * @return hashæ•°ç»„ï¼Œå°è£…æŸ¥è¯¢ç»“æœ
 	 * @throws SQLException
 	 */
 	public void executeSelectForOracle(String dbName, String sql, long offset,
@@ -1941,9 +1941,9 @@ public class DBUtil extends SQLUtil implements Serializable {
 	}
 
 	/**
-	 * ÔÚÖ¸¶¨dbNameµÄÊı¾İ¿âÖĞÖ´ĞĞ·ÖÒ³²éÑ¯²Ù×÷£¬±¾·½·¨ÀûÓÃoracle×ÔÉíÌá¹©µÄ·ÖÒ³»úÖÆ£¬ÌáÉıoracleµÄ¸ßĞ§·ÖÒ³²éÑ¯
-	 * »ñÈ¡¸ßĞ§µÄoracle·ÖÒ³Óï¾ä£¬sqlÖĞÒÑ¾­Ğ´ºÃROW_NUMBER() OVER ( ORDER BY cjrq ) rownum
-	 * ·ñÔò²»ÄÜµ÷ÓÃ±¾·½·¨Éú³ÉoralceµÄ·ÖÒ³Óï¾ä,ÆäÖĞrownum¾Í¶ÔÓ¦ÁË±¾·½·¨µÄ²ÎÊırownum ÀıÈç£º String sql = "select
+	 * åœ¨æŒ‡å®šdbNameçš„æ•°æ®åº“ä¸­æ‰§è¡Œåˆ†é¡µæŸ¥è¯¢æ“ä½œï¼Œæœ¬æ–¹æ³•åˆ©ç”¨oracleè‡ªèº«æä¾›çš„åˆ†é¡µæœºåˆ¶ï¼Œæå‡oracleçš„é«˜æ•ˆåˆ†é¡µæŸ¥è¯¢
+	 * è·å–é«˜æ•ˆçš„oracleåˆ†é¡µè¯­å¥ï¼Œsqlä¸­å·²ç»å†™å¥½ROW_NUMBER() OVER ( ORDER BY cjrq ) rownum
+	 * å¦åˆ™ä¸èƒ½è°ƒç”¨æœ¬æ–¹æ³•ç”Ÿæˆoralceçš„åˆ†é¡µè¯­å¥,å…¶ä¸­rownumå°±å¯¹åº”äº†æœ¬æ–¹æ³•çš„å‚æ•°rownum ä¾‹å¦‚ï¼š String sql = "select
 	 * name,row_number() over (order by id,name) rownum_ from test"; DBUtil
 	 * dbUtil = new DBUtil();
 	 * dbUtil.executeSelectForOracle("bspf",sql,offset,maxsize,"rownum_"); .....
@@ -1951,16 +1951,16 @@ public class DBUtil extends SQLUtil implements Serializable {
 	 * 
 	 * 
 	 * @param dbName
-	 *            ²éÑ¯µÄÊı¾İ¿âÁ¬½Ó³Ø
+	 *            æŸ¥è¯¢çš„æ•°æ®åº“è¿æ¥æ± 
 	 * @param sql
-	 *            ²éÑ¯Óï¾ä
+	 *            æŸ¥è¯¢è¯­å¥
 	 * @param offset
-	 *            ·ÖÒ³²ÎÊı£­£­»ñÈ¡¼ÇÂ¼µÄÆğÊ¼Î»ÖÃ
+	 *            åˆ†é¡µå‚æ•°ï¼ï¼è·å–è®°å½•çš„èµ·å§‹ä½ç½®
 	 * @param maxsize
-	 *            ·ÖÒ³²ÎÊı£­£­»ñÈ¡×î´ó¼ÇÂ¼ÊıÁ¿
+	 *            åˆ†é¡µå‚æ•°ï¼ï¼è·å–æœ€å¤§è®°å½•æ•°é‡
 	 * @param rownum
-	 *            oracleµÄĞĞºÅ±ğÃû£¬ÓÃÓÚÌáÉıoracleµÄ¸ßĞ§·ÖÒ³²éÑ¯
-	 * @return hashÊı×é£¬·â×°²éÑ¯½á¹û
+	 *            oracleçš„è¡Œå·åˆ«åï¼Œç”¨äºæå‡oracleçš„é«˜æ•ˆåˆ†é¡µæŸ¥è¯¢
+	 * @return hashæ•°ç»„ï¼Œå°è£…æŸ¥è¯¢ç»“æœ
 	 * @throws SQLException
 	 */
 	public void executeSelectForOracle(String dbName, String sql, long offset,
@@ -1974,19 +1974,19 @@ public class DBUtil extends SQLUtil implements Serializable {
 	}
 
 	/**
-	 * ÔÚÈ±Ê¡µÄÊı¾İ¿âÖĞÖ´ĞĞ·ÖÒ³²éÑ¯²Ù×÷£¬±¾·½·¨ÀûÓÃoracle×ÔÉíÌá¹©µÄ·ÖÒ³»úÖÆ£¬ÌáÉıoracleµÄ¸ßĞ§·ÖÒ³²éÑ¯
-	 * »ñÈ¡¸ßĞ§µÄoracle·ÖÒ³Óï¾ä£¬sqlÖĞÒÑ¾­Ğ´ºÃROW_NUMBER() OVER ( ORDER BY cjrq ) rownum
-	 * ·ñÔò²»ÄÜµ÷ÓÃ±¾·½·¨Éú³ÉoralceµÄ·ÖÒ³Óï¾ä,ÆäÖĞrownum¾Í¶ÔÓ¦ÁË±¾·½·¨µÄ²ÎÊırownum
+	 * åœ¨ç¼ºçœçš„æ•°æ®åº“ä¸­æ‰§è¡Œåˆ†é¡µæŸ¥è¯¢æ“ä½œï¼Œæœ¬æ–¹æ³•åˆ©ç”¨oracleè‡ªèº«æä¾›çš„åˆ†é¡µæœºåˆ¶ï¼Œæå‡oracleçš„é«˜æ•ˆåˆ†é¡µæŸ¥è¯¢
+	 * è·å–é«˜æ•ˆçš„oracleåˆ†é¡µè¯­å¥ï¼Œsqlä¸­å·²ç»å†™å¥½ROW_NUMBER() OVER ( ORDER BY cjrq ) rownum
+	 * å¦åˆ™ä¸èƒ½è°ƒç”¨æœ¬æ–¹æ³•ç”Ÿæˆoralceçš„åˆ†é¡µè¯­å¥,å…¶ä¸­rownumå°±å¯¹åº”äº†æœ¬æ–¹æ³•çš„å‚æ•°rownum
 	 * 
 	 * @param sql
-	 *            ²éÑ¯Óï¾ä
+	 *            æŸ¥è¯¢è¯­å¥
 	 * @param offset
-	 *            ·ÖÒ³²ÎÊı£­£­»ñÈ¡¼ÇÂ¼µÄÆğÊ¼Î»ÖÃ
+	 *            åˆ†é¡µå‚æ•°ï¼ï¼è·å–è®°å½•çš„èµ·å§‹ä½ç½®
 	 * @param maxsize
-	 *            ·ÖÒ³²ÎÊı£­£­»ñÈ¡×î´ó¼ÇÂ¼ÊıÁ¿
+	 *            åˆ†é¡µå‚æ•°ï¼ï¼è·å–æœ€å¤§è®°å½•æ•°é‡
 	 * @param rownum
-	 *            oracleµÄĞĞºÅ±ğÃû£¬ÓÃÓÚÌáÉıoracleµÄ¸ßĞ§·ÖÒ³²éÑ¯
-	 * @return hashÊı×é£¬·â×°²éÑ¯½á¹û
+	 *            oracleçš„è¡Œå·åˆ«åï¼Œç”¨äºæå‡oracleçš„é«˜æ•ˆåˆ†é¡µæŸ¥è¯¢
+	 * @return hashæ•°ç»„ï¼Œå°è£…æŸ¥è¯¢ç»“æœ
 	 * @throws SQLException
 	 */
 	public void executeSelectForOracle(String sql, long offset, int maxsize,
@@ -1996,15 +1996,15 @@ public class DBUtil extends SQLUtil implements Serializable {
 	}
 
 	/**
-	 * Ö´ĞĞ·ÖÒ³²éÑ¯²Ù×÷
+	 * æ‰§è¡Œåˆ†é¡µæŸ¥è¯¢æ“ä½œ
 	 * 
 	 * @param sql
-	 *            ²éÑ¯Óï¾ä
+	 *            æŸ¥è¯¢è¯­å¥
 	 * @param offset
-	 *            ·ÖÒ³²ÎÊı£­£­»ñÈ¡¼ÇÂ¼µÄÆğÊ¼Î»ÖÃ
+	 *            åˆ†é¡µå‚æ•°ï¼ï¼è·å–è®°å½•çš„èµ·å§‹ä½ç½®
 	 * @param maxsize
-	 *            ·ÖÒ³²ÎÊı£­£­»ñÈ¡×î´ó¼ÇÂ¼ÊıÁ¿
-	 * @return hashÊı×é£¬·â×°²éÑ¯½á¹û
+	 *            åˆ†é¡µå‚æ•°ï¼ï¼è·å–æœ€å¤§è®°å½•æ•°é‡
+	 * @return hashæ•°ç»„ï¼Œå°è£…æŸ¥è¯¢ç»“æœ
 	 * @throws SQLException
 	 */
 	public void executeSelect(String sql, long offset, int maxsize)
@@ -2013,17 +2013,17 @@ public class DBUtil extends SQLUtil implements Serializable {
 	}
 
 	/**
-	 * Ö´ĞĞ·ÖÒ³²éÑ¯²Ù×÷
+	 * æ‰§è¡Œåˆ†é¡µæŸ¥è¯¢æ“ä½œ
 	 * 
 	 * @param dbName
-	 *            ²éÑ¯µÄÊı¾İ¿âÁ¬½Ó³Ø
+	 *            æŸ¥è¯¢çš„æ•°æ®åº“è¿æ¥æ± 
 	 * @param sql
-	 *            ²éÑ¯Óï¾ä
+	 *            æŸ¥è¯¢è¯­å¥
 	 * @param offset
-	 *            ·ÖÒ³²ÎÊı£­£­»ñÈ¡¼ÇÂ¼µÄÆğÊ¼Î»ÖÃ
+	 *            åˆ†é¡µå‚æ•°ï¼ï¼è·å–è®°å½•çš„èµ·å§‹ä½ç½®
 	 * @param maxsize
-	 *            ·ÖÒ³²ÎÊı£­£­»ñÈ¡×î´ó¼ÇÂ¼ÊıÁ¿
-	 * @return hashÊı×é£¬·â×°²éÑ¯½á¹û
+	 *            åˆ†é¡µå‚æ•°ï¼ï¼è·å–æœ€å¤§è®°å½•æ•°é‡
+	 * @return hashæ•°ç»„ï¼Œå°è£…æŸ¥è¯¢ç»“æœ
 	 * @throws SQLException
 	 *  @deprecated
 	 */
@@ -2033,17 +2033,17 @@ public class DBUtil extends SQLUtil implements Serializable {
 	}
 
 	/**
-	 * Ö´ĞĞ·ÖÒ³²éÑ¯²Ù×÷
+	 * æ‰§è¡Œåˆ†é¡µæŸ¥è¯¢æ“ä½œ
 	 * 
 	 * @param dbName
-	 *            ²éÑ¯µÄÊı¾İ¿âÁ¬½Ó³Ø
+	 *            æŸ¥è¯¢çš„æ•°æ®åº“è¿æ¥æ± 
 	 * @param sql
-	 *            ²éÑ¯Óï¾ä
+	 *            æŸ¥è¯¢è¯­å¥
 	 * @param offset
-	 *            ·ÖÒ³²ÎÊı£­£­»ñÈ¡¼ÇÂ¼µÄÆğÊ¼Î»ÖÃ
+	 *            åˆ†é¡µå‚æ•°ï¼ï¼è·å–è®°å½•çš„èµ·å§‹ä½ç½®
 	 * @param maxsize
-	 *            ·ÖÒ³²ÎÊı£­£­»ñÈ¡×î´ó¼ÇÂ¼ÊıÁ¿
-	 * @return hashÊı×é£¬·â×°²éÑ¯½á¹û
+	 *            åˆ†é¡µå‚æ•°ï¼ï¼è·å–æœ€å¤§è®°å½•æ•°é‡
+	 * @return hashæ•°ç»„ï¼Œå°è£…æŸ¥è¯¢ç»“æœ
 	 * @throws SQLException
 	 *  @deprecated
 	 */
@@ -2087,11 +2087,11 @@ public class DBUtil extends SQLUtil implements Serializable {
 	}
 
 	/**
-	 * Ö´ĞĞÊı¾İ¿âµÄ¸üĞÂÓï¾ä
+	 * æ‰§è¡Œæ•°æ®åº“çš„æ›´æ–°è¯­å¥
 	 * 
 	 * @param updateSql
-	 *            updateÓï¾ä
-	 * @return Hashtable[] °üº¬¸üĞÂ½á¹ûĞÅÏ¢
+	 *            updateè¯­å¥
+	 * @return Hashtable[] åŒ…å«æ›´æ–°ç»“æœä¿¡æ¯
 	 * @throws SQLException
 	 */
 	public Hashtable[] executeUpdate(String updateSql) throws SQLException {
@@ -2099,13 +2099,13 @@ public class DBUtil extends SQLUtil implements Serializable {
 	}
 
 	/**
-	 * Ö´ĞĞÊı¾İ¿âµÄ¸üĞÂÓï¾ä
+	 * æ‰§è¡Œæ•°æ®åº“çš„æ›´æ–°è¯­å¥
 	 * 
 	 * @param updateSql
-	 *            updateÓï¾ä
+	 *            updateè¯­å¥
 	 * @param dbName
-	 *            Êı¾İ¿âÃû³Æ
-	 * @return Hashtable[] °üº¬¸üĞÂ½á¹ûĞÅÏ¢
+	 *            æ•°æ®åº“åç§°
+	 * @return Hashtable[] åŒ…å«æ›´æ–°ç»“æœä¿¡æ¯
 	 * @throws SQLException
 	 */
 	public Hashtable[] executeUpdate(String dbName, String updateSql)
@@ -2114,13 +2114,13 @@ public class DBUtil extends SQLUtil implements Serializable {
 	}
 
 	/**
-	 * Ö´ĞĞÊı¾İ¿âµÄ¸üĞÂÓï¾ä
+	 * æ‰§è¡Œæ•°æ®åº“çš„æ›´æ–°è¯­å¥
 	 * 
 	 * @param updateSql
-	 *            updateÓï¾ä
+	 *            updateè¯­å¥
 	 * @param dbName
-	 *            Êı¾İ¿âÃû³Æ
-	 * @return Hashtable[] °üº¬¸üĞÂ½á¹ûĞÅÏ¢
+	 *            æ•°æ®åº“åç§°
+	 * @return Hashtable[] åŒ…å«æ›´æ–°ç»“æœä¿¡æ¯
 	 * @throws SQLException
 	 */
 	public Hashtable[] executeUpdate(String dbName, String updateSql,
@@ -2133,14 +2133,14 @@ public class DBUtil extends SQLUtil implements Serializable {
 	 * doJDBC() to perform the actual operation.
 	 * 
 	 * @param dbname
-	 *            ²éÑ¯µÄÊı¾İ¿âÁ¬½Ó³Ø
+	 *            æŸ¥è¯¢çš„æ•°æ®åº“è¿æ¥æ± 
 	 * @param sql
-	 *            ²éÑ¯Óï¾ä
+	 *            æŸ¥è¯¢è¯­å¥
 	 * @param offset
-	 *            ·ÖÒ³²ÎÊı£­£­»ñÈ¡¼ÇÂ¼µÄÆğÊ¼Î»ÖÃ
+	 *            åˆ†é¡µå‚æ•°ï¼ï¼è·å–è®°å½•çš„èµ·å§‹ä½ç½®
 	 * @param maxsize
-	 *            ·ÖÒ³²ÎÊı£­£­»ñÈ¡×î´ó¼ÇÂ¼ÊıÁ¿
-	 * @return hashÊı×é£¬·â×°²éÑ¯½á¹û
+	 *            åˆ†é¡µå‚æ•°ï¼ï¼è·å–æœ€å¤§è®°å½•æ•°é‡
+	 * @return hashæ•°ç»„ï¼Œå°è£…æŸ¥è¯¢ç»“æœ
 	 * @throws SQLException
 	 */
 
@@ -2158,14 +2158,14 @@ public class DBUtil extends SQLUtil implements Serializable {
 	 * doJDBC() to perform the actual operation.
 	 * 
 	 * @param dbname
-	 *            ²éÑ¯µÄÊı¾İ¿âÁ¬½Ó³Ø
+	 *            æŸ¥è¯¢çš„æ•°æ®åº“è¿æ¥æ± 
 	 * @param sql
-	 *            ²éÑ¯Óï¾ä
+	 *            æŸ¥è¯¢è¯­å¥
 	 * @param offset
-	 *            ·ÖÒ³²ÎÊı£­£­»ñÈ¡¼ÇÂ¼µÄÆğÊ¼Î»ÖÃ
+	 *            åˆ†é¡µå‚æ•°ï¼ï¼è·å–è®°å½•çš„èµ·å§‹ä½ç½®
 	 * @param maxsize
-	 *            ·ÖÒ³²ÎÊı£­£­»ñÈ¡×î´ó¼ÇÂ¼ÊıÁ¿
-	 * @return hashÊı×é£¬·â×°²éÑ¯½á¹û
+	 *            åˆ†é¡µå‚æ•°ï¼ï¼è·å–æœ€å¤§è®°å½•æ•°é‡
+	 * @return hashæ•°ç»„ï¼Œå°è£…æŸ¥è¯¢ç»“æœ
 	 * @throws SQLException
 	 */
 
@@ -2174,7 +2174,7 @@ public class DBUtil extends SQLUtil implements Serializable {
 
 		Record[] hashResults = null;
 		/**
-		 * Èç¹ûÊÇ·Ö¿é´¦Àí,ÄÇÃ´ÖØÖÃtotalSize
+		 * å¦‚æœæ˜¯åˆ†å—å¤„ç†,é‚£ä¹ˆé‡ç½®totalSize
 		 */
 		if (isRobustQuery) {
 			totalSize = 0;
@@ -2213,7 +2213,7 @@ public class DBUtil extends SQLUtil implements Serializable {
 	
 	
 	/**
-	 * Ìí¼ÓÅú´¦ÀísqlÓï¾ä
+	 * æ·»åŠ æ‰¹å¤„ç†sqlè¯­å¥
 	 * 
 	 * @param sql
 	 * @throws SQLException
@@ -2232,7 +2232,7 @@ public class DBUtil extends SQLUtil implements Serializable {
 
 
 	/**
-	 * ¸üĞÂÒ»Åú±íµÄÖ÷¼üĞÅÏ¢
+	 * æ›´æ–°ä¸€æ‰¹è¡¨çš„ä¸»é”®ä¿¡æ¯
 	 * 
 	 * @param batchUpdateSqls
 	 * @throws SQLException
@@ -2242,7 +2242,7 @@ public class DBUtil extends SQLUtil implements Serializable {
 			return;
 		// DBUtil dbUtil = new DBUtil();
 		try {
-			// // ÉèÖÃÊı¾İ¿â²Ù×÷µÄÌá½»Ä£Ê½
+			// // è®¾ç½®æ•°æ®åº“æ“ä½œçš„æäº¤æ¨¡å¼
 			// dbUtil.setAutoCommit(isAutoCommit());
 
 			for (Iterator i = batchUpdateSqls.iterator(); i.hasNext();) {
@@ -2264,15 +2264,15 @@ public class DBUtil extends SQLUtil implements Serializable {
 
 
 	/**
-	 * »Ø¹öÊÂÎñ
+	 * å›æ»šäº‹åŠ¡
 	 */
 	public void rollbackTransaction() {
 
 	}
 	/**
-	 * Ö´ĞĞÅú´¦ÀíÃüÁî£¬Ö´ĞĞÅú´¦ÀíÃüÁîÖ®Ç°¿ÉÒÔÖ¸¶¨ÌØ¶¨µÄÊı¾İ¿âÁ¬½Ó³ØµÄÃû³Æ
+	 * æ‰§è¡Œæ‰¹å¤„ç†å‘½ä»¤ï¼Œæ‰§è¡Œæ‰¹å¤„ç†å‘½ä»¤ä¹‹å‰å¯ä»¥æŒ‡å®šç‰¹å®šçš„æ•°æ®åº“è¿æ¥æ± çš„åç§°
 	 * 
-	 * @return Èç¹ûÊÇ²åÈëÅú´¦ÀíÄÇÃ´·µ»ØËùÓĞ²úÉúµÄÖ÷¼ü
+	 * @return å¦‚æœæ˜¯æ’å…¥æ‰¹å¤„ç†é‚£ä¹ˆè¿”å›æ‰€æœ‰äº§ç”Ÿçš„ä¸»é”®
 	 * @throws Exception
 	 */
 	public Object[] executeBatch() throws SQLException {
@@ -2281,9 +2281,9 @@ public class DBUtil extends SQLUtil implements Serializable {
 	
 	
 	/**
-	 * Ö´ĞĞÅú´¦ÀíÃüÁî£¬Ö´ĞĞÅú´¦ÀíÃüÁîÖ®Ç°¿ÉÒÔÖ¸¶¨ÌØ¶¨µÄÊı¾İ¿âÁ¬½Ó³ØµÄÃû³Æ
+	 * æ‰§è¡Œæ‰¹å¤„ç†å‘½ä»¤ï¼Œæ‰§è¡Œæ‰¹å¤„ç†å‘½ä»¤ä¹‹å‰å¯ä»¥æŒ‡å®šç‰¹å®šçš„æ•°æ®åº“è¿æ¥æ± çš„åç§°
 	 * 
-	 * @return Èç¹ûÊÇ²åÈëÅú´¦ÀíÄÇÃ´·µ»ØËùÓĞ²úÉúµÄÖ÷¼ü
+	 * @return å¦‚æœæ˜¯æ’å…¥æ‰¹å¤„ç†é‚£ä¹ˆè¿”å›æ‰€æœ‰äº§ç”Ÿçš„ä¸»é”®
 	 * @throws Exception
 	 */
 	public Object[] executeBatch(Connection con) throws SQLException {
@@ -2291,7 +2291,7 @@ public class DBUtil extends SQLUtil implements Serializable {
 	}
 	
 	/**
-	 * ÔÚÌØ¶¨µÄÊı¾İ¿âÉÏÃæÖ´ĞĞÅú´¦Àí²Ù×÷
+	 * åœ¨ç‰¹å®šçš„æ•°æ®åº“ä¸Šé¢æ‰§è¡Œæ‰¹å¤„ç†æ“ä½œ
 	 * @param dbname
 	 * @return
 	 * @throws Exception
@@ -2302,9 +2302,9 @@ public class DBUtil extends SQLUtil implements Serializable {
 	
 	
 	/**
-	 * Ö´ĞĞÅú´¦ÀíÃüÁî£¬Ö´ĞĞÅú´¦ÀíÃüÁîÖ®Ç°¿ÉÒÔÖ¸¶¨ÌØ¶¨µÄÊı¾İ¿âÁ¬½Ó³ØµÄÃû³Æ
+	 * æ‰§è¡Œæ‰¹å¤„ç†å‘½ä»¤ï¼Œæ‰§è¡Œæ‰¹å¤„ç†å‘½ä»¤ä¹‹å‰å¯ä»¥æŒ‡å®šç‰¹å®šçš„æ•°æ®åº“è¿æ¥æ± çš„åç§°
 	 * 
-	 * @return Èç¹ûÊÇ²åÈëÅú´¦ÀíÄÇÃ´·µ»ØËùÓĞ²úÉúµÄÖ÷¼ü
+	 * @return å¦‚æœæ˜¯æ’å…¥æ‰¹å¤„ç†é‚£ä¹ˆè¿”å›æ‰€æœ‰äº§ç”Ÿçš„ä¸»é”®
 	 * @throws Exception
 	 */
 	public Object[] executeBatch(boolean needtransaction) throws SQLException {
@@ -2312,7 +2312,7 @@ public class DBUtil extends SQLUtil implements Serializable {
 	}
 	
 	/**
-	 * ÔÚÌØ¶¨µÄÊı¾İ¿âÉÏÃæÖ´ĞĞÅú´¦Àí²Ù×÷
+	 * åœ¨ç‰¹å®šçš„æ•°æ®åº“ä¸Šé¢æ‰§è¡Œæ‰¹å¤„ç†æ“ä½œ
 	 * @param dbname
 	 * @return
 	 * @throws Exception
@@ -2323,7 +2323,7 @@ public class DBUtil extends SQLUtil implements Serializable {
 	
 	
 	/**
-	 * ÔÚÌØ¶¨µÄÊı¾İ¿âºÍÁ´½ÓÉÏÖ´ĞĞÊı¾İ¿âÅú´¦Àí²Ù×÷
+	 * åœ¨ç‰¹å®šçš„æ•°æ®åº“å’Œé“¾æ¥ä¸Šæ‰§è¡Œæ•°æ®åº“æ‰¹å¤„ç†æ“ä½œ
 	 * @param dbname
 	 * @param con
 	 * @return
@@ -2347,10 +2347,10 @@ public class DBUtil extends SQLUtil implements Serializable {
 	}
 	
 	/**
-	 * ÅĞ¶ÏÖ¸¶¨µÄÊı¾İ¿âÊÇ·ñÆôÓÃÁË×Ô¶¯Éú³ÉÊı¾İ¿âÖ÷¼üµÄÄ£Ê½
+	 * åˆ¤æ–­æŒ‡å®šçš„æ•°æ®åº“æ˜¯å¦å¯ç”¨äº†è‡ªåŠ¨ç”Ÿæˆæ•°æ®åº“ä¸»é”®çš„æ¨¡å¼
 	 * 
-	 * @return true ±êÊ¶ÆôÓÃ
-	 *         false ±êÊ¶²»ÆôÓÃ
+	 * @return true æ ‡è¯†å¯ç”¨
+	 *         false æ ‡è¯†ä¸å¯ç”¨
 	 */
 	public static boolean isAutoprimarykey(String dbname)
 	{
@@ -2359,15 +2359,15 @@ public class DBUtil extends SQLUtil implements Serializable {
 		
 	}
 	/**
-	 * ÔÚÌØ¶¨µÄÊı¾İ¿âºÍÁ´½ÓÉÏÖ´ĞĞÊı¾İ¿âÅú´¦Àí²Ù×÷£¬
-	 * @param batchSQLS Åú´¦ÀíµÄsqlÓï¾ä¼¯
-	 * @param dbname dbname == null?batchDBName:dbname Êı¾İ¿âÂß¼­¿âÃû³Æ
-	 * @param con Íâ²¿´«ÈëµÄÊı¾İ¿âÁ´½Ó£¬Èç¹ûÎª¿ÕÔòÖØĞÂÏòÁ´½Ó³ØÉêÇëÁ´½Ó
-	 *        Ê¹ÓÃÍâ²¿Á´½ÓÊ±£¬±¾·½·¨²»×öÈÎºÎÊÂÎñĞÔµÄ²Ù×÷£¬Èç¹û³öÏÖÊı¾İ¿âµÄÒì³££¬Ö±½ÓÅ×³öÕâ¸öÒì³£¡£
-	 * @param needtransaction ±êÊ¶Åú´¦Àí²Ù×÷ÊÇ·ñ²ÉÓÃÊÖ¶¯¿ØÖÆµÄÊÂÎñ£¬trueÎªĞèÒªÊÂÎñ£¬Ö»ÓĞËùÓĞµÄsqlÓï¾ä¶¼Ö´ĞĞ³É¹¦²ÅÌá½»£¬·ñÔò
-	 * 		  È«²¿»Ø¹ö
-	 *        falseÎª²»ĞèÒªÊÂÎñ£¬°´Ë³ĞòÖ´ĞĞÅú´¦Àí²Ù×÷£¬Ö±µ½È«²¿Ö´ĞĞÍê»òÕßÅöµ½Êı¾İ¿âÒì³£ºóÖÕÖ¹
-	 *        ĞèÒª×¢ÒâµÄÊÇÈç¹ûÔÚ¸Ã·½·¨ÊÇÔÚÊÂÎñÉÏÏÂÎÄ»·¾³ÖĞÖ´ĞĞ£¬Ôòneedtransaction²ÎÊı½«±»ºöÂÔ
+	 * åœ¨ç‰¹å®šçš„æ•°æ®åº“å’Œé“¾æ¥ä¸Šæ‰§è¡Œæ•°æ®åº“æ‰¹å¤„ç†æ“ä½œï¼Œ
+	 * @param batchSQLS æ‰¹å¤„ç†çš„sqlè¯­å¥é›†
+	 * @param dbname dbname == null?batchDBName:dbname æ•°æ®åº“é€»è¾‘åº“åç§°
+	 * @param con å¤–éƒ¨ä¼ å…¥çš„æ•°æ®åº“é“¾æ¥ï¼Œå¦‚æœä¸ºç©ºåˆ™é‡æ–°å‘é“¾æ¥æ± ç”³è¯·é“¾æ¥
+	 *        ä½¿ç”¨å¤–éƒ¨é“¾æ¥æ—¶ï¼Œæœ¬æ–¹æ³•ä¸åšä»»ä½•äº‹åŠ¡æ€§çš„æ“ä½œï¼Œå¦‚æœå‡ºç°æ•°æ®åº“çš„å¼‚å¸¸ï¼Œç›´æ¥æŠ›å‡ºè¿™ä¸ªå¼‚å¸¸ã€‚
+	 * @param needtransaction æ ‡è¯†æ‰¹å¤„ç†æ“ä½œæ˜¯å¦é‡‡ç”¨æ‰‹åŠ¨æ§åˆ¶çš„äº‹åŠ¡ï¼Œtrueä¸ºéœ€è¦äº‹åŠ¡ï¼Œåªæœ‰æ‰€æœ‰çš„sqlè¯­å¥éƒ½æ‰§è¡ŒæˆåŠŸæ‰æäº¤ï¼Œå¦åˆ™
+	 * 		  å…¨éƒ¨å›æ»š
+	 *        falseä¸ºä¸éœ€è¦äº‹åŠ¡ï¼ŒæŒ‰é¡ºåºæ‰§è¡Œæ‰¹å¤„ç†æ“ä½œï¼Œç›´åˆ°å…¨éƒ¨æ‰§è¡Œå®Œæˆ–è€…ç¢°åˆ°æ•°æ®åº“å¼‚å¸¸åç»ˆæ­¢
+	 *        éœ€è¦æ³¨æ„çš„æ˜¯å¦‚æœåœ¨è¯¥æ–¹æ³•æ˜¯åœ¨äº‹åŠ¡ä¸Šä¸‹æ–‡ç¯å¢ƒä¸­æ‰§è¡Œï¼Œåˆ™needtransactionå‚æ•°å°†è¢«å¿½ç•¥
 	 * @return
 	 * @throws SQLException
 	 */
@@ -2376,14 +2376,14 @@ public class DBUtil extends SQLUtil implements Serializable {
 								 Connection con_,
 								 boolean needtransaction_ ) throws SQLException {
 		if (batchSQLS == null || batchSQLS.size() == 0) {
-			System.out.println("Ã»ÓĞÒª´¦ÀíµÄÅú´¦ÀíÃüÁîĞĞ£¡");
+			System.out.println("æ²¡æœ‰è¦å¤„ç†çš„æ‰¹å¤„ç†å‘½ä»¤è¡Œï¼");
 			return null;
 		}
 		StatementInfo stmtInfo = null;
 		Object[] ret_keys = null;
-		// Èç¹ûÅú´¦ÀíÖ¸ÁîÖ´ĞĞµÄÊı¾İ¿â²åÈë²Ù×÷£¬±£´æ¸Ã²åÈë²Ù×÷Éú³ÉµÄÖ÷¼üÖµ
+		// å¦‚æœæ‰¹å¤„ç†æŒ‡ä»¤æ‰§è¡Œçš„æ•°æ®åº“æ’å…¥æ“ä½œï¼Œä¿å­˜è¯¥æ’å…¥æ“ä½œç”Ÿæˆçš„ä¸»é”®å€¼
 		List batchResult = new ArrayList();
-		// Èç¹ûÅú´¦ÀíÖ¸ÁîÖ´ĞĞµÄÊı¾İ¿â²åÈë²Ù×÷£¬±£´æ¸Ã²åÈë²Ù×÷Ö´ĞĞºóĞèÒª¸üĞÂ±íµÄÖ÷¼üĞÅÏ¢µÄÓï¾ä
+		// å¦‚æœæ‰¹å¤„ç†æŒ‡ä»¤æ‰§è¡Œçš„æ•°æ®åº“æ’å…¥æ“ä½œï¼Œä¿å­˜è¯¥æ’å…¥æ“ä½œæ‰§è¡Œåéœ€è¦æ›´æ–°è¡¨çš„ä¸»é”®ä¿¡æ¯çš„è¯­å¥
 		Set batchUpdateSqls = new TreeSet();
 
 		Statement batchStmt = null;
@@ -2397,7 +2397,7 @@ public class DBUtil extends SQLUtil implements Serializable {
 					 needtransaction_);
 			stmtInfo.init();
 
-			// ³õÊ¼»¯Åú´¦ÀíÊı¾İ¿âÖ´ĞĞÓï¾ä
+			// åˆå§‹åŒ–æ‰¹å¤„ç†æ•°æ®åº“æ‰§è¡Œè¯­å¥
 			batchStmt = stmtInfo.createStatement();
 			boolean autokey = isAutoprimarykey(dbname_);
 			for(int i = 0; i < batchSQLS.size(); i ++)
@@ -2412,11 +2412,11 @@ public class DBUtil extends SQLUtil implements Serializable {
 					Object[] objs = StatementParser.refactorInsertStatement(
 							stmtInfo.getCon(), sql, stmtInfo.getDbname());
 					/**
-					 * ret[0] ´æ·ÅinsertÓï¾ä ret[1] ´æ·ÅĞÂµÄÖ÷¼üÖµ ret[2] ¸üĞÂ±ítableinfoÖĞ²åÈë±í¶ÔÓ¦Ö÷¼üÖµÓï¾ä
-					 * ret[3] PrimaryKey¶ÔÏó
+					 * ret[0] å­˜æ”¾insertè¯­å¥ ret[1] å­˜æ”¾æ–°çš„ä¸»é”®å€¼ ret[2] æ›´æ–°è¡¨tableinfoä¸­æ’å…¥è¡¨å¯¹åº”ä¸»é”®å€¼è¯­å¥
+					 * ret[3] PrimaryKeyå¯¹è±¡
 					 */
 		
-					// ÖØĞÂÉèÖÃ´¦ÀíºóµÄsqlÓï¾ä
+					// é‡æ–°è®¾ç½®å¤„ç†åçš„sqlè¯­å¥
 					sql = (String) objs[0];
 					if(showsql(stmtInfo.getDbname()))
 					{
@@ -2424,10 +2424,10 @@ public class DBUtil extends SQLUtil implements Serializable {
 					}
 //					log.info("Add Batch Statement:" + sql);
 		
-					// Ö´ĞĞstatementµÄÌí¼ÓÅú´¦ÀíÃüÁî
+					// æ‰§è¡Œstatementçš„æ·»åŠ æ‰¹å¤„ç†å‘½ä»¤
 		
 					batchStmt.addBatch(sql);
-					// Èç¹ûsqlÎªinsertÓï¾ä²¢ÇÒÓĞĞÂµÄÖ÷¼üÖµÉú³É£¬Ôò±£´æ¸ÃÖ÷¼üÖµ
+					// å¦‚æœsqlä¸ºinsertè¯­å¥å¹¶ä¸”æœ‰æ–°çš„ä¸»é”®å€¼ç”Ÿæˆï¼Œåˆ™ä¿å­˜è¯¥ä¸»é”®å€¼
 					if (objs[1] != null ) {
 						batchResult.add(objs[1]);
 					}
@@ -2443,7 +2443,7 @@ public class DBUtil extends SQLUtil implements Serializable {
 					{
 						log.debug("Execute JDBC batch statement:"+sql);
 					}
-					// Ö´ĞĞstatementµÄÌí¼ÓÅú´¦ÀíÃüÁî		
+					// æ‰§è¡Œstatementçš„æ·»åŠ æ‰¹å¤„ç†å‘½ä»¤		
 					batchStmt.addBatch(sql);
 				}
 			}	
@@ -2455,7 +2455,7 @@ public class DBUtil extends SQLUtil implements Serializable {
 			{
 				if (batchUpdateSqls.size() > 0)
 					updateTableInfo(batchUpdateSqls,stmtInfo.getCon());
-				// Èç¹ûÖ´ĞĞµÄÊÇÊı¾İ¿â²åÈë²Ù×÷£¬¶øÇÒ×Ô¶¯Éú³ÉÊı¾İ¿â±íµÄÖ÷¼ü£¬Ôò·µ»ØËùÓĞµÄ²åÈë²Ù×÷µÄÖ÷¼ü
+				// å¦‚æœæ‰§è¡Œçš„æ˜¯æ•°æ®åº“æ’å…¥æ“ä½œï¼Œè€Œä¸”è‡ªåŠ¨ç”Ÿæˆæ•°æ®åº“è¡¨çš„ä¸»é”®ï¼Œåˆ™è¿”å›æ‰€æœ‰çš„æ’å…¥æ“ä½œçš„ä¸»é”®
 	
 				if (batchResult != null && batchResult.size() > 0) {
 					ret_keys = new Object[batchResult.size()];
@@ -2476,7 +2476,7 @@ public class DBUtil extends SQLUtil implements Serializable {
 				}
 			}
 
-			// Èç¹ûÊÇÊÖ¶¯Ìá½»Êı¾İ¿âÊÂÎñÄ£Ê½£¬ËùÓĞµÄ²Ù×÷Íê³Éºóµ÷ÓÃbatchConÌá½»·½·¨Ìá½»ÊÂÎñ
+			// å¦‚æœæ˜¯æ‰‹åŠ¨æäº¤æ•°æ®åº“äº‹åŠ¡æ¨¡å¼ï¼Œæ‰€æœ‰çš„æ“ä½œå®Œæˆåè°ƒç”¨batchConæäº¤æ–¹æ³•æäº¤äº‹åŠ¡
 
 			stmtInfo.commit();
 		} 
@@ -2532,7 +2532,7 @@ public class DBUtil extends SQLUtil implements Serializable {
 			if(stmtInfo != null)
 				stmtInfo.dofinally();
 			stmtInfo = null;
-			// ÖØÖÃÅú´¦ÀíÖ´ĞĞ±êÊ¶
+			// é‡ç½®æ‰¹å¤„ç†æ‰§è¡Œæ ‡è¯†
 			if(batchSQLS != null)
 				batchSQLS.clear();
 			if (batchResult != null) {
@@ -2548,7 +2548,7 @@ public class DBUtil extends SQLUtil implements Serializable {
 	}
 	
 	/**
-	 * ÔÚÌØ¶¨µÄÊı¾İ¿âºÍÁ´½ÓÉÏÖ´ĞĞÊı¾İ¿âÅú´¦Àí²Ù×÷
+	 * åœ¨ç‰¹å®šçš„æ•°æ®åº“å’Œé“¾æ¥ä¸Šæ‰§è¡Œæ•°æ®åº“æ‰¹å¤„ç†æ“ä½œ
 	 * @param dbname
 	 * @param con
 	 * @return
@@ -3407,7 +3407,7 @@ public class DBUtil extends SQLUtil implements Serializable {
 	}
 
 	/**
-	 * »ñÈ¡Êı¾İ¿â±íµÄÏÂÒ»¸öÖ÷¼üÖµ
+	 * è·å–æ•°æ®åº“è¡¨çš„ä¸‹ä¸€ä¸ªä¸»é”®å€¼
 	 * 
 	 * @param tableName
 	 * @return
@@ -3419,7 +3419,7 @@ public class DBUtil extends SQLUtil implements Serializable {
 	}
 
 	/**
-	 * »ñÈ¡Êı¾İ¿â±íµÄÏÂÒ»¸öÖ÷¼üÖµ
+	 * è·å–æ•°æ®åº“è¡¨çš„ä¸‹ä¸€ä¸ªä¸»é”®å€¼
 	 * 
 	 * @param tableName
 	 * @return
@@ -3432,7 +3432,7 @@ public class DBUtil extends SQLUtil implements Serializable {
 	}
 
 	/**
-	 * »ñÈ¡Êı¾İ¿â±íµÄÏÂÒ»¸öÖ÷¼üÖµ
+	 * è·å–æ•°æ®åº“è¡¨çš„ä¸‹ä¸€ä¸ªä¸»é”®å€¼
 	 * 
 	 * @param tableName
 	 * @return
@@ -3443,7 +3443,7 @@ public class DBUtil extends SQLUtil implements Serializable {
 	}
 
 	/**
-	 * »ñÈ¡Êı¾İ¿â±íµÄÏÂÒ»¸öÖ÷¼üÖµ
+	 * è·å–æ•°æ®åº“è¡¨çš„ä¸‹ä¸€ä¸ªä¸»é”®å€¼
 	 * 
 	 * @param tableName
 	 * @return
@@ -3471,7 +3471,7 @@ public class DBUtil extends SQLUtil implements Serializable {
 	}
 
 	/**
-	 * »ñÈ¡Êı¾İ¿â±íµÄÏÂÒ»¸öÖ÷¼üÖµ
+	 * è·å–æ•°æ®åº“è¡¨çš„ä¸‹ä¸€ä¸ªä¸»é”®å€¼
 	 * 
 	 * @param tableName
 	 * @return
@@ -3484,7 +3484,7 @@ public class DBUtil extends SQLUtil implements Serializable {
 	}
 
 	/**
-	 * »ñÈ¡Êı¾İ¿â±íµÄÏÂÒ»¸öÖ÷¼üÖµ
+	 * è·å–æ•°æ®åº“è¡¨çš„ä¸‹ä¸€ä¸ªä¸»é”®å€¼
 	 * 
 	 * @param tableName
 	 * @return
@@ -3497,7 +3497,7 @@ public class DBUtil extends SQLUtil implements Serializable {
 	}
 
 	/**
-	 * »ñÈ¡Êı¾İ¿â±íµÄÏÂÒ»¸öÖ÷¼üÖµ
+	 * è·å–æ•°æ®åº“è¡¨çš„ä¸‹ä¸€ä¸ªä¸»é”®å€¼
 	 * 
 	 * @param tableName
 	 * @return
@@ -3508,7 +3508,7 @@ public class DBUtil extends SQLUtil implements Serializable {
 	}
 
 	/**
-	 * »ñÈ¡Êı¾İ¿â±íµÄÏÂÒ»¸öÖ÷¼üÖµ
+	 * è·å–æ•°æ®åº“è¡¨çš„ä¸‹ä¸€ä¸ªä¸»é”®å€¼
 	 * 
 	 * @param tableName
 	 * @return
@@ -3532,7 +3532,7 @@ public class DBUtil extends SQLUtil implements Serializable {
 	}
 	
 	/**
-	 * Ö±½Ó»ñÈ¡ËùÓĞµÄÊı¾İ¿â²éÑ¯½á¹û¼¯£¬ÎŞĞè·â×°¼´¿É¸ø·ÖÒ³ÁĞ±í±êÇ©Õ¹Ê¾
+	 * ç›´æ¥è·å–æ‰€æœ‰çš„æ•°æ®åº“æŸ¥è¯¢ç»“æœé›†ï¼Œæ— éœ€å°è£…å³å¯ç»™åˆ†é¡µåˆ—è¡¨æ ‡ç­¾å±•ç¤º
 	 * @return
 	 */
 	public Record[] getAllResults()
@@ -3776,7 +3776,7 @@ public class DBUtil extends SQLUtil implements Serializable {
 
 	
 	/*********************************************************************************************
-	 * ·ÖÒ³forList
+	 * åˆ†é¡µforList
 	 ********************************************************/
 	
 //	executeSelect(String, String, int)
@@ -3815,7 +3815,7 @@ public class DBUtil extends SQLUtil implements Serializable {
 	
 	
 	/*********************************************************************************************
-	 * ·ÖÒ³for xml
+	 * åˆ†é¡µfor xml
 	 ********************************************************/
 	
 
@@ -4040,7 +4040,7 @@ public class DBUtil extends SQLUtil implements Serializable {
 	
 	
 	/*********************************************************************************************
-	 * ·ÖÒ³forList with handler
+	 * åˆ†é¡µforList with handler
 	 ********************************************************/
 	
 //	executeSelect(String, String, int)
@@ -4087,7 +4087,7 @@ public class DBUtil extends SQLUtil implements Serializable {
 	
 	
 	/*********************************************************************************************
-	 * ·ÖÒ³for xml
+	 * åˆ†é¡µfor xml
 	 ********************************************************/
 	
 	public Serializable getSerializable(int rowid,String fieldname) throws SQLException

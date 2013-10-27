@@ -204,12 +204,12 @@ public class WebDataBinder  {//extends DataBinder {
 		else
 		{
 			Object target = this.getTarget();
-			if(target != null) //¼¯ºÏÖ¸¶¨·ºĞÍÀàĞÍ²¢ÇÒ·ºĞÍÀàĞÍÎªpo¶ÔÏó
+			if(target != null) //é›†åˆæŒ‡å®šæ³›å‹ç±»å‹å¹¶ä¸”æ³›å‹ç±»å‹ä¸ºpoå¯¹è±¡
 			{
 				createTransferObject( request, response, pageContext,
 						 handlerMethod, model,target,messageConverters);
 			}
-			else //¼¯ºÏÖ¸¶¨·ºĞÍÀàĞÍ²¢ÇÒ·ºĞÍÀàĞÍÎª»ù´¡¶ÔÏó£¬»òÕß¼¯ºÏÃ»ÓĞÖ¸¶¨·ºĞÍÀàĞÍ
+			else //é›†åˆæŒ‡å®šæ³›å‹ç±»å‹å¹¶ä¸”æ³›å‹ç±»å‹ä¸ºåŸºç¡€å¯¹è±¡ï¼Œæˆ–è€…é›†åˆæ²¡æœ‰æŒ‡å®šæ³›å‹ç±»å‹
 			{
 				createTransferObject(
 						 request, response, pageContext,
@@ -221,13 +221,13 @@ public class WebDataBinder  {//extends DataBinder {
 //			} catch (Exception e) {
 //				model.getErrors().reject("createTransferObject.getBeanInfo.error",objectType.getCanonicalName() + ":"+e.getMessage());
 ////				throw new PropertyAccessException(new PropertyChangeEvent(whichToVO, "",
-////					     null, null),"»ñÈ¡bean ĞÅÏ¢Ê§°Ü",e);
+////					     null, null),"è·å–bean ä¿¡æ¯å¤±è´¥",e);
 //				return ;
 //			}
-			//µÚÒ»¸öµÄÊ±ºò£¬¼ÆËãtarget¸öÊı
-			//listĞèÒªÇø·Ö´ÓattributeÖĞ»ñÈ¡listºÍsetµÄÇé¿ö£¬ÕâÖÖÇé¿ö²»ĞèÒª½øĞĞ×Ô¶¯Êı¾İ°ó¶¨
-			//µ½ÕâÀïµÄ»°¾ÍÊÇĞèÒªÊı¾İ°ó¶¨µÄ¶ÔÏó¼¯ºÏ,¶ÔÏó¼¯ºÏµÄÊı¾İÄ¿Ç°¿¼ÂÇÖ»´ÓrequestÖĞ»ñÈ¡
-			//ÆäËû
+			//ç¬¬ä¸€ä¸ªçš„æ—¶å€™ï¼Œè®¡ç®—targetä¸ªæ•°
+			//listéœ€è¦åŒºåˆ†ä»attributeä¸­è·å–listå’Œsetçš„æƒ…å†µï¼Œè¿™ç§æƒ…å†µä¸éœ€è¦è¿›è¡Œè‡ªåŠ¨æ•°æ®ç»‘å®š
+			//åˆ°è¿™é‡Œçš„è¯å°±æ˜¯éœ€è¦æ•°æ®ç»‘å®šçš„å¯¹è±¡é›†åˆ,å¯¹è±¡é›†åˆçš„æ•°æ®ç›®å‰è€ƒè™‘åªä»requestä¸­è·å–
+			//å…¶ä»–
 //			int bcount = createTransferObject( request, response, pageContext,
 //					 handlerMethod, model,this.getTarget(),messageConverters);
 			
@@ -237,7 +237,7 @@ public class WebDataBinder  {//extends DataBinder {
 	
 	public static class CallHolder
 	{
-		/**±£³ÖÇëÇóÊı¾İ£¬±ÜÃâÖØ¸´»ñÈ¡*/
+		/**ä¿æŒè¯·æ±‚æ•°æ®ï¼Œé¿å…é‡å¤è·å–*/
 		private Map<String,Object> datas = new HashMap<String,Object>();
 		
 		
@@ -245,7 +245,7 @@ public class WebDataBinder  {//extends DataBinder {
 		private boolean isCollection;
 		
 		
-		/**ºÍµ±Ç°¼ÇÂ¼Ïà¹ØµÄ¼¸¸ö²ÎÊı¶¨Òå¿ªÊ¼*/
+		/**å’Œå½“å‰è®°å½•ç›¸å…³çš„å‡ ä¸ªå‚æ•°å®šä¹‰å¼€å§‹*/
 		private int position = 0;
 //		private boolean required = false;
 //		private EditorInf editor = null;
@@ -253,7 +253,7 @@ public class WebDataBinder  {//extends DataBinder {
 		private Map<String,Boolean> isrequired = new HashMap<String,Boolean>();
 		private Map<String,EditorInf> editors = new HashMap<String,EditorInf>();
 		/**
-		 * ¼ÇÂ¼ÊôĞÔµÄÈÕÆÚ¸ñÊ½£¬Èç¹ûÖ¸¶¨¾ÍÓĞ£¬Ã»ÓĞÖ¸¶¨¾ÍÎªnull£»
+		 * è®°å½•å±æ€§çš„æ—¥æœŸæ ¼å¼ï¼Œå¦‚æœæŒ‡å®šå°±æœ‰ï¼Œæ²¡æœ‰æŒ‡å®šå°±ä¸ºnullï¼›
 		 */
 		private Map<String,SimpleDateFormat> dateformats = new HashMap<String,SimpleDateFormat>();
 		private Map<String,Object> defaultValues = new HashMap<String,Object>();
@@ -265,7 +265,7 @@ public class WebDataBinder  {//extends DataBinder {
 		}
 		
 		
-//		/**ºÍµ±Ç°¼ÇÂ¼Ïà¹ØµÄ¼¸¸ö²ÎÊı¶¨Òå½áÊø*/
+//		/**å’Œå½“å‰è®°å½•ç›¸å…³çš„å‡ ä¸ªå‚æ•°å®šä¹‰ç»“æŸ*/
 //		
 //		public void initisarray()
 //		{
@@ -423,7 +423,7 @@ public class WebDataBinder  {//extends DataBinder {
 	
 	/**
 	 * added by biaoping.yin 2005.8.13
-	 * ¼¯ºÏ¶ÔÓ¦µÄ·ºĞÍÊÇ»ù´¡Êı¾İÀàĞÍ/Ã¶¾ÙÀàĞÍ/¸½¼şÀàĞÍ »òÕßÃ»ÓĞÖ¸¶¨ÀàĞÍ
+	 * é›†åˆå¯¹åº”çš„æ³›å‹æ˜¯åŸºç¡€æ•°æ®ç±»å‹/æšä¸¾ç±»å‹/é™„ä»¶ç±»å‹ æˆ–è€…æ²¡æœ‰æŒ‡å®šç±»å‹
 	 */
 	public  void createTransferObject(
 			HttpServletRequest request,HttpServletResponse response,PageContext pageContext,
@@ -436,7 +436,7 @@ public class WebDataBinder  {//extends DataBinder {
 //		} catch (Exception e) {
 //			model.getErrors().reject("createTransferObject.getBeanInfo.error",whichToVO.getClass().getCanonicalName() + ":"+e.getMessage());
 ////			throw new PropertyAccessException(new PropertyChangeEvent(whichToVO, "",
-////				     null, null),"»ñÈ¡bean ĞÅÏ¢Ê§°Ü",e);
+////				     null, null),"è·å–bean ä¿¡æ¯å¤±è´¥",e);
 //			return ;
 //		} 
 //		ClassInfo beanInfo = ClassUtil.getClassInfo(whichToVO.getClass());
@@ -444,7 +444,7 @@ public class WebDataBinder  {//extends DataBinder {
 		holder.isCollection =  true;
 		
 
-		if(holder.isCollection)//¼¯ºÏÀàĞÍ£¨List,Map£©,Èç¹ûÃ»ÓĞÊı¾İ¼ÇÂ¼£¬ÔòÖ±½Ó·µ»Ø£¬ĞŞ¸´Ã»ÓĞÊı¾İÇé¿öÏÂ·µ»ØÒ»Ìõ¿Õ¼ÇÂ¼µÄÎÊÌâ
+		if(holder.isCollection)//é›†åˆç±»å‹ï¼ˆList,Mapï¼‰,å¦‚æœæ²¡æœ‰æ•°æ®è®°å½•ï¼Œåˆ™ç›´æ¥è¿”å›ï¼Œä¿®å¤æ²¡æœ‰æ•°æ®æƒ…å†µä¸‹è¿”å›ä¸€æ¡ç©ºè®°å½•çš„é—®é¢˜
 		{
 		
 				
@@ -495,9 +495,9 @@ public class WebDataBinder  {//extends DataBinder {
 	}
 	/**
 	 * added by biaoping.yin 2005.8.13
-	 * ½«mapÖĞ°üº¬µÄÊôĞÔÖµ¸´ÖÆµ½¶ÔÏóÖĞ,¶ÔÓ¦ÊôĞÔµÄÃû³ÆºÍÀàĞÍ±ØĞëÒ»ÖÂ
-	 * @param completeVO ÓĞÊôĞÔÖµµÄmap¶ÔÏó
-	 * @param whichToVO ¿Õ¶ÔÏó
+	 * å°†mapä¸­åŒ…å«çš„å±æ€§å€¼å¤åˆ¶åˆ°å¯¹è±¡ä¸­,å¯¹åº”å±æ€§çš„åç§°å’Œç±»å‹å¿…é¡»ä¸€è‡´
+	 * @param completeVO æœ‰å±æ€§å€¼çš„mapå¯¹è±¡
+	 * @param whichToVO ç©ºå¯¹è±¡
 	 * @param validators 
 	 * @return Object
 	 */
@@ -513,7 +513,7 @@ public class WebDataBinder  {//extends DataBinder {
 //		} catch (Exception e) {
 //			model.getErrors().reject("createTransferObject.getBeanInfo.error",whichToVO.getClass().getCanonicalName() + ":"+e.getMessage());
 ////			throw new PropertyAccessException(new PropertyChangeEvent(whichToVO, "",
-////				     null, null),"»ñÈ¡bean ĞÅÏ¢Ê§°Ü",e);
+////				     null, null),"è·å–bean ä¿¡æ¯å¤±è´¥",e);
 //			return ;
 //		} 
 		ClassInfo beanInfo = ClassUtil.getClassInfo(whichToVO.getClass());
@@ -521,7 +521,7 @@ public class WebDataBinder  {//extends DataBinder {
 		holder.isCollection =  this.isCollection();
 		List<PropertieDescription> attributes = beanInfo.getPropertyDescriptors();		
 		Object mapKey = null;
-		if(holder.isCollection)//¼¯ºÏÀàĞÍ£¨List,Map£©,Èç¹ûÃ»ÓĞÊı¾İ¼ÇÂ¼£¬ÔòÖ±½Ó·µ»Ø£¬ĞŞ¸´Ã»ÓĞÊı¾İÇé¿öÏÂ·µ»ØÒ»Ìõ¿Õ¼ÇÂ¼µÄÎÊÌâ
+		if(holder.isCollection)//é›†åˆç±»å‹ï¼ˆList,Mapï¼‰,å¦‚æœæ²¡æœ‰æ•°æ®è®°å½•ï¼Œåˆ™ç›´æ¥è¿”å›ï¼Œä¿®å¤æ²¡æœ‰æ•°æ®æƒ…å†µä¸‹è¿”å›ä¸€æ¡ç©ºè®°å½•çš„é—®é¢˜
 		{
 			boolean hasdata = false;
 			PropertieDescription property = null;
@@ -621,7 +621,7 @@ public class WebDataBinder  {//extends DataBinder {
 
 					value = HandlerUtils.buildPropertyValue(property, request, response, pageContext, 
 							handlerMethod, model, messageConverters, holder,whichToVO.getClass());
-					if(this.mapKeyName != null && this.mapKeyName.equals(property.getName()))//Èç¹ûÊÇmap¶ÔÏó°ó¶¨£¬ÔòĞèÒªÉèÖÃmap keyµÄÖµ
+					if(this.mapKeyName != null && this.mapKeyName.equals(property.getName()))//å¦‚æœæ˜¯mapå¯¹è±¡ç»‘å®šï¼Œåˆ™éœ€è¦è®¾ç½®map keyçš„å€¼
 						mapKey = ValueObjectUtil.typeCast(value, this.mapKeyType);
 //					writeMethod.invoke(whichToVO, new Object[]{value});
 					property.setValue(whichToVO, value);
@@ -632,17 +632,17 @@ public class WebDataBinder  {//extends DataBinder {
 					model.getErrors().rejectValue(property.getName(), "buildPropertyValue.error", String.valueOf(value),property.getPropertyType(),null);
 //						return ValueObjectUtil.getDefaultValue(property.getPropertyType());
 //						throw new PropertyAccessException(new PropertyChangeEvent(whichToVO, property.getName(),
-//							     null,null),"ÉèÖÃÊôĞÔÊ§°Ü",e);
+//							     null,null),"è®¾ç½®å±æ€§å¤±è´¥",e);
 				} catch (IllegalAccessException e) {
 					
 //						throw new PropertyAccessException(new PropertyChangeEvent(whichToVO, property.getName(),
-//							     null, null),"ÉèÖÃÊôĞÔÊ§°Ü",e);
+//							     null, null),"è®¾ç½®å±æ€§å¤±è´¥",e);
 //						model.getErrors().rejectValue(property.getName(), "buildPropertyValue.error",e.getMessage());
 					model.getErrors().rejectValue(property.getName(), "buildPropertyValue.error", String.valueOf(value),property.getPropertyType(),null);
 				} catch (InvocationTargetException e) {
 					
 //						throw new PropertyAccessException(new PropertyChangeEvent(whichToVO, property.getName(),
-//							     null, null),"ÉèÖÃÊôĞÔÊ§°Ü",e);
+//							     null, null),"è®¾ç½®å±æ€§å¤±è´¥",e);
 //						model.getErrors().rejectValue(property.getName(), "buildPropertyValue.error",e.getMessage());
 					model.getErrors().rejectValue(property.getName(), "buildPropertyValue.error", String.valueOf(value),property.getPropertyType(),null);
 				} catch (Exception e) {
@@ -749,17 +749,17 @@ public class WebDataBinder  {//extends DataBinder {
 	private Object getTarget() throws Exception {
 		if(this.targetContainer == null && this.targetMapContainer == null)
 			return target;
-		else if(objectType != null )//Ó¦¸ÃÃ»ÓĞÎÊÌâ
+		else if(objectType != null )//åº”è¯¥æ²¡æœ‰é—®é¢˜
 		{
 			if(!ValueObjectUtil.isPrimaryType(objectType) 
 					&& !HandlerUtils.isMultipartFile(objectType))
 				return HandlerUtils.newCommandObject(objectType);
-			else //¼¯ºÏ¶ÔÓ¦µÄ·ºĞÍÊÇ»ù´¡Êı¾İÀàĞÍ/Ã¶¾ÙÀàĞÍ/¸½¼şÀàĞÍ
+			else //é›†åˆå¯¹åº”çš„æ³›å‹æ˜¯åŸºç¡€æ•°æ®ç±»å‹/æšä¸¾ç±»å‹/é™„ä»¶ç±»å‹
 			{
 				return null;
 			}
 		}
-		else //ÊÇ¼¯ºÏµ«ÊÇ¼¯ºÏÃ»ÓĞÖ¸¶¨·ºĞÍ
+		else //æ˜¯é›†åˆä½†æ˜¯é›†åˆæ²¡æœ‰æŒ‡å®šæ³›å‹
 		{
 			return null;
 		}

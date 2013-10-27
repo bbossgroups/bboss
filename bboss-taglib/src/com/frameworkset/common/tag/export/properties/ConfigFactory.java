@@ -46,7 +46,7 @@ import org.xml.sax.SAXException;
 public class ConfigFactory {
 	private static Configture configture;
 	/**
-	 * 是否强制从xml中读取信配置信息
+	 * 鏄惁寮哄埗浠巟ml涓鍙栦俊閰嶇疆淇℃伅
 	 * @param force
 	 * @return Configture
 	 */

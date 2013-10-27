@@ -26,7 +26,7 @@ import java.lang.reflect.Method;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2009-10-8 ÏÂÎç10:56:19
+ * @Date 2009-10-8 ä¸‹åˆ10:56:19
  * @author biaoping.yin
  * @version 1.0
  */

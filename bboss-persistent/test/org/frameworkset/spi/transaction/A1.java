@@ -81,7 +81,7 @@ public class A1 implements AI{
 	}
 	
 	/**
-	 * Ö»ÒªÅ×³öÒì³££¬ÊÂÎñ¾Í»Ø¹ö
+	 * åªè¦æŠ›å‡ºå¼‚å¸¸ï¼Œäº‹åŠ¡å°±å›æ»š
 	 */
 	public String testTXInvokeWithException() throws Exception {
 		System.out.println("call A1.testTXInvokeWithException()");
@@ -132,19 +132,19 @@ public class A1 implements AI{
 	}
 
 	public int testInt(int i) {
-		System.out.println("call A1.testInt(int i)£º" + i);
+		System.out.println("call A1.testInt(int i)ï¼š" + i);
 		return i;
 		
 	}
 	
 	public int testIntNoTX(int i) {
-		System.out.println("call A1.testIntNoTX(int i)£º" + i);
+		System.out.println("call A1.testIntNoTX(int i)ï¼š" + i);
 		return i;		
 	}
 	
 	/**
-	 * »ìºÏÒì³£²âÊÔ£¬¼´°üº¬ÊµÀıÒì³££¬Ò²°üº¬×ÓÀàºÍÊµÀıÒì³£
-	 * ËùÓĞµÄÒì³£¶¼½«µ¼ÖÂÊÂÎñ»Ø¹ö
+	 * æ··åˆå¼‚å¸¸æµ‹è¯•ï¼Œå³åŒ…å«å®ä¾‹å¼‚å¸¸ï¼Œä¹ŸåŒ…å«å­ç±»å’Œå®ä¾‹å¼‚å¸¸
+	 * æ‰€æœ‰çš„å¼‚å¸¸éƒ½å°†å¯¼è‡´äº‹åŠ¡å›æ»š
 	 */
 	public void testTXWithSpecialExceptions(String type) throws Exception
 	{
@@ -152,25 +152,25 @@ public class A1 implements AI{
 		DBUtil db = new DBUtil();
 		String id = db.getNextStringPrimaryKey("test");
 		db.executeInsert("insert into test(id,name) values('"+id+"','testTXWithSpecialExceptions("+type+")')");	
-		//ÊÂÎñ»Ø¹ö
+		//äº‹åŠ¡å›æ»š
 		if(type.equals("IMPLEMENTS"))
 		{
 			throw new RollbackInstanceofException("IMPLEMENTS RollbackInstanceofException");
 		}
 		
-		//ÊÂÎñ»Ø¹ö
+		//äº‹åŠ¡å›æ»š
 		if(type.equals("INSTANCEOF"))
 		{
 			throw new SubRollbackInstanceofException("INSTANCEOF RollbackInstanceofException");
 		}
 		
-		//ÊÂÎñ»Ø¹ö
+		//äº‹åŠ¡å›æ»š
 		if(type.equals("exception1"))
 		{
 			throw new Exception1("IMPLEMENTS exception1");
 		}
 		/**
-		 * ÊÂÎñ²»»á»Ø¹ö£¬Ã»ÓĞ½øĞĞÅäÖÃ
+		 * äº‹åŠ¡ä¸ä¼šå›æ»šï¼Œæ²¡æœ‰è¿›è¡Œé…ç½®
 		 */
 		if(type.equals("notxexception"))
 		{
@@ -180,7 +180,7 @@ public class A1 implements AI{
 	}
 	
 	/**
-	 * Ö»ÒªÊÇÌØ¶¨ÊµÀıµÄÒì³£¾Í»á»Ø¹ö
+	 * åªè¦æ˜¯ç‰¹å®šå®ä¾‹çš„å¼‚å¸¸å°±ä¼šå›æ»š
 	 * @param type
 	 * @throws Exception
 	 */
@@ -191,19 +191,19 @@ public class A1 implements AI{
 		String id = db.getNextStringPrimaryKey("test");
 		db.executeInsert("insert into test(id,name) values('"+id+"','testTXWithInstanceofExceptions(" + type + ")')");
 		
-		//ÊÂÎñ»Ø¹ö
+		//äº‹åŠ¡å›æ»š
 		if(type.equals("IMPLEMENTS"))
 		{
 			throw new RollbackInstanceofException("IMPLEMENTS RollbackInstanceofException");
 		}
 		
-		//ÊÂÎñ»Ø¹ö
+		//äº‹åŠ¡å›æ»š
 		if(type.equals("INSTANCEOF"))
 		{
 			throw new SubRollbackInstanceofException("INSTANCEOF RollbackInstanceofException");
 		}
 		/**
-		 * ÊÂÎñ²»»á»Ø¹ö£¬Ìá½»
+		 * äº‹åŠ¡ä¸ä¼šå›æ»šï¼Œæäº¤
 		 */
 		if(type.equals("notxexception"))
 		{
@@ -212,7 +212,7 @@ public class A1 implements AI{
 	}
 	
 	/**
-	 * Ö»ÓĞÒì³£±¾ÉíµÄÊµÀıÒì³£²Å´¥·¢ÊÂÎñµÄ»Ø¹ö
+	 * åªæœ‰å¼‚å¸¸æœ¬èº«çš„å®ä¾‹å¼‚å¸¸æ‰è§¦å‘äº‹åŠ¡çš„å›æ»š
 	 * @param type
 	 * @throws Exception
 	 */
@@ -222,19 +222,19 @@ public class A1 implements AI{
 		DBUtil db = new DBUtil();
 		String id = db.getNextStringPrimaryKey("test");
 		db.executeInsert("insert into test(id,name) values('"+id+"','testTXWithImplementsofExceptions(" + type + ")')");
-		//ÊÂÎñ»Ø¹ö
+		//äº‹åŠ¡å›æ»š
 		if(type.equals("IMPLEMENTS"))
 		{
 			throw new RollbackInstanceofException("IMPLEMENTS RollbackInstanceofException");
 		}
 		
-		//ÊÂÎñ²»»á»Ø¹ö£¬Ìá½»
+		//äº‹åŠ¡ä¸ä¼šå›æ»šï¼Œæäº¤
 		if(type.equals("INSTANCEOF"))
 		{
 			throw new SubRollbackInstanceofException("INSTANCEOF RollbackInstanceofException");
 		}
 		/**
-		 * ÊÂÎñ²»»á»Ø¹ö£¬Ìá½»
+		 * äº‹åŠ¡ä¸ä¼šå›æ»šï¼Œæäº¤
 		 */
 		if(type.equals("notxexception"))
 		{
@@ -247,19 +247,19 @@ public class A1 implements AI{
 		DBUtil db = new DBUtil();
 		String id = db.getNextStringPrimaryKey("test");
 		db.executeInsert("insert into test(id,name) values('"+id+"','testPatternTX1(" + type + ")')");
-		//ÊÂÎñ»Ø¹ö
+		//äº‹åŠ¡å›æ»š
 		if(type.equals("IMPLEMENTS"))
 		{
 			throw new RollbackInstanceofException("IMPLEMENTS RollbackInstanceofException");
 		}
 		
-		//ÊÂÎñ²»»á»Ø¹ö£¬Ìá½»
+		//äº‹åŠ¡ä¸ä¼šå›æ»šï¼Œæäº¤
 		if(type.equals("INSTANCEOF"))
 		{
 			throw new SubRollbackInstanceofException("INSTANCEOF RollbackInstanceofException");
 		}
 		/**
-		 * ÊÂÎñ²»»á»Ø¹ö£¬Ìá½»
+		 * äº‹åŠ¡ä¸ä¼šå›æ»šï¼Œæäº¤
 		 */
 		if(type.equals("notxexception"))
 		{
@@ -272,19 +272,19 @@ public class A1 implements AI{
 		DBUtil db = new DBUtil();
 		String id = db.getNextStringPrimaryKey("test");
 		db.executeInsert("insert into test(id,name) values('"+id+"','testPatternTX2(" + type + ")')");
-		//ÊÂÎñ»Ø¹ö
+		//äº‹åŠ¡å›æ»š
 		if(type.equals("IMPLEMENTS"))
 		{
 			throw new RollbackInstanceofException("IMPLEMENTS RollbackInstanceofException");
 		}
 		
-		//ÊÂÎñ²»»á»Ø¹ö£¬Ìá½»
+		//äº‹åŠ¡ä¸ä¼šå›æ»šï¼Œæäº¤
 		if(type.equals("INSTANCEOF"))
 		{
 			throw new SubRollbackInstanceofException("INSTANCEOF RollbackInstanceofException");
 		}
 		/**
-		 * ÊÂÎñ²»»á»Ø¹ö£¬Ìá½»
+		 * äº‹åŠ¡ä¸ä¼šå›æ»šï¼Œæäº¤
 		 */
 		if(type.equals("notxexception"))
 		{
@@ -297,19 +297,19 @@ public class A1 implements AI{
 		DBUtil db = new DBUtil();
 		String id = db.getNextStringPrimaryKey("test");
 		db.executeInsert("insert into test(id,name) values('"+id+"','testPatternTX3(" + type + ")')");
-		//ÊÂÎñ»Ø¹ö
+		//äº‹åŠ¡å›æ»š
 		if(type.equals("IMPLEMENTS"))
 		{
 			throw new RollbackInstanceofException("IMPLEMENTS RollbackInstanceofException");
 		}
 		
-		//ÊÂÎñ²»»á»Ø¹ö£¬Ìá½»
+		//äº‹åŠ¡ä¸ä¼šå›æ»šï¼Œæäº¤
 		if(type.equals("INSTANCEOF"))
 		{
 			throw new SubRollbackInstanceofException("INSTANCEOF RollbackInstanceofException");
 		}
 		/**
-		 * ÊÂÎñ²»»á»Ø¹ö£¬Ìá½»
+		 * äº‹åŠ¡ä¸ä¼šå›æ»šï¼Œæäº¤
 		 */
 		if(type.equals("notxexception"))
 		{
@@ -321,19 +321,19 @@ public class A1 implements AI{
 		DBUtil db = new DBUtil();
 		String id = db.getNextStringPrimaryKey("test");
 		db.executeInsert("insert into test(id,name) values('"+id+"','testPatternTX4(" + type + ")')");
-		//ÊÂÎñ»Ø¹ö
+		//äº‹åŠ¡å›æ»š
 		if(type.equals("IMPLEMENTS"))
 		{
 			throw new RollbackInstanceofException("IMPLEMENTS RollbackInstanceofException");
 		}
 		
-		//ÊÂÎñ²»»á»Ø¹ö£¬Ìá½»
+		//äº‹åŠ¡ä¸ä¼šå›æ»šï¼Œæäº¤
 		if(type.equals("INSTANCEOF"))
 		{
 			throw new SubRollbackInstanceofException("INSTANCEOF RollbackInstanceofException");
 		}
 		/**
-		 * ÊÂÎñ²»»á»Ø¹ö£¬Ìá½»
+		 * äº‹åŠ¡ä¸ä¼šå›æ»šï¼Œæäº¤
 		 */
 		if(type.equals("notxexception"))
 		{
@@ -342,22 +342,22 @@ public class A1 implements AI{
 	}
 	
 	/**
-	 * Õë¶ÔÏµÍ³¼¶±ğµÄÒì³££¬ÊÂÎñ×Ô¶¯»Ø¹ö
-	 * ±¾·½·¨ÉùÃ÷ÁËÊÂÎñ»Ø¹öÒì³£
+	 * é’ˆå¯¹ç³»ç»Ÿçº§åˆ«çš„å¼‚å¸¸ï¼Œäº‹åŠ¡è‡ªåŠ¨å›æ»š
+	 * æœ¬æ–¹æ³•å£°æ˜äº†äº‹åŠ¡å›æ»šå¼‚å¸¸
 	 * <method name="testSystemException">	
 				<rollbackexceptions>
 					<exception class="org.frameworkset.spi.transaction.RollbackInstanceofException" 
 					type="IMPLEMENTS"/>
 				</rollbackexceptions>
 			</method>
-			·½·¨ÖĞÅ×³öÁËÏµÍ³¼¶±ğµÄ¿ÕÖ¸ÕëÒì³££¬½«µ¼ÖÂÊÂÎñ»Ø¹ö
+			æ–¹æ³•ä¸­æŠ›å‡ºäº†ç³»ç»Ÿçº§åˆ«çš„ç©ºæŒ‡é’ˆå¼‚å¸¸ï¼Œå°†å¯¼è‡´äº‹åŠ¡å›æ»š
 	 */
 	public void testSystemException() throws Exception
 	{
 		DBUtil db = new DBUtil();
 		String id = db.getNextStringPrimaryKey("test");
 		db.executeInsert("insert into test(id,name) values('"+id+"','testSystemException()')");
-//		throw new java.lang.NullPointerException("¿ÕÖ¸ÕëÒì³£¡£ÊÂÎñ»Ø¹ö");
+//		throw new java.lang.NullPointerException("ç©ºæŒ‡é’ˆå¼‚å¸¸ã€‚äº‹åŠ¡å›æ»š");
 		
 	}
 

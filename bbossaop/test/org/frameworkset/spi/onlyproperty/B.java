@@ -21,7 +21,7 @@ package org.frameworkset.spi.onlyproperty;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2012-1-5 ÏÂÎç5:02:30
+ * @Date 2012-1-5 ä¸‹åˆ5:02:30
  * @author biaoping.yin
  * @version 1.0
  */

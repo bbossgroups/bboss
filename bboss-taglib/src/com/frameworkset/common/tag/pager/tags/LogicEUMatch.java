@@ -35,8 +35,8 @@ package com.frameworkset.common.tag.pager.tags;
 import com.frameworkset.util.ValueObjectUtil;
 
 /**
- * ÅĞ¶Ïµ±Ç°ÁĞµÄÖµÊÇ·ñ´óÓÚµÈÓÚvalueÊôĞÔÖ¸¶¨µÄÔ¤ÉèÖµ£¬
- * Èç¹û³ÉÁ¢ÔòÖ´ĞĞ±êÇ©ÌåÄÚÈİ£¬·ñÔòÌø¹ı
+ * åˆ¤æ–­å½“å‰åˆ—çš„å€¼æ˜¯å¦å¤§äºç­‰äºvalueå±æ€§æŒ‡å®šçš„é¢„è®¾å€¼ï¼Œ
+ * å¦‚æœæˆç«‹åˆ™æ‰§è¡Œæ ‡ç­¾ä½“å†…å®¹ï¼Œå¦åˆ™è·³è¿‡
  * @author biaoping.ying
  * @version 1.0
  *  2004-9-15
@@ -44,7 +44,7 @@ import com.frameworkset.util.ValueObjectUtil;
 public class LogicEUMatch extends MatchTag {
 
 	/**
-	 *  Description: ´óÓÚµÈÓÚ
+	 *  Description: å¤§äºç­‰äº
 	 * @return boolean
 	 * @see com.frameworkset.common.tag.pager.tags.MatchTag#match()
 	 */

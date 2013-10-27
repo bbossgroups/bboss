@@ -13,10 +13,10 @@ import org.apache.catalina.websocket.StreamInbound;
 import org.apache.catalina.websocket.WsOutbound;
 
 /**
- * Tomcat7 WebSocketµÄº††Î‘ªÓÃ, WebSocketµÄservlet½Ó¿Ú¼¯³É×ÔwebSocketServlet,ÊµÖÊÎªSerlet
- * <p>¹¦ÄÜÃèÊö,¸Ã²¿·Ö±ØĞëÒÔÖĞÎÄ¾äºÅ½áÎ²¡£<p>
+ * Tomcat7 WebSocketçš„ç°¡å–®æ‡‰ç”¨, WebSocketçš„servletæ¥å£é›†æˆè‡ªwebSocketServlet,å®è´¨ä¸ºSerlet
+ * <p>åŠŸèƒ½æè¿°,è¯¥éƒ¨åˆ†å¿…é¡»ä»¥ä¸­æ–‡å¥å·ç»“å°¾ã€‚<p>
  *
- * ´´½¨ÈÕÆÚ  2013-7-21<br>
+ * åˆ›å»ºæ—¥æœŸ  2013-7-21<br>
  * @author  longgangbai <br>
  * @version $Revision$ $Date$
  * @since   3.0.0
@@ -54,18 +54,18 @@ public class WebSocketServlet extends
 //                logger.info(";web socket Received : !"+buff.remaining());
             	String msg = buff.toString();
                 logger.info("buff.toString();"+msg);
-                //getWsOutbound¿ÉÒÔ·µ»Øµ±Ç°µÄWsOutbound,Í¨¹ıËûÏò¿Í»§¶Ë·µ»ØÊı¾İ,ÕâÀï²ÉÓÃnioµÄCharBuffer
+                //getWsOutboundå¯ä»¥è¿”å›å½“å‰çš„WsOutbound,é€šè¿‡ä»–å‘å®¢æˆ·ç«¯è¿”å›æ•°æ®,è¿™é‡Œé‡‡ç”¨nioçš„CharBuffer
 //                for (int j = 0; j < 50; j++) 
 //                {
 //                    try {
 //                        Thread.sleep(2000);
-//                        this.getWsOutbound().writeTextMessage(CharBuffer.wrap("¶à¶à"));
+//                        this.getWsOutbound().writeTextMessage(CharBuffer.wrap("å¤šå¤š"));
 //                    } catch (InterruptedException e) {
 //                        // TODO Auto-generated catch block
 //                        e.printStackTrace();
 //                    }
 //                }
-                this.getWsOutbound().writeTextMessage(CharBuffer.wrap("¶à¶à:"+msg));
+                this.getWsOutbound().writeTextMessage(CharBuffer.wrap("å¤šå¤š:"+msg));
                 
             }
             

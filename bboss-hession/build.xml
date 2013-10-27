@@ -36,7 +36,7 @@
 
 	<target name="compile-frameworkset-hessian" description="compile the bboss-hessian source ">
 		<echo>compile the frameworkset-hessian source ...</echo>
-		<javac destdir="classes-bboss-hessian" target="1.5" source="1.5" deprecation="true" debug="${debug}" optimize="${optimize}" memorymaximumsize="256M" fork="true" verbose="yes">
+		<javac encoding="UTF-8" destdir="classes-bboss-hessian" target="1.5" source="1.5" deprecation="true" debug="${debug}" optimize="${optimize}" memorymaximumsize="256M" fork="true" verbose="yes">
 			<src path="src" />
 			
 			
@@ -66,7 +66,7 @@
 		<echo>compile the frameworkset-hessian source ...</echo>
 		<delete dir="classes-bboss-hessian" />
 		<mkdir dir="classes-bboss-hessian" />
-		<javac destdir="classes-bboss-hessian" target="1.5" source="1.5" deprecation="true" debug="${debug}" optimize="${optimize}" memorymaximumsize="256M" fork="true" verbose="yes">
+		<javac encoding="UTF-8" destdir="classes-bboss-hessian" target="1.5" source="1.5" deprecation="true" debug="${debug}" optimize="${optimize}" memorymaximumsize="256M" fork="true" verbose="yes">
 			<src path="test" />
 			
 			

@@ -22,7 +22,7 @@ package com.frameworkset.common.poolman.interceptor;
  * <p>Description: </p>
  *
  * <p>Copyright: Copyright (c) 2007</p>
- * @Date 2010-7-7 œ¬ŒÁ03:30:51
+ * @Date 2010-7-7 ‰∏ãÂçà03:30:51
  * @author biaoping.yin
  * @version 1.0
  */

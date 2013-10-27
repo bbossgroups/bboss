@@ -1,32 +1,32 @@
-<?xml version="1.0" encoding="gbk"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <properties>
 	<property name="test1" class="org.frameworkset.spi.properties.loopinject.Test1">
 		<property name="test2" class="org.frameworkset.spi.properties.loopinject.Test2">
-		    <!--ÄÚ²¿×é¼þtest2µÄtest1ÊôÐÔÒýÓÃÍâ²ã×é¼þtest1-->		
+		    <!--å†…éƒ¨ç»„ä»¶test2çš„test1å±žæ€§å¼•ç”¨å¤–å±‚ç»„ä»¶test1-->		
 			<property name="test1" refid="attr:test1" />
-			<!--ÄÚ²¿×é¼þtest2µÄtest3ÊôÐÔÒýÓÃÍâ²ã×é¼þtest1µÄtest3ÊôÐÔ-->
+			<!--å†…éƒ¨ç»„ä»¶test2çš„test3å±žæ€§å¼•ç”¨å¤–å±‚ç»„ä»¶test1çš„test3å±žæ€§-->
 			<property name="test3" refid="attr:test1->test3" />
 		</property>
-		<!--ÄÚ²¿×é¼þtest3µÄtest2ÊôÐÔÒýÓÃÍâ²ã×é¼þtest1µÄtest2ÊôÐÔ-->
+		<!--å†…éƒ¨ç»„ä»¶test3çš„test2å±žæ€§å¼•ç”¨å¤–å±‚ç»„ä»¶test1çš„test2å±žæ€§-->
 		<property name="test3" class="org.frameworkset.spi.properties.loopinject.Test3"
 			f:test2="attr:test1->test2"/>
-		<!--test4ÊôÐÔÖ±½ÓÒýÓÃÍâ²ã×é¼þtest1-->
+		<!--test4å±žæ€§ç›´æŽ¥å¼•ç”¨å¤–å±‚ç»„ä»¶test1-->
 		<property name="test4" refid="attr:test1"/>
 		<property name="testmap" >
 			<map componentType="bean">
-			    <!--MapÀàÐÍÊôÐÔtestmapµÄtest4Ë÷Òý¶ÔÓ¦µÄÖµÊÇ¶ÔÍâ²ã×é¼þtest1ÒýÓÃ-->
+			    <!--Mapç±»åž‹å±žæ€§testmapçš„test4ç´¢å¼•å¯¹åº”çš„å€¼æ˜¯å¯¹å¤–å±‚ç»„ä»¶test1å¼•ç”¨-->
 				<property name="test4" refid="attr:test1"/>
 			</map>
 		</property>
 		<property name="testlist" >
 			<list componentType="bean">
-			 <!--ListÀàÐÍÊôÐÔtestlistµÄµÚÒ»¸öÖµÊÇ¶ÔÍâ²ã×é¼þtest1ÒýÓÃ-->
+			 <!--Listç±»åž‹å±žæ€§testlistçš„ç¬¬ä¸€ä¸ªå€¼æ˜¯å¯¹å¤–å±‚ç»„ä»¶test1å¼•ç”¨-->
 				<property refid="attr:test1"/>
 			</list>
 		</property>
 		<property name="testarray" >
 			<array componentType="org.frameworkset.spi.properties.loopinject.Test1">
-				<!--Êý×éÀàÐÍÊôÐÔtestlistµÄµÚÒ»¸öÖµÊÇ¶ÔÍâ²ã×é¼þtest1ÒýÓÃ-->
+				<!--æ•°ç»„ç±»åž‹å±žæ€§testlistçš„ç¬¬ä¸€ä¸ªå€¼æ˜¯å¯¹å¤–å±‚ç»„ä»¶test1å¼•ç”¨-->
 				<property refid="attr:test1"/>
 			</array>
 		</property>

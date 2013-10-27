@@ -42,31 +42,31 @@ public class Map2ndConverTagController
 		Map<String,TestBean> mapbeans = new HashMap<String,TestBean>();
 		bean = new TestBean();
 		bean.setId("uuid");
-		bean.setName("多多");
+		bean.setName("澶氬");
 		mapbeans.put(bean.getId(),bean);
 		
 		bean = new TestBean();
 		bean.setId("uuid1");
-		bean.setName("多多1");
+		bean.setName("澶氬1");
 		mapbeans.put(bean.getId(),bean);
 		bean = new TestBean();
 		bean.setId("uuid2");
-		bean.setName("多多2");
+		bean.setName("澶氬2");
 		mapbeans.put(bean.getId(),bean);
 		model.addAttribute("mapbeans",mapbeans);
 		
 		Map<String,String> mapstrings = new HashMap<String,String>();
-		mapstrings.put("id1","多多1");
-		mapstrings.put("id2","多多2");
-		mapstrings.put("id3","多多3");
-		mapstrings.put("id4","多多4");
+		mapstrings.put("id1","澶氬1");
+		mapstrings.put("id2","澶氬2");
+		mapstrings.put("id3","澶氬3");
+		mapstrings.put("id4","澶氬4");
 		model.addAttribute("mapstrings",mapstrings);
 		
 		org.frameworkset.web.demo.User user = new org.frameworkset.web.demo.User();
 		user.setUserId(1);
 		user.setUserName("duoduo");
 		java.util.Map beanmapdata = new HashMap();
-		beanmapdata.put("duoduo","多多");
+		beanmapdata.put("duoduo","澶氬");
 		model.addAttribute("beanmapdata",beanmapdata);
 		model.addAttribute("beandata",user);
 		return "path:testmap";

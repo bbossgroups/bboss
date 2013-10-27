@@ -36,7 +36,7 @@ import javax.servlet.jsp.tagext.TagExtraInfo;
 import javax.servlet.jsp.tagext.VariableInfo;
 
 /**
- * µ¼³ö±äÁ¿
+ * å¯¼å‡ºå˜é‡
  * @author biaoping.yin
  * created on 2005-3-30
  * version 1.0
@@ -44,7 +44,7 @@ import javax.servlet.jsp.tagext.VariableInfo;
 public class PagerDataSetExtraInfo extends TagExtraInfo {
     public VariableInfo[] getVariableInfo(TagData tagData)
     {
-        Object declareo = tagData.getAttribute("declare");//Õâ¸öÊôĞÔÖ»ÓĞÔÚ±êÇ©ÉÏ£¬²Å»áÓĞÖµ
+        Object declareo = tagData.getAttribute("declare");//è¿™ä¸ªå±æ€§åªæœ‰åœ¨æ ‡ç­¾ä¸Šï¼Œæ‰ä¼šæœ‰å€¼
         
 //        if(true)
 //        	return null;

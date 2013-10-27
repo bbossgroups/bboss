@@ -8,7 +8,7 @@ import javax.servlet.jsp.JspException;
  * <p>Title: TextParamTag</p>
  *
  * <p>
- * Description: ÉÏÏÂ·­Ò³Ê±£¬±£´æÒ³Ãæ²ÎÊı
+ * Description: ä¸Šä¸‹ç¿»é¡µæ—¶ï¼Œä¿å­˜é¡µé¢å‚æ•°
  * </p>
  *
  * <p>Copyright: Copyright (c) 2005</p>
@@ -19,13 +19,13 @@ import javax.servlet.jsp.JspException;
  * @version 1.0
  */
 public class TextParamTag extends TextSupportTag {
-    /**²ÎÊıÃû³Æ*/
+    /**å‚æ•°åç§°*/
     private String name;
-    /**²ÎÊıÖµ*/
+    /**å‚æ•°å€¼*/
     private String value;
-    /**²ÎÊıÊôĞÔÃû³Æ*/
+    /**å‚æ•°å±æ€§åç§°*/
     private String attribute;
-    /**request²ÎÊıÃû³Æ*/
+    /**requestå‚æ•°åç§°*/
     private String parameter;
 
     public static void main(String[] args) {

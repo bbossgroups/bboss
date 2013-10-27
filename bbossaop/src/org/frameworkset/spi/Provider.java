@@ -19,18 +19,18 @@ package org.frameworkset.spi;
 /**
  * <p>Title: </p>
  *
- * <p>Description: ³éÏó·şÎñÌá¹©Õß£¬°üº¬·şÎñÌá¹©ÕßĞÅÏ¢</p>
+ * <p>Description: æŠ½è±¡æœåŠ¡æä¾›è€…ï¼ŒåŒ…å«æœåŠ¡æä¾›è€…ä¿¡æ¯</p>
  *
  * <p>Copyright: Copyright (c) 2006</p>
  *
- * <p>Company: ³¤É³¿Æ´´¼ÆËã»úÏµÍ³¼¯³ÉÓĞÏŞ¹«Ë¾</p>
+ * <p>Company: é•¿æ²™ç§‘åˆ›è®¡ç®—æœºç³»ç»Ÿé›†æˆæœ‰é™å…¬å¸</p>
  *
  * @author biaoping.yin
  * @version 1.0
  */
 public interface Provider{
 //    /**
-//     *·şÎñÌá¹©ÕßĞÅÏ¢
+//     *æœåŠ¡æä¾›è€…ä¿¡æ¯
 //     */
 //    protected SecurityProviderInfo providerInfo;
 //    public void setProviderInfo(SecurityProviderInfo providerInfo) {

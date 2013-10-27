@@ -1,9 +1,9 @@
-<%@ page contentType="text/html; charset=GBK" language="java"%>
+<%@ page contentType="text/html; charset=UTF-8" language="java"%>
 <%@ taglib uri="/WEB-INF/pager-taglib.tld" prefix="pg"%>
 <!-- 
-	batchutil±êÇ©ÊµÏÖÊý¾Ý¿âÅú´¦Àí²Ù×÷
-	statement:Ö¸¶¨Åú´¦ÀíÓï¾ä
-	dbname:Åú´¦ÀíÓï¾äÖ´ÐÐµÄ¶ÔÓ¦µÄÊý¾Ý¿âÁ¬½Ó³ØÃû³Æ£¬ÔÚpoolman.xmlÎÄ¼þÖÐ½øÐÐÅäÖÃ
+	batchutilæ ‡ç­¾å®žçŽ°æ•°æ®åº“æ‰¹å¤„ç†æ“ä½œ
+	statement:æŒ‡å®šæ‰¹å¤„ç†è¯­å¥
+	dbname:æ‰¹å¤„ç†è¯­å¥æ‰§è¡Œçš„å¯¹åº”çš„æ•°æ®åº“è¿žæŽ¥æ± åç§°ï¼Œåœ¨poolman.xmlæ–‡ä»¶ä¸­è¿›è¡Œé…ç½®
 
 	
 -->
@@ -18,7 +18,7 @@
 %>
 <html>
 	<head>
-		<title>²âÊÔÔÚbatchutil±êÇ©ÉÏÖ±½ÓÖ´ÐÐÊý¾Ý¿âÅú´¦Àí²Ù×÷</title>
+		<title>æµ‹è¯•åœ¨batchutilæ ‡ç­¾ä¸Šç›´æŽ¥æ‰§è¡Œæ•°æ®åº“æ‰¹å¤„ç†æ“ä½œ</title>
 	</head>
 	<body>
 		<table>

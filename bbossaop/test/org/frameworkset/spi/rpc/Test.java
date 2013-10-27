@@ -34,7 +34,7 @@ public class Test {
             }
             long e = System.currentTimeMillis();
 
-            System.out.println((e - s) / 1000 + "√Î");
+            System.out.println((e - s) / 1000 + "Áßí");
             
         } catch (SPIException e) {
             // TODO Auto-generated catch block
@@ -65,7 +65,7 @@ public class Test {
         	
 //            long e = System.currentTimeMillis();
 
-//            System.out.println((e - s) / 1000 + "√Î");
+//            System.out.println((e - s) / 1000 + "Áßí");
            
         } catch (SPIException e) {
             // TODO Auto-generated catch block
@@ -88,7 +88,7 @@ public class Test {
                
 //            long e = System.currentTimeMillis();
 
-//            System.out.println((e - s) / 1000 + "√Î");
+//            System.out.println((e - s) / 1000 + "Áßí");
            
         } catch (SPIException e) {
             // TODO Auto-generated catch block
@@ -127,7 +127,7 @@ public class Test {
     	}
     	System.out.println("i=:" + i);
     	end = System.currentTimeMillis();
-        System.out.println("total times:" + (end - start) / 1000 + "√Î");
+        System.out.println("total times:" + (end - start) / 1000 + "Áßí");
     }
     static Object lock = new Object(); 
     static int i = 20;
@@ -185,7 +185,7 @@ public class Test {
             }
             long e = System.currentTimeMillis();
 
-            System.out.println((e - s) / 1000 + "√Î");
+            System.out.println((e - s) / 1000 + "Áßí");
            
         } catch (SPIException e) {
           

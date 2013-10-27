@@ -26,7 +26,7 @@ import org.frameworkset.spi.security.SecurityContext;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2009-10-17 œ¬ŒÁ05:11:41
+ * @Date 2009-10-17 ‰∏ãÂçà05:11:41
  * @author biaoping.yin
  * @version 1.0
  */
@@ -79,7 +79,7 @@ public class RPCTest implements RPCTestInf
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();
 //		}
-		return new O("ooooooooOoo≈∂≈∂");
+		return new O("ooooooooOooÂì¶Âì¶");
 	}
 	
 	public Object getParameter()

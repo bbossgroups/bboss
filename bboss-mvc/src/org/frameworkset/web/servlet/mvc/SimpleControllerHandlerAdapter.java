@@ -59,7 +59,7 @@ public class SimpleControllerHandlerAdapter  implements HandlerAdapter{
 				{
 					if(mav.getView() != null && mav.getView() instanceof AbstractUrlBasedView)
 					{
-						//处理path:类型路径
+						//澶勭悊path:绫诲瀷璺緞
 						AbstractUrlBasedView view = (AbstractUrlBasedView) mav.getView();
 						String url = view.getUrl();
 						if(UrlBasedViewResolver.isPathVariable(url))

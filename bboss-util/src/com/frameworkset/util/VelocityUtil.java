@@ -213,7 +213,7 @@ public class VelocityUtil implements Serializable{
 	    	       }
 	             
 	
-	             //³õÊ¼»¯velocity
+	             //åˆå§‹åŒ–velocity
 	             try { 
 	
 	            	 Velocity.init(pros);
@@ -232,17 +232,17 @@ public class VelocityUtil implements Serializable{
 	             	try {
 	 					Velocity.init("velocity.properties");
 	 					inited = true;
-	 					log.error("Init velocity failed:velocity.properties (ÏµÍ³ÕÒ²»µ½Ö¸¶¨µÄÎÄ¼ş¡£) ¼ì²éclasspathÖĞÊÇ·ñÅäÖÃÕıÈ·:"+ ex.getMessage(),ex) ;
+	 					log.error("Init velocity failed:velocity.properties (ç³»ç»Ÿæ‰¾ä¸åˆ°æŒ‡å®šçš„æ–‡ä»¶ã€‚) æ£€æŸ¥classpathä¸­æ˜¯å¦é…ç½®æ­£ç¡®:"+ ex.getMessage(),ex) ;
 	 				} catch (Exception e) {
 	 					inited = true;
-	 					log.error("Init velocity failed:velocity.properties (ÏµÍ³ÕÒ²»µ½Ö¸¶¨µÄÎÄ¼ş¡£) ¼ì²éclasspathÖĞÊÇ·ñÅäÖÃÕıÈ·:"+ ex.getMessage(),e);
+	 					log.error("Init velocity failed:velocity.properties (ç³»ç»Ÿæ‰¾ä¸åˆ°æŒ‡å®šçš„æ–‡ä»¶ã€‚) æ£€æŸ¥classpathä¸­æ˜¯å¦é…ç½®æ­£ç¡®:"+ ex.getMessage(),e);
 	 				}
 	                
 	             }
 	            
 	         } catch (Exception e) {
 	        	 inited = true;
-	             log.error("Init velocity failed:velocity.properties (ÏµÍ³ÕÒ²»µ½Ö¸¶¨µÄÎÄ¼ş¡£) ¼ì²éclasspathÖĞÊÇ·ñÅäÖÃÕıÈ·:"+ e.getMessage(),e);
+	             log.error("Init velocity failed:velocity.properties (ç³»ç»Ÿæ‰¾ä¸åˆ°æŒ‡å®šçš„æ–‡ä»¶ã€‚) æ£€æŸ¥classpathä¸­æ˜¯å¦é…ç½®æ­£ç¡®:"+ e.getMessage(),e);
 	         }
     	 }
     	 
@@ -280,7 +280,7 @@ public class VelocityUtil implements Serializable{
     }
     
     /**
-     * ×Ö·û´®Ä£°å½âÎö
+     * å­—ç¬¦ä¸²æ¨¡æ¿è§£æ
      * @param context
      * @param templateName
      * @param template
@@ -311,7 +311,7 @@ public class VelocityUtil implements Serializable{
     
     
     /**
-     * ×Ö·û´®Ä£°å½âÎö
+     * å­—ç¬¦ä¸²æ¨¡æ¿è§£æ
      * @param context
      * @param templateName
      * @param template
@@ -341,7 +341,7 @@ public class VelocityUtil implements Serializable{
     
     
     /**
-     * ×Ö·û´®Ä£°å½âÎö
+     * å­—ç¬¦ä¸²æ¨¡æ¿è§£æ
      * @param context
      * @param templateName
      * @param template
@@ -372,7 +372,7 @@ public class VelocityUtil implements Serializable{
     
     
     /**
-     * ×Ö·û´®Ä£°å½âÎö
+     * å­—ç¬¦ä¸²æ¨¡æ¿è§£æ
      * @param context
      * @param templateName
      * @param template
@@ -401,7 +401,7 @@ public class VelocityUtil implements Serializable{
     }
     
     /**
-     * ×Ö·û´®Ä£°å½âÎö
+     * å­—ç¬¦ä¸²æ¨¡æ¿è§£æ
      * @param context
      * @param templateName
      * @param template
@@ -432,7 +432,7 @@ public class VelocityUtil implements Serializable{
     
     
     /**
-     * ×Ö·û´®Ä£°å½âÎö
+     * å­—ç¬¦ä¸²æ¨¡æ¿è§£æ
      * @param context
      * @param templateName
      * @param template
@@ -477,7 +477,7 @@ public class VelocityUtil implements Serializable{
     	
     }
     /**
-     * ×Ö·û´®Ä£°å½âÎö
+     * å­—ç¬¦ä¸²æ¨¡æ¿è§£æ
      * @param context
      * @param templateName
      * @param template
@@ -508,7 +508,7 @@ public class VelocityUtil implements Serializable{
     
     
     /**
-     * ×Ö·û´®Ä£°å½âÎö
+     * å­—ç¬¦ä¸²æ¨¡æ¿è§£æ
      * @param context
      * @param templateName
      * @param template
@@ -538,7 +538,7 @@ public class VelocityUtil implements Serializable{
     
     
     /**
-     * ×Ö·û´®Ä£°å½âÎö
+     * å­—ç¬¦ä¸²æ¨¡æ¿è§£æ
      * @param context
      * @param templateName
      * @param template
@@ -569,7 +569,7 @@ public class VelocityUtil implements Serializable{
     
     
     /**
-     * ×Ö·û´®Ä£°å½âÎö
+     * å­—ç¬¦ä¸²æ¨¡æ¿è§£æ
      * @param context
      * @param templateName
      * @param template
@@ -598,7 +598,7 @@ public class VelocityUtil implements Serializable{
     }
     
     /**
-     * ×Ö·û´®Ä£°å½âÎö
+     * å­—ç¬¦ä¸²æ¨¡æ¿è§£æ
      * @param context
      * @param templateName
      * @param template
@@ -629,7 +629,7 @@ public class VelocityUtil implements Serializable{
     
     
     /**
-     * ×Ö·û´®Ä£°å½âÎö
+     * å­—ç¬¦ä¸²æ¨¡æ¿è§£æ
      * @param context
      * @param templateName
      * @param template

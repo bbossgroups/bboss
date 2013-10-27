@@ -22,8 +22,8 @@ import java.util.List;
 
 import com.frameworkset.common.tag.BaseTag;
 /**
- * ¹¦ÄÜ£º¸ù¾İÌá¹©µÄlist½øĞĞÑ­»·£¬ÏÔÊ¾Ã¿Ò»¸ölistµÄÊı¾İ
- * ¸Ã±êÇ©ĞèÒªÔÚPagerDataSet¼°ÅÉÉú±êÇ©ÄÚ²¿Ê¹ÓÃ
+ * åŠŸèƒ½ï¼šæ ¹æ®æä¾›çš„listè¿›è¡Œå¾ªç¯ï¼Œæ˜¾ç¤ºæ¯ä¸€ä¸ªlistçš„æ•°æ®
+ * è¯¥æ ‡ç­¾éœ€è¦åœ¨PagerDataSetåŠæ´¾ç”Ÿæ ‡ç­¾å†…éƒ¨ä½¿ç”¨
  * @author zhiguo.wang
  * @version 1.0
  */
@@ -32,7 +32,7 @@ public class LoopList extends BaseTag
 	
 	
 	/**
-	 * ĞèÒªÑ­»·µÄlistÃû³Æ
+	 * éœ€è¦å¾ªç¯çš„liståç§°
 	 */
 	private String listname=null;
 	

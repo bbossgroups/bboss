@@ -33,7 +33,7 @@ import com.frameworkset.common.poolman.handle.NullRowHandler;
  * <p>Description: </p>
  *
  * <p>Copyright: Copyright (c) 2007</p>
- * @Date 2010-2-7 ÏÂÎç03:50:42
+ * @Date 2010-2-7 ä¸‹åˆ03:50:42
  * @author biaoping.yin
  * @version 1.0
  */
@@ -56,7 +56,7 @@ public class PreparedDBUtilRowhandler
 						t.setCREATED(record.getDate("created"));
 						t.setDATA_OBJECT_ID(record.getInt("DATA_OBJECT_ID"));
 						datas.add(t);
-						//........ÉèÖÃÆäËûµÄÊôĞÔ
+						//........è®¾ç½®å…¶ä»–çš„å±æ€§
 					} catch (SQLException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -66,10 +66,10 @@ public class PreparedDBUtilRowhandler
 				}
 				
 			});
-			//¼ÇÂ¼ÌõÊı
+			//è®°å½•æ¡æ•°
 			System.out.print("dbUtil.size():" + dbUtil.size());
 			
-			//±éÀú¼ÇÂ¼¼¯
+			//éå†è®°å½•é›†
 			for(int i = 0; i < datas.size(); i ++)
 			{
 				TestNewface testNewface = datas.get(i);
@@ -83,7 +83,7 @@ public class PreparedDBUtilRowhandler
 	
 	
 	/**
-	 * ·ÖÒ³nullhandlerÑİÊ¾
+	 * åˆ†é¡µnullhandleræ¼”ç¤º
 	 */
 	@Test
 	public void testPageinNullRowhandler()
@@ -102,7 +102,7 @@ public class PreparedDBUtilRowhandler
 						t.setCREATED(record.getDate("created"));
 						t.setDATA_OBJECT_ID(record.getInt("DATA_OBJECT_ID"));
 						datas.add(t);
-						//........ÉèÖÃÆäËûµÄÊôĞÔ
+						//........è®¾ç½®å…¶ä»–çš„å±æ€§
 					} catch (SQLException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -112,14 +112,14 @@ public class PreparedDBUtilRowhandler
 				}
 				
 			});
-			//µ±Ç°Ò³¼ÇÂ¼ÌõÊı
+			//å½“å‰é¡µè®°å½•æ¡æ•°
 			System.out.print("dbUtil.size():" + dbUtil.size());
 			
-			//×Ü¼ÇÂ¼ÌõÊı
+			//æ€»è®°å½•æ¡æ•°
 			System.out.print("dbUtil.getTotalSize():" + dbUtil.getLongTotalSize());
 			
 			/**
-			 * ±éÀúµ±Ç°¼ÇÂ¼
+			 * éå†å½“å‰è®°å½•
 			 */
 			for(int i = 0; i < datas.size(); i ++)
 			{

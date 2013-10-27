@@ -343,7 +343,7 @@ public abstract class AnnotationUtils {
 	}
 	
 	/**
-	 * »ñÈ¡restfulÂ·¾¶ÖĞµÄ±äÁ¿µÄÖµ
+	 * è·å–restfulè·¯å¾„ä¸­çš„å˜é‡çš„å€¼
 	 * @param method
 	 * @param lookupPath
 	 * @return

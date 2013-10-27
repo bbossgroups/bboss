@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset=GBK" language="java" %>
+<%@ page contentType="text/html; charset=UTF-8" language="java" %>
 <%@ taglib uri="/WEB-INF/pager-taglib.tld" prefix="pg"%>
 <%@ taglib uri="/WEB-INF/commontag.tld" prefix="common"%>
 <%@ page import="org.frameworkset.web.servlet.support.RequestContext" %>
@@ -11,7 +11,7 @@ String path = request.getContextPath();
 	<head>
 		
 
-		<title>Ê÷demo</title>
+		<title>æ ‘demo</title>
 <script type="text/javascript"> 
 	function edit(message)
 	{

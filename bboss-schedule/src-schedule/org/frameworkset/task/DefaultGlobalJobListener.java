@@ -27,7 +27,7 @@ import com.frameworkset.util.StringUtil;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2013-1-27 œ¬ŒÁ12:29:52
+ * @Date 2013-1-27 ‰∏ãÂçà12:29:52
  * @author biaoping.yin
  * @version 1.0
  */
@@ -53,9 +53,9 @@ public class DefaultGlobalJobListener extends BaseJobListener {
 	public void jobWasExecuted(JobExecutionContext arg0,
 			JobExecutionException arg1) {
 		if(arg1!=null)
-			log.info("Global job Was Executed:∫ƒ ±"+arg0.getJobRunTime()+" milliseconds,[" + StringUtil.exceptionToString(arg1)+"]");
+			log.info("Global job Was Executed:ËÄóÊó∂"+arg0.getJobRunTime()+" milliseconds,[" + StringUtil.exceptionToString(arg1)+"]");
 		else
-			log.info("Global job Was Executed:∫ƒ ±"+arg0.getJobRunTime()+" milliseconds");
+			log.info("Global job Was Executed:ËÄóÊó∂"+arg0.getJobRunTime()+" milliseconds");
 	} 
 
 }

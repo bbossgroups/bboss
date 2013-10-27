@@ -28,7 +28,7 @@ import org.frameworkset.spi.remote.ServiceID;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2008</p>
- * @Date 2011-5-9 ÏÂÎç06:12:52
+ * @Date 2011-5-9 ä¸‹åˆ06:12:52
  * @author biaoping.yin
  * @version 1.0
  */
@@ -59,9 +59,9 @@ public class SOAApplicationContext extends DefaultApplicationContext {
 
 
 	/**
-	 * ±¾·½·¨£¬¶ÔÓÚSOAApplicationContextÈİÆ÷ÊÇ²»ÊÊÓÃµÄ£¬ºÇºÇ
-	 * »ñÈ¡Ö¸¶¨¸ùÅäÖÃÎÄ¼şÉÏÏÂÎÄbean×é¼ş¹ÜÀíÈİÆ÷£¬ÅäÖÃÎÄ¼ş´Ó²ÎÊıconfigfile¶ÔÓ¦ÅäÖÃÎÄ¼ş¿ªÊ¼
-	 * ²»Í¬µÄÉÏÏÂÎÄ¼ş»·¾³ÈİÆ÷»¥Ïà¸ôÀë£¬×é¼ş¼ä²»´æÔÚÒÀÀµ¹ØÏµ£¬ÊôĞÔÒ²²»´æÔÚÈÎºÎÒıÓÃ¹ØÏµ¡£
+	 * æœ¬æ–¹æ³•ï¼Œå¯¹äºSOAApplicationContextå®¹å™¨æ˜¯ä¸é€‚ç”¨çš„ï¼Œå‘µå‘µ
+	 * è·å–æŒ‡å®šæ ¹é…ç½®æ–‡ä»¶ä¸Šä¸‹æ–‡beanç»„ä»¶ç®¡ç†å®¹å™¨ï¼Œé…ç½®æ–‡ä»¶ä»å‚æ•°configfileå¯¹åº”é…ç½®æ–‡ä»¶å¼€å§‹
+	 * ä¸åŒçš„ä¸Šä¸‹æ–‡ä»¶ç¯å¢ƒå®¹å™¨äº’ç›¸éš”ç¦»ï¼Œç»„ä»¶é—´ä¸å­˜åœ¨ä¾èµ–å…³ç³»ï¼Œå±æ€§ä¹Ÿä¸å­˜åœ¨ä»»ä½•å¼•ç”¨å…³ç³»ã€‚
 	 * 
 	 * @return
 	 * 
@@ -95,9 +95,9 @@ public class SOAApplicationContext extends DefaultApplicationContext {
 	
 	
 	/**
-	 * bean×é¼ş¹¤³§·½·¨£¬ Èç¹ûserviceID²»Îª¿Õ£¬ÔòserviceIDÊÇ¸ù¾İgetBeanObject(Context context,
-	 * String name,Object defaultValue)·½·¨µÄnameÉú³ÉµÄ
-	 * ·ñÔòĞèÒª¸ù¾İproviderManagerInfoµÄname»òÕßrefidÀ´Éú³ÉserviceID
+	 * beanç»„ä»¶å·¥å‚æ–¹æ³•ï¼Œ å¦‚æœserviceIDä¸ä¸ºç©ºï¼Œåˆ™serviceIDæ˜¯æ ¹æ®getBeanObject(Context context,
+	 * String name,Object defaultValue)æ–¹æ³•çš„nameç”Ÿæˆçš„
+	 * å¦åˆ™éœ€è¦æ ¹æ®providerManagerInfoçš„nameæˆ–è€…refidæ¥ç”ŸæˆserviceID
 	 * 
 	 * @param context
 	 * @param providerManagerInfo
@@ -108,7 +108,7 @@ public class SOAApplicationContext extends DefaultApplicationContext {
 	public Object getBeanObject(CallContext context, Pro providerManagerInfo,
 			Object defaultValue, ServiceID serviceID) {
 		if (providerManagerInfo == null)
-			throw new SPIException("bean¶ÔÏóÎª¿Õ¡£");
+			throw new SPIException("beanå¯¹è±¡ä¸ºç©ºã€‚");
 //		String key = providerManagerInfo.getName();
 		if (providerManagerInfo.isRefereced()) {
 			Object retvalue = providerManagerInfo.getTrueValue(context,
@@ -123,7 +123,7 @@ public class SOAApplicationContext extends DefaultApplicationContext {
 	}
 	
 	/**
-	 * bean¹¤³§·½·¨
+	 * beanå·¥å‚æ–¹æ³•
 	 * 
 	 * @param context
 	 * @param name
@@ -133,7 +133,7 @@ public class SOAApplicationContext extends DefaultApplicationContext {
 	@SuppressWarnings("unchecked")
 	protected Object getBeanObject(CallContext context, String name, Object defaultValue,
 			boolean fromprovider) {
-		// ·ÖÎö·şÎñ²ÎÊı
+		// åˆ†ææœåŠ¡å‚æ•°
 //		int idx = name.indexOf("?");
 
 //		String _name = name;

@@ -1,23 +1,23 @@
-1.linuxÏÂ°²×°openffice
-²Î¿¼ÎÄµµ
+1.linuxä¸‹å®‰è£…openffice
+å‚è€ƒæ–‡æ¡£
 http://wiki.openoffice.org/w/images/7/7e/Installation_Guide_OOo3.pdf
-Ä¬ÈÏ°²×°Ä¿Â¼£º
+é»˜è®¤å®‰è£…ç›®å½•ï¼š
 /opt/openoffice.org3
-2.linuxÏÂ°²×°swftoolsÏÂÔØfreetype
-ÏÂÔØswftools 0.9.1°æ±¾
+2.linuxä¸‹å®‰è£…swftoolsä¸‹è½½freetype
+ä¸‹è½½swftools 0.9.1ç‰ˆæœ¬
 http://www.swftools.org/swftools-0.9.1.tar.gz
 http://wiki.swftools.org/wiki/Main_Page#Installation_guides
 http://wiki.swftools.org/wiki/Installation
-ÔÚ°²×°swftools 0.9.2Ê±±¨´í£¬×ª¶ø°²×°swftools 0.9.1
-Ä¬ÈÏ°²×°Ä¿Â¼
+åœ¨å®‰è£…swftools 0.9.2æ—¶æŠ¥é”™ï¼Œè½¬è€Œå®‰è£…swftools 0.9.1
+é»˜è®¤å®‰è£…ç›®å½•
 /usr/local/share/swftools
 http://www.foolabs.com/xpdf/download.html
-zlib °²×°
-jpeg.c:462: error: conflicting types for ¡®jpeg_load_from_mem¡¯
+zlib å®‰è£…
+jpeg.c:462: error: conflicting types for â€˜jpeg_load_from_memâ€™
 
 make[2]: g++: Command not found
 http://www.rpmfind.net/linux/rpm2html/search.php?query=gcc-c%2B%2B
-°²×°£ºgcc-c++-4.4.6-4.el6.i686.rpm libstdc++-devel-4.4.6-4.el6.i686.rpm
+å®‰è£…ï¼šgcc-c++-4.4.6-4.el6.i686.rpm libstdc++-devel-4.4.6-4.el6.i686.rpm
 
 s -Wformat -O -fomit-frame-pointer  modules/swfaction.c -o modules/swfaction.o
 In file included from modules/.././bitio.h:23,
@@ -42,47 +42,47 @@ Furthermore, a new installation of jpeglib (the following assumes it's in /usr/l
 ./soffice --invisible --convert-to pdf:writer_pdf_Export --outdir "/opt/tomcat/test" "/opt/tomcat/wordpdf/anjie.doc"
 ./soffice --invisible --convert-to swf:draw_flash_Export --outdir "/opt/tomcat/test" "/opt/tomcat/wordpdf/anjie.doc"
 
-   ±àÒë½âÑ¹²¢½øÈëÏÂÔØµÄswftoolsÄ¿Â¼ÔËĞĞ
-./configure£¨È·±£Ã»ÓĞÒÀÀµÈí¼ş°üµÄ´íÎó£©
+   ç¼–è¯‘è§£å‹å¹¶è¿›å…¥ä¸‹è½½çš„swftoolsç›®å½•è¿è¡Œ
+./configureï¼ˆç¡®ä¿æ²¡æœ‰ä¾èµ–è½¯ä»¶åŒ…çš„é”™è¯¯ï¼‰
 make
 make install
-     ¿ÉÄÜ³öÏÖµÄÒì³£
-ĞŞ¸ÄÒ»¸öÔ´ÎÄ¼ş´íÎó
-Õâ¸öÊ±ºò£¬Óöµ½±¨´í
-jpeg.c:463: error: conflicting types for ¡®jpeg_load_from_mem¡¯
-jpeg.h:15: error: previous declaration of ¡®jpeg_load_from_mem¡¯ was here
+     å¯èƒ½å‡ºç°çš„å¼‚å¸¸
+ä¿®æ”¹ä¸€ä¸ªæºæ–‡ä»¶é”™è¯¯
+è¿™ä¸ªæ—¶å€™ï¼Œé‡åˆ°æŠ¥é”™
+jpeg.c:463: error: conflicting types for â€˜jpeg_load_from_memâ€™
+jpeg.h:15: error: previous declaration of â€˜jpeg_load_from_memâ€™ was here
 make[1]: *** [jpeg.o] Error 1
-Ô­À´ÊÇº¯ÊıµÄ¶¨ÒåºÍÍ·ÎÄ¼şµÄÉùÃ÷ÓĞµã³åÍ»£¬½â¾ö·½Ê½±È½Ï¼òµ¥£¬ĞŞ¸Ä swftools-0.9.1\swftools-0.9.1\lib\jpeg.c µÄ 463ĞĞ£º
-¸ÄÎª£º
+åŸæ¥æ˜¯å‡½æ•°çš„å®šä¹‰å’Œå¤´æ–‡ä»¶çš„å£°æ˜æœ‰ç‚¹å†²çªï¼Œè§£å†³æ–¹å¼æ¯”è¾ƒç®€å•ï¼Œä¿®æ”¹ swftools-0.9.1\swftools-0.9.1\lib\jpeg.c çš„ 463è¡Œï¼š
+æ”¹ä¸ºï¼š
 int jpeg_load_from_mem(unsigned char*_data, int size, unsigned char**dest, int*width, int*height)
-¼ÌĞø¼´¿É£¬
+ç»§ç»­å³å¯ï¼Œ
 
-»ùÓÚgiflib 5.0.3°²×°swftools±¨ÒÔÏÂ´íÎó
+åŸºäºgiflib 5.0.3å®‰è£…swftoolsæŠ¥ä»¥ä¸‹é”™è¯¯
 pe -Wno-write-strings -Wformat -O -fomit-frame-pointer  gif2swf.c -o gif2swf.o
-gif2swf.c: In function ¡®MovieAddFrame¡¯:
-gif2swf.c:233: error: too few arguments to function ¡®DGifOpenFileName¡¯
-gif2swf.c:239: warning: implicit declaration of function ¡®PrintGifError¡¯
-gif2swf.c: In function ¡®CheckInputFile¡¯:
-gif2swf.c:491: error: too few arguments to function ¡®DGifOpenFileName¡¯
+gif2swf.c: In function â€˜MovieAddFrameâ€™:
+gif2swf.c:233: error: too few arguments to function â€˜DGifOpenFileNameâ€™
+gif2swf.c:239: warning: implicit declaration of function â€˜PrintGifErrorâ€™
+gif2swf.c: In function â€˜CheckInputFileâ€™:
+gif2swf.c:491: error: too few arguments to function â€˜DGifOpenFileNameâ€™
 make[1]: *** [gif2swf.o] Error 1
 make[1]: Leaving directory `/opt/openoffice/tools/swftools-0.9.1/src'
 make: *** [all] Error 2
 
-Ğ¶ÔØgiflib 5.0.3 °²×°giflib-4.1.6.tar.gzÎÊÌâ½â¾ö
+å¸è½½giflib 5.0.3 å®‰è£…giflib-4.1.6.tar.gzé—®é¢˜è§£å†³
 
-3.jdk°²×°
-ÏÂÔØlinux°æ±¾jdk 64Î»
-°²×°
+3.jdkå®‰è£…
+ä¸‹è½½linuxç‰ˆæœ¬jdk 64ä½
+å®‰è£…
 ./jdk-6u31-linux-x64-rpm.bin 
-ÅäÖÃ»·¾³±äÁ¿
+é…ç½®ç¯å¢ƒå˜é‡
 vi /etc/profile
 JAVA_HOME=/opt/jdk1.5
 PATH=$JAVA_HOME/bin:$PATH
 CLASSPATH=.$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar export JAVA_HOME,PATH,CLASSPATH
-ÈÃ»·¾³±äÁ¿ÉúĞ§
+è®©ç¯å¢ƒå˜é‡ç”Ÿæ•ˆ
 source /etc/profile
 
-ÔÚjavaÖĞÖ´ĞĞopenofficeµÄÆô¶¯²Ù×÷Ê±±¨ÒÔÏÂ´íÎó£º
+åœ¨javaä¸­æ‰§è¡Œopenofficeçš„å¯åŠ¨æ“ä½œæ—¶æŠ¥ä»¥ä¸‹é”™è¯¯ï¼š
 WriterDoc: Start up or connect to the remote service manager.
 CE> /opt/openoffice.org3/program/../basis-link/ure-link/bin/javaldx: /lib64/libc.so.6: version `GLIBC_2.7' not found (required by /opt/openoffice.org/ure/bin/../lib/libuno_sal.so.3)
 CE> /opt/openoffice.org3/program/../basis-link/ure-link/bin/javaldx: /lib64/libc.so.6: version `GLIBC_2.7' not found (required by /opt/openoffice.org/ure/bin/../lib/libxml2.so.2)
@@ -92,16 +92,16 @@ CE> /opt/openoffice.org3/program/soffice.bin: /lib64/libc.so.6: version `GLIBC_2
 CE> /opt/openoffice.org3/program/soffice.bin: /lib64/libc.so.6: version `GLIBC_2.11' not found (required by /opt/openoffice.org3/program/../basis-link/program/libvcl.so)
 CE> /opt/openoffice.org3/program/soffice.bin: /lib64/libc.so.6: version `GLIBC_2.7' not found (required by /opt/openoffice.org3/program/../basis-link/program/../ure-link/lib/libxml2.so.2)
 ./soffice -accept="socket,host=localhost,port=2002;urp;StarOffice.Service.Manager" 
-Ğ¶ÔØOpenOffice
-yum remove openoffice.org-core ¼´¿ÉÍêÈ«Ğ¶ÔØ OpenOffice.org
+å¸è½½OpenOffice
+yum remove openoffice.org-core å³å¯å®Œå…¨å¸è½½ OpenOffice.org
 
 rpm -e 'rpm -qa |grep openoffice' 'rpm -qa |grep ooobasis'
 yum remove ooobasis3.4*
 yum remove openoffice.org3*
 
-°²×°OpenOffice from source£º
-°²×°dmake
-°²×°ant
+å®‰è£…OpenOffice from sourceï¼š
+å®‰è£…dmake
+å®‰è£…ant
 http://kobyla.info/distfiles/ archive zip
 http://kobyla.info/distfiles/ zlib
 
@@ -146,13 +146,13 @@ make
 make install 
 
 then openoffice configure is:
-ÏÈ¿½±´junit-4.jarµ½/usr/share/java/ÏÂÃæ£¬È»ºóÖ´ĞĞÏÂÊöÖ¸Áî¼´¿É
+å…ˆæ‹·è´junit-4.jaråˆ°/usr/share/java/ä¸‹é¢ï¼Œç„¶åæ‰§è¡Œä¸‹è¿°æŒ‡ä»¤å³å¯
 ./configure --disable-odk --disable-binfilter --disable-cups --with-junit=/usr/share/java/junit-4.jar
 
-Ö´ĞĞ³É¹¦ºóÔÚ/opt/openoffice/source/aoo-3.4.1/mainÏÂÖ´ĞĞ£º
+æ‰§è¡ŒæˆåŠŸååœ¨/opt/openoffice/source/aoo-3.4.1/mainä¸‹æ‰§è¡Œï¼š
 ./bootstrap 
 
-±¨´í£º
+æŠ¥é”™ï¼š
 [root@localhost main]# ./bootstrap 
 Can't locate Digest/SHA.pm in @INC (@INC contains: /usr/lib64/perl5/site_perl/5.8.8/x86_64-linux-thread-multi /usr/lib64/perl5/site_perl/5.8.7/x86_64-linux-thread-multi /usr/lib64/perl5/site_perl/5.8.6/x86_64-linux-thread-multi /usr/lib64/perl5/site_perl/5.8.5/x86_64-linux-thread-multi /usr/lib/perl5/site_perl/5.8.8 /usr/lib/perl5/site_perl/5.8.7 /usr/lib/perl5/site_perl/5.8.6 /usr/lib/perl5/site_perl/5.8.5 /usr/lib/perl5/site_perl /usr/lib64/perl5/vendor_perl/5.8.8/x86_64-linux-thread-multi /usr/lib64/perl5/vendor_perl/5.8.7/x86_64-linux-thread-multi /usr/lib64/perl5/vendor_perl/5.8.6/x86_64-linux-thread-multi /usr/lib64/perl5/vendor_perl/5.8.5/x86_64-linux-thread-multi /usr/lib/perl5/vendor_perl/5.8.8 /usr/lib/perl5/vendor_perl/5.8.7 /usr/lib/perl5/vendor_perl/5.8.6 /usr/lib/perl5/vendor_perl/5.8.5 /usr/lib/perl5/vendor_perl /usr/lib64/perl5/5.8.8/x86_64-linux-thread-multi /usr/lib/perl5/5.8.8 .) at /opt/openoffice/source/aoo-3.4.1/main/solenv/bin/download_external_dependencies.pl line 66.
 BEGIN failed--compilation aborted at /opt/openoffice/source/aoo-3.4.1/main/solenv/bin/download_external_dependencies.pl line 66.
@@ -163,19 +163,19 @@ bundling of dictionaries is disabled.
 
 source LinuxX86-64Env.Set.sh
 
-ÔÚ·şÎñÆ÷JVMÆô¶¯²ÎÊıÖĞ¼ÓÈëÈçÏÂÃüÁî
--Djava.library.path=¡®OpenOffice°²×°Â·¾¶¡¯/URE/bin
+åœ¨æœåŠ¡å™¨JVMå¯åŠ¨å‚æ•°ä¸­åŠ å…¥å¦‚ä¸‹å‘½ä»¤
+-Djava.library.path=â€˜OpenOfficeå®‰è£…è·¯å¾„â€™/URE/bin
 
 windows:
-	½«sigar-x86-winnt.dll·ÅÈë¡®OpenOffice°²×°Â·¾¶¡¯/URE/bin/ÏÂ
+	å°†sigar-x86-winnt.dllæ”¾å…¥â€˜OpenOfficeå®‰è£…è·¯å¾„â€™/URE/bin/ä¸‹
 linux:
-	½«libsigar-x86-linux.so·ÅÈë¡®OpenOffice°²×°Â·¾¶¡¯/URE/bin/ÏÂ
+	å°†libsigar-x86-linux.soæ”¾å…¥â€˜OpenOfficeå®‰è£…è·¯å¾„â€™/URE/bin/ä¸‹
 
-×¢£ºlinuxÏÂOpenOffice°²×°Â·¾¶¿ÉÄÜÎª2¸ö£¬Çë×¢Òâ´Ë´ÎÊ¹ÓÃµÄÂ·¾¶ĞèÒªÏÂÓĞ/ure/binÎÄ¼ş¼Ğ
+æ³¨ï¼šlinuxä¸‹OpenOfficeå®‰è£…è·¯å¾„å¯èƒ½ä¸º2ä¸ªï¼Œè¯·æ³¨æ„æ­¤æ¬¡ä½¿ç”¨çš„è·¯å¾„éœ€è¦ä¸‹æœ‰/ure/binæ–‡ä»¶å¤¹
 
 
 
-vmware ipÅäÖÃ
+vmware ipé…ç½®
 
 Ethernet adapter VMware Network Adapter VMnet8:
 
@@ -184,14 +184,14 @@ Ethernet adapter VMware Network Adapter VMnet8:
         Subnet Mask . . . . . . . . . . . : 255.255.255.0
         Default Gateway . . . . . . . . . :
         
-°²×°ÕûÀí²½Öè£º
-ÏÂÔØºÍ°²×°VMWare9
+å®‰è£…æ•´ç†æ­¥éª¤ï¼š
+ä¸‹è½½å’Œå®‰è£…VMWare9
 http://tieba.baidu.com/p/1954912175  
 redhat linux 6.3
 http://rhel.ieesee.net/uingei/rhel-server-6.3-i386-dvd.iso    
-zlibÏÂÔØ
+zlibä¸‹è½½
 http://zlib.net/zlib-1.2.7.tar.gz
-ÏÈºó°²×°£ºlibstdc++-devel-4.4.6-4.el6.i686.rpm  gcc-c++-4.4.6-4.el6.i686.rpm £¨°²×°³ÌĞòÔÚredhatµÄisoÎÄ¼şÖĞ£© 
+å…ˆåå®‰è£…ï¼šlibstdc++-devel-4.4.6-4.el6.i686.rpm  gcc-c++-4.4.6-4.el6.i686.rpm ï¼ˆå®‰è£…ç¨‹åºåœ¨redhatçš„isoæ–‡ä»¶ä¸­ï¼‰ 
 openoffice
 http://nchc.dl.sourceforge.net/project/openofficeorg.mirror/stable/3.4.1/Apache_OpenOffice_incubating_3.4.1_Linux_x86_install-rpm_en-US.tar.gz 
 http://nchc.dl.sourceforge.net/project/openofficeorg.mirror/localized/zh-CN/3.4.1/Apache_OpenOffice_incubating_3.4.1_Linux_x86_langpack-rpm_zh-CN.tar.gz
@@ -210,37 +210,37 @@ http://download.oracle.com/otn-pub/java/jdk/7/jdk-7-linux-i586.rpm?AuthParam=135
 
 flash player linux
 http://fpdownload.macromedia.com/get/flashplayer/pdc/11.2.202.258/flash-plugin-11.2.202.258-release.i386.rpm
-bboss-wordpdf²å¼ş-¹¹½¨
-Ö´ĞĞbboss-wordpdf¹¤³ÌÏÂµÄrun.batÖ¸Áî£¬¹¹½¨Íê±ÏºóÔÚ½«distribÏÂµÄbboss-office.war¿½±´µ½tomcatµÄwebappsÏÂ¼´¿É£¬Í¬Ê±ĞŞ¸Ä
-WEB-INF/bboss-wordpdf.xmlÖĞµÄÊôĞÔ£º
+bboss-wordpdfæ’ä»¶-æ„å»º
+æ‰§è¡Œbboss-wordpdfå·¥ç¨‹ä¸‹çš„run.batæŒ‡ä»¤ï¼Œæ„å»ºå®Œæ¯•ååœ¨å°†distribä¸‹çš„bboss-office.waræ‹·è´åˆ°tomcatçš„webappsä¸‹å³å¯ï¼ŒåŒæ—¶ä¿®æ”¹
+WEB-INF/bboss-wordpdf.xmlä¸­çš„å±æ€§ï¼š
 f:swftoolWorkDir="/usr/local/bin/" 	
 f:officeHome = "/opt/openoffice.org3/"	
-swftoolWorkDirµÄ°²×°Ä¿Â¼£¬ÏÂÃæ±ØĞë°üº¬pdf2swfÖ¸Áî
-officeHome°²×°Ä¿Â¼£¬ÏÂÃæ±ØĞë°üº¬programÄ¿Â¼
+swftoolWorkDirçš„å®‰è£…ç›®å½•ï¼Œä¸‹é¢å¿…é¡»åŒ…å«pdf2swfæŒ‡ä»¤
+officeHomeå®‰è£…ç›®å½•ï¼Œä¸‹é¢å¿…é¡»åŒ…å«programç›®å½•
 
-Í¬Ê±½«plugin/wordpdf/anjie.docÁ½¸öÎÄ¼ş¿½±´µ½/opt/tomcat/wordpdfÄ¿Â¼ÏÂÃæ¡£
-ÔÚ/opt/tomcatÏÂ´´½¨testÄ¿Â¼
+åŒæ—¶å°†plugin/wordpdf/anjie.docä¸¤ä¸ªæ–‡ä»¶æ‹·è´åˆ°/opt/tomcat/wordpdfç›®å½•ä¸‹é¢ã€‚
+åœ¨/opt/tomcatä¸‹åˆ›å»ºtestç›®å½•
 
-Æô¶¯tomcat£¬ÔÚä¯ÀÀÆ÷ÖĞÊäÈë:http://localhost:8080/bboss-office/FlexPaper_2.0.3/index_ooo.html,¼´¿É²é¿´Ğ§¹û£¬Í¬Ê±»¹ĞèÒªÔÚlinuxÏÂ°²×°flash player
+å¯åŠ¨tomcatï¼Œåœ¨æµè§ˆå™¨ä¸­è¾“å…¥:http://localhost:8080/bboss-office/FlexPaper_2.0.3/index_ooo.html,å³å¯æŸ¥çœ‹æ•ˆæœï¼ŒåŒæ—¶è¿˜éœ€è¦åœ¨linuxä¸‹å®‰è£…flash player
 
 -------------------------------------------------------------------------------------------------------------------------------------------------
-1.libreoffice°²×°£º
-ÏÂÔØ£º
-°²×°³ÌĞò
+1.libreofficeå®‰è£…ï¼š
+ä¸‹è½½ï¼š
+å®‰è£…ç¨‹åº
 http://zh-cn.libreoffice.org/
-ÖĞÎÄ°ü
+ä¸­æ–‡åŒ…
 http://zh-cn.libreoffice.org/
-°²×°£º
-½âÑ¹
+å®‰è£…ï¼š
+è§£å‹
 rpm -ivh *.rpm
 rpm -ivh desktop
 
-½â¾öword×ªpdfÖĞÎÄÂÒÂëÎÊÌâ
-¿½±´×ÖÌå£º°ÑWindowsÏÂµÄ×ÖÌåC:\Windows\FontsÏÂµÄËùÓĞÎÄ¼ş¿½±´µ½/usr/share/fonts/windowsÄ¿Â¼ÏÂ
-ÊÚÈ¨
+è§£å†³wordè½¬pdfä¸­æ–‡ä¹±ç é—®é¢˜
+æ‹·è´å­—ä½“ï¼šæŠŠWindowsä¸‹çš„å­—ä½“C:\Windows\Fontsä¸‹çš„æ‰€æœ‰æ–‡ä»¶æ‹·è´åˆ°/usr/share/fonts/windowsç›®å½•ä¸‹
+æˆæƒ
 cd /usr/share/fonts/windows
 chmod 644 -R .
-¸üĞÂ×ÖÌå»º´æ£º
+æ›´æ–°å­—ä½“ç¼“å­˜ï¼š
 sudo fc-cache -fv
 
 

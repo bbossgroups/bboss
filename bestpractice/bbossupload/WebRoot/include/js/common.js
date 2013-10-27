@@ -1,5 +1,5 @@
 /**
- * @fileoverview  »ù´¡º¯Êı¿â
+ * @fileoverview  åŸºç¡€å‡½æ•°åº“
  * @author xs | creator
  */
 
@@ -21,8 +21,8 @@ function trace(txt) {
 }
 
 /**
- * ¸øFunction¶ÔÏóÌí¼Óbind·½·¨
- * @param {Object} Ä¿±ê°ó¶¨¶ÔÏó
+ * ç»™Functionå¯¹è±¡æ·»åŠ bindæ–¹æ³•
+ * @param {Object} ç›®æ ‡ç»‘å®šå¯¹è±¡
  */
 Function.prototype.bind = function(object) {
 	var __method = this;
@@ -32,23 +32,23 @@ Function.prototype.bind = function(object) {
 };
 
 /**
- * ¸øString¶ÔÏóÌí¼ÓgetBytes·½·¨£¬ÒÔ»ñÈ¡Êµ¼Ê×Ö½Ú³¤¶È(ÖĞÎÄËã2×Ö½Ú)
+ * ç»™Stringå¯¹è±¡æ·»åŠ getBytesæ–¹æ³•ï¼Œä»¥è·å–å®é™…å­—èŠ‚é•¿åº¦(ä¸­æ–‡ç®—2å­—èŠ‚)
  */
 String.prototype.getBytes = function() {
 	return this.replace(/[^\x00-\xff]/ig,"oo").length;
 };
 
 /**
- * ÔÚÖ¸¶¨½ÚµãÉÏ°ó¶¨ÏàÓ¦µÄÊÂ¼ş
+ * åœ¨æŒ‡å®šèŠ‚ç‚¹ä¸Šç»‘å®šç›¸åº”çš„äº‹ä»¶
  * @method $addEvent2
- * @param {String} elm ĞèÒª°ó¶¨µÄ½Úµãid
- * @param {Function} func ÊÂ¼ş·¢ÉúÊ±ÏìÓ¦µÄº¯Êı
- * @param {String} evType ÊÂ¼şµÄÀàĞÍÈç:click, mouseover
+ * @param {String} elm éœ€è¦ç»‘å®šçš„èŠ‚ç‚¹id
+ * @param {Function} func äº‹ä»¶å‘ç”Ÿæ—¶å“åº”çš„å‡½æ•°
+ * @param {String} evType äº‹ä»¶çš„ç±»å‹å¦‚:click, mouseover
  * @global $addEvent2
  * @update 2008-2-28
  * @author	creator
  * @example
- * 		//Êó±êµã»÷testEleÔòalert "clicked"
+ * 		//é¼ æ ‡ç‚¹å‡»testEleåˆ™alert "clicked"
  * 		$addEvent2("testEle",function () {
  * 			alert("clicked")
  * 		},'click');
@@ -72,7 +72,7 @@ function $addEvent2(elm, func, evType, useCapture) {
 };
 
 /**
- * ·ÇIEä¯ÀÀÆ÷Ôö¼Ócontains·½·¨
+ * éIEæµè§ˆå™¨å¢åŠ containsæ–¹æ³•
  * @example obj.contains(obj);
  */
 if(!(/msie/).test(navigator.userAgent.toLowerCase())) {
@@ -88,8 +88,8 @@ if(!(/msie/).test(navigator.userAgent.toLowerCase())) {
 }
 
 /**
- * document.getElementById µÄ¿ì½İ·½Ê½
- * @param {String} id×Ö´®
+ * document.getElementById çš„å¿«æ·æ–¹å¼
+ * @param {String} idå­—ä¸²
  */
 function $(oID) {
 	var node = typeof oID == "string" ? document.getElementById(oID) : oID;
@@ -100,18 +100,18 @@ function $(oID) {
 }
 
 /**
- * document.createElement µÄ¿ì½İ·½Ê½
- * @param {String} tagName×Ö´®
+ * document.createElement çš„å¿«æ·æ–¹å¼
+ * @param {String} tagNameå­—ä¸²
  */
 function $C(tagName){
     return document.createElement(tagName);
 }
 
 /**
- * ÅĞ¶ÏÄ³×Ö·û´®ÊÇ·ñÔÚÄ¿±êÊı×éÖĞ
- * @param {String}  Ä¿±ê¹Ø¼ü×Ö
- * @param {Array}   Ä¿±êÊı×é
- * @param {Boolean}   ÊÇ·ñÈ«µÈ(¼´ÍêÈ«ÏàÍ¬)
+ * åˆ¤æ–­æŸå­—ç¬¦ä¸²æ˜¯å¦åœ¨ç›®æ ‡æ•°ç»„ä¸­
+ * @param {String}  ç›®æ ‡å…³é”®å­—
+ * @param {Array}   ç›®æ ‡æ•°ç»„
+ * @param {Boolean}   æ˜¯å¦å…¨ç­‰(å³å®Œå…¨ç›¸åŒ)
  */
 function $inArr(key, arr, same) {
 	if(!same) return arr.join(' ').indexOf(key) != -1;
@@ -120,9 +120,9 @@ function $inArr(key, arr, same) {
 }
 
 /**
- * Îª¶ÔÏóÌí¼Ó className
- * @param {Object} ĞèÒªÌí¼ÓclassNameµÄ½Úµã
- * @param {String}  ÒªÌí¼ÓµÄ className
+ * ä¸ºå¯¹è±¡æ·»åŠ  className
+ * @param {Object} éœ€è¦æ·»åŠ classNameçš„èŠ‚ç‚¹
+ * @param {String}  è¦æ·»åŠ çš„ className
  */
 function $addClassName(el, cls) {
 	var el = $(el);
@@ -132,9 +132,9 @@ function $addClassName(el, cls) {
 };
 
 /**
- * Îª¶ÔÏóÉ¾³ı className
- * @param {Object} ĞèÒªÉ¾³ıclassNameµÄ½Úµã
- * @param {String}  ÒªÉ¾³ıµÄ className
+ * ä¸ºå¯¹è±¡åˆ é™¤ className
+ * @param {Object} éœ€è¦åˆ é™¤classNameçš„èŠ‚ç‚¹
+ * @param {String}  è¦åˆ é™¤çš„ className
  */
 function $removeClassName(el, cls) {
 	var el = $(el);
@@ -143,9 +143,9 @@ function $removeClassName(el, cls) {
 };
 
 /**
- * ÅĞ¶Ï¶ÔÏóÊÇ·ñ´æÔÚ¸Ã className
- * @param {Object} ĞèÒªÅĞ¶ÏclassNameµÄ½Úµã
- * @param {String}  ÒªÅĞ¶ÏµÄ className
+ * åˆ¤æ–­å¯¹è±¡æ˜¯å¦å­˜åœ¨è¯¥ className
+ * @param {Object} éœ€è¦åˆ¤æ–­classNameçš„èŠ‚ç‚¹
+ * @param {String}  è¦åˆ¤æ–­çš„ className
  */
 function hasClass(node, className) {
 	var elementClassName = node.className;
@@ -153,8 +153,8 @@ function hasClass(node, className) {
 }
 
 /**
- * È¡µÃÔªËØµÄLeft
- * @param {Object} ĞèÒªÈ¡ÖµµÄÔªËØ½Úµã
+ * å–å¾—å…ƒç´ çš„Left
+ * @param {Object} éœ€è¦å–å€¼çš„å…ƒç´ èŠ‚ç‚¹
  */
 function getLeft(node) {
 	var obj = node;
@@ -166,8 +166,8 @@ function getLeft(node) {
 }
 
 /**
- * È¡µÃÔªËØµÄTop
- * @param {Object} ĞèÒªÈ¡ÖµµÄÔªËØ½Úµã
+ * å–å¾—å…ƒç´ çš„Top
+ * @param {Object} éœ€è¦å–å€¼çš„å…ƒç´ èŠ‚ç‚¹
  */
 function getTop(node) {
 	var obj = node;
@@ -179,9 +179,9 @@ function getTop(node) {
 }
 
 /**
- * »ñÈ¡µ±Ç°¶ÔÏóËùÓ¦ÓÃµÄÑùÊ½
- * @param {Object} Ä¿±ê¶ÔÏó
- * @param {String}  ĞèÒª»ñÈ¡µÄÑùÊ½ÊôĞÔ
+ * è·å–å½“å‰å¯¹è±¡æ‰€åº”ç”¨çš„æ ·å¼
+ * @param {Object} ç›®æ ‡å¯¹è±¡
+ * @param {String}  éœ€è¦è·å–çš„æ ·å¼å±æ€§
  */
 function GetCurrentStyle(el, prop) {
 	if (el.currentStyle) {
@@ -195,9 +195,9 @@ function GetCurrentStyle(el, prop) {
 }
 
 /**
- * ÇĞ»»HTMLÔªËØÏÔÊ¾/Òş²Ø×´Ì¬
- * @param {String} ÔªËØid
- * @param {String} ÔªËØ display ×´Ì¬×Ö·û ( 'none' , 'block', '');
+ * åˆ‡æ¢HTMLå…ƒç´ æ˜¾ç¤º/éšè—çŠ¶æ€
+ * @param {String} å…ƒç´ id
+ * @param {String} å…ƒç´  display çŠ¶æ€å­—ç¬¦ ( 'none' , 'block', '');
  */
 function $toggle(el, flag){
 	var el = $(el);
@@ -208,24 +208,24 @@ function $toggle(el, flag){
 }
 
 /**
- * ÏÔÊ¾Ò»¸öHTMLÔªËØ
- * @param {String} ÔªËØid
+ * æ˜¾ç¤ºä¸€ä¸ªHTMLå…ƒç´ 
+ * @param {String} å…ƒç´ id
  */
 function $show(el){
 	$toggle(el, '');
 }
 
 /**
- * Òş²ØÒ»¸öHTMLÔªËØ
- * @param {String} ÔªËØid
+ * éšè—ä¸€ä¸ªHTMLå…ƒç´ 
+ * @param {String} å…ƒç´ id
  */
 function $hide(el){
 	$toggle(el, 'none');
 }
 
 /**
- * ÅĞ¶ÏÔªËØÊÇ·ñ¿É¼û
- * @param {Object} ÒªÅĞ¶ÏµÄÒ³ÃæÔªËØ
+ * åˆ¤æ–­å…ƒç´ æ˜¯å¦å¯è§
+ * @param {Object} è¦åˆ¤æ–­çš„é¡µé¢å…ƒç´ 
  */
 function $isVisible(el){
 	while(el && el != document) {
@@ -236,8 +236,8 @@ function $isVisible(el){
 }
 
 /**
- * µ±ÎÄµµÔØÈëºóÖ´ĞĞÒ»¶Îº¯Êı
- * @param {Function} ÒªÖ´ĞĞµÄº¯Êı
+ * å½“æ–‡æ¡£è½½å…¥åæ‰§è¡Œä¸€æ®µå‡½æ•°
+ * @param {Function} è¦æ‰§è¡Œçš„å‡½æ•°
  */
 function onReady(fn) {
 	if (typeof fn != "function") return;

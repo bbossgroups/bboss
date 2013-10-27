@@ -7,12 +7,12 @@ import org.quartz.Scheduler;
 
 /**
  * 
- * 缺省的任务调度器
+ * 缂虹渷鐨勪换鍔¤皟搴﹀櫒
  * <p>Title: DefaultScheduleService.java</p> 
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2010-3-26 下午02:03:35
+ * @Date 2010-3-26 涓嬪崍02:03:35
  * @author biaoping.yin,gao.tang
  * @version 1.0
  */

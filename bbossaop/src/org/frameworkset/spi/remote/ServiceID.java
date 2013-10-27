@@ -31,7 +31,7 @@ package org.frameworkset.spi.remote;
  * Copyright (c) 2007
  * </p>
  * 
- * @Date 2009-4-20 ÏÂÎç05:29:01
+ * @Date 2009-4-20 ä¸‹åˆ05:29:01
  * @author biaoping.yin
  * @version 1.0
  */

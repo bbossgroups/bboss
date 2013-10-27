@@ -46,7 +46,7 @@ import com.frameworkset.util.ValueObjectUtil;
  * Title: ObjectSerializable.java
  * </p>
  * <p>
- * Description: ½â¾ö¶ÔÏó·½·¨µ÷ÓÃ×ª»»Îªxml´®µÄ¹¦ÄÜ
+ * Description: è§£å†³å¯¹è±¡æ–¹æ³•è°ƒç”¨è½¬æ¢ä¸ºxmlä¸²çš„åŠŸèƒ½
  * </p>
  * <p>
  * bboss workgroup
@@ -55,7 +55,7 @@ import com.frameworkset.util.ValueObjectUtil;
  * Copyright (c) 2008
  * </p>
  * 
- * @Date 2011-5-10 ÉÏÎç11:14:21
+ * @Date 2011-5-10 ä¸Šåˆ11:14:21
  * @author biaoping.yin
  * @version 1.0
  */
@@ -72,7 +72,7 @@ public class ObjectSerializable {
 			"message", "cause" };
 
 	/**
-	 * ±êÊ¶nullÖµÀàĞÍ
+	 * æ ‡è¯†nullå€¼ç±»å‹
 	 */
 	public static final String NULL_TYPE = "s:nvl";
 
@@ -136,7 +136,7 @@ public class ObjectSerializable {
 			if (charset.equals(CHARSET_UTF_8)) {
 				ret.append(content_header_utf_8);
 			} else
-				ret.append(content_header_gbk);
+				ret.append(content_header_utf_8);
 			ret.append(call_header);
 			convertMethodCallToXMLMethod(ret, method.getName(), params, paramTypes,
 					charset);
@@ -157,7 +157,7 @@ public class ObjectSerializable {
 			if (charset.equals(CHARSET_UTF_8)) {
 				ret.append(content_header_utf_8);
 			} else
-				ret.append(content_header_gbk);
+				ret.append(content_header_utf_8);
 			ret.append(call_header);
 			SerialStack stack = new SerialStack();
 			convertBeanObjectToXML("soamethodcall", method, method.getClass(),
@@ -193,7 +193,7 @@ public class ObjectSerializable {
 			Class type) throws NumberFormatException, IllegalArgumentException,
 			IntrospectionException {
 		return convertBeanObjectToXML(name, obj, type, (String) null,
-				CHARSET_GBK);
+				CHARSET_UTF_8);
 	}
 
 	public final static String toXML(Object obj) throws NumberFormatException,
@@ -201,7 +201,7 @@ public class ObjectSerializable {
 		if (obj == null)
 			return null;
 		return convertBeanObjectToXML("_dflt_", obj, obj.getClass(),
-				(String) null, CHARSET_GBK);
+				(String) null, CHARSET_UTF_8);
 	}
 
 	public final static void toXML(Object obj, Writer out)
@@ -210,9 +210,9 @@ public class ObjectSerializable {
 		if (obj == null)
 			return ;
 		convertBeanObjectToXML("_dflt_", obj,
-				obj.getClass(), null, CHARSET_GBK,out);
+				obj.getClass(), null, CHARSET_UTF_8,out);
 //		return convertBeanObjectToXML("_dflt_", obj, obj.getClass(),
-//				(String) null, CHARSET_GBK);
+//				(String) null, CHARSET_UTF_8);
 		
 	}
 
@@ -245,7 +245,7 @@ public class ObjectSerializable {
 //		if (charset.equals(CHARSET_UTF_8)) {
 //			ret.append(content_header_utf_8);
 //		} else
-//			ret.append(content_header_gbk);
+//			ret.append(content_header_utf_8);
 //		ret.append("<ps>");
 //		convertBeanObjectToXML(name, obj, type, dateformat, ret);
 //		ret.append("</ps>");
@@ -262,7 +262,7 @@ public class ObjectSerializable {
 //		if (charset.equals(CHARSET_UTF_8)) {
 //			ret.append(content_header_utf_8);
 //		} else
-//			ret.append(content_header_gbk);
+//			ret.append(content_header_utf_8);
 //		ret.append("<ps>");
 //		convertBeanObjectToXML(name, obj, type, dateformat, ret);
 //		ret.append("</ps>");
@@ -282,7 +282,7 @@ public class ObjectSerializable {
 			if (charset.equals(CHARSET_UTF_8)) {
 				ret.append(content_header_utf_8);
 			} else
-				ret.append(content_header_gbk);
+				ret.append(content_header_utf_8);
 			ret.append("<ps>");
 			SerialStack stack = new SerialStack();
 			convertBeanObjectToXML(name, obj, type, dateformat, ret,stack,name);
@@ -314,7 +314,7 @@ public class ObjectSerializable {
 			IllegalArgumentException, IntrospectionException {
 
 		
-			return convertBeanObjectsToXML(names, objs, types, CHARSET_GBK);
+			return convertBeanObjectsToXML(names, objs, types, CHARSET_UTF_8);
 		
 	}
 
@@ -328,7 +328,7 @@ public class ObjectSerializable {
 			if (charset.equals(CHARSET_UTF_8)) {
 				ret.append(content_header_utf_8);
 			} else
-				ret.append(content_header_gbk);
+				ret.append(content_header_utf_8);
 			ret.append("<ps>");
 			if (objs != null && objs.size() > 0) {
 				int i = 0;
@@ -347,8 +347,8 @@ public class ObjectSerializable {
 	}
 
 	/**
-	 * ¸ù¾İ¶ÔÏóÖµ£¬¶ÔÏóÀàĞÍ²éÕÒµ½¶ÔÓ¦µÄ·½·¨£¬Õâ¸öÍæÒâ¶ù£¬±È½ÏÂé·³
-	 * ĞèÒªÅĞ¶ÁcurrentAddressÎª¿ÕµÄÇé¿ö£¬biaoping.yin
+	 * æ ¹æ®å¯¹è±¡å€¼ï¼Œå¯¹è±¡ç±»å‹æŸ¥æ‰¾åˆ°å¯¹åº”çš„æ–¹æ³•ï¼Œè¿™ä¸ªç©æ„å„¿ï¼Œæ¯”è¾ƒéº»çƒ¦
+	 * éœ€è¦åˆ¤è¯»currentAddressä¸ºç©ºçš„æƒ…å†µï¼Œbiaoping.yin
 	 * @param obj
 	 * @param type
 	 * @param dateformat
@@ -797,14 +797,14 @@ public class ObjectSerializable {
 		// Object arrayObj;
 		//
 		// /**
-		// * »ù±¾ÀàĞÍ×ª»»ºÍ»ù±¾ÀàĞÍÖ®¼äÏà»¥×ª»»
+		// * åŸºæœ¬ç±»å‹è½¬æ¢å’ŒåŸºæœ¬ç±»å‹ä¹‹é—´ç›¸äº’è½¬æ¢
 		// */
 		// if (!type.isArray() && !toType.isArray()) {
 		// arrayObj = basicTypeCast(obj, type, toType, dateformat);
 		// }
 		//
 		// /**
-		// * ×Ö·û´®Êı×éÏòÆäËûÀàĞÍÊı×éÖ®¼ä×ª»» Êı×éºÍÊı×éÖ®¼äµÄ×ª»» »ù´¡ÀàĞÍÊı¾İÏòÊı×é×ª»»
+		// * å­—ç¬¦ä¸²æ•°ç»„å‘å…¶ä»–ç±»å‹æ•°ç»„ä¹‹é—´è½¬æ¢ æ•°ç»„å’Œæ•°ç»„ä¹‹é—´çš„è½¬æ¢ åŸºç¡€ç±»å‹æ•°æ®å‘æ•°ç»„è½¬æ¢
 		// */
 		// else {
 		//
@@ -814,7 +814,7 @@ public class ObjectSerializable {
 	}
 
 	/**
-	 * Description:»ù±¾µÄÊı¾İÀàĞÍ×ªà÷
+	 * Description:åŸºæœ¬çš„æ•°æ®ç±»å‹è½¬åœœ
 	 * 
 	 * @param obj
 	 * @param type
@@ -845,24 +845,24 @@ public class ObjectSerializable {
 		type = obj.getClass();
 		//		
 		// if (type.isAssignableFrom(toType)) //
-		// typeÊÇtoTypeµÄ¸¸Àà£¬¸¸ÀàÏò×ÓÀà×ª»»µÄ¹ı³Ì£¬Õâ¸ö×ª»»¹ı³ÌÊÇ²»°²È«µÄ
+		// typeæ˜¯toTypeçš„çˆ¶ç±»ï¼Œçˆ¶ç±»å‘å­ç±»è½¬æ¢çš„è¿‡ç¨‹ï¼Œè¿™ä¸ªè½¬æ¢è¿‡ç¨‹æ˜¯ä¸å®‰å…¨çš„
 		// {
 		// if (!java.util.Date.class.isAssignableFrom(type))
 		// return shell(toType, obj);
 		// }
 		/**
-		 * Èç¹ûobjµÄÀàĞÍ²»ÊÇStringĞÍÊ±Ö±½ÓÅ×Òì³£, ²»Ö§³Ö·Ç×Ö·û´®ºÍ×Ö·û´®Êı×éµÄÀàĞÍ×ª»»
+		 * å¦‚æœobjçš„ç±»å‹ä¸æ˜¯Stringå‹æ—¶ç›´æ¥æŠ›å¼‚å¸¸, ä¸æ”¯æŒéå­—ç¬¦ä¸²å’Œå­—ç¬¦ä¸²æ•°ç»„çš„ç±»å‹è½¬æ¢
 		 */
 		// if (type != String.class)
 		// throw new NoSupportTypeCastException(
-		// new StringBuffer("²»Ö§³Ö[")
+		// new StringBuffer("ä¸æ”¯æŒ[")
 		// .append(type)
-		// .append("]Ïò[")
+		// .append("]å‘[")
 		// .append(toType)
-		// .append("]µÄ×ª»»")
+		// .append("]çš„è½¬æ¢")
 		// .toString());
 		/*******************************************
-		 * ×Ö·û´®Ïò»ù±¾ÀàĞÍ¼°Æä°ü×°Æ÷×ª»» * Èç¹ûobj²»ÊÇÏàÓ¦µÃÊı¾İ¸ñÊ½,½«Å×³ö * NumberFormatException *
+		 * å­—ç¬¦ä¸²å‘åŸºæœ¬ç±»å‹åŠå…¶åŒ…è£…å™¨è½¬æ¢ * å¦‚æœobjä¸æ˜¯ç›¸åº”å¾—æ•°æ®æ ¼å¼,å°†æŠ›å‡º * NumberFormatException *
 		 ******************************************/
 		if (type == long.class || type == Long.class) {
 			// if (ValueObjectUtil.isNumber(obj))
@@ -942,7 +942,7 @@ public class ObjectSerializable {
 			return true;
 		}
 
-		// Èç¹ûÊÇ×Ö·û´®ÔòÖ±½Ó·µ»Øobj.toString()
+		// å¦‚æœæ˜¯å­—ç¬¦ä¸²åˆ™ç›´æ¥è¿”å›obj.toString()
 		if (type == String.class) {
 			if (name == null)
 				ret.append("<p s:t=\"String\" v=\"").append(obj.toString()).append("\"/>");
@@ -984,7 +984,7 @@ public class ObjectSerializable {
 			return true;
 		}
 
-		else // ¶ÔÏó×ª»»¼°¶ÔÏó×´Ì¬×ª»»
+		else // å¯¹è±¡è½¬æ¢åŠå¯¹è±¡çŠ¶æ€è½¬æ¢
 		{
 			if (name == null)
 				ret.append("<p cs=\"")

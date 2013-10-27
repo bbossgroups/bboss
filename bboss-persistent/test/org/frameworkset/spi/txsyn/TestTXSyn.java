@@ -29,7 +29,7 @@ public class TestTXSyn {
 			AI a = (AI) BaseSPIManager.getProvider("txsyn.a","A1");
 			try {
 				/**
-				 * Á½¸öÌá¹©Õß·½·¨¶¼µ÷ÓÃ³É¹¦£¬¹²ÓÃÏàÍ¬µÄÊÂÎñ
+				 * ä¸¤ä¸ªæä¾›è€…æ–¹æ³•éƒ½è°ƒç”¨æˆåŠŸï¼Œå…±ç”¨ç›¸åŒçš„äº‹åŠ¡
 				 */
 				a.testTXSynSuccess();
 			} catch (Exception e) {
@@ -38,7 +38,7 @@ public class TestTXSyn {
 			}
 			try {
 				/**
-				 * A1ÊÂÎñÖ´ÐÐ³É¹¦£¬A2Í¬²½µ÷ÓÃµÄ·½·¨ÊÂÎñÖ´ÐÐÊ§°Ü£¬ËùÒÔÕû¸öÊÂÎñÖ´ÐÐÊ§°Ü
+				 * A1äº‹åŠ¡æ‰§è¡ŒæˆåŠŸï¼ŒA2åŒæ­¥è°ƒç”¨çš„æ–¹æ³•äº‹åŠ¡æ‰§è¡Œå¤±è´¥ï¼Œæ‰€ä»¥æ•´ä¸ªäº‹åŠ¡æ‰§è¡Œå¤±è´¥
 				 */
 				a.testTXSynFailed();
 			} catch (Exception e) {
@@ -47,7 +47,7 @@ public class TestTXSyn {
 			}
 			try {
 				/**
-				 * Ö´ÐÐÊÂÎñ£¬²»Í¬²½µ÷ÓÃÆäËû·þÎñ·½·¨
+				 * æ‰§è¡Œäº‹åŠ¡ï¼Œä¸åŒæ­¥è°ƒç”¨å…¶ä»–æœåŠ¡æ–¹æ³•
 				 */
 				a.testTXNoSyn();
 			} catch (Exception e) {
@@ -57,7 +57,7 @@ public class TestTXSyn {
 			
 			try {
 				/**
-				 * Í¬²½µ÷ÓÃA1ºÍA2µÄ·½·¨£¬Ã»ÓÐÊÂÎñ»·¾³
+				 * åŒæ­¥è°ƒç”¨A1å’ŒA2çš„æ–¹æ³•ï¼Œæ²¡æœ‰äº‹åŠ¡çŽ¯å¢ƒ
 				 */
 				a.testNoTXSyn();
 			} catch (Exception e) {
@@ -66,7 +66,7 @@ public class TestTXSyn {
 			}
 			try {
 				/**
-				 * ¼ÈÃ»ÓÐÍ¬²½¿ØÖÆ£¬Ò²Ã»ÓÐÊÂÎñ¿ØÖÆ
+				 * æ—¢æ²¡æœ‰åŒæ­¥æŽ§åˆ¶ï¼Œä¹Ÿæ²¡æœ‰äº‹åŠ¡æŽ§åˆ¶
 				 */
 				a.testNoTXNoSyn();
 			} catch (Exception e) {
@@ -76,8 +76,8 @@ public class TestTXSyn {
 			
 			try {
 				/**
-				 * °üº¬ÉùÃ÷Ê½ÊÂÎñµÄÍ¬²½·½·¨£¬²¢ÇÒ¶¨ÒåÁËÊÂÎñ»Ø¹öµÄÒì³£ÀàÐÍÎªSynException 
-				 * µ«ÊÇÍ¬²½·½·¨Å×³öÒì³£ÀàÐÍÎªSynException£¬ËùÒÔÊÂÎñ»á»Ø¹ö
+				 * åŒ…å«å£°æ˜Žå¼äº‹åŠ¡çš„åŒæ­¥æ–¹æ³•ï¼Œå¹¶ä¸”å®šä¹‰äº†äº‹åŠ¡å›žæ»šçš„å¼‚å¸¸ç±»åž‹ä¸ºSynException 
+				 * ä½†æ˜¯åŒæ­¥æ–¹æ³•æŠ›å‡ºå¼‚å¸¸ç±»åž‹ä¸ºSynExceptionï¼Œæ‰€ä»¥äº‹åŠ¡ä¼šå›žæ»š
 				 */
 				a.testWithSpecialException(1);
 			} catch (Exception e) {
@@ -87,8 +87,8 @@ public class TestTXSyn {
 //			
 			try {
 				/**
-				 * °üº¬ÉùÃ÷Ê½ÊÂÎñµÄÍ¬²½·½·¨£¬²¢ÇÒ¶¨ÒåÁËÊÂÎñ»Ø¹öµÄÒì³£ÀàÐÍÎªSynException 
-				 * µ«ÊÇÍ¬²½·½·¨Å×³öÒì³£ÀàÐÍÎªException£¬ËùÒÔÊÂÎñ²»»á»Ø¹ö
+				 * åŒ…å«å£°æ˜Žå¼äº‹åŠ¡çš„åŒæ­¥æ–¹æ³•ï¼Œå¹¶ä¸”å®šä¹‰äº†äº‹åŠ¡å›žæ»šçš„å¼‚å¸¸ç±»åž‹ä¸ºSynException 
+				 * ä½†æ˜¯åŒæ­¥æ–¹æ³•æŠ›å‡ºå¼‚å¸¸ç±»åž‹ä¸ºExceptionï¼Œæ‰€ä»¥äº‹åŠ¡ä¸ä¼šå›žæ»š
 				 */
 				a.testWithSpecialException(2);
 			} catch (Exception e) {
@@ -109,7 +109,7 @@ public class TestTXSyn {
 			AI a = (AI) BaseSPIManager.getProvider("txsyn.a","A1");
 			try {
 				/**
-				 * Á½¸öÌá¹©Õß·½·¨¶¼µ÷ÓÃ³É¹¦£¬¹²ÓÃÏàÍ¬µÄÊÂÎñ
+				 * ä¸¤ä¸ªæä¾›è€…æ–¹æ³•éƒ½è°ƒç”¨æˆåŠŸï¼Œå…±ç”¨ç›¸åŒçš„äº‹åŠ¡
 				 */
 				a.testTXSynSuccess();
 			} catch (Exception e) {
@@ -118,7 +118,7 @@ public class TestTXSyn {
 			}
 			try {
 				/**
-				 * A1ÊÂÎñÖ´ÐÐ³É¹¦£¬A2Í¬²½µ÷ÓÃµÄ·½·¨ÊÂÎñÖ´ÐÐÊ§°Ü£¬ËùÒÔÕû¸öÊÂÎñÖ´ÐÐÊ§°Ü
+				 * A1äº‹åŠ¡æ‰§è¡ŒæˆåŠŸï¼ŒA2åŒæ­¥è°ƒç”¨çš„æ–¹æ³•äº‹åŠ¡æ‰§è¡Œå¤±è´¥ï¼Œæ‰€ä»¥æ•´ä¸ªäº‹åŠ¡æ‰§è¡Œå¤±è´¥
 				 */
 				a.testTXSynFailed();
 			} catch (Exception e) {
@@ -127,7 +127,7 @@ public class TestTXSyn {
 			}
 			try {
 				/**
-				 * Ö´ÐÐÊÂÎñ£¬²»Í¬²½µ÷ÓÃÆäËû·þÎñ·½·¨
+				 * æ‰§è¡Œäº‹åŠ¡ï¼Œä¸åŒæ­¥è°ƒç”¨å…¶ä»–æœåŠ¡æ–¹æ³•
 				 */
 				a.testTXNoSyn();
 			} catch (Exception e) {
@@ -137,7 +137,7 @@ public class TestTXSyn {
 			
 			try {
 				/**
-				 * Í¬²½µ÷ÓÃA1ºÍA2µÄ·½·¨£¬Ã»ÓÐÊÂÎñ»·¾³
+				 * åŒæ­¥è°ƒç”¨A1å’ŒA2çš„æ–¹æ³•ï¼Œæ²¡æœ‰äº‹åŠ¡çŽ¯å¢ƒ
 				 */
 				a.testNoTXSyn();
 			} catch (Exception e) {
@@ -146,7 +146,7 @@ public class TestTXSyn {
 			}
 			try {
 				/**
-				 * ¼ÈÃ»ÓÐÍ¬²½¿ØÖÆ£¬Ò²Ã»ÓÐÊÂÎñ¿ØÖÆ
+				 * æ—¢æ²¡æœ‰åŒæ­¥æŽ§åˆ¶ï¼Œä¹Ÿæ²¡æœ‰äº‹åŠ¡æŽ§åˆ¶
 				 */
 				a.testNoTXNoSyn();
 			} catch (Exception e) {
@@ -156,8 +156,8 @@ public class TestTXSyn {
 			
 			try {
 				/**
-				 * °üº¬ÉùÃ÷Ê½ÊÂÎñµÄÍ¬²½·½·¨£¬²¢ÇÒ¶¨ÒåÁËÊÂÎñ»Ø¹öµÄÒì³£ÀàÐÍÎªSynException 
-				 * µ«ÊÇÍ¬²½·½·¨Å×³öÒì³£ÀàÐÍÎªSynException£¬ËùÒÔÊÂÎñ»á»Ø¹ö
+				 * åŒ…å«å£°æ˜Žå¼äº‹åŠ¡çš„åŒæ­¥æ–¹æ³•ï¼Œå¹¶ä¸”å®šä¹‰äº†äº‹åŠ¡å›žæ»šçš„å¼‚å¸¸ç±»åž‹ä¸ºSynException 
+				 * ä½†æ˜¯åŒæ­¥æ–¹æ³•æŠ›å‡ºå¼‚å¸¸ç±»åž‹ä¸ºSynExceptionï¼Œæ‰€ä»¥äº‹åŠ¡ä¼šå›žæ»š
 				 */
 				a.testWithSpecialException(1);
 			} catch (Exception e) {
@@ -167,8 +167,8 @@ public class TestTXSyn {
 //			
 			try {
 				/**
-				 * °üº¬ÉùÃ÷Ê½ÊÂÎñµÄÍ¬²½·½·¨£¬²¢ÇÒ¶¨ÒåÁËÊÂÎñ»Ø¹öµÄÒì³£ÀàÐÍÎªSynException 
-				 * µ«ÊÇÍ¬²½·½·¨Å×³öÒì³£ÀàÐÍÎªException£¬ËùÒÔÊÂÎñ²»»á»Ø¹ö
+				 * åŒ…å«å£°æ˜Žå¼äº‹åŠ¡çš„åŒæ­¥æ–¹æ³•ï¼Œå¹¶ä¸”å®šä¹‰äº†äº‹åŠ¡å›žæ»šçš„å¼‚å¸¸ç±»åž‹ä¸ºSynException 
+				 * ä½†æ˜¯åŒæ­¥æ–¹æ³•æŠ›å‡ºå¼‚å¸¸ç±»åž‹ä¸ºExceptionï¼Œæ‰€ä»¥äº‹åŠ¡ä¸ä¼šå›žæ»š
 				 */
 				a.testWithSpecialException(2);
 			} catch (Exception e) {

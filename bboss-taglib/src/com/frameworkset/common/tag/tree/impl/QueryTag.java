@@ -29,8 +29,8 @@ import com.frameworkset.util.VelocityUtil;
 
 /**
  * <p>QueryTag.java</p>
- * <p> Description: ʵ������ǩ�Ĳ�ѯ���ܣ������ھ�̬���Ͷ�����ϵ���
- * ֻ�ܲ����Ѿ�չʾ���������ڵ�
+ * <p> Description: 实现树标签的查询功能，适用于静态树和动静结合的树
+ * 只能查找已经展示出来的树节点
  * </p>
  * <p> bboss workgroup </p>
  * <p> Copyright (c) 2009 </p>

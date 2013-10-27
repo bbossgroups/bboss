@@ -20,10 +20,10 @@ import java.util.Set;
 import com.frameworkset.common.poolman.DBUtil;
 
 /**
- * <p>Title: ÊµÏÖÊı¾İ¿â¼ÇÂ¼Ïò¶ÔÏó×ª»»¹¦ÄÜ</p>
+ * <p>Title: å®ç°æ•°æ®åº“è®°å½•å‘å¯¹è±¡è½¬æ¢åŠŸèƒ½</p>
  *
- * <p>Description: ÊµÏÖ´¿¶ÔÏó²åÈë¡¢É¾³ı¡¢¸üĞÂÊı¾İ¿â²Ù×÷
- *                 ÊµÏÖsqlÓï¾ä½áºÏÒµÎñ¶ÔÏóµÄ²éÑ¯²Ù×÷£¨²éÑ¯½á¹û¼¯·â×°ÒÔÒµÎñ¶ÔÏóµÄ¸ñÊ½·â×°£©
+ * <p>Description: å®ç°çº¯å¯¹è±¡æ’å…¥ã€åˆ é™¤ã€æ›´æ–°æ•°æ®åº“æ“ä½œ
+ *                 å®ç°sqlè¯­å¥ç»“åˆä¸šåŠ¡å¯¹è±¡çš„æŸ¥è¯¢æ“ä½œï¼ˆæŸ¥è¯¢ç»“æœé›†å°è£…ä»¥ä¸šåŠ¡å¯¹è±¡çš„æ ¼å¼å°è£…ï¼‰
  * </p>
  *
  * <p>
@@ -33,7 +33,7 @@ import com.frameworkset.common.poolman.DBUtil;
  * Copyright (c) 2007
  * </p>
  * 
- * @Date 2009-6-1 ÏÂÎç08:58:51
+ * @Date 2009-6-1 ä¸‹åˆ08:58:51
  * @author biaoping.yin
  * @version 1.0
  */
@@ -44,11 +44,11 @@ public class ORMUtil
     }
 
     /**
-     * ·â×°Êı¾İµÄ¶ÔÏóµÄClassÀàĞÍ
-     * Ö´ĞĞ²éÑ¯²Ù×÷Ê±¿ÉÒÔÖ±½Ó½«·µ»ØµÄ½á¹û¼¯·â×°³ÉÒ»¸ö°üº¬¸ÃÀàĞÍ¶ÔÏóµÄÁĞ±íÀ´Ê¹ÓÃ
-     * @param dbName String Êı¾İ¿âÁ´½Ó³ØµÄÃû³Æ
-     * @param newObj Object ²åÈë¼ÇÂ¼Êı¾İ·â×°¶ÔÏó
-     * @return Object Èç¹û×Ô¶¯²úÉúÊı¾İ¿âÖ÷¼üÔò·µ»ØÊı¾İ¿âÖ÷¼ü
+     * å°è£…æ•°æ®çš„å¯¹è±¡çš„Classç±»å‹
+     * æ‰§è¡ŒæŸ¥è¯¢æ“ä½œæ—¶å¯ä»¥ç›´æ¥å°†è¿”å›çš„ç»“æœé›†å°è£…æˆä¸€ä¸ªåŒ…å«è¯¥ç±»å‹å¯¹è±¡çš„åˆ—è¡¨æ¥ä½¿ç”¨
+     * @param dbName String æ•°æ®åº“é“¾æ¥æ± çš„åç§°
+     * @param newObj Object æ’å…¥è®°å½•æ•°æ®å°è£…å¯¹è±¡
+     * @return Object å¦‚æœè‡ªåŠ¨äº§ç”Ÿæ•°æ®åº“ä¸»é”®åˆ™è¿”å›æ•°æ®åº“ä¸»é”®
      */
 
     public Object executeInsert(String dbName,Object newObj) throws ORMappingException
@@ -57,28 +57,28 @@ public class ORMUtil
     }
 
     /**
-     * ·â×°Êı¾İµÄ¶ÔÏóµÄClassÀàĞÍ
-     * Ö´ĞĞ²éÑ¯²Ù×÷Ê±¿ÉÒÔÖ±½Ó½«·µ»ØµÄ½á¹û¼¯·â×°³ÉÒ»¸ö°üº¬¸ÃÀàĞÍ¶ÔÏóµÄÁĞ±íÀ´Ê¹ÓÃ
-     * @param newObj Object ²åÈë¼ÇÂ¼Êı¾İ·â×°¶ÔÏó
-     * @return Object Èç¹û×Ô¶¯²úÉúÊı¾İ¿âÖ÷¼üÔò·µ»ØÊı¾İ¿âÖ÷¼ü
+     * å°è£…æ•°æ®çš„å¯¹è±¡çš„Classç±»å‹
+     * æ‰§è¡ŒæŸ¥è¯¢æ“ä½œæ—¶å¯ä»¥ç›´æ¥å°†è¿”å›çš„ç»“æœé›†å°è£…æˆä¸€ä¸ªåŒ…å«è¯¥ç±»å‹å¯¹è±¡çš„åˆ—è¡¨æ¥ä½¿ç”¨
+     * @param newObj Object æ’å…¥è®°å½•æ•°æ®å°è£…å¯¹è±¡
+     * @return Object å¦‚æœè‡ªåŠ¨äº§ç”Ÿæ•°æ®åº“ä¸»é”®åˆ™è¿”å›æ•°æ®åº“ä¸»é”®
      */
 
     public Object executeInsert(Object newObj) throws ORMappingException
     {
-        //´«ÈëÈ±Ê¡µÄÊı¾İ¿âÁ¬½Ó³Ø
+        //ä¼ å…¥ç¼ºçœçš„æ•°æ®åº“è¿æ¥æ± 
         return executeInsert(null,newObj);
     }
 
     /**
-     * ÅúÁ¿²åÈë²Ù×÷
+     * æ‰¹é‡æ’å…¥æ“ä½œ
      *
-     * @param newObj Object ²åÈë¼ÇÂ¼Êı¾İ·â×°¶ÔÏó
-     * @return Object Èç¹û×Ô¶¯²úÉúÊı¾İ¿âÖ÷¼üÔò·µ»ØÊı¾İ¿âÖ÷¼ü
+     * @param newObj Object æ’å…¥è®°å½•æ•°æ®å°è£…å¯¹è±¡
+     * @return Object å¦‚æœè‡ªåŠ¨äº§ç”Ÿæ•°æ®åº“ä¸»é”®åˆ™è¿”å›æ•°æ®åº“ä¸»é”®
      */
 
     public Object[] executeBatchInsert(Set newObj) throws ORMappingException
     {
-        //´«ÈëÈ±Ê¡µÄÊı¾İ¿âÁ¬½Ó³Ø
+        //ä¼ å…¥ç¼ºçœçš„æ•°æ®åº“è¿æ¥æ± 
         return executeBatchInsert(null,newObj);
     }
 
@@ -95,9 +95,9 @@ public class ORMUtil
 
 
     /**
-     * ¸üĞÂ²Ù×÷
-     * @param dbName String Êı¾İ¿âÁ´½Ó³ØµÄÃû³Æ
-     * @param newObj Object ¸üĞÂ¼ÇÂ¼Êı¾İ·â×°¶ÔÏó
+     * æ›´æ–°æ“ä½œ
+     * @param dbName String æ•°æ®åº“é“¾æ¥æ± çš„åç§°
+     * @param newObj Object æ›´æ–°è®°å½•æ•°æ®å°è£…å¯¹è±¡
      */
 
     public void executeUpdate(String dbName,Object newObj) throws ORMappingException
@@ -106,33 +106,33 @@ public class ORMUtil
     }
 
     /**
-     * ¸üĞÂ²Ù×÷
-     * @param newObj Object ¸üĞÂ¼ÇÂ¼Êı¾İ·â×°¶ÔÏó
+     * æ›´æ–°æ“ä½œ
+     * @param newObj Object æ›´æ–°è®°å½•æ•°æ®å°è£…å¯¹è±¡
      */
 
     public void executeUpdate(Object newObj) throws ORMappingException
     {
-        //´«ÈëÈ±Ê¡µÄÊı¾İ¿âÁ¬½Ó³Ø
+        //ä¼ å…¥ç¼ºçœçš„æ•°æ®åº“è¿æ¥æ± 
         executeUpdate(null,newObj);
     }
 
     /**
-     * ÅúÁ¿¸üĞÂ²Ù×÷
+     * æ‰¹é‡æ›´æ–°æ“ä½œ
      *
-     * @param newObj Object Åú´¦Àí¸üĞÂ¼ÇÂ¼Êı¾İ·â×°¶ÔÏó
+     * @param newObj Object æ‰¹å¤„ç†æ›´æ–°è®°å½•æ•°æ®å°è£…å¯¹è±¡
 
      */
 
     public void executeBatchUpdate(Set newObj) throws ORMappingException
     {
-        //´«ÈëÈ±Ê¡µÄÊı¾İ¿âÁ¬½Ó³Ø
+        //ä¼ å…¥ç¼ºçœçš„æ•°æ®åº“è¿æ¥æ± 
         executeBatchUpdate(null,newObj);
     }
 
     /**
-     * ÅúÁ¿¸üĞÂ²Ù×÷
-     * @param dbName String Êı¾İ¿âÁ´½Ó³ØµÄÃû³Æ
-     * @param newObj Set Åú´¦Àí¸üĞÂ¼ÇÂ¼Êı¾İ·â×°¶ÔÏó
+     * æ‰¹é‡æ›´æ–°æ“ä½œ
+     * @param dbName String æ•°æ®åº“é“¾æ¥æ± çš„åç§°
+     * @param newObj Set æ‰¹å¤„ç†æ›´æ–°è®°å½•æ•°æ®å°è£…å¯¹è±¡
      */
     public void executeBatchUpdate(String dbName, Set newObj) throws ORMappingException{
 

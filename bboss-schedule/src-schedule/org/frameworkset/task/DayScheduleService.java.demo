@@ -25,7 +25,7 @@ public class DayScheduleService extends ScheduleService implements Serializable
 
     }
     /**
-     * ·şÎñÆ÷Æô¶¯Ê±×°ÔØÈÎÎñ
+     * æœåŠ¡å™¨å¯åŠ¨æ—¶è£…è½½ä»»åŠ¡
      */
     public void startService(Scheduler scheduler)
             throws ScheduleServiceException
@@ -37,7 +37,7 @@ public class DayScheduleService extends ScheduleService implements Serializable
             long interval = 0;
             try
             {
-                //´ÓÈÕ³Ì¹ÜÀíµÄÊı¾İ¿âÖĞµÃµ½ĞèÒªÌáĞÑµÄÈÕ³Ì
+                //ä»æ—¥ç¨‹ç®¡ç†çš„æ•°æ®åº“ä¸­å¾—åˆ°éœ€è¦æé†’çš„æ—¥ç¨‹
                 list = smi.getStartSchedular();
             } catch (ManagerException e1)
             {
@@ -60,7 +60,7 @@ public class DayScheduleService extends ScheduleService implements Serializable
                     // Execute instance =
                     // (Execute)Class.forName(jobInfo.getClazz()
                     // ).newInstance();
-                    //ÉèÖÃÈÎÎñµ½´ïÊ±Ö´ĞĞµÄÀà
+                    //è®¾ç½®ä»»åŠ¡åˆ°è¾¾æ—¶æ‰§è¡Œçš„ç±»
                     Execute instance = new DayExecute();
                     map.put("action", instance);
 
@@ -78,13 +78,13 @@ public class DayScheduleService extends ScheduleService implements Serializable
                     	parameters.put("type", "schedule");
                     else
                     	parameters.put("type", sch.getType());
-                    parameters.put("typeDesc", "ÈÕ³Ì°²ÅÅ");
+                    parameters.put("typeDesc", "æ—¥ç¨‹å®‰æ’");
                     parameters.put("url","/sysmanager/remind_list.jsp");
                     parameters.put("isMessage", sch.getIsMessage() + "");    
                     map.put("parameters", parameters);
                     jobDetail.setJobDataMap(map);
                     // jobDetail.se
-                    //ÉèÖÃÌáĞÑ¼ä¸ô
+                    //è®¾ç½®æé†’é—´éš”
                     if (sch.getIntervalType() == 0)
                     {
                         interval = (long) (sch.getInterval() * 60L * 1000L);
@@ -97,7 +97,7 @@ public class DayScheduleService extends ScheduleService implements Serializable
                     {
                         interval = (long) (sch.getInterval() * 24L * 60L * 60L * 1000L);
                     }
-                    //ÉèÖÃ´¥·¢Æ÷£¬ÈçÈÎÎñid£¬ÈÎÎñ×éÃû£¬ÌáĞÑ¿ªÊ¼Ê±¼äºÍ½áÊøÊ±¼ä£¬ÌáĞÑ¼ä¸ô£¬ÌáĞÑ´ÎÊı
+                    //è®¾ç½®è§¦å‘å™¨ï¼Œå¦‚ä»»åŠ¡idï¼Œä»»åŠ¡ç»„åï¼Œæé†’å¼€å§‹æ—¶é—´å’Œç»“æŸæ—¶é—´ï¼Œæé†’é—´éš”ï¼Œæé†’æ¬¡æ•°
                     Trigger trigger = new SimpleTrigger(jobId,
                             super.scheduleServiceInfo.getId(), sch
                                     .getRemindBeginTime(), sch
@@ -115,7 +115,7 @@ public class DayScheduleService extends ScheduleService implements Serializable
                     // e.printStackTrace();
                     // }
                     // trigger.setCronExpression(cron_time);
-                    //Æô¶¯ÈÎÎñ
+                    //å¯åŠ¨ä»»åŠ¡
                     scheduler.scheduleJob(jobDetail, trigger);
                 } catch (SchedulerException ex)
                 {
@@ -128,13 +128,13 @@ public class DayScheduleService extends ScheduleService implements Serializable
     }
 
     /**
-     * Ôö¼ÓÒ»¸öÌáĞÑÈÎÎñ
+     * å¢åŠ ä¸€ä¸ªæé†’ä»»åŠ¡
      * 
      * @param scheduler
      */
     public void startExecuteJob(Scheduler scheduler, SchedulejobInfo jobInfo)
     {
-        //½ÓÊÕÈÕ³Ìbean
+        //æ¥æ”¶æ—¥ç¨‹bean
         Schedular sch = (Schedular) jobInfo;
         String name;
         long interval = 0;
@@ -147,7 +147,7 @@ public class DayScheduleService extends ScheduleService implements Serializable
         try
         {
             JobDataMap map = new JobDataMap();
-            //ÉèÖÃÌáĞÑ²ÎÊı
+            //è®¾ç½®æé†’å‚æ•°
             Execute instance = new DayExecute();
             map.put("action", instance);
             
@@ -165,7 +165,7 @@ public class DayScheduleService extends ScheduleService implements Serializable
             	parameters.put("type", "schedule");
             else
             	parameters.put("type", sch.getType());
-            parameters.put("typeDesc", "ÈÕ³Ì°²ÅÅ");
+            parameters.put("typeDesc", "æ—¥ç¨‹å®‰æ’");
             parameters.put("url","/sysmanager/remind_list.jsp");
             parameters.put("isMessage", sch.getIsMessage() + "");
             
@@ -173,7 +173,7 @@ public class DayScheduleService extends ScheduleService implements Serializable
 
             jobDetail.setJobDataMap(map);
             // jobDetail.se
-            //ÉèÖÃÌáĞÑ¼ä¸ô
+            //è®¾ç½®æé†’é—´éš”
             if (sch.getIntervalType() == 0)
             {
                 interval = (long) (sch.getInterval() * 60L * 1000L);
@@ -186,11 +186,11 @@ public class DayScheduleService extends ScheduleService implements Serializable
             {
                 interval = (long) (sch.getInterval() * 24L * 60L * 60L * 1000L);
             }
-            //ÉèÖÃ´¥·¢Æ÷
+            //è®¾ç½®è§¦å‘å™¨
             Trigger trigger = new SimpleTrigger(name, super.scheduleServiceInfo
                     .getId(), sch.getRemindBeginTime(), sch.getRemindEndTime(),
                     SimpleTrigger.REPEAT_INDEFINITELY, interval);
-//          Æô¶¯ÈÎÎñ
+//          å¯åŠ¨ä»»åŠ¡
             scheduler.scheduleJob(jobDetail, trigger);
 
         } catch (SchedulerException ex)
@@ -200,7 +200,7 @@ public class DayScheduleService extends ScheduleService implements Serializable
     }
 
     /**
-     * ¸üĞÂÒ»¸öÌáĞÑ´¥·¢Æ÷
+     * æ›´æ–°ä¸€ä¸ªæé†’è§¦å‘å™¨
      * 
      * @param scheduler
      */
@@ -244,7 +244,7 @@ public class DayScheduleService extends ScheduleService implements Serializable
     }
 
     /**
-     * ¸üĞÂÒ»¸öÈÎÎñ
+     * æ›´æ–°ä¸€ä¸ªä»»åŠ¡
      */
     public void updateJob(Scheduler scheduler, SchedulejobInfo jobInfo)
     {
@@ -276,7 +276,7 @@ public class DayScheduleService extends ScheduleService implements Serializable
             	parameters.put("type", "schedule");
             else
             	parameters.put("type", sch.getType());
-            parameters.put("typeDesc", "ÈÕ³Ì°²ÅÅ");
+            parameters.put("typeDesc", "æ—¥ç¨‹å®‰æ’");
             parameters.put("url","/sysmanager/remind_list.jsp");
             map.put("parameters", parameters);
 
@@ -291,7 +291,7 @@ public class DayScheduleService extends ScheduleService implements Serializable
     }
 
     /**
-     * ¸üĞÂÒ»¸öÈÎÎñºÍ´¥·¢Æ÷
+     * æ›´æ–°ä¸€ä¸ªä»»åŠ¡å’Œè§¦å‘å™¨
      * 
      * @param scheduler
      * @param jobInfo
@@ -332,7 +332,7 @@ public class DayScheduleService extends ScheduleService implements Serializable
 	            	parameters.put("type", "schedule");
 	            else
 	            	parameters.put("type", sch.getType());
-	            parameters.put("typeDesc", "ÈÕ³Ì°²ÅÅ");
+	            parameters.put("typeDesc", "æ—¥ç¨‹å®‰æ’");
 	            parameters.put("url","/sysmanager/remind_list.jsp");
 	            map.put("parameters", parameters);
 	

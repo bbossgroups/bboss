@@ -37,7 +37,7 @@ import org.apache.log4j.Logger;
  * Copyright (c) 2007
  * </p>
  * 
- * @Date 2010-9-24 ÏÂÎç05:05:18
+ * @Date 2010-9-24 ä¸‹åˆ05:05:18
  * @author biaoping.yin
  * @version 1.0
  */

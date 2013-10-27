@@ -22,10 +22,10 @@ import org.frameworkset.spi.security.SecurityContext;
 
 /**
  * <p>Title: CallContext.java</p> 
- * <p>Description: ·şÎñµ÷ÓÃÉÏÏÂÎÄ</p>
+ * <p>Description: æœåŠ¡è°ƒç”¨ä¸Šä¸‹æ–‡</p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2010-2-9 ÉÏÎç10:43:54
+ * @Date 2010-2-9 ä¸Šåˆ10:43:54
  * @author biaoping.yin
  * @version 1.0
  */
@@ -37,19 +37,19 @@ public class CallContext implements java.io.Serializable
 	private String  applicationContextPath ;
 	
     /**
-     * ·şÎñµ÷ÓÃ°²È«ÉÏÏÂÎÄ
+     * æœåŠ¡è°ƒç”¨å®‰å…¨ä¸Šä¸‹æ–‡
      */
     private SecurityContext secutiryContext; 
     /**
-     * ·şÎñµ÷ÓÃµÄÏûÏ¢Í·ÊôĞÔ¼¯
+     * æœåŠ¡è°ƒç”¨çš„æ¶ˆæ¯å¤´å±æ€§é›†
      */
     private Headers headers;
     /**
-     * ·şÎñµ÷ÓÃÑ­»·ÒÀÀµ×¢ÈëÉÏÏÂÎÄ
+     * æœåŠ¡è°ƒç”¨å¾ªç¯ä¾èµ–æ³¨å…¥ä¸Šä¸‹æ–‡
      */
     private transient Context loopcontext;
     /**
-     * Ó¦ÓÃÄ£¿éÉÏÏÂÎÄ
+     * åº”ç”¨æ¨¡å—ä¸Šä¸‹æ–‡
      * @param applicationContext
      */
     public CallContext(BaseApplicationContext applicationContext)

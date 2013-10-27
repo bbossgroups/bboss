@@ -44,15 +44,15 @@ public abstract class BaseTableManager {
 
 	private static Logger log = Logger.getLogger(BaseTableManager.class);
 
-	// ²éÑ¯±íµÄĞÅÏ¢sql
+	// æŸ¥è¯¢è¡¨çš„ä¿¡æ¯sql
 	public static final String queryTableInfoSql = "select * from tableinfo";
 
 	public static final String queryTableInfoSqlBytableName = "select * from tableinfo where table_name=?";
 
-	// »ñÈ¡±íµÄÖ÷¼üÖµsql
+	// è·å–è¡¨çš„ä¸»é”®å€¼sql
 	public static final String queryPrimaryKey = "select max(?) from ?";
 
-	// ¸üĞÂtableinfoÖĞ±íµÄ×îĞÂÖ÷¼üÖµsql
+	// æ›´æ–°tableinfoä¸­è¡¨çš„æœ€æ–°ä¸»é”®å€¼sql
 	public static final String updateTableInfoSql = "update tableinfo set table_id_value=? where upper(table_name)=?";
 	private static final Object token = new Object();
 	public static PrimaryKeyCache getPoolTableInfos(String poolName)
@@ -83,13 +83,13 @@ public abstract class BaseTableManager {
 			
 			u_pstmt = con.prepareStatement(updateTableInfoSql);
 			
-			// ´´½¨Êı¾İ¿âÁ´½Ó³ØµÄÖ÷¼ü»º³å³Ø
+			// åˆ›å»ºæ•°æ®åº“é“¾æ¥æ± çš„ä¸»é”®ç¼“å†²æ± 
 			
 			while (rs.next()) {
 				String table_name = rs.getString("table_name").trim();
 				if(trace.containsKey(table_name.toLowerCase()))
 				{
-					log.info("¾¯¸æ£ºtableinfo±íÖĞ´æÔÚ¶àÌõ¡¾" + table_name + "¡¿µÄÖ÷¼üĞÅÏ¢,Ö»ÄÜ±£³ÖÒ»Ìõ¼ÇÂ¼£¬·ñÔò»áÓ°ÏìÓë¸Ã±íÏà¹ØµÄÒµÎñµÄ´¦Àí.") ;
+					log.info("è­¦å‘Šï¼štableinfoè¡¨ä¸­å­˜åœ¨å¤šæ¡ã€" + table_name + "ã€‘çš„ä¸»é”®ä¿¡æ¯,åªèƒ½ä¿æŒä¸€æ¡è®°å½•ï¼Œå¦åˆ™ä¼šå½±å“ä¸è¯¥è¡¨ç›¸å…³çš„ä¸šåŠ¡çš„å¤„ç†.") ;
 				}
 				else
 				{
@@ -169,7 +169,7 @@ public abstract class BaseTableManager {
 							new_table_id_value = rs1.getLong(1);// PrimaryKey.parserSequence(rs1.getString(1),prefix,type,table_name);
 						}
 	
-						// Èç¹ûtableinfo±íÖĞ±íÖ÷¼üÖµÓë±íµÄÊµ¼ÊÖ÷¼üÖµ²»Ïà·ûÊ±£¬¸üĞÂtableinfoÖĞ±íµÄÖ÷¼üÖµ
+						// å¦‚æœtableinfoè¡¨ä¸­è¡¨ä¸»é”®å€¼ä¸è¡¨çš„å®é™…ä¸»é”®å€¼ä¸ç›¸ç¬¦æ—¶ï¼Œæ›´æ–°tableinfoä¸­è¡¨çš„ä¸»é”®å€¼
 						if (new_table_id_value > table_id_value || new_table_id_value < table_id_value) {
 							
 							u_pstmt.setString(2, table_name.toUpperCase());
@@ -185,7 +185,7 @@ public abstract class BaseTableManager {
 					keyCache.addIDTable(primaryKey);
 				} catch (Exception e) {
 					// e.printStackTrace();
-					// »ñÈ¡±íµÄÖ÷¼üĞÅÏ¢Ê§°ÜÊ±×Ô¶¯Ìø¹ı±¾±íÖ÷¼üĞÅÏ¢³õÊ¼»¯ 
+					// è·å–è¡¨çš„ä¸»é”®ä¿¡æ¯å¤±è´¥æ—¶è‡ªåŠ¨è·³è¿‡æœ¬è¡¨ä¸»é”®ä¿¡æ¯åˆå§‹åŒ– 
 					log.error("    load table[" + table_name
 							+ "] failed!\r\nerror message:\r\n"
 							+ e.getMessage(),e);
@@ -248,7 +248,7 @@ public abstract class BaseTableManager {
 	}
 
 	/**
-	 * Èç¹û±íµÄÖ÷¼üĞÅÏ¢²»´æÔÚÊ±Í¨¹ı±¾·½·¨´ÓÊı¾İ¿âÖĞÊµÊ±¼ÓÔØ±íµÄÖ÷¼üĞÅÏ¢
+	 * å¦‚æœè¡¨çš„ä¸»é”®ä¿¡æ¯ä¸å­˜åœ¨æ—¶é€šè¿‡æœ¬æ–¹æ³•ä»æ•°æ®åº“ä¸­å®æ—¶åŠ è½½è¡¨çš„ä¸»é”®ä¿¡æ¯
 	 * 
 	 * @param poolName
 	 * @param tableName
@@ -262,10 +262,10 @@ public abstract class BaseTableManager {
 	
 	
 	/**
-	 * Èç¹û±íµÄÖ÷¼üĞÅÏ¢²»´æÔÚÊ±Í¨¹ı±¾·½·¨´ÓÊı¾İ¿âÖĞÊµÊ±¼ÓÔØ±íµÄÖ÷¼üĞÅÏ¢
+	 * å¦‚æœè¡¨çš„ä¸»é”®ä¿¡æ¯ä¸å­˜åœ¨æ—¶é€šè¿‡æœ¬æ–¹æ³•ä»æ•°æ®åº“ä¸­å®æ—¶åŠ è½½è¡¨çš„ä¸»é”®ä¿¡æ¯
 	 * 
 	 * @param poolName
-	 * @param Connection con Íâ²¿´«ÈëµÄÏµÍ³Á´½Ó
+	 * @param Connection con å¤–éƒ¨ä¼ å…¥çš„ç³»ç»Ÿé“¾æ¥
 	 * @param tableName
 	 * @return
 	 * @throws Exception
@@ -278,7 +278,7 @@ public abstract class BaseTableManager {
 		ResultSet rs1 = null;
 		Statement q_pstmt = null;
 		PreparedStatement u_pstmt = null;
-		//Çø·ÖÊÇ·ñÊ¹ÓÃÍâ²¿Á´½Ó±êÊ¶£¬·½·¨²ÎÊıconÎª¿ÕÊ±£¬ĞèÒª¸Ä±äoutconµÄÖµÎªfalse
+		//åŒºåˆ†æ˜¯å¦ä½¿ç”¨å¤–éƒ¨é“¾æ¥æ ‡è¯†ï¼Œæ–¹æ³•å‚æ•°conä¸ºç©ºæ—¶ï¼Œéœ€è¦æ”¹å˜outconçš„å€¼ä¸ºfalse
 		boolean outcon = true;
 
 		ResultSet rs = null;
@@ -288,7 +288,7 @@ public abstract class BaseTableManager {
 			if(con == null)
 			{
 				tx = TransactionManager.getTransaction();
-				//ÅĞ¶Ïµ±Ç°µÄ²Ù×÷ÊÇ·ñÔÚÊÂÎñ»·¾³ÖĞ£¬Èç¹ûÔÚÊ¹ÓÃÊÂÎñ»·¾³µÄÁ´½Ó 
+				//åˆ¤æ–­å½“å‰çš„æ“ä½œæ˜¯å¦åœ¨äº‹åŠ¡ç¯å¢ƒä¸­ï¼Œå¦‚æœåœ¨ä½¿ç”¨äº‹åŠ¡ç¯å¢ƒçš„é“¾æ¥ 
 				if(tx != null)
 				{
 					con = tx.getConnection(poolName);
@@ -306,7 +306,7 @@ public abstract class BaseTableManager {
 			stmt.setString(1, tableName);
 			rs = stmt.executeQuery();
 			DB dbAdapter = SQLManager.getInstance().getDBAdapter(poolName);
-			// ´´½¨Êı¾İ¿âÁ´½Ó³ØµÄÖ÷¼ü»º³å³Ø
+			// åˆ›å»ºæ•°æ®åº“é“¾æ¥æ± çš„ä¸»é”®ç¼“å†²æ± 
 
 			if (rs.next()) {
 				String table_name = rs.getString("table_name").trim();
@@ -369,7 +369,7 @@ public abstract class BaseTableManager {
 								new_table_id_value = rs1.getLong(1);// PrimaryKey.parserSequence(rs1.getString(1),prefix,type,table_name);
 							}
 		
-							// Èç¹ûtableinfo±íÖĞ±íÖ÷¼üÖµÓë±íµÄÊµ¼ÊÖ÷¼üÖµ²»Ïà·ûÊ±£¬¸üĞÂtableinfoÖĞ±íµÄÖ÷¼üÖµ
+							// å¦‚æœtableinfoè¡¨ä¸­è¡¨ä¸»é”®å€¼ä¸è¡¨çš„å®é™…ä¸»é”®å€¼ä¸ç›¸ç¬¦æ—¶ï¼Œæ›´æ–°tableinfoä¸­è¡¨çš„ä¸»é”®å€¼
 							if (new_table_id_value > table_id_value || new_table_id_value < table_id_value) {
 								u_pstmt.setString(2, table_name.toUpperCase());
 								u_pstmt.setLong(1, new_table_id_value);
@@ -384,7 +384,7 @@ public abstract class BaseTableManager {
 						return primaryKey;
 					} catch (Exception e) {
 						// e.printStackTrace();
-						// »ñÈ¡±íµÄÖ÷¼üĞÅÏ¢Ê§°ÜÊ±×Ô¶¯Ìø¹ı±¾±íÖ÷¼üĞÅÏ¢³õÊ¼»¯
+						// è·å–è¡¨çš„ä¸»é”®ä¿¡æ¯å¤±è´¥æ—¶è‡ªåŠ¨è·³è¿‡æœ¬è¡¨ä¸»é”®ä¿¡æ¯åˆå§‹åŒ–
 						log.error("    load table[" + table_name
 								+ "] failed:"
 								+ e.getMessage(),e);
@@ -457,13 +457,13 @@ public abstract class BaseTableManager {
 
 	public void initTableInfo() throws Exception {
 		log.debug("initial tableinfo start.......");
-		// »ñÈ¡ËùÓĞµÄÊı¾İ¿âÁ´½Ó³ØµÄÃû³Æ
+		// è·å–æ‰€æœ‰çš„æ•°æ®åº“é“¾æ¥æ± çš„åç§°
 		java.util.List<String> poolNames = SQLManager.getInstance()
 				.getAllPoolNamesIfExist();
 
-		// Í¬²½Êı¾İ¿â±íÓë¸Ã±íÔÚtableinfoÖĞµÄÏàÓ¦µÄĞÅÏ¢£¨Ö÷¼üÖµ£©
+		// åŒæ­¥æ•°æ®åº“è¡¨ä¸è¯¥è¡¨åœ¨tableinfoä¸­çš„ç›¸åº”çš„ä¿¡æ¯ï¼ˆä¸»é”®å€¼ï¼‰
 
-		// Í¬²½¿ªÊ¼
+		// åŒæ­¥å¼€å§‹
 		for(int i = 0; i < poolNames.size(); i ++) {
 			String poolName = poolNames.get(i);
 			// PrimaryKeyCache keyCache = new PrimaryKeyCache(poolName);
@@ -477,7 +477,7 @@ public abstract class BaseTableManager {
 					    manager.addPrimaryKeyCache(keyCache);
 				}
 			} catch (Exception e) {
-				// »ñÈ¡±íµÄÖ÷¼üĞÅÏ¢Ê§°ÜÊ±×Ô¶¯Ìø¹ı±¾±íÖ÷¼üĞÅÏ¢³õÊ¼»¯
+				// è·å–è¡¨çš„ä¸»é”®ä¿¡æ¯å¤±è´¥æ—¶è‡ªåŠ¨è·³è¿‡æœ¬è¡¨ä¸»é”®ä¿¡æ¯åˆå§‹åŒ–
 				log.info("load pool[" + poolName
 						+ "] tables information failed!\r\nerror message:\r\n"
 						,e);
@@ -495,9 +495,9 @@ public abstract class BaseTableManager {
 		log.debug("initial tableinfo start for ["+poolName+"].......");
 		
 
-		// Í¬²½Êı¾İ¿â±íÓë¸Ã±íÔÚtableinfoÖĞµÄÏàÓ¦µÄĞÅÏ¢£¨Ö÷¼üÖµ£©
+		// åŒæ­¥æ•°æ®åº“è¡¨ä¸è¯¥è¡¨åœ¨tableinfoä¸­çš„ç›¸åº”çš„ä¿¡æ¯ï¼ˆä¸»é”®å€¼ï¼‰
 
-		// Í¬²½¿ªÊ¼
+		// åŒæ­¥å¼€å§‹
 	
 			try {
 				String _poolname = SQLManager.getRealDBNameFromExternalDBNameIfExist(poolName);
@@ -509,7 +509,7 @@ public abstract class BaseTableManager {
 					    manager.addPrimaryKeyCache(keyCache);
 				}
 			} catch (Exception e) {
-				// »ñÈ¡±íµÄÖ÷¼üĞÅÏ¢Ê§°ÜÊ±×Ô¶¯Ìø¹ı±¾±íÖ÷¼üĞÅÏ¢³õÊ¼»¯
+				// è·å–è¡¨çš„ä¸»é”®ä¿¡æ¯å¤±è´¥æ—¶è‡ªåŠ¨è·³è¿‡æœ¬è¡¨ä¸»é”®ä¿¡æ¯åˆå§‹åŒ–
 				log.error("load pool[" + poolName
 						+ "] tables information failed!\r\nerror message:\r\n"
 						+ e.getMessage(),e);
@@ -532,7 +532,7 @@ public abstract class BaseTableManager {
 		}
 	}
 
-	// ¸üĞÂ»º³åÇøĞÅÏ¢µ½Êı¾İ¿âÖĞ
+	// æ›´æ–°ç¼“å†²åŒºä¿¡æ¯åˆ°æ•°æ®åº“ä¸­
 	public void updateTableInfo() {
 
 	}

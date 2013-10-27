@@ -28,7 +28,7 @@ import com.frameworkset.spi.assemble.BeanInstanceException;
 
 /**
  * <p>Title: AbstractDetectingUrlHandlerMapping.java</p> 
- * <p>Description: bboss-mvcÖĞÎŞĞèÔÚÆô¶¯Ê±¼ÓÔØËùÓĞµÄurl´¦ÀíÆ÷</p>
+ * <p>Description: bboss-mvcä¸­æ— éœ€åœ¨å¯åŠ¨æ—¶åŠ è½½æ‰€æœ‰çš„urlå¤„ç†å™¨</p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2008</p>
  * @Date 2010-9-24

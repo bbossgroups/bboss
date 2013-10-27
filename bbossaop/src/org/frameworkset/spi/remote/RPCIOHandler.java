@@ -25,7 +25,7 @@ import java.util.List;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2009-10-30 下午03:24:49
+ * @Date 2009-10-30 涓嬪崍03:24:49
  * @author biaoping.yin
  * @version 1.0
  */
@@ -64,7 +64,7 @@ public interface RPCIOHandler
     public RPCMessage messageReceived(RPCMessage ret)  throws Exception;
     
     /**
-     * 获取本地地址
+     * 鑾峰彇鏈湴鍦板潃
      * @return
      */
     public RPCAddress getLocalAddress();

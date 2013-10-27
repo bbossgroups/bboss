@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset=GBK" language="java" %>
+<%@ page contentType="text/html; charset=UTF-8" language="java" %>
 <%@ taglib uri="/WEB-INF/pager-taglib.tld" prefix="pg"%>
 <%@ taglib uri="/WEB-INF/commontag.tld" prefix="common"%>
 <%@ page import="org.frameworkset.web.servlet.support.RequestContext" %>
@@ -11,7 +11,7 @@ String path = request.getContextPath();
 	<head>
 		
 
-		<title>发送xml数据demo</title>
+		<title>鍙戦�亁ml鏁版嵁demo</title>
 <script type="text/javascript"> 
 	function sendxml()
 	{
@@ -31,7 +31,7 @@ String path = request.getContextPath();
 			alert("aaaa");
 			return;
 		}
-		var xml = "<web><version>国产 1.0</version></web>";
+		var xml = "<web><version>鍥戒骇 1.0</version></web>";
 		xmlhttp.open("POST","echo.page");
 		xmlhttp.setRequestHeader("Content-Length",xml.length);
 		xmlhttp.setRequestHeader("CONTENT-TYPE","text/xml;charset=UTF-8");

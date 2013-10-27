@@ -29,7 +29,7 @@ import org.frameworkset.util.beans.PropertyAccessException;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2010-10-15 œ¬ŒÁ04:02:34
+ * @Date 2010-10-15 ‰∏ãÂçà04:02:34
  * @author biaoping.yin
  * @version 1.0
  */

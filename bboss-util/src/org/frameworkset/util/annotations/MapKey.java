@@ -24,8 +24,8 @@ import java.lang.annotation.Target;
 
 /**
  * <p>MapKey.java</p>
- * <p> Description: ÓÃÀ´Ö¸¶¨°ó¶¨Map<String,PO>ÀàĞÍ²ÎÊıÖµÊ±×îÎª
- * ´æ·ÅÖµ¶ÔÏóµÄkeyµÄ¶ÔÓ¦µÄ²ÎÊıÃû³Æ</p>
+ * <p> Description: ç”¨æ¥æŒ‡å®šç»‘å®šMap<String,PO>ç±»å‹å‚æ•°å€¼æ—¶æœ€ä¸º
+ * å­˜æ”¾å€¼å¯¹è±¡çš„keyçš„å¯¹åº”çš„å‚æ•°åç§°</p>
  * <p> bboss workgroup </p>
  * <p> Copyright (c) 2009 </p>
  * 

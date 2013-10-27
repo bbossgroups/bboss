@@ -13,7 +13,7 @@ import org.frameworkset.web.multipart.MultipartFile;
 public interface UpLoadDao {
 	
 	/**
-	 * ÉÏ´«¸½¼þ
+	 * ä¸Šä¼ é™„ä»¶
 	 * @param inputStream
 	 * @param filename
 	 * @return

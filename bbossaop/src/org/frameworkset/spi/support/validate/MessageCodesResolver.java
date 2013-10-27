@@ -21,7 +21,7 @@ package org.frameworkset.spi.support.validate;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2010-10-13 ÏÂÎç10:42:46
+ * @Date 2010-10-13 ä¸‹åˆ10:42:46
  * @author biaoping.yin
  * @version 1.0
  */

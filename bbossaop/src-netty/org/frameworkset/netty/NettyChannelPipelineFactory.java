@@ -35,7 +35,7 @@ import org.jboss.netty.handler.ssl.SslHandler;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2010-4-20 ÏÂÎç03:18:49
+ * @Date 2010-4-20 ä¸‹åˆ03:18:49
  * @author biaoping.yin
  * @version 1.0
  */
@@ -63,7 +63,7 @@ public class NettyChannelPipelineFactory implements ChannelPipelineFactory
         // if you need client certificate authentication.
         
         /**
-         * Ôö¼ÓsslµÄ¼¼ÊõÖ§³Ö
+         * å¢åŠ sslçš„æŠ€æœ¯æ”¯æŒ
          */
         ProMap commons = Util.defaultContext.getMapProperty("rpc.protocol.netty.params");
         boolean enablessl = commons.getBoolean("enablessl",false);

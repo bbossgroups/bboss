@@ -53,14 +53,14 @@ import com.frameworkset.common.tag.tree.itf.ITreeNode;
 import com.frameworkset.common.tag.tree.itf.IUnselectListener;
 
 /**
- * ¶¨ÒåÊ÷½á¹¹µÄ³éÏóÀà
+ * å®šä¹‰æ ‘ç»“æ„çš„æŠ½è±¡ç±»
  * @author biaoping.yin
  * created on 2005-3-25
  * version 1.0
  */
 public abstract class Tree extends ContextMenuImpl implements ITree,java.io.Serializable {
 	/**
-	 * level:¶¨ÒåÄ¬ÈÏÕ¹¿ª²ã¼¶
+	 * level:å®šä¹‰é»˜è®¤å±•å¼€å±‚çº§
 	 */
 	protected int level = -1;
     protected boolean   singleSelectionMode = false;
@@ -73,7 +73,7 @@ public abstract class Tree extends ContextMenuImpl implements ITree,java.io.Seri
     protected List      selectListeners   = new ArrayList();
     protected List      unselectListeners = new ArrayList();
 	protected List      nodeListeners = new ArrayList();
-	/**±êÊ¶µ±Ç°Õ¹¿ªµÃ½Úµã*/
+	/**æ ‡è¯†å½“å‰å±•å¼€å¾—èŠ‚ç‚¹*/
 	protected ITreeNode curExpanded;
 	
 	protected boolean dynamic = true;
@@ -81,7 +81,7 @@ public abstract class Tree extends ContextMenuImpl implements ITree,java.io.Seri
 	
 	protected boolean needObservable = false;
 	//	added this attribute by biaoping.yin on 2005-02-04
-	/**¸üĞÂ½áµãµÃĞÅÏ¢*/
+	/**æ›´æ–°ç»“ç‚¹å¾—ä¿¡æ¯*/
 	protected boolean refreshNode = true;
 	
 	protected boolean uprecursive = false;
@@ -96,7 +96,7 @@ public abstract class Tree extends ContextMenuImpl implements ITree,java.io.Seri
 	
 	
 	/**
-	 * Ö¸¶¨ÊÇ·ñ¶ÔÊ÷½Úµã½øĞĞÅÅĞò,È±Ê¡Îªtrue
+	 * æŒ‡å®šæ˜¯å¦å¯¹æ ‘èŠ‚ç‚¹è¿›è¡Œæ’åº,ç¼ºçœä¸ºtrue
 	 */
     private boolean sortable = false;
     
@@ -107,7 +107,7 @@ public abstract class Tree extends ContextMenuImpl implements ITree,java.io.Seri
 	}	
 	
 	/**
-	 * ÅĞ¶ÏÊÇ·ñĞèÒª×¢²áµ½¹Û²ìÆ÷ÖĞ
+	 * åˆ¤æ–­æ˜¯å¦éœ€è¦æ³¨å†Œåˆ°è§‚å¯Ÿå™¨ä¸­
 	 * @return boolean
 	 */
 	protected boolean isNeedObservable()
@@ -168,15 +168,15 @@ public abstract class Tree extends ContextMenuImpl implements ITree,java.io.Seri
     }
 	
 //	/**
-//	 * Õ¹¿ª½ÚµãtreeNodeId£¬curLevelÎªµ±Ç°²ã¼¶
+//	 * å±•å¼€èŠ‚ç‚¹treeNodeIdï¼ŒcurLevelä¸ºå½“å‰å±‚çº§
 //	 */
 //	
 //    public void expand(String treeNodeId,int curLevel) {
 //        this.expanded.add(treeNodeId);
 //		ITreeNode expandedNode = findNode(treeNodeId);
 //		/**
-//		 * Èç¹ûĞèÒªÊµÊ±Ë¢ĞÂËùÓĞ½ÚµãµÄĞÅÏ¢£¬Ôòµ÷ÓÃnotifyObservers·½·¨Í¨ÖªËùÓĞµÄÆäËûµÄ½Úµã
-//		 * ¼°Ê±Ë¢ĞÂĞÅÏ¢
+//		 * å¦‚æœéœ€è¦å®æ—¶åˆ·æ–°æ‰€æœ‰èŠ‚ç‚¹çš„ä¿¡æ¯ï¼Œåˆ™è°ƒç”¨notifyObserversæ–¹æ³•é€šçŸ¥æ‰€æœ‰çš„å…¶ä»–çš„èŠ‚ç‚¹
+//		 * åŠæ—¶åˆ·æ–°ä¿¡æ¯
 //		 */
 //		System.out.println("expand treenodeID 2:" + treeNodeId);
 //		if (needObservable)
@@ -211,7 +211,7 @@ public abstract class Tree extends ContextMenuImpl implements ITree,java.io.Seri
      */
 	public void expand(ITreeNode expandedNode,int curLevel) {
 		this.expanded.add(expandedNode.getId());
-		//µ±Õ¹¿ªÊÂ¼şÊÇÓÉÓÚÊÖ¶¯¼´µã»÷Ò³ÃæµÄÕ¹¿ªÍ¼±ê´¥·¢Ê±£¬¹ã²¥¸ÃÊÂ¼ş
+		//å½“å±•å¼€äº‹ä»¶æ˜¯ç”±äºæ‰‹åŠ¨å³ç‚¹å‡»é¡µé¢çš„å±•å¼€å›¾æ ‡è§¦å‘æ—¶ï¼Œå¹¿æ’­è¯¥äº‹ä»¶
 		if (needObservable && curLevel > level)
 		{
 			notifyObservers(expandedNode);
@@ -226,7 +226,7 @@ public abstract class Tree extends ContextMenuImpl implements ITree,java.io.Seri
 	
 	
     /**
-     *  ¾²Ì¬Ä£Ê½Ê±Ê¹ÓÃ
+     *  é™æ€æ¨¡å¼æ—¶ä½¿ç”¨
      *  Description:
      * @param expandedNode
      * @param curLevel
@@ -234,7 +234,7 @@ public abstract class Tree extends ContextMenuImpl implements ITree,java.io.Seri
      */
 	public void impactExpand(ITreeNode expandedNode,int curLevel) {
 //		this.expanded.add(expandedNode.getId());
-		//µ±Õ¹¿ªÊÂ¼şÊÇÓÉÓÚÊÖ¶¯¼´µã»÷Ò³ÃæµÄÕ¹¿ªÍ¼±ê´¥·¢Ê±£¬¹ã²¥¸ÃÊÂ¼ş
+		//å½“å±•å¼€äº‹ä»¶æ˜¯ç”±äºæ‰‹åŠ¨å³ç‚¹å‡»é¡µé¢çš„å±•å¼€å›¾æ ‡è§¦å‘æ—¶ï¼Œå¹¿æ’­è¯¥äº‹ä»¶
 		if (needObservable && curLevel > level)
 		{
 			notifyObservers(expandedNode);
@@ -248,7 +248,7 @@ public abstract class Tree extends ContextMenuImpl implements ITree,java.io.Seri
 	}
     
     /**
-     * Ò³ÃæÉÏµã»÷Õ¹¿ªÍ¼±êÊ±£¬µ÷ÓÃ±¾·½·¨Õ¹¿ªµã»÷µÄ½Úµã
+     * é¡µé¢ä¸Šç‚¹å‡»å±•å¼€å›¾æ ‡æ—¶ï¼Œè°ƒç”¨æœ¬æ–¹æ³•å±•å¼€ç‚¹å‡»çš„èŠ‚ç‚¹
      *  Description:
      * @param treeNodeId
      * @see com.frameworkset.common.tag.tree.itf.ITree#expand(java.lang.String)
@@ -338,7 +338,7 @@ public abstract class Tree extends ContextMenuImpl implements ITree,java.io.Seri
 	
 	/**
 	 * 
-	 *  Description:µã»÷½ÚµãµÄÕÛµşÍ¼±êÊ±µ÷ÓÃ±¾·½·¨
+	 *  Description:ç‚¹å‡»èŠ‚ç‚¹çš„æŠ˜å å›¾æ ‡æ—¶è°ƒç”¨æœ¬æ–¹æ³•
 	 * @param treeNodeId
 	 * @see com.frameworkset.common.tag.tree.itf.ITree#collapse(java.lang.String)
 	 */
@@ -503,7 +503,7 @@ public abstract class Tree extends ContextMenuImpl implements ITree,java.io.Seri
     
     /**
      * added by yinbiaoping on 2004/03/23
-     * ÖØÔØ·½·¨java.util.Observable#notifyObservers(Object o)
+     * é‡è½½æ–¹æ³•java.util.Observable#notifyObservers(Object o)
      */
 	public void notifyObservers(Object o)
 	{
@@ -529,10 +529,10 @@ public abstract class Tree extends ContextMenuImpl implements ITree,java.io.Seri
 	}
 	
 	/**
-	 * ²»ÖªµÀµ±Ç°²ã¼¶Ê±£¬µ÷ÓÃ±¾·½·¨»ñÈ¡µ±Ç°²ã¼¶
-	 * Ã»ÓĞÖ¸¶¨½ÚµãËù´¦µÄµ±Ç°²ã¼¶£¬ÎªÁË±ÜÃâÓëÆäËûÒÑÓĞ²ã¼¶·¢Éú³åÍ»£¬Ö¸¶¨µ±Ç°²ã¼¶±ÈÄ¬ÈÏ²ã¼¶´ó1£¬
-	 * ÕâÑùsetSon·½·¨µ÷ÓÃaddNode·½·¨²»ÖÁÓÚÒòÎªµ±Ç°Ëù´¦µÄ²ã¼¶
-	 * ±ÈÄ¬ÈÏÕ¹¿ª²ã¼¶Ğ¡¶øÕ¹¿ªÆäÏÂ¼¶µÄÇé¿ö³öÏÖ
+	 * ä¸çŸ¥é“å½“å‰å±‚çº§æ—¶ï¼Œè°ƒç”¨æœ¬æ–¹æ³•è·å–å½“å‰å±‚çº§
+	 * æ²¡æœ‰æŒ‡å®šèŠ‚ç‚¹æ‰€å¤„çš„å½“å‰å±‚çº§ï¼Œä¸ºäº†é¿å…ä¸å…¶ä»–å·²æœ‰å±‚çº§å‘ç”Ÿå†²çªï¼ŒæŒ‡å®šå½“å‰å±‚çº§æ¯”é»˜è®¤å±‚çº§å¤§1ï¼Œ
+	 * è¿™æ ·setSonæ–¹æ³•è°ƒç”¨addNodeæ–¹æ³•ä¸è‡³äºå› ä¸ºå½“å‰æ‰€å¤„çš„å±‚çº§
+	 * æ¯”é»˜è®¤å±•å¼€å±‚çº§å°è€Œå±•å¼€å…¶ä¸‹çº§çš„æƒ…å†µå‡ºç°
 	 * Description:
 	 * @return
 	 * int
@@ -555,8 +555,8 @@ public abstract class Tree extends ContextMenuImpl implements ITree,java.io.Seri
 	}
 
 	/**
-	 * »ñÈ¡µ±Ç°Õ¹¿ªµÄ½ÚµãĞÅÏ¢£¬
-	 * Ö÷ÒªÔÚ¶¯¾²Ì¬·½Ê½Éú³ÉÊ÷Ê±µ±Ì«µØ·µ»Øµ±Ç°µÄÊ÷½ÚµãµÄhtmlĞÅÏ¢
+	 * è·å–å½“å‰å±•å¼€çš„èŠ‚ç‚¹ä¿¡æ¯ï¼Œ
+	 * ä¸»è¦åœ¨åŠ¨é™æ€æ–¹å¼ç”Ÿæˆæ ‘æ—¶å½“å¤ªåœ°è¿”å›å½“å‰çš„æ ‘èŠ‚ç‚¹çš„htmlä¿¡æ¯
 	 */
 	public ITreeNode getCurExpanded()
 	{

@@ -12,17 +12,17 @@ import org.frameworkset.spi.CallContext;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2009-9-19 ÏÂÎç11:00:43
+ * @Date 2009-9-19 ä¸‹åˆ11:00:43
  * @author biaoping.yin
  * @version 1.0
  */
 public class ProMap<K,V extends Pro> extends HashMap<K,V>
 {        
 	 /**
-     * ÈİÆ÷×é¼şÀàĞÍ£¬ÓĞÒÔÏÂÈıÖÖÀàĞÍ£º
-     * bean:½«¿ÉÒÔÖ±½Ó½«×é×°µÄProList×ª»»ÎªList<po¶ÔÏó>¼¯ºÏ
-     * String£ºProList×ª»»ÎªList<String>¼¯ºÏ
-     * Pro£ºÄ¬ÈÏÀàĞÍProList<V extends Pro>£¬²»×ö×ª»»£¬³ı·ÇÖ¸¶¨editor±à¼­Æ÷
+     * å®¹å™¨ç»„ä»¶ç±»å‹ï¼Œæœ‰ä»¥ä¸‹ä¸‰ç§ç±»å‹ï¼š
+     * bean:å°†å¯ä»¥ç›´æ¥å°†ç»„è£…çš„ProListè½¬æ¢ä¸ºList<poå¯¹è±¡>é›†åˆ
+     * Stringï¼šProListè½¬æ¢ä¸ºList<String>é›†åˆ
+     * Proï¼šé»˜è®¤ç±»å‹ProList<V extends Pro>ï¼Œä¸åšè½¬æ¢ï¼Œé™¤éæŒ‡å®šeditorç¼–è¾‘å™¨
      */
     private String componentType ;
     private boolean isfreeze = false;
@@ -193,7 +193,7 @@ public class ProMap<K,V extends Pro> extends HashMap<K,V>
     }
     
     /**
-     * ·µ»Ø´øioc¹¦ÄÜµÄ¶ÔÏó
+     * è¿”å›å¸¦iocåŠŸèƒ½çš„å¯¹è±¡
      * @param key
      * @param callcontext
      * @return

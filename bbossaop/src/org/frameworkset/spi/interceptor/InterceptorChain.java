@@ -26,13 +26,13 @@ import com.frameworkset.proxy.Interceptor;
  * 
  * <p>Title: InterceptorChain.java</p>
  *
- * <p>Description: À¹½ØÆ÷Ö´ĞĞË³ĞòÁ´</p>
+ * <p>Description: æ‹¦æˆªå™¨æ‰§è¡Œé¡ºåºé“¾</p>
  *
  * <p>Copyright: Copyright (c) 2007</p>
  *
  * <p>bboss workgroup</p>
  * @Date Aug 11, 2008 3:51:49 PM
- * @author biaoping.yin,Òü±êÆ½
+ * @author biaoping.yin,å°¹æ ‡å¹³
  * @version 1.0
  */
 public class InterceptorChain implements Interceptor {

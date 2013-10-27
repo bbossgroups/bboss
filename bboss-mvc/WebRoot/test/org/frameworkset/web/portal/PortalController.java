@@ -63,11 +63,11 @@ public class PortalController
 		p.setStatus("P");
 		p.setListprice(16.50 + i);
 		if(i % 3 == 0)
-			p.setAttr1("ÌÒ×Ó");
+			p.setAttr1("æ¡ƒå­");
 		else if(i % 3 == 1)
-			p.setAttr1("»ğÁú¹û");
+			p.setAttr1("ç«é¾™æœ");
 		if(i % 3 == 2)
-			p.setAttr1("Ã¢¹û");	
+			p.setAttr1("èŠ’æœ");	
 		p.setItemid("EST-" + i);
 		return p;
 	}

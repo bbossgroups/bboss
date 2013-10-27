@@ -63,14 +63,14 @@ import com.frameworkset.common.tag.tree.itf.ITreeNode;
 public abstract class COMTree extends Tree {
     private static final Logger log = Logger.getLogger(COMTree.class);
     /**
-     * À©Õ¹Ìõ¼ş£¬Í¨¹ı¸ÃÌõ¼şÀ´¹ıÂËÊ÷µÄ½Úµã,»ñÈ¡·ûºÏÌõ¼şµÄ½Úµã
+     * æ‰©å±•æ¡ä»¶ï¼Œé€šè¿‡è¯¥æ¡ä»¶æ¥è¿‡æ»¤æ ‘çš„èŠ‚ç‚¹,è·å–ç¬¦åˆæ¡ä»¶çš„èŠ‚ç‚¹
      */
     protected String extCondition = "";
     
    
 
     /**
-     * jspÒ³ÃæÉÏÏÂÎÄ¶ÔÏó£¬¸Ã¶ÔÏóÌá¹©request,response,sessionµÄ·ÃÎÊ·½·¨
+     * jspé¡µé¢ä¸Šä¸‹æ–‡å¯¹è±¡ï¼Œè¯¥å¯¹è±¡æä¾›request,response,sessionçš„è®¿é—®æ–¹æ³•
      */
     protected transient PageContext pageContext;
 
@@ -88,10 +88,10 @@ public abstract class COMTree extends Tree {
     
    
     /**
-     * ±¾·½·¨Ã»ÓĞÖ¸¶¨father½ÚµãËù´¦µÄµ±Ç°²ã¼¶
-     * ÎªÁË±ÜÃâÓëÆäËûÒÑÓĞ²ã¼¶·¢Éú³åÍ»£¬Ö¸¶¨µ±Ç°²ã¼¶±ÈÄ¬ÈÏ²ã¼¶´ó1£¬
-     * ÕâÑùsetSon·½·¨µ÷ÓÃaddNode·½·¨²»ÖÁÓÚÒòÎªµ±Ç°Ëù´¦µÄ²ã¼¶
-     * ±ÈÄ¬ÈÏÕ¹¿ª²ã¼¶Ğ¡¶øÕ¹¿ªÆäÏÂ¼¶µÄÇé¿ö³öÏÖ
+     * æœ¬æ–¹æ³•æ²¡æœ‰æŒ‡å®šfatherèŠ‚ç‚¹æ‰€å¤„çš„å½“å‰å±‚çº§
+     * ä¸ºäº†é¿å…ä¸å…¶ä»–å·²æœ‰å±‚çº§å‘ç”Ÿå†²çªï¼ŒæŒ‡å®šå½“å‰å±‚çº§æ¯”é»˜è®¤å±‚çº§å¤§1ï¼Œ
+     * è¿™æ ·setSonæ–¹æ³•è°ƒç”¨addNodeæ–¹æ³•ä¸è‡³äºå› ä¸ºå½“å‰æ‰€å¤„çš„å±‚çº§
+     * æ¯”é»˜è®¤å±•å¼€å±‚çº§å°è€Œå±•å¼€å…¶ä¸‹çº§çš„æƒ…å†µå‡ºç°
      *
      *  Description:
      * @param father
@@ -105,17 +105,17 @@ public abstract class COMTree extends Tree {
     }
 
     /**
-     * ÍùÊ÷ÖĞÌí¼Ó¸¸½ÚµãµÄËùÓĞÖ±½Ó¶ù×Ó
+     * å¾€æ ‘ä¸­æ·»åŠ çˆ¶èŠ‚ç‚¹çš„æ‰€æœ‰ç›´æ¥å„¿å­
      */
     public abstract boolean setSon(ITreeNode father, int curLevel);
 
 //	/**
-//	 * ´ÓÊı¾İÔ´»ñÈ¡½ÚµãĞÅÏ¢
+//	 * ä»æ•°æ®æºè·å–èŠ‚ç‚¹ä¿¡æ¯
 //	 */
 //	public abstract ITreeNode getTreeNode(String id);
 
     /**
-     * »ñÈ¡½ÚµãµÄ×îĞÂĞÅÏ¢£¬È±Ê¡µÄÊµÏÖÖ±½Ó·µ»Øµ±Ç°½Úµã£¬ÓÃ»§¿ÉÒÔÖØÔØ¸Ã·½·¨
+     * è·å–èŠ‚ç‚¹çš„æœ€æ–°ä¿¡æ¯ï¼Œç¼ºçœçš„å®ç°ç›´æ¥è¿”å›å½“å‰èŠ‚ç‚¹ï¼Œç”¨æˆ·å¯ä»¥é‡è½½è¯¥æ–¹æ³•
      * @param oldNode ITreeNode
      * @return ITreeNode
      */
@@ -124,7 +124,7 @@ public abstract class COMTree extends Tree {
     }
 
     /**
-     * ÉèÖÃÒ³ÃæÉÏÏÂÎÄ¶ÔÏó
+     * è®¾ç½®é¡µé¢ä¸Šä¸‹æ–‡å¯¹è±¡
      */
     public void setPageContext(PageContext pageContext) {
         this.pageContext = pageContext;
@@ -134,7 +134,7 @@ public abstract class COMTree extends Tree {
             session = request.getSession(false);
             response = (HttpServletResponse) pageContext.getResponse();
             /**
-             * 2009.07.02 ×¢ÊÍ£¬Èç¹û·ÅÈëÏµÍ³Æ½Ì¨ĞèÒª´ò¿ª
+             * 2009.07.02 æ³¨é‡Šï¼Œå¦‚æœæ”¾å…¥ç³»ç»Ÿå¹³å°éœ€è¦æ‰“å¼€
              */
             if(BaseTag.ENABLE_TAG_SECURITY)
             {   
@@ -153,11 +153,11 @@ public abstract class COMTree extends Tree {
 
 
     /**
-     * »ñÈ¡Ò»¸ö½áµã
+     * è·å–ä¸€ä¸ªç»“ç‚¹
      * @param treeid
      * @param treeName
      * @param type
-     * @param needObservable ÊÇ·ñ×¢²áµ½¹Û²ìÆ÷ÖĞ
+     * @param needObservable æ˜¯å¦æ³¨å†Œåˆ°è§‚å¯Ÿå™¨ä¸­
      * @deprecated BY BIAOPING.YIN REPLACED BY
      * getTreeNode(
      String treeid,
@@ -203,11 +203,11 @@ public abstract class COMTree extends Tree {
     }
 
     /**
-     * »ñÈ¡Ò»¸ö½áµã
+     * è·å–ä¸€ä¸ªç»“ç‚¹
      * @param treeid
      * @param treeName
      * @param type
-     * @param needObservable ÊÇ·ñ×¢²áµ½¹Û²ìÆ÷ÖĞ
+     * @param needObservable æ˜¯å¦æ³¨å†Œåˆ°è§‚å¯Ÿå™¨ä¸­
      * @deprecated BY BIAOPING.YIN REPLACED BY
      * getTreeNode(
      String treeid,
@@ -235,7 +235,7 @@ public abstract class COMTree extends Tree {
 
 
     /**
-     * ¸ø¶¨½ÚµãĞÅÏ¢£¬¹¹½¨Ê÷½Úµã
+     * ç»™å®šèŠ‚ç‚¹ä¿¡æ¯ï¼Œæ„å»ºæ ‘èŠ‚ç‚¹
      * Description:
      * @param treeid
      * @param treeName
@@ -390,7 +390,7 @@ public abstract class COMTree extends Tree {
 
 
     /**
-     * ¸ø¶¨½ÚµãĞÅÏ¢£¬¹¹½¨Ê÷½Úµã
+     * ç»™å®šèŠ‚ç‚¹ä¿¡æ¯ï¼Œæ„å»ºæ ‘èŠ‚ç‚¹
      * Description:
      * @param treeid
      * @param treeName
@@ -558,7 +558,7 @@ public abstract class COMTree extends Tree {
 
 
     /**
-     * »ñÈ¡Ê÷½ÚµãĞÅÏ¢
+     * è·å–æ ‘èŠ‚ç‚¹ä¿¡æ¯
      * @param treeid
      * @param treeName
      * @param type
@@ -612,11 +612,11 @@ public abstract class COMTree extends Tree {
 
     /**
      *
-     * @param treeid ½Úµã±êÊ¶
-     * @param treeName ½ÚµãÃû³Æ
-     * @param type ½ÚµãÀàĞÍ
+     * @param treeid èŠ‚ç‚¹æ ‡è¯†
+     * @param treeName èŠ‚ç‚¹åç§°
+     * @param type èŠ‚ç‚¹ç±»å‹
 
-     * @param showHref ÊÇ·ñÏÔÊ¾³¬Á´½Ó
+     * @param showHref æ˜¯å¦æ˜¾ç¤ºè¶…é“¾æ¥
 
      * @return ITreeNode
      */
@@ -686,7 +686,7 @@ public abstract class COMTree extends Tree {
      * @param root
      * @param rootName
      * @see com.frameworkset.common.tag.tree.itf.ActiveTree#addRootNode(java.lang.String, java.lang.String)
-     * @deprecated µ÷ÊÔÎ´Í¨¹ı£¬ÇëÎğÊ¹ÓÃ
+     * @deprecated è°ƒè¯•æœªé€šè¿‡ï¼Œè¯·å‹¿ä½¿ç”¨
      */
     public void addRootNode(String root, String rootName, String path) {
         addRootNode(root, rootName, (String)null, path);
@@ -698,7 +698,7 @@ public abstract class COMTree extends Tree {
      * @param root
      * @param rootName
      * @see com.frameworkset.common.tag.tree.itf.ActiveTree#addRootNode(java.lang.String, java.lang.String)
-     * @deprecated µ÷ÊÔÎ´Í¨¹ı£¬ÇëÎğÊ¹ÓÃ
+     * @deprecated è°ƒè¯•æœªé€šè¿‡ï¼Œè¯·å‹¿ä½¿ç”¨
      */
     public void addRootNode(String root, String rootName, String memo,
                             String path) {
@@ -706,7 +706,7 @@ public abstract class COMTree extends Tree {
     }
 
     /**
-     * Ìí¼Ó¸ù½Úµã
+     * æ·»åŠ æ ¹èŠ‚ç‚¹
      *  Description:
      * @param root
      * @param rootName
@@ -722,7 +722,7 @@ public abstract class COMTree extends Tree {
     }
 
     /**
-     * Ìí¼Ó¸ù½Úµã
+     * æ·»åŠ æ ¹èŠ‚ç‚¹
      *  Description:
      * @param root
      * @param rootName
@@ -739,7 +739,7 @@ public abstract class COMTree extends Tree {
     }
 
     /**
-     * Ìí¼Ó¸ù½Úµã
+     * æ·»åŠ æ ¹èŠ‚ç‚¹
      *  Description:
      * @param root
      * @param rootName
@@ -771,7 +771,7 @@ public abstract class COMTree extends Tree {
 
         setRoot(rootNode);
         /**
-         * µ±Ç°µÄ²ã¼¶Ğ¡ÓÚÄ¬ÈÏ²ã¼¶£¬²¢ÇÒÓĞ¶ù×ÓÔòÕ¹¿ª
+         * å½“å‰çš„å±‚çº§å°äºé»˜è®¤å±‚çº§ï¼Œå¹¶ä¸”æœ‰å„¿å­åˆ™å±•å¼€
          */
         //removed by biaoping.yin on 2005-02-05
 //		boolean hasSon = rootNode.hasChildren();
@@ -788,7 +788,7 @@ public abstract class COMTree extends Tree {
     }
 
     /**
-     * Ïò¸¸½ÚµãfatherÖĞÌí¼Ó¸ø¶¨ĞÅÏ¢µÄ×Ó½Úµã
+     * å‘çˆ¶èŠ‚ç‚¹fatherä¸­æ·»åŠ ç»™å®šä¿¡æ¯çš„å­èŠ‚ç‚¹
      *  Description:
      * @param father
      * @param treeid
@@ -838,7 +838,7 @@ public abstract class COMTree extends Tree {
     }
 
     /**
-     * Ïò¸¸½ÚµãfatherÖĞÌí¼Ó¸ø¶¨ĞÅÏ¢µÄ×Ó½Úµã
+     * å‘çˆ¶èŠ‚ç‚¹fatherä¸­æ·»åŠ ç»™å®šä¿¡æ¯çš„å­èŠ‚ç‚¹
      *  Description:
      * @param father
      * @param treeid
@@ -1065,18 +1065,18 @@ public abstract class COMTree extends Tree {
 
     /**
      *
-     * @param father ITreeNode ¸¸½Úµã
-     * @param treeid String ½Úµãid
-     * @param treeName String ½ÚµãÃû³Æ
-     * @param type String ½ÚµãÀàĞÍ
-     * @param hasSon boolean ½ÚµãÊÇ·ñÓĞ¶ù×Ó
-     * @param showHref boolean ½ÚµãÊÇ·ñ´øÁ´½Ó
-     * @param curLevel int ½Úµãµ±Ç°¼¶±ğ
-     * @param memo String ½Úµã±¸×¢×Ö¶Î
-     * @param radioValue String µ¥Ñ¡°´Å¥µÄÖµ
-     * @param checkboxValue String ¸´Ñ¡°´Å¥Öµ
-     * @param path String ½ÚµãÂ·¾¶
-     * @param params Map ½Úµã²ÎÊı¼¯£¬½«ĞèÒª´«µİ¸øÁ´½ÓµÄËùÓĞ²ÎÊı¿ÉÒÔÈ«²¿·Åµ½MapÖĞ
+     * @param father ITreeNode çˆ¶èŠ‚ç‚¹
+     * @param treeid String èŠ‚ç‚¹id
+     * @param treeName String èŠ‚ç‚¹åç§°
+     * @param type String èŠ‚ç‚¹ç±»å‹
+     * @param hasSon boolean èŠ‚ç‚¹æ˜¯å¦æœ‰å„¿å­
+     * @param showHref boolean èŠ‚ç‚¹æ˜¯å¦å¸¦é“¾æ¥
+     * @param curLevel int èŠ‚ç‚¹å½“å‰çº§åˆ«
+     * @param memo String èŠ‚ç‚¹å¤‡æ³¨å­—æ®µ
+     * @param radioValue String å•é€‰æŒ‰é’®çš„å€¼
+     * @param checkboxValue String å¤é€‰æŒ‰é’®å€¼
+     * @param path String èŠ‚ç‚¹è·¯å¾„
+     * @param params Map èŠ‚ç‚¹å‚æ•°é›†ï¼Œå°†éœ€è¦ä¼ é€’ç»™é“¾æ¥çš„æ‰€æœ‰å‚æ•°å¯ä»¥å…¨éƒ¨æ”¾åˆ°Mapä¸­
      * @return ITreeNode
      */
     public ITreeNode addNode(
@@ -1228,7 +1228,7 @@ public abstract class COMTree extends Tree {
 
 
     /**
-     * Ìí¼ÓÊ÷½ÚµãĞÅÏ¢
+     * æ·»åŠ æ ‘èŠ‚ç‚¹ä¿¡æ¯
      * @param father
      * @param treeid
      * @param treeName
@@ -1285,7 +1285,7 @@ public abstract class COMTree extends Tree {
 
 
     /**
-     * Ìí¼ÓÊ÷½ÚµãĞÅÏ¢
+     * æ·»åŠ æ ‘èŠ‚ç‚¹ä¿¡æ¯
      * @param father ITreeNode
      * @param treeid String
      * @param treeName String
@@ -1441,7 +1441,7 @@ public abstract class COMTree extends Tree {
     }
 
     /**
-     * Ìæ»»·½·¨addNode(
+     * æ›¿æ¢æ–¹æ³•addNode(
      ITreeNode father,
      String treeid,
      String treeName,
@@ -1624,14 +1624,14 @@ public abstract class COMTree extends Tree {
 //			&& (curLevel < level || isExpanded(sNode.getId())))
 //			expand(sNode, curLevel + 1);
 
-        // Èç¹û½ÚµãÓĞº¢×Ó²¢ÇÒµ±Ç°²ã¼¶Ğ¡ÓÚÄ¬ÈÏ²ã¼¶£¬ÔòÕ¹¿ª½ÚµãsNode
+        // å¦‚æœèŠ‚ç‚¹æœ‰å­©å­å¹¶ä¸”å½“å‰å±‚çº§å°äºé»˜è®¤å±‚çº§ï¼Œåˆ™å±•å¼€èŠ‚ç‚¹sNode
         boolean flag = false;
         
         if (sNode.hasChildren() && curLevel < level) {
             expand(sNode, curLevel + 1);
             flag = true;
         }
-        //Èç¹û½ÚµãÓĞº¢×Ó£¬²¢ÇÒ½ÚµãÊÇÕ¹¿ªµÄ£¬²¢ÇÒ½ÚµãµÄº¢×ÓÃ»ÓĞ»ñÈ¡£¬ÔòÖØĞÂÕ¹¿ª½Úµã
+        //å¦‚æœèŠ‚ç‚¹æœ‰å­©å­ï¼Œå¹¶ä¸”èŠ‚ç‚¹æ˜¯å±•å¼€çš„ï¼Œå¹¶ä¸”èŠ‚ç‚¹çš„å­©å­æ²¡æœ‰è·å–ï¼Œåˆ™é‡æ–°å±•å¼€èŠ‚ç‚¹
         //if (sNode.hasChildren() && refreshNode && this.isExpanded(sNode.getId()))
         if (!flag && sNode.hasChildren() && sNode.childrenSize() == 0 &&
             this.isExpanded(sNode.getId()) ) {
@@ -1664,7 +1664,7 @@ public abstract class COMTree extends Tree {
     }
 
     /**
-     * ×°ÔØ¸ù½áµãrootidµÄÄ¿Â¼Ê÷£¬levelÎªÄ¬ÈÏÕ¹¿ª²ãÎ»
+     * è£…è½½æ ¹ç»“ç‚¹rootidçš„ç›®å½•æ ‘ï¼Œlevelä¸ºé»˜è®¤å±•å¼€å±‚ä½
      * @param rootid
      * @param level
      */
@@ -1677,7 +1677,7 @@ public abstract class COMTree extends Tree {
     }
 
     /**
-     * ×°ÔØ¸ù½áµãrootidµÄÄ¿Â¼Ê÷£¬levelÎªÄ¬ÈÏÕ¹¿ª²ãÎ»
+     * è£…è½½æ ¹ç»“ç‚¹rootidçš„ç›®å½•æ ‘ï¼Œlevelä¸ºé»˜è®¤å±•å¼€å±‚ä½
      * @param rootid
      * @param level
      */
@@ -1696,7 +1696,7 @@ public abstract class COMTree extends Tree {
     }
 
     /**
-     * ×°ÔØ¸ù½áµãrootidµÄÄ¿Â¼Ê÷£¬levelÎªÄ¬ÈÏÕ¹¿ª²ãÎ»
+     * è£…è½½æ ¹ç»“ç‚¹rootidçš„ç›®å½•æ ‘ï¼Œlevelä¸ºé»˜è®¤å±•å¼€å±‚ä½
      * @param rootid
      * @param level
      */
@@ -1720,7 +1720,7 @@ public abstract class COMTree extends Tree {
      * load tree that the node id is rootid and the node name is rootName
      * @param rootid
      * @param rootName
-     * @deprecated ²»½¨ÒéÊ¹ÓÃ£¬µ÷ÊÔÃ»Í¨¹ı£¬ÇëÎğÊ¹ÓÃ
+     * @deprecated ä¸å»ºè®®ä½¿ç”¨ï¼Œè°ƒè¯•æ²¡é€šè¿‡ï¼Œè¯·å‹¿ä½¿ç”¨
      */
     public void loadTree(String rootid, String rootName, String path) {
         loadTree(rootid, rootName, null, path);
@@ -1730,7 +1730,7 @@ public abstract class COMTree extends Tree {
      * load tree that the node id is rootid and the node name is rootName
      * @param rootid
      * @param rootName
-     * @deprecated ²»½¨ÒéÊ¹ÓÃ£¬µ÷ÊÔÃ»Í¨¹ı£¬ÇëÎğÊ¹ÓÃ
+     * @deprecated ä¸å»ºè®®ä½¿ç”¨ï¼Œè°ƒè¯•æ²¡é€šè¿‡ï¼Œè¯·å‹¿ä½¿ç”¨
      */
     public void loadTree(String rootid, String rootName, String memo,
                          String path) {
@@ -1740,7 +1740,7 @@ public abstract class COMTree extends Tree {
     }
 
     /**
-     * Ìí¼ÓÕ¹¿ª¼àÌıÆ÷
+     * æ·»åŠ å±•å¼€ç›‘å¬å™¨
      */
 
     public void addExpandListener() {
@@ -1762,37 +1762,37 @@ public abstract class COMTree extends Tree {
                 //removed by biaoping.yin on2005-02-04
                 //node.removeAllChildren();
                 boolean hasSon = node.hasChildren();
-                //Èç¹ûÕ¹¿ªÊ±ĞèÒªË¢ĞÂ½Úµã
-                //²¢ÇÒÃ»ÓĞ¼°Ê±¼à¿ØÃ¿¸ö½ÚµãµÄ×´Ì¬
-                //²¢ÇÒ²»ÊÇÄ¬ÈÏÕ¹¿ª¼¶±ğÇé¿ö
-                //ĞèÒªÖ´ĞĞÒÔÏÂ³ÌĞò
+                //å¦‚æœå±•å¼€æ—¶éœ€è¦åˆ·æ–°èŠ‚ç‚¹
+                //å¹¶ä¸”æ²¡æœ‰åŠæ—¶ç›‘æ§æ¯ä¸ªèŠ‚ç‚¹çš„çŠ¶æ€
+                //å¹¶ä¸”ä¸æ˜¯é»˜è®¤å±•å¼€çº§åˆ«æƒ…å†µ
+                //éœ€è¦æ‰§è¡Œä»¥ä¸‹ç¨‹åº
                 if (refreshNode && !needNotifier && (curLevel > level)) {
                     node.removeAllChildren();
-                    //É¾³ı¶ù×ÓÊ±Ó¦¸ÃÇå³şËùÓĞ½ÚµãµÄ×´Ì¬Âğ£¬·ÖÁ½ÖÖÇé¿ö´¦Àí
-                    //ÓÉÓĞ¶ù×Ó×ªµ½Ã»¶ù×Ó
+                    //åˆ é™¤å„¿å­æ—¶åº”è¯¥æ¸…æ¥šæ‰€æœ‰èŠ‚ç‚¹çš„çŠ¶æ€å—ï¼Œåˆ†ä¸¤ç§æƒ…å†µå¤„ç†
+                    //ç”±æœ‰å„¿å­è½¬åˆ°æ²¡å„¿å­
                     hasSon = hasSon(node);
                     node.setHasChildren(hasSon);
                 }
 
-                //µ±ÓĞ¶ù×Ó²¢ÇÒ¶ù×ÓÃ»ÓĞ¼ÓÔØ
-                //»òÕßÓĞ¶ù×Ó£¬²¢ÇÒÒªÇóË¢ĞÂ½Úµã£¬²»¹Ü¶ù×ÓÓĞÃ»ÓĞ¼ÓÔØ£¬²¢ÇÒ²»ÊÇÄ¬ÈÏÕ¹¿ª²ã¼¶Ê±
+                //å½“æœ‰å„¿å­å¹¶ä¸”å„¿å­æ²¡æœ‰åŠ è½½
+                //æˆ–è€…æœ‰å„¿å­ï¼Œå¹¶ä¸”è¦æ±‚åˆ·æ–°èŠ‚ç‚¹ï¼Œä¸ç®¡å„¿å­æœ‰æ²¡æœ‰åŠ è½½ï¼Œå¹¶ä¸”ä¸æ˜¯é»˜è®¤å±•å¼€å±‚çº§æ—¶
 //				if ((hasSon && node.childrenSize() == 0 && (curLevel > level))
 //					|| (hasSon && refreshNode && (curLevel > level))
 //					|| curLevel < level
 //					|| (node.hasChildren() && node.childrenSize() == 0 && this.isExpanded(sNode.getId())))
-                //ÓĞ¶ù×Ó²¢ÇÒ²»ÊÇ³õÊ¼Õ¹¿ª¶øÇÒÒªË¢ĞÂ½ÚµãnodeÊ±ÖØĞÂÉèÖÃnodeµÄ¶ù×Ó
+                //æœ‰å„¿å­å¹¶ä¸”ä¸æ˜¯åˆå§‹å±•å¼€è€Œä¸”è¦åˆ·æ–°èŠ‚ç‚¹nodeæ—¶é‡æ–°è®¾ç½®nodeçš„å„¿å­
                 if (hasSon && refreshNode && (curLevel > level)) {
                     tree.setSon(node, curLevel);
                 }
-                //ÓĞ¶ù×Ó²¢ÇÒµ±Ç°Õ¹¿ªµÄ²ã¼¶±ÈÄ¬ÈÏÕ¹¿ªµÄ²ã¼¶Ğ¡Ê±ÉèÖÃ½ÚµãnodeµÄ¶ù×Ó
+                //æœ‰å„¿å­å¹¶ä¸”å½“å‰å±•å¼€çš„å±‚çº§æ¯”é»˜è®¤å±•å¼€çš„å±‚çº§å°æ—¶è®¾ç½®èŠ‚ç‚¹nodeçš„å„¿å­
                 else if (curLevel < level) {
                     tree.setSon(node, curLevel);
                 }
-                //½ÚµãÓĞ¶ù×Ó£¬×´Ì¬ÊÇÕ¹¿ªµÄ£¬µ«ÊÇ¶ù×ÓÃ»ÓĞ»ñÈ¡ÔòÉèÖÃ½ÚµãµÄ¶ù×Ó
+                //èŠ‚ç‚¹æœ‰å„¿å­ï¼ŒçŠ¶æ€æ˜¯å±•å¼€çš„ï¼Œä½†æ˜¯å„¿å­æ²¡æœ‰è·å–åˆ™è®¾ç½®èŠ‚ç‚¹çš„å„¿å­
                 else if (node.childrenSize() == 0 && tree.isExpanded(node.getId())) {
                     tree.setSon(node, curLevel);
                 }
-                //½ÚµãÓĞ¶ù×Ó£¬µ«ÊÇ¶ù×ÓÃ»ÓĞ»ñÈ¡
+                //èŠ‚ç‚¹æœ‰å„¿å­ï¼Œä½†æ˜¯å„¿å­æ²¡æœ‰è·å–
                 else if (node.childrenSize() == 0 && hasSon) {
                     tree.setSon(node, curLevel);
                 }
@@ -1834,7 +1834,7 @@ public abstract class COMTree extends Tree {
 //			}
             
             /**
-             * Òşº¬µØÕ¹¿ªÃ¿¸öÊ÷½Úµã£¬¾²Ì¬Ò»´Î¼ÓÔØÊ÷ÖĞËùÓĞµÄÊ÷½Úµã£¬²¢ÇÒ½«
+             * éšå«åœ°å±•å¼€æ¯ä¸ªæ ‘èŠ‚ç‚¹ï¼Œé™æ€ä¸€æ¬¡åŠ è½½æ ‘ä¸­æ‰€æœ‰çš„æ ‘èŠ‚ç‚¹ï¼Œå¹¶ä¸”å°†
              */
             public void impactExpandNode(ITreeNode node, ITree tree,int curLevel,boolean needNotifier)
         	{
@@ -1852,13 +1852,13 @@ public abstract class COMTree extends Tree {
                 boolean hasSon = node.hasChildren();
                
 
-                //µ±ÓĞ¶ù×Ó²¢ÇÒ¶ù×ÓÃ»ÓĞ¼ÓÔØ
-                //»òÕßÓĞ¶ù×Ó£¬²¢ÇÒÒªÇóË¢ĞÂ½Úµã£¬²»¹Ü¶ù×ÓÓĞÃ»ÓĞ¼ÓÔØ£¬²¢ÇÒ²»ÊÇÄ¬ÈÏÕ¹¿ª²ã¼¶Ê±
+                //å½“æœ‰å„¿å­å¹¶ä¸”å„¿å­æ²¡æœ‰åŠ è½½
+                //æˆ–è€…æœ‰å„¿å­ï¼Œå¹¶ä¸”è¦æ±‚åˆ·æ–°èŠ‚ç‚¹ï¼Œä¸ç®¡å„¿å­æœ‰æ²¡æœ‰åŠ è½½ï¼Œå¹¶ä¸”ä¸æ˜¯é»˜è®¤å±•å¼€å±‚çº§æ—¶
 //				if ((hasSon && node.childrenSize() == 0 && (curLevel > level))
 //					|| (hasSon && refreshNode && (curLevel > level))
 //					|| curLevel < level
 //					|| (node.hasChildren() && node.childrenSize() == 0 && this.isExpanded(sNode.getId())))
-                //ÓĞ¶ù×Ó²¢ÇÒ²»ÊÇ³õÊ¼Õ¹¿ª¶øÇÒÒªË¢ĞÂ½ÚµãnodeÊ±ÖØĞÂÉèÖÃnodeµÄ¶ù×Ó
+                //æœ‰å„¿å­å¹¶ä¸”ä¸æ˜¯åˆå§‹å±•å¼€è€Œä¸”è¦åˆ·æ–°èŠ‚ç‚¹nodeæ—¶é‡æ–°è®¾ç½®nodeçš„å„¿å­
                 if (hasSon ) {
                     setSon(node,curLevel);
                 }
@@ -1867,7 +1867,7 @@ public abstract class COMTree extends Tree {
     }
 
     /**
-     * Ìí¼ÓÕÛµş¼àÌıÆ÷
+     * æ·»åŠ æŠ˜å ç›‘å¬å™¨
      */
     public void addCollapseListener() {
         addCollapseListener(new ICollapseListener() {
@@ -1911,7 +1911,7 @@ public abstract class COMTree extends Tree {
     }
 
     /**
-     * Ìí¼ÓÑ¡Ôñ¼àÌıÆ÷
+     * æ·»åŠ é€‰æ‹©ç›‘å¬å™¨
      */
     public void addSelectListener() {
         addSelectListener(new ISelectListener() {
@@ -1955,14 +1955,14 @@ public abstract class COMTree extends Tree {
     }
 
     /**
-     * ¸üĞÂnode½Úµã
+     * æ›´æ–°nodeèŠ‚ç‚¹
      */
     public ITreeNode updateNode(ITree tree, ITreeNode node) {
         return getTreeNode(node);
     }
 
     /**
-     * @return String À©Õ¹Ìõ¼ş²ÎÊı
+     * @return String æ‰©å±•æ¡ä»¶å‚æ•°
      */
     public String getExtCondition() {
         return extCondition;

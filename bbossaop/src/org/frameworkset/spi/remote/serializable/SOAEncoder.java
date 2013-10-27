@@ -23,7 +23,7 @@ import org.frameworkset.soa.ObjectSerializable;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2011-12-7 œ¬ŒÁ4:27:07
+ * @Date 2011-12-7 ‰∏ãÂçà4:27:07
  * @author biaoping.yin
  * @version 1.0
  */

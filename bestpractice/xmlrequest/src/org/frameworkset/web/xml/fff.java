@@ -15,7 +15,7 @@ public class fff {
 	 */
 	public static void main(String[] args) throws IOException {
 		
-		InputStream in = null;//¥”request÷–ªÒ»°
+		InputStream in = null;//‰ªérequest‰∏≠Ëé∑Âèñ
 		Reader reader = null;
 		StringWriter out = null;
 		try {

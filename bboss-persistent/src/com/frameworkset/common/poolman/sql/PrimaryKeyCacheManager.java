@@ -41,7 +41,7 @@ import org.apache.log4j.Logger;
 import com.frameworkset.common.poolman.util.SQLManager;
 
 /**
- * ¹ÜÀíÈ«²¿Êı¾İ¿âÁ´½Ó³ØµÄËùÓĞÖ÷¼üĞÅÏ¢
+ * ç®¡ç†å…¨éƒ¨æ•°æ®åº“é“¾æ¥æ± çš„æ‰€æœ‰ä¸»é”®ä¿¡æ¯
  * @author biaoping.yin
  * created on 2005-3-30
  * version 1.0
@@ -106,7 +106,7 @@ public class PrimaryKeyCacheManager {
     }
     
     /**
-     * ´ÓÊı¾İ¿âÖĞ¼ÓÔØ±íµÄÖ÷¼üĞÅÏ¢
+     * ä»æ•°æ®åº“ä¸­åŠ è½½è¡¨çš„ä¸»é”®ä¿¡æ¯
      * @param con
      * @param dbname
      * @param tableName

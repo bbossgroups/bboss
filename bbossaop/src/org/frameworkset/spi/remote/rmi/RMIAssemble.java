@@ -32,7 +32,7 @@ import org.frameworkset.spi.assemble.ProMap;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2011-5-18 ÏÂÎç04:17:55
+ * @Date 2011-5-18 ä¸‹åˆ04:17:55
  * @author biaoping.yin
  * @version 1.0
  */
@@ -45,7 +45,7 @@ public class RMIAssemble {
 	private static String address = "rmi://localhost:1099";
 	private static void initAddress()
 	{
-		SOAFileApplicationContext context = new SOAFileApplicationContext ("org/frameworkset/spi/manager-rpc-rmi.xml","GBK");
+		SOAFileApplicationContext context = new SOAFileApplicationContext ("org/frameworkset/spi/manager-rpc-rmi.xml","UTF-8");
 		try
 		{
 			ProMap map = context.getMapProperty("rpc.protocol.rmi.params");
@@ -121,7 +121,7 @@ public class RMIAssemble {
 	
 	
 	/**
-	 * ĞèÒªÈ·±£mvc·ÖÅÉÆ÷ÔÚRMIService·şÎñÒıÇæÖ®Ç°Æô¶¯£¬·ñÔò»ñÈ¡²»µ½ÈÎºÎÔÚmvc¿ò¼ÜÖĞÅäÖÃµÄRMIService·şÎñ
+	 * éœ€è¦ç¡®ä¿mvcåˆ†æ´¾å™¨åœ¨RMIServiceæœåŠ¡å¼•æ“ä¹‹å‰å¯åŠ¨ï¼Œå¦åˆ™è·å–ä¸åˆ°ä»»ä½•åœ¨mvcæ¡†æ¶ä¸­é…ç½®çš„RMIServiceæœåŠ¡
 	 */
 	private  static void loadMvcRMIService()
 	{
@@ -146,7 +146,7 @@ public class RMIAssemble {
 			return ;
 		org.frameworkset.spi.ApplicationContext context_ = null;
 		/**
-		 * Ô¤¼ÓÔØËùÓĞwsÄ£¿éÓ¦ÓÃÉÏÏÂÎÄ
+		 * é¢„åŠ è½½æ‰€æœ‰wsæ¨¡å—åº”ç”¨ä¸Šä¸‹æ–‡
 		 */
 		for(String t:RMIServices_modules)
 		{
@@ -154,7 +154,7 @@ public class RMIAssemble {
 //			loaderContextRMIServices(context_);
 		}
 		/**
-		 * ÌáÈ¡Ã¿¸öÄ£¿éÉÏÏÂÎÄÖĞµÄRMIService·şÎñ²¢¼ÓÔØÖ®
+		 * æå–æ¯ä¸ªæ¨¡å—ä¸Šä¸‹æ–‡ä¸­çš„RMIServiceæœåŠ¡å¹¶åŠ è½½ä¹‹
 		 */
 		for(String t:RMIServices_modules)
 		{
@@ -240,13 +240,13 @@ public class RMIAssemble {
             if(RMIUtil.rebindservice(servicePort, RMIService))
 //            	  if(RMIUtil.rebindservice(temp, RMIService))
             {
-            	logger.debug("rmi×é¼ş"+rmipro.getClazz()+"±»°ó¶¨ÔÚ·şÎñµØÖ·£º" + servicePort);
+            	logger.debug("rmiç»„ä»¶"+rmipro.getClazz()+"è¢«ç»‘å®šåœ¨æœåŠ¡åœ°å€ï¼š" + servicePort);
             	tracks.put(servicePort, rmipro);
 			
             }
             else
             {
-            	 logger.debug("rmi×é¼ş"+rmipro.getClazz()+"ÔÚ·şÎñµØÖ·[" + servicePort + "]°ó¶¨Ê§°Ü,ÏêÏ¸Çé¿öÇë²é¿´ÏµÍ³ÈÕÖ¾¡£");
+            	 logger.debug("rmiç»„ä»¶"+rmipro.getClazz()+"åœ¨æœåŠ¡åœ°å€[" + servicePort + "]ç»‘å®šå¤±è´¥,è¯¦ç»†æƒ…å†µè¯·æŸ¥çœ‹ç³»ç»Ÿæ—¥å¿—ã€‚");
             }
             
            

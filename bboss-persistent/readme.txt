@@ -8,7 +8,7 @@ dist--bboss persistent release package.
 
 
 ---------------------------------
-bboss-persistent¹ØÁª¹¤³Ì£º
+bboss-persistentå…³è”å·¥ç¨‹ï¼š
 ---------------------------------
 bboss-persistent<-active-ext [frameworkset-pool.jar]
 bboss-persistent<-bboss-ws [frameworkset-pool.jar]
@@ -21,23 +21,23 @@ bboss-persistent<-portal [frameworkset-pool.jar]
 bboss-persistent<-cas server [frameworkset-pool.jar]
 
 to do list:
-ÎŞ
+æ— 
 #######update function list since bbossgroups-3.6.2 begin###########
-o ¶¯Ì¬sql½âÎöÓÅ»¯£¬À©Õ¹velocityÄ£°åÒıÇæ
-o ´æ´¢¹ı³ÌÄÚ²¿´¦Àí»úÖÆÓÅ»¯£¬½â¾öÃû³Æ²ÎÊıÎŞ·¨ÕıÈ·»ñÈ¡µ½Êä³ö²ÎÊıµÄÎÊÌâ
-o ¶¯Ì¬sql¸ÄÔìºó£¬Åú´¦Àí¹¦ÄÜÎÊÌâĞŞ¸´
-o Êı¾İ¿â´¦Àí±êÇ©¿â£¬Åú´¦Àí²ÎÊı±êÇ©¶ÔtimestampºÍdateÀàĞÍÄ¬ÈÏ¸ñÊ½´¦ÀíÎÊÌâĞŞ¸´
-o SQLParams¶ÔÏóÔö¼Ó´øcharset²ÎÊıµÄ·½·¨£¬ÒÔ±ã¶ÔclobÀàĞÍ´æÈëµÄFile¶ÔÏóµÄÄÚÈİ½øĞĞÕıÈ·µÄ±àÂë²Ù×÷£¬½â¾öÎÄ¼şÄÚÈİ±àÂëÓëÊı¾İ¿â±àÂë²»Ò»ÖÂÊ±³öÏÖµÄ
-ÂÒÂëÎÊÌâ£º
-SQLParams.addSQLParamWithCharset("FILECONTENT", file,SQLParams.CLOBFILE,"GBK");
-Ê¹ÓÃ·½·¨ÈçÏÂ£º
+o åŠ¨æ€sqlè§£æä¼˜åŒ–ï¼Œæ‰©å±•velocityæ¨¡æ¿å¼•æ“
+o å­˜å‚¨è¿‡ç¨‹å†…éƒ¨å¤„ç†æœºåˆ¶ä¼˜åŒ–ï¼Œè§£å†³åç§°å‚æ•°æ— æ³•æ­£ç¡®è·å–åˆ°è¾“å‡ºå‚æ•°çš„é—®é¢˜
+o åŠ¨æ€sqlæ”¹é€ åï¼Œæ‰¹å¤„ç†åŠŸèƒ½é—®é¢˜ä¿®å¤
+o æ•°æ®åº“å¤„ç†æ ‡ç­¾åº“ï¼Œæ‰¹å¤„ç†å‚æ•°æ ‡ç­¾å¯¹timestampå’Œdateç±»å‹é»˜è®¤æ ¼å¼å¤„ç†é—®é¢˜ä¿®å¤
+o SQLParamså¯¹è±¡å¢åŠ å¸¦charsetå‚æ•°çš„æ–¹æ³•ï¼Œä»¥ä¾¿å¯¹clobç±»å‹å­˜å…¥çš„Fileå¯¹è±¡çš„å†…å®¹è¿›è¡Œæ­£ç¡®çš„ç¼–ç æ“ä½œï¼Œè§£å†³æ–‡ä»¶å†…å®¹ç¼–ç ä¸æ•°æ®åº“ç¼–ç ä¸ä¸€è‡´æ—¶å‡ºç°çš„
+ä¹±ç é—®é¢˜ï¼š
+SQLParams.addSQLParamWithCharset("FILECONTENT", file,SQLParams.CLOBFILE,"UTF-8");
+ä½¿ç”¨æ–¹æ³•å¦‚ä¸‹ï¼š
 SQLParams sqlparams = new SQLParams();
 			sqlparams.addSQLParam("filename", file.getName(), SQLParams.STRING);
-			sqlparams.addSQLParamWithCharset("FILECONTENT", file,SQLParams.CLOBFILE,"GBK");
+			sqlparams.addSQLParamWithCharset("FILECONTENT", file,SQLParams.CLOBFILE,"UTF-8");
 			
-Í¬Ê±SQLParamTag±êÇ©Ò³Ôö¼ÓcharsetÊôĞÔÓÃÀ´Ö¸¶¨¶ÔÓ¦µÄ×Ö·û±àÂë¼¯£¬
-<pg:sqlparam name="clobdata" value="<%=clobdata %>" type="clobfile" charset="GBK"/>
-Ê¹ÓÃµÄÊµÀıÈçÏÂ£º
+åŒæ—¶SQLParamTagæ ‡ç­¾é¡µå¢åŠ charsetå±æ€§ç”¨æ¥æŒ‡å®šå¯¹åº”çš„å­—ç¬¦ç¼–ç é›†ï¼Œ
+<pg:sqlparam name="clobdata" value="<%=clobdata %>" type="clobfile" charset="UTF-8"/>
+ä½¿ç”¨çš„å®ä¾‹å¦‚ä¸‹ï¼š
 <%
 	int object_id = 1;
 
@@ -51,7 +51,7 @@ SQLParams sqlparams = new SQLParams();
 	java.io.File clobdata = new java.io.File("D:\\bbossgroups-3.5.1\\bboss-taglib\\readme.txt");
 	
 	
-	String sql = "update sqltest set created=#[created],clobdata=#[clobdata],blobdata=#[blobdata] where object_id=#[object_id]";//¶àÌõsqlÓï¾ä²Ù×÷clob£¬blob»áµ¼ÖÂÊı¾İ¿â¼ÇÂ¼ĞĞËø¶¨
+	String sql = "update sqltest set created=#[created],clobdata=#[clobdata],blobdata=#[blobdata] where object_id=#[object_id]";//å¤šæ¡sqlè¯­å¥æ“ä½œclobï¼Œblobä¼šå¯¼è‡´æ•°æ®åº“è®°å½•è¡Œé”å®š
 	
 	
 %>
@@ -61,34 +61,34 @@ SQLParams sqlparams = new SQLParams();
 						<pg:sqlparam name="object_id" value="<%=object_id %>" type="int" />
 						<pg:sqlparam name="created" value="<%=created %>" type="timestamp" />
 						<pg:sqlparam name="blobdata" value="<%=blobdata %>" type="blobfile" />
-						<pg:sqlparam name="clobdata" value="<%=clobdata %>" type="clobfile" charset="GBK"/>
+						<pg:sqlparam name="clobdata" value="<%=clobdata %>" type="clobfile" charset="UTF-8"/>
 					</pg:batch>
 				</pg:statement>		
 </pg:batchutil>					
 #######update function list since bbossgroups-3.6 begin###########
-o ²ÉÓÃ¶à¸öproxoolÊı¾İÔ´Ê±£¬aliasÊôĞÔ±ØĞë±£³ÖÎ¨Ò»ĞÔ
-o À©Õ¹·ÖÒ³²éÑ¯¹¦ÄÜ,3.6.0Ö®ºóµÄ°æ±¾ConfigSQLExecutor/SQLExecutor/PreparedDBUtilÈı¸ö³Ö¾Ã²ã×é¼şÖĞÔö¼ÓÁËÁ½×é·ÖÒ³½Ó¿Ú£¬
-  µÚÒ»×é½Ó¿ÚºÍÖ®Ç°µÄ·ÖÒ³½Ó¿ÚµÄÇø±ğÊÇÔö¼ÓÁËÒ»¸ötotalsize²ÎÊı£¬Ò²¾ÍÊÇËµ¿ÉÒÔÍ¨¹ıtotalsize²ÎÊı´ÓÍâ²¿´«Èë×Ü¼ÇÂ¼Êı£¬
- ÕâÑùÔÚ·ÖÒ³·½·¨ÄÚ²¿ÎŞĞèÖ´ĞĞ×Ü¼ÇÂ¼Êı²éÑ¯²Ù×÷£¬ÒÔ±ãÌáÉıÏµÍ³ĞÔÄÜ,Í¬²½¸üĞÂÁË±êÇ©¿âÖĞºÍÊı¾İ¿â²éÑ¯Ïà¹ØµÄ³ÌĞò
-   µÚ¶ş×é½Ó¿ÚºÍÖ®Ç°µÄ·ÖÒ³½Ó¿ÚµÄÇø±ğÊÇÔö¼ÓÁËÒ»¸ötotalsizesql²ÎÊı£¬Ò²¾ÍÊÇËµ·ÖÒ³½Ó¿ÚÄÚ²¿¿ÉÒÔÍ¨¹ıÖ´ĞĞtotalsizesql²ÎÊı»ñÈ¡×Ü¼ÇÂ¼Êı£¬
- ÒÔ±ãÌáÉıÏµÍ³ĞÔÄÜ,Í¬²½¸üĞÂÁË±êÇ©¿âÖĞºÍÊı¾İ¿â²éÑ¯Ïà¹ØµÄ³ÌĞò
-o ÔÚÈÕÖ¾ÎÄ¼şÖĞÊä³ö·ÖÒ³²éÑ¯Ïà¹ØµÄËùÓĞsqlÓï¾ä
+o é‡‡ç”¨å¤šä¸ªproxoolæ•°æ®æºæ—¶ï¼Œaliaså±æ€§å¿…é¡»ä¿æŒå”¯ä¸€æ€§
+o æ‰©å±•åˆ†é¡µæŸ¥è¯¢åŠŸèƒ½,3.6.0ä¹‹åçš„ç‰ˆæœ¬ConfigSQLExecutor/SQLExecutor/PreparedDBUtilä¸‰ä¸ªæŒä¹…å±‚ç»„ä»¶ä¸­å¢åŠ äº†ä¸¤ç»„åˆ†é¡µæ¥å£ï¼Œ
+  ç¬¬ä¸€ç»„æ¥å£å’Œä¹‹å‰çš„åˆ†é¡µæ¥å£çš„åŒºåˆ«æ˜¯å¢åŠ äº†ä¸€ä¸ªtotalsizeå‚æ•°ï¼Œä¹Ÿå°±æ˜¯è¯´å¯ä»¥é€šè¿‡totalsizeå‚æ•°ä»å¤–éƒ¨ä¼ å…¥æ€»è®°å½•æ•°ï¼Œ
+ è¿™æ ·åœ¨åˆ†é¡µæ–¹æ³•å†…éƒ¨æ— éœ€æ‰§è¡Œæ€»è®°å½•æ•°æŸ¥è¯¢æ“ä½œï¼Œä»¥ä¾¿æå‡ç³»ç»Ÿæ€§èƒ½,åŒæ­¥æ›´æ–°äº†æ ‡ç­¾åº“ä¸­å’Œæ•°æ®åº“æŸ¥è¯¢ç›¸å…³çš„ç¨‹åº
+   ç¬¬äºŒç»„æ¥å£å’Œä¹‹å‰çš„åˆ†é¡µæ¥å£çš„åŒºåˆ«æ˜¯å¢åŠ äº†ä¸€ä¸ªtotalsizesqlå‚æ•°ï¼Œä¹Ÿå°±æ˜¯è¯´åˆ†é¡µæ¥å£å†…éƒ¨å¯ä»¥é€šè¿‡æ‰§è¡Œtotalsizesqlå‚æ•°è·å–æ€»è®°å½•æ•°ï¼Œ
+ ä»¥ä¾¿æå‡ç³»ç»Ÿæ€§èƒ½,åŒæ­¥æ›´æ–°äº†æ ‡ç­¾åº“ä¸­å’Œæ•°æ®åº“æŸ¥è¯¢ç›¸å…³çš„ç¨‹åº
+o åœ¨æ—¥å¿—æ–‡ä»¶ä¸­è¾“å‡ºåˆ†é¡µæŸ¥è¯¢ç›¸å…³çš„æ‰€æœ‰sqlè¯­å¥
 #######update function list since bbossgroups-3.5 begin###########
-o TransactionManager×é¼şÔö¼Órelease·½·¨£¬
-	  Ó¦ÓÃ³ÌĞòÔÚfinal·½·¨ÖĞµ÷ÓÃ£¬ÓÃÀ´ÔÚ³öÏÖÒì³£Ê±¶ÔÊÂÎñ×ÊÔ´½øĞĞ»ØÊÕ£¬Ê×ÏÈ¶ÔÊÂÎñ½øĞĞ»Ø¹ö£¬
-	  È»ºó»ØÊÕ×ÊÔ´£¬Èç¹ûÊÂÎñÃ»ÓĞ¿ªÆô»òÕßÒÑ¾­Ìá½»»òÕßÒÑ¾­»Ø¹ö£¬Ôòrelease·½·¨²»×öÈÎºÎ²Ù×÷
+o TransactionManagerç»„ä»¶å¢åŠ releaseæ–¹æ³•ï¼Œ
+	  åº”ç”¨ç¨‹åºåœ¨finalæ–¹æ³•ä¸­è°ƒç”¨ï¼Œç”¨æ¥åœ¨å‡ºç°å¼‚å¸¸æ—¶å¯¹äº‹åŠ¡èµ„æºè¿›è¡Œå›æ”¶ï¼Œé¦–å…ˆå¯¹äº‹åŠ¡è¿›è¡Œå›æ»šï¼Œ
+	  ç„¶åå›æ”¶èµ„æºï¼Œå¦‚æœäº‹åŠ¡æ²¡æœ‰å¼€å¯æˆ–è€…å·²ç»æäº¤æˆ–è€…å·²ç»å›æ»šï¼Œåˆ™releaseæ–¹æ³•ä¸åšä»»ä½•æ“ä½œ
 	
-o poolmanÄÚÖÃÊı¾İÔ´apache common dbcpÉı¼¶µ½1.4°æ±¾£¬apache common poolÉı¼¶µ½1.5.4£¬
-ÓÉÓÚdbcp 1.4Ö»Ö§³Öjdk 1.6£¬ËùÒÔ¶Ô³Ö¾Ã²ã½øĞĞÏàÓ¦µÄµ÷Õû£¬µ÷ÕûºóµÄ³Ö¾Ã²ã¿ò¼Ü
-Í¬Ê±Ö§³ÖÔÚjdk 1.5ºÍjdk 1.6ÏÂ½øĞĞ±àÒëºÍ´ò°ü£¨Ö®Ç°µÄ³Ö¾Ã²ã°æ±¾Ö»ÄÜÔÚjdk 1.5ÏÂÃæ´ò°üºÍ±àÒë£©¡£
-Èç¹ûĞèÒªÔÚjdk 1.5ÖĞÊ¹ÓÃÇëÊ¹ÓÃrun.bat½øĞĞ´ò°ü·¢²¼£¬·¢²¼µÄ°üÔÚdistribÄ¿Â¼ÏÂ
-Èç¹ûĞèÒªÔÚjdk 1.6ÖĞÊ¹ÓÃÇëÊ¹ÓÃrun-jdk6.bat½øĞĞ´ò°ü·¢²¼£¬·¢²¼µÄ°üÔÚdistribÄ¿Â¼ÏÂ
+o poolmanå†…ç½®æ•°æ®æºapache common dbcpå‡çº§åˆ°1.4ç‰ˆæœ¬ï¼Œapache common poolå‡çº§åˆ°1.5.4ï¼Œ
+ç”±äºdbcp 1.4åªæ”¯æŒjdk 1.6ï¼Œæ‰€ä»¥å¯¹æŒä¹…å±‚è¿›è¡Œç›¸åº”çš„è°ƒæ•´ï¼Œè°ƒæ•´åçš„æŒä¹…å±‚æ¡†æ¶
+åŒæ—¶æ”¯æŒåœ¨jdk 1.5å’Œjdk 1.6ä¸‹è¿›è¡Œç¼–è¯‘å’Œæ‰“åŒ…ï¼ˆä¹‹å‰çš„æŒä¹…å±‚ç‰ˆæœ¬åªèƒ½åœ¨jdk 1.5ä¸‹é¢æ‰“åŒ…å’Œç¼–è¯‘ï¼‰ã€‚
+å¦‚æœéœ€è¦åœ¨jdk 1.5ä¸­ä½¿ç”¨è¯·ä½¿ç”¨run.batè¿›è¡Œæ‰“åŒ…å‘å¸ƒï¼Œå‘å¸ƒçš„åŒ…åœ¨distribç›®å½•ä¸‹
+å¦‚æœéœ€è¦åœ¨jdk 1.6ä¸­ä½¿ç”¨è¯·ä½¿ç”¨run-jdk6.batè¿›è¡Œæ‰“åŒ…å‘å¸ƒï¼Œå‘å¸ƒçš„åŒ…åœ¨distribç›®å½•ä¸‹
 
-ÎªÁË¼æÈİjdk 1.5°æ±¾µÄÓ¦ÓÃ³ÌĞò£¬Í¬Ê±ÔÚantbuildall¹¤³ÌÏÂÃæµÄÁ½¸öbuild-all.batºÍbuild-all-jdk16.bat·Ö±ğ¶ÔÓ¦jdk 5ºÍjdk 6µÄ±àÒëÖ¸Áî
+ä¸ºäº†å…¼å®¹jdk 1.5ç‰ˆæœ¬çš„åº”ç”¨ç¨‹åºï¼ŒåŒæ—¶åœ¨antbuildallå·¥ç¨‹ä¸‹é¢çš„ä¸¤ä¸ªbuild-all.batå’Œbuild-all-jdk16.batåˆ†åˆ«å¯¹åº”jdk 5å’Œjdk 6çš„ç¼–è¯‘æŒ‡ä»¤
 
-¹¤³ÌÄ¿Â¼ÏÂÔö¼Ósrc-jdk5ºÍsrc-jdk6Á½¸öÔ´ÂëÄ¿Â¼£¬Ä¬ÈÏ²ÉÓÃsrc-jdk6µ¼Èë¹¤³Ì£¬Èç¹û»·¾³ÊÇ1.5ÇëÇĞ»»ÖÁsrc-jdk5Í¬Ê±½«¹¤³ÌµÄjdkÖ¸¶¨Îªjdk 1.5
-o poolman.xmlÎÄ¼şÔö¼ÓdatasourceFileÊôĞÔ£¬ÓÃÀ´Ö¸¶¨¶¨ÒåÊı¾İÔ´µÄiocÅäÖÃÎÄ¼ş£¨»ùÓÚbboss ioc¿ò¼Ü£©
-ÒÔc3p0ÎªÀı½øĞĞËµÃ÷£¨²»Í¬µÄÊı¾İÔ´Çë²Î¿¼poolmna-third.xmlÎÄ¼ş£©£º
+å·¥ç¨‹ç›®å½•ä¸‹å¢åŠ src-jdk5å’Œsrc-jdk6ä¸¤ä¸ªæºç ç›®å½•ï¼Œé»˜è®¤é‡‡ç”¨src-jdk6å¯¼å…¥å·¥ç¨‹ï¼Œå¦‚æœç¯å¢ƒæ˜¯1.5è¯·åˆ‡æ¢è‡³src-jdk5åŒæ—¶å°†å·¥ç¨‹çš„jdkæŒ‡å®šä¸ºjdk 1.5
+o poolman.xmlæ–‡ä»¶å¢åŠ datasourceFileå±æ€§ï¼Œç”¨æ¥æŒ‡å®šå®šä¹‰æ•°æ®æºçš„iocé…ç½®æ–‡ä»¶ï¼ˆåŸºäºbboss iocæ¡†æ¶ï¼‰
+ä»¥c3p0ä¸ºä¾‹è¿›è¡Œè¯´æ˜ï¼ˆä¸åŒçš„æ•°æ®æºè¯·å‚è€ƒpoolmna-third.xmlæ–‡ä»¶ï¼‰ï¼š
   <datasource>
 	
     <dbname>c3p0</dbname>
@@ -99,77 +99,77 @@ o poolman.xmlÎÄ¼şÔö¼ÓdatasourceFileÊôĞÔ£¬ÓÃÀ´Ö¸¶¨¶¨ÒåÊı¾İÔ´µÄiocÅäÖÃÎÄ¼ş£¨»ùÓÚbb
     <autoprimarykey>false</autoprimarykey>
 	<showsql>false</showsql>
 	 <!--
-        ¶¨ÒåÊı¾İ¿âÖ÷¼üÉú³É»úÖÆ
-        È±Ê¡µÄ²ÉÓÃÏµÍ³×Ô´øµÄÖ÷¼üÉú³É»úÖÆ£¬
-        Íâ²½³ÌĞò¿ÉÒÔ¸²¸ÇÏµÍ³Ö÷¼üÉú³É»úÖÆ
-        ÓÉÖµÀ´¾ö¶¨
-        auto:×Ô¶¯£¬Ò»°ãÔÚÉú²ú»·¾³ÏÂ²ÉÓÃ¸ÃÖÖÄ£Ê½£¬
-               ½â¾öÁËµ¥¸öÓ¦ÓÃ²¢·¢·ÃÎÊÊı¾İ¿âÌí¼Ó¼ÇÂ¼²úÉú³åÍ»µÄÎÊÌâ£¬Ğ§ÂÊ¸ß£¬Èç¹ûÉú²ú»·¾³ÏÂÓĞ¶à¸öÓ¦ÓÃ²¢·¢·ÃÎÊÍ¬Ò»Êı¾İ¿âÊ±£¬±ØĞë²ÉÓÃcompositeÄ£Ê½
-        composite£º½áºÏ×Ô¶¯ºÍÊµÊ±´ÓÊı¾İ¿âÖĞ»ñÈ¡×î´óµÄÖ÷¼üÖµÁ½ÖÖ·½Ê½À´´¦Àí£¬¿ª·¢»·¾³ÏÂ½¨Òé²ÉÓÃ¸ÃÖÖÄ£Ê½£¬
-                   ½â¾öÁË¶à¸öÓ¦ÓÃÍ¬Ê±·ÃÎÊÊı¾İ¿âÌí¼Ó¼ÇÂ¼Ê±²úÉú³åÍ»µÄÎÊÌâ£¬Ğ§ÂÊÏà¶Ô½ÏµÍ£¬ Èç¹ûÉú²ú»·¾³ÏÂÓĞ¶à¸öÓ¦ÓÃ²¢·¢·ÃÎÊÍ¬Ò»Êı¾İ¿âÊ±£¬±ØĞë²ÉÓÃcompositeÄ£Ê½
+        å®šä¹‰æ•°æ®åº“ä¸»é”®ç”Ÿæˆæœºåˆ¶
+        ç¼ºçœçš„é‡‡ç”¨ç³»ç»Ÿè‡ªå¸¦çš„ä¸»é”®ç”Ÿæˆæœºåˆ¶ï¼Œ
+        å¤–æ­¥ç¨‹åºå¯ä»¥è¦†ç›–ç³»ç»Ÿä¸»é”®ç”Ÿæˆæœºåˆ¶
+        ç”±å€¼æ¥å†³å®š
+        auto:è‡ªåŠ¨ï¼Œä¸€èˆ¬åœ¨ç”Ÿäº§ç¯å¢ƒä¸‹é‡‡ç”¨è¯¥ç§æ¨¡å¼ï¼Œ
+               è§£å†³äº†å•ä¸ªåº”ç”¨å¹¶å‘è®¿é—®æ•°æ®åº“æ·»åŠ è®°å½•äº§ç”Ÿå†²çªçš„é—®é¢˜ï¼Œæ•ˆç‡é«˜ï¼Œå¦‚æœç”Ÿäº§ç¯å¢ƒä¸‹æœ‰å¤šä¸ªåº”ç”¨å¹¶å‘è®¿é—®åŒä¸€æ•°æ®åº“æ—¶ï¼Œå¿…é¡»é‡‡ç”¨compositeæ¨¡å¼
+        compositeï¼šç»“åˆè‡ªåŠ¨å’Œå®æ—¶ä»æ•°æ®åº“ä¸­è·å–æœ€å¤§çš„ä¸»é”®å€¼ä¸¤ç§æ–¹å¼æ¥å¤„ç†ï¼Œå¼€å‘ç¯å¢ƒä¸‹å»ºè®®é‡‡ç”¨è¯¥ç§æ¨¡å¼ï¼Œ
+                   è§£å†³äº†å¤šä¸ªåº”ç”¨åŒæ—¶è®¿é—®æ•°æ®åº“æ·»åŠ è®°å½•æ—¶äº§ç”Ÿå†²çªçš„é—®é¢˜ï¼Œæ•ˆç‡ç›¸å¯¹è¾ƒä½ï¼Œ å¦‚æœç”Ÿäº§ç¯å¢ƒä¸‹æœ‰å¤šä¸ªåº”ç”¨å¹¶å‘è®¿é—®åŒä¸€æ•°æ®åº“æ—¶ï¼Œå¿…é¡»é‡‡ç”¨compositeæ¨¡å¼
     -->
     <keygenerate>composite</keygenerate>
 
   </datasource>
-  ÆäÖĞµÄ<datasourceFile>c3p0.xml</datasourceFile>Ö¸¶¨ÁËc3p0 datasourceµÄÅäÖÃÎÄ¼şµØÖ·£¬c3p0.xmlÏà¶ÔÓ¦classpathµÄ¸ùÂ·¾¶¡£
+  å…¶ä¸­çš„<datasourceFile>c3p0.xml</datasourceFile>æŒ‡å®šäº†c3p0 datasourceçš„é…ç½®æ–‡ä»¶åœ°å€ï¼Œc3p0.xmlç›¸å¯¹åº”classpathçš„æ ¹è·¯å¾„ã€‚
   
-c3p0.xml²Î¿¼²âÊÔÅäÖÃÎÄ¼ş/bboss-persistent/resources/c3p0.xml
+c3p0.xmlå‚è€ƒæµ‹è¯•é…ç½®æ–‡ä»¶/bboss-persistent/resources/c3p0.xml
 <property name="datasource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
-  <!-- Ö¸¶¨Á¬½ÓÊı¾İ¿âµÄJDBCÇı¶¯ -->
+  <!-- æŒ‡å®šè¿æ¥æ•°æ®åº“çš„JDBCé©±åŠ¨ -->
   <property name="driverClass" value="oracle.jdbc.driver.OracleDriver"/>  
-  <!-- Á¬½ÓÊı¾İ¿âËùÓÃµÄURL -->
+  <!-- è¿æ¥æ•°æ®åº“æ‰€ç”¨çš„URL -->
   <property name="jdbcUrl"
    value="jdbc:oracle:thin:@//10.0.15.134:1521/orcl">
-   <!-- Èç¹ûÊı¾İ¿âurlÊÇ¼ÓÃÜµÄ£¬ÔòĞèÒªÅäÖÃ½âÃÜµÄ±à¼­Æ÷ -->
+   <!-- å¦‚æœæ•°æ®åº“urlæ˜¯åŠ å¯†çš„ï¼Œåˆ™éœ€è¦é…ç½®è§£å¯†çš„ç¼–è¾‘å™¨ -->
 	<!--<editor clazz="com.frameworkset.common.poolman.security.DecryptEditor"/> -->
    </property>  
-  <!-- Á¬½ÓÊı¾İ¿âµÄÓÃ»§Ãû -->
+  <!-- è¿æ¥æ•°æ®åº“çš„ç”¨æˆ·å -->
   <property name="user" value="SANYGCMP">
-    <!-- Èç¹ûÕËºÅÊÇ¼ÓÃÜµÄÕËºÅ£¬ÔòĞèÒªÅäÖÃ½âÃÜµÄ±à¼­Æ÷ -->
+    <!-- å¦‚æœè´¦å·æ˜¯åŠ å¯†çš„è´¦å·ï¼Œåˆ™éœ€è¦é…ç½®è§£å¯†çš„ç¼–è¾‘å™¨ -->
 <!--   	<editor clazz="com.frameworkset.common.poolman.security.DecryptEditor"/> -->
   </property>  
-  <!-- Á¬½ÓÊı¾İ¿âµÄÃÜÂë -->
+  <!-- è¿æ¥æ•°æ®åº“çš„å¯†ç  -->
   <property name="password" value="SANYGCMP">
-  <!-- Èç¹û¿ÚÁîÊÇ¼ÓÃÜµÄ¿ÚÁî£¬ÔòĞèÒªÅäÖÃ½âÃÜµÄ±à¼­Æ÷ -->
+  <!-- å¦‚æœå£ä»¤æ˜¯åŠ å¯†çš„å£ä»¤ï¼Œåˆ™éœ€è¦é…ç½®è§£å¯†çš„ç¼–è¾‘å™¨ -->
 <!--   	<editor clazz="com.frameworkset.common.poolman.security.DecryptEditor"/> -->
   </property>
   
-  <!-- ÉèÖÃÊı¾İ¿âÁ¬½Ó³ØµÄ×î´óÁ¬½ÓÊı -->
+  <!-- è®¾ç½®æ•°æ®åº“è¿æ¥æ± çš„æœ€å¤§è¿æ¥æ•° -->
   <property name="maxPoolSize" value="20"/>  
-  <!-- ÉèÖÃÊı¾İ¿âÁ¬½Ó³ØµÄ×îĞ¡Á¬½ÓÊı -->
+  <!-- è®¾ç½®æ•°æ®åº“è¿æ¥æ± çš„æœ€å°è¿æ¥æ•° -->
   <property name="minPoolSize" value="2"/>
   
-  <!-- ÉèÖÃÊı¾İ¿âÁ¬½Ó³ØµÄ³õÊ¼»¯Á¬½ÓÊı -->
+  <!-- è®¾ç½®æ•°æ®åº“è¿æ¥æ± çš„åˆå§‹åŒ–è¿æ¥æ•° -->
   <property name="initialPoolSize" value="2"/>
-  <!-- ÉèÖÃÊı¾İ¿âÁ¬½Ó³ØµÄÁ¬½ÓµÄ×î´ó¿ÕÏĞÊ±¼ä,µ¥Î»ÎªÃë -->
+  <!-- è®¾ç½®æ•°æ®åº“è¿æ¥æ± çš„è¿æ¥çš„æœ€å¤§ç©ºé—²æ—¶é—´,å•ä½ä¸ºç§’ -->
   <property name="maxIdleTime" value="20"/>  
   <property name="preferredTestQuery" value="select 1 from dual"/>
   
 </property>
  
- ²âÊÔÓÃÀı
+ æµ‹è¯•ç”¨ä¾‹
  int num = SQLExecutor.queryObjectWithDBName(int.class, "c3p0", "select 1 from dual")
  
-o poolman.xmlÎÄ¼şÖĞdatasourceÔö¼Ó<enablejta>true</enablejta>ÊôĞÔÅäÖÃ
-enablejtaºÍjndiNameÊôĞÔ½áºÏÊ¹ÓÃ£¬µ±enablejtaÎªtrueÊ±½«°ÑÊı¾İÔ´×ª»»ÎªTXDataSource×¢²ájndiÉÏÏÂÎÄÖĞ
-Ö÷ÒªÓ¦ÓÃÓÚÍĞ¹ÜhibernateºÍibatisµÈ³Ö¾Ã²ã¿ò¼ÜÊÂÎñ
+o poolman.xmlæ–‡ä»¶ä¸­datasourceå¢åŠ <enablejta>true</enablejta>å±æ€§é…ç½®
+enablejtaå’ŒjndiNameå±æ€§ç»“åˆä½¿ç”¨ï¼Œå½“enablejtaä¸ºtrueæ—¶å°†æŠŠæ•°æ®æºè½¬æ¢ä¸ºTXDataSourceæ³¨å†Œjndiä¸Šä¸‹æ–‡ä¸­
+ä¸»è¦åº”ç”¨äºæ‰˜ç®¡hibernateå’Œibatisç­‰æŒä¹…å±‚æ¡†æ¶äº‹åŠ¡
 
-o Ôö¼Ó¶ÔdatasourceÅäÖÃÎÄ¼şÖĞ¶ÔÕËºÅºÍÃÜÂëµÄÍ¬Ê±¼ÓÃÜ²å¼ş
+o å¢åŠ å¯¹datasourceé…ç½®æ–‡ä»¶ä¸­å¯¹è´¦å·å’Œå¯†ç çš„åŒæ—¶åŠ å¯†æ’ä»¶
 com.frameworkset.common.poolman.security.DESDBUserAndPasswordEncrypt
-o ĞÂÔöTXDataSourceÊı¾İÔ´Àà£¬ÓÃÀ´ÊµÏÖµÚÈı·½Êı¾İ¿âÊÂÎñ´úÀí¹¦ÄÜ
+o æ–°å¢TXDataSourceæ•°æ®æºç±»ï¼Œç”¨æ¥å®ç°ç¬¬ä¸‰æ–¹æ•°æ®åº“äº‹åŠ¡ä»£ç†åŠŸèƒ½
 com.frameworkset.orm.transaction.TXDataSource
-TXDataSource¿ÉÒÔÍĞ¹Ühibernate£¬ibatis£¬mybatisµÈ³Ö¾Ã²ã¿ò¼ÜµÄÊÂÎñ¹ÜÀí£¬Ô­ÀíÈçÏÂ£º
-ÎÒÃÇÖ»ĞèÒªÍ¨¹ıTXDataSourceµÄ¹¹Ôìº¯Êı´«ÈëĞèÒªÍĞ¹ÜÊÂÎñµÄÊµ¼ÊÊı¾İÔ´DataSource¼´¿É£¬Õâ¸öDataSource¿ÉÒÔÊÇbbossÄÚÖÃµÄÊı¾İÔ´£¬Ò²¿ÉÒÔÊÇµÚÈı·½Êı¾İÔ´£¨common dbcp£¬C3P0£¬Proxool £¬Druid£©µÈµÈ
+TXDataSourceå¯ä»¥æ‰˜ç®¡hibernateï¼Œibatisï¼Œmybatisç­‰æŒä¹…å±‚æ¡†æ¶çš„äº‹åŠ¡ç®¡ç†ï¼ŒåŸç†å¦‚ä¸‹ï¼š
+æˆ‘ä»¬åªéœ€è¦é€šè¿‡TXDataSourceçš„æ„é€ å‡½æ•°ä¼ å…¥éœ€è¦æ‰˜ç®¡äº‹åŠ¡çš„å®é™…æ•°æ®æºDataSourceå³å¯ï¼Œè¿™ä¸ªDataSourceå¯ä»¥æ˜¯bbosså†…ç½®çš„æ•°æ®æºï¼Œä¹Ÿå¯ä»¥æ˜¯ç¬¬ä¸‰æ–¹æ•°æ®æºï¼ˆcommon dbcpï¼ŒC3P0ï¼ŒProxool ï¼ŒDruidï¼‰ç­‰ç­‰
 public TXDataSource(DataSource datasource)
 
-ÕâÑùÎÒÃÇÖ»ÒªÍ¨¹ıTXDataSourceÊµÀıµÄgetConnection()·½·¨¼È¿ÉÒÔ»ñÈ¡µ½ÊÂÎñ»·¾³ÖĞµÄconnection×ÊÔ´´Ó¶øÊµÏÖÊı¾İ¿âÊÂÎñµÄÍĞ¹Ü¹¦ÄÜ¡£
-TXDataSourceÊı¾İÔ´µÄ¾ßÌåÊ¹ÓÃ·½·¨£º
-ÎÒÃÇÒÔÍĞ¹Ü¿ªÔ´¹¤×÷Á÷activitiµÄÊÂÎñ×÷ÎªÊ¾Àı£¬²ÉÓÃbbossÄÚÖÃÊı¾İÔ´
-ÔÚ¼ÌĞøÖ®Ç°ĞèÒªÖªµÀÒ»ÏÂ×é¼şcom.frameworkset.common.poolman.util.SQLManagerÖĞµÄÁ½¸ö¹¤¾ß·½·¨£º
- public static DataSource getTXDatasourceByDBName(String dbname) --Ö±½Ó»ñÈ¡bbossµÄÄÚÖÃÊı¾İÔ´£¬²¢½«¸ÃÊı¾İÔ´×ª»»ÎªÒ»¸ö´úÀíÊÂÎñµÄÊı¾İÔ´£¬bboss³Ö¾Ã²ãµÄpoolman.xmlÎÄ¼şÖĞĞèÒª¶¨Òådbname´ú±íµÄÊı¾İÔ´
- public static DataSource getTXDatasource(DataSource ds) --Ö±½Ó½«dsÊı¾İÔ´×ª»»ÎªÒ»¸ö´úÀíÊÂÎñµÄÊı¾İÔ´
+è¿™æ ·æˆ‘ä»¬åªè¦é€šè¿‡TXDataSourceå®ä¾‹çš„getConnection()æ–¹æ³•æ—¢å¯ä»¥è·å–åˆ°äº‹åŠ¡ç¯å¢ƒä¸­çš„connectionèµ„æºä»è€Œå®ç°æ•°æ®åº“äº‹åŠ¡çš„æ‰˜ç®¡åŠŸèƒ½ã€‚
+TXDataSourceæ•°æ®æºçš„å…·ä½“ä½¿ç”¨æ–¹æ³•ï¼š
+æˆ‘ä»¬ä»¥æ‰˜ç®¡å¼€æºå·¥ä½œæµactivitiçš„äº‹åŠ¡ä½œä¸ºç¤ºä¾‹ï¼Œé‡‡ç”¨bbosså†…ç½®æ•°æ®æº
+åœ¨ç»§ç»­ä¹‹å‰éœ€è¦çŸ¥é“ä¸€ä¸‹ç»„ä»¶com.frameworkset.common.poolman.util.SQLManagerä¸­çš„ä¸¤ä¸ªå·¥å…·æ–¹æ³•ï¼š
+ public static DataSource getTXDatasourceByDBName(String dbname) --ç›´æ¥è·å–bbossçš„å†…ç½®æ•°æ®æºï¼Œå¹¶å°†è¯¥æ•°æ®æºè½¬æ¢ä¸ºä¸€ä¸ªä»£ç†äº‹åŠ¡çš„æ•°æ®æºï¼ŒbbossæŒä¹…å±‚çš„poolman.xmlæ–‡ä»¶ä¸­éœ€è¦å®šä¹‰dbnameä»£è¡¨çš„æ•°æ®æº
+ public static DataSource getTXDatasource(DataSource ds) --ç›´æ¥å°†dsæ•°æ®æºè½¬æ¢ä¸ºä¸€ä¸ªä»£ç†äº‹åŠ¡çš„æ•°æ®æº
 
-Ê×ÏÈÔÚpoolman.xmlÎÄ¼şÖĞÅäÖÃÒ»¸öÃû³Æ½ĞmysqlµÄdatasource
+é¦–å…ˆåœ¨poolman.xmlæ–‡ä»¶ä¸­é…ç½®ä¸€ä¸ªåç§°å«mysqlçš„datasource
  <datasource>
 
     <dbname>mysql</dbname>
@@ -184,7 +184,7 @@ TXDataSourceÊı¾İÔ´µÄ¾ßÌåÊ¹ÓÃ·½·¨£º
     .........
 </datasource>
 
-È»ºóÔÚactivitiµÄÅäÖÃÎÄ¼şactiviti.cfg.xmlÖĞ×öÈçÏÂÅäÖÃ£º
+ç„¶ååœ¨activitiçš„é…ç½®æ–‡ä»¶activiti.cfg.xmlä¸­åšå¦‚ä¸‹é…ç½®ï¼š
 <properties>
   <property name="processEngineConfiguration" class="org.activiti.engine.impl.cfg.StandaloneProcessEngineConfiguration">
      <property name="dataSource" factory-class="com.frameworkset.common.poolman.util.SQLManager" factory-method="getTXDatasourceByDBName">
@@ -202,53 +202,53 @@ TXDataSourceÊı¾İÔ´µÄ¾ßÌåÊ¹ÓÃ·½·¨£º
   </property>
 </properties>
 
-´Óactiviti.cfg.xmlÅäÖÃÎÄ¼şÖĞ¿ÉÒÔ¿´³ö£¬ÎÒÃÇÒÑ¾­¿ÉÒÔÊ¹ÓÃbboss ioc¿ò¼ÜÀ´¹ÜÀíactivitiÁ÷³ÌÒıÇæ£¬bboss iocÈİÆ÷ÖĞ¹ÜÀíµÄ×é¼ş¶¼¿ÉÒÔÓÃÓÚactivitiµÄÏà¹Ø
-»î¶¯»·½ÚºÍÊÂ¼ş¼àÌıÆ÷ÖĞ£¨¸Ã¹¦ÄÜÁíÍâĞ´ÎÄÕÂ½éÉÜ£©¡£ÕâÀïĞèÒª¹Ø×¢µÄÊÇÅäÖÃÄÚÈİ£º
+ä»activiti.cfg.xmlé…ç½®æ–‡ä»¶ä¸­å¯ä»¥çœ‹å‡ºï¼Œæˆ‘ä»¬å·²ç»å¯ä»¥ä½¿ç”¨bboss iocæ¡†æ¶æ¥ç®¡ç†activitiæµç¨‹å¼•æ“ï¼Œbboss iocå®¹å™¨ä¸­ç®¡ç†çš„ç»„ä»¶éƒ½å¯ä»¥ç”¨äºactivitiçš„ç›¸å…³
+æ´»åŠ¨ç¯èŠ‚å’Œäº‹ä»¶ç›‘å¬å™¨ä¸­ï¼ˆè¯¥åŠŸèƒ½å¦å¤–å†™æ–‡ç« ä»‹ç»ï¼‰ã€‚è¿™é‡Œéœ€è¦å…³æ³¨çš„æ˜¯é…ç½®å†…å®¹ï¼š
 <property name="dataSource" factory-class="com.frameworkset.common.poolman.util.SQLManager" factory-method="getTXDatasourceByDBName">
     	<construction>
     		<property value="mysql" />
     	</construction>
     </property>
-ÎÒÃÇ²ÉÓÃbboss iocµÄ¾²Ì¬¹¤³§Ä£Ê½À´¶¨ÒåÒ»¸öTXDatasource²¢×¢Èëµ½activitiµÄorg.activiti.engine.impl.cfg.StandaloneProcessEngineConfiguration
-×é¼şÖĞ£¬ÕâÑùactivitiÁ÷³ÌÒıÇæµÄdbÊÂÎñ¾Í¿ÉÒÔ±»bbossÊı¾İ¿âÊÂÎñËùÍĞ¹ÜÁË¡£bbossÊı¾İ¿âÊÂÎñ¹ÜÀí¿ÉÒÔ²Î¿¼bbossgroups training.pptÖĞµÄÏà¹ØÊÂÎñ½éÉÜÕÂ½Ú¡£
+æˆ‘ä»¬é‡‡ç”¨bboss iocçš„é™æ€å·¥å‚æ¨¡å¼æ¥å®šä¹‰ä¸€ä¸ªTXDatasourceå¹¶æ³¨å…¥åˆ°activitiçš„org.activiti.engine.impl.cfg.StandaloneProcessEngineConfiguration
+ç»„ä»¶ä¸­ï¼Œè¿™æ ·activitiæµç¨‹å¼•æ“çš„dbäº‹åŠ¡å°±å¯ä»¥è¢«bbossæ•°æ®åº“äº‹åŠ¡æ‰€æ‰˜ç®¡äº†ã€‚bbossæ•°æ®åº“äº‹åŠ¡ç®¡ç†å¯ä»¥å‚è€ƒbbossgroups training.pptä¸­çš„ç›¸å…³äº‹åŠ¡ä»‹ç»ç« èŠ‚ã€‚
 http://www.bbossgroups.com/file/download.htm?fileName=bbossgroups trainning.ppt
 
-ÅäÖÃºÃÁËºó¾Í¿ÉÒÔ£¬Æô¶¯Á÷³ÌÒıÇæ£¨Ïà¹Ø·½·¨Çë²Î¿¼activitiµÄÊ®·ÖÖÓÖ¸ÄÏ£©£¬¿´¿´Á½¸öÊÂÎñ¹ÜÀíµÄ´úÂëÊ¾Àı£º
-´´½¨activitiµÄÓÃ»§ĞÅÏ¢--½«Á½¸ö´´½¨ÓÃ»§²Ù×÷°üº¬ÔÚÊÂÎñÖĞ£¬activiti²ÉÓÃmybatis×÷Îª³Ö¾Ã²ã¿ò¼Ü
+é…ç½®å¥½äº†åå°±å¯ä»¥ï¼Œå¯åŠ¨æµç¨‹å¼•æ“ï¼ˆç›¸å…³æ–¹æ³•è¯·å‚è€ƒactivitiçš„ååˆ†é’ŸæŒ‡å—ï¼‰ï¼Œçœ‹çœ‹ä¸¤ä¸ªäº‹åŠ¡ç®¡ç†çš„ä»£ç ç¤ºä¾‹ï¼š
+åˆ›å»ºactivitiçš„ç”¨æˆ·ä¿¡æ¯--å°†ä¸¤ä¸ªåˆ›å»ºç”¨æˆ·æ“ä½œåŒ…å«åœ¨äº‹åŠ¡ä¸­ï¼Œactivitié‡‡ç”¨mybatisä½œä¸ºæŒä¹…å±‚æ¡†æ¶
  TransactionManager tm = new TransactionManager();
     try
     {
-	    tm.begin();//¿ªÆôÊÂÎñ
+	    tm.begin();//å¼€å¯äº‹åŠ¡
 	    identityService.saveUser(identityService.newUser("kermit"));
 	    identityService.saveUser(identityService.newUser("gonzo"));	    
-	    tm.commit();//Ìá½»ÊÂÎñ
+	    tm.commit();//æäº¤äº‹åŠ¡
     }
     catch(Throwable e)
     {
     	try {
-			tm.rollback();//»Ø¹öÊÂÎñ
+			tm.rollback();//å›æ»šäº‹åŠ¡
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
     }
 
-Íê³ÉÁ÷³ÌÈÎÎñºÍÒµÎñÂß¼­´¦ÀíÏà½áºÏ--½«ÒµÎñ´¦ÀíºÍÁ÷³Ì²Ù×÷°üº¬ÔÚÒ»¸öÊÂÎñÖĞ£¬activiti²ÉÓÃmybatis×÷Îª³Ö¾Ã²ã¿ò¼Ü
+å®Œæˆæµç¨‹ä»»åŠ¡å’Œä¸šåŠ¡é€»è¾‘å¤„ç†ç›¸ç»“åˆ--å°†ä¸šåŠ¡å¤„ç†å’Œæµç¨‹æ“ä½œåŒ…å«åœ¨ä¸€ä¸ªäº‹åŠ¡ä¸­ï¼Œactivitié‡‡ç”¨mybatisä½œä¸ºæŒä¹…å±‚æ¡†æ¶
  // Start process instance
 	ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("taskAssigneeExampleProcess");
 	TransactionManager tm = new TransactionManager();
 	try {
 		tm.begin();
-		//´¦ÀíÒµÎñÂß¼­,Ê¡ÂÔ´¦Àí´úÂë
+		//å¤„ç†ä¸šåŠ¡é€»è¾‘,çœç•¥å¤„ç†ä»£ç 
 		.....
-	    // »ñÈ¡ÓÃ»§ÈÎÎñÁĞ±í
+	    // è·å–ç”¨æˆ·ä»»åŠ¡åˆ—è¡¨
 	    List<Task> tasks = taskService
 	      .createTaskQuery()
 	      .taskAssignee("kermit")
 	      .list();
 	    
 	    Task myTask = tasks.get(0);
-	    //Íê³ÉÈÎÎñ
+	    //å®Œæˆä»»åŠ¡
 	    taskService.complete(myTask.getId());
 	    
 	    tm.commit();
@@ -265,19 +265,19 @@ http://www.bbossgroups.com/file/download.htm?fileName=bbossgroups trainning.ppt
 
 
 
-o ÍêÉÆsql±äÁ¿beanÀàĞÍ±äÁ¿ÊôĞÔÒıÓÃ¹¦ÄÜ
-¸üĞÂ°ü£º
+o å®Œå–„sqlå˜é‡beanç±»å‹å˜é‡å±æ€§å¼•ç”¨åŠŸèƒ½
+æ›´æ–°åŒ…ï¼š
 frameworkset-pool.jar
 frameworkset-util.jar
-o ³Ö¾Ã²ãÄ£°åsql±äÁ¿½âÎö»úÖÆÓÉÕıÔò±í´ïÊ½ÇĞ»»Îªbboss×Ô´øµÄ±äÁ¿½âÎö»úÖÆ£¬Ö§³ÖÒÔÏÂÀàĞÍ±äÁ¿£º
-»ù±¾Êı¾İÀàĞÍ
-ÈÕÆÚÀàĞÍ
-ÉÏÊöÀàĞÍ×éºÏ¸´ÔÓÀàĞÍÈçÏÂ£º
-   Êı×é£¨Ò»Î¬Êı×é£¬¶àÎ¬Êı×é£©
+o æŒä¹…å±‚æ¨¡æ¿sqlå˜é‡è§£ææœºåˆ¶ç”±æ­£åˆ™è¡¨è¾¾å¼åˆ‡æ¢ä¸ºbbossè‡ªå¸¦çš„å˜é‡è§£ææœºåˆ¶ï¼Œæ”¯æŒä»¥ä¸‹ç±»å‹å˜é‡ï¼š
+åŸºæœ¬æ•°æ®ç±»å‹
+æ—¥æœŸç±»å‹
+ä¸Šè¿°ç±»å‹ç»„åˆå¤æ‚ç±»å‹å¦‚ä¸‹ï¼š
+   æ•°ç»„ï¼ˆä¸€ç»´æ•°ç»„ï¼Œå¤šç»´æ•°ç»„ï¼‰
  List
  Map
  
-ÒÔÏÂÊÇÒ»¸öÊı×é±äÁ¿Ê¹ÓÃµÄ¼òµ¥Ê¾Àı£º
+ä»¥ä¸‹æ˜¯ä¸€ä¸ªæ•°ç»„å˜é‡ä½¿ç”¨çš„ç®€å•ç¤ºä¾‹ï¼š
 String[] FIELDNAMES = new
 String[]{"ss","testttt","sdds","insertOpreation","ss556"};
 		String deleteAllsql = "delete from LISTBEAN where FIELDNAME in
@@ -285,25 +285,25 @@ String[]{"ss","testttt","sdds","insertOpreation","ss556"};
 		Map conditions = new HashMap();
 		conditions.put("FIELDNAMES", FIELDNAMES);
 		
-o ³Ö¾Ã²ã¿ò¼ÜÄ£°åsqlÖĞ±äÁ¿½âÎö¹¦ÄÜÀ©Õ¹ºÍÓÅ»¯£¬ÓÉÕıÔò±í´ïÊ½ÇĞ»»Îª×ÔÖ÷±àĞ´µÄsql±äÁ¿½âÎö»úÖÆ
-ÕıÔò±í´ïÊ½Ö»ÄÜ½âÎö¼òµ¥µÄ±äÁ¿£¬ÎŞ·¨½âÎö¸´ÔÓµÄ±äÁ¿¸ñÊ½
-     #[HOST_ID]ÕâÖÖ¸ñÊ½ÕıÔò±í´ïÊ½ÄÜ¹»½âÎö
-     #[HOST_ID->bb[0]]ÕâÖÖ´øÒıÓÃµÄ¸ñÊ½£¬ÕıÔò±í´ï¾Í²»ÄÜ½âÎöÁË
-     VariableHandler.parserSQLStruction·½·¨¿ÉÒÔ½âÎöÉÏÊöÁ½ÖÖ¸ñÊ½µÄ±äÁ¿£¬²¢ÇÒÄÜ¹»½«¸´ÔÓµÄ±äÁ¿
+o æŒä¹…å±‚æ¡†æ¶æ¨¡æ¿sqlä¸­å˜é‡è§£æåŠŸèƒ½æ‰©å±•å’Œä¼˜åŒ–ï¼Œç”±æ­£åˆ™è¡¨è¾¾å¼åˆ‡æ¢ä¸ºè‡ªä¸»ç¼–å†™çš„sqlå˜é‡è§£ææœºåˆ¶
+æ­£åˆ™è¡¨è¾¾å¼åªèƒ½è§£æç®€å•çš„å˜é‡ï¼Œæ— æ³•è§£æå¤æ‚çš„å˜é‡æ ¼å¼
+     #[HOST_ID]è¿™ç§æ ¼å¼æ­£åˆ™è¡¨è¾¾å¼èƒ½å¤Ÿè§£æ
+     #[HOST_ID->bb[0]]è¿™ç§å¸¦å¼•ç”¨çš„æ ¼å¼ï¼Œæ­£åˆ™è¡¨è¾¾å°±ä¸èƒ½è§£æäº†
+     VariableHandler.parserSQLStructionæ–¹æ³•å¯ä»¥è§£æä¸Šè¿°ä¸¤ç§æ ¼å¼çš„å˜é‡ï¼Œå¹¶ä¸”èƒ½å¤Ÿå°†å¤æ‚çš„å˜é‡
 
-µÄĞÅÏ¢ÒÔVariableÁĞ±íµÄ·½Ê½´æ´¢£¬ÒÔ¹©³Ö¾Ã²ã¿ò¼Ü¶ÔÕâĞ©±äÁ¿ÇóÖµ
+çš„ä¿¡æ¯ä»¥Variableåˆ—è¡¨çš„æ–¹å¼å­˜å‚¨ï¼Œä»¥ä¾›æŒä¹…å±‚æ¡†æ¶å¯¹è¿™äº›å˜é‡æ±‚å€¼
 
-±äÁ¿½âÎö¹¦ÄÜ¿ª·¢ÒÑ¾­Íê³É²¢¾­¹ı¸÷ÖÖ³¡¾°µÄ²âÊÔ£¬ÏÂÒ»²½¾ÍÊÇ¾ÍÊÇ¸Ã»úÖÆÌæ»»Ô­À´µÄÕıÔò±í´ïÊ½·½Ê½¡£
-¾ßÌåµÄ²âÊÔ·½·¨Çë²é¿´²âÊÔÓÃÀı£º
-/bboss-util/test/com/frameworkset/util/TestVaribleHandler.javaÖĞµÄÏà¹Ø·½·¨
+å˜é‡è§£æåŠŸèƒ½å¼€å‘å·²ç»å®Œæˆå¹¶ç»è¿‡å„ç§åœºæ™¯çš„æµ‹è¯•ï¼Œä¸‹ä¸€æ­¥å°±æ˜¯å°±æ˜¯è¯¥æœºåˆ¶æ›¿æ¢åŸæ¥çš„æ­£åˆ™è¡¨è¾¾å¼æ–¹å¼ã€‚
+å…·ä½“çš„æµ‹è¯•æ–¹æ³•è¯·æŸ¥çœ‹æµ‹è¯•ç”¨ä¾‹ï¼š
+/bboss-util/test/com/frameworkset/util/TestVaribleHandler.javaä¸­çš„ç›¸å…³æ–¹æ³•
 public void varialparserUtil()
 public void regexUtilvsVarialparserUtil()			
 #######update function list since bbossgroups-3.4 begin###########
 
-o ½â¾öÁ¬½Ó³ØÖĞÎŞ·¨²éÕÒµ½tomcat 6ºÍweblogic ÈİÆ÷Êı¾İÔ´µÄÎÊÌâ
-o ½â¾ösql server jtdÇı¶¯ÎŞ·¨ÕıÈ·ÕÒµ½DB adaptorµÄÎÊÌâ
-o PreparedDBUtilÔö¼Ópublic void setBlob(int i, String x) throws SQLException ·½·¨£¬ÓÃÀ´Ö±½ÓÏòblobÀàĞÍ×Ö¶ÎÖĞ´æÈë×Ö·û´®
-o ĞŞ¸ÄTestLob²âÊÔÓÃÀı£¬ÓÃÀ´ÑİÊ¾SQLExecutor/ConfigSQLExecutor×é¼şÏòBlobºÍclobÖĞ²åÈë×Ö·û´®µÄ·½·¨£º
+o è§£å†³è¿æ¥æ± ä¸­æ— æ³•æŸ¥æ‰¾åˆ°tomcat 6å’Œweblogic å®¹å™¨æ•°æ®æºçš„é—®é¢˜
+o è§£å†³sql server jtdé©±åŠ¨æ— æ³•æ­£ç¡®æ‰¾åˆ°DB adaptorçš„é—®é¢˜
+o PreparedDBUtilå¢åŠ public void setBlob(int i, String x) throws SQLException æ–¹æ³•ï¼Œç”¨æ¥ç›´æ¥å‘blobç±»å‹å­—æ®µä¸­å­˜å…¥å­—ç¬¦ä¸²
+o ä¿®æ”¹TestLobæµ‹è¯•ç”¨ä¾‹ï¼Œç”¨æ¥æ¼”ç¤ºSQLExecutor/ConfigSQLExecutorç»„ä»¶å‘Blobå’Œclobä¸­æ’å…¥å­—ç¬¦ä¸²çš„æ–¹æ³•ï¼š
 	@Test
 	public void testNewSQLParamInsert() throws Exception
 	{
@@ -326,7 +326,7 @@ o ĞŞ¸ÄTestLob²âÊÔÓÃÀı£¬ÓÃÀ´ÑİÊ¾SQLExecutor/ConfigSQLExecutor×é¼şÏòBlobºÍclobÖĞ²å
 		SQLExecutor.insertBean("insert into test(id,blobname,clobname) values(#[id],#[blobname],#[clobname])", bean);
 	}
 	
-	×¢ÒâÈç¹û
+	æ³¨æ„å¦‚æœ
 	public static class LobBean
 	{
 		private String id;
@@ -335,12 +335,12 @@ o ĞŞ¸ÄTestLob²âÊÔÓÃÀı£¬ÓÃÀ´ÑİÊ¾SQLExecutor/ConfigSQLExecutor×é¼şÏòBlobºÍclobÖĞ²å
 		@Column(type="clob")
 		private String clobname;
 	}
-	ÖĞtype·Ö±ğÎªblobfile»òÕßclobfileÊ±£¬¾Í±ØĞëÒªÇó×Ö¶ÎµÄÖµÀàĞÍÎªÒÔÏÂÈıÖÖ£º
+	ä¸­typeåˆ†åˆ«ä¸ºblobfileæˆ–è€…clobfileæ—¶ï¼Œå°±å¿…é¡»è¦æ±‚å­—æ®µçš„å€¼ç±»å‹ä¸ºä»¥ä¸‹ä¸‰ç§ï¼š
 	1.java.io.File
 	2.MultipartFile
 	3.InputStream
 	
-	ÀıÈç£º
+	ä¾‹å¦‚ï¼š
 	public static class LobBean
 	{
 		private String id;
@@ -349,8 +349,8 @@ o ĞŞ¸ÄTestLob²âÊÔÓÃÀı£¬ÓÃÀ´ÑİÊ¾SQLExecutor/ConfigSQLExecutor×é¼şÏòBlobºÍclobÖĞ²å
 		@Column(type="clobfile")
 		private File clobname;
 	}
-o SQLExecutor/ConfigSQLExecutor×é¼şÔö¼Óµ¥×Ö¶Î¶à¼ÇÂ¼½á¹ûÀàĞÍÎªList<String>µÄ²éÑ¯¹¦ÄÜ£¬Ê¹ÓÃ·½·¨ÈçÏÂ£º
-Ê¹ÓÃ·½·¨£º
+o SQLExecutor/ConfigSQLExecutorç»„ä»¶å¢åŠ å•å­—æ®µå¤šè®°å½•ç»“æœç±»å‹ä¸ºList<String>çš„æŸ¥è¯¢åŠŸèƒ½ï¼Œä½¿ç”¨æ–¹æ³•å¦‚ä¸‹ï¼š
+ä½¿ç”¨æ–¹æ³•ï¼š
 @Test
 	public void dynamicquery() throws SQLException
 	{
@@ -392,7 +392,7 @@ o SQLExecutor/ConfigSQLExecutor×é¼şÔö¼Óµ¥×Ö¶Î¶à¼ÇÂ¼½á¹ûÀàĞÍÎªList<String>µÄ²éÑ¯¹
 		 System.out.println(result_int);
 		 
 	}
-o ĞŞ¸´Ö´ĞĞclob ÎÄ¼ş²åÈë²Ù×÷µ¼ÖÂ¿ÕÖ¸ÕëµÄÎÊÌâ
+o ä¿®å¤æ‰§è¡Œclob æ–‡ä»¶æ’å…¥æ“ä½œå¯¼è‡´ç©ºæŒ‡é’ˆçš„é—®é¢˜
 
 sql = "INSERT INTO CLOBFILE (FILENAME,FILECONTENT,fileid,FILESIZE) VALUES(#[filename],#[FILECONTENT],#[FILEID],#[FILESIZE])";
 			SQLParams sqlparams = new SQLParams();
@@ -401,40 +401,40 @@ sql = "INSERT INTO CLOBFILE (FILENAME,FILECONTENT,fileid,FILESIZE) VALUES(#[file
 			sqlparams.addSQLParam("FILEID", UUID.randomUUID().toString(),SQLParams.STRING);
 			sqlparams.addSQLParam("FILESIZE", file.getSize(),SQLParams.LONG);
 			SQLExecutor.insertBean(sql, sqlparams);	
-o ÓÅ»¯or mappingĞÔÄÜ
-o ¸üĞÂ×îĞÂµÄframeworkset-util.jar£¬³Ö¾Ã²ãor mapping»úÖÆµÄbeanµÄÊôĞÔ²»ÔÙĞèÒªget/set·½·¨
-o ½«¶¯Ì¬Ìí¼ÓµÄÊı¾İÔ´µÄremoveAbandonedÊôĞÔÉèÖÃÎªfalse
+o ä¼˜åŒ–or mappingæ€§èƒ½
+o æ›´æ–°æœ€æ–°çš„frameworkset-util.jarï¼ŒæŒä¹…å±‚or mappingæœºåˆ¶çš„beançš„å±æ€§ä¸å†éœ€è¦get/setæ–¹æ³•
+o å°†åŠ¨æ€æ·»åŠ çš„æ•°æ®æºçš„removeAbandonedå±æ€§è®¾ç½®ä¸ºfalse
 #######update function list since bbossgroups-3.3 begin###########
 ------2011-09-22-------------
-o ÍêÉÆMultipartFile¶ÔÏó³Ö¾Ã»¯¹¦ÄÜ£¬Ôö¼ÓÓÑºÃÌáÊ¾£¬Èç¹û¶ÔÏóÊôĞÔÀàĞÍÎªMultipartFile£¬Òª×Ô¶¯´æ´¢µ½Êı¾İ¿âµÄblob»òÕßclob×Ö¶ÎÊ±
-ĞèÒªÌí¼Ó@Column(type="blobfile")»òÕß@Column(type="clobfile")£»²éÑ¯´ó×Ö¶ÎÊı¾İÊ±£¬±ÜÃâ½«´ó×Ö¶Î×¢Èëµ½ÀàĞÍÎªMultipartFileµÄÊôĞÔÖĞ
+o å®Œå–„MultipartFileå¯¹è±¡æŒä¹…åŒ–åŠŸèƒ½ï¼Œå¢åŠ å‹å¥½æç¤ºï¼Œå¦‚æœå¯¹è±¡å±æ€§ç±»å‹ä¸ºMultipartFileï¼Œè¦è‡ªåŠ¨å­˜å‚¨åˆ°æ•°æ®åº“çš„blobæˆ–è€…clobå­—æ®µæ—¶
+éœ€è¦æ·»åŠ @Column(type="blobfile")æˆ–è€…@Column(type="clobfile")ï¼›æŸ¥è¯¢å¤§å­—æ®µæ•°æ®æ—¶ï¼Œé¿å…å°†å¤§å­—æ®µæ³¨å…¥åˆ°ç±»å‹ä¸ºMultipartFileçš„å±æ€§ä¸­
 ------2011-09-20-------------
-o ÍêÉÆProArray¶ÔÏóĞòÁĞ»¯¿ÉÄÜ´æÔÚµÄÎÊÌâ
+o å®Œå–„ProArrayå¯¹è±¡åºåˆ—åŒ–å¯èƒ½å­˜åœ¨çš„é—®é¢˜
 ------2011-09-06-------------
-o SQLParamsÖĞÎŞ·¨»ñÈ¡¸¸ÀàbeanµÄ×Ö¶Î¶¨ÒåĞÅÏ¢
-o ResultMapÖĞÎŞ·¨»ñÈ¡¸¸ÀàbeanµÄ×Ö¶Î¶¨ÒåĞÅÏ¢
-o ½«Êı×ÖWraperÀàĞÍ¡¢Boolean¡¢Charaset£¬ByteµÈWraperÀàĞÍµÄ»ñÈ¡Ä¬ÈÏÖµµ÷ÕûÎª·µ»Ønull
-o SQLParamsÖĞgetParamJavatype·½·¨¶ÔLong£¬Double£¬Float£¬Short£¬Bloone´¦Àí²»ÕıÈ·µÄÎÊÌâ
+o SQLParamsä¸­æ— æ³•è·å–çˆ¶ç±»beançš„å­—æ®µå®šä¹‰ä¿¡æ¯
+o ResultMapä¸­æ— æ³•è·å–çˆ¶ç±»beançš„å­—æ®µå®šä¹‰ä¿¡æ¯
+o å°†æ•°å­—Wraperç±»å‹ã€Booleanã€Charasetï¼ŒByteç­‰Wraperç±»å‹çš„è·å–é»˜è®¤å€¼è°ƒæ•´ä¸ºè¿”å›null
+o SQLParamsä¸­getParamJavatypeæ–¹æ³•å¯¹Longï¼ŒDoubleï¼ŒFloatï¼ŒShortï¼ŒBlooneå¤„ç†ä¸æ­£ç¡®çš„é—®é¢˜
 
 
 ------2011-08-16-------------
-o ½â¾ö¶¯Ì¬sqlÓï¾äÖĞ£¬beanÊôĞÔÃ»ÓĞset·½·¨Ê±µ¼ÖÂÂß¼­ÅĞ¶Ï²»ÄÜÕıÈ·½âÎöµÄÎÊÌâ
+o è§£å†³åŠ¨æ€sqlè¯­å¥ä¸­ï¼Œbeanå±æ€§æ²¡æœ‰setæ–¹æ³•æ—¶å¯¼è‡´é€»è¾‘åˆ¤æ–­ä¸èƒ½æ­£ç¡®è§£æçš„é—®é¢˜
 ------2011-08-15-------------
-o ÓÅ»¯blob/clob´¦Àí£¬ĞŞ¸ÄÄ³Ğ©Çé¿öÏÂblob/clobÎª¿ÕÊ±±¨´íµÄÎÊÌâ
+o ä¼˜åŒ–blob/clobå¤„ç†ï¼Œä¿®æ”¹æŸäº›æƒ…å†µä¸‹blob/clobä¸ºç©ºæ—¶æŠ¥é”™çš„é—®é¢˜
 #######update function list since bbossgroups-3.2 begin###########
 ------2011-08-05-------------
-o ´¦ÀíÈÕÆÚºÍÊ±¼äÀàĞÍÊ±×ª»»Îª×Ö·û´®Ê±£¬Èç¹ûÖµÎª¿ÕÊ±Å×³ö¿ÕÖ¸ÕëÒì³£µÄÎÊÌâĞŞ¸´
+o å¤„ç†æ—¥æœŸå’Œæ—¶é—´ç±»å‹æ—¶è½¬æ¢ä¸ºå­—ç¬¦ä¸²æ—¶ï¼Œå¦‚æœå€¼ä¸ºç©ºæ—¶æŠ›å‡ºç©ºæŒ‡é’ˆå¼‚å¸¸çš„é—®é¢˜ä¿®å¤
 ------2011-07-25-------------
-o ½â¾ösql serverÔªÊı¾İ»ñÈ¡Îª¿ÕµÄÎÊÌâ
+o è§£å†³sql serverå…ƒæ•°æ®è·å–ä¸ºç©ºçš„é—®é¢˜
 ------2011-07-24-------------
-o ¸Ä½øSQLParams api£¬¿ÉÒÔÖ±½Ó¶ÔMultipartFile¶ÔÏó´æÈëclob»òÕßblobÁĞ¡£
+o æ”¹è¿›SQLParams apiï¼Œå¯ä»¥ç›´æ¥å¯¹MultipartFileå¯¹è±¡å­˜å…¥clobæˆ–è€…blobåˆ—ã€‚
 sqlparams.addSQLParam("FILECONTENT", multipartfile,SQLParams.BLOBFILE);
 
-¶ÔÓÚ´ó×Ö¶ÎµÄ´¦Àí½¨Òé²ÉÓÃÒÔÏÂ·½·¨£º
-sqlparams.addSQLParam("FILECONTENT", multipartfile,SQLParams.BLOBFILE);//Ö±½Ó´«µİMultipartFile¶ÔÏó½øĞĞ²åÈë
-sqlparams.addSQLParam("FILECONTENT", inputStream, size,SQLParams.BLOBFILE);//Ö±½Ó´«µİInputStream¶ÔÏóÒÔ¼°Á÷´óĞ¡SizeÊôĞÔ½øĞĞ²åÈë
+å¯¹äºå¤§å­—æ®µçš„å¤„ç†å»ºè®®é‡‡ç”¨ä»¥ä¸‹æ–¹æ³•ï¼š
+sqlparams.addSQLParam("FILECONTENT", multipartfile,SQLParams.BLOBFILE);//ç›´æ¥ä¼ é€’MultipartFileå¯¹è±¡è¿›è¡Œæ’å…¥
+sqlparams.addSQLParam("FILECONTENT", inputStream, size,SQLParams.BLOBFILE);//ç›´æ¥ä¼ é€’InputStreamå¯¹è±¡ä»¥åŠæµå¤§å°Sizeå±æ€§è¿›è¡Œæ’å…¥
 ------2011-07-15-------------
-o Ôö¼ÓFieldRowHandler´¦ÀíÆ÷£¬ÒÔ±ãÊµÏÖ´Óblob/clobÖĞ»ñÈ¡µ¥¸ö×Ö¶ÎÎÄ¼ş¶ÔÏóµÄ´¦Àí,ÆäËûÀàËÆÀàĞÍÊı¾İÒ²¿ÉÒÔÊ¹ÓÃFieldRowHandler£¬Ê¹ÓÃÊ¾ÀıÈçÏÂ£º
+o å¢åŠ FieldRowHandlerå¤„ç†å™¨ï¼Œä»¥ä¾¿å®ç°ä»blob/clobä¸­è·å–å•ä¸ªå­—æ®µæ–‡ä»¶å¯¹è±¡çš„å¤„ç†,å…¶ä»–ç±»ä¼¼ç±»å‹æ•°æ®ä¹Ÿå¯ä»¥ä½¿ç”¨FieldRowHandlerï¼Œä½¿ç”¨ç¤ºä¾‹å¦‚ä¸‹ï¼š
 public File getDownloadClobFile(String fileid) throws Exception
 	{
 		try
@@ -449,12 +449,12 @@ public File getDownloadClobFile(String fileid) throws Exception
 														throws Exception
 												{
 
-													// ¶¨ÒåÎÄ¼ş¶ÔÏó
+													// å®šä¹‰æ–‡ä»¶å¯¹è±¡
 													File f = new File("d:/",record.getString("filename"));
-													// Èç¹ûÎÄ¼şÒÑ¾­´æÔÚÔòÖ±½Ó·µ»Øf
+													// å¦‚æœæ–‡ä»¶å·²ç»å­˜åœ¨åˆ™ç›´æ¥è¿”å›f
 													if (f.exists())
 														return f;
-													// ½«blobÖĞµÄÎÄ¼şÄÚÈİ´æ´¢µ½ÎÄ¼şÖĞ
+													// å°†blobä¸­çš„æ–‡ä»¶å†…å®¹å­˜å‚¨åˆ°æ–‡ä»¶ä¸­
 													record.getFile("filecontent",f);
 													return f;
 												}
@@ -468,8 +468,8 @@ public File getDownloadClobFile(String fileid) throws Exception
 		}
 	}
 ------2011-07-15------------
-o Ôö¼Ó¶ÔÎÄ¼şÉÏ´«Èë¿âºÍ´ÓdbÏÂÔØ¹¦ÄÜµÄÖ§³Ö,Ê¹ÓÃÊµÀı
-ÉÏ´«
+o å¢åŠ å¯¹æ–‡ä»¶ä¸Šä¼ å…¥åº“å’Œä»dbä¸‹è½½åŠŸèƒ½çš„æ”¯æŒ,ä½¿ç”¨å®ä¾‹
+ä¸Šä¼ 
 public boolean uploadFile(InputStream inputStream,long size, String filename) throws Exception {
 		boolean result = true;
 		String sql = "";
@@ -485,7 +485,7 @@ public boolean uploadFile(InputStream inputStream,long size, String filename) th
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			result = false;
-			throw new Exception("ÉÏ´«¸½¼ş¹ØÁªÁÙ¿ØÖ¸Áî²¼¿ØĞÅÏ¢¸½¼şÊ§°Ü£º" + ex);
+			throw new Exception("ä¸Šä¼ é™„ä»¶å…³è”ä¸´æ§æŒ‡ä»¤å¸ƒæ§ä¿¡æ¯é™„ä»¶å¤±è´¥ï¼š" + ex);
 		} finally {
 			if(inputStream != null){
 				inputStream.close();
@@ -493,7 +493,7 @@ public boolean uploadFile(InputStream inputStream,long size, String filename) th
 		}
 		return result;
 	}
-ÏÂÔØ	
+ä¸‹è½½	
 	SQLExecutor.queryByNullRowHandler(new NullRowHandler(){
 				@Override
 				public void handleRow(Record record)
@@ -502,16 +502,16 @@ public boolean uploadFile(InputStream inputStream,long size, String filename) th
 					record.getBlob("filecontent").getBinaryStream();
 					StringUtil.sendFile(request, response, record.getString("filename"),record.getBlob("filecontent"));
 				}}, "select * from filetable where fileid=?",fileid);
-o Èç¹ûÃ»ÓĞÖ¸¶¨Ò»ÌõsqlÓï¾ä£¬PreparedDBUtil.executePreparedBatch½«±¨³öÒì³££¬Õâ¸ö²»ÊÇºÜºÏÀí
-Ö±½Ó¸ÄÎªinfo·½Ê½¡£
+o å¦‚æœæ²¡æœ‰æŒ‡å®šä¸€æ¡sqlè¯­å¥ï¼ŒPreparedDBUtil.executePreparedBatchå°†æŠ¥å‡ºå¼‚å¸¸ï¼Œè¿™ä¸ªä¸æ˜¯å¾ˆåˆç†
+ç›´æ¥æ”¹ä¸ºinfoæ–¹å¼ã€‚
 
 #######update function list since bbossgroups-3.1 begin###########
 
 ------2011-06-10------------
-o ĞŞÕıSQLExecutorÖĞ·ºĞÍ×Ö¶Î²éÑ¯APIÖĞµÄÀàĞÍ×ª»»Â©¶´
+o ä¿®æ­£SQLExecutorä¸­æ³›å‹å­—æ®µæŸ¥è¯¢APIä¸­çš„ç±»å‹è½¬æ¢æ¼æ´
 ------2011-06-8------------
-o ĞŞÕı²»Õı³£µÄÌáÊ¾ĞÅÏ¢£¬externaljndiName
-o ĞŞ¸´Ö»ÅäÖÃÍâ²¿Êı¾İÔ´µÄÇé¿öÏÂ£¬poolÆô¶¯¶ÑÕ»Òç³öÎÊÌâ
+o ä¿®æ­£ä¸æ­£å¸¸çš„æç¤ºä¿¡æ¯ï¼ŒexternaljndiName
+o ä¿®å¤åªé…ç½®å¤–éƒ¨æ•°æ®æºçš„æƒ…å†µä¸‹ï¼Œpoolå¯åŠ¨å †æ ˆæº¢å‡ºé—®é¢˜
     java.lang.StackOverflowError
 	at java.lang.Thread.currentThread(Native Method)
 	at org.apache.xerces.util.SecuritySupport12$1.run(Unknown Source)
@@ -521,7 +521,7 @@ o ĞŞ¸´Ö»ÅäÖÃÍâ²¿Êı¾İÔ´µÄÇé¿öÏÂ£¬poolÆô¶¯¶ÑÕ»Òç³öÎÊÌâ
 	at org.apache.xerces.impl.dv.DTDDVFactory.getInstance(Unknown Source)
 	at org.apache.xerces.impl.dv.DTDDVFactory.getInstance(Unknown Source)
 	at 
-	ĞŞ¸Ä³ÌĞòÇåµ¥£º
+	ä¿®æ”¹ç¨‹åºæ¸…å•ï¼š
 	com.frameworkset.common.poolman.sql.PoolMan
 	com.frameworkset.common.poolman.util.JDBCPool
 	com.frameworkset.common.poolman.util.SQLManager
@@ -538,33 +538,33 @@ o ĞŞ¸´Ö»ÅäÖÃÍâ²¿Êı¾İÔ´µÄÇé¿öÏÂ£¬poolÆô¶¯¶ÑÕ»Òç³öÎÊÌâ
             return pool;
         }
 ------2011-06-2------------
-o ĞŞ¸´Ê¹ÓÃColumn×¢½âÉèÖÃ¶ÔÏóÊôĞÔÓëÁĞÃûÓ³ÉäÊ±£¬µ¼ÖÂsqlÓï¾äÖĞ°ó¶¨ÏàÓ¦µÄÊôĞÔ±äÁ¿ÖµÊ§°ÜµÄÂ©¶´
+o ä¿®å¤ä½¿ç”¨Columnæ³¨è§£è®¾ç½®å¯¹è±¡å±æ€§ä¸åˆ—åæ˜ å°„æ—¶ï¼Œå¯¼è‡´sqlè¯­å¥ä¸­ç»‘å®šç›¸åº”çš„å±æ€§å˜é‡å€¼å¤±è´¥çš„æ¼æ´
 ------2011-05-20------------
-o ĞŞ¸´ÒıÓÃÈİÆ÷datasourceÂ©¶´
-o ĞŞ¸´Í¨¹ıÄ£°åÆô¶¯Êı¾İÔ´²ÎÊıÉèÖÃÎÊÌâ
-o ĞŞ¸´Ò»ÏµÁĞ¿ÕÖ¸ÕëÎÊÌâ
-o ĞŞ¸´Ê¹ÓÃÍâ²¿Êı¾İÔ´Ê±£¬µ±Íâ²¿Êı¾İÔ´ÊÇoracleÊ±ÎŞ·¨»ñÈ¡Êı¾İÔ´µÄÔªÊı¾İÎÊÌâ
+o ä¿®å¤å¼•ç”¨å®¹å™¨datasourceæ¼æ´
+o ä¿®å¤é€šè¿‡æ¨¡æ¿å¯åŠ¨æ•°æ®æºå‚æ•°è®¾ç½®é—®é¢˜
+o ä¿®å¤ä¸€ç³»åˆ—ç©ºæŒ‡é’ˆé—®é¢˜
+o ä¿®å¤ä½¿ç”¨å¤–éƒ¨æ•°æ®æºæ—¶ï¼Œå½“å¤–éƒ¨æ•°æ®æºæ˜¯oracleæ—¶æ— æ³•è·å–æ•°æ®æºçš„å…ƒæ•°æ®é—®é¢˜
 
 ------2011-05-17------------
-o ĞŞ¸´sqlexecutor¶ÔÈÕÆÚÀàĞÍtimestamp´¦Àí¶ªÊ§Ê±·ÖÃëµÄÈ±Ïİ
+o ä¿®å¤sqlexecutorå¯¹æ—¥æœŸç±»å‹timestampå¤„ç†ä¸¢å¤±æ—¶åˆ†ç§’çš„ç¼ºé™·
 ------2011-05-03------------
-o ĞŞ¸´ÔÚÊÂÎñ»·¾³ÏÂÍ¨¹ıJDBCPoolµÄ·½·¨
+o ä¿®å¤åœ¨äº‹åŠ¡ç¯å¢ƒä¸‹é€šè¿‡JDBCPoolçš„æ–¹æ³•
 public TableMetaData getTableMetaDataFromDatabase(Connection con,
 			String tableName)
-»ñÈ¡²»µ½ÌØ¶¨Êı¾İÔ´µÄ±íÔªÊı¾İµÄÎÊÌâ
+è·å–ä¸åˆ°ç‰¹å®šæ•°æ®æºçš„è¡¨å…ƒæ•°æ®çš„é—®é¢˜
 ------2011-05-03------------
-o ĞŞ¸´preDBUtil.preparedSelect(params, dbName, sql, offset, long)
-	ÔÚ²éÑ¯Ã»ÓĞÊı¾İµÄÇé¿öÏÂ£¬preDBUtil.getMeta()·µ»ØµÄÊÇnull£»
+o ä¿®å¤preDBUtil.preparedSelect(params, dbName, sql, offset, long)
+	åœ¨æŸ¥è¯¢æ²¡æœ‰æ•°æ®çš„æƒ…å†µä¸‹ï¼ŒpreDBUtil.getMeta()è¿”å›çš„æ˜¯nullï¼›
 #######update function list since bbossgroups-3.1 end###########
 
 
 #######update function list since bbossgroups-3.0 begin###########
 ------2011-04-25------------
-o ĞŞ¸´»ñÈ¡Êı×ÖÀàĞÍµÄÖµÊ±£¬Ò»µ©rsÖĞ·µ»ØnullÊ±£¬Ã»ÓĞÕıÈ·»ñÈ¡Êı×ÖÈ±Ê¡ÖµµÄÎÊÌâ
-ValueExchange.convert·½·¨
+o ä¿®å¤è·å–æ•°å­—ç±»å‹çš„å€¼æ—¶ï¼Œä¸€æ—¦rsä¸­è¿”å›nullæ—¶ï¼Œæ²¡æœ‰æ­£ç¡®è·å–æ•°å­—ç¼ºçœå€¼çš„é—®é¢˜
+ValueExchange.convertæ–¹æ³•
 ------2011-04-18------------
-o ÍêÉÆÊÂÎñĞ¹Â¶¼ì²â»úÖÆ£¬ÔÚmanager-provider.xmlÖĞÔö¼Ó¼ì²âÒ³ÃæµØÖ·ÀàĞÍÅäÖÃ£º
-<!-- Êı¾İ¿âÊÂÎñĞ¹Â¶¼ì²âurlÀàĞÍ·¶Î§ÅäÖÃ -->
+o å®Œå–„äº‹åŠ¡æ³„éœ²æ£€æµ‹æœºåˆ¶ï¼Œåœ¨manager-provider.xmlä¸­å¢åŠ æ£€æµ‹é¡µé¢åœ°å€ç±»å‹é…ç½®ï¼š
+<!-- æ•°æ®åº“äº‹åŠ¡æ³„éœ²æ£€æµ‹urlç±»å‹èŒƒå›´é…ç½® -->
 	<property name="transaction.leakcheck.files" >
 		<array componentType="String">
 			<property value=".jsp"/>
@@ -575,7 +575,7 @@ o ÍêÉÆÊÂÎñĞ¹Â¶¼ì²â»úÖÆ£¬ÔÚmanager-provider.xmlÖĞÔö¼Ó¼ì²âÒ³ÃæµØÖ·ÀàĞÍÅäÖÃ£º
 		</array>
 	</property>
 ------2011-04-16------------
-o ÍêÉÆ´ø·µ»ØÖµµÄÊÂÎñ¹ÜÀíÄ£°å×é¼şÖ§³Ö·ºĞÍÀàĞÍµÄ·µ»Ø
+o å®Œå–„å¸¦è¿”å›å€¼çš„äº‹åŠ¡ç®¡ç†æ¨¡æ¿ç»„ä»¶æ”¯æŒæ³›å‹ç±»å‹çš„è¿”å›
 public void stringarraytoList(final List<ListBean> beans) throws Throwable {
 		List<ListBean> ret = TemplateDBUtil.executeTemplate(
 				new JDBCValueTemplate<List<ListBean>>(){
@@ -594,33 +594,33 @@ public void stringarraytoList(final List<ListBean> beans) throws Throwable {
 		);
 	}
 ------2011-04-11------------
-o ÍêÉÆConfigSQLExecutorºÍSQLExecutor×é¼şÖĞËùÓĞºÍbean¶ÔÏóÏà¹ØµÄ½Ó¿Ú£¬
-	Object bean²ÎÊı¿ÉÒÔÊÇÆÕÍ¨µÄµÄÖµ¶ÔÏó£¬Ò²¿ÉÒÔÊÇÒ»¸öSQLParams¶ÔÏó,Ò²¿ÉÒÔÊÇÒ»¸öMap¶ÔÏó
-	Ê¹ÓÃ·½·¨²Î¿¼²âÊÔÓÃÀı£º
+o å®Œå–„ConfigSQLExecutorå’ŒSQLExecutorç»„ä»¶ä¸­æ‰€æœ‰å’Œbeanå¯¹è±¡ç›¸å…³çš„æ¥å£ï¼Œ
+	Object beanå‚æ•°å¯ä»¥æ˜¯æ™®é€šçš„çš„å€¼å¯¹è±¡ï¼Œä¹Ÿå¯ä»¥æ˜¯ä¸€ä¸ªSQLParamså¯¹è±¡,ä¹Ÿå¯ä»¥æ˜¯ä¸€ä¸ªMapå¯¹è±¡
+	ä½¿ç”¨æ–¹æ³•å‚è€ƒæµ‹è¯•ç”¨ä¾‹ï¼š
 	/bboss-persistent/test/com/frameworkset/sqlexecutor/ConfigSQLExecutorTest.java
 
 ------2011-04-07------------
-o Ôö¼Ó¸ù¾İ±äÁ¿Ãû³Æ´ÓÅäÖÃÎÄ¼şÖĞ»ñÈ¡sqlÓï¾äµÄÀ´²Ù×÷Êı¾İ¿â×é¼ş,¶ÔÓ¦sqlÅäÖÃÎÄ¼şÌá¹©¶¨Ê±Ë¢ĞÂ»úÖÆ
-  Èç¹û¼ì²âµ½sqlÎÄ¼ş±»ĞŞ¸Ä£¬¾Í´ÓĞÂ¼ÓÔØÎÄ¼ş£¨Ç°ÌáÊÇ¿ªÆôË¢ĞÂ»úÖÆ£©
+o å¢åŠ æ ¹æ®å˜é‡åç§°ä»é…ç½®æ–‡ä»¶ä¸­è·å–sqlè¯­å¥çš„æ¥æ“ä½œæ•°æ®åº“ç»„ä»¶,å¯¹åº”sqlé…ç½®æ–‡ä»¶æä¾›å®šæ—¶åˆ·æ–°æœºåˆ¶
+  å¦‚æœæ£€æµ‹åˆ°sqlæ–‡ä»¶è¢«ä¿®æ”¹ï¼Œå°±ä»æ–°åŠ è½½æ–‡ä»¶ï¼ˆå‰ææ˜¯å¼€å¯åˆ·æ–°æœºåˆ¶ï¼‰
 com.frameworkset.common.poolman.ConfigSQLExecutor
-¾ßÌåµÄÊ¹ÓÃ·½·¨Îª£º
+å…·ä½“çš„ä½¿ç”¨æ–¹æ³•ä¸ºï¼š
 ConfigSQLExecutor executor = new ConfigSQLExecutor("com/frameworkset/sqlexecutor/sqlfile.xml");
 Map dbBeans  =  executor.queryObject(HashMap.class, "sqltest");
 String result = executor.queryFieldBean("sqltemplate", bean);
-ÅäÖÃÎÄ¼ş£º
+é…ç½®æ–‡ä»¶ï¼š
 
-<?xml version="1.0" encoding='gb2312'?>
+<?xml version="1.0" encoding='UTF-8'?>
 <properties>
 <description>
 <![CDATA[
-	sqlÅäÖÃÎÄ¼ş
-	¿ÉÒÔÍ¨¹ıÃû³ÆÊôĞÔnameÅäÖÃÄ¬ÈÏsql£¬ÌØ¶¨Êı¾İ¿âµÄsqlÍ¨¹ıÔÚ
-	Ãû³ÆºóÃæ¼ÓÊı¾İ¿âÀàĞÍºó×ºÀ´Çø·Ö£¬ÀıÈç£º
+	sqlé…ç½®æ–‡ä»¶
+	å¯ä»¥é€šè¿‡åç§°å±æ€§nameé…ç½®é»˜è®¤sqlï¼Œç‰¹å®šæ•°æ®åº“çš„sqlé€šè¿‡åœ¨
+	åç§°åé¢åŠ æ•°æ®åº“ç±»å‹åç¼€æ¥åŒºåˆ†ï¼Œä¾‹å¦‚ï¼š
 	sqltest
 	sqltest-oracle
 	sqltest-derby
 	sqltest-mysql
-	µÈµÈ£¬±¾ÅäÖÃÊµÀı¾ÍÑİÊ¾ÁË¾ßÌåÅäÖÃ·½·¨
+	ç­‰ç­‰ï¼Œæœ¬é…ç½®å®ä¾‹å°±æ¼”ç¤ºäº†å…·ä½“é…ç½®æ–¹æ³•
  ]]>
 </description>
 	<property name="sqltest"><![CDATA[select * from LISTBEAN]]>
@@ -637,19 +637,19 @@ String result = executor.queryFieldBean("sqltemplate", bean);
 	</property>
 </properties>
 
-Ë¢ĞÂ»úÖÆµÄÅäÖÃ·½·¨£º
-ÔÚmanager-provider.xmlÎÄ¼şÖĞÌí¼ÓÒÔÏÂÅäÖÃÏî¼´¿É£º
+åˆ·æ–°æœºåˆ¶çš„é…ç½®æ–¹æ³•ï¼š
+åœ¨manager-provider.xmlæ–‡ä»¶ä¸­æ·»åŠ ä»¥ä¸‹é…ç½®é¡¹å³å¯ï¼š
 <property name="sqlfile.refresh_interval" value="10000"/>
-µ±value´óÓÚ0Ê±¾Í¿ªÆôsqlfileÎÄ¼şµÄ¸üĞÂ¼ì²â»úÖÆ£¬Ã¿¸ôvalueÖ¸¶¨µÄÊ±¼ä¼ä¸ô¾Í¼ì²âÒ»´Î£¬ÓĞ¸üĞÂ¾ÍÖØĞÂ¼ÓÔØ£¬·ñÔò²»ÖØĞÂ¼ÓÔØ
+å½“valueå¤§äº0æ—¶å°±å¼€å¯sqlfileæ–‡ä»¶çš„æ›´æ–°æ£€æµ‹æœºåˆ¶ï¼Œæ¯éš”valueæŒ‡å®šçš„æ—¶é—´é—´éš”å°±æ£€æµ‹ä¸€æ¬¡ï¼Œæœ‰æ›´æ–°å°±é‡æ–°åŠ è½½ï¼Œå¦åˆ™ä¸é‡æ–°åŠ è½½
 ------2011-04-06------------
-o Ôö¼ÓÒ»×é²éÑ¯µ¥¸ö×Ö¶ÎµÄ·ºĞÍ½Ó¿Ú£¬Ê¹ÓÃ·½·¨ÈçÏÂ£º
+o å¢åŠ ä¸€ç»„æŸ¥è¯¢å•ä¸ªå­—æ®µçš„æ³›å‹æ¥å£ï¼Œä½¿ç”¨æ–¹æ³•å¦‚ä¸‹ï¼š
 		String sql = "select REQUIRED from LISTBEAN ";
 		int id=  SQLExecutor.queryTField(int.class, sql);
 		long id=  SQLExecutor.queryTField(long.class, "select seq_name.nextval from LISTBEAN ");
 		String sql = "select FIELDLABLE from LISTBEAN ";
 		String id=  SQLExecutor.queryTField(String.class, sql);
 		System.out.println(id);
-o 3.0apiÔö¼Ó·µ»ØList<HashMap>½á¹û¼¯µÄ²éÑ¯½Ó¿ÚÖ§³Ö£¬Ê¹ÓÃ·½·¨ÈçÏÂ£¨ÒÔÔ¤±àÒëÓï¾äÎªÀı£©£º
+o 3.0apiå¢åŠ è¿”å›List<HashMap>ç»“æœé›†çš„æŸ¥è¯¢æ¥å£æ”¯æŒï¼Œä½¿ç”¨æ–¹æ³•å¦‚ä¸‹ï¼ˆä»¥é¢„ç¼–è¯‘è¯­å¥ä¸ºä¾‹ï¼‰ï¼š
 @Test
 	public void queryListMap() throws SQLException
 	{
@@ -669,10 +669,10 @@ o 3.0apiÔö¼Ó·µ»ØList<HashMap>½á¹û¼¯µÄ²éÑ¯½Ó¿ÚÖ§³Ö£¬Ê¹ÓÃ·½·¨ÈçÏÂ£¨ÒÔÔ¤±àÒëÓï¾äÎªÀ
 	}
 	
 ------2011-03-30------------
-o 3.0apiÖĞÍêÉÆ¶Ôjava.util.DateÀàĞÍ¶ÔÏóÊôĞÔÊı¾İµÄ´¦Àí
+o 3.0apiä¸­å®Œå–„å¯¹java.util.Dateç±»å‹å¯¹è±¡å±æ€§æ•°æ®çš„å¤„ç†
 ------2011-03-04------------
-o Ôö¼ÓÒ»¸ö¸ù¾İ²ÎÊıÆô¶¯Êı¾İÔ´µÄapi£¬¿ÉÒÔ¿ØÖÆÊı¾İÔ´ÊÇÁ¬½Ó³ØÊı¾İÔ´»¹ÊÇ·ÇÁ¬½Ó³ØÊı¾İÔ´
-DBUtilÖĞÔö¼ÓÒÔÏÂ¾²Ì¬·½·¨£º
+o å¢åŠ ä¸€ä¸ªæ ¹æ®å‚æ•°å¯åŠ¨æ•°æ®æºçš„apiï¼Œå¯ä»¥æ§åˆ¶æ•°æ®æºæ˜¯è¿æ¥æ± æ•°æ®æºè¿˜æ˜¯éè¿æ¥æ± æ•°æ®æº
+DBUtilä¸­å¢åŠ ä»¥ä¸‹é™æ€æ–¹æ³•ï¼š
 public static void startPool(String poolname,String driver,String jdbcurl,String username,String password,
         		String readOnly,
         		String txIsolationLevel,
@@ -686,8 +686,8 @@ public static void startPool(String poolname,String driver,String jdbcurl,String
         		String externaljndiName        		
         		)
         		
-o Êı¾İÔ´ÅäÖÃÎÄ¼şÖĞÔö¼ÓusepoolÔªËØ £¬¿ÉÒÔ¿ØÖÆÊı¾İÔ´ÊÇÁ¬½Ó³ØÊı¾İÔ´»¹ÊÇ·ÇÁ¬½Ó³ØÊı¾İÔ´
-<?xml version="1.0" encoding="gb2312"?>
+o æ•°æ®æºé…ç½®æ–‡ä»¶ä¸­å¢åŠ usepoolå…ƒç´  ï¼Œå¯ä»¥æ§åˆ¶æ•°æ®æºæ˜¯è¿æ¥æ± æ•°æ®æºè¿˜æ˜¯éè¿æ¥æ± æ•°æ®æº
+<?xml version="1.0" encoding="UTF-8"?>
 <poolman>
 	<datasource>
 		<dbname>bspf</dbname>
@@ -707,18 +707,18 @@ o Êı¾İÔ´ÅäÖÃÎÄ¼şÖĞÔö¼ÓusepoolÔªËØ £¬¿ÉÒÔ¿ØÖÆÊı¾İÔ´ÊÇÁ¬½Ó³ØÊı¾İÔ´»¹ÊÇ·ÇÁ¬½Ó³ØÊı¾İ
 	</datasource>
 </poolman>       		
 
-o µ÷Õû·ÇÁ¬½Ó³ØÊı¾İÔ´µÄ¼à¿ØÊı¾İ²É¼¯ºÍÏà¹ØÊôĞÔÕ¹Ê¾½Ó¿Ú
+o è°ƒæ•´éè¿æ¥æ± æ•°æ®æºçš„ç›‘æ§æ•°æ®é‡‡é›†å’Œç›¸å…³å±æ€§å±•ç¤ºæ¥å£
 ------2011-03-02------------
  
-o ĞŞ¸Äodbc Çı¶¯ÏÂÊ¹ÓÃo/r mapping²éÑ¯£¬´ó×Ö¶Î´¦ÀíÒì³£ÎÊÌâ
-o À©Õ¹SQLExecutor×é¼şÔö¼ÓËùÓĞ²éÑ¯List½á¹û¼¯·½·¨¶Ô·ºĞÍµÄÖ§³Ö
-o ĞŞ¸´doubleÀàĞÍÊı¾İÏòintÀàĞÍ×ª»»µÄÎÊÌâ£¬ĞÂÔöµ¥¸öÖµ×ª»»ÎªÊı×éµÄ¹¦ÄÜ£¬Ö§³ÖÊı×ÖÀàĞÍÊı×éÖ®¼äµÄÏà»¥×ª»»
+o ä¿®æ”¹odbc é©±åŠ¨ä¸‹ä½¿ç”¨o/r mappingæŸ¥è¯¢ï¼Œå¤§å­—æ®µå¤„ç†å¼‚å¸¸é—®é¢˜
+o æ‰©å±•SQLExecutorç»„ä»¶å¢åŠ æ‰€æœ‰æŸ¥è¯¢Listç»“æœé›†æ–¹æ³•å¯¹æ³›å‹çš„æ”¯æŒ
+o ä¿®å¤doubleç±»å‹æ•°æ®å‘intç±»å‹è½¬æ¢çš„é—®é¢˜ï¼Œæ–°å¢å•ä¸ªå€¼è½¬æ¢ä¸ºæ•°ç»„çš„åŠŸèƒ½ï¼Œæ”¯æŒæ•°å­—ç±»å‹æ•°ç»„ä¹‹é—´çš„ç›¸äº’è½¬æ¢
 
 #######update function list since bbossgroups-3.0 end###########
 ------------------------------------------------------------------------
 update function list in bbossgroups-3.0 since bbossgroups-2.0-rc2
 ------------------------------------------------------------------------
-o SQLExecutor×é¼şÖĞĞÂÔöÒ»×éÊı¾İ¿â²Ù×÷api
+o SQLExecutorç»„ä»¶ä¸­æ–°å¢ä¸€ç»„æ•°æ®åº“æ“ä½œapi
 
 ------------------------------------------------------------------------
 update function list in bbossgroups-2.0-rc2 since bbossgroups-2.0-rc1
@@ -726,18 +726,18 @@ update function list in bbossgroups-2.0-rc2 since bbossgroups-2.0-rc1
 ----------------------------------------
 bbossgroups-2.1-RC - 2011-02-9
 ----------------------------------------
-o ĞÂÔö´ÓÊı¾İ¿âÖĞÖ±½Ó»ñÈ¡±íÔªÊı¾İºÍËùÓĞ±íÔªÊı¾İµÄapi
+o æ–°å¢ä»æ•°æ®åº“ä¸­ç›´æ¥è·å–è¡¨å…ƒæ•°æ®å’Œæ‰€æœ‰è¡¨å…ƒæ•°æ®çš„api
 ----------------------------------------
 bbossgroups-2.1-RC - 2011-01-20
 ----------------------------------------
-o ÍêÉÆÁ¬½Ó³Ø¡¢Íâ²¿Á¬½Ó³Ø¼à¿ØÏà¹ØĞÅÏ¢»ñÈ¡·½Ê½£¬Èç¹ûÍâ²¿Á¬½Ó³Ø¶ÔÓ¦µÄÊµ¼ÊÁ¬½Ó³ØÈç¹ûÊÇÒ»¸öÄÚ²¿µÄÁ¬½Ó³Ø
-ÄÇÃ´Íâ²¿Á¬½Ó³ØµÄÆô¶¯Ê±¼ä£¬Í£ÓÃÊ±¼ä½«Ö±½ÓÊÇÊµ¼ÊÁ¬½Ó³ØµÄÊ±¼ä¡£
+o å®Œå–„è¿æ¥æ± ã€å¤–éƒ¨è¿æ¥æ± ç›‘æ§ç›¸å…³ä¿¡æ¯è·å–æ–¹å¼ï¼Œå¦‚æœå¤–éƒ¨è¿æ¥æ± å¯¹åº”çš„å®é™…è¿æ¥æ± å¦‚æœæ˜¯ä¸€ä¸ªå†…éƒ¨çš„è¿æ¥æ± 
+é‚£ä¹ˆå¤–éƒ¨è¿æ¥æ± çš„å¯åŠ¨æ—¶é—´ï¼Œåœç”¨æ—¶é—´å°†ç›´æ¥æ˜¯å®é™…è¿æ¥æ± çš„æ—¶é—´ã€‚
 
 ----------------------------------------
 bbossgroups-2.1-RC - 2010-12-30
 ----------------------------------------
-o Ôö¼Ó´ÓÅäÖÃÎÄ¼şÆô¶¯Á¬½Ó³Ø·½·¨-Ê¹ÓÃ·½·¨²Î¿¼²âÊÔÓÃÀıcom.frameworkset.common.Monitor
-o Ôö¼ÓÔÚsqlÓï¾äÖĞÉèÖÃÂß¼­ÅĞ¶ÏÓï¾ä¹¦ÄÜ,ÀıÈç£º
+o å¢åŠ ä»é…ç½®æ–‡ä»¶å¯åŠ¨è¿æ¥æ± æ–¹æ³•-ä½¿ç”¨æ–¹æ³•å‚è€ƒæµ‹è¯•ç”¨ä¾‹com.frameworkset.common.Monitor
+o å¢åŠ åœ¨sqlè¯­å¥ä¸­è®¾ç½®é€»è¾‘åˆ¤æ–­è¯­å¥åŠŸèƒ½,ä¾‹å¦‚ï¼š
 			PreparedDBUtil dbutil = new PreparedDBUtil();
 			String listRepositorySql = "select *  from CIM_ETL_REPOSITORY  where 1=1 " +
 					"#if($HOST_ID && !$HOST_ID.equals(\"\")) " +
@@ -748,9 +748,9 @@ o Ôö¼ÓÔÚsqlÓï¾äÖĞÉèÖÃÂß¼­ÅĞ¶ÏÓï¾ä¹¦ÄÜ,ÀıÈç£º
 			String sql = listRepositorySql.toString();
 
 			try {
-				// ²éÑ¯²ÎÊı
+				// æŸ¥è¯¢å‚æ•°
 				SQLParams params = new SQLParams();
-				params.addSQLParam("HOST_ID", null,//ÉèÖÃhost_id±äÁ¿ÎªµÄÖµNull»òÕß¿Õ´®""»òÕßÖ±½ÓºöÂÔÌí¼Ó¸Ã²ÎÊı£¬ÄÇÃ´Óï¾äÖĞµÄand HOST_ID = #[HOST_ID]"½«±»ºöÂÔµô
+				params.addSQLParam("HOST_ID", null,//è®¾ç½®host_idå˜é‡ä¸ºçš„å€¼Nullæˆ–è€…ç©ºä¸²""æˆ–è€…ç›´æ¥å¿½ç•¥æ·»åŠ è¯¥å‚æ•°ï¼Œé‚£ä¹ˆè¯­å¥ä¸­çš„and HOST_ID = #[HOST_ID]"å°†è¢«å¿½ç•¥æ‰
 												   //"#if($HOST_ID && !$HOST_ID.equals(\"\")) " +
 												   //"	and HOST_ID = #[HOST_ID]" +
 												   //"#end
@@ -763,16 +763,16 @@ o Ôö¼ÓÔÚsqlÓï¾äÖĞÉèÖÃÂß¼­ÅĞ¶ÏÓï¾ä¹¦ÄÜ,ÀıÈç£º
 
 				dbutil.preparedSelect(params, "bspf",
 								sql);
-				// Ö´ĞĞ²éÑ¯
+				// æ‰§è¡ŒæŸ¥è¯¢
 				dbutil.executePrepared();
 
 select *  from CIM_ETL_REPOSITORY  where 1=1 #if($HOST_ID && !$HOST_ID.equals("")) and HOST_ID = #[HOST_ID] #end   and PLUGIN_ID = #[PLUGIN_ID]  and CATEGORY_ID = #[CATEGORY_ID] and APP = #[APP]
 ----------------------------------------
 bbossgroups-2.1-RC - 2010-12-01
 ----------------------------------------
-o ĞŞ¸Ä²éÑ¯ÔªÊı¾İ»º³å»úÖÆ£¬²ÉÓÃ·ÖÁ¬½Ó³Ø»º³åµÄ»úÖÆ£¬±ÜÃâÊı¾İ¿âÖ®¼äµÄ³åÍ»
+o ä¿®æ”¹æŸ¥è¯¢å…ƒæ•°æ®ç¼“å†²æœºåˆ¶ï¼Œé‡‡ç”¨åˆ†è¿æ¥æ± ç¼“å†²çš„æœºåˆ¶ï¼Œé¿å…æ•°æ®åº“ä¹‹é—´çš„å†²çª
 
-o SQLParamsºÍParamsÀàÌí¼Ócopy·½·¨£¬¶Ôsql²ÎÊı½øĞĞ¸´ÖÆ£¬ÒÔ±ãÔÚ±êÇ©¿âÖĞ½øĞĞ·ÖÒ³²éÑ¯Ê±£¬µ±Ò³Ãæ¼ÇÂ¼Êı·¢Éú±ä»¯Ê±±£³Ösqlparams²ÎÊı
+o SQLParamså’ŒParamsç±»æ·»åŠ copyæ–¹æ³•ï¼Œå¯¹sqlå‚æ•°è¿›è¡Œå¤åˆ¶ï¼Œä»¥ä¾¿åœ¨æ ‡ç­¾åº“ä¸­è¿›è¡Œåˆ†é¡µæŸ¥è¯¢æ—¶ï¼Œå½“é¡µé¢è®°å½•æ•°å‘ç”Ÿå˜åŒ–æ—¶ä¿æŒsqlparamså‚æ•°
 
 ------------------------------------------------------------------------
 update function list in bbossgroups-2.0-rc1 since bbossgroups-2.0-rc
@@ -787,10 +787,10 @@ purge recyclebin
 ----------------------------------------
 bbossgroups-2.0-rc1 - 2010-08-03
 ----------------------------------------
-o ¶àÊı¾İ¿âÊÂÎñÍêÉÆ£º
-Èç¹û´æÔÚÁ½¸öÁ¬½Ó³ØbspfºÍmqÉÏµÄÒ»¸öÊÂÎñ£¬Èç¹ûmqÊµ¼ÊÒıÓÃÁËbspf×öÎªÍâ²¿Êı¾İÔ´£¬ÄÇÃ´mqµÄ¶ÔÓ¦×ÓÊÂÎñºÍbspfµÄ×ÓÊÂÎñºÏ²¢Ò²¾ÍÊÇËµÊµ¼ÊÉÏ
-mqÖ±½ÓÊ¹ÓÃbspfµÄÊÂÎñ¡£
-o Íâ²¿Êı¾İÔ´¼à¿ØĞÅÏ¢ÍêÉÆ£¬Ô´Êı¾İ¼ÓÔØÍêÉÆ£¬ÅäÖÃĞÅÏ¢¾«¼ò
+o å¤šæ•°æ®åº“äº‹åŠ¡å®Œå–„ï¼š
+å¦‚æœå­˜åœ¨ä¸¤ä¸ªè¿æ¥æ± bspfå’Œmqä¸Šçš„ä¸€ä¸ªäº‹åŠ¡ï¼Œå¦‚æœmqå®é™…å¼•ç”¨äº†bspfåšä¸ºå¤–éƒ¨æ•°æ®æºï¼Œé‚£ä¹ˆmqçš„å¯¹åº”å­äº‹åŠ¡å’Œbspfçš„å­äº‹åŠ¡åˆå¹¶ä¹Ÿå°±æ˜¯è¯´å®é™…ä¸Š
+mqç›´æ¥ä½¿ç”¨bspfçš„äº‹åŠ¡ã€‚
+o å¤–éƒ¨æ•°æ®æºç›‘æ§ä¿¡æ¯å®Œå–„ï¼Œæºæ•°æ®åŠ è½½å®Œå–„ï¼Œé…ç½®ä¿¡æ¯ç²¾ç®€
 <datasource external="true">
 
     <dbname>mq</dbname>
@@ -811,13 +811,13 @@ bbossgroups-2.0-rc1 - 2010-07-23
 ----------------------------------------
 
 
-o Ôö¼Óto_charº¯ÊıµÄÊÊÅä,to_dateº¯ÊıÊÊÅä£¬Ä¿Ç°ĞŞ¸ÄµÄÓĞoracle£¬mysql
+o å¢åŠ to_charå‡½æ•°çš„é€‚é…,to_dateå‡½æ•°é€‚é…ï¼Œç›®å‰ä¿®æ”¹çš„æœ‰oracleï¼Œmysql
 ----------------------------------------
 bbossgroups-2.0-rc1 - 2010-07-22
 ----------------------------------------
-o À©Õ¹dbÊÊÅäÆ÷Êı¾İ¿âÈÕÆÚ×ª»»º¯Êı£¬Ôö¼ÓÖ¸¶¨×ª»»ÈÕÆÚ¸ñÊ½²ÎÊı·½·¨
-o ÓÅ»¯/bboss-persistent/src/com/frameworkset/common/poolman/management/BaseTableManager.javaÖĞ¼ÓÔØtableinfoĞÅÏ¢£¬uuidºÍsequenceÊ±ÎŞĞè¼ÆËã±íµÄ×î´óÖµ
-o mysql Êı¾İ¿âÊÊÅäÆ÷bugĞŞ¸Ä
+o æ‰©å±•dbé€‚é…å™¨æ•°æ®åº“æ—¥æœŸè½¬æ¢å‡½æ•°ï¼Œå¢åŠ æŒ‡å®šè½¬æ¢æ—¥æœŸæ ¼å¼å‚æ•°æ–¹æ³•
+o ä¼˜åŒ–/bboss-persistent/src/com/frameworkset/common/poolman/management/BaseTableManager.javaä¸­åŠ è½½tableinfoä¿¡æ¯ï¼Œuuidå’Œsequenceæ—¶æ— éœ€è®¡ç®—è¡¨çš„æœ€å¤§å€¼
+o mysql æ•°æ®åº“é€‚é…å™¨bugä¿®æ”¹
 /bboss-persistent/src/com/frameworkset/orm/adapter/DBMM.java
 public String getIDMAXSql(String table_name,String table_id_name,String table_id_prefix,String type)
 	{
@@ -827,12 +827,12 @@ public String getIDMAXSql(String table_name,String table_id_name,String table_id
     	{
     		if(table_id_prefix != null && !table_id_prefix.trim().equals(""))
     		{
-    		//½«bigint ĞŞ¸ÄÎªDECIMAL£¬·ñÔò»á±¨´í£¬¾ßÌåÔ­ÒòÊÇmysqlµÄcastº¯Êı²»ÖÆÖ¹bigintÀàĞÍ
+    		//å°†bigint ä¿®æ”¹ä¸ºDECIMALï¼Œå¦åˆ™ä¼šæŠ¥é”™ï¼Œå…·ä½“åŸå› æ˜¯mysqlçš„castå‡½æ•°ä¸åˆ¶æ­¢bigintç±»å‹
     			maxSql = "select max(CAST(SUBSTRING(" + table_id_name + ",len(" + table_id_prefix + ") + 1) as DECIMAL))) from " + table_name;
     		}
     		else
     		{
-    		//½«bigint ĞŞ¸ÄÎªDECIMAL£¬·ñÔò»á±¨´í£¬¾ßÌåÔ­ÒòÊÇmysqlµÄcastº¯Êı²»ÖÆÖ¹bigintÀàĞÍ
+    		//å°†bigint ä¿®æ”¹ä¸ºDECIMALï¼Œå¦åˆ™ä¼šæŠ¥é”™ï¼Œå…·ä½“åŸå› æ˜¯mysqlçš„castå‡½æ•°ä¸åˆ¶æ­¢bigintç±»å‹
     			maxSql = "select max(CAST(" + table_id_name + " as DECIMAL)) from " + table_name;
     		}
     	}
@@ -844,10 +844,10 @@ update function list:
 ----------------------------------------
 bbossgroup 1.0rc - 2010-07-7
 ----------------------------------------
-o À©Õ¹ÊÊÅäÆ÷¹¦ÄÜ£¬ÓÃ»§¿ÉÒÔ×Ô¶¨ÒåÌØ¶¨Êı¾İ¿âµÄÊÊÅäÆ÷
-ËùÊµÏÖµÄÊÊÅäÆ÷±ØĞë´Ócom.frameworkset.orm.adapter.DB¼Ì³Ğ»òÕßÆäcom.frameworkset.orm.adapter.DB×ÓÀà¼Ì³Ğ
-×Ô¶¨ÒåÊÊÅäÆ÷ÅäÖÃ·½·¨£º
-poolman.xmlÎÄ¼şÖĞÅäÖÃ£º
+o æ‰©å±•é€‚é…å™¨åŠŸèƒ½ï¼Œç”¨æˆ·å¯ä»¥è‡ªå®šä¹‰ç‰¹å®šæ•°æ®åº“çš„é€‚é…å™¨
+æ‰€å®ç°çš„é€‚é…å™¨å¿…é¡»ä»com.frameworkset.orm.adapter.DBç»§æ‰¿æˆ–è€…å…¶com.frameworkset.orm.adapter.DBå­ç±»ç»§æ‰¿
+è‡ªå®šä¹‰é€‚é…å™¨é…ç½®æ–¹æ³•ï¼š
+poolman.xmlæ–‡ä»¶ä¸­é…ç½®ï¼š
 <poolman>
 	<adaptor dbtype="oracle">com.frameworkset.orm.adaptors.MyOracle
 	</adaptor>
@@ -859,29 +859,29 @@ poolman.xmlÎÄ¼şÖĞÅäÖÃ£º
 
 </poolman>
 
-o DBUtilÔö¼ÓÊı¾İ¿âÁ¬½Ó³Ø´´½¨·½·¨£º
+o DBUtilå¢åŠ æ•°æ®åº“è¿æ¥æ± åˆ›å»ºæ–¹æ³•ï¼š
         public static void startPool(String poolname,String driver,String jdbcurl,String username,String password,String readOnly,String validationQuery)
     	{
         	SQLUtil.getSQLManager().startPool(poolname, driver, jdbcurl, username, password, readOnly, validationQuery);
     	}
     	
     	
-o DBUtilÔö¼ÓÀ¹½ØÆ÷,ÓÃÀ´Âú×ãÓ¦ÓÃÆ½Ì¨ÌØÊâµÄĞèÇó£¬ÆäËûÓ¦ÓÃÎŞĞè¹ØĞÄÕâĞ©ÎÊÌâ
+o DBUtilå¢åŠ æ‹¦æˆªå™¨,ç”¨æ¥æ»¡è¶³åº”ç”¨å¹³å°ç‰¹æ®Šçš„éœ€æ±‚ï¼Œå…¶ä»–åº”ç”¨æ— éœ€å…³å¿ƒè¿™äº›é—®é¢˜
     	
     	public static InterceptorInf getInterceptorInf(String dbname)
     	{
     		return SQLUtil.getSQLManager().getPool(dbname).getInterceptor();
     	}
-    	Ïà¹ØµÄ³ÌĞò£º
+    	ç›¸å…³çš„ç¨‹åºï¼š
     	com.frameworkset.common.poolman.interceptor.DummyInterceptor
     	com.frameworkset.common.poolman.interceptor.InterceptorInf
-    	poolman.xmlÎÄ¼şÖĞÅäÖÃInterceptorInfµÄ·½·¨£º
-    	ÔÚdatasourceÖĞÔö¼ÓÒÔÏÂ½Úµã¼´¿É£º
+    	poolman.xmlæ–‡ä»¶ä¸­é…ç½®InterceptorInfçš„æ–¹æ³•ï¼š
+    	åœ¨datasourceä¸­å¢åŠ ä»¥ä¸‹èŠ‚ç‚¹å³å¯ï¼š
     	<interceptor>com.frameworkset.orm.adaptors.MyInterceptor</interceptor>
-    	×Ô¶¨ÒåµÄÀ¹½ØÆ÷ĞèÒª´Ócom.frameworkset.common.poolman.interceptor.InterceptorInf½Ó¿Ú¼Ì³Ğ£¬ÊµÏÖÒÔÏÂÁ½¸ö·½·¨£º
+    	è‡ªå®šä¹‰çš„æ‹¦æˆªå™¨éœ€è¦ä»com.frameworkset.common.poolman.interceptor.InterceptorInfæ¥å£ç»§æ‰¿ï¼Œå®ç°ä»¥ä¸‹ä¸¤ä¸ªæ–¹æ³•ï¼š
     	public String getDefaultDBName();
 		public String convertSQL(String sql,String dbtype,String dbname);
-    	»òÕß´Ócom.frameworkset.common.poolman.interceptor.DummyInterceptor¼Ì³Ğ£¬¹ıÔØ·½·¨£º
+    	æˆ–è€…ä»com.frameworkset.common.poolman.interceptor.DummyInterceptorç»§æ‰¿ï¼Œè¿‡è½½æ–¹æ³•ï¼š
     	public String convertSQL(String sql, String dbtype, String dbname) {
 			return sql;
 		}
@@ -892,53 +892,53 @@ o DBUtilÔö¼ÓÀ¹½ØÆ÷,ÓÃÀ´Âú×ãÓ¦ÓÃÆ½Ì¨ÌØÊâµÄĞèÇó£¬ÆäËûÓ¦ÓÃÎŞĞè¹ØĞÄÕâĞ©ÎÊÌâ
 		}
     	
 
-o ĞŞ¸Äweglobic»·¾³ÏÂjndi²éÕÒÊ§°Übug
-Ïà¹Ø³ÌĞò
+o ä¿®æ”¹weglobicç¯å¢ƒä¸‹jndiæŸ¥æ‰¾å¤±è´¥bug
+ç›¸å…³ç¨‹åº
 com.frameworkset.common.poolman.util.JDBCPool
 ----------------------------------------
 bbossgroup 1.0rc - 2010-07-2
 ----------------------------------------
-o ĞŞ¸Ädb2Ô´Êı¾İ¼ÓÔØ±íÊı¾İÊ±¼ÓÔØËùÓĞÓÃ»§Êı¾İµÄÎÊÌâ£¬ĞŞ¸Ä³ÌĞò£º
+o ä¿®æ”¹db2æºæ•°æ®åŠ è½½è¡¨æ•°æ®æ—¶åŠ è½½æ‰€æœ‰ç”¨æˆ·æ•°æ®çš„é—®é¢˜ï¼Œä¿®æ”¹ç¨‹åºï¼š
 /bboss-persistent/src/com/frameworkset/common/poolman/util/JDBCPool.java
 /bboss-persistent/src/com/frameworkset/orm/adapter/DB.java
 ----------------------------------------
 bbossgroup 1.0rc - 2010-05-27
 ----------------------------------------
-o ĞÂÔö¼à¿Ø·şÎñ×é¼ş
+o æ–°å¢ç›‘æ§æœåŠ¡ç»„ä»¶
 com.frameworkset.common.poolman.monitor
 ----------------------------------------
 bbossgroup 1.0rc - 2010-05-21
 ----------------------------------------
-o Ôö¼ÓuuidÖ÷¼üÉú³É»úÖÆ
+o å¢åŠ uuidä¸»é”®ç”Ÿæˆæœºåˆ¶
 /bboss-persistent/src/com/frameworkset/common/poolman/sql/PrimaryKey.java
-ĞÂÔöuuid»úÖÆ½«Éú³É36Î»³¤¶ÈµÄ×Ö·û´®Î¨Ò»Ö÷¼üÖµ
+æ–°å¢uuidæœºåˆ¶å°†ç”Ÿæˆ36ä½é•¿åº¦çš„å­—ç¬¦ä¸²å”¯ä¸€ä¸»é”®å€¼
 
 ----------------------------------------
 bbossgroup 1.0rc - 2010-05-07
 ----------------------------------------
 
-o mysqlÖ÷¼üÉú³É»úÖÆbugĞŞ¸´
-Éú³ÉÖ÷¼üµÄ·½·¨ÖĞÖ±½ÓĞ´ËÀÁËdbnameºÍsequenceÃû³Æ
-o com.frameworkset.commons.dbcp.DelegatingResultSetÈ¥³ıÁË¶ÔOracleResultSetµÄÒÀÀµ
+o mysqlä¸»é”®ç”Ÿæˆæœºåˆ¶bugä¿®å¤
+ç”Ÿæˆä¸»é”®çš„æ–¹æ³•ä¸­ç›´æ¥å†™æ­»äº†dbnameå’Œsequenceåç§°
+o com.frameworkset.commons.dbcp.DelegatingResultSetå»é™¤äº†å¯¹OracleResultSetçš„ä¾èµ–
 ----------------------------------------
 bbossgroup 1.0rc - 2010-05-05
 ----------------------------------------
-o ĞÂÔö¹Ø±ÕÁ¬½Ó³Ø·½·¨
+o æ–°å¢å…³é—­è¿æ¥æ± æ–¹æ³•
 ----------------------------------------
  DBUtil.stopPool(dbname);
  DBUtil.startPool(dbname);
 bbossgroup 1.0rc - 2010-04-29
 ----------------------------------------
-o Ôö¼ÓpoolµÄ¼à¿ØĞÅÏ¢
+o å¢åŠ poolçš„ç›‘æ§ä¿¡æ¯
 starttime
 stoptime
 ----------------------------------------
 bbossgroup 1.0rc - 2010-04-24
 ----------------------------------------
-o Ôö¼ÓmysqlÖ÷¼üÉú³É»úÖÆ
-1.´´½¨sequenceÊı¾İ¿â
+o å¢åŠ mysqlä¸»é”®ç”Ÿæˆæœºåˆ¶
+1.åˆ›å»ºsequenceæ•°æ®åº“
 CREATE DATABASE sequence; 
-ÔÚsequenceÉÏ´´½¨±í£º
+åœ¨sequenceä¸Šåˆ›å»ºè¡¨ï¼š
 CREATE TABLE sequence.sequence_data ( 
 sequence_name varchar(100) NOT NULL, 
 sequence_increment int(11) unsigned NOT NULL DEFAULT 1, 
@@ -948,7 +948,7 @@ sequence_cur_value bigint(20) unsigned DEFAULT 1,
 sequence_cycle boolean NOT NULL DEFAULT FALSE, 
 PRIMARY KEY (sequence_name) 
 ) ENGINE=MyISAM;
-´´½¨±ísequence
+åˆ›å»ºè¡¨sequence
 -- This code will create sequence with default values. 
 --INSERT INTO sequence.sequence_data 
 --(sequence_name) 
@@ -963,7 +963,7 @@ PRIMARY KEY (sequence_name)
 --(sq_sequence_2, 10, 100) 
 --;
 
-´´½¨»ñÈ¡sequenceÖµµÄº¯Êı£º
+åˆ›å»ºè·å–sequenceå€¼çš„å‡½æ•°ï¼š
 CREATE FUNCTION nextval (seq_name varchar(100)) 
 RETURNS bigint(20) NOT DETERMINISTIC 
 BEGIN
@@ -992,22 +992,22 @@ END IF;
 RETURN cur_val; 
 END;
 
-ĞŞ¸ÄµÄ³ÌĞò
+ä¿®æ”¹çš„ç¨‹åº
 /bboss-persistent/src/com/frameworkset/common/poolman/sql/PrimaryKey.java
-/bboss-persistent/src/com/frameworkset/orm/adapter/DB.java--Ôö¼ÓsequenceÉú³ÉÖ÷¼ü·½·¨
-/bboss-persistent/src/com/frameworkset/orm/adapter/DBMM.java--Ôö¼ÓsequenceÉú³ÉÖ÷¼ü·½·¨
+/bboss-persistent/src/com/frameworkset/orm/adapter/DB.java--å¢åŠ sequenceç”Ÿæˆä¸»é”®æ–¹æ³•
+/bboss-persistent/src/com/frameworkset/orm/adapter/DBMM.java--å¢åŠ sequenceç”Ÿæˆä¸»é”®æ–¹æ³•
 
-o ĞŞ¸Äbug,µ±Á¬½Ó³Ø»¹Ã»ÓĞ³õÊ¼»¯Ê±Í¨¹ıÒÔÏÂ·½·¨»ñÈ¡Ö÷¼üÊ±±¨NullpointException
+o ä¿®æ”¹bug,å½“è¿æ¥æ± è¿˜æ²¡æœ‰åˆå§‹åŒ–æ—¶é€šè¿‡ä»¥ä¸‹æ–¹æ³•è·å–ä¸»é”®æ—¶æŠ¥NullpointException
 PreparedDBUtil.getNextPrimaryKey("mysql",
 							"cim_dbpool"))
-ĞŞ¸Ä³ÌĞò
+ä¿®æ”¹ç¨‹åº
 /bboss-persistent/src/com/frameworkset/common/poolman/DBUtil.java
-Ìí¼Ó¾²Ì¬³õÊ¼»¯´úÂë
+æ·»åŠ é™æ€åˆå§‹åŒ–ä»£ç 
 
 ----------------------------------------
 1.0.5 - 2010-04-01
 ----------------------------------------
-o Ìí¼Ó»ñÈ¡Êı¾İ¿â³ØÃû³ÆÁĞ±íµÄ·½·¨
+o æ·»åŠ è·å–æ•°æ®åº“æ± åç§°åˆ—è¡¨çš„æ–¹æ³•
 com.frameworkset.common.poolman.util.SQLManager
 com.frameworkset.common.poolman.util.PoolManager
 
@@ -1032,96 +1032,96 @@ com/frameworkset/common/poolman/util/SQLUtil.java
 ----------------------------------------
 1.0.5 - 2010-03-30
 ----------------------------------------
-o ½â¾ömysqlÊı¾İ¿âµ÷ÓÃRecord.getClobºÍRecord.getBlob·½·¨±¨ÀàĞÍ×ª»»Òì³£ÎÊÌâ
-Ô­Òò·ÖÎömysqlÖĞblobºÍclob×Ö¶Î·µ»ØµÄjdbcÀàĞÍ·Ö±ğÎªLONGVARBINARYºÍLONGVARCHAR
-¶ø/bboss-persistent/src/com/frameworkset/common/poolman/handle/ValueExchange.javaÀàÖĞ½«
-LONGVARBINARYºÍLONGVARCHARÀàĞÍµÄ×Ö¶Î¶ÁÈ¡Ê±²ÉÓÃResultSet.getObject·½·¨À´»ñÈ¡£¬Ä¬ÈÏ·µ»Øbyte[]Êı×éÀàĞÍ
-½â¾ö°ì·¨£º
+o è§£å†³mysqlæ•°æ®åº“è°ƒç”¨Record.getClobå’ŒRecord.getBlobæ–¹æ³•æŠ¥ç±»å‹è½¬æ¢å¼‚å¸¸é—®é¢˜
+åŸå› åˆ†æmysqlä¸­blobå’Œclobå­—æ®µè¿”å›çš„jdbcç±»å‹åˆ†åˆ«ä¸ºLONGVARBINARYå’ŒLONGVARCHAR
+è€Œ/bboss-persistent/src/com/frameworkset/common/poolman/handle/ValueExchange.javaç±»ä¸­å°†
+LONGVARBINARYå’ŒLONGVARCHARç±»å‹çš„å­—æ®µè¯»å–æ—¶é‡‡ç”¨ResultSet.getObjectæ–¹æ³•æ¥è·å–ï¼Œé»˜è®¤è¿”å›byte[]æ•°ç»„ç±»å‹
+è§£å†³åŠæ³•ï¼š
 
-LONGVARBINARY-²ÉÓÃResultSet.getBlob·½·¨À´»ñÈ¡
-LONGVARCHAR-²ÉÓÃResultSet.getClob·½·¨À´»ñÈ¡
+LONGVARBINARY-é‡‡ç”¨ResultSet.getBlobæ–¹æ³•æ¥è·å–
+LONGVARCHAR-é‡‡ç”¨ResultSet.getClobæ–¹æ³•æ¥è·å–
 
-ÔÚÊı¾İ¿âÊÊÅäÆ÷com.frameworkset.orm.adapter.DBÖĞÌá¹©LONGVARBINARYºÍLONGVARCHARÀàĞÍÖµµÄÊÊÅäÆ÷·½·¨£¬ÒÔ±ã²»Í¬µÄÊı¾İ¿â¶ÔÕâÁ½ÖÖÀàĞÍµÄÊı¾İ½øĞĞÌØÊâ´¦Àí
-mysqlÊı¾İ¿âÊÊÅäÆ÷com.frameworkset.orm.adapter.DBMM¸²¸ÇDBÖĞµÄ·½·¨×öblobºÍclob´¦Àí£¬ÆäËûÀàĞÍÊı¾İ¿âÔİÊ±°´DBÖĞµÄÄ¬ÈÏ·½·¨À´´¦Àí
+åœ¨æ•°æ®åº“é€‚é…å™¨com.frameworkset.orm.adapter.DBä¸­æä¾›LONGVARBINARYå’ŒLONGVARCHARç±»å‹å€¼çš„é€‚é…å™¨æ–¹æ³•ï¼Œä»¥ä¾¿ä¸åŒçš„æ•°æ®åº“å¯¹è¿™ä¸¤ç§ç±»å‹çš„æ•°æ®è¿›è¡Œç‰¹æ®Šå¤„ç†
+mysqlæ•°æ®åº“é€‚é…å™¨com.frameworkset.orm.adapter.DBMMè¦†ç›–DBä¸­çš„æ–¹æ³•åšblobå’Œclobå¤„ç†ï¼Œå…¶ä»–ç±»å‹æ•°æ®åº“æš‚æ—¶æŒ‰DBä¸­çš„é»˜è®¤æ–¹æ³•æ¥å¤„ç†
 ----------------------------------------
 1.0.5 - 2010-03-29
 ----------------------------------------
-o ĞŞ¸´ÎÊÌâ£¬DBUtil.getDBDate(new Date())·½·¨Ê±±¨¸ñÊ½²»ÕıÈ·ÎÊÌâ
-½â¾ö°ì·¨
-com.frameworkset.orm.adapter.DBOracleÖĞĞÂÔö±äÁ¿db_format£¬±£Ö¤javaÈÕÆÚ¸ñÊ½DATE_FORMATºÍoracleÈÕÆÚ¸ñÊ½±£³ÖÒ»ÖÂ
+o ä¿®å¤é—®é¢˜ï¼ŒDBUtil.getDBDate(new Date())æ–¹æ³•æ—¶æŠ¥æ ¼å¼ä¸æ­£ç¡®é—®é¢˜
+è§£å†³åŠæ³•
+com.frameworkset.orm.adapter.DBOracleä¸­æ–°å¢å˜é‡db_formatï¼Œä¿è¯javaæ—¥æœŸæ ¼å¼DATE_FORMATå’Œoracleæ—¥æœŸæ ¼å¼ä¿æŒä¸€è‡´
 //DD-MM-YYYY HH24:MI:SS old format
     public static final String db_format = "yyyy-MM-dd HH24:mi:ss";
 
 
-o Ôö¼ÓsqlÄ£°åÔ¤±àÒë²Ù×÷×é¼ş
+o å¢åŠ sqlæ¨¡æ¿é¢„ç¼–è¯‘æ“ä½œç»„ä»¶
 com.frameworkset.common.poolman.SQLExecutor
-SQLExecutorÖ÷ÒªÓÃÀ´Ö§³Åbboss±êÇ©¿âÔ¤±àÒëÔö¡¢É¾¡¢¸Ä¡¢²é¡¢Åú´¦Àí¹¦ÄÜ£¬ºóĞø½«Ö±½Ó¿ª·Å¸øÓ¦ÓÃ³ÌĞòÊ¹ÓÃ
+SQLExecutorä¸»è¦ç”¨æ¥æ”¯æ’‘bbossæ ‡ç­¾åº“é¢„ç¼–è¯‘å¢ã€åˆ ã€æ”¹ã€æŸ¥ã€æ‰¹å¤„ç†åŠŸèƒ½ï¼Œåç»­å°†ç›´æ¥å¼€æ”¾ç»™åº”ç”¨ç¨‹åºä½¿ç”¨
 
-Ö÷ÒªÌá¹©ÒÔÏÂÌØĞÔ£º
-Êı¾İ¿âÔ¤±àÒë/ÆÕÍ¨²éÑ¯²Ù×÷£¬
-²åÈë£¬É¾³ı£¬ĞŞ¸Ä
-Ô¤±àÒë²åÈë£¬É¾³ı£¬ĞŞ¸Ä
-Åú´¦ÀíÔ¤±àÒë/ÆÕÍ¨²åÈë£¬É¾³ı£¬ĞŞ¸Ä²Ù×÷
+ä¸»è¦æä¾›ä»¥ä¸‹ç‰¹æ€§ï¼š
+æ•°æ®åº“é¢„ç¼–è¯‘/æ™®é€šæŸ¥è¯¢æ“ä½œï¼Œ
+æ’å…¥ï¼Œåˆ é™¤ï¼Œä¿®æ”¹
+é¢„ç¼–è¯‘æ’å…¥ï¼Œåˆ é™¤ï¼Œä¿®æ”¹
+æ‰¹å¤„ç†é¢„ç¼–è¯‘/æ™®é€šæ’å…¥ï¼Œåˆ é™¤ï¼Œä¿®æ”¹æ“ä½œ
 
-ÏµÍ³Ìá¹©×¢½âÄ£Ê½À´Ö§³ÖËùÓĞÔ¤±àÒë²Ù×÷Ä£Ê½
-SQLExecutor×é¼şÔÚÔ­ÓĞÊı¾İ¿â×é¼şµÄ»ù´¡ÉÏ¿ª·¢µÄÒ»¸öĞÂµÄ×é¼ş£¬¼Ì³ĞÔ­ÓĞÈ«²¿¹¦ÄÜ¡£
+ç³»ç»Ÿæä¾›æ³¨è§£æ¨¡å¼æ¥æ”¯æŒæ‰€æœ‰é¢„ç¼–è¯‘æ“ä½œæ¨¡å¼
+SQLExecutorç»„ä»¶åœ¨åŸæœ‰æ•°æ®åº“ç»„ä»¶çš„åŸºç¡€ä¸Šå¼€å‘çš„ä¸€ä¸ªæ–°çš„ç»„ä»¶ï¼Œç»§æ‰¿åŸæœ‰å…¨éƒ¨åŠŸèƒ½ã€‚
 
 
 ----------------------------------------
 1.0.5 - 2010-01-19
 ----------------------------------------
 
-o Ôö¼ÓÊÂÎñÀàĞÍÃ¶¾ÙÀàcom.frameworkset.orm.annotation.TransactionType
-¶¨ÒåÁËÒÔÏÂ¼¸ÖÖÀàĞÍ£º
+o å¢åŠ äº‹åŠ¡ç±»å‹æšä¸¾ç±»com.frameworkset.orm.annotation.TransactionType
+å®šä¹‰äº†ä»¥ä¸‹å‡ ç§ç±»å‹ï¼š
 /**
-     * Ê¼ÖÕ´´½¨ĞÂÊÂÎñ
+     * å§‹ç»ˆåˆ›å»ºæ–°äº‹åŠ¡
      */
     NEW_TRANSACTION,
     
     /**
-     * Èç¹ûÃ»ÓĞÊÂÎñ´´½¨ĞÂÊÂÎñ£¬ÓĞÊÂÎñ¼ÓÈëµ±Ç°ÊÂÎñ
+     * å¦‚æœæ²¡æœ‰äº‹åŠ¡åˆ›å»ºæ–°äº‹åŠ¡ï¼Œæœ‰äº‹åŠ¡åŠ å…¥å½“å‰äº‹åŠ¡
      */
     REQUIRED_TRANSACTION,
     /**
-     * ÓĞÊÂÎñ¾Í¼ÓÈëÊÂÎñ£¬Ã»ÓĞ²»´´½¨ÊÂÎñ,Ä¬ÈÏÇé¿ö
+     * æœ‰äº‹åŠ¡å°±åŠ å…¥äº‹åŠ¡ï¼Œæ²¡æœ‰ä¸åˆ›å»ºäº‹åŠ¡,é»˜è®¤æƒ…å†µ
      */
     MAYBE_TRANSACTION,
     /**
-     * Ã»ÓĞÊÂÎñ
+     * æ²¡æœ‰äº‹åŠ¡
      */
     NO_TRANSACTION,
     
     /**
-     * Î´ÖªÊÂÎñÀàĞÍ
+     * æœªçŸ¥äº‹åŠ¡ç±»å‹
      */
     UNKNOWN_TRANSACTION,
     
     /**
-     * ¶ÁĞ´ÊÂÎñÀàĞÍ£¬Ö§³ÖÊı¾İ¿â¶ÁĞ´²Ù×÷£¬ÊÂÎñÖĞËù×öµÄ²Ù×÷
-     * ÆäËûÊÂÎñ¶¼¿ÉÒÔ¿´µ½
+     * è¯»å†™äº‹åŠ¡ç±»å‹ï¼Œæ”¯æŒæ•°æ®åº“è¯»å†™æ“ä½œï¼Œäº‹åŠ¡ä¸­æ‰€åšçš„æ“ä½œ
+     * å…¶ä»–äº‹åŠ¡éƒ½å¯ä»¥çœ‹åˆ°
      */
     RW_TRANSACTION
 
 ----------------------------------------
 1.0.5 - 2010-01-19
 ----------------------------------------
-o oracleºÍderby£¬mysql´¦Àílob×Ö¶ÎµÄÇø±ğ£º
-¶Ôlob×Ö¶ÎµÄĞ´²Ù×÷oracle£¬derby£¬mysqlÖĞ»ù±¾Ò»ÖÂ
-¶Álob×Ö¶ÎÊ±£¬oracleÖ§³ÖÔÚ¶ÁÈ¡ÊÂÎñÖ®Íâ»¹¿ÉÒÔ¶ÁÈ¡blob×Ö¶ÎºÍclob×Ö¶ÎµÄÄÚÈİ£¬µ«ÊÇderbyºÍmysqlÖĞ¾Í²»¿ÉÒÔ£¬ÕâÀïÒÔclob×Ö¶ÎÎªÊ¾Àı£¬ÀıÈç£º
+o oracleå’Œderbyï¼Œmysqlå¤„ç†lobå­—æ®µçš„åŒºåˆ«ï¼š
+å¯¹lobå­—æ®µçš„å†™æ“ä½œoracleï¼Œderbyï¼Œmysqlä¸­åŸºæœ¬ä¸€è‡´
+è¯»lobå­—æ®µæ—¶ï¼Œoracleæ”¯æŒåœ¨è¯»å–äº‹åŠ¡ä¹‹å¤–è¿˜å¯ä»¥è¯»å–blobå­—æ®µå’Œclobå­—æ®µçš„å†…å®¹ï¼Œä½†æ˜¯derbyå’Œmysqlä¸­å°±ä¸å¯ä»¥ï¼Œè¿™é‡Œä»¥clobå­—æ®µä¸ºç¤ºä¾‹ï¼Œä¾‹å¦‚ï¼š
 
-oracleÖĞ×÷ÒÔÏÂ²Ù×÷ÊÇ¿ÉÒÔµÄ£º
+oracleä¸­ä½œä»¥ä¸‹æ“ä½œæ˜¯å¯ä»¥çš„ï¼š
 		PreparedDBUtil dbUtil = new PreparedDBUtil();
 		try {
-			//²éÑ¯´ó×Ö¶ÎÄÚÈİ²¢ÇÒ½«´ó×Ö¶Î´æ·Åµ½ÎÄ¼şÖĞ
+			//æŸ¥è¯¢å¤§å­—æ®µå†…å®¹å¹¶ä¸”å°†å¤§å­—æ®µå­˜æ”¾åˆ°æ–‡ä»¶ä¸­
 			dbUtil.preparedSelect( "select id,clobname from test");
-			dbUtil.executePrepared();//Ö´ĞĞ¶ÁÈ¡ÊÂÎñ
+			dbUtil.executePrepared();//æ‰§è¡Œè¯»å–äº‹åŠ¡
 			
 			for(int i = 0; i < dbUtil.size(); i ++)
 			{
 				
-				dbUtil.getFile(i, "clobname", new java.io.File("d:/route" + i + ".txt")); //¶ÁÈ¡clob×Ö¶Îµ½ÎÄ¼şÖĞ£¬ÔÚ¶ÁÈ¡µÄÊÂÎñÖ®Íâ²Ù×÷clob×Ö¶Î
-//				String clobvalue = dbUtil.getString(i, "clobname");//»ñÈ¡clob×Ö¶Îµ½×Ö·û´®±äÁ¿ÖĞ
-//				Clob clob = dbUtil.getClob(i, "clobname");//»ñÈ¡clob×Ö¶ÎÖµµ½clobÀàĞÍ±äÁ¿ÖĞ
+				dbUtil.getFile(i, "clobname", new java.io.File("d:/route" + i + ".txt")); //è¯»å–clobå­—æ®µåˆ°æ–‡ä»¶ä¸­ï¼Œåœ¨è¯»å–çš„äº‹åŠ¡ä¹‹å¤–æ“ä½œclobå­—æ®µ
+//				String clobvalue = dbUtil.getString(i, "clobname");//è·å–clobå­—æ®µåˆ°å­—ç¬¦ä¸²å˜é‡ä¸­
+//				Clob clob = dbUtil.getClob(i, "clobname");//è·å–clobå­—æ®µå€¼åˆ°clobç±»å‹å˜é‡ä¸­
 			}
 			
 		} catch (Exception e) {
@@ -1133,13 +1133,13 @@ oracleÖĞ×÷ÒÔÏÂ²Ù×÷ÊÇ¿ÉÒÔµÄ£º
 			dbUtil = null;
 		}
 
-ÄÇÃ´ÔÚmysqlºÍderbyÖĞÔõÃ´×öÄØ£¬ÄÇ¾ÍÒª½èÖúÓÚNullRowHandler´¦ÀíÆ÷»òÕßRowHandler´¦ÀíÆ÷À´ÊµÏÖÒ»¸öÊÂÎñÄÚ¶Ôblob×Ö¶ÎµÄ´¦ÀíÁË(blobÎªÀı)£º
+é‚£ä¹ˆåœ¨mysqlå’Œderbyä¸­æ€ä¹ˆåšå‘¢ï¼Œé‚£å°±è¦å€ŸåŠ©äºNullRowHandlerå¤„ç†å™¨æˆ–è€…RowHandlerå¤„ç†å™¨æ¥å®ç°ä¸€ä¸ªäº‹åŠ¡å†…å¯¹blobå­—æ®µçš„å¤„ç†äº†(blobä¸ºä¾‹)ï¼š
 		PreparedDBUtil dbUtil = new PreparedDBUtil();
 		try {
 
-			//²éÑ¯´ó×Ö¶ÎÄÚÈİ²¢ÇÒ½«´ó×Ö¶Î´æ·Åµ½ÎÄ¼şÖĞ
+			//æŸ¥è¯¢å¤§å­—æ®µå†…å®¹å¹¶ä¸”å°†å¤§å­—æ®µå­˜æ”¾åˆ°æ–‡ä»¶ä¸­
 			dbUtil.preparedSelect("derby", "select id,blobname from test");
-			final List<File> datas = new ArrayList<File>();//´æ´¢blob×Ö¶Îblobnameµ½datasÁĞ±íÖĞ
+			final List<File> datas = new ArrayList<File>();//å­˜å‚¨blobå­—æ®µblobnameåˆ°datasåˆ—è¡¨ä¸­
 			dbUtil.executePreparedWithRowHandler(new NullRowHandler(){
 
                 @Override
@@ -1149,8 +1149,8 @@ oracleÖĞ×÷ÒÔÏÂ²Ù×÷ÊÇ¿ÉÒÔµÄ£º
                     datas.add(file);
                 }});
 			
-			System.out.println("testblobRead dbUtil.size():"+dbUtil.size());//Êä³ö½á¹û¼¯µÄ´óĞ¡
-			System.out.println("testblobRead datas.size():"+datas.size());//Êä³ö½á¹û¼¯µÄ´óĞ¡
+			System.out.println("testblobRead dbUtil.size():"+dbUtil.size());//è¾“å‡ºç»“æœé›†çš„å¤§å°
+			System.out.println("testblobRead datas.size():"+datas.size());//è¾“å‡ºç»“æœé›†çš„å¤§å°
 			
 
 		} catch (Exception e) {
@@ -1162,7 +1162,7 @@ oracleÖĞ×÷ÒÔÏÂ²Ù×÷ÊÇ¿ÉÒÔµÄ£º
 			
 		}
 
-o DBUtilÖĞÔö¼ÓÁËÒÔÏÂ·½·¨,ÓÃÀ´Ö§³Ö²»´ø·µ»ØÖµµÄÆÕÍ¨²éÑ¯ºÍ·ÖÒ³²éÑ¯²Ù×÷£º
+o DBUtilä¸­å¢åŠ äº†ä»¥ä¸‹æ–¹æ³•,ç”¨æ¥æ”¯æŒä¸å¸¦è¿”å›å€¼çš„æ™®é€šæŸ¥è¯¢å’Œåˆ†é¡µæŸ¥è¯¢æ“ä½œï¼š
 
 public void executeSelectWithRowHandler(String sql,Connection con,NullRowHandler rowhandler)  throws SQLException
 public void executeSelectWithRowHandler(String sql,NullRowHandler rowhandler)  throws SQLException
@@ -1173,56 +1173,56 @@ public void executeSelectWithRowHandler(String sql,long offset,int pagesize,Null
 public void executeSelectWithRowHandler(String dbname,String sql,long offset,int pagesize,NullRowHandler rowhandler)  throws SQLException
 public void executeSelectWithRowhandler(String dbname, String sql,long offset,int pagesize, Connection con,NullRowHandler rowhandler) throws SQLException
 
-ÓÃ»§¿ÉÒÔÍ¨¹ıÉÏÊö·½·¨×ÔÓÉµØ¹¹Ôì×Ô¼ºµÄ²éÑ¯½á¹û¼¯ºÏ    ,¿É²Î¿¼¼òµ¥µÄ²âÊÔÓÃÁĞ£º
+ç”¨æˆ·å¯ä»¥é€šè¿‡ä¸Šè¿°æ–¹æ³•è‡ªç”±åœ°æ„é€ è‡ªå·±çš„æŸ¥è¯¢ç»“æœé›†åˆ    ,å¯å‚è€ƒç®€å•çš„æµ‹è¯•ç”¨åˆ—ï¼š
 /bboss-persistent/test/com/frameworkset/common/rowhandler/DBUtilRowHandler.java
 
-o PreparedDBUtilÖĞÌí¼ÓÁ½¸ö·½·¨,ÓÃÀ´Ö§³Ö²»´ø·µ»ØÖµµÄÆÕÍ¨²éÑ¯ºÍ·ÖÒ³²éÑ¯²Ù×÷£º
+o PreparedDBUtilä¸­æ·»åŠ ä¸¤ä¸ªæ–¹æ³•,ç”¨æ¥æ”¯æŒä¸å¸¦è¿”å›å€¼çš„æ™®é€šæŸ¥è¯¢å’Œåˆ†é¡µæŸ¥è¯¢æ“ä½œï¼š
 
 public void executePreparedWithRowHandler(NullRowHandler rowhandler) throws SQLException
 public void executePreparedWithRowHandler(Connection con,NullRowHandler rowhandler) throws SQLException
-ÓÃ»§¿ÉÒÔÍ¨¹ıÉÏÊö·½·¨×ÔÓÉµØ¹¹Ôì×Ô¼ºµÄ²éÑ¯½á¹û¼¯ºÏ      ,¿É²Î¿¼¼òµ¥µÄ²âÊÔÓÃÁĞ£º
+ç”¨æˆ·å¯ä»¥é€šè¿‡ä¸Šè¿°æ–¹æ³•è‡ªç”±åœ°æ„é€ è‡ªå·±çš„æŸ¥è¯¢ç»“æœé›†åˆ      ,å¯å‚è€ƒç®€å•çš„æµ‹è¯•ç”¨åˆ—ï¼š
 /bboss-persistent/test/com/frameworkset/common/rowhandler/PreparedDBUtilRowhandler.java
 
 
-o Ôö¼Ó³éÏóÀàcom.frameworkset.common.poolman.handle.NullRowHandler£¬
+o å¢åŠ æŠ½è±¡ç±»com.frameworkset.common.poolman.handle.NullRowHandlerï¼Œ
 
 public abstract class NullRowHandler extends BaseRowHandler
 {
 
-    ¡£¡£¡£¡£¡£¡£
+    ã€‚ã€‚ã€‚ã€‚ã€‚ã€‚
     
 
     public abstract void handleRow(Record origine) throws Exception;
 }
-ÓÃÀ´´¦Àí×Ô¶¨Òå·µ»ØÖµÀàĞÍ£¬¾ßÌåÊµÏÖÀàÊµÏÖ³éÏó·½·¨public abstract void handleRow(Record origine) throws Exception;²ÎÊırecordÎªµ±Ç°¼ÇÂ¼¿ÉÒÔ½øĞĞÏàÓ¦µÄ´¦Àí
+ç”¨æ¥å¤„ç†è‡ªå®šä¹‰è¿”å›å€¼ç±»å‹ï¼Œå…·ä½“å®ç°ç±»å®ç°æŠ½è±¡æ–¹æ³•public abstract void handleRow(Record origine) throws Exception;å‚æ•°recordä¸ºå½“å‰è®°å½•å¯ä»¥è¿›è¡Œç›¸åº”çš„å¤„ç†
 
-¾ßÌåµÄÊ¹ÓÃ·½·¨£¬Çë²Î¿¼²âÊÔÓÃÀı/bboss-persistent/test/com/frameworkset/derby/TestLob.javaÖĞµÄ·½·¨£º
+å…·ä½“çš„ä½¿ç”¨æ–¹æ³•ï¼Œè¯·å‚è€ƒæµ‹è¯•ç”¨ä¾‹/bboss-persistent/test/com/frameworkset/derby/TestLob.javaä¸­çš„æ–¹æ³•ï¼š
 public void testBlobRead()  throws Exception
 
-o ĞŞÕıÊ¹ÓÃmysqlºÍderbyÊ±µÄÒ»Ğ©ÎÊÌâ£¬
+o ä¿®æ­£ä½¿ç”¨mysqlå’Œderbyæ—¶çš„ä¸€äº›é—®é¢˜ï¼Œ
 
-o mysql,derbyÊı¾İ¿âµÄdatasourceÅäÖÃÎÄ¼şpoolman.xmlÖĞµÄreadOnlyÊôĞÔÒªÉèÖÃÎªfalse
+o mysql,derbyæ•°æ®åº“çš„datasourceé…ç½®æ–‡ä»¶poolman.xmlä¸­çš„readOnlyå±æ€§è¦è®¾ç½®ä¸ºfalse
 
-o Ôö¼Ó×¢½â·½Ê½µÄÊı¾İ¿âÊÂÎñ¹ÜÀí
+o å¢åŠ æ³¨è§£æ–¹å¼çš„æ•°æ®åº“äº‹åŠ¡ç®¡ç†
 	@Transaction("REQUIRED_TRANSACTION")
     @RollbackExceptions("") //@RollbackExceptions("{exception1,excpetion2}")
-    ÏêÏ¸Çé¿ö²Î¿´²âÊÔÓÃÀı/bbossaop/test/com/chinacreator/spi/transaction/annotation
+    è¯¦ç»†æƒ…å†µå‚çœ‹æµ‹è¯•ç”¨ä¾‹/bbossaop/test/com/chinacreator/spi/transaction/annotation
 ----------------------------------------
 1.0.5 - 2009-12-14
 ----------------------------------------
-o ĞŞ¸ÄprepareddbutilÖĞµÄ·ÖÒ³²éÑ¯·½·¨£¬½«offset²ÎÊıÀàĞÍÓÉintĞŞ¸ÄÎªlong
+o ä¿®æ”¹prepareddbutilä¸­çš„åˆ†é¡µæŸ¥è¯¢æ–¹æ³•ï¼Œå°†offsetå‚æ•°ç±»å‹ç”±intä¿®æ”¹ä¸ºlong
 /bboss-persistent/src/com/frameworkset/common/poolman/PreparedDBUtil.java
 ----------------------------------------
 1.0.5 - 2009-6-16
 ----------------------------------------
 
-o PoolManager Ôö¼ÓÒÔÏÂ·½·¨£º
+o PoolManager å¢åŠ ä»¥ä¸‹æ–¹æ³•ï¼š
  public boolean exist(String name)
     {
         return this.pools.containsKey(name);
     }
-  SQLUtil  Ôö¼ÓÒÔÏÂ·½·¨£º
-  ÅĞ¶ÏÊı¾İ¿âÁ¬½Ó³ØÊÇ·ñ´æÔÚ
+  SQLUtil  å¢åŠ ä»¥ä¸‹æ–¹æ³•ï¼š
+  åˆ¤æ–­æ•°æ®åº“è¿æ¥æ± æ˜¯å¦å­˜åœ¨
    public static boolean exist(String dbname)
 	    {
 	      SQLManager datab = getSQLManager();
@@ -1230,14 +1230,14 @@ o PoolManager Ôö¼ÓÒÔÏÂ·½·¨£º
 	    }
    
 
-o ĞŞ¸Ä¹«Ë¾ĞÅÏ¢
+o ä¿®æ”¹å…¬å¸ä¿¡æ¯
 
-o ĞŞ¸ÄÓÊ¼şµØÖ·´íÎóÎÊÌâ
+o ä¿®æ”¹é‚®ä»¶åœ°å€é”™è¯¯é—®é¢˜
 If the StackTrace contains an InstanceAlreadyExistsException, then you have  encountered a ClassLoader linkage problem.  Please email poolman@codestudio.com **
 	at com.frameworkset.common.poolman.util.SQLManager.requestConnection(SQLManager.java:190)
 	at com.frameworkset.common.poolman.util.SQLUtil.getConection(SQLUtil.java:930)
 	at com.chinacreator.mq.transfer.send.SendBigData.execute(SendBigData.java:268)
-o Ôö¼ÓSerializable¶ÔÏó»ñÈ¡½Ó¿Ú
+o å¢åŠ Serializableå¯¹è±¡è·å–æ¥å£
 com.frameworkset.common.poolman.DBUtil
 
 	
@@ -1308,24 +1308,24 @@ public Serializable getSerializable(String field) throws SQLException
         return object;
         
     }
-o ´Óbboss-persistent\src\com\frameworkset\common\poolman\Record.java
-  »ñÈ¡blob¶ÔÏó¶ÑÕ»Òç³öµÄÎÊÌâ£º
+o ä»bboss-persistent\src\com\frameworkset\common\poolman\Record.java
+  è·å–blobå¯¹è±¡å †æ ˆæº¢å‡ºçš„é—®é¢˜ï¼š
   java.lang.StackOverflowError
 	at com.frameworkset.common.poolman.Record.getBlob(Record.java:1630)
-  Ô­Òò·ÖÎö£ºÒÔÏÂ·½·¨ÏİÈëËÀÑ­»·
+  åŸå› åˆ†æï¼šä»¥ä¸‹æ–¹æ³•é™·å…¥æ­»å¾ªç¯
   public Blob getBlob (String parameterName) throws SQLException
 {
 	return (Blob)this.getBlob(parameterName);
 }
-ĞŞ¸ÄÎª£º
+ä¿®æ”¹ä¸ºï¼š
 public Blob getBlob (String parameterName) throws SQLException
     {
     	return (Blob)this.getObject(parameterName);
     }
-  ¼´¿É¡£
+  å³å¯ã€‚
   
-o Òì³££ºjava.util.ConcurrentModificationException: concurrent access to HashMap attempted by Thread[Thread-58,5,main]
-´íÎóÃèÊö£º
+o å¼‚å¸¸ï¼šjava.util.ConcurrentModificationException: concurrent access to HashMap attempted by Thread[Thread-58,5,main]
+é”™è¯¯æè¿°ï¼š
 	[09-4-28 16:37:53:375 CST] 0000003b SystemErr     R java.util.ConcurrentModificationException: concurrent access to HashMap attempted by Thread[Thread-58,5,main]
 	at java.util.HashMap.onEntry(HashMap.java(Inlined Compiled Code))
 	at java.util.HashMap.transfer(HashMap.java(Compiled Code))
@@ -1361,13 +1361,13 @@ o Òì³££ºjava.util.ConcurrentModificationException: concurrent access to HashMap 
 [09-4-28 16:37:53:375 CST] 0000003b SystemErr     R 	at com.chinacreator.sms.thread.QueueServiceHandleThread.run(QueueServiceHandleThread.java:79)
 [09-4-28 16:37:53:375 CST] 0000003b SystemErr     R 	at java.lang.Thread.run(Thread.java:570)
 
-ÎÊÌâ·ÖÎö£ºÕâ¸ö´íÎóÖ»ÊÇÅ¼¶û³öÏÖ£¬ÔÚ·şÎñÆ÷Ñ¹Á¦´ó£¬»òÕßÊı¾İ¿âÑ¹Á¦´óµÄÊ±ºòÈİÒ×³öÏÖ£¬²ÎÕÕÎÄµµ£ºhttp://jira.codehaus.org/browse/XFIRE-1119
-½â¾ö·½°¸£ºÕÒµ½Õâ¸öÀàÖĞµÄ·½·¨£º
+é—®é¢˜åˆ†æï¼šè¿™ä¸ªé”™è¯¯åªæ˜¯å¶å°”å‡ºç°ï¼Œåœ¨æœåŠ¡å™¨å‹åŠ›å¤§ï¼Œæˆ–è€…æ•°æ®åº“å‹åŠ›å¤§çš„æ—¶å€™å®¹æ˜“å‡ºç°ï¼Œå‚ç…§æ–‡æ¡£ï¼šhttp://jira.codehaus.org/browse/XFIRE-1119
+è§£å†³æ–¹æ¡ˆï¼šæ‰¾åˆ°è¿™ä¸ªç±»ä¸­çš„æ–¹æ³•ï¼š
 com.frameworkset.common.poolman.sql.PrimaryKeyCache
-ÀïÃæ¶ÔÓ¦µÄMap£¬½«mapĞŞ¸ÄÎªÍ¬²½Map£º
+é‡Œé¢å¯¹åº”çš„Mapï¼Œå°†mapä¿®æ”¹ä¸ºåŒæ­¥Mapï¼š
 	id_tables = new java.util.concurrent.ConcurrentHashMap(new HashMap());
 	
-o Ôö¼ÓĞĞ´¦ÀíÆ÷¶Ô·ºĞÍµÄÖ§³Ö
+o å¢åŠ è¡Œå¤„ç†å™¨å¯¹æ³›å‹çš„æ”¯æŒ
 
 public abstract class RowHandler<T>
 public abstract void handleRow(T rowValue,Record record);
@@ -1377,21 +1377,21 @@ public abstract void handleRow(T rowValue,Record record);
 ----------------------------------------
 1.0.4 - 2009-5-22
 ----------------------------------------
-o µ÷Õûcom.frameworkset.common.poolman.handle.RowHandler
+o è°ƒæ•´com.frameworkset.common.poolman.handle.RowHandler
 
-½«Ô­À´µÄ½Ó¿Ú¸ÄÎª³éÏóÀà
-½«½Ó¿Ú·½·¨public void handleRow(Object rowValue,Record origine)
-¸ÄÎª³éÏó·½·¨public abstract void handleRow(Object rowValue,Record origine)
-Ôö¼ÓinitºÍdestroy·½·¨£¬ÒÔ±ã½øĞĞ²éÑ¯Ô´Êı¾İºÍÊı¾İ¿âÃû³ÆdbnameµÄ³õÊ¼»¯ºÍÏú»Ù£¬ÕâĞ©ĞÅÏ¢¶Ô´æ´¢¹ı³ÌºÍº¯Êıµ÷ÓÃÖĞµÄĞĞ´¦ÀíÆ÷²»Æğ×÷ÓÃ¡£
+å°†åŸæ¥çš„æ¥å£æ”¹ä¸ºæŠ½è±¡ç±»
+å°†æ¥å£æ–¹æ³•public void handleRow(Object rowValue,Record origine)
+æ”¹ä¸ºæŠ½è±¡æ–¹æ³•public abstract void handleRow(Object rowValue,Record origine)
+å¢åŠ initå’Œdestroyæ–¹æ³•ï¼Œä»¥ä¾¿è¿›è¡ŒæŸ¥è¯¢æºæ•°æ®å’Œæ•°æ®åº“åç§°dbnameçš„åˆå§‹åŒ–å’Œé”€æ¯ï¼Œè¿™äº›ä¿¡æ¯å¯¹å­˜å‚¨è¿‡ç¨‹å’Œå‡½æ•°è°ƒç”¨ä¸­çš„è¡Œå¤„ç†å™¨ä¸èµ·ä½œç”¨ã€‚
 
-Ôö¼Ó·½·¨
+å¢åŠ æ–¹æ³•
 public SchemaType getSchemaType(String colName)
-ÒÔ±ãÔÚĞĞ´¦ÀíÆ÷ÖĞ »ñÈ¡ÁĞµÄjavaÊı¾İÀàĞÍÃû³ÆºÍÊı¾İ¿âÀàĞÍÃû³Æ
+ä»¥ä¾¿åœ¨è¡Œå¤„ç†å™¨ä¸­ è·å–åˆ—çš„javaæ•°æ®ç±»å‹åç§°å’Œæ•°æ®åº“ç±»å‹åç§°
         
-o ĞŞ¸Äcom/frameworkset/common/poolman/Record.javaÀà
-Ôö¼Ó¼ÇÂ¼µÄÔ­Ê¼ĞĞºÅĞÅÏ¢ºÍget/set·½·¨£º
+o ä¿®æ”¹com/frameworkset/common/poolman/Record.javaç±»
+å¢åŠ è®°å½•çš„åŸå§‹è¡Œå·ä¿¡æ¯å’Œget/setæ–¹æ³•ï¼š
 /**
-	 * ÉèÖÃ¼ÇÂ¼¶ÔÓ¦µÄÊı¾İ¿âÔ­Ê¼¼ÇÂ¼ĞĞºÅ
+	 * è®¾ç½®è®°å½•å¯¹åº”çš„æ•°æ®åº“åŸå§‹è®°å½•è¡Œå·
 	 */
 	private int rowid;
 	public void setRowid(int rowid)
@@ -1403,25 +1403,25 @@ o ĞŞ¸Äcom/frameworkset/common/poolman/Record.javaÀà
             return rowid;
         }
  
-o ResoultMapÀàÖĞ¶ÔRecordÀàµÄ³õÊ¼»¯·½·¨½øĞĞÁËÓÅ»¯
+o ResoultMapç±»ä¸­å¯¹Recordç±»çš„åˆå§‹åŒ–æ–¹æ³•è¿›è¡Œäº†ä¼˜åŒ–
 
-o À©Õ¹xmlĞĞ´¦ÀíÆ÷
+o æ‰©å±•xmlè¡Œå¤„ç†å™¨
 
-¿ÉÒÔ×Ô¶¨Òå¸ù½ÚµãÃû³Æ
-¿ÉÒÔ×Ô¶¨Òå×Ö·û¼¯
-¿ÉÒÔ×Ô¶¨Òå°æ±¾ºÅ
-Ìí¼Ó¹¹Ôìxml½Úµã´®µÄÁ½¸ö·½·¨
+å¯ä»¥è‡ªå®šä¹‰æ ¹èŠ‚ç‚¹åç§°
+å¯ä»¥è‡ªå®šä¹‰å­—ç¬¦é›†
+å¯ä»¥è‡ªå®šä¹‰ç‰ˆæœ¬å·
+æ·»åŠ æ„é€ xmlèŠ‚ç‚¹ä¸²çš„ä¸¤ä¸ªæ–¹æ³•
 
-ÊµÏÖ
-ÔÚcom.frameworkset.common.poolman.handle.XMLRowHandler³ÌĞòÖĞÌí¼ÓÒÔÏÂ·½·¨£º
+å®ç°
+åœ¨com.frameworkset.common.poolman.handle.XMLRowHandlerç¨‹åºä¸­æ·»åŠ ä»¥ä¸‹æ–¹æ³•ï¼š
         /**
-         * rowValueÀàĞÍÎªStringBuffer
+         * rowValueç±»å‹ä¸ºStringBuffer
          */
-	public void handleRow(Object rowValue,Record origine) µÄÄ¬ÈÏÊµÏÖ
+	public void handleRow(Object rowValue,Record origine) çš„é»˜è®¤å®ç°
 	
 /**
-	 * ·µ»Øxml´®µÄ¸ù½ÚµãÃû³Æ
-	 * È±Ê¡Îªrecords£¬ÓÃ»§¿ÉÒÔÀ©Õ¹Õâ¸ö·½·¨
+	 * è¿”å›xmlä¸²çš„æ ¹èŠ‚ç‚¹åç§°
+	 * ç¼ºçœä¸ºrecordsï¼Œç”¨æˆ·å¯ä»¥æ‰©å±•è¿™ä¸ªæ–¹æ³•
 	 * @return
 	 */
 	public String getRootName()
@@ -1430,19 +1430,19 @@ o À©Õ¹xmlĞĞ´¦ÀíÆ÷
 	}
 	
 	/**
-         * ·µ»ØxmlµÄ±àÂë×Ö·û¼¯
-         * È±Ê¡Îªgb2312£¬ÓÃ»§¿ÉÒÔÀ©Õ¹Õâ¸ö·½·¨
+         * è¿”å›xmlçš„ç¼–ç å­—ç¬¦é›†
+         * ç¼ºçœä¸ºUTF-8ï¼Œç”¨æˆ·å¯ä»¥æ‰©å±•è¿™ä¸ªæ–¹æ³•
          * @return
          */
         public String getEncoding()
         {
-            return "gb2312";
+            return "UTF-8";
         }
         
         
         /**
-         * ·µ»ØxmlÓï·¨µÄ°æ±¾ºÅ
-         * È±Ê¡Îª1.0£¬ÓÃ»§¿ÉÒÔÀ©Õ¹Õâ¸ö·½·¨
+         * è¿”å›xmlè¯­æ³•çš„ç‰ˆæœ¬å·
+         * ç¼ºçœä¸º1.0ï¼Œç”¨æˆ·å¯ä»¥æ‰©å±•è¿™ä¸ªæ–¹æ³•
          * @return
          */
         public String getVersion()
@@ -1450,21 +1450,21 @@ o À©Õ¹xmlĞĞ´¦ÀíÆ÷
             return "1.0";
         }
 
-¹¹½¨xml½Úµã´®µÄ·½·¨
-public static String buildNode(String columnNodeName,//xml½ÚµãÃû³Æ
-                                      String columnName,//½áµãÁĞÃûnameÊôĞÔµÄÖµ
-                                      String columnType, //½áµãÁĞjdbcÀàĞÍÊôĞÔÃû³ÆÖµ
-                                      String columnJavaType, //½áµãÁĞjavaÀàĞÍÊôĞÔÃû³ÆÖµ
-                                      String value,//½áµãÖµ
-                                      String split)//½áµãÓë½ÚµãÖ®¼äµÄ·Ö¸î·û
+æ„å»ºxmlèŠ‚ç‚¹ä¸²çš„æ–¹æ³•
+public static String buildNode(String columnNodeName,//xmlèŠ‚ç‚¹åç§°
+                                      String columnName,//ç»“ç‚¹åˆ—ånameå±æ€§çš„å€¼
+                                      String columnType, //ç»“ç‚¹åˆ—jdbcç±»å‹å±æ€§åç§°å€¼
+                                      String columnJavaType, //ç»“ç‚¹åˆ—javaç±»å‹å±æ€§åç§°å€¼
+                                      String value,//ç»“ç‚¹å€¼
+                                      String split)//ç»“ç‚¹ä¸èŠ‚ç‚¹ä¹‹é—´çš„åˆ†å‰²ç¬¦
 
-public static String buildNode(String columnNodeName, //xml½ÚµãÃû³Æ
-                                Map attributes,//½ÚµãÊôĞÔ¼¯
-                                String value, //½ÚµãÖµ
-                                String split)//½Úµã¼äµÄ·Ö¸î·û
-ÕâĞ©·½·¨¶¼ÓĞÈ±Ê¡ÊµÏÖ£¬Èç¹û²»Ò»ÖÂµÄ»°¿ÉÒÔÔÚ×ÓÀàÖĞ¸²¸Ç¡£
+public static String buildNode(String columnNodeName, //xmlèŠ‚ç‚¹åç§°
+                                Map attributes,//èŠ‚ç‚¹å±æ€§é›†
+                                String value, //èŠ‚ç‚¹å€¼
+                                String split)//èŠ‚ç‚¹é—´çš„åˆ†å‰²ç¬¦
+è¿™äº›æ–¹æ³•éƒ½æœ‰ç¼ºçœå®ç°ï¼Œå¦‚æœä¸ä¸€è‡´çš„è¯å¯ä»¥åœ¨å­ç±»ä¸­è¦†ç›–ã€‚
 
-Ê¹ÓÃÊµÀı
+ä½¿ç”¨å®ä¾‹
 public class TestXMLHandler {
     public static void testCustomXMLHandler()
     {
@@ -1527,7 +1527,7 @@ public class TestXMLHandler {
                 
                 public String getEncoding() {
                     // TODO Auto-generated method stub
-                    return "gbk";
+                    return "UTF-8";
                 }
 
                
@@ -1573,7 +1573,7 @@ public class TestXMLHandler {
     }
 }
 
-o ĞŞ¸Äbug£¬Ö´ĞĞo/r mapping ²éÑ¯Ê±£¬Èç¹ûÊı×ÖÀàĞÍ/byte/booleanµÄÊı¾İÖµÎªnullÊ±£¬»á±¨ÒÔÏÂÒì³££º
+o ä¿®æ”¹bugï¼Œæ‰§è¡Œo/r mapping æŸ¥è¯¢æ—¶ï¼Œå¦‚æœæ•°å­—ç±»å‹/byte/booleançš„æ•°æ®å€¼ä¸ºnullæ—¶ï¼Œä¼šæŠ¥ä»¥ä¸‹å¼‚å¸¸ï¼š
 Build ValueObject for ResultSet[select * from mq_node where NODE_NAME='test'] Get Column[CA_ID] from  ResultSet to com.chinacreator.mq.client.MqNode@10cec16.CA_ID[int] failed:null
 ERROR 01-06 17:30:25,093 - Build ValueObject for ResultSet[select * from mq_node where NODE_NAME='test'] Get Column[CA_ID] from  ResultSet to com.chinacreator.mq.client.MqNode@10cec16.CA_ID[int] failed:null
 java.lang.IllegalArgumentException
@@ -1592,10 +1592,10 @@ java.lang.IllegalArgumentException
 	at be.ibridge.kettle.consumer_stream.Consumer.processRow(Consumer.java:155)
 	at be.ibridge.kettle.consumer_stream.Consumer.run(Consumer.java:200)
 
-Ô­Òò·ÖÎö£º
-Êı¾İ¿â²éÑ¯·µ»ØµÄ½á¹û¼¯£¬ÓÉÓÚÊı×ÖÀàĞÍ/byte/booleanÎªnullÊ±£¬Ô­À´µÄ´¦Àí³ÌĞòÖ±½Ó·µ»Ønull£¬¶ø²»ÊÇ·µ»Ø¾ßÌåµÄÊı×ÖÀàĞÍ/byte/booleanµÄÈ±Ê¡Öµ£¬µ¼ÖÂ½«nullÖµÉèÖÃ¸ø¶ÔÏóÊôĞÔÊ§°Ü¡£
+åŸå› åˆ†æï¼š
+æ•°æ®åº“æŸ¥è¯¢è¿”å›çš„ç»“æœé›†ï¼Œç”±äºæ•°å­—ç±»å‹/byte/booleanä¸ºnullæ—¶ï¼ŒåŸæ¥çš„å¤„ç†ç¨‹åºç›´æ¥è¿”å›nullï¼Œè€Œä¸æ˜¯è¿”å›å…·ä½“çš„æ•°å­—ç±»å‹/byte/booleançš„ç¼ºçœå€¼ï¼Œå¯¼è‡´å°†nullå€¼è®¾ç½®ç»™å¯¹è±¡å±æ€§å¤±è´¥ã€‚
 
-½â¾ö°ì·¨£¬ĞŞ¸Ä¶ÔÓ¦Êı×ÖÀàĞÍ/byte/booleanµÄhandle½Ó¿ÚÌá¹©nullÖµµÄ×ª»»º¯Êı,½«null×ª»»ÎªÏàÓ¦µÄÈ±Ê¡Öµ¡£
+è§£å†³åŠæ³•ï¼Œä¿®æ”¹å¯¹åº”æ•°å­—ç±»å‹/byte/booleançš„handleæ¥å£æä¾›nullå€¼çš„è½¬æ¢å‡½æ•°,å°†nullè½¬æ¢ä¸ºç›¸åº”çš„ç¼ºçœå€¼ã€‚
 com/frameworkset/common/poolman/handle/type/BigDecimalTypeHandler.java
 com/frameworkset/common/poolman/handle/type/BooleanTypeHandler.java
 com/frameworkset/common/poolman/handle/type/ByteTypeHandler.java
@@ -1609,9 +1609,9 @@ com/frameworkset/common/poolman/handle/type/ShortTypeHandler.java
 1.0.3-1 - 2009-4-16
 ----------------------------------------
 
-o ÎÊÌâÃèÊö£º
-µ±sqlÓï¾äÖĞ¼´³öÏÖÍ¬ÃûÁĞÓÖÓĞ²»Í¬ÃûÁĞÊ±£¬¾Í»áÔÚ¶ÁÖµÊ±±¨¿ÕÖ¸ÕëÒì³£¡£
-¿ØÖÆÌ¨ĞÅÏ¢£º
+o é—®é¢˜æè¿°ï¼š
+å½“sqlè¯­å¥ä¸­å³å‡ºç°åŒååˆ—åˆæœ‰ä¸åŒååˆ—æ—¶ï¼Œå°±ä¼šåœ¨è¯»å€¼æ—¶æŠ¥ç©ºæŒ‡é’ˆå¼‚å¸¸ã€‚
+æ§åˆ¶å°ä¿¡æ¯ï¼š
 
 java.lang.NullPointerException
 	at com.frameworkset.common.poolman.Record.seekField(Record.java:694)
@@ -1662,7 +1662,7 @@ java.lang.NullPointerException
 	at java.lang.Thread.run(Thread.java:595)
 
 
-ĞŞ¸Ä³ÌĞò
+ä¿®æ”¹ç¨‹åº
 com/frameworkset/common/poolman/Record.java
 
 
@@ -1670,94 +1670,94 @@ com/frameworkset/common/poolman/Record.java
  1.0.3 - 2009-4-13
 ------------------------------
 
- o µ¥¶ÀÊ¹ÓÃpoolman£¬Î´½¨Á¢±ítableinfo£¬ºóÌ¨±¨SQLExceptionÒì³£
-ĞŞ¸Ä³ÌĞò£º
+ o å•ç‹¬ä½¿ç”¨poolmanï¼Œæœªå»ºç«‹è¡¨tableinfoï¼Œåå°æŠ¥SQLExceptionå¼‚å¸¸
+ä¿®æ”¹ç¨‹åºï¼š
 com/frameworkset/common/poolman/management/BaseTableManager.java
 
- o sql server 2005·­Ò³²éÑ¯Òì³£ÎÊÌâ
-Ô­ÒòÊÇsqlserverÖĞĞèÒªÕâÑù´´½¨statement
+ o sql server 2005ç¿»é¡µæŸ¥è¯¢å¼‚å¸¸é—®é¢˜
+åŸå› æ˜¯sqlserverä¸­éœ€è¦è¿™æ ·åˆ›å»ºstatement
 Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY); 
-µ«ÊÇpoolmanÖĞÊÇÕâÑù»ñÈ¡Statement £ºstmt=conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_UPDATABLE);
-Òò´Ë±¨ÏÂÃæµÄ´íÎó£º
-com.microsoft.sqlserver.jdbc.SQLServerException: ²»Ö§³Ö´ËÓÎ±êÀàĞÍ/²¢·¢×é
-ºÏ¡£
+ä½†æ˜¯poolmanä¸­æ˜¯è¿™æ ·è·å–Statement ï¼šstmt=conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_UPDATABLE);
+å› æ­¤æŠ¥ä¸‹é¢çš„é”™è¯¯ï¼š
+com.microsoft.sqlserver.jdbc.SQLServerException: ä¸æ”¯æŒæ­¤æ¸¸æ ‡ç±»å‹/å¹¶å‘ç»„
+åˆã€‚
 
-ĞŞ¸Ä·½·¨£º
-Í¨¹ıÊÊÅäÆ÷·½·¨À´»ñÈ¡ÓÎ±êÀàĞÍ£º
+ä¿®æ”¹æ–¹æ³•ï¼š
+é€šè¿‡é€‚é…å™¨æ–¹æ³•æ¥è·å–æ¸¸æ ‡ç±»å‹ï¼š
 
-ĞŞ¸ÄµÄ³ÌĞò
+ä¿®æ”¹çš„ç¨‹åº
 com\frameworkset\orm\adapter\DB.java
 com\frameworkset\orm\adapter\DBMSSQL.java
 com\frameworkset\common\poolman\StatementInfo.java
 com\frameworkset\common\poolman\DBUtil.java
 
 
-o Ôö¼Ó»ñÈ¡DataSourceµÄ½Ó¿Ú
-ĞŞ¸ÄµÄ³ÌĞò£º
+o å¢åŠ è·å–DataSourceçš„æ¥å£
+ä¿®æ”¹çš„ç¨‹åºï¼š
 com\frameworkset\common\poolman\util\SQLUtil.java
-Ôö¼ÓÒÔÏÂÈı¸ö·½·¨
-»ñÈ¡È±Ê¡Á¬½Ó³Ø¶ÔÓ¦µÄdatasource
+å¢åŠ ä»¥ä¸‹ä¸‰ä¸ªæ–¹æ³•
+è·å–ç¼ºçœè¿æ¥æ± å¯¹åº”çš„datasource
 public static DataSource getDataSource()
 	
-»ñÈ¡¸ø¶¨Êı¾İ¿âÁ¬½Ó³ØÃû¶ÔÓ¦µÄdatasource
+è·å–ç»™å®šæ•°æ®åº“è¿æ¥æ± åå¯¹åº”çš„datasource
 	public static DataSource getDataSource(String dbname)
       
-Í¨¹ıjndiÃû³Æ²éÕÒÊı¾İÔ´
+é€šè¿‡jndiåç§°æŸ¥æ‰¾æ•°æ®æº
   public static DataSource getDataSourceByJNDI(String jndiname) throws NamingException
       
 
 com/frameworkset/common/poolman/handle/type/CallableStatementResultSet.java
-Ôö¼ÓÒÔÏÂ·½·¨£º
+å¢åŠ ä»¥ä¸‹æ–¹æ³•ï¼š
 public Object getObject(int arg0, Map arg1) throws SQLException
 
 
 com/frameworkset/common/poolman/util/JDBCPool.java
-Ôö¼Ó·½·¨£º
+å¢åŠ æ–¹æ³•ï¼š
 public static DataSource find(String jndiName) throws NamingException
 
 
-Ôö¼ÓÈ«¾Ö±äÁ¿£º
+å¢åŠ å…¨å±€å˜é‡ï¼š
 public static Context ctx = null;
 	
-o ĞÂÔöbboss jndi ÉÏÏÂÎÄ»·¾³
-ĞÂÔöjndiÉÏÏÂÎÄ»·¾³£¬½â¾öÏµÍ³ÍÑÀëÓ¦ÓÃ·şÎñÆ÷µ¥¶ÀÔËĞĞÊ±ÎŞ·¨½øĞĞjndi°ó¶¨µÄÎÊÌâ¡£
-ĞÂÔöºÍĞŞ¸ÄµÄ³ÌĞòÈçÏÂ£º
-com/frameworkset/common/poolman/jndi/DummyContext.java£¨ĞÂÔö£©
-com/frameworkset/common/poolman/jndi/DummyContextFactory.java£¨ĞÂÔö£©
-com/frameworkset/common/poolman/util/JDBCPool.java£¨ĞŞ¸Ä£©
+o æ–°å¢bboss jndi ä¸Šä¸‹æ–‡ç¯å¢ƒ
+æ–°å¢jndiä¸Šä¸‹æ–‡ç¯å¢ƒï¼Œè§£å†³ç³»ç»Ÿè„±ç¦»åº”ç”¨æœåŠ¡å™¨å•ç‹¬è¿è¡Œæ—¶æ— æ³•è¿›è¡Œjndiç»‘å®šçš„é—®é¢˜ã€‚
+æ–°å¢å’Œä¿®æ”¹çš„ç¨‹åºå¦‚ä¸‹ï¼š
+com/frameworkset/common/poolman/jndi/DummyContext.javaï¼ˆæ–°å¢ï¼‰
+com/frameworkset/common/poolman/jndi/DummyContextFactory.javaï¼ˆæ–°å¢ï¼‰
+com/frameworkset/common/poolman/util/JDBCPool.javaï¼ˆä¿®æ”¹ï¼‰
 
 
 
-o DBUtilÖ´ĞĞÁ½¸ö±íµÄÁªºÏ²éÑ¯£¬Èç¹ûÁ½±íµÄ²éÑ¯×Ö¶ÎÖĞ°üº¬ÏàÍ¬×Ö¶ÎÃûµ«Ã»ÓĞÖ¸¶¨ÕâĞ©×Ö¶ÎµÄ±ğÃûÊ±£¬²éÑ¯½á¹ûÖĞÇ°ÃæµÄ±í×Ö¶ÎµÄÖµ±»ºóÃæµÄ±í×Ö¶ÎµÄÖµ¸²¸Ç¡£ÀıÈç£º
+o DBUtilæ‰§è¡Œä¸¤ä¸ªè¡¨çš„è”åˆæŸ¥è¯¢ï¼Œå¦‚æœä¸¤è¡¨çš„æŸ¥è¯¢å­—æ®µä¸­åŒ…å«ç›¸åŒå­—æ®µåä½†æ²¡æœ‰æŒ‡å®šè¿™äº›å­—æ®µçš„åˆ«åæ—¶ï¼ŒæŸ¥è¯¢ç»“æœä¸­å‰é¢çš„è¡¨å­—æ®µçš„å€¼è¢«åé¢çš„è¡¨å­—æ®µçš„å€¼è¦†ç›–ã€‚ä¾‹å¦‚ï¼š
 select table_a.id,table_b.id from table_a,table_b;
 
-´úÂë¶ÎÈçÏÂ£º
+ä»£ç æ®µå¦‚ä¸‹ï¼š
 DBUtil dbUtil = new DBUtil();
 		dbUtil.executeSelect("select table_a.id,table_b.id from table_a,table_b ");
 		System.out.println("table_a.id" + dbUtil.getInt(0, 0));
 		System.out.println("table_b.id" + dbUtil.getInt(0, 1));
 
-²éÑ¯µÄ½á¹ûÏÔÊ¾table_a.idµÄÖµ±äÎªtable_b.id×Ö¶ÎµÄÖµ¡£
+æŸ¥è¯¢çš„ç»“æœæ˜¾ç¤ºtable_a.idçš„å€¼å˜ä¸ºtable_b.idå­—æ®µçš„å€¼ã€‚
 
-Ô­Òò·ÖÎö£º
+åŸå› åˆ†æï¼š
 
-Ö´ĞĞ±¾´Î²éÑ¯ºó£¬½á¹û¼¯ÔªÊı¾İÎª£º
+æ‰§è¡Œæœ¬æ¬¡æŸ¥è¯¢åï¼Œç»“æœé›†å…ƒæ•°æ®ä¸ºï¼š
 [id,id]
-¿É¼ûÁ½¸ö²éÑ¯×Ö¶ÎµÄÁĞÃûÏàÍ¬£¬ÓĞÃ»ÓĞÖ¸¶¨±ğÃû×Ö¶Î£¬ÓÉÓÚDBUtilÁÙÊ±´æ·Å½á¹û¼¯µÄÊı¾İ½á¹¹ÎªÒ»¸öhash±í£¬keyÎª×Ö¶ÎÃû£¬ÖµÎªÏàÓ¦×Ö¶ÎµÄÖµ£¬ÕâÑù¾Íµ¼ÖÂÔ­À´µÄ×Ö¶ÎµÄÖµ±»Ç°ÃæµÄ×Ö¶ÎµÄÖµ¸²¸Ç¡£
-½â¾ö°ì·¨£º
-A.	Îª×Ö¶ÎÖ¸¶¨²»Í¬µÄ±ğÃû
-B.	ĞŞ¸ÄÔ­À´µÄ´æ´¢»úÖÆ£¬ÎªÏàÍ¬µÄÁĞÃû½¨Á¢²»Í¬µÄ±ğÃû
-½¨Á¢±ğÃûµÄ¹æÔòÎª£ºÁĞÃû+#$_+ÁĞË÷Òı£¬ÀıÈç£º
-½«Ô­À´µÄ[id,id]×ª»»Îª[id,id#$_1]
+å¯è§ä¸¤ä¸ªæŸ¥è¯¢å­—æ®µçš„åˆ—åç›¸åŒï¼Œæœ‰æ²¡æœ‰æŒ‡å®šåˆ«åå­—æ®µï¼Œç”±äºDBUtilä¸´æ—¶å­˜æ”¾ç»“æœé›†çš„æ•°æ®ç»“æ„ä¸ºä¸€ä¸ªhashè¡¨ï¼Œkeyä¸ºå­—æ®µåï¼Œå€¼ä¸ºç›¸åº”å­—æ®µçš„å€¼ï¼Œè¿™æ ·å°±å¯¼è‡´åŸæ¥çš„å­—æ®µçš„å€¼è¢«å‰é¢çš„å­—æ®µçš„å€¼è¦†ç›–ã€‚
+è§£å†³åŠæ³•ï¼š
+A.	ä¸ºå­—æ®µæŒ‡å®šä¸åŒçš„åˆ«å
+B.	ä¿®æ”¹åŸæ¥çš„å­˜å‚¨æœºåˆ¶ï¼Œä¸ºç›¸åŒçš„åˆ—åå»ºç«‹ä¸åŒçš„åˆ«å
+å»ºç«‹åˆ«åçš„è§„åˆ™ä¸ºï¼šåˆ—å+#$_+åˆ—ç´¢å¼•ï¼Œä¾‹å¦‚ï¼š
+å°†åŸæ¥çš„[id,id]è½¬æ¢ä¸º[id,id#$_1]
 
 
-ĞŞ¸ÄµÄ³ÌĞòÇåµ¥Îª£º
+ä¿®æ”¹çš„ç¨‹åºæ¸…å•ä¸ºï¼š
 /bboss-persistent/src/com/frameworkset/common/poolman/sql/PoolManResultSetMetaData.java
 /bboss-persistent/src/com/frameworkset/common/poolman/ResultMap.java
 /bboss-persistent/src/com/frameworkset/common/poolman/Record.java
 /bboss-persistent/src/com/frameworkset/common/poolman/DBUtil.java
 
-²âÊÔ½Å±¾£º
+æµ‹è¯•è„šæœ¬ï¼š
 create table TABLE_A
 (
   ID  NUMBER(10),
@@ -1775,25 +1775,25 @@ insert into table_a (id,id1) value(1,11)
 insert into table_b (id,id1) value(2,22)
 /
 
-²âÊÔ³ÌĞò£º
+æµ‹è¯•ç¨‹åºï¼š
 /bboss-persistent/test/com/frameworkset/common/TestTwoTablewithSameCol.java
-Ö´ĞĞ²éÑ¯½á¹ûÕıÈ·¡£
+æ‰§è¡ŒæŸ¥è¯¢ç»“æœæ­£ç¡®ã€‚
 
-o  sqlserverÖĞÈç¹ûÊı¾İ¿â±íÓĞÁĞµÄÀàĞÍÊÇchar(1),ÄÇÃ´, DBUtil²éÑ¯Õâ¸ö×Ö¶ÎµÄÊ±ºò,¾Í±¨´í
-³ö´íµÄÔ­Òò¿ÉÄÜÊÇpoolman.xmlÎÄ¼şÖĞÖ¸¶¨µÄÊı¾İ¿âÇı¶¯³ÌĞò²»ÕıÈ·¡£
+o  sqlserverä¸­å¦‚æœæ•°æ®åº“è¡¨æœ‰åˆ—çš„ç±»å‹æ˜¯char(1),é‚£ä¹ˆ, DBUtilæŸ¥è¯¢è¿™ä¸ªå­—æ®µçš„æ—¶å€™,å°±æŠ¥é”™
+å‡ºé”™çš„åŸå› å¯èƒ½æ˜¯poolman.xmlæ–‡ä»¶ä¸­æŒ‡å®šçš„æ•°æ®åº“é©±åŠ¨ç¨‹åºä¸æ­£ç¡®ã€‚
 <jndiName>hb_datasource_jndiname</jndiName>
 <driver>com.microsoft.sqlserver.jdbc.SQLServerDriver</driver>
-ÕıÈ·µÄÅä·¨Îª£º
+æ­£ç¡®çš„é…æ³•ä¸ºï¼š
 <jndiName>hb_datasource_jndiname</jndiName>
 <driver>com.microsoft.jdbc.sqlserver.SQLServerDriver</driver>
-ÏÖÔÚ²»Ã÷È·ÊÇ·ñ´æÔÚcom.microsoft. sqlserver.jdbc.SQLServerDriverÇı¶¯³ÌĞò£¬
-¹À¼ÆÕâ¸öÇı¶¯³ÌĞòÊÇsqlserver 2005°æ±¾µÄÇı¶¯³ÌĞò¡£
-ĞèÒªĞŞÕı³ÌĞò£º
+ç°åœ¨ä¸æ˜ç¡®æ˜¯å¦å­˜åœ¨com.microsoft. sqlserver.jdbc.SQLServerDriveré©±åŠ¨ç¨‹åºï¼Œ
+ä¼°è®¡è¿™ä¸ªé©±åŠ¨ç¨‹åºæ˜¯sqlserver 2005ç‰ˆæœ¬çš„é©±åŠ¨ç¨‹åºã€‚
+éœ€è¦ä¿®æ­£ç¨‹åºï¼š
 /bboss-persistent/src/com/frameworkset/orm/adapter/DBFactory.java
-ÒÔ±ãÄÜ¹»ÕıÈ·µØÕÒµ½sql serverµÄÊÊÅäÆ÷£¨²»Í¬Êı¾İ¿âµÄÊÊÅäÆ÷£¬ÊÇÍ¨¹ıÇı¶¯³ÌĞò²éÕÒµÄ£©¡£ĞŞÕıºó£¬ÎÊÌâ½â¾ö¡£
+ä»¥ä¾¿èƒ½å¤Ÿæ­£ç¡®åœ°æ‰¾åˆ°sql serverçš„é€‚é…å™¨ï¼ˆä¸åŒæ•°æ®åº“çš„é€‚é…å™¨ï¼Œæ˜¯é€šè¿‡é©±åŠ¨ç¨‹åºæŸ¥æ‰¾çš„ï¼‰ã€‚ä¿®æ­£åï¼Œé—®é¢˜è§£å†³ã€‚
 
-o  ¸ÄÔìoracle·ÖÒ³»úÖÆ
-ĞŞ¸Ä³ÌĞò£º
+o  æ”¹é€ oracleåˆ†é¡µæœºåˆ¶
+ä¿®æ”¹ç¨‹åºï¼š
 com/frameworkset/orm/adapter/DBOracle.java
 
 
@@ -1815,7 +1815,7 @@ First version of bboss persitent released.
 First version of bboss persitent released.
 
 hibernate.rar 
-Õâ¸öÎÄ¼ş°üº¬ÁËbboss persistent ºÍ hibernate½áºÏµÄ³ÌĞò£¬°üÀ¨hibernateÊ¹ÓÃbboss persistent Éú³ÉÖ÷¼ü
-hibernateÊ¹ÓÃbboss persistent Ìá¹©µÄÊı¾İÔ´
+è¿™ä¸ªæ–‡ä»¶åŒ…å«äº†bboss persistent å’Œ hibernateç»“åˆçš„ç¨‹åºï¼ŒåŒ…æ‹¬hibernateä½¿ç”¨bboss persistent ç”Ÿæˆä¸»é”®
+hibernateä½¿ç”¨bboss persistent æä¾›çš„æ•°æ®æº
 
 [http://blog.csdn.net/yin_bp]

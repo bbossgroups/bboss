@@ -36,7 +36,7 @@
 
 	<target name="compile-frameworkset-soa" description="compile the bboss-soa source ">
 		<echo>compile the frameworkset-soa source ...</echo>
-		<javac destdir="classes-bboss-soa" target="1.5" source="1.5" deprecation="true" debug="${debug}" optimize="${optimize}" memorymaximumsize="256M" fork="true" verbose="yes">
+		<javac encoding="UTF-8" destdir="classes-bboss-soa" target="1.5" source="1.5" deprecation="true" debug="${debug}" optimize="${optimize}" memorymaximumsize="256M" fork="true" verbose="yes">
 			<src path="src" />
 			
 			

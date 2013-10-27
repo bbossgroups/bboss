@@ -27,13 +27,13 @@ import org.frameworkset.spi.UNmodify;
 /**
  * <p>Title: </p>
  *
- * <p>Description: ·şÎñ¹ÜÀíÕßĞÅÏ¢·â×°Æ÷
- * ·â×°Ã¿¸ö·şÎñ×é¼şµÄ¸÷ÖÖ²»Í¬µÄÌá¹©ÕßĞÅÏ¢£¬Ìá¹©Õß¼äµÄÍ¬²½·½·¨ĞÅÏ¢£¬·½·¨µÄÉùÃ÷Ê½ÊÂÎñ¹ÜÀíĞÅÏ¢
+ * <p>Description: æœåŠ¡ç®¡ç†è€…ä¿¡æ¯å°è£…å™¨
+ * å°è£…æ¯ä¸ªæœåŠ¡ç»„ä»¶çš„å„ç§ä¸åŒçš„æä¾›è€…ä¿¡æ¯ï¼Œæä¾›è€…é—´çš„åŒæ­¥æ–¹æ³•ä¿¡æ¯ï¼Œæ–¹æ³•çš„å£°æ˜å¼äº‹åŠ¡ç®¡ç†ä¿¡æ¯
  * </p>
  *
  * <p>Copyright: Copyright (c) 2006</p>
  *
- * <p>Company: ³¤É³¿Æ´´</p>
+ * <p>Company: é•¿æ²™ç§‘åˆ›</p>
  *
  * @author biaoping.yin
  * @version 1.0
@@ -55,7 +55,7 @@ public class ProviderManagerInfo extends BaseTXManager implements UNmodify {
 //    private List interceptors;
 //    
 //    /**
-//     * ÓÃ»§ÊÇ·ñ×Ô¼º¶¨ÒåÁËÀ¹½ØÆ÷
+//     * ç”¨æˆ·æ˜¯å¦è‡ªå·±å®šä¹‰äº†æ‹¦æˆªå™¨
 //     */
 //    private boolean usedCustomInterceptor = false;
 //    
@@ -63,12 +63,12 @@ public class ProviderManagerInfo extends BaseTXManager implements UNmodify {
 //
 ////    private Interceptor transactionInterceptor;
 //    private String transactionInterceptorClass;
-    /**±êÊ¶·şÎñÌá¹©ÕßÊµÀıÊÇ·ñÎªµ¥ÀıÄ£Ê½*/
+    /**æ ‡è¯†æœåŠ¡æä¾›è€…å®ä¾‹æ˜¯å¦ä¸ºå•ä¾‹æ¨¡å¼*/
 
     private boolean singlable = true;
     private boolean defaultable = false;
 
-    /**È±Ê¡µÄprovider*/
+    /**ç¼ºçœçš„provider*/
     private SecurityProviderInfo defaulProvider;
 
     private boolean synchronizedEnabled = false;
@@ -125,7 +125,7 @@ public class ProviderManagerInfo extends BaseTXManager implements UNmodify {
     }
     
     /**
-     * ´ÓÒÔ·½·¨Ãû»òÕßÄ£Ê½Æ¥ÅäÃû³ÆË÷ÒıµÄÍ¬²½·½·¨±í»ñÈ¡Í¬²½·½·¨¶ÔÏó
+     * ä»ä»¥æ–¹æ³•åæˆ–è€…æ¨¡å¼åŒ¹é…åç§°ç´¢å¼•çš„åŒæ­¥æ–¹æ³•è¡¨è·å–åŒæ­¥æ–¹æ³•å¯¹è±¡
      * @param methodUUID
      * @return
      */
@@ -142,7 +142,7 @@ public class ProviderManagerInfo extends BaseTXManager implements UNmodify {
     public static final Boolean FALSE = new Boolean(false);
     
     /**
-     * ÅĞ¶Ï·½·¨ÊÇ·ñ°üº¬Í¬²½·½·¨£¬Èç¹û°üº¬Ôò·µ»Øtrue£¬·ñÔò·µ»Øfalse
+     * åˆ¤æ–­æ–¹æ³•æ˜¯å¦åŒ…å«åŒæ­¥æ–¹æ³•ï¼Œå¦‚æœåŒ…å«åˆ™è¿”å›trueï¼Œå¦åˆ™è¿”å›false
      * @param method
      * @return
      */
@@ -321,7 +321,7 @@ public class ProviderManagerInfo extends BaseTXManager implements UNmodify {
 //    }
     
 //    /**
-//     * ¹¹½¨À¹½ØÆ÷Á´±í£¬¸ù¾İÀ¹½ØÆ÷ÅäÖÃµÄË³Ğò¹¹ÔìÁ´½Ó£¬ÅäÖÃÔÚÇ°µÄÏÈµ÷ÓÃ¡£
+//     * æ„å»ºæ‹¦æˆªå™¨é“¾è¡¨ï¼Œæ ¹æ®æ‹¦æˆªå™¨é…ç½®çš„é¡ºåºæ„é€ é“¾æ¥ï¼Œé…ç½®åœ¨å‰çš„å…ˆè°ƒç”¨ã€‚
 //     * 
 //     * @return
 //     */

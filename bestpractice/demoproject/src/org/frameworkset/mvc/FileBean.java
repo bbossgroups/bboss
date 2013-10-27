@@ -23,7 +23,7 @@ import org.frameworkset.web.multipart.IgnoreFieldNameMultipartFile;
  * <p> bboss workgroup </p>
  * <p> Copyright (c) 2009 </p>
  * 
- * @Date 2012-5-15 œ¬ŒÁ5:50:07
+ * @Date 2012-5-15 ‰∏ãÂçà5:50:07
  * @author biaoping.yin
  * @version 1.0
  */

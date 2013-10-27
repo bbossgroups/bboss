@@ -26,7 +26,7 @@ import com.frameworkset.orm.transaction.TransactionManager;
  * 
  * <p>Title: CallableDBUtil.java</p>
  *
- * <p>Description: ´æ´¢¹ý³Ì</p>
+ * <p>Description: å­˜å‚¨è¿‡ç¨‹</p>
  *
  * <p>Copyright: Copyright (c) 2007</p>
  *

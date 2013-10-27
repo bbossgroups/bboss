@@ -60,11 +60,11 @@ public class JsonDataWrapper <T> implements Serializable {
     }   
     
     /**
-	 * ¶ÔÁĞ±í½øĞĞ·ÖÒ³²Ù×÷,Êı¾İÔ´ÊÇÒ»¸öÁĞ±í
-	 * @param datas ÁĞ±íÊı¾İ
-	 * @param offset »ñÈ¡Êı¾İµÄÆğÊ¼Î»ÖÃ
-	 * @param pageItems »ñÈ¡Êı¾İµÄÌõÊı
-	 * @return ListInfo ¶Ô·ÖÒ³Êı¾İºÍ×Ü¼ÇÂ¼ÌõÊıµÄ·â×°Àà
+	 * å¯¹åˆ—è¡¨è¿›è¡Œåˆ†é¡µæ“ä½œ,æ•°æ®æºæ˜¯ä¸€ä¸ªåˆ—è¡¨
+	 * @param datas åˆ—è¡¨æ•°æ®
+	 * @param offset è·å–æ•°æ®çš„èµ·å§‹ä½ç½®
+	 * @param pageItems è·å–æ•°æ®çš„æ¡æ•°
+	 * @return ListInfo å¯¹åˆ†é¡µæ•°æ®å’Œæ€»è®°å½•æ¡æ•°çš„å°è£…ç±»
 	 */
 
 	public static JsonDataWrapper pagerList(List datas,int page,int pageItems)

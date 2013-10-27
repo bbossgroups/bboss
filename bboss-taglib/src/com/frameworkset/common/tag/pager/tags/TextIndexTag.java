@@ -9,12 +9,12 @@ import org.apache.log4j.Logger;
 /**
  * <p>Title: TextIndexTag</p>
  *
- * <p>Description: Éú³ÉÎÄ±¾·ÖÒ³Ë÷Òı
- *          ¹²¼¸Ò³
- *          Ê×Ò³
- *          ÉÏÒ»Ò³
- *          ÏÂÒ»Ò³
- *          Î²Ò³
+ * <p>Description: ç”Ÿæˆæ–‡æœ¬åˆ†é¡µç´¢å¼•
+ *          å…±å‡ é¡µ
+ *          é¦–é¡µ
+ *          ä¸Šä¸€é¡µ
+ *          ä¸‹ä¸€é¡µ
+ *          å°¾é¡µ
  * </p>
  *
  * <p>Copyright: Copyright (c) 2005</p>
@@ -35,8 +35,8 @@ public class TextIndexTag extends TextSupportTag {
             {
                 StringBuffer output = new StringBuffer();
                 output.append("<br/>");
-                output.append(StringUtil.toUTF("µÚ" + listInfo.getCurPage() + "Ò³"));
-                output.append(StringUtil.toUTF("  ¹²" + listInfo.getTotal() + "Ò³"))
+                output.append(StringUtil.toUTF("ç¬¬" + listInfo.getCurPage() + "é¡µ"));
+                output.append(StringUtil.toUTF("  å…±" + listInfo.getTotal() + "é¡µ"))
 
                     .append("<br/>");
 
@@ -44,24 +44,24 @@ public class TextIndexTag extends TextSupportTag {
                     output.append("<a href=\"")
                           .append(pagerTag.getPageURL(listInfo.getCurPage() + 1))
                           .append("\">")
-                          .append(StringUtil.toUTF("ÏÂÒ»Ò³"))
+                          .append(StringUtil.toUTF("ä¸‹ä¸€é¡µ"))
                           .append("</a><br/>");
                     output.append("<a href=\"")
                           .append(pagerTag.getPageURL(listInfo.getTotal()))
                           .append("\">")
-                          .append(StringUtil.toUTF("Ä©Ò³"))
+                          .append(StringUtil.toUTF("æœ«é¡µ"))
                           .append("</a>");
                 }
                 else if (listInfo.getCurPage() == listInfo.getTotal()) {
                     output.append("<a href=\"")
                           .append(pagerTag.getPageURL(1))
                           .append("\">")
-                          .append(StringUtil.toUTF("Ê×Ò³"))
+                          .append(StringUtil.toUTF("é¦–é¡µ"))
                           .append("</a><br/>");
                     output.append("<a href=\"")
                           .append(pagerTag.getPageURL(listInfo.getCurPage() - 1))
                           .append("\">")
-                          .append(StringUtil.toUTF("ÉÏÒ»Ò³"))
+                          .append(StringUtil.toUTF("ä¸Šä¸€é¡µ"))
                           .append("</a>");
                 }
                 else
@@ -69,22 +69,22 @@ public class TextIndexTag extends TextSupportTag {
                     output.append("<a href=\"")
                           .append(pagerTag.getPageURL(1))
                           .append("\">")
-                          .append(StringUtil.toUTF("Ê×Ò³"))
+                          .append(StringUtil.toUTF("é¦–é¡µ"))
                           .append("</a><br/>");
                     output.append("<a href=\"")
                           .append(pagerTag.getPageURL(listInfo.getCurPage() - 1))
                           .append("\">")
-                          .append(StringUtil.toUTF("ÉÏÒ»Ò³"))
+                          .append(StringUtil.toUTF("ä¸Šä¸€é¡µ"))
                           .append("</a>");
                     output.append("<a href=\"")
                             .append(pagerTag.getPageURL(listInfo.getCurPage() + 1))
                             .append("\"><br/>")
-                            .append(StringUtil.toUTF("ÏÂÒ»Ò³"))
+                            .append(StringUtil.toUTF("ä¸‹ä¸€é¡µ"))
                             .append("</a><br/>");
                     output.append("<a href=\"")
                           .append(pagerTag.getPageURL(listInfo.getTotal()))
                           .append("\">")
-                          .append(StringUtil.toUTF("Ä©Ò³"))
+                          .append(StringUtil.toUTF("æœ«é¡µ"))
                           .append("</a>");
                 }
                 this.getJspWriter().print(output.toString());

@@ -45,7 +45,7 @@ public abstract class AbstractHttpMessageConverter<T> implements HttpMessageConv
 	/** Logger available to subclasses */
 	protected final static Logger logger = Logger.getLogger(AbstractHttpMessageConverter.class);
 	/**
-	 * Ö¸¶¨Ä¬ÈÏµÄÊä³ö×Ö·û±àÂë
+	 * æŒ‡å®šé»˜è®¤çš„è¾“å‡ºå­—ç¬¦ç¼–ç 
 	 */
 	protected MediaType responsecontenteype;
 	private List<MediaType> supportedMediaTypes = Collections.emptyList();

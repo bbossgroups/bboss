@@ -21,7 +21,7 @@ package org.frameworkset.util.beans;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2010-9-24 ÏÂÎç05:39:27
+ * @Date 2010-9-24 ä¸‹åˆ05:39:27
  * @author biaoping.yin
  * @version 1.0
  */

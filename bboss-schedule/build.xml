@@ -1,0 +1,76 @@
+<project name="bboss schedule" default="default" basedir=".">
+	<description>
+		bboss schedule build file
+	</description>
+	<tstamp prefix="start" />
+
+	<tstamp>
+		<format property="compile.timestamp" pattern="yyyy-MM-dd HH.mm.ss" />
+	</tstamp>
+
+
+
+	<!-- set global properties for this build -->
+	<property file="build.properties" />
+	<target name="init" description="create timestamp and directories">
+		<echo>Init...</echo>
+
+		<tstamp />
+		<delete dir="classes-bboss-schedule" />
+		
+		<delete dir="distrib" />
+		<mkdir dir="classes-bboss-schedule" />
+		
+		<mkdir dir="distrib" />
+	</target>
+	<target name="default" depends="complete" description="default = build distribution package" />
+
+	<!--
+		       ==========================
+		        Distribution jar package
+		       ==========================
+		  -->
+	<target name="distrib" depends="init,jar-frameworkset-schedule,copy-depends-liberary" description="copy jar file to distribution directory">
+		<echo>Construct the distribution package...</echo>
+	</target>
+
+	<target name="compile-frameworkset-schedule" description="compile the bboss-schedule source ">
+		<echo>compile the frameworkset-schedule source ...</echo>
+		<javac encoding="UTF-8" destdir="classes-bboss-schedule" target="1.5" source="1.5" deprecation="true" debug="${debug}" optimize="${optimize}" memorymaximumsize="256M" fork="true" verbose="yes">
+			<src path="src-schedule" />
+			<classpath id="cp-classes-bboss-schedule">
+				<fileset dir="lib/" includes="*.jar *.zip" />				
+			</classpath>
+		</javac>
+	</target>
+	<target name="jar-frameworkset-schedule" depends="compile-frameworkset-schedule" description="generate the bboss-taglib library bboss-schedule.jar">
+		<echo>Generate the bboss-util library bboss-schedule.jar ...</echo>
+		<jar jarfile="distrib/bboss-schedule.jar" basedir="classes-bboss-schedule" includes="**/*">
+			<manifest>
+				
+				<attribute name="Implementation-Version" value="${impl.version}" />
+				<attribute name="Specification-Version" value="${revision}" />
+				<attribute name="Implementation-Vendor" value="${impl.vendor}" />
+				<attribute name="Implementation-ProductID" value="${impl.productID}" />
+				<attribute name="Compile-Timestamp" value="${compile.timestamp}" />
+				<attribute name="Compile-User" value="${username}" />
+			</manifest>
+		</jar>
+	</target>
+	
+	
+	
+	<target name="copy-depends-liberary" description="copy depends liberarys">
+				<echo>copy depends liberarys ...</echo>
+				<copy todir="distrib/dependlibs">
+					<fileset dir="lib" includes="*.jar"/>
+				</copy>
+				
+
+	</target>
+	
+	<target name="complete" depends="distrib" description="copy depends liberarys">
+			<delete dir="classes-bboss-schedule" />				
+	
+	</target>
+</project>

@@ -38,7 +38,7 @@ import com.frameworkset.util.ValueObjectUtil;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2008</p>
- * @Date 2011-5-9 œ¬ŒÁ06:12:52
+ * @Date 2011-5-9 ‰∏ãÂçà06:12:52
  * @author biaoping.yin
  * @version 1.0
  */
@@ -46,11 +46,11 @@ public class SOAApplicationContextTest {
 	@Test
 	public void testXMLToBean() throws NoSupportTypeCastException, NumberFormatException, IllegalArgumentException, IntrospectionException
 	{
-		String content = "<?xml version=\"1.0\" encoding=\"gbk\"?>" +
+		String content = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
 			"<esb>"+
 				"<call>"+
 				
-				"<!-- µ˜∂»÷––ƒ–Ë“™µƒ ˝æ›ø™ º -->"+
+				"<!-- Ë∞ÉÂ∫¶‰∏≠ÂøÉÈúÄË¶ÅÁöÑÊï∞ÊçÆÂºÄÂßã -->"+
 					
 					"<property name=\"soamethodcall\" " +
 						"class=\"org.frameworkset.soa.SOAMethodCall\" "+
@@ -61,8 +61,8 @@ public class SOAApplicationContextTest {
 						"f:encyptalgorithem=\"algorithm\" "+
 						"f:serviceid=\"hilaryserviceid\" "+
 						"f:issynchronized=\"true\" >"+
-						"<!-- µ˜∂»÷––ƒ–Ë“™µƒ ˝æ›Ω· ¯ -->"+
-						"<!-- µ˜∂»÷––ƒÃ·Ωª∏¯∑˛ŒÒÃ·π©∑Ωµƒ∑˛ŒÒ∑Ω∑®–≈œ¢ -->"+
+						"<!-- Ë∞ÉÂ∫¶‰∏≠ÂøÉÈúÄË¶ÅÁöÑÊï∞ÊçÆÁªìÊùü -->"+
+						"<!-- Ë∞ÉÂ∫¶‰∏≠ÂøÉÊèê‰∫§ÁªôÊúçÂä°Êèê‰æõÊñπÁöÑÊúçÂä°ÊñπÊ≥ï‰ø°ÊÅØ -->"+
 						"<property name=\"soamethodinfo\" class=\"org.frameworkset.soa.SOAMethodInfo\" " +
 														"f:methodName=\"methodname\">"+
 							"<property name=\"paramTypes\">"+
@@ -92,7 +92,7 @@ public class SOAApplicationContextTest {
 	
 		SOAMethodCall object = context.getTBeanObject("soamethodcall",SOAMethodCall.class);
 		System.out.println(object);
-		String xmlcontent = ObjectSerializable.convertSOAMethodCallToXMLMethod(object, ObjectSerializable.CHARSET_GBK);
+		String xmlcontent = ObjectSerializable.convertSOAMethodCallToXMLMethod(object, ObjectSerializable.CHARSET_UTF_8);
 		System.out.println(xmlcontent);
 		
 		context  = new SOAApplicationContext(xmlcontent);
@@ -114,14 +114,14 @@ public class SOAApplicationContextTest {
 	public void bytearraybeantoxml() throws NumberFormatException, IllegalArgumentException, IntrospectionException
 	{
 		ArrayBean bean = new ArrayBean();
-		Exception e = new Exception("“Ï≥£∑¢…˙°£");
+		Exception e = new Exception("ÂºÇÂ∏∏ÂèëÁîü„ÄÇ");
 		bean.setE(e);
 		
-		String content = "<?xml version=\"1.0\" encoding=\"gbk\"?>" +
+		String content = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
 		"<esb>"+
 			"<call>"+
 			
-			"<!-- µ˜∂»÷––ƒ–Ë“™µƒ ˝æ›ø™ º -->"+
+			"<!-- Ë∞ÉÂ∫¶‰∏≠ÂøÉÈúÄË¶ÅÁöÑÊï∞ÊçÆÂºÄÂßã -->"+
 				
 				"<property name=\"soamethodcall\" " +
 					"class=\"org.frameworkset.soa.SOAMethodCall\" "+
@@ -132,8 +132,8 @@ public class SOAApplicationContextTest {
 					"f:encyptalgorithem=\"algorithm\" "+
 					"f:serviceid=\"hilaryserviceid\" "+
 					"f:issynchronized=\"true\" >"+
-					"<!-- µ˜∂»÷––ƒ–Ë“™µƒ ˝æ›Ω· ¯ -->"+
-					"<!-- µ˜∂»÷––ƒÃ·Ωª∏¯∑˛ŒÒÃ·π©∑Ωµƒ∑˛ŒÒ∑Ω∑®–≈œ¢ -->"+
+					"<!-- Ë∞ÉÂ∫¶‰∏≠ÂøÉÈúÄË¶ÅÁöÑÊï∞ÊçÆÁªìÊùü -->"+
+					"<!-- Ë∞ÉÂ∫¶‰∏≠ÂøÉÊèê‰∫§ÁªôÊúçÂä°Êèê‰æõÊñπÁöÑÊúçÂä°ÊñπÊ≥ï‰ø°ÊÅØ -->"+
 					"<property name=\"soamethodinfo\" class=\"org.frameworkset.soa.SOAMethodInfo\" " +
 													"f:methodName=\"methodname\">"+
 						"<property name=\"paramTypes\">"+
@@ -186,11 +186,11 @@ public class SOAApplicationContextTest {
 		
 		fbean.setFile(ValueObjectUtil.getClassPathFile("org/frameworkset/soa/datasource-sql.xml"));
 		ArrayBean bean = new ArrayBean();
-		String content = "<?xml version=\"1.0\" encoding=\"gbk\"?>" +
+		String content = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
 		"<esb>"+
 			"<call>"+
 			
-			"<!-- µ˜∂»÷––ƒ–Ë“™µƒ ˝æ›ø™ º -->"+
+			"<!-- Ë∞ÉÂ∫¶‰∏≠ÂøÉÈúÄË¶ÅÁöÑÊï∞ÊçÆÂºÄÂßã -->"+
 				
 				"<property name=\"soamethodcall\" " +
 					"class=\"org.frameworkset.soa.SOAMethodCall\" "+
@@ -201,8 +201,8 @@ public class SOAApplicationContextTest {
 					"f:encyptalgorithem=\"algorithm\" "+
 					"f:serviceid=\"hilaryserviceid\" "+
 					"f:issynchronized=\"true\" >"+
-					"<!-- µ˜∂»÷––ƒ–Ë“™µƒ ˝æ›Ω· ¯ -->"+
-					"<!-- µ˜∂»÷––ƒÃ·Ωª∏¯∑˛ŒÒÃ·π©∑Ωµƒ∑˛ŒÒ∑Ω∑®–≈œ¢ -->"+
+					"<!-- Ë∞ÉÂ∫¶‰∏≠ÂøÉÈúÄË¶ÅÁöÑÊï∞ÊçÆÁªìÊùü -->"+
+					"<!-- Ë∞ÉÂ∫¶‰∏≠ÂøÉÊèê‰∫§ÁªôÊúçÂä°Êèê‰æõÊñπÁöÑÊúçÂä°ÊñπÊ≥ï‰ø°ÊÅØ -->"+
 					"<property name=\"soamethodinfo\" class=\"org.frameworkset.soa.SOAMethodInfo\" " +
 													"f:methodName=\"methodname\">"+
 						"<property name=\"paramTypes\">"+

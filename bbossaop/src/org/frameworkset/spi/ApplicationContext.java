@@ -37,8 +37,8 @@ import org.frameworkset.spi.remote.rmi.RMIServer;
  * Title: ApplicationContext.java
  * </p>
  * <p>
- * Description: ApplicationContext×é¼şÊÇ¶Ô³éÏó×é¼şBaseApplicationContextµÄÀ©Õ¹£¬Ö÷Òª¹¦ÄÜ
- * ÌØĞÔÊÇ³ıÁËÓµÓĞ»ù±¾µÄaopºÍioc¡¢È«¾ÖÊôĞÔ¹ÜÀíµÄ¹¦ÄÜÍâ£¬»¹¾ß±¸Ö§³ÖÔ¶³Ì·şÎñ×é¼şµ÷ÓÃµÄ¹¦ÄÜ
+ * Description: ApplicationContextç»„ä»¶æ˜¯å¯¹æŠ½è±¡ç»„ä»¶BaseApplicationContextçš„æ‰©å±•ï¼Œä¸»è¦åŠŸèƒ½
+ * ç‰¹æ€§æ˜¯é™¤äº†æ‹¥æœ‰åŸºæœ¬çš„aopå’Œiocã€å…¨å±€å±æ€§ç®¡ç†çš„åŠŸèƒ½å¤–ï¼Œè¿˜å…·å¤‡æ”¯æŒè¿œç¨‹æœåŠ¡ç»„ä»¶è°ƒç”¨çš„åŠŸèƒ½
  * </p>
  * <p>
  * bboss workgroup
@@ -47,7 +47,7 @@ import org.frameworkset.spi.remote.rmi.RMIServer;
  * Copyright (c) 2007
  * </p>
  * 
- * @Date 2010-3-21 ÏÂÎç08:46:12
+ * @Date 2010-3-21 ä¸‹åˆ08:46:12
  * @author biaoping.yin
  * @version 1.0
  */
@@ -79,7 +79,7 @@ public class ApplicationContext extends BaseApplicationContext {
 	
 
 	/**
-	 * »ñÈ¡Ä¬ÈÏÉÏÏÂÎÄµÄbean×é¼ş¹ÜÀíÈİÆ÷£¬ÅäÖÃÎÄ¼ş´Ómanager-provider.xmlÎÄ¼ş¿ªÊ¼
+	 * è·å–é»˜è®¤ä¸Šä¸‹æ–‡çš„beanç»„ä»¶ç®¡ç†å®¹å™¨ï¼Œé…ç½®æ–‡ä»¶ä»manager-provider.xmlæ–‡ä»¶å¼€å§‹
 	 * 
 	 * @return
 	 */
@@ -88,8 +88,8 @@ public class ApplicationContext extends BaseApplicationContext {
 	}
 	
 	/**
-	 * »ñÈ¡Ö¸¶¨¸ùÅäÖÃÎÄ¼şÉÏÏÂÎÄbean×é¼ş¹ÜÀíÈİÆ÷£¬ÅäÖÃÎÄ¼ş´Ó²ÎÊıconfigfile¶ÔÓ¦ÅäÖÃÎÄ¼ş¿ªÊ¼
-	 * ²»Í¬µÄÉÏÏÂÎÄ¼ş»·¾³ÈİÆ÷»¥Ïà¸ôÀë£¬×é¼ş¼ä²»´æÔÚÒÀÀµ¹ØÏµ£¬ÊôĞÔÒ²²»´æÔÚÈÎºÎÒıÓÃ¹ØÏµ¡£
+	 * è·å–æŒ‡å®šæ ¹é…ç½®æ–‡ä»¶ä¸Šä¸‹æ–‡beanç»„ä»¶ç®¡ç†å®¹å™¨ï¼Œé…ç½®æ–‡ä»¶ä»å‚æ•°configfileå¯¹åº”é…ç½®æ–‡ä»¶å¼€å§‹
+	 * ä¸åŒçš„ä¸Šä¸‹æ–‡ä»¶ç¯å¢ƒå®¹å™¨äº’ç›¸éš”ç¦»ï¼Œç»„ä»¶é—´ä¸å­˜åœ¨ä¾èµ–å…³ç³»ï¼Œå±æ€§ä¹Ÿä¸å­˜åœ¨ä»»ä½•å¼•ç”¨å…³ç³»ã€‚
 	 * 
 	 * @return
 	 */
@@ -174,8 +174,8 @@ public class ApplicationContext extends BaseApplicationContext {
 	
 
 	/**
-	 * ¸ù¾İÔ¶³Ìµ÷ÓÃÄ¿±êipµØÖ·ºÍ¶Ë¿Ú»ñÈ¡¶ÔÓ¦·şÎñÆ÷ÖĞ·µ»ØµÄ½á¹û ÊÊÓÃÓÚminaºÍjgroupĞ­Òé
-	 * ÆäËûĞ­ÒéÓ¦¸ÃÍ¨¹ıÌØ¶¨Ğ­ÒéµÄ½Ó¿ÚºÍ´øĞ­ÒéµÄgetRPCResult·½·¨»ñÈ¡ ¶ÔÓ¦·şÎñÆ÷µÄ½Ó¿Ú
+	 * æ ¹æ®è¿œç¨‹è°ƒç”¨ç›®æ ‡ipåœ°å€å’Œç«¯å£è·å–å¯¹åº”æœåŠ¡å™¨ä¸­è¿”å›çš„ç»“æœ é€‚ç”¨äºminaå’Œjgroupåè®®
+	 * å…¶ä»–åè®®åº”è¯¥é€šè¿‡ç‰¹å®šåè®®çš„æ¥å£å’Œå¸¦åè®®çš„getRPCResultæ–¹æ³•è·å– å¯¹åº”æœåŠ¡å™¨çš„æ¥å£
 	 * 
 	 * @param ip
 	 * @param port
@@ -190,14 +190,14 @@ public class ApplicationContext extends BaseApplicationContext {
 	}
 
 	/**
-	 * ¸ù¾İurlµØÖ·»ñÈ¡¶ÔÓ¦µÄ½á¹ûÖµ
+	 * æ ¹æ®urlåœ°å€è·å–å¯¹åº”çš„ç»“æœå€¼
 	 * 
 	 * @param url
-	 *            ¶ÔÓ¦µÄÔ¶³ÌµØÖ·url
+	 *            å¯¹åº”çš„è¿œç¨‹åœ°å€url
 	 * @param values
-	 *            ¶à²¥µ÷ÓÃ·µ»ØµÄ½á¹û¼¯
+	 *            å¤šæ’­è°ƒç”¨è¿”å›çš„ç»“æœé›†
 	 * @param protocol
-	 *            rpc¶ÔÓ¦µÄÔ¶³ÌĞ­Òé£¬
+	 *            rpcå¯¹åº”çš„è¿œç¨‹åè®®ï¼Œ
 	 * @see org.frameworkset.remote.Target.BROADCAST_TYPE_MUTICAST
 	 *      org.frameworkset.remote.Target.BROADCAST_TYPE_UNICAST
 	 *      org.frameworkset.remote.Target.BROADCAST_TYPE_JRGOUP
@@ -228,7 +228,7 @@ public class ApplicationContext extends BaseApplicationContext {
 
 
 	/**
-	 * »ñÈ¡µ±Ç°ËùÓĞÁ¬Í¨µÄ½ÚµãÇåµ¥
+	 * è·å–å½“å‰æ‰€æœ‰è¿é€šçš„èŠ‚ç‚¹æ¸…å•
 	 */
 	@SuppressWarnings("unchecked")
 	public static List<RPCAddress> getAllNodes() {
@@ -264,7 +264,7 @@ public class ApplicationContext extends BaseApplicationContext {
 	
 
 	/**
-	 * Ğ£ÑéµØÖ·ÊÇ·ñÊÇºÏ·¨¿ÉÁ¬Í¨µÄµØÖ·
+	 * æ ¡éªŒåœ°å€æ˜¯å¦æ˜¯åˆæ³•å¯è¿é€šçš„åœ°å€
 	 * 
 	 * @param address
 	 * @return
@@ -284,7 +284,7 @@ public class ApplicationContext extends BaseApplicationContext {
 	}
 
 	/**
-	 * ÅĞ¶ÏÏµÍ³ÊÇ·ñÆôÓÃÁË¼¯Èº¹¦ÄÜ
+	 * åˆ¤æ–­ç³»ç»Ÿæ˜¯å¦å¯ç”¨äº†é›†ç¾¤åŠŸèƒ½
 	 * 
 	 * @return
 	 */
@@ -295,7 +295,7 @@ public class ApplicationContext extends BaseApplicationContext {
 	}
 
 	/**
-	 * ÅĞ¶ÏÏµÍ³ÊÇ·ñÆôÓÃÁË¼¯Èº¹¦ÄÜ
+	 * åˆ¤æ–­ç³»ç»Ÿæ˜¯å¦å¯ç”¨äº†é›†ç¾¤åŠŸèƒ½
 	 * 
 	 * @return
 	 */
@@ -317,7 +317,7 @@ public class ApplicationContext extends BaseApplicationContext {
 			return RMIServer.getRMIServer().started();
 
 		} else {
-			throw new java.lang.IllegalArgumentException("Î´Ö§³ÖĞ­Òé£º" + protocol);
+			throw new java.lang.IllegalArgumentException("æœªæ”¯æŒåè®®ï¼š" + protocol);
 		}
 
 	}
@@ -327,7 +327,7 @@ public class ApplicationContext extends BaseApplicationContext {
 	}
 
 	/**
-	 * »ñÈ¡webservice·şÎñµ÷ÓÃ½á¹û
+	 * è·å–webserviceæœåŠ¡è°ƒç”¨ç»“æœ
 	 * 
 	 * @param url
 	 * @param ret
@@ -341,7 +341,7 @@ public class ApplicationContext extends BaseApplicationContext {
 	}
 
 	/**
-	 * »ñÈ¡webservice·şÎñµ÷ÓÃ½á¹û
+	 * è·å–webserviceæœåŠ¡è°ƒç”¨ç»“æœ
 	 * 
 	 * @param url
 	 * @param ret
@@ -355,7 +355,7 @@ public class ApplicationContext extends BaseApplicationContext {
 	}
 
 	/**
-	 * »ñÈ¡mina·şÎñµ÷ÓÃ½á¹û
+	 * è·å–minaæœåŠ¡è°ƒç”¨ç»“æœ
 	 * 
 	 * @param url
 	 * @param ret
@@ -369,7 +369,7 @@ public class ApplicationContext extends BaseApplicationContext {
 	}
 
 	/**
-	 * »ñÈ¡mina·şÎñµ÷ÓÃ½á¹û
+	 * è·å–minaæœåŠ¡è°ƒç”¨ç»“æœ
 	 * 
 	 * @param url
 	 * @param ret
@@ -384,7 +384,7 @@ public class ApplicationContext extends BaseApplicationContext {
 	}
 
 	/**
-	 * »ñÈ¡mina·şÎñµ÷ÓÃ½á¹û
+	 * è·å–minaæœåŠ¡è°ƒç”¨ç»“æœ
 	 * 
 	 * @param url
 	 * @param ret
@@ -399,7 +399,7 @@ public class ApplicationContext extends BaseApplicationContext {
 	}
 
 	/**
-	 * »ñÈ¡mina·şÎñµ÷ÓÃ½á¹û
+	 * è·å–minaæœåŠ¡è°ƒç”¨ç»“æœ
 	 * 
 	 * @param url
 	 * @param ret
@@ -414,7 +414,7 @@ public class ApplicationContext extends BaseApplicationContext {
 	}
 
 	/**
-	 * »ñÈ¡webservice·şÎñµ÷ÓÃ½á¹û
+	 * è·å–webserviceæœåŠ¡è°ƒç”¨ç»“æœ
 	 * 
 	 * @param url
 	 * @param ret

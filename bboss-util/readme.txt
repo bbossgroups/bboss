@@ -1,8 +1,8 @@
-·¢²¼µÄjar°ü£º
+å‘å¸ƒçš„jaråŒ…ï¼š
 frameworkset.jar ditchnet-tabs-taglib.jar
 
 ---------------------------------
-bboss-util¹ØÁª¹¤³Ì£º
+bboss-utilå…³è”å·¥ç¨‹ï¼š
 ---------------------------------
 
 bboss-util->bbossaop [bboss-aop.jar]
@@ -19,18 +19,18 @@ bboss-util<-kettle [frameworkset-util.jar]
 bboss-util<-portal [frameworkset-util.jar]
 bboss-util<-cas server [frameworkset-util.jar]
 #######update function list since bbossgroups-3.5 begin###########
-o ĞŞ¸ÄDameonThread×é¼ş£¬Ìí¼Ó¼à¿ØÎÄ¼şÊ±£¬ÅĞ¶ÏÎÄ¼şÊÇ·ñÒÑ¾­±»¼à¿Ø£¬Èç¹ûÒÑ¾­¼à¿ØÔòºöÂÔ
-o com.framworkset.util.StringUtilÔö¼ÓÏÂÔØResource½Ó¿Ú¶ÔÓ¦µÄ×ÊÔ´µÄ·½·¨
+o ä¿®æ”¹DameonThreadç»„ä»¶ï¼Œæ·»åŠ ç›‘æ§æ–‡ä»¶æ—¶ï¼Œåˆ¤æ–­æ–‡ä»¶æ˜¯å¦å·²ç»è¢«ç›‘æ§ï¼Œå¦‚æœå·²ç»ç›‘æ§åˆ™å¿½ç•¥
+o com.framworkset.util.StringUtilå¢åŠ ä¸‹è½½Resourceæ¥å£å¯¹åº”çš„èµ„æºçš„æ–¹æ³•
 public static void sendFile_(HttpServletRequest request, HttpServletResponse response, Resource in) throws Exception 
-Ä¿Ç°Ö§³ÖResource½Ó¿ÚµÄÒÔÏÂÊµÏÖ£º
-ClassPathResource -- ÊÊÓÃÓÚÓ¦classpathÏÂÃæµÄ×ÊÔ´
-ServletContextResource --ÊÊÓÃÓÚwebÓ¦ÓÃ¸ùÄ¿Â¼¼°×ÓÄ¿Â¼ÏÂµÄ×ÊÔ´
-FileSystemResource --ÊÊÓÃÓÚÎÄ¼şÏµÍ³ÖĞÎÄ¼ş×ÊÔ´
-UrlResource --ÊÊÓÃÓÚurlÁ¬½Ó¶ÔÓ¦×ÊÔ´
-ByteArrayResource--ÊÊÓÃÓÚ¶ş½øÖÆ×ÊÔ´
+ç›®å‰æ”¯æŒResourceæ¥å£çš„ä»¥ä¸‹å®ç°ï¼š
+ClassPathResource -- é€‚ç”¨äºåº”classpathä¸‹é¢çš„èµ„æº
+ServletContextResource --é€‚ç”¨äºwebåº”ç”¨æ ¹ç›®å½•åŠå­ç›®å½•ä¸‹çš„èµ„æº
+FileSystemResource --é€‚ç”¨äºæ–‡ä»¶ç³»ç»Ÿä¸­æ–‡ä»¶èµ„æº
+UrlResource --é€‚ç”¨äºurlè¿æ¥å¯¹åº”èµ„æº
+ByteArrayResource--é€‚ç”¨äºäºŒè¿›åˆ¶èµ„æº
 
-o ValueObjectUtilÔö¼Ócast(Object obj,Class toType)·½·¨£¬ÓÃÀ´½«¸¸ÀàÀàĞÍ¶ÔÏóobj×ª»»Îª×ÓÀàĞÍ¶ÔÏó£¬Ö§³ÖÊı×éÀàĞÍºÍÆÕÍ¨ÀàĞÍ
-o Ôö¼Ó±äÁ¿¡¢Êı×éÔªËØ¡¢list/set¡¢mapÔªËØ±äÁ¿½âÎö·½·¨,Ê¹ÓÃ·½·¨ÈçÏÂ£º
+o ValueObjectUtilå¢åŠ cast(Object obj,Class toType)æ–¹æ³•ï¼Œç”¨æ¥å°†çˆ¶ç±»ç±»å‹å¯¹è±¡objè½¬æ¢ä¸ºå­ç±»å‹å¯¹è±¡ï¼Œæ”¯æŒæ•°ç»„ç±»å‹å’Œæ™®é€šç±»å‹
+o å¢åŠ å˜é‡ã€æ•°ç»„å…ƒç´ ã€list/setã€mapå…ƒç´ å˜é‡è§£ææ–¹æ³•,ä½¿ç”¨æ–¹æ³•å¦‚ä¸‹ï¼š
  String url = "http://localhost:80/detail.html?user=#[account[0][0]]&password=#[password->aaa[0]->bb->cc[0]]love";
          URLStruction a = com.frameworkset.util.VariableHandler.parserSQLStruction(url);
 List<String> tokens = a.getTokens();
@@ -43,9 +43,9 @@ List<String> tokens = a.getTokens();
 	
 	 			Variable as = variables.get(k);
 	
-	 			System.out.println("±äÁ¿Ãû³Æ£º" + as.getVariableName());
-	 			System.out.println("±äÁ¿¶ÔÓ¦Î»ÖÃ£º" + as.getPosition());
-	 			//Èç¹û±äÁ¿ÊÇ¶ÔÓ¦µÄÊı×é»òÕßlist¡¢set¡¢mapÖĞÔªËØµÄÓ¦ÓÃ£¬Ôò½âÎöÏàÓ¦µÄÔªËØË÷ÒıÏÂ±êĞÅÏ¢
+	 			System.out.println("å˜é‡åç§°ï¼š" + as.getVariableName());
+	 			System.out.println("å˜é‡å¯¹åº”ä½ç½®ï¼š" + as.getPosition());
+	 			//å¦‚æœå˜é‡æ˜¯å¯¹åº”çš„æ•°ç»„æˆ–è€…listã€setã€mapä¸­å…ƒç´ çš„åº”ç”¨ï¼Œåˆ™è§£æç›¸åº”çš„å…ƒç´ ç´¢å¼•ä¸‹æ ‡ä¿¡æ¯
 	 			List<Index> idxs = as.getIndexs();
 	 			if(idxs != null)
 	 			{
@@ -54,106 +54,106 @@ List<String> tokens = a.getTokens();
 	 					Index idx = idxs.get(h);
 	 					if(idx.getInt_idx() > 0)
 	 					{
-	 						System.out.println("ÔªËØË÷ÒıÏÂ±ê£º"+idx.getInt_idx());
+	 						System.out.println("å…ƒç´ ç´¢å¼•ä¸‹æ ‡ï¼š"+idx.getInt_idx());
 	 					}
 	 					else
 	 					{
-	 						System.out.println("map key£º"+idx.getString_idx());
+	 						System.out.println("map keyï¼š"+idx.getString_idx());
 	 					}
 	 				}
 	 			}
 	
 	 		}
-o ÎÄ¼şÏÂÔØ·½·¨À©Õ¹£¬¿ÉÒÔÖ±½Ó½«Resource´ú±íµÄ×ÊÔ´½øĞĞÏÂÔØ
+o æ–‡ä»¶ä¸‹è½½æ–¹æ³•æ‰©å±•ï¼Œå¯ä»¥ç›´æ¥å°†Resourceä»£è¡¨çš„èµ„æºè¿›è¡Œä¸‹è½½
  public static void sendFile_(HttpServletRequest request, HttpServletResponse response, Resource in)	 		
-o ĞŞ¸´ValueObjectUtilÈÕÆÚ×ª»»·½·¨¶àÏß³Ì°²È«ÎÊÌâ£¬ÎÊÌâ±íÏÖÎª¶à¸ö²»Í¬µÄÓÃ»§²¢·¢×ª»»Ê±¼äÊ±£¬µÃµ½²»¿ÉÔ¤ÆÚµÄ½á¹û
-Éı¼¶frameworkset-util.jar¿ÉÒÔ½â¾öÕâ¸öÎÊÌâ
+o ä¿®å¤ValueObjectUtilæ—¥æœŸè½¬æ¢æ–¹æ³•å¤šçº¿ç¨‹å®‰å…¨é—®é¢˜ï¼Œé—®é¢˜è¡¨ç°ä¸ºå¤šä¸ªä¸åŒçš„ç”¨æˆ·å¹¶å‘è½¬æ¢æ—¶é—´æ—¶ï¼Œå¾—åˆ°ä¸å¯é¢„æœŸçš„ç»“æœ
+å‡çº§frameworkset-util.jarå¯ä»¥è§£å†³è¿™ä¸ªé—®é¢˜
 /bboss-util/src/com/frameworkset/util/ValueObjectUtil.java
-o SimpleStringUtilÀàÖĞÔö¼Ó¸ñÊ½»¯ExceptionÀàÎªStringµÄ·½·¨
-o UTF8ConvertorÀàÖĞÔö¼ÓÖ¸¶¨Ä¿Â¼£¬Ö¸¶¨¹ıÂË×ÓÄ¿Â¼ÃûÁĞ±í£¬Ö¸¶¨ÎÄ¼şÀàĞÍÁĞ±íµÄ±àÂë×ª»»·½·¨
-o ½â¾ö¸½¼şÏÂÔØÖĞÎÄÃû³ÆÎÄ¼şÔÚie 6ÏÂÎŞ·¨ÏÂÔØµÄÎÊÌâ
-o util¹¦ÄÜ£ºÔö¼Ó×Ö·û´®±àÂë¼¯Ê¶±ğ¹¦ÄÜ
+o SimpleStringUtilç±»ä¸­å¢åŠ æ ¼å¼åŒ–Exceptionç±»ä¸ºStringçš„æ–¹æ³•
+o UTF8Convertorç±»ä¸­å¢åŠ æŒ‡å®šç›®å½•ï¼ŒæŒ‡å®šè¿‡æ»¤å­ç›®å½•ååˆ—è¡¨ï¼ŒæŒ‡å®šæ–‡ä»¶ç±»å‹åˆ—è¡¨çš„ç¼–ç è½¬æ¢æ–¹æ³•
+o è§£å†³é™„ä»¶ä¸‹è½½ä¸­æ–‡åç§°æ–‡ä»¶åœ¨ie 6ä¸‹æ— æ³•ä¸‹è½½çš„é—®é¢˜
+o utilåŠŸèƒ½ï¼šå¢åŠ å­—ç¬¦ä¸²ç¼–ç é›†è¯†åˆ«åŠŸèƒ½
 
-o ºÏ²¢StringUtilºÍSimpleStringUtilÖĞµÄ²¿·Ö·½·¨£¬StringUtilÖ»±£ÁôºÍHttpServletRequestÏà¹ØµÄµÄ·½·¨
-o ValueObjectUtilÀàÖĞÔö¼ÓÒ»ÏµÁĞÊı¾İ±È½Ïº¯Êı
+o åˆå¹¶StringUtilå’ŒSimpleStringUtilä¸­çš„éƒ¨åˆ†æ–¹æ³•ï¼ŒStringUtilåªä¿ç•™å’ŒHttpServletRequestç›¸å…³çš„çš„æ–¹æ³•
+o ValueObjectUtilç±»ä¸­å¢åŠ ä¸€ç³»åˆ—æ•°æ®æ¯”è¾ƒå‡½æ•°
 #######update function list since bbossgroups-3.4 begin###########
-o ClassInfo¶ÔÏóÔö¼Óisprimary·½·¨£¬±êÊ¶¶ÔÓ¦µÄÀàĞÍÊÇ·ñÊÇbboss¶¨ÒåµÄ»ù´¡Êı¾İÀàĞÍ·¶³ë
-o Ôö¼Ó»ñÈ¡·½·¨²ÎÊıÃû³ÆµÄ¹¤¾ßÀàLocalVariableTableParameterNameDiscoverer
-»ñÈ¡LocalVariableTableParameterNameDiscovererµÄ·½·¨ÈçÏÂ£º
+o ClassInfoå¯¹è±¡å¢åŠ isprimaryæ–¹æ³•ï¼Œæ ‡è¯†å¯¹åº”çš„ç±»å‹æ˜¯å¦æ˜¯bbosså®šä¹‰çš„åŸºç¡€æ•°æ®ç±»å‹èŒƒç•´
+o å¢åŠ è·å–æ–¹æ³•å‚æ•°åç§°çš„å·¥å…·ç±»LocalVariableTableParameterNameDiscoverer
+è·å–LocalVariableTableParameterNameDiscovererçš„æ–¹æ³•å¦‚ä¸‹ï¼š
 ParameterNameDiscoverer parameterNameDiscoverer = ClassUtil.getParameterNameDiscoverer();
-»ñÈ¡·½·¨²ÎÊıÃû³ÆµÄ·½·¨ÈçÏÂ£º
+è·å–æ–¹æ³•å‚æ•°åç§°çš„æ–¹æ³•å¦‚ä¸‹ï¼š
 ParameterNameDiscoverer parameterNameDiscoverer = ClassUtil.getParameterNameDiscoverer();
 Method method = ClassInfo.class.getMethod("getDeclaredMethod", String.class);
 String[] names = parameterNameDiscoverer.getParameterNames(method);
-o ÄÚÖÃasm 4.0°æ±¾
+o å†…ç½®asm 4.0ç‰ˆæœ¬
 #######update function list since bbossgroups-3.3 begin###########
 ------2011-10-14------------
-o ÓÅ»¯ValueObjectUtilÖĞ¸ù¾İÊôĞÔÃû³Æ»ñÈ¡×Ö¶ÎÖµµÃ·½·¨£¬¸Ä½øĞÔÄÜ¡£
+o ä¼˜åŒ–ValueObjectUtilä¸­æ ¹æ®å±æ€§åç§°è·å–å­—æ®µå€¼å¾—æ–¹æ³•ï¼Œæ”¹è¿›æ€§èƒ½ã€‚
 ------2011-09-19------------
-o ÍêÉÆVelocityÄ£°åÒıÇæÄ£°åÂ·¾¶ÅäÖÃ»úÖÆ£¬ÔÚbboss-aop.jar/aop.propertiesÎÄ¼şÖĞÔö¼ÓapprootÅäÖÃ£¬
-ÓÃÀ´Ö¸Ê¾Ó¦ÓÃÉÏÏÂÎÄµÄ¾ø¶ÔÂ·¾¶£º
+o å®Œå–„Velocityæ¨¡æ¿å¼•æ“æ¨¡æ¿è·¯å¾„é…ç½®æœºåˆ¶ï¼Œåœ¨bboss-aop.jar/aop.propertiesæ–‡ä»¶ä¸­å¢åŠ approoté…ç½®ï¼Œ
+ç”¨æ¥æŒ‡ç¤ºåº”ç”¨ä¸Šä¸‹æ–‡çš„ç»å¯¹è·¯å¾„ï¼š
 approot=D:/workspace/bbossgroups-3.2/bboss-mvc/WebRoot
-ÒÔ±ãÄÜ¹»²éÕÒµ½¶ÔÓ¦µÄÄ£°å¸ùÄ¿Â¼
-ÓÉÓÚ±êÇ©¿âÖĞÊ¹ÓÃÁËvmÎÄ¼ş£¬ÕâĞ©ÎÄ¼ş´æ·ÅÔÚapprootµÄ/WEB-INF/templatesÄ¿Â¼ÏÂÃæ£¬Òò´Ë±ØĞë±£Ö¤VelocityÒıÇæÆô¶¯ºóÕıÈ·µØÕÒµ½
-Õâ¸öÄ¿Â¼£¬ÔÚtomcatÖĞÊÇÄÜ¹»×Ô¶¯ÕÒµ½µÄ£¬µ«ÊÇÔÚweblogicµÈÈİÆ÷ÖĞÎŞ·¨×Ô¶¯ÕÒµ½Õâ¸öÄ¿Â¼£¬Òò´ËĞèÒªÔÚbboss-aop.jar/aop.propertiesÎÄ¼şÖĞÔö¼ÓapprootÅäÖÃ
+ä»¥ä¾¿èƒ½å¤ŸæŸ¥æ‰¾åˆ°å¯¹åº”çš„æ¨¡æ¿æ ¹ç›®å½•
+ç”±äºæ ‡ç­¾åº“ä¸­ä½¿ç”¨äº†vmæ–‡ä»¶ï¼Œè¿™äº›æ–‡ä»¶å­˜æ”¾åœ¨approotçš„/WEB-INF/templatesç›®å½•ä¸‹é¢ï¼Œå› æ­¤å¿…é¡»ä¿è¯Velocityå¼•æ“å¯åŠ¨åæ­£ç¡®åœ°æ‰¾åˆ°
+è¿™ä¸ªç›®å½•ï¼Œåœ¨tomcatä¸­æ˜¯èƒ½å¤Ÿè‡ªåŠ¨æ‰¾åˆ°çš„ï¼Œä½†æ˜¯åœ¨weblogicç­‰å®¹å™¨ä¸­æ— æ³•è‡ªåŠ¨æ‰¾åˆ°è¿™ä¸ªç›®å½•ï¼Œå› æ­¤éœ€è¦åœ¨bboss-aop.jar/aop.propertiesæ–‡ä»¶ä¸­å¢åŠ approoté…ç½®
 
-o ÍêÉÆVelocityUtilÀà£¬½â¾öÕÒ²»µ½velocity.propertiesÎÄ¼şµÄÎÊÌâ
+o å®Œå–„VelocityUtilç±»ï¼Œè§£å†³æ‰¾ä¸åˆ°velocity.propertiesæ–‡ä»¶çš„é—®é¢˜
 
-o ÍêÉÆÀàĞÍ×ª»»»úÖÆ£¬Ö§³Ölob×Ö¶ÎÏòFile/byte[]/StringÀàĞÍµÄ×ª»»
+o å®Œå–„ç±»å‹è½¬æ¢æœºåˆ¶ï¼Œæ”¯æŒlobå­—æ®µå‘File/byte[]/Stringç±»å‹çš„è½¬æ¢
 #######update function list since bbossgroups-3.2 begin###########
 ------2011-07-19------------
-o StringUtilÀàÖĞÔö¼ÓÎÄ¼şÏÂÔØ·½·¨£º
+o StringUtilç±»ä¸­å¢åŠ æ–‡ä»¶ä¸‹è½½æ–¹æ³•ï¼š
 StringUtil.sendFile(request, response, record
 							.getString("filename"), record
 							.getBlob("filecontent"));
 StringUtil.sendFile(request, response, file);							
 ------2011-06-14------------
-o Ö§³ÖÊı×ÖÏòBigDecimal×ª»»¡¢Êı×ÖÊı×éÏòBigDecimalÊı×é×ª»»¹¦ÄÜ
+o æ”¯æŒæ•°å­—å‘BigDecimalè½¬æ¢ã€æ•°å­—æ•°ç»„å‘BigDecimalæ•°ç»„è½¬æ¢åŠŸèƒ½
 
 #######update function list since bbossgroups-3.1 begin###########
 
 ------2011-06-09------------
-o ´¦Àí¿Õ×Ö·û´®ÏòÈÕÆÚÀàĞÍ×ª»»ºóÌ¨±¨Òì³£µÄÈ±Ïİ
+o å¤„ç†ç©ºå­—ç¬¦ä¸²å‘æ—¥æœŸç±»å‹è½¬æ¢åå°æŠ¥å¼‚å¸¸çš„ç¼ºé™·
 ------2011-05-06------------
-o ĞŞ¸´·ÖÒ³±êÇ©Å¼¶ûÕÒ²»µ½vmÄ£°åÎÄ¼şµÄÂ©¶´
-ÉÏÊöÂ©¶´ĞŞ¸´µÄ³ÌĞòÎª£º
+o ä¿®å¤åˆ†é¡µæ ‡ç­¾å¶å°”æ‰¾ä¸åˆ°vmæ¨¡æ¿æ–‡ä»¶çš„æ¼æ´
+ä¸Šè¿°æ¼æ´ä¿®å¤çš„ç¨‹åºä¸ºï¼š
 /bboss-util/src/com/frameworkset/util/VelocityUtil.java
 	
 #######update function list since bbossgroups-3.1 end###########
 
 #######update function list since bbossgroups-3.0 begin###########
 to do list:
-ÓĞÊ±»áÕÒ²»µ½vmÄ£°åÎÄ¼ş
+æœ‰æ—¶ä¼šæ‰¾ä¸åˆ°vmæ¨¡æ¿æ–‡ä»¶
 
 ------2011-04-07------------
-o  ĞŞ¸ÄDaemonThread½ø³Ì£¬Ö§³Ö´ÓÍâ²¿Ö¸¶¨Ë¢ĞÂÎÄ¼ş×ÊÔ´µÄÊ±¼ä¼ä¸ô¡£
+o  ä¿®æ”¹DaemonThreadè¿›ç¨‹ï¼Œæ”¯æŒä»å¤–éƒ¨æŒ‡å®šåˆ·æ–°æ–‡ä»¶èµ„æºçš„æ—¶é—´é—´éš”ã€‚
 ------2011-04-05------------
-o  Ö§³Ö×Ö·û´®ÏòÃ¶¾ÙÀàĞÍ×ª»»¡¢×Ö·û´®Êı×éÏòÃ¶¾ÙÀàĞÍÊı×é×ª»»¹¦ÄÜ
+o  æ”¯æŒå­—ç¬¦ä¸²å‘æšä¸¾ç±»å‹è½¬æ¢ã€å­—ç¬¦ä¸²æ•°ç»„å‘æšä¸¾ç±»å‹æ•°ç»„è½¬æ¢åŠŸèƒ½
 ------2011-03-02------------
-o  ĞŞ¸´doubleÀàĞÍÊı¾İÏòintÀàĞÍ×ª»»µÄÎÊÌâ£¬ĞÂÔöµ¥¸öÖµ×ª»»ÎªÊı×éµÄ¹¦ÄÜ£¬Ö§³ÖÊı×ÖÀàĞÍÊı×éÖ®¼äµÄÏà»¥×ª»»
+o  ä¿®å¤doubleç±»å‹æ•°æ®å‘intç±»å‹è½¬æ¢çš„é—®é¢˜ï¼Œæ–°å¢å•ä¸ªå€¼è½¬æ¢ä¸ºæ•°ç»„çš„åŠŸèƒ½ï¼Œæ”¯æŒæ•°å­—ç±»å‹æ•°ç»„ä¹‹é—´çš„ç›¸äº’è½¬æ¢
 #######update function list since bbossgroups-3.0 end###########
 
 ------------------------------------------------------------------------
 update function list in bbossgroups-2.0-rc2 since bbossgroups-2.0-rc1
 ------------------------------------------------------------------------
-o ĞŞ¸Ä com/frameworkset/util/TransferObjectFactory.javaÖĞ¶ÔÏóÖµ¿½±´²»Ö§³ÖisXXXX·½Ê½»ñÈ¡ÊôĞÔÖµµÄÎÊÌâ
+o ä¿®æ”¹ com/frameworkset/util/TransferObjectFactory.javaä¸­å¯¹è±¡å€¼æ‹·è´ä¸æ”¯æŒisXXXXæ–¹å¼è·å–å±æ€§å€¼çš„é—®é¢˜
 /bboss-util/src/com/frameworkset/util/TransferObjectFactory.java
 ----------------------------------------
 bbossgroups-2.0-rc2 - 2010-11-28
 ----------------------------------------
-o ÍêÉÆValueObjectUtilµÄgetValue·½·¨£¬±ÜÃâÒòÎªµ÷ÓÃget·½·¨·µ»ØÖµÎªnullºó£¬ÖØ¸´²éÕÒBoolean·½·¨µÄÎÊÌâ
-Ôö¼ÓgetMethodByPropertyName·½·¨£¬Ôö¼Ópublic static Object getValueByMethod(Object obj, Method method, Object[] params)·½·¨
+o å®Œå–„ValueObjectUtilçš„getValueæ–¹æ³•ï¼Œé¿å…å› ä¸ºè°ƒç”¨getæ–¹æ³•è¿”å›å€¼ä¸ºnullåï¼Œé‡å¤æŸ¥æ‰¾Booleanæ–¹æ³•çš„é—®é¢˜
+å¢åŠ getMethodByPropertyNameæ–¹æ³•ï¼Œå¢åŠ public static Object getValueByMethod(Object obj, Method method, Object[] params)æ–¹æ³•
 ----------------------------------------
 bbossgroups-2.0-rc2 - 2010-08-31
 ----------------------------------------
-o ĞŞ¸´velocityÄ£°åÃ»ÓĞÕıÈ·³õÊ¼»¯µÄÎÊÌâ£¬Ö÷ÒªÊÇÔÚVelocityUtilÉÏÖ´ĞĞevaluteÊ±Ã»ÓĞÅĞ±ğ
-  ÒıÇæÊÇ·ñÒÑ¾­³õÊ¼»¯
+o ä¿®å¤velocityæ¨¡æ¿æ²¡æœ‰æ­£ç¡®åˆå§‹åŒ–çš„é—®é¢˜ï¼Œä¸»è¦æ˜¯åœ¨VelocityUtilä¸Šæ‰§è¡Œevaluteæ—¶æ²¡æœ‰åˆ¤åˆ«
+  å¼•æ“æ˜¯å¦å·²ç»åˆå§‹åŒ–
 
 ----------------------------------------
 bbossgroups-2.0-rc2 - 2010-08-23
 ----------------------------------------
-o ĞŞ¸´com.frameworkset.util.VariableHandlerÖĞ±äÁ¿½âÎöbug,
-Ä¬ÈÏdefault_regex ĞŞ¸ÄÎª "\\$\\{.+?)\\}"»ñÈ¡ÊäÈë´®ÖĞµÄ±äÁ¿£¬×÷ÎªÊı×é·µ»Ø
+o ä¿®å¤com.frameworkset.util.VariableHandlerä¸­å˜é‡è§£æbug,
+é»˜è®¤default_regex ä¿®æ”¹ä¸º "\\$\\{.+?)\\}"è·å–è¾“å…¥ä¸²ä¸­çš„å˜é‡ï¼Œä½œä¸ºæ•°ç»„è¿”å›
 
 ------------------------------------------------------------------------
 update function list in bbossgroups-2.0-rc1 since bbossgroups-2.0-rc
@@ -161,31 +161,31 @@ update function list in bbossgroups-2.0-rc1 since bbossgroups-2.0-rc
 ----------------------------------------
 bbossgroups-2.0-rc1 - 2010-07-23
 ----------------------------------------
-o VelocityUtilÖĞÔö¼Ó¶Ô×Ö·û´®Ä£°åµÄ½âÎö·½·¨
+o VelocityUtilä¸­å¢åŠ å¯¹å­—ç¬¦ä¸²æ¨¡æ¿çš„è§£ææ–¹æ³•
 --------------------------
 2010-03-10
 --------------------------
 
-o ±äÁ¿½âÎö³ÌĞòÖĞĞÂÔö±äÁ¿ÎöÈ¡ºÍÌæ»»½Ó¿Ú
+o å˜é‡è§£æç¨‹åºä¸­æ–°å¢å˜é‡æå–å’Œæ›¿æ¢æ¥å£
 
 --------------------------
 2010-01-07
 ----------------------
-o ½«springÏà¹ØµÄ³ÌĞò·ÖÀë£¬µ¥¶ÀĞÎ³É°üframeworkset-spring.jar,Ô­À´µÄ°ü¼ÌĞø±£Áôframeworkset-util.jar
-o Ìí¼Óant¹¹½¨½Å±¾ºÍÊôĞÔÅäÖÃÎÄ¼ş:build.xml
+o å°†springç›¸å…³çš„ç¨‹åºåˆ†ç¦»ï¼Œå•ç‹¬å½¢æˆåŒ…frameworkset-spring.jar,åŸæ¥çš„åŒ…ç»§ç»­ä¿ç•™frameworkset-util.jar
+o æ·»åŠ antæ„å»ºè„šæœ¬å’Œå±æ€§é…ç½®æ–‡ä»¶:build.xml
  
 
 --------------------------
 2009-12-15
 ----------------------
-o ĞÂÔö±äÁ¿½âÎö³ÌĞò
+o æ–°å¢å˜é‡è§£æç¨‹åº
 com.frameworkset.util.VariableHandler
-¹¦ÄÜËµÃ÷£º
-¿ÉÒÔ¸ù¾İÄ¬ÈÏµÄÕıÔòÊ½default_regex = "\\$\\{([^\\}]+)\\}"»ñÈ¡ÊäÈë´®ÖĞµÄ±äÁ¿£¬×÷ÎªÊı×é·µ»Ø
+åŠŸèƒ½è¯´æ˜ï¼š
+å¯ä»¥æ ¹æ®é»˜è®¤çš„æ­£åˆ™å¼default_regex = "\\$\\{([^\\}]+)\\}"è·å–è¾“å…¥ä¸²ä¸­çš„å˜é‡ï¼Œä½œä¸ºæ•°ç»„è¿”å›
 public static String[] variableParser(String inputString)
-¿ÉÒÔ¸ù¾İÖ¸¶¨µÄÕıÔòÊ½»ñÈ¡ÊäÈë´®ÖĞµÄ±äÁ¿£¬×÷ÎªÊı×é·µ»Ø
+å¯ä»¥æ ¹æ®æŒ‡å®šçš„æ­£åˆ™å¼è·å–è¾“å…¥ä¸²ä¸­çš„å˜é‡ï¼Œä½œä¸ºæ•°ç»„è¿”å›
 public static String[] variableParser(String inputString,String regex)
-¿ÉÒÔ¸ù¾İÖ¸¶¨µÄ±äÁ¿µÄÇ°µ¼·ûºÍºóµ¼·û»ñÈ¡ÊäÈë´®ÖĞµÄ±äÁ¿£¬×÷ÎªÊı×é·µ»Ø
+å¯ä»¥æ ¹æ®æŒ‡å®šçš„å˜é‡çš„å‰å¯¼ç¬¦å’Œåå¯¼ç¬¦è·å–è¾“å…¥ä¸²ä¸­çš„å˜é‡ï¼Œä½œä¸ºæ•°ç»„è¿”å›
  public static String[] variableParser(String inputString,String pretoken,String endtoken)
 
 
@@ -194,12 +194,12 @@ public static String[] variableParser(String inputString,String regex)
 2009-09-28
 ----------------------
 o   bboss-util/src/com/frameworkset/util/ValueObjectUtil.java
-booleanÖµ×ª»»Ê±£¬ÄÜ¹»´¦Àí0,ºÍ1
+booleanå€¼è½¬æ¢æ—¶ï¼Œèƒ½å¤Ÿå¤„ç†0,å’Œ1
 
-o ĞŞ¸ÄVelocityUtil.java
-o ĞŞ¸Äcom.frameworkset.util.ValueObjectUtil
-	ĞŞ¸Äcom.frameworkset.common.util.ValueObjectUtilÊ¹ÆäÓëcom.frameworkset.util.ValueObjectUtilµÄ¹¦ÄÜ±£³ÖÒ»ÖÂ
-o Ôö¼Ó²âÊÔÓÃÀı°ütest
+o ä¿®æ”¹VelocityUtil.java
+o ä¿®æ”¹com.frameworkset.util.ValueObjectUtil
+	ä¿®æ”¹com.frameworkset.common.util.ValueObjectUtilä½¿å…¶ä¸com.frameworkset.util.ValueObjectUtilçš„åŠŸèƒ½ä¿æŒä¸€è‡´
+o å¢åŠ æµ‹è¯•ç”¨ä¾‹åŒ…test
 
-o Ôö¼Óbsh-2.0b4.jar°ü£¬ÊµÏÖValueObjectUtilÖĞ¸¸ÀàÏò×ÓÀà×ª»»µÄ¹ı³Ì
+o å¢åŠ bsh-2.0b4.jaråŒ…ï¼Œå®ç°ValueObjectUtilä¸­çˆ¶ç±»å‘å­ç±»è½¬æ¢çš„è¿‡ç¨‹
 

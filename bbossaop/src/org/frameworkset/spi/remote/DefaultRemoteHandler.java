@@ -37,11 +37,11 @@ public class DefaultRemoteHandler implements RemoteHandler{
 
     
     /**
-     * ÏòËùÓĞµÄÔ¶³Ì×é¼ş·¢ËÍÔ¶³Ì·½·¨µ÷ÓÃÇëÇó
-     * ·şÎñid£¬
-     * mehthod ·½·¨Ãû³Æ
-     * Object[] parameters ·½·¨²ÎÊı
-     * Class[]  types ·½·¨²ÎÊıÀàĞÍ
+     * å‘æ‰€æœ‰çš„è¿œç¨‹ç»„ä»¶å‘é€è¿œç¨‹æ–¹æ³•è°ƒç”¨è¯·æ±‚
+     * æœåŠ¡idï¼Œ
+     * mehthod æ–¹æ³•åç§°
+     * Object[] parameters æ–¹æ³•å‚æ•°
+     * Class[]  types æ–¹æ³•å‚æ•°ç±»å‹
      * @throws SPIException 
      * @throws NoSuchMethodException 
      * @throws SecurityException 
@@ -76,7 +76,7 @@ public class DefaultRemoteHandler implements RemoteHandler{
 	            instance = context.getProvider(serviceID.getService(),serviceID.getProviderID());
 	        }
         }
-        else //ĞèÒª¿¼ÂÇ×ª»»³ÉClientProxyContextµÄµ÷ÓÃÄ£Ê½£¬ÎŞĞèÖĞ½é´úÀí°üº¬·şÎñÅäÖÃÎÄ¼şºÍÊµÏÖ×é¼şÀà£¬¿É×÷Îª·şÎñ×ÜÏßµÄÊµÏÖ¼¼Êõ
+        else //éœ€è¦è€ƒè™‘è½¬æ¢æˆClientProxyContextçš„è°ƒç”¨æ¨¡å¼ï¼Œæ— éœ€ä¸­ä»‹ä»£ç†åŒ…å«æœåŠ¡é…ç½®æ–‡ä»¶å’Œå®ç°ç»„ä»¶ç±»ï¼Œå¯ä½œä¸ºæœåŠ¡æ€»çº¿çš„å®ç°æŠ€æœ¯
         {
         	BaseApplicationContext context = BaseApplicationContext.getBaseApplicationContext(serviceID.getApplicationContext(),serviceID.getContainerType());
         	instance = context.getBeanObject(serviceID.getNextRestfulServiceAddress());
@@ -88,11 +88,11 @@ public class DefaultRemoteHandler implements RemoteHandler{
     }
     
 //    /**
-//     * ÏòËùÓĞµÄÔ¶³Ì×é¼ş·¢ËÍÔ¶³Ì·½·¨µ÷ÓÃÇëÇó
-//     * ·şÎñid£¬
-//     * mehthod ·½·¨Ãû³Æ
-//     * Object[] parameters ·½·¨²ÎÊı
-//     * Class[]  types ·½·¨²ÎÊıÀàĞÍ
+//     * å‘æ‰€æœ‰çš„è¿œç¨‹ç»„ä»¶å‘é€è¿œç¨‹æ–¹æ³•è°ƒç”¨è¯·æ±‚
+//     * æœåŠ¡idï¼Œ
+//     * mehthod æ–¹æ³•åç§°
+//     * Object[] parameters æ–¹æ³•å‚æ•°
+//     * Class[]  types æ–¹æ³•å‚æ•°ç±»å‹
 //     * @throws SPIException 
 //     * @throws NoSuchMethodException 
 //     * @throws SecurityException 

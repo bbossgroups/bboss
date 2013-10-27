@@ -42,7 +42,7 @@ import com.frameworkset.util.StringUtil;
 
 /**
  * @author biaoping.yin
- * ¸´Ñ¡¿òÉèÖÃ±êÇ© 
+ * å¤é€‰æ¡†è®¾ç½®æ ‡ç­¾ 
  */
 public class CheckBoxTag extends BaseTag {
 	String name;
@@ -110,14 +110,14 @@ public class CheckBoxTag extends BaseTag {
 	}
 
 	/**
-	 * @return ¸´Ñ¡¿òµÄÄ¬ÈÏÑ¡ÖĞÖµ
+	 * @return å¤é€‰æ¡†çš„é»˜è®¤é€‰ä¸­å€¼
 	 */
 	public String getDefaultValues() {
 		return defaultValues;
 	}
 
 	/**
-	 * @return ¸´Ñ¡¿òµÄÃû³Æ
+	 * @return å¤é€‰æ¡†çš„åç§°
 	 */
 	public String getName() {
 		return name;

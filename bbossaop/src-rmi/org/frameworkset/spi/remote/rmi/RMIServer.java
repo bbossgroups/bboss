@@ -43,7 +43,7 @@ import org.frameworkset.spi.remote.Util;
  * Copyright (c) 2007
  * </p>
  * 
- * @Date 2010-6-16 ÏÂÎç07:12:45
+ * @Date 2010-6-16 ä¸‹åˆ07:12:45
  * @author biaoping.yin
  * @version 1.0
  */
@@ -69,7 +69,7 @@ public class RMIServer {
 	}
 
 	public boolean validateAddress(RPCAddress address) {
-		// Ê×ÏÈÅĞ¶ÏµØÖ·ÊÇ·ñÔÚµØÖ··¶Î§ÖĞ
+		// é¦–å…ˆåˆ¤æ–­åœ°å€æ˜¯å¦åœ¨åœ°å€èŒƒå›´ä¸­
 
 		// return ClinentTransport.validateAddress(address);
 		// fix rpc
@@ -172,9 +172,9 @@ public class RMIServer {
 							
 							if(RMIUtil.rebindservice(address, rpcService))
 							{
-								System.out.println("°ó¶¨×é¼şµØÖ·£º" + address);
-								System.out.println("RMI¼àÌıÓÚIP£º" + ip);
-								System.out.println("RMI¼àÌıÓÚ¶Ë¿Ú£º" + PORT);
+								System.out.println("ç»‘å®šç»„ä»¶åœ°å€ï¼š" + address);
+								System.out.println("RMIç›‘å¬äºIPï¼š" + ip);
+								System.out.println("RMIç›‘å¬äºç«¯å£ï¼š" + PORT);
 								started = true;
 								ApplicationContext
 										.addShutdownHook(new ShutDownRMIServer(
@@ -186,7 +186,7 @@ public class RMIServer {
 							}
 							else
 							{
-								throw new Exception("°ó¶¨·şÎñÊ§°Ü£¬°ó¶¨×é¼şµØÖ·£º" + address+"£¬IP£º" + ip+"£¬¶Ë¿Ú£º" + PORT + ",¾ßÌåÔ­ÒòÇë²é¿´ÏµÍ³ÈÕÖ¾¡£");
+								throw new Exception("ç»‘å®šæœåŠ¡å¤±è´¥ï¼Œç»‘å®šç»„ä»¶åœ°å€ï¼š" + address+"ï¼ŒIPï¼š" + ip+"ï¼Œç«¯å£ï¼š" + PORT + ",å…·ä½“åŸå› è¯·æŸ¥çœ‹ç³»ç»Ÿæ—¥å¿—ã€‚");
 							}
 						
 							
@@ -221,8 +221,8 @@ public class RMIServer {
 				// LocateRegistry.createRegistry(PORT);
 				// Naming.bind("rmi://"+ip+":"+PORT+"/rpcService", rpcService);
 				//		      
-				// System.out.println("RMI¼àÌıÓÚIP£º"+ip);
-				// System.out.println("RMI¼àÌıÓÚ¶Ë¿Ú£º"+PORT);
+				// System.out.println("RMIç›‘å¬äºIPï¼š"+ip);
+				// System.out.println("RMIç›‘å¬äºç«¯å£ï¼š"+PORT);
 				// } catch (Exception e) {
 				// e.printStackTrace();
 				// }

@@ -11,7 +11,7 @@ import org.frameworkset.spi.assemble.Pro;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2010-3-26 ÏÂÎç02:04:10
+ * @Date 2010-3-26 ä¸‹åˆ02:04:10
  * @author biaoping.yin,gao.tang
  * @version 1.0
  */
@@ -25,8 +25,8 @@ public class SchedulejobInfo implements java.io.Serializable {
 	private boolean shouldRecover = false;
 	
 	/**
-	 * ×÷ÒµÖ´ĞĞ×é¼ş¼°ÆäÖ´ĞĞµÄ·½·¨²ÎÊı
-	 * Èç¹ûÖ¸¶¨µÄbeanºÍmethodÊôĞÔ£¬ÄÇÃ´clazz¶ÔÓ¦µÄexecutejob¾Í²»ĞèÒªÖ¸¶¨£¬¶şÕßÑ¡Ò»
+	 * ä½œä¸šæ‰§è¡Œç»„ä»¶åŠå…¶æ‰§è¡Œçš„æ–¹æ³•å‚æ•°
+	 * å¦‚æœæŒ‡å®šçš„beanå’Œmethodå±æ€§ï¼Œé‚£ä¹ˆclazzå¯¹åº”çš„executejobå°±ä¸éœ€è¦æŒ‡å®šï¼ŒäºŒè€…é€‰ä¸€
 	 */
 	private String beanName ;
 	private String beanClass ;

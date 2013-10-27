@@ -47,7 +47,7 @@ import org.jboss.netty.logging.InternalLoggerFactory;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2010-4-19 œ¬ŒÁ05:26:24
+ * @Date 2010-4-19 ‰∏ãÂçà05:26:24
  * @author biaoping.yin
  * @version 1.0
  */

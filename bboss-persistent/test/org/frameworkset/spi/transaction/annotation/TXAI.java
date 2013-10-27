@@ -24,7 +24,7 @@ import java.sql.SQLException;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2010-1-19 œ¬ŒÁ05:13:53
+ * @Date 2010-1-19 ‰∏ãÂçà05:13:53
  * @author biaoping.yin
  * @version 1.0
  */

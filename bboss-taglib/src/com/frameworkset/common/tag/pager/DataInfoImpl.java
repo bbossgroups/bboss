@@ -47,13 +47,13 @@ import com.frameworkset.util.ListInfo;
 
 /**
  * @author biaoping.yin
- * tag¿ª·¢ÈËÔ±ĞèÒª¼Ì³ĞDataInfoImplÀà£¬ÊµÏÖÒÔÏÂ³éÏó·½·¨£º
+ * tagå¼€å‘äººå‘˜éœ€è¦ç»§æ‰¿DataInfoImplç±»ï¼Œå®ç°ä»¥ä¸‹æŠ½è±¡æ–¹æ³•ï¼š
  * protected abstract ListInfo getDataList(String sortKey,
 										 boolean desc,
 										 int offSet,
-										 int pageItemsize)£¬¸Ã·½·¨·ÖÒ³µ÷ÓÃ
+										 int pageItemsize)ï¼Œè¯¥æ–¹æ³•åˆ†é¡µè°ƒç”¨
   protected abstract ListInfo getDataList(String sortKey,
-									 boolean desc)£¬¸Ã·½·¨ÁĞ±íµ÷ÓÃ
+									 boolean desc)ï¼Œè¯¥æ–¹æ³•åˆ—è¡¨è°ƒç”¨
 
  *
  */
@@ -72,11 +72,11 @@ public abstract class DataInfoImpl implements DataInfo
 	boolean first;
 
 	/**
-     * ³õÊ¼»¯»ñÈ¡·ÖÒ³/ÁĞ±íÊı¾İµÄ±ØÒª²ÎÊı
-     * @param sortKey ÅÅĞò×Ö¶Î
-     * @param desc ÅÅĞòË³Ğò£¬true±íÊ¾½µĞò£¬false±íÊ¾ÉıĞò
-     * @param offSet »ñÈ¡·ÖÒ³Êı¾İÊ±£¬ÓÃ¸Ã²ÎÊıÉèÖÃ»ñÈ¡Êı¾İµÄÆğµã
-     * @param pageItemsize »ñÈ¡·ÖÒ³Êı¾İÊ±£¬ÓÃ¸Ã²ÎÊıÉèÖÃ»ñÈ¡Êı¾İµÄÌõÊı
+     * åˆå§‹åŒ–è·å–åˆ†é¡µ/åˆ—è¡¨æ•°æ®çš„å¿…è¦å‚æ•°
+     * @param sortKey æ’åºå­—æ®µ
+     * @param desc æ’åºé¡ºåºï¼Œtrueè¡¨ç¤ºé™åºï¼Œfalseè¡¨ç¤ºå‡åº
+     * @param offSet è·å–åˆ†é¡µæ•°æ®æ—¶ï¼Œç”¨è¯¥å‚æ•°è®¾ç½®è·å–æ•°æ®çš„èµ·ç‚¹
+     * @param pageItemsize è·å–åˆ†é¡µæ•°æ®æ—¶ï¼Œç”¨è¯¥å‚æ•°è®¾ç½®è·å–æ•°æ®çš„æ¡æ•°
      */
 	public void initial(String sortKey,
 						boolean desc,
@@ -92,7 +92,7 @@ public abstract class DataInfoImpl implements DataInfo
 		this.request = request;
 		session = request.getSession(false);
 		/**
-		 * 2009.07.02 ×¢ÊÍ£¬Èç¹û·ÅÈëÏµÍ³Æ½Ì¨ĞèÒª´ò¿ª
+		 * 2009.07.02 æ³¨é‡Šï¼Œå¦‚æœæ”¾å…¥ç³»ç»Ÿå¹³å°éœ€è¦æ‰“å¼€
 		 */
 		if(BaseTag.ENABLE_TAG_SECURITY)
 		{
@@ -111,11 +111,11 @@ public abstract class DataInfoImpl implements DataInfo
 	}
 
 	/**
-     * ÎŞĞèÊµÏÖ£¬³õÊ¼»¯»ñÈ¡·ÖÒ³/ÁĞ±íÊı¾İµÄ±ØÒª²ÎÊı
-     * @param sql Êı¾İ¿â²éÑ¯Óï¾ä
-     * @param dbName Êı¾İ¿âÁ¬½Ó³ØÃû³Æ
-     * @param offSet »ñÈ¡·ÖÒ³Êı¾İÊ±£¬ÓÃ¸Ã²ÎÊıÉèÖÃ»ñÈ¡Êı¾İµÄÆğµã
-     * @param pageItemsize »ñÈ¡·ÖÒ³Êı¾İÊ±£¬ÓÃ¸Ã²ÎÊıÉèÖÃ»ñÈ¡Êı¾İµÄÌõÊı
+     * æ— éœ€å®ç°ï¼Œåˆå§‹åŒ–è·å–åˆ†é¡µ/åˆ—è¡¨æ•°æ®çš„å¿…è¦å‚æ•°
+     * @param sql æ•°æ®åº“æŸ¥è¯¢è¯­å¥
+     * @param dbName æ•°æ®åº“è¿æ¥æ± åç§°
+     * @param offSet è·å–åˆ†é¡µæ•°æ®æ—¶ï¼Œç”¨è¯¥å‚æ•°è®¾ç½®è·å–æ•°æ®çš„èµ·ç‚¹
+     * @param pageItemsize è·å–åˆ†é¡µæ•°æ®æ—¶ï¼Œç”¨è¯¥å‚æ•°è®¾ç½®è·å–æ•°æ®çš„æ¡æ•°
      */
 	public void initial(String sql,
 	        		    String dbName,
@@ -127,12 +127,12 @@ public abstract class DataInfoImpl implements DataInfo
 	}
 
 	/**
-	* ·ÖÒ³ÏÔÊ¾Ê±»ñÈ¡Ã¿Ò³µÄÊı¾İÏî
-	* sortKey:ÅÅĞò×Ö¶Î
-	* desc:ÅÅĞòµÄÖÈĞò£¬trueÎª½µĞò£¬falseÎªÉıĞò
-	* @param offSet - ´ÓÊı¾İÔ´»ñÈ¡Êı¾İµÄÓÎ±êÎ»ÖÃ
+	* åˆ†é¡µæ˜¾ç¤ºæ—¶è·å–æ¯é¡µçš„æ•°æ®é¡¹
+	* sortKey:æ’åºå­—æ®µ
+	* desc:æ’åºçš„ç§©åºï¼Œtrueä¸ºé™åºï¼Œfalseä¸ºå‡åº
+	* @param offSet - ä»æ•°æ®æºè·å–æ•°æ®çš„æ¸¸æ ‡ä½ç½®
 	*
-	* @param pageItemsize - Ã¿Ò³ÏÔÊ¾µÄÊı¾İÌõÊı
+	* @param pageItemsize - æ¯é¡µæ˜¾ç¤ºçš„æ•°æ®æ¡æ•°
 	* @return java.util.List
 	*/
 	protected abstract ListInfo getDataList(String sortKey,
@@ -143,15 +143,15 @@ public abstract class DataInfoImpl implements DataInfo
 
 
 	/**
-	 * Èç¹û·ÖÒ³tagÖ»ÊÇ×÷ÎªÁĞ±íÀ´ÊµÏÖÊ±£¬µ÷ÓÃ¸Ã·½·¨
-	 * sortKey:ÅÅĞò×Ö¶Î
-	 * desc:ÅÅĞòµÄÖÈĞò£¬trueÎª½µĞò£¬falseÎªÉıĞò
+	 * å¦‚æœåˆ†é¡µtagåªæ˜¯ä½œä¸ºåˆ—è¡¨æ¥å®ç°æ—¶ï¼Œè°ƒç”¨è¯¥æ–¹æ³•
+	 * sortKey:æ’åºå­—æ®µ
+	 * desc:æ’åºçš„ç§©åºï¼Œtrueä¸ºé™åºï¼Œfalseä¸ºå‡åº
 	 * @return java.util.List
 	 */
 	protected abstract ListInfo getDataList(String sortKey,
 									 boolean desc);
 	/**
-	 * Ê¶±ğ²éÑ¯ÊÇ·ñÊÇmore·ÖÒ³²éÑ¯
+	 * è¯†åˆ«æŸ¥è¯¢æ˜¯å¦æ˜¯moreåˆ†é¡µæŸ¥è¯¢
 	 * @return
 	 */
 	public boolean isMore()
@@ -169,7 +169,7 @@ public abstract class DataInfoImpl implements DataInfo
 		return listInfo.isMore();
 	}
 	/**
-	 * tagÖĞµ÷ÓÃÒÔÏÂ·½·¨»ñÈ¡·ÖÒ³Ê±µÄ×ÜµÄÊı¾İÌõÊı£¬ÒÔ±ã¼ÆËãÒ³Ãæ×ÜÊı
+	 * tagä¸­è°ƒç”¨ä»¥ä¸‹æ–¹æ³•è·å–åˆ†é¡µæ—¶çš„æ€»çš„æ•°æ®æ¡æ•°ï¼Œä»¥ä¾¿è®¡ç®—é¡µé¢æ€»æ•°
 	 */
 	public long getItemCount()
 		//throws Exception
@@ -188,7 +188,7 @@ public abstract class DataInfoImpl implements DataInfo
 	}
 
 	/**
-	 * tagÖĞµ÷ÓÃÒÔÏÂ·½·¨»ñÈ¡·ÖÒ³Êı¾İ
+	 * tagä¸­è°ƒç”¨ä»¥ä¸‹æ–¹æ³•è·å–åˆ†é¡µæ•°æ®
 	 */
 	public Object getPageItems()
 	{
@@ -204,7 +204,7 @@ public abstract class DataInfoImpl implements DataInfo
 	}
 
 	/**
-	 * tagÖĞµ÷ÓÃÒÔÏÂ·½·¨»ñÈ¡ÁĞ±íÊı¾İ
+	 * tagä¸­è°ƒç”¨ä»¥ä¸‹æ–¹æ³•è·å–åˆ—è¡¨æ•°æ®
 	 */
 	public Object getListItems()
 	{
@@ -221,7 +221,7 @@ public abstract class DataInfoImpl implements DataInfo
 	}
 
 	/**
-	 * tagÖĞµ÷ÓÃÒÔÏÂ·½·¨»ñÈ¡·µ»ØµÄÊı¾İ¼¯ÖĞËù°üº¬µÄÖµ¶ÔÏóµÄClass¶ÔÏó
+	 * tagä¸­è°ƒç”¨ä»¥ä¸‹æ–¹æ³•è·å–è¿”å›çš„æ•°æ®é›†ä¸­æ‰€åŒ…å«çš„å€¼å¯¹è±¡çš„Classå¯¹è±¡
 	 */
 	public Class getVOClass() {
 //		if(listInfo == null
@@ -233,7 +233,7 @@ public abstract class DataInfoImpl implements DataInfo
 	}
 
 	 /**
-     * ·ÖÒ³ÏÔÊ¾Ê±´ÓÊı¾İ¿â»ñÈ¡Ã¿Ò³µÄÊı¾İÏî
+     * åˆ†é¡µæ˜¾ç¤ºæ—¶ä»æ•°æ®åº“è·å–æ¯é¡µçš„æ•°æ®é¡¹
      * @return Hashtable[]
      */
 	public Object[] getPageItemsFromDB()
@@ -242,14 +242,14 @@ public abstract class DataInfoImpl implements DataInfo
 	}
 
 	/**
-     * Èç¹û·ÖÒ³tagÖ»ÊÇ×÷ÎªÁĞ±íÀ´ÊµÏÖÊ±£¬µ÷ÓÃ¸Ã·½·¨´ÓÊı¾İ¿âÖĞ»ñÈ¡
-     * ÒªÏÔÊ¾µÄÁĞ±íÊı¾İ
+     * å¦‚æœåˆ†é¡µtagåªæ˜¯ä½œä¸ºåˆ—è¡¨æ¥å®ç°æ—¶ï¼Œè°ƒç”¨è¯¥æ–¹æ³•ä»æ•°æ®åº“ä¸­è·å–
+     * è¦æ˜¾ç¤ºçš„åˆ—è¡¨æ•°æ®
      * @return java.util.List
      */
 	public Object[] getListItemsFromDB(){return null;}
 
 	/**
-	 * »ñÈ¡µ±Ç°Ò³ÃæµÄ¼ÇÂ¼ÌõÊı
+	 * è·å–å½“å‰é¡µé¢çš„è®°å½•æ¡æ•°
 	 */
 	public int getDataSize()
 	{
@@ -267,7 +267,7 @@ public abstract class DataInfoImpl implements DataInfo
 	}
 	
 	/**
-	 * »ñÈ¡µ±Ç°Ò³ÃæµÄ¼ÇÂ¼ÌõÊı
+	 * è·å–å½“å‰é¡µé¢çš„è®°å½•æ¡æ•°
 	 */
 	public int getDataResultSize()
 	{
@@ -285,11 +285,11 @@ public abstract class DataInfoImpl implements DataInfo
 	}
 
 	/**
-	 * ¶ÔÁĞ±í½øĞĞ·ÖÒ³²Ù×÷,Êı¾İÔ´ÊÇÒ»¸öÁĞ±í
-	 * @param datas ÁĞ±íÊı¾İ
-	 * @param offset »ñÈ¡Êı¾İµÄÆğÊ¼Î»ÖÃ
-	 * @param pageItems »ñÈ¡Êı¾İµÄÌõÊı
-	 * @return ListInfo ¶Ô·ÖÒ³Êı¾İºÍ×Ü¼ÇÂ¼ÌõÊıµÄ·â×°Àà
+	 * å¯¹åˆ—è¡¨è¿›è¡Œåˆ†é¡µæ“ä½œ,æ•°æ®æºæ˜¯ä¸€ä¸ªåˆ—è¡¨
+	 * @param datas åˆ—è¡¨æ•°æ®
+	 * @param offset è·å–æ•°æ®çš„èµ·å§‹ä½ç½®
+	 * @param pageItems è·å–æ•°æ®çš„æ¡æ•°
+	 * @return ListInfo å¯¹åˆ†é¡µæ•°æ®å’Œæ€»è®°å½•æ¡æ•°çš„å°è£…ç±»
 	 */
 
 	public static ListInfo pagerList(List datas,int offset,int pageItems)

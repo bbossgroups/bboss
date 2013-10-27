@@ -24,7 +24,7 @@ import org.junit.Test;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2010-7-22 下午02:44:46
+ * @Date 2010-7-22 涓嬪崍02:44:46
  * @author biaoping.yin
  * @version 1.0
  */
@@ -54,7 +54,7 @@ public class ConcurrentTest {
 			while(true)
 			{
 				RPCTestInf testInf = (RPCTestInf)context.getBeanObject("(rmi::172.16.17.216:1099)/rpc.test");
-				byte[] bytes = testInf.getBytes("多多");
+				byte[] bytes = testInf.getBytes("澶氬");
 				System.out.println(bytes);
 				try {
 					sleep(1);
@@ -73,7 +73,7 @@ public class ConcurrentTest {
 			while(true)
 			{
 				RPCTestInf testInf = (RPCTestInf)context.getBeanObject("(rmi::172.16.17.216:1099)/rpc.test");
-				String bytes = testInf.getString("多多");
+				String bytes = testInf.getString("澶氬");
 				System.out.println(bytes);
 				try {
 					sleep(1);

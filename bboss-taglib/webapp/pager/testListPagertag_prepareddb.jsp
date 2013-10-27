@@ -1,9 +1,9 @@
-<%@ page contentType="text/html; charset=GBK" language="java" import="java.sql.*,java.util.List" errorPage=""%>
+<%@ page contentType="text/html; charset=UTF-8" language="java" import="java.sql.*,java.util.List" errorPage=""%>
 <%@ taglib uri="/WEB-INF/pager-taglib.tld" prefix="pg"%>
 <!-- 
-	²âÊÔÔÚlist±êÇ©ÉÏÖ±½ÓÖ´ÐÐ Ô¤±àÒëÊý¾Ý¿â²Ù×÷£¬»ñÈ¡ÁÐ±íÐÅÏ¢ÊµÀý
-	statement:Êý¾Ý¿âÔ¤±àÒë²éÑ¯Óï¾ä
-	dbname:²éÑ¯µÄÏàÓ¦Êý¾Ý¿âÃû³Æ£¬ÔÚpoolman.xmlÎÄ¼þÖÐ½øÐÐÅäÖÃ
+	æµ‹è¯•åœ¨listæ ‡ç­¾ä¸Šç›´æŽ¥æ‰§è¡Œ é¢„ç¼–è¯‘æ•°æ®åº“æ“ä½œï¼ŒèŽ·å–åˆ—è¡¨ä¿¡æ¯å®žä¾‹
+	statement:æ•°æ®åº“é¢„ç¼–è¯‘æŸ¥è¯¢è¯­å¥
+	dbname:æŸ¥è¯¢çš„ç›¸åº”æ•°æ®åº“åç§°ï¼Œåœ¨poolman.xmlæ–‡ä»¶ä¸­è¿›è¡Œé…ç½®
 -->
 
 <%
@@ -13,7 +13,7 @@
 %>
 <html>
 <head>
-<title>²âÊÔÔÚlist±êÇ©ÉÏÖ±½ÓÖ´ÐÐÔ¤±àÒëÊý¾Ý¿â²Ù×÷£¬»ñÈ¡·ÖÒ³ÁÐ±íÐÅÏ¢ÊµÀý</title>
+<title>æµ‹è¯•åœ¨listæ ‡ç­¾ä¸Šç›´æŽ¥æ‰§è¡Œé¢„ç¼–è¯‘æ•°æ®åº“æ“ä½œï¼ŒèŽ·å–åˆ†é¡µåˆ—è¡¨ä¿¡æ¯å®žä¾‹</title>
 </head>
 <body>
 
@@ -25,9 +25,9 @@
 		<pg:list autosort="true" id="testid" statement="<%=statement%>" sqlparamskey="key"
 	    		  dbname="bspf" isList="false" maxPageItems="8">
 			<pg:header>
-				<pg:title type="td" width="15%" className="headercolor" title="±íÃû" sort="true" colName="table_name"/>
-				<pg:title type="td" width="15%" className="headercolor"  sort="true" colName="table_id_name" title="±íidÃû"/>
-				<pg:title type="td" width="15%" className="headercolor"  sort="true" colName="table_id_value" title="±íidÖµ"/>				
+				<pg:title type="td" width="15%" className="headercolor" title="è¡¨å" sort="true" colName="table_name"/>
+				<pg:title type="td" width="15%" className="headercolor"  sort="true" colName="table_id_name" title="è¡¨idå"/>
+				<pg:title type="td" width="15%" className="headercolor"  sort="true" colName="table_id_value" title="è¡¨idå€¼"/>				
 			</pg:header>
 			<pg:param name="table_name"/>
 			<tr class="cms_data_tr" id="<pg:cell colName="table_name" defaultValue=""/>">

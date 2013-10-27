@@ -28,7 +28,7 @@ import org.frameworkset.spi.support.validate.ObjectError;
 
 /**
  * <p>Title: ErrorTag.java</p> 
- * <p>Description: Êä³öÈ«¾Ö´íÎóºÍ²ÎÊı°ó¶¨´íÎóĞÅÏ¢±êÇ©
+ * <p>Description: è¾“å‡ºå…¨å±€é”™è¯¯å’Œå‚æ•°ç»‘å®šé”™è¯¯ä¿¡æ¯æ ‡ç­¾
  * 
  * <div>error:
 	<pg:errors >

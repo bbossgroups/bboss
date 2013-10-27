@@ -26,7 +26,7 @@ import com.frameworkset.orm.platform.Platform;
  * <p>Description: </p>
  *
  * <p>Copyright: Copyright (c) 2007</p>
- * @Date 2010-1-26 œ¬ŒÁ03:58:36
+ * @Date 2010-1-26 ‰∏ãÂçà03:58:36
  * @author biaoping.yin
  * @version 1.0
  */

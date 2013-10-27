@@ -21,10 +21,10 @@ import java.lang.reflect.Method;
 
 /**
  * <p>Title: JobMethod.java</p> 
- * <p>Description: 作业方法执行对象</p>
+ * <p>Description: 浣滀笟鏂规硶鎵ц瀵硅薄</p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2011-1-22 下午07:36:24
+ * @Date 2011-1-22 涓嬪崍07:36:24
  * @author biaoping.yin
  * @version 1.0
  */

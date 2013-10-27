@@ -99,7 +99,7 @@ public class FutureCall extends BaseFutureCall
                     Client client_ = ClientProxy.getClient(client);                    
                     HTTPConduit http = (HTTPConduit) client_.getConduit();
                     /**
-                     * ³õÊ¼»¯cxf¿Í·ş¶ËÁ¬½Ó²ÎÊı¿ªÊ¼
+                     * åˆå§‹åŒ–cxfå®¢æœç«¯è¿æ¥å‚æ•°å¼€å§‹
                      */
                     Pro client_config = BaseSPIManager.getProBean("cxf.client.config");
                     if(client_config != null)
@@ -129,11 +129,11 @@ public class FutureCall extends BaseFutureCall
                     }
                     clients.put(url, client);
                     /**
-                     * ³õÊ¼»¯cxf¿Í·ş¶ËÁ¬½Ó²ÎÊı½áÊø
+                     * åˆå§‹åŒ–cxfå®¢æœç«¯è¿æ¥å‚æ•°ç»“æŸ
                      */
                     
                     /**
-                     * ³õÊ¼»¯cxf¿Í·ş¶Ëssl²ÎÊı¿ªÊ¼
+                     * åˆå§‹åŒ–cxfå®¢æœç«¯sslå‚æ•°å¼€å§‹
                      */
 //                    TLSClientParameters ssl = new TLSClientParameters();
 //                    ssl.setTrustManagers(SSLHelper.getTrustManagers(null, null));
@@ -141,14 +141,14 @@ public class FutureCall extends BaseFutureCall
 //                    
 //                    http.setTlsClientParameters((TLSClientParameters)null);
                     /**
-                     * ³õÊ¼»¯cxf¿Í·ş¶Ëssl²ÎÊı½áÊø
+                     * åˆå§‹åŒ–cxfå®¢æœç«¯sslå‚æ•°ç»“æŸ
                      */
                     /**
-                     * ³õÊ¼»¯cxf¿Í·ş¶Ë¼øÈ¨²ÎÊı¿ªÊ¼
+                     * åˆå§‹åŒ–cxfå®¢æœç«¯é‰´æƒå‚æ•°å¼€å§‹
                      */
 //                    http.setAuthorization(authorization);
                     /**
-                     * ³õÊ¼»¯cxf¿Í·ş¶Ë¼øÈ¨²ÎÊı½áÊø
+                     * åˆå§‹åŒ–cxfå®¢æœç«¯é‰´æƒå‚æ•°ç»“æŸ
                      */
                 }
             }            

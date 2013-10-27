@@ -50,7 +50,7 @@ public class ConfigSQLUploadDaoImpl implements UpLoadDao
 {
 	private ConfigSQLExecutor executor ;
 	/**
-	 * ÉÏ´«¸½¼ş
+	 * ä¸Šä¼ é™„ä»¶
 	 * @param inputStream
 	 * @param filename
 	 * @return
@@ -71,7 +71,7 @@ public class ConfigSQLUploadDaoImpl implements UpLoadDao
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			result = false;
-			throw new Exception("ÉÏ´«¸½¼ş¹ØÁªÁÙ¿ØÖ¸Áî²¼¿ØĞÅÏ¢¸½¼şÊ§°Ü£º" + ex);
+			throw new Exception("ä¸Šä¼ é™„ä»¶å…³è”ä¸´æ§æŒ‡ä»¤å¸ƒæ§ä¿¡æ¯é™„ä»¶å¤±è´¥ï¼š" + ex);
 		} finally {
 			if(inputStream != null){
 				inputStream.close();
@@ -94,15 +94,15 @@ public class ConfigSQLUploadDaoImpl implements UpLoadDao
 														throws Exception
 												{
 
-													// ¶¨ÒåÎÄ¼ş¶ÔÏó
+													// å®šä¹‰æ–‡ä»¶å¯¹è±¡
 													File f = new File(
 															"d:/",
 															record
 																	.getString("filename"));
-													// Èç¹ûÎÄ¼şÒÑ¾­´æÔÚÔòÖ±½Ó·µ»Øf
+													// å¦‚æœæ–‡ä»¶å·²ç»å­˜åœ¨åˆ™ç›´æ¥è¿”å›f
 													if (f.exists())
 														return f;
-													// ½«blobÖĞµÄÎÄ¼şÄÚÈİ´æ´¢µ½ÎÄ¼şÖĞ
+													// å°†blobä¸­çš„æ–‡ä»¶å†…å®¹å­˜å‚¨åˆ°æ–‡ä»¶ä¸­
 													record
 															.getFile(
 																		"filecontent",
@@ -214,12 +214,12 @@ public class ConfigSQLUploadDaoImpl implements UpLoadDao
 														throws Exception
 												{
 
-													// ¶¨ÒåÎÄ¼ş¶ÔÏó
+													// å®šä¹‰æ–‡ä»¶å¯¹è±¡
 													File f = new File("d:/",record.getString("filename"));
-													// Èç¹ûÎÄ¼şÒÑ¾­´æÔÚÔòÖ±½Ó·µ»Øf
+													// å¦‚æœæ–‡ä»¶å·²ç»å­˜åœ¨åˆ™ç›´æ¥è¿”å›f
 													if (f.exists())
 														return f;
-													// ½«blobÖĞµÄÎÄ¼şÄÚÈİ´æ´¢µ½ÎÄ¼şÖĞ
+													// å°†blobä¸­çš„æ–‡ä»¶å†…å®¹å­˜å‚¨åˆ°æ–‡ä»¶ä¸­
 													record.getFile("filecontent",f);
 													return f;
 												}
@@ -256,7 +256,7 @@ public class ConfigSQLUploadDaoImpl implements UpLoadDao
 		} catch (Exception ex) {
 		
 			
-			throw new Exception("ÉÏ´«¸½¼şÊ§°Ü£º" + ex);
+			throw new Exception("ä¸Šä¼ é™„ä»¶å¤±è´¥ï¼š" + ex);
 		} 
 		
 	}

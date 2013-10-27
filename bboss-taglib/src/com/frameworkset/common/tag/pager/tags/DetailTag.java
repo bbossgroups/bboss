@@ -45,12 +45,12 @@ import com.frameworkset.common.tag.pager.ObjectDataInfoImpl;
 import com.frameworkset.util.StringUtil;
 
 /**
- * ´Ó¸ø¶¨µÄsession»òÕßrequest»òÕßpageContextÖĞ»ñÈ¡¸ø¶¨Ãû³ÆµÄÖµ¶ÔÏó
- * ÓÃcellTagÏÔÊ¾ÊôĞÔµÄÖµ£¬
- * ÓÃlist tagÏÔÊ¾ÀàĞÍÎªlist,setµÄÊôĞÔÖĞµÄ¶ÔÏóµÄÊôĞÔÖµ.
+ * ä»ç»™å®šçš„sessionæˆ–è€…requestæˆ–è€…pageContextä¸­è·å–ç»™å®šåç§°çš„å€¼å¯¹è±¡
+ * ç”¨cellTagæ˜¾ç¤ºå±æ€§çš„å€¼ï¼Œ
+ * ç”¨list tagæ˜¾ç¤ºç±»å‹ä¸ºlist,setçš„å±æ€§ä¸­çš„å¯¹è±¡çš„å±æ€§å€¼.
  *
- * Èç¹û±¾±êÇ©×÷ÎªÒ»¸ö·ÖÒ³/ÁĞ±í±êÇ©µÄÇ¶Ì×±êÇ©Ê¹ÓÃÊ±£¬
- * ¿ÉÉèÖÃcolName,propertyÊôĞÔ£¬²»ÒªÉèÖÃÆäËû¼¸¸öÊôĞÔ
+ * å¦‚æœæœ¬æ ‡ç­¾ä½œä¸ºä¸€ä¸ªåˆ†é¡µ/åˆ—è¡¨æ ‡ç­¾çš„åµŒå¥—æ ‡ç­¾ä½¿ç”¨æ—¶ï¼Œ
+ * å¯è®¾ç½®colName,propertyå±æ€§ï¼Œä¸è¦è®¾ç½®å…¶ä»–å‡ ä¸ªå±æ€§
  * @author biaoping.ying
  * @version 1.0
  *  2004-9-10
@@ -65,25 +65,25 @@ public class DetailTag extends PagerDataSet implements FieldHelper{
 	private static final Logger log = Logger.getLogger(DetailTag.class);
 
 
-	/**ÏêÏ¸ÏÔÊ¾Ò³µÄÏÔÊ¾µÄ×Ö¶ÎĞÅÏ¢,ÒÔ¶ººÅ·Ö¸ô*/
+	/**è¯¦ç»†æ˜¾ç¤ºé¡µçš„æ˜¾ç¤ºçš„å­—æ®µä¿¡æ¯,ä»¥é€—å·åˆ†éš”*/
 	protected String field;
-	/**ÏêÏ¸ÏÔÊ¾Ò³µÄÏÔÊ¾µÄ×Ö¶ÎÏÔÊ¾Ãû³Æ,ÒÔ¶ººÅ·Ö¸ô*/
+	/**è¯¦ç»†æ˜¾ç¤ºé¡µçš„æ˜¾ç¤ºçš„å­—æ®µæ˜¾ç¤ºåç§°,ä»¥é€—å·åˆ†éš”*/
 	protected String title;
 
-	/**ÏêÏ¸ÏÔÊ¾Ò³µÄÏÔÊ¾µÄ×Ö¶ÎÏÔÊ¾¿í¶È,ÒÔ¶ººÅ·Ö¸ô*/
+	/**è¯¦ç»†æ˜¾ç¤ºé¡µçš„æ˜¾ç¤ºçš„å­—æ®µæ˜¾ç¤ºå®½åº¦,ä»¥é€—å·åˆ†éš”*/
 	protected String width;
 
 	protected boolean exportMeta;
 	
 	protected boolean wapflag = false;
 	/**
-	 * Ö¸¶¨ÄÚÖÃ±äÁ¿beaninfoµÄ±äÁ¿Ãû³Æ
+	 * æŒ‡å®šå†…ç½®å˜é‡beaninfoçš„å˜é‡åç§°
 	 */
 	protected String beaninfoName = "beaninfo";
 
 	/**
-	 * ÖØÔØ¸¸ÀàµÄ·½·¨£¬·ÖÎöÏêÏ¸ÏÔÊ¾Ò³µÄÏÔÊ¾µÄ×Ö¶ÎĞÅÏ¢Îª×Ö¶ÎÊı×é
-	 * @return °üº¬ĞÅÏ¢×Ö¶ÎµÄÊı×é
+	 * é‡è½½çˆ¶ç±»çš„æ–¹æ³•ï¼Œåˆ†æè¯¦ç»†æ˜¾ç¤ºé¡µçš„æ˜¾ç¤ºçš„å­—æ®µä¿¡æ¯ä¸ºå­—æ®µæ•°ç»„
+	 * @return åŒ…å«ä¿¡æ¯å­—æ®µçš„æ•°ç»„
 	 */
 	public String[] getFields() {
 		if(field == null)
@@ -113,7 +113,7 @@ public class DetailTag extends PagerDataSet implements FieldHelper{
 //				this.pageContext,this);
 //
 //		// /*
-//		// * idµÄÖµÎª¡°pager¡°,±¸·İÏÈÇ°µÄÒ³ÃæµÃÉÏÏÂÎÄ»·¾³£¬È»ºóÔÙ½«µ±Ç°µÃÉÏÏÂÎÄÉèÖÃµ½request»òpageContextÖĞ
+//		// * idçš„å€¼ä¸ºâ€œpagerâ€œ,å¤‡ä»½å…ˆå‰çš„é¡µé¢å¾—ä¸Šä¸‹æ–‡ç¯å¢ƒï¼Œç„¶åå†å°†å½“å‰å¾—ä¸Šä¸‹æ–‡è®¾ç½®åˆ°requestæˆ–pageContextä¸­
 //		// */
 //		// if(REQUEST.equals(scope))
 //		// {
@@ -159,7 +159,7 @@ public class DetailTag extends PagerDataSet implements FieldHelper{
 //		// offset = 0;
 //		// itemCount = 0;
 //
-////		// ÉèÖÃÊÇ·ñÊÇÉıĞò»¹ÊÇ½µĞò
+////		// è®¾ç½®æ˜¯å¦æ˜¯å‡åºè¿˜æ˜¯é™åº
 ////		String desc_key = pagerContext.getKey("desc");
 ////
 ////		String t_desc = request.getParameter(desc_key);
@@ -170,15 +170,15 @@ public class DetailTag extends PagerDataSet implements FieldHelper{
 ////			desc = true;
 ////
 ////		pagerContext.setDesc(desc);
-////		// ÉèÖÃÅÅĞò¹Ø¼ü×Ö£¬Ê×ÏÈÍ¨¹ırequest.getParameter»ñÈ¡
+////		// è®¾ç½®æ’åºå…³é”®å­—ï¼Œé¦–å…ˆé€šè¿‡request.getParameterè·å–
 ////
 ////		String sortKey_key = pagerContext.getKey("sortKey");
 ////
 ////		String t_sortKey = request.getParameter(sortKey_key);
-////		// Èç¹û»ñÈ¡µ½µÄsortKeyÎª¿ÕÊ±£¬Í¨¹ırequest.getAttribute»ñÈ¡
+////		// å¦‚æœè·å–åˆ°çš„sortKeyä¸ºç©ºæ—¶ï¼Œé€šè¿‡request.getAttributeè·å–
 ////		if (t_sortKey == null)
 ////			t_sortKey = (String) request.getAttribute(sortKey_key);
-////		// Èç¹ûÉÏÃæ»ñÈ¡µ½µÄsortKey²»ÎªnullÊ±£¬ÉèÖÃsortKey
+////		// å¦‚æœä¸Šé¢è·å–åˆ°çš„sortKeyä¸ä¸ºnullæ—¶ï¼Œè®¾ç½®sortKey
 ////		if (t_sortKey != null)
 ////			pagerContext.setSortKey(t_sortKey);
 //
@@ -214,7 +214,7 @@ public class DetailTag extends PagerDataSet implements FieldHelper{
 				}
 			}
 		    /**
-		     * ÉèÖÃ¶ÔÏóµÄÔ­Ä£ĞÍ
+		     * è®¾ç½®å¯¹è±¡çš„åŸæ¨¡å‹
 		     */
 	//	    setMeta();
 			
@@ -223,7 +223,7 @@ public class DetailTag extends PagerDataSet implements FieldHelper{
 	
 			
 			/**
-			 * µÃµ½Ò³ÃæÉÏÒªÏÔÊ¾µÄÖµ¶ÔÏóÖĞ×Ö¶Î
+			 * å¾—åˆ°é¡µé¢ä¸Šè¦æ˜¾ç¤ºçš„å€¼å¯¹è±¡ä¸­å­—æ®µ
 			 *
 			 */
 			try { 
@@ -260,7 +260,7 @@ public class DetailTag extends PagerDataSet implements FieldHelper{
 			    else if(dataInfo instanceof DataInfo)
 			    	loadClassData(dataInfo, pagerContext.ListMode());
 	//			/**
-	//			 * ÒÔÏÂµÄ´úÂë¶ÔÈ¡µ½µÄÊı¾İ£¨¼°µ±Ç°Ò³ÃæÊı¾İ£©½øĞĞÅÅĞò
+	//			 * ä»¥ä¸‹çš„ä»£ç å¯¹å–åˆ°çš„æ•°æ®ï¼ˆåŠå½“å‰é¡µé¢æ•°æ®ï¼‰è¿›è¡Œæ’åº
 	//			 */
 	//			sortKey = pagerContext.getSortKey();
 	
@@ -295,7 +295,7 @@ public class DetailTag extends PagerDataSet implements FieldHelper{
 	//
 	//		}
 	//		/**
-	//		 * Èç¹û±¾±êÇ©×÷ÎªÒ»¸ö·ÖÒ³/ÁĞ±í±êÇ©µÄÇ¶Ì×±êÇ©Ê¹ÓÃÊ±£¬¿ÉÉèÖÃcolName,propertyÊôĞÔ£¬²»ÒªÉèÖÃÆäËû¼¸¸öÊôĞÔ
+	//		 * å¦‚æœæœ¬æ ‡ç­¾ä½œä¸ºä¸€ä¸ªåˆ†é¡µ/åˆ—è¡¨æ ‡ç­¾çš„åµŒå¥—æ ‡ç­¾ä½¿ç”¨æ—¶ï¼Œå¯è®¾ç½®colName,propertyå±æ€§ï¼Œä¸è¦è®¾ç½®å…¶ä»–å‡ ä¸ªå±æ€§
 	//		 */
 	//		else
 	//		{
@@ -343,7 +343,7 @@ public class DetailTag extends PagerDataSet implements FieldHelper{
 	}
 
 //	/**
-//	 * ¸ù¾İ²»Í¬µÄ·¶Î§»ñÈ¡Êı¾İ¶ÔÏó
+//	 * æ ¹æ®ä¸åŒçš„èŒƒå›´è·å–æ•°æ®å¯¹è±¡
 //	 * @param scope
 //	 * @throws LoadDataException
 //	 */
@@ -373,10 +373,10 @@ public class DetailTag extends PagerDataSet implements FieldHelper{
 //			//System.out.println("dataSet:" + dataSet);
 //			//System.out.println("dataSet.getRowid():" + dataSet.getRowid());
 //			/**
-//			 * ¸ù¾İµ÷ÓÃgetProperty()·½·¨·µ»ØÖµÅĞ¶Ïµ±Ç°ÁĞÊÇ·ñÎªbean
-//			 * Èç¹ûÎª¿Õ,±íÊ¾×Ö¶ÎÎªcollection
+//			 * æ ¹æ®è°ƒç”¨getProperty()æ–¹æ³•è¿”å›å€¼åˆ¤æ–­å½“å‰åˆ—æ˜¯å¦ä¸ºbean
+//			 * å¦‚æœä¸ºç©º,è¡¨ç¤ºå­—æ®µä¸ºcollection
 //			 *
-//			 * ·ñÔò±íÊ¾×Ö¶ÎÊÇÒ»¸öjavabean,getProperty()·µ»ØµÄÖµÎª¸Ã¶ÔÏóµÄÒ»¸öÊôĞÔ£¬ÀàĞÍÎªcollection
+//			 * å¦åˆ™è¡¨ç¤ºå­—æ®µæ˜¯ä¸€ä¸ªjavabean,getProperty()è¿”å›çš„å€¼ä¸ºè¯¥å¯¹è±¡çš„ä¸€ä¸ªå±æ€§ï¼Œç±»å‹ä¸ºcollection
 //			 */
 //
 //			if (getProperty() == null) {
@@ -447,7 +447,7 @@ public class DetailTag extends PagerDataSet implements FieldHelper{
 //		{
 			removeVariable();
 			beaninfoName = "beaninfo";
-			//»Ö¸´¸¸beaninfoÊµÀı
+			//æ¢å¤çˆ¶beaninfoå®ä¾‹
 			recoverParentBeanInfo();
 //		}
 //		this.request = null;
@@ -463,7 +463,7 @@ public class DetailTag extends PagerDataSet implements FieldHelper{
 	
 	
 	/**
-	 * »Ö¸´¸¸DetailTag±äÁ¿
+	 * æ¢å¤çˆ¶DetailTagå˜é‡
 	 *
 	 */
 	 
@@ -479,7 +479,7 @@ public class DetailTag extends PagerDataSet implements FieldHelper{
 	}
 	
 	/**
-	 * »ñÈ¡¸¸beaninfo¶ÔÏóÊµÀı
+	 * è·å–çˆ¶beaninfoå¯¹è±¡å®ä¾‹
 	 * @return DetailTag
 	 */
 	private DetailTag getParentBeanInfo()
@@ -606,13 +606,13 @@ public class DetailTag extends PagerDataSet implements FieldHelper{
     }
 
     /**
-	 * ÖØĞ´¸¸ÀàÖĞ·½·¨£¬ÅĞ¶ÏÊÇ·ñµ¼³öÊı¾İµ½ÎÄ¼şÖĞ
+	 * é‡å†™çˆ¶ç±»ä¸­æ–¹æ³•ï¼Œåˆ¤æ–­æ˜¯å¦å¯¼å‡ºæ•°æ®åˆ°æ–‡ä»¶ä¸­
 	 * @return boolean
 	 */
     protected boolean isExportMeta()
     {
-        //Èç¹ûÊÇÇ¶Ì×ÔÚ·ÖÒ³/ÁĞ±íÖĞµÄÏêÏ¸ĞÅÏ¢Ö±½ÓÊ¹ÓÃ¸¸ÀàµÄ·½·¨£¬·ñÔò¸ù¾İÊôĞÔµÄÅäÖÃÀ´
-        //ÅĞ¶ÏÊÇ·ñµ¼³öÊı¾İ
+        //å¦‚æœæ˜¯åµŒå¥—åœ¨åˆ†é¡µ/åˆ—è¡¨ä¸­çš„è¯¦ç»†ä¿¡æ¯ç›´æ¥ä½¿ç”¨çˆ¶ç±»çš„æ–¹æ³•ï¼Œå¦åˆ™æ ¹æ®å±æ€§çš„é…ç½®æ¥
+        //åˆ¤æ–­æ˜¯å¦å¯¼å‡ºæ•°æ®
         if(getColName() != null)
             return super.isExportMeta();
         else

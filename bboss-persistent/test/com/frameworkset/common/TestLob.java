@@ -58,7 +58,7 @@ import com.frameworkset.util.StringUtil;
  * </p>
  *
  * <p>Copyright: Copyright (c) 2007</p>
- * @Date 2011-12-27 ÏÂÎç2:56:03
+ * @Date 2011-12-27 ä¸‹åˆ2:56:03
  * @author biaoping.yin
  * @version 1.0
  */
@@ -67,17 +67,17 @@ public class TestLob {
 	public static class LobBean
 	{
 		private String id;		
-		@Column(type="blob")//Ö¸Ê¾ÊôĞÔµÄÖµ°´blobÀàĞÍĞ´Èë»òÕß¶ÁÈ¡
+		@Column(type="blob")//æŒ‡ç¤ºå±æ€§çš„å€¼æŒ‰blobç±»å‹å†™å…¥æˆ–è€…è¯»å–
 		private String blobname;
-		@Column(type="clob")//Ö¸Ê¾ÊôĞÔµÄÖµ°´clobÀàĞÍĞ´Èë»òÕß¶ÁÈ¡
+		@Column(type="clob")//æŒ‡ç¤ºå±æ€§çš„å€¼æŒ‰clobç±»å‹å†™å…¥æˆ–è€…è¯»å–
 		private String clobname; 
 
-        @Column(name="name_")//Ö¸Ê¾ÊôĞÔÃû³ÆÓë±í×Ö¶ÎÃû³ÆÓ³Éä¹ØÏµ£¬nameÊôĞÔ¶ÔÓ¦ÓÚ±íÖĞµÄname_×Ö¶Î
+        @Column(name="name_")//æŒ‡ç¤ºå±æ€§åç§°ä¸è¡¨å­—æ®µåç§°æ˜ å°„å…³ç³»ï¼Œnameå±æ€§å¯¹åº”äºè¡¨ä¸­çš„name_å­—æ®µ
 		private String name; 
-        @Column(dataformat="yyyy-mm-dd")//Ö¸Ê¾ÈÕÆÚÀàĞÍÊôĞÔÖµµÄ´æ´¢ºÍ¶ÁÈ¡×ª»»ÈÕÆÚ¸ñÊ½
+        @Column(dataformat="yyyy-mm-dd")//æŒ‡ç¤ºæ—¥æœŸç±»å‹å±æ€§å€¼çš„å­˜å‚¨å’Œè¯»å–è½¬æ¢æ—¥æœŸæ ¼å¼
 		private String regdate; 
         
-//        ¡£¡£¡£¡£¡£¡£
+//        ã€‚ã€‚ã€‚ã€‚ã€‚ã€‚
 
 
 	}
@@ -153,7 +153,7 @@ public class TestLob {
 			sql = "INSERT INTO CLOBFILE (FILENAME,FILECONTENT,fileid,FILESIZE) VALUES(#[filename],#[FILECONTENT],#[FILEID],#[FILESIZE])";
 			SQLParams sqlparams = new SQLParams();
 			sqlparams.addSQLParam("filename", file.getName(), SQLParams.STRING);
-			sqlparams.addSQLParamWithCharset("FILECONTENT", file,SQLParams.CLOBFILE,"GBK");
+			sqlparams.addSQLParamWithCharset("FILECONTENT", file,SQLParams.CLOBFILE,"UTF-8");
 			sqlparams.addSQLParam("FILEID", UUID.randomUUID().toString(),SQLParams.STRING);
 			sqlparams.addSQLParam("FILESIZE", file.length(),SQLParams.LONG);
 			SQLExecutor.insertBean(sql, sqlparams);			
@@ -161,7 +161,7 @@ public class TestLob {
 		} catch (Exception ex) {
 		
 			
-			throw new Exception("ÉÏ´«¸½¼ş¹ØÁªÁÙ¿ØÖ¸Áî²¼¿ØĞÅÏ¢¸½¼şÊ§°Ü£º" + ex);
+			throw new Exception("ä¸Šä¼ é™„ä»¶å…³è”ä¸´æ§æŒ‡ä»¤å¸ƒæ§ä¿¡æ¯é™„ä»¶å¤±è´¥ï¼š" + ex);
 		} 
 		
 		
@@ -184,15 +184,15 @@ public class TestLob {
 		TransactionManager tm = new TransactionManager();
 		try {
 			tm.begin();
-			SQLExecutor.queryField("select 1 as ss from CLOBFILE where fieldid=? for update nowait","11");//Ëø¶¨¼ÇÂ¼
+			SQLExecutor.queryField("select 1 as ss from CLOBFILE where fieldid=? for update nowait","11");//é”å®šè®°å½•
 			sql = "update CLOBFILE set FILECONTENT=#[FILECONTENT]) where fileid = #[FILEID])";
 			SQLParams sqlparams = new SQLParams();
-			sqlparams.addSQLParamWithCharset("FILECONTENT", file,SQLParams.CLOBFILE,"GBK");
+			sqlparams.addSQLParamWithCharset("FILECONTENT", file,SQLParams.CLOBFILE,"UTF-8");
 			sqlparams.addSQLParam("FILEID", "11",SQLParams.STRING);
 			SQLExecutor.updateBean(sql, sqlparams);			
 			tm.commit();
 		} catch (Exception ex) {
-			throw new Exception("ÉÏ´«¸½¼ş¹ØÁªÁÙ¿ØÖ¸Áî²¼¿ØĞÅÏ¢¸½¼şÊ§°Ü£º" + ex);
+			throw new Exception("ä¸Šä¼ é™„ä»¶å…³è”ä¸´æ§æŒ‡ä»¤å¸ƒæ§ä¿¡æ¯é™„ä»¶å¤±è´¥ï¼š" + ex);
 		} 
 		finally
 		{
@@ -203,7 +203,7 @@ public class TestLob {
 	}
 	
 	/**
-	 * ÉÏ´«¸½¼ş
+	 * ä¸Šä¼ é™„ä»¶
 	 * @param inputStream
 	 * @param filename
 	 * @return
@@ -224,7 +224,7 @@ public class TestLob {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			result = false;
-			throw new Exception("ÉÏ´«¸½¼ş¹ØÁªÁÙ¿ØÖ¸Áî²¼¿ØĞÅÏ¢¸½¼şÊ§°Ü£º" + ex);
+			throw new Exception("ä¸Šä¼ é™„ä»¶å…³è”ä¸´æ§æŒ‡ä»¤å¸ƒæ§ä¿¡æ¯é™„ä»¶å¤±è´¥ï¼š" + ex);
 		} finally {
 			if(inputStream != null){
 				inputStream.close();
@@ -247,12 +247,12 @@ public class TestLob {
 														throws Exception
 												{
 
-													// ¶¨ÒåÎÄ¼ş¶ÔÏó
+													// å®šä¹‰æ–‡ä»¶å¯¹è±¡
 													File f = new File("d:/",record.getString("filename"));
-													// Èç¹ûÎÄ¼şÒÑ¾­´æÔÚÔòÖ±½Ó·µ»Øf
+													// å¦‚æœæ–‡ä»¶å·²ç»å­˜åœ¨åˆ™ç›´æ¥è¿”å›f
 													if (f.exists())
 														return f;
-													// ½«blobÖĞµÄÎÄ¼şÄÚÈİ´æ´¢µ½ÎÄ¼şÖĞ
+													// å°†blobä¸­çš„æ–‡ä»¶å†…å®¹å­˜å‚¨åˆ°æ–‡ä»¶ä¸­
 													record.getFile("filecontent",f);
 													return f;
 												}
@@ -280,12 +280,12 @@ public class TestLob {
 														throws Exception
 												{
 
-													// ¶¨ÒåÎÄ¼ş¶ÔÏó
+													// å®šä¹‰æ–‡ä»¶å¯¹è±¡
 													File f = new File("d:/",record.getString("filename"));
-													// Èç¹ûÎÄ¼şÒÑ¾­´æÔÚÔòÖ±½Ó·µ»Øf
+													// å¦‚æœæ–‡ä»¶å·²ç»å­˜åœ¨åˆ™ç›´æ¥è¿”å›f
 													if (f.exists())
 														return f;
-													// ½«blobÖĞµÄÎÄ¼şÄÚÈİ´æ´¢µ½ÎÄ¼şÖĞ
+													// å°†blobä¸­çš„æ–‡ä»¶å†…å®¹å­˜å‚¨åˆ°æ–‡ä»¶ä¸­
 													record.getFile("filecontent",f);
 													return f;
 												}
@@ -436,7 +436,7 @@ public class TestLob {
 //      
 //  }
 	/**
-     * µÚÒ»ÖÖ²åÈëblob×Ö¶ÎµÄ·½·¨£¬Í¨ÓÃµÄÄ£Ê½
+     * ç¬¬ä¸€ç§æ’å…¥blobå­—æ®µçš„æ–¹æ³•ï¼Œé€šç”¨çš„æ¨¡å¼
 	 */
     @Test
 	public void testBlobWrite()
@@ -446,7 +446,7 @@ public class TestLob {
 			dbUtil.preparedInsert( "insert into test(id,blobname) values(?,?)");
 			
 			dbUtil.setString(1, DBUtil.getNextStringPrimaryKey("test"));
-			dbUtil.setBlob(2, new java.io.File("d:/dominspector.rar"));//Ö±½Ó½«ÎÄ¼ş´æ´¢µ½´ó×Ö¶ÎÖĞ			
+			dbUtil.setBlob(2, new java.io.File("d:/dominspector.rar"));//ç›´æ¥å°†æ–‡ä»¶å­˜å‚¨åˆ°å¤§å­—æ®µä¸­			
 			dbUtil.executePrepared();
 			
 		} catch (Exception e) {
@@ -462,7 +462,7 @@ public class TestLob {
 	
 	
 	/**
-	 * Õë¶Ôoracle Blob×Ö¶ÎµÄ²åÈë²Ù×÷
+	 * é’ˆå¯¹oracle Blobå­—æ®µçš„æ’å…¥æ“ä½œ
 	 */
     @Test
 	public void testBigBlobWrite()
@@ -470,18 +470,18 @@ public class TestLob {
 		PreparedDBUtil dbUtil = new PreparedDBUtil();
 		TransactionManager tm = new TransactionManager();
 		try {
-			//Æô¶¯ÊÂÎñ
+			//å¯åŠ¨äº‹åŠ¡
 			tm.begin();
-			//ÏÈ²åÈëÒ»Ìõ¼ÇÂ¼,blob×Ö¶Î³õÊ¼»¯Îªempty_lob
+			//å…ˆæ’å…¥ä¸€æ¡è®°å½•,blobå­—æ®µåˆå§‹åŒ–ä¸ºempty_lob
 			dbUtil.preparedInsert( "insert into test(id,blobname) values(?,?)");
 			String id = DBUtil.getNextStringPrimaryKey("test");
 			dbUtil.setString(1, id);
-			dbUtil.setBlob(2,BLOB.empty_lob());//ÏÈÉèÖÃ¿ÕµÄblob×Ö¶Î
+			dbUtil.setBlob(2,BLOB.empty_lob());//å…ˆè®¾ç½®ç©ºçš„blobå­—æ®µ
 			
 			
 			dbUtil.executePrepared();
 			
-			//²éÕÒ¸Õ²ÅµÄ²åÈëµÄ¼ÇÂ¼£¬ĞŞ¸Äblob×Ö¶ÎµÄÖµÎªÒ»¸öÎÄ¼ş
+			//æŸ¥æ‰¾åˆšæ‰çš„æ’å…¥çš„è®°å½•ï¼Œä¿®æ”¹blobå­—æ®µçš„å€¼ä¸ºä¸€ä¸ªæ–‡ä»¶
 			dbUtil = new PreparedDBUtil();
 			dbUtil.preparedSelect("select blobname from test where id = ?");
 			dbUtil.setString(1, id);
@@ -516,22 +516,22 @@ public class TestLob {
 	
 	
 	/**
-	 * ´ó×Ö¶ÎµÄ¶ÁÈ¡
+	 * å¤§å­—æ®µçš„è¯»å–
 	 */
     @Test
 	public void testBlobRead()
 	{
 		PreparedDBUtil dbUtil = new PreparedDBUtil();
 		try {
-			//²éÑ¯´ó×Ö¶ÎÄÚÈİ²¢ÇÒ½«´ó×Ö¶Î´æ·Åµ½ÎÄ¼şÖĞ
+			//æŸ¥è¯¢å¤§å­—æ®µå†…å®¹å¹¶ä¸”å°†å¤§å­—æ®µå­˜æ”¾åˆ°æ–‡ä»¶ä¸­
 			dbUtil.preparedSelect( "select id,blobname from test");
 			dbUtil.executePrepared();
 			
 			for(int i = 0; i < dbUtil.size(); i ++)
 			{
 				
-				dbUtil.getFile(i, "blobname", new java.io.File("e:/dominspector.rar"));//½«blob×Ö¶ÎµÄÖµ×ª»»ÎªÎÄ¼ş
-//				Blob blob = dbUtil.getBlob(i, "blobname");//»ñÈ¡blob×Ö¶ÎµÄÖµµ½blob±äÁ¿ÖĞ¡£
+				dbUtil.getFile(i, "blobname", new java.io.File("e:/dominspector.rar"));//å°†blobå­—æ®µçš„å€¼è½¬æ¢ä¸ºæ–‡ä»¶
+//				Blob blob = dbUtil.getBlob(i, "blobname");//è·å–blobå­—æ®µçš„å€¼åˆ°blobå˜é‡ä¸­ã€‚
 			}
 			
 		} catch (Exception e) {
@@ -546,7 +546,7 @@ public class TestLob {
 	}
 	
 	/**
-	 * clob×Ö¶ÎµÄĞ´Èë
+	 * clobå­—æ®µçš„å†™å…¥
 	 */
     @Test
 	public void testClobWrite()
@@ -556,7 +556,7 @@ public class TestLob {
 			dbUtil.preparedInsert( "insert into test(id,clobname) values(?,?)");
 			
 			dbUtil.setString(1, DBUtil.getNextStringPrimaryKey("test"));
-			dbUtil.setClob(2,"clobvalue");//Ö±½Ó½«×Ö·û´®´æ´¢µ½clob×Ö¶ÎÖĞ
+			dbUtil.setClob(2,"clobvalue");//ç›´æ¥å°†å­—ç¬¦ä¸²å­˜å‚¨åˆ°clobå­—æ®µä¸­
 			dbUtil.executePrepared();
 			
 		} catch (Exception e) {
@@ -571,7 +571,7 @@ public class TestLob {
 	}
 	
 	/**
-	 * Õë¶Ôoracle Clob×Ö¶ÎµÄ²åÈë²Ù×÷
+	 * é’ˆå¯¹oracle Clobå­—æ®µçš„æ’å…¥æ“ä½œ
 	 */
     @Test
 	public void testBigClobWrite()
@@ -579,18 +579,18 @@ public class TestLob {
 		PreparedDBUtil dbUtil = new PreparedDBUtil();
 		TransactionManager tm = new TransactionManager();
 		try {
-			//Æô¶¯ÊÂÎñ
+			//å¯åŠ¨äº‹åŠ¡
 			tm.begin();
-			//ÏÈ²åÈëÒ»Ìõ¼ÇÂ¼,blob×Ö¶Î³õÊ¼»¯Îªempty_lob
+			//å…ˆæ’å…¥ä¸€æ¡è®°å½•,blobå­—æ®µåˆå§‹åŒ–ä¸ºempty_lob
 			dbUtil.preparedInsert( "insert into test(id,clobname) values(?,?)");
 			String id = DBUtil.getNextStringPrimaryKey("test");
 			dbUtil.setString(1, id);
-			dbUtil.setClob(2,CLOB.empty_lob());//ÏÈÉèÖÃ¿ÕµÄblob×Ö¶Î
+			dbUtil.setClob(2,CLOB.empty_lob());//å…ˆè®¾ç½®ç©ºçš„blobå­—æ®µ
 			
 			
 			dbUtil.executePrepared();
 			
-			//²éÕÒ¸Õ²ÅµÄ²åÈëµÄ¼ÇÂ¼£¬ĞŞ¸Äblob×Ö¶ÎµÄÖµÎªÒ»¸öÎÄ¼ş
+			//æŸ¥æ‰¾åˆšæ‰çš„æ’å…¥çš„è®°å½•ï¼Œä¿®æ”¹blobå­—æ®µçš„å€¼ä¸ºä¸€ä¸ªæ–‡ä»¶
 			dbUtil = new PreparedDBUtil();
 			dbUtil.preparedSelect("select clobname from test where id = ?");
 			dbUtil.setString(1, id);
@@ -624,23 +624,23 @@ public class TestLob {
 	}
 	
 	/**
-	 * clob×Ö¶ÎµÄ¶ÁÈ¡
+	 * clobå­—æ®µçš„è¯»å–
 	 */
     @Test
 	public void testClobRead()
 	{
 		PreparedDBUtil dbUtil = new PreparedDBUtil();
 		try {
-			//²éÑ¯´ó×Ö¶ÎÄÚÈİ²¢ÇÒ½«´ó×Ö¶Î´æ·Åµ½ÎÄ¼şÖĞ
+			//æŸ¥è¯¢å¤§å­—æ®µå†…å®¹å¹¶ä¸”å°†å¤§å­—æ®µå­˜æ”¾åˆ°æ–‡ä»¶ä¸­
 			dbUtil.preparedSelect( "select id,clobname from test");
 			dbUtil.executePrepared();
 			
 			for(int i = 0; i < dbUtil.size(); i ++)
 			{
 				
-				dbUtil.getFile(i, "clobname", new java.io.File("d:/route" + i + ".txt")); //¶ÁÈ¡clob×Ö¶Îµ½ÎÄ¼şÖĞ
-//				String clobvalue = dbUtil.getString(i, "clobname");//»ñÈ¡clob×Ö¶Îµ½×Ö·û´®±äÁ¿ÖĞ
-//				Clob clob = dbUtil.getClob(i, "clobname");//»ñÈ¡clob×Ö¶ÎÖµµ½clobÀàĞÍ±äÁ¿ÖĞ
+				dbUtil.getFile(i, "clobname", new java.io.File("d:/route" + i + ".txt")); //è¯»å–clobå­—æ®µåˆ°æ–‡ä»¶ä¸­
+//				String clobvalue = dbUtil.getString(i, "clobname");//è·å–clobå­—æ®µåˆ°å­—ç¬¦ä¸²å˜é‡ä¸­
+//				Clob clob = dbUtil.getClob(i, "clobname");//è·å–clobå­—æ®µå€¼åˆ°clobç±»å‹å˜é‡ä¸­
 			}
 			
 		} catch (Exception e) {

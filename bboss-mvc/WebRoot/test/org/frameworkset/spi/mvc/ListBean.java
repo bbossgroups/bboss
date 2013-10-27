@@ -26,7 +26,7 @@ public class ListBean {
 	@PrimaryKey(pkname="ListBean",auto=true)
 	private int id ;
 	private String fieldName;
-//	@Column(name="fileNamezzz",dataformat="∏Ò Ω◊™ªª" ,type="clob")
+//	@Column(name="fileNamezzz",dataformat="Ê†ºÂºèËΩ¨Êç¢" ,type="clob")
 	private String fieldLable;
 	private String fieldType;
 	private String sortorder;

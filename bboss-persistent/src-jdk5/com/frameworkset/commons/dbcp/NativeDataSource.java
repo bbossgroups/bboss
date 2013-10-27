@@ -30,12 +30,12 @@ import javax.sql.DataSource;
  * 
  * <p>Title: NativeDataSource.java</p>
  * 
- * <p>Description: ÓÃ»§·ÇÁ¬½Ó³ØÄ£Ê½µÄÊı¾İÔ´¹ÜÀí£¬µ±ÓÃ»§ÔÚÁ¬½Ó³ØµÄÅäÖÃÎÄ¼şÖ¸¶¨
- * usepool=falseÊ±£¬ÏµÍ³´´½¨NativeDataSourceÀàĞÍµÄÊı¾İÔ´
+ * <p>Description: ç”¨æˆ·éè¿æ¥æ± æ¨¡å¼çš„æ•°æ®æºç®¡ç†ï¼Œå½“ç”¨æˆ·åœ¨è¿æ¥æ± çš„é…ç½®æ–‡ä»¶æŒ‡å®š
+ * usepool=falseæ—¶ï¼Œç³»ç»Ÿåˆ›å»ºNativeDataSourceç±»å‹çš„æ•°æ®æº
  * </p>
  *
  * <p>Copyright: Copyright (c) 2007</p>
- * @Date 2011-3-4 ÏÂÎç02:06:01
+ * @Date 2011-3-4 ä¸‹åˆ02:06:01
  * @author biaoping.yin
  * @version 1.0
  */
@@ -51,11 +51,11 @@ public class NativeDataSource implements DataSource {
 		}
 		
 		/**
-		 * ·ÇÁ´½Ó³ØÊı¾İÔ´»î¶¯Á´½ÓÊı
+		 * éé“¾æ¥æ± æ•°æ®æºæ´»åŠ¨é“¾æ¥æ•°
 		 */
 		private volatile int activeConnections = 0;
 		/**
-		 * ·ÇÁ´½Ó³ØÊı¾İÔ´¸ß·åÁ´½ÓÊı
+		 * éé“¾æ¥æ± æ•°æ®æºé«˜å³°é“¾æ¥æ•°
 		 */
 		private volatile int heapConnections = 0;
 		private Object lock = new Object();

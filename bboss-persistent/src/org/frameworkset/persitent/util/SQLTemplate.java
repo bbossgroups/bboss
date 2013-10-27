@@ -46,11 +46,11 @@ import com.frameworkset.velocity.BBossVelocityUtil;
 
 /**
  * <p> SQLTemplate.java</p>
- * <p> Description: sql语句模板</p>
+ * <p> Description: sql璇彞妯℃澘</p>
  * <p> bboss workgroup </p>
  * <p> Copyright (c) 2009 </p>
  * 
- * @Date 2012-12-4 下午7:31:55
+ * @Date 2012-12-4 涓嬪崍7:31:55
  * @author biaoping.yin
  * @version 1.0
  */
@@ -79,9 +79,9 @@ public class SQLTemplate extends Resource
         setType(ResourceManager.RESOURCE_SQL);
     }
     /**
-     * 根据解析出的语法结构确定sql语句是否是velocity模板
-     * 如果不是则重置sqlinfo的istpl属性，相关的缓存就可以使用sqlname来作为key
-     * 同时避免每次都对token进行拼接，提升系统性能
+     * 鏍规嵁瑙ｆ瀽鍑虹殑璇硶缁撴瀯纭畾sql璇彞鏄惁鏄痸elocity妯℃澘
+     * 濡傛灉涓嶆槸鍒欓噸缃畇qlinfo鐨刬stpl灞炴�э紝鐩稿叧鐨勭紦瀛樺氨鍙互浣跨敤sqlname鏉ヤ綔涓簁ey
+     * 鍚屾椂閬垮厤姣忔閮藉token杩涜鎷兼帴锛屾彁鍗囩郴缁熸�ц兘
      */
     private void rechecksqlistpl()
     {

@@ -24,7 +24,7 @@ import org.frameworkset.spi.remote.mina.server.RPCServerIoHandler;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2009-11-10 ÏÂÎç11:23:14
+ * @Date 2009-11-10 ä¸‹åˆ11:23:14
  * @author biaoping.yin
  * @version 1.0
  */

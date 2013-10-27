@@ -33,7 +33,7 @@ import org.frameworkset.util.TimeUtil;
  * Title: AsyncCall.java
  * </p>
  * <p>
- * Description: Ö´ĞĞ·şÎñµÄÒì²½µ÷ÓÃ
+ * Description: æ‰§è¡ŒæœåŠ¡çš„å¼‚æ­¥è°ƒç”¨
  * </p>
  * <p>
  * bboss workgroup
@@ -42,7 +42,7 @@ import org.frameworkset.util.TimeUtil;
  * Copyright (c) 2007
  * </p>
  * 
- * @Date 2011-4-21 ÉÏÎç11:06:42
+ * @Date 2011-4-21 ä¸Šåˆ11:06:42
  * @author biaoping.yin
  * @version 1.0
  */
@@ -56,13 +56,13 @@ public class AsyncCall {
 	private CallHandler callHandler;
 	private CallBackHandler callBackHandler;
 	/**
-	 * ÇëÇóµ÷ÓÃ¶ÑÕ»
+	 * è¯·æ±‚è°ƒç”¨å †æ ˆ
 	 */
 	private LinkedBlockingQueue<CallService> callblockqueue = new java.util.concurrent.LinkedBlockingQueue<CallService>(
 			ApplicationContext.getApplicationContext().getIntProperty(
 					"component.asynccall.block.size", 200));
 	/**
-	 * ÇëÇóÏìÓ¦»Øµ÷´¦Àí¶ÑÕ»
+	 * è¯·æ±‚å“åº”å›è°ƒå¤„ç†å †æ ˆ
 	 */
 	private LinkedBlockingQueue<CallService> callbackblockqueue = new java.util.concurrent.LinkedBlockingQueue<CallService>(
 			ApplicationContext.getApplicationContext().getIntProperty(
@@ -191,12 +191,12 @@ public class AsyncCall {
 
 	public Object runCallService(CallService task) throws Exception {
 		if (!this.started())
-			throw new AsyncCallException("Òì²½µ÷ÓÃ·şÎñÒÑ¾­±»Í£Ö¹£¬¾Ü¾ø½ÓÊÜĞÂµÄÒì²½·şÎñµ÷ÓÃ");
+			throw new AsyncCallException("å¼‚æ­¥è°ƒç”¨æœåŠ¡å·²ç»è¢«åœæ­¢ï¼Œæ‹’ç»æ¥å—æ–°çš„å¼‚æ­¥æœåŠ¡è°ƒç”¨");
 		if (task != null) {
 			try {
 				/**
-				 * Èç¹ûĞèÒª·µ»Ø½á¹û£¬ÄÇÃ´¼ì²âÊÇ·ñ»Øµ÷·½Ê½£¬Èç¹û²»ÊÇ»Øµ÷·½Ê½£¬ÄÇÃ´²ÉÓÃ×èÈûÖ÷Ïß³ÌÄ£Ê½£¬Èç¹ûÊÇ²ÉÓÃÒì²½µ÷ÓÃ·½Ê½
-				 * Èç¹û²»ĞèÒª·µ»Ø½á¹û£¬ÄÇÃ´Ö±½Ó²ÉÓÃÒì²½µ÷ÓÃ·½Ê½
+				 * å¦‚æœéœ€è¦è¿”å›ç»“æœï¼Œé‚£ä¹ˆæ£€æµ‹æ˜¯å¦å›è°ƒæ–¹å¼ï¼Œå¦‚æœä¸æ˜¯å›è°ƒæ–¹å¼ï¼Œé‚£ä¹ˆé‡‡ç”¨é˜»å¡ä¸»çº¿ç¨‹æ¨¡å¼ï¼Œå¦‚æœæ˜¯é‡‡ç”¨å¼‚æ­¥è°ƒç”¨æ–¹å¼
+				 * å¦‚æœä¸éœ€è¦è¿”å›ç»“æœï¼Œé‚£ä¹ˆç›´æ¥é‡‡ç”¨å¼‚æ­¥è°ƒç”¨æ–¹å¼
 				 */
 				if (task.getAsyncMethod().getAsyncResultMode() == Result.YES) {
 					if (task.getAsyncMethod().getAsyncCallback() == null) {
@@ -205,16 +205,16 @@ public class AsyncCall {
 							callexecutor.execute(f);
 							return f.get(task.getAsyncMethod()
 									.getAsyncTimeout(), TimeUnit.MICROSECONDS);
-						} else // ÕâÖÖ²»ÉèÖÃ³¬Ê±Ö±½Ó×èÈûµÄ·½Ê½Ã»ÓĞÊµ¼ÊÒâÒå£¬ÓëÍ¬²½µ÷ÓÃÒ»ÖÂ
+						} else // è¿™ç§ä¸è®¾ç½®è¶…æ—¶ç›´æ¥é˜»å¡çš„æ–¹å¼æ²¡æœ‰å®é™…æ„ä¹‰ï¼Œä¸åŒæ­¥è°ƒç”¨ä¸€è‡´
 						{
 							FutureTask f = new FutureTask(task);
 							callexecutor.execute(f);
 							return f.get();
 						}
-					} else {//ÓĞ»Øµ÷º¯ÊıÔòÒì²½´¦Àí,½»¸ø¹¤×÷¶ÓÁĞÒì²½´¦Àí
+					} else {//æœ‰å›è°ƒå‡½æ•°åˆ™å¼‚æ­¥å¤„ç†,äº¤ç»™å·¥ä½œé˜Ÿåˆ—å¼‚æ­¥å¤„ç†
 						this.putCallBackService(task);
 					}
-				} else {//²»ĞèÒª·µ»ØÖµÔòÒì²½´¦Àí£¬½»¸ø¹¤×÷¶ÓÁĞÒì²½´¦Àí£¬·ÀÖ¹´ó²¢·¢·ÃÎÊ×ÊÔ´±»ºÄ¾¡
+				} else {//ä¸éœ€è¦è¿”å›å€¼åˆ™å¼‚æ­¥å¤„ç†ï¼Œäº¤ç»™å·¥ä½œé˜Ÿåˆ—å¼‚æ­¥å¤„ç†ï¼Œé˜²æ­¢å¤§å¹¶å‘è®¿é—®èµ„æºè¢«è€—å°½
 					this.putCallService(task);
 				}
 			} catch (Exception e) {
@@ -224,18 +224,18 @@ public class AsyncCall {
 			return null;
 		}
 		else 
-			throw new AsyncCallException("Òì²½·şÎñµ÷ÓÃÊ§°Ü£º·şÎñÎªnull");
+			throw new AsyncCallException("å¼‚æ­¥æœåŠ¡è°ƒç”¨å¤±è´¥ï¼šæœåŠ¡ä¸ºnull");
 	}
 
 	
 	/**
-	 * ²»ĞèÒª·µ»Ø½á¹ûµÄÄ£Ê½£¬Ò²Ã»ÓĞ»Øµ÷º¯Êı£¬¿ÉÒÔÖ¸¶¨³¬Ê±Ê±¼ä£¬Èç¹ûÃ»ÓĞÖ¸¶¨Ôòrun·½·¨ÖĞÍ¬²½ÌõÓÃ
-	 * ·ñÔòÒì²½µ÷ÓÃ£¬³¬Ê±Ê±±¨Òì³£¼ÇÂ¼ÈÕÖ¾(ÕâÖÖ³¬Ê±Ã»ÓĞÌØ±ğµÄÒâÒå£¬Ö»ÊÇ¸æËßÏµÍ³ËµÃ÷·şÎñÖ®ĞÇ³¬¹ıÃş¸öÊ±¼äÁË)
+	 * ä¸éœ€è¦è¿”å›ç»“æœçš„æ¨¡å¼ï¼Œä¹Ÿæ²¡æœ‰å›è°ƒå‡½æ•°ï¼Œå¯ä»¥æŒ‡å®šè¶…æ—¶æ—¶é—´ï¼Œå¦‚æœæ²¡æœ‰æŒ‡å®šåˆ™runæ–¹æ³•ä¸­åŒæ­¥æ¡ç”¨
+	 * å¦åˆ™å¼‚æ­¥è°ƒç”¨ï¼Œè¶…æ—¶æ—¶æŠ¥å¼‚å¸¸è®°å½•æ—¥å¿—(è¿™ç§è¶…æ—¶æ²¡æœ‰ç‰¹åˆ«çš„æ„ä¹‰ï¼Œåªæ˜¯å‘Šè¯‰ç³»ç»Ÿè¯´æ˜æœåŠ¡ä¹‹æ˜Ÿè¶…è¿‡æ‘¸ä¸ªæ—¶é—´äº†)
 	 * <p>Title: AsyncCall.java</p> 
 	 * <p>Description: </p>
 	 * <p>bboss workgroup</p>
 	 * <p>Copyright (c) 2007</p>
-	 * @Date 2011-4-21 ÏÂÎç03:58:56
+	 * @Date 2011-4-21 ä¸‹åˆ03:58:56
 	 * @author biaoping.yin
 	 * @version 1.0
 	 */
@@ -281,7 +281,7 @@ public class AsyncCall {
 				{
 					final Object ret = task.call();
 					/**
-					 * ¶Ôµ÷ÓÃ½á¹û²ÉÓÃÒì²½·½Ê½½øĞĞ»Øµ÷´¦Àí
+					 * å¯¹è°ƒç”¨ç»“æœé‡‡ç”¨å¼‚æ­¥æ–¹å¼è¿›è¡Œå›è°ƒå¤„ç†
 					 */
 						
 						new Thread(new Runnable(){
@@ -298,7 +298,7 @@ public class AsyncCall {
 					new Thread(t).start();
 					final Object ret = t.get(task.getAsyncMethod().getAsyncTimeout(), TimeUnit.MICROSECONDS);
 					/**
-					 * ¶Ôµ÷ÓÃ½á¹û²ÉÓÃÒì²½·½Ê½½øĞĞ»Øµ÷´¦Àí
+					 * å¯¹è°ƒç”¨ç»“æœé‡‡ç”¨å¼‚æ­¥æ–¹å¼è¿›è¡Œå›è°ƒå¤„ç†
 					 */
 					new Thread(new Runnable(){
 						public void run()

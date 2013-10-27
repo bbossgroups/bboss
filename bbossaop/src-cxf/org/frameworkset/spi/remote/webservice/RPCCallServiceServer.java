@@ -24,7 +24,7 @@ import javax.xml.ws.Endpoint;
   * <p>Description: </p>
   * <p>bboss workgroup</p>
   * <p>Copyright (c) 2008</p>
-  * @Date 2009-11-4 œ¬ŒÁ05:05:19
+  * @Date 2009-11-4 ‰∏ãÂçà05:05:19
   * @author biaoping.yin
   * @version 1.0
   */

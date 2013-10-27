@@ -28,10 +28,10 @@ import org.frameworkset.util.ClassUtil.PropertieDescription;
 
 /**
  * <p>Title: VariableHandler.java</p> 
- * <p>Description: ±äÁ¿½âÎö³ÌĞò </p>
+ * <p>Description: å˜é‡è§£æç¨‹åº </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2008</p>
- * @Date 2009-12-16 ÉÏÎç11:34:31
+ * @Date 2009-12-16 ä¸Šåˆ11:34:31
  * @author biaoping.yin
  * @version 1.0
  */
@@ -49,7 +49,7 @@ public class VariableHandler
         
     }
     /**
-     * ¿ÉÒÔ¸ù¾İÄ¬ÈÏµÄÕıÔòÊ½default_regex = "\\$\\{([^\\}]+)\\}"»ñÈ¡ÊäÈë´®ÖĞµÄ±äÁ¿£¬×÷ÎªÊı×é·µ»Ø
+     * å¯ä»¥æ ¹æ®é»˜è®¤çš„æ­£åˆ™å¼default_regex = "\\$\\{([^\\}]+)\\}"è·å–è¾“å…¥ä¸²ä¸­çš„å˜é‡ï¼Œä½œä¸ºæ•°ç»„è¿”å›
      * @param inputString
      * @return
      */
@@ -60,7 +60,7 @@ public class VariableHandler
     }
     
     /**
-     * ¿ÉÒÔ¸ù¾İÖ¸¶¨µÄ±äÁ¿µÄÇ°µ¼·ûºÍºóµ¼·û»ñÈ¡ÊäÈë´®ÖĞµÄ±äÁ¿£¬×÷ÎªÊı×é·µ»Ø
+     * å¯ä»¥æ ¹æ®æŒ‡å®šçš„å˜é‡çš„å‰å¯¼ç¬¦å’Œåå¯¼ç¬¦è·å–è¾“å…¥ä¸²ä¸­çš„å˜é‡ï¼Œä½œä¸ºæ•°ç»„è¿”å›
      * @param inputString
      * @param pretoken
      * @param endtoken
@@ -75,7 +75,7 @@ public class VariableHandler
     }
     
     /**
-     * ¿ÉÒÔ¸ù¾İÖ¸¶¨µÄ±äÁ¿µÄÇ°µ¼·ûºÍºóµ¼·û»ñÈ¡ÊäÈë´®ÖĞµÄ±äÁ¿£¬×÷ÎªÊı×é·µ»Ø
+     * å¯ä»¥æ ¹æ®æŒ‡å®šçš„å˜é‡çš„å‰å¯¼ç¬¦å’Œåå¯¼ç¬¦è·å–è¾“å…¥ä¸²ä¸­çš„å˜é‡ï¼Œä½œä¸ºæ•°ç»„è¿”å›
      * @param inputString
      * @param pretoken
      * @param endtoken
@@ -89,7 +89,7 @@ public class VariableHandler
     }
     
     /**
-     * ¿ÉÒÔ¸ù¾İÖ¸¶¨µÄÕıÔòÊ½»ñÈ¡ÊäÈë´®ÖĞµÄ±äÁ¿£¬×÷ÎªÊı×é·µ»Ø
+     * å¯ä»¥æ ¹æ®æŒ‡å®šçš„æ­£åˆ™å¼è·å–è¾“å…¥ä¸²ä¸­çš„å˜é‡ï¼Œä½œä¸ºæ•°ç»„è¿”å›
      * @param inputString
      * @param regex
      * @return
@@ -101,11 +101,11 @@ public class VariableHandler
         return vars;
     }
     /**
-     * ´Ó´®srcÖĞÎöÈ¡Æ¥ÅäregexÄ£Ê½µÄËùÓĞ×Ö·û´®£¬²¢ÇÒÓÃsubstitutionÌæ»»Æ¥ÅäÉÏÄ£Ê½µÄ×Ó·û´®
+     * ä»ä¸²srcä¸­æå–åŒ¹é…regexæ¨¡å¼çš„æ‰€æœ‰å­—ç¬¦ä¸²ï¼Œå¹¶ä¸”ç”¨substitutionæ›¿æ¢åŒ¹é…ä¸Šæ¨¡å¼çš„å­ç¬¦ä¸²
      * @param src
      * @param regex
      * @param substitution
-     * @return String[][]¶şÎ¬Êı×é£¬µÚÒ»Î¬±íÊ¾Ìæ»»ºóµÄsrc£¬µÚ¶şÎ¬±íÊ¾Æ¥ÅäregexµÄËùÓĞµÄ×Ó´®Êı×é
+     * @return String[][]äºŒç»´æ•°ç»„ï¼Œç¬¬ä¸€ç»´è¡¨ç¤ºæ›¿æ¢åçš„srcï¼Œç¬¬äºŒç»´è¡¨ç¤ºåŒ¹é…regexçš„æ‰€æœ‰çš„å­ä¸²æ•°ç»„
      */
     public static String[][] parser2ndSubstitution(String inputString,String regex,String substitution)
     {
@@ -113,11 +113,11 @@ public class VariableHandler
     }
     
     /**
-     * ´Ó´®srcÖĞÎöÈ¡Æ¥ÅäregexÄ£Ê½µÄËùÓĞ×Ö·û´®£¬²¢ÇÒÓÃsubstitutionÌæ»»Æ¥ÅäÉÏÄ£Ê½µÄ×Ó·û´®
+     * ä»ä¸²srcä¸­æå–åŒ¹é…regexæ¨¡å¼çš„æ‰€æœ‰å­—ç¬¦ä¸²ï¼Œå¹¶ä¸”ç”¨substitutionæ›¿æ¢åŒ¹é…ä¸Šæ¨¡å¼çš„å­ç¬¦ä¸²
      * @param src
      * @param regex
      * @param substitution
-     * @return String[][]¶şÎ¬Êı×é£¬µÚÒ»Î¬±íÊ¾Ìæ»»ºóµÄsrc£¬µÚ¶şÎ¬±íÊ¾Æ¥ÅäregexµÄËùÓĞµÄ×Ó´®Êı×é
+     * @return String[][]äºŒç»´æ•°ç»„ï¼Œç¬¬ä¸€ç»´è¡¨ç¤ºæ›¿æ¢åçš„srcï¼Œç¬¬äºŒç»´è¡¨ç¤ºåŒ¹é…regexçš„æ‰€æœ‰çš„å­ä¸²æ•°ç»„
      */
     public static String[][] parser2ndSubstitution(String inputString,String substitution)
     {
@@ -126,12 +126,12 @@ public class VariableHandler
     
     
     /**
-     * ´Ó´®srcÖĞÎöÈ¡Æ¥Åäpretoken ±äÁ¿¶¨ÒåÇ°×ººÍendtoken ±äÁ¿¶¨Òåºó×ºÖ¸¶¨Ä£Ê½ËùÓĞ×Ö·û´®£¬²¢ÇÒÓÃsubstitutionÌæ»»Æ¥ÅäÉÏÄ£Ê½µÄ×Ó·û´®
-     * @param inputString ÊäÈëµÄ´® 
-     * @param pretoken ±äÁ¿¶¨ÒåÇ°×º
-     * @param endtoken ±äÁ¿¶¨Òåºó×º
+     * ä»ä¸²srcä¸­æå–åŒ¹é…pretoken å˜é‡å®šä¹‰å‰ç¼€å’Œendtoken å˜é‡å®šä¹‰åç¼€æŒ‡å®šæ¨¡å¼æ‰€æœ‰å­—ç¬¦ä¸²ï¼Œå¹¶ä¸”ç”¨substitutionæ›¿æ¢åŒ¹é…ä¸Šæ¨¡å¼çš„å­ç¬¦ä¸²
+     * @param inputString è¾“å…¥çš„ä¸² 
+     * @param pretoken å˜é‡å®šä¹‰å‰ç¼€
+     * @param endtoken å˜é‡å®šä¹‰åç¼€
      * @param substitution
-     * @return String[][]¶şÎ¬Êı×é£¬µÚÒ»Î¬±íÊ¾Ìæ»»ºóµÄsrc£¬µÚ¶şÎ¬±íÊ¾Æ¥ÅäregexµÄËùÓĞµÄ×Ó´®Êı×é
+     * @return String[][]äºŒç»´æ•°ç»„ï¼Œç¬¬ä¸€ç»´è¡¨ç¤ºæ›¿æ¢åçš„srcï¼Œç¬¬äºŒç»´è¡¨ç¤ºåŒ¹é…regexçš„æ‰€æœ‰çš„å­ä¸²æ•°ç»„
      */
     public static String[][] parser2ndSubstitution(String inputString,String pretoken,String endtoken ,String substitution)
     {
@@ -140,12 +140,12 @@ public class VariableHandler
     }
     
     /**
-     * ´Ó´®srcÖĞÎöÈ¡Æ¥Åäpretoken ±äÁ¿¶¨ÒåÇ°×ººÍendtoken ±äÁ¿¶¨Òåºó×ºÖ¸¶¨Ä£Ê½ËùÓĞ×Ö·û´®£¬²¢ÇÒÓÃsubstitutionÌæ»»Æ¥ÅäÉÏÄ£Ê½µÄ×Ó·û´®
-     * @param inputString ÊäÈëµÄ´® 
-     * @param pretoken ±äÁ¿¶¨ÒåÇ°×º
-     * @param endtoken ±äÁ¿¶¨Òåºó×º
+     * ä»ä¸²srcä¸­æå–åŒ¹é…pretoken å˜é‡å®šä¹‰å‰ç¼€å’Œendtoken å˜é‡å®šä¹‰åç¼€æŒ‡å®šæ¨¡å¼æ‰€æœ‰å­—ç¬¦ä¸²ï¼Œå¹¶ä¸”ç”¨substitutionæ›¿æ¢åŒ¹é…ä¸Šæ¨¡å¼çš„å­ç¬¦ä¸²
+     * @param inputString è¾“å…¥çš„ä¸² 
+     * @param pretoken å˜é‡å®šä¹‰å‰ç¼€
+     * @param endtoken å˜é‡å®šä¹‰åç¼€
      * @param substitution
-     * @return String[][]¶şÎ¬Êı×é£¬µÚÒ»Î¬±íÊ¾Ìæ»»ºóµÄsrc£¬µÚ¶şÎ¬±íÊ¾Æ¥ÅäregexµÄËùÓĞµÄ×Ó´®Êı×é
+     * @return String[][]äºŒç»´æ•°ç»„ï¼Œç¬¬ä¸€ç»´è¡¨ç¤ºæ›¿æ¢åçš„srcï¼Œç¬¬äºŒç»´è¡¨ç¤ºåŒ¹é…regexçš„æ‰€æœ‰çš„å­ä¸²æ•°ç»„
      */
     public static String[][] parser2ndSubstitution(String inputString,String pretoken,String endtoken ,String substitution,int mask)
     {
@@ -154,7 +154,7 @@ public class VariableHandler
     }
     
     /**
-     * Ìæ»»±äÁ¿ÎªÖÆ¶¨µÄÖµ
+     * æ›¿æ¢å˜é‡ä¸ºåˆ¶å®šçš„å€¼
      * @param inputString
      * @param substitution
      * @return
@@ -166,7 +166,7 @@ public class VariableHandler
     }
     
     /**
-     * Ìæ»»±äÁ¿ÎªÖÆ¶¨µÄÖµ
+     * æ›¿æ¢å˜é‡ä¸ºåˆ¶å®šçš„å€¼
      * @param inputString
      * @param substitution
      * @return
@@ -364,8 +364,8 @@ public class VariableHandler
 	
     
     /**
-     * ½«°üº¬±äÁ¿µÄurlÂ·¾¶½âÎö³É³£Á¿×Ö·û´®ÁĞ±íºÍ±äÁ¿Ãû³ÆÁ½¸öÁĞ±í
-     * ±äÁ¿µÄ·Ö½ç·ûÎª#[ºÍ],Èç¹ûurlÖĞÃ»ÓĞ°üº¬±äÁ¿ÄÇÃ´·µ»ØnullÖµ
+     * å°†åŒ…å«å˜é‡çš„urlè·¯å¾„è§£ææˆå¸¸é‡å­—ç¬¦ä¸²åˆ—è¡¨å’Œå˜é‡åç§°ä¸¤ä¸ªåˆ—è¡¨
+     * å˜é‡çš„åˆ†ç•Œç¬¦ä¸º#[å’Œ],å¦‚æœurlä¸­æ²¡æœ‰åŒ…å«å˜é‡é‚£ä¹ˆè¿”å›nullå€¼
      * @param url
      * @return
      */
@@ -471,10 +471,10 @@ public class VariableHandler
     
     
     /**
-     * ½«°üº¬±äÁ¿µÄsqlÓï¾ä½âÎö³É³£Á¿×Ö·û´®ÁĞ±íºÍ±äÁ¿Ãû³ÆÁ½¸öÁĞ±í
-     * ±äÁ¿µÄ·Ö½ç·ûÎª#[ºÍ],Èç¹ûurlÖĞÃ»ÓĞ°üº¬±äÁ¿ÄÇÃ´·µ»ØnullÖµ
-     * ±äÁ¿Êı×é¡¢list¡¢mapµÄÔªËØÈ¡Öµ²ÉÓÃ[]½áºÏÊı×ÖÏÂ±êºÍkeyÃû³Æ
-     * ±äÁ¿ÒıÓÃ²ÉÓÃ->Á¬½Ó·û
+     * å°†åŒ…å«å˜é‡çš„sqlè¯­å¥è§£ææˆå¸¸é‡å­—ç¬¦ä¸²åˆ—è¡¨å’Œå˜é‡åç§°ä¸¤ä¸ªåˆ—è¡¨
+     * å˜é‡çš„åˆ†ç•Œç¬¦ä¸º#[å’Œ],å¦‚æœurlä¸­æ²¡æœ‰åŒ…å«å˜é‡é‚£ä¹ˆè¿”å›nullå€¼
+     * å˜é‡æ•°ç»„ã€listã€mapçš„å…ƒç´ å–å€¼é‡‡ç”¨[]ç»“åˆæ•°å­—ä¸‹æ ‡å’Œkeyåç§°
+     * å˜é‡å¼•ç”¨é‡‡ç”¨->è¿æ¥ç¬¦
      * @param url
      * @return
      */
@@ -488,15 +488,15 @@ public class VariableHandler
 //		StringBuffer index = new StringBuffer();
 		
 		boolean varstart = false;
-		int varstartposition = -1;//¼ÇÂ¼±äÁ¿µÄ¿ªÊ¼Î»ÖÃ
-		//¼¯ºÏË÷Òı¿ªÊ¼
+		int varstartposition = -1;//è®°å½•å˜é‡çš„å¼€å§‹ä½ç½®
+		//é›†åˆç´¢å¼•å¼€å§‹
 		boolean index_start = false;
 		Variable header = null;
 		Variable hh = null;
 		Variable variable = null;
 		List<Index> indexs = null;
 		/**
-		 * ¶ÔÏóÊôĞÔÒıÓÃÎ»ÖÃ¿ªÊ¼
+		 * å¯¹è±¡å±æ€§å¼•ç”¨ä½ç½®å¼€å§‹
 		 */
 		boolean ref_start = false;
 
@@ -524,7 +524,7 @@ public class VariableHandler
 						hh = null;
 						indexs = null;
 						/**
-						 * ¶ÔÏóÊôĞÔÒıÓÃÎ»ÖÃ¿ªÊ¼
+						 * å¯¹è±¡å±æ€§å¼•ç”¨ä½ç½®å¼€å§‹
 						 */
 						ref_start = false;
 						i = i + 2;
@@ -617,7 +617,7 @@ public class VariableHandler
 							i++;
 							
 						}
-						else if(ref_start)//ÒıÓÃ½áÊø£¬±äÁ¿¶¨Òå½áÊøa->b[0]
+						else if(ref_start)//å¼•ç”¨ç»“æŸï¼Œå˜é‡å®šä¹‰ç»“æŸa->b[0]
 						{
 							ref_start = false;
 //							if(sql.charAt(i + 1) == '-' && sql.charAt(i + 2) == '>')
@@ -716,7 +716,7 @@ public class VariableHandler
 								}
 								else
 								{
-									if(variable == null)//Ã»ÓĞÒòÎªË÷ÒıÏÂ±êµ¼ÖÂÒıÓÃ¶ÔÏóÒÑ¾­´´½¨£¬Ôò¿ªÊ¼´´½¨¶ÔÏó
+									if(variable == null)//æ²¡æœ‰å› ä¸ºç´¢å¼•ä¸‹æ ‡å¯¼è‡´å¼•ç”¨å¯¹è±¡å·²ç»åˆ›å»ºï¼Œåˆ™å¼€å§‹åˆ›å»ºå¯¹è±¡
 									{
 										variable = new Variable();
 										//variable.setPosition(varcount);
@@ -771,15 +771,15 @@ public class VariableHandler
 			}
 		}
 		/**
-		 * Èİ´í´¦Àí£º
-		 * Çé¿ö1.±äÁ¿Ã»ÓĞÍêÈ«½áÊø(ĞèÒª·´×ªheader¶ÔÏó)
-		 * Çé¿ö2.ºóÃæµÄ×Ö·û´®Ã»ÓĞ±äÁ¿
-		 * a.ÍêÈ«Ã»ÓĞ±äÁ¿µÄÏà¹Ø¹Ø¼ü×Ö
-		 * b.ÓĞ²¿·Ö±äÁ¿¶¨Òå£¬µ«ÊÇ²»È«
+		 * å®¹é”™å¤„ç†ï¼š
+		 * æƒ…å†µ1.å˜é‡æ²¡æœ‰å®Œå…¨ç»“æŸ(éœ€è¦åè½¬headerå¯¹è±¡)
+		 * æƒ…å†µ2.åé¢çš„å­—ç¬¦ä¸²æ²¡æœ‰å˜é‡
+		 * a.å®Œå…¨æ²¡æœ‰å˜é‡çš„ç›¸å…³å…³é”®å­—
+		 * b.æœ‰éƒ¨åˆ†å˜é‡å®šä¹‰ï¼Œä½†æ˜¯ä¸å…¨
 		 * 
 		 */
-		if (token.length() > 0) {//Çé¿ö2.ºóÃæµÄ×Ö·û´®Ã»ÓĞ±äÁ¿
-			if (var.length() > 0) {// b.ÓĞ²¿·Ö±äÁ¿¶¨Òå£¬µ«ÊÇ²»È«£¬´Ó±äÁ¿¿ªÊ¼µÄÎ»ÖÃ»Ö¸´token
+		if (token.length() > 0) {//æƒ…å†µ2.åé¢çš„å­—ç¬¦ä¸²æ²¡æœ‰å˜é‡
+			if (var.length() > 0) {// b.æœ‰éƒ¨åˆ†å˜é‡å®šä¹‰ï¼Œä½†æ˜¯ä¸å…¨ï¼Œä»å˜é‡å¼€å§‹çš„ä½ç½®æ¢å¤token
 				String partvar = sql.substring(varstartposition);
 				token.append("#[").append(partvar);
 //				token.append("#[").append(var);
@@ -788,7 +788,7 @@ public class VariableHandler
 		} 
 		
 		else {
-			if (var.length() > 0) {//Çé¿ö1.±äÁ¿Ã»ÓĞÍêÈ«½áÊø£¬´Ó±äÁ¿¿ªÊ¼µÄÎ»ÖÃ»Ö¸´token
+			if (var.length() > 0) {//æƒ…å†µ1.å˜é‡æ²¡æœ‰å®Œå…¨ç»“æŸï¼Œä»å˜é‡å¼€å§‹çš„ä½ç½®æ¢å¤token
 //				token.append("#[").append(var);
 				String partvar = sql.substring(varstartposition);
 				token.append("#[").append(partvar);
@@ -814,7 +814,7 @@ public class VariableHandler
 	}
     
     /**
-     * ¸ù¾İÒıÓÃµÄÎ¬¶È»ñÈ¡Æä¶ÔÓ¦µÄPro¶ÔÏó
+     * æ ¹æ®å¼•ç”¨çš„ç»´åº¦è·å–å…¶å¯¹åº”çš„Proå¯¹è±¡
      * @param refid
      * @return
      */
@@ -826,10 +826,10 @@ public class VariableHandler
     	Object temp = null;
     	PropertieDescription pro = null;
     	List<Index> indexs = null;
-    	//if(var.getNext() == null )//²»´æÔÚÒıÓÃ
+    	//if(var.getNext() == null )//ä¸å­˜åœ¨å¼•ç”¨
     	
 		indexs = var.getIndexs() ;
-		if(indexs == null || indexs.size() == 0)//Ö±½Ó·µ»Øµ±Ç°Êı¾İ
+		if(indexs == null || indexs.size() == 0)//ç›´æ¥è¿”å›å½“å‰æ•°æ®
 		{
 			if(var.getNext() == null)
 				return bean;
@@ -839,7 +839,7 @@ public class VariableHandler
 				var = var.getNext();
 			}
 		}
-		else//»ñÈ¡Êı×é/map/list»òÕßÈÎÒâ×éºÏÖĞµÄÔªËØÊı¾İ
+		else//è·å–æ•°ç»„/map/listæˆ–è€…ä»»æ„ç»„åˆä¸­çš„å…ƒç´ æ•°æ®
 		{
 			Class tcls = null;
 			temp = bean;
@@ -863,15 +863,15 @@ public class VariableHandler
 //								temp = ((Set)temp).get(idx.getInt_idx());
 //							}
 					} catch (ArrayIndexOutOfBoundsException e) {
-						throw new EvalVariableValueFailedException("»ñÈ¡Êı×éÔªËØÊ§°Ü£ºÊı×éÔ½½ç"+temp+"["+idx.getInt_idx()+"]",e);
+						throw new EvalVariableValueFailedException("è·å–æ•°ç»„å…ƒç´ å¤±è´¥ï¼šæ•°ç»„è¶Šç•Œ"+temp+"["+idx.getInt_idx()+"]",e);
 					} catch (Throwable e) {
-						throw new EvalVariableValueFailedException("»ñÈ¡Êı×éÔªËØÊ§°Ü£º"+temp+"["+idx.getInt_idx()+"]",e);
+						throw new EvalVariableValueFailedException("è·å–æ•°ç»„å…ƒç´ å¤±è´¥ï¼š"+temp+"["+idx.getInt_idx()+"]",e);
 					}
 				else
 					try {
 						temp = ((Map)temp).get(idx.getString_idx());
 					} catch (Throwable e) {
-						throw new EvalVariableValueFailedException("»ñÈ¡MapÔªËØÊ§°Ü£º"+temp+"["+idx.getString_idx()+"]",e);
+						throw new EvalVariableValueFailedException("è·å–Mapå…ƒç´ å¤±è´¥ï¼š"+temp+"["+idx.getString_idx()+"]",e);
 					}
 				if(temp == null)
 					break;
@@ -886,7 +886,7 @@ root:  	do
     	{
 			pro = ClassUtil.getPropertyDescriptor(temp.getClass(), var.getVariableName());
 			if(pro == null)
-				throw new EvalVariableValueFailedException("¼ÆËã±äÁ¿ÖµÊ§°Ü£ºclass["+bean.getClass().getCanonicalName()+"]Ã»ÓĞ¶¨ÒåÊôĞÔ["+var.getVariableName()+"]");
+				throw new EvalVariableValueFailedException("è®¡ç®—å˜é‡å€¼å¤±è´¥ï¼šclass["+bean.getClass().getCanonicalName()+"]æ²¡æœ‰å®šä¹‰å±æ€§["+var.getVariableName()+"]");
 			try {
 				temp = pro.getValue(temp);
 			} catch (EvalVariableValueFailedException e) {
@@ -920,15 +920,15 @@ root:  	do
 								temp = ((List)temp).get(idx.getInt_idx());
 							}
 						} catch (ArrayIndexOutOfBoundsException e) {
-							throw new EvalVariableValueFailedException("»ñÈ¡Êı×éÔªËØÊ§°Ü£ºÊı×éÔ½½ç"+temp+"["+idx.getInt_idx()+"]",e);
+							throw new EvalVariableValueFailedException("è·å–æ•°ç»„å…ƒç´ å¤±è´¥ï¼šæ•°ç»„è¶Šç•Œ"+temp+"["+idx.getInt_idx()+"]",e);
 						} catch (Throwable e) {
-							throw new EvalVariableValueFailedException("»ñÈ¡Êı×éÔªËØÊ§°Ü£º"+temp+"["+idx.getInt_idx()+"]",e);
+							throw new EvalVariableValueFailedException("è·å–æ•°ç»„å…ƒç´ å¤±è´¥ï¼š"+temp+"["+idx.getInt_idx()+"]",e);
 						}
 					else
 						try {
 							temp = ((Map)temp).get(idx.getString_idx());
 						} catch (Throwable e) {
-							throw new EvalVariableValueFailedException("»ñÈ¡MapÔªËØÊ§°Ü£º"+temp+"["+idx.getString_idx()+"]",e);
+							throw new EvalVariableValueFailedException("è·å–Mapå…ƒç´ å¤±è´¥ï¼š"+temp+"["+idx.getString_idx()+"]",e);
 						}
 					if(temp == null)
 						break root;

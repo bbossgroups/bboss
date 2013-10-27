@@ -35,7 +35,7 @@
 
 	<target name="compile-frameworkset-event" description="compile the bboss-event source ">
 		<echo>compile the frameworkset-event source ...</echo>
-		<javac destdir="classes-bboss-event" target="1.5" source="1.5" deprecation="true" debug="${debug}" optimize="${optimize}" memorymaximumsize="256M" fork="true" verbose="yes">
+		<javac encoding="UTF-8" destdir="classes-bboss-event" target="1.5" source="1.5" deprecation="true" debug="${debug}" optimize="${optimize}" memorymaximumsize="256M" fork="true" verbose="yes">
 			<src path="src" />
 			
 			

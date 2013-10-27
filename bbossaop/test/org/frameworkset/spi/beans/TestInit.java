@@ -9,7 +9,7 @@ import org.frameworkset.spi.InitializingBean;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2009-10-4 œ¬ŒÁ05:05:23
+ * @Date 2009-10-4 ‰∏ãÂçà05:05:23
  * @author biaoping.yin
  * @version 1.0
  */

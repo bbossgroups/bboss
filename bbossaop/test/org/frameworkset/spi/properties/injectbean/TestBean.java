@@ -26,14 +26,14 @@ public class TestBean
     public void testEditor0()
     {
         EditorService editorService = (EditorService)BaseSPIManager.getBeanObject("inject.editor.injectbean.0");
-        org.junit.Assert.assertEquals("��", editorService.getSex());
+        org.junit.Assert.assertEquals("男", editorService.getSex());
         System.out.println("sex:" + editorService.getSex());
     }
     @Test
     public void testEditor1()
     {
         EditorService editorService = (EditorService)BaseSPIManager.getBeanObject("inject.editor.injectbean.1");
-        org.junit.Assert.assertEquals("Ů", editorService.getSex());
+        org.junit.Assert.assertEquals("女", editorService.getSex());
     }
     
     @Test
@@ -41,7 +41,7 @@ public class TestBean
     {
         EditorService editorService = (EditorService)BaseSPIManager.getBeanObject("inject.editor.injectbean.2");
         System.out.println("sex:" + editorService.getSex());
-        org.junit.Assert.assertEquals("δ֪", editorService.getSex());
+        org.junit.Assert.assertEquals("未知", editorService.getSex());
     }
       
     

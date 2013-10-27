@@ -24,7 +24,7 @@ package org.frameworkset.util.io;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2010-9-24 ÏÂÎç05:46:14
+ * @Date 2010-9-24 ä¸‹åˆ05:46:14
  * @author biaoping.yin
  * @version 1.0
  */

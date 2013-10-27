@@ -25,7 +25,7 @@ import com.frameworkset.common.poolman.monitor.PoolMonitorService;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2010-5-28 œ¬ŒÁ06:08:31
+ * @Date 2010-5-28 ‰∏ãÂçà06:08:31
  * @author biaoping.yin
  * @version 1.0
  */

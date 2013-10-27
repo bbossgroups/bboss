@@ -25,13 +25,13 @@ import org.frameworkset.spi.BaseApplicationContext;
  * 
  * <p>Title: InterceptorInfo.java</p>
  *
- * <p>Description: À¹½ØÆ÷ÀàÅäÖÃĞÅÏ¢</p>
+ * <p>Description: æ‹¦æˆªå™¨ç±»é…ç½®ä¿¡æ¯</p>
  *
  * <p>Copyright: Copyright (c) 2007</p>
  *
  * <p>bboss workgroup</p>
  * @Date Sep 5, 2008 9:37:29 AM
- * @author biaoping.yin,Òü±êÆ½
+ * @author biaoping.yin,å°¹æ ‡å¹³
  * @version 1.0
  */
 public class InterceptorInfo extends Pro{
@@ -59,10 +59,10 @@ public class InterceptorInfo extends Pro{
 
   
     /**
-     * ÅĞ¶Ï·½·¨ÊÇ·ñÊÇĞèÒª½øĞĞÊÂÎñ¿ØÖÆ,Èç¹ûÊÇÔò·µ»Ø°üº¬ÊÂÎñ¿ØÖÆ²ßÂÔĞÅÏ¢µÄ·½·¨¶ÔÏó£¬ ²»ÊÇ¾Í·µ»Ønull
+     * åˆ¤æ–­æ–¹æ³•æ˜¯å¦æ˜¯éœ€è¦è¿›è¡Œäº‹åŠ¡æ§åˆ¶,å¦‚æœæ˜¯åˆ™è¿”å›åŒ…å«äº‹åŠ¡æ§åˆ¶ç­–ç•¥ä¿¡æ¯çš„æ–¹æ³•å¯¹è±¡ï¼Œ ä¸æ˜¯å°±è¿”å›null
      * 
      * @param method
-     * @return SynchronizedMethod °üº¬ÊÂÎñ¿ØÖÆ²ßÂÔĞÅÏ¢
+     * @return SynchronizedMethod åŒ…å«äº‹åŠ¡æ§åˆ¶ç­–ç•¥ä¿¡æ¯
      */
     public SynchronizedMethod isInterceptMethod(Method method,String muuid)
     {
@@ -70,8 +70,8 @@ public class InterceptorInfo extends Pro{
     }
     
     /**
-     * ÅĞ¶ÏËùÓĞµÄ·½·¨¶¼ĞèÒª±»À¹½ØÆ÷À¹½Ø£¬Èç¹ûÎªtrue£¬ÔòËùÓĞµÄ¶¼ĞèÒª±»À¹½Ø£¬·ñÔò
-     * ĞèÒª¸ù¾İisInterceptMethod(Method method)À´ÅĞ±ğ·½·¨ÊÇ·ñĞèÒª±»À¹½Ø
+     * åˆ¤æ–­æ‰€æœ‰çš„æ–¹æ³•éƒ½éœ€è¦è¢«æ‹¦æˆªå™¨æ‹¦æˆªï¼Œå¦‚æœä¸ºtrueï¼Œåˆ™æ‰€æœ‰çš„éƒ½éœ€è¦è¢«æ‹¦æˆªï¼Œå¦åˆ™
+     * éœ€è¦æ ¹æ®isInterceptMethod(Method method)æ¥åˆ¤åˆ«æ–¹æ³•æ˜¯å¦éœ€è¦è¢«æ‹¦æˆª
      * @return
      */
     public boolean allWillBeIntercept()

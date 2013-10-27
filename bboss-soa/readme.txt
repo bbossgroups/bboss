@@ -1,26 +1,26 @@
 #######update function list since bbossgroups-3.4 begin###########
-o Òı½øĞòÁĞ»¯»úÖÆ£¬¶ÔÓÚstatic£¬final£¬transientÀàĞÍµÄÊôĞÔ²»½øĞĞĞòÁĞ»¯£¬¶ÔÓÚÌí¼ÓÁË@ExcludeFieldµÄ×¢½â²»ĞòÁĞ»¯
-¶ÔÏóÖĞĞòÁĞ»¯µÄ×Ö¶Î²»ÔÙĞèÒªget/set·½·¨
+o å¼•è¿›åºåˆ—åŒ–æœºåˆ¶ï¼Œå¯¹äºstaticï¼Œfinalï¼Œtransientç±»å‹çš„å±æ€§ä¸è¿›è¡Œåºåˆ—åŒ–ï¼Œå¯¹äºæ·»åŠ äº†@ExcludeFieldçš„æ³¨è§£ä¸åºåˆ—åŒ–
+å¯¹è±¡ä¸­åºåˆ—åŒ–çš„å­—æ®µä¸å†éœ€è¦get/setæ–¹æ³•
 #######update function list since bbossgroups-3.2 begin###########
-o ÊµÏÖ¶ÔÏóÓëxmlÏà»¥×ª»¯¹¦ÄÜ
-o ĞÔÄÜÓÅ»¯²ßÂÔ
-properties×ª»»Îªps
-property×ª»»Îªp
-name×ª»»Îªn
-value×ª»»Îªv
-class×ª»»Îªcs
+o å®ç°å¯¹è±¡ä¸xmlç›¸äº’è½¬åŒ–åŠŸèƒ½
+o æ€§èƒ½ä¼˜åŒ–ç­–ç•¥
+propertiesè½¬æ¢ä¸ºps
+propertyè½¬æ¢ä¸ºp
+nameè½¬æ¢ä¸ºn
+valueè½¬æ¢ä¸ºv
+classè½¬æ¢ä¸ºcs
 
-list×ª»»Îªl
-array×ª»»Îªa
-map×ª»»Îªm
-set×ª»»Îªs
+listè½¬æ¢ä¸ºl
+arrayè½¬æ¢ä¸ºa
+mapè½¬æ¢ä¸ºm
+setè½¬æ¢ä¸ºs
 
 
-soa:type_null_value×ª»»Îªs:nvl
-soa:type×ª»»Îªs:t
-componentType×ª»»Îªcmt
+soa:type_null_valueè½¬æ¢ä¸ºs:nvl
+soa:typeè½¬æ¢ä¸ºs:t
+componentTypeè½¬æ¢ä¸ºcmt
 
-o ĞŞ¸´set×ª»»ÎÊÌâ
-o ĞŞ¸´Ã¶¾ÙÀàĞÍ×ª»»ÎÊÌâ
+o ä¿®å¤setè½¬æ¢é—®é¢˜
+o ä¿®å¤æšä¸¾ç±»å‹è½¬æ¢é—®é¢˜
 
 

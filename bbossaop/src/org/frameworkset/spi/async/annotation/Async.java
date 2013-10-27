@@ -23,14 +23,14 @@ import java.lang.annotation.Target;
 
 /**
  * <p>Title: Async.java</p> 
- * <p>Description: ÓÃÀ´Ö§³Ö·þÎñ×é¼þ·½·¨µÄÒì²½µ÷ÓÃ»úÖÆ
- * 1.²ÉÓÃÒì²½µ÷ÓÃ£¬µ«ÊÇ½á¹ûÍ¨¹ý»Øµ÷µÄ·½Ê½·µ»Ø¸øµ÷ÓÃ¶Ë
-   2¡¢²»ÐèÒªµÈ´ý½á¹ûµÄµÄÒì²½µ÷ÓÃ
-   3¡¢ÐèÒªµÈ´ý½á¹û£¬µ«ÊÇÖ¸¶¨µÈ´ý³¬Ê±Ê±¼ä£¬Ò»µ©timeout¾Í±¨³¬Ê±Òì³£
+ * <p>Description: ç”¨æ¥æ”¯æŒæœåŠ¡ç»„ä»¶æ–¹æ³•çš„å¼‚æ­¥è°ƒç”¨æœºåˆ¶
+ * 1.é‡‡ç”¨å¼‚æ­¥è°ƒç”¨ï¼Œä½†æ˜¯ç»“æžœé€šè¿‡å›žè°ƒçš„æ–¹å¼è¿”å›žç»™è°ƒç”¨ç«¯
+   2ã€ä¸éœ€è¦ç­‰å¾…ç»“æžœçš„çš„å¼‚æ­¥è°ƒç”¨
+   3ã€éœ€è¦ç­‰å¾…ç»“æžœï¼Œä½†æ˜¯æŒ‡å®šç­‰å¾…è¶…æ—¶æ—¶é—´ï¼Œä¸€æ—¦timeoutå°±æŠ¥è¶…æ—¶å¼‚å¸¸
  * </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2011-4-20 ÏÂÎç02:21:50
+ * @Date 2011-4-20 ä¸‹åˆ02:21:50
  * @author biaoping.yin
  * @version 1.0
  */
@@ -38,28 +38,28 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Async {
 	/**
-	 * Ö¸¶¨Òì²½µ÷ÓÃµÄ³¬Ê±Ê±¼ä£¬Ä¬ÈÏÎª-1¼°ÓÀ¾ÃµÈ´ý£¬Ö±µ½µ÷ÓÃ·½·µ»Ø
-	 * ´óÓÚ0Ê±£¬µÈ´ý½á¹û£¬³¬¹ýÖ¸¶¨µÄÊ±¼ä¾ÍÅ×³ö³¬Ê±Òì³£
+	 * æŒ‡å®šå¼‚æ­¥è°ƒç”¨çš„è¶…æ—¶æ—¶é—´ï¼Œé»˜è®¤ä¸º-1åŠæ°¸ä¹…ç­‰å¾…ï¼Œç›´åˆ°è°ƒç”¨æ–¹è¿”å›ž
+	 * å¤§äºŽ0æ—¶ï¼Œç­‰å¾…ç»“æžœï¼Œè¶…è¿‡æŒ‡å®šçš„æ—¶é—´å°±æŠ›å‡ºè¶…æ—¶å¼‚å¸¸
 	 * @return
 	 */
 	public long timeout() default -1;
 	/**
-	 * ²ÉÓÃÒì²½µ÷ÓÃ£¬µ«ÊÇ½á¹ûÍ¨¹ý»Øµ÷µÄ·½Ê½·µ»Ø¸øµ÷ÓÃ¶Ë
+	 * é‡‡ç”¨å¼‚æ­¥è°ƒç”¨ï¼Œä½†æ˜¯ç»“æžœé€šè¿‡å›žè°ƒçš„æ–¹å¼è¿”å›žç»™è°ƒç”¨ç«¯
 	 * @return
 	 */
 	public String callback() default Constants.NULLCALLBACK;
 	/**
-	 * ÊÇ·ñÐèÒª·µ»Øµ÷ÓÃ½á¹û£¬Ä¬ÈÏ²»·µ»Ø£¬Ö÷Ïß³Ì¼ÌÐøÍùÇ°×ß
-	 * Èç¹ûÐèÒª·µ»ØÔò£¬¸ù¾ÝtimeoutºÍcallbackÁ½¸ö²ÎÊýÀ´¾ö¶¨
-	 * ·µ»Ø½á¹ûµÄµÈ´ý´¦ÀíÄ£Ê½£º
+	 * æ˜¯å¦éœ€è¦è¿”å›žè°ƒç”¨ç»“æžœï¼Œé»˜è®¤ä¸è¿”å›žï¼Œä¸»çº¿ç¨‹ç»§ç»­å¾€å‰èµ°
+	 * å¦‚æžœéœ€è¦è¿”å›žåˆ™ï¼Œæ ¹æ®timeoutå’Œcallbackä¸¤ä¸ªå‚æ•°æ¥å†³å®š
+	 * è¿”å›žç»“æžœçš„ç­‰å¾…å¤„ç†æ¨¡å¼ï¼š
 	 * 
-	 * µ±timeout > 0 ÔòµÈ´ýÌØ¶¨µÄÊ±¼äÀ´À´»ñÈ¡½á¹û£¬³¬¹ýÖ¸¶¨µÄÊ±¼äºó¾ÍÅ×³¬Ê±Òì³££¬µÈ´ý³¬Ê±µÄÄ£Ê½ÓÖ·ÖÎªÁ½ÖÖÇé¿ö£º
-	 * Èç¹ûÖ¸¶¨ÁË»Øµ÷º¯Êý£¬²»×èÈûÖ÷³ÌÐò£¬½«½á¹û½»¸ø»Øµ÷º¯ÊýÀ´´¦Àí
-	 * Èç¹ûÃ»ÓÐÖ¸¶¨»Øµ÷º¯ÊýÔò×èÈûÖ÷³ÌÐò£¬½«½á¹û½»¸øÖ÷³ÌÐòÀ´´¦Àí
+	 * å½“timeout > 0 åˆ™ç­‰å¾…ç‰¹å®šçš„æ—¶é—´æ¥æ¥èŽ·å–ç»“æžœï¼Œè¶…è¿‡æŒ‡å®šçš„æ—¶é—´åŽå°±æŠ›è¶…æ—¶å¼‚å¸¸ï¼Œç­‰å¾…è¶…æ—¶çš„æ¨¡å¼åˆåˆ†ä¸ºä¸¤ç§æƒ…å†µï¼š
+	 * å¦‚æžœæŒ‡å®šäº†å›žè°ƒå‡½æ•°ï¼Œä¸é˜»å¡žä¸»ç¨‹åºï¼Œå°†ç»“æžœäº¤ç»™å›žè°ƒå‡½æ•°æ¥å¤„ç†
+	 * å¦‚æžœæ²¡æœ‰æŒ‡å®šå›žè°ƒå‡½æ•°åˆ™é˜»å¡žä¸»ç¨‹åºï¼Œå°†ç»“æžœäº¤ç»™ä¸»ç¨‹åºæ¥å¤„ç†
 	 * 
-	 * µ±timeout <= 0 Ê±£¬ÔòÓÀ¾ÃµÈ´ý½á¹û£¬Ö±µ½½á¹û·µ»Ø£¬ÕâÖÖÄ£Ê½Ò²·ÖÁ½ÖÖÇé¿ö£º
-	 * Èç¹ûÖ¸¶¨ÁË»Øµ÷º¯Êý Ôò²»×èÈûÖ÷³ÌÐò£¬
-	 * Èç¹ûÃ»ÓÐÖ¸¶¨»Øµ÷º¯Êý£¬Ôò×èÈûÖ÷³ÌÐò£¬Ö±µ½½á¹û·µ»ØÀ´
+	 * å½“timeout <= 0 æ—¶ï¼Œåˆ™æ°¸ä¹…ç­‰å¾…ç»“æžœï¼Œç›´åˆ°ç»“æžœè¿”å›žï¼Œè¿™ç§æ¨¡å¼ä¹Ÿåˆ†ä¸¤ç§æƒ…å†µï¼š
+	 * å¦‚æžœæŒ‡å®šäº†å›žè°ƒå‡½æ•° åˆ™ä¸é˜»å¡žä¸»ç¨‹åºï¼Œ
+	 * å¦‚æžœæ²¡æœ‰æŒ‡å®šå›žè°ƒå‡½æ•°ï¼Œåˆ™é˜»å¡žä¸»ç¨‹åºï¼Œç›´åˆ°ç»“æžœè¿”å›žæ¥
 	 * @return
 	 */
 	public Result result() default Result.NO;	

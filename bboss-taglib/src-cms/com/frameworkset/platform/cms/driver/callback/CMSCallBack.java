@@ -27,20 +27,20 @@ import com.frameworkset.common.tag.pager.DataInfo;
  * <p> bboss workgroup </p>
  * <p> Copyright (c) 2005-2013 </p>
  * 
- * @Date 2013Äê10ÔÂ26ÈÕ
+ * @Date 2013å¹´10æœˆ26æ—¥
  * @author biaoping.yin
  * @version 1.0
  */
 public interface CMSCallBack {
 	/**
-	 * ÄÚÈİ¹ÜÀí£º³õÊ¼»¯ÉÏÏÂÎÄÖĞ·ÖÒ³µÄ×î´ó¼ÇÂ¼Êı£¬²¢·µ»Ø·ÖÒ³ÆğµãÎ»ÖÃ£¨ÊÇStringÀàĞÍµÄoffset£©
+	 * å†…å®¹ç®¡ç†ï¼šåˆå§‹åŒ–ä¸Šä¸‹æ–‡ä¸­åˆ†é¡µçš„æœ€å¤§è®°å½•æ•°ï¼Œå¹¶è¿”å›åˆ†é¡µèµ·ç‚¹ä½ç½®ï¼ˆæ˜¯Stringç±»å‹çš„offsetï¼‰
 	 * @param maxPateItems
 	 * @return
 	 */
 	String initContext(int maxPateItems);
 	
 	/**
-	 * ÄÚÈİ¹ÜÀí£º³õÊ¼»¯³õÊ¼»¯ÉÏÏÂÎÄÖĞ·ÖÒ³ÆğµãÎ»ÖÃ£¬µ±Ò³Ò³±àºÅ£¬×Ü¼ÇÂ¼Êı
+	 * å†…å®¹ç®¡ç†ï¼šåˆå§‹åŒ–åˆå§‹åŒ–ä¸Šä¸‹æ–‡ä¸­åˆ†é¡µèµ·ç‚¹ä½ç½®ï¼Œå½“é¡µé¡µç¼–å·ï¼Œæ€»è®°å½•æ•°
 	 * @param offset
 	 * @param newPageCount
 	 * @param totalsize

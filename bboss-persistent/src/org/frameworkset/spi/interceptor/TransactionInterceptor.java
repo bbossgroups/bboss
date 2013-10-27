@@ -26,13 +26,13 @@ import com.frameworkset.proxy.Interceptor;
  * 
  * <p>Title: TransactionInterceptor.java</p>
  *
- * <p>Description: ÊÂÎñ¹ÜÀíÀ¹½ØÆ÷£¬¶ÔÉùÃ÷Ê½µÄÊÂÎñ½øĞĞÀ¹½Ø´¦Àí</p>
+ * <p>Description: äº‹åŠ¡ç®¡ç†æ‹¦æˆªå™¨ï¼Œå¯¹å£°æ˜å¼çš„äº‹åŠ¡è¿›è¡Œæ‹¦æˆªå¤„ç†</p>
  *
  * <p>Copyright: Copyright (c) 2007</p>
  *
  * <p>bboss workgroup</p>
  * @Date Aug 11, 2008 4:57:34 PM
- * @author biaoping.yin,Òü±êÆ½
+ * @author biaoping.yin,å°¹æ ‡å¹³
  * @version 1.0
  */
 public final class TransactionInterceptor implements Interceptor {

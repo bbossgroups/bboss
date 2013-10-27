@@ -20,24 +20,24 @@ import com.frameworkset.common.poolman.util.JDBCPoolMetaData;
 
 public class PoolmanStatic extends JDBCPoolMetaData{
 	/**
-	 * ×îĞ¡Á¬½ÓÊı
+	 * æœ€å°è¿æ¥æ•°
 	 */
 //    private int minconnections;
     /**
-     * ×î´óÁ¬½ÓÊı
+     * æœ€å¤§è¿æ¥æ•°
      */
 //    private int maxconnections;
     /**
-     * µ±Ç°¿ÕÏĞÁ¬½ÓÊı
+     * å½“å‰ç©ºé—²è¿æ¥æ•°
      */
     private int idleconnections;
     /**
-     * µ±Ç°Ê¹ÓÃÁ¬½ÓÊı
+     * å½“å‰ä½¿ç”¨è¿æ¥æ•°
      */
     private int activeconnections;
     
     /**
-     * Ê¹ÓÃ¸ß·åÖµ
+     * ä½¿ç”¨é«˜å³°å€¼
      */
     private int heapconnections;
    
@@ -46,42 +46,42 @@ public class PoolmanStatic extends JDBCPoolMetaData{
      */
     private String dbname;
     
-    /* Æô¶¯Ê±¼ä
+    /* å¯åŠ¨æ—¶é—´
 	 */
    private long startTime;
    /**
-    * Í£Ö¹Ê±¼ä
+    * åœæ­¢æ—¶é—´
     */
    private long stopTime;
    /**
-    * ×´Ì¬
+    * çŠ¶æ€
     */
    private String status;
    /**
-    * ³ÖĞøÔËĞĞÊ±¼ä
+    * æŒç»­è¿è¡Œæ—¶é—´
     */
    private long continousTime;
    
    private boolean usepool = true;
   
    /**
-    * ¼ì²âsqlÓï¾ä
+    * æ£€æµ‹sqlè¯­å¥
     */
 //   private String validationQuery;
    /**
-    * Êı¾İ¿âÇı¶¯
+    * æ•°æ®åº“é©±åŠ¨
     */
 //   private String driver;
    /**
-    * ÊÇ·ñÍâ²¿Êı¾İÔ´
+    * æ˜¯å¦å¤–éƒ¨æ•°æ®æº
     */
 //   private boolean external = PoolManConstants.EXTERNAL;
    /**
-    * ÊÇ·ñÍâ²¿Êı¾İÔ´
+    * æ˜¯å¦å¤–éƒ¨æ•°æ®æº
     */
 //   private String externaljndiName;
    /**
-    * jndiÃû³Æ
+    * jndiåç§°
     */
 //   private String JNDIName;
  

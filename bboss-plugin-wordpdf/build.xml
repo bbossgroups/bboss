@@ -38,7 +38,7 @@
 
 	<target name="compile-bboss-wordpdf" description="compile the bboss-wordpdf source ">
 		<echo>compile the bboss-wordpdf source ...</echo>
-		<javac destdir="classes-bboss-wordpdf" 
+		<javac encoding="UTF-8" destdir="classes-bboss-wordpdf" 
 			
 			target="1.5" source="1.5" deprecation="true" debug="${debug}" optimize="${optimize}" memorymaximumsize="256M" fork="true" verbose="yes">
 			<src path="src" />			
@@ -74,7 +74,7 @@
 	
 	<target name="compile-bboss-wordpdf-test" depends="jar-bboss-wordpdf" description="compile the bboss-wordpdf-test source ">
 			<echo>compile the frameworkset-pool-test source ...</echo>
-			<javac destdir="classes-bboss-wordpdf-test" target="1.5" source="1.5" 
+			<javac encoding="UTF-8" destdir="classes-bboss-wordpdf-test" target="1.5" source="1.5" 
 				deprecation="true" debug="${debug}" optimize="${optimize}" 
 				memorymaximumsize="256M" fork="true" verbose="yes"
 				>				

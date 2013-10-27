@@ -18,12 +18,12 @@ package org.frameworkset.spi.interceptor;
 
 /**
  * <p>Title: InterruptionException.java</p> 
- * <p>Description: 如果在拦截器中抛出InterruptionException，将导致程序的正常逻辑结束，主要应用于before
- * 方法，如果后续还有拦截器没有执行则都不执行，
- * 并且所有已经执行before方法的拦截器的后续方法也全部都不执行</p>
+ * <p>Description: 濡傛灉鍦ㄦ嫤鎴櫒涓姏鍑篒nterruptionException锛屽皢瀵艰嚧绋嬪簭鐨勬甯搁�昏緫缁撴潫锛屼富瑕佸簲鐢ㄤ簬before
+ * 鏂规硶锛屽鏋滃悗缁繕鏈夋嫤鎴櫒娌℃湁鎵ц鍒欓兘涓嶆墽琛岋紝
+ * 骞朵笖鎵�鏈夊凡缁忔墽琛宐efore鏂规硶鐨勬嫤鎴櫒鐨勫悗缁柟娉曚篃鍏ㄩ儴閮戒笉鎵ц</p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2012-11-27 下午3:04:29
+ * @Date 2012-11-27 涓嬪崍3:04:29
  * @author biaoping.yin
  * @version 1.0
  */

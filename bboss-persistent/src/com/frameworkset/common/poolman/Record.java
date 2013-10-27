@@ -41,7 +41,7 @@ import com.frameworkset.util.ValueObjectUtil;
  * 
  * <p>Title: Record.java</p>
  *
- * <p>Description: ·â×°Ã¿Ìõ¼ÇÂ¼µÄÏêÏ¸ĞÅÏ¢</p>
+ * <p>Description: å°è£…æ¯æ¡è®°å½•çš„è¯¦ç»†ä¿¡æ¯</p>
  *
  * <p>Copyright: Copyright (c) 2007</p>
  *
@@ -79,7 +79,7 @@ public class Record extends DBHashtable{
 	}
 	
 	/**
-	 * ÉèÖÃ¼ÇÂ¼¶ÔÓ¦µÄÊı¾İ¿âÔ­Ê¼¼ÇÂ¼ĞĞºÅ
+	 * è®¾ç½®è®°å½•å¯¹åº”çš„æ•°æ®åº“åŸå§‹è®°å½•è¡Œå·
 	 */
 	private int rowid;
 	public void setRowid(int rowid)
@@ -158,7 +158,7 @@ public class Record extends DBHashtable{
      * database, including any padding added by the database.
      *
      * @param parameterIndex 
-     * 					´æ´¢¹ı³Ì·µ»ØµÄÊı¾İ£ºthe first parameter is 1, the second is 2 Ò»°ã²éÑ¯µÄ½á¹û¼¯£º the first parameter is 0, the second is 1,
+     * 					å­˜å‚¨è¿‡ç¨‹è¿”å›çš„æ•°æ®ï¼šthe first parameter is 1, the second is 2 ä¸€èˆ¬æŸ¥è¯¢çš„ç»“æœé›†ï¼š the first parameter is 0, the second is 1,
      * and so on
      * @return the parameter value. If the value is SQL <code>NULL</code>, 
      *         the result 
@@ -177,7 +177,7 @@ public class Record extends DBHashtable{
      * Retrieves the value of the designated JDBC <code>BIT</code> parameter as a 
      * <code>boolean</code> in the Java programming language.
      *
-     * @param parameterIndex ´æ´¢¹ı³Ì·µ»ØµÄÊı¾İ£ºthe first parameter is 1, the second is 2 Ò»°ã²éÑ¯µÄ½á¹û¼¯£º the first parameter is 0, the second is 1, 
+     * @param parameterIndex å­˜å‚¨è¿‡ç¨‹è¿”å›çš„æ•°æ®ï¼šthe first parameter is 1, the second is 2 ä¸€èˆ¬æŸ¥è¯¢çš„ç»“æœé›†ï¼š the first parameter is 0, the second is 1, 
      *        and so on
      * @return the parameter value.  If the value is SQL <code>NULL</code>, 
      *         the result is <code>false</code>.
@@ -199,7 +199,7 @@ public class Record extends DBHashtable{
      * Retrieves the value of the designated JDBC <code>TINYINT</code> parameter 
      * as a <code>byte</code> in the Java programming language.
      *
-     * @param parameterIndex ´æ´¢¹ı³Ì·µ»ØµÄÊı¾İ£ºthe first parameter is 1, the second is 2 Ò»°ã²éÑ¯µÄ½á¹û¼¯£º the first parameter is 0, the second is 1, 
+     * @param parameterIndex å­˜å‚¨è¿‡ç¨‹è¿”å›çš„æ•°æ®ï¼šthe first parameter is 1, the second is 2 ä¸€èˆ¬æŸ¥è¯¢çš„ç»“æœé›†ï¼š the first parameter is 0, the second is 1, 
      * and so on
      * @return the parameter value.  If the value is SQL <code>NULL</code>, the result 
      * is <code>0</code>.
@@ -218,7 +218,7 @@ public class Record extends DBHashtable{
      * Retrieves the value of the designated JDBC <code>SMALLINT</code> parameter 
      * as a <code>short</code> in the Java programming language.
      *
-     * @param parameterIndex ´æ´¢¹ı³Ì·µ»ØµÄÊı¾İ£ºthe first parameter is 1, the second is 2 Ò»°ã²éÑ¯µÄ½á¹û¼¯£º the first parameter is 0, the second is 1, 
+     * @param parameterIndex å­˜å‚¨è¿‡ç¨‹è¿”å›çš„æ•°æ®ï¼šthe first parameter is 1, the second is 2 ä¸€èˆ¬æŸ¥è¯¢çš„ç»“æœé›†ï¼š the first parameter is 0, the second is 1, 
      * and so on
      * @return the parameter value.  If the value is SQL <code>NULL</code>, the result 
      * is <code>0</code>.
@@ -436,7 +436,7 @@ public class Record extends DBHashtable{
      * Retrieves the value of the designated JDBC <code>INTEGER</code> parameter 
      * as an <code>int</code> in the Java programming language.
      *
-     * @param parameterIndex ´æ´¢¹ı³Ì·µ»ØµÄÊı¾İ£ºthe first parameter is 1, the second is 2 Ò»°ã²éÑ¯µÄ½á¹û¼¯£º the first parameter is 0, the second is 1, 
+     * @param parameterIndex å­˜å‚¨è¿‡ç¨‹è¿”å›çš„æ•°æ®ï¼šthe first parameter is 1, the second is 2 ä¸€èˆ¬æŸ¥è¯¢çš„ç»“æœé›†ï¼š the first parameter is 0, the second is 1, 
      * and so on
      * @return the parameter value.  If the value is SQL <code>NULL</code>, the result 
      * is <code>0</code>.
@@ -456,7 +456,7 @@ public class Record extends DBHashtable{
      * Retrieves the value of the designated JDBC <code>BIGINT</code> parameter 
      * as a <code>long</code> in the Java programming language.
      *
-     * @param parameterIndex ´æ´¢¹ı³Ì·µ»ØµÄÊı¾İ£ºthe first parameter is 1, the second is 2 Ò»°ã²éÑ¯µÄ½á¹û¼¯£º the first parameter is 0, the second is 1, 
+     * @param parameterIndex å­˜å‚¨è¿‡ç¨‹è¿”å›çš„æ•°æ®ï¼šthe first parameter is 1, the second is 2 ä¸€èˆ¬æŸ¥è¯¢çš„ç»“æœé›†ï¼š the first parameter is 0, the second is 1, 
      * and so on
      * @return the parameter value.  If the value is SQL <code>NULL</code>, the result 
      * is <code>0</code>.
@@ -527,7 +527,7 @@ public class Record extends DBHashtable{
      * Retrieves the value of the designated JDBC <code>FLOAT</code> parameter 
      * as a <code>float</code> in the Java programming language.
      *
-     * @param parameterIndex ´æ´¢¹ı³Ì·µ»ØµÄÊı¾İ£ºthe first parameter is 1, the second is 2 Ò»°ã²éÑ¯µÄ½á¹û¼¯£º the first parameter is 0, the second is 1, 
+     * @param parameterIndex å­˜å‚¨è¿‡ç¨‹è¿”å›çš„æ•°æ®ï¼šthe first parameter is 1, the second is 2 ä¸€èˆ¬æŸ¥è¯¢çš„ç»“æœé›†ï¼š the first parameter is 0, the second is 1, 
      *        and so on
      * @return the parameter value.  If the value is SQL <code>NULL</code>, the result 
      *         is <code>0</code>.
@@ -543,7 +543,7 @@ public class Record extends DBHashtable{
     /**
      * Retrieves the value of the designated JDBC <code>DOUBLE</code> parameter as a <code>double</code>
      * in the Java programming language.
-     * @param parameterIndex ´æ´¢¹ı³Ì·µ»ØµÄÊı¾İ£ºthe first parameter is 1, the second is 2 Ò»°ã²éÑ¯µÄ½á¹û¼¯£º the first parameter is 0, the second is 1,
+     * @param parameterIndex å­˜å‚¨è¿‡ç¨‹è¿”å›çš„æ•°æ®ï¼šthe first parameter is 1, the second is 2 ä¸€èˆ¬æŸ¥è¯¢çš„ç»“æœé›†ï¼š the first parameter is 0, the second is 1,
      *        and so on
      * @return the parameter value.  If the value is SQL <code>NULL</code>, the result 
      *         is <code>0</code>.
@@ -565,7 +565,7 @@ public class Record extends DBHashtable{
      * Retrieves the value of the designated JDBC <code>NUMERIC</code> parameter as a 
      * <code>java.math.BigDecimal</code> object with <i>scale</i> digits to
      * the right of the decimal point.
-     * @param parameterIndex ´æ´¢¹ı³Ì·µ»ØµÄÊı¾İ£ºthe first parameter is 1, the second is 2 Ò»°ã²éÑ¯µÄ½á¹û¼¯£º the first parameter is 0, the second is 1, 
+     * @param parameterIndex å­˜å‚¨è¿‡ç¨‹è¿”å›çš„æ•°æ®ï¼šthe first parameter is 1, the second is 2 ä¸€èˆ¬æŸ¥è¯¢çš„ç»“æœé›†ï¼š the first parameter is 0, the second is 1, 
      *        and so on
      * @param scale the number of digits to the right of the decimal point 
      * @return the parameter value.  If the value is SQL <code>NULL</code>, the result 
@@ -588,7 +588,7 @@ public class Record extends DBHashtable{
      * Retrieves the value of the designated JDBC <code>BINARY</code> or 
      * <code>VARBINARY</code> parameter as an array of <code>byte</code> 
      * values in the Java programming language.
-     * @param parameterIndex ´æ´¢¹ı³Ì·µ»ØµÄÊı¾İ£ºthe first parameter is 1, the second is 2 Ò»°ã²éÑ¯µÄ½á¹û¼¯£º the first parameter is 0, the second is 1, 
+     * @param parameterIndex å­˜å‚¨è¿‡ç¨‹è¿”å›çš„æ•°æ®ï¼šthe first parameter is 1, the second is 2 ä¸€èˆ¬æŸ¥è¯¢çš„ç»“æœé›†ï¼š the first parameter is 0, the second is 1, 
      *        and so on
      * @return the parameter value.  If the value is SQL <code>NULL</code>, the result 
      *         is <code>null</code>.
@@ -611,7 +611,7 @@ public class Record extends DBHashtable{
     /**
      * Retrieves the value of the designated JDBC <code>DATE</code> parameter as a 
      * <code>java.sql.Date</code> object.
-     * @param parameterIndex ´æ´¢¹ı³Ì·µ»ØµÄÊı¾İ£ºthe first parameter is 1, the second is 2 Ò»°ã²éÑ¯µÄ½á¹û¼¯£º the first parameter is 0, the second is 1, 
+     * @param parameterIndex å­˜å‚¨è¿‡ç¨‹è¿”å›çš„æ•°æ®ï¼šthe first parameter is 1, the second is 2 ä¸€èˆ¬æŸ¥è¯¢çš„ç»“æœé›†ï¼š the first parameter is 0, the second is 1, 
      *        and so on
      * @return the parameter value.  If the value is SQL <code>NULL</code>, the result 
      *         is <code>null</code>.
@@ -639,7 +639,7 @@ public class Record extends DBHashtable{
      * Retrieves the value of the designated JDBC <code>TIME</code> parameter as a 
      * <code>java.sql.Time</code> object.
      *
-     * @param parameterIndex ´æ´¢¹ı³Ì·µ»ØµÄÊı¾İ£ºthe first parameter is 1, the second is 2 Ò»°ã²éÑ¯µÄ½á¹û¼¯£º the first parameter is 0, the second is 1, 
+     * @param parameterIndex å­˜å‚¨è¿‡ç¨‹è¿”å›çš„æ•°æ®ï¼šthe first parameter is 1, the second is 2 ä¸€èˆ¬æŸ¥è¯¢çš„ç»“æœé›†ï¼š the first parameter is 0, the second is 1, 
      *        and so on
      * @return the parameter value.  If the value is SQL <code>NULL</code>, the result 
      *         is <code>null</code>.
@@ -665,7 +665,7 @@ public class Record extends DBHashtable{
      * Retrieves the value of the designated JDBC <code>TIMESTAMP</code> parameter as a 
      * <code>java.sql.Timestamp</code> object.
      *
-     * @param parameterIndex ´æ´¢¹ı³Ì·µ»ØµÄÊı¾İ£ºthe first parameter is 1, the second is 2 Ò»°ã²éÑ¯µÄ½á¹û¼¯£º the first parameter is 0, the second is 1, 
+     * @param parameterIndex å­˜å‚¨è¿‡ç¨‹è¿”å›çš„æ•°æ®ï¼šthe first parameter is 1, the second is 2 ä¸€èˆ¬æŸ¥è¯¢çš„ç»“æœé›†ï¼š the first parameter is 0, the second is 1, 
      *        and so on
      * @return the parameter value.  If the value is SQL <code>NULL</code>, the result 
      *         is <code>null</code>.
@@ -695,7 +695,7 @@ public class Record extends DBHashtable{
 	 * 
 	 * @param column
 	 *            start from zero
-	 * @return ÁĞË÷Òı¶ÔÓ¦µÄÊôĞÔÃû³Æ
+	 * @return åˆ—ç´¢å¼•å¯¹åº”çš„å±æ€§åç§°
 	 * @throws SQLException 
 	 */
 	private String seekField(int column) throws SQLException {
@@ -726,7 +726,7 @@ public class Record extends DBHashtable{
      * type as <code>java.sql.Types.OTHER</code>, this method can be used
      * to read database-specific abstract data types.
      *
-     * @param parameterIndex ´æ´¢¹ı³Ì·µ»ØµÄÊı¾İ£ºthe first parameter is 1, the second is 2 Ò»°ã²éÑ¯µÄ½á¹û¼¯£º the first parameter is 0, the second is 1, 
+     * @param parameterIndex å­˜å‚¨è¿‡ç¨‹è¿”å›çš„æ•°æ®ï¼šthe first parameter is 1, the second is 2 ä¸€èˆ¬æŸ¥è¯¢çš„ç»“æœé›†ï¼š the first parameter is 0, the second is 1, 
      *        and so on
      * @return A <code>java.lang.Object</code> holding the OUT parameter value
      * @exception SQLException if a database access error occurs
@@ -757,7 +757,7 @@ public class Record extends DBHashtable{
      * Retrieves the value of the designated JDBC <code>NUMERIC</code> parameter as a 
      * <code>java.math.BigDecimal</code> object with as many digits to the
      * right of the decimal point as the value contains.
-     * @param parameterIndex ´æ´¢¹ı³Ì·µ»ØµÄÊı¾İ£ºthe first parameter is 1, the second is 2 Ò»°ã²éÑ¯µÄ½á¹û¼¯£º the first parameter is 0, the second is 1,
+     * @param parameterIndex å­˜å‚¨è¿‡ç¨‹è¿”å›çš„æ•°æ®ï¼šthe first parameter is 1, the second is 2 ä¸€èˆ¬æŸ¥è¯¢çš„ç»“æœé›†ï¼š the first parameter is 0, the second is 1,
      * and so on
      * @return the parameter value in full precision.  If the value is 
      * SQL <code>NULL</code>, the result is <code>null</code>. 
@@ -780,7 +780,7 @@ public class Record extends DBHashtable{
      * <code>registerOutParameter</code>.  By registering the target
      * JDBC type as <code>java.sql.Types.OTHER</code>, this method can
      * be used to read database-specific abstract data types.  
-     * @param i ´æ´¢¹ı³Ì·µ»ØµÄÊı¾İ£ºthe first parameter is 1, the second is 2 Ò»°ã²éÑ¯µÄ½á¹û¼¯£º the first parameter is 0, the second is 1, and so on
+     * @param i å­˜å‚¨è¿‡ç¨‹è¿”å›çš„æ•°æ®ï¼šthe first parameter is 1, the second is 2 ä¸€èˆ¬æŸ¥è¯¢çš„ç»“æœé›†ï¼š the first parameter is 0, the second is 1, and so on
      * @param map the mapping from SQL type names to Java classes
      * @return a <code>java.lang.Object</code> holding the OUT parameter value
      * @exception SQLException if a database access error occurs
@@ -1085,7 +1085,7 @@ public class Record extends DBHashtable{
     /**
      * Retrieves the value of the designated JDBC <code>REF(&lt;structured-type&gt;)</code>
      * parameter as a {@link Ref} object in the Java programming language.
-     * @param i ´æ´¢¹ı³Ì·µ»ØµÄÊı¾İ£ºthe first parameter is 1, the second is 2 Ò»°ã²éÑ¯µÄ½á¹û¼¯£º the first parameter is 0, the second is 1, 
+     * @param i å­˜å‚¨è¿‡ç¨‹è¿”å›çš„æ•°æ®ï¼šthe first parameter is 1, the second is 2 ä¸€èˆ¬æŸ¥è¯¢çš„ç»“æœé›†ï¼š the first parameter is 0, the second is 1, 
      * and so on
      * @return the parameter value as a <code>Ref</code> object in the
      * Java programming language.  If the value was SQL <code>NULL</code>, the value
@@ -1101,7 +1101,7 @@ public class Record extends DBHashtable{
     /**
      * Retrieves the value of the designated JDBC <code>BLOB</code> parameter as a
      * {@link Blob} object in the Java programming language.
-     * @param i ´æ´¢¹ı³Ì·µ»ØµÄÊı¾İ£ºthe first parameter is 1, the second is 2 Ò»°ã²éÑ¯µÄ½á¹û¼¯£º the first parameter is 0, the second is 1, and so on
+     * @param i å­˜å‚¨è¿‡ç¨‹è¿”å›çš„æ•°æ®ï¼šthe first parameter is 1, the second is 2 ä¸€èˆ¬æŸ¥è¯¢çš„ç»“æœé›†ï¼š the first parameter is 0, the second is 1, and so on
      * @return the parameter value as a <code>Blob</code> object in the
      * Java programming language.  If the value was SQL <code>NULL</code>, the value
      * <code>null</code> is returned.
@@ -1116,7 +1116,7 @@ public class Record extends DBHashtable{
     /**
      * Retrieves the value of the designated JDBC <code>CLOB</code> parameter as a
      * <code>Clob</code> object in the Java programming language.
-     * @param i ´æ´¢¹ı³Ì·µ»ØµÄÊı¾İ£ºthe first parameter is 1, the second is 2 Ò»°ã²éÑ¯µÄ½á¹û¼¯£º the first parameter is 0, the second is 1, and
+     * @param i å­˜å‚¨è¿‡ç¨‹è¿”å›çš„æ•°æ®ï¼šthe first parameter is 1, the second is 2 ä¸€èˆ¬æŸ¥è¯¢çš„ç»“æœé›†ï¼š the first parameter is 0, the second is 1, and
      * so on
      * @return the parameter value as a <code>Clob</code> object in the
      * Java programming language.  If the value was SQL <code>NULL</code>, the
@@ -1133,7 +1133,7 @@ public class Record extends DBHashtable{
      *
      * Retrieves the value of the designated JDBC <code>ARRAY</code> parameter as an
      * {@link Array} object in the Java programming language.
-     * @param i ´æ´¢¹ı³Ì·µ»ØµÄÊı¾İ£ºthe first parameter is 1, the second is 2 Ò»°ã²éÑ¯µÄ½á¹û¼¯£º the first parameter is 0, the second is 1, and 
+     * @param i å­˜å‚¨è¿‡ç¨‹è¿”å›çš„æ•°æ®ï¼šthe first parameter is 1, the second is 2 ä¸€èˆ¬æŸ¥è¯¢çš„ç»“æœé›†ï¼š the first parameter is 0, the second is 1, and 
      * so on
      * @return the parameter value as an <code>Array</code> object in
      * the Java programming language.  If the value was SQL <code>NULL</code>, the
@@ -1156,7 +1156,7 @@ public class Record extends DBHashtable{
      * If no <code>Calendar</code> object is specified, the driver uses the
      * default timezone and locale.
      *
-     * @param parameterIndex ´æ´¢¹ı³Ì·µ»ØµÄÊı¾İ£ºthe first parameter is 1, the second is 2 Ò»°ã²éÑ¯µÄ½á¹û¼¯£º the first parameter is 0, the second is 1, 
+     * @param parameterIndex å­˜å‚¨è¿‡ç¨‹è¿”å›çš„æ•°æ®ï¼šthe first parameter is 1, the second is 2 ä¸€èˆ¬æŸ¥è¯¢çš„ç»“æœé›†ï¼š the first parameter is 0, the second is 1, 
      * and so on
      * @param cal the <code>Calendar</code> object the driver will use
      *            to construct the date
@@ -1192,7 +1192,7 @@ public class Record extends DBHashtable{
      * If no <code>Calendar</code> object is specified, the driver uses the
      * default timezone and locale.
      *
-     * @param parameterIndex ´æ´¢¹ı³Ì·µ»ØµÄÊı¾İ£ºthe first parameter is 1, the second is 2 Ò»°ã²éÑ¯µÄ½á¹û¼¯£º the first parameter is 0, the second is 1,
+     * @param parameterIndex å­˜å‚¨è¿‡ç¨‹è¿”å›çš„æ•°æ®ï¼šthe first parameter is 1, the second is 2 ä¸€èˆ¬æŸ¥è¯¢çš„ç»“æœé›†ï¼š the first parameter is 0, the second is 1,
      * and so on
      * @param cal the <code>Calendar</code> object the driver will use
      *            to construct the time
@@ -1226,7 +1226,7 @@ public class Record extends DBHashtable{
      * default timezone and locale.
      *
      *
-     * @param parameterIndex ´æ´¢¹ı³Ì·µ»ØµÄÊı¾İ£ºthe first parameter is 1, the second is 2 Ò»°ã²éÑ¯µÄ½á¹û¼¯£º the first parameter is 0, the second is 1, 
+     * @param parameterIndex å­˜å‚¨è¿‡ç¨‹è¿”å›çš„æ•°æ®ï¼šthe first parameter is 1, the second is 2 ä¸€èˆ¬æŸ¥è¯¢çš„ç»“æœé›†ï¼š the first parameter is 0, the second is 1, 
      * and so on
      * @param cal the <code>Calendar</code> object the driver will use
      *            to construct the timestamp
@@ -1254,7 +1254,7 @@ public class Record extends DBHashtable{
      * Retrieves the value of the designated JDBC <code>DATALINK</code> parameter as a
      * <code>java.net.URL</code> object.
      * 
-     * @param parameterIndex ´æ´¢¹ı³Ì·µ»ØµÄÊı¾İ£ºthe first parameter is 1, the second is 2 Ò»°ã²éÑ¯µÄ½á¹û¼¯£º the first parameter is 0, the second is 1,...
+     * @param parameterIndex å­˜å‚¨è¿‡ç¨‹è¿”å›çš„æ•°æ®ï¼šthe first parameter is 1, the second is 2 ä¸€èˆ¬æŸ¥è¯¢çš„ç»“æœé›†ï¼š the first parameter is 0, the second is 1,...
      * @return a <code>java.net.URL</code> object that represents the 
      *         JDBC <code>DATALINK</code> value used as the designated
      *         parameter
@@ -1825,7 +1825,7 @@ public class Record extends DBHashtable{
     }
     
     /*
-     * »ñÈ¡ĞòÁĞ»¯¶ÔÏó
+     * è·å–åºåˆ—åŒ–å¯¹è±¡
      */
     public Serializable getSerializable(String field) throws SQLException
     {

@@ -36,16 +36,16 @@ import com.frameworkset.common.tag.pager.DataInfo;
 import com.frameworkset.common.tag.pager.ListDataInfoFactory;
 /**
  * @author biaoping.yin
- * ÉèÖÃÁĞ±í/·ÖÒ³tag»ñÈ¡Êı¾İµÄ½Ó¿Úµ½requestÊôĞÔÖĞ
+ * è®¾ç½®åˆ—è¡¨/åˆ†é¡µtagè·å–æ•°æ®çš„æ¥å£åˆ°requestå±æ€§ä¸­
  * 
  */
 public class ListDataTag extends BaseListTag
 {
 	public int doStartTag() throws JspException
 	{
-		//PmsCarFormRationDataInfo dataInfo = new PmsCarFormRationDataInfo();							//ÊµÀı»¯	PmsCarFormRationDataInfoÀà
+		//PmsCarFormRationDataInfo dataInfo = new PmsCarFormRationDataInfo();							//å®ä¾‹åŒ–	PmsCarFormRationDataInfoç±»
 		DataInfo data = ListDataInfoFactory.getDataInfo(getDataInfo());
-		initDatainfo(data); //ÉèÖÃ
+		initDatainfo(data); //è®¾ç½®
 		return (SKIP_BODY);
 	}
 }

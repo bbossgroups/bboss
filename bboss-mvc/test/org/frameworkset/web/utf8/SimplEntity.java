@@ -3,9 +3,9 @@ package org.frameworkset.web.utf8;
 /**
  * @Title: SimplEntity.java 
  * @Package com.chinacreator.demo.fromsubmint.entity
- * @Description TODO(¼òµ¥ÊµÌåform²âÊÔÊ±Ê¹ÓÃ)  
+ * @Description TODO(ç®€å•å®ä½“formæµ‹è¯•æ—¶ä½¿ç”¨)  
  * @Copyright:Copyright (c) 2012
- * @Company: ºşÄÏ¿Æ´´
+ * @Company: æ¹–å—ç§‘åˆ›
  * @author: yahui.hu 
  * @Date:2012-1-17
  */

@@ -1,9 +1,9 @@
-<%@ page contentType="text/html; charset=GBK" language="java"%>
+<%@ page contentType="text/html; charset=UTF-8" language="java"%>
 <%@ taglib uri="/WEB-INF/pager-taglib.tld" prefix="pg"%>
 <!-- 
-	batchutil±êÇ©ÊµÏÖÊı¾İ¿âÔ¤±àÒëÅú´¦Àí²Ù×÷
-	statement:Ö¸¶¨Ô¤±àÒëÅú´¦ÀíÓï¾ä
-	dbname:Ô¤±àÒëÅú´¦ÀíÓï¾äÖ´ĞĞµÄ¶ÔÓ¦µÄÊı¾İ¿âÁ¬½Ó³ØÃû³Æ£¬ÔÚpoolman.xmlÎÄ¼şÖĞ½øĞĞÅäÖÃ
+	batchutilæ ‡ç­¾å®ç°æ•°æ®åº“é¢„ç¼–è¯‘æ‰¹å¤„ç†æ“ä½œ
+	statement:æŒ‡å®šé¢„ç¼–è¯‘æ‰¹å¤„ç†è¯­å¥
+	dbname:é¢„ç¼–è¯‘æ‰¹å¤„ç†è¯­å¥æ‰§è¡Œçš„å¯¹åº”çš„æ•°æ®åº“è¿æ¥æ± åç§°ï¼Œåœ¨poolman.xmlæ–‡ä»¶ä¸­è¿›è¡Œé…ç½®
 
 	alter table SQLTEST add clobdata clob;
 alter table SQLTEST add blobdata blob;
@@ -21,14 +21,14 @@ alter table SQLTEST add blobdata blob;
 	java.io.File clobdata = new java.io.File("D:\\bbossgroups-3.5.1\\bboss-taglib\\readme.txt");
 	
 	
-	String sql = "update sqltest set created=#[created],clobdata=#[clobdata],blobdata=#[blobdata] where object_id=#[object_id]";//¶àÌõsqlÓï¾ä²Ù×÷clob£¬blob»áµ¼ÖÂÊı¾İ¿â¼ÇÂ¼ĞĞËø¶¨
+	String sql = "update sqltest set created=#[created],clobdata=#[clobdata],blobdata=#[blobdata] where object_id=#[object_id]";//å¤šæ¡sqlè¯­å¥æ“ä½œclobï¼Œblobä¼šå¯¼è‡´æ•°æ®åº“è®°å½•è¡Œé”å®š
 	String sql_1 = "update sqltest set created=#[created] where object_id=#[object_id]";
 	try
 	{
 %>
 <html>
 	<head>
-		<title>²âÊÔÔÚbatchutil±êÇ©ÉÏÖ±½ÓÖ´ĞĞÊı¾İ¿âÔ¤±àÒëÅú´¦Àí²Ù×÷</title>
+		<title>æµ‹è¯•åœ¨batchutilæ ‡ç­¾ä¸Šç›´æ¥æ‰§è¡Œæ•°æ®åº“é¢„ç¼–è¯‘æ‰¹å¤„ç†æ“ä½œ</title>
 	</head>
 	<body>
 		<table>
@@ -38,7 +38,7 @@ alter table SQLTEST add blobdata blob;
 						<pg:sqlparam name="object_id" value="<%=object_id %>" type="int" />
 						<pg:sqlparam name="created" value="<%=created %>" type="timestamp" />
 						<pg:sqlparam name="blobdata" value="<%=blobdata %>" type="blobfile" />
-						<pg:sqlparam name="clobdata" value="<%=clobdata %>" type="clobfile" charset="GBK"/>
+						<pg:sqlparam name="clobdata" value="<%=clobdata %>" type="clobfile" charset="UTF-8"/>
 					</pg:batch>
 				</pg:statement>
 				<pg:statement sql="<%=sql_1 %>" pretoken="#\\[" endtoken="\\]">

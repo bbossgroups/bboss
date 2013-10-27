@@ -21,7 +21,7 @@ import com.frameworkset.orm.transaction.TransactionManager;
 public class A1 implements AI {
 
 	/**
-	 * µ÷ÓÃ·½·¨Ö´ĞĞ³É¹¦,Í¬²½·½·¨Ö´ĞĞÊ§°Ü
+	 * è°ƒç”¨æ–¹æ³•æ‰§è¡ŒæˆåŠŸ,åŒæ­¥æ–¹æ³•æ‰§è¡Œå¤±è´¥
 	 */
 	public void testNoTXSyn() throws Exception {
 		System.out.println("A1.testNoTXSyn():");
@@ -33,7 +33,7 @@ public class A1 implements AI {
 	}
 
 	/**
-	 * ÊÂÎñ³É¹¦
+	 * äº‹åŠ¡æˆåŠŸ
 	 */
 	public void testTXNoSyn() throws Exception {
 		
@@ -45,7 +45,7 @@ public class A1 implements AI {
 	}
 
 	/**
-	 * ÊÂÎñÖ´ĞĞ³É¹¦£¬Í¬²½µ÷ÓÃµÄ·½·¨ÊÂÎñÖ´ĞĞÊ§°Ü£¬ËùÒÔÕû¸öÊÂÎñÖ´ĞĞÊ§°Ü
+	 * äº‹åŠ¡æ‰§è¡ŒæˆåŠŸï¼ŒåŒæ­¥è°ƒç”¨çš„æ–¹æ³•äº‹åŠ¡æ‰§è¡Œå¤±è´¥ï¼Œæ‰€ä»¥æ•´ä¸ªäº‹åŠ¡æ‰§è¡Œå¤±è´¥
 	 */
 	public void testTXSynFailed() throws Exception {
 		System.out.println("A1.testTXSynFailed():");

@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.XmlType;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2008</p>
- * @Date 2009-11-4 œ¬ŒÁ05:07:16
+ * @Date 2009-11-4 ‰∏ãÂçà05:07:16
  * @author biaoping.yin
  * @version 1.0
  */

@@ -36,7 +36,7 @@ public class TableInfoListData extends DataInfoImpl {
 
 	
 	/**
-	 * pager±êÇ©±»ÉèÖÃÎªÁĞ±íÄ£Ê½Ê±£¬Ö´ĞĞ±¾·½·¨
+	 * pageræ ‡ç­¾è¢«è®¾ç½®ä¸ºåˆ—è¡¨æ¨¡å¼æ—¶ï¼Œæ‰§è¡Œæœ¬æ–¹æ³•
 	 */
 	protected ListInfo getDataList(String sortKey, boolean desc) {	
 	    
@@ -46,7 +46,7 @@ public class TableInfoListData extends DataInfoImpl {
 			db.preparedSelect(sql);
 			List tables = db.executePreparedForList(TableInfo.class);
 			ListInfo datas = new ListInfo();
-			datas.setDatas(tables);//ÉèÖÃÁĞ±íÊı¾İ¼´¿É
+			datas.setDatas(tables);//è®¾ç½®åˆ—è¡¨æ•°æ®å³å¯
 			return datas;
 			
 		} catch (SQLException e) {
@@ -65,8 +65,8 @@ public class TableInfoListData extends DataInfoImpl {
 			db.preparedSelect(sql,(int)offSet,pageItemsize);
 			List tables = db.executePreparedForList(TableInfo.class);
 			ListInfo datas = new ListInfo();
-			datas.setTotalSize(db.getLongTotalSize());//ÉèÖÃ×Ü¼ÇÂ¼Êı
-			datas.setDatas(tables);//ÉèÖÃµ±Ò³Êı¾İ
+			datas.setTotalSize(db.getLongTotalSize());//è®¾ç½®æ€»è®°å½•æ•°
+			datas.setDatas(tables);//è®¾ç½®å½“é¡µæ•°æ®
 			return datas;
 			
 		} catch (SQLException e) {

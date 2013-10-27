@@ -38,10 +38,10 @@ public class ContextMenuTag extends BaseTag {
 	private static final String parentmenuScript = "contextmenu/parentpopmenu.vm";
 	private String parent_indent ;
 	 /**
-     * ÊÇ·ñjquery×°ÔØ,true-ÊÇ£¬false-²»ÊÇ
-            Ä¬ÈÏÖµ£ºfalse;
-            ÎªfalseÊ±,±êÇ©¿â½«×Ô¶¯ÎªÒ³ÃæÒıÈëÒÔÏÂÑùÊ½ºÍ½Å±¾£¬·ñÔò²»µ¼Èë
-            trueÊ±£¬ÉÏÊöÑùÊ½ºÍ½Å±¾½«Í¨¹ıÍâ²¿µ¼Èë
+     * æ˜¯å¦jqueryè£…è½½,true-æ˜¯ï¼Œfalse-ä¸æ˜¯
+            é»˜è®¤å€¼ï¼šfalse;
+            ä¸ºfalseæ—¶,æ ‡ç­¾åº“å°†è‡ªåŠ¨ä¸ºé¡µé¢å¼•å…¥ä»¥ä¸‹æ ·å¼å’Œè„šæœ¬ï¼Œå¦åˆ™ä¸å¯¼å…¥
+            trueæ—¶ï¼Œä¸Šè¿°æ ·å¼å’Œè„šæœ¬å°†é€šè¿‡å¤–éƒ¨å¯¼å…¥
      */
     protected boolean jquery = false; 
 	
@@ -52,13 +52,13 @@ public class ContextMenuTag extends BaseTag {
 	
 	
 	/**
-	 * contextmenu»º³åµÄkey
+	 * contextmenuç¼“å†²çš„key
 	 */
 	private String context = null;
 	
 	/**
-	 * contextmenu¶ÔÏó»º³åµÄ·¶Î§£º
-	 * request È±Ê¡Öµ
+	 * contextmenuå¯¹è±¡ç¼“å†²çš„èŒƒå›´ï¼š
+	 * request ç¼ºçœå€¼
 	 * session
 	 * pageContext
 	 */
@@ -91,7 +91,7 @@ public class ContextMenuTag extends BaseTag {
 		if(parent_indent == null || parent_indent.equals(""))
 		{
 //		    String enablecontextmenu_flag = (String)request.getAttribute(PageConfig.popscript_set_flag);
-//	        if(enablecontextmenu_flag != null && enablecontextmenu_flag.equals("true"))//ÆôÓÃÓÒ¼ü²Ëµ¥£¬Èç¹û½Å±¾»¹Ã»ÓĞÓĞÊä³ö£¬ÔòÊä³ö²¢ÉèÖÃÊôĞÔÎªtrue£¬·ñÔò²»×ö´¦Àí
+//	        if(enablecontextmenu_flag != null && enablecontextmenu_flag.equals("true"))//å¯ç”¨å³é”®èœå•ï¼Œå¦‚æœè„šæœ¬è¿˜æ²¡æœ‰æœ‰è¾“å‡ºï¼Œåˆ™è¾“å‡ºå¹¶è®¾ç½®å±æ€§ä¸ºtrueï¼Œå¦åˆ™ä¸åšå¤„ç†
 //	        {
 //	            
 //	        }
@@ -187,7 +187,7 @@ public class ContextMenuTag extends BaseTag {
 	
 	
 //	/**
-//	 * ¹¹½¨ÓÒ¼ü²Ëµ¥
+//	 * æ„å»ºå³é”®èœå•
 //	 * @param menuid
 //	 * @param buffer
 //	 * @param menu
@@ -199,18 +199,18 @@ public class ContextMenuTag extends BaseTag {
 //		buffer.append("menu_"+menuid+".BuildMenu(\""+menu.getIdentity()+"\");\n");
 //		menu.setJsObjectId("menu_"+menuid);
 //		List contextmenuitems = menu.getContextMenuItems();
-//		//¸ù¾İ²»Í¬µÄÀàĞÍ¹¹½¨²Ëµ¥ peng.yang
+//		//æ ¹æ®ä¸åŒçš„ç±»å‹æ„å»ºèœå• peng.yang
 //		for(int i = 0; i < contextmenuitems.size(); i ++){
 //			Menu.ContextMenuItem contextMenuItem = (Menu.ContextMenuItem)contextmenuitems.get(i);
 //			if(contextMenuItem.isSeperate()){
 //				buffer.append(menu.getJsObjectId()+".AddSeparator();\n");
 //			}else if (contextMenuItem == Menu.MENU_OPEN) {
-//				buffer.append(menu.getJsObjectId()+".Add(new MenuItem(\"´ò¿ª\",")
+//				buffer.append(menu.getJsObjectId()+".Add(new MenuItem(\"æ‰“å¼€\",")
 //				.append("\"javascript:expandNode('"+menu.getIdentity()+"');\",")
 //				.append("\""+contextMenuItem.getIcon()+"\",")
 //				.append("null,null,").append(contextMenuItem.isDisabled()).append("));\n");
 //			}else if (contextMenuItem == Menu.MENU_EXPAND) {
-//				buffer.append(menu.getJsObjectId()+".Add(new MenuItem(\"Õ¹¿ª/ÕÛµş\",")
+//				buffer.append(menu.getJsObjectId()+".Add(new MenuItem(\"å±•å¼€/æŠ˜å \",")
 //				.append("\"javascript:expandNode('"+menu.getIdentity()+"');\",")
 //				.append("\""+contextMenuItem.getIcon()+"\",")
 //				.append("null,null,").append(contextMenuItem.isDisabled()).append("));\n");
@@ -249,7 +249,7 @@ public class ContextMenuTag extends BaseTag {
 //	}
 //	
 //	/**
-//	 * ¹¹½¨¸¸¿òµÄÓÒ¼ü²Ëµ¥
+//	 * æ„å»ºçˆ¶æ¡†çš„å³é”®èœå•
 //	 * @param menuid
 //	 * @param buffer
 //	 * @param menu
@@ -262,18 +262,18 @@ public class ContextMenuTag extends BaseTag {
 //		//buffer.append("menuobjects.push('").append(menu.getIdentity()).append("');\n");
 //		menu.setJsObjectId("menu_"+menuid);
 //		List contextmenuitems = menu.getContextMenuItems();
-//		//¸ù¾İ²»Í¬µÄÀàĞÍ¹¹½¨²Ëµ¥ peng.yang
+//		//æ ¹æ®ä¸åŒçš„ç±»å‹æ„å»ºèœå• peng.yang
 //		for(int i = 0; i < contextmenuitems.size(); i ++){
 //			Menu.ContextMenuItem contextMenuItem = (Menu.ContextMenuItem)contextmenuitems.get(i);
 //			if(contextMenuItem.isSeperate()){
 //				buffer.append(menu.getJsObjectId()+".AddSeparator();\n");
 //			}else if (contextMenuItem == Menu.MENU_OPEN) {
-//				buffer.append(menu.getJsObjectId()+".Add(new MenuItem(\"´ò¿ª\",")
+//				buffer.append(menu.getJsObjectId()+".Add(new MenuItem(\"æ‰“å¼€\",")
 //				.append("\"javascript:expandNode('"+menu.getIdentity()+"');\",")
 //				.append("\""+contextMenuItem.getIcon()+"\",")
 //				.append("null,null,").append(contextMenuItem.isDisabled()).append("));\n");
 //			}else if (contextMenuItem == Menu.MENU_EXPAND) {
-//				buffer.append(menu.getJsObjectId()+".Add(new MenuItem(\"Õ¹¿ª/ÕÛµş\",")
+//				buffer.append(menu.getJsObjectId()+".Add(new MenuItem(\"å±•å¼€/æŠ˜å \",")
 //				.append("\"javascript:expandNode('"+menu.getIdentity()+"');\",")
 //				.append("\""+contextMenuItem.getIcon()+"\",")
 //				.append("null,null,").append(contextMenuItem.isDisabled()).append("));\n");
@@ -314,7 +314,7 @@ public class ContextMenuTag extends BaseTag {
 	
 	
 	/**
-	 * ¹¹½¨ÓÒ¼ü²Ëµ¥
+	 * æ„å»ºå³é”®èœå•
 	 * @param menuid
 	 * @param buffer
 	 * @param menu
@@ -348,7 +348,7 @@ public class ContextMenuTag extends BaseTag {
 			buffer.append("<div style=\"width:150px;\">");
 		}
 		List contextmenuitems = menu.getContextMenuItems();
-		//¸ù¾İ²»Í¬µÄÀàĞÍ¹¹½¨²Ëµ¥ peng.yang
+		//æ ¹æ®ä¸åŒçš„ç±»å‹æ„å»ºèœå• peng.yang
 		for(int i = 0; i < contextmenuitems.size(); i ++){
 			Menu.ContextMenuItem contextMenuItem = (Menu.ContextMenuItem)contextmenuitems.get(i);
 			if(contextMenuItem.isSeperate()){
@@ -357,13 +357,13 @@ public class ContextMenuTag extends BaseTag {
 				
 				if(!contextMenuItem.isDisabled())
 				{
-					buffer.append("<div onclick=\"javascript:expandNode('"+menu.getIdentity()+"');\">").append("´ò¿ª").append("</div>");
+					buffer.append("<div onclick=\"javascript:expandNode('"+menu.getIdentity()+"');\">").append("æ‰“å¼€").append("</div>");
 				}
 				else
 				{
-//					buffer.append("<div class=\"menu-shadow\" onclick=\"javascript:expandNode('"+menu.getIdentity()+"');\">").append("´ò¿ª").append("</div>");
+//					buffer.append("<div class=\"menu-shadow\" onclick=\"javascript:expandNode('"+menu.getIdentity()+"');\">").append("æ‰“å¼€").append("</div>");
 				}
-//				buffer.append(menu.getJsObjectId()+".Add(new MenuItem(\"´ò¿ª\",")
+//				buffer.append(menu.getJsObjectId()+".Add(new MenuItem(\"æ‰“å¼€\",")
 //				.append("\"javascript:expandNode('"+menu.getIdentity()+"');\",")
 //				.append("\""+contextMenuItem.getIcon()+"\",")
 //				.append("null,null,").append(contextMenuItem.isDisabled()).append("));\n");
@@ -371,13 +371,13 @@ public class ContextMenuTag extends BaseTag {
 			}else if (contextMenuItem == Menu.MENU_EXPAND) {
 				if(!contextMenuItem.isDisabled())
 				{
-					buffer.append("<div icon=\"").append(Menu.icon_add).append("\" onclick=\"javascript:expandNode('"+menu.getIdentity()+"');\">").append("Õ¹¿ª/ÕÛµş").append("</div>");
+					buffer.append("<div icon=\"").append(Menu.icon_add).append("\" onclick=\"javascript:expandNode('"+menu.getIdentity()+"');\">").append("å±•å¼€/æŠ˜å ").append("</div>");
 				}
 				else
 				{
-//					buffer.append("<div icon=\"").append(Menu.icon_add).append("\" class=\"menu-shadow\" onclick=\"javascript:expandNode('"+menu.getIdentity()+"');\">").append("Õ¹¿ª/ÕÛµş").append("</div>");
+//					buffer.append("<div icon=\"").append(Menu.icon_add).append("\" class=\"menu-shadow\" onclick=\"javascript:expandNode('"+menu.getIdentity()+"');\">").append("å±•å¼€/æŠ˜å ").append("</div>");
 				}
-//				buffer.append(menu.getJsObjectId()+".Add(new MenuItem(\"Õ¹¿ª/ÕÛµş\",")
+//				buffer.append(menu.getJsObjectId()+".Add(new MenuItem(\"å±•å¼€/æŠ˜å \",")
 //				.append("\"javascript:expandNode('"+menu.getIdentity()+"');\",")
 //				.append("\""+contextMenuItem.getIcon()+"\",")
 //				.append("null,null,").append(contextMenuItem.isDisabled()).append("));\n");
@@ -410,11 +410,11 @@ public class ContextMenuTag extends BaseTag {
 				{
 					if(contextMenuItem.getDisableMsg() == null)
 					{
-						buffer.append("onclick=\"javascript:$.messager.alert('ÌáÊ¾','²Ù×÷ÎŞĞ§£¬ÇëÈ·ÈÏÓµÓĞ[").append(contextMenuItem.getName()).append("]µÄÈ¨ÏŞ£¬ÇëÁªÏµ¹ÜÀíÔ±.','warning');\" ");
+						buffer.append("onclick=\"javascript:$.messager.alert('æç¤º','æ“ä½œæ— æ•ˆï¼Œè¯·ç¡®è®¤æ‹¥æœ‰[").append(contextMenuItem.getName()).append("]çš„æƒé™ï¼Œè¯·è”ç³»ç®¡ç†å‘˜.','warning');\" ");
 					}
 					else
 					{
-						buffer.append("onclick=\"javascript:$.messager.alert('ÌáÊ¾','").append(contextMenuItem.getDisableMsg()).append("','warning');\" ");
+						buffer.append("onclick=\"javascript:$.messager.alert('æç¤º','").append(contextMenuItem.getDisableMsg()).append("','warning');\" ");
 					}
 				}
 				String icon = contextMenuItem.getIcon();
@@ -489,7 +489,7 @@ public class ContextMenuTag extends BaseTag {
 	}
 	
 //	/**
-//	 * ¹¹½¨¸¸¿òµÄÓÒ¼ü²Ëµ¥
+//	 * æ„å»ºçˆ¶æ¡†çš„å³é”®èœå•
 //	 * @param menuid
 //	 * @param buffer
 //	 * @param menu
@@ -502,18 +502,18 @@ public class ContextMenuTag extends BaseTag {
 //		//buffer.append("menuobjects.push('").append(menu.getIdentity()).append("');\n");
 //		menu.setJsObjectId("menu_"+menuid);
 //		List contextmenuitems = menu.getContextMenuItems();
-//		//¸ù¾İ²»Í¬µÄÀàĞÍ¹¹½¨²Ëµ¥ peng.yang
+//		//æ ¹æ®ä¸åŒçš„ç±»å‹æ„å»ºèœå• peng.yang
 //		for(int i = 0; i < contextmenuitems.size(); i ++){
 //			Menu.ContextMenuItem contextMenuItem = (Menu.ContextMenuItem)contextmenuitems.get(i);
 //			if(contextMenuItem.isSeperate()){
 //				buffer.append(menu.getJsObjectId()+".AddSeparator();\n");
 //			}else if (contextMenuItem == Menu.MENU_OPEN) {
-//				buffer.append(menu.getJsObjectId()+".Add(new MenuItem(\"´ò¿ª\",")
+//				buffer.append(menu.getJsObjectId()+".Add(new MenuItem(\"æ‰“å¼€\",")
 //				.append("\"javascript:expandNode('"+menu.getIdentity()+"');\",")
 //				.append("\""+contextMenuItem.getIcon()+"\",")
 //				.append("null,null,").append(contextMenuItem.isDisabled()).append("));\n");
 //			}else if (contextMenuItem == Menu.MENU_EXPAND) {
-//				buffer.append(menu.getJsObjectId()+".Add(new MenuItem(\"Õ¹¿ª/ÕÛµş\",")
+//				buffer.append(menu.getJsObjectId()+".Add(new MenuItem(\"å±•å¼€/æŠ˜å \",")
 //				.append("\"javascript:expandNode('"+menu.getIdentity()+"');\",")
 //				.append("\""+contextMenuItem.getIcon()+"\",")
 //				.append("null,null,").append(contextMenuItem.isDisabled()).append("));\n");

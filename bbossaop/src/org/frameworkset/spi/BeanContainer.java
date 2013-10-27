@@ -25,10 +25,10 @@ import org.frameworkset.spi.remote.ServiceID;
 
 /**
  * <p>Title: BeanContainer.java</p> 
- * <p>Description: bean 管理容器</p>
+ * <p>Description: bean 绠＄悊瀹瑰櫒</p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2010-1-17 下午02:44:15
+ * @Date 2010-1-17 涓嬪崍02:44:15
  * @author biaoping.yin
  * @version 1.0
  */
@@ -53,7 +53,7 @@ public class BeanContainer
 	}
 	
 	
-/*********引入应用模块上下文时注释-2010-03-22*/	
+/*********寮曞叆搴旂敤妯″潡涓婁笅鏂囨椂娉ㄩ噴-2010-03-22*/	
 //	public Object getBeanObject(String name)
 //    {
 //        return getBeanObject(null, name);
@@ -114,7 +114,7 @@ public class BeanContainer
 //            if (providerManagerInfo.isSinglable())
 //            {
 ////                String key = serviceID.getServiceID();
-//                if(context != null && !context.containHeaders() )//如果包含头信息时，代理类将不能被缓冲，原因是头信息的动态性会导致缓冲实例过多
+//                if(context != null && !context.containHeaders() )//濡傛灉鍖呭惈澶翠俊鎭椂锛屼唬鐞嗙被灏嗕笉鑳借缂撳啿锛屽師鍥犳槸澶翠俊鎭殑鍔ㄦ�佹�т細瀵艰嚧缂撳啿瀹炰緥杩囧
 //                {
 //                    Object provider = servicProviders .get(key);
 //                    if (provider != null)
@@ -146,5 +146,5 @@ public class BeanContainer
 //            return finalsynProvider;
 //        }
 //    }
-	/*********引入应用模块上下文时注释-2010-03-22*/
+	/*********寮曞叆搴旂敤妯″潡涓婁笅鏂囨椂娉ㄩ噴-2010-03-22*/
 }
