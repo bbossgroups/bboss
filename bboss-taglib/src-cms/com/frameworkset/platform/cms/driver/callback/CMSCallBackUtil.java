@@ -34,7 +34,7 @@ import com.frameworkset.platform.cms.driver.jsp.CMSServletRequest;
 public class CMSCallBackUtil {
 	static CMSCallBackFactory cmsCallBackFactory;
 	private static Logger log = Logger.getLogger(CMSCallBackUtil.class);
-	{
+	static {
 		try {
 			cmsCallBackFactory = (CMSCallBackFactory) Class.forName("com.frameworkset.platform.cms.driver.callback.PlatformCMSCallBackFactory").newInstance();
 		} catch (Exception e) {

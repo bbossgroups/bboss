@@ -45,7 +45,6 @@
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/bboss-http.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/bboss-jms.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/bboss-mina.jar"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/bboss-schedule.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/bboss-soa.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/bboss-tlq.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/bboss-ws.jar"/>
