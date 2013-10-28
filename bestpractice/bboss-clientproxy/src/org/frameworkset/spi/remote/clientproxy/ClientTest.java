@@ -21,6 +21,7 @@ import java.util.concurrent.atomic.AtomicLong;
 import org.frameworkset.spi.ClientProxyContext;
 import org.frameworkset.spi.DefaultApplicationContext;
 import org.frameworkset.spi.remote.webservice.JaxWsProxyFactory;
+import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -39,7 +40,7 @@ public class ClientTest {
 	ClientInf simpleinf;
 	
 	static java.util.concurrent.atomic.AtomicLong longcount = new AtomicLong(0);
-//	@Before
+	@Before
 	public void init()
 	{
 		//获取mvc容器中组件的远程服务调用接口，mvc容器由服务端mvc框架自动初始化
