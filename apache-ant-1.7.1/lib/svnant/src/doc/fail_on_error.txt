@@ -1,8 +1,0 @@
-<ant:parameter name="failonerror">
-	<ant:description>
-		Controls whether an error stops the build or is merely reported to the screen.
-	</ant:description>
-	<ant:required>
-		No (defaults to "true")
-	</ant:required>
-</ant:parameter>

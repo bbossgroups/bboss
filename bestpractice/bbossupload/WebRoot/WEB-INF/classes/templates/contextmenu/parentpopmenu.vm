@@ -1,7 +1,0 @@
-<div id="sonscript__" style="display:none;">
-	${initscript}
-</div>
-<div id="sonsmenu__" style="display:none;">
-${menus}
-</div>
-

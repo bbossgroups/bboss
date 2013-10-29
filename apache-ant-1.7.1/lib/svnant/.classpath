@@ -10,5 +10,5 @@
 	<classpathentry kind="lib" path="lib/ganymed.jar"/>
 	<classpathentry kind="lib" path="lib/svnkit.jar"/>
 	<classpathentry kind="lib" path="lib/svnjavahl.jar"/>
-	<classpathentry kind="output" path="build/bin"/>
+	<classpathentry kind="output" path="classes"/>
 </classpath>
