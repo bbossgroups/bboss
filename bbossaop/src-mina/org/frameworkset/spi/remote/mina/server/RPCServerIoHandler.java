@@ -46,7 +46,7 @@ import org.frameworkset.spi.serviceidentity.TargetImpl;
  * Copyright (c) 2007
  * </p>
  * 
- * @Date 2009-10-7 ÏÂÎç05:08:18
+ * @Date 2009-10-7 ä¸‹åˆ05:08:18
  * @author biaoping.yin
  * @version 1.0
  */

@@ -26,7 +26,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface PrimaryKey {
 	/**
-	 * Ö÷¼üÃû³Æ
+	 * ä¸»é”®åç§°
 	 * @return
 	 */
 	String name() default "";

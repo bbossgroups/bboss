@@ -30,30 +30,30 @@ package org.frameworkset.event;
  */
 public interface ResourceChangeEventType extends EventType{
 	
-	/**Õ¾µãÌí¼Ó*/
+	/**ç«™ç‚¹æ·»åŠ */
 	public static final EventType EVENT_SITE_ADD = new ResourceChangeEventTypeImpl("EVENT_SITE_ADD");
 			
 		
-	/**Õ¾µãÉ¾³ı*/
+	/**ç«™ç‚¹åˆ é™¤*/
 	public static final EventType EVENT_SITE_DELETE = new ResourceChangeEventTypeImpl("EVENT_SITE_DELETE");
-	/**Õ¾µãĞŞ¸Ä*/
+	/**ç«™ç‚¹ä¿®æ”¹*/
 	public static final EventType EVENT_SITE_UPDATE = new ResourceChangeEventTypeImpl("EVENT_SITE_UPDATE");
-	/**Õ¾µã×´Ì¬ĞŞ¸Ä*/
+	/**ç«™ç‚¹çŠ¶æ€ä¿®æ”¹*/
 	public static final EventType EVENT_SITESTATUS_UPDATE = new ResourceChangeEventTypeImpl("EVENT_SITESTATUS_UPDATE");
 	
-	/**Õ¾µã±ä»¯*/
+	/**ç«™ç‚¹å˜åŒ–*/
 	public static final EventType EVENT_SITE_CHANGE = new ResourceChangeEventTypeImpl("EVENT_SITE_CHANGE");
 	
-	/**ÆµµÀÌí¼Ó*/
+	/**é¢‘é“æ·»åŠ */
 	public static final EventType EVENT_CHANNEL_ADD = new ResourceChangeEventTypeImpl("EVENT_CHANNEL_ADD");
-	/**ÆµµÀÉ¾³ı*/
+	/**é¢‘é“åˆ é™¤*/
 	public static final EventType EVENT_CHANNEL_DELETE = new ResourceChangeEventTypeImpl("EVENT_CHANNEL_DELETE");
-	/**ÆµµÀĞŞ¸Ä*/
+	/**é¢‘é“ä¿®æ”¹*/
 	public static final EventType EVENT_CHANNEL_UPDATE = new ResourceChangeEventTypeImpl("EVENT_CHANNEL_UPDATE");
-	/**ÆµµÀÒÆ¶¯*/
+	/**é¢‘é“ç§»åŠ¨*/
 	public static final EventType EVENT_CHANNEL_MOVE = new ResourceChangeEventTypeImpl("EVENT_CHANNEL_MOVE");
 	
-	/**ÆµµÀ±ä»¯*/
+	/**é¢‘é“å˜åŒ–*/
 	public static final EventType EVENT_CHANNEL_CHANGE = new ResourceChangeEventTypeImpl("EVENT_CHANNEL_CHANGE");
 
 }

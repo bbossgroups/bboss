@@ -36,17 +36,17 @@
 		<echo>Construct the distribution package...</echo>
 	</target>
 
-	<target name="compile-frameworkset" description="compile the bboss-taglib source ">
+	<target name="compile-frameworkset" depends="jar-html" description="compile the bboss-taglib source ">
 		<echo>compile the bboss-taglib source ...</echo>
-		<javac destdir="classes-bboss-taglib" target="1.5" source="1.5" deprecation="true" debug="${debug}" optimize="${optimize}" memorymaximumsize="256M" fork="true" verbose="yes">
+		<javac encoding="UTF-8" destdir="classes-bboss-taglib" target="1.5" source="1.5" deprecation="true" debug="${debug}" optimize="${optimize}" memorymaximumsize="256M" fork="true" verbose="yes">
 			<src path="src" />
 			<src path="test" />
-			
+			<src path="src-cms" />
 			<classpath id="cp-bboss-taglib">
 
 				<fileset dir="lib/" includes="*.jar *.zip" />
 				<fileset dir="compilelib/" includes="*.jar *.zip" />
-				
+				<fileset dir="distrib/" includes="*.jar *.zip" />
 			</classpath>
 		</javac>
 		<copy todir="classes-bboss-taglib">
@@ -72,7 +72,7 @@
 	
 	<target name="compile-tabpane" description="compile the bboss-tabpane source ">
 			<echo>compile the bboss-tabpane source ...</echo>
-			<javac destdir="classes-bboss-tabpane" target="1.5" source="1.5" deprecation="true" debug="${debug}" optimize="${optimize}" memorymaximumsize="256M" fork="true" verbose="yes">
+			<javac encoding="UTF-8" destdir="classes-bboss-tabpane" target="1.5" source="1.5" deprecation="true" debug="${debug}" optimize="${optimize}" memorymaximumsize="256M" fork="true" verbose="yes">
 				<src path="tabpane" />
 				<classpath id="cp-bboss-tabpane">
 
@@ -98,7 +98,38 @@
 
 		</target>
 		
-	
+	<target name="compile-html" depends="init" description="compile the sany source ">
+						<echo>compile the compile-all source ...</echo>
+						 <mkdir dir="classes-html"/>	
+						<javac encoding="UTF-8" destdir="classes-html" target="1.5" source="1.5" deprecation="true" debug="${debug}" optimize="${optimize}" memorymaximumsize="256M" fork="true" verbose="yes">
+							<src path="src-htmlparser" />				
+							<classpath id="cp-cms_baseline">
+								
+								<fileset dir="lib/" includes="*.jar *.zip" />
+													<fileset dir="distrib/" includes="*.jar *.zip" />
+													<fileset dir="compilelib/" includes="*.jar *.zip" />
+													
+							</classpath>
+						</javac>
+					
+				
+			</target>
+			
+			<target name="jar-html" depends="compile-html" description="generate htmlparser-1.5-20050925.jar">
+						<echo>Generate the cms html parser library htmlparser-1.5-20050925.jar ...</echo>
+						<jar jarfile="distrib/htmlparser-1.5-20050925.jar" basedir="classes-html" includes="**/*">
+							<manifest>
+								<attribute name="Implementation-Version" value="${impl.version}" />
+								<attribute name="Specification-Version" value="${revision}" />
+								<attribute name="Implementation-Vendor" value="${impl.vendor}" />
+								<attribute name="Implementation-ProductID" value="${impl.productID}" />
+								<attribute name="Compile-Timestamp" value="${compile.timestamp}" />
+								<attribute name="Compile-User" value="${username}" />
+							</manifest>
+						</jar>
+					 <delete dir="classes-html"/>
+					
+			</target>
 
 	<target name="copy-resource" description="copy resource files">
 		<echo>copy resource files ...</echo>

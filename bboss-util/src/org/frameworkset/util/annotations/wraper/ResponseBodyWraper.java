@@ -24,18 +24,18 @@ import org.frameworkset.util.annotations.ResponseBody;
  * <p> bboss workgroup </p>
  * <p> Copyright (c) 2005-2013 </p>
  * 
- * @Date 2013Äê10ÔÂ3ÈÕ
+ * @Date 2013å¹´10æœˆ3æ—¥
  * @author biaoping.yin
  * @version 1.0
  */
 public class ResponseBodyWraper {
 	/**
-	 * Ö¸¶¨ÏìÓ¦µÄÊı¾İÀàĞÍ
+	 * æŒ‡å®šå“åº”çš„æ•°æ®ç±»å‹
 	 * @return
 	 */
 	private String datatype;
 	/**
-	 * Ö¸¶¨ÏìÓ¦µÄÊı¾İ±àÂë×Ö·û¼¯
+	 * æŒ‡å®šå“åº”çš„æ•°æ®ç¼–ç å­—ç¬¦é›†
 	 * @return
 	 */
 	private String charset;
@@ -45,14 +45,14 @@ public class ResponseBodyWraper {
 	}
 	
 	/**
-	 * Ö¸¶¨ÏìÓ¦µÄÊı¾İÀàĞÍ
+	 * æŒ‡å®šå“åº”çš„æ•°æ®ç±»å‹
 	 * @return
 	 */
 	public String datatype(){
 		return this.datatype;
 	}
 	/**
-	 * Ö¸¶¨ÏìÓ¦µÄÊı¾İ±àÂë×Ö·û¼¯
+	 * æŒ‡å®šå“åº”çš„æ•°æ®ç¼–ç å­—ç¬¦é›†
 	 * @return
 	 */
 	public String charset(){

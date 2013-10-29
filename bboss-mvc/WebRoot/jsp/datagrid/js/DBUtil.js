@@ -1,102 +1,102 @@
 /**
- * 	·â×°DBUtil Êı¾İ¿âµ×²ãÀà£¬ÓÃÓÚAjaxµ÷ÓÃ
- *	²ÎÊıËµÃ÷£º
- 	sql				£º	ÒªÖ´ĞĞµÄsqlÓï¾ä
- 	outerCallBack	£º	µ±¸Ã²ÎÊı²»Îª¿ÕÊ±£¬DBUtilÒÔÒì²½·½Ê½Ö´ĞĞsqlÓï¾ä£¬ĞèÒªÍâ²¿Ìá¹©Ò»¸öjs·½·¨£¬·ñÔòÒÔÍ¬²½·½Ê½Ö´ĞĞsqlÓï¾ä£¬Ò»°ã¶¼ÒÔÍ¬²½·½Ê½Ö´ĞĞ
- *	·µ»Ø²ÎÊı£º
- 	µ±Ö´ĞĞ²éÑ¯Óï¾äÊ±£¬Èç¹û³É¹¦·µ»Ø¶şÎ¬Êı×é£¬·ñÔòÅ×³öÒì³£
- 	µ±Ö´ĞĞÆäËûÊı¾İ¿â·½·¨Ê±£¬Èç¹û³É¹¦·µ»Ø"true"£¬·ñÔòÅ×³öÒì³£
+ * 	å°è£…DBUtil æ•°æ®åº“åº•å±‚ç±»ï¼Œç”¨äºAjaxè°ƒç”¨
+ *	å‚æ•°è¯´æ˜ï¼š
+ 	sql				ï¼š	è¦æ‰§è¡Œçš„sqlè¯­å¥
+ 	outerCallBack	ï¼š	å½“è¯¥å‚æ•°ä¸ä¸ºç©ºæ—¶ï¼ŒDBUtilä»¥å¼‚æ­¥æ–¹å¼æ‰§è¡Œsqlè¯­å¥ï¼Œéœ€è¦å¤–éƒ¨æä¾›ä¸€ä¸ªjsæ–¹æ³•ï¼Œå¦åˆ™ä»¥åŒæ­¥æ–¹å¼æ‰§è¡Œsqlè¯­å¥ï¼Œä¸€èˆ¬éƒ½ä»¥åŒæ­¥æ–¹å¼æ‰§è¡Œ
+ *	è¿”å›å‚æ•°ï¼š
+ 	å½“æ‰§è¡ŒæŸ¥è¯¢è¯­å¥æ—¶ï¼Œå¦‚æœæˆåŠŸè¿”å›äºŒç»´æ•°ç»„ï¼Œå¦åˆ™æŠ›å‡ºå¼‚å¸¸
+ 	å½“æ‰§è¡Œå…¶ä»–æ•°æ®åº“æ–¹æ³•æ—¶ï¼Œå¦‚æœæˆåŠŸè¿”å›"true"ï¼Œå¦åˆ™æŠ›å‡ºå¼‚å¸¸
  	
- *  DBUtilÓÃ·¨: ¿É²ÎÕÕÒ³Ãæ testDBHelper.jsp
- 	Í¬²½·½Ê½£º
+ *  DBUtilç”¨æ³•: å¯å‚ç…§é¡µé¢ testDBHelper.jsp
+ 	åŒæ­¥æ–¹å¼ï¼š
 	 	try{
 	 		var rs = dbUtil().executeSelect("select * from dual");
 	 	}catch(e){
 	 		alert(e);
 	 	}
-	 	µÈÍ¬ÓÚ
+	 	ç­‰åŒäº
 	 	try{
 	 		var rs = dbUtil().executeSql("select * from dual");
 	 	}catch(e){
 	 		alert(e);
 	 	} 	
-	 	Ö´ĞĞÅú´¦Àí£º
-	 	try{//ÏÈ¶¨ÒåsqlÊı×é
+	 	æ‰§è¡Œæ‰¹å¤„ç†ï¼š
+	 	try{//å…ˆå®šä¹‰sqlæ•°ç»„
 	 		var sqls = ["update ta_test_dbutil t set t.value='v3'","insert into ta_test_dbutil values('n2','v2',4)"];
 	 		var rs = dbUtil().executeSql(sqls);
 	 	}catch(e){
 	 		alert(e);
 	 	} 		
- 	Òì²½·½Ê½£º
-	 	//doSomeThingÎªÖ»ÓĞÒ»¸ö²ÎÊıµÄ»Øµ÷·½·¨
+ 	å¼‚æ­¥æ–¹å¼ï¼š
+	 	//doSomeThingä¸ºåªæœ‰ä¸€ä¸ªå‚æ•°çš„å›è°ƒæ–¹æ³•
 	 	dbUtil().executeSql("select * from dual",doSomeThing);
 	 	
  *  by:fenggao.li
  *	version 1.0
  */
  var DBUtil = function(){
- 	//ÒÔDBUtil¿ªÍ·µÄ¾ÍÊÇ¾²Ì¬±äÁ¿
- 	//ĞÂÔö
+ 	//ä»¥DBUtilå¼€å¤´çš„å°±æ˜¯é™æ€å˜é‡
+ 	//æ–°å¢
 	DBUtil.OP_TYPE_INSERT = "1";
-	//É¾³ı
+	//åˆ é™¤
 	DBUtil.OP_TYPE_DELETE = "2";
-	//ĞŞ¸Ä
+	//ä¿®æ”¹
 	DBUtil.OP_TYPE_UPDATE = "3";
-	//²éÑ¯
+	//æŸ¥è¯¢
 	DBUtil.OP_TYPE_SELECT = "4";
-	//Åú´¦Àí
+	//æ‰¹å¤„ç†
 	DBUtil.OP_TYPE_BATCH = "5";
- 	//ÊÇ·ñµ÷ÊÔ
+ 	//æ˜¯å¦è°ƒè¯•
  	DBUtil.debug = false;
  	
- 	//Êı¾İ¿â²Ù×÷ÊµÏÖÀà
+ 	//æ•°æ®åº“æ“ä½œå®ç°ç±»
 	this.dbImplName = "DBUtil";	
-	//Êı¾İÔ´Ãû³Æ
+	//æ•°æ®æºåç§°
 	this.dbName = "bspf";	
 	
-	//²Ù×÷ÀàĞÍ£º1ĞÂÔö2É¾³ı3ĞŞ¸Ä4²éÑ¯
+	//æ“ä½œç±»å‹ï¼š1æ–°å¢2åˆ é™¤3ä¿®æ”¹4æŸ¥è¯¢
 	this.opType = "";	
-	//´ıÖ´ĞĞµÄsqlÓï¾ä
+	//å¾…æ‰§è¡Œçš„sqlè¯­å¥
 	this.sql = "";	
  	
  	this.rs = "" ;
  	
- 	//Íâ²¿»Øµ÷·½·¨
+ 	//å¤–éƒ¨å›è°ƒæ–¹æ³•
  	//this.outerCallBack ;
  	
- 	//ÉÏÏÂÎÄ£¬Ä¬ÈÏÎª¿Õ
+ 	//ä¸Šä¸‹æ–‡ï¼Œé»˜è®¤ä¸ºç©º
  	this.contextPath = ""; 		
  	
- 	/*Ö´ĞĞĞÂÔöÓï¾ä*/
+ 	/*æ‰§è¡Œæ–°å¢è¯­å¥*/
  	this.executeInsert = function(sql,outerCallBack){ 		
  		return this.execute(DBUtil.OP_TYPE_INSERT,sql,outerCallBack);
  	}
  	
- 	/*Ö´ĞĞÉ¾³ıÓï¾ä*/
+ 	/*æ‰§è¡Œåˆ é™¤è¯­å¥*/
  	this.executeDelete = function(sql,outerCallBack){ 		
  		return this.execute(DBUtil.OP_TYPE_DELETE,sql,outerCallBack);
  	}
  	
- 	/*Ö´ĞĞĞŞ¸ÄÓï¾ä*/
+ 	/*æ‰§è¡Œä¿®æ”¹è¯­å¥*/
  	this.executeUpdate = function(sql,outerCallBack){
  		return this.execute(DBUtil.OP_TYPE_UPDATE,sql,outerCallBack);
  	}
  	
- 	/*Ö´ĞĞ²éÑ¯Óï¾ä*/
+ 	/*æ‰§è¡ŒæŸ¥è¯¢è¯­å¥*/
  	this.executeSelect = function(sql,outerCallBack){ 		
  		return this.execute(DBUtil.OP_TYPE_SELECT,sql,outerCallBack);
  	}
  	
- 	/*Ö´ĞĞÅú´¦ÀíÓï¾ä*/
+ 	/*æ‰§è¡Œæ‰¹å¤„ç†è¯­å¥*/
  	this.executeBatch = function(sqls,outerCallBack){ 	
- 		//´«ÈëµÄsql±ØĞëÊÇÊı×é	
+ 		//ä¼ å…¥çš„sqlå¿…é¡»æ˜¯æ•°ç»„	
  		return this.execute(DBUtil.OP_TYPE_BATCH,sqls,outerCallBack);
  	}
  	
- 	/*Ö´ĞĞÊı¾İ¿â·½·¨*/
+ 	/*æ‰§è¡Œæ•°æ®åº“æ–¹æ³•*/
  	this.executeSql = function(sql,outerCallBack){
  		if(null == sql){
- 			throw new Error("¶Ô²»Æğ£¡SQLÓï¾ä²»ÄÜÎª¿Õ£¡");
+ 			throw new Error("å¯¹ä¸èµ·ï¼SQLè¯­å¥ä¸èƒ½ä¸ºç©ºï¼");
  		} 		
  		if(sql instanceof Array){ 			
  			return this.execute(DBUtil.OP_TYPE_BATCH,sql,outerCallBack);
@@ -111,19 +111,19 @@
  			}else if(sql.indexOf("update") == 0){ 				
  				return this.execute(DBUtil.OP_TYPE_UPDATE,sql,outerCallBack);
  			}else{
- 				throw new Error("¶Ô²»Æğ£¡ÇëÊäÈëºÏ·¨µÄSQLÓï¾ä£¡");
+ 				throw new Error("å¯¹ä¸èµ·ï¼è¯·è¾“å…¥åˆæ³•çš„SQLè¯­å¥ï¼");
  			}
  		}
  	}
  	
- 	/*Ö´ĞĞÊı¾İ¿â·½·¨*/
+ 	/*æ‰§è¡Œæ•°æ®åº“æ–¹æ³•*/
  	this.execute = function(opType,sql,outerCallBack){ 	
  		//var contextPathTemp = (contextPath==null || contextPath=="") ? contextPath : contextPath+"/";
- 		//µ±Ã»ÓĞÉèÖÃÉÏÏÂÎÄµÄÊ±ºò£¬½ØÈ¡Ä¬ÈÏÖµ
+ 		//å½“æ²¡æœ‰è®¾ç½®ä¸Šä¸‹æ–‡çš„æ—¶å€™ï¼Œæˆªå–é»˜è®¤å€¼
  		this.contextPath = getContextPathByClient(); 		
  		try{
 	 		var url = window.location.protocol+"//"+window.location.host+this.contextPath+"/commons/common/dbHelper.jsp";
-	 		//sql = encodeParams(sql); //ÔÚ´«Êä¸øJSPÒ³ÃæµÄÊ±ºò£¬½«º¬ÓĞ+ºÅµÄSQL²ÎÊı½øĞĞÍ³Ò»±àÂë£¬¿ÉÒÔ½«ÌØÊâ×Ö·û´«Êä¹ıÈ¥ 		
+	 		//sql = encodeParams(sql); //åœ¨ä¼ è¾“ç»™JSPé¡µé¢çš„æ—¶å€™ï¼Œå°†å«æœ‰+å·çš„SQLå‚æ•°è¿›è¡Œç»Ÿä¸€ç¼–ç ï¼Œå¯ä»¥å°†ç‰¹æ®Šå­—ç¬¦ä¼ è¾“è¿‡å» 		
 	 		var params = "dbImplName="+this.dbImplName+"&dbName="+this.dbName+"&opType="+opType;
 	 		if(opType == DBUtil.OP_TYPE_BATCH){
 	 			for(var i=0; i<sql.length; i++){
@@ -136,16 +136,16 @@
 	 		var r = mAjaxer.send();
 	 		return DBUtil.callBackFunction(r); 		
  		}catch(e){
- 			if(DBUtil.debug){alert("²Ù×÷³ö´í£¡SQL£º\n"+sql);} 	
+ 			if(DBUtil.debug){alert("æ“ä½œå‡ºé”™ï¼SQLï¼š\n"+sql);} 	
  			throw e;		
  		}	
  	}
  	
- 	//»Øµ÷·½·¨
+ 	//å›è°ƒæ–¹æ³•
  	DBUtil.callBackFunction = function(res){
  		if(null==res || ""==res) return "";
  		var rs = "";
- 		//alert("½øÈëÁË»Øµ÷·½·¨:"+res);		
+ 		//alert("è¿›å…¥äº†å›è°ƒæ–¹æ³•:"+res);		
   		//alert("1");
   		var myJsonObject = eval('('+res+')');
   		//alert("myJsonObject="+myJsonObject);
@@ -154,14 +154,14 @@
   		//alert("opType="+opType);
   		//alert("3");
   		var errCode = myJsonObject.errCode;  		 		
-		//Èç¹ûµ÷ÓÃ¹ı³ÌÖĞÓöµ½´íÎó
+		//å¦‚æœè°ƒç”¨è¿‡ç¨‹ä¸­é‡åˆ°é”™è¯¯
 		if(null != errCode){
 			//alert(errCode);
 			throw new Error(errCode);
 			//rs = errCode;
 			//return rs;
 		}
-		//Èç¹ûÊÇ²åÈëÀàĞÍ
+		//å¦‚æœæ˜¯æ’å…¥ç±»å‹
 		if(opType == DBUtil.OP_TYPE_SELECT){
 			rs = myJsonObject.resultSet;
 			//alert("callBackFunction.rs="+rs);
@@ -178,36 +178,36 @@
 		return rs;
 		//eval("doSomeThing(1);");					
  	};
- 	//´íÎó´¦Àí·½·¨	
+ 	//é”™è¯¯å¤„ç†æ–¹æ³•	
 	errorFunction = function(error){
 		this.rs = "";
-		alert("²Ù×÷Ê§°Ü:"+error);
+		alert("æ“ä½œå¤±è´¥:"+error);
 	};
  }
  
-/*¶¨ÒåÒ»¸öÏµÍ³±äÁ¿dbUitl*/
+/*å®šä¹‰ä¸€ä¸ªç³»ç»Ÿå˜é‡dbUitl*/
 var dbUtil = new DBUtil();	
-/*¶¨ÒåÒ»¸öÏµÍ³±äÁ¿pdbUitl*/
+/*å®šä¹‰ä¸€ä¸ªç³»ç»Ÿå˜é‡pdbUitl*/
 var pdbUtil = new DBUtil();	
 
 /**
- * 	·â×°Ajax ´«ÊäÀà
- * 	URL:´«¹ıÈ¥´¦ÀíµÄÒ³ÃæµØÖ·
- *  params :Òª´«¹ıÈ¥µÄ²ÎÊı£¬¡£Èç£º"reportId=1&templetId=2"
- *	callBackFunction:³É¹¦ºóµ÷ÓÃµÄ·½·¨
- *	errorFunction:Ê§°Üºóµ÷ÓÃµÄ·½·¨
- *	AjaxerÓÃ·¨: 
- *	Í¬²½·½Ê½£º var rs = new Ajaxer(url,params).send();£¬Ò²¿ÉÊ¹ÓÃÒì²½·½Ê½£¬
- *	Òì²½·½Ê½£º var mAjaxer = new Ajaxer(url,params,callBackFunction,errorFunction).send();
+ * 	å°è£…Ajax ä¼ è¾“ç±»
+ * 	URL:ä¼ è¿‡å»å¤„ç†çš„é¡µé¢åœ°å€
+ *  params :è¦ä¼ è¿‡å»çš„å‚æ•°ï¼Œã€‚å¦‚ï¼š"reportId=1&templetId=2"
+ *	callBackFunction:æˆåŠŸåè°ƒç”¨çš„æ–¹æ³•
+ *	errorFunction:å¤±è´¥åè°ƒç”¨çš„æ–¹æ³•
+ *	Ajaxerç”¨æ³•: 
+ *	åŒæ­¥æ–¹å¼ï¼š var rs = new Ajaxer(url,params).send();ï¼Œä¹Ÿå¯ä½¿ç”¨å¼‚æ­¥æ–¹å¼ï¼Œ
+ *	å¼‚æ­¥æ–¹å¼ï¼š var mAjaxer = new Ajaxer(url,params,callBackFunction,errorFunction).send();
  *  by:haibo.liu
  *	version 1.0
  */
 var Ajaxer = function(URL,params,callBackFunction,errorFunction){
-	this.AjaxMethod = "POST";							//Ä¬ÈÏ´«Êä·½Ê½ POST;
-	this.SendObject = params;								//´«ÊäµÄÄÚÈİ	
-	this.ResponseType = "Text";						//·µ»ØÖµÀàĞÍ 
-	//async - ÊÇ·ñÒì²½£¬trueÎªÒì²½£¬falseÎªÍ¬²½£¬Ä¬ÈÏÎªtrue	
-	this.Async = true;										//ÊÇ·ñÒì²½·½Ê½
+	this.AjaxMethod = "POST";							//é»˜è®¤ä¼ è¾“æ–¹å¼ POST;
+	this.SendObject = params;								//ä¼ è¾“çš„å†…å®¹	
+	this.ResponseType = "Text";						//è¿”å›å€¼ç±»å‹ 
+	//async - æ˜¯å¦å¼‚æ­¥ï¼Œtrueä¸ºå¼‚æ­¥ï¼Œfalseä¸ºåŒæ­¥ï¼Œé»˜è®¤ä¸ºtrue	
+	this.Async = true;										//æ˜¯å¦å¼‚æ­¥æ–¹å¼
 	 	
 	function createXMLHttp(){
 	    var xmlhttp;
@@ -226,16 +226,16 @@ var Ajaxer = function(URL,params,callBackFunction,errorFunction){
  	this.send =	function ()
 	{			
 		this.Async = (typeof(callBackFunction) == 'function');
-		//Èç¹ûÊÇÍ¬²½£¬ÔòÖ±½Ó·µ»Ø½á¹û¡£
+		//å¦‚æœæ˜¯åŒæ­¥ï¼Œåˆ™ç›´æ¥è¿”å›ç»“æœã€‚
 		if(!this.Async){
 			return this.sendSynchroMethod(URL,params);
 		}
-		//ÏÂÃæÖ´ĞĞµÄÊÇÒì²½
+		//ä¸‹é¢æ‰§è¡Œçš„æ˜¯å¼‚æ­¥
 	    xmlHttp = null;
 	    xmlHttp = createXMLHttp();
 	    if(xmlHttp == null)
 	    {
-	        alert("´´½¨xmlHTTPÊ§°Ü£¡");
+	        alert("åˆ›å»ºxmlHTTPå¤±è´¥ï¼");
 	    }else{
 	        xmlHttp.onreadystatechange = this.SendBack;	         
 	        xmlHttp.open(this.AjaxMethod,URL,this.Async);	       
@@ -244,14 +244,14 @@ var Ajaxer = function(URL,params,callBackFunction,errorFunction){
 	    }	
 	    return ""; 	    
 	}	
-	//Èç¹ûÊÇÍ¬²½·½Ê½£¬¾Í²ÉÓÃÖ±½Ó·µ»Ø½á¹û
+	//å¦‚æœæ˜¯åŒæ­¥æ–¹å¼ï¼Œå°±é‡‡ç”¨ç›´æ¥è¿”å›ç»“æœ
 	this.sendSynchroMethod = function(URL,params){
 		
-		//Èç¹ûÊÇÍ¬²½·½Ê½£¬Ê¹ÓÃµ¥¶ÀµÄ_xmlHttp¶ÔÏó		
+		//å¦‚æœæ˜¯åŒæ­¥æ–¹å¼ï¼Œä½¿ç”¨å•ç‹¬çš„_xmlHttpå¯¹è±¡		
 	    var _xmlHttp = createXMLHttp();
 	    if(_xmlHttp == null)
 	    {
-	        alert("´´½¨_xmlHttpÊ§°Ü£¡");
+	        alert("åˆ›å»º_xmlHttpå¤±è´¥ï¼");
 	    }else{	         
 	        _xmlHttp.open(this.AjaxMethod,URL,this.Async);	       
 	        _xmlHttp.setRequestHeader("Content-Type","application/x-www-form-urlencoded;charset=UTF-8");	       
@@ -259,18 +259,18 @@ var Ajaxer = function(URL,params,callBackFunction,errorFunction){
 	        if(_xmlHttp.status == 200){
 	        	return _xmlHttp.responseText;
 	        }
-	        //alert("·şÎñÆ÷·¢ÉúÁË"+_xmlHttp.status+"´íÎó£¡");	
-	        throw new Error(_xmlHttp.status,"·şÎñÆ÷·¢ÉúÁË"+_xmlHttp.status+"´íÎó£¡");        
+	        //alert("æœåŠ¡å™¨å‘ç”Ÿäº†"+_xmlHttp.status+"é”™è¯¯ï¼");	
+	        throw new Error(_xmlHttp.status,"æœåŠ¡å™¨å‘ç”Ÿäº†"+_xmlHttp.status+"é”™è¯¯ï¼");        
 	    }		    
 	}	
-	//Èç¹ûÊÇÒì²½·½Ê½£¬¾Í²ÉÓÃ»Øµ÷·½·¨
+	//å¦‚æœæ˜¯å¼‚æ­¥æ–¹å¼ï¼Œå°±é‡‡ç”¨å›è°ƒæ–¹æ³•
 	this.SendBack = function (){
 		try{
 			if(xmlHttp.readyState == 4){				
 				if(xmlHttp.status == 200){
 					var res;
 					res = xmlHttp.responseText;
-					//ÔÚ½«res·µ»Ø¸øµ÷ÓÃ·½·¨Ö®Ç°£¬ĞèÒªÏÈ´¦Àíres£¬ÎªÁË²»Ó°ÏìÆäËûÈËÊ¹ÓÃAjaxerÀà£¬È¥µôÕâĞĞ´úÂë£¬ÒòÎªÕâĞĞ´úÂëñîºÏÁËDBUtilÀà
+					//åœ¨å°†resè¿”å›ç»™è°ƒç”¨æ–¹æ³•ä¹‹å‰ï¼Œéœ€è¦å…ˆå¤„ç†resï¼Œä¸ºäº†ä¸å½±å“å…¶ä»–äººä½¿ç”¨Ajaxerç±»ï¼Œå»æ‰è¿™è¡Œä»£ç ï¼Œå› ä¸ºè¿™è¡Œä»£ç è€¦åˆäº†DBUtilç±»
 					//callBackFunction(DBUtil.callBackFunction(res));
 					callBackFunction(res);
 							
@@ -280,43 +280,43 @@ var Ajaxer = function(URL,params,callBackFunction,errorFunction){
 				}
 			}
 		}catch(e){
-			alert(" ·şÎñÆ÷·¢ÉúÁË"+xmlHttp.status+"´íÎó£¡"+e);
+			alert(" æœåŠ¡å™¨å‘ç”Ÿäº†"+xmlHttp.status+"é”™è¯¯ï¼"+e);
 		}
 
 	}
 }
 /**
- * 	ÈÕÖ¾¼ÇÂ¼Àà
- * 	logInfo:²Ù×÷ÄÚÈİ
- *  logModule :²Ù×÷ÈÕÖ¾Ä£¿é£¬´ÓÒ³ÃæÖĞÒıÈë ReportDBToolsÖĞ¶¨ÒåµÄÄ£¿éÃû³Æ£¬Èç£ºReportDBTools.MODULE_BQXTBB
- *	log_type ²Ù×÷ÀàĞÍ	(ÎŞ²Ù×÷ 0 ; ĞÂÔö 1 ; ¸üĞÂ 2 ; É¾³ı 3 ; ÆäËû 4)
- *  url ÒıÓÃÒ³ÃæÓëlog.jspÎÄ¼şµÄÏà¶ÔÂ·¾¶
- *	ÓÃ·¨£º new Log().log(logInfo, logModule, log_type);
+ * 	æ—¥å¿—è®°å½•ç±»
+ * 	logInfo:æ“ä½œå†…å®¹
+ *  logModule :æ“ä½œæ—¥å¿—æ¨¡å—ï¼Œä»é¡µé¢ä¸­å¼•å…¥ ReportDBToolsä¸­å®šä¹‰çš„æ¨¡å—åç§°ï¼Œå¦‚ï¼šReportDBTools.MODULE_BQXTBB
+ *	log_type æ“ä½œç±»å‹	(æ— æ“ä½œ 0 ; æ–°å¢ 1 ; æ›´æ–° 2 ; åˆ é™¤ 3 ; å…¶ä»– 4)
+ *  url å¼•ç”¨é¡µé¢ä¸log.jspæ–‡ä»¶çš„ç›¸å¯¹è·¯å¾„
+ *	ç”¨æ³•ï¼š new Log().log(logInfo, logModule, log_type);
  *  by:haibo.liu
  *	version 1.0
  */
 var Log = function (){
-	//ÉÏÏÂÎÄ£¬Ä¬ÈÏÎª¿Õ
+	//ä¸Šä¸‹æ–‡ï¼Œé»˜è®¤ä¸ºç©º
  	this.contextPath = ""; 
- 	//µ±Ã»ÓĞÉèÖÃÉÏÏÂÎÄµÄÊ±ºò£¬½ØÈ¡Ä¬ÈÏÖµ
+ 	//å½“æ²¡æœ‰è®¾ç½®ä¸Šä¸‹æ–‡çš„æ—¶å€™ï¼Œæˆªå–é»˜è®¤å€¼
  	if(this.contextPath == null){ 		
  		this.contextPath = getContextPathByClient();
  	}
 	this.log =	function (logInfo, logModule, log_type){
 		var params = "logInfo="+logInfo+"&logModule="+logModule+"&log_type="+log_type;
 		url = window.location.protocol+"//"+window.location.host+this.contextPath+"/ynstjj/report/log/logManage.jsp";
-		//Òì²½¼ÇÂ¼ÈÕÖ¾
+		//å¼‚æ­¥è®°å½•æ—¥å¿—
 		new Ajaxer(url,params,callBackFunction,errorFunction).send();
 	}
 	callBackFunction = function(){};
 	errorFunction = function(){};
 }
 /*
- * ·â×°²ÎÊı
+ * å°è£…å‚æ•°
  */
 function encodeParams(params){
 	return encodeURIComponent(params);
-}//½ØÈ¡ÉÏÏÂÎÄ
+}//æˆªå–ä¸Šä¸‹æ–‡
 function getContextPathByClient(){		
 	var cp = location.pathname ;	
 	cp = cp.substring(0,cp.indexOf("/",1));	
@@ -331,13 +331,13 @@ function getContextPathByClient(){
     */
 	return cp;
 }
-//È¥¿Õ¸ñ
+//å»ç©ºæ ¼
 String.prototype.trim= function(){
-	// ÓÃÕıÔò±í´ïÊ½½«Ç°ºó¿Õ¸ñ
-	// ÓÃ¿Õ×Ö·û´®Ìæ´ú¡£ 
+	// ç”¨æ­£åˆ™è¡¨è¾¾å¼å°†å‰åç©ºæ ¼
+	// ç”¨ç©ºå­—ç¬¦ä¸²æ›¿ä»£ã€‚ 
 	return this.replace(/(^\s*)|(\s*$)/g, "");
 }	
-//È¥¿Õ¸ñ
+//å»ç©ºæ ¼
 function jstrim(str){
 	if(null == str) return null;
 	try{				
@@ -346,16 +346,16 @@ function jstrim(str){
 		return str;
 	}	
 }
-//³£ÓÃjs·½·¨
+//å¸¸ç”¨jsæ–¹æ³•
 var Validator = function(){
 	
 }
-//Ğ£ÑéÊÇ·ñÊÇÒ»¸öºÏ·¨µÄÃû×Ö
+//æ ¡éªŒæ˜¯å¦æ˜¯ä¸€ä¸ªåˆæ³•çš„åå­—
 Validator.isName = function(str){
-	var reg = /^[\w\u4e00-\u9fa5£¬¡¢£»¡®¡¯¡°¡±¡¾¡¿]+$/g;
+	var reg = /^[\w\u4e00-\u9fa5ï¼Œã€ï¼›â€˜â€™â€œâ€ã€ã€‘]+$/g;
 	return reg.test(str);
 }
-//¼ì²âÊÇ·ñÊÇÒ»¸öºÏ·¨µÄÖ¸±êÃû³Æ	
+//æ£€æµ‹æ˜¯å¦æ˜¯ä¸€ä¸ªåˆæ³•çš„æŒ‡æ ‡åç§°	
 Validator.isItemName = function(str){
 	var reg1 = /^[\S]+$/g;	
 	var reg2 = /^[^%\'\",;:=+-\\{\\}\[\].]+$/g;

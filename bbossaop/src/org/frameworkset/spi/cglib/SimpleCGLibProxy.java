@@ -27,11 +27,11 @@ import org.frameworkset.spi.remote.ServiceID;
 
 /**
  * <p>Title: SimpleCGLibProxy.java</p> 
- * <p>Description: Ö÷ÒªÊÊÓÃÓÚÒıÓÃ×é¼şºÍÄÚ²¿×é¼şµÄaop
- * À¹½ØºÍ´¦Àí</p>
+ * <p>Description: ä¸»è¦é€‚ç”¨äºå¼•ç”¨ç»„ä»¶å’Œå†…éƒ¨ç»„ä»¶çš„aop
+ * æ‹¦æˆªå’Œå¤„ç†</p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2012-1-3 ÉÏÎç11:11:42
+ * @Date 2012-1-3 ä¸Šåˆ11:11:42
  * @author biaoping.yin
  * @version 1.0
  */

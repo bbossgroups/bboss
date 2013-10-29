@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="gb2312"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <poolman>
 
@@ -30,45 +30,45 @@
 
 		<minimumSize>2</minimumSize>
 		<maximumSize>10</maximumSize>
-		<!--����connection�ﵽmaximumSize�Ƿ������ٴ����µ�connection
-			true��������ȱʡֵ
-			false��������-->
+		<!--控制connection达到maximumSize是否允许再创建新的connection
+			true：允许，缺省值
+			false：不允许-->
 		<maximumSoft>false</maximumSoft>
 
 		<!--
-			�Ƿ��ⳬʱ���ӣ�����ʱ���ӣ�
-			true-��⣬�����⵽������ʱ�����ӣ�ϵͳ��ǿ�ƻ��գ��ͷţ�������
-			false-����⣬Ĭ��ֵ
+			是否检测超时链接（事务超时链接）
+			true-检测，如果检测到有事务超时的链接，系统将强制回收（释放）该链接
+			false-不检测，默认值
 		-->
 		<removeAbandoned>true</removeAbandoned>
 		<!--
-			����ʹ�ó�ʱʱ�䣨����ʱʱ�䣩
-			��λ����
+			链接使用超时时间（事务超时时间）
+			单位：秒
 		-->
 		<userTimeout>50</userTimeout>
 		<!--
-			ϵͳǿ�ƻ�������ʱ���Ƿ������̨��־
-			true-�����Ĭ��ֵ
-			false-�����
+			系统强制回收链接时，是否输出后台日志
+			true-输出，默认值
+			false-不输出
 		-->
 		<logAbandoned>true</logAbandoned>
 
 		<!--
-			���ݿ�Ự�Ƿ���readonly��ȱʡΪfalse
+			数据库会话是否是readonly，缺省为false
 		-->
 		<readOnly>false</readOnly>
 
 		<!--
-			��Ӧ���ԣ�timeBetweenEvictionRunsMillis
+			对应属性：timeBetweenEvictionRunsMillis
 			the amount of time (in milliseconds) to sleep between examining idle objects for eviction
 		-->
 		<skimmerFrequency>120000</skimmerFrequency>
-		<!--��Ӧ��minEvictableIdleTimeMillis ���ԣ�
+		<!--对应于minEvictableIdleTimeMillis 属性：
 			minEvictableIdleTimeMillis the minimum number of milliseconds
 			an object can sit idle in the pool before it is eligable for evcition
-			��λ����
+			单位：秒
 			
-			�������ӻ���ʱ�䣬����ʱ�䳬��ָ����ֵʱ����������
+			空闲链接回收时间，空闲时间超过指定的值时，将被回收
 		-->
 		<connectionTimeout>240000</connectionTimeout>
 		<!--
@@ -76,40 +76,40 @@
 			the number of idle objects to
 			examine per run within the idle object eviction thread (if any)
 			
-			ÿ�λ��յ����Ӹ���
+			每次回收的链接个数
 		-->
 		<shrinkBy>5</shrinkBy>
 		<!--
 			/**
-			* ���������Ӵ���ʱ���Ƿ�Կ������ӽ�����Ч�Լ����ƿ���
-			* true-��飬����鵽����Ч����ʱ��ֱ��������Ч����
-			* false-����飬ȱʡֵ
+			* 检测空闲链接处理时，是否对空闲链接进行有效性检查控制开关
+			* true-检查，都检查到有无效链接时，直接销毁无效链接
+			* false-不检查，缺省值
 			*/
 		-->
 		<testWhileidle>true</testWhileidle>
 
 		<!--
-			�������ݿ��������ɻ���
-			ȱʡ�Ĳ���ϵͳ�Դ����������ɻ��ƣ�
-			�ⲽ������Ը���ϵͳ�������ɻ���
-			��ֵ������
-			auto:�Զ���һ�������������²��ø���ģʽ��
-			����˵���Ӧ�ò����������ݿ����Ӽ�¼������ͻ�����⣬Ч�ʸߣ���������������ж��Ӧ�ò�������ͬһ���ݿ�ʱ���������compositeģʽ
-			composite������Զ���ʵʱ�����ݿ��л�ȡ��������ֵ���ַ�ʽ�����������������½�����ø���ģʽ��
-			����˶��Ӧ��ͬʱ�������ݿ����Ӽ�¼ʱ������ͻ�����⣬Ч����Խϵͣ� ��������������ж��Ӧ�ò�������ͬһ���ݿ�ʱ���������compositeģʽ
+			定义数据库主键生成机制
+			缺省的采用系统自带的主键生成机制，
+			外步程序可以覆盖系统主键生成机制
+			由值来决定
+			auto:自动，一般在生产环境下采用该种模式，
+			解决了单个应用并发访问数据库添加记录产生冲突的问题，效率高，如果生产环境下有多个应用并发访问同一数据库时，必须采用composite模式
+			composite：结合自动和实时从数据库中获取最大的主键值两种方式来处理，开发环境下建议采用该种模式，
+			解决了多个应用同时访问数据库添加记录时产生冲突的问题，效率相对较低， 如果生产环境下有多个应用并发访问同一数据库时，必须采用composite模式
 		-->
 		<keygenerate>composite</keygenerate>
 
-		<!--poolman����־��Ϣ�������log4j���������־�ļ�����ص����ü�log4j.properties�ļ�-->
+		<!--poolman的日志信息输出改用log4j来输出到日志文件，相关的配置见log4j.properties文件-->
 		<!--<logFile>dbaccess.log</logFile>
 			<debugging>true</debugging>-->
-		<!-- ��������ʱ�ȴ�ʱ�䣬��λ����
-			�ͷ��˳����������ӵȴ�ʱ�䳬��ָ��ֵʱ����̨���ȴ���ʱ�쳣
+		<!-- 请求链接时等待时间，单位：秒
+			客服端程序请求链接等待时间超过指定值时，后台包等待超时异常
 		-->
 		<maxWait>60</maxWait>
 
 		<!--
-			������Ч�Լ��sql���
+			链接有效性检查sql语句
 		-->
 		<!--<validationQuery>select 1 from dual</validationQuery>-->
 
@@ -137,45 +137,45 @@
 		
 		<minimumSize>2</minimumSize>
 		<maximumSize>10</maximumSize>
-		����connection�ﵽmaximumSize�Ƿ������ٴ����µ�connection
-		true��������ȱʡֵ
-		false��������
+		控制connection达到maximumSize是否允许再创建新的connection
+		true：允许，缺省值
+		false：不允许
 		<maximumSoft>false</maximumSoft>
 		
 		
-		�Ƿ��ⳬʱ���ӣ�����ʱ���ӣ�
-		true-��⣬�����⵽������ʱ�����ӣ�ϵͳ��ǿ�ƻ��գ��ͷţ�������
-		false-����⣬Ĭ��ֵ
+		是否检测超时链接（事务超时链接）
+		true-检测，如果检测到有事务超时的链接，系统将强制回收（释放）该链接
+		false-不检测，默认值
 		
 		<removeAbandoned>true</removeAbandoned>
 		
-		����ʹ�ó�ʱʱ�䣨����ʱʱ�䣩
-		��λ����
+		链接使用超时时间（事务超时时间）
+		单位：秒
 		
 		<userTimeout>50</userTimeout>
 		
-		ϵͳǿ�ƻ�������ʱ���Ƿ������̨��־
-		true-�����Ĭ��ֵ
-		false-�����
+		系统强制回收链接时，是否输出后台日志
+		true-输出，默认值
+		false-不输出
 		
 		<logAbandoned>true</logAbandoned>
 		
 		
-		���ݿ�Ự�Ƿ���readonly��ȱʡΪfalse
+		数据库会话是否是readonly，缺省为false
 		
 		<readOnly>true</readOnly>
 		
 		
-		��Ӧ���ԣ�timeBetweenEvictionRunsMillis
+		对应属性：timeBetweenEvictionRunsMillis
 		the amount of time (in milliseconds) to sleep between examining idle objects for eviction
 		
 		<skimmerFrequency>120000</skimmerFrequency>
-		��Ӧ��minEvictableIdleTimeMillis ���ԣ�
+		对应于minEvictableIdleTimeMillis 属性：
 		minEvictableIdleTimeMillis the minimum number of milliseconds
 		an object can sit idle in the pool before it is eligable for evcition
-		��λ����
+		单位：秒
 		
-		�������ӻ���ʱ�䣬����ʱ�䳬��ָ����ֵʱ����������
+		空闲链接回收时间，空闲时间超过指定的值时，将被回收
 		
 		<connectionTimeout>240000</connectionTimeout>
 		
@@ -183,40 +183,40 @@
 		the number of idle objects to
 		examine per run within the idle object eviction thread (if any)
 		
-		ÿ�λ��յ����Ӹ���
+		每次回收的链接个数
 		
 		<shrinkBy>5</shrinkBy>
 		
 		/**
-		* ���������Ӵ���ʱ���Ƿ�Կ������ӽ�����Ч�Լ����ƿ���
-		* true-��飬����鵽����Ч����ʱ��ֱ��������Ч����
-		* false-����飬ȱʡֵ
+		* 检测空闲链接处理时，是否对空闲链接进行有效性检查控制开关
+		* true-检查，都检查到有无效链接时，直接销毁无效链接
+		* false-不检查，缺省值
 		*/
 		
 		<testWhileidle>true</testWhileidle>
 		
 		
-		�������ݿ��������ɻ���
-		ȱʡ�Ĳ���ϵͳ�Դ����������ɻ��ƣ�
-		�ⲽ������Ը���ϵͳ�������ɻ���
-		��ֵ������
-		auto:�Զ���һ�������������²��ø���ģʽ��
-		����˵���Ӧ�ò����������ݿ����Ӽ�¼������ͻ�����⣬Ч�ʸߣ���������������ж��Ӧ�ò�������ͬһ���ݿ�ʱ���������compositeģʽ
-		composite������Զ���ʵʱ�����ݿ��л�ȡ��������ֵ���ַ�ʽ�����������������½�����ø���ģʽ��
-		����˶��Ӧ��ͬʱ�������ݿ����Ӽ�¼ʱ������ͻ�����⣬Ч����Խϵͣ� ��������������ж��Ӧ�ò�������ͬһ���ݿ�ʱ���������compositeģʽ
+		定义数据库主键生成机制
+		缺省的采用系统自带的主键生成机制，
+		外步程序可以覆盖系统主键生成机制
+		由值来决定
+		auto:自动，一般在生产环境下采用该种模式，
+		解决了单个应用并发访问数据库添加记录产生冲突的问题，效率高，如果生产环境下有多个应用并发访问同一数据库时，必须采用composite模式
+		composite：结合自动和实时从数据库中获取最大的主键值两种方式来处理，开发环境下建议采用该种模式，
+		解决了多个应用同时访问数据库添加记录时产生冲突的问题，效率相对较低， 如果生产环境下有多个应用并发访问同一数据库时，必须采用composite模式
 		
 		<keygenerate>composite</keygenerate>
 		
-		poolman����־��Ϣ�������log4j���������־�ļ�����ص����ü�log4j.properties�ļ�
+		poolman的日志信息输出改用log4j来输出到日志文件，相关的配置见log4j.properties文件
 		<logFile>dbaccess.log</logFile>
 		<debugging>true</debugging>
-		��������ʱ�ȴ�ʱ�䣬��λ����
-		�ͷ��˳����������ӵȴ�ʱ�䳬��ָ��ֵʱ����̨���ȴ���ʱ�쳣
+		请求链接时等待时间，单位：秒
+		客服端程序请求链接等待时间超过指定值时，后台包等待超时异常
 		
 		<maxWait>60</maxWait>
 		
 		
-		������Ч�Լ��sql���
+		链接有效性检查sql语句
 		
 		<validationQuery>select 1 from dual</validationQuery>
 		

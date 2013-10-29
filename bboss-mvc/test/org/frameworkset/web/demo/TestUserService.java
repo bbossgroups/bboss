@@ -85,7 +85,7 @@ public class TestUserService {
 			
 			userService.deleteUser(userId);
 		} catch (Exception e) {
-			throw new UserManagerException("用户查找失败：用户不存在",e);
+			throw new UserManagerException("鐢ㄦ埛鏌ユ壘澶辫触锛氱敤鎴蜂笉瀛樺湪",e);
 		}
 		
 	}

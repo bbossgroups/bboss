@@ -72,10 +72,10 @@ import com.frameworkset.util.StringUtil;
 import com.frameworkset.util.ValueObjectUtil;
 
 /**
- * µ÷ÓÃDataInfo½Ó¿Ú»ñÈ¡·ÖÒ³/ÁĞ±í/ÏêÏ¸Êı¾İ£¬ ²¢¶Ô·â×°ÕâĞ©Êı¾İµ½ÌØ¶¨µÄÊı¾İ½á¹¹ÖĞ£¬ÎªÏÔÊ¾Êı¾İ×÷×¼±¸
+ * è°ƒç”¨DataInfoæ¥å£è·å–åˆ†é¡µ/åˆ—è¡¨/è¯¦ç»†æ•°æ®ï¼Œ å¹¶å¯¹å°è£…è¿™äº›æ•°æ®åˆ°ç‰¹å®šçš„æ•°æ®ç»“æ„ä¸­ï¼Œä¸ºæ˜¾ç¤ºæ•°æ®ä½œå‡†å¤‡
  * 
  * 
- * ÅĞ¶ÏÊÇ·ñÊÇÇ¶Ì×ÁĞ±í£¬Èç¹ûÊÇÇ¶Ì×ÁĞ±íÔò¿ÉÉèÖÃÈçÏÂÊôĞÔ£º colName,property,sortKey,desc
+ * åˆ¤æ–­æ˜¯å¦æ˜¯åµŒå¥—åˆ—è¡¨ï¼Œå¦‚æœæ˜¯åµŒå¥—åˆ—è¡¨åˆ™å¯è®¾ç½®å¦‚ä¸‹å±æ€§ï¼š colName,property,sortKey,desc
  * 
  * @author biaoping.yin
  */
@@ -85,16 +85,16 @@ public class PagerDataSet extends PagerTagSupport {
 //	protected boolean flag = false;
 	protected boolean moreQuery = false;
 	/**
-	 * Èç¹ûÍ¨¹ıtitle±êÇ©ÉèÖÃÅÅĞò×Ö¶Î£¬Í¨¹ı¸ÃÊôĞÔÀ´
-	 * ¿ØÖÆÊÇ·ñ×Ô¶¯¶Ôµ±Ç°Ò³Êı¾İÅÅĞò£¬»¹ÊÇÔÚÊı¾İ¼ÓÔØÆ÷ÖĞÊÖ¹¤¹¹ÔìsqlÓï¾ä¶ÔÈ«²¿Êı¾İÅÅĞò
-	 * true-×Ô¶¯ÅÅĞò£¬È±Ê¡Öµ
-	 * false-ÔÚÊı¾İ¼ÓÔØÆ÷ÖĞÊÖ¹¤¹¹ÔìsqlÓï¾ä¶ÔÈ«²¿Êı¾İÅÅĞò,Èç¹ûÊı¾İ¼ÓÔØÆ÷Ã»ÓĞ½«titleÖ¸¶¨µÄÅÅĞò×Ö¶Î×÷ÎªsqlµÄÅÅĞò×Ö¶Î£¬ÄÇÃ´
-	 *       Ö¸¶¨µÄÅÅĞò×Ö¶Î½«²»Æğ×÷ÓÃ
+	 * å¦‚æœé€šè¿‡titleæ ‡ç­¾è®¾ç½®æ’åºå­—æ®µï¼Œé€šè¿‡è¯¥å±æ€§æ¥
+	 * æ§åˆ¶æ˜¯å¦è‡ªåŠ¨å¯¹å½“å‰é¡µæ•°æ®æ’åºï¼Œè¿˜æ˜¯åœ¨æ•°æ®åŠ è½½å™¨ä¸­æ‰‹å·¥æ„é€ sqlè¯­å¥å¯¹å…¨éƒ¨æ•°æ®æ’åº
+	 * true-è‡ªåŠ¨æ’åºï¼Œç¼ºçœå€¼
+	 * false-åœ¨æ•°æ®åŠ è½½å™¨ä¸­æ‰‹å·¥æ„é€ sqlè¯­å¥å¯¹å…¨éƒ¨æ•°æ®æ’åº,å¦‚æœæ•°æ®åŠ è½½å™¨æ²¡æœ‰å°†titleæŒ‡å®šçš„æ’åºå­—æ®µä½œä¸ºsqlçš„æ’åºå­—æ®µï¼Œé‚£ä¹ˆ
+	 *       æŒ‡å®šçš„æ’åºå­—æ®µå°†ä¸èµ·ä½œç”¨
 	 */
 	protected boolean autosort = false;
 	/**
-	 * Õë¶ÔsessionKey¡¢requestKey¡¢pagecontextKey½øĞĞclassdataListÊı¾İ¶ÔÏó»º´æ£¬
-	 * ±ÜÃâÖØ¸´Ê¹ÓÃÊ±ÖØ¸´Éú³ÉÊı¾İ¶ÔÏó
+	 * é’ˆå¯¹sessionKeyã€requestKeyã€pagecontextKeyè¿›è¡ŒclassdataListæ•°æ®å¯¹è±¡ç¼“å­˜ï¼Œ
+	 * é¿å…é‡å¤ä½¿ç”¨æ—¶é‡å¤ç”Ÿæˆæ•°æ®å¯¹è±¡
 	 */
 	protected boolean softparser = true;
 	protected Object actual;
@@ -103,23 +103,23 @@ public class PagerDataSet extends PagerTagSupport {
 	// protected Tag origineTag = null;
 
 	/***************************************************************************
-	 * ÉèÖÃÄÚÈİ¹ÜÀíÏµÍ³¸ÄÔìÌí¼ÓµÄÏµÁĞÊôĞÔ¿ªÊ¼ **
+	 * è®¾ç½®å†…å®¹ç®¡ç†ç³»ç»Ÿæ”¹é€ æ·»åŠ çš„ç³»åˆ—å±æ€§å¼€å§‹ **
 	 **************************************************************************/
 
 	// /**
-	// * ÆµµÀid
+	// * é¢‘é“id
 	// */
 	// private String channelid="";
-	/** ´¦ÀíÉÏÏÂ·­Ò³´¥·¢formÌá½»ÊÂ¼ş£¬±¾ÊôĞÔÖ¸¶¨ĞèÒªÌá½»µÄform±íµ¥Ãû³Æ */
+	/** å¤„ç†ä¸Šä¸‹ç¿»é¡µè§¦å‘formæäº¤äº‹ä»¶ï¼Œæœ¬å±æ€§æŒ‡å®šéœ€è¦æäº¤çš„formè¡¨å•åç§° */
 	private String form = null;
 
 	/*
-	 * Tag Properties ¶¨ÒåÌø×ªµÄurl
+	 * Tag Properties å®šä¹‰è·³è½¬çš„url
 	 */
 	private String url = null;
 
 	/**
-	 * µ¼º½Ë÷ÒıÀà±ğ£¬¶ÔÓ¦PagerContextÖĞµÄindexÊôĞÔ
+	 * å¯¼èˆªç´¢å¼•ç±»åˆ«ï¼Œå¯¹åº”PagerContextä¸­çš„indexå±æ€§
 	 */
 	private String navindex = null;
 
@@ -141,11 +141,11 @@ public class PagerDataSet extends PagerTagSupport {
 	private String data = null;
 
 	/**
-	 * ±êÊ¶ÊÇ·ñÊÇwapÓ¦ÓÃ
+	 * æ ‡è¯†æ˜¯å¦æ˜¯wapåº”ç”¨
 	 */
 	private boolean wapflag = false;
 
-	/** µ±ĞèÒª±£´æÊı¾İÊ±ÊÇ·ñÌáÊ¾±£´æ£¬ÓëformÊôĞÔÅäºÏÊ¹ÓÃ */
+	/** å½“éœ€è¦ä¿å­˜æ•°æ®æ—¶æ˜¯å¦æç¤ºä¿å­˜ï¼Œä¸formå±æ€§é…åˆä½¿ç”¨ */
 	private boolean promotion = false;
 
 	boolean isList = true;
@@ -157,11 +157,11 @@ public class PagerDataSet extends PagerTagSupport {
 	String title = null;
 
 	/***************************************************************************
-	 * ÉèÖÃÄÚÈİ¹ÜÀíÏµÍ³¸ÄÔìÌí¼ÓµÄÏµÁĞÊôĞÔ½áÊø **
+	 * è®¾ç½®å†…å®¹ç®¡ç†ç³»ç»Ÿæ”¹é€ æ·»åŠ çš„ç³»åˆ—å±æ€§ç»“æŸ **
 	 **************************************************************************/
 
 	/**
-	 * ¶¨ÒåÈ«¾Ö±äÁ¿
+	 * å®šä¹‰å…¨å±€å˜é‡
 	 */
 	protected DataModel dataModel = null;
 
@@ -170,14 +170,14 @@ public class PagerDataSet extends PagerTagSupport {
 	private static final Logger log = Logger.getLogger(PagerDataSet.class);
 	
 	/**
-	 * Íâ²¿¶¨ÒåµÄ±äÁ¿Ãû³ÆĞÅÏ¢
+	 * å¤–éƒ¨å®šä¹‰çš„å˜é‡åç§°ä¿¡æ¯
 	 */
 	private String rowidName = "rowid";
 	private String dataSetName = "dataSet";
 	
 
 	/**
-	 * ¶¨ÒåÊı¾İ¼¯µÄ¶ÑÕ»
+	 * å®šä¹‰æ•°æ®é›†çš„å †æ ˆ
 	 */
 	protected Stack stack = null;
 
@@ -192,7 +192,7 @@ public class PagerDataSet extends PagerTagSupport {
 	protected String sqlparamskey = "sql.params.key";
 
 	/**
-	 * ¶¨ÒådataSetµÄ»ñÈ¡·¶Î§
+	 * å®šä¹‰dataSetçš„è·å–èŒƒå›´
 	 */
 	protected static final String SESSION_SCOPE = "session";
 
@@ -205,18 +205,18 @@ public class PagerDataSet extends PagerTagSupport {
 	protected static final String DB_SCOPE = "db";
 
 	/**
-	 * ÄÚÈİ¹ÜÀí²¹³ä³£Á¿£¬ÄÚÈİ¹ÜÀíÏµÍ³·¢²¼Ê±ĞèÒªÓÃµ½µÄ·¶Î§
+	 * å†…å®¹ç®¡ç†è¡¥å……å¸¸é‡ï¼Œå†…å®¹ç®¡ç†ç³»ç»Ÿå‘å¸ƒæ—¶éœ€è¦ç”¨åˆ°çš„èŒƒå›´
 	 */
 	protected static final String CMS_SCOPE = "cms";
 
 	/**
-	 * ±£´æÒ³ÃæpageSetµÄ¶ÑÕ»
+	 * ä¿å­˜é¡µé¢pageSetçš„å †æ ˆ
 	 */
 	protected static final String PAGERDATASET_STACK = "PAGERDATASET_STACK";
 
 	/**
-	 * ±£´ædataSetÖĞ³öÏÖµÄËùÓĞ¹«Ê½ ÒÔ¹«Ê½´®ÎªkeyÖµ ÒÔFormula¶ÔÏó×÷ÎªÖµ
-	 * ±êÇ©¿â¶Ô¹«Ê½µÄ½âÎöÏÈ±àÒë
+	 * ä¿å­˜dataSetä¸­å‡ºç°çš„æ‰€æœ‰å…¬å¼ ä»¥å…¬å¼ä¸²ä¸ºkeyå€¼ ä»¥Formulaå¯¹è±¡ä½œä¸ºå€¼
+	 * æ ‡ç­¾åº“å¯¹å…¬å¼çš„è§£æå…ˆç¼–è¯‘
 	 */
 	private Map formulas = null;
 
@@ -234,7 +234,7 @@ public class PagerDataSet extends PagerTagSupport {
 	// }
 	// }
 	/**
-	 * ×Ö·û´®Êı×é£¬´æ·ÅÒ³ÃæÖĞÒªÏÔÊ¾ÊôĞÔ×Ö¶ÎÃû³Æ
+	 * å­—ç¬¦ä¸²æ•°ç»„ï¼Œå­˜æ”¾é¡µé¢ä¸­è¦æ˜¾ç¤ºå±æ€§å­—æ®µåç§°
 	 */
 	protected java.lang.String[] fields;
 
@@ -243,50 +243,50 @@ public class PagerDataSet extends PagerTagSupport {
 	protected String sortKey = null;
 
 	/***************************************************************************
-	 * µ±Öµ¶ÔÏóÊôĞÔcolName¶ÔÓ¦µÄÀàĞÍÎªCollectionÊ±£¬* ±¾±êÇ©½«¸Ãcollection×÷ÎªÊı¾İÔ´£¬ *
-	 * Ñ­»·Ç¶Ì×Êä³öcollectionÖĞµÄ¶ÔÏóÊôĞÔ * propertyÏÂ¼¶ÊôĞÔÃû³Æ
+	 * å½“å€¼å¯¹è±¡å±æ€§colNameå¯¹åº”çš„ç±»å‹ä¸ºCollectionæ—¶ï¼Œ* æœ¬æ ‡ç­¾å°†è¯¥collectionä½œä¸ºæ•°æ®æºï¼Œ *
+	 * å¾ªç¯åµŒå¥—è¾“å‡ºcollectionä¸­çš„å¯¹è±¡å±æ€§ * propertyä¸‹çº§å±æ€§åç§°
 	 **************************************************************************/
 	/**
-	 * ÁĞÃû
+	 * åˆ—å
 	 */
 	protected String colName;
 
 	/**
-	 * ÏÂ¼¶ÊôĞÔÃû³Æ
+	 * ä¸‹çº§å±æ€§åç§°
 	 */
 	protected String property;
 
 	int rowid = 0;
 
 	/**
-	 * ¶¨ÒåÁĞ±íÀàĞÍ£¬»ñÈ¡Êı¾İ
+	 * å®šä¹‰åˆ—è¡¨ç±»å‹ï¼Œè·å–æ•°æ®
 	 */
 	String type = "";
 
 	/**
-	 * ¶¨ÒåÊı¾İ¿â²éÑ¯Óï¾ä
+	 * å®šä¹‰æ•°æ®åº“æŸ¥è¯¢è¯­å¥
 	 */
 	protected String statement = null;
 
 	/**
-	 * ¶¨ÒåÊı¾İ¿âÁ¬½Ó³ØÃû³Æ
+	 * å®šä¹‰æ•°æ®åº“è¿æ¥æ± åç§°
 	 */
 	protected String dbname = null;
 
 	protected String desc = null;
 
 	/**
-	 * ÊÇ·ñÉùÃ÷Íâ²¿±äÁ¿ true:ÉùÃ÷£¬È±Ê¡Öµ false£º²»ÉùÃ÷
+	 * æ˜¯å¦å£°æ˜å¤–éƒ¨å˜é‡ true:å£°æ˜ï¼Œç¼ºçœå€¼ falseï¼šä¸å£°æ˜
 	 */
 	protected boolean declare = true;
 	
     /**
-     * jqueryÄÚÈİÈİÆ÷
+     * jqueryå†…å®¹å®¹å™¨
      */
     private String containerid ;
     
     /**
-     * jqueryÄÚÈİÑ¡ÔñÆ÷
+     * jqueryå†…å®¹é€‰æ‹©å™¨
      */
     private String selector;
 
@@ -315,7 +315,7 @@ public class PagerDataSet extends PagerTagSupport {
 //    }
 	
 	/**
-	 * Õâ¸ö¹¹Ôì·½·¨Ö»ÔÚÄÚÈİ¹ÜÀíÏµÍ³·¢²¼Ê±µ÷ÓÃ
+	 * è¿™ä¸ªæ„é€ æ–¹æ³•åªåœ¨å†…å®¹ç®¡ç†ç³»ç»Ÿå‘å¸ƒæ—¶è°ƒç”¨
 	 */
 	public PagerDataSet(HttpServletRequest request,
 			HttpServletResponse response, PageContext pageContext) {
@@ -378,7 +378,7 @@ public class PagerDataSet extends PagerTagSupport {
 	
 
 	/**
-	 * ³õÊ¼»¯Ê±±ØĞëÒªµ÷ÓÃµÄ·½·¨£¬µ÷ÓÃË³Ğò1
+	 * åˆå§‹åŒ–æ—¶å¿…é¡»è¦è°ƒç”¨çš„æ–¹æ³•ï¼Œè°ƒç”¨é¡ºåº1
 	 * 
 	 * @param fields
 	 */
@@ -393,7 +393,7 @@ public class PagerDataSet extends PagerTagSupport {
 	/**
 	 * @param dataInfo
 	 * @param fields -
-	 *            ×Ö·û´®Êı×é£¬´æ·ÅÒ³ÃæÖĞÒªÏÔÊ¾ÊôĞÔ×Ö¶ÎÃû³Æ
+	 *            å­—ç¬¦ä¸²æ•°ç»„ï¼Œå­˜æ”¾é¡µé¢ä¸­è¦æ˜¾ç¤ºå±æ€§å­—æ®µåç§°
 	 * 
 	 * public PagerDataSet(DataInfo dataInfo, String[] fields) {
 	 * this.loadClassData(dataInfo.getDataList()); this.fields = fields; }
@@ -409,9 +409,9 @@ public class PagerDataSet extends PagerTagSupport {
 	}
 
 	/**
-	 * »ñÈ¡dataSetµÄÖµ¶ÔÏóµÄÊôĞÔ rowid:ĞĞË÷Òı£¬È·¶¨Öµ¶ÔÏñµÄÎ»ÖÃ columnid£ºÁĞË÷Òı£¬È·¶¨»ñÈ¡Öµ¶ÔÏóµÄÄÄ¸öÊôĞÔ
+	 * è·å–dataSetçš„å€¼å¯¹è±¡çš„å±æ€§ rowid:è¡Œç´¢å¼•ï¼Œç¡®å®šå€¼å¯¹åƒçš„ä½ç½® columnidï¼šåˆ—ç´¢å¼•ï¼Œç¡®å®šè·å–å€¼å¯¹è±¡çš„å“ªä¸ªå±æ€§
 	 * 
-	 * ½­»ñÈ¡µÄÊôĞÔ·â×°³ÉÒ»¸öObject¶ÔÏó·µ»Ø
+	 * æ±Ÿè·å–çš„å±æ€§å°è£…æˆä¸€ä¸ªObjectå¯¹è±¡è¿”å›
 	 * 
 	 * @param rowid
 	 * @param columnid
@@ -422,7 +422,7 @@ public class PagerDataSet extends PagerTagSupport {
 	}
 
 	/**
-	 * ĞĞºÅrowidËù¶ÔÓ¦µÄÊôĞÔ¶ÔÏóµÄÊôĞÔÖµ
+	 * è¡Œå·rowidæ‰€å¯¹åº”çš„å±æ€§å¯¹è±¡çš„å±æ€§å€¼
 	 * 
 	 * @param rowid
 	 * @param columnid
@@ -440,12 +440,12 @@ public class PagerDataSet extends PagerTagSupport {
 	}
 
 	/**
-	 * »ñÈ¡ĞĞºÅÎªrowidµÄÖµ¶ÔÏóÖĞÊôĞÔÃû³ÆÎªcolNameµÄÖµ
+	 * è·å–è¡Œå·ä¸ºrowidçš„å€¼å¯¹è±¡ä¸­å±æ€§åç§°ä¸ºcolNameçš„å€¼
 	 * 
 	 * @param rowid -
-	 *            Öµ¶ÔÏóĞĞºÅ
+	 *            å€¼å¯¹è±¡è¡Œå·
 	 * @param colName -
-	 *            ÊôĞÔÃû³Æ
+	 *            å±æ€§åç§°
 	 * @return Object
 	 */
 	public Object getValue(int rowid, String colName) {
@@ -468,18 +468,18 @@ public class PagerDataSet extends PagerTagSupport {
 		}
 		catch(Exception e)
 		{
-		    throw new RuntimeException("»ñÈ¡ÊôĞÔ[colName=" + colName + "]Ê§°Ü£º" + theClassDataList + "=" + theClassDataList,e);
+		    throw new RuntimeException("è·å–å±æ€§[colName=" + colName + "]å¤±è´¥ï¼š" + theClassDataList + "=" + theClassDataList,e);
 		}
 	}
 	
 	
 	/**
-	 * »ñÈ¡ĞĞºÅÎªrowidµÄÖµ¶ÔÏóÖĞÊôĞÔÃû³ÆÎªcolNameµÄÖµ
+	 * è·å–è¡Œå·ä¸ºrowidçš„å€¼å¯¹è±¡ä¸­å±æ€§åç§°ä¸ºcolNameçš„å€¼
 	 * 
 	 * @param rowid -
-	 *            Öµ¶ÔÏóĞĞºÅ
+	 *            å€¼å¯¹è±¡è¡Œå·
 	 * @param colName -
-	 *            ÊôĞÔÃû³Æ
+	 *            å±æ€§åç§°
 	 * @return Object
 	 */
 	public Object getValue(int rowid) {
@@ -502,12 +502,12 @@ public class PagerDataSet extends PagerTagSupport {
 		}
 		catch(Exception e)
 		{
-		    throw new RuntimeException("»ñÈ¡ÊôĞÔ[colName=" + colName + "]Ê§°Ü£º" + theClassDataList + "=" + theClassDataList,e);
+		    throw new RuntimeException("è·å–å±æ€§[colName=" + colName + "]å¤±è´¥ï¼š" + theClassDataList + "=" + theClassDataList,e);
 		}
 	}
 	
 	/**
-	 * »ñÈ¡¶ÔÓ¦ĞĞÔ­Ê¼¶ÔÏóÊı¾İÀàĞÍ
+	 * è·å–å¯¹åº”è¡ŒåŸå§‹å¯¹è±¡æ•°æ®ç±»å‹
 	 * @param rowid
 	 * @return
 	 */
@@ -549,7 +549,7 @@ public class PagerDataSet extends PagerTagSupport {
 	}
 	
 	/**
-	 * »ñÈ¡µ±Ç°ĞĞÔ­Ê¼¶ÔÏóÊı¾İÀàĞÍ
+	 * è·å–å½“å‰è¡ŒåŸå§‹å¯¹è±¡æ•°æ®ç±»å‹
 	 * @param rowid
 	 * @return
 	 */
@@ -567,7 +567,7 @@ public class PagerDataSet extends PagerTagSupport {
 	}
 
 	/**
-	 * »ñÈ¡Öµ¶ÔÏóÖĞËùÒıÓÃµÄÆäËüÖµ¶ÔÏó£¨±äÁ¿Ãû³ÆÎªcolName£© ÖĞÊôĞÔ£¨ÊôĞÔÃû³ÆÎªsubColName£©Öµ
+	 * è·å–å€¼å¯¹è±¡ä¸­æ‰€å¼•ç”¨çš„å…¶å®ƒå€¼å¯¹è±¡ï¼ˆå˜é‡åç§°ä¸ºcolNameï¼‰ ä¸­å±æ€§ï¼ˆå±æ€§åç§°ä¸ºsubColNameï¼‰å€¼
 	 * 
 	 * @param rowid
 	 * @param colName
@@ -594,7 +594,7 @@ public class PagerDataSet extends PagerTagSupport {
 	}
 
 	/**
-	 * ´ÓdataÖĞ»ñÈ¡ÊôĞÔÖµ
+	 * ä»dataä¸­è·å–å±æ€§å€¼
 	 * 
 	 * @param data
 	 * @param colName
@@ -607,7 +607,7 @@ public class PagerDataSet extends PagerTagSupport {
 	}
 	
 	/**
-	 * ´ÓdataÖĞ»ñÈ¡ÊôĞÔÖµ
+	 * ä»dataä¸­è·å–å±æ€§å€¼
 	 * 
 	 * @param data
 	 * @param colName
@@ -716,7 +716,7 @@ public class PagerDataSet extends PagerTagSupport {
 	}
 	
 	/**
-	 * »ñÈ¡ÊôĞÔ¶ÔÓ¦µÄmap¶ÔÏó
+	 * è·å–å±æ€§å¯¹åº”çš„mapå¯¹è±¡
 	 * @param colName
 	 * @return java.lang.String
 	 */
@@ -744,7 +744,7 @@ public class PagerDataSet extends PagerTagSupport {
 	}
 
 	/**
-	 * ¸ù¾İË÷Òı»ñÈ¡¶ÔÓ¦µÄ¸¸Öµ
+	 * æ ¹æ®ç´¢å¼•è·å–å¯¹åº”çš„çˆ¶å€¼
 	 * 
 	 * @param rowid
 	 * @param colName
@@ -757,7 +757,7 @@ public class PagerDataSet extends PagerTagSupport {
 					+ "],stack size is " + stack.size());
 			return null;
 		}
-		// ¸ù¾İË÷Òı»ñÈ¡×Ö¶ÎµÄÖµ
+		// æ ¹æ®ç´¢å¼•è·å–å­—æ®µçš„å€¼
 		PagerDataSet dataSet = (PagerDataSet) this.stack.elementAt(index);
 		Object value = dataSet.getValue(dataSet.getRowid(), colName);
 		
@@ -799,7 +799,7 @@ public class PagerDataSet extends PagerTagSupport {
 					+ "],stack size is " + stack.size());
 			return defaultValue.toString();
 		}
-		// ¸ù¾İË÷Òı»ñÈ¡×Ö¶ÎµÄÖµ
+		// æ ¹æ®ç´¢å¼•è·å–å­—æ®µçš„å€¼
 		PagerDataSet dataSet = (PagerDataSet) this.stack.elementAt(index);
 		Object value = dataSet.getValue(dataSet.getRowid(), colName);
 		value = convertLobToString(value);
@@ -822,7 +822,7 @@ public class PagerDataSet extends PagerTagSupport {
 	}
 	
 	/**
-	 * ¸ù¾İÁĞÃû¶ÔÓ¦µÄ¶ÔÏóµÄÊôĞÔ»ñÈ¡ÊôĞÔÖµ
+	 * æ ¹æ®åˆ—åå¯¹åº”çš„å¯¹è±¡çš„å±æ€§è·å–å±æ€§å€¼
 	 * @param colName
 	 * @param property
 	 * @param defaultValue
@@ -837,7 +837,7 @@ public class PagerDataSet extends PagerTagSupport {
 	
 
 	/**
-	 * ½«lob×Ö¶ÎÊä³öµ½×Ö·û´®
+	 * å°†lobå­—æ®µè¾“å‡ºåˆ°å­—ç¬¦ä¸²
 	 * @param value
 	 * @return
 	 */
@@ -889,7 +889,7 @@ public class PagerDataSet extends PagerTagSupport {
 	}
 	
 	/**
-	 * ½«lob×Ö¶ÎÊä³öµ½×Ö·û´®
+	 * å°†lobå­—æ®µè¾“å‡ºåˆ°å­—ç¬¦ä¸²
 	 * @param value
 	 * @return
 	 */
@@ -945,7 +945,7 @@ public class PagerDataSet extends PagerTagSupport {
 					+ "],stack size is " + stack.size());
 			return null;
 		}
-		// ¸ù¾İË÷Òı»ñÈ¡×Ö¶ÎµÄÖµ
+		// æ ¹æ®ç´¢å¼•è·å–å­—æ®µçš„å€¼
 		PagerDataSet dataSet = (PagerDataSet) this.stack.elementAt(index);
 		Object value = dataSet.getValue(dataSet.getRowid(), colName, property);
 		
@@ -966,7 +966,7 @@ public class PagerDataSet extends PagerTagSupport {
 					+ "],stack size is " + stack.size());
 			return defaultValue.toString();
 		}
-		// ¸ù¾İË÷Òı»ñÈ¡×Ö¶ÎµÄÖµ
+		// æ ¹æ®ç´¢å¼•è·å–å­—æ®µçš„å€¼
 		PagerDataSet dataSet = (PagerDataSet) this.stack.elementAt(index);
 		Object value = dataSet.getValue(dataSet.getRowid(), colName, property);
 		value = convertLobToString(value);
@@ -992,7 +992,7 @@ public class PagerDataSet extends PagerTagSupport {
 	}
 
 	/**
-	 * ¸ù¾İÊı¾İ¼¯Ë÷ÒıindexºÍ×Ö¶ÎÃû³Æ,»ñÈ¡ÕûĞÎ×Ö¶ÎµÄÖµ
+	 * æ ¹æ®æ•°æ®é›†ç´¢å¼•indexå’Œå­—æ®µåç§°,è·å–æ•´å½¢å­—æ®µçš„å€¼
 	 * 
 	 * @param colName
 	 * @param index
@@ -1005,7 +1005,7 @@ public class PagerDataSet extends PagerTagSupport {
 					+ "],stack size is " + stack.size());
 			return -1;
 		}
-		// ¸ù¾İË÷Òı»ñÈ¡×Ö¶ÎµÄÖµ
+		// æ ¹æ®ç´¢å¼•è·å–å­—æ®µçš„å€¼
 		PagerDataSet dataSet = (PagerDataSet) this.stack.elementAt(index);
 		Object value = dataSet.getValue(dataSet.getRowid(), colName, property);
 		if (value == null)
@@ -1014,7 +1014,7 @@ public class PagerDataSet extends PagerTagSupport {
 	}
 
 	/**
-	 * ¸ù¾İ×Ö¶ÎÃû³Æ,»ñÈ¡ÕûĞÎ×Ö¶ÎµÄÖµ
+	 * æ ¹æ®å­—æ®µåç§°,è·å–æ•´å½¢å­—æ®µçš„å€¼
 	 * 
 	 * @param rowid
 	 * @param colName
@@ -1198,7 +1198,7 @@ public class PagerDataSet extends PagerTagSupport {
 	}
 
 	/**
-	 * »ñÈ¡¸ñÊ½»¯µÄÈÕÆÚ×Ö·û´®
+	 * è·å–æ ¼å¼åŒ–çš„æ—¥æœŸå­—ç¬¦ä¸²
 	 * 
 	 * @param rowid
 	 * @param columnid
@@ -1466,7 +1466,7 @@ public class PagerDataSet extends PagerTagSupport {
 	}
 
 	/**
-	 * µ÷ÓÃdataInfo½Ó¿Ú·½·¨£¬»ñÈ¡Êı¾İ ´¦ÀídataSetÖĞµÄËùÓĞ¶ÔÏó
+	 * è°ƒç”¨dataInfoæ¥å£æ–¹æ³•ï¼Œè·å–æ•°æ® å¤„ç†dataSetä¸­çš„æ‰€æœ‰å¯¹è±¡
 	 * 
 	 * @param dataInfo
 	 * @param isList
@@ -1477,12 +1477,12 @@ public class PagerDataSet extends PagerTagSupport {
 		// List list;
 		if (dataInfo == null)
 			throw new LoadDataException(
-					"load list Data error in loadClassData(DataInfo dataInfo, boolean isList):Êı¾İ¶ÔÏóÎª¿Õ");
+					"load list Data error in loadClassData(DataInfo dataInfo, boolean isList):æ•°æ®å¯¹è±¡ä¸ºç©º");
 		// log.info();
 		// Class voClass = dataInfo.getVOClass();
 		/**
-		 * Í¨¹ıdataInfo½Ó¿Ú»ñÈ¡Êı¾İ·ÖÎªÁ½ÖÖÇé¿ö£¬Ò»ÖÖÊÇ²ÉÓÃDefaultDataInfoImplÊµÏÖ£¬ÆäËûµÄÎªDataInfoImplÊµÏÖ
-		 * ÔÚ´Ë´¦Òª×öÏàÓ¦µÄÅĞ¶Ï£¬·Ö±ğ´¦Àí
+		 * é€šè¿‡dataInfoæ¥å£è·å–æ•°æ®åˆ†ä¸ºä¸¤ç§æƒ…å†µï¼Œä¸€ç§æ˜¯é‡‡ç”¨DefaultDataInfoImplå®ç°ï¼Œå…¶ä»–çš„ä¸ºDataInfoImplå®ç°
+		 * åœ¨æ­¤å¤„è¦åšç›¸åº”çš„åˆ¤æ–­ï¼Œåˆ†åˆ«å¤„ç†
 		 */
 		if (dataInfo instanceof DefaultDataInfoImpl) {
 			if (isList)
@@ -1518,7 +1518,7 @@ public class PagerDataSet extends PagerTagSupport {
 	}
 
 	/**
-	 * ×°ÔØhashtableÊı×éÖĞµÄÊı¾İ£¬Í¨¹ıÊôĞÔ»ñÈ¡hashtableÖĞµÄÊı×éÊ±½«ÊôĞÔÈ«²¿ÖÃ»»Îª´óĞ´
+	 * è£…è½½hashtableæ•°ç»„ä¸­çš„æ•°æ®ï¼Œé€šè¿‡å±æ€§è·å–hashtableä¸­çš„æ•°ç»„æ—¶å°†å±æ€§å…¨éƒ¨ç½®æ¢ä¸ºå¤§å†™
 	 * 
 	 * @param datas
 	 * @param voClazz
@@ -1536,7 +1536,7 @@ public class PagerDataSet extends PagerTagSupport {
 	}
 
 	/**
-	 * ×°ÔØMapÊı×éÖĞµÄÊı¾İ£¬ Í¨¹ıÊôĞÔ»ñÈ¡mapÖĞµÄÊı×éÊ±½«¸ù¾İtoUpercase²ÎÊıÀ´¿ØÖÆÊÇ·ñ½«ÊôĞÔÈ«²¿ÖÃ»»Îª´óĞ´
+	 * è£…è½½Mapæ•°ç»„ä¸­çš„æ•°æ®ï¼Œ é€šè¿‡å±æ€§è·å–mapä¸­çš„æ•°ç»„æ—¶å°†æ ¹æ®toUpercaseå‚æ•°æ¥æ§åˆ¶æ˜¯å¦å°†å±æ€§å…¨éƒ¨ç½®æ¢ä¸ºå¤§å†™
 	 * 
 	 * @param datas
 	 * @param toUpercase
@@ -1559,7 +1559,7 @@ public class PagerDataSet extends PagerTagSupport {
 	}
 
 	/**
-	 * ×°ÔØmapÖĞµÄÊı¾İ£¬²¢ÇÒÍ¨¹ıÊôĞÔ»ñÈ¡Ê±²»»á¶ÔÊôĞÔ½øĞĞ´óĞ´ÖÃ»»
+	 * è£…è½½mapä¸­çš„æ•°æ®ï¼Œå¹¶ä¸”é€šè¿‡å±æ€§è·å–æ—¶ä¸ä¼šå¯¹å±æ€§è¿›è¡Œå¤§å†™ç½®æ¢
 	 * 
 	 * @param datas
 	 * @param voClazz
@@ -1579,9 +1579,9 @@ public class PagerDataSet extends PagerTagSupport {
 	}
 	
 	/**
-	 * ×°ÔØmapÖĞµÄÊı¾İ£¬ÓÃÓÚmap±êÇ©µü´úÕ¹Ê¾mapÖĞµÄÊı¾İ
-	 * key±êÇ©ÓÃÀ´ÔÚµü´ú¹ı³ÌÖĞ»òÕß¶ÔÓ¦µÄkeyÖµ
-	 * cell±êÇ©ÓÃÀ´Õ¹Ê¾value¶ÔÏóµÄÊôĞÔÖµ»òÕßvalue¶ÔÏó±¾Éí	 * 
+	 * è£…è½½mapä¸­çš„æ•°æ®ï¼Œç”¨äºmapæ ‡ç­¾è¿­ä»£å±•ç¤ºmapä¸­çš„æ•°æ®
+	 * keyæ ‡ç­¾ç”¨æ¥åœ¨è¿­ä»£è¿‡ç¨‹ä¸­æˆ–è€…å¯¹åº”çš„keyå€¼
+	 * cellæ ‡ç­¾ç”¨æ¥å±•ç¤ºvalueå¯¹è±¡çš„å±æ€§å€¼æˆ–è€…valueå¯¹è±¡æœ¬èº«	 * 
 	 * @param data
 	 */
 	protected void loadMapClassData(Map data,MapTag maptag) {
@@ -1628,7 +1628,7 @@ public class PagerDataSet extends PagerTagSupport {
 	}
 
 	/**
-	 * ×°ÔØ¶ÔÏóÊı×éÊı×éÖĞµÄÊı¾İ
+	 * è£…è½½å¯¹è±¡æ•°ç»„æ•°ç»„ä¸­çš„æ•°æ®
 	 * 
 	 * @param datas
 	 * @param voClazz
@@ -1651,7 +1651,7 @@ public class PagerDataSet extends PagerTagSupport {
 	}
 	
 	/**
-	 * ×°ÔØ¶ÔÏóÊı×éÊı×éÖĞµÄÊı¾İ
+	 * è£…è½½å¯¹è±¡æ•°ç»„æ•°ç»„ä¸­çš„æ•°æ®
 	 * 
 	 * @param datas
 	 * @param voClazz
@@ -1681,7 +1681,7 @@ public class PagerDataSet extends PagerTagSupport {
 			throws LoadDataException {
 		if (dataInfo == null)
 			throw new LoadDataException(
-					"load list Data error loadClassData(Iterator dataInfo, Class voClazz):Êı¾İ¶ÔÏóÎª¿Õ");
+					"load list Data error loadClassData(Iterator dataInfo, Class voClazz):æ•°æ®å¯¹è±¡ä¸ºç©º");
 		// log.info();
 		if (theClassDataList == null)
 			theClassDataList = new ClassDataList();
@@ -1717,7 +1717,7 @@ public class PagerDataSet extends PagerTagSupport {
 //			theClassDataList = new ClassDataList();
 			if(this.softparser)
 			{
-				if(!StringUtil.isEmpty(this.requestKey)) //¶ÔÓÚÖ±½ÓÖ¸¶¨µÄÇëÇóÊôĞÔ½øĞĞ»º³å´¦Àí
+				if(!StringUtil.isEmpty(this.requestKey)) //å¯¹äºç›´æ¥æŒ‡å®šçš„è¯·æ±‚å±æ€§è¿›è¡Œç¼“å†²å¤„ç†
 				{
 					String cachekey = softparser_cache_pre +requestKey;
 					theClassDataList = (ClassDataList)request.getAttribute(cachekey);
@@ -1727,7 +1727,7 @@ public class PagerDataSet extends PagerTagSupport {
 					request.setAttribute(cachekey,theClassDataList);
 					
 				}
-				else if(!StringUtil.isEmpty(this.sessionKey))//¶ÔÓÚÖ±½ÓÖ¸¶¨µÄsessionÊôĞÔ½øĞĞ»º³å´¦Àí
+				else if(!StringUtil.isEmpty(this.sessionKey))//å¯¹äºç›´æ¥æŒ‡å®šçš„sessionå±æ€§è¿›è¡Œç¼“å†²å¤„ç†
 				{
 					
 					if(this.session != null)
@@ -1740,7 +1740,7 @@ public class PagerDataSet extends PagerTagSupport {
 						session.setAttribute(cachekey,theClassDataList);
 					}
 				}
-				else if(!StringUtil.isEmpty(this.pageContextKey))//¶ÔÓÚÖ±½ÓÖ¸¶¨µÄpageContextÊôĞÔ½øĞĞ»º³å´¦Àí
+				else if(!StringUtil.isEmpty(this.pageContextKey))//å¯¹äºç›´æ¥æŒ‡å®šçš„pageContextå±æ€§è¿›è¡Œç¼“å†²å¤„ç†
 				{
 					
 					String cachekey = softparser_cache_pre +pageContextKey;
@@ -1752,7 +1752,7 @@ public class PagerDataSet extends PagerTagSupport {
 					
 				}
 				
-				else if(this.colName != null )//Èç¹û¶ÔÓ¦µÄ¼¯ºÏÀ´×ÔÓÚÍâ²ã»òÕß±¾²ã¶ÔÏóÊôĞÔ¶ÔÓ¦µÄmap»òÕßlist»òÕßÊı×é
+				else if(this.colName != null )//å¦‚æœå¯¹åº”çš„é›†åˆæ¥è‡ªäºå¤–å±‚æˆ–è€…æœ¬å±‚å¯¹è±¡å±æ€§å¯¹åº”çš„mapæˆ–è€…listæˆ–è€…æ•°ç»„
 				{
 					String key = buildColnameKey(colName);
 				
@@ -1778,14 +1778,14 @@ public class PagerDataSet extends PagerTagSupport {
 		
 	}
 	/**
-	 * ×°ÔØ¼¯ºÏÖĞµÄÊı¾İ
+	 * è£…è½½é›†åˆä¸­çš„æ•°æ®
 	 * 
 	 * @param dataInfo
 	 */
 	protected void loadClassData(Collection dataInfo) throws LoadDataException {
 		if (dataInfo == null)
 			throw new LoadDataException(
-					"load list Data error loadClassData(Collection dataInfo):Êı¾İ¶ÔÏóÎª¿Õ");
+					"load list Data error loadClassData(Collection dataInfo):æ•°æ®å¯¹è±¡ä¸ºç©º");
 		
 		
 			
@@ -1847,7 +1847,7 @@ public class PagerDataSet extends PagerTagSupport {
 				theClassDataList.add(new ClassData(it.next()));
 			}
 				/**
-				 * ÒÔÏÂµÄ´úÂë¶ÔÈ¡µ½µÄÊı¾İ½øĞĞÅÅĞò
+				 * ä»¥ä¸‹çš„ä»£ç å¯¹å–åˆ°çš„æ•°æ®è¿›è¡Œæ’åº
 				 */
 				// sortKey = getSortKey();
 				// sortBy(getSortKey(),desc());
@@ -1864,7 +1864,7 @@ public class PagerDataSet extends PagerTagSupport {
 			throws LoadDataException {
 		if (dataInfo == null)
 			throw new LoadDataException(
-					"load list Data error in loadClassData(Object dataInfo, Class voClazz):Êı¾İ¶ÔÏóÎª¿Õ");
+					"load list Data error in loadClassData(Object dataInfo, Class voClazz):æ•°æ®å¯¹è±¡ä¸ºç©º");
 		// log.info();
 //		Field[] fields = voClazz == null ? null : voClazz.getFields();
 //		Method[] methods = voClazz == null ? null : voClazz.getMethods();
@@ -1884,7 +1884,7 @@ public class PagerDataSet extends PagerTagSupport {
 	}
 
 	/**
-	 * ×°ÔØµü´úÆ÷ÖĞµÄÊı¾İ¶ÔÏó
+	 * è£…è½½è¿­ä»£å™¨ä¸­çš„æ•°æ®å¯¹è±¡
 	 * 
 	 * @param dataInfo
 	 * 
@@ -1892,7 +1892,7 @@ public class PagerDataSet extends PagerTagSupport {
 	protected void loadClassData(Iterator dataInfo) throws LoadDataException {
 		if (dataInfo == null)
 			throw new LoadDataException(
-					"load list Data error in loadClassData(Object dataInfo, Class voClazz):Êı¾İ¶ÔÏóÎª¿Õ");
+					"load list Data error in loadClassData(Object dataInfo, Class voClazz):æ•°æ®å¯¹è±¡ä¸ºç©º");
 		// log.info();
 
 //		if (theClassDataList == null)
@@ -1907,7 +1907,7 @@ public class PagerDataSet extends PagerTagSupport {
 	}
 
 	/**
-	 * ×°ÔØ¿ÕÊı¾İ£¬ÏêÏ¸ÏÔÊ¾Ò³ÃæÉÏ¿ÉÓÃ
+	 * è£…è½½ç©ºæ•°æ®ï¼Œè¯¦ç»†æ˜¾ç¤ºé¡µé¢ä¸Šå¯ç”¨
 	 */
 	protected void loadClassDataNull() {
 		if (theClassDataList == null)
@@ -1917,9 +1917,9 @@ public class PagerDataSet extends PagerTagSupport {
 
 
 	/**
-	 * ÊäÈë²ÎÊıindex ¶¨Î»fieldsÊı×éÖĞÏÂ±êÎªindexµÄÊı¾İÏî²¢·µ»Ø¸ÃÏî
+	 * è¾“å…¥å‚æ•°index å®šä½fieldsæ•°ç»„ä¸­ä¸‹æ ‡ä¸ºindexçš„æ•°æ®é¡¹å¹¶è¿”å›è¯¥é¡¹
 	 * 
-	 * Òì³£²¶»ñ£º Êı×éÔ½½çÒì³£
+	 * å¼‚å¸¸æ•è·ï¼š æ•°ç»„è¶Šç•Œå¼‚å¸¸
 	 * 
 	 * @param index
 	 * @return java.lang.String
@@ -1931,14 +1931,14 @@ public class PagerDataSet extends PagerTagSupport {
 	}
 
 	/**
-	 * ¶ÔclassDatasÖĞµÄ¶ÔÏóÅÅĞò£¬·½·¨ÌåÖĞÖ±½Óµ÷ÓÃclassDatas.sortby(sortKey,desc)·½·¨¼È?
+	 * å¯¹classDatasä¸­çš„å¯¹è±¡æ’åºï¼Œæ–¹æ³•ä½“ä¸­ç›´æ¥è°ƒç”¨classDatas.sortby(sortKey,desc)æ–¹æ³•æ—¢?
 	 * 
-	 * desc²ÎÊı¾ö¶¨ÅÅĞòµÄÖÈĞò£º true :½µĞò false:ÉıĞò
+	 * descå‚æ•°å†³å®šæ’åºçš„ç§©åºï¼š true :é™åº false:å‡åº
 	 * 
-	 * sortKey²ÎÊı£ºÅÅĞò×Ö¶Î
+	 * sortKeyå‚æ•°ï¼šæ’åºå­—æ®µ
 	 * 
 	 * @param sortKey -
-	 *            ÅÅĞò¹Ø¼ü×Ö
+	 *            æ’åºå…³é”®å­—
 	 * @param desc
 	 */
 	public void sortBy(String sortKey, boolean desc) {
@@ -1946,12 +1946,12 @@ public class PagerDataSet extends PagerTagSupport {
 			theClassDataList.sortBy(sortKey, desc);
 		else
 			// :log
-			log.warn("Ã»ÓĞÒªÅÅĞòÁĞ±íÊı¾İ£º" + PagerDataSet.class.getName() + ".sort("
+			log.warn("æ²¡æœ‰è¦æ’åºåˆ—è¡¨æ•°æ®ï¼š" + PagerDataSet.class.getName() + ".sort("
 					+ sortKey + "," + desc + ")");
 	}
 
 	/**
-	 * »ñÈ¡¼ÇÂ¼ÌõÊı
+	 * è·å–è®°å½•æ¡æ•°
 	 * 
 	 * @return int
 	 */
@@ -2019,13 +2019,13 @@ public class PagerDataSet extends PagerTagSupport {
 			request.setAttribute(PAGERDATASET_STACK, stack);
 		}
 		stack.push(this);
-		// //±£´æ¸±±¾
+		// //ä¿å­˜å‰¯æœ¬
 		// if(isExportMeta())
 		// savecopy();
 	}
 
 	// /**
-	// * ÔÚpagerContextÖĞ±£´æpageDataSetµÄ¸±±¾£¬ÆäËûµÄÒ³Ãæ¹¦ÄÜÊ¹ÓÃÊı¾İ¼¯ºÏ
+	// * åœ¨pagerContextä¸­ä¿å­˜pageDataSetçš„å‰¯æœ¬ï¼Œå…¶ä»–çš„é¡µé¢åŠŸèƒ½ä½¿ç”¨æ•°æ®é›†åˆ
 	// */
 	// protected void savecopy()
 	// {
@@ -2042,7 +2042,7 @@ public class PagerDataSet extends PagerTagSupport {
 	}
 
 	/**
-	 * »Ö¸´¸¸dataSet±äÁ¿
+	 * æ¢å¤çˆ¶dataSetå˜é‡
 	 * 
 	 */
 	protected void recoverParentDataSet() {
@@ -2058,7 +2058,7 @@ public class PagerDataSet extends PagerTagSupport {
 	}
 
 	/**
-	 * ¸ù¾İindex»ñÈ¡ÏàÓ¦Î»ÖÃÉÏµÄ
+	 * æ ¹æ®indexè·å–ç›¸åº”ä½ç½®ä¸Šçš„
 	 * 
 	 * @param index
 	 * @return PagerDataSet
@@ -2071,7 +2071,7 @@ public class PagerDataSet extends PagerTagSupport {
 	}
 
 	/**
-	 * ËÑË÷Ò³ÃæÉÏµÄÊı¾İ¼¯£¬Èç¹ûÖ¸¶¨ÁËË÷ÒıÔò»ñÈ¡Ë÷ÒıËù¶ÔÓ¦µÄÊı¾İ¼¯£¬·ñÔò·µ»ØÀë±êÇ©obj×î½üµÄÊı¾İ¼¯
+	 * æœç´¢é¡µé¢ä¸Šçš„æ•°æ®é›†ï¼Œå¦‚æœæŒ‡å®šäº†ç´¢å¼•åˆ™è·å–ç´¢å¼•æ‰€å¯¹åº”çš„æ•°æ®é›†ï¼Œå¦åˆ™è¿”å›ç¦»æ ‡ç­¾objæœ€è¿‘çš„æ•°æ®é›†
 	 * 
 	 * @param obj
 	 * @param clazz
@@ -2141,12 +2141,12 @@ public class PagerDataSet extends PagerTagSupport {
 	
 
 	/**
-	 * ³õÊ¼»¯£¬pagerContext
+	 * åˆå§‹åŒ–ï¼ŒpagerContext
 	 * 
 	 * @throws LoadDataException
 	 */
 	public void init() throws LoadDataException {
-		// ³õÊ¼»¯Ò³ÃæÉÏÏÂÎÄĞÅÏ¢
+		// åˆå§‹åŒ–é¡µé¢ä¸Šä¸‹æ–‡ä¿¡æ¯
 		// if(this.origineTag == null)
 		HttpServletRequest request = this.getHttpServletRequest();
 		HttpServletResponse response = this.getHttpServletResponse();
@@ -2157,7 +2157,7 @@ public class PagerDataSet extends PagerTagSupport {
 		// this.pageContext,this.origineTag);
 
 		// /*
-		// * idµÄÖµÎª¡°pager¡°,±¸·İÏÈÇ°µÄÒ³ÃæµÃÉÏÏÂÎÄ»·¾³£¬È»ºóÔÙ½«µ±Ç°µÃÉÏÏÂÎÄÉèÖÃµ½request»òpageContextÖĞ
+		// * idçš„å€¼ä¸ºâ€œpagerâ€œ,å¤‡ä»½å…ˆå‰çš„é¡µé¢å¾—ä¸Šä¸‹æ–‡ç¯å¢ƒï¼Œç„¶åå†å°†å½“å‰å¾—ä¸Šä¸‹æ–‡è®¾ç½®åˆ°requestæˆ–pageContextä¸­
 		// */
 		// if(REQUEST.equals(scope))
 		// {
@@ -2253,7 +2253,7 @@ public class PagerDataSet extends PagerTagSupport {
 		// offset = 0;
 		// itemCount = 0;
 
-		// ÉèÖÃÊÇ·ñÊÇÉıĞò»¹ÊÇ½µĞò
+		// è®¾ç½®æ˜¯å¦æ˜¯å‡åºè¿˜æ˜¯é™åº
 		String desc_key = pagerContext.getKey("desc");
 
 		String t_desc = request.getParameter(desc_key);
@@ -2264,15 +2264,15 @@ public class PagerDataSet extends PagerTagSupport {
 			desc = true;
 
 		pagerContext.setDesc(desc);
-		// ÉèÖÃÅÅĞò¹Ø¼ü×Ö£¬Ê×ÏÈÍ¨¹ırequest.getParameter»ñÈ¡
+		// è®¾ç½®æ’åºå…³é”®å­—ï¼Œé¦–å…ˆé€šè¿‡request.getParameterè·å–
 
 		String sortKey_key = pagerContext.getKey("sortKey");
 
 		String t_sortKey = request.getParameter(sortKey_key);
-		// Èç¹û»ñÈ¡µ½µÄsortKeyÎª¿ÕÊ±£¬Í¨¹ırequest.getAttribute»ñÈ¡
+		// å¦‚æœè·å–åˆ°çš„sortKeyä¸ºç©ºæ—¶ï¼Œé€šè¿‡request.getAttributeè·å–
 		if (t_sortKey == null)
 			t_sortKey = (String) request.getAttribute(sortKey_key);
-		// Èç¹ûÉÏÃæ»ñÈ¡µ½µÄsortKey²»ÎªnullÊ±£¬ÉèÖÃsortKey
+		// å¦‚æœä¸Šé¢è·å–åˆ°çš„sortKeyä¸ä¸ºnullæ—¶ï¼Œè®¾ç½®sortKey
 		if (t_sortKey != null)
 			pagerContext.setSortKey(t_sortKey);
 
@@ -2291,7 +2291,7 @@ public class PagerDataSet extends PagerTagSupport {
 		setVariable();
 		this.formulas = new HashMap();
 		/**
-		 * Ö§³ÖÄÚÈİ¹ÜÀíÏµÍ³µÃ·¢²¼µÄĞèÒª
+		 * æ”¯æŒå†…å®¹ç®¡ç†ç³»ç»Ÿå¾—å‘å¸ƒçš„éœ€è¦
 		 */
 		if (this.pagerContext == null) {
 			try {
@@ -2318,7 +2318,7 @@ public class PagerDataSet extends PagerTagSupport {
 //		flag = true;
 		// setMeta();
 
-		// else //Èç¹û²»ÊÇÇ¶Ì×ÁĞ±í£¬ÔòÊÇÆÕÍ¨µÄ·ÖÒ³/ÁĞ±íÏÔÊ¾
+		// else //å¦‚æœä¸æ˜¯åµŒå¥—åˆ—è¡¨ï¼Œåˆ™æ˜¯æ™®é€šçš„åˆ†é¡µ/åˆ—è¡¨æ˜¾ç¤º
 		// {
 
 		initField(pagerContext.getFields());
@@ -2336,7 +2336,7 @@ public class PagerDataSet extends PagerTagSupport {
 
 	public void doDataLoading() {
 		/**
-		 * µÃµ½Ò³ÃæÉÏÒªÏÔÊ¾µÄÖµ¶ÔÏóÖĞ×Ö¶Î
+		 * å¾—åˆ°é¡µé¢ä¸Šè¦æ˜¾ç¤ºçš„å€¼å¯¹è±¡ä¸­å­—æ®µ
 		 * 
 		 */
 		DataInfo dataInfo = this.pagerContext.getDataInfo();
@@ -2357,11 +2357,11 @@ public class PagerDataSet extends PagerTagSupport {
 						loadMapClassData((Map) data,(MapTag)this);
 					}
 				} 
-				else if (data instanceof Map[]) // Èç¹û¼¯ºÏÊÇÒ»¸ö¶ÔÏóÊı×é£¬Ôòµ÷ÓÃ¼ÓÔØ¶ÔÏóÊı×éµÄ·½·¨
+				else if (data instanceof Map[]) // å¦‚æœé›†åˆæ˜¯ä¸€ä¸ªå¯¹è±¡æ•°ç»„ï¼Œåˆ™è°ƒç”¨åŠ è½½å¯¹è±¡æ•°ç»„çš„æ–¹æ³•
 				{
 					loadClassData((Map[]) data, null, false);
 				} 
-				else if (data instanceof Object[]) // Èç¹û¼¯ºÏÊÇÒ»¸ö¶ÔÏóÊı×é£¬Ôòµ÷ÓÃ¼ÓÔØ¶ÔÏóÊı×éµÄ·½·¨
+				else if (data instanceof Object[]) // å¦‚æœé›†åˆæ˜¯ä¸€ä¸ªå¯¹è±¡æ•°ç»„ï¼Œåˆ™è°ƒç”¨åŠ è½½å¯¹è±¡æ•°ç»„çš„æ–¹æ³•
 				{
 					loadClassData((Object[]) data);
 				} else {
@@ -2376,7 +2376,7 @@ public class PagerDataSet extends PagerTagSupport {
 			else if (dataInfo instanceof DataInfo)
 				loadClassData(dataInfo, pagerContext.ListMode());
 			// /**
-			// * ÒÔÏÂµÄ´úÂë¶ÔÈ¡µ½µÄÊı¾İ£¨¼°µ±Ç°Ò³ÃæÊı¾İ£©½øĞĞÅÅĞò
+			// * ä»¥ä¸‹çš„ä»£ç å¯¹å–åˆ°çš„æ•°æ®ï¼ˆåŠå½“å‰é¡µé¢æ•°æ®ï¼‰è¿›è¡Œæ’åº
 			// */
 			// sortKey = pagerContext.getSortKey();
 
@@ -2392,11 +2392,11 @@ public class PagerDataSet extends PagerTagSupport {
 		if (size() > 0) {
 
 			/**
-			 * ÒÔÏÂµÄ´úÂë¶ÔÈ¡µ½µÄÊı¾İ½øĞĞÅÅĞò
+			 * ä»¥ä¸‹çš„ä»£ç å¯¹å–åˆ°çš„æ•°æ®è¿›è¡Œæ’åº
 			 */
-			// »ñÈ¡±êÇ©±¾ÉíÉèÖÃµÄÅÅĞòÂë
+			// è·å–æ ‡ç­¾æœ¬èº«è®¾ç½®çš„æ’åºç 
 			boolean t_desc = true;
-			if (desc == null && pagerContext != null) // Èç¹û±êÇ©±¾ÉíÃ»ÓĞÉèÖÃÅÅĞòË³Ğò²¢ÇÒ´æÔÚpager±êÇ©£¬Ôò´Ópager±êÇ©ÖĞ»ñÈ¡ÅÅĞòË³Ğò
+			if (desc == null && pagerContext != null) // å¦‚æœæ ‡ç­¾æœ¬èº«æ²¡æœ‰è®¾ç½®æ’åºé¡ºåºå¹¶ä¸”å­˜åœ¨pageræ ‡ç­¾ï¼Œåˆ™ä»pageræ ‡ç­¾ä¸­è·å–æ’åºé¡ºåº
 				t_desc = pagerContext.getDesc();
 			if (desc != null) {
 				t_desc = new Boolean(desc).booleanValue();
@@ -2414,24 +2414,24 @@ public class PagerDataSet extends PagerTagSupport {
 	}
 
 	/**
-	 * ¶¯Ì¬¹»½¨¸ÃdataSetµÄÔªÄ£ĞÍ
+	 * åŠ¨æ€å¤Ÿå»ºè¯¥dataSetçš„å…ƒæ¨¡å‹
 	 */
 	protected void setMeta() {
 		if (isExportMeta()) {
 			if (dataModel == null) {
-				// ±£´æÔªÊı¾İĞÅÏ¢
+				// ä¿å­˜å…ƒæ•°æ®ä¿¡æ¯
 				dataModel = new DataModel();
 				dataModel.setField(this.getColName());
 				dataModel.setIndex(this.getIndex());
 				dataModel.setProperty(this.getProperty());
 			}
 			// /**
-			// * ±£´ædataModel
+			// * ä¿å­˜dataModel
 			// */
 			// if(!dataModel.isHasAdded())
 			// {
-			// //Èç¹ûÃ»ÓĞ×îÉÏ²ãµÄdataSetÔªÊı¾İÔòÔÚpagerContextÖĞÌí¼ÓÌí¼Ó£¬
-			// //·ñÔòÖ±½ÓËÑË÷¸¸dataSetÔªÊı¾İ£¬½«dataModelÌí¼Óµ½ÆäÖĞ
+			// //å¦‚æœæ²¡æœ‰æœ€ä¸Šå±‚çš„dataSetå…ƒæ•°æ®åˆ™åœ¨pagerContextä¸­æ·»åŠ æ·»åŠ ï¼Œ
+			// //å¦åˆ™ç›´æ¥æœç´¢çˆ¶dataSetå…ƒæ•°æ®ï¼Œå°†dataModelæ·»åŠ åˆ°å…¶ä¸­
 			// if(pagerContext != null &&
 			// !pagerContext.getMetaDatas().hasDataModel())
 			// {
@@ -2440,7 +2440,7 @@ public class PagerDataSet extends PagerTagSupport {
 			// }
 			// else
 			// {
-			// //Ö±½Ó±£´æµ½ÉÏÒ»¼¶dataSetµÄÔªÄ£ĞÍÖĞ
+			// //ç›´æ¥ä¿å­˜åˆ°ä¸Šä¸€çº§dataSetçš„å…ƒæ¨¡å‹ä¸­
 			// PagerDataSet data_father =
 			// (PagerDataSet)findAncestorWithClass(this, PagerDataSet.class);
 			// data_father.getDataModel().getMetaDatas().addDataModel(dataModel);
@@ -2473,7 +2473,7 @@ public class PagerDataSet extends PagerTagSupport {
 	}
 
 	/**
-	 * @return ÅÅĞò¹Ø¼ü×Ö
+	 * @return æ’åºå…³é”®å­—
 	 */
 	public String getSortKey() {
 
@@ -2490,7 +2490,7 @@ public class PagerDataSet extends PagerTagSupport {
 	}
 
 	/**
-	 * @return Êı¾İ¼¯µÄÅÅĞòË³Ğò£¬desc½µĞò£¬ascÉıĞò
+	 * @return æ•°æ®é›†çš„æ’åºé¡ºåºï¼Œdescé™åºï¼Œascå‡åº
 	 */
 	public String getDesc() {
 		return desc;
@@ -2518,7 +2518,7 @@ public class PagerDataSet extends PagerTagSupport {
 	}
 
 	/**
-	 * @return ·µ»ØÊôĞÔÃû³Æ
+	 * @return è¿”å›å±æ€§åç§°
 	 */
 	public String getColName() {
 		return colName;
@@ -2547,7 +2547,7 @@ public class PagerDataSet extends PagerTagSupport {
 	// }
 
 	/**
-	 * @return Êı¾İ¼¯¶ÔÓ¦µÄ×ÓÊôĞÔÃû³Æ
+	 * @return æ•°æ®é›†å¯¹åº”çš„å­å±æ€§åç§°
 	 */
 	public String getProperty() {
 		return property;
@@ -2614,7 +2614,7 @@ public class PagerDataSet extends PagerTagSupport {
 	}
 	
 	/**
-	 * ÄÚÈİ¹ÜÀíÊ±Ê¹ÓÃµÄ·½·¨£¬ÊÍ·Å»·¾³±äÁ¿ºÍ»¹Ô­ÈİÆ÷µÄÄÚÈİ
+	 * å†…å®¹ç®¡ç†æ—¶ä½¿ç”¨çš„æ–¹æ³•ï¼Œé‡Šæ”¾ç¯å¢ƒå˜é‡å’Œè¿˜åŸå®¹å™¨çš„å†…å®¹
 	 */
 	public void cmsClear()
 	{
@@ -2627,7 +2627,7 @@ public class PagerDataSet extends PagerTagSupport {
 
 	/**
 	 * 
-	 * Description:ÖØÖÃ¶ÔÏótheClassDataListºÍĞĞºÅrowid ·ñÔòÇ¶Ì×Ê¹ÓÃÇé¿öÏÂ»á³ö´í void
+	 * Description:é‡ç½®å¯¹è±¡theClassDataListå’Œè¡Œå·rowid å¦åˆ™åµŒå¥—ä½¿ç”¨æƒ…å†µä¸‹ä¼šå‡ºé”™ void
 	 */
 	public void clear() {
 		theClassDataList = null;
@@ -2639,7 +2639,7 @@ public class PagerDataSet extends PagerTagSupport {
 		HttpServletRequest request = this.getHttpServletRequest();
 		HttpSession session = request.getSession(false);
 		
-		// Çå³ı»º³å
+		// æ¸…é™¤ç¼“å†²
 		if (getNeedClear()) {
 			if (requestKey != null)
 				request.removeAttribute(requestKey);
@@ -2649,8 +2649,8 @@ public class PagerDataSet extends PagerTagSupport {
 				pageContext.removeAttribute(pageContextKey);
 
 			/**
-			 * Õâ¸öÌõ¼ş¿ÉÄÜ²»³ÉÁ¢£¬ÒòÎªwebÈİÆ÷¿ÉÄÜ¶Ôrequest×öÁËÏàÓ¦µÄwraper·â×°£¬
-			 * ÒªÏëµÃµ½Êµ¼ÊµÄrequestĞèÒªÍ¨¹ıÌØ¶¨µÄ·½·¨½øĞĞ²éÕÒ
+			 * è¿™ä¸ªæ¡ä»¶å¯èƒ½ä¸æˆç«‹ï¼Œå› ä¸ºwebå®¹å™¨å¯èƒ½å¯¹requeståšäº†ç›¸åº”çš„wraperå°è£…ï¼Œ
+			 * è¦æƒ³å¾—åˆ°å®é™…çš„requestéœ€è¦é€šè¿‡ç‰¹å®šçš„æ–¹æ³•è¿›è¡ŒæŸ¥æ‰¾
 			 */
 			if (!(request instanceof CMSServletRequest))
 				this.pagerContext = null;
@@ -2659,9 +2659,9 @@ public class PagerDataSet extends PagerTagSupport {
 	}
 
 	/**
-	 * »ñÈ¡Êı¾İ¼¯Ë÷Òı
+	 * è·å–æ•°æ®é›†ç´¢å¼•
 	 * 
-	 * @return Êı¾İ¼¯Ë÷Òı
+	 * @return æ•°æ®é›†ç´¢å¼•
 	 */
 	public int getIndex() {
 		return index;
@@ -2675,7 +2675,7 @@ public class PagerDataSet extends PagerTagSupport {
 	}
 
 	/**
-	 * Êı¾İ¼¯ÔÚpageContextÖĞµÄ»º³åÃû³Æ
+	 * æ•°æ®é›†åœ¨pageContextä¸­çš„ç¼“å†²åç§°
 	 * 
 	 * @return String
 	 */
@@ -2684,7 +2684,7 @@ public class PagerDataSet extends PagerTagSupport {
 	}
 
 	/**
-	 * Êı¾İ¼¯ÔÚrequestÖĞµÄ»º³åÃû³Æ
+	 * æ•°æ®é›†åœ¨requestä¸­çš„ç¼“å†²åç§°
 	 * 
 	 * @return String
 	 */
@@ -2693,7 +2693,7 @@ public class PagerDataSet extends PagerTagSupport {
 	}
 
 	/**
-	 * Êı¾İ¼¯ÔÚsessionÖĞµÄ»º³åÃû³Æ
+	 * æ•°æ®é›†åœ¨sessionä¸­çš„ç¼“å†²åç§°
 	 * 
 	 * @return String
 	 */
@@ -2723,9 +2723,9 @@ public class PagerDataSet extends PagerTagSupport {
 	}
 
 	/**
-	 * »ñÈ¡ÊÇ·ñĞèÒª×Ô¶¯Çå³şÊı¾İ¼¯»º³å
+	 * è·å–æ˜¯å¦éœ€è¦è‡ªåŠ¨æ¸…æ¥šæ•°æ®é›†ç¼“å†²
 	 * 
-	 * @return boolean false²»ĞèÒª£¬trueĞèÒª
+	 * @return boolean falseä¸éœ€è¦ï¼Œtrueéœ€è¦
 	 */
 	public boolean getNeedClear() {
 
@@ -2785,10 +2785,10 @@ public class PagerDataSet extends PagerTagSupport {
 	}
 
 	/**
-	 * ÇóºÍº¯Êı
+	 * æ±‚å’Œå‡½æ•°
 	 * 
 	 * @param colName
-	 * @return Object ½á¹û
+	 * @return Object ç»“æœ
 	 */
 	public Object sum(String colName) throws FormulaException {
 		int value_i = 0;
@@ -2797,8 +2797,8 @@ public class PagerDataSet extends PagerTagSupport {
 		double value_d = 0;
 		float value_f = 0;
 		Object left = null;
-		// Êı¾İÀàĞÍ£º0£­£­ÕûĞÎ
-		// Êı¾İÀàĞÍ£º1£­£­¸¡µãĞÎ
+		// æ•°æ®ç±»å‹ï¼š0ï¼ï¼æ•´å½¢
+		// æ•°æ®ç±»å‹ï¼š1ï¼ï¼æµ®ç‚¹å½¢
 		int type = 0;
 		boolean start = false;
 		for (int i = 0; i < this.size(); i++) {
@@ -2867,11 +2867,11 @@ public class PagerDataSet extends PagerTagSupport {
 	}
 
 	/**
-	 * ÇóºÍº¯Êı
+	 * æ±‚å’Œå‡½æ•°
 	 * 
 	 * @param colName
 	 * @param property
-	 * @return Object ½á¹û
+	 * @return Object ç»“æœ
 	 */
 	public Object sum(String colName, String property) throws FormulaException {
 		int value_i = 0;
@@ -2880,8 +2880,8 @@ public class PagerDataSet extends PagerTagSupport {
 		double value_d = 0;
 		float value_f = 0;
 		Object left = null;
-		// Êı¾İÀàĞÍ£º0£­£­ÕûĞÎ
-		// Êı¾İÀàĞÍ£º1£­£­¸¡µãĞÎ
+		// æ•°æ®ç±»å‹ï¼š0ï¼ï¼æ•´å½¢
+		// æ•°æ®ç±»å‹ï¼š1ï¼ï¼æµ®ç‚¹å½¢
 		int type = 0;
 		boolean start = false;
 		for (int i = 0; i < this.size(); i++) {
@@ -2948,7 +2948,7 @@ public class PagerDataSet extends PagerTagSupport {
 	}
 
 	/**
-	 * ÇóÆ½¾ùÖµ
+	 * æ±‚å¹³å‡å€¼
 	 * 
 	 * @param colName
 	 * @return float
@@ -2974,7 +2974,7 @@ public class PagerDataSet extends PagerTagSupport {
 	}
 
 	/**
-	 * ÇóÆ½¾ùÖµ
+	 * æ±‚å¹³å‡å€¼
 	 * 
 	 * @param colName
 	 * @param property
@@ -3002,7 +3002,7 @@ public class PagerDataSet extends PagerTagSupport {
 	}
 
 	/**
-	 * ¼ÆÊı¹¦ÄÜ
+	 * è®¡æ•°åŠŸèƒ½
 	 * 
 	 * @param colName
 	 * @return int
@@ -3012,7 +3012,7 @@ public class PagerDataSet extends PagerTagSupport {
 	}
 
 	/**
-	 * ¼¼Êõ¹¦ÄÜ
+	 * æŠ€æœ¯åŠŸèƒ½
 	 * 
 	 * @param colName
 	 * @param property
@@ -3023,7 +3023,7 @@ public class PagerDataSet extends PagerTagSupport {
 	}
 
 	/**
-	 * »ñÈ¡formulaËù¶ÔÓ¦µÄ ±í´ïÊ½¶ÔÏó
+	 * è·å–formulaæ‰€å¯¹åº”çš„ è¡¨è¾¾å¼å¯¹è±¡
 	 * 
 	 * @param formula
 	 * @return Formula
@@ -3167,9 +3167,9 @@ public class PagerDataSet extends PagerTagSupport {
 	}
 	
 	/**
-	 * »ñÈ¡Íâ²¿Õ¹Ê¾µÄĞĞºÅ
-	 * @param offset ÊÇ·ñÊ¹ÓÃÆ«ÒÆÁ¿£¬Èç¹ûÊ¹ÓÃÔò´Óµ±Ç°Ò³ÃæµÄÆğÊ¼Î»ÖÃ¿ªÊ¼£¬·ñÔò´Ó0¿ªÊ¼
-	 * @param increament Æ«ÒÆÁ¿µÄ×ÔÔöÖµ
+	 * è·å–å¤–éƒ¨å±•ç¤ºçš„è¡Œå·
+	 * @param offset æ˜¯å¦ä½¿ç”¨åç§»é‡ï¼Œå¦‚æœä½¿ç”¨åˆ™ä»å½“å‰é¡µé¢çš„èµ·å§‹ä½ç½®å¼€å§‹ï¼Œå¦åˆ™ä»0å¼€å§‹
+	 * @param increament åç§»é‡çš„è‡ªå¢å€¼
 	 * @return
 	 */
 	public int getOuterRowid(boolean offset,int increament)
@@ -3185,7 +3185,7 @@ public class PagerDataSet extends PagerTagSupport {
 	}
 	
 	/**
-	 * »ñÈ¡µ±Ç°ĞĞĞĞºÅ£¬Ã¿Ò³¶¼´ÓÁã¿ªÊ¼
+	 * è·å–å½“å‰è¡Œè¡Œå·ï¼Œæ¯é¡µéƒ½ä»é›¶å¼€å§‹
 	 * @return
 	 */
 	public int getRowid() {
@@ -3201,8 +3201,8 @@ public class PagerDataSet extends PagerTagSupport {
 		return this.rowid;
 	}
 	/**
-	 * »ñÈ¡Ç¶Ì×listË÷ÒıºÅ¶ÔÓ¦µÄlistµÄÍâ²¿Õ¹Ê¾ĞĞºÅ
-	 * @param index Ç¶Ì×listË÷Òı ºÅ	
+	 * è·å–åµŒå¥—listç´¢å¼•å·å¯¹åº”çš„listçš„å¤–éƒ¨å±•ç¤ºè¡Œå·
+	 * @param index åµŒå¥—listç´¢å¼• å·	
 	 * @return
 	 */
 	public int getRowidByIndex(int index) {
@@ -3211,16 +3211,16 @@ public class PagerDataSet extends PagerTagSupport {
 					+ "],stack size is " + stack.size());
 			return -1;
 		}
-		// ¸ù¾İË÷Òı»ñÈ¡×Ö¶ÎµÄÖµ
+		// æ ¹æ®ç´¢å¼•è·å–å­—æ®µçš„å€¼
 		PagerDataSet dataSet = (PagerDataSet) this.stack.elementAt(index);
 		return dataSet.getRowid();
 	}
 	
 	/**
-	 * »ñÈ¡Ç¶Ì×listË÷ÒıºÅ¶ÔÓ¦µÄlistµÄÍâ²¿Õ¹Ê¾ĞĞºÅ
-	 * @param index Ç¶Ì×listË÷Òı ºÅ
-	 * @param offset ÊÇ·ñÊ¹ÓÃÆ«ÒÆÁ¿£¬Èç¹ûÊ¹ÓÃÔò´Óµ±Ç°Ò³ÃæµÄÆğÊ¼Î»ÖÃ¿ªÊ¼£¬·ñÔò´Ó0¿ªÊ¼
-	 * @param increament Æ«ÒÆÁ¿µÄ×ÔÔöÖµ
+	 * è·å–åµŒå¥—listç´¢å¼•å·å¯¹åº”çš„listçš„å¤–éƒ¨å±•ç¤ºè¡Œå·
+	 * @param index åµŒå¥—listç´¢å¼• å·
+	 * @param offset æ˜¯å¦ä½¿ç”¨åç§»é‡ï¼Œå¦‚æœä½¿ç”¨åˆ™ä»å½“å‰é¡µé¢çš„èµ·å§‹ä½ç½®å¼€å§‹ï¼Œå¦åˆ™ä»0å¼€å§‹
+	 * @param increament åç§»é‡çš„è‡ªå¢å€¼
 	 * @return
 	 */
 	public int getOutRowidByIndex(int index,boolean offset,int increament) {
@@ -3229,14 +3229,14 @@ public class PagerDataSet extends PagerTagSupport {
 					+ "],stack size is " + stack.size());
 			return -1;
 		}
-		// ¸ù¾İË÷Òı»ñÈ¡×Ö¶ÎµÄÖµ
+		// æ ¹æ®ç´¢å¼•è·å–å­—æ®µçš„å€¼
 		PagerDataSet dataSet = (PagerDataSet) this.stack.elementAt(index);		
 		return dataSet.getOuterRowid( offset, increament);
 	}
 	
 	
 	/**
-	 * »ñÈ¡Ò³ÃæµÄ¼ÇÂ¼ÆğÊ¼µØÖ·
+	 * è·å–é¡µé¢çš„è®°å½•èµ·å§‹åœ°å€
 	 * @return
 	 */
 	public int getOffset()

@@ -40,19 +40,19 @@ public class ExampleEventPublish {
 	public static void publishEventtype1()
 	{
 		/**
-		 * ¹¹½¨ÊÂ¼şÏûÏ¢¡¾hello world type2.¡¿£¬Ö¸¶¨ÁËÊÂ¼şµÄÀàĞÍÎªExampleEventType.type2
-		 * Ä¬ÈÏµÄÊÂ¼şÏûÏ¢¹ã²¥Í¾¾¶ÎªEvent.REMOTELOCAL,Äã¿ÉÒÔÖ¸¶¨×Ô¼ºµÄÊÂ¼ş¹ã²¥Í¾¾¶
-		 *  ÏûÏ¢Ö»ÔÚ±¾µØ´«²¥£¬ÏûÏ¢±»·¢ËÍ¸øËùÓĞ¶ÔExampleEventType.type2ÀàĞÍÏûÏ¢¸ĞĞËÈ¤µÄ±¾µØÏûÏ¢¼àÌıÆ÷ºÍ±¾µØÔ¶³ÌÊÂ¼ş¼àÌıÆ÷
+		 * æ„å»ºäº‹ä»¶æ¶ˆæ¯ã€hello world type2.ã€‘ï¼ŒæŒ‡å®šäº†äº‹ä»¶çš„ç±»å‹ä¸ºExampleEventType.type2
+		 * é»˜è®¤çš„äº‹ä»¶æ¶ˆæ¯å¹¿æ’­é€”å¾„ä¸ºEvent.REMOTELOCAL,ä½ å¯ä»¥æŒ‡å®šè‡ªå·±çš„äº‹ä»¶å¹¿æ’­é€”å¾„
+		 *  æ¶ˆæ¯åªåœ¨æœ¬åœ°ä¼ æ’­ï¼Œæ¶ˆæ¯è¢«å‘é€ç»™æ‰€æœ‰å¯¹ExampleEventType.type2ç±»å‹æ¶ˆæ¯æ„Ÿå…´è¶£çš„æœ¬åœ°æ¶ˆæ¯ç›‘å¬å™¨å’Œæœ¬åœ°è¿œç¨‹äº‹ä»¶ç›‘å¬å™¨
 		 * 	Event event = new EventImpl("hello world type2.",ExampleEventType.type2,Event.LOCAL);
-		 *  ÏûÏ¢ÔÚÍøÂçÉÏ´«²¥£¬ÏûÏ¢±»·¢ËÍ¸øËùÓĞ¶ÔExampleEventType.type2ÀàĞÍÏûÏ¢¸ĞĞËÈ¤µÄÔ¶³ÌÏûÏ¢¼àÌıÆ÷ºÍ±¾µØÔ¶³ÌÊÂ¼ş¼àÌıÆ÷£¬Í¬Ê±Ò²»áÖ±½Ó·¢ËÍ¸ø±¾µØ¼àÌıÆ÷
+		 *  æ¶ˆæ¯åœ¨ç½‘ç»œä¸Šä¼ æ’­ï¼Œæ¶ˆæ¯è¢«å‘é€ç»™æ‰€æœ‰å¯¹ExampleEventType.type2ç±»å‹æ¶ˆæ¯æ„Ÿå…´è¶£çš„è¿œç¨‹æ¶ˆæ¯ç›‘å¬å™¨å’Œæœ¬åœ°è¿œç¨‹äº‹ä»¶ç›‘å¬å™¨ï¼ŒåŒæ—¶ä¹Ÿä¼šç›´æ¥å‘é€ç»™æœ¬åœ°ç›‘å¬å™¨
 		 *  Event event = new EventImpl("hello world type2.",ExampleEventType.type2,Event.REMOTELOCAL);
-		 *  ÏûÏ¢ÔÚÍøÂçÉÏ´«²¥£¬ÏûÏ¢±»·¢ËÍ¸øËùÓĞ¶ÔExampleEventType.type2ÀàĞÍÏûÏ¢¸ĞĞËÈ¤µÄÔ¶³ÌÏûÏ¢¼àÌıÆ÷ºÍ±¾µØÔ¶³ÌÊÂ¼ş¼àÌıÆ÷
+		 *  æ¶ˆæ¯åœ¨ç½‘ç»œä¸Šä¼ æ’­ï¼Œæ¶ˆæ¯è¢«å‘é€ç»™æ‰€æœ‰å¯¹ExampleEventType.type2ç±»å‹æ¶ˆæ¯æ„Ÿå…´è¶£çš„è¿œç¨‹æ¶ˆæ¯ç›‘å¬å™¨å’Œæœ¬åœ°è¿œç¨‹äº‹ä»¶ç›‘å¬å™¨
 		 *  Event event = new EventImpl("hello world type2.",ExampleEventType.type2,Event.REMOTE);
 		 */
 		Event event = new EventImpl("hello world type1.",ExampleEventType.type1);
 		
 		/**
-		 * ÊÂ¼şÒÔÍ¬²½·½Ê½´«²¥
+		 * äº‹ä»¶ä»¥åŒæ­¥æ–¹å¼ä¼ æ’­
 		 */
 		
 		EventHandle.getInstance().change(event);
@@ -62,19 +62,19 @@ public class ExampleEventPublish {
 	public static void publishAsynEventtype1()
 	{
 		/**
-		 * ¹¹½¨ÊÂ¼şÏûÏ¢¡¾hello world type2.¡¿£¬Ö¸¶¨ÁËÊÂ¼şµÄÀàĞÍÎªExampleEventType.type2
-		 * Ä¬ÈÏµÄÊÂ¼şÏûÏ¢¹ã²¥Í¾¾¶ÎªEvent.REMOTELOCAL,Äã¿ÉÒÔÖ¸¶¨×Ô¼ºµÄÊÂ¼ş¹ã²¥Í¾¾¶
-		 *  ÏûÏ¢Ö»ÔÚ±¾µØ´«²¥£¬ÏûÏ¢±»·¢ËÍ¸øËùÓĞ¶ÔExampleEventType.type2ÀàĞÍÏûÏ¢¸ĞĞËÈ¤µÄ±¾µØÏûÏ¢¼àÌıÆ÷ºÍ±¾µØÔ¶³ÌÊÂ¼ş¼àÌıÆ÷
+		 * æ„å»ºäº‹ä»¶æ¶ˆæ¯ã€hello world type2.ã€‘ï¼ŒæŒ‡å®šäº†äº‹ä»¶çš„ç±»å‹ä¸ºExampleEventType.type2
+		 * é»˜è®¤çš„äº‹ä»¶æ¶ˆæ¯å¹¿æ’­é€”å¾„ä¸ºEvent.REMOTELOCAL,ä½ å¯ä»¥æŒ‡å®šè‡ªå·±çš„äº‹ä»¶å¹¿æ’­é€”å¾„
+		 *  æ¶ˆæ¯åªåœ¨æœ¬åœ°ä¼ æ’­ï¼Œæ¶ˆæ¯è¢«å‘é€ç»™æ‰€æœ‰å¯¹ExampleEventType.type2ç±»å‹æ¶ˆæ¯æ„Ÿå…´è¶£çš„æœ¬åœ°æ¶ˆæ¯ç›‘å¬å™¨å’Œæœ¬åœ°è¿œç¨‹äº‹ä»¶ç›‘å¬å™¨
 		 * 	Event event = new EventImpl("hello world type2.",ExampleEventType.type2,Event.LOCAL);
-		 *  ÏûÏ¢ÔÚÍøÂçÉÏ´«²¥£¬ÏûÏ¢±»·¢ËÍ¸øËùÓĞ¶ÔExampleEventType.type2ÀàĞÍÏûÏ¢¸ĞĞËÈ¤µÄÔ¶³ÌÏûÏ¢¼àÌıÆ÷ºÍ±¾µØÔ¶³ÌÊÂ¼ş¼àÌıÆ÷£¬Í¬Ê±Ò²»áÖ±½Ó·¢ËÍ¸ø±¾µØ¼àÌıÆ÷
+		 *  æ¶ˆæ¯åœ¨ç½‘ç»œä¸Šä¼ æ’­ï¼Œæ¶ˆæ¯è¢«å‘é€ç»™æ‰€æœ‰å¯¹ExampleEventType.type2ç±»å‹æ¶ˆæ¯æ„Ÿå…´è¶£çš„è¿œç¨‹æ¶ˆæ¯ç›‘å¬å™¨å’Œæœ¬åœ°è¿œç¨‹äº‹ä»¶ç›‘å¬å™¨ï¼ŒåŒæ—¶ä¹Ÿä¼šç›´æ¥å‘é€ç»™æœ¬åœ°ç›‘å¬å™¨
 		 *  Event event = new EventImpl("hello world type2.",ExampleEventType.type2,Event.REMOTELOCAL);
-		 *  ÏûÏ¢ÔÚÍøÂçÉÏ´«²¥£¬ÏûÏ¢±»·¢ËÍ¸øËùÓĞ¶ÔExampleEventType.type2ÀàĞÍÏûÏ¢¸ĞĞËÈ¤µÄÔ¶³ÌÏûÏ¢¼àÌıÆ÷ºÍ±¾µØÔ¶³ÌÊÂ¼ş¼àÌıÆ÷
+		 *  æ¶ˆæ¯åœ¨ç½‘ç»œä¸Šä¼ æ’­ï¼Œæ¶ˆæ¯è¢«å‘é€ç»™æ‰€æœ‰å¯¹ExampleEventType.type2ç±»å‹æ¶ˆæ¯æ„Ÿå…´è¶£çš„è¿œç¨‹æ¶ˆæ¯ç›‘å¬å™¨å’Œæœ¬åœ°è¿œç¨‹äº‹ä»¶ç›‘å¬å™¨
 		 *  Event event = new EventImpl("hello world type2.",ExampleEventType.type2,Event.REMOTE);
 		 */
 		Event event = new EventImpl("hello world type1.",ExampleEventType.type1);
 		
 		/**
-		 * ÊÂ¼şÒÔÍ¬²½·½Ê½´«²¥
+		 * äº‹ä»¶ä»¥åŒæ­¥æ–¹å¼ä¼ æ’­
 		 */
 		
 		EventHandle.getInstance().change(event,false);
@@ -84,19 +84,19 @@ public class ExampleEventPublish {
 	public static void publishEventtype2()
 	{
 		/**
-		 * ¹¹½¨ÊÂ¼şÏûÏ¢¡¾hello world type2.¡¿£¬Ö¸¶¨ÁËÊÂ¼şµÄÀàĞÍÎªExampleEventType.type2
-		 * Ä¬ÈÏµÄÊÂ¼şÏûÏ¢¹ã²¥Í¾¾¶ÎªEvent.REMOTELOCAL,Äã¿ÉÒÔÖ¸¶¨×Ô¼ºµÄÊÂ¼ş¹ã²¥Í¾¾¶
-		 *  ÏûÏ¢Ö»ÔÚ±¾µØ´«²¥£¬ÏûÏ¢±»·¢ËÍ¸øËùÓĞ¶ÔExampleEventType.type2ÀàĞÍÏûÏ¢¸ĞĞËÈ¤µÄ±¾µØÏûÏ¢¼àÌıÆ÷ºÍ±¾µØÔ¶³ÌÊÂ¼ş¼àÌıÆ÷
+		 * æ„å»ºäº‹ä»¶æ¶ˆæ¯ã€hello world type2.ã€‘ï¼ŒæŒ‡å®šäº†äº‹ä»¶çš„ç±»å‹ä¸ºExampleEventType.type2
+		 * é»˜è®¤çš„äº‹ä»¶æ¶ˆæ¯å¹¿æ’­é€”å¾„ä¸ºEvent.REMOTELOCAL,ä½ å¯ä»¥æŒ‡å®šè‡ªå·±çš„äº‹ä»¶å¹¿æ’­é€”å¾„
+		 *  æ¶ˆæ¯åªåœ¨æœ¬åœ°ä¼ æ’­ï¼Œæ¶ˆæ¯è¢«å‘é€ç»™æ‰€æœ‰å¯¹ExampleEventType.type2ç±»å‹æ¶ˆæ¯æ„Ÿå…´è¶£çš„æœ¬åœ°æ¶ˆæ¯ç›‘å¬å™¨å’Œæœ¬åœ°è¿œç¨‹äº‹ä»¶ç›‘å¬å™¨
 		 * 	Event event = new EventImpl("hello world type2.",ExampleEventType.type2,Event.LOCAL);
-		 *  ÏûÏ¢ÔÚÍøÂçÉÏ´«²¥£¬ÏûÏ¢±»·¢ËÍ¸øËùÓĞ¶ÔExampleEventType.type2ÀàĞÍÏûÏ¢¸ĞĞËÈ¤µÄÔ¶³ÌÏûÏ¢¼àÌıÆ÷ºÍ±¾µØÔ¶³ÌÊÂ¼ş¼àÌıÆ÷£¬Í¬Ê±Ò²»áÖ±½Ó·¢ËÍ¸ø±¾µØ¼àÌıÆ÷
+		 *  æ¶ˆæ¯åœ¨ç½‘ç»œä¸Šä¼ æ’­ï¼Œæ¶ˆæ¯è¢«å‘é€ç»™æ‰€æœ‰å¯¹ExampleEventType.type2ç±»å‹æ¶ˆæ¯æ„Ÿå…´è¶£çš„è¿œç¨‹æ¶ˆæ¯ç›‘å¬å™¨å’Œæœ¬åœ°è¿œç¨‹äº‹ä»¶ç›‘å¬å™¨ï¼ŒåŒæ—¶ä¹Ÿä¼šç›´æ¥å‘é€ç»™æœ¬åœ°ç›‘å¬å™¨
 		 *  Event event = new EventImpl("hello world type2.",ExampleEventType.type2,Event.REMOTELOCAL);
-		 *  ÏûÏ¢ÔÚÍøÂçÉÏ´«²¥£¬ÏûÏ¢±»·¢ËÍ¸øËùÓĞ¶ÔExampleEventType.type2ÀàĞÍÏûÏ¢¸ĞĞËÈ¤µÄÔ¶³ÌÏûÏ¢¼àÌıÆ÷ºÍ±¾µØÔ¶³ÌÊÂ¼ş¼àÌıÆ÷
+		 *  æ¶ˆæ¯åœ¨ç½‘ç»œä¸Šä¼ æ’­ï¼Œæ¶ˆæ¯è¢«å‘é€ç»™æ‰€æœ‰å¯¹ExampleEventType.type2ç±»å‹æ¶ˆæ¯æ„Ÿå…´è¶£çš„è¿œç¨‹æ¶ˆæ¯ç›‘å¬å™¨å’Œæœ¬åœ°è¿œç¨‹äº‹ä»¶ç›‘å¬å™¨
 		 *  Event event = new EventImpl("hello world type2.",ExampleEventType.type2,Event.REMOTE);
 		 */
 	
 		Event event = new EventImpl("hello world type2.",ExampleEventType.type2);
 		/**
-		 * ÏûÏ¢ÒÔÒì²½·½Ê½´«µİ
+		 * æ¶ˆæ¯ä»¥å¼‚æ­¥æ–¹å¼ä¼ é€’
 		 */
 		
 		EventHandle.getInstance().change(event,false);
@@ -106,12 +106,12 @@ public class ExampleEventPublish {
 	public static void publishEventtype2Withtarget()
 	{
 		/**
-		 * ¹¹½¨ÊÂ¼şÏûÏ¢¡¾hello world type2.¡¿£¬Ö¸¶¨ÁËÊÂ¼şµÄÀàĞÍÎªExampleEventType.type2withtarget
-		 * Ä¬ÈÏµÄÊÂ¼şÏûÏ¢¹ã²¥Í¾¾¶ÎªEvent.REMOTELOCAL,Äã¿ÉÒÔÖ¸¶¨×Ô¼ºµÄÊÂ¼ş¹ã²¥Í¾¾¶
+		 * æ„å»ºäº‹ä»¶æ¶ˆæ¯ã€hello world type2.ã€‘ï¼ŒæŒ‡å®šäº†äº‹ä»¶çš„ç±»å‹ä¸ºExampleEventType.type2withtarget
+		 * é»˜è®¤çš„äº‹ä»¶æ¶ˆæ¯å¹¿æ’­é€”å¾„ä¸ºEvent.REMOTELOCAL,ä½ å¯ä»¥æŒ‡å®šè‡ªå·±çš„äº‹ä»¶å¹¿æ’­é€”å¾„
 	
-		 *  ÏûÏ¢ÔÚÍøÂçÉÏ´«²¥£¬ÏûÏ¢±»·¢ËÍ¸øËùÓĞ¶ÔExampleEventType.type2ÀàĞÍÏûÏ¢¸ĞĞËÈ¤µÄÔ¶³ÌÏûÏ¢¼àÌıÆ÷ºÍ±¾µØÔ¶³ÌÊÂ¼ş¼àÌıÆ÷£¬Í¬Ê±Ò²»áÖ±½Ó·¢ËÍ¸ø±¾µØ¼àÌıÆ÷
+		 *  æ¶ˆæ¯åœ¨ç½‘ç»œä¸Šä¼ æ’­ï¼Œæ¶ˆæ¯è¢«å‘é€ç»™æ‰€æœ‰å¯¹ExampleEventType.type2ç±»å‹æ¶ˆæ¯æ„Ÿå…´è¶£çš„è¿œç¨‹æ¶ˆæ¯ç›‘å¬å™¨å’Œæœ¬åœ°è¿œç¨‹äº‹ä»¶ç›‘å¬å™¨ï¼ŒåŒæ—¶ä¹Ÿä¼šç›´æ¥å‘é€ç»™æœ¬åœ°ç›‘å¬å™¨
 		 *  Event event = new EventImpl("hello world type2.",ExampleEventType.type2,Event.REMOTELOCAL);
-		 *  ÏûÏ¢ÔÚÍøÂçÉÏ´«²¥£¬ÏûÏ¢±»·¢ËÍ¸øËùÓĞ¶ÔExampleEventType.type2ÀàĞÍÏûÏ¢¸ĞĞËÈ¤µÄÔ¶³ÌÏûÏ¢¼àÌıÆ÷ºÍ±¾µØÔ¶³ÌÊÂ¼ş¼àÌıÆ÷
+		 *  æ¶ˆæ¯åœ¨ç½‘ç»œä¸Šä¼ æ’­ï¼Œæ¶ˆæ¯è¢«å‘é€ç»™æ‰€æœ‰å¯¹ExampleEventType.type2ç±»å‹æ¶ˆæ¯æ„Ÿå…´è¶£çš„è¿œç¨‹æ¶ˆæ¯ç›‘å¬å™¨å’Œæœ¬åœ°è¿œç¨‹äº‹ä»¶ç›‘å¬å™¨
 		 *  Event event = new EventImpl("hello world type2.",ExampleEventType.type2,Event.REMOTE);
 		 */
 		
@@ -119,7 +119,7 @@ public class ExampleEventPublish {
 		EventTarget defualtprotocoltarget = null;
 		Event event = null;
 		Vector<Address> addresses = JGroupHelper.getJGroupHelper().getAppservers();
-		if(addresses.size() > 0)//ÍùÒ»¸ö½Úµã·¢ËÍÊı¾İ
+		if(addresses.size() > 0)//å¾€ä¸€ä¸ªèŠ‚ç‚¹å‘é€æ•°æ®
 		{
 			defualtprotocoltarget = new EventTarget("jgroup::" + addresses.get(0));
 			
@@ -132,7 +132,7 @@ public class ExampleEventPublish {
 	
 			EventHandle.getInstance().change(event);
 		}
-		if(addresses.size() > 2)//ÍùÇ°Á½¸ö½Úµã·¢ËÍÊı¾İ
+		if(addresses.size() > 2)//å¾€å‰ä¸¤ä¸ªèŠ‚ç‚¹å‘é€æ•°æ®
 		{
 			defualtprotocoltarget = new EventTarget("jgroup::" + addresses.get(0) + ";" + addresses.get(1) );
 			event = new EventImpl("hello world type2 with jgroups target[" + defualtprotocoltarget +"].",
@@ -143,7 +143,7 @@ public class ExampleEventPublish {
 			EventHandle.getInstance().change(event);
 		}
 		
-		//ÍùËùÓĞ½Úµã¹ã²¥ÏûÏ¢
+		//å¾€æ‰€æœ‰èŠ‚ç‚¹å¹¿æ’­æ¶ˆæ¯
 		{
 			defualtprotocoltarget = new EventTarget("jgroup::all" );
 			event = new EventImpl("hello world type2 with jgroups target[" + defualtprotocoltarget +"].",
@@ -158,12 +158,12 @@ public class ExampleEventPublish {
 	public static void publishFileEvent()
 	{
 		/**
-		 * ¹¹½¨ÊÂ¼şÏûÏ¢¡¾hello world type2.¡¿£¬Ö¸¶¨ÁËÊÂ¼şµÄÀàĞÍÎªExampleEventType.type2withtarget
-		 * Ä¬ÈÏµÄÊÂ¼şÏûÏ¢¹ã²¥Í¾¾¶ÎªEvent.REMOTELOCAL,Äã¿ÉÒÔÖ¸¶¨×Ô¼ºµÄÊÂ¼ş¹ã²¥Í¾¾¶
+		 * æ„å»ºäº‹ä»¶æ¶ˆæ¯ã€hello world type2.ã€‘ï¼ŒæŒ‡å®šäº†äº‹ä»¶çš„ç±»å‹ä¸ºExampleEventType.type2withtarget
+		 * é»˜è®¤çš„äº‹ä»¶æ¶ˆæ¯å¹¿æ’­é€”å¾„ä¸ºEvent.REMOTELOCAL,ä½ å¯ä»¥æŒ‡å®šè‡ªå·±çš„äº‹ä»¶å¹¿æ’­é€”å¾„
 	
-		 *  ÏûÏ¢ÔÚÍøÂçÉÏ´«²¥£¬ÏûÏ¢±»·¢ËÍ¸øËùÓĞ¶ÔExampleEventType.type2ÀàĞÍÏûÏ¢¸ĞĞËÈ¤µÄÔ¶³ÌÏûÏ¢¼àÌıÆ÷ºÍ±¾µØÔ¶³ÌÊÂ¼ş¼àÌıÆ÷£¬Í¬Ê±Ò²»áÖ±½Ó·¢ËÍ¸ø±¾µØ¼àÌıÆ÷
+		 *  æ¶ˆæ¯åœ¨ç½‘ç»œä¸Šä¼ æ’­ï¼Œæ¶ˆæ¯è¢«å‘é€ç»™æ‰€æœ‰å¯¹ExampleEventType.type2ç±»å‹æ¶ˆæ¯æ„Ÿå…´è¶£çš„è¿œç¨‹æ¶ˆæ¯ç›‘å¬å™¨å’Œæœ¬åœ°è¿œç¨‹äº‹ä»¶ç›‘å¬å™¨ï¼ŒåŒæ—¶ä¹Ÿä¼šç›´æ¥å‘é€ç»™æœ¬åœ°ç›‘å¬å™¨
 		 *  Event event = new EventImpl("hello world type2.",ExampleEventType.type2,Event.REMOTELOCAL);
-		 *  ÏûÏ¢ÔÚÍøÂçÉÏ´«²¥£¬ÏûÏ¢±»·¢ËÍ¸øËùÓĞ¶ÔExampleEventType.type2ÀàĞÍÏûÏ¢¸ĞĞËÈ¤µÄÔ¶³ÌÏûÏ¢¼àÌıÆ÷ºÍ±¾µØÔ¶³ÌÊÂ¼ş¼àÌıÆ÷
+		 *  æ¶ˆæ¯åœ¨ç½‘ç»œä¸Šä¼ æ’­ï¼Œæ¶ˆæ¯è¢«å‘é€ç»™æ‰€æœ‰å¯¹ExampleEventType.type2ç±»å‹æ¶ˆæ¯æ„Ÿå…´è¶£çš„è¿œç¨‹æ¶ˆæ¯ç›‘å¬å™¨å’Œæœ¬åœ°è¿œç¨‹äº‹ä»¶ç›‘å¬å™¨
 		 *  Event event = new EventImpl("hello world type2.",ExampleEventType.type2,Event.REMOTE);
 		 */
 		

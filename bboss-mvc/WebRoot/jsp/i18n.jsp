@@ -2,7 +2,7 @@
 <%@page import="org.frameworkset.web.servlet.i18n.WebMessageSourceUtil"%>
 <%@page import="org.frameworkset.web.servlet.support.RequestContextUtils"%>
 <%@page import="org.frameworkset.web.servlet.i18n.SessionLocalResolver"%>
-<%@ page contentType="text/html; charset=GBK" language="java" %>
+<%@ page contentType="text/html; charset=UTF-8" language="java" %>
 <%@ taglib uri="/WEB-INF/pager-taglib.tld" prefix="pg"%>
 <%
 //session.setAttribute(SessionLocalResolver.SESSION_LOCAL_KEY, java.util.Locale.US);
@@ -22,7 +22,7 @@ MessageSource ms = WebMessageSourceUtil.getMessageSource("/WEB-INF/messages_pdp,
 %>
 <html>
 <head>
-<title>����͹��ʻ�,��ѡ��Ĺ��Ҵ���-<pg:locale/>-local_request[<%=local_request %>]</title>
+<title>主题和国际化,你选择的国家代码-<pg:locale/>-local_request[<%=local_request %>]</title>
 		<link rel="stylesheet"
 			href="${pageContext.request.contextPath}/css/classic/tables.css"
 			type="text/css">

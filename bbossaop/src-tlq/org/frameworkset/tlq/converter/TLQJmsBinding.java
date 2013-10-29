@@ -29,7 +29,7 @@ import org.apache.commons.logging.LogFactory;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2010-6-13 …œŒÁ11:12:10
+ * @Date 2010-6-13 ‰∏äÂçà11:12:10
  * @author biaoping.yin
  * @version 1.0
  */

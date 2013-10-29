@@ -77,7 +77,7 @@ public interface HttpMessageConverter<T> {
 	 * default content type of the converter must be used. If not {@code null}, this media type must have
 	 * previously been passed to the {@link #canWrite canWrite} method of this interface, which must have
 	 * returned {@code true}.
-	 * @param usecustomMediaTypeByMethod Ê¶±ğcontentTypeÊÇ²»ÊÇÓÉ¿ØÖÆÆ÷·½·¨µ¥¶ÀÖ¸¶¨£¬Èç¹ûÊÇÔòÎªtrue,·ñÔòÎªfalse£¬Èç¹ûÃ»ÓĞÊ¹ÓÃ
+	 * @param usecustomMediaTypeByMethod è¯†åˆ«contentTypeæ˜¯ä¸æ˜¯ç”±æ§åˆ¶å™¨æ–¹æ³•å•ç‹¬æŒ‡å®šï¼Œå¦‚æœæ˜¯åˆ™ä¸ºtrue,å¦åˆ™ä¸ºfalseï¼Œå¦‚æœæ²¡æœ‰ä½¿ç”¨
 	 * @param outputMessage the message to write to
 	 * @throws IOException in case of I/O errors
 	 * @throws HttpMessageNotWritableException in case of conversion errors

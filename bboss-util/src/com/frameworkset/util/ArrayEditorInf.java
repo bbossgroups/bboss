@@ -18,9 +18,9 @@ package com.frameworkset.util;
 
 /**
  * <p> ArrayEditorInf.java</p>
- * <p> Description: mvc¿ò¼Ü²ÎÊı°ó¶¨Ê±£¬Èç¹ûÖ¸¶¨ÁËÀàĞÍÎªArrayEditorInfµÄÊôĞÔ±à¼­Æ÷
- * ÔòÒªÇómvc¿ò¼Ü´«ÈëµÄ²ÎÊıÎª²ÎÊıÊı×é£¬·ñÔòÖ»ÄÜ´«Èëµ¥¸öÖµ
- * ÀıÈç£º
+ * <p> Description: mvcæ¡†æ¶å‚æ•°ç»‘å®šæ—¶ï¼Œå¦‚æœæŒ‡å®šäº†ç±»å‹ä¸ºArrayEditorInfçš„å±æ€§ç¼–è¾‘å™¨
+ * åˆ™è¦æ±‚mvcæ¡†æ¶ä¼ å…¥çš„å‚æ•°ä¸ºå‚æ•°æ•°ç»„ï¼Œå¦åˆ™åªèƒ½ä¼ å…¥å•ä¸ªå€¼
+ * ä¾‹å¦‚ï¼š
  * public class EditorExampleBean {
 	@RequestParam(editor="org.frameworkset.mvc.Editor")
 	private String[] name;
@@ -38,7 +38,7 @@ package com.frameworkset.util;
  * <p> bboss workgroup </p>
  * <p> Copyright (c) 2009 </p>
  * 
- * @Date 2012-11-21 ÉÏÎç11:48:40
+ * @Date 2012-11-21 ä¸Šåˆ11:48:40
  * @author biaoping.yin
  * @version 1.0
  */

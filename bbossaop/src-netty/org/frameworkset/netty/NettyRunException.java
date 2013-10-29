@@ -21,7 +21,7 @@ package org.frameworkset.netty;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2010-4-19 ÏÂÎç11:05:34
+ * @Date 2010-4-19 ä¸‹åˆ11:05:34
  * @author biaoping.yin
  * @version 1.0
  */

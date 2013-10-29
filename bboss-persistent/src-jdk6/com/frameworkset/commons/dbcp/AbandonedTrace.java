@@ -253,7 +253,7 @@ public class AbandonedTrace {
     	}
     }
     /**
-     * 为了监控而添加的api
+     * 涓轰簡鐩戞帶鑰屾坊鍔犵殑api
      * @return
      */
     public List<AbandonedTrace> getTraces() {

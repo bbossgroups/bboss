@@ -39,7 +39,7 @@ import com.frameworkset.common.tag.pager.model.PageInfo;
 import com.frameworkset.common.tag.pager.model.PageModel;
 
 /**
- * µ¼³öÎÄ¼ş±êÇ©
+ * å¯¼å‡ºæ–‡ä»¶æ ‡ç­¾
  * @author biaoping.yin
  * created on 2005-5-25
  * version 1.0 
@@ -47,18 +47,18 @@ import com.frameworkset.common.tag.pager.model.PageModel;
 public class ExportTag extends PagerTagSupport
 {
     /**
-	 * ´æ·ÅÒ³Ãæµ¼³öµ½ÎÄ¼şÊ±ËùÓĞ²ÎÊı£¬µ±exportMetaÎªtrueÊ±ÉèÖÃ±¾±äÁ¿
+	 * å­˜æ”¾é¡µé¢å¯¼å‡ºåˆ°æ–‡ä»¶æ—¶æ‰€æœ‰å‚æ•°ï¼Œå½“exportMetaä¸ºtrueæ—¶è®¾ç½®æœ¬å˜é‡
 	 */
 	protected PageInfo pageInfo;	
 	
 	
 	/**
-	 * ÊÇ·ñÈ«²¿µ¼³öÎÄ¼ş
+	 * æ˜¯å¦å…¨éƒ¨å¯¼å‡ºæ–‡ä»¶
 	 */
 	protected boolean exportAll = false;
 	/**
-	 * È±Ê¡µ¼³öÎªwordÎÄµµ
-	 * ÓÃ»§¿ÉÒÔ×ÔĞĞÉèÖÃµ¼³ö¸ñÊ½
+	 * ç¼ºçœå¯¼å‡ºä¸ºwordæ–‡æ¡£
+	 * ç”¨æˆ·å¯ä»¥è‡ªè¡Œè®¾ç½®å¯¼å‡ºæ ¼å¼
 	 */
 	protected String type = FileType.WORD;
 	
@@ -68,8 +68,8 @@ public class ExportTag extends PagerTagSupport
     {
 //        String keyName = this.id +  ".pageInfo";
 //        /**
-//		 * Èç¹ûĞèÒªµ¼³öÊı¾İµ½ÎÄ¼ş
-//		 * Ôò³õÊ¼»¯pageInfo±äÁ¿
+//		 * å¦‚æœéœ€è¦å¯¼å‡ºæ•°æ®åˆ°æ–‡ä»¶
+//		 * åˆ™åˆå§‹åŒ–pageInfoå˜é‡
 //		 */
 //        session.removeAttribute(keyName);
 //        if(this.pagerTag.isExportMeta())
@@ -80,21 +80,21 @@ public class ExportTag extends PagerTagSupport
 //		    pageInfo.setList(pagerTag.ListMode());
 //		    pageInfo.setMaxPageItems(pagerTag.getMaxPageItems());
 //		    pageInfo.setMetaDatas(pagerTag.getMetaDatas());
-//		    //Ò³Ãæ²éÑ¯´®ÔÚ±êÇ©½áÊøµÄÊ±ºòÔÙÉèÖÃ
+//		    //é¡µé¢æŸ¥è¯¢ä¸²åœ¨æ ‡ç­¾ç»“æŸçš„æ—¶å€™å†è®¾ç½®
 //		    pageInfo.setQueryString(pagerTag.getQueryString());
 //		    pageInfo.setDbName(pagerTag.getDbname());
 //		    DataInfo dataInfo = pagerTag.getDataInfo();
-//		    //ÖØĞÂ´´½¨ĞÂµÄdataInfo½Ó¿Ú£¬ÒÔ±ã»ñÈ¡ËùÓĞÊı¾İ
+//		    //é‡æ–°åˆ›å»ºæ–°çš„dataInfoæ¥å£ï¼Œä»¥ä¾¿è·å–æ‰€æœ‰æ•°æ®
 //		    dataInfo = newDataInfo(dataInfo);
 //		    
 //		    pageInfo.setDataInfo(dataInfo);
 //		    
 ////		    PageModel pageModel = new PageModel();
 ////		    
-////		    //³õÊ¼»¯pageModel
+////		    //åˆå§‹åŒ–pageModel
 ////		    pageModel.setParameter(pageInfo,dataInfo,null,this.pageContext);
 //		    /**
-//		     * ±£´æËùÓĞµÄÒ³Ãæ²ÎÊı
+//		     * ä¿å­˜æ‰€æœ‰çš„é¡µé¢å‚æ•°
 //		     */
 //		    this.session.setAttribute(keyName,pageInfo);
 //		}

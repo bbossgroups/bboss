@@ -1,15 +1,15 @@
-1.ÊµÏÖiohandler
-´Ó³éÏñÀàorg.frameworkset.spi.remote.BaseRPCIOHandler¼Ì³Ğ
-ÊµÏÖ³éÏó·½·¨
+1.å®ç°iohandler
+ä»æŠ½åƒç±»org.frameworkset.spi.remote.BaseRPCIOHandlerç»§æ‰¿
+å®ç°æŠ½è±¡æ–¹æ³•
 protected BaseFutureCall buildBaseFutureCall(RPCMessage srcmsg,
 			RPCAddress address) {
-2.ĞŞ¸ÄTarget.buildTarget()·½·¨£º
-Ôö¼ÓÏàÓ¦µÄĞ­ÒéÄ¿±êµØÖ·µÄ¹¹½¨Âß¼­
-3.ÊµÏÖ·şÎñ³ÌĞò£¬ÀıÈç£ºRMIRpcService£¨client£¬server£©
-4.ÊµÏÖfuture·¢ËÍÇëÇó
-5.ÊµÏÖÇëÇó´¦Àífuture
-6.ÊµÏÖ·şÎñÇëÇóÖ´ĞĞºÍÏìÓ¦Á÷³Ì
-7.ÊµÏÖĞ­ÒéµÄclientºÍserver¶Ë´¦Àí³ÌĞò
+2.ä¿®æ”¹Target.buildTarget()æ–¹æ³•ï¼š
+å¢åŠ ç›¸åº”çš„åè®®ç›®æ ‡åœ°å€çš„æ„å»ºé€»è¾‘
+3.å®ç°æœåŠ¡ç¨‹åºï¼Œä¾‹å¦‚ï¼šRMIRpcServiceï¼ˆclientï¼Œserverï¼‰
+4.å®ç°futureå‘é€è¯·æ±‚
+5.å®ç°è¯·æ±‚å¤„ç†future
+6.å®ç°æœåŠ¡è¯·æ±‚æ‰§è¡Œå’Œå“åº”æµç¨‹
+7.å®ç°åè®®çš„clientå’Œserverç«¯å¤„ç†ç¨‹åº
 Target
     
     public boolean isRMI()
@@ -23,18 +23,18 @@ Target
     public static String buildWebserviceURL(RPCAddress address)
     public boolean protocol_http()
 RPCHelper
- 	public Object rpcRMIService(ServiceID serviceID,// ·şÎñ±êÊ¶
-            Method method,// ĞèÒªÔÚ·şÎñÉÏµ÷ÓÃµÄ·½·¨
-            Object[] parameters // ·şÎñ²ÎÊı
+ 	public Object rpcRMIService(ServiceID serviceID,// æœåŠ¡æ ‡è¯†
+            Method method,// éœ€è¦åœ¨æœåŠ¡ä¸Šè°ƒç”¨çš„æ–¹æ³•
+            Object[] parameters // æœåŠ¡å‚æ•°
             ,CallContext callContext) throws Throwable
   	public void startServerProtocol(String protocol)
   	public void startRMIServer()
    	public void stopServerProtocol(String protocol)
    	public void stopRMIServer() 
    
-     public Object rpcService(ServiceID serviceID,// ·şÎñ±êÊ¶
-            Method method,// ĞèÒªÔÚ·şÎñÉÏµ÷ÓÃµÄ·½·¨
-            Object[] parameters ,CallContext callContext// ·şÎñ²ÎÊı
+     public Object rpcService(ServiceID serviceID,// æœåŠ¡æ ‡è¯†
+            Method method,// éœ€è¦åœ¨æœåŠ¡ä¸Šè°ƒç”¨çš„æ–¹æ³•
+            Object[] parameters ,CallContext callContext// æœåŠ¡å‚æ•°
 
     
 ApplicationContext    
@@ -48,7 +48,7 @@ private boolean rpcserviceStarted(Target target)
 private boolean isLocalAddress(Target target,boolean fromrest)
  private void setLocalAddress()
  
- À©Õ¹cglibÊ±Åöµ½µÄÎÊÌâ£º
+ æ‰©å±•cglibæ—¶ç¢°åˆ°çš„é—®é¢˜ï¼š
  java.lang.Exception
 	at org.frameworkset.spi.remote.BaseRPCIOHandler.sendRequest(BaseRPCIOHandler.java:284)
 	at org.frameworkset.spi.remote.RPCRequest.execute(RPCRequest.java:304)

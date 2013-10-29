@@ -10,7 +10,7 @@ import com.frameworkset.orm.engine.model.SchemaType;
  * 
  * <p>Title: RowHandler.java</p>
  *
- * <p>Description: ĞĞ´¦ÀíÆ÷</p>
+ * <p>Description: è¡Œå¤„ç†å™¨</p>
  *
  * <p>Copyright: Copyright (c) 2007</p>
  *
@@ -20,12 +20,12 @@ import com.frameworkset.orm.engine.model.SchemaType;
  */
 public abstract class RowHandler<T> {
 	/**
-	 * ¶ÔÒÑ¾­´¦ÀíºÃµÄĞĞ¼ÇÂ¼½øĞĞ´¦ÀíµÄÂß¼­
-	 * @param rowValue ĞèÒª´æ·Årecord¼ÇÂ¼ÖĞµÄÁĞĞÅÏ¢µÄ¶ÔÏó£¬Ä¿Ç°ÓĞÁ½ÖÖÖ÷ÒªµÄÀàĞÍ£ºÆÕÍ¨javaÖµ¶ÔÏó£¬StringBuffer¶ÔÏó£¨ÓÃÀ´Æ´½Ó×Ô¶¨ÒåµÄxml´®£©
-	 * @param record ´æ·ÅÁËµ±Ç°¼ÇÂ¼µÄĞÅÏ¢£¬°üº¬²éÑ¯ÁĞ±íÖĞµÄËùÓĞÁĞĞÅÏ¢£¬ÀıÈç£ºselect id,name from test,ÄÇÃ´RecordÖĞ´æ·ÅÁËÁĞid£¬nameµÄÖµ
-	 *               ¿ÉÒÔÍ¨¹ıÒÔÏÂµÄ·½Ê½»ñÈ¡£º
-	 *               record.getInt("id");//ÆäÖĞÁĞÃûidµÄ´óĞ¡Ğ´²»ÏŞÖÆ
-	 *               record.getInt("name");//ÆäÖĞÁĞÃûnameµÄ´óĞ¡Ğ´²»ÏŞÖÆ
+	 * å¯¹å·²ç»å¤„ç†å¥½çš„è¡Œè®°å½•è¿›è¡Œå¤„ç†çš„é€»è¾‘
+	 * @param rowValue éœ€è¦å­˜æ”¾recordè®°å½•ä¸­çš„åˆ—ä¿¡æ¯çš„å¯¹è±¡ï¼Œç›®å‰æœ‰ä¸¤ç§ä¸»è¦çš„ç±»å‹ï¼šæ™®é€šjavaå€¼å¯¹è±¡ï¼ŒStringBufferå¯¹è±¡ï¼ˆç”¨æ¥æ‹¼æ¥è‡ªå®šä¹‰çš„xmlä¸²ï¼‰
+	 * @param record å­˜æ”¾äº†å½“å‰è®°å½•çš„ä¿¡æ¯ï¼ŒåŒ…å«æŸ¥è¯¢åˆ—è¡¨ä¸­çš„æ‰€æœ‰åˆ—ä¿¡æ¯ï¼Œä¾‹å¦‚ï¼šselect id,name from test,é‚£ä¹ˆRecordä¸­å­˜æ”¾äº†åˆ—idï¼Œnameçš„å€¼
+	 *               å¯ä»¥é€šè¿‡ä»¥ä¸‹çš„æ–¹å¼è·å–ï¼š
+	 *               record.getInt("id");//å…¶ä¸­åˆ—åidçš„å¤§å°å†™ä¸é™åˆ¶
+	 *               record.getInt("name");//å…¶ä¸­åˆ—ånameçš„å¤§å°å†™ä¸é™åˆ¶
 	 */
 	public abstract void handleRow(T rowValue,Record record) throws Exception;
 	
@@ -51,7 +51,7 @@ public abstract class RowHandler<T> {
         {
            if(meta == null)
            {
-               throw new RowHandlerException("Ô´Êı¾İ¶ÔÏó[meta]Î´³õÊ¼»¯,ÎŞ·¨½øĞĞĞĞ´¦Àí.");
+               throw new RowHandlerException("æºæ•°æ®å¯¹è±¡[meta]æœªåˆå§‹åŒ–,æ— æ³•è¿›è¡Œè¡Œå¤„ç†.");
            }
             try {
                 int sqltype = meta.getColumnType(clindex);
@@ -68,7 +68,7 @@ public abstract class RowHandler<T> {
         {
            if(meta == null)
            {
-               throw new RowHandlerException("Ô´Êı¾İ¶ÔÏó[meta]Î´³õÊ¼»¯,ÎŞ·¨½øĞĞĞĞ´¦Àí.");
+               throw new RowHandlerException("æºæ•°æ®å¯¹è±¡[meta]æœªåˆå§‹åŒ–,æ— æ³•è¿›è¡Œè¡Œå¤„ç†.");
            }
             try {
                 int index = seekIndex(colName);
@@ -96,7 +96,7 @@ public abstract class RowHandler<T> {
 //                if(columnLabel_uppers[i].equals(temp))
 //                    return i;
 //            }
-//            throw new RowHandlerException("²éÑ¯½á¹ûÖĞ²»´æÔÚÁĞ[" + colName + "].");
+//            throw new RowHandlerException("æŸ¥è¯¢ç»“æœä¸­ä¸å­˜åœ¨åˆ—[" + colName + "].");
         	return meta.seekIndex(colName);
         }
 	

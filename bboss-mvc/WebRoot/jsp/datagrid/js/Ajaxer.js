@@ -1,20 +1,20 @@
 /**
- * 	·â×°Ajax ´«ÊäÀà
- * 	URL:´«¹ıÈ¥´¦ÀíµÄÒ³ÃæµØÖ·
- *  params :Òª´«¹ıÈ¥µÄ²ÎÊı£¬¡£Èç£º"reportId=1&templetId=2"
- *	callBackFunction:³É¹¦ºóµ÷ÓÃµÄ·½·¨
- *	errorFunction:Ê§°Üºóµ÷ÓÃµÄ·½·¨
- *	ÓÃ·¨£º var mAjaxer = new Ajaxer(url,params,callBackFunction,errorFunction)
+ * 	å°è£…Ajax ä¼ è¾“ç±»
+ * 	URL:ä¼ è¿‡å»å¤„ç†çš„é¡µé¢åœ°å€
+ *  params :è¦ä¼ è¿‡å»çš„å‚æ•°ï¼Œã€‚å¦‚ï¼š"reportId=1&templetId=2"
+ *	callBackFunction:æˆåŠŸåè°ƒç”¨çš„æ–¹æ³•
+ *	errorFunction:å¤±è´¥åè°ƒç”¨çš„æ–¹æ³•
+ *	ç”¨æ³•ï¼š var mAjaxer = new Ajaxer(url,params,callBackFunction,errorFunction)
  *		  mAjaxer.send();
  *  by:haibo.liu
  *	version 1.0
  */
 var Ajaxer = function(URL,params,callBackFunction,errorFunction){
-	this.AjaxMethod = "POST";							//Ä¬ÈÏ´«Êä·½Ê½ POST;
-	this.SendObject = params;								//´«ÊäµÄÄÚÈİ	
-	this.ResponseType = "Text";						//·µ»ØÖµÀàĞÍ 
-	//async - ÊÇ·ñÒì²½£¬trueÎªÒì²½£¬falseÎªÍ¬²½£¬Ä¬ÈÏÎªtrue	
-	this.Async = true;										//ÊÇ·ñÒì²½·½Ê½
+	this.AjaxMethod = "POST";							//é»˜è®¤ä¼ è¾“æ–¹å¼ POST;
+	this.SendObject = params;								//ä¼ è¾“çš„å†…å®¹	
+	this.ResponseType = "Text";						//è¿”å›å€¼ç±»å‹ 
+	//async - æ˜¯å¦å¼‚æ­¥ï¼Œtrueä¸ºå¼‚æ­¥ï¼Œfalseä¸ºåŒæ­¥ï¼Œé»˜è®¤ä¸ºtrue	
+	this.Async = true;										//æ˜¯å¦å¼‚æ­¥æ–¹å¼
 	
  	
 	function createXMLHttp(){
@@ -36,16 +36,16 @@ var Ajaxer = function(URL,params,callBackFunction,errorFunction){
  	this.send =	function ()
 	{	
 		this.Async = (typeof(callBackFunction) == 'function');
-		//Èç¹ûÊÇÍ¬²½£¬ÔòÖ±½Ó·µ»Ø½á¹û¡£
+		//å¦‚æœæ˜¯åŒæ­¥ï¼Œåˆ™ç›´æ¥è¿”å›ç»“æœã€‚
 		if(!this.Async){
 			return this.sendSynchroMethod(URL,params);
 		}
-		//ÏÂÃæÖ´ĞĞµÄÊÇÒì²½
+		//ä¸‹é¢æ‰§è¡Œçš„æ˜¯å¼‚æ­¥
 	    xmlHttp = null;
 	    xmlHttp = createXMLHttp();
 	    if(xmlHttp == null)
 	    {
-	        alert("´´½¨xmlHTTPÊ§°Ü£¡");
+	        alert("åˆ›å»ºxmlHTTPå¤±è´¥ï¼");
 	    }else{
 	        xmlHttp.onreadystatechange = this.SendBack;	         
 	        xmlHttp.open(this.AjaxMethod,URL,this.Async);	       
@@ -54,14 +54,14 @@ var Ajaxer = function(URL,params,callBackFunction,errorFunction){
 	    }	
 	    return "";   
 	}
-	//Èç¹ûÊÇÍ¬²½·½Ê½£¬¾Í²ÉÓÃÖ±½Ó·µ»Ø½á¹û
+	//å¦‚æœæ˜¯åŒæ­¥æ–¹å¼ï¼Œå°±é‡‡ç”¨ç›´æ¥è¿”å›ç»“æœ
 	this.sendSynchroMethod = function(URL,params){
-		//Èç¹ûÊÇÍ¬²½·½Ê½£¬Ê¹ÓÃµ¥¶ÀµÄ_xmlHttp¶ÔÏó	
+		//å¦‚æœæ˜¯åŒæ­¥æ–¹å¼ï¼Œä½¿ç”¨å•ç‹¬çš„_xmlHttpå¯¹è±¡	
 		//alert("URL="+URL+"\nparams="+params);	
 	    var _xmlHttp = createXMLHttp();
 	    if(_xmlHttp == null)
 	    {
-	        alert("´´½¨_xmlHttpÊ§°Ü£¡");
+	        alert("åˆ›å»º_xmlHttpå¤±è´¥ï¼");
 	    }else{	         
 	        _xmlHttp.open(this.AjaxMethod,URL,this.Async);	       
 	        _xmlHttp.setRequestHeader("Content-Type","application/x-www-form-urlencoded;charset=UTF-8");	       
@@ -69,18 +69,18 @@ var Ajaxer = function(URL,params,callBackFunction,errorFunction){
 	        if(_xmlHttp.status == 200){
 	        	return _xmlHttp.responseText;
 	        }
-	        //alert("·şÎñÆ÷·¢ÉúÁË"+_xmlHttp.status+"´íÎó£¡");	
-	        throw new Error(_xmlHttp.status,"·şÎñÆ÷·¢ÉúÁË"+_xmlHttp.status+"´íÎó£¡");         
+	        //alert("æœåŠ¡å™¨å‘ç”Ÿäº†"+_xmlHttp.status+"é”™è¯¯ï¼");	
+	        throw new Error(_xmlHttp.status,"æœåŠ¡å™¨å‘ç”Ÿäº†"+_xmlHttp.status+"é”™è¯¯ï¼");         
 	    }	   
 	}	
-	//Èç¹ûÊÇÒì²½·½Ê½£¬¾Í²ÉÓÃ»Øµ÷·½·¨
+	//å¦‚æœæ˜¯å¼‚æ­¥æ–¹å¼ï¼Œå°±é‡‡ç”¨å›è°ƒæ–¹æ³•
 	this.SendBack = function (){
 		try{
 			if(xmlHttp.readyState == 4){				
 				if(xmlHttp.status == 200){
 					var res;
 					res = xmlHttp.responseText;
-					//ÔÚ½«res·µ»Ø¸øµ÷ÓÃ·½·¨Ö®Ç°£¬ĞèÒªÏÈ´¦Àíres£¬ÎªÁË²»Ó°ÏìÆäËûÈËÊ¹ÓÃAjaxerÀà£¬È¥µôÕâĞĞ´úÂë£¬ÒòÎªÕâĞĞ´úÂëñîºÏÁËDBUtilÀà
+					//åœ¨å°†resè¿”å›ç»™è°ƒç”¨æ–¹æ³•ä¹‹å‰ï¼Œéœ€è¦å…ˆå¤„ç†resï¼Œä¸ºäº†ä¸å½±å“å…¶ä»–äººä½¿ç”¨Ajaxerç±»ï¼Œå»æ‰è¿™è¡Œä»£ç ï¼Œå› ä¸ºè¿™è¡Œä»£ç è€¦åˆäº†DBUtilç±»
 					//callBackFunction(DBUtil.callBackFunction(res));
 					callBackFunction(res);
 							
@@ -90,42 +90,42 @@ var Ajaxer = function(URL,params,callBackFunction,errorFunction){
 				}
 			}
 		}catch(e){
-			alert(" ·şÎñÆ÷·¢ÉúÁË"+xmlHttp.status+"´íÎó£¡"+e);
+			alert(" æœåŠ¡å™¨å‘ç”Ÿäº†"+xmlHttp.status+"é”™è¯¯ï¼"+e);
 		}
 
 	}
 }
 /**
- * 	ÈÕÖ¾¼ÇÂ¼Àà
- * 	logInfo:²Ù×÷ÄÚÈİ
- *  logModule :²Ù×÷ÈÕÖ¾Ä£¿é£¬´ÓÒ³ÃæÖĞÒıÈë ReportDBToolsÖĞ¶¨ÒåµÄÄ£¿éÃû³Æ£¬Èç£ºReportDBTools.MODULE_BQXTBB
- *	log_type ²Ù×÷ÀàĞÍ	(ÎŞ²Ù×÷ 0 ; ĞÂÔö 1 ; ¸üĞÂ 2 ; É¾³ı 3 ; ÆäËû 4)
- *  url ÒıÓÃÒ³ÃæÓëlog.jspÎÄ¼şµÄÏà¶ÔÂ·¾¶
- *	ÓÃ·¨£º new Log().log(logInfo, logModule, log_type);
+ * 	æ—¥å¿—è®°å½•ç±»
+ * 	logInfo:æ“ä½œå†…å®¹
+ *  logModule :æ“ä½œæ—¥å¿—æ¨¡å—ï¼Œä»é¡µé¢ä¸­å¼•å…¥ ReportDBToolsä¸­å®šä¹‰çš„æ¨¡å—åç§°ï¼Œå¦‚ï¼šReportDBTools.MODULE_BQXTBB
+ *	log_type æ“ä½œç±»å‹	(æ— æ“ä½œ 0 ; æ–°å¢ 1 ; æ›´æ–° 2 ; åˆ é™¤ 3 ; å…¶ä»– 4)
+ *  url å¼•ç”¨é¡µé¢ä¸log.jspæ–‡ä»¶çš„ç›¸å¯¹è·¯å¾„
+ *	ç”¨æ³•ï¼š new Log().log(logInfo, logModule, log_type);
  *  by:haibo.liu
  *	version 1.0
  */
 var Log = function (){
-	//ÉÏÏÂÎÄ£¬Ä¬ÈÏÎª¿Õ£¬Èç¹û²»ÊÇ¿ÕÔòÉèÖÃÎªnull¿ÉÒÔ×Ô¶¯»ñÈ¡µ½¡£
+	//ä¸Šä¸‹æ–‡ï¼Œé»˜è®¤ä¸ºç©ºï¼Œå¦‚æœä¸æ˜¯ç©ºåˆ™è®¾ç½®ä¸ºnullå¯ä»¥è‡ªåŠ¨è·å–åˆ°ã€‚
  	this.contextPath = ""; 
- 	//µ±Ã»ÓĞÉèÖÃÉÏÏÂÎÄµÄÊ±ºò£¬½ØÈ¡Ä¬ÈÏÖµ
+ 	//å½“æ²¡æœ‰è®¾ç½®ä¸Šä¸‹æ–‡çš„æ—¶å€™ï¼Œæˆªå–é»˜è®¤å€¼
  	this.contextPath = getContextPathByClient();
 	this.log =	function (logInfo, logModule, log_type){
 		var params = "logInfo="+logInfo+"&logModule="+logModule+"&log_type="+log_type;
 		url = window.location.protocol+"//"+window.location.host+this.contextPath+"/ynstjj/report/log/logManage.jsp";
-		//Òì²½¼ÇÂ¼ÈÕÖ¾
+		//å¼‚æ­¥è®°å½•æ—¥å¿—
 		new Ajaxer(url,params,callBackFunction,errorFunction).send();
 	}
 	callBackFunction = function(){};
 	errorFunction = function(){};
 }
 /*
- * ·â×°²ÎÊı
+ * å°è£…å‚æ•°
  */
 function encodeParams(params){
 	return encodeURIComponent(params);
 }
-//½ØÈ¡ÉÏÏÂÎÄ
+//æˆªå–ä¸Šä¸‹æ–‡
 function getContextPathByClient(){		
 	var cp = location.pathname ;	
 	cp = cp.substring(0,cp.indexOf("/",1));	
@@ -138,13 +138,13 @@ function getContextPathByClient(){
     }
 	return cp;
 }
-//È¥¿Õ¸ñ
+//å»ç©ºæ ¼
 String.prototype.trim= function(){
-	// ÓÃÕıÔò±í´ïÊ½½«Ç°ºó¿Õ¸ñ
-	// ÓÃ¿Õ×Ö·û´®Ìæ´ú¡£ 
+	// ç”¨æ­£åˆ™è¡¨è¾¾å¼å°†å‰åç©ºæ ¼
+	// ç”¨ç©ºå­—ç¬¦ä¸²æ›¿ä»£ã€‚ 
 	return this.replace(/(^\s*)|(\s*$)/g, "");
 }	
-//È¥¿Õ¸ñ
+//å»ç©ºæ ¼
 function jstrim(str){
 	if(null == str) return null;
 	try{				
@@ -153,16 +153,16 @@ function jstrim(str){
 		return str;
 	}
 }
-//³£ÓÃjs·½·¨
+//å¸¸ç”¨jsæ–¹æ³•
 var Validator = function(){
 	
 }
-//Ğ£ÑéÊÇ·ñÊÇÒ»¸öºÏ·¨µÄÃû×Ö
+//æ ¡éªŒæ˜¯å¦æ˜¯ä¸€ä¸ªåˆæ³•çš„åå­—
 Validator.isName = function(str){
-	var reg = /^[\w\u4e00-\u9fa5£¬¡¢£»¡®¡¯¡°¡±¡¾¡¿]+$/g;
+	var reg = /^[\w\u4e00-\u9fa5ï¼Œã€ï¼›â€˜â€™â€œâ€ã€ã€‘]+$/g;
 	return reg.test(str);
 }
-//¼ì²âÊÇ·ñÊÇÒ»¸öºÏ·¨µÄÖ¸±êÃû³Æ	
+//æ£€æµ‹æ˜¯å¦æ˜¯ä¸€ä¸ªåˆæ³•çš„æŒ‡æ ‡åç§°	
 Validator.isItemName = function(str){
 	var reg1 = /^[\S]+$/g;	
 	var reg2 = /^[^%\'\",;:=+-\\{\\}\[\].]+$/g;

@@ -26,7 +26,7 @@ import org.frameworkset.spi.remote.RPCMessage;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2010-6-16 œ¬ŒÁ07:03:22
+ * @Date 2010-6-16 ‰∏ãÂçà07:03:22
  * @author biaoping.yin
  * @version 1.0
  */

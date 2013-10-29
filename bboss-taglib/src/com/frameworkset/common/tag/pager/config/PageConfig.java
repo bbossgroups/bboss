@@ -40,7 +40,7 @@ import com.frameworkset.util.VelocityUtil;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2008</p>
- * @Date 2010-4-12 ÏÂÎç05:55:45
+ * @Date 2010-4-12 ä¸‹åˆ05:55:45
  * @author biaoping.yin
  * @version 1.0
  */
@@ -71,7 +71,7 @@ public class PageConfig extends BaseTag
     
     public static String getPopScript(HttpServletRequest request ,boolean enablecontextmenu) 
     {
-//        if(!enablecontextmenu) //Ã»ÓÐÆôÓÃÓÒ¼ü²Ëµ¥£¬²»Êä³öÓÒ¼ü²Ëµ¥js½Å±¾
+//        if(!enablecontextmenu) //æ²¡æœ‰å¯ç”¨å³é”®èœå•ï¼Œä¸è¾“å‡ºå³é”®èœå•jsè„šæœ¬
 //        {
 //            return "";
 //        }
@@ -83,15 +83,15 @@ public class PageConfig extends BaseTag
         {
             
         }
-        else //ÆôÓÃÓÒ¼ü²Ëµ¥£¬µ«ÊÇÊÇÊ÷µÄÑÓ³Ù¼ÓÔØ£¬²»ÐèÒªÊä³öÓÒ¼ü²Ëµ¥js½Å±¾
+        else //å¯ç”¨å³é”®èœå•ï¼Œä½†æ˜¯æ˜¯æ ‘çš„å»¶è¿ŸåŠ è½½ï¼Œä¸éœ€è¦è¾“å‡ºå³é”®èœå•jsè„šæœ¬
         {
             return "";
         }
-        if(enablecontextmenu_flag != null && enablecontextmenu_flag.equals("true")) //ÆôÓÃÓÒ¼ü²Ëµ¥£¬ÒÑ¾­Êä³öÓÒ¼ü²Ëµ¥js½Å±¾²»ÐèÒª¼Ó
+        if(enablecontextmenu_flag != null && enablecontextmenu_flag.equals("true")) //å¯ç”¨å³é”®èœå•ï¼Œå·²ç»è¾“å‡ºå³é”®èœå•jsè„šæœ¬ä¸éœ€è¦åŠ 
         {
             return "";
         }
-        else //ÆôÓÃÓÒ¼ü²Ëµ¥£¬µÚÒ»´ÎÊä³öÓÒ¼ü²Ëµ¥js½Å±¾£¬²¢ÉèÖÃ±ê¼Çenablecontextmenu_flagÎªtrue
+        else //å¯ç”¨å³é”®èœå•ï¼Œç¬¬ä¸€æ¬¡è¾“å‡ºå³é”®èœå•jsè„šæœ¬ï¼Œå¹¶è®¾ç½®æ ‡è®°enablecontextmenu_flagä¸ºtrue
         {
             try
             {
@@ -139,7 +139,7 @@ public class PageConfig extends BaseTag
                 e.printStackTrace();
             }
             
-            return "";//ÆôÓÃÓÒ¼ü²Ëµ¥£¬µÚÒ»´ÎÊä³öÓÒ¼ü²Ëµ¥js½Å±¾£¬¼ÓÔØÊ±³öÏÖÒì³£·µ»Ø""
+            return "";//å¯ç”¨å³é”®èœå•ï¼Œç¬¬ä¸€æ¬¡è¾“å‡ºå³é”®èœå•jsè„šæœ¬ï¼ŒåŠ è½½æ—¶å‡ºçŽ°å¼‚å¸¸è¿”å›ž""
         }
         
 //        if(enablecontextmenu)

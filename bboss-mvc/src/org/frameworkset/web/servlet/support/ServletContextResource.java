@@ -40,7 +40,7 @@ import com.frameworkset.util.StringUtil;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2010-9-24 œ¬ŒÁ10:08:35
+ * @Date 2010-9-24 ‰∏ãÂçà10:08:35
  * @author biaoping.yin
  * @version 1.0
  */

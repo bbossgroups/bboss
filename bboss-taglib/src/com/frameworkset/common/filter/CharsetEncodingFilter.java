@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * ÅäÖÃÊ¾Àı£º
+ * é…ç½®ç¤ºä¾‹ï¼š
  * <filter>
     	<filter-name>CharsetEncoding</filter-name>
     	<filter-class>com.frameworkset.platform.oa.meeting.util.CharsetEncodingFilter</filter-class>
@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletResponse;
     	</init-param>
     	<init-param>
       		<param-name>ResponseEncoding</param-name>
-      		<param-value>GBK</param-value>
+      		<param-value>UTF-8</param-value>
     	</init-param>
   	</filter>
 
@@ -88,7 +88,7 @@ public class CharsetEncodingFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest)req;
         
 
-        //ÊÇ·ñÔÊĞí¹ıÂËÆ÷£¬
+        //æ˜¯å¦å…è®¸è¿‡æ»¤å™¨ï¼Œ
         String filterEnabled = request.getParameter("filterEnabled");
 
         HttpServletResponse response = (HttpServletResponse)res;
@@ -104,8 +104,8 @@ public class CharsetEncodingFilter implements Filter {
             return;
         }
 //        System.out.println("old request:" + request.getClass());
-        //Ä£Ê½0£º¶ÔÇëÇó²ÎÊı±àÂë£¬¶ÔÏìÓ¦±àÂë
-        //      ·şÎñÆ÷¶Ôurl²»½øĞĞ±àÂë
+        //æ¨¡å¼0ï¼šå¯¹è¯·æ±‚å‚æ•°ç¼–ç ï¼Œå¯¹å“åº”ç¼–ç 
+        //      æœåŠ¡å™¨å¯¹urlä¸è¿›è¡Œç¼–ç 
         if(mode.equals("0"))
         {
 
@@ -115,14 +115,14 @@ public class CharsetEncodingFilter implements Filter {
                 CharacterEncodingHttpServletResponseWrapper(response, ResponseEncoding);
             fc.doFilter(mrequestw, wresponsew);
         }
-        //Ä£Ê½1£º¶ÔÇëÇó²ÎÊı±àÂë£¬¶ÔÏìÓ¦²»±àÂë
-        //      ·şÎñÆ÷¶Ôurl½øĞĞ±àÂë
+        //æ¨¡å¼1ï¼šå¯¹è¯·æ±‚å‚æ•°ç¼–ç ï¼Œå¯¹å“åº”ä¸ç¼–ç 
+        //      æœåŠ¡å™¨å¯¹urlè¿›è¡Œç¼–ç 
         else if(mode.equals("1"))
         {
             request.setCharacterEncoding(RequestEncoding);
             fc.doFilter(request,response);
         }
-        //ÆäËûÄ£Ê½
+        //å…¶ä»–æ¨¡å¼
         else
         {
             CharacterEncodingHttpServletRequestWrapper mrequestw = new

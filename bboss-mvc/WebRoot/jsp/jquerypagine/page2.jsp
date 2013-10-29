@@ -8,7 +8,7 @@ String path = request.getContextPath();
               <div class="genericTbl">
 				<!--分页显示开始,分页标签初始化-->
 			   	<pg:pager scope="request" data="users" 
-						  isList="false" containerid="pagecontainer1" selector="pagecontent">
+						  isList="false" containerid="pagecontainer2" selector="pagecontent">
 				<pg:beanparams name="usermap"/>
 				
 				<div><pg:index/></div>

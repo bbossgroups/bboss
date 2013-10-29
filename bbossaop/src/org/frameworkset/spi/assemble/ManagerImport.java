@@ -22,13 +22,13 @@ import org.frameworkset.spi.assemble.callback.AssembleCallback;
  * 
  * <p>Title: ManagerImport.java</p>
  *
- * <p>Description: Œ§ÈëÍâ²¿¹ÜÀí·ş„ÕÎÄ¼ş</p>
+ * <p>Description: å°å…¥å¤–éƒ¨ç®¡ç†æœå‹™æ–‡ä»¶</p>
  *
  * <p>Copyright: Copyright (c) 2007</p>
  *
  * <p>bboss workgroup</p>
  * @Date Aug 13, 2008 3:29:41 PM
- * @author biaoping.yin,Òü±êÆ½
+ * @author biaoping.yin,å°¹æ ‡å¹³
  * @version 1.0
  */
 public class ManagerImport {

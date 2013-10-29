@@ -1,0 +1,53 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<HTML>
+  <HEAD>
+<!--
+ HTMLParser Library $Name: v1_5 $ - A java-based parser for HTML
+ http://sourceforge.org/projects/htmlparser
+ Copyright (C) 2004 Derrick Oswald
+
+ Revision Control Information
+
+ $Source: /cvsroot/htmlparser/htmlparser/src/org/htmlparser/lexerapplications/tabby/package.html,v $
+ $Author: derrickoswald $
+ $Date: 2004/01/02 16:24:53 $
+ $Revision: 1.2 $
+
+ This library is free software; you can redistribute it and/or
+ modify it under the terms of the GNU Lesser General Public
+ License as published by the Free Software Foundation; either
+ version 2.1 of the License, or (at your option) any later version.
+
+ This library is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ Lesser General Public License for more details.
+
+ You should have received a copy of the GNU Lesser General Public
+ License along with this library; if not, write to the Free Software
+ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+-->
+    <TITLE>Tabby</TITLE>
+  </HEAD>
+  <BODY>
+The Tabby program is a demonstration of how to use the underlying Lexer
+classes to perform file I/O. The results could also be achieved with a normal
+Reader object but then there wouldn't be anything interesting about this.
+<p>
+The task is to replace tabs with spaces and preserve any indentaion that was a
+combination of tabs and spaces. This means honouring the 'tab stops' that would
+be used by an editor and not just a global search and replace.
+<p>
+The mechanism used is to keep track of the character offset from the beginning
+of a line and when a tab is encountered add spaces till the next tab stop.
+<p>
+At the same time any "\r\n" combinations that are in the file are converted to
+simple "\n" characters as found on Unix/Linux systems, and trailing whitespace
+at the ends of lines is removed.
+<p>
+The trick is to only write the file if something in the file required changes,
+so a boolean variable is kept current with a <code>true</code> value indicating
+the file needs to be modified.
+  </BODY>
+</HTML>

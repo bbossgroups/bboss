@@ -8,7 +8,7 @@ import org.frameworkset.util.annotations.ResponseBody;
 
 public class PrintController {
 	public @ResponseBody Word2PDFResponse getPDF(boolean usecache)  {
-		System.out.println("--------------³ÌĞòÖ´ĞĞµ½´Ë´¦------------------");
+		System.out.println("--------------ç¨‹åºæ‰§è¡Œåˆ°æ­¤å¤„------------------");
 		Word2PDFResponse response = new Word2PDFResponse();
 		response.setCache(usecache);
 		response.setWordFile("d:\\anjie_test.doc");
@@ -22,11 +22,11 @@ public class PrintController {
 				"FinanceAmt", "FinanceFC", "LackAmtPayDate",
 				"LackAmtFinalPayDate", "ReceiverName", "ReceiverID",   
 				"ReceiverTel", "Insurer","authoriate" };
-		String[] mapValue = new String[] { "ºşÄÏÈıÒ»¹¤³Ì»úĞµÓĞÏŞ¹«Ë¾", "ºşÄÏÈıÒ»¹¤³Ì»úĞµÓĞÏŞ¹«Ë¾",
-				"ÁùÇÅ±Ã³µ", "SY5419THB 52E(6)", "2", "·çÀä", "V09660", "300.00",
-				"600.00", "Â½°ÛÍòÔªÕû", "7", "100", "2012Äê8ÔÂ31ÈÕ", "60", "5", "3",
-				"10", "6", "10", "5", "10", "21", "540", "10", "2012Äê8ÔÂ31ÈÕ",
-				"2012Äê8ÔÂ31ÈÕ", "ÇäÁÕ", "430111199910102121", "13800138200", "ÇäÁÕ","bboss" };
+		String[] mapValue = new String[] { "æ¹–å—ä¸‰ä¸€å·¥ç¨‹æœºæ¢°æœ‰é™å…¬å¸", "æ¹–å—ä¸‰ä¸€å·¥ç¨‹æœºæ¢°æœ‰é™å…¬å¸",
+				"å…­æ¡¥æ³µè½¦", "SY5419THB 52E(6)", "2", "é£å†·", "V09660", "300.00",
+				"600.00", "é™†ä½°ä¸‡å…ƒæ•´", "7", "100", "2012å¹´8æœˆ31æ—¥", "60", "5", "3",
+				"10", "6", "10", "5", "10", "21", "540", "10", "2012å¹´8æœˆ31æ—¥",
+				"2012å¹´8æœˆ31æ—¥", "å¿ç³", "430111199910102121", "13800138200", "å¿ç³","bboss" };
 		for(int i = 0; i < bookMarks.length; i ++)
 		{
 			
@@ -43,7 +43,7 @@ public class PrintController {
 
 	}
 	public @ResponseBody Word2PDFResponse getPDFTemp()  {
-		System.out.println("--------------³ÌĞòÖ´ĞĞµ½´Ë´¦------------------");
+		System.out.println("--------------ç¨‹åºæ‰§è¡Œåˆ°æ­¤å¤„------------------");
 		Word2PDFResponse response = new Word2PDFResponse();
 //		response.setTempdir("d:\\");
 //		response.setWordFile("d:\\anjie_test.doc");
@@ -57,11 +57,11 @@ public class PrintController {
 				"FinanceAmt", "FinanceFC", "LackAmtPayDate",
 				"LackAmtFinalPayDate", "ReceiverName", "ReceiverID",   
 				"ReceiverTel", "Insurer","authoriate" };
-		String[] mapValue = new String[] { "ºşÄÏÈıÒ»¹¤³Ì»úĞµÓĞÏŞ¹«Ë¾", "ºşÄÏÈıÒ»¹¤³Ì»úĞµÓĞÏŞ¹«Ë¾",
-				"ÁùÇÅ±Ã³µ", "SY5419THB 52E(6)", "2", "·çÀä", "V09660", "300.00",
-				"600.00", "Â½°ÛÍòÔªÕû", "7", "100", "2012Äê8ÔÂ31ÈÕ", "60", "5", "3",
-				"10", "6", "10", "5", "10", "21", "540", "10", "2012Äê8ÔÂ31ÈÕ",
-				"2012Äê8ÔÂ31ÈÕ", "ÇäÁÕ", "430111199910102121", "13800138200", "ÇäÁÕ","bboss" };
+		String[] mapValue = new String[] { "æ¹–å—ä¸‰ä¸€å·¥ç¨‹æœºæ¢°æœ‰é™å…¬å¸", "æ¹–å—ä¸‰ä¸€å·¥ç¨‹æœºæ¢°æœ‰é™å…¬å¸",
+				"å…­æ¡¥æ³µè½¦", "SY5419THB 52E(6)", "2", "é£å†·", "V09660", "300.00",
+				"600.00", "é™†ä½°ä¸‡å…ƒæ•´", "7", "100", "2012å¹´8æœˆ31æ—¥", "60", "5", "3",
+				"10", "6", "10", "5", "10", "21", "540", "10", "2012å¹´8æœˆ31æ—¥",
+				"2012å¹´8æœˆ31æ—¥", "å¿ç³", "430111199910102121", "13800138200", "å¿ç³","bboss" };
 		for(int i = 0; i < bookMarks.length; i ++)
 		{
 			
@@ -82,7 +82,7 @@ public class PrintController {
 		return new File("D:\\bbossgroups-3.5.1\\bboss-mvc\\plugin\\wordpdf\\anjie.doc");
 	}
 	public @ResponseBody Word2PDFResponse downPDFTemp()  {
-		System.out.println("--------------³ÌĞòÖ´ĞĞµ½´Ë´¦------------------");
+		System.out.println("--------------ç¨‹åºæ‰§è¡Œåˆ°æ­¤å¤„------------------");
 		Word2PDFResponse response = new Word2PDFResponse();
 //		response.setTempdir("d:\\");
 //		response.setWordFile("d:\\anjie_test.doc");
@@ -96,11 +96,11 @@ public class PrintController {
 				"FinanceAmt", "FinanceFC", "LackAmtPayDate",
 				"LackAmtFinalPayDate", "ReceiverName", "ReceiverID",   
 				"ReceiverTel", "Insurer","authoriate" };
-		String[] mapValue = new String[] { "ºşÄÏÈıÒ»¹¤³Ì»úĞµÓĞÏŞ¹«Ë¾", "ºşÄÏÈıÒ»¹¤³Ì»úĞµÓĞÏŞ¹«Ë¾",
-				"ÁùÇÅ±Ã³µ", "SY5419THB 52E(6)", "2", "·çÀä", "V09660", "300.00",
-				"600.00", "Â½°ÛÍòÔªÕû", "7", "100", "2012Äê8ÔÂ31ÈÕ", "60", "5", "3",
-				"10", "6", "10", "5", "10", "21", "540", "10", "2012Äê8ÔÂ31ÈÕ",
-				"2012Äê8ÔÂ31ÈÕ", "ÇäÁÕ", "430111199910102121", "13800138200", "ÇäÁÕ","bboss" };
+		String[] mapValue = new String[] { "æ¹–å—ä¸‰ä¸€å·¥ç¨‹æœºæ¢°æœ‰é™å…¬å¸", "æ¹–å—ä¸‰ä¸€å·¥ç¨‹æœºæ¢°æœ‰é™å…¬å¸",
+				"å…­æ¡¥æ³µè½¦", "SY5419THB 52E(6)", "2", "é£å†·", "V09660", "300.00",
+				"600.00", "é™†ä½°ä¸‡å…ƒæ•´", "7", "100", "2012å¹´8æœˆ31æ—¥", "60", "5", "3",
+				"10", "6", "10", "5", "10", "21", "540", "10", "2012å¹´8æœˆ31æ—¥",
+				"2012å¹´8æœˆ31æ—¥", "å¿ç³", "430111199910102121", "13800138200", "å¿ç³","bboss" };
 		for(int i = 0; i < bookMarks.length; i ++)
 		{
 			
@@ -117,7 +117,7 @@ public class PrintController {
 
 	}
 	public @ResponseBody WordResponse getWord(boolean usecache)  {
-		System.out.println("--------------³ÌĞòÖ´ĞĞµ½´Ë´¦------------------");
+		System.out.println("--------------ç¨‹åºæ‰§è¡Œåˆ°æ­¤å¤„------------------");
 		WordResponse response = new WordResponse();
 		response.setCache(usecache);
 		response.setWordFile("d:\\anjie_test1.doc");
@@ -131,11 +131,11 @@ public class PrintController {
 				"FinanceAmt", "FinanceFC", "LackAmtPayDate",
 				"LackAmtFinalPayDate", "ReceiverName", "ReceiverID",   
 				"ReceiverTel", "Insurer","authoriate" };
-		String[] mapValue = new String[] { "ºşÄÏÈıÒ»¹¤³Ì»úĞµÓĞÏŞ¹«Ë¾", "ºşÄÏÈıÒ»¹¤³Ì»úĞµÓĞÏŞ¹«Ë¾",
-				"ÁùÇÅ±Ã³µ", "SY5419THB 52E(6)", "2", "·çÀäsdfsdf", "V09660ffff", "300.00",
-				"600.00", "Â½°ÛÍòÔªÕû", "7", "100", "2012Äê8ÔÂ31ÈÕ", "60", "5", "3",
-				"10", "6", "10", "5", "10", "21", "540", "10", "2012Äê8ÔÂ31ÈÕ",
-				"2012Äê8ÔÂ31ÈÕ", "ÇäÁÕ", "430111199910102121", "13800138200", "ÇäÁÕ","bboss" };
+		String[] mapValue = new String[] { "æ¹–å—ä¸‰ä¸€å·¥ç¨‹æœºæ¢°æœ‰é™å…¬å¸", "æ¹–å—ä¸‰ä¸€å·¥ç¨‹æœºæ¢°æœ‰é™å…¬å¸",
+				"å…­æ¡¥æ³µè½¦", "SY5419THB 52E(6)", "2", "é£å†·sdfsdf", "V09660ffff", "300.00",
+				"600.00", "é™†ä½°ä¸‡å…ƒæ•´", "7", "100", "2012å¹´8æœˆ31æ—¥", "60", "5", "3",
+				"10", "6", "10", "5", "10", "21", "540", "10", "2012å¹´8æœˆ31æ—¥",
+				"2012å¹´8æœˆ31æ—¥", "å¿ç³", "430111199910102121", "13800138200", "å¿ç³","bboss" };
 		for(int i = 0; i < bookMarks.length; i ++)
 		{
 			
@@ -153,7 +153,7 @@ public class PrintController {
 	}
 	
 	public @ResponseBody WordResponse getWordTemp()  {
-		System.out.println("--------------³ÌĞòÖ´ĞĞµ½´Ë´¦------------------");
+		System.out.println("--------------ç¨‹åºæ‰§è¡Œåˆ°æ­¤å¤„------------------");
 		WordResponse response = new WordResponse();
 		response.setTempdir("d:\\");
 //		response.setWordFile("d:\\anjie_test1.doc");
@@ -167,11 +167,11 @@ public class PrintController {
 				"FinanceAmt", "FinanceFC", "LackAmtPayDate",
 				"LackAmtFinalPayDate", "ReceiverName", "ReceiverID",   
 				"ReceiverTel", "Insurer","authoriate" };
-		String[] mapValue = new String[] { "ºşÄÏÈıÒ»¹¤³Ì»úĞµÓĞÏŞ¹«Ë¾", "ºşÄÏÈıÒ»¹¤³Ì»úĞµÓĞÏŞ¹«Ë¾",
-				"ÁùÇÅ±Ã³µ", "SY5419THB 52E(6)", "2", "·çÀäsdfsdf", "V09660ffff", "300.00",
-				"600.00", "Â½°ÛÍòÔªÕû", "7", "100", "2012Äê8ÔÂ31ÈÕ", "60", "5", "3",
-				"10", "6", "10", "5", "10", "21", "540", "10", "2012Äê8ÔÂ31ÈÕ",
-				"2012Äê8ÔÂ31ÈÕ", "ÇäÁÕ", "430111199910102121", "13800138200", "ÇäÁÕ","bboss" };
+		String[] mapValue = new String[] { "æ¹–å—ä¸‰ä¸€å·¥ç¨‹æœºæ¢°æœ‰é™å…¬å¸", "æ¹–å—ä¸‰ä¸€å·¥ç¨‹æœºæ¢°æœ‰é™å…¬å¸",
+				"å…­æ¡¥æ³µè½¦", "SY5419THB 52E(6)", "2", "é£å†·sdfsdf", "V09660ffff", "300.00",
+				"600.00", "é™†ä½°ä¸‡å…ƒæ•´", "7", "100", "2012å¹´8æœˆ31æ—¥", "60", "5", "3",
+				"10", "6", "10", "5", "10", "21", "540", "10", "2012å¹´8æœˆ31æ—¥",
+				"2012å¹´8æœˆ31æ—¥", "å¿ç³", "430111199910102121", "13800138200", "å¿ç³","bboss" };
 		for(int i = 0; i < bookMarks.length; i ++)
 		{
 			
@@ -189,7 +189,7 @@ public class PrintController {
 	}
 	
 	public @ResponseBody WordResponse downWordTemp()  {
-		System.out.println("--------------³ÌĞòÖ´ĞĞµ½´Ë´¦------------------");
+		System.out.println("--------------ç¨‹åºæ‰§è¡Œåˆ°æ­¤å¤„------------------");
 		WordResponse response = new WordResponse();
 //		response.setTempdir("d:\\");
 //		response.setWordFile("d:\\anjie_test1.doc");
@@ -203,11 +203,11 @@ public class PrintController {
 				"FinanceAmt", "FinanceFC", "LackAmtPayDate",
 				"LackAmtFinalPayDate", "ReceiverName", "ReceiverID",   
 				"ReceiverTel", "Insurer","authoriate" };
-		String[] mapValue = new String[] { "ºşÄÏÈıÒ»¹¤³Ì»úĞµÓĞÏŞ¹«Ë¾", "ºşÄÏÈıÒ»¹¤³Ì»úĞµÓĞÏŞ¹«Ë¾",
-				"ÁùÇÅ±Ã³µ", "SY5419THB 52E(6)", "2", "·çÀäsdfsdf", "V09660ffff", "300.00",
-				"600.00", "Â½°ÛÍòÔªÕû", "7", "100", "2012Äê8ÔÂ31ÈÕ", "60", "5", "3",
-				"10", "6", "10", "5", "10", "21", "540", "10", "2012Äê8ÔÂ31ÈÕ",
-				"2012Äê8ÔÂ31ÈÕ", "ÇäÁÕ", "430111199910102121", "13800138200", "ÇäÁÕ","bboss" };
+		String[] mapValue = new String[] { "æ¹–å—ä¸‰ä¸€å·¥ç¨‹æœºæ¢°æœ‰é™å…¬å¸", "æ¹–å—ä¸‰ä¸€å·¥ç¨‹æœºæ¢°æœ‰é™å…¬å¸",
+				"å…­æ¡¥æ³µè½¦", "SY5419THB 52E(6)", "2", "é£å†·sdfsdf", "V09660ffff", "300.00",
+				"600.00", "é™†ä½°ä¸‡å…ƒæ•´", "7", "100", "2012å¹´8æœˆ31æ—¥", "60", "5", "3",
+				"10", "6", "10", "5", "10", "21", "540", "10", "2012å¹´8æœˆ31æ—¥",
+				"2012å¹´8æœˆ31æ—¥", "å¿ç³", "430111199910102121", "13800138200", "å¿ç³","bboss" };
 		for(int i = 0; i < bookMarks.length; i ++)
 		{
 			

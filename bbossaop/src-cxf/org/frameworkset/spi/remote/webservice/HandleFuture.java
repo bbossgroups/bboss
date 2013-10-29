@@ -22,7 +22,7 @@ import org.frameworkset.spi.remote.RPCMessage;
 
 /**
  * <p>HandleFuture.java</p>
- * <p> Description: 接收到远程服务调用请求处理任务类</p>
+ * <p> Description: 鎺ユ敹鍒拌繙绋嬫湇鍔¤皟鐢ㄨ姹傚鐞嗕换鍔＄被</p>
  * <p> bboss workgroup </p>
  * <p> Copyright (c) 2009 </p>
  * 

@@ -43,9 +43,7 @@ import org.apache.ecs.html.A;
 import org.apache.ecs.html.Span;
 import org.apache.ecs.html.TD;
 import org.apache.ecs.html.TH;
-import org.frameworkset.spi.support.MessageSource;
-import org.frameworkset.web.servlet.support.RequestContextUtils;
-import org.frameworkset.web.servlet.support.WebApplicationContextUtils;
+import org.frameworkset.util.I18NUtil;
 
 import com.frameworkset.util.StringUtil;
 
@@ -53,7 +51,7 @@ import com.frameworkset.util.StringUtil;
 
 /**
  * @author biaoping.yin
- * ÏÔÊ¾±íÍ·±êÌâµÄtag
+ * æ˜¾ç¤ºè¡¨å¤´æ ‡é¢˜çš„tag
  * To change the template for this generated type comment go to
  * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
  */
@@ -62,26 +60,26 @@ public class TitleTag  extends PagerTagSupport
 
 	private String bgColor = "#8da6c4";
 	private String title = null;
-	/**±êÌâ¹ú¼Ê»¯code*/
+	/**æ ‡é¢˜å›½é™…åŒ–code*/
 	private String titlecode = null;
 	
 	private boolean sort = false;
 	private int colid = -1;
 
 
-	/**±êÌâÑùÊ½Ãû³Æ*/
+	/**æ ‡é¢˜æ ·å¼åç§°*/
 	private String className = null;
 
-	/**±êÌâ¶ÔÆëÑùÊ½Ãû³Æ*/
+	/**æ ‡é¢˜å¯¹é½æ ·å¼åç§°*/
 	private String align = null;
 
-	/**¿ØÖÆÄÚÈİÊÇ·ñÕÛĞĞ*/
+	/**æ§åˆ¶å†…å®¹æ˜¯å¦æŠ˜è¡Œ*/
 	private boolean nowrap = false;
 
-	/**¿ØÖÆ±êÌâ¿çĞĞ*/
+	/**æ§åˆ¶æ ‡é¢˜è·¨è¡Œ*/
 	private int colspan = 0;
 	/**
-	 * Ö¸¶¨±êÌâµÄ¿í¶È
+	 * æŒ‡å®šæ ‡é¢˜çš„å®½åº¦
 	 */
 	private String width = null;
 
@@ -89,7 +87,7 @@ public class TitleTag  extends PagerTagSupport
 	private String type = "th";
 
 	/**
-	 * Ö¸¶¨±êÌâ¶ÔÓ¦µÄÊôĞÔÃû³Æ
+	 * æŒ‡å®šæ ‡é¢˜å¯¹åº”çš„å±æ€§åç§°
 	 */
 	private String colName = null;
 	
@@ -181,11 +179,11 @@ public class TitleTag  extends PagerTagSupport
     public String generateWapContent() {
         StringBuffer ret = new StringBuffer();
         TD td = new TD();
-        if(this.getTitle() == null)//Èç¹ûÃ»ÓĞÉè¶¨±êÌâ
+        if(this.getTitle() == null)//å¦‚æœæ²¡æœ‰è®¾å®šæ ‡é¢˜
         {
             /**
-             * Èç¹û¸Ä×Ö¶ÎĞèÒªÅÅĞò£¬¹¹½¨ÅÅĞòµÄhref
-             * ²¢ÇÒ·´×ªÅÅĞòË³Ğò
+             * å¦‚æœæ”¹å­—æ®µéœ€è¦æ’åºï¼Œæ„å»ºæ’åºçš„href
+             * å¹¶ä¸”åè½¬æ’åºé¡ºåº
              *
              */
             if(isSortKey())
@@ -227,7 +225,7 @@ public class TitleTag  extends PagerTagSupport
             else
                 td.setTagText(getTitle(getColid()));
         }
-        else //Èç¹û²»ĞèÒªÅÅĞòÖ±½ÓÊä³ö±êÌâ
+        else //å¦‚æœä¸éœ€è¦æ’åºç›´æ¥è¾“å‡ºæ ‡é¢˜
         {
 
             String title = getTitle();
@@ -298,11 +296,11 @@ public class TitleTag  extends PagerTagSupport
 		td.setNoWrap(nowrap);
 		if(this.getColspan() != 0)
 		    td.setColSpan(getColspan());
-		if(title_lable == null)//Èç¹ûÃ»ÓĞÉè¶¨±êÌâ
+		if(title_lable == null)//å¦‚æœæ²¡æœ‰è®¾å®šæ ‡é¢˜
 		{
 			/**
-			 * Èç¹û¸Ä×Ö¶ÎĞèÒªÅÅĞò£¬¹¹½¨ÅÅĞòµÄhref
-			 * ²¢ÇÒ·´×ªÅÅĞòË³Ğò
+			 * å¦‚æœæ”¹å­—æ®µéœ€è¦æ’åºï¼Œæ„å»ºæ’åºçš„href
+			 * å¹¶ä¸”åè½¬æ’åºé¡ºåº
 			 *
 			 */
 			if(isSortKey())
@@ -387,7 +385,7 @@ public class TitleTag  extends PagerTagSupport
 			else
 				td.setTagText(getTitle(getColid()));
 		}
-		else //Èç¹û²»ĞèÒªÅÅĞòÖ±½ÓÊä³ö±êÌâ
+		else //å¦‚æœä¸éœ€è¦æ’åºç›´æ¥è¾“å‡ºæ ‡é¢˜
 		{
 
 			String title = title_lable;
@@ -482,7 +480,7 @@ public class TitleTag  extends PagerTagSupport
 //		MessageSource source = WebApplicationContextUtils.getWebApplicationContext();
 //		
 //		return source.getMessage(this.titlecode, RequestContextUtils.getRequestContextLocal(request));
-		return RequestContextUtils.getI18nMessage(titlecode, this.title,request);
+		return I18NUtil.getI18nMessage(titlecode, this.title,request);
 	}
 	/**
 	 * @see com.frameworkset.common.tag.BaseTag#generateContent()
@@ -505,11 +503,11 @@ public class TitleTag  extends PagerTagSupport
 		td.setNoWrap(nowrap);
 		if(this.getColspan() != 0)
 		    td.setColSpan(getColspan());
-		if(title_lable == null)//Èç¹ûÃ»ÓĞÉè¶¨±êÌâ
+		if(title_lable == null)//å¦‚æœæ²¡æœ‰è®¾å®šæ ‡é¢˜
 		{
 			/**
-			 * Èç¹û¸Ä×Ö¶ÎĞèÒªÅÅĞò£¬¹¹½¨ÅÅĞòµÄhref
-			 * ²¢ÇÒ·´×ªÅÅĞòË³Ğò
+			 * å¦‚æœæ”¹å­—æ®µéœ€è¦æ’åºï¼Œæ„å»ºæ’åºçš„href
+			 * å¹¶ä¸”åè½¬æ’åºé¡ºåº
 			 *
 			 */
 			if(isSortKey())
@@ -589,7 +587,7 @@ public class TitleTag  extends PagerTagSupport
 			else
 				td.setTagText(getTitle(getColid()));
 		}
-		else //Èç¹û²»ĞèÒªÅÅĞòÖ±½ÓÊä³ö±êÌâ
+		else //å¦‚æœä¸éœ€è¦æ’åºç›´æ¥è¾“å‡ºæ ‡é¢˜
 		{
 
 			String title = title_lable;
@@ -726,7 +724,7 @@ public class TitleTag  extends PagerTagSupport
 	}
 
 	/**
-	 * ÅĞ¶ÏÊÇ·ñÊÇÅÅĞò×Ö¶Î
+	 * åˆ¤æ–­æ˜¯å¦æ˜¯æ’åºå­—æ®µ
 	 * @return boolean
 	 */
 	public boolean isSortKey() {

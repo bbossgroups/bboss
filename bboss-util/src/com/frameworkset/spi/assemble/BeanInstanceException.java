@@ -9,7 +9,7 @@ import java.lang.reflect.InvocationTargetException;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2009-9-17 œ¬ŒÁ04:04:28
+ * @Date 2009-9-17 ‰∏ãÂçà04:04:28
  * @author biaoping.yin
  * @version 1.0
  */

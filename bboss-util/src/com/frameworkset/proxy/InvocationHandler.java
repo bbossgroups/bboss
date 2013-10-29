@@ -5,7 +5,7 @@ import java.lang.reflect.Method;
 /**
  * <p>Title: InvocationHandler</p>
  *
- * <p>Description: ´¦Àí¶¯Ì¬´úÀíµ÷ÓÃ</p>
+ * <p>Description: å¤„ç†åŠ¨æ€ä»£ç†è°ƒç”¨</p>
  *
  * <p>Copyright: Copyright (c) 2005</p>
  *
@@ -16,11 +16,11 @@ import java.lang.reflect.Method;
  */
 public  abstract class InvocationHandler implements java.lang.reflect.InvocationHandler{
     /**
-     * ĞèÒª¶¯Ì¬´úÀíµÄ½Ó¿ÚÊµÏÖ³ÌĞò
+     * éœ€è¦åŠ¨æ€ä»£ç†çš„æ¥å£å®ç°ç¨‹åº
      */
     protected Object delegate;
     /**
-     * À¹½ØÆ÷Ìá¹©ËùÓĞµÄÃæÏò·½ÃæµÄ½Ó¿Ú
+     * æ‹¦æˆªå™¨æä¾›æ‰€æœ‰çš„é¢å‘æ–¹é¢çš„æ¥å£
      */
     protected Interceptor interceptor;
     public abstract Object invoke(Object proxy, Method method, Object[] args) throws Throwable ;

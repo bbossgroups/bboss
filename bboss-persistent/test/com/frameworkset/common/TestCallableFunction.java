@@ -34,7 +34,7 @@ public class TestCallableFunction {
 	}
 	
 	/**
-	 * Ö´ĞĞº¯ÊıÊ±²»ÄÜÍ¨¹ıÃüÃû·½Ê½°ó¶¨±äÁ¿
+	 * æ‰§è¡Œå‡½æ•°æ—¶ä¸èƒ½é€šè¿‡å‘½åæ–¹å¼ç»‘å®šå˜é‡
 	 */
 	public @Test void testTest_fWithNameIndex()
 	{
@@ -67,7 +67,7 @@ public class TestCallableFunction {
 		{
 			callableDBUtil.prepareCallable("{? = call Test_f(?,?,?)}");
 			callableDBUtil.registerOutParameter(1, java.sql.Types.INTEGER);
-			//²»ÔÊĞíµÄ²Ù×÷: Ordinal binding and Named binding cannot be combined!
+			//ä¸å…è®¸çš„æ“ä½œ: Ordinal binding and Named binding cannot be combined!
 			callableDBUtil.setInt(2, 10);
 			callableDBUtil.registerOutParameter(3, java.sql.Types.VARCHAR);
 			callableDBUtil.registerOutParameter(4, java.sql.Types.VARCHAR);
@@ -86,7 +86,7 @@ public class TestCallableFunction {
 	}
 	
 	/**
-	 * ¶ÔÓÚº¯ÊıµÄµ÷ÓÃÊ¹ÄÜÊ¹ÓÃË³ĞòÎ»ÖÃ±êÊ¶À´°ó¶¨±äÁ¿
+	 * å¯¹äºå‡½æ•°çš„è°ƒç”¨ä½¿èƒ½ä½¿ç”¨é¡ºåºä½ç½®æ ‡è¯†æ¥ç»‘å®šå˜é‡
 	 */
 	public @Test void testTest_fWithNameIndexForXMLStringRowHandler()
 	{
@@ -94,7 +94,7 @@ public class TestCallableFunction {
 		try
 		{
 			callableDBUtil.prepareCallable("{? = call Test_f(?,?,?)}");
-			//²»ÔÊĞíµÄ²Ù×÷: Ordinal binding and Named binding cannot be combined!
+			//ä¸å…è®¸çš„æ“ä½œ: Ordinal binding and Named binding cannot be combined!
 			callableDBUtil.registerOutParameter(1, java.sql.Types.INTEGER);
 			callableDBUtil.setInt(2, 10);
 			callableDBUtil.registerOutParameter(3, java.sql.Types.VARCHAR);
@@ -102,7 +102,7 @@ public class TestCallableFunction {
 			String xmlString = callableDBUtil.executeCallableForXML(new com.frameworkset.common.poolman.handle.RowHandler()
 			{
 				/**
-				 * ¶ÔÒÑ¾­´¦ÀíºÃµÄĞĞ¼ÇÂ¼½øĞĞ´¦ÀíµÄÂß¼­
+				 * å¯¹å·²ç»å¤„ç†å¥½çš„è¡Œè®°å½•è¿›è¡Œå¤„ç†çš„é€»è¾‘
 				 * @param rowValue
 				 */
 				public void handleRow(Object rowValue,Record record)
@@ -173,10 +173,10 @@ public class TestCallableFunction {
 	}
 	
 	/**
-	 * ¾­¹ı²âÊÔÖ¤Ã÷´æ´¢¹ı³ÌÖĞÈç¹ûÃ»ÓĞ¶Ô²åÈë/É¾³ı/ĞŞ¸Ä²Ù×÷×öÊÂÎñÌá½»¡¢»Ø¹öÊ±£¬¿ÉÒÔÍ¨¹ıpoolman
-	 * µÄÊÂÎñ¿ò¼ÜÀ´¹ÜÀíÊÂÎñ;Èç¹û´æ´¢¹ı³ÌÖĞ¶Ô²åÈë/É¾³ı/ĞŞ¸Ä²Ù×÷ÒÑ¾­×öÁËÊÂÎñÌá½»»òÕß»Ø¹öÊ±£¬ÄÇÃ´Ó¦ÓÃµÄÊÂÎñºÍ´æ´¢¹ı³ÌÖĞ
-	 * ÖĞµÄÊÂÎñ¾ÍÊÇ·ÖÀëµÄÁ½¸öÊÂÎñ¡£ 
-	 * @param i Îª0Ê±»Ø¹öÊÂÎñ£¬1Ê±Ìá½»ÊÂÎñ
+	 * ç»è¿‡æµ‹è¯•è¯æ˜å­˜å‚¨è¿‡ç¨‹ä¸­å¦‚æœæ²¡æœ‰å¯¹æ’å…¥/åˆ é™¤/ä¿®æ”¹æ“ä½œåšäº‹åŠ¡æäº¤ã€å›æ»šæ—¶ï¼Œå¯ä»¥é€šè¿‡poolman
+	 * çš„äº‹åŠ¡æ¡†æ¶æ¥ç®¡ç†äº‹åŠ¡;å¦‚æœå­˜å‚¨è¿‡ç¨‹ä¸­å¯¹æ’å…¥/åˆ é™¤/ä¿®æ”¹æ“ä½œå·²ç»åšäº†äº‹åŠ¡æäº¤æˆ–è€…å›æ»šæ—¶ï¼Œé‚£ä¹ˆåº”ç”¨çš„äº‹åŠ¡å’Œå­˜å‚¨è¿‡ç¨‹ä¸­
+	 * ä¸­çš„äº‹åŠ¡å°±æ˜¯åˆ†ç¦»çš„ä¸¤ä¸ªäº‹åŠ¡ã€‚ 
+	 * @param i ä¸º0æ—¶å›æ»šäº‹åŠ¡ï¼Œ1æ—¶æäº¤äº‹åŠ¡
 	 */
 	public @Test void testTest_fWithNameIndexForObjectTx()
 	{
@@ -188,7 +188,7 @@ public class TestCallableFunction {
 			CallableDBUtil callableDBUtil = new CallableDBUtil();
 			callableDBUtil.prepareCallable("{? = call Test_f(?,?,?)}");
 			callableDBUtil.registerOutParameter(1, java.sql.Types.INTEGER);
-			//²»ÔÊĞíµÄ²Ù×÷: Ordinal binding and Named binding cannot be combined!
+			//ä¸å…è®¸çš„æ“ä½œ: Ordinal binding and Named binding cannot be combined!
 			
 			callableDBUtil.setInt(2, 10);
 			callableDBUtil.registerOutParameter(3, java.sql.Types.VARCHAR);

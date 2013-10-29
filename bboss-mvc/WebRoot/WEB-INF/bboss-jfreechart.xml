@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding='gb2312'?>
+<?xml version="1.0" encoding='UTF-8'?>
 <!-- 
 bboss-jfreechart.xml
-描述：jfreechart
+鎻忚堪锛歫freechart
 -->
 <properties>
     <property name = "/jfreechart/*.htm" class="org.frameworkset.web.jfreechart.JfreeChartController" ></property>

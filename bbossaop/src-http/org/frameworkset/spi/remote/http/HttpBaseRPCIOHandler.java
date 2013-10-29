@@ -96,7 +96,7 @@ public class HttpBaseRPCIOHandler extends BaseRPCIOHandler implements org.apache
 	            RPCMessage message = (RPCMessage) ObjectSerializable.toBean(instream, RPCMessage.class);   
 				RPCMessage ret = super.messageReceived(message);
 				 String ret_str = ObjectSerializable.toXML(ret);
-		            response.addHeader("Content-Type", "text/xml;charset=GBK");    
+		            response.addHeader("Content-Type", "text/xml;charset=UTF-8");    
 
 		              response.setEntity(new NStringEntity(ret_str));
 			} catch (Exception e) {

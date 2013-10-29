@@ -24,7 +24,7 @@ import java.util.List;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2010-2-8 ÏÂÎç04:43:07
+ * @Date 2010-2-8 ä¸‹åˆ04:43:07
  * @author biaoping.yin
  * @version 1.0
  */

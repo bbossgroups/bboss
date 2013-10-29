@@ -22,7 +22,7 @@ package org.frameworkset.spi.remote.http;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2011-12-28 œ¬ŒÁ11:01:50
+ * @Date 2011-12-28 ‰∏ãÂçà11:01:50
  * @author biaoping.yin
  * @version 1.0
  */
@@ -73,7 +73,7 @@ public class BBossHttp  {
 	    public final static String PLAIN_TEXT_TYPE = "text/plain";
 	    public final static String CHARSET_PARAM = "; charset=";
 	    
-	    public final static String XML_TEXT_TYPE = "text/xml;charset=gbk";
+	    public final static String XML_TEXT_TYPE = "text/xml;charset=UTF-8";
 
 	    /** Default content type */
 	    public final static String DEFAULT_CONTENT_TYPE = OCTET_STREAM_TYPE;

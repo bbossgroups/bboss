@@ -21,7 +21,7 @@ import com.frameworkset.common.tag.BaseTag;
 
 /**
  * <p>Title: ScriptTag.java</p> 
- * <p>Description: 用来在界面上唯一地输出一个js导入文件脚本</p>
+ * <p>Description: 鐢ㄦ潵鍦ㄧ晫闈笂鍞竴鍦拌緭鍑轰竴涓猨s瀵煎叆鏂囦欢鑴氭湰</p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2008</p>
  * @Date 2010-7-4

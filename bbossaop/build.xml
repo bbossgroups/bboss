@@ -52,12 +52,13 @@
 		<fileset dir="lib/mina/test/" includes="**/*.jar *.zip" />
 		<fileset dir="lib/encrypt" includes="*.jar *.zip" />
 		<fileset dir="lib/jgroups" includes="*.jar *.zip" />
-		<fileset dir="lib/quartz" includes="*.jar *.zip" />
+		<!--<fileset dir="lib/quartz" includes="*.jar *.zip" />-->
 		<fileset dir="lib/netty" includes="*.jar *.zip" />
 		<fileset dir="lib/tlq" includes="*.jar *.zip" />
 		<fileset dir="lib/cglib" includes="*.jar *.zip" />
 		<fileset dir="lib/asm" includes="*.jar *.zip" />
 		<fileset dir="lib/http" includes="*.jar *.zip" />
+		<fileset dir="testlib/" includes="*.jar *.zip" />
 		<fileset dir="${distrib}" includes="**/*.jar **/*.zip" />
 
 	</path>
@@ -66,7 +67,7 @@
 		        Distribution jar package
 		       ==========================
 		  -->
-	<target name="distrib" depends="init,jar-bboss-aop-jgroups,jar-bboss-ws,jar-bboss-camel,jar-bboss-mina,jar-bboss-jms,jar-bboss-schedule,jar-bboss-rmi,jar-bboss-http,jar-bboss-aop,copy-resource,copy-depends-liberary,jar-bboss-tlq,jar-bboss-aop-test" description="copy jar file to distribution directory">
+	<target name="distrib" depends="init,jar-bboss-aop-jgroups,jar-bboss-ws,jar-bboss-camel,jar-bboss-mina,jar-bboss-jms,jar-bboss-rmi,jar-bboss-http,jar-bboss-aop,copy-resource,copy-depends-liberary,jar-bboss-tlq,jar-bboss-aop-test" description="copy jar file to distribution directory">
 		<echo>Construct the distribution package...</echo>
 
 	</target>
@@ -74,7 +75,7 @@
 	<target name="compile-bboss-aop" description="compile the bboss-aop source ">
 		<echo>compile the bboss-aop source ...</echo>
 
-		<javac destdir="${classes-bboss-aop}" target="1.5" source="1.5" deprecation="true" debug="${debug}" optimize="${optimize}" memorymaximumsize="256M" fork="true" verbose="yes">
+		<javac encoding="UTF-8" destdir="${classes-bboss-aop}" target="1.5" source="1.5" deprecation="true" debug="${debug}" optimize="${optimize}" memorymaximumsize="256M" fork="true" verbose="yes">
 			<src path="src" />
 			<src path="src-mina" />
 			<src path="src-log" />
@@ -83,7 +84,7 @@
 			<src path="src-jms" />
 			<src path="src-jgroups" />
 			<src path="src-thread" />
-			<src path="src-schedule" />
+			<!--<src path="src-schedule" />-->
 			<src path="src-netty" />
 			<src path="src-rmi" />
 			<src path="src-http" />
@@ -139,7 +140,7 @@
 		</jar>
 		<delete dir="${classes-bboss-aop}/org/frameworkset/netty" />
 	</target>
-	<target name="jar-bboss-schedule" depends="compile-bboss-aop" description="generate the bboss-schedule library bboss-schedule.jar">
+	<!--<target name="jar-bboss-schedule" depends="compile-bboss-aop" description="generate the bboss-schedule library bboss-schedule.jar">
 		<echo>Generate the bboss-aop library bboss-schedule.jar ...</echo>
 		<jar jarfile="${distrib}/bboss-schedule.jar" basedir="${classes-bboss-aop}" includes="org/frameworkset/task/**/*">
 			<manifest>
@@ -153,7 +154,7 @@
 			</manifest>
 		</jar>
 		<delete dir="${classes-bboss-aop}/org/frameworkset/task" />
-	</target>
+	</target>-->
 	<target name="jar-bboss-mina" depends="compile-bboss-aop" description="generate the bboss-mina library bboss-mina.jar">
 		<echo>Generate the bboss-aop library bboss-mina.jar ...</echo>
 		<jar jarfile="${distrib}/bboss-mina.jar" basedir="${classes-bboss-aop}" includes="org/frameworkset/spi/remote/mina/**/*">
@@ -207,7 +208,7 @@
 
 	<target name="compile-bboss-aop-test" description="compile the bboss-aop-test source ">
 		<echo>compile the bboss-aop-test source ...</echo>
-		<javac destdir="${classes-bboss-aop-test}" target="1.5" source="1.5" deprecation="true" debug="${debug}" optimize="${optimize}" memorymaximumsize="256M" fork="true" verbose="yes">
+		<javac encoding="UTF-8" destdir="${classes-bboss-aop-test}" target="1.5" source="1.5" deprecation="true" debug="${debug}" optimize="${optimize}" memorymaximumsize="256M" fork="true" verbose="yes">
 
 			<src path="test" />
 
@@ -276,7 +277,7 @@
 	</target>
 	<target name="compile-bboss-camel" description="compile the bboss-camel source ">
 		<echo>compile the bboss-camel source ...</echo>
-		<javac destdir="classes-bboss-camel" target="1.5" source="1.5" deprecation="true" debug="${debug}" optimize="${optimize}" memorymaximumsize="256M" fork="true" verbose="yes">
+		<javac encoding="UTF-8" destdir="classes-bboss-camel" target="1.5" source="1.5" deprecation="true" debug="${debug}" optimize="${optimize}" memorymaximumsize="256M" fork="true" verbose="yes">
 
 			<src path="src-camel" />
 
@@ -311,7 +312,7 @@
 
 	<target name="compile-bboss-tlq" description="compile the bboss-tlq source ">
 		<echo>compile the bboss-tlq source ...</echo>
-		<javac destdir="classes-bboss-tlq" target="1.5" source="1.5" deprecation="true" debug="${debug}" optimize="${optimize}" memorymaximumsize="256M" fork="true" verbose="yes">
+		<javac encoding="UTF-8" destdir="classes-bboss-tlq" target="1.5" source="1.5" deprecation="true" debug="${debug}" optimize="${optimize}" memorymaximumsize="256M" fork="true" verbose="yes">
 
 			<src path="src-tlq" />
 

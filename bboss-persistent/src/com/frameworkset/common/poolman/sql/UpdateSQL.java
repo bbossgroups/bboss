@@ -35,16 +35,16 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * Ö´ĞĞÅú´¦Àí²åÈë²Ù×÷Ê±£¬±£´æ¸üĞÂ±íÃû¡¢Ö÷¼üĞÅÏ¢Óï¾äºÍÖ÷¼üÖµ¶ÔÏó
+ * æ‰§è¡Œæ‰¹å¤„ç†æ’å…¥æ“ä½œæ—¶ï¼Œä¿å­˜æ›´æ–°è¡¨åã€ä¸»é”®ä¿¡æ¯è¯­å¥å’Œä¸»é”®å€¼å¯¹è±¡
  * @author biaoping.yin
  * created on 2005-4-16
  * version 1.0 
- * java.lang.Comparable:±ãÓÚ³ÌĞò¶ÔÏó×Ô¶¯ÅÅĞò
+ * java.lang.Comparable:ä¾¿äºç¨‹åºå¯¹è±¡è‡ªåŠ¨æ’åº
  */
 public class UpdateSQL implements Serializable,java.lang.Comparable{
     private String updateSql;
     /**
-     * Ô¤±àÒëÖ´ĞĞµÄÓï¾ä¶ÔÓ¦µÄ²ÎÊı±í
+     * é¢„ç¼–è¯‘æ‰§è¡Œçš„è¯­å¥å¯¹åº”çš„å‚æ•°è¡¨
      * datas<i,data>
      */
     private List datas = null;  
@@ -76,7 +76,7 @@ public class UpdateSQL implements Serializable,java.lang.Comparable{
     }
     
     /**
-     * ÅĞ¶ÏÁ½¸ösqlÓï¾äÊÇ·ñÏàµÈ
+     * åˆ¤æ–­ä¸¤ä¸ªsqlè¯­å¥æ˜¯å¦ç›¸ç­‰
      */
     public boolean equals(Object updateStatement)
     {

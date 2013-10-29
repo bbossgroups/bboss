@@ -32,16 +32,16 @@
 package com.frameworkset.common.tag.pager.model;
 
 /**
- * Ò»¸öÔªÊı¾İÖ»ÄÜÔÚÔªÄ£ĞÍÖĞÌí¼ÓÒ»´Î£¬Òò´ËÍ¨¹ı±¾³éÏóÀàÀ´¿ØÖÆÈ·±£ËùÓĞµÄÔªÊı¾İÖ»Ìí¼ÓÒ»´Î
+ * ä¸€ä¸ªå…ƒæ•°æ®åªèƒ½åœ¨å…ƒæ¨¡å‹ä¸­æ·»åŠ ä¸€æ¬¡ï¼Œå› æ­¤é€šè¿‡æœ¬æŠ½è±¡ç±»æ¥æ§åˆ¶ç¡®ä¿æ‰€æœ‰çš„å…ƒæ•°æ®åªæ·»åŠ ä¸€æ¬¡
  * @author biaoping.yin
  * created on 2005-5-27
  * version 1.0 
  */
 public abstract class UniqueHelper implements ModelObject{
     /**
-     * ¿ØÖÆ±äÁ¿Èç¹ûÒÑ¾­Ìí¼Óµ½ÔªÄ£ĞÍÖĞ£¬Ôò²»Ìí¼Ó
-     * true£¬ÒÑ¾­Ìí¼Ó£¬
-     * false£¬Î´Ìí¼Ó
+     * æ§åˆ¶å˜é‡å¦‚æœå·²ç»æ·»åŠ åˆ°å…ƒæ¨¡å‹ä¸­ï¼Œåˆ™ä¸æ·»åŠ 
+     * trueï¼Œå·²ç»æ·»åŠ ï¼Œ
+     * falseï¼Œæœªæ·»åŠ 
      */
     protected boolean hasAdded = false; 
 

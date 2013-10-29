@@ -1,58 +1,58 @@
-Ò».ÔËĞĞ»·¾³
+ä¸€.è¿è¡Œç¯å¢ƒ
    1.jdk1.4
-   2.ËùĞèµÄµÚÈı·½°ü:ecs-1.4.2.jar                  
+   2.æ‰€éœ€çš„ç¬¬ä¸‰æ–¹åŒ…:ecs-1.4.2.jar                  
                   jakarta-oro-2.0.8.jar
                   jmxri.jar
                   jmxtools.jar
                   log4j.jar
                   turbine-2.3.jar
                   
-                  Ïê¼ûreadme.txt
+                  è¯¦è§readme.txt
                   
-¶ş.ÈçºÎÅäÖÃ
+äºŒ.å¦‚ä½•é…ç½®
 
-1.½«/tldÄ¿Â¼ÏÂµÄ±êÇ©¿âÎÄ¼ş·Åµ½Ó¦ÓÃµÄ/WEB-INF/Ä¿Â¼ÏÂ,²¢ÇÒ¼Óµ½web.xmlÎÄ¼şÖĞ£¬½«ËùÓĞµÄ¿âÎÄ¼şºÍÊı¾İ¿âÇı¶¯³ÌĞò¿âÎÄ¼ş·Åµ½WEB-INF/libÄ¿Â¼ÏÂÃæ
+1.å°†/tldç›®å½•ä¸‹çš„æ ‡ç­¾åº“æ–‡ä»¶æ”¾åˆ°åº”ç”¨çš„/WEB-INF/ç›®å½•ä¸‹,å¹¶ä¸”åŠ åˆ°web.xmlæ–‡ä»¶ä¸­ï¼Œå°†æ‰€æœ‰çš„åº“æ–‡ä»¶å’Œæ•°æ®åº“é©±åŠ¨ç¨‹åºåº“æ–‡ä»¶æ”¾åˆ°WEB-INF/libç›®å½•ä¸‹é¢
 
-2.ĞŞ¸Äframeworkset.jar°üÖĞ»òÕßÆäËûclasspathÖĞµÄpoolman.xmlÎÄ¼şµÄÒÔÏÂÄÚÈİ£º
+2.ä¿®æ”¹frameworkset.jaråŒ…ä¸­æˆ–è€…å…¶ä»–classpathä¸­çš„poolman.xmlæ–‡ä»¶çš„ä»¥ä¸‹å†…å®¹ï¼š
     <dbname>youdbname</dbname>    	
     <driver>oracle.jdbc.driver.OracleDriver</driver>
     <url>jdbc:oracle:thin:@localhost:1521:XXXX</url>
     <username>user</username>
     <password>password</password>
-    ½«ÒÔÉÏ¸÷ÏîĞŞ¸ÄÎªÄã×Ô¼ºµÄÊı¾İ¿âÁ¬½ÓÅäÖÃ¼´¿É
+    å°†ä»¥ä¸Šå„é¡¹ä¿®æ”¹ä¸ºä½ è‡ªå·±çš„æ•°æ®åº“è¿æ¥é…ç½®å³å¯
  
-3.Ê÷±êÇ©¿âÊı¾İ»ñÈ¡½Ó¿ÚÅäÖÃÎÄ¼ş£ºtreedata.properties·Åµ½/WEB-INF/classes/ÏÂ
-4.·ÖÒ³/ÁĞ±í/ÏêÏ¸ĞÅÏ¢Êı¾İ»ñÈ¡½Ó¿ÚÅäÖÃÎÄ¼ş£ºlistdata.properties·Åµ½/WEB-INF/classes/ÏÂ
+3.æ ‘æ ‡ç­¾åº“æ•°æ®è·å–æ¥å£é…ç½®æ–‡ä»¶ï¼štreedata.propertiesæ”¾åˆ°/WEB-INF/classes/ä¸‹
+4.åˆ†é¡µ/åˆ—è¡¨/è¯¦ç»†ä¿¡æ¯æ•°æ®è·å–æ¥å£é…ç½®æ–‡ä»¶ï¼šlistdata.propertiesæ”¾åˆ°/WEB-INF/classes/ä¸‹
                                 
     
-Èı.±êÇ©Ê¹ÓÃËµÃ÷£º    
+ä¸‰.æ ‡ç­¾ä½¿ç”¨è¯´æ˜ï¼š    
 
-1.·ÖÒ³/ÁĞ±í/ÏêÏ¸ĞÅÏ¢±êÇ©¿â
+1.åˆ†é¡µ/åˆ—è¡¨/è¯¦ç»†ä¿¡æ¯æ ‡ç­¾åº“
 
-    ¿ÉÒÔÍ¨¹ıÁ½ÖÖ·½Ê½»ñÈ¡·ÖÒ³ÁĞ±íÊı¾İ£º
-        µÚÒ»ÖÖÖ±½Ó·ÃÎÊÊı¾İ¿â£¬Èç¹ûÄúµÄÊı¾İÊÇ´æ·ÅÔÚÊı¾İ¿âÖĞ£¬ÄÇÃ´Äã¿ÉÒÔÖ±½ÓÍ¨¹ısqlÓï¾ä»òÕß´æ´¢¹ı³Ì·ÃÎÊÊı¾İ¿â»ñÈ¡Êı¾İ
-        µÚ¶şÖÖÍ¨¹ıÊµÏÖ×Ô¶¨ÒåµÄ½Ó¿Ú»ñÈ¡´æ·ÅÔÚ²»Í¬Êı¾İÔ´ÖĞµÄÊı¾İ
+    å¯ä»¥é€šè¿‡ä¸¤ç§æ–¹å¼è·å–åˆ†é¡µåˆ—è¡¨æ•°æ®ï¼š
+        ç¬¬ä¸€ç§ç›´æ¥è®¿é—®æ•°æ®åº“ï¼Œå¦‚æœæ‚¨çš„æ•°æ®æ˜¯å­˜æ”¾åœ¨æ•°æ®åº“ä¸­ï¼Œé‚£ä¹ˆä½ å¯ä»¥ç›´æ¥é€šè¿‡sqlè¯­å¥æˆ–è€…å­˜å‚¨è¿‡ç¨‹è®¿é—®æ•°æ®åº“è·å–æ•°æ®
+        ç¬¬äºŒç§é€šè¿‡å®ç°è‡ªå®šä¹‰çš„æ¥å£è·å–å­˜æ”¾åœ¨ä¸åŒæ•°æ®æºä¸­çš„æ•°æ®
     
     
-    1.1 pagertaglibÖĞµÄÂß¼­±È½Ï±êÇ©Ãû³ÆÒÑ×öÏàÓ¦µÄ¼ò»¯£¬¾ßÌåÃû³ÆÇë²Î¿´pager-taglib.tldÎÄ¼ş£¬ĞÂÔöÁË¼ì²âµ±Ç°Ò³ÃæÊÇ·ñÓĞ¼ÇÂ¼µÄ±êÇ©notify
-        Ê¹ÓÃ·½·¨ÈçÏÂ£º
-            <!--¼ì²âµ±Ç°Ò³ÃæÊÇ·ñÓĞ¼ÇÂ¼-->
+    1.1 pagertaglibä¸­çš„é€»è¾‘æ¯”è¾ƒæ ‡ç­¾åç§°å·²åšç›¸åº”çš„ç®€åŒ–ï¼Œå…·ä½“åç§°è¯·å‚çœ‹pager-taglib.tldæ–‡ä»¶ï¼Œæ–°å¢äº†æ£€æµ‹å½“å‰é¡µé¢æ˜¯å¦æœ‰è®°å½•çš„æ ‡ç­¾notify
+        ä½¿ç”¨æ–¹æ³•å¦‚ä¸‹ï¼š
+            <!--æ£€æµ‹å½“å‰é¡µé¢æ˜¯å¦æœ‰è®°å½•-->
         	  <pg:notify>
     		      <tr height="18px" class="labeltable_middle_tr_01">
-    		      	<td colspan=100 align='center' colspan=3>Ã»ÓĞ¼ÇÂ¼</td>
+    		      	<td colspan=100 align='center' colspan=3>æ²¡æœ‰è®°å½•</td>
     		      </tr>
     	      </pg:notify>
-    1.2 Ê¹ÓÃ±êÇ©¿â·ÃÎÊÊı¾İ¿âÀı×Ó
-        a.ÏêÏ¸ÏÔÊ¾Êı¾İÒ³
-        <pg:beaninfo  statement="<%=query%>"  //Êı¾İ¿â²éÑ¯Óï¾ä£¬±ÈÈç"select name,birthdate from student"
-    				  dbname="oa"			  //poolman.xmlÎÄ¼şÖĞÖ¸¶¨µÄdbname	
+    1.2 ä½¿ç”¨æ ‡ç­¾åº“è®¿é—®æ•°æ®åº“ä¾‹å­
+        a.è¯¦ç»†æ˜¾ç¤ºæ•°æ®é¡µ
+        <pg:beaninfo  statement="<%=query%>"  //æ•°æ®åº“æŸ¥è¯¢è¯­å¥ï¼Œæ¯”å¦‚"select name,birthdate from student"
+    				  dbname="oa"			  //poolman.xmlæ–‡ä»¶ä¸­æŒ‡å®šçš„dbname	
     				  >
     			      <tr height="20px">		
-    			      	<pg:title width="10%" align="right" className="labeltable_middle_td_01"  title="ĞÕÃû"/>
+    			      	<pg:title width="10%" align="right" className="labeltable_middle_td_01"  title="å§“å"/>
     			    	<td colspan="5">	
-    			    	<!--colNameµÄÖµ¶ÔÓ¦Êı¾İ²éÑ¯Óï¾äselect name,birthdate from studentÖĞµÄ×Ö¶Î¡°name¡±-->	
+    			    	<!--colNameçš„å€¼å¯¹åº”æ•°æ®æŸ¥è¯¢è¯­å¥select name,birthdate from studentä¸­çš„å­—æ®µâ€œnameâ€-->	
     			    	<%
-    			    	    //Ö±½ÓÍ¨¹ıbeaninfo.getString(fieldname)»ñÈ¡ÏàÓ¦×Ö¶ÎµÄÖµ
+    			    	    //ç›´æ¥é€šè¿‡beaninfo.getString(fieldname)è·å–ç›¸åº”å­—æ®µçš„å€¼
     			    	    String name = beaninfo.getString("name");
     			    	%>							    	
     			    	<pg:cell colName="name" defaultValue="200512000"/>
@@ -60,22 +60,22 @@
     			      </tr>	
         </pg:beaninfo>
         
-        b.ÁĞ±íºÍ·ÖÒ³
+        b.åˆ—è¡¨å’Œåˆ†é¡µ
         
         <pg:pager maxPageItems="5"
     				  scope="request"    
-    	              statement="<%=query%>"  //Êı¾İ¿â²éÑ¯Óï¾ä£¬±ÈÈç"select name,birthdate from student"
-    				  dbname="oa"			  //poolman.xmlÎÄ¼şÖĞÖ¸¶¨µÄdbname	  
-    			      title="·ÖÒ³±êÌâ"    			     
-    			      //isList="true" Èç¹ûÊÇÁĞ±íµÄ»°Ö¸¶¨isListÊôĞÔÎªtrue
+    	              statement="<%=query%>"  //æ•°æ®åº“æŸ¥è¯¢è¯­å¥ï¼Œæ¯”å¦‚"select name,birthdate from student"
+    				  dbname="oa"			  //poolman.xmlæ–‡ä»¶ä¸­æŒ‡å®šçš„dbname	  
+    			      title="åˆ†é¡µæ ‡é¢˜"    			     
+    			      //isList="true" å¦‚æœæ˜¯åˆ—è¡¨çš„è¯æŒ‡å®šisListå±æ€§ä¸ºtrue
     			      >
-    			      <!--¼ÇÂ¼Ò³Ãæ²éÑ¯²ÎÊı-->
+    			      <!--è®°å½•é¡µé¢æŸ¥è¯¢å‚æ•°-->
     			      <pg:param name="sourceNumber"/>
     			      <pg:param name="meetingSubject"/>
     			      <pg:param name="writeUserName"/>			      
     
     			      <tr class="labeltable_middle_td">
-    			      <!--ÉèÖÃ·ÖÒ³±íÍ·-->
+    			      <!--è®¾ç½®åˆ†é¡µè¡¨å¤´-->
     			      <pg:header>
     			      	
     			    	<pg:title nowrap="true" width="10%" colid="0"/>					    
@@ -83,119 +83,119 @@
     			      </pg:header>
     			      </tr>
     			      
-    			      <!--¼ì²âµ±Ç°Ò³ÃæÊÇ·ñÓĞ¼ÇÂ¼-->
+    			      <!--æ£€æµ‹å½“å‰é¡µé¢æ˜¯å¦æœ‰è®°å½•-->
     			     <pg:notify>
     				      <tr height="18px" class="labeltable_middle_tr_01">
-    				      	<td colspan=100 align='center'>ÔİÊ±Ã»ÓĞ¼ÇÂ¼</td>
+    				      	<td colspan=100 align='center'>æš‚æ—¶æ²¡æœ‰è®°å½•</td>
     				      </tr>
     			     </pg:notify>			      
     			      
     			      <input type="hidden" name="del_returnLink" value="meetingnote_list.jsp?<pg:querystring/>">
-    			      <!--list±êÇ©Ñ­»·Êä³öÃ¿Ìõ¼ÇÂ¼-->			      
+    			      <!--listæ ‡ç­¾å¾ªç¯è¾“å‡ºæ¯æ¡è®°å½•-->			      
     			      <pg:list>				      		
     			      		<tr height="18px" class="labeltable_middle_tr_01" >							
     							<td align="center" nowrap>	
     							
     							<%
-    							    //Ö±½ÓÍ¨¹ıdataSet.getString(Integer.parseInt(rowid),fieldName)»ñÈ¡ÏàÓ¦¼ÇÂ¼µÄÖµ
+    							    //ç›´æ¥é€šè¿‡dataSet.getString(Integer.parseInt(rowid),fieldName)è·å–ç›¸åº”è®°å½•çš„å€¼
     							    String name = dataSet.getString(Integer.parseInt(rowid),"name");
     							%>
-    							<!--colNameµÄÖµ¶ÔÓ¦Êı¾İ²éÑ¯Óï¾äselect name,birthdate from studentÖĞµÄ×Ö¶Î¡°name¡±-->						
+    							<!--colNameçš„å€¼å¯¹åº”æ•°æ®æŸ¥è¯¢è¯­å¥select name,birthdate from studentä¸­çš„å­—æ®µâ€œnameâ€-->						
     							    <pg:cell colName="name" />
-    							 <!--Âß¼­ÅĞ¶Ï£¬ÆäËûµÄÂß¼­±êÇ©Çë²é¿´±êÇ©¶¨ÒåÎÄ¼ş-->
-    							    <pg:equal colName="name" value="ÕÅ½¨">ÎÒÊÇÕÅ½¨</pg:equal>						
+    							 <!--é€»è¾‘åˆ¤æ–­ï¼Œå…¶ä»–çš„é€»è¾‘æ ‡ç­¾è¯·æŸ¥çœ‹æ ‡ç­¾å®šä¹‰æ–‡ä»¶-->
+    							    <pg:equal colName="name" value="å¼ å»º">æˆ‘æ˜¯å¼ å»º</pg:equal>						
     						    </td>  			    		
     					  	</tr>			      		
     					  	
     			      </pg:list>			   	      
         			    <tr>
         			      <td align="right" colspan=100 nowrap>
-        					<!--ÉèÖÃÒ³Ãæµ¼º½-->
+        					<!--è®¾ç½®é¡µé¢å¯¼èˆª-->
         					<pg:index/>
                 		  </td>
         		        </tr>
     		
     		</pg:pager>
         
-    1.3 Í¨¹ı×Ô¶¨Òå½Ó¿Ú»ñÈ¡·ÖÒ³/ÁĞ±íÊı¾İµÄÀı×Ó
-        Í¨¹ı×Ô¶¨Òå½Ó¿Ú»ñÈ¡Êı¾İµÄ·ÖÒ³¡¢ÁĞ±íºÍÖ±½Ó·ÃÎÊÊı¾İ¿âµÄ±êÇ©Ê¹ÓÃÇø±ğ²»´ó£¬Ö»ÊÇÍ¨¹ıÁíÍâµÄ±êÇ©¸¨ÖúÎª·ÖÒ³¡¢ÁĞ±í±êÇ©Ö¸¶¨×Ô¶¨ÒåÊı¾İ»ñÈ¡½Ó¿Ú£¬ÀıÈç£º
+    1.3 é€šè¿‡è‡ªå®šä¹‰æ¥å£è·å–åˆ†é¡µ/åˆ—è¡¨æ•°æ®çš„ä¾‹å­
+        é€šè¿‡è‡ªå®šä¹‰æ¥å£è·å–æ•°æ®çš„åˆ†é¡µã€åˆ—è¡¨å’Œç›´æ¥è®¿é—®æ•°æ®åº“çš„æ ‡ç­¾ä½¿ç”¨åŒºåˆ«ä¸å¤§ï¼Œåªæ˜¯é€šè¿‡å¦å¤–çš„æ ‡ç­¾è¾…åŠ©ä¸ºåˆ†é¡µã€åˆ—è¡¨æ ‡ç­¾æŒ‡å®šè‡ªå®šä¹‰æ•°æ®è·å–æ¥å£ï¼Œä¾‹å¦‚ï¼š
         <pg:listdata dataInfo="MeetingUnitType_list" keyName="unittype_list"/>
-        dataInfoÊôĞÔÎªlistdata.propertiesÎÄ¼şÖĞÏàÓ¦µÄ×Ô¶¨Òå½Ó¿ÚµÄkey
-        keyNameÊôĞÔÎªÔÚrequestÖĞ»º³å×Ô¶¨Òå½Ó¿ÚÊµÀıµÄkey£¬pager±êÇ©ÖĞµÄdataÊôĞÔÖµ±ØĞëÓëÆäÖµÒ»Ñù£¬±ÈÈç£º<pg:pager data="unittype_list" isList="true">
+        dataInfoå±æ€§ä¸ºlistdata.propertiesæ–‡ä»¶ä¸­ç›¸åº”çš„è‡ªå®šä¹‰æ¥å£çš„key
+        keyNameå±æ€§ä¸ºåœ¨requestä¸­ç¼“å†²è‡ªå®šä¹‰æ¥å£å®ä¾‹çš„keyï¼Œpageræ ‡ç­¾ä¸­çš„dataå±æ€§å€¼å¿…é¡»ä¸å…¶å€¼ä¸€æ ·ï¼Œæ¯”å¦‚ï¼š<pg:pager data="unittype_list" isList="true">
         
         
         
-    1.4 ÈçºÎÊµÏÖ·ÖÒ³/ÁĞ±íÊı¾İ»ñÈ¡½Ó¿Ú
-        ËùÓĞµÄ×Ô¶¨Òå½Ó¿Ú±ØĞë¼Ì³Ğ×Ô³éÏóÀàcom.frameworkset.common.tag.pager.DataInfoImpl
-        Èç¹ûÊÇ·ÖÒ³±ØĞëÊµÏÖ·½·¨£º
+    1.4 å¦‚ä½•å®ç°åˆ†é¡µ/åˆ—è¡¨æ•°æ®è·å–æ¥å£
+        æ‰€æœ‰çš„è‡ªå®šä¹‰æ¥å£å¿…é¡»ç»§æ‰¿è‡ªæŠ½è±¡ç±»com.frameworkset.common.tag.pager.DataInfoImpl
+        å¦‚æœæ˜¯åˆ†é¡µå¿…é¡»å®ç°æ–¹æ³•ï¼š
         /**
-    	* ·ÖÒ³ÏÔÊ¾Ê±»ñÈ¡Ã¿Ò³µÄÊı¾İÏî
-    	* sortKey:ÅÅĞò×Ö¶Î
-    	* desc:ÅÅĞòµÄÖÈĞò£¬trueÎª½µĞò£¬falseÎªÉıĞò 
-    	* @param offSet - ´ÓÊı¾İÔ´»ñÈ¡Êı¾İµÄÓÎ±êÎ»ÖÃ
+    	* åˆ†é¡µæ˜¾ç¤ºæ—¶è·å–æ¯é¡µçš„æ•°æ®é¡¹
+    	* sortKey:æ’åºå­—æ®µ
+    	* desc:æ’åºçš„ç§©åºï¼Œtrueä¸ºé™åºï¼Œfalseä¸ºå‡åº 
+    	* @param offSet - ä»æ•°æ®æºè·å–æ•°æ®çš„æ¸¸æ ‡ä½ç½®
     	* 
-    	* @param pageItemsize - Ã¿Ò³ÏÔÊ¾µÄÊı¾İÌõÊı
+    	* @param pageItemsize - æ¯é¡µæ˜¾ç¤ºçš„æ•°æ®æ¡æ•°
     	* @return ListInfo
     	*/
 	
         protected ListInfo getDataList(String sortKey, boolean desc, int offSet, int pageItemsize)
-        Èç¹ûÊÇÁĞ±í±ØĞëÊµÏÖ·½·¨£º
+        å¦‚æœæ˜¯åˆ—è¡¨å¿…é¡»å®ç°æ–¹æ³•ï¼š
         /**
-    	 * Èç¹û·ÖÒ³tagÖ»ÊÇ×÷ÎªÁĞ±íÀ´ÊµÏÖÊ±£¬µ÷ÓÃ¸Ã·½·¨
-    	 * sortKey:ÅÅĞò×Ö¶Î
-    	 * desc:ÅÅĞòµÄÖÈĞò£¬trueÎª½µĞò£¬falseÎªÉıĞò
+    	 * å¦‚æœåˆ†é¡µtagåªæ˜¯ä½œä¸ºåˆ—è¡¨æ¥å®ç°æ—¶ï¼Œè°ƒç”¨è¯¥æ–¹æ³•
+    	 * sortKey:æ’åºå­—æ®µ
+    	 * desc:æ’åºçš„ç§©åºï¼Œtrueä¸ºé™åºï¼Œfalseä¸ºå‡åº
     	 * @return java.util.List
     	 */
         protected ListInfo getDataList(String sortKey, boolean desc) 
         
         
-    1.5 ²¹³äËµÃ÷ÈçÏÂ£º
-        a.Ô­À´µÄÂß¼­±È½Ï±êÇ©µÄÃû³ÆÌ«³¤£¬°ÑÃû³Æ¸Ä¶ÌÁËÒ»Ğ©£¬±ãÓÚÊ¹ÓÃ
-        b.·ÖÒ³ÁĞ±í±êÇ©»¹¶¨ÒådataSet£¬rowid(ÎªStringÀàĞÍ)Á½¸ö±äÁ¿£¬Èç¹ûÍòÒ»ĞèÒªµÄ»°¿ÉÒÔÔÚlist±êÇ©ÄÚ£¨Ö»ÄÜÔÚlist±êÇ©ÖĞÊ¹ÓÃ£©Ö±½ÓÍ¨¹ıdataSet.getString(Integer.parseInt(rowid),fieldName)»ñÈ¡ÏàÓ¦¼ÇÂ¼µÄÊôĞÔÖµ
+    1.5 è¡¥å……è¯´æ˜å¦‚ä¸‹ï¼š
+        a.åŸæ¥çš„é€»è¾‘æ¯”è¾ƒæ ‡ç­¾çš„åç§°å¤ªé•¿ï¼ŒæŠŠåç§°æ”¹çŸ­äº†ä¸€äº›ï¼Œä¾¿äºä½¿ç”¨
+        b.åˆ†é¡µåˆ—è¡¨æ ‡ç­¾è¿˜å®šä¹‰dataSetï¼Œrowid(ä¸ºStringç±»å‹)ä¸¤ä¸ªå˜é‡ï¼Œå¦‚æœä¸‡ä¸€éœ€è¦çš„è¯å¯ä»¥åœ¨listæ ‡ç­¾å†…ï¼ˆåªèƒ½åœ¨listæ ‡ç­¾ä¸­ä½¿ç”¨ï¼‰ç›´æ¥é€šè¿‡dataSet.getString(Integer.parseInt(rowid),fieldName)è·å–ç›¸åº”è®°å½•çš„å±æ€§å€¼
         
-        c.ÏêÏ¸ÏÔÊ¾Ò³±êÇ©ÖĞÒ²¶¨ÒåÁËbeaninfo±äÁ¿£¬Èç¹ûÍòÒ»ĞèÒªµÄ»°¿ÉÒÔÔÚbeaninfo±êÇ©ÄÚ£¨Ö»ÄÜÔÚbeaninfo±êÇ©ÖĞÊ¹ÓÃ£©Ö±½ÓÍ¨¹ıbeaninfo.getString(fieldname)»ñÈ¡ÏàÓ¦×Ö¶ÎµÄÖµ
+        c.è¯¦ç»†æ˜¾ç¤ºé¡µæ ‡ç­¾ä¸­ä¹Ÿå®šä¹‰äº†beaninfoå˜é‡ï¼Œå¦‚æœä¸‡ä¸€éœ€è¦çš„è¯å¯ä»¥åœ¨beaninfoæ ‡ç­¾å†…ï¼ˆåªèƒ½åœ¨beaninfoæ ‡ç­¾ä¸­ä½¿ç”¨ï¼‰ç›´æ¥é€šè¿‡beaninfo.getString(fieldname)è·å–ç›¸åº”å­—æ®µçš„å€¼
             
-2.Ê÷ĞÍ±êÇ©¿âµÄÊ¹ÓÃ
+2.æ ‘å‹æ ‡ç­¾åº“çš„ä½¿ç”¨
    
-  2.1 Ê÷ĞÍ±êÇ©°üº¬ÒÔÏÂ¼¸¸ö±êÇ©£ºtree,checkbox,radio,treedata
-    ÒÔÏÂÊÇÒ»¸ö¼òµ¥µÄÀı×Ó£º
+  2.1 æ ‘å‹æ ‡ç­¾åŒ…å«ä»¥ä¸‹å‡ ä¸ªæ ‡ç­¾ï¼štree,checkbox,radio,treedata
+    ä»¥ä¸‹æ˜¯ä¸€ä¸ªç®€å•çš„ä¾‹å­ï¼š
     <tree:tree tree="chooseunit_tree" node="chooseunit_tree.node" imageFolder="../../images/tree_images/">
 	    <tree:checkbox name="unit" />
 	    <tree:radio name="unit_r" />
 	    <tree:treedata treetype="1" 
 	                   scope="session"
 	                   rootid="0"
-	                   rootName="Ê¡°ì¹«Ìü×éÖ¯½á¹¹"
+	                   rootName="çœåŠå…¬å…ç»„ç»‡ç»“æ„"
 	                   expandLevel="100"
 	                   showRootHref="false"	  
 	                   needObserver="false"                 
 	                   />
 	</tree:tree>      
 	
-	ÌØ±ğËµÃ÷µÄÊÇ±êÇ©treedataµÄtreetypeÊôĞÔ£º
-	Õâ¸öÊôĞÔÖ¸¶¨Ê÷ĞĞ½á¹¹Êı¾İ»ñÈ¡½Ó¿ÚÅäÖÃÃû³Æ£¬¸ÃÃû³Æ¶ÔÓ¦ÓÚtreedata.propertiesÎÄ¼şÖĞµÄ¾ßÌåÅäÖÃ£¬ÀıÈç£º
+	ç‰¹åˆ«è¯´æ˜çš„æ˜¯æ ‡ç­¾treedataçš„treetypeå±æ€§ï¼š
+	è¿™ä¸ªå±æ€§æŒ‡å®šæ ‘è¡Œç»“æ„æ•°æ®è·å–æ¥å£é…ç½®åç§°ï¼Œè¯¥åç§°å¯¹åº”äºtreedata.propertiesæ–‡ä»¶ä¸­çš„å…·ä½“é…ç½®ï¼Œä¾‹å¦‚ï¼š
 	1=com.chinacreator.oa.tag.meeting.meetingnotemanager.MeetingUnitTree
 	
-  2.2 ÈçºÎÊµÏÖ×Ô¼ºµÄÊ÷½á¹¹Êı¾İ»ñÈ¡Àà
-    ×Ô¶¨ÒåµÄÊı¾İ»ñÈ¡ÀàĞèÒª¼Ì³Ğ³éÏóÀàcom.frameworkset.common.tag.tree.COMTree£¬²¢ÇÒÊµÏÖÒÔÏÂÈı¸ö³éÏó·½·¨£º
+  2.2 å¦‚ä½•å®ç°è‡ªå·±çš„æ ‘ç»“æ„æ•°æ®è·å–ç±»
+    è‡ªå®šä¹‰çš„æ•°æ®è·å–ç±»éœ€è¦ç»§æ‰¿æŠ½è±¡ç±»com.frameworkset.common.tag.tree.COMTreeï¼Œå¹¶ä¸”å®ç°ä»¥ä¸‹ä¸‰ä¸ªæŠ½è±¡æ–¹æ³•ï¼š
     /**
-	 * ÅĞ¶ÏÊ÷½ÚµãÊÇ·ñÓĞ¶ù×Ó
-	 * ITreeNode father:¸¸½Úµã
+	 * åˆ¤æ–­æ ‘èŠ‚ç‚¹æ˜¯å¦æœ‰å„¿å­
+	 * ITreeNode father:çˆ¶èŠ‚ç‚¹
 	 */
     public abstract boolean hasSon(ITreeNode father);
     /**
-	 * ÍùÊ÷ÖĞÌí¼Ó¸¸½ÚµãµÄËùÓĞÖ±½Ó¶ù×Ó
-	 * ITreeNode father:¸¸½Úµã
-	 * int curLevel:¸¸½ÚµãËù´¦µÄµ±Ç°²ã¼¶
+	 * å¾€æ ‘ä¸­æ·»åŠ çˆ¶èŠ‚ç‚¹çš„æ‰€æœ‰ç›´æ¥å„¿å­
+	 * ITreeNode father:çˆ¶èŠ‚ç‚¹
+	 * int curLevel:çˆ¶èŠ‚ç‚¹æ‰€å¤„çš„å½“å‰å±‚çº§
 	 */
     public abstract boolean setSon(ITreeNode father, int curLevel);
 
 	/**
-	 * ´ÓÊı¾İÔ´»ñÈ¡¸ø¶¨idµÄ½ÚµãĞÅÏ¢½ÚµãĞÅÏ¢
+	 * ä»æ•°æ®æºè·å–ç»™å®šidçš„èŠ‚ç‚¹ä¿¡æ¯èŠ‚ç‚¹ä¿¡æ¯
 	 */
 	public abstract ITreeNode getTreeNode(String id);
 	
-	¾ÙÀıÈçÏÂ£º	
+	ä¸¾ä¾‹å¦‚ä¸‹ï¼š	
 	
         package com.chinacreator.oa.tag.meeting.meetingnotemanager;
         
@@ -208,7 +208,7 @@
         
         
         /**
-         * »áÒéÑ¡Ôñ×éÖ¯½á¹¹Ê÷
+         * ä¼šè®®é€‰æ‹©ç»„ç»‡ç»“æ„æ ‘
          * @author biaoping.yin
          * created on 2005-4-13
          * version 1.0 
@@ -216,7 +216,7 @@
         public class MeetingUnitTree extends COMTree {
         
             /**
-             * ÅĞ¶Ï½ÚµãfatherÊÇ·ñÓĞ¶ù×Ó 
+             * åˆ¤æ–­èŠ‚ç‚¹fatheræ˜¯å¦æœ‰å„¿å­ 
              * @see com.frameworkset.common.tag.tree.itf.ActiveTree#hasSon(com.frameworkset.common.tag.tree.itf.ITreeNode)
              */
             public boolean hasSon(ITreeNode father) {
@@ -225,7 +225,7 @@
             }
         
             /**
-             * ÉèÖÃ½ÚµãfatherµÄ¶ù×Ó£¬curLevelÎª½ÚµãfatherËùÔÚµÄ²ã¼¶
+             * è®¾ç½®èŠ‚ç‚¹fatherçš„å„¿å­ï¼ŒcurLevelä¸ºèŠ‚ç‚¹fatheræ‰€åœ¨çš„å±‚çº§
              * @see com.frameworkset.common.tag.tree.itf.ActiveTree#setSon(com.frameworkset.common.tag.tree.itf.ITreeNode, int)
              */
             public boolean setSon(ITreeNode father, int curLevel) {
@@ -245,7 +245,7 @@
             }
         
             /**
-             * »ñÈ¡½ÚµãµÄµ±Ç°×îĞÂĞÅÏ¢
+             * è·å–èŠ‚ç‚¹çš„å½“å‰æœ€æ–°ä¿¡æ¯
              * @see com.frameworkset.common.tag.tree.itf.ActiveTree#getTreeNode(java.lang.String)
              */
             public ITreeNode getTreeNode(String id) {   
@@ -256,9 +256,9 @@
         
         }
         
-3.±êÇ©¿âµÄÃèÊö£­£­£­£­´ıĞø
+3.æ ‡ç­¾åº“çš„æè¿°ï¼ï¼ï¼ï¼å¾…ç»­
 
-ËÄ.ÈçºÎ·ÃÎÊÊı¾İÊı¾İ¿â
-   ÏµÍ³ÖĞÍ¨¹ıÀàcom.frameworkset.common.poolman.DBUtilÀ´Íê³ÉÊı¾İ¿âµÄ²éÑ¯¡¢²åÈë¡¢¸üĞÂ¡¢É¾³ıÒÔ¼°Åú´¦Àí²Ù×÷µÈ²Ù×÷£¬·Ö±ğËµÃ÷ÈçÏÂ
+å››.å¦‚ä½•è®¿é—®æ•°æ®æ•°æ®åº“
+   ç³»ç»Ÿä¸­é€šè¿‡ç±»com.frameworkset.common.poolman.DBUtilæ¥å®Œæˆæ•°æ®åº“çš„æŸ¥è¯¢ã€æ’å…¥ã€æ›´æ–°ã€åˆ é™¤ä»¥åŠæ‰¹å¤„ç†æ“ä½œç­‰æ“ä½œï¼Œåˆ†åˆ«è¯´æ˜å¦‚ä¸‹
    
-   1.ĞÂÔö£­£­£­£­´ıĞø
+   1.æ–°å¢ï¼ï¼ï¼ï¼å¾…ç»­

@@ -25,18 +25,18 @@ import org.junit.Test;
 
 /**
  * <p>Title: TestloopInject.java</p> 
- * <p>Description: bbossgroups 3.5��ǰ�İ汾��֧������ѭ������ע�룬
- * 3.5�Ժ�İ汾�ṩ�˺ܺõ�֧��,����֧�־ֲ�ѭ������
- * �ֲ�ѭ�����õ����Ƹ�ʽ����Ϊ��
+ * <p>Description: bbossgroups 3.5以前的版本不支持属性循环依赖注入，
+ * 3.5以后的版本提供了很好的支持,并且支持局部循环引用
+ * 局部循环引用的名称格式定义为：
  * name1->name12->name121
  * 
- * ���ڹ��캯��������ע�봦��
- * ���ڹ�������ע�봦��
- * ���ڴ����ÿ�ʼ������ע�봦�����������֧��ѭ�����ã�������Ҫ��һ���Ľ���
+ * 对于构造函数的依赖注入处理
+ * 对于工厂依赖注入处理
+ * 对于从引用开始的依赖注入处理（这个必须支持循环引用，具体需要进一步改进）
  * </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2010-1-17 ����08:41:46
+ * @Date 2010-1-17 下午08:41:46
  * @author biaoping.yin
  * @version 1.0
  */

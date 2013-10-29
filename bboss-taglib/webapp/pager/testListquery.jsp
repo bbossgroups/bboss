@@ -1,30 +1,30 @@
-<%@ page contentType="text/html; charset=GBK" language="java" %>
+<%@ page contentType="text/html; charset=UTF-8" language="java" %>
 <%@ taglib uri="/WEB-INF/pager-taglib.tld" prefix="pg"%>
 <!-- 
-	������ͨ�����ݼ�������ȡ��ҳ�б����ݣ������ṩ��ѯ����
+	测试在通过数据加载器获取分页列表数据，并且提供查询功能
 -->
 <html>
 <head>
-<title>������ͨ�����ݼ�������ȡ��ҳ�б����ݣ������ṩ��ѯ����</title>
+<title>测试在通过数据加载器获取分页列表数据，并且提供查询功能</title>
 </head>
 <body>
 	<table>
 				<tr class="cms_report_tr">
-						<!--���÷�ҳ��ͷ-->
+						<!--设置分页表头-->
 					<form action="" method="post">
-						<td  style="width:20%">�����������</td>
-						<td  style="width:5%" colspan="100"><input type="text" name="TABLE_NAME" value="<%=request.getParameter("TABLE_NAME") %>"><input type="submit" name="��ѯ" value="��ѯ"></td>
+						<td  style="width:20%">请输入表名：</td>
+						<td  style="width:5%" colspan="100"><input type="text" name="TABLE_NAME" value="<%=request.getParameter("TABLE_NAME") %>"><input type="submit" name="查询" value="查询"></td>
 					</form>
 				</tr>
 						
 	    
 				<pg:listdata dataInfo="test.pager.QueryTableList" keyName="QueryTableList" />
 				<pg:param name="TABLE_NAME" />
-				<!--��ҳ��ʾ��ʼ,��ҳ��ǩ��ʼ��-->
+				<!--分页显示开始,分页标签初始化-->
 				<pg:pager maxPageItems="15" scope="request" data="QueryTableList" 
 						  isList="false">
 					<tr class="cms_report_tr">
-						<!--���÷�ҳ��ͷ-->
+						<!--设置分页表头-->
 
 						<td width="2%" align=center style="width:5%">
 						<input class="checkbox" 
@@ -50,7 +50,7 @@
 				<pg:notify>
 						<tr  class="labeltable_middle_tr_01">
 							<td colspan=100 align='center' height="18px">
-								û������
+								没有数据
 							</td>
 						</tr>
 				</pg:notify>
@@ -83,10 +83,10 @@
 					</pg:list>
 					<tr class="labeltable_middle_tr_01">
 						<td colspan=11 ><div class="Data_List_Table_Bottom"> 
-							��
+							共
 							<pg:rowcount />
-							����¼
-							ÿҳ��ʾ15��
+							条记录
+							每页显示15条
 							<pg:index />					</div>  </td>
 					</tr>
 					<input id="queryString" name="queryString" value="<pg:querystring/>" type="hidden">

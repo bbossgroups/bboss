@@ -384,7 +384,7 @@ public class RequestDispatcher extends ReceiveDispatcher
 	{
 
 		if (this.destinationType == MQUtil.TYPE_ROUTER)
-			throw new JMSException("¶Ô²»Æğ,²»ÄÜ¶ÔÂ·ÓÉ½Úµã·¢ËÍÏûÏ¢.type="
+			throw new JMSException("å¯¹ä¸èµ·,ä¸èƒ½å¯¹è·¯ç”±èŠ‚ç‚¹å‘é€æ¶ˆæ¯.type="
 					+ MQUtil.getTypeDesc(destinationType));
 		// send(destinationType, this.persistent,4,0L,message, logger);
 		send(destinationType, destination, persistent, message, logger, properties);
@@ -419,7 +419,7 @@ public class RequestDispatcher extends ReceiveDispatcher
 	{
 
 		if (this.destinationType == MQUtil.TYPE_ROUTER)
-			throw new JMSException("¶Ô²»Æğ,²»ÄÜ¶ÔÂ·ÓÉ½Úµã·¢ËÍÏûÏ¢.type="
+			throw new JMSException("å¯¹ä¸èµ·,ä¸èƒ½å¯¹è·¯ç”±èŠ‚ç‚¹å‘é€æ¶ˆæ¯.type="
 					+ MQUtil.getTypeDesc(destinationType));
 		send(destinationType, this.destination, persistent, message,properties);
 	}
@@ -555,7 +555,7 @@ public class RequestDispatcher extends ReceiveDispatcher
 
 		byte[] send = null;
 
-		/* ÊÇ·ñ¼ÓÃÜ */
+		/* æ˜¯å¦åŠ å¯† */
 		if (properties.isEncrypt())
 		{
 			try

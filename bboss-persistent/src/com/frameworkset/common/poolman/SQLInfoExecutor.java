@@ -29,7 +29,7 @@ import com.frameworkset.util.ValueObjectUtil;
 
 public class SQLInfoExecutor {
     /**
-     * 添加sql参数，由DefaultDataInfoImpl进行处理
+     * 娣诲姞sql鍙傛暟锛岀敱DefaultDataInfoImpl杩涜澶勭悊
      * @param name
      * @param value
      * @param type
@@ -119,7 +119,7 @@ public class SQLInfoExecutor {
 		return CUDexecute(dbname, sql, bean,action,false) ;
 	}
 	/**
-	 * 针对增删改三种类型DB操作的统一处理方法
+	 * 閽堝澧炲垹鏀逛笁绉嶇被鍨婦B鎿嶄綔鐨勭粺涓�澶勭悊鏂规硶
 	 * @param dbname
 	 * @param sql
 	 * @param bean
@@ -133,7 +133,7 @@ public class SQLInfoExecutor {
 		Connection con = null;
 		try
 		{
-			if(action ==  PreparedDBUtil.INSERT)//如果bean中使用PrimaryKey注解，并且要求自动设置主键，则要求后续所有的操作共用同一个connection来完成所有操作，以便提升系统性能
+			if(action ==  PreparedDBUtil.INSERT)//濡傛灉bean涓娇鐢≒rimaryKey娉ㄨВ锛屽苟涓旇姹傝嚜鍔ㄨ缃富閿紝鍒欒姹傚悗缁墍鏈夌殑鎿嶄綔鍏辩敤鍚屼竴涓猚onnection鏉ュ畬鎴愭墍鏈夋搷浣滐紝浠ヤ究鎻愬崌绯荤粺鎬ц兘
 				con = DBUtil.getConection(dbname);
 			SQLParams batchsqlparams = SQLParams.convertBeanToSqlParams(bean,sql,dbname,action,con);
 			if(batchsqlparams == null)
@@ -185,7 +185,7 @@ public class SQLInfoExecutor {
 //	            }
 	        }
 	        else
-	            throw new SQLException("不支持的数据库操作：" + action);
+	            throw new SQLException("涓嶆敮鎸佺殑鏁版嵁搴撴搷浣滐細" + action);
 		        
 		}
 		finally

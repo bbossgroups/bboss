@@ -20,10 +20,10 @@ import java.util.List;
 
 /**
  * <p>Title: RefID.java</p> 
- * <p>Description: 保存引用标识结构信息</p>
+ * <p>Description: 淇濆瓨寮曠敤鏍囪瘑缁撴瀯淇℃伅</p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2012-1-2 下午8:12:14
+ * @Date 2012-1-2 涓嬪崍8:12:14
  * @author biaoping.yin
  * @version 1.0
  */

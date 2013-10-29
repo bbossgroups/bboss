@@ -31,7 +31,7 @@ import org.frameworkset.util.annotations.ResponseBody;
 
 public class EnumConvertController {
 	/**
-	 * ²âÊÔµ¥¸ö×Ö·û´®ÏòÃ¶¾ÙÀàĞÍÖµ×ª»»
+	 * æµ‹è¯•å•ä¸ªå­—ç¬¦ä¸²å‘æšä¸¾ç±»å‹å€¼è½¬æ¢
 	 * @param type
 	 * @param response
 	 * @throws IOException
@@ -42,40 +42,40 @@ public class EnumConvertController {
 		{
 //			if(type == SexType.F)
 //			{
-//				response.setContentType("text/html; charset=GBK");
-//				response.getWriter().print("Å®");
+//				response.setContentType("text/html; charset=UTF-8");
+//				response.getWriter().print("å¥³");
 //			}
 //			else if(type == SexType.M)
 //			{
-//				response.setContentType("text/html; charset=GBK");
-//				response.getWriter().print("ÄĞ");
+//				response.setContentType("text/html; charset=UTF-8");
+//				response.getWriter().print("ç”·");
 //			}
 //			else if(type == SexType.UN)
 //			{
-//				response.setContentType("text/html; charset=GBK");
-//				response.getWriter().print("Î´Öª");
+//				response.setContentType("text/html; charset=UTF-8");
+//				response.getWriter().print("æœªçŸ¥");
 //			}
 			if(sex == SexType.F)
 			{
-				return "Å®";
+				return "å¥³";
 			}
 			else if(sex == SexType.M)
 			{
-				return "ÄĞ";
+				return "ç”·";
 			}
 			else if(sex == SexType.UN)
 			{
-				return "Î´Öª";
+				return "æœªçŸ¥";
 				
 			}	
 			
 		}
-		return "Î´Öª";
+		return "æœªçŸ¥";
 		
 	}
 	
 	/**
-	 * ²âÊÔµ¥¸ö×Ö·û´®ÏòÃ¶¾ÙÀàĞÍÖµ×ª»»
+	 * æµ‹è¯•å•ä¸ªå­—ç¬¦ä¸²å‘æšä¸¾ç±»å‹å€¼è½¬æ¢
 	 * @param type
 	 * @param response
 	 * @throws IOException
@@ -86,18 +86,18 @@ public class EnumConvertController {
 		{
 			if(sex[0] == SexType.F)
 			{
-				return "Å®";
+				return "å¥³";
 			}
 			else if(sex[0] == SexType.M)
 			{
-				return "ÄĞ";
+				return "ç”·";
 			}
 			else if(sex[0] == SexType.UN)
 			{
-				return "Î´Öª";
+				return "æœªçŸ¥";
 			}
 		}
-		return "Î´Öª";
+		return "æœªçŸ¥";
 	}
 	
 	public String selectSex()

@@ -33,7 +33,7 @@ import bboss.org.jgroups.Address;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2011-5-11 ÉÏÎç10:43:48
+ * @Date 2011-5-11 ä¸Šåˆ10:43:48
  * @author biaoping.yin
  * @version 1.0
  */
@@ -254,7 +254,7 @@ public class TargetImpl implements Target{
 //							.parseInt(port));
 					Address lad = JGroupHelper.getJGroupHelper().getAddress(token); 
 					if(lad == null)
-						throw new RuntimeException("µØÖ··Ç·¨£º" + token + " in " + targets + " ²»´æÔÚ.");
+						throw new RuntimeException("åœ°å€éæ³•ï¼š" + token + " in " + targets + " ä¸å­˜åœ¨.");
 					RPCAddress rpcaddr = new RPCAddress(token,lad,Target.BROADCAST_TYPE_JRGOUP);
 					dests.add(rpcaddr);
 				}
@@ -264,7 +264,7 @@ public class TargetImpl implements Target{
 				}
 				catch (Exception e)
 				{
-					throw new RuntimeException("µØÖ··Ç·¨£º" + token + " in " + targets,e);
+					throw new RuntimeException("åœ°å€éæ³•ï¼š" + token + " in " + targets,e);
 				}
 			}
 			return dests;
@@ -283,7 +283,7 @@ public class TargetImpl implements Target{
 					Address lad = JGroupHelper.getJGroupHelper().getAddress(next); 
 //					dests.add(address);
 					if(lad == null)
-						throw new RuntimeException("µØÖ··Ç·¨£º" + next + " in " + targets + " ²»´æÔÚ.");
+						throw new RuntimeException("åœ°å€éæ³•ï¼š" + next + " in " + targets + " ä¸å­˜åœ¨.");
 					RPCAddress rpcaddr = new RPCAddress(next,lad,Target.BROADCAST_TYPE_JRGOUP);
 					dests.add(rpcaddr);
 				}
@@ -293,7 +293,7 @@ public class TargetImpl implements Target{
 				}
 				catch (Exception e)
 				{
-					throw new RuntimeException("µØÖ··Ç·¨£º" + next + " in " + targets,e);
+					throw new RuntimeException("åœ°å€éæ³•ï¼š" + next + " in " + targets,e);
 				}
 			}
 		}
@@ -323,14 +323,14 @@ public class TargetImpl implements Target{
 				    
 				{
 					throw new RemoteException(this.targets
-							+ " ÖĞ¶à²¥´«ÊäĞ­ÒéÉèÖÃ´íÎó£¬±ØĞëÎª[" + BROADCAST_TYPE_MUTICAST
-							+ "]»òÕß[" + BROADCAST_TYPE_UNICAST
-							+ "]»òÕß[" + BROADCAST_TYPE_MINA
-							+ "]»òÕß[" + BROADCAST_TYPE_WEBSERVICE 
-							+ "]»òÕß[" + BROADCAST_TYPE_JMS
-							+ "]»òÕß[" + BROADCAST_TYPE_NETTY
-							+ "]»òÕß[" + BROADCAST_TYPE_RMI
-							+ "]»òÕß[" + BROADCAST_TYPE_REST + "]");
+							+ " ä¸­å¤šæ’­ä¼ è¾“åè®®è®¾ç½®é”™è¯¯ï¼Œå¿…é¡»ä¸º[" + BROADCAST_TYPE_MUTICAST
+							+ "]æˆ–è€…[" + BROADCAST_TYPE_UNICAST
+							+ "]æˆ–è€…[" + BROADCAST_TYPE_MINA
+							+ "]æˆ–è€…[" + BROADCAST_TYPE_WEBSERVICE 
+							+ "]æˆ–è€…[" + BROADCAST_TYPE_JMS
+							+ "]æˆ–è€…[" + BROADCAST_TYPE_NETTY
+							+ "]æˆ–è€…[" + BROADCAST_TYPE_RMI
+							+ "]æˆ–è€…[" + BROADCAST_TYPE_REST + "]");
 				}
 				_targets_ = this.targets.substring(protocol + 2);
 			}
@@ -475,7 +475,7 @@ public class TargetImpl implements Target{
 						security = true;
 					}
 					else
-						throw new RuntimeException("µØÖ··Ç·¨£º" + token + " in " + targets);
+						throw new RuntimeException("åœ°å€éæ³•ï¼š" + token + " in " + targets);
 					int idx = token.indexOf('/');
 					String contextpath = null;
 					
@@ -499,11 +499,11 @@ public class TargetImpl implements Target{
 					}
 					catch (NumberFormatException e)
 					{
-						throw new RuntimeException("¶Ë¿Ú·Ç·¨£º" + port + " in " + targets,e);
+						throw new RuntimeException("ç«¯å£éæ³•ï¼š" + port + " in " + targets,e);
 					}
 					catch (Exception e)
 					{
-						throw new RuntimeException("µØÖ··Ç·¨£º" + nexttokenizer + " in " + targets,e);
+						throw new RuntimeException("åœ°å€éæ³•ï¼š" + nexttokenizer + " in " + targets,e);
 					}
 				}
 				return dests;
@@ -521,7 +521,7 @@ public class TargetImpl implements Target{
 					security = true;
 				}
 				else
-					throw new RuntimeException("µØÖ··Ç·¨£º" + next + " in " + targets);
+					throw new RuntimeException("åœ°å€éæ³•ï¼š" + next + " in " + targets);
 					
 				
 				int idx = next.indexOf('/');
@@ -547,18 +547,18 @@ public class TargetImpl implements Target{
 				}
 				catch (NumberFormatException e)
 				{
-					throw new RuntimeException("¶Ë¿Ú·Ç·¨£º" + port + " in " + targets,e);
+					throw new RuntimeException("ç«¯å£éæ³•ï¼š" + port + " in " + targets,e);
 				}
 				catch (Exception e)
 				{
-					throw new RuntimeException("µØÖ··Ç·¨£º" + nexttokenizer + " in " + targets,e);
+					throw new RuntimeException("åœ°å€éæ³•ï¼š" + nexttokenizer + " in " + targets,e);
 				}
 			}
 
 		}
 		catch (Exception e)
 		{
-			throw new RuntimeException("µØÖ··Ç·¨£º" +  targets,e);
+			throw new RuntimeException("åœ°å€éæ³•ï¼š" +  targets,e);
 		}
 
 		return dests;
@@ -589,7 +589,7 @@ public class TargetImpl implements Target{
                                                 security = true;
                                         }
                                         else
-                                                throw new RuntimeException("µØÖ··Ç·¨£º" + token + " in " + _targets_);
+                                                throw new RuntimeException("åœ°å€éæ³•ï¼š" + token + " in " + _targets_);
                                         int idx = token.indexOf('/');
                                         String contextpath = null;
                                         
@@ -613,11 +613,11 @@ public class TargetImpl implements Target{
                                         }
                                         catch (NumberFormatException e)
                                         {
-                                                throw new RuntimeException("¶Ë¿Ú·Ç·¨£º" + port + " in " + _targets_,e);
+                                                throw new RuntimeException("ç«¯å£éæ³•ï¼š" + port + " in " + _targets_,e);
                                         }
                                         catch (Exception e)
                                         {
-                                                throw new RuntimeException("µØÖ··Ç·¨£º" + nexttokenizer + " in " + _targets_,e);
+                                                throw new RuntimeException("åœ°å€éæ³•ï¼š" + nexttokenizer + " in " + _targets_,e);
                                         }
                                 }
                                 return dests;
@@ -635,7 +635,7 @@ public class TargetImpl implements Target{
                                         security = true;
                                 }
                                 else
-                                        throw new RuntimeException("µØÖ··Ç·¨£º" + next + " in " + _targets_);
+                                        throw new RuntimeException("åœ°å€éæ³•ï¼š" + next + " in " + _targets_);
                                         
                                 
                                 int idx = next.indexOf('/');
@@ -661,18 +661,18 @@ public class TargetImpl implements Target{
                                 }
                                 catch (NumberFormatException e)
                                 {
-                                        throw new RuntimeException("¶Ë¿Ú·Ç·¨£º" + port + " in " + _targets_,e);
+                                        throw new RuntimeException("ç«¯å£éæ³•ï¼š" + port + " in " + _targets_,e);
                                 }
                                 catch (Exception e)
                                 {
-                                        throw new RuntimeException("µØÖ··Ç·¨£º" + nexttokenizer + " in " + _targets_,e);
+                                        throw new RuntimeException("åœ°å€éæ³•ï¼š" + nexttokenizer + " in " + _targets_,e);
                                 }
                         }
 
                 }
                 catch (Exception e)
                 {
-                        throw new RuntimeException("µØÖ··Ç·¨£º" +  _targets_,e);
+                        throw new RuntimeException("åœ°å€éæ³•ï¼š" +  _targets_,e);
                 }
 
                 return dests;
@@ -925,7 +925,7 @@ public class TargetImpl implements Target{
 
 		}
 		
-		while(tokens.hasMoreTokens())//²»Ö§³Örest·ç¸ñµÄ¶à²¥Ğ­Òéµ÷ÓÃ
+		while(tokens.hasMoreTokens())//ä¸æ”¯æŒresté£æ ¼çš„å¤šæ’­åè®®è°ƒç”¨
 		{
 //			String server_uuid = tokens.nextToken();
 //			RPCAddress address = new RPCAddress(server_uuid,BROADCAST_TYPE_REST);
@@ -982,11 +982,11 @@ public class TargetImpl implements Target{
                                     }
                                     catch (NumberFormatException e)
                                     {
-                                            throw new RuntimeException("¶Ë¿Ú·Ç·¨£º" + port + " in " + _targets_,e);
+                                            throw new RuntimeException("ç«¯å£éæ³•ï¼š" + port + " in " + _targets_,e);
                                     }
                                     catch (Exception e)
                                     {
-                                            throw new RuntimeException("µØÖ··Ç·¨£º" + nexttokenizer + " in " + _targets_,e);
+                                            throw new RuntimeException("åœ°å€éæ³•ï¼š" + nexttokenizer + " in " + _targets_,e);
                                     }
                             }
                             return dests;
@@ -1022,18 +1022,18 @@ public class TargetImpl implements Target{
                             }
                             catch (NumberFormatException e)
                             {
-                                    throw new RuntimeException("¶Ë¿Ú·Ç·¨£º" + port + " in " + _targets_,e);
+                                    throw new RuntimeException("ç«¯å£éæ³•ï¼š" + port + " in " + _targets_,e);
                             }
                             catch (Exception e)
                             {
-                                    throw new RuntimeException("µØÖ··Ç·¨£º" + nexttokenizer + " in " + _targets_,e);
+                                    throw new RuntimeException("åœ°å€éæ³•ï¼š" + nexttokenizer + " in " + _targets_,e);
                             }
                     }
 
             }
             catch (Exception e)
             {
-                    throw new RuntimeException("µØÖ··Ç·¨£º" +  _targets_,e);
+                    throw new RuntimeException("åœ°å€éæ³•ï¼š" +  _targets_,e);
             }
 
             return dests;
@@ -1109,11 +1109,11 @@ public class TargetImpl implements Target{
 					}
 					catch (NumberFormatException e)
 					{
-						throw new RuntimeException("¶Ë¿Ú·Ç·¨£º" + port + " in " + targets,e);
+						throw new RuntimeException("ç«¯å£éæ³•ï¼š" + port + " in " + targets,e);
 					}
 					catch (Exception e)
 					{
-						throw new RuntimeException("µØÖ··Ç·¨£º" + nexttokenizer + " in " + targets,e);
+						throw new RuntimeException("åœ°å€éæ³•ï¼š" + nexttokenizer + " in " + targets,e);
 					}
 				}
 				return dests;
@@ -1149,18 +1149,18 @@ public class TargetImpl implements Target{
 				}
 				catch (NumberFormatException e)
 				{
-					throw new RuntimeException("¶Ë¿Ú·Ç·¨£º" + port + " in " + targets,e);
+					throw new RuntimeException("ç«¯å£éæ³•ï¼š" + port + " in " + targets,e);
 				}
 				catch (Exception e)
 				{
-					throw new RuntimeException("µØÖ··Ç·¨£º" + nexttokenizer + " in " + targets,e);
+					throw new RuntimeException("åœ°å€éæ³•ï¼š" + nexttokenizer + " in " + targets,e);
 				}
 			}
 
 		}
 		catch (Exception e)
 		{
-			throw new RuntimeException("µØÖ··Ç·¨£º" +  targets,e);
+			throw new RuntimeException("åœ°å€éæ³•ï¼š" +  targets,e);
 		}
 
 		return dests;
@@ -1185,7 +1185,7 @@ public class TargetImpl implements Target{
 		
 		else
 		{
-		    throw new RuntimeException("²»Ö§³ÖµÄĞ­Òé£º" +  _targets_ + ",protocol=" + protocol);
+		    throw new RuntimeException("ä¸æ”¯æŒçš„åè®®ï¼š" +  _targets_ + ",protocol=" + protocol);
 		}
 
 		
@@ -1203,8 +1203,8 @@ public class TargetImpl implements Target{
 			if (!broadcastType.equals(BROADCAST_TYPE_MUTICAST)
 					&& !broadcastType.equals(BROADCAST_TYPE_UNICAST))
 			{
-				throw new RemoteException(targets_ + " ÖĞ¶à²¥´«ÊäĞ­Òé´íÎó£¬±ØĞëÎª["
-						+ BROADCAST_TYPE_MUTICAST + "]»òÕß["
+				throw new RemoteException(targets_ + " ä¸­å¤šæ’­ä¼ è¾“åè®®é”™è¯¯ï¼Œå¿…é¡»ä¸º["
+						+ BROADCAST_TYPE_MUTICAST + "]æˆ–è€…["
 						+ BROADCAST_TYPE_UNICAST + "]");
 			}
 			targets_ = targets_.substring(protocol + 2);
@@ -1251,7 +1251,7 @@ public class TargetImpl implements Target{
         }
 		else
 		{
-		    throw new RuntimeException("²»Ö§³ÖµÄĞ­Òé£º" +  url + ",protocol=" + protocol);
+		    throw new RuntimeException("ä¸æ”¯æŒçš„åè®®ï¼š" +  url + ",protocol=" + protocol);
 		}
 	}
 

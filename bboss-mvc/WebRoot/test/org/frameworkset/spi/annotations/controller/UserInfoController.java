@@ -138,12 +138,12 @@ public class UserInfoController{
 		}	
 		model.addAttribute("list",list);
 		if(true)
-			throw new Exception("ÕâÊÇÒ»¸ö´íÎóÒì³£´¦Àí³ÌĞòµÄÊµÀı·½·¨");
+			throw new Exception("è¿™æ˜¯ä¸€ä¸ªé”™è¯¯å¼‚å¸¸å¤„ç†ç¨‹åºçš„å®ä¾‹æ–¹æ³•");
 		return "restful/people";
 	}
 	
 	/**
-	 * Òì³£´¦Àí³ÌĞò£¬Ã¿¸ö¿ØÖÆÆ÷¿ÉÒÔ¶¨Òå¶à¸öÌØ¶¨Òì³£µÄ´¦Àí·½·¨
+	 * å¼‚å¸¸å¤„ç†ç¨‹åºï¼Œæ¯ä¸ªæ§åˆ¶å™¨å¯ä»¥å®šä¹‰å¤šä¸ªç‰¹å®šå¼‚å¸¸çš„å¤„ç†æ–¹æ³•
 	 * @param request
 	 * @param response
 	 * @param context

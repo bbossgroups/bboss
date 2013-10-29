@@ -47,7 +47,7 @@ public class DemoController extends AbstractController {
 		{
 			TestObject object = new TestObject();
 			object.setId("id" + i);
-			object.setName("¶à¶à");
+			object.setName("å¤šå¤š");
 			values.add(object);
 		}
 		return new ModelAndView(this.getViewName(),"testmodel",values);

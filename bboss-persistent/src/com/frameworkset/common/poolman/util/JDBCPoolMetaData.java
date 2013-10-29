@@ -37,9 +37,9 @@ public class JDBCPoolMetaData implements Serializable{
     private int skimmerFrequency = PoolManConstants.DEFAULT_SKIMMER_SLEEP;
     private int shrinkBy = PoolManConstants.DEFAULT_SHRINKBY;
     private boolean emergencyCreates = PoolManConstants.DEFAULT_EMERGENCY_CREATES;
-    private String maxWait = "30";//30Ãë  
+    private String maxWait = "30";//30ç§’  
     private String datasourceFile ;
-    /**×Ô¶¨Òå×ÔÔöĞòÁĞº¯ÊıÃû³Æ£¬ºÍtableinfoÖĞµÄsequence±íÖ÷¼üÅäÖÃ½áºÏÊ¹ÓÃ*/
+    /**è‡ªå®šä¹‰è‡ªå¢åºåˆ—å‡½æ•°åç§°ï¼Œå’Œtableinfoä¸­çš„sequenceè¡¨ä¸»é”®é…ç½®ç»“åˆä½¿ç”¨*/
     private String seqfunction;
 //    private boolean neadGetGenerateKeys;
     
@@ -96,10 +96,10 @@ public class JDBCPoolMetaData implements Serializable{
     private String jndiuser;
     private String jndipassword;
     /**
-     * ÊÇ·ñ¶ÔÊı¾İ¿âĞÅÏ¢½øĞĞ¼ÓÃÜ£º
-     * ÕËºÅĞÅÏ¢
-     * urlĞÅÏ¢
-     * ¿ÚÁîĞÅÏ¢
+     * æ˜¯å¦å¯¹æ•°æ®åº“ä¿¡æ¯è¿›è¡ŒåŠ å¯†ï¼š
+     * è´¦å·ä¿¡æ¯
+     * urlä¿¡æ¯
+     * å£ä»¤ä¿¡æ¯
      */
     private boolean encryptdbinfo = false;
     public String getJndiclass() {
@@ -126,66 +126,66 @@ public class JDBCPoolMetaData implements Serializable{
 	}
 
     /**
-     * ÏµÍ³Ìá¹©µÄÈ±Ê¡Êı¾İ¿â±íµÄÖ÷¼üÉú³É»úÖÆ¿ÉÒÔÍ¨¹ıÁ½ÖÖ·½Ê½Éú³ÉÊı¾İ¿âÖ÷¼ü
-     * 1.auto:×Ô¶¯Éú³É
-     * 2.composite£º²éÑ¯±íµÄ×î´óÖ÷¼ü
+     * ç³»ç»Ÿæä¾›çš„ç¼ºçœæ•°æ®åº“è¡¨çš„ä¸»é”®ç”Ÿæˆæœºåˆ¶å¯ä»¥é€šè¿‡ä¸¤ç§æ–¹å¼ç”Ÿæˆæ•°æ®åº“ä¸»é”®
+     * 1.auto:è‡ªåŠ¨ç”Ÿæˆ
+     * 2.compositeï¼šæŸ¥è¯¢è¡¨çš„æœ€å¤§ä¸»é”®
      */
     private String keygenerate = PoolManConstants.DEFAULT_KEY_GENERATE;
     
 
     /**
-     * Êı¾İ¿âÀàĞÍ
+     * æ•°æ®åº“ç±»å‹
      */
     private String dbtype = null;
     
     /**
-     * ÊÇ·ñ¼ÓÔØÔªÊı¾İ
+     * æ˜¯å¦åŠ è½½å…ƒæ•°æ®
      */
     private String loadmetadata = "false";
     
     /**
-     * ÊÇ·ñ×Ô¶¯²úÉúÖ÷¼ü
+     * æ˜¯å¦è‡ªåŠ¨äº§ç”Ÿä¸»é”®
      */
     private boolean autoprimarykey = false;
     private boolean showsql = false;
     /**
-     * ÊÇ·ñ»º³å²éÑ¯ÁĞ±íÔªÊı¾İ
+     * æ˜¯å¦ç¼“å†²æŸ¥è¯¢åˆ—è¡¨å…ƒæ•°æ®
      */
     private boolean cachequerymetadata = true;
     
     /**
-     * ±êÊ¶·ÖÒ³²éÑ¯ÊÇ·ñÊ¹ÓÃ¸ßĞ§²éÑ¯£¬È±Ê¡Îªtrue
-     * ÎªfalseÊ±½«²»»áÖ´ĞĞ¸ßĞ§²éÑ¯
+     * æ ‡è¯†åˆ†é¡µæŸ¥è¯¢æ˜¯å¦ä½¿ç”¨é«˜æ•ˆæŸ¥è¯¢ï¼Œç¼ºçœä¸ºtrue
+     * ä¸ºfalseæ—¶å°†ä¸ä¼šæ‰§è¡Œé«˜æ•ˆæŸ¥è¯¢
      */
     private boolean robotquery = true;
     
     /**
-     * ¼ì²â¿ÕÏĞÁ´½Ó´¦ÀíÊ±£¬ÊÇ·ñ¶Ô¿ÕÏĞÁ´½Ó½øĞĞÓĞĞ§ĞÔ¼ì²é¿ØÖÆ¿ª¹Ø
-     * true-¼ì²é£¬¶¼¼ì²éµ½ÓĞÎŞĞ§Á´½ÓÊ±£¬Ö±½ÓÏú»ÙÎŞĞ§Á´½Ó
-     * false-²»¼ì²é£¬È±Ê¡Öµ
+     * æ£€æµ‹ç©ºé—²é“¾æ¥å¤„ç†æ—¶ï¼Œæ˜¯å¦å¯¹ç©ºé—²é“¾æ¥è¿›è¡Œæœ‰æ•ˆæ€§æ£€æŸ¥æ§åˆ¶å¼€å…³
+     * true-æ£€æŸ¥ï¼Œéƒ½æ£€æŸ¥åˆ°æœ‰æ— æ•ˆé“¾æ¥æ—¶ï¼Œç›´æ¥é”€æ¯æ— æ•ˆé“¾æ¥
+     * false-ä¸æ£€æŸ¥ï¼Œç¼ºçœå€¼
      */
     private boolean testWhileidle = false; 
     
 	/**
-	 * µ±Á´½Ó³¬Ê±Ê±ÊÇ·ñÊÍ·ÅÁ´½Ó
+	 * å½“é“¾æ¥è¶…æ—¶æ—¶æ˜¯å¦é‡Šæ”¾é“¾æ¥
 	 */
 	private String removeAbandoned = "false";
 	
 	/**
-	 * µ±Á´½Ó³¬Ê±ÊÍ·ÅÁ´½ÓÊ±£¬ÊÇ·ñ´òÓ¡ºóÌ¨ÈÕÖ¾
+	 * å½“é“¾æ¥è¶…æ—¶é‡Šæ”¾é“¾æ¥æ—¶ï¼Œæ˜¯å¦æ‰“å°åå°æ—¥å¿—
 	 */
 	private boolean logAbandoned = false;
 	
 	/**
-	 * Éè¶¨Á´½ÓÊÇ·ñÊÇreadOnlyÊôĞÔ
+	 * è®¾å®šé“¾æ¥æ˜¯å¦æ˜¯readOnlyå±æ€§
 	 */
 	private boolean readOnly = true;
 	/**
-	 * ÊÇ·ñÆôÓÃjta datasource£¬Èç¹ûÆôÓÃ½«ÔÚjndi contextÖĞ×¢²áÒ»¸ö
+	 * æ˜¯å¦å¯ç”¨jta datasourceï¼Œå¦‚æœå¯ç”¨å°†åœ¨jndi contextä¸­æ³¨å†Œä¸€ä¸ª
 	 * TXDatasource
-	 * jta datasourceµÄjndinameÎª jndiNameÊôĞÔÖ¸¶¨µÄÖµ
-	 * Ä¬ÈÏÎª²»ÆôÓÃ£¬¸ÃÊôĞÔÔÚÍĞ¹ÜµÚÈı·½Êı¾İÔ´Ê±ÓĞÓÃ
-	 * µ±enablejta == trueÊ±£¬±ØĞëÔÚpoolman.xmlÎÄ¼şÖĞÖ¸¶¨jndiNameÊôĞÔ
+	 * jta datasourceçš„jndinameä¸º jndiNameå±æ€§æŒ‡å®šçš„å€¼
+	 * é»˜è®¤ä¸ºä¸å¯ç”¨ï¼Œè¯¥å±æ€§åœ¨æ‰˜ç®¡ç¬¬ä¸‰æ–¹æ•°æ®æºæ—¶æœ‰ç”¨
+	 * å½“enablejta == trueæ—¶ï¼Œå¿…é¡»åœ¨poolman.xmlæ–‡ä»¶ä¸­æŒ‡å®šjndiNameå±æ€§
 	 */
 	private boolean enablejta =  false;
     
@@ -634,7 +634,7 @@ public class JDBCPoolMetaData implements Serializable{
 		this.readOnly = readOnly;
 	}
 	/**
-	 * ÊÇ·ñ×Ô¶¯Í¬²½sequence
+	 * æ˜¯å¦è‡ªåŠ¨åŒæ­¥sequence
 	 */
 	boolean synsequence = false;
 	public boolean synsequence() {

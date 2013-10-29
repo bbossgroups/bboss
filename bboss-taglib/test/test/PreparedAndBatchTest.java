@@ -15,7 +15,7 @@ import com.frameworkset.orm.transaction.TransactionManager;
 public class PreparedAndBatchTest {
 	
 	/**
-	 * Ö´ĞĞÔ¤±àÒë¸üĞÂ²Ù×÷,ÊÍ·ÅÊı¾İ¿â×ÊÔ´ÊµÀı
+	 * æ‰§è¡Œé¢„ç¼–è¯‘æ›´æ–°æ“ä½œ,é‡Šæ”¾æ•°æ®åº“èµ„æºå®ä¾‹
 	 * @throws SQLException
 	 */
 	public static void updateTest() throws SQLException
@@ -32,8 +32,8 @@ public class PreparedAndBatchTest {
 				db.setTimestamp(2, new Timestamp(new java.util.Date().getTime()));
 				if(true && i < 50)
 				{
-					//´Ë´¦Å×³öÒµÎñÒì³££¬±ØĞëÔÚÏàÓ¦µÄÒì³£´¦Àí¿é»òÕßfinally¿éÖĞµ÷ÓÃdb.resetPrepare()·½·¨À´ÊÍ·ÅÊı¾İ¿â×ÊÔ´
-					//Èç¹ûÃ»ÓĞÊÍ·ÅÔò»áµ¼ÖÂÏµÍ³ÔËĞĞÒ»¶ÎÊ±ºòºóÅ×³öÒÔÏÂÒì³££º
+					//æ­¤å¤„æŠ›å‡ºä¸šåŠ¡å¼‚å¸¸ï¼Œå¿…é¡»åœ¨ç›¸åº”çš„å¼‚å¸¸å¤„ç†å—æˆ–è€…finallyå—ä¸­è°ƒç”¨db.resetPrepare()æ–¹æ³•æ¥é‡Šæ”¾æ•°æ®åº“èµ„æº
+					//å¦‚æœæ²¡æœ‰é‡Šæ”¾åˆ™ä¼šå¯¼è‡´ç³»ç»Ÿè¿è¡Œä¸€æ®µæ—¶å€™åæŠ›å‡ºä»¥ä¸‹å¼‚å¸¸ï¼š
 					//Cannot get a connection, pool error Timeout waiting for idle object
 					throw new Exception("e");
 				}
@@ -45,8 +45,8 @@ public class PreparedAndBatchTest {
 			catch(Exception e)
 			{
 				/**
-				 * PreparedDBUtilÖ´ĞĞÔ¤±àÒë²Ù×÷¹ı³ÌÖĞÅ×³öÒì³£ºó£¬µ÷ÓÃresetPrepare()·½·¨À´ÊÍ·ÅÊı¾İ¿â×ÊÔ´
-				 * ¸Ã·½·¨Ò²¿ÉÒÔ·Åµ½finally¿éÖĞÖ´ĞĞ
+				 * PreparedDBUtilæ‰§è¡Œé¢„ç¼–è¯‘æ“ä½œè¿‡ç¨‹ä¸­æŠ›å‡ºå¼‚å¸¸åï¼Œè°ƒç”¨resetPrepare()æ–¹æ³•æ¥é‡Šæ”¾æ•°æ®åº“èµ„æº
+				 * è¯¥æ–¹æ³•ä¹Ÿå¯ä»¥æ”¾åˆ°finallyå—ä¸­æ‰§è¡Œ
 				 * finally
 				 *	{
 				 *		
@@ -59,7 +59,7 @@ public class PreparedAndBatchTest {
 			finally
 			{
 				/**
-				 * PreparedDBUtilÖ´ĞĞÔ¤±àÒë²Ù×÷½áÊøºóµ÷ÓÃresetPrepare()·½·¨À´ÊÍ·ÅÊı¾İ¿â×ÊÔ´
+				 * PreparedDBUtilæ‰§è¡Œé¢„ç¼–è¯‘æ“ä½œç»“æŸåè°ƒç”¨resetPrepare()æ–¹æ³•æ¥é‡Šæ”¾æ•°æ®åº“èµ„æº
 				 */
 				db.resetPrepare();
 			}
@@ -69,7 +69,7 @@ public class PreparedAndBatchTest {
 	}
 	
 	/**
-	 * °üº¬ÔÚÊÂÎñ»·¾³ÖĞµÄÔ¤±àÒë²Ù×÷£¬Ö´ĞĞÅ×³öÒì³£ºó
+	 * åŒ…å«åœ¨äº‹åŠ¡ç¯å¢ƒä¸­çš„é¢„ç¼–è¯‘æ“ä½œï¼Œæ‰§è¡ŒæŠ›å‡ºå¼‚å¸¸å
 	 * @throws SQLException
 	 */
 	public static void updateWithTXtest() throws SQLException
@@ -93,13 +93,13 @@ public class PreparedAndBatchTest {
 				}				
 				db.setTimestamp(3, new Timestamp(new java.util.Date().getTime()));
 				db.executePrepared();
-				tm.commit();//ÊÂÎñÌá½»ºó×Ô¶¯ÊÍ·ÅÏµÍ³×ÊÔ´
+				tm.commit();//äº‹åŠ¡æäº¤åè‡ªåŠ¨é‡Šæ”¾ç³»ç»Ÿèµ„æº
 
 			}
 			catch(Exception e)
 			{
 				try {
-					tm.rollback();//ÊÂÎñ»Ø¹öºóÒ²»á×Ô¶¯ÊÍ·ÅÏµÍ³×ÊÔ´
+					tm.rollback();//äº‹åŠ¡å›æ»šåä¹Ÿä¼šè‡ªåŠ¨é‡Šæ”¾ç³»ç»Ÿèµ„æº
 				} catch (RollbackException e1) {
 					
 					e1.printStackTrace();
@@ -371,7 +371,7 @@ public class PreparedAndBatchTest {
 		    	db.addBatch("delete from TD_REG_BANK_ACC_bak where id=951");
 		    	db.addBatch("delete from TD_REG_BANK_ACC_bak where id=951");
 		    	if(i < 55)
-		    		//´Ë´¦Å×³öÒµÎñÒì³££¬ĞèÒªÔÚÏàÓ¦µÄÒì³£´¦Àí¿é»òfinally¿éÖĞµ÷ÓÃdb.resetBatch()·½·¨ÊÍ·ÅÊı¾İ¿â×ÊÔ´
+		    		//æ­¤å¤„æŠ›å‡ºä¸šåŠ¡å¼‚å¸¸ï¼Œéœ€è¦åœ¨ç›¸åº”çš„å¼‚å¸¸å¤„ç†å—æˆ–finallyå—ä¸­è°ƒç”¨db.resetBatch()æ–¹æ³•é‡Šæ”¾æ•°æ®åº“èµ„æº
 		    		throw new Exception("batch"); 
 		    	db.addBatch("delete from TD_REG_BANK_ACC_bak where id=951");
 		    	db.addBatch("delete from TD_REG_BANK_ACC_bak where id=951");
@@ -380,11 +380,11 @@ public class PreparedAndBatchTest {
 	    	catch(Exception e)
 	    	{
 	    		e.printStackTrace();
-	    		db.resetBatch();//ÔÚÏàÓ¦µÄÒì³£´¦Àí¿é»òfinally¿éÖĞµ÷ÓÃdb.resetBatch()·½·¨ÊÍ·ÅÊı¾İ¿â×ÊÔ´
+	    		db.resetBatch();//åœ¨ç›¸åº”çš„å¼‚å¸¸å¤„ç†å—æˆ–finallyå—ä¸­è°ƒç”¨db.resetBatch()æ–¹æ³•é‡Šæ”¾æ•°æ®åº“èµ„æº
 	    	}
 	    	finally
 	    	{
-	    		//finally¿éÖĞµ÷ÓÃdb.resetBatch()·½·¨ÊÍ·ÅÊı¾İ¿â×ÊÔ´£¬È·±£×ÊÔ´ÄÜ¹»Õı³£»ØÊÕ
+	    		//finallyå—ä¸­è°ƒç”¨db.resetBatch()æ–¹æ³•é‡Šæ”¾æ•°æ®åº“èµ„æºï¼Œç¡®ä¿èµ„æºèƒ½å¤Ÿæ­£å¸¸å›æ”¶
 	    		db.resetBatch();
 	    	}
     	}

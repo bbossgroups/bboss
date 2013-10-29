@@ -24,7 +24,7 @@ import org.frameworkset.spi.assemble.ProMap;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2010-2-5 下午04:33:54
+ * @Date 2010-2-5 涓嬪崍04:33:54
  * @author biaoping.yin
  * @version 1.0
  */
@@ -96,7 +96,7 @@ public class SecurityManagerImpl implements SecurityManager
 			try
 			{
 			    if(context == null)
-	                throw new SecurityException("认证失败：没有指定用户凭证信息，SecurityContext is null."  );
+	                throw new SecurityException("璁よ瘉澶辫触锛氭病鏈夋寚瀹氱敤鎴峰嚟璇佷俊鎭紝SecurityContext is null."  );
 				return this.authority.checkPermission(context);
 			}
 			catch (SecurityException e)
@@ -157,7 +157,7 @@ public class SecurityManagerImpl implements SecurityManager
         if(enableAuthenticate)
         {
             if(context == null)
-                throw new SecurityException("认证失败：没有指定用户凭证信息，SecurityContext is null."  );
+                throw new SecurityException("璁よ瘉澶辫触锛氭病鏈夋寚瀹氱敤鎴峰嚟璇佷俊鎭紝SecurityContext is null."  );
 	        try
 			{
 	            

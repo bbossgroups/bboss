@@ -1,15 +1,15 @@
-<?xml version="1.0" encoding='gb2312'?>
+<?xml version="1.0" encoding='UTF-8'?>
 <properties>
 	<description>
 <![CDATA[
-	sqlÅäÖÃÎÄ¼þ
-	¿ÉÒÔÍ¨¹ýÃû³ÆÊôÐÔnameÅäÖÃÄ¬ÈÏsql£¬ÌØ¶¨Êý¾Ý¿âµÄsqlÍ¨¹ýÔÚ
-	Ãû³ÆºóÃæ¼ÓÊý¾Ý¿âÀàÐÍºó×ºÀ´Çø·Ö£¬ÀýÈç£º
+	sqlé…ç½®æ–‡ä»¶
+	å¯ä»¥é€šè¿‡åç§°å±žæ€§nameé…ç½®é»˜è®¤sqlï¼Œç‰¹å®šæ•°æ®åº“çš„sqlé€šè¿‡åœ¨
+	åç§°åŽé¢åŠ æ•°æ®åº“ç±»åž‹åŽç¼€æ¥åŒºåˆ†ï¼Œä¾‹å¦‚ï¼š
 	sqltest
 	sqltest-oracle
 	sqltest-derby
 	sqltest-mysql
-	µÈµÈ£¬±¾ÅäÖÃÊµÀý¾ÍÑÝÊ¾ÁË¾ßÌåÅäÖÃ·½·¨
+	ç­‰ç­‰ï¼Œæœ¬é…ç½®å®žä¾‹å°±æ¼”ç¤ºäº†å…·ä½“é…ç½®æ–¹æ³•
  ]]>
 	</description>
 	<property name="sqltest"><![CDATA[select * from LISTBEAN]]>
@@ -19,13 +19,13 @@
 	<property name="sqltemplate"><![CDATA[select FIELDNAME from LISTBEAN where FIELDNAME=#[fieldName]]]>
 	</property>
 	<property name="sqltemplate-oracle"><![CDATA[select FIELDNAME from LISTBEAN where FIELDNAME=#[fieldName]  ]]></property>
-	<!-- ¶¯Ì¬sql£¬Èç¹ûFIELDNAME ²»µÈÓÚnull£¬²¢ÇÒFIELDNAME²»Îª""½«FIELDNAME×÷Îª²éÑ¯Ìõ¼þ-->
+	<!-- åŠ¨æ€sqlï¼Œå¦‚æžœFIELDNAME ä¸ç­‰äºŽnullï¼Œå¹¶ä¸”FIELDNAMEä¸ä¸º""å°†FIELDNAMEä½œä¸ºæŸ¥è¯¢æ¡ä»¶-->
 	<property name="dynamicsqltemplate"><![CDATA[select *  from LISTBEAN  where 1=1 
 					#if($fieldName && !$fieldName.equals("")) and FIELDNAME = #[fieldName] #end  ]]>
 	</property>
 	
 	
-	<!-- ¶¯Ì¬sql£¬Èç¹ûid ²»µÈÓÚ-1£¬²¢ÇÒid²»Îª0½«id×÷Îª²éÑ¯Ìõ¼þ-->
+	<!-- åŠ¨æ€sqlï¼Œå¦‚æžœid ä¸ç­‰äºŽ-1ï¼Œå¹¶ä¸”idä¸ä¸º0å°†idä½œä¸ºæŸ¥è¯¢æ¡ä»¶-->
 	<property name="dynamicsqltemplateid"><![CDATA[select *  from LISTBEAN  where 1=1 
 					#if($id != -1 && $id != 0) and id = #[id] #end  ]]>
 	</property>

@@ -29,7 +29,7 @@ import com.caucho.hessian.client.HessianProxyFactory;
  * <p> bboss workgroup </p>
  * <p> Copyright (c) 2009 </p>
  * 
- * @Date 2013-2-22 ÉÏÎç11:14:18
+ * @Date 2013-2-22 ä¸Šåˆ11:14:18
  * @author biaoping.yin
  * @version 1.0
  */
@@ -42,7 +42,7 @@ public class ClientTest {
 	public void testFromIOC()
 	{
 		DefaultApplicationContext context = DefaultApplicationContext.getApplicationContext("org/frameworkset/spi/remote/hession/client/hessian-client.xml");
-			//»ñÈ¡¿Í»§¶Ë×é¼şÊµÀı
+			//è·å–å®¢æˆ·ç«¯ç»„ä»¶å®ä¾‹
 		ServiceInf basic = context.getTBeanObject("clientservice", ServiceInf.class);
 		System.out.println(basic.hello("duoduo"));
 	}
@@ -50,7 +50,7 @@ public class ClientTest {
 	@Test
 	public void testHessian() throws MalformedURLException
 	{
-		String url = "http://localhost/SanyPDP/hessian?container=org/frameworkset/spi/remote/hession/server/hessian-service.xml&service=basicservice";//Ö¸¶¨ÈİÆ÷±êÊ¶ºÍÈİÆ÷ÀàĞÍ¼°·şÎñ±êÊ¶
+		String url = "http://localhost/SanyPDP/hessian?container=org/frameworkset/spi/remote/hession/server/hessian-service.xml&service=basicservice";//æŒ‡å®šå®¹å™¨æ ‡è¯†å’Œå®¹å™¨ç±»å‹åŠæœåŠ¡æ ‡è¯†
 		
 		 HessianProxyFactory factory = new HessianProxyFactory();
 	    ServiceInf basic = (ServiceInf) factory.create(org.frameworkset.spi.remote.hession.server.ServiceInf.class, url);
@@ -61,7 +61,7 @@ public class ClientTest {
 	@Test
 	public void testSimpleHessian() throws MalformedURLException
 	{
-		String url = "http://localhost/SanyPDP/hessian?service=basicservice";//Ö¸¶¨ÈİÆ÷±êÊ¶ºÍÈİÆ÷ÀàĞÍ¼°·şÎñ±êÊ¶
+		String url = "http://localhost/SanyPDP/hessian?service=basicservice";//æŒ‡å®šå®¹å™¨æ ‡è¯†å’Œå®¹å™¨ç±»å‹åŠæœåŠ¡æ ‡è¯†
 		
 		 HessianProxyFactory factory = new HessianProxyFactory();
 	    ServiceInf basic = (ServiceInf) factory.create(org.frameworkset.spi.remote.hession.server.ServiceInf.class, url);

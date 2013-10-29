@@ -21,7 +21,7 @@ import org.frameworkset.event.Event;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2009-4-17 ÏÂÎç02:15:40
+ * @Date 2009-4-17 ä¸‹åˆ02:15:40
  * @author biaoping.yin
  * @version 1.0
  */

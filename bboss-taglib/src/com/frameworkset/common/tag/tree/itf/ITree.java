@@ -252,7 +252,7 @@ public interface ITree extends ActiveTree {
 	public ITreeNode getCurExpanded();
 	
 	/**
-	 * ÅĞ¶Ïµ±Ç°µÄÊ÷ÊÇ·ñÊÇ¶¯Ì¬Ê÷
+	 * åˆ¤æ–­å½“å‰çš„æ ‘æ˜¯å¦æ˜¯åŠ¨æ€æ ‘
 	 * @return
 	 */
 	public boolean isDynamic();
@@ -268,7 +268,7 @@ public interface ITree extends ActiveTree {
 	public Iterator iterator(String parent_indent);
 	
 	/**
-	 * Îª¸´Ñ¡¿ò¶¨ÒåµÄÒ»×éº¯Êı
+	 * ä¸ºå¤é€‰æ¡†å®šä¹‰çš„ä¸€ç»„å‡½æ•°
 	 */
 	
 	/**

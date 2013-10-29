@@ -27,7 +27,7 @@ import java.lang.annotation.Target;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2010-10-18 ÏÂÎç02:10:51
+ * @Date 2010-10-18 ä¸‹åˆ02:10:51
  * @author biaoping.yin
  * @version 1.0
  */

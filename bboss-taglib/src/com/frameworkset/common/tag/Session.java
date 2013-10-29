@@ -24,13 +24,13 @@ import javax.servlet.jsp.JspWriter;
 
 import com.frameworkset.util.ValueObjectUtil;
 /**
- * session¶ÔÏóµÄÈ¡Öµ±êÇ©
+ * sessionå¯¹è±¡çš„å–å€¼æ ‡ç­¾
  *
  * @author biaoping.yin
  */
 public class Session extends BaseTag {
 	/**
-	 * sessionÖĞ±£´æµÄ±äÁ¿Ãû³Æ
+	 * sessionä¸­ä¿å­˜çš„å˜é‡åç§°
 	 */
 	private String name;
 	private String property;
@@ -145,7 +145,7 @@ public class Session extends BaseTag {
 	}
 
 	/**
-	 * @return È±Ê¡Öµ
+	 * @return ç¼ºçœå€¼
 	 */
 	public String getDefaultValue() {
 		return defaultValue;

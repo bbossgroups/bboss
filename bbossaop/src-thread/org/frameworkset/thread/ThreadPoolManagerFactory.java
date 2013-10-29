@@ -36,9 +36,9 @@ import org.frameworkset.spi.assemble.ProMap;
  * </p>
  * 
  * <p>
- * Description: corePoolSize�� �̳߳�ά���̵߳��������� maximumPoolSize���̳߳�ά���̵߳��������
- * keepAliveTime�� �̳߳�ά���߳��������Ŀ���ʱ�� unit�� �̳߳�ά���߳��������Ŀ���ʱ��ĵ�λ workQueue��
- * �̳߳���ʹ�õĻ������ handler�� �̳߳ضԾܾ�����Ĵ�������
+ * Description: corePoolSize： 线程池维护线程的最少数量 maximumPoolSize：线程池维护线程的最大数量
+ * keepAliveTime： 线程池维护线程所允许的空闲时间 unit： 线程池维护线程所允许的空闲时间的单位 workQueue：
+ * 线程池所使用的缓冲队列 handler： 线程池对拒绝任务的处理策略
  * 
  * 
  * </p>
@@ -62,8 +62,8 @@ public class ThreadPoolManagerFactory
      * <property name="transfer.threadpool"> <map> <property name="corePoolSize"
      * value="50"/> <property name="maximumPoolSize" value="50"/> <!--
      * TimeUnit.SECONDS TimeUnit.MICROSECONDS TimeUnit.MILLISECONDS
-     * TimeUnit.NANOSECONDS ʱ�䵥λ���������²����� keepAliveTime waitTime
-     * delayTime����delayTimeΪ����ʱ������ǰٷֱ�ʱ��Ч�� --> <property name="timeUnit"
+     * TimeUnit.NANOSECONDS 时间单位适用于以下参数： keepAliveTime waitTime
+     * delayTime（当delayTime为整数时间而不是百分比时有效） --> <property name="timeUnit"
      * value="TimeUnit.SECONDS"/> <property name="keepAliveTime" value="10"/>
      * <!--
      * 
@@ -75,22 +75,22 @@ public class ThreadPoolManagerFactory
      * <property name="blockingQueue" value="40"/>
      * 
      * <!-- RejectedExecutionHandler
-     * ����ʵ��java.util.concurrent.RejectedExecutionHandler�ӿ� Ŀǰϵͳ�ṩ����ȱʡʵ�֣�
+     * 必须实现java.util.concurrent.RejectedExecutionHandler接口 目前系统提供以下缺省实现：
      * org.frameworkset.thread.WaitPolicy
-     * ѭ���ȴ�event.threadpool.waitTimeָ����ʱ�䣬��λΪ��
-     * java.util.concurrent.ThreadPoolExecutor$DiscardPolicy ֱ�Ӷ������񣬲��׳��쳣
+     * 循环等待event.threadpool.waitTime指定的时间，单位为秒
+     * java.util.concurrent.ThreadPoolExecutor$DiscardPolicy 直接丢弃任务，不抛出异常
      * java.util.concurrent.ThreadPoolExecutor$AbortPolicy
-     * ֱ�Ӷ��������׳��쳣RejectedExecutionException
-     * java.util.concurrent.ThreadPoolExecutor$CallerRunsPolicy ֱ������
-     * java.util.concurrent.ThreadPoolExecutor$DiscardOldestPolicy ������У������ϵ�����ɾ��
-     * org.frameworkset.thread.RunRejectPolicy ֱ�����У�����֪ͨ���������ӳ�����ִ������
-     * org.frameworkset.thread.RejectRequeuePoliecy ���·��������ջִ������֪ͨ�ⲿ����Ż�����ַ�
+     * 直接丢弃任务，抛出异常RejectedExecutionException
+     * java.util.concurrent.ThreadPoolExecutor$CallerRunsPolicy 直接运行
+     * java.util.concurrent.ThreadPoolExecutor$DiscardOldestPolicy 放入队列，将最老的任务删除
+     * org.frameworkset.thread.RunRejectPolicy 直接运行，并且通知驱动程序延迟生成执行任务
+     * org.frameworkset.thread.RejectRequeuePoliecy 重新放入任务堆栈执行任务，通知外部程序放缓任务分发
      * --> <property name="rejectedExecutionHandler"
      * value="org.frameworkset.thread.RejectRequeuePoliecy"/> <!-- <property
      * name="rejectedExecutionHandler"
      * value="java.util.concurrent.ThreadPoolExecutor$CallerRunsPolicy"/>-->
      * 
-     * <!-- ���²���ֻ�������õ�org.frameworkset.thread.WaitPolicy����ʱ����Ҫ���� --> <property
+     * <!-- 以下参数只有在配置的org.frameworkset.thread.WaitPolicy策略时才需要配置 --> <property
      * name="waitTime" value="1"/> <property name="delayTime" value="20%"/>
      * <property name="maxWaits" value="-1"/> <property name="maxdelayTime"
      * value="4"/> <property name="waitFailHandler" value=

@@ -34,8 +34,8 @@ import java.util.List;
  */
 public class ExampleListener implements Listener<String>{
 	/**
-	 * ×¢²á¼àÌıÆ÷,¼àÌıExampleEventType.type1ºÍExampleEventType.type2Á½ÖÖÀàĞÍµÄÊÂ¼ş
-	 * ÊÂ¼şÏûÏ¢¿ÉÒÔÊÇ±¾µØÊÂ¼ş£¬¿ÉÒÔÊÇÔ¶³Ì±¾µØÏûÏ¢£¬Ò²¿ÉÒÔÊÇÔ¶³ÌÏûÏ¢
+	 * æ³¨å†Œç›‘å¬å™¨,ç›‘å¬ExampleEventType.type1å’ŒExampleEventType.type2ä¸¤ç§ç±»å‹çš„äº‹ä»¶
+	 * äº‹ä»¶æ¶ˆæ¯å¯ä»¥æ˜¯æœ¬åœ°äº‹ä»¶ï¼Œå¯ä»¥æ˜¯è¿œç¨‹æœ¬åœ°æ¶ˆæ¯ï¼Œä¹Ÿå¯ä»¥æ˜¯è¿œç¨‹æ¶ˆæ¯
 	 */
 	public void init()
 	{
@@ -43,21 +43,21 @@ public class ExampleListener implements Listener<String>{
 		eventtypes.add(ExampleEventType.type1);
 		eventtypes.add(ExampleEventType.type2);
 		eventtypes.add(ExampleEventType.type2withtarget);
-		//¼àÌıÆ÷¼àÌıµÄÊÂ¼şÏûÏ¢¿ÉÒÔÊÇ±¾µØÊÂ¼ş£¬¿ÉÒÔÊÇÔ¶³Ì±¾µØÏûÏ¢£¬Ò²¿ÉÒÔÊÇÔ¶³ÌÏûÏ¢
-		//Èç¹û²»Ö¸¶¨eventtypesÔò¼àÌıËùÓĞÀàĞÍµÄÊÂ¼şÏûÏ¢
+		//ç›‘å¬å™¨ç›‘å¬çš„äº‹ä»¶æ¶ˆæ¯å¯ä»¥æ˜¯æœ¬åœ°äº‹ä»¶ï¼Œå¯ä»¥æ˜¯è¿œç¨‹æœ¬åœ°æ¶ˆæ¯ï¼Œä¹Ÿå¯ä»¥æ˜¯è¿œç¨‹æ¶ˆæ¯
+		//å¦‚æœä¸æŒ‡å®ševenttypesåˆ™ç›‘å¬æ‰€æœ‰ç±»å‹çš„äº‹ä»¶æ¶ˆæ¯
 		NotifiableFactory.getNotifiable().addListener(this, eventtypes);
 		/**
-		 * Ö»¼àÌı±¾µØÏûÏ¢ºÍ±¾µØ·¢²¼µÄ±¾µØÔ¶³ÌÏûÏ¢
+		 * åªç›‘å¬æœ¬åœ°æ¶ˆæ¯å’Œæœ¬åœ°å‘å¸ƒçš„æœ¬åœ°è¿œç¨‹æ¶ˆæ¯
 		 * NotifiableFactory.getNotifiable().addListener(this, eventtypes,Listener.LOCAL);
-		 * Ö»¼àÌı±¾µØÏûÏ¢ºÍ´ÓÔ¶³ÌÏûÏ¢¹ã²¥Æ÷·¢²¼µÄÔ¶³ÌÏûÏ¢ºÍÔ¶³Ì±¾µØÏûÏ¢
+		 * åªç›‘å¬æœ¬åœ°æ¶ˆæ¯å’Œä»è¿œç¨‹æ¶ˆæ¯å¹¿æ’­å™¨å‘å¸ƒçš„è¿œç¨‹æ¶ˆæ¯å’Œè¿œç¨‹æœ¬åœ°æ¶ˆæ¯
 		 * NotifiableFactory.getNotifiable().addListener(this, eventtypes,Listener.LOCAL_REMOTE);
-		 * Ö»¼àÌı´ÓÔ¶³ÌÏûÏ¢¹ã²¥Æ÷·¢²¼µÄÔ¶³ÌÏûÏ¢ºÍÔ¶³Ì±¾µØÏûÏ¢
+		 * åªç›‘å¬ä»è¿œç¨‹æ¶ˆæ¯å¹¿æ’­å™¨å‘å¸ƒçš„è¿œç¨‹æ¶ˆæ¯å’Œè¿œç¨‹æœ¬åœ°æ¶ˆæ¯
 		 * NotifiableFactory.getNotifiable().addListener(this, eventtypes,Listener.REMOTE);
 		 */
 		
 	}
 	/**
-	 * ´¦Àí¼àÌıµ½µÄÏûÏ¢
+	 * å¤„ç†ç›‘å¬åˆ°çš„æ¶ˆæ¯
 	 */
 	public void handle(Event<String> e) {
 		

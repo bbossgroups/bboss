@@ -36,9 +36,9 @@
 
 	<target name="compile-bboss-velocity" description="compile the bboss-velocity source ">
 		<echo>compile the bboss-velocity source ...</echo>
-		<javac destdir="classes-bboss-velocity" target="1.5" source="1.5" deprecation="true" debug="${debug}" optimize="${optimize}" memorymaximumsize="256M" fork="true" verbose="yes">
+		<javac encoding="UTF-8" destdir="classes-bboss-velocity" target="1.5" source="1.5" deprecation="true" debug="${debug}" optimize="${optimize}" memorymaximumsize="256M" fork="true" verbose="yes">
 			<src path="src-velocity" />
-			<src path="src-ext" />
+			
 			<classpath id="cp-classes-bboss-velocity">
 				<fileset dir="lib/" includes="*.jar *.zip" />				
 				<fileset dir="lib/test" includes="*.jar" />

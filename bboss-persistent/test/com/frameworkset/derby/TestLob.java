@@ -47,29 +47,29 @@ public class TestLob {
         "TABLE_ID_PREFIX     VARCHAR(255)"+
         ")";
         String addpk = "ALTER TABLE TABLEINFO ADD   CONSTRAINT PK_TABLEINFO0 PRIMARY KEY (TABLE_NAME)";
-//        " COMMENT ON TABLE TABLEINFO IS ''±íĞÅÏ¢Î¬»¤¶ÔÏó'';"+
-//        " execute immediate 'COMMENT ON COLUMN TABLEINFO.TABLE_NAME IS ''±íÃû³Æ''';"+
-//        " execute immediate 'COMMENT ON COLUMN TABLEINFO.TABLE_ID_NAME IS ''±íµÄÖ÷¼üÃû³Æ''';"+
-//        " execute immediate 'COMMENT ON COLUMN TABLEINFO.TABLE_ID_INCREMENT IS ''±íµÄÖ÷¼üµİÔöÁ¿È±Ê¡Îª1''';"+
-//        " execute immediate 'COMMENT ON COLUMN TABLEINFO.TABLE_ID_VALUE IS ''Ö÷¼üµ±Ç°Öµ£ºÈ±Ê¡Îª0''';"+
-//        " execute immediate 'COMMENT ON COLUMN TABLEINFO.TABLE_ID_GENERATOR IS ''×Ô¶¨Òå±íÖ÷¼üÉú³É»úÖÆ"+
-//        "±ØĞè´Ó"+
-//        "com.frameworkset.common.poolman.sql.PrimaryKey¼¯³É''';"+
-//        " execute immediate 'COMMENT ON COLUMN TABLEINFO.TABLE_ID_TYPE IS ''Ö÷¼üÀàĞÍ£¨string,int£©''';"+
-//        " execute immediate 'COMMENT ON COLUMN TABLEINFO.TABLE_ID_PREFIX IS ''ÀàĞÍÎªstringµÄÖ÷¼üÇ°×º£¬¿ÉÖ¸¶¨¿É²»Ö¸¶¨,È±Ê¡ÖµÎª¿Õ''';"+
+//        " COMMENT ON TABLE TABLEINFO IS ''è¡¨ä¿¡æ¯ç»´æŠ¤å¯¹è±¡'';"+
+//        " execute immediate 'COMMENT ON COLUMN TABLEINFO.TABLE_NAME IS ''è¡¨åç§°''';"+
+//        " execute immediate 'COMMENT ON COLUMN TABLEINFO.TABLE_ID_NAME IS ''è¡¨çš„ä¸»é”®åç§°''';"+
+//        " execute immediate 'COMMENT ON COLUMN TABLEINFO.TABLE_ID_INCREMENT IS ''è¡¨çš„ä¸»é”®é€’å¢é‡ç¼ºçœä¸º1''';"+
+//        " execute immediate 'COMMENT ON COLUMN TABLEINFO.TABLE_ID_VALUE IS ''ä¸»é”®å½“å‰å€¼ï¼šç¼ºçœä¸º0''';"+
+//        " execute immediate 'COMMENT ON COLUMN TABLEINFO.TABLE_ID_GENERATOR IS ''è‡ªå®šä¹‰è¡¨ä¸»é”®ç”Ÿæˆæœºåˆ¶"+
+//        "å¿…éœ€ä»"+
+//        "com.frameworkset.common.poolman.sql.PrimaryKeyé›†æˆ''';"+
+//        " execute immediate 'COMMENT ON COLUMN TABLEINFO.TABLE_ID_TYPE IS ''ä¸»é”®ç±»å‹ï¼ˆstring,intï¼‰''';"+
+//        " execute immediate 'COMMENT ON COLUMN TABLEINFO.TABLE_ID_PREFIX IS ''ç±»å‹ä¸ºstringçš„ä¸»é”®å‰ç¼€ï¼Œå¯æŒ‡å®šå¯ä¸æŒ‡å®š,ç¼ºçœå€¼ä¸ºç©º''';"+
 //        " execute immediate 'CREATE UNIQUE INDEX PK_TABLEINFO0 ON TABLEINFO(TABLE_NAME)';"+
 //        " execute immediate 'ALTER TABLE TABLEINFO ADD   CONSTRAINT PK_TABLEINFO0 PRIMARY KEY (TABLE_NAME)';" +
 //        " exception" +
 //        " when others then " +
 //        " execute immediate 'CREATE TABLE TABLEINFO ( TABLE_NAME          VARCHAR2(255)        NOT NULL,TABLE_ID_NAME       VARCHAR2(255),TABLE_ID_INCREMENT  NUMBER(5)                 DEFAULT 1,TABLE_ID_VALUE      NUMBER(20)                DEFAULT 0,TABLE_ID_GENERATOR  VARCHAR2(255),TABLE_ID_TYPE       VARCHAR2(255),TABLE_ID_PREFIX     VARCHAR2(255))';" +
-//        " execute immediate 'COMMENT ON TABLE TABLEINFO IS ''±íĞÅÏ¢Î¬»¤¶ÔÏó''';" +
-//        " execute immediate 'COMMENT ON COLUMN TABLEINFO.TABLE_NAME IS ''±íÃû³Æ''';" +
-//        " execute immediate 'COMMENT ON COLUMN TABLEINFO.TABLE_ID_NAME IS ''±íµÄÖ÷¼üÃû³Æ''';" +
-//        " execute immediate 'COMMENT ON COLUMN TABLEINFO.TABLE_ID_INCREMENT IS ''±íµÄÖ÷¼üµİÔöÁ¿È±Ê¡Îª1''';" +
-//        " execute immediate 'COMMENT ON COLUMN TABLEINFO.TABLE_ID_VALUE IS ''Ö÷¼üµ±Ç°Öµ£ºÈ±Ê¡Îª0''';" +
-//        " execute immediate 'COMMENT ON COLUMN TABLEINFO.TABLE_ID_GENERATOR IS ''×Ô¶¨Òå±íÖ÷¼üÉú³É»úÖÆ±ØĞè´Ócom.frameworkset.common.poolman.sql.PrimaryKey¼¯³É''';" +
-//        " execute immediate 'COMMENT ON COLUMN TABLEINFO.TABLE_ID_TYPE IS ''Ö÷¼üÀàĞÍ£¨string,int£©''';" +
-//        " execute immediate 'COMMENT ON COLUMN TABLEINFO.TABLE_ID_PREFIX IS ''ÀàĞÍÎªstringµÄÖ÷¼üÇ°×º£¬¿ÉÖ¸¶¨¿É²»Ö¸¶¨,È±Ê¡ÖµÎª¿Õ''';" +
+//        " execute immediate 'COMMENT ON TABLE TABLEINFO IS ''è¡¨ä¿¡æ¯ç»´æŠ¤å¯¹è±¡''';" +
+//        " execute immediate 'COMMENT ON COLUMN TABLEINFO.TABLE_NAME IS ''è¡¨åç§°''';" +
+//        " execute immediate 'COMMENT ON COLUMN TABLEINFO.TABLE_ID_NAME IS ''è¡¨çš„ä¸»é”®åç§°''';" +
+//        " execute immediate 'COMMENT ON COLUMN TABLEINFO.TABLE_ID_INCREMENT IS ''è¡¨çš„ä¸»é”®é€’å¢é‡ç¼ºçœä¸º1''';" +
+//        " execute immediate 'COMMENT ON COLUMN TABLEINFO.TABLE_ID_VALUE IS ''ä¸»é”®å½“å‰å€¼ï¼šç¼ºçœä¸º0''';" +
+//        " execute immediate 'COMMENT ON COLUMN TABLEINFO.TABLE_ID_GENERATOR IS ''è‡ªå®šä¹‰è¡¨ä¸»é”®ç”Ÿæˆæœºåˆ¶å¿…éœ€ä»com.frameworkset.common.poolman.sql.PrimaryKeyé›†æˆ''';" +
+//        " execute immediate 'COMMENT ON COLUMN TABLEINFO.TABLE_ID_TYPE IS ''ä¸»é”®ç±»å‹ï¼ˆstring,intï¼‰''';" +
+//        " execute immediate 'COMMENT ON COLUMN TABLEINFO.TABLE_ID_PREFIX IS ''ç±»å‹ä¸ºstringçš„ä¸»é”®å‰ç¼€ï¼Œå¯æŒ‡å®šå¯ä¸æŒ‡å®š,ç¼ºçœå€¼ä¸ºç©º''';" +
 //        " execute immediate 'CREATE UNIQUE INDEX PK_TABLEINFO0 ON TABLEINFO(TABLE_NAME)';" +
 //        " execute immediate 'ALTER TABLE TABLEINFO ADD   CONSTRAINT PK_TABLEINFO0 PRIMARY KEY (TABLE_NAME)';" +
 //        " end;";
@@ -86,29 +86,29 @@ public class TestLob {
 //"TABLE_ID_TYPE       VARCHAR2(255),"+
 //"TABLE_ID_PREFIX     VARCHAR2(255)"+
 //")';"+
-//" execute immediate 'COMMENT ON TABLE TABLEINFO IS ''±íĞÅÏ¢Î¬»¤¶ÔÏó''';"+
-//" execute immediate 'COMMENT ON COLUMN TABLEINFO.TABLE_NAME IS ''±íÃû³Æ''';"+
-//" execute immediate 'COMMENT ON COLUMN TABLEINFO.TABLE_ID_NAME IS ''±íµÄÖ÷¼üÃû³Æ''';"+
-//" execute immediate 'COMMENT ON COLUMN TABLEINFO.TABLE_ID_INCREMENT IS ''±íµÄÖ÷¼üµİÔöÁ¿È±Ê¡Îª1''';"+
-//" execute immediate 'COMMENT ON COLUMN TABLEINFO.TABLE_ID_VALUE IS ''Ö÷¼üµ±Ç°Öµ£ºÈ±Ê¡Îª0''';"+
-//" execute immediate 'COMMENT ON COLUMN TABLEINFO.TABLE_ID_GENERATOR IS ''×Ô¶¨Òå±íÖ÷¼üÉú³É»úÖÆ"+
-//"±ØĞè´Ó"+
-//"com.frameworkset.common.poolman.sql.PrimaryKey¼¯³É''';"+
-//" execute immediate 'COMMENT ON COLUMN TABLEINFO.TABLE_ID_TYPE IS ''Ö÷¼üÀàĞÍ£¨string,int£©''';"+
-//" execute immediate 'COMMENT ON COLUMN TABLEINFO.TABLE_ID_PREFIX IS ''ÀàĞÍÎªstringµÄÖ÷¼üÇ°×º£¬¿ÉÖ¸¶¨¿É²»Ö¸¶¨,È±Ê¡ÖµÎª¿Õ''';"+
+//" execute immediate 'COMMENT ON TABLE TABLEINFO IS ''è¡¨ä¿¡æ¯ç»´æŠ¤å¯¹è±¡''';"+
+//" execute immediate 'COMMENT ON COLUMN TABLEINFO.TABLE_NAME IS ''è¡¨åç§°''';"+
+//" execute immediate 'COMMENT ON COLUMN TABLEINFO.TABLE_ID_NAME IS ''è¡¨çš„ä¸»é”®åç§°''';"+
+//" execute immediate 'COMMENT ON COLUMN TABLEINFO.TABLE_ID_INCREMENT IS ''è¡¨çš„ä¸»é”®é€’å¢é‡ç¼ºçœä¸º1''';"+
+//" execute immediate 'COMMENT ON COLUMN TABLEINFO.TABLE_ID_VALUE IS ''ä¸»é”®å½“å‰å€¼ï¼šç¼ºçœä¸º0''';"+
+//" execute immediate 'COMMENT ON COLUMN TABLEINFO.TABLE_ID_GENERATOR IS ''è‡ªå®šä¹‰è¡¨ä¸»é”®ç”Ÿæˆæœºåˆ¶"+
+//"å¿…éœ€ä»"+
+//"com.frameworkset.common.poolman.sql.PrimaryKeyé›†æˆ''';"+
+//" execute immediate 'COMMENT ON COLUMN TABLEINFO.TABLE_ID_TYPE IS ''ä¸»é”®ç±»å‹ï¼ˆstring,intï¼‰''';"+
+//" execute immediate 'COMMENT ON COLUMN TABLEINFO.TABLE_ID_PREFIX IS ''ç±»å‹ä¸ºstringçš„ä¸»é”®å‰ç¼€ï¼Œå¯æŒ‡å®šå¯ä¸æŒ‡å®š,ç¼ºçœå€¼ä¸ºç©º''';"+
 //" execute immediate 'CREATE UNIQUE INDEX PK_TABLEINFO0 ON TABLEINFO(TABLE_NAME)';"+
 //" execute immediate 'ALTER TABLE TABLEINFO ADD   CONSTRAINT PK_TABLEINFO0 PRIMARY KEY (TABLE_NAME)';" +
 //" exception" +
 //" when others then " +
 //" execute immediate 'CREATE TABLE TABLEINFO ( TABLE_NAME          VARCHAR2(255)        NOT NULL,TABLE_ID_NAME       VARCHAR2(255),TABLE_ID_INCREMENT  NUMBER(5)                 DEFAULT 1,TABLE_ID_VALUE      NUMBER(20)                DEFAULT 0,TABLE_ID_GENERATOR  VARCHAR2(255),TABLE_ID_TYPE       VARCHAR2(255),TABLE_ID_PREFIX     VARCHAR2(255))';" +
-//" execute immediate 'COMMENT ON TABLE TABLEINFO IS ''±íĞÅÏ¢Î¬»¤¶ÔÏó''';" +
-//" execute immediate 'COMMENT ON COLUMN TABLEINFO.TABLE_NAME IS ''±íÃû³Æ''';" +
-//" execute immediate 'COMMENT ON COLUMN TABLEINFO.TABLE_ID_NAME IS ''±íµÄÖ÷¼üÃû³Æ''';" +
-//" execute immediate 'COMMENT ON COLUMN TABLEINFO.TABLE_ID_INCREMENT IS ''±íµÄÖ÷¼üµİÔöÁ¿È±Ê¡Îª1''';" +
-//" execute immediate 'COMMENT ON COLUMN TABLEINFO.TABLE_ID_VALUE IS ''Ö÷¼üµ±Ç°Öµ£ºÈ±Ê¡Îª0''';" +
-//" execute immediate 'COMMENT ON COLUMN TABLEINFO.TABLE_ID_GENERATOR IS ''×Ô¶¨Òå±íÖ÷¼üÉú³É»úÖÆ±ØĞè´Ócom.frameworkset.common.poolman.sql.PrimaryKey¼¯³É''';" +
-//" execute immediate 'COMMENT ON COLUMN TABLEINFO.TABLE_ID_TYPE IS ''Ö÷¼üÀàĞÍ£¨string,int£©''';" +
-//" execute immediate 'COMMENT ON COLUMN TABLEINFO.TABLE_ID_PREFIX IS ''ÀàĞÍÎªstringµÄÖ÷¼üÇ°×º£¬¿ÉÖ¸¶¨¿É²»Ö¸¶¨,È±Ê¡ÖµÎª¿Õ''';" +
+//" execute immediate 'COMMENT ON TABLE TABLEINFO IS ''è¡¨ä¿¡æ¯ç»´æŠ¤å¯¹è±¡''';" +
+//" execute immediate 'COMMENT ON COLUMN TABLEINFO.TABLE_NAME IS ''è¡¨åç§°''';" +
+//" execute immediate 'COMMENT ON COLUMN TABLEINFO.TABLE_ID_NAME IS ''è¡¨çš„ä¸»é”®åç§°''';" +
+//" execute immediate 'COMMENT ON COLUMN TABLEINFO.TABLE_ID_INCREMENT IS ''è¡¨çš„ä¸»é”®é€’å¢é‡ç¼ºçœä¸º1''';" +
+//" execute immediate 'COMMENT ON COLUMN TABLEINFO.TABLE_ID_VALUE IS ''ä¸»é”®å½“å‰å€¼ï¼šç¼ºçœä¸º0''';" +
+//" execute immediate 'COMMENT ON COLUMN TABLEINFO.TABLE_ID_GENERATOR IS ''è‡ªå®šä¹‰è¡¨ä¸»é”®ç”Ÿæˆæœºåˆ¶å¿…éœ€ä»com.frameworkset.common.poolman.sql.PrimaryKeyé›†æˆ''';" +
+//" execute immediate 'COMMENT ON COLUMN TABLEINFO.TABLE_ID_TYPE IS ''ä¸»é”®ç±»å‹ï¼ˆstring,intï¼‰''';" +
+//" execute immediate 'COMMENT ON COLUMN TABLEINFO.TABLE_ID_PREFIX IS ''ç±»å‹ä¸ºstringçš„ä¸»é”®å‰ç¼€ï¼Œå¯æŒ‡å®šå¯ä¸æŒ‡å®š,ç¼ºçœå€¼ä¸ºç©º''';" +
 //" execute immediate 'CREATE UNIQUE INDEX PK_TABLEINFO0 ON TABLEINFO(TABLE_NAME)';" +
 //" execute immediate 'ALTER TABLE TABLEINFO ADD   CONSTRAINT PK_TABLEINFO0 PRIMARY KEY (TABLE_NAME)';" +
 //" end;";
@@ -228,7 +228,7 @@ public class TestLob {
 //      
 //  }
 	/**
-     * µÚÒ»ÖÖ²åÈëblob×Ö¶ÎµÄ·½·¨£¬Í¨ÓÃµÄÄ£Ê½
+     * ç¬¬ä¸€ç§æ’å…¥blobå­—æ®µçš„æ–¹æ³•ï¼Œé€šç”¨çš„æ¨¡å¼
 	 * @throws Exception 
 	 */
     @Test
@@ -239,7 +239,7 @@ public class TestLob {
 			dbUtil.preparedInsert("derby", "insert into test(id,blobname) values(?,?)");
 			
 			dbUtil.setString(1, DBUtil.getNextStringPrimaryKey("test"));
-			dbUtil.setBlob(2, new java.io.File("resources/lob/manager.rar"));//Ö±½Ó½«ÎÄ¼ş´æ´¢µ½´ó×Ö¶ÎÖĞ
+			dbUtil.setBlob(2, new java.io.File("resources/lob/manager.rar"));//ç›´æ¥å°†æ–‡ä»¶å­˜å‚¨åˆ°å¤§å­—æ®µä¸­
 			
 			dbUtil.executePrepared();
 			
@@ -256,7 +256,7 @@ public class TestLob {
 //	
 	
 	/**
-	 * Õë¶Ôoracle Blob×Ö¶ÎµÄ²åÈë²Ù×÷
+	 * é’ˆå¯¹oracle Blobå­—æ®µçš„æ’å…¥æ“ä½œ
 	 */
     @Test
 	public void testBigBlobWrite() throws Exception
@@ -264,18 +264,18 @@ public class TestLob {
 		PreparedDBUtil dbUtil = new PreparedDBUtil();
 		TransactionManager tm = new TransactionManager();
 		try {
-			//Æô¶¯ÊÂÎñ
+			//å¯åŠ¨äº‹åŠ¡
 			tm.begin();
-			//ÏÈ²åÈëÒ»Ìõ¼ÇÂ¼,blob×Ö¶Î³õÊ¼»¯Îªempty_lob
+			//å…ˆæ’å…¥ä¸€æ¡è®°å½•,blobå­—æ®µåˆå§‹åŒ–ä¸ºempty_lob
 			dbUtil.preparedInsert("derby", "insert into test(id,blobname) values(?,?)");
 			String id = DBUtil.getNextStringPrimaryKey("test");
 			dbUtil.setString(1, id);
-			dbUtil.setNull(2,java.sql.Types.BLOB);//ÏÈÉèÖÃ¿ÕµÄblob×Ö¶Î
+			dbUtil.setNull(2,java.sql.Types.BLOB);//å…ˆè®¾ç½®ç©ºçš„blobå­—æ®µ
 			
 			
 			dbUtil.executePrepared();
 			
-			//²éÕÒ¸Õ²ÅµÄ²åÈëµÄ¼ÇÂ¼£¬ĞŞ¸Äblob×Ö¶ÎµÄÖµÎªÒ»¸öÎÄ¼ş
+			//æŸ¥æ‰¾åˆšæ‰çš„æ’å…¥çš„è®°å½•ï¼Œä¿®æ”¹blobå­—æ®µçš„å€¼ä¸ºä¸€ä¸ªæ–‡ä»¶
 			dbUtil = new PreparedDBUtil();
 			dbUtil.preparedUpdate("derby","update test set  blobname =? where id = ?");
 			dbUtil.setBlob(1, new java.io.File("resources/lob/manager.rar"));
@@ -313,7 +313,7 @@ public class TestLob {
 //	
 //	
 	/**
-	 * ´ó×Ö¶ÎµÄ¶ÁÈ¡
+	 * å¤§å­—æ®µçš„è¯»å–
 	 */
     @Test
 	public void testBlobRead()  throws Exception
@@ -322,7 +322,7 @@ public class TestLob {
 		PreparedDBUtil dbUtil = new PreparedDBUtil();
 		try {
 
-			//²éÑ¯´ó×Ö¶ÎÄÚÈİ²¢ÇÒ½«´ó×Ö¶Î´æ·Åµ½ÎÄ¼şÖĞ
+			//æŸ¥è¯¢å¤§å­—æ®µå†…å®¹å¹¶ä¸”å°†å¤§å­—æ®µå­˜æ”¾åˆ°æ–‡ä»¶ä¸­
 			dbUtil.preparedSelect("derby", "select id,blobname from test");
 
 			dbUtil.executePreparedWithRowHandler(new NullRowHandler(){
@@ -348,7 +348,7 @@ public class TestLob {
 	}
 //	
 	/**
-	 * clob×Ö¶ÎµÄĞ´Èë
+	 * clobå­—æ®µçš„å†™å…¥
 	 */
     @Test
 	public void testClobWrite()  throws Exception
@@ -358,7 +358,7 @@ public class TestLob {
 			dbUtil.preparedInsert("derby",  "insert into test(id,clobname) values(?,?)");
 			
 			dbUtil.setString(1, DBUtil.getNextStringPrimaryKey("test"));
-			dbUtil.setClob(2,"clobvalue");//Ö±½Ó½«×Ö·û´®´æ´¢µ½clob×Ö¶ÎÖĞ
+			dbUtil.setClob(2,"clobvalue");//ç›´æ¥å°†å­—ç¬¦ä¸²å­˜å‚¨åˆ°clobå­—æ®µä¸­
 			dbUtil.executePrepared();
 			
 		} catch (Exception e) {
@@ -374,7 +374,7 @@ public class TestLob {
 	}
 	
 	/**
-	 * Õë¶Ôoracle Clob×Ö¶ÎµÄ²åÈë²Ù×÷
+	 * é’ˆå¯¹oracle Clobå­—æ®µçš„æ’å…¥æ“ä½œ
 	 */
     @Test
 	public void testBigClobWrite()  throws Exception
@@ -382,18 +382,18 @@ public class TestLob {
 		PreparedDBUtil dbUtil = new PreparedDBUtil();
 		TransactionManager tm = new TransactionManager();
 		try {
-			//Æô¶¯ÊÂÎñ
+			//å¯åŠ¨äº‹åŠ¡
 			tm.begin();
-			//ÏÈ²åÈëÒ»Ìõ¼ÇÂ¼,blob×Ö¶Î³õÊ¼»¯Îªempty_lob
+			//å…ˆæ’å…¥ä¸€æ¡è®°å½•,blobå­—æ®µåˆå§‹åŒ–ä¸ºempty_lob
 			dbUtil.preparedInsert("derby",  "insert into test(id,clobname) values(?,?)");
 			String id = DBUtil.getNextStringPrimaryKey("test");
 			dbUtil.setString(1, id);
-			dbUtil.setNull(2,java.sql.Types.CLOB);//ÏÈÉèÖÃ¿ÕµÄblob×Ö¶Î
+			dbUtil.setNull(2,java.sql.Types.CLOB);//å…ˆè®¾ç½®ç©ºçš„blobå­—æ®µ
 			
 			
 			dbUtil.executePrepared();
 			
-			//²éÕÒ¸Õ²ÅµÄ²åÈëµÄ¼ÇÂ¼£¬ĞŞ¸Äblob×Ö¶ÎµÄÖµÎªÒ»¸öÎÄ¼ş
+			//æŸ¥æ‰¾åˆšæ‰çš„æ’å…¥çš„è®°å½•ï¼Œä¿®æ”¹blobå­—æ®µçš„å€¼ä¸ºä¸€ä¸ªæ–‡ä»¶
 			dbUtil = new PreparedDBUtil();
 			dbUtil.preparedUpdate("derby", "update test set clobname =? where id = ?");
 			dbUtil.setClob(1, new java.io.File("resources/lob/route.txt"));
@@ -429,14 +429,14 @@ public class TestLob {
 	}
 //	
 	/**
-	 * clob×Ö¶ÎµÄ¶ÁÈ¡
+	 * clobå­—æ®µçš„è¯»å–
 	 */
     @Test
 	public void testClobRead()  throws Exception
 	{
 		PreparedDBUtil dbUtil = new PreparedDBUtil();
 		try {
-			//²éÑ¯´ó×Ö¶ÎÄÚÈİ²¢ÇÒ½«´ó×Ö¶Î´æ·Åµ½ÎÄ¼şÖĞ
+			//æŸ¥è¯¢å¤§å­—æ®µå†…å®¹å¹¶ä¸”å°†å¤§å­—æ®µå­˜æ”¾åˆ°æ–‡ä»¶ä¸­
 			dbUtil.preparedSelect( "derby", "select id,clobname from test");
 			dbUtil.executePreparedWithRowHandler(new NullRowHandler(){
 
@@ -450,9 +450,9 @@ public class TestLob {
 //			for(int i = 0; i < dbUtil.size(); i ++)
 //			{
 //				
-//				dbUtil.getFile(i, "clobname", new java.io.File("resources/lob/route" + i + ".txt")); //¶ÁÈ¡clob×Ö¶Îµ½ÎÄ¼şÖĞ
-////				String clobvalue = dbUtil.getString(i, "clobname");//»ñÈ¡clob×Ö¶Îµ½×Ö·û´®±äÁ¿ÖĞ
-////				Clob clob = dbUtil.getClob(i, "clobname");//»ñÈ¡clob×Ö¶ÎÖµµ½clobÀàĞÍ±äÁ¿ÖĞ
+//				dbUtil.getFile(i, "clobname", new java.io.File("resources/lob/route" + i + ".txt")); //è¯»å–clobå­—æ®µåˆ°æ–‡ä»¶ä¸­
+////				String clobvalue = dbUtil.getString(i, "clobname");//è·å–clobå­—æ®µåˆ°å­—ç¬¦ä¸²å˜é‡ä¸­
+////				Clob clob = dbUtil.getClob(i, "clobname");//è·å–clobå­—æ®µå€¼åˆ°clobç±»å‹å˜é‡ä¸­
 //			}
 			
 		} catch (Exception e) {

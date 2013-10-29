@@ -31,7 +31,7 @@ import javax.naming.spi.InitialContextFactory;
  * <p>Description: </p>
  *
  * <p>Copyright: Copyright (c) 2007</p>
- * @Date 2009-4-2 œ¬ŒÁ03:57:12
+ * @Date 2009-4-2 ‰∏ãÂçà03:57:12
  * @author biaoping.yin
  * @version 1.0
  */

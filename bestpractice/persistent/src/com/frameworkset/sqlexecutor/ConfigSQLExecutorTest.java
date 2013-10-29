@@ -55,7 +55,7 @@ public class ConfigSQLExecutorTest {
 	public void queryField() throws SQLException
 	{
 		 ListBean bean = new ListBean();
-		    bean.setFieldName("°¢Ë¹¶Ù·É");
+		    bean.setFieldName("é˜¿æ–¯é¡¿é£ž");
 		 //<property name="refresh_interval" value="10000"/>
 		 String result = executor.queryFieldBean("sqltemplate", bean);
 		 System.out.println(result);
@@ -69,7 +69,7 @@ public class ConfigSQLExecutorTest {
 	public void dynamicquery() throws SQLException
 	{
 		 ListBean bean = new ListBean();
-		    bean.setFieldName("°¢Ë¹¶Ù·É");
+		    bean.setFieldName("é˜¿æ–¯é¡¿é£ž");
 		 //<property name="refresh_interval" value="10000"/>
 		 List<ListBean> result = executor.queryListBean(ListBean.class, "dynamicsqltemplate", bean);
 		 System.out.println(result.size());
@@ -87,7 +87,7 @@ public class ConfigSQLExecutorTest {
 	public void dynamicqueryWithSQLParams() throws SQLException
 	{
 		 SQLParams params = new SQLParams();
-		 params.addSQLParam("fieldName", "°¢Ë¹¶Ù·É", SQLParams.STRING);
+		 params.addSQLParam("fieldName", "é˜¿æ–¯é¡¿é£ž", SQLParams.STRING);
 		 
 		 //<property name="refresh_interval" value="10000"/>
 		 List<ListBean> result = executor.queryListBean(ListBean.class, "dynamicsqltemplate", params);

@@ -46,14 +46,14 @@ import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 
 /**
- * Ìá¹©DataInfo½Ó¿ÚµÄÈ±Ê¡ÊµÏÖ£¬´ÓÊı¾İ¿âÖĞ»ñÈ¡Êı¾İ¼¯
+ * æä¾›DataInfoæ¥å£çš„ç¼ºçœå®ç°ï¼Œä»æ•°æ®åº“ä¸­è·å–æ•°æ®é›†
  * @author biaoping.yin
  * created on 2005-3-25
  * version 1.0
  */
 public class DefaultDataInfoImpl implements DataInfo {
 
-    /**·â×°Ò³ÃæÊı¾İ±äÁ¿*/
+    /**å°è£…é¡µé¢æ•°æ®å˜é‡*/
     private ListInfo listInfo = null;
 	private int pageItemsize;
     private long offSet;
@@ -66,17 +66,17 @@ public class DefaultDataInfoImpl implements DataInfo {
 	protected boolean first = true;
 	private static final Logger log = Logger.getLogger(DefaultDataInfoImpl.class);
 	/**
-	 * ±êÊ¶²éÑ¯ÊÇ·ñÊÇmore²éÑ¯
+	 * æ ‡è¯†æŸ¥è¯¢æ˜¯å¦æ˜¯moreæŸ¥è¯¢
 	 */
 	private boolean moreQuery;
 	/**
-	 * Ô¤±àÒë´¦Àí²ÎÊı
+	 * é¢„ç¼–è¯‘å¤„ç†å‚æ•°
 	 */
     private SQLParams params;
 
 
     /**
-     * ÎŞĞèÊµÏÖ
+     * æ— éœ€å®ç°
      * @param sortKey
      * @param desc
      * @param offSet
@@ -92,11 +92,11 @@ public class DefaultDataInfoImpl implements DataInfo {
     
 
     /**
-     * ³õÊ¼»¯»ñÈ¡·ÖÒ³/ÁĞ±íÊı¾İµÄ±ØÒª²ÎÊı
-     * @param sql Êı¾İ¿â²éÑ¯Óï¾ä
-     * @param dbName Êı¾İ¿âÁ¬½Ó³ØÃû³Æ
-     * @param offSet »ñÈ¡·ÖÒ³Êı¾İÊ±£¬ÓÃ¸Ã²ÎÊıÉèÖÃ»ñÈ¡Êı¾İµÄÆğµã
-     * @param pageItemsize »ñÈ¡·ÖÒ³Êı¾İÊ±£¬ÓÃ¸Ã²ÎÊıÉèÖÃ»ñÈ¡Êı¾İµÄÌõÊı
+     * åˆå§‹åŒ–è·å–åˆ†é¡µ/åˆ—è¡¨æ•°æ®çš„å¿…è¦å‚æ•°
+     * @param sql æ•°æ®åº“æŸ¥è¯¢è¯­å¥
+     * @param dbName æ•°æ®åº“è¿æ¥æ± åç§°
+     * @param offSet è·å–åˆ†é¡µæ•°æ®æ—¶ï¼Œç”¨è¯¥å‚æ•°è®¾ç½®è·å–æ•°æ®çš„èµ·ç‚¹
+     * @param pageItemsize è·å–åˆ†é¡µæ•°æ®æ—¶ï¼Œç”¨è¯¥å‚æ•°è®¾ç½®è·å–æ•°æ®çš„æ¡æ•°
      */
     public void initial(String sql,
             			String dbName,
@@ -119,11 +119,11 @@ public class DefaultDataInfoImpl implements DataInfo {
     
     
     /**
-     * ³õÊ¼»¯»ñÈ¡·ÖÒ³/ÁĞ±íÊı¾İµÄ±ØÒª²ÎÊı
-     * @param sql Êı¾İ¿â²éÑ¯Óï¾ä
-     * @param dbName Êı¾İ¿âÁ¬½Ó³ØÃû³Æ
-     * @param offSet »ñÈ¡·ÖÒ³Êı¾İÊ±£¬ÓÃ¸Ã²ÎÊıÉèÖÃ»ñÈ¡Êı¾İµÄÆğµã
-     * @param pageItemsize »ñÈ¡·ÖÒ³Êı¾İÊ±£¬ÓÃ¸Ã²ÎÊıÉèÖÃ»ñÈ¡Êı¾İµÄÌõÊı
+     * åˆå§‹åŒ–è·å–åˆ†é¡µ/åˆ—è¡¨æ•°æ®çš„å¿…è¦å‚æ•°
+     * @param sql æ•°æ®åº“æŸ¥è¯¢è¯­å¥
+     * @param dbName æ•°æ®åº“è¿æ¥æ± åç§°
+     * @param offSet è·å–åˆ†é¡µæ•°æ®æ—¶ï¼Œç”¨è¯¥å‚æ•°è®¾ç½®è·å–æ•°æ®çš„èµ·ç‚¹
+     * @param pageItemsize è·å–åˆ†é¡µæ•°æ®æ—¶ï¼Œç”¨è¯¥å‚æ•°è®¾ç½®è·å–æ•°æ®çš„æ¡æ•°
      */
     public void initial(String sql,
                         String dbName,
@@ -152,7 +152,7 @@ public class DefaultDataInfoImpl implements DataInfo {
 
 
     /**
-     * ´ÓÊı¾İ¿âÖĞ»ñÈ¡·ÖÒ³Ò³ÃæÊı¾İ
+     * ä»æ•°æ®åº“ä¸­è·å–åˆ†é¡µé¡µé¢æ•°æ®
      * @see com.frameworkset.common.tag.pager.DataInfo#getPageItemsFromDB()
      */
     public Object[] getPageItemsFromDB() {
@@ -168,7 +168,7 @@ public class DefaultDataInfoImpl implements DataInfo {
     }
 
     /**
-     * ´ÓÊı¾İ¿âÖĞ»ñÈ¡ÁĞ±íÊı¾İ
+     * ä»æ•°æ®åº“ä¸­è·å–åˆ—è¡¨æ•°æ®
      * @see com.frameworkset.common.tag.pager.DataInfo#getListItemsFromDB()
      */
     public Object[] getListItemsFromDB() {
@@ -185,7 +185,7 @@ public class DefaultDataInfoImpl implements DataInfo {
 
 
     /**
-     * »ñÈ¡Êı¾İ·â×°ÀàµÄClass¾ä±ú
+     * è·å–æ•°æ®å°è£…ç±»çš„Classå¥æŸ„
      */
     public Class getVOClass() {
 
@@ -225,13 +225,13 @@ public class DefaultDataInfoImpl implements DataInfo {
     }
 
     /**
-	* ·ÖÒ³ÏÔÊ¾Ê±´ÓÊı¾İ¿â»ñÈ¡Ã¿Ò³µÄÊı¾İÏî£¬Íê³ÉÊµ¼Ê·ÃÎÊÊı¾İ¿âµÄ²Ù×÷
-	* sql:²éÑ¯Óï¾ä
-	* dbName:Êı¾İ¿âÁ¬½Ó³ØµÄÃû³Æ
-	* desc:ÅÅĞòµÄÖÈĞò£¬trueÎª½µĞò£¬falseÎªÉıĞò
-	* @param offSet - ´ÓÊı¾İÔ´»ñÈ¡Êı¾İµÄÓÎ±êÎ»ÖÃ
+	* åˆ†é¡µæ˜¾ç¤ºæ—¶ä»æ•°æ®åº“è·å–æ¯é¡µçš„æ•°æ®é¡¹ï¼Œå®Œæˆå®é™…è®¿é—®æ•°æ®åº“çš„æ“ä½œ
+	* sql:æŸ¥è¯¢è¯­å¥
+	* dbName:æ•°æ®åº“è¿æ¥æ± çš„åç§°
+	* desc:æ’åºçš„ç§©åºï¼Œtrueä¸ºé™åºï¼Œfalseä¸ºå‡åº
+	* @param offSet - ä»æ•°æ®æºè·å–æ•°æ®çš„æ¸¸æ ‡ä½ç½®
 	*
-	* @param pageItemsize - Ã¿Ò³ÏÔÊ¾µÄÊı¾İÌõÊı
+	* @param pageItemsize - æ¯é¡µæ˜¾ç¤ºçš„æ•°æ®æ¡æ•°
 	* @return ListInfo
 	*/
 	protected ListInfo getDataFromDB(String sql,
@@ -239,7 +239,7 @@ public class DefaultDataInfoImpl implements DataInfo {
 									 long offSet,
 									 int pageItemsize)
 	{
-	    //¶¨ÒåÊı¾İ¿â·ÃÎÊ¶ÔÏó
+	    //å®šä¹‰æ•°æ®åº“è®¿é—®å¯¹è±¡
 	    
 	    try {
 	        ListInfo listInfo = new ListInfo();
@@ -272,7 +272,7 @@ public class DefaultDataInfoImpl implements DataInfo {
 	
 
 	/**
-	 * Íê³É´ÓÊı¾İ¿â»ñÈ¡ÁĞ±íÏÔÊ¾Êı¾İµÄÊµ¼Ê²Ù×÷
+	 * å®Œæˆä»æ•°æ®åº“è·å–åˆ—è¡¨æ˜¾ç¤ºæ•°æ®çš„å®é™…æ“ä½œ
 	 */
 	public ListInfo getListItemsFromDB(String sql,
 			  						   String dbName)
@@ -283,7 +283,7 @@ public class DefaultDataInfoImpl implements DataInfo {
 	        ListInfo listInfo = new ListInfo();
 	        if(this.params == null)
             {
-	            //¶¨ÒåÊı¾İ¿â·ÃÎÊ¶ÔÏó
+	            //å®šä¹‰æ•°æ®åº“è®¿é—®å¯¹è±¡
 	            DBUtil dbUtil = new DBUtil();
 	            
                 Hashtable[] tables = (Hashtable[])dbUtil.executeSelectForObjectArray(dbName,sql,Record.class);
@@ -293,7 +293,7 @@ public class DefaultDataInfoImpl implements DataInfo {
             }
 	        else
 	        {
-	          //¶¨ÒåÊı¾İ¿â·ÃÎÊ¶ÔÏó
+	          //å®šä¹‰æ•°æ®åº“è®¿é—®å¯¹è±¡
                 PreparedDBUtil dbUtil = new PreparedDBUtil();
                 dbUtil.setMore(this.moreQuery);
                 dbUtil.preparedSelect(params.copy(), dbName, sql);
@@ -310,7 +310,7 @@ public class DefaultDataInfoImpl implements DataInfo {
 	}
 
 	/**
-     * Î´ÊµÏÖ
+     * æœªå®ç°
      * @see com.frameworkset.common.tag.pager.DataInfo#getPageItems()
      */
     public Object getPageItems() {
@@ -319,7 +319,7 @@ public class DefaultDataInfoImpl implements DataInfo {
     }
 
     /**
-     * Î´ÊµÏÖ
+     * æœªå®ç°
      */
     public Object getListItems() {
         return null;

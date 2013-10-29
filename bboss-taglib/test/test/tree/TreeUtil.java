@@ -20,7 +20,7 @@ import java.util.Map;
 
 /**
  * <p>TreeUtil.java</p>
- * <p> Description: ¹¹½¨Ê÷ĞÎµÄÊı¾İ½á¹¹</p>
+ * <p> Description: æ„å»ºæ ‘å½¢çš„æ•°æ®ç»“æ„</p>
  * <p> bboss workgroup </p>
  * <p> Copyright (c) 2009 </p>
  * 
@@ -47,7 +47,7 @@ public class TreeUtil {
 			root = treedatas.get("root");
 			if(root != null )
 				return root;
-			root = new TreeNode(null,"root","¸ù½Úµã",0);
+			root = new TreeNode(null,"root","æ ¹èŠ‚ç‚¹",0);
 			
 			buildSonTreeDatas(root,1 );
 			

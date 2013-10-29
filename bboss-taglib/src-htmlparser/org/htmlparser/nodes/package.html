@@ -1,0 +1,68 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<HTML>
+<HEAD>
+<!--
+ HTMLParser Library $Name: v1_5 $ - A java-based parser for HTML
+ http://sourceforge.org/projects/htmlparser
+ Copyright (C) 2004 Derrick Oswald
+
+ Revision Control Information
+
+ $Source: /cvsroot/htmlparser/htmlparser/src/org/htmlparser/nodes/package.html,v $
+ $Author: derrickoswald $
+ $Date: 2005/04/10 23:20:44 $
+ $Revision: 1.2 $
+
+ This library is free software; you can redistribute it and/or
+ modify it under the terms of the GNU Lesser General Public
+ License as published by the Free Software Foundation; either
+ version 2.1 of the License, or (at your option) any later version.
+
+ This library is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ Lesser General Public License for more details.
+
+ You should have received a copy of the GNU Lesser General Public
+ License along with this library; if not, write to the Free Software
+ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+-->
+<TITLE>Nodes Package</TITLE>
+</HEAD>
+<BODY>
+The nodes package has the concrete node implementations.
+<p>
+The classes in this package all implement the {@link org.htmlparser.Node Node}
+interface. They individually implement the more specific interfaces for text,
+remarks and tags. The three node types are mapped as follows:
+<table border="1" cellpadding="3" cellspacing="0">
+  <thead CLASS="TableHeadingColor">
+  <tr>
+    <td>Interface</td><td>Concrete Implementation</td>
+  </tr>
+  </thead>
+  <tr>
+    <td>{@link org.htmlparser.Text Text}</td><td>{@link org.htmlparser.nodes.TextNode TextNode}</td>
+  </tr>
+  <tr>
+    <td>{@link org.htmlparser.Remark Remark}</td><td>{@link org.htmlparser.nodes.RemarkNode RemarkNode}</td>
+  </tr>
+  <tr>
+    <td>{@link org.htmlparser.Tag Tag}</td><td>{@link org.htmlparser.nodes.TagNode TagNode}</td>
+  </tr>
+</table>
+These classes are derived from the
+{@link org.htmlparser.nodes.AbstractNode AbstractNode} class, which provides
+basic functionality common to all nodes, such as maintaining start and end positions
+and child and parent references. Only the {@link org.htmlparser.nodes.TagNode TagNode} objects
+contain a list of {@link org.htmlparser.Attribute Attribute} objects.
+<p>The {@link org.htmlparser.lexer.Lexer Lexer} parses an HTML stream into a
+contiguous stream of these nodes.</p>
+<p>The {@link org.htmlparser.Parser Parser} returns either these nodes or specific
+{@link org.htmlparser.tags Tag} objects (which are subclasses of TagNode)
+for tags with names that have been registered via
+{@link org.htmlparser.PrototypicalNodeFactory#registerTag registerTag()}.
+<p>
+</BODY>
+</HTML>

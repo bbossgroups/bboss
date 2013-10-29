@@ -1,20 +1,20 @@
 package org.frameworkset.thread;
 /** 
- * <p>ÀàËµÃ÷:</p>
+ * <p>ç±»è¯´æ˜:</p>
  * <p>Copyright: Copyright (c) 2009</p>
  * <p>Company: bboss group</p>
  * @author  gao.tang ,biaoping.yin
- * @version V1.0  ´´½¨Ê±¼ä£ºSep 11, 2009 6:02:25 PM 
+ * @version V1.0  åˆ›å»ºæ—¶é—´ï¼šSep 11, 2009 6:02:25 PM 
  */
 public abstract class RejectCallback {
-    /**ÓÃÓÚÏß³Ìµ÷¶ÈÊ±ÑÓÊ±²ÉÓÃ*/
+    /**ç”¨äºçº¿ç¨‹è°ƒåº¦æ—¶å»¶æ—¶é‡‡ç”¨*/
     int rejecttimes = 0;
 	/**
-     * »ñÈ¡±»¾Ü¾øµÄ´ÎÊı
+     * è·å–è¢«æ‹’ç»çš„æ¬¡æ•°
      */
     public int getRejectTimes()
     {
-        /**ÓÃÓÚÏß³Ìµ÷¶ÈÊ±ÑÓÊ±²ÉÓÃ*/
+        /**ç”¨äºçº¿ç¨‹è°ƒåº¦æ—¶å»¶æ—¶é‡‡ç”¨*/
         return rejecttimes;
     }
     public int increamentRejecttimes()

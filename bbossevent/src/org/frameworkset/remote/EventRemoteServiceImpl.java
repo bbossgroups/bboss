@@ -22,14 +22,14 @@ import org.frameworkset.event.EventHandle;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2009-4-17 下午02:02:31
+ * @Date 2009-4-17 涓嬪崍02:02:31
  * @author biaoping.yin
  * @version 1.0
  */
 public class EventRemoteServiceImpl implements EventRemoteService {
     
     /**
-     * 处理远程事件接口
+     * 澶勭悊杩滅▼浜嬩欢鎺ュ彛
      * @param eventfqn
      * @return
      * @throws Exception

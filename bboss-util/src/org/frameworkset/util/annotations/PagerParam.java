@@ -9,8 +9,8 @@ import java.lang.annotation.Target;
 import org.frameworkset.util.annotations.ValueConstants;
 
 /**
- * ·ÖÒ³×¢½â£¬±ê×¢²ÎÊıÓÃÀ´ÉèÖÃ·ÖÒ³Êı¾İ
- * ±¾×¢½âÖ»ÄÜÓÃÓÚ×¢½â¿ØÖÆÆ÷·½·¨²ÎÊı
+ * åˆ†é¡µæ³¨è§£ï¼Œæ ‡æ³¨å‚æ•°ç”¨æ¥è®¾ç½®åˆ†é¡µæ•°æ®
+ * æœ¬æ³¨è§£åªèƒ½ç”¨äºæ³¨è§£æ§åˆ¶å™¨æ–¹æ³•å‚æ•°
  * @author biaoping.yin
  *
  */
@@ -27,7 +27,7 @@ public @interface PagerParam {
 	
 	String id() default DEFAULT_ID;
 	/**
-	 * ·ÖÒ³²ÎÊıÃû³Æ
+	 * åˆ†é¡µå‚æ•°åç§°
 	 * @return
 	 */
 	String name() ;	

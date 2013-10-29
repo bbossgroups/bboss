@@ -11,15 +11,15 @@ public class MetadataSet implements Serializable {
 	 */
 	private static final long serialVersionUID = 1380385031400115783L;
 	
-	private Timestamp create_time; //´´½¨Ê±¼ä
-	private String creator; //´´½¨Õß
-	private String data_type_code; //Êı¾İÀàĞÍ±àÂë
-	private String metadata_set_code; //¹²ÏíÏî¼¯±àÂë
-	private String metadata_set_id; //¹²ÏíÏî¼¯ID
-	private String metadata_set_name; //Ãû³Æ
-	private String modifier; //×îºóĞŞ¸ÄÕß
-	private Timestamp modify_time; //×îºóĞŞ¸ÄÊ±¼ä
-	private String remark; //ÃèÊö
+	private Timestamp create_time; //åˆ›å»ºæ—¶é—´
+	private String creator; //åˆ›å»ºè€…
+	private String data_type_code; //æ•°æ®ç±»å‹ç¼–ç 
+	private String metadata_set_code; //å…±äº«é¡¹é›†ç¼–ç 
+	private String metadata_set_id; //å…±äº«é¡¹é›†ID
+	private String metadata_set_name; //åç§°
+	private String modifier; //æœ€åä¿®æ”¹è€…
+	private Timestamp modify_time; //æœ€åä¿®æ”¹æ—¶é—´
+	private String remark; //æè¿°
 	public Timestamp getCreate_time() {
 		return create_time;
 	}

@@ -78,13 +78,13 @@ public class ASMPUTGETFieldAdapter extends ClassAdapter{
 		if(pro != null)
 		{
 			/**
-			 * //ÎÒÃÇ½Ó×ÅĞèÒªÔö¼ÓÒ»¸öexecute·½·¨
+			 * //æˆ‘ä»¬æ¥ç€éœ€è¦å¢åŠ ä¸€ä¸ªexecuteæ–¹æ³•
  MethodVisitor mv = cw.visitMethod(Opcodes.ACC_PUBLIC, "execute",
          "()V", null,
          null);
- //¿ªÊ¼Ôö¼Ó´úÂë
+ //å¼€å§‹å¢åŠ ä»£ç 
  mv.visitCode();
- //½ÓÏÂÀ´£¬ÎÒÃÇĞèÒª°ÑĞÂµÄexecute·½·¨µÄÄÚÈİ£¬Ôö¼Óµ½Õâ¸ö·½·¨ÖĞ
+ //æ¥ä¸‹æ¥ï¼Œæˆ‘ä»¬éœ€è¦æŠŠæ–°çš„executeæ–¹æ³•çš„å†…å®¹ï¼Œå¢åŠ åˆ°è¿™ä¸ªæ–¹æ³•ä¸­
  mv.visitFieldInsn(Opcodes.GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;");
  mv.visitLdcInsn("Before execute");
  mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/io/PrintStream", "println", "(Ljava/lang/String;)V"); 
@@ -94,13 +94,13 @@ public class ASMPUTGETFieldAdapter extends ClassAdapter{
  mv.visitLdcInsn("End execute");
  mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/io/PrintStream", "println", "(Ljava/lang/String;)V");
  mv.visitInsn(Opcodes.RETURN);
- mv.visitMaxs(0, 0); //Õâ¸öµØ·½£¬×î´óµÄ²Ù×÷ÊıÕ»ºÍ×î´óµÄ±¾µØ±äÁ¿µÄ¿Õ¼ä£¬ÊÇ×Ô¶¯¼ÆËãµÄ£¬ÊÇÒòÎª¹¹ÔìClassWriterµÄÊ±ºòÊ¹ÓÃÁËClassWriter.COMPUTE_MAXS
+ mv.visitMaxs(0, 0); //è¿™ä¸ªåœ°æ–¹ï¼Œæœ€å¤§çš„æ“ä½œæ•°æ ˆå’Œæœ€å¤§çš„æœ¬åœ°å˜é‡çš„ç©ºé—´ï¼Œæ˜¯è‡ªåŠ¨è®¡ç®—çš„ï¼Œæ˜¯å› ä¸ºæ„é€ ClassWriterçš„æ—¶å€™ä½¿ç”¨äº†ClassWriter.COMPUTE_MAXS
  mv.visitEnd();
- //µ½ÕâÀï£¬¾ÍÍê³ÉÁËexecute·½·¨µÄÌí¼Ó¡£
+ //åˆ°è¿™é‡Œï¼Œå°±å®Œæˆäº†executeæ–¹æ³•çš„æ·»åŠ ã€‚
 
 			 */
 			 MethodVisitor mv = null;
-			//ÎÒÃÇ½Ó×ÅĞèÒªÔö¼ÓÒ»¸öexecute·½·¨
+			//æˆ‘ä»¬æ¥ç€éœ€è¦å¢åŠ ä¸€ä¸ªexecuteæ–¹æ³•
 			if(pro.getReadMethod() == null)
 			{
 				String getMd = new StringBuffer(6).append(AsmUtil.bboss_field_getMethod_prex)
@@ -146,7 +146,7 @@ public class ASMPUTGETFieldAdapter extends ClassAdapter{
 				mv.visitEnd();
 			}
 	           
-	         //µ½ÕâÀï£¬¾ÍÍê³ÉÁËexecute·½·¨µÄÌí¼Ó¡£
+	         //åˆ°è¿™é‡Œï¼Œå°±å®Œæˆäº†executeæ–¹æ³•çš„æ·»åŠ ã€‚
 		}
 		return super.visitField(access, name, desc, signature, value);
 	}

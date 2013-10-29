@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding='gb2312'?>
+<?xml version="1.0" encoding='UTF-8'?>
 <properties>
 	<property name="/upload/*.page"				
 		path:main="/upload.jsp"
@@ -12,7 +12,7 @@
 	<property name="uploadDao"
 		class="org.frameworkset.upload.dao.impl.UpLoadDaoImpl" />
 	<!-- 
-	如果启用配置文件方式，则打开以下注释，注释上述uploadDao即可
+	濡傛灉鍚敤閰嶇疆鏂囦欢鏂瑰紡锛屽垯鎵撳紑浠ヤ笅娉ㄩ噴锛屾敞閲婁笂杩皍ploadDao鍗冲彲
 	 -->
 	<!-- 
 	<property name="uploadDao"

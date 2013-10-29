@@ -169,7 +169,7 @@ public class StatementInfo {
 			if (!outcon) {
 				tx = TransactionManager.getTransaction();
 				if (tx == null) {
-					con = SQLUtil.getSQLManager().requestConnection(dbname);// ÊÂÎñÎŞ´¦Àí£¬Åú´¦ÀíµÄÄ¬ÈÏÊÂÎñ´¦ÀíĞèÒªÉè¶¨
+					con = SQLUtil.getSQLManager().requestConnection(dbname);// äº‹åŠ¡æ— å¤„ç†ï¼Œæ‰¹å¤„ç†çš„é»˜è®¤äº‹åŠ¡å¤„ç†éœ€è¦è®¾å®š
 					if (needTransaction) {
 						this.oldautocommit = con.getAutoCommit();
 						con.setAutoCommit(false);
@@ -261,11 +261,11 @@ public class StatementInfo {
 	
 
 	/**
-	 * ·ÖÒ³²éÑ¯£¬¹¹½¨²éÑ¯Êı¾İ¿â×Ü¼ÇÂ¼ÊıµÄsqlÓï¾ä
+	 * åˆ†é¡µæŸ¥è¯¢ï¼Œæ„å»ºæŸ¥è¯¢æ•°æ®åº“æ€»è®°å½•æ•°çš„sqlè¯­å¥
 	 * 
 	 * @param sql
-	 *            ·ÖÒ³²éÑ¯µÄsqlÓï¾ä
-	 * @return ²éÑ¯×Ü¼ÇÂ¼ÊıµÄsqlÓï¾ä
+	 *            åˆ†é¡µæŸ¥è¯¢çš„sqlè¯­å¥
+	 * @return æŸ¥è¯¢æ€»è®°å½•æ•°çš„sqlè¯­å¥
 	 * @throws SQLException
 	 */
 	public String countSql() throws SQLException {
@@ -350,7 +350,7 @@ public class StatementInfo {
 //		// }
 //		// }
 //		// }
-//		// log.error("Ô¤±àÒëÖ´ĞĞ±¨´í", sqle);
+//		// log.error("é¢„ç¼–è¯‘æ‰§è¡ŒæŠ¥é”™", sqle);
 //		// throw e;
 //		if (sqle instanceof SQLException)
 //			throw (SQLException) sqle;
@@ -361,7 +361,7 @@ public class StatementInfo {
 	
 	public void errorHandle(Exception sqle) throws SQLException {
 		
-		if(outcon )//Ê¹ÓÃÍâ²¿Á´½Ó
+		if(outcon )//ä½¿ç”¨å¤–éƒ¨é“¾æ¥
 		{
 			
 			if(tx != null && this.con != null && this.con instanceof TXConnection)
@@ -373,7 +373,7 @@ public class StatementInfo {
 				}
 			}
 		}
-		else//Ã»ÓĞÊ¹ÓÃÍâ²¿Á´½Ó
+		else//æ²¡æœ‰ä½¿ç”¨å¤–éƒ¨é“¾æ¥
 		{
 			if (tx != null) {
 				try {
@@ -555,7 +555,7 @@ public class StatementInfo {
 	public void commit() throws SQLException {
 		if (!outcon) {
 			if (tx == null) {
-				// Èç¹ûÊÇÊÖ¶¯Ìá½»Êı¾İ¿âÄ£Ê½£¬ËùÓĞµÄ²Ù×÷Íê³Éºóµ÷ÓÃbatchConÌá½»·½·¨Ìá½»²Ù×÷
+				// å¦‚æœæ˜¯æ‰‹åŠ¨æäº¤æ•°æ®åº“æ¨¡å¼ï¼Œæ‰€æœ‰çš„æ“ä½œå®Œæˆåè°ƒç”¨batchConæäº¤æ–¹æ³•æäº¤æ“ä½œ
 				if (this.needTransaction)
 					con.commit();
 			}
@@ -595,7 +595,7 @@ public class StatementInfo {
 		else
 			go = res.next();
 
-		// ´Ó½á¹û¼¯ÖĞ»ñÈ¡µ±Ç°ÓÎ±êºómaxsizeÌõ¼ÇÂ¼
+		// ä»ç»“æœé›†ä¸­è·å–å½“å‰æ¸¸æ ‡åmaxsizeæ¡è®°å½•
 		
 		boolean ismap = Map.class.isAssignableFrom(objectType);
 		ClassInfo beanInfo = ClassUtil.getClassInfo(objectType);
@@ -658,7 +658,7 @@ public class StatementInfo {
 			go = res.next() && rowcount < getMaxsize();
 		else
 			go = res.next();
-		// ´Ó½á¹û¼¯ÖĞ»ñÈ¡µ±Ç°ÓÎ±êºómaxsizeÌõ¼ÇÂ¼
+		// ä»ç»“æœé›†ä¸­è·å–å½“å‰æ¸¸æ ‡åmaxsizeæ¡è®°å½•
 		
 		boolean ismap = Map.class.isAssignableFrom(objectType);
 		ClassInfo beanInfo = ClassUtil.getClassInfo(objectType);
@@ -692,7 +692,7 @@ public class StatementInfo {
             go = res.next() && rowcount < getMaxsize();
         else
             go = res.next();
-        // ´Ó½á¹û¼¯ÖĞ»ñÈ¡µ±Ç°ÓÎ±êºómaxsizeÌõ¼ÇÂ¼
+        // ä»ç»“æœé›†ä¸­è·å–å½“å‰æ¸¸æ ‡åmaxsizeæ¡è®°å½•
         while (go) {
             ResultMap.buildRecord(res, this,
                     rowHandler);
@@ -733,9 +733,9 @@ public class StatementInfo {
         		    
         //		boolean isxmlhandler = rowHandler != null && rowHandler instanceof XMLRowHandler; 
         		
-        		if(!isxmlhandler) //ĞĞ´¦ÀíÆ÷²»ÊÇ´ÓXMLRowHandler´¦ÀíÆ÷¼Ì³ĞÊ±½øÈëÕâ¸ö·ÖÖ§
+        		if(!isxmlhandler) //è¡Œå¤„ç†å™¨ä¸æ˜¯ä»XMLRowHandlerå¤„ç†å™¨ç»§æ‰¿æ—¶è¿›å…¥è¿™ä¸ªåˆ†æ”¯
         		{
-        		    results.append("<?xml version=\"1.0\" encoding=\"gb2312\"?>\r\n");
+        		    results.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n");
                             results.append("<records>\r\n");
         		    
         		}
@@ -759,7 +759,7 @@ public class StatementInfo {
         			go = res.next() && rowcount < getMaxsize();
         		else
         			go = res.next();
-        		// ´Ó½á¹û¼¯ÖĞ»ñÈ¡µ±Ç°ÓÎ±êºómaxsizeÌõ¼ÇÂ¼
+        		// ä»ç»“æœé›†ä¸­è·å–å½“å‰æ¸¸æ ‡åmaxsizeæ¡è®°å½•
         		while (go) {
         			StringBuffer record = ResultMap.buildSingleRecordXMLString(res,
         					this, rowHandler);
@@ -804,7 +804,7 @@ public class StatementInfo {
 		else
 			go = res.next();
 
-		// ´Ó½á¹û¼¯ÖĞ»ñÈ¡µ±Ç°ÓÎ±êºómaxsizeÌõ¼ÇÂ¼
+		// ä»ç»“æœé›†ä¸­è·å–å½“å‰æ¸¸æ ‡åmaxsizeæ¡è®°å½•
 		while (go) {
 
 			if (rowcount == results.length) {
@@ -873,7 +873,7 @@ public class StatementInfo {
 			if(results != null)
 				resultMap.setSize(results.size());
 		}
-		else if(result_type == ResultMap.type_objcet) //·ÖÒ³Ê±£¬²»ÄÜÖ¸¶¨·µ»ØÖµÀàĞÍÎªtype_objcet
+		else if(result_type == ResultMap.type_objcet) //åˆ†é¡µæ—¶ï¼Œä¸èƒ½æŒ‡å®šè¿”å›å€¼ç±»å‹ä¸ºtype_objcet
 		{
 			if(!ispagine)
 			{
@@ -986,7 +986,7 @@ public class StatementInfo {
 	}
 
 	/**
-	 * »ñÈ¡Ö¸¶¨Êı¾İ¿âµÄ·ÖÒ³Êı¾İsqlÓï¾ä
+	 * è·å–æŒ‡å®šæ•°æ®åº“çš„åˆ†é¡µæ•°æ®sqlè¯­å¥
 	 * 
 	 * @param dbName
 	 * @param sql
@@ -999,7 +999,7 @@ public class StatementInfo {
 	}
 
 	/**
-	 * »ñÈ¡Ö¸¶¨Êı¾İ¿âµÄ·ÖÒ³Êı¾İsqlÓï¾ä£¬Í¨¹ıoracleµÄ¸ßĞ§²éÑ¯Óï¾ä
+	 * è·å–æŒ‡å®šæ•°æ®åº“çš„åˆ†é¡µæ•°æ®sqlè¯­å¥ï¼Œé€šè¿‡oracleçš„é«˜æ•ˆæŸ¥è¯¢è¯­å¥
 	 * 
 	 * @param dbName
 	 * @param sql

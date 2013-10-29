@@ -30,20 +30,20 @@ import org.frameworkset.http.converter.HttpMessageNotWritableException;
 /**
  * <p> Word2PDFMessageConverter.java</p>
  * <p> Description: 
- * 1.word×ªpdf£¬²¢Ìá¹©ä¯ÀÀºÍÏÂÔØ¹¦ÄÜ
- * 2.wordÄ£°å½áºÏÊı¾İ£¬ÔÙ×ªpdf£¬²¢Ìá¹©ä¯ÀÀºÍÏÂÔØ¹¦ÄÜ
- * 3.word×ªflash¸ñÊ½ÎÄ¼ş
+ * 1.wordè½¬pdfï¼Œå¹¶æä¾›æµè§ˆå’Œä¸‹è½½åŠŸèƒ½
+ * 2.wordæ¨¡æ¿ç»“åˆæ•°æ®ï¼Œå†è½¬pdfï¼Œå¹¶æä¾›æµè§ˆå’Œä¸‹è½½åŠŸèƒ½
+ * 3.wordè½¬flashæ ¼å¼æ–‡ä»¶
  * </p>
  * <p> bboss workgroup </p>
  * <p> Copyright (c) 2009 </p>
  * 
- * @Date 2012-9-17 ÉÏÎç8:29:53
+ * @Date 2012-9-17 ä¸Šåˆ8:29:53
  * @author biaoping.yin
  * @version 1.0
  */
 public class Word2PDFMessageConverter <T> implements HttpMessageConverter<T>{
 	/**
-	 * Ö¸¶¨È«¾ÖÁÙÊ±ÎÄ¼şÄ¿Â¼
+	 * æŒ‡å®šå…¨å±€ä¸´æ—¶æ–‡ä»¶ç›®å½•
 	 */
 	private String tempDir;
 	private String flashpaperWorkDir;

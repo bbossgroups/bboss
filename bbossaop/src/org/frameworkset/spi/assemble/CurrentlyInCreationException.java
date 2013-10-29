@@ -23,9 +23,9 @@ package org.frameworkset.spi.assemble;
  * </p>
  * 
  * <p>
- * Description: Èç¹û¹ÜÀí·şÎñÔÚ×¢ÈëÒıÓÃ±äÁ¿µÄÖµÊ±£¬³öÏÖÑ­»·ÒıÓÃµÄÇé¿ö£¬±ÈÈç£º
- * ±ÈÈçËµ£¬Ò»¸öÀàA£¬ĞèÒªĞèÒª×¢ÈëÀàBµÄÒıÓÃ±äÁ¿£¬¶øÀàBÓÖĞèÒªÍ¨¹ı×¢ÈëÀàAµÄÒıÓÃ±äÁ¿
- * ÏµÍ³Ò»µ©¼ì²âµ½Ñ­»·ÒıÓÃµÄÇé¿ö£¬ĞèÒªÅ×³öCurrentlyInCreationExceptionÒì³£¡£
+ * Description: å¦‚æœç®¡ç†æœåŠ¡åœ¨æ³¨å…¥å¼•ç”¨å˜é‡çš„å€¼æ—¶ï¼Œå‡ºç°å¾ªç¯å¼•ç”¨çš„æƒ…å†µï¼Œæ¯”å¦‚ï¼š
+ * æ¯”å¦‚è¯´ï¼Œä¸€ä¸ªç±»Aï¼Œéœ€è¦éœ€è¦æ³¨å…¥ç±»Bçš„å¼•ç”¨å˜é‡ï¼Œè€Œç±»Båˆéœ€è¦é€šè¿‡æ³¨å…¥ç±»Açš„å¼•ç”¨å˜é‡
+ * ç³»ç»Ÿä¸€æ—¦æ£€æµ‹åˆ°å¾ªç¯å¼•ç”¨çš„æƒ…å†µï¼Œéœ€è¦æŠ›å‡ºCurrentlyInCreationExceptionå¼‚å¸¸ã€‚
  * </p>
  * 
  * <p>
@@ -37,7 +37,7 @@ package org.frameworkset.spi.assemble;
  * </p>
  * 
  * @Date Aug 14, 2008 3:28:10 PM
- * @author biaoping.yin,Òü±êÆ½
+ * @author biaoping.yin,å°¹æ ‡å¹³
  * @version 1.0
  */
 public class CurrentlyInCreationException extends RuntimeException

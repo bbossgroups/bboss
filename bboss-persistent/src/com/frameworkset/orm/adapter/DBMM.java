@@ -130,11 +130,11 @@ public class DBMM extends DB
     }
     
     /**
-     * ²ÉÓÃmysql¹Ù·½Éú³ÉÖ÷¼ü·½·¨£¬µ«ÊÇÓÐ²¢·¢¸ÉÈÅÎÊÌâ
-     * ÀýÈç£¬Ò»¸öconÀ´Éú³É²»Í¬±íµÄÖ÷¼üÊ±£¬ÓÉÓÚÊ±¼äË³ÐòÎÊÌâ¿ÉÄÜ³öÏÖÒÔÏÂÇé¿ö£º
-     * µÚÒ»¸ö±íÖ´ÐÐÁË"UPDATE "+sequence +" SET id=LAST_INSERT_ID(id+1)"£¬ÕýÒªÖ´ÐÐ"SELECT LAST_INSERT_ID()"Ê±
-     * µÚ¶þ¸ö±íÏÈÓÚµÚÒ»¸ö±íÖ´ÐÐÍê"UPDATE "+sequence +" SET id=LAST_INSERT_ID(id+1)"£¬"SELECT LAST_INSERT_ID()"Á½²½£¬µÚ¶þ¸öµÃµ½ÕýÈ·µÄÖ÷¼üÖµ
-     * ×îÖÕµÚÒ»¸ö±íÔÚÖ´ÐÐ"SELECT LAST_INSERT_ID()"Ê±£¬½á¹ûµÃµ½µÄÊÇµÚ¶þ¸ö±íµÄÖ÷¼üÖµ£¬µ¼ÖÂ²»ÕýÈ·µÄ½á¹û³öÏÖ¡£
+     * é‡‡ç”¨mysqlå®˜æ–¹ç”Ÿæˆä¸»é”®æ–¹æ³•ï¼Œä½†æ˜¯æœ‰å¹¶å‘å¹²æ‰°é—®é¢˜
+     * ä¾‹å¦‚ï¼Œä¸€ä¸ªconæ¥ç”Ÿæˆä¸åŒè¡¨çš„ä¸»é”®æ—¶ï¼Œç”±äºŽæ—¶é—´é¡ºåºé—®é¢˜å¯èƒ½å‡ºçŽ°ä»¥ä¸‹æƒ…å†µï¼š
+     * ç¬¬ä¸€ä¸ªè¡¨æ‰§è¡Œäº†"UPDATE "+sequence +" SET id=LAST_INSERT_ID(id+1)"ï¼Œæ­£è¦æ‰§è¡Œ"SELECT LAST_INSERT_ID()"æ—¶
+     * ç¬¬äºŒä¸ªè¡¨å…ˆäºŽç¬¬ä¸€ä¸ªè¡¨æ‰§è¡Œå®Œ"UPDATE "+sequence +" SET id=LAST_INSERT_ID(id+1)"ï¼Œ"SELECT LAST_INSERT_ID()"ä¸¤æ­¥ï¼Œç¬¬äºŒä¸ªå¾—åˆ°æ­£ç¡®çš„ä¸»é”®å€¼
+     * æœ€ç»ˆç¬¬ä¸€ä¸ªè¡¨åœ¨æ‰§è¡Œ"SELECT LAST_INSERT_ID()"æ—¶ï¼Œç»“æžœå¾—åˆ°çš„æ˜¯ç¬¬äºŒä¸ªè¡¨çš„ä¸»é”®å€¼ï¼Œå¯¼è‡´ä¸æ­£ç¡®çš„ç»“æžœå‡ºçŽ°ã€‚
      */
 //    public long getNextValue(String sequence,Connection con,String dbname) throws SQLException
 //    {
@@ -400,7 +400,7 @@ public class DBMM extends DB
     }
     
     /**
-     * Êý¾Ý¿âÖ÷¼ü×î´óÖµµÄ»ñÈ¡·½·¨
+     * æ•°æ®åº“ä¸»é”®æœ€å¤§å€¼çš„èŽ·å–æ–¹æ³•
      */
     public String getIDMAXSql(String table_name,String table_id_name,String table_id_prefix,String type)
 	{
@@ -423,7 +423,7 @@ public class DBMM extends DB
     
 
 	/**
-	 * »ñÈ¡Ö¸¶¨Êý¾ÝµÄ·ÖÒ³Êý¾ÝsqlÓï¾ä
+	 * èŽ·å–æŒ‡å®šæ•°æ®çš„åˆ†é¡µæ•°æ®sqlè¯­å¥
 	 * @param sql
 	 * @return
 	 */

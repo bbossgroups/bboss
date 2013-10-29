@@ -26,7 +26,7 @@ import com.frameworkset.orm.transaction.TransactionManager;
  * <p>Description: </p>
  *
  * <p>Copyright: Copyright (c) 2007</p>
- * @Date 2010-8-2 ÏÂÎç12:02:44
+ * @Date 2010-8-2 ä¸‹åˆ12:02:44
  * @author biaoping.yin
  * @version 1.0
  */

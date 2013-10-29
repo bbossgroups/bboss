@@ -5,7 +5,7 @@ import java.lang.reflect.Method;
 /**
  * <p>Title: Interceptor</p>
  *
- * <p>Description: À¹½ØÆ÷¶¨Òå</p>
+ * <p>Description: æ‹¦æˆªå™¨å®šä¹‰</p>
  *
  * <p>Copyright: Copyright (c) 2005</p>
  *
@@ -16,21 +16,21 @@ import java.lang.reflect.Method;
  */
 public interface Interceptor {
 	/**
-	 * ½«À¹½ØÆ÷·½·¨ÖĞ°üº¬µÄÒì³£Å×³ö
+	 * å°†æ‹¦æˆªå™¨æ–¹æ³•ä¸­åŒ…å«çš„å¼‚å¸¸æŠ›å‡º
 	 * @param method
 	 * @param args
 	 * @throws Throwable
 	 */
     public void before(Method method,Object[] args) throws Throwable;
     /**
-	 * ½«À¹½ØÆ÷·½·¨ÖĞ°üº¬µÄÒì³£Å×³ö
+	 * å°†æ‹¦æˆªå™¨æ–¹æ³•ä¸­åŒ…å«çš„å¼‚å¸¸æŠ›å‡º
 	 * @param method
 	 * @param args
 	 * @throws Throwable
 	 */
     public void after(Method method,Object[] args) throws Throwable;
     /**
-	 * ½«À¹½ØÆ÷·½·¨ÖĞ°üº¬µÄÒì³£Å×³ö
+	 * å°†æ‹¦æˆªå™¨æ–¹æ³•ä¸­åŒ…å«çš„å¼‚å¸¸æŠ›å‡º
 	 * @param method
 	 * @param args
 	 * @throws Throwable
@@ -38,14 +38,14 @@ public interface Interceptor {
     public void afterThrowing(Method method,Object[] args,Throwable throwable) throws Throwable;
     
 //    /**
-//	 * ½«À¹½ØÆ÷·½·¨ÖĞ°üº¬µÄÒì³£Å×³ö
+//	 * å°†æ‹¦æˆªå™¨æ–¹æ³•ä¸­åŒ…å«çš„å¼‚å¸¸æŠ›å‡º
 //	 * @param method
 //	 * @param args
 //	 * @throws Throwable
 //	 */
 //    public void afterThrowing(Method method,Object[] args) throws Throwable;
     /**
-	 * ½«À¹½ØÆ÷·½·¨ÖĞ°üº¬µÄÒì³£Å×³ö
+	 * å°†æ‹¦æˆªå™¨æ–¹æ³•ä¸­åŒ…å«çš„å¼‚å¸¸æŠ›å‡º
 	 * @param method
 	 * @param args
 	 * @throws Throwable

@@ -23,7 +23,7 @@ import java.util.HashMap;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2010-5-5 ÏÂÎç04:00:45
+ * @Date 2010-5-5 ä¸‹åˆ04:00:45
  * @author biaoping.yin
  * @version 1.0
  */

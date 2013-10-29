@@ -65,13 +65,13 @@ public class A1 implements AI{
 	}
 
 	public int testInt(int i) {
-		System.out.println("call A1.testInt(int i)£º" + i);
+		System.out.println("call A1.testInt(int i)ï¼š" + i);
 		return i;
 		
 	}
 	
 	public int testIntNoSyn(int i) {
-		System.out.println("call A1.testIntNoSyn(int i)£º" + i);
+		System.out.println("call A1.testIntNoSyn(int i)ï¼š" + i);
 		return i;		
 	}
 

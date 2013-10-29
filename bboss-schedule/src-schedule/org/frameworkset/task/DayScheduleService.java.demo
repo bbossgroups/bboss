@@ -1,0 +1,375 @@
+package org.frameworkset.task;
+
+import java.io.Serializable;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.quartz.JobDataMap;
+import org.quartz.JobDetail;
+import org.quartz.Scheduler;
+import org.quartz.SchedulerException;
+import org.quartz.SimpleTrigger;
+import org.quartz.Trigger;
+
+import com.chinacreator.config.model.SchedulejobInfo;
+import com.chinacreator.schedularmanage.Schedular;
+import com.chinacreator.sysmgrcore.exception.ManagerException;
+import com.chinacreator.sysmgrcore.manager.db.SchedularManagerImpl;
+
+public class DayScheduleService extends ScheduleService implements Serializable
+{
+
+    public DayScheduleService()
+    {
+
+    }
+    /**
+     * 服务器启动时装载任务
+     */
+    public void startService(Scheduler scheduler)
+            throws ScheduleServiceException
+    {
+        // TODO Auto-generated method stub
+        {
+            SchedularManagerImpl smi = new SchedularManagerImpl();
+            List list = null;
+            long interval = 0;
+            try
+            {
+                //从日程管理的数据库中得到需要提醒的日程
+                list = smi.getStartSchedular();
+            } catch (ManagerException e1)
+            {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+            }
+            for (int i = 0; list != null && i < list.size(); i++)
+            {
+                Schedular sch = new Schedular();
+                sch = (Schedular) list.get(i);
+                
+                String jobId = sch.getSchedularID() + "";
+                JobDetail jobDetail = new JobDetail(jobId,
+                // Scheduler.DEFAULT_GROUP,
+                        super.scheduleServiceInfo.getId(), ExecuteJOB.class);
+
+                try
+                {
+                    JobDataMap map = new JobDataMap();
+                    // Execute instance =
+                    // (Execute)Class.forName(jobInfo.getClazz()
+                    // ).newInstance();
+                    //设置任务到达时执行的类
+                    Execute instance = new DayExecute();
+                    map.put("action", instance);
+
+                    Map parameters = new HashMap();
+                    String userID = sch.getExecutorID() + "";
+                    parameters.put("schedularID", sch.getSchedularID() + "");
+                    parameters.put("userID", userID);
+                    parameters.put("topic", sch.getTopic());
+                    parameters.put("place", sch.getPlace());
+                    parameters.put("beginTime", sch.getBeginTime());
+                    parameters.put("endTime", sch.getEndTime());
+                    parameters.put("isSys", sch.getIsSys() + "");
+                    parameters.put("isEmail", sch.getIsEmail() + "");
+                    if(sch.getType() == null || sch.getType().equals(""))
+                    	parameters.put("type", "schedule");
+                    else
+                    	parameters.put("type", sch.getType());
+                    parameters.put("typeDesc", "日程安排");
+                    parameters.put("url","/sysmanager/remind_list.jsp");
+                    parameters.put("isMessage", sch.getIsMessage() + "");    
+                    map.put("parameters", parameters);
+                    jobDetail.setJobDataMap(map);
+                    // jobDetail.se
+                    //设置提醒间隔
+                    if (sch.getIntervalType() == 0)
+                    {
+                        interval = (long) (sch.getInterval() * 60L * 1000L);
+                    }
+                    if (sch.getIntervalType() == 1)
+                    {
+                        interval = (long) (sch.getInterval() * 60L * 60L * 1000L);
+                    }
+                    if (sch.getIntervalType() == 2)
+                    {
+                        interval = (long) (sch.getInterval() * 24L * 60L * 60L * 1000L);
+                    }
+                    //设置触发器，如任务id，任务组名，提醒开始时间和结束时间，提醒间隔，提醒次数
+                    Trigger trigger = new SimpleTrigger(jobId,
+                            super.scheduleServiceInfo.getId(), sch
+                                    .getRemindBeginTime(), sch
+                                    .getRemindEndTime(),
+                            SimpleTrigger.REPEAT_INDEFINITELY, interval);
+
+                    // CronTrigger trigger = new CronTrigger(name + "_Trigger",
+                    // super.scheduleServiceInfo.getId());
+                    // String cron_time = "";
+                    // try {
+                    // cron_time =
+                    // smi.generateCrontime(sch.getRemindBeginTime(),sch.getRemindEndTime(),sch.getInterval(),sch.getIntervalType());
+                    // } catch (ManagerException e) {
+                    // // TODO Auto-generated catch block
+                    // e.printStackTrace();
+                    // }
+                    // trigger.setCronExpression(cron_time);
+                    //启动任务
+                    scheduler.scheduleJob(jobDetail, trigger);
+                } catch (SchedulerException ex)
+                {
+                    ex.printStackTrace();
+                    continue;
+                }
+            }
+
+        }
+    }
+
+    /**
+     * 增加一个提醒任务
+     * 
+     * @param scheduler
+     */
+    public void startExecuteJob(Scheduler scheduler, SchedulejobInfo jobInfo)
+    {
+        //接收日程bean
+        Schedular sch = (Schedular) jobInfo;
+        String name;
+        long interval = 0;
+        name = sch.getSchedularID() + "";
+        JobDetail jobDetail = new JobDetail(name, super.scheduleServiceInfo
+                .getId(),
+        // scheduleServiceInfo.getId(),
+                ExecuteJOB.class);
+
+        try
+        {
+            JobDataMap map = new JobDataMap();
+            //设置提醒参数
+            Execute instance = new DayExecute();
+            map.put("action", instance);
+            
+            Map parameters = new HashMap();
+            parameters.put("schedularID", sch.getSchedularID() + "");
+            parameters.put("userID", sch.getExecutorID() + "");
+            parameters.put("topic", sch.getTopic());
+            parameters.put("place", sch.getPlace());
+            parameters.put("beginTime", sch.getBeginTime());
+            parameters.put("endTime", sch.getEndTime());
+            parameters.put("isSys", sch.getIsSys() + "");
+            parameters.put("isEmail", sch.getIsEmail() + "");
+            parameters.put("isMessage", sch.getIsMessage() + "");
+            if(sch.getType() == null || sch.getType().equals(""))
+            	parameters.put("type", "schedule");
+            else
+            	parameters.put("type", sch.getType());
+            parameters.put("typeDesc", "日程安排");
+            parameters.put("url","/sysmanager/remind_list.jsp");
+            parameters.put("isMessage", sch.getIsMessage() + "");
+            
+            map.put("parameters", parameters);
+
+            jobDetail.setJobDataMap(map);
+            // jobDetail.se
+            //设置提醒间隔
+            if (sch.getIntervalType() == 0)
+            {
+                interval = (long) (sch.getInterval() * 60L * 1000L);
+            }
+            if (sch.getIntervalType() == 1)
+            {
+                interval = (long) (sch.getInterval() * 60L * 60L * 1000L);
+            }
+            if (sch.getIntervalType() == 2)
+            {
+                interval = (long) (sch.getInterval() * 24L * 60L * 60L * 1000L);
+            }
+            //设置触发器
+            Trigger trigger = new SimpleTrigger(name, super.scheduleServiceInfo
+                    .getId(), sch.getRemindBeginTime(), sch.getRemindEndTime(),
+                    SimpleTrigger.REPEAT_INDEFINITELY, interval);
+//          启动任务
+            scheduler.scheduleJob(jobDetail, trigger);
+
+        } catch (SchedulerException ex)
+        {
+            ex.printStackTrace();
+        }
+    }
+
+    /**
+     * 更新一个提醒触发器
+     * 
+     * @param scheduler
+     */
+    public void updateTriger(Scheduler scheduler, SchedulejobInfo jobInfo)
+    {
+        Schedular sch = (Schedular) jobInfo;
+        String name;
+        long interval = 0;
+
+        name = sch.getSchedularID() + "";
+
+        try
+        {
+
+            // jobDetail.se
+            if (sch.getIntervalType() == 0)
+            {
+                interval = (long) (sch.getInterval() * 60L * 1000L);
+            }
+            if (sch.getIntervalType() == 1)
+            {
+                interval = (long) (sch.getInterval() * 60L * 60L * 1000L);
+            }
+            if (sch.getIntervalType() == 2)
+            {
+                interval = (long) (sch.getInterval() * 24L * 60L * 60L * 1000L);
+            }
+            Trigger trigger = new SimpleTrigger(name, super.scheduleServiceInfo
+                    .getId(), sch.getRemindBeginTime(), sch.getRemindEndTime(),
+                    SimpleTrigger.REPEAT_INDEFINITELY, interval);
+            trigger.setJobName(name);
+
+            trigger.setJobGroup(super.scheduleServiceInfo.getId());
+            scheduler.rescheduleJob(name, super.scheduleServiceInfo.getId(),
+                    trigger);
+
+        } catch (SchedulerException ex)
+        {
+            ex.printStackTrace();
+        }
+    }
+
+    /**
+     * 更新一个任务
+     */
+    public void updateJob(Scheduler scheduler, SchedulejobInfo jobInfo)
+    {
+
+        Schedular sch = (Schedular) jobInfo;
+        String name = sch.getSchedularID() + "";
+        JobDetail jobDetail = new JobDetail(name, super.scheduleServiceInfo
+                .getId(),
+        // scheduleServiceInfo.getId(),
+                ExecuteJOB.class);
+
+        try
+        {
+            JobDataMap map = new JobDataMap();
+            Execute instance = new DayExecute();
+            map.put("action", instance);
+
+            Map parameters = new HashMap();
+            parameters.put("schedularID", sch.getSchedularID() + "");
+            parameters.put("userID", sch.getExecutorID() + "");
+            parameters.put("topic", sch.getTopic());
+            parameters.put("place", sch.getPlace());
+            parameters.put("beginTime", sch.getBeginTime());
+            parameters.put("endTime", sch.getEndTime());
+            parameters.put("isSys", sch.getIsSys() + "");
+            parameters.put("isEmail", sch.getIsEmail() + "");
+            parameters.put("isMessage", sch.getIsMessage() + "");
+            if(sch.getType() == null || sch.getType().equals(""))
+            	parameters.put("type", "schedule");
+            else
+            	parameters.put("type", sch.getType());
+            parameters.put("typeDesc", "日程安排");
+            parameters.put("url","/sysmanager/remind_list.jsp");
+            map.put("parameters", parameters);
+
+            jobDetail.setJobDataMap(map);
+            // jobDetail.se
+
+            scheduler.addJob(jobDetail, true);
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 更新一个任务和触发器
+     * 
+     * @param scheduler
+     * @param jobInfo
+     */
+    public void updateJobAndTriger(Scheduler scheduler, SchedulejobInfo jobInfo)
+    {
+    	
+    	
+        Schedular sch = (Schedular) jobInfo;
+        String name = sch.getSchedularID() + "";
+        if(isExist(scheduler,super.scheduleServiceInfo.getId(),name))
+        {		
+        
+	        long interval = 0;
+	        
+	        JobDetail jobDetail = new JobDetail(name, super.scheduleServiceInfo
+	                .getId(),
+	        // scheduleServiceInfo.getId(),
+	                ExecuteJOB.class);
+	
+	        try
+	        {
+	            JobDataMap map = new JobDataMap();
+	            Execute instance = new DayExecute();
+	            map.put("action", instance);
+	
+	            Map parameters = new HashMap();
+	            parameters.put("schedularID", sch.getSchedularID() + "");
+	            parameters.put("userID", sch.getExecutorID() + "");
+	            parameters.put("topic", sch.getTopic());
+	            parameters.put("place", sch.getPlace());
+	            parameters.put("beginTime", sch.getBeginTime());
+	            parameters.put("endTime", sch.getEndTime());
+	            parameters.put("isSys", sch.getIsSys() + "");
+	            parameters.put("isEmail", sch.getIsEmail() + "");
+	            parameters.put("isMessage", sch.getIsMessage() + "");
+	            if(sch.getType() == null || sch.getType().equals(""))
+	            	parameters.put("type", "schedule");
+	            else
+	            	parameters.put("type", sch.getType());
+	            parameters.put("typeDesc", "日程安排");
+	            parameters.put("url","/sysmanager/remind_list.jsp");
+	            map.put("parameters", parameters);
+	
+	            jobDetail.setJobDataMap(map);
+	            // jobDetail.se
+	
+	            scheduler.addJob(jobDetail, true);
+	            if (sch.getIntervalType() == 0)
+	            {
+	                interval = (long) (sch.getInterval() * 60L * 1000L);
+	            }
+	            if (sch.getIntervalType() == 1)
+	            {
+	                interval = (long) (sch.getInterval() * 60L * 60L * 1000L);
+	            }
+	            if (sch.getIntervalType() == 2)
+	            {
+	                interval = (long) (sch.getInterval() * 24L * 60L * 60L * 1000L);
+	            }
+	            Trigger trigger = new SimpleTrigger(name, super.scheduleServiceInfo
+	                    .getId(), sch.getRemindBeginTime(), sch.getRemindEndTime(),
+	                    SimpleTrigger.REPEAT_INDEFINITELY, interval);
+	            trigger.setJobName(name);
+	
+	            trigger.setJobGroup(super.scheduleServiceInfo.getId());
+	            scheduler.rescheduleJob(name, super.scheduleServiceInfo.getId(),
+	                    trigger);
+	
+	        } catch (Exception e)
+	        {
+	            e.printStackTrace();
+	        }
+        }
+        else
+        {
+        	this.startExecuteJob(scheduler,jobInfo);
+        }
+    }
+
+}

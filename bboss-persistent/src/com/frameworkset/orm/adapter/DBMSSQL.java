@@ -56,7 +56,7 @@ public class DBMSSQL extends DBSybase
     
  
     /**
-     * 数据库主键最大值的获取方法
+     * 鏁版嵁搴撲富閿渶澶у�肩殑鑾峰彇鏂规硶
      */
     public String getIDMAXSql(String table_name,String table_id_name,String table_id_prefix,String type)
 	{

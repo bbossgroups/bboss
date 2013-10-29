@@ -62,7 +62,7 @@
 	<target name="compile" description="compile all source files">
 		<mkdir dir="${build.classes.dir}" />
 		<depend srcDir="${src.main.dir}" destDir="${build.classes.dir}" cache="${build.cache.dir}" />
-		<javac srcdir="${src.main.dir}" 
+		<javac encoding="UTF-8" srcdir="${src.main.dir}" 
 	      destdir="${build.classes.dir}"
 		  debug="${debug}" 
 	      target="${targetJvm}"
@@ -102,7 +102,7 @@
 	<!-- ================================================================= -->
 	<target name="compileTests" description="compile junit sources files">
 		<mkdir dir="${build.classes.dir}" />
-		<javac srcdir="${src.testcases.dir}" 
+		<javac encoding="UTF-8" srcdir="${src.testcases.dir}" 
 	      destdir="${build.classes.dir}" 
 	      debug="${debug}" 
 	      includes="**" 

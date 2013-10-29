@@ -181,7 +181,7 @@ public final class TabContainerTag extends BaseBodyTag {
 	private boolean existSelectIndex()
 	{
 		/**
-		 * 容器已经处理空的情况
+		 * 瀹瑰櫒宸茬粡澶勭悊绌虹殑鎯呭喌
 		 */
 		if(selectedIndex == null || selectedIndex.equals(""))
 			return false;

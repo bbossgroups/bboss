@@ -24,12 +24,12 @@ import org.frameworkset.util.ResourceUtils;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2008</p>
- * @Date 2011-5-13 œ¬ŒÁ05:23:29
+ * @Date 2011-5-13 ‰∏ãÂçà05:23:29
  * @author biaoping.yin
  * @version 1.0
  */
 public class SOAFileApplicationContext extends SOAApplicationContext{
-	public static final String default_charset = "GBK"; 
+	public static final String default_charset = "UTF-8"; 
 	public SOAFileApplicationContext(String file) {
 		this(file,default_charset);
 		

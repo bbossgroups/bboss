@@ -36,12 +36,12 @@
 
 	<target name="compile-frameworkset-soa" description="compile the bboss-soa source ">
 		<echo>compile the frameworkset-soa source ...</echo>
-		<javac destdir="classes-bboss-soa" target="1.5" source="1.5" deprecation="true" debug="${debug}" optimize="${optimize}" memorymaximumsize="256M" fork="true" verbose="yes">
+		<javac encoding="UTF-8" destdir="classes-bboss-soa" target="1.5" source="1.5" deprecation="true" debug="${debug}" optimize="${optimize}" memorymaximumsize="256M" fork="true" verbose="yes">
 			<src path="src" />
 			
 			
 			<classpath id="cp-classes-bboss-soa">
-				<fileset dir="lib/" includes="**/*.jar" />				
+						
 				
 			</classpath>
 		</javac>
@@ -65,9 +65,7 @@
 	
 	<target name="copy-depends-liberary" description="copy depends liberarys">
 				<echo>copy depends liberarys ...</echo>
-				<copy todir="distrib/dependlibs">
-					<fileset dir="lib" includes="**/*.jar" excludes="j2ee.jar jsp-api.jar servlet-api.jar junit.jar"/>
-				</copy>
+				
 	</target>
 	
 	<target name="complete" depends="distrib" description="copy depends liberarys">

@@ -21,11 +21,11 @@ import com.frameworkset.proxy.Interceptor;
 /**
  * <p>Title: </p>
  *
- * <p>Description: Óë·şÎñÌá¹©ÕßÏà¹ØµÄÀ¹½ØÆ÷</p>
+ * <p>Description: ä¸æœåŠ¡æä¾›è€…ç›¸å…³çš„æ‹¦æˆªå™¨</p>
  *
  * <p>Copyright: Copyright (c) 2006</p>
  *
- * <p>Company: ³¤É³¿Æ´´¼ÆËã»úÏµÍ³¼¯³ÉÓĞÏŞ¹«Ë¾</p>
+ * <p>Company: é•¿æ²™ç§‘åˆ›è®¡ç®—æœºç³»ç»Ÿé›†æˆæœ‰é™å…¬å¸</p>
  *
  * @author biaoping.yin
  * @version 1.0

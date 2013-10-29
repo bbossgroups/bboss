@@ -36,7 +36,7 @@ import org.frameworkset.spi.security.SecurityContext;
  * Copyright (c) 2007
  * </p>
  * 
- * @Date 2009-10-8 下午10:15:31
+ * @Date 2009-10-8 涓嬪崍10:15:31
  * @author biaoping.yin
  * @version 1.0
  */
@@ -54,9 +54,9 @@ public class RPCMessage implements Serializable
     protected int resultSerial ;
     
     /**
-     * 是否解密标记
-     * 该标记只能被getBuffer置为true，而且只能被setbuffer置为false
-     * 一旦getBuffer方法被执行，则加密消息被解密
+     * 鏄惁瑙ｅ瘑鏍囪
+     * 璇ユ爣璁板彧鑳借getBuffer缃负true锛岃�屼笖鍙兘琚玸etbuffer缃负false
+     * 涓�鏃etBuffer鏂规硶琚墽琛岋紝鍒欏姞瀵嗘秷鎭瑙ｅ瘑
      */
     protected boolean flag = false;
 
@@ -179,7 +179,7 @@ public class RPCMessage implements Serializable
         {
             offset = 0;
             length = buf.length;
-          //消息加密
+          //娑堟伅鍔犲瘑
 //            this.encrypt = SecurityContext.getSecurityManager().enableEncrypt();
             if(encrypt)
             	buf = SecurityContext.getSecurityManager().encode(buf);

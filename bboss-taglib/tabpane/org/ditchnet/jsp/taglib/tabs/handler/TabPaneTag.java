@@ -29,7 +29,7 @@ import javax.servlet.jsp.JspException;
 
 import org.ditchnet.jsp.util.JspResponseWriter;
 import org.ditchnet.xml.Xhtml;
-import org.frameworkset.web.servlet.support.RequestContextUtils;
+import org.frameworkset.util.I18NUtil;
 
 import com.frameworkset.common.tag.BaseBodyTag;
 
@@ -133,7 +133,7 @@ public final class TabPaneTag extends BaseBodyTag {
 			tab.setTabTitle(this.tabTitle);
 		else
 		{
-			tab.setTabTitle( RequestContextUtils.getI18nMessage(tabTitleCode,(String)tabTitle, request));
+			tab.setTabTitle( I18NUtil.getI18nMessage(tabTitleCode,(String)tabTitle, request));
 		}
 		
 		getTabContainer().addChild(tab);
@@ -147,7 +147,7 @@ public final class TabPaneTag extends BaseBodyTag {
 	}
 	
 	/**
-	 * ÖØÖÃËùÓÐµÄÊôÐÔ
+	 * é‡ç½®æ‰€æœ‰çš„å±žæ€§
 	 *
 	 */
 	void reset()
@@ -177,7 +177,7 @@ public final class TabPaneTag extends BaseBodyTag {
 			out.attribute(Xhtml.Attr.STYLE,"display:block;");
 		} else {
 			out.attribute(Xhtml.Attr.STYLE,"display:none;");
-			//Èç¹ûÆôÓÃÑÓ³Ù¼ÓÔØ£¬ÔòÌí¼ÓÒ»¸öhiddenÔªËØ£¬´æ·Å¸ÃÃæ°åÄÚµÄËùÓÐiframeÒ³ÃæµÄidÓësrc
+			//å¦‚æžœå¯ç”¨å»¶è¿ŸåŠ è½½ï¼Œåˆ™æ·»åŠ ä¸€ä¸ªhiddenå…ƒç´ ï¼Œå­˜æ”¾è¯¥é¢æ¿å†…çš„æ‰€æœ‰iframeé¡µé¢çš„idä¸Žsrc
 			if(this.lazeload && this.listIFrame != null
 					&& this.listIFrame.size() > 0){
 				String iframeStr = "";

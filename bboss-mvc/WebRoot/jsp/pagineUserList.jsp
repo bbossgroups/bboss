@@ -1,29 +1,29 @@
-<%@ page contentType="text/html; charset=GBK" language="java" %>
+<%@ page contentType="text/html; charset=UTF-8" language="java" %>
 <%@ taglib uri="/WEB-INF/pager-taglib.tld" prefix="pg"%>
 <!-- 
-	������ͨ�����ݼ�������ȡ��ҳ�б����ݣ������ṩ��ѯ����
+	测试在通过数据加载器获取分页列表数据，并且提供查询功能
 -->
 <html>
 <head>
-<title>������ͨ�����ݼ�������ȡ��ҳ�б����ݣ������ṩ��ѯ����</title>
+<title>测试在通过数据加载器获取分页列表数据，并且提供查询功能</title>
 </head>
 <body>
 	<table>
 				<tr class="cms_report_tr">
-						<!--���÷�ҳ��ͷ-->
+						<!--设置分页表头-->
 					<form action="" method="post">
-						<td  style="width:20%">�����������</td>
-						<td  style="width:5%" colspan="100"><input type="text" name="TABLE_NAME" value="<%=request.getParameter("TABLE_NAME") %>"><input type="submit" name="��ѯ" value="��ѯ"></td>
+						<td  style="width:20%">请输入表名：</td>
+						<td  style="width:5%" colspan="100"><input type="text" name="TABLE_NAME" value="<%=request.getParameter("TABLE_NAME") %>"><input type="submit" name="查询" value="查询"></td>
 					</form>
 				</tr>
 						
 	    <pg:listdata dataInfo="org.frameworkset.spi.mvc.PagerUserList" keyName="TableInfoListData" />
-				<!--��ҳ��ʾ��ʼ,��ҳ��ǩ��ʼ��-->
+				<!--分页显示开始,分页标签初始化-->
 				<pg:pager maxPageItems="15" scope="request" data="TableInfoListData" 
 						  isList="false">
 				
 					<tr class="cms_report_tr">
-						<!--���÷�ҳ��ͷ-->
+						<!--设置分页表头-->
 
 						<td width="2%" align=center style="width:5%">
 						<input class="checkbox" 

@@ -14,7 +14,7 @@ public class TestDBUtil {
 	{
 		com.frameworkset.common.poolman.PreparedDBUtil d = new com.frameworkset.common.poolman.PreparedDBUtil();
         System.out.println(d.getTableMetaData("td_sm_log"));
-//		String sql1 = "select '0_10000104_l÷–Œƒ÷–Œƒ÷–Œƒ÷–Œƒ÷–Œƒ÷–Œƒ÷–Œƒ÷–Œƒ  '  as id,'0_1000010' || '4' as parentid from dual";
+//		String sql1 = "select '0_10000104_l‰∏≠Êñá‰∏≠Êñá‰∏≠Êñá‰∏≠Êñá‰∏≠Êñá‰∏≠Êñá‰∏≠Êñá‰∏≠Êñá  '  as id,'0_1000010' || '4' as parentid from dual";
 //		//String sql1 = "select '4' as id from td_sm_user";
 //
 //
@@ -79,7 +79,7 @@ public class TestDBUtil {
 	
 	public static void testCaseWhen()
 	{
-		String sql = "select case when a.PRINT_FLAG=0 then '“ª¥Ú”°' when a.PRINT_FLAG=1 then 'Œ¥¥Ú”°' end PRINT_FLAG_TO from TD_WR_USER_WRIT a inner join TD_WR_WRIT_COMMON_DATA b on a.ID = b.id  inner join td_sm_organization c on b.ORG_ID = c.ORG_ID where  a.USER_ID=1";
+		String sql = "select case when a.PRINT_FLAG=0 then '‰∏ÄÊâìÂç∞' when a.PRINT_FLAG=1 then 'Êú™ÊâìÂç∞' end PRINT_FLAG_TO from TD_WR_USER_WRIT a inner join TD_WR_WRIT_COMMON_DATA b on a.ID = b.id  inner join td_sm_organization c on b.ORG_ID = c.ORG_ID where  a.USER_ID=1";
 		DBUtil dbUtil = new DBUtil();
 		try {
 			dbUtil.executeSelect(sql);

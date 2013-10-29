@@ -1,11 +1,11 @@
-<%@ page language="java" contentType="text/html; charset=GBK"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"%>
 <% String rootpath = request.getContextPath();%>
 <script language="javascript">
-//±êÊ¶ÊÇ·ñÊÇÊ÷µÄÓÒ¼ü²Ëµ¥£¬Èç¹ûÊÇÊ÷ÔòÎªtrue£¬·ñÔòÎªfalse
+//æ ‡è¯†æ˜¯å¦æ˜¯æ ‘çš„å³é”®èœå•ï¼Œå¦‚æœæ˜¯æ ‘åˆ™ä¸ºtrueï¼Œå¦åˆ™ä¸ºfalse
 //var istree = false;
 
 
-//½¨Á¢²Ëµ¥ÓëÏÔÊ¾µÄHTMLÖ®¼äµÄ¹ØÏµ
+//å»ºç«‹èœå•ä¸æ˜¾ç¤ºçš„HTMLä¹‹é—´çš„å…³ç³»
 var _MenuCache_ = 
 {
 	m_Count : 0,
@@ -24,31 +24,31 @@ var _MenuCache_ =
 	
 }
 
-//var styleURL_blue = "popmenu_blue.css";                               //ÑùÊ½
-var imgURL_blue = "<%=rootpath%>/include/menu_mouse_dis_blue.gif";                      //·Ö¸îÏß
+//var styleURL_blue = "popmenu_blue.css";                               //æ ·å¼
+var imgURL_blue = "<%=rootpath%>/include/menu_mouse_dis_blue.gif";                      //åˆ†å‰²çº¿
 
-var styleURL = "<%=rootpath%>/include/popmenu_window.css";                     //ÑùÊ½,Ìá¹©popmenu_window.css,popmenu_blue.cssÁ½¸öÑùÊ½
-var imgURL_window = "<%=rootpath%>/include/menu_mouse_dis_window.jpg";           //·Ö¸îÏß
-var menuWidth = 130;//²Ëµ¥ÕûÌå¿í¶È
+var styleURL = "<%=rootpath%>/include/popmenu_window.css";                     //æ ·å¼,æä¾›popmenu_window.css,popmenu_blue.cssä¸¤ä¸ªæ ·å¼
+var imgURL_window = "<%=rootpath%>/include/menu_mouse_dis_window.jpg";           //åˆ†å‰²çº¿
+var menuWidth = 130;//èœå•æ•´ä½“å®½åº¦
 
 function Menu() 
 { 
-    this.m_Items = [];                  //²Ëµ¥ÌõÄ¿¼¯ºÏ 
-    this.m_Popup = null;                //ÏÔÊ¾²Ëµ¥µÄpopup´°¿Ú 
-    this.m_Invalidate = false;          //ÊÇ·ñÊ§Ğ§±êÖ¾ 
-    this.m_Drawn = false;               //²Ëµ¥ÊÇ·ñÒÑÊä³ö 
-    this.m_Opener = null;               //²Ëµ¥µÄ¸¸´°¿Úwindow¶ÔÏó 
-    this.m_ParentMenu = null;           //²Ëµ¥µÄ¸¸²Ëµ¥MenuItem¶ÔÏó 
-    this.m_ActiveItem = null;           //±»¼¤»î(highlighting)µÄMenuItem 
-    this.m_ShowTimer = null;            //Êó±êÍ£ÁôÔÚÓĞ×Ó²Ëµ¥µÄÌõÄ¿ÉÏ,×Ó²Ëµ¥ÏÔÊ¾ÑÓ³Ù¼ÆÊ±Æ÷ 
-    this.m_Bounds = null;               //²Ëµ¥µÄbounds 
-    this.m_ShowHeaderBlank = true;      //ÊÇ·ñÏÔÊ¾MenuItemÇ°µÄ¿Õ°×ÇøÓò 
-    this.m_IsEventAttached = false;     //ÊÂ¼şÊÇ·ñattached
-	this.path = "parent";				//¸¸¼¶Â·¾¶
+    this.m_Items = [];                  //èœå•æ¡ç›®é›†åˆ 
+    this.m_Popup = null;                //æ˜¾ç¤ºèœå•çš„popupçª—å£ 
+    this.m_Invalidate = false;          //æ˜¯å¦å¤±æ•ˆæ ‡å¿— 
+    this.m_Drawn = false;               //èœå•æ˜¯å¦å·²è¾“å‡º 
+    this.m_Opener = null;               //èœå•çš„çˆ¶çª—å£windowå¯¹è±¡ 
+    this.m_ParentMenu = null;           //èœå•çš„çˆ¶èœå•MenuItemå¯¹è±¡ 
+    this.m_ActiveItem = null;           //è¢«æ¿€æ´»(highlighting)çš„MenuItem 
+    this.m_ShowTimer = null;            //é¼ æ ‡åœç•™åœ¨æœ‰å­èœå•çš„æ¡ç›®ä¸Š,å­èœå•æ˜¾ç¤ºå»¶è¿Ÿè®¡æ—¶å™¨ 
+    this.m_Bounds = null;               //èœå•çš„bounds 
+    this.m_ShowHeaderBlank = true;      //æ˜¯å¦æ˜¾ç¤ºMenuItemå‰çš„ç©ºç™½åŒºåŸŸ 
+    this.m_IsEventAttached = false;     //äº‹ä»¶æ˜¯å¦attached
+	this.path = "parent";				//çˆ¶çº§è·¯å¾„
 	this.m_Id = "";
-	this.m_SeparatorAmount = 0;         //SeparatorµÄÊıÁ¿
-    //this.m_Id = _MenuCache_.NewId();    //»òÈ¡²Ëµ¥¶ÔÏóµÄÎ¨Ò»±êÊ¶
-    //_MenuCache_[this.m_Id] = this;     //°Ñ²Ëµ¥·ÅÈë__MenuCache__ 
+	this.m_SeparatorAmount = 0;         //Separatorçš„æ•°é‡
+    //this.m_Id = _MenuCache_.NewId();    //æˆ–å–èœå•å¯¹è±¡çš„å”¯ä¸€æ ‡è¯†
+    //_MenuCache_[this.m_Id] = this;     //æŠŠèœå•æ”¾å…¥__MenuCache__ 
  
     this.toString = function() 
     { 
@@ -56,30 +56,30 @@ function Menu()
     }; 
 }
 
-//²Ëµ¥ÀàµÄ·½·¨ÓĞ£º 
+//èœå•ç±»çš„æ–¹æ³•æœ‰ï¼š 
 Menu.prototype.BuildMenu = function(identity) 
 { 
-    // Ìí¼Ó²Ëµ¥ÌõÄ¿µ½²Ëµ¥ÖĞ
+    // æ·»åŠ èœå•æ¡ç›®åˆ°èœå•ä¸­
 	this.m_Id = identity;
 	_MenuCache_[this.m_Id] = this;
 }; 
-//²Ëµ¥ÀàµÄ·½·¨ÓĞ£º 
+//èœå•ç±»çš„æ–¹æ³•æœ‰ï¼š 
 Menu.prototype.Add = function(mi) 
 { 
-    // Ìí¼Ó²Ëµ¥ÌõÄ¿µ½²Ëµ¥ÖĞ
+    // æ·»åŠ èœå•æ¡ç›®åˆ°èœå•ä¸­
 	this.m_Items.push(mi);
 	mi.m_Menu = this;
 }; 
  
 Menu.prototype.AddAt = function(mi, index) 
 { 
-    // °Ñ²Ëµ¥ÌõÄ¿Ìí¼Óµ½Ö¸¶¨µÄÊı×éË÷ÒıÉÏ
+    // æŠŠèœå•æ¡ç›®æ·»åŠ åˆ°æŒ‡å®šçš„æ•°ç»„ç´¢å¼•ä¸Š
 	this.m_Items[index] = mi;
 }; 
  
 Menu.prototype.AddSeparator = function() 
 { 
-    // Ìí¼ÓÒ»¸öSeparator Item,¾ÍÊÇÎÒÃÇÔÚwindow²Ëµ¥ÀïµÄ"-";
+    // æ·»åŠ ä¸€ä¸ªSeparator Item,å°±æ˜¯æˆ‘ä»¬åœ¨windowèœå•é‡Œçš„"-";
 	var m_Id = m_Id = _MenuCache_.NewId();
 	_MenuCache_[m_Id] = new MenuItem(null,null,null,null,null,false);
 	_MenuCache_[this.m_Id].Add(_MenuCache_[m_Id]);
@@ -88,17 +88,17 @@ Menu.prototype.AddSeparator = function()
  
 Menu.prototype.Remove = function(mi) 
 { 
-    // É¾³ı²Ëµ¥ÖĞµÄÒ»¸ö²Ëµ¥ÌõÄ¿ 
+    // åˆ é™¤èœå•ä¸­çš„ä¸€ä¸ªèœå•æ¡ç›® 
 }; 
  
 Menu.prototype.Contains = function(menu) 
 { 
-    // ÅĞ¶ÏÒÑ¹¹½¨µÄ²Ëµ¥ÖĞÊÇ·ñÒÑ°üº¬ÁËmenu 
+    // åˆ¤æ–­å·²æ„å»ºçš„èœå•ä¸­æ˜¯å¦å·²åŒ…å«äº†menu 
 }; 
  
 Menu.prototype.Render = function() 
 { 
-    // Éú³É²Ëµ¥UIÏÔÊ¾ĞèÒªµÄDHTML
+    // ç”Ÿæˆèœå•UIæ˜¾ç¤ºéœ€è¦çš„DHTML
 	var outerHTML = "";
 	var menuObj = this;
 	outerHTML += "<html>\n<body scroll=no >\n<LINK href=\""+styleURL+"\" type=text/css rel=StyleSheet />\n";
@@ -115,12 +115,12 @@ Menu.prototype.Render = function()
  
 Menu.prototype.__generatePaddingTR = function(doc) 
 { 
-    // ÎªÁËÃÀ»¯²Ëµ¥UIÉú³ÉµÄÒ»¸öTR element 
+    // ä¸ºäº†ç¾åŒ–èœå•UIç”Ÿæˆçš„ä¸€ä¸ªTR element 
 }; 
  
 Menu.prototype.AttachEvents = function(menuHtml) 
 { 
-    //attachÊÂ¼ş´¦Àíº¯Êıµ½²Ëµ¥ÊÂ¼şÉÏ
+    //attachäº‹ä»¶å¤„ç†å‡½æ•°åˆ°èœå•äº‹ä»¶ä¸Š
 	var menuObj = _MenuCache_[menuHtml.id];
     if ( menuObj.m_IsEventAttached ) 
     { 
@@ -178,12 +178,12 @@ Menu.prototype.AttachEvents = function(menuHtml)
  
 Menu.prototype.ActiveItem = function(evt) 
 { 
-    // ´¦Àí²Ëµ¥itme±»ActiveºóµÄUIºÍ¶¯×÷µÈ 
+    // å¤„ç†èœå•itmeè¢«Activeåçš„UIå’ŒåŠ¨ä½œç­‰ 
 }; 
  
 Menu.prototype.Hide = function() 
 { 
-    // Òş²Ø²Ëµ¥
+    // éšè—èœå•
 	if (this.m_Popup != null && this.m_Popup != "" && this.m_Popup.hide)
 	{
 		this.m_Popup.hide();
@@ -192,13 +192,13 @@ Menu.prototype.Hide = function()
  
 Menu.prototype.Keydown = function(evt) 
 { 
-    // ´¦Àí¼üÅÌ°´¼ü 
+    // å¤„ç†é”®ç›˜æŒ‰é”® 
 }; 
  
 Menu.prototype.ResumeItem = function(id) 
 { 
-    // »Ö¸´²Ëµ¥,È¡ÏûactiveºÍ»Ö¸´UI
-	// ÏÔÊ¾submenu,ÓÃÓÚ²Ëµ¥ÄÚ²¿´¥·¢µÄ²Ëµ¥ÏÔÊ¾ 
+    // æ¢å¤èœå•,å–æ¶ˆactiveå’Œæ¢å¤UI
+	// æ˜¾ç¤ºsubmenu,ç”¨äºèœå•å†…éƒ¨è§¦å‘çš„èœå•æ˜¾ç¤º 
 	var mItem = _MenuCache_[id];
 	var doc = mItem.m_Menu.m_Popup.document;
 	var trHtml = doc.getElementById(id);
@@ -217,12 +217,12 @@ Menu.prototype.ResumeItem = function(id)
  
 Menu.prototype.__resumeItem = function() 
 { 
-    // Ö´ĞĞUI»Ö¸´
+    // æ‰§è¡ŒUIæ¢å¤
 }; 
  
 Menu.prototype.__resumeAll = function() 
 { 
-    // Ö´ĞĞÅúÁ¿UI»Ö¸´
+    // æ‰§è¡Œæ‰¹é‡UIæ¢å¤
 	for (var i=0; i<this.m_Items.length; i++)
 	{
 		var mi = this.m_Items[i];
@@ -234,17 +234,17 @@ Menu.prototype.__resumeAll = function()
  
 Menu.prototype.__activeItem = function() 
 { 
-    // Ö´ĞĞUI¼¤»î 
+    // æ‰§è¡ŒUIæ¿€æ´» 
 }; 
  
 Menu.prototype.HasSubMenuExpanded = function() 
 { 
-    // ÅĞ¶Ï²Ëµ¥ÊÇ·ñÓĞÕ¹¿ªµÄsubmenu
+    // åˆ¤æ–­èœå•æ˜¯å¦æœ‰å±•å¼€çš„submenu
 }; 
  
 Menu.prototype.__isEllipsis = function(menuObj, menuHtml) 
 { 
-    // ÔÚ²Ëµ¥itemµÄtext¹ı³¤Ê±½«½Ø¶Ï²¢ÏÔÊ¾""
+    // åœ¨èœå•itemçš„textè¿‡é•¿æ—¶å°†æˆªæ–­å¹¶æ˜¾ç¤º""
 }; 
  
 Menu.prototype.Show = function(win) 
@@ -259,7 +259,7 @@ Menu.prototype.Show = function(win)
     menuObj.__resumeItem(); 
     var win = menuObj.m_Opener; 
     var popup, popwin, popdoc; 
-    // ÅĞ¶Ï²Ëµ¥µÄÈİÆ÷popupÊÇ·ñ½¨Á¢ 
+    // åˆ¤æ–­èœå•çš„å®¹å™¨popupæ˜¯å¦å»ºç«‹ 
     if ( !menuObj.m_Popup ) 
     { 
         popup = win.createPopup();
@@ -272,14 +272,14 @@ Menu.prototype.Show = function(win)
     } 
     popdoc = popup.document; 
     popwin = popdoc.parentWindow; 
-    // ÅĞ¶ÏÊÇ·ñĞèÒªÖØ»æ²Ëµ¥µÄÄÚÈİ 
+    // åˆ¤æ–­æ˜¯å¦éœ€è¦é‡ç»˜èœå•çš„å†…å®¹ 
     if ( menuObj.m_Invalidate || !menuObj.m_Drawn ) 
     {
         popdoc.body.innerHTML = menuObj.Render();
         menuObj.m_Invalidate = false; 
         menuObj.m_Drawn = true; 
     } 
-    // »ñÈ¡²Ëµ¥µÄÖ÷table(²Ëµ¥ÊÇÊ¹ÓÃtableÀ´ÊµÏÖµÄ) 
+    // è·å–èœå•çš„ä¸»table(èœå•æ˜¯ä½¿ç”¨tableæ¥å®ç°çš„) 
     var menuHtml = popup.document.getElementById(menuObj.m_Id);
     var hrAmount = menuObj.m_SeparatorAmount;
     var hrHeight = 4;
@@ -297,14 +297,14 @@ Menu.prototype.Show = function(win)
         width: menuHtml.offsetWidth, 
         height: menuHtml.offsetHeight 
     };
-    // °Ñ²Ëµ¥²Ù×÷µÄÊÂ¼şattachµ½²Ëµ¥ÉÏ£¬Êó±êºÍ¼üÅÌ²Ù×÷µÈ
+    // æŠŠèœå•æ“ä½œçš„äº‹ä»¶attachåˆ°èœå•ä¸Šï¼Œé¼ æ ‡å’Œé”®ç›˜æ“ä½œç­‰
     menuObj.AttachEvents(menuHtml);
     
 }; 
  
 Menu.prototype.InnerShow = function(id) 
 {
-    // ÏÔÊ¾submenu,ÓÃÓÚ²Ëµ¥ÄÚ²¿´¥·¢µÄ²Ëµ¥ÏÔÊ¾ 
+    // æ˜¾ç¤ºsubmenu,ç”¨äºèœå•å†…éƒ¨è§¦å‘çš„èœå•æ˜¾ç¤º 
 	var mItem = _MenuCache_[id];
 	var doc = mItem.m_Menu.m_Popup.document;
 	var trHtml = doc.getElementById(id);
@@ -337,7 +337,7 @@ Menu.prototype.InnerShow = function(id)
  
 Menu.prototype.__show = function(mItem) 
 { 
-    // Ö´ĞĞ²Ëµ¥ÏÔÊ¾
+    // æ‰§è¡Œèœå•æ˜¾ç¤º
 	var win = mItem.m_Menu.m_Popup.document.parentWindow;
 	var m_Bounds = mItem.m_Menu.m_Bounds;
 	var trHtml = win.document.getElementById(mItem.m_Id);
@@ -350,7 +350,7 @@ Menu.prototype.__show = function(mItem)
     menuObj.__resumeItem(); 
     var win = menuObj.m_Opener; 
     var popup, popwin, popdoc; 
-    // ÅĞ¶Ï²Ëµ¥µÄÈİÆ÷popupÊÇ·ñ½¨Á¢ 
+    // åˆ¤æ–­èœå•çš„å®¹å™¨popupæ˜¯å¦å»ºç«‹ 
     if ( !menuObj.m_Popup ) 
     { 
         popup = win.createPopup();
@@ -363,14 +363,14 @@ Menu.prototype.__show = function(mItem)
     } 
     popdoc = popup.document; 
     popwin = popdoc.parentWindow; 
-    // ÅĞ¶ÏÊÇ·ñĞèÒªÖØ»æ²Ëµ¥µÄÄÚÈİ 
+    // åˆ¤æ–­æ˜¯å¦éœ€è¦é‡ç»˜èœå•çš„å†…å®¹ 
     if ( menuObj.m_Invalidate || !menuObj.m_Drawn ) 
     {
         popdoc.body.innerHTML = menuObj.Render();
         menuObj.m_Invalidate = false; 
         menuObj.m_Drawn = true;
     }
-    // »ñÈ¡²Ëµ¥µÄÖ÷table(²Ëµ¥ÊÇÊ¹ÓÃtableÀ´ÊµÏÖµÄ)
+    // è·å–èœå•çš„ä¸»table(èœå•æ˜¯ä½¿ç”¨tableæ¥å®ç°çš„)
    var menuHtml = popup.document.getElementById(menuObj.m_Id);
    var hrAmount = menuObj.m_SeparatorAmount;
    var hrHeight = 4;
@@ -385,34 +385,34 @@ Menu.prototype.__show = function(mItem)
        width: menuHtml.offsetWidth,
        height: menuHtml.offsetHeight 
    };  
-   // °Ñ²Ëµ¥²Ù×÷µÄÊÂ¼şattachµ½²Ëµ¥ÉÏ£¬Êó±êºÍ¼üÅÌ²Ù×÷µÈ
+   // æŠŠèœå•æ“ä½œçš„äº‹ä»¶attachåˆ°èœå•ä¸Šï¼Œé¼ æ ‡å’Œé”®ç›˜æ“ä½œç­‰
    menuObj.AttachEvents(menuHtml);
 }; 
  
 Menu.prototype.FadeinEffect = function(effect) 
 { 
-    // ²Ëµ¥ÏÔÊ¾Ê½µÄÌØĞ§,ÊÇÓÃfilterÀ´ÊµÏÖ,Ö»ÔÚShow²ËµÄÊ±ºòµ÷ÓÃ 
+    // èœå•æ˜¾ç¤ºå¼çš„ç‰¹æ•ˆ,æ˜¯ç”¨filteræ¥å®ç°,åªåœ¨Showèœçš„æ—¶å€™è°ƒç”¨ 
 }; 
 
 
-//ÀàMenuItem±ÈMenuÀà¼òµ¥ºÜ¶à£¬¶¨ÒåÈçÏÂ£º 
+//ç±»MenuItemæ¯”Menuç±»ç®€å•å¾ˆå¤šï¼Œå®šä¹‰å¦‚ä¸‹ï¼š 
 function MenuItem(text, action, icon, shortcut, menu, Disabled) 
 {
-	//²Ëµ¥ÎÄ±¾
+	//èœå•æ–‡æœ¬
     this.m_Text = text;
 	//if (text != null && text != "")
 	//{
 		//this.m_Text = text.len(5); 
 	//}
-    this.m_Action = action;            //²Ëµ¥ÌõÄ¿±»´¥·¢Ê±Ö´ĞĞµÄº¯Êı 
-    this.m_Icon = icon;                //²Ëµ¥ÌõÄ¿Ç°µÄÍ¼±êÂ·¾¶ 
-    this.m_ChildMenu = menu;           //×Ó²Ëµ¥,ÀàĞÍÎªMenu¶ÔÏó 
-    this.m_Menu = null;                //±¾²Ëµ¥ÌõÄ¿ËùÔÚµÄ²Ëµ¥¶ÔÏóÊµÀı 
-    this.m_ShortCut = shortcut;        //¿ì½İ·½Ê½(±£Áô,Î´ÊµÏÖ) 
+    this.m_Action = action;            //èœå•æ¡ç›®è¢«è§¦å‘æ—¶æ‰§è¡Œçš„å‡½æ•° 
+    this.m_Icon = icon;                //èœå•æ¡ç›®å‰çš„å›¾æ ‡è·¯å¾„ 
+    this.m_ChildMenu = menu;           //å­èœå•,ç±»å‹ä¸ºMenuå¯¹è±¡ 
+    this.m_Menu = null;                //æœ¬èœå•æ¡ç›®æ‰€åœ¨çš„èœå•å¯¹è±¡å®ä¾‹ 
+    this.m_ShortCut = shortcut;        //å¿«æ·æ–¹å¼(ä¿ç•™,æœªå®ç°) 
     this.m_Disabled = Disabled;       
     this.m_Mnemonic = null; 
     this.m_Tooltip = null; 
-    this.m_Attributes = [];            // ¸½¼ÓÊôĞÔ¼¯ºÏ,ÓÉSetAttributeÉèÖÃ 
+    this.m_Attributes = [];            // é™„åŠ å±æ€§é›†åˆ,ç”±SetAttributeè®¾ç½® 
 	this.m_Frame = null;
 	this.m_RightIcon = "<%=rootpath%>/include/leftbtn.png";
     
@@ -425,31 +425,31 @@ function MenuItem(text, action, icon, shortcut, menu, Disabled)
     }; 
 } 
 
-//MenuItemÀàµÄ·½·¨ÈçÏÂ£º 
+//MenuItemç±»çš„æ–¹æ³•å¦‚ä¸‹ï¼š 
 MenuItem.prototype.Contains = function(menu) 
 { 
-    //×Ó²Ëµ¥ÖĞÊÇ·ñÒÑÌí¼Ómenu
+    //å­èœå•ä¸­æ˜¯å¦å·²æ·»åŠ menu
 	
 };
  
 MenuItem.prototype.SetAttribute = function(key, value) 
 { 
-    // ÉèÖÃÓÃ»§¶¨ÒåµÄÊôĞÔ 
+    // è®¾ç½®ç”¨æˆ·å®šä¹‰çš„å±æ€§ 
 }; 
  
 MenuItem.prototype.GetAttribute = function(key) 
 { 
-    // »òÈ¡ÓÃ»§¶¨ÒåµÄÊôĞÔ 
+    // æˆ–å–ç”¨æˆ·å®šä¹‰çš„å±æ€§ 
 }; 
  
 MenuItem.prototype.Invalidate = function() 
 { 
-    // Ê§Ğ§ 
+    // å¤±æ•ˆ 
 }; 
 
 MenuItem.prototype.IsSeparator = function() 
 { 
-    // ÅĞ¶ÏMenuItemÊÇ·ñÎªSeparator,¾ÍÊÇÆäm_Text == '-'
+    // åˆ¤æ–­MenuItemæ˜¯å¦ä¸ºSeparator,å°±æ˜¯å…¶m_Text == '-'
 	var mi = this;
 	if (mi.m_Text == null && mi.m_Action == null && mi.m_Icon == null)
 		return true ;
@@ -458,7 +458,7 @@ MenuItem.prototype.IsSeparator = function()
  
 MenuItem.prototype.Render = function() 
 { 
-    // Éú³É²Ëµ¥UIµÄDHTML
+    // ç”Ÿæˆèœå•UIçš„DHTML
 	var outerHTML = "";
 	var mi = this;
 	if (mi.m_Text == null && mi.m_Action == null && mi.m_Icon == null)
@@ -500,15 +500,15 @@ MenuItem.prototype.Render = function()
  
 MenuItem.prototype.SetBorderColor = function(miHtml, width, borderColor) 
 { 
-    // ÉèÖÃ²Ëµ¥ÌõÄ¿µÄ±ß¿òÑÕÉ« 
+    // è®¾ç½®èœå•æ¡ç›®çš„è¾¹æ¡†é¢œè‰² 
 };
-//ÊµÏÖÒ³ÃæÌø×ª
+//å®ç°é¡µé¢è·³è½¬
 var Loade = function (id)
 {
 	var mItem = _MenuCache_[id];
 	if( mItem == null )
 	{
-		alert("´íÎó£ºÃ»ÓĞÕÒµ½¸Ã²Ëµ¥Ïî");
+		alert("é”™è¯¯ï¼šæ²¡æœ‰æ‰¾åˆ°è¯¥èœå•é¡¹");
 		return ;
 	}
 	
@@ -522,7 +522,7 @@ var Loade = function (id)
 	}
 	closeAllPopup();
 }
-//¹Ø±ÕËùÓĞ²Ëµ¥
+//å…³é—­æ‰€æœ‰èœå•
 var closeAllPopup = function ()
 {
 	for(obj in _MenuCache_)
@@ -544,7 +544,7 @@ function findBridge(win)
 	}
 	return bridge;
 }
-//ÊµÏÖÒ³ÃæÌø×ª
+//å®ç°é¡µé¢è·³è½¬
 MenuItem.prototype.Click = function(mItem,path,tag,src)
 {
 	var win = "";
@@ -557,7 +557,7 @@ MenuItem.prototype.Click = function(mItem,path,tag,src)
 	return;
 }
 
-//ÕÒ³ö¶¥¼¶Ò³Ãæ
+//æ‰¾å‡ºé¡¶çº§é¡µé¢
 Menu.prototype.findPath = function (menuObj,path)
 {
 	var win = "";
@@ -575,7 +575,7 @@ Menu.prototype.findPath = function (menuObj,path)
 }
 
 /**
- * ÅĞ¶Ïµ±Ç°µÄµØÖ·ÊÇ·ñÊÇjavascriptº¯Êı
+ * åˆ¤æ–­å½“å‰çš„åœ°å€æ˜¯å¦æ˜¯javascriptå‡½æ•°
  */
 function isJavsscriptFun(linkUrl)
 {
@@ -584,12 +584,12 @@ function isJavsscriptFun(linkUrl)
 	return linkUrl.match(re);
 }
 
-//Õ¹¿ª/ÕÛµş
+//å±•å¼€/æŠ˜å 
 function expandNode(node)
 {
 	document.getElementById(node).click();
 }
-//¸ù¾İ×Ö·û´®³¤¶ÈÈ·¶¨´°Ìå¿í
+//æ ¹æ®å­—ç¬¦ä¸²é•¿åº¦ç¡®å®šçª—ä½“å®½
 function widthByString(menu)
 {
 	var mis = menu.m_Items;
@@ -609,7 +609,7 @@ function widthByString(menu)
 		return 120+(maxSize-6)*13;
 }
 
-//½ØÈ¡×Ö·û´®
+//æˆªå–å­—ç¬¦ä¸²
 String.prototype.len=function(size)   
 {   
 	
@@ -710,7 +710,7 @@ function InitializedDocEvent()
 
 
 /**
- * ÎªÁ¬½ÓÌí¼Ó²ÎÊı£¬Ö÷ÒªÊÇÊ÷½ÚµãÓÒ¼üµã»÷Á´½ÓµÄÌí¼Ó²ÎÊı
+ * ä¸ºè¿æ¥æ·»åŠ å‚æ•°ï¼Œä¸»è¦æ˜¯æ ‘èŠ‚ç‚¹å³é”®ç‚¹å‡»é“¾æ¥çš„æ·»åŠ å‚æ•°
  */
 function refactorLink(linkUrl,params)
 {

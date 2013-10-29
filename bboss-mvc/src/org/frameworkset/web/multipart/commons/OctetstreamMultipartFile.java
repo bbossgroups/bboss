@@ -38,7 +38,7 @@ import com.frameworkset.util.FileUtil;
  * <p> bboss workgroup </p>
  * <p> Copyright (c) 2009 </p>
  * 
- * @Date 2012-5-14 ÏÂÎç5:49:16
+ * @Date 2012-5-14 ä¸‹åˆ5:49:16
  * @author biaoping.yin
  * @version 1.0
  */

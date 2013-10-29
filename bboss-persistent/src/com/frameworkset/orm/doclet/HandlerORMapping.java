@@ -38,11 +38,11 @@ import com.frameworkset.orm.engine.model.Table;
 /**
  * <p>Title: HandlerORMapping</p>
  *
- * <p>Description: ³õÊ¼»¯½âÎöÏµÍ³ÖĞËùÓĞµÄjavabeanÖĞÓëÊı¾İ¿â¹ØÏµ±íÖ®¼ä´æÔÚµÄ¶ÔÏóÊôĞÔºÍ±í×Ö¶ÎµÄÓ³Éä¹ØÏµ.
- *                 ·ÖÎöo/r mappingÔªÄ£ĞÍ,²¢ÇÒ¶ÔÔªÄ£ĞÍ½øĞĞ³Ö¾Ã»¯
- *                 ¸ù¾İÒÔÏÂ¹æÔò½øĞĞ½âÎö£º
- *                 ÔÚjavabeanµÄÀà×¢ÊÍÖĞ¶¨ÒåÊı¾İ¿âÃû³ÆºÍ±íÃû³Æ£¬ÕâÖÖ¶¨ÒåÊÇ¿ÉÑ¡µÄ
- *                 ÔÚjavabeanµÄÊôĞÔ¶¨ÒåµÄ×¢ÊÍÖĞ¶¨Òå×Ö¶Î¶ÔÓ¦µÄ±íµÄ×Ö¶Î£¬ÕâÖÖ¶¨ÒåÊÇ±ØĞëµÄ
+ * <p>Description: åˆå§‹åŒ–è§£æç³»ç»Ÿä¸­æ‰€æœ‰çš„javabeanä¸­ä¸æ•°æ®åº“å…³ç³»è¡¨ä¹‹é—´å­˜åœ¨çš„å¯¹è±¡å±æ€§å’Œè¡¨å­—æ®µçš„æ˜ å°„å…³ç³».
+ *                 åˆ†æo/r mappingå…ƒæ¨¡å‹,å¹¶ä¸”å¯¹å…ƒæ¨¡å‹è¿›è¡ŒæŒä¹…åŒ–
+ *                 æ ¹æ®ä»¥ä¸‹è§„åˆ™è¿›è¡Œè§£æï¼š
+ *                 åœ¨javabeançš„ç±»æ³¨é‡Šä¸­å®šä¹‰æ•°æ®åº“åç§°å’Œè¡¨åç§°ï¼Œè¿™ç§å®šä¹‰æ˜¯å¯é€‰çš„
+ *                 åœ¨javabeançš„å±æ€§å®šä¹‰çš„æ³¨é‡Šä¸­å®šä¹‰å­—æ®µå¯¹åº”çš„è¡¨çš„å­—æ®µï¼Œè¿™ç§å®šä¹‰æ˜¯å¿…é¡»çš„
  * </p>
  *
  * <p>Copyright: Copyright (c) 2005</p>
@@ -73,8 +73,8 @@ public class HandlerORMapping {
     }
 
     /**
-     * ¸ù¾İ´«ÈëµÄÔ´ÎÄ¼şµÄÏà¶Ô¸ùÄ¿Â¼£¨¾ø¶ÔÄ¿Â¼Í¨¹ı±£´æÔÚÏµÍ³ÊôĞÔÖĞbasedir+relativeSrcdir¶øµÃ£©£¬
-     * ³õÊ¼»¯xjavadoc£¬½«ËùÓĞµÄjavaÎÄ¼ş×ª»»³ÉXClass¶ÔÏó£¬Îª½âÎöjava¶ÔÏóÖĞÊôĞÔÓëÊı¾İ¿â±íÖ®¼äµÃ¹ØÏµ×ö×¼±¸
+     * æ ¹æ®ä¼ å…¥çš„æºæ–‡ä»¶çš„ç›¸å¯¹æ ¹ç›®å½•ï¼ˆç»å¯¹ç›®å½•é€šè¿‡ä¿å­˜åœ¨ç³»ç»Ÿå±æ€§ä¸­basedir+relativeSrcdirè€Œå¾—ï¼‰ï¼Œ
+     * åˆå§‹åŒ–xjavadocï¼Œå°†æ‰€æœ‰çš„javaæ–‡ä»¶è½¬æ¢æˆXClasså¯¹è±¡ï¼Œä¸ºè§£æjavaå¯¹è±¡ä¸­å±æ€§ä¸æ•°æ®åº“è¡¨ä¹‹é—´å¾—å…³ç³»åšå‡†å¤‡
      * @param relativeSrcdir String
      */
     public void init(String relativeSrcdir)
@@ -90,8 +90,8 @@ public class HandlerORMapping {
     }
 
     /**
-     * ¸ù¾İ´«ÈëµÄÔ´ÎÄ¼şµÄ¸ùÄ¿Â¼£¬
-     * ³õÊ¼»¯xjavadoc£¬½«ËùÓĞµÄjavaÎÄ¼ş×ª»»³ÉXClass¶ÔÏó£¬Îª½âÎöjava¶ÔÏóÖĞÊôĞÔÓëÊı¾İ¿â±íÖ®¼äµÃ¹ØÏµ×ö×¼±¸
+     * æ ¹æ®ä¼ å…¥çš„æºæ–‡ä»¶çš„æ ¹ç›®å½•ï¼Œ
+     * åˆå§‹åŒ–xjavadocï¼Œå°†æ‰€æœ‰çš„javaæ–‡ä»¶è½¬æ¢æˆXClasså¯¹è±¡ï¼Œä¸ºè§£æjavaå¯¹è±¡ä¸­å±æ€§ä¸æ•°æ®åº“è¡¨ä¹‹é—´å¾—å…³ç³»åšå‡†å¤‡
      * @param srcdir String
      */
     public void initByCompletePath(String srcdir)
@@ -107,7 +107,7 @@ public class HandlerORMapping {
     }
 
     /**
-     * ½âÎö¿ªÊ¼
+     * è§£æå¼€å§‹
      */
     public void execute()
     {
@@ -126,7 +126,7 @@ public class HandlerORMapping {
         {
             Table table = null;
             xclass = (XClass)it.next();
-            //Èç¹ûxclass¶ÔÓ¦µÄÀàÃ»ÓĞÖ¸¶¨±íµÄ×Ö¶ÎĞÅÏ¢£¬¼ÌĞø½øĞĞÏÂÒ»´ÎÑ­»·
+            //å¦‚æœxclasså¯¹åº”çš„ç±»æ²¡æœ‰æŒ‡å®šè¡¨çš„å­—æ®µä¿¡æ¯ï¼Œç»§ç»­è¿›è¡Œä¸‹ä¸€æ¬¡å¾ªç¯
             if(!needHandler(xclass))
             {
                 //log.debug("ignore parseing " + xclass.getQualifiedName() + ".");
@@ -162,14 +162,14 @@ public class HandlerORMapping {
                     tableName = tableTag.getAttributeValue(TagConst.
                         TAG_TABLE_NAME);
 
-                    //±£ÁôÊôĞÔ
+                    //ä¿ç•™å±æ€§
                     tableSchema = tableTag.getAttributeValue(TagConst.
                         TAG_TABLE_SCHEMA);
                 }
-                //´´½¨Êı¾İ¿âÊµÀı
+                //åˆ›å»ºæ•°æ®åº“å®ä¾‹
 
-                //Èç¹ûÃ»ÓĞÖ¸¶¨Êı¾İ¿â±êÇ©£¬µ«ÊÇ±í±êÇ©Ö¸¶¨ÁË£¬Ôò¸ù¾İ±í±êÇ©µÄÊôĞÔ´´½¨Êı¾İ¿âÊµÀı
-                //·ñÔò
+                //å¦‚æœæ²¡æœ‰æŒ‡å®šæ•°æ®åº“æ ‡ç­¾ï¼Œä½†æ˜¯è¡¨æ ‡ç­¾æŒ‡å®šäº†ï¼Œåˆ™æ ¹æ®è¡¨æ ‡ç­¾çš„å±æ€§åˆ›å»ºæ•°æ®åº“å®ä¾‹
+                //å¦åˆ™
                 if (databaseTag == null && tableTag != null) {
                     if (tableSchema != null)
                         dataBase = ORMappingManager.getInstance().creatDataBase(tableSchema);
@@ -178,7 +178,7 @@ public class HandlerORMapping {
                 } else
                     dataBase = ORMappingManager.getInstance().creatDataBase(dbName, dbType);
             }
-            try {                //´´½¨±íÊµÀı
+            try {                //åˆ›å»ºè¡¨å®ä¾‹
 
 
 
@@ -224,7 +224,7 @@ public class HandlerORMapping {
                 }
 
                 //table.setDatabase(dataBase);
-                //½«±íÊµÀıÌí¼Óµ½Êı¾İ¿âÖĞ
+                //å°†è¡¨å®ä¾‹æ·»åŠ åˆ°æ•°æ®åº“ä¸­
                 dataBase.addTable(table);
                 //System.out.println(dataBase);
                 log.debug("Complete parseing " + xclass.getQualifiedName() + ".");
@@ -238,7 +238,7 @@ public class HandlerORMapping {
     }
 
     /**
-     * ÅĞ¶ÏÊÇ·ñĞèÒª½âÎöxclassÖĞµÄÊı¾İ¿âÏà¹ØĞÅÏ¢
+     * åˆ¤æ–­æ˜¯å¦éœ€è¦è§£æxclassä¸­çš„æ•°æ®åº“ç›¸å…³ä¿¡æ¯
      * @param xclass XClass
      * @return boolean
      */
@@ -322,7 +322,7 @@ public class HandlerORMapping {
     }
 
     /**
-     * ½«Êı¾İ¿â´æ·ÅÔÚÄ¿Â¼xmlDirÖĞµÄschemaÎÄ¼ş×ª»»³É
+     * å°†æ•°æ®åº“å­˜æ”¾åœ¨ç›®å½•xmlDirä¸­çš„schemaæ–‡ä»¶è½¬æ¢æˆ
      * @param xmlDir String
      * @return ORMappingManager
      */
@@ -337,7 +337,7 @@ public class HandlerORMapping {
     }
 
     /**
-     * ´Ó´æ·ÅÔÚÄ¿Â¼xmlDirÖĞµÄschemaÎÄ¼ş×ª»»³ÉÊı¾İ¿â
+     * ä»å­˜æ”¾åœ¨ç›®å½•xmlDirä¸­çš„schemaæ–‡ä»¶è½¬æ¢æˆæ•°æ®åº“
      * @param xmlDir String
      * @return ORMappingManager
      */

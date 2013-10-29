@@ -35,12 +35,12 @@ import java.lang.annotation.Target;
 @Documented
 public @interface ResponseBody {
 	/**
-	 * Ö¸¶¨ÏìÓ¦µÄÊı¾İÀàĞÍ
+	 * æŒ‡å®šå“åº”çš„æ•°æ®ç±»å‹
 	 * @return
 	 */
 	String datatype() default ValueConstants.DEFAULT_NONE;
 	/**
-	 * Ö¸¶¨ÏìÓ¦µÄÊı¾İ±àÂë×Ö·û¼¯
+	 * æŒ‡å®šå“åº”çš„æ•°æ®ç¼–ç å­—ç¬¦é›†
 	 * @return
 	 */
 	String charset() default ValueConstants.DEFAULT_NONE;

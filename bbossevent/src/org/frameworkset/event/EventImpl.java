@@ -19,7 +19,7 @@ import org.frameworkset.spi.BaseSPIManager;
 
 
 /**
- * ÊÂ¼ş½Ó¿ÚÊµÏÖ
+ * äº‹ä»¶æ¥å£å®ç°
  *
  * @author biaoping.yin
  * @version 1.0
@@ -32,18 +32,18 @@ public final class EventImpl<T> implements Event {
 	T source;
 	EventType type ;
 	/**
-	 * ÊÂ¼şÏûÏ¢¹ã²¥µÄÄ¿µÄµØÖ·£¬Ö»ÓĞeventBroadcastTypeÎªÔ¶³Ì´«²¥(Event.REMOTE)
-	 * ±¾µØÔ¶³Ì´«²¥ (Event.REMOTELOCAL)Á½ÖÖÀàĞÍÊ±£¬²Å¿ÉÒÔÖ¸¶¨targetÊôĞÔ
-	 * Èç¹ûtargetÎªnull£¬ÄÇÃ´ÊÂ¼ş½«±»¹ã²¥µ½ËùÓĞµÄÔ¶³Ì½ÚµãÉÏÃæµÄ¼àÌıÆ÷£¬·ñÔòÖ»¹ã²¥µ½target
-	 * Ö¸¶¨µÄÄ¿µÄµØÖ·¶ÔÓ¦µÄÔ¶³Ì¼àÌıÆ÷ÉÏÃæ£¬Èç¹û¶ÔÓ¦µÄtarget²»´æÔÚ£¬ÄÇÃ´Ö±½Ó¶ªÆúÕâ¸öÊÂ¼şÏûÏ¢
+	 * äº‹ä»¶æ¶ˆæ¯å¹¿æ’­çš„ç›®çš„åœ°å€ï¼Œåªæœ‰eventBroadcastTypeä¸ºè¿œç¨‹ä¼ æ’­(Event.REMOTE)
+	 * æœ¬åœ°è¿œç¨‹ä¼ æ’­ (Event.REMOTELOCAL)ä¸¤ç§ç±»å‹æ—¶ï¼Œæ‰å¯ä»¥æŒ‡å®štargetå±æ€§
+	 * å¦‚æœtargetä¸ºnullï¼Œé‚£ä¹ˆäº‹ä»¶å°†è¢«å¹¿æ’­åˆ°æ‰€æœ‰çš„è¿œç¨‹èŠ‚ç‚¹ä¸Šé¢çš„ç›‘å¬å™¨ï¼Œå¦åˆ™åªå¹¿æ’­åˆ°target
+	 * æŒ‡å®šçš„ç›®çš„åœ°å€å¯¹åº”çš„è¿œç¨‹ç›‘å¬å™¨ä¸Šé¢ï¼Œå¦‚æœå¯¹åº”çš„targetä¸å­˜åœ¨ï¼Œé‚£ä¹ˆç›´æ¥ä¸¢å¼ƒè¿™ä¸ªäº‹ä»¶æ¶ˆæ¯
 	 */
 	EventTarget target = null;
 	
 	/**
-	 * ÏûÏ¢´«²¥ÀàĞÍ£º
-	 * ±¾µØ´«²¥(Event.LOCAL)
-	 * Ô¶³Ì´«²¥(Event.REMOTE)
-	 * ±¾µØÔ¶³Ì´«²¥ (Event.REMOTELOCAL)
+	 * æ¶ˆæ¯ä¼ æ’­ç±»å‹ï¼š
+	 * æœ¬åœ°ä¼ æ’­(Event.LOCAL)
+	 * è¿œç¨‹ä¼ æ’­(Event.REMOTE)
+	 * æœ¬åœ°è¿œç¨‹ä¼ æ’­ (Event.REMOTELOCAL)
 	 */
 	int eventBroadcastType = Event.REMOTELOCAL;
 	boolean issynchronized = false;

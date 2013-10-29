@@ -22,7 +22,7 @@ package org.frameworkset.spi.properties.loopinject;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2010-1-17 œ¬ŒÁ08:38:31
+ * @Date 2010-1-17 ‰∏ãÂçà08:38:31
  * @author biaoping.yin
  * @version 1.0
  */

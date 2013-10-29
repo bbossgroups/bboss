@@ -23,9 +23,9 @@ public class BatchUtilTag extends BaseTag {
 	protected SQLExecutor sqlExecutor;
 	 
 	/**
-	 * 是否需要对预编译批处理进行优化，如果需要则对所有的batchparams按照sql语句是否相同进行排序
-	 * 如果语句相同则放到一起，这样避免出现同一条sql语句存在多个preparedstatement句柄
-	 * 默认不排序，否则排序
+	 * 鏄惁闇�瑕佸棰勭紪璇戞壒澶勭悊杩涜浼樺寲锛屽鏋滈渶瑕佸垯瀵规墍鏈夌殑batchparams鎸夌収sql璇彞鏄惁鐩稿悓杩涜鎺掑簭
+	 * 濡傛灉璇彞鐩稿悓鍒欐斁鍒颁竴璧凤紝杩欐牱閬垮厤鍑虹幇鍚屼竴鏉ql璇彞瀛樺湪澶氫釜preparedstatement鍙ユ焺
+	 * 榛樿涓嶆帓搴忥紝鍚﹀垯鎺掑簭
 	 */
 	protected boolean batchOptimize = false;
 	/**

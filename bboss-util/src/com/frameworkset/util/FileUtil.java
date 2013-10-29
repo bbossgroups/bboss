@@ -34,7 +34,7 @@ package com.frameworkset.util;
 
 /**
  * @author biaoping.yin
- * ÎÄ¼ş´¦ÀíÊµÓÃÀà
+ * æ–‡ä»¶å¤„ç†å®ç”¨ç±»
  */
 
 import java.io.BufferedInputStream;
@@ -80,7 +80,7 @@ public class FileUtil
 	}
 	
 	/**
-	 * »ñÈ¡Ò³ÃæÀàĞÍ
+	 * è·å–é¡µé¢ç±»å‹
 	 * @param fileName
 	 * @return
 	 */
@@ -93,7 +93,7 @@ public class FileUtil
 	}
 	
 	/**
-	 * »ñÈ¡Ò³ÃæÀàĞÍ
+	 * è·å–é¡µé¢ç±»å‹
 	 * @param fileName
 	 * @return
 	 */
@@ -191,7 +191,7 @@ public class FileUtil
     }
 
     /**
-     * Description:¶ÁÈ¡ÎÄ¼şµÄÄÚÈİ£¬½«Æä±£´æÔÚStringBuffer¶ÔÏóÖĞ·µ»Ø£¬
+     * Description:è¯»å–æ–‡ä»¶çš„å†…å®¹ï¼Œå°†å…¶ä¿å­˜åœ¨StringBufferå¯¹è±¡ä¸­è¿”å›ï¼Œ
      * 
      * @param file
      * @return StringBuffer
@@ -220,7 +220,7 @@ public class FileUtil
     }
 
     /**
-     * Description:»ñÈ¡ÊôĞÔÎÄ¼şµÄÀàÈİ
+     * Description:è·å–å±æ€§æ–‡ä»¶çš„ç±»å®¹
      * 
      * @param propsFile
      * @return Properties
@@ -233,11 +233,11 @@ public class FileUtil
     }
 
     /**
-     * Description:»ñÈ¡ÊôĞÔÎÄ¼şµÄÄÚÈİ£¬²¢ÇÒ¸ù¾İaddToSystemPropsµÄÖµÊÇ·ñ×°ÔØÏµÍ³ÊôĞÔ
+     * Description:è·å–å±æ€§æ–‡ä»¶çš„å†…å®¹ï¼Œå¹¶ä¸”æ ¹æ®addToSystemPropsçš„å€¼æ˜¯å¦è£…è½½ç³»ç»Ÿå±æ€§
      * 
      * @param propsFile
      * @param addToSystemProps
-     *            true:×°ÔØÏµÍ³ÊôĞÔ£¬false²»×°ÔØÏµÍ³ÊôĞÔ
+     *            true:è£…è½½ç³»ç»Ÿå±æ€§ï¼Œfalseä¸è£…è½½ç³»ç»Ÿå±æ€§
      * @return Properties
      * @throws Exception
      *             Properties
@@ -357,11 +357,11 @@ public class FileUtil
     }
 
     /**
-     * Ä¿Â¼¿½±´,ÓÃÓÚ¶ÔÄ¿Â¼µÄËùÓĞÎÄ¼şºÍ×ÓÄ¿Â¼½øĞĞµİ¹é¿½±´
+     * ç›®å½•æ‹·è´,ç”¨äºå¯¹ç›®å½•çš„æ‰€æœ‰æ–‡ä»¶å’Œå­ç›®å½•è¿›è¡Œé€’å½’æ‹·è´
      * 
      * @param source
      * @param destinction
-     *            ±ØĞëÎªÄ¿Â¼
+     *            å¿…é¡»ä¸ºç›®å½•
      * @throws IOException
      */
     public static void copy(String source, String destinction) throws IOException
@@ -509,10 +509,10 @@ public class FileUtil
     }
     
     /**
-     * »ñÈ¡ÎÄ¼şµÃÄÚÈİ
+     * è·å–æ–‡ä»¶å¾—å†…å®¹
      * 
      * @param filePath
-     *            ÎÄ¼şµÃÎïÀíÂ·¾¶
+     *            æ–‡ä»¶å¾—ç‰©ç†è·¯å¾„
      * @return
      * @throws IOException
      */
@@ -523,10 +523,10 @@ public class FileUtil
     
     
     /**
-     * »ñÈ¡ÎÄ¼şµÃÄÚÈİ
+     * è·å–æ–‡ä»¶å¾—å†…å®¹
      * 
      * @param filePath
-     *            ÎÄ¼şµÃÎïÀíÂ·¾¶
+     *            æ–‡ä»¶å¾—ç‰©ç†è·¯å¾„
      * @return
      * @throws IOException
      */
@@ -604,7 +604,7 @@ public class FileUtil
 
     private static final int EOF = -1;
 
-    // »ñÈ¡Ö¸¶¨Â·¾¶ºÍÎÄ¼şºó×ºÃûµÄÎÄ¼şÃûÁĞ±í
+    // è·å–æŒ‡å®šè·¯å¾„å’Œæ–‡ä»¶åç¼€åçš„æ–‡ä»¶ååˆ—è¡¨
     public Vector getFileNames(String pathName, String suffix) throws Exception
     {
         Vector v = new Vector();
@@ -626,7 +626,7 @@ public class FileUtil
     }
 
     /**
-     * É¾³ıÎÄ¼şÄ¿Â¼ÏÂµÄËùÓĞ×ÓÎÄ¼şºÍ×ÓÄ¿Â¼£¬²Ù×÷Ò»¶¨ÒªĞ¡ĞÄ
+     * åˆ é™¤æ–‡ä»¶ç›®å½•ä¸‹çš„æ‰€æœ‰å­æ–‡ä»¶å’Œå­ç›®å½•ï¼Œæ“ä½œä¸€å®šè¦å°å¿ƒ
      * 
      * @param publishTemppath
      */
@@ -643,10 +643,10 @@ public class FileUtil
     }
 
     /**
-     * Ö»É¾³ıÄ¿±êÎÄ¼ş
+     * åªåˆ é™¤ç›®æ ‡æ–‡ä»¶
      * 
      * @param path
-     *            ÎÄ¼ş¾ø¶ÔÂ·¾¶
+     *            æ–‡ä»¶ç»å¯¹è·¯å¾„
      * @author da.wei200710171007
      */
     public static void deleteFileOnly(String path)
@@ -661,7 +661,7 @@ public class FileUtil
     
 
     /**
-     * ÒÆ¶¯ÎÄ¼ş
+     * ç§»åŠ¨æ–‡ä»¶
      */
     public static void moveFile(String sourceFileName, String destPath) throws Exception
     {
@@ -719,7 +719,7 @@ public class FileUtil
 
     
     /**
-     * ÖØÃüÃûÎÄ¼ş£¬Ô­À´µÄÎÄ¼ş»á±»É¾³ı
+     * é‡å‘½åæ–‡ä»¶ï¼ŒåŸæ¥çš„æ–‡ä»¶ä¼šè¢«åˆ é™¤
      * @param source
      * @param dest
      */
@@ -730,7 +730,7 @@ public class FileUtil
     }
     
     /**
-     * ÖØÃüÃûÎÄ¼ş£¬Ô­À´µÄÎÄ¼ş»á±»É¾³ı
+     * é‡å‘½åæ–‡ä»¶ï¼ŒåŸæ¥çš„æ–‡ä»¶ä¼šè¢«åˆ é™¤
      * @param source
      * @param dest
      */
@@ -741,7 +741,7 @@ public class FileUtil
     }
     
     /**
-     * ±¸·İÎÄ¼ş£¬É¾³ıÔ­À´µÄÎÄ¼ş
+     * å¤‡ä»½æ–‡ä»¶ï¼Œåˆ é™¤åŸæ¥çš„æ–‡ä»¶
      * @param source
      * @param dest
      * @throws IOException
@@ -750,9 +750,9 @@ public class FileUtil
     	File file = new File(source);
         boolean state = file.renameTo(new File(dest));
         if(!state){
-        	//½«ÎÄ¼şsource¿½±´µ½dest
+        	//å°†æ–‡ä»¶sourceæ‹·è´åˆ°dest
         	fileCopy(source,dest);
-        	//É¾³ısourceÎÄ¼ş
+        	//åˆ é™¤sourceæ–‡ä»¶
         	deleteFileOnly(source);
         }
     }
@@ -836,7 +836,7 @@ public class FileUtil
     }
 
     /**
-     * ½«zipÎÄ¼ş½âÑ¹µ½destPathÂ·¾¶ÏÂÃæ
+     * å°†zipæ–‡ä»¶è§£å‹åˆ°destPathè·¯å¾„ä¸‹é¢
      * 
      * @param sourceFileName
      * @param destPath
@@ -861,7 +861,7 @@ public class FileUtil
                 saveEntry(destPath, zipEnt, zf);
                 if (!zipEnt.isDirectory())
                 {
-                    // Ìí¼ÓzipÎÄ¼şµÄĞÅÏ¢µ½ÁĞ±íÖĞ
+                    // æ·»åŠ zipæ–‡ä»¶çš„ä¿¡æ¯åˆ°åˆ—è¡¨ä¸­
                     v.add(zipEnt.getName());
                 }
             }
@@ -911,7 +911,7 @@ public class FileUtil
         }
     }
 
-    // ´´½¨Ä¿Â¼
+    // åˆ›å»ºç›®å½•
     public static boolean createDir(String dirName)
     {
         File file = new File(dirName);
@@ -970,7 +970,7 @@ public class FileUtil
     }
 
     /**
-     * É¾³ıÎÄ¼şÄ¿Â¼ÏÂµÄËùÓĞ×ÓÎÄ¼şºÍ×ÓÄ¿Â¼£¬²Ù×÷Ò»¶¨ÒªĞ¡ĞÄ
+     * åˆ é™¤æ–‡ä»¶ç›®å½•ä¸‹çš„æ‰€æœ‰å­æ–‡ä»¶å’Œå­ç›®å½•ï¼Œæ“ä½œä¸€å®šè¦å°å¿ƒ
      * 
      * @param publishTemppath
      */
@@ -1006,10 +1006,10 @@ public class FileUtil
     }
 
     /**
-     * »ñÈ¡ÎÄ¼şµÃÄÚÈİ
+     * è·å–æ–‡ä»¶å¾—å†…å®¹
      * 
      * @param filePath
-     *            ÎÄ¼şµÃÎïÀíÂ·¾¶
+     *            æ–‡ä»¶å¾—ç‰©ç†è·¯å¾„
      * @return
      * @throws IOException
      */
@@ -1192,7 +1192,7 @@ public class FileUtil
     }
 
     /**
-     * »ñÈ¡Ä³¸öÂ·¾¶ÏÂµÄËùÓĞÎÄ¼ş(²»°üÀ¨ÎÄ¼ş¼Ğ)
+     * è·å–æŸä¸ªè·¯å¾„ä¸‹çš„æ‰€æœ‰æ–‡ä»¶(ä¸åŒ…æ‹¬æ–‡ä»¶å¤¹)
      */
     public static File[] getSubFiles(String parentpath)
     {
@@ -1200,7 +1200,7 @@ public class FileUtil
     }
 
     /**
-     * »ñÈ¡Ä³¸öÂ·¾¶ÏÂµÄËùÓĞÎÄ¼ş(²»°üÀ¨ÎÄ¼ş¼Ğ)
+     * è·å–æŸä¸ªè·¯å¾„ä¸‹çš„æ‰€æœ‰æ–‡ä»¶(ä¸åŒ…æ‹¬æ–‡ä»¶å¤¹)
      */
     public static File[] getSubFiles(String parentpath, String uri)
     {
@@ -1257,7 +1257,7 @@ public class FileUtil
             files = file.listFiles();
         }
 
-        // Ô¤·À´«µİ½øÀ´µÄFileFilterÃ»ÓĞ°ÑÎÄ¼ş¹ıÂËµô
+        // é¢„é˜²ä¼ é€’è¿›æ¥çš„FileFilteræ²¡æœ‰æŠŠæ–‡ä»¶è¿‡æ»¤æ‰
         int rLen = 0;
         for (int i = 0; files != null && i < files.length; i++)
         {
@@ -1273,8 +1273,8 @@ public class FileUtil
     }
 
     /**
-     * ²Î¿¼getSubDirectorieAndFiles(String parentpath,String uri,FileFilter
-     * fileFilter)·½·¨
+     * å‚è€ƒgetSubDirectorieAndFiles(String parentpath,String uri,FileFilter
+     * fileFilter)æ–¹æ³•
      */
     public static File[] getSubDirectorieAndFiles(String parentpath)
     {
@@ -1282,8 +1282,8 @@ public class FileUtil
     }
 
     /**
-     * ²Î¿¼getSubDirectorieAndFiles(String parentpath,String uri,FileFilter
-     * fileFilter)·½·¨
+     * å‚è€ƒgetSubDirectorieAndFiles(String parentpath,String uri,FileFilter
+     * fileFilter)æ–¹æ³•
      */
     public static File[] getSubDirectorieAndFiles(String parentpath, String uri)
     {
@@ -1291,8 +1291,8 @@ public class FileUtil
     }
 
     /**
-     * ²Î¿¼getSubDirectorieAndFiles(String parentpath,String uri,FileFilter
-     * fileFilter)·½·¨
+     * å‚è€ƒgetSubDirectorieAndFiles(String parentpath,String uri,FileFilter
+     * fileFilter)æ–¹æ³•
      */
     public static File[] getSubDirectorieAndFiles(String parentpath, FileFilter fileFilter)
     {
@@ -1300,14 +1300,14 @@ public class FileUtil
     }
 
     /**
-     * »ñÈ¡Ä³¸öÂ·¾¶ÏÂµÄÎÄ¼ş
+     * è·å–æŸä¸ªè·¯å¾„ä¸‹çš„æ–‡ä»¶
      * 
      * @param parentpath
-     *            ¾ø¶ÔÂ·¾¶
+     *            ç»å¯¹è·¯å¾„
      * @param uri
-     *            Ïà¶ÔÓë parentpathµÄÏà¶ÔÂ·¾¶
+     *            ç›¸å¯¹ä¸ parentpathçš„ç›¸å¯¹è·¯å¾„
      * @param fileFilter
-     *            ¹ıÂËÄ³Ğ©ÎÄ¼ş,Õâ¸öÈ¨Á¦½»¸øÁËÊ¹ÓÃ¸Ã·½·¨µÄÓÃ»§
+     *            è¿‡æ»¤æŸäº›æ–‡ä»¶,è¿™ä¸ªæƒåŠ›äº¤ç»™äº†ä½¿ç”¨è¯¥æ–¹æ³•çš„ç”¨æˆ·
      * @return
      */
     public static File[] getSubDirectorieAndFiles(String parentpath, String uri, FileFilter fileFilter)
@@ -1384,7 +1384,7 @@ public class FileUtil
     }
 
     /**
-     * ´ÓÊäÈëÁ÷ÖĞ¶ÁÈ¡×Ö½ÚÊı×é
+     * ä»è¾“å…¥æµä¸­è¯»å–å­—èŠ‚æ•°ç»„
      * 
      * @param in
      * @return

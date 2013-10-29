@@ -33,7 +33,7 @@ import com.frameworkset.util.StringUtil;
  * Word2PDFResponse.java
  * </p>
  * <p>
- * Description:word转pdf，然后下载和浏览功能组件
+ * Description:word杞琾df锛岀劧鍚庝笅杞藉拰娴忚鍔熻兘缁勪欢
  * </p>
  * <p>
  * bboss workgroup
@@ -42,7 +42,7 @@ import com.frameworkset.util.StringUtil;
  * Copyright (c) 2009
  * </p>
  * 
- * @Date 2012-9-17 上午9:54:32
+ * @Date 2012-9-17 涓婂崍9:54:32
  * @author biaoping.yin
  * @version 1.0
  */
@@ -258,7 +258,7 @@ public class Word2PDFResponse extends WordResponse {
 
 
 
-	// 合并pdf
+	// 鍚堝苟pdf
 	protected boolean mergePdfFiles(String[] files, String newfile) throws Exception {
 		return FileConvertor.mergePdfFiles(files, newfile, getPdfFile(), mergeposition);
 //		boolean retValue = false;

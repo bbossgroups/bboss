@@ -130,14 +130,14 @@ a:active {
 	background-image: url(../images/di1.jpg);
 	color: #03588e;
 }
-.CTable{/*±í¸ñ*/
+.CTable{/*è¡¨æ ¼*/
 	border-collapse:collapse;
 	background:#ffffff;
 	padding:0px;
 	color: #000000;
 	margin: 0px;
-	border: 1px solid #7F9DB9; /*±í¸ñÍâ¿ò±ß¿òÏßÑÕÉ«*/
-	font-size: 13px;/*×ÖÌå13ºÅ*/
+	border: 1px solid #7F9DB9; /*è¡¨æ ¼å¤–æ¡†è¾¹æ¡†çº¿é¢œè‰²*/
+	font-size: 13px;/*å­—ä½“13å·*/
 }
 
 .CTable textarea {
@@ -146,29 +146,29 @@ a:active {
 }
 
 .CTable td{
-	border:1px solid #fff; /*±í¸ñÄÚ¿ò±ß¿òÏßÑÕÉ«*/
+	border:1px solid #fff; /*è¡¨æ ¼å†…æ¡†è¾¹æ¡†çº¿é¢œè‰²*/
 	padding: 5px;
 }
 .CTable .c2{
 	color:#000000;
 	margin: 0px;
 	padding:12px;
-	background-color: #F2F2F2;/*±íÍ·±³¾°É«*/
+	background-color: #F2F2F2;/*è¡¨å¤´èƒŒæ™¯è‰²*/
 	font-weight: bold;
-	/*background: url(../images/  .jpg);±íÍ·±³¾°Í¼Æ¬*/
+	/*background: url(../images/  .jpg);è¡¨å¤´èƒŒæ™¯å›¾ç‰‡*/
 }
 .CTable .c1{
 	font-weight: bold;
 	color:#000000;
 	line-height: 15px;
-	background-color: #CCCCCC;/*±íÍ·±³¾°É«*/
+	background-color: #CCCCCC;/*è¡¨å¤´èƒŒæ™¯è‰²*/
 	background-image: url(../images/dis3.jpg);
 	height: 20px;
-	/*background: url(../images/  .jpg);±íÍ·±³¾°Í¼Æ¬*/
+	/*background: url(../images/  .jpg);è¡¨å¤´èƒŒæ™¯å›¾ç‰‡*/
 }
 .CTable .c4{
 	height: 25px;
-	text-align: center;	/*background: url(../images/  .jpg);±íÍ·±³¾°Í¼Æ¬*/
+	text-align: center;	/*background: url(../images/  .jpg);è¡¨å¤´èƒŒæ™¯å›¾ç‰‡*/
 }
 .TBox_1{
 border:1px solid #CBCBCB;
@@ -187,12 +187,12 @@ height:30px;
 cursor:hand;
 border:0;
 }
-.SaveBtn {/*±à¼­°´Å¤*/
-	background: url(../images/SaveBtn.jpg) no-repeat center; padding-left: 6px; height: 27px;width: 87px;border: none;font-family: "ËÎÌå";font-size: 13px;color: #0000;text-decoration: none;	line-height: 25px;	margin-bottom: 6px; margin-top: 6px; cursor:hand;
+.SaveBtn {/*ç¼–è¾‘æŒ‰æ‰­*/
+	background: url(../images/SaveBtn.jpg) no-repeat center; padding-left: 6px; height: 27px;width: 87px;border: none;font-family: "å®‹ä½“";font-size: 13px;color: #0000;text-decoration: none;	line-height: 25px;	margin-bottom: 6px; margin-top: 6px; cursor:hand;
 }
-.Exit {/*±à¼­°´Å¤*/
-	background: url(../images/Exit.jpg) no-repeat center; padding-left: 6px; height: 27px;width: 87px;border: none;font-family: "ËÎÌå";font-size: 13px;color: #0000;text-decoration: none;	line-height: 25px;	margin-bottom: 6px; margin-top: 6px; cursor:hand;
+.Exit {/*ç¼–è¾‘æŒ‰æ‰­*/
+	background: url(../images/Exit.jpg) no-repeat center; padding-left: 6px; height: 27px;width: 87px;border: none;font-family: "å®‹ä½“";font-size: 13px;color: #0000;text-decoration: none;	line-height: 25px;	margin-bottom: 6px; margin-top: 6px; cursor:hand;
 }
-.F5 {/*±à¼­°´Å¤*/
-	background: url(../images/F5.jpg) no-repeat center; padding-left: 6px; height: 27px;width: 87px;border: none;font-family: "ËÎÌå";font-size: 13px;color: #0000;text-decoration: none;	line-height: 25px;	margin-bottom: 6px; margin-top: 6px; cursor:hand;
+.F5 {/*ç¼–è¾‘æŒ‰æ‰­*/
+	background: url(../images/F5.jpg) no-repeat center; padding-left: 6px; height: 27px;width: 87px;border: none;font-family: "å®‹ä½“";font-size: 13px;color: #0000;text-decoration: none;	line-height: 25px;	margin-bottom: 6px; margin-top: 6px; cursor:hand;
 }

@@ -34,73 +34,73 @@ import org.frameworkset.util.annotations.ResponseBody;
 
 public class EnumConvertController {
 	/**
-	 * ²âÊÔµ¥¸ö×Ö·û´®ÏòÃ¶¾ÙÀàĞÍÖµ×ª»»
+	 * æµ‹è¯•å•ä¸ªå­—ç¬¦ä¸²å‘æšä¸¾ç±»å‹å€¼è½¬æ¢
 	 * @param type
 	 * @param response
 	 * @throws IOException
 	 */
-	public  @ResponseBody(charset="GBK") String querySex(@RequestParam(name="sex") SexType type) 
+	public  @ResponseBody(charset="UTF-8") String querySex(@RequestParam(name="sex") SexType type) 
 	{
 		if(type != null)
 		{
 //			if(type == SexType.F)
 //			{
-//				response.setContentType("text/html; charset=GBK");
-//				response.getWriter().print("Å®");
+//				response.setContentType("text/html; charset=UTF-8");
+//				response.getWriter().print("å¥³");
 //			}
 //			else if(type == SexType.M)
 //			{
-//				response.setContentType("text/html; charset=GBK");
-//				response.getWriter().print("ÄĞ");
+//				response.setContentType("text/html; charset=UTF-8");
+//				response.getWriter().print("ç”·");
 //			}
 //			else if(type == SexType.UN)
 //			{
-//				response.setContentType("text/html; charset=GBK");
-//				response.getWriter().print("Î´Öª");
+//				response.setContentType("text/html; charset=UTF-8");
+//				response.getWriter().print("æœªçŸ¥");
 //			}
 			if(type == SexType.F)
 			{
-				return "Å®";
+				return "å¥³";
 			}
 			else if(type == SexType.M)
 			{
-				return "ÄĞ";
+				return "ç”·";
 			}
 			else if(type == SexType.UN)
 			{
-				return "Î´Öª";
+				return "æœªçŸ¥";
 				
 			}	
 			
 		}
-		return "Î´Öª";
+		return "æœªçŸ¥";
 		
 	}
 	
 	/**
-	 * ²âÊÔµ¥¸ö×Ö·û´®ÏòÃ¶¾ÙÀàĞÍÖµ×ª»»
+	 * æµ‹è¯•å•ä¸ªå­—ç¬¦ä¸²å‘æšä¸¾ç±»å‹å€¼è½¬æ¢
 	 * @param type
 	 * @param response
 	 * @throws IOException
 	 */
-	public  @ResponseBody(charset="GBK") String queryMutiSex(@RequestParam(name="sex") SexType[] types)
+	public  @ResponseBody(charset="UTF-8") String queryMutiSex(@RequestParam(name="sex") SexType[] types)
 	{
 		if(types != null)
 		{
 			if(types[0] == SexType.F)
 			{
-				return "Å®";
+				return "å¥³";
 			}
 			else if(types[0] == SexType.M)
 			{
-				return "ÄĞ";
+				return "ç”·";
 			}
 			else if(types[0] == SexType.UN)
 			{
-				return "Î´Öª";
+				return "æœªçŸ¥";
 			}
 		}
-		return "Î´Öª";
+		return "æœªçŸ¥";
 	}
 	
 	public String selectSex()

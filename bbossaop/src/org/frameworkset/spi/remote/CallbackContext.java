@@ -17,17 +17,17 @@ import java.util.Map;
  * Copyright (c) 2007
  * </p>
  * 
- * @Date 2009-6-1 ÏÂÎç08:58:51
+ * @Date 2009-6-1 ä¸‹åˆ08:58:51
  * @author biaoping.yin
  * @version 1.0
  */
 public class CallbackContext implements java.io.Serializable {
     /**
-     * È·¶¨·şÎñÆ÷»Øµ÷µÄµØÖ·£¬ÓÉµ÷ÓÃ¿Í»§¶ËÈ·¶¨
+     * ç¡®å®šæœåŠ¡å™¨å›è°ƒçš„åœ°å€ï¼Œç”±è°ƒç”¨å®¢æˆ·ç«¯ç¡®å®š
      */
     private Target callbackTarget;
     /**
-     * »Øµ÷·½·¨µÄ²ÎÊı£¬ÓÉ·şÎñÆ÷´¦ÀíÍêÊÂ¼şºóÉèÖÃ
+     * å›è°ƒæ–¹æ³•çš„å‚æ•°ï¼Œç”±æœåŠ¡å™¨å¤„ç†å®Œäº‹ä»¶åè®¾ç½®
      */
     private Map callbackParameters;
 

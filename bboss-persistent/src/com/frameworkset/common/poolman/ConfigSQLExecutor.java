@@ -30,10 +30,10 @@ import com.frameworkset.util.ListInfo;
  * 
  * <p>Title: ConfigSQLExecutor.java</p>
  *
- * <p>Description: ´Ó¸ù¾İid´ÓÅäÖÃÎÄ¼ş¶ÁÈ¡sqlÓï¾ä£¬Ö´ĞĞÏà¹ØÊı¾İ¿â²Ù×÷</p>
+ * <p>Description: ä»æ ¹æ®idä»é…ç½®æ–‡ä»¶è¯»å–sqlè¯­å¥ï¼Œæ‰§è¡Œç›¸å…³æ•°æ®åº“æ“ä½œ</p>
  *
  * <p>Copyright: Copyright (c) 2007</p>
- * @Date 2011-4-7 ÏÂÎç02:28:41
+ * @Date 2011-4-7 ä¸‹åˆ02:28:41
  * @author biaoping.yin
  * @version 1.0
  */
@@ -55,7 +55,7 @@ public class ConfigSQLExecutor  {
 	{
 		SQLInfo sql = context.getSQLInfo(dbname, sqlname);
 		if(sql == null)
-			throw new NestedSQLException("Ãû³ÆÎª[" + sqlname + "]µÄsqlÓï¾ä²»´æÔÚ£¬Çë¼ì²éÅäÖÃÎÄ¼ş[" + context.getSQLFile() + "]ÅäÖÃÊÇ·ñÕıÈ·.");
+			throw new NestedSQLException("åç§°ä¸º[" + sqlname + "]çš„sqlè¯­å¥ä¸å­˜åœ¨ï¼Œè¯·æ£€æŸ¥é…ç½®æ–‡ä»¶[" + context.getSQLFile() + "]é…ç½®æ˜¯å¦æ­£ç¡®.");
 		return sql;
 	}
 	public String getSql(String sqlname) throws SQLException
@@ -66,7 +66,7 @@ public class ConfigSQLExecutor  {
 	{
 		SQLInfo sql = context.getSQLInfo(dbname, sqlname);
 		if(sql == null)
-			throw new NestedSQLException("Ãû³ÆÎª[" + sqlname + "]µÄsqlÓï¾ä²»´æÔÚ£¬Çë¼ì²éÅäÖÃÎÄ¼ş[" + context.getSQLFile() + "]ÅäÖÃÊÇ·ñÕıÈ·.");
+			throw new NestedSQLException("åç§°ä¸º[" + sqlname + "]çš„sqlè¯­å¥ä¸å­˜åœ¨ï¼Œè¯·æ£€æŸ¥é…ç½®æ–‡ä»¶[" + context.getSQLFile() + "]é…ç½®æ˜¯å¦æ­£ç¡®.");
 		return sql.getSql();
 	}
 	public void insertBeans(String dbname, String sqlname, List beans) throws SQLException {
@@ -719,7 +719,7 @@ public class ConfigSQLExecutor  {
 	}
 	
 	
-	/**ĞĞ´¦ÀíÆ÷¿ªÊ¼*/
+	/**è¡Œå¤„ç†å™¨å¼€å§‹*/
 	/**
 	 * 
 	 * @param <T>
@@ -754,7 +754,7 @@ public class ConfigSQLExecutor  {
 		return SQLInfoExecutor.queryTFieldWithDBName(     dbname,  type,fieldRowHandler, sql,  fields); 
 	}
 	
-	/**ĞĞ´¦ÀíÆ÷½áÊø*/
+	/**è¡Œå¤„ç†å™¨ç»“æŸ*/
 	/**
 	 * 
 	 * @param <T>
@@ -976,8 +976,8 @@ public class ConfigSQLExecutor  {
 	}
 	
 	/**
-	 * more·ÖÒ³²éÑ¯£¬²»»á¼ÆËã×Ü¼ÇÂ¼Êı£¬Èç¹ûÃ»ÓĞ¼ÇÂ¼ÄÇÃ´·µ»ØµÄListInfoµÄdatasµÄsizeÎª0,
-	 * ÌáÉıĞÔÄÜ£¬Í¬Ê±Ç°Ì¨±êÇ©¿âÒ²»á×öÏìÓ¦µÄµ÷Õû
+	 * moreåˆ†é¡µæŸ¥è¯¢ï¼Œä¸ä¼šè®¡ç®—æ€»è®°å½•æ•°ï¼Œå¦‚æœæ²¡æœ‰è®°å½•é‚£ä¹ˆè¿”å›çš„ListInfoçš„datasçš„sizeä¸º0,
+	 * æå‡æ€§èƒ½ï¼ŒåŒæ—¶å‰å°æ ‡ç­¾åº“ä¹Ÿä¼šåšå“åº”çš„è°ƒæ•´
 	 */
 	/**
 	 * 

@@ -22,10 +22,10 @@ import org.junit.Test;
 
 /**
  * <p>Title: TestCase.java</p> 
- * <p>Description: 数组注入方式</p>
+ * <p>Description: 鏁扮粍娉ㄥ叆鏂瑰紡</p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2011-4-11 下午01:47:29
+ * @Date 2011-4-11 涓嬪崍01:47:29
  * @author biaoping.yin
  * @version 1.0
  */

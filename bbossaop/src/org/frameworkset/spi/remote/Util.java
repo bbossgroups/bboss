@@ -46,7 +46,7 @@ import org.frameworkset.spi.serviceidentity.TargetImpl;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2009-10-8 ÏÂÎç11:20:00
+ * @Date 2009-10-8 ä¸‹åˆ11:20:00
  * @author biaoping.yin
  * @version 1.0
  */
@@ -410,7 +410,7 @@ public class Util
 	}
    
    /**
-    * ĞèÒª½øĞĞÌØÊâ´¦Àí
+    * éœ€è¦è¿›è¡Œç‰¹æ®Šå¤„ç†
     * @param protocol
     * @return
     */

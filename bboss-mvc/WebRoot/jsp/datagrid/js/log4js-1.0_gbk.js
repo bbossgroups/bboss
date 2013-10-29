@@ -1,23 +1,23 @@
 /**
- * 	Log·â×°Àà
+ * 	Logå°è£…ç±»
  */
 var Logger = function(debug) {
-	//Ä¬ÈÏ²»¿ªÆôµ÷ÊÔ¹¦ÄÜ
+	//é»˜è®¤ä¸å¼€å¯è°ƒè¯•åŠŸèƒ½
 	if (null == debug) {debug = false};
 	this.debug = debug;
-	//¼ÇÂ¼ÈÕÖ¾
+	//è®°å½•æ—¥å¿—
 	this.logs = "";
-	//ÊÇ·ñÓĞ´íÎóÈÕÖ¾
+	//æ˜¯å¦æœ‰é”™è¯¯æ—¥å¿—
 	this.hasError = false;
 	
-	/*ÖØÔØjQueryµÄÄÚ²¿´íÎó´¦Àí*/
+	/*é‡è½½jQueryçš„å†…éƒ¨é”™è¯¯å¤„ç†*/
 	this.error = function(message) {
 		this.log("jquery.error()="+message,"error");
 		this.hasError = true;
 	}
-	//ÔİÊ±ÉèÖÃ²»À¹½Ø
+	//æš‚æ—¶è®¾ç½®ä¸æ‹¦æˆª
 	//jQuery.error = this.error;
-	/*¼ÇÂ¼ÈÕÖ¾ĞÅÏ¢*/
+	/*è®°å½•æ—¥å¿—ä¿¡æ¯*/
 	this.log = function(msg,level) {
 		if (null == level || "" == level) {
 			level = "info";
@@ -26,12 +26,12 @@ var Logger = function(debug) {
 			var prefix = level+">>";
 			if (typeof(msg) == "string") {
 				var html =  prefix+msg+"<br>";
-				//´íÎóĞÅÏ¢ÓÃºìÉ«±íÊ¾
+				//é”™è¯¯ä¿¡æ¯ç”¨çº¢è‰²è¡¨ç¤º
 				if ("error" == level) {
 					html = "<font color='red'>"+html+"</font>";
 					this.hasError = true;
 				} else if ("message" == level) {
-					//µ÷ÊÔĞÅÏ¢ÓÃÀ¶É«±íÊ¾
+					//è°ƒè¯•ä¿¡æ¯ç”¨è“è‰²è¡¨ç¤º
 					html = "<font color='blue'>"+html+"</font>";
 				}
 				this.logs += "<"+(new Date()).toTimeString()+"><br>"+html;		
@@ -41,25 +41,25 @@ var Logger = function(debug) {
 			
 		}
 	}
-	/*ÏÔÊ¾ÈÕÖ¾ĞÅÏ¢*/
+	/*æ˜¾ç¤ºæ—¥å¿—ä¿¡æ¯*/
 	this.showLogs = function() {
 		if (true != this.debug) {
-			this.logs = "<font color='red'>ĞèÒªÉèÖÃÎªdebug=trueºó²Å¿É¼ÇÂ¼µ÷ÊÔĞÅÏ¢£¡</font>";
+			this.logs = "<font color='red'>éœ€è¦è®¾ç½®ä¸ºdebug=trueåæ‰å¯è®°å½•è°ƒè¯•ä¿¡æ¯ï¼</font>";
 		}
-		var fn = "<center><a href='javascript:void(0)' onclick=\"Logger.mailtoAdmin($('#logdiv').html())\">·¢ËÍÓÊ¼ş</a>&nbsp;&nbsp;&nbsp;&nbsp;"
-		fn += "<a href='javascript:void(0)' onclick=\"Logger.copyToClipboard($('#logdiv').text())\">¸´ÖÆ</a></center>"
+		var fn = "<center><a href='javascript:void(0)' onclick=\"Logger.mailtoAdmin($('#logdiv').html())\">å‘é€é‚®ä»¶</a>&nbsp;&nbsp;&nbsp;&nbsp;"
+		fn += "<a href='javascript:void(0)' onclick=\"Logger.copyToClipboard($('#logdiv').text())\">å¤åˆ¶</a></center>"
 		var logdiv = "<div id='logdiv'>"+this.logs+"</div>"
-		$.messager.alert('µ÷ÊÔĞÅÏ¢',logdiv+fn);
+		$.messager.alert('è°ƒè¯•ä¿¡æ¯',logdiv+fn);
 		this.clearLogs();
 	}
-	/*Çå¿ÕÈÕÖ¾*/
+	/*æ¸…ç©ºæ—¥å¿—*/
 	this.clearLogs = function() {
 		this.logs = "";
 		this.hasError = false;
 	}
 }
-/**¾²Ì¬ÉèÖÃ¿ªÊ¼**/
-/*½ØÈ¡ÉÏÏÂÎÄ*/
+/**é™æ€è®¾ç½®å¼€å§‹**/
+/*æˆªå–ä¸Šä¸‹æ–‡*/
 Logger.getContextPath = function() {	
 	//this.log("this.getContextPath()");	
 	var cp = location.pathname ;	
@@ -69,23 +69,23 @@ Logger.getContextPath = function() {
     }
 	return cp;
 }
-/*¾²Ì¬ÊôĞÔ*/
+/*é™æ€å±æ€§*/
 Logger.mailtoAdminUrl = window.location.protocol+"//"+window.location.host+Logger.getContextPath()+"/log/mailtoAdmin.htm?";
-/*¾²Ì¬·½·¨*/
-/*·¢ËÍÓÊ¼ş*/
+/*é™æ€æ–¹æ³•*/
+/*å‘é€é‚®ä»¶*/
 Logger.mailtoAdmin = function(msg) {
 	//alert(msg);
 	var url = Logger.mailtoAdminUrl;
-	$.messager.alert('ÌáÊ¾ĞÅÏ¢','¹§Ï²Äú£¬ÓÊ¼ş·¢ËÍ³É¹¦£¬ÎÒÃÇ½«¾¡¿ì´¦ÀíÕâ¸öÎÊÌâ','info');
+	$.messager.alert('æç¤ºä¿¡æ¯','æ­å–œæ‚¨ï¼Œé‚®ä»¶å‘é€æˆåŠŸï¼Œæˆ‘ä»¬å°†å°½å¿«å¤„ç†è¿™ä¸ªé—®é¢˜','info');
 }
-/*¸´ÖÆµ½¼ôÇĞ°å*/
+/*å¤åˆ¶åˆ°å‰ªåˆ‡æ¿*/
 Logger.copyToClipboard = function(msg) {
 	//alert(msg);
-	if ($.browser.msie){//ÅĞ¶ÏIE
+	if ($.browser.msie){//åˆ¤æ–­IE
 		window.clipboardData.setData('text', msg);
-		$.messager.alert('ÌáÊ¾ĞÅÏ¢','¹§Ï²Äú£¬ÒÑ¾­¸´ÖÆµ½ÁË¼ôÌù°å£¡','info');
+		$.messager.alert('æç¤ºä¿¡æ¯','æ­å–œæ‚¨ï¼Œå·²ç»å¤åˆ¶åˆ°äº†å‰ªè´´æ¿ï¼','info');
 	}else{
-		$.messager.alert('ÌáÊ¾ĞÅÏ¢','ÄúµÄä¯ÀÀÆ÷²»Ö§³Ö¼ôÌù°å²Ù×÷£¬Çë×ÔĞĞ¸´ÖÆ£¡','error');
+		$.messager.alert('æç¤ºä¿¡æ¯','æ‚¨çš„æµè§ˆå™¨ä¸æ”¯æŒå‰ªè´´æ¿æ“ä½œï¼Œè¯·è‡ªè¡Œå¤åˆ¶ï¼','error');
 	}
 			
 	

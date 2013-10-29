@@ -27,7 +27,7 @@ import com.frameworkset.orm.engine.model.Database;
  * <p>Description: </p>
  *
  * <p>Copyright: Copyright (c) 2007</p>
- * @Date 2010-1-26 ÏÂÎç05:12:00
+ * @Date 2010-1-26 ä¸‹åˆ05:12:00
  * @author biaoping.yin
  * @version 1.0
  */

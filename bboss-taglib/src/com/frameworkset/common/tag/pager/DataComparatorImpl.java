@@ -40,8 +40,8 @@ import com.frameworkset.util.CompareUtil;
 
 
 /**
- * ¼Ì³Ğjava.util.Comparator½Ó¿Ú£¬Õë¶ÔClassDataµÄ£¬¸ù¾İdescµÄÖµÀ´È·¶¨ÅÅĞòµÄË³Ğò£¬¸ù?
- * sortKeyÀ´È·¶¨ÅÅĞòµÄ×Ö¶Î 
+ * ç»§æ‰¿java.util.Comparatoræ¥å£ï¼Œé’ˆå¯¹ClassDataçš„ï¼Œæ ¹æ®descçš„å€¼æ¥ç¡®å®šæ’åºçš„é¡ºåºï¼Œæ ¹?
+ * sortKeyæ¥ç¡®å®šæ’åºçš„å­—æ®µ 
  * @author biaoping.yin
  * 2005-3-25
  * version 1.0
@@ -51,20 +51,20 @@ public class DataComparatorImpl implements Comparator ,Serializable
 {
     
     /**
-     * ¾ö¶¨ÅÅĞò¹æÔò
-     * false:ÉıĞò
-     * true :½µĞò
+     * å†³å®šæ’åºè§„åˆ™
+     * false:å‡åº
+     * true :é™åº
      */
     private boolean desc = true;	
     
     /**
-     * ÅÅĞò¹Ø¼ü×Ö£¬Îª¾ßÌåField¶ÔÏóµÄÃû³Æ
+     * æ’åºå…³é”®å­—ï¼Œä¸ºå…·ä½“Fieldå¯¹è±¡çš„åç§°
      */
     private String sortKey = "";
     private static DataComparatorImpl dataComparatorImpl;
     
     /**
-     * ¹¹½¨Æ÷£¬²ÎÊısortKeyÎªÅÅĞòµÄ¹Ø¼ü×Ö
+     * æ„å»ºå™¨ï¼Œå‚æ•°sortKeyä¸ºæ’åºçš„å…³é”®å­—
      */
     private DataComparatorImpl() 
     {
@@ -144,7 +144,7 @@ public class DataComparatorImpl implements Comparator ,Serializable
     {
 		ClassData tleft = (ClassData)arg0;		
 		ClassData tright = (ClassData)arg1;		
-		//»ñÈ¡Öµ¶ÔÏóÖĞfieldÃû³ÆÎªsortKeyµÄÖµ
+		//è·å–å€¼å¯¹è±¡ä¸­fieldåç§°ä¸ºsortKeyçš„å€¼
 		Object lvalue =  tleft.getValue(sortKey);
 		Object rvalue =  tright.getValue(sortKey);		
 		return compareValue(lvalue,rvalue);	
@@ -156,7 +156,7 @@ public class DataComparatorImpl implements Comparator ,Serializable
     
     
     /**
-     * ÖØÖÃsortKeyºÍdescµÄÖµ
+     * é‡ç½®sortKeyå’Œdescçš„å€¼
      */
     public void reset() 
     {

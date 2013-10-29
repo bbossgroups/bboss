@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * ¹¦ÄÜÃèÊö:´æ·Å×éºÏ²éÑ¯µÄÌõ¼ş
+ * åŠŸèƒ½æè¿°:å­˜æ”¾ç»„åˆæŸ¥è¯¢çš„æ¡ä»¶
  * @author biaoping.yin
  * 2004-7-12
  */
@@ -48,13 +48,13 @@ public abstract class QueryVO implements Serializable
 	}
     
     /**
-     *  ¹¹Ôì²éÑ¯´®µÄ³éÏó·½·¨
+     *  æ„é€ æŸ¥è¯¢ä¸²çš„æŠ½è±¡æ–¹æ³•
      */
     protected abstract String buildQuery()
     	throws QueryVOException;    
     
     /**
-     * »ñÈ¡²éÑ¯´®  
+     * è·å–æŸ¥è¯¢ä¸²  
      */
     public String getQueryString()
     	throws QueryVOException

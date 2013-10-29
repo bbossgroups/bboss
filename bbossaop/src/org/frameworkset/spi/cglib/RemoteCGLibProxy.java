@@ -30,7 +30,7 @@ import org.frameworkset.spi.remote.ServiceID;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2011-10-18 œ¬ŒÁ11:23:01
+ * @Date 2011-10-18 ‰∏ãÂçà11:23:01
  * @author biaoping.yin
  * @version 1.0
  */

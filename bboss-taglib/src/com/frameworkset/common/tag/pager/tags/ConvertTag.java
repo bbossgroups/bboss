@@ -25,7 +25,7 @@ import javax.servlet.jsp.JspException;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2008</p>
- * @Date 2011-4-20 下午04:33:19
+ * @Date 2011-4-20 涓嬪崍04:33:19
  * @author biaoping.yin
  * @version 1.0
  */
@@ -34,7 +34,7 @@ public class ConvertTag extends BaseValueTag{
 	public static final String scope_session = "session";
 	public static final String scope_pageContext = "pageContext";
 	/**
-	 * 存储转换数据的key，数据存放的容器可能是Map
+	 * 瀛樺偍杞崲鏁版嵁鐨刱ey锛屾暟鎹瓨鏀剧殑瀹瑰櫒鍙兘鏄疢ap
 	 */
 	private String convertData;
 	private String scope = scope_request;

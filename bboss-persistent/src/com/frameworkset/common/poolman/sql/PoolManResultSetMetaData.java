@@ -65,14 +65,14 @@ public class PoolManResultSetMetaData implements java.sql.ResultSetMetaData, jav
     private String[] _schemaName;
     private boolean[] _caseSensitive;
     /**
-     * ´æ´¢·ûºÏjava¹æ·¶javaÊôĞÔÃû³Æ£¬×ª»»¹æÔòÎª£ºaaa_bb_cc-->aaaBbCc
+     * å­˜å‚¨ç¬¦åˆjavaè§„èŒƒjavaå±æ€§åç§°ï¼Œè½¬æ¢è§„åˆ™ä¸ºï¼šaaa_bb_cc-->aaaBbCc
      */
     private String columnJavaName[];
     
     /**
-     * Ö´ĞĞ²éÑ¯Ê±£¬±£´æÏàÍ¬µÄ×Ö¶Î³öÏÖÔÚ²éÑ¯×Ö¶ÎÁĞ±íÖĞµÄÎ»ÖÃĞÅÏ¢
+     * æ‰§è¡ŒæŸ¥è¯¢æ—¶ï¼Œä¿å­˜ç›¸åŒçš„å­—æ®µå‡ºç°åœ¨æŸ¥è¯¢å­—æ®µåˆ—è¡¨ä¸­çš„ä½ç½®ä¿¡æ¯
      * 
-     * ±ÈÈç
+     * æ¯”å¦‚
      * Map<ColumnName,WrapInteger>
      */
     private Map samecols ;
@@ -443,10 +443,10 @@ public class PoolManResultSetMetaData implements java.sql.ResultSetMetaData, jav
             if(columnLabel_uppers[i].equals(temp))
                 return i;
         }
-        throw new RowHandlerException("²éÑ¯½á¹ûÖĞ²»´æÔÚÁĞ[" + colName + "].");
+        throw new RowHandlerException("æŸ¥è¯¢ç»“æœä¸­ä¸å­˜åœ¨åˆ—[" + colName + "].");
     }
 	
-	/**ÁĞÃû»ñÈ¡ÁĞµÄĞÅÏ¢¿ªÊ¼
+	/**åˆ—åè·å–åˆ—çš„ä¿¡æ¯å¼€å§‹
 	 * @throws SQLException */
 	public String getCatalogName(String colName) throws SQLException
 	{

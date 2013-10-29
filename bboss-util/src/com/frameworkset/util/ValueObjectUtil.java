@@ -81,18 +81,18 @@ import com.frameworkset.spi.assemble.BeanInstanceException;
 import com.frameworkset.spi.assemble.CurrentlyInCreationException;
 
 /**
- * @author biaoping.yin ¸ÄÀà³ä·ÖÊ¹ÓÃjava.lang.reflectionÖĞÌá¹©µÄ¹¦ÄÜ£¬Ìá¹©ÒÔÏÂ¹¤¾ß£º ´Ó¶ÔÏóÖĞ»ñÈ¡¶ÔÓ¦ÊôĞÔµÄÖµ
+ * @author biaoping.yin æ”¹ç±»å……åˆ†ä½¿ç”¨java.lang.reflectionä¸­æä¾›çš„åŠŸèƒ½ï¼Œæä¾›ä»¥ä¸‹å·¥å…·ï¼š ä»å¯¹è±¡ä¸­è·å–å¯¹åº”å±æ€§çš„å€¼
  */
 public class ValueObjectUtil {
 
 	/**
-	 * »ù±¾Êı¾İÀàĞÍ£¬bboss¶¨Î»ÈçÏÂ£º
-	 * java¶¨ÒåµÄ»ù±¾Êı¾İÀàĞÍ
-	 * BigFile ´ó¸½¼şÀàĞÍ
-	 * Ã¶¾ÙÀàĞÍ
-	 * ÈÕÆÚÀàĞÍ
-	 * ×Ö·û´®ÀàĞÍ
-	 * ÕâĞ©ÀàĞÍÖ÷ÒªÓ¦ÓÃÓÚmvc¿ØÖÆÆ÷·½·¨²ÎÊıµÄ°ó¶¨¹ı³ÌÖĞ
+	 * åŸºæœ¬æ•°æ®ç±»å‹ï¼Œbbosså®šä½å¦‚ä¸‹ï¼š
+	 * javaå®šä¹‰çš„åŸºæœ¬æ•°æ®ç±»å‹
+	 * BigFile å¤§é™„ä»¶ç±»å‹
+	 * æšä¸¾ç±»å‹
+	 * æ—¥æœŸç±»å‹
+	 * å­—ç¬¦ä¸²ç±»å‹
+	 * è¿™äº›ç±»å‹ä¸»è¦åº”ç”¨äºmvcæ§åˆ¶å™¨æ–¹æ³•å‚æ•°çš„ç»‘å®šè¿‡ç¨‹ä¸­
 	 */
 	public static final Class[] baseTypes = {String.class,
 		int.class ,Integer.class,
@@ -108,7 +108,7 @@ public class ValueObjectUtil {
 		byte.class ,Byte.class,
 		BigDecimal.class};
 	/**
-	 * ÓÃÓÚĞòÁĞ»¯»úÖÆÊ¶±ğ»ù´¡Êı¾İÀàĞÍ   
+	 * ç”¨äºåºåˆ—åŒ–æœºåˆ¶è¯†åˆ«åŸºç¡€æ•°æ®ç±»å‹   
 	 */
 	public static final Class[] basePrimaryTypes = {String.class,
 		int.class ,
@@ -127,12 +127,12 @@ public class ValueObjectUtil {
 //	private static final SimpleDateFormat format = new SimpleDateFormat(
 //			"yyyy-MM-dd HH:mm:ss");
 	/**
-	 * »º´æËùÓĞµÄÈÕÆÚ¸ñÊ½
+	 * ç¼“å­˜æ‰€æœ‰çš„æ—¥æœŸæ ¼å¼
 	 */
 //	private static final Map<String,SimpleDateFormat> dataformats = new HashMap<String,SimpleDateFormat>();
 
 //	/**
-//	 * Description:»ñÈ¡¶ÔÏóobjµÄpropertyÊôĞÔÖµ
+//	 * Description:è·å–å¯¹è±¡objçš„propertyå±æ€§å€¼
 //	 * 
 //	 * @param obj
 //	 * @param property
@@ -143,12 +143,12 @@ public class ValueObjectUtil {
 //	}
 
 	/**
-	 * Description:»ñÈ¡¶ÔÏóobjµÄpropertyÊôĞÔÖµ,paramsÎª²ÎÊıÊı×é
+	 * Description:è·å–å¯¹è±¡objçš„propertyå±æ€§å€¼,paramsä¸ºå‚æ•°æ•°ç»„
 	 * 
 	 * @param obj
 	 * @param property
 	 * @param params
-	 *            »ñÈ¡ÊôĞÔ·½·¨ÖµµÄ²ÎÊı
+	 *            è·å–å±æ€§æ–¹æ³•å€¼çš„å‚æ•°
 	 * @return Object
 	 */
 	public static Object getValue(Object obj, String property) {
@@ -162,7 +162,7 @@ public class ValueObjectUtil {
 				
 			
 		} catch (Exception e) {
-			log.debug("Ã»ÓĞÎªÊôĞÔ[" + property + "]¶¨Òåget»òÕß·µ»Ø²¼¶ûÖµµÄis·½·¨.");
+			log.debug("æ²¡æœ‰ä¸ºå±æ€§[" + property + "]å®šä¹‰getæˆ–è€…è¿”å›å¸ƒå°”å€¼çš„isæ–¹æ³•.");
 		}
 		
 		return null;
@@ -186,7 +186,7 @@ public class ValueObjectUtil {
 //				return getValueByMethod(obj, method, params);
 //			}
 		} catch (Exception e) {
-			log.debug("Ã»ÓĞÎªÊôĞÔ[" + property + "]¶¨Òåget»òÕß·µ»Ø²¼¶ûÖµµÄis·½·¨.");
+			log.debug("æ²¡æœ‰ä¸ºå±æ€§[" + property + "]å®šä¹‰getæˆ–è€…è¿”å›å¸ƒå°”å€¼çš„isæ–¹æ³•.");
 		}
 		// Object ret = getValueByMethodName(obj, getMethodName(property),
 		// params);
@@ -205,13 +205,13 @@ public class ValueObjectUtil {
 	}
 
 	/**
-	 * Description:¸ù¾İ·½·¨Ãû³Æ»ñÈ¡£¬ ÔÚ¶ÔÏóobjÉÏµ÷ÓÃ¸Ä·½·¨²¢ÇÒ·µ»Øµ÷ÓÃµÄ·µ»ØÖµ
+	 * Description:æ ¹æ®æ–¹æ³•åç§°è·å–ï¼Œ åœ¨å¯¹è±¡objä¸Šè°ƒç”¨æ”¹æ–¹æ³•å¹¶ä¸”è¿”å›è°ƒç”¨çš„è¿”å›å€¼
 	 * 
 	 * @param obj
 	 * @param methodName
-	 *            ·½·¨Ãû³Æ
+	 *            æ–¹æ³•åç§°
 	 * @param params
-	 *            ·½·¨µÄ²ÎÊı
+	 *            æ–¹æ³•çš„å‚æ•°
 	 * @return Object
 	 * @deprecated
 	 */
@@ -278,15 +278,15 @@ public class ValueObjectUtil {
 	}
 
 	/**
-	 * Description:¸ù¾İ·½·¨Ãû³Æ»ñÈ¡£¬ ÔÚ¶ÔÏóobjÉÏµ÷ÓÃ¸Ä·½·¨²¢ÇÒ·µ»Øµ÷ÓÃµÄ·µ»ØÖµ
+	 * Description:æ ¹æ®æ–¹æ³•åç§°è·å–ï¼Œ åœ¨å¯¹è±¡objä¸Šè°ƒç”¨æ”¹æ–¹æ³•å¹¶ä¸”è¿”å›è°ƒç”¨çš„è¿”å›å€¼
 	 * 
 	 * @param obj
 	 * @param methodName
-	 *            ·½·¨Ãû³Æ
+	 *            æ–¹æ³•åç§°
 	 * @param params
-	 *            ·½·¨µÄ²ÎÊı
+	 *            æ–¹æ³•çš„å‚æ•°
 	 * @param paramsTtype
-	 *            ·½·¨µÄ²ÎÊıÀàĞÍ
+	 *            æ–¹æ³•çš„å‚æ•°ç±»å‹
 	 * @deprecated           
 	 * @return Object
 	 */
@@ -317,15 +317,15 @@ public class ValueObjectUtil {
 	}
 
 	/**
-	 * Description:¸ù¾İ·½·¨Ãû³Æ»ñÈ¡£¬ ÔÚ¶ÔÏóobjÉÏµ÷ÓÃ¸Ä·½·¨²¢ÇÒ·µ»Øµ÷ÓÃµÄ·µ»ØÖµ
+	 * Description:æ ¹æ®æ–¹æ³•åç§°è·å–ï¼Œ åœ¨å¯¹è±¡objä¸Šè°ƒç”¨æ”¹æ–¹æ³•å¹¶ä¸”è¿”å›è°ƒç”¨çš„è¿”å›å€¼
 	 * 
 	 * @param obj
 	 * @param methodName
-	 *            ·½·¨Ãû³Æ
+	 *            æ–¹æ³•åç§°
 	 * @param params
-	 *            ·½·¨µÄ²ÎÊı
+	 *            æ–¹æ³•çš„å‚æ•°
 	 * @param paramsTtype
-	 *            ·½·¨µÄ²ÎÊıÀàĞÍ
+	 *            æ–¹æ³•çš„å‚æ•°ç±»å‹
 	 * @return Object
 	 */
 	public static Object getValueByMethod(Object obj, Method method,
@@ -348,14 +348,14 @@ public class ValueObjectUtil {
 	}
 
 	/**
-	 * Description:ÊµÏÖÔÚ¶ÔÏóµ÷ÓÃmethod²¢Îª¸Ã·½·¨´«Èë²ÎÊıÊı×éparams
+	 * Description:å®ç°åœ¨å¯¹è±¡è°ƒç”¨methodå¹¶ä¸ºè¯¥æ–¹æ³•ä¼ å…¥å‚æ•°æ•°ç»„params
 	 * 
 	 * @param obj
-	 *            ¶ÔÏó
+	 *            å¯¹è±¡
 	 * @param method
-	 *            ´ıµ÷ÓÃµÄ·½·¨
+	 *            å¾…è°ƒç”¨çš„æ–¹æ³•
 	 * @param params
-	 *            ²ÎÊıÊı×é
+	 *            å‚æ•°æ•°ç»„
 	 * @return Object
 	 * @throws Exception
 	 *             Object
@@ -366,7 +366,7 @@ public class ValueObjectUtil {
 	}
 
 	/**
-	 * »ñÈ¡fieldNameµÄgetter·½·¨Ãû³Æ
+	 * è·å–fieldNameçš„getteræ–¹æ³•åç§°
 	 * 
 	 * @param fieldName
 	 * @return String
@@ -396,7 +396,7 @@ public class ValueObjectUtil {
 	}
 
 	/**
-	 * »ñÈ¡fieldNameµÄsetter·½·¨
+	 * è·å–fieldNameçš„setteræ–¹æ³•
 	 * 
 	 * @param fieldName
 	 * @return String
@@ -421,12 +421,12 @@ public class ValueObjectUtil {
 	//		
 	// else if(type == toType)
 	// return true;
-	// else if(toType.isAssignableFrom(type))//¼ì²étoTypeÊÇ²»ÊÇtypeµÄ¸¸Àà»òÕßÊÇtypeËùÊµÏÖµÄ½Ó¿Ú
+	// else if(toType.isAssignableFrom(type))//æ£€æŸ¥toTypeæ˜¯ä¸æ˜¯typeçš„çˆ¶ç±»æˆ–è€…æ˜¯typeæ‰€å®ç°çš„æ¥å£
 	// {
 	// return true;
 	// }
 	// else
-	// if(type.isAssignableFrom(toType))//¼ì²étypeÊÇ²»ÊÇtoTypeµÄ¸¸Àà»òÕßÊÇÍÏÓÍÆ¿typeËùÊµÏÖµÄ½Ó¿Ú
+	// if(type.isAssignableFrom(toType))//æ£€æŸ¥typeæ˜¯ä¸æ˜¯toTypeçš„çˆ¶ç±»æˆ–è€…æ˜¯æ‹–æ²¹ç“¶typeæ‰€å®ç°çš„æ¥å£
 	// {
 	// if(type.getName().equals(toType.getName()))
 	// return true;
@@ -470,9 +470,9 @@ public class ValueObjectUtil {
 	/**
 	 * 
 	 * @param types
-	 *            ¹¹Ôìº¯ÊıµÄ²ÎÊıÀàĞÍ
+	 *            æ„é€ å‡½æ•°çš„å‚æ•°ç±»å‹
 	 * @param params
-	 *            Íâ²¿´«ÈëµÄĞÎÊ½²ÎÊıÀàĞÍ
+	 *            å¤–éƒ¨ä¼ å…¥çš„å½¢å¼å‚æ•°ç±»å‹
 	 * @return
 	 */
 	public static boolean isSameTypes(Class[] types, Class[] params,
@@ -498,10 +498,10 @@ public class ValueObjectUtil {
 
 		else if (type == toType)
 			return true;
-		else if (toType.isAssignableFrom(type))// ¼ì²étoTypeÊÇ²»ÊÇtypeµÄ¸¸Àà»òÕßÊÇtypeËùÊµÏÖµÄ½Ó¿Ú
+		else if (toType.isAssignableFrom(type))// æ£€æŸ¥toTypeæ˜¯ä¸æ˜¯typeçš„çˆ¶ç±»æˆ–è€…æ˜¯typeæ‰€å®ç°çš„æ¥å£
 		{
 			return true;
-		} else if (type.isAssignableFrom(toType))// ¼ì²étypeÊÇ²»ÊÇtoTypeµÄ¸¸Àà»òÕßÊÇÍÏÓÍÆ¿toTypeËùÊµÏÖµÄ½Ó¿Ú
+		} else if (type.isAssignableFrom(toType))// æ£€æŸ¥typeæ˜¯ä¸æ˜¯toTypeçš„çˆ¶ç±»æˆ–è€…æ˜¯æ‹–æ²¹ç“¶toTypeæ‰€å®ç°çš„æ¥å£
 		{
 			try {
 				toType.cast(value);
@@ -537,7 +537,7 @@ public class ValueObjectUtil {
 	}
 
 	/**
-	 * Í¨¹ıÊôĞÔ±à¼­Æ÷À´×ª»»ÊôĞÔÖµ
+	 * é€šè¿‡å±æ€§ç¼–è¾‘å™¨æ¥è½¬æ¢å±æ€§å€¼
 	 * 
 	 * @param obj
 	 * @param editor
@@ -554,7 +554,7 @@ public class ValueObjectUtil {
 	}
 
 	/**
-	 * ½«obj¶ÔÏó´ÓÀàĞÍtype×ª»»µ½ÀàĞÍtoType Ö§³Ö×Ö·û´®ÏòÆäËû»ù±¾ÀàĞĞ×ª»»: Ö§³ÖµÄÀàĞÍ:
+	 * å°†objå¯¹è±¡ä»ç±»å‹typeè½¬æ¢åˆ°ç±»å‹toType æ”¯æŒå­—ç¬¦ä¸²å‘å…¶ä»–åŸºæœ¬ç±»è¡Œè½¬æ¢: æ”¯æŒçš„ç±»å‹:
 	 * int,char,short,double,float,long,boolean,byte
 	 * java.sql.Date,java.util.Date, Integer Long Float Short Double Character
 	 * Boolean Byte
@@ -919,7 +919,7 @@ public class ValueObjectUtil {
 
 	}
 	/**
-	 * ¸¸ÀàĞÍÏò×ÓÀàĞÍ×ª»»
+	 * çˆ¶ç±»å‹å‘å­ç±»å‹è½¬æ¢
 	 * @param obj
 	 * @param toType
 	 * @param type
@@ -944,13 +944,13 @@ public class ValueObjectUtil {
 			}
 		}
 		/**
-		 * ÈÕÆÚÀàĞÍ´¦Àí±È½ÏÌØÊâ
+		 * æ—¥æœŸç±»å‹å¤„ç†æ¯”è¾ƒç‰¹æ®Š
 		 */
 //		return null;
 			
 	}
 	/**
-	 * ½«obj¶ÔÏó´ÓÀàĞÍtype×ª»»µ½ÀàĞÍtoType Ö§³Ö×Ö·û´®ÏòÆäËû»ù±¾ÀàĞĞ×ª»»: Ö§³ÖµÄÀàĞÍ:
+	 * å°†objå¯¹è±¡ä»ç±»å‹typeè½¬æ¢åˆ°ç±»å‹toType æ”¯æŒå­—ç¬¦ä¸²å‘å…¶ä»–åŸºæœ¬ç±»è¡Œè½¬æ¢: æ”¯æŒçš„ç±»å‹:
 	 * int,char,short,double,float,long,boolean,byte
 	 * java.sql.Date,java.util.Date, Integer Long Float Short Double Character
 	 * Boolean Byte
@@ -970,7 +970,7 @@ public class ValueObjectUtil {
 		if (isSameType(type, toType, obj))
 			return obj;
 
-		if (type.isAssignableFrom(toType)) // typeÊÇtoTypeµÄ¸¸Àà£¬¸¸ÀàÏò×ÓÀà×ª»»µÄ¹ı³Ì£¬Õâ¸ö×ª»»¹ı³ÌÊÇ²»°²È«µÄ
+		if (type.isAssignableFrom(toType)) // typeæ˜¯toTypeçš„çˆ¶ç±»ï¼Œçˆ¶ç±»å‘å­ç±»è½¬æ¢çš„è¿‡ç¨‹ï¼Œè¿™ä¸ªè½¬æ¢è¿‡ç¨‹æ˜¯ä¸å®‰å…¨çš„
 		{
 			// return shell(toType,obj);
 			if (!java.util.Date.class.isAssignableFrom(type))
@@ -1003,8 +1003,8 @@ public class ValueObjectUtil {
 			catch (Exception e)
 			{
 				throw new IllegalArgumentException(new StringBuffer(
-				"ÀàĞÍÎŞ·¨×ª»»,²»Ö§³Ö[").append(type.getName()).append("]Ïò[")
-				.append(toType.getName()).append("]×ª»»").append(",value is ").append(obj).toString());
+				"ç±»å‹æ— æ³•è½¬æ¢,ä¸æ”¯æŒ[").append(type.getName()).append("]å‘[")
+				.append(toType.getName()).append("]è½¬æ¢").append(",value is ").append(obj).toString());
 			}
 			
 			
@@ -1029,8 +1029,8 @@ public class ValueObjectUtil {
 			catch (Exception e)
 			{
 				throw new IllegalArgumentException(new StringBuffer(
-				"ÀàĞÍÎŞ·¨×ª»»,²»Ö§³Ö[").append(type.getName()).append("]Ïò[")
-				.append(toType.getName()).append("]×ª»»").append(",value is").append(obj).toString());
+				"ç±»å‹æ— æ³•è½¬æ¢,ä¸æ”¯æŒ[").append(type.getName()).append("]å‘[")
+				.append(toType.getName()).append("]è½¬æ¢").append(",value is").append(obj).toString());
 			}
 			
 			
@@ -1184,31 +1184,31 @@ public class ValueObjectUtil {
 			// && !toType.getName().startsWith("[")
 			// || !type.getName().startsWith("[")
 			// && toType.getName().startsWith("["))
-			throw new IllegalArgumentException(new StringBuffer("ÀàĞÍÎŞ·¨×ª»»,²»Ö§³Ö[")
-					.append(type.getName()).append("]Ïò[").append(
-							toType.getName()).append("]×ª»»").append(",value is ").append(obj).toString());
+			throw new IllegalArgumentException(new StringBuffer("ç±»å‹æ— æ³•è½¬æ¢,ä¸æ”¯æŒ[")
+					.append(type.getName()).append("]å‘[").append(
+							toType.getName()).append("]è½¬æ¢").append(",value is ").append(obj).toString());
 		} else if (type == String.class && toType == Class.class) {
 			try {
 				return getClass((String) obj);
 			} catch (ClassNotFoundException e) {
 				throw new IllegalArgumentException(new StringBuffer(
-						"ÀàĞÍÎŞ·¨×ª»»,²»Ö§³Ö[").append(type.getName()).append("]Ïò[")
-						.append(toType.getName()).append("]×ª»»").append(",value is").append(obj).toString());
+						"ç±»å‹æ— æ³•è½¬æ¢,ä¸æ”¯æŒ[").append(type.getName()).append("]å‘[")
+						.append(toType.getName()).append("]è½¬æ¢").append(",value is").append(obj).toString());
 			}
 		}
 		Object arrayObj;
 
 		/**
-		 * »ù±¾ÀàĞÍ×ª»»ºÍ»ù±¾ÀàĞÍÖ®¼äÏà»¥×ª»»
+		 * åŸºæœ¬ç±»å‹è½¬æ¢å’ŒåŸºæœ¬ç±»å‹ä¹‹é—´ç›¸äº’è½¬æ¢
 		 */
 		if (!type.isArray() && !toType.isArray()) {
 			arrayObj = basicTypeCast(obj, type, toType,dateformat);
 		}
 
 		/**
-		 * ×Ö·û´®Êı×éÏòÆäËûÀàĞÍÊı×éÖ®¼ä×ª»»
-		 * Êı×éºÍÊı×éÖ®¼äµÄ×ª»»
-		 * »ù´¡ÀàĞÍÊı¾İÏòÊı×é×ª»»
+		 * å­—ç¬¦ä¸²æ•°ç»„å‘å…¶ä»–ç±»å‹æ•°ç»„ä¹‹é—´è½¬æ¢
+		 * æ•°ç»„å’Œæ•°ç»„ä¹‹é—´çš„è½¬æ¢
+		 * åŸºç¡€ç±»å‹æ•°æ®å‘æ•°ç»„è½¬æ¢
 		 */
 		else {
 
@@ -1225,7 +1225,7 @@ public class ValueObjectUtil {
 		if (isSameType(type, toType, obj))
 			return obj;
 
-		if (type.isAssignableFrom(toType)) // typeÊÇtoTypeµÄ¸¸Àà£¬¸¸ÀàÏò×ÓÀà×ª»»µÄ¹ı³Ì£¬Õâ¸ö×ª»»¹ı³ÌÊÇ²»°²È«µÄ
+		if (type.isAssignableFrom(toType)) // typeæ˜¯toTypeçš„çˆ¶ç±»ï¼Œçˆ¶ç±»å‘å­ç±»è½¬æ¢çš„è¿‡ç¨‹ï¼Œè¿™ä¸ªè½¬æ¢è¿‡ç¨‹æ˜¯ä¸å®‰å…¨çš„
 		{
 			// return shell(toType,obj);
 			if (!java.util.Date.class.isAssignableFrom(type))
@@ -1258,8 +1258,8 @@ public class ValueObjectUtil {
 			catch (Exception e)
 			{
 				throw new IllegalArgumentException(new StringBuffer(
-				"ÀàĞÍÎŞ·¨×ª»»,²»Ö§³Ö[").append(type.getName()).append("]Ïò[")
-				.append(toType.getName()).append("]×ª»»").append(",value is ").append(obj).toString());
+				"ç±»å‹æ— æ³•è½¬æ¢,ä¸æ”¯æŒ[").append(type.getName()).append("]å‘[")
+				.append(toType.getName()).append("]è½¬æ¢").append(",value is ").append(obj).toString());
 			}
 			
 			
@@ -1284,8 +1284,8 @@ public class ValueObjectUtil {
 			catch (Exception e)
 			{
 				throw new IllegalArgumentException(new StringBuffer(
-				"ÀàĞÍÎŞ·¨×ª»»,²»Ö§³Ö[").append(type.getName()).append("]Ïò[")
-				.append(toType.getName()).append("]×ª»»").append(",value is").append(obj).toString());
+				"ç±»å‹æ— æ³•è½¬æ¢,ä¸æ”¯æŒ[").append(type.getName()).append("]å‘[")
+				.append(toType.getName()).append("]è½¬æ¢").append(",value is").append(obj).toString());
 			}
 			
 			
@@ -1439,31 +1439,31 @@ public class ValueObjectUtil {
 			// && !toType.getName().startsWith("[")
 			// || !type.getName().startsWith("[")
 			// && toType.getName().startsWith("["))
-			throw new IllegalArgumentException(new StringBuffer("ÀàĞÍÎŞ·¨×ª»»,²»Ö§³Ö[")
-					.append(type.getName()).append("]Ïò[").append(
-							toType.getName()).append("]×ª»»").append(",value is ").append(obj).toString());
+			throw new IllegalArgumentException(new StringBuffer("ç±»å‹æ— æ³•è½¬æ¢,ä¸æ”¯æŒ[")
+					.append(type.getName()).append("]å‘[").append(
+							toType.getName()).append("]è½¬æ¢").append(",value is ").append(obj).toString());
 		} else if (type == String.class && toType == Class.class) {
 			try {
 				return getClass((String) obj);
 			} catch (ClassNotFoundException e) {
 				throw new IllegalArgumentException(new StringBuffer(
-						"ÀàĞÍÎŞ·¨×ª»»,²»Ö§³Ö[").append(type.getName()).append("]Ïò[")
-						.append(toType.getName()).append("]×ª»»").append(",value is").append(obj).toString());
+						"ç±»å‹æ— æ³•è½¬æ¢,ä¸æ”¯æŒ[").append(type.getName()).append("]å‘[")
+						.append(toType.getName()).append("]è½¬æ¢").append(",value is").append(obj).toString());
 			}
 		}
 		Object arrayObj;
 
 		/**
-		 * »ù±¾ÀàĞÍ×ª»»ºÍ»ù±¾ÀàĞÍÖ®¼äÏà»¥×ª»»
+		 * åŸºæœ¬ç±»å‹è½¬æ¢å’ŒåŸºæœ¬ç±»å‹ä¹‹é—´ç›¸äº’è½¬æ¢
 		 */
 		if (!type.isArray() && !toType.isArray()) {
 			arrayObj = basicTypeCastWithDateformat(obj, type, toType,dateformat);
 		}
 
 		/**
-		 * ×Ö·û´®Êı×éÏòÆäËûÀàĞÍÊı×éÖ®¼ä×ª»»
-		 * Êı×éºÍÊı×éÖ®¼äµÄ×ª»»
-		 * »ù´¡ÀàĞÍÊı¾İÏòÊı×é×ª»»
+		 * å­—ç¬¦ä¸²æ•°ç»„å‘å…¶ä»–ç±»å‹æ•°ç»„ä¹‹é—´è½¬æ¢
+		 * æ•°ç»„å’Œæ•°ç»„ä¹‹é—´çš„è½¬æ¢
+		 * åŸºç¡€ç±»å‹æ•°æ®å‘æ•°ç»„è½¬æ¢
 		 */
 		else {
 
@@ -1476,7 +1476,7 @@ public class ValueObjectUtil {
 	
 
 	/**
-	 * Í¨¹ıBeanShell½Å±¾À´×ª»»¶ÔÏóÀàĞÍ
+	 * é€šè¿‡BeanShellè„šæœ¬æ¥è½¬æ¢å¯¹è±¡ç±»å‹
 	 * 
 	 * @param toType
 	 * @param obj
@@ -1535,7 +1535,7 @@ public class ValueObjectUtil {
 		return f;
 	}
 	/**
-	 * Description:»ù±¾µÄÊı¾İÀàĞÍ×ªà÷
+	 * Description:åŸºæœ¬çš„æ•°æ®ç±»å‹è½¬åœœ
 	 * 
 	 * @param obj
 	 * @param type
@@ -1553,24 +1553,24 @@ public class ValueObjectUtil {
 		if (isSameType(type, toType, obj))
 			return obj;
 
-		if (type.isAssignableFrom(toType)) // typeÊÇtoTypeµÄ¸¸Àà£¬¸¸ÀàÏò×ÓÀà×ª»»µÄ¹ı³Ì£¬Õâ¸ö×ª»»¹ı³ÌÊÇ²»°²È«µÄ
+		if (type.isAssignableFrom(toType)) // typeæ˜¯toTypeçš„çˆ¶ç±»ï¼Œçˆ¶ç±»å‘å­ç±»è½¬æ¢çš„è¿‡ç¨‹ï¼Œè¿™ä¸ªè½¬æ¢è¿‡ç¨‹æ˜¯ä¸å®‰å…¨çš„
 		{
 			if (!java.util.Date.class.isAssignableFrom(type))
 				return shell(toType, obj);
 		}
 		/**
-		 * Èç¹ûobjµÄÀàĞÍ²»ÊÇStringĞÍÊ±Ö±½ÓÅ×Òì³£, ²»Ö§³Ö·Ç×Ö·û´®ºÍ×Ö·û´®Êı×éµÄÀàĞÍ×ª»»
+		 * å¦‚æœobjçš„ç±»å‹ä¸æ˜¯Stringå‹æ—¶ç›´æ¥æŠ›å¼‚å¸¸, ä¸æ”¯æŒéå­—ç¬¦ä¸²å’Œå­—ç¬¦ä¸²æ•°ç»„çš„ç±»å‹è½¬æ¢
 		 */
 		// if (type != String.class)
 		// throw new NoSupportTypeCastException(
-		// new StringBuffer("²»Ö§³Ö[")
+		// new StringBuffer("ä¸æ”¯æŒ[")
 		// .append(type)
-		// .append("]Ïò[")
+		// .append("]å‘[")
 		// .append(toType)
-		// .append("]µÄ×ª»»")
+		// .append("]çš„è½¬æ¢")
 		// .toString());
 		/*******************************************
-		 * ×Ö·û´®Ïò»ù±¾ÀàĞÍ¼°Æä°ü×°Æ÷×ª»» * Èç¹ûobj²»ÊÇÏàÓ¦µÃÊı¾İ¸ñÊ½,½«Å×³ö * NumberFormatException *
+		 * å­—ç¬¦ä¸²å‘åŸºæœ¬ç±»å‹åŠå…¶åŒ…è£…å™¨è½¬æ¢ * å¦‚æœobjä¸æ˜¯ç›¸åº”å¾—æ•°æ®æ ¼å¼,å°†æŠ›å‡º * NumberFormatException *
 		 ******************************************/
 		if (toType == long.class || toType == Long.class) {
 			if (ValueObjectUtil.isNumber(obj))
@@ -1621,7 +1621,7 @@ public class ValueObjectUtil {
 			return converObjToBigDecimal(obj);
 			
 		}
-		// Èç¹ûÊÇ×Ö·û´®ÔòÖ±½Ó·µ»Øobj.toString()
+		// å¦‚æœæ˜¯å­—ç¬¦ä¸²åˆ™ç›´æ¥è¿”å›obj.toString()
 		if (toType == String.class) {
 			if (obj instanceof java.util.Date)
 			{
@@ -1643,8 +1643,8 @@ public class ValueObjectUtil {
 				return getClass((String) obj);
 			} catch (ClassNotFoundException e) {
 				throw new IllegalArgumentException(new StringBuffer(
-						"ÀàĞÍÎŞ·¨×ª»»,²»Ö§³Ö[").append(type.getName()).append("]Ïò[")
-						.append(toType.getName()).append("]×ª»»").append(",value is ").append(obj).toString());
+						"ç±»å‹æ— æ³•è½¬æ¢,ä¸æ”¯æŒ[").append(type.getName()).append("]å‘[")
+						.append(toType.getName()).append("]è½¬æ¢").append(",value is ").append(obj).toString());
 			}
 		}
 		
@@ -1655,29 +1655,29 @@ public class ValueObjectUtil {
 				return convertStringToEnum((String )obj,toType);
 			} catch (SecurityException e) {
 				throw new IllegalArgumentException(new StringBuffer(
-				"ÀàĞÍÎŞ·¨×ª»»,²»Ö§³Ö[").append(type.getName()).append("]ÏòÃ¶¾ÙÀàĞÍ[")
-				.append(toType.getName()).append("]×ª»»£¬³¬³öÃ¶¾ÙÖµ·¶Î§").append(",value is").append(obj).toString());
+				"ç±»å‹æ— æ³•è½¬æ¢,ä¸æ”¯æŒ[").append(type.getName()).append("]å‘æšä¸¾ç±»å‹[")
+				.append(toType.getName()).append("]è½¬æ¢ï¼Œè¶…å‡ºæšä¸¾å€¼èŒƒå›´").append(",value is").append(obj).toString());
 			} catch (IllegalArgumentException e) {
 				throw new IllegalArgumentException(new StringBuffer(
-				"ÀàĞÍÎŞ·¨×ª»»,²»Ö§³Ö[").append(type.getName()).append("]ÏòÃ¶¾ÙÀàĞÍ[")
-				.append(toType.getName()).append("]×ª»»£¬³¬³öÃ¶¾ÙÖµ·¶Î§").append(",value is").append(obj).toString());
+				"ç±»å‹æ— æ³•è½¬æ¢,ä¸æ”¯æŒ[").append(type.getName()).append("]å‘æšä¸¾ç±»å‹[")
+				.append(toType.getName()).append("]è½¬æ¢ï¼Œè¶…å‡ºæšä¸¾å€¼èŒƒå›´").append(",value is").append(obj).toString());
 			} catch (NoSuchMethodException e) {
 				throw new IllegalArgumentException(new StringBuffer(
-				"ÀàĞÍÎŞ·¨×ª»»,²»Ö§³Ö[").append(type.getName()).append("]ÏòÃ¶¾ÙÀàĞÍ[")
-				.append(toType.getName()).append("]×ª»»£¬³¬³öÃ¶¾ÙÖµ·¶Î§").append(",value is").append(obj).toString());
+				"ç±»å‹æ— æ³•è½¬æ¢,ä¸æ”¯æŒ[").append(type.getName()).append("]å‘æšä¸¾ç±»å‹[")
+				.append(toType.getName()).append("]è½¬æ¢ï¼Œè¶…å‡ºæšä¸¾å€¼èŒƒå›´").append(",value is").append(obj).toString());
 			} catch (IllegalAccessException e) {
 				throw new IllegalArgumentException(new StringBuffer(
-				"ÀàĞÍÎŞ·¨×ª»»,²»Ö§³Ö[").append(type.getName()).append("]ÏòÃ¶¾ÙÀàĞÍ[")
-				.append(toType.getName()).append("]×ª»»£¬³¬³öÃ¶¾ÙÖµ·¶Î§").append(",value is").append(obj).toString());
+				"ç±»å‹æ— æ³•è½¬æ¢,ä¸æ”¯æŒ[").append(type.getName()).append("]å‘æšä¸¾ç±»å‹[")
+				.append(toType.getName()).append("]è½¬æ¢ï¼Œè¶…å‡ºæšä¸¾å€¼èŒƒå›´").append(",value is").append(obj).toString());
 			} catch (InvocationTargetException e) {
 				throw new IllegalArgumentException(new StringBuffer(
-				"ÀàĞÍÎŞ·¨×ª»»,²»Ö§³Ö[").append(type.getName()).append("]ÏòÃ¶¾ÙÀàĞÍ[")
-				.append(toType.getName()).append("]×ª»»£¬³¬³öÃ¶¾ÙÖµ·¶Î§").append(",value is").append(obj).toString());
+				"ç±»å‹æ— æ³•è½¬æ¢,ä¸æ”¯æŒ[").append(type.getName()).append("]å‘æšä¸¾ç±»å‹[")
+				.append(toType.getName()).append("]è½¬æ¢ï¼Œè¶…å‡ºæšä¸¾å€¼èŒƒå›´").append(",value is").append(obj).toString());
 			}
 		}
 
-		throw new NoSupportTypeCastException(new StringBuffer("²»Ö§³Ö[").append(
-				type).append("]Ïò[").append(toType).append("]µÄ×ª»»").append(",value is").append(obj).toString());
+		throw new NoSupportTypeCastException(new StringBuffer("ä¸æ”¯æŒ[").append(
+				type).append("]å‘[").append(toType).append("]çš„è½¬æ¢").append(",value is").append(obj).toString());
 
 	}
 	
@@ -1689,24 +1689,24 @@ public class ValueObjectUtil {
 		if (isSameType(type, toType, obj))
 			return obj;
 
-		if (type.isAssignableFrom(toType)) // typeÊÇtoTypeµÄ¸¸Àà£¬¸¸ÀàÏò×ÓÀà×ª»»µÄ¹ı³Ì£¬Õâ¸ö×ª»»¹ı³ÌÊÇ²»°²È«µÄ
+		if (type.isAssignableFrom(toType)) // typeæ˜¯toTypeçš„çˆ¶ç±»ï¼Œçˆ¶ç±»å‘å­ç±»è½¬æ¢çš„è¿‡ç¨‹ï¼Œè¿™ä¸ªè½¬æ¢è¿‡ç¨‹æ˜¯ä¸å®‰å…¨çš„
 		{
 			if (!java.util.Date.class.isAssignableFrom(type))
 				return shell(toType, obj);
 		}
 		/**
-		 * Èç¹ûobjµÄÀàĞÍ²»ÊÇStringĞÍÊ±Ö±½ÓÅ×Òì³£, ²»Ö§³Ö·Ç×Ö·û´®ºÍ×Ö·û´®Êı×éµÄÀàĞÍ×ª»»
+		 * å¦‚æœobjçš„ç±»å‹ä¸æ˜¯Stringå‹æ—¶ç›´æ¥æŠ›å¼‚å¸¸, ä¸æ”¯æŒéå­—ç¬¦ä¸²å’Œå­—ç¬¦ä¸²æ•°ç»„çš„ç±»å‹è½¬æ¢
 		 */
 		// if (type != String.class)
 		// throw new NoSupportTypeCastException(
-		// new StringBuffer("²»Ö§³Ö[")
+		// new StringBuffer("ä¸æ”¯æŒ[")
 		// .append(type)
-		// .append("]Ïò[")
+		// .append("]å‘[")
 		// .append(toType)
-		// .append("]µÄ×ª»»")
+		// .append("]çš„è½¬æ¢")
 		// .toString());
 		/*******************************************
-		 * ×Ö·û´®Ïò»ù±¾ÀàĞÍ¼°Æä°ü×°Æ÷×ª»» * Èç¹ûobj²»ÊÇÏàÓ¦µÃÊı¾İ¸ñÊ½,½«Å×³ö * NumberFormatException *
+		 * å­—ç¬¦ä¸²å‘åŸºæœ¬ç±»å‹åŠå…¶åŒ…è£…å™¨è½¬æ¢ * å¦‚æœobjä¸æ˜¯ç›¸åº”å¾—æ•°æ®æ ¼å¼,å°†æŠ›å‡º * NumberFormatException *
 		 ******************************************/
 		if (toType == long.class || toType == Long.class) {
 			if (ValueObjectUtil.isNumber(obj))
@@ -1757,7 +1757,7 @@ public class ValueObjectUtil {
 			return converObjToBigDecimal(obj);
 			
 		}
-		// Èç¹ûÊÇ×Ö·û´®ÔòÖ±½Ó·µ»Øobj.toString()
+		// å¦‚æœæ˜¯å­—ç¬¦ä¸²åˆ™ç›´æ¥è¿”å›obj.toString()
 		if (toType == String.class) {
 			if (obj instanceof java.util.Date)
 			{
@@ -1783,8 +1783,8 @@ public class ValueObjectUtil {
 				return getClass((String) obj);
 			} catch (ClassNotFoundException e) {
 				throw new IllegalArgumentException(new StringBuffer(
-						"ÀàĞÍÎŞ·¨×ª»»,²»Ö§³Ö[").append(type.getName()).append("]Ïò[")
-						.append(toType.getName()).append("]×ª»»").append(",value is ").append(obj).toString());
+						"ç±»å‹æ— æ³•è½¬æ¢,ä¸æ”¯æŒ[").append(type.getName()).append("]å‘[")
+						.append(toType.getName()).append("]è½¬æ¢").append(",value is ").append(obj).toString());
 			}
 		}
 		
@@ -1795,29 +1795,29 @@ public class ValueObjectUtil {
 				return convertStringToEnum((String )obj,toType);
 			} catch (SecurityException e) {
 				throw new IllegalArgumentException(new StringBuffer(
-				"ÀàĞÍÎŞ·¨×ª»»,²»Ö§³Ö[").append(type.getName()).append("]ÏòÃ¶¾ÙÀàĞÍ[")
-				.append(toType.getName()).append("]×ª»»£¬³¬³öÃ¶¾ÙÖµ·¶Î§").append(",value is").append(obj).toString());
+				"ç±»å‹æ— æ³•è½¬æ¢,ä¸æ”¯æŒ[").append(type.getName()).append("]å‘æšä¸¾ç±»å‹[")
+				.append(toType.getName()).append("]è½¬æ¢ï¼Œè¶…å‡ºæšä¸¾å€¼èŒƒå›´").append(",value is").append(obj).toString());
 			} catch (IllegalArgumentException e) {
 				throw new IllegalArgumentException(new StringBuffer(
-				"ÀàĞÍÎŞ·¨×ª»»,²»Ö§³Ö[").append(type.getName()).append("]ÏòÃ¶¾ÙÀàĞÍ[")
-				.append(toType.getName()).append("]×ª»»£¬³¬³öÃ¶¾ÙÖµ·¶Î§").append(",value is").append(obj).toString());
+				"ç±»å‹æ— æ³•è½¬æ¢,ä¸æ”¯æŒ[").append(type.getName()).append("]å‘æšä¸¾ç±»å‹[")
+				.append(toType.getName()).append("]è½¬æ¢ï¼Œè¶…å‡ºæšä¸¾å€¼èŒƒå›´").append(",value is").append(obj).toString());
 			} catch (NoSuchMethodException e) {
 				throw new IllegalArgumentException(new StringBuffer(
-				"ÀàĞÍÎŞ·¨×ª»»,²»Ö§³Ö[").append(type.getName()).append("]ÏòÃ¶¾ÙÀàĞÍ[")
-				.append(toType.getName()).append("]×ª»»£¬³¬³öÃ¶¾ÙÖµ·¶Î§").append(",value is").append(obj).toString());
+				"ç±»å‹æ— æ³•è½¬æ¢,ä¸æ”¯æŒ[").append(type.getName()).append("]å‘æšä¸¾ç±»å‹[")
+				.append(toType.getName()).append("]è½¬æ¢ï¼Œè¶…å‡ºæšä¸¾å€¼èŒƒå›´").append(",value is").append(obj).toString());
 			} catch (IllegalAccessException e) {
 				throw new IllegalArgumentException(new StringBuffer(
-				"ÀàĞÍÎŞ·¨×ª»»,²»Ö§³Ö[").append(type.getName()).append("]ÏòÃ¶¾ÙÀàĞÍ[")
-				.append(toType.getName()).append("]×ª»»£¬³¬³öÃ¶¾ÙÖµ·¶Î§").append(",value is").append(obj).toString());
+				"ç±»å‹æ— æ³•è½¬æ¢,ä¸æ”¯æŒ[").append(type.getName()).append("]å‘æšä¸¾ç±»å‹[")
+				.append(toType.getName()).append("]è½¬æ¢ï¼Œè¶…å‡ºæšä¸¾å€¼èŒƒå›´").append(",value is").append(obj).toString());
 			} catch (InvocationTargetException e) {
 				throw new IllegalArgumentException(new StringBuffer(
-				"ÀàĞÍÎŞ·¨×ª»»,²»Ö§³Ö[").append(type.getName()).append("]ÏòÃ¶¾ÙÀàĞÍ[")
-				.append(toType.getName()).append("]×ª»»£¬³¬³öÃ¶¾ÙÖµ·¶Î§").append(",value is").append(obj).toString());
+				"ç±»å‹æ— æ³•è½¬æ¢,ä¸æ”¯æŒ[").append(type.getName()).append("]å‘æšä¸¾ç±»å‹[")
+				.append(toType.getName()).append("]è½¬æ¢ï¼Œè¶…å‡ºæšä¸¾å€¼èŒƒå›´").append(",value is").append(obj).toString());
 			}
 		}
 
-		throw new NoSupportTypeCastException(new StringBuffer("²»Ö§³Ö[").append(
-				type).append("]Ïò[").append(toType).append("]µÄ×ª»»").append(",value is").append(obj).toString());
+		throw new NoSupportTypeCastException(new StringBuffer("ä¸æ”¯æŒ[").append(
+				type).append("]å‘[").append(toType).append("]çš„è½¬æ¢").append(",value is").append(obj).toString());
 
 	}
 	
@@ -1848,7 +1848,7 @@ public class ValueObjectUtil {
 		if(dateformat == null)
 			dateformat = ValueObjectUtil.getDefaultDateFormat();
 		/**
-		 * ×Ö·û´®Ïòjava.util.DateºÍjava.sql.Date ÀàĞÍ×ª»»
+		 * å­—ç¬¦ä¸²å‘java.util.Dateå’Œjava.sql.Date ç±»å‹è½¬æ¢
 		 */
 		if (toType == java.util.Date.class) {
 			// if(obj instanceof java.sql.Date
@@ -2064,7 +2064,7 @@ public class ValueObjectUtil {
 				toType,dateformat_);
 	}
 	/**
-	 * Êı×éÀàĞÍ×ª»» Ö§³Ö×Ö·û´®Êı×éÏòÒ»ÏÂÀàĞÍÊı×éµÃ×Ô¶¯×ª»»: int[] Integer[] long[] Long[] short[] Short[]
+	 * æ•°ç»„ç±»å‹è½¬æ¢ æ”¯æŒå­—ç¬¦ä¸²æ•°ç»„å‘ä¸€ä¸‹ç±»å‹æ•°ç»„å¾—è‡ªåŠ¨è½¬æ¢: int[] Integer[] long[] Long[] short[] Short[]
 	 * double[] Double[] boolean[] Boolean[] char[] Character[] float[] Float[]
 	 * byte[] Byte[] java.sql.Date[] java.util.Date[]
 	 * 
@@ -2082,11 +2082,11 @@ public class ValueObjectUtil {
 			return obj;
 		// if (type != String[].class)
 		// throw new NoSupportTypeCastException(
-		// new StringBuffer("²»Ö§³Ö[")
+		// new StringBuffer("ä¸æ”¯æŒ[")
 		// .append(type)
-		// .append("]Ïò[")
+		// .append("]å‘[")
 		// .append(toType)
-		// .append("]µÄ×ª»»")
+		// .append("]çš„è½¬æ¢")
 		// .toString());
 		if(dateformat == null)
 			dateformat = ValueObjectUtil.getDefaultDateFormat();
@@ -2336,7 +2336,7 @@ public class ValueObjectUtil {
 			return ret;
 		}
 
-		// Èç¹ûÊÇ×Ö·û´®ÔòÖ±½Ó·µ»Øobj.toString()
+		// å¦‚æœæ˜¯å­—ç¬¦ä¸²åˆ™ç›´æ¥è¿”å›obj.toString()
 		if (toType == String[].class) {
 			{
 				if (obj.getClass() == java.util.Date[].class)
@@ -2352,13 +2352,13 @@ public class ValueObjectUtil {
 			// return ret;
 		}
 		/**
-		 * ×Ö·û´®Ïòjava.util.DateºÍjava.sql.Date ÀàĞÍ×ª»»
+		 * å­—ç¬¦ä¸²å‘java.util.Dateå’Œjava.sql.Date ç±»å‹è½¬æ¢
 		 */
 		Object dates = convertObjectToDateArrayWithDateFormat( obj,type,toType, dateformat);
 		if(dates != null)
 			return dates;
 		/**
-		 * Ã¶¾ÙÊı×éÀàĞÍ´¦Àí×ª»»
+		 * æšä¸¾æ•°ç»„ç±»å‹å¤„ç†è½¬æ¢
 		 */
 		if(toType.isArray() && toType.getComponentType().isEnum())
 		{
@@ -2370,24 +2370,24 @@ public class ValueObjectUtil {
 					return value;
 				} catch (SecurityException e) {
 					throw new IllegalArgumentException(new StringBuffer(
-					"ÀàĞÍÎŞ·¨×ª»»,²»Ö§³Ö[").append(type.getName()).append("]ÏòÃ¶¾ÙÀàĞÍ[")
-					.append(toType.getName()).append("]×ª»»£¬³¬³öÃ¶¾ÙÖµ·¶Î§").append(",value is").append(obj).toString());
+					"ç±»å‹æ— æ³•è½¬æ¢,ä¸æ”¯æŒ[").append(type.getName()).append("]å‘æšä¸¾ç±»å‹[")
+					.append(toType.getName()).append("]è½¬æ¢ï¼Œè¶…å‡ºæšä¸¾å€¼èŒƒå›´").append(",value is").append(obj).toString());
 				} catch (IllegalArgumentException e) {
 					throw new IllegalArgumentException(new StringBuffer(
-					"ÀàĞÍÎŞ·¨×ª»»,²»Ö§³Ö[").append(type.getName()).append("]ÏòÃ¶¾ÙÀàĞÍ[")
-					.append(toType.getName()).append("]×ª»»£¬³¬³öÃ¶¾ÙÖµ·¶Î§").append(",value is").append(obj).toString());
+					"ç±»å‹æ— æ³•è½¬æ¢,ä¸æ”¯æŒ[").append(type.getName()).append("]å‘æšä¸¾ç±»å‹[")
+					.append(toType.getName()).append("]è½¬æ¢ï¼Œè¶…å‡ºæšä¸¾å€¼èŒƒå›´").append(",value is").append(obj).toString());
 				} catch (NoSuchMethodException e) {
 					throw new IllegalArgumentException(new StringBuffer(
-					"ÀàĞÍÎŞ·¨×ª»»,²»Ö§³Ö[").append(type.getName()).append("]ÏòÃ¶¾ÙÀàĞÍ[")
-					.append(toType.getName()).append("]×ª»»£¬³¬³öÃ¶¾ÙÖµ·¶Î§").append(",value is").append(obj).toString());
+					"ç±»å‹æ— æ³•è½¬æ¢,ä¸æ”¯æŒ[").append(type.getName()).append("]å‘æšä¸¾ç±»å‹[")
+					.append(toType.getName()).append("]è½¬æ¢ï¼Œè¶…å‡ºæšä¸¾å€¼èŒƒå›´").append(",value is").append(obj).toString());
 				} catch (IllegalAccessException e) {
 					throw new IllegalArgumentException(new StringBuffer(
-					"ÀàĞÍÎŞ·¨×ª»»,²»Ö§³Ö[").append(type.getName()).append("]ÏòÃ¶¾ÙÀàĞÍ[")
-					.append(toType.getName()).append("]×ª»»£¬³¬³öÃ¶¾ÙÖµ·¶Î§").append(",value is").append(obj).toString());
+					"ç±»å‹æ— æ³•è½¬æ¢,ä¸æ”¯æŒ[").append(type.getName()).append("]å‘æšä¸¾ç±»å‹[")
+					.append(toType.getName()).append("]è½¬æ¢ï¼Œè¶…å‡ºæšä¸¾å€¼èŒƒå›´").append(",value is").append(obj).toString());
 				} catch (InvocationTargetException e) {
 					throw new IllegalArgumentException(new StringBuffer(
-					"ÀàĞÍÎŞ·¨×ª»»,²»Ö§³Ö[").append(type.getName()).append("]ÏòÃ¶¾ÙÀàĞÍ[")
-					.append(toType.getName()).append("]×ª»»£¬³¬³öÃ¶¾ÙÖµ·¶Î§").append(",value is").append(obj).toString());
+					"ç±»å‹æ— æ³•è½¬æ¢,ä¸æ”¯æŒ[").append(type.getName()).append("]å‘æšä¸¾ç±»å‹[")
+					.append(toType.getName()).append("]è½¬æ¢ï¼Œè¶…å‡ºæšä¸¾å€¼èŒƒå›´").append(",value is").append(obj).toString());
 				}
 			}
 			else if(type == String[].class )
@@ -2398,31 +2398,31 @@ public class ValueObjectUtil {
 					return value;
 				} catch (SecurityException e) {
 					throw new IllegalArgumentException(new StringBuffer(
-					"ÀàĞÍÎŞ·¨×ª»»,²»Ö§³Ö[").append(type.getName()).append("]ÏòÃ¶¾ÙÀàĞÍ[")
-					.append(toType.getName()).append("]×ª»»£¬³¬³öÃ¶¾ÙÖµ·¶Î§").append(",value is").append(obj).toString());
+					"ç±»å‹æ— æ³•è½¬æ¢,ä¸æ”¯æŒ[").append(type.getName()).append("]å‘æšä¸¾ç±»å‹[")
+					.append(toType.getName()).append("]è½¬æ¢ï¼Œè¶…å‡ºæšä¸¾å€¼èŒƒå›´").append(",value is").append(obj).toString());
 				} catch (IllegalArgumentException e) {
 					throw new IllegalArgumentException(new StringBuffer(
-					"ÀàĞÍÎŞ·¨×ª»»,²»Ö§³Ö[").append(type.getName()).append("]ÏòÃ¶¾ÙÀàĞÍ[")
-					.append(toType.getName()).append("]×ª»»£¬³¬³öÃ¶¾ÙÖµ·¶Î§").append(",value is").append(obj).toString());
+					"ç±»å‹æ— æ³•è½¬æ¢,ä¸æ”¯æŒ[").append(type.getName()).append("]å‘æšä¸¾ç±»å‹[")
+					.append(toType.getName()).append("]è½¬æ¢ï¼Œè¶…å‡ºæšä¸¾å€¼èŒƒå›´").append(",value is").append(obj).toString());
 				} catch (NoSuchMethodException e) {
 					throw new IllegalArgumentException(new StringBuffer(
-					"ÀàĞÍÎŞ·¨×ª»»,²»Ö§³Ö[").append(type.getName()).append("]ÏòÃ¶¾ÙÀàĞÍ[")
-					.append(toType.getName()).append("]×ª»»£¬³¬³öÃ¶¾ÙÖµ·¶Î§").append(",value is").append(obj).toString());
+					"ç±»å‹æ— æ³•è½¬æ¢,ä¸æ”¯æŒ[").append(type.getName()).append("]å‘æšä¸¾ç±»å‹[")
+					.append(toType.getName()).append("]è½¬æ¢ï¼Œè¶…å‡ºæšä¸¾å€¼èŒƒå›´").append(",value is").append(obj).toString());
 				} catch (IllegalAccessException e) {
 					throw new IllegalArgumentException(new StringBuffer(
-					"ÀàĞÍÎŞ·¨×ª»»,²»Ö§³Ö[").append(type.getName()).append("]ÏòÃ¶¾ÙÀàĞÍ[")
-					.append(toType.getName()).append("]×ª»»£¬³¬³öÃ¶¾ÙÖµ·¶Î§").append(",value is").append(obj).toString());
+					"ç±»å‹æ— æ³•è½¬æ¢,ä¸æ”¯æŒ[").append(type.getName()).append("]å‘æšä¸¾ç±»å‹[")
+					.append(toType.getName()).append("]è½¬æ¢ï¼Œè¶…å‡ºæšä¸¾å€¼èŒƒå›´").append(",value is").append(obj).toString());
 				} catch (InvocationTargetException e) {
 					throw new IllegalArgumentException(new StringBuffer(
-					"ÀàĞÍÎŞ·¨×ª»»,²»Ö§³Ö[").append(type.getName()).append("]ÏòÃ¶¾ÙÀàĞÍ[")
-					.append(toType.getName()).append("]×ª»»£¬³¬³öÃ¶¾ÙÖµ·¶Î§").append(",value is").append(obj).toString());
+					"ç±»å‹æ— æ³•è½¬æ¢,ä¸æ”¯æŒ[").append(type.getName()).append("]å‘æšä¸¾ç±»å‹[")
+					.append(toType.getName()).append("]è½¬æ¢ï¼Œè¶…å‡ºæšä¸¾å€¼èŒƒå›´").append(",value is").append(obj).toString());
 				}
 			}
 				
 		}
 
-		throw new NoSupportTypeCastException(new StringBuffer("²»Ö§³Ö[").append(
-				type).append("]Ïò[").append(toType).append("]µÄ×ª»»").append(",value is").append(obj).toString());
+		throw new NoSupportTypeCastException(new StringBuffer("ä¸æ”¯æŒ[").append(
+				type).append("]å‘[").append(toType).append("]çš„è½¬æ¢").append(",value is").append(obj).toString());
 
 	}
 	public static Object convertObjectToDateArray(Object obj,Class type,Class toType,String dateformat)
@@ -2663,8 +2663,8 @@ public class ValueObjectUtil {
 	}
 
 	/**
-	 * ¸ù¾İ²ÎÊıÖµµÄÀàĞÍĞŞÕıÏÈÇ°¶¨ÒåµÄ²ÎÊıÀàĞÍÊı×éÖĞ¶ÔÓ¦µÄ²ÎÊı
-	 * paramsÖĞµÄÀàĞÍÓëparamArgs¶ÔÓ¦Î»ÖÃÏàÍ¬ÀàĞÍµÄ²»ĞŞ¸Ä£¬²»ÏàÍ¬µÄĞŞ¸ÄÎªparamArgsÖĞÏàÓ¦µÄÀàĞÍ
+	 * æ ¹æ®å‚æ•°å€¼çš„ç±»å‹ä¿®æ­£å…ˆå‰å®šä¹‰çš„å‚æ•°ç±»å‹æ•°ç»„ä¸­å¯¹åº”çš„å‚æ•°
+	 * paramsä¸­çš„ç±»å‹ä¸paramArgså¯¹åº”ä½ç½®ç›¸åŒç±»å‹çš„ä¸ä¿®æ”¹ï¼Œä¸ç›¸åŒçš„ä¿®æ”¹ä¸ºparamArgsä¸­ç›¸åº”çš„ç±»å‹
 	 * 
 	 * @param params
 	 * @param paramArgs
@@ -2690,9 +2690,9 @@ public class ValueObjectUtil {
 	}
 
 	/**
-	 * ¸ù¾İ²ÎÊıÀàĞÍparams_£¬»ñÈ¡clazzµÄ¹¹Ôìº¯Êı£¬paramArgsÎª²ÎÊıµÄÖµ£¬Èç¹ûsynTypesÎªtrue·½·¨»á
-	 * Í¨¹ı²ÎÊıµÄÖµ¶Ô²ÎÊıÀàĞÍ½øĞĞĞ£Õı µ±·ûºÏparams_ÀàĞÍµÄ¹¹Ôìº¯ÊıÓĞ¶à¸öÊ±£¬·µ»Ø×î¿ªÊ¼Æ¥ÅäÉÏµÄ¹¹Ôìº¯Êı£¬µ«ÊÇµ±synTypesÎªtrueÊ±£¬
-	 * ¾Í»á·µ»ØÑÏ¸ñ·ûºÏparamArgsÖµÀàĞÍ¶ÔÓ¦µÄ¹¹Ôìº¯Êı paramArgsÖµµÄÀàĞÍÒ²»á×÷Îª»ñÈ¡¹¹Ôìº¯ÊıµÄ¸¨ÖúÌõ¼ş£¬
+	 * æ ¹æ®å‚æ•°ç±»å‹params_ï¼Œè·å–clazzçš„æ„é€ å‡½æ•°ï¼ŒparamArgsä¸ºå‚æ•°çš„å€¼ï¼Œå¦‚æœsynTypesä¸ºtrueæ–¹æ³•ä¼š
+	 * é€šè¿‡å‚æ•°çš„å€¼å¯¹å‚æ•°ç±»å‹è¿›è¡Œæ ¡æ­£ å½“ç¬¦åˆparams_ç±»å‹çš„æ„é€ å‡½æ•°æœ‰å¤šä¸ªæ—¶ï¼Œè¿”å›æœ€å¼€å§‹åŒ¹é…ä¸Šçš„æ„é€ å‡½æ•°ï¼Œä½†æ˜¯å½“synTypesä¸ºtrueæ—¶ï¼Œ
+	 * å°±ä¼šè¿”å›ä¸¥æ ¼ç¬¦åˆparamArgså€¼ç±»å‹å¯¹åº”çš„æ„é€ å‡½æ•° paramArgså€¼çš„ç±»å‹ä¹Ÿä¼šä½œä¸ºè·å–æ„é€ å‡½æ•°çš„è¾…åŠ©æ¡ä»¶ï¼Œ
 	 * 
 	 * @param clazz
 	 * @param params_
@@ -2724,7 +2724,7 @@ public class ValueObjectUtil {
 			if (constructors == null || constructors.length == 0)
 				throw new CurrentlyInCreationException(
 						"Inject constructor error: no construction define in the "
-								+ clazz + ",Çë¼ì²éÅäÖÃÎÄ¼şÊÇ·ñÅäÖÃÕıÈ·,²ÎÊı¸öÊıÊÇ·ñÕıÈ·.");
+								+ clazz + ",è¯·æ£€æŸ¥é…ç½®æ–‡ä»¶æ˜¯å¦é…ç½®æ­£ç¡®,å‚æ•°ä¸ªæ•°æ˜¯å¦æ­£ç¡®.");
 			int l = constructors.length;
 			int size = params.length;
 			Class[] types = null;
@@ -2745,7 +2745,7 @@ public class ValueObjectUtil {
 			throw new CurrentlyInCreationException(
 					"Inject constructor error: Parameters with construction defined in the "
 							+ clazz
-							+ " is not matched with the config paramenters .Çë¼ì²éÅäÖÃÎÄ¼şÊÇ·ñÅäÖÃÕıÈ·,²ÎÊı¸öÊıÊÇ·ñÕıÈ·.");
+							+ " is not matched with the config paramenters .è¯·æ£€æŸ¥é…ç½®æ–‡ä»¶æ˜¯å¦é…ç½®æ­£ç¡®,å‚æ•°ä¸ªæ•°æ˜¯å¦æ­£ç¡®.");
 
 			// TODO Auto-generated catch block
 			// throw new BeanInstanceException("Inject constructor error:"
@@ -2778,7 +2778,7 @@ public class ValueObjectUtil {
 	}
 
 	public static Object getDefaultValue(Class toType) {
-		// Èç¹ûÊÇ×Ö·û´®ÔòÖ±½Ó·µ»Øobj.toString()
+		// å¦‚æœæ˜¯å­—ç¬¦ä¸²åˆ™ç›´æ¥è¿”å›obj.toString()
 		if (toType == String.class) {
 			return null;
 		}
@@ -2860,9 +2860,9 @@ public class ValueObjectUtil {
 //	}
 
 	/**
-	 * ¶ÔÏó±È½Ï¹¦ÄÜ£¬value1 > value2 ·µ»Ø1£¬value1 < value2 ·µ»Ø-1£¬value1 == value2 ·µ»Ø0
-	 * ±È½ÏÖ®Ç°Ê×ÏÈ½«value2×ª»»Îªvalue1µÄÀàĞÍ
-	 * Ä¿Ç°Ö»Ö§³ÖÊı×ÖºÍString£¬ÈÕÆÚÀàĞÍµÄ±È½Ï£¬¸´ÔÓÀàĞÍ²»ÄÜÊ¹ÓÃ¸Ä·½·¨½øĞĞ±È½Ï
+	 * å¯¹è±¡æ¯”è¾ƒåŠŸèƒ½ï¼Œvalue1 > value2 è¿”å›1ï¼Œvalue1 < value2 è¿”å›-1ï¼Œvalue1 == value2 è¿”å›0
+	 * æ¯”è¾ƒä¹‹å‰é¦–å…ˆå°†value2è½¬æ¢ä¸ºvalue1çš„ç±»å‹
+	 * ç›®å‰åªæ”¯æŒæ•°å­—å’ŒStringï¼Œæ—¥æœŸç±»å‹çš„æ¯”è¾ƒï¼Œå¤æ‚ç±»å‹ä¸èƒ½ä½¿ç”¨æ”¹æ–¹æ³•è¿›è¡Œæ¯”è¾ƒ
 	 */
 	public static int typecompare(Object value1,Object value2)
 	{
@@ -4751,7 +4751,7 @@ public class ValueObjectUtil {
 	}
 	
 	/**
-	 * »ñÈ¡Êı×éÔªËØÀàĞÍÃû³Æ
+	 * è·å–æ•°ç»„å…ƒç´ ç±»å‹åç§°
 	 * @param array
 	 * @return
 	 */
@@ -4928,7 +4928,7 @@ public class ValueObjectUtil {
 	public static String getFileContent(String configFile)
     {
     	try {
-			return getFileContent(configFile,"GBK");
+			return getFileContent(configFile,"UTF-8");
 		} catch (Exception e) {
 			return null;
 		}
@@ -4971,7 +4971,7 @@ public class ValueObjectUtil {
 							temp.write(buffer, 0, len);
 						}
 						temp.flush();
-						pooltemplates = swriter.toString("GBK");
+						pooltemplates = swriter.toString("UTF-8");
 
 					} catch (Exception e) {
 						// TODO Auto-generated catch block
@@ -5266,7 +5266,7 @@ public class ValueObjectUtil {
     }
     
     /**
-     * ÅĞ¶ÏÀàtypeÊÇ·ñÊÇ»ù´¡Êı¾İÀàĞÍ»òÕß»ù´¡Êı¾İÀàĞÍÊı×é
+     * åˆ¤æ–­ç±»typeæ˜¯å¦æ˜¯åŸºç¡€æ•°æ®ç±»å‹æˆ–è€…åŸºç¡€æ•°æ®ç±»å‹æ•°ç»„
      * @param type
      * @return
      */
@@ -5291,7 +5291,7 @@ public class ValueObjectUtil {
     }
     
     /**
-     * ÅĞ¶ÏÀàtypeÊÇ·ñÊÇ»ù´¡Êı¾İÀàĞÍ
+     * åˆ¤æ–­ç±»typeæ˜¯å¦æ˜¯åŸºç¡€æ•°æ®ç±»å‹
      * @param type
      * @return
      */

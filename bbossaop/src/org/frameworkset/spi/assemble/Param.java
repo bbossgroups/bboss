@@ -22,13 +22,13 @@ import org.frameworkset.spi.BaseApplicationContext;
  * 
  * <p>Title: Param.java</p>
  *
- * <p>Description: ·½·¨²ÎÊı¶ÔÏó£¬ÓÃÀ´·â×°·½·¨µÄ²ÎÊıĞÅÏ¢</p>
+ * <p>Description: æ–¹æ³•å‚æ•°å¯¹è±¡ï¼Œç”¨æ¥å°è£…æ–¹æ³•çš„å‚æ•°ä¿¡æ¯</p>
  *
  * <p>Copyright: Copyright (c) 2007</p>
  *
  * <p>bboss workgroup</p>
  * @Date Jul 30, 2008 4:38:57 PM
- * @author biaoping.yin,Òü±êÆ½
+ * @author biaoping.yin,å°¹æ ‡å¹³
  * @version 1.0
  */
 public class Param  extends Pro{

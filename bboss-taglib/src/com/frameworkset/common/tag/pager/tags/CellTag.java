@@ -29,7 +29,8 @@ import org.apache.log4j.Logger;
 import com.frameworkset.common.tag.exception.FormulaException;
 import com.frameworkset.common.tag.pager.model.Field;
 import com.frameworkset.common.tag.pager.model.Formula;
-import com.frameworkset.platform.cms.driver.htmlconverter.CmsLinkProcessor;
+import com.frameworkset.platform.cms.driver.htmlconverter.CmsLinkProcessorInf;
+import com.frameworkset.platform.cms.driver.htmlconverter.CmsLinkProcessorUtil;
 import com.frameworkset.platform.cms.driver.jsp.CMSServletRequest;
 import com.frameworkset.platform.cms.driver.jsp.InternalImplConverter;
 import com.frameworkset.util.RegexUtil;
@@ -37,7 +38,7 @@ import com.frameworkset.util.SimpleStringUtil;
 import com.frameworkset.util.StringUtil;
 /**
  * @author biaoping.yin
- * ÏÔÊ¾Ò»¸öÊı¾İµÄtag
+ * æ˜¾ç¤ºä¸€ä¸ªæ•°æ®çš„tag
  * To change the template for this generated type comment go to
  * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
  */
@@ -46,64 +47,64 @@ public class CellTag  extends PagerTagSupport {
 	protected boolean actualseted = false;
     private static Logger log = Logger.getLogger (CellTag.class);
     /**
-     * ¼ÇÂ¼cellµÄÔªÄ£ĞÍÔªËØ
+     * è®°å½•cellçš„å…ƒæ¨¡å‹å…ƒç´ 
      */
     private Field metafield;
 
 	/**
-	 * ÁĞÃû
+	 * åˆ—å
 	 */
 	private String colName;
 
 	/**
-	 * ×æÏÈË÷Òı
+	 * ç¥–å…ˆç´¢å¼•
 	 */
 	protected int index = -1;
 
 	/**
-	 * Êä³öÈÕÆÚ¸ñÊ½
+	 * è¾“å‡ºæ—¥æœŸæ ¼å¼
 	 */
 	private String dateformat;
 
 	/**
-	 * Êä³öÊı×Ö¸ñÊ½
+	 * è¾“å‡ºæ•°å­—æ ¼å¼
 	 */
 	private String numerformat;
 	/**
-	 * ÊôĞÔÃû³Æ
+	 * å±æ€§åç§°
 	 */
 	private String property;
 	/**
-	 * Ö¸¶¨ÊôĞÔÊä³öÄÚÈİ
+	 * æŒ‡å®šå±æ€§è¾“å‡ºå†…å®¹
 	 */
 	private String content;
 	/**
-	 * ÁĞµÄË÷Òı
+	 * åˆ—çš„ç´¢å¼•
 	 */
 	private int colid = -1;
 
 	protected Object defaultValue;
 
 	/**
-	 * ¼ÆËã¹«Ê½
+	 * è®¡ç®—å…¬å¼
 	 */
 	private String expression;
 
 	protected Formula t_formula;
 
 	/**
-	 * ÊÇ·ñ½øĞĞurl±àÂë
+	 * æ˜¯å¦è¿›è¡Œurlç¼–ç 
 	 */
 	private String encode;
 	
 	/**
-	 * ±àÂë´ÎÊı£¬Á¬Ğø±àÂë´ÎÊı
+	 * ç¼–ç æ¬¡æ•°ï¼Œè¿ç»­ç¼–ç æ¬¡æ•°
 	 */
 	private int encodecount = 1;
 	
 
 	/**
-	 * ÊÇ·ñ½øĞĞurl½âÂë
+	 * æ˜¯å¦è¿›è¡Œurlè§£ç 
 	 */
 	private String decode;
 	
@@ -117,7 +118,7 @@ public class CellTag  extends PagerTagSupport {
 	 */
 	protected boolean trim ;
 	/**
-	 * °üº¬cell±êÇ©µÄdataSet
+	 * åŒ…å«cellæ ‡ç­¾çš„dataSet
 	 */
 	protected PagerDataSet dataSet;
 	
@@ -127,10 +128,10 @@ public class CellTag  extends PagerTagSupport {
 	
 	
 	/**
-	 * ±êÊ¶ÊÇ·ñ¶Ô±êÇ©ÊôĞÔ¶ÔÓ¦µÄÖµ½øĞĞ·¢²¼£¬ÄÚÈİ¹ÜÀíÏµÍ³ÖĞÊ¹ÓÃµÄ±êÇ©
-	 * true-·¢²¼
-	 * false-²»·¢²¼
-	 * Ö÷ÒªÊÇÕë¶ÔÄÚÈİÖĞ¶ÔÓ¦µÄÁ´½ÓºÍ¸½¼şµÄ·¢²¼ºÍÂ·¾¶ĞŞ¸Ä
+	 * æ ‡è¯†æ˜¯å¦å¯¹æ ‡ç­¾å±æ€§å¯¹åº”çš„å€¼è¿›è¡Œå‘å¸ƒï¼Œå†…å®¹ç®¡ç†ç³»ç»Ÿä¸­ä½¿ç”¨çš„æ ‡ç­¾
+	 * true-å‘å¸ƒ
+	 * false-ä¸å‘å¸ƒ
+	 * ä¸»è¦æ˜¯é’ˆå¯¹å†…å®¹ä¸­å¯¹åº”çš„é“¾æ¥å’Œé™„ä»¶çš„å‘å¸ƒå’Œè·¯å¾„ä¿®æ”¹
 	 */
 	protected boolean publish = false;
 	
@@ -149,7 +150,7 @@ public class CellTag  extends PagerTagSupport {
         	{
         		e.printStackTrace();
         	}
-//            //ÉèÖÃ±¨±íÔªÄ£ĞÍ
+//            //è®¾ç½®æŠ¥è¡¨å…ƒæ¨¡å‹
 //            setMeta();
         }
         else
@@ -189,7 +190,7 @@ public class CellTag  extends PagerTagSupport {
 	}
 	public int doStartTag() throws JspException {
 		//super.doStartTag();
-	    //³õÊ¼»¯dataSet
+	    //åˆå§‹åŒ–dataSet
 		
 	    init();
 	   
@@ -242,17 +243,20 @@ public class CellTag  extends PagerTagSupport {
 		}
 		try { 
 			/**
-			 * Èç¹ûĞèÒª¶ÔÊä³öµÄÄÚÈİ½øĞĞ·¢²¼ÔòÖ´ĞĞ·¢²¼µÄ¹ı³Ì
+			 * å¦‚æœéœ€è¦å¯¹è¾“å‡ºçš„å†…å®¹è¿›è¡Œå‘å¸ƒåˆ™æ‰§è¡Œå‘å¸ƒçš„è¿‡ç¨‹
 			 */
 			if(this.isPublish())
 			{
 				
 				String encoding = "";
-				CmsLinkProcessor processor = new CmsLinkProcessor(null,
-						  CmsLinkProcessor.REPLACE_LINKS,
+//				CmsLinkProcessorInf processor = new CmsLinkProcessor(null,
+//						CmsLinkProcessorInf.REPLACE_LINKS,
+//						  encoding);
+				CmsLinkProcessorInf processor = CmsLinkProcessorUtil.getCmsLinkProcessor(null,
+						CmsLinkProcessorInf.REPLACE_LINKS,
 						  encoding);
-				processor.setHandletype(CmsLinkProcessor.PROCESS_CONTENT);
 				
+				processor.setHandletype(CmsLinkProcessorInf.PROCESS_CONTENT);
 				content = processor.process(content,encoding);
 			}
 			
@@ -300,16 +304,16 @@ public class CellTag  extends PagerTagSupport {
 		    {
 
 		        metafield = new Field();
-		        //ÉèÖÃ×Ö¶ÎÃû³Æ£¬Èç¹ûÖ¸¶¨µÄÊÇÁĞË÷Òı£¬Í¨¹ıË÷Òı²éÕÒ×Ö¶ÎµÄÃû³Æ
+		        //è®¾ç½®å­—æ®µåç§°ï¼Œå¦‚æœæŒ‡å®šçš„æ˜¯åˆ—ç´¢å¼•ï¼Œé€šè¿‡ç´¢å¼•æŸ¥æ‰¾å­—æ®µçš„åç§°
 		        if(this.getColid() == -1)
 		            metafield.setField(this.getColName());
 		        else
 		            metafield.setField(fieldHelper.getFields()[getColid()]);
-		        //ÉèÖÃ×Ö¶Îid
+		        //è®¾ç½®å­—æ®µid
 		        metafield.setColid(getColid());
-		        //ÉèÖÃ×Ö¶ÎµÄÏÔÊ¾±êÌâ
+		        //è®¾ç½®å­—æ®µçš„æ˜¾ç¤ºæ ‡é¢˜
 		        metafield.setTitle(this.fieldHelper.getTitles()[getColid()]);
-		        //ÉèÖÃÍ³¼Æ¹«Ê½
+		        //è®¾ç½®ç»Ÿè®¡å…¬å¼
 		        if(t_formula != null)
 		        {
 
@@ -406,7 +410,7 @@ public class CellTag  extends PagerTagSupport {
 	}
 
 	/**
-	 * È±Ê¡ÖµÎª¶ÔÏóÊ±µ÷ÓÃÒÔÏÂ·½·¨£¬»ñÈ¡Êä³ö
+	 * ç¼ºçœå€¼ä¸ºå¯¹è±¡æ—¶è°ƒç”¨ä»¥ä¸‹æ–¹æ³•ï¼Œè·å–è¾“å‡º
 	 * @param obj
 	 * @return String
 	 */
@@ -438,7 +442,7 @@ public class CellTag  extends PagerTagSupport {
 	}
 	
 	/**
-	 * È±Ê¡ÖµÎª¶ÔÏóÊ±µ÷ÓÃÒÔÏÂ·½·¨£¬»ñÈ¡Êä³ö
+	 * ç¼ºçœå€¼ä¸ºå¯¹è±¡æ—¶è°ƒç”¨ä»¥ä¸‹æ–¹æ³•ï¼Œè·å–è¾“å‡º
 	 * @param obj
 	 * @return String
 	 */
@@ -613,11 +617,11 @@ public class CellTag  extends PagerTagSupport {
 	}
 
 	/**
-	 * °üº¬±êÇ©¿âÊôĞÔ±äÁ¿µÄ±í´ïÊ½Æ¥Åä¹«Ê½£¬ÆäËûµÄ±í´ïÊ½½«²»ÄÜÊ¹ÓÃ±¾±í´ïÊ½
+	 * åŒ…å«æ ‡ç­¾åº“å±æ€§å˜é‡çš„è¡¨è¾¾å¼åŒ¹é…å…¬å¼ï¼Œå…¶ä»–çš„è¡¨è¾¾å¼å°†ä¸èƒ½ä½¿ç”¨æœ¬è¡¨è¾¾å¼
 	 */
 	public static final String EXPRESSION_PATTERN = "\\s*\\{[^\\}]+\\}\\s*";
 	/**
-	 * ÇóÒ»°ã±í´ïÊ½µÄÖµ
+	 * æ±‚ä¸€èˆ¬è¡¨è¾¾å¼çš„å€¼
 	 * @param formula
 	 * @return Object
 	 * @throws FormulaException
@@ -632,7 +636,7 @@ public class CellTag  extends PagerTagSupport {
 	
 	
 	/**
-	 * ÇóÒ»¶¨°üº¬¶ÔÏóÊôĞÔ±í´ïÊ½µÄÖµ
+	 * æ±‚ä¸€å®šåŒ…å«å¯¹è±¡å±æ€§è¡¨è¾¾å¼çš„å€¼
 	 * @param formula
 	 * @return Object
 	 * added on 2007.11.5 
@@ -659,7 +663,7 @@ public class CellTag  extends PagerTagSupport {
 	}
 	
 	/**
-	 * ÇóÒ»¶¨°üº¬¶ÔÏóÊôĞÔ±í´ïÊ½µÄÖµ,Ê×ÏÈÅĞ¶ÏformulaÊÇ²»ÊÇ±í´ïÊ½,Èç¹û²»ÊÇÔòÖ±½Ó»ñÈ¡ÊôĞÔformula£¨½«Æäµ±×÷ÊôĞÔÀ´Ê¹ÓÃ£©
+	 * æ±‚ä¸€å®šåŒ…å«å¯¹è±¡å±æ€§è¡¨è¾¾å¼çš„å€¼,é¦–å…ˆåˆ¤æ–­formulaæ˜¯ä¸æ˜¯è¡¨è¾¾å¼,å¦‚æœä¸æ˜¯åˆ™ç›´æ¥è·å–å±æ€§formulaï¼ˆå°†å…¶å½“ä½œå±æ€§æ¥ä½¿ç”¨ï¼‰
 	 * @param formula
 	 * @return Object
 	 * added on 2007.11.5 
@@ -689,7 +693,7 @@ public class CellTag  extends PagerTagSupport {
 	
 
 	/**
-	 * »ñÈ¡µ¥Ôª¸ñµÄÊä³ö
+	 * è·å–å•å…ƒæ ¼çš„è¾“å‡º
 	 * @return String
 	 */
 
@@ -701,8 +705,8 @@ public class CellTag  extends PagerTagSupport {
 		}
 		return outStr;
 //		//PagerDataSet dataSet = this.searchDataSet(this,PagerDataSet.class);
-//		//ÔÚsetMeta·½·¨ÖĞ³õÊ¼»¯t_formula¶ÔÏó
-//		//Èç¹ûÉèÖÃÁË±í´ïÊ½£¬ÔòÍ¨¹ı±í´ïÊ½Çó½â·µ»ØµÄÖµ
+//		//åœ¨setMetaæ–¹æ³•ä¸­åˆå§‹åŒ–t_formulaå¯¹è±¡
+//		//å¦‚æœè®¾ç½®äº†è¡¨è¾¾å¼ï¼Œåˆ™é€šè¿‡è¡¨è¾¾å¼æ±‚è§£è¿”å›çš„å€¼
 //		if(this.t_formula != null)
 //		{
 //		    try {
@@ -758,8 +762,8 @@ public class CellTag  extends PagerTagSupport {
 			if(this.dataSet == null)
 				return null;
 			Object outStr = null;
-	//		ÔÚsetMeta·½·¨ÖĞ³õÊ¼»¯t_formula¶ÔÏó
-			//Èç¹ûÉèÖÃÁË±í´ïÊ½£¬ÔòÍ¨¹ı±í´ïÊ½Çó½â·µ»ØµÄÖµ
+	//		åœ¨setMetaæ–¹æ³•ä¸­åˆå§‹åŒ–t_formulaå¯¹è±¡
+			//å¦‚æœè®¾ç½®äº†è¡¨è¾¾å¼ï¼Œåˆ™é€šè¿‡è¡¨è¾¾å¼æ±‚è§£è¿”å›çš„å€¼
 			if(this.t_formula != null)
 			{
 			    try {
@@ -825,8 +829,8 @@ public class CellTag  extends PagerTagSupport {
 //			if(this.dataSet == null)
 //				return null;
 //			String outStr = null;
-//	//		ÔÚsetMeta·½·¨ÖĞ³õÊ¼»¯t_formula¶ÔÏó
-//			//Èç¹ûÉèÖÃÁË±í´ïÊ½£¬ÔòÍ¨¹ı±í´ïÊ½Çó½â·µ»ØµÄÖµ
+//	//		åœ¨setMetaæ–¹æ³•ä¸­åˆå§‹åŒ–t_formulaå¯¹è±¡
+//			//å¦‚æœè®¾ç½®äº†è¡¨è¾¾å¼ï¼Œåˆ™é€šè¿‡è¡¨è¾¾å¼æ±‚è§£è¿”å›çš„å€¼
 //			if(this.t_formula != null)
 //			{
 //			    try {
@@ -894,7 +898,7 @@ public class CellTag  extends PagerTagSupport {
 		return String.valueOf(ret);
 	}
 	/**
-	 * @return ·µ»ØÊôĞÔË÷Òı
+	 * @return è¿”å›å±æ€§ç´¢å¼•
 	 */
 	public int getColid() {
 		return this.colid;
@@ -906,7 +910,7 @@ public class CellTag  extends PagerTagSupport {
 		this.colid = colid;
 	}
 	/**
-	 * @return String ·µ»ØÊôĞÔÃû³Æ
+	 * @return String è¿”å›å±æ€§åç§°
 	 */
 	public String getColName() {
 		return colName;

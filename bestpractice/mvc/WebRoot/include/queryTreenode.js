@@ -1,6 +1,6 @@
 /**
 *
-*²éÕÒ¾²Ì¬Ê÷½Úµã£¬ÔÚÒª²éÕÒµÄ¾²Ì¬Ê÷ÉÏ£¬·ÅÉÏÒÔÏÂ´úÂë
+*æŸ¥æ‰¾é™æ€æ ‘èŠ‚ç‚¹ï¼Œåœ¨è¦æŸ¥æ‰¾çš„é™æ€æ ‘ä¸Šï¼Œæ”¾ä¸Šä»¥ä¸‹ä»£ç 
 <div align="center">
 	<table width="100%" border="0" cellpadding="0" cellspacing="0" class="table">
 		<tr>
@@ -10,8 +10,8 @@
 	</tr>
 	<tr>
 	<td align="right">
-		<input type="button" name="queryBtn" value="²éÑ¯" onclick="blurryQuary('blurryValue','queryBtn','nextBtn')"  class="input">
-		<input style="display:none" name="nextBtn" type="button" value="²éÕÒÏÂÒ»¸ö" onclick="nextNodes('queryBtn','nextBtn')" class="input">
+		<input type="button" name="queryBtn" value="æŸ¥è¯¢" onclick="blurryQuary('blurryValue','queryBtn','nextBtn')"  class="input">
+		<input style="display:none" name="nextBtn" type="button" value="æŸ¥æ‰¾ä¸‹ä¸€ä¸ª" onclick="nextNodes('queryBtn','nextBtn')" class="input">
 		</td>
 	</tr>
 	</table>
@@ -22,24 +22,24 @@
 
 
 
-/**±£´æ¶¨Î»µ½µÄÔªËØ¼¯ºÏ**/
+/**ä¿å­˜å®šä½åˆ°çš„å…ƒç´ é›†åˆ**/
 var eleArray_queryTreenode = new Array();
-/**±£´æ½ÚµãÃû³ÆºÍÎ»ÖÃµÄ·´ÏòË÷Òı£¬Ö÷ÒªÊÇÎª½â¾öÒ»¸ö½ÚµãÃû³Æ¶ÔÓ¦ÁË¶à¸ö½ÚµãµÄ¼ìË÷ÎÊÌâ*/
+/**ä¿å­˜èŠ‚ç‚¹åç§°å’Œä½ç½®çš„åå‘ç´¢å¼•ï¼Œä¸»è¦æ˜¯ä¸ºè§£å†³ä¸€ä¸ªèŠ‚ç‚¹åç§°å¯¹åº”äº†å¤šä¸ªèŠ‚ç‚¹çš„æ£€ç´¢é—®é¢˜*/
 var eleArray_reverseTreenodeIdx = new Array();
 
-/*Ä£ºı²éÑ¯ÏÂÒ»Ìõ¼ÇÂ¼*/
+/*æ¨¡ç³ŠæŸ¥è¯¢ä¸‹ä¸€æ¡è®°å½•*/
 var next_queryTreenode = 0;
 
 var tree_node_rootid_ = 0;
 
 
 /*
-	queryTextname	²éÑ¯Ìõ¼şµÄÊäÈëÎÄ±¾¿òÃû³Æ
-	queryBtn		²éÑ¯°´Å¥Ãû³Æ
-	nextBtn			Ä£ºı²éÑ¯ÏÂÒ»¸ö°´Å¥µÄÃû³Æ
+	queryTextname	æŸ¥è¯¢æ¡ä»¶çš„è¾“å…¥æ–‡æœ¬æ¡†åç§°
+	queryBtn		æŸ¥è¯¢æŒ‰é’®åç§°
+	nextBtn			æ¨¡ç³ŠæŸ¥è¯¢ä¸‹ä¸€ä¸ªæŒ‰é’®çš„åç§°
 */
 function blurryQuary(queryTextname,queryBtn,nextBtn,root_id){
-	/**²éÑ¯³öÀ´µÄ½Úµã¼¯ºÏ**/
+	/**æŸ¥è¯¢å‡ºæ¥çš„èŠ‚ç‚¹é›†åˆ**/
 	var a = document.getElementsByTagName("a");
 	
 	
@@ -47,10 +47,10 @@ function blurryQuary(queryTextname,queryBtn,nextBtn,root_id){
 	var count = 0;
 	var blurryValue = $(queryTextname).val();
 	if(blurryValue == ""){
-		alert("²éÕÒÄÚÈİ²»ÄÜÎª¿Õ!");
+		alert("æŸ¥æ‰¾å†…å®¹ä¸èƒ½ä¸ºç©º!");
 		return ;
 	}
-	//¼ÆËã³öÓëblurryValueÖµÄ£ºıÆ¥ÅäµÄ½ÚµãÊı
+	//è®¡ç®—å‡ºä¸blurryValueå€¼æ¨¡ç³ŠåŒ¹é…çš„èŠ‚ç‚¹æ•°
 	for(var i = 0; i < a.length; i++){
 		//alert(a[i].name + "---" + (a[i].name.indexOf("xml") == -1)) (a[i].name.indexOf("xml") == -1)
 		if(a[i].name != ""){
@@ -62,7 +62,7 @@ function blurryQuary(queryTextname,queryBtn,nextBtn,root_id){
 				//alert(a[i].innerText);
 				eleArray_queryTreenode[count] = a[i].name;	
 				/**
-				 * ÅĞ¶ÏÊÇ·ñÓĞ¶à¸öÍ¬Ãû½Úµã
+				 * åˆ¤æ–­æ˜¯å¦æœ‰å¤šä¸ªåŒåèŠ‚ç‚¹
 				 */
 				var tree_node_ = document.all(eleArray_queryTreenode[count]);
 				
@@ -84,7 +84,7 @@ function blurryQuary(queryTextname,queryBtn,nextBtn,root_id){
 		}
 	}
 	if(eleArray_queryTreenode.length > 0){
-	/**±£´æËùÓĞ¸¸½ÚµãĞÅÏ¢**/
+	/**ä¿å­˜æ‰€æœ‰çˆ¶èŠ‚ç‚¹ä¿¡æ¯**/
 	    var parentEle = new Array();
 //		var node = document.all("div_"+eleArray_queryTreenode[0]);
 		
@@ -114,12 +114,12 @@ function blurryQuary(queryTextname,queryBtn,nextBtn,root_id){
 	 			for(var i = 0; i < 100; i++){
 			      	node = node.parentElement;
 			      	
-			      /**¸¸½ÚµãÓĞID±íÊ¾´æÔÚ**/
+			      /**çˆ¶èŠ‚ç‚¹æœ‰IDè¡¨ç¤ºå­˜åœ¨**/
 			      
 			      	if(node.id != ""){
 				     		parentEle[i] = node.id;
 				    	}else{
-				     		/**ÍË³öÑ­»·**/
+				     		/**é€€å‡ºå¾ªç¯**/
 				     		break;
 				    	}
 			      	
@@ -138,7 +138,7 @@ function blurryQuary(queryTextname,queryBtn,nextBtn,root_id){
 	   		   document.all('icon_'+parentEle[i].substring(11,parentEle[i].length)).click();
 	   		}
 
-	   		/**ÅĞ¶ÏÊÇ·ñµ½´ï×îºóÒ»¸ö**/ 
+	   		/**åˆ¤æ–­æ˜¯å¦åˆ°è¾¾æœ€åä¸€ä¸ª**/ 
 	   		if( i == 0 ){
 	   			tree_node_.parentElement.childNodes[0].style.backgroundColor="cornflowerblue";
 	   			tree_node_.parentElement.focus();
@@ -150,16 +150,16 @@ function blurryQuary(queryTextname,queryBtn,nextBtn,root_id){
  		
 	}else{
 		onBlurryQueryChange(queryBtn,nextBtn);
-		alert("Ã»ÓĞÕÒµ½ÄúĞèÒªµÄÏà¹ØĞÅÏ¢£¡");
+		alert("æ²¡æœ‰æ‰¾åˆ°æ‚¨éœ€è¦çš„ç›¸å…³ä¿¡æ¯ï¼");
 		return;
 	}
 	
 }
 
 /*
-	ÎÄ±¾ÊôĞÔ¸Ä±ä
-	queryBtn	²éÑ¯°´Å¥Ãû³Æ
-	nextBtn		²éÑ¯ÏÂÒ»¸ö°´Å¥Ãû³Æ
+	æ–‡æœ¬å±æ€§æ”¹å˜
+	queryBtn	æŸ¥è¯¢æŒ‰é’®åç§°
+	nextBtn		æŸ¥è¯¢ä¸‹ä¸€ä¸ªæŒ‰é’®åç§°
 */
 function onBlurryQueryChange(queryBtn,nextBtn){
 	count = 0;
@@ -216,8 +216,8 @@ function getCurrentTreeNode(nextcount)
 }
 
 /*
-	queryBtn	²éÑ¯°´Å¥Ãû³Æ
-	nextBtn		²éÑ¯ÏÂÒ»¸ö°´Å¥Ãû³Æ
+	queryBtn	æŸ¥è¯¢æŒ‰é’®åç§°
+	nextBtn		æŸ¥è¯¢ä¸‹ä¸€ä¸ªæŒ‰é’®åç§°
 */
 function nextNodes(queryBtn,nextBtn,root_id){
 	if(eleArray_queryTreenode.length > next_queryTreenode){
@@ -246,12 +246,12 @@ function nextNodes(queryBtn,nextBtn,root_id){
 		else{
 	 			for(var i = 0; i < 100; i++){
 			      	node = node.parentElement;
-			      /**¸¸½ÚµãÓĞID±íÊ¾´æÔÚ**/
+			      /**çˆ¶èŠ‚ç‚¹æœ‰IDè¡¨ç¤ºå­˜åœ¨**/
 			      	
 			    	if(node.id != ""){
 			     		parentEle[i] = node.id;
 			    	}else{
-			     		/**ÍË³öÑ­»·**/
+			     		/**é€€å‡ºå¾ªç¯**/
 			     		break;
 			    	}
 	 			}
@@ -266,7 +266,7 @@ function nextNodes(queryBtn,nextBtn,root_id){
 	   		   document.all('icon_'+parentEle[i].substring(11,parentEle[i].length)).click();
 	   		}
 
-	   		/**ÅĞ¶ÏÊÇ·ñµ½´ï×îºóÒ»¸ö**/ 
+	   		/**åˆ¤æ–­æ˜¯å¦åˆ°è¾¾æœ€åä¸€ä¸ª**/ 
 	   		if( i == 0 ){
 	   			tree_node_.parentElement.childNodes[0].style.backgroundColor="cornflowerblue";
 	   			tree_node_.parentElement.focus();
@@ -277,7 +277,7 @@ function nextNodes(queryBtn,nextBtn,root_id){
  		}
  		
 	}else{
-		alert("²éÑ¯Íê³É£¡");
+		alert("æŸ¥è¯¢å®Œæˆï¼");
 		eleArray_queryTreenode = new Array();
 		eleArray_reverseTreenodeIdx = new Array();
 		onBlurryQueryChange(queryBtn,nextBtn);
@@ -285,9 +285,9 @@ function nextNodes(queryBtn,nextBtn,root_id){
 	}
 }
 /*
-	queryTextname	²éÑ¯Ìõ¼şµÄÊäÈëÎÄ±¾¿òÃû³Æ
-	queryBtn	²éÑ¯°´Å¥Ãû³Æ
-	nextBtn		²éÑ¯ÏÂÒ»¸ö°´Å¥Ãû³Æ
+	queryTextname	æŸ¥è¯¢æ¡ä»¶çš„è¾“å…¥æ–‡æœ¬æ¡†åç§°
+	queryBtn	æŸ¥è¯¢æŒ‰é’®åç§°
+	nextBtn		æŸ¥è¯¢ä¸‹ä¸€ä¸ªæŒ‰é’®åç§°
 */			
 function enterKeydowngo(queryTextname,queryBtn,nextBtn,root_id){ 
 	if(window.event.keyCode == 13){
@@ -309,8 +309,8 @@ function enterKeydowngo(queryTextname,queryBtn,nextBtn,root_id){
 	</tr>
 	<tr>
 	<td align="right">
-		<input type="button" name="queryBtn" value="²éÑ¯" onclick="blurryQuary('blurryValue','queryBtn','nextBtn')"  class="input">
-		<input style="display:none" name="nextBtn" type="button" value="²éÕÒÏÂÒ»¸ö" onclick="nextNodes('queryBtn','nextBtn')" class="input">
+		<input type="button" name="queryBtn" value="æŸ¥è¯¢" onclick="blurryQuary('blurryValue','queryBtn','nextBtn')"  class="input">
+		<input style="display:none" name="nextBtn" type="button" value="æŸ¥æ‰¾ä¸‹ä¸€ä¸ª" onclick="nextNodes('queryBtn','nextBtn')" class="input">
 		</td>
 	</tr>
 	</table>

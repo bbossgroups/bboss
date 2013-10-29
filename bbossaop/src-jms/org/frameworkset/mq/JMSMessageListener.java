@@ -23,20 +23,20 @@ import javax.jms.MessageListener;
 /**
  * <p>Title: JMSMessageListener.java</p> 
  * <p>Description: 
- * 	ÏµÍ³À©Õ¹µÄÏûÏ¢¼àÌıÆ÷ £¬Ìá¹©ÒÔÏÂ¹«¹²·½·¨
- * 	o ÊÂÎñ¹ÜÀí·½·¨
- *  commitºÍrollback
+ * 	ç³»ç»Ÿæ‰©å±•çš„æ¶ˆæ¯ç›‘å¬å™¨ ï¼Œæä¾›ä»¥ä¸‹å…¬å…±æ–¹æ³•
+ * 	o äº‹åŠ¡ç®¡ç†æ–¹æ³•
+ *  commitå’Œrollback
  *  
- *  o ÏûÏ¢»Ø¸´¹ÜÀí¹¦ÄÜ
- *  ËùÓĞµÄ×ÓÀà¿ÉÒÔÍ¨¹ı·½·¨
+ *  o æ¶ˆæ¯å›å¤ç®¡ç†åŠŸèƒ½
+ *  æ‰€æœ‰çš„å­ç±»å¯ä»¥é€šè¿‡æ–¹æ³•
  *  
 	protected  RequestDispatcher getRequestDispatcher()
-	»ñÈ¡½øĞĞÏûÏ¢´¦ÀíµÄËùÓĞ·½·¨£¬°üÀ¨·¢ËÍºÍ½ÓÊÕ·½·¨
+	è·å–è¿›è¡Œæ¶ˆæ¯å¤„ç†çš„æ‰€æœ‰æ–¹æ³•ï¼ŒåŒ…æ‹¬å‘é€å’Œæ¥æ”¶æ–¹æ³•
 	
  * </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2009-11-21 ÏÂÎç05:36:28
+ * @Date 2009-11-21 ä¸‹åˆ05:36:28
  * @author biaoping.yin
  * @version 1.0
  */

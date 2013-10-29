@@ -35,7 +35,7 @@ import org.frameworkset.spi.remote.Util;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2009-11-11 ÏÂÎç10:45:10
+ * @Date 2009-11-11 ä¸‹åˆ10:45:10
  * @author biaoping.yin
  * @version 1.0
  */
@@ -43,7 +43,7 @@ public class RPCJMSFuture extends BaseFutureCall
 {
 	protected JMSTemplate request ;
 	/**
-	 * ¿Í·ş¶Ë±êÊ¶id£¬×÷Îª·şÎñÆ÷·µ»Ø¸ø±¾¿Í·ş¶ËµÄÏìÓ¦ÏûÏ¢µÄÌØÊâ±êÊ¶
+	 * å®¢æœç«¯æ ‡è¯†idï¼Œä½œä¸ºæœåŠ¡å™¨è¿”å›ç»™æœ¬å®¢æœç«¯çš„å“åº”æ¶ˆæ¯çš„ç‰¹æ®Šæ ‡è¯†
 	 */
 	protected RPCAddress src_address;
 	public RPCJMSFuture(RPCMessage srcmsg, RPCAddress address,

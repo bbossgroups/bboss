@@ -36,7 +36,7 @@ package com.frameworkset.common.util;
 import java.util.Date;
 
 /**
- * ÊµÏÖ¸÷ÖÖÀàĞÍÊı¾İµÄ±È½Ï²Ù×÷£¬ÊµÏÖ¸÷ÖÖ¶ÔÏóÖĞÊôĞÔÖµµÄ±È½Ï²Ù×÷ 
+ * å®ç°å„ç§ç±»å‹æ•°æ®çš„æ¯”è¾ƒæ“ä½œï¼Œå®ç°å„ç§å¯¹è±¡ä¸­å±æ€§å€¼çš„æ¯”è¾ƒæ“ä½œ 
  * @author biaoping.yin
  * @version 1.0
  */
@@ -46,14 +46,14 @@ public final class CompareUtil {
 	
 	
 	/**	 
-	 * Description: ±È½ÏÁ½¸ö¶ÔÏóµÄ´óĞ¡
-	 * @param left µÚÒ»¸ö¶ÔÏó
-	 * @param right µÚ¶ş¸ö¶ÔÏó
-	 * true£º½µĞò
-	 * false:ÉıĞò
-	 * @return int 0 -±íÊ¾Á½¸ö¶ÔÏóÏàµÈ
-	 * 				-1-±íÊ¾left±ÈrightĞ¡
-	 * 				1 -±íÊ¾left±Èright´ó
+	 * Description: æ¯”è¾ƒä¸¤ä¸ªå¯¹è±¡çš„å¤§å°
+	 * @param left ç¬¬ä¸€ä¸ªå¯¹è±¡
+	 * @param right ç¬¬äºŒä¸ªå¯¹è±¡
+	 * trueï¼šé™åº
+	 * false:å‡åº
+	 * @return int 0 -è¡¨ç¤ºä¸¤ä¸ªå¯¹è±¡ç›¸ç­‰
+	 * 				-1-è¡¨ç¤ºleftæ¯”rightå°
+	 * 				1 -è¡¨ç¤ºleftæ¯”rightå¤§
 	 */
 	public static int compareValue(Object left, Object right)
 	{				
@@ -61,15 +61,15 @@ public final class CompareUtil {
 	}
 	
 	/**	 
-	 * Description: ±È½ÏÁ½¸ö¶ÔÏóµÄ´óĞ¡
-	 * @param left µÚÒ»¸ö¶ÔÏó
-	 * @param right µÚ¶ş¸ö¶ÔÏó
-	 * @param desc È·¶¨±È½ÏÂß¼­Ë³Ğò
-	 * 				true£º½µĞò
-	 * 				false:ÉıĞò
-	 * @return int 0 -±íÊ¾Á½¸ö¶ÔÏóÏàµÈ
-	 * 				-1-±íÊ¾left±ÈrightĞ¡
-	 * 				1 -±íÊ¾left±Èright´ó
+	 * Description: æ¯”è¾ƒä¸¤ä¸ªå¯¹è±¡çš„å¤§å°
+	 * @param left ç¬¬ä¸€ä¸ªå¯¹è±¡
+	 * @param right ç¬¬äºŒä¸ªå¯¹è±¡
+	 * @param desc ç¡®å®šæ¯”è¾ƒé€»è¾‘é¡ºåº
+	 * 				trueï¼šé™åº
+	 * 				false:å‡åº
+	 * @return int 0 -è¡¨ç¤ºä¸¤ä¸ªå¯¹è±¡ç›¸ç­‰
+	 * 				-1-è¡¨ç¤ºleftæ¯”rightå°
+	 * 				1 -è¡¨ç¤ºleftæ¯”rightå¤§
 	 */
 	public static int compareValue(Object left, Object right,boolean desc) 
 	{    	
@@ -127,10 +127,10 @@ public final class CompareUtil {
 	}
 	
 	/** 
-	 * Description:±È½ÏÁ½¸ö²¼¶û±äÁ¿µÄ´óĞ¡
+	 * Description:æ¯”è¾ƒä¸¤ä¸ªå¸ƒå°”å˜é‡çš„å¤§å°
 	 * @param left
 	 * @param right
-	 * @param desc ÅÅĞòË³Ğò£¬true½µĞò£¬falseÉıĞò
+	 * @param desc æ’åºé¡ºåºï¼Œtrueé™åºï¼Œfalseå‡åº
 	 * @return
 	 * int
 	 */
@@ -147,10 +147,10 @@ public final class CompareUtil {
 	}
 
 	/**
-	 * ±È½ÏÁ½¸ö×Ö·û´®µÄ´óĞ¡
+	 * æ¯”è¾ƒä¸¤ä¸ªå­—ç¬¦ä¸²çš„å¤§å°
 	 * @param left
 	 * @param right
-	 * @param desc ÅÅĞòË³Ğò£¬true½µĞò£¬falseÉıĞò
+	 * @param desc æ’åºé¡ºåºï¼Œtrueé™åºï¼Œfalseå‡åº
 	 * @return int
 	 */
 	public static int compareString(String left, String right,boolean desc) 
@@ -165,7 +165,7 @@ public final class CompareUtil {
 	}
 
 	/**
-	 * ±È½ÏÁ½¸öÕûÊıµÄ´óĞ¡
+	 * æ¯”è¾ƒä¸¤ä¸ªæ•´æ•°çš„å¤§å°
 	 * @param left
 	 * @param right
 	 * @return int
@@ -181,10 +181,10 @@ public final class CompareUtil {
 	}
 
 	/**
-	 * ±È½ÏÁ½¸öÈÕÆÚµÄ´óĞ¡
+	 * æ¯”è¾ƒä¸¤ä¸ªæ—¥æœŸçš„å¤§å°
 	 * @param left
 	 * @param right
-	 * @param desc ÅÅĞòË³Ğò£¬true½µĞò£¬falseÉıĞò 
+	 * @param desc æ’åºé¡ºåºï¼Œtrueé™åºï¼Œfalseå‡åº 
 	 * @return int
 	 */
 	public static int compareDate(Date left, Date right,boolean desc) 
@@ -199,10 +199,10 @@ public final class CompareUtil {
 	}
 
 	/**
-	 * ±È½ÏÁ½¸ö³¤ÕûÊıµÄ´óĞ¡
+	 * æ¯”è¾ƒä¸¤ä¸ªé•¿æ•´æ•°çš„å¤§å°
 	 * @param left
 	 * @param right
-	 * @param desc ÅÅĞòË³Ğò£¬true½µĞò£¬falseÉıĞò
+	 * @param desc æ’åºé¡ºåºï¼Œtrueé™åºï¼Œfalseå‡åº
 	 * @return int
 	 */
 	public static int compareLong(long left, long right,boolean desc) 
@@ -216,10 +216,10 @@ public final class CompareUtil {
 	}
 
 	/**
-	 * ±È½ÏÁ½¸ö¶ÌÕûÊıµÄ´óĞ¡
+	 * æ¯”è¾ƒä¸¤ä¸ªçŸ­æ•´æ•°çš„å¤§å°
 	 * @param left
 	 * @param right
-	 * @param desc ÅÅĞòË³Ğò£¬true½µĞò£¬falseÉıĞò
+	 * @param desc æ’åºé¡ºåºï¼Œtrueé™åºï¼Œfalseå‡åº
 	 * @return int
 	 */
 	public static int compareShort(short left, short right,boolean desc) 
@@ -233,10 +233,10 @@ public final class CompareUtil {
 	}
 
 	/**
-	 * ±È½ÏÁ½¸öË«¾«¶ÈÊıµÄ´óĞ¡
+	 * æ¯”è¾ƒä¸¤ä¸ªåŒç²¾åº¦æ•°çš„å¤§å°
 	 * @param left
 	 * @param right
-	 * @param desc ÅÅĞòË³Ğò£¬true½µĞò£¬falseÉıĞò
+	 * @param desc æ’åºé¡ºåºï¼Œtrueé™åºï¼Œfalseå‡åº
 	 * @return int
 	 */
 	public static int compareDouble(double left, double right,boolean desc) 
@@ -250,10 +250,10 @@ public final class CompareUtil {
 	}
 
 	/**
-	 * ±í½ÏÁ½¸ö¸¡µãÊıµÄ´óĞ¡
+	 * è¡¨è¾ƒä¸¤ä¸ªæµ®ç‚¹æ•°çš„å¤§å°
 	 * @param left
 	 * @param right
-	 * @param desc ÅÅĞòË³Ğò£¬true½µĞò£¬falseÉıĞò
+	 * @param desc æ’åºé¡ºåºï¼Œtrueé™åºï¼Œfalseå‡åº
 	 * @return int
 	 */
 	public static int compareFloat(float left, float right,boolean desc) 
@@ -267,10 +267,10 @@ public final class CompareUtil {
 	}
 
 	/**
-	 * ±È½ÏÁ½¸ö×Ö·ûµÄ´óĞ¡
+	 * æ¯”è¾ƒä¸¤ä¸ªå­—ç¬¦çš„å¤§å°
 	 * @param left
 	 * @param right 
-	 * @param desc ÅÅĞòË³Ğò£¬true½µĞò£¬falseÉıĞò
+	 * @param desc æ’åºé¡ºåºï¼Œtrueé™åºï¼Œfalseå‡åº
 	 * @return int
 	 */
 	public static int compareChar(char left, char right,boolean desc) 
@@ -286,8 +286,8 @@ public final class CompareUtil {
 	
 
 	/**
-	 * Description:¸ù¾İdescµÄÖµ£¬´¦Àí±È½Ï½á¹ûÎªĞ¡ÓÚÊ±µÄ·µ»Ø½á¹û
-	 * @param desc ÅÅĞòË³Ğò£¬true½µĞò£¬falseÉıĞò
+	 * Description:æ ¹æ®descçš„å€¼ï¼Œå¤„ç†æ¯”è¾ƒç»“æœä¸ºå°äºæ—¶çš„è¿”å›ç»“æœ
+	 * @param desc æ’åºé¡ºåºï¼Œtrueé™åºï¼Œfalseå‡åº
 	 * @return int
 	 */
 	private static int lessThan(boolean desc)
@@ -296,8 +296,8 @@ public final class CompareUtil {
 	}
    
 	/**
-	 * Description:¸ù¾İdescµÄÖµ£¬´¦Àí±È½Ï½á¹ûÎª´óÓÚÊ±µÄ·µ»Ø½á¹û
-     * @param desc ÅÅĞòË³Ğò£¬true½µĞò£¬falseÉıĞò
+	 * Description:æ ¹æ®descçš„å€¼ï¼Œå¤„ç†æ¯”è¾ƒç»“æœä¸ºå¤§äºæ—¶çš„è¿”å›ç»“æœ
+     * @param desc æ’åºé¡ºåºï¼Œtrueé™åºï¼Œfalseå‡åº
 	 * @return
 	 * int
 	 */
@@ -307,7 +307,7 @@ public final class CompareUtil {
 	} 
 	
 	/** 
-	 * Description:±È½Ï¶ÔÏóobjÖĞ×Ö¶ÎfieldµÄÖµÓëcompareValueµÄ´óĞ¡
+	 * Description:æ¯”è¾ƒå¯¹è±¡objä¸­å­—æ®µfieldçš„å€¼ä¸compareValueçš„å¤§å°
 	 * @param obj
 	 * @param field
 	 * @param compareValue
@@ -320,11 +320,11 @@ public final class CompareUtil {
 	}
 	
 	/** 
-	 * Description:±È½Ï¶ÔÏóobjÖĞ×Ö¶ÎfieldµÄÖµÓëcompareValueµÄ´óĞ¡
+	 * Description:æ¯”è¾ƒå¯¹è±¡objä¸­å­—æ®µfieldçš„å€¼ä¸compareValueçš„å¤§å°
 	 * @param obj
 	 * @param field
 	 * @param compareValue
-	 * @param desc ÅÅĞòË³Ğò£¬true½µĞò£¬falseÉıĞò
+	 * @param desc æ’åºé¡ºåºï¼Œtrueé™åºï¼Œfalseå‡åº
 	 * @return
 	 * int
 	 */
@@ -335,12 +335,12 @@ public final class CompareUtil {
 	}
 	
 	/**
-	 * Description:±È½Ï¶ÔÏóobjµÄ×Ö¶ÎfieldÓë¶ÔÏóobj1µÄ×Ö¶Îfield1µÄ´óĞ¡
+	 * Description:æ¯”è¾ƒå¯¹è±¡objçš„å­—æ®µfieldä¸å¯¹è±¡obj1çš„å­—æ®µfield1çš„å¤§å°
 	 * @param obj
 	 * @param field
 	 * @param obj1
 	 * @param field1
-	 * @param desc ÅÅĞòË³Ğò£¬true½µĞò£¬falseÉıĞò
+	 * @param desc æ’åºé¡ºåºï¼Œtrueé™åºï¼Œfalseå‡åº
 	 * @return
 	 * int
 	 */
@@ -352,7 +352,7 @@ public final class CompareUtil {
 	}
 	
 	/**
-	 * Description:±È½Ï¶ÔÏóobjµÄ×Ö¶ÎfieldÓë¶ÔÏóobj1µÄ×Ö¶Îfield1µÄ´óĞ¡
+	 * Description:æ¯”è¾ƒå¯¹è±¡objçš„å­—æ®µfieldä¸å¯¹è±¡obj1çš„å­—æ®µfield1çš„å¤§å°
 	 * @param obj
 	 * @param field
 	 * @param obj1

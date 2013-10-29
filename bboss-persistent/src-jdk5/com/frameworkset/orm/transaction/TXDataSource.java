@@ -29,10 +29,10 @@ import com.frameworkset.common.poolman.util.SQLUtil;
  * 
  * <p>Title: TXDatasource.java</p>
  *
- * <p>Description: »ñÈ¡ÊÂÎñĞÔÊı¾İÔ´</p>
+ * <p>Description: è·å–äº‹åŠ¡æ€§æ•°æ®æº</p>
  *
  * <p>Copyright: Copyright (c) 2007</p>
- * @Date 2012-4-14 ÉÏÎç08:52:55
+ * @Date 2012-4-14 ä¸Šåˆ08:52:55
  * @author biaoping.yin
  * @version 1.0
  */
@@ -56,7 +56,7 @@ public class TXDataSource implements DataSource{
 	}
 
 	/**
-	 * ±¾·½·¨²»¾ß±¸ÊÂÎñĞÔ
+	 * æœ¬æ–¹æ³•ä¸å…·å¤‡äº‹åŠ¡æ€§
 	 */
 	public Connection getConnection(String username, String password)
 			throws SQLException {

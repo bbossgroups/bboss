@@ -37,20 +37,20 @@ import org.xml.sax.helpers.DefaultHandler;
  * </p>
  * 
  * <p>
- * Description: ¹ÜÀí·şÎñÅäÖÃÎÄ¼ş½âÎöÆ÷,bean¶¨Òå
- * Õë¶ÔsoaµÄÓÅ»¯½ÚµãºÍÊôĞÔ¶ÔÕÕ±í
-properties×ª»»Îªps
-property×ª»»Îªp
-name×ª»»Îªn
-value×ª»»Îªv
-class×ª»»Îªcs
-list×ª»»Îªl
-array×ª»»Îªa
-map×ª»»Îªm
-set×ª»»Îªs
-soa:type_null_value×ª»»Îªs:nvl
-soa:type×ª»»Îªs:t
-componentType×ª»»Îªcmt
+ * Description: ç®¡ç†æœåŠ¡é…ç½®æ–‡ä»¶è§£æå™¨,beanå®šä¹‰
+ * é’ˆå¯¹soaçš„ä¼˜åŒ–èŠ‚ç‚¹å’Œå±æ€§å¯¹ç…§è¡¨
+propertiesè½¬æ¢ä¸ºps
+propertyè½¬æ¢ä¸ºp
+nameè½¬æ¢ä¸ºn
+valueè½¬æ¢ä¸ºv
+classè½¬æ¢ä¸ºcs
+listè½¬æ¢ä¸ºl
+arrayè½¬æ¢ä¸ºa
+mapè½¬æ¢ä¸ºm
+setè½¬æ¢ä¸ºs
+soa:type_null_valueè½¬æ¢ä¸ºs:nvl
+soa:typeè½¬æ¢ä¸ºs:t
+componentTypeè½¬æ¢ä¸ºcmt
  * </p>
  * 
  * <p>
@@ -62,7 +62,7 @@ componentType×ª»»Îªcmt
  * </p>
  * 
  * @Date Sep 8, 2008 10:02:46 AM
- * @author biaoping.yin,Òü±êÆ½
+ * @author biaoping.yin,å°¹æ ‡å¹³
  * @version 1.0
  */
 public class ProviderParser extends DefaultHandler
@@ -127,8 +127,8 @@ public class ProviderParser extends DefaultHandler
         currentValue.append(ch, start, length);
     }
     /**
-     * ÅĞ¶Ï×é¼şÊÇ·ñÊÇbean×é¼ş£¬Èç¹ûÊÇ·µ»Øtrue
-     * Èç¹ûÊÇÆÕÍ¨ÊôĞÔ£¬»òÕßÊÇÒıÓÃÄÇÃ´·µ»Øfalse
+     * åˆ¤æ–­ç»„ä»¶æ˜¯å¦æ˜¯beanç»„ä»¶ï¼Œå¦‚æœæ˜¯è¿”å›true
+     * å¦‚æœæ˜¯æ™®é€šå±æ€§ï¼Œæˆ–è€…æ˜¯å¼•ç”¨é‚£ä¹ˆè¿”å›false
      * @param p
      * @return
      */
@@ -263,7 +263,7 @@ public class ProviderParser extends DefaultHandler
             this.properties.put(p.getName(), p);
         }
 //        /**
-//         * ³õÊ¼»¯ÊÂÎñĞÅÏ¢
+//         * åˆå§‹åŒ–äº‹åŠ¡ä¿¡æ¯
 //         */
 //        p.initTransactions();
         p.freeze();
@@ -390,7 +390,7 @@ public class ProviderParser extends DefaultHandler
 
         }
        
-        else if (name.equals("param")) // Ìí¼Ó·½·¨²ÎÊıĞÅÏ¢
+        else if (name.equals("param")) // æ·»åŠ æ–¹æ³•å‚æ•°ä¿¡æ¯
         {
             // do nothing
         }
@@ -465,7 +465,7 @@ public class ProviderParser extends DefaultHandler
     		{
     			continue;
     		}
-    		else if(name.startsWith("f:"))//Í¨¹ıpropertyµÄÊôĞÔÀ´ÖÆ¶¨¶ÔÏóÖĞfieldµÄÖµ
+    		else if(name.startsWith("f:"))//é€šè¿‡propertyçš„å±æ€§æ¥åˆ¶å®šå¯¹è±¡ä¸­fieldçš„å€¼
     		{
     			Pro f = new Pro(applicationContext);
     			
@@ -481,7 +481,7 @@ public class ProviderParser extends DefaultHandler
     			{
     				f.setValue(value);
     			}
-    			//Ôö¼ÓxpathĞÅÏ¢
+    			//å¢åŠ xpathä¿¡æ¯
     			f.setXpath(property.getXpath() + Pro.REF_TOKEN + f.getName());
     			property.addReferenceParam(f);
     		}
@@ -525,7 +525,7 @@ public class ProviderParser extends DefaultHandler
     }
     
     /**
-     * ¹¹½¨ÔªËØµÄxpathÖµ
+     * æ„å»ºå…ƒç´ çš„xpathå€¼
      * @param p
      * @return
      */
@@ -700,11 +700,11 @@ public class ProviderParser extends DefaultHandler
         p.setDestroyMethod(destroyMethod);
         String initMethod = attributes.getValue("init-method");
         p.setInitMethod(initMethod);
-        //callorder_sequence±êÊ¶×é¼şÅäÖÃµÄÀ¹½ØÆ÷ÒÔË³Ğò·½Ê½Ö´ĞĞ»¹ÊÇÒÔ¶ÑÕ»·½Ê½Ö´ĞĞ,
-        //true:Ë³Ğò·½Ê½Ö´ĞĞ£¬À¹½ØÆ÷ÖĞµÄÃ¿¸ö·½·¨¶¼ÊÇ°´ÕÕÅäÖÃË³ĞòÖ´ĞĞ£¬before¡¢after¡¢afterthrow¡¢afterfinally¶¼ÊÇ°´ÕÕÏÈºóË³ĞòÖ´ĞĞ
-        //false:Á´Ê½·½Ê½Ö´ĞĞ£¬À¹½ØÆ÷ÖĞµÄÃ¿¸ö·½·¨¶¼ÊÇ°´ÕÕÅäÖÃ¶ÑÕ»·½Ê½Ö´ĞĞÖ´ĞĞ£¬
-        //ÏÈ°´ÏÈºóË³ĞòÖ´ĞĞËùÓĞÀ¹½ØÆ÷µÄbefore·½·¨£¬È»ºó°´ÄæĞòÖ´ĞĞËùÓĞÀ¹½ØÆ÷µÄafter¡¢afterthrow¡¢afterfinallyÈı¸ö·½·¨
-        //Ä¬ÈÏÖµÎªfalse
+        //callorder_sequenceæ ‡è¯†ç»„ä»¶é…ç½®çš„æ‹¦æˆªå™¨ä»¥é¡ºåºæ–¹å¼æ‰§è¡Œè¿˜æ˜¯ä»¥å †æ ˆæ–¹å¼æ‰§è¡Œ,
+        //true:é¡ºåºæ–¹å¼æ‰§è¡Œï¼Œæ‹¦æˆªå™¨ä¸­çš„æ¯ä¸ªæ–¹æ³•éƒ½æ˜¯æŒ‰ç…§é…ç½®é¡ºåºæ‰§è¡Œï¼Œbeforeã€afterã€afterthrowã€afterfinallyéƒ½æ˜¯æŒ‰ç…§å…ˆåé¡ºåºæ‰§è¡Œ
+        //false:é“¾å¼æ–¹å¼æ‰§è¡Œï¼Œæ‹¦æˆªå™¨ä¸­çš„æ¯ä¸ªæ–¹æ³•éƒ½æ˜¯æŒ‰ç…§é…ç½®å †æ ˆæ–¹å¼æ‰§è¡Œæ‰§è¡Œï¼Œ
+        //å…ˆæŒ‰å…ˆåé¡ºåºæ‰§è¡Œæ‰€æœ‰æ‹¦æˆªå™¨çš„beforeæ–¹æ³•ï¼Œç„¶åæŒ‰é€†åºæ‰§è¡Œæ‰€æœ‰æ‹¦æˆªå™¨çš„afterã€afterthrowã€afterfinallyä¸‰ä¸ªæ–¹æ³•
+        //é»˜è®¤å€¼ä¸ºfalse
         p
         .setCallorder_sequence(getBoolean(attributes.getValue("callorder_sequence"), false));
         this.buildXpath(p);
@@ -921,7 +921,7 @@ public class ProviderParser extends DefaultHandler
                 }
                 else
                 {
-                    throw new SPIException("referenceÔªËØ±ØĞë´øclass,value,refidÈı¸öÊôĞÔÖĞµÄÈÎºÎÒ»¸ö¡£");
+                    throw new SPIException("referenceå…ƒç´ å¿…é¡»å¸¦class,value,refidä¸‰ä¸ªå±æ€§ä¸­çš„ä»»ä½•ä¸€ä¸ªã€‚");
                 }
             }
             ref.setName(fieldname);
@@ -974,7 +974,7 @@ public class ProviderParser extends DefaultHandler
 
         }
         
-        else if (name.equals("param")) // Ìí¼Ó·½·¨²ÎÊıĞÅÏ¢
+        else if (name.equals("param")) // æ·»åŠ æ–¹æ³•å‚æ•°ä¿¡æ¯
         {
             String paramType = attributes.getValue("type");
             if(paramType == null)
@@ -1015,7 +1015,7 @@ public class ProviderParser extends DefaultHandler
             Editor editor = new Editor();
             String clazz = attributes.getValue("class");
             if(clazz == null || clazz.equals(""))
-                throwable("editor ½ÚµãÃ»ÓĞÖ¸¶¨classÊôĞÔ¡£");
+                throwable("editor èŠ‚ç‚¹æ²¡æœ‰æŒ‡å®šclasså±æ€§ã€‚");
             editor.setEditor(clazz);
             Pro currentElement = (Pro)this.traceStack.peek();
             currentElement.setEditor(editor);            
@@ -1023,9 +1023,9 @@ public class ProviderParser extends DefaultHandler
         else
         {
 //        	if(this.applicationContext.isfile())
-//        		log.info("½âÎöÎÄ¼şÊ±[" + this.parent + "]Óöµ½ÔªËØ[" + name + "]£¬ºöÂÔ´¦Àí¡£");
+//        		log.info("è§£ææ–‡ä»¶æ—¶[" + this.parent + "]é‡åˆ°å…ƒç´ [" + name + "]ï¼Œå¿½ç•¥å¤„ç†ã€‚");
 //        	else
-//        		log.info("½âÎö±¨ÎÄÊ±Óöµ½ÔªËØ[" + name + "]£¬ºöÂÔ´¦Àí¡£");
+//        		log.info("è§£ææŠ¥æ–‡æ—¶é‡åˆ°å…ƒç´ [" + name + "]ï¼Œå¿½ç•¥å¤„ç†ã€‚");
         }
     }
 
@@ -1042,10 +1042,10 @@ public class ProviderParser extends DefaultHandler
     public void throwable(String message)
     {
         if(parent == null)
-            throw new IllegalArgumentException("editor ½ÚµãÃ»ÓĞÖ¸¶¨classÊôĞÔ¡£¶ÔÓ¦µÄÅäÖÃÎÄ¼şÎª£º" + this.file);
+            throw new IllegalArgumentException("editor èŠ‚ç‚¹æ²¡æœ‰æŒ‡å®šclasså±æ€§ã€‚å¯¹åº”çš„é…ç½®æ–‡ä»¶ä¸ºï¼š" + this.file);
         else
         {
-            throw new IllegalArgumentException("editor ½ÚµãÃ»ÓĞÖ¸¶¨classÊôĞÔ¡£¶ÔÓ¦µÄÅäÖÃÎÄ¼şÎª£º" + this.parent.toString(this.file) );
+            throw new IllegalArgumentException("editor èŠ‚ç‚¹æ²¡æœ‰æŒ‡å®šclasså±æ€§ã€‚å¯¹åº”çš„é…ç½®æ–‡ä»¶ä¸ºï¼š" + this.parent.toString(this.file) );
         }
     }
     

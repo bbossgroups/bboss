@@ -52,13 +52,13 @@ public class BaseFactory implements ObjectCreationFactory,Serializable
 {
 
 	/**
-	 *	xml摘要
+	 *	xml鎽樿
 	 */
 	protected transient Digester digester = null;
 
 
 	/**
-	 * 根据xml属性返回xml节点类型对象
+	 * 鏍规嵁xml灞炴�ц繑鍥瀤ml鑺傜偣绫诲瀷瀵硅薄
 	 */
 	public Object createObject(Attributes attributes)
 	{
@@ -67,7 +67,7 @@ public class BaseFactory implements ObjectCreationFactory,Serializable
 	
 
 	/**
-	 * 获取xml摘要
+	 * 鑾峰彇xml鎽樿
 	 */
 	public Digester getDigester() 
 	{
@@ -76,7 +76,7 @@ public class BaseFactory implements ObjectCreationFactory,Serializable
 	
 
 	/**
-	 *	设置xml摘要
+	 *	璁剧疆xml鎽樿
 	 */
 	public void setDigester(Digester digester) 
 	{

@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset=GBK" language="java" %>
+<%@ page contentType="text/html; charset=UTF-8" language="java" %>
 <%@ taglib uri="/WEB-INF/pager-taglib.tld" prefix="pg"%>
 <%
 String user = request.getParameter("userName");
@@ -7,11 +7,11 @@ System.out.println(org.frameworkset.web.servlet.support.WebApplicationContextUti
 System.out.println(org.frameworkset.web.servlet.support.WebApplicationContextUtils.getWebApplicationContext());
  %>
 <!-- 
-	测试在通过数据加载器获取分页列表数据，并且提供查询功能
+	娴嬭瘯鍦ㄩ�氳繃鏁版嵁鍔犺浇鍣ㄨ幏鍙栧垎椤靛垪琛ㄦ暟鎹紝骞朵笖鎻愪緵鏌ヨ鍔熻兘
 -->
 <html>
 <head>
-<title>测试在通过数据加载器获取分页列表数据，并且提供查询功能</title>
+<title>娴嬭瘯鍦ㄩ�氳繃鏁版嵁鍔犺浇鍣ㄨ幏鍙栧垎椤靛垪琛ㄦ暟鎹紝骞朵笖鎻愪緵鏌ヨ鍔熻兘</title>
 		<link rel="stylesheet"
 			href="${pageContext.request.contextPath}/css/classic/tables.css"
 			type="text/css">
@@ -31,17 +31,17 @@ System.out.println(org.frameworkset.web.servlet.support.WebApplicationContextUti
 <body>
 	<table  class="genericTbl">
 				<tr class="cms_report_tr">
-						<!--设置分页表头-->
+						<!--璁剧疆鍒嗛〉琛ㄥご-->
 					<form action="" method="post">
-						<th  style="width:20%" class="order1 sorted">请输入表名：</th>
-						<th  style="width:5%" colspan="100" class="order1 sorted"><input type="text" name="TABLE_NAME" value="<%=request.getParameter("TABLE_NAME") %>"><input type="submit" name="查询" value="查询"></th>
+						<th  style="width:20%" class="order1 sorted">璇疯緭鍏ヨ〃鍚嶏細</th>
+						<th  style="width:5%" colspan="100" class="order1 sorted"><input type="text" name="TABLE_NAME" value="<%=request.getParameter("TABLE_NAME") %>"><input type="submit" name="鏌ヨ" value="鏌ヨ"></th>
 					</form>
 				</tr>
 						
 	    
 				
 					<tr class="even">
-						<!--设置分页表头-->
+						<!--璁剧疆鍒嗛〉琛ㄥご-->
 
 						<td width="2%" align=center style="width:5%">
 						<input class="checkbox" 

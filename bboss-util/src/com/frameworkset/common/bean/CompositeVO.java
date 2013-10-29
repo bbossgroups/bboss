@@ -13,37 +13,37 @@ import java.util.Map;
 
 /**
  * @author biaoping.yin
- * ×éºÏÖµ¶ÔÏó£¬¿ÉÒÔ×Ô¶¯½«²»Í¬ÀàĞÍµÄ¶ÔÏó£¨¶ÔÏó¶ÔÓ¦µÄÀà±ØĞë´ÓValueObject¼Ì³Ğ£¬
- * ValueObjectÎªÏµÍ³ÖĞËùÓĞÖµ¶ÔÏàµÄ»ùÀà£©·Ö·¢µ½ÌØ¶¨µÄmapÖĞ¡£
+ * ç»„åˆå€¼å¯¹è±¡ï¼Œå¯ä»¥è‡ªåŠ¨å°†ä¸åŒç±»å‹çš„å¯¹è±¡ï¼ˆå¯¹è±¡å¯¹åº”çš„ç±»å¿…é¡»ä»ValueObjectç»§æ‰¿ï¼Œ
+ * ValueObjectä¸ºç³»ç»Ÿä¸­æ‰€æœ‰å€¼å¯¹ç›¸çš„åŸºç±»ï¼‰åˆ†å‘åˆ°ç‰¹å®šçš„mapä¸­ã€‚
  * 
- * ÊÊÓÃÓÚ¶Ô¶à¸öÖµ¶ÔÏó½øĞĞÔö¡¢É¾¡¢¸ÄµÈ²Ù×÷µÄÇé¿öºó´«µİºÍ»º³åÕâĞ©¶ÔÏó
+ * é€‚ç”¨äºå¯¹å¤šä¸ªå€¼å¯¹è±¡è¿›è¡Œå¢ã€åˆ ã€æ”¹ç­‰æ“ä½œçš„æƒ…å†µåä¼ é€’å’Œç¼“å†²è¿™äº›å¯¹è±¡
  * To change the template for this generated type comment go to
  * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
  */
 public class CompositeVO extends AbstractCompositeVO 
 {
 	/****************************************************
-	 *      ×éºÏ¶ÔÏó¿ÉÒÔ»º´æ¶ÔÒµÎñÊı¾İ½øĞĞÔö¡¢É¾¡¢¸Ä    *
-	 * 		ÈıÖÖ²Ù×÷ºóµÄ½á¹û,ÒÔÏÂ¶¨ÒåËÄÖÖ²Ù×÷¶ÔÓ¦µÄ±êÖ¾ *
+	 *      ç»„åˆå¯¹è±¡å¯ä»¥ç¼“å­˜å¯¹ä¸šåŠ¡æ•°æ®è¿›è¡Œå¢ã€åˆ ã€æ”¹    *
+	 * 		ä¸‰ç§æ“ä½œåçš„ç»“æœ,ä»¥ä¸‹å®šä¹‰å››ç§æ“ä½œå¯¹åº”çš„æ ‡å¿— *
 	 ****************************************************/
 	/**
-	 * É¾³ı×´Ì¬±êÖ¾
+	 * åˆ é™¤çŠ¶æ€æ ‡å¿—
 	 */
 	protected final static int DELETE = 0;
 	/**
-	 * ¸üĞÂ×´Ì¬±êÊ¶
+	 * æ›´æ–°çŠ¶æ€æ ‡è¯†
 	 */
 	protected final static int UPDATE = 1;
 	/**
-	 * Ìí¼Ó×´Ì¬±êÊ¶
+	 * æ·»åŠ çŠ¶æ€æ ‡è¯†
 	 */
 	protected final static int ADD = 2;
 	/**
-	 * »º³å×´Ì¬±êÊ¶
+	 * ç¼“å†²çŠ¶æ€æ ‡è¯†
 	 */
 	protected final static int CACHE = 3;
 	/**
-	 * »º³åÒ»°ãµÄ¶ÔÏó
+	 * ç¼“å†²ä¸€èˆ¬çš„å¯¹è±¡
 	 * @param obj
 	 */
 	public void cacheVO(ValueObject obj)
@@ -57,7 +57,7 @@ public class CompositeVO extends AbstractCompositeVO
 	        setVO((ValueObject)vos.get(i), CACHE);
 	}
 	/**
-	 * »ñÈ¡»º³åÊı¾İ
+	 * è·å–ç¼“å†²æ•°æ®
 	 * @param clazz
 	 * @return Iterator
 	 */
@@ -66,7 +66,7 @@ public class CompositeVO extends AbstractCompositeVO
 		return this.getVO(clazz, new int[] { CACHE });
 	}
 	/**
-	 * ½«¸üĞÂÒµÎñĞÅÏ¢Ê±£¬½«·â×°ĞÅÏ¢µÄÖµ¶ÔÏó´æ·Åµ½¸Ã¶ÔÏó¶ÔÓ¦µÄÉ¢ÁĞÖĞ
+	 * å°†æ›´æ–°ä¸šåŠ¡ä¿¡æ¯æ—¶ï¼Œå°†å°è£…ä¿¡æ¯çš„å€¼å¯¹è±¡å­˜æ”¾åˆ°è¯¥å¯¹è±¡å¯¹åº”çš„æ•£åˆ—ä¸­
 	 * @param obj
 	 */
 	public void updateVO(ValueObject obj)
@@ -75,11 +75,11 @@ public class CompositeVO extends AbstractCompositeVO
 			setVO(obj, UPDATE);
 	}
 	/**
-	 * ´Ó×éºÏ¶ÔÏóÖĞ»ñÈ¡µ¥¸öÖµ¶ÔÏó,
-	 * Èç¹û¿ª·¢ÈËÔ±²Ù×÷µÄÊÇÒ»¸öÖµ¶ÔÏó¶ø²»ÊÇÖµ¶ÔÏóµÄ¼¯ºÏ£¬
-	 * ×îºó´Ó×éºÏ¶ÔÏóÖĞÈ¡¶ÔÏóÊ±µ÷ÓÃ¸Ã·½·¨
-	 * @param clazz Òª»ñÈ¡Öµ¶ÔÏó¶ÔÓ¦µÄClass¶ÔÏó£¬ÀıÈç£ºxxVO.class
-	 * @return Èç¹û¸ÄÀàĞÍµÄ¶ÔÏó´æÔÚÔò·µ»Ø¸Ã¶ÔÏó·ñÔò·µ»Ønull
+	 * ä»ç»„åˆå¯¹è±¡ä¸­è·å–å•ä¸ªå€¼å¯¹è±¡,
+	 * å¦‚æœå¼€å‘äººå‘˜æ“ä½œçš„æ˜¯ä¸€ä¸ªå€¼å¯¹è±¡è€Œä¸æ˜¯å€¼å¯¹è±¡çš„é›†åˆï¼Œ
+	 * æœ€åä»ç»„åˆå¯¹è±¡ä¸­å–å¯¹è±¡æ—¶è°ƒç”¨è¯¥æ–¹æ³•
+	 * @param clazz è¦è·å–å€¼å¯¹è±¡å¯¹åº”çš„Classå¯¹è±¡ï¼Œä¾‹å¦‚ï¼šxxVO.class
+	 * @return å¦‚æœæ”¹ç±»å‹çš„å¯¹è±¡å­˜åœ¨åˆ™è¿”å›è¯¥å¯¹è±¡å¦åˆ™è¿”å›null
 	 */
 	public ValueObject getSingleVO(Class clazz)
 	{
@@ -91,7 +91,7 @@ public class CompositeVO extends AbstractCompositeVO
 	
 	
 	/**
-	 * »ñÈ¡É¢ÁĞÖĞËùÓĞclazzµÄ¶ÔÏó
+	 * è·å–æ•£åˆ—ä¸­æ‰€æœ‰clazzçš„å¯¹è±¡
 	 * @param clazz
 	 * @return Iterator
 	 */
@@ -100,8 +100,8 @@ public class CompositeVO extends AbstractCompositeVO
 		return getVO(clazz, new int[] { ADD, UPDATE, DELETE, CACHE });
 	}
 	/**
-	 * ĞÂ½¨ÒµÎñĞÅÏ¢Ê±£¬½«·â×°ĞÅÏ¢µÄÖµ¶ÔÏó´æ·Åµ½¸Ã¶ÔÏó¶ÔÓ¦µÄÉ¢ÁĞÖĞ
-	 * ×¢Òâ:µ÷ÓÃ±¾·½·¨Ê±½«ÒªĞŞ¸ÄobjµÄÖ÷¼ü
+	 * æ–°å»ºä¸šåŠ¡ä¿¡æ¯æ—¶ï¼Œå°†å°è£…ä¿¡æ¯çš„å€¼å¯¹è±¡å­˜æ”¾åˆ°è¯¥å¯¹è±¡å¯¹åº”çš„æ•£åˆ—ä¸­
+	 * æ³¨æ„:è°ƒç”¨æœ¬æ–¹æ³•æ—¶å°†è¦ä¿®æ”¹objçš„ä¸»é”®
 	 * @param obj
 	 */
 	public void addVO(ValueObject obj)
@@ -110,7 +110,7 @@ public class CompositeVO extends AbstractCompositeVO
 	}
 	
 	/**
-	 * Ìí¼Óobjµ½Öµ¶ÔÏóÖĞ,¸ù¾İkeyGeneratorÅĞ¶¨ÊÇ·ñ²úÉúÖ÷¼ütrue²úÉú,false²»²úÉú
+	 * æ·»åŠ objåˆ°å€¼å¯¹è±¡ä¸­,æ ¹æ®keyGeneratoråˆ¤å®šæ˜¯å¦äº§ç”Ÿä¸»é”®trueäº§ç”Ÿ,falseä¸äº§ç”Ÿ
 	 * @param obj
 	 * @param keyGenerator
 	 */
@@ -118,7 +118,7 @@ public class CompositeVO extends AbstractCompositeVO
 	{
 	    addVO(obj,keyGenerator,false);
 //		Map voBin = getMap(obj.getClass());
-//		//Èç¹ûĞèÒª²úÉúÖ÷¼ü,Ôò²úÉú²¢ÉèÖÃ¸ÃÖ÷¼üµ½Öµ¶ÔÏóÖĞ,·ñÔò²ÉÓÃÖµ¶ÔÏóÖĞµÄÖ÷¼ü
+//		//å¦‚æœéœ€è¦äº§ç”Ÿä¸»é”®,åˆ™äº§ç”Ÿå¹¶è®¾ç½®è¯¥ä¸»é”®åˆ°å€¼å¯¹è±¡ä¸­,å¦åˆ™é‡‡ç”¨å€¼å¯¹è±¡ä¸­çš„ä¸»é”®
 //		if(keyGenerator)
 //		{
 //			Object id = getId(voBin.keySet().iterator());
@@ -128,14 +128,14 @@ public class CompositeVO extends AbstractCompositeVO
 	}
 	
 	/**
-	 * Ìí¼Óobjµ½Öµ¶ÔÏóÖĞ,¸ù¾İkeyGeneratorÅĞ¶¨ÊÇ·ñ²úÉúÖ÷¼ütrue²úÉú,false²»²úÉú
+	 * æ·»åŠ objåˆ°å€¼å¯¹è±¡ä¸­,æ ¹æ®keyGeneratoråˆ¤å®šæ˜¯å¦äº§ç”Ÿä¸»é”®trueäº§ç”Ÿ,falseä¸äº§ç”Ÿ
 	 * @param obj
 	 * @param keyGenerator
 	 */
 	public void addVO(ValueObject obj,boolean keyGenerator,boolean needSynchro)
 	{
 		Map voBin = getMap(obj.getClass());
-		//Èç¹ûĞèÒª²úÉúÖ÷¼ü,Ôò²úÉú²¢ÉèÖÃ¸ÃÖ÷¼üµ½Öµ¶ÔÏóÖĞ,·ñÔò²ÉÓÃÖµ¶ÔÏóÖĞµÄÖ÷¼ü
+		//å¦‚æœéœ€è¦äº§ç”Ÿä¸»é”®,åˆ™äº§ç”Ÿå¹¶è®¾ç½®è¯¥ä¸»é”®åˆ°å€¼å¯¹è±¡ä¸­,å¦åˆ™é‡‡ç”¨å€¼å¯¹è±¡ä¸­çš„ä¸»é”®
 		if(keyGenerator)
 		{
 			Object id = getId(voBin.keySet().iterator());
@@ -158,7 +158,7 @@ public class CompositeVO extends AbstractCompositeVO
 	}
 	
 	/**
-	 * É¾³ıÒµÎñĞÅÏ¢Ê±£¬½«·â×°ĞÅÏ¢µÄÖµ¶ÔÏó´æ·Åµ½¸Ã¶ÔÏóµÄÉ¢ÁĞÖĞ
+	 * åˆ é™¤ä¸šåŠ¡ä¿¡æ¯æ—¶ï¼Œå°†å°è£…ä¿¡æ¯çš„å€¼å¯¹è±¡å­˜æ”¾åˆ°è¯¥å¯¹è±¡çš„æ•£åˆ—ä¸­
 	 * @param obj
 	 */
 	public void deleteVO(ValueObject obj)
@@ -167,18 +167,18 @@ public class CompositeVO extends AbstractCompositeVO
 			setVO(obj, DELETE);
 	}
 	/**
-	 * »ñÈ¡»º´æÖĞĞÂ½¨µÄËùÓĞclazz¶ÔÓ¦µÄÖµ¶ÔÏó
-	 * @param clazz Òª»ñÈ¡Öµ¶ÔÏó¶ÔÓ¦µÄClass¶ÔÏó£¬ÀıÈç£ºxxVO.class
-	 * @return °üº¬Öµ¶ÔÏóµÄµü´úÆ÷
+	 * è·å–ç¼“å­˜ä¸­æ–°å»ºçš„æ‰€æœ‰clazzå¯¹åº”çš„å€¼å¯¹è±¡
+	 * @param clazz è¦è·å–å€¼å¯¹è±¡å¯¹åº”çš„Classå¯¹è±¡ï¼Œä¾‹å¦‚ï¼šxxVO.class
+	 * @return åŒ…å«å€¼å¯¹è±¡çš„è¿­ä»£å™¨
 	 */
 	public Iterator getNewVO(Class clazz)
 	{
 		return getVO(clazz, new int[] { ADD });
 	}
 	/**
-	 * »ñÈ¡»º´æÖĞ¸üĞÂµÄËùÓĞclazz¶ÔÓ¦µÄÖµ¶ÔÏó
-	 * @param clazz :Òª»ñÈ¡Öµ¶ÔÏó¶ÔÓ¦µÄClass¶ÔÏó£¬ÀıÈç£ºxxVO.class
-	 * @return °üº¬Öµ¶ÔÏóµÄµü´úÆ÷
+	 * è·å–ç¼“å­˜ä¸­æ›´æ–°çš„æ‰€æœ‰clazzå¯¹åº”çš„å€¼å¯¹è±¡
+	 * @param clazz :è¦è·å–å€¼å¯¹è±¡å¯¹åº”çš„Classå¯¹è±¡ï¼Œä¾‹å¦‚ï¼šxxVO.class
+	 * @return åŒ…å«å€¼å¯¹è±¡çš„è¿­ä»£å™¨
 	 */
 	public Iterator getUpdateVO(Class clazz)
 	{
@@ -186,7 +186,7 @@ public class CompositeVO extends AbstractCompositeVO
 	}
 	
 	/**
-	 * »ñÈ¡clazzµÄĞÂÔö£¬ĞŞ¸ÄÁ½ÖÖ×´Ì¬µÄ¶ÔÏó
+	 * è·å–clazzçš„æ–°å¢ï¼Œä¿®æ”¹ä¸¤ç§çŠ¶æ€çš„å¯¹è±¡
 	 * @param clazz
 	 * @return Iterator
 	 */
@@ -196,7 +196,7 @@ public class CompositeVO extends AbstractCompositeVO
 	}
 	
 	/**
-	 * »ñÈ¡clazzµÄĞÂÔö£¬ĞŞ¸Ä£¬»º³åÈıÖÖ×´Ì¬µÄ¶ÔÏó
+	 * è·å–clazzçš„æ–°å¢ï¼Œä¿®æ”¹ï¼Œç¼“å†²ä¸‰ç§çŠ¶æ€çš„å¯¹è±¡
 	 * @param clazz
 	 * @return Iterator
 	 */
@@ -206,7 +206,7 @@ public class CompositeVO extends AbstractCompositeVO
 	}
 	     
 	/**
-	 * »ñÈ¡clazzµÄĞÂÔö£¬ĞŞ¸Ä£¬É¾³ıÈıÖÖ×´Ì¬µÄ¶ÔÏó
+	 * è·å–clazzçš„æ–°å¢ï¼Œä¿®æ”¹ï¼Œåˆ é™¤ä¸‰ç§çŠ¶æ€çš„å¯¹è±¡
 	 * @param clazz
 	 * @return Iterator
 	 */
@@ -215,9 +215,9 @@ public class CompositeVO extends AbstractCompositeVO
 		return getVO(clazz, new int[] { UPDATE, ADD, DELETE });
 	}
 	/**
-	 * »ñÈ¡»º´æÖĞÉ¾³ıµÄËùÓĞclazz¶ÔÓ¦µÄÖµ¶ÔÏó
-	 * @param clazz :Òª»ñÈ¡Öµ¶ÔÏó¶ÔÓ¦µÄClass¶ÔÏó£¬ÀıÈç£ºxxVO.class
-	 * @return °üº¬Öµ¶ÔÏóµÄµü´úÆ÷
+	 * è·å–ç¼“å­˜ä¸­åˆ é™¤çš„æ‰€æœ‰clazzå¯¹åº”çš„å€¼å¯¹è±¡
+	 * @param clazz :è¦è·å–å€¼å¯¹è±¡å¯¹åº”çš„Classå¯¹è±¡ï¼Œä¾‹å¦‚ï¼šxxVO.class
+	 * @return åŒ…å«å€¼å¯¹è±¡çš„è¿­ä»£å™¨
 	 */
 	public Iterator getDeleteVO(Class clazz)
 	{
@@ -225,7 +225,7 @@ public class CompositeVO extends AbstractCompositeVO
 	}	
 	
 	/**
-	 * Ïû³ıdeleteºÍaddµÄ³åÍ»
+	 * æ¶ˆé™¤deleteå’Œaddçš„å†²çª
 	 * @param obj
 	 */
 	protected boolean synchroDelete(ValueObject obj)
@@ -233,7 +233,7 @@ public class CompositeVO extends AbstractCompositeVO
 		return synchroDelete(obj,ADD);
 	}
 	/**
-	 * Ïû³ıupdateºÍaddµÄ³åÍ»
+	 * æ¶ˆé™¤updateå’Œaddçš„å†²çª
 	 * @param obj
 	 */
 	protected boolean synchroUpdate(ValueObject obj)
@@ -242,7 +242,7 @@ public class CompositeVO extends AbstractCompositeVO
 	}	
 	
 	/**
-	 * ÒÆ³ıËùÓĞÈİÆ÷ÖĞ»º´æµÄÀàĞÍÎªclazzµÄ×´Ì¬ÎªstatusµÄÖµ¶ÔÏó
+	 * ç§»é™¤æ‰€æœ‰å®¹å™¨ä¸­ç¼“å­˜çš„ç±»å‹ä¸ºclazzçš„çŠ¶æ€ä¸ºstatusçš„å€¼å¯¹è±¡
 	 * @param clazz
 	 */
 	public void deleteAll(Class clazz)

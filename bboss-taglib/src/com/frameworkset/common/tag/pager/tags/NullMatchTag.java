@@ -43,7 +43,7 @@ package com.frameworkset.common.tag.pager.tags;
 public class NullMatchTag extends MatchTag {
 
 	/**
-	 *  Description: 判断属性值是否为null
+	 *  Description: 鍒ゆ柇灞炴�у�兼槸鍚︿负null
 	 * @return boolean
 	 * @see com.frameworkset.common.tag.pager.tags.MatchTag#match()
 	 */

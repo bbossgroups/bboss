@@ -30,7 +30,7 @@ import com.frameworkset.orm.annotation.TransactionType;
  * 
  * <p>Title: TransactionManager</p>
  *
- * <p>Description: ÊµÏÖÊı¾İ¿âµÄÊÂÎñ¿ò¼Ü</p>
+ * <p>Description: å®ç°æ•°æ®åº“çš„äº‹åŠ¡æ¡†æ¶</p>
  *
  * <p>
  * bboss workgroup
@@ -39,7 +39,7 @@ import com.frameworkset.orm.annotation.TransactionType;
  * Copyright (c) 2007
  * </p>
  * 
- * @Date 2009-6-1 ÏÂÎç08:58:51
+ * @Date 2009-6-1 ä¸‹åˆ08:58:51
  * @author biaoping.yin
  * @version 1.0
  */
@@ -58,29 +58,29 @@ public class TransactionManager implements java.io.Serializable {
 	
 	
 	/**
-	 * Ê¼ÖÕ´´½¨ĞÂÊÂÎñ
+	 * å§‹ç»ˆåˆ›å»ºæ–°äº‹åŠ¡
 	 */
 	public static final TransactionType NEW_TRANSACTION = TransactionType.NEW_TRANSACTION;
 	
 	/**
-	 * Èç¹ûÃ»ÓĞÊÂÎñ´´½¨ĞÂÊÂÎñ£¬ÓĞÊÂÎñ¼ÓÈëµ±Ç°ÊÂÎñ
+	 * å¦‚æœæ²¡æœ‰äº‹åŠ¡åˆ›å»ºæ–°äº‹åŠ¡ï¼Œæœ‰äº‹åŠ¡åŠ å…¥å½“å‰äº‹åŠ¡
 	 */
 	public static final TransactionType REQUIRED_TRANSACTION = TransactionType.REQUIRED_TRANSACTION;
 	/**
-	 * ÓĞÊÂÎñ¾Í¼ÓÈëÊÂÎñ£¬Ã»ÓĞ²»´´½¨ÊÂÎñ,Ä¬ÈÏÇé¿ö
+	 * æœ‰äº‹åŠ¡å°±åŠ å…¥äº‹åŠ¡ï¼Œæ²¡æœ‰ä¸åˆ›å»ºäº‹åŠ¡,é»˜è®¤æƒ…å†µ
 	 */
 	public static final TransactionType MAYBE_TRANSACTION = TransactionType.MAYBE_TRANSACTION;
 	/**
-	 * Ã»ÓĞÊÂÎñ
+	 * æ²¡æœ‰äº‹åŠ¡
 	 */
 	public static final TransactionType NO_TRANSACTION = TransactionType.NO_TRANSACTION;
 	/**
-     * ¶ÁĞ´ÊÂÎñ
+     * è¯»å†™äº‹åŠ¡
      */
     public static final TransactionType RW_TRANSACTION = TransactionType.RW_TRANSACTION;
 	
 	/**
-	 * Î´ÖªÊÂÎñ
+	 * æœªçŸ¥äº‹åŠ¡
 	 */
 	public static final TransactionType UNKNOWN_TRANSACTION = TransactionType.UNKNOWN_TRANSACTION;
 
@@ -101,12 +101,12 @@ public class TransactionManager implements java.io.Serializable {
 	 */
 	public void begin() throws TransactionException {
 //		if(this.committed )
-//			throw new TransactionException("ÊÂÎñÒÑ¾­Ìá½»");
+//			throw new TransactionException("äº‹åŠ¡å·²ç»æäº¤");
 //		
 //		if(this.rollbacked)
-//			throw new TransactionException("ÊÂÎñÒÑ¾­»Ø¹ö");
+//			throw new TransactionException("äº‹åŠ¡å·²ç»å›æ»š");
 //		if(this.started == true)
-//			throw new TransactionException("ÊÂÎñÒÑ¾­Æô¶¯£¬²¢ÇÒÊÂÎñÕıÔÚÖ´ĞĞÖĞ¡£");
+//			throw new TransactionException("äº‹åŠ¡å·²ç»å¯åŠ¨ï¼Œå¹¶ä¸”äº‹åŠ¡æ­£åœ¨æ‰§è¡Œä¸­ã€‚");
 //		
 //		JDBCTransaction currentTx = (JDBCTransaction) thread_local.get();
 //
@@ -129,25 +129,25 @@ public class TransactionManager implements java.io.Serializable {
 	 * Starts a new transaction, and associate it with the calling thread.
 	 * 
 	 * @param int
-	 *            tx_type (Ä¬ÈÏÖµÎªREQUIRED_TRANSACTION£©
+	 *            tx_type (é»˜è®¤å€¼ä¸ºREQUIRED_TRANSACTIONï¼‰
 	 * 
 	 * 
 	 * 
-	 * Ê¼ÖÕ´´½¨ĞÂÊÂÎñ
+	 * å§‹ç»ˆåˆ›å»ºæ–°äº‹åŠ¡
 	 * 
 	 * JDBCTransaction.public static final int NEW_TRANSACTION = 0;
 	 * 
 	 * 
-	 * Èç¹ûÃ»ÓĞÊÂÎñ´´½¨ĞÂÊÂÎñ£¬ÓĞÊÂÎñ¼ÓÈëµ±Ç°ÊÂÎñ(Ä¬ÈÏÖµ)
+	 * å¦‚æœæ²¡æœ‰äº‹åŠ¡åˆ›å»ºæ–°äº‹åŠ¡ï¼Œæœ‰äº‹åŠ¡åŠ å…¥å½“å‰äº‹åŠ¡(é»˜è®¤å€¼)
 	 * 
 	 * JDBCTransaction.public static final int REQUIRED_TRANSACTION = 2;  
 	 * 
 	 * 
-	 * ÓĞÊÂÎñ¾Í¼ÓÈëÊÂÎñ£¬Ã»ÓĞ²»´´½¨ÊÂÎñ,Ä¬ÈÏÇé¿ö
+	 * æœ‰äº‹åŠ¡å°±åŠ å…¥äº‹åŠ¡ï¼Œæ²¡æœ‰ä¸åˆ›å»ºäº‹åŠ¡,é»˜è®¤æƒ…å†µ
 	 * 
 	 * JDBCTransaction.public static final int MAYBE_TRANSACTION = 3;
 	 * 
-	 * Ã»ÓĞÊÂÎñ
+	 * æ²¡æœ‰äº‹åŠ¡
 	 * 
 	 * JDBCTransaction.public static final int NO_TRANSACTION = 4;
 	 * @throws TransactionException 
@@ -160,12 +160,12 @@ public class TransactionManager implements java.io.Serializable {
 	 */
 	public void begin(TransactionType tx_type) throws TransactionException {
 		if(this.committed )
-			throw new TransactionException("ÊÂÎñÒÑ¾­Ìá½»");
+			throw new TransactionException("äº‹åŠ¡å·²ç»æäº¤");
 		
 		if(this.rollbacked)
-			throw new TransactionException("ÊÂÎñÒÑ¾­»Ø¹ö");
+			throw new TransactionException("äº‹åŠ¡å·²ç»å›æ»š");
 		if(this.started == true)
-			throw new TransactionException("ÊÂÎñÒÑ¾­Æô¶¯£¬²¢ÇÒÊÂÎñÕıÔÚÖ´ĞĞÖĞ¡£");
+			throw new TransactionException("äº‹åŠ¡å·²ç»å¯åŠ¨ï¼Œå¹¶ä¸”äº‹åŠ¡æ­£åœ¨æ‰§è¡Œä¸­ã€‚");
 		
 		JDBCTransaction currentTx = (JDBCTransaction) thread_local.get();
 		currenttxtype = tx_type;
@@ -193,7 +193,7 @@ public class TransactionManager implements java.io.Serializable {
 			        }
 			        else
 			        {
-			            throw new TransactionException("µ±Ç°´æÔÚÀàĞÍÎª["+ currentTx.getTXType() +"]µÄÊÂÎñ£¬ÓëRW_TRANSACTIONÀàĞÍÊÂÎñ²»¼æÈİ£¬ÎŞ·¨´´½¨RW_TRANSACTIONÀàĞÍÊÂÎñ¡£");
+			            throw new TransactionException("å½“å‰å­˜åœ¨ç±»å‹ä¸º["+ currentTx.getTXType() +"]çš„äº‹åŠ¡ï¼Œä¸RW_TRANSACTIONç±»å‹äº‹åŠ¡ä¸å…¼å®¹ï¼Œæ— æ³•åˆ›å»ºRW_TRANSACTIONç±»å‹äº‹åŠ¡ã€‚");
 			        }
                     
 
@@ -221,7 +221,7 @@ public class TransactionManager implements java.io.Serializable {
 				    }
 				    else
 				    {
-				        throw new TransactionException("µ±Ç°´æÔÚÀàĞÍÎª["+ currentTx.getTXType() +"]µÄÊÂÎñ£¬ÓëREQUIRED_TRANSACTIONÀàĞÍÊÂÎñ²»¼æÈİ£¬ÎŞ·¨´´½¨REQUIRED_TRANSACTIONÀàĞÍÊÂÎñ¡£");
+				        throw new TransactionException("å½“å‰å­˜åœ¨ç±»å‹ä¸º["+ currentTx.getTXType() +"]çš„äº‹åŠ¡ï¼Œä¸REQUIRED_TRANSACTIONç±»å‹äº‹åŠ¡ä¸å…¼å®¹ï¼Œæ— æ³•åˆ›å»ºREQUIRED_TRANSACTIONç±»å‹äº‹åŠ¡ã€‚");
 				    }
 				} 
 				else 
@@ -250,12 +250,12 @@ public class TransactionManager implements java.io.Serializable {
 	private void assertTX() throws RollbackException
 	{
 		if(!this.started )
-			throw new RollbackException("ÊÂÎñÃ»ÓĞ¿ªÊ¼");
+			throw new RollbackException("äº‹åŠ¡æ²¡æœ‰å¼€å§‹");
 		if(this.committed )
-			throw new RollbackException("ÊÂÎñÒÑ¾­Ìá½»");
+			throw new RollbackException("äº‹åŠ¡å·²ç»æäº¤");
 		
 		if(this.rollbacked)
-			throw new RollbackException("ÊÂÎñÒÑ¾­»Ø¹ö");
+			throw new RollbackException("äº‹åŠ¡å·²ç»å›æ»š");
 	}
 
 	/**
@@ -333,7 +333,7 @@ public class TransactionManager implements java.io.Serializable {
 				try
 				{
 					log.debug("Commit execute rolling back action.");
-					//Èç¹ûÊÂÎñ±»±êÊ¶Îª»Ø¹ö£¬ÔòÖ±½Ó»Ø¹öÊÂÎñ£¬Ìá½»¹ı³Ì×ªÈë»Ø¹ö¹ı³Ì
+					//å¦‚æœäº‹åŠ¡è¢«æ ‡è¯†ä¸ºå›æ»šï¼Œåˆ™ç›´æ¥å›æ»šäº‹åŠ¡ï¼Œæäº¤è¿‡ç¨‹è½¬å…¥å›æ»šè¿‡ç¨‹
 					this.rollback();
 					this.rollbacked = true;
 					return ;
@@ -509,7 +509,7 @@ public class TransactionManager implements java.io.Serializable {
 		
 		if(this.context_tx != null)
 		{
-			if(context_tx == tx) //¸ÃÌõ¼şÊÇ·ñ»á³ÉÁ¢ÄØ
+			if(context_tx == tx) //è¯¥æ¡ä»¶æ˜¯å¦ä¼šæˆç«‹å‘¢
 			{
 				System.out.println("context_tx == tx");
 				this.rollbacked = true;
@@ -685,8 +685,8 @@ public class TransactionManager implements java.io.Serializable {
 	}
 	
 	/**
-	 * Èç¹û³É¹¦Ïú»ÙÊÂÎñ£¬Ôò·µ»Øtrue
-	 * Èç¹ûÃ»ÓĞĞèÒªÏú»ÙµÄÊÂÎñÔò·µ»Øfalse
+	 * å¦‚æœæˆåŠŸé”€æ¯äº‹åŠ¡ï¼Œåˆ™è¿”å›true
+	 * å¦‚æœæ²¡æœ‰éœ€è¦é”€æ¯çš„äº‹åŠ¡åˆ™è¿”å›false
 	 * @return boolean
 	 */
 	public static boolean destroyTransaction()
@@ -713,7 +713,7 @@ public class TransactionManager implements java.io.Serializable {
 	}
 	
 	/**
-	 * »ñÈ¡µ±Ç°ÊÂÎñµÄÀàĞÍ
+	 * è·å–å½“å‰äº‹åŠ¡çš„ç±»å‹
 	 * @return
 	 */
 	public TransactionType getCurrenttxtype() {
@@ -721,7 +721,7 @@ public class TransactionManager implements java.io.Serializable {
 	}
 	
 	/**
-	 * »ñÈ¡µ±Ç°ÊÂÎñµÄÀàĞÍÃû³Æ
+	 * è·å–å½“å‰äº‹åŠ¡çš„ç±»å‹åç§°
 	 * @return
 	 */
 	public String getCurrenttxtypeName() {
@@ -742,20 +742,20 @@ public class TransactionManager implements java.io.Serializable {
 		}
 	}
 	/**
-	 * ÔÚfinal·½·¨ÖĞµ÷ÓÃ£¬ÓÃÀ´ÔÚ³öÏÖÒì³£Ê±¶ÔÊÂÎñ×ÊÔ´½øĞĞ»ØÊÕ£¬Ê×ÏÈ¶ÔÊÂÎñ½øĞĞ»Ø¹ö£¬
-	 * È»ºó»ØÊÕ×ÊÔ´£¬Èç¹ûÊÂÎñÒÑ¾­Ìá½»ºÍ»Ø¹ö£¬Ôò²»×öÈÎºÎ²Ù×÷
+	 * åœ¨finalæ–¹æ³•ä¸­è°ƒç”¨ï¼Œç”¨æ¥åœ¨å‡ºç°å¼‚å¸¸æ—¶å¯¹äº‹åŠ¡èµ„æºè¿›è¡Œå›æ”¶ï¼Œé¦–å…ˆå¯¹äº‹åŠ¡è¿›è¡Œå›æ»šï¼Œ
+	 * ç„¶åå›æ”¶èµ„æºï¼Œå¦‚æœäº‹åŠ¡å·²ç»æäº¤å’Œå›æ»šï¼Œåˆ™ä¸åšä»»ä½•æ“ä½œ
 	 */
 	public void release()
 	{
 		if(!this.started )
-//			throw new RollbackException("ÊÂÎñÃ»ÓĞ¿ªÊ¼");
+//			throw new RollbackException("äº‹åŠ¡æ²¡æœ‰å¼€å§‹");
 			return ;
 		if(this.committed )
-//			throw new RollbackException("ÊÂÎñÒÑ¾­Ìá½»");
+//			throw new RollbackException("äº‹åŠ¡å·²ç»æäº¤");
 			return ;
 		
 		if(this.rollbacked)
-//			throw new RollbackException("ÊÂÎñÒÑ¾­»Ø¹ö");
+//			throw new RollbackException("äº‹åŠ¡å·²ç»å›æ»š");
 			return;
 		try {
 			log.debug("Warnning:Detected uncommit Transaction,force rollbacked this transaction by system.",new Exception());
@@ -768,20 +768,20 @@ public class TransactionManager implements java.io.Serializable {
 	}
 	
 	/**
-	 * ÔÚfinal·½·¨ÖĞµ÷ÓÃ£¬ÓÃÀ´ÔÚ³öÏÖÒì³£Ê±¶ÔÊÂÎñ×ÊÔ´½øĞĞ»ØÊÕ£¬Ê×ÏÈ¶ÔÊÂÎñ½øĞĞ»Ø¹ö£¬
-	 * È»ºó»ØÊÕ×ÊÔ´£¬Èç¹ûÊÂÎñÒÑ¾­Ìá½»ºÍ»Ø¹ö£¬Ôò²»×öÈÎºÎ²Ù×÷
+	 * åœ¨finalæ–¹æ³•ä¸­è°ƒç”¨ï¼Œç”¨æ¥åœ¨å‡ºç°å¼‚å¸¸æ—¶å¯¹äº‹åŠ¡èµ„æºè¿›è¡Œå›æ”¶ï¼Œé¦–å…ˆå¯¹äº‹åŠ¡è¿›è¡Œå›æ»šï¼Œ
+	 * ç„¶åå›æ”¶èµ„æºï¼Œå¦‚æœäº‹åŠ¡å·²ç»æäº¤å’Œå›æ»šï¼Œåˆ™ä¸åšä»»ä½•æ“ä½œ
 	 */
 	public void releasenolog()
 	{
 		if(!this.started )
-//			throw new RollbackException("ÊÂÎñÃ»ÓĞ¿ªÊ¼");
+//			throw new RollbackException("äº‹åŠ¡æ²¡æœ‰å¼€å§‹");
 			return ;
 		if(this.committed )
-//			throw new RollbackException("ÊÂÎñÒÑ¾­Ìá½»");
+//			throw new RollbackException("äº‹åŠ¡å·²ç»æäº¤");
 			return ;
 		
 		if(this.rollbacked)
-//			throw new RollbackException("ÊÂÎñÒÑ¾­»Ø¹ö");
+//			throw new RollbackException("äº‹åŠ¡å·²ç»å›æ»š");
 			return;
 		try {
 //			log.debug("Warnning:Detected uncommit Transaction,force rollbacked this transaction by system.",new Exception());

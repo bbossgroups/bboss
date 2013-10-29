@@ -20,7 +20,7 @@ import org.frameworkset.web.servlet.ModelMap;
 
 /**
  * <p>Title: DateConvertController.java</p> 
- * <p>Description: 日期转换实例</p>
+ * <p>Description: 鏃ユ湡杞崲瀹炰緥</p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2008</p>
  * @Date 2011-4-30

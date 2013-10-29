@@ -22,7 +22,7 @@ package org.frameworkset.spi.remote;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2009-10-8 ÏÂÎç10:25:59
+ * @Date 2009-10-8 ä¸‹åˆ10:25:59
  * @author biaoping.yin
  * @version 1.0
  */

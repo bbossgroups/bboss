@@ -19,10 +19,10 @@ package com.frameworkset.common.poolman.security;
  * 
  * <p>Title: DESDBInfoEncrypt.java</p>
  *
- * <p>Description: ²ÉÓÃdesËã·¨¶ÔÊı¾İ¿âurl£¬ÕËºÅ£¬ÃÜÂë½øĞĞ¼ÓÃÜºÍ½âÃÜ²Ù×÷</p>
+ * <p>Description: é‡‡ç”¨desç®—æ³•å¯¹æ•°æ®åº“urlï¼Œè´¦å·ï¼Œå¯†ç è¿›è¡ŒåŠ å¯†å’Œè§£å¯†æ“ä½œ</p>
  *
  * <p>Copyright: Copyright (c) 2007</p>
- * @Date 2012-3-14 ÏÂÎç3:25:14
+ * @Date 2012-3-14 ä¸‹åˆ3:25:14
  * @author biaoping.yin
  * @version 1.0
  */

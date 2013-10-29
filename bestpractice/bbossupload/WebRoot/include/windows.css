@@ -316,7 +316,7 @@ img.twist {
 
 .dateInputElem {
 	width:140;
-	font-family: "ËÎÌå", "ĞÂËÎÌå";
+	font-family: "å®‹ä½“", "æ–°å®‹ä½“";
 	background-attachment: fixed;
 	background-image: url(../images/date.gif);
 	background-repeat: no-repeat;
@@ -325,7 +325,7 @@ img.twist {
 }
 .dateInputElemDisabled {
 	width:140;
-	font-family: "ËÎÌå", "ĞÂËÎÌå";
+	font-family: "å®‹ä½“", "æ–°å®‹ä½“";
 	background-attachment: fixed;
 	background-image: url(../images/date.gif);
 	background-repeat: no-repeat;
@@ -405,7 +405,7 @@ img.twist {
 	line-height: 17px;
 	text-indent: 2pt;
 }
-/*[ °´Å¥ - ½ûÓÃµÄ - ÊÊÓÃÓÚvalue=" ¼Ù  ×Ö " µÄ°´Å¥] ,±³¾°ÎªÒ»ÕÅÍ¼Æ¬*/
+/*[ æŒ‰é’® - ç¦ç”¨çš„ - é€‚ç”¨äºvalue=" å‡  å­— " çš„æŒ‰é’®] ,èƒŒæ™¯ä¸ºä¸€å¼ å›¾ç‰‡*/
 .buttonDisabled{
   	background-image: url(../images/b-H.GIF);
 	background-repeat:no-repeat;

@@ -1,9 +1,9 @@
-<%@ page contentType="text/html; charset=GBK" language="java" import="java.sql.*,java.util.List" errorPage=""%>
+<%@ page contentType="text/html; charset=UTF-8" language="java" import="java.sql.*,java.util.List" errorPage=""%>
 <%@ taglib uri="/WEB-INF/pager-taglib.tld" prefix="pg"%>
 <!-- 
-	callableutil±êÇ©ÊµÏÖÊı¾İ¿âº¯ÊıºÍ´æ´¢¹ı³Ì²Ù×÷
-	statement:´æ´¢¹ı³Ì»òÕßº¯Êı
-	dbname:Åú´¦Àí´æ´¢¹ı³Ì»òÕßº¯Êı¶ÔÓ¦µÄÊı¾İ¿âÃû³Æ£¬ÔÚpoolman.xmlÎÄ¼şÖĞ½øĞĞÅäÖÃ
+	callableutilæ ‡ç­¾å®ç°æ•°æ®åº“å‡½æ•°å’Œå­˜å‚¨è¿‡ç¨‹æ“ä½œ
+	statement:å­˜å‚¨è¿‡ç¨‹æˆ–è€…å‡½æ•°
+	dbname:æ‰¹å¤„ç†å­˜å‚¨è¿‡ç¨‹æˆ–è€…å‡½æ•°å¯¹åº”çš„æ•°æ®åº“åç§°ï¼Œåœ¨poolman.xmlæ–‡ä»¶ä¸­è¿›è¡Œé…ç½®
 
 	
 -->
@@ -16,7 +16,7 @@
  %>
 <html>
 <head>
-<title>²âÊÔÔÚdbutil±êÇ©ÉÏÖ±½ÓÖ´ĞĞÊı¾İ¿âupdate²Ù×÷</title>
+<title>æµ‹è¯•åœ¨dbutilæ ‡ç­¾ä¸Šç›´æ¥æ‰§è¡Œæ•°æ®åº“updateæ“ä½œ</title>
 </head>
 <body>
 	<table>

@@ -42,14 +42,14 @@ public abstract class PagerTagSupport extends BaseTag {
 	protected FieldHelper fieldHelper;
 	protected PagerContext pagerContext;
 	/**
-	 * ÅĞ¶ÏÊÇ·ñµ¼³öÒ³ÃæÊı¾İµ½ÎÄ¼şÖĞ
+	 * åˆ¤æ–­æ˜¯å¦å¯¼å‡ºé¡µé¢æ•°æ®åˆ°æ–‡ä»¶ä¸­
 	 * @return boolean
 	 */
 	protected boolean isExportMeta()
 	{
-	    //Èç¹ûÒ³Ãæ±êÇ©ÊÇÇ¶Ì×ÔÚ·ÖÒ³±êÇ©ÖĞÊ±£¬Ôò¸ù¾İ·ÖÒ³±êÇ©µÄÅĞ¶ÏÀ´¾ö¶¨ÊÇ·ñµ¼³öÒ³ÃæÊı¾İ
-	    //Èç¹ûÒ³Ãæ±êÇ©ÊÇÇ¶Ì×ÔÚÏêÏ¸±êÇ©ÖĞÊ±£¬Ôò¸ù¾İÏêÏ¸±êÇ©µÄÅĞ¶ÏÀ´¾ö¶¨ÊÇ·ñµ¼³öÒ³ÃæÊı¾İ
-	    //·ñÔò²»µ¼³öÒ³ÃæÊı¾İ
+	    //å¦‚æœé¡µé¢æ ‡ç­¾æ˜¯åµŒå¥—åœ¨åˆ†é¡µæ ‡ç­¾ä¸­æ—¶ï¼Œåˆ™æ ¹æ®åˆ†é¡µæ ‡ç­¾çš„åˆ¤æ–­æ¥å†³å®šæ˜¯å¦å¯¼å‡ºé¡µé¢æ•°æ®
+	    //å¦‚æœé¡µé¢æ ‡ç­¾æ˜¯åµŒå¥—åœ¨è¯¦ç»†æ ‡ç­¾ä¸­æ—¶ï¼Œåˆ™æ ¹æ®è¯¦ç»†æ ‡ç­¾çš„åˆ¤æ–­æ¥å†³å®šæ˜¯å¦å¯¼å‡ºé¡µé¢æ•°æ®
+	    //å¦åˆ™ä¸å¯¼å‡ºé¡µé¢æ•°æ®
 //	    if(pagerTag != null)
 //	        return pagerTag.isExportMeta();
 //	    else if(detailTag != null)
@@ -106,10 +106,10 @@ public abstract class PagerTagSupport extends BaseTag {
 //		return EVAL_BODY_INCLUDE;
 		pagerContext = null;
 		/*
-		 * ²éÕÒ²¢³õÊ¼»¯±êÇ©µÄpagerContext¶ÔÏó£¬ÒÔÏÂÇé¿öĞèÒª´ÓÍâÎ§»·¾³ÖĞ£¬²éÕÒpagerContext
-		 * 1.±êÇ©µÄÊı¾İÒÀÀµÓÚÍâÎ§µÄ±êÇ©Ìá¹©£¬Ê×ÏÈ¸ù¾İ±êÇ©
-		 * ±¾ÉíµÃidÖµÔÚrequestÖĞ²éÕÒ£¬Èç¹ûÃ»ÓĞÕÒµ½£¬Èç¹ûidÎªnullÊ±
-		 * ÔòĞèÒª 
+		 * æŸ¥æ‰¾å¹¶åˆå§‹åŒ–æ ‡ç­¾çš„pagerContextå¯¹è±¡ï¼Œä»¥ä¸‹æƒ…å†µéœ€è¦ä»å¤–å›´ç¯å¢ƒä¸­ï¼ŒæŸ¥æ‰¾pagerContext
+		 * 1.æ ‡ç­¾çš„æ•°æ®ä¾èµ–äºå¤–å›´çš„æ ‡ç­¾æä¾›ï¼Œé¦–å…ˆæ ¹æ®æ ‡ç­¾
+		 * æœ¬èº«å¾—idå€¼åœ¨requestä¸­æŸ¥æ‰¾ï¼Œå¦‚æœæ²¡æœ‰æ‰¾åˆ°ï¼Œå¦‚æœidä¸ºnullæ—¶
+		 * åˆ™éœ€è¦ 
 		 */
 		if (id != null) 
 		{
@@ -180,7 +180,7 @@ public abstract class PagerTagSupport extends BaseTag {
 			}
 			else if(this instanceof CellTag)
 			{
-				//ÎŞĞè³õÊ±»¯pagerContext
+				//æ— éœ€åˆæ—¶åŒ–pagerContext
 			}
 			else if(this instanceof ParamTag || this instanceof ParamsTag || this instanceof BeanParamsTag)
 			{
@@ -293,7 +293,7 @@ public abstract class PagerTagSupport extends BaseTag {
 		
 		if(pagerContext == null)
 		{
-			//½øĞĞ¶îÍâ´¦Àí
+			//è¿›è¡Œé¢å¤–å¤„ç†
 		}
 		fieldHelper = pagerContext;
 //		if(this.pagerTag == null)

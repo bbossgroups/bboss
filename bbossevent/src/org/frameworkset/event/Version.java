@@ -23,7 +23,7 @@ import java.util.Date;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2009-5-7 ÏÂÎç05:02:50
+ * @Date 2009-5-7 ä¸‹åˆ05:02:50
  * @author biaoping.yin
  * @version 1.0
  */

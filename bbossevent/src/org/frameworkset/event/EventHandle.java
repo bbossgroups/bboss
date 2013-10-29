@@ -36,7 +36,7 @@ import org.safehaus.uuid.UUID;
 import org.safehaus.uuid.UUIDGenerator;
 
 /**
- * ÊÂ¼ş´¦Àí³éÏóÀà
+ * äº‹ä»¶å¤„ç†æŠ½è±¡ç±»
  * 
  * @author biaoping.yin
  * @version 1.0
@@ -49,34 +49,34 @@ public class EventHandle extends RejectCallback implements Notifiable {
 	
 	public static final String  EVENT_SERVICE = "event.serivce";
 	/**
-	 * ´æ·ÅÏµÍ³ÖĞËùÓĞµÄ±¾µØºÍÔ¶³ÌÊÂ¼ş¶¼¸ĞĞËÈ¤µÄ¼àÌıÆ÷,µ±Ä³¸öÊÂ¼ş±»´¥·¢Ê±£¬ÊÂ¼ş¹ÜÀí¿ò¼Ü½«ÏòlistÖĞµÄËùÓĞ¼àÌıÆ÷·¢ËÍÏûÏ¢ List<Listener>
+	 * å­˜æ”¾ç³»ç»Ÿä¸­æ‰€æœ‰çš„æœ¬åœ°å’Œè¿œç¨‹äº‹ä»¶éƒ½æ„Ÿå…´è¶£çš„ç›‘å¬å™¨,å½“æŸä¸ªäº‹ä»¶è¢«è§¦å‘æ—¶ï¼Œäº‹ä»¶ç®¡ç†æ¡†æ¶å°†å‘listä¸­çš„æ‰€æœ‰ç›‘å¬å™¨å‘é€æ¶ˆæ¯ List<Listener>
 	 */
 	private static final List list = new ArrayList();
 
 	/**
-	 * ´æ·ÅÏµÍ³ÖĞËùÓĞ±¾µØÊÂ¼ş¶¼¸ĞĞËÈ¤µÄ¼àÌıÆ÷,µ±Ä³¸öÊÂ¼ş±»´¥·¢Ê±£¬ÊÂ¼ş¹ÜÀí¿ò¼Ü½«ÏòlistÖĞµÄËùÓĞ¼àÌıÆ÷·¢ËÍÏûÏ¢ List<Listener>
+	 * å­˜æ”¾ç³»ç»Ÿä¸­æ‰€æœ‰æœ¬åœ°äº‹ä»¶éƒ½æ„Ÿå…´è¶£çš„ç›‘å¬å™¨,å½“æŸä¸ªäº‹ä»¶è¢«è§¦å‘æ—¶ï¼Œäº‹ä»¶ç®¡ç†æ¡†æ¶å°†å‘listä¸­çš„æ‰€æœ‰ç›‘å¬å™¨å‘é€æ¶ˆæ¯ List<Listener>
 	 */
 	private static final List locallist = new ArrayList();
 	/**
-	 * ½«¼àÌıÆ÷Ëù¼àÌıµÄÊÂ¼şÀàĞÍ¶Ô¼àÌıÆ÷½¨Á¢Ë÷Òı£¬µ±Ä³¸öÀàĞÍµÄ±¾µØ»òÔ¶³ÌÊÂ¼ş±»¼¤·¢Ê±£¬ ÊÂ¼ş¹ÜÀí¿ò¼Ü³ıÁË¸øËùÓĞµÄÊÂ¼ş¸ĞĞËÈ¤µÄ¼àÌıÆ÷·¢
-	 * ËÍÏûÏ¢Ê±£¬»¹»á¸ø¶Ô¸ÃÀàĞÍÊÂ¼ş¸ĞĞËÈ¤µÄ¼àÌıÆ÷·¢ËÍÏûÏ¢
-	 * ĞèÒª×¢ÒâµÄÊÇ£¬Èç¹ûÄ³¸ö¼àÌıÆ÷¼´¶ÔÄ³¸öÌØ¶¨ÀàĞÍµÄÊÂ¼ş¸ĞĞËÈ¤ÓÖ¶ÔÆäËûËùÓĞµÄÊÂ¼ş¸ĞĞËÈ¤£¬ÄÇÃ´½«¸Ã¼àÌıÆ÷ °´ÕÕ¶ÔËùÓĞÊÂ¼ş¸ĞĞËÈ¤µÄ¼àÌıÆ÷´¦Àí Map<EventType,List<Listener>>
+	 * å°†ç›‘å¬å™¨æ‰€ç›‘å¬çš„äº‹ä»¶ç±»å‹å¯¹ç›‘å¬å™¨å»ºç«‹ç´¢å¼•ï¼Œå½“æŸä¸ªç±»å‹çš„æœ¬åœ°æˆ–è¿œç¨‹äº‹ä»¶è¢«æ¿€å‘æ—¶ï¼Œ äº‹ä»¶ç®¡ç†æ¡†æ¶é™¤äº†ç»™æ‰€æœ‰çš„äº‹ä»¶æ„Ÿå…´è¶£çš„ç›‘å¬å™¨å‘
+	 * é€æ¶ˆæ¯æ—¶ï¼Œè¿˜ä¼šç»™å¯¹è¯¥ç±»å‹äº‹ä»¶æ„Ÿå…´è¶£çš„ç›‘å¬å™¨å‘é€æ¶ˆæ¯
+	 * éœ€è¦æ³¨æ„çš„æ˜¯ï¼Œå¦‚æœæŸä¸ªç›‘å¬å™¨å³å¯¹æŸä¸ªç‰¹å®šç±»å‹çš„äº‹ä»¶æ„Ÿå…´è¶£åˆå¯¹å…¶ä»–æ‰€æœ‰çš„äº‹ä»¶æ„Ÿå…´è¶£ï¼Œé‚£ä¹ˆå°†è¯¥ç›‘å¬å™¨ æŒ‰ç…§å¯¹æ‰€æœ‰äº‹ä»¶æ„Ÿå…´è¶£çš„ç›‘å¬å™¨å¤„ç† Map<EventType,List<Listener>>
 	 */
 	private static final Map listenersIndexbyType = new HashMap();
 
 	/**
-	 * ½«¼àÌıÆ÷Ëù¼àÌıµÄÊÂ¼şÀàĞÍ¶Ô¼àÌıÆ÷½¨Á¢Ë÷Òı£¬µ±Ä³¸öÀàĞÍµÄ±¾µØÊÂ¼ş±»¼¤·¢Ê±£¬ ÊÂ¼ş¹ÜÀí¿ò¼Ü³ıÁË¸øËùÓĞµÄÊÂ¼ş¸ĞĞËÈ¤µÄ¼àÌıÆ÷·¢
-	 * ËÍÏûÏ¢Ê±£¬»¹»á¸ø¶Ô¸ÃÀàĞÍÊÂ¼ş¸ĞĞËÈ¤µÄ¼àÌıÆ÷·¢ËÍÏûÏ¢
-	 * ĞèÒª×¢ÒâµÄÊÇ£¬Èç¹ûÄ³¸ö¼àÌıÆ÷¼´¶ÔÄ³¸öÌØ¶¨ÀàĞÍµÄÊÂ¼ş¸ĞĞËÈ¤ÓÖ¶ÔÆäËûËùÓĞµÄÊÂ¼ş¸ĞĞËÈ¤£¬ÄÇÃ´½«¸Ã¼àÌıÆ÷ °´ÕÕ¶ÔËùÓĞÊÂ¼ş¸ĞĞËÈ¤µÄ¼àÌıÆ÷´¦Àí Map<EventType,List<Listener>>
+	 * å°†ç›‘å¬å™¨æ‰€ç›‘å¬çš„äº‹ä»¶ç±»å‹å¯¹ç›‘å¬å™¨å»ºç«‹ç´¢å¼•ï¼Œå½“æŸä¸ªç±»å‹çš„æœ¬åœ°äº‹ä»¶è¢«æ¿€å‘æ—¶ï¼Œ äº‹ä»¶ç®¡ç†æ¡†æ¶é™¤äº†ç»™æ‰€æœ‰çš„äº‹ä»¶æ„Ÿå…´è¶£çš„ç›‘å¬å™¨å‘
+	 * é€æ¶ˆæ¯æ—¶ï¼Œè¿˜ä¼šç»™å¯¹è¯¥ç±»å‹äº‹ä»¶æ„Ÿå…´è¶£çš„ç›‘å¬å™¨å‘é€æ¶ˆæ¯
+	 * éœ€è¦æ³¨æ„çš„æ˜¯ï¼Œå¦‚æœæŸä¸ªç›‘å¬å™¨å³å¯¹æŸä¸ªç‰¹å®šç±»å‹çš„äº‹ä»¶æ„Ÿå…´è¶£åˆå¯¹å…¶ä»–æ‰€æœ‰çš„äº‹ä»¶æ„Ÿå…´è¶£ï¼Œé‚£ä¹ˆå°†è¯¥ç›‘å¬å™¨ æŒ‰ç…§å¯¹æ‰€æœ‰äº‹ä»¶æ„Ÿå…´è¶£çš„ç›‘å¬å™¨å¤„ç† Map<EventType,List<Listener>>
 	 */
 	private static final Map localListenersIndexbyType = new HashMap();
 	
 	/**
-	 * ¼àÌıËùÓĞÀàĞÍÔ¶³ÌÊÂ¼şµÄ¼àÌıÆ÷ÁĞ±í
+	 * ç›‘å¬æ‰€æœ‰ç±»å‹è¿œç¨‹äº‹ä»¶çš„ç›‘å¬å™¨åˆ—è¡¨
 	 */
 	private static final List remoteListeners = new ArrayList();
 	/**
-	 * ¼àÌıÌØ¶¨ÀàĞÍÔ¶³ÌÊÂ¼şµÄ¼àÌıÆ÷ÁĞ±í
+	 * ç›‘å¬ç‰¹å®šç±»å‹è¿œç¨‹äº‹ä»¶çš„ç›‘å¬å™¨åˆ—è¡¨
 	 */
 	private static final Map remoteListenersIndexbyType = new HashMap();
 	
@@ -84,7 +84,7 @@ public class EventHandle extends RejectCallback implements Notifiable {
 	private static String event_password = BaseSPIManager.getProperty("event.password","123456");
 
 //	/**
-//	 * ÊÂ¼ş»º³åÆ÷£¬Í¨¹ı»º³åÖĞÊÂ¼şÊı¾İµÄ±ä»¯Çé¿öÀ´ÔÚ¼¯Èº»·¾³ÖĞ¹ã²¥ÊÂ¼ş Map<fqn,Event>
+//	 * äº‹ä»¶ç¼“å†²å™¨ï¼Œé€šè¿‡ç¼“å†²ä¸­äº‹ä»¶æ•°æ®çš„å˜åŒ–æƒ…å†µæ¥åœ¨é›†ç¾¤ç¯å¢ƒä¸­å¹¿æ’­äº‹ä»¶ Map<fqn,Event>
 //	 * 
 //	 */
 //	private static AopMapContainer treeMap = null;
@@ -146,11 +146,11 @@ public class EventHandle extends RejectCallback implements Notifiable {
 	}
 
 	/**
-	 * Description:×¢²á¼àÌıÆ÷£¬±»×¢²áµÄ¼àÌıÆ÷Ö»¶ÔeventtypesÖĞ°üº¬µÄÊÂ¼şÀàĞÍµÄÔ¶³ÌÊÂ¼şºÍ±¾µØÊÂ¼ş¸ĞĞËÈ¤
+	 * Description:æ³¨å†Œç›‘å¬å™¨ï¼Œè¢«æ³¨å†Œçš„ç›‘å¬å™¨åªå¯¹eventtypesä¸­åŒ…å«çš„äº‹ä»¶ç±»å‹çš„è¿œç¨‹äº‹ä»¶å’Œæœ¬åœ°äº‹ä»¶æ„Ÿå…´è¶£
 	 * 
 	 * @param listener
 	 * @param List
-	 *            <ResourceChangeEventType> ¼àÌıÆ÷ĞèÒª¼àÌıµÄÏûÏ¢ÀàĞÍ
+	 *            <ResourceChangeEventType> ç›‘å¬å™¨éœ€è¦ç›‘å¬çš„æ¶ˆæ¯ç±»å‹
 	 * @see com.chinacreator.security.authorization.ACLNotifiable#addListener(com.chinacreator.security.authorization.ACLListener)
 	 */
 	public void addListener(Listener listener, List eventtypes) {
@@ -159,8 +159,8 @@ public class EventHandle extends RejectCallback implements Notifiable {
 	}
 
 	/**
-	 * ×¢²á¼àÌıÆ÷£¬±»×¢²áµÄ¼àÌıÆ÷Ö»¶ÔeventtypesÖĞ°üº¬µÄÊÂ¼şÀàĞÍ¸ĞĞËÈ¤£¬¶ÔÆäËüÀàĞÍµÄÊÂ¼ş²»¸ÒĞËÈ¤
-	 * ¸ù¾İremoteµÄÖµ¾ö¶¨¼àÌıÆ÷ÊÇ·ñ¼àÌıÔ¶³ÌÊÂ¼şºÍ±¾µØÊÂ¼ş£¬remote=trueÊ±¼àÌıÔ¶³ÌºÍ±¾µØÊÂ¼ş£¬falseÊ± Ö»¼àÌı±¾µØÊÂ¼ş¡£
+	 * æ³¨å†Œç›‘å¬å™¨ï¼Œè¢«æ³¨å†Œçš„ç›‘å¬å™¨åªå¯¹eventtypesä¸­åŒ…å«çš„äº‹ä»¶ç±»å‹æ„Ÿå…´è¶£ï¼Œå¯¹å…¶å®ƒç±»å‹çš„äº‹ä»¶ä¸æ•¢å…´è¶£
+	 * æ ¹æ®remoteçš„å€¼å†³å®šç›‘å¬å™¨æ˜¯å¦ç›‘å¬è¿œç¨‹äº‹ä»¶å’Œæœ¬åœ°äº‹ä»¶ï¼Œremote=trueæ—¶ç›‘å¬è¿œç¨‹å’Œæœ¬åœ°äº‹ä»¶ï¼Œfalseæ—¶ åªç›‘å¬æœ¬åœ°äº‹ä»¶ã€‚
 	 */
 	public void addListener(Listener listener, List eventtypes, boolean remote) {
 		if(remote)
@@ -177,7 +177,7 @@ public class EventHandle extends RejectCallback implements Notifiable {
 	public void addListener(Listener listener, List eventtypes, int listenerType) {
 		
 		/**
-		 * ÅĞ¶Ï¼àÌıÆ÷ÊÇ·ñÒÑ¾­ÔÚ¶ÔËùÓĞÏûÏ¢¶¼¸ĞĞËÈ¤µÄ¼àÌıÆ÷ÁĞ±íÖĞ£¬ÒÑ¾­´æÔÚ¾Í·µ»Ø£¬·ñÔò ¼ÌĞøÖ´ĞĞºóĞøµÄ¹¤×÷
+		 * åˆ¤æ–­ç›‘å¬å™¨æ˜¯å¦å·²ç»åœ¨å¯¹æ‰€æœ‰æ¶ˆæ¯éƒ½æ„Ÿå…´è¶£çš„ç›‘å¬å™¨åˆ—è¡¨ä¸­ï¼Œå·²ç»å­˜åœ¨å°±è¿”å›ï¼Œå¦åˆ™ ç»§ç»­æ‰§è¡Œåç»­çš„å·¥ä½œ
 		 */
 		if(listenerType == Listener.LOCAL)
 		{
@@ -194,7 +194,7 @@ public class EventHandle extends RejectCallback implements Notifiable {
 			if(containListener(remoteListeners, listener))
 				return;
 		}
-		else //ÆäËüÀàĞÍ°´LOCAL_REMOTEÀàĞÍ´¦Àí
+		else //å…¶å®ƒç±»å‹æŒ‰LOCAL_REMOTEç±»å‹å¤„ç†
 		{
 			if(containListener(list, listener))
 				return;
@@ -282,9 +282,9 @@ public class EventHandle extends RejectCallback implements Notifiable {
 					}
 				}
 			}
-			else  //ÆäËûÀàĞÍµÄ¼àÌıÆ÷£¬°´ÕÕLOCAL_REMOTEÀàĞÍ´¦Àí
+			else  //å…¶ä»–ç±»å‹çš„ç›‘å¬å™¨ï¼ŒæŒ‰ç…§LOCAL_REMOTEç±»å‹å¤„ç†
 			{
-				log.warn("addListener:×¢²á²»Ö§³ÖµÄ¼àÌıÆ÷ÀàĞÍ[" + listenerType + ",listener=" + listener + "] on line 332");
+				log.warn("addListener:æ³¨å†Œä¸æ”¯æŒçš„ç›‘å¬å™¨ç±»å‹[" + listenerType + ",listener=" + listener + "] on line 332");
 				for (int i = 0; i < eventtypes.size(); i++) {
 					EventType eventType = (EventType) eventtypes.get(i);
 					if (this.containEventType(listenersIndexbyType, eventType)) {
@@ -330,9 +330,9 @@ public class EventHandle extends RejectCallback implements Notifiable {
 				remoteListeners.add(listener);
 			}
 		}
-		else //ÆäËûÀàĞÍµÄ¼àÌıÆ÷£¬°´ÕÕLOCAL_REMOTEÀàĞÍ´¦Àí
+		else //å…¶ä»–ç±»å‹çš„ç›‘å¬å™¨ï¼ŒæŒ‰ç…§LOCAL_REMOTEç±»å‹å¤„ç†
 		{
-			log.warn("addListener:×¢²á²»Ö§³ÖµÄ¼àÌıÆ÷ÀàĞÍ[" + listenerType + ",listener=" + listener + "] on line 375");
+			log.warn("addListener:æ³¨å†Œä¸æ”¯æŒçš„ç›‘å¬å™¨ç±»å‹[" + listenerType + ",listener=" + listener + "] on line 375");
 			if (!this.containListener(list, listener)) {
 				list.add(listener);
 			}
@@ -341,7 +341,7 @@ public class EventHandle extends RejectCallback implements Notifiable {
 	}
 
 	/**
-	 * ÅĞ¶Ï¼àÌıÆ÷ÊÇ·ñÔÚÁĞ±íÖĞ´æÔÚ
+	 * åˆ¤æ–­ç›‘å¬å™¨æ˜¯å¦åœ¨åˆ—è¡¨ä¸­å­˜åœ¨
 	 */
 	private boolean containListener(List listeners, Listener listener) {
 		for (int i = 0; i < listeners.size(); i++) {
@@ -354,7 +354,7 @@ public class EventHandle extends RejectCallback implements Notifiable {
 	}
 
 	/**
-	 * ÅĞ¶ÏÊÂ¼şÀàĞÍÊÇ·ñÒÑ¾­½¨Á¢Ë÷Òı
+	 * åˆ¤æ–­äº‹ä»¶ç±»å‹æ˜¯å¦å·²ç»å»ºç«‹ç´¢å¼•
 	 * 
 	 * @param eventType
 	 * @return
@@ -375,7 +375,7 @@ public class EventHandle extends RejectCallback implements Notifiable {
 	}
 
 	/**
-	 * Ïò¶Ô±¾µØÊÂ¼şºÍÔ¶³ÌÊÂ¼ş¸ĞĞËÈ¤µÄ¼àÌıÆ÷¹ã²¥ÊÂ¼ş
+	 * å‘å¯¹æœ¬åœ°äº‹ä»¶å’Œè¿œç¨‹äº‹ä»¶æ„Ÿå…´è¶£çš„ç›‘å¬å™¨å¹¿æ’­äº‹ä»¶
 	 * 
 	 * @param event
 	 */
@@ -403,7 +403,7 @@ public class EventHandle extends RejectCallback implements Notifiable {
 	}
 
 	/**
-	 * ¹«¹²ÊÂ¼ş´¦Àí·½·¨
+	 * å…¬å…±äº‹ä»¶å¤„ç†æ–¹æ³•
 	 * 
 	 * @param event
 	 */
@@ -411,7 +411,7 @@ public class EventHandle extends RejectCallback implements Notifiable {
 		if(event.isLocal() )
 		{
 			if(event.getEventTarget() != null)
-				log.warn("±¾µØÊÂ¼ş²»ÄÜÖ¸¶¨ÊÂ¼ş·¢ËÍÔ¶³ÌÄ¿±ê£ºtarget=" + event.getEventTarget() + ",event source:" + event.getSource() + ",event type:" + event.getType());
+				log.warn("æœ¬åœ°äº‹ä»¶ä¸èƒ½æŒ‡å®šäº‹ä»¶å‘é€è¿œç¨‹ç›®æ ‡ï¼štarget=" + event.getEventTarget() + ",event source:" + event.getSource() + ",event type:" + event.getType());
 			try {
 				_handleCommon(event);
 			} catch (Exception e) {
@@ -430,19 +430,19 @@ public class EventHandle extends RejectCallback implements Notifiable {
 		else if(event.isRemoteLocal())
 		{
 			try {
-				_handleLocal(event);//Ê×ÏÈ·¢ËÍ¸ø±¾µØÊÂ¼şÀàĞÍ¼àÌıÆ÷
+				_handleLocal(event);//é¦–å…ˆå‘é€ç»™æœ¬åœ°äº‹ä»¶ç±»å‹ç›‘å¬å™¨
 			} catch (Exception e) {
 				log.error("",e);
 			}
 			if (!EventUtils.remoteevent_enabled()) {
 				
 				try {
-					_handleCommon(event);//Èç¹ûÃ»ÓĞÆôÓÃ¼¯Èº£¬ÄÇÃ´Ïò±¾µØÔ¶³ÌÊÂ¼şÀàĞÍ¼àÌıÆ÷·¢ËÍÏûÏ¢
+					_handleCommon(event);//å¦‚æœæ²¡æœ‰å¯ç”¨é›†ç¾¤ï¼Œé‚£ä¹ˆå‘æœ¬åœ°è¿œç¨‹äº‹ä»¶ç±»å‹ç›‘å¬å™¨å‘é€æ¶ˆæ¯
 				} catch (Exception e) {
 					log.error("",e);
 				}
 				if(event.getEventTarget() != null)
-					log.warn("Ô¶³ÌÊÂ¼ş±»½ûÓÃ£¬ºöÂÔ·¢ËÍÔ¶³ÌÊÂ¼ş£ºtarget=" + event.getEventTarget() + ",event source:" + event.getSource() + ",event type:" + event.getType());
+					log.warn("è¿œç¨‹äº‹ä»¶è¢«ç¦ç”¨ï¼Œå¿½ç•¥å‘é€è¿œç¨‹äº‹ä»¶ï¼štarget=" + event.getEventTarget() + ",event source:" + event.getSource() + ",event type:" + event.getType());
 				
 			}
 			else
@@ -458,7 +458,7 @@ public class EventHandle extends RejectCallback implements Notifiable {
 					    eventRemoteService.remoteEventChange(key,event);
 					}catch(Exception e){
 						log.error("",e);
-						_handleCommon(event);//Èç¹û¼¯Èº»·¾³ÏÂ£¬Õı³£Çé¿öÏÂ£¬ÏûÏ¢»á±»Í¨ÓÃ¼àÌıÆ÷½ÓÊÕ£¬µ«ÊÇÈç¹û¼¯Èº´¦ÀíÊ§°Ü£¬ÄÇÃ´ĞèÒªÖ±½Ó½«ÊÂ¼ş·¢¸ø×Ô¼º
+						_handleCommon(event);//å¦‚æœé›†ç¾¤ç¯å¢ƒä¸‹ï¼Œæ­£å¸¸æƒ…å†µä¸‹ï¼Œæ¶ˆæ¯ä¼šè¢«é€šç”¨ç›‘å¬å™¨æ¥æ”¶ï¼Œä½†æ˜¯å¦‚æœé›†ç¾¤å¤„ç†å¤±è´¥ï¼Œé‚£ä¹ˆéœ€è¦ç›´æ¥å°†äº‹ä»¶å‘ç»™è‡ªå·±
 						return;
 						
 					}
@@ -475,7 +475,7 @@ public class EventHandle extends RejectCallback implements Notifiable {
 						log.error("",e);
 					}
 					try {
-						_handleCommon(event);//±¾µØ¿ÉÄÜ»áÖØ¸´½ÓÊÕµ½Í¬Ò»¸öÊÂ¼ş£¬ÒòÎªÈç¹ûÖ¸¶¨µÄÄ¿±êµØÖ·°üº¬ÁË±¾µØµØÖ·
+						_handleCommon(event);//æœ¬åœ°å¯èƒ½ä¼šé‡å¤æ¥æ”¶åˆ°åŒä¸€ä¸ªäº‹ä»¶ï¼Œå› ä¸ºå¦‚æœæŒ‡å®šçš„ç›®æ ‡åœ°å€åŒ…å«äº†æœ¬åœ°åœ°å€
 					} catch (Exception e) {
 						log.error("",e);
 					}
@@ -494,10 +494,10 @@ public class EventHandle extends RejectCallback implements Notifiable {
 			}
 		} 
 		
-		else if(event.isRemote()) //²»ÄÜ·¢ËÍ¸ø±¾µØÔ¶³ÌÊÂ¼ş¼àÌıÆ÷ºÍ±¾µØÊÂ¼ş¼àÌıÆ÷
+		else if(event.isRemote()) //ä¸èƒ½å‘é€ç»™æœ¬åœ°è¿œç¨‹äº‹ä»¶ç›‘å¬å™¨å’Œæœ¬åœ°äº‹ä»¶ç›‘å¬å™¨
 		{
 			if (!EventUtils.remoteevent_enabled()) {
-				log.debug("ÏµÍ³±»ÉèÖÃÎª½ûÓÃÔ¶³ÌÊÂ¼ş,ºöÂÔÔ¶³ÌÊÂ¼şµÄ´¦Àí£ºtarget=" + event.getEventTarget() + ",event source:" + event.getSource() + ",event type:" + event.getType());
+				log.debug("ç³»ç»Ÿè¢«è®¾ç½®ä¸ºç¦ç”¨è¿œç¨‹äº‹ä»¶,å¿½ç•¥è¿œç¨‹äº‹ä»¶çš„å¤„ç†ï¼štarget=" + event.getEventTarget() + ",event source:" + event.getSource() + ",event type:" + event.getType());
 			}
 			else
 			{
@@ -551,7 +551,7 @@ public class EventHandle extends RejectCallback implements Notifiable {
 	}
 
 	/**
-	 * ÏòÖ»¶Ô±¾µØÊÂ¼ş¸ĞĞËÈ¤µÄ¼àÌıÆ÷£¬¹ã²¥±¾µØÊÂ¼ş
+	 * å‘åªå¯¹æœ¬åœ°äº‹ä»¶æ„Ÿå…´è¶£çš„ç›‘å¬å™¨ï¼Œå¹¿æ’­æœ¬åœ°äº‹ä»¶
 	 * 
 	 * @param event
 	 */
@@ -579,7 +579,7 @@ public class EventHandle extends RejectCallback implements Notifiable {
 	}
 	
 	/**
-	 * ÏòÖ»¶ÔÔ¶³ÌÊÂ¼ş¸ĞĞËÈ¤µÄ¼àÌıÆ÷£¬¹ã²¥±¾µØÊÂ¼ş
+	 * å‘åªå¯¹è¿œç¨‹äº‹ä»¶æ„Ÿå…´è¶£çš„ç›‘å¬å™¨ï¼Œå¹¿æ’­æœ¬åœ°äº‹ä»¶
 	 * 
 	 * @param event
 	 */
@@ -607,7 +607,7 @@ public class EventHandle extends RejectCallback implements Notifiable {
 	}
 
 	/**
-	 * Èç¹ûÏµÍ³ÔÊĞí¼¯Èº»òÕß¶àÊµÀı¼ä»º³åÊı¾İ²¢ÇÒ¼¯ÈºÒÑ¾­Õı³£Æô¶¯ÔòÊ×ÏÈÔÚ¼¯ÈºÖĞ¹ã²¥
+	 * å¦‚æœç³»ç»Ÿå…è®¸é›†ç¾¤æˆ–è€…å¤šå®ä¾‹é—´ç¼“å†²æ•°æ®å¹¶ä¸”é›†ç¾¤å·²ç»æ­£å¸¸å¯åŠ¨åˆ™é¦–å…ˆåœ¨é›†ç¾¤ä¸­å¹¿æ’­
 	 */
 	public void change(Event event, boolean synchronizable) {
 	
@@ -617,7 +617,7 @@ public class EventHandle extends RejectCallback implements Notifiable {
 	}
 	static InnerThreadPoolExecutor executor ;
 	/**
-	 * ±¾µØÊÂ¼ş´¦Àí
+	 * æœ¬åœ°äº‹ä»¶å¤„ç†
 	 * 
 	 * @param event
 	 */
@@ -646,7 +646,7 @@ public class EventHandle extends RejectCallback implements Notifiable {
 	}
 
 	/**
-	 * ¶¨ÒåÏß³Ì£¬Òì²½´¦ÀíËùÓĞµÄÊÂ¼ş£¬ÒÑÊµÊ±¸üĞÂ»º³åÇøµÄÈ¨ÏŞĞÅÏ¢
+	 * å®šä¹‰çº¿ç¨‹ï¼Œå¼‚æ­¥å¤„ç†æ‰€æœ‰çš„äº‹ä»¶ï¼Œå·²å®æ—¶æ›´æ–°ç¼“å†²åŒºçš„æƒé™ä¿¡æ¯
 	 * 
 	 * @author biaoping.yin
 	 * @version 1.0
@@ -665,7 +665,7 @@ public class EventHandle extends RejectCallback implements Notifiable {
 		}
 
 		/**
-		 * Description:Ïß³ÌÖ÷Ìå
+		 * Description:çº¿ç¨‹ä¸»ä½“
 		 * 
 		 * @see java.lang.Runnable#run()
 		 */
@@ -734,7 +734,7 @@ public class EventHandle extends RejectCallback implements Notifiable {
 //		}
 //	}
 	/**
-	 * Íâ²¿µôÓÃµÄÔ¶³Ì´¦Àí·½·¨£¬ËùÓĞµÄÔ¶³ÌÊÂ¼şÍ¨¹ıÍâ²¿·½·¨À´´¦Àí
+	 * å¤–éƒ¨æ‰ç”¨çš„è¿œç¨‹å¤„ç†æ–¹æ³•ï¼Œæ‰€æœ‰çš„è¿œç¨‹äº‹ä»¶é€šè¿‡å¤–éƒ¨æ–¹æ³•æ¥å¤„ç†
 	 * @param eventfqn
 	 * @return
 	 * @throws Exception

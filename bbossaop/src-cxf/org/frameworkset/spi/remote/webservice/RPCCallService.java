@@ -25,7 +25,7 @@ import javax.jws.WebService;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2008</p>
- * @Date 2009-11-4 œ¬ŒÁ05:04:55
+ * @Date 2009-11-4 ‰∏ãÂçà05:04:55
  * @author biaoping.yin
  * @version 1.0
  */

@@ -1,7 +1,7 @@
 
 //---------------------------------------------->
-// 		[µ¯³öÊ½¹¦ÄÜ²Ëµ¥]
-//		×÷Õß£ºbiaoping.yin
+// 		[å¼¹å‡ºå¼åŠŸèƒ½èœå•]
+//		ä½œè€…ï¼šbiaoping.yin
 ////---------------------------------------------->
 var MenuCount=0;
 var MenuCollections = new Array();
@@ -33,7 +33,7 @@ function windowOnload()
 }
 
 //---------------------------------
-//	³õÊ¼»¯ÊÂ¼ş
+//	åˆå§‹åŒ–äº‹ä»¶
 //---------------------------------
 function InitializedDocEvent()
 {
@@ -290,12 +290,12 @@ function addMenu(childMenu)
 {
 	if(this.parentMenu == null)
 	{
-		alert("²Ëµ¥ÌõÄ¿»¹Ã»ÓĞ±»Ìí¼Óµ½²Ëµ¥.");
+		alert("èœå•æ¡ç›®è¿˜æ²¡æœ‰è¢«æ·»åŠ åˆ°èœå•.");
 		return false;
 	}
 	else if(this.parentMenu.stringId == childMenu.stringId)
 	{
-		alert("²Ëµ¥ÌõÄ¿µÄ¸¸²Ëµ¥Óë×Ó²Ëµ¥ÏàÍ¬.");
+		alert("èœå•æ¡ç›®çš„çˆ¶èœå•ä¸å­èœå•ç›¸åŒ.");
 		return false;
 	}
 	this.item.rows[0].detachEvent("onclick",this.runJsCmd);
@@ -529,7 +529,7 @@ function setMainMenu(menu)
 	}
 	else
 	{
-		alert("Menu¸¸¶ÔÏó²»Îª¿Õ.ÎŞ·¨³ÉÎªÖ÷²Ëµ¥");
+		alert("Menuçˆ¶å¯¹è±¡ä¸ä¸ºç©º.æ— æ³•æˆä¸ºä¸»èœå•");
 	}
 }
 
@@ -620,7 +620,7 @@ function InitializedTextMenu(srcElement)
     }
 }
 /**
- * ÓÒ¼ü²Ëµ¥µã»÷ÊÂ¼ş
+ * å³é”®èœå•ç‚¹å‡»äº‹ä»¶
  */
 function menuclick(link,target)
 {
@@ -673,7 +673,7 @@ function textMenu()
 	
 }
 /**
- * ÎªÁ¬½ÓÌí¼Ó²ÎÊı
+ * ä¸ºè¿æ¥æ·»åŠ å‚æ•°
  */
 function refactorLink(link,params)
 {
@@ -731,7 +731,7 @@ function getContextMenuByID(identity)
 }
 
 /**
- *  ¹¹½¨²Ëµ¥ĞÅÏ¢»º³åÇø
+ *  æ„å»ºèœå•ä¿¡æ¯ç¼“å†²åŒº
  *
  */
 function Menu(identity)
@@ -805,40 +805,40 @@ function init()
     try
     {
         var menu = new Menu("firstmenu");
-        menu.addItem(buildItem("ÎÒµÄÊıÂë¹ÊÊÂ"));
+        menu.addItem(buildItem("æˆ‘çš„æ•°ç æ•…äº‹"));
             
     		menu.addMenuSeperate();
-    		menu.addItem(buildItem("ÎÒµÄÊıÂë¹ÊÊÂ","http://www.cookieszone.com","location","sharefiles/logoff.gif"));
-    		//Menu1.addMenuItem(new MenuItem("¿á¿ÍµØ´øÊ×Ò³","location.href='http://www.cookieszone.com'","sharefiles/logoff.gif"));
+    		menu.addItem(buildItem("æˆ‘çš„æ•°ç æ•…äº‹","http://www.cookieszone.com","location","sharefiles/logoff.gif"));
+    		//Menu1.addMenuItem(new MenuItem("é…·å®¢åœ°å¸¦é¦–é¡µ","location.href='http://www.cookieszone.com'","sharefiles/logoff.gif"));
     		
-    		menu.addItem(buildItem("¿á¿ÍÂÛÌ³","http://www.cookieszone.com","location","sharefiles/logoff.gif"));
-    		menu.addItem(buildItem("FLASHÎÄ»¯","http://www.cookieszone.com/culture/cookiesflash.asp","location","sharefiles/logoff.gif"));
+    		menu.addItem(buildItem("é…·å®¢è®ºå›","http://www.cookieszone.com","location","sharefiles/logoff.gif"));
+    		menu.addItem(buildItem("FLASHæ–‡åŒ–","http://www.cookieszone.com/culture/cookiesflash.asp","location","sharefiles/logoff.gif"));
     		
-    		menu.addItem(buildItem("photoshopÉè¼Æ","http://www.cookieszone.com/designsky/designsky.asp?boardid=301","location","sharefiles/logoff.gif"));
+    		menu.addItem(buildItem("photoshopè®¾è®¡","http://www.cookieszone.com/designsky/designsky.asp?boardid=301","location","sharefiles/logoff.gif"));
     		menu.addMenuSeperate();
-    		menu.addItem(buildItem("¸öÈË×÷Æ·","http://www.cookieszone.com/aboutus/works.asp","location"));
+    		menu.addItem(buildItem("ä¸ªäººä½œå“","http://www.cookieszone.com/aboutus/works.asp","location"));
     		var menu1 = new Menu("secondmenu_1");
     		
-    		menu1.addItem(buildItem("×îĞÂÊıÂë","http://www.cookieszone.com/digitalstory/list.asp?boardid=501","location","sharefiles/logoff.gif"));
-    		menu1.addItem(buildItem("ÊıÂëÖªÊ¶¿â","http://www.cookieszone.com/digitalstory/list.asp?boardid=502","location","sharefiles/logoff.gif"));
+    		menu1.addItem(buildItem("æœ€æ–°æ•°ç ","http://www.cookieszone.com/digitalstory/list.asp?boardid=501","location","sharefiles/logoff.gif"));
+    		menu1.addItem(buildItem("æ•°ç çŸ¥è¯†åº“","http://www.cookieszone.com/digitalstory/list.asp?boardid=502","location","sharefiles/logoff.gif"));
     		menu.collectionItems[0].addSubMenu(menu1);
     		collections.push(menu);
     	
     		
     		var t_Menu1 = new Menu("secondmenu");
     
-    		t_Menu1.addItem(buildItem("ÎÒµÄÊıÂë¹ÊÊÂ1"));
+    		t_Menu1.addItem(buildItem("æˆ‘çš„æ•°ç æ•…äº‹1"));
     		t_Menu1.addMenuSeperate();
-    		t_Menu1.addItem(buildItem("¿á¿ÍµØ´øÊ×Ò³1","http://www.cookieszone.com","location","sharefiles/logoff.gif"));
-    		t_Menu1.addItem(buildItem("¿á¿ÍÂÛÌ³1","http://www.cookieszone.com/bbs","location","sharefiles/logoff.gif"));
-    		t_Menu1.addItem(buildItem("FLASHÎÄ»¯1","http://www.cookieszone.com/culture/cookiesflash.asp","location","sharefiles/logoff.gif"));
-    		t_Menu1.addItem(buildItem("photoshopÉè¼Æ1","http://www.cookieszone.com/designsky/designsky.asp?boardid=301","location","sharefiles/logoff.gif"));
+    		t_Menu1.addItem(buildItem("é…·å®¢åœ°å¸¦é¦–é¡µ1","http://www.cookieszone.com","location","sharefiles/logoff.gif"));
+    		t_Menu1.addItem(buildItem("é…·å®¢è®ºå›1","http://www.cookieszone.com/bbs","location","sharefiles/logoff.gif"));
+    		t_Menu1.addItem(buildItem("FLASHæ–‡åŒ–1","http://www.cookieszone.com/culture/cookiesflash.asp","location","sharefiles/logoff.gif"));
+    		t_Menu1.addItem(buildItem("photoshopè®¾è®¡1","http://www.cookieszone.com/designsky/designsky.asp?boardid=301","location","sharefiles/logoff.gif"));
     		t_Menu1.addMenuSeperate();
-    		t_Menu1.addItem(buildItem("¸öÈË×÷Æ·1","http://www.cookieszone.com/aboutus/works.asp","location"));
+    		t_Menu1.addItem(buildItem("ä¸ªäººä½œå“1","http://www.cookieszone.com/aboutus/works.asp","location"));
     		t_Menu2 = new Menu("secondmenu_i");
     
-    		t_Menu2.addItem(buildItem("×îĞÂÊıÂë1","http://www.cookieszone.com/digitalstory/list.asp?boardid=501","location","sharefiles/logoff.gif"));
-    		t_Menu2.addItem(buildItem("ÊıÂëÖªÊ¶¿â1","http://www.cookieszone.com/digitalstory/list.asp?boardid=502","location","sharefiles/logoff.gif"));
+    		t_Menu2.addItem(buildItem("æœ€æ–°æ•°ç 1","http://www.cookieszone.com/digitalstory/list.asp?boardid=501","location","sharefiles/logoff.gif"));
+    		t_Menu2.addItem(buildItem("æ•°ç çŸ¥è¯†åº“1","http://www.cookieszone.com/digitalstory/list.asp?boardid=502","location","sharefiles/logoff.gif"));
     		t_Menu1.collectionItems[0].addSubMenu(t_Menu2);
     		collections.push(t_Menu1);
 	}

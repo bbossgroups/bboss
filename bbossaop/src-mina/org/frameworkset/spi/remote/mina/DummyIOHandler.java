@@ -20,10 +20,10 @@ import org.apache.mina.core.service.IoHandlerAdapter;
 
 /**
  * <p>Title: DummyIOHandler.java</p> 
- * <p>Description: ÑéÖ¤Ê±Ê¹ÓÃ</p>
+ * <p>Description: éªŒè¯æ—¶ä½¿ç”¨</p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2009-10-28 ÏÂÎç03:08:22
+ * @Date 2009-10-28 ä¸‹åˆ03:08:22
  * @author biaoping.yin
  * @version 1.0
  */

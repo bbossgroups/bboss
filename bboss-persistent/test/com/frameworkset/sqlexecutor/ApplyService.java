@@ -10,15 +10,15 @@ import com.frameworkset.util.ListInfo;
  * 
  * <p>Title: ApplyService.java</p>
  *
- * <p>Description: ·ÖÒ³²éÑ¯¹¦ÄÜÊµÀı£¨Õë¶ÔĞÂµÄ·ÖÒ³½Ó¿Ú½øĞĞ²âÊÔ£©
- * 3.6.0Ö®ºóµÄ°æ±¾ConfigSQLExecutor/SQLExecutor/PreparedDBUtilÈı¸ö³Ö¾Ã²ã×é¼şÖĞÔö¼ÓÁËÒ»×é·ÖÒ³½Ó¿Ú£¬
- * Õâ×é½Ó¿ÚºÍÖ®Ç°µÄ·ÖÒ³½Ó¿ÚµÄÇø±ğÊÇÔö¼ÓÁËÒ»¸ötotalsize²ÎÊı£¬Ò²¾ÍÊÇËµ¿ÉÒÔÍ¨¹ıtotalsize²ÎÊı´ÓÍâ²¿´«Èë×Ü¼ÇÂ¼Êı£¬
- * ÕâÑùÔÚ·ÖÒ³·½·¨ÄÚ²¿ÎŞĞèÖ´ĞĞ×Ü¼ÇÂ¼Êı²éÑ¯²Ù×÷£¬ÒÔ±ãÌáÉıÏµÍ³ĞÔÄÜ
+ * <p>Description: åˆ†é¡µæŸ¥è¯¢åŠŸèƒ½å®ä¾‹ï¼ˆé’ˆå¯¹æ–°çš„åˆ†é¡µæ¥å£è¿›è¡Œæµ‹è¯•ï¼‰
+ * 3.6.0ä¹‹åçš„ç‰ˆæœ¬ConfigSQLExecutor/SQLExecutor/PreparedDBUtilä¸‰ä¸ªæŒä¹…å±‚ç»„ä»¶ä¸­å¢åŠ äº†ä¸€ç»„åˆ†é¡µæ¥å£ï¼Œ
+ * è¿™ç»„æ¥å£å’Œä¹‹å‰çš„åˆ†é¡µæ¥å£çš„åŒºåˆ«æ˜¯å¢åŠ äº†ä¸€ä¸ªtotalsizeå‚æ•°ï¼Œä¹Ÿå°±æ˜¯è¯´å¯ä»¥é€šè¿‡totalsizeå‚æ•°ä»å¤–éƒ¨ä¼ å…¥æ€»è®°å½•æ•°ï¼Œ
+ * è¿™æ ·åœ¨åˆ†é¡µæ–¹æ³•å†…éƒ¨æ— éœ€æ‰§è¡Œæ€»è®°å½•æ•°æŸ¥è¯¢æ“ä½œï¼Œä»¥ä¾¿æå‡ç³»ç»Ÿæ€§èƒ½
  * 
  * </p>
  *
  * <p>Copyright: Copyright (c) 2007</p>
- * @Date 2012-10-18 ÏÂÎç5:06:43
+ * @Date 2012-10-18 ä¸‹åˆ5:06:43
  * @author biaoping.yin
  * @version 1.0
  */
@@ -26,13 +26,13 @@ public class ApplyService {
 
 	private com.frameworkset.common.poolman.ConfigSQLExecutor executor = new ConfigSQLExecutor("com/frameworkset/sqlexecutor/purchaseApply.xml");
 	
-	/*******************************ÒÔbean·½Ê½´«µİ²éÑ¯Ìõ¼ş¿ªÊ¼*******************************/
+	/*******************************ä»¥beanæ–¹å¼ä¼ é€’æŸ¥è¯¢æ¡ä»¶å¼€å§‹*******************************/
 	@Test
 	public void queryMaterailListInfoFirstStyleBean() throws Exception {
 		
-		//Ö´ĞĞ·ÖÒ³²éÑ¯£¬queryMaterialList¶ÔÓ¦·ÖÒ³²éÑ¯Óï¾ä£¬
-		//¸ù¾İsqlÓï¾äÔÚ·ÖÒ³·½·¨ÄÚ²¿Ö´ĞĞ×Ü¼ÇÂ¼Êı²éÑ¯²Ù×÷£¬ÕâÖÖ·ç¸ñÊ¹ÓÃ¼òµ¥£¬Ğ§ÂÊÏà¶Ô½ÏµÍ
-		//condition²ÎÊı±£´æÁË²éÑ¯Ìõ¼ş
+		//æ‰§è¡Œåˆ†é¡µæŸ¥è¯¢ï¼ŒqueryMaterialListå¯¹åº”åˆ†é¡µæŸ¥è¯¢è¯­å¥ï¼Œ
+		//æ ¹æ®sqlè¯­å¥åœ¨åˆ†é¡µæ–¹æ³•å†…éƒ¨æ‰§è¡Œæ€»è®°å½•æ•°æŸ¥è¯¢æ“ä½œï¼Œè¿™ç§é£æ ¼ä½¿ç”¨ç®€å•ï¼Œæ•ˆç‡ç›¸å¯¹è¾ƒä½
+		//conditionå‚æ•°ä¿å­˜äº†æŸ¥è¯¢æ¡ä»¶
 		int offset = 0; int pagesize = 10;
 		PurchaseApplyCondition condition = new PurchaseApplyCondition();
 		condition.setId("3952ce4f-fce7-4f9e-a92b-81ebdcbe57ed");
@@ -41,55 +41,55 @@ public class ApplyService {
 	}
 	@Test
 	public void queryMaterailListInfoSecondStyleBean() throws Exception {
-		//Ö´ĞĞ×Ü¼ÇÂ¼²éÑ¯²¢´æÈëtotalSize±äÁ¿ÖĞ£¬queryCountMaterialList¶ÔÓ¦Ò»¸öÓÅ»¯ºóµÄ×Ü¼ÇÂ¼²éÑ¯Óï¾ä
-		//condition²ÎÊı±£´æÁË²éÑ¯Ìõ¼ş
+		//æ‰§è¡Œæ€»è®°å½•æŸ¥è¯¢å¹¶å­˜å…¥totalSizeå˜é‡ä¸­ï¼ŒqueryCountMaterialListå¯¹åº”ä¸€ä¸ªä¼˜åŒ–åçš„æ€»è®°å½•æŸ¥è¯¢è¯­å¥
+		//conditionå‚æ•°ä¿å­˜äº†æŸ¥è¯¢æ¡ä»¶
 		int offset = 0; int pagesize = 10;
 		PurchaseApplyCondition condition = new PurchaseApplyCondition();
 		condition.setId("3952ce4f-fce7-4f9e-a92b-81ebdcbe57ed");
 		long totalSize = executor.queryObjectBean(long.class, "queryCountMaterialList", condition);
-		//Ö´ĞĞ×Ü¼Ç·ÖÒ³²éÑ¯£¬queryMaterialList¶ÔÓ¦·ÖÒ³²éÑ¯Óï¾ä£¬Í¨¹ıtotalsize²ÎÊı´ÓÍâ²¿´«Èë×Ü¼ÇÂ¼Êı£¬
-		//ÕâÑùÔÚ·ÖÒ³·½·¨ÄÚ²¿ÎŞĞèÖ´ĞĞ×Ü¼ÇÂ¼Êı²éÑ¯²Ù×÷£¬ÒÔ±ãÌáÉıÏµÍ³ĞÔÄÜ£¬ÕâÖÖ·ç¸ñÊ¹ÓÃ¼òµ¥£¬Ğ§ÂÊÏà¶ÔµÚÒ»ÖÖ·ç¸ñ½Ï¸ß£¬µ«ÊÇÒª¶îÍâÅäÖÃ×Ü¼ÇÂ¼Êı²éÑ¯sql
-		//condition²ÎÊı±£´æÁË²éÑ¯Ìõ¼ş
+		//æ‰§è¡Œæ€»è®°åˆ†é¡µæŸ¥è¯¢ï¼ŒqueryMaterialListå¯¹åº”åˆ†é¡µæŸ¥è¯¢è¯­å¥ï¼Œé€šè¿‡totalsizeå‚æ•°ä»å¤–éƒ¨ä¼ å…¥æ€»è®°å½•æ•°ï¼Œ
+		//è¿™æ ·åœ¨åˆ†é¡µæ–¹æ³•å†…éƒ¨æ— éœ€æ‰§è¡Œæ€»è®°å½•æ•°æŸ¥è¯¢æ“ä½œï¼Œä»¥ä¾¿æå‡ç³»ç»Ÿæ€§èƒ½ï¼Œè¿™ç§é£æ ¼ä½¿ç”¨ç®€å•ï¼Œæ•ˆç‡ç›¸å¯¹ç¬¬ä¸€ç§é£æ ¼è¾ƒé«˜ï¼Œä½†æ˜¯è¦é¢å¤–é…ç½®æ€»è®°å½•æ•°æŸ¥è¯¢sql
+		//conditionå‚æ•°ä¿å­˜äº†æŸ¥è¯¢æ¡ä»¶
 		ListInfo datas = executor.queryListInfoBean(HashMap.class, "queryMaterialList", offset, pagesize,totalSize ,condition);
 		return;
 	}
 	
 	
 	public @Test void queryMaterailListInfoThirdStyleBean() throws Exception {
-		//¸ù¾İsqlÓï¾äºÍÍâ²¿´«ÈëµÄ×Ü¼ÇÂ¼ÊısqlÓï¾ä½øĞĞ·ÖÒ³£¬ÕâÖÖ·ç¸ñÊ¹ÓÃ¼òµ¥£¬Ğ§ÂÊ×î¸ß£¬µ«ÊÇÒª¶îÍâÅäÖÃ×Ü¼ÇÂ¼Êı²éÑ¯sql
+		//æ ¹æ®sqlè¯­å¥å’Œå¤–éƒ¨ä¼ å…¥çš„æ€»è®°å½•æ•°sqlè¯­å¥è¿›è¡Œåˆ†é¡µï¼Œè¿™ç§é£æ ¼ä½¿ç”¨ç®€å•ï¼Œæ•ˆç‡æœ€é«˜ï¼Œä½†æ˜¯è¦é¢å¤–é…ç½®æ€»è®°å½•æ•°æŸ¥è¯¢sql
 		PurchaseApplyCondition condition = new PurchaseApplyCondition();
 		condition.setId("3952ce4f-fce7-4f9e-a92b-81ebdcbe57ed");
 		ListInfo list = executor.queryListInfoBeanWithDBName(HashMap.class, "bspf","queryMaterialList", 0, 10,"queryCountMaterialList" ,condition);
 		return ;
 	}
-	/*******************************ÒÔbean·½Ê½´«µİ²éÑ¯Ìõ¼ş½áÊø*******************************/
+	/*******************************ä»¥beanæ–¹å¼ä¼ é€’æŸ¥è¯¢æ¡ä»¶ç»“æŸ*******************************/
 	
-	/*******************************ÒÔ´«Í³°ó¶¨±äÁ¿·½Ê½´«µİ²éÑ¯Ìõ¼ş¿ªÊ¼*******************************/
+	/*******************************ä»¥ä¼ ç»Ÿç»‘å®šå˜é‡æ–¹å¼ä¼ é€’æŸ¥è¯¢æ¡ä»¶å¼€å§‹*******************************/
 	public @Test void queryMaterailListInfoFirstStyle( ) throws Exception {
 		
-		//Ö´ĞĞ·ÖÒ³²éÑ¯£¬queryMaterialList¶ÔÓ¦·ÖÒ³²éÑ¯Óï¾ä£¬
-		//¸ù¾İsqlÓï¾äÔÚ·ÖÒ³·½·¨ÄÚ²¿Ö´ĞĞ×Ü¼ÇÂ¼Êı²éÑ¯²Ù×÷£¬ÕâÖÖ·ç¸ñÊ¹ÓÃ¼òµ¥£¬Ğ§ÂÊÏà¶Ô½ÏµÍ
-		//condition²ÎÊı±£´æÁË²éÑ¯Ìõ¼ş
+		//æ‰§è¡Œåˆ†é¡µæŸ¥è¯¢ï¼ŒqueryMaterialListå¯¹åº”åˆ†é¡µæŸ¥è¯¢è¯­å¥ï¼Œ
+		//æ ¹æ®sqlè¯­å¥åœ¨åˆ†é¡µæ–¹æ³•å†…éƒ¨æ‰§è¡Œæ€»è®°å½•æ•°æŸ¥è¯¢æ“ä½œï¼Œè¿™ç§é£æ ¼ä½¿ç”¨ç®€å•ï¼Œæ•ˆç‡ç›¸å¯¹è¾ƒä½
+		//conditionå‚æ•°ä¿å­˜äº†æŸ¥è¯¢æ¡ä»¶
 		ListInfo list = executor.queryListInfo(HashMap.class, "queryMaterialListbindParam", 0, 10, "3952ce4f-fce7-4f9e-a92b-81ebdcbe57ed");
 		return;
 	}
 	
 	public @Test void queryMaterailListInfoSecondStyle( ) throws Exception {
-		//Ö´ĞĞ×Ü¼ÇÂ¼²éÑ¯²¢´æÈëtotalSize±äÁ¿ÖĞ£¬queryCountMaterialList¶ÔÓ¦Ò»¸öÓÅ»¯ºóµÄ×Ü¼ÇÂ¼²éÑ¯Óï¾ä
-		//condition²ÎÊı±£´æÁË²éÑ¯Ìõ¼ş
+		//æ‰§è¡Œæ€»è®°å½•æŸ¥è¯¢å¹¶å­˜å…¥totalSizeå˜é‡ä¸­ï¼ŒqueryCountMaterialListå¯¹åº”ä¸€ä¸ªä¼˜åŒ–åçš„æ€»è®°å½•æŸ¥è¯¢è¯­å¥
+		//conditionå‚æ•°ä¿å­˜äº†æŸ¥è¯¢æ¡ä»¶
 		long totalSize = executor.queryObject(long.class, "queryCountMaterialListbindParam", "3952ce4f-fce7-4f9e-a92b-81ebdcbe57ed");
-		//Ö´ĞĞ×Ü¼Ç·ÖÒ³²éÑ¯£¬queryMaterialList¶ÔÓ¦·ÖÒ³²éÑ¯Óï¾ä£¬Í¨¹ıtotalsize²ÎÊı´ÓÍâ²¿´«Èë×Ü¼ÇÂ¼Êı£¬
-		//ÕâÑùÔÚ·ÖÒ³·½·¨ÄÚ²¿ÎŞĞèÖ´ĞĞ×Ü¼ÇÂ¼Êı²éÑ¯²Ù×÷£¬ÒÔ±ãÌáÉıÏµÍ³ĞÔÄÜ£¬ÕâÖÖ·ç¸ñÊ¹ÓÃ¼òµ¥£¬Ğ§ÂÊÏà¶ÔµÚÒ»ÖÖ·ç¸ñ½Ï¸ß£¬µ«ÊÇÒª¶îÍâÅäÖÃ×Ü¼ÇÂ¼Êı²éÑ¯sql
-		//condition²ÎÊı±£´æÁË²éÑ¯Ìõ¼ş
+		//æ‰§è¡Œæ€»è®°åˆ†é¡µæŸ¥è¯¢ï¼ŒqueryMaterialListå¯¹åº”åˆ†é¡µæŸ¥è¯¢è¯­å¥ï¼Œé€šè¿‡totalsizeå‚æ•°ä»å¤–éƒ¨ä¼ å…¥æ€»è®°å½•æ•°ï¼Œ
+		//è¿™æ ·åœ¨åˆ†é¡µæ–¹æ³•å†…éƒ¨æ— éœ€æ‰§è¡Œæ€»è®°å½•æ•°æŸ¥è¯¢æ“ä½œï¼Œä»¥ä¾¿æå‡ç³»ç»Ÿæ€§èƒ½ï¼Œè¿™ç§é£æ ¼ä½¿ç”¨ç®€å•ï¼Œæ•ˆç‡ç›¸å¯¹ç¬¬ä¸€ç§é£æ ¼è¾ƒé«˜ï¼Œä½†æ˜¯è¦é¢å¤–é…ç½®æ€»è®°å½•æ•°æŸ¥è¯¢sql
+		//conditionå‚æ•°ä¿å­˜äº†æŸ¥è¯¢æ¡ä»¶
 		ListInfo datas = executor.queryListInfoWithTotalsize(HashMap.class, "queryMaterialListbindParam", 0, 10,totalSize , "3952ce4f-fce7-4f9e-a92b-81ebdcbe57ed");
 		return;
 	}
 	
 	
 	public @Test void queryMaterailListInfoThirdStyle() throws Exception {
-		//¸ù¾İsqlÓï¾äºÍÍâ²¿´«ÈëµÄ×Ü¼ÇÂ¼ÊısqlÓï¾ä½øĞĞ·ÖÒ³£¬ÕâÖÖ·ç¸ñÊ¹ÓÃ¼òµ¥£¬Ğ§ÂÊ×î¸ß£¬µ«ÊÇÒª¶îÍâÅäÖÃ×Ü¼ÇÂ¼Êı²éÑ¯sql
+		//æ ¹æ®sqlè¯­å¥å’Œå¤–éƒ¨ä¼ å…¥çš„æ€»è®°å½•æ•°sqlè¯­å¥è¿›è¡Œåˆ†é¡µï¼Œè¿™ç§é£æ ¼ä½¿ç”¨ç®€å•ï¼Œæ•ˆç‡æœ€é«˜ï¼Œä½†æ˜¯è¦é¢å¤–é…ç½®æ€»è®°å½•æ•°æŸ¥è¯¢sql
 		ListInfo list = executor.queryListInfoWithDBName2ndTotalsizesql(HashMap.class, "bspf","queryMaterialListbindParam", 0, 10,"queryCountMaterialListbindParam", "3952ce4f-fce7-4f9e-a92b-81ebdcbe57ed");
 		return ;
 	}
-	/*******************************ÒÔ´«Í³°ó¶¨±äÁ¿·½Ê½´«µİ²éÑ¯Ìõ¼ş½áÊø*******************************/
+	/*******************************ä»¥ä¼ ç»Ÿç»‘å®šå˜é‡æ–¹å¼ä¼ é€’æŸ¥è¯¢æ¡ä»¶ç»“æŸ*******************************/
 }

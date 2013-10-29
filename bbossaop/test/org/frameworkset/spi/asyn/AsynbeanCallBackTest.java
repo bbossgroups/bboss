@@ -23,7 +23,7 @@ import org.frameworkset.spi.async.CallBack;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2011-4-21 œ¬ŒÁ06:39:52
+ * @Date 2011-4-21 ‰∏ãÂçà06:39:52
  * @author biaoping.yin
  * @version 1.0
  */

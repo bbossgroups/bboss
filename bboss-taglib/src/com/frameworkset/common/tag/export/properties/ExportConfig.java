@@ -33,25 +33,25 @@ package com.frameworkset.common.tag.export.properties;
 
 
 /**
- * 封装导出配置实体对象
+ * 灏佽瀵煎嚭閰嶇疆瀹炰綋瀵硅薄
  * @author biaoping.yin
  * created on 2005-5-14 
  * version 1.0
  */
 public class ExportConfig {
-	/**描述信息*/
+	/**鎻忚堪淇℃伅*/
 	private String description;
 	
-	/**版本信息*/
+	/**鐗堟湰淇℃伅*/
 	private String version;
 	
-	/**名称*/
+	/**鍚嶇О*/
 	private String name;
 	
-	/**类型*/
+	/**绫诲瀷*/
 	private String type;
 	
-	/**类型*/
+	/**绫诲瀷*/
 	private String exportClass;	
 	
 	

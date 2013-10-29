@@ -36,14 +36,15 @@
 
 	<target name="compile-frameworkset-pool" description="compile the bboss-persistent source ">
 		<echo>compile the frameworkset-pool source ...</echo>
-		<javac destdir="classes-bboss-persistent" 
+		<javac encoding="UTF-8" destdir="classes-bboss-persistent" 
 			executable="${JDK}/bin/javac"
 			target="1.5" source="1.5" deprecation="true" debug="${debug}" optimize="${optimize}" memorymaximumsize="256M" fork="true" verbose="yes">
 			<src path="src" />			
 			<src path="src-jdk5" />
 			<src path="listener" />
 			<classpath id="cp-classes-bboss-persistent">
-				<fileset dir="lib/" includes="**/*.jar *.zip" />				
+				<fileset dir="lib/" includes="**/*.jar *.zip" />
+				<fileset dir="lib-test/" includes="**/*.jar *.zip" />			
 			</classpath>
 		</javac>
 		<copy todir="classes-bboss-persistent" >
@@ -68,7 +69,7 @@
 	
 	<target name="compile-frameworkset-pool-test" depends="jar-frameworkset" description="compile the bboss-persistent-test source ">
 			<echo>compile the frameworkset-pool-test source ...</echo>
-			<javac destdir="classes-bboss-persistent-test" target="1.5" source="1.5" 
+			<javac encoding="UTF-8" destdir="classes-bboss-persistent-test" target="1.5" source="1.5" 
 				deprecation="true" debug="${debug}" optimize="${optimize}" 
 				memorymaximumsize="256M" fork="true" verbose="yes"
 				executable="${JDK}/bin/javac">				
@@ -77,6 +78,7 @@
 				<classpath id="cp-classes-bboss-persistent-test">
 					<fileset dir="lib/" includes="**/*.jar *.zip" />				
 					<fileset dir="distrib/" includes="**/*.jar *.zip" />
+					<fileset dir="lib-test/" includes="**/*.jar *.zip" />	
 				</classpath>
 			</javac>
 		</target>
@@ -108,6 +110,7 @@
 					<fileset dir="src" includes="**/*"/>
 					<fileset dir="src-jdk5" includes="**/*"/>
 					<fileset dir="listener" includes="**/*"/>
+					
 				</jar>
 			</target>
 		

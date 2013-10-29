@@ -27,7 +27,7 @@ import org.junit.Test;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2010-10-4 ÏÂÎç06:42:54
+ * @Date 2010-10-4 ä¸‹åˆ06:42:54
  * @author biaoping.yin
  * @version 1.0
  */
@@ -41,14 +41,14 @@ public class TestApplicationContextLoader {
 	@Test
 	public void testWebApplicationClient()
 	{
-			//µ¥¶ÀÔËĞĞ·şÎñ¶ËÊ±Ò»¶¨ÒªÔÚ³õÊ¼»¯ApplicationContextÖ®Ç°ÔËĞĞÕâÌõÓï¾ä£¬ÓÃÀ´Ö¸¶¨webbaseÂ·¾¶,·ñÔòÏµÍ³½«ÎŞ·¨ÕÒµ½Í¨¹ıdocbaseµ¼ÈëµÄ×é¼ş
+			//å•ç‹¬è¿è¡ŒæœåŠ¡ç«¯æ—¶ä¸€å®šè¦åœ¨åˆå§‹åŒ–ApplicationContextä¹‹å‰è¿è¡Œè¿™æ¡è¯­å¥ï¼Œç”¨æ¥æŒ‡å®šwebbaseè·¯å¾„,å¦åˆ™ç³»ç»Ÿå°†æ— æ³•æ‰¾åˆ°é€šè¿‡docbaseå¯¼å…¥çš„ç»„ä»¶
 	    	AssembleUtil.registAssembleCallback(new WebDocbaseAssembleCallback("D:/workspace/bbossgroup-2.0-RC2/bbossaop/"));
 	        NettyRPCServer.getNettyRPCServer().start();
-	      //µ¥¶ÀÔËĞĞ¿Í·ş¶ËÊ±Ò»¶¨ÒªÔÚ³õÊ¼»¯ApplicationContextÖ®Ç°ÔËĞĞÕâÌõÓï¾ä£¬ÓÃÀ´Ö¸¶¨webbaseÂ·¾¶,·ñÔòÏµÍ³½«ÎŞ·¨ÕÒµ½Í¨¹ıdocbaseµ¼ÈëµÄ×é¼ş
+	      //å•ç‹¬è¿è¡Œå®¢æœç«¯æ—¶ä¸€å®šè¦åœ¨åˆå§‹åŒ–ApplicationContextä¹‹å‰è¿è¡Œè¿™æ¡è¯­å¥ï¼Œç”¨æ¥æŒ‡å®šwebbaseè·¯å¾„,å¦åˆ™ç³»ç»Ÿå°†æ— æ³•æ‰¾åˆ°é€šè¿‡docbaseå¯¼å…¥çš„ç»„ä»¶
 //	        AssembleUtil.registAssembleCallback(new WebDocbaseAssembleCallback("D:/workspace/bbossgroup-2.0-RC2/bbossaop/")); 
 
 	        ApplicationContext context = ApplicationContext.getApplicationContext();
-			RPCTestInf testInf = (RPCTestInf)context.getBeanObject("(netty::172.16.7.108:12347)/rpc.test?user=admin&password=123456&server_uuid=¶à¶à");
+			RPCTestInf testInf = (RPCTestInf)context.getBeanObject("(netty::172.16.7.108:12347)/rpc.test?user=admin&password=123456&server_uuid=å¤šå¤š");
 			
 			for(int i = 0; i < 10; i ++)
 			{

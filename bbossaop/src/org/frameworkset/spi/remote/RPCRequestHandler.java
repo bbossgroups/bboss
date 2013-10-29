@@ -29,7 +29,7 @@ import org.frameworkset.spi.security.SecurityContext;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2009-10-13 ÏÂÎç10:25:20
+ * @Date 2009-10-13 ä¸‹åˆ10:25:20
  * @author biaoping.yin
  * @version 1.0
  */
@@ -123,7 +123,7 @@ public class RPCRequestHandler implements RequestHandler
 	}
     
 //    /**
-//     * Ö´ĞĞÔ¶³Ìµ÷ÓÃµÄ×¼±¸¹¦ÄÜ£¬×öÈÏÖ¤ºÍ¼øÈ¨
+//     * æ‰§è¡Œè¿œç¨‹è°ƒç”¨çš„å‡†å¤‡åŠŸèƒ½ï¼Œåšè®¤è¯å’Œé‰´æƒ
 //     * @param method_call
 //     * @throws Throwable
 //     */
@@ -137,12 +137,12 @@ public class RPCRequestHandler implements RequestHandler
 //                SecurityContext.setSecurityContext(securityContext);
 //            else
 //            {
-//                throw new SecurityException("È¨ÏŞ¼ì²âÊ§°Ü,µ±Ç°ÓÃ»§ÎŞ·¨Ö´ĞĞ·şÎñ²Ù×÷£º" + securityContext);
+//                throw new SecurityException("æƒé™æ£€æµ‹å¤±è´¥,å½“å‰ç”¨æˆ·æ— æ³•æ‰§è¡ŒæœåŠ¡æ“ä½œï¼š" + securityContext);
 //            }
 //        }
 //        else
 //        {
-//            throw new SecurityException("ÈÏÖ¤Ê§°Ü,Çë¼ì²éÓÃ»§Æ¾Ö¤ĞÅÏ¢ÊÇ·ñÕıÈ·£º" + securityContext);
+//            throw new SecurityException("è®¤è¯å¤±è´¥,è¯·æ£€æŸ¥ç”¨æˆ·å‡­è¯ä¿¡æ¯æ˜¯å¦æ­£ç¡®ï¼š" + securityContext);
 //        }
 //    }
 //    

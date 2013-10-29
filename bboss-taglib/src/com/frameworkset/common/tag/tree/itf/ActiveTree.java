@@ -45,16 +45,16 @@ import com.frameworkset.common.tag.contextmenu.ContextMenu;
 
 public interface ActiveTree  extends ContextMenu{
 	/**
-	 * ¹¦ÄÜËµÃ÷£ºÅĞ¶Ï½áµãnodeIdÊÇ·ñÓĞ¶ù×Ó
+	 * åŠŸèƒ½è¯´æ˜ï¼šåˆ¤æ–­ç»“ç‚¹nodeIdæ˜¯å¦æœ‰å„¿å­
 	 * @param node
 	 * @return boolean
 	 */
 	public boolean hasSon(ITreeNode node);
 
 //	/**
-//	 * ¹¦ÄÜËµÃ÷£º½«½áµãnodeIdµÄÖ±½Ó¶ù×ÓÌí¼Óµ½Ä¿Â¼Ê÷
+//	 * åŠŸèƒ½è¯´æ˜ï¼šå°†ç»“ç‚¹nodeIdçš„ç›´æ¥å„¿å­æ·»åŠ åˆ°ç›®å½•æ ‘
 //	 * @param nodeId
-//	 * @return boolean false±íÊ¾ÉèÖÃ²»³É¹¦£¬true±íÊ¾ÉèÖÃ³É¹¦
+//	 * @return boolean falseè¡¨ç¤ºè®¾ç½®ä¸æˆåŠŸï¼Œtrueè¡¨ç¤ºè®¾ç½®æˆåŠŸ
 //	 */
 //	public boolean setSon(ITreeNode node);
 
@@ -62,12 +62,12 @@ public interface ActiveTree  extends ContextMenu{
 	 *
 	 * @param node
 	 * @param curLevel
-	 * @return boolean false±íÊ¾ÉèÖÃ²»³É¹¦£¬true±íÊ¾ÉèÖÃ³É¹¦
+	 * @return boolean falseè¡¨ç¤ºè®¾ç½®ä¸æˆåŠŸï¼Œtrueè¡¨ç¤ºè®¾ç½®æˆåŠŸ
 	 */
 	public boolean setSon(ITreeNode node,int curLevel);
 
 	/**
-	 * ÍùÄ¿Â¼Ê÷ÖĞÌí¼ÓÒ»¸ö½áµã
+	 * å¾€ç›®å½•æ ‘ä¸­æ·»åŠ ä¸€ä¸ªç»“ç‚¹
 	 * @param father
 	 * @param treeid
 	 * @param type
@@ -83,7 +83,7 @@ public interface ActiveTree  extends ContextMenu{
 							 boolean hasSon,
 							 int curLevel,String path);
 	/**
-		 * ÍùÄ¿Â¼Ê÷ÖĞÌí¼ÓÒ»¸ö½áµã
+		 * å¾€ç›®å½•æ ‘ä¸­æ·»åŠ ä¸€ä¸ªç»“ç‚¹
 		 * @param father
 		 * @param treeid
 		 * @param name
@@ -99,11 +99,11 @@ public interface ActiveTree  extends ContextMenu{
 								 boolean hasSon,String path
 								 );
 	/**
-	 * ¹¦ÄÜËµÃ÷£ºÌí¼Ó¸ù½áµã
-	 * @param rootid ¸ù½áµãid
-	 * @param rootname ¸ù½áµãÃû³Æ
-	 * @param curLevel Ä¬ÈÏ´ò¿ª²ã¼¶
-	 * @param showRootHref ÊÇ·ñÏÔÊ¾Á´½Ó
+	 * åŠŸèƒ½è¯´æ˜ï¼šæ·»åŠ æ ¹ç»“ç‚¹
+	 * @param rootid æ ¹ç»“ç‚¹id
+	 * @param rootname æ ¹ç»“ç‚¹åç§°
+	 * @param curLevel é»˜è®¤æ‰“å¼€å±‚çº§
+	 * @param showRootHref æ˜¯å¦æ˜¾ç¤ºé“¾æ¥
 	 * @return ITreeNode
 	 */
 	public void addRootNode(String rootid,String rootname ,int curLevel,boolean showRootHref,String path);
@@ -118,21 +118,21 @@ public interface ActiveTree  extends ContextMenu{
 	public void notifyObservers(Object o);
 
 //	/**
-//	 * ´ÔÊı¾İÔ´ÖĞ»ñÈ¡treeidÎªidµÄ×îĞÂ½áµã
+//	 * ä¸›æ•°æ®æºä¸­è·å–treeidä¸ºidçš„æœ€æ–°ç»“ç‚¹
 //	 * @param id
 //	 * @return ITreeNode
 //	 */
 //	public ITreeNode getTreeNode(String id);
 
   /**
-   * »ñÈ¡½ÚµãµÄ×îĞÂĞÅÏ¢
+   * è·å–èŠ‚ç‚¹çš„æœ€æ–°ä¿¡æ¯
    * @param oldNode ITreeNode
    * @return ITreeNode
    */
 
     public ITreeNode getTreeNode(ITreeNode oldNode);
 	/**
-	 * ¸üĞÂÊ÷½ÚµãĞÅÏ¢
+	 * æ›´æ–°æ ‘èŠ‚ç‚¹ä¿¡æ¯
 	 * @param tree
 	 * @param node
 	 * @return ITreeNode

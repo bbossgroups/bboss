@@ -20,13 +20,13 @@ package org.frameworkset.spi.assemble;
  * 
  * <p>Title: RollbackException.java</p>
  *
- * <p>Description: ÊÂÎñĞÔ·½·¨ÊÂÎñ»Ø¹öÒì³£¶¨Òå</p>
+ * <p>Description: äº‹åŠ¡æ€§æ–¹æ³•äº‹åŠ¡å›æ»šå¼‚å¸¸å®šä¹‰</p>
  *
  * <p>Copyright: Copyright (c) 2007</p>
  *
  * <p>bboss workgroup</p>
  * @Date Aug 7, 2008 10:05:17 AM
- * @author biaoping.yin,Òü±êÆ½
+ * @author biaoping.yin,å°¹æ ‡å¹³
  * @version 1.0
  */
 public class RollbackException {

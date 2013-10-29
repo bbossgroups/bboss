@@ -42,7 +42,7 @@ import bboss.org.jgroups.util.Buffer;
  * Copyright (c) 2008
  * </p>
  * 
- * @Date 2009-11-9 ÏÂÎç12:52:30
+ * @Date 2009-11-9 ä¸‹åˆ12:52:30
  * @author biaoping.yin
  * @version 1.0
  */
@@ -50,7 +50,7 @@ public abstract class BaseRPCIOHandler implements RPCIOHandler
 {
     private ThreadPoolExecutor reqest_threadpool ;
     /**
-     * ÓÃÀ´±êÊ¶ÊÇ·ñ²ÉÓÃ¶ÔÏó½á¹ûÀàĞÍ
+     * ç”¨æ¥æ ‡è¯†æ˜¯å¦é‡‡ç”¨å¯¹è±¡ç»“æœç±»å‹
      */
     public static final boolean useOOB = true;
 
@@ -102,7 +102,7 @@ public abstract class BaseRPCIOHandler implements RPCIOHandler
     protected String localaddress = null;
 
     /**
-     * ¿Í·ş¶Ë±êÊ¶id£¬×÷Îª·şÎñÆ÷·µ»Ø¸ø±¾¿Í·ş¶ËµÄÏìÓ¦ÏûÏ¢µÄÌØÊâ±êÊ¶
+     * å®¢æœç«¯æ ‡è¯†idï¼Œä½œä¸ºæœåŠ¡å™¨è¿”å›ç»™æœ¬å®¢æœç«¯çš„å“åº”æ¶ˆæ¯çš„ç‰¹æ®Šæ ‡è¯†
      */
     protected RPCAddress src_address;
 
@@ -223,20 +223,20 @@ public abstract class BaseRPCIOHandler implements RPCIOHandler
                             // new Thread(fr).start();
                             //                            
                             // RPCMessage ret = fr.get();
-                            // //Í¬²½µ÷ÓÃÏµÍ³£¨webservice£¬rmi£¬ejbµÈ£©Ò»°ã»áÖ±½Ó·µ»Øµ÷ÓÃ½á¹û£¬Òì²½£¨mina£¬jms£©ÏµÍ³½«·µ»Ø¿ÕÖµ£¬
-                            // //Òò´ËÒì²½µ÷ÓÃĞ­Òé£¨mina£¬jms£©Çé¿öÏÂÎŞĞèÖ±½Óµ÷ÓÃhandler.messageReceived(ret);½øĞĞÏûÏ¢´¦Àí
+                            // //åŒæ­¥è°ƒç”¨ç³»ç»Ÿï¼ˆwebserviceï¼Œrmiï¼Œejbç­‰ï¼‰ä¸€èˆ¬ä¼šç›´æ¥è¿”å›è°ƒç”¨ç»“æœï¼Œå¼‚æ­¥ï¼ˆminaï¼Œjmsï¼‰ç³»ç»Ÿå°†è¿”å›ç©ºå€¼ï¼Œ
+                            // //å› æ­¤å¼‚æ­¥è°ƒç”¨åè®®ï¼ˆminaï¼Œjmsï¼‰æƒ…å†µä¸‹æ— éœ€ç›´æ¥è°ƒç”¨handler.messageReceived(ret);è¿›è¡Œæ¶ˆæ¯å¤„ç†
                             //                                
                             // if(ret !=
-                            // null)//minaĞ­Òé´¦ÀíÊ±·µ»ØnullÖµ,webservice·µ»ØÆäµ÷ÓÃ½á¹û
+                            // null)//minaåè®®å¤„ç†æ—¶è¿”å›nullå€¼,webserviceè¿”å›å…¶è°ƒç”¨ç»“æœ
                             // messageReceived(ret);
                             // }
                             // else
                             {
                                 RPCMessage ret = future.call();
-                                // Í¬²½µ÷ÓÃÏµÍ³£¨webservice£¬rmi£¬ejbµÈ£©Ò»°ã»áÖ±½Ó·µ»Øµ÷ÓÃ½á¹û£¬Òì²½£¨mina£¬jms£©ÏµÍ³½«·µ»Ø¿ÕÖµ£¬
-                                // Òò´ËÒì²½µ÷ÓÃĞ­Òé£¨mina£¬jms£©Çé¿öÏÂÎŞĞèÖ±½Óµ÷ÓÃhandler.messageReceived(ret);½øĞĞÏûÏ¢´¦Àí
+                                // åŒæ­¥è°ƒç”¨ç³»ç»Ÿï¼ˆwebserviceï¼Œrmiï¼Œejbç­‰ï¼‰ä¸€èˆ¬ä¼šç›´æ¥è¿”å›è°ƒç”¨ç»“æœï¼Œå¼‚æ­¥ï¼ˆminaï¼Œjmsï¼‰ç³»ç»Ÿå°†è¿”å›ç©ºå€¼ï¼Œ
+                                // å› æ­¤å¼‚æ­¥è°ƒç”¨åè®®ï¼ˆminaï¼Œjmsï¼‰æƒ…å†µä¸‹æ— éœ€ç›´æ¥è°ƒç”¨handler.messageReceived(ret);è¿›è¡Œæ¶ˆæ¯å¤„ç†
 
-                                if (ret != null)// minaĞ­Òé´¦ÀíÊ±·µ»ØnullÖµ,webservice·µ»ØÆäµ÷ÓÃ½á¹û
+                                if (ret != null)// minaåè®®å¤„ç†æ—¶è¿”å›nullå€¼,webserviceè¿”å›å…¶è°ƒç”¨ç»“æœ
                                     messageReceived(ret);
                             }
                         }
@@ -311,19 +311,19 @@ public abstract class BaseRPCIOHandler implements RPCIOHandler
                         // FutureTask<RPCMessage>(future);
                         // new Thread(fr).start();
                         // RPCMessage ret = fr.get();
-                        // //Í¬²½µ÷ÓÃÏµÍ³£¨webservice£¬rmi£¬ejbµÈ£©Ò»°ã»áÖ±½Ó·µ»Øµ÷ÓÃ½á¹û£¬Òì²½£¨mina£¬jms£©ÏµÍ³½«·µ»Ø¿ÕÖµ£¬
-                        // //Òò´ËÒì²½µ÷ÓÃĞ­Òé£¨mina£¬jms£©Çé¿öÏÂÎŞĞèÖ±½Óµ÷ÓÃhandler.messageReceived(ret);½øĞĞÏûÏ¢´¦Àí
+                        // //åŒæ­¥è°ƒç”¨ç³»ç»Ÿï¼ˆwebserviceï¼Œrmiï¼Œejbç­‰ï¼‰ä¸€èˆ¬ä¼šç›´æ¥è¿”å›è°ƒç”¨ç»“æœï¼Œå¼‚æ­¥ï¼ˆminaï¼Œjmsï¼‰ç³»ç»Ÿå°†è¿”å›ç©ºå€¼ï¼Œ
+                        // //å› æ­¤å¼‚æ­¥è°ƒç”¨åè®®ï¼ˆminaï¼Œjmsï¼‰æƒ…å†µä¸‹æ— éœ€ç›´æ¥è°ƒç”¨handler.messageReceived(ret);è¿›è¡Œæ¶ˆæ¯å¤„ç†
                         //
-                        // if (ret != null)//minaĞ­Òé´¦ÀíÊ±·µ»ØnullÖµ,webservice·µ»ØÆäµ÷ÓÃ½á¹û
+                        // if (ret != null)//minaåè®®å¤„ç†æ—¶è¿”å›nullå€¼,webserviceè¿”å›å…¶è°ƒç”¨ç»“æœ
                         // messageReceived(ret);
                         // }
                         // else
                         {
                             RPCMessage ret = future.call();
-                            // Í¬²½µ÷ÓÃÏµÍ³£¨webservice£¬rmi£¬ejbµÈ£©Ò»°ã»áÖ±½Ó·µ»Øµ÷ÓÃ½á¹û£¬Òì²½£¨mina£¬jms£©ÏµÍ³½«·µ»Ø¿ÕÖµ£¬
-                            // Òò´ËÒì²½µ÷ÓÃĞ­Òé£¨mina£¬jms£©Çé¿öÏÂÎŞĞèÖ±½Óµ÷ÓÃhandler.messageReceived(ret);½øĞĞÏûÏ¢´¦Àí
+                            // åŒæ­¥è°ƒç”¨ç³»ç»Ÿï¼ˆwebserviceï¼Œrmiï¼Œejbç­‰ï¼‰ä¸€èˆ¬ä¼šç›´æ¥è¿”å›è°ƒç”¨ç»“æœï¼Œå¼‚æ­¥ï¼ˆminaï¼Œjmsï¼‰ç³»ç»Ÿå°†è¿”å›ç©ºå€¼ï¼Œ
+                            // å› æ­¤å¼‚æ­¥è°ƒç”¨åè®®ï¼ˆminaï¼Œjmsï¼‰æƒ…å†µä¸‹æ— éœ€ç›´æ¥è°ƒç”¨handler.messageReceived(ret);è¿›è¡Œæ¶ˆæ¯å¤„ç†
 
-                            if (ret != null)// minaĞ­Òé´¦ÀíÊ±·µ»ØnullÖµ,webservice·µ»ØÆäµ÷ÓÃ½á¹û
+                            if (ret != null)// minaåè®®å¤„ç†æ—¶è¿”å›nullå€¼,webserviceè¿”å›å…¶è°ƒç”¨ç»“æœ
                                 messageReceived(ret);
                         }
                     }
@@ -404,7 +404,7 @@ public abstract class BaseRPCIOHandler implements RPCIOHandler
     }
 
     /**
-     * ·şÎñÆ÷¶Ë½ÓÊÕµ½ÇëÇóºó£¬¶ÔÇëÇó½øĞĞ´¦Àí£¬½«´¦ÀíµÄ½á¹û·µ»Ø¸ø¿Í·ş¶Ë
+     * æœåŠ¡å™¨ç«¯æ¥æ”¶åˆ°è¯·æ±‚åï¼Œå¯¹è¯·æ±‚è¿›è¡Œå¤„ç†ï¼Œå°†å¤„ç†çš„ç»“æœè¿”å›ç»™å®¢æœç«¯
      * 
      * @param req
      * @param hdr
@@ -533,7 +533,7 @@ public abstract class BaseRPCIOHandler implements RPCIOHandler
     }
 
     /**
-     * ¿Í·ş¶Ë½ÓÊÕµ½·şÎñÆ÷µÄÏìÓ¦ºó£¬¶Ô½ÓÊÕµ½µÃ½á¹û¼¯½øĞĞ´¦Àí,Í¬Ê±Ò²¶ÔÇëÇó½øĞĞ×ª·¢
+     * å®¢æœç«¯æ¥æ”¶åˆ°æœåŠ¡å™¨çš„å“åº”åï¼Œå¯¹æ¥æ”¶åˆ°å¾—ç»“æœé›†è¿›è¡Œå¤„ç†,åŒæ—¶ä¹Ÿå¯¹è¯·æ±‚è¿›è¡Œè½¬å‘
      * 
      * @param message_
      * @throws Exception
@@ -603,7 +603,7 @@ public abstract class BaseRPCIOHandler implements RPCIOHandler
     
     
     /**
-     * ¿Í·ş¶Ë½ÓÊÕµ½·şÎñÆ÷µÄÏìÓ¦ºó£¬¶Ô½ÓÊÕµ½µÃ½á¹û¼¯½øĞĞ´¦Àí,Í¬Ê±Ò²¶ÔÇëÇó½øĞĞ×ª·¢
+     * å®¢æœç«¯æ¥æ”¶åˆ°æœåŠ¡å™¨çš„å“åº”åï¼Œå¯¹æ¥æ”¶åˆ°å¾—ç»“æœé›†è¿›è¡Œå¤„ç†,åŒæ—¶ä¹Ÿå¯¹è¯·æ±‚è¿›è¡Œè½¬å‘
      * 
      * @param message_
      * @throws Exception

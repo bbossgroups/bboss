@@ -29,7 +29,7 @@ import org.frameworkset.spi.remote.Util;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2010-6-17 ÏÂÎç12:10:58
+ * @Date 2010-6-17 ä¸‹åˆ12:10:58
  * @author biaoping.yin
  * @version 1.0
  */
@@ -54,9 +54,9 @@ public class RMIRpcServiceClient {
 				 {
 //						System.setProperty("sun.rmi.transport.tcp.responseTimeout :"+System.getProperty("sun.rmi.transport.tcp.responseTimeout"));
 					 System.setProperty("sun.rmi.transport.connectionTimeout",RMIServer.getRMIServer().getConnectTimeout() + "");
-					 System.out.println("²éÕÒ×é¼şµØÖ·£º" + address);
+					 System.out.println("æŸ¥æ‰¾ç»„ä»¶åœ°å€ï¼š" + address);
 					 rmiInterfactRemote = RMIUtil.lookupService(address, RMIServiceInfo.class);
-					 System.out.println("²éÕÒ×é¼ş³É¹¦£º" + address);
+					 System.out.println("æŸ¥æ‰¾ç»„ä»¶æˆåŠŸï¼š" + address);
 					 
 					 services.put(address, rmiInterfactRemote);
 				 }

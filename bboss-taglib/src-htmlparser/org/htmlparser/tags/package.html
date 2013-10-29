@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!--
+ HTMLParser Library $Name: v1_5 $ - A java-based parser for HTML
+ http://sourceforge.org/projects/htmlparser
+ Copyright (C) 2004 Somik Raha
+
+ Revision Control Information
+
+ $Source: /cvsroot/htmlparser/htmlparser/src/org/htmlparser/tags/package.html,v $
+ $Author: derrickoswald $
+ $Date: 2005/04/24 17:48:27 $
+ $Revision: 1.21 $
+
+ This library is free software; you can redistribute it and/or
+ modify it under the terms of the GNU Lesser General Public
+ License as published by the Free Software Foundation; either
+ version 2.1 of the License, or (at your option) any later version.
+
+ This library is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ Lesser General Public License for more details.
+
+ You should have received a copy of the GNU Lesser General Public
+ License along with this library; if not, write to the Free Software
+ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+-->
+</head>
+<body bgcolor="white">
+The tags package contains specific tags.
+<p>This package has implementations of tags that have functionality beyond the
+capability of a generic tag. For example, the {@.html <META>} tag has methods
+to get the {@link org.htmlparser.tags.MetaTag#getMetaContent CONTENT} and
+{@link org.htmlparser.tags.MetaTag#getMetaTagName NAME}
+attributes (although this could be done with generic attribute manipulation)
+and an implementation of
+{@link org.htmlparser.tags.MetaTag#doSemanticAction doSemanticAction}
+that alters the lexer's encoding.</p>
+<p>The classes in this package have been added in an ad-hoc fashion, with the
+most useful ones having existed a long time, while some obvious ones are rather
+new. Please feel free to add your own custom tags, and register them with the
+{@link org.htmlparser.PrototypicalNodeFactory PrototypicalNodeFactory},
+and they will be treated like any other in-built tag. In fact tags do not need
+to reside in this package.</p>
+<br><b>Custom Tags</b>
+<p>Creating custom tags is fairly straight forward. Simply copy one of the
+simpler tags you find in this package and alter it as follows.
+<p>If the tag can contain other nodes, i.e. {@.html <h1>My Heading</h1>}, then
+it should derive from (i.e. be a subclass of) {@link org.htmlparser.tags.CompositeTag}.
+In this way it will inherit the
+{@link org.htmlparser.scanners.CompositeTagScanner CompositeTagScanner}
+and nodes between the start and end tag will be gathered into the list of
+children. Most of the tags in this package derive from CompositeTag, and that
+is why the nodes returned from the Parser are nested.</p>
+<p>If it is a simple tag, i.e. {@.html <br>}, then it should derive from
+{@link org.htmlparser.nodes.TagNode TagNode}. See for example
+{@link org.htmlparser.tags.MetaTag}
+or {@link org.htmlparser.tags.ImageTag}.</p>
+<p>To be registered with {@link org.htmlparser.PrototypicalNodeFactory#registerTag},
+and especially if it is a composite tag, the tag needs to implement
+<code>getIds</code> which returns the UPPERCASE list of names for the tag
+(usually only one), for example "HTML". If the tag can be smart enough to know
+what other tags can't be contained within it, it should also implement
+{@link org.htmlparser.nodes.TagNode#getEnders getEnders()} which returns the
+list of other tags that should cause this tag to close itself, and 
+{@link org.htmlparser.nodes.TagNode#getEndTagEnders getEndTagEnders()} which
+returns the list of end tags (i.e. {@.html </xxx>}), other than it's own name, that
+should cause this tag to close itself. When these 'ender' lists cause a tag to
+end before seeing it's own end tag, a virtual end tag is created and 'inserted'
+at the location where the end tag should have been. These end tags can be
+distinguished because their {@link org.htmlparser.Node#getStartPosition starting}
+and {@link org.htmlparser.Node#getEndPosition ending} locations are the same
+(i.e. they take up no character length in the HTML stream).
+<p>For example, the {@.html <OPTION>} tag from a form can be prematurely ended by
+any of {@.html <INPUT>}, {@.html <TEXTAREA>}, {@.html <SELECT>},
+or another {@.html <OPTION>} tag. These are the tags in the getEnders() list.
+It can also be prematurely ended by {@.html </SELECT>}, {@.html </FORM>},
+{@.html </BODY>}, or {@.html </HTML>}. These are the tags in the
+getEndTagEnders() list.
+<p>Other than that any functionality is up to you. You should note that
+{@link org.htmlparser.Node#doSemanticAction doSemanticAction()} is called after
+the tag has been completely scanned (it has it's children and end tag), but before
+its siblings further downstream have been scanned. If transformation is your purpose,
+this is the opportunity to mess around with the content, for example to set the link URL,
+or lowercase the tag name, or whatever.
+<!-- Put @see and @since tags down here. -->
+
+</body>
+</html>

@@ -12,7 +12,7 @@ package com.frameworkset.common.hibernate;
  * Copyright (c) 2007
  * </p>
  * 
- * @Date 2009-6-1 ÏÂÎç08:58:51
+ * @Date 2009-6-1 ä¸‹åˆ08:58:51
  * @author biaoping.yin
  * @version 1.0
  */

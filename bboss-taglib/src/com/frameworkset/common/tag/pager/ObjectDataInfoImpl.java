@@ -10,7 +10,7 @@ import com.frameworkset.util.ListInfo;
  * 
  * <p>Title: com.frameworkset.common.tag.pager.ObjectDataInfo.java</p>
  *
- * <p>Description: ·â×°¶ÔÏóÀàĞÍµÄÊı¾İ»ñÈ¡Àà</p>
+ * <p>Description: å°è£…å¯¹è±¡ç±»å‹çš„æ•°æ®è·å–ç±»</p>
  *
  * <p>Copyright (c) 2006.10 </p>
  *
@@ -21,7 +21,7 @@ import com.frameworkset.util.ListInfo;
  */
 public class ObjectDataInfoImpl extends DataInfoImpl {
 	/**
-	 * ´æ·Å¶ÔÏóÀàĞÍÊı¾İµÄ±äÁ¿
+	 * å­˜æ”¾å¯¹è±¡ç±»å‹æ•°æ®çš„å˜é‡
 	 */
 	Object data;
 	

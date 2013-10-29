@@ -31,7 +31,7 @@ import org.junit.Test;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2009-11-7 ÉÏÎç11:24:33
+ * @Date 2009-11-7 ä¸Šåˆ11:24:33
  * @author biaoping.yin
  * @version 1.0
  */
@@ -56,25 +56,25 @@ public class TestServiceID
 	
 	/**
 	 * 	<!-- 
-			Ö¸¶¨Ô¶³ÌÍ¨Ñ¶µÄÄ¬ÈÏĞ­Òé£ºmina,
+			æŒ‡å®šè¿œç¨‹é€šè®¯çš„é»˜è®¤åè®®ï¼šmina,
 							   jgroup,
 							   jms,
 							   webservice
 							   rmi
 							   ejb
 							   corba
-			Ò»¸öÍêÕûµÄÔ¶³Ì×é¼ş·ÃÎÊµØÖ·µÄÊµÀıÈçÏÂ£º
+			ä¸€ä¸ªå®Œæ•´çš„è¿œç¨‹ç»„ä»¶è®¿é—®åœ°å€çš„å®ä¾‹å¦‚ä¸‹ï¼š
 			protocol::ip:port/serviceid
-			Èç¹ûÓ¦ÓÃ³ÌĞòÃ»ÓĞÖ¸¶¨protocolÍ·£¬ÀıÈç£º
+			å¦‚æœåº”ç”¨ç¨‹åºæ²¡æœ‰æŒ‡å®šprotocolå¤´ï¼Œä¾‹å¦‚ï¼š
 			ip:port/serviceid
-			½«Ê¹ÓÃrpc.default.protocolÖ¸¶¨µÄĞ­Òé
+			å°†ä½¿ç”¨rpc.default.protocolæŒ‡å®šçš„åè®®
 		 -->			      
 		<property name="rpc.default.protocol" 
 					      value="mina"/>
 	 */
 	public static void defaultServiceID()
 	{
-		//Ä¬ÈÏµÄÔ¶³Ì·şÎñµ÷ÓÃ±êÊ¶,ÆäĞ­ÒéÓÉ¿ò¼ÜÅäÖÃÖĞÉèÖÃµÄÈ±Ê¡ÅäÖÃĞ­Òé¾ö¶¨£º
+		//é»˜è®¤çš„è¿œç¨‹æœåŠ¡è°ƒç”¨æ ‡è¯†,å…¶åè®®ç”±æ¡†æ¶é…ç½®ä¸­è®¾ç½®çš„ç¼ºçœé…ç½®åè®®å†³å®šï¼š
 		
         String serviceid = "(192.168.0.17:1010;192.168.0.18:1020)/serviceid";        
         ServiceID id = new ServiceIDImpl(serviceid, null, GroupRequest.GET_ALL, ServiceID.result_object, 0,
@@ -85,7 +85,7 @@ public class TestServiceID
 	
 	public static void webserviceServiceID()
 	{
-		 //webserviceÔ¶³Ì·şÎñµ÷ÓÃ±êÊ¶
+		 //webserviceè¿œç¨‹æœåŠ¡è°ƒç”¨æ ‡è¯†
 		String serviceid = "(webservice::http://192.168.0.17:1010/webroot/;http://192.168.0.17:1010/webroot/)/serviceid";
                 ServiceID id = new ServiceIDImpl(serviceid, null, GroupRequest.GET_ALL, ServiceID.result_object, 0,
                                              ServiceID.PROVIDER_BEAN_SERVICE,null);
@@ -95,7 +95,7 @@ public class TestServiceID
 	
 	public static void testBuildWebServiceURL()
 	{
-		 //webserviceÔ¶³Ì·şÎñµ÷ÓÃ±êÊ¶
+		 //webserviceè¿œç¨‹æœåŠ¡è°ƒç”¨æ ‡è¯†
 //		String serviceid = "(webservice::http://192.168.0.17:1010/webroot;http://192.168.0.17:1011/webroot/)/serviceid";
 		String serviceid = "(webservice::http://192.168.0.17:1010;http://192.168.0.17:1011/)/serviceid";
         ServiceID id = new ServiceIDImpl(serviceid, null, GroupRequest.GET_ALL, ServiceID.result_object, 0,
@@ -110,7 +110,7 @@ public class TestServiceID
 	
 	public static void minaServiceID()
 	{
-		 //minaÔ¶³Ì·şÎñµ÷ÓÃ±êÊ¶
+		 //minaè¿œç¨‹æœåŠ¡è°ƒç”¨æ ‡è¯†
 		String serviceid = "(mina::192.168.0.17:1010;192.168.0.17:1011)/serviceid";
         ServiceID id = new ServiceIDImpl(serviceid, null, GroupRequest.GET_ALL, ServiceID.result_object, 0,
                                      ServiceID.PROVIDER_BEAN_SERVICE,null);
@@ -121,7 +121,7 @@ public class TestServiceID
 	
 	public static void jgroupServiceID()
 	{
-		 //jgroupÔ¶³Ì·şÎñµ÷ÓÃ±êÊ¶
+		 //jgroupè¿œç¨‹æœåŠ¡è°ƒç”¨æ ‡è¯†
 		String serviceid = "(jgroup::192.168.0.17:1010;192.168.0.17:1011)/serviceid";
         ServiceID id = new ServiceIDImpl(serviceid, null, GroupRequest.GET_ALL, ServiceID.result_object, 0,
                                      ServiceID.PROVIDER_BEAN_SERVICE,null);
@@ -131,7 +131,7 @@ public class TestServiceID
 	
 	public static void rmiServiceID()
 	{
-		 //rmiÔ¶³Ì·şÎñµ÷ÓÃ±êÊ¶
+		 //rmiè¿œç¨‹æœåŠ¡è°ƒç”¨æ ‡è¯†
 		String serviceid = "(rmi::192.168.0.17:1010;192.168.0.17:1011)/serviceid";
         ServiceID id = new ServiceIDImpl(serviceid, null, GroupRequest.GET_ALL, ServiceID.result_object, 0,
                                      ServiceID.PROVIDER_BEAN_SERVICE,null);
@@ -141,7 +141,7 @@ public class TestServiceID
 	
 	public static void ejbServiceID()
 	{
-		 //ejbÔ¶³Ì·şÎñµ÷ÓÃ±êÊ¶
+		 //ejbè¿œç¨‹æœåŠ¡è°ƒç”¨æ ‡è¯†
 		String serviceid = "(ejb::192.168.0.17:1010;192.168.0.17:1011)/serviceid";
         ServiceID id = new ServiceIDImpl(serviceid, null, GroupRequest.GET_ALL, ServiceID.result_object, 0,
                                      ServiceID.PROVIDER_BEAN_SERVICE,null);
@@ -151,7 +151,7 @@ public class TestServiceID
 	
 	public static void corbaServiceID()
 	{
-		 //corbaÔ¶³Ì·şÎñµ÷ÓÃ±êÊ¶
+		 //corbaè¿œç¨‹æœåŠ¡è°ƒç”¨æ ‡è¯†
 		String serviceid = "(corba::192.168.0.17:1010;192.168.0.17:1011)/serviceid";
         ServiceID id = new ServiceIDImpl(serviceid, null, GroupRequest.GET_ALL, ServiceID.result_object, 0,
                                      ServiceID.PROVIDER_BEAN_SERVICE,null);

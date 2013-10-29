@@ -53,7 +53,7 @@ import org.jboss.netty.handler.ssl.SslHandler;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2010-4-19 ÏÂÎç11:41:28
+ * @Date 2010-4-19 ä¸‹åˆ11:41:28
  * @author biaoping.yin
  * @version 1.0
  */
@@ -78,7 +78,7 @@ public class NettyClinentTransport {
 
 
     /**
-     * Ğ£ÑéµØÖ·ÊÇ·ñÓĞĞ§
+     * æ ¡éªŒåœ°å€æ˜¯å¦æœ‰æ•ˆ
      * @param address
      * @return
      */
@@ -275,16 +275,16 @@ public class NettyClinentTransport {
     }
 
     /**
-     * ÊÇ·ñÊ¹ÓÃ³¤Á¬½Ó
+     * æ˜¯å¦ä½¿ç”¨é•¿è¿æ¥
      * 
      * @param host
-     *            Á¬½ÓµÄÖ÷»úµØÖ·
+     *            è¿æ¥çš„ä¸»æœºåœ°å€
      * @param port
-     *            Á¬½ÓµÄ¶Ë¿ÚµØÖ·
+     *            è¿æ¥çš„ç«¯å£åœ°å€
      * @param corr
-     *            Ğ­×÷´¦ÀíÆ÷
+     *            åä½œå¤„ç†å™¨
      * @param longconnection
-     *            ÊÇ·ñÊ¹ÓÃ³¤Á¬½Ó
+     *            æ˜¯å¦ä½¿ç”¨é•¿è¿æ¥
      */
     private NettyClinentTransport(RPCAddress rpcaddress, ChannelUpstreamHandler corr)
     {
@@ -336,7 +336,7 @@ public class NettyClinentTransport {
     private boolean dummy = false;
     
     /**
-     * ÊÇ²»ÊÇÄ£ÄâÁ¬½ÓÆ÷£¬true-ÊÇ£¬false-·ñ
+     * æ˜¯ä¸æ˜¯æ¨¡æ‹Ÿè¿æ¥å™¨ï¼Œtrue-æ˜¯ï¼Œfalse-å¦
      * @return
      */
     public boolean isdummy()
@@ -352,7 +352,7 @@ public class NettyClinentTransport {
  	        cb = new ClientBootstrap(channelFactory);
  	
  	        /**
- 	         * Ôö¼ÓsslµÄ¼¼ÊõÖ§³Ö
+ 	         * å¢åŠ sslçš„æŠ€æœ¯æ”¯æŒ
  	         */
  	
  	        ProMap commons = ApplicationContext.getApplicationContext().getMapProperty("rpc.protocol.netty.params");
@@ -403,7 +403,7 @@ public class NettyClinentTransport {
             ssls = ApplicationContext.getApplicationContext().getMapProperty(name);
             if(ssls == null)
             {
-                throw new NettyRunException("ÆôÓÃÁËsslÄ£Ê½£¬ µ«ÊÇÃ»ÓĞÖ¸¶¨"+ name +" ²ÎÊı£¬Çë¼ì²éÎÄ¼şorg/frameworkset/spi/manager-rpc-netty.xmlÊÇ·ñÕıÈ·ÉèÖÃÁË¸Ã²ÎÊı¡£");
+                throw new NettyRunException("å¯ç”¨äº†sslæ¨¡å¼ï¼Œ ä½†æ˜¯æ²¡æœ‰æŒ‡å®š"+ name +" å‚æ•°ï¼Œè¯·æ£€æŸ¥æ–‡ä»¶org/frameworkset/spi/manager-rpc-netty.xmlæ˜¯å¦æ­£ç¡®è®¾ç½®äº†è¯¥å‚æ•°ã€‚");
             }
             String keyStore = ssls.getString("keyStore");
             String keyStorePassword = ssls.getString("keyStorePassword");
@@ -430,11 +430,11 @@ public class NettyClinentTransport {
         }
         catch (GeneralSecurityException e)
         {
-            throw new NettyRunException("ÆôÓÃÁËsslÄ£Ê½£¬ Çë¼ì²éÎÄ¼şorg/frameworkset/spi/manager-rpc-netty.xmlÊÇ·ñÕıÈ·ÉèÖÃÁË¿Í·ş¶ËµÄssl²ÎÊı"+ name +"¡£",e);
+            throw new NettyRunException("å¯ç”¨äº†sslæ¨¡å¼ï¼Œ è¯·æ£€æŸ¥æ–‡ä»¶org/frameworkset/spi/manager-rpc-netty.xmlæ˜¯å¦æ­£ç¡®è®¾ç½®äº†å®¢æœç«¯çš„sslå‚æ•°"+ name +"ã€‚",e);
         }
         catch (IOException e)
         {
-            throw new NettyRunException("ÆôÓÃÁËsslÄ£Ê½£¬ Çë¼ì²éÎÄ¼şorg/frameworkset/spi/manager-rpc-netty.xmlÊÇ·ñÕıÈ·ÉèÖÃÁË¿Í·ş¶ËµÄssl²ÎÊı"+ name +"¡£",e);
+            throw new NettyRunException("å¯ç”¨äº†sslæ¨¡å¼ï¼Œ è¯·æ£€æŸ¥æ–‡ä»¶org/frameworkset/spi/manager-rpc-netty.xmlæ˜¯å¦æ­£ç¡®è®¾ç½®äº†å®¢æœç«¯çš„sslå‚æ•°"+ name +"ã€‚",e);
         }
         catch(NettyRunException e)
         {
@@ -442,7 +442,7 @@ public class NettyClinentTransport {
         }
         catch (Exception e)
         {
-            throw new NettyRunException("ÆôÓÃÁËsslÄ£Ê½£¬ Çë¼ì²éÎÄ¼şorg/frameworkset/spi/manager-rpc-netty.xmlÊÇ·ñÕıÈ·ÉèÖÃÁË¿Í·ş¶ËµÄssl²ÎÊı"+ name +"¡£",e);
+            throw new NettyRunException("å¯ç”¨äº†sslæ¨¡å¼ï¼Œ è¯·æ£€æŸ¥æ–‡ä»¶org/frameworkset/spi/manager-rpc-netty.xmlæ˜¯å¦æ­£ç¡®è®¾ç½®äº†å®¢æœç«¯çš„sslå‚æ•°"+ name +"ã€‚",e);
         }
     
     }
@@ -458,7 +458,7 @@ public class NettyClinentTransport {
         
 //        connector = new NioSocketConnector();
 //        /**
-//         * Ôö¼ÓsslµÄ¼¼ÊõÖ§³Ö
+//         * å¢åŠ sslçš„æŠ€æœ¯æ”¯æŒ
 //         */
        
 //        channelFactory = newClientSocketChannelFactory();

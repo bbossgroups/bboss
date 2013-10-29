@@ -1,5 +1,5 @@
-<%@ page language="java" import="java.util.*" pageEncoding="GBK"%>
-<%@ page contentType="text/html; charset=GBK"%>
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8"%>
 <%
 String templet_id = "1";
 String report_id = "1";
@@ -8,7 +8,7 @@ String tableInfoId = "CAN_BE_TABLE_NAME";
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=GBK">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>DataGrid Editer</title>
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/jsp/datagrid/themes/default/easyui.css">
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/jsp/datagrid/themes/icon.css">
@@ -36,29 +36,29 @@ String tableInfoId = "CAN_BE_TABLE_NAME";
 		    {productid:'FL-DLH-02',name:'Persian'},
 		    {productid:'AV-CB-01',name:'Amazon Parrot'}
 		];
-		/*²úÆ·¸ñÊ½Æ÷*/
+		/*äº§å“æ ¼å¼å™¨*/
 		function formatter_product(value, rowData, rowIndex) {
 			for(var i=0; i<products.length; i++){
 				if (products[i].productid == value) return products[i].name;
 			}
 			return value;
 		}
-		/*³É±¾¸ñÊ½Æ÷*/
+		/*æˆæœ¬æ ¼å¼å™¨*/
 		function formatter_unitcost(value, rowData, rowIndex) {
 			if (null == value || "" == value) {
-				//alert("¶Ô²»Æğ£¡³É±¾²»ÄÜÎª¿Õ£¡");
+				//alert("å¯¹ä¸èµ·ï¼æˆæœ¬ä¸èƒ½ä¸ºç©ºï¼");
 				return 0.0;
 			}
 			
 			return value;
 		}
 		
-		/*Ğ£ÑéÆ÷*/
+		/*æ ¡éªŒå™¨*/
 		function validator(rowIndex, rowData) {
-			//Ğ£Ñé³É±¾
+			//æ ¡éªŒæˆæœ¬
 			if(null == rowData["unitcost"] || "" == rowData["unitcost"]){
-				alert("¶Ô²»Æğ£¡³É±¾²»ÄÜÎª¿Õ£¡");
-				//¶¨Î»ÖØĞÂĞŞ¸Ä
+				alert("å¯¹ä¸èµ·ï¼æˆæœ¬ä¸èƒ½ä¸ºç©ºï¼");
+				//å®šä½é‡æ–°ä¿®æ”¹
 				$('#tt').datagrid('beginEdit', rowIndex);
 				return false;
 			}
@@ -69,7 +69,7 @@ String tableInfoId = "CAN_BE_TABLE_NAME";
 			var lastIndex;
 			$('#tt').datagrid({
 				toolbar:[{
-					text:'Ìí¼Ó',
+					text:'æ·»åŠ ',
 					iconCls:'icon-add',
 					handler:function(){
 					$('#tt').datagrid('endEdit', lastIndex);
@@ -86,7 +86,7 @@ String tableInfoId = "CAN_BE_TABLE_NAME";
 						$('#tt').datagrid('beginEdit', lastIndex);
 					}
 				},'-',{
-					text:'É¾³ı',
+					text:'åˆ é™¤',
 					iconCls:'icon-remove',
 					handler:function(){
 						var row = $('#tt').datagrid('getSelected');
@@ -96,7 +96,7 @@ String tableInfoId = "CAN_BE_TABLE_NAME";
 						}
 					}
 				},'-',{
-					text:'³·Ïú',
+					text:'æ’¤é”€',
 					iconCls:'icon-undo',
 					handler:function(){
 						$('#tt').datagrid('rejectChanges');
@@ -104,19 +104,19 @@ String tableInfoId = "CAN_BE_TABLE_NAME";
 				}
 				/*	
 				,'-',{
-					text:'¸ü¸ÄĞÅÏ¢',
+					text:'æ›´æ”¹ä¿¡æ¯',
 					iconCls:'icon-search',
 					handler:function(){
 						//var rows = $('#tt').datagrid('getChanges','deleted');	
 						var rows = $('#tt').datagrid('getChanges');
 						alert('changed rows: ' + rows.length + ' lines');
 						if(rows.length>0){							
-							alert("¸Ä±äĞĞ:"+rows[0]["itemid"]);							
+							alert("æ”¹å˜è¡Œ:"+rows[0]["itemid"]);							
 						}
 					}
 				}							
 				,'-',{
-					text:'È·ÈÏ',
+					text:'ç¡®è®¤',
 					iconCls:'icon-ok',
 					handler:function(){
 						$('#tt').datagrid('acceptChanges');
@@ -124,14 +124,14 @@ String tableInfoId = "CAN_BE_TABLE_NAME";
 				}
 				*/
 				,'-',{
-					text:'±£´æ',
+					text:'ä¿å­˜',
 					iconCls:'icon-save',
 					handler:function(){
 						saveData();
 					}
 				}],
 				fitColumns:true,
-				loadMsg:'ÕıÔÚ¼ÓÔØÊı¾İ£¬ÇëÉÔºó...',
+				loadMsg:'æ­£åœ¨åŠ è½½æ•°æ®ï¼Œè¯·ç¨å...',
 				onBeforeLoad:function(){
 					$(this).datagrid('rejectChanges');
 				},
@@ -154,7 +154,7 @@ String tableInfoId = "CAN_BE_TABLE_NAME";
 					//alert("rowIndex="+rowIndex+"\nrowData="+object2json(rowData)+"\nchanges="+object2json(changes));
 					/*
 					if(rowData["unitcost"]==null || rowData["unitcost"] == "" ){
-						alert("³É±¾²»ÄÜÎª¿Õ£¡");
+						alert("æˆæœ¬ä¸èƒ½ä¸ºç©ºï¼");
 						$('#tt').datagrid('beginEdit', rowIndex);
 						return false;
 					}
@@ -163,15 +163,15 @@ String tableInfoId = "CAN_BE_TABLE_NAME";
 				/**
 				,columns:[[
 						{field:'itemid',title:'Item ID',rowspan:2,width:80,sortable:true},
-						{field:'productid',title:'²úÆ·',rowspan:2,width:80,sortable:true},				
-						{title:'²úÆ·ÊôĞÔ1',colspan:2},
-						{field:'productid',title:'²úÆ·',rowspan:2,width:100,sortable:true},	
-						{title:'²úÆ·ÊôĞÔ2',colspan:2}
+						{field:'productid',title:'äº§å“',rowspan:2,width:80,sortable:true},				
+						{title:'äº§å“å±æ€§1',colspan:2},
+						{field:'productid',title:'äº§å“',rowspan:2,width:100,sortable:true},	
+						{title:'äº§å“å±æ€§2',colspan:2}
 					],[
-						{field:'listprice',title:'¼Û¸ñ(£¤)',width:80,align:'right',sortable:true,editor:"numberbox"},
-						{field:'unitcost',title:'³É±¾(£¤)',width:80,align:'right',sortable:true,editor:'numberbox'},
-						{field:'attr1',title:'ÊôĞÔ',width:100,editor:'text'},
-						{field:'status',title:'×´Ì¬',width:60,align:'center',editor:"{type:'checkbox',options:{on:'P',off:''}}"}
+						{field:'listprice',title:'ä»·æ ¼(ï¿¥)',width:80,align:'right',sortable:true,editor:"numberbox"},
+						{field:'unitcost',title:'æˆæœ¬(ï¿¥)',width:80,align:'right',sortable:true,editor:'numberbox'},
+						{field:'attr1',title:'å±æ€§',width:100,editor:'text'},
+						{field:'status',title:'çŠ¶æ€',width:60,align:'center',editor:"{type:'checkbox',options:{on:'P',off:''}}"}
 					]]
 					**/
 				<!-- datagrid end -->
@@ -181,7 +181,7 @@ String tableInfoId = "CAN_BE_TABLE_NAME";
 		var templet_id = "1";
 		var report_id = "1";
 		
-		/*½«¶ÔÏó×ª»»Îªjsoncode*/
+		/*å°†å¯¹è±¡è½¬æ¢ä¸ºjsoncode*/
 		function object2json(jsonObj){
 		
 			var jsoncode =  JSON.stringify(jsonObj); 
@@ -190,18 +190,18 @@ String tableInfoId = "CAN_BE_TABLE_NAME";
 			return jsoncode;
 		} 
 		
-		/*±£´æÊı¾İ*/
+		/*ä¿å­˜æ•°æ®*/
 		function saveData() {
 			try{
-				//±£´æµ±Ç°¸ü¸Ä
+				//ä¿å­˜å½“å‰æ›´æ”¹
 				//alert("dataGrid1.currRowIndex="+dataGrid1.currRowIndex);			
 				$('#tt').datagrid('endEdit', dataGrid1.currRowIndex);	
-				//×ª»»ÎªjsoncodeÂë²¢Ìá½»µ½ºóÌ¨Êı¾İ¿â				
+				//è½¬æ¢ä¸ºjsoncodeç å¹¶æäº¤åˆ°åå°æ•°æ®åº“				
 				var rows = $('#tt').datagrid('getChanges');				
 				if(rows.length>0){					
 					submitData();
 				}else{
-					alert("¶Ô²»Æğ£¡Êı¾İÃ»ÓĞ¸ü¸Ä»òÕßÈÔÓĞ´íÎóÊı¾İ£¬ÇëÌîºÃÊı¾İ£¡");
+					alert("å¯¹ä¸èµ·ï¼æ•°æ®æ²¡æœ‰æ›´æ”¹æˆ–è€…ä»æœ‰é”™è¯¯æ•°æ®ï¼Œè¯·å¡«å¥½æ•°æ®ï¼");
 					return false;
 				}				
 			}catch(e){
@@ -209,7 +209,7 @@ String tableInfoId = "CAN_BE_TABLE_NAME";
 			}
 		}
 		
-		/*Ìá½»Êı¾İ*/
+		/*æäº¤æ•°æ®*/
 		function submitData(data){
 			var deleted_rows = $('#tt').datagrid('getChanges','deleted');
 			var updated_rows = $('#tt').datagrid('getChanges','updated');
@@ -250,18 +250,18 @@ String tableInfoId = "CAN_BE_TABLE_NAME";
 			//var r = $.post(url,param,onSaveDataSuccess,"json");	
 		}
 		
-		/*±£´æÊı¾İ³ö´í*/
+		/*ä¿å­˜æ•°æ®å‡ºé”™*/
 		function onSaveDataError(XMLHttpRequest, textStatus, errorThrown) {			
-			alert("¶Ô²»Æğ£¡±£´æÊ§°Ü:"+textStatus+"");
-			//±£´æÊ§°ÜÈ¡Ïû¿Í»§¶Ë±¾´Î¸ü¸Ä
+			alert("å¯¹ä¸èµ·ï¼ä¿å­˜å¤±è´¥:"+textStatus+"");
+			//ä¿å­˜å¤±è´¥å–æ¶ˆå®¢æˆ·ç«¯æœ¬æ¬¡æ›´æ”¹
 			//$('#tt').datagrid('rejectChanges');
 		}
 		
-		/*±£´æÊı¾İ³ö´í*/
+		/*ä¿å­˜æ•°æ®å‡ºé”™*/
 		function onSaveDataSuccess(data, textStatus) {
 			
 			if (data.status == 1) {
-				//±£´æ³É¹¦È·ÈÏ¿Í»§¶Ë±¾´Î¸ü¸Ä
+				//ä¿å­˜æˆåŠŸç¡®è®¤å®¢æˆ·ç«¯æœ¬æ¬¡æ›´æ”¹
 				$('#tt').datagrid('acceptChanges');
 				alert(data.msg);
 			} else {
@@ -276,7 +276,7 @@ String tableInfoId = "CAN_BE_TABLE_NAME";
 			initSelect("productid", products);
 		}
 		
-		/*¼ÓÔØÊı¾İ*/
+		/*åŠ è½½æ•°æ®*/
 		function loadData(){
 			/*
 			alert("");
@@ -284,10 +284,10 @@ String tableInfoId = "CAN_BE_TABLE_NAME";
 			alert(b);
 			*/
 		}
-		//¸Ãº¯Êı²»Æğ×÷ÓÃ
+		//è¯¥å‡½æ•°ä¸èµ·ä½œç”¨
 		//$(document).ready(initSelect("productid", products));
 		
-		/*³õÊ¼»¯Êı¾İ*/
+		/*åˆå§‹åŒ–æ•°æ®*/
 		function initSelect(selectId, datas) {
 			var id = "#"+selectId;
 			//products productid
@@ -297,7 +297,7 @@ String tableInfoId = "CAN_BE_TABLE_NAME";
 			}
 		}
 		
-		/*²¥·Å¶¯»­Ğ§¹û*/
+		/*æ’­æ”¾åŠ¨ç”»æ•ˆæœ*/
 		function animate() {
 			$("#queryTable").hide("slow");
 			$("#queryTable").show("slow");
@@ -311,7 +311,7 @@ String tableInfoId = "CAN_BE_TABLE_NAME";
 	<input type="button" onclick="animate();">
 	<form>
 	<fieldset style="width:643px;height:auto">
-		<legend>²éÑ¯Ìõ¼ş</legend>
+		<legend>æŸ¥è¯¢æ¡ä»¶</legend>
 
 				<table id="queryTable" class="genericTbl">
 					<tr>
@@ -322,7 +322,7 @@ String tableInfoId = "CAN_BE_TABLE_NAME";
 							<input type="text" name="itemid">
 						</td>
 						<td width="25%" align="right">
-							²úÆ·
+							äº§å“
 						</td>
 						<td width="25%" align="right">
 							<select style="width:100%;" name="productid" id="productid"></select>
@@ -331,13 +331,13 @@ String tableInfoId = "CAN_BE_TABLE_NAME";
 					</tr>
 					<tr>
 						<td style="" width="25%" align="right">
-							¼Û¸ñ >=
+							ä»·æ ¼ >=
 						</td>
 						<td width="25%" align="right">
 							<input type="text" name="listprice">
 						</td>
 						<td style="" width="25%" align="right">
-							³É±¾ >=
+							æˆæœ¬ >=
 						</td>
 						<td width="25%" align="right">
 						<input type="text" name="unitcost">
@@ -348,37 +348,37 @@ String tableInfoId = "CAN_BE_TABLE_NAME";
 	</form>
 	
 	<table id="tt" style="width:650px;height:auto"
-			title="Êı¾İ±à¼­Æ÷" iconCls="icon-edit" singleSelect="true"
+			title="æ•°æ®ç¼–è¾‘å™¨" iconCls="icon-edit" singleSelect="true"
 			idField="itemid" url="${pageContext.request.contextPath}/datagrid/getData.htm?templet_id=<%=templet_id %>&report_id=<%=report_id %>&tableInfoId=<%=tableInfoId %>">
-			<!-- ¼òµ¥±íÍ·¡¤
+			<!-- ç®€å•è¡¨å¤´Â·
 		<thead>
 			<tr>
 				<th field="itemid" width="80">Item ID</th>
-				<th field="productid" width="100" formatter="formatter_product" editor="{type:'combobox',options:{valueField:'productid',textField:'name',data:products,required:true}}">²úÆ·</th>
-				<th field="listprice" width="80" align="right" editor="{type:'numberbox',options:{precision:1}}">¼Û¸ñ(£¤)</th>
-				<th field="unitcost" width="80" align="right" editor="numberbox">³É±¾(£¤)</th>
-				<th field="attr1" width="150" editor="text">ÊôĞÔ</th>
-				<th field="status" width="60" align="center" editor="{type:'checkbox',options:{on:'P',off:''}}">×´Ì¬</th>
+				<th field="productid" width="100" formatter="formatter_product" editor="{type:'combobox',options:{valueField:'productid',textField:'name',data:products,required:true}}">äº§å“</th>
+				<th field="listprice" width="80" align="right" editor="{type:'numberbox',options:{precision:1}}">ä»·æ ¼(ï¿¥)</th>
+				<th field="unitcost" width="80" align="right" editor="numberbox">æˆæœ¬(ï¿¥)</th>
+				<th field="attr1" width="150" editor="text">å±æ€§</th>
+				<th field="status" width="60" align="center" editor="{type:'checkbox',options:{on:'P',off:''}}">çŠ¶æ€</th>
 			</tr>
 		</thead>
 		-->		
-		<!-- ¸´ÔÓ±íÍ· -->
+		<!-- å¤æ‚è¡¨å¤´ -->
 		<thead>
 			<tr>
 				<th field="itemid" width="80" rowspan='2' editor="{type:'text'}">Item ID</th>
-				<th field="productid" width="100" rowspan='2' formatter="formatter_product" editor="{type:'combobox',options:{valueField:'productid',textField:'name',data:products,required:true}}">²úÆ·</th>
-				<th colspan='2'>²úÆ·ÊôĞÔ1</th>
+				<th field="productid" width="100" rowspan='2' formatter="formatter_product" editor="{type:'combobox',options:{valueField:'productid',textField:'name',data:products,required:true}}">äº§å“</th>
+				<th colspan='2'>äº§å“å±æ€§1</th>
 				<!-- 
-				<th field="productid" width="100" rowspan='2'>²úÆ·</th>
+				<th field="productid" width="100" rowspan='2'>äº§å“</th>
 				 -->
-				<th colspan='2'>²úÆ·ÊôĞÔ2</th>	
+				<th colspan='2'>äº§å“å±æ€§2</th>	
 						
 			</tr>
 			<tr>				
-				<th sorter="listpriceSorter" field="listprice" width="80" align="right" editor="{type:'numberbox',options:{precision:1,required:true}}">¼Û¸ñ(£¤)</th>
-				<th field="unitcost" width="80" align="right" editor="numberbox" formatter="formatter_unitcost">³É±¾(£¤)</th>
-				<th field="attr1" width="150" editor="text">ÊôĞÔ</th>
-				<th field="status" width="60" align="center" editor="{type:'checkbox',options:{on:'P',off:''}}">×´Ì¬</th>
+				<th sorter="listpriceSorter" field="listprice" width="80" align="right" editor="{type:'numberbox',options:{precision:1,required:true}}">ä»·æ ¼(ï¿¥)</th>
+				<th field="unitcost" width="80" align="right" editor="numberbox" formatter="formatter_unitcost">æˆæœ¬(ï¿¥)</th>
+				<th field="attr1" width="150" editor="text">å±æ€§</th>
+				<th field="status" width="60" align="center" editor="{type:'checkbox',options:{on:'P',off:''}}">çŠ¶æ€</th>
 			</tr>
 		</thead>
 	</table>

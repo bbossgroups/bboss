@@ -51,10 +51,10 @@ import com.frameworkset.common.tag.contextmenu.ContextMenu;
 
 
 /**
- * Ò»¸ö´Ójavax.servlet.jsp.tagext.TagSupport¼Ì³Ğ¡¢ÊµÏÖTagOutput½Ó¿ÚµÄ³éÏóÀà¡£
- * ×ÓÀà±ØĞëÊµÏÖ³éÏó·½·¨writer(OutputStream),¿Í»§³ÌĞòµ÷ÓÃwrite·½·¨½«tagµÄÄÚÈİÊä³öµ½
+ * ä¸€ä¸ªä»javax.servlet.jsp.tagext.TagSupportç»§æ‰¿ã€å®ç°TagOutputæ¥å£çš„æŠ½è±¡ç±»ã€‚
+ * å­ç±»å¿…é¡»å®ç°æŠ½è±¡æ–¹æ³•writer(OutputStream),å®¢æˆ·ç¨‹åºè°ƒç”¨writeæ–¹æ³•å°†tagçš„å†…å®¹è¾“å‡ºåˆ°
  * outputstream.
- * ×ÓÀà±ØĞëÊµÏÖ³éÏó·½·¨generateContent(),Ìá¹©¸÷×Ô²úÉúÊä³öÄÚÈİµÄ»úÖÆ
+ * å­ç±»å¿…é¡»å®ç°æŠ½è±¡æ–¹æ³•generateContent(),æä¾›å„è‡ªäº§ç”Ÿè¾“å‡ºå†…å®¹çš„æœºåˆ¶
  * @author biaoping.yin
  */
 public abstract class BaseTag extends TagSupport implements TryCatchFinally
@@ -89,7 +89,7 @@ public abstract class BaseTag extends TagSupport implements TryCatchFinally
 	}
 	
 	/**
-	 * ³õÊ¼»¯ÓÒ¼ü²Ëµ¥ĞÅÏ¢
+	 * åˆå§‹åŒ–å³é”®èœå•ä¿¡æ¯
 	 *
 	 */
 	public void initContextMenu(){
@@ -102,7 +102,7 @@ public abstract class BaseTag extends TagSupport implements TryCatchFinally
 	}
     
    /**
-    * ³õÊ¼»¯request,out¶ÔÏó
+    * åˆå§‹åŒ–request,outå¯¹è±¡
     *  JetspeedRunData   data = (JetspeedRunData)pageContext.getAttribute(JspService.RUNDATA, PageContext.REQUEST_SCOPE);
 
     */

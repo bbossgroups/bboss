@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding='gb2312'?>
+<?xml version="1.0" encoding='UTF-8'?>
 	<!-- 
 bboss-demo.xml
-ÃèÊö£ºÅäÖÃÓÃ»§¹ÜÀí¿ØÖÆÆ÷
+æè¿°ï¼šé…ç½®ç”¨æˆ·ç®¡ç†æŽ§åˆ¶å™¨
 -->
 <properties>
 
@@ -12,14 +12,14 @@ bboss-demo.xml
 
 	<property name="demo_sites">
 		<list componentType="bean">
-			<property f:name="index" f:cnname="Ê×Ò³"
+			<property f:name="index" f:cnname="é¦–é¡µ"
 				class="org.frameworkset.web.demo.SiteDemoBean">
 				<property name="controllerClass"
 					value="test/org/frameworkset/web/demo/SiteDemoController.java" />
 				<property name="configFile" value="WEB-INF/bboss-demo.xml" />
-				<property name="controllerClassCharset" value="GBK"></property>
-				<property name="configFileCharset" value="gb2312"></property>
-				<property name="beanClassCharset" value="GBK"></property>
+				<property name="controllerClassCharset" value="UTF-8"></property>
+				<property name="configFileCharset" value="UTF-8"></property>
+				<property name="beanClassCharset" value="UTF-8"></property>
 				<property name="visturl">
 					<list componentType="String">
 						<property value="/index.htm" />
@@ -32,13 +32,13 @@ bboss-demo.xml
 						<property f:formPath="jsp/index.jsp" f:charset="UTF-8"
 							class="org.frameworkset.web.demo.FormUrl">
 							<property name="description"><![CDATA[
-								±íµ¥index.jsp, ¶ÔÓ¦ÓÚ/index.htmÌø×ªÒ³Ãæ 
+								è¡¨å•index.jsp, å¯¹åº”äºŽ/index.htmè·³è½¬é¡µé¢ 
 							]]></property>
 						</property>
 						<property f:formPath="jsp/seconddetail.jsp" f:charset="UTF-8"
 							class="org.frameworkset.web.demo.FormUrl">
 							<property name="description"><![CDATA[
-								±íµ¥seconddetail.jsp, ¶ÔÓ¦ÓÚ/detail.htmÌø×ªÒ³Ãæ 
+								è¡¨å•seconddetail.jsp, å¯¹åº”äºŽ/detail.htmè·³è½¬é¡µé¢ 
 							]]></property>
 						</property>
 					</list>
@@ -56,21 +56,21 @@ bboss-demo.xml
 				</property>
 
 				<property name="description"><![CDATA[
-					demoÕ¾µãÊ×Ò³µØÖ·
-					/index.htm?name=testµØÖ·ÓÃÀ´²âÊÔÀ¹½ØÆ÷¹¦ÄÜ£¬Ê¹Æäµ÷Õûµ½µÇÂ½Ò³Ãæ
+					demoç«™ç‚¹é¦–é¡µåœ°å€
+					/index.htm?name=teståœ°å€ç”¨æ¥æµ‹è¯•æ‹¦æˆªå™¨åŠŸèƒ½ï¼Œä½¿å…¶è°ƒæ•´åˆ°ç™»é™†é¡µé¢
 					org.frameworkset.web.interceptor.MyFirstInterceptor
 				]]></property>
 			</property>
 			
 			
-			<property f:name="monitor" f:cnname="bbossgroups¼à¿Ø"
+			<property f:name="monitor" f:cnname="bbossgroupsç›‘æŽ§"
 				class="org.frameworkset.web.demo.SiteDemoBean">
 				<property name="controllerClass"
 					value="test/org/frameworkset/spi/monitor/MonitorController.java" />
 				<property name="configFile" value="WEB-INF/bboss-monitor.xml" />
-				<property name="controllerClassCharset" value="GBK"></property>
-				<property name="configFileCharset" value="gb2312"></property>
-				<property name="beanClassCharset" value="GBK"></property>
+				<property name="controllerClassCharset" value="UTF-8"></property>
+				<property name="configFileCharset" value="UTF-8"></property>
+				<property name="beanClassCharset" value="UTF-8"></property>
 				<property name="visturl">
 					<list componentType="String">
 						<property value="/monitor/console.htm" />
@@ -81,24 +81,24 @@ bboss-demo.xml
 						<property f:formPath="jsp/monitor/console.jsp"
 							f:charset="UTF-8" class="org.frameworkset.web.demo.FormUrl">
 							<property name="description"><![CDATA[
-								bbossgroups¼à¿ØÒ³Ãæ
+								bbossgroupsç›‘æŽ§é¡µé¢
 							]]></property>
 						</property>
 					</list>
 				</property>
 				<property name="description"><![CDATA[
-					bbossgroups¼à¿Ø
+					bbossgroupsç›‘æŽ§
 				]]></property>
 			</property>
 
-			<property f:name="download" f:cnname="Ô´ÂëºÍÎÄµµÏÂÔØ"
+			<property f:name="download" f:cnname="æºç å’Œæ–‡æ¡£ä¸‹è½½"
 				class="org.frameworkset.web.demo.SiteDemoBean">
 				<property name="controllerClass"
 					value="test/org/frameworkset/web/fileupload/FileController.java" />
 				<property name="configFile" value="WEB-INF/bboss-files.xml" />
-				<property name="controllerClassCharset" value="GBK"></property>
-				<property name="configFileCharset" value="gb2312"></property>
-				<property name="beanClassCharset" value="GBK"></property>
+				<property name="controllerClassCharset" value="UTF-8"></property>
+				<property name="configFileCharset" value="UTF-8"></property>
+				<property name="beanClassCharset" value="UTF-8"></property>
 				<property name="visturl">
 					<list componentType="String">
 						<property value="/files/downloadList.htm" />
@@ -109,25 +109,25 @@ bboss-demo.xml
 						<property f:formPath="jsp/files/downloadlist.jsp"
 							f:charset="UTF-8" class="org.frameworkset.web.demo.FormUrl">
 							<property name="description"><![CDATA[
-								ÏÂÔØÎÄ¼þÁÐ±í£¬¶ÔÓ¦ÓÚ/files/downloadList.htmµÄÌø×ª
+								ä¸‹è½½æ–‡ä»¶åˆ—è¡¨ï¼Œå¯¹åº”äºŽ/files/downloadList.htmçš„è·³è½¬
 							]]></property>
 						</property>
 					</list>
 				</property>
 				<property name="description"><![CDATA[
-					bboss-mvcÎÄµµÏÂÔØºÍdemoÔ´ÂëÏÂÔØ
+					bboss-mvcæ–‡æ¡£ä¸‹è½½å’Œdemoæºç ä¸‹è½½
 				]]></property>
 			</property>
 			
 			
-			<property f:name="databindexamples" f:cnname="Êý¾Ý°ó¶¨ÊµÀý"
+			<property f:name="databindexamples" f:cnname="æ•°æ®ç»‘å®šå®žä¾‹"
 				class="org.frameworkset.web.demo.SiteDemoBean">
 				<property name="controllerClass"
 					value="test/org/frameworkset/mvc/HelloWord.java" />
 				<property name="configFile" value="WEB-INF/bboss-helloworld.xml" />
-				<property name="controllerClassCharset" value="GBK"></property>
-				<property name="configFileCharset" value="gb2312"></property>
-				<property name="beanClassCharset" value="GBK"></property>
+				<property name="controllerClassCharset" value="UTF-8"></property>
+				<property name="configFileCharset" value="UTF-8"></property>
+				<property name="beanClassCharset" value="UTF-8"></property>
 				<property name="visturl">
 					<list componentType="String">
 						<property value="/examples/index.page" />
@@ -138,25 +138,25 @@ bboss-demo.xml
 						<property f:formPath="jsp/examples/hello.jsp"
 							f:charset="UTF-8" class="org.frameworkset.web.demo.FormUrl">
 							<property name="description"><![CDATA[
-								Êý¾Ý°ó¶¨ÊµÀý£¬¶ÔÓ¦ÓÚ/examples/index.pageµÄÌø×ª
+								æ•°æ®ç»‘å®šå®žä¾‹ï¼Œå¯¹åº”äºŽ/examples/index.pageçš„è·³è½¬
 							]]></property>
 						</property>
 					</list>
 				</property>
 				<property name="description"><![CDATA[
-					Êý¾Ý°ó¶¨ÊµÀý,½éÉÜbbossgroups¿ò¼ÜÖÐµÄ¸÷ÖÖÀàÐÍÊý¾Ý°ó¶¨µÄÊ¹ÓÃ·½·¨
+					æ•°æ®ç»‘å®šå®žä¾‹,ä»‹ç»bbossgroupsæ¡†æž¶ä¸­çš„å„ç§ç±»åž‹æ•°æ®ç»‘å®šçš„ä½¿ç”¨æ–¹æ³•
 				]]></property>
 			</property>
 
 
-			<property f:name="listbean" f:cnname="List¼¯ºÏpo¶ÔÏó°ó¶¨ÊµÀý"
+			<property f:name="listbean" f:cnname="Listé›†åˆpoå¯¹è±¡ç»‘å®šå®žä¾‹"
 				class="org.frameworkset.web.demo.SiteDemoBean">
 				<property name="controllerClass"
 					value="test/org/frameworkset/spi/mvc/ListBeanBindController.java" />
 				<property name="configFile" value="WEB-INF/bboss-listbean.xml" />
-				<property name="controllerClassCharset" value="GBK"></property>
-				<property name="configFileCharset" value="gb2312"></property>
-				<property name="beanClassCharset" value="GBK"></property>
+				<property name="controllerClassCharset" value="UTF-8"></property>
+				<property name="configFileCharset" value="UTF-8"></property>
+				<property name="beanClassCharset" value="UTF-8"></property>
 				<property name="visturl">
 					<list componentType="String">
 						<property value="/databind/showstringarraytoList.htm" />
@@ -168,19 +168,19 @@ bboss-demo.xml
 						<property f:formPath="jsp/databind/table.jsp" f:charset="UTF-8"
 							class="org.frameworkset.web.demo.FormUrl">
 							<property name="description"><![CDATA[
-									±íµ¥table.jsp, ¶ÔÓ¦ÓÚ/databind/showlist.htmÌø×ªÒ³Ãæ 
+									è¡¨å•table.jsp, å¯¹åº”äºŽ/databind/showlist.htmè·³è½¬é¡µé¢ 
 								]]></property>
 						</property>
 						<property f:formPath="jsp/databind/stringarraytoList.jsp"
 							f:charset="UTF-8" class="org.frameworkset.web.demo.FormUrl">
 							<property name="description"><![CDATA[
-									±íµ¥stringarraytoList.jsp, ¶ÔÓ¦ÓÚ/databind/showstringarraytoList.htmÌø×ªÒ³Ãæ 
+									è¡¨å•stringarraytoList.jsp, å¯¹åº”äºŽ/databind/showstringarraytoList.htmè·³è½¬é¡µé¢ 
 							]]></property>
 						</property>
 						<property f:formPath="jsp/databind/tableinfo.jsp"
 							f:charset="UTF-8" class="org.frameworkset.web.demo.FormUrl">
 							<property name="description"><![CDATA[
-									±íµ¥tableinfo.jsp, ¶ÔÓ¦ÓÚ/databind/showbean.htmÌø×ªÒ³Ãæ 
+									è¡¨å•tableinfo.jsp, å¯¹åº”äºŽ/databind/showbean.htmè·³è½¬é¡µé¢ 
 							]]></property>
 						</property>
 					</list>
@@ -193,18 +193,18 @@ bboss-demo.xml
 				</property>
 
 				<property name="description"><![CDATA[
-					List¼¯ºÏpo¶ÔÏó°ó¶¨ÊµÀý ×Ö·û´®Êý×é×ªListÊý¾Ý°ó¶¨ÊµÀý 
+					Listé›†åˆpoå¯¹è±¡ç»‘å®šå®žä¾‹ å­—ç¬¦ä¸²æ•°ç»„è½¬Listæ•°æ®ç»‘å®šå®žä¾‹ 
 				]]></property>
 			</property>
 
-			<property f:name="mapbean" f:cnname="Map¼¯ºÏpo¶ÔÏó°ó¶¨ÊµÀý"
+			<property f:name="mapbean" f:cnname="Mapé›†åˆpoå¯¹è±¡ç»‘å®šå®žä¾‹"
 				class="org.frameworkset.web.demo.SiteDemoBean">
 				<property name="controllerClass"
 					value="test/org/frameworkset/spi/mvc/MapBindController.java" />
 				<property name="configFile" value="WEB-INF/bboss-mapbean.xml" />
-				<property name="controllerClassCharset" value="GBK"></property>
-				<property name="configFileCharset" value="gb2312"></property>
-				<property name="beanClassCharset" value="GBK"></property>
+				<property name="controllerClassCharset" value="UTF-8"></property>
+				<property name="configFileCharset" value="UTF-8"></property>
+				<property name="beanClassCharset" value="UTF-8"></property>
 				<property name="visturl">
 					<list componentType="String">
 						<property value="/databind/map/showstringarraytoMap.htm" />
@@ -216,19 +216,19 @@ bboss-demo.xml
 						<property f:formPath="jsp/databind/map/table.jsp" f:charset="UTF-8"
 							class="org.frameworkset.web.demo.FormUrl">
 							<property name="description"><![CDATA[
-									±íµ¥table.jsp, ¶ÔÓ¦ÓÚ/databind/map/showlist.htmÌø×ªÒ³Ãæ 
+									è¡¨å•table.jsp, å¯¹åº”äºŽ/databind/map/showlist.htmè·³è½¬é¡µé¢ 
 								]]></property>
 						</property>
 						<property f:formPath="jsp/databind/map/stringarraytoMap.jsp"
 							f:charset="UTF-8" class="org.frameworkset.web.demo.FormUrl">
 							<property name="description"><![CDATA[
-									±íµ¥stringarraytoMap.jsp, ¶ÔÓ¦ÓÚ/databind/map/showstringarraytoList.htmÌø×ªÒ³Ãæ 
+									è¡¨å•stringarraytoMap.jsp, å¯¹åº”äºŽ/databind/map/showstringarraytoList.htmè·³è½¬é¡µé¢ 
 							]]></property>
 						</property>
 						<property f:formPath="jsp/databind/map/tableinfo.jsp"
 							f:charset="UTF-8" class="org.frameworkset.web.demo.FormUrl">
 							<property name="description"><![CDATA[
-									±íµ¥tableinfo.jsp, ¶ÔÓ¦ÓÚ/databind/map/showbean.htmÌø×ªÒ³Ãæ 
+									è¡¨å•tableinfo.jsp, å¯¹åº”äºŽ/databind/map/showbean.htmè·³è½¬é¡µé¢ 
 							]]></property>
 						</property>
 					</list>
@@ -241,18 +241,18 @@ bboss-demo.xml
 				</property>
 
 				<property name="description"><![CDATA[
-					Map¼¯ºÏpo¶ÔÏó°ó¶¨ÊµÀý ×Ö·û´®Êý×é×ªListÊý¾Ý°ó¶¨ÊµÀý 
+					Mapé›†åˆpoå¯¹è±¡ç»‘å®šå®žä¾‹ å­—ç¬¦ä¸²æ•°ç»„è½¬Listæ•°æ®ç»‘å®šå®žä¾‹ 
 				]]></property>
 			</property>
 
-			<property f:name="pathaliaslistbean" f:cnname="Â·¾¶±ðÃûÓ³Éä»úÖÆ¼¯ºÏpo¶ÔÏó°ó¶¨ÊµÀý"
+			<property f:name="pathaliaslistbean" f:cnname="è·¯å¾„åˆ«åæ˜ å°„æœºåˆ¶é›†åˆpoå¯¹è±¡ç»‘å®šå®žä¾‹"
 				class="org.frameworkset.web.demo.SiteDemoBean">
 				<property name="controllerClass"
 					value="test/org/frameworkset/spi/mvc/PathController.java" />
 				<property name="configFile" value="WEB-INF/bboss-path.xml" />
-				<property name="controllerClassCharset" value="GBK"></property>
-				<property name="configFileCharset" value="gb2312"></property>
-				<property name="beanClassCharset" value="GBK"></property>
+				<property name="controllerClassCharset" value="UTF-8"></property>
+				<property name="configFileCharset" value="UTF-8"></property>
+				<property name="beanClassCharset" value="UTF-8"></property>
 				<property name="visturl">
 					<list componentType="String">
 						<property value="/pathalias/showstringarraytoList.htm" />
@@ -264,19 +264,19 @@ bboss-demo.xml
 						<property f:formPath="jsp/databind/table.jsp" f:charset="UTF-8"
 							class="org.frameworkset.web.demo.FormUrl">
 							<property name="description"><![CDATA[
-									±íµ¥table.jsp, ¶ÔÓ¦ÓÚ/pathalias/showlist.htmÌø×ªÒ³Ãæ 
+									è¡¨å•table.jsp, å¯¹åº”äºŽ/pathalias/showlist.htmè·³è½¬é¡µé¢ 
 								]]></property>
 						</property>
 						<property f:formPath="jsp/databind/stringarraytoList.jsp"
 							f:charset="UTF-8" class="org.frameworkset.web.demo.FormUrl">
 							<property name="description"><![CDATA[
-									±íµ¥stringarraytoList.jsp, ¶ÔÓ¦ÓÚ/pathalias/showstringarraytoList.htmÌø×ªÒ³Ãæ 
+									è¡¨å•stringarraytoList.jsp, å¯¹åº”äºŽ/pathalias/showstringarraytoList.htmè·³è½¬é¡µé¢ 
 							]]></property>
 						</property>
 						<property f:formPath="jsp/databind/tableinfo.jsp"
 							f:charset="UTF-8" class="org.frameworkset.web.demo.FormUrl">
 							<property name="description"><![CDATA[
-									±íµ¥tableinfo.jsp, ¶ÔÓ¦ÓÚ/pathalias/showbean.htmÌø×ªÒ³Ãæ 
+									è¡¨å•tableinfo.jsp, å¯¹åº”äºŽ/pathalias/showbean.htmè·³è½¬é¡µé¢ 
 							]]></property>
 						</property>
 					</list>
@@ -289,19 +289,19 @@ bboss-demo.xml
 				</property>
 
 				<property name="description"><![CDATA[
-					Â·¾¶±ðÃûÓ³Éä»úÖÆ£¨ÀýÈçpath:update-ok£© ¼¯ºÏpo¶ÔÏó°ó¶¨ÊµÀý ×Ö·û´®Êý×é×ªListÊý¾Ý°ó¶¨ÊµÀý 
+					è·¯å¾„åˆ«åæ˜ å°„æœºåˆ¶ï¼ˆä¾‹å¦‚path:update-okï¼‰ é›†åˆpoå¯¹è±¡ç»‘å®šå®žä¾‹ å­—ç¬¦ä¸²æ•°ç»„è½¬Listæ•°æ®ç»‘å®šå®žä¾‹ 
 				]]></property>
 			</property>
 
 
-			<property f:name="muti" f:cnname="JqueryÊµÏÖ¶àÎÄ¼þÉÏ´«"
+			<property f:name="muti" f:cnname="Jqueryå®žçŽ°å¤šæ–‡ä»¶ä¸Šä¼ "
 				class="org.frameworkset.web.demo.SiteDemoBean">
 				<property name="controllerClass"
 					value="test/org/frameworkset/spi/mvc/DemoMutiActionController.java" />
 				<property name="configFile" value="WEB-INF/bboss-control.xml" />
-				<property name="controllerClassCharset" value="GBK"></property>
-				<property name="configFileCharset" value="gb2312"></property>
-				<property name="beanClassCharset" value="GBK"></property>
+				<property name="controllerClassCharset" value="UTF-8"></property>
+				<property name="configFileCharset" value="UTF-8"></property>
+				<property name="beanClassCharset" value="UTF-8"></property>
 				<property name="visturl">
 					<list componentType="String">
 						<property value="/demo/uploadjsp.htm" />
@@ -313,30 +313,30 @@ bboss-demo.xml
 						<property f:formPath="jsp/fileupload.jsp" f:charset="UTF-8"
 							class="org.frameworkset.web.demo.FormUrl">
 							<property name="description"><![CDATA[
-								±íµ¥upload.jsp, ¶ÔÓ¦ÓÚ/demo/uploadjsp.htmÌø×ªÒ³Ãæ 
+								è¡¨å•upload.jsp, å¯¹åº”äºŽ/demo/uploadjsp.htmè·³è½¬é¡µé¢ 
 							]]></property>
 						</property>
 						<property f:formPath="jsp/uploadsuccess.jsp" f:charset="UTF-8"
 							class="org.frameworkset.web.demo.FormUrl">
 							<property name="description"><![CDATA[
-								±íµ¥uploadsuccess.jsp, ¶ÔÓ¦ÓÚ/demo/uploadFiles.htmÌø×ªÒ³Ãæ 
+								è¡¨å•uploadsuccess.jsp, å¯¹åº”äºŽ/demo/uploadFiles.htmè·³è½¬é¡µé¢ 
 							]]></property>
 						</property>
 
 					</list>
 				</property>
 				<property name="description"><![CDATA[
-					¶àÎÄ¼þÉÏ´«,¶à·½·¨Æ¥Åä
+					å¤šæ–‡ä»¶ä¸Šä¼ ,å¤šæ–¹æ³•åŒ¹é…
 				]]></property>
 			</property>
-			<property f:name="swfupload" f:cnname="swfuploadÊµÏÖ¶àÎÄ¼þÉÏ´«"
+			<property f:name="swfupload" f:cnname="swfuploadå®žçŽ°å¤šæ–‡ä»¶ä¸Šä¼ "
 				class="org.frameworkset.web.demo.SiteDemoBean">
 				<property name="controllerClass"
 					value="test/org/frameworkset/web/fileupload/FileController.java" />
 				<property name="configFile" value="WEB-INF/bboss-files.xml" />
-				<property name="controllerClassCharset" value="GBK"></property>
-				<property name="configFileCharset" value="gb2312"></property>
-				<property name="beanClassCharset" value="GBK"></property>
+				<property name="controllerClassCharset" value="UTF-8"></property>
+				<property name="configFileCharset" value="UTF-8"></property>
+				<property name="beanClassCharset" value="UTF-8"></property>
 				<property name="visturl">
 					<list componentType="String">
 						<property value="/swfupload/mutifileselects.htm" />
@@ -347,7 +347,7 @@ bboss-demo.xml
 						<property f:formPath="jsp/files/upload.jsp" f:charset="UTF-8"
 							class="org.frameworkset.web.demo.FormUrl">
 							<property name="description"><![CDATA[
-								±íµ¥upload.jsp, ¶ÔÓ¦ÓÚswfuploadÉÏ´«×é¼þ 
+								è¡¨å•upload.jsp, å¯¹åº”äºŽswfuploadä¸Šä¼ ç»„ä»¶ 
 							]]></property>
 						</property>
 					</list>
@@ -360,20 +360,20 @@ bboss-demo.xml
 				</property>
 
 				<property name="description"><![CDATA[
-					swfuploadÊµÏÖ¶àÎÄ¼þÉÏ´«,²¢ÊµÏÖÎÄ¼þÎÞË¢ÐÂÉ¾³ý
-					Í¨¹ý/swfupload/deleteAllfiles.htm¿ÉÒÔÇåÀíÉÏ´«Ä¿Â¼ÏÂµÄËùÓÐÎÄ¼þ
+					swfuploadå®žçŽ°å¤šæ–‡ä»¶ä¸Šä¼ ,å¹¶å®žçŽ°æ–‡ä»¶æ— åˆ·æ–°åˆ é™¤
+					é€šè¿‡/swfupload/deleteAllfiles.htmå¯ä»¥æ¸…ç†ä¸Šä¼ ç›®å½•ä¸‹çš„æ‰€æœ‰æ–‡ä»¶
 				]]></property>
 			</property>
 
 
-			<property f:name="userinfo" f:cnname="ÓÃ»§ÐÅÏ¢ÔöÉ¾¸Ä²é"
+			<property f:name="userinfo" f:cnname="ç”¨æˆ·ä¿¡æ¯å¢žåˆ æ”¹æŸ¥"
 				class="org.frameworkset.web.demo.SiteDemoBean">
 				<property name="controllerClass"
 					value="test/org/frameworkset/web/demo/UserController.java" />
 				<property name="configFile" value="WEB-INF/bboss-user.xml" />
-				<property name="controllerClassCharset" value="GBK"></property>
-				<property name="configFileCharset" value="gb2312"></property>
-				<property name="beanClassCharset" value="GBK"></property>
+				<property name="controllerClassCharset" value="UTF-8"></property>
+				<property name="configFileCharset" value="UTF-8"></property>
+				<property name="beanClassCharset" value="UTF-8"></property>
 				<property name="visturl">
 					<list componentType="String">
 						<property value="/updateUser.htm" />
@@ -389,13 +389,13 @@ bboss-demo.xml
 						<property f:formPath="jsp/demo/userinfo.jsp" f:charset="UTF-8"
 							class="org.frameworkset.web.demo.FormUrl">
 							<property name="description"><![CDATA[
-								±íµ¥userinfo.jsp, ¶ÔÓ¦ÓÚÔöÉ¾¸Ä²Ù×÷Ìø×ªÒ³Ãæ 
+								è¡¨å•userinfo.jsp, å¯¹åº”äºŽå¢žåˆ æ”¹æ“ä½œè·³è½¬é¡µé¢ 
 							]]></property>
 						</property>
-						<property f:formPath="jsp/demo/userList.jsp" f:charset="GBK"
+						<property f:formPath="jsp/demo/userList.jsp" f:charset="UTF-8"
 							class="org.frameworkset.web.demo.FormUrl">
 							<property name="description"><![CDATA[
-								±íµ¥userList.jsp, ¶ÔÓ¦ÓÚ·ÖÒ³ºÍ¶à¼ÇÂ¼²éÑ¯Ìø×ªÒ³Ãæ 
+								è¡¨å•userList.jsp, å¯¹åº”äºŽåˆ†é¡µå’Œå¤šè®°å½•æŸ¥è¯¢è·³è½¬é¡µé¢ 
 							]]></property>
 						</property>
 					</list>
@@ -409,19 +409,19 @@ bboss-demo.xml
 				</property>
 
 				<property name="description"><![CDATA[
-					ÓÃ»§ÐÅÏ¢µÄcrud²Ù×÷£¬»¹¿ÉÒÔ½øÐÐ·ÖÒ³²éÑ¯
+					ç”¨æˆ·ä¿¡æ¯çš„crudæ“ä½œï¼Œè¿˜å¯ä»¥è¿›è¡Œåˆ†é¡µæŸ¥è¯¢
 				]]></property>
 			</property>
 
 
-			<property f:name="rss" f:cnname="rss¿ØÖÆÆ÷"
+			<property f:name="rss" f:cnname="rssæŽ§åˆ¶å™¨"
 				class="org.frameworkset.web.demo.SiteDemoBean">
 				<property name="controllerClass"
 					value="test/org/frameworkset/web/http/converter/feed/RSSController.java" />
 				<property name="configFile" value="WEB-INF/bboss-rss.xml" />
-				<property name="controllerClassCharset" value="GBK"></property>
-				<property name="configFileCharset" value="gb2312"></property>
-				<property name="beanClassCharset" value="GBK"></property>
+				<property name="controllerClassCharset" value="UTF-8"></property>
+				<property name="configFileCharset" value="UTF-8"></property>
+				<property name="beanClassCharset" value="UTF-8"></property>
 				<property name="visturl">
 					<list componentType="String">
 						<property value="/rss/rss.html" />
@@ -434,7 +434,7 @@ bboss-demo.xml
 							f:formPath="test/org/frameworkset/web/http/converter/feed/RSSController.java"
 							f:charset="UTF-8" class="org.frameworkset.web.demo.FormUrl">
 							<property name="description"><![CDATA[
-								rss, ¶ÔÓ¦ÓÚ/rss/rss.htmlÌø×ªÒ³Ãæ 
+								rss, å¯¹åº”äºŽ/rss/rss.htmlè·³è½¬é¡µé¢ 
 							]]></property>
 						</property>
 					</list>
@@ -445,14 +445,14 @@ bboss-demo.xml
 			</property>
 
 
-			<property f:name="json" f:cnname="flexigrid×é¼þµÄÓ¦ÓÃ"
+			<property f:name="json" f:cnname="flexigridç»„ä»¶çš„åº”ç”¨"
 				class="org.frameworkset.web.demo.SiteDemoBean">
 				<property name="controllerClass"
 					value="test/org/frameworkset/web/http/converter/json/JsonController.java" />
 				<property name="configFile" value="WEB-INF/bboss-json.xml" />
-				<property name="controllerClassCharset" value="GBK"></property>
-				<property name="configFileCharset" value="gb2312"></property>
-				<property name="beanClassCharset" value="GBK"></property>
+				<property name="controllerClassCharset" value="UTF-8"></property>
+				<property name="configFileCharset" value="UTF-8"></property>
+				<property name="beanClassCharset" value="UTF-8"></property>
 				<property name="visturl">
 					<list componentType="String">
 						<property value="/json/showjson.html" />
@@ -463,7 +463,7 @@ bboss-demo.xml
 						<property f:formPath="jsp/json/json.jsp" f:charset="UTF-8"
 							class="org.frameworkset.web.demo.FormUrl">
 							<property name="description"><![CDATA[
-								±íµ¥json.jsp, ¶ÔÓ¦ÓÚ/json/showjson.htmlÌø×ªÒ³Ãæ 
+								è¡¨å•json.jsp, å¯¹åº”äºŽ/json/showjson.htmlè·³è½¬é¡µé¢ 
 							]]></property>
 						</property>
 					</list>
@@ -477,19 +477,19 @@ bboss-demo.xml
 				</property>
 
 				<property name="description"><![CDATA[
-					JqueryÊµÏÖFlexigrid×é¼þµÄÓ¦ÓÃ£¬ÊµÏÖ·ÖÒ³Êý¾ÝÕ¹Ê¾ 
+					Jqueryå®žçŽ°Flexigridç»„ä»¶çš„åº”ç”¨ï¼Œå®žçŽ°åˆ†é¡µæ•°æ®å±•ç¤º 
 				]]></property>
 			</property>
 
 
-			<property f:name="pagin" f:cnname="·ÖÒ³Õ¹Ê¾Êý¾Ý"
+			<property f:name="pagin" f:cnname="åˆ†é¡µå±•ç¤ºæ•°æ®"
 				class="org.frameworkset.web.demo.SiteDemoBean">
 				<property name="controllerClass"
 					value="test/org/frameworkset/spi/mvc/PaginController.java" />
 				<property name="configFile" value="WEB-INF/bboss-pagerdemo.xml" />
-				<property name="controllerClassCharset" value="GBK"></property>
-				<property name="configFileCharset" value="gb2312"></property>
-				<property name="beanClassCharset" value="GBK"></property>
+				<property name="controllerClassCharset" value="UTF-8"></property>
+				<property name="configFileCharset" value="UTF-8"></property>
+				<property name="beanClassCharset" value="UTF-8"></property>
 				<property name="visturl">
 					<list componentType="String">
 						<property value="/pager/pagerdemo.html" />
@@ -497,28 +497,28 @@ bboss-demo.xml
 				</property>
 				<property name="formlist">
 					<list componentType="bean">
-						<property f:formPath="jsp/pager/pagerdemo.jsp" f:charset="GBK"
+						<property f:formPath="jsp/pager/pagerdemo.jsp" f:charset="UTF-8"
 							class="org.frameworkset.web.demo.FormUrl">
 							<property name="description"><![CDATA[
-								·ÖÒ³ÁÐ±ípagedemo.jsp, ¶ÔÓ¦ÓÚ/pager/pagerdemo.htmlÌø×ªÒ³Ãæ 
+								åˆ†é¡µåˆ—è¡¨pagedemo.jsp, å¯¹åº”äºŽ/pager/pagerdemo.htmlè·³è½¬é¡µé¢ 
 							]]></property>
 						</property>
 					</list>
 				</property>
 				<property name="description"><![CDATA[
-					·ÖÒ³ÁÐ±íÕ¹Ê¾
+					åˆ†é¡µåˆ—è¡¨å±•ç¤º
 				]]></property>
 			</property>
 
 
-			<property f:name="jquerypagin" f:cnname="ÀûÓÃJquery·ÖÒ³Õ¹Ê¾Êý¾Ý"
+			<property f:name="jquerypagin" f:cnname="åˆ©ç”¨Jqueryåˆ†é¡µå±•ç¤ºæ•°æ®"
 				class="org.frameworkset.web.demo.SiteDemoBean">
 				<property name="controllerClass"
 					value="test/org/frameworkset/web/jquerypagine/JqueryPagineController.java" />
 				<property name="configFile" value="WEB-INF/bboss-jquerypagine.xml" />
-				<property name="controllerClassCharset" value="GBK"></property>
-				<property name="configFileCharset" value="gb2312"></property>
-				<property name="beanClassCharset" value="GBK"></property>
+				<property name="controllerClassCharset" value="UTF-8"></property>
+				<property name="configFileCharset" value="UTF-8"></property>
+				<property name="beanClassCharset" value="UTF-8"></property>
 				<property name="visturl">
 					<list componentType="String">
 						<property value="/jquerypagine/main.htm" />
@@ -529,33 +529,33 @@ bboss-demo.xml
 						<property f:formPath="jsp/jquerypagine/main.jsp"
 							f:charset="UTF-8" class="org.frameworkset.web.demo.FormUrl">
 							<property name="description"><![CDATA[
-								·ÖÒ³ÁÐ±ímain.jsp, ¶ÔÓ¦ÓÚ/jquerypagine/main.htmÌø×ªÒ³Ãæ £¬Õ¹Ê¾ÁËjquery load·½·¨ÈçºÎ´«µÝ
-								jsonÊý×é²ÎÊýµÄ·½·¨£º
-								$("#pagecontainer").load("pagerqueryuser.htm?name=¶ÁÆÆ¶ÇÆ¤ #pagecontent",
+								åˆ†é¡µåˆ—è¡¨main.jsp, å¯¹åº”äºŽ/jquerypagine/main.htmè·³è½¬é¡µé¢ ï¼Œå±•ç¤ºäº†jquery loadæ–¹æ³•å¦‚ä½•ä¼ é€’
+								jsonæ•°ç»„å‚æ•°çš„æ–¹æ³•ï¼š
+								$("#pagecontainer").load("pagerqueryuser.htm?name=è¯»ç ´è‚šçš® #pagecontent",
 				               { userName: [$("#userName").val(),$("#userName").val(),$("#userName").val()] } );
 							]]></property>
 						</property>
 						<property f:formPath="jsp/jquerypagine/page.jsp"
 							f:charset="UTF-8" class="org.frameworkset.web.demo.FormUrl">
 							<property name="description"><![CDATA[
-								¼ÓÔØÒ³Ãæpage.jsp, ¶ÔÓ¦ÓÚ/jquerypagine/pagerqueryuser.htm
-								Õ¹Ê¾params´«µÝÊý×é²ÎÊýÓÃ·¨
+								åŠ è½½é¡µé¢page.jsp, å¯¹åº”äºŽ/jquerypagine/pagerqueryuser.htm
+								å±•ç¤ºparamsä¼ é€’æ•°ç»„å‚æ•°ç”¨æ³•
 							]]></property>
 						</property>
 						
 						<property f:formPath="jsp/jquerypagine/page1.jsp"
 							f:charset="UTF-8" class="org.frameworkset.web.demo.FormUrl">
 							<property name="description"><![CDATA[
-								¼ÓÔØÒ³Ãæpage1.jsp, ¶ÔÓ¦ÓÚ/jquerypagine/pagerqueryuser1.htm
-								Õ¹Ê¾beanparams´«µÝbeanÊôÐÔ²ÎÊýÓÃ·¨
+								åŠ è½½é¡µé¢page1.jsp, å¯¹åº”äºŽ/jquerypagine/pagerqueryuser1.htm
+								å±•ç¤ºbeanparamsä¼ é€’beanå±žæ€§å‚æ•°ç”¨æ³•
 							]]></property>
 						</property>
 						
 						<property f:formPath="jsp/jquerypagine/page2.jsp"
 							f:charset="UTF-8" class="org.frameworkset.web.demo.FormUrl">
 							<property name="description"><![CDATA[
-								¼ÓÔØÒ³Ãæpage2.jsp, ¶ÔÓ¦ÓÚ/jquerypagine/pagerqueryuser2.htm
-								Õ¹Ê¾beanparams´«µÝmapÊôÐÔ²ÎÊýÓÃ·¨
+								åŠ è½½é¡µé¢page2.jsp, å¯¹åº”äºŽ/jquerypagine/pagerqueryuser2.htm
+								å±•ç¤ºbeanparamsä¼ é€’mapå±žæ€§å‚æ•°ç”¨æ³•
 							]]></property>
 						</property>
 					</list>
@@ -567,20 +567,20 @@ bboss-demo.xml
 					</list>
 				</property>
 				<property name="description"><![CDATA[
-					JQueryÊµÏÖ·ÖÒ³ÁÐ±íÕ¹Ê¾
+					JQueryå®žçŽ°åˆ†é¡µåˆ—è¡¨å±•ç¤º
 				]]></property>
 			</property>
 
 
-			<property f:name="tree" f:cnname="Ê÷Ä¿Â¼Õ¹Ê¾"
+			<property f:name="tree" f:cnname="æ ‘ç›®å½•å±•ç¤º"
 				class="org.frameworkset.web.demo.SiteDemoBean">
 				<property name="controllerClass"
 					value="test/org/frameworkset/web/tree/TreeController.java" />
 				<property name="configFile" value="WEB-INF/bboss-tree.xml" />
-				<property name="controllerClassCharset" value="GBK"></property>
-				<property name="beanClassCharset" value="GBK"></property>
+				<property name="controllerClassCharset" value="UTF-8"></property>
+				<property name="beanClassCharset" value="UTF-8"></property>
 				
-				<property name="configFileCharset" value="gb2312"></property>
+				<property name="configFileCharset" value="UTF-8"></property>
 				<property name="visturl">
 					<list componentType="String">
 						<property value="/tree/main.htm" />
@@ -588,34 +588,34 @@ bboss-demo.xml
 				</property>
 				<property name="formlist">
 					<list componentType="bean">
-						<property f:formPath="jsp/tree/main.jsp" f:charset="GBK"
+						<property f:formPath="jsp/tree/main.jsp" f:charset="UTF-8"
 							class="org.frameworkset.web.demo.FormUrl">
 							<property name="description"><![CDATA[
-								·ÖÒ³ÁÐ±ímain.jsp, ¶ÔÓ¦ÓÚ/tree/main.htmÌø×ªÒ³Ãæ 
+								åˆ†é¡µåˆ—è¡¨main.jsp, å¯¹åº”äºŽ/tree/main.htmè·³è½¬é¡µé¢ 
 							]]></property>
 						</property>
 						<property f:formPath="jsp/tree/checkboxtree.jsp"
-							f:charset="GBK" class="org.frameworkset.web.demo.FormUrl">
+							f:charset="UTF-8" class="org.frameworkset.web.demo.FormUrl">
 							<property name="description"><![CDATA[
-								·ÖÒ³ÁÐ±ícheckboxtree.jsp, ¶ÔÓ¦ÓÚtree/checkboxtree.htmÌø×ªÒ³Ãæ 
+								åˆ†é¡µåˆ—è¡¨checkboxtree.jsp, å¯¹åº”äºŽtree/checkboxtree.htmè·³è½¬é¡µé¢ 
 							]]></property>
 						</property>
-						<property f:formPath="jsp/tree/radiotree.jsp" f:charset="GBK"
+						<property f:formPath="jsp/tree/radiotree.jsp" f:charset="UTF-8"
 							class="org.frameworkset.web.demo.FormUrl">
 							<property name="description"><![CDATA[
-								·ÖÒ³ÁÐ±íradiotree.jsp, ¶ÔÓ¦ÓÚtree/radiotree.htmÌø×ªÒ³Ãæ 
+								åˆ†é¡µåˆ—è¡¨radiotree.jsp, å¯¹åº”äºŽtree/radiotree.htmè·³è½¬é¡µé¢ 
 							]]></property>
 						</property>
 						<property f:formPath="jsp/tree/contextmenutree.jsp"
-							f:charset="GBK" class="org.frameworkset.web.demo.FormUrl">
+							f:charset="UTF-8" class="org.frameworkset.web.demo.FormUrl">
 							<property name="description"><![CDATA[
-								·ÖÒ³ÁÐ±ícontextmenutree.jsp, ¶ÔÓ¦ÓÚtree/contextmenutree.htmÌø×ªÒ³Ãæ 
+								åˆ†é¡µåˆ—è¡¨contextmenutree.jsp, å¯¹åº”äºŽtree/contextmenutree.htmè·³è½¬é¡µé¢ 
 							]]></property>
 						</property>
 						<property f:formPath="jsp/tree/querycontextmenutree.jsp"
 							f:charset="UTF-8" class="org.frameworkset.web.demo.FormUrl">
 							<property name="description"><![CDATA[
-								¼ÓÔØÒ³Ãæquerycontextmenutree.jsp, ¶ÔÓ¦ÓÚtree/querycontextmenutree.htm
+								åŠ è½½é¡µé¢querycontextmenutree.jsp, å¯¹åº”äºŽtree/querycontextmenutree.htm
 							]]></property>
 						</property>
 					</list>
@@ -629,18 +629,18 @@ bboss-demo.xml
 				</property>
 
 				<property name="description"><![CDATA[
-					Ê÷×´Ä¿Â¼Õ¹Ê¾
+					æ ‘çŠ¶ç›®å½•å±•ç¤º
 				]]></property>
 			</property>
 
-			<property f:name="exjsdemo-desktop" f:cnname="exjsdemo-desktop¼òµ¥µÄdemo"
+			<property f:name="exjsdemo-desktop" f:cnname="exjsdemo-desktopç®€å•çš„demo"
 				class="org.frameworkset.web.demo.SiteDemoBean">
 				<property name="controllerClass"
 					value="test/org/frameworkset/web/desktop/DesktopController.java" />
 				<property name="configFile" value="WEB-INF/bboss-desktop.xml" />
-				<property name="controllerClassCharset" value="GBK"></property>
-				<property name="configFileCharset" value="gb2312"></property>
-				<property name="beanClassCharset" value="GBK"></property>
+				<property name="controllerClassCharset" value="UTF-8"></property>
+				<property name="configFileCharset" value="UTF-8"></property>
+				<property name="beanClassCharset" value="UTF-8"></property>
 				<property name="visturl">
 					<list componentType="String">
 						<property value="/desktop/desktop.htm" />
@@ -651,14 +651,14 @@ bboss-demo.xml
 						<property f:formPath="jsp/desktop/desktop.jsp" f:charset="UTF-8"
 							class="org.frameworkset.web.demo.FormUrl">
 							<property name="description"><![CDATA[
-								exjsdemo-desktop¼òµ¥µÄdemo£¬Èë¿ÚµØÖ·£º/desktop/desktop.htm
+								exjsdemo-desktopç®€å•çš„demoï¼Œå…¥å£åœ°å€ï¼š/desktop/desktop.htm
 							]]></property>
 						</property>
 						
 						<property f:formPath="jsp/desktop/sample.js" f:charset="UTF-8"
 							class="org.frameworkset.web.demo.FormUrl">
 							<property name="description"><![CDATA[
-								³õÊ¼»¯desktopµÄjsÎÄ¼þ
+								åˆå§‹åŒ–desktopçš„jsæ–‡ä»¶
 							]]></property>
 						</property>
 						
@@ -666,17 +666,17 @@ bboss-demo.xml
 					</list>
 				</property>
 				<property name="description"><![CDATA[
-					exjsdemo-desktop¼òµ¥µÄdemo£¬Èë¿ÚµØÖ·£º/desktop/desktop.htm
+					exjsdemo-desktopç®€å•çš„demoï¼Œå…¥å£åœ°å€ï¼š/desktop/desktop.htm
 				]]></property>
 			</property>
-			<property f:name="user" f:cnname="ÓÃ»§ÐÅÏ¢crud"
+			<property f:name="user" f:cnname="ç”¨æˆ·ä¿¡æ¯crud"
 				class="org.frameworkset.web.demo.SiteDemoBean">
 				<property name="controllerClass"
 					value="test/org/frameworkset/spi/annotations/controller/UserInfoController.java" />
 				<property name="configFile" value="WEB-INF/bboss-restful.xml" />
-				<property name="controllerClassCharset" value="GBK"></property>
-				<property name="configFileCharset" value="gb2312"></property>
-				<property name="beanClassCharset" value="GBK"></property>
+				<property name="controllerClassCharset" value="UTF-8"></property>
+				<property name="configFileCharset" value="UTF-8"></property>
+				<property name="beanClassCharset" value="UTF-8"></property>
 				<property name="visturl">
 					<list componentType="String">
 						<property value="/rest/people" />
@@ -688,7 +688,7 @@ bboss-demo.xml
 						<property f:formPath="jsp/restful/people.jsp" f:charset="UTF-8"
 							class="org.frameworkset.web.demo.FormUrl">
 							<property name="description"><![CDATA[
-								±íµ¥people.jsp, ¶ÔÓ¦ÓÚ/rest/peopleÌø×ªÒ³Ãæ 
+								è¡¨å•people.jsp, å¯¹åº”äºŽ/rest/peopleè·³è½¬é¡µé¢ 
 							]]></property>
 						</property>
 					</list>
@@ -702,17 +702,17 @@ bboss-demo.xml
 				</property>
 
 				<property name="description"><![CDATA[
-					restful·ç¸ñÔÚmvcÖÐÊµÏÖÓÃ»§ÐÅÏ¢²Ù×÷
+					restfulé£Žæ ¼åœ¨mvcä¸­å®žçŽ°ç”¨æˆ·ä¿¡æ¯æ“ä½œ
 				]]></property>
 			</property>
-			<property f:name="restfulloginnamequery" f:cnname="restful·ç¸ñÓÃ»§Ãû²éÑ¯"
+			<property f:name="restfulloginnamequery" f:cnname="restfulé£Žæ ¼ç”¨æˆ·åæŸ¥è¯¢"
 				class="org.frameworkset.web.demo.SiteDemoBean">
 				<property name="controllerClass"
 					value="test/org/frameworkset/web/restful/LoginNameQuery.java" />
 				<property name="configFile" value="WEB-INF/bboss-loginnamequery.xml" />
-				<property name="controllerClassCharset" value="GBK"></property>
-				<property name="configFileCharset" value="gb2312"></property>
-				<property name="beanClassCharset" value="GBK"></property>
+				<property name="controllerClassCharset" value="UTF-8"></property>
+				<property name="configFileCharset" value="UTF-8"></property>
+				<property name="beanClassCharset" value="UTF-8"></property>
 				<property name="visturl">
 					<list componentType="String">
 						<property value="/query/loginName.htm" />
@@ -723,7 +723,7 @@ bboss-demo.xml
 						<property f:formPath="jsp/restful/loginName.jsp" f:charset="UTF-8"
 							class="org.frameworkset.web.demo.FormUrl">
 							<property name="description"><![CDATA[
-								restful·ç¸ñÓÃ»§Ãû²éÑ¯ £¬¶ÔÓ¦ÓÚÈë¿ÚµØÖ·£º/query/loginName.htm
+								restfulé£Žæ ¼ç”¨æˆ·åæŸ¥è¯¢ ï¼Œå¯¹åº”äºŽå…¥å£åœ°å€ï¼š/query/loginName.htm
 							]]></property>
 						</property>
 						
@@ -731,17 +731,17 @@ bboss-demo.xml
 					</list>
 				</property>
 				<property name="description"><![CDATA[
-					restful·ç¸ñÓÃ»§Ãû²éÑ¯ £¬¶ÔÓ¦ÓÚÈë¿ÚµØÖ·£º/query/loginName.htm
+					restfulé£Žæ ¼ç”¨æˆ·åæŸ¥è¯¢ ï¼Œå¯¹åº”äºŽå…¥å£åœ°å€ï¼š/query/loginName.htm
 				]]></property>
 			</property>
-			<property f:name="image" f:cnname="Í¼Æ¬Ð£ÑéÂë"
+			<property f:name="image" f:cnname="å›¾ç‰‡æ ¡éªŒç "
 				class="org.frameworkset.web.demo.SiteDemoBean">
 				<property name="controllerClass"
 					value="test/org/frameworkset/web/spi/validator/ImageValidatorController.java" />
 				<property name="configFile" value="WEB-INF/bboss-restful.xml" />
-				<property name="controllerClassCharset" value="GBK"></property>
-				<property name="configFileCharset" value="gb2312"></property>
-				<property name="beanClassCharset" value="GBK"></property>
+				<property name="controllerClassCharset" value="UTF-8"></property>
+				<property name="configFileCharset" value="UTF-8"></property>
+				<property name="beanClassCharset" value="UTF-8"></property>
 				<property name="visturl">
 					<list componentType="String">
 						<property value="/rest/imagevalidator" />
@@ -752,7 +752,7 @@ bboss-demo.xml
 						<property f:formPath="jsp/validate/imagevalidate.jsp"
 							f:charset="UTF-8" class="org.frameworkset.web.demo.FormUrl">
 							<property name="description"><![CDATA[
-								±íµ¥/validate/imagevalidate.jsp, ¶ÔÓ¦ÓÚ/rest/imagevalidatorÌø×ªÒ³Ãæ 
+								è¡¨å•/validate/imagevalidate.jsp, å¯¹åº”äºŽ/rest/imagevalidatorè·³è½¬é¡µé¢ 
 							]]></property>
 						</property>
 					</list>
@@ -766,19 +766,19 @@ bboss-demo.xml
 				</property>
 
 				<property name="description"><![CDATA[
-					restful·ç¸ñÊµÏÖÍ¼Æ¬ÑéÖ¤ÂëµÄÐ£Ñé
+					restfulé£Žæ ¼å®žçŽ°å›¾ç‰‡éªŒè¯ç çš„æ ¡éªŒ
 				]]></property>
 			</property>
 
 
-			<property f:name="jfreechart" f:cnname="bboss-mvcÊµÏÖJfreeChartÈÈµãmap"
+			<property f:name="jfreechart" f:cnname="bboss-mvcå®žçŽ°JfreeChartçƒ­ç‚¹map"
 				class="org.frameworkset.web.demo.SiteDemoBean">
 				<property name="controllerClass"
 					value="test/org/frameworkset/web/jfreechart/JfreeChartController.java" />
 				<property name="configFile" value="WEB-INF/bboss-jfreechart.xml" />
-				<property name="controllerClassCharset" value="GBK"></property>
-				<property name="configFileCharset" value="gb2312"></property>
-				<property name="beanClassCharset" value="GBK"></property>
+				<property name="controllerClassCharset" value="UTF-8"></property>
+				<property name="configFileCharset" value="UTF-8"></property>
+				<property name="beanClassCharset" value="UTF-8"></property>
 				<property name="visturl">
 					<list componentType="String">
 						<property value="/jfreechart/showjfree.htm" />
@@ -789,25 +789,25 @@ bboss-demo.xml
 						<property f:formPath="jsp/jfreechart/jfreechart.jsp"
 							f:charset="UTF-8" class="org.frameworkset.web.demo.FormUrl">
 							<property name="description"><![CDATA[
-								±íµ¥/jfreechart/jfreechart.jsp, ¶ÔÓ¦ÓÚ/jfreechart/showjfree.htmÌø×ªÒ³Ãæ 
+								è¡¨å•/jfreechart/jfreechart.jsp, å¯¹åº”äºŽ/jfreechart/showjfree.htmè·³è½¬é¡µé¢ 
 							]]></property>
 						</property>
 					</list>
 				</property>
 
 				<property name="description"><![CDATA[
-					JFreeChartÀûÓÃJQuery²å¼þÊµÏÖ×Ô¶¨ÒåmapÑùÊ½
+					JFreeChartåˆ©ç”¨JQueryæ’ä»¶å®žçŽ°è‡ªå®šä¹‰mapæ ·å¼
 				]]></property>
 			</property>
 
-			<property f:name="date" f:cnname="datepicker¿Ø¼þµÄÓ¦ÓÃ"
+			<property f:name="date" f:cnname="datepickeræŽ§ä»¶çš„åº”ç”¨"
 				class="org.frameworkset.web.demo.SiteDemoBean">
 				<property name="controllerClass"
 					value="test/org/frameworkset/web/datepicker/DatePickerController.java" />
 				<property name="configFile" value="WEB-INF/bboss-datepicker.xml" />
-				<property name="controllerClassCharset" value="GBK"></property>
-				<property name="configFileCharset" value="gb2312"></property>
-				<property name="beanClassCharset" value="GBK"></property>
+				<property name="controllerClassCharset" value="UTF-8"></property>
+				<property name="configFileCharset" value="UTF-8"></property>
+				<property name="beanClassCharset" value="UTF-8"></property>
 				<property name="visturl">
 					<list componentType="String">
 						<property value="/datepicker/datepicker.htm" />
@@ -818,25 +818,25 @@ bboss-demo.xml
 						<property f:formPath="jsp/datepicker/datepicker.jsp"
 							f:charset="UTF-8" class="org.frameworkset.web.demo.FormUrl">
 							<property name="description"><![CDATA[
-								±íµ¥datepicker.jsp, ¶ÔÓ¦ÓÚ/datepicker/datepicker.htmÌø×ªÒ³Ãæ 
+								è¡¨å•datepicker.jsp, å¯¹åº”äºŽ/datepicker/datepicker.htmè·³è½¬é¡µé¢ 
 							]]></property>
 						</property>
 					</list>
 				</property>
 
 				<property name="description"><![CDATA[
-					datepicker¿Ø¼þµÄÓ¦ÓÃ 
+					datepickeræŽ§ä»¶çš„åº”ç”¨ 
 				]]></property>
 			</property>
 
-			<property f:name="enumdemo" f:cnname="×Ö·û´®ÏòÃ¶¾ÙÀàÐÍ×ª»»¡¢×Ö·û´®Êý×éÏòÃ¶¾ÙÀàÐÍÊý×é×ª»»demo"
+			<property f:name="enumdemo" f:cnname="å­—ç¬¦ä¸²å‘æžšä¸¾ç±»åž‹è½¬æ¢ã€å­—ç¬¦ä¸²æ•°ç»„å‘æžšä¸¾ç±»åž‹æ•°ç»„è½¬æ¢demo"
 				class="org.frameworkset.web.demo.SiteDemoBean">
 				<property name="controllerClass"
 					value="test/org/frameworkset/web/enumtest/EnumConvertController.java" />
 				<property name="configFile" value="WEB-INF/bboss-enum.xml" />
-				<property name="controllerClassCharset" value="GBK"></property>
-				<property name="configFileCharset" value="gb2312"></property>
-				<property name="beanClassCharset" value="GBK"></property>
+				<property name="controllerClassCharset" value="UTF-8"></property>
+				<property name="configFileCharset" value="UTF-8"></property>
+				<property name="beanClassCharset" value="UTF-8"></property>
 				<property name="visturl">
 					<list componentType="String">
 						<property value="/enum/selectSex.html" />
@@ -853,24 +853,24 @@ bboss-demo.xml
 						<property f:formPath="jsp/enum/enumpage.jsp" f:charset="UTF-8"
 							class="org.frameworkset.web.demo.FormUrl">
 							<property name="description"><![CDATA[
-								±íµ¥enumpage.jsp, ¶ÔÓ¦ÓÚ/enum/selectSex.htmlÌø×ªÒ³Ãæ 
+								è¡¨å•enumpage.jsp, å¯¹åº”äºŽ/enum/selectSex.htmlè·³è½¬é¡µé¢ 
 							]]></property>
 						</property>
 					</list>
 				</property>
 
 				<property name="description"><![CDATA[
-					×Ö·û´®ÏòÃ¶¾ÙÀàÐÍ×ª»»¡¢×Ö·û´®Êý×éÏòÃ¶¾ÙÀàÐÍÊý×é×ª»»demo
+					å­—ç¬¦ä¸²å‘æžšä¸¾ç±»åž‹è½¬æ¢ã€å­—ç¬¦ä¸²æ•°ç»„å‘æžšä¸¾ç±»åž‹æ•°ç»„è½¬æ¢demo
 				]]></property>
 			</property>
-			<property f:name="dateconvert" f:cnname="ÈÕÆÚÀàÐÍÊý¾Ý°ó¶¨ÊµÀý"
+			<property f:name="dateconvert" f:cnname="æ—¥æœŸç±»åž‹æ•°æ®ç»‘å®šå®žä¾‹"
 				class="org.frameworkset.web.demo.SiteDemoBean">
 				<property name="controllerClass"
 					value="test/org/frameworkset/web/date/DateConvertController.java" />
 				<property name="configFile" value="WEB-INF/bboss-dateconvert.xml" />
-				<property name="controllerClassCharset" value="GBK"></property>
-				<property name="configFileCharset" value="gb2312"></property>
-				<property name="beanClassCharset" value="GBK"></property>
+				<property name="controllerClassCharset" value="UTF-8"></property>
+				<property name="configFileCharset" value="UTF-8"></property>
+				<property name="beanClassCharset" value="UTF-8"></property>
 				<property name="visturl">
 					<list componentType="String">
 						<property value="/dateconvert/dateconvert.html" />
@@ -881,32 +881,32 @@ bboss-demo.xml
 						<property f:formPath="jsp/dateconvert/in.jsp" f:charset="UTF-8"
 							class="org.frameworkset.web.demo.FormUrl">
 							<property name="description"><![CDATA[
-								Í¨¹ýÈÕÆÚ¿Ø¼þÑ¡ÔñÐèÒª×ª»»µÄÈÕÆÚÊý¾Ý £¬¶ÔÓ¦ÓÚÈÕÆÚdemoµÄÈë¿ÚµØÖ·£º/dateconvert/dateconvert.html
+								é€šè¿‡æ—¥æœŸæŽ§ä»¶é€‰æ‹©éœ€è¦è½¬æ¢çš„æ—¥æœŸæ•°æ® ï¼Œå¯¹åº”äºŽæ—¥æœŸdemoçš„å…¥å£åœ°å€ï¼š/dateconvert/dateconvert.html
 							]]></property>
 						</property>
 						<property f:formPath="jsp/dateconvert/ok.jsp" f:charset="UTF-8"
 							class="org.frameworkset.web.demo.FormUrl">
 							<property name="description"><![CDATA[
-								¸ù¾ÝÖÆ¶¨µÄÈÕÆÚ¸ñÊ½½«ÒÑ¾­Ñ¡ÔñµÄÈý¸öÈÕÆÚÊý¾Ý ×ª»»Îªjava.util.Date/java.sql.Date/java.sql.TimestampÀàÐÍµÄÈÕÆÚÊý¾Ý
-								¶ÔÓ¦ÓÚÈÕÆÚdemo×ª»»½á¹ûÒ³Ãæ
+								æ ¹æ®åˆ¶å®šçš„æ—¥æœŸæ ¼å¼å°†å·²ç»é€‰æ‹©çš„ä¸‰ä¸ªæ—¥æœŸæ•°æ® è½¬æ¢ä¸ºjava.util.Date/java.sql.Date/java.sql.Timestampç±»åž‹çš„æ—¥æœŸæ•°æ®
+								å¯¹åº”äºŽæ—¥æœŸdemoè½¬æ¢ç»“æžœé¡µé¢
 							]]></property>
 						</property>
 						
 					</list>
 				</property>
 				<property name="description"><![CDATA[
-					ÈÕÆÚÀàÐÍÊý¾Ý°ó¶¨ÊµÀý
+					æ—¥æœŸç±»åž‹æ•°æ®ç»‘å®šå®žä¾‹
 				]]></property>
 			</property>
 			
-			<property f:name="default" f:cnname="Ä¬ÈÏÒ³Ãæ"
+			<property f:name="default" f:cnname="é»˜è®¤é¡µé¢"
 				class="org.frameworkset.web.demo.SiteDemoBean">
 				<property name="controllerClass"
 					value="test/org/frameworkset/spi/mvc/DemoController.java" />
 				<property name="configFile" value="WEB-INF/bboss-control.xml" />
-				<property name="controllerClassCharset" value="GBK"></property>
-				<property name="configFileCharset" value="gb2312"></property>
-				<property name="beanClassCharset" value="GBK"></property>
+				<property name="controllerClassCharset" value="UTF-8"></property>
+				<property name="configFileCharset" value="UTF-8"></property>
+				<property name="beanClassCharset" value="UTF-8"></property>
 				<property name="visturl">
 					<list componentType="String">
 						<property value="/demo.htm" />
@@ -914,28 +914,28 @@ bboss-demo.xml
 				</property>
 				<property name="formlist">
 					<list componentType="bean">
-						<property f:formPath="jsp/demo.jsp" f:charset="GBK"
+						<property f:formPath="jsp/demo.jsp" f:charset="UTF-8"
 							class="org.frameworkset.web.demo.FormUrl">
 							<property name="description"><![CDATA[
-								±íµ¥demo.jsp, ¶ÔÓ¦ÓÚ/demo.htmÌø×ªÒ³Ãæ 
+								è¡¨å•demo.jsp, å¯¹åº”äºŽ/demo.htmè·³è½¬é¡µé¢ 
 							]]></property>
 						</property>
 					</list>
 				</property>
 				<property name="description"><![CDATA[
-					Ö÷ÌâºÍ¹ú¼Ê»¯
+					ä¸»é¢˜å’Œå›½é™…åŒ–
 				]]></property>
 			</property>
 
 
-			<property f:name="search" f:cnname="È«ÎÄ¼ìË÷"
+			<property f:name="search" f:cnname="å…¨æ–‡æ£€ç´¢"
 				class="org.frameworkset.web.demo.SiteDemoBean">
 				<property name="controllerClass"
 					value="test/org/frameworkset/web/search/SearchController.java" />
 				<property name="configFile" value="WEB-INF/bboss-control.xml" />
-				<property name="controllerClassCharset" value="GBK"></property>
-				<property name="configFileCharset" value="gb2312"></property>
-				<property name="beanClassCharset" value="GBK"></property>
+				<property name="controllerClassCharset" value="UTF-8"></property>
+				<property name="configFileCharset" value="UTF-8"></property>
+				<property name="beanClassCharset" value="UTF-8"></property>
 				<property name="visturl">
 					<list componentType="String">
 						<property value="/rest/search/dosearch" />
@@ -946,13 +946,13 @@ bboss-demo.xml
 						<property f:formPath="jsp/search/results.jsp" f:charset="UTF-8"
 							class="org.frameworkset.web.demo.FormUrl">
 							<property name="description"><![CDATA[
-								±íµ¥result.jsp, ¶ÔÓ¦ÓÚ/rest/search/dosearchÌø×ªÒ³Ãæ 
+								è¡¨å•result.jsp, å¯¹åº”äºŽ/rest/search/dosearchè·³è½¬é¡µé¢ 
 							]]></property>
 						</property>
 					</list>
 				</property>
 				<property name="description"><![CDATA[
-					resutful·ç¸ñÊµÏÖÈ«ÎÄ¼ìË÷
+					resutfulé£Žæ ¼å®žçŽ°å…¨æ–‡æ£€ç´¢
 				]]></property>
 			</property>
 			<property f:name="datagrid-jquery" f:cnname="datagrid-jquery"
@@ -960,8 +960,8 @@ bboss-demo.xml
 				
 				<property name="configFile" value="WEB-INF/bboss-datagrid.xml" />
 				
-				<property name="configFileCharset" value="gb2312"></property>
-				<property name="beanClassCharset" value="GBK"></property>
+				<property name="configFileCharset" value="UTF-8"></property>
+				<property name="beanClassCharset" value="UTF-8"></property>
 				<property name="visturl">
 					<list componentType="String">
 						<property value="/datagrid/editer.page" />
@@ -973,20 +973,20 @@ bboss-demo.xml
 						<property f:formPath="jsp/datagrid/page/datagrid_editer.jsp" f:charset="UTF-8"
 							class="org.frameworkset.web.demo.FormUrl">
 							<property name="description"><![CDATA[
-								±íµ¥datagrid/page/datagrid_editer.jsp
+								è¡¨å•datagrid/page/datagrid_editer.jsp
 							]]></property>
 						</property>
 					<property f:formPath="jsp/datagrid/page/returnJson.jsp" f:charset="UTF-8"
 							class="org.frameworkset.web.demo.FormUrl">
 							<property name="description"><![CDATA[
-								±íµ¥datagrid/page/returnJson.jsp
+								è¡¨å•datagrid/page/returnJson.jsp
 							]]></property>
 						</property>
 				
 						<property f:formPath="jsp/datagrid/page/datagrid_info.jsp" f:charset="utf-8"
 							class="org.frameworkset.web.demo.FormUrl">
 							<property name="description"><![CDATA[
-								±íµ¥jsp/datagrid/page/datagrid_info.jsp
+								è¡¨å•jsp/datagrid/page/datagrid_info.jsp
 							]]></property>
 						</property>
 						
@@ -997,14 +997,14 @@ bboss-demo.xml
 				]]></property>
 			</property>
 			
-			<property f:name="portal-jquery" f:cnname="jquery easyui portal ÊµÀý"
+			<property f:name="portal-jquery" f:cnname="jquery easyui portal å®žä¾‹"
 				class="org.frameworkset.web.demo.SiteDemoBean">
 				<property name="controllerClass"
 					value="test/org/frameworkset/web/portal/PortalController.java" />
 				<property name="configFile" value="WEB-INF/conf/bboss-portal.xml" />
-				<property name="controllerClassCharset" value="GBK"></property>
-				<property name="configFileCharset" value="gb2312"></property>
-				<property name="beanClassCharset" value="GBK"></property>
+				<property name="controllerClassCharset" value="UTF-8"></property>
+				<property name="configFileCharset" value="UTF-8"></property>
+				<property name="beanClassCharset" value="UTF-8"></property>
 				<property name="visturl">
 					<list componentType="String">
 						<property value="/portal/portal.page" />
@@ -1016,7 +1016,7 @@ bboss-demo.xml
 						<property f:formPath="jsp/portal/portal.jsp" f:charset="UTF-8"
 							class="org.frameworkset.web.demo.FormUrl">
 							<property name="description"><![CDATA[
-								Bboss mvc demo -jQuery EasyUI PortalÖ÷Ò³Ãæ
+								Bboss mvc demo -jQuery EasyUI Portalä¸»é¡µé¢
 							]]></property>
 						</property>
 					
@@ -1038,14 +1038,14 @@ bboss-demo.xml
 			</property>
 			
 			
-			<property f:name="tagdemo-map" f:cnname="tagdemo-map ÊµÀý"
+			<property f:name="tagdemo-map" f:cnname="tagdemo-map å®žä¾‹"
 				class="org.frameworkset.web.demo.SiteDemoBean">
 				<property name="controllerClass"
 					value="test/org/frameworkset/web/tagdemo/Map2ndConverTagController.java" />
 				<property name="configFile" value="WEB-INF/conf/bboss-maptag.xml" />
-				<property name="controllerClassCharset" value="GBK"></property>
-				<property name="configFileCharset" value="gb2312"></property>
-				<property name="beanClassCharset" value="GBK"></property>
+				<property name="controllerClassCharset" value="UTF-8"></property>
+				<property name="configFileCharset" value="UTF-8"></property>
+				<property name="beanClassCharset" value="UTF-8"></property>
 				<property name="visturl">
 					<list componentType="String">
 						<property value="/tagdemo/testmap.page" />
@@ -1054,10 +1054,10 @@ bboss-demo.xml
 				<property name="formlist">
 					<list componentType="bean">
 					
-						<property f:formPath="jsp/tagdemo/testmap.jsp" f:charset="GBK"
+						<property f:formPath="jsp/tagdemo/testmap.jsp" f:charset="UTF-8"
 							class="org.frameworkset.web.demo.FormUrl">
 							<property name="description"><![CDATA[
-								Õ¹Ê¾map±êÇ©/mapkey±êÇ©£¬convert±êÇ©µÄÊ¹ÓÃ·½·¨
+								å±•ç¤ºmapæ ‡ç­¾/mapkeyæ ‡ç­¾ï¼Œconvertæ ‡ç­¾çš„ä½¿ç”¨æ–¹æ³•
 							]]></property>
 						</property>
 					
@@ -1066,7 +1066,7 @@ bboss-demo.xml
 				</property>
 				
 				<property name="description"><![CDATA[
-					Õ¹Ê¾map±êÇ©/mapkey±êÇ©£¬convert±êÇ©µÄÊ¹ÓÃ·½·¨
+					å±•ç¤ºmapæ ‡ç­¾/mapkeyæ ‡ç­¾ï¼Œconvertæ ‡ç­¾çš„ä½¿ç”¨æ–¹æ³•
 				]]></property>
 			</property>
 

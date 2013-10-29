@@ -23,7 +23,7 @@ package org.frameworkset.spi.remote.clientproxy;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2009-10-17 œ¬ŒÁ05:12:04
+ * @Date 2009-10-17 ‰∏ãÂçà05:12:04
  * @author biaoping.yin
  * @version 1.0
  */

@@ -25,15 +25,15 @@ import java.util.List;
  * 
  * <p>Title: ProviderInfoQueue.java</p>
  *
- * <p>Description: ¹ÜÀí·şÎñÌá¹©Õß¶ÓÁĞ£¬°´ÓÅÏÈ¼¶Ë³Ğò
- * ´æ·Å¹ÜÀí·şÎñµÄ¶à¸öÌá¹©Õß
+ * <p>Description: ç®¡ç†æœåŠ¡æä¾›è€…é˜Ÿåˆ—ï¼ŒæŒ‰ä¼˜å…ˆçº§é¡ºåº
+ * å­˜æ”¾ç®¡ç†æœåŠ¡çš„å¤šä¸ªæä¾›è€…
  * </p>
  *
  * <p>Copyright: Copyright (c) 2007</p>
  *
  * <p>bboss workgroup</p>
  * @Date Sep 8, 2008 10:05:06 AM
- * @author biaoping.yin,Òü±êÆ½
+ * @author biaoping.yin,å°¹æ ‡å¹³
  * @version 1.0
  */
 public class ProviderInfoQueue implements java.io.Serializable {
@@ -53,7 +53,7 @@ public class ProviderInfoQueue implements java.io.Serializable {
         java.util.Collections.sort(list, new java.util.Comparator()
         {
         	/**
-        	 * providerÅÅĞò¹æÔò£¬priorÖµÔ½Ğ¡£¬ÓÅÏÈ¼¶Ô½¸ß
+        	 * provideræ’åºè§„åˆ™ï¼Œpriorå€¼è¶Šå°ï¼Œä¼˜å…ˆçº§è¶Šé«˜
         	 */
 			public int compare(Object o1, Object o2) {
 				SecurityProviderInfo o1_ = (SecurityProviderInfo)o1;

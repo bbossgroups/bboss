@@ -73,7 +73,7 @@ public class DefaultAnnotationHandlerMapping  extends AbstractDetectingUrlHandle
 ////				((ConfigurableApplicationContext) context).getBeanFactory() : context);
 ////		GenericBeanFactoryAccessor bfa = new GenericBeanFactoryAccessor(bf);
 //		
-//		//获取类级url和controller映射关系
+//		//鑾峰彇绫荤骇url鍜宑ontroller鏄犲皠鍏崇郴
 //		HandlerMapping mapping = AnnotationUtils.findAnnotation(handlerType, HandlerMapping.class);
 //
 //		if (mapping != null) {
@@ -121,7 +121,7 @@ public class DefaultAnnotationHandlerMapping  extends AbstractDetectingUrlHandle
 ////				((ConfigurableApplicationContext) context).getBeanFactory() : context);
 ////		GenericBeanFactoryAccessor bfa = new GenericBeanFactoryAccessor(bf);
 //		
-//		//获取类级url和controller映射关系
+//		//鑾峰彇绫荤骇url鍜宑ontroller鏄犲皠鍏崇郴
 //		HandlerMapping mapping = AnnotationUtils.findAnnotation(handlerType, HandlerMapping.class);
 //
 //		if (mapping != null) {

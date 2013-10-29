@@ -27,7 +27,7 @@ import com.frameworkset.common.poolman.util.SQLManager;
  *
  * <p>Title: DBAdapter</p>
  *
- * <p>Description: Ïû³ıÊı¾İÖ®¼äµÄ²îÒìĞÔ</p>
+ * <p>Description: æ¶ˆé™¤æ•°æ®ä¹‹é—´çš„å·®å¼‚æ€§</p>
  *
  * <p>Copyright: Copyright (c) 2005</p>
  *

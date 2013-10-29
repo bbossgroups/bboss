@@ -119,10 +119,10 @@ public class TestValueTemplateDBUtil {
 		Object ret = TemplateDBUtil.executeTemplate(
 				new JDBCValueTemplate(){
 					/**
-					 * Õû¸öexecute()·½·¨µÄÖ´ÐÐ¶¼»á±»°üº¬ÔÚÒ»¸öÊý¾Ý¿âÊÂÎñÖÐ
-					 * µ±ÓÐÒì³£Å×³öÊ±TemplateDBUtil.executeTemplate()·½·¨¾Í»á×Ô¶¯»Ø¹öÕû¸öÊý¾Ý¿âÊÂÎñ
-					 * µ±Õû¸ö·½·¨Õý³£½áÊøºó£¬ÊÂÎñ¾Í»á×Ô¶¯±»Ìá½»£¬²¢½«·µ»ØÖµ·µ»Ø¸øµ÷ÓÃ³ÌÐò¡£
-					 * Í¨¹ýÄ£°å¹¤¾ßÌá¹©µÄ±ãÀû£¬¿ª·¢ÈËÔ±²»ÐèÒª±àÐ´×Ô¼ºµÄÊÂÎñ´úÂë¾Í¿ÉÒÔË³ÀûµØÊµÏÖÊý¾Ý¿âµÄÊÂÎñÐÔ²Ù×÷
+					 * æ•´ä¸ªexecute()æ–¹æ³•çš„æ‰§è¡Œéƒ½ä¼šè¢«åŒ…å«åœ¨ä¸€ä¸ªæ•°æ®åº“äº‹åŠ¡ä¸­
+					 * å½“æœ‰å¼‚å¸¸æŠ›å‡ºæ—¶TemplateDBUtil.executeTemplate()æ–¹æ³•å°±ä¼šè‡ªåŠ¨å›žæ»šæ•´ä¸ªæ•°æ®åº“äº‹åŠ¡
+					 * å½“æ•´ä¸ªæ–¹æ³•æ­£å¸¸ç»“æŸåŽï¼Œäº‹åŠ¡å°±ä¼šè‡ªåŠ¨è¢«æäº¤ï¼Œå¹¶å°†è¿”å›žå€¼è¿”å›žç»™è°ƒç”¨ç¨‹åºã€‚
+					 * é€šè¿‡æ¨¡æ¿å·¥å…·æä¾›çš„ä¾¿åˆ©ï¼Œå¼€å‘äººå‘˜ä¸éœ€è¦ç¼–å†™è‡ªå·±çš„äº‹åŠ¡ä»£ç å°±å¯ä»¥é¡ºåˆ©åœ°å®žçŽ°æ•°æ®åº“çš„äº‹åŠ¡æ€§æ“ä½œ
 					 */
 					public Object execute() throws Exception {
 						DBUtil dbUtil = new DBUtil();						
@@ -144,7 +144,7 @@ public class TestValueTemplateDBUtil {
 						} 
 						catch(Exception e)
 						{
-							throw e;//Å×³öÒì³££¬½«µ¼ÖÂÕû¸öÊý¾Ý¿âÊÂÎñ»Ø¹ö
+							throw e;//æŠ›å‡ºå¼‚å¸¸ï¼Œå°†å¯¼è‡´æ•´ä¸ªæ•°æ®åº“äº‹åŠ¡å›žæ»š
 						}
 						try
 						{
@@ -154,9 +154,9 @@ public class TestValueTemplateDBUtil {
 						}
 						catch(Exception e)
 						{
-							throw e;//Å×³öÒì³££¬½«µ¼ÖÂÕû¸öÊý¾Ý¿âÊÂÎñ»Ø¹ö
+							throw e;//æŠ›å‡ºå¼‚å¸¸ï¼Œå°†å¯¼è‡´æ•´ä¸ªæ•°æ®åº“äº‹åŠ¡å›žæ»š
 						}						
-						//·½·¨Ë³ÀûÖ´ÐÐÍê³É£¬ÊÂÎñ×Ô¶¯Ìá½»£¬²¢·µ»Ø·½·¨µÄ·µ»ØÖµ
+						//æ–¹æ³•é¡ºåˆ©æ‰§è¡Œå®Œæˆï¼Œäº‹åŠ¡è‡ªåŠ¨æäº¤ï¼Œå¹¶è¿”å›žæ–¹æ³•çš„è¿”å›žå€¼
 						return "go";
 					}				
 				}

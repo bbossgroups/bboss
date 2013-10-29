@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding='gb2312'?>
+<?xml version="1.0" encoding='UTF-8'?>
 <!-- 
 bboss-mapbean.xml
-描述：对象Map和对象数组控制器demo
+鎻忚堪锛氬璞ap鍜屽璞℃暟缁勬帶鍒跺櫒demo
 -->
 <properties>
     <property name="/databind/map/*.htm" class="org.frameworkset.spi.mvc.MapBindController"

@@ -1,11 +1,11 @@
 form,iframe{padding: 0px;margin: 0px;border: 0px}
-.button {/*²éÑ¯È·ÈÏ°´Å¤*/
+.button {/*æŸ¥è¯¢ç¡®è®¤æŒ‰æ‰­*/
 	background: url(../images/botton_064.gif) no-repeat center;
 	padding-left: 6px;
 	height: 25px;
 	width: 86px;
 	border: none;
-	font-family: "ËÎÌå";
+	font-family: "å®‹ä½“";
 	font-size: 14px;
 	color: #fff;
 	text-decoration: none;
@@ -15,13 +15,13 @@ form,iframe{padding: 0px;margin: 0px;border: 0px}
 	margin-right: 3px;
 	font-weight:bold;
 }
-.button_1 {/*Ò»°ã°´Å¤*/
+.button_1 {/*ä¸€èˆ¬æŒ‰æ‰­*/
 	background: url(../images/botton_064_1.gif) repeat-x center;
 	padding-left:4px;
 	padding-right:4px;
 	height: 23px;
 	border:1px solid #4c849f;
-	font-family: "ËÎÌå";
+	font-family: "å®‹ä½“";
 	font-size: 13px;
 	color: #0000;
 	text-decoration: none;
@@ -31,15 +31,15 @@ form,iframe{padding: 0px;margin: 0px;border: 0px}
 	margin-right: 3px;
 	cursor:hand;
 }
-.longbutton {/*²éÑ¯È·ÈÏ°´Å¤*/
-	background: url(../images/niu2.jpg) no-repeat center; padding-left: 6px; height: 27px;width: 125px;border: none;font-family: "ËÎÌå";font-size: 13px;color: #0000;text-decoration: none;	line-height: 25px;	margin-bottom: 6px; margin-top: 6px;
+.longbutton {/*æŸ¥è¯¢ç¡®è®¤æŒ‰æ‰­*/
+	background: url(../images/niu2.jpg) no-repeat center; padding-left: 6px; height: 27px;width: 125px;border: none;font-family: "å®‹ä½“";font-size: 13px;color: #0000;text-decoration: none;	line-height: 25px;	margin-bottom: 6px; margin-top: 6px;
 }
-.button2 {/*±à¼­°´Å¤*/
+.button2 {/*ç¼–è¾‘æŒ‰æ‰­*/
 	padding-left: 6px;
 	height: 24px;
 	width: 45px;
 	border: none;
-	font-family: "ËÎÌå";
+	font-family: "å®‹ä½“";
 	font-size: 13px;
 	color: #0000;
 	text-decoration: none;
@@ -54,12 +54,12 @@ form,iframe{padding: 0px;margin: 0px;border: 0px}
 	margin-right: 6px;
 	margin-left: 3px;
 }
-.loginbutton {/*²éÑ¯È·ÈÏ°´Å¤*/
+.loginbutton {/*æŸ¥è¯¢ç¡®è®¤æŒ‰æ‰­*/
 	padding-left: 6px;
 	height: 27px;
 	width: 69px;
 	border: none;
-	font-family: "ËÎÌå";
+	font-family: "å®‹ä½“";
 	font-size: 13px;
 	color: #0000;
 	text-decoration: none;
@@ -71,25 +71,25 @@ form,iframe{padding: 0px;margin: 0px;border: 0px}
 	background-position: center;
 
 }
-.listbutton1 {/*±à¼­°´Å¤*/
-	background: url(../images/listA.jpg) no-repeat center; padding-left: 6px; height: 27px;width: 87px;border: none;font-family: "ËÎÌå";font-size: 13px;color: #0000;text-decoration: none;	line-height: 25px;	margin-bottom: 6px; margin-top: 6px;
+.listbutton1 {/*ç¼–è¾‘æŒ‰æ‰­*/
+	background: url(../images/listA.jpg) no-repeat center; padding-left: 6px; height: 27px;width: 87px;border: none;font-family: "å®‹ä½“";font-size: 13px;color: #0000;text-decoration: none;	line-height: 25px;	margin-bottom: 6px; margin-top: 6px;
 }
-.addbutton1 {/*±à¼­°´Å¤*/
-	background: url(../images/addniu.jpg) no-repeat center; padding-left: 6px; height: 27px;width: 87px;border: none;font-family: "ËÎÌå";font-size: 13px;color: #0000;text-decoration: none;	line-height: 25px;	margin-bottom: 6px; margin-top: 6px;
+.addbutton1 {/*ç¼–è¾‘æŒ‰æ‰­*/
+	background: url(../images/addniu.jpg) no-repeat center; padding-left: 6px; height: 27px;width: 87px;border: none;font-family: "å®‹ä½“";font-size: 13px;color: #0000;text-decoration: none;	line-height: 25px;	margin-bottom: 6px; margin-top: 6px;
 }
-.addbutton2 {/*±à¼­°´Å¤*/
-	background: url(../images/addniu.gif) no-repeat center; padding-left: 6px; height: 27px;width: 87px;border: none;font-family: "ËÎÌå";font-size: 13px;color: #0000;text-decoration: none;	line-height: 25px;	margin-bottom: 6px; margin-top: 6px;
+.addbutton2 {/*ç¼–è¾‘æŒ‰æ‰­*/
+	background: url(../images/addniu.gif) no-repeat center; padding-left: 6px; height: 27px;width: 87px;border: none;font-family: "å®‹ä½“";font-size: 13px;color: #0000;text-decoration: none;	line-height: 25px;	margin-bottom: 6px; margin-top: 6px;
 }
-.xbutton1 {/*±à¼­°´Å¤*/
-	background: url(../images/xniu.jpg) no-repeat center; padding-left: 6px; height: 27px;width: 87px;border: none;font-family: "ËÎÌå";font-size: 13px;color: #0000;text-decoration: none;	line-height: 25px;	margin-bottom: 6px; margin-top: 6px;
+.xbutton1 {/*ç¼–è¾‘æŒ‰æ‰­*/
+	background: url(../images/xniu.jpg) no-repeat center; padding-left: 6px; height: 27px;width: 87px;border: none;font-family: "å®‹ä½“";font-size: 13px;color: #0000;text-decoration: none;	line-height: 25px;	margin-bottom: 6px; margin-top: 6px;
 }
-.xbutton2 {/*±à¼­°´Å¤*/
-	background: url(../images/xniu.gif) no-repeat center; padding-left: 6px; height: 27px;width: 87px;border: none;font-family: "ËÎÌå";font-size: 13px;color: #0000;text-decoration: none;	line-height: 25px;	margin-bottom: 6px; margin-top: 6px;
+.xbutton2 {/*ç¼–è¾‘æŒ‰æ‰­*/
+	background: url(../images/xniu.gif) no-repeat center; padding-left: 6px; height: 27px;width: 87px;border: none;font-family: "å®‹ä½“";font-size: 13px;color: #0000;text-decoration: none;	line-height: 25px;	margin-bottom: 6px; margin-top: 6px;
 }
-.sbutton1 {/*±à¼­°´Å¤*/
-	background: url(../images/sniu.jpg) no-repeat center; padding-left: 6px; height: 27px;width: 87px;border: none;font-family: "ËÎÌå";font-size: 13px;color: #0000;text-decoration: none;	line-height: 25px;	margin-bottom: 6px; margin-top: 6px;
+.sbutton1 {/*ç¼–è¾‘æŒ‰æ‰­*/
+	background: url(../images/sniu.jpg) no-repeat center; padding-left: 6px; height: 27px;width: 87px;border: none;font-family: "å®‹ä½“";font-size: 13px;color: #0000;text-decoration: none;	line-height: 25px;	margin-bottom: 6px; margin-top: 6px;
 }
-.sbutton2 {/*±à¼­°´Å¤*/
-	background: url(../images/sniu.gif) no-repeat center; padding-left: 6px; height: 27px;width: 87px;border: none;font-family: "ËÎÌå";font-size: 13px;color: #0000;text-decoration: none;	line-height: 25px;	margin-bottom: 6px; margin-top: 6px;
+.sbutton2 {/*ç¼–è¾‘æŒ‰æ‰­*/
+	background: url(../images/sniu.gif) no-repeat center; padding-left: 6px; height: 27px;width: 87px;border: none;font-family: "å®‹ä½“";font-size: 13px;color: #0000;text-decoration: none;	line-height: 25px;	margin-bottom: 6px; margin-top: 6px;
 }
-.button5{background: url(../images/jf_bg_06.jpg) no-repeat center center;height: 27px;width: 88px;border: none;font-family: "ËÎÌå";font-size: 13px;color: #0000;text-decoration: none;	line-height: 25px; }
+.button5{background: url(../images/jf_bg_06.jpg) no-repeat center center;height: 27px;width: 88px;border: none;font-family: "å®‹ä½“";font-size: 13px;color: #0000;text-decoration: none;	line-height: 25px; }

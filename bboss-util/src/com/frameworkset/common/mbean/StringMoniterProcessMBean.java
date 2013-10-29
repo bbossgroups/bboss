@@ -18,7 +18,7 @@ import javax.management.ObjectName;
 public interface StringMoniterProcessMBean extends javax.management.monitor.StringMonitorMBean
 {
     /**
-     * @param name ObjectName ¼àÌıÆ÷¼àÌıµ½ÌØ¶¨µÄÏûÏ¢Ê±£¬¸ù¾İÏûÏ¢ÀàĞÍ¿ÉÒÔ×öÏàÓ¦µÄ´¦Àí
+     * @param name ObjectName ç›‘å¬å™¨ç›‘å¬åˆ°ç‰¹å®šçš„æ¶ˆæ¯æ—¶ï¼Œæ ¹æ®æ¶ˆæ¯ç±»å‹å¯ä»¥åšç›¸åº”çš„å¤„ç†
      * @param methodName String
      */
     public void setExecutableMethodOnDiffer(ObjectName handler, String executeMethod);

@@ -5,7 +5,7 @@
 		<frame name="perspective_toolbar" title="${perspective_toolbar_title}"
 			src="${perspective_toolbar_leftside}" marginwidth=0 marginheight=0
 			scrolling="no" frameborder=0 noresize>
-		<frame name="hidden_frame" title="Òþ²Ø/ÏÔÊ¾²Ëµ¥Ê÷"
+		<frame name="hidden_frame" title="éšè—/æ˜¾ç¤ºèœå•æ ‘"
 			src="${hidden_frame_url}" marginwidth=0 marginheight=0
 			scrolling="no" frameborder=0 noresize>	
 		<frame name="perspective_content" title="${perspective_content_title}"

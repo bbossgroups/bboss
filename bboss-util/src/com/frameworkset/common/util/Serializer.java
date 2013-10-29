@@ -34,7 +34,7 @@ package com.frameworkset.common.util;
 
 /**
  * @author biaoping.yin
- * ¶ÔÏóĞòÁĞ»¯ºÍ·´ĞòÁĞ»¯Àà 
+ * å¯¹è±¡åºåˆ—åŒ–å’Œååºåˆ—åŒ–ç±» 
  */
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -48,7 +48,7 @@ public class Serializer {
 	 }
 	 
 	 /**
-	  * Description:½«¶ÔÏó×Ö½ÚÁ÷×ª»»³ÉÒ»¸ö¶ÔÏó
+	  * Description:å°†å¯¹è±¡å­—èŠ‚æµè½¬æ¢æˆä¸€ä¸ªå¯¹è±¡
 	  * @param buf
 	  * @return Object
 	  * @throws Exception
@@ -74,7 +74,7 @@ public class Serializer {
 	 }
 	
 	 /**
-	  * Description:½«Ò»¸ö¶ÔÏó×ª»»ÎªÒ»¸ö×Ö½ÚÊı×é
+	  * Description:å°†ä¸€ä¸ªå¯¹è±¡è½¬æ¢ä¸ºä¸€ä¸ªå­—èŠ‚æ•°ç»„
 	  * @param obj
 	  * @return byte[]
 	  * @throws Exception
@@ -102,7 +102,7 @@ public class Serializer {
 	 }
 	
 	 /**
-	  * Description:ÊµÏÖ¶ÔÏóµÄÍêÕû¿½±´
+	  * Description:å®ç°å¯¹è±¡çš„å®Œæ•´æ‹·è´
 	  * @param oldObj
 	  * @return Object
 	  * @throws Exception

@@ -49,7 +49,7 @@ public class SimpleApiTest {
 		lb.setIsvalidated(6);
 		
 		
-		//ÓÃList´æ·ÅBean£¬ÔÚÄ³ÌØ¶¨µÄÁ¬½Ó³ØÖĞ½øĞĞcrud²Ù×÷
+		//ç”¨Listå­˜æ”¾Beanï¼Œåœ¨æŸç‰¹å®šçš„è¿æ¥æ± ä¸­è¿›è¡Œcrudæ“ä½œ
 		List<ListBean> beans = new ArrayList<ListBean>();
 		beans.add(lb);
 		lb = new ListBean();
@@ -118,8 +118,8 @@ public class SimpleApiTest {
 	public void arrayVariableTest() throws SQLException
 	{
 		/**
-		 * É¾³ıÊı¾İ£¬Êı¾İÌõ¼şÓÉÊı×é,FIELDNAMES£¬ÕâÀïÖ÷ÒªÑİÊ¾Èç¹ûÍ¨¹ıÊı×é±äÁ¿Óï·¨»ñÈ¡Êı¾İÏî
-		 * ºóÌ¨×ª»»ÎªÔ¤±àÒëÖ´ĞĞ
+		 * åˆ é™¤æ•°æ®ï¼Œæ•°æ®æ¡ä»¶ç”±æ•°ç»„,FIELDNAMESï¼Œè¿™é‡Œä¸»è¦æ¼”ç¤ºå¦‚æœé€šè¿‡æ•°ç»„å˜é‡è¯­æ³•è·å–æ•°æ®é¡¹
+		 * åå°è½¬æ¢ä¸ºé¢„ç¼–è¯‘æ‰§è¡Œ
 		 */
 		insertOpera();
 		String[] FIELDNAMES = new String[]{"ss","testttt","sdds","insertOpreation","ss556"};
@@ -134,8 +134,8 @@ public class SimpleApiTest {
 	public void listVariableTest() throws SQLException
 	{
 		/**
-		 * É¾³ıÊı¾İ£¬Êı¾İÌõ¼şÓÉlist ¶ÔÏóFIELDNAMESÌá¹©£¬ÕâÀïÖ÷ÒªÑİÊ¾ÈçºÎÍ¨¹ılist±äÁ¿Óï·¨»ñÈ¡Êı¾İÏî
-		 * ºóÌ¨×ª»»ÎªÔ¤±àÒëÖ´ĞĞ
+		 * åˆ é™¤æ•°æ®ï¼Œæ•°æ®æ¡ä»¶ç”±list å¯¹è±¡FIELDNAMESæä¾›ï¼Œè¿™é‡Œä¸»è¦æ¼”ç¤ºå¦‚ä½•é€šè¿‡listå˜é‡è¯­æ³•è·å–æ•°æ®é¡¹
+		 * åå°è½¬æ¢ä¸ºé¢„ç¼–è¯‘æ‰§è¡Œ
 		 */
 		insertOpera();
 		List<String> FIELDNAMES = new ArrayList<String>();
@@ -155,8 +155,8 @@ public class SimpleApiTest {
 	public void beanVariableTest() throws SQLException
 	{
 		/**
-		 * É¾³ıÊı¾İ£¬Êı¾İÌõ¼şÓÉÊı×éFIELDNAMES£¬ÕâÀïÖ÷ÒªÑİÊ¾Èç¹ûÍ¨¹ıbeanÊôĞÔÒıÓÃ±äÁ¿Óï·¨»ñÈ¡Êı¾İÏî
-		 * ºóÌ¨×ª»»ÎªÔ¤±àÒëÖ´ĞĞ
+		 * åˆ é™¤æ•°æ®ï¼Œæ•°æ®æ¡ä»¶ç”±æ•°ç»„FIELDNAMESï¼Œè¿™é‡Œä¸»è¦æ¼”ç¤ºå¦‚æœé€šè¿‡beanå±æ€§å¼•ç”¨å˜é‡è¯­æ³•è·å–æ•°æ®é¡¹
+		 * åå°è½¬æ¢ä¸ºé¢„ç¼–è¯‘æ‰§è¡Œ
 		 */
 		insertOpera();
 		BeanVariable beanvariable = new BeanVariable();
@@ -170,8 +170,8 @@ public class SimpleApiTest {
 	public void mapVariableTest() throws SQLException
 	{
 		/**
-		 * É¾³ıÊı¾İ£¬Êı¾İÌõ¼şÓÉFIELDNAMESÎªÃû³ÆË÷ÒıµÄmap¶ÔÏóÖĞ£¬ÕâÀïÖ÷ÒªÑİÊ¾Èç¹ûÍ¨¹ımap±äÁ¿»ñÈ¡Êı¾İÏî
-		 * ºóÌ¨×ª»»ÎªÔ¤±àÒëÖ´ĞĞ
+		 * åˆ é™¤æ•°æ®ï¼Œæ•°æ®æ¡ä»¶ç”±FIELDNAMESä¸ºåç§°ç´¢å¼•çš„mapå¯¹è±¡ä¸­ï¼Œè¿™é‡Œä¸»è¦æ¼”ç¤ºå¦‚æœé€šè¿‡mapå˜é‡è·å–æ•°æ®é¡¹
+		 * åå°è½¬æ¢ä¸ºé¢„ç¼–è¯‘æ‰§è¡Œ
 		 */
 		insertOpera();
 		Map<String,String> datas = new HashMap<String,String>();
@@ -190,22 +190,22 @@ public class SimpleApiTest {
 	
 //	public void batchadd(List<TestBean> newdatas)
 //	{				
-//		//sqlÖĞµÄ±äÁ¿¶ÔÓ¦TestBeanÖĞµÄÊôĞÔÃû³Æ£¬±ØĞëÒªÓĞÏàÓ¦µÄget/set·½·¨,¿ò¼Ü»á×Ô¶¯×ª»»ÎªÔ¤±àÒëÕ¼Î»·ûµÄsqlÓï¾ä
+//		//sqlä¸­çš„å˜é‡å¯¹åº”TestBeanä¸­çš„å±æ€§åç§°ï¼Œå¿…é¡»è¦æœ‰ç›¸åº”çš„get/setæ–¹æ³•,æ¡†æ¶ä¼šè‡ªåŠ¨è½¬æ¢ä¸ºé¢„ç¼–è¯‘å ä½ç¬¦çš„sqlè¯­å¥
 //		String sql = "insert into LISTBEAN(ID,FIELDNAME,FIELDLABLE,FIELDTYPE,SORTORDER," +
 //				"ISPRIMARYKEY,REQUIRED,FIELDLENGTH,ISVALIDATED) " +
 //				"values(#[id],#[fieldName],#[fieldLable],#[fieldType],#[sortorder]," +
 //				"#[isprimaryKey],#[required],#[fieldLength],#[isvalidated])";
-//        //SQLExecutor.insertBeans(sql,newdatas);//²»´øÊı¾İÔ´µÄ·½·¨
-//		SQLExecutor.insertBeans("bspf",//Êı¾İÔ´
-//		                        sql,//Êı¾İ¿âsqlÓï¾ä
-//		                        newdatas//ÅúÁ¿²åÈëµÄ¶ÔÏó¼ÇÂ¼¼¯
+//        //SQLExecutor.insertBeans(sql,newdatas);//ä¸å¸¦æ•°æ®æºçš„æ–¹æ³•
+//		SQLExecutor.insertBeans("bspf",//æ•°æ®æº
+//		                        sql,//æ•°æ®åº“sqlè¯­å¥
+//		                        newdatas//æ‰¹é‡æ’å…¥çš„å¯¹è±¡è®°å½•é›†
 //		                        );
 //	}
 	
 	@Test
 	public void updateOpera() throws SQLException
 	{
-		//ÔÚÄ³ÌØ¶¨µÄÁ¬½Ó³ØÖĞÖ±½Ócrud¶ÔÏó
+		//åœ¨æŸç‰¹å®šçš„è¿æ¥æ± ä¸­ç›´æ¥crudå¯¹è±¡
 		ListBean bean = new ListBean();
 		bean.setId(88);
 		bean.setFieldLable("tttt");
@@ -243,7 +243,7 @@ public class SimpleApiTest {
 	}
 	
 	/**
-	 * ²âÊÔ¿ÕÖµ²åÈë¹¦ÄÜ
+	 * æµ‹è¯•ç©ºå€¼æ’å…¥åŠŸèƒ½
 	 * CREATE
     TABLE NULLNUMBER
     (
@@ -276,7 +276,7 @@ public class SimpleApiTest {
 	
 	@Test
 	public void deleteOpera() throws SQLException
-	{   //ÔÚÌØ¶¨µÄÁ¬½Ó³ØÖĞ¶ÔÊı×é¶ÔÏó½øĞĞcrud
+	{   //åœ¨ç‰¹å®šçš„è¿æ¥æ± ä¸­å¯¹æ•°ç»„å¯¹è±¡è¿›è¡Œcrud
 		ListBean lb = new ListBean();
 		lb.setId(85);
 		lb.setFieldLable("tttt");
@@ -470,7 +470,7 @@ public class SimpleApiTest {
 	public void dynamicqueryBean() throws SQLException
 	{
 		 ListBean bean = new ListBean();
-		    bean.setFieldName("°¢Ë¹¶Ù·É");
+		    bean.setFieldName("é˜¿æ–¯é¡¿é£");
 		 //<property name="refresh_interval" value="10000"/>
 		 List<ListBean> result = SQLExecutor.queryListBean(ListBean.class, "select *  from LISTBEAN", bean);
 		 System.out.println(result.size());
@@ -923,16 +923,16 @@ public class SimpleApiTest {
 	{
 		AutoKeyDemo demo = new AutoKeyDemo();		
 		demo.setName("name2");	
-		//Ö÷¼ü±»·â×°µ½GetCUDResult¶ÔÏóÖĞ,Í¨¹ı»Øµ÷·½Ê½·µ»Ø
-		//ÏÂÃæµÄinsertBean·½·¨×îºó´øÁËÒ»¸öGetCUDResultÀàĞÍ²ÎÊı£¬
-		//Õâ¸ö·½·¨ÊÇ×¨ÃÅÎª·µ»Ø×ÔÔöÖ÷¼ü¶øĞÂÔöµÄÒ»¸öapi
+		//ä¸»é”®è¢«å°è£…åˆ°GetCUDResultå¯¹è±¡ä¸­,é€šè¿‡å›è°ƒæ–¹å¼è¿”å›
+		//ä¸‹é¢çš„insertBeanæ–¹æ³•æœ€åå¸¦äº†ä¸€ä¸ªGetCUDResultç±»å‹å‚æ•°ï¼Œ
+		//è¿™ä¸ªæ–¹æ³•æ˜¯ä¸“é—¨ä¸ºè¿”å›è‡ªå¢ä¸»é”®è€Œæ–°å¢çš„ä¸€ä¸ªapi
 		GetCUDResult ret = new GetCUDResult(); 
 		SQLExecutor.insertBean("insert into demo(name) values(#[name])", demo,ret);
-		//Í¨¹ıGetCUDResult¶ÔÏóµÄgetKeys·½·¨»ñÈ¡Ö÷¼ü£¬²¢½«Ö÷¼üÉèÖÃµ½demo¶ÔÏóÖĞ
+		//é€šè¿‡GetCUDResultå¯¹è±¡çš„getKeysæ–¹æ³•è·å–ä¸»é”®ï¼Œå¹¶å°†ä¸»é”®è®¾ç½®åˆ°demoå¯¹è±¡ä¸­
 		demo.setId((Long)ret.getKeys());
-		//¸üĞÂ¸ÕÌí¼ÓµÄ¼ÇÂ¼
+		//æ›´æ–°åˆšæ·»åŠ çš„è®°å½•
 		demo.setName("newname");	
-		//upretÊÇÒ»¸öÊı×ÖÀàĞÍ£¬±íÊ¾¸üĞÂ³É¹¦µÄ¼ÇÂ¼Êı		
+		//upretæ˜¯ä¸€ä¸ªæ•°å­—ç±»å‹ï¼Œè¡¨ç¤ºæ›´æ–°æˆåŠŸçš„è®°å½•æ•°		
 		SQLExecutor.updateBean("update demo set name=#[name] where id=#[id]", demo,ret);
 		System.out.println();
 		
@@ -942,7 +942,7 @@ public class SimpleApiTest {
 	public @Test void testAutoGenalKeys() throws SQLException
 	{
 //		SQLExecutor.delete("delete from demo");
-		//¹¹½¨¶àÌõ¼ÇÂ¼
+		//æ„å»ºå¤šæ¡è®°å½•
 		List<AutoKeyDemo> datas = new ArrayList<AutoKeyDemo>();		
 		AutoKeyDemo demo = new AutoKeyDemo();		
 		demo.setName("name2");
@@ -953,19 +953,19 @@ public class SimpleApiTest {
 		demo = new AutoKeyDemo();		
 		demo.setName("name4");
 		datas.add(demo);
-		//²åÈë¶àÌõ¼ÇÂ¼£¬²¢½«³É¹¦²åÈëµÄ¼ÇÂ¼ÊıºÍ×îºóÒ»Ìõ¼ÇÂ¼µÄÖ÷¼üÖµ·â×°³ÉGetCUDResult¶ÔÏó·µ»Ø
-		//ÏÂÃæµÄinsertBeans·½·¨×îºó´øÁËÒ»¸öGetCUDResultÀàĞÍ²ÎÊı£¬
-		//Õâ¸ö·½·¨ÊÇ×¨ÃÅÎª·µ»Ø×ÔÔöÖ÷¼ü¶øĞÂÔöµÄÒ»¸öapi
+		//æ’å…¥å¤šæ¡è®°å½•ï¼Œå¹¶å°†æˆåŠŸæ’å…¥çš„è®°å½•æ•°å’Œæœ€åä¸€æ¡è®°å½•çš„ä¸»é”®å€¼å°è£…æˆGetCUDResultå¯¹è±¡è¿”å›
+		//ä¸‹é¢çš„insertBeansæ–¹æ³•æœ€åå¸¦äº†ä¸€ä¸ªGetCUDResultç±»å‹å‚æ•°ï¼Œ
+		//è¿™ä¸ªæ–¹æ³•æ˜¯ä¸“é—¨ä¸ºè¿”å›è‡ªå¢ä¸»é”®è€Œæ–°å¢çš„ä¸€ä¸ªapi
 		GetCUDResult ret = new GetCUDResult(); 
 		SQLExecutor.insertBeans("insert into demo(name) values(#[name])", datas,ret);
-		//»ñÈ¡×ÔÔöÖ÷¼üÁĞ±í£¨ºÜÒÅº¶£¬listÖĞÖ»ÓĞ×îºóÒ»Ìõ¼ÇÂ¼µÄÖ÷¼ü£¬
-		//µ«ÊÇ»¹ÊÇ±£ÁôÎªList¶ÔÏó£¬ÒÔ±ãºóĞøÓĞ·µ»ØËùÓĞ¼ÇÂ¼Ö÷¼üµÄ½â¾ö·½°¸ºóÔÙÒÔÁĞ±íµÄ·½Ê½·µ»ØÕâĞ©Ö÷¼ü£©
+		//è·å–è‡ªå¢ä¸»é”®åˆ—è¡¨ï¼ˆå¾ˆé—æ†¾ï¼Œlistä¸­åªæœ‰æœ€åä¸€æ¡è®°å½•çš„ä¸»é”®ï¼Œ
+		//ä½†æ˜¯è¿˜æ˜¯ä¿ç•™ä¸ºListå¯¹è±¡ï¼Œä»¥ä¾¿åç»­æœ‰è¿”å›æ‰€æœ‰è®°å½•ä¸»é”®çš„è§£å†³æ–¹æ¡ˆåå†ä»¥åˆ—è¡¨çš„æ–¹å¼è¿”å›è¿™äº›ä¸»é”®ï¼‰
 		List<Object> keys = (List<Object>)ret.getKeys();
 		for(int i = 0; i <keys.size(); i ++)
 		{
 			datas.get(i).setId((Long)keys.get(i));
 		}
-		//»ñÈ¡²åÈëµÄµÄ´¦ÀíÇé¿ö
+		//è·å–æ’å…¥çš„çš„å¤„ç†æƒ…å†µ
 		int[] updatecount = (int[])ret.getUpdatecount();
 		
 		

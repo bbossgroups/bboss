@@ -1,15 +1,15 @@
-<?xml version="1.0" encoding='gb2312'?>
+<?xml version="1.0" encoding='UTF-8'?>
 <properties>
 	<description>
 <![CDATA[
-	sqlÅäÖÃÎÄ¼þ
-	¿ÉÒÔÍ¨¹ýÃû³ÆÊôÐÔnameÅäÖÃÄ¬ÈÏsql£¬ÌØ¶¨Êý¾Ý¿âµÄsqlÍ¨¹ýÔÚ
-	Ãû³ÆºóÃæ¼ÓÊý¾Ý¿âÀàÐÍºó×ºÀ´Çø·Ö£¬ÀýÈç£º
+	sqlé…ç½®æ–‡ä»¶
+	å¯ä»¥é€šè¿‡åç§°å±žæ€§nameé…ç½®é»˜è®¤sqlï¼Œç‰¹å®šæ•°æ®åº“çš„sqlé€šè¿‡åœ¨
+	åç§°åŽé¢åŠ æ•°æ®åº“ç±»åž‹åŽç¼€æ¥åŒºåˆ†ï¼Œä¾‹å¦‚ï¼š
 	sqltest
 	sqltest-oracle
 	sqltest-derby
 	sqltest-mysql
-	µÈµÈ£¬±¾ÅäÖÃÊµÀý¾ÍÑÝÊ¾ÁË¾ßÌåÅäÖÃ·½·¨
+	ç­‰ç­‰ï¼Œæœ¬é…ç½®å®žä¾‹å°±æ¼”ç¤ºäº†å…·ä½“é…ç½®æ–¹æ³•
  ]]>
 	</description>
 	<property name="sqltest"><![CDATA[select * from LISTBEAN]]>
@@ -19,13 +19,13 @@
 	<property name="sqltemplate"><![CDATA[select FIELDNAME from LISTBEAN where FIELDNAME=#[fieldName]]]>
 	</property>
 	<property name="sqltemplate-oracle"><![CDATA[select FIELDNAME from LISTBEAN where FIELDNAME=#[fieldName]  ]]></property>
-	<!-- ¶¯Ì¬sql£¬Èç¹ûFIELDNAME ²»µÈÓÚnull£¬²¢ÇÒFIELDNAME²»Îª""½«FIELDNAME×÷Îª²éÑ¯Ìõ¼þ -->
+	<!-- åŠ¨æ€sqlï¼Œå¦‚æžœFIELDNAME ä¸ç­‰äºŽnullï¼Œå¹¶ä¸”FIELDNAMEä¸ä¸º""å°†FIELDNAMEä½œä¸ºæŸ¥è¯¢æ¡ä»¶ -->
 	<property name="dynamicsqltemplate"><![CDATA[select *  from LISTBEAN  where 1=1 
 					#if($fieldName && !$fieldName.equals("")) and FIELDNAME = #[fieldName] #end  ]]>
 	</property>
 
 
-	<!-- ¶¯Ì¬sql£¬Èç¹ûid ²»µÈÓÚ-1£¬²¢ÇÒid²»Îª0½«id×÷Îª²éÑ¯Ìõ¼þ -->
+	<!-- åŠ¨æ€sqlï¼Œå¦‚æžœid ä¸ç­‰äºŽ-1ï¼Œå¹¶ä¸”idä¸ä¸º0å°†idä½œä¸ºæŸ¥è¯¢æ¡ä»¶ -->
 	<property name="dynamicsqltemplateid"><![CDATA[select *  from LISTBEAN  where 1=1 
 					#if($id != -1 && $id != 0) and id = #[id] #end  ]]>
 	</property>
@@ -36,17 +36,17 @@
 	<property name="queryFieldWithSQLParams"><![CDATA[select count(1)  from LISTBEAN ]]>
 	</property>
 	<!--
-		ÊôÐÔËµÃ÷£ºistpl="true" multiparser="false"
-		istpl ±êÊ¶sqlÓï¾äÖÐÊÇ·ñÓÐvelocityÄ£°åÒýÇæÓï·¨£¬Èç¹ûÓÐÔò±ØÐëÉèÖÃÎªtrue£¬Ä¬ÈÏÎªtrue
+		å±žæ€§è¯´æ˜Žï¼šistpl="true" multiparser="false"
+		istpl æ ‡è¯†sqlè¯­å¥ä¸­æ˜¯å¦æœ‰velocityæ¨¡æ¿å¼•æ“Žè¯­æ³•ï¼Œå¦‚æžœæœ‰åˆ™å¿…é¡»è®¾ç½®ä¸ºtrueï¼Œé»˜è®¤ä¸ºtrue
 	-->
 	<property name="testsqlinfo"  istpl="true" multiparser="false"><![CDATA[select * from TD_APP_BOM where 1=1 ]]></property>
 	
 	<!-- 
-	bboss³Ö¾Ã²ã¿ò¼ÜÖ§³Ö¿äÄ£¿éÈÝÆ÷ÒýÓÃsql£¬¾ÍÊÇÈç¹û±¾Ä£¿éµÄsqlÓï¾äºÍÁíÍâÒ»¸öÄ£¿éµÄsqlÓï¾äÒ»Ñù£¬Ôò¿ÉÒÔÍ¨¹ýsqlnameºÍsqlfileÀ´½øÐÐÒýÓÃ£º
-	sqlfile:ÒýÓÃµÄsqlÎÄ¼þ
-	sqlname£ºÒýÓÃsqlfileÖÐ¶ÔÓÚµÄsqlÓï¾äµÄÃû³Æ
+	bbossæŒä¹…å±‚æ¡†æž¶æ”¯æŒå¤¸æ¨¡å—å®¹å™¨å¼•ç”¨sqlï¼Œå°±æ˜¯å¦‚æžœæœ¬æ¨¡å—çš„sqlè¯­å¥å’Œå¦å¤–ä¸€ä¸ªæ¨¡å—çš„sqlè¯­å¥ä¸€æ ·ï¼Œåˆ™å¯ä»¥é€šè¿‡sqlnameå’Œsqlfileæ¥è¿›è¡Œå¼•ç”¨ï¼š
+	sqlfile:å¼•ç”¨çš„sqlæ–‡ä»¶
+	sqlnameï¼šå¼•ç”¨sqlfileä¸­å¯¹äºŽçš„sqlè¯­å¥çš„åç§°
 	
-	½¨Òé²»Òª´ÓsqlÓï¾ä¼¶±ðÒýÓÃsqlÓ¦¸Ã´ÓÒµÎñ²ã×é¼þÒýÓÃµ÷ÓÃÄ£Ê½À´ÊµÏÖ£¬ÀàËÆÓÚÄ£¿éÖ®¼äµÄ½Ó¿Úµ÷ÓÃ¹ØÏµ
+	å»ºè®®ä¸è¦ä»Žsqlè¯­å¥çº§åˆ«å¼•ç”¨sqlåº”è¯¥ä»Žä¸šåŠ¡å±‚ç»„ä»¶å¼•ç”¨è°ƒç”¨æ¨¡å¼æ¥å®žçŽ°ï¼Œç±»ä¼¼äºŽæ¨¡å—ä¹‹é—´çš„æŽ¥å£è°ƒç”¨å…³ç³»
 	 -->
 	<property name="queryCountMaterialList" 
 		sqlname="queryCountMaterialList" 

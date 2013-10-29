@@ -38,33 +38,33 @@ import com.frameworkset.common.tag.exception.FormulaException;
 import com.frameworkset.util.StringUtil;
 
 /**
- * ËùÓĞÓÃÓÚ·ÖÒ³/ÁĞ±í/ÏêÏ¸ĞÅÏ¢±êÇ©Âß¼­ÅĞ¶ÏµÄ±êÇ©»ùÀà£¬
- * ¾ßÌåµÄÂß¼­±êÇ©Ö»ĞèÊµÏÖÆäÖĞµÄ³éÏó·½·¨match()¼´¿É
+ * æ‰€æœ‰ç”¨äºåˆ†é¡µ/åˆ—è¡¨/è¯¦ç»†ä¿¡æ¯æ ‡ç­¾é€»è¾‘åˆ¤æ–­çš„æ ‡ç­¾åŸºç±»ï¼Œ
+ * å…·ä½“çš„é€»è¾‘æ ‡ç­¾åªéœ€å®ç°å…¶ä¸­çš„æŠ½è±¡æ–¹æ³•match()å³å¯
  * 
  * @author biaoping.yin
  * @version 1.0
  */
 public abstract class MatchTag extends BaseValueTag {
 	
-    /**Êµ¼ÊÖµ*/
+    /**å®é™…å€¼*/
 	protected Object actualValue;
 	
-	/**ÆÚÍûÖµ*/
+	/**æœŸæœ›å€¼*/
 	protected Object value;
 	
-	/**±í´ïÊ½£¬Í¨¹ı¼ÆËã±í´ïÊ½µÄ½á¹û»ñÈ¡ÆÚÍûÖµ*/
+	/**è¡¨è¾¾å¼ï¼Œé€šè¿‡è®¡ç®—è¡¨è¾¾å¼çš„ç»“æœè·å–æœŸæœ›å€¼*/
 	protected String expressionValue;
 	
 	/**
-	 * ¿ØÖÆÊÇ·ñ½«ÕæÖµÌí¼Óµ½¸Ã×Ö¶ÎµÄÃ¶¾ÙÖµÖĞ£¨À©Õ¹×Ö¶Î£¬Éú³É±¨±íÊ±ÓĞÓÃ£©
+	 * æ§åˆ¶æ˜¯å¦å°†çœŸå€¼æ·»åŠ åˆ°è¯¥å­—æ®µçš„æšä¸¾å€¼ä¸­ï¼ˆæ‰©å±•å­—æ®µï¼Œç”ŸæˆæŠ¥è¡¨æ—¶æœ‰ç”¨ï¼‰
 	 */
 	protected boolean addTruevalue = false; 
 	
 	protected String pattern;
 	
 	/**
-	 * in£¬notin±êÇ©Æ¥ÅäµÄ·¶Î§Ã¶¾ÙÖµ
-	 * ¿ÉÒÔÊÇ±äÁ¿±í´ïÊ½À´Ö¸¶¨£¬ÀıÈç£º{xxxscope}
+	 * inï¼Œnotinæ ‡ç­¾åŒ¹é…çš„èŒƒå›´æšä¸¾å€¼
+	 * å¯ä»¥æ˜¯å˜é‡è¡¨è¾¾å¼æ¥æŒ‡å®šï¼Œä¾‹å¦‚ï¼š{xxxscope}
 	 */
 	
 	protected String scope;
@@ -96,7 +96,7 @@ public abstract class MatchTag extends BaseValueTag {
 	    actualValue = evaluateActualValue();
 //		actualValue = getOutStr();
 //		setMeta();
-		//Èç¹ûÆÚÍûÖµÎª±í´ïÊ½£¬ÔòÇó½â±í´ïÊ½µÄÖµÀ´µÃµ½ÆÚÍûÖµ
+		//å¦‚æœæœŸæœ›å€¼ä¸ºè¡¨è¾¾å¼ï¼Œåˆ™æ±‚è§£è¡¨è¾¾å¼çš„å€¼æ¥å¾—åˆ°æœŸæœ›å€¼
 		if(this.getExpressionValue() != null)
             try {
             	Object value_ = getFormulaValue(getExpressionValue());

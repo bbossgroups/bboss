@@ -399,7 +399,7 @@ public class CommonRequest implements HttpServletRequest,Serializable {
 
 	/**
 	 *  Description:
-	 * @return 内容长度
+	 * @return 鍐呭闀垮害
 	 * @see javax.servlet.ServletRequest#getContentLength()
 	 */
 	public int getContentLength() {
@@ -409,7 +409,7 @@ public class CommonRequest implements HttpServletRequest,Serializable {
 
 	/**
 	 *  Description:
-	 * @return 内容类型
+	 * @return 鍐呭绫诲瀷
 	 * @see javax.servlet.ServletRequest#getContentType()
 	 */
 	public String getContentType() {
@@ -448,13 +448,13 @@ public class CommonRequest implements HttpServletRequest,Serializable {
 	public String getParameter(String arg0) {
 		// TODO Auto-generated method stub
         String value = "";
-        //处理tubine中文问题
+        //澶勭悊tubine涓枃闂
 		if(rundata == null)
 			value = request.getParameter(arg0);
 		else
 			value = rundata.getParameters().getString(arg0);
 
-        //处理手机浏览器和oprea中文问题
+        //澶勭悊鎵嬫満娴忚鍣ㄥ拰oprea涓枃闂
         value = this.getParameterOfMobile(value);
         return value;
 	}

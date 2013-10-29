@@ -27,7 +27,7 @@ import org.frameworkset.spi.remote.RequestHandler;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2010-6-16 œ¬ŒÁ09:18:30
+ * @Date 2010-6-16 ‰∏ãÂçà09:18:30
  * @author biaoping.yin
  * @version 1.0
  */

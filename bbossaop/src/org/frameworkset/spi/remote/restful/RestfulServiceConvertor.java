@@ -18,21 +18,21 @@ package org.frameworkset.spi.remote.restful;
 
 /**
  * <p>Title: RestfulServiceConvertor.java</p> 
- * <p>Description: µØÖ·ĞÅÏ¢·­Òë</p>
+ * <p>Description: åœ°å€ä¿¡æ¯ç¿»è¯‘</p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2010-3-5 ÏÂÎç04:33:57
+ * @Date 2010-3-5 ä¸‹åˆ04:33:57
  * @author biaoping.yin
  * @version 1.0
  */
 public interface RestfulServiceConvertor
 {
     /**
-     * ½«restful±êÊ¶µØÖ·×ª»»ÎªÊµ¼ÊÄ¿±ê×¢²áµØÖ·
-     * ×ª»»¹æÔò£¬ÓÉrestfuluddi×ª»»³öÊµ¼ÊµØÖ·£¬È»ºóÓÃÊµ¼ÊµØÖ·½áºÏserviceidºÍÏà¹ØµÄÈÏÖ¤ĞÅÏ¢
-     * À´»ñÈ¡ÏÂÒ»²½·şÎñµ÷ÓÃµØÖ·¡£
-     * @param restfuluddi restful·ç¸ñµØÖ·±êÊ¶£¬ĞèÒª×ª»»ÎªÄ¿±êµØÖ·
-     * @param serviceid Òªµ÷ÓÃµÄ·şÎñ±êÊ¶
+     * å°†restfulæ ‡è¯†åœ°å€è½¬æ¢ä¸ºå®é™…ç›®æ ‡æ³¨å†Œåœ°å€
+     * è½¬æ¢è§„åˆ™ï¼Œç”±restfuluddiè½¬æ¢å‡ºå®é™…åœ°å€ï¼Œç„¶åç”¨å®é™…åœ°å€ç»“åˆserviceidå’Œç›¸å…³çš„è®¤è¯ä¿¡æ¯
+     * æ¥è·å–ä¸‹ä¸€æ­¥æœåŠ¡è°ƒç”¨åœ°å€ã€‚
+     * @param restfuluddi restfulé£æ ¼åœ°å€æ ‡è¯†ï¼Œéœ€è¦è½¬æ¢ä¸ºç›®æ ‡åœ°å€
+     * @param serviceid è¦è°ƒç”¨çš„æœåŠ¡æ ‡è¯†
      * @return
      */
     public String convert(String restfuluddi,String serviceid);

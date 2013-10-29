@@ -20,7 +20,7 @@ import java.util.Map;
 
 /**
  * <p>Title: SerialStack.java</p> 
- * <p>Description: ¼ÇÂ¼¶ÔÏóºÍ¶ÔÏóÒıÓÃ±êÊ¶£¬±ãÓÚ¹¹½¨ºóĞøµÄÒıÓÃ½Úµã</p>
+ * <p>Description: è®°å½•å¯¹è±¡å’Œå¯¹è±¡å¼•ç”¨æ ‡è¯†ï¼Œä¾¿äºæ„å»ºåç»­çš„å¼•ç”¨èŠ‚ç‚¹</p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2008</p>
  * @Date 2012-1-6

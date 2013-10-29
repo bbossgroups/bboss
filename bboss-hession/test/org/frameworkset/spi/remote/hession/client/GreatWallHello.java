@@ -21,7 +21,7 @@ package org.frameworkset.spi.remote.hession.client;
  * <p> bboss workgroup </p>
  * <p> Copyright (c) 2009 </p>
  * 
- * @Date 2013-2-22 ÏÂÎç4:09:46
+ * @Date 2013-2-22 ä¸‹åˆ4:09:46
  * @author biaoping.yin
  * @version 1.0
  */

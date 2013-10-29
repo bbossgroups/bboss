@@ -50,7 +50,7 @@ import com.frameworkset.common.poolman.handle.XMLMark;
  * 
  * <p>Title: CallableDBUtil.java</p>
  *
- * <p>Description: ´æ´¢¹ı³Ì</p>
+ * <p>Description: å­˜å‚¨è¿‡ç¨‹</p>
  *
  * <p>Copyright: Copyright (c) 2007</p>
  *
@@ -65,7 +65,7 @@ public class CallableDBUtil extends PreparedDBUtil {
 	
 	private static Logger log = Logger.getLogger(CallableDBUtil.class);
 	/**
-	 * ¸²¸Ç¸¸ÀàµÄ²ÎÊı¹¹Ôì·½·¨
+	 * è¦†ç›–çˆ¶ç±»çš„å‚æ•°æ„é€ æ–¹æ³•
 	 */
 	protected Param buildParam()
 	{
@@ -73,7 +73,7 @@ public class CallableDBUtil extends PreparedDBUtil {
 	}
 	
 	/**
-	 * ¸²¸Ç¸¸ÀàµÄ²ÎÊı¹¹Ôì·½·¨
+	 * è¦†ç›–çˆ¶ç±»çš„å‚æ•°æ„é€ æ–¹æ³•
 	 */
 	protected Params buildParams()
 	{
@@ -94,7 +94,7 @@ public class CallableDBUtil extends PreparedDBUtil {
 
 
 	/**
-	 *  ¹¹ÔìÔ¤±àÒë²ÎÊı
+	 *  æ„é€ é¢„ç¼–è¯‘å‚æ•°
 	 * @param index
 	 * @param sqlType
 	 * @param method
@@ -129,7 +129,7 @@ public class CallableDBUtil extends PreparedDBUtil {
 	}
 	
 	/**
-	 *  ¹¹ÔìÔ¤±àÒë²ÎÊı
+	 *  æ„é€ é¢„ç¼–è¯‘å‚æ•°
 	 * @param index
 	 * @param sqlType
 	 * @param scale
@@ -2193,7 +2193,7 @@ public class CallableDBUtil extends PreparedDBUtil {
 	}
 	
 	/**
-	 * Íâ²¿Á´½Ó
+	 * å¤–éƒ¨é“¾æ¥
 	 * @param con
 	 * @throws java.sql.SQLException
 	 */

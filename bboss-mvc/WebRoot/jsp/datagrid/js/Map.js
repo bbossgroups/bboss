@@ -1,33 +1,33 @@
 /*  
- * ½Ó¿Ú£º size() »ñÈ¡MAPÔªËØ¸öÊı isEmpty() ÅĞ¶ÏMAPÊÇ·ñÎª¿Õ clear() É¾³ıMAPËùÓĞÔªËØ put(key, value)  
- * ÏòMAPÖĞÔö¼ÓÔªËØ£¨key, value) remove(key) É¾³ıÖ¸¶¨KEYµÄÔªËØ£¬³É¹¦·µ»ØTrue£¬Ê§°Ü·µ»ØFalse get(key)  
- * »ñÈ¡Ö¸¶¨KEYµÄÔªËØÖµVALUE£¬Ê§°Ü·µ»ØNULL element(index)  
- * »ñÈ¡Ö¸¶¨Ë÷ÒıµÄÔªËØ£¨Ê¹ÓÃelement.key£¬element.value»ñÈ¡KEYºÍVALUE£©£¬Ê§°Ü·µ»ØNULL containsKey(key)  
- * ÅĞ¶ÏMAPÖĞÊÇ·ñº¬ÓĞÖ¸¶¨KEYµÄÔªËØ containsValue(value) ÅĞ¶ÏMAPÖĞÊÇ·ñº¬ÓĞÖ¸¶¨VALUEµÄÔªËØ values()  
- * »ñÈ¡MAPÖĞËùÓĞVALUEµÄÊı×é£¨ARRAY£© keys() »ñÈ¡MAPÖĞËùÓĞKEYµÄÊı×é£¨ARRAY£©  
+ * æ¥å£ï¼š size() è·å–MAPå…ƒç´ ä¸ªæ•° isEmpty() åˆ¤æ–­MAPæ˜¯å¦ä¸ºç©º clear() åˆ é™¤MAPæ‰€æœ‰å…ƒç´  put(key, value)  
+ * å‘MAPä¸­å¢åŠ å…ƒç´ ï¼ˆkey, value) remove(key) åˆ é™¤æŒ‡å®šKEYçš„å…ƒç´ ï¼ŒæˆåŠŸè¿”å›Trueï¼Œå¤±è´¥è¿”å›False get(key)  
+ * è·å–æŒ‡å®šKEYçš„å…ƒç´ å€¼VALUEï¼Œå¤±è´¥è¿”å›NULL element(index)  
+ * è·å–æŒ‡å®šç´¢å¼•çš„å…ƒç´ ï¼ˆä½¿ç”¨element.keyï¼Œelement.valueè·å–KEYå’ŒVALUEï¼‰ï¼Œå¤±è´¥è¿”å›NULL containsKey(key)  
+ * åˆ¤æ–­MAPä¸­æ˜¯å¦å«æœ‰æŒ‡å®šKEYçš„å…ƒç´  containsValue(value) åˆ¤æ–­MAPä¸­æ˜¯å¦å«æœ‰æŒ‡å®šVALUEçš„å…ƒç´  values()  
+ * è·å–MAPä¸­æ‰€æœ‰VALUEçš„æ•°ç»„ï¼ˆARRAYï¼‰ keys() è·å–MAPä¸­æ‰€æœ‰KEYçš„æ•°ç»„ï¼ˆARRAYï¼‰  
  *   
- * Àı×Ó£º var map = new Map();  
- * map.put("key", "value"); var val = map.get("key") ¡­¡­  
+ * ä¾‹å­ï¼š var map = new Map();  
+ * map.put("key", "value"); var val = map.get("key") â€¦â€¦  
  */  
 function Map() {	
     this.elements = new Array();   
   
-    // »ñÈ¡MAPÔªËØ¸öÊı   
+    // è·å–MAPå…ƒç´ ä¸ªæ•°   
     this.size = function() {   
         return this.elements.length;   
     }   
   
-    // ÅĞ¶ÏMAPÊÇ·ñÎª¿Õ   
+    // åˆ¤æ–­MAPæ˜¯å¦ä¸ºç©º   
     this.isEmpty = function() {   
         return (this.elements.length < 1);   
     }   
   
-    // É¾³ıMAPËùÓĞÔªËØ   
+    // åˆ é™¤MAPæ‰€æœ‰å…ƒç´    
     this.clear = function() {   
         this.elements = new Array();   
     }   
   
-    // ÏòMAPÖĞÔö¼ÓÔªËØ£¨key, value)   
+    // å‘MAPä¸­å¢åŠ å…ƒç´ ï¼ˆkey, value)   
     this.put = function(_key, _value) {   
         this.elements.push({   
                     key : _key,   
@@ -35,13 +35,13 @@ function Map() {
                 });   
     }   
        
-    // Ôö¼ÓÔªËØ²¢¸²¸Ç   
+    // å¢åŠ å…ƒç´ å¹¶è¦†ç›–   
     this.putOverride = function(_key,_value){   
         this.remove(_key);   
         this.put(_key,_value);   
     }   
   
-    // É¾³ıÖ¸¶¨KEYµÄÔªËØ£¬³É¹¦·µ»ØTrue£¬Ê§°Ü·µ»ØFalse   
+    // åˆ é™¤æŒ‡å®šKEYçš„å…ƒç´ ï¼ŒæˆåŠŸè¿”å›Trueï¼Œå¤±è´¥è¿”å›False   
     this.remove = function(_key) {   
         var bln = false;   
         try {   
@@ -57,7 +57,7 @@ function Map() {
         return bln;   
     }   
   
-    // »ñÈ¡Ö¸¶¨KEYµÄÔªËØÖµVALUE£¬Ê§°Ü·µ»ØNULL   
+    // è·å–æŒ‡å®šKEYçš„å…ƒç´ å€¼VALUEï¼Œå¤±è´¥è¿”å›NULL   
     this.get = function(_key) {   
         try {   
             for (i = 0; i < this.elements.length; i++) {   
@@ -70,7 +70,7 @@ function Map() {
         }   
     }   
   
-    // »ñÈ¡Ö¸¶¨Ë÷ÒıµÄÔªËØ£¨Ê¹ÓÃelement.key£¬element.value»ñÈ¡KEYºÍVALUE£©£¬Ê§°Ü·µ»ØNULL   
+    // è·å–æŒ‡å®šç´¢å¼•çš„å…ƒç´ ï¼ˆä½¿ç”¨element.keyï¼Œelement.valueè·å–KEYå’ŒVALUEï¼‰ï¼Œå¤±è´¥è¿”å›NULL   
     this.element = function(_index) {   
         if (_index < 0 || _index >= this.elements.length) {   
             return null;   
@@ -78,7 +78,7 @@ function Map() {
         return this.elements[_index];   
     }   
   
-    // ÅĞ¶ÏMAPÖĞÊÇ·ñº¬ÓĞÖ¸¶¨KEYµÄÔªËØ   
+    // åˆ¤æ–­MAPä¸­æ˜¯å¦å«æœ‰æŒ‡å®šKEYçš„å…ƒç´    
     this.containsKey = function(_key) {   
         var bln = false;   
         try {   
@@ -93,7 +93,7 @@ function Map() {
         return bln;   
     }   
   
-    // ÅĞ¶ÏMAPÖĞÊÇ·ñº¬ÓĞÖ¸¶¨VALUEµÄÔªËØ   
+    // åˆ¤æ–­MAPä¸­æ˜¯å¦å«æœ‰æŒ‡å®šVALUEçš„å…ƒç´    
     this.containsValue = function(_value) {   
         var bln = false;   
         try {   
@@ -108,7 +108,7 @@ function Map() {
         return bln;   
     }   
   
-    // »ñÈ¡MAPÖĞËùÓĞVALUEµÄÊı×é£¨ARRAY£©   
+    // è·å–MAPä¸­æ‰€æœ‰VALUEçš„æ•°ç»„ï¼ˆARRAYï¼‰   
     this.values = function() {   
         var arr = new Array();   
         for (i = 0; i < this.elements.length; i++) {   
@@ -117,7 +117,7 @@ function Map() {
         return arr;   
     }   
   
-    // »ñÈ¡MAPÖĞËùÓĞKEYµÄÊı×é£¨ARRAY£©   
+    // è·å–MAPä¸­æ‰€æœ‰KEYçš„æ•°ç»„ï¼ˆARRAYï¼‰   
     this.keys = function() {   
         var arr = new Array();   
         for (i = 0; i < this.elements.length; i++) {   
@@ -126,15 +126,15 @@ function Map() {
         return arr;   
     }
     
-    // ½«Array,copy 
+    // å°†Array,copy 
     this.copyArray = function(_Array){
         var len = _Array.length;
     	var arr = new Array();
-    	if(arr.constructor == Array){ //¶şÎ¬µÄ
+    	if(arr.constructor == Array){ //äºŒç»´çš„
     		for(var i=0; i<len; i++){
     			arr.push(_Array[i]);
     		}
-    	} else {//Ò»Î¬µÄ
+    	} else {//ä¸€ç»´çš„
     		
     	}
     	return arr;
@@ -142,7 +142,7 @@ function Map() {
 }   
   
 /**  
-   Êı×ÖÊı×é£¬¿É½«×Ö´®ÖĞµÄÊı×ÖÌá³ö²¢¼ÓÈëÊı×é£¬·µ»Ø×î´ó×îĞ¡Öµ£¬ÅÅĞò  
+   æ•°å­—æ•°ç»„ï¼Œå¯å°†å­—ä¸²ä¸­çš„æ•°å­—æå‡ºå¹¶åŠ å…¥æ•°ç»„ï¼Œè¿”å›æœ€å¤§æœ€å°å€¼ï¼Œæ’åº  
 */  
 function NumberArray(){   
        
@@ -169,12 +169,12 @@ function NumberArray(){
        
     this.bubbleSort = function() {   
         var arr = this.elements;   
-        // Íâ²ãÑ­»·£¬¹²Òª½øĞĞarr.length´ÎÇó×î´óÖµ²Ù×÷   
+        // å¤–å±‚å¾ªç¯ï¼Œå…±è¦è¿›è¡Œarr.lengthæ¬¡æ±‚æœ€å¤§å€¼æ“ä½œ   
         for (var i = 0; i < arr.length; i++) {   
-            // ÄÚ²ãÑ­»·£¬ÕÒµ½µÚi´óµÄÔªËØ£¬²¢½«ÆäºÍµÚi¸öÔªËØ½»»»   
+            // å†…å±‚å¾ªç¯ï¼Œæ‰¾åˆ°ç¬¬iå¤§çš„å…ƒç´ ï¼Œå¹¶å°†å…¶å’Œç¬¬iä¸ªå…ƒç´ äº¤æ¢   
             for (var j = i; j < arr.length; j++) {   
                 if (parseInt(arr[i]) < parseInt(arr[j])) {   
-                    // ½»»»Á½¸öÔªËØµÄÎ»ÖÃ   
+                    // äº¤æ¢ä¸¤ä¸ªå…ƒç´ çš„ä½ç½®   
                     var temp = arr[i];   
                     arr[i] = arr[j];   
                     arr[j] = temp;   

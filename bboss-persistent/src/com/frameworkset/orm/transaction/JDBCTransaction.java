@@ -59,7 +59,7 @@ import com.frameworkset.orm.annotation.TransactionType;
  */
 public class JDBCTransaction {
 	/**
-	 * ÊÂÎñÀàĞÍ£¬Ä¬ÈÏÎªÎŞÊÂÎñ
+	 * äº‹åŠ¡ç±»å‹ï¼Œé»˜è®¤ä¸ºæ— äº‹åŠ¡
 	 */
 	
 	
@@ -160,7 +160,7 @@ public class JDBCTransaction {
     		this.count ++;
     	}
     	
-    	//¼ÆÊıÆ÷¼õÒ»£¬Ä¿Ç°Ã»ÓĞµ÷ÓÃ
+    	//è®¡æ•°å™¨å‡ä¸€ï¼Œç›®å‰æ²¡æœ‰è°ƒç”¨
     	protected void decreament()
     	{
     		this.count --;
@@ -318,14 +318,14 @@ public class JDBCTransaction {
 	public Connection getConnectionFromDS(DataSource datasource) throws TransactionException {
 		if(wasRolledBack())
 		{
-			throw new TransactionException(new SQLException("JDBCTransaction.getConnectionFromDS()£ºTX was RolledBack."));
+			throw new TransactionException(new SQLException("JDBCTransaction.getConnectionFromDS()ï¼šTX was RolledBack."));
 		}
 		
 		if(this.wasCommitted())
-			throw new TransactionException(new SQLException("JDBCTransaction.getConnectionFromDS£ºTX was committed."));
+			throw new TransactionException(new SQLException("JDBCTransaction.getConnectionFromDSï¼šTX was committed."));
 		if(this.status == Status.STATUS_MARKED_ROLLBACK)
 		{
-			throw new TransactionException(new SQLException("JDBCTransaction.getConnectionFromDS£ºTX was remarked rollingback."));
+			throw new TransactionException(new SQLException("JDBCTransaction.getConnectionFromDSï¼šTX was remarked rollingback."));
 		}
 		TransactionEntity txentity = null;
 //		String t_dbName = (dbName == null ?SQLManager.getInstance().getDefaultDBName():dbName);
@@ -341,7 +341,7 @@ public class JDBCTransaction {
     		{    			
 	    		con = datasource.getConnection();
 	    		if(con == null)
-	    			throw new TransactionException(new SQLException("JDBCTransaction.getConnectionFromDS£ºRequest connection  from datasource return null!"));
+	    			throw new TransactionException(new SQLException("JDBCTransaction.getConnectionFromDSï¼šRequest connection  from datasource return null!"));
 	    		txentity = new TransactionEntity(con);
 	    		txentity.increament();
 	    		txentity.setStatus(Status.STATUS_ACTIVE);
@@ -355,7 +355,7 @@ public class JDBCTransaction {
     					|| txentity.getStatus() == Status.STATUS_MARKED_ROLLBACK
     					|| txentity.getStatus() == Status.STATUS_ROLLEDBACK
     					|| txentity.getStatus() == Status.STATUS_ROLLING_BACK)
-    				throw new TransactionException(new SQLException("JDBCTransaction.getConnectionFromDS£º" + "TransactionEntity.getStatus() == Status.STATUS_COMMITTED "
+    				throw new TransactionException(new SQLException("JDBCTransaction.getConnectionFromDSï¼š" + "TransactionEntity.getStatus() == Status.STATUS_COMMITTED "
         					+ "|| TransactionEntity.getStatus() == Status.STATUS_MARKED_ROLLBACK"
         					+ "|| TransactionEntity.getStatus() == Status.STATUS_ROLLEDBACK"
         					+ "|| TransactionEntity.getStatus() == Status.STATUS_ROLLING_BACK"));
@@ -395,14 +395,14 @@ public class JDBCTransaction {
     	
     	if(wasRolledBack())
 		{
-			throw new TransactionException(new SQLException("JDBCTransaction.getConnection(dbName="+ dbName +")£ºTX was RolledBack."));
+			throw new TransactionException(new SQLException("JDBCTransaction.getConnection(dbName="+ dbName +")ï¼šTX was RolledBack."));
 		}
 		
 		if(this.wasCommitted())
-			throw new TransactionException(new SQLException("JDBCTransaction.getConnection(dbName="+ dbName +")£ºTX was committed."));
+			throw new TransactionException(new SQLException("JDBCTransaction.getConnection(dbName="+ dbName +")ï¼šTX was committed."));
 		if(this.status == Status.STATUS_MARKED_ROLLBACK)
 		{
-			throw new TransactionException(new SQLException("JDBCTransaction.getConnection(dbName="+ dbName +")£ºTX was remarked rollingback."));
+			throw new TransactionException(new SQLException("JDBCTransaction.getConnection(dbName="+ dbName +")ï¼šTX was remarked rollingback."));
 		}
 		TransactionEntity txentity = null;
 		String t_dbName = (dbName == null ?SQLManager.getInstance().getDefaultDBName():dbName);
@@ -418,7 +418,7 @@ public class JDBCTransaction {
     		{    			
 	    		con = SQLManager.getInstance().requestConnection(t_dbName);
 	    		if(con == null)
-	    			throw new TransactionException(new SQLException("JDBCTransaction.getConnection(dbName="+ dbName +")£ºRequest connection  from pool return null!"));
+	    			throw new TransactionException(new SQLException("JDBCTransaction.getConnection(dbName="+ dbName +")ï¼šRequest connection  from pool return null!"));
 	    		txentity = new TransactionEntity(con);
 	    		txentity.increament();
 	    		txentity.setStatus(Status.STATUS_ACTIVE);
@@ -432,7 +432,7 @@ public class JDBCTransaction {
     					|| txentity.getStatus() == Status.STATUS_MARKED_ROLLBACK
     					|| txentity.getStatus() == Status.STATUS_ROLLEDBACK
     					|| txentity.getStatus() == Status.STATUS_ROLLING_BACK)
-    				throw new TransactionException(new SQLException("JDBCTransaction.getConnection(dbName="+ dbName +")£º" + "TransactionEntity.getStatus() == Status.STATUS_COMMITTED "
+    				throw new TransactionException(new SQLException("JDBCTransaction.getConnection(dbName="+ dbName +")ï¼š" + "TransactionEntity.getStatus() == Status.STATUS_COMMITTED "
         					+ "|| TransactionEntity.getStatus() == Status.STATUS_MARKED_ROLLBACK"
         					+ "|| TransactionEntity.getStatus() == Status.STATUS_ROLLEDBACK"
         					+ "|| TransactionEntity.getStatus() == Status.STATUS_ROLLING_BACK"));
@@ -561,7 +561,7 @@ public class JDBCTransaction {
 	
 
 	/**
-	 * ÊÂÎñÒıÓÃ¼ÆÊıÆ÷¼õÒ»
+	 * äº‹åŠ¡å¼•ç”¨è®¡æ•°å™¨å‡ä¸€
 	 */
 	public void decreament()
 	{
@@ -571,7 +571,7 @@ public class JDBCTransaction {
 
 		if(this.status == Status.STATUS_MARKED_ROLLBACK)
 		{
-			System.out.println("±ê¼ÇÎª´ı»Ø¹öµÄÊÂÎñ");
+			System.out.println("æ ‡è®°ä¸ºå¾…å›æ»šçš„äº‹åŠ¡");
 //			this.rollback();
 			throw new RollbackException("Commit " + dbName + " TX failed: TX MARKED_ROLLBACK" );
 		}
@@ -585,7 +585,7 @@ public class JDBCTransaction {
 				this.status = Status.STATUS_COMMITTED;
 			} catch (SQLException e) {
 				this.status = Status.STATUS_MARKED_ROLLBACK;
-				this.increament(); //ÖØĞÂ¼Ó1·ÀÖ¹ÔÚ»Ø¹öÊ±ÖØ¸´¼õ1
+				this.increament(); //é‡æ–°åŠ 1é˜²æ­¢åœ¨å›æ»šæ—¶é‡å¤å‡1
 				throw new RollbackException(e.getMessage());						
 			}
 		}
@@ -616,7 +616,7 @@ public class JDBCTransaction {
 		
 	}
 	/**
-	 * Ò»¸ö»Ø¹öÈ«²¿»Ø¹ö
+	 * ä¸€ä¸ªå›æ»šå…¨éƒ¨å›æ»š
 	 * @param dbName
 	 * @throws IllegalStateException
 	
@@ -630,7 +630,7 @@ public class JDBCTransaction {
 //			{
 //				System.out.println("executeStack ");
 //			}
-			throw new IllegalStateException("ÊÂÎñÒÑ¾­»Ø¹ö");
+			throw new IllegalStateException("äº‹åŠ¡å·²ç»å›æ»š");
 		}
 		
 		if(this.status == Status.STATUS_COMMITTED)
@@ -639,10 +639,10 @@ public class JDBCTransaction {
 //			{
 //				System.out.println("executeStack");
 //			}
-			throw new IllegalStateException("ÊÂÎñÒÑ¾­Ìá½»");
+			throw new IllegalStateException("äº‹åŠ¡å·²ç»æäº¤");
 		}
 		/**
-		 * ¼ÆÊıÆ÷¼õÒ»
+		 * è®¡æ•°å™¨å‡ä¸€
 		 */
 		this.decreament();
 		if(this.count <= 0)
@@ -655,7 +655,7 @@ public class JDBCTransaction {
 		}
 		
 		/**
-		 * Ã¿´ÎÏÔÊ¾µØµ÷ÓÃ»Ø¹ö²Ù×÷ºó£¬Á¢¼´ÊÍ·ÅËùÓĞµÄ×ÊÔ´£¬»Ø¹öËùÓĞµÄÊı¾İ¿âÊÂÎñ
+		 * æ¯æ¬¡æ˜¾ç¤ºåœ°è°ƒç”¨å›æ»šæ“ä½œåï¼Œç«‹å³é‡Šæ”¾æ‰€æœ‰çš„èµ„æºï¼Œå›æ»šæ‰€æœ‰çš„æ•°æ®åº“äº‹åŠ¡
 		 */
 		while (executeStack.size() > 0)
 		{

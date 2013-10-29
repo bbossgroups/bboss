@@ -25,7 +25,7 @@ import org.frameworkset.util.annotations.CookieValue;
  * <p> bboss workgroup </p>
  * <p> Copyright (c) 2005-2013 </p>
  * 
- * @Date 2013Äê9ÔÂ30ÈÕ
+ * @Date 2013å¹´9æœˆ30æ—¥
  * @author biaoping.yin
  * @version 1.0
  */
@@ -63,7 +63,7 @@ public class CookieValueWraper {
 	 */
 	private String defaultvalue;
 	/**
-	 * Ö¸¶¨ÈÕÆÚ¸ñÊ½
+	 * æŒ‡å®šæ—¥æœŸæ ¼å¼
 	 * @return
 	 */
 	private String dateformat;
@@ -99,7 +99,7 @@ public class CookieValueWraper {
 		return defaultvalue;
 	}
 	/**
-	 * Ö¸¶¨ÈÕÆÚ¸ñÊ½
+	 * æŒ‡å®šæ—¥æœŸæ ¼å¼
 	 * @return
 	 */
 	public String dateformat(){

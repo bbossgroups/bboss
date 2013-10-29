@@ -1,5 +1,5 @@
-<%@ page language="java" import="java.util.*" pageEncoding="GBK"%>
-<%@ page contentType="text/html; charset=GBK"%>
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8"%>
 <%
 String templet_id = "1";
 String report_id = "1";
@@ -8,7 +8,7 @@ String tableInfoId = "CAN_BE_TABLE_NAME";
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=GBK">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>DataGrid Editer</title>
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/jsp/datagrid/themes/default/easyui.css">
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/jsp/datagrid/themes/icon.css">
@@ -29,30 +29,30 @@ String tableInfoId = "CAN_BE_TABLE_NAME";
 		    {productid:'FL-DLH-02',name:'Persian'},
 		    {productid:'AV-CB-01',name:'Amazon Parrot'}
 		];
-		/*²úÆ·¸ñÊ½Æ÷*/
+		/*äº§å“æ ¼å¼å™¨*/
 		function formatter_product(value, rowData, rowIndex) {
 			for(var i=0; i<products.length; i++){
 				if (products[i].productid == value) return products[i].name;
 			}
 			return value;
 		}
-		/*³É±¾¸ñÊ½Æ÷*/
+		/*æˆæœ¬æ ¼å¼å™¨*/
 		function formatter_unitcost(value, rowData, rowIndex) {
 			if (null == value || "" == value) {
-				//alert("¶Ô²»Æğ£¡³É±¾²»ÄÜÎª¿Õ£¡");
+				//alert("å¯¹ä¸èµ·ï¼æˆæœ¬ä¸èƒ½ä¸ºç©ºï¼");
 				return 0.0;
 			}
 			
 			return value;
 		}
 		
-		/*Ğ£ÑéÆ÷*/
+		/*æ ¡éªŒå™¨*/
 		function validator(rowIndex, rowData) {
-			//Ğ£Ñé³É±¾
+			//æ ¡éªŒæˆæœ¬
 			if(null == rowData["unitcost"] || "" == rowData["unitcost"]){
-				$.messager.alert('´íÎóĞÅÏ¢','¶Ô²»Æğ£¡³É±¾²»ÄÜÎª¿Õ£¡','error');
-				//alert("¶Ô²»Æğ£¡³É±¾²»ÄÜÎª¿Õ£¡");
-				//¶¨Î»ÖØĞÂĞŞ¸Ä
+				$.messager.alert('é”™è¯¯ä¿¡æ¯','å¯¹ä¸èµ·ï¼æˆæœ¬ä¸èƒ½ä¸ºç©ºï¼','error');
+				//alert("å¯¹ä¸èµ·ï¼æˆæœ¬ä¸èƒ½ä¸ºç©ºï¼");
+				//å®šä½é‡æ–°ä¿®æ”¹
 				$('#tt').datagrid('beginEdit', rowIndex);
 				return false;
 			}
@@ -64,32 +64,32 @@ String tableInfoId = "CAN_BE_TABLE_NAME";
 			tableInfoId:'<%=tableInfoId%>'
 			
 		};
-		/*³õÊ¼»¯¶ÔÏó*/
+		/*åˆå§‹åŒ–å¯¹è±¡*/
 		var editer1 = new DataGrid('#tt',editer_params);
 		
-		/*³õÊ¼»¯·½·¨*/
+		/*åˆå§‹åŒ–æ–¹æ³•*/
 		$(function(){
-			//³õÊ¼»¯tabs
+			//åˆå§‹åŒ–tabs
 			$('#tabs').tabs({
 				tools:[{
 					iconCls:'icon-add',
 					handler: function(){
-						$.messager.alert('ÌáÊ¾ĞÅÏ¢','¿ÉÒÔ¶¯Ì¬Ìí¼ÓÄúÏëÒª±à¼­µÄ±í','info');
+						$.messager.alert('æç¤ºä¿¡æ¯','å¯ä»¥åŠ¨æ€æ·»åŠ æ‚¨æƒ³è¦ç¼–è¾‘çš„è¡¨','info');
 					}
 				},{
 					iconCls:'icon-save',
 					handler: function(){
-						$.messager.alert('ÌáÊ¾ĞÅÏ¢','¿ÉÒÔÅúÁ¿±£´æÄúĞŞ¸ÄÁËµÄ±í','info');	
+						$.messager.alert('æç¤ºä¿¡æ¯','å¯ä»¥æ‰¹é‡ä¿å­˜æ‚¨ä¿®æ”¹äº†çš„è¡¨','info');	
 					}
 				}]
 			});
 					
-			//³õÊ¼»¯datagrid£¬Ò»¶¨Òª×¢ÒâÕâÀï
+			//åˆå§‹åŒ–datagridï¼Œä¸€å®šè¦æ³¨æ„è¿™é‡Œ
 			var editer = editer1;
 			<!-- datagrid start -->
 			$('#tt').datagrid({
 				toolbar:[{
-					text:'Ìí¼Ó',
+					text:'æ·»åŠ ',
 					iconCls:'icon-add',
 					handler:function(){
 						editer.appendRow({
@@ -103,27 +103,27 @@ String tableInfoId = "CAN_BE_TABLE_NAME";
 						});
 					}
 				},'-',{
-					text:'É¾³ı',
+					text:'åˆ é™¤',
 					iconCls:'icon-remove',
 					handler:function(){
 						editer.deleteRow();
 					}
 				},'-',{
-					text:'³·Ïú',
+					text:'æ’¤é”€',
 					iconCls:'icon-undo',
 					handler:function(){
 						editer.rejectChanges();
 					}
 				}
 				,'-',{
-					text:'±£´æ',
+					text:'ä¿å­˜',
 					iconCls:'icon-save',
 					handler:function(){
 						editer.saveData();
 					}
 				}],
 				fitColumns:true,
-				loadMsg:'ÕıÔÚ¼ÓÔØÊı¾İ£¬ÇëÉÔºó...',
+				loadMsg:'æ­£åœ¨åŠ è½½æ•°æ®ï¼Œè¯·ç¨å...',
 				onBeforeLoad:function(){
 					editer.rejectChanges();
 				},
@@ -136,26 +136,26 @@ String tableInfoId = "CAN_BE_TABLE_NAME";
 				<!-- datagrid end -->
 			});
 			
-			//³õÊ¼»¯Êı¾İ
+			//åˆå§‹åŒ–æ•°æ®
 			initSelect("productid", products);
-			//¼ÓÔØÊı¾İ
+			//åŠ è½½æ•°æ®
 			doQuery();
 		});
 		
-		/*¼ÓÔØÊı¾İ*/
+		/*åŠ è½½æ•°æ®*/
 		function doQuery(){			
 			inputs = $("#form1 input,#form1 select");	
-			//Ö§³ÖÁ½ÖÖ·½Ê½µ÷ÓÃ
+			//æ”¯æŒä¸¤ç§æ–¹å¼è°ƒç”¨
 			//editer1.loadData("itemid=i&a=33");
 			editer1.loadData(inputs);
 		}
 		
-		/*³õÊ¼»¯Êı¾İ*/
+		/*åˆå§‹åŒ–æ•°æ®*/
 		function initSelect(selectId, datas) {
 			var id = "#"+selectId;
 			var selectObj = $(id);
 			//alert("data="+jQuery.data(products[0],"productid"));
-			//ÏÈÌí¼ÓÒ»¸ö¿ÕĞĞ£¬ÒÔ±ã²éÑ¯³öÈ«²¿Êı¾İ
+			//å…ˆæ·»åŠ ä¸€ä¸ªç©ºè¡Œï¼Œä»¥ä¾¿æŸ¥è¯¢å‡ºå…¨éƒ¨æ•°æ®
 			$(id).append("<option ></option>"); 
 			for (var i=0; i<products.length; i++) {
 				$(id).append("<option value='"+products[i].productid+"'>"+products[i].name+"</option>"); 
@@ -163,7 +163,7 @@ String tableInfoId = "CAN_BE_TABLE_NAME";
 			
 		}
 		
-		/*²¥·Å¶¯»­Ğ§¹û*/
+		/*æ’­æ”¾åŠ¨ç”»æ•ˆæœ*/
 		function animate() {
 			$("#queryTable").hide("slow");
 			$("#queryTable").show("slow");
@@ -176,14 +176,14 @@ String tableInfoId = "CAN_BE_TABLE_NAME";
 	<h1 align="center">Editable DataGrid</h1>
 	<!-- tab start -->
 	<div id="tabs" >
-		<div title="ÔöÉ¾¸Ä²é±í" style="padding:15px;">
+		<div title="å¢åˆ æ”¹æŸ¥è¡¨" style="padding:15px;">
 			<!-- form start -->
 			<form name='form1' id='form1'>
 			<table id="queryTable" class="genericTbl"  style="width:100%;height:auto">
 			<tr>
 			<td>
 			<fieldset>
-				<legend>²éÑ¯Ìõ¼ş</legend>
+				<legend>æŸ¥è¯¢æ¡ä»¶</legend>
 		
 						<table id="queryTable1">
 							<tr>
@@ -194,30 +194,30 @@ String tableInfoId = "CAN_BE_TABLE_NAME";
 									<input type="text" name="itemid">
 								</td>
 								<td width="10%" align="right">
-									²úÆ· =
+									äº§å“ =
 								</td>
 								<td width="20%" align="left">
 									<select style="width:100%;" name="productid" id="productid"></select>
 								</td>
 								<td width="20%" align="center" nowrap>
-									<a class="easyui-linkbutton" icon="icon-add" href="javascript:void(0)" onclick="">ÖØÖÃ</a>
+									<a class="easyui-linkbutton" icon="icon-add" href="javascript:void(0)" onclick="">é‡ç½®</a>
 								</td>
 							</tr>
 							<tr>
 								<td style="" width="10%" align="right">
-									¼Û¸ñ >=
+									ä»·æ ¼ >=
 								</td>
 								<td width="20%" align="left">
 									<input type="text" name="listprice">
 								</td>
 								<td style="" width="10%" align="right">
-									³É±¾ >=
+									æˆæœ¬ >=
 								</td>
 								<td width="20%" align="left">
 								<input type="text" name="unitcost">
 								</td>
 								<td width="20%" align="center" nowrap>
-									<a class="easyui-linkbutton" icon="icon-search" href="javascript:void(0)" onclick="doQuery()">²éÑ¯</a>
+									<a class="easyui-linkbutton" icon="icon-search" href="javascript:void(0)" onclick="doQuery()">æŸ¥è¯¢</a>
 								</td>
 							</tr>
 						</table>
@@ -230,57 +230,57 @@ String tableInfoId = "CAN_BE_TABLE_NAME";
 			<!-- dadagrid start -->
 			<!-- url="http://127.0.0.1:8000/bboss/datagrid/getData.htm?templet_id=1&report_id=1&tableInfoId=CAN_BE_TABLE_NAME" -->
 			<table id="tt" 
-					title="Êı¾İ±à¼­Æ÷" iconCls="icon-edit" singleSelect="true"
+					title="æ•°æ®ç¼–è¾‘å™¨" iconCls="icon-edit" singleSelect="true"
 					idField="itemid" url="http://172.16.81.53:8000/bboss/datagrid/getData.htm?templet_id=1&report_id=1&tableInfoId=CAN_BE_TABLE_NAME">
 				<thead>
 					<tr>
 						<th field="itemid" width="80" rowspan='2' editor="{type:'text'}">Item ID</th>
-						<th field="productid" width="100" rowspan='2' formatter="formatter_product" editor="{type:'combobox',options:{valueField:'productid',textField:'name',data:products,required:true}}">²úÆ·</th>
-						<th colspan='2'>²úÆ·ÊôĞÔ1</th>
+						<th field="productid" width="100" rowspan='2' formatter="formatter_product" editor="{type:'combobox',options:{valueField:'productid',textField:'name',data:products,required:true}}">äº§å“</th>
+						<th colspan='2'>äº§å“å±æ€§1</th>
 						<!-- 
-						<th field="productid" width="100" rowspan='2'>²úÆ·</th>
+						<th field="productid" width="100" rowspan='2'>äº§å“</th>
 						 -->
-						<th colspan='2'>²úÆ·ÊôĞÔ2</th>	
+						<th colspan='2'>äº§å“å±æ€§2</th>	
 								
 					</tr>
 					<tr>				
-						<th sorter="listpriceSorter" field="listprice" width="80" align="right" editor="{type:'numberbox',options:{precision:1,required:true}}">¼Û¸ñ(£¤)</th>
-						<th field="unitcost" width="80" align="right" editor="numberbox" formatter="formatter_unitcost">³É±¾(£¤)</th>
-						<th field="attr1" width="150" editor="text">ÊôĞÔ</th>
-						<th field="status" width="60" align="center" editor="{type:'checkbox',options:{on:'P',off:''}}">×´Ì¬</th>
+						<th sorter="listpriceSorter" field="listprice" width="80" align="right" editor="{type:'numberbox',options:{precision:1,required:true}}">ä»·æ ¼(ï¿¥)</th>
+						<th field="unitcost" width="80" align="right" editor="numberbox" formatter="formatter_unitcost">æˆæœ¬(ï¿¥)</th>
+						<th field="attr1" width="150" editor="text">å±æ€§</th>
+						<th field="status" width="60" align="center" editor="{type:'checkbox',options:{on:'P',off:''}}">çŠ¶æ€</th>
 					</tr>
 				</thead>
 			</table>
 			<!-- dadagrid end -->
 			
 		</div>
-		<div title="ÏµÍ³¹ÜÀí±í" closable="true" style="padding:15px;" cache="false" href="tabs_href_test.html">
+		<div title="ç³»ç»Ÿç®¡ç†è¡¨" closable="true" style="padding:15px;" cache="false" href="tabs_href_test.html">
 			This is Tab2 with close button.
 		</div>
-		<div title="ÄÚÇ¶iframe" closable="true">
+		<div title="å†…åµŒiframe" closable="true">
 			<iframe scrolling="yes" frameborder="0"  src="http://www.google.com" style="width:100%;height:100%;"></iframe>
 		</div>
-		<div title="DataGrid½éÉÜ" closable="false" align="left" style="padding:15px;">
+		<div title="DataGridä»‹ç»" closable="false" align="left" style="padding:15px;">
 				<p>
-					×÷Õß£ºÀî·å¸ß
+					ä½œè€…ï¼šæå³°é«˜
 				</p>
 				<p>
-					ÒÑÊµÏÖ¹¦ÄÜ
+					å·²å®ç°åŠŸèƒ½
 				</p>					
 				<ul>
 					<li>
-						¿É×ÔÓÉ½øĞĞÔöÉ¾¸Ä²é²Ù×÷£¬ÎŞĞè½øĞĞÈÎºÎÊı¾İ¿â²Ù×÷£¬ÓÉdatagrid×Ô¶¯Íê³É
+						å¯è‡ªç”±è¿›è¡Œå¢åˆ æ”¹æŸ¥æ“ä½œï¼Œæ— éœ€è¿›è¡Œä»»ä½•æ•°æ®åº“æ“ä½œï¼Œç”±datagridè‡ªåŠ¨å®Œæˆ
 					</li>
 					<li>
 						
 					</li>
 				</ul>
 				<p>
-					Î´ÊµÏÖ¹¦ÄÜ
+					æœªå®ç°åŠŸèƒ½
 				</p>					
 				<ul>
 					<li>
-						ÔİÊ±Ã»ÓĞÊµÏÖÊı¾İµ¼Èëµ¼³ö
+						æš‚æ—¶æ²¡æœ‰å®ç°æ•°æ®å¯¼å…¥å¯¼å‡º
 					</li>
 					<li>
 						

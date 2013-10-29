@@ -121,7 +121,7 @@ public class JGroupHelper
     private void assertStarted()
     {
         if (!this.inited)
-            throw new RuntimeException("JGroup protocol Ã»ÓĞÆô¶¯¡£");
+            throw new RuntimeException("JGroup protocol æ²¡æœ‰å¯åŠ¨ã€‚");
     }
 
     public Channel getChannel()
@@ -144,7 +144,7 @@ public class JGroupHelper
     }
 
 //    /**
-//     * »ñÈ¡¼¯Èº/¶àÊµÀı¸÷·şÎñÆ÷µÄĞÅÏ¢
+//     * è·å–é›†ç¾¤/å¤šå®ä¾‹å„æœåŠ¡å™¨çš„ä¿¡æ¯
 //     * 
 //     * @return
 //     */
@@ -180,7 +180,7 @@ public class JGroupHelper
 //    	
 //    }
     /**
-     * »ñÈ¡¼¯Èº/¶àÊµÀı¸÷·şÎñÆ÷µÄĞÅÏ¢
+     * è·å–é›†ç¾¤/å¤šå®ä¾‹å„æœåŠ¡å™¨çš„ä¿¡æ¯
      * 
      * @return
      */

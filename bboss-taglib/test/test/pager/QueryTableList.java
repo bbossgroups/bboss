@@ -24,7 +24,7 @@ import com.frameworkset.util.ListInfo;
 
 /**
  * <p>QueryTableList.java</p>
- * <p> Description: ÊµÏÖ´ø²éÑ¯µÄ·ÖÒ³Êı¾İ¼ÓÔØÆ÷</p>
+ * <p> Description: å®ç°å¸¦æŸ¥è¯¢çš„åˆ†é¡µæ•°æ®åŠ è½½å™¨</p>
  * <p> bboss workgroup </p>
  * <p> Copyright (c) 2009 </p>
  * 
@@ -50,8 +50,8 @@ public class QueryTableList extends DataInfoImpl {
 				db.setString(1, tablename);
 			List tables = db.executePreparedForList(TableInfo.class);
 			ListInfo datas = new ListInfo();
-			datas.setTotalSize(db.getLongTotalSize());//ÉèÖÃ×Ü¼ÇÂ¼Êı
-			datas.setDatas(tables);//ÉèÖÃµ±Ò³Êı¾İ
+			datas.setTotalSize(db.getLongTotalSize());//è®¾ç½®æ€»è®°å½•æ•°
+			datas.setDatas(tables);//è®¾ç½®å½“é¡µæ•°æ®
 			return datas;
 			
 		} catch (SQLException e) {
@@ -77,8 +77,8 @@ public class QueryTableList extends DataInfoImpl {
 				db.setString(1, tablename);
 			List tables = db.executePreparedForList(TableInfo.class);
 			ListInfo datas = new ListInfo();
-			datas.setTotalSize(db.getLongTotalSize());//ÉèÖÃ×Ü¼ÇÂ¼Êı
-			datas.setDatas(tables);//ÉèÖÃµ±Ò³Êı¾İ
+			datas.setTotalSize(db.getLongTotalSize());//è®¾ç½®æ€»è®°å½•æ•°
+			datas.setDatas(tables);//è®¾ç½®å½“é¡µæ•°æ®
 			return datas;
 			
 		} catch (SQLException e) {

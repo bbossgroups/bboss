@@ -25,7 +25,7 @@ import com.caucho.hessian.io.HessianInput;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2012-1-30 ÏÂÎç08:36:27
+ * @Date 2012-1-30 ä¸‹åˆ08:36:27
  * @author biaoping.yin
  * @version 1.0
  */

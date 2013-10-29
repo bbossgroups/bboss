@@ -80,7 +80,7 @@ public abstract class AuthenticateInterceptor extends AuthenticateFilter impleme
 			HttpServletResponse response, HandlerMeta handlerMeta)
 			throws Exception {
 		String requesturipath = WebUtils.getHANDLER_Mappingpath(request);
-		//×ö¿ØÖÆÂß¼­¼ì²â£¬Èç¹û¼ì²âÊ§°Ü£¬ÔòÖ´ĞĞÏÂÊöÂß¼­£¬·ñÔòÖ´ĞĞÕı³£µÄ¿ØÖÆÆ÷·½·¨		
+		//åšæ§åˆ¶é€»è¾‘æ£€æµ‹ï¼Œå¦‚æœæ£€æµ‹å¤±è´¥ï¼Œåˆ™æ‰§è¡Œä¸‹è¿°é€»è¾‘ï¼Œå¦åˆ™æ‰§è¡Œæ­£å¸¸çš„æ§åˆ¶å™¨æ–¹æ³•		
 		if(needCheck(requesturipath) )
 		{			
 			boolean checkresult = check(request,

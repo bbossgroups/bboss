@@ -78,7 +78,7 @@ import com.frameworkset.util.SimpleStringUtil;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2011-5-11 ÉÏÎç09:52:42
+ * @Date 2011-5-11 ä¸Šåˆ09:52:42
  * @author biaoping.yin
  * @version 1.0
  */
@@ -86,7 +86,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 		MessageSource, ResourcePatternResolver, ResourceLoader {
 	
 	/**
-	 * ¶¨Òå5ÖÖ×é¼şÈİÆ÷µÄÀàĞÍ´úÂë
+	 * å®šä¹‰5ç§ç»„ä»¶å®¹å™¨çš„ç±»å‹ä»£ç 
 	 */
 	public static int container_type_simple = 0;
 	public static int container_type_application = 1;
@@ -99,7 +99,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 	protected static List<String> rootFiles = new ArrayList<String>();
 	protected boolean started = true;
 	/**
-	 * Ö¸¶¨ÈİÆ÷ÖĞµÄ×é¼şÈ±Ê¡Ê¹ÓÃµ¥Àı»¹ÊÇ¶àÊµÀıÄ£Ê½
+	 * æŒ‡å®šå®¹å™¨ä¸­çš„ç»„ä»¶ç¼ºçœä½¿ç”¨å•ä¾‹è¿˜æ˜¯å¤šå®ä¾‹æ¨¡å¼
 	 */
 	protected boolean default_singable = true;
 	protected boolean needRecordFile = true;
@@ -113,8 +113,8 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 	public static final String MESSAGE_SOURCE_BEAN_NAME = "messageSource";
 	
 	/**
-	 * »ñÈ¡Ö¸¶¨¸ùÅäÖÃÎÄ¼şÉÏÏÂÎÄbean×é¼ş¹ÜÀíÈİÆ÷£¬ÅäÖÃÎÄ¼ş´Ó²ÎÊıconfigfile¶ÔÓ¦ÅäÖÃÎÄ¼ş¿ªÊ¼
-	 * ²»Í¬µÄÉÏÏÂÎÄ¼ş»·¾³ÈİÆ÷»¥Ïà¸ôÀë£¬×é¼ş¼ä²»´æÔÚÒÀÀµ¹ØÏµ£¬ÊôĞÔÒ²²»´æÔÚÈÎºÎÒıÓÃ¹ØÏµ¡£
+	 * è·å–æŒ‡å®šæ ¹é…ç½®æ–‡ä»¶ä¸Šä¸‹æ–‡beanç»„ä»¶ç®¡ç†å®¹å™¨ï¼Œé…ç½®æ–‡ä»¶ä»å‚æ•°configfileå¯¹åº”é…ç½®æ–‡ä»¶å¼€å§‹
+	 * ä¸åŒçš„ä¸Šä¸‹æ–‡ä»¶ç¯å¢ƒå®¹å™¨äº’ç›¸éš”ç¦»ï¼Œç»„ä»¶é—´ä¸å­˜åœ¨ä¾èµ–å…³ç³»ï¼Œå±æ€§ä¹Ÿä¸å­˜åœ¨ä»»ä½•å¼•ç”¨å…³ç³»ã€‚
 	 * 
 	 * @return
 	 */
@@ -201,7 +201,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 				throw new RuntimeException(e);
 			}
     	}
-    	throw new RuntimeException("»ñÈ¡Ó¦ÓÃÉÏÏÂÎÄÈİÆ÷Ê§°Ü,²»Ö§³ÖµÄÀàĞÍ£ºapplicationContextPath["+applicationContextPath+"],containerType=" + containerType);
+    	throw new RuntimeException("è·å–åº”ç”¨ä¸Šä¸‹æ–‡å®¹å™¨å¤±è´¥,ä¸æ”¯æŒçš„ç±»å‹ï¼šapplicationContextPath["+applicationContextPath+"],containerType=" + containerType);
     	
     		
     }
@@ -393,7 +393,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 	protected static Object lock = new Object();
 
 //	/**
-//	 * »ñÈ¡Ä¬ÈÏÉÏÏÂÎÄµÄbean×é¼ş¹ÜÀíÈİÆ÷£¬ÅäÖÃÎÄ¼ş´Ómanager-provider.xmlÎÄ¼ş¿ªÊ¼
+//	 * è·å–é»˜è®¤ä¸Šä¸‹æ–‡çš„beanç»„ä»¶ç®¡ç†å®¹å™¨ï¼Œé…ç½®æ–‡ä»¶ä»manager-provider.xmlæ–‡ä»¶å¼€å§‹
 //	 * 
 //	 * @return
 //	 */
@@ -522,8 +522,8 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 }
 
 //	/**
-//	 * »ñÈ¡Ö¸¶¨¸ùÅäÖÃÎÄ¼şÉÏÏÂÎÄbean×é¼ş¹ÜÀíÈİÆ÷£¬ÅäÖÃÎÄ¼ş´Ó²ÎÊıconfigfile¶ÔÓ¦ÅäÖÃÎÄ¼ş¿ªÊ¼
-//	 * ²»Í¬µÄÉÏÏÂÎÄ¼ş»·¾³ÈİÆ÷»¥Ïà¸ôÀë£¬×é¼ş¼ä²»´æÔÚÒÀÀµ¹ØÏµ£¬ÊôĞÔÒ²²»´æÔÚÈÎºÎÒıÓÃ¹ØÏµ¡£
+//	 * è·å–æŒ‡å®šæ ¹é…ç½®æ–‡ä»¶ä¸Šä¸‹æ–‡beanç»„ä»¶ç®¡ç†å®¹å™¨ï¼Œé…ç½®æ–‡ä»¶ä»å‚æ•°configfileå¯¹åº”é…ç½®æ–‡ä»¶å¼€å§‹
+//	 * ä¸åŒçš„ä¸Šä¸‹æ–‡ä»¶ç¯å¢ƒå®¹å™¨äº’ç›¸éš”ç¦»ï¼Œç»„ä»¶é—´ä¸å­˜åœ¨ä¾èµ–å…³ç³»ï¼Œå±æ€§ä¹Ÿä¸å­˜åœ¨ä»»ä½•å¼•ç”¨å…³ç³»ã€‚
 //	 * 
 //	 * @return
 //	 */
@@ -575,7 +575,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 		}
 	}
 	/**
-	 * Ìí¼ÓÏµÍ³ÖĞÍ£Ö¹Ê±µÄ»Øµ÷³ÌĞò
+	 * æ·»åŠ ç³»ç»Ÿä¸­åœæ­¢æ—¶çš„å›è°ƒç¨‹åº
 	 * 
 	 * @param destroyVMHook
 	 */
@@ -667,18 +667,18 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 	private static Logger log = Logger.getLogger(BaseApplicationContext.class);
 
 	/**
-	 * È±Ê¡½Ó¿Úkey
+	 * ç¼ºçœæ¥å£key
 	 */
 	public static final String DEFAULT_CACHE_KEY = "DEFAULT_CACHE_KEY";
 
 	/**
-	 * Í¬²½»º³åkey
+	 * åŒæ­¥ç¼“å†²key
 	 */
 
 	public static final String SYNCHRO_CACHE_KEY = "SYNCHRO_CACHE_KEY";
 
 	/**
-	 * ´´½¨²»¾ßÓĞÍ¬²½¿ØÖÆµÄprovider´úÀí½Ó¿ÚÊµÀı ¸Ã´úÀí½Ó¿Ú¿ÉÄÜÓĞÊÂÎñ¿ØÖÆµÄ¹¦ÄÜÒ²¿ÉÄÜÃ»ÓĞÓĞÊÂÎñ¿ØÖÆ£¬¸ù¾İ¾ßÌåµÄÅäÖÃÀ´¾ö¶¨ createInf
+	 * åˆ›å»ºä¸å…·æœ‰åŒæ­¥æ§åˆ¶çš„providerä»£ç†æ¥å£å®ä¾‹ è¯¥ä»£ç†æ¥å£å¯èƒ½æœ‰äº‹åŠ¡æ§åˆ¶çš„åŠŸèƒ½ä¹Ÿå¯èƒ½æ²¡æœ‰æœ‰äº‹åŠ¡æ§åˆ¶ï¼Œæ ¹æ®å…·ä½“çš„é…ç½®æ¥å†³å®š createInf
 	 * 
 	 * @return Object
 	 */
@@ -705,7 +705,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 	
 	
 	/**
-	 * ´´½¨²»¾ßÓĞÍ¬²½¿ØÖÆµÄprovider´úÀí½Ó¿ÚÊµÀı ¸Ã´úÀí½Ó¿Ú¿ÉÄÜÓĞÊÂÎñ¿ØÖÆµÄ¹¦ÄÜÒ²¿ÉÄÜÃ»ÓĞÓĞÊÂÎñ¿ØÖÆ£¬¸ù¾İ¾ßÌåµÄÅäÖÃÀ´¾ö¶¨ createInf
+	 * åˆ›å»ºä¸å…·æœ‰åŒæ­¥æ§åˆ¶çš„providerä»£ç†æ¥å£å®ä¾‹ è¯¥ä»£ç†æ¥å£å¯èƒ½æœ‰äº‹åŠ¡æ§åˆ¶çš„åŠŸèƒ½ä¹Ÿå¯èƒ½æ²¡æœ‰æœ‰äº‹åŠ¡æ§åˆ¶ï¼Œæ ¹æ®å…·ä½“çš„é…ç½®æ¥å†³å®š createInf
 	 * 
 	 * @return Object
 	 */
@@ -759,7 +759,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 	    }
 
 	/**
-	 * ´´½¨Ã»ÓĞÍ¬²½µ«ÓĞÊÂÎñ¿ØÖÆµÄprovider´úÀí½Ó¿ÚÊµÀı ¸Ã·½·¨µÄÊµÏÖÂß¼­Ä¿Ç°ºÍcreateInf·½·¨Ò»ÖÂ
+	 * åˆ›å»ºæ²¡æœ‰åŒæ­¥ä½†æœ‰äº‹åŠ¡æ§åˆ¶çš„providerä»£ç†æ¥å£å®ä¾‹ è¯¥æ–¹æ³•çš„å®ç°é€»è¾‘ç›®å‰å’ŒcreateInfæ–¹æ³•ä¸€è‡´
 	 * 
 	 * @return Object
 	 */
@@ -771,7 +771,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 	}
 
 	/**
-	 * ´´½¨¼´¾ßÓĞÍ¬²½¿ØÖÆ¹¦ÄÜµ«²»¾ß±¸ÊÂÎñ¹ÜÀí¹¦ÄÜµÄprovider´úÀí½Ó¿ÚÊµÀı createInf
+	 * åˆ›å»ºå³å…·æœ‰åŒæ­¥æ§åˆ¶åŠŸèƒ½ä½†ä¸å…·å¤‡äº‹åŠ¡ç®¡ç†åŠŸèƒ½çš„providerä»£ç†æ¥å£å®ä¾‹ createInf
 	 * 
 	 * @return Object
 	 */
@@ -795,7 +795,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 	}
 
 	/**
-	 * ´´½¨¾ßÓĞÍ¬²½ºÍÊÂÎñ¿ØÖÆµÄprovider´úÀí½Ó¿ÚÊµÀı createInf
+	 * åˆ›å»ºå…·æœ‰åŒæ­¥å’Œäº‹åŠ¡æ§åˆ¶çš„providerä»£ç†æ¥å£å®ä¾‹ createInf
 	 * 
 	 * @return Object
 	 */
@@ -820,7 +820,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 	}
 
 	/**
-	 * Í¨ÓÃÌØ¶¨·şÎñÌá¹©½Ó¿Ú»ñÈ¡Àà
+	 * é€šç”¨ç‰¹å®šæœåŠ¡æä¾›æ¥å£è·å–ç±»
 	 * 
 	 * @param providerManagerType
 	 *            String
@@ -832,7 +832,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 	}
 
 	/**
-	 * »ñÈ¡È«¾ÖÈ±Ê¡µÄprovider
+	 * è·å–å…¨å±€ç¼ºçœçš„provider
 	 * 
 	 * @return Object
 	 * @throws SPIException
@@ -842,7 +842,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 	}
 
 	// /**
-	// * Í¨ÓÃÌØ¶¨·şÎñÀàĞÍÖĞÌØ¶¨Êı¾İÔ´ÊµÏÖµÄÌá¹©½Ó¿Ú»ñÈ¡Àà
+	// * é€šç”¨ç‰¹å®šæœåŠ¡ç±»å‹ä¸­ç‰¹å®šæ•°æ®æºå®ç°çš„æä¾›æ¥å£è·å–ç±»
 	// * @param providerManagerType String
 	// * @param sourceType String
 	// * @return Provider
@@ -861,13 +861,13 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 	// ConfigManager.getInstance().getDefaultProviderManagerInfo();
 	// providerManagerType = providerManagerInfo.getId() ;
 	// }
-	// //¸÷spi¹ÜÀíÕßµÄ»º³å¹Ø¼ü×ÖÎªproviderManagerType £« ":" + sourceType;
+	// //å„spiç®¡ç†è€…çš„ç¼“å†²å…³é”®å­—ä¸ºproviderManagerType ï¼‹ ":" + sourceType;
 	// String cacheKey = sourceType != null?providerManagerType+":"+sourceType
 	// :providerManagerType+":"+DEFAULT_CACHE_KEY;
 	// String syncacheKey = providerManagerType+":"+SYNCHRO_CACHE_KEY;
 	//
 	// Provider provider = null;
-	// //ÅĞ¶ÏÊÇ·ñÔÊĞíÎªµ¥ÊµÀıÄ£Ê½£¬Èç¹ûÊÇ»ñÈ¡µ¥ÊµÀı£¬·ñÔòÖØĞÂ´´½¨providerÊµÀı
+	// //åˆ¤æ–­æ˜¯å¦å…è®¸ä¸ºå•å®ä¾‹æ¨¡å¼ï¼Œå¦‚æœæ˜¯è·å–å•å®ä¾‹ï¼Œå¦åˆ™é‡æ–°åˆ›å»ºproviderå®ä¾‹
 	// if(providerManagerInfo.isSinglable())
 	// {
 	// provider = (Provider) providers.get(cacheKey);
@@ -903,10 +903,10 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 	// getSecurityProviderInfoByType(sourceType)
 	// .getProvider();
 	// }
-	// //Èç¹û¿ªÆôÍ¬²½»úÖÆ£¬»ñÈ¡Í¬²½´úÀí½Ó¿Ú£¬·ñÔòÖ±½Ó·µ»ØÈ±Ê¡µÄ¹ÜÀí½Ó¿Ú
+	// //å¦‚æœå¼€å¯åŒæ­¥æœºåˆ¶ï¼Œè·å–åŒæ­¥ä»£ç†æ¥å£ï¼Œå¦åˆ™ç›´æ¥è¿”å›ç¼ºçœçš„ç®¡ç†æ¥å£
 	// if (providerManagerInfo.isSynchronizedEnabled()) {
 	// Provider synProvider = null;
-	// //Èç¹ûÊÇµ¥ÊµÀıÔò»ñÈ¡´úÀíµ¥ÊµÀı£¬·ñÔòÖØĞÂÉú³É´úÀíÊµÀı
+	// //å¦‚æœæ˜¯å•å®ä¾‹åˆ™è·å–ä»£ç†å•å®ä¾‹ï¼Œå¦åˆ™é‡æ–°ç”Ÿæˆä»£ç†å®ä¾‹
 	// if(providerManagerInfo.isSinglable())
 	// {
 	// synProvider = (Provider) providers.get(
@@ -938,7 +938,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 	// }
 
 	/**
-	 * »ñÈ¡¹ÜÀí·şÎñµÄÌØ¶¨Ìá¹©ÕßÊµÀı¶ÔÏó
+	 * è·å–ç®¡ç†æœåŠ¡çš„ç‰¹å®šæä¾›è€…å®ä¾‹å¯¹è±¡
 	 */
 	public Object getProvider(String providerManagerType, String sourceType)
 			throws SPIException {
@@ -991,13 +991,13 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 		}
 		if (providerManagerInfo == null) {
 			if (frombeanobject)
-				throw new SPIException("ÈİÆ÷["+this.getConfigfile()+"]£¬SPI[" + providerManagerType + "] in "
+				throw new SPIException("å®¹å™¨["+this.getConfigfile()+"]ï¼ŒSPI[" + providerManagerType + "] in "
 						+ callContext.getLoopContext() + " does not exist.");
 			else {
 				return getBeanObject(callContext, _name, null, true);
 			}
 		}
-		// ¸÷spi¹ÜÀíÕßµÄ»º³å¹Ø¼ü×ÖÎªproviderManagerType £« ":" + sourceType;
+		// å„spiç®¡ç†è€…çš„ç¼“å†²å…³é”®å­—ä¸ºproviderManagerType ï¼‹ ":" + sourceType;
 		if (sourceType == null || sourceType.equals("")) {
 			sourceType = providerManagerInfo.getDefaulProviderInfo().getType();
 		}
@@ -1016,11 +1016,11 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 				.getSecurityProviderInfoByType(sourceType).getProvider(
 						callContext);
 		if (provider == null)
-			throw new SPIException("ÈİÆ÷["+this.getConfigfile()+"]£¬¹ÜÀí·şÎñ[" + key + "]Îªnull,Çë¼ì²éÏà¹ØÅäÖÃÊÇ·ñÕıÈ·¡£");
+			throw new SPIException("å®¹å™¨["+this.getConfigfile()+"]ï¼Œç®¡ç†æœåŠ¡[" + key + "]ä¸ºnull,è¯·æ£€æŸ¥ç›¸å…³é…ç½®æ˜¯å¦æ­£ç¡®ã€‚");
 
 		finalsynProvider = provider;
 
-		// Éú³É¹ÜÀí·şÎñµÄ¶¯Ì¬´úÀíÊµÀı,Èç¹û²»ÊÇÒÔÏÂµÄÇé¿öÔò²»ĞèÒª´´½¨´úÀí
+		// ç”Ÿæˆç®¡ç†æœåŠ¡çš„åŠ¨æ€ä»£ç†å®ä¾‹,å¦‚æœä¸æ˜¯ä»¥ä¸‹çš„æƒ…å†µåˆ™ä¸éœ€è¦åˆ›å»ºä»£ç†
 		try {
 			if (providerManagerInfo.enableTransaction()
 					&& providerManagerInfo.isSynchronizedEnabled()) {
@@ -1158,7 +1158,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 		return getBeanObject(name, (Object)null);
 		// return this.providerManager.getObjectProperty(name);
 		// if(value == null)
-		// throw new AssembleException("ÅäÖÃÎÄ¼şÃ»ÓĞÖ¸¶¨ÊôĞÔ[" + name + "]£¡");
+		// throw new AssembleException("é…ç½®æ–‡ä»¶æ²¡æœ‰æŒ‡å®šå±æ€§[" + name + "]ï¼");
 
 	}
 	
@@ -1166,7 +1166,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 		return (T)getBeanObject(name, (Object)null);
 		// return this.providerManager.getObjectProperty(name);
 		// if(value == null)
-		// throw new AssembleException("ÅäÖÃÎÄ¼şÃ»ÓĞÖ¸¶¨ÊôĞÔ[" + name + "]£¡");
+		// throw new AssembleException("é…ç½®æ–‡ä»¶æ²¡æœ‰æŒ‡å®šå±æ€§[" + name + "]ï¼");
 
 	}
 
@@ -1175,7 +1175,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 		// return this.providerManager.getObjectProperty(name,
 		// defaultValue);
 		// if(value == null)
-		// throw new AssembleException("ÅäÖÃÎÄ¼şÃ»ÓĞÖ¸¶¨ÊôĞÔ[" + name + "]£¡");
+		// throw new AssembleException("é…ç½®æ–‡ä»¶æ²¡æœ‰æŒ‡å®šå±æ€§[" + name + "]ï¼");
 
 	}
 	
@@ -1184,14 +1184,14 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 		// return this.providerManager.getObjectProperty(name,
 		// defaultValue);
 		// if(value == null)
-		// throw new AssembleException("ÅäÖÃÎÄ¼şÃ»ÓĞÖ¸¶¨ÊôĞÔ[" + name + "]£¡");
+		// throw new AssembleException("é…ç½®æ–‡ä»¶æ²¡æœ‰æŒ‡å®šå±æ€§[" + name + "]ï¼");
 
 	}
 
 	public ProSet getSetProperty(String name) {
 		return this.providerManager.getSetProperty(name);
 		// if(value == null)
-		// throw new AssembleException("ÅäÖÃÎÄ¼şÃ»ÓĞÖ¸¶¨ÊôĞÔ[" + name + "]£¡");
+		// throw new AssembleException("é…ç½®æ–‡ä»¶æ²¡æœ‰æŒ‡å®šå±æ€§[" + name + "]ï¼");
 
 	}
 
@@ -1213,7 +1213,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 	public ProMap getMapProperty(String name) {
 		return this.providerManager.getMapProperty(name);
 		// if(value == null)
-		// throw new AssembleException("ÅäÖÃÎÄ¼şÃ»ÓĞÖ¸¶¨ÊôĞÔ[" + name + "]£¡");
+		// throw new AssembleException("é…ç½®æ–‡ä»¶æ²¡æœ‰æŒ‡å®šå±æ€§[" + name + "]ï¼");
 
 	}
 
@@ -1225,7 +1225,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 	public ProArray getArrayProperty(String name) {
 		return this.providerManager.getArrayProperty(name);
 		// if(value == null)
-		// throw new AssembleException("ÅäÖÃÎÄ¼şÃ»ÓĞÖ¸¶¨ÊôĞÔ[" + name + "]£¡");
+		// throw new AssembleException("é…ç½®æ–‡ä»¶æ²¡æœ‰æŒ‡å®šå±æ€§[" + name + "]ï¼");
 
 	}
 
@@ -1238,7 +1238,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 	
 
 	// /**
-	// * Õâ¸ö·½·¨ĞèÒª¶Ô·şÎñÊÂÎñ½øĞĞÏàÓ¦µÄ´¦Àí
+	// * è¿™ä¸ªæ–¹æ³•éœ€è¦å¯¹æœåŠ¡äº‹åŠ¡è¿›è¡Œç›¸åº”çš„å¤„ç†
 	// * @param context
 	// * @param name
 	// * @param defaultValue
@@ -1261,7 +1261,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 	// providerManagerInfo_ = this.providerManager
 	// .getProviderManagerInfo(serviceID.getService());
 	// if(providerManagerInfo_ == null)
-	// throw new SPIException("Ã»ÓĞ¶¨ÒåÃû³ÆÎª[" + name + "]µÄbean¶ÔÏó¡£");
+	// throw new SPIException("æ²¡æœ‰å®šä¹‰åç§°ä¸º[" + name + "]çš„beanå¯¹è±¡ã€‚");
 	// return BaseSPIManager.getProvider(context, name, null);
 	// }
 	//        
@@ -1298,7 +1298,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 	}
 
 	/**
-	 * ¹¹½¨ÇëÇóÓ¦ÓÃµ÷ÓÃÉÏÏÂÎÄÖĞ²ÎÊıÍ·ĞÅÏ¢ºÍ°²È«ÉÏÏÂÎÄĞÅÏ¢
+	 * æ„å»ºè¯·æ±‚åº”ç”¨è°ƒç”¨ä¸Šä¸‹æ–‡ä¸­å‚æ•°å¤´ä¿¡æ¯å’Œå®‰å…¨ä¸Šä¸‹æ–‡ä¿¡æ¯
 	 * 
 	 * @fixed biaoping.yin 2010-10-11
 	 * @param params
@@ -1311,7 +1311,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 		// StringTokenizer tokenizer = new StringTokenizer(params, "&", false);
 		//
 		// /**
-		// * Ğ­ÒéÖĞ°üº¬µÄÊôĞÔ²ÎÊı£¬¿ÉÒÔÓÃÀ´×öÂ·ÓÉÌõ¼ş
+		// * åè®®ä¸­åŒ…å«çš„å±æ€§å‚æ•°ï¼Œå¯ä»¥ç”¨æ¥åšè·¯ç”±æ¡ä»¶
 		// */
 		// Headers headers = null;
 		// SecurityContext securityContext = null;
@@ -1323,7 +1323,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 		//
 		// int idex = parameter.indexOf("=");
 		// if (idex <= 0) {
-		// throw new SPIException("·Ç·¨µÄ·şÎñ²ÎÊı´®[" + params + "]");
+		// throw new SPIException("éæ³•çš„æœåŠ¡å‚æ•°ä¸²[" + params + "]");
 		// }
 		// StringTokenizer ptokenizer = new StringTokenizer(parameter, "=",
 		// false);
@@ -1351,7 +1351,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 	}
 
 	/**
-	 * ¹¹½¨ÌØ¶¨×é¼ş¹ÜÀíÈİÆ÷Ô¶³ÌÇëÇóµ÷ÓÃÉÏÏÂÎÄÖĞ²ÎÊıÍ·ĞÅÏ¢ºÍ°²È«ÉÏÏÂÎÄĞÅÏ¢
+	 * æ„å»ºç‰¹å®šç»„ä»¶ç®¡ç†å®¹å™¨è¿œç¨‹è¯·æ±‚è°ƒç”¨ä¸Šä¸‹æ–‡ä¸­å‚æ•°å¤´ä¿¡æ¯å’Œå®‰å…¨ä¸Šä¸‹æ–‡ä¿¡æ¯
 	 * 
 	 * @fixed biaoping.yin 2010-10-11
 	 * @param params
@@ -1367,7 +1367,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 		StringTokenizer tokenizer = new StringTokenizer(params, "&", false);
 
 		/**
-		 * Ğ­ÒéÖĞ°üº¬µÄÊôĞÔ²ÎÊı£¬¿ÉÒÔÓÃÀ´×öÂ·ÓÉÌõ¼ş
+		 * åè®®ä¸­åŒ…å«çš„å±æ€§å‚æ•°ï¼Œå¯ä»¥ç”¨æ¥åšè·¯ç”±æ¡ä»¶
 		 */
 		Headers headers = null;
 		SecurityContext securityContext = null;
@@ -1379,7 +1379,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 
 			int idex = parameter.indexOf("=");
 			if (idex <= 0) {
-				throw new SPIException("·Ç·¨µÄ·şÎñ²ÎÊı´®[" + params + "]");
+				throw new SPIException("éæ³•çš„æœåŠ¡å‚æ•°ä¸²[" + params + "]");
 			}
 			StringTokenizer ptokenizer = new StringTokenizer(parameter, "=",
 					false);
@@ -1407,7 +1407,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 	
 	
 	/**
-	 * ¹¹½¨ÌØ¶¨×é¼ş¹ÜÀíÈİÆ÷Ô¶³ÌÇëÇóµ÷ÓÃÉÏÏÂÎÄÖĞ²ÎÊıÍ·ĞÅÏ¢ºÍ°²È«ÉÏÏÂÎÄĞÅÏ¢
+	 * æ„å»ºç‰¹å®šç»„ä»¶ç®¡ç†å®¹å™¨è¿œç¨‹è¯·æ±‚è°ƒç”¨ä¸Šä¸‹æ–‡ä¸­å‚æ•°å¤´ä¿¡æ¯å’Œå®‰å…¨ä¸Šä¸‹æ–‡ä¿¡æ¯
 	 * 
 	 * @fixed biaoping.yin 2010-10-11
 	 * @param params
@@ -1422,7 +1422,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 		StringTokenizer tokenizer = new StringTokenizer(params, "&", false);
 		
 		/**
-		 * Ğ­ÒéÖĞ°üº¬µÄÊôĞÔ²ÎÊı£¬¿ÉÒÔÓÃÀ´×öÂ·ÓÉÌõ¼ş
+		 * åè®®ä¸­åŒ…å«çš„å±æ€§å‚æ•°ï¼Œå¯ä»¥ç”¨æ¥åšè·¯ç”±æ¡ä»¶
 		 */
 		Headers headers = null;
 		SecurityContext securityContext = null;
@@ -1434,7 +1434,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 
 			int idex = parameter.indexOf("=");
 			if (idex <= 0) {
-				throw new SPIException("·Ç·¨µÄ·şÎñ²ÎÊı´®[" + params + "]");
+				throw new SPIException("éæ³•çš„æœåŠ¡å‚æ•°ä¸²[" + params + "]");
 			}
 			StringTokenizer ptokenizer = new StringTokenizer(parameter, "=",
 					false);
@@ -1462,7 +1462,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 	
 	
 	/**
-	 * bean¹¤³§·½·¨
+	 * beanå·¥å‚æ–¹æ³•
 	 * 
 	 * @param context
 	 * @param name
@@ -1471,7 +1471,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 	 */
 	@SuppressWarnings("unchecked")
 	public Object getBeanObjectFromRefID(CallContext context, RefID name,String strrefid ,Object defaultValue) {
-//		// ·ÖÎö·şÎñ²ÎÊı
+//		// åˆ†ææœåŠ¡å‚æ•°
 //		int idx = name.indexOf("?");
 //
 //		String _name = name;
@@ -1483,7 +1483,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 
 		if (providerManagerInfo == null) {
 			if(defaultValue == null)
-				throw new SPIException("ÈİÆ÷["+this.getConfigfile()+"]Ã»ÓĞ¶¨ÒåÃû³ÆÎª[" + strrefid + "]µÄbean¶ÔÏó¡£");
+				throw new SPIException("å®¹å™¨["+this.getConfigfile()+"]æ²¡æœ‰å®šä¹‰åç§°ä¸º[" + strrefid + "]çš„beanå¯¹è±¡ã€‚");
 			else
 				return defaultValue;
 		}
@@ -1494,7 +1494,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 	}
 
 	/**
-	 * bean¹¤³§·½·¨
+	 * beanå·¥å‚æ–¹æ³•
 	 * 
 	 * @param context
 	 * @param name
@@ -1504,7 +1504,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 	@SuppressWarnings("unchecked")
 	protected Object getBeanObject(CallContext context, String name, Object defaultValue,
 			boolean fromprovider) {
-		// ·ÖÎö·şÎñ²ÎÊı
+		// åˆ†ææœåŠ¡å‚æ•°
 		int idx = name.indexOf("?");
 
 		String _name = name;
@@ -1534,14 +1534,14 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 				if (providerManagerInfo_ == null)
 				{
 					if(defaultValue == null)
-						throw new SPIException("ÈİÆ÷["+this.getConfigfile()+"]Ã»ÓĞ¶¨ÒåÃû³ÆÎª[" + name + "]µÄbean¶ÔÏó¡£");
+						throw new SPIException("å®¹å™¨["+this.getConfigfile()+"]æ²¡æœ‰å®šä¹‰åç§°ä¸º[" + name + "]çš„beanå¯¹è±¡ã€‚");
 					else
 						return defaultValue;
 				}
 				return getProvider(context, _name, null, true);
 			} else {
 				if(defaultValue == null)
-					throw new SPIException("ÈİÆ÷["+this.getConfigfile()+"]Ã»ÓĞ¶¨ÒåÃû³ÆÎª[" + name + "]µÄbean¶ÔÏó¡£");
+					throw new SPIException("å®¹å™¨["+this.getConfigfile()+"]æ²¡æœ‰å®šä¹‰åç§°ä¸º[" + name + "]çš„beanå¯¹è±¡ã€‚");
 				else
 					return defaultValue;
 			}
@@ -1553,7 +1553,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 	
 	
 	/**
-	 * bean¹¤³§·½·¨
+	 * beanå·¥å‚æ–¹æ³•
 	 * 
 	 * @param context
 	 * @param name
@@ -1562,7 +1562,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 	 */
 	@SuppressWarnings("unchecked")
 	protected <T> T getTBeanObject(CallContext context, String name,T defaultValue,Class<T> interfaceclazz) {
-		// ·ÖÎö·şÎñ²ÎÊı
+		// åˆ†ææœåŠ¡å‚æ•°
 		int idx = name.indexOf("?");
 
 		String _name = name;
@@ -1591,11 +1591,11 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 //				providerManagerInfo_ = this.providerManager
 //						.getProviderManagerInfo(serviceID.getService());
 //				if (providerManagerInfo_ == null)
-//					throw new SPIException("Ã»ÓĞ¶¨ÒåÃû³ÆÎª[" + name + "]µÄbean¶ÔÏó¡£");
+//					throw new SPIException("æ²¡æœ‰å®šä¹‰åç§°ä¸º[" + name + "]çš„beanå¯¹è±¡ã€‚");
 //				return getProvider(context, _name, null, true);
 //			} else 
 			{
-				throw new SPIException("ÈİÆ÷["+this.getConfigfile()+"]Ã»ÓĞ¶¨ÒåÃû³ÆÎª[" + name + "]µÄbean¶ÔÏó¡£");
+				throw new SPIException("å®¹å™¨["+this.getConfigfile()+"]æ²¡æœ‰å®šä¹‰åç§°ä¸º[" + name + "]çš„beanå¯¹è±¡ã€‚");
 			}
 		}
 		return (T)getBeanObject(context, providerManagerInfo, null,
@@ -1620,9 +1620,9 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 	}
 
 	/**
-	 * bean×é¼ş¹¤³§·½·¨£¬ Èç¹ûserviceID²»Îª¿Õ£¬ÔòserviceIDÊÇ¸ù¾İgetBeanObject(Context context,
-	 * String name,Object defaultValue)·½·¨µÄnameÉú³ÉµÄ
-	 * ·ñÔòĞèÒª¸ù¾İproviderManagerInfoµÄname»òÕßrefidÀ´Éú³ÉserviceID
+	 * beanç»„ä»¶å·¥å‚æ–¹æ³•ï¼Œ å¦‚æœserviceIDä¸ä¸ºç©ºï¼Œåˆ™serviceIDæ˜¯æ ¹æ®getBeanObject(Context context,
+	 * String name,Object defaultValue)æ–¹æ³•çš„nameç”Ÿæˆçš„
+	 * å¦åˆ™éœ€è¦æ ¹æ®providerManagerInfoçš„nameæˆ–è€…refidæ¥ç”ŸæˆserviceID
 	 * 
 	 * @param context
 	 * @param providerManagerInfo
@@ -1633,7 +1633,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 	public Object getBeanObject(CallContext context, Pro providerManagerInfo,
 			Object defaultValue, ServiceID serviceID) {
 		if (providerManagerInfo == null)
-			throw new SPIException("ÈİÆ÷["+this.getConfigfile()+"]bean¶ÔÏóÎª¿Õ¡£");
+			throw new SPIException("å®¹å™¨["+this.getConfigfile()+"]beanå¯¹è±¡ä¸ºç©ºã€‚");
 		String key = providerManagerInfo.getName();
 		if (providerManagerInfo.isRefereced()) {
 			Object retvalue = providerManagerInfo.getTrueValue(context,
@@ -1660,8 +1660,8 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 				// String key = serviceID.getServiceID();
 				// if(context != null && !context.containHeaders() &&
 				// !serviceID.isRestStyle()
-				// )//Èç¹û°üº¬Í·ĞÅÏ¢Ê±£¬´úÀíÀà½«²»ÄÜ±»»º³å£¬Ô­ÒòÊÇÍ·ĞÅÏ¢µÄ¶¯Ì¬ĞÔ»áµ¼ÖÂ»º³åÊµÀı¹ı¶à
-				if (context != null && !serviceID.isRestStyle())// Èç¹û°üº¬Í·ĞÅÏ¢Ê±£¬´úÀíÀà½«²»ÄÜ±»»º³å£¬Ô­ÒòÊÇÍ·ĞÅÏ¢µÄ¶¯Ì¬ĞÔ»áµ¼ÖÂ»º³åÊµÀı¹ı¶à
+				// )//å¦‚æœåŒ…å«å¤´ä¿¡æ¯æ—¶ï¼Œä»£ç†ç±»å°†ä¸èƒ½è¢«ç¼“å†²ï¼ŒåŸå› æ˜¯å¤´ä¿¡æ¯çš„åŠ¨æ€æ€§ä¼šå¯¼è‡´ç¼“å†²å®ä¾‹è¿‡å¤š
+				if (context != null && !serviceID.isRestStyle())// å¦‚æœåŒ…å«å¤´ä¿¡æ¯æ—¶ï¼Œä»£ç†ç±»å°†ä¸èƒ½è¢«ç¼“å†²ï¼ŒåŸå› æ˜¯å¤´ä¿¡æ¯çš„åŠ¨æ€æ€§ä¼šå¯¼è‡´ç¼“å†²å®ä¾‹è¿‡å¤š
 				{
 					Object provider = servicProviders.get(key);
 					if (provider != null)
@@ -1693,9 +1693,9 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 	
 	
 	/**
-	 * bean×é¼ş¹¤³§·½·¨£¬ Èç¹ûserviceID²»Îª¿Õ£¬ÔòserviceIDÊÇ¸ù¾İgetBeanObject(Context context,
-	 * String name,Object defaultValue)·½·¨µÄnameÉú³ÉµÄ
-	 * ·ñÔòĞèÒª¸ù¾İproviderManagerInfoµÄname»òÕßrefidÀ´Éú³ÉserviceID
+	 * beanç»„ä»¶å·¥å‚æ–¹æ³•ï¼Œ å¦‚æœserviceIDä¸ä¸ºç©ºï¼Œåˆ™serviceIDæ˜¯æ ¹æ®getBeanObject(Context context,
+	 * String name,Object defaultValue)æ–¹æ³•çš„nameç”Ÿæˆçš„
+	 * å¦åˆ™éœ€è¦æ ¹æ®providerManagerInfoçš„nameæˆ–è€…refidæ¥ç”ŸæˆserviceID
 	 * 
 	 * @param context
 	 * @param providerManagerInfo
@@ -1706,7 +1706,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 	protected Object getBeanObjectFromRefID(CallContext context, Pro providerManagerInfo,
 			Object defaultValue) {
 		if (providerManagerInfo == null)
-			throw new SPIException("ÈİÆ÷["+this.getConfigfile()+"]bean¶ÔÏóÎª¿Õ¡£");
+			throw new SPIException("å®¹å™¨["+this.getConfigfile()+"]beanå¯¹è±¡ä¸ºç©ºã€‚");
 		
 		if (providerManagerInfo.isRefereced()) {
 			Object retvalue = providerManagerInfo.getTrueValue(context,
@@ -1765,7 +1765,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 	}
 
 	/**
-	 * ·µ»ØÒ»¼¶ÅäÖÃÎÄ¼şÇåµ¥
+	 * è¿”å›ä¸€çº§é…ç½®æ–‡ä»¶æ¸…å•
 	 * 
 	 * @return
 	 */
@@ -1774,7 +1774,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 	}
 
 	/**
-	 * ·µ»Ø¸ø¶¨±êÊ¶µÄ¹ÜÀí·şÎñÅäÖÃÎÄ¼şĞÅÏ¢
+	 * è¿”å›ç»™å®šæ ‡è¯†çš„ç®¡ç†æœåŠ¡é…ç½®æ–‡ä»¶ä¿¡æ¯
 	 * 
 	 * @param id
 	 * @return
@@ -2155,8 +2155,8 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 			String serviceid, BaseApplicationContext applicationcontext) ;
 	
 	/**
-	 * »ñÈ¡parent¶ÔÓ¦µÄÊôĞÔÄÚ²¿µÄÃû³ÆÎªnameµÄPro¶ÔÏó
-	 * parentµÄ¸ñÊ½£º
+	 * è·å–parentå¯¹åº”çš„å±æ€§å†…éƒ¨çš„åç§°ä¸ºnameçš„Proå¯¹è±¡
+	 * parentçš„æ ¼å¼ï¼š
 	 * vvvv^^list#!#cccc^^map#!#dddd^^map
 	 * vvvv^^list#!#cccc^^map#!#0^^list
 	 * @param parent
@@ -2193,7 +2193,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 				
 				if(i == nodes.length -1)
 				{
-					//´ïµ½×îºóÒ»¸ö¸¸½Úµã:
+					//è¾¾åˆ°æœ€åä¸€ä¸ªçˆ¶èŠ‚ç‚¹:
 					if(nodetype.equals("list"))
 					{
 						ProList list = pro.getList();
@@ -2230,7 +2230,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 						int position = Integer.parseInt(name);
 						return (Pro)referencesList.get(position);
 					}
-					throw new NullPointerException(this.getConfigfile() + "ÖĞ²»´æÔÚ[" + parent+","+name + "]£¬ÀàĞÍÎª"+nodetype+"µÄÄÚ²¿property½Úµã");
+					throw new NullPointerException(this.getConfigfile() + "ä¸­ä¸å­˜åœ¨[" + parent+","+name + "]ï¼Œç±»å‹ä¸º"+nodetype+"çš„å†…éƒ¨propertyèŠ‚ç‚¹");
 						
 				}
 				
@@ -2291,17 +2291,17 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 					pro = (Pro)referencesList.get(position);
 				}
 				else 
-					throw new NullPointerException(this.getConfigfile() + "ÖĞ²»´æÔÚ[oldnodetype=" + oldnodetype +
+					throw new NullPointerException(this.getConfigfile() + "ä¸­ä¸å­˜åœ¨[oldnodetype=" + oldnodetype +
 					
 					",oldnodename="+oldnodename +
 					",nodetype="+nodetype +
 					
-					",nodename="+nodename  + "]µÄÄÚ²¿property½Úµã");
+					",nodename="+nodename  + "]çš„å†…éƒ¨propertyèŠ‚ç‚¹");
 				
 				
 				if(i == nodes.length -1)
 				{
-					//´ïµ½×îºóÒ»¸ö¸¸½Úµã£¬´Ó¶ÔÓ¦µÄ½ÚµãÖĞ»ñÈ¡¸ø¶¨Ãû³ÆnameµÄpro¶ÔÏó:
+					//è¾¾åˆ°æœ€åä¸€ä¸ªçˆ¶èŠ‚ç‚¹ï¼Œä»å¯¹åº”çš„èŠ‚ç‚¹ä¸­è·å–ç»™å®šåç§°nameçš„proå¯¹è±¡:
 					if(nodetype.equals("list"))
 					{
 						ProList list = pro.getList();
@@ -2338,13 +2338,13 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 						int position = Integer.parseInt(name);
 						return (Pro)referencesList.get(position);
 					}
-					throw new NullPointerException(this.getConfigfile() + "ÖĞ²»´æÔÚ[" + parent+","+name + "]£¬ÀàĞÍÎª"+nodetype+"µÄÄÚ²¿property½Úµã");
+					throw new NullPointerException(this.getConfigfile() + "ä¸­ä¸å­˜åœ¨[" + parent+","+name + "]ï¼Œç±»å‹ä¸º"+nodetype+"çš„å†…éƒ¨propertyèŠ‚ç‚¹");
 						
 				}
 			}
 			
 		}
-		throw new NullPointerException(this.getConfigfile() + "ÖĞ²»´æÔÚ[" + parent+","+name + "]£¬ÀàĞÍÎª"+nodetype+"µÄÄÚ²¿property½Úµã");	
+		throw new NullPointerException(this.getConfigfile() + "ä¸­ä¸å­˜åœ¨[" + parent+","+name + "]ï¼Œç±»å‹ä¸º"+nodetype+"çš„å†…éƒ¨propertyèŠ‚ç‚¹");	
 			
 	}
 	

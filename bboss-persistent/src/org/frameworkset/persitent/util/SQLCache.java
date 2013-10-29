@@ -31,7 +31,7 @@ import com.frameworkset.util.VariableHandler.SQLStruction;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2012-12-5 ÏÂÎç6:15:07
+ * @Date 2012-12-5 ä¸‹åˆ6:15:07
  * @author biaoping.yin
  * @version 1.0
  */

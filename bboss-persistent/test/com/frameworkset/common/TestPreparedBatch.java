@@ -27,7 +27,7 @@ import com.frameworkset.orm.transaction.TransactionManager;
  */
 public class TestPreparedBatch {
 	/**
-	 * ²âÊÔµ¥ÌõÓï¾ä
+	 * æµ‹è¯•å•æ¡è¯­å¥
 	 */
 	@Test
 	public  void testSingleSTMTBatch()
@@ -50,7 +50,7 @@ public class TestPreparedBatch {
 	}
 	
 	/**
-	 * ²âÊÔ¶àÌõÓï¾ä
+	 * æµ‹è¯•å¤šæ¡è¯­å¥
 	 */
 	@Test
 	public void testMutiSTMTBatch()
@@ -98,7 +98,7 @@ public class TestPreparedBatch {
 	}
 	
 	/**
-	 * ²âÊÔ¶àÌõÓï¾ä,²¢ÇÒÍ¨¹ıpre.setBatchOptimize(true);·½·¨½øĞĞÓÅ»¯Ö´ĞĞÔ¤±àÒë²Ù×÷
+	 * æµ‹è¯•å¤šæ¡è¯­å¥,å¹¶ä¸”é€šè¿‡pre.setBatchOptimize(true);æ–¹æ³•è¿›è¡Œä¼˜åŒ–æ‰§è¡Œé¢„ç¼–è¯‘æ“ä½œ
 	 */
 	public @Test void testOptimizeMutiSTMTBatch()
 	{
@@ -137,8 +137,8 @@ public class TestPreparedBatch {
 	}
 	
 	/**
-	 * ÔÚÊÂÎñ»·¾³ÖĞ²âÊÔ¶àÌõÓï¾äµÄÅú´¦Àí²Ù×÷
-	 * ²ÎÊıtµÄÖµÀ´²âÊÔÊÂÎñ»Ø¹öºÍÊÂÎñÌá½»²Ù×÷
+	 * åœ¨äº‹åŠ¡ç¯å¢ƒä¸­æµ‹è¯•å¤šæ¡è¯­å¥çš„æ‰¹å¤„ç†æ“ä½œ
+	 * å‚æ•°tçš„å€¼æ¥æµ‹è¯•äº‹åŠ¡å›æ»šå’Œäº‹åŠ¡æäº¤æ“ä½œ
 	 */
 	public static void testTXOptimizeMutiSTMTBatch(int t)
 	{

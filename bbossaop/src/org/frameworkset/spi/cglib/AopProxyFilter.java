@@ -26,7 +26,7 @@ import net.sf.cglib.proxy.CallbackFilter;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2010-7-19 ÏÂÎç03:46:17
+ * @Date 2010-7-19 ä¸‹åˆ03:46:17
  * @author biaoping.yin
  * @version 1.0
  */

@@ -18,7 +18,7 @@ public interface RejectTask extends Runnable
     public void setReject();
     
     /**
-     * 获取被拒绝的次数
+     * 鑾峰彇琚嫆缁濈殑娆℃暟
      */
     public int getRejectTimes();
     public void increamentRejecttimes();

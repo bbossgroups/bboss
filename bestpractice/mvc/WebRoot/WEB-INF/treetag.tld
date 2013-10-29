@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="gb2312"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <!DOCTYPE taglib PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.1//EN" "http://java.sun.com/j2ee/dtds/web-jsptaglibrary_1_1.dtd">
 
@@ -15,7 +15,7 @@
     This little tag library can generate html trees from an com.jenkov.tags.tree.itf.ITreeNode tree.
     It can expand/collapse nodes in the tree, and manage links on the nodes.
     </description>
-	Ê÷ÐÍ½á¹¹µÄ¸ù±êÇ©£¬Íê³ÉÏÔÊ¾Ê÷ÐÍ½á¹¹¹¦ÄÜ
+	æ ‘åž‹ç»“æž„çš„æ ¹æ ‡ç­¾ï¼Œå®Œæˆæ˜¾ç¤ºæ ‘åž‹ç»“æž„åŠŸèƒ½
     -->
     <tag>
         <name>tree</name>
@@ -28,9 +28,9 @@
             <rtexprvalue>true</rtexprvalue>
         </attribute>
 		<!--
-			¿ØÖÆÊ÷½ÚµãÊÇ·ñ»»ÐÐ,
-			true:²»ÔÊÐí»»ÐÐ£¬È±Ê¡Îªtrue
-			false:ÔÊÐí»»ÐÐ
+			æŽ§åˆ¶æ ‘èŠ‚ç‚¹æ˜¯å¦æ¢è¡Œ,
+			true:ä¸å…è®¸æ¢è¡Œï¼Œç¼ºçœä¸ºtrue
+			false:å…è®¸æ¢è¡Œ
 		-->
 		<attribute>
             <name>nowrap</name>
@@ -75,8 +75,8 @@
         </attribute>
 
         <!--
-          Ë«ÊÂ¼þ¿ØÖÆ±äÁ¿£¬µã»÷½ÚµãÊ±ÊÇ·ñÕ¹¿ª½ÚµãµÄÏÂÒ»¼¶Ä¿Â¼£¬Ç°ÌáÌõ¼þÊÇ½ÚµãÒªÓÐÏÂÒ»¼¶Ä¿Â¼
-          false£ºÎª²»Õ¹¿ª£¬trueÎªÕ¹¿ª£¬È±Ê¡Îªfalse
+          åŒäº‹ä»¶æŽ§åˆ¶å˜é‡ï¼Œç‚¹å‡»èŠ‚ç‚¹æ—¶æ˜¯å¦å±•å¼€èŠ‚ç‚¹çš„ä¸‹ä¸€çº§ç›®å½•ï¼Œå‰ææ¡ä»¶æ˜¯èŠ‚ç‚¹è¦æœ‰ä¸‹ä¸€çº§ç›®å½•
+          falseï¼šä¸ºä¸å±•å¼€ï¼Œtrueä¸ºå±•å¼€ï¼Œç¼ºçœä¸ºfalse
         -->
         <attribute>
             <name>doubleEvent</name>
@@ -95,17 +95,17 @@
             <required>false</required>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
-		<!--À©³ä´®-->
+		<!--æ‰©å……ä¸²-->
         <attribute>
             <name>extendString</name>
             <required>false</required>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
         <!--
-            ¿ØÖÆÊ÷µÄÕÛµþ¹¦ÄÜ£º
-            false£º²»ÕÛµþ
-            true£ºÕÛµþ
-            È±Ê¡Öµ£ºfalse
+            æŽ§åˆ¶æ ‘çš„æŠ˜å åŠŸèƒ½ï¼š
+            falseï¼šä¸æŠ˜å 
+            trueï¼šæŠ˜å 
+            ç¼ºçœå€¼ï¼šfalse
         -->
         <attribute>
             <name>collapse</name>
@@ -114,11 +114,11 @@
         </attribute>
 		
 		<!--
-		  ²»½¨ÒéÊ¹ÓÃ£¬ÇëÓÃmodeÊôÐÔµÄdynamicºÍstatic-dynamicÖµÀ´Ö¸¶¨
-            ¿ØÖÆÊ÷µÄdynamic»úÖÆ£º
-            false£º¶¯¾²Ì¬½áºÏ¼ÓÔØ
-            true£º´¿¶¯Ì¬µÄÊ÷
-            È±Ê¡Öµ£ºtrue 
+		  ä¸å»ºè®®ä½¿ç”¨ï¼Œè¯·ç”¨modeå±žæ€§çš„dynamicå’Œstatic-dynamicå€¼æ¥æŒ‡å®š
+            æŽ§åˆ¶æ ‘çš„dynamicæœºåˆ¶ï¼š
+            falseï¼šåŠ¨é™æ€ç»“åˆåŠ è½½
+            trueï¼šçº¯åŠ¨æ€çš„æ ‘
+            ç¼ºçœå€¼ï¼štrue 
         -->
         <attribute> 
             <name>dynamic</name>
@@ -127,11 +127,11 @@
         </attribute>
         
         <!--
-            ¿ØÖÆÊ÷µÄÊý¾Ý¼ÓÔØ»úÖÆ£º
-            static£º¾²Ì¬½áºÏ¼ÓÔØ
-            static-dynamic:¶¯¾²Ì¬½áºÏ¼ÓÔØ
-            dynamic£º´¿¶¯Ì¬µÄÊ÷
-            È±Ê¡Öµ£ºdynamic 
+            æŽ§åˆ¶æ ‘çš„æ•°æ®åŠ è½½æœºåˆ¶ï¼š
+            staticï¼šé™æ€ç»“åˆåŠ è½½
+            static-dynamic:åŠ¨é™æ€ç»“åˆåŠ è½½
+            dynamicï¼šçº¯åŠ¨æ€çš„æ ‘
+            ç¼ºçœå€¼ï¼šdynamic 
         -->
         <attribute> 
             <name>mode</name>
@@ -139,12 +139,12 @@
             <rtexprvalue>true</rtexprvalue>
         </attribute>
         <!-- 
-        	ÊÇ·ñjquery×°ÔØ,true-ÊÇ£¬false-²»ÊÇ
-        	Ä¬ÈÏÖµ£ºfalse;
-        	ÎªfalseÊ±,±êÇ©¿â½«×Ô¶¯ÎªÒ³ÃæÒýÈëÒÔÏÂÑùÊ½ºÍ½Å±¾£¬·ñÔò²»µ¼Èë
+        	æ˜¯å¦jqueryè£…è½½,true-æ˜¯ï¼Œfalse-ä¸æ˜¯
+        	é»˜è®¤å€¼ï¼šfalse;
+        	ä¸ºfalseæ—¶,æ ‡ç­¾åº“å°†è‡ªåŠ¨ä¸ºé¡µé¢å¼•å…¥ä»¥ä¸‹æ ·å¼å’Œè„šæœ¬ï¼Œå¦åˆ™ä¸å¯¼å…¥
         	<script src="/cimconsole/include/jquery-1.4.2.min.js" type="text/javascript"></script>
 <link rel="stylesheet" type="text/css" href="/cimconsole/include/treeview.css"/>
-        	trueÊ±£¬ÉÏÊöÑùÊ½ºÍ½Å±¾½«Í¨¹ýÍâ²¿µ¼Èë
+        	trueæ—¶ï¼Œä¸Šè¿°æ ·å¼å’Œè„šæœ¬å°†é€šè¿‡å¤–éƒ¨å¯¼å…¥
          -->
         <attribute> 
             <name>jquery</name>
@@ -158,8 +158,8 @@
 
     </tag>
 	<!--
-		ÅäÖÃÊ÷½ÚµãÇ°ÃæµÄ¸´Ñ¡¿ò°´Å¥ÐÅÏ¢£¬°üÀ¨£º
-		¸´Ñ¡¿òÃû³Æ£¬¸´Ñ¡¿òËùÓÐÈ±Ê¡Ñ¡ÖÐÖµ£¬ÒÔ¼°À©Õ¹×Ö·û´®£¬Îª¸´Ñ¡¿òÌí¼Ó¸÷ÖÖÐÐÎª
+		é…ç½®æ ‘èŠ‚ç‚¹å‰é¢çš„å¤é€‰æ¡†æŒ‰é’®ä¿¡æ¯ï¼ŒåŒ…æ‹¬ï¼š
+		å¤é€‰æ¡†åç§°ï¼Œå¤é€‰æ¡†æ‰€æœ‰ç¼ºçœé€‰ä¸­å€¼ï¼Œä»¥åŠæ‰©å±•å­—ç¬¦ä¸²ï¼Œä¸ºå¤é€‰æ¡†æ·»åŠ å„ç§è¡Œä¸º
 		-->
     <tag>
         <name>checkbox</name>
@@ -172,7 +172,7 @@
             <rtexprvalue>true</rtexprvalue>
         </attribute>
         <!--
-            ¶¨Òå¸´Ñ¡¿òµÄÈ±Ê¡Öµ£¬ÒÔ"$$"·Ö¸ô
+            å®šä¹‰å¤é€‰æ¡†çš„ç¼ºçœå€¼ï¼Œä»¥"$$"åˆ†éš”
         -->
         <attribute>
             <name>defaultValues</name>
@@ -186,7 +186,7 @@
         </attribute>
 		
 		<!--
-			ÊÇ·ñµÝ¹éÑ¡ÖÐ¸´Ñ¡¿ò
+			æ˜¯å¦é€’å½’é€‰ä¸­å¤é€‰æ¡†
 		-->
 		<attribute>
             <name>recursive</name>
@@ -197,7 +197,7 @@
         
         
         <!--
-			ÊÇ·ñµÝ¹éÑ¡ÖÐ¸¸¸´Ñ¡¿ò
+			æ˜¯å¦é€’å½’é€‰ä¸­çˆ¶å¤é€‰æ¡†
 		-->
 		<attribute>
             <name>uprecursive</name>
@@ -206,7 +206,7 @@
         </attribute>
         
          <!--
-			ÊÇ·ñµÝ¹éÑ¡ÖÐ¸¸¸´Ñ¡¿ò
+			æ˜¯å¦é€’å½’é€‰ä¸­çˆ¶å¤é€‰æ¡†
 		-->
 		<attribute>
             <name>partuprecursive</name>
@@ -216,7 +216,7 @@
         
 		
 		<!--
-			¶¨Òå¸´Ñ¡¿òµÄonchangeÊÂ¼þ
+			å®šä¹‰å¤é€‰æ¡†çš„onchangeäº‹ä»¶
 		-->
 		<attribute>
             <name>onchange</name>
@@ -246,9 +246,9 @@
         </attribute>
     </tag>
 
-	<!--ÅäÖÃÊ÷µÄÊý¾Ý»ñÈ¡½Ó¿Ú£¬
-		Ê÷µÄ¸ù½ÚµãÐÅÏ¢£¬
-		Ê÷µÄÊý¾Ý»º³å·¶Î§¡¢½ÚµãÐÅÏ¢ÊÇ·ñÊµÊ±Ë¢ÐÂ¡¢Ê÷µÄÄ¬ÈÏÕ¹¿ª²ã¼¶¡¢ÊÇ·ñÊÇµ¥Ñ¡Ä£Ê½-->
+	<!--é…ç½®æ ‘çš„æ•°æ®èŽ·å–æŽ¥å£ï¼Œ
+		æ ‘çš„æ ¹èŠ‚ç‚¹ä¿¡æ¯ï¼Œ
+		æ ‘çš„æ•°æ®ç¼“å†²èŒƒå›´ã€èŠ‚ç‚¹ä¿¡æ¯æ˜¯å¦å®žæ—¶åˆ·æ–°ã€æ ‘çš„é»˜è®¤å±•å¼€å±‚çº§ã€æ˜¯å¦æ˜¯å•é€‰æ¨¡å¼-->
 
     <tag>
         <name>treedata</name>
@@ -256,20 +256,20 @@
         <bodycontent>JSP</bodycontent>
 
 
-        <!--Ö¸¶¨Ê÷½ÚµãµÄÊý¾Ý»ñÈ¡½Ó¿ÚÃû³Æ±ðÃû£¬ÔÚtree.propertiesÎÄ¼þÖÐÅäÖÃ-->
+        <!--æŒ‡å®šæ ‘èŠ‚ç‚¹çš„æ•°æ®èŽ·å–æŽ¥å£åç§°åˆ«åï¼Œåœ¨tree.propertiesæ–‡ä»¶ä¸­é…ç½®-->
         <attribute>
             <name>treetype</name>
             <required>true</required>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
 		
-		<!--Ö¸¶¨ÊÇ·ñ¶ÔÊ÷½Úµã½øÐÐÅÅÐòÈ±Ê¡Îªtrue-->
+		<!--æŒ‡å®šæ˜¯å¦å¯¹æ ‘èŠ‚ç‚¹è¿›è¡ŒæŽ’åºç¼ºçœä¸ºtrue-->
 		<attribute>
             <name>sortable</name>
             <required>false</required>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
-        <!--Ê÷½ÚµãÊý¾Ý»º³å·¶Î§£º
+        <!--æ ‘èŠ‚ç‚¹æ•°æ®ç¼“å†²èŒƒå›´ï¼š
 			session
 			request
 			pageContext
@@ -280,83 +280,83 @@
             <required>false</required>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
-		<!--¸ù½Úµã±êÊ¶-->
+		<!--æ ¹èŠ‚ç‚¹æ ‡è¯†-->
         <attribute>
             <name>rootid</name>
             <required>true</required>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
-        <!--¸ù½ÚµãÃû³Æ-->
+        <!--æ ¹èŠ‚ç‚¹åç§°-->
 		<attribute>
             <name>rootName</name>
             <required>true</required>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
- 		<!--¸ù½ÚµãÃû³Æ¹ú¼Ê»¯´úÂë-->
+ 		<!--æ ¹èŠ‚ç‚¹åç§°å›½é™…åŒ–ä»£ç -->
         <attribute>
             <name>rootNameCode</name>
             <required>false</required>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
-		<!--Ê÷µÄÄ¬ÈÏÕ¹¿ª²ã¼¶-->
+		<!--æ ‘çš„é»˜è®¤å±•å¼€å±‚çº§-->
 		<attribute>
             <name>expandLevel</name>
             <required>false</required>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
-		<!--ÊÇ·ñÏÔÊ¾¸ù½Úµã³¬Á´½Ó-->
+		<!--æ˜¯å¦æ˜¾ç¤ºæ ¹èŠ‚ç‚¹è¶…é“¾æŽ¥-->
         <attribute>
             <name>showRootHref</name>
             <required>false</required>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
 
-		<!--ÊÇ·ñÐèÒª¼°Ê±¸üÐÂËùÓÐÊ÷½ÚµãÐÅÏ¢-->
+		<!--æ˜¯å¦éœ€è¦åŠæ—¶æ›´æ–°æ‰€æœ‰æ ‘èŠ‚ç‚¹ä¿¡æ¯-->
         <attribute>
             <name>needObserver</name>
             <required>false</required>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
-        <!--ÊÇ·ñÊÇµ¥Ñ¡Ä£Ê½-->
+        <!--æ˜¯å¦æ˜¯å•é€‰æ¨¡å¼-->
         <attribute>
             <name>singleSelection</name>
             <required>false</required>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
-        <!--¸ù½Úµã±¸×¢×Ö¶Î-->
+        <!--æ ¹èŠ‚ç‚¹å¤‡æ³¨å­—æ®µ-->
         <attribute>
             <name>memo</name>
             <required>false</required>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
 
-		<!--¸ù½ÚµãcheckboxÖµ-->
+		<!--æ ¹èŠ‚ç‚¹checkboxå€¼-->
         <attribute>
             <name>checkboxValue</name>
             <required>false</required>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
-        <!--¸ù½Úµãradioµ¥Ñ¡Öµ-->
+        <!--æ ¹èŠ‚ç‚¹radioå•é€‰å€¼-->
         <attribute>
             <name>radioValue</name>
             <required>false</required>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
-		<!--µã»÷Ê÷½ÚµãÊ±ÊÇ·ñÐèÒªrefreshµã»÷µÄtree Node-->
+		<!--ç‚¹å‡»æ ‘èŠ‚ç‚¹æ—¶æ˜¯å¦éœ€è¦refreshç‚¹å‡»çš„tree Node-->
         <attribute>
             <name>refreshNode</name>
             <required>false</required>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
 
-        <!--ÉèÖÃ¸¸½ÚµãÂ·¾¶-->
+        <!--è®¾ç½®çˆ¶èŠ‚ç‚¹è·¯å¾„-->
         <attribute>
             <name>path</name>
             <required>false</required>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
 		
-		<!--ÓÒ¼ü²Ëµ¥¿ØÖÆ±äÁ¿-->
+		<!--å³é”®èœå•æŽ§åˆ¶å˜é‡-->
 		<attribute>
             <name>enablecontextmenu</name>
             <required>false</required>
@@ -366,8 +366,8 @@
 
     </tag>
 
-	<!--±£ÁôÒ³Ãæ²ÎÊý
-		Ê÷½ÚµãµÄÕ¹¿ª£¬ÕÛµþÊÂ¼þÐèÒª¼ÇÂ¼Ò³Ãæ²ÎÊýÒÔÃâ²ÎÊý¶ªÊ§-->
+	<!--ä¿ç•™é¡µé¢å‚æ•°
+		æ ‘èŠ‚ç‚¹çš„å±•å¼€ï¼ŒæŠ˜å äº‹ä»¶éœ€è¦è®°å½•é¡µé¢å‚æ•°ä»¥å…å‚æ•°ä¸¢å¤±-->
      <tag>
         <name>param</name>
         <tagclass>com.frameworkset.common.tag.tree.impl.ParamTag</tagclass>
@@ -406,15 +406,15 @@
         <bodycontent>JSP</bodycontent>        
 	 </tag>
 	 <!-- 
-	 	ÊµÏÖÊ÷±êÇ©µÄ²éÑ¯¹¦ÄÜ£¬ÊÊÓÃÓÚ¾²Ì¬Ê÷ºÍ¶¯¾²½áºÏµÄÊ÷
-		Ö»ÄÜ²éÕÒÒÑ¾­Õ¹Ê¾³öÀ´µÄÊ÷½Úµã
+	 	å®žçŽ°æ ‘æ ‡ç­¾çš„æŸ¥è¯¢åŠŸèƒ½ï¼Œé€‚ç”¨äºŽé™æ€æ ‘å’ŒåŠ¨é™ç»“åˆçš„æ ‘
+		åªèƒ½æŸ¥æ‰¾å·²ç»å±•ç¤ºå‡ºæ¥çš„æ ‘èŠ‚ç‚¹
 	  -->
 	 <tag>
 		<name>query</name>
         <tagclass>com.frameworkset.common.tag.tree.impl.QueryTag</tagclass>		
         <bodycontent>JSP</bodycontent>
         <!-- 
-        	rootid:Ö¸¶¨Ê÷µÄ¸ù½Úµãid£¬Ä¬ÈÏÖµÎª0£¬¶ÔÓ¦ÓÚtreedataµÄrootidÊôÐÔÖµ
+        	rootid:æŒ‡å®šæ ‘çš„æ ¹èŠ‚ç‚¹idï¼Œé»˜è®¤å€¼ä¸º0ï¼Œå¯¹åº”äºŽtreedataçš„rootidå±žæ€§å€¼
          -->        
         <attribute>
           <name>rootid</name>
@@ -422,8 +422,8 @@
           <rtexprvalue>true</rtexprvalue>
         </attribute>
         <!-- 
-        	templatepath:Êä³ö²éÑ¯¿ò¡¢²éÑ¯°´Å¥µÄvelocityÄ£°å½Å±¾ÎÄ¼þÂ·¾¶£¬Ïà¶ÔÓÚvelocityÄ£°åÎÄ¼þ¼ÐµÄ¸ùÄ¿Â¼
-        	ÀýÈç£ºÄ£°åÄ¿Â¼Îªd:/templates/treequery.vm,ÄÇÃ´templatepathµÄÖµ¾ÍÎªtreequery.vm
+        	templatepath:è¾“å‡ºæŸ¥è¯¢æ¡†ã€æŸ¥è¯¢æŒ‰é’®çš„velocityæ¨¡æ¿è„šæœ¬æ–‡ä»¶è·¯å¾„ï¼Œç›¸å¯¹äºŽvelocityæ¨¡æ¿æ–‡ä»¶å¤¹çš„æ ¹ç›®å½•
+        	ä¾‹å¦‚ï¼šæ¨¡æ¿ç›®å½•ä¸ºd:/templates/treequery.vm,é‚£ä¹ˆtemplatepathçš„å€¼å°±ä¸ºtreequery.vm
          -->        
         <attribute>
           <name>templatepath</name>

@@ -26,7 +26,7 @@ import org.junit.Test;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2008</p>
- * @Date 2011-4-28 下午01:59:19
+ * @Date 2011-4-28 涓嬪崍01:59:19
  * @author biaoping.yin
  * @version 1.0
  */
@@ -41,19 +41,19 @@ public class WSClient {
 		factory.setAddress("http://localhost:8080/bboss-mvc/cxfservices/mysfirstwsservicePort");
 		factory.setServiceClass(org.frameworkset.web.ws.WSService.class);
 		wsservice =  (WSService)factory.create();
-		wsservice.sayHello("多多");
+		wsservice.sayHello("澶氬");
 	}
 	@Test
 	public void testA()
 	{
 		org.frameworkset.web.ws.WSService wsservice =  (WSService)context.getBeanObject("WSServiceClient");
-		System.out.println(wsservice.sayHello("多多"));
+		System.out.println(wsservice.sayHello("澶氬"));
 	}
 	@Test
 	public void testcode()
 	{
 		long s = System.currentTimeMillis();
-		String re = wsservice.sayHello("多多");
+		String re = wsservice.sayHello("澶氬");
 		long e = System.currentTimeMillis();
 		System.out.println("testMvcClient:" +re + "," + (e -s));
 	}
@@ -69,7 +69,7 @@ public class WSClient {
 	{
 		org.frameworkset.web.ws.WSService wsservice = JaxWsProxyFactory.getWSClient("http://localhost:8080/" +
 				"bboss-mvc/cxfservices/mysfirstwsservicePort",WSService.class);
-		System.out.println(wsservice.sayHello("多多"));
+		System.out.println(wsservice.sayHello("澶氬"));
 	}
 	                                                                                                                          
 

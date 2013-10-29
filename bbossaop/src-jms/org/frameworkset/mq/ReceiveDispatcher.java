@@ -64,11 +64,11 @@ public class ReceiveDispatcher
     protected JMSConnection connection;
 
     // /**
-    // * ÇëÇóÏûÏ¢Ñ¡ÔñÆ÷
+    // * è¯·æ±‚æ¶ˆæ¯é€‰æ‹©å™¨
     // */
     // protected String requestMessageSelector;
     // /**
-    // * ÏìÓ¦ÏûÏ¢Ñ¡ÔñÆ÷
+    // * å“åº”æ¶ˆæ¯é€‰æ‹©å™¨
     // */
     // protected String responseMessageSelector;
     protected String messageSelector;
@@ -148,7 +148,7 @@ public class ReceiveDispatcher
     public MessageConsumer getConsumer() throws JMSException
     {
         if (this.destinationType == MQUtil.TYPE_ROUTER)
-            throw new JMSException("¶Ô²»Æğ,²»ÄÜ¶ÔÂ·ÓÉ½Úµã·¢ËÍÏûÏ¢.type=" + MQUtil.getTypeDesc(destinationType));
+            throw new JMSException("å¯¹ä¸èµ·,ä¸èƒ½å¯¹è·¯ç”±èŠ‚ç‚¹å‘é€æ¶ˆæ¯.type=" + MQUtil.getTypeDesc(destinationType));
         if (consumer != null)
             return consumer;
         synchronized (consumerLock)
@@ -163,17 +163,17 @@ public class ReceiveDispatcher
     {
 
         if (this.destinationType == MQUtil.TYPE_ROUTER)
-            throw new JMSException("¶Ô²»Æğ,²»ÄÜ¶ÔÂ·ÓÉ½Úµã·¢ËÍÏûÏ¢.type=" + MQUtil.getTypeDesc(destinationType));
-        if (this.messageSelector != null && this.messageSelector.equals(selector))// Èç¹ûÒÑ¾­Ö¸¶¨ÁË±¾Àà´ú±íµÄÄ¿±êµØÖ·µÄÑ¡ÔñÆ÷Ä¿±ê£¬ÔòÖ±½Ó·µ»Ø¸ÃµØÖ·
+            throw new JMSException("å¯¹ä¸èµ·,ä¸èƒ½å¯¹è·¯ç”±èŠ‚ç‚¹å‘é€æ¶ˆæ¯.type=" + MQUtil.getTypeDesc(destinationType));
+        if (this.messageSelector != null && this.messageSelector.equals(selector))// å¦‚æœå·²ç»æŒ‡å®šäº†æœ¬ç±»ä»£è¡¨çš„ç›®æ ‡åœ°å€çš„é€‰æ‹©å™¨ç›®æ ‡ï¼Œåˆ™ç›´æ¥è¿”å›è¯¥åœ°å€
             return this.consumer;
         if (this.consumer != null)
-            throw new JMSException("¶Ô²»ÆğÄ¿±êµØÖ·ÒÑ¾­±»ÆäËûµÄÑ¡ÔñÆ÷Ê¹ÓÃ¡£other selector is " + this.messageSelector);
+            throw new JMSException("å¯¹ä¸èµ·ç›®æ ‡åœ°å€å·²ç»è¢«å…¶ä»–çš„é€‰æ‹©å™¨ä½¿ç”¨ã€‚other selector is " + this.messageSelector);
         synchronized (consumerLock)
         {
-            if (this.messageSelector != null && this.messageSelector.equals(selector))// Èç¹ûÒÑ¾­Ö¸¶¨ÁË±¾Àà´ú±íµÄÄ¿±êµØÖ·µÄÑ¡ÔñÆ÷Ä¿±ê£¬ÔòÖ±½Ó·µ»Ø¸ÃµØÖ·
+            if (this.messageSelector != null && this.messageSelector.equals(selector))// å¦‚æœå·²ç»æŒ‡å®šäº†æœ¬ç±»ä»£è¡¨çš„ç›®æ ‡åœ°å€çš„é€‰æ‹©å™¨ç›®æ ‡ï¼Œåˆ™ç›´æ¥è¿”å›è¯¥åœ°å€
                 return this.consumer;
             if (this.consumer != null)
-                throw new JMSException("¶Ô²»ÆğÄ¿±êµØÖ·ÒÑ¾­±»ÆäËûµÄÑ¡ÔñÆ÷Ê¹ÓÃ¡£other selector is " + this.messageSelector);
+                throw new JMSException("å¯¹ä¸èµ·ç›®æ ‡åœ°å€å·²ç»è¢«å…¶ä»–çš„é€‰æ‹©å™¨ä½¿ç”¨ã€‚other selector is " + this.messageSelector);
             this.consumer = getConsumer(destinationType, destination, selector, false);
             this.messageSelector = selector;
 
@@ -347,7 +347,7 @@ public class ReceiveDispatcher
     // JMSException
     // {
     // if (this.client.getDestinationType() != ClientHelper.TYPE_TOPIC)
-    // throw new JMSException("¶Ô²»Æğ,Ö»ÄÜ¶ÔÖ÷Ìâ½Úµã´´½¨³Ö¾Ã¶©ÔÄÏû·ÑÕß.type=" +
+    // throw new JMSException("å¯¹ä¸èµ·,åªèƒ½å¯¹ä¸»é¢˜èŠ‚ç‚¹åˆ›å»ºæŒä¹…è®¢é˜…æ¶ˆè´¹è€….type=" +
     // MQClient.getTypeDesc(client.getDestinationType()));
     // TopicSubscriber topicSubscriber =
     // getTopicSubscriberWithSelector(this.client.getDestination(), name, null);
@@ -359,7 +359,7 @@ public class ReceiveDispatcher
     // selector) throws JMSException
     // {
     // if (this.client.getDestinationType() != ClientHelper.TYPE_TOPIC)
-    // throw new JMSException("¶Ô²»Æğ,²»ÄÜ¶Ô¶ÓÁĞÀàĞÍ½Úµã´´½¨³Ö¾Ã¶©ÔÄÏû·ÑÕß.type=" +
+    // throw new JMSException("å¯¹ä¸èµ·,ä¸èƒ½å¯¹é˜Ÿåˆ—ç±»å‹èŠ‚ç‚¹åˆ›å»ºæŒä¹…è®¢é˜…æ¶ˆè´¹è€….type=" +
     // MQClient.getTypeDesc(this.client.getDestinationType()));
     // this.consumer =
     // getTopicSubscriberWithSelector(this.client.getDestination(), name,

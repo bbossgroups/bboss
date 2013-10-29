@@ -9,27 +9,38 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 import org.frameworkset.spi.ProviderInterceptor;
 import org.frameworkset.spi.UNmodify;
+import org.frameworkset.spi.interceptor.DummyInterceptorFacttory;
 import org.frameworkset.spi.interceptor.DumyInterceptor;
 import org.frameworkset.spi.interceptor.InterceptorChain;
+import org.frameworkset.spi.interceptor.InterceptorFacttory;
 import org.frameworkset.spi.interceptor.InterceptorWrapper;
-import org.frameworkset.spi.interceptor.TransactionInterceptor;
 
 import com.frameworkset.proxy.Interceptor;
 
 public abstract class BaseTXManager implements java.io.Serializable,UNmodify
 {
     private static Logger log = Logger.getLogger(ProviderManagerInfo.class);
-
+    private static InterceptorFacttory interceptorFacttory;
+    static
+    {
+    	try {
+			interceptorFacttory = (InterceptorFacttory) Class.forName("org.frameworkset.spi.interceptor.InterceptorFacttoryImpl").newInstance();
+		} catch (Exception e) {
+			log.warn("class org.frameworkset.spi.interceptor.InterceptorFacttoryImpl not found in classpath,use DummyInterceptorFacttory. ");
+			interceptorFacttory = new DummyInterceptorFacttory();
+			
+		}
+    }
     protected Transactions txs;
     
-
+    
     protected List<InterceptorInfo> interceptors = new ArrayList<InterceptorInfo>();
 
     protected boolean callorder_sequence = false;
     protected AOPMethods asyncMethods;
 
     /**
-     * ÓÃ»§ÊÇ·ñ×Ô¼º¶¨ÒåÁËÀ¹½ØÆ÷
+     * ç”¨æˆ·æ˜¯å¦è‡ªå·±å®šä¹‰äº†æ‹¦æˆªå™¨
      */
     protected boolean usedCustomInterceptor = false;
 
@@ -114,7 +125,7 @@ public abstract class BaseTXManager implements java.io.Serializable,UNmodify
                     	SynchronizedMethod synmethod = txs.isTransactionMethod(method,muuid);
                     	if(synmethod == null)
                     		return intercptor;
-                        TransactionInterceptor wrapInterceptor = new TransactionInterceptor(synmethod);
+                        Interceptor wrapInterceptor = interceptorFacttory.getInterceptor(synmethod);
 
                         InterceptorChain inteceptor = new InterceptorChain(wrapInterceptor, intercptor, true);
                         return inteceptor;
@@ -124,7 +135,7 @@ public abstract class BaseTXManager implements java.io.Serializable,UNmodify
                     	SynchronizedMethod synmethod = txs.isTransactionMethod(method,muuid);
                     	if(synmethod == null)
                     		return null;
-                        TransactionInterceptor wrapInterceptor = new TransactionInterceptor(synmethod);
+                        Interceptor wrapInterceptor = interceptorFacttory.getInterceptor(synmethod);
 
 
                         return wrapInterceptor;
@@ -149,7 +160,7 @@ public abstract class BaseTXManager implements java.io.Serializable,UNmodify
         	SynchronizedMethod synmethod = txs.isTransactionMethod(method,muuid);
         	if(synmethod == null)
         		return null;
-            return new TransactionInterceptor(synmethod);
+            return interceptorFacttory.getInterceptor(synmethod);//new TransactionInterceptor(synmethod);
 
         }
         return null;
@@ -187,7 +198,7 @@ public abstract class BaseTXManager implements java.io.Serializable,UNmodify
         	SynchronizedMethod synmethod = txs.isTransactionMethod(method,muuid);
         	if(synmethod == null)
         		return null;
-            TransactionInterceptor wrapInterceptor = new TransactionInterceptor(synmethod);
+            Interceptor wrapInterceptor = interceptorFacttory.getInterceptor(synmethod);//new TransactionInterceptor(synmethod);
             return wrapInterceptor;
         }
         return null;
@@ -307,7 +318,7 @@ public abstract class BaseTXManager implements java.io.Serializable,UNmodify
                 {
 
                     InterceptorInfo it = (InterceptorInfo) interceptors.get(i);
-                    if(!it.allWillBeIntercept() || it.isInterceptMethod(method, muuid )== null)//Èç¹û²»ÊÇÒ»¸öĞèÒª±»±¾À¹½ØÆ÷À¹½ØµÄ·½·¨£¬ÔòºöÂÔ¸ÃÀ¹½ØÆ÷
+                    if(!it.allWillBeIntercept() || it.isInterceptMethod(method, muuid )== null)//å¦‚æœä¸æ˜¯ä¸€ä¸ªéœ€è¦è¢«æœ¬æ‹¦æˆªå™¨æ‹¦æˆªçš„æ–¹æ³•ï¼Œåˆ™å¿½ç•¥è¯¥æ‹¦æˆªå™¨
                     	continue;    
 //                    Interceptor transactionInterceptor = (Interceptor) Class.forName(it.getClazz()).newInstance();
                     Interceptor transactionInterceptor = (Interceptor)it.getBean();
@@ -330,7 +341,7 @@ public abstract class BaseTXManager implements java.io.Serializable,UNmodify
             	SynchronizedMethod synmethod = txs.isTransactionMethod(method,muuid);
             	if(synmethod == null)
             		return new InterceptorWrapper(_t);
-                TransactionInterceptor wrapInterceptor = new TransactionInterceptor(synmethod);
+                Interceptor wrapInterceptor = interceptorFacttory.getInterceptor(synmethod);//new TransactionInterceptor(synmethod);
 
                 InterceptorWrapper wraper = new InterceptorWrapper(wrapInterceptor, _t);
                 return wraper;
@@ -349,14 +360,14 @@ public abstract class BaseTXManager implements java.io.Serializable,UNmodify
         	SynchronizedMethod synmethod = txs.isTransactionMethod(method,muuid);
         	if(synmethod == null)
         		return null;
-            TransactionInterceptor wrapInterceptor = new TransactionInterceptor(synmethod);
+            Interceptor wrapInterceptor = interceptorFacttory.getInterceptor(synmethod);//new TransactionInterceptor(synmethod);
             return wrapInterceptor;
         }
 
     }
 
     /**
-     * ¹¹½¨À¹½ØÆ÷Á´±í£¬¸ù¾İÀ¹½ØÆ÷ÅäÖÃµÄË³Ğò¹¹ÔìÁ´½Ó£¬ÅäÖÃÔÚÇ°µÄÏÈµ÷ÓÃ¡£
+     * æ„å»ºæ‹¦æˆªå™¨é“¾è¡¨ï¼Œæ ¹æ®æ‹¦æˆªå™¨é…ç½®çš„é¡ºåºæ„é€ é“¾æ¥ï¼Œé…ç½®åœ¨å‰çš„å…ˆè°ƒç”¨ã€‚
      * 
      * @return
      */
@@ -372,7 +383,7 @@ public abstract class BaseTXManager implements java.io.Serializable,UNmodify
                 {
 
                     InterceptorInfo it = (InterceptorInfo) interceptors.get(i);
-                    if(!it.allWillBeIntercept() )//Èç¹û²»ÊÇÒ»¸öĞèÒª±»±¾À¹½ØÆ÷À¹½ØµÄ·½·¨£¬ÔòºöÂÔ¸ÃÀ¹½ØÆ÷
+                    if(!it.allWillBeIntercept() )//å¦‚æœä¸æ˜¯ä¸€ä¸ªéœ€è¦è¢«æœ¬æ‹¦æˆªå™¨æ‹¦æˆªçš„æ–¹æ³•ï¼Œåˆ™å¿½ç•¥è¯¥æ‹¦æˆªå™¨
                     {
                     	if( it.isInterceptMethod(method, methoduuid )== null)
                     		continue;

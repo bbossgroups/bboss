@@ -40,7 +40,7 @@ import org.frameworkset.util.ResourceUtils;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2011-5-18 œ¬ŒÁ03:01:08
+ * @Date 2011-5-18 ‰∏ãÂçà03:01:08
  * @author biaoping.yin
  * @version 1.0
  */
@@ -59,7 +59,7 @@ public class RMIUtil {
 		try
 		{
 			URL file = ResourceUtils.getFileURL("org/frameworkset/spi/manager-rpc-rmi.xml");
-			context = new SOAFileApplicationContext (file,"GBK");
+			context = new SOAFileApplicationContext (file,"UTF-8");
 			ProMap map = context.getMapProperty("rpc.protocol.rmi.params");
 			if(map == null)
 			{

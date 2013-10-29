@@ -22,16 +22,16 @@ package org.frameworkset.spi.assemble;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2010-1-17 ÏÂÎç02:29:17
+ * @Date 2010-1-17 ä¸‹åˆ02:29:17
  * @author biaoping.yin
  * @version 1.0
  */
 public abstract class ProParentInf
 {
 	/**
-	 * »ñÈ¡¸¸ÈİÆ÷ÖĞµÄÒıÓÃ¶ÔÏó£¬±ØĞëÓĞĞ§·ÀÖ¹Ñ­»·ÒÀÀµ×¢Èë
+	 * è·å–çˆ¶å®¹å™¨ä¸­çš„å¼•ç”¨å¯¹è±¡ï¼Œå¿…é¡»æœ‰æ•ˆé˜²æ­¢å¾ªç¯ä¾èµ–æ³¨å…¥
 	 * 
-	 * »ñÈ¡ÒıÓÃ±äÁ¿ÈİÆ÷°üÀ¨£º
+	 * è·å–å¼•ç”¨å˜é‡å®¹å™¨åŒ…æ‹¬ï¼š
 	 * contruct
 	 * pro
 	 * promap

@@ -137,7 +137,7 @@ public class PoolManBootstrap implements java.io.Serializable{
                 //throw ex2;
             }
         }
-        //³õÊ¼»¯Ö÷¼üÉú³É»úÖÆ
+        //åˆå§‹åŒ–ä¸»é”®ç”Ÿæˆæœºåˆ¶
         if(deployer != null)
         {
             try
@@ -188,7 +188,7 @@ public class PoolManBootstrap implements java.io.Serializable{
                 //throw ex2;
             }
         }
-        //³õÊ¼»¯Ö÷¼üÉú³É»úÖÆ
+        //åˆå§‹åŒ–ä¸»é”®ç”Ÿæˆæœºåˆ¶
         if(deployer != null)
         {
             try
@@ -211,9 +211,9 @@ public class PoolManBootstrap implements java.io.Serializable{
     }
     
     /**
-     * Ö±½Ó´ÓÅäÖÃÎÄ¼şÆô¶¯Êı¾İ¿âÁ¬½Ó³Ø£¬Ö¸¶¨Ã¿¸ö¿âµÄdbnamespace£¬ÓÃÀ´±ÜÃâÊı¾İ¿âÃû³ÆµÄ³åÍ»
-     * Ò»µ©Ö¸¶¨µÄÁËdbnamespace£¬ÄÇÃ´Ô­À´configfileÖĞÖ¸¶¨µÄdbname¾Í»Ø×Ô¶¯ÔÚÇ°Ãæ×·¼Ódbnamespace.Ç°×º
-     * ÀıÈç£º
+     * ç›´æ¥ä»é…ç½®æ–‡ä»¶å¯åŠ¨æ•°æ®åº“è¿æ¥æ± ï¼ŒæŒ‡å®šæ¯ä¸ªåº“çš„dbnamespaceï¼Œç”¨æ¥é¿å…æ•°æ®åº“åç§°çš„å†²çª
+     * ä¸€æ—¦æŒ‡å®šçš„äº†dbnamespaceï¼Œé‚£ä¹ˆåŸæ¥configfileä¸­æŒ‡å®šçš„dbnameå°±å›è‡ªåŠ¨åœ¨å‰é¢è¿½åŠ dbnamespace.å‰ç¼€
+     * ä¾‹å¦‚ï¼š
      * 	
      * @param configFile
      * @param dbnamespace
@@ -250,7 +250,7 @@ public class PoolManBootstrap implements java.io.Serializable{
                 //throw ex2;
             }
         }
-        //³õÊ¼»¯Ö÷¼üÉú³É»úÖÆ
+        //åˆå§‹åŒ–ä¸»é”®ç”Ÿæˆæœºåˆ¶
         if(deployer != null)
         {
             try
@@ -273,7 +273,7 @@ public class PoolManBootstrap implements java.io.Serializable{
     }
     
     /**
-     * ¶ÁÈ¡ÅäÖÃÎÄ¼şÆô¶¯ÌØ¶¨µÄÊı¾İ¿â
+     * è¯»å–é…ç½®æ–‡ä»¶å¯åŠ¨ç‰¹å®šçš„æ•°æ®åº“
      * @param configFile
      * @param dbname
      * @throws Exception 
@@ -298,7 +298,7 @@ public class PoolManBootstrap implements java.io.Serializable{
                 throw ex2;
             }
        
-        //³õÊ¼»¯Ö÷¼üÉú³É»úÖÆ
+        //åˆå§‹åŒ–ä¸»é”®ç”Ÿæˆæœºåˆ¶
         if(deployer != null)
         {
             try

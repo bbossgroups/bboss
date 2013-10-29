@@ -6,7 +6,7 @@ import javax.management.monitor.MonitorNotification;
 /**
  * <p>Title: DefaultStringMoniterProcess</p>
  *
- * <p>Description: 监听管理的字符串变量值，当字符串的值发生变化后做相应的处理</p>
+ * <p>Description: 鐩戝惉绠＄悊鐨勫瓧绗︿覆鍙橀噺鍊硷紝褰撳瓧绗︿覆鐨勫�煎彂鐢熷彉鍖栧悗鍋氱浉搴旂殑澶勭悊</p>
  *
  * <p>Copyright: Copyright (c) 2005</p>
  *

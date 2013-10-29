@@ -1,32 +1,32 @@
 ************************************************bbossgroups-3.3******************************
 1.aop/ioc
 ------2011-07-16-----------
-o Ôö¼ÓnettyĞ­ÒéÏûÏ¢´óĞ¡ÅäÖÃ²ÎÊı£¬½â¾ö±¬³´¹ıÄ¬ÈÏ1MÊ±·¢ËÍÊ§°ÜµÄÎÊÌâ
-<!-- ÄÜ¹»½âÂëµÄ×î´óÊı¾İsize£¬³¬¹ıÊ±£¬½«Å×Òì³££¬Ä¬ÈÏ20M -->
+o å¢åŠ nettyåè®®æ¶ˆæ¯å¤§å°é…ç½®å‚æ•°ï¼Œè§£å†³çˆ†ç‚’è¿‡é»˜è®¤1Mæ—¶å‘é€å¤±è´¥çš„é—®é¢˜
+<!-- èƒ½å¤Ÿè§£ç çš„æœ€å¤§æ•°æ®sizeï¼Œè¶…è¿‡æ—¶ï¼Œå°†æŠ›å¼‚å¸¸ï¼Œé»˜è®¤20M -->
 			<property name="maxFramgeLength_" value="20971520" />
 			
-			<!-- ±àÂë¿é´óĞ¡ -->
+			<!-- ç¼–ç å—å¤§å° -->
 			<property name="estimatedLength_" value="1024" />
 ------2011-07-04-----------
-o ĞŞ¸ÄÄ¬ÈÏ·şÎñ·¢²¼Ê±£¬serviceport´øÁËws:Ç°×º
+o ä¿®æ”¹é»˜è®¤æœåŠ¡å‘å¸ƒæ—¶ï¼Œserviceportå¸¦äº†ws:å‰ç¼€
 ------2011-07-02-----------
-o ĞŞ¸´×¢ÈëÊôĞÔÈ±Ïİ£º
-µ±ÊôĞÔÖµ×¢ÈëÒÔºóÃ»ÓĞÁ¢¼´ÍË³ö×¢ÈëÑ­»·£¬¶øÊÇ°ÑÑ­»·ÅÜÍê£¬¶ÔĞÔÄÜÓĞÒ»¶¨µÄÓ°Ïì¡£
-ĞŞ¸Ä³ÌĞò£º
+o ä¿®å¤æ³¨å…¥å±æ€§ç¼ºé™·ï¼š
+å½“å±æ€§å€¼æ³¨å…¥ä»¥åæ²¡æœ‰ç«‹å³é€€å‡ºæ³¨å…¥å¾ªç¯ï¼Œè€Œæ˜¯æŠŠå¾ªç¯è·‘å®Œï¼Œå¯¹æ€§èƒ½æœ‰ä¸€å®šçš„å½±å“ã€‚
+ä¿®æ”¹ç¨‹åºï¼š
 /bbossaop/src/org/frameworkset/spi/assemble/BeanAccembleHelper.java
-o ĞŞ¸´ÅäÖÃÎÄ¼şsql²»ÄÜ°²ÕÕÌØ¶¨Êı¾İ¿âÀàĞÍ»òÕßµ½Ö¸¶¨Êı¾İ¿âsqlÓï¾äµÄÈ±Ïİ
+o ä¿®å¤é…ç½®æ–‡ä»¶sqlä¸èƒ½å®‰ç…§ç‰¹å®šæ•°æ®åº“ç±»å‹æˆ–è€…åˆ°æŒ‡å®šæ•°æ®åº“sqlè¯­å¥çš„ç¼ºé™·
 
 2.mvc
 ------2011-07-24-------------
-o ¿ØÖÆÆ÷·½·¨²ÎÊı°ó¶¨»úÖÆÔö¼ÓMultipartFile¡¢MultipartFile[]ÀàĞÍ°ó¶¨Ö§³Ö,±ØĞëºÍRequestParam×¢½âÒ»ÆğÊ¹ÓÃ£¬Ê¹ÓÃ·½·¨ÈçÏÂ£º
+o æ§åˆ¶å™¨æ–¹æ³•å‚æ•°ç»‘å®šæœºåˆ¶å¢åŠ MultipartFileã€MultipartFile[]ç±»å‹ç»‘å®šæ”¯æŒ,å¿…é¡»å’ŒRequestParamæ³¨è§£ä¸€èµ·ä½¿ç”¨ï¼Œä½¿ç”¨æ–¹æ³•å¦‚ä¸‹ï¼š
 public String uploadFileWithMultipartFile(@RequestParam(name="upload1")  MultipartFile file,
 			ModelMap model)
 public String uploadFileWithMultipartFiles(@RequestParam(name="upload1")  MultipartFile[] files,
 			ModelMap model)
-o PO¶ÔÏóÊôĞÔÊı¾İ°ó¶¨»úÖÆÔö¼ÓMultipartFile¡¢MultipartFile[]ÀàĞÍ°ó¶¨Ö§³Ö,¿ÉÒÔºÍRequestParam×¢½âÒ»ÆğÊ¹ÓÃ£¬Ò²¿ÉÒÔÖ±½ÓÓëÊôĞÔÃû³ÆÖ±½Ó°ó¶¨£¬Ê¹ÓÃ·½·¨ÈçÏÂ£º
+o POå¯¹è±¡å±æ€§æ•°æ®ç»‘å®šæœºåˆ¶å¢åŠ MultipartFileã€MultipartFile[]ç±»å‹ç»‘å®šæ”¯æŒ,å¯ä»¥å’ŒRequestParamæ³¨è§£ä¸€èµ·ä½¿ç”¨ï¼Œä¹Ÿå¯ä»¥ç›´æ¥ä¸å±æ€§åç§°ç›´æ¥ç»‘å®šï¼Œä½¿ç”¨æ–¹æ³•å¦‚ä¸‹ï¼š
 public String uploadFileWithFileBean(FileBean files)
 
-FileBeanÊÇÒ»¸ö×Ô¶¨ÒåµÄjava bean£¬½á¹¹ÈçÏÂ£º
+FileBeanæ˜¯ä¸€ä¸ªè‡ªå®šä¹‰çš„java beanï¼Œç»“æ„å¦‚ä¸‹ï¼š
 public class FileBean
 {
 	private MultipartFile upload1;
@@ -34,19 +34,19 @@ public class FileBean
 	private MultipartFile[] uploads;
 	@RequestParam(name="upload1")
 	private MultipartFile anupload;
-	//Ê¡ÂÔÊôĞÔµÄget/set·½·¨
+	//çœç•¥å±æ€§çš„get/setæ–¹æ³•
 }	
-o ÍêÉÆ@ResponseBody×¢½â£¬Ôö¼ÓÖ±½Ó¶ÔÎÄ¼şÏÂÔØ¹¦ÄÜµÄÖ§³Ö£¬Ö»Òª¿ØÖÆÆ÷·½·¨·µ»ØFile¶ÔÏó¼´¿É
-o ÍêÉÆÈÏÖ¤À¹½ØÆ÷¹¦ÄÜ£¬Ôö¼ÓÈÏÖ¤Ê§°ÜºóÌø×ªÒ³ÃæµÄ·½Ê½ÎªredirectºÍforwardÁ½ÖÖ£¬¿ÉÒÔÔÚÀ¹½ØÆ÷ÉÏÅäÖÃdirecttypeÊôĞÔ
- À´ÊµÏÖ¾ßÌåµÄÌø×ª·½Ê½£º
+o å®Œå–„@ResponseBodyæ³¨è§£ï¼Œå¢åŠ ç›´æ¥å¯¹æ–‡ä»¶ä¸‹è½½åŠŸèƒ½çš„æ”¯æŒï¼Œåªè¦æ§åˆ¶å™¨æ–¹æ³•è¿”å›Fileå¯¹è±¡å³å¯
+o å®Œå–„è®¤è¯æ‹¦æˆªå™¨åŠŸèƒ½ï¼Œå¢åŠ è®¤è¯å¤±è´¥åè·³è½¬é¡µé¢çš„æ–¹å¼ä¸ºredirectå’Œforwardä¸¤ç§ï¼Œå¯ä»¥åœ¨æ‹¦æˆªå™¨ä¸Šé…ç½®directtypeå±æ€§
+ æ¥å®ç°å…·ä½“çš„è·³è½¬æ–¹å¼ï¼š
  <property class="org.frameworkset.web.interceptor.MyFirstInterceptor">
-     			<!-- ÅäÖÃÈÏÖ¤¼ì²éÀ¹½ØÆ÷À¹½ØurlÄ£Ê½¹æÔò -->
+     			<!-- é…ç½®è®¤è¯æ£€æŸ¥æ‹¦æˆªå™¨æ‹¦æˆªurlæ¨¡å¼è§„åˆ™ -->
      			<property name="patternsInclude">
      				<list componentType="string">
      					<property value="/**/*.htm"/>
      				</list>
      			</property>
-     			<!-- ÅäÖÃÈÏÖ¤¼ì²éÀ¹½ØÆ÷²»À¹½ØurlÄ£Ê½¹æÔò -->
+     			<!-- é…ç½®è®¤è¯æ£€æŸ¥æ‹¦æˆªå™¨ä¸æ‹¦æˆªurlæ¨¡å¼è§„åˆ™ -->
      			<property name="patternsExclude">
      				<list componentType="string">
      					<property value="/*.html"/>
@@ -55,23 +55,23 @@ o ÍêÉÆÈÏÖ¤À¹½ØÆ÷¹¦ÄÜ£¬Ôö¼ÓÈÏÖ¤Ê§°ÜºóÌø×ªÒ³ÃæµÄ·½Ê½ÎªredirectºÍforwardÁ½ÖÖ£¬¿ÉÒÔÔ
      			<property name="redirecturl" value="/login.jsp"/>
      			<property name="directtype" value="forward"/>
      		</property>
-o ĞŞ¸´mvc·ÖÒ³Ìø×ªÒ³ÂëÎª¸ºÊıÊ±£¬²»ÄÜÕı³£·ÖÒ³µÄÎÊÌâ
-o ĞŞ¸´ResponseBodyÖ¸¶¨Êı¾İ·µ»ØÀàĞÍºÍ×Ö·û¼¯²»ÉúĞ§µÄÎÊÌâ
+o ä¿®å¤mvcåˆ†é¡µè·³è½¬é¡µç ä¸ºè´Ÿæ•°æ—¶ï¼Œä¸èƒ½æ­£å¸¸åˆ†é¡µçš„é—®é¢˜
+o ä¿®å¤ResponseBodyæŒ‡å®šæ•°æ®è¿”å›ç±»å‹å’Œå­—ç¬¦é›†ä¸ç”Ÿæ•ˆçš„é—®é¢˜
 
 3.persistent
 ------2011-08-05-------------
-o ´¦ÀíÈÕÆÚºÍÊ±¼äÀàĞÍÊ±×ª»»Îª×Ö·û´®Ê±£¬Èç¹ûÖµÎª¿ÕÊ±Å×³ö¿ÕÖ¸ÕëÒì³£µÄÎÊÌâĞŞ¸´
+o å¤„ç†æ—¥æœŸå’Œæ—¶é—´ç±»å‹æ—¶è½¬æ¢ä¸ºå­—ç¬¦ä¸²æ—¶ï¼Œå¦‚æœå€¼ä¸ºç©ºæ—¶æŠ›å‡ºç©ºæŒ‡é’ˆå¼‚å¸¸çš„é—®é¢˜ä¿®å¤
 ------2011-07-25-------------
-o ½â¾ösql serverÔªÊı¾İ»ñÈ¡Îª¿ÕµÄÎÊÌâ
+o è§£å†³sql serverå…ƒæ•°æ®è·å–ä¸ºç©ºçš„é—®é¢˜
 ------2011-07-24-------------
-o ¸Ä½øSQLParams api£¬¿ÉÒÔÖ±½Ó¶ÔMultipartFile¶ÔÏó´æÈëclob»òÕßblobÁĞ¡£
+o æ”¹è¿›SQLParams apiï¼Œå¯ä»¥ç›´æ¥å¯¹MultipartFileå¯¹è±¡å­˜å…¥clobæˆ–è€…blobåˆ—ã€‚
 sqlparams.addSQLParam("FILECONTENT", multipartfile,SQLParams.BLOBFILE);
 
-¶ÔÓÚ´ó×Ö¶ÎµÄ´¦Àí½¨Òé²ÉÓÃÒÔÏÂ·½·¨£º
-sqlparams.addSQLParam("FILECONTENT", multipartfile,SQLParams.BLOBFILE);//Ö±½Ó´«µİMultipartFile¶ÔÏó½øĞĞ²åÈë
-sqlparams.addSQLParam("FILECONTENT", inputStream, size,SQLParams.BLOBFILE);//Ö±½Ó´«µİInputStream¶ÔÏóÒÔ¼°Á÷´óĞ¡SizeÊôĞÔ½øĞĞ²åÈë
+å¯¹äºå¤§å­—æ®µçš„å¤„ç†å»ºè®®é‡‡ç”¨ä»¥ä¸‹æ–¹æ³•ï¼š
+sqlparams.addSQLParam("FILECONTENT", multipartfile,SQLParams.BLOBFILE);//ç›´æ¥ä¼ é€’MultipartFileå¯¹è±¡è¿›è¡Œæ’å…¥
+sqlparams.addSQLParam("FILECONTENT", inputStream, size,SQLParams.BLOBFILE);//ç›´æ¥ä¼ é€’InputStreamå¯¹è±¡ä»¥åŠæµå¤§å°Sizeå±æ€§è¿›è¡Œæ’å…¥
 ------2011-07-15-------------
-o Ôö¼ÓFieldRowHandler´¦ÀíÆ÷£¬ÒÔ±ãÊµÏÖ´Óblob/clobÖĞ»ñÈ¡µ¥¸ö×Ö¶ÎÎÄ¼ş¶ÔÏóµÄ´¦Àí,ÆäËûÀàËÆÀàĞÍÊı¾İÒ²¿ÉÒÔÊ¹ÓÃFieldRowHandler£¬Ê¹ÓÃÊ¾ÀıÈçÏÂ£º
+o å¢åŠ FieldRowHandlerå¤„ç†å™¨ï¼Œä»¥ä¾¿å®ç°ä»blob/clobä¸­è·å–å•ä¸ªå­—æ®µæ–‡ä»¶å¯¹è±¡çš„å¤„ç†,å…¶ä»–ç±»ä¼¼ç±»å‹æ•°æ®ä¹Ÿå¯ä»¥ä½¿ç”¨FieldRowHandlerï¼Œä½¿ç”¨ç¤ºä¾‹å¦‚ä¸‹ï¼š
 public File getDownloadClobFile(String fileid) throws Exception
 	{
 		try
@@ -86,12 +86,12 @@ public File getDownloadClobFile(String fileid) throws Exception
 														throws Exception
 												{
 
-													// ¶¨ÒåÎÄ¼ş¶ÔÏó
+													// å®šä¹‰æ–‡ä»¶å¯¹è±¡
 													File f = new File("d:/",record.getString("filename"));
-													// Èç¹ûÎÄ¼şÒÑ¾­´æÔÚÔòÖ±½Ó·µ»Øf
+													// å¦‚æœæ–‡ä»¶å·²ç»å­˜åœ¨åˆ™ç›´æ¥è¿”å›f
 													if (f.exists())
 														return f;
-													// ½«blobÖĞµÄÎÄ¼şÄÚÈİ´æ´¢µ½ÎÄ¼şÖĞ
+													// å°†blobä¸­çš„æ–‡ä»¶å†…å®¹å­˜å‚¨åˆ°æ–‡ä»¶ä¸­
 													record.getFile("filecontent",f);
 													return f;
 												}
@@ -105,8 +105,8 @@ public File getDownloadClobFile(String fileid) throws Exception
 		}
 	}
 ------2011-07-15------------
-o Ôö¼Ó¶ÔÎÄ¼şÉÏ´«Èë¿âºÍ´ÓdbÏÂÔØ¹¦ÄÜµÄÖ§³Ö,Ê¹ÓÃÊµÀı
-ÉÏ´«
+o å¢åŠ å¯¹æ–‡ä»¶ä¸Šä¼ å…¥åº“å’Œä»dbä¸‹è½½åŠŸèƒ½çš„æ”¯æŒ,ä½¿ç”¨å®ä¾‹
+ä¸Šä¼ 
 public boolean uploadFile(InputStream inputStream,long size, String filename) throws Exception {
 		boolean result = true;
 		String sql = "";
@@ -122,7 +122,7 @@ public boolean uploadFile(InputStream inputStream,long size, String filename) th
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			result = false;
-			throw new Exception("ÉÏ´«¸½¼ş¹ØÁªÁÙ¿ØÖ¸Áî²¼¿ØĞÅÏ¢¸½¼şÊ§°Ü£º" + ex);
+			throw new Exception("ä¸Šä¼ é™„ä»¶å…³è”ä¸´æ§æŒ‡ä»¤å¸ƒæ§ä¿¡æ¯é™„ä»¶å¤±è´¥ï¼š" + ex);
 		} finally {
 			if(inputStream != null){
 				inputStream.close();
@@ -130,7 +130,7 @@ public boolean uploadFile(InputStream inputStream,long size, String filename) th
 		}
 		return result;
 	}
-ÏÂÔØ	
+ä¸‹è½½	
 	SQLExecutor.queryByNullRowHandler(new NullRowHandler(){
 				@Override
 				public void handleRow(Record record)
@@ -139,15 +139,15 @@ public boolean uploadFile(InputStream inputStream,long size, String filename) th
 					record.getBlob("filecontent").getBinaryStream();
 					StringUtil.sendFile(request, response, record.getString("filename"),record.getBlob("filecontent"));
 				}}, "select * from filetable where fileid=?",fileid);
-o Èç¹ûÃ»ÓĞÖ¸¶¨Ò»ÌõsqlÓï¾ä£¬PreparedDBUtil.executePreparedBatch½«±¨³öÒì³££¬Õâ¸ö²»ÊÇºÜºÏÀí
-Ö±½Ó¸ÄÎªinfo·½Ê½¡£
+o å¦‚æœæ²¡æœ‰æŒ‡å®šä¸€æ¡sqlè¯­å¥ï¼ŒPreparedDBUtil.executePreparedBatchå°†æŠ¥å‡ºå¼‚å¸¸ï¼Œè¿™ä¸ªä¸æ˜¯å¾ˆåˆç†
+ç›´æ¥æ”¹ä¸ºinfoæ–¹å¼ã€‚
 
 4.taglib
 ------2011-07-31------------
-o Ôö¼ÓmapºÍmapkeyÁ½¸ö±êÇ©£¬ÓÃÀ´Ñ­»·µü´úÕ¹Ê¾mapÖĞµÄvalue¶ÔÏóÖµ»òÕßvalue¶ÔÏóÖĞµÄÊı¾İÖµÒÔ¼°mapkeyÖµ
-Ê¹ÓÃ·½·¨ÈçÏÂ£º
+o å¢åŠ mapå’Œmapkeyä¸¤ä¸ªæ ‡ç­¾ï¼Œç”¨æ¥å¾ªç¯è¿­ä»£å±•ç¤ºmapä¸­çš„valueå¯¹è±¡å€¼æˆ–è€…valueå¯¹è±¡ä¸­çš„æ•°æ®å€¼ä»¥åŠmapkeyå€¼
+ä½¿ç”¨æ–¹æ³•å¦‚ä¸‹ï¼š
 <table>
-	    <h3>map<String,po>¶ÔÏóĞÅÏ¢µü´ú¹¦ÄÜ</h3>
+	    <h3>map<String,po>å¯¹è±¡ä¿¡æ¯è¿­ä»£åŠŸèƒ½</h3>
 		<pg:map requestKey="mapbeans">
 		
 			<tr class="cms_data_tr">
@@ -167,7 +167,7 @@ o Ôö¼ÓmapºÍmapkeyÁ½¸ö±êÇ©£¬ÓÃÀ´Ñ­»·µü´úÕ¹Ê¾mapÖĞµÄvalue¶ÔÏóÖµ»òÕßvalue¶ÔÏóÖĞµÄÊı
 	</table>
 	
 	<table>
-	    <h3>map<String,String>×Ö·û´®ĞÅÏ¢µü´ú¹¦ÄÜ</h3>
+	    <h3>map<String,String>å­—ç¬¦ä¸²ä¿¡æ¯è¿­ä»£åŠŸèƒ½</h3>
 		<pg:map requestKey="mapstrings">
 		
 			<tr class="cms_data_tr">
@@ -184,37 +184,37 @@ o Ôö¼ÓmapºÍmapkeyÁ½¸ö±êÇ©£¬ÓÃÀ´Ñ­»·µü´úÕ¹Ê¾mapÖĞµÄvalue¶ÔÏóÖµ»òÕßvalue¶ÔÏóÖĞµÄÊı
 		
 	</table>
 ------2011-07-19------------
-o cell±êÇ©Ìá¹©actualÊôĞÔ£¬¿ÉÒÔÖ±½ÓÊä³ö¸ÄÊôĞÔÉè¶¨µÄÖµ£¬Öµ¿ÉÒÔÎªel±í´ïÊ½µÄÖµ
+o cellæ ‡ç­¾æä¾›actualå±æ€§ï¼Œå¯ä»¥ç›´æ¥è¾“å‡ºæ”¹å±æ€§è®¾å®šçš„å€¼ï¼Œå€¼å¯ä»¥ä¸ºelè¡¨è¾¾å¼çš„å€¼
 ------2011-07-13------------
-o ĞŞ¸ÄemptyºÍnotemptyÁ½¸öÂß¼­±êÇ©Ôö¼Ó¶ÔCollectionºÍMap¶ÔÏóµÄÎªemptyÅĞ¶ÏÖ§³Ö
-o ĞŞ¸Ärowcount±êÇ©£¬È¥³ı¶àÓàµÄ¿Õ¸ñ
-o ÍêÉÆ±êÇ©ÅÅĞò¹¦ÄÜ²¹¶¡
-Ôö¼ÓÏàÓ¦µÄÖ¸Ê¾¼ıÍ·£¬±êÊ¶ÉıĞòºÍ½µĞò
-Ïà¹ØÎÄ¼ş
+o ä¿®æ”¹emptyå’Œnotemptyä¸¤ä¸ªé€»è¾‘æ ‡ç­¾å¢åŠ å¯¹Collectionå’ŒMapå¯¹è±¡çš„ä¸ºemptyåˆ¤æ–­æ”¯æŒ
+o ä¿®æ”¹rowcountæ ‡ç­¾ï¼Œå»é™¤å¤šä½™çš„ç©ºæ ¼
+o å®Œå–„æ ‡ç­¾æ’åºåŠŸèƒ½è¡¥ä¸
+å¢åŠ ç›¸åº”çš„æŒ‡ç¤ºç®­å¤´ï¼Œæ ‡è¯†å‡åºå’Œé™åº
+ç›¸å…³æ–‡ä»¶
 /bboss-mvc/WebRoot/include/pager.css
 WebRoot\WEB-INF\lib\frameworkset.jar
-¾ßÌåµÄÊ¹ÓÃ·½·¨²Î¿¼¡¶»ùÓÚ»ù´¡¿ò¼Ü¿ª·¢Ô¼¶¨.doc¡·ÖĞµÄÕÂ½Ú3.5	·ÖÒ³×Ö¶ÎÅÅĞòÉè¶¨
+å…·ä½“çš„ä½¿ç”¨æ–¹æ³•å‚è€ƒã€ŠåŸºäºåŸºç¡€æ¡†æ¶å¼€å‘çº¦å®š.docã€‹ä¸­çš„ç« èŠ‚3.5	åˆ†é¡µå­—æ®µæ’åºè®¾å®š
 5.util
 ------2011-07-19------------
-o StringUtilÀàÖĞÔö¼ÓÎÄ¼şÏÂÔØ·½·¨£º
+o StringUtilç±»ä¸­å¢åŠ æ–‡ä»¶ä¸‹è½½æ–¹æ³•ï¼š
 StringUtil.sendFile(request, response, record
 							.getString("filename"), record
 							.getBlob("filecontent"));
 StringUtil.sendFile(request, response, file);							
 ------2011-06-14------------
-o Ö§³ÖÊı×ÖÏòBigDecimal×ª»»¡¢Êı×ÖÊı×éÏòBigDecimalÊı×é×ª»»¹¦ÄÜ
+o æ”¯æŒæ•°å­—å‘BigDecimalè½¬æ¢ã€æ•°å­—æ•°ç»„å‘BigDecimalæ•°ç»„è½¬æ¢åŠŸèƒ½
 
 
 ************************************************bbossgroups-3.2******************************
 ------2011-06-10------------
-o ĞŞÕıSQLExecutorÖĞ·ºĞÍ×Ö¶Î²éÑ¯APIÖĞµÄÀàĞÍ×ª»»Â©¶´
+o ä¿®æ­£SQLExecutorä¸­æ³›å‹å­—æ®µæŸ¥è¯¢APIä¸­çš„ç±»å‹è½¬æ¢æ¼æ´
 ------2011-06-09------------
-o ´¦Àí¿Õ×Ö·û´®ÏòÈÕÆÚÀàĞÍ×ª»»ºóÌ¨±¨Òì³£µÄÈ±Ïİ
+o å¤„ç†ç©ºå­—ç¬¦ä¸²å‘æ—¥æœŸç±»å‹è½¬æ¢åå°æŠ¥å¼‚å¸¸çš„ç¼ºé™·
 ------2011-06-09------------
-o ×¢½â¿ØÖÆÆ÷¿ÉÒÔ²»ÓÃÌí¼Ó×¢½â@ControllerÒ²¿ÉÒÔ±»¿ò¼ÜÊ¶±ğÁË
+o æ³¨è§£æ§åˆ¶å™¨å¯ä»¥ä¸ç”¨æ·»åŠ æ³¨è§£@Controllerä¹Ÿå¯ä»¥è¢«æ¡†æ¶è¯†åˆ«äº†
 ------2011-06-8------------
-o ĞŞÕı²»Õı³£µÄÌáÊ¾ĞÅÏ¢£¬externaljndiName
-o ĞŞ¸´Ö»ÅäÖÃÍâ²¿Êı¾İÔ´µÄÇé¿öÏÂ£¬poolÆô¶¯¶ÑÕ»Òç³öÎÊÌâ
+o ä¿®æ­£ä¸æ­£å¸¸çš„æç¤ºä¿¡æ¯ï¼ŒexternaljndiName
+o ä¿®å¤åªé…ç½®å¤–éƒ¨æ•°æ®æºçš„æƒ…å†µä¸‹ï¼Œpoolå¯åŠ¨å †æ ˆæº¢å‡ºé—®é¢˜
     java.lang.StackOverflowError
 	at java.lang.Thread.currentThread(Native Method)
 	at org.apache.xerces.util.SecuritySupport12$1.run(Unknown Source)
@@ -224,7 +224,7 @@ o ĞŞ¸´Ö»ÅäÖÃÍâ²¿Êı¾İÔ´µÄÇé¿öÏÂ£¬poolÆô¶¯¶ÑÕ»Òç³öÎÊÌâ
 	at org.apache.xerces.impl.dv.DTDDVFactory.getInstance(Unknown Source)
 	at org.apache.xerces.impl.dv.DTDDVFactory.getInstance(Unknown Source)
 	at 
-	ĞŞ¸Ä³ÌĞòÇåµ¥£º
+	ä¿®æ”¹ç¨‹åºæ¸…å•ï¼š
 	com.frameworkset.common.poolman.sql.PoolMan
 	com.frameworkset.common.poolman.util.JDBCPool
 	com.frameworkset.common.poolman.util.SQLManager
@@ -242,14 +242,14 @@ o ĞŞ¸´Ö»ÅäÖÃÍâ²¿Êı¾İÔ´µÄÇé¿öÏÂ£¬poolÆô¶¯¶ÑÕ»Òç³öÎÊÌâ
         }
 
 ------2011-06-06------------
-o ÍêÉÆresponsebody×¢½â¹¦ÄÜ,Ôö¼ÓdatatypeºÍcharsetÁ½¸öÊôĞÔ
-datatype£ºjson,xmlµÈÖµ£¬ÓÃÀ´Ö¸³öÊä³öÊı¾İµÄcontentÀàĞÍ
-charset£ºÓÃÀ´Ö¸³öreponseÏìÓ¦×Ö·û±àÂë
-ÏêÏ¸Ê¹ÓÃ·½·¨Çë²Î¿¼²âÊÔÓÃÀı
+o å®Œå–„responsebodyæ³¨è§£åŠŸèƒ½,å¢åŠ datatypeå’Œcharsetä¸¤ä¸ªå±æ€§
+datatypeï¼šjson,xmlç­‰å€¼ï¼Œç”¨æ¥æŒ‡å‡ºè¾“å‡ºæ•°æ®çš„contentç±»å‹
+charsetï¼šç”¨æ¥æŒ‡å‡ºreponseå“åº”å­—ç¬¦ç¼–ç 
+è¯¦ç»†ä½¿ç”¨æ–¹æ³•è¯·å‚è€ƒæµ‹è¯•ç”¨ä¾‹
 org.frameworkset.web.enumtest.EnumConvertController
 org.frameworkset.web.http.converter.json.JsonController
 ------2011-06-04------------
-o Âß¼­±êÇ©¿ÉÒÔ¶ÀÁ¢ÓÚlistºÍbeaninfo±êÇ©Ê¹ÓÃ,Ôö¼ÓÒÔÏÂÊôĞÔ£º
+o é€»è¾‘æ ‡ç­¾å¯ä»¥ç‹¬ç«‹äºlistå’Œbeaninfoæ ‡ç­¾ä½¿ç”¨,å¢åŠ ä»¥ä¸‹å±æ€§ï¼š
 		<attribute>
 			<name>requestKey</name>
 			<rtexprvalue>true</rtexprvalue>
@@ -270,32 +270,32 @@ o Âß¼­±êÇ©¿ÉÒÔ¶ÀÁ¢ÓÚlistºÍbeaninfo±êÇ©Ê¹ÓÃ,Ôö¼ÓÒÔÏÂÊôĞÔ£º
 			<name>actual</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
-Í¨¹ıÒÔÉÏÊôĞÔ£¬¿ÉÒÔ·½±ãµØÖÆ¶¨Âß¼­±êÇ©µÄÆÚÍûÖµ£¬
-requestKey£ºÖ¸¶¨´ÓrequestµÄattributeÊôĞÔÖĞ»ñÈ¡Êµ¼ÊÖµ£¬
-sessionKey£ºÖ¸¶¨´ÓsessionµÄattributeÊôĞÔÖĞ»ñÈ¡Êµ¼ÊÖµ£¬
-pageContextKey£ºÖ¸¶¨´ÓpageContextµÄattributeÊôĞÔÖĞ»ñÈ¡Êµ¼ÊÖµ£¬
-parameter:Ö¸¶¨´ÓrequestµÄparameterÖĞ»ñÈ¡Êµ¼ÊÖµ
-actual:Ö±½ÓÖ¸¶¨Êµ¼ÊÖµ£¬¿ÉÒÔÊÇ¾ßÌåµÄÖµ£¬Ò²¿ÉÒÔÊÇÒ»¸öel±äÁ¿
-ÉÏÊöÊôĞÔ»¹¿ÉÒÔºÍpropertyÊôĞÔ½áºÏÆğÀ´»ñÈ¡Öµ¶ÔÏóÖĞµÄÊôĞÔÖµ
+é€šè¿‡ä»¥ä¸Šå±æ€§ï¼Œå¯ä»¥æ–¹ä¾¿åœ°åˆ¶å®šé€»è¾‘æ ‡ç­¾çš„æœŸæœ›å€¼ï¼Œ
+requestKeyï¼šæŒ‡å®šä»requestçš„attributeå±æ€§ä¸­è·å–å®é™…å€¼ï¼Œ
+sessionKeyï¼šæŒ‡å®šä»sessionçš„attributeå±æ€§ä¸­è·å–å®é™…å€¼ï¼Œ
+pageContextKeyï¼šæŒ‡å®šä»pageContextçš„attributeå±æ€§ä¸­è·å–å®é™…å€¼ï¼Œ
+parameter:æŒ‡å®šä»requestçš„parameterä¸­è·å–å®é™…å€¼
+actual:ç›´æ¥æŒ‡å®šå®é™…å€¼ï¼Œå¯ä»¥æ˜¯å…·ä½“çš„å€¼ï¼Œä¹Ÿå¯ä»¥æ˜¯ä¸€ä¸ªelå˜é‡
+ä¸Šè¿°å±æ€§è¿˜å¯ä»¥å’Œpropertyå±æ€§ç»“åˆèµ·æ¥è·å–å€¼å¯¹è±¡ä¸­çš„å±æ€§å€¼
 ------2011-06-04------------
-o requestºÍsession±êÇ©Ôö¼ÓÈÕÆÚdateformat¸ñÊ½ÊôĞÔ
+o requestå’Œsessionæ ‡ç­¾å¢åŠ æ—¥æœŸdateformatæ ¼å¼å±æ€§
 
 ------2011-06-03------------
-o ĞŞ¸´config±êÇ©enablecontextmenuÊôĞÔ²»ÄÜÕı³£¹¤×÷µÄÂ©¶´
+o ä¿®å¤configæ ‡ç­¾enablecontextmenuå±æ€§ä¸èƒ½æ­£å¸¸å·¥ä½œçš„æ¼æ´
 ------2011-06-2------------
-o ĞŞ¸´Ê¹ÓÃColumn×¢½âÉèÖÃ¶ÔÏóÊôĞÔÓëÁĞÃûÓ³ÉäÊ±£¬µ¼ÖÂsqlÓï¾äÖĞ°ó¶¨ÏàÓ¦µÄÊôĞÔ±äÁ¿ÖµÊ§°ÜµÄÂ©¶´
+o ä¿®å¤ä½¿ç”¨Columnæ³¨è§£è®¾ç½®å¯¹è±¡å±æ€§ä¸åˆ—åæ˜ å°„æ—¶ï¼Œå¯¼è‡´sqlè¯­å¥ä¸­ç»‘å®šç›¸åº”çš„å±æ€§å˜é‡å€¼å¤±è´¥çš„æ¼æ´
 
 ------2011-05-28-----------
-o ĞŞ¸´quartzÒıÇæ¼ÓÔØ´ø²ÎÊı·½·¨ÈÎÎñÊ±£¬ºóÌ¨Å×¿ÕÖ¸ÕëÒì³££¬ÕâÊÇ3.1°æ±¾²úÉúµÄĞÂÎÊÌâ£¬Ó°ÏìĞÂ
- °æ±¾µÄÊ¹ÓÃ
-o ÍêÉÆÈÎÎñµ÷¶È¹ÜÀí×é¼şorg.frameworkset.task.TaskService
-ÍêÉÆstopService·½·¨ºÍstartService·½·¨£¬½â¾öÍ£Ö¹ÒıÇæºó£¬ÎŞ·¨Æô¶¯ÒıÇæµÄÎÊÌâ£¬Ôö¼Ó·½·¨stopService(boolean force)
-Ôö¼Ó·½·¨£¬Ò»±ßÔÚÖ´ĞĞpublic void deleteJob(String jobname, String groupid)·½·¨ºóÖØĞÂ¼ÓÔØ×÷Òµ
+o ä¿®å¤quartzå¼•æ“åŠ è½½å¸¦å‚æ•°æ–¹æ³•ä»»åŠ¡æ—¶ï¼Œåå°æŠ›ç©ºæŒ‡é’ˆå¼‚å¸¸ï¼Œè¿™æ˜¯3.1ç‰ˆæœ¬äº§ç”Ÿçš„æ–°é—®é¢˜ï¼Œå½±å“æ–°
+ ç‰ˆæœ¬çš„ä½¿ç”¨
+o å®Œå–„ä»»åŠ¡è°ƒåº¦ç®¡ç†ç»„ä»¶org.frameworkset.task.TaskService
+å®Œå–„stopServiceæ–¹æ³•å’ŒstartServiceæ–¹æ³•ï¼Œè§£å†³åœæ­¢å¼•æ“åï¼Œæ— æ³•å¯åŠ¨å¼•æ“çš„é—®é¢˜ï¼Œå¢åŠ æ–¹æ³•stopService(boolean force)
+å¢åŠ æ–¹æ³•ï¼Œä¸€è¾¹åœ¨æ‰§è¡Œpublic void deleteJob(String jobname, String groupid)æ–¹æ³•åé‡æ–°åŠ è½½ä½œä¸š
 public void startExecuteJob(String groupid, String jobname)
 ------2011-05-28------------
-o Ö§³ÖMap<Key,PO>ÀàĞÍ²ÎÊı°ó¶¨»úÖÆ£¬Í¨¹ıÕâÖÖ»úÖÆ¿ÉÒÔ·Ç³£·½±ãµØ½«±íµ¥Ìá½»¹ıÀ´µÄÒ»¸ö¶ÔÏó¼¯ºÏÊı¾İ
-¸ù¾İkey¶ÔÓ¦µÄ×Ö¶ÎÖµ£¬ĞÎ³ÉMapË÷Òı¶ÔÏó¡£
-Ê¹ÓÃ·½·¨ÈçÏÂ£º
+o æ”¯æŒMap<Key,PO>ç±»å‹å‚æ•°ç»‘å®šæœºåˆ¶ï¼Œé€šè¿‡è¿™ç§æœºåˆ¶å¯ä»¥éå¸¸æ–¹ä¾¿åœ°å°†è¡¨å•æäº¤è¿‡æ¥çš„ä¸€ä¸ªå¯¹è±¡é›†åˆæ•°æ®
+æ ¹æ®keyå¯¹åº”çš„å­—æ®µå€¼ï¼Œå½¢æˆMapç´¢å¼•å¯¹è±¡ã€‚
+ä½¿ç”¨æ–¹æ³•å¦‚ä¸‹ï¼š
 public String mapbean(@MapKey("fieldName") Map<String,ListBean> beans, ModelMap model) {
 		String sql = "INSERT INTO LISTBEAN (" + "ID," + "FIELDNAME,"
 				+ "FIELDLABLE," + "FIELDTYPE," + "SORTORDER,"
@@ -328,43 +328,43 @@ public String mapbean(@MapKey("fieldName") Map<String,ListBean> beans, ModelMap 
 
 		return "path:mapbean";
 	}
-	ÏêÇéÇë²Î¿¼²âÊÔÓÃÀı£º
+	è¯¦æƒ…è¯·å‚è€ƒæµ‹è¯•ç”¨ä¾‹ï¼š
 	/bboss-mvc/WebRoot/WEB-INF/bboss-mapbean.xml
 ------2011-05-26------------
-o ĞÂÔöemptyºÍnotemptyÁ½¸öÂß¼­±êÇ©Ê¹ÓÃ·½·¨ºÍnull¡¢notnullÒ»Ñù
-emptyÅĞ¶ÏÖ¸¶¨µÄ×Ö¶ÎµÄÖµÊÇ·ñÊÇnull£¬»òÕß¿Õ´®£¬Èç¹ûÌõ¼ş³ÉÁ¢£¬ÔòÖ´ĞĞ±êÇ©ÌåÖĞµÄÂß¼­
-notemptyÅĞ¶ÏÖ¸¶¨µÄ×Ö¶ÎµÄÖµ¼È²»ÊÇnullÒ²²»ÊÇ¿Õ´®£¬ÔòÖ´ĞĞ±êÇ©ÌåµÃÄÚÈİ
+o æ–°å¢emptyå’Œnotemptyä¸¤ä¸ªé€»è¾‘æ ‡ç­¾ä½¿ç”¨æ–¹æ³•å’Œnullã€notnullä¸€æ ·
+emptyåˆ¤æ–­æŒ‡å®šçš„å­—æ®µçš„å€¼æ˜¯å¦æ˜¯nullï¼Œæˆ–è€…ç©ºä¸²ï¼Œå¦‚æœæ¡ä»¶æˆç«‹ï¼Œåˆ™æ‰§è¡Œæ ‡ç­¾ä½“ä¸­çš„é€»è¾‘
+notemptyåˆ¤æ–­æŒ‡å®šçš„å­—æ®µçš„å€¼æ—¢ä¸æ˜¯nullä¹Ÿä¸æ˜¯ç©ºä¸²ï¼Œåˆ™æ‰§è¡Œæ ‡ç­¾ä½“å¾—å†…å®¹
 ------2011-05-24------------
-o ĞŞ¸ÄnullºÍnotnull±êÇ©²»ÄÜÕıÈ·¹¤×÷µÄÎÊÌâ
-o ĞŞ¸´detail±êÇ©µÄÌáÊ¾ĞÅÏ¢²»ÊÇºÜÕıÈ·µÄÎÊÌâ
+o ä¿®æ”¹nullå’Œnotnullæ ‡ç­¾ä¸èƒ½æ­£ç¡®å·¥ä½œçš„é—®é¢˜
+o ä¿®å¤detailæ ‡ç­¾çš„æç¤ºä¿¡æ¯ä¸æ˜¯å¾ˆæ­£ç¡®çš„é—®é¢˜
 ###################################################################################
 ------2011-05-20------------
-o ĞŞ¸´ÒıÓÃÈİÆ÷datasourceÂ©¶´
-o ĞŞ¸´Í¨¹ıÄ£°åÆô¶¯Êı¾İÔ´²ÎÊıÉèÖÃÎÊÌâ
-o ĞŞ¸´Ò»ÏµÁĞ¿ÕÖ¸ÕëÎÊÌâ
-o ĞŞ¸´Ê¹ÓÃÍâ²¿Êı¾İÔ´Ê±£¬µ±Íâ²¿Êı¾İÔ´ÊÇoracleÊ±ÎŞ·¨»ñÈ¡Êı¾İÔ´µÄÔªÊı¾İÎÊÌâ,±ØĞëÖÆ¶¨ÏàÓ¦Êı¾İ¿âµÄÇı¶¯³ÌĞò£¬·ñÔòÎŞ·¨³õÊ¼»¯ÕıÈ·µÄdbadapter
+o ä¿®å¤å¼•ç”¨å®¹å™¨datasourceæ¼æ´
+o ä¿®å¤é€šè¿‡æ¨¡æ¿å¯åŠ¨æ•°æ®æºå‚æ•°è®¾ç½®é—®é¢˜
+o ä¿®å¤ä¸€ç³»åˆ—ç©ºæŒ‡é’ˆé—®é¢˜
+o ä¿®å¤ä½¿ç”¨å¤–éƒ¨æ•°æ®æºæ—¶ï¼Œå½“å¤–éƒ¨æ•°æ®æºæ˜¯oracleæ—¶æ— æ³•è·å–æ•°æ®æºçš„å…ƒæ•°æ®é—®é¢˜,å¿…é¡»åˆ¶å®šç›¸åº”æ•°æ®åº“çš„é©±åŠ¨ç¨‹åºï¼Œå¦åˆ™æ— æ³•åˆå§‹åŒ–æ­£ç¡®çš„dbadapter
 ------2011-05-20-----------
-o Ôö¼Órmi·şÎñ·¢²¼ºÍrmi¿Í·ş¶Ë×é¼ş»ñÈ¡¹¦ÄÜ
-·¢²¼·şÎñ·½·¨£¬Í¨¹ı rmi:addressÖ¸¶¨·¢²¼·şÎñµÄÎ¨Ò»µØÖ·£º
+o å¢åŠ rmiæœåŠ¡å‘å¸ƒå’Œrmiå®¢æœç«¯ç»„ä»¶è·å–åŠŸèƒ½
+å‘å¸ƒæœåŠ¡æ–¹æ³•ï¼Œé€šè¿‡ rmi:addressæŒ‡å®šå‘å¸ƒæœåŠ¡çš„å”¯ä¸€åœ°å€ï¼š
 <property name="rmi_service_test"
 		 rmi:address="rmi_service_test"
 		 class="org.frameworkset.spi.remote.rmi.RMIServiceTest"/>
-·şÎñÆ÷portµÄÖ¸¶¨ÔÚrmiĞ­ÒéÅäÖÃÎÄ¼şÖĞ£º
+æœåŠ¡å™¨portçš„æŒ‡å®šåœ¨rmiåè®®é…ç½®æ–‡ä»¶ä¸­ï¼š
 /bbossaop/resources/org/frameworkset/spi/manager-rpc-rmi.xml
 	<!-- 
-					·şÎñÆ÷°ó¶¨¶Ë¿Ú
+					æœåŠ¡å™¨ç»‘å®šç«¯å£
 				 -->
 	<property name="connection.bind.port" value="1099" />
 	
-rmi¿Í·ş¶Ë×é¼şÅäÖÃºÍ»ñÈ¡£º
-ÅäÖÃ
+rmiå®¢æœç«¯ç»„ä»¶é…ç½®å’Œè·å–ï¼š
+é…ç½®
 <property name="rmi_service_client_test" factory-class="org.frameworkset.spi.remote.rmi.RMIUtil" factory-method="lookupService">
 		<construction>
 			<property name="servicaddress" value="//172.16.25.108:1099/rmi_service_test"/>			
 		</construction>
 	</property>	
 
-»ñÈ¡£º
+è·å–ï¼š
 	BaseApplicationContext context ;
 	@Before
 	public void init()
@@ -375,102 +375,102 @@ rmi¿Í·ş¶Ë×é¼şÅäÖÃºÍ»ñÈ¡£º
 	public void test() throws RemoteException
 	{
 		RMIServiceTestInf test = (RMIServiceTestInf)context.getBeanObject("rmi_service_client_test");
-		System.out.println(test.sayHello("¶à¶à"));
+		System.out.println(test.sayHello("å¤šå¤š"));
 	}
 ------2011-05-17------------
-o ĞŞ¸´sqlexecutor¶ÔÈÕÆÚÀàĞÍtimestamp´¦Àí¶ªÊ§Ê±·ÖÃëµÄÈ±Ïİ
+o ä¿®å¤sqlexecutorå¯¹æ—¥æœŸç±»å‹timestampå¤„ç†ä¸¢å¤±æ—¶åˆ†ç§’çš„ç¼ºé™·
 
 
 		
 ------2011-05-15-----------
-o ¸Ä½ø¹ú¼Ê»¯»úÖÆ£¬Ã¿¸ö×é¼şÈİÆ÷Ïà¹ØµÄ¹ú¼Ê»¯ÎÄ¼ş±ØĞëºÍ×é¼şÈİÆ÷µÄ¸ùÅäÖÃÎÄ¼şÔÚÍ¬¼¶Ä¿Â¼£¬²¢ÇÒÃû³ÆÒÔÏÂ¸ñÊ½ÃüÃû£º
+o æ”¹è¿›å›½é™…åŒ–æœºåˆ¶ï¼Œæ¯ä¸ªç»„ä»¶å®¹å™¨ç›¸å…³çš„å›½é™…åŒ–æ–‡ä»¶å¿…é¡»å’Œç»„ä»¶å®¹å™¨çš„æ ¹é…ç½®æ–‡ä»¶åœ¨åŒçº§ç›®å½•ï¼Œå¹¶ä¸”åç§°ä»¥ä¸‹æ ¼å¼å‘½åï¼š
 messages_en_US.properties
 messages_zh_CN.properties
-o ¸Ä½øsqlÅäÖÃÎÄ¼şË¢ĞÂ»úÖÆ£¬½«3.1°æ±¾ÖĞÃ¿¸ösqlÅäÖÃÎÄ¼ş¶¨ÒåÒ»¸öÊØ»¤½ø³Ì¸ÄÎªµ¥Ò»ÊØ»¤½ø³Ì¼ì²â»úÖÆ£¬¼´ËùÓĞµÄsqlÎÄ¼şÊÇ·ñ
-±ä¸üµÄ¼ì²âÓÉÒ»¸öÊØ»¤½ø³ÌÍê³É£¬Õâ¸ö½ø³ÌÖĞÎ¬»¤Ò»¸öÎÄ¼ş¶ÓÁĞ£¬Ë¢ĞÂÊÂ¼şÅäÖÃÒ²ÓÉmanager-provider.xmlÎÄ¼ş¸ÄÎª£º
-/bbossaop/src/aop.propertiesÖĞÅäÖÃ£º
+o æ”¹è¿›sqlé…ç½®æ–‡ä»¶åˆ·æ–°æœºåˆ¶ï¼Œå°†3.1ç‰ˆæœ¬ä¸­æ¯ä¸ªsqlé…ç½®æ–‡ä»¶å®šä¹‰ä¸€ä¸ªå®ˆæŠ¤è¿›ç¨‹æ”¹ä¸ºå•ä¸€å®ˆæŠ¤è¿›ç¨‹æ£€æµ‹æœºåˆ¶ï¼Œå³æ‰€æœ‰çš„sqlæ–‡ä»¶æ˜¯å¦
+å˜æ›´çš„æ£€æµ‹ç”±ä¸€ä¸ªå®ˆæŠ¤è¿›ç¨‹å®Œæˆï¼Œè¿™ä¸ªè¿›ç¨‹ä¸­ç»´æŠ¤ä¸€ä¸ªæ–‡ä»¶é˜Ÿåˆ—ï¼Œåˆ·æ–°äº‹ä»¶é…ç½®ä¹Ÿç”±manager-provider.xmlæ–‡ä»¶æ”¹ä¸ºï¼š
+/bbossaop/src/aop.propertiesä¸­é…ç½®ï¼š
 sqlfile.refresh_interval=5000
-Í¬Ê±½«sqlÅäÖÃÎÄ¼şµÄ¹ÜÀíÈİÆ÷¸ÄÎªSOAFileApplicationContext£¬ÒÔ±ãÌáÉıÏµÍ³ĞÔÄÜ
+åŒæ—¶å°†sqlé…ç½®æ–‡ä»¶çš„ç®¡ç†å®¹å™¨æ”¹ä¸ºSOAFileApplicationContextï¼Œä»¥ä¾¿æå‡ç³»ç»Ÿæ€§èƒ½
 
 
 ------2011-05-11-----------
-o ¸Ä½øApplicationContext£¬WebApplicationContextÈİÆ÷£¬·ÖÀë³öSOAApplicationContext¡¢BaseApplicationContextºÍDefaultApplicationContextÈı¸öÀàĞÍµÄÈİÆ÷£¬ËûÃÇµÄÖ°Ôğ·Ö±ğÎª£º
-ApplicationContext£ººÍÔ­À´µÄ¹¦ÄÜApplicationContextµÄ¹¦ÄÜÒ»ÖÂ£¬°üÀ¨»ù±¾µÄaop/ioc¹¦ÄÜ£¬Ô¶³Ì·şÎñ£¬È«¾ÖÊôĞÔ¹ÜÀí£¬À¹½ØÆ÷£¬°üº¬ÉùÃ÷Ê½ÊÂÎñ¹ÜÀí£¬ÊÇBaseApplicationContextµÄ×ÓÀà
-SOAApplicationContext/SOAFileApplicationContext£ºÁ½¸öÇáÁ¿¼¶µÄiocÈİÆ÷£¬°üº¬È«¾ÖÊôĞÔ¹ÜÀí£¬²»°üº¬Ô¶³Ì·şÎñ£¬À¹½ØÆ÷£¬²»°üº¬ÉùÃ÷Ê½ÊÂÎñ¹ÜÀí£¬ÊÇDefaultApplicationContextµÄ×ÓÀà
-DefaultApplicationContext£ººÍApplicationContextµÄÇø±ğ¾ÍÊÇ²»°üº¬Ô¶³Ì·şÎñµÄ¹¦ÄÜ£¬ºÍÔ¶³Ì·şÎñÏà¹ØµÄ×é¼şÃ»ÓĞÒÀÀµ¹ØÏµ£¬ÊÇBaseApplicationContextµÄ×ÓÀà
-BaseApplicationContext£ºÊÇÒ»¸ö³éÏóÈİÆ÷£¬ËùÓĞµÄÉÏ²ãÈİÆ÷¶¼¼ä½Ó»òÖ±½ÓÊµÏÖÁËÕâ¸öÈİÆ÷£¬Ìá¹©¹«¹²µÄ»ù´¡¹¦ÄÜ¡£
-WebApplicationContext£ºÊÇmvc¿ò¼ÜµÄ¿ØÖÆÆ÷ºÍÒµÎñ×é¼ş¹ÜÀíÈİÆ÷£¬ÊÇDefaultApplicationContextµÄ×ÓÀà£¬ÓµÓĞDefaultApplicationContextµÄËùÓĞ¹¦ÄÜ¡£
+o æ”¹è¿›ApplicationContextï¼ŒWebApplicationContextå®¹å™¨ï¼Œåˆ†ç¦»å‡ºSOAApplicationContextã€BaseApplicationContextå’ŒDefaultApplicationContextä¸‰ä¸ªç±»å‹çš„å®¹å™¨ï¼Œä»–ä»¬çš„èŒè´£åˆ†åˆ«ä¸ºï¼š
+ApplicationContextï¼šå’ŒåŸæ¥çš„åŠŸèƒ½ApplicationContextçš„åŠŸèƒ½ä¸€è‡´ï¼ŒåŒ…æ‹¬åŸºæœ¬çš„aop/iocåŠŸèƒ½ï¼Œè¿œç¨‹æœåŠ¡ï¼Œå…¨å±€å±æ€§ç®¡ç†ï¼Œæ‹¦æˆªå™¨ï¼ŒåŒ…å«å£°æ˜å¼äº‹åŠ¡ç®¡ç†ï¼Œæ˜¯BaseApplicationContextçš„å­ç±»
+SOAApplicationContext/SOAFileApplicationContextï¼šä¸¤ä¸ªè½»é‡çº§çš„iocå®¹å™¨ï¼ŒåŒ…å«å…¨å±€å±æ€§ç®¡ç†ï¼Œä¸åŒ…å«è¿œç¨‹æœåŠ¡ï¼Œæ‹¦æˆªå™¨ï¼Œä¸åŒ…å«å£°æ˜å¼äº‹åŠ¡ç®¡ç†ï¼Œæ˜¯DefaultApplicationContextçš„å­ç±»
+DefaultApplicationContextï¼šå’ŒApplicationContextçš„åŒºåˆ«å°±æ˜¯ä¸åŒ…å«è¿œç¨‹æœåŠ¡çš„åŠŸèƒ½ï¼Œå’Œè¿œç¨‹æœåŠ¡ç›¸å…³çš„ç»„ä»¶æ²¡æœ‰ä¾èµ–å…³ç³»ï¼Œæ˜¯BaseApplicationContextçš„å­ç±»
+BaseApplicationContextï¼šæ˜¯ä¸€ä¸ªæŠ½è±¡å®¹å™¨ï¼Œæ‰€æœ‰çš„ä¸Šå±‚å®¹å™¨éƒ½é—´æ¥æˆ–ç›´æ¥å®ç°äº†è¿™ä¸ªå®¹å™¨ï¼Œæä¾›å…¬å…±çš„åŸºç¡€åŠŸèƒ½ã€‚
+WebApplicationContextï¼šæ˜¯mvcæ¡†æ¶çš„æ§åˆ¶å™¨å’Œä¸šåŠ¡ç»„ä»¶ç®¡ç†å®¹å™¨ï¼Œæ˜¯DefaultApplicationContextçš„å­ç±»ï¼Œæ‹¥æœ‰DefaultApplicationContextçš„æ‰€æœ‰åŠŸèƒ½ã€‚
 
 ------2011-05-11------------
-o ÍêÉÆrestfulÊµÏÖ»úÖÆ£¬¿ÉÒÔÖ§³Ö¶Ô¿ØÖÆÆ÷·½·¨¼¶±ğµÄrestfulÈ«µØÖ·Ó³Éä¹ØÏµ²¢ĞŞ¸´ÁË²¿·ÖÈ±Ïİ£¬3.0°æ±¾ĞèÒª¸ù¾İÀà¼¶±ğºÍ·½·¨¼¶±ğµØÖ·×éºÏ²ÅÄÜÊµÏÖ
-  restful·ç¸ñµÄ¹¦ÄÜ£¬¶øÇÒ´æÔÚÈ±Ïİ¡£
-o aop¿ò¼ÜÖĞÊµÏÖ¶ÔÏóÓëxmlÏà»¥×ª»¯¹¦ÄÜ
+o å®Œå–„restfulå®ç°æœºåˆ¶ï¼Œå¯ä»¥æ”¯æŒå¯¹æ§åˆ¶å™¨æ–¹æ³•çº§åˆ«çš„restfulå…¨åœ°å€æ˜ å°„å…³ç³»å¹¶ä¿®å¤äº†éƒ¨åˆ†ç¼ºé™·ï¼Œ3.0ç‰ˆæœ¬éœ€è¦æ ¹æ®ç±»çº§åˆ«å’Œæ–¹æ³•çº§åˆ«åœ°å€ç»„åˆæ‰èƒ½å®ç°
+  restfulé£æ ¼çš„åŠŸèƒ½ï¼Œè€Œä¸”å­˜åœ¨ç¼ºé™·ã€‚
+o aopæ¡†æ¶ä¸­å®ç°å¯¹è±¡ä¸xmlç›¸äº’è½¬åŒ–åŠŸèƒ½
 
 ------2011-05-06------------
-o ĞŞ¸´Ñ­»·ÒÀÀµ»úÖÆÂ©¶´
-o ĞŞ¸´quartzÈÎÎñµ÷¶Èµ¼ÖÂÄ£¿éÖĞÃ»ÓĞÅäÖÃÈÎºÎÈÎÎñÊ±£¬ºóÌ¨Å×³öÀàĞÍ×ª»»Òì³£
-o ĞŞ¸´3.0°æ±¾ÖĞÃ»ÓĞ½«×é¼şÊµÀı»úÖÆ¶¨ÒåÎªµ¥ÀıÄ£Ê½µÄÂ©¶´£¬µ«ÊÇpptÅàÑµ½Ì³ÌÖĞÈ´Ã÷È·Ö¸³ö¸Ã°æ±¾ÖĞµÄ×é¼şÄ¬ÈÏÎªµ¥ÀıÄ£Ê½
+o ä¿®å¤å¾ªç¯ä¾èµ–æœºåˆ¶æ¼æ´
+o ä¿®å¤quartzä»»åŠ¡è°ƒåº¦å¯¼è‡´æ¨¡å—ä¸­æ²¡æœ‰é…ç½®ä»»ä½•ä»»åŠ¡æ—¶ï¼Œåå°æŠ›å‡ºç±»å‹è½¬æ¢å¼‚å¸¸
+o ä¿®å¤3.0ç‰ˆæœ¬ä¸­æ²¡æœ‰å°†ç»„ä»¶å®ä¾‹æœºåˆ¶å®šä¹‰ä¸ºå•ä¾‹æ¨¡å¼çš„æ¼æ´ï¼Œä½†æ˜¯pptåŸ¹è®­æ•™ç¨‹ä¸­å´æ˜ç¡®æŒ‡å‡ºè¯¥ç‰ˆæœ¬ä¸­çš„ç»„ä»¶é»˜è®¤ä¸ºå•ä¾‹æ¨¡å¼
 
-ÉÏÊö3¸öÂ©¶´ĞŞ¸´µÄ³ÌĞòÎª£º
+ä¸Šè¿°3ä¸ªæ¼æ´ä¿®å¤çš„ç¨‹åºä¸ºï¼š
 /bbossaop/src/org/frameworkset/spi/assemble/BeanAccembleHelper.java
 /bbossaop/src/org/frameworkset/spi/assemble/Pro.java
 /bbossaop/src/org/frameworkset/spi/assemble/ProviderParser.java
 ------2011-05-06------------
-o ĞŞ¸´·ÖÒ³±êÇ©Å¼¶ûÕÒ²»µ½vmÄ£°åÎÄ¼şµÄÂ©¶´
-ÉÏÊöÂ©¶´ĞŞ¸´µÄ³ÌĞòÎª£º
+o ä¿®å¤åˆ†é¡µæ ‡ç­¾å¶å°”æ‰¾ä¸åˆ°vmæ¨¡æ¿æ–‡ä»¶çš„æ¼æ´
+ä¸Šè¿°æ¼æ´ä¿®å¤çš„ç¨‹åºä¸ºï¼š
 /bboss-util/src/com/frameworkset/util/VelocityUtil.java
 ------2011-05-03------------
-o ĞŞ¸´ÔÚÊÂÎñ»·¾³ÏÂÍ¨¹ıJDBCPoolµÄ·½·¨
+o ä¿®å¤åœ¨äº‹åŠ¡ç¯å¢ƒä¸‹é€šè¿‡JDBCPoolçš„æ–¹æ³•
 public TableMetaData getTableMetaDataFromDatabase(Connection con,
 			String tableName)
-»ñÈ¡²»µ½ÌØ¶¨Êı¾İÔ´µÄ±íÔªÊı¾İµÄÎÊÌâ
+è·å–ä¸åˆ°ç‰¹å®šæ•°æ®æºçš„è¡¨å…ƒæ•°æ®çš„é—®é¢˜
 ------2011-05-03------------
-o ĞŞ¸´preDBUtil.preparedSelect(params, dbName, sql, offset, long)
-	ÔÚ²éÑ¯Ã»ÓĞÊı¾İµÄÇé¿öÏÂ£¬preDBUtil.getMeta()·µ»ØµÄÊÇnull£»	
+o ä¿®å¤preDBUtil.preparedSelect(params, dbName, sql, offset, long)
+	åœ¨æŸ¥è¯¢æ²¡æœ‰æ•°æ®çš„æƒ…å†µä¸‹ï¼ŒpreDBUtil.getMeta()è¿”å›çš„æ˜¯nullï¼›	
 	
 ************************************************bbossgroups-3.1******************************
 ------2011-04-30------------
-o mvc¿ò¼Ü°ó¶¨²ÎÊı×¢½âÖ¸¶¨ÈÕÆÚ×ª»»¸ñÊ½£¬ÒÔ±ã±£Ö¤°´Ô­Ê¼Êı¾İ¸ñÊ½½«²ÎÊı×ª»»ÎªÕıÈ·µÄÈÕÆÚ
-o mvc¿ò¼Ü¿ÉÒÔ½«ÈÕÆÚÀàĞÍ(java.util.Date/java.sql.Date/java.sql.Timestamp)×ª»»ÎªlongÀàĞÍÊı¾İ£¬Ò²¿ÉÒÔ½«longÊı¾İ×ª»»ÎªÈÕÆÚÀàĞÍ(java.util.Date/java.sql.Date/java.sql.Timestamp)£¬
-Ò²¿ÉÒÔ½øĞĞlongÊı×éºÍÈÕÆÚÀàĞÍ(java.util.Date/java.sql.Date/java.sql.Timestamp)Êı×éµÄÏà»¥×ª»»
-o ĞŞ¸´mvc¿ò¼Ü¿ØÖÆÆ÷×é¼ş½âÎöÒì³££º
+o mvcæ¡†æ¶ç»‘å®šå‚æ•°æ³¨è§£æŒ‡å®šæ—¥æœŸè½¬æ¢æ ¼å¼ï¼Œä»¥ä¾¿ä¿è¯æŒ‰åŸå§‹æ•°æ®æ ¼å¼å°†å‚æ•°è½¬æ¢ä¸ºæ­£ç¡®çš„æ—¥æœŸ
+o mvcæ¡†æ¶å¯ä»¥å°†æ—¥æœŸç±»å‹(java.util.Date/java.sql.Date/java.sql.Timestamp)è½¬æ¢ä¸ºlongç±»å‹æ•°æ®ï¼Œä¹Ÿå¯ä»¥å°†longæ•°æ®è½¬æ¢ä¸ºæ—¥æœŸç±»å‹(java.util.Date/java.sql.Date/java.sql.Timestamp)ï¼Œ
+ä¹Ÿå¯ä»¥è¿›è¡Œlongæ•°ç»„å’Œæ—¥æœŸç±»å‹(java.util.Date/java.sql.Date/java.sql.Timestamp)æ•°ç»„çš„ç›¸äº’è½¬æ¢
+o ä¿®å¤mvcæ¡†æ¶æ§åˆ¶å™¨ç»„ä»¶è§£æå¼‚å¸¸ï¼š
 	java.lang.IllegalArgumentException: Class must not be null
 	at org.frameworkset.util.Assert.notNull(Assert.java:112)
 	at org.frameworkset.util.annotations.AnnotationUtils.findAnnotation(AnnotationUtils.java:129)
 	at org.frameworkset.web.servlet.handler.HandlerUtils.determineUrlsForHandler(HandlerUtils.java:1965)
 ------2011-04-25------------
-o ³Ö¾Ã²ã¿ò¼ÜÖĞĞŞ¸´»ñÈ¡Êı×ÖÀàĞÍµÄÖµÊ±£¬Ò»µ©rsÖĞ·µ»ØnullÊ±£¬Ã»ÓĞÕıÈ·»ñÈ¡Êı×ÖÈ±Ê¡ÖµµÄÎÊÌâ
-ValueExchange.convert·½·¨
+o æŒä¹…å±‚æ¡†æ¶ä¸­ä¿®å¤è·å–æ•°å­—ç±»å‹çš„å€¼æ—¶ï¼Œä¸€æ—¦rsä¸­è¿”å›nullæ—¶ï¼Œæ²¡æœ‰æ­£ç¡®è·å–æ•°å­—ç¼ºçœå€¼çš„é—®é¢˜
+ValueExchange.convertæ–¹æ³•
 
-o ±êÇ©¿âÖĞĞŞ¸Ä×Ö·û´®¹ıÂËÆ÷£¬½â¾öjquery»òÕßajaxÊı¾İÇëÇóÊ±£¬·ÖÒ³²éÑ¯µÄÖĞÎÄÂÒÂëÎÊÌâ£¬¸Ä½ø×Ö·û´®¹ıÂËÆ÷µÄĞÔÄÜ
+o æ ‡ç­¾åº“ä¸­ä¿®æ”¹å­—ç¬¦ä¸²è¿‡æ»¤å™¨ï¼Œè§£å†³jqueryæˆ–è€…ajaxæ•°æ®è¯·æ±‚æ—¶ï¼Œåˆ†é¡µæŸ¥è¯¢çš„ä¸­æ–‡ä¹±ç é—®é¢˜ï¼Œæ”¹è¿›å­—ç¬¦ä¸²è¿‡æ»¤å™¨çš„æ€§èƒ½
 
 ------2011-04-24------------
-o ¸Ä½øwebservice·şÎñ×°ÔØ¹¦ÄÜ£¬¿ÉÒÔ´ÓmvcºÍËùÓĞµÄapplicationcontextÖĞÅäÖÃºÍ×°ÔØwebservice·şÎñ£º
-Mvc¿ò¼ÜµÄws·şÎñÎŞĞèÌØÊâ´¦Àí
-ÆÕÍ¨µÄapplicationcontextÈİÆ÷ÖĞµÄws·şÎñ¶ÔÓ¦µÄÄ£¿éÅäÖÃÎÄ¼şĞèÒªÅäÖÃÔÚorg/frameworkset/spi/ws/webserivce-modules.xmlÎÄ¼şÖĞ
+o æ”¹è¿›webserviceæœåŠ¡è£…è½½åŠŸèƒ½ï¼Œå¯ä»¥ä»mvcå’Œæ‰€æœ‰çš„applicationcontextä¸­é…ç½®å’Œè£…è½½webserviceæœåŠ¡ï¼š
+Mvcæ¡†æ¶çš„wsæœåŠ¡æ— éœ€ç‰¹æ®Šå¤„ç†
+æ™®é€šçš„applicationcontextå®¹å™¨ä¸­çš„wsæœåŠ¡å¯¹åº”çš„æ¨¡å—é…ç½®æ–‡ä»¶éœ€è¦é…ç½®åœ¨org/frameworkset/spi/ws/webserivce-modules.xmlæ–‡ä»¶ä¸­
 
 ------2011-04-21------------
-o Ôö¼Ó×é¼şÒì²½µ÷ÓÃ»úÖÆ£¬Ê¹ÓÃ·½·¨²Î¿¼²âÊÔÓÃÀı£º
+o å¢åŠ ç»„ä»¶å¼‚æ­¥è°ƒç”¨æœºåˆ¶ï¼Œä½¿ç”¨æ–¹æ³•å‚è€ƒæµ‹è¯•ç”¨ä¾‹ï¼š
 /bbossaop/test/org/frameworkset/spi/asyn/AsynbeanTest.java
-¿ÉÒÔÍ¨¹ıAsync×¢½â±ê×¢×é¼şÖĞĞèÒªÒì²½Ö´ĞĞµÄ·½·¨¼´¿É£¬¿ÉÒÔÖ¸¶¨³¬Ê±Ê±¼ä£¬ÊÇ·ñĞèÒª·µ»Ø½á¹û£¬ÊÇ·ñĞèÒª»Øµ÷´¦Àí·µ»Ø½á¹û
+å¯ä»¥é€šè¿‡Asyncæ³¨è§£æ ‡æ³¨ç»„ä»¶ä¸­éœ€è¦å¼‚æ­¥æ‰§è¡Œçš„æ–¹æ³•å³å¯ï¼Œå¯ä»¥æŒ‡å®šè¶…æ—¶æ—¶é—´ï¼Œæ˜¯å¦éœ€è¦è¿”å›ç»“æœï¼Œæ˜¯å¦éœ€è¦å›è°ƒå¤„ç†è¿”å›ç»“æœ
 
 ------2011-04-20------------
-o ÍêÉÆPro¶ÔÏó¶ÔProList£¬ProSet£¬ProMap£¬ProArrayµÄ´¦Àí»úÖÆ
-o ApplicationContext×é¼şĞÂÔöÒ»×é»ñÈ¡ProArray¶ÔÏóµÄ½Ó¿Ú
+o å®Œå–„Proå¯¹è±¡å¯¹ProListï¼ŒProSetï¼ŒProMapï¼ŒProArrayçš„å¤„ç†æœºåˆ¶
+o ApplicationContextç»„ä»¶æ–°å¢ä¸€ç»„è·å–ProArrayå¯¹è±¡çš„æ¥å£
 public ProArray getArrayProperty(String name) ;
 public ProArray getProArrayProperty(String name, ProArray defaultValue) ;
 
-o ĞÂÔöconvert±êÇ©£¬Ö§³Ö×ÖµäÊı¾İÖµÏòÃû³ÆµÄ×ª»»
-ÆäÖĞµÄdatasÎªÒ»¸ömapÊôĞÔÓ³ÉäÖµ£¬name¶ÔÓ¦ÓÚkey£¬convert±êÇ©Í¨¹ıname»ñÈ¡µ½¶ÔÓ¦µÄÊôĞÔÖµ
-È»ºóÏÔÊ¾µ½Ò³ÃæÉÏ£¬Èç¹û¶ÔÓ¦µÄÖµÃ»ÓĞÄÇÃ´Êä³ödefaultValue¶ÔÓ¦µÄÖµ£¬Èç¹ûÃ»ÓĞÉèÖÃdefaultValue
-ÄÇÃ´Ö±½ÓÊä³öname¡£
+o æ–°å¢convertæ ‡ç­¾ï¼Œæ”¯æŒå­—å…¸æ•°æ®å€¼å‘åç§°çš„è½¬æ¢
+å…¶ä¸­çš„datasä¸ºä¸€ä¸ªmapå±æ€§æ˜ å°„å€¼ï¼Œnameå¯¹åº”äºkeyï¼Œconvertæ ‡ç­¾é€šè¿‡nameè·å–åˆ°å¯¹åº”çš„å±æ€§å€¼
+ç„¶åæ˜¾ç¤ºåˆ°é¡µé¢ä¸Šï¼Œå¦‚æœå¯¹åº”çš„å€¼æ²¡æœ‰é‚£ä¹ˆè¾“å‡ºdefaultValueå¯¹åº”çš„å€¼ï¼Œå¦‚æœæ²¡æœ‰è®¾ç½®defaultValue
+é‚£ä¹ˆç›´æ¥è¾“å‡ºnameã€‚
 <pg:convert convertData="datas" colName="name" defaultValue=""/>
 pager-taglib.tld
 frameworkset.jar
 ------2011-04-18------------
-o ½â¾ö»ñÈ¡¿ÕµÄProListÊ±µ¼ÖÂaop¿ò¼ÜÆô¶¯Ê§°ÜµÄÎÊÌâ
-o ÍêÉÆÊÂÎñĞ¹Â¶¼ì²â»úÖÆ£¬ÔÚmanager-provider.xmlÖĞÔö¼Ó¼ì²âÒ³ÃæµØÖ·ÀàĞÍÅäÖÃ£º
-<!-- Êı¾İ¿âÊÂÎñĞ¹Â¶¼ì²âurlÀàĞÍ·¶Î§ÅäÖÃ -->
+o è§£å†³è·å–ç©ºçš„ProListæ—¶å¯¼è‡´aopæ¡†æ¶å¯åŠ¨å¤±è´¥çš„é—®é¢˜
+o å®Œå–„äº‹åŠ¡æ³„éœ²æ£€æµ‹æœºåˆ¶ï¼Œåœ¨manager-provider.xmlä¸­å¢åŠ æ£€æµ‹é¡µé¢åœ°å€ç±»å‹é…ç½®ï¼š
+<!-- æ•°æ®åº“äº‹åŠ¡æ³„éœ²æ£€æµ‹urlç±»å‹èŒƒå›´é…ç½® -->
 	<property name="transaction.leakcheck.files" >
 		<array componentType="String">
 			<property value=".jsp"/>
@@ -481,7 +481,7 @@ o ÍêÉÆÊÂÎñĞ¹Â¶¼ì²â»úÖÆ£¬ÔÚmanager-provider.xmlÖĞÔö¼Ó¼ì²âÒ³ÃæµØÖ·ÀàĞÍÅäÖÃ£º
 		</array>
 	</property>
 ------2011-04-16------------
-o ÍêÉÆ´ø·µ»ØÖµµÄÊÂÎñ¹ÜÀíÄ£°å×é¼şÖ§³Ö·ºĞÍÀàĞÍµÄ·µ»Ø
+o å®Œå–„å¸¦è¿”å›å€¼çš„äº‹åŠ¡ç®¡ç†æ¨¡æ¿ç»„ä»¶æ”¯æŒæ³›å‹ç±»å‹çš„è¿”å›
 public void stringarraytoList(final List<ListBean> beans) throws Throwable {
 		List<ListBean> ret = TemplateDBUtil.executeTemplate(
 				new JDBCValueTemplate<List<ListBean>>(){
@@ -499,51 +499,51 @@ public void stringarraytoList(final List<ListBean> beans) throws Throwable {
 			}
 		);
 	}
-o ½â¾öÖ÷Ò³ÃæÍ¨¹ıajax·½Ê½¼ÓÔØ¶à¸ö·ÖÒ³Ò³ÃæÊ±£¬Ìø×ª¹¦ÄÜ²»ÄÜÕı³£Ê¹ÓÃµÄÎÊÌâ£¬ÒÔ¼°ÌáÊ¾ĞÅÏ¢ÖĞÎÄÂÒÂëÎÊÌâ
+o è§£å†³ä¸»é¡µé¢é€šè¿‡ajaxæ–¹å¼åŠ è½½å¤šä¸ªåˆ†é¡µé¡µé¢æ—¶ï¼Œè·³è½¬åŠŸèƒ½ä¸èƒ½æ­£å¸¸ä½¿ç”¨çš„é—®é¢˜ï¼Œä»¥åŠæç¤ºä¿¡æ¯ä¸­æ–‡ä¹±ç é—®é¢˜
 	
 ------2011-04-14------------
-o mvcÖĞ´«µİ¸ø·ÖÒ³±êÇ©µÄµ¼º½Â·¾¶ĞŞ¸ÄÎª´øÉÏÏÂÎÄµÄ¾ø¶ÔµØÖ·£¬ÒÔÃâÔÚÊ¹ÓÃjqueryÄ£Ê½¾Ö²¿·ÖÒ³Ê±£¬Ö÷Ò³ÃæµÄÏà¶ÔµØÖ·ºÍ·ÖÒ³¶ÔÓ¦µÄÒ³ÃæµÄÏà¶ÔÂ·¾¶²»Ò»ÖÂÊ±£¬²»ÄÜÕıÈ·µØ½øĞĞ·ÖÒ³µ¼º½
+o mvcä¸­ä¼ é€’ç»™åˆ†é¡µæ ‡ç­¾çš„å¯¼èˆªè·¯å¾„ä¿®æ”¹ä¸ºå¸¦ä¸Šä¸‹æ–‡çš„ç»å¯¹åœ°å€ï¼Œä»¥å…åœ¨ä½¿ç”¨jqueryæ¨¡å¼å±€éƒ¨åˆ†é¡µæ—¶ï¼Œä¸»é¡µé¢çš„ç›¸å¯¹åœ°å€å’Œåˆ†é¡µå¯¹åº”çš„é¡µé¢çš„ç›¸å¯¹è·¯å¾„ä¸ä¸€è‡´æ—¶ï¼Œä¸èƒ½æ­£ç¡®åœ°è¿›è¡Œåˆ†é¡µå¯¼èˆª
 ------2011-04-13------------
-o ¿ØÖÆÆ÷·½·¨ÖĞÔö¼ÓMapÀàĞÍ²ÎÊı°ó¶¨»úÖÆ£¬¿ÉÒÔ½«requestÖĞµÄ²ÎÊı×ª»»ÎªMap¶ÔÏó£¬µ±²ÎÊıÊÇÊı×éÊ±´æÈëÊı×éÖµ£¬·ñÔò´æÈëµ¥¸öÖµ
+o æ§åˆ¶å™¨æ–¹æ³•ä¸­å¢åŠ Mapç±»å‹å‚æ•°ç»‘å®šæœºåˆ¶ï¼Œå¯ä»¥å°†requestä¸­çš„å‚æ•°è½¬æ¢ä¸ºMapå¯¹è±¡ï¼Œå½“å‚æ•°æ˜¯æ•°ç»„æ—¶å­˜å…¥æ•°ç»„å€¼ï¼Œå¦åˆ™å­˜å…¥å•ä¸ªå€¼
 ------2011-04-11------------
-o ÍêÉÆConfigSQLExecutorºÍSQLExecutor×é¼şÖĞËùÓĞºÍbean¶ÔÏóÏà¹ØµÄ½Ó¿Ú£¬
-	Object bean²ÎÊı¿ÉÒÔÊÇÆÕÍ¨µÄµÄÖµ¶ÔÏó£¬Ò²¿ÉÒÔÊÇÒ»¸öSQLParams¶ÔÏó,Ò²¿ÉÒÔÊÇÒ»¸öMap¶ÔÏó
-	Ê¹ÓÃ·½·¨²Î¿¼²âÊÔÓÃÀı£º
+o å®Œå–„ConfigSQLExecutorå’ŒSQLExecutorç»„ä»¶ä¸­æ‰€æœ‰å’Œbeanå¯¹è±¡ç›¸å…³çš„æ¥å£ï¼Œ
+	Object beanå‚æ•°å¯ä»¥æ˜¯æ™®é€šçš„çš„å€¼å¯¹è±¡ï¼Œä¹Ÿå¯ä»¥æ˜¯ä¸€ä¸ªSQLParamså¯¹è±¡,ä¹Ÿå¯ä»¥æ˜¯ä¸€ä¸ªMapå¯¹è±¡
+	ä½¿ç”¨æ–¹æ³•å‚è€ƒæµ‹è¯•ç”¨ä¾‹ï¼š
 	/bboss-persistent/test/com/frameworkset/sqlexecutor/ConfigSQLExecutorTest.java
 
 
 
 	
 ------2011-04-11------------
-o ĞÂÔöarrayÔªËØ£¬Í¨¹ı¸ÃÔªËØ¿ÉÒÔÊµÏÖ¸÷ÖÖÀàĞÍÊı×éÊı¾İµÄ×¢Èë¹¦ÄÜ
+o æ–°å¢arrayå…ƒç´ ï¼Œé€šè¿‡è¯¥å…ƒç´ å¯ä»¥å®ç°å„ç§ç±»å‹æ•°ç»„æ•°æ®çš„æ³¨å…¥åŠŸèƒ½
 ------2011-04-07------------
-o  ĞŞ¸ÄDaemonThread½ø³Ì£¬Ö§³Ö´ÓÍâ²¿Ö¸¶¨Ë¢ĞÂÎÄ¼ş×ÊÔ´µÄÊ±¼ä¼ä¸ô¡£
-o ÍêÉÆApplicationContext×é¼şµÄÉúÃüÖÜÆÚ¹ÜÀí»úÖÆ
-o ApplicationContext×é¼şÔö¼Ó»ñÈ¡longÖµÊôĞÔµÄapi
+o  ä¿®æ”¹DaemonThreadè¿›ç¨‹ï¼Œæ”¯æŒä»å¤–éƒ¨æŒ‡å®šåˆ·æ–°æ–‡ä»¶èµ„æºçš„æ—¶é—´é—´éš”ã€‚
+o å®Œå–„ApplicationContextç»„ä»¶çš„ç”Ÿå‘½å‘¨æœŸç®¡ç†æœºåˆ¶
+o ApplicationContextç»„ä»¶å¢åŠ è·å–longå€¼å±æ€§çš„api
 ------2011-04-11------------
-o ĞÂÔöarrayÔªËØ£¬Í¨¹ı¸ÃÔªËØ¿ÉÒÔÊµÏÖ¸÷ÖÖÀàĞÍÊı×éÊı¾İµÄ×¢Èë¹¦ÄÜ
+o æ–°å¢arrayå…ƒç´ ï¼Œé€šè¿‡è¯¥å…ƒç´ å¯ä»¥å®ç°å„ç§ç±»å‹æ•°ç»„æ•°æ®çš„æ³¨å…¥åŠŸèƒ½
 ------2011-04-07------------
-o Ôö¼Ó¸ù¾İ±äÁ¿Ãû³Æ´ÓÅäÖÃÎÄ¼şÖĞ»ñÈ¡sqlÓï¾äµÄÀ´²Ù×÷Êı¾İ¿â×é¼ş,¶ÔÓ¦sqlÅäÖÃÎÄ¼şÌá¹©¶¨Ê±Ë¢ĞÂ»úÖÆ
-  Èç¹û¼ì²âµ½sqlÎÄ¼ş±»ĞŞ¸Ä£¬¾Í´ÓĞÂ¼ÓÔØÎÄ¼ş£¨Ç°ÌáÊÇ¿ªÆôË¢ĞÂ»úÖÆ£©
+o å¢åŠ æ ¹æ®å˜é‡åç§°ä»é…ç½®æ–‡ä»¶ä¸­è·å–sqlè¯­å¥çš„æ¥æ“ä½œæ•°æ®åº“ç»„ä»¶,å¯¹åº”sqlé…ç½®æ–‡ä»¶æä¾›å®šæ—¶åˆ·æ–°æœºåˆ¶
+  å¦‚æœæ£€æµ‹åˆ°sqlæ–‡ä»¶è¢«ä¿®æ”¹ï¼Œå°±ä»æ–°åŠ è½½æ–‡ä»¶ï¼ˆå‰ææ˜¯å¼€å¯åˆ·æ–°æœºåˆ¶ï¼‰
 com.frameworkset.common.poolman.ConfigSQLExecutor
-¾ßÌåµÄÊ¹ÓÃ·½·¨Îª£º
+å…·ä½“çš„ä½¿ç”¨æ–¹æ³•ä¸ºï¼š
 ConfigSQLExecutor executor = new ConfigSQLExecutor("com/frameworkset/sqlexecutor/sqlfile.xml");
 Map dbBeans  =  executor.queryObject(HashMap.class, "sqltest");
 String result = executor.queryFieldBean("sqltemplate", bean);
-ÅäÖÃÎÄ¼ş£º
+é…ç½®æ–‡ä»¶ï¼š
 
 <?xml version="1.0" encoding='gb2312'?>
 <properties>
 <description>
 <![CDATA[
-	sqlÅäÖÃÎÄ¼ş
-	¿ÉÒÔÍ¨¹ıÃû³ÆÊôĞÔnameÅäÖÃÄ¬ÈÏsql£¬ÌØ¶¨Êı¾İ¿âµÄsqlÍ¨¹ıÔÚ
-	Ãû³ÆºóÃæ¼ÓÊı¾İ¿âÀàĞÍºó×ºÀ´Çø·Ö£¬ÀıÈç£º
+	sqlé…ç½®æ–‡ä»¶
+	å¯ä»¥é€šè¿‡åç§°å±æ€§nameé…ç½®é»˜è®¤sqlï¼Œç‰¹å®šæ•°æ®åº“çš„sqlé€šè¿‡åœ¨
+	åç§°åé¢åŠ æ•°æ®åº“ç±»å‹åç¼€æ¥åŒºåˆ†ï¼Œä¾‹å¦‚ï¼š
 	sqltest
 	sqltest-oracle
 	sqltest-derby
 	sqltest-mysql
-	µÈµÈ£¬±¾ÅäÖÃÊµÀı¾ÍÑİÊ¾ÁË¾ßÌåÅäÖÃ·½·¨
+	ç­‰ç­‰ï¼Œæœ¬é…ç½®å®ä¾‹å°±æ¼”ç¤ºäº†å…·ä½“é…ç½®æ–¹æ³•
  ]]>
 </description>
 	<property name="sqltest"><![CDATA[select * from LISTBEAN]]>
@@ -560,15 +560,15 @@ String result = executor.queryFieldBean("sqltemplate", bean);
 	</property>
 </properties>
 
-Ë¢ĞÂ»úÖÆµÄÅäÖÃ·½·¨£º
-ÔÚmanager-provider.xmlÎÄ¼şÖĞÌí¼ÓÒÔÏÂÅäÖÃÏî¼´¿É£º
+åˆ·æ–°æœºåˆ¶çš„é…ç½®æ–¹æ³•ï¼š
+åœ¨manager-provider.xmlæ–‡ä»¶ä¸­æ·»åŠ ä»¥ä¸‹é…ç½®é¡¹å³å¯ï¼š
 <property name="sqlfile.refresh_interval" value="10000"/>
-µ±value´óÓÚ0Ê±¾Í¿ªÆôsqlfileÎÄ¼şµÄ¸üĞÂ¼ì²â»úÖÆ£¬Ã¿¸ôvalueÖ¸¶¨µÄÊ±¼ä¼ä¸ô¾Í¼ì²âÒ»´Î£¬ÓĞ¸üĞÂ¾ÍÖØĞÂ¼ÓÔØ£¬·ñÔò²»ÖØĞÂ¼ÓÔØ
+å½“valueå¤§äº0æ—¶å°±å¼€å¯sqlfileæ–‡ä»¶çš„æ›´æ–°æ£€æµ‹æœºåˆ¶ï¼Œæ¯éš”valueæŒ‡å®šçš„æ—¶é—´é—´éš”å°±æ£€æµ‹ä¸€æ¬¡ï¼Œæœ‰æ›´æ–°å°±é‡æ–°åŠ è½½ï¼Œå¦åˆ™ä¸é‡æ–°åŠ è½½
 
-o ÍêÉÆApplicationContext×é¼şµÄÉúÃüÖÜÆÚ¹ÜÀí»úÖÆ
-o ApplicationContext×é¼şÔö¼Ó»ñÈ¡longÖµÊôĞÔµÄapi
-o ÍêÉÆmvc¿ò¼ÜÅäÖÃÎÄ¼şµ¼Èë·½Ê½
-¿ÉÒÔÓÃ,ºÅ·Ö¸ôµ¼Èë×ÓÄ¿Â¼ÏÂµÄÅäÖÃÎÄ¼ş,ÀıÈç£º
+o å®Œå–„ApplicationContextç»„ä»¶çš„ç”Ÿå‘½å‘¨æœŸç®¡ç†æœºåˆ¶
+o ApplicationContextç»„ä»¶å¢åŠ è·å–longå€¼å±æ€§çš„api
+o å®Œå–„mvcæ¡†æ¶é…ç½®æ–‡ä»¶å¯¼å…¥æ–¹å¼
+å¯ä»¥ç”¨,å·åˆ†éš”å¯¼å…¥å­ç›®å½•ä¸‹çš„é…ç½®æ–‡ä»¶,ä¾‹å¦‚ï¼š
 <servlet>
 	<servlet-name>mvcdispather</servlet-name>
 	<servlet-class>org.frameworkset.web.servlet.DispatchServlet</servlet-class>
@@ -577,25 +577,25 @@ o ÍêÉÆmvc¿ò¼ÜÅäÖÃÎÄ¼şµ¼Èë·½Ê½
 		<param-value>/WEB-INF/bboss-*.xml,
 					/WEB-INF/conf/bboss-*.xml</param-value>
 	</init-param>
-¡£¡£¡£¡£¡£¡£
+ã€‚ã€‚ã€‚ã€‚ã€‚ã€‚
 </servlet>
 
 ------2011-04-05------------
-o ¿ØÖÆÆ÷·½·¨Ôö¼ÓÃ¶¾ÙÀàĞÍ£¬Ã¶¾ÙÊı×éÀàĞÍ²ÎÊıµÄ°ó¶¨¹¦ÄÜ
+o æ§åˆ¶å™¨æ–¹æ³•å¢åŠ æšä¸¾ç±»å‹ï¼Œæšä¸¾æ•°ç»„ç±»å‹å‚æ•°çš„ç»‘å®šåŠŸèƒ½
 ------2011-03-31------------
-o Ìø×ªÂ·¾¶¿ÉÒÔÍ¨¹ıpath£ºÔªËØÖ±½ÓÖ¸¶¨£¬¶øÎŞĞè×¢Èë
-¾ßÌåÊ¹ÓÃ·½·¨£¬²Î¿¼demo
+o è·³è½¬è·¯å¾„å¯ä»¥é€šè¿‡pathï¼šå…ƒç´ ç›´æ¥æŒ‡å®šï¼Œè€Œæ— éœ€æ³¨å…¥
+å…·ä½“ä½¿ç”¨æ–¹æ³•ï¼Œå‚è€ƒdemo
 WebRoot/WEB-INF/bboss-path.xml
 
 ------2011-04-06------------
-o Ôö¼ÓÒ»×é²éÑ¯µ¥¸ö×Ö¶ÎµÄ·ºĞÍ½Ó¿Ú£¬Ê¹ÓÃ·½·¨ÈçÏÂ£º
+o å¢åŠ ä¸€ç»„æŸ¥è¯¢å•ä¸ªå­—æ®µçš„æ³›å‹æ¥å£ï¼Œä½¿ç”¨æ–¹æ³•å¦‚ä¸‹ï¼š
 		String sql = "select REQUIRED from LISTBEAN ";
 		int id=  SQLExecutor.queryTField(int.class, sql);
 		long id=  SQLExecutor.queryTField(long.class, "select seq_name.nextval from LISTBEAN ");
 		String sql = "select FIELDLABLE from LISTBEAN ";
 		String id=  SQLExecutor.queryTField(String.class, sql);
 		System.out.println(id);
-o 3.0apiÔö¼Ó·µ»ØList<HashMap>½á¹û¼¯µÄ²éÑ¯½Ó¿ÚÖ§³Ö£¬Ê¹ÓÃ·½·¨ÈçÏÂ£¨ÒÔÔ¤±àÒëÓï¾äÎªÀı£©£º
+o 3.0apiå¢åŠ è¿”å›List<HashMap>ç»“æœé›†çš„æŸ¥è¯¢æ¥å£æ”¯æŒï¼Œä½¿ç”¨æ–¹æ³•å¦‚ä¸‹ï¼ˆä»¥é¢„ç¼–è¯‘è¯­å¥ä¸ºä¾‹ï¼‰ï¼š
 @Test
 	public void queryListMap() throws SQLException
 	{
@@ -623,9 +623,9 @@ o 3.0apiÔö¼Ó·µ»ØList<HashMap>½á¹û¼¯µÄ²éÑ¯½Ó¿ÚÖ§³Ö£¬Ê¹ÓÃ·½·¨ÈçÏÂ£¨ÒÔÔ¤±àÒëÓï¾äÎªÀ
 	}
 	
 ------2011-03-30------------
-o 3.0apiÖĞÍêÉÆ¶Ôjava.util.DateÀàĞÍ¶ÔÏóÊôĞÔÊı¾İµÄ´¦Àí
+o 3.0apiä¸­å®Œå–„å¯¹java.util.Dateç±»å‹å¯¹è±¡å±æ€§æ•°æ®çš„å¤„ç†
 
-o ĞŞ¸´mvcÊµÏÖ·ÖÒ³¹¦ÄÜÊ±£¬Í¨¹ıhandleMapping×¢½âÖ¸¶¨µÄurlÂ·¾¶ÎŞ·¨½øĞĞ·ÖÒ³µÄbug£¬ĞŞ¸ÄµÄ³ÌĞòÈçÏÂ£º
+o ä¿®å¤mvcå®ç°åˆ†é¡µåŠŸèƒ½æ—¶ï¼Œé€šè¿‡handleMappingæ³¨è§£æŒ‡å®šçš„urlè·¯å¾„æ— æ³•è¿›è¡Œåˆ†é¡µçš„bugï¼Œä¿®æ”¹çš„ç¨‹åºå¦‚ä¸‹ï¼š
 
 ------2011-03-20------------
-o ¸Ä½øÓÒ¼ü²Ëµ¥¹¦ÄÜ£¬ÌáÉıÓÒ¼ü²Ëµ¥ĞÔÄÜ£¬Éæ¼°µÄ¹¦ÄÜÓĞ£ºÊ¹ÓÃÓÒ¼ü²Ëµ¥µÄÊ÷±êÇ©ºÍÊ¹ÓÃÓÒ¼ü²Ëµ¥µÄÁĞ±í¡¢·ÖÒ³±êÇ©£¬ÒÔ¼°ËùÓĞÆäËûÏà¹ØµÄÒ³Ãæ
+o æ”¹è¿›å³é”®èœå•åŠŸèƒ½ï¼Œæå‡å³é”®èœå•æ€§èƒ½ï¼Œæ¶‰åŠçš„åŠŸèƒ½æœ‰ï¼šä½¿ç”¨å³é”®èœå•çš„æ ‘æ ‡ç­¾å’Œä½¿ç”¨å³é”®èœå•çš„åˆ—è¡¨ã€åˆ†é¡µæ ‡ç­¾ï¼Œä»¥åŠæ‰€æœ‰å…¶ä»–ç›¸å…³çš„é¡µé¢

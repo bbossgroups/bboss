@@ -20,7 +20,7 @@ public class TestUnicast {
             }
 //            long e = System.currentTimeMillis();
 
-//            System.out.println((e - s) / 1000 + "√Î");
+//            System.out.println((e - s) / 1000 + "Áßí");
            
         } catch (SPIException e) {
             // TODO Auto-generated catch block

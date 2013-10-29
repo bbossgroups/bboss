@@ -20,7 +20,7 @@ import java.io.Serializable;
 /**
  * <p>Title: PoolmanMBean</p>
  *
- * <p>Description: 初始化poolman中的所有数据库链接池，并且将连接池绑定到特定服务器jndi服务</p>
+ * <p>Description: 鍒濆鍖杙oolman涓殑鎵�鏈夋暟鎹簱閾炬帴姹狅紝骞朵笖灏嗚繛鎺ユ睜缁戝畾鍒扮壒瀹氭湇鍔″櫒jndi鏈嶅姟</p>
  *
  * <p>Copyright: Copyright (c) 2005</p>
  *
@@ -30,6 +30,6 @@ import java.io.Serializable;
  * @version 1.0
  */
 public interface PoolmanMBean extends Serializable{
-    /**初始化poolman中的所有数据库链接池，并且将连接池绑定到特定服务器jndi服务*/
+    /**鍒濆鍖杙oolman涓殑鎵�鏈夋暟鎹簱閾炬帴姹狅紝骞朵笖灏嗚繛鎺ユ睜缁戝畾鍒扮壒瀹氭湇鍔″櫒jndi鏈嶅姟*/
     public void bootStartup();
 }

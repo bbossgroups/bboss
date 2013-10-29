@@ -50,7 +50,7 @@ public class ConfigParser extends DefaultHandler{
     private String dbnamespace;
     
     /**
-     * ÓÃ»§×Ô¶¨ÒåµÄÊÊÅäÆ÷
+     * ç”¨æˆ·è‡ªå®šä¹‰çš„é€‚é…å™¨
      */
     private Map<String,String> adaptors = new HashMap<String,String>(); 
     public ConfigParser(String file,String dbnamespace,String[] filterdbname) {
@@ -156,7 +156,7 @@ public class ConfigParser extends DefaultHandler{
         		!name.equals("datasourceFile") )
             
         {
-        	log.debug("½âÎöÎÄ¼şÊ±[" + this.file + "]Óöµ½ÔªËØ[" + name + "]£¬ºöÂÔ´¦Àí¡£");
+        	log.debug("è§£ææ–‡ä»¶æ—¶[" + this.file + "]é‡åˆ°å…ƒç´ [" + name + "]ï¼Œå¿½ç•¥å¤„ç†ã€‚");
         }
 
     }
@@ -239,7 +239,7 @@ public class ConfigParser extends DefaultHandler{
         	{
         		if(currentdbtype == null || currentdbtype.equals(""))
         		{
-        			System.out.println("ignoe adaptor["+currentValue+"],Ã»ÓĞÖ¸¶¨dbtype¡£");
+        			System.out.println("ignoe adaptor["+currentValue+"],æ²¡æœ‰æŒ‡å®šdbtypeã€‚");
         		}
         		else
         		{

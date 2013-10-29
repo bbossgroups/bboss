@@ -31,7 +31,7 @@ import com.frameworkset.util.ValueObjectUtil;
  * Title: ProArray.java
  * </p>
  * <p>
- * Description: Ö÷ÒªÊÇÓÃÓÚiocµÄÊı×é×¢Èë¹¦ÄÜ
+ * Description: ä¸»è¦æ˜¯ç”¨äºiocçš„æ•°ç»„æ³¨å…¥åŠŸèƒ½
  * </p>
  * <p>
  * bboss workgroup
@@ -40,7 +40,7 @@ import com.frameworkset.util.ValueObjectUtil;
  * Copyright (c) 2007
  * </p>
  * 
- * @Date 2011-4-11 ÏÂÎç01:30:37
+ * @Date 2011-4-11 ä¸‹åˆ01:30:37
  * @author biaoping.yin
  * @version 1.0
  */
@@ -48,8 +48,8 @@ public class ProArray implements Serializable{
 	private static final Logger log = Logger.getLogger(ProArray.class);
 	private boolean isfreeze = false;
 	/**
-	 * ÈİÆ÷×é¼şÀàĞÍ£¬ÓĞÒÔÏÂÈıÖÖÀàĞÍ£º bean:½«¿ÉÒÔÖ±½Ó½«×é×°µÄbeanÊı×é String£ºProArray×ª»»ÎªString[]Êı×é
-	 * Pro£ºÄ¬ÈÏÀàĞÍPro£¬²»×ö×ª»»£¬³ı·ÇÖ¸¶¨editor±à¼­Æ÷
+	 * å®¹å™¨ç»„ä»¶ç±»å‹ï¼Œæœ‰ä»¥ä¸‹ä¸‰ç§ç±»å‹ï¼š bean:å°†å¯ä»¥ç›´æ¥å°†ç»„è£…çš„beanæ•°ç»„ Stringï¼šProArrayè½¬æ¢ä¸ºString[]æ•°ç»„
+	 * Proï¼šé»˜è®¤ç±»å‹Proï¼Œä¸åšè½¬æ¢ï¼Œé™¤éæŒ‡å®šeditorç¼–è¾‘å™¨
 	 */
 	private String componentType;
 	Pro[] pros;

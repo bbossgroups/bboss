@@ -22,16 +22,15 @@ import org.frameworkset.spi.remote.TestBase;
 import org.frameworkset.spi.security.SecurityManager;
 import org.junit.Test;
 
-import com.frameworkset.common.poolman.handle.ValueExchange;
 import com.frameworkset.util.ValueObjectUtil;
 
 
 /**
  * <p>Title: TestClient.java</p> 
- * <p>Description: netty¿Í·ş¶Ë²âÊÔÓÃÀı</p>
+ * <p>Description: nettyå®¢æœç«¯æµ‹è¯•ç”¨ä¾‹</p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2010-4-20 ÉÏÎç11:47:12
+ * @Date 2010-4-20 ä¸Šåˆ11:47:12
  * @author biaoping.yin
  * @version 1.0
  */
@@ -40,7 +39,7 @@ public class TestClient extends TestBase
 	@Test
 	public void testBigDatas()
 	{
-		byte[] datas = ValueObjectUtil.getBytesFileContent("D:/workspace/bbossgroups-3.2/ÎÄµµ/bbossgroups¿ò¼ÜÅàÑµ½Ì³Ì.ppt") ;
+		byte[] datas = ValueObjectUtil.getBytesFileContent("D:/workspace/bbossgroups-3.2/æ–‡æ¡£/bbossgroupsæ¡†æ¶åŸ¹è®­æ•™ç¨‹.ppt") ;
 		RPCTest test = context.getTBeanObject("(netty::172.16.33.46:12347)/rpc.test",RPCTest.class);
 		datas = test.echo18M(datas);
 		
@@ -50,7 +49,7 @@ public class TestClient extends TestBase
 	{
 //		AssembleUtil.registAssembleCallback(new WebDocbaseAssembleCallback("D:/workspace/bbossgroup-2.0-RC2/bbossaop/"));
 //		RPCTestInf testInf = (RPCTestInf)context.getBeanObject("(192.168.11.102:1186)/rpc.test");
-		RPCTestInf testInf = (RPCTestInf)context.getBeanObject("(netty::192.168.1.22:12347)/rpc.test?user=admin&password=123456&server_uuid=¶à¶à");
+		RPCTestInf testInf = (RPCTestInf)context.getBeanObject("(netty::192.168.1.22:12347)/rpc.test?user=admin&password=123456&server_uuid=å¤šå¤š");
 		
 		for(int i = 0; i < 10; i ++)
 		{
@@ -88,7 +87,7 @@ public class TestClient extends TestBase
 //                    System.out.println("testInf.getCount():" + i + " = "+testInf.getCount());
 //                
 //                long end = System.currentTimeMillis();
-//                System.out.println("ÏûºÄÊ±¼ä£º" + (end - start) / 1000 + "Ãë");
+//                System.out.println("æ¶ˆè€—æ—¶é—´ï¼š" + (end - start) / 1000 + "ç§’");
         for(int i = 0; i < 10; i ++)
         {
             Thread t = new Thread(new RunNettyRPC(i));
@@ -99,7 +98,7 @@ public class TestClient extends TestBase
         }
     
     /**
-     * ¶à²¥·şÎñµ÷ÓÃ
+     * å¤šæ’­æœåŠ¡è°ƒç”¨
      */
     @Test
 	public void testMuticastNettyRPC()
@@ -110,7 +109,7 @@ public class TestClient extends TestBase
                 Object ret_12345 = null;
 				try {
 					ret_12345 = context.getNettyRPCResult("172.16.17.216:12345", ret);
-					System.out.println("ret_12345£º"+ret_12345);
+					System.out.println("ret_12345ï¼š"+ret_12345);
 	                
 				} catch (Throwable e) {
 					// TODO Auto-generated catch block
@@ -121,13 +120,13 @@ public class TestClient extends TestBase
 				try {
 					ret_12347 = context.getNettyRPCResult("172.16.17.216:12347", ret);
 					
-	                System.out.println("ret_12347£º"+ret_12347);
+	                System.out.println("ret_12347ï¼š"+ret_12347);
 				} catch (Throwable e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
                 
-                //µÈ¼ÛµÄµ÷ÓÃ·½·¨
+                //ç­‰ä»·çš„è°ƒç”¨æ–¹æ³•
                 
 //                Object ret_12345 = context.getRPCResult("127.0.0.1:12345", ret,Target.BROADCAST_TYPE_NETTY);
 //                Object ret_12346 = context.getRPCResult("127.0.0.1:12346", ret,Target.BROADCAST_TYPE_NETTY);
@@ -164,7 +163,7 @@ public class TestClient extends TestBase
         }
         
         long end = System.currentTimeMillis();
-        System.out.println("ÏûºÄÊ±¼ä£º" + (end - start)  + "Ãë");
+        System.out.println("æ¶ˆè€—æ—¶é—´ï¼š" + (end - start)  + "ç§’");
         
         start = System.currentTimeMillis();
         
@@ -176,7 +175,7 @@ public class TestClient extends TestBase
         }
         
          end = System.currentTimeMillis();
-        System.out.println("ÏûºÄÊ±¼ä£º" + (end - start)  + "ºÀÃë");
+        System.out.println("æ¶ˆè€—æ—¶é—´ï¼š" + (end - start)  + "è±ªç§’");
     }
     
      class RunNettyRPC implements Runnable

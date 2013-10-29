@@ -38,7 +38,7 @@ import com.frameworkset.util.HtmlUtils;
  * Title: ErrorTag.java
  * </p>
  * <p>
- * Description: 绑定参数异常信息标签
+ * Description: 缁戝畾鍙傛暟寮傚父淇℃伅鏍囩
  * </p>
  * <p>
  * bboss workgroup

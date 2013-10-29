@@ -1,6 +1,6 @@
 <%
 /**
- * ¼òµ¥µÄÓÒ¼ü²Ëµ¥²âÊÔÊ÷
+ * ç®€å•çš„å³é”®èœå•æµ‹è¯•æ ‘
  */
  %>
 
@@ -11,7 +11,7 @@
 	response.setDateHeader("max-age", 0); 
 %>
 <%@ taglib uri="/WEB-INF/treetag.tld" prefix="tree" %>
-<%@ page language="java" contentType="text/html; charset=GBK"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"%>
 
 <%
 String treetype = request.getParameter("treetype");
@@ -21,14 +21,14 @@ String id = treetype+"root";
 				<div class="info">
 					<p>
 		        <!-- 
-		        	Í¨¹ýÒ»ÕûÌ×µÄÊ÷±êÇ©£¬Éú³ÉÊ÷
-		        	tree ÊôÐÔÖ¸¶¨Ê÷µÄÎ¨Ò»Ãû³Æ
-		        	imageFolder Ö¸¶¨Ê÷½ÚµãµÄÍ¼±êÄ¿Â¼
-		        	collapse Ö¸¶¨Ê÷½ÚµãÊÇ·ñÈ«²¿ÆÌ¿ª£¬²¢ÇÒ²»ÄÜÕÛµþ£¬true¿ÉÒÔÕÛµþ£¬falseÈ«²¿Õ¹¿ªµ«ÊÇ²»ÄÜÕÛµþ
-		        	includeRootNode ÊÇ·ñ°üº¬¸ù½Úµã
-		        	href ½ÚµãÈ«¾ÖurlµØÖ·
-		        	target ½Úµãurlµ¯³ö´°¿Ú
-		        	mode ¿ØÖÆÊ÷µÄÕ¹Ê¾Ä£Ê½£¬Îª¶¯¾²Ä£Ê½
+		        	é€šè¿‡ä¸€æ•´å¥—çš„æ ‘æ ‡ç­¾ï¼Œç”Ÿæˆæ ‘
+		        	tree å±žæ€§æŒ‡å®šæ ‘çš„å”¯ä¸€åç§°
+		        	imageFolder æŒ‡å®šæ ‘èŠ‚ç‚¹çš„å›¾æ ‡ç›®å½•
+		        	collapse æŒ‡å®šæ ‘èŠ‚ç‚¹æ˜¯å¦å…¨éƒ¨é“ºå¼€ï¼Œå¹¶ä¸”ä¸èƒ½æŠ˜å ï¼Œtrueå¯ä»¥æŠ˜å ï¼Œfalseå…¨éƒ¨å±•å¼€ä½†æ˜¯ä¸èƒ½æŠ˜å 
+		        	includeRootNode æ˜¯å¦åŒ…å«æ ¹èŠ‚ç‚¹
+		        	href èŠ‚ç‚¹å…¨å±€urlåœ°å€
+		        	target èŠ‚ç‚¹urlå¼¹å‡ºçª—å£
+		        	mode æŽ§åˆ¶æ ‘çš„å±•ç¤ºæ¨¡å¼ï¼Œä¸ºåŠ¨é™æ¨¡å¼
 		         -->
 		         <tree:tree tree="TreeWithContextMenu"
 		    	           node="TreeWithContextMenu.node"
@@ -41,27 +41,27 @@ String id = treetype+"root";
 		    			   jquery="true"
 		    			   > 
 		    			   <!--
-		    			   		Ê÷µÄÕ¹¿ªºÍÕÛµþÊ±  ±£³ÖÒ³ÃæµÄ²ÎÊý
+		    			   		æ ‘çš„å±•å¼€å’ŒæŠ˜å æ—¶  ä¿æŒé¡µé¢çš„å‚æ•°
 		    			   -->               
 		                  <tree:param name="treetype"/>
 		                   <tree:radio name="test_radio"/>
-		                   <!-- Ö¸¶¨Ê÷µÄÊý¾Ý¼ÓÔØÆ÷ºÍ¸ù½ÚµãÐÅÏ¢
-		                   		treetype-Êý¾Ý¼ÓÔØÆ÷µÄÊµÏÖÀà£¬ÕâÀïÊÇtest.tree.TestTree
-		                   		scope Êý¾Ý¼ÓÔØÆ÷¶ÔÏóµÄ´æ´¢·¶Î§£¬Ò»°ãÊÇrequest¼¶±ð
+		                   <!-- æŒ‡å®šæ ‘çš„æ•°æ®åŠ è½½å™¨å’Œæ ¹èŠ‚ç‚¹ä¿¡æ¯
+		                   		treetype-æ•°æ®åŠ è½½å™¨çš„å®žçŽ°ç±»ï¼Œè¿™é‡Œæ˜¯test.tree.TestTree
+		                   		scope æ•°æ®åŠ è½½å™¨å¯¹è±¡çš„å­˜å‚¨èŒƒå›´ï¼Œä¸€èˆ¬æ˜¯requestçº§åˆ«
 		                   		
-		                   		Ö¸¶¨¸ù½ÚµãµÄÐÅÏ¢£º
-		                   		rootid ¸ù½ÚµãµÄid
-		                   		rootName ¸ù½ÚµãµÄÃû³Æ
+		                   		æŒ‡å®šæ ¹èŠ‚ç‚¹çš„ä¿¡æ¯ï¼š
+		                   		rootid æ ¹èŠ‚ç‚¹çš„id
+		                   		rootName æ ¹èŠ‚ç‚¹çš„åç§°
 		                   		
-		                   		expandLevel Ä¬ÈÏÕ¹¿ª¶àÉÙ¼¶
-		                   		enablecontextmenu ÊÇ·ñÆôÓÃÓÒ¼ü²Ëµ¥£¬trueÆôÓÃ£¬false²»ÆôÓÃ
+		                   		expandLevel é»˜è®¤å±•å¼€å¤šå°‘çº§
+		                   		enablecontextmenu æ˜¯å¦å¯ç”¨å³é”®èœå•ï¼Œtrueå¯ç”¨ï¼Œfalseä¸å¯ç”¨
 		                    -->
 		                    
 		                    
 		    			   <tree:treedata treetype="org.frameworkset.web.tree.TreeWithContextMenu1"
 		    	                   scope="request"
 		    	                   rootid="<%=id %>"  
-		    	                   rootName="²âÊÔÊ÷"
+		    	                   rootName="æµ‹è¯•æ ‘"
 		    	                   expandLevel="2"
 		    	                   showRootHref="true"
 		    	                   needObserver="false"

@@ -35,7 +35,7 @@ import org.frameworkset.util.ClassUtil;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2009-10-11 ÉÏÎç09:06:47
+ * @Date 2009-10-11 ä¸Šåˆ09:06:47
  * @author biaoping.yin
  * @version 1.0
  */
@@ -87,7 +87,7 @@ public class RPCMethodCall implements Externalizable
 //    protected static final short ID=5;
     
     /**
-     * ·½·¨Ö´ĞĞÉÏÏÂÎÄ»·¾³£¬Ö÷ÒªÓĞ°²È«ºÍÆäËûÊôĞÔÏûÏ¢
+     * æ–¹æ³•æ‰§è¡Œä¸Šä¸‹æ–‡ç¯å¢ƒï¼Œä¸»è¦æœ‰å®‰å…¨å’Œå…¶ä»–å±æ€§æ¶ˆæ¯
      */
     protected SecurityContext securityContext = null;
 

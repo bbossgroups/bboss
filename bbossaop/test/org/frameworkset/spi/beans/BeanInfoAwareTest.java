@@ -23,13 +23,13 @@ import org.frameworkset.spi.InitializingBean;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2012-3-2 ÉÏÎç09:52:40
+ * @Date 2012-3-2 ä¸Šåˆ09:52:40
  * @author biaoping.yin
  * @version 1.0
  */
 public class BeanInfoAwareTest extends org.frameworkset.spi.BeanInfoAware implements InitializingBean {
 	public void afterPropertiesSet() throws Exception {
-		String extrattr = super.beaninfo.getStringExtendAttribute("extrattr");//»ñÈ¡À©Õ¹ÊôĞÔÖµ
-		String extrattr_default = super.beaninfo.getStringExtendAttribute("extrattr","defaultvalue");//»ñÈ¡À©Õ¹ÊôĞÔÖµ£¬Èç¹ûÃ»ÓĞÖ¸¶¨Ôò·µ»ØºóÃæµÄÄ¬ÈÏÖµ
+		String extrattr = super.beaninfo.getStringExtendAttribute("extrattr");//è·å–æ‰©å±•å±æ€§å€¼
+		String extrattr_default = super.beaninfo.getStringExtendAttribute("extrattr","defaultvalue");//è·å–æ‰©å±•å±æ€§å€¼ï¼Œå¦‚æœæ²¡æœ‰æŒ‡å®šåˆ™è¿”å›åé¢çš„é»˜è®¤å€¼
 	}
 }

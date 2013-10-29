@@ -32,7 +32,7 @@
 package com.frameworkset.common.tag.export;
 
 /**
- * 导出列表数据到Pdf文件
+ * 瀵煎嚭鍒楄〃鏁版嵁鍒癙df鏂囦欢
  * @author biaoping.yin
  * created on 2005-3-13
  * version 1.0 

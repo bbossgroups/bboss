@@ -12,7 +12,7 @@ import com.frameworkset.common.poolman.DBUtil;
  * 
  * <p>Title: TestIdleEvict.java</p>
  *
- * <p>Description:测试poolman的链接池空闲链接回收功能 </p>
+ * <p>Description:娴嬭瘯poolman鐨勯摼鎺ユ睜绌洪棽閾炬帴鍥炴敹鍔熻兘 </p>
  *
  * <p>
  * bboss workgroup
@@ -21,7 +21,7 @@ import com.frameworkset.common.poolman.DBUtil;
  * Copyright (c) 2007
  * </p>
  * 
- * @Date 2009-6-1 下午08:58:51
+ * @Date 2009-6-1 涓嬪崍08:58:51
  * @author biaoping.yin
  * @version 1.0
  */
@@ -59,9 +59,9 @@ public class TestIdleEvict {
 			}
 			while(true)
 			{
-				System.out.println("空闲链接数：" + DBUtil.getNumIdle());
-				System.out.println("正在使用链接数：" + DBUtil.getNumActive());
-				System.out.println("使用链接数最大值：" + DBUtil.getMaxNumActive());
+				System.out.println("绌洪棽閾炬帴鏁帮細" + DBUtil.getNumIdle());
+				System.out.println("姝ｅ湪浣跨敤閾炬帴鏁帮細" + DBUtil.getNumActive());
+				System.out.println("浣跨敤閾炬帴鏁版渶澶у�硷細" + DBUtil.getMaxNumActive());
 				try {
 					sleep(10000);
 				} catch (InterruptedException e) {

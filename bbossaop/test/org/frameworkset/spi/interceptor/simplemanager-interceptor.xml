@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding='gb2312'?>
+<?xml version="1.0" encoding='UTF-8'?>
 <properties>
 		<property name="serviceName" class="org.frameworkset.spi.interceptor.A" singlable="true">
 			<interceptor class="org.frameworkset.spi.interceptor.Insterceptor"/>

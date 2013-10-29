@@ -33,7 +33,7 @@ import org.frameworkset.util.ObjectUtils;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2010-10-12 œ¬ŒÁ11:15:21
+ * @Date 2010-10-12 ‰∏ãÂçà11:15:21
  * @author biaoping.yin
  * @version 1.0
  */

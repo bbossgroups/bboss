@@ -24,7 +24,7 @@ import com.frameworkset.util.ValueObjectUtil;
 /**
  * <p>Title: KeyGenerator</p>
  *
- * <p>Description: Ö÷¼üÉú³ÉÆ÷</p>
+ * <p>Description: ä¸»é”®ç”Ÿæˆå™¨</p>
  *
  * <p>
  * bboss workgroup
@@ -33,7 +33,7 @@ import com.frameworkset.util.ValueObjectUtil;
  * Copyright (c) 2007
  * </p>
  * 
- * @Date 2009-6-1 ÏÂÎç08:58:51
+ * @Date 2009-6-1 ä¸‹åˆ08:58:51
  * @author biaoping.yin
  * @version 1.0
  */

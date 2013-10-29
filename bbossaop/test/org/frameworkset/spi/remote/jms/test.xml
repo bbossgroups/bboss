@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="gbk"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <ps>
 	<p n="_dflt_" cs="org.frameworkset.spi.remote.RPCMessage">
 		<p n="buffer" s:nvl="true" s:t="byte[]" />

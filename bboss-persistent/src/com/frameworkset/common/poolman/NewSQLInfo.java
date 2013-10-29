@@ -102,7 +102,7 @@ public class NewSQLInfo
 	{
 		if(this.oldsql != null && this.oldsql.getSqlutil() != null)
 		{
-			if(oldsql.istpl())//Èç¹ûsqlÓï¾äÊÇÒ»¸ö
+			if(oldsql.istpl())//å¦‚æœsqlè¯­å¥æ˜¯ä¸€ä¸ª
 			{
 				return this.oldsql.getSqlutil().getPoolManResultSetMetaData(dbname, sqlkey, rsmetadata);
 			}

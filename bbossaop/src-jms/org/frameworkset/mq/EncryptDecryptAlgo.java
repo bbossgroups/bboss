@@ -4,9 +4,9 @@ package org.frameworkset.mq;
 /**
  * 
  * <p>Title: EncryptDecryptAlgo.java</p>
- * <p>Description:¼òµ¥µÄ¼ÓÃÜºÍ½âÃÜËã·¨ </p>
+ * <p>Description:ç®€å•çš„åŠ å¯†å’Œè§£å¯†ç®—æ³• </p>
  * <p>Copyright: Copyright (c) 2009</p>
- * <p>Company: ºşÄÏ¿Æ´´ĞÅÏ¢¹É·İÓĞÏŞ¹«Ë¾</p>
+ * <p>Company: æ¹–å—ç§‘åˆ›ä¿¡æ¯è‚¡ä»½æœ‰é™å…¬å¸</p>
  * @Date May 17, 2009
  * @author xian.liu
  * @version 1.0
@@ -14,7 +14,7 @@ package org.frameworkset.mq;
 public class EncryptDecryptAlgo
 {	// Encrypting a string value.
 	/**
-	 * ×Ö·û´®¼ÓÃÜ
+	 * å­—ç¬¦ä¸²åŠ å¯†
 	 * @param plainText
 	 * @return
 	 */
@@ -25,7 +25,7 @@ public class EncryptDecryptAlgo
 
   	}
 	/**
-	 * ×Ö½ÚÊı×é¼ÓÃÜ
+	 * å­—èŠ‚æ•°ç»„åŠ å¯†
 	 * @param in
 	 * @return
 	 */
@@ -37,7 +37,7 @@ public class EncryptDecryptAlgo
   	}
 	
 	/**
-	 * ×Ö·û´®½âÃÜ
+	 * å­—ç¬¦ä¸²è§£å¯†
 	 * @param plainText
 	 * @return
 	 */
@@ -52,7 +52,7 @@ public class EncryptDecryptAlgo
 	}
 	}
 	/**
-	 * ×Ö½ÚÊı×é½âÃÜ
+	 * å­—èŠ‚æ•°ç»„è§£å¯†
 	 * @param in
 	 * @return
 	 */

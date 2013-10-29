@@ -7,11 +7,10 @@ import java.util.Map;
 
 import javax.servlet.jsp.PageContext;
 
+
+
 import com.frameworkset.common.tag.tree.COMTree;
 import com.frameworkset.common.tag.tree.itf.ITreeNode;
-import com.frameworkset.platform.cms.templatemanager.FileResource;
-import com.frameworkset.platform.cms.templatemanager.TemplateManagerException;
-import com.frameworkset.platform.cms.util.FileUtil;
 
 public class FolderTree extends COMTree {
 
@@ -37,7 +36,7 @@ public class FolderTree extends COMTree {
 
 	}
 	public List getDirectoryResource(String uri)
-			throws TemplateManagerException {
+			 {
 		
 		List fileResources = new ArrayList();
 		File[] subFiles = FileUtil.getSubDirectories(rootPath, uri);
@@ -64,20 +63,20 @@ public class FolderTree extends COMTree {
 	}
 
 	/**
-	 * ×ÊÔ´¹ÜÀíÊ÷id£ºResourceManager
-	 * Õ¾µãid=site:siteid
-	 * ÆµµÀid=channelid:site:siteid
-	 * ÆµµÀ¸ùid=channel:site:siteid
+	 * èµ„æºç®¡ç†æ ‘idï¼šResourceManager
+	 * ç«™ç‚¹id=site:siteid
+	 * é¢‘é“id=channelid:site:siteid
+	 * é¢‘é“æ ¹id=channel:site:siteid
 	 */
 	public boolean setSon(ITreeNode father, int curLevel){
 		//String fileFlag = (String)session.getAttribute("fileFlag");
-		//Í¼Æ¬ä¯ÀÀÊÓÍ¼£ºlist£¬ÁĞ±í£»ppt£¬»ÃµÆÆ¬£»thumbnail£¬ËõÂÔÍ¼
+		//å›¾ç‰‡æµè§ˆè§†å›¾ï¼šlistï¼Œåˆ—è¡¨ï¼›pptï¼Œå¹»ç¯ç‰‡ï¼›thumbnailï¼Œç¼©ç•¥å›¾
 		//String viewertype = request.getParameter("viewertype");
 		List fileresources = null;
 		String parentPath = "";
 		try {
 			
-			//Ìí¼Ó¶¥¼¶Õ¾µã
+			//æ·»åŠ é¡¶çº§ç«™ç‚¹
 			
 				
 			parentPath = father.getId();
@@ -90,7 +89,7 @@ public class FolderTree extends COMTree {
 			
 			
 			fileresources = getDirectoryResource(parentPath);
-		} catch (TemplateManagerException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		

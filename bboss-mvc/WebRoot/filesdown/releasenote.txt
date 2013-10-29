@@ -327,7 +327,7 @@ Map dbBeans  =  executor.queryObject(HashMap.class, "sqltest");
 String result = executor.queryFieldBean("sqltemplate", bean);
 配置文件：
 
-<?xml version="1.0" encoding='gb2312'?>
+<?xml version="1.0" encoding='UTF-8'?>
 <properties>
 <description>
 <![CDATA[

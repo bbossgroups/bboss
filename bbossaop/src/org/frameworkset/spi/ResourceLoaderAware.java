@@ -25,7 +25,7 @@ import org.frameworkset.util.io.ResourceLoader;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2010-9-24 œ¬ŒÁ05:27:00
+ * @Date 2010-9-24 ‰∏ãÂçà05:27:00
  * @author biaoping.yin
  * @version 1.0
  */

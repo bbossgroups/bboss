@@ -24,7 +24,7 @@ import java.util.Properties;
  * 
  * <p>Title: CacheControl.java</p>
  *
- * <p>Description: 缓冲刷新控制机制</p>
+ * <p>Description: 缂撳啿鍒锋柊鎺у埗鏈哄埗</p>
  *
  * <p>Copyright: Copyright (c) 2007</p>
  *

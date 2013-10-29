@@ -28,7 +28,7 @@ import org.junit.Test;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2011-5-18 œ¬ŒÁ05:30:15
+ * @Date 2011-5-18 ‰∏ãÂçà05:30:15
  * @author biaoping.yin
  * @version 1.0
  */
@@ -43,7 +43,7 @@ public class RMIServiceClientTest {
 	public void test() throws RemoteException
 	{
 		RMIServiceTestInf test = (RMIServiceTestInf)context.getBeanObject("rmi_service_client_test");
-		System.out.println(test.sayHello("∂‡∂‡"));
+		System.out.println(test.sayHello("Â§öÂ§ö"));
 	}
 
 }

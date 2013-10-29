@@ -1,6 +1,6 @@
-/************************2008-08-27 author Àî·å¸ß **************************
-ÎªÁËÏìÓ¦¼üÅÌÊäÈëÂëÖµ²éÕÒÑ¡Ïî
-*************************2008-08-27 author Àî·å¸ß **************************/
+/************************2008-08-27 author æå³°é«˜ **************************
+ä¸ºäº†å“åº”é”®ç›˜è¾“å…¥ç å€¼æŸ¥æ‰¾é€‰é¡¹
+*************************2008-08-27 author æå³°é«˜ **************************/
 /*
 document.attachEvent("onblur", searchOptionOnblur);
 //var currentSearchSelect = null;
@@ -9,40 +9,40 @@ function searchOptionOnblur(currentSearchSelect){
 		currentSearchSelect.code = "";
 	}
 }
-Ê¾Àı´úÂë£º¿ÉÒÔ²Î¿¼ TestOptionSearcher.html Ò³Ãæ
+ç¤ºä¾‹ä»£ç ï¼šå¯ä»¥å‚è€ƒ TestOptionSearcher.html é¡µé¢
 
---¶ÔÓÚµ¥Ñ¡µÄÏÂÀ­¿ò:
+--å¯¹äºå•é€‰çš„ä¸‹æ‹‰æ¡†:
 
-<select name="levy_item" onpropertychange="searchDictFun(this);conculate();" style="width:240px;" validator="num" cnname="Ë°ÖÖË°Ä¿" msg="ÇëÑ¡ÔñË°ÖÖË°Ä¿£¡" 
+<select name="levy_item" onpropertychange="searchDictFun(this);conculate();" style="width:240px;" validator="num" cnname="ç¨ç§ç¨ç›®" msg="è¯·é€‰æ‹©ç¨ç§ç¨ç›®ï¼" 
   onkeydown="searchOption(this);"  onkeypress="resetKeyPress();" onblur="clearCode(this);" onchange="clearCode(this);"
  >
-ÆäÖĞĞèÒª¼àÌıËÄ¸öÊÂ¼ş: onkeydown="searchOption(this);"  onkeypress="resetKeyPress();" onblur="clearCode(this);" onchange="clearCode(this);"
-onkeydownÊÂ¼şÊÇ±ØĞëµÄ
+å…¶ä¸­éœ€è¦ç›‘å¬å››ä¸ªäº‹ä»¶: onkeydown="searchOption(this);"  onkeypress="resetKeyPress();" onblur="clearCode(this);" onchange="clearCode(this);"
+onkeydownäº‹ä»¶æ˜¯å¿…é¡»çš„
 
---¶ÔÓÚ¶àÑ¡¿ò£¬ĞèÒªÁíÍâµÄÎÄ±¾²éÑ¯¿ò
+--å¯¹äºå¤šé€‰æ¡†ï¼Œéœ€è¦å¦å¤–çš„æ–‡æœ¬æŸ¥è¯¢æ¡†
 
 <input type="TEXT" name="test" onkeydown="searchOption(levy_item);"  onblur="clearCode(levy_item);" onchange="clearCode(levy_item);"/>
-<input type="button" name="btn" value="ËÑË÷" onclick="doSearch(test.value,levy_item)"/>
+<input type="button" name="btn" value="æœç´¢" onclick="doSearch(test.value,levy_item)"/>
 <br>
 <select name="levy_item" id="levy_item" size=8 multiple>
- <option name="o1">011-ÃºÓÍ</option>
- <option name="o1">012-Ô­ÓÍ</option>
+ <option name="o1">011-ç…¤æ²¹</option>
+ <option name="o1">012-åŸæ²¹</option>
 </select>
 */
-//ÓÃ»§°´±àÂë£¬Ö±½Ó¶¨Î»selectµÄoption
+//ç”¨æˆ·æŒ‰ç¼–ç ï¼Œç›´æ¥å®šä½selectçš„option
 function searchOption(oSelect, defaultValue){
-	//Óë¶àÑ¡»¹ÊÇµ¥Ñ¡ÎŞ¹Ø£¬Í¨¹ıoSelect.multiple¿ÉÒÔÅĞ¶Ïµ¥Ñ¡»¹ÊÇ¶àÑ¡
+	//ä¸å¤šé€‰è¿˜æ˜¯å•é€‰æ— å…³ï¼Œé€šè¿‡oSelect.multipleå¯ä»¥åˆ¤æ–­å•é€‰è¿˜æ˜¯å¤šé€‰
 	//alert(oSelect.multiple);
 	searchSelect(oSelect, defaultValue);
 }
 
-//´Ó¶àÑ¡µÄselectÖĞËÑË÷
+//ä»å¤šé€‰çš„selectä¸­æœç´¢
 function searchSelect(oSelect, defaultValue){
 	//alert("searchMultipleSelect");
-	/*µ±Ã»ÓĞÕÒµ½Ñ¡ÏîµÄÊ±ºò£¬ÉèÖÃÄ¬ÈÏÖµ*/
-	var defaultIndex = oSelect.selectedIndex ;//µ±ÊäÈëÁË´íÎóµÄÂëÖµÊ±£¬Ä¬ÈÏÎªÖ®Ç°µÄ²»¶¯¡£Èç¹ûÒªÄ¬ÈÏÎª¿Õ£¬ÔòÖ»Ğè¸øËü-1
+	/*å½“æ²¡æœ‰æ‰¾åˆ°é€‰é¡¹çš„æ—¶å€™ï¼Œè®¾ç½®é»˜è®¤å€¼*/
+	var defaultIndex = oSelect.selectedIndex ;//å½“è¾“å…¥äº†é”™è¯¯çš„ç å€¼æ—¶ï¼Œé»˜è®¤ä¸ºä¹‹å‰çš„ä¸åŠ¨ã€‚å¦‚æœè¦é»˜è®¤ä¸ºç©ºï¼Œåˆ™åªéœ€ç»™å®ƒ-1
 	if(null == defaultValue || "current" == defaultValue){
-		//currentÎªÄ¬ÈÏ·½Ê½
+		//currentä¸ºé»˜è®¤æ–¹å¼
 	}
 	else if("blank" == defaultValue){
 		defaultIndex = -1 ;
@@ -54,28 +54,28 @@ function searchSelect(oSelect, defaultValue){
 		defaultIndex = parseInt(defaultValue) ;
 	}
 //alert(defaultIndex);
-	if(window.event.keyCode == 13){//Èç¹ûÊÇ»Ø³µ·ûºÅ£¬ÔòÖ´ĞĞËÑË÷¶¯×÷	   
+	if(window.event.keyCode == 13){//å¦‚æœæ˜¯å›è½¦ç¬¦å·ï¼Œåˆ™æ‰§è¡Œæœç´¢åŠ¨ä½œ	   
 		doSearch(oSelect.code,oSelect, defaultIndex) ;
-		oSelect.code = "";//Ã¿ËÑË÷Íê±Ï£¬Ôò½«±äÁ¿ÖÃ¿Õ¡£
-	}else{//·ñÔò±£´æselectµÄÊôĞÔ		
+		oSelect.code = "";//æ¯æœç´¢å®Œæ¯•ï¼Œåˆ™å°†å˜é‡ç½®ç©ºã€‚
+	}else{//å¦åˆ™ä¿å­˜selectçš„å±æ€§		
 		if(oSelect.code == null){ oSelect.code = "" ;}	
 
 		var tempCode = window.event.keyCode ;
-		//ÒòÎªĞ¡¼üÅÌÉÏÃæµÄcodeÂë²»Í¬£¬ÏÈ×ª»»ÎªĞ¡¼üÅÌµÄ£¬´Ó48µ½57ÊÇÊı×Ö0-9¡£
+		//å› ä¸ºå°é”®ç›˜ä¸Šé¢çš„codeç ä¸åŒï¼Œå…ˆè½¬æ¢ä¸ºå°é”®ç›˜çš„ï¼Œä»48åˆ°57æ˜¯æ•°å­—0-9ã€‚
 		if(window.event.keyCode >= 48 && window.event.keyCode <= 57){
 			tempCode += 48;
 		}
 		//alert(tempCode);
-		//Èç¹ûÊÇÎÄ±¾¿ò
+		//å¦‚æœæ˜¯æ–‡æœ¬æ¡†
 		//if(event.srcElement.type == "text"){
 			//oSelect.code = event.srcElement.value;
 		//}else
 		{
-			//É¾³ı¼ü
+			//åˆ é™¤é”®
 			if(tempCode == 8 && oSelect.code.length>0){				
 				oSelect.code = oSelect.code.substring(0,oSelect.code.length-1);			
 			}else if(tempCode>=96 && tempCode<=105){
-				oSelect.code += new String(tempCode-96) ;//unicodeÂë-96Ö®ºó¾ÍÊÇÊı×Ö±¾Éí
+				oSelect.code += new String(tempCode-96) ;//unicodeç -96ä¹‹åå°±æ˜¯æ•°å­—æœ¬èº«
 			}
 		}
 		//alert(oSelect.code);
@@ -83,9 +83,9 @@ function searchSelect(oSelect, defaultValue){
 	}
 }
 
-//ËÑË÷¶¨Î»£¬¸ù¾İÓÃ»§µÄÊäÈë·µ»ØËÑË÷µ½µÄindex
+//æœç´¢å®šä½ï¼Œæ ¹æ®ç”¨æˆ·çš„è¾“å…¥è¿”å›æœç´¢åˆ°çš„index
 function doSearch(content,oSelect, defaultIndex){	
-	var index = defaultIndex ;	//Ô­À´ÏëÄ¬ÈÏÎªoSelect.selectedIndex£¬ºóÀ´ÓÃ¿ÕÖµÌæ´ú;	
+	var index = defaultIndex ;	//åŸæ¥æƒ³é»˜è®¤ä¸ºoSelect.selectedIndexï¼Œåæ¥ç”¨ç©ºå€¼æ›¿ä»£;	
 	for(var i=0; i<oSelect.options.length; i++){
 		if(oSelect.options[i].text.indexOf(content) >= 0){
 			index = i ;		
@@ -96,7 +96,7 @@ function doSearch(content,oSelect, defaultIndex){
 	//return index ;
 }
 
-//Çå¿ÕselectµÄcodeÖµ
+//æ¸…ç©ºselectçš„codeå€¼
 function clearCode(oSelect){
 	if(event.srcElement.type == "text"){
 			oSelect.code = event.srcElement.value;

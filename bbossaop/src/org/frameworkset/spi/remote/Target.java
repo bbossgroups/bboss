@@ -36,7 +36,7 @@ import bboss.org.jgroups.Address;
  * Copyright (c) 2007
  * </p>
  * 
- * @Date 2009-4-20 ����05:30:19
+ * @Date 2009-4-20 下午05:30:19
  * @author biaoping.yin
  * @version 1.0
  */
@@ -45,14 +45,14 @@ public interface Target extends java.io.Serializable
 
 	
 	/**
-	 * BROADCAST_TYPE_MUTICAST��BROADCAST_TYPE_UNICASTΪ����Э�飬�°�ϵͳ����֧��
-	 * �ֱ������¼��������滻
+	 * BROADCAST_TYPE_MUTICAST，BROADCAST_TYPE_UNICAST为遗留协议，新版系统不再支持
+	 * 分别由以下几种类型替换
 	 * BROADCAST_TYPE_JRGOUP
 	 * BROADCAST_TYPE_MINA
 	 * BROADCAST_TYPE_JMS
 	 * BROADCAST_TYPE_WEBSERVICE
 	 * 	 * 
-	 * ָ����Ӧ��Э�����Ҫ����ÿ��Э���������ò���
+	 * 指定相应的协议后，需要配置每种协议的相关配置参数
 	 */
 	
 	public static final String	BROADCAST_TYPE_MUTICAST		= "muticast";

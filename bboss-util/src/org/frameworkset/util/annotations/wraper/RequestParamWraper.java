@@ -24,13 +24,13 @@ import org.frameworkset.util.annotations.RequestParam;
  * <p> bboss workgroup </p>
  * <p> Copyright (c) 2005-2013 </p>
  * 
- * @Date 2013Äê10ÔÂ3ÈÕ
+ * @Date 2013å¹´10æœˆ3æ—¥
  * @author biaoping.yin
  * @version 1.0
  */
 public class RequestParamWraper {
 	/**
-	 * ²ÎÊıÃû³Æ£¬Ä¬ÈÏÎª""
+	 * å‚æ•°åç§°ï¼Œé»˜è®¤ä¸º""
 	 * @return
 	 */
 	private String name;
@@ -38,34 +38,34 @@ public class RequestParamWraper {
 	private boolean required;
 	private String editor;
 	/**
-     * Êı¾İ¸ñÊ½
+     * æ•°æ®æ ¼å¼
      */
 	private String dataformat;
 	/**
-	 * ÈÕÆÚ¸ñÊ½
+	 * æ—¥æœŸæ ¼å¼
      */
 	private String dateformat;
 	private String defaultvalue;
 	/**
-	 * ½âÂë×Ö·û¼¯
+	 * è§£ç å­—ç¬¦é›†
 	 * @return
 	 */
 	private String decodeCharset;
 	
 	/**
-	 * ²ÎÊıÔ­Ê¼×Ö·û¼¯
+	 * å‚æ•°åŸå§‹å­—ç¬¦é›†
 	 * @return
 	 */
 	private String charset;
 	
 	/**
-	 * ²ÎÊı×ª»»×Ö·û¼¯
+	 * å‚æ•°è½¬æ¢å­—ç¬¦é›†
 	 * @return
 	 */
 	private String convertcharset;
 	public RequestParamWraper(RequestParam param) {
 		/**
-		 * ²ÎÊıÃû³Æ£¬Ä¬ÈÏÎª""
+		 * å‚æ•°åç§°ï¼Œé»˜è®¤ä¸º""
 		 * @return
 		 */
 		 name = param.name();
@@ -73,34 +73,34 @@ public class RequestParamWraper {
 		 required = param.required();
 		 editor = param.editor();
 		/**
-	     * Êı¾İ¸ñÊ½
+	     * æ•°æ®æ ¼å¼
 	     */
 		 dataformat = param.dataformat();
 		/**
-		 * ÈÕÆÚ¸ñÊ½
+		 * æ—¥æœŸæ ¼å¼
 	     */
 		 dateformat = param.dateformat();
 		 defaultvalue = AnnotationUtils.converDefaultValue(param.defaultvalue());
 		/**
-		 * ½âÂë×Ö·û¼¯
+		 * è§£ç å­—ç¬¦é›†
 		 * @return
 		 */
 		 decodeCharset = AnnotationUtils.converDefaultValue(param.decodeCharset());
 		
 		/**
-		 * ²ÎÊıÔ­Ê¼×Ö·û¼¯
+		 * å‚æ•°åŸå§‹å­—ç¬¦é›†
 		 * @return
 		 */
 		 charset = AnnotationUtils.converDefaultValue(param.charset());
 		
 		/**
-		 * ²ÎÊı×ª»»×Ö·û¼¯
+		 * å‚æ•°è½¬æ¢å­—ç¬¦é›†
 		 * @return
 		 */
 		 convertcharset = AnnotationUtils.converDefaultValue(param.convertcharset());
 	}
 	/**
-	 * ²ÎÊıÃû³Æ£¬Ä¬ÈÏÎª""
+	 * å‚æ•°åç§°ï¼Œé»˜è®¤ä¸º""
 	 * @return
 	 */
 	public String name(){
@@ -114,13 +114,13 @@ public class RequestParamWraper {
 		return this.editor;
 	}
 	/**
-     * Êı¾İ¸ñÊ½
+     * æ•°æ®æ ¼å¼
      */
 	public String dataformat(){
 		return this.dataformat;
 	}
 	/**
-	 * ÈÕÆÚ¸ñÊ½
+	 * æ—¥æœŸæ ¼å¼
      */
 	public String dateformat(){
 		return this.dateformat;
@@ -129,7 +129,7 @@ public class RequestParamWraper {
 		return this.defaultvalue;
 	}
 	/**
-	 * ½âÂë×Ö·û¼¯
+	 * è§£ç å­—ç¬¦é›†
 	 * @return
 	 */
 	public String decodeCharset(){
@@ -137,7 +137,7 @@ public class RequestParamWraper {
 	}
 	
 	/**
-	 * ²ÎÊıÔ­Ê¼×Ö·û¼¯
+	 * å‚æ•°åŸå§‹å­—ç¬¦é›†
 	 * @return
 	 */
 	public String charset(){
@@ -145,7 +145,7 @@ public class RequestParamWraper {
 	}
 	
 	/**
-	 * ²ÎÊı×ª»»×Ö·û¼¯
+	 * å‚æ•°è½¬æ¢å­—ç¬¦é›†
 	 * @return
 	 */
 	public String convertcharset(){

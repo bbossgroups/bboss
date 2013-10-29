@@ -29,7 +29,7 @@ import org.frameworkset.spi.assemble.callback.DefaultAssembleCallbackResolver;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2010-10-4 œ¬ŒÁ03:56:12
+ * @Date 2010-10-4 ‰∏ãÂçà03:56:12
  * @author biaoping.yin
  * @version 1.0
  */

@@ -36,7 +36,7 @@ import com.frameworkset.util.SimpleStringUtil;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2010-10-3 ÏÂÎç11:04:59
+ * @Date 2010-10-3 ä¸‹åˆ11:04:59
  * @author biaoping.yin
  * @version 1.0
  */
@@ -58,7 +58,7 @@ public class DefaultAssembleCallbackResolver implements AssembleCallbackResolver
 	
 	/**
 	 * docbase:
-	 * classpath::conf,Ïà¶ÔÓÚ.
+	 * classpath::conf,ç›¸å¯¹äº.
 	 * web::/WEB-INF/ 
 	 * 
 	 * @param docbaseImport
@@ -73,7 +73,7 @@ public class DefaultAssembleCallbackResolver implements AssembleCallbackResolver
 		String contextFile = docbaseImport.getFile();
 		AssembleCallback assembleCallback = this.resolverAssembleCallback(docbaseImport.isClasspathBase()?AssembleCallback.classpathprex:AssembleCallback.webprex);
 		if(assembleCallback == null)
-			throw new AssembleCallbackException("GetManagerImports("+docbaseType+","+docbase+","+contextFile+"):»ñÈ¡docbaseType[" + docbaseType + "]Ê§°Ü,AssembleCallback is null.");
+			throw new AssembleCallbackException("GetManagerImports("+docbaseType+","+docbase+","+contextFile+"):è·å–docbaseType[" + docbaseType + "]å¤±è´¥,AssembleCallback is null.");
 		String absoluteParentPath = assembleCallback.getDocbasePath(docbase);
 //		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~assembleCallback.getRootPath():" + assembleCallback.getRootPath() + "," + assembleCallback.getClass().getName());
 		List<ManagerImport> managerImports = new ArrayList<ManagerImport>();
@@ -92,11 +92,11 @@ public class DefaultAssembleCallbackResolver implements AssembleCallbackResolver
 		{
 			if(docbaseImport.isClasspathBase())
 				throw new AssembleCallbackException("GetManagerImports("+docbaseType+
-						","+docbase+","+contextFile+"):classpathÉÏÏÂÎÄ»·¾³ÖĞµÄÅäÖÃÎÄ¼ş²»ÄÜÍ¨¹ı*,?½øĞĞÅúÁ¿ÅäÖÃµ¼Èë.");
+						","+docbase+","+contextFile+"):classpathä¸Šä¸‹æ–‡ç¯å¢ƒä¸­çš„é…ç½®æ–‡ä»¶ä¸èƒ½é€šè¿‡*,?è¿›è¡Œæ‰¹é‡é…ç½®å¯¼å…¥.");
 		}
 		File parent = new File(absoluteParentPath);
 		if(!parent.exists())
-			throw new AssembleCallbackException("GetManagerImports("+docbaseType+","+docbase+","+contextFile+")Ê§°Ü£º"+absoluteParentPath + " do not exist.");
+			throw new AssembleCallbackException("GetManagerImports("+docbaseType+","+docbase+","+contextFile+")å¤±è´¥ï¼š"+absoluteParentPath + " do not exist.");
 //		String docContextFilePattern = StringUtil.getRealPath(docbase, contextFile);
 		String docContextFilePattern = contextFile;
 		

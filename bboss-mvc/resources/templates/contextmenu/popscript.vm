@@ -2,7 +2,7 @@
 	<script type="text/javascript">
 		var old_menu___;
 		$(function(){
-			//绑定菜单
+			//缁戝畾鑿滃崟
 			$(document).bind('contextmenu',function(e){
 				var tt = e.srcElement || e.target ;
 				if(old_menu___)
@@ -77,23 +77,23 @@
 	      }
 		
 		var __menus = new Array();
-		//添加右键菜单和菜单宿主之间的关系
+		//娣诲姞鍙抽敭鑿滃崟鍜岃彍鍗曞涓讳箣闂寸殑鍏崇郴
 		function addMenu(menuid,elementid)
 		{
 			__menus[elementid] = convertValue(menuid,true);
 		}
-		//展开/折叠函数
+		//灞曞紑/鎶樺彔鍑芥暟
 		function expandNode(node)
 		{
 			doclickevt(document.getElementById(node));
 		}
 		
-		//展开/折叠函数
+		//灞曞紑/鎶樺彔鍑芥暟
 		function openUrl(url,target)
 		{
 			window.open(url,target);
 		}
-		//根据菜单宿主id获取右键菜单，如果存在返回菜单id，否则返回空
+		//鏍规嵁鑿滃崟瀹夸富id鑾峰彇鍙抽敭鑿滃崟锛屽鏋滃瓨鍦ㄨ繑鍥炶彍鍗昳d锛屽惁鍒欒繑鍥炵┖
 		function getMenu(elementid)
 		{
 			return __menus[elementid];

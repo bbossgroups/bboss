@@ -1,0 +1,43 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!--
+ HTMLParser Library $Name: v1_5 $ - A java-based parser for HTML
+ http://sourceforge.org/projects/htmlparser
+ Copyright (C) 2004 Derrick Oswald
+
+ Revision Control Information
+
+ $Source: /cvsroot/htmlparser/htmlparser/src/org/htmlparser/sax/package.html,v $
+ $Author: derrickoswald $
+ $Date: 2004/07/14 01:58:02 $
+ $Revision: 1.1 $
+
+ This library is free software; you can redistribute it and/or
+ modify it under the terms of the GNU Lesser General Public
+ License as published by the Free Software Foundation; either
+ version 2.1 of the License, or (at your option) any later version.
+
+ This library is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ Lesser General Public License for more details.
+
+ You should have received a copy of the GNU Lesser General Public
+ License along with this library; if not, write to the Free Software
+ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+-->
+</head>
+<body bgcolor="white">
+The sax package implements a SAX (Simple API for XML) parser for HTML.
+It uses the SAX 2 interfaces available from the <A
+href="http://sourceforge.net/projects/sax/">sax</A> project.<br>
+The HTML parser sax package is currently in it's infancy and just exposes the DOM Parser
+via a SAX interface. The driver name is "org.htmlparser.sax.XMLReader" and a
+simplistic test program is available in the org.htmlparser.tests package as
+SAXTest.java.<br>
+Some major pieces are missing, like namespace support (HTML files won't
+generally have much in the way of namespaces), attribute type info, resolvers
+and DTD handlers, among many other things.<br>
+</body>
+</html>

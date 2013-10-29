@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding='gb2312'?>
+<?xml version="1.0" encoding='UTF-8'?>
 <manager-config>
 	<properties>
 		<property name="int_enable" value="1"/>
@@ -78,8 +78,8 @@
 				<property label="topicPrefetch" name="topicPrefetch" value="32766" >
 					<description> <![CDATA[ topicPrefetch ]]></description>
 				</property>
-				<property label="ÊÇ·ñÊ¹ÓÃÁ´½Ó³Ø" name="useConnectionPool" value="ÊÇ·ñÊ¹ÓÃÁ´½Ó³Ø" >
-					<description> <![CDATA[ trueÊ¹ÓÃ£¬false²»Ê¹ÓÃ ]]></description>
+				<property label="æ˜¯å¦ä½¿ç”¨é“¾æŽ¥æ± " name="useConnectionPool" value="æ˜¯å¦ä½¿ç”¨é“¾æŽ¥æ± " >
+					<description> <![CDATA[ trueä½¿ç”¨ï¼Œfalseä¸ä½¿ç”¨ ]]></description>
 				</property>				
 			</map>
 		</property>	
@@ -157,8 +157,8 @@
 				<property label="topicPrefetch" name="topicPrefetch" value="32766" >
 					<description> <![CDATA[ topicPrefetch ]]></description>
 				</property>
-				<property label="ÊÇ·ñÊ¹ÓÃÁ´½Ó³Ø" name="useConnectionPool" value="false" >
-					<description> <![CDATA[ trueÊ¹ÓÃ£¬false²»Ê¹ÓÃ ]]></description>
+				<property label="æ˜¯å¦ä½¿ç”¨é“¾æŽ¥æ± " name="useConnectionPool" value="false" >
+					<description> <![CDATA[ trueä½¿ç”¨ï¼Œfalseä¸ä½¿ç”¨ ]]></description>
 				</property>				
 			</list>
 		</property>	
@@ -236,8 +236,8 @@
 				<property label="topicPrefetch" name="topicPrefetch" value="32766" >
 					<description> <![CDATA[ topicPrefetch ]]></description>
 				</property>
-				<property label="ÊÇ·ñÊ¹ÓÃÁ´½Ó³Ø" name="useConnectionPool" value="false" >
-					<description> <![CDATA[ trueÊ¹ÓÃ£¬false²»Ê¹ÓÃ ]]></description>
+				<property label="æ˜¯å¦ä½¿ç”¨é“¾æŽ¥æ± " name="useConnectionPool" value="false" >
+					<description> <![CDATA[ trueä½¿ç”¨ï¼Œfalseä¸ä½¿ç”¨ ]]></description>
 				</property>				
 			</set>
 		</property>	

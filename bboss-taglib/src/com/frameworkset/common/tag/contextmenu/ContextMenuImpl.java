@@ -13,7 +13,7 @@ import java.util.TreeSet;
  *
  * <p>Copyright: Copyright (c) 2006</p>
  *
- * <p>Company: ³¤É³¿Æ´´¼ÆËã»úÏµÍ³¼¯³ÉÓĞÏŞ¹«Ë¾</p>
+ * <p>Company: é•¿æ²™ç§‘åˆ›è®¡ç®—æœºç³»ç»Ÿé›†æˆæœ‰é™å…¬å¸</p>
  * @Date 2006-9-15
  * @author biaoping.yin
  * @version 1.0
@@ -37,7 +37,7 @@ public class ContextMenuImpl extends Observable implements ContextMenu {
 
 
 	/**
-	 * ÎªÊ÷½ÚµãÌí¼ÓÀàĞÍÓÒ¼ü²Ëµ¥¹¦ÄÜ
+	 * ä¸ºæ ‘èŠ‚ç‚¹æ·»åŠ ç±»å‹å³é”®èœå•åŠŸèƒ½
 	 * 
 	 * @param ITreeNode
 	 */
@@ -49,7 +49,7 @@ public class ContextMenuImpl extends Observable implements ContextMenu {
 	
 
 	/**
-	 * Ìí¼ÓÒ»°ãÔªËØµÄÓÒ¼ü²Ëµ¥¹¦ÄÜ
+	 * æ·»åŠ ä¸€èˆ¬å…ƒç´ çš„å³é”®èœå•åŠŸèƒ½
 	 * 
 	 * @param ITreeNode
 	 */
@@ -60,7 +60,7 @@ public class ContextMenuImpl extends Observable implements ContextMenu {
 	}
 
 	/**
-	 * ÎªÊ÷½ÚµãÌí¼Ó½ÚµãÀàĞÍÓÒ¼ü²Ëµ¥¹¦ÄÜ
+	 * ä¸ºæ ‘èŠ‚ç‚¹æ·»åŠ èŠ‚ç‚¹ç±»å‹å³é”®èœå•åŠŸèƒ½
 	 * 
 	 * @param ITreeNode
 	 */
@@ -75,7 +75,7 @@ public class ContextMenuImpl extends Observable implements ContextMenu {
 	}
 
 	/**
-	 * ¹¹½¨ÀàĞÍ²Ëµ¥
+	 * æ„å»ºç±»å‹èœå•
 	 *
 	 */
 	public void buildContextMenusWraper() {
@@ -86,7 +86,7 @@ public class ContextMenuImpl extends Observable implements ContextMenu {
 	}
 	
 	/**
-	 * ºÏ²¢ÀàĞÍÓÒ¼ü²Ëµ¥ºÍ½ÚµãÓÒ¼ü²Ëµ¥
+	 * åˆå¹¶ç±»å‹å³é”®èœå•å’ŒèŠ‚ç‚¹å³é”®èœå•
 	 *
 	 */
 	public void mergeContextMenus() {
@@ -96,7 +96,7 @@ public class ContextMenuImpl extends Observable implements ContextMenu {
 	}
 
 	/**
-	 * ¹¹½¨Ê÷µÄÓÒ¼ü²Ëµ¥£¬²»Í¬ÀàĞÍµÄ½Úµã¿ÉÉèÖÃ²»Í¬µÄÓÒ¼ü²Ëµ¥Ïî ¸ÃÀàÓÉ¿ÉÒÔ±»×ÓÀàÖØÔØ
+	 * æ„å»ºæ ‘çš„å³é”®èœå•ï¼Œä¸åŒç±»å‹çš„èŠ‚ç‚¹å¯è®¾ç½®ä¸åŒçš„å³é”®èœå•é¡¹ è¯¥ç±»ç”±å¯ä»¥è¢«å­ç±»é‡è½½
 	 */
 	protected void buildContextMenus() {
 

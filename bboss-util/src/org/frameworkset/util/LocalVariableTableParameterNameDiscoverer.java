@@ -42,7 +42,7 @@ import bboss.org.objectweb.asm.Type;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2010-10-23 œ¬ŒÁ10:41:14
+ * @Date 2010-10-23 ‰∏ãÂçà10:41:14
  * @author biaoping.yin
  * @version 1.0
  */

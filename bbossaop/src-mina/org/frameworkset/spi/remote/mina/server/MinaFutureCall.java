@@ -27,7 +27,7 @@ import org.frameworkset.spi.remote.mina.client.ClinentTransport;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2008</p>
- * @Date 2009-11-9 ÏÂÎç02:06:04
+ * @Date 2009-11-9 ä¸‹åˆ02:06:04
  * @author biaoping.yin
  * @version 1.0
  */

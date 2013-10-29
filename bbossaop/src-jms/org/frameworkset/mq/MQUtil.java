@@ -33,7 +33,7 @@ import org.frameworkset.spi.BaseSPIManager;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2009-11-16 ÉÏÎç10:06:03
+ * @Date 2009-11-16 ä¸Šåˆ10:06:03
  * @author biaoping.yin
  * @version 1.0
  */
@@ -129,7 +129,7 @@ public class MQUtil
         }
         else if(JMSConnectionFactory.JMSProvider_TLQ.equals(properties.getJmsProvider()))
         {
-        	msg.setBooleanProperty("JMS_TLQ_Compressed",properties.isCompress());//¼æÈİ¶«·½Í¨µÄÏûÏ¢Ñ¹Ëõ£¬2010.6.10 
+        	msg.setBooleanProperty("JMS_TLQ_Compressed",properties.isCompress());//å…¼å®¹ä¸œæ–¹é€šçš„æ¶ˆæ¯å‹ç¼©ï¼Œ2010.6.10 
         }
         // msg.setBooleanProperty("isZip", properties.isCompress());
         // msg.setBooleanProperty("isEncrypt", properties.isEncrypt());
@@ -300,7 +300,7 @@ public class MQUtil
     }
     
     /**
-     * ½«kb£¬mb£¬gb×ª»»³Ébyte×Ö½Ú£¬Ö§³ÖµÄµ¥Î»ÓĞ£ºmb,m,gb,kb
+     * å°†kbï¼Œmbï¼Œgbè½¬æ¢æˆbyteå­—èŠ‚ï¼Œæ”¯æŒçš„å•ä½æœ‰ï¼šmb,m,gb,kb
      * @param maxFileLength
      * @return
      */
@@ -329,8 +329,8 @@ public class MQUtil
     
     /**
      *<!-- 
-        ÊÇ·ñÆôÓÃrpc·şÎñµÄjmsĞ­Òé
-        true--ÆôÓÃ£¬¿ò¼Ü½«Æô¶¯½ÓÊÕ·şÎñµ÷ÓÃµÄjms¶ÓÁĞºÍ½ÓÊÕÏìÓ¦µÄjmsÄ¿±ê¶ÓÁĞ
+        æ˜¯å¦å¯ç”¨rpcæœåŠ¡çš„jmsåè®®
+        true--å¯ç”¨ï¼Œæ¡†æ¶å°†å¯åŠ¨æ¥æ”¶æœåŠ¡è°ƒç”¨çš„jmsé˜Ÿåˆ—å’Œæ¥æ”¶å“åº”çš„jmsç›®æ ‡é˜Ÿåˆ—
      -->
      */
     public static boolean rpc_jms_enable = BaseSPIManager.getBooleanProperty("rpc.jms.enable",false);

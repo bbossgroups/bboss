@@ -22,13 +22,13 @@ import javax.servlet.http.HttpServlet;
 
 /**
  * <p>Title: RMIRegistServlet.java</p> 
- * <p>Description: ÔÚwebÓ¦ÓÃ³ÌĞòÖĞÆô¶¯ËùÓĞrmi·şÎñµÄservlet
- * ¸ÄservletµÄÆô¶¯Ë³Ğò±ØĞëÔÚmvc¿ò¼ÜµÄservletºóÃæÆô¶¯£¬·ñÔò
- * »áµ¼ÖÂmvc¿ò¼ÜÖĞÅäÖÃµÄrmi·şÎñÎŞ·¨¼ÓÔØ
+ * <p>Description: åœ¨webåº”ç”¨ç¨‹åºä¸­å¯åŠ¨æ‰€æœ‰rmiæœåŠ¡çš„servlet
+ * æ”¹servletçš„å¯åŠ¨é¡ºåºå¿…é¡»åœ¨mvcæ¡†æ¶çš„servletåé¢å¯åŠ¨ï¼Œå¦åˆ™
+ * ä¼šå¯¼è‡´mvcæ¡†æ¶ä¸­é…ç½®çš„rmiæœåŠ¡æ— æ³•åŠ è½½
  * </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2011-5-20 ÉÏÎç09:49:40
+ * @Date 2011-5-20 ä¸Šåˆ09:49:40
  * @author biaoping.yin
  * @version 1.0
  */

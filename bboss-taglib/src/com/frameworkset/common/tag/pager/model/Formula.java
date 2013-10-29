@@ -42,27 +42,27 @@ import com.frameworkset.util.StringUtil;
 import com.frameworkset.util.ValueObjectUtil;
 
 /**
- * ¼ÆËã¹«Ê½µÄÖµ,¹«Ê½ÖĞ°üº¬µÄ²ÎÊıÓĞÁ½ÖÖ:±äÁ¿,³£Á¿
- * °üº¬µÄ²Ù×÷ÓĞ:
- * statusµÄÖµ±íÊ¾×Ö·ûµÄÖÖÀà£¬Ö÷ÒªÓĞ
- * -1£º¿ªÊ¼×´Ì¬
- * 0: Êı×Ö¿ªÊ¼
- * 1: ÖĞ¼äÊı×Ö
- * 2£ºÊı×Ö½áÊø
- * 3£º¿Õ¸ñ¿ªÊ¼
- * 4£º¿Õ¸ñÖĞ
- * 5£º{
+ * è®¡ç®—å…¬å¼çš„å€¼,å…¬å¼ä¸­åŒ…å«çš„å‚æ•°æœ‰ä¸¤ç§:å˜é‡,å¸¸é‡
+ * åŒ…å«çš„æ“ä½œæœ‰:
+ * statusçš„å€¼è¡¨ç¤ºå­—ç¬¦çš„ç§ç±»ï¼Œä¸»è¦æœ‰
+ * -1ï¼šå¼€å§‹çŠ¶æ€
+ * 0: æ•°å­—å¼€å§‹
+ * 1: ä¸­é—´æ•°å­—
+ * 2ï¼šæ•°å­—ç»“æŸ
+ * 3ï¼šç©ºæ ¼å¼€å§‹
+ * 4ï¼šç©ºæ ¼ä¸­
+ * 5ï¼š{
  * 6: }
- * 7: ×ÖÄ¸¿ªÊ¼
- * 8£ºÖĞ¼ä×ÖÄ¸
- * 9£º*³Ë·¨
- * 10£º/Õû³ı
- * 11£º£¥ÇóÓà
- * 12£ºsumÇóºÍ
- * 13£ºcount¼ÆÊı
- * 14£ºavageÇóÆ½¾ùÊı
- * 15:+¼Ó·¨
- * 16£º³ı·¨
+ * 7: å­—æ¯å¼€å§‹
+ * 8ï¼šä¸­é—´å­—æ¯
+ * 9ï¼š*ä¹˜æ³•
+ * 10ï¼š/æ•´é™¤
+ * 11ï¼šï¼…æ±‚ä½™
+ * 12ï¼šsumæ±‚å’Œ
+ * 13ï¼šcountè®¡æ•°
+ * 14ï¼šavageæ±‚å¹³å‡æ•°
+ * 15:+åŠ æ³•
+ * 16ï¼šé™¤æ³•
  * @author biaoping.yin
  * created on 2005-5-21
  * version 1.0
@@ -70,59 +70,59 @@ import com.frameworkset.util.ValueObjectUtil;
 public class Formula implements ModelObject
 {   
     /**
-     * Çó±äÁ¿ÖµÏà¹ØµÄÊı¾İÔ´
+     * æ±‚å˜é‡å€¼ç›¸å…³çš„æ•°æ®æº
      */
     private PagerDataSet dataSet;
     
     
 	/**
-	 * ±êÊ¶¹«Ê½ÊÇ·ñÒÑ¾­½âÎöÍê³É
+	 * æ ‡è¯†å…¬å¼æ˜¯å¦å·²ç»è§£æå®Œæˆ
 	 */
 	private boolean parsered = false;
 	
-	/**±£´æ½âÎöºóËù»ñÈ¡µ½µÄËùÓĞtoken*/
+	/**ä¿å­˜è§£æåæ‰€è·å–åˆ°çš„æ‰€æœ‰token*/
 	private List tokens = null;
     /**
-     * ÊıÑ§±í´ïÊ½£¬±ÈÈç:
+     * æ•°å­¦è¡¨è¾¾å¼ï¼Œæ¯”å¦‚:
      * ({value1} + 4)/{value2}
-     * ÆäÖĞ"{"ºÍ"}"Ö®¼äµÄµ¥´Ê±íÊ¾×Ö¶ÎÃû³ÆÓëÏàÓ¦Êı¾İ¿â±í»òÕßÖµ¶ÔÏóµÄÊôĞÔÃû³ÆÒ»ÖÂ
-     * ¹«Ê½¼ÆËãÊ±»á²ÉÓÃÊµ¼ÊµÄÊôĞÔÖµÌæ»»±¾±äÁ¿£¬ÔÙ¼ÆËã±í´ïÊ½µÄÖµ
+     * å…¶ä¸­"{"å’Œ"}"ä¹‹é—´çš„å•è¯è¡¨ç¤ºå­—æ®µåç§°ä¸ç›¸åº”æ•°æ®åº“è¡¨æˆ–è€…å€¼å¯¹è±¡çš„å±æ€§åç§°ä¸€è‡´
+     * å…¬å¼è®¡ç®—æ—¶ä¼šé‡‡ç”¨å®é™…çš„å±æ€§å€¼æ›¿æ¢æœ¬å˜é‡ï¼Œå†è®¡ç®—è¡¨è¾¾å¼çš„å€¼
      */
     private String formula = null;
     /**
-     * Ô¼¶¨Õ»¶¥²Ù×÷·ûÓëÕ»Íâ²Ù×÷·ûÒ»ÑùÊ±£¬¸ù¾İ²Ù×÷µÃÏÈºóË³Ğò£¨´Ó×óÖÂÓÒ»¹ÊÇ´ÓÓÒµ½×ó£©
-     * ²Ù×÷·û¶ÑÕ»
-     * ¸ù¾İµÄÕ»Íâ²Ù×÷ºÍÕ»¶¥²Ù×÷µÄÓÅÏÈ¼¶±È½Ï½øĞĞÏàÓ¦µÄ²Ù×÷£¨Í¬¼¶²Ù×÷·ûÖ®¼äÕ»ÄÚÓÅÏÈ¼¶±ÈÕ»ÍâÓÅÏÈ¼¶Òª¸ß£©£º
-     * a.Õ»Íâ²Ù×÷·ûÓÅÏÈ¼¶¸ß£¬ÔòÕ»Íâ²Ù×÷·û½øÕ»
-     * b.Õ»Íâ²Ù×÷·ûÓÅÏÈ¼¶µÍ£¬Õ»¶¥²Ù×÷·û³öÕ»£¬È»ºó²Ù×÷Êı¶ÑÕ»ÖĞÕ»¶¥²Ù×÷Êı³öÕ»£¨Èç¹û²Ù×÷ÊÇµ¥²Ù×÷Êı£¬
-     * ÔòÖ»È¡Ò»¸ö²Ù×÷Êı£¬Èç¹ûÊÇË«²Ù×÷ÊıÔòÁ¬Ğø»ñÈ¡Á½´Î²Ù×÷Êı£©£¬½øĞĞ¼ÆËã¼ÆËãÍê³Éºó½á¹û½ø²Ù×÷Êı¶ÑÕ»
-     * c.ÖØ¸´b²Ù×÷£¬Ö±µ½Õ»Íâ²Ù×÷·ûµÄÓÅÏÈ¼¶±ÈÕ»ÄÚÓÅÏÈ¼¶¸ßÊ±ÔÙ×÷ÈçÏÂ²Ù×÷£º
-     *  1.Èç¹ûÕ»Íâ²Ù×÷·ûÎª¡®£©¡¯£¬ÔòÕ»ÄÚ²Ù×÷·û±ØÎª¡®£¨¡¯£¬Ö±½Ó³öÕ»¡£
-     *  2.Èç¹û²Ù×÷·ûÕ»Îª¿ÕÔò½áÊø¼ÆËã£¬²Ù×÷Êı¶ÑÕ»Õ»¶¥ÔªËØ¼´Îª¹«Ê½¼ÆËã½á¹û
-     *  3.·ñÔò²Ù×÷Êı½øÕ»
-     * ´ı½øÒ»²½´¦ÀíµÄÇé¿ö£º
-     * '{'Ã»ÓĞ×÷Îª²Ù×÷·ûÀ´´¦Àí£¬
+     * çº¦å®šæ ˆé¡¶æ“ä½œç¬¦ä¸æ ˆå¤–æ“ä½œç¬¦ä¸€æ ·æ—¶ï¼Œæ ¹æ®æ“ä½œå¾—å…ˆåé¡ºåºï¼ˆä»å·¦è‡´å³è¿˜æ˜¯ä»å³åˆ°å·¦ï¼‰
+     * æ“ä½œç¬¦å †æ ˆ
+     * æ ¹æ®çš„æ ˆå¤–æ“ä½œå’Œæ ˆé¡¶æ“ä½œçš„ä¼˜å…ˆçº§æ¯”è¾ƒè¿›è¡Œç›¸åº”çš„æ“ä½œï¼ˆåŒçº§æ“ä½œç¬¦ä¹‹é—´æ ˆå†…ä¼˜å…ˆçº§æ¯”æ ˆå¤–ä¼˜å…ˆçº§è¦é«˜ï¼‰ï¼š
+     * a.æ ˆå¤–æ“ä½œç¬¦ä¼˜å…ˆçº§é«˜ï¼Œåˆ™æ ˆå¤–æ“ä½œç¬¦è¿›æ ˆ
+     * b.æ ˆå¤–æ“ä½œç¬¦ä¼˜å…ˆçº§ä½ï¼Œæ ˆé¡¶æ“ä½œç¬¦å‡ºæ ˆï¼Œç„¶åæ“ä½œæ•°å †æ ˆä¸­æ ˆé¡¶æ“ä½œæ•°å‡ºæ ˆï¼ˆå¦‚æœæ“ä½œæ˜¯å•æ“ä½œæ•°ï¼Œ
+     * åˆ™åªå–ä¸€ä¸ªæ“ä½œæ•°ï¼Œå¦‚æœæ˜¯åŒæ“ä½œæ•°åˆ™è¿ç»­è·å–ä¸¤æ¬¡æ“ä½œæ•°ï¼‰ï¼Œè¿›è¡Œè®¡ç®—è®¡ç®—å®Œæˆåç»“æœè¿›æ“ä½œæ•°å †æ ˆ
+     * c.é‡å¤bæ“ä½œï¼Œç›´åˆ°æ ˆå¤–æ“ä½œç¬¦çš„ä¼˜å…ˆçº§æ¯”æ ˆå†…ä¼˜å…ˆçº§é«˜æ—¶å†ä½œå¦‚ä¸‹æ“ä½œï¼š
+     *  1.å¦‚æœæ ˆå¤–æ“ä½œç¬¦ä¸ºâ€˜ï¼‰â€™ï¼Œåˆ™æ ˆå†…æ“ä½œç¬¦å¿…ä¸ºâ€˜ï¼ˆâ€™ï¼Œç›´æ¥å‡ºæ ˆã€‚
+     *  2.å¦‚æœæ“ä½œç¬¦æ ˆä¸ºç©ºåˆ™ç»“æŸè®¡ç®—ï¼Œæ“ä½œæ•°å †æ ˆæ ˆé¡¶å…ƒç´ å³ä¸ºå…¬å¼è®¡ç®—ç»“æœ
+     *  3.å¦åˆ™æ“ä½œæ•°è¿›æ ˆ
+     * å¾…è¿›ä¸€æ­¥å¤„ç†çš„æƒ…å†µï¼š
+     * '{'æ²¡æœ‰ä½œä¸ºæ“ä½œç¬¦æ¥å¤„ç†ï¼Œ
      */
     private java.util.Stack operations = null;
-    /**²Ù×÷Êı¶ÑÕ»*/
+    /**æ“ä½œæ•°å †æ ˆ*/
     private java.util.Stack operationParms = null;
     
     /**
-     * ¸ú×Ù²Ù×÷·û´íÎó¶ÑÕ»
+     * è·Ÿè¸ªæ“ä½œç¬¦é”™è¯¯å †æ ˆ
      */
     private java.util.Stack operStackTrace = new java.util.Stack();
     
     /**
-     * ²Ù×÷·û¶ÑÕ»Íâ²Ù×÷·ûÓÅÏÈ¼¶±í
+     * æ“ä½œç¬¦å †æ ˆå¤–æ“ä½œç¬¦ä¼˜å…ˆçº§è¡¨
      */
     private static int[]  inPriorTable = new int[] {8,6,6,6,5,5,9,9,9,2,1,2,1};
     /**
-     * ²Ù×÷·û¶ÑÕ»ÄÚ²Ù×÷·ûÓÅÏÈ¼¶±í
+     * æ“ä½œç¬¦å †æ ˆå†…æ“ä½œç¬¦ä¼˜å…ˆçº§è¡¨
      */
     private static int[] outPriorTable = new int[] {7,6,6,6,5,5,9,9,9,10,1,10,0};
     
     /**
-     * ²Ù×÷·ûºÅÂë
+     * æ“ä½œç¬¦å·ç 
      */
     private static final char OPER_LB = '{';  //1  
     private static final char OPER_RB = '}';  //1
@@ -144,7 +144,7 @@ public class Formula implements ModelObject
     //private static char OPER_PARENTHESIS = '(';
     
     /**
-     * ²Ù×÷·ûÄÚÂë¶¨Òå
+     * æ“ä½œç¬¦å†…ç å®šä¹‰
      */
     private final static int CODE_RB = 13;
     private final static int CODE_LB = 12;
@@ -161,7 +161,7 @@ public class Formula implements ModelObject
     private final static int CODE_MUL = 2;  
     private final static int CODE_POW = 1;
     
-    /**¶¨Òå²Ù×÷·ûÓë²Ù×÷ÄÚÂëÓ³Éä*/
+    /**å®šä¹‰æ“ä½œç¬¦ä¸æ“ä½œå†…ç æ˜ å°„*/
     private static OPERCode[] operCodes = new OPERCode[] {
             new OPERCode(OPER_POW,CODE_POW),
             new OPERCode(OPER_MUL,CODE_MUL),
@@ -186,25 +186,25 @@ public class Formula implements ModelObject
     private static String FUNCTION_COUNT = "count";    
     private static String FUNCTION_AVG = "avg";
     
-    /**´æ´¢×ª»»Îª×Ö·ûÊı×éºóµÄ¹«Ê½*/
+    /**å­˜å‚¨è½¬æ¢ä¸ºå­—ç¬¦æ•°ç»„åçš„å…¬å¼*/
     private char[] formulaChars = null; 
     /**
-     * ¼ÇÂ¼·ÖÎö¹«Ê½×Ö·ûµÄµ±Ç°Î»ÖÃ
+     * è®°å½•åˆ†æå…¬å¼å­—ç¬¦çš„å½“å‰ä½ç½®
      */
     private int curpos = 0;
     
     /**
-     * Ê®½øÖÆ»ùÊı
+     * åè¿›åˆ¶åŸºæ•°
      */
     private static final int RADIX = 10;
     
     /**
-     * Ê®½øÖÆ»ùÊı
+     * åè¿›åˆ¶åŸºæ•°
      */
     private static final double D_RADIX = 0.1;
     
     /**
-     * ¶¨Òå²Ù×÷ÊıÀàĞÍ
+     * å®šä¹‰æ“ä½œæ•°ç±»å‹
      */
     private static final int OPT_TYPE_VARIABLE = 0;
     private static final int OPT_TYPE_INTEGER = 1;
@@ -213,44 +213,44 @@ public class Formula implements ModelObject
     private static final int OPT_TYPE_LONG = 4;
     
 //    /**
-//     * Ê®½øÖÆĞ¡ÊıÎ»»ùÊı
+//     * åè¿›åˆ¶å°æ•°ä½åŸºæ•°
 //     */
 //    private static final int FRADIX = 0.1;
     
     
     /**
-     * ×´Ì¬·ûºÅ£¬¸ù¾İ²»Í¬µÄ×´Ì¬×éºÏÈ·¶¨²»Í¬µÄ²Ù×÷
+     * çŠ¶æ€ç¬¦å·ï¼Œæ ¹æ®ä¸åŒçš„çŠ¶æ€ç»„åˆç¡®å®šä¸åŒçš„æ“ä½œ
      */
-    /**¹«Ê½¿ªÊ¼*/
+    /**å…¬å¼å¼€å§‹*/
     private static final int STATUS_FORMULA_BEGIN = 0;
-    /**±äÁ¿¿ªÊ¼*/
+    /**å˜é‡å¼€å§‹*/
     private static final int STATUS_VARIABLE_BEGIN = 1;
-    /**±äÁ¿½áÊø*/
+    /**å˜é‡ç»“æŸ*/
     private static final int STATUS_VARIABLE_END = 2;
-    /**Êı¿ªÊ¼*/
+    /**æ•°å¼€å§‹*/
     private static final int STATUS_NUMCONST_BEGIN = 3;
-    /**Êı½áÊø*/
+    /**æ•°ç»“æŸ*/
     private static final int STATUS_NUMCONST_END = 4;    
     /**
-     * Ğ¡ÊıÎ»¿ªÊ¼×´Ì¬
+     * å°æ•°ä½å¼€å§‹çŠ¶æ€
      */
     private static final int STATUS_FNUMCONST_BEGIN = 5;
-    /**×Ö·û´®¿ªÊ¼*/
+    /**å­—ç¬¦ä¸²å¼€å§‹*/
     private static final int STATUS_STRCONST_BEGIN = 6;
-    /**×Ö·û´®½áÊø*/
+    /**å­—ç¬¦ä¸²ç»“æŸ*/
     private static final int STATUS_STRCONST_END = 7;
-    /**²Ù×÷·û¿ªÊ¼*/
+    /**æ“ä½œç¬¦å¼€å§‹*/
     private static final int STATUS_OPERATION_BEGIN = 8;
-    /**²Ù×÷·û½áÊø*/
+    /**æ“ä½œç¬¦ç»“æŸ*/
     private static final int STATUS_OPERATION_END = 9;
     
     
     /**
-     * ¹«Ê½·ÖÎöµ±Ç°×´Ì¬±êÊ¶£¬È±Ê¡Îª¹«Ê½¿ªÊ¼×´Ì¬
+     * å…¬å¼åˆ†æå½“å‰çŠ¶æ€æ ‡è¯†ï¼Œç¼ºçœä¸ºå…¬å¼å¼€å§‹çŠ¶æ€
      */
     private int status = STATUS_FORMULA_BEGIN;
     /**
-     * ·ÖÎöµÄÉÏÒ»´Î×´Ì¬±êÊ¶
+     * åˆ†æçš„ä¸Šä¸€æ¬¡çŠ¶æ€æ ‡è¯†
      */
     private int oldstatus = status;
     
@@ -265,7 +265,7 @@ public class Formula implements ModelObject
     }
     
     /**
-     * ÖØÖÃdataSetÊôĞÔÎªnull
+     * é‡ç½®dataSetå±æ€§ä¸ºnull
      *
      */
     public void reset()
@@ -274,7 +274,7 @@ public class Formula implements ModelObject
     }
     
     /**
-     * ÖØÖÃdataSetÊôĞÔÎªµ±Ç°µÄdataSet¶ÔÏó
+     * é‡ç½®dataSetå±æ€§ä¸ºå½“å‰çš„dataSetå¯¹è±¡
      * @param dataSet
      */
     public void setDataSet(PagerDataSet dataSet)
@@ -283,7 +283,7 @@ public class Formula implements ModelObject
     }
     
     /**
-     * µ±Ç°²Ù×÷·û½øÕ»
+     * å½“å‰æ“ä½œç¬¦è¿›æ ˆ
      * @param oper
      * @param curpos
      */
@@ -294,7 +294,7 @@ public class Formula implements ModelObject
     }
     
     /**
-     * µ¯³öµ±Ç°²Ù×÷·ûËù¶ÔÓ¦µÄ¹Ø±êÊ¶
+     * å¼¹å‡ºå½“å‰æ“ä½œç¬¦æ‰€å¯¹åº”çš„å…³æ ‡è¯†
      * @param curChar
      * @param curpos
      * @return OPERPOS
@@ -319,7 +319,7 @@ public class Formula implements ModelObject
     }
     
     /**
-     * »ñÈ¡²Ù×÷·ûÆ¥ÅäµÄ¿ª±êÊ¶»ò¹Ø±êÊ¶
+     * è·å–æ“ä½œç¬¦åŒ¹é…çš„å¼€æ ‡è¯†æˆ–å…³æ ‡è¯†
      * @param curChar
      * @return char
      */
@@ -339,58 +339,58 @@ public class Formula implements ModelObject
         
     }
     /**
-     * ½âÎöÎÄ·¨
-     * »ñÈ¡¹«Ê½ÖĞµÄµ¥¸öµ¥Ôª£¬Ä¿Ç°°üÀ¨£º²Ù×÷·û£¬±äÁ¿£¬³£Á¿
+     * è§£ææ–‡æ³•
+     * è·å–å…¬å¼ä¸­çš„å•ä¸ªå•å…ƒï¼Œç›®å‰åŒ…æ‹¬ï¼šæ“ä½œç¬¦ï¼Œå˜é‡ï¼Œå¸¸é‡
      * 
-     * @return ¶şÎ¬Êı×é£¬µÚÒ»Î¬´æ´¢²Ù×÷·ûÄÚÂë£¬µÚ¶şÎ¬´æ´¢²Ù×÷Êı£¬µÚÈıÎ¬´æ´¢²Ù×÷ÊıÀàĞÍ£¨±äÁ¿£¬Êı£¬×Ö·û´®£©
+     * @return äºŒç»´æ•°ç»„ï¼Œç¬¬ä¸€ç»´å­˜å‚¨æ“ä½œç¬¦å†…ç ï¼Œç¬¬äºŒç»´å­˜å‚¨æ“ä½œæ•°ï¼Œç¬¬ä¸‰ç»´å­˜å‚¨æ“ä½œæ•°ç±»å‹ï¼ˆå˜é‡ï¼Œæ•°ï¼Œå­—ç¬¦ä¸²ï¼‰
      */
     private Object[] getToken() throws FormulaException
     {
         /**
-         * ·µ»ØÖµ
+         * è¿”å›å€¼
          */
         Object[] obj = new Object[3];
-        //´æ·Åµ±Ç°×Ö·û
+        //å­˜æ”¾å½“å‰å­—ç¬¦
         char curChar = ' ';
-        //´æ·Å±äÁ¿Ãû³Æ/×Ö·û´®µÄÃû³Æ
+        //å­˜æ”¾å˜é‡åç§°/å­—ç¬¦ä¸²çš„åç§°
         String token = "";
         double dradix = 1.0;
-        //´æ·ÅÊı×ÖµÄÖµ
+        //å­˜æ”¾æ•°å­—çš„å€¼
         double number = 0.0;        
-        //¶¨ÒåÒÔÏÂÁ½¸ö±äÁ¿£¬µ±¹«Ê½ÖĞ°üº¬Ğ¡ÊıÀàĞÍµÄ²Ù×÷ÊıÊ±·Ö±ğÓÃÀ´¼ÇÂ¼Ğ¡ÊıºÍÕûÊıÊı×Ö¸öÊı
-        int integerNum = 0;//¼ÇÂ¼ÕûÊıÊı×Ö¸öÊı
-        int dNum = 0;//¼ÇÂ¼Ğ¡ÊıÊı×Ö¸öÊı
+        //å®šä¹‰ä»¥ä¸‹ä¸¤ä¸ªå˜é‡ï¼Œå½“å…¬å¼ä¸­åŒ…å«å°æ•°ç±»å‹çš„æ“ä½œæ•°æ—¶åˆ†åˆ«ç”¨æ¥è®°å½•å°æ•°å’Œæ•´æ•°æ•°å­—ä¸ªæ•°
+        int integerNum = 0;//è®°å½•æ•´æ•°æ•°å­—ä¸ªæ•°
+        int dNum = 0;//è®°å½•å°æ•°æ•°å­—ä¸ªæ•°
         
         for(; curpos < formulaChars.length; curpos ++)
         {            
             curChar = this.formulaChars[curpos];
-            //¸ù¾İ²»Í¬µÄ×´Ì¬²ÉÈ¡²»Í¬µÄ²Ù×÷
+            //æ ¹æ®ä¸åŒçš„çŠ¶æ€é‡‡å–ä¸åŒçš„æ“ä½œ
             switch(status)
             {                	
-            	case STATUS_FORMULA_BEGIN://¹«Ê½¿ªÊ¼
-            	    if(curChar < '0' || curChar > '9')//Èç¹û²»ÊÇÊı×Ö
+            	case STATUS_FORMULA_BEGIN://å…¬å¼å¼€å§‹
+            	    if(curChar < '0' || curChar > '9')//å¦‚æœä¸æ˜¯æ•°å­—
                     {
                 	    if(curChar == OPER_LB)
                 	    {
                 	       
-                	        //ĞŞ¸ÄÀÏ×´Ì¬Îªµ±Ç°×´Ì¬µ½
+                	        //ä¿®æ”¹è€çŠ¶æ€ä¸ºå½“å‰çŠ¶æ€åˆ°
                 	        oldstatus = status;
                 	        
-                	        //±äÁ¿¿ªÊ¼£¬ĞŞ¸Äµ±Ç°×´Ì¬Îª±äÁ¿¿ªÊ¼
+                	        //å˜é‡å¼€å§‹ï¼Œä¿®æ”¹å½“å‰çŠ¶æ€ä¸ºå˜é‡å¼€å§‹
                 	        status = STATUS_VARIABLE_BEGIN;
                 	        push(curChar,curpos);
                 	        continue;
                 	        
                     	    
                 	    }	                	    
-                	    else if(curChar == PARENTHESES)//Èç¹ûÊÇ·ÖºÅ£¬±íÊ¾×Ö·û´®¿ªÊ¼
+                	    else if(curChar == PARENTHESES)//å¦‚æœæ˜¯åˆ†å·ï¼Œè¡¨ç¤ºå­—ç¬¦ä¸²å¼€å§‹
                 	    {	
                 	        push(curChar,curpos);
                 	        oldstatus = status;
                 	        status = STATUS_STRCONST_BEGIN;
                 	        continue;
                 	    }
-                	    else if(curChar == OPER_RB || curChar == OPER_RP) //Èç¹ûÊÇ¡®}¡¯,±êÊ¶¹«Ê½·Ç·¨£¬Å×Òì³£ĞÅÏ¢
+                	    else if(curChar == OPER_RB || curChar == OPER_RP) //å¦‚æœæ˜¯â€˜}â€™,æ ‡è¯†å…¬å¼éæ³•ï¼ŒæŠ›å¼‚å¸¸ä¿¡æ¯
                 	    {
                 	        throw new FormulaException("Illegle formula start or need a oprator data:char[" + curChar + "],index:["+ curpos + "]");
                 	    }
@@ -399,27 +399,27 @@ public class Formula implements ModelObject
         	                continue;
         	            }
                 	    
-                	    //»ñÈ¡²Ù×÷Âë
+                	    //è·å–æ“ä½œç 
                 	    int code = this.getOperCode(curChar);                	    
                 	    
-                	    //Èç¹ûÊÇ²Ù×÷Âë·µ»Ø²Ù×÷ÂëµÄÄÚÂë
+                	    //å¦‚æœæ˜¯æ“ä½œç è¿”å›æ“ä½œç çš„å†…ç 
                 	    if(code != -1)
                 	    {
                 	        oldstatus = status;
                 	        status = STATUS_OPERATION_END;
-                	        //¼ì²âÈç¹ûÊÇsum²Ù×÷                	        
+                	        //æ£€æµ‹å¦‚æœæ˜¯sumæ“ä½œ                	        
                 	        obj[0] = new Integer(code);
                 	        if(curChar == OPER_LP)
                 	            push(curChar,curpos);
                 	        return obj;
                 	    }
-                	    else //·ñÔòÅ×³öÒì³£ĞÅÏ¢
+                	    else //å¦åˆ™æŠ›å‡ºå¼‚å¸¸ä¿¡æ¯
                 	    {
                 	        throw new FormulaException("Illegle formula start:[" + curChar + "],index:["+ curpos + "]");                	         
                 	    }
                 	    //throw new FormulaException("Illegle formula start:[" + curChar + "],index:["+ curpos + "]");
                     }
-                	else //Èç¹ûÊÇÊı×ÖÔò
+                	else //å¦‚æœæ˜¯æ•°å­—åˆ™
                 	{
                 	    oldstatus = status;
                 	    status  = STATUS_NUMCONST_BEGIN;	                	    
@@ -434,27 +434,27 @@ public class Formula implements ModelObject
                 	    
                 	}
                 	break;
-            	case STATUS_OPERATION_END://²Ù×÷·û½áÊø
-            	    if(curChar < '0' || curChar > '9')//Èç¹û²»ÊÇÊı×Ö
+            	case STATUS_OPERATION_END://æ“ä½œç¬¦ç»“æŸ
+            	    if(curChar < '0' || curChar > '9')//å¦‚æœä¸æ˜¯æ•°å­—
                     {
                 	    if(curChar == OPER_LB)
                 	    {
                 	       
-                	        //ĞŞ¸ÄÀÏ×´Ì¬Îªµ±Ç°×´Ì¬µ½
+                	        //ä¿®æ”¹è€çŠ¶æ€ä¸ºå½“å‰çŠ¶æ€åˆ°
                 	        oldstatus = status;
-                	        //±äÁ¿¿ªÊ¼£¬ĞŞ¸Äµ±Ç°×´Ì¬Îª±äÁ¿¿ªÊ¼
+                	        //å˜é‡å¼€å§‹ï¼Œä¿®æ”¹å½“å‰çŠ¶æ€ä¸ºå˜é‡å¼€å§‹
                 	        status = STATUS_VARIABLE_BEGIN;
                 	        push(curChar,curpos);
                 	        continue;
                 	    }	                	    
-                	    else if(curChar == PARENTHESES)//Èç¹ûÊÇ·ÖºÅ£¬±íÊ¾×Ö·û´®¿ªÊ¼
+                	    else if(curChar == PARENTHESES)//å¦‚æœæ˜¯åˆ†å·ï¼Œè¡¨ç¤ºå­—ç¬¦ä¸²å¼€å§‹
                 	    {	                	        
                 	        oldstatus = status;
                 	        status = STATUS_STRCONST_BEGIN;
                 	        push(curChar,curpos);
                 	        continue;
                 	    }
-//                	    else if((curChar == OPER_RB || curChar == OPER_RP) && oldstatus != this.STATUS_OPERATION_END) //Èç¹ûÊÇ¡®}¡¯,±êÊ¶¹«Ê½·Ç·¨£¬Å×Òì³£ĞÅÏ¢
+//                	    else if((curChar == OPER_RB || curChar == OPER_RP) && oldstatus != this.STATUS_OPERATION_END) //å¦‚æœæ˜¯â€˜}â€™,æ ‡è¯†å…¬å¼éæ³•ï¼ŒæŠ›å¼‚å¸¸ä¿¡æ¯
 //                	    {
 //                	        throw new FormulaException("Illegle formula start or need a oprator data:[" + curChar + "],index:["+ curpos + "]");
 //                	    }
@@ -475,15 +475,15 @@ public class Formula implements ModelObject
                 	                throw new FormulaException("Illegle formula operator symbol:multiple operator[" + curChar + "],index:["+ curpos + "]");
                 	    }
                 	    
-                	    //»ñÈ¡²Ù×÷Âë
+                	    //è·å–æ“ä½œç 
                 	    int code = this.getOperCode(curChar);                	    
                 	    
-                	    //Èç¹ûÊÇ²Ù×÷Âë·µ»Ø²Ù×÷ÂëµÄÄÚÂë
+                	    //å¦‚æœæ˜¯æ“ä½œç è¿”å›æ“ä½œç çš„å†…ç 
                 	    if(code != -1)
                 	    {
                 	        oldstatus = status;
                 	        status = STATUS_OPERATION_END;
-                	        //¼ì²âÈç¹ûÊÇsum²Ù×÷            
+                	        //æ£€æµ‹å¦‚æœæ˜¯sumæ“ä½œ            
                 	        if(curChar == OPER_LP)
                 	            push(curChar,curpos);
                 	        else if(curChar == OPER_RP)
@@ -495,13 +495,13 @@ public class Formula implements ModelObject
                 	        obj[0] = new Integer(code);
                 	        return obj;
                 	    }
-                	    else //·ñÔòÅ×³öÒì³£ĞÅÏ¢
+                	    else //å¦åˆ™æŠ›å‡ºå¼‚å¸¸ä¿¡æ¯
                 	    {
                 	        throw new FormulaException("Illegle operator start:[" + curChar + "],index:["+ curpos + "]");                	         
                 	    }
                 	    //throw new FormulaException("Illegle formula start:[" + curChar + "],index:["+ curpos + "]");
                     }
-                	else //Èç¹ûÊÇÊı×ÖÔò
+                	else //å¦‚æœæ˜¯æ•°å­—åˆ™
                 	{
                 	    oldstatus = status;
                 	    status  = STATUS_NUMCONST_BEGIN;	                	    
@@ -515,7 +515,7 @@ public class Formula implements ModelObject
                 	}
                 	break;
                 	
-            	case STATUS_VARIABLE_BEGIN://±äÁ¿¿ªÊ¼                	
+            	case STATUS_VARIABLE_BEGIN://å˜é‡å¼€å§‹                	
             	    if(curChar == OPER_RB )
             	    {
             	        if(token.length() == 0)
@@ -553,7 +553,7 @@ public class Formula implements ModelObject
             	        
             	    token += curChar;            	    
             	    continue;
-            	case STATUS_NUMCONST_BEGIN://Êı×Ö¿ªÊ¼
+            	case STATUS_NUMCONST_BEGIN://æ•°å­—å¼€å§‹
             	    if('0' <= curChar && curChar <= '9')
             	    {
             	        number = number * RADIX + (curChar - '0');
@@ -565,7 +565,7 @@ public class Formula implements ModelObject
                 	        return obj;
                 	    } 
             	    }
-            	    else if(curChar == '.') //Ğ¡ÊıÎ»¿ªÊ¼
+            	    else if(curChar == '.') //å°æ•°ä½å¼€å§‹
             	    {
             	        this.oldstatus = status;
             	        status = STATUS_FNUMCONST_BEGIN;
@@ -576,7 +576,7 @@ public class Formula implements ModelObject
     	            {
     	                continue;
     	            }
-            	    else //»ñÈ¡Êı×Ö½áÊø
+            	    else //è·å–æ•°å­—ç»“æŸ
             	    {
             	        this.oldstatus = status;
             	        this.status = STATUS_NUMCONST_END;           	        
@@ -588,7 +588,7 @@ public class Formula implements ModelObject
             	        return obj;
             	    }
             	    continue;
-            	 case STATUS_FNUMCONST_BEGIN://»ñÈ¡Ğ¡ÊıÎ»ÊıÖµ
+            	 case STATUS_FNUMCONST_BEGIN://è·å–å°æ•°ä½æ•°å€¼
             	     if('0' <= curChar && curChar <= '9')
             	     {
             	         number = number + (curChar - '0') * dradix;
@@ -619,14 +619,14 @@ public class Formula implements ModelObject
      	             {
      	                 continue;
      	             }
-            	     else //Èç¹û³öÏÖ·ÇÊı×ÖÔòÊıÖµ»ñÈ¡½áÊø
+            	     else //å¦‚æœå‡ºç°éæ•°å­—åˆ™æ•°å€¼è·å–ç»“æŸ
             	     {
             	         this.oldstatus = status;
             	         this.status = STATUS_NUMCONST_END;
-            	         //¶¨ÒåÊı¾İµÃ¸ñÊ½£¬½â¾öÖØĞÂ¹»½¨doubleÀàĞÍµÃÊı¾İĞ¡Êı²¿·ÖÊı¾İÖµÆ¯ÒÆµÃÎÊÌâ
-            	         //ÀıÈç£ºÊı23.23334Í¨¹ı½âÎöºó»á±äÎª23.23333999999999999999
-            	         //ËùÒÔÍ¨¹ı¼ÇÂ¼ÊıµÃÕûÊıÎ»ÊıºÍĞ¡ÊıÎ»Êı£¬
-            	         //È»ºó¸ù¾İÕâÁ½¸öÊı×Ö¹»½¨¸ñÊ½»¯´®##.#####¶Ô½âÎöºóµÃÊı×Ö½øĞĞ¸ñÊ½»¯,½á¹ûÎªÕıÈ·µÃÔ­À´µÃÊı×Ö
+            	         //å®šä¹‰æ•°æ®å¾—æ ¼å¼ï¼Œè§£å†³é‡æ–°å¤Ÿå»ºdoubleç±»å‹å¾—æ•°æ®å°æ•°éƒ¨åˆ†æ•°æ®å€¼æ¼‚ç§»å¾—é—®é¢˜
+            	         //ä¾‹å¦‚ï¼šæ•°23.23334é€šè¿‡è§£æåä¼šå˜ä¸º23.23333999999999999999
+            	         //æ‰€ä»¥é€šè¿‡è®°å½•æ•°å¾—æ•´æ•°ä½æ•°å’Œå°æ•°ä½æ•°ï¼Œ
+            	         //ç„¶åæ ¹æ®è¿™ä¸¤ä¸ªæ•°å­—å¤Ÿå»ºæ ¼å¼åŒ–ä¸²##.#####å¯¹è§£æåå¾—æ•°å­—è¿›è¡Œæ ¼å¼åŒ–,ç»“æœä¸ºæ­£ç¡®å¾—åŸæ¥å¾—æ•°å­—
             	         //
             	         String formats = "";
              	         for(int i = 0; i < integerNum; i ++)
@@ -704,7 +704,7 @@ public class Formula implements ModelObject
     }
     
     /**
-     * ÅĞ¶ÏÒ»¸öÔËËã·ûºÅÊÇ·ñÖØ¸´³öÏÖ¶à´Î
+     * åˆ¤æ–­ä¸€ä¸ªè¿ç®—ç¬¦å·æ˜¯å¦é‡å¤å‡ºç°å¤šæ¬¡
      * @param curChar
      * @return boolean
      */
@@ -716,7 +716,7 @@ public class Formula implements ModelObject
         return code == t_code;        
     }
 	/**
-	 * »ñÈ¡²Ù×÷·ûÄÚÂë
+	 * è·å–æ“ä½œç¬¦å†…ç 
 	 * @param oper
 	 * @return int
 	 */
@@ -760,7 +760,7 @@ public class Formula implements ModelObject
     }
     
     /**
-	 * ¼ì²âÊÇ·ñÊÇÇóÆ½¾ùº¯Êı
+	 * æ£€æµ‹æ˜¯å¦æ˜¯æ±‚å¹³å‡å‡½æ•°
 	 * @return boolean
 	 */
     private boolean isAvg(char curChar)
@@ -799,7 +799,7 @@ public class Formula implements ModelObject
     }
     
     /**
-	 * ¼ì²âÊÇ·ñÊÇ¼ÆÊıº¯Êı
+	 * æ£€æµ‹æ˜¯å¦æ˜¯è®¡æ•°å‡½æ•°
 	 * @return boolean
 	 */
     private boolean isCount(char curChar)
@@ -847,7 +847,7 @@ public class Formula implements ModelObject
         return ret;
     }
 	/**
-	 * ¼ì²âÊÇ·ñÊÇÇóºÍº¯Êı
+	 * æ£€æµ‹æ˜¯å¦æ˜¯æ±‚å’Œå‡½æ•°
 	 * @return boolean
 	 */
     private boolean isSum(char curChar)
@@ -886,7 +886,7 @@ public class Formula implements ModelObject
     
            
     /**
-     * ·ÖÎö¹«Ê½´Ê·¨ºÍÓï·¨½á¹¹
+     * åˆ†æå…¬å¼è¯æ³•å’Œè¯­æ³•ç»“æ„
      * @throws FormulaException
      */
     private void parser() throws FormulaException
@@ -908,7 +908,7 @@ public class Formula implements ModelObject
     }
     
     /**
-     * ¸ù¾İ²Ù×÷·ûÄÚÂë»ñÈ¡²Ù×÷·û,Èç¹ûÊÇ'a','s','c'½«·Ö±ğ·µ»Ø'avg','sum','count'
+     * æ ¹æ®æ“ä½œç¬¦å†…ç è·å–æ“ä½œç¬¦,å¦‚æœæ˜¯'a','s','c'å°†åˆ†åˆ«è¿”å›'avg','sum','count'
      * @param code
      * @return String
      */
@@ -969,9 +969,9 @@ public class Formula implements ModelObject
     }
     
     /**
-     * ¾ÛºÏÊı¾İ¼¯ÖĞ±äÁ¿µÄÖµ£¬Ä¿Ç°ÏµÍ³Ìá¹©ÁË3ÖÖ¾ÛºÏº¯Êı£ºsum(ÇóºÍ),avg£¨ÇóÆ½¾ùÖµ£©,count(¼ÆÊı)
-     * @param variableName  ±äÁ¿¿ÉÄÜÎªµ¥¸ö±äÁ¿£¬Ò²¿ÉÄÜÎª¸´ºÏ±äÁ¿£¬¸´ºÏ±äÁ¿ÒÔ'.'·Ö¸ô
-     * @return ÀàĞÍÎªObjectµÄÖµ¶ÔÏó
+     * èšåˆæ•°æ®é›†ä¸­å˜é‡çš„å€¼ï¼Œç›®å‰ç³»ç»Ÿæä¾›äº†3ç§èšåˆå‡½æ•°ï¼šsum(æ±‚å’Œ),avgï¼ˆæ±‚å¹³å‡å€¼ï¼‰,count(è®¡æ•°)
+     * @param variableName  å˜é‡å¯èƒ½ä¸ºå•ä¸ªå˜é‡ï¼Œä¹Ÿå¯èƒ½ä¸ºå¤åˆå˜é‡ï¼Œå¤åˆå˜é‡ä»¥'.'åˆ†éš”
+     * @return ç±»å‹ä¸ºObjectçš„å€¼å¯¹è±¡
      * @throws FormulaException
      */
      
@@ -983,9 +983,9 @@ public class Formula implements ModelObject
             throw new FormulaException("evaluate variablevalue exception:dataSet=null or dataSet.size=0,[" + variableName + "]");
         String[] variables =  parseVariable(variableName);
         
-        //ÅĞ±ğÊÇ·ñÊÇ¸´ºÏ±äÁ¿£¬
-        //Èç¹ûÊÇÔò¼ì²â±äÁ¿Ãû³ÆÖĞÊÇ·ñ°üº¬Êı¾İ¼¯ºÏË÷Òı£¬
-        //Èç¹û°üº¬Ë÷ÒıÔòÈ¡³ö¶ÔÓ¦µÄÊı¾İ¼¯ºÏÔÙ¼ÆËã±äÁ¿µÄÖµ
+        //åˆ¤åˆ«æ˜¯å¦æ˜¯å¤åˆå˜é‡ï¼Œ
+        //å¦‚æœæ˜¯åˆ™æ£€æµ‹å˜é‡åç§°ä¸­æ˜¯å¦åŒ…å«æ•°æ®é›†åˆç´¢å¼•ï¼Œ
+        //å¦‚æœåŒ…å«ç´¢å¼•åˆ™å–å‡ºå¯¹åº”çš„æ•°æ®é›†åˆå†è®¡ç®—å˜é‡çš„å€¼
          
         if(variables.length > 1)
 	        try
@@ -1041,9 +1041,9 @@ public class Formula implements ModelObject
     }
     
     /**
-     * »ñÈ¡±äÁ¿µÄÖµ
-     * @param variableName  ±äÁ¿¿ÉÄÜÎªµ¥¸ö±äÁ¿£¬Ò²¿ÉÄÜÎª¸´ºÏ±äÁ¿£¬¸´ºÏ±äÁ¿ÒÔ'.'·Ö¸ô
-     * @return ÀàĞÍÎªObjectµÄÖµ¶ÔÏó
+     * è·å–å˜é‡çš„å€¼
+     * @param variableName  å˜é‡å¯èƒ½ä¸ºå•ä¸ªå˜é‡ï¼Œä¹Ÿå¯èƒ½ä¸ºå¤åˆå˜é‡ï¼Œå¤åˆå˜é‡ä»¥'.'åˆ†éš”
+     * @return ç±»å‹ä¸ºObjectçš„å€¼å¯¹è±¡
      * @throws FormulaException
      */
      
@@ -1087,8 +1087,8 @@ public class Formula implements ModelObject
         }
         else
         {
-            //Èç¹ûÊÇ¸´ºÏ±äÁ¿£¬Ê×ÏÈ¼ì²âµÚÒ»¸ö±äÁ¿ÊÇ·ñÎªÊı×Ö£¬Èç¹ûÊÇÔò±íÊ¾Òª»ñÈ¡Ë÷ÒıËù¶ÔÓ¦µÄÊı¾İ¼¯ÖĞµ±Ç°ĞĞ¶ÔÓ¦µÄ¼ÇÂ¼µÄÊôĞÔÖµ
-            //·ñÔòÖ±½Ó´Óµ±Ç°Êı¾İ¼¯ÖĞ»ñÈ¡±äÁ¿Öµ
+            //å¦‚æœæ˜¯å¤åˆå˜é‡ï¼Œé¦–å…ˆæ£€æµ‹ç¬¬ä¸€ä¸ªå˜é‡æ˜¯å¦ä¸ºæ•°å­—ï¼Œå¦‚æœæ˜¯åˆ™è¡¨ç¤ºè¦è·å–ç´¢å¼•æ‰€å¯¹åº”çš„æ•°æ®é›†ä¸­å½“å‰è¡Œå¯¹åº”çš„è®°å½•çš„å±æ€§å€¼
+            //å¦åˆ™ç›´æ¥ä»å½“å‰æ•°æ®é›†ä¸­è·å–å˜é‡å€¼
             int index = 0;
             try
             {
@@ -1099,7 +1099,7 @@ public class Formula implements ModelObject
                 }
                 PagerDataSet dataSet_t = dataSet.getPagerDataSet(index);
                 /**
-                 * Èç¹ûÊÇ»ñÈ¡µ±Ç°ÁĞ±í»òÕß·ÖÒ³µÄĞĞºÅ
+                 * å¦‚æœæ˜¯è·å–å½“å‰åˆ—è¡¨æˆ–è€…åˆ†é¡µçš„è¡Œå·
                  */
                 if(variables[1].equals("rowid"))
                 {
@@ -1147,7 +1147,7 @@ public class Formula implements ModelObject
         	{
             	t = dataSet.getValue(dataSet.getRowid(),variables[0]);
             	 /**
-                 * Èç¹ûÊÇ»ñÈ¡µ±Ç°ÁĞ±í»òÕß·ÖÒ³µÄĞĞºÅ
+                 * å¦‚æœæ˜¯è·å–å½“å‰åˆ—è¡¨æˆ–è€…åˆ†é¡µçš„è¡Œå·
                  */
                 if(variables[0].equals("rowid"))
                 {
@@ -1192,9 +1192,9 @@ public class Formula implements ModelObject
     }
     
     /**
-     * ½âÎö¹«Ê½ÖĞ±äÁ¿£¬Èç¹û±äÁ¿Îª×éºÏ±äÁ¿£¬½«Æä·Ö½âÎªµ¥¸ö±äÁ¿£¬½«µ¥¸ö±äÁ¿´æ·Åµ½Êı×éÖĞ
+     * è§£æå…¬å¼ä¸­å˜é‡ï¼Œå¦‚æœå˜é‡ä¸ºç»„åˆå˜é‡ï¼Œå°†å…¶åˆ†è§£ä¸ºå•ä¸ªå˜é‡ï¼Œå°†å•ä¸ªå˜é‡å­˜æ”¾åˆ°æ•°ç»„ä¸­
      * @param variableName
-     * @return ·µ»Ø´æ·Å±äÁ¿µÄÊı×é
+     * @return è¿”å›å­˜æ”¾å˜é‡çš„æ•°ç»„
      */
     private String[] parseVariable(String variableName)
     {
@@ -1203,8 +1203,8 @@ public class Formula implements ModelObject
     }
     
     /**
-     * ¼ÆËã±í´ïÊ½µÄÖµ
-     * ÔİÊ±Ã»ÓĞ¿¼ÂÇ´óÊıµÄ¼Ó¼õ³Ë³ıÔËËã£¬ÔÚºóĞø¹¤×÷ÖĞ²¹³äÕâĞ©¹¦ÄÜ
+     * è®¡ç®—è¡¨è¾¾å¼çš„å€¼
+     * æš‚æ—¶æ²¡æœ‰è€ƒè™‘å¤§æ•°çš„åŠ å‡ä¹˜é™¤è¿ç®—ï¼Œåœ¨åç»­å·¥ä½œä¸­è¡¥å……è¿™äº›åŠŸèƒ½
      * @param oper
      * @param left
      * @param right
@@ -1219,7 +1219,7 @@ public class Formula implements ModelObject
         int left_type = ((Integer)((Object[])left)[2]).intValue();
         String temp_l = left_value.toString();
         String temp_r = right_value.toString();
-        if(left_type == OPT_TYPE_VARIABLE)//Èç¹û²Ù×÷Êı1ÊÇ±äÁ¿¼ÆËã±äÁ¿Öµ
+        if(left_type == OPT_TYPE_VARIABLE)//å¦‚æœæ“ä½œæ•°1æ˜¯å˜é‡è®¡ç®—å˜é‡å€¼
         {
             temp_l = left_value.toString();
             left_value = evalVariableValue(dataSet,left_value.toString());
@@ -1227,7 +1227,7 @@ public class Formula implements ModelObject
                 throw new FormulaException("attribute '" + temp_l + "' is null!");
         }
         int right_type = ((Integer)((Object[])right)[2]).intValue();
-        if(right_type == OPT_TYPE_VARIABLE)//Èç¹û²Ù×÷Êı2ÊÇ±äÁ¿¼ÆËã±äÁ¿Öµ
+        if(right_type == OPT_TYPE_VARIABLE)//å¦‚æœæ“ä½œæ•°2æ˜¯å˜é‡è®¡ç®—å˜é‡å€¼
         {            
             right_value = evalVariableValue(dataSet,right_value.toString());
             if(right_value == null)
@@ -1408,7 +1408,7 @@ public class Formula implements ModelObject
     }
     
     /**
-     * ¼ÆËã±í´ïÊ½µÄÖµ(µ¥Ä¿ÔËËã)
+     * è®¡ç®—è¡¨è¾¾å¼çš„å€¼(å•ç›®è¿ç®—)
      * @param oper
      * @param left     
      * @return Object
@@ -1434,7 +1434,7 @@ public class Formula implements ModelObject
     }
     
     /**
-     * ·µ»Ø¼ÆËã¹«Ê½µÄ Öµ
+     * è¿”å›è®¡ç®—å…¬å¼çš„ å€¼
      * @return Object
      */
     public Object getValue() throws FormulaException
@@ -1444,45 +1444,45 @@ public class Formula implements ModelObject
     }
     
     /**
-     * ¸ù¾İ²Ù×÷·û¼ÆËãÖµ
+     * æ ¹æ®æ“ä½œç¬¦è®¡ç®—å€¼
      * @param code
      * @throws FormulaException
      */
     private void eval(int code) throws FormulaException
     {
-        //²Ù×÷Êı1
+        //æ“ä½œæ•°1
         Object opt1;
-        //²Ù×÷Êı2
+        //æ“ä½œæ•°2
         Object opt2;
-        //ÅĞ¶Ï²Ù×÷ÊÇ·ñÊÇ¾ÛºÏ²Ù×÷
-        if(!operCodes[code - 1].isAggregation())//Èç¹ûÊÇ¾ÛºÏ²Ù×÷
+        //åˆ¤æ–­æ“ä½œæ˜¯å¦æ˜¯èšåˆæ“ä½œ
+        if(!operCodes[code - 1].isAggregation())//å¦‚æœæ˜¯èšåˆæ“ä½œ
         {
-            //²Ù×÷Êı2³öÕ»
+            //æ“ä½œæ•°2å‡ºæ ˆ
             opt2 = operationParms.pop();
-            //²Ù×÷Êı1³öÕ»
+            //æ“ä½œæ•°1å‡ºæ ˆ
             opt1 = operationParms.pop();
             
-            //¼ÆËã½á¹û
+            //è®¡ç®—ç»“æœ
             Object value = eval(code,opt1,opt2);
             opt1 = null;
             opt2 = null;
-            //½«ËùµÃµÄ½á¹û½ø²Ù×÷Êı¶ÑÕ»
+            //å°†æ‰€å¾—çš„ç»“æœè¿›æ“ä½œæ•°å †æ ˆ
             
             operationParms.push(value);	                           
         }
         else
         {
-//          ²Ù×÷Êı2³öÕ»
+//          æ“ä½œæ•°2å‡ºæ ˆ
             opt2 = operationParms.pop();
-            //¼ÆËã½á¹û
+            //è®¡ç®—ç»“æœ
             Object value = eval(code,opt2);	                            
             opt2 = null;
-            //½«ËùµÃµÄ½á¹û½ø²Ù×÷Êı¶ÑÕ»
+            //å°†æ‰€å¾—çš„ç»“æœè¿›æ“ä½œæ•°å †æ ˆ
             operationParms.push(value);	                           
         }
     }
     /**
-     * Í¨¹ı±¾·½·¨ÇóµÃ±í´ïÊ½µÃÖµ
+     * é€šè¿‡æœ¬æ–¹æ³•æ±‚å¾—è¡¨è¾¾å¼å¾—å€¼
      * @return Object
      */
     private  Object eval() throws FormulaException
@@ -1492,7 +1492,7 @@ public class Formula implements ModelObject
         parser();
         if(tokens == null || tokens.size() == 0)
             return null;
-//        //±êÊ¶±í´ïÊ½ÇóÖµ¿ªÊ¼£ºfalse£¬Î´¿ªÊ¼£¬true£º¿ªÊ¼
+//        //æ ‡è¯†è¡¨è¾¾å¼æ±‚å€¼å¼€å§‹ï¼šfalseï¼Œæœªå¼€å§‹ï¼Œtrueï¼šå¼€å§‹
 //        boolean start = false;
         int curcode;
         int outpirior;
@@ -1503,7 +1503,7 @@ public class Formula implements ModelObject
 label1: for(int i = 0; i < tokens.size(); i ++)
         {
             Object[] token = (Object[])tokens.get(i);
-            if(token[0] != null)//ÊÇ²Ù×÷·û
+            if(token[0] != null)//æ˜¯æ“ä½œç¬¦
             {
                 if(operations.isEmpty())
                 {
@@ -1514,19 +1514,19 @@ label1: for(int i = 0; i < tokens.size(); i ++)
                 outpirior = outPriorTable[curcode - 1];
                 topcode = ((Integer)operations.peek()).intValue();
                 inpirior = inPriorTable[topcode - 1];                
-                if(outpirior > inpirior)//Èç¹ûÕ»Íâ²Ù×÷·û±ÈÕ»ÄÚ²Ù×÷·ûÓÅÏÈÈ¨¸ß
+                if(outpirior > inpirior)//å¦‚æœæ ˆå¤–æ“ä½œç¬¦æ¯”æ ˆå†…æ“ä½œç¬¦ä¼˜å…ˆæƒé«˜
                 {
                     operations.push(token[0]);                    
                 }   
-                else if(outpirior <= inpirior)//Èç¹ûÕ»Íâ²Ù×÷·û±ÈÕ»ÄÚ²Ù×÷·ûÓÅÏÈÈ¨µÍ»òÕßÏàµÈÊ±
+                else if(outpirior <= inpirior)//å¦‚æœæ ˆå¤–æ“ä½œç¬¦æ¯”æ ˆå†…æ“ä½œç¬¦ä¼˜å…ˆæƒä½æˆ–è€…ç›¸ç­‰æ—¶
                 {
-                    //²Ù×÷Õ»¶¥ÔªËØ³öÕ»£¬µÃµ½²Ù×÷·ûÄÚÂë
+                    //æ“ä½œæ ˆé¡¶å…ƒç´ å‡ºæ ˆï¼Œå¾—åˆ°æ“ä½œç¬¦å†…ç 
                     int temp ;                    
                     do
                     {
-                        //²Ù×÷Õ»¶¥ÔªËØ³öÕ»
+                        //æ“ä½œæ ˆé¡¶å…ƒç´ å‡ºæ ˆ
                         temp = ((Integer)operations.pop()).intValue();
-                        //Èç¹ûµ±Ç°µÃ²Ù×÷·ûÊÇÔËËã·ûÔòÖ´ĞĞÏàÓ¦µÃÔËËã;
+                        //å¦‚æœå½“å‰å¾—æ“ä½œç¬¦æ˜¯è¿ç®—ç¬¦åˆ™æ‰§è¡Œç›¸åº”å¾—è¿ç®—;
                         if(operCodes[temp - 1].isOperator())
                         {
                             eval(temp);
@@ -1536,17 +1536,17 @@ label1: for(int i = 0; i < tokens.size(); i ++)
                             continue label1;
                         }
                         
-                        //Èç¹û¶ÑÕ»Îª¿Õ£¬Õ»Íâ²Ù×÷·û½øÕ»
+                        //å¦‚æœå †æ ˆä¸ºç©ºï¼Œæ ˆå¤–æ“ä½œç¬¦è¿›æ ˆ
                         if(operations.isEmpty())
                         {
                             operations.push(token[0]);
                             continue label1;
                         }
-//                      »ñÈ¡²Ù×÷Õ»¶¥ÔªËØ
+//                      è·å–æ“ä½œæ ˆé¡¶å…ƒç´ 
                         topcode = ((Integer)operations.peek()).intValue();                            
                         inpirior = inPriorTable[topcode - 1];
                     }
-                    while(outpirior <= inpirior);//Ö´ĞĞ¼ÆËã²Ù×÷Ö±µ½
+                    while(outpirior <= inpirior);//æ‰§è¡Œè®¡ç®—æ“ä½œç›´åˆ°
                     
                     if(outpirior > inpirior)
                     {
@@ -1557,12 +1557,12 @@ label1: for(int i = 0; i < tokens.size(); i ++)
                     }   
                 }   
             }
-            else//²Ù×÷Êı
+            else//æ“ä½œæ•°
                 this.operationParms.push(token);
             
         }
         
-        //µ±ËùÓĞµÄ²Ù×÷·ûºÍ²Ù×÷Êı¶¼ÒÑ¾­½øÕ»£¬²¢ÇÒÃ»ÓĞÔËËãÍê³É£¬¼ÌĞø½øĞĞ¼ÆËã
+        //å½“æ‰€æœ‰çš„æ“ä½œç¬¦å’Œæ“ä½œæ•°éƒ½å·²ç»è¿›æ ˆï¼Œå¹¶ä¸”æ²¡æœ‰è¿ç®—å®Œæˆï¼Œç»§ç»­è¿›è¡Œè®¡ç®—
         while(!operations.isEmpty())
         {
             int temp = ((Integer)operations.pop()).intValue();
@@ -1572,35 +1572,35 @@ label1: for(int i = 0; i < tokens.size(); i ++)
             }
             
         }
-        //µ¯³ö×îºóµÄ²ÎÊı£¬ÓÉÓÚ'{' ºÍ '}'Ã»ÓĞ×÷Îª²Ù×÷·ûºÅ´¦Àí£¬¿ÉÄÜ³öÏÖ²Ù×÷ÊıÀàĞÍÎª±äÁ¿µÄÇé¿ö£¬Òò´ËĞèÒª
-        //¼ÓÒÔÅĞ±ğ£¬µ±Îª±äÁ¿Ê±¼ÆËã±äÁ¿µÄÖµ
+        //å¼¹å‡ºæœ€åçš„å‚æ•°ï¼Œç”±äº'{' å’Œ '}'æ²¡æœ‰ä½œä¸ºæ“ä½œç¬¦å·å¤„ç†ï¼Œå¯èƒ½å‡ºç°æ“ä½œæ•°ç±»å‹ä¸ºå˜é‡çš„æƒ…å†µï¼Œå› æ­¤éœ€è¦
+        //åŠ ä»¥åˆ¤åˆ«ï¼Œå½“ä¸ºå˜é‡æ—¶è®¡ç®—å˜é‡çš„å€¼
         Object[] last_param = ((Object[])operationParms.pop());
         Object left_value = last_param[1];        
         int left_type = ((Integer)(last_param[2])).intValue();
-        if(left_type == OPT_TYPE_VARIABLE)//Èç¹û²Ù×÷Êı1ÊÇ±äÁ¿¼ÆËã±äÁ¿Öµ
+        if(left_type == OPT_TYPE_VARIABLE)//å¦‚æœæ“ä½œæ•°1æ˜¯å˜é‡è®¡ç®—å˜é‡å€¼
         {            
             left_value = evalVariableValue(dataSet,left_value.toString());
         }
         
-        //·µ»ØÔËËã½á¹û
+        //è¿”å›è¿ç®—ç»“æœ
         return left_value;
     }
     
     /**
-     * ²Ù×÷·ûºÅºÍ²Ù×÷ÄÚÂë·â×°¶ÔÏó
+     * æ“ä½œç¬¦å·å’Œæ“ä½œå†…ç å°è£…å¯¹è±¡
      * @author biaoping.yin
      * created on 2005-7-4
      * version 1.0
      */
     private static class OPERCode
     {
-        /**²Ù×÷·ûºÅ*/
+        /**æ“ä½œç¬¦å·*/
         private char oper;
-        /**²Ù×÷·ûºÅÄÚÂë*/
+        /**æ“ä½œç¬¦å·å†…ç */
         private int code;
         
         /**
-         * ¹»½¨º¯Êı
+         * å¤Ÿå»ºå‡½æ•°
          * @param oper
          * @param code
          */
@@ -1635,7 +1635,7 @@ label1: for(int i = 0; i < tokens.size(); i ++)
         }
         
         /**
-         * ÅĞ±ğ²Ù×÷ÂëÊÇ·ñÊÇÔËËã·û
+         * åˆ¤åˆ«æ“ä½œç æ˜¯å¦æ˜¯è¿ç®—ç¬¦
          * 
          * @return boolean
          */
@@ -1654,7 +1654,7 @@ label1: for(int i = 0; i < tokens.size(); i ++)
         }
         
         /**
-         * ÅĞ±ğ²Ù×÷ÂëÊÇ·ñÊÇÔËËã·û
+         * åˆ¤åˆ«æ“ä½œç æ˜¯å¦æ˜¯è¿ç®—ç¬¦
          * 
          * @return boolean
          */
@@ -1668,7 +1668,7 @@ label1: for(int i = 0; i < tokens.size(); i ++)
     }
 
     /**
-     * ¼ÇÂ¼²Ù×÷·ûÎ»ÖÃĞÅÏ¢
+     * è®°å½•æ“ä½œç¬¦ä½ç½®ä¿¡æ¯
      * @author biaoping.yin
      * created on 2005-7-6
      * version 1.0

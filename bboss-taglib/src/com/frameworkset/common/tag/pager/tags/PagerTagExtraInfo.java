@@ -31,7 +31,7 @@ public final class PagerTagExtraInfo extends TagExtraInfo {
 		if(pager_infoName == null || pager_infoName.equals(""))
 			pager_infoName = "pager_info";
 //	    String id = (String)tagData.getAttribute("id");
-        //System.out.println("id£º" + id);
+        //System.out.println("idï¼š" + id);
 //		String export = tagData.getAttributeString("export");
 //		if (export != null) {
 //			try {

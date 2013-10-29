@@ -27,7 +27,7 @@ import org.apache.mina.filter.codec.ProtocolEncoder;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2009-10-7 œ¬ŒÁ05:32:07
+ * @Date 2009-10-7 ‰∏ãÂçà05:32:07
  * @author biaoping.yin
  * @version 1.0
  */

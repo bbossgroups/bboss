@@ -1,12 +1,12 @@
 /**
- * 	DataGrid·â×°Àà
- *  id :ĞÎÈç"#table1"
- *  params :¶ÔDataGrid³õÊ¼»¯¶ÔÏó²ÎÊı
+ * 	DataGridå°è£…ç±»
+ *  id :å½¢å¦‚"#table1"
+ *  params :å¯¹DataGridåˆå§‹åŒ–å¯¹è±¡å‚æ•°
  */
 var DataGrid = function(id, statParams) {
 	DataGrid.log("constructor().id="+id);
 	try {
-		//statParams:À©Õ¹²ÎÊı£¬Ö÷ÒªÊÇÓÃÓÚÍ³¼ÆÊı¾İ
+		//statParams:æ‰©å±•å‚æ•°ï¼Œä¸»è¦æ˜¯ç”¨äºç»Ÿè®¡æ•°æ®
 		this.statParams = statParams;
 		if (null == this.statParams) {
 			this.statParams = {};
@@ -20,25 +20,25 @@ var DataGrid = function(id, statParams) {
 			this.id = id;
 		}
 		
-		//µ±Ç°ÕıÔÚ±à¼­ĞĞ
+		//å½“å‰æ­£åœ¨ç¼–è¾‘è¡Œ
 		//this.currRowIndex = 0;
-		//×îºó±à¼­ĞĞ
+		//æœ€åç¼–è¾‘è¡Œ
 		this.lastIndex = 0;
 		this.hasError = false;
 		
-		/*×¢²áediter*/
+		/*æ³¨å†Œediter*/
 		//$(this.id).editer = this;
 		//alert($(this.id).editer);
 	} catch(e) {
 		DataGrid.log("constructor().error="+DataGrid.msg_init_error+e.description,'error');
-		$.messager.alert('´íÎóĞÅÏ¢',DataGrid.msg_init_error+e.description,'error');
+		$.messager.alert('é”™è¯¯ä¿¡æ¯',DataGrid.msg_init_error+e.description,'error');
 		return ;
 	}
 	
-	/**³ÉÔ±·½·¨**/
-	/*¼ÓÔØÊı¾İ£¬Ö§³ÖËÄÖÖ²ÎÊı£¬×Ö·û´®£¬jquery¶ÔÏó£¬ÆÕÍ¨¶ÔÏó£¬×Ô¶¨Òåº¯Êı*/
+	/**æˆå‘˜æ–¹æ³•**/
+	/*åŠ è½½æ•°æ®ï¼Œæ”¯æŒå››ç§å‚æ•°ï¼Œå­—ç¬¦ä¸²ï¼Œjqueryå¯¹è±¡ï¼Œæ™®é€šå¯¹è±¡ï¼Œè‡ªå®šä¹‰å‡½æ•°*/
 	this.loadData = function(params) {
-		DataGrid.log("²éÑ¯Êı¾İ¿ªÊ¼......","message");
+		DataGrid.log("æŸ¥è¯¢æ•°æ®å¼€å§‹......","message");
 		DataGrid.log("loadData().params="+params);
 		$(this.id).datagrid('options').url = DataGrid.getDataUrl;
 		var queryParams = $(this.id).datagrid('options').queryParams;
@@ -55,10 +55,10 @@ var DataGrid = function(id, statParams) {
 		}
 		
 		DataGrid.log("loadData().queryParams="+jQuery.param(queryParams));
-		//Çå¿ÕÊı¾İ£¬»òÕß¿ÉÒÔ½«columns=null
+		//æ¸…ç©ºæ•°æ®ï¼Œæˆ–è€…å¯ä»¥å°†columns=null
 		$(this.id).datagrid('loadData',{"total":0,"rows":[]});
 		$(this.id).datagrid('load',queryParams);
-		DataGrid.log("²éÑ¯Êı¾İ½áÊø......","message");
+		DataGrid.log("æŸ¥è¯¢æ•°æ®ç»“æŸ......","message");
 		/*
 		var id = this.id;
 		$.getJSON(DataGrid.getDataUrl+jQuery.param(this.params),
@@ -67,35 +67,35 @@ var DataGrid = function(id, statParams) {
 						if(null != data){
 							$(id).datagrid('loadData', data);
 						}else{
-							$.messager.alert('´íÎóĞÅÏ¢','¶Ô²»Æğ£¡¼ÓÔØÊı¾İÊ§°Ü£¡','error');
+							$.messager.alert('é”™è¯¯ä¿¡æ¯','å¯¹ä¸èµ·ï¼åŠ è½½æ•°æ®å¤±è´¥ï¼','error');
 						};
 		});
 		*/
 		//$(this.id).datagrid('loaded');
 	}
-	/*±£´æÊı¾İ*/
+	/*ä¿å­˜æ•°æ®*/
 	this.saveData = function() {
-		DataGrid.log("±£´æÊı¾İ¿ªÊ¼......","message");
+		DataGrid.log("ä¿å­˜æ•°æ®å¼€å§‹......","message");
 		DataGrid.log("saveData()");
 		try{
-			//±£´æµ±Ç°¸ü¸Ä
+			//ä¿å­˜å½“å‰æ›´æ”¹
 			//alert("this.lastIndex="+this.lastIndex);			
 			$(this.id).datagrid('endEdit', this.lastIndex);	
-			//×ª»»ÎªjsoncodeÂë²¢Ìá½»µ½ºóÌ¨Êı¾İ¿â				
+			//è½¬æ¢ä¸ºjsoncodeç å¹¶æäº¤åˆ°åå°æ•°æ®åº“				
 			var rows = $(this.id).datagrid('getChanges');				
 			if(rows.length>0){					
 				this.submitData();
 			}else{
-				$.messager.alert('ÌáÊ¾ĞÅÏ¢',"¶Ô²»Æğ£¡Êı¾İÃ»ÓĞ¸ü¸Ä»òÕßÈÔÓĞ´íÎóÊı¾İ£¬ÇëÌîºÃÊı¾İ£¡",'info');
+				$.messager.alert('æç¤ºä¿¡æ¯',"å¯¹ä¸èµ·ï¼æ•°æ®æ²¡æœ‰æ›´æ”¹æˆ–è€…ä»æœ‰é”™è¯¯æ•°æ®ï¼Œè¯·å¡«å¥½æ•°æ®ï¼",'info');
 				return false;
 			}				
 		}catch(e){
 			this.onSaveDataError(null, e.description, null);				
 		}
-		DataGrid.log("±£´æÊı¾İ½áÊø......","message");
+		DataGrid.log("ä¿å­˜æ•°æ®ç»“æŸ......","message");
 	}
 	
-	/*Ìá½»Êı¾İ*/
+	/*æäº¤æ•°æ®*/
 	this.submitData = function(data){
 		DataGrid.log("submitData()");
 		var deleted_rows = $(this.id).datagrid('getChanges','deleted');
@@ -134,26 +134,26 @@ var DataGrid = function(id, statParams) {
 				});
 		//var r = $.post(url,param,onSaveDataSuccess,"json");	
 	}
-	/*±£´æÊı¾İ³ö´í*/
+	/*ä¿å­˜æ•°æ®å‡ºé”™*/
 	this.onSaveDataError = function(XMLHttpRequest, textStatus, errorThrown) {	
 		DataGrid.log("onSaveDataError().textStatus="+textStatus,'error');
-		$.messager.alert('´íÎóĞÅÏ¢',"¶Ô²»Æğ£¡±£´æÊ§°Ü:"+textStatus+"",'error');		
-		//±£´æÊ§°ÜÈ¡Ïû¿Í»§¶Ë±¾´Î¸ü¸Ä
+		$.messager.alert('é”™è¯¯ä¿¡æ¯',"å¯¹ä¸èµ·ï¼ä¿å­˜å¤±è´¥:"+textStatus+"",'error');		
+		//ä¿å­˜å¤±è´¥å–æ¶ˆå®¢æˆ·ç«¯æœ¬æ¬¡æ›´æ”¹
 		//$('#tt').datagrid('rejectChanges');
 	}
-	/*±£´æÊı¾İ³ö´í*/
+	/*ä¿å­˜æ•°æ®å‡ºé”™*/
 	this.onSaveDataSuccess = function(data, textStatus) {
 		DataGrid.log("onSaveDataSuccess().data="+data);
 		if (data.status == 1) {
-			//±£´æ³É¹¦È·ÈÏ¿Í»§¶Ë±¾´Î¸ü¸Ä
+			//ä¿å­˜æˆåŠŸç¡®è®¤å®¢æˆ·ç«¯æœ¬æ¬¡æ›´æ”¹
 			$(this.id).datagrid('acceptChanges');
-			$.messager.alert('´íÎóĞÅÏ¢',data.msg,'info');
+			$.messager.alert('é”™è¯¯ä¿¡æ¯',data.msg,'info');
 		} else {
-			$.messager.alert('ÌáÊ¾ĞÅÏ¢',data.msg,'error');
+			$.messager.alert('æç¤ºä¿¡æ¯',data.msg,'error');
 		}
 		//$.messager.show(0, data.msg);  
 	}
-	/*Ìí¼ÓÒ»ĞĞ*/
+	/*æ·»åŠ ä¸€è¡Œ*/
 	this.appendRow = function(params) {
 		DataGrid.log("appendRow().params="+params);
 		$(this.id).datagrid('endEdit', this.lastIndex);
@@ -162,7 +162,7 @@ var DataGrid = function(id, statParams) {
 		//$(this.id).datagrid('select', this.lastIndex);
 		$(this.id).datagrid('beginEdit', this.lastIndex);	
 	}
-	/*²åÈëÒ»ĞĞ*/
+	/*æ’å…¥ä¸€è¡Œ*/
 	this.insertRow = function(params) {alert(22);
 		DataGrid.log("insertRow().params="+params);
 		//$(this.id).datagrid('endEdit', this.lastIndex);
@@ -172,7 +172,7 @@ var DataGrid = function(id, statParams) {
 		//$(this.id).datagrid('select', this.lastIndex);
 		//$(this.id).datagrid('beginEdit', this.lastIndex);	
 	}
-	/*É¾³ıÒ»ĞĞ*/
+	/*åˆ é™¤ä¸€è¡Œ*/
 	this.deleteRow = function(params) {
 		DataGrid.log("deleteRow().params="+params);
 		var row = $(this.id).datagrid('getSelected');
@@ -181,7 +181,7 @@ var DataGrid = function(id, statParams) {
 			$(this.id).datagrid('deleteRow', index);
 		}	
 	}
-	/*µã»÷Ò»ĞĞ*/
+	/*ç‚¹å‡»ä¸€è¡Œ*/
 	this.onClickRow = function(rowIndex) {
 		DataGrid.log("onClickRow().rowIndex="+rowIndex);
 		if (this.lastIndex != rowIndex){
@@ -192,65 +192,65 @@ var DataGrid = function(id, statParams) {
 		}
 		this.lastIndex = rowIndex;	
 	}
-	/*¾Ü¾øĞŞ¸Ä*/
+	/*æ‹’ç»ä¿®æ”¹*/
 	this.rejectChanges = function() {
 		DataGrid.log("rejectChanges()...");
 		$(this.id).datagrid('rejectChanges');
 	}
-	/*»ñÈ¡²éÑ¯²ÎÊı*/
+	/*è·å–æŸ¥è¯¢å‚æ•°*/
 	this.getQueryParams = function(){
 		DataGrid.log("getQueryParams()...");
 		var queryParams = $(this.id).datagrid('options').queryParams;
 		DataGrid.log("getQueryParams().queryParams="+jQuery.param(queryParams));
 		return queryParams;
 	}
-	/*·½·¨´úÀí*/
+	/*æ–¹æ³•ä»£ç†*/
 	this.run = function(){
 		DataGrid.log("run()");
 		//alert(1);
 		//$(this.id).datagrid;
 	};
-	/*Êı¾İ¹ıÂËÆ÷*/
+	/*æ•°æ®è¿‡æ»¤å™¨*/
 	this.onLoadSuccess = function(data) {
 		//alert("statParams="+this.statParams);
 		//return data;
 	}
-	/*×Ô¶¨ÒåÕ¹ÏÖ*/
+	/*è‡ªå®šä¹‰å±•ç°*/
 	this.customDisplay = function() {
 		DataGrid.log("customDisplay()");
-		$.messager.alert('ÌáÊ¾ĞÅÏ¢','ÕıÔÚ¿ª·¢ÖĞ......','info');
+		$.messager.alert('æç¤ºä¿¡æ¯','æ­£åœ¨å¼€å‘ä¸­......','info');
 		var columns = $(this.id).datagrid('options').columns;
 		var columns_json = DataGrid.obj2json(columns);
 		alert(columns_json);
 		
 	}
 }
-/**¾²Ì¬ÉèÖÃ¿ªÊ¼**/
-//ÄÚÖÃÒ»¸öÈÕÖ¾¼ÇÂ¼Æ÷
+/**é™æ€è®¾ç½®å¼€å§‹**/
+//å†…ç½®ä¸€ä¸ªæ—¥å¿—è®°å½•å™¨
 DataGrid.logger = new Logger();
 
-/*ÖØÔØjQueryµÄÄÚ²¿´íÎó´¦Àí*/
+/*é‡è½½jQueryçš„å†…éƒ¨é”™è¯¯å¤„ç†*/
 DataGrid.error = function(message) {
 	DataGrid.log("jquery.error()="+message,"error");
 }
-//ÔİÊ±ÉèÖÃ²»À¹½Ø
+//æš‚æ—¶è®¾ç½®ä¸æ‹¦æˆª
 //jQuery.error = DataGrid.error;
-/*¼ÇÂ¼ÈÕÖ¾ĞÅÏ¢*/
+/*è®°å½•æ—¥å¿—ä¿¡æ¯*/
 DataGrid.debug = function(debug) {
 	DataGrid.logger.debug = debug;
 }
 DataGrid.log = function(msg,level) {
 	DataGrid.logger.log(msg,level);
 }
-/*ÏÔÊ¾ÈÕÖ¾ĞÅÏ¢*/
+/*æ˜¾ç¤ºæ—¥å¿—ä¿¡æ¯*/
 DataGrid.showLogs = function() {
 	DataGrid.logger.showLogs();
 }
-/*Çå¿ÕÈÕÖ¾*/
+/*æ¸…ç©ºæ—¥å¿—*/
 DataGrid.clearLogs = function() {
 	DataGrid.logger.clearLogs();
 }
-/*½ØÈ¡ÉÏÏÂÎÄ*/
+/*æˆªå–ä¸Šä¸‹æ–‡*/
 DataGrid.getContextPath = function() {	
 	DataGrid.log("DataGrid.getContextPath()");	
 	var cp = location.pathname ;	
@@ -260,29 +260,29 @@ DataGrid.getContextPath = function() {
     }
 	return cp;
 }
-/*¾²Ì¬ÊôĞÔ*/
-DataGrid.msg_init_error = "¹¹ÔìDataGridÊ§°Ü:";
-DataGrid.msg_init_lostparam = "È±ÉÙ²ÎÊı";
+/*é™æ€å±æ€§*/
+DataGrid.msg_init_error = "æ„é€ DataGridå¤±è´¥:";
+DataGrid.msg_init_lostparam = "ç¼ºå°‘å‚æ•°";
 DataGrid.getDataUrl = window.location.protocol+"//"+window.location.host+DataGrid.getContextPath()+"/datagrid/getData.htm?";
 DataGrid.saveDataUrl = window.location.protocol+"//"+window.location.host+DataGrid.getContextPath()+"/datagrid/saveData.htm?";
 DataGrid.getNextKeyUrl = window.location.protocol+"//"+window.location.host+DataGrid.getContextPath()+"/datagrid/getNextKey.htm?";
 DataGrid.getTableInfoUrl = window.location.protocol+"//"+window.location.host+DataGrid.getContextPath()+"/datagrid/getTableInfo.htm?";
 DataGrid.editers = {};
-/*¾²Ì¬·½·¨*/
-//²éÕÒediter
+/*é™æ€æ–¹æ³•*/
+//æŸ¥æ‰¾editer
 DataGrid.getEditer = function(id) {
 	return DataGrid.editers.id;
 }
-/*ÒòÎªÖ»ÄÜ¹»½«²ÎÊıÉèÖÃµ½queryParamsÖĞ£¬´ø½øÀ´µÄ²ÎÊı¿ÉÄÜÊÇjQuery¶ÔÏó£¬»òÕßÒ»°ã£¬ÄÇÃ´´ËÊ±ĞèÒª±éÀú¸Ã¶ÔÏóµÄÊôĞÔ£¬½«ÆäÉèÖÃµ½queryParamsÖĞ*/
+/*å› ä¸ºåªèƒ½å¤Ÿå°†å‚æ•°è®¾ç½®åˆ°queryParamsä¸­ï¼Œå¸¦è¿›æ¥çš„å‚æ•°å¯èƒ½æ˜¯jQueryå¯¹è±¡ï¼Œæˆ–è€…ä¸€èˆ¬ï¼Œé‚£ä¹ˆæ­¤æ—¶éœ€è¦éå†è¯¥å¯¹è±¡çš„å±æ€§ï¼Œå°†å…¶è®¾ç½®åˆ°queryParamsä¸­*/
 DataGrid.addQueryParams = function(queryParams, params) {
 	try {
-		//jQuery.isPlainObject(params);²âÊÔÊÇ·ñÒ»¸ö´¿´âµÄ¶ÔÏó
+		//jQuery.isPlainObject(params);æµ‹è¯•æ˜¯å¦ä¸€ä¸ªçº¯ç²¹çš„å¯¹è±¡
 		if (params instanceof jQuery) {
 			DataGrid.log("DataGrid.addQueryParams().params is a jQuery Object");
 			var json = "{";			
 			$.each(params, function(i, o){
 				json += "\""+o.name+"\":\""+o.value+"\",";
-				//evalº¯Êı²»°²È«£¬ÔÚieÉÏ¿ÉÒÔÖ´ĞĞ£¬Í¬Ê±ÔÚffä¯ÀÀÆ÷ÉÏÒ²ÎŞ·¨ÔËĞĞ£¬¿ÉÒÔ¿¼ÂÇÓÃÆäËû·½·¨È¡´ú				
+				//evalå‡½æ•°ä¸å®‰å…¨ï¼Œåœ¨ieä¸Šå¯ä»¥æ‰§è¡Œï¼ŒåŒæ—¶åœ¨ffæµè§ˆå™¨ä¸Šä¹Ÿæ— æ³•è¿è¡Œï¼Œå¯ä»¥è€ƒè™‘ç”¨å…¶ä»–æ–¹æ³•å–ä»£				
 				//window.eval("queryParams."+o.name+"=\""+o.value+"\"");
 				
 			});
@@ -290,26 +290,26 @@ DataGrid.addQueryParams = function(queryParams, params) {
 				json = json.substring(0,json.length-1);
 			}
 			json += "}"; 
-			//ÖØĞÂ´¦Àí¸Ã²ÎÊı
+			//é‡æ–°å¤„ç†è¯¥å‚æ•°
 			params = jQuery.parseJSON(json);
 		} 
 		
-		DataGrid.log("DataGrid.addQueryParams()ºÏ²¢Ç°µÄparams="+jQuery.param(params));
-		//Éî¶Èµİ¹éºÏ²¢Á½¸ö¶ÔÏó
+		DataGrid.log("DataGrid.addQueryParams()åˆå¹¶å‰çš„params="+jQuery.param(params));
+		//æ·±åº¦é€’å½’åˆå¹¶ä¸¤ä¸ªå¯¹è±¡
 		jQuery.extend(true,queryParams, params);
-		DataGrid.log("DataGrid.addQueryParams()ºÏ²¢ºóµÄqueryParams="+jQuery.param(queryParams));
+		DataGrid.log("DataGrid.addQueryParams()åˆå¹¶åçš„queryParams="+jQuery.param(queryParams));
 	} catch(e) {
   		DataGrid.log("DataGrid.addQueryParams().params can not be eval!","error");
-  		$.messager.alert('´íÎóĞÅÏ¢','¶Ô²»Æğ£¡²éÑ¯Ê§°Ü£¬ÔÚ´«µİ²éÑ¯²ÎÊıµÄÊ±ºòÓöµ½´íÎó£º'+e,'error');
+  		$.messager.alert('é”™è¯¯ä¿¡æ¯','å¯¹ä¸èµ·ï¼æŸ¥è¯¢å¤±è´¥ï¼Œåœ¨ä¼ é€’æŸ¥è¯¢å‚æ•°çš„æ—¶å€™é‡åˆ°é”™è¯¯ï¼š'+e,'error');
   		throw e;
 	}
 }
-/*·â×°²ÎÊı*/
+/*å°è£…å‚æ•°*/
 DataGrid.encodeParams = function(params) {
 	DataGrid.log("DataGrid.encodeParams().params="+params);
 	return encodeURIComponent(params);
 }
-/*½«¶ÔÏó×ª»»Îªjsoncode*/
+/*å°†å¯¹è±¡è½¬æ¢ä¸ºjsoncode*/
 DataGrid.obj2json = function(jsonObj){
 	DataGrid.log("DataGrid.obj2json().jsonObj="+jsonObj);
 	var jsoncode =  JSON.stringify(jsonObj); 

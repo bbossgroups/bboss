@@ -25,15 +25,15 @@ import org.frameworkset.util.ClassUtil.PropertieDescription;
 
 /**
  * <p> ClassWrapper.java</p>
- * <p> Description:¸ù¾Ý´«ÈëµÄÊý¾Ý¶ÔÏó£¬Ìá¹©ÏàÓ¦µÄ²Ù×÷Êý¾Ý¶ÔÏóµÄ·½·¨£º
- * 1.ÉèÖÃÊôÐÔµÄÖµ
- * 2.»ñÈ¡ÊôÐÔÖµ
- * 3.»ñÈ¡¶ÔÏó¶ÔÓ¦µÄÀàµÄÏà¹ØÐÅÏ¢£¨ÊôÐÔÐÅÏ¢£¬·½·¨ÐÅÏ¢µÈµÈ£©
+ * <p> Description:æ ¹æ®ä¼ å…¥çš„æ•°æ®å¯¹è±¡ï¼Œæä¾›ç›¸åº”çš„æ“ä½œæ•°æ®å¯¹è±¡çš„æ–¹æ³•ï¼š
+ * 1.è®¾ç½®å±žæ€§çš„å€¼
+ * 2.èŽ·å–å±žæ€§å€¼
+ * 3.èŽ·å–å¯¹è±¡å¯¹åº”çš„ç±»çš„ç›¸å…³ä¿¡æ¯ï¼ˆå±žæ€§ä¿¡æ¯ï¼Œæ–¹æ³•ä¿¡æ¯ç­‰ç­‰ï¼‰
  *  </p>
  * <p> bboss workgroup </p>
  * <p> Copyright (c) 2009 </p>
  * 
- * @Date 2012-11-13 ÏÂÎç4:06:11
+ * @Date 2012-11-13 ä¸‹åˆ4:06:11
  * @author biaoping.yin
  * @version 1.0
  */

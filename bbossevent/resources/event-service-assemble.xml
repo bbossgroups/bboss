@@ -1,36 +1,36 @@
-<?xml version="1.0" encoding='gb2312'?>
+<?xml version="1.0" encoding='UTF-8'?>
 
 <manager-config>
 	<properties>
 		
-		<!-- ¶¨Òå¿ÉÒÔ½øÐÐÔ¶³ÌÍ¨Ñ¶µÄÍøÂç½Úµã½áºÏ£¬Ä¬ÈÏÎªall -->
+		<!-- å®šä¹‰å¯ä»¥è¿›è¡Œè¿œç¨‹é€šè®¯çš„ç½‘ç»œèŠ‚ç‚¹ç»“åˆï¼Œé»˜è®¤ä¸ºall -->
 		<!-- <property name="event.static-networks" value="172.16.17.254:1185"/> -->
 		
 		<!-- 
-			ÊÇ·ñÆôÓÃÔ¶³ÌÊÂ¼þ¿ª¹Ø£¬Èç¹ûÃ»ÓÐÆôÓÃÔ¶³ÌÊÂ¼þ»òÕßÏµÍ³µÄrpc·þÎñÃ»ÓÐ¿ªÆô£¬ÊÂ¼þµÄ´¦ÀíÇé¿öÈçÏÂ£º
-			±¾µØÊÂ¼þ·¢¸øµ±Ç°·þÎñÆ÷µÄ±¾µØÊÂ¼þ¼àÌýÆ÷
-			Ô¶³ÌÊÂ¼þ·¢¸øµ±Ç°·þÎñÆ÷µÄ±¾µØÔ¶³ÌÊÂ¼þ¼àÌýÆ÷¡¢Ô¶³ÌÊÂ¼þ¼àÌýÆ÷
-			±¾µØÔ¶³ÌÊÂ¼þ·¢¸øµ±Ç°·þÎñÆ÷µÄ±¾µØÊÂ¼þ¼àÌýÆ÷¡¢±¾µØÔ¶³ÌÊÂ¼þ¼àÌýÆ÷¡¢Ô¶³ÌÊÂ¼þ¼àÌýÆ÷
+			æ˜¯å¦å¯ç”¨è¿œç¨‹äº‹ä»¶å¼€å…³ï¼Œå¦‚æžœæ²¡æœ‰å¯ç”¨è¿œç¨‹äº‹ä»¶æˆ–è€…ç³»ç»Ÿçš„rpcæœåŠ¡æ²¡æœ‰å¼€å¯ï¼Œäº‹ä»¶çš„å¤„ç†æƒ…å†µå¦‚ä¸‹ï¼š
+			æœ¬åœ°äº‹ä»¶å‘ç»™å½“å‰æœåŠ¡å™¨çš„æœ¬åœ°äº‹ä»¶ç›‘å¬å™¨
+			è¿œç¨‹äº‹ä»¶å‘ç»™å½“å‰æœåŠ¡å™¨çš„æœ¬åœ°è¿œç¨‹äº‹ä»¶ç›‘å¬å™¨ã€è¿œç¨‹äº‹ä»¶ç›‘å¬å™¨
+			æœ¬åœ°è¿œç¨‹äº‹ä»¶å‘ç»™å½“å‰æœåŠ¡å™¨çš„æœ¬åœ°äº‹ä»¶ç›‘å¬å™¨ã€æœ¬åœ°è¿œç¨‹äº‹ä»¶ç›‘å¬å™¨ã€è¿œç¨‹äº‹ä»¶ç›‘å¬å™¨
 			
 			
-			Èç¹ûÆôÓÃÔ¶³ÌÊÂ¼þºÍ¿ªÆôrpc·þÎñµÄÇé¿öÏÂ£º
-			±¾µØÊÂ¼þ·¢¸øµ±Ç°·þÎñÆ÷µÄ±¾µØÊÂ¼þ¼àÌýÆ÷
-			Ô¶³ÌÊÂ¼þ·¢¸øËùÓÐ·þÎñÆ÷µÄ±¾µØÔ¶³ÌÊÂ¼þ¼àÌýÆ÷¡¢Ô¶³ÌÊÂ¼þ¼àÌýÆ÷
-			±¾µØÔ¶³ÌÊÂ¼þ·¢¸øµ±Ç°·þÎñÆ÷µÄ±¾µØÊÂ¼þ¼àÌýÆ÷¡¢ËùÓÐ·þÎñÆ÷µÄ±¾µØÔ¶³ÌÊÂ¼þ¼àÌýÆ÷¡¢ËùÓÐ·þÎñÆ÷µÄÔ¶³ÌÊÂ¼þ¼àÌýÆ÷
+			å¦‚æžœå¯ç”¨è¿œç¨‹äº‹ä»¶å’Œå¼€å¯rpcæœåŠ¡çš„æƒ…å†µä¸‹ï¼š
+			æœ¬åœ°äº‹ä»¶å‘ç»™å½“å‰æœåŠ¡å™¨çš„æœ¬åœ°äº‹ä»¶ç›‘å¬å™¨
+			è¿œç¨‹äº‹ä»¶å‘ç»™æ‰€æœ‰æœåŠ¡å™¨çš„æœ¬åœ°è¿œç¨‹äº‹ä»¶ç›‘å¬å™¨ã€è¿œç¨‹äº‹ä»¶ç›‘å¬å™¨
+			æœ¬åœ°è¿œç¨‹äº‹ä»¶å‘ç»™å½“å‰æœåŠ¡å™¨çš„æœ¬åœ°äº‹ä»¶ç›‘å¬å™¨ã€æ‰€æœ‰æœåŠ¡å™¨çš„æœ¬åœ°è¿œç¨‹äº‹ä»¶ç›‘å¬å™¨ã€æ‰€æœ‰æœåŠ¡å™¨çš„è¿œç¨‹äº‹ä»¶ç›‘å¬å™¨
 		 -->
 		<property name="remoteevent.enabled" value="true"/>
 		<!--  
 			/**
-			 * Ö¸¶¨È±Ê¡ÏûÏ¢´«²¥ÀàÐÍ£º
-			 * ±¾µØ´«²¥(Event.LOCAL)
-			 * Ô¶³Ì´«²¥(Event.REMOTE)
-			 * ±¾µØÔ¶³Ì´«²¥ (Event.REMOTELOCAL)
+			 * æŒ‡å®šç¼ºçœæ¶ˆæ¯ä¼ æ’­ç±»åž‹ï¼š
+			 * æœ¬åœ°ä¼ æ’­(Event.LOCAL)
+			 * è¿œç¨‹ä¼ æ’­(Event.REMOTE)
+			 * æœ¬åœ°è¿œç¨‹ä¼ æ’­ (Event.REMOTELOCAL)
 			 */
 		-->
 		
 		<property name="event.destinction.type" value="Event.REMOTELOCAL"/>
 		<!-- 
-			×î´óµÈ´ý5´Î£¬Ã¿´ÎÑÓÊ±³¤10%
+			æœ€å¤§ç­‰å¾…5æ¬¡ï¼Œæ¯æ¬¡å»¶æ—¶é•¿10%
 		 -->
 		<property name="event.threadpool">
 			<map>
@@ -41,10 +41,10 @@
 				TimeUnit.MICROSECONDS
 				TimeUnit.MILLISECONDS
 				TimeUnit.NANOSECONDS
-				Ê±¼äµ¥Î»ÊÊÓÃÓÚÒÔÏÂ²ÎÊý£º
+				æ—¶é—´å•ä½é€‚ç”¨äºŽä»¥ä¸‹å‚æ•°ï¼š
 				keepAliveTime
 				waitTime
-				delayTime£¨µ±delayTimeÎªÕûÊýÊ±¼ä¶ø²»ÊÇ°Ù·Ö±ÈÊ±ÓÐÐ§£©
+				delayTimeï¼ˆå½“delayTimeä¸ºæ•´æ•°æ—¶é—´è€Œä¸æ˜¯ç™¾åˆ†æ¯”æ—¶æœ‰æ•ˆï¼‰
 				 -->
 				<property name="timeUnit" value="TimeUnit.SECONDS"/>
 				<property name="keepAliveTime" value="40"/>		
@@ -62,17 +62,17 @@
 				
 				<!-- 
 				RejectedExecutionHandler
-				±ØÐëÊµÏÖjava.util.concurrent.RejectedExecutionHandler½Ó¿Ú
-				Ä¿Ç°ÏµÍ³Ìá¹©ÒÔÏÂÈ±Ê¡ÊµÏÖ£º
-				org.frameworkset.thread.WaitPolicy  Ñ­»·µÈ´ýevent.threadpool.waitTimeÖ¸¶¨µÄÊ±¼ä£¬µ¥Î»ÎªÃë
-				java.util.concurrent.ThreadPoolExecutor.DiscardPolicy Ö±½Ó¶ªÆúÈÎÎñ£¬²»Å×³öÒì³£
-				java.util.concurrent.ThreadPoolExecutor.AbortPolicy Ö±½Ó¶ªÆúÈÎÎñ£¬Å×³öÒì³£RejectedExecutionException
-				java.util.concurrent.ThreadPoolExecutor.CallerRunsPolicy Ö±½ÓÔËÐÐ
-				java.util.concurrent.ThreadPoolExecutor.DiscardOldestPolicy ·ÅÈë¶ÓÁÐ£¬½«×îÀÏµÄÈÎÎñÉ¾³ý
+				å¿…é¡»å®žçŽ°java.util.concurrent.RejectedExecutionHandleræŽ¥å£
+				ç›®å‰ç³»ç»Ÿæä¾›ä»¥ä¸‹ç¼ºçœå®žçŽ°ï¼š
+				org.frameworkset.thread.WaitPolicy  å¾ªçŽ¯ç­‰å¾…event.threadpool.waitTimeæŒ‡å®šçš„æ—¶é—´ï¼Œå•ä½ä¸ºç§’
+				java.util.concurrent.ThreadPoolExecutor.DiscardPolicy ç›´æŽ¥ä¸¢å¼ƒä»»åŠ¡ï¼Œä¸æŠ›å‡ºå¼‚å¸¸
+				java.util.concurrent.ThreadPoolExecutor.AbortPolicy ç›´æŽ¥ä¸¢å¼ƒä»»åŠ¡ï¼ŒæŠ›å‡ºå¼‚å¸¸RejectedExecutionException
+				java.util.concurrent.ThreadPoolExecutor.CallerRunsPolicy ç›´æŽ¥è¿è¡Œ
+				java.util.concurrent.ThreadPoolExecutor.DiscardOldestPolicy æ”¾å…¥é˜Ÿåˆ—ï¼Œå°†æœ€è€çš„ä»»åŠ¡åˆ é™¤
 				 -->
 				<property name="rejectedExecutionHandler" value="org.frameworkset.thread.WaitPolicy"/>
 				<!-- 
-					ÒÔÏÂ²ÎÊýÖ»ÓÐÔÚÅäÖÃµÄorg.frameworkset.thread.WaitPolicy²ßÂÔÊ±²ÅÐèÒªÅäÖÃ
+					ä»¥ä¸‹å‚æ•°åªæœ‰åœ¨é…ç½®çš„org.frameworkset.thread.WaitPolicyç­–ç•¥æ—¶æ‰éœ€è¦é…ç½®
 				 -->
 				<property name="waitTime" value="1"/>
 				<property name="delayTime" value="10%"/>
@@ -88,9 +88,9 @@
 		
 	</properties>
 	<!-- 
-		Ô¶³ÌÊÂ¼þÈÏÖ¤ÐÅÏ¢ÅäÖÃ
-		ÓÃ»§ÕËºÅ
-		ÓÃ»§¿ÚÁî
+		è¿œç¨‹äº‹ä»¶è®¤è¯ä¿¡æ¯é…ç½®
+		ç”¨æˆ·è´¦å·
+		ç”¨æˆ·å£ä»¤
 	 -->
 	<property name="event.user" value="admin"/>
 	<property name="event.password" value="123456"/>
@@ -99,7 +99,7 @@
 	
 	
 	<!--
-			ÊÂ¼þ¹ÜÀíÔ¶³Ì·þÎñ
+			äº‹ä»¶ç®¡ç†è¿œç¨‹æœåŠ¡
 			
 		-->
 	<property name="event.serivce" class="org.frameworkset.remote.EventRemoteServiceImpl"  singlable="true" />

@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding='gb2312'?>
+<?xml version="1.0" encoding='UTF-8'?>
 <!-- 
 bboss-maptag.xml
-描述：展示map标签/mapkey标签，convert标签的使用方法
+鎻忚堪锛氬睍绀簃ap鏍囩/mapkey鏍囩锛宑onvert鏍囩鐨勪娇鐢ㄦ柟娉�
 -->
 <properties>
     <property name = "/tagdemo/*.page" 

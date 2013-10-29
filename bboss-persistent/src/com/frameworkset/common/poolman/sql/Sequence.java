@@ -3,7 +3,7 @@ package com.frameworkset.common.poolman.sql;
 import java.io.Serializable;
 
 /**
- * Ö÷¼üµÄĞòºÅºÍµ±Ç°Öµ
+ * ä¸»é”®çš„åºå·å’Œå½“å‰å€¼
  * @author biaoping.yin
  *
  */

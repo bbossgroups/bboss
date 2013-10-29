@@ -23,7 +23,7 @@ import org.junit.Test;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2012-1-2 ÏÂÎç10:42:20
+ * @Date 2012-1-2 ä¸‹åˆ10:42:20
  * @author biaoping.yin
  * @version 1.0
  */

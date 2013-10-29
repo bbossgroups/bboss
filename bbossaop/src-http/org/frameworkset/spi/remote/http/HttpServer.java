@@ -258,7 +258,7 @@ public class HttpServer {
 			ProMap ssls =  ApplicationContext.getApplicationContext().getMapProperty("rpc.protocol.http.ssl.server");
             if(ssls == null)
             {
-                throw new Exception("ÆôÓÃÁËsslÄ£Ê½£¬ µ«ÊÇÃ»ÓĞÖ¸¶¨rpc.protocol.http.ssl.server ²ÎÊı£¬Çë¼ì²éÎÄ¼şorg/frameworkset/spi/manager-rpc-http.xmlÊÇ·ñÕıÈ·ÉèÖÃÁË¸Ã²ÎÊı¡£");
+                throw new Exception("å¯ç”¨äº†sslæ¨¡å¼ï¼Œ ä½†æ˜¯æ²¡æœ‰æŒ‡å®šrpc.protocol.http.ssl.server å‚æ•°ï¼Œè¯·æ£€æŸ¥æ–‡ä»¶org/frameworkset/spi/manager-rpc-http.xmlæ˜¯å¦æ­£ç¡®è®¾ç½®äº†è¯¥å‚æ•°ã€‚");
             }
             String keyStore = ssls.getString("keyStore");
             String keyStorePassword = ssls.getString("keyStorePassword");
@@ -328,7 +328,7 @@ public class HttpServer {
 		
 		
 		serverParams = new BasicHttpParams();
-		int so_timeout = this.params.getInt("http.socket.timeout", 30);//ÒÔÃëÎªµ¥Î»
+		int so_timeout = this.params.getInt("http.socket.timeout", 30);//ä»¥ç§’ä¸ºå•ä½
 		int SOCKET_BUFFER_SIZE = this.params.getInt("http.socket.buffer-size",8 * 1024);
 		boolean STALE_CONNECTION_CHECK = this.params.getBoolean("http.connection.stalecheck", false);
 		boolean TCP_NODELAY = this.params.getBoolean("TCP_NODELAY", true);
@@ -414,7 +414,7 @@ public class HttpServer {
 	private RPCAddress localAddress;
 	public boolean validateAddress(RPCAddress address)
 	{
-	    //Ê×ÏÈÅĞ¶ÏµØÖ·ÊÇ·ñÔÚµØÖ··¶Î§ÖĞ
+	    //é¦–å…ˆåˆ¤æ–­åœ°å€æ˜¯å¦åœ¨åœ°å€èŒƒå›´ä¸­
 	    
 	    return ClinentTransport.validateAddress(address);
 	}

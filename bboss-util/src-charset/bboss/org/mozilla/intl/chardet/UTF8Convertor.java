@@ -86,7 +86,7 @@ public class UTF8Convertor {
 	public void convertCharsetToUtf_8(String dir)
 	{
 		convertCharsetToUtf_8(dir,
-							new String[]{".svn","classes",".settings","ÎÄµµ","dbinit-system","distrib","doc","lib","lib-client","lib-compile"},
+							new String[]{".svn","classes",".settings","æ–‡æ¡£","dbinit-system","distrib","doc","lib","lib-client","lib-compile"},
 							new String[]{".jsp",".java",".js",".css",".txt",".properties",".html",".htm",".tld",".vm",".xml"});
 				
 	}
@@ -245,7 +245,7 @@ public class UTF8Convertor {
 	}
 	
 	/**
-	 * »ñÈ¡ÎÄ¼şÄÚÈİ×Ö·û¼¯
+	 * è·å–æ–‡ä»¶å†…å®¹å­—ç¬¦é›†
 	 * @param f
 	 * @return
 	 * @throws Exception
@@ -255,7 +255,7 @@ public class UTF8Convertor {
 	}
 	
 	/**
-	 * »ñÈ¡ÎÄ¼şÄÚÈİ×Ö·û¼¯
+	 * è·å–æ–‡ä»¶å†…å®¹å­—ç¬¦é›†
 	 * @param f
 	 * @return
 	 * @throws Exception
@@ -356,7 +356,7 @@ public class UTF8Convertor {
 		}
 	}
 	/**
-	 * ½«ÎÄ¼şÄÚÈİ´ÓGBK×ª»»ÎªUTF-8
+	 * å°†æ–‡ä»¶å†…å®¹ä»GBKè½¬æ¢ä¸ºUTF-8
 	 * @param f
 	 * @throws Exception
 	 */
@@ -465,20 +465,20 @@ public class UTF8Convertor {
 	public static void main(String[] args) throws Exception
 	{
 		UTF8Convertor convertor = new UTF8Convertor();
-    	//×ª»»ÎÄ¼ş×Ö·û±àÂëGBK,GB2312,gb18030ÎªUTF-8
+    	//è½¬æ¢æ–‡ä»¶å­—ç¬¦ç¼–ç GBK,GB2312,gb18030ä¸ºUTF-8
 //		convertor.convertCharsetToUtf_8("D:\\workspace\\SanyPDP\\src-htmlparser");
 		
-		//×ª»»ÎÄ¼ş×Ö·û±àÂëGBK,GB2312,gb18030ÎªUTF-8,Ö¸¶¨ºöÂÔµÄÄ¿Â¼Ãû³Æ£¬Ö¸¶¨Òª×ª»»µÄÎÄ¼şÀàĞÍ
+		//è½¬æ¢æ–‡ä»¶å­—ç¬¦ç¼–ç GBK,GB2312,gb18030ä¸ºUTF-8,æŒ‡å®šå¿½ç•¥çš„ç›®å½•åç§°ï¼ŒæŒ‡å®šè¦è½¬æ¢çš„æ–‡ä»¶ç±»å‹
 //		convertor.convertCharsetToUtf_8("D:\\workspace\\SanyPDP\\src-htmlparser",
-//				new String[]{".svn","classes",".settings","ÎÄµµ","dbinit-system","distrib","doc","lib","lib-client","lib-compile"},
+//				new String[]{".svn","classes",".settings","æ–‡æ¡£","dbinit-system","distrib","doc","lib","lib-client","lib-compile"},
 //				new String[]{".jsp",".java",".js",".css",".txt",".properties",".html",".htm",".tld",".vm",".xml"});
 		convertor.convertCharsetToUtf_8("D:\\workspace\\SanyPDP\\src-htmlparser",
 				new String[]{".svn"},
 				new String[]{".java"});
 		
-		//»ñÈ¡ÎÄ¼şÄÚÈİ±àÂë¼¯
+		//è·å–æ–‡ä»¶å†…å®¹ç¼–ç é›†
 //		 String charset = convertor.takefilecharset(new File("D:\\workspace\\smc-desktop/src-sys/com/frameworkset/platform/sysmgrcore/purviewmanager/PurviewManagerOrgTree.java"));
-		//´òÓ¡Ã»ÓĞ¾«È·Ê¶±ğ³ö×Ö·û¼¯µÄÎÄ¼şĞÅÏ¢
+		//æ‰“å°æ²¡æœ‰ç²¾ç¡®è¯†åˆ«å‡ºå­—ç¬¦é›†çš„æ–‡ä»¶ä¿¡æ¯
 		 System.out.println(convertor.getUnknown());
 		
 	}

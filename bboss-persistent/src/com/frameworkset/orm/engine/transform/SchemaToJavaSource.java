@@ -20,7 +20,7 @@ import java.io.Serializable;
 /**
  * <p>Title: SchemaToJavaSource</p>
  *
- * <p>Description: ¸ù¾İO/R mapping SCHEMAÎÄ¼ş,Éú³Éjava beanÔ´ÎÄ¼ş</p>
+ * <p>Description: æ ¹æ®O/R mapping SCHEMAæ–‡ä»¶,ç”Ÿæˆjava beanæºæ–‡ä»¶</p>
  *
  * <p>Copyright: Copyright (c) 2005</p>
  *

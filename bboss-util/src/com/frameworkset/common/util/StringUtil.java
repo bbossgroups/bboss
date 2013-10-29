@@ -44,26 +44,26 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * To change for your class or interface
- * DAOÖĞVOObject StringÀàĞÍÓëPOÊı¾İÀàĞÍ×ª»»¹¤¾ßÀà.
+ * DAOä¸­VOObject Stringç±»å‹ä¸POæ•°æ®ç±»å‹è½¬æ¢å·¥å…·ç±».
  * @author wangyixing
  * @version 1.0
  */
 
 public class StringUtil {
-	//¶ººÅ³£Á¿
+	//é€—å·å¸¸é‡
 	public static final String COMMA = ",";
-	//¿Õ´®³£Á¿
+	//ç©ºä¸²å¸¸é‡
 	public static final String BLANK = "";
 	
 	/**
-	 * ½«Ò»¸ö×Ö·û´®¸ù¾İ¶ººÅ·Ö²ğ
+	 * å°†ä¸€ä¸ªå­—ç¬¦ä¸²æ ¹æ®é€—å·åˆ†æ‹†
 	 * */
 	public static String[] split(String s) {
 		return split(s, COMMA);
 	}
 
 	/**
-	 * ½«×Ö·û´®¸ù¾İ¸ø¶¨·Ö¸ô·û·Ö²ğ
+	 * å°†å­—ç¬¦ä¸²æ ¹æ®ç»™å®šåˆ†éš”ç¬¦åˆ†æ‹†
 	 * */
 	public static String[] split(String s, String delimiter) {		
 		return s.split(delimiter);
@@ -171,8 +171,8 @@ public class StringUtil {
 	}
 	
 	/**
-	 * »ñÈ¡ÎÄ¼şÃû³Æ
-	 * @param path ÎÄ¼şÂ·¾­
+	 * è·å–æ–‡ä»¶åç§°
+	 * @param path æ–‡ä»¶è·¯ç»
 	 * @return String
 	 */
 	public static String getFileName(String path)

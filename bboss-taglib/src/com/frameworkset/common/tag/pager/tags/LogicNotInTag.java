@@ -3,8 +3,8 @@ package com.frameworkset.common.tag.pager.tags;
  * 
  * <p>Title: LogicNotInTag</p>
  *
- * <p>Description: �жϼ������Ի���expression���Զ�Ӧ�ı���ʽ�õ�ֵ�Ƿ����
- * ��scope���Ի����ʽ��Ӧ��ֵ��Χ֮�ڣ�ֵ��Χ�Զ��ŷָ��������������ִ��notin��ǩ���Ӧ�Ĵ��룬����ִ��</p>
+ * <p>Description: 判断计算属性或者expression属性对应的表达式得到值是否包含
+ * 在scope属性或表达式对应的值范围之内，值范围以逗号分隔，如果不包含则执行notin标签体对应的代码，否则不执行</p>
  *
  * <p>Copyright: Copyright (c) 2006</p>
  *

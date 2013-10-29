@@ -371,7 +371,7 @@ public class DBOracle extends DB
     }
 
     /**
-     * Êı¾İ¿âÖ÷¼ü×î´óÖµµÄ»ñÈ¡·½·¨
+     * æ•°æ®åº“ä¸»é”®æœ€å¤§å€¼çš„è·å–æ–¹æ³•
      */
     public String getIDMAXSql(String table_name, String table_id_name, String table_id_prefix, String type)
     {
@@ -436,7 +436,7 @@ public class DBOracle extends DB
     }
 
     /**
-     * »ñÈ¡ÊÜÏŞÖÆ½á¹ûÌõÊıµÄsqlÓï¾ä£¬Ä¬ÈÏÎªmysqlÓï·¨¹æÔò ²»Í¬µÄÊı¾İ¿âĞèÒªÖØÔØ±¾·½·¨
+     * è·å–å—é™åˆ¶ç»“æœæ¡æ•°çš„sqlè¯­å¥ï¼Œé»˜è®¤ä¸ºmysqlè¯­æ³•è§„åˆ™ ä¸åŒçš„æ•°æ®åº“éœ€è¦é‡è½½æœ¬æ–¹æ³•
      * 
      * @param selectSql
      *            String
@@ -453,7 +453,7 @@ public class DBOracle extends DB
     }
 
     /**
-     * »ñÈ¡Ö¸¶¨Êı¾İµÄ·ÖÒ³Êı¾İsqlÓï¾ä
+     * è·å–æŒ‡å®šæ•°æ®çš„åˆ†é¡µæ•°æ®sqlè¯­å¥
      * 
      * @param sql
      * @return
@@ -489,7 +489,7 @@ public class DBOracle extends DB
     }
 
     /**
-     * »ñÈ¡ÊÜÏŞÖÆ½á¹ûÌõÊıµÄsqlÓï¾ä£¬ÒªÇóselectSqlµÄÓï·¨£¬°´oracle×Ô¶¨ÒåÊÜÏŞÓï¾äÓï·¨£¬ÀıÈç SELECT
+     * è·å–å—é™åˆ¶ç»“æœæ¡æ•°çš„sqlè¯­å¥ï¼Œè¦æ±‚selectSqlçš„è¯­æ³•ï¼ŒæŒ‰oracleè‡ªå®šä¹‰å—é™è¯­å¥è¯­æ³•ï¼Œä¾‹å¦‚ SELECT
      * a.cpmc,a.ggxh,a.
      * cjdd,a.ph,a.jgxs,a.dj,a.jldw,a.cd,a.cddm,a.flag,cjrq,a.pricepsj_id
      * ,b.user_name, ROW_NUMBER() OVER ( ORDER BY cjrq ) aa from
@@ -500,7 +500,7 @@ public class DBOracle extends DB
      * @param limit
      *            int
      * @param rownum
-     *            ĞĞºÅµÄ±ğÃû
+     *            è¡Œå·çš„åˆ«å
      * @return String
      */
     public String getOracleLimitSelect(String selectSql, int limit, String rownum)
@@ -512,8 +512,8 @@ public class DBOracle extends DB
     }
 
     /**
-     * »ñÈ¡¸ßĞ§µÄoracle·ÖÒ³Óï¾ä£¬sqlÖĞÒÑ¾­Ğ´ºÃROW_NUMBER() OVER ( ORDER BY cjrq ) rownum
-     * ·ñÔò²»ÄÜµ÷ÓÃ±¾·½·¨Éú³ÉoralceµÄ·ÖÒ³Óï¾ä
+     * è·å–é«˜æ•ˆçš„oracleåˆ†é¡µè¯­å¥ï¼Œsqlä¸­å·²ç»å†™å¥½ROW_NUMBER() OVER ( ORDER BY cjrq ) rownum
+     * å¦åˆ™ä¸èƒ½è°ƒç”¨æœ¬æ–¹æ³•ç”Ÿæˆoralceçš„åˆ†é¡µè¯­å¥
      */
     public PagineSql getOracleDBPagineSql(String sql, long offset, int maxsize, String rownum,boolean prepared)
     {
@@ -716,7 +716,7 @@ public class DBOracle extends DB
 
 			sqlBuffer.append("?");
 
-			// ×¢ÒâÕâÀïµÄ¡±for update¡±
+			// æ³¨æ„è¿™é‡Œçš„â€for updateâ€
 
 			sqlBuffer.append(" for update nowait");
 
@@ -868,7 +868,7 @@ public class DBOracle extends DB
 
 			sqlBuffer.append("?");
 
-			// ×¢ÒâÕâÀïµÄ¡±for update¡±
+			// æ³¨æ„è¿™é‡Œçš„â€for updateâ€
 
 			sqlBuffer.append(" for update nowait");
 
@@ -1025,7 +1025,7 @@ public class DBOracle extends DB
 	}
 
 	/**
-	 * ¸ù¾İÊäÈëÁ÷¸üĞÂ
+	 * æ ¹æ®è¾“å…¥æµæ›´æ–°
 	 * 
 	 * @param value
 	 * @param conn
@@ -1078,7 +1078,7 @@ public class DBOracle extends DB
 
 			sqlBuffer.append("?");
 
-			// ×¢ÒâÕâÀïµÄ¡±for update¡±
+			// æ³¨æ„è¿™é‡Œçš„â€for updateâ€
 
 			sqlBuffer.append(" for update nowait");
 
@@ -1223,7 +1223,7 @@ public class DBOracle extends DB
 	}
 
 	/**
-	 * ³õÊ¼»¯blob×Ö¶Î
+	 * åˆå§‹åŒ–blobå­—æ®µ
 	 * 
 	 * @param conn
 	 * @param table
@@ -1250,7 +1250,7 @@ public class DBOracle extends DB
 			pstmt.setBlob(1, BLOB.empty_lob());
 			pstmt.executeUpdate();
 			/**
-			 * »ñÈ¡¸Õ¸Õ³õÊ¼»¯µÄ×Ö¶Îclob×Ö¶Î
+			 * è·å–åˆšåˆšåˆå§‹åŒ–çš„å­—æ®µclobå­—æ®µ
 			 */
 			StringBuffer sqlBuffer = new StringBuffer();
 			sqlBuffer.append("select ");
@@ -1269,7 +1269,7 @@ public class DBOracle extends DB
 
 			sqlBuffer.append("?");
 
-			// ×¢ÒâÕâÀïµÄ¡±for update¡±
+			// æ³¨æ„è¿™é‡Œçš„â€for updateâ€
 
 			sqlBuffer.append("  ");
 
@@ -1327,7 +1327,7 @@ public class DBOracle extends DB
 	}
 
 	/**
-	 * ³õÊ¼»¯blob×Ö¶Î
+	 * åˆå§‹åŒ–blobå­—æ®µ
 	 * 
 	 * @param conn
 	 * @param table
@@ -1354,7 +1354,7 @@ public class DBOracle extends DB
 			pstmt.executeUpdate();
 
 			/**
-			 * »ñÈ¡¸Õ¸Õ³õÊ¼»¯µÄ×Ö¶Îclob×Ö¶Î
+			 * è·å–åˆšåˆšåˆå§‹åŒ–çš„å­—æ®µclobå­—æ®µ
 			 */
 			StringBuffer sqlBuffer = new StringBuffer();
 			sqlBuffer.append("select ");
@@ -1373,7 +1373,7 @@ public class DBOracle extends DB
 
 			sqlBuffer.append("?");
 
-			// ×¢ÒâÕâÀïµÄ¡±for update¡±
+			// æ³¨æ„è¿™é‡Œçš„â€for updateâ€
 
 			sqlBuffer.append("  ");
 

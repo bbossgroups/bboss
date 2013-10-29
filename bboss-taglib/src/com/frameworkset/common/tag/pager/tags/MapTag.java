@@ -28,15 +28,15 @@ import javax.servlet.jsp.JspException;
 	                    	<pg:map requestKey="billDataList" key="" keycell="true" keyColName="">
 		                    	<pg:list> 
 			                    	<ul>
-			                        	<li class="w50"><label>�û���</label>���</li>
-			                        	<li class="w50"><label>���ţ�</label>���ض��첿</li>
-			                        	<li><label>��Ŀ��</label>��Ŀ1</li>
-			                        	<li><label>Ԥ���Ŀ��</label>�칫��-�ʼķ�</li>
-			                        	<li><label>���÷���ʱ�䣺</label>2012-01-31</li>
-			                        	<li><label>��</label>1000.00</li>
-			                        	<li><label>���֣�</label>�����</li>
-			                        	<li><label>���ݽ�</label>5905.05</li>
-			                        	<li><label>��ע��</label>����</li>
+			                        	<li class="w50"><label>用户：</label>蔡睿</li>
+			                        	<li class="w50"><label>部门：</label>文秘督办部</li>
+			                        	<li><label>项目：</label>项目1</li>
+			                        	<li><label>预算科目：</label>办公费-邮寄费</li>
+			                        	<li><label>费用发生时间：</label>2012-01-31</li>
+			                        	<li><label>金额：</label>1000.00</li>
+			                        	<li><label>币种：</label>人民币</li>
+			                        	<li><label>单据金额：</label>5905.05</li>
+			                        	<li><label>备注：</label>测试</li>
 			                        </ul>
 		                        </pg:list>
 	                        </pg:map>

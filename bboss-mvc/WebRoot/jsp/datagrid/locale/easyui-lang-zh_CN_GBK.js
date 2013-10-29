@@ -1,43 +1,43 @@
 if ($.fn.pagination){
-	$.fn.pagination.defaults.beforePageText = 'µÚ';
-	$.fn.pagination.defaults.afterPageText = '¹²{pages}Ò³';
-	$.fn.pagination.defaults.displayMsg = 'ÏÔÊ¾{from}µ½{to},¹²{total}¼ÇÂ¼';
+	$.fn.pagination.defaults.beforePageText = 'ç¬¬';
+	$.fn.pagination.defaults.afterPageText = 'å…±{pages}é¡µ';
+	$.fn.pagination.defaults.displayMsg = 'æ˜¾ç¤º{from}åˆ°{to},å…±{total}è®°å½•';
 }
 if ($.fn.datagrid){
-	$.fn.datagrid.defaults.loadMsg = 'ÕıÔÚ´¦Àí£¬ÇëÉÔ´ı¡£¡£¡£';
+	$.fn.datagrid.defaults.loadMsg = 'æ­£åœ¨å¤„ç†ï¼Œè¯·ç¨å¾…ã€‚ã€‚ã€‚';
 }
 if ($.messager){
-	$.messager.defaults.ok = 'È·¶¨';
-	$.messager.defaults.cancel = 'È¡Ïû';
+	$.messager.defaults.ok = 'ç¡®å®š';
+	$.messager.defaults.cancel = 'å–æ¶ˆ';
 }
 if ($.fn.validatebox){
-	$.fn.validatebox.defaults.missingMessage = '¸ÃÊäÈëÏîÎª±ØÊäÏî';
-	$.fn.validatebox.defaults.rules.email.message = 'ÇëÊäÈëÓĞĞ§µÄµç×ÓÓÊ¼şµØÖ·';
-	$.fn.validatebox.defaults.rules.url.message = 'ÇëÊäÈëÓĞĞ§µÄURLµØÖ·';
-	$.fn.validatebox.defaults.rules.length.message = 'ÊäÈëÄÚÈİ³¤¶È±ØĞë½éÓÚ{0}ºÍ{1}Ö®¼ä';
-	$.fn.validatebox.defaults.rules.remote.message = 'ÇëĞŞÕı¸Ã×Ö¶Î';
+	$.fn.validatebox.defaults.missingMessage = 'è¯¥è¾“å…¥é¡¹ä¸ºå¿…è¾“é¡¹';
+	$.fn.validatebox.defaults.rules.email.message = 'è¯·è¾“å…¥æœ‰æ•ˆçš„ç”µå­é‚®ä»¶åœ°å€';
+	$.fn.validatebox.defaults.rules.url.message = 'è¯·è¾“å…¥æœ‰æ•ˆçš„URLåœ°å€';
+	$.fn.validatebox.defaults.rules.length.message = 'è¾“å…¥å†…å®¹é•¿åº¦å¿…é¡»ä»‹äº{0}å’Œ{1}ä¹‹é—´';
+	$.fn.validatebox.defaults.rules.remote.message = 'è¯·ä¿®æ­£è¯¥å­—æ®µ';
 }
 if ($.fn.numberbox){
-	$.fn.numberbox.defaults.missingMessage = '¸ÃÊäÈëÏîÎª±ØÊäÏî';
+	$.fn.numberbox.defaults.missingMessage = 'è¯¥è¾“å…¥é¡¹ä¸ºå¿…è¾“é¡¹';
 }
 if ($.fn.combobox){
-	$.fn.combobox.defaults.missingMessage = '¸ÃÊäÈëÏîÎª±ØÊäÏî';
+	$.fn.combobox.defaults.missingMessage = 'è¯¥è¾“å…¥é¡¹ä¸ºå¿…è¾“é¡¹';
 }
 if ($.fn.combotree){
-	$.fn.combotree.defaults.missingMessage = '¸ÃÊäÈëÏîÎª±ØÊäÏî';
+	$.fn.combotree.defaults.missingMessage = 'è¯¥è¾“å…¥é¡¹ä¸ºå¿…è¾“é¡¹';
 }
 if ($.fn.combogrid){
-	$.fn.combogrid.defaults.missingMessage = '¸ÃÊäÈëÏîÎª±ØÊäÏî';
+	$.fn.combogrid.defaults.missingMessage = 'è¯¥è¾“å…¥é¡¹ä¸ºå¿…è¾“é¡¹';
 }
 if ($.fn.calendar){
-	$.fn.calendar.defaults.weeks = ['ÈÕ','Ò»','¶ş','Èı','ËÄ','Îå','Áù'];
-	$.fn.calendar.defaults.months = ['Ò»ÔÂ','¶şÔÂ','ÈıÔÂ','ËÄÔÂ','ÎåÔÂ','ÁùÔÂ','ÆßÔÂ','°ËÔÂ','¾ÅÔÂ','Ê®ÔÂ','Ê®Ò»ÔÂ','Ê®¶şÔÂ'];
+	$.fn.calendar.defaults.weeks = ['æ—¥','ä¸€','äºŒ','ä¸‰','å››','äº”','å…­'];
+	$.fn.calendar.defaults.months = ['ä¸€æœˆ','äºŒæœˆ','ä¸‰æœˆ','å››æœˆ','äº”æœˆ','å…­æœˆ','ä¸ƒæœˆ','å…«æœˆ','ä¹æœˆ','åæœˆ','åä¸€æœˆ','åäºŒæœˆ'];
 }
 if ($.fn.datebox){
-	$.fn.datebox.defaults.currentText = '½ñÌì';
-	$.fn.datebox.defaults.closeText = '¹Ø±Õ';
-	$.fn.datebox.defaults.okText = 'È·¶¨';
-	$.fn.datebox.defaults.missingMessage = '¸ÃÊäÈëÏîÎª±ØÊäÏî';
+	$.fn.datebox.defaults.currentText = 'ä»Šå¤©';
+	$.fn.datebox.defaults.closeText = 'å…³é—­';
+	$.fn.datebox.defaults.okText = 'ç¡®å®š';
+	$.fn.datebox.defaults.missingMessage = 'è¯¥è¾“å…¥é¡¹ä¸ºå¿…è¾“é¡¹';
 	$.fn.datebox.defaults.formatter = function(date){
 		var y = date.getFullYear();
 		var m = date.getMonth()+1;

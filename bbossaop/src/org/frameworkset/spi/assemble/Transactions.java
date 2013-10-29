@@ -29,8 +29,8 @@ import org.frameworkset.spi.UNmodify;
  * </p>
  * 
  * <p>
- * Description: ·â×°ÒµÎñ×é¼şµÄÊÂÎñÊôĞÔ,ÒµÎñ×é¼şµÄÊÂÎñÊôĞÔ °üº¬ÒÔÏÂÄÚÈİ£º Òª½øĞĞÊÂÎñ¿ØÖÆµÄ·½·¨Ãû ·½·¨²ÎÊıÁĞ±í ´¥·¢ÊÂÎñ»Ø¹öµÄÒì³£Çåµ¥
- * ·½·¨ËùĞèÊÂÎñÀàĞÍ
+ * Description: å°è£…ä¸šåŠ¡ç»„ä»¶çš„äº‹åŠ¡å±æ€§,ä¸šåŠ¡ç»„ä»¶çš„äº‹åŠ¡å±æ€§ åŒ…å«ä»¥ä¸‹å†…å®¹ï¼š è¦è¿›è¡Œäº‹åŠ¡æ§åˆ¶çš„æ–¹æ³•å æ–¹æ³•å‚æ•°åˆ—è¡¨ è§¦å‘äº‹åŠ¡å›æ»šçš„å¼‚å¸¸æ¸…å•
+ * æ–¹æ³•æ‰€éœ€äº‹åŠ¡ç±»å‹
  * </p>
  * 
  * <p>
@@ -42,7 +42,7 @@ import org.frameworkset.spi.UNmodify;
  * </p>
  * 
  * @Date Jul 30, 2008 9:19:00 AM
- * @author biaoping.yin,Òü±êÆ½
+ * @author biaoping.yin,å°¹æ ‡å¹³
  * @version 1.0
  */
 public class Transactions implements java.io.Serializable,UNmodify
@@ -57,10 +57,10 @@ public class Transactions implements java.io.Serializable,UNmodify
     }
 
     /**
-     * ÅĞ¶Ï·½·¨ÊÇ·ñÊÇĞèÒª½øĞĞÊÂÎñ¿ØÖÆ,Èç¹ûÊÇÔò·µ»Ø°üº¬ÊÂÎñ¿ØÖÆ²ßÂÔĞÅÏ¢µÄ·½·¨¶ÔÏó£¬ ²»ÊÇ¾Í·µ»Ønull
+     * åˆ¤æ–­æ–¹æ³•æ˜¯å¦æ˜¯éœ€è¦è¿›è¡Œäº‹åŠ¡æ§åˆ¶,å¦‚æœæ˜¯åˆ™è¿”å›åŒ…å«äº‹åŠ¡æ§åˆ¶ç­–ç•¥ä¿¡æ¯çš„æ–¹æ³•å¯¹è±¡ï¼Œ ä¸æ˜¯å°±è¿”å›null
      * 
      * @param method
-     * @return SynchronizedMethod °üº¬ÊÂÎñ¿ØÖÆ²ßÂÔĞÅÏ¢
+     * @return SynchronizedMethod åŒ…å«äº‹åŠ¡æ§åˆ¶ç­–ç•¥ä¿¡æ¯
      */
     public SynchronizedMethod isTransactionMethod(Method method,String muuid)
     {

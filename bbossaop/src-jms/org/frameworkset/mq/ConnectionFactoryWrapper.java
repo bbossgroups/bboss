@@ -25,7 +25,7 @@ import javax.jms.JMSException;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2010-1-13 œ¬ŒÁ01:53:07
+ * @Date 2010-1-13 ‰∏ãÂçà01:53:07
  * @author biaoping.yin
  * @version 1.0
  */

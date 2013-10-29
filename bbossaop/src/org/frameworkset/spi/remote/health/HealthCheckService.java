@@ -21,7 +21,7 @@ package org.frameworkset.spi.remote.health;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2010-5-15 ÏÂÎç09:15:47
+ * @Date 2010-5-15 ä¸‹åˆ09:15:47
  * @author biaoping.yin
  * @version 1.0
  */

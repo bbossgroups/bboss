@@ -22,13 +22,13 @@ import org.frameworkset.spi.BaseApplicationContext;
  * 
  * <p>Title: Reference.java</p>
  *
- * <p>Description: ·şÎñÌá¹©ÕßÒıÓÃÆäËûÒıÓÃ·şÎñÕßµÄĞÅÏ¢</p>
+ * <p>Description: æœåŠ¡æä¾›è€…å¼•ç”¨å…¶ä»–å¼•ç”¨æœåŠ¡è€…çš„ä¿¡æ¯</p>
  *
  * <p>Copyright: Copyright (c) 2007</p>
  *
  * <p>bboss workgroup</p>
  * @Date Aug 13, 2008 10:43:38 AM
- * @author biaoping.yin,Òü±êÆ½
+ * @author biaoping.yin,å°¹æ ‡å¹³
  * @version 1.0
  */
 public class Reference extends Pro{
@@ -38,7 +38,7 @@ public class Reference extends Pro{
         super(applicationContext);
         // TODO Auto-generated constructor stub
     }
-    /**ÒıÓÃ×Ö¶ÎÃû³Æ*/
+    /**å¼•ç”¨å­—æ®µåç§°*/
 	private String fieldname;
 	
 //	

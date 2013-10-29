@@ -44,7 +44,7 @@ import com.frameworkset.common.tag.tree.itf.ITree;
 import com.frameworkset.common.tag.tree.itf.ITreeNode;
 
 /**
- * Ê÷µÄ½ÚµãĞÅÏ¢¶ÔÏó
+ * æ ‘çš„èŠ‚ç‚¹ä¿¡æ¯å¯¹è±¡
  * @author biaoping.yin 
  * @date 2006-12-19 8:53:36
  * @version v1.0
@@ -53,12 +53,12 @@ import com.frameworkset.common.tag.tree.itf.ITreeNode;
 public class TreeNode implements ITreeNode, java.io.Serializable ,AttachElement{
 
 	/**
-	 * comtree½Ó¿Ú
+	 * comtreeæ¥å£
 	 */
 	Tree tree;
 	/**
-	 * ±¸×¢£¬¿ÉÒÔ±£´æËùÓĞĞèÒªÀ©³äµÄĞÅÏ¢
-	 * tagºÍactionÖĞ¿ÉÒÔÍ¨¹ırequest.getParameter("memo")»ñÈ¡¸ÃĞÅÏ¢
+	 * å¤‡æ³¨ï¼Œå¯ä»¥ä¿å­˜æ‰€æœ‰éœ€è¦æ‰©å……çš„ä¿¡æ¯
+	 * tagå’Œactionä¸­å¯ä»¥é€šè¿‡request.getParameter("memo")è·å–è¯¥ä¿¡æ¯
 	 */
 	protected String memo;
 	protected String name;
@@ -66,7 +66,7 @@ public class TreeNode implements ITreeNode, java.io.Serializable ,AttachElement{
 	protected String type;
 	protected String target; 
 	/**
-	 * ½Úµãlink
+	 * èŠ‚ç‚¹link
 	 */
 	protected String nodeLink;
 	protected List children = new ArrayList();
@@ -76,13 +76,13 @@ public class TreeNode implements ITreeNode, java.io.Serializable ,AttachElement{
     protected String parentPath;
     protected Map params;
 	/**
-	 * checkbox µÄÖµ
+	 * checkbox çš„å€¼
 	 */
 
 	private String checkboxValue;
 
 	/**
-	 * radio°´Å¥Öµ
+	 * radioæŒ‰é’®å€¼
 	 */
 	private String radioValue;
 
@@ -96,9 +96,9 @@ public class TreeNode implements ITreeNode, java.io.Serializable ,AttachElement{
       
     
 	/**
-	 * ¿ØÖÆ½ÚµãÊÇ·ñÏÔÊ¾Á´½Ó
-	 * true ÏÔÊ¾£¨Ä¬ÈÏ£©
-	 * false ²»ÏÔÊ¾
+	 * æ§åˆ¶èŠ‚ç‚¹æ˜¯å¦æ˜¾ç¤ºé“¾æ¥
+	 * true æ˜¾ç¤ºï¼ˆé»˜è®¤ï¼‰
+	 * false ä¸æ˜¾ç¤º
 	 */
 	protected boolean showHref = true;
 	
@@ -106,13 +106,13 @@ public class TreeNode implements ITreeNode, java.io.Serializable ,AttachElement{
 	protected ITreeNode rightNode;
 	
 	/**
-	 * ¶ù×Ó½Úµã´®£¬Ö»ÓĞµ±¸´Ñ¡¿òµÄÊôĞÔrecursiveÎªtrue»òÕß½Úµã±¾ÉíµÄrecursiveÎªtrueÊ±ĞèÒª
-	 * Æ´½Ó¶ù×ÓµÄids
+	 * å„¿å­èŠ‚ç‚¹ä¸²ï¼Œåªæœ‰å½“å¤é€‰æ¡†çš„å±æ€§recursiveä¸ºtrueæˆ–è€…èŠ‚ç‚¹æœ¬èº«çš„recursiveä¸ºtrueæ—¶éœ€è¦
+	 * æ‹¼æ¥å„¿å­çš„ids
 	 */
 	protected StringBuffer sonids;
 	/**
-	 * ¸¸½Úµãids´®£¬Ö»ÓĞ¸´Ñ¡¿òµÄuprecursiveµÄÖµÎªtrue»òÕß½Úµã±¾ÉíµÄuprecursiveµÄÖµÎªtrueÊ±
-	 * ĞèÒªÆ´½Ó¸¸ids
+	 * çˆ¶èŠ‚ç‚¹idsä¸²ï¼Œåªæœ‰å¤é€‰æ¡†çš„uprecursiveçš„å€¼ä¸ºtrueæˆ–è€…èŠ‚ç‚¹æœ¬èº«çš„uprecursiveçš„å€¼ä¸ºtrueæ—¶
+	 * éœ€è¦æ‹¼æ¥çˆ¶ids
 	 */
 	protected StringBuffer fatherids;
 	
@@ -156,10 +156,10 @@ public class TreeNode implements ITreeNode, java.io.Serializable ,AttachElement{
 	//		}
 
 	/**
-	 * Ë¢ĞÂ½Úµã±¾ÉíĞÅÏ¢
+	 * åˆ·æ–°èŠ‚ç‚¹æœ¬èº«ä¿¡æ¯
 	 * derived from java.util.Observer
 	 * added by yinbiaoping on 2003/03/23
-	 * Object o is the Observer Èç¹ûo¾ÍÊÇ¶ÔÏó±¾Éí£¨this£©Ê±¸ÃÔõÃ´´¦Àí£¿£¿£¿£¿£¿£¿£¿£¿ #questtion1
+	 * Object o is the Observer å¦‚æœoå°±æ˜¯å¯¹è±¡æœ¬èº«ï¼ˆthisï¼‰æ—¶è¯¥æ€ä¹ˆå¤„ç†ï¼Ÿï¼Ÿï¼Ÿï¼Ÿï¼Ÿï¼Ÿï¼Ÿï¼Ÿ #questtion1
 	 * @see     java.util.Observable
 	 * @see     java.util.Observer
 	 */
@@ -196,9 +196,9 @@ public class TreeNode implements ITreeNode, java.io.Serializable ,AttachElement{
 
 	/**
 	 *
-	 * @param id ½Úµãid,È«¾ÖÎ¨Ò»
-	 * @param name ½ÚµãÃû³Æ
-	 * @param type ½ÚµãÀàĞÍ
+	 * @param id èŠ‚ç‚¹id,å…¨å±€å”¯ä¸€
+	 * @param name èŠ‚ç‚¹åç§°
+	 * @param type èŠ‚ç‚¹ç±»å‹
 	 */
 	public TreeNode(String id, String name, String type) {
 		this(id, name, type, (String) null);
@@ -206,10 +206,10 @@ public class TreeNode implements ITreeNode, java.io.Serializable ,AttachElement{
 
 	/**
 		 *
-		 * @param id ½Úµãid,È«¾ÖÎ¨Ò»
-		 * @param name ½ÚµãÃû³Æ
-		 * @param type ½ÚµãÀàĞÍ
-		 * @param memo ½Úµã±¸×¢
+		 * @param id èŠ‚ç‚¹id,å…¨å±€å”¯ä¸€
+		 * @param name èŠ‚ç‚¹åç§°
+		 * @param type èŠ‚ç‚¹ç±»å‹
+		 * @param memo èŠ‚ç‚¹å¤‡æ³¨
 		 */
 	public TreeNode(String id, String name, String type, String memo) {
 		this(id, name, type, true, null, memo);
@@ -218,10 +218,10 @@ public class TreeNode implements ITreeNode, java.io.Serializable ,AttachElement{
 
 	/**
 	 *
-	 * @param id ½Úµãid,È«¾ÖÎ¨Ò»
-	 * @param name ½ÚµãÃû³Æ
-	 * @param type ½ÚµãÀàĞÍ
-	 * @param showHref ÊÇ·ñÏÔÊ¾½ÚµãµÄ³¬Á´½Ó
+	 * @param id èŠ‚ç‚¹id,å…¨å±€å”¯ä¸€
+	 * @param name èŠ‚ç‚¹åç§°
+	 * @param type èŠ‚ç‚¹ç±»å‹
+	 * @param showHref æ˜¯å¦æ˜¾ç¤ºèŠ‚ç‚¹çš„è¶…é“¾æ¥
 	 */
 	public TreeNode(String id, String name, String type, boolean showHref) {
 		this(id, name, type, showHref, (String) null);
@@ -229,11 +229,11 @@ public class TreeNode implements ITreeNode, java.io.Serializable ,AttachElement{
 
 	/**
 		 *
-		 * @param id ½Úµãid,È«¾ÖÎ¨Ò»
-		 * @param name ½ÚµãÃû³Æ
-		 * @param type ½ÚµãÀàĞÍ
-		 * @param showHref ÊÇ·ñÏÔÊ¾½ÚµãµÄ³¬Á´½Ó
-		 * @param memo ½Úµã±¸×¢
+		 * @param id èŠ‚ç‚¹id,å…¨å±€å”¯ä¸€
+		 * @param name èŠ‚ç‚¹åç§°
+		 * @param type èŠ‚ç‚¹ç±»å‹
+		 * @param showHref æ˜¯å¦æ˜¾ç¤ºèŠ‚ç‚¹çš„è¶…é“¾æ¥
+		 * @param memo èŠ‚ç‚¹å¤‡æ³¨
 		 */
 	public TreeNode(
 		String id,
@@ -245,12 +245,12 @@ public class TreeNode implements ITreeNode, java.io.Serializable ,AttachElement{
 	}
 
 	/**
-		 * ¹¹½¨Æ÷
-		 * ³õÊ¼»¯ÊôĞÔid,name,type,notifier
-		 * @param id ½Úµãid,È«¾ÖÎ¨Ò»
-		 * @param name ½ÚµãÃû³Æ
-		 * @param type ½ÚµãÀàĞÍ
-		 * @param memo ½Úµã±¸×¢
+		 * æ„å»ºå™¨
+		 * åˆå§‹åŒ–å±æ€§id,name,type,notifier
+		 * @param id èŠ‚ç‚¹id,å…¨å±€å”¯ä¸€
+		 * @param name èŠ‚ç‚¹åç§°
+		 * @param type èŠ‚ç‚¹ç±»å‹
+		 * @param memo èŠ‚ç‚¹å¤‡æ³¨
 		 */
 	public TreeNode(
 		String id,
@@ -261,25 +261,25 @@ public class TreeNode implements ITreeNode, java.io.Serializable ,AttachElement{
 		this(id, name, type, true, notifier, memo);
 	}
 	/**
-	 * ¹¹½¨Æ÷
-	 * ³õÊ¼»¯ÊôĞÔid,name,type,notifier
-	 * @param id ½Úµãid,È«¾ÖÎ¨Ò»
-	 * @param name ½ÚµãÃû³Æ
-	 * @param type ½ÚµãÀàĞÍ
-	 * @param notifier ¹Û²ìÕß
+	 * æ„å»ºå™¨
+	 * åˆå§‹åŒ–å±æ€§id,name,type,notifier
+	 * @param id èŠ‚ç‚¹id,å…¨å±€å”¯ä¸€
+	 * @param name èŠ‚ç‚¹åç§°
+	 * @param type èŠ‚ç‚¹ç±»å‹
+	 * @param notifier è§‚å¯Ÿè€…
 	 */
 	public TreeNode(String id, String name, String type, Observable notifier) {
 		this(id, name, type, notifier, null);
 	}
 
 	/**
-	 * ¹¹½¨Æ÷
-	 * ³õÊ¼»¯ÊôĞÔid,name,type,showHref,notifier
-	 * @param id ½Úµã±êÊ¶
-	 * @param name ½ÚµãÃû³Æ
-	 * @param type ½ÚµãÀàĞÍ
-	 * @param showHref ÊÇ·ñÏÔÊ¾³¬Á´½Ó
-	 * @param notifier ¹Û²ìÕß
+	 * æ„å»ºå™¨
+	 * åˆå§‹åŒ–å±æ€§id,name,type,showHref,notifier
+	 * @param id èŠ‚ç‚¹æ ‡è¯†
+	 * @param name èŠ‚ç‚¹åç§°
+	 * @param type èŠ‚ç‚¹ç±»å‹
+	 * @param showHref æ˜¯å¦æ˜¾ç¤ºè¶…é“¾æ¥
+	 * @param notifier è§‚å¯Ÿè€…
 	 */
 	public TreeNode(
 		String id,
@@ -291,13 +291,13 @@ public class TreeNode implements ITreeNode, java.io.Serializable ,AttachElement{
 	}
 
 	/**
-	 * ¹¹½¨Æ÷
-	 * ³õÊ¼»¯ÊôĞÔid,name,type,showHref,notifier
-	 * @param id ½Úµã±êÊ¶
-	 * @param name ½ÚµãÃû³Æ
-	 * @param type ½ÚµãÀàĞÍ
-	 * @param showHref ÊÇ·ñÏÔÊ¾½Úµã³¬Á´½Ó
-	 * @param notifier ½Úµã¹Û²ìÆ÷
+	 * æ„å»ºå™¨
+	 * åˆå§‹åŒ–å±æ€§id,name,type,showHref,notifier
+	 * @param id èŠ‚ç‚¹æ ‡è¯†
+	 * @param name èŠ‚ç‚¹åç§°
+	 * @param type èŠ‚ç‚¹ç±»å‹
+	 * @param showHref æ˜¯å¦æ˜¾ç¤ºèŠ‚ç‚¹è¶…é“¾æ¥
+	 * @param notifier èŠ‚ç‚¹è§‚å¯Ÿå™¨
 	 * @param memo
 	 */
 	public TreeNode(
@@ -317,13 +317,13 @@ public class TreeNode implements ITreeNode, java.io.Serializable ,AttachElement{
 	}
 
 	/**
-	 * ¹¹½¨Æ÷
-	 * ³õÊ¼»¯ÊôĞÔid,name,type,showHref,notifier
-	 * @param id ½Úµã±êÊ¶
-	 * @param name ½ÚµãÃû³Æ
-	 * @param type ½ÚµãÀàĞÍ
-	 * @param showHref  ÊÇ·ñÏÔÊ¾½Úµã³¬Á´½Ó
-	 * @param notifier ½Úµã¹Û²ìÆ÷
+	 * æ„å»ºå™¨
+	 * åˆå§‹åŒ–å±æ€§id,name,type,showHref,notifier
+	 * @param id èŠ‚ç‚¹æ ‡è¯†
+	 * @param name èŠ‚ç‚¹åç§°
+	 * @param type èŠ‚ç‚¹ç±»å‹
+	 * @param showHref  æ˜¯å¦æ˜¾ç¤ºèŠ‚ç‚¹è¶…é“¾æ¥
+	 * @param notifier èŠ‚ç‚¹è§‚å¯Ÿå™¨
 	 * @param memo
 	 */
 	public TreeNode(
@@ -437,7 +437,7 @@ public class TreeNode implements ITreeNode, java.io.Serializable ,AttachElement{
 	 */
 	public List getChildren() {
 		/**
-		 * ÔÚ»ñÈ¡childrenÊ±¶ÔËùÓĞµÄº¢×Ó½øĞĞÅÅĞò
+		 * åœ¨è·å–childrenæ—¶å¯¹æ‰€æœ‰çš„å­©å­è¿›è¡Œæ’åº
 		 */
         if(!sorted && this.tree.isSortable())
         {
@@ -455,7 +455,7 @@ public class TreeNode implements ITreeNode, java.io.Serializable ,AttachElement{
 	}
 
 	/**
-	 * ÅĞ¶ÏÊÇ·ñÓĞ¶ù×Ó
+	 * åˆ¤æ–­æ˜¯å¦æœ‰å„¿å­
 	 */
 	public boolean hasChildren() {
 		//modified by biaoping.yin on 2005-02-04
@@ -467,7 +467,7 @@ public class TreeNode implements ITreeNode, java.io.Serializable ,AttachElement{
 
 	/**
 	 * 	added by biaoping.yin on 2005-02-04
-	 *  »ñÈ¡¶ù×ÓÊıÁ¿
+	 *  è·å–å„¿å­æ•°é‡
 	 */
 	public int childrenSize()
 	{
@@ -535,14 +535,14 @@ public class TreeNode implements ITreeNode, java.io.Serializable ,AttachElement{
 	}
 
 	/**
-	 * Ê÷½áµãÅÅĞò±È½ÏÆ÷,½ÚµãÀàĞÍÅÅĞò
+	 * æ ‘ç»“ç‚¹æ’åºæ¯”è¾ƒå™¨,èŠ‚ç‚¹ç±»å‹æ’åº
 	 * @author biaoping.yin
 	 * 2004-7-1
 	 */
 	static class TreeNodeCompare implements Comparator {
 		private ITreeNode node1;
 		private ITreeNode node2;
-		/* Ê×ÏÈ¸ù¾İ½ÚµãÀàĞÍÅÅĞò£¬È»ºó¸ù¾İ½ÚµãµÄÊÇ·ñ¾ßÓĞ¶ù×ÓÅÅĞò
+		/* é¦–å…ˆæ ¹æ®èŠ‚ç‚¹ç±»å‹æ’åºï¼Œç„¶åæ ¹æ®èŠ‚ç‚¹çš„æ˜¯å¦å…·æœ‰å„¿å­æ’åº
 		 * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
 		 */
 		public int compare(Object o1, Object o2) {
@@ -612,27 +612,27 @@ public class TreeNode implements ITreeNode, java.io.Serializable ,AttachElement{
 		}
 	}
 	/**
-	 * remarkÊôĞÔ»ñÈ¡·½·¨
+	 * remarkå±æ€§è·å–æ–¹æ³•
 	 */
 	public String getMemo() {
 		return memo;
 	}
 	/**
-	 * remarkÊôĞÔÉèÖÃ·½·¨¡£
+	 * remarkå±æ€§è®¾ç½®æ–¹æ³•ã€‚
 	 */
 	public void setMemo(String memo) {
 		this.memo = memo;
 	}
 
 	/**
-	 * @return checkboxValue  ¸´Ñ¡¿òµÄÖµ
+	 * @return checkboxValue  å¤é€‰æ¡†çš„å€¼
 	 */
 	public String getCheckboxValue() {
 		return checkboxValue;
 	}
 
 	/**
-	 * @return radioValue µ¥Ñ¡¿òµÄÖµ
+	 * @return radioValue å•é€‰æ¡†çš„å€¼
 	 */
 	public String getRadioValue() {
 		return radioValue;
@@ -694,7 +694,7 @@ public class TreeNode implements ITreeNode, java.io.Serializable ,AttachElement{
     }
 //    
 //    /**
-//     * Ìí¼ÓÓÒ¼ü²Ëµ¥Ïî
+//     * æ·»åŠ å³é”®èœå•é¡¹
 //     */
 //	public void addContextMenuItem(String menuid, String icon, String name, String link) {
 //		ContextMenuItem contextMenuItem = new ContextMenuItem();
@@ -751,7 +751,7 @@ public class TreeNode implements ITreeNode, java.io.Serializable ,AttachElement{
 	}
 	
 	/**
-	 * ¶ù×Ó½Úµã»áµ÷ÓÃ
+	 * å„¿å­èŠ‚ç‚¹ä¼šè°ƒç”¨
 	 * @return
 	 */
 	public StringBuffer getFatherids() {
@@ -781,7 +781,7 @@ public class TreeNode implements ITreeNode, java.io.Serializable ,AttachElement{
 //	}
 	
 //	/**
-//	 * Ìí¼ÓÓÒ¼ü²Ëµ¥ÏîÖĞµÄ¼ä¸ôÏß
+//	 * æ·»åŠ å³é”®èœå•é¡¹ä¸­çš„é—´éš”çº¿
 //	 * @param icon
 //	 */
 //	public void addContextMenuItemSeperate(String icon) {

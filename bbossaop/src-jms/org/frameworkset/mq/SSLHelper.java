@@ -35,7 +35,7 @@ package org.frameworkset.mq;
  * Copyright (c) 2007
  * </p>
  * 
- * @Date 2009-11-22 ÏÂÎç03:49:17
+ * @Date 2009-11-22 ä¸‹åˆ03:49:17
  * @author biaoping.yin
  * @version 1.0
  * @deprecated use org.frameworkset.spi.remote.SSLHelper

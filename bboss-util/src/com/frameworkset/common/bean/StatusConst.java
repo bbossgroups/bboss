@@ -10,7 +10,7 @@ import java.io.Serializable;
 
 /**
  * @author biaoping.yin
- * ²Ù×÷±êÖ¾³£ÊıÀà:
+ * æ“ä½œæ ‡å¿—å¸¸æ•°ç±»:
  * 
  * To change the template for this generated type comment go to
  * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
@@ -18,19 +18,19 @@ import java.io.Serializable;
 public final class StatusConst implements Serializable
 {
 	/**
-		 * É¾³ı×´Ì¬±êÖ¾
+		 * åˆ é™¤çŠ¶æ€æ ‡å¿—
 		 */
 		public final static int DELETE = 0;
 		/**
-		 * ¸üĞÂ×´Ì¬±êÊ¶
+		 * æ›´æ–°çŠ¶æ€æ ‡è¯†
 		 */
 		public final static int UPDATE = 1;
 		/**
-		 * Ìí¼Ó×´Ì¬±êÊ¶
+		 * æ·»åŠ çŠ¶æ€æ ‡è¯†
 		 */
 		public final static int ADD = 2;
 		/**
-		 * »º³å×´Ì¬±êÊ¶
+		 * ç¼“å†²çŠ¶æ€æ ‡è¯†
 		 */
 		public final static int CACHE = 3;
 }

@@ -15,7 +15,7 @@ import org.apache.ecs.html.TR;
 import com.frameworkset.common.tag.BaseTag;
 /**
  * @author biaoping.yin
- * ÏÔÊ¾±íÍ·µÄtag
+ * æ˜¾ç¤ºè¡¨å¤´çš„tag
  *
  * To change the template for this generated type comment go to
  * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
@@ -53,11 +53,11 @@ public class HeaderTag extends BaseTag
 	 * <tr align="center" class="th" > 
                   <td height="19" align="left" valign="bottom" bgcolor="#8da6c4"><img src="../../../images/t4.gif" width="17" height="17"></td>
 
-                  <td bgcolor="#8da6c4">Îï×Ê±àÂë</td>
-                  <td bgcolor="#8da6c4">Îï×ÊÃû³Æ</td>
-                  <td bgcolor="#8da6c4">¹æ¸ñ</td>
-                  <td bgcolor="#8da6c4">ĞÍºÅ</td>
-                  <td bgcolor="#8da6c4">¼ÆÁ¿µ¥Î»</td>
+                  <td bgcolor="#8da6c4">ç‰©èµ„ç¼–ç </td>
+                  <td bgcolor="#8da6c4">ç‰©èµ„åç§°</td>
+                  <td bgcolor="#8da6c4">è§„æ ¼</td>
+                  <td bgcolor="#8da6c4">å‹å·</td>
+                  <td bgcolor="#8da6c4">è®¡é‡å•ä½</td>
                 </tr>
 
 	 */
@@ -67,9 +67,9 @@ public class HeaderTag extends BaseTag
 		listTag = (PagerDataSet) findAncestorWithClass(this, PagerDataSet.class);
 		if(listTag == null || listTag.getRowid() == 0)
 			/**
-			µ±header±êÇ©³öÏÖÔÚlist±êÇ©ÖĞÊ±£¬»òÕßÔÚpager±êÇ©ÖĞ
-			½øĞĞÒÔÏÂ´¦Àí¡£Èç¹ûµ±´æÔÚpager±êÇ©£¬²¢ÇÒ½«headerÒ²·ÅÔÚlist±êÇ©ÖĞ£¬ÕâÖÖÇé¿öÊÇ·Ç·¨µÄ
-			µ«ÊÇ³ÌĞòÃ»ÓĞ×öÏàÓ¦µÄÅĞ¶ÏºÍ´¦ÀíĞèÒª³ÌĞòÔ±×Ô¼º´¦Àí¡£
+			å½“headeræ ‡ç­¾å‡ºç°åœ¨listæ ‡ç­¾ä¸­æ—¶ï¼Œæˆ–è€…åœ¨pageræ ‡ç­¾ä¸­
+			è¿›è¡Œä»¥ä¸‹å¤„ç†ã€‚å¦‚æœå½“å­˜åœ¨pageræ ‡ç­¾ï¼Œå¹¶ä¸”å°†headerä¹Ÿæ”¾åœ¨listæ ‡ç­¾ä¸­ï¼Œè¿™ç§æƒ…å†µæ˜¯éæ³•çš„
+			ä½†æ˜¯ç¨‹åºæ²¡æœ‰åšç›¸åº”çš„åˆ¤æ–­å’Œå¤„ç†éœ€è¦ç¨‹åºå‘˜è‡ªå·±å¤„ç†ã€‚
 			*/
 		{
 			tr = new TR();

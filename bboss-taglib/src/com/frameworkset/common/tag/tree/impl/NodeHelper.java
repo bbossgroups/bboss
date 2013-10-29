@@ -57,11 +57,11 @@ import com.frameworkset.util.StringUtil;
 import com.frameworkset.util.VelocityUtil;
 
 /**
- * ¸ÃÀà¸¨ÖúTreeTagÉú³É¸÷ÖÖÊ÷µÄhtml´úÂë£¬ ¿ÉÒÔÍ¨¹ıecs/velocity/StringBuffer¼¸ÖÖ·½Ê½À´Éú³É
+ * è¯¥ç±»è¾…åŠ©TreeTagç”Ÿæˆå„ç§æ ‘çš„htmlä»£ç ï¼Œ å¯ä»¥é€šè¿‡ecs/velocity/StringBufferå‡ ç§æ–¹å¼æ¥ç”Ÿæˆ
  * 
- * @×÷Õß biaoping.yin
- * @ÈÕÆÚ 2004-3-19 16:28:13
- * @°æ±¾ v1.0
+ * @ä½œè€… biaoping.yin
+ * @æ—¥æœŸ 2004-3-19 16:28:13
+ * @ç‰ˆæœ¬ v1.0
  */
 
 public class NodeHelper  implements Serializable
@@ -69,64 +69,64 @@ public class NodeHelper  implements Serializable
 	private static final Logger log = Logger.getLogger(NodeHelper.class);
  
 	/**
-	 * °üº¬ÏÔÊ¾µÄ½ÚµãĞÅÏ¢
+	 * åŒ…å«æ˜¾ç¤ºçš„èŠ‚ç‚¹ä¿¡æ¯
 	 */
 	private ITreeIteratorElement element = null;
 	
 //	private 
 
 	/**
-	 * ´ıÏÔÊ¾µÄ½Úµãaction
+	 * å¾…æ˜¾ç¤ºçš„èŠ‚ç‚¹action
 	 */
 	private String action = null;
 
 	/**
-	 * ¸Ã½ÚµãÊÇ·ñÎªÕ¹¿ª½Úµã
+	 * è¯¥èŠ‚ç‚¹æ˜¯å¦ä¸ºå±•å¼€èŠ‚ç‚¹
 	 */
 	boolean expanded = false;
 
 	/**
-	 * ½ÚµãÊÇ·ñÓĞ×Ö½Úµã
+	 * èŠ‚ç‚¹æ˜¯å¦æœ‰å­—èŠ‚ç‚¹
 	 */
 	boolean hasChildren = true;
 
 	/**
-	 * ÊÇ·ñÊÇ×îºóº¢×Ó½Úµã
+	 * æ˜¯å¦æ˜¯æœ€åå­©å­èŠ‚ç‚¹
 	 */
 	boolean isLastChild = false;
 
 	/**
-	 * ÊÇ·ñÊÇµÚÒ»¸öº¢×Ó½Úµã
+	 * æ˜¯å¦æ˜¯ç¬¬ä¸€ä¸ªå­©å­èŠ‚ç‚¹
 	 */
 	boolean isFirstChild = false;
 
 	/**
-	 * ½ÚµãÊÇ·ñÑ¡ÖĞ
+	 * èŠ‚ç‚¹æ˜¯å¦é€‰ä¸­
 	 */
 	boolean selected = false;
 
 	/**
-	 * ¿ØÖÆÊ÷µÄÕÛµş¹¦ÄÜ£º false£º²»ÕÛµş true£ºÕÛµş È±Ê¡Öµ£ºtrue
+	 * æ§åˆ¶æ ‘çš„æŠ˜å åŠŸèƒ½ï¼š falseï¼šä¸æŠ˜å  trueï¼šæŠ˜å  ç¼ºçœå€¼ï¼štrue
 	 */
 	private boolean isCollapse = true;
 
 	/**
-	 * ½ÚµãhrefÀ©Õ¹´®
+	 * èŠ‚ç‚¹hrefæ‰©å±•ä¸²
 	 */
 	String extendString = "";
 
 	/**
-	 * ½ÚµãÀàĞÍ
+	 * èŠ‚ç‚¹ç±»å‹
 	 */
 	String type = "";
 
 	/**
-	 * Ò³ÃæÇëÇó¶ÔÏó
+	 * é¡µé¢è¯·æ±‚å¯¹è±¡
 	 */
 	HttpServletRequest request;
 
 	/**
-	 * ¶¯¾²½áºÏÊ±ĞèÒª¼ÇÂ¼µ±Ç°½ÚµãµÄident£¬ÒÔ±ãÉú³É½ÚµãµÄ¶ù×Ó½ÚµãµÄindent ¶ù×Ó½ÚµãµÄindent £½ ¸¸µÄindent £« ¶ù×ÓµÄindent
+	 * åŠ¨é™ç»“åˆæ—¶éœ€è¦è®°å½•å½“å‰èŠ‚ç‚¹çš„identï¼Œä»¥ä¾¿ç”ŸæˆèŠ‚ç‚¹çš„å„¿å­èŠ‚ç‚¹çš„indent å„¿å­èŠ‚ç‚¹çš„indent ï¼ çˆ¶çš„indent ï¼‹ å„¿å­çš„indent
 	 */
 	StringBuffer indent;
 
@@ -135,75 +135,75 @@ public class NodeHelper  implements Serializable
 	
 
 	/**
-	 * Ò³ÃæÇëÇó·¶Î§ session£¬request£¬pageContext£¬È±Ê¡ÖµÎªsession
+	 * é¡µé¢è¯·æ±‚èŒƒå›´ sessionï¼Œrequestï¼ŒpageContextï¼Œç¼ºçœå€¼ä¸ºsession
 	 */
 	String scope = "session";
 	
 	
 
 	/**
-	 * Ö¸¶¨½ÚµãµÄĞŞÊÎÍ¼Æ¬µÄÄ¿Â¼
+	 * æŒ‡å®šèŠ‚ç‚¹çš„ä¿®é¥°å›¾ç‰‡çš„ç›®å½•
 	 */
 	String imageFolder = "/images/";
 
 	/**
-	 * checkboxÃû³Æ
+	 * checkboxåç§°
 	 */
 	String checkBox = null;
 
 	/**
-	 * radioÃû³Æ
+	 * radioåç§°
 	 */
 	String radio = null;
 
 	/**
-	 * checkboxÄ¬ÈÏÑ¡ÖĞÖµ£¬ÒÔ¡®,¡¯·Ö¸ôµÄ×Ö·û´®
+	 * checkboxé»˜è®¤é€‰ä¸­å€¼ï¼Œä»¥â€˜,â€™åˆ†éš”çš„å­—ç¬¦ä¸²
 	 */
 	private String[] checkBoxDefaultValue = null;
 
 	/**
-	 * checkbox µÄÖµ
+	 * checkbox çš„å€¼
 	 */
 
 	private String checkboxValue;
 
 	/**
-	 * radioµÄÄ¬ÈÏÑ¡ÖĞÖµ
+	 * radioçš„é»˜è®¤é€‰ä¸­å€¼
 	 */
 	private String radioDefaultValue = null;
 
 	/**
-	 * checkboxÀ©Õ¹´®
+	 * checkboxæ‰©å±•ä¸²
 	 */
 	private String checkBoxExtention;
 
 	/**
-	 * radio°´Å¥À©Õ¹´®
+	 * radioæŒ‰é’®æ‰©å±•ä¸²
 	 */
 	private String radioExtention;
 
 	/**
-	 * radio°´Å¥Öµ
+	 * radioæŒ‰é’®å€¼
 	 */
 	private String radioValue;
 
 	/**
-	 * ½ÚµãhrefÄ¿±ê
+	 * èŠ‚ç‚¹hrefç›®æ ‡
 	 */
 	String target = "";
 
 	/**
-	 * ½Úµã±êÊ¶
+	 * èŠ‚ç‚¹æ ‡è¯†
 	 */
 	String nodeId;
 
 	/**
-	 * Ò³Ãæ²ÎÊı
+	 * é¡µé¢å‚æ•°
 	 */
 	String params;
 
 	/**
-	 * Ë«ÊÂ¼ş¿ØÖÆ±äÁ¿£¬µã»÷½ÚµãÊ±ÊÇ·ñÕ¹¿ª½ÚµãµÄÏÂÒ»¼¶Ä¿Â¼£¬Ç°ÌáÌõ¼şÊÇ½ÚµãÒªÓĞÏÂÒ»¼¶Ä¿Â¼ false£ºÎª²»Õ¹¿ª£¬trueÎªÕ¹¿ª£¬È±Ê¡Îªfalse
+	 * åŒäº‹ä»¶æ§åˆ¶å˜é‡ï¼Œç‚¹å‡»èŠ‚ç‚¹æ—¶æ˜¯å¦å±•å¼€èŠ‚ç‚¹çš„ä¸‹ä¸€çº§ç›®å½•ï¼Œå‰ææ¡ä»¶æ˜¯èŠ‚ç‚¹è¦æœ‰ä¸‹ä¸€çº§ç›®å½• falseï¼šä¸ºä¸å±•å¼€ï¼Œtrueä¸ºå±•å¼€ï¼Œç¼ºçœä¸ºfalse
 	 */
 	private boolean doubleEvent = false;
 
@@ -251,7 +251,7 @@ public class NodeHelper  implements Serializable
 	}
 
 	/**
-	 * »ñÈ¡ÊÂ¼şÃû³Æ
+	 * è·å–äº‹ä»¶åç§°
 	 * 
 	 * @return
 	 */
@@ -273,31 +273,31 @@ public class NodeHelper  implements Serializable
         if(itree.isDynamic())
         {
     		if (!expanded && hasChildren && !isLastChild)
-    			return "Õ¹¿ª";
+    			return "å±•å¼€";
                
     		if (expanded && hasChildren && !isLastChild)
-    			return "ÕÛµş";
+    			return "æŠ˜å ";
                
     		if (!expanded && hasChildren && isLastChild)
-    			return "Õ¹¿ª";
+    			return "å±•å¼€";
                 
     		if (expanded && hasChildren && isLastChild)
-    			return "ÕÛµş";
+    			return "æŠ˜å ";
         }
         else
         {
             if (!expanded && hasChildren && !isLastChild)
     
-                return "Õ¹¿ª/ÕÛµş";
+                return "å±•å¼€/æŠ˜å ";
             if (expanded && hasChildren && !isLastChild)
     
-                return "Õ¹¿ª/ÕÛµş";
+                return "å±•å¼€/æŠ˜å ";
             if (!expanded && hasChildren && isLastChild)
    
-                return "Õ¹¿ª/ÕÛµş";
+                return "å±•å¼€/æŠ˜å ";
             if (expanded && hasChildren && isLastChild)
     
-                return "Õ¹¿ª/ÕÛµş";
+                return "å±•å¼€/æŠ˜å ";
         }
 		return null;
 	}
@@ -407,7 +407,7 @@ public class NodeHelper  implements Serializable
 			{
 				String key = (String) keys.next();
 				 /**
-                 * ÅĞ¶ÏkeyÊÇ·ñÊÇÏµÍ³ÖĞÈ±Ê¡±£ÁôµÄ²ÎÊı
+                 * åˆ¤æ–­keyæ˜¯å¦æ˜¯ç³»ç»Ÿä¸­ç¼ºçœä¿ç•™çš„å‚æ•°
                  */
 				if(this.isInnerVariable(key))
 				{
@@ -435,51 +435,51 @@ public class NodeHelper  implements Serializable
 	{
 		boolean isInnerVariable = false;
 		/**
-         * ÅĞ¶ÏkeyÊÇ·ñÊÇÏµÍ³ÖĞÈ±Ê¡±£ÁôµÄ²ÎÊı
+         * åˆ¤æ–­keyæ˜¯å¦æ˜¯ç³»ç»Ÿä¸­ç¼ºçœä¿ç•™çš„å‚æ•°
          */
-		if (key.equals("nodeLink"))//½ÚµãÁ´½Ó²ÎÊıÃû³Æ
+		if (key.equals("nodeLink"))//èŠ‚ç‚¹é“¾æ¥å‚æ•°åç§°
 			isInnerVariable = true;
-		else if (key.equals("node_recursive"))//¸´Ñ¡¿òÊÇ·ñµİ¹éÑ¡Ôñ²ÎÊıÃû³ÆÎªbooleanÀàĞÍ
+		else if (key.equals("node_recursive"))//å¤é€‰æ¡†æ˜¯å¦é€’å½’é€‰æ‹©å‚æ•°åç§°ä¸ºbooleanç±»å‹
 			isInnerVariable = true;
         
-		else if (key.equals("node_linktarget"))//½ÚµãÁ´½ÓµØÖ·key
+		else if (key.equals("node_linktarget"))//èŠ‚ç‚¹é“¾æ¥åœ°å€key
         {
 			isInnerVariable = true;
         }
         
-		else if (key.equals("node_checkboxname"))//½Úµã¸´Ñ¡¿òÃû³Ækey
+		else if (key.equals("node_checkboxname"))//èŠ‚ç‚¹å¤é€‰æ¡†åç§°key
         {
             
 			isInnerVariable = true;
         }
         
-		else if (key.equals("node_radioname"))//½Úµãµ¥Ñ¡¿òÃû³Ækey
+		else if (key.equals("node_radioname"))//èŠ‚ç‚¹å•é€‰æ¡†åç§°key
         {
             
 			isInnerVariable = true;
         }
-		else if(key.equals("node_uprecursive"))//½Úµã¸´Ñ¡¿òÊÇ·ñÓĞµİ¹éÑ¡ÔñÉÏ¼¶µÄ¹¦ÄÜ
+		else if(key.equals("node_uprecursive"))//èŠ‚ç‚¹å¤é€‰æ¡†æ˜¯å¦æœ‰é€’å½’é€‰æ‹©ä¸Šçº§çš„åŠŸèƒ½
         {
 			isInnerVariable = true;
         }
-		else if(key.equals("node_partuprecursive"))//½Úµã¸´Ñ¡¿òÊÇ·ñÓĞµİ¹éÑ¡ÔñÉÏ¼¶µÄ¹¦ÄÜ
+		else if(key.equals("node_partuprecursive"))//èŠ‚ç‚¹å¤é€‰æ¡†æ˜¯å¦æœ‰é€’å½’é€‰æ‹©ä¸Šçº§çš„åŠŸèƒ½
         {
 			isInnerVariable = true;
         }
-		else if(key.equals("node_checkboxchecked")) //±êÊ¶¸´Ñ¡¿òÊÇ·ñ±»Ñ¡ÖĞ
+		else if(key.equals("node_checkboxchecked")) //æ ‡è¯†å¤é€‰æ¡†æ˜¯å¦è¢«é€‰ä¸­
 			isInnerVariable = true;
-		else if(key.equals("node_checkboxdisabled")) //±êÊ¶¸´Ñ¡¿òÊÇ·ñ±»½ûÓÃ
+		else if(key.equals("node_checkboxdisabled")) //æ ‡è¯†å¤é€‰æ¡†æ˜¯å¦è¢«ç¦ç”¨
 			isInnerVariable = true;
-		else if(key.equals("node_radiochecked")) //±êÊ¶µ¥Ñ¡°´Å¥ÊÇ·ñ±»Ñ¡³å
+		else if(key.equals("node_radiochecked")) //æ ‡è¯†å•é€‰æŒ‰é’®æ˜¯å¦è¢«é€‰å†²
 			isInnerVariable = true;
-		else if(key.equals("node_radiodisabled")) //±êÊ¶µ¥Ñ¡°´Å¥ÊÇ·ñ±»½ûÓÃ
+		else if(key.equals("node_radiodisabled")) //æ ‡è¯†å•é€‰æŒ‰é’®æ˜¯å¦è¢«ç¦ç”¨
 			isInnerVariable = true;	
 		return isInnerVariable;
 	}
 	
 
 	/**
-	 * »ñÈ¡½Úµãµã»÷Á´½Ó
+	 * è·å–èŠ‚ç‚¹ç‚¹å‡»é“¾æ¥
 	 * 
 	 * @return
 	 */
@@ -491,7 +491,7 @@ public class NodeHelper  implements Serializable
 		String nodeLink = null;
 		Map attributes = element.getNode().getParams();
 		
-		// Èç¹ûĞèÒªÉèÖÃhref£¬Ôò»ñÈ¡Á´½ÓµØÖ·£¬·ñÔò
+		// å¦‚æœéœ€è¦è®¾ç½®hrefï¼Œåˆ™è·å–é“¾æ¥åœ°å€ï¼Œå¦åˆ™
 		if (this.element.getNode().getShowHref())
 		{
 			if (attributes != null)
@@ -534,7 +534,7 @@ public class NodeHelper  implements Serializable
 					{
 						String key = (String) keys.next();
 	                    /**
-	                     * ÅĞ¶ÏkeyÊÇ·ñÊÇÏµÍ³ÖĞÈ±Ê¡±£ÁôµÄ²ÎÊı
+	                     * åˆ¤æ–­keyæ˜¯å¦æ˜¯ç³»ç»Ÿä¸­ç¼ºçœä¿ç•™çš„å‚æ•°
 	                     */
 						if(this.isInnerVariable(key))
 						{
@@ -565,12 +565,12 @@ public class NodeHelper  implements Serializable
 			}
 			else if (!eventLink.equals(""))
 			{
-				if(itree.isDynamic()) //´¿¶¯Ì¬µÄÊ÷Ä£Ê½
+				if(itree.isDynamic()) //çº¯åŠ¨æ€çš„æ ‘æ¨¡å¼
 				{
 					buffer.append("doClickImageIcon('").append(
 								eventLink).append("')");
 				}
-				else //¶¯¾²½áºÏµÄÄ£Ê½
+				else //åŠ¨é™ç»“åˆçš„æ¨¡å¼
 				{
 
 					buffer.append("doClickImageIcon('").append(
@@ -601,9 +601,9 @@ public class NodeHelper  implements Serializable
 	}
 
 	/**
-	 * Éú³É½ÚµãµÄhtmlÎÄ±¾£¬½ÚµãÊÇ·ñ´øÁ´½ÓÒÔ¼°´øÊ²Ã´ÑùµÄÁ´½ÓÓĞÒÔÏÂ¼¸ÖÖÇé¿ö£º
-	 * ²»ĞèÒªÉèÖÃµã»÷Á´½Ó£¬µ«ÊÇ½Úµã°üº¬×Ö½Úµã£¬ÄÇÃ´ĞèÒªÉèÖÃÕ¹¿ª¸Ã½ÚµãÏÂÒ»¼¶µÄÁ´½Ó ĞèÒªÉèÖÃµã»÷Á´½Ó£¬µ«½Úµã²»°üº¬×Ó½Úµã¶ø²»ĞèÒªÉèÖÃÕ¹¿ª½ÚµãµÄÏÂÒ»¼¶Á´½Ó
-	 * ĞèÒªÉèÖÃµã»÷Á´½Ó£¬½Úµã°üº¬×Ö½Úµã£¬Ò²ĞèÒªÉèÖÃÕ¹¿ª¸Ã½ÚµãÏÂÒ»¼¶µÄÁ´½Ó
+	 * ç”ŸæˆèŠ‚ç‚¹çš„htmlæ–‡æœ¬ï¼ŒèŠ‚ç‚¹æ˜¯å¦å¸¦é“¾æ¥ä»¥åŠå¸¦ä»€ä¹ˆæ ·çš„é“¾æ¥æœ‰ä»¥ä¸‹å‡ ç§æƒ…å†µï¼š
+	 * ä¸éœ€è¦è®¾ç½®ç‚¹å‡»é“¾æ¥ï¼Œä½†æ˜¯èŠ‚ç‚¹åŒ…å«å­—èŠ‚ç‚¹ï¼Œé‚£ä¹ˆéœ€è¦è®¾ç½®å±•å¼€è¯¥èŠ‚ç‚¹ä¸‹ä¸€çº§çš„é“¾æ¥ éœ€è¦è®¾ç½®ç‚¹å‡»é“¾æ¥ï¼Œä½†èŠ‚ç‚¹ä¸åŒ…å«å­èŠ‚ç‚¹è€Œä¸éœ€è¦è®¾ç½®å±•å¼€èŠ‚ç‚¹çš„ä¸‹ä¸€çº§é“¾æ¥
+	 * éœ€è¦è®¾ç½®ç‚¹å‡»é“¾æ¥ï¼ŒèŠ‚ç‚¹åŒ…å«å­—èŠ‚ç‚¹ï¼Œä¹Ÿéœ€è¦è®¾ç½®å±•å¼€è¯¥èŠ‚ç‚¹ä¸‹ä¸€çº§çš„é“¾æ¥
 	 * 
 	 * @param buffer
 	 * @param event
@@ -613,7 +613,7 @@ public class NodeHelper  implements Serializable
 			boolean selected)
 	{
 
-		// ¶¨Òå´Óµã»÷Í¼±ê´¦´«µİ¹ıÀ´µÄ²ÎÊı,È»ºóÅĞ¶ÏÄ¬ÈÏÑ¡ÖĞµÄ½áµã
+		// å®šä¹‰ä»ç‚¹å‡»å›¾æ ‡å¤„ä¼ é€’è¿‡æ¥çš„å‚æ•°,ç„¶ååˆ¤æ–­é»˜è®¤é€‰ä¸­çš„ç»“ç‚¹
 
 		String selectedNode = request.getParameter("selectedNode");
 		// StringBuffer buffer = new StringBuffer();
@@ -631,10 +631,10 @@ public class NodeHelper  implements Serializable
 			if (this.enablecontextmenu)
 			{
 				String id = "";
-				if (this.element.getNode().isEnablecontextmenu()) // Èç¹û½Úµã±¾ÉíÖÆ¶¨ÁËÓÒ¼ü²Ëµ¥£¬ÔòÉèÖÃ±¾ÉíµÄÓÒ¼ü²Ëµ¥Ïî
+				if (this.element.getNode().isEnablecontextmenu()) // å¦‚æœèŠ‚ç‚¹æœ¬èº«åˆ¶å®šäº†å³é”®èœå•ï¼Œåˆ™è®¾ç½®æœ¬èº«çš„å³é”®èœå•é¡¹
 					id = "_node_" + this.element.getNode().getId();
 				else
-					// ·ñÔòÈç¹û¸ù¾İÖ±½ÓÊ¹ÓÃ½ÚµãÀàĞÍ¶ÔÓ¦µÄÓÒ¼ü²Ëµ¥
+					// å¦åˆ™å¦‚æœæ ¹æ®ç›´æ¥ä½¿ç”¨èŠ‚ç‚¹ç±»å‹å¯¹åº”çš„å³é”®èœå•
 					id = "_type_" + this.element.getNode().getType();
 				String params = this.getCustomParams(this.element.getNode()
 						.getParams());
@@ -682,10 +682,10 @@ public class NodeHelper  implements Serializable
 			if (this.enablecontextmenu)
 			{
 				String id = "";
-				if (this.element.getNode().isEnablecontextmenu()) // Èç¹û½Úµã±¾ÉíÖÆ¶¨ÁËÓÒ¼ü²Ëµ¥£¬ÔòÉèÖÃ±¾ÉíµÄÓÒ¼ü²Ëµ¥Ïî
+				if (this.element.getNode().isEnablecontextmenu()) // å¦‚æœèŠ‚ç‚¹æœ¬èº«åˆ¶å®šäº†å³é”®èœå•ï¼Œåˆ™è®¾ç½®æœ¬èº«çš„å³é”®èœå•é¡¹
 					id = "_node_" + this.element.getNode().getId();
 				else
-					// ·ñÔòÈç¹û¸ù¾İÖ±½ÓÊ¹ÓÃ½ÚµãÀàĞÍ¶ÔÓ¦µÄÓÒ¼ü²Ëµ¥
+					// å¦åˆ™å¦‚æœæ ¹æ®ç›´æ¥ä½¿ç”¨èŠ‚ç‚¹ç±»å‹å¯¹åº”çš„å³é”®èœå•
 					id = "_type_" + this.element.getNode().getType();
 				String params = this.getCustomParams(this.element.getNode()
 						.getParams());
@@ -752,24 +752,24 @@ public class NodeHelper  implements Serializable
 	private String localAction;
 
 	/**
-	 * ¿ØÖÆÊ÷½ÚµãÊÇ·ñ»»ĞĞ
+	 * æ§åˆ¶æ ‘èŠ‚ç‚¹æ˜¯å¦æ¢è¡Œ
 	 */
 	private boolean nowrap = true;
 
 	private boolean enablecontextmenu;
 
 	/**
-	 * ÏòÏÂµİ¹éËùÓĞ½Úµã
+	 * å‘ä¸‹é€’å½’æ‰€æœ‰èŠ‚ç‚¹
 	 */
     private boolean recursive = false;
     
     /**
-     * ÏòÉÏµİ¹éµ½ËùÓĞ¸¸½Úµã
+     * å‘ä¸Šé€’å½’åˆ°æ‰€æœ‰çˆ¶èŠ‚ç‚¹
      */
     private boolean uprecursive = false;
     
     /**
-     * ÏòÉÏµİ¹éµ½ËùÓĞĞèÒªµİ¹é¸¸½Úµã
+     * å‘ä¸Šé€’å½’åˆ°æ‰€æœ‰éœ€è¦é€’å½’çˆ¶èŠ‚ç‚¹
      */
     private boolean partrecursive = false;
     
@@ -780,7 +780,7 @@ public class NodeHelper  implements Serializable
 	private ITree itree;
 
 	/**
-	 * »ñÈ¡±¾µØÁ¬½Ó£¬²¢ÇÒ½«Ò³Ãæ²ÎÊı×·¼Óµ½Á¬½ÓºóÃæ
+	 * è·å–æœ¬åœ°è¿æ¥ï¼Œå¹¶ä¸”å°†é¡µé¢å‚æ•°è¿½åŠ åˆ°è¿æ¥åé¢
 	 * 
 	 * @return String
 	 */
@@ -806,7 +806,7 @@ public class NodeHelper  implements Serializable
 	}
 
 	/**
-	 * »ñÈ¡ÊÂ¼şÁ´½Ó
+	 * è·å–äº‹ä»¶é“¾æ¥
 	 * 
 	 * @param event
 	 * @return
@@ -820,7 +820,7 @@ public class NodeHelper  implements Serializable
 		String location = getLocalAction();
 		int index = location.indexOf('?');
 
-		// Èç¹ûÔÊĞíÊ÷½øĞĞÕÛµş£¬ÄÇÃ´ÉèÖÃÍ¼±êµÄÁ´½Ó£¬·ñÔò²»ÉèÖÃ
+		// å¦‚æœå…è®¸æ ‘è¿›è¡ŒæŠ˜å ï¼Œé‚£ä¹ˆè®¾ç½®å›¾æ ‡çš„é“¾æ¥ï¼Œå¦åˆ™ä¸è®¾ç½®
 		StringBuffer temp_b = new StringBuffer();
 
 	
@@ -915,10 +915,10 @@ public class NodeHelper  implements Serializable
 			if (this.enablecontextmenu && !nodeClickEvent.equals(""))
 			{
 				String id = "";
-				if (this.element.getNode().isEnablecontextmenu()) // Èç¹û½Úµã±¾ÉíÖÆ¶¨ÁËÓÒ¼ü²Ëµ¥£¬ÔòÉèÖÃ±¾ÉíµÄÓÒ¼ü²Ëµ¥Ïî
+				if (this.element.getNode().isEnablecontextmenu()) // å¦‚æœèŠ‚ç‚¹æœ¬èº«åˆ¶å®šäº†å³é”®èœå•ï¼Œåˆ™è®¾ç½®æœ¬èº«çš„å³é”®èœå•é¡¹
 					id = "_node_" + this.element.getNode().getId();
 				else
-					// ·ñÔòÈç¹û¸ù¾İÖ±½ÓÊ¹ÓÃ½ÚµãÀàĞÍ¶ÔÓ¦µÄÓÒ¼ü²Ëµ¥
+					// å¦åˆ™å¦‚æœæ ¹æ®ç›´æ¥ä½¿ç”¨èŠ‚ç‚¹ç±»å‹å¯¹åº”çš„å³é”®èœå•
 					id = "_type_" + this.element.getNode().getType();
 				String params = this.getCustomParams(this.element.getNode()
 						.getParams());
@@ -962,10 +962,10 @@ public class NodeHelper  implements Serializable
 			if (this.enablecontextmenu && !nodeClickEvent.equals(""))
 			{
 				String id = "";
-				if (this.element.getNode().isEnablecontextmenu()) // Èç¹û½Úµã±¾ÉíÖÆ¶¨ÁËÓÒ¼ü²Ëµ¥£¬ÔòÉèÖÃ±¾ÉíµÄÓÒ¼ü²Ëµ¥Ïî
+				if (this.element.getNode().isEnablecontextmenu()) // å¦‚æœèŠ‚ç‚¹æœ¬èº«åˆ¶å®šäº†å³é”®èœå•ï¼Œåˆ™è®¾ç½®æœ¬èº«çš„å³é”®èœå•é¡¹
 					id = "_node_" + this.element.getNode().getId();
 				else
-					// ·ñÔòÈç¹û¸ù¾İÖ±½ÓÊ¹ÓÃ½ÚµãÀàĞÍ¶ÔÓ¦µÄÓÒ¼ü²Ëµ¥
+					// å¦åˆ™å¦‚æœæ ¹æ®ç›´æ¥ä½¿ç”¨èŠ‚ç‚¹ç±»å‹å¯¹åº”çš„å³é”®èœå•
 					id = "_type_" + this.element.getNode().getType();
 				String params = this.getCustomParams(this.element.getNode()
 						.getParams());
@@ -1003,10 +1003,10 @@ public class NodeHelper  implements Serializable
 					&& !nodeClickEvent.equals(""))
 			{
 				String id = "";
-				if (this.element.getNode().isEnablecontextmenu()) // Èç¹û½Úµã±¾ÉíÖÆ¶¨ÁËÓÒ¼ü²Ëµ¥£¬ÔòÉèÖÃ±¾ÉíµÄÓÒ¼ü²Ëµ¥Ïî
+				if (this.element.getNode().isEnablecontextmenu()) // å¦‚æœèŠ‚ç‚¹æœ¬èº«åˆ¶å®šäº†å³é”®èœå•ï¼Œåˆ™è®¾ç½®æœ¬èº«çš„å³é”®èœå•é¡¹
 					id = "_node_" + this.element.getNode().getId();
 				else
-					// ·ñÔòÈç¹û¸ù¾İÖ±½ÓÊ¹ÓÃ½ÚµãÀàĞÍ¶ÔÓ¦µÄÓÒ¼ü²Ëµ¥
+					// å¦åˆ™å¦‚æœæ ¹æ®ç›´æ¥ä½¿ç”¨èŠ‚ç‚¹ç±»å‹å¯¹åº”çš„å³é”®èœå•
 					id = "_type_" + this.element.getNode().getType();
 				String params = this.getCustomParams(this.element.getNode()
 						.getParams());
@@ -1034,7 +1034,7 @@ public class NodeHelper  implements Serializable
 	}
 
 	/**
-	 * »ñÈ¡Ê÷Í·²¿·Ö
+	 * è·å–æ ‘å¤´éƒ¨åˆ†
 	 */
 	public void getUpper(StringBuffer buffer)
 	{
@@ -1048,9 +1048,9 @@ public class NodeHelper  implements Serializable
 						.append("<tr>");
 			else if(itree.isStaticDynamic())
             {
-				// ¶¯¾²Ì¬½áºÏµÄÊ÷½Úµã
+				// åŠ¨é™æ€ç»“åˆçš„æ ‘èŠ‚ç‚¹
                 String parent_indent = request.getParameter("node_parent_indent");
-                if(element.isFirstChild()) //\\µ÷Õû
+                if(element.isFirstChild()) //\\è°ƒæ•´
                 { 
                     if(parent_indent != null)
                         buffer.append("<div sonids=\"").append(sonids).append("\" style=\"display:none;\" id=\"div_parent_")
@@ -1077,7 +1077,7 @@ public class NodeHelper  implements Serializable
 			else if(itree.isStatic())
 			{
 //				
-                if(element.isFirstChild()) //\\µ÷Õû
+                if(element.isFirstChild()) //\\è°ƒæ•´
                 { 
                     
                     
@@ -1122,7 +1122,7 @@ public class NodeHelper  implements Serializable
     
 
 	/**
-	 * »ñÈ¡Ê÷¸ù
+	 * è·å–æ ‘æ ¹
 	 * 
 	 * @return String
 	 */
@@ -1138,7 +1138,7 @@ public class NodeHelper  implements Serializable
             
             if(this.element.isLastChild())
             {
-                //Èç¹ûÊÇ¾²Ì¬µã»÷Õ¹¿ª½Úµã£¬ÔòÖ±½ÓÌí¼Ó</div>¸¸²ã¹Ø±Õ±ê¼Ç
+                //å¦‚æœæ˜¯é™æ€ç‚¹å‡»å±•å¼€èŠ‚ç‚¹ï¼Œåˆ™ç›´æ¥æ·»åŠ </div>çˆ¶å±‚å…³é—­æ ‡è®°
                 if(parent_indent != null)
                 {
                     buffer.append("</div>");
@@ -1146,9 +1146,9 @@ public class NodeHelper  implements Serializable
                 else
                     /**
                      * modifiye 
-                     * ÅĞ¶Ïµ±Ç°×Ô¶¯Õ¹¿ªµÄ½ÚµãÊÇ·ñÓĞ¶ù×Ó:
-                     *  Ã»ÓĞ¶ù×ÓÔòÖ±½ÓÌí¼Ó</div>¸¸²ã¹Ø±Õ±ê¼Ç£¬²¢ÇÒµİ¹éÅĞ¶Ïµ±Ç°½ÚµãµÄËùÓĞ×æÏÈÊÇ·ñÊÇ×îºóµÄº¢×ÓÈç¹ûÊÇÔò²¹³ä</div>
-                     *  ÓĞ¶ù×ÓÔòĞèÒª½øĞĞÌØÊâ´¦Àí£¬µ«ÊÇº¢×ÓÃ»ÓĞ¼ÓÔØÔòÖ±½ÓÌí¼Ó¸¸µÄ</div>±ê¼Ç
+                     * åˆ¤æ–­å½“å‰è‡ªåŠ¨å±•å¼€çš„èŠ‚ç‚¹æ˜¯å¦æœ‰å„¿å­:
+                     *  æ²¡æœ‰å„¿å­åˆ™ç›´æ¥æ·»åŠ </div>çˆ¶å±‚å…³é—­æ ‡è®°ï¼Œå¹¶ä¸”é€’å½’åˆ¤æ–­å½“å‰èŠ‚ç‚¹çš„æ‰€æœ‰ç¥–å…ˆæ˜¯å¦æ˜¯æœ€åçš„å­©å­å¦‚æœæ˜¯åˆ™è¡¥å……</div>
+                     *  æœ‰å„¿å­åˆ™éœ€è¦è¿›è¡Œç‰¹æ®Šå¤„ç†ï¼Œä½†æ˜¯å­©å­æ²¡æœ‰åŠ è½½åˆ™ç›´æ¥æ·»åŠ çˆ¶çš„</div>æ ‡è®°
                      */
                 {
                     if(!element.getNode().hasChildren())
@@ -1196,7 +1196,7 @@ public class NodeHelper  implements Serializable
     }
 
 	/**
-	 * »ñÈ¡½ÚµãµÄËõÅÅ¸ñÊ½
+	 * è·å–èŠ‚ç‚¹çš„ç¼©æ’æ ¼å¼
 	 */
 	public void getIndent(StringBuffer indent)
 	{
@@ -1214,7 +1214,7 @@ public class NodeHelper  implements Serializable
 				this.indent.append(!isVerticalLineIndentationType ? "1" : "0");
 			if (isVerticalLineIndentationType)
 			{
-				// :log imgsrc±ØĞë¶¯Ì¬»ñÈ¡
+				// :log imgsrcå¿…é¡»åŠ¨æ€è·å–
 				indent.append("<img src=\"").append(getVerticalLine()).append(
 						"\">");
 			}
@@ -1262,7 +1262,7 @@ public class NodeHelper  implements Serializable
 	}
 
 	/**
-	 * »ñÈ¡ÏàÓ¦ÀàĞÍ¹Ø±ÕÄ¿Â¼Ç°µÄÍ¼±ê
+	 * è·å–ç›¸åº”ç±»å‹å…³é—­ç›®å½•å‰çš„å›¾æ ‡
 	 * 
 	 * @return String
 	 */
@@ -1353,13 +1353,13 @@ public class NodeHelper  implements Serializable
 	}
 
 	/**
-	 * »ñÈ¡¸´Ñ¡¿ò´úÂë
+	 * è·å–å¤é€‰æ¡†ä»£ç 
 	 * 
 	 * @return String
 	 */
 	public String getCheckBox()
 	{
-		// Èç¹ûÃ»ÓĞÉèÖÃµ¥Ñ¡¿òµÄÃû³Æ£¬»òÕßµ¥Ñ¡¿òµÄÖµÎªnullÊ±£¬²»Éú³ÉÏàÓ¦µÄ¸´Ñ¡¿ò
+		// å¦‚æœæ²¡æœ‰è®¾ç½®å•é€‰æ¡†çš„åç§°ï¼Œæˆ–è€…å•é€‰æ¡†çš„å€¼ä¸ºnullæ—¶ï¼Œä¸ç”Ÿæˆç›¸åº”çš„å¤é€‰æ¡†
 		String value = this.getCheckboxValue();
 		// System.out.println("check box value:" + value);
 		if (checkBox == null || checkBox.trim().equals("") || value == null)
@@ -1467,9 +1467,9 @@ public class NodeHelper  implements Serializable
 	}
 
 //	/**
-//	 * »ñÈ¡µ±Ç°½ÚµãµÄËùÓĞ×Ó½ÚµãµÄid£¬×é³ÉÒ»¸ö´®£¬ÒÔ¡°##¡±×÷Îª·Ö¸ô·û
+//	 * è·å–å½“å‰èŠ‚ç‚¹çš„æ‰€æœ‰å­èŠ‚ç‚¹çš„idï¼Œç»„æˆä¸€ä¸ªä¸²ï¼Œä»¥â€œ##â€ä½œä¸ºåˆ†éš”ç¬¦
 //	 * 
-//	 * @return ·µ»ØÉú³ÉµÄ´®
+//	 * @return è¿”å›ç”Ÿæˆçš„ä¸²
 //	 */
 //	public static String getSonIDs(ITreeNode node)
 //	{
@@ -1514,7 +1514,7 @@ public class NodeHelper  implements Serializable
 	}
 
 	/**
-	 * »ñÈ¡µ¥Ñ¡¿òµÄ´úÂë
+	 * è·å–å•é€‰æ¡†çš„ä»£ç 
 	 * 
 	 * @return String
 	 */
@@ -1523,7 +1523,7 @@ public class NodeHelper  implements Serializable
 		String value = this.getRadioValue();
 		// System.out.println("value:"+value);
 		// System.out.println("radio:"+radio);
-		// Èç¹ûÃ»ÓĞÉèÖÃµ¥Ñ¡¿òµÄÃû³Æ£¬»òÕßµ¥Ñ¡¿òµÄÖµÎªnullÊ±£¬²»Éú³ÉÏàÓ¦µÄµ¥Ñ¡¿ò
+		// å¦‚æœæ²¡æœ‰è®¾ç½®å•é€‰æ¡†çš„åç§°ï¼Œæˆ–è€…å•é€‰æ¡†çš„å€¼ä¸ºnullæ—¶ï¼Œä¸ç”Ÿæˆç›¸åº”çš„å•é€‰æ¡†
 		if (radio == null || radio.trim().equals("") || value == null)
 			return "";
 		String checked = "";
@@ -1621,7 +1621,7 @@ public class NodeHelper  implements Serializable
 	}
 
 	/**
-	 * ¸´Ñ¡¿òµÄÈ±Ê¡Öµ£¬ÒÔ"$$"·Ö¸ô
+	 * å¤é€‰æ¡†çš„ç¼ºçœå€¼ï¼Œä»¥"$$"åˆ†éš”
 	 * 
 	 * @return String[]
 	 */
@@ -1672,7 +1672,7 @@ public class NodeHelper  implements Serializable
 	}
 
 	/**
-	 * »ñÈ¡¸´Ñ¡¿òµÄÀ©Õ¹´úÂë
+	 * è·å–å¤é€‰æ¡†çš„æ‰©å±•ä»£ç 
 	 * 
 	 * @return String[]
 	 */
@@ -1738,7 +1738,7 @@ public class NodeHelper  implements Serializable
 	}
 
 	/**
-	 * Ëø¶¨µ½µ±Ç°Ò³ÃæµÄ½¹µã½Úµã Description:
+	 * é”å®šåˆ°å½“å‰é¡µé¢çš„ç„¦ç‚¹èŠ‚ç‚¹ Description:
 	 * 
 	 * @return String
 	 */
@@ -1833,7 +1833,7 @@ public class NodeHelper  implements Serializable
 		// System.out.println(temp.length);
 		// System.out.println(temp[0]);
 		// System.out.println(temp[1]);
-		System.out.println("ˆÒ");
+		System.out.println("å ƒ");
 		System.out.println(System.getProperties());
 
 	}

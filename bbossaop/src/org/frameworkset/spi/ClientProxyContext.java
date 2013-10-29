@@ -27,19 +27,19 @@ import org.frameworkset.spi.remote.ServiceID;
 
 /**
  * <p>Title: ClientProxyContext.java</p> 
- * <p>Description: Ô¶³Ì·şÎñ×é¼ş¶¯Ì¬µ÷ÓÃ´úÀí¹¤³§£¬¿É¸ù¾İ·şÎñµØÖ·£¬·şÎñ½Ó¿Ú£¬·şÎñ¶ÔÓ¦µÄÈİÆ÷±êÊ¶
- * Éú³É·şÎñµÄ¿Í»§¶Ëµ÷ÓÃ´úÀí×é¼ş£¬È»ºóÍ¨¹ı´úÀí×é¼şÀ´ÊµÏÖÔ¶³Ì·şÎñµ÷ÓÃ£¬Ê¹ÓÃÊµÀıÈçÏÂ£º
+ * <p>Description: è¿œç¨‹æœåŠ¡ç»„ä»¶åŠ¨æ€è°ƒç”¨ä»£ç†å·¥å‚ï¼Œå¯æ ¹æ®æœåŠ¡åœ°å€ï¼ŒæœåŠ¡æ¥å£ï¼ŒæœåŠ¡å¯¹åº”çš„å®¹å™¨æ ‡è¯†
+ * ç”ŸæˆæœåŠ¡çš„å®¢æˆ·ç«¯è°ƒç”¨ä»£ç†ç»„ä»¶ï¼Œç„¶åé€šè¿‡ä»£ç†ç»„ä»¶æ¥å®ç°è¿œç¨‹æœåŠ¡è°ƒç”¨ï¼Œä½¿ç”¨å®ä¾‹å¦‚ä¸‹ï¼š
  * 
  * @Test
 	public void testMvcClient()
 	{
-		//»ñÈ¡mvcÈİÆ÷ÖĞ×é¼şµÄÔ¶³Ì·şÎñµ÷ÓÃ½Ó¿Ú£¬mvcÈİÆ÷ÓÉ·şÎñ¶Ëmvc¿ò¼Ü×Ô¶¯³õÊ¼»¯
+		//è·å–mvcå®¹å™¨ä¸­ç»„ä»¶çš„è¿œç¨‹æœåŠ¡è°ƒç”¨æ¥å£ï¼Œmvcå®¹å™¨ç”±æœåŠ¡ç«¯mvcæ¡†æ¶è‡ªåŠ¨åˆå§‹åŒ–
 		ClientInf inf = ClientProxyContext.getWebMVCClientBean(
 				"(http::172.16.25.108:8080/bboss-mvc/http.rpc)" +
 				"/client.proxy.demo?user=admin&password=123456",
 				ClientInf.class);
-		//½øĞĞÔ¶³Ì·½·¨µ÷ÓÃ,²¢Êä³öµ÷ÓÃ½á¹û
-		System.out.println(inf.helloworld("aaaa£¬¶à¶à"));
+		//è¿›è¡Œè¿œç¨‹æ–¹æ³•è°ƒç”¨,å¹¶è¾“å‡ºè°ƒç”¨ç»“æœ
+		System.out.println(inf.helloworld("aaaaï¼Œå¤šå¤š"));
 		
 		
 	}
@@ -48,28 +48,28 @@ import org.frameworkset.spi.remote.ServiceID;
 	@Test
 	public void testApplicationClient()
 	{
-		//»ñÈ¡ApplicationContextÀàĞÍÈİÆ÷ÖĞ×é¼şµÄÔ¶³Ì·şÎñµ÷ÓÃ½Ó¿Ú
+		//è·å–ApplicationContextç±»å‹å®¹å™¨ä¸­ç»„ä»¶çš„è¿œç¨‹æœåŠ¡è°ƒç”¨æ¥å£
 		WSService inf = ClientProxyContext.getApplicationClientBean("org/frameworkset/web/ws/testwsmodule.xml", 
 				"(http::172.16.25.108:8080/bboss-mvc/http.rpc)" +
 				"/mysfirstwsservice?user=admin&password=123456", 
 				WSService.class);
-		//ApplicationContextÈİÆ÷±ØĞëÊÇÒÔÏÂ·½Ê½´´½¨
+		//ApplicationContextå®¹å™¨å¿…é¡»æ˜¯ä»¥ä¸‹æ–¹å¼åˆ›å»º
 //		ApplicationContext context = ApplicationContext.getApplicationContext("org/frameworkset/web/ws/testwsmodule.xml");
-		//½øĞĞÔ¶³Ì·½·¨µ÷ÓÃ,²¢Êä³öµ÷ÓÃ½á¹û
-		System.out.println(inf.sayHello("aaaa£¬¶à¶à"));
+		//è¿›è¡Œè¿œç¨‹æ–¹æ³•è°ƒç”¨,å¹¶è¾“å‡ºè°ƒç”¨ç»“æœ
+		System.out.println(inf.sayHello("aaaaï¼Œå¤šå¤š"));
 	}
 	
 	@Test
 	public void testDefaultApplicationClient()
 	{
-		//»ñÈ¡·şÎñÆ÷¶ËÄ¬ÈÏÈİÆ÷ÖĞ×é¼şµÄÔ¶³Ì·şÎñµ÷ÓÃ½Ó¿Ú
+		//è·å–æœåŠ¡å™¨ç«¯é»˜è®¤å®¹å™¨ä¸­ç»„ä»¶çš„è¿œç¨‹æœåŠ¡è°ƒç”¨æ¥å£
 		ClientInf inf = ClientProxyContext.getApplicationClientBean( "(http::172.16.25.108:8080/bboss-mvc/http.rpc)" +
 				"/client.proxy.simpledemo?user=admin&password=123456", ClientInf.class);
-		//½øĞĞÔ¶³Ì·½·¨µ÷ÓÃ,²¢Êä³öµ÷ÓÃ½á¹û
-		System.out.println(inf.helloworld("aaaa£¬¶à¶à"));
-		//·şÎñÆ÷¶ËÄ¬ÈÏÈİÆ÷manager-provider.xml±ØĞëÊÇÒÔÏÂ·½Ê½´´½¨
+		//è¿›è¡Œè¿œç¨‹æ–¹æ³•è°ƒç”¨,å¹¶è¾“å‡ºè°ƒç”¨ç»“æœ
+		System.out.println(inf.helloworld("aaaaï¼Œå¤šå¤š"));
+		//æœåŠ¡å™¨ç«¯é»˜è®¤å®¹å™¨manager-provider.xmlå¿…é¡»æ˜¯ä»¥ä¸‹æ–¹å¼åˆ›å»º
 //		ApplicationContext context = ApplicationContext.getApplicationContext();
-		//ÒÔÏÂÊÇ´«Í³µÄÔ¶³Ì·şÎñ»ñÈ¡·½Ê½£¬±ØĞëÒªÇó±¾µØÓĞÏàÓ¦µÄ½Ó¿ÚºÍ×é¼şÊµÏÖÒÔ¼°ÅäÖÃÎÄ¼ş£¬ĞÂµÄapiÒÑ¾­Ïû³ıÁËÕâÖÖÏŞÖÆ
+		//ä»¥ä¸‹æ˜¯ä¼ ç»Ÿçš„è¿œç¨‹æœåŠ¡è·å–æ–¹å¼ï¼Œå¿…é¡»è¦æ±‚æœ¬åœ°æœ‰ç›¸åº”çš„æ¥å£å’Œç»„ä»¶å®ç°ä»¥åŠé…ç½®æ–‡ä»¶ï¼Œæ–°çš„apiå·²ç»æ¶ˆé™¤äº†è¿™ç§é™åˆ¶
 //		context.getTBeanObject("(http::172.16.25.108:8080/bboss-mvc/http.rpc)" +
 //				"/client.proxy.simpledemo?user=admin&password=123456",  ClientInf.class);
 	}
@@ -78,32 +78,32 @@ import org.frameworkset.spi.remote.ServiceID;
 	@Test
 	public void testSimpleClient()
 	{
-		//»ñÈ¡¿Í»§¶Ëµ÷ÓÃ´úÀí½Ó¿Ú
-		ClientInf inf = ClientProxyContext.getSimpleClientBean("org/frameworkset/spi/ws/webserivce-modules.xml",//ÈİÆ÷±êÊ¶
-		                                                            "(http::172.16.25.108:8080/bboss-mvc/http.rpc)/client.proxy.simpledemo?user=admin&password=123456",//·şÎñ×é¼şµØÖ· 
-		                                                            ClientInf.class);//·şÎñ½Ó¿Ú
-		//½øĞĞÔ¶³Ì·½·¨µ÷ÓÃ,²¢Êä³öµ÷ÓÃ½á¹û
-		System.out.println(inf.helloworld("aaaa£¬¶à¶à"));
+		//è·å–å®¢æˆ·ç«¯è°ƒç”¨ä»£ç†æ¥å£
+		ClientInf inf = ClientProxyContext.getSimpleClientBean("org/frameworkset/spi/ws/webserivce-modules.xml",//å®¹å™¨æ ‡è¯†
+		                                                            "(http::172.16.25.108:8080/bboss-mvc/http.rpc)/client.proxy.simpledemo?user=admin&password=123456",//æœåŠ¡ç»„ä»¶åœ°å€ 
+		                                                            ClientInf.class);//æœåŠ¡æ¥å£
+		//è¿›è¡Œè¿œç¨‹æ–¹æ³•è°ƒç”¨,å¹¶è¾“å‡ºè°ƒç”¨ç»“æœ
+		System.out.println(inf.helloworld("aaaaï¼Œå¤šå¤š"));
 		
-		//·şÎñÆ÷¶ËÈİÆ÷org/frameworkset/spi/ws/webserivce-modules.xml±ØĞëÊÇÒÔÏÂ·½Ê½´´½¨
+		//æœåŠ¡å™¨ç«¯å®¹å™¨org/frameworkset/spi/ws/webserivce-modules.xmlå¿…é¡»æ˜¯ä»¥ä¸‹æ–¹å¼åˆ›å»º
 //		DefaultApplicationContext context = DefaultApplicationContext.getApplicationContext("org/frameworkset/spi/ws/webserivce-modules.xml");
 	}
  * </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2011-10-19 ÏÂÎç09:43:26
+ * @Date 2011-10-19 ä¸‹åˆ09:43:26
  * @author biaoping.yin
  * @version 1.0
  */
 public class ClientProxyContext
 {
 	/**
-	 * »ñÈ¡DefaultApplicationContextÀàĞÍÈİÆ÷ÖĞµÄ·şÎñ×é¼şµ÷ÓÃ´úÀí
-	 * @param <T> ·ºĞÍÀàĞÍ
-	 * @param context ÈİÆ÷±êÊ¶£¬Ò»°ãÊÇÈİÆ÷³õÊ¼»¯µÄÅäÖÃÎÄ¼şÂ·¾¶
-	 * @param name  ·şÎñ×é¼ş·ÃÎÊµØÖ·
-	 * @param type  ×é¼ş½Ó¿ÚÀàĞÍ£¬Ê¹ÓÃ·ºĞÍÀ´ÊµÏÖ½Ó¿ÚµÄ×Ô¶¯ÀàĞÍ×ª»»
-	 * @return ·şÎñ×é¼şµ÷ÓÃ´úÀí
+	 * è·å–DefaultApplicationContextç±»å‹å®¹å™¨ä¸­çš„æœåŠ¡ç»„ä»¶è°ƒç”¨ä»£ç†
+	 * @param <T> æ³›å‹ç±»å‹
+	 * @param context å®¹å™¨æ ‡è¯†ï¼Œä¸€èˆ¬æ˜¯å®¹å™¨åˆå§‹åŒ–çš„é…ç½®æ–‡ä»¶è·¯å¾„
+	 * @param name  æœåŠ¡ç»„ä»¶è®¿é—®åœ°å€
+	 * @param type  ç»„ä»¶æ¥å£ç±»å‹ï¼Œä½¿ç”¨æ³›å‹æ¥å®ç°æ¥å£çš„è‡ªåŠ¨ç±»å‹è½¬æ¢
+	 * @return æœåŠ¡ç»„ä»¶è°ƒç”¨ä»£ç†
 	 */
 	public static <T> T getSimpleClientBean(String context,String name,Class<T> type)
 	{
@@ -115,11 +115,11 @@ public class ClientProxyContext
 	}
 	
 	/**
-	  * »ñÈ¡·şÎñ¶ËÄ¬ÈÏÈİÆ÷ÖĞµÄ·şÎñ×é¼şµ÷ÓÃ´úÀí
-	 * @param <T> ·ºĞÍÀàĞÍ	 
-	 * @param name  ·şÎñ×é¼ş·ÃÎÊµØÖ·
-	 * @param type  ×é¼ş½Ó¿ÚÀàĞÍ£¬Ê¹ÓÃ·ºĞÍÀ´ÊµÏÖ½Ó¿ÚµÄ×Ô¶¯ÀàĞÍ×ª»»
-	 * @return ·şÎñ×é¼şµ÷ÓÃ´úÀí
+	  * è·å–æœåŠ¡ç«¯é»˜è®¤å®¹å™¨ä¸­çš„æœåŠ¡ç»„ä»¶è°ƒç”¨ä»£ç†
+	 * @param <T> æ³›å‹ç±»å‹	 
+	 * @param name  æœåŠ¡ç»„ä»¶è®¿é—®åœ°å€
+	 * @param type  ç»„ä»¶æ¥å£ç±»å‹ï¼Œä½¿ç”¨æ³›å‹æ¥å®ç°æ¥å£çš„è‡ªåŠ¨ç±»å‹è½¬æ¢
+	 * @return æœåŠ¡ç»„ä»¶è°ƒç”¨ä»£ç†
 	 */
 	public static <T> T getApplicationClientBean(String name,Class<T> type)
 	{
@@ -127,12 +127,12 @@ public class ClientProxyContext
 	}
 	
 	/**
-	  * »ñÈ¡ApplicationContextÀàĞÍÈİÆ÷ÖĞµÄ·şÎñ×é¼şµ÷ÓÃ´úÀí
-	 * @param <T> ·ºĞÍÀàĞÍ
-	 * @param context ÈİÆ÷±êÊ¶£¬Ò»°ãÊÇÈİÆ÷³õÊ¼»¯µÄÅäÖÃÎÄ¼şÂ·¾¶
-	 * @param name  ·şÎñ×é¼ş·ÃÎÊµØÖ·
-	 * @param type  ×é¼ş½Ó¿ÚÀàĞÍ£¬Ê¹ÓÃ·ºĞÍÀ´ÊµÏÖ½Ó¿ÚµÄ×Ô¶¯ÀàĞÍ×ª»»
-	 * @return ·şÎñ×é¼şµ÷ÓÃ´úÀí
+	  * è·å–ApplicationContextç±»å‹å®¹å™¨ä¸­çš„æœåŠ¡ç»„ä»¶è°ƒç”¨ä»£ç†
+	 * @param <T> æ³›å‹ç±»å‹
+	 * @param context å®¹å™¨æ ‡è¯†ï¼Œä¸€èˆ¬æ˜¯å®¹å™¨åˆå§‹åŒ–çš„é…ç½®æ–‡ä»¶è·¯å¾„
+	 * @param name  æœåŠ¡ç»„ä»¶è®¿é—®åœ°å€
+	 * @param type  ç»„ä»¶æ¥å£ç±»å‹ï¼Œä½¿ç”¨æ³›å‹æ¥å®ç°æ¥å£çš„è‡ªåŠ¨ç±»å‹è½¬æ¢
+	 * @return æœåŠ¡ç»„ä»¶è°ƒç”¨ä»£ç†
 	 */
 	public static <T> T getApplicationClientBean(String context,String name,Class<T> type)
 	{
@@ -143,11 +143,11 @@ public class ClientProxyContext
 	}
 	
 	/**
-	  * »ñÈ¡MVCÈİÆ÷ÖĞµÄ·şÎñ×é¼şµ÷ÓÃ´úÀí
-	 * @param <T>	·ºĞÍÀàĞÍ 
-	 * @param name  ·şÎñ×é¼ş·ÃÎÊµØÖ·
-	 * @param type  ×é¼ş½Ó¿ÚÀàĞÍ£¬Ê¹ÓÃ·ºĞÍÀ´ÊµÏÖ½Ó¿ÚµÄ×Ô¶¯ÀàĞÍ×ª»»
-	 * @return ·şÎñ×é¼şµ÷ÓÃ´úÀí
+	  * è·å–MVCå®¹å™¨ä¸­çš„æœåŠ¡ç»„ä»¶è°ƒç”¨ä»£ç†
+	 * @param <T>	æ³›å‹ç±»å‹ 
+	 * @param name  æœåŠ¡ç»„ä»¶è®¿é—®åœ°å€
+	 * @param type  ç»„ä»¶æ¥å£ç±»å‹ï¼Œä½¿ç”¨æ³›å‹æ¥å®ç°æ¥å£çš„è‡ªåŠ¨ç±»å‹è½¬æ¢
+	 * @return æœåŠ¡ç»„ä»¶è°ƒç”¨ä»£ç†
 	 */
 	public static <T> T getWebMVCClientBean(String name,Class<T> type)
 	{

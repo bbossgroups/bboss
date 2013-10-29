@@ -21,7 +21,7 @@ package org.frameworkset.spi.assemble.callback;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2010-10-3 下午10:46:21
+ * @Date 2010-10-3 涓嬪崍10:46:21
  * @author biaoping.yin
  * @version 1.0
  */
@@ -29,7 +29,7 @@ public interface AssembleCallback {
 	final String webprex = "web::";
 	final String classpathprex = "classpath::";
 	/**
-	 * 由具体的实现将传入的路径path转换为具体环境的绝对路径
+	 * 鐢卞叿浣撶殑瀹炵幇灏嗕紶鍏ョ殑璺緞path杞崲涓哄叿浣撶幆澧冪殑缁濆璺緞
 	 * @param path
 	 * @return
 	 */

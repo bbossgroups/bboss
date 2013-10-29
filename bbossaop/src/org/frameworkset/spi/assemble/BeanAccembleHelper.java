@@ -49,7 +49,7 @@ import com.frameworkset.util.ValueObjectUtil;
  * Copyright (c) 2007
  * </p>
  * 
- * @Date 2009-9-19 ÏÂÎç11:01:02
+ * @Date 2009-9-19 ä¸‹åˆ11:01:02
  * @author biaoping.yin
  * @version 1.0
  */
@@ -79,7 +79,7 @@ public class BeanAccembleHelper<V> {
 	}
 
 	/**
-	 * »ñÈ¡ÊôĞÔµÄÒıÓÃÖµ
+	 * è·å–å±æ€§çš„å¼•ç”¨å€¼
 	 * 
 	 * @param property
 	 * @param context
@@ -102,7 +102,7 @@ public class BeanAccembleHelper<V> {
 //					throw new CurrentlyInCreationException(
 //							"loop inject constructor error. the inject context path is ["
 //									+ context + ">" + property.getRefid()
-//									+ "],Çë¼ì²éÅäÖÃÎÄ¼şÊÇ·ñÅäÖÃÕıÈ·[" + property.getConfigFile()
+//									+ "],è¯·æ£€æŸ¥é…ç½®æ–‡ä»¶æ˜¯å¦é…ç½®æ­£ç¡®[" + property.getConfigFile()
 //									+ "]");
 //				}
 				LoopObject lo = new LoopObject();
@@ -111,7 +111,7 @@ public class BeanAccembleHelper<V> {
 					throw new CurrentlyInCreationException(
 							"loop inject constructor error. the inject context path is ["
 									+ context + ">" + property.getRefid()
-									+ "],Çë¼ì²éÅäÖÃÎÄ¼şÊÇ·ñÅäÖÃÕıÈ·[" + property.getConfigFile()
+									+ "],è¯·æ£€æŸ¥é…ç½®æ–‡ä»¶æ˜¯å¦é…ç½®æ­£ç¡®[" + property.getConfigFile()
 									+ "]");
 				}
 				if(lo.getObj() != null)
@@ -120,9 +120,9 @@ public class BeanAccembleHelper<V> {
 		}
 			
 		
-		if (!property.isServiceRef()) {//Ê¶±ğĞÂµÄÄ£Ê½
+		if (!property.isServiceRef()) {//è¯†åˆ«æ–°çš„æ¨¡å¼
 			/**
-			 * ĞèÒª¶Ôrefid½øĞĞÄÚ²¿Ê¶±ğµÄ´¦Àí
+			 * éœ€è¦å¯¹refidè¿›è¡Œå†…éƒ¨è¯†åˆ«çš„å¤„ç†
 			 * test1->test2->test3
 			 * 
 			 */
@@ -143,24 +143,24 @@ public class BeanAccembleHelper<V> {
 				} catch (NumberFormatException e) {
 					throw new CurrentlyInCreationException(
 							"providerManagerInfo[" + property.getName()
-									+ "],Çë¼ì²éÅäÖÃÎÄ¼şÊÇ·ñÅäÖÃÕıÈ·["
+									+ "],è¯·æ£€æŸ¥é…ç½®æ–‡ä»¶æ˜¯å¦é…ç½®æ­£ç¡®["
 									+ property.getConfigFile() + "]", e);
 				} catch (IllegalArgumentException e) {
 					throw new CurrentlyInCreationException(
 							"providerManagerInfo[" + property.getName()
-									+ "],Çë¼ì²éÅäÖÃÎÄ¼şÊÇ·ñÅäÖÃÕıÈ·["
+									+ "],è¯·æ£€æŸ¥é…ç½®æ–‡ä»¶æ˜¯å¦é…ç½®æ­£ç¡®["
 									+ property.getConfigFile() + "]", e);
 				} catch (NoSupportTypeCastException e) {
 					throw new CurrentlyInCreationException(
 							"providerManagerInfo[" + property.getName()
-									+ "],Çë¼ì²éÅäÖÃÎÄ¼şÊÇ·ñÅäÖÃÕıÈ·["
+									+ "],è¯·æ£€æŸ¥é…ç½®æ–‡ä»¶æ˜¯å¦é…ç½®æ­£ç¡®["
 									+ property.getConfigFile() + "]", e);
 				} catch (BeanInstanceException e) {
 					throw e;
 				} catch (Exception e) {
 					throw new CurrentlyInCreationException(
 							"providerManagerInfo[" + property.getName()
-									+ "],Çë¼ì²éÅäÖÃÎÄ¼şÊÇ·ñÅäÖÃÕıÈ·["
+									+ "],è¯·æ£€æŸ¥é…ç½®æ–‡ä»¶æ˜¯å¦é…ç½®æ­£ç¡®["
 									+ property.getConfigFile() + "]", e);
 				}
 			} else {
@@ -179,7 +179,7 @@ public class BeanAccembleHelper<V> {
 	}
 	
 	/**
-	 * »ñÈ¡bean´´½¨¹¤³§¶ÔÏó
+	 * è·å–beanåˆ›å»ºå·¥å‚å¯¹è±¡
 	 * 
 	 * @param property
 	 * @param context
@@ -196,7 +196,7 @@ public class BeanAccembleHelper<V> {
 //			throw new CurrentlyInCreationException(
 //					"loop inject constructor error. the inject context path is ["
 //							+ context + ">" + property.getRefid()
-//							+ "],Çë¼ì²éÅäÖÃÎÄ¼şÊÇ·ñÅäÖÃÕıÈ·[" + property.getConfigFile()
+//							+ "],è¯·æ£€æŸ¥é…ç½®æ–‡ä»¶æ˜¯å¦é…ç½®æ­£ç¡®[" + property.getConfigFile()
 //							+ "]");
 //		}
 		LoopObject lo = new LoopObject();
@@ -205,7 +205,7 @@ public class BeanAccembleHelper<V> {
 			throw new CurrentlyInCreationException(
 					"loop inject constructor error. the inject context path is ["
 							+ context + ">" + factoryname
-							+ "],Çë¼ì²éÅäÖÃÎÄ¼şÊÇ·ñÅäÖÃÕıÈ·[" + property.getConfigFile()
+							+ "],è¯·æ£€æŸ¥é…ç½®æ–‡ä»¶æ˜¯å¦é…ç½®æ­£ç¡®[" + property.getConfigFile()
 							+ "]");
 		}
 		if(lo.getObj() != null)
@@ -271,7 +271,7 @@ public class BeanAccembleHelper<V> {
 	// throw new
 	// CurrentlyInCreationException("Inject constructor error: no construction
 	// define in the "
-	// + clazz + ",Çë¼ì²éÅäÖÃÎÄ¼şÊÇ·ñÅäÖÃÕıÈ·,²ÎÊı¸öÊıÊÇ·ñÕıÈ·.");
+	// + clazz + ",è¯·æ£€æŸ¥é…ç½®æ–‡ä»¶æ˜¯å¦é…ç½®æ­£ç¡®,å‚æ•°ä¸ªæ•°æ˜¯å¦æ­£ç¡®.");
 	// int l = constructors.length;
 	// int size = params.length;
 	// Class[] types = null;
@@ -295,7 +295,7 @@ public class BeanAccembleHelper<V> {
 	// "Inject constructor error: Parameters with construction defined in the "
 	// + clazz
 	// +
-	// " is not matched with the config paramenters .Çë¼ì²éÅäÖÃÎÄ¼şÊÇ·ñÅäÖÃÕıÈ·,²ÎÊı¸öÊıÊÇ·ñÕıÈ·.");
+	// " is not matched with the config paramenters .è¯·æ£€æŸ¥é…ç½®æ–‡ä»¶æ˜¯å¦é…ç½®æ­£ç¡®,å‚æ•°ä¸ªæ•°æ˜¯å¦æ­£ç¡®.");
 	//
 	//                        
 	//            
@@ -315,8 +315,8 @@ public class BeanAccembleHelper<V> {
 
 	// /**
 	// *
-	// * @param types ¹¹Ôìº¯ÊıµÄ²ÎÊıÀàĞÍ
-	// * @param params Íâ²¿´«ÈëµÄĞÎÊ½²ÎÊıÀàĞÍ
+	// * @param types æ„é€ å‡½æ•°çš„å‚æ•°ç±»å‹
+	// * @param params å¤–éƒ¨ä¼ å…¥çš„å½¢å¼å‚æ•°ç±»å‹
 	// * @return
 	// */
 	// private boolean isSameTypes(Class[] types, Class[] params)
@@ -393,7 +393,7 @@ public class BeanAccembleHelper<V> {
 	 * 
 	 * @param providerManagerInfo
 	 * @param context
-	 * @param ignoreconstruction ¹¤³§Ä£Ê½ÊµÀı»¯¹¤³§ÊµÀıÊ±ĞèÒªºöÂÔ¹¹Ôìº¯Êı£¬ÒòÎª¹¹Ôìº¯ÊıÊÇ×÷Îª¹¤³§·½·¨´´½¨×é¼şÊµÀıµÄ²ÎÊı
+	 * @param ignoreconstruction å·¥å‚æ¨¡å¼å®ä¾‹åŒ–å·¥å‚å®ä¾‹æ—¶éœ€è¦å¿½ç•¥æ„é€ å‡½æ•°ï¼Œå› ä¸ºæ„é€ å‡½æ•°æ˜¯ä½œä¸ºå·¥å‚æ–¹æ³•åˆ›å»ºç»„ä»¶å®ä¾‹çš„å‚æ•°
 	 * @return
 	 */
 	private V initbean(BeanInf providerManagerInfo, CallContext context,boolean ignoreconstruction) {
@@ -456,11 +456,11 @@ public class BeanAccembleHelper<V> {
 			return (V)context.getLoopContext().setCurrentObj(constructor.newInstance(values));
 		} catch (InstantiationException e) {
 			throw new BeanInstanceException("providerManagerInfo["
-					+ providerManagerInfo.getName() + "],Çë¼ì²éÅäÖÃÎÄ¼şÊÇ·ñÅäÖÃÕıÈ·["
+					+ providerManagerInfo.getName() + "],è¯·æ£€æŸ¥é…ç½®æ–‡ä»¶æ˜¯å¦é…ç½®æ­£ç¡®["
 					+ providerManagerInfo.getConfigFile() + "]", e);
 		} catch (IllegalAccessException e) {
 			throw new BeanInstanceException("providerManagerInfo["
-					+ providerManagerInfo.getName() + "],Çë¼ì²éÅäÖÃÎÄ¼şÊÇ·ñÅäÖÃÕıÈ·["
+					+ providerManagerInfo.getName() + "],è¯·æ£€æŸ¥é…ç½®æ–‡ä»¶æ˜¯å¦é…ç½®æ­£ç¡®["
 					+ providerManagerInfo.getConfigFile() + "]", e);
 		}
 		catch(CurrentlyInCreationException e)
@@ -472,7 +472,7 @@ public class BeanAccembleHelper<V> {
 			throw e;
 		} catch (Exception e) {
 			throw new BeanInstanceException("providerManagerInfo["
-					+ providerManagerInfo.getName() + "],Çë¼ì²éÅäÖÃÎÄ¼şÊÇ·ñÅäÖÃÕıÈ·["
+					+ providerManagerInfo.getName() + "],è¯·æ£€æŸ¥é…ç½®æ–‡ä»¶æ˜¯å¦é…ç½®æ­£ç¡®["
 					+ providerManagerInfo.getConfigFile() + "]", e);
 		}
 	}
@@ -636,15 +636,15 @@ public class BeanAccembleHelper<V> {
 							}
 							else
 							{
-								log.warn("ÉèÖÃ×é¼ş["+bean.getClass()+"]ÊôĞÔÊ§°Ü£ºDoes not exist a writer method for field ["
-										+ propertyDescriptor.getName() +"] ,Çë¼ì²éÀà¶¨ÒåÎÄ¼şÊÇ·ñÕıÈ·ÉèÖÃÁË¸Ã×Ö¶ÎµÄset·½·¨£¬»òÕß×Ö¶ÎÃû³ÆÊÇ·ñÖ¸¶¨ÕıÈ·¡£");
+								log.warn("è®¾ç½®ç»„ä»¶["+bean.getClass()+"]å±æ€§å¤±è´¥ï¼šDoes not exist a writer method for field ["
+										+ propertyDescriptor.getName() +"] ,è¯·æ£€æŸ¥ç±»å®šä¹‰æ–‡ä»¶æ˜¯å¦æ­£ç¡®è®¾ç½®äº†è¯¥å­—æ®µçš„setæ–¹æ³•ï¼Œæˆ–è€…å­—æ®µåç§°æ˜¯å¦æŒ‡å®šæ­£ç¡®ã€‚");
 								flag = false;
 								break;
 							}
 //							if(wm == null)
 //							{
-//								log.warn("ÉèÖÃ×é¼ş["+bean.getClass()+"]ÊôĞÔÊ§°Ü£ºDoes not exist a writer method for field ["
-//										+ propertyDescriptor.getName() +"] ,Çë¼ì²éÀà¶¨ÒåÎÄ¼şÊÇ·ñÕıÈ·ÉèÖÃÁË¸Ã×Ö¶ÎµÄset·½·¨£¬»òÕß×Ö¶ÎÃû³ÆÊÇ·ñÖ¸¶¨ÕıÈ·¡£");
+//								log.warn("è®¾ç½®ç»„ä»¶["+bean.getClass()+"]å±æ€§å¤±è´¥ï¼šDoes not exist a writer method for field ["
+//										+ propertyDescriptor.getName() +"] ,è¯·æ£€æŸ¥ç±»å®šä¹‰æ–‡ä»¶æ˜¯å¦æ­£ç¡®è®¾ç½®äº†è¯¥å­—æ®µçš„setæ–¹æ³•ï¼Œæˆ–è€…å­—æ®µåç§°æ˜¯å¦æŒ‡å®šæ­£ç¡®ã€‚");
 //								flag = false;
 //								break;
 //							}
@@ -678,12 +678,12 @@ public class BeanAccembleHelper<V> {
 					}
 				}
 
-				if (!flag) // ÒıÓÃ×Ö¶ÎÃû³ÆÔÚproviderÖĞÃ»ÓĞ¶¨Òå
+				if (!flag) // å¼•ç”¨å­—æ®µåç§°åœ¨providerä¸­æ²¡æœ‰å®šä¹‰
 				{
-					// System.out.println("ÒıÓÃ×Ö¶Î[" + filedName + "]ÔÚprovider[" +
-					// bean.getClass() + "]ÖĞÃ»ÓĞ¶¨Òå");
-					log.warn("ÒıÓÃ×Ö¶Î[" + filedName + "]ÔÚprovider["
-							+ bean.getClass() + "]ÖĞÃ»ÓĞ¶¨Òå");
+					// System.out.println("å¼•ç”¨å­—æ®µ[" + filedName + "]åœ¨provider[" +
+					// bean.getClass() + "]ä¸­æ²¡æœ‰å®šä¹‰");
+					log.warn("å¼•ç”¨å­—æ®µ[" + filedName + "]åœ¨provider["
+							+ bean.getClass() + "]ä¸­æ²¡æœ‰å®šä¹‰");
 				}
 			} 
 			catch(CurrentlyInCreationException e)
@@ -788,8 +788,8 @@ public class BeanAccembleHelper<V> {
 //								Method wm = propertyDescriptor.getWriteMethod();
 //								if(wm == null)
 //								{
-//									log.warn("³õÊ¼»¯×é¼ş["+bean.getClass()+"]Ê§°Ü£ºDoes not exist a writer method for field ["
-//											+ propertyDescriptor.getName() +"] ,Çë¼ì²éÀà¶¨ÒåÎÄ¼şÊÇ·ñÕıÈ·ÉèÖÃÁË¸Ã×Ö¶ÎµÄset·½·¨£¬»òÕß×Ö¶ÎÃû³ÆÊÇ·ñÖ¸¶¨ÕıÈ·¡£");
+//									log.warn("åˆå§‹åŒ–ç»„ä»¶["+bean.getClass()+"]å¤±è´¥ï¼šDoes not exist a writer method for field ["
+//											+ propertyDescriptor.getName() +"] ,è¯·æ£€æŸ¥ç±»å®šä¹‰æ–‡ä»¶æ˜¯å¦æ­£ç¡®è®¾ç½®äº†è¯¥å­—æ®µçš„setæ–¹æ³•ï¼Œæˆ–è€…å­—æ®µåç§°æ˜¯å¦æŒ‡å®šæ­£ç¡®ã€‚");
 //									flag = false;
 //									break;
 //								}
@@ -799,15 +799,15 @@ public class BeanAccembleHelper<V> {
 							}
 							else
 							{
-								log.warn("³õÊ¼»¯×é¼ş["+bean.getClass()+"]Ê§°Ü£ºDoes not exist a writer method for field ["
-										+ propertyDescriptor.getName() +"] ,Çë¼ì²éÀà¶¨ÒåÎÄ¼şÊÇ·ñÕıÈ·ÉèÖÃÁË¸Ã×Ö¶ÎµÄset·½·¨£¬»òÕß×Ö¶ÎÃû³ÆÊÇ·ñÖ¸¶¨ÕıÈ·¡£");
+								log.warn("åˆå§‹åŒ–ç»„ä»¶["+bean.getClass()+"]å¤±è´¥ï¼šDoes not exist a writer method for field ["
+										+ propertyDescriptor.getName() +"] ,è¯·æ£€æŸ¥ç±»å®šä¹‰æ–‡ä»¶æ˜¯å¦æ­£ç¡®è®¾ç½®äº†è¯¥å­—æ®µçš„setæ–¹æ³•ï¼Œæˆ–è€…å­—æ®µåç§°æ˜¯å¦æŒ‡å®šæ­£ç¡®ã€‚");
 								flag = false;
 								break;
 							}
 							
 						} catch (IllegalArgumentException e) {
 							throw new CurrentlyInCreationException(
-									pro.getName()+"@" + pro.getConfigFile() + "£¬providerManagerInfo[" + bean.getClass()
+									pro.getName()+"@" + pro.getConfigFile() + "ï¼ŒproviderManagerInfo[" + bean.getClass()
 											+ "]", e);
 						} 
 						catch(CurrentlyInCreationException e)
@@ -820,12 +820,12 @@ public class BeanAccembleHelper<V> {
 						}
 						catch (IllegalAccessException e) {
 							throw new CurrentlyInCreationException(
-									pro.getName()+"@" + pro.getConfigFile() + "£¬providerManagerInfo[" + bean.getClass()
+									pro.getName()+"@" + pro.getConfigFile() + "ï¼ŒproviderManagerInfo[" + bean.getClass()
 											+ "]", e);
 						} 
 						catch (Exception e) {
 							throw new CurrentlyInCreationException(
-									pro.getName()+"@" + pro.getConfigFile() + "£¬providerManagerInfo[" + bean.getClass()
+									pro.getName()+"@" + pro.getConfigFile() + "ï¼ŒproviderManagerInfo[" + bean.getClass()
 											+ "]", e);
 						}
 						// Object value = editor.getValue();
@@ -834,12 +834,12 @@ public class BeanAccembleHelper<V> {
 					}
 				}
 
-				if (!flag) // ÒıÓÃ×Ö¶ÎÃû³ÆÔÚproviderÖĞÃ»ÓĞ¶¨Òå
+				if (!flag) // å¼•ç”¨å­—æ®µåç§°åœ¨providerä¸­æ²¡æœ‰å®šä¹‰
 				{
-					// System.out.println("ÒıÓÃ×Ö¶Î[" + filedName + "]ÔÚprovider[" +
-					// bean.getClass() + "]ÖĞÃ»ÓĞ¶¨Òå");
-					log.warn("ÒıÓÃ×Ö¶Î[" + filedName + "]ÔÚprovider["
-							+ bean.getClass() + "]ÖĞÃ»ÓĞ¶¨Òå");
+					// System.out.println("å¼•ç”¨å­—æ®µ[" + filedName + "]åœ¨provider[" +
+					// bean.getClass() + "]ä¸­æ²¡æœ‰å®šä¹‰");
+					log.warn("å¼•ç”¨å­—æ®µ[" + filedName + "]åœ¨provider["
+							+ bean.getClass() + "]ä¸­æ²¡æœ‰å®šä¹‰");
 				}
 			}
 			catch(CurrentlyInCreationException e)
@@ -851,19 +851,19 @@ public class BeanAccembleHelper<V> {
 				throw e;
 			}catch (ClassNotFoundException e) {
 				// TODO Auto-generated catch block
-				throw new CurrentlyInCreationException(pro.getName()+"@" + pro.getConfigFile() + "£¬injectProperties["
+				throw new CurrentlyInCreationException(pro.getName()+"@" + pro.getConfigFile() + "ï¼ŒinjectProperties["
 						+ bean.getClass() + "]", e);
 			} catch (NumberFormatException e) {
-				throw new CurrentlyInCreationException(pro.getName()+"@" + pro.getConfigFile() + "£¬injectProperties["
+				throw new CurrentlyInCreationException(pro.getName()+"@" + pro.getConfigFile() + "ï¼ŒinjectProperties["
 						+ bean.getClass() + "]", e);
 			} catch (IllegalArgumentException e) {
-				throw new CurrentlyInCreationException(pro.getName()+"@" + pro.getConfigFile() + "£¬injectProperties["
+				throw new CurrentlyInCreationException(pro.getName()+"@" + pro.getConfigFile() + "ï¼ŒinjectProperties["
 						+ bean.getClass() + "]", e);
 			} catch (NoSupportTypeCastException e) {
-				throw new CurrentlyInCreationException(pro.getName()+"@" + pro.getConfigFile() + "£¬injectProperties["
+				throw new CurrentlyInCreationException(pro.getName()+"@" + pro.getConfigFile() + "ï¼ŒinjectProperties["
 						+ bean.getClass() + "]", e);
 			} catch (Exception e) {
-				throw new CurrentlyInCreationException(pro.getName()+"@" + pro.getConfigFile() + "£¬injectProperties["
+				throw new CurrentlyInCreationException(pro.getName()+"@" + pro.getConfigFile() + "ï¼ŒinjectProperties["
 						+ bean.getClass() + "]", e);
 			}
 
@@ -871,7 +871,7 @@ public class BeanAccembleHelper<V> {
 
 	}
 	/**
-	 * Í¨¹ı¹¤³§·½·¨»ñÈ¡×é¼şÊµÀı
+	 * é€šè¿‡å·¥å‚æ–¹æ³•è·å–ç»„ä»¶å®ä¾‹
 	 * @param providerManagerInfo
 	 * @param callcontext
 	 * @return
@@ -881,18 +881,18 @@ public class BeanAccembleHelper<V> {
 		Pro pro = (Pro)providerManagerInfo;
 		String factoryMethod = pro.getFactory_method();
 		if(factoryMethod == null || factoryMethod.equals(""))
-			throw new CurrentlyInCreationException(pro.getName()+"@" + pro.getConfigFile() + "£¬Ã»ÓĞÖ¸¶¨¹¤³§´´½¨·½·¨¡£Çë¼ì²é[factory-method]ÊôĞÔÅäÖÃÊÇ·ñÕıÈ·¡£");
-		if(pro.getFactory_bean() != null)//Ê¹ÓÃ¹¤³§bean´´½¨×é¼şÊµÀı
+			throw new CurrentlyInCreationException(pro.getName()+"@" + pro.getConfigFile() + "ï¼Œæ²¡æœ‰æŒ‡å®šå·¥å‚åˆ›å»ºæ–¹æ³•ã€‚è¯·æ£€æŸ¥[factory-method]å±æ€§é…ç½®æ˜¯å¦æ­£ç¡®ã€‚");
+		if(pro.getFactory_bean() != null)//ä½¿ç”¨å·¥å‚beanåˆ›å»ºç»„ä»¶å®ä¾‹
 		{
-			//»ñÈ¡¹¤³§¶ÔÏó
+			//è·å–å·¥å‚å¯¹è±¡
 			String beanname = providerManagerInfo.getFactory_bean();
 			Object factory = this.getFactoryRefValue(pro, beanname, callcontext, null);
 			if(factory == null)
 			{
-				throw new CurrentlyInCreationException(pro.getName()+"@" + pro.getConfigFile() + "£¬Ã»ÓĞÕÒµ½¶ÔÏó¹¤³§["+beanname+"]¡£Çë¼ì²é[factory-bean]ÊôĞÔÅäÖÃÊÇ·ñÕıÈ·¡£");
+				throw new CurrentlyInCreationException(pro.getName()+"@" + pro.getConfigFile() + "ï¼Œæ²¡æœ‰æ‰¾åˆ°å¯¹è±¡å·¥å‚["+beanname+"]ã€‚è¯·æ£€æŸ¥[factory-bean]å±æ€§é…ç½®æ˜¯å¦æ­£ç¡®ã€‚");
 			}
-			//Í¨¹ı¹¤³§¶ÔÏó´´½¨×é¼şÊµÀı
-			//1.¹¹½¨¹¤³§´´½¨Â·¾¶ÉÏÏÂÎÄ£¬·ÀÖ¹¹¤³§¶ÔÏóÔÚ´´½¨×é¼şÊµÀıÊ±²úÉúÑ­»·ÒÀÀµ
+			//é€šè¿‡å·¥å‚å¯¹è±¡åˆ›å»ºç»„ä»¶å®ä¾‹
+			//1.æ„å»ºå·¥å‚åˆ›å»ºè·¯å¾„ä¸Šä¸‹æ–‡ï¼Œé˜²æ­¢å·¥å‚å¯¹è±¡åœ¨åˆ›å»ºç»„ä»¶å®ä¾‹æ—¶äº§ç”Ÿå¾ªç¯ä¾èµ–
 			Context context = null;
 			if (callcontext == null)
 				callcontext = new CallContext(providerManagerInfo
@@ -905,18 +905,18 @@ public class BeanAccembleHelper<V> {
 						providerManagerInfo.getXpath());
 				callcontext.setLoopContext(context);
 			}
-			//2.´´½¨×é¼şÊµÀı
+			//2.åˆ›å»ºç»„ä»¶å®ä¾‹
 			V bean  = creatorBeanByFactoryBean(pro, factory,factoryMethod,callcontext);
 			context.setCurrentObj(bean);
 			return bean;
 		}
-		else//Ê¹ÓÃ¹¤³§Àà¾²Ì¬·½·¨´´½¨×é¼şÊµÀı
+		else//ä½¿ç”¨å·¥å‚ç±»é™æ€æ–¹æ³•åˆ›å»ºç»„ä»¶å®ä¾‹
 		{
 			String factoryClass = pro.getFactory_class();
 			try {
 				Class cls = Class.forName(factoryClass);
-				//Í¨¹ı¹¤³§¶ÔÏó´´½¨×é¼şÊµÀı
-				//1.¹¹½¨¹¤³§´´½¨Â·¾¶ÉÏÏÂÎÄ£¬·ÀÖ¹¹¤³§¶ÔÏóÔÚ´´½¨×é¼şÊµÀıÊ±²úÉúÑ­»·ÒÀÀµ
+				//é€šè¿‡å·¥å‚å¯¹è±¡åˆ›å»ºç»„ä»¶å®ä¾‹
+				//1.æ„å»ºå·¥å‚åˆ›å»ºè·¯å¾„ä¸Šä¸‹æ–‡ï¼Œé˜²æ­¢å·¥å‚å¯¹è±¡åœ¨åˆ›å»ºç»„ä»¶å®ä¾‹æ—¶äº§ç”Ÿå¾ªç¯ä¾èµ–
 				Context context = null;
 				if (callcontext == null)
 					callcontext = new CallContext(providerManagerInfo
@@ -942,7 +942,7 @@ public class BeanAccembleHelper<V> {
 				throw e;
 			}
 			catch (Exception e) {
-				throw new CurrentlyInCreationException(pro.getName()+"@" + pro.getConfigFile() + "£¬Ã»ÓĞÕÒµ½¶ÔÏó¹¤³§["+factoryClass+"]Àà¡£Çë¼ì²é[factory-class]ÊôĞÔÅäÖÃÊÇ·ñÕıÈ·¡£",e);
+				throw new CurrentlyInCreationException(pro.getName()+"@" + pro.getConfigFile() + "ï¼Œæ²¡æœ‰æ‰¾åˆ°å¯¹è±¡å·¥å‚["+factoryClass+"]ç±»ã€‚è¯·æ£€æŸ¥[factory-class]å±æ€§é…ç½®æ˜¯å¦æ­£ç¡®ã€‚",e);
 			}
 			
 			
@@ -950,7 +950,7 @@ public class BeanAccembleHelper<V> {
 	}
 	
 	/**
-	 * Í¨¹ı¹¤³§¶ÔÏó´´½¨×é¼şÊµÀı
+	 * é€šè¿‡å·¥å‚å¯¹è±¡åˆ›å»ºç»„ä»¶å®ä¾‹
 	 * @param providerManagerInfo
 	 * @param factory
 	 * @param context
@@ -967,18 +967,18 @@ public class BeanAccembleHelper<V> {
 				Method method = cls.getMethod(factoryMethod,null);
 				if(method == null)
 				{
-					throw new CurrentlyInCreationException(providerManagerInfo.getName()+"@" + providerManagerInfo.getConfigFile() + ",¶ÔÏó¹¤³§["+factory.getClass().getName()+"]Ã»ÓĞ¶¨Òå"+factoryMethod+"·½·¨¡£Çë¼ì²é[factory-method]ÊôĞÔÅäÖÃÊÇ·ñÕıÈ·¡£");
+					throw new CurrentlyInCreationException(providerManagerInfo.getName()+"@" + providerManagerInfo.getConfigFile() + ",å¯¹è±¡å·¥å‚["+factory.getClass().getName()+"]æ²¡æœ‰å®šä¹‰"+factoryMethod+"æ–¹æ³•ã€‚è¯·æ£€æŸ¥[factory-method]å±æ€§é…ç½®æ˜¯å¦æ­£ç¡®ã€‚");
 				}
 				/**
-				 * ±¾µØÏß³Ì¼¼Êõ£¬´æ·ÅCallContextÉÏÏÂÎÄ
-				 * Èç¹ûÓĞ¾ÉµÄ»¹ĞèÒª±£´æ¾ÉµÄcallContext
+				 * æœ¬åœ°çº¿ç¨‹æŠ€æœ¯ï¼Œå­˜æ”¾CallContextä¸Šä¸‹æ–‡
+				 * å¦‚æœæœ‰æ—§çš„è¿˜éœ€è¦ä¿å­˜æ—§çš„callContext
 				 */
 //				return (V) method.invoke(factory, null);
 				return invokerMethod(  providerManagerInfo,factory,method,null,context);
 				
 				/**
-				 * ÇåÀí±¾µØÏß³Ì
-				 * Èç¹ûÓĞ¾ÉµÄcallContext£¬»¹ĞèÒª»Ö¸´¾ÉµÄÉÏÏÂÎÄ
+				 * æ¸…ç†æœ¬åœ°çº¿ç¨‹
+				 * å¦‚æœæœ‰æ—§çš„callContextï¼Œè¿˜éœ€è¦æ¢å¤æ—§çš„ä¸Šä¸‹æ–‡
 				 */
 			}
 			List<Pro> params = providerManagerInfo.getConstructorParams();
@@ -1004,8 +1004,8 @@ public class BeanAccembleHelper<V> {
 
 			}
 			/**
-			 * ²ÉÓÃ±¾µØÏß³Ì¼¼Êõ´æ·ÅCallContextÉÏÏÂÎÄ
-			 * Èç¹ûÓĞ¾ÉµÄ»¹ĞèÒª±£´æ¾ÉµÄcallContext
+			 * é‡‡ç”¨æœ¬åœ°çº¿ç¨‹æŠ€æœ¯å­˜æ”¾CallContextä¸Šä¸‹æ–‡
+			 * å¦‚æœæœ‰æ—§çš„è¿˜éœ€è¦ä¿å­˜æ—§çš„callContext
 			 */
 			
 //			V bean =  (V)method.invoke(factory,values);
@@ -1013,14 +1013,14 @@ public class BeanAccembleHelper<V> {
 			return bean;
 			
 			/**
-			 * ÇåÀí±¾µØÏß³Ì
-			 * Èç¹ûÓĞ¾ÉµÄcallContext£¬»¹ĞèÒª»Ö¸´¾ÉµÄÉÏÏÂÎÄ
+			 * æ¸…ç†æœ¬åœ°çº¿ç¨‹
+			 * å¦‚æœæœ‰æ—§çš„callContextï¼Œè¿˜éœ€è¦æ¢å¤æ—§çš„ä¸Šä¸‹æ–‡
 			 */
 			
 			
 		}  catch (IllegalAccessException e) {
 			throw new BeanInstanceException("providerManagerInfo["
-					+ providerManagerInfo.getName() + "],Çë¼ì²éÅäÖÃÎÄ¼şÊÇ·ñÅäÖÃÕıÈ·["
+					+ providerManagerInfo.getName() + "],è¯·æ£€æŸ¥é…ç½®æ–‡ä»¶æ˜¯å¦é…ç½®æ­£ç¡®["
 					+ providerManagerInfo.getConfigFile() + "]", e);
 		}
 		catch(CurrentlyInCreationException e)
@@ -1035,14 +1035,14 @@ public class BeanAccembleHelper<V> {
 			throw e;
 		} catch (Exception e) {
 			throw new BeanInstanceException("providerManagerInfo["
-					+ providerManagerInfo.getName() + "],Çë¼ì²éÅäÖÃÎÄ¼şÊÇ·ñÅäÖÃÕıÈ·["
+					+ providerManagerInfo.getName() + "],è¯·æ£€æŸ¥é…ç½®æ–‡ä»¶æ˜¯å¦é…ç½®æ­£ç¡®["
 					+ providerManagerInfo.getConfigFile() + "]", e);
 		}
 	}
 	
 	
 	/**
-	 * Í¨¹ı¹¤³§¶ÔÏó´´½¨×é¼şÊµÀı
+	 * é€šè¿‡å·¥å‚å¯¹è±¡åˆ›å»ºç»„ä»¶å®ä¾‹
 	 * @param providerManagerInfo
 	 * @param factory
 	 * @param context
@@ -1061,19 +1061,19 @@ public class BeanAccembleHelper<V> {
 				if(method == null)
 				{
 					throw new CurrentlyInCreationException(providerManagerInfo.getName()+"@" 
-							+ providerManagerInfo.getConfigFile() + ",¶ÔÏó¹¤³§["+cls.getName()+"]Ã»ÓĞ¶¨Òå"+method+"·½·¨¡£Çë¼ì²é[factory-method]ÊôĞÔÅäÖÃÊÇ·ñÕıÈ·¡£");
+							+ providerManagerInfo.getConfigFile() + ",å¯¹è±¡å·¥å‚["+cls.getName()+"]æ²¡æœ‰å®šä¹‰"+method+"æ–¹æ³•ã€‚è¯·æ£€æŸ¥[factory-method]å±æ€§é…ç½®æ˜¯å¦æ­£ç¡®ã€‚");
 				}
 				
 				/**
-				 * ±¾µØÏß³Ì¼¼Êõ£¬´æ·ÅCallContextÉÏÏÂÎÄ
-				 * Èç¹ûÓĞ¾ÉµÄ»¹ĞèÒª±£´æ¾ÉµÄcallContext
+				 * æœ¬åœ°çº¿ç¨‹æŠ€æœ¯ï¼Œå­˜æ”¾CallContextä¸Šä¸‹æ–‡
+				 * å¦‚æœæœ‰æ—§çš„è¿˜éœ€è¦ä¿å­˜æ—§çš„callContext
 				 */
 //				return (V) method.invoke(factory, null);
 				return new MethodInvoker(false, instance, null, method_,providerManagerInfo);
 				
 				/**
-				 * ÇåÀí±¾µØÏß³Ì
-				 * Èç¹ûÓĞ¾ÉµÄcallContext£¬»¹ĞèÒª»Ö¸´¾ÉµÄÉÏÏÂÎÄ
+				 * æ¸…ç†æœ¬åœ°çº¿ç¨‹
+				 * å¦‚æœæœ‰æ—§çš„callContextï¼Œè¿˜éœ€è¦æ¢å¤æ—§çš„ä¸Šä¸‹æ–‡
 				 */
 			}
 			List<Pro> params = providerManagerInfo.getConstructorParams();
@@ -1114,7 +1114,7 @@ public class BeanAccembleHelper<V> {
 			throw e;
 		} catch (Exception e) {
 			throw new BeanInstanceException("providerManagerInfo["
-					+ providerManagerInfo.getName() + "],Çë¼ì²éÅäÖÃÎÄ¼şÊÇ·ñÅäÖÃÕıÈ·["
+					+ providerManagerInfo.getName() + "],è¯·æ£€æŸ¥é…ç½®æ–‡ä»¶æ˜¯å¦é…ç½®æ­£ç¡®["
 					+ providerManagerInfo.getConfigFile() + "]", e);
 		}
 	}
@@ -1123,16 +1123,16 @@ public class BeanAccembleHelper<V> {
 	{
 		try {
 			/**
-			 * ±¾µØÏß³Ì¼¼Êõ£¬´æ·ÅCallContextÉÏÏÂÎÄ
-			 * Èç¹ûÓĞ¾ÉµÄ»¹ĞèÒª±£´æ¾ÉµÄcallContext
+			 * æœ¬åœ°çº¿ç¨‹æŠ€æœ¯ï¼Œå­˜æ”¾CallContextä¸Šä¸‹æ–‡
+			 * å¦‚æœæœ‰æ—§çš„è¿˜éœ€è¦ä¿å­˜æ—§çš„callContext
 			 */
 			return (V) method.invoke(bean, params);
 		} 
 		finally
 		{
 			/**
-			 * ÇåÀí±¾µØÏß³Ì
-			 * Èç¹ûÓĞ¾ÉµÄcallContext£¬»¹ĞèÒª»Ö¸´¾ÉµÄÉÏÏÂÎÄ
+			 * æ¸…ç†æœ¬åœ°çº¿ç¨‹
+			 * å¦‚æœæœ‰æ—§çš„callContextï¼Œè¿˜éœ€è¦æ¢å¤æ—§çš„ä¸Šä¸‹æ–‡
 			 */
 		}
 		
@@ -1142,8 +1142,8 @@ public class BeanAccembleHelper<V> {
 	
 	
 	/**
-	 * Í¨¹ı¹¤³§Àà´´½¨×é¼şÊµÀı,¹¤³§·½·¨Èç¹ûÊÇ¾²Ì¬µÄÖ±½Óµ÷ÓÃ¾²Ì¬·½·¨´´½¨ËùĞè×é¼ş£»
-	 * Èç¹ûÊÇ·Ç¾²Ì¬µÄ°²ÕÕÆÕÍ¨×é¼ş´¦Àí£¬¼´ÏÈ»ñÈ¡¹¤³§¶ÔÏóÊµÀı£¬È»ºóÔÙ´´½¨×é¼ş
+	 * é€šè¿‡å·¥å‚ç±»åˆ›å»ºç»„ä»¶å®ä¾‹,å·¥å‚æ–¹æ³•å¦‚æœæ˜¯é™æ€çš„ç›´æ¥è°ƒç”¨é™æ€æ–¹æ³•åˆ›å»ºæ‰€éœ€ç»„ä»¶ï¼›
+	 * å¦‚æœæ˜¯éé™æ€çš„å®‰ç…§æ™®é€šç»„ä»¶å¤„ç†ï¼Œå³å…ˆè·å–å·¥å‚å¯¹è±¡å®ä¾‹ï¼Œç„¶åå†åˆ›å»ºç»„ä»¶
 	 * @param providerManagerInfo
 	 * @param factory
 	 * @param context
@@ -1161,22 +1161,22 @@ public class BeanAccembleHelper<V> {
 //				method.
 				if(method == null)
 				{
-					throw new CurrentlyInCreationException(providerManagerInfo.getName()+"@" + providerManagerInfo.getConfigFile() + ",¶ÔÏó¹¤³§["+factoryClass.getName()+"]Ã»ÓĞ¶¨Òå"+factoryMethod+"·½·¨¡£Çë¼ì²é[factory-method]ÊôĞÔÅäÖÃÊÇ·ñÕıÈ·¡£");
+					throw new CurrentlyInCreationException(providerManagerInfo.getName()+"@" + providerManagerInfo.getConfigFile() + ",å¯¹è±¡å·¥å‚["+factoryClass.getName()+"]æ²¡æœ‰å®šä¹‰"+factoryMethod+"æ–¹æ³•ã€‚è¯·æ£€æŸ¥[factory-method]å±æ€§é…ç½®æ˜¯å¦æ­£ç¡®ã€‚");
 				}
 				try {
 					/**
-					 * ±¾µØÏß³Ì¼¼Êõ£¬´æ·ÅCallContextÉÏÏÂÎÄ
-					 * Èç¹ûÓĞ¾ÉµÄ»¹ĞèÒª±£´æ¾ÉµÄcallContext
+					 * æœ¬åœ°çº¿ç¨‹æŠ€æœ¯ï¼Œå­˜æ”¾CallContextä¸Šä¸‹æ–‡
+					 * å¦‚æœæœ‰æ—§çš„è¿˜éœ€è¦ä¿å­˜æ—§çš„callContext
 					 */
 //					return (V) method.invoke(null);
 
 					 int mode = method.getModifiers();
-					 if( Modifier.isStatic(mode))//¾²Ì¬·½·¨
+					 if( Modifier.isStatic(mode))//é™æ€æ–¹æ³•
 						 return this.invokerMethod(providerManagerInfo, null, method, null, context);
-					 else//·Ç¾²Ì¬·½·¨
+					 else//éé™æ€æ–¹æ³•
 					 {
-						 Object factoryInf = getBeanFromClass( providerManagerInfo,  context,true);//ÏÈ»ñÈ¡¹¤³§ÀàÊµÀı
-						 return this.invokerMethod(providerManagerInfo, factoryInf, method, null, context);//È»ºóµ÷ÓÃ¹¤³§ÀàÊµÀı·½·¨´´½¨×é¼şÊµÀı
+						 Object factoryInf = getBeanFromClass( providerManagerInfo,  context,true);//å…ˆè·å–å·¥å‚ç±»å®ä¾‹
+						 return this.invokerMethod(providerManagerInfo, factoryInf, method, null, context);//ç„¶åè°ƒç”¨å·¥å‚ç±»å®ä¾‹æ–¹æ³•åˆ›å»ºç»„ä»¶å®ä¾‹
 					 }
 				}
 				catch(CurrentlyInCreationException e)
@@ -1188,13 +1188,13 @@ public class BeanAccembleHelper<V> {
 					throw new BeanInstanceException(e.getTargetException());
 				}
 				catch (Exception e) {
-					throw new CurrentlyInCreationException(providerManagerInfo.getName()+"@" + providerManagerInfo.getConfigFile() + ",¶ÔÏó¹¤³§["+factoryClass.getName()+"]Ã»ÓĞ¶¨Òå"+factoryMethod+"·½·¨,»òÕßÊÇ·Ç¾²Ì¬·½·¨¡£Çë¼ì²é[factory-method]ÊôĞÔÅäÖÃÊÇ·ñÕıÈ·¡£",e);
+					throw new CurrentlyInCreationException(providerManagerInfo.getName()+"@" + providerManagerInfo.getConfigFile() + ",å¯¹è±¡å·¥å‚["+factoryClass.getName()+"]æ²¡æœ‰å®šä¹‰"+factoryMethod+"æ–¹æ³•,æˆ–è€…æ˜¯éé™æ€æ–¹æ³•ã€‚è¯·æ£€æŸ¥[factory-method]å±æ€§é…ç½®æ˜¯å¦æ­£ç¡®ã€‚",e);
 				}
 				
 				
 				/**
-				 * ÇåÀí±¾µØÏß³Ì
-				 * Èç¹ûÓĞ¾ÉµÄcallContext£¬»¹ĞèÒª»Ö¸´¾ÉµÄÉÏÏÂÎÄ
+				 * æ¸…ç†æœ¬åœ°çº¿ç¨‹
+				 * å¦‚æœæœ‰æ—§çš„callContextï¼Œè¿˜éœ€è¦æ¢å¤æ—§çš„ä¸Šä¸‹æ–‡
 				 */
 			}
 			List<Pro> params = providerManagerInfo.getConstructorParams();
@@ -1222,31 +1222,31 @@ public class BeanAccembleHelper<V> {
 
 			}
 			/**
-			 * ²ÉÓÃ±¾µØÏß³Ì¼¼Êõ´æ·ÅCallContextÉÏÏÂÎÄ
-			 * Èç¹ûÓĞ¾ÉµÄ»¹ĞèÒª±£´æ¾ÉµÄcallContext
+			 * é‡‡ç”¨æœ¬åœ°çº¿ç¨‹æŠ€æœ¯å­˜æ”¾CallContextä¸Šä¸‹æ–‡
+			 * å¦‚æœæœ‰æ—§çš„è¿˜éœ€è¦ä¿å­˜æ—§çš„callContext
 			 */
 			
 //			V bean =  (V)method.invoke(null,values);
 			 int mode = method.getModifiers();
-			 if( Modifier.isStatic(mode))//¾²Ì¬·½·¨
+			 if( Modifier.isStatic(mode))//é™æ€æ–¹æ³•
 			 {
 				 return invokerMethod(providerManagerInfo, null, method, values, context);
 			 }
-			 else //·Ç¾²Ì¬·½·¨
+			 else //éé™æ€æ–¹æ³•
 			 {
-				 Object factoryInf = getBeanFromClass( providerManagerInfo,  context,true);//ÏÈ»ñÈ¡¹¤³§ÀàÊµÀı
-				 return invokerMethod(providerManagerInfo, factoryInf, method, values, context);//È»ºóµ÷ÓÃ¹¤³§ÀàÊµÀı·½·¨´´½¨×é¼şÊµÀı
+				 Object factoryInf = getBeanFromClass( providerManagerInfo,  context,true);//å…ˆè·å–å·¥å‚ç±»å®ä¾‹
+				 return invokerMethod(providerManagerInfo, factoryInf, method, values, context);//ç„¶åè°ƒç”¨å·¥å‚ç±»å®ä¾‹æ–¹æ³•åˆ›å»ºç»„ä»¶å®ä¾‹
 			 }
 			
 			/**
-			 * ÇåÀí±¾µØÏß³Ì
-			 * Èç¹ûÓĞ¾ÉµÄcallContext£¬»¹ĞèÒª»Ö¸´¾ÉµÄÉÏÏÂÎÄ
+			 * æ¸…ç†æœ¬åœ°çº¿ç¨‹
+			 * å¦‚æœæœ‰æ—§çš„callContextï¼Œè¿˜éœ€è¦æ¢å¤æ—§çš„ä¸Šä¸‹æ–‡
 			 */
 			
 			
 		}  catch (IllegalAccessException e) {
 			throw new BeanInstanceException("providerManagerInfo["
-					+ providerManagerInfo.getName() + "],Çë¼ì²éÅäÖÃÎÄ¼şÊÇ·ñÅäÖÃÕıÈ·["
+					+ providerManagerInfo.getName() + "],è¯·æ£€æŸ¥é…ç½®æ–‡ä»¶æ˜¯å¦é…ç½®æ­£ç¡®["
 					+ providerManagerInfo.getConfigFile() + "]", e);
 		} catch (BeanInstanceException e) {
 			throw e;
@@ -1261,13 +1261,13 @@ public class BeanAccembleHelper<V> {
 		}
 		catch (Exception e) {
 			throw new BeanInstanceException("providerManagerInfo["
-					+ providerManagerInfo.getName() + "],Çë¼ì²éÅäÖÃÎÄ¼şÊÇ·ñÅäÖÃÕıÈ·["
+					+ providerManagerInfo.getName() + "],è¯·æ£€æŸ¥é…ç½®æ–‡ä»¶æ˜¯å¦é…ç½®æ­£ç¡®["
 					+ providerManagerInfo.getConfigFile() + "]", e);
 		}
 	}
 	
 	/**
-	 * Í¨¹ı¹¤³§¶ÔÏó´´½¨×é¼şÊµÀı
+	 * é€šè¿‡å·¥å‚å¯¹è±¡åˆ›å»ºç»„ä»¶å®ä¾‹
 	 * @param providerManagerInfo
 	 * @param factory
 	 * @param context
@@ -1287,12 +1287,12 @@ public class BeanAccembleHelper<V> {
 				if(method == null)
 				{
 					throw new CurrentlyInCreationException(providerManagerInfo.getName()+"@" + providerManagerInfo.getConfigFile() 
-							+ ",¶ÔÏó¹¤³§["+beanClass+"]Ã»ÓĞ¶¨Òå"+method+"·½·¨¡£Çë¼ì²é[factory-method]ÊôĞÔÅäÖÃÊÇ·ñÕıÈ·¡£");
+							+ ",å¯¹è±¡å·¥å‚["+beanClass+"]æ²¡æœ‰å®šä¹‰"+method+"æ–¹æ³•ã€‚è¯·æ£€æŸ¥[factory-method]å±æ€§é…ç½®æ˜¯å¦æ­£ç¡®ã€‚");
 				}
 				try {
 					/**
-					 * ±¾µØÏß³Ì¼¼Êõ£¬´æ·ÅCallContextÉÏÏÂÎÄ
-					 * Èç¹ûÓĞ¾ÉµÄ»¹ĞèÒª±£´æ¾ÉµÄcallContext
+					 * æœ¬åœ°çº¿ç¨‹æŠ€æœ¯ï¼Œå­˜æ”¾CallContextä¸Šä¸‹æ–‡
+					 * å¦‚æœæœ‰æ—§çš„è¿˜éœ€è¦ä¿å­˜æ—§çš„callContext
 					 */
 //					return (V) method.invoke(null);
 					return new MethodInvoker(true, instance, null, method_,providerManagerInfo);
@@ -1304,13 +1304,13 @@ public class BeanAccembleHelper<V> {
 				
 				catch (Exception e) {
 					throw new CurrentlyInCreationException(providerManagerInfo.getName()+"@" + providerManagerInfo.getConfigFile() 
-							+ ",¶ÔÏó¹¤³§["+beanClass+"]Ã»ÓĞ¶¨Òå"+method+"·½·¨,»òÕßÊÇ·Ç¾²Ì¬·½·¨¡£Çë¼ì²é[factory-method]ÊôĞÔÅäÖÃÊÇ·ñÕıÈ·¡£",e);
+							+ ",å¯¹è±¡å·¥å‚["+beanClass+"]æ²¡æœ‰å®šä¹‰"+method+"æ–¹æ³•,æˆ–è€…æ˜¯éé™æ€æ–¹æ³•ã€‚è¯·æ£€æŸ¥[factory-method]å±æ€§é…ç½®æ˜¯å¦æ­£ç¡®ã€‚",e);
 				}
 				
 				
 				/**
-				 * ÇåÀí±¾µØÏß³Ì
-				 * Èç¹ûÓĞ¾ÉµÄcallContext£¬»¹ĞèÒª»Ö¸´¾ÉµÄÉÏÏÂÎÄ
+				 * æ¸…ç†æœ¬åœ°çº¿ç¨‹
+				 * å¦‚æœæœ‰æ—§çš„callContextï¼Œè¿˜éœ€è¦æ¢å¤æ—§çš„ä¸Šä¸‹æ–‡
 				 */
 			}
 			List<Pro> params = providerManagerInfo.getConstructorParams();
@@ -1351,15 +1351,15 @@ public class BeanAccembleHelper<V> {
 		
 		catch (Exception e) {
 			throw new BeanInstanceException("providerManagerInfo["
-					+ providerManagerInfo.getName() + "],Çë¼ì²éÅäÖÃÎÄ¼şÊÇ·ñÅäÖÃÕıÈ·["
+					+ providerManagerInfo.getName() + "],è¯·æ£€æŸ¥é…ç½®æ–‡ä»¶æ˜¯å¦é…ç½®æ­£ç¡®["
 					+ providerManagerInfo.getConfigFile() + "]", e);
 		}
 	}
 	
 	/**
-     * ¸ù¾İ²ÎÊıÀàĞÍparams_£¬»ñÈ¡clazzµÄ¹¹Ôìº¯Êı£¬paramArgsÎª²ÎÊıµÄÖµ£¬Èç¹ûsynTypesÎªtrue·½·¨»á
-     * Í¨¹ı²ÎÊıµÄÖµ¶Ô²ÎÊıÀàĞÍ½øĞĞĞ£Õı µ±·ûºÏparams_ÀàĞÍµÄ¹¹Ôìº¯ÊıÓĞ¶à¸öÊ±£¬·µ»Ø×î¿ªÊ¼Æ¥ÅäÉÏµÄ¹¹Ôìº¯Êı£¬µ«ÊÇµ±synTypesÎªtrueÊ±£¬
-     * ¾Í»á·µ»ØÑÏ¸ñ·ûºÏparamArgsÖµÀàĞÍ¶ÔÓ¦µÄ¹¹Ôìº¯Êı paramArgsÖµµÄÀàĞÍÒ²»á×÷Îª»ñÈ¡¹¹Ôìº¯ÊıµÄ¸¨ÖúÌõ¼ş£¬
+     * æ ¹æ®å‚æ•°ç±»å‹params_ï¼Œè·å–clazzçš„æ„é€ å‡½æ•°ï¼ŒparamArgsä¸ºå‚æ•°çš„å€¼ï¼Œå¦‚æœsynTypesä¸ºtrueæ–¹æ³•ä¼š
+     * é€šè¿‡å‚æ•°çš„å€¼å¯¹å‚æ•°ç±»å‹è¿›è¡Œæ ¡æ­£ å½“ç¬¦åˆparams_ç±»å‹çš„æ„é€ å‡½æ•°æœ‰å¤šä¸ªæ—¶ï¼Œè¿”å›æœ€å¼€å§‹åŒ¹é…ä¸Šçš„æ„é€ å‡½æ•°ï¼Œä½†æ˜¯å½“synTypesä¸ºtrueæ—¶ï¼Œ
+     * å°±ä¼šè¿”å›ä¸¥æ ¼ç¬¦åˆparamArgså€¼ç±»å‹å¯¹åº”çš„æ„é€ å‡½æ•° paramArgså€¼çš„ç±»å‹ä¹Ÿä¼šä½œä¸ºè·å–æ„é€ å‡½æ•°çš„è¾…åŠ©æ¡ä»¶ï¼Œ
      * 
      * @param clazz
      * @param params_
@@ -1390,7 +1390,7 @@ public class BeanAccembleHelper<V> {
         	Method[] constructors = clazz.getMethods();
             if (constructors == null || constructors.length == 0)
                 throw new CurrentlyInCreationException("Inject constructor error: no construction define in the "
-                        + clazz + ",Çë¼ì²éÅäÖÃÎÄ¼şÊÇ·ñÅäÖÃÕıÈ·,²ÎÊı¸öÊıÊÇ·ñÕıÈ·.");
+                        + clazz + ",è¯·æ£€æŸ¥é…ç½®æ–‡ä»¶æ˜¯å¦é…ç½®æ­£ç¡®,å‚æ•°ä¸ªæ•°æ˜¯å¦æ­£ç¡®.");
             int l = constructors.length;
             int size = params.length;
             Class[] types = null;
@@ -1415,8 +1415,8 @@ public class BeanAccembleHelper<V> {
             StringBuffer msg = new StringBuffer();
             
             msg.append(pro.getName()+"@" 
-            		+ pro.getConfigFile() + "£¬ ¶ÔÏó¹¤³§["
-            		+ clazz+"]Ã»ÓĞ¶¨Òå"
+            		+ pro.getConfigFile() + "ï¼Œ å¯¹è±¡å·¥å‚["
+            		+ clazz+"]æ²¡æœ‰å®šä¹‰"
             		+ methodName);
             msg.append("(");
             for(int i = 0; i < params.length; i ++)
@@ -1427,7 +1427,7 @@ public class BeanAccembleHelper<V> {
             	
             }
             
-            msg.append(")·½·¨¡£Çë¼ì²é[factory-method]ÊôĞÔÅäÖÃÊÇ·ñÕıÈ·¡£.");
+            msg.append(")æ–¹æ³•ã€‚è¯·æ£€æŸ¥[factory-method]å±æ€§é…ç½®æ˜¯å¦æ­£ç¡®ã€‚.");
             		
             throw new CurrentlyInCreationException(msg.toString());
 
@@ -1444,8 +1444,8 @@ public class BeanAccembleHelper<V> {
         	StringBuffer msg = new StringBuffer();
             
             msg.append(pro.getName()+"@" 
-            		+ pro.getConfigFile() + "£¬ ¶ÔÏó¹¤³§["
-            		+ clazz+"]Ã»ÓĞ¶¨Òå"
+            		+ pro.getConfigFile() + "ï¼Œ å¯¹è±¡å·¥å‚["
+            		+ clazz+"]æ²¡æœ‰å®šä¹‰"
             		+ methodName);
             msg.append("(");
             for(int i = 0; i < params.length; i ++)
@@ -1456,7 +1456,7 @@ public class BeanAccembleHelper<V> {
             	
             }
             
-            msg.append(")·½·¨¡£Çë¼ì²é[factory-method]ÊôĞÔÅäÖÃÊÇ·ñÕıÈ·¡£.");
+            msg.append(")æ–¹æ³•ã€‚è¯·æ£€æŸ¥[factory-method]å±æ€§é…ç½®æ˜¯å¦æ­£ç¡®ã€‚.");
             		
             throw new CurrentlyInCreationException(msg.toString(),e);
         }
@@ -1506,7 +1506,7 @@ public class BeanAccembleHelper<V> {
 			List<Pro> refs = providerManagerInfo.getReferences();
 			ClassInfo classInfo = ClassUtil.getClassInfo(cls);
 			if (refs != null && refs.size() > 0) {
-				//ÕâÀïĞèÒªÔö¼ÓÒıÓÃProµÄµ÷ÓÃÉÏÏÂÎÄ
+				//è¿™é‡Œéœ€è¦å¢åŠ å¼•ç”¨Proçš„è°ƒç”¨ä¸Šä¸‹æ–‡
 				Context currentLoopContext = callcontext != null?callcontext.getLoopContext():null;
 				for (int i = 0; i < refs.size(); i++) {
 					Pro ref = refs.get(i);
@@ -1550,15 +1550,15 @@ public class BeanAccembleHelper<V> {
 							}
 							else
 							{
-								log.warn("ÉèÖÃ×é¼ş["+providerManagerInfo.getName()+"]ÊôĞÔÊ§°Ü£ºDoes not exist a writer method for field ["
-										+ propertyDescriptor.getName() +"] in class ["+instance.getClass().getCanonicalName()+"],Çë¼ì²éÀà¶¨ÒåÎÄ¼şÊÇ·ñÕıÈ·ÉèÖÃÁË¸Ã×Ö¶ÎµÄset·½·¨£¬»òÕß×Ö¶ÎÃû³ÆÊÇ·ñÖ¸¶¨ÕıÈ·¡£");
+								log.warn("è®¾ç½®ç»„ä»¶["+providerManagerInfo.getName()+"]å±æ€§å¤±è´¥ï¼šDoes not exist a writer method for field ["
+										+ propertyDescriptor.getName() +"] in class ["+instance.getClass().getCanonicalName()+"],è¯·æ£€æŸ¥ç±»å®šä¹‰æ–‡ä»¶æ˜¯å¦æ­£ç¡®è®¾ç½®äº†è¯¥å­—æ®µçš„setæ–¹æ³•ï¼Œæˆ–è€…å­—æ®µåç§°æ˜¯å¦æŒ‡å®šæ­£ç¡®ã€‚");
 								
 								continue;
 							}
 //							if(wm == null)
 //							{
-//								log.warn("ÉèÖÃ×é¼ş["+providerManagerInfo.getName()+"]ÊôĞÔÊ§°Ü£ºDoes not exist a writer method for field ["
-//										+ propertyDescriptor.getName() +"] in class ["+instance.getClass().getCanonicalName()+"],Çë¼ì²éÀà¶¨ÒåÎÄ¼şÊÇ·ñÕıÈ·ÉèÖÃÁË¸Ã×Ö¶ÎµÄset·½·¨£¬»òÕß×Ö¶ÎÃû³ÆÊÇ·ñÖ¸¶¨ÕıÈ·¡£");
+//								log.warn("è®¾ç½®ç»„ä»¶["+providerManagerInfo.getName()+"]å±æ€§å¤±è´¥ï¼šDoes not exist a writer method for field ["
+//										+ propertyDescriptor.getName() +"] in class ["+instance.getClass().getCanonicalName()+"],è¯·æ£€æŸ¥ç±»å®šä¹‰æ–‡ä»¶æ˜¯å¦æ­£ç¡®è®¾ç½®äº†è¯¥å­—æ®µçš„setæ–¹æ³•ï¼Œæˆ–è€…å­—æ®µåç§°æ˜¯å¦æŒ‡å®šæ­£ç¡®ã€‚");
 //								
 //								continue;
 //							}
@@ -1568,7 +1568,7 @@ public class BeanAccembleHelper<V> {
 							throw new CurrentlyInCreationException(
 									"providerManagerInfo["
 											+ providerManagerInfo.getName()
-											+ "],Çë¼ì²éÅäÖÃÎÄ¼şÊÇ·ñÅäÖÃÕıÈ·["
+											+ "],è¯·æ£€æŸ¥é…ç½®æ–‡ä»¶æ˜¯å¦é…ç½®æ­£ç¡®["
 											+ providerManagerInfo
 													.getConfigFile() + "]",
 									e);
@@ -1576,7 +1576,7 @@ public class BeanAccembleHelper<V> {
 							throw new CurrentlyInCreationException(
 									"providerManagerInfo["
 											+ providerManagerInfo.getName()
-											+ "],Çë¼ì²éÅäÖÃÎÄ¼şÊÇ·ñÅäÖÃÕıÈ·["
+											+ "],è¯·æ£€æŸ¥é…ç½®æ–‡ä»¶æ˜¯å¦é…ç½®æ­£ç¡®["
 											+ providerManagerInfo
 													.getConfigFile() + "]",
 									e);
@@ -1584,7 +1584,7 @@ public class BeanAccembleHelper<V> {
 							throw new CurrentlyInCreationException(
 									"providerManagerInfo["
 											+ providerManagerInfo.getName()
-											+ "],Çë¼ì²éÅäÖÃÎÄ¼şÊÇ·ñÅäÖÃÕıÈ·["
+											+ "],è¯·æ£€æŸ¥é…ç½®æ–‡ä»¶æ˜¯å¦é…ç½®æ­£ç¡®["
 											+ providerManagerInfo
 													.getConfigFile() + "]",
 									e);
@@ -1603,7 +1603,7 @@ public class BeanAccembleHelper<V> {
 							throw new CurrentlyInCreationException(
 									"providerManagerInfo["
 											+ providerManagerInfo.getName()
-											+ "],Çë¼ì²éÅäÖÃÎÄ¼şÊÇ·ñÅäÖÃÕıÈ·["
+											+ "],è¯·æ£€æŸ¥é…ç½®æ–‡ä»¶æ˜¯å¦é…ç½®æ­£ç¡®["
 											+ providerManagerInfo
 													.getConfigFile() + "]",
 									e);
@@ -1611,25 +1611,25 @@ public class BeanAccembleHelper<V> {
 						
 
 					}
-					else // ÒıÓÃ×Ö¶ÎÃû³ÆÔÚproviderÖĞÃ»ÓĞ¶¨Òå
+					else // å¼•ç”¨å­—æ®µåç§°åœ¨providerä¸­æ²¡æœ‰å®šä¹‰
 					{
 						
-						log.warn("ÒıÓÃ×Ö¶Î[" + filedName + "]ÔÚprovider["
-								+ instance.getClass() + "]ÖĞÃ»ÓĞ¶¨Òå");
+						log.warn("å¼•ç”¨å­—æ®µ[" + filedName + "]åœ¨provider["
+								+ instance.getClass() + "]ä¸­æ²¡æœ‰å®šä¹‰");
 					}
 				}
 			}
 		} catch (NumberFormatException e) {
 			throw new CurrentlyInCreationException("providerManagerInfo["
-					+ providerManagerInfo.getName() + "],Çë¼ì²éÅäÖÃÎÄ¼şÊÇ·ñÅäÖÃÕıÈ·["
+					+ providerManagerInfo.getName() + "],è¯·æ£€æŸ¥é…ç½®æ–‡ä»¶æ˜¯å¦é…ç½®æ­£ç¡®["
 					+ providerManagerInfo.getConfigFile() + "]", e);
 		} catch (IllegalArgumentException e) {
 			throw new CurrentlyInCreationException("providerManagerInfo["
-					+ providerManagerInfo.getName() + "],Çë¼ì²éÅäÖÃÎÄ¼şÊÇ·ñÅäÖÃÕıÈ·["
+					+ providerManagerInfo.getName() + "],è¯·æ£€æŸ¥é…ç½®æ–‡ä»¶æ˜¯å¦é…ç½®æ­£ç¡®["
 					+ providerManagerInfo.getConfigFile() + "]", e);
 		} catch (NoSupportTypeCastException e) {
 			throw new CurrentlyInCreationException("providerManagerInfo["
-					+ providerManagerInfo.getName() + "],Çë¼ì²éÅäÖÃÎÄ¼şÊÇ·ñÅäÖÃÕıÈ·["
+					+ providerManagerInfo.getName() + "],è¯·æ£€æŸ¥é…ç½®æ–‡ä»¶æ˜¯å¦é…ç½®æ­£ç¡®["
 					+ providerManagerInfo.getConfigFile() + "]", e);
 		} catch (BeanInstanceException e) {
 			throw e;
@@ -1641,7 +1641,7 @@ public class BeanAccembleHelper<V> {
 
 		catch (Exception e) {
 			throw new CurrentlyInCreationException("providerManagerInfo["
-					+ providerManagerInfo.getName() + "],Çë¼ì²éÅäÖÃÎÄ¼şÊÇ·ñÅäÖÃÕıÈ·["
+					+ providerManagerInfo.getName() + "],è¯·æ£€æŸ¥é…ç½®æ–‡ä»¶æ˜¯å¦é…ç½®æ­£ç¡®["
 					+ providerManagerInfo.getConfigFile() + "]" , e);
 		}
 		providerManagerInfo.getApplicationContext().initBean(instance,
@@ -1789,12 +1789,12 @@ public class BeanAccembleHelper<V> {
 			} catch (SecurityException e) {
 				throw new BeanInstanceException("InitializingBean["
 						+ providerManagerInfo.getName()
-						+ "] afterPropertiesSet Ê§°Ü,Çë¼ì²éÅäÖÃÎÄ¼şÊÇ·ñÅäÖÃÕıÈ·["
+						+ "] afterPropertiesSet å¤±è´¥,è¯·æ£€æŸ¥é…ç½®æ–‡ä»¶æ˜¯å¦é…ç½®æ­£ç¡®["
 						+ providerManagerInfo.getConfigFile() + "]", e);
 			} catch (NoSuchMethodException e) {
 				throw new BeanInstanceException("InitializingBean["
 						+ providerManagerInfo.getName()
-						+ "] afterPropertiesSet Ê§°Ü,Çë¼ì²éÅäÖÃÎÄ¼şÊÇ·ñÅäÖÃÕıÈ·["
+						+ "] afterPropertiesSet å¤±è´¥,è¯·æ£€æŸ¥é…ç½®æ–‡ä»¶æ˜¯å¦é…ç½®æ­£ç¡®["
 						+ providerManagerInfo.getConfigFile() + "]", e);
 			}
 			catch(CurrentlyInCreationException e)
@@ -1810,7 +1810,7 @@ public class BeanAccembleHelper<V> {
 			} catch (Exception e) {
 				throw new BeanInstanceException("InitializingBean["
 						+ providerManagerInfo.getName()
-						+ "] afterPropertiesSet Ê§°Ü,Çë¼ì²éÅäÖÃÎÄ¼şÊÇ·ñÅäÖÃÕıÈ·["
+						+ "] afterPropertiesSet å¤±è´¥,è¯·æ£€æŸ¥é…ç½®æ–‡ä»¶æ˜¯å¦é…ç½®æ­£ç¡®["
 						+ providerManagerInfo.getConfigFile() + "]", e);
 			}
 		}
@@ -1908,12 +1908,12 @@ public class BeanAccembleHelper<V> {
 	// }
 	// }
 	//
-	// if (!flag) // ÒıÓÃ×Ö¶ÎÃû³ÆÔÚproviderÖĞÃ»ÓĞ¶¨Òå
+	// if (!flag) // å¼•ç”¨å­—æ®µåç§°åœ¨providerä¸­æ²¡æœ‰å®šä¹‰
 	// {
-	// System.out.println("ÒıÓÃ×Ö¶Î[" + filedName + "]ÔÚprovider[" +
-	// instance.getClass() + "]ÖĞÃ»ÓĞ¶¨Òå");
-	// log.warn("ÒıÓÃ×Ö¶Î[" + filedName + "]ÔÚprovider[" + instance.getClass() +
-	// "]ÖĞÃ»ÓĞ¶¨Òå");
+	// System.out.println("å¼•ç”¨å­—æ®µ[" + filedName + "]åœ¨provider[" +
+	// instance.getClass() + "]ä¸­æ²¡æœ‰å®šä¹‰");
+	// log.warn("å¼•ç”¨å­—æ®µ[" + filedName + "]åœ¨provider[" + instance.getClass() +
+	// "]ä¸­æ²¡æœ‰å®šä¹‰");
 	// }
 	// }
 	// }

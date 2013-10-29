@@ -14,8 +14,8 @@ public class TestSecondIO {
 	 */
 	public static void main(String[] args) {
 		FileUtil filrUtil = new FileUtil();
-		String path = "E:/µØË°Ìá½»Çø/statspackÊÕ¼¯sql/20081015/resultStat20081015Test.txt";
-		String writepath = "E:/µØË°Ìá½»Çø/statspackÊÕ¼¯sql/20081009/resultStat20081010three.txt";
+		String path = "E:/åœ°ç¨æäº¤åŒº/statspackæ”¶é›†sql/20081015/resultStat20081015Test.txt";
+		String writepath = "E:/åœ°ç¨æäº¤åŒº/statspackæ”¶é›†sql/20081009/resultStat20081010three.txt";
 		StringBuffer result = new StringBuffer();
 		try {
 			FileReader fileReader = new FileReader(path);

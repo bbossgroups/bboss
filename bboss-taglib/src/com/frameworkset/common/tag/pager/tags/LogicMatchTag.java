@@ -36,7 +36,7 @@ import com.frameworkset.util.ValueObjectUtil;
 
 
 /**
- * 如果对象属性值与给定value值匹配时输出本标签得内容，否则不输出
+ * 濡傛灉瀵硅薄灞炴�у�间笌缁欏畾value鍊煎尮閰嶆椂杈撳嚭鏈爣绛惧緱鍐呭锛屽惁鍒欎笉杈撳嚭
  * @author biaoping.yin
  * 2004-6-24
  */
@@ -44,7 +44,7 @@ public class LogicMatchTag extends MatchTag
 {
 
 	/**
-	 *  Description: 等于
+	 *  Description: 绛変簬
 	 * @return  boolean
 	 * @see com.frameworkset.common.tag.pager.tags.MatchTag#match()
 	 */

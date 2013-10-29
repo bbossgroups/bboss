@@ -93,21 +93,21 @@ public class TestSQLParams {
 					.append(
 							" select REPOSITORY_ID, ID, PARENT_ID, DIR_NAME, NAME, OBJECT_TYPE, DESCRIPTION, MODIFIED_USER, MODIFIED_DATE")
 					.append(" from CIM_ETL_RESOURCE_ITEM ").append(" where 1=1")
-					.append(" and OBJECT_TYPE=#[OBJECT_TYPE] ").append(//ĞŞ¸ÄÄ¿Â¼ÏÂÍ¬ÃûjobºÍ×ª»»Í¬²½³åÍ»ÎÊÌâ£¬Ôö¼ÓOBJECT_TYPEÎªÖ÷¼ü
+					.append(" and OBJECT_TYPE=#[OBJECT_TYPE] ").append(//ä¿®æ”¹ç›®å½•ä¸‹åŒåjobå’Œè½¬æ¢åŒæ­¥å†²çªé—®é¢˜ï¼Œå¢åŠ OBJECT_TYPEä¸ºä¸»é”®
 							" and REPOSITORY_ID = #[REPOSITORY_ID]");
 
 			listRepositoryDirctoryByParentIdSql
 					.append(
 							" select REPOSITORY_ID, ID, PARENT_ID, DIR_NAME, NAME, OBJECT_TYPE, DESCRIPTION, MODIFIED_USER, MODIFIED_DATE")
 					.append(" from CIM_ETL_RESOURCE_ITEM ").append(" where 1=1")
-					.append(" and OBJECT_TYPE=#[OBJECT_TYPE] ").append(//ĞŞ¸ÄÄ¿Â¼ÏÂÍ¬ÃûjobºÍ×ª»»Í¬²½³åÍ»ÎÊÌâ£¬Ôö¼ÓOBJECT_TYPEÎªÖ÷¼ü
+					.append(" and OBJECT_TYPE=#[OBJECT_TYPE] ").append(//ä¿®æ”¹ç›®å½•ä¸‹åŒåjobå’Œè½¬æ¢åŒæ­¥å†²çªé—®é¢˜ï¼Œå¢åŠ OBJECT_TYPEä¸ºä¸»é”®
 							" and REPOSITORY_ID = #[REPOSITORY_ID]").append(
 							" and PARENT_ID = #[PARENT_ID]");
 
 			deleteRepositoryTreeItemSql
 					.append("delete from  CIM_ETL_RESOURCE_ITEM").append(
 							" where 1=1")
-							.append(" and OBJECT_TYPE=#[OBJECT_TYPE] ")//ĞŞ¸ÄÄ¿Â¼ÏÂÍ¬ÃûjobºÍ×ª»»Í¬²½³åÍ»ÎÊÌâ£¬Ôö¼ÓOBJECT_TYPEÎªÖ÷¼ü
+							.append(" and OBJECT_TYPE=#[OBJECT_TYPE] ")//ä¿®æ”¹ç›®å½•ä¸‹åŒåjobå’Œè½¬æ¢åŒæ­¥å†²çªé—®é¢˜ï¼Œå¢åŠ OBJECT_TYPEä¸ºä¸»é”®
 							.append(
 							" and REPOSITORY_ID = #[REPOSITORY_ID]").append(
 							" and PARENT_ID = #[PARENT_ID]").append(
@@ -147,7 +147,7 @@ public class TestSQLParams {
 					.append(" where 1=1").append(
 							" and REPOSITORY_ID = #[REPOSITORY_ID]").append(
 							" and PARENT_ID = #[PARENT_ID]").append(
-							" and OBJECT_TYPE = #[OBJECT_TYPE]").append(//ĞŞ¸ÄÄ¿Â¼ÏÂÍ¬ÃûjobºÍ×ª»»Í¬²½³åÍ»ÎÊÌâ£¬Ôö¼ÓOBJECT_TYPEÎªÖ÷¼ü
+							" and OBJECT_TYPE = #[OBJECT_TYPE]").append(//ä¿®æ”¹ç›®å½•ä¸‹åŒåjobå’Œè½¬æ¢åŒæ­¥å†²çªé—®é¢˜ï¼Œå¢åŠ OBJECT_TYPEä¸ºä¸»é”®
 							" and NAME = #[NAME]");
 
 			updateJobMetaSql
@@ -159,7 +159,7 @@ public class TestSQLParams {
 					.append(" where 1=1").append(
 							" and REPOSITORY_ID = #[REPOSITORY_ID]").append(
 							" and PARENT_ID = #[PARENT_ID]").append(
-							" and OBJECT_TYPE = #[OBJECT_TYPE]").append(//ĞŞ¸ÄÄ¿Â¼ÏÂÍ¬ÃûjobºÍ×ª»»Í¬²½³åÍ»ÎÊÌâ£¬ÔÚ±íCIM_ETL_RESOURCE_ITEMÖĞÔö¼ÓOBJECT_TYPEÎªÖ÷¼ü
+							" and OBJECT_TYPE = #[OBJECT_TYPE]").append(//ä¿®æ”¹ç›®å½•ä¸‹åŒåjobå’Œè½¬æ¢åŒæ­¥å†²çªé—®é¢˜ï¼Œåœ¨è¡¨CIM_ETL_RESOURCE_ITEMä¸­å¢åŠ OBJECT_TYPEä¸ºä¸»é”®
 							" and NAME = #[NAME]");
 
 			deleteDatasoureMetaSql.append(" delete from CIM_ETL_DATASOURCE_META")
@@ -188,9 +188,9 @@ public class TestSQLParams {
 
 		}
 
-		/** ******************************** ×ÊÔ´¿â ************************** */
+		/** ******************************** èµ„æºåº“ ************************** */
 		/**
-		 * ²éÑ¯×ÊÔ´¿âÁĞ±í
+		 * æŸ¥è¯¢èµ„æºåº“åˆ—è¡¨
 		 */
 		public List<RepositoryInfo> listRepository(AppParams appParams) {
 			// TODO Auto-generated method stub
@@ -200,7 +200,7 @@ public class TestSQLParams {
 			String sql = listRepositorySql.toString();
 
 			try {
-				// ²éÑ¯²ÎÊı
+				// æŸ¥è¯¢å‚æ•°
 				SQLParams params = new SQLParams();
 				params.addSQLParam("HOST_ID", appParams.getBusinessId(),
 						SQLParams.STRING);
@@ -213,7 +213,7 @@ public class TestSQLParams {
 				dbutil
 						.preparedSelect(params, "bspf",
 								sql);
-				// Ö´ĞĞ²éÑ¯
+				// æ‰§è¡ŒæŸ¥è¯¢
 				dbutil.executePrepared();
 
 				for (int i = 0; i < dbutil.size(); i++) {
@@ -229,7 +229,7 @@ public class TestSQLParams {
 
 			} catch (Exception e) {
 				e.printStackTrace();
-				throw new RuntimeException("ºóÌ¨Êı¾İ¿â²Ù×÷´íÎó£¡", e);
+				throw new RuntimeException("åå°æ•°æ®åº“æ“ä½œé”™è¯¯ï¼", e);
 			}
 
 			return repositorys;
@@ -270,9 +270,9 @@ public class TestSQLParams {
 //			context.put("publisherName", publisher_.getPublisherName());
 		}
 
-		/** ******************************** ×ÊÔ´¿â ************************** */
+		/** ******************************** èµ„æºåº“ ************************** */
 		/**
-		 * ²éÑ¯×ÊÔ´¿âÁĞ±í
+		 * æŸ¥è¯¢èµ„æºåº“åˆ—è¡¨
 		 */
 		public List<RepositoryInfo> dynamicQuery() {
 			// TODO Auto-generated method stub
@@ -288,7 +288,7 @@ public class TestSQLParams {
 			String sql = listRepositorySql.toString();
 
 			try {
-				// ²éÑ¯²ÎÊı
+				// æŸ¥è¯¢å‚æ•°
 				SQLParams params = new SQLParams();
 				params.addSQLParam("HOST_ID", null,
 						SQLParams.STRING);
@@ -300,7 +300,7 @@ public class TestSQLParams {
 
 				dbutil.preparedSelect(params, "bspf",
 								sql);
-				// Ö´ĞĞ²éÑ¯
+				// æ‰§è¡ŒæŸ¥è¯¢
 				dbutil.executePrepared();
 
 				for (int i = 0; i < dbutil.size(); i++) {
@@ -316,14 +316,14 @@ public class TestSQLParams {
 
 			} catch (Exception e) {
 				e.printStackTrace();
-				throw new RuntimeException("ºóÌ¨Êı¾İ¿â²Ù×÷´íÎó£¡", e);
+				throw new RuntimeException("åå°æ•°æ®åº“æ“ä½œé”™è¯¯ï¼", e);
 			}
 
 			return repositorys;
 		}
 
 		/**
-		 * Í¨¹ıÃû³ÆÈ¡µÃ×ÊÔ´¿âÔÚÊı¾İ¿âµÄID
+		 * é€šè¿‡åç§°å–å¾—èµ„æºåº“åœ¨æ•°æ®åº“çš„ID
 		 * 
 		 * @param businessId
 		 * @param pluginid
@@ -339,7 +339,7 @@ public class TestSQLParams {
 			PreparedDBUtil dbutil = new PreparedDBUtil();
 			String sql = getRepositoryByNameSql.toString();
 			try {
-				// ²éÑ¯²ÎÊı
+				// æŸ¥è¯¢å‚æ•°
 				SQLParams params = new SQLParams();
 				params.addSQLParam("HOST_ID", appParams.getBusinessId(),
 						SQLParams.STRING);
@@ -353,7 +353,7 @@ public class TestSQLParams {
 				dbutil
 						.preparedSelect(params, "bspf",
 								sql);
-				// Ö´ĞĞ²éÑ¯
+				// æ‰§è¡ŒæŸ¥è¯¢
 				dbutil.executePrepared();
 
 				if (dbutil.size() > 0) {
@@ -366,14 +366,14 @@ public class TestSQLParams {
 
 			} catch (Exception e) {
 				e.printStackTrace();
-				throw new RuntimeException("ºóÌ¨Êı¾İ¿â²Ù×÷´íÎó£¡", e);
+				throw new RuntimeException("åå°æ•°æ®åº“æ“ä½œé”™è¯¯ï¼", e);
 			}
 
 			return repositoryInfo;
 		}
 
 		/**
-		 * ½«Êı¾İÍ¬²½µ½Êı¾İ¿â
+		 * å°†æ•°æ®åŒæ­¥åˆ°æ•°æ®åº“
 		 * 
 		 * @param deleteList
 		 * @param insertList
@@ -420,7 +420,7 @@ public class TestSQLParams {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
-					throw new RuntimeException("ºóÌ¨Êı¾İ¿â²Ù×÷´íÎó£¡", e);
+					throw new RuntimeException("åå°æ•°æ®åº“æ“ä½œé”™è¯¯ï¼", e);
 				} catch (RollbackException e) {
 					e.printStackTrace();
 					try {
@@ -429,7 +429,7 @@ public class TestSQLParams {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
-					throw new RuntimeException("ºóÌ¨Êı¾İ¿â²Ù×÷´íÎó£¡", e);
+					throw new RuntimeException("åå°æ•°æ®åº“æ“ä½œé”™è¯¯ï¼", e);
 				} catch (TransactionException e) {
 					try {
 						transactionManager.rollback();
@@ -438,7 +438,7 @@ public class TestSQLParams {
 						e1.printStackTrace();
 					}
 					e.printStackTrace();
-					throw new RuntimeException("ºóÌ¨Êı¾İ¿â²Ù×÷´íÎó£¡", e);
+					throw new RuntimeException("åå°æ•°æ®åº“æ“ä½œé”™è¯¯ï¼", e);
 				}
 			}
 		}
@@ -489,7 +489,7 @@ public class TestSQLParams {
 						"bspf", "CIM_ETL_REPOSITORY");
 			} catch (SQLException e) {
 				e.printStackTrace();
-				throw new RuntimeException("ºóÌ¨Êı¾İ¿â²Ù×÷´íÎó£¡", e);
+				throw new RuntimeException("åå°æ•°æ®åº“æ“ä½œé”™è¯¯ï¼", e);
 			}
 			return primaryKey;
 		}

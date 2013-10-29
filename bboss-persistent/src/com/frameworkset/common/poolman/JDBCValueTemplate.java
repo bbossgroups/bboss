@@ -20,9 +20,9 @@ package com.frameworkset.common.poolman;
  * 
  * <p>Title: JDBCValueTemplate.java</p>
  *
- * <p>Description: ÊÂÎñÖ´ĞĞÄ£°åÀà£¬ Ìá¹©Ö´ĞĞÊı¾İ¿â²Ù×÷µÄÄ£°å·½·¨£¬¸Ã·½·¨ÓĞ·µ»ØÖµ
- * ¸ÃÄ£°å·½·¨½«·½·¨ÖĞµÄËùÓĞÊı¾İ¿â²Ù×÷º­¸ÇÔÚÒ»¸öÊı¾İ¿âÊÂÎñÖĞ</p>
- * @see com.frameworkset.common.poolman.TemplateDBUtilÖĞµÄ·½·¨
+ * <p>Description: äº‹åŠ¡æ‰§è¡Œæ¨¡æ¿ç±»ï¼Œ æä¾›æ‰§è¡Œæ•°æ®åº“æ“ä½œçš„æ¨¡æ¿æ–¹æ³•ï¼Œè¯¥æ–¹æ³•æœ‰è¿”å›å€¼
+ * è¯¥æ¨¡æ¿æ–¹æ³•å°†æ–¹æ³•ä¸­çš„æ‰€æœ‰æ•°æ®åº“æ“ä½œæ¶µç›–åœ¨ä¸€ä¸ªæ•°æ®åº“äº‹åŠ¡ä¸­</p>
+ * @see com.frameworkset.common.poolman.TemplateDBUtilä¸­çš„æ–¹æ³•
  * public static Object executeTemplate(JDBCValueTemplate template) throws Throwable
  *
  * <p>
@@ -32,15 +32,15 @@ package com.frameworkset.common.poolman;
  * Copyright (c) 2007
  * </p>
  * 
- * @Date 2009-6-1 ÏÂÎç08:58:51
+ * @Date 2009-6-1 ä¸‹åˆ08:58:51
  * @author biaoping.yin
  * @version 1.0
  */
 public interface JDBCValueTemplate<T> {
 	/**
-	 * ÓÃÀ´ÊµÏÖĞèÒª¿ØÖÆµÄÊı¾İ¿âÊÂÎñµÄÊı¾İ¿â²Ù×÷µÄÄ£°å·½·¨£¬±ÜÃâÓÃ»§Ö±½ÓÔÚ´úÂëÖĞÊ¹ÓÃ
-	 * Êı¾İ¿âÊÂÎñ¹ÜÀí´úÂë¡£
-	 * ¸Ã·½·¨ÔÊĞíÓÃ»§·µ»ØÒ»¸ö¶ÔÏóÀàĞÍµÄ·µ»ØÖµ
+	 * ç”¨æ¥å®ç°éœ€è¦æ§åˆ¶çš„æ•°æ®åº“äº‹åŠ¡çš„æ•°æ®åº“æ“ä½œçš„æ¨¡æ¿æ–¹æ³•ï¼Œé¿å…ç”¨æˆ·ç›´æ¥åœ¨ä»£ç ä¸­ä½¿ç”¨
+	 * æ•°æ®åº“äº‹åŠ¡ç®¡ç†ä»£ç ã€‚
+	 * è¯¥æ–¹æ³•å…è®¸ç”¨æˆ·è¿”å›ä¸€ä¸ªå¯¹è±¡ç±»å‹çš„è¿”å›å€¼
 	 * @throws Exception
 	 * @return Object
 	 * 

@@ -1,21 +1,21 @@
-<%@ page contentType="text/html; charset=GBK" language="java" %>
+<%@ page contentType="text/html; charset=UTF-8" language="java" %>
 <%@ taglib uri="/WEB-INF/pager-taglib.tld" prefix="pg"%>
 <!-- 
-	������ͨ�����ݼ�������ȡ��ҳ�б�����
+	测试在通过数据加载器获取分页列表数据
 -->
 <html>
 <head>
-<title>������ͨ�����ݼ�������ȡ��ҳ�б�����</title>
+<title>测试在通过数据加载器获取分页列表数据</title>
 </head>
 <body>
 	<table>
 	    
 				<pg:listdata dataInfo="test.pager.TableInfoListData" keyName="TableInfoListData" />
-				<!--��ҳ��ʾ��ʼ,��ҳ��ǩ��ʼ��-->
+				<!--分页显示开始,分页标签初始化-->
 				<pg:pager maxPageItems="15" scope="request" data="TableInfoListData" 
 						  isList="false">
 					<tr class="cms_report_tr">
-						<!--���÷�ҳ��ͷ-->
+						<!--设置分页表头-->
 					<pg:header>									
 										
 						<td width="2%" align=center style="width:5%">
@@ -44,7 +44,7 @@
 				<pg:notify>
 						<tr  class="labeltable_middle_tr_01">
 							<td colspan=100 align='center' height="18px">
-								û������
+								没有数据
 							</td>
 						</tr>
 				</pg:notify>

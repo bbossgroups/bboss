@@ -32,7 +32,7 @@ import org.frameworkset.spi.serviceidentity.TargetImpl;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2009-11-3 ÏÂÎç11:05:34
+ * @Date 2009-11-3 ä¸‹åˆ11:05:34
  * @author biaoping.yin
  * @version 1.0
  */

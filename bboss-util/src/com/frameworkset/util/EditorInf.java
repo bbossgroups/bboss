@@ -19,10 +19,10 @@ package com.frameworkset.util;
 
 /**
  * <p>Title: EditorInf.java</p> 
- * <p>Description: ÓÃ»§×Ô¶¨ÒåÊôĞÔ±à¼­½Ó¿Ú</p>
+ * <p>Description: ç”¨æˆ·è‡ªå®šä¹‰å±æ€§ç¼–è¾‘æ¥å£</p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2008</p>
- * @Date 2009-12-7 ÉÏÎç10:44:15
+ * @Date 2009-12-7 ä¸Šåˆ10:44:15
  * @author biaoping.yin
  * @version 1.0
  */

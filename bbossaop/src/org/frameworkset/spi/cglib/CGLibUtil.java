@@ -49,7 +49,7 @@ import com.frameworkset.proxy.Interceptor;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2010-6-19 ÏÂÎç06:00:28
+ * @Date 2010-6-19 ä¸‹åˆ06:00:28
  * @author biaoping.yin
  * @version 1.0
  */
@@ -198,7 +198,7 @@ public class CGLibUtil {
             		muuid = SynchronizedMethod.buildMethodUUID(method);
             	interceptor = providerManagerInfo.getChainInterceptor(method,muuid);
             }
-            Object obj = null;// Ö»·µ»ØdelegateÖĞ·½·¨·µ»ØµÄÖµ
+            Object obj = null;// åªè¿”å›delegateä¸­æ–¹æ³•è¿”å›çš„å€¼
             try
             {
             	if (interceptor != null)
@@ -216,7 +216,7 @@ public class CGLibUtil {
             {
 
               
-                // Èç¹û²»ÊÇÍ¬²½·½·¨£¬ÔòÎŞĞèÍ¬²½µ÷ÓÃÆäËû½Ó¿Ú·½·¨
+                // å¦‚æœä¸æ˜¯åŒæ­¥æ–¹æ³•ï¼Œåˆ™æ— éœ€åŒæ­¥è°ƒç”¨å…¶ä»–æ¥å£æ–¹æ³•
                 // log.debug("method.getName():" + method.getName());
                 //log.debug("providerManagerInfo.getSynchronizedMethod("
                 // +
@@ -258,7 +258,7 @@ public class CGLibUtil {
                     interceptor.afterThrowing(method, args, e.getTargetException());
                 }
 
-                // ½«·½·¨Å×³öµÄÒì³£Ö±½ÓÅ×³ö·½·¨Òì³£
+                // å°†æ–¹æ³•æŠ›å‡ºçš„å¼‚å¸¸ç›´æ¥æŠ›å‡ºæ–¹æ³•å¼‚å¸¸
                 throw e.getTargetException();
             }
             catch (Throwable t)
@@ -366,7 +366,7 @@ public class CGLibUtil {
             	interceptor = providerManagerInfo.getChainInterceptor(method,muuid);
             }
             
-            Object obj = null;// Ö»·µ»ØdelegateÖĞ·½·¨·µ»ØµÄÖµ
+            Object obj = null;// åªè¿”å›delegateä¸­æ–¹æ³•è¿”å›çš„å€¼
             try
             {
             	if (interceptor != null)
@@ -384,7 +384,7 @@ public class CGLibUtil {
             {
 
                
-                // Èç¹û²»ÊÇÍ¬²½·½·¨£¬ÔòÎŞĞèÍ¬²½µ÷ÓÃÆäËû½Ó¿Ú·½·¨
+                // å¦‚æœä¸æ˜¯åŒæ­¥æ–¹æ³•ï¼Œåˆ™æ— éœ€åŒæ­¥è°ƒç”¨å…¶ä»–æ¥å£æ–¹æ³•
                 // log.debug("method.getName():" + method.getName());
                 //log.debug("providerManagerInfo.getSynchronizedMethod("
                 // +
@@ -429,7 +429,7 @@ public class CGLibUtil {
                     
                 }
 
-                // ½«·½·¨Å×³öµÄÒì³£Ö±½ÓÅ×³ö·½·¨Òì³£
+                // å°†æ–¹æ³•æŠ›å‡ºçš„å¼‚å¸¸ç›´æ¥æŠ›å‡ºæ–¹æ³•å¼‚å¸¸
                 throw e.getTargetException();
             }
             catch (Throwable t)
@@ -516,8 +516,8 @@ public class CGLibUtil {
             try
             {
 
-                Object obj = null;// Ö»·µ»ØdelegateÖĞ·½·¨·µ»ØµÄÖµ
-                // Èç¹û²»ÊÇÍ¬²½·½·¨£¬ÔòÎŞĞèÍ¬²½µ÷ÓÃÆäËû½Ó¿Ú·½·¨
+                Object obj = null;// åªè¿”å›delegateä¸­æ–¹æ³•è¿”å›çš„å€¼
+                // å¦‚æœä¸æ˜¯åŒæ­¥æ–¹æ³•ï¼Œåˆ™æ— éœ€åŒæ­¥è°ƒç”¨å…¶ä»–æ¥å£æ–¹æ³•
                 // log.debug("method.getName():" + method.getName());
                 //log.debug("providerManagerInfo.getSynchronizedMethod("
                 // +
@@ -526,9 +526,9 @@ public class CGLibUtil {
                 // (method.getName()));
                 if (!providerManagerInfo.isSynchronizedEnabled()
                         || !providerManagerInfo.isSynchronizedMethod(method))
-                {// Èç¹ûÃ»ÓĞÅäÖÃÒÔ·½·¨¼°ÏàÓ¦µÄ·½·¨²ÎÊıµÄÎª±êÊ¶µÄÍ¬²½·½·¨
-                    // £¬
-                    // Èç¹ûÓĞÔòÖ´ĞĞËùÓĞproviderµÄÍ¬²½·½·¨
+                {// å¦‚æœæ²¡æœ‰é…ç½®ä»¥æ–¹æ³•åŠç›¸åº”çš„æ–¹æ³•å‚æ•°çš„ä¸ºæ ‡è¯†çš„åŒæ­¥æ–¹æ³•
+                    // ï¼Œ
+                    // å¦‚æœæœ‰åˆ™æ‰§è¡Œæ‰€æœ‰providerçš„åŒæ­¥æ–¹æ³•
 
                     if (interceptor != null)
                         interceptor.before(method, args);
@@ -543,11 +543,11 @@ public class CGLibUtil {
                 }
                 else
                 {
-                    // »ñÈ¡·şÎñÌá¹©Õß¶ÓÁĞ£¬¸Ã¶ÓÁĞÒÑ¾­°´ÕÕÖ¸¶¨µÄÓÅÏÈ¼¶Ë³Ğò½øĞĞÅÅĞò
+                    // è·å–æœåŠ¡æä¾›è€…é˜Ÿåˆ—ï¼Œè¯¥é˜Ÿåˆ—å·²ç»æŒ‰ç…§æŒ‡å®šçš„ä¼˜å…ˆçº§é¡ºåºè¿›è¡Œæ’åº
                     ProviderInfoQueue providerInfoQueue = providerManagerInfo.getProviderInfoQueue();
 
-                    //Í¬²½µ÷ÓÃËùÓĞµÄ½Ó¿Ú·½·¨£¬Èç¹ûÍ¬²½·½·¨ÊÇÊÇÊÂÎñĞÔ·½·¨£¬ÔòĞèÒª½øĞĞÊÂÎñ´¦Àí£¬¼°ÒªÃ´È«²¿³É¹¦£¬ÒªÃ´È«²¿Ê§°Ü
-                    // ·ñÔòÔÚ´¦ÀíµÄ¹ı³ÌÖĞ,Ò»Ğ©·şÎñÌá¹©Õß·½·¨±»Ö´ĞĞÊ±Å×³öÒì³££¬½«¼ÌĞøÖ´ĞĞºóĞøµÄÍ¬²½·½·¨
+                    //åŒæ­¥è°ƒç”¨æ‰€æœ‰çš„æ¥å£æ–¹æ³•ï¼Œå¦‚æœåŒæ­¥æ–¹æ³•æ˜¯æ˜¯äº‹åŠ¡æ€§æ–¹æ³•ï¼Œåˆ™éœ€è¦è¿›è¡Œäº‹åŠ¡å¤„ç†ï¼ŒåŠè¦ä¹ˆå…¨éƒ¨æˆåŠŸï¼Œè¦ä¹ˆå…¨éƒ¨å¤±è´¥
+                    // å¦åˆ™åœ¨å¤„ç†çš„è¿‡ç¨‹ä¸­,ä¸€äº›æœåŠ¡æä¾›è€…æ–¹æ³•è¢«æ‰§è¡Œæ—¶æŠ›å‡ºå¼‚å¸¸ï¼Œå°†ç»§ç»­æ‰§è¡Œåç»­çš„åŒæ­¥æ–¹æ³•
 
                     SynchronizedMethod synm = providerManagerInfo.isTransactionMethod(method,uuid);
                     boolean isTXMethod = synm != null;
@@ -570,22 +570,22 @@ public class CGLibUtil {
                         // securityProviderInfo.getSingleProvider
                         // (parent);
                         boolean isdelegate = provider.getClass() == delegate.getClass();
-                        // È±Ê¡µÄproviderºÍ±»±êÊ¶ÎªÊ¹ÓÃµÄprovider¶¼ĞèÒª½øĞĞÍ¬²½µ÷ÓÃ
+                        // ç¼ºçœçš„providerå’Œè¢«æ ‡è¯†ä¸ºä½¿ç”¨çš„provideréƒ½éœ€è¦è¿›è¡ŒåŒæ­¥è°ƒç”¨
                         if (isdelegate || securityProviderInfo.isUsed() || securityProviderInfo.isIsdefault())
                         {
                             if (isdelegate && !securityProviderInfo.isUsed())
                             {
-                                log.warn("µ÷ÓÃµÄProvider[" + delegate.getClass() + "]£¬[" + securityProviderInfo
-                                        + "]±»ÉèÖÃÎªÎ´Ê¹ÓÃµÄ·şÎñÌá¹©Õß¡£");
+                                log.warn("è°ƒç”¨çš„Provider[" + delegate.getClass() + "]ï¼Œ[" + securityProviderInfo
+                                        + "]è¢«è®¾ç½®ä¸ºæœªä½¿ç”¨çš„æœåŠ¡æä¾›è€…ã€‚");
                             }
 
-                            if (!isTXMethod) // ²»ÊÇÊÂÎñ·½·¨Ê±£¬
-                                             // Ö´ĞĞËùÓĞµÄproviderµÄÍ¬Ò»¸ö·½·¨£¬
-                            // ºöÂÔÊ§°ÜµÄ·½·¨µ÷ÓÃ£¬
+                            if (!isTXMethod) // ä¸æ˜¯äº‹åŠ¡æ–¹æ³•æ—¶ï¼Œ
+                                             // æ‰§è¡Œæ‰€æœ‰çš„providerçš„åŒä¸€ä¸ªæ–¹æ³•ï¼Œ
+                            // å¿½ç•¥å¤±è´¥çš„æ–¹æ³•è°ƒç”¨ï¼Œ
                             {
                                 /**
-                                 * È±Ê¡µÄÌá¹©Õß£¬Ò²¾ÍÊÇÄ¬ÈÏµÄÌá¹©Õß£¬²»ĞèÒª½øĞĞÊÂÎñ´¦ÀíÊ±£¬
-                                 * Ö»±£Áô·şÎñÌá¹©ÕßµÄ·µ»ØÖµ
+                                 * ç¼ºçœçš„æä¾›è€…ï¼Œä¹Ÿå°±æ˜¯é»˜è®¤çš„æä¾›è€…ï¼Œä¸éœ€è¦è¿›è¡Œäº‹åŠ¡å¤„ç†æ—¶ï¼Œ
+                                 * åªä¿ç•™æœåŠ¡æä¾›è€…çš„è¿”å›å€¼
                                  */
                                 if (isdelegate)
                                 {
@@ -599,13 +599,13 @@ public class CGLibUtil {
                                     catch (InvocationTargetException e)
                                     {
                                         throwable = e.getTargetException();
-                                        log.error("µ÷ÓÃ·şÎñÌá¹©Õß[" + securityProviderInfo + "]ÖĞ·½·¨[" + method + "]Òì³££º"
+                                        log.error("è°ƒç”¨æœåŠ¡æä¾›è€…[" + securityProviderInfo + "]ä¸­æ–¹æ³•[" + method + "]å¼‚å¸¸ï¼š"
                                                 + e.getMessage(), e);
                                     }
                                     catch (Exception e)
                                     {
                                         throwable = e;
-                                        log.error("µ÷ÓÃ·şÎñÌá¹©Õß[" + securityProviderInfo + "]ÖĞ·½·¨[" + method + "]Òì³££º"
+                                        log.error("è°ƒç”¨æœåŠ¡æä¾›è€…[" + securityProviderInfo + "]ä¸­æ–¹æ³•[" + method + "]å¼‚å¸¸ï¼š"
                                                 + e.getMessage(), e);
                                     }
                                 }
@@ -617,19 +617,19 @@ public class CGLibUtil {
                                     	method = provider.getClass().getMethod(method.getName(), method.getParameterTypes());
                                         method.invoke(provider, args);
                                     }
-                                    catch (Exception e)// Å×³öÒì³£Ê±²»¼ÇÂ¼¸ÃÒì³££¬
-                                    // ¼ÌĞøÖ´ĞĞºóĞøµÄproviderµÄ·½·¨
+                                    catch (Exception e)// æŠ›å‡ºå¼‚å¸¸æ—¶ä¸è®°å½•è¯¥å¼‚å¸¸ï¼Œ
+                                    // ç»§ç»­æ‰§è¡Œåç»­çš„providerçš„æ–¹æ³•
                                     {
-                                        // ²»ÊÇÊÂÎñ·½·¨µ÷ÓÃÊ±£¬ºöÂÔÆäËû·şÎñÌá¹©Õß·½·¨Ö´ĞĞÊ±µÄÒì³£
-                                        log.error("Í¬²½µ÷ÓÃ·şÎñÌá¹©Õß[" + securityProviderInfo + "]ÖĞ·½·¨[" + method
-                                                + "]Òì³££º" + e.getMessage(), e);
+                                        // ä¸æ˜¯äº‹åŠ¡æ–¹æ³•è°ƒç”¨æ—¶ï¼Œå¿½ç•¥å…¶ä»–æœåŠ¡æä¾›è€…æ–¹æ³•æ‰§è¡Œæ—¶çš„å¼‚å¸¸
+                                        log.error("åŒæ­¥è°ƒç”¨æœåŠ¡æä¾›è€…[" + securityProviderInfo + "]ä¸­æ–¹æ³•[" + method
+                                                + "]å¼‚å¸¸ï¼š" + e.getMessage(), e);
                                     }
                                 }
-                                // Å×³öÈ±Ê¡·şÎñÌá¹©Õß·½·¨Òì³££¬Í¬Ê±ÖÕÖ¹ÆäËûproviderÍ¬²½Ö´ĞĞÂß¼­
+                                // æŠ›å‡ºç¼ºçœæœåŠ¡æä¾›è€…æ–¹æ³•å¼‚å¸¸ï¼ŒåŒæ—¶ç»ˆæ­¢å…¶ä»–provideråŒæ­¥æ‰§è¡Œé€»è¾‘
 
                             }
                             else
-                            // ÊÂÎñĞÔ·½·¨Ö´ĞĞÂß¼­£¬²»´¦ÀíÊÂÎñĞÔÒì³££¬µ«ÊÇĞèÒª´¦Àí·ÇÊÂÎñĞÔÒì³£
+                            // äº‹åŠ¡æ€§æ–¹æ³•æ‰§è¡Œé€»è¾‘ï¼Œä¸å¤„ç†äº‹åŠ¡æ€§å¼‚å¸¸ï¼Œä½†æ˜¯éœ€è¦å¤„ç†éäº‹åŠ¡æ€§å¼‚å¸¸
                             {
                                 if (isdelegate)
                                 {
@@ -642,36 +642,36 @@ public class CGLibUtil {
                                     }
                                     catch (InvocationTargetException e)
                                     {
-                                        if (synm.isRollbackException(e.getTargetException())) // ÊÂÎñĞÔÒì³£
-                                        // £¬
-                                        // ¼ÌĞøÅ×³öÒì³£
-                                        // £¬
-                                        // ÖĞ¶ÏÆäËû·şÎñÌá¹©Õß·½·¨Ö´ĞĞ
+                                        if (synm.isRollbackException(e.getTargetException())) // äº‹åŠ¡æ€§å¼‚å¸¸
+                                        // ï¼Œ
+                                        // ç»§ç»­æŠ›å‡ºå¼‚å¸¸
+                                        // ï¼Œ
+                                        // ä¸­æ–­å…¶ä»–æœåŠ¡æä¾›è€…æ–¹æ³•æ‰§è¡Œ
                                         {
                                             throw e.getTargetException();
                                         }
                                         else
                                         {
-                                            throwable = e.getTargetException();// Å×³öÒì³£Ê±¼ÇÂ¼¸ÃÒì³£
-                                            // £¬
-                                            // ¼ÌĞøÖ´ĞĞºóĞøµÄproviderµÄÍ¬²½·½·¨
+                                            throwable = e.getTargetException();// æŠ›å‡ºå¼‚å¸¸æ—¶è®°å½•è¯¥å¼‚å¸¸
+                                            // ï¼Œ
+                                            // ç»§ç»­æ‰§è¡Œåç»­çš„providerçš„åŒæ­¥æ–¹æ³•
                                         }
                                     }
 
                                     catch (Exception e)
                                     {
-                                        if (synm.isRollbackException(e)) // ÊÂÎñĞÔÒì³£
-                                        // £¬
-                                        // ¼ÌĞøÅ×³öÒì³£
-                                        // £¬
-                                        // ÖĞ¶ÏÆäËû·şÎñÌá¹©Õß·½·¨Ö´ĞĞ
+                                        if (synm.isRollbackException(e)) // äº‹åŠ¡æ€§å¼‚å¸¸
+                                        // ï¼Œ
+                                        // ç»§ç»­æŠ›å‡ºå¼‚å¸¸
+                                        // ï¼Œ
+                                        // ä¸­æ–­å…¶ä»–æœåŠ¡æä¾›è€…æ–¹æ³•æ‰§è¡Œ
                                         {
                                             throw e;
                                         }
                                         else
                                         {
-                                            throwable = e;// Å×³öÒì³£Ê±¼ÇÂ¼¸ÃÒì³££¬
-                                            // ¼ÌĞøÖ´ĞĞºóĞøµÄproviderµÄÍ¬²½·½·¨
+                                            throwable = e;// æŠ›å‡ºå¼‚å¸¸æ—¶è®°å½•è¯¥å¼‚å¸¸ï¼Œ
+                                            // ç»§ç»­æ‰§è¡Œåç»­çš„providerçš„åŒæ­¥æ–¹æ³•
                                         }
                                     }
                                 }
@@ -684,34 +684,34 @@ public class CGLibUtil {
                                     }
                                     catch (InvocationTargetException e)
                                     {
-                                        if (synm.isRollbackException(e.getTargetException())) // ÊÂÎñĞÔÒì³£
-                                        // £¬
-                                        // ¼ÌĞøÅ×³öÒì³£
-                                        // £¬
-                                        // ÖĞ¶ÏÆäËû·şÎñÌá¹©Õß·½·¨Ö´ĞĞ
+                                        if (synm.isRollbackException(e.getTargetException())) // äº‹åŠ¡æ€§å¼‚å¸¸
+                                        // ï¼Œ
+                                        // ç»§ç»­æŠ›å‡ºå¼‚å¸¸
+                                        // ï¼Œ
+                                        // ä¸­æ–­å…¶ä»–æœåŠ¡æä¾›è€…æ–¹æ³•æ‰§è¡Œ
                                         {
                                             throw e;
                                         }
                                         else
                                         {
-                                            log.error("Í¬²½µ÷ÓÃ·şÎñÌá¹©Õß[" + securityProviderInfo + "]ÖĞ·½·¨[" + method
-                                                    + "]Òì³££º" + e.getMessage(), e);
+                                            log.error("åŒæ­¥è°ƒç”¨æœåŠ¡æä¾›è€…[" + securityProviderInfo + "]ä¸­æ–¹æ³•[" + method
+                                                    + "]å¼‚å¸¸ï¼š" + e.getMessage(), e);
                                         }
                                     }
                                     catch (Exception e)
                                     {
-                                        if (synm.isRollbackException(e)) // ÊÂÎñĞÔÒì³£
-                                        // £¬
-                                        // ¼ÌĞøÅ×³öÒì³£
-                                        // £¬
-                                        // ÖĞ¶ÏÆäËû·şÎñÌá¹©Õß·½·¨Ö´ĞĞ
+                                        if (synm.isRollbackException(e)) // äº‹åŠ¡æ€§å¼‚å¸¸
+                                        // ï¼Œ
+                                        // ç»§ç»­æŠ›å‡ºå¼‚å¸¸
+                                        // ï¼Œ
+                                        // ä¸­æ–­å…¶ä»–æœåŠ¡æä¾›è€…æ–¹æ³•æ‰§è¡Œ
                                         {
                                             throw e;
                                         }
                                         else
                                         {
-                                            log.error("Í¬²½µ÷ÓÃ·şÎñÌá¹©Õß[" + securityProviderInfo + "]ÖĞ·½·¨[" + method
-                                                    + "]Òì³££º" + e.getMessage(), e);
+                                            log.error("åŒæ­¥è°ƒç”¨æœåŠ¡æä¾›è€…[" + securityProviderInfo + "]ä¸­æ–¹æ³•[" + method
+                                                    + "]å¼‚å¸¸ï¼š" + e.getMessage(), e);
                                         }
                                     }
                                 }
@@ -724,7 +724,7 @@ public class CGLibUtil {
                         // providerInfoQueue.getSecurityProviderInfo(i)
                         // .getProvider());
                     }
-                    if (throwable != null)// Èç¹ûÔÚ·½·¨µÄÖ´ĞĞ¹ı³ÌÖĞ·¢ÉúÒì³££¬Å×³ö¸ÃÒì³£
+                    if (throwable != null)// å¦‚æœåœ¨æ–¹æ³•çš„æ‰§è¡Œè¿‡ç¨‹ä¸­å‘ç”Ÿå¼‚å¸¸ï¼ŒæŠ›å‡ºè¯¥å¼‚å¸¸
                         throw throwable;
                     if (interceptor != null)
                         interceptor.after(method, args);
@@ -837,8 +837,8 @@ public class CGLibUtil {
             try
             {
 
-                Object obj = null;// Ö»·µ»ØdelegateÖĞ·½·¨·µ»ØµÄÖµ
-                // Èç¹û²»ÊÇÍ¬²½·½·¨£¬ÔòÎŞĞèÍ¬²½µ÷ÓÃÆäËû½Ó¿Ú·½·¨
+                Object obj = null;// åªè¿”å›delegateä¸­æ–¹æ³•è¿”å›çš„å€¼
+                // å¦‚æœä¸æ˜¯åŒæ­¥æ–¹æ³•ï¼Œåˆ™æ— éœ€åŒæ­¥è°ƒç”¨å…¶ä»–æ¥å£æ–¹æ³•
                 // log.debug("method.getName():" + method.getName());
                 //log.debug("providerManagerInfo.getSynchronizedMethod("
                 // +
@@ -847,9 +847,9 @@ public class CGLibUtil {
                 // (method.getName()));
                 if (!providerManagerInfo.isSynchronizedEnabled()
                         || !providerManagerInfo.isSynchronizedMethod(method))
-                {// Èç¹ûÃ»ÓĞÅäÖÃÒÔ·½·¨¼°ÏàÓ¦µÄ·½·¨²ÎÊıµÄÎª±êÊ¶µÄÍ¬²½·½·¨
-                    // £¬
-                    // Èç¹ûÓĞÔòÖ´ĞĞËùÓĞproviderµÄÍ¬²½·½·¨
+                {// å¦‚æœæ²¡æœ‰é…ç½®ä»¥æ–¹æ³•åŠç›¸åº”çš„æ–¹æ³•å‚æ•°çš„ä¸ºæ ‡è¯†çš„åŒæ­¥æ–¹æ³•
+                    // ï¼Œ
+                    // å¦‚æœæœ‰åˆ™æ‰§è¡Œæ‰€æœ‰providerçš„åŒæ­¥æ–¹æ³•
 
                     if (interceptor != null)
                         interceptor.before(method, args);
@@ -864,11 +864,11 @@ public class CGLibUtil {
                 }
                 else
                 {
-                    // »ñÈ¡·şÎñÌá¹©Õß¶ÓÁĞ£¬¸Ã¶ÓÁĞÒÑ¾­°´ÕÕÖ¸¶¨µÄÓÅÏÈ¼¶Ë³Ğò½øĞĞÅÅĞò
+                    // è·å–æœåŠ¡æä¾›è€…é˜Ÿåˆ—ï¼Œè¯¥é˜Ÿåˆ—å·²ç»æŒ‰ç…§æŒ‡å®šçš„ä¼˜å…ˆçº§é¡ºåºè¿›è¡Œæ’åº
                     ProviderInfoQueue providerInfoQueue = providerManagerInfo.getProviderInfoQueue();
 
-                    //Í¬²½µ÷ÓÃËùÓĞµÄ½Ó¿Ú·½·¨£¬Èç¹ûÍ¬²½·½·¨ÊÇÊÇÊÂÎñĞÔ·½·¨£¬ÔòĞèÒª½øĞĞÊÂÎñ´¦Àí£¬¼°ÒªÃ´È«²¿³É¹¦£¬ÒªÃ´È«²¿Ê§°Ü
-                    // ·ñÔòÔÚ´¦ÀíµÄ¹ı³ÌÖĞ,Ò»Ğ©·şÎñÌá¹©Õß·½·¨±»Ö´ĞĞÊ±Å×³öÒì³££¬½«¼ÌĞøÖ´ĞĞºóĞøµÄÍ¬²½·½·¨
+                    //åŒæ­¥è°ƒç”¨æ‰€æœ‰çš„æ¥å£æ–¹æ³•ï¼Œå¦‚æœåŒæ­¥æ–¹æ³•æ˜¯æ˜¯äº‹åŠ¡æ€§æ–¹æ³•ï¼Œåˆ™éœ€è¦è¿›è¡Œäº‹åŠ¡å¤„ç†ï¼ŒåŠè¦ä¹ˆå…¨éƒ¨æˆåŠŸï¼Œè¦ä¹ˆå…¨éƒ¨å¤±è´¥
+                    // å¦åˆ™åœ¨å¤„ç†çš„è¿‡ç¨‹ä¸­,ä¸€äº›æœåŠ¡æä¾›è€…æ–¹æ³•è¢«æ‰§è¡Œæ—¶æŠ›å‡ºå¼‚å¸¸ï¼Œå°†ç»§ç»­æ‰§è¡Œåç»­çš„åŒæ­¥æ–¹æ³•
 
                     Throwable throwable = null;
                     if (interceptor != null)
@@ -889,17 +889,17 @@ public class CGLibUtil {
                         // (parent);
                         Object provider = securityProviderInfo.getProvider(callcontext);
                         boolean isdelegate = provider.getClass() == delegate.getClass();
-                        // È±Ê¡µÄproviderºÍ±»±êÊ¶ÎªÊ¹ÓÃµÄprovider¶¼ĞèÒª½øĞĞÍ¬²½µ÷ÓÃ
+                        // ç¼ºçœçš„providerå’Œè¢«æ ‡è¯†ä¸ºä½¿ç”¨çš„provideréƒ½éœ€è¦è¿›è¡ŒåŒæ­¥è°ƒç”¨
                         if (isdelegate || securityProviderInfo.isUsed() || securityProviderInfo.isIsdefault())
                         {
                             if (isdelegate && !securityProviderInfo.isUsed())
                             {
-                                log.warn("µ÷ÓÃµÄProvider[" + delegate.getClass() + "]£¬[" + securityProviderInfo
-                                        + "]±»ÉèÖÃÎªÎ´Ê¹ÓÃµÄ·şÎñÌá¹©Õß¡£");
+                                log.warn("è°ƒç”¨çš„Provider[" + delegate.getClass() + "]ï¼Œ[" + securityProviderInfo
+                                        + "]è¢«è®¾ç½®ä¸ºæœªä½¿ç”¨çš„æœåŠ¡æä¾›è€…ã€‚");
                             }
 
                             /**
-                             * È±Ê¡µÄÌá¹©Õß£¬Ò²¾ÍÊÇÄ¬ÈÏµÄÌá¹©Õß£¬²»ĞèÒª½øĞĞÊÂÎñ´¦ÀíÊ±£¬Ö»±£Áô·şÎñÌá¹©ÕßµÄ·µ»ØÖµ
+                             * ç¼ºçœçš„æä¾›è€…ï¼Œä¹Ÿå°±æ˜¯é»˜è®¤çš„æä¾›è€…ï¼Œä¸éœ€è¦è¿›è¡Œäº‹åŠ¡å¤„ç†æ—¶ï¼Œåªä¿ç•™æœåŠ¡æä¾›è€…çš„è¿”å›å€¼
                              */
                             if (isdelegate)
                             {
@@ -913,13 +913,13 @@ public class CGLibUtil {
                                 catch (InvocationTargetException e)
                                 {
                                     throwable = e.getTargetException();
-                                    log.error("µ÷ÓÃ·şÎñÌá¹©Õß[" + securityProviderInfo + "]ÖĞ·½·¨[" + method + "]Òì³££º"
+                                    log.error("è°ƒç”¨æœåŠ¡æä¾›è€…[" + securityProviderInfo + "]ä¸­æ–¹æ³•[" + method + "]å¼‚å¸¸ï¼š"
                                             + e.getMessage(), e);
                                 }
                                 catch (Exception e)
                                 {
                                     throwable = e;
-                                    log.error("µ÷ÓÃ·şÎñÌá¹©Õß[" + securityProviderInfo + "]ÖĞ·½·¨[" + method + "]Òì³££º"
+                                    log.error("è°ƒç”¨æœåŠ¡æä¾›è€…[" + securityProviderInfo + "]ä¸­æ–¹æ³•[" + method + "]å¼‚å¸¸ï¼š"
                                             + e.getMessage(), e);
                                 }
 
@@ -933,8 +933,8 @@ public class CGLibUtil {
                                 }
                                 catch (Exception e)
                                 {
-                                    // ²»ÊÇÊÂÎñ·½·¨µ÷ÓÃÊ±£¬ºöÂÔÆäËû·şÎñÌá¹©Õß·½·¨Ö´ĞĞÊ±µÄÒì³£
-                                    log.error("Í¬²½µ÷ÓÃ·şÎñÌá¹©Õß[" + securityProviderInfo + "]ÖĞ·½·¨[" + method + "]Òì³££º"
+                                    // ä¸æ˜¯äº‹åŠ¡æ–¹æ³•è°ƒç”¨æ—¶ï¼Œå¿½ç•¥å…¶ä»–æœåŠ¡æä¾›è€…æ–¹æ³•æ‰§è¡Œæ—¶çš„å¼‚å¸¸
+                                    log.error("åŒæ­¥è°ƒç”¨æœåŠ¡æä¾›è€…[" + securityProviderInfo + "]ä¸­æ–¹æ³•[" + method + "]å¼‚å¸¸ï¼š"
                                             + e.getMessage(), e);
                                 }
                             }
@@ -947,7 +947,7 @@ public class CGLibUtil {
                         // providerInfoQueue.getSecurityProviderInfo(i)
                         // .getProvider());
                     }
-                    // Å×³öÈ±Ê¡·şÎñÌá¹©Õß·½·¨Òì³£
+                    // æŠ›å‡ºç¼ºçœæœåŠ¡æä¾›è€…æ–¹æ³•å¼‚å¸¸
                     if (throwable != null)
                         throw throwable;
                     if (interceptor != null)
@@ -1006,7 +1006,7 @@ public class CGLibUtil {
     }
 	
 	/**
-	 * »ñÈ¡×é¼şÊµÀı
+	 * è·å–ç»„ä»¶å®ä¾‹
 	 * @param <T>
 	 * @param rettype
 	 * @param beanType
@@ -1024,7 +1024,7 @@ public class CGLibUtil {
 	}
 	
 	/**
-	 * »ñÈ¡×é¼şÊµÀı
+	 * è·å–ç»„ä»¶å®ä¾‹
 	 * @param <T>
 	 * @param rettype
 	 * @param beanType

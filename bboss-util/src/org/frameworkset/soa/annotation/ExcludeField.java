@@ -23,7 +23,7 @@ import java.lang.annotation.Target;
 
 /**
  * <p>Title: ExecuteField.java</p> 
- * <p>Description: 用来标识需要忽略的序列号字段和方法</p>
+ * <p>Description: 鐢ㄦ潵鏍囪瘑闇�瑕佸拷鐣ョ殑搴忓垪鍙峰瓧娈靛拰鏂规硶</p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2008</p>
  * @Date 2011-12-27

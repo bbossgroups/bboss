@@ -1,15 +1,15 @@
 <%-- 
- * @Description ·µ»Øjsondata
+ * @Description è¿”å›žjsondata
  * @Date 20110402
- * @author Àî·å¸ß
+ * @author æŽå³°é«˜
  * @version 1.0
 --%>
 
-<%@ page language="java" import="java.util.*" pageEncoding="GBK"%>
-<%@ page contentType="text/html; charset=GBK"%>
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8"%>
 <%
 //System.out.println("debug>>returnJson.jsp->jsoncode="+request.getAttribute("jsoncode"));
-/* ÀýÈç·µ»Ø£º
+/* ä¾‹å¦‚è¿”å›žï¼š
 {"total":28,"rows":[
 	{"productid":"FI-SW-01","unitcost":10.00,"status":"P","listprice":36.50,"attr1":"Large","itemid":"EST-1"},
 	{"productid":"K9-DL-01","unitcost":12.00,"status":"P","listprice":18.50,"attr1":"Spotted Adult Female","itemid":"EST-10"}	

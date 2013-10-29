@@ -86,7 +86,7 @@ public  class HandlerMeta
 	}
 	
 	/**
-	 * ÓĞĞ§´¦ÀíËÀÑ­»·
+	 * æœ‰æ•ˆå¤„ç†æ­»å¾ªç¯
 	 * @param path
 	 * @param method
 	 * @param handler
@@ -97,17 +97,17 @@ public  class HandlerMeta
 	public String getUrlPath(String path,String method,Object handler,HttpServletRequest request) throws PathURLNotSetException
 	{
 		/*
-		 * Ê×ÏÈ³¢ÊÔ2´ÎÁ¬Ğø»ñÈ¡£¬³¬¹ı2´Î±ğÃûÒıÓÃµÄÇé¿ö²»¶à£¬Ò»µ©³¬¹ıÁ½´Î
-		 * ¼°¹¦¹ıdo-whileÑ­»·½â¾ö¼¶ÁªÒıÓÃµÄÎÊÌâ
+		 * é¦–å…ˆå°è¯•2æ¬¡è¿ç»­è·å–ï¼Œè¶…è¿‡2æ¬¡åˆ«åå¼•ç”¨çš„æƒ…å†µä¸å¤šï¼Œä¸€æ—¦è¶…è¿‡ä¸¤æ¬¡
+		 * åŠåŠŸè¿‡do-whileå¾ªç¯è§£å†³çº§è”å¼•ç”¨çš„é—®é¢˜
 		 */
-		//µÚÒ»´Î³¢ÊÔ
+		//ç¬¬ä¸€æ¬¡å°è¯•
 		String tmp = this.getPathNames() != null? this.getPathNames().get(path):null;
 		
 		if(tmp == null)
 			throw new PathURLNotSetException(path,method,handler,request);
 		if(!UrlBasedViewResolver.isPathVariable(tmp))
 			return tmp;
-		//µÚ¶ş´Î³¢ÊÔ
+		//ç¬¬äºŒæ¬¡å°è¯•
 		String old = tmp;
 		tmp = this.getPathNames().get(tmp);
 		if(tmp == null)
@@ -119,7 +119,7 @@ public  class HandlerMeta
 			throw new PathURLNotSetException(path,old + "->" + tmp,method,handler,request);
 		}
 		
-		//½øÈëdo-whileÑ­»·»·½Ú£¬¼ÇÂ¼Ç°Á½´ÎµÄµ÷ÓÃÂ·¾¶
+		//è¿›å…¥do-whileå¾ªç¯ç¯èŠ‚ï¼Œè®°å½•å‰ä¸¤æ¬¡çš„è°ƒç”¨è·¯å¾„
 		List<String> trace = new ArrayList<String>(getPathNames().size());
 		trace.add(old);
 		trace.add(tmp);

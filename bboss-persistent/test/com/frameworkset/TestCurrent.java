@@ -9,7 +9,7 @@ import com.frameworkset.common.poolman.DBUtil;
 import com.frameworkset.orm.transaction.TransactionManager;
 
 /**
- * java²¢·¢±à³ÌÖ®²¢ĞĞ·Ö½âºÏ²¢
+ * javaå¹¶å‘ç¼–ç¨‹ä¹‹å¹¶è¡Œåˆ†è§£åˆå¹¶
  * <p>Title: TestCurrent</p>
  *
  * Description:
@@ -21,7 +21,7 @@ import com.frameworkset.orm.transaction.TransactionManager;
  * Copyright (c) 2007
  * </p>
  * 
- * @Date 2009-6-1 ÏÂÎç08:58:51
+ * @Date 2009-6-1 ä¸‹åˆ08:58:51
  * @author biaoping.yin
  * @version 1.0
  */

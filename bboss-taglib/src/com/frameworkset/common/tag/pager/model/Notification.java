@@ -32,19 +32,19 @@
 package com.frameworkset.common.tag.pager.model;
 
 /**
- * ÌáÊ¾ĞÅÏ¢£¬µ±¼ÇÂ¼ÊıÎªÁãÊ±£¬ÉèÖÃÌáÊ¾ĞÅÏ¢
+ * æç¤ºä¿¡æ¯ï¼Œå½“è®°å½•æ•°ä¸ºé›¶æ—¶ï¼Œè®¾ç½®æç¤ºä¿¡æ¯
  * @author biaoping.yin
  * created on 2005-5-30
  * version 1.0 
  */
 public class Notification extends UniqueHelper implements ModelObject{
     /**
-     * ÌáÊ¾ĞÅÏ¢      
+     * æç¤ºä¿¡æ¯      
      */
     private String notification;
     
     /**
-     * ÊÇ·ñÊä³öÌáÊ¾ĞÅÏ¢
+     * æ˜¯å¦è¾“å‡ºæç¤ºä¿¡æ¯
      */
     private boolean output = false;
 

@@ -1,132 +1,132 @@
-<?xml version="1.0" encoding='gb2312'?>
+<?xml version="1.0" encoding='UTF-8'?>
 <!-- 
 	manager-config(manager+,managerimport*,properties*)
 	manager(provider+,synchronize?,transactions?,reference*,interceptor*,construction)
 	manager-attributelist{
-		id-¹ÜÀí·þÎñÕßid
-		jndiname-¹ÜÀí·þÎñÕßjndiÊôÐÔ£¬Ä¿Ç°Î´Ê¹ÓÃ
-		singlable-ÊÇ·ñÊÇµ¥ÊµÀýÄ£Ê½
-		default-ÊÇ·ñÊÇÈ±Ê¡¹ÜÀí·þÎñ		
-		callorder_sequence-À¹½ØÆ÷Ö´ÐÐË³Ðò£¬true°´Ë³ÐòÖ´ÐÐ£¬false°´Á´Ê½Ë³ÐòÖ´ÐÐ£¬È±Ê¡Öµtrue
+		id-ç®¡ç†æœåŠ¡è€…id
+		jndiname-ç®¡ç†æœåŠ¡è€…jndiå±žæ€§ï¼Œç›®å‰æœªä½¿ç”¨
+		singlable-æ˜¯å¦æ˜¯å•å®žä¾‹æ¨¡å¼
+		default-æ˜¯å¦æ˜¯ç¼ºçœç®¡ç†æœåŠ¡		
+		callorder_sequence-æ‹¦æˆªå™¨æ‰§è¡Œé¡ºåºï¼ŒtrueæŒ‰é¡ºåºæ‰§è¡Œï¼ŒfalseæŒ‰é“¾å¼é¡ºåºæ‰§è¡Œï¼Œç¼ºçœå€¼true
 	}
 	##
-	# Èç¹ûÔÚÏµÍ³ÖÐÅäÖÃÁË¶à¸öÀ¹½ØÆ÷£¬Õû¸ö¿ò¼ÜÄÜ¹»È·±£Ã¿¸öÀ¹½ØÆ÷¶¼±»µ÷ÓÃ
-	# µ÷ÓÃµÄË³ÐòÎª À¹½ØÆ÷ÅäÖÃµÄË³Ðò,Èç¹ûÍ¬Ê±Í¨¹ýmanager½ÚµãµÄÊôÐÔinterceptor¶¨ÒåÁËÒ»¸öÀ¹½ØÆ÷£¬
-	# Ôò»áÊ×ÏÈµ÷ÓÃÕâ¸öÊôÐÔ¶ÔÓ¦µÄÀ¹½ØÆ÷£¬È»ºóÔÙµ÷ÓÃÆäËûÀ¹½ØÆ÷
+	# å¦‚æžœåœ¨ç³»ç»Ÿä¸­é…ç½®äº†å¤šä¸ªæ‹¦æˆªå™¨ï¼Œæ•´ä¸ªæ¡†æž¶èƒ½å¤Ÿç¡®ä¿æ¯ä¸ªæ‹¦æˆªå™¨éƒ½è¢«è°ƒç”¨
+	# è°ƒç”¨çš„é¡ºåºä¸º æ‹¦æˆªå™¨é…ç½®çš„é¡ºåº,å¦‚æžœåŒæ—¶é€šè¿‡managerèŠ‚ç‚¹çš„å±žæ€§interceptorå®šä¹‰äº†ä¸€ä¸ªæ‹¦æˆªå™¨ï¼Œ
+	# åˆ™ä¼šé¦–å…ˆè°ƒç”¨è¿™ä¸ªå±žæ€§å¯¹åº”çš„æ‹¦æˆªå™¨ï¼Œç„¶åŽå†è°ƒç”¨å…¶ä»–æ‹¦æˆªå™¨
 	##
 	interceptor(pcdata)   
 	
 	interceptor-attributelist{
-		class-À¹½ØÆ÷µÄÊµÏÖÀà£¬ËùÓÐµÄÀ¹½ØÆ÷¶¼±ØÐëÊµÏÖ
-		      com.frameworkset.proxy.Interceptor½Ó¿Ú
-		      Ä¿Ç°ÏµÍ³ÖÐÌá¹©ÁËÒÔÏÂÈ±Ê¡À¹½ØÆ÷£º
-		      	Êý¾Ý¿âÊÂÎñ¹ÜÀíÀ¹½ØÆ÷£¨com.chinacreator.spi.
-		      	interceptor.TransactionInterceptor£©,Ö§³Ö¶ÔÉùÃ÷Ê½ÊÂÎñµÄ¹ÜÀí
+		class-æ‹¦æˆªå™¨çš„å®žçŽ°ç±»ï¼Œæ‰€æœ‰çš„æ‹¦æˆªå™¨éƒ½å¿…é¡»å®žçŽ°
+		      com.frameworkset.proxy.InterceptoræŽ¥å£
+		      ç›®å‰ç³»ç»Ÿä¸­æä¾›äº†ä»¥ä¸‹ç¼ºçœæ‹¦æˆªå™¨ï¼š
+		      	æ•°æ®åº“äº‹åŠ¡ç®¡ç†æ‹¦æˆªå™¨ï¼ˆcom.chinacreator.spi.
+		      	interceptor.TransactionInterceptorï¼‰,æ”¯æŒå¯¹å£°æ˜Žå¼äº‹åŠ¡çš„ç®¡ç†
 	}
 	reference(pcdata)
 	reference-attributelist{
-		fieldname-¶ÔÓ¦µÄ¹ÜÀí·þÎñÌá¹©ÕßÖÐµÄ×Ö¶ÎÃû³Æ£¬±ØÑ¡ÊôÐÔ
-		refid-ÒýÓÃµÄ¹ÜÀí·þÎñµÄid£¬¶ÔÓ¦manager½ÚµãµÄidÊôÐÔ£¬
-		reftype-¶ÔÓ¦µÄ¹ÜÀí·þÎñÌá¹©ÕßÀàÐÍ£¬¿ÉÑ¡ÊôÐÔ,¿ÉÒÔ×÷ÎªrefidµÄ¸¨ÖúÊôÐÔ
-		class-Ö±½ÓÓ¦ÓÃclassÖ¸¶¨µÄÒ»¸öÊµÀý¶ÔÏó
-		value-Ö±½ÓÖ¸¶¨ÊôÐÔ¶ÔÓ¦µÄ±êÁ¿Öµ
-		refid£¬class£¬valueÈý¸öÊôÐÔÖ»ÄÜÈÎÒâÖ¸¶¨Ò»¸ö
+		fieldname-å¯¹åº”çš„ç®¡ç†æœåŠ¡æä¾›è€…ä¸­çš„å­—æ®µåç§°ï¼Œå¿…é€‰å±žæ€§
+		refid-å¼•ç”¨çš„ç®¡ç†æœåŠ¡çš„idï¼Œå¯¹åº”managerèŠ‚ç‚¹çš„idå±žæ€§ï¼Œ
+		reftype-å¯¹åº”çš„ç®¡ç†æœåŠ¡æä¾›è€…ç±»åž‹ï¼Œå¯é€‰å±žæ€§,å¯ä»¥ä½œä¸ºrefidçš„è¾…åŠ©å±žæ€§
+		class-ç›´æŽ¥åº”ç”¨classæŒ‡å®šçš„ä¸€ä¸ªå®žä¾‹å¯¹è±¡
+		value-ç›´æŽ¥æŒ‡å®šå±žæ€§å¯¹åº”çš„æ ‡é‡å€¼
+		refidï¼Œclassï¼Œvalueä¸‰ä¸ªå±žæ€§åªèƒ½ä»»æ„æŒ‡å®šä¸€ä¸ª
 		
 	}
 	provider(pcdata)   
 	provider-attributelist{
-		type-·þÎñÌá¹©Õß±êÊ¶id
-		used-·þÎñÌá¹©ÕßÊÇ·ñ±»ÆôÓÃ,È±Ê¡ÖµÎªfalse
-		class-·þÎñÌá¹©Õß¶ÔÓ¦µÄclassÀà
-		prior-providerµ÷ÓÃµÄÓÅÏÈ¼¶
+		type-æœåŠ¡æä¾›è€…æ ‡è¯†id
+		used-æœåŠ¡æä¾›è€…æ˜¯å¦è¢«å¯ç”¨,ç¼ºçœå€¼ä¸ºfalse
+		class-æœåŠ¡æä¾›è€…å¯¹åº”çš„classç±»
+		prior-providerè°ƒç”¨çš„ä¼˜å…ˆçº§
 	}
 	
 	construction(param*)
 	synchronize(method+)
 	synchronize-attributelist{
-		enabled-ÊÇ·ñÆôÓÃÍ¬²½¹¦ÄÜ£¬Èç¹ûÃ»ÓÐÆôÓÃÍ¬²½¹¦ÄÜ
-		        ¼´Ê¹ÅäÖÃÁË¶à¸ö·þÎñÌá¹©ÕßµÄÍ¬²½·½·¨£¬ËùÓÐµÄÍ¬²½¹¦ÄÜ½«²»Æð×÷ÓÃ
+		enabled-æ˜¯å¦å¯ç”¨åŒæ­¥åŠŸèƒ½ï¼Œå¦‚æžœæ²¡æœ‰å¯ç”¨åŒæ­¥åŠŸèƒ½
+		        å³ä½¿é…ç½®äº†å¤šä¸ªæœåŠ¡æä¾›è€…çš„åŒæ­¥æ–¹æ³•ï¼Œæ‰€æœ‰çš„åŒæ­¥åŠŸèƒ½å°†ä¸èµ·ä½œç”¨
 	}
 	transactions(method+)
 	
 	method(param*,rollbackexceptions?)
 	method-attributelist{
-		name-·½·¨Ãû³Æ£¬nameºÍpattern²»ÄÜÍ¬Ê±³öÏÖ
-		pattern-Æ¥Åä·½·¨Ãû³ÆµÄÕýÔò±í´ïÊ½
-		txtype-ÐèÒª¿ØÖÆµÄÊÂÎñÀàÐÍ£¬È¡Öµ·¶Î§£º
-					NEW_TRANSACTION£¬
-					REQUIRED_TRANSACTION£¬
-					MAYBE_TRANSACTION£¬
+		name-æ–¹æ³•åç§°ï¼Œnameå’Œpatternä¸èƒ½åŒæ—¶å‡ºçŽ°
+		pattern-åŒ¹é…æ–¹æ³•åç§°çš„æ­£åˆ™è¡¨è¾¾å¼
+		txtype-éœ€è¦æŽ§åˆ¶çš„äº‹åŠ¡ç±»åž‹ï¼Œå–å€¼èŒƒå›´ï¼š
+					NEW_TRANSACTIONï¼Œ
+					REQUIRED_TRANSACTIONï¼Œ
+					MAYBE_TRANSACTIONï¼Œ
 					NO_TRANSACTION
 	}
 	param(pcdata)
 	param-attributelist{
-		type-²ÎÊýµÄÀàÐÍ,Èç¹ûÊÇ¹¹½¨º¯ÊýµÄ²ÎÊý£¬ÄÇÃ´½«´´½¨type¶ÔÓ¦µÄclassµÄ¶ÔÏóÊµÀý×÷Îª¹¹½¨º¯ÊýµÄÊµÀý²ÎÊý
-		value-ÓÃÀ´Ö¸¶¨¹¹Ôìº¯ÊýµÄ²ÎÊýÖµ
-		refid-ÓÃÀ´Ö¸¶¨¹¹Ôìº¯ÊýµÄÒýÓÃÆäËû¶ÔÏó±êÊ¶
+		type-å‚æ•°çš„ç±»åž‹,å¦‚æžœæ˜¯æž„å»ºå‡½æ•°çš„å‚æ•°ï¼Œé‚£ä¹ˆå°†åˆ›å»ºtypeå¯¹åº”çš„classçš„å¯¹è±¡å®žä¾‹ä½œä¸ºæž„å»ºå‡½æ•°çš„å®žä¾‹å‚æ•°
+		value-ç”¨æ¥æŒ‡å®šæž„é€ å‡½æ•°çš„å‚æ•°å€¼
+		refid-ç”¨æ¥æŒ‡å®šæž„é€ å‡½æ•°çš„å¼•ç”¨å…¶ä»–å¯¹è±¡æ ‡è¯†
 	}
 	rollbackexceptions(exception+)
 	
 	exception(pcdata)
 	exception-attributelist{
-		class-Ö¸¶¨Òì³£Àà
-		type-IMPLEMENTS,INSTANCEOF Òì³£Æ¥ÅäÀàÐÍ£¬IMPLEMENTS±íÊ¾Ö»ÄÜÊÇclassÀàÐÍÒì³£Àà£¬INSTANCEOF±íÊ¾classÀàºÍÆä×ÓÀà
+		class-æŒ‡å®šå¼‚å¸¸ç±»
+		type-IMPLEMENTS,INSTANCEOF å¼‚å¸¸åŒ¹é…ç±»åž‹ï¼ŒIMPLEMENTSè¡¨ç¤ºåªèƒ½æ˜¯classç±»åž‹å¼‚å¸¸ç±»ï¼ŒINSTANCEOFè¡¨ç¤ºclassç±»å’Œå…¶å­ç±»
 	}
 	
 	mangerimport(pcdata)
 	mangerimport-attributelist{
-		file-µ¼ÈëÆäËûÄ£¿éµÄÅäÖÃÎÄ¼þ
+		file-å¯¼å…¥å…¶ä»–æ¨¡å—çš„é…ç½®æ–‡ä»¶
 	}
 	
 	************************************************************************
-	ÐÂµÄ·þÎñÅäÖÃÓï·¨£¬¼æÈÝ¾ÉµÄÓï·¨£¨manager-provider£©
+	æ–°çš„æœåŠ¡é…ç½®è¯­æ³•ï¼Œå…¼å®¹æ—§çš„è¯­æ³•ï¼ˆmanager-providerï¼‰
 	**************************************************************************
 	
 	properties(property*)
 	properties-attributelist{
-		name-Ö¸¶¨Ò»×éÊôÐÔµÄ·Ö×éÃû³Æ		
+		name-æŒ‡å®šä¸€ç»„å±žæ€§çš„åˆ†ç»„åç§°		
 	}
 	property(property*,map,list,set,description,editor)
 	property-attributelist{
-		name-Ö¸¶¨ÊôÐÔÃû³Æ,
-		id-Ö¸¶¨ÊôÐÔÃû³Æ£¬nameµÄÌæ´úÊôÐÔ£¬Èç¹ûÖ¸¶¨ÁËnameÄÇÃ´idÊôÐÔ½«±»ºöÂÔ
-		singlable-ÊÇ·ñÊÇµ¥ÊµÀýÄ£Ê½,true-µ¥Àý£¬false-¶àÊµÀý
+		name-æŒ‡å®šå±žæ€§åç§°,
+		id-æŒ‡å®šå±žæ€§åç§°ï¼Œnameçš„æ›¿ä»£å±žæ€§ï¼Œå¦‚æžœæŒ‡å®šäº†nameé‚£ä¹ˆidå±žæ€§å°†è¢«å¿½ç•¥
+		singlable-æ˜¯å¦æ˜¯å•å®žä¾‹æ¨¡å¼,true-å•ä¾‹ï¼Œfalse-å¤šå®žä¾‹
 		
-		label-Ö¸¶¨ÊôÐÔµÄ±ê¼Ç
+		label-æŒ‡å®šå±žæ€§çš„æ ‡è®°
 		
-		value-Ö¸¶¨ÊôÐÔµÄÖµ£¬ÊôÐÔÖµÒ²¿ÉÒÔÍ¨¹ýproperty½ÚµãµÄÄÚÖÃÎÄ±¾Ö¸¶¨
+		value-æŒ‡å®šå±žæ€§çš„å€¼ï¼Œå±žæ€§å€¼ä¹Ÿå¯ä»¥é€šè¿‡propertyèŠ‚ç‚¹çš„å†…ç½®æ–‡æœ¬æŒ‡å®š
 		
-		class-Ö¸¶¨Öµ¶ÔÓ¦µÄjavaÀàÐÍÃû³Æ£ºint,boolean,string,ÓÃ»§×Ô¶¨ÒåµÄÀàÐÍ
+		class-æŒ‡å®šå€¼å¯¹åº”çš„javaç±»åž‹åç§°ï¼šint,boolean,string,ç”¨æˆ·è‡ªå®šä¹‰çš„ç±»åž‹
 		
-		refid-½ÚµãÊôÐÔÖµÎªrefid¶ÔÓ¦µÄÊôÐÔ»òÕß·þÎñÌá¹©ÕßµÄÖµ
-		      Èç¹ûÊÇÊôÐÔÇ°ÃæÓÃ£ºattr:×÷ÎªÇ°×º
-		      Èç¹ûÒýÓÃµÄÊÇ·þÎñ£ºservice:×÷ÎªÇ°×º£¬
-		      ¶ÔÓÚÒýÓÃµÄ½âÎö½«²ÉÓÃ·´ÏòË÷ÒýµÄ·½Ê½µÄÌæ»»»¹Ã»ÓÐ¼ÓÔØµÄÒýÓÃÊôÐÔºÍ·þÎñ	
+		refid-èŠ‚ç‚¹å±žæ€§å€¼ä¸ºrefidå¯¹åº”çš„å±žæ€§æˆ–è€…æœåŠ¡æä¾›è€…çš„å€¼
+		      å¦‚æžœæ˜¯å±žæ€§å‰é¢ç”¨ï¼šattr:ä½œä¸ºå‰ç¼€
+		      å¦‚æžœå¼•ç”¨çš„æ˜¯æœåŠ¡ï¼šservice:ä½œä¸ºå‰ç¼€ï¼Œ
+		      å¯¹äºŽå¼•ç”¨çš„è§£æžå°†é‡‡ç”¨åå‘ç´¢å¼•çš„æ–¹å¼çš„æ›¿æ¢è¿˜æ²¡æœ‰åŠ è½½çš„å¼•ç”¨å±žæ€§å’ŒæœåŠ¡	
 		
-		f:xxx-beanÒÀÀµ×¢ÈëÊôÐÔÓï·¨
+		f:xxx-beanä¾èµ–æ³¨å…¥å±žæ€§è¯­æ³•
 		
-		xxx-ÆäËûÀ©Õ¹ÊôÐÔ£¬±£´æÔÚÒ»¸ömap¶ÔÏóÖÐ		
+		xxx-å…¶ä»–æ‰©å±•å±žæ€§ï¼Œä¿å­˜åœ¨ä¸€ä¸ªmapå¯¹è±¡ä¸­		
 		
-		init-method:Ö¸¶¨¶ÔÏóµÄ³õÊ¼»¯·½·¨
-		destroy-method£ºÖ¸¶¨¶ÔÏóµÄÏú»Ù·½·¨
+		init-method:æŒ‡å®šå¯¹è±¡çš„åˆå§‹åŒ–æ–¹æ³•
+		destroy-methodï¼šæŒ‡å®šå¯¹è±¡çš„é”€æ¯æ–¹æ³•
 		
 		
 		
-		refid£¬class¿ÉÒÔ×éºÏÖ¸¶¨ÒýÓÃ¶ÔÏóÖµºÍÀàÐÍ
-		value£¬class¿ÉÒÔ×éºÏÖ¸¶¨Ò»¸öÊôÐÔÖµºÍÊôÐÔÀàÐÍ
+		refidï¼Œclasså¯ä»¥ç»„åˆæŒ‡å®šå¼•ç”¨å¯¹è±¡å€¼å’Œç±»åž‹
+		valueï¼Œclasså¯ä»¥ç»„åˆæŒ‡å®šä¸€ä¸ªå±žæ€§å€¼å’Œå±žæ€§ç±»åž‹
 		
-		init-method£¬destroy-methodÁ½¸öÊôÐÔ·Ö±ð¶ÔÓ¦aop¿ò¼ÜÌá¹©µÄÁ½¸öInitializingBeanºÍDisposableBean
-		ÊµÏÖµÄ·½·¨£¬Èç¹û×é¼þÒÑ¾­ÊµÏÖÁËInitializingBean¾Í²»ÐèÒªÖ¸¶¨init-methodÊôÐÔ
-		Èç¹û×é¼þÊµÏÖÁËDisposableBean½Ó¿Ú¾Í²»ÐèÒªÖ¸¶¨destroy-methodÊôÐÔ
+		init-methodï¼Œdestroy-methodä¸¤ä¸ªå±žæ€§åˆ†åˆ«å¯¹åº”aopæ¡†æž¶æä¾›çš„ä¸¤ä¸ªInitializingBeanå’ŒDisposableBean
+		å®žçŽ°çš„æ–¹æ³•ï¼Œå¦‚æžœç»„ä»¶å·²ç»å®žçŽ°äº†InitializingBeanå°±ä¸éœ€è¦æŒ‡å®šinit-methodå±žæ€§
+		å¦‚æžœç»„ä»¶å®žçŽ°äº†DisposableBeanæŽ¥å£å°±ä¸éœ€è¦æŒ‡å®šdestroy-methodå±žæ€§
 		
 	}
-	map(property+) £º¶ÔÓ¦µÄÊôÐÔÖµÎªmap¶ÔÏó£¬¶ÔÏóµÄÀàÐÍÎª£ºPro
-	list(property+)£º¶ÔÓ¦µÄÊôÐÔÖµÎªlist¶ÔÏó£¬¶ÔÏóµÄÀàÐÍÎª£ºPro
-	set(property+)£º¶ÔÓ¦µÄÊôÐÔÖµÎªset¶ÔÏó£¬¶ÔÏóµÄÀàÐÍÎª£ºPro
-	description(pcdata):ÃèÊöÐÅÏ¢
-	editor£ºÊôÐÔ×ª»»Æ÷
+	map(property+) ï¼šå¯¹åº”çš„å±žæ€§å€¼ä¸ºmapå¯¹è±¡ï¼Œå¯¹è±¡çš„ç±»åž‹ä¸ºï¼šPro
+	list(property+)ï¼šå¯¹åº”çš„å±žæ€§å€¼ä¸ºlistå¯¹è±¡ï¼Œå¯¹è±¡çš„ç±»åž‹ä¸ºï¼šPro
+	set(property+)ï¼šå¯¹åº”çš„å±žæ€§å€¼ä¸ºsetå¯¹è±¡ï¼Œå¯¹è±¡çš„ç±»åž‹ä¸ºï¼šPro
+	description(pcdata):æè¿°ä¿¡æ¯
+	editorï¼šå±žæ€§è½¬æ¢å™¨
 	editor-attributelist{
-		class-×ª»»Æ÷Àà£¬ÏµÍ³Ä¬ÈÏÖ§³Ö×Ö·û´®ÏòÆäËû»ù±¾ÀàÐÐ×ª»»:					 
+		class-è½¬æ¢å™¨ç±»ï¼Œç³»ç»Ÿé»˜è®¤æ”¯æŒå­—ç¬¦ä¸²å‘å…¶ä»–åŸºæœ¬ç±»è¡Œè½¬æ¢:					 
 					 * int,char,short,double,float,long,boolean,byte
 					 * java.sql.Date,java.util.Date,
 					 * Integer
@@ -137,7 +137,7 @@
 					 * Character
 					 * Boolean
 					 * Byte
-					Èç¹û²»ÊÇ»ù±¾Êý¾ÝÀàÐÍÄÇ¾ÍÐèÒªÍ¨¹ý×Ô¶¨ÒåµÄÊôÐÔ±à¼­Æ÷À´ÊµÏÖ£¬ÊôÐÔ±à¼­Æ÷±ØÐèÊµÏÖ½Ó¿Ú:
+					å¦‚æžœä¸æ˜¯åŸºæœ¬æ•°æ®ç±»åž‹é‚£å°±éœ€è¦é€šè¿‡è‡ªå®šä¹‰çš„å±žæ€§ç¼–è¾‘å™¨æ¥å®žçŽ°ï¼Œå±žæ€§ç¼–è¾‘å™¨å¿…éœ€å®žçŽ°æŽ¥å£:
 						com.frameworkset.util.EditorInf
 						
 						Object getValueFromObject(Object fromValue) ;    

@@ -37,7 +37,7 @@ import com.frameworkset.util.SimpleStringUtil;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2011-5-11 下午06:17:20
+ * @Date 2011-5-11 涓嬪崍06:17:20
  * @author biaoping.yin
  * @version 1.0
  */
@@ -171,7 +171,7 @@ public final class WebServicePublisherUtil {
             String mtom = wspro.getWSAttribute("ws:mtom");
 
             /**
-             * tomcat容器下这段是没有问题的，但是在weblogic下就会有问题，所有改为以下方式发布服务：
+             * tomcat瀹瑰櫒涓嬭繖娈垫槸娌℃湁闂鐨勶紝浣嗘槸鍦╳eblogic涓嬪氨浼氭湁闂锛屾墍鏈夋敼涓轰互涓嬫柟寮忓彂甯冩湇鍔★細
              * ProviderImpl providerimpl = new ProviderImpl();
              * Endpoint ep = providerimpl.createAndPublishEndpoint(WebServicePublisherUtil.convertServicePort( servicePort_, classLoader), webservice);
              */

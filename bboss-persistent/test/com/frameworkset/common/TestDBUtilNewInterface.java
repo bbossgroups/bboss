@@ -54,25 +54,25 @@ public class TestDBUtilNewInterface {
 	}
 	
 	/**
-	 * ÆÕÍ¨·ÖÒ³²éÑ¯
+	 * æ™®é€šåˆ†é¡µæŸ¥è¯¢
 	 */
 	public static void testObjectPagineResult()
 	{
 		DBUtil dbUtil = new DBUtil();
 		try {
 			List list = dbUtil.executeSelectForList("select * from testnewface where object_id",
-															0,//offset·ÖÒ³Êı¾İµÄÆğµã
-															100, //Ã¿Ò³×î¶àÈ¡100Ìõ
+															0,//offsetåˆ†é¡µæ•°æ®çš„èµ·ç‚¹
+															100, //æ¯é¡µæœ€å¤šå–100æ¡
 															TestNewface.class);
-			//listÖĞ´æ·Åµ±Ç°Ò³ÃæµÄTestNewface¶ÔÏóÁĞ±í£¬´Ó0¿ªÊ¼£¬Ã¿Ò³È¡100Ìõ£¬µÚ¶şÒ³µÄÊı¾İ´Ó½«´Ó100¿ªÊ¼¡£
+			//listä¸­å­˜æ”¾å½“å‰é¡µé¢çš„TestNewfaceå¯¹è±¡åˆ—è¡¨ï¼Œä»0å¼€å§‹ï¼Œæ¯é¡µå–100æ¡ï¼Œç¬¬äºŒé¡µçš„æ•°æ®ä»å°†ä»100å¼€å§‹ã€‚
 			for(int i = 0;
-					i < list.size();//µ±Ç°Ò³ÃæµÄÊı¾İÌõÊı 
+					i < list.size();//å½“å‰é¡µé¢çš„æ•°æ®æ¡æ•° 
 						i ++)
 			{
 				System.out.println(list.get(i));
 			}
 			
-			long totalsize = dbUtil.getLongTotalSize();//×Ü¼ÇÂ¼Êı
+			long totalsize = dbUtil.getLongTotalSize();//æ€»è®°å½•æ•°
 			
 			
 		} catch (SQLException e) {
@@ -83,27 +83,27 @@ public class TestDBUtilNewInterface {
 	}
 	
 	/**
-	 * Ô¤±àÒë·ÖÒ³²éÑ¯
+	 * é¢„ç¼–è¯‘åˆ†é¡µæŸ¥è¯¢
 	 */
 	public static void testObjectPreparedPagineResult()
 	{
 		PreparedDBUtil dbUtil = new PreparedDBUtil();
 		try {
 			dbUtil.preparedSelect("select * from testnewface where object_id < ?",
-															0,//offset·ÖÒ³Êı¾İµÄÆğµã
-															100 //Ã¿Ò³×î¶àÈ¡100Ìõ
+															0,//offsetåˆ†é¡µæ•°æ®çš„èµ·ç‚¹
+															100 //æ¯é¡µæœ€å¤šå–100æ¡
 															);
 			dbUtil.setInt(1, 100000);
 			List list = dbUtil.executePreparedForList(TestNewface.class);
-			//listÖĞ´æ·Åµ±Ç°Ò³ÃæµÄTestNewface¶ÔÏóÁĞ±í£¬´Ó0¿ªÊ¼£¬Ã¿Ò³È¡100Ìõ£¬µÚ¶şÒ³µÄÊı¾İ´Ó½«´Ó100¿ªÊ¼¡£
+			//listä¸­å­˜æ”¾å½“å‰é¡µé¢çš„TestNewfaceå¯¹è±¡åˆ—è¡¨ï¼Œä»0å¼€å§‹ï¼Œæ¯é¡µå–100æ¡ï¼Œç¬¬äºŒé¡µçš„æ•°æ®ä»å°†ä»100å¼€å§‹ã€‚
 			for(int i = 0;
-					i < list.size();//µ±Ç°Ò³ÃæµÄÊı¾İÌõÊı 
+					i < list.size();//å½“å‰é¡µé¢çš„æ•°æ®æ¡æ•° 
 						i ++)
 			{
 				System.out.println(list.get(i));
 			}
 			
-			long totalsize = dbUtil.getLongTotalSize();//×Ü¼ÇÂ¼Êı
+			long totalsize = dbUtil.getLongTotalSize();//æ€»è®°å½•æ•°
 			
 			
 		} catch (SQLException e) {
@@ -265,9 +265,9 @@ public class TestDBUtilNewInterface {
 		   for(int i = 0; i < records.length; i ++)
 		   {
 			   /**
-			    * Ìá¹©¸÷ÖÖÀàĞÍÊı¾İµÄ»ñÈ¡·½·¨
+			    * æä¾›å„ç§ç±»å‹æ•°æ®çš„è·å–æ–¹æ³•
 			    */
-			   records[i].getString(0);//Óërecords[i].getString("filelist")·½·¨Ò»ÖÂ
+			   records[i].getString(0);//ä¸records[i].getString("filelist")æ–¹æ³•ä¸€è‡´
 		   }
 		}
 		catch(Exception e)

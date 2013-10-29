@@ -1,8 +1,8 @@
-<?xml version="1.0" encoding='gb2312'?>
+<?xml version="1.0" encoding='UTF-8'?>
 <manager-config>
 <description>
 <![CDATA[
-	smc mysql³õÊ¼»¯Óï¾ä
+	smc mysqlåˆå§‹åŒ–è¯­å¥
  ]]>
 </description>
 <properties>
@@ -593,7 +593,7 @@
 									  (1,
 									   ' ',
 									   ' ',
-									   'ÎÄ±¾ÀàĞÍ',
+									   'æ–‡æœ¬ç±»å‹',
 									   ' ')]]></property>
 			<property index="1"><![CDATA[insert into tb_sm_inputtype
 									  (INPUT_TYPE_ID,
@@ -605,7 +605,7 @@
 									  (2,
 									   ' ',
 									   ' ',
-									   'Ñ¡Ôñ×Öµä',
+									   'é€‰æ‹©å­—å…¸',
 									   ' ')]]></property>
 		<property index="2"><![CDATA[insert into tb_sm_inputtype
 									  (INPUT_TYPE_ID,
@@ -617,7 +617,7 @@
 									  (3,
 									   ' ',
 									   ' ',
-									   'Ñ¡ÔñÊ±¼ä',
+									   'é€‰æ‹©æ—¶é—´',
 									   ' ')]]></property>
 			<property index="3"><![CDATA[insert into tb_sm_inputtype
 									  (INPUT_TYPE_ID,
@@ -629,7 +629,7 @@
 									  (4,
 									   ' ',
 									   ' ',
-									   'Ö÷¼üÉú³É',
+									   'ä¸»é”®ç”Ÿæˆ',
 									   ' ')]]></property>
 				<property index="4"><![CDATA[insert into tb_sm_inputtype
 									  (INPUT_TYPE_ID,
@@ -641,7 +641,7 @@
 									  (5,
 									   ' ',
 									   ' ',
-									   'Ñ¡Ôñ»ú¹¹',
+									   'é€‰æ‹©æœºæ„',
 									   ' ')]]></property>
 			 <property index="5"><![CDATA[insert into tb_sm_inputtype
 									  (INPUT_TYPE_ID,
@@ -653,7 +653,7 @@
 									  (6,
 									   ' ',
 									   ' ',
-									   'Ñ¡ÔñÈËÔ±',
+									   'é€‰æ‹©äººå‘˜',
 									   ' ')]]></property>
 			<property index="6"><![CDATA[insert into tb_sm_inputtype
 									  (INPUT_TYPE_ID,
@@ -665,7 +665,7 @@
 									  (7,
 									   ' ',
 									   ' ',
-									   'µ±Ç°ÓÃ»§',
+									   'å½“å‰ç”¨æˆ·',
 									   ' ')]]></property>
 			<property index="7"><![CDATA[insert into tb_sm_inputtype
 									  (INPUT_TYPE_ID,
@@ -677,7 +677,7 @@
 									  (8,
 									   ' ',
 									   ' ',
-									   'µ±Ç°»ú¹¹',
+									   'å½“å‰æœºæ„',
 									   ' ')]]></property>
 			 <property index="8"><![CDATA[insert into tb_sm_inputtype
 									  (INPUT_TYPE_ID,
@@ -689,7 +689,7 @@
 									  (9,
 									   ' ',
 									   ' ',
-									   'µ±Ç°ÓÃ»§',
+									   'å½“å‰ç”¨æˆ·',
 									   ' ')]]></property>
 				
 		</list>
@@ -729,7 +729,7 @@
 									   '9',
 									   null,
 									   'isPublicAffair',
-									   'ÈÕ³Ì¹ÜÀíÊÇ·ñ¹«ÊÂ',
+									   'æ—¥ç¨‹ç®¡ç†æ˜¯å¦å…¬äº‹',
 									   '0',
 									   ' ',
 									   ' ',
@@ -738,8 +738,8 @@
 									   ' ',
 									   ' ',
 									   ' ',
-									   'Ãû³Æ',
-									   'ÕæÊµÖµ',
+									   'åç§°',
+									   'çœŸå®å€¼',
 									   null,
 									   ' ',
 									   ' ',
@@ -777,7 +777,7 @@
 									   '6',
 									   null,
 									   'intervalType',
-									   'ÈÕ³Ì¹ÜÀíÌáĞÑÊ±¼ä¼ä¸ôµ¥Î»',
+									   'æ—¥ç¨‹ç®¡ç†æé†’æ—¶é—´é—´éš”å•ä½',
 									   '0',
 									   ' ',
 									   ' ',
@@ -786,8 +786,8 @@
 									   ' ',
 									   ' ',
 									   ' ',
-									   'Ãû³Æ',
-									   'ÕæÊµÖµ',
+									   'åç§°',
+									   'çœŸå®å€¼',
 									   null,
 									   ' ',
 									   ' ',
@@ -825,7 +825,7 @@
 									   '2',
 									   null,
 									   'isvalid',
-									   'ÓĞĞ§·ñ',
+									   'æœ‰æ•ˆå¦',
 									   '0',
 									   ' ',
 									   ' ',
@@ -834,8 +834,8 @@
 									   ' ',
 									   ' ',
 									   ' ',
-									   'Ãû³Æ',
-									   'ÕæÊµÖµ',
+									   'åç§°',
+									   'çœŸå®å€¼',
 									   null,
 									   ' ',
 									   ' ',
@@ -873,7 +873,7 @@
 									   '1',
 									   null,
 									   'sex',
-									   'ĞÔ±ğ',
+									   'æ€§åˆ«',
 									   '0',
 									   ' ',
 									   ' ',
@@ -882,8 +882,8 @@
 									   ' ',
 									   ' ',
 									   ' ',
-									   'Ãû³Æ',
-									   'ÕæÊµÖµ',
+									   'åç§°',
+									   'çœŸå®å€¼',
 									   null,
 									   ' ',
 									   ' ',
@@ -921,7 +921,7 @@
 									   '5',
 									   null,
 									   'orgType',
-									   '»ú¹¹ÀàĞÍ',
+									   'æœºæ„ç±»å‹',
 									   '0',
 									   ' ',
 									   ' ',
@@ -930,8 +930,8 @@
 									   ' ',
 									   ' ',
 									   ' ',
-									   'Ãû³Æ',
-									   'ÕæÊµÖµ',
+									   'åç§°',
+									   'çœŸå®å€¼',
 									   null,
 									   ' ',
 									   ' ',
@@ -969,7 +969,7 @@
 									   '4',
 									   null,
 									   'MailPostfix',
-									   'ÓÊÏäºó×º',
+									   'é‚®ç®±åç¼€',
 									   '0',
 									   ' ',
 									   ' ',
@@ -978,8 +978,8 @@
 									   ' ',
 									   ' ',
 									   ' ',
-									   'Ãû³Æ',
-									   'ÕæÊµÖµ',
+									   'åç§°',
+									   'çœŸå®å€¼',
 									   null,
 									   ' ',
 									   ' ',
@@ -1017,7 +1017,7 @@
 									   '3',
 									   null,
 									   'userType',
-									   'ÓÃ»§ÀàĞÍ',
+									   'ç”¨æˆ·ç±»å‹',
 									   '0',
 									   ' ',
 									   ' ',
@@ -1026,8 +1026,8 @@
 									   ' ',
 									   ' ',
 									   ' ',
-									   'Ãû³Æ',
-									   'ÕæÊµÖµ',
+									   'åç§°',
+									   'çœŸå®å€¼',
 									   null,
 									   ' ',
 									   ' ',
@@ -1065,7 +1065,7 @@
 									   '7',
 									   null,
 									   'essentiality',
-									   'ÈÕ³Ì¹ÜÀíÖØÒªĞÔ',
+									   'æ—¥ç¨‹ç®¡ç†é‡è¦æ€§',
 									   '0',
 									   ' ',
 									   ' ',
@@ -1074,8 +1074,8 @@
 									   ' ',
 									   ' ',
 									   ' ',
-									   'Ãû³Æ',
-									   'ÕæÊµÖµ',
+									   'åç§°',
+									   'çœŸå®å€¼',
 									   null,
 									   ' ',
 									   ' ',
@@ -1113,7 +1113,7 @@
 									   '8',
 									   null,
 									   'isLeisure',
-									   'ÈÕ³Ì¹ÜÀíÊÇ·ñ¿ÕÏĞ',
+									   'æ—¥ç¨‹ç®¡ç†æ˜¯å¦ç©ºé—²',
 									   '0',
 									   ' ',
 									   ' ',
@@ -1122,8 +1122,8 @@
 									   ' ',
 									   ' ',
 									   ' ',
-									   'Ãû³Æ',
-									   'ÕæÊµÖµ',
+									   'åç§°',
+									   'çœŸå®å€¼',
 									   null,
 									   ' ',
 									   ' ',
@@ -1161,7 +1161,7 @@
 									   '45',
 									   null,
 									   'ispartybussiness',
-									   '»ú¹¹ÊÇ·ñÒµÎñ²¿ÃÅ',
+									   'æœºæ„æ˜¯å¦ä¸šåŠ¡éƒ¨é—¨',
 									   '0',
 									   ' ',
 									   ' ',
@@ -1170,8 +1170,8 @@
 									   ' ',
 									   ' ',
 									   ' ',
-									   'Ãû³Æ',
-									   'ÕæÊµÖµ',
+									   'åç§°',
+									   'çœŸå®å€¼',
 									   null,
 									   ' ',
 									   ' ',
@@ -1208,8 +1208,8 @@
 									   0,
 									   '2312',
 									   null,
-									   'ÊÇ·ñ×Öµä',
-									   'ÊÇ·ñ×Öµä',
+									   'æ˜¯å¦å­—å…¸',
+									   'æ˜¯å¦å­—å…¸',
 									   '0',
 									   ' ',
 									   ' ',
@@ -1218,8 +1218,8 @@
 									   ' ',
 									   ' ',
 									   ' ',
-									   'Ãû³Æ',
-									   'ÕæÊµÖµ',
+									   'åç§°',
+									   'çœŸå®å€¼',
 									   null,
 									   ' ',
 									   ' ',
@@ -1240,7 +1240,7 @@
 									values
 									  ('70',
 									   2312,
-									   'ÊÇ',
+									   'æ˜¯',
 									   '1',
 									   0)]]></property>
 			 <property index="1"><![CDATA[insert into td_sm_dictdata
@@ -1252,7 +1252,7 @@
 									values
 									  ('71',
 									   2312,
-									   '·ñ',
+									   'å¦',
 									   '0',
 									   1)]]></property>
 				<property index="2"><![CDATA[insert into td_sm_dictdata
@@ -1264,7 +1264,7 @@
 									values
 									  ('60',
 									   9,
-									   '¹«ÊÂ',
+									   'å…¬äº‹',
 									   '0',
 									   0)]]></property>
 			<property index="3"><![CDATA[insert into td_sm_dictdata
@@ -1276,7 +1276,7 @@
 									values
 									  ('61',
 									   9,
-									   'Ë½ÊÂ',
+									   'ç§äº‹',
 									   '1',
 									   0)]]></property>
 		<property index="4"><![CDATA[insert into td_sm_dictdata
@@ -1288,7 +1288,7 @@
 									values
 									  ('62',
 									   6,
-									   '·Ö',
+									   'åˆ†',
 									   '0',
 									   0)]]></property>
 		  <property index="5"><![CDATA[insert into td_sm_dictdata
@@ -1300,7 +1300,7 @@
 									values
 									  ('63',
 									   6,
-									   'Ğ¡Ê±',
+									   'å°æ—¶',
 									   '1',
 									   0)]]></property>
 			<property index="6"><![CDATA[insert into td_sm_dictdata
@@ -1312,7 +1312,7 @@
 									values
 									  ('64',
 									   6,
-									   'Ìì',
+									   'å¤©',
 									   '2',
 									   0)]]></property>
 		  <property index="7"><![CDATA[insert into td_sm_dictdata
@@ -1324,7 +1324,7 @@
 									values
 									  ('65',
 									   7,
-									   'ÖØÒª',
+									   'é‡è¦',
 									   '0',
 									   0)]]></property>
 			<property index="8"><![CDATA[insert into td_sm_dictdata
@@ -1336,7 +1336,7 @@
 									values
 									  ('66',
 									   7,
-									   'Ò»°ã',
+									   'ä¸€èˆ¬',
 									   '1',
 									   0)]]></property>
 			<property index="9"><![CDATA[insert into td_sm_dictdata
@@ -1348,7 +1348,7 @@
 									values
 									  ('67',
 									   7,
-									   '²»ÖØÒª',
+									   'ä¸é‡è¦',
 									   '2',
 									   0)]]></property>
 			<property index="10"><![CDATA[insert into td_sm_dictdata
@@ -1360,7 +1360,7 @@
 									values
 									  ('68',
 									   8,
-									   'Ã¦',
+									   'å¿™',
 									   '0',
 									   0)]]></property>
 			<property index="11"><![CDATA[insert into td_sm_dictdata
@@ -1372,7 +1372,7 @@
 									values
 									  ('69',
 									   8,
-									   '¿ÕÏĞ',
+									   'ç©ºé—²',
 									   '1',
 									   0)]]></property>
 			 <property index="12"><![CDATA[insert into td_sm_dictdata
@@ -1384,7 +1384,7 @@
 									values
 									  ('11',
 									   1,
-									   'ÄĞ',
+									   'ç”·',
 									   'M',
 									   0)]]></property>
 			<property index="13"><![CDATA[insert into td_sm_dictdata
@@ -1396,7 +1396,7 @@
 									values
 									  ('12',
 									   1,
-									   'Å®',
+									   'å¥³',
 									   'F',
 									   0)]]></property>
 		 <property index="14"><![CDATA[insert into td_sm_dictdata
@@ -1408,7 +1408,7 @@
 									values
 									  ('124',
 									   2,
-									   'É¾³ı',
+									   'åˆ é™¤',
 									   '0',
 									   3)]]></property>
 		  <property index="15"><![CDATA[insert into td_sm_dictdata
@@ -1420,7 +1420,7 @@
 									values
 									  ('125',
 									   2,
-									   'ÉêÇë',
+									   'ç”³è¯·',
 									   '1',
 									   1)]]></property>
 			<property index="16"><![CDATA[insert into td_sm_dictdata
@@ -1432,7 +1432,7 @@
 									values
 									  ('126',
 									   2,
-									   '¿ªÍ¨',
+									   'å¼€é€š',
 									   '2',
 									   0)]]></property>
 			<property index="17"><![CDATA[insert into td_sm_dictdata
@@ -1444,7 +1444,7 @@
 									values
 									  ('127',
 									   2,
-									   'Í£ÓÃ',
+									   'åœç”¨',
 									   '3',
 									   2)]]></property>
 			<property index="18"><![CDATA[insert into td_sm_dictdata
@@ -1492,7 +1492,7 @@
 									values
 									  ('13',
 									   1,
-									   'Î´Öª',
+									   'æœªçŸ¥',
 									   '-1',
 									   0)]]></property>
 			<property index="22"><![CDATA[insert into td_sm_dictdata
@@ -1504,7 +1504,7 @@
 									values
 									  ('41',
 									   5,
-									   'ÓĞĞ§',
+									   'æœ‰æ•ˆ',
 									   '0',
 									   0)]]></property>
 			
@@ -1516,7 +1516,7 @@
 	<![CDATA[insert into td_sm_job
   				(JOB_ID, JOB_NAME, JOB_DESC, JOB_FUNCTION,JOB_AMOUNT,JOB_NUMBER,JOB_CONDITION,JOB_RANK,OWNER_ID)
 				values
-  				('1','ÔÚÖ°','²»ÄÜÉ¾³ı',' ',' ',' ',' ',' ',1)]]>
+  				('1','åœ¨èŒ','ä¸èƒ½åˆ é™¤',' ',' ',' ',' ',' ',1)]]>
 	</property>
 	
 	<property dbname="bspf" name="addtd_sm_role_list">
@@ -1535,7 +1535,7 @@
 									  ('1',
 									   'administrator',
 									   '1',
-									   '³¬¼¶¹ÜÀíÔ±½ÇÉ«£¬´Ë½ÇÉ«²»ÒªĞŞ¸Ä£¬³¬¼¶¹ÜÀíÔ±admin×Ô¶¯ÓµÓĞ±¾½ÇÉ«£¬Ö»ÓĞadmin¿ÉÒÔ½«±¾½ÇÉ«ÊÚÓèÆäËûÓÃ»§£¬±¾½ÇÉ«Ò²²»ĞèÒªÊÚÓèÈ¨ÏŞ£¬Ä¬ÈÏÓµÓĞÏµÍ³ÖĞµÄËùÓĞÈ¨ÏŞ',
+									   'è¶…çº§ç®¡ç†å‘˜è§’è‰²ï¼Œæ­¤è§’è‰²ä¸è¦ä¿®æ”¹ï¼Œè¶…çº§ç®¡ç†å‘˜adminè‡ªåŠ¨æ‹¥æœ‰æœ¬è§’è‰²ï¼Œåªæœ‰adminå¯ä»¥å°†æœ¬è§’è‰²æˆäºˆå…¶ä»–ç”¨æˆ·ï¼Œæœ¬è§’è‰²ä¹Ÿä¸éœ€è¦æˆäºˆæƒé™ï¼Œé»˜è®¤æ‹¥æœ‰ç³»ç»Ÿä¸­çš„æ‰€æœ‰æƒé™',
 									   ' ',
 									   ' ',
 									   ' ',
@@ -1555,7 +1555,7 @@
 									  ('2',
 									   'roleofeveryone',
 									   '1',
-									   'Ã¿¸öÓÃ»§¶¼È±Ê¡ÓµÓĞµÄ½ÇÉ«£¬´Ë½ÇÉ«²»ÄÜ±»ĞŞ¸Ä£¬Ò²²»ÄÜ±»É¾³ı',
+									   'æ¯ä¸ªç”¨æˆ·éƒ½ç¼ºçœæ‹¥æœ‰çš„è§’è‰²ï¼Œæ­¤è§’è‰²ä¸èƒ½è¢«ä¿®æ”¹ï¼Œä¹Ÿä¸èƒ½è¢«åˆ é™¤',
 									   ' ',
 									   ' ',
 									   ' ',
@@ -1575,7 +1575,7 @@
 									  ('3',
 									   'orgmanager',
 									   '1',
-									   '²¿ÃÅ¹ÜÀíÔ±½ÇÉ«,´Ë½ÇÉ«²»ÄÜ±»ĞŞ¸Ä£¬Ò²²»ÄÜ±»É¾³ı£¬ËùÓĞ²¿ÃÅ¹ÜÀíÔ±×Ô¶¯ÓµÓĞ±¾½ÇÉ«',
+									   'éƒ¨é—¨ç®¡ç†å‘˜è§’è‰²,æ­¤è§’è‰²ä¸èƒ½è¢«ä¿®æ”¹ï¼Œä¹Ÿä¸èƒ½è¢«åˆ é™¤ï¼Œæ‰€æœ‰éƒ¨é—¨ç®¡ç†å‘˜è‡ªåŠ¨æ‹¥æœ‰æœ¬è§’è‰²',
 									   ' ',
 									   ' ',
 									   ' ',
@@ -1595,7 +1595,7 @@
 									  ('4',
 									   'orgmanagerroletemplate',
 									   '1',
-									   '²¿ÃÅ¹ÜÀíÔ±½ÇÉ«Ä£°å,±¾½ÇÉ«²»ÄÜ±»É¾³ıºÍĞŞ¸Ä£¬²»ÄÜÊÚÓèÆÕÍ¨ÓÃ»§£¬Ö»ÄÜ¹»ÊÚÈ¨£¬ĞÂÔö²¿ÃÅ¹ÜÀíÔ±Ê±×Ô¶¯ÓµÓĞ±¾½ÇÉ«£¬Ö»ÓĞ³¬¼¶¹ÜÀíÔ±²ÅÄÜ¸ø²¿ÃÅ¹ÜÀíÔ±½ÇÉ«Ä£°åÊÚÈ¨',
+									   'éƒ¨é—¨ç®¡ç†å‘˜è§’è‰²æ¨¡æ¿,æœ¬è§’è‰²ä¸èƒ½è¢«åˆ é™¤å’Œä¿®æ”¹ï¼Œä¸èƒ½æˆäºˆæ™®é€šç”¨æˆ·ï¼Œåªèƒ½å¤Ÿæˆæƒï¼Œæ–°å¢éƒ¨é—¨ç®¡ç†å‘˜æ—¶è‡ªåŠ¨æ‹¥æœ‰æœ¬è§’è‰²ï¼Œåªæœ‰è¶…çº§ç®¡ç†å‘˜æ‰èƒ½ç»™éƒ¨é—¨ç®¡ç†å‘˜è§’è‰²æ¨¡æ¿æˆæƒ',
 									   ' ',
 									   ' ',
 									   ' ',
@@ -1627,7 +1627,7 @@
 									   '3',
 									   'role',
 									   '0',
-									   '½ÇÉ«×ÊÔ´',
+									   'è§’è‰²èµ„æº',
 									   'role',
 									   0,
 									   null,
@@ -1653,7 +1653,7 @@
 									   '3',
 									   'orgunit',
 									   '0',
-									   '»ú¹¹×ÊÔ´',
+									   'æœºæ„èµ„æº',
 									   'role',
 									   0,
 									   null,
@@ -1679,7 +1679,7 @@
 									   '3',
 									   'orgunit',
 									   '0',
-									   '½ÇÉ«×ÊÔ´',
+									   'è§’è‰²èµ„æº',
 									   'role',
 									   0,
 									   null,
@@ -1705,7 +1705,7 @@
 									   '3',
 									   'column',
 									   '0',
-									   '»ú¹¹ÊÚÈ¨±àÂëÎ¬»¤',
+									   'æœºæ„æˆæƒç¼–ç ç»´æŠ¤',
 									   'role',
 									   0,
 									   null,
@@ -1731,7 +1731,7 @@
 									   '3',
 									   'column',
 									   '0',
-									   '»ú¹¹³£ÓÃ±àÂëÎ¬»¤',
+									   'æœºæ„å¸¸ç”¨ç¼–ç ç»´æŠ¤',
 									   'role',
 									   0,
 									   null,
@@ -1757,7 +1757,7 @@
 									   '3',
 									   'column',
 									   '0',
-									   '½ÇÉ«¹ÜÀí',
+									   'è§’è‰²ç®¡ç†',
 									   'role',
 									   0,
 									   null,
@@ -1783,7 +1783,7 @@
 									   '3',
 									   'column',
 									   '0',
-									   'ÓÃ»§¹ÜÀí',
+									   'ç”¨æˆ·ç®¡ç†',
 									   'role',
 									   0,
 									   null,
@@ -1809,7 +1809,7 @@
 									   '3',
 									   'column',
 									   '0',
-									   '»ú¹¹¹ÜÀí',
+									   'æœºæ„ç®¡ç†',
 									   'role',
 									   0,
 									   null,
@@ -1835,7 +1835,7 @@
 									   '3',
 									   'column',
 									   '0',
-									   'È¨ÏŞÎ¬»¤',
+									   'æƒé™ç»´æŠ¤',
 									   'role',
 									   0,
 									   null,
@@ -1861,7 +1861,7 @@
 									   '3',
 									   'column',
 									   '0',
-									   'È¨ÏŞÎ¬»¤',
+									   'æƒé™ç»´æŠ¤',
 									   'role',
 									   0,
 									   null,
@@ -1887,7 +1887,7 @@
 									   '3',
 									   'column',
 									   '0',
-									   'ÏµÍ³ÕË»§ĞŞ¸Ä',
+									   'ç³»ç»Ÿè´¦æˆ·ä¿®æ”¹',
 									   'role',
 									   0,
 									   null,
@@ -1913,7 +1913,7 @@
 									   '3',
 									   'column',
 									   '0',
-									   'È¨ÏŞ¹ÜÀí',
+									   'æƒé™ç®¡ç†',
 									   'role',
 									   0,
 									   null,
@@ -1931,7 +1931,7 @@
 	<![CDATA[insert into td_sm_roletype
   				(TYPE_NAME, TYPE_DESC, TYPE_ID, CREATOR_USER_ID,CREATOR_ORG_ID)
 				values
-  				('Í¨ÓÃ½ÇÉ«ÀàĞÍ','Í¨ÓÃ½ÇÉ«ÀàĞÍ',1,'1','1')]]>
+  				('é€šç”¨è§’è‰²ç±»å‹','é€šç”¨è§’è‰²ç±»å‹',1,'1','1')]]>
 	</property>
 	
 		<property name="addtd_sm_user">
@@ -1943,7 +1943,7 @@
   				USER_TYPE,REMARK1,REMARK2,REMARK3,REMARK4,REMARK5,PAST_TIME,DREDGE_TIME,LASTLOGIN_DATE,
   				WORKLENGTH,POLITICS,ISTAXMANAGER,LOGON_IP,CERT_SN)
 				values
-  				(1,1,'admin','123456','ÏµÍ³¹ÜÀíÔ±',' ','M',' ',
+  				(1,1,'admin','123456','ç³»ç»Ÿç®¡ç†å‘˜',' ','M',' ',
   				' ',' ',' ',' ',' ',' ',null,
   				' ',' ',' ',' ',2,null,null,
   				'0',' ',' ',' ',' ',' ',null,' ',null,
@@ -1977,20 +1977,20 @@
                                         from("cmq:start").resequencer(body()).batch().to("cmq:result");
                                         from("cmq:start").resequencer(body()).batch().size(300).timeout(4000L).to("cmq:result");
                                         from("cmq:start").resequencer(body()).batch(new BatchResequencerConfig(300, 4000L)).to("cmq:result");',
-									   'Åú´¦ÀíÖØ×éÆ÷(Batch Resequencing)',
+									   'æ‰¹å¤„ç†é‡ç»„å™¨(Batch Resequencing)',
 									   1,
 									   'admin',
-									   'EIPÄ£Ê½ÖĞµÄÏûÏ¢ÖØ×éÄ£Ê½ÔÊĞíÏûÏ¢»ùÓÚÄ³ÖÖ±È½ÏÆ÷ÖØĞÂ×éÖ¯£¬Åú´¦ÀíÖØ×éÊÇ½«ÏûÏ¢ÅÅ³ÉÒ»ÅúÓĞĞòµÄÏûÏ¢·¢ËÍ¡£
-                                                                                                          ¹¦ÄÜËµÃ÷£º
-                        CamelÖ§³ÖÁ½ÖÖÖØ×éÆ÷Ëã·¨£¬Åú´¦ÀíÖØ×éÆ÷ºÍÁ÷³ÌÖØ×éÆ÷£¬Åú´¦ÀíÖØ×éÆ÷½«ÏûÏ¢ÊÕ¼¯³ÉÒ»×é£¬È»ºó½«ÏûÏ¢ÅÅĞòºó·¢µ½Ä¿µÄµØ¡£
-                        ÊÂÀıËµÃ÷£º
-                        Ä£°åÖĞÕ¹Ê¾ÁËÈçºÎÊ¹ÓÃÅú´¦ÀíÖØ×éÆ÷¸ù¾İÏûÏ¢body()ÅÅĞò£¬ÕâĞ©ÏûÏ¢±»ÊÕ¼¯³ÉÒ»×é£¨Ã¿×é¼È¿ÉÒÔÉèÖÃ×î´óÏûÏ¢ÊıÁ¿Ò²¿ÉÒÔÉèÖÃ³¬Ê±Ê±¼ä£©È»ºóÅÅĞò·¢ËÍµ½Ä¿µÄµØ¡£
-                        from("cmq:start").resequencer(body()).to("cmq:result");ºÍfrom("cmq:start").resequencer(body()).batch().to("cmq:result");µÈ¼Û¡£
-                        from("cmq:start").resequencer(body()).batch().size(300).timeout(4000L).to("cmq:result");ÉèÖÃÁËÃ¿×éÏûÏ¢ÊıÁ¿ºÍ³¬Ê±Ê±¼ä¡£
-                        ÅÅĞòÒ²¿ÉÒÔ¸ù¾İÏûÏ¢µÄheaderÊôĞÔ¶ø²»ÊÇ¸ù¾İbody²¿·ÖÀıÈç£º
+									   'EIPæ¨¡å¼ä¸­çš„æ¶ˆæ¯é‡ç»„æ¨¡å¼å…è®¸æ¶ˆæ¯åŸºäºæŸç§æ¯”è¾ƒå™¨é‡æ–°ç»„ç»‡ï¼Œæ‰¹å¤„ç†é‡ç»„æ˜¯å°†æ¶ˆæ¯æ’æˆä¸€æ‰¹æœ‰åºçš„æ¶ˆæ¯å‘é€ã€‚
+                                                                                                          åŠŸèƒ½è¯´æ˜ï¼š
+                        Camelæ”¯æŒä¸¤ç§é‡ç»„å™¨ç®—æ³•ï¼Œæ‰¹å¤„ç†é‡ç»„å™¨å’Œæµç¨‹é‡ç»„å™¨ï¼Œæ‰¹å¤„ç†é‡ç»„å™¨å°†æ¶ˆæ¯æ”¶é›†æˆä¸€ç»„ï¼Œç„¶åå°†æ¶ˆæ¯æ’åºåå‘åˆ°ç›®çš„åœ°ã€‚
+                        äº‹ä¾‹è¯´æ˜ï¼š
+                        æ¨¡æ¿ä¸­å±•ç¤ºäº†å¦‚ä½•ä½¿ç”¨æ‰¹å¤„ç†é‡ç»„å™¨æ ¹æ®æ¶ˆæ¯body()æ’åºï¼Œè¿™äº›æ¶ˆæ¯è¢«æ”¶é›†æˆä¸€ç»„ï¼ˆæ¯ç»„æ—¢å¯ä»¥è®¾ç½®æœ€å¤§æ¶ˆæ¯æ•°é‡ä¹Ÿå¯ä»¥è®¾ç½®è¶…æ—¶æ—¶é—´ï¼‰ç„¶åæ’åºå‘é€åˆ°ç›®çš„åœ°ã€‚
+                        from("cmq:start").resequencer(body()).to("cmq:result");å’Œfrom("cmq:start").resequencer(body()).batch().to("cmq:result");ç­‰ä»·ã€‚
+                        from("cmq:start").resequencer(body()).batch().size(300).timeout(4000L).to("cmq:result");è®¾ç½®äº†æ¯ç»„æ¶ˆæ¯æ•°é‡å’Œè¶…æ—¶æ—¶é—´ã€‚
+                        æ’åºä¹Ÿå¯ä»¥æ ¹æ®æ¶ˆæ¯çš„headerå±æ€§è€Œä¸æ˜¯æ ¹æ®bodyéƒ¨åˆ†ä¾‹å¦‚ï¼š
                         from("cmq:start").resequencer(resequencer(header("JMSPriority"))
                         ).batch().size(300).timeout(4000L).to("cmq:result");
-                        ÄúÒ²¿ÉÒÔÊ¹ÓÃ¶àÖÖ±í´ïÊ½£¬ÀıÈç
+                        æ‚¨ä¹Ÿå¯ä»¥ä½¿ç”¨å¤šç§è¡¨è¾¾å¼ï¼Œä¾‹å¦‚
                         from("cmq:start").resequencer(header("JMSPriority"), header("MyCustomerRating")).batch().size(300).timeout(4000L).to("cmq:result");',
 									   '1245936062828_Resequencer.gif',
 									   'import org.apache.camel.model.config.BatchResequencerConfig;',
@@ -2010,13 +2010,13 @@
 									values
 									  (7,
 									   'from("cmq:start").filter().xpath("/person[@name=''James'']").to("cmq:result");',
-									   'ÏûÏ¢¹ıÂË(Message filterXPath·½Ê½)',
+									   'æ¶ˆæ¯è¿‡æ»¤(Message filterXPathæ–¹å¼)',
 									   1,
 									   'admin',
-									   'EIPÄ£Ê½ÖĞµÄÏûÏ¢¹ıÂËÄ£Ê½¿ÉÒÔ¹ıÂË·ûºÏ¹ıÂËÌõ¼şÏûÏ¢¡£´Ë¹æÔòµÄÓÃÍ¾ÔÚÓÚ¿ÉÒÔ±ÜÃâ×é¼şÊÕµ½ÓëÖ®ÎŞ¹ØµÄÏûÏ¢£¬ÒªÈÃ×é¼şÖ»½ÓÊÕÓëÖ®Ïà¹ØµÄÏûÏ¢£¬»ù±¾µÄ·½·¨¾ÍÊÇÖ»¶©¹ºÄÇĞ©Ïà¹ØĞÅÏ¢µÄÍ¨µÀ£¬×é¼şËù¶©¹ºÍ¨µÀÉÏµÄÏûÏ¢²Å»á±»¸Ã×é¼ş½ÓÊÕ£¬µ«ÊÇ·¢²¼£­¶©¹ºÍ¨µÀÊ±£¬Í¨³£»á´æÔÚÒ»ÖÖ¡°È«ÓĞ»òÕßÈ«ÎŞ¡±µÄÏŞÖÆ£ºÈç¹û×é¼ş¶©¹ºÁËÒ»¸öÍ¨µÀ£¬¾Í»á½ÓÊÕ¸ÃÍ¨µÀµÄËùÓĞÏûÏ¢¡£ÒªÏë»ñµÃ¸üÏ¸Á£¶ÈµÄ¿ØÖÆ£¬Î¨Ò»µÄ·½·¨ÊÇ´´½¨¸ü¶àµÄÍ¨µÀ¡£ÏûÏ¢¹ıÂËÆ÷·½Ê½Ôò±ÈÍ¨µÀ¶©¹º¾ßÓĞ¸ü´óµÄÁé»îĞÔ£¬Ëü¿ÉÒÔÃèÊöÎªÒ»ÖÖÌØÊâµÄ»ùÓÚÄÚÈİµÄÂ·ÓÉÆ÷£¬»á°ÑÏûÏ¢Â·ÓÉµ½Êä³öÍ¨µÀ»òÕßÒ»¸ö¿ÕÍ¨µÀ¡£
+									   'EIPæ¨¡å¼ä¸­çš„æ¶ˆæ¯è¿‡æ»¤æ¨¡å¼å¯ä»¥è¿‡æ»¤ç¬¦åˆè¿‡æ»¤æ¡ä»¶æ¶ˆæ¯ã€‚æ­¤è§„åˆ™çš„ç”¨é€”åœ¨äºå¯ä»¥é¿å…ç»„ä»¶æ”¶åˆ°ä¸ä¹‹æ— å…³çš„æ¶ˆæ¯ï¼Œè¦è®©ç»„ä»¶åªæ¥æ”¶ä¸ä¹‹ç›¸å…³çš„æ¶ˆæ¯ï¼ŒåŸºæœ¬çš„æ–¹æ³•å°±æ˜¯åªè®¢è´­é‚£äº›ç›¸å…³ä¿¡æ¯çš„é€šé“ï¼Œç»„ä»¶æ‰€è®¢è´­é€šé“ä¸Šçš„æ¶ˆæ¯æ‰ä¼šè¢«è¯¥ç»„ä»¶æ¥æ”¶ï¼Œä½†æ˜¯å‘å¸ƒï¼è®¢è´­é€šé“æ—¶ï¼Œé€šå¸¸ä¼šå­˜åœ¨ä¸€ç§â€œå…¨æœ‰æˆ–è€…å…¨æ— â€çš„é™åˆ¶ï¼šå¦‚æœç»„ä»¶è®¢è´­äº†ä¸€ä¸ªé€šé“ï¼Œå°±ä¼šæ¥æ”¶è¯¥é€šé“çš„æ‰€æœ‰æ¶ˆæ¯ã€‚è¦æƒ³è·å¾—æ›´ç»†ç²’åº¦çš„æ§åˆ¶ï¼Œå”¯ä¸€çš„æ–¹æ³•æ˜¯åˆ›å»ºæ›´å¤šçš„é€šé“ã€‚æ¶ˆæ¯è¿‡æ»¤å™¨æ–¹å¼åˆ™æ¯”é€šé“è®¢è´­å…·æœ‰æ›´å¤§çš„çµæ´»æ€§ï¼Œå®ƒå¯ä»¥æè¿°ä¸ºä¸€ç§ç‰¹æ®Šçš„åŸºäºå†…å®¹çš„è·¯ç”±å™¨ï¼Œä¼šæŠŠæ¶ˆæ¯è·¯ç”±åˆ°è¾“å‡ºé€šé“æˆ–è€…ä¸€ä¸ªç©ºé€šé“ã€‚
 
-                      ÊÂÀıËµÃ÷£º
-                      from("cmq:start").filter().xpath("/person[@name=''James'']").to("cmq:result");´ËÀı×Ó´Ó¶ÓÁĞstart½ÓÊÕµ½µÄÉú²úµÄÏûÏ¢£¬Èç¹ûÍ·²¿ÊôĞÔpersonµÈÓÚ''James''µÄÊ±ºò¾Í·¢ËÍµ½¶ÓÁĞresult',
+                      äº‹ä¾‹è¯´æ˜ï¼š
+                      from("cmq:start").filter().xpath("/person[@name=''James'']").to("cmq:result");æ­¤ä¾‹å­ä»é˜Ÿåˆ—startæ¥æ”¶åˆ°çš„ç”Ÿäº§çš„æ¶ˆæ¯ï¼Œå¦‚æœå¤´éƒ¨å±æ€§personç­‰äº''James''çš„æ—¶å€™å°±å‘é€åˆ°é˜Ÿåˆ—result',
 									   '1245935765296_MessageFilter.gif',
 									   ' ',
 									   null,
@@ -2035,13 +2035,13 @@
 									values
 									  (6,
 									   'from("cmq:a").filter(header("foo").isEqualTo("bar")).to("cmq:b");',
-									   'ÏûÏ¢¹ıÂË(Message filter)',
+									   'æ¶ˆæ¯è¿‡æ»¤(Message filter)',
 									   1,
 									   'admin',
-									   'EIPÄ£Ê½ÖĞµÄÏûÏ¢¹ıÂËÄ£Ê½¿ÉÒÔ¹ıÂË·ûºÏ¹ıÂËÌõ¼şÏûÏ¢¡£´Ë¹æÔòµÄÓÃÍ¾ÔÚÓÚ¿ÉÒÔ±ÜÃâ×é¼şÊÕµ½ÓëÖ®ÎŞ¹ØµÄÏûÏ¢£¬ÒªÈÃ×é¼şÖ»½ÓÊÕÓëÖ®Ïà¹ØµÄÏûÏ¢£¬»ù±¾µÄ·½·¨¾ÍÊÇÖ»¶©¹ºÄÇĞ©Ïà¹ØĞÅÏ¢µÄÍ¨µÀ£¬×é¼şËù¶©¹ºÍ¨µÀÉÏµÄÏûÏ¢²Å»á±»¸Ã×é¼ş½ÓÊÕ£¬µ«ÊÇ·¢²¼£­¶©¹ºÍ¨µÀÊ±£¬Í¨³£»á´æÔÚÒ»ÖÖ¡°È«ÓĞ»òÕßÈ«ÎŞ¡±µÄÏŞÖÆ£ºÈç¹û×é¼ş¶©¹ºÁËÒ»¸öÍ¨µÀ£¬¾Í»á½ÓÊÕ¸ÃÍ¨µÀµÄËùÓĞÏûÏ¢¡£ÒªÏë»ñµÃ¸üÏ¸Á£¶ÈµÄ¿ØÖÆ£¬Î¨Ò»µÄ·½·¨ÊÇ´´½¨¸ü¶àµÄÍ¨µÀ¡£ÏûÏ¢¹ıÂËÆ÷·½Ê½Ôò±ÈÍ¨µÀ¶©¹º¾ßÓĞ¸ü´óµÄÁé»îĞÔ£¬Ëü¿ÉÒÔÃèÊöÎªÒ»ÖÖÌØÊâµÄ»ùÓÚÄÚÈİµÄÂ·ÓÉÆ÷£¬»á°ÑÏûÏ¢Â·ÓÉµ½Êä³öÍ¨µÀ»òÕßÒ»¸ö¿ÕÍ¨µÀ¡£
+									   'EIPæ¨¡å¼ä¸­çš„æ¶ˆæ¯è¿‡æ»¤æ¨¡å¼å¯ä»¥è¿‡æ»¤ç¬¦åˆè¿‡æ»¤æ¡ä»¶æ¶ˆæ¯ã€‚æ­¤è§„åˆ™çš„ç”¨é€”åœ¨äºå¯ä»¥é¿å…ç»„ä»¶æ”¶åˆ°ä¸ä¹‹æ— å…³çš„æ¶ˆæ¯ï¼Œè¦è®©ç»„ä»¶åªæ¥æ”¶ä¸ä¹‹ç›¸å…³çš„æ¶ˆæ¯ï¼ŒåŸºæœ¬çš„æ–¹æ³•å°±æ˜¯åªè®¢è´­é‚£äº›ç›¸å…³ä¿¡æ¯çš„é€šé“ï¼Œç»„ä»¶æ‰€è®¢è´­é€šé“ä¸Šçš„æ¶ˆæ¯æ‰ä¼šè¢«è¯¥ç»„ä»¶æ¥æ”¶ï¼Œä½†æ˜¯å‘å¸ƒï¼è®¢è´­é€šé“æ—¶ï¼Œé€šå¸¸ä¼šå­˜åœ¨ä¸€ç§â€œå…¨æœ‰æˆ–è€…å…¨æ— â€çš„é™åˆ¶ï¼šå¦‚æœç»„ä»¶è®¢è´­äº†ä¸€ä¸ªé€šé“ï¼Œå°±ä¼šæ¥æ”¶è¯¥é€šé“çš„æ‰€æœ‰æ¶ˆæ¯ã€‚è¦æƒ³è·å¾—æ›´ç»†ç²’åº¦çš„æ§åˆ¶ï¼Œå”¯ä¸€çš„æ–¹æ³•æ˜¯åˆ›å»ºæ›´å¤šçš„é€šé“ã€‚æ¶ˆæ¯è¿‡æ»¤å™¨æ–¹å¼åˆ™æ¯”é€šé“è®¢è´­å…·æœ‰æ›´å¤§çš„çµæ´»æ€§ï¼Œå®ƒå¯ä»¥æè¿°ä¸ºä¸€ç§ç‰¹æ®Šçš„åŸºäºå†…å®¹çš„è·¯ç”±å™¨ï¼Œä¼šæŠŠæ¶ˆæ¯è·¯ç”±åˆ°è¾“å‡ºé€šé“æˆ–è€…ä¸€ä¸ªç©ºé€šé“ã€‚
 
-                      ÊÂÀıËµÃ÷£º
-                      from("cmq:a").filter(header("foo").isEqualTo("bar")).to("cmq:b");´ËÀı×Ó´Ó¶ÓÁĞa½ÓÊÕµ½µÄÉú²úµÄÏûÏ¢£¬Èç¹ûÍ·²¿ÊôĞÔfooµÈÓÚbarµÄÊ±ºò¾Í·¢ËÍµ½¶ÓÁĞb¡£',
+                      äº‹ä¾‹è¯´æ˜ï¼š
+                      from("cmq:a").filter(header("foo").isEqualTo("bar")).to("cmq:b");æ­¤ä¾‹å­ä»é˜Ÿåˆ—aæ¥æ”¶åˆ°çš„ç”Ÿäº§çš„æ¶ˆæ¯ï¼Œå¦‚æœå¤´éƒ¨å±æ€§fooç­‰äºbarçš„æ—¶å€™å°±å‘é€åˆ°é˜Ÿåˆ—bã€‚',
 									   '1245935630390_MessageFilter.gif',
 									   ' ',
 									   null,
@@ -2066,19 +2066,19 @@
                         in.setBody(in.getBody(String.class) + " World!");
                          }
                          }).to("mock:result");',
-									   'ÄÚÈİ¹ıÂË(content filter)',
+									   'å†…å®¹è¿‡æ»¤(content filter)',
 									   1,
 									   'admin',
-									   'EIPÖĞµÄÄÚÈİ¹ıÂËÄ£Ê½ÔÚÂ·Å·Âß¼­ÖĞÊ¹ÓÃÏûÏ¢×ª»»º¯Êı¡¢µ÷ÓÃjava bean»òÕßÊÇ¶ÔÏó´¦ÀíµÄ·½Ê½À´×ª»»ÏûÏ¢ÄÚÈİ¡£
+									   'EIPä¸­çš„å†…å®¹è¿‡æ»¤æ¨¡å¼åœ¨è·¯æ¬§é€»è¾‘ä¸­ä½¿ç”¨æ¶ˆæ¯è½¬æ¢å‡½æ•°ã€è°ƒç”¨java beanæˆ–è€…æ˜¯å¯¹è±¡å¤„ç†çš„æ–¹å¼æ¥è½¬æ¢æ¶ˆæ¯å†…å®¹ã€‚
 
-                      ÊÂÀıËµÃ÷£º
-                       from("cmq:start").setBody(body().append(" World!")).to("cmq:result");Ê¹ÓÃDSLÄ£Ê½¡£
+                      äº‹ä¾‹è¯´æ˜ï¼š
+                       from("cmq:start").setBody(body().append(" World!")).to("cmq:result");ä½¿ç”¨DSLæ¨¡å¼ã€‚
                        from("cmq:start").process(new Processor() {
                            public void process(Exchange exchange) {
                            Message in = exchange.getIn();
                            in.setBody(in.getBody(String.class) + " World!");
                            }
-                       }).to("cmq:result");Ê¹ÓÃµÄ´¦Àí¶ÔÏó·½Ê½¡£ ',
+                       }).to("cmq:result");ä½¿ç”¨çš„å¤„ç†å¯¹è±¡æ–¹å¼ã€‚ ',
 									   '1245936943531_ContentFilter.gif',
 									   'import org.apache.camel.*;',
 									   null,
@@ -2099,8 +2099,8 @@
 									   'errorHandler(deadLetterChannel("cmq:dead").maximumRedeliveries(3).maximumRedeliveryDelay(5000));
 
                       /*
-                       ÄúÒ²¿ÉÒÔ¶¨Òå×Ô¼ºµÄ´¦Àí·½·¨£¬ÈçÏÂ£º
-                          ÕâÀïÎÒÃÇ¶¨ÒåÁËÒ»¸ö×Ô¼ºµÄ´¦ÀíÆ÷À´´¦ÀíÃ¿¸ö±»·¢ËÍµÄËÀĞÅ¶ÓÁĞÖ®Ç°µÄ²Ù×÷¡£
+                       æ‚¨ä¹Ÿå¯ä»¥å®šä¹‰è‡ªå·±çš„å¤„ç†æ–¹æ³•ï¼Œå¦‚ä¸‹ï¼š
+                          è¿™é‡Œæˆ‘ä»¬å®šä¹‰äº†ä¸€ä¸ªè‡ªå·±çš„å¤„ç†å™¨æ¥å¤„ç†æ¯ä¸ªè¢«å‘é€çš„æ­»ä¿¡é˜Ÿåˆ—ä¹‹å‰çš„æ“ä½œã€‚
                          // we configure our Dead Letter Channel to invoke
                          // MyRedeliveryProcessor before a redelivery is
                          // attempted. This allows us to alter the message before
@@ -2108,7 +2108,7 @@
                          .onRedelivery(new MyRedeliverPrcessor())
                            // setting delay to zero is just to make unit teting faster
                           .redeliverDelay(0L));
-                         ÎÒÃÇ×Ô¼ºµÄ´¦ÀíÆ÷ MyRedeliveryProcessorÔÚÕâÀï¿ÉÒÔĞŞ¸ÄÏûÏ¢¡£
+                         æˆ‘ä»¬è‡ªå·±çš„å¤„ç†å™¨ MyRedeliveryProcessoråœ¨è¿™é‡Œå¯ä»¥ä¿®æ”¹æ¶ˆæ¯ã€‚
                           // This is our processor that is executed before every redelivery attempt
                           // here we can do what we want in the java code, such as altering the message
                            public class MyRedeliverPrcessor implements Processor {
@@ -2126,19 +2126,19 @@
                               }
 
                          */ ',
-									   'ËÀĞÅÍ¨µÀ(Dead Letter Channel)',
+									   'æ­»ä¿¡é€šé“(Dead Letter Channel)',
 									   1,
 									   'admin',
-									   'EIPÄ£Ê½ÖĞËÀĞÅÍ¨µÀÄ£Ê½Ê¹ÓÃÒ»¸öÄÜ¹»´¦Àí´íÎóµÄ¶ÓÁĞÀ´´¦Àí´íÎóĞÅÏ¢¡£
+									   'EIPæ¨¡å¼ä¸­æ­»ä¿¡é€šé“æ¨¡å¼ä½¿ç”¨ä¸€ä¸ªèƒ½å¤Ÿå¤„ç†é”™è¯¯çš„é˜Ÿåˆ—æ¥å¤„ç†é”™è¯¯ä¿¡æ¯ã€‚
 
-                      ¹¦ÄÜËµÃ÷£º
-                      ËÀĞÅÍ¨µÀÓëÄ¬ÈÏ´íÎó´¦Àí²»Í¬µÄÊÇ£¬ËÀĞÅÍ¨µÀÊ¹ÓÃÒ»¸ö¶ÓÁĞ´æ·ÅĞÅÏ¢½»»»Ê±·¢ÉúµÄ´íÎó£¬ÎŞÂÛÊ²Ã´Ê±ºò£¬Ò»µ©Ê¹ÓÃÁËËÀĞÅ¶ÓÁĞ£¬´íÎóĞÅÏ¢·¢ÉúÊ±´íÎóĞÅÏ¢¾Í±»·¢ËÍµÄ¸Ã¶ÓÁĞÖĞ¡£Ä¬ÈÏ´íÎó´¦Àí²¢Ã»ÓĞÒ»¸ö´æ·Å´íÎóµÄĞÅÏ¢µÄ¶ÓÁĞ£¬Ò»µ©ÓĞ½»»»ĞÅÏ¢²»ÄÜ±»´¦ÀíÊ±£¬Ôò´íÎóĞÅÏ¢±»·¢ËÍµ½¿Í»§¶Ë¡£
+                      åŠŸèƒ½è¯´æ˜ï¼š
+                      æ­»ä¿¡é€šé“ä¸é»˜è®¤é”™è¯¯å¤„ç†ä¸åŒçš„æ˜¯ï¼Œæ­»ä¿¡é€šé“ä½¿ç”¨ä¸€ä¸ªé˜Ÿåˆ—å­˜æ”¾ä¿¡æ¯äº¤æ¢æ—¶å‘ç”Ÿçš„é”™è¯¯ï¼Œæ— è®ºä»€ä¹ˆæ—¶å€™ï¼Œä¸€æ—¦ä½¿ç”¨äº†æ­»ä¿¡é˜Ÿåˆ—ï¼Œé”™è¯¯ä¿¡æ¯å‘ç”Ÿæ—¶é”™è¯¯ä¿¡æ¯å°±è¢«å‘é€çš„è¯¥é˜Ÿåˆ—ä¸­ã€‚é»˜è®¤é”™è¯¯å¤„ç†å¹¶æ²¡æœ‰ä¸€ä¸ªå­˜æ”¾é”™è¯¯çš„ä¿¡æ¯çš„é˜Ÿåˆ—ï¼Œä¸€æ—¦æœ‰äº¤æ¢ä¿¡æ¯ä¸èƒ½è¢«å¤„ç†æ—¶ï¼Œåˆ™é”™è¯¯ä¿¡æ¯è¢«å‘é€åˆ°å®¢æˆ·ç«¯ã€‚
 
-                      ÊÂÀıËµÃ÷£º
+                      äº‹ä¾‹è¯´æ˜ï¼š
                         errorHandler(deadLetterChannel("cmq:dead").maximumRedeliveries(3).maximumRedeliveryDelay(5000));
-                      Ê¹ÓÃ¸Ã´¦Àí·½Ê½£¬´íÎó·¢ÉúÊ±ËÀĞÅÍ¨µÀ½«´¦ÀíÕâ¸ö´íÎó£¬²¢½«´íÎóĞÅÏ¢·¢ËÍµ½deadÕâ¸ö¶ÓÁĞÖĞ£¬¿Í»§¶Ë¾Í²»»á·¢ÏÖÕâ¸ö´íÎóĞÅÏ¢¡£
+                      ä½¿ç”¨è¯¥å¤„ç†æ–¹å¼ï¼Œé”™è¯¯å‘ç”Ÿæ—¶æ­»ä¿¡é€šé“å°†å¤„ç†è¿™ä¸ªé”™è¯¯ï¼Œå¹¶å°†é”™è¯¯ä¿¡æ¯å‘é€åˆ°deadè¿™ä¸ªé˜Ÿåˆ—ä¸­ï¼Œå®¢æˆ·ç«¯å°±ä¸ä¼šå‘ç°è¿™ä¸ªé”™è¯¯ä¿¡æ¯ã€‚
 
-                      ²ÎÊıÉèÖÃ£º
+                      å‚æ•°è®¾ç½®ï¼š
                       willmaximumRedeliveries=5
                       redeliverDelay=1000L (1 second, new as of Camel 2.0)
                       use initialRedeliveryDelay for previous versions
@@ -2147,9 +2147,9 @@
                       The retriesExhaustedLogLevel and retryAttemptedLogLevel are set to LoggingLevel.ERROR
                       Stack traces is logged
 
-                      À©Õ¹£º
-                      ÄúÒ²¿ÉÒÔ¶¨Òå×Ô¼ºµÄ´¦Àí·½·¨£¬ÈçÏÂ£º
-                      ÕâÀïÎÒÃÇ¶¨ÒåÁËÒ»¸ö×Ô¼ºµÄ´¦ÀíÆ÷À´´¦ÀíÃ¿¸ö±»·¢ËÍµÄËÀĞÅ¶ÓÁĞÖ®Ç°µÄ²Ù×÷¡£
+                      æ‰©å±•ï¼š
+                      æ‚¨ä¹Ÿå¯ä»¥å®šä¹‰è‡ªå·±çš„å¤„ç†æ–¹æ³•ï¼Œå¦‚ä¸‹ï¼š
+                      è¿™é‡Œæˆ‘ä»¬å®šä¹‰äº†ä¸€ä¸ªè‡ªå·±çš„å¤„ç†å™¨æ¥å¤„ç†æ¯ä¸ªè¢«å‘é€çš„æ­»ä¿¡é˜Ÿåˆ—ä¹‹å‰çš„æ“ä½œã€‚
 
                       // we configure our Dead Letter Channel to invoke
                       // MyRedeliveryProcessor before a redelivery is
@@ -2158,7 +2158,7 @@
                       .onRedelivery(new MyRedeliverPrcessor())
                       // setting delay to zero is just to make unit teting faster
                        .redeliverDelay(0L));
-                      ÎÒÃÇ×Ô¼ºµÄ´¦ÀíÆ÷ MyRedeliveryProcessorÔÚÕâÀï¿ÉÒÔĞŞ¸ÄÏûÏ¢¡£
+                      æˆ‘ä»¬è‡ªå·±çš„å¤„ç†å™¨ MyRedeliveryProcessoråœ¨è¿™é‡Œå¯ä»¥ä¿®æ”¹æ¶ˆæ¯ã€‚
                       // This is our processor that is executed before every redelivery attempt
                       // here we can do what we want in the java code, such as altering the message
                        public class MyRedeliverPrcessor implements Processor {
@@ -2193,10 +2193,10 @@
 									values
 									  (9,
 									   'from("cmq:a").choice().when(header("foo").isEqualTo("bar")).to("cmq:b").otherwise().throwFault("No matching when clause found on choice block");',
-									   'Ôö¼ÓÀıÍâ',
+									   'å¢åŠ ä¾‹å¤–',
 									   1,
 									   'admin',
-									   'EIPÄ£Ê½ÖĞµÄÔö¼ÓÀıÍâÄ£Ê½ÔÊĞíµ±ÏûÏ¢½»»»Ã»ÓĞÆ¥ÅäÌõ¼ş£¬¼ÓÈëÒ»¸öÆ¥ÅäÌõ¼ş¡£',
+									   'EIPæ¨¡å¼ä¸­çš„å¢åŠ ä¾‹å¤–æ¨¡å¼å…è®¸å½“æ¶ˆæ¯äº¤æ¢æ²¡æœ‰åŒ¹é…æ¡ä»¶ï¼ŒåŠ å…¥ä¸€ä¸ªåŒ¹é…æ¡ä»¶ã€‚',
 									   ' ',
 									   ' ',
 									   null,
@@ -2215,10 +2215,10 @@
 									values
 									  (8,
 									   'from("cmq:SomeQueue").beanRef("myTransformerBean", "myMethodName").to("cmq:AnotherQueue");',
-									   'ÏûÏ¢×ª»»(Message Transformation)',
+									   'æ¶ˆæ¯è½¬æ¢(Message Transformation)',
 									   1,
 									   'admin',
-									   'EIPÄ£Ê½ÖĞµÄÏûÏ¢×ªĞĞÔÊĞíÔÚÂ·ÓÉÂß¼­ÖĞÊ¹ÓÃÈÎÒâÒ»¸ö´¦ÀíÆ÷£¬Í¨¹ıÊ¹ÓÃÒ»¸öbean»òÕßÒ»¸ö×ªĞĞº¯ÊıÀ´¶ÔÏûÏ¢¸ÄÔì¡£',
+									   'EIPæ¨¡å¼ä¸­çš„æ¶ˆæ¯è½¬è¡Œå…è®¸åœ¨è·¯ç”±é€»è¾‘ä¸­ä½¿ç”¨ä»»æ„ä¸€ä¸ªå¤„ç†å™¨ï¼Œé€šè¿‡ä½¿ç”¨ä¸€ä¸ªbeanæˆ–è€…ä¸€ä¸ªè½¬è¡Œå‡½æ•°æ¥å¯¹æ¶ˆæ¯æ”¹é€ ã€‚',
 									   '1245936592375_MessageTranslator.gif',
 									   ' ',
 									   null,
@@ -2241,19 +2241,19 @@
                       from("cmq:vendor2").to("bean:vendor2").to("cmq:quoteAggregator");
                       from("cmq:vendor3").to("bean:vendor3").to("cmq:quoteAggregator");
                       from("cmq:quoteAggregator").aggregator(header("quoteRequestId")).to("cmq:result");',
-									   '·ÖÉ¢ÊÕ¼¯Æ÷(Scatter-Gather)',
+									   'åˆ†æ•£æ”¶é›†å™¨(Scatter-Gather)',
 									   1,
 									   'admin',
-									   '°ÑÏìÓ¦µÄÏûÏ¢ÖØĞÂ×éºÏ³ÉÎªÒ»¸öÏûÏ¢,EIPÄ£Ê½ÖĞÏûÏ¢·Ö·¢ºÍÕûºÏÄ£Ê½ÔÊĞí½«ÏûÏ¢¹ã²¥ºó½«¶à·İÏûÏ¢µÄÏìÓ¦ÕûºÏ³ÉÒ»¸öÏûÏ¢¡£
+									   'æŠŠå“åº”çš„æ¶ˆæ¯é‡æ–°ç»„åˆæˆä¸ºä¸€ä¸ªæ¶ˆæ¯,EIPæ¨¡å¼ä¸­æ¶ˆæ¯åˆ†å‘å’Œæ•´åˆæ¨¡å¼å…è®¸å°†æ¶ˆæ¯å¹¿æ’­åå°†å¤šä»½æ¶ˆæ¯çš„å“åº”æ•´åˆæˆä¸€ä¸ªæ¶ˆæ¯ã€‚
 
-                      ÊÂÀıËµÃ÷£º
+                      äº‹ä¾‹è¯´æ˜ï¼š
                       from("cmq:start").multicast().to("cmq:vendor1, cmq:vendor2,cmq:vendor3");
                       from("cmq:vendor1").to("bean:vendor1").to("cmq:quoteAggregator");
                       from("cmq:vendor2").to("bean:vendor2").to("cmq:quoteAggregator");
                       from("cmq:vendor3").to("bean:vendor3").to("cmq:quoteAggregator");
-                      from("cmq:quoteAggregator").aggregator(header("quoteRequestId")).to("cmq:result");ÊÂÀıËµÃ÷Ê×ÏÈÊ¹ÓÃÏûÏ¢¹ã²¥½«ÏûÏ¢·¢ËÍµ½vendor1¡¢vendor2¡¢vendor3£¬·¢ËÍµ½vendor1µÄÏûÏ¢Í¨¹ıbean:vendor1µÄ´¦Àí·¢ËÍµ½quoteAggregator£¬
-                      ·¢ËÍµ½vendor2µÄÏûÏ¢Í¨¹ıbean:vendor2µÄ´¦Àí·¢ËÍµ½quoteAggregator£¬
-                      ·¢ËÍµ½vendor3µÄÏûÏ¢Í¨¹ıbean:vendor3µÄ´¦Àí·¢ËÍµ½quoteAggregator£¬×îºóÔÚquoteAggregator½«ÈıÌõÏûÏ¢ÕûºÏ·¢ËÍµ½result¡£',
+                      from("cmq:quoteAggregator").aggregator(header("quoteRequestId")).to("cmq:result");äº‹ä¾‹è¯´æ˜é¦–å…ˆä½¿ç”¨æ¶ˆæ¯å¹¿æ’­å°†æ¶ˆæ¯å‘é€åˆ°vendor1ã€vendor2ã€vendor3ï¼Œå‘é€åˆ°vendor1çš„æ¶ˆæ¯é€šè¿‡bean:vendor1çš„å¤„ç†å‘é€åˆ°quoteAggregatorï¼Œ
+                      å‘é€åˆ°vendor2çš„æ¶ˆæ¯é€šè¿‡bean:vendor2çš„å¤„ç†å‘é€åˆ°quoteAggregatorï¼Œ
+                      å‘é€åˆ°vendor3çš„æ¶ˆæ¯é€šè¿‡bean:vendor3çš„å¤„ç†å‘é€åˆ°quoteAggregatorï¼Œæœ€ååœ¨quoteAggregatorå°†ä¸‰æ¡æ¶ˆæ¯æ•´åˆå‘é€åˆ°resultã€‚',
 									   '1245936131734_ScatterGather.gif',
 									   ' ',
 									   null,
@@ -2273,13 +2273,13 @@
 									  (20,
 									   'from("cmq:SomeQueue").routingSlip("headerName");
                       from("cmq:c").routingSlip("aRoutingSlipHeader", "#");',
-									   '´®ĞĞÂ·ÓÉ',
+									   'ä¸²è¡Œè·¯ç”±',
 									   1,
 									   'admin',
-									   'EIPÄ£Ê½ÖĞµÄ´®ĞĞÂ·ÓÉÔÊĞíÂ·ÓÉÏûÏ¢Í¨¹ıÒ»¸ö³ÖĞøÏûÏ¢´¦Àí²½Öè£¬¶ÔÓÚÃ¿¸öÏûÏ¢¶øÕâ¸ö´¦Àí¹ı³ÌÔÚÉè¼ÆÊ±²¢²»ÒÑÖª¶øÇÒÊÇ¿ÉÒÔ¸Ä±äµÄ¡£
-                      ÊÂÀıËµÃ÷£º
-                      from("cmq:SomeQueue").routingSlip("headerName");´ËÀı×Ó¿ÉÒÔ½«ÏûÏ¢Â·ÓÉµ½ActiveMQÖĞµÄ¶ÓÁĞÈÎºÎµØ·½£¬Â·ÓÉµÄÂß¼­ÊÇ¸ù¾İÏûÏ¢µÄÍ·²¿headerNameµÄÖµÀ´ÉèÖÃ£¬ÔÚheaderNameµÄÖµÉèÖÃÖĞ£¬Öµ±ØĞëÊÇÒÔ¶ººÅÎª·Ö¸ô·û£¬Ã¿¸öÖµ¾ÍÊÇÒ»¸öURIÏûÏ¢´«µİ¶Ëµã¡£
-                      from("cmq:c").routingSlip("aRoutingSlipHeader", "#");´ËÀı×Ó×Ô¶¨Òå·Ö¸ô·ûÎª¡°££¡±£¬¶ø²»ÊÇÊ¹ÓÃÄ¬ÈÏ·Ö¸ô·û¡°£¬¡±¡£',
+									   'EIPæ¨¡å¼ä¸­çš„ä¸²è¡Œè·¯ç”±å…è®¸è·¯ç”±æ¶ˆæ¯é€šè¿‡ä¸€ä¸ªæŒç»­æ¶ˆæ¯å¤„ç†æ­¥éª¤ï¼Œå¯¹äºæ¯ä¸ªæ¶ˆæ¯è€Œè¿™ä¸ªå¤„ç†è¿‡ç¨‹åœ¨è®¾è®¡æ—¶å¹¶ä¸å·²çŸ¥è€Œä¸”æ˜¯å¯ä»¥æ”¹å˜çš„ã€‚
+                      äº‹ä¾‹è¯´æ˜ï¼š
+                      from("cmq:SomeQueue").routingSlip("headerName");æ­¤ä¾‹å­å¯ä»¥å°†æ¶ˆæ¯è·¯ç”±åˆ°ActiveMQä¸­çš„é˜Ÿåˆ—ä»»ä½•åœ°æ–¹ï¼Œè·¯ç”±çš„é€»è¾‘æ˜¯æ ¹æ®æ¶ˆæ¯çš„å¤´éƒ¨headerNameçš„å€¼æ¥è®¾ç½®ï¼Œåœ¨headerNameçš„å€¼è®¾ç½®ä¸­ï¼Œå€¼å¿…é¡»æ˜¯ä»¥é€—å·ä¸ºåˆ†éš”ç¬¦ï¼Œæ¯ä¸ªå€¼å°±æ˜¯ä¸€ä¸ªURIæ¶ˆæ¯ä¼ é€’ç«¯ç‚¹ã€‚
+                      from("cmq:c").routingSlip("aRoutingSlipHeader", "#");æ­¤ä¾‹å­è‡ªå®šä¹‰åˆ†éš”ç¬¦ä¸ºâ€œï¼ƒâ€ï¼Œè€Œä¸æ˜¯ä½¿ç”¨é»˜è®¤åˆ†éš”ç¬¦â€œï¼Œâ€ã€‚',
 									   '1245937320593_RoutingSlip.gif',
 									   ' ',
 									   null,
@@ -2298,12 +2298,12 @@
 									values
 									  (21,
 									   'from("cmq:a").throttler(3).timePeriodMillis(10000).to("cmq:result");',
-									   'ThrottlerÄ£Ê½',
+									   'Throttleræ¨¡å¼',
 									   1,
 									   'admin',
-									   'EIPÄ£Ê½ÖĞµÄThrottlerÄ£Ê½¿ÉÒÔÈ·±£Ä³¸öÌØ¶¨µÄ¶Ëµã²»»á³¬ÔØ¡£
-                      ÊÂÀıËµÃ÷£º
-                      from("cmq:a").throttler(3).timePeriodMillis(10000).to("cmq:result");´ËÀı×ÓÉèÖÃÔÚÍùresult¶ÓÁĞ·¢ËÍÏûÏ¢µÄÖ®Ç°ÉèÖÃãĞÖµ£¬×î´ó·¢ËÍÏûÏ¢ÊÇ3ÌõÃ¿10ÃëÖÓ¡£',
+									   'EIPæ¨¡å¼ä¸­çš„Throttleræ¨¡å¼å¯ä»¥ç¡®ä¿æŸä¸ªç‰¹å®šçš„ç«¯ç‚¹ä¸ä¼šè¶…è½½ã€‚
+                      äº‹ä¾‹è¯´æ˜ï¼š
+                      from("cmq:a").throttler(3).timePeriodMillis(10000).to("cmq:result");æ­¤ä¾‹å­è®¾ç½®åœ¨å¾€resulté˜Ÿåˆ—å‘é€æ¶ˆæ¯çš„ä¹‹å‰è®¾ç½®é˜ˆå€¼ï¼Œæœ€å¤§å‘é€æ¶ˆæ¯æ˜¯3æ¡æ¯10ç§’é’Ÿã€‚',
 									   ' ',
 									   ' ',
 									   null,
@@ -2322,10 +2322,10 @@
 									values
 									  (24,
 									   'from("cmq:a").multicast().to("cmq:x, cmq:y, cmq:z");',
-									   'ÏûÏ¢¹ã²¥',
+									   'æ¶ˆæ¯å¹¿æ’­',
 									   1,
 									   'admin',
-									   'EIPÄ£Ê½ÖĞÏûÏ¢¹ã²¥Ä£Ê½ÔÊĞí½«Í¬Ò»·İÏûÏ¢·¢ËÍµ½¶à¸öÏûÏ¢½ÓÊÕ¶Ëµã¡£',
+									   'EIPæ¨¡å¼ä¸­æ¶ˆæ¯å¹¿æ’­æ¨¡å¼å…è®¸å°†åŒä¸€ä»½æ¶ˆæ¯å‘é€åˆ°å¤šä¸ªæ¶ˆæ¯æ¥æ”¶ç«¯ç‚¹ã€‚',
 									   '1245937387390_RecipientList.gif',
 									   ' ',
 									   null,
@@ -2344,19 +2344,19 @@
 									values
 									  (23,
 									   'from("cmq:start").loadBalance().roundRobin().to("cmq:x, cmq:y, cmq:z");',
-									   '¸ºÔØ¾ùºâ(Load Balancer)',
+									   'è´Ÿè½½å‡è¡¡(Load Balancer)',
 									   1,
 									   'admin',
-									   'EIPÄ£Ê½ÖĞµÄ¸ºÔØ¾ùºâÄ£Ê½ÔÊĞíÊ¹ÓÃ¶àÖÖ¾ùºâ²ßÂÔ(ÀıÈç£ºRound Robin£¬Random£¬Sticky£¬Topic£¬Failover )Î¯ÅÉ¶à¸öÏûÏ¢¶Ëµã¡£
-                      ÊÂÀıËµÃ÷£º
-                      from("cmq:start").loadBalance().roundRobin().to("cmq:x, cmq:y, cmq:z");ÊÂÀıËµÃ÷Àı×Ó²ÉÓÃRoundRobin·½Ê½¡£
-                      ²ÎÊıÉèÖÃ£º
-                      ¸ºÔØ¾ùºâµÄ¼¸ÖÖ²ßÂÔµÄÉèÖÃ£º
-                      Round Robin£ºThe exchanges is selected in a round robin fashion¡£ This is a well known and classic policy. This spreads the load even¡£
-                      Random£ºA random endpoint is selected for each exchange  ¡£
-                      Sticky£ºSticky load balancing using an Expression to calculate a correlation key to perform the sticky load balancing; rather like jsessionid in the web or JMSXGroupID in JMS.
-                      Topic£ºTopic which sends to all destinations (rather like JMS Topics)
-                      Failover£ºCamel 2.0: In case of failures the exchange is tried on the next endpoint.',
+									   'EIPæ¨¡å¼ä¸­çš„è´Ÿè½½å‡è¡¡æ¨¡å¼å…è®¸ä½¿ç”¨å¤šç§å‡è¡¡ç­–ç•¥(ä¾‹å¦‚ï¼šRound Robinï¼ŒRandomï¼ŒStickyï¼ŒTopicï¼ŒFailover )å§”æ´¾å¤šä¸ªæ¶ˆæ¯ç«¯ç‚¹ã€‚
+                      äº‹ä¾‹è¯´æ˜ï¼š
+                      from("cmq:start").loadBalance().roundRobin().to("cmq:x, cmq:y, cmq:z");äº‹ä¾‹è¯´æ˜ä¾‹å­é‡‡ç”¨RoundRobinæ–¹å¼ã€‚
+                      å‚æ•°è®¾ç½®ï¼š
+                      è´Ÿè½½å‡è¡¡çš„å‡ ç§ç­–ç•¥çš„è®¾ç½®ï¼š
+                      Round Robinï¼šThe exchanges is selected in a round robin fashionã€‚ This is a well known and classic policy. This spreads the load evenã€‚
+                      Randomï¼šA random endpoint is selected for each exchange  ã€‚
+                      Stickyï¼šSticky load balancing using an Expression to calculate a correlation key to perform the sticky load balancing; rather like jsessionid in the web or JMSXGroupID in JMS.
+                      Topicï¼šTopic which sends to all destinations (rather like JMS Topics)
+                      Failoverï¼šCamel 2.0: In case of failures the exchange is tried on the next endpoint.',
 									   ' ',
 									   ' ',
 									   null,
@@ -2375,13 +2375,13 @@
 									values
 									  (1,
 									   'from("cmq:a").choice().when(header("foo").isEqualTo("bar")).to("cmq:b").when(header("foo").isEqualTo("cheese")).to("cmq:c").otherwise().to("cmq:d");',
-									   '»ùÓÚÄÚÈİÂ·ÓÉ(Content Based Router )',
+									   'åŸºäºå†…å®¹è·¯ç”±(Content Based Router )',
 									   1,
 									   'admin',
-									   'EIPÄ£Ê½ÖĞµÄ»ùÓÚÄÚÈİµÄÂ·ÓÉÄ£°å¿ÉÒÔÔÚÏûÏ¢ÄÚÈİµÄ»ù´¡ÉÏÂ·ÓÉÏûÏ¢ÖÁÕıÈ·µÄÄ¿µÄµØ¡£
+									   'EIPæ¨¡å¼ä¸­çš„åŸºäºå†…å®¹çš„è·¯ç”±æ¨¡æ¿å¯ä»¥åœ¨æ¶ˆæ¯å†…å®¹çš„åŸºç¡€ä¸Šè·¯ç”±æ¶ˆæ¯è‡³æ­£ç¡®çš„ç›®çš„åœ°ã€‚
 
-                      ÊÂÀıËµÃ÷£º
-                      from("cmq:a").choice().when(header("foo").isEqualTo("bar")).to("cmq:b").when(header("foo").isEqualTo("cheese")).to("cmq:c").otherwise().to("cmq:d");¸ÄÀı×Ó¸ù¾İÏûÏ¢Í·²¿ĞÅÏ¢×óÓÒÂ·ÓÉÄ¿µÄµØµÄÌõ¼ş£¬µ±ÏûÏ¢Í·²¿¡±foo¡±ÊôĞÔµÈÓÚ"bar"£¬ÏûÏ¢·¢ËÍµ½"b"¶ÓÁĞ£¬µ±ÏûÏ¢Í·²¿¡±foo¡±ÊôĞÔµÈÓÚ" cheese "£¬ÏûÏ¢·¢ËÍµ½"c"¶ÓÁĞ£¬¶¼²»ÏàµÈÊ±·¢ËÍµ½¡±d¡±¶ÓÁĞ¡£FromÏûÏ¢·¢ËÍµÄÆğµã£¬choiceÏàµ±ÓÚÌõ¼şÑ¡Ôñ£¬when±íÊ¾Ìõ¼şÂú×ãÊ±Ö´ĞĞµÄ²Ù×÷£¬to±íÊ¾·¢ËÍµÄÄ¿µÄµØ¡£',
+                      äº‹ä¾‹è¯´æ˜ï¼š
+                      from("cmq:a").choice().when(header("foo").isEqualTo("bar")).to("cmq:b").when(header("foo").isEqualTo("cheese")).to("cmq:c").otherwise().to("cmq:d");æ”¹ä¾‹å­æ ¹æ®æ¶ˆæ¯å¤´éƒ¨ä¿¡æ¯å·¦å³è·¯ç”±ç›®çš„åœ°çš„æ¡ä»¶ï¼Œå½“æ¶ˆæ¯å¤´éƒ¨â€fooâ€å±æ€§ç­‰äº"bar"ï¼Œæ¶ˆæ¯å‘é€åˆ°"b"é˜Ÿåˆ—ï¼Œå½“æ¶ˆæ¯å¤´éƒ¨â€fooâ€å±æ€§ç­‰äº" cheese "ï¼Œæ¶ˆæ¯å‘é€åˆ°"c"é˜Ÿåˆ—ï¼Œéƒ½ä¸ç›¸ç­‰æ—¶å‘é€åˆ°â€dâ€é˜Ÿåˆ—ã€‚Fromæ¶ˆæ¯å‘é€çš„èµ·ç‚¹ï¼Œchoiceç›¸å½“äºæ¡ä»¶é€‰æ‹©ï¼Œwhenè¡¨ç¤ºæ¡ä»¶æ»¡è¶³æ—¶æ‰§è¡Œçš„æ“ä½œï¼Œtoè¡¨ç¤ºå‘é€çš„ç›®çš„åœ°ã€‚',
 									   '1245936911562_ContentBaseRouter.gif',
 									   ' ',
 									   null,
@@ -2400,13 +2400,13 @@
 									values
 									  (5,
 									   'from("cmq:a").multicast().to("cmq:b, cmq:c,cmq:d");',
-									   '·¢²¼¶©ÔÄ(publish-subscribe)',
+									   'å‘å¸ƒè®¢é˜…(publish-subscribe)',
 									   1,
 									   'admin',
-									   'EIPÄ£Ê½ÖĞµÄ·¢²¼¶©ÔÄÄ£Ê½ÔÊĞí¶©ÔÄÏûÏ¢µÄÏû·ÑÕß£¬µ±ÏûÏ¢·¢²¼Ê±¶¼Í¬Ê±ÄÜÊÕµ½¶©ÔÄÏûÏ¢¡£´ËÄ£Ê½ºÍ¶¯Ì¬½ÓÊÕÁĞ±íÄ£Ê½£¬¾²Ì¬½ÓÊÕÁĞ±íÄ£Ê½ÏàËÆ£¬·¢²¼£­¶©ÔÄ·½Ê½Ö»Ìá¹©Á½ÖÖÑ¡Ôñ£ºÒªÃ´¶©¹ºÍ¨µÀÖĞµÄËùÓĞÏûÏ¢£¬ÒªÃ´Ê²Ã´Ò²²»¶©¹º¡£½ÓÊÕÁĞ±íÄ£Ê½Ïû·Ñ¶ËÊÇ¿ÉÒÔÑ¡Ôñ½ÓÊÕÏûÏ¢µÄ¡£
+									   'EIPæ¨¡å¼ä¸­çš„å‘å¸ƒè®¢é˜…æ¨¡å¼å…è®¸è®¢é˜…æ¶ˆæ¯çš„æ¶ˆè´¹è€…ï¼Œå½“æ¶ˆæ¯å‘å¸ƒæ—¶éƒ½åŒæ—¶èƒ½æ”¶åˆ°è®¢é˜…æ¶ˆæ¯ã€‚æ­¤æ¨¡å¼å’ŒåŠ¨æ€æ¥æ”¶åˆ—è¡¨æ¨¡å¼ï¼Œé™æ€æ¥æ”¶åˆ—è¡¨æ¨¡å¼ç›¸ä¼¼ï¼Œå‘å¸ƒï¼è®¢é˜…æ–¹å¼åªæä¾›ä¸¤ç§é€‰æ‹©ï¼šè¦ä¹ˆè®¢è´­é€šé“ä¸­çš„æ‰€æœ‰æ¶ˆæ¯ï¼Œè¦ä¹ˆä»€ä¹ˆä¹Ÿä¸è®¢è´­ã€‚æ¥æ”¶åˆ—è¡¨æ¨¡å¼æ¶ˆè´¹ç«¯æ˜¯å¯ä»¥é€‰æ‹©æ¥æ”¶æ¶ˆæ¯çš„ã€‚
 
-                                                                                                      ÊÂÀıËµÃ÷£º
-                                      from("cmq:a").multicast().to("cmq:b, cmq:c, cmq:d");fromÎªÏûÏ¢µÄÉú²ú¶Ë£¬toÎªÏûÏ¢Ïû·Ñ¶Ë£¬multicastÎª¹ã²¥£¬µ«ÊÇ¹ã²¥µÄ¶ÔÏó²»ÊÇËùÓĞµÄÏû·ÑÕß£¬¶øÊÇb,c,dÈı¸öÏû·ÑÕß¡£',
+                                                                                                      äº‹ä¾‹è¯´æ˜ï¼š
+                                      from("cmq:a").multicast().to("cmq:b, cmq:c, cmq:d");fromä¸ºæ¶ˆæ¯çš„ç”Ÿäº§ç«¯ï¼Œtoä¸ºæ¶ˆæ¯æ¶ˆè´¹ç«¯ï¼Œmulticastä¸ºå¹¿æ’­ï¼Œä½†æ˜¯å¹¿æ’­çš„å¯¹è±¡ä¸æ˜¯æ‰€æœ‰çš„æ¶ˆè´¹è€…ï¼Œè€Œæ˜¯b,c,dä¸‰ä¸ªæ¶ˆè´¹è€…ã€‚',
 									   '1245936670390_PublishSubcribe.gif',
 									   ' ',
 									   null,
@@ -2425,13 +2425,13 @@
 									values
 									  (4,
 									   'from("cmq:a").multicast().to("cmq:b, cmq:c, cmq:d");',
-									   '¾²Ì¬½ÓÊÕÁĞ±í(Static Recipient List)',
+									   'é™æ€æ¥æ”¶åˆ—è¡¨(Static Recipient List)',
 									   1,
 									   'admin',
-									   'EIPÄ£Ê½ÖĞµÄ¾²Ì¬ÊÕ¼şÈËÁĞ±íÄ£Ê½¿ÉÒÔÔÊĞíÏûÏ¢Â·ÓÉµ½Ò»¸ö¾²Ì¬µÄÊÕ¼şÈËÁĞ±í¡£´ËÄ£Ê½ÀàËÆÓÚÓÊ¼şÏµÍ³ÖĞµÄ½ÓÊÕÁĞ±í£¬¶ÔÓÚÃ¿Ìõµç×ÓÓÊ¼şÏûÏ¢£¬·¢ËÍÕß¶¼¿ÉÒÔÖ¸¶¨Ò»¸ö½ÓÊÕÁĞ±í£¬´ËÄ£Ê½ÀàËÆÓëÏûÏ¢·¢²¼£­¶©ÔÄ·½Ê½£¬µ«ÊÇ·½Ê½¸üÁé»î£¬·¢²¼£­¶©ÔÄ·½Ê½Ö»Ìá¹©Á½ÖÖÑ¡Ôñ£ºÒªÃ´¶©¹ºÍ¨µÀÖĞµÄËùÓĞÏûÏ¢£¬ÒªÃ´Ê²Ã´Ò²²»¶©¹º¡£¶ø¾²Ì¬Ì¬½ÓÊÕÁĞ±íÄ£Ê½¿ÉÒÔ±£³Ö¼¯ÖĞ¿ØÖÆ£¬¿ÉÒÔÔÚÃ¿ÌõÏûÏ¢¸½´øµÄÁĞ±íÖĞÖ¸¶¨ÏûÏ¢ËùÃæÏòµÄÏû·ÑÕß£¬ÕâÑùÒ»À´£¬ÏûÏ¢±»¹ã²¥¸øËùÓĞ¿ÉÄÜµÄ½ÓÊÕÕßÊ±£¬²»ÔÚ½ÓÊÕÁĞ±íÖĞµÄ¸÷¸ö½ÓÊÜÕß¿ÉÒÔ¶ªµÃ¸ÃÏûÏ¢¡£
+									   'EIPæ¨¡å¼ä¸­çš„é™æ€æ”¶ä»¶äººåˆ—è¡¨æ¨¡å¼å¯ä»¥å…è®¸æ¶ˆæ¯è·¯ç”±åˆ°ä¸€ä¸ªé™æ€çš„æ”¶ä»¶äººåˆ—è¡¨ã€‚æ­¤æ¨¡å¼ç±»ä¼¼äºé‚®ä»¶ç³»ç»Ÿä¸­çš„æ¥æ”¶åˆ—è¡¨ï¼Œå¯¹äºæ¯æ¡ç”µå­é‚®ä»¶æ¶ˆæ¯ï¼Œå‘é€è€…éƒ½å¯ä»¥æŒ‡å®šä¸€ä¸ªæ¥æ”¶åˆ—è¡¨ï¼Œæ­¤æ¨¡å¼ç±»ä¼¼ä¸æ¶ˆæ¯å‘å¸ƒï¼è®¢é˜…æ–¹å¼ï¼Œä½†æ˜¯æ–¹å¼æ›´çµæ´»ï¼Œå‘å¸ƒï¼è®¢é˜…æ–¹å¼åªæä¾›ä¸¤ç§é€‰æ‹©ï¼šè¦ä¹ˆè®¢è´­é€šé“ä¸­çš„æ‰€æœ‰æ¶ˆæ¯ï¼Œè¦ä¹ˆä»€ä¹ˆä¹Ÿä¸è®¢è´­ã€‚è€Œé™æ€æ€æ¥æ”¶åˆ—è¡¨æ¨¡å¼å¯ä»¥ä¿æŒé›†ä¸­æ§åˆ¶ï¼Œå¯ä»¥åœ¨æ¯æ¡æ¶ˆæ¯é™„å¸¦çš„åˆ—è¡¨ä¸­æŒ‡å®šæ¶ˆæ¯æ‰€é¢å‘çš„æ¶ˆè´¹è€…ï¼Œè¿™æ ·ä¸€æ¥ï¼Œæ¶ˆæ¯è¢«å¹¿æ’­ç»™æ‰€æœ‰å¯èƒ½çš„æ¥æ”¶è€…æ—¶ï¼Œä¸åœ¨æ¥æ”¶åˆ—è¡¨ä¸­çš„å„ä¸ªæ¥å—è€…å¯ä»¥ä¸¢å¾—è¯¥æ¶ˆæ¯ã€‚
 
-                                                                                                       ÊÂÀıËµÃ÷£º
-                                       from("cmq:a").multicast().to("cmq:b, cmq:c, cmq:d");fromÎªÏûÏ¢µÄÉú²ú¶Ë£¬toÎªÏûÏ¢Ïû·Ñ¶Ë£¬multicastÎª¹ã²¥£¬µ«ÊÇ¹ã²¥µÄ¶ÔÏó²»ÊÇËùÓĞµÄÏû·ÑÕß£¬¶øÊÇb,c,dÈı¸öÏû·ÑÕß¡£',
+                                                                                                       äº‹ä¾‹è¯´æ˜ï¼š
+                                       from("cmq:a").multicast().to("cmq:b, cmq:c, cmq:d");fromä¸ºæ¶ˆæ¯çš„ç”Ÿäº§ç«¯ï¼Œtoä¸ºæ¶ˆæ¯æ¶ˆè´¹ç«¯ï¼Œmulticastä¸ºå¹¿æ’­ï¼Œä½†æ˜¯å¹¿æ’­çš„å¯¹è±¡ä¸æ˜¯æ‰€æœ‰çš„æ¶ˆè´¹è€…ï¼Œè€Œæ˜¯b,c,dä¸‰ä¸ªæ¶ˆè´¹è€…ã€‚',
 									   '1245935910250_RecipientList.gif',
 									   ' ',
 									   null,
@@ -2452,37 +2452,37 @@
 									   'from("cmq:a").splitter(body(String.class).tokenize("\n")).to("cmq:b");
                                         from("cmq:my.queue").splitter().xpath(("//foo/bar")).convertBodyTo(String.class).to("file://some/directory");
                                         from("cmq:streaming").splitter(body().tokenize(",")).streaming().to("cmq:my.parts");',
-									   '·ÖÀëÆ÷(Splitter)',
+									   'åˆ†ç¦»å™¨(Splitter)',
 									   1,
 									   'admin',
-									   'EIPÄ£Ê½ÖĞµÄ·ÖÀëÆ÷Ä£Ê½ÔÊĞí½«ÏûÏ¢·Ö¸î³ÉÒ»¸öÒ»¸öĞ¡¿éµÄÏûÏ¢·Ö±ğ´¦Àí¡£
+									   'EIPæ¨¡å¼ä¸­çš„åˆ†ç¦»å™¨æ¨¡å¼å…è®¸å°†æ¶ˆæ¯åˆ†å‰²æˆä¸€ä¸ªä¸€ä¸ªå°å—çš„æ¶ˆæ¯åˆ†åˆ«å¤„ç†ã€‚
 
-¹¦ÄÜËµÃ÷£º
-Camel·ÖÀëÆ÷½«ÏûÏ¢²ğ·Ö³ÉĞí¶à¿é£¬Ä¬ÈÏ·µ»Ø×îºóÒ»¸ö¿é±»·ÖÀëµÄÏûÏ¢¡£CamelÖ§³Ö±àĞ´×Ô¼ºµÄ¾ÛºÏÏûÏ¢µÄ²ßÂÔ¡£
+åŠŸèƒ½è¯´æ˜ï¼š
+Camelåˆ†ç¦»å™¨å°†æ¶ˆæ¯æ‹†åˆ†æˆè®¸å¤šå—ï¼Œé»˜è®¤è¿”å›æœ€åä¸€ä¸ªå—è¢«åˆ†ç¦»çš„æ¶ˆæ¯ã€‚Camelæ”¯æŒç¼–å†™è‡ªå·±çš„èšåˆæ¶ˆæ¯çš„ç­–ç•¥ã€‚
 
-ÊÂÀıËµÃ÷£º
+äº‹ä¾‹è¯´æ˜ï¼š
 errorHandler(deadLetterChannel("mock:error"));
 from("seda:a").split(body(String.class).tokenize("\n")).to("seda:b");
-Àı×ÓÕ¹Ê¾ÁËÒ»¸öÏûÏ¢´Ó¶ÓÁĞa·¢³ö£¬Í¨¹ı·Ö¸î·ûºÅ»Ø³µ½«Ò»¸öÕûÌåÏûÏ¢·Ö³ÉÒ»¿éÒ»¿é£¬·¢µ½ÁË¶ÓÁĞb£¬ÔÚÊ¹ÓÃ·ÖÀëÆ÷¹¦ÄÜÇ°£¬Ê¹ÓÃÁËËÀĞÅÍ¨µÀ¹¦ÄÜ£¬½«Òì³£ĞÅÏ¢·¢ËÍµ½error¶ÓÁĞÖĞ¡£
-ÔÚ·ÖÀëÆ÷ÖĞ»¹¿ÉÒÔÖ§³ÖXPath£¬XQuery£¬SQL»òÕßÒ»ÖÖ½Å±¾ÓïÑÔÀ´Ö´ĞĞ·ÖÀë±í´ïÊ½¡£ÊÂÀıÈçÏÂ£º
+ä¾‹å­å±•ç¤ºäº†ä¸€ä¸ªæ¶ˆæ¯ä»é˜Ÿåˆ—aå‘å‡ºï¼Œé€šè¿‡åˆ†å‰²ç¬¦å·å›è½¦å°†ä¸€ä¸ªæ•´ä½“æ¶ˆæ¯åˆ†æˆä¸€å—ä¸€å—ï¼Œå‘åˆ°äº†é˜Ÿåˆ—bï¼Œåœ¨ä½¿ç”¨åˆ†ç¦»å™¨åŠŸèƒ½å‰ï¼Œä½¿ç”¨äº†æ­»ä¿¡é€šé“åŠŸèƒ½ï¼Œå°†å¼‚å¸¸ä¿¡æ¯å‘é€åˆ°erroré˜Ÿåˆ—ä¸­ã€‚
+åœ¨åˆ†ç¦»å™¨ä¸­è¿˜å¯ä»¥æ”¯æŒXPathï¼ŒXQueryï¼ŒSQLæˆ–è€…ä¸€ç§è„šæœ¬è¯­è¨€æ¥æ‰§è¡Œåˆ†ç¦»è¡¨è¾¾å¼ã€‚äº‹ä¾‹å¦‚ä¸‹ï¼š
 from("cmq:my.queue").split(xpath("//foo/bar")).convertBodyTo(String.class).to("file://some/directory");
-ÔÚ·ÖÀëÆ÷ÖĞÒ²¿ÉÒÔ·ÖÀëÊı¾İÁ÷£¬ÊÂÀıÈçÏÂ£º
+åœ¨åˆ†ç¦»å™¨ä¸­ä¹Ÿå¯ä»¥åˆ†ç¦»æ•°æ®æµï¼Œäº‹ä¾‹å¦‚ä¸‹ï¼š
 from("cmq:streaming").splitter(body().tokenize(",")).streaming().to("cmq:my.parts");
-»ù±¾Ê¹ÓÃ
+åŸºæœ¬ä½¿ç”¨
 from("cmq:start").resequencer(header("seqnum")).stream().to("cmq:result");
-ÉèÖÃÈİÁ¿ºÍ³¬Ê±Ê±¼ä´óĞ¡
+è®¾ç½®å®¹é‡å’Œè¶…æ—¶æ—¶é—´å¤§å°
 from("cmq:start").resequencer(header("seqnum")).stream().capacity(5000).timeout(4000L).to("cmq:result");
-ÔÚ·ÖÀëÆ÷ÖĞÔÚ²¢ĞĞ·ÖÀëÄ£Ê½ÖĞÒ²¿ÉÒÔ¶¨ÖÆThreadPoolExecutor£¬Àı×ÓÈçÏÂ¡£
+åœ¨åˆ†ç¦»å™¨ä¸­åœ¨å¹¶è¡Œåˆ†ç¦»æ¨¡å¼ä¸­ä¹Ÿå¯ä»¥å®šåˆ¶ThreadPoolExecutorï¼Œä¾‹å­å¦‚ä¸‹ã€‚
 XPathBuilder xPathBuilder = new XPathBuilder("//foo/bar");
 ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(8, 16, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue());
 from("cmq:my.queue").split(xPathBuilder, true, threadPoolExecutor).to("cmq:my.parts");
-·ÖÀëÆ÷ÖĞÊ¹ÓÃpojoÀ´·ÖÀëÏûÏ¢£¬ÎÒÃÇ¿ÉÒÔÊ¹ÓÃmethod±í´ïÊ½À´µ÷ÓÃÒ»¸öBeanÀ´»ñµÃ·ÖÀëµÄ²¿·Ö£¬Õâ¸öBean±ØĞë·µ»ØÒ»¸öiterable£¬ÀıÈç£ºjava.util.Collection, java.util.Iterator or an array.
-ÊÂÀıÈçÏÂ£º
+åˆ†ç¦»å™¨ä¸­ä½¿ç”¨pojoæ¥åˆ†ç¦»æ¶ˆæ¯ï¼Œæˆ‘ä»¬å¯ä»¥ä½¿ç”¨methodè¡¨è¾¾å¼æ¥è°ƒç”¨ä¸€ä¸ªBeanæ¥è·å¾—åˆ†ç¦»çš„éƒ¨åˆ†ï¼Œè¿™ä¸ªBeanå¿…é¡»è¿”å›ä¸€ä¸ªiterableï¼Œä¾‹å¦‚ï¼šjava.util.Collection, java.util.Iterator or an array.
+äº‹ä¾‹å¦‚ä¸‹ï¼š
 from("direct:body") // here we use a POJO bean mySplitterBean to do the split of the payload .splitter().method("mySplitterBean", "splitBody")
 .to("mock:result");
 from("direct:message") // here we use a POJO bean mySplitterBean to do the split of the message  // with a certain header value
 .splitter().method("mySplitterBean", "splitMessage").to("mock:result");
-Bean±àĞ´ÈçÏÂ£º
+Beanç¼–å†™å¦‚ä¸‹ï¼š
 public class MySplitterBean {
 
     /**
@@ -2530,8 +2530,8 @@ public class MySplitterBean {
         return answer;
     }
 }
-·ÖÀë¡¢ÕûºÏ ÇëÇó/Ó¦´ğ Àı×Ó
-ÔÚ·ÖÀëÆ÷ÖĞ¿ÉÒÔ½«·ÖÀëµÄÏûÏ¢·Ö±ğ´¦Àí£¬ÕûºÏ²¢ÇÒ·µ»ØÒ»¸ö×éºÏÏìÓ¦µ½Ô­Ê¼µÄµ÷ÓÃÕß¡£ÒÔÏÂÊÇÑİÊ¾ÊÂÀı
+åˆ†ç¦»ã€æ•´åˆ è¯·æ±‚/åº”ç­” ä¾‹å­
+åœ¨åˆ†ç¦»å™¨ä¸­å¯ä»¥å°†åˆ†ç¦»çš„æ¶ˆæ¯åˆ†åˆ«å¤„ç†ï¼Œæ•´åˆå¹¶ä¸”è¿”å›ä¸€ä¸ªç»„åˆå“åº”åˆ°åŸå§‹çš„è°ƒç”¨è€…ã€‚ä»¥ä¸‹æ˜¯æ¼”ç¤ºäº‹ä¾‹
 // this routes starts from the direct:start endpoint
             // the body is then splitted based on @ separator
             // the splitter in Camel supports InOut as well and for that we need
@@ -2548,7 +2548,7 @@ public class MySplitterBean {
             // response back to the original caller, so we let this bean build it for us
             // this bean will receive the result of the aggregate strategy: MyOrderStrategy
             .to("bean:MyOrderService?method=buildCombinedResponse");
-OrderService beanÈçÏÂ
+OrderService beanå¦‚ä¸‹
 public static class MyOrderService {
 
     private static int counter;
@@ -2570,7 +2570,7 @@ public static class MyOrderService {
         return "Response[" + line + "]";
     }
 }
-ÒÔÏÂÊÇÕûºÏÏûÏ¢·½Ê½
+ä»¥ä¸‹æ˜¯æ•´åˆæ¶ˆæ¯æ–¹å¼
 /**
  * This is our own order aggregation strategy where we can control
  * how each splitted message should be combined. As we do not want to
@@ -2604,7 +2604,7 @@ public static class MyOrderStrategy implements AggregationStrategy {
         return oldExchange;
     }
 }
-ÉÏÊöÀı×ÓµÄ´òÓ¡ÏûÏ¢£¬¼ÙÉèÔÚdirect:start´æÔÚÒ»¸öÏûÏ¢£¬ÏûÏ¢µÄbody°üº¬Êı¾İA@B@C£¬¾­¹ı´¦Àíºó
+ä¸Šè¿°ä¾‹å­çš„æ‰“å°æ¶ˆæ¯ï¼Œå‡è®¾åœ¨direct:startå­˜åœ¨ä¸€ä¸ªæ¶ˆæ¯ï¼Œæ¶ˆæ¯çš„bodyåŒ…å«æ•°æ®A@B@Cï¼Œç»è¿‡å¤„ç†å
 HandleOrder: A
 HandleOrder: B
 Aggregate old orders: (id=1,item=A)
@@ -2632,37 +2632,37 @@ Response to caller: Response[(id=1,item=A);(id=2,item=B);(id=3,item=C)]',
 									values
 									  (13,
 									   'from("cmq:my.queue").splitter().xpath("//foo/bar").convertBodyTo(String.class).to("file://some/directory");',
-									   '·ÖÀëÆ÷(SplitterXPathÄ£Ê½)',
+									   'åˆ†ç¦»å™¨(SplitterXPathæ¨¡å¼)',
 									   1,
 									   'admin',
-									   'EIPÄ£Ê½ÖĞµÄ·ÖÀëÆ÷Ä£Ê½ÔÊĞí½«ÏûÏ¢·Ö¸î³ÉÒ»¸öÒ»¸öĞ¡¿éµÄÏûÏ¢·Ö±ğ´¦Àí¡£
+									   'EIPæ¨¡å¼ä¸­çš„åˆ†ç¦»å™¨æ¨¡å¼å…è®¸å°†æ¶ˆæ¯åˆ†å‰²æˆä¸€ä¸ªä¸€ä¸ªå°å—çš„æ¶ˆæ¯åˆ†åˆ«å¤„ç†ã€‚
 
-¹¦ÄÜËµÃ÷£º
-Camel·ÖÀëÆ÷½«ÏûÏ¢²ğ·Ö³ÉĞí¶à¿é£¬Ä¬ÈÏ·µ»Ø×îºóÒ»¸ö¿é±»·ÖÀëµÄÏûÏ¢¡£CamelÖ§³Ö±àĞ´×Ô¼ºµÄ¾ÛºÏÏûÏ¢µÄ²ßÂÔ¡£
+åŠŸèƒ½è¯´æ˜ï¼š
+Camelåˆ†ç¦»å™¨å°†æ¶ˆæ¯æ‹†åˆ†æˆè®¸å¤šå—ï¼Œé»˜è®¤è¿”å›æœ€åä¸€ä¸ªå—è¢«åˆ†ç¦»çš„æ¶ˆæ¯ã€‚Camelæ”¯æŒç¼–å†™è‡ªå·±çš„èšåˆæ¶ˆæ¯çš„ç­–ç•¥ã€‚
 
-ÊÂÀıËµÃ÷£º
+äº‹ä¾‹è¯´æ˜ï¼š
 errorHandler(deadLetterChannel("mock:error"));
 from("seda:a").split(body(String.class).tokenize("\n")).to("seda:b");
-Àı×ÓÕ¹Ê¾ÁËÒ»¸öÏûÏ¢´Ó¶ÓÁĞa·¢³ö£¬Í¨¹ı·Ö¸î·ûºÅ»Ø³µ½«Ò»¸öÕûÌåÏûÏ¢·Ö³ÉÒ»¿éÒ»¿é£¬·¢µ½ÁË¶ÓÁĞb£¬ÔÚÊ¹ÓÃ·ÖÀëÆ÷¹¦ÄÜÇ°£¬Ê¹ÓÃÁËËÀĞÅÍ¨µÀ¹¦ÄÜ£¬½«Òì³£ĞÅÏ¢·¢ËÍµ½error¶ÓÁĞÖĞ¡£
-ÔÚ·ÖÀëÆ÷ÖĞ»¹¿ÉÒÔÖ§³ÖXPath£¬XQuery£¬SQL»òÕßÒ»ÖÖ½Å±¾ÓïÑÔÀ´Ö´ĞĞ·ÖÀë±í´ïÊ½¡£ÊÂÀıÈçÏÂ£º
+ä¾‹å­å±•ç¤ºäº†ä¸€ä¸ªæ¶ˆæ¯ä»é˜Ÿåˆ—aå‘å‡ºï¼Œé€šè¿‡åˆ†å‰²ç¬¦å·å›è½¦å°†ä¸€ä¸ªæ•´ä½“æ¶ˆæ¯åˆ†æˆä¸€å—ä¸€å—ï¼Œå‘åˆ°äº†é˜Ÿåˆ—bï¼Œåœ¨ä½¿ç”¨åˆ†ç¦»å™¨åŠŸèƒ½å‰ï¼Œä½¿ç”¨äº†æ­»ä¿¡é€šé“åŠŸèƒ½ï¼Œå°†å¼‚å¸¸ä¿¡æ¯å‘é€åˆ°erroré˜Ÿåˆ—ä¸­ã€‚
+åœ¨åˆ†ç¦»å™¨ä¸­è¿˜å¯ä»¥æ”¯æŒXPathï¼ŒXQueryï¼ŒSQLæˆ–è€…ä¸€ç§è„šæœ¬è¯­è¨€æ¥æ‰§è¡Œåˆ†ç¦»è¡¨è¾¾å¼ã€‚äº‹ä¾‹å¦‚ä¸‹ï¼š
 from("cmq:my.queue").split(xpath("//foo/bar")).convertBodyTo(String.class).to("file://some/directory");
-ÔÚ·ÖÀëÆ÷ÖĞÒ²¿ÉÒÔ·ÖÀëÊı¾İÁ÷£¬ÊÂÀıÈçÏÂ£º
+åœ¨åˆ†ç¦»å™¨ä¸­ä¹Ÿå¯ä»¥åˆ†ç¦»æ•°æ®æµï¼Œäº‹ä¾‹å¦‚ä¸‹ï¼š
 from("direct:streaming").splitter(body().tokenize(",")).streaming().to("cmq:my.parts");
-»ù±¾Ê¹ÓÃ
+åŸºæœ¬ä½¿ç”¨
 from("cmq:start").resequencer(header("seqnum")).stream().to("activemq:result");
-ÉèÖÃÈİÁ¿ºÍ³¬Ê±Ê±¼ä´óĞ¡
+è®¾ç½®å®¹é‡å’Œè¶…æ—¶æ—¶é—´å¤§å°
 from("cmq:start").resequencer(header("seqnum")).stream().capacity(5000).timeout(4000L).to("cmq:result");
-ÔÚ·ÖÀëÆ÷ÖĞÔÚ²¢ĞĞ·ÖÀëÄ£Ê½ÖĞÒ²¿ÉÒÔ¶¨ÖÆThreadPoolExecutor£¬Àı×ÓÈçÏÂ¡£
+åœ¨åˆ†ç¦»å™¨ä¸­åœ¨å¹¶è¡Œåˆ†ç¦»æ¨¡å¼ä¸­ä¹Ÿå¯ä»¥å®šåˆ¶ThreadPoolExecutorï¼Œä¾‹å­å¦‚ä¸‹ã€‚
 XPathBuilder xPathBuilder = new XPathBuilder("//foo/bar");
 ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(8, 16, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue());
 from("cmq:my.queue").split(xPathBuilder, true, threadPoolExecutor).to("cmq:my.parts");
-·ÖÀëÆ÷ÖĞÊ¹ÓÃpojoÀ´·ÖÀëÏûÏ¢£¬ÎÒÃÇ¿ÉÒÔÊ¹ÓÃmethod±í´ïÊ½À´µ÷ÓÃÒ»¸öBeanÀ´»ñµÃ·ÖÀëµÄ²¿·Ö£¬Õâ¸öBean±ØĞë·µ»ØÒ»¸öiterable£¬ÀıÈç£ºjava.util.Collection, java.util.Iterator or an array.
-ÊÂÀıÈçÏÂ£º
+åˆ†ç¦»å™¨ä¸­ä½¿ç”¨pojoæ¥åˆ†ç¦»æ¶ˆæ¯ï¼Œæˆ‘ä»¬å¯ä»¥ä½¿ç”¨methodè¡¨è¾¾å¼æ¥è°ƒç”¨ä¸€ä¸ªBeanæ¥è·å¾—åˆ†ç¦»çš„éƒ¨åˆ†ï¼Œè¿™ä¸ªBeanå¿…é¡»è¿”å›ä¸€ä¸ªiterableï¼Œä¾‹å¦‚ï¼šjava.util.Collection, java.util.Iterator or an array.
+äº‹ä¾‹å¦‚ä¸‹ï¼š
 from("direct:body") // here we use a POJO bean mySplitterBean to do the split of the payload .splitter().method("mySplitterBean", "splitBody")
 .to("mock:result");
 from("direct:message") // here we use a POJO bean mySplitterBean to do the split of the message  // with a certain header value
 .splitter().method("mySplitterBean", "splitMessage").to("mock:result");
-Bean±àĞ´ÈçÏÂ£º
+Beanç¼–å†™å¦‚ä¸‹ï¼š
 public class MySplitterBean {
 
     /**
@@ -2710,8 +2710,8 @@ public class MySplitterBean {
         return answer;
     }
 }
-·ÖÀë¡¢ÕûºÏ ÇëÇó/Ó¦´ğ Àı×Ó
-ÔÚ·ÖÀëÆ÷ÖĞ¿ÉÒÔ½«·ÖÀëµÄÏûÏ¢·Ö±ğ´¦Àí£¬ÕûºÏ²¢ÇÒ·µ»ØÒ»¸ö×éºÏÏìÓ¦µ½Ô­Ê¼µÄµ÷ÓÃÕß¡£ÒÔÏÂÊÇÑİÊ¾ÊÂÀı
+åˆ†ç¦»ã€æ•´åˆ è¯·æ±‚/åº”ç­” ä¾‹å­
+åœ¨åˆ†ç¦»å™¨ä¸­å¯ä»¥å°†åˆ†ç¦»çš„æ¶ˆæ¯åˆ†åˆ«å¤„ç†ï¼Œæ•´åˆå¹¶ä¸”è¿”å›ä¸€ä¸ªç»„åˆå“åº”åˆ°åŸå§‹çš„è°ƒç”¨è€…ã€‚ä»¥ä¸‹æ˜¯æ¼”ç¤ºäº‹ä¾‹
 // this routes starts from the direct:start endpoint
             // the body is then splitted based on @ separator
             // the splitter in Camel supports InOut as well and for that we need
@@ -2728,7 +2728,7 @@ public class MySplitterBean {
             // response back to the original caller, so we let this bean build it for us
             // this bean will receive the result of the aggregate strategy: MyOrderStrategy
             .to("bean:MyOrderService?method=buildCombinedResponse");
-OrderService beanÈçÏÂ
+OrderService beanå¦‚ä¸‹
 public static class MyOrderService {
 
     private static int counter;
@@ -2750,7 +2750,7 @@ public static class MyOrderService {
         return "Response[" + line + "]";
     }
 }
-ÒÔÏÂÊÇÕûºÏÏûÏ¢·½Ê½
+ä»¥ä¸‹æ˜¯æ•´åˆæ¶ˆæ¯æ–¹å¼
 /**
  * This is our own order aggregation strategy where we can control
  * how each splitted message should be combined. As we do not want to
@@ -2784,7 +2784,7 @@ public static class MyOrderStrategy implements AggregationStrategy {
         return oldExchange;
     }
 }
-ÉÏÊöÀı×ÓµÄ´òÓ¡ÏûÏ¢£¬¼ÙÉèÔÚdirect:start´æÔÚÒ»¸öÏûÏ¢£¬ÏûÏ¢µÄbody°üº¬Êı¾İA@B@C£¬¾­¹ı´¦Àíºó
+ä¸Šè¿°ä¾‹å­çš„æ‰“å°æ¶ˆæ¯ï¼Œå‡è®¾åœ¨direct:startå­˜åœ¨ä¸€ä¸ªæ¶ˆæ¯ï¼Œæ¶ˆæ¯çš„bodyåŒ…å«æ•°æ®A@B@Cï¼Œç»è¿‡å¤„ç†å
 HandleOrder: A
 HandleOrder: B
 Aggregate old orders: (id=1,item=A)
@@ -2814,18 +2814,18 @@ Response to caller: Response[(id=1,item=A);(id=2,item=B);(id=3,item=C)] ',
 									   'from("cmq:start").resequencer(header("seqnum")).stream().to("cmq:result");
 from("cmq:start").resequencer(header("seqnum")).stream().capacity(5000).timeout(4000L).to("cmq:result");
 from("cmq:start").resequencer(header("seqnum")).stream(new StreamResequencerConfig(5000, 4000L)).to("cmq:result");',
-									   'Á÷ÖØ×éÆ÷(Stream Resequencing)',
+									   'æµé‡ç»„å™¨(Stream Resequencing)',
 									   1,
 									   'admin',
-									   'EIPÄ£Ê½ÖĞµÄÏûÏ¢ÖØ×éÄ£Ê½ÔÊĞíÏûÏ¢»ùÓÚÄ³ÖÖ±È½ÏÆ÷ÖØĞÂ×éÖ¯£¬Á÷ÖØ×éÆ÷¸ù¾İÌ½²âĞÅÏ¢Ö®¼äµÄ¼äÏ¶£¬¶øÖØĞÂÅÅÁĞÁ¬ĞøµÄĞÅÏ¢Á÷ ¡£
+									   'EIPæ¨¡å¼ä¸­çš„æ¶ˆæ¯é‡ç»„æ¨¡å¼å…è®¸æ¶ˆæ¯åŸºäºæŸç§æ¯”è¾ƒå™¨é‡æ–°ç»„ç»‡ï¼Œæµé‡ç»„å™¨æ ¹æ®æ¢æµ‹ä¿¡æ¯ä¹‹é—´çš„é—´éš™ï¼Œè€Œé‡æ–°æ’åˆ—è¿ç»­çš„ä¿¡æ¯æµ ã€‚
 
-¹¦ÄÜËµÃ÷£º
-CamelÖ§³ÖÁ½ÖÖÖØ×éÆ÷Ëã·¨£¬Åú´¦ÀíÖØ×éÆ÷ºÍÁ÷³ÌÖØ×éÆ÷£¬Á÷ÖØ×éÆ÷ÔÚ¶ÀÁ¢ÏûÏ¢µÄ²ãÃæÉÏ¸ù¾İ·ìÏ¶Ì½²âºÍ³¬Ê±£¬Ê¹ÓÃÏûÏ¢Í·²¿ĞòºÅÖØÅÅÏûÏ¢¡£
+åŠŸèƒ½è¯´æ˜ï¼š
+Camelæ”¯æŒä¸¤ç§é‡ç»„å™¨ç®—æ³•ï¼Œæ‰¹å¤„ç†é‡ç»„å™¨å’Œæµç¨‹é‡ç»„å™¨ï¼Œæµé‡ç»„å™¨åœ¨ç‹¬ç«‹æ¶ˆæ¯çš„å±‚é¢ä¸Šæ ¹æ®ç¼éš™æ¢æµ‹å’Œè¶…æ—¶ï¼Œä½¿ç”¨æ¶ˆæ¯å¤´éƒ¨åºå·é‡æ’æ¶ˆæ¯ã€‚
 
-ÊÂÀıËµÃ÷£º
-»ù±¾Ê¹ÓÃ
+äº‹ä¾‹è¯´æ˜ï¼š
+åŸºæœ¬ä½¿ç”¨
 from("cmq:start").resequencer(header("seqnum")).stream().to("cmq:result");
-ÉèÖÃÈİÁ¿ºÍ³¬Ê±Ê±¼ä´óĞ¡
+è®¾ç½®å®¹é‡å’Œè¶…æ—¶æ—¶é—´å¤§å°
 from("cmq:start").resequencer(header("seqnum")).stream().capacity(5000).timeout(4000L).to("cmq:result");',
 									   '1245936079656_Resequencer.gif',
 									   'import org.apache.camel.model.config.StreamResequencerConfig;',
@@ -2845,14 +2845,14 @@ from("cmq:start").resequencer(header("seqnum")).stream().capacity(5000).timeout(
 									values
 									  (17,
 									   'from("cmq:a").idempotentConsumer(header("myMessageId"),memoryMessageIdRepository(200)).to("cmq:b");',
-									   'ÃİµÈÏû·Ñ(Idempotent Consumer)',
+									   'å¹‚ç­‰æ¶ˆè´¹(Idempotent Consumer)',
 									   1,
 									   'admin',
-									   'ÃİµÈÊõÓïÔÚÊıÑ§ÖĞÊÇÖ¸£¬Ò»¸öº¯ÊıÓ¦ÓÃÓÚ×ÔÉí£¬¿ÉÒÔ²úÉúÏàÍ¬µÄ½á¹û£¬¼´f(x)=f(f(x))¡£ÔÚÏûÏ¢´«µİÒıÇæÖĞ£¬¿ÉÒÔ½âÊÍÎª£º²»¹ÜÏûÏ¢½ÓÊÕÒ»´Î»¹ÊÇ¶à´Î£¬²úÉúµÄĞ§¹û¶¼ÏàÍ¬¡£Ò²¾ÍÊÇËµ£¬ÏûÏ¢¿ÉÒÔ¶à´ÎÖØ´«£¬¶ø²»»áÒıÆğÈÎºÎÎÊÌâ£¬¼´Ê¹½ÓÊÕÕß»áÖØ¸´½ÓÊÕµ½ÏàÍ¬µÄÏûÏ¢¡£
-¹¦ÄÜËµÃ÷£º
-EIPÄ£Ê½ÖĞµÄÃİµÈÏû·Ñ½«Ïû·ÑÕßÉè¼Æ³ÉÎªÃİµÈÏû·Ñ£¬°²È«µÄ¶à´ÎµÄ½ÓÊÕÏàÍ¬ÏûÏ¢¡£
-ÊÂÀıËµÃ÷£º
-from("cmq:a").idempotentConsumer(header("myMessageId"),memoryMessageIdRepository(200)).to("cmq:b");´ËÀı×ÓÊ¹ÓÃmessageIdÀ´¹ıÂËÖØ¸´µÄĞÅÏ¢£¬Ê¹ÓÃMessageId¿âÀ´´æ´¢ÏûÏ¢id¡£',
+									   'å¹‚ç­‰æœ¯è¯­åœ¨æ•°å­¦ä¸­æ˜¯æŒ‡ï¼Œä¸€ä¸ªå‡½æ•°åº”ç”¨äºè‡ªèº«ï¼Œå¯ä»¥äº§ç”Ÿç›¸åŒçš„ç»“æœï¼Œå³f(x)=f(f(x))ã€‚åœ¨æ¶ˆæ¯ä¼ é€’å¼•æ“ä¸­ï¼Œå¯ä»¥è§£é‡Šä¸ºï¼šä¸ç®¡æ¶ˆæ¯æ¥æ”¶ä¸€æ¬¡è¿˜æ˜¯å¤šæ¬¡ï¼Œäº§ç”Ÿçš„æ•ˆæœéƒ½ç›¸åŒã€‚ä¹Ÿå°±æ˜¯è¯´ï¼Œæ¶ˆæ¯å¯ä»¥å¤šæ¬¡é‡ä¼ ï¼Œè€Œä¸ä¼šå¼•èµ·ä»»ä½•é—®é¢˜ï¼Œå³ä½¿æ¥æ”¶è€…ä¼šé‡å¤æ¥æ”¶åˆ°ç›¸åŒçš„æ¶ˆæ¯ã€‚
+åŠŸèƒ½è¯´æ˜ï¼š
+EIPæ¨¡å¼ä¸­çš„å¹‚ç­‰æ¶ˆè´¹å°†æ¶ˆè´¹è€…è®¾è®¡æˆä¸ºå¹‚ç­‰æ¶ˆè´¹ï¼Œå®‰å…¨çš„å¤šæ¬¡çš„æ¥æ”¶ç›¸åŒæ¶ˆæ¯ã€‚
+äº‹ä¾‹è¯´æ˜ï¼š
+from("cmq:a").idempotentConsumer(header("myMessageId"),memoryMessageIdRepository(200)).to("cmq:b");æ­¤ä¾‹å­ä½¿ç”¨messageIdæ¥è¿‡æ»¤é‡å¤çš„ä¿¡æ¯ï¼Œä½¿ç”¨MessageIdåº“æ¥å­˜å‚¨æ¶ˆæ¯idã€‚',
 									   ' ',
 									   ' ',
 									   null,
@@ -2871,13 +2871,13 @@ from("cmq:a").idempotentConsumer(header("myMessageId"),memoryMessageIdRepository
 									values
 									  (18,
 									   'from("cmq:start").splitter().body().choice().when().method("orderItemHelper", "isWidget").to("cmq:widgetInventory, cmq:aggregate").otherwise().to("cmq:gadgetInventory,cmq:aggregate");',
-									   '¸´ºÏÏûÏ¢´¦Àí(Composed Message Processor)',
+									   'å¤åˆæ¶ˆæ¯å¤„ç†(Composed Message Processor)',
 									   1,
 									   'admin',
-									   '¸´ºÏÏûÏ¢´¦Àí(Composed Message Processor)
-Èç¹ûÒ»¸öÏûÏ¢ĞèÒª¶à¸ö´¦Àí¹ı³Ì£¬ÈçÍ¼ËùÊ¾£¬Ò»¸öÏûÏ¢ÓÉ·Ö½âÆ÷°Ñµ¥¶ÀµÄÏûÏ¢»®·Ö³É¶à¸ö×é³É²¿·Ö£¬»ùÓÚÄÚÈİµÄÂ·ÓÉÆ÷¿ÉÒÔ¸ù¾İÏûÏ¢µÄÄÚÈİ»òÕßÀàĞÍ°Ñ·Ö½âºóµÄ¸÷¸ö×ÓÏûÏ¢Â·ÓÉ¸øÕıÈ·µÄ´¦Àí¹ı³Ì£¬×îºóÊ¹ÓÃ¾ÛºÏÆ÷°ÑÏìÓ¦µÄ½á¹ûÖØĞÂ×éºÏ³ÉÒ»¸öÏûÏ¢£¬EIPÖĞµÄÏûÏ¢×éºÏ´¦ÀíÄ£Ê½ÔÊĞí¶ÔÏûÏ¢½øĞĞ×éºÏ²Ù×÷¡£
-ÊÂÀıËµÃ÷£º
-from("cmq:start").splitter().body().choice().when().method("orderItemHelper", "isWidget").to("cmq:widgetInventory, cmq:aggregate").otherwise().to("cmq:gadgetInventory,cmq:aggregate");´ËÀı×ÓÊ×ÏÈÊ¹ÓÃ·Ö½âÆ÷½«ÏûÏ¢·Ö³ÉÒ»¸öÒ»¸öµ¥¶ÀÏûÏ¢£¬È»ºóÊ¹ÓÃ»ùÓÚÄÚÈİµÄÂ·ÓÉÆ÷£¬Èç¹ûÏûÏ¢µÄÄÚÈİÊÇwidget£¬Ôò·¢ËÍµ½widgetInventory´¦Àí£¬ÈçÊÇgadget£¬Ôò·¢ËÍµÄgadgetInventory´¦Àí¡£',
+									   'å¤åˆæ¶ˆæ¯å¤„ç†(Composed Message Processor)
+å¦‚æœä¸€ä¸ªæ¶ˆæ¯éœ€è¦å¤šä¸ªå¤„ç†è¿‡ç¨‹ï¼Œå¦‚å›¾æ‰€ç¤ºï¼Œä¸€ä¸ªæ¶ˆæ¯ç”±åˆ†è§£å™¨æŠŠå•ç‹¬çš„æ¶ˆæ¯åˆ’åˆ†æˆå¤šä¸ªç»„æˆéƒ¨åˆ†ï¼ŒåŸºäºå†…å®¹çš„è·¯ç”±å™¨å¯ä»¥æ ¹æ®æ¶ˆæ¯çš„å†…å®¹æˆ–è€…ç±»å‹æŠŠåˆ†è§£åçš„å„ä¸ªå­æ¶ˆæ¯è·¯ç”±ç»™æ­£ç¡®çš„å¤„ç†è¿‡ç¨‹ï¼Œæœ€åä½¿ç”¨èšåˆå™¨æŠŠå“åº”çš„ç»“æœé‡æ–°ç»„åˆæˆä¸€ä¸ªæ¶ˆæ¯ï¼ŒEIPä¸­çš„æ¶ˆæ¯ç»„åˆå¤„ç†æ¨¡å¼å…è®¸å¯¹æ¶ˆæ¯è¿›è¡Œç»„åˆæ“ä½œã€‚
+äº‹ä¾‹è¯´æ˜ï¼š
+from("cmq:start").splitter().body().choice().when().method("orderItemHelper", "isWidget").to("cmq:widgetInventory, cmq:aggregate").otherwise().to("cmq:gadgetInventory,cmq:aggregate");æ­¤ä¾‹å­é¦–å…ˆä½¿ç”¨åˆ†è§£å™¨å°†æ¶ˆæ¯åˆ†æˆä¸€ä¸ªä¸€ä¸ªå•ç‹¬æ¶ˆæ¯ï¼Œç„¶åä½¿ç”¨åŸºäºå†…å®¹çš„è·¯ç”±å™¨ï¼Œå¦‚æœæ¶ˆæ¯çš„å†…å®¹æ˜¯widgetï¼Œåˆ™å‘é€åˆ°widgetInventoryå¤„ç†ï¼Œå¦‚æ˜¯gadgetï¼Œåˆ™å‘é€çš„gadgetInventoryå¤„ç†ã€‚',
 									   '1245936107453_ComposedMessageProcessor.gif',
 									   ' ',
 									   null,
@@ -2896,13 +2896,13 @@ from("cmq:start").splitter().body().choice().when().method("orderItemHelper", "i
 									values
 									  (30,
 									   'from("cmq:a").filter(header("foo").isEqualTo("bar")).process(myProcessor);',
-									   'Ñ¡ÔñĞÔÏû·ÑÕß(Selective Consumer )',
+									   'é€‰æ‹©æ€§æ¶ˆè´¹è€…(Selective Consumer )',
 									   1,
 									   'admin',
-									   'Ó¦ÓÃÊ¹ÓÃÏûÏ¢´«µİ£¬´ÓÏûÏ¢´«µİÖĞÏû·ÑÏûÏ¢£¬µ«ÊÇ²¢²»ÏëÏû·ÑÏûÏ¢Í¨µÀÖĞËùÓĞµÄÏûÏ¢£¬¶øÖ»ÏëÏû·ÑÆäÖĞµÄÒ»²¿·ÖÏûÏ¢£¬ÏûÏ¢µÄÏû·ÑÕßÊµÏÖÎªÑ¡ÔñĞÔÏû·ÑÕß£¬¹ıÂËÔÚÍ¨µÀÉÏ´«ËÍµÄÏûÏ¢£¬´Ó¶øÊ¹ÆäÖ»ÄÜ½ÓÊÕµ½·ûºÏÆä±ê×¼µÄÏûÏ¢¡£
+									   'åº”ç”¨ä½¿ç”¨æ¶ˆæ¯ä¼ é€’ï¼Œä»æ¶ˆæ¯ä¼ é€’ä¸­æ¶ˆè´¹æ¶ˆæ¯ï¼Œä½†æ˜¯å¹¶ä¸æƒ³æ¶ˆè´¹æ¶ˆæ¯é€šé“ä¸­æ‰€æœ‰çš„æ¶ˆæ¯ï¼Œè€Œåªæƒ³æ¶ˆè´¹å…¶ä¸­çš„ä¸€éƒ¨åˆ†æ¶ˆæ¯ï¼Œæ¶ˆæ¯çš„æ¶ˆè´¹è€…å®ç°ä¸ºé€‰æ‹©æ€§æ¶ˆè´¹è€…ï¼Œè¿‡æ»¤åœ¨é€šé“ä¸Šä¼ é€çš„æ¶ˆæ¯ï¼Œä»è€Œä½¿å…¶åªèƒ½æ¥æ”¶åˆ°ç¬¦åˆå…¶æ ‡å‡†çš„æ¶ˆæ¯ã€‚
 
-ÊÂÀıËµÃ÷£º
-from("cmq:a").filter(header("foo").isEqualTo("bar")).process(myProcessor);ÊÂÀıËµÃ÷Ïû·ÑÕß¼àÌı¶ÓÁĞa£¬µ±¶ÓÁĞÀïµÄÏûÏ¢µÄÍ·²¿ĞÅÏ¢µÈÓÚbar£¬²Å°ÑÏûÏ¢´«µ½¶¨ÒåµÄ´¦ÀíÆ÷myProcessor',
+äº‹ä¾‹è¯´æ˜ï¼š
+from("cmq:a").filter(header("foo").isEqualTo("bar")).process(myProcessor);äº‹ä¾‹è¯´æ˜æ¶ˆè´¹è€…ç›‘å¬é˜Ÿåˆ—aï¼Œå½“é˜Ÿåˆ—é‡Œçš„æ¶ˆæ¯çš„å¤´éƒ¨ä¿¡æ¯ç­‰äºbarï¼Œæ‰æŠŠæ¶ˆæ¯ä¼ åˆ°å®šä¹‰çš„å¤„ç†å™¨myProcessor',
 									   '1245937185500_SelectiveConsumer.gif',
 									   ' ',
 									   null,
@@ -2927,18 +2927,18 @@ from("cmq:start").aggregator().xpath("name(/stockQuote[@symbol=APACHE])", String
 from("cmq:start").aggregator().header("id").batchTimeout(500L).to("cmq:result");
 AggregationCollection ag = new PredicateAggregationCollection(header("id"),new UseLatestAggregationStrategy(),header(Exchange.AGGREGATED_COUNT).isEqualTo(3));
 from("cmq:start").aggregator(ag).batchTimeout(500L).to("cmq:result");',
-									   'ÕûºÏÄ£Ê½(Aggregator )',
+									   'æ•´åˆæ¨¡å¼(Aggregator )',
 									   1,
 									   'admin',
-									   'EIPÄ£Ê½ÖĞµÄÕûºÏÄ£Ê½ÔÊĞí½«¶à¸öÏûÏ¢ÕûºÏ³ÉÒ»¸öµ¥¶ÀÏûÏ¢·¢ËÍ¡£
+									   'EIPæ¨¡å¼ä¸­çš„æ•´åˆæ¨¡å¼å…è®¸å°†å¤šä¸ªæ¶ˆæ¯æ•´åˆæˆä¸€ä¸ªå•ç‹¬æ¶ˆæ¯å‘é€ã€‚
 
-¹¦ÄÜËµÃ÷£º
-ÕûºÏÄ£Ê½ÓÃÀ´½«ÏûÏ¢ºÏ³ÉÒ»¸öÏûÏ¢£¬ÀıÈç£¬¼ÙÉèÓĞÒ»¸ö¹ÉÆ±ÏµÍ³£¬Äã¿ÉÄÜÊÜµ½Ã¿Ãë30000¸öÏûÏ¢£¬Äã¿ÉÄÜÏë¼õ»ºÊı¾İ¸üĞÂËÙ¶È£¬Ò»¸öGUIÎŞ·¨´¦ÀíÈç´Ë¿ìµÄ¸üĞÂËÙÂÊ£¬ËùÒÔÄãÏëÕûºÏÕâĞ©ÏûÏ¢µ½Ò»¸öwindow£¬¶ÔÓÚÕâĞ©¹ÉÆ±ÏûÏ¢±»ÕûºÏÔÚÒ»Æğ£¬ÔÚÈ±Ê¡Çé¿öÕûºÏÄ£Ê½»áÑ¡Ôñ×î½üµÄÏûÏ¢£¬²¢ÇÒ¶ªÆúÊ±¼ä³¤µÄÏûÏ¢¡£
+åŠŸèƒ½è¯´æ˜ï¼š
+æ•´åˆæ¨¡å¼ç”¨æ¥å°†æ¶ˆæ¯åˆæˆä¸€ä¸ªæ¶ˆæ¯ï¼Œä¾‹å¦‚ï¼Œå‡è®¾æœ‰ä¸€ä¸ªè‚¡ç¥¨ç³»ç»Ÿï¼Œä½ å¯èƒ½å—åˆ°æ¯ç§’30000ä¸ªæ¶ˆæ¯ï¼Œä½ å¯èƒ½æƒ³å‡ç¼“æ•°æ®æ›´æ–°é€Ÿåº¦ï¼Œä¸€ä¸ªGUIæ— æ³•å¤„ç†å¦‚æ­¤å¿«çš„æ›´æ–°é€Ÿç‡ï¼Œæ‰€ä»¥ä½ æƒ³æ•´åˆè¿™äº›æ¶ˆæ¯åˆ°ä¸€ä¸ªwindowï¼Œå¯¹äºè¿™äº›è‚¡ç¥¨æ¶ˆæ¯è¢«æ•´åˆåœ¨ä¸€èµ·ï¼Œåœ¨ç¼ºçœæƒ…å†µæ•´åˆæ¨¡å¼ä¼šé€‰æ‹©æœ€è¿‘çš„æ¶ˆæ¯ï¼Œå¹¶ä¸”ä¸¢å¼ƒæ—¶é—´é•¿çš„æ¶ˆæ¯ã€‚
 
-ÊÂÀıËµÃ÷£º
+äº‹ä¾‹è¯´æ˜ï¼š
 from("seda:header").setHeader("visited", constant(true)). aggregator (header("cheese")).to("mock:result");
 
-// ×Ô¶¨ÒåÕûºÏ²ßÂÔ
+// è‡ªå®šä¹‰æ•´åˆç­–ç•¥
 // stating that the aggregated header is equal to 5.
 from("direct:predicate"). aggregator (header("cheese"), new MyAggregationStrategy()).
 completionPredicate(header("aggregated").isEqualTo(5)).to("mock:result");
@@ -2947,10 +2947,10 @@ completionPredicate(header("aggregated").isEqualTo(5)).to("mock:result");
 from("direct:outBatchPredicate"). aggregator (header("cheese"), new MyAggregationStrategy()).
 completionPredicate(header("aggregated").isEqualTo(5)).outBatchSize(10).to("mock:result");
 
-Èç¹ûÊÇÊ¹ÓÃJMS¿ÉÒÔÊ¹ÓÃJMSDestinnationÍ·²¿×÷ÎªÏà¹ØµÄkey¡£
+å¦‚æœæ˜¯ä½¿ç”¨JMSå¯ä»¥ä½¿ç”¨JMSDestinnationå¤´éƒ¨ä½œä¸ºç›¸å…³çš„keyã€‚
 from("activemq:someReallyFastTopic").aggregator(header("JMSDestination")).to("activemq:someSlowTopicForGuis");
 
-Í¬Ê±Ò²¿ÉÒÔÊÇÊ¹ÓÃ²»Í¬µÄÓïÑÔÈçXPath£¬XQuery£¬SQL»òÕß²»Í¬µÄ½Å±¾ÓïÑÔ£¬ÒÔÏÂÊÇXPathµÄÀı×Ó¡£
+åŒæ—¶ä¹Ÿå¯ä»¥æ˜¯ä½¿ç”¨ä¸åŒçš„è¯­è¨€å¦‚XPathï¼ŒXQueryï¼ŒSQLæˆ–è€…ä¸åŒçš„è„šæœ¬è¯­è¨€ï¼Œä»¥ä¸‹æ˜¯XPathçš„ä¾‹å­ã€‚
 //aggregate based on the message content using an XPath expression
 //example assumes an XML document starting with <stockQuote symbol=''...''>
 //aggregate messages based on their symbol attribute within the <stockQuote> element
@@ -2960,7 +2960,7 @@ from("seda:start").aggregate().xpath("/stockQuote/@symbol", String.class).batchS
 //one exchange and all the other messages (different symbol or different root element) into another exchange.
 from("seda:start").aggregate().xpath("name(/stockQuote[@symbol=''APACHE''])", String.class).batchSize(5).to("mock:result");
 
-Ä¬ÈÏÇé¿öÏÂCamelÊ¹ÓÃDefaultAggregationCollection ºÍ UseLatestAggregationStrategy£¬ÒÔÏÂÊÇ¼òµ¥µÄÀı×Ó¡£
+é»˜è®¤æƒ…å†µä¸‹Camelä½¿ç”¨DefaultAggregationCollection å’Œ UseLatestAggregationStrategyï¼Œä»¥ä¸‹æ˜¯ç®€å•çš„ä¾‹å­ã€‚
 // our route is aggregating from the direct queue and sending the response to the mock
 from("direct:start")
     // aggregated by header id
@@ -2971,7 +2971,7 @@ from("direct:start")
     .batchTimeout(500L)
 .to("mock:result");
 
-ÒÔÏÂÊÇ¶ÔÕûºÏ²ßÂÔµÄÀ©Õ¹£¬Ê¹ÓÃ¶ÏÑÔÀ´¾ö¶¨ÊÕ¼¯²ßÂÔ¡£ÊÂÀıÈçÏÂ£º
+ä»¥ä¸‹æ˜¯å¯¹æ•´åˆç­–ç•¥çš„æ‰©å±•ï¼Œä½¿ç”¨æ–­è¨€æ¥å†³å®šæ”¶é›†ç­–ç•¥ã€‚äº‹ä¾‹å¦‚ä¸‹ï¼š
         // create the aggregation collection we will use.
             // - we will correlate the received message based on the id header
             // - as we will just keep the latest message we use the latest strategy
@@ -2988,7 +2988,7 @@ from("direct:start")
                 .batchTimeout(500L)
                 .to("mock:result");
 
-Ê¹ÓÃcustomÕûºÏ²ßÂÔ
+ä½¿ç”¨customæ•´åˆç­–ç•¥
 private static class MyAggregationStrategy implements AggregationStrategy {
 
         public Exchange aggregate(Exchange oldExchange, Exchange newExchange) {
@@ -3002,7 +3002,7 @@ private static class MyAggregationStrategy implements AggregationStrategy {
             return newPrice > oldPrice ? newExchange : oldExchange;
         }
     }
-ÒÔÏÂÊÇ¶ÔÂ·ÓÉµÄÅäÖÃ
+ä»¥ä¸‹æ˜¯å¯¹è·¯ç”±çš„é…ç½®
 // our route is aggregating from the direct queue and sending the response to the mock
 from("direct:start")
     // aggregated by header id and use our own strategy how to aggregate
@@ -3037,14 +3037,14 @@ import org.apache.camel.processor.aggregate.*;',
                                          return delay;
                                          }
                                       }',
-									   'ÑÓ³Ù·¢ËÍ(delay)',
+									   'å»¶è¿Ÿå‘é€(delay)',
 									   1,
 									   'admin',
-									   'EIPÄ£Ê½ÖĞÏûÏ¢ÑÓ³ÙÄ£Ê½ÔÊĞíÉèÖÃÏûÏ¢ÑÓ³Ù·¢ËÍ¡£
-¹¦ÄÜËµÃ÷£º
-ÊÂÀıËµÃ÷£º
-from("cmq:b").delayer(1000).to("cmq:result");´ËÀı×ÓÊÇ½«b¶ÓÁĞÖĞµÄÏûÏ¢¶¼ÑÓ³Ù1ÃëÖĞ·¢ËÍµ½¶ÓÁĞresultÖĞ¡£
-from("cmq:someQueue").resequencer(header("MyDeliveryTime")).delayer("MyRedeliveryTime").to("cmq:aDelayedQueue");´ËÀı×ÓÊÇ½«¶ÓÁĞÖĞµÄÏûÏ¢¸ù¾İÍ·²¿ÊôĞÔMyDeliveryTimeÖØĞÂÅÅĞò£¬È»ºóÔÙÑÓ³Ù·¢ËÍµ½aDelayedQueue¶ÓÁĞÖĞ¡£
+									   'EIPæ¨¡å¼ä¸­æ¶ˆæ¯å»¶è¿Ÿæ¨¡å¼å…è®¸è®¾ç½®æ¶ˆæ¯å»¶è¿Ÿå‘é€ã€‚
+åŠŸèƒ½è¯´æ˜ï¼š
+äº‹ä¾‹è¯´æ˜ï¼š
+from("cmq:b").delayer(1000).to("cmq:result");æ­¤ä¾‹å­æ˜¯å°†bé˜Ÿåˆ—ä¸­çš„æ¶ˆæ¯éƒ½å»¶è¿Ÿ1ç§’ä¸­å‘é€åˆ°é˜Ÿåˆ—resultä¸­ã€‚
+from("cmq:someQueue").resequencer(header("MyDeliveryTime")).delayer("MyRedeliveryTime").to("cmq:aDelayedQueue");æ­¤ä¾‹å­æ˜¯å°†é˜Ÿåˆ—ä¸­çš„æ¶ˆæ¯æ ¹æ®å¤´éƒ¨å±æ€§MyDeliveryTimeé‡æ–°æ’åºï¼Œç„¶åå†å»¶è¿Ÿå‘é€åˆ°aDelayedQueueé˜Ÿåˆ—ä¸­ã€‚
 from("cmq:foo").delayer().method("someBean", "computeDelay").to("cmq:bar");
 public class SomeBean {
   public long computeDelay() {
@@ -3052,7 +3052,7 @@ public class SomeBean {
      // use java code to compute a delay value in millis
      return delay;
  }
-}´ËÀı×ÓÊÇÓëÉÏÃæÁ½¸öÀı×Ó²»Í¬µÄÊÇ£¬¿ÉÒÔ×Ô¶¨ÒåÑÓ³Ù·¢ËÍ²ßÂÔ¡£',
+}æ­¤ä¾‹å­æ˜¯ä¸ä¸Šé¢ä¸¤ä¸ªä¾‹å­ä¸åŒçš„æ˜¯ï¼Œå¯ä»¥è‡ªå®šä¹‰å»¶è¿Ÿå‘é€ç­–ç•¥ã€‚',
 									   ' ',
 									   ' ',
 									   null,

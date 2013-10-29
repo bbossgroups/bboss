@@ -34,7 +34,7 @@ package com.frameworkset.common.util;
 
 /**
  * @author biaoping.yin
- * Êı¾İ´«ÊäÒì³£Àà
+ * æ•°æ®ä¼ è¾“å¼‚å¸¸ç±»
  */
 public class TransferException extends Exception {
 	public TransferException(String msg)

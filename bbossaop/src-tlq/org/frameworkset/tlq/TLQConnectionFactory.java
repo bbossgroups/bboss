@@ -30,7 +30,7 @@ import tongtech.jms.client.JmsConnectionFactory;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2010-6-8 œ¬ŒÁ05:08:13
+ * @Date 2010-6-8 ‰∏ãÂçà05:08:13
  * @author biaoping.yin
  * @version 1.0
  */

@@ -134,7 +134,7 @@ public class DBDB2Net
     }
     
 //    /**
-//	 * 获取指定数据的分页数据sql语句
+//	 * 鑾峰彇鎸囧畾鏁版嵁鐨勫垎椤垫暟鎹畇ql璇彞
 //	 * @param sql
 //	 * @return
 //	 */

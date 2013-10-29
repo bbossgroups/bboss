@@ -46,7 +46,7 @@ public class TestPrepareDBUtilNewInterface {
 	{
 		PreparedDBUtil dbUtil = new PreparedDBUtil();
 		try {
-			dbUtil.preparedSelect("select * from testnewface where object_id < ?",0,10);//·ÖÒ³²éÑ¯·½·¨
+			dbUtil.preparedSelect("select * from testnewface where object_id < ?",0,10);//åˆ†é¡µæŸ¥è¯¢æ–¹æ³•
 			dbUtil.setInt(1, 100);
 			List list = dbUtil.executePreparedForList(TestNewface.class,new RowHandler<TestNewface>()
 			{
@@ -56,7 +56,7 @@ public class TestPrepareDBUtilNewInterface {
 					try {
 						t.setCREATED(record.getDate("created"));
 						t.setDATA_OBJECT_ID(record.getInt("DATA_OBJECT_ID"));
-						//........ÉèÖÃÆäËûµÄÊôÐÔ
+						//........è®¾ç½®å…¶ä»–çš„å±žæ€§
 					} catch (SQLException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -66,8 +66,8 @@ public class TestPrepareDBUtilNewInterface {
 				}
 				
 			});
-			long totalsize = dbUtil.getLongTotalSize();//»ñµÃ×Ü¼ÇÂ¼Êý
-			for(int i = 0; i < list.size()/*list.size()µ±Ò³¼ÇÂ¼Êý*/; i ++)//±éÀúµ±Ò³¼ÇÂ¼
+			long totalsize = dbUtil.getLongTotalSize();//èŽ·å¾—æ€»è®°å½•æ•°
+			for(int i = 0; i < list.size()/*list.size()å½“é¡µè®°å½•æ•°*/; i ++)//éåŽ†å½“é¡µè®°å½•
 			{
 				TestNewface testNewface = (TestNewface)list.get(i);
 				System.out.println(testNewface);
@@ -102,7 +102,7 @@ public class TestPrepareDBUtilNewInterface {
 		try {
 			dbUtil.preparedSelect("select * from testnewface where object_id < ?");
 			dbUtil.setInt(1, 100);
-			//Í¨¹ýÐÐ´¦ÀíÆ÷¹¹Ôì×Ô¼ºµÄxml´®
+			//é€šè¿‡è¡Œå¤„ç†å™¨æž„é€ è‡ªå·±çš„xmlä¸²
 			String xml = dbUtil.executePreparedForXML(new RowHandler()
 			{
 
@@ -203,9 +203,9 @@ public class TestPrepareDBUtilNewInterface {
 		   for(int i = 0; i < records.length; i ++)
 		   {
 			   /**
-			    * Ìá¹©¸÷ÖÖÀàÐÍÊý¾ÝµÄ»ñÈ¡·½·¨
+			    * æä¾›å„ç§ç±»åž‹æ•°æ®çš„èŽ·å–æ–¹æ³•
 			    */
-			   records[i].getString(0);//Óërecords[i].getString("filelist")·½·¨Ò»ÖÂ
+			   records[i].getString(0);//ä¸Žrecords[i].getString("filelist")æ–¹æ³•ä¸€è‡´
 		   }
 		}
 		catch(Exception e)

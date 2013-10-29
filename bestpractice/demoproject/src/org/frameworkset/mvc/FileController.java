@@ -26,8 +26,6 @@ import org.frameworkset.web.multipart.IgnoreFieldNameMultipartFile;
 import org.frameworkset.web.multipart.MultipartFile;
 import org.frameworkset.web.servlet.ModelMap;
 
-import com.frameworkset.platform.cms.templatemanager.FileResource;
-import com.frameworkset.platform.cms.util.FileUtil;
 import com.frameworkset.util.StringUtil;
 
 /**
@@ -36,7 +34,7 @@ import com.frameworkset.util.StringUtil;
  * <p> bboss workgroup </p>
  * <p> Copyright (c) 2009 </p>
  * 
- * @Date 2012-5-14 œ¬ŒÁ3:25:35
+ * @Date 2012-5-14 ‰∏ãÂçà3:25:35
  * @author biaoping.yin
  * @version 1.0
  */

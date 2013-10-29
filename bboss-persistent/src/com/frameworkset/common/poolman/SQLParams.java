@@ -54,10 +54,10 @@ import com.frameworkset.util.VariableHandler.Variable;
 /**
  * <p>Title: SQLParams.java</p>
  *
- * <p>Description: ·â×°sqlÉÏ²ãÓ¦ÓÃ´«µİµÄÔ¤±àÒë²ÎÊı</p>
+ * <p>Description: å°è£…sqlä¸Šå±‚åº”ç”¨ä¼ é€’çš„é¢„ç¼–è¯‘å‚æ•°</p>
  *
  * <p>Copyright: Copyright (c) 2007</p>
- * @Date 2010-3-11 ÉÏÎç09:17:38
+ * @Date 2010-3-11 ä¸Šåˆ09:17:38
  * @author biaoping.yin
  * @version 1.0
  */
@@ -73,7 +73,7 @@ public class SQLParams
 	private String dbname = null;
     private static Logger log = Logger.getLogger(SQLParams.class);
     /**
-     * ÓÃÓÚÔ¤±àÒëÅú´¦Àí²Ù×÷
+     * ç”¨äºé¢„ç¼–è¯‘æ‰¹å¤„ç†æ“ä½œ
      */
     private SQLInfo oldsql = null;
     private boolean frommap = false;
@@ -87,7 +87,7 @@ public class SQLParams
         this.dbname = dbname;
     }
     /**
-     * Êı¾İ¿â²Ù×÷ÀàĞÍ
+     * æ•°æ®åº“æ“ä½œç±»å‹
      * 
      */
     private int action = -1;
@@ -103,8 +103,8 @@ public class SQLParams
         this.action = action;
     }
     /**
-     * ²»½¨ÒéÊ¹ÓÃ£¬¸Ã±äÁ¿ÒÑ¾­±»parserSQLStructionsËùÈ¡´ú
-     * parserResultsÈÎÈ»±£ÁôÓÃÀ´´æ·Å·Ç#[]ÀàĞÍµÄ±äÁ¿Êı¾İ
+     * ä¸å»ºè®®ä½¿ç”¨ï¼Œè¯¥å˜é‡å·²ç»è¢«parserSQLStructionsæ‰€å–ä»£
+     * parserResultsä»»ç„¶ä¿ç•™ç”¨æ¥å­˜æ”¾é#[]ç±»å‹çš„å˜é‡æ•°æ®
      */
     @Deprecated 
     private static final Map<String,String[][]> parserResults = new java.util.WeakHashMap<String,String[][]>();
@@ -327,20 +327,20 @@ public class SQLParams
 //        String vars[] = args[1];  
 //        if(vars.length == 0 )
 //        {
-//        	log.debug("Ô¤±àÒësqlÓï¾äÌáÊ¾£ºÖ¸¶¨ÁËÔ¤±àÒë²ÎÊı,sqlÓï¾äÖĞÃ»ÓĞ°üº¬·ûºÏÒªÇóµÄÔ¤±àÒë±äÁ¿£¬" + this);
-////            throw new SetSQLParamException("Ô¤±àÒësqlÓï¾ä·Ç·¨£ºÖ¸¶¨ÁËÔ¤±àÒë²ÎÊı,sqlÓï¾äÖĞÃ»ÓĞ°üº¬·ûºÏÒªÇóµÄÔ¤±àÒë±äÁ¿£¬" + this);
+//        	log.debug("é¢„ç¼–è¯‘sqlè¯­å¥æç¤ºï¼šæŒ‡å®šäº†é¢„ç¼–è¯‘å‚æ•°,sqlè¯­å¥ä¸­æ²¡æœ‰åŒ…å«ç¬¦åˆè¦æ±‚çš„é¢„ç¼–è¯‘å˜é‡ï¼Œ" + this);
+////            throw new SetSQLParamException("é¢„ç¼–è¯‘sqlè¯­å¥éæ³•ï¼šæŒ‡å®šäº†é¢„ç¼–è¯‘å‚æ•°,sqlè¯­å¥ä¸­æ²¡æœ‰åŒ…å«ç¬¦åˆè¦æ±‚çš„é¢„ç¼–è¯‘å˜é‡ï¼Œ" + this);
 //        }
 //        Param temp = null;
 //        for(int i = 0;i < vars.length; i ++)
 //        {
 //            temp = this.sqlparams.get(vars[i]);
 //            if(temp == null)
-//                throw new SetSQLParamException("Î´Ö¸¶¨°ó¶¨±äÁ¿µÄÖµ£º" 
+//                throw new SetSQLParamException("æœªæŒ‡å®šç»‘å®šå˜é‡çš„å€¼ï¼š" 
 //                                                + vars[i] 
 //                                                + "\r\n" 
 //                                                + this);
 //            Param newparam = temp.clone();
-//            //°ó¶¨±äÁ¿Ë÷Òı´Ó1¿ªÊ¼
+//            //ç»‘å®šå˜é‡ç´¢å¼•ä»1å¼€å§‹
 //            newparam.index = i + 1;
 //            _realParams.add(newparam);
 //        }
@@ -435,20 +435,20 @@ public class SQLParams
         String vars[] = args[1];  
         if(vars.length == 0 )
         {
-        	log.debug("Ô¤±àÒësqlÓï¾äÌáÊ¾£ºÖ¸¶¨ÁËÔ¤±àÒë²ÎÊı,sqlÓï¾äÖĞÃ»ÓĞ°üº¬·ûºÏÒªÇóµÄÔ¤±àÒë±äÁ¿£¬" + this);
-//            throw new SetSQLParamException("Ô¤±àÒësqlÓï¾ä·Ç·¨£ºÖ¸¶¨ÁËÔ¤±àÒë²ÎÊı,sqlÓï¾äÖĞÃ»ÓĞ°üº¬·ûºÏÒªÇóµÄÔ¤±àÒë±äÁ¿£¬" + this);
+        	log.debug("é¢„ç¼–è¯‘sqlè¯­å¥æç¤ºï¼šæŒ‡å®šäº†é¢„ç¼–è¯‘å‚æ•°,sqlè¯­å¥ä¸­æ²¡æœ‰åŒ…å«ç¬¦åˆè¦æ±‚çš„é¢„ç¼–è¯‘å˜é‡ï¼Œ" + this);
+//            throw new SetSQLParamException("é¢„ç¼–è¯‘sqlè¯­å¥éæ³•ï¼šæŒ‡å®šäº†é¢„ç¼–è¯‘å‚æ•°,sqlè¯­å¥ä¸­æ²¡æœ‰åŒ…å«ç¬¦åˆè¦æ±‚çš„é¢„ç¼–è¯‘å˜é‡ï¼Œ" + this);
         }
         Param temp = null;
         for(int i = 0;i < vars.length; i ++)
         {
             temp = this.sqlparams.get(vars[i]);
             if(temp == null)
-                throw new SetSQLParamException("Î´Ö¸¶¨°ó¶¨±äÁ¿µÄÖµ£º" 
+                throw new SetSQLParamException("æœªæŒ‡å®šç»‘å®šå˜é‡çš„å€¼ï¼š" 
                                                 + vars[i] 
                                                 + "\r\n" 
                                                 + this);
             Param newparam = temp.clone();
-            //°ó¶¨±äÁ¿Ë÷Òı´Ó1¿ªÊ¼
+            //ç»‘å®šå˜é‡ç´¢å¼•ä»1å¼€å§‹
             newparam.index = i + 1;
             _realParams.add(newparam);
         }
@@ -469,10 +469,10 @@ public class SQLParams
 	    	VelocityContext vcontext = null;
 	    	if(sqlinfo.istpl())
 	    	{
-	    		sqlinfo.getSqltpl().process();//Ê¶±ğsqlÓï¾äÊÇ²»ÊÇÕæÕıµÄvelocity sqlÄ£°å
+	    		sqlinfo.getSqltpl().process();//è¯†åˆ«sqlè¯­å¥æ˜¯ä¸æ˜¯çœŸæ­£çš„velocity sqlæ¨¡æ¿
 	    		if(sqlinfo.istpl())
 	    		{
-	    			vcontext = buildVelocityContext();//Ò»¸öcontextÊÇ·ñ¿ÉÒÔ±»Í¬Ê±ÓÃÓÚ¶à´ÎÔËËãÄØ£¿
+	    			vcontext = buildVelocityContext();//ä¸€ä¸ªcontextæ˜¯å¦å¯ä»¥è¢«åŒæ—¶ç”¨äºå¤šæ¬¡è¿ç®—å‘¢ï¼Ÿ
 			    	
 			    	StringWriter sw = new StringWriter();
 			       sqlinfo.getSqltpl().merge(vcontext,sw);
@@ -521,7 +521,7 @@ public class SQLParams
 	        		totalsizesql = totalsizesqlinfo.getSql();
 	        	}
 	        	SQLStruction totalsizesqlstruction =  null;
-	        	if(totalsizesqlinfo.getSqlutil() == null)//Èç¹ûsqlÓï¾äÊ±´ÓÅäÖÃÎÄ¼ş¶ÁÈ¡£¬ÔòÎªÃ¿¸öÅäÖÃÎÄ¼ş¶¨ÒåÁËÒ»¸ösqlÓï¾ä½á¹¹»º´æÈİÆ÷
+	        	if(totalsizesqlinfo.getSqlutil() == null)//å¦‚æœsqlè¯­å¥æ—¶ä»é…ç½®æ–‡ä»¶è¯»å–ï¼Œåˆ™ä¸ºæ¯ä¸ªé…ç½®æ–‡ä»¶å®šä¹‰äº†ä¸€ä¸ªsqlè¯­å¥ç»“æ„ç¼“å­˜å®¹å™¨
 	        	{
 			        totalsizesqlstruction =   SQLUtil.getGlobalSQLUtil().getTotalsizeSQLStruction(totalsizesqlinfo,totalsizesql);
     
@@ -534,7 +534,7 @@ public class SQLParams
 		        newsql.setNewtotalsizesql(newtotalsizesql);
 	        }
     	}
-    	else//¶ÔÓÚÅäÖÃÎÄ¼şÖĞ¶ÁÈ¡µÄsqlÓï¾ä½øĞĞÅú´¦ÀíÔöÉ¾¸ÄÊ±£¬Èç¹ûsqlÓï¾äÖĞÃ»ÓĞ
+    	else//å¯¹äºé…ç½®æ–‡ä»¶ä¸­è¯»å–çš„sqlè¯­å¥è¿›è¡Œæ‰¹å¤„ç†å¢åˆ æ”¹æ—¶ï¼Œå¦‚æœsqlè¯­å¥ä¸­æ²¡æœ‰
     	{
     		this.newsql = firstnewsql;
     		sqlstruction = this.newsql.getSqlstruction();
@@ -542,8 +542,8 @@ public class SQLParams
 //        String vars[] = args[1];  
         if(!sqlstruction.hasVars())
         {
-        	//log.debug("Ô¤±àÒësqlÓï¾äÌáÊ¾£ºÖ¸¶¨ÁËÔ¤±àÒë²ÎÊı,sqlÓï¾äÖĞÃ»ÓĞ°üº¬·ûºÏÒªÇóµÄÔ¤±àÒë±äÁ¿£¬" + this.toString());
-//            throw new SetSQLParamException("Ô¤±àÒësqlÓï¾ä·Ç·¨£ºÖ¸¶¨ÁËÔ¤±àÒë²ÎÊı,sqlÓï¾äÖĞÃ»ÓĞ°üº¬·ûºÏÒªÇóµÄÔ¤±àÒë±äÁ¿£¬" + this);
+        	//log.debug("é¢„ç¼–è¯‘sqlè¯­å¥æç¤ºï¼šæŒ‡å®šäº†é¢„ç¼–è¯‘å‚æ•°,sqlè¯­å¥ä¸­æ²¡æœ‰åŒ…å«ç¬¦åˆè¦æ±‚çš„é¢„ç¼–è¯‘å˜é‡ï¼Œ" + this.toString());
+//            throw new SetSQLParamException("é¢„ç¼–è¯‘sqlè¯­å¥éæ³•ï¼šæŒ‡å®šäº†é¢„ç¼–è¯‘å‚æ•°,sqlè¯­å¥ä¸­æ²¡æœ‰åŒ…å«ç¬¦åˆè¦æ±‚çš„é¢„ç¼–è¯‘å˜é‡ï¼Œ" + this);
         }
         else
         {
@@ -554,12 +554,12 @@ public class SQLParams
 	        	Variable var = vars.get(i);
 	            temp = this.sqlparams.get(var.getVariableName());
 	            if(temp == null)
-	                throw new SetSQLParamException("Î´Ö¸¶¨°ó¶¨±äÁ¿µÄÖµ£º" 
+	                throw new SetSQLParamException("æœªæŒ‡å®šç»‘å®šå˜é‡çš„å€¼ï¼š" 
 	                                                + var.getVariableName() 
 	                                                + "\r\n" 
 	                                                + this.toString());
 	            Param newparam = temp.clone(var);
-	            //°ó¶¨±äÁ¿Ë÷Òı´Ó1¿ªÊ¼
+	            //ç»‘å®šå˜é‡ç´¢å¼•ä»1å¼€å§‹
 	            newparam.index = i + 1;
 	            _realParams.add(newparam);
 	        }
@@ -603,7 +603,7 @@ public class SQLParams
     
     
     /**
-     * Ìí¼Ósql²ÎÊı£¬ÓÉDefaultDataInfoImpl½øĞĞ´¦Àí
+     * æ·»åŠ sqlå‚æ•°ï¼Œç”±DefaultDataInfoImplè¿›è¡Œå¤„ç†
      * @param name
      * @param value
      * @param type
@@ -615,7 +615,7 @@ public class SQLParams
     }
     
     /**
-     * Ìí¼Ósql²ÎÊı£¬ÓÉDefaultDataInfoImpl½øĞĞ´¦Àí
+     * æ·»åŠ sqlå‚æ•°ï¼Œç”±DefaultDataInfoImplè¿›è¡Œå¤„ç†
      * @param name
      * @param value
      * @param type
@@ -690,7 +690,7 @@ public class SQLParams
     	}
     }
     /**
-     * ¸ù¾İjavaÊı¾İÀàĞÍ£¬»ñÈ¡ÖĞĞÔµÄÊı¾İ¿âÀàĞÍ
+     * æ ¹æ®javaæ•°æ®ç±»å‹ï¼Œè·å–ä¸­æ€§çš„æ•°æ®åº“ç±»å‹
      * @param clazz
      * @return
      * @throws NestedSQLException 
@@ -737,7 +737,7 @@ public class SQLParams
     		return BLOB;
     	else if(BigFile.class.isAssignableFrom(clazz))
     	{
-    		log.warn("ÊôĞÔ["+fieldName+"]Êı¾İÀàĞÍÎª£º"+clazz.getCanonicalName() + ",±ØĞëÍ¨¹ı@Column×¢½âÀ´Ö¸¶¨×Ö¶Î¶ÔÓ¦µÄÊı¾İ¿âÀàĞÍÎªblobfile»òÕßclobfile,ÀıÈç£º@Column(type=\"blobfile\")");
+    		log.warn("å±æ€§["+fieldName+"]æ•°æ®ç±»å‹ä¸ºï¼š"+clazz.getCanonicalName() + ",å¿…é¡»é€šè¿‡@Columnæ³¨è§£æ¥æŒ‡å®šå­—æ®µå¯¹åº”çš„æ•°æ®åº“ç±»å‹ä¸ºblobfileæˆ–è€…clobfile,ä¾‹å¦‚ï¼š@Column(type=\"blobfile\")");
     		return OBJECT;
     	}
     	else
@@ -847,7 +847,7 @@ public class SQLParams
 //			beanInfo = Introspector.getBeanInfo(bean.getClass());
 //		} catch (Exception e) {
 //			throw new PropertyAccessException(new PropertyChangeEvent(bean, "",
-//				     null, null),"»ñÈ¡bean ĞÅÏ¢Ê§°Ü",e);
+//				     null, null),"è·å–bean ä¿¡æ¯å¤±è´¥",e);
 //		}
 		ClassInfo beanInfo = ClassUtil.getClassInfo(bean.getClass());
 		params.setOldsql(sql);
@@ -888,9 +888,9 @@ public class SQLParams
 					}
 					catch(InvocationTargetException e1)
 					{
-						log.error("»ñÈ¡ÊôĞÔ["+beanInfo.getClazz().getName()+"."+property.getName()+"]ÖµÊ§°Ü£º",e1.getTargetException());
+						log.error("è·å–å±æ€§["+beanInfo.getClazz().getName()+"."+property.getName()+"]å€¼å¤±è´¥ï¼š",e1.getTargetException());
 					} catch (Exception e1) {
-						log.error("»ñÈ¡ÊôĞÔ["+beanInfo.getClazz().getName()+"."+property.getName()+"]ÖµÊ§°Ü£º",e1);
+						log.error("è·å–å±æ€§["+beanInfo.getClazz().getName()+"."+property.getName()+"]å€¼å¤±è´¥ï¼š",e1);
 					}
 //					Field field = null;
 //					try
@@ -926,7 +926,7 @@ public class SQLParams
 							}
 							else 
 								value = DBUtil.getNextStringPrimaryKey(con,dbname,pkname);
-							//ÉèÖÃÖ÷¼üµ½¶ÔÏóÖĞ
+							//è®¾ç½®ä¸»é”®åˆ°å¯¹è±¡ä¸­
 //								Method writeMethod = null;
 //								try
 //								{
@@ -1063,7 +1063,7 @@ public class SQLParams
             }
             catch (Exception e)
             {
-                throw new SetSQLParamException("·Ç·¨°ó¶¨±äÁ¿µÄÖµ»ò¸ñÊ½£ºname"                        
+                throw new SetSQLParamException("éæ³•ç»‘å®šå˜é‡çš„å€¼æˆ–æ ¼å¼ï¼šname"                        
                         + "="
                         + name 
                         + ",value"                        
@@ -1088,7 +1088,7 @@ public class SQLParams
             }
             catch (Exception e)
             {
-                throw new SetSQLParamException("·Ç·¨°ó¶¨±äÁ¿µÄÖµ»ò¸ñÊ½£ºname"                        
+                throw new SetSQLParamException("éæ³•ç»‘å®šå˜é‡çš„å€¼æˆ–æ ¼å¼ï¼šname"                        
                         + "="
                         + name 
                         + ",value"                        
@@ -1211,11 +1211,11 @@ public class SQLParams
     	addSQLParam(name, value, -100,type,dataformat,charset) ;
     }
     /**
-     * Ìí¼Ósql²ÎÊı£¬ÓÉDefaultDataInfoImpl½øĞĞ´¦Àí
+     * æ·»åŠ sqlå‚æ•°ï¼Œç”±DefaultDataInfoImplè¿›è¡Œå¤„ç†
      * @param name
      * @param value
      * @param type
-     * @param charset Ö¸¶¨clob×Ö¶Î¶ÁÈ¡ÎÄ¼şÊ±µÄ×Ö·û¼¯utf-8£¬»òÕßgbk
+     * @param charset æŒ‡å®šclobå­—æ®µè¯»å–æ–‡ä»¶æ—¶çš„å­—ç¬¦é›†utf-8ï¼Œæˆ–è€…UTF-8
      * @throws SetSQLParamException 
      */
     public void addSQLParam(String name, Object value, long size,String type,String dataformat) throws SetSQLParamException
@@ -1224,11 +1224,11 @@ public class SQLParams
         
     }
     /**
-     * Ìí¼Ósql²ÎÊı£¬ÓÉDefaultDataInfoImpl½øĞĞ´¦Àí
+     * æ·»åŠ sqlå‚æ•°ï¼Œç”±DefaultDataInfoImplè¿›è¡Œå¤„ç†
      * @param name
      * @param value
      * @param type
-     * @param charset Ö¸¶¨clob×Ö¶Î¶ÁÈ¡ÎÄ¼şÊ±µÄ×Ö·û¼¯utf-8£¬»òÕßgbk
+     * @param charset æŒ‡å®šclobå­—æ®µè¯»å–æ–‡ä»¶æ—¶çš„å­—ç¬¦é›†utf-8ï¼Œæˆ–è€…UTF-8
      * @throws SetSQLParamException 
      */
     public void addSQLParam(String name, Object value, long size,String type,String dataformat,String charset) throws SetSQLParamException

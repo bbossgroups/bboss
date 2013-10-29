@@ -45,24 +45,24 @@ import java.io.Serializable;
 public class Const implements Serializable
 {
 	/**
-	 * ¶¨Òå½áµãÀàĞÍ
+	 * å®šä¹‰ç»“ç‚¹ç±»å‹
 	 */
 
-	public final static int NODE_ROOT = 1;//¸ù½áµã
-	public final static int NODE_DIRECTORY = 2;//Ä¿Â¼½áµã
-	public final static int NODE_FILE = 3;//ÎÄ¼ş½áµã
+	public final static int NODE_ROOT = 1;//æ ¹ç»“ç‚¹
+	public final static int NODE_DIRECTORY = 2;//ç›®å½•ç»“ç‚¹
+	public final static int NODE_FILE = 3;//æ–‡ä»¶ç»“ç‚¹
 
-	public final static int NODE_SON = 4;//¶ù×Ó½áµã
-	public final static int NODE_LEAF = 5;//Ò¶×Ó½áµã
+	public final static int NODE_SON = 4;//å„¿å­ç»“ç‚¹
+	public final static int NODE_LEAF = 5;//å¶å­ç»“ç‚¹
 
-	public final static int PRODUCT_CLASS_TREE = 0; //²úÆ··ÖÀàÊ÷
+	public final static int PRODUCT_CLASS_TREE = 0; //äº§å“åˆ†ç±»æ ‘
 
-	//public final static int SECURITY_MANAGER_TREE = 2; //°²È«¹ÜÀíÊ÷
+	//public final static int SECURITY_MANAGER_TREE = 2; //å®‰å…¨ç®¡ç†æ ‘
 
-	//public final static int SYSTEM_MANAGER_TREE = 3; //°²È«¹ÜÀíÊ÷
+	//public final static int SYSTEM_MANAGER_TREE = 3; //å®‰å…¨ç®¡ç†æ ‘
 
-	public final static int MATERIAL_CLASS_TREE = 1; //Îï×Ê·ÖÀàÊ÷
+	public final static int MATERIAL_CLASS_TREE = 1; //ç‰©èµ„åˆ†ç±»æ ‘
 
-	public final static int PRODUCTION_OILWORKSTREE_CLASS_TREE = 2; //Éú²ú²ÉÓÍ³§·ÖÀàÊ÷
+	public final static int PRODUCTION_OILWORKSTREE_CLASS_TREE = 2; //ç”Ÿäº§é‡‡æ²¹å‚åˆ†ç±»æ ‘
 
 }

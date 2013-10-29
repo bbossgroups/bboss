@@ -14,7 +14,7 @@ public class SiteDemoController {
 	}
 	
 	/**
-	 * 这是一个权限检测失败测试控制器方法
+	 * 杩欐槸涓�涓潈闄愭娴嬪け璐ユ祴璇曟帶鍒跺櫒鏂规硶
 	 * authorfailed.htm
 	 * @param model
 	 */

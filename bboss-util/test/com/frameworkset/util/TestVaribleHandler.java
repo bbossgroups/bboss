@@ -30,7 +30,7 @@ import com.frameworkset.util.VariableHandler.Variable;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2008</p>
- * @Date 2010-3-10 ÏÂÎç02:31:03
+ * @Date 2010-3-10 ä¸‹åˆ02:31:03
  * @author biaoping.yin
  * @version 1.0
  */
@@ -131,8 +131,8 @@ public class TestVaribleHandler
 
 			Variable as = variables.get(k);
 
-			System.out.println("±äÁ¿Ãû³Æ£º" + as.getVariableName());
-			System.out.println("±äÁ¿¶ÔÓ¦Î»ÖÃ£º" + as.getPosition());
+			System.out.println("å˜é‡åç§°ï¼š" + as.getVariableName());
+			System.out.println("å˜é‡å¯¹åº”ä½ç½®ï¼š" + as.getPosition());
 
 		}
 		}
@@ -190,9 +190,9 @@ public class TestVaribleHandler
 	
 	 			Variable as = variables.get(k);
 	
-	 			System.out.println("±äÁ¿Ãû³Æ£º" + as.getVariableName());
-	 			System.out.println("±äÁ¿¶ÔÓ¦Î»ÖÃ£º" + as.getPosition());
-	 			//Èç¹û±äÁ¿ÊÇ¶ÔÓ¦µÄÊı×é»òÕßlist¡¢set¡¢mapÖĞÔªËØµÄÓ¦ÓÃ£¬Ôò½âÎöÏàÓ¦µÄÔªËØË÷ÒıÏÂ±êĞÅÏ¢
+	 			System.out.println("å˜é‡åç§°ï¼š" + as.getVariableName());
+	 			System.out.println("å˜é‡å¯¹åº”ä½ç½®ï¼š" + as.getPosition());
+	 			//å¦‚æœå˜é‡æ˜¯å¯¹åº”çš„æ•°ç»„æˆ–è€…listã€setã€mapä¸­å…ƒç´ çš„åº”ç”¨ï¼Œåˆ™è§£æç›¸åº”çš„å…ƒç´ ç´¢å¼•ä¸‹æ ‡ä¿¡æ¯
 	 			List<Index> idxs = as.getIndexs();
 	 			if(idxs != null)
 	 			{
@@ -201,11 +201,11 @@ public class TestVaribleHandler
 	 					Index idx = idxs.get(h);
 	 					if(idx.getInt_idx() > 0)
 	 					{
-	 						System.out.println("ÔªËØË÷ÒıÏÂ±ê£º"+idx.getInt_idx());
+	 						System.out.println("å…ƒç´ ç´¢å¼•ä¸‹æ ‡ï¼š"+idx.getInt_idx());
 	 					}
 	 					else
 	 					{
-	 						System.out.println("map key£º"+idx.getString_idx());
+	 						System.out.println("map keyï¼š"+idx.getString_idx());
 	 					}
 	 				}
 	 			}
@@ -214,10 +214,10 @@ public class TestVaribleHandler
  		}
     }
     /**
-     * ¶Ô±ÈÕıÔò±í´ïÊ½½âÎö±äÁ¿ºÍVariableHandler½âÎösql±äÁ¿µÄĞÔÄÜ²îÒìĞÔ
-     * ÕıÔò±í´ïÊ½½âÎö±äÁ¿ºÍVariableHandler½âÎösql±äÁ¿µÄ¹¦ÄÜÇø±ğ£º
-     * VariableHandlerÖ§³ÖÊôĞÔÒıÓÃ£¨²ã¼¶²»ÏŞ£©£¬Ö§³ÖÊı×é¡¢list¡¢map¡¢setÔªËØµÄÒıÓÃ,Èİ´íĞÔ±ÈÕıÔò±í´ïÊ½·½Ê½ÒªºÃ
-     * ´Ó²âÊÔµÄĞÔÄÜÊı¾İÉÏÀ´¿´£¬ÕıÔò±í´ïÊ½ºÍVariableHandler parserSQLStruction·½·¨µÄĞÔÄÜ»ù±¾²î²»¶à
+     * å¯¹æ¯”æ­£åˆ™è¡¨è¾¾å¼è§£æå˜é‡å’ŒVariableHandlerè§£æsqlå˜é‡çš„æ€§èƒ½å·®å¼‚æ€§
+     * æ­£åˆ™è¡¨è¾¾å¼è§£æå˜é‡å’ŒVariableHandlerè§£æsqlå˜é‡çš„åŠŸèƒ½åŒºåˆ«ï¼š
+     * VariableHandleræ”¯æŒå±æ€§å¼•ç”¨ï¼ˆå±‚çº§ä¸é™ï¼‰ï¼Œæ”¯æŒæ•°ç»„ã€listã€mapã€setå…ƒç´ çš„å¼•ç”¨,å®¹é”™æ€§æ¯”æ­£åˆ™è¡¨è¾¾å¼æ–¹å¼è¦å¥½
+     * ä»æµ‹è¯•çš„æ€§èƒ½æ•°æ®ä¸Šæ¥çœ‹ï¼Œæ­£åˆ™è¡¨è¾¾å¼å’ŒVariableHandler parserSQLStructionæ–¹æ³•çš„æ€§èƒ½åŸºæœ¬å·®ä¸å¤š
      */
     @org.junit.Test
     public void regexUtilvsVarialparserUtil()
@@ -274,11 +274,11 @@ public class TestVaribleHandler
     	 start = System.currentTimeMillis();
     	  sqls = VariableHandler.parser2ndSubstitution(listRepositorySql, "#\\[","\\]","?");
     	 end = System.currentTimeMillis();
-    	 System.out.println("ÕıÔò±í´ïÊ½ºÄÊ±£º" + (end - start));
+    	 System.out.println("æ­£åˆ™è¡¨è¾¾å¼è€—æ—¶ï¼š" + (end - start));
     	 start = System.currentTimeMillis();
     	 a = VariableHandler.parserSQLStruction(listRepositorySql);
 	   	 end = System.currentTimeMillis();
-	   	System.out.println("±äÁ¿½âÎöºÄÊ±£º" + (end - start));
+	   	System.out.println("å˜é‡è§£æè€—æ—¶ï¼š" + (end - start));
     	
     	
     	
@@ -287,11 +287,11 @@ public class TestVaribleHandler
     
     
     /**
-     * ÕıÔò±í´ïÊ½Ö»ÄÜ½âÎö¼òµ¥µÄ±äÁ¿£¬ÎŞ·¨½âÎö¸´ÔÓµÄ±äÁ¿¸ñÊ½
-     * #[HOST_ID]ÕâÖÖ¸ñÊ½ÕıÔò±í´ïÊ½ÄÜ¹»½âÎö
-     * #[HOST_ID->bb[0]]ÕâÖÖ´øÒıÓÃµÄ¸ñÊ½£¬ÕıÔò±í´ï¾Í²»ÄÜ½âÎöÁË
-     * VariableHandler.parserSQLStruction·½·¨¿ÉÒÔ½âÎöÉÏÊöÁ½ÖÖ¸ñÊ½µÄ±äÁ¿£¬²¢ÇÒÄÜ¹»½«¸´ÔÓµÄ±äÁ¿µÄĞÅÏ¢
-     * ÒÔVariableÁĞ±íµÄ·½Ê½´æ´¢£¬ÒÔ¹©³Ö¾Ã²ã¿ò¼Ü¶ÔÕâĞ©±äÁ¿ÇóÖµ
+     * æ­£åˆ™è¡¨è¾¾å¼åªèƒ½è§£æç®€å•çš„å˜é‡ï¼Œæ— æ³•è§£æå¤æ‚çš„å˜é‡æ ¼å¼
+     * #[HOST_ID]è¿™ç§æ ¼å¼æ­£åˆ™è¡¨è¾¾å¼èƒ½å¤Ÿè§£æ
+     * #[HOST_ID->bb[0]]è¿™ç§å¸¦å¼•ç”¨çš„æ ¼å¼ï¼Œæ­£åˆ™è¡¨è¾¾å°±ä¸èƒ½è§£æäº†
+     * VariableHandler.parserSQLStructionæ–¹æ³•å¯ä»¥è§£æä¸Šè¿°ä¸¤ç§æ ¼å¼çš„å˜é‡ï¼Œå¹¶ä¸”èƒ½å¤Ÿå°†å¤æ‚çš„å˜é‡çš„ä¿¡æ¯
+     * ä»¥Variableåˆ—è¡¨çš„æ–¹å¼å­˜å‚¨ï¼Œä»¥ä¾›æŒä¹…å±‚æ¡†æ¶å¯¹è¿™äº›å˜é‡æ±‚å€¼
      */
     @org.junit.Test
     public void varialparserUtil()
@@ -312,21 +312,21 @@ public class TestVaribleHandler
     	 long start = System.currentTimeMillis();
     	 String[][] sqls = VariableHandler.parser2ndSubstitution(listRepositorySql, "#\\[","\\]","?");
     	 long end = System.currentTimeMillis();
-    	 System.out.println("ÕıÔò±í´ïÊ½½âÎöµÄ´íÎósql:" + sqls[0][0]);
+    	 System.out.println("æ­£åˆ™è¡¨è¾¾å¼è§£æçš„é”™è¯¯sql:" + sqls[0][0]);
     	 System.out.println("--------------------------");
-    	 System.out.println("bboss±äÁ¿½âÎöÆ÷µÄ·ÖÎö³öµÄÕıÈ·sql:" + a.getSql());
-    	 System.out.println("bboss±äÁ¿:" + a.getVariables().get(0).toString());
+    	 System.out.println("bbosså˜é‡è§£æå™¨çš„åˆ†æå‡ºçš„æ­£ç¡®sql:" + a.getSql());
+    	 System.out.println("bbosså˜é‡:" + a.getVariables().get(0).toString());
     	 System.out.println(sqls[0][0].equals(a.getSql()));
     	 
     	 
     	 start = System.currentTimeMillis();
     	  sqls = VariableHandler.parser2ndSubstitution(listRepositorySql, "#\\[","\\]","?");
     	 end = System.currentTimeMillis();
-    	 System.out.println("ÕıÔò±í´ïÊ½ºÄÊ±£º" + (end - start));
+    	 System.out.println("æ­£åˆ™è¡¨è¾¾å¼è€—æ—¶ï¼š" + (end - start));
     	 start = System.currentTimeMillis();
     	 a = VariableHandler.parserSQLStruction(listRepositorySql);
 	   	 end = System.currentTimeMillis();
-	   	System.out.println("±äÁ¿½âÎöºÄÊ±£º" + (end - start));
+	   	System.out.println("å˜é‡è§£æè€—æ—¶ï¼š" + (end - start));
     	
     	
     	

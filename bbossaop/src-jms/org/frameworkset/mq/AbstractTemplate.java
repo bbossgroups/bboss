@@ -40,7 +40,7 @@ import org.frameworkset.log.Logger;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2010-1-13 œ¬ŒÁ04:14:43
+ * @Date 2010-1-13 ‰∏ãÂçà04:14:43
  * @author biaoping.yin
  * @version 1.0
  */

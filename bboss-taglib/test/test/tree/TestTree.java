@@ -62,18 +62,18 @@ public class TestTree extends COMTree {
 		List<TreeNode> nodes = node.getSons();
 		
 		/**
-		 * ÔÚÌí¼ÓÃ¿¸ö½ÚµãÊ±½«½ÚµãµÄËùÓĞ²ÎÊı·ÅÖÃµ½Ò»¸öMap¶ÔÏóÖĞ£¬µ«ÊÇÒÔÏÂµÄ¼¸¸öÃû³ÆÊÇÊ÷ÖĞ±£ÁôµÄ²ÎÊıÃû³Æ£¬²»ÄÜ×÷ÎªÆäËû²ÎÊı£º
-			node_recursive:Ö¸¶¨ÌØ¶¨Ê÷½ÚµãµÄ¸´Ñ¡¿òÊÇ·ñ¾ßÓĞµİ¹éÑ¡ÔñµÄ¹¦ÄÜ£¬ÖµÀàĞÍBoolean
-			node_uprecursive:Ö¸¶¨ÌØ¶¨Ê÷½ÚµãµÄ¸´Ñ¡¿òÊÇ·ñ¾ßÓĞµİ¹éÑ¡ÔñÉÏ¼¶¸´Ñ¡¿òµÄ¹¦ÄÜ£¬ÖµÀàĞÍBoolean
-			node_partuprecursive£ºbooleanÖµ£¬Ö¸¶¨ÌØ¶¨½ÚµãµÄ¸´Ñ¡¿òÊÇ·ñ¾ßÓĞ²¿·Öµİ¹é
-			node_checkboxname£ºµ¥¶ÀÖ¸¶¨½ÚµãÇ°µÄµÄ¸´Ñ¡¿òµÄÃû³Æ
-			nodeLink:Ö¸¶¨Ã¿¸öÊ÷½ÚµãµÄÁ´½ÓµØÖ·£¬¿ÉÒÔÊÇjavascriptº¯Êı£¬Ò²¿ÉÒÔÊÇ³¬Á´½Ó
-			node_linktarget£ºÖ¸¶¨Ã¿¸ö½ÚµãÁ´½ÓµØÖ·µ¯³ö´°¿ÚÃû³Æ
-			node_radioname£º¶¨ÒåÃ¿¸ö½Úµãµ¥Ñ¡¿òÃû³Æ
-			node_checkboxchecked :booleanÖµ ±êÊ¶¸´Ñ¡¿òÊÇ·ñÑ¡ÖĞ
-			node_checkboxdisabled£ºbooleanÖµ ±êÊ¶½ÚµãÇ°µÄ¸´Ñ¡¿òÊÇ·ñ±»½ûÓÃ
-			node_radiochecked£ºbooleanÖµ ±êÊ¶½ÚµãÇ°µÄµ¥Ñ¡°´Å¥ÊÇ·ñ±»Ñ¡ÖĞ
-			node_radiodisabled£ºbooleanÖµ ±êÊ¶½ÚµãÇ°µÄµ¥Ñ¡°´Å¥ÊÇ·ñ±»½ûÓÃ
+		 * åœ¨æ·»åŠ æ¯ä¸ªèŠ‚ç‚¹æ—¶å°†èŠ‚ç‚¹çš„æ‰€æœ‰å‚æ•°æ”¾ç½®åˆ°ä¸€ä¸ªMapå¯¹è±¡ä¸­ï¼Œä½†æ˜¯ä»¥ä¸‹çš„å‡ ä¸ªåç§°æ˜¯æ ‘ä¸­ä¿ç•™çš„å‚æ•°åç§°ï¼Œä¸èƒ½ä½œä¸ºå…¶ä»–å‚æ•°ï¼š
+			node_recursive:æŒ‡å®šç‰¹å®šæ ‘èŠ‚ç‚¹çš„å¤é€‰æ¡†æ˜¯å¦å…·æœ‰é€’å½’é€‰æ‹©çš„åŠŸèƒ½ï¼Œå€¼ç±»å‹Boolean
+			node_uprecursive:æŒ‡å®šç‰¹å®šæ ‘èŠ‚ç‚¹çš„å¤é€‰æ¡†æ˜¯å¦å…·æœ‰é€’å½’é€‰æ‹©ä¸Šçº§å¤é€‰æ¡†çš„åŠŸèƒ½ï¼Œå€¼ç±»å‹Boolean
+			node_partuprecursiveï¼šbooleanå€¼ï¼ŒæŒ‡å®šç‰¹å®šèŠ‚ç‚¹çš„å¤é€‰æ¡†æ˜¯å¦å…·æœ‰éƒ¨åˆ†é€’å½’
+			node_checkboxnameï¼šå•ç‹¬æŒ‡å®šèŠ‚ç‚¹å‰çš„çš„å¤é€‰æ¡†çš„åç§°
+			nodeLink:æŒ‡å®šæ¯ä¸ªæ ‘èŠ‚ç‚¹çš„é“¾æ¥åœ°å€ï¼Œå¯ä»¥æ˜¯javascriptå‡½æ•°ï¼Œä¹Ÿå¯ä»¥æ˜¯è¶…é“¾æ¥
+			node_linktargetï¼šæŒ‡å®šæ¯ä¸ªèŠ‚ç‚¹é“¾æ¥åœ°å€å¼¹å‡ºçª—å£åç§°
+			node_radionameï¼šå®šä¹‰æ¯ä¸ªèŠ‚ç‚¹å•é€‰æ¡†åç§°
+			node_checkboxchecked :booleanå€¼ æ ‡è¯†å¤é€‰æ¡†æ˜¯å¦é€‰ä¸­
+			node_checkboxdisabledï¼šbooleanå€¼ æ ‡è¯†èŠ‚ç‚¹å‰çš„å¤é€‰æ¡†æ˜¯å¦è¢«ç¦ç”¨
+			node_radiocheckedï¼šbooleanå€¼ æ ‡è¯†èŠ‚ç‚¹å‰çš„å•é€‰æŒ‰é’®æ˜¯å¦è¢«é€‰ä¸­
+			node_radiodisabledï¼šbooleanå€¼ æ ‡è¯†èŠ‚ç‚¹å‰çš„å•é€‰æŒ‰é’®æ˜¯å¦è¢«ç¦ç”¨
 		 */
 //		Map<paramname,paramvalue> params = new HashMap();
 		for(int i = 0; i < nodes.size(); i ++)
@@ -93,7 +93,7 @@ public class TestTree extends COMTree {
 			    params.put("nodeLink", "javascript:alert('yes');");
 			}
 			
-			//ÉèÖÃ½ÚµãÄ¬ÈÏÑ¡ÖĞ£º
+			//è®¾ç½®èŠ‚ç‚¹é»˜è®¤é€‰ä¸­ï¼š
 			
 			params.put("node_checkboxchecked", new Boolean(true));
 			
@@ -102,12 +102,12 @@ public class TestTree extends COMTree {
 					son.getUid(), //treeid 
 					son.getUid(), //tree node name
 	                null,// node type
-	                true, //show href,true Ê±Ê÷½Úµã½«´ø³¬Á´½Ó£¬falseÊ±²»´ø³¬Á´½Ó
+	                true, //show href,true æ—¶æ ‘èŠ‚ç‚¹å°†å¸¦è¶…é“¾æ¥ï¼Œfalseæ—¶ä¸å¸¦è¶…é“¾æ¥
 	                curLevel, //current level
-	                (String) null,//±¸×¢
-	                (String) son.getUid(), //radio value,µ¥Ñ¡¿ò°´Å¥
-	                (String) son.getUid(), //¸´Ñ¡¿òµÄÖµ
-	                params  //Îª½ÚµãÁ¬½ÓÖ¸¶¨urlµÄ²ÎÊı<paramname,paramvalue>
+	                (String) null,//å¤‡æ³¨
+	                (String) son.getUid(), //radio value,å•é€‰æ¡†æŒ‰é’®
+	                (String) son.getUid(), //å¤é€‰æ¡†çš„å€¼
+	                params  //ä¸ºèŠ‚ç‚¹è¿æ¥æŒ‡å®šurlçš„å‚æ•°<paramname,paramvalue>
 	                );
 		}
 		return true;

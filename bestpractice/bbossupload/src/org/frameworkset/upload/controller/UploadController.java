@@ -77,7 +77,7 @@ public class UploadController
 	public String uploadFile(MultipartHttpServletRequest request)
 	{
 		Iterator<String> fileNames = request.getFileNames();
-		// ¸ù¾İ·şÎñÆ÷µÄÎÄ¼ş±£´æµØÖ·ºÍÔ­ÎÄ¼şÃû´´½¨Ä¿Â¼ÎÄ¼şÈ«Â·¾¶		
+		// æ ¹æ®æœåŠ¡å™¨çš„æ–‡ä»¶ä¿å­˜åœ°å€å’ŒåŸæ–‡ä»¶ååˆ›å»ºç›®å½•æ–‡ä»¶å…¨è·¯å¾„		
 		try
 		{
 			while (fileNames.hasNext())
@@ -106,8 +106,8 @@ public class UploadController
 	
 	/**
 	 * 
-	 * @param upload1 ²ÎÊıÃû³ÆÒªºÍ<input type="file" id="upload1" name="upload1" style="width: 200px"/>
-	 *        ÖĞµÄnameÊôĞÔ±£³ÖÒ»ÖÂ£¬ÕâÑù¾ÍÄÜ¹»×Ô¶¯½øĞĞ°ó¶¨ºÍÓ³Éä
+	 * @param upload1 å‚æ•°åç§°è¦å’Œ<input type="file" id="upload1" name="upload1" style="width: 200px"/>
+	 *        ä¸­çš„nameå±æ€§ä¿æŒä¸€è‡´ï¼Œè¿™æ ·å°±èƒ½å¤Ÿè‡ªåŠ¨è¿›è¡Œç»‘å®šå’Œæ˜ å°„
 	 * @return
 	 */
 //	public String uploadFileWithMultipartFile(@RequestParam(name="upload1")  MultipartFile file)
@@ -115,7 +115,7 @@ public class UploadController
 	{
 
 		
-		// ¸ù¾İ·şÎñÆ÷µÄÎÄ¼ş±£´æµØÖ·ºÍÔ­ÎÄ¼şÃû´´½¨Ä¿Â¼ÎÄ¼şÈ«Â·¾¶
+		// æ ¹æ®æœåŠ¡å™¨çš„æ–‡ä»¶ä¿å­˜åœ°å€å’ŒåŸæ–‡ä»¶ååˆ›å»ºç›®å½•æ–‡ä»¶å…¨è·¯å¾„
 		
 		try
 		{
@@ -152,8 +152,8 @@ public class UploadController
 //	public @ResponseBody File uploaddownFileWithMultipartFile( MultipartFile file) throws IllegalStateException, IOException
 	/**
 	 * 
-	 * @param upload1 ²ÎÊıÃû³ÆÒªºÍ<input type="file" id="upload1" name="upload1" style="width: 200px"/>
-	 *        ÖĞµÄnameÊôĞÔ±£³ÖÒ»ÖÂ
+	 * @param upload1 å‚æ•°åç§°è¦å’Œ<input type="file" id="upload1" name="upload1" style="width: 200px"/>
+	 *        ä¸­çš„nameå±æ€§ä¿æŒä¸€è‡´
 	 * @return
 	 * @throws IllegalStateException
 	 * @throws IOException
@@ -164,7 +164,7 @@ public class UploadController
 		File f = new File("d:/" + upload1.getOriginalFilename());
 		upload1.transferTo(f);
 		return f;
-		// ¸ù¾İ·şÎñÆ÷µÄÎÄ¼ş±£´æµØÖ·ºÍÔ­ÎÄ¼şÃû´´½¨Ä¿Â¼ÎÄ¼şÈ«Â·¾¶
+		// æ ¹æ®æœåŠ¡å™¨çš„æ–‡ä»¶ä¿å­˜åœ°å€å’ŒåŸæ–‡ä»¶ååˆ›å»ºç›®å½•æ–‡ä»¶å…¨è·¯å¾„
 		
 //		try
 //		{
@@ -201,8 +201,8 @@ public class UploadController
 	
 	/**
 	 * 
-	 * @param upload1 ²ÎÊıÃû³ÆÒªºÍ<input type="file" id="upload1" name="upload1" style="width: 200px"/>
-	 *        ÖĞµÄnameÊôĞÔ±£³ÖÒ»ÖÂ,·ñÔò¾ÍĞèÒª@RequestParamÀ´½¨Á¢Ó³Éä¹ØÏµ
+	 * @param upload1 å‚æ•°åç§°è¦å’Œ<input type="file" id="upload1" name="upload1" style="width: 200px"/>
+	 *        ä¸­çš„nameå±æ€§ä¿æŒä¸€è‡´,å¦åˆ™å°±éœ€è¦@RequestParamæ¥å»ºç«‹æ˜ å°„å…³ç³»
 	 * @return
 	 */
 //	public String uploadFileWithMultipartFiles(@RequestParam(name="upload1")  MultipartFile[] files)
@@ -233,12 +233,12 @@ public class UploadController
 	
 	/**
 	 * 
-	 * @param upload1 ²ÎÊıÃû³ÆÒªºÍ<input type="file" id="upload1" name="upload1" style="width: 200px"/>
-	 *        ÖĞµÄnameÊôĞÔ±£³ÖÒ»ÖÂ,·ñÔò¾ÍĞèÒª@RequestParamÀ´½¨Á¢Ó³Éä¹ØÏµ
+	 * @param upload1 å‚æ•°åç§°è¦å’Œ<input type="file" id="upload1" name="upload1" style="width: 200px"/>
+	 *        ä¸­çš„nameå±æ€§ä¿æŒä¸€è‡´,å¦åˆ™å°±éœ€è¦@RequestParamæ¥å»ºç«‹æ˜ å°„å…³ç³»
 	 * @return
 	 */
-//	public @ResponseBody(charset="GBK") String uploadFileWithMultipartFilesJson(@RequestParam(name="upload1")  MultipartFile[] upload1)
-	public @ResponseBody(charset="GBK") String uploadFileWithMultipartFilesJson(MultipartFile[] upload1)
+//	public @ResponseBody(charset="UTF-8") String uploadFileWithMultipartFilesJson(@RequestParam(name="upload1")  MultipartFile[] upload1)
+	public @ResponseBody(charset="UTF-8") String uploadFileWithMultipartFilesJson(MultipartFile[] upload1)
 	{		
 		try
 		{ 
@@ -260,7 +260,7 @@ public class UploadController
 		{
 			ex.printStackTrace();
 		}
-		return "ÄãºÃ";
+		return "ä½ å¥½";
 	}
 	
 	/**
@@ -277,7 +277,7 @@ public class UploadController
 		try
 		{
 			
-			//¶ÔFileBean¶ÔÏóÖĞµÄ¸½¼ş½øĞĞ´¦Àí¡£¡£¡£¡£
+			//å¯¹FileBeanå¯¹è±¡ä¸­çš„é™„ä»¶è¿›è¡Œå¤„ç†ã€‚ã€‚ã€‚ã€‚
 			
 		}
 		catch (Exception ex)
@@ -302,10 +302,10 @@ public class UploadController
 	}
 
 	/**
-	 * Ö±½Ó½«blob¶ÔÓ¦µÄÎÄ¼şÄÚÈİÒÔÏàÓ¦µÄÎÄ¼şÃûÏìÓ¦µ½¿Í»§¶Ë£¬ĞèÒªÌá¹©requestºÍresponse¶ÔÏó
-	 * Õâ¸ö·½·¨±È½ÏÌØÊâ£¬ÒòÎªderbyÊı¾İ¿âµÄblob×Ö¶Î±ØĞëÔÚstatementÓĞĞ§·¶Î§ÄÚ²ÅÄÜÊ¹ÓÃ£¬ËùÒÔ²ÉÓÃÁË¿ÕĞĞ´¦ÀíÆ÷£¬À´½øĞĞ´¦Àí
-	 * ²éÑ¯Êı¾İ¿âµÄ²Ù×÷Ò²Ö»ºÃ·ÅÔÚ¿ØÖÆÆ÷ÖĞ´¦Àí
-	 * @param fileid ²ÎÊıÃû³ÆÒªºÍrequestÇëÇóÖĞµÄ²ÎÊıÃû³Æ±£³ÖÒ»ÖÂ,·ñÔò¾ÍĞèÒª@RequestParamÀ´½¨Á¢Ó³Éä¹ØÏµ
+	 * ç›´æ¥å°†blobå¯¹åº”çš„æ–‡ä»¶å†…å®¹ä»¥ç›¸åº”çš„æ–‡ä»¶åå“åº”åˆ°å®¢æˆ·ç«¯ï¼Œéœ€è¦æä¾›requestå’Œresponseå¯¹è±¡
+	 * è¿™ä¸ªæ–¹æ³•æ¯”è¾ƒç‰¹æ®Šï¼Œå› ä¸ºderbyæ•°æ®åº“çš„blobå­—æ®µå¿…é¡»åœ¨statementæœ‰æ•ˆèŒƒå›´å†…æ‰èƒ½ä½¿ç”¨ï¼Œæ‰€ä»¥é‡‡ç”¨äº†ç©ºè¡Œå¤„ç†å™¨ï¼Œæ¥è¿›è¡Œå¤„ç†
+	 * æŸ¥è¯¢æ•°æ®åº“çš„æ“ä½œä¹Ÿåªå¥½æ”¾åœ¨æ§åˆ¶å™¨ä¸­å¤„ç†
+	 * @param fileid å‚æ•°åç§°è¦å’Œrequestè¯·æ±‚ä¸­çš„å‚æ•°åç§°ä¿æŒä¸€è‡´,å¦åˆ™å°±éœ€è¦@RequestParamæ¥å»ºç«‹æ˜ å°„å…³ç³»
 	 * @param request
 	 * @param response
 	 * @throws Exception
@@ -324,11 +324,11 @@ public class UploadController
 	}
 	
 	/**
-	 * Ö±½Ó½«blob¶ÔÓ¦µÄÎÄ¼şÄÚÈİÒÔÏàÓ¦µÄÎÄ¼şÃûÏìÓ¦µ½¿Í»§¶Ë£¬ĞèÒªÌá¹©requestºÍresponse¶ÔÏó
-	 * Õâ¸ö·½·¨±È½ÏÌØÊâ£¬ÒòÎªderbyÊı¾İ¿âµÄblob×Ö¶Î±ØĞëÔÚstatementÓĞĞ§·¶Î§ÄÚ²ÅÄÜÊ¹ÓÃ£¬ËùÒÔ²ÉÓÃÁË¿ÕĞĞ´¦ÀíÆ÷£¬À´½øĞĞ´¦Àí
-	 * ²éÑ¯Êı¾İ¿âµÄ²Ù×÷Ò²Ö»ºÃ·ÅÔÚ¿ØÖÆÆ÷ÖĞ´¦Àí
-	 * @param fileid ÓÃÀ´ÑéÖ¤Ö¸¶¨@RequestParam×¢½âµÄ²ÎÊı£¬µ«ÊÇRequestParam²¢Ã»Ã÷ÏÔµØÖ¸¶¨²ÎÊıµÄÃû³Æ£¬Ôò½«»áÓÃ·½·¨²ÎÊıµÄÃû³Æ
-	 * ×÷Îª²ÎÊıÃû³Æ
+	 * ç›´æ¥å°†blobå¯¹åº”çš„æ–‡ä»¶å†…å®¹ä»¥ç›¸åº”çš„æ–‡ä»¶åå“åº”åˆ°å®¢æˆ·ç«¯ï¼Œéœ€è¦æä¾›requestå’Œresponseå¯¹è±¡
+	 * è¿™ä¸ªæ–¹æ³•æ¯”è¾ƒç‰¹æ®Šï¼Œå› ä¸ºderbyæ•°æ®åº“çš„blobå­—æ®µå¿…é¡»åœ¨statementæœ‰æ•ˆèŒƒå›´å†…æ‰èƒ½ä½¿ç”¨ï¼Œæ‰€ä»¥é‡‡ç”¨äº†ç©ºè¡Œå¤„ç†å™¨ï¼Œæ¥è¿›è¡Œå¤„ç†
+	 * æŸ¥è¯¢æ•°æ®åº“çš„æ“ä½œä¹Ÿåªå¥½æ”¾åœ¨æ§åˆ¶å™¨ä¸­å¤„ç†
+	 * @param fileid ç”¨æ¥éªŒè¯æŒ‡å®š@RequestParamæ³¨è§£çš„å‚æ•°ï¼Œä½†æ˜¯RequestParamå¹¶æ²¡æ˜æ˜¾åœ°æŒ‡å®šå‚æ•°çš„åç§°ï¼Œåˆ™å°†ä¼šç”¨æ–¹æ³•å‚æ•°çš„åç§°
+	 * ä½œä¸ºå‚æ•°åç§°
 	 * @param request
 	 * @param response
 	 * @throws Exception
@@ -348,7 +348,7 @@ public class UploadController
 	}
 
 	/**
-	 * ½«Êı¾İ¿âÖĞ´æ´¢µÄÎÄ¼şÄÚÈİ×ª´¢µ½Ó¦ÓÃ·şÎñÆ÷ÎÄ¼şÄ¿Â¼ÖĞ£¬È»ºó½«×ª´¢µÄÎÄ¼şÏÂÔØ£¬ÎŞĞèÌá¹©responseºÍrequest¶ÔÏó
+	 * å°†æ•°æ®åº“ä¸­å­˜å‚¨çš„æ–‡ä»¶å†…å®¹è½¬å‚¨åˆ°åº”ç”¨æœåŠ¡å™¨æ–‡ä»¶ç›®å½•ä¸­ï¼Œç„¶åå°†è½¬å‚¨çš„æ–‡ä»¶ä¸‹è½½ï¼Œæ— éœ€æä¾›responseå’Œrequestå¯¹è±¡
 	 * 
 	 * @param fileid
 	 * @return
@@ -369,7 +369,7 @@ public class UploadController
 	
 
 	/**
-	 * bbossgroups 3.5°æ±¾¶Ôaop¿ò¼ÜµÄÊôĞÔ×¢Èë¹¦ÄÜ×öÁË¸Ä½ø£¬×¢ÈëµÄÊôĞÔÎŞĞèÔÙ¶¨Òåget/set·½·¨
+	 * bbossgroups 3.5ç‰ˆæœ¬å¯¹aopæ¡†æ¶çš„å±æ€§æ³¨å…¥åŠŸèƒ½åšäº†æ”¹è¿›ï¼Œæ³¨å…¥çš„å±æ€§æ— éœ€å†å®šä¹‰get/setæ–¹æ³•
 	 */
 //	public UploadService getUploadService()
 //	{

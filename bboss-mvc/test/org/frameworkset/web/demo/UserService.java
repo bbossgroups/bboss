@@ -76,7 +76,7 @@ public class UserService {
 			db.executePrepared();
 			
 		} catch (Exception e) {
-			throw new UserManagerException("ÓÃ»§¸üĞÂÊ§°Ü",e);
+			throw new UserManagerException("ç”¨æˆ·æ›´æ–°å¤±è´¥",e);
 		}
 		
 	}
@@ -90,7 +90,7 @@ public class UserService {
 			db.preparedSelect(params, sql);
 			return (User)db.executePreparedForObject(User.class);
 		} catch (Exception e) {
-			throw new UserManagerException("ÓÃ»§²éÕÒÊ§°Ü£ºÓÃ»§²»´æÔÚ",e);
+			throw new UserManagerException("ç”¨æˆ·æŸ¥æ‰¾å¤±è´¥ï¼šç”¨æˆ·ä¸å­˜åœ¨",e);
 		}
 		
 	}
@@ -103,7 +103,7 @@ public class UserService {
 			db.preparedSelect( sql);
 			return (List<User>)db.executePreparedForList(User.class);
 		} catch (Exception e) {
-			throw new UserManagerException("ÓÃ»§²éÕÒÊ§°Ü£ºÓÃ»§²»´æÔÚ",e);
+			throw new UserManagerException("ç”¨æˆ·æŸ¥æ‰¾å¤±è´¥ï¼šç”¨æˆ·ä¸å­˜åœ¨",e);
 		}
 		
 	}
@@ -126,7 +126,7 @@ public class UserService {
 			});
 			return users;
 		} catch (Exception e) {
-			throw new UserManagerException("ÓÃ»§²éÕÒÊ§°Ü£ºÓÃ»§²»´æÔÚ",e);
+			throw new UserManagerException("ç”¨æˆ·æŸ¥æ‰¾å¤±è´¥ï¼šç”¨æˆ·ä¸å­˜åœ¨",e);
 		}
 		
 	}
@@ -155,12 +155,12 @@ public class UserService {
 				}
 			});
 			ListInfo listinfo = new ListInfo(); 
-			long totalsize = db.getTotalSize();//×Ü¼ÇÂ¼Êı
+			long totalsize = db.getTotalSize();//æ€»è®°å½•æ•°
 			listinfo.setDatas(users);
 			listinfo.setTotalSize(totalsize);
 			return listinfo;
 		} catch (Exception e) {
-			throw new UserManagerException("ÓÃ»§²éÕÒÊ§°Ü£ºÓÃ»§²»´æÔÚ",e);
+			throw new UserManagerException("ç”¨æˆ·æŸ¥æ‰¾å¤±è´¥ï¼šç”¨æˆ·ä¸å­˜åœ¨",e);
 		}
 		
 	}
@@ -194,7 +194,7 @@ public class UserService {
 				
 				e1.printStackTrace();
 			}
-			throw new UserManagerException("ÓÃ»§²éÕÒÊ§°Ü£ºÓÃ»§²»´æÔÚ",e);
+			throw new UserManagerException("ç”¨æˆ·æŸ¥æ‰¾å¤±è´¥ï¼šç”¨æˆ·ä¸å­˜åœ¨",e);
 		}
 		
 	}
@@ -208,14 +208,14 @@ public class UserService {
 			db.preparedDelete(params, sql);
 			db.executePrepared();
 		} catch (Exception e) {
-			throw new UserManagerException("ÓÃ»§²éÕÒÊ§°Ü£ºÓÃ»§²»´æÔÚ",e);
+			throw new UserManagerException("ç”¨æˆ·æŸ¥æ‰¾å¤±è´¥ï¼šç”¨æˆ·ä¸å­˜åœ¨",e);
 		}
 		
 	}
 	
 	public User addUser(User user) throws UserManagerException {
 		try {
-			int userId = (int) DBUtil.getNextPrimaryKey("tb_user");//»ñÈ¡ÓÃ»§µÄÖ÷¼üĞÅÏ¢
+			int userId = (int) DBUtil.getNextPrimaryKey("tb_user");//è·å–ç”¨æˆ·çš„ä¸»é”®ä¿¡æ¯
 			String sql = "insert into tb_user(userId,userName,userPassword) " +
 					"values(#[userId],#[userName],#[userPassword])";
 			SQLParams params = new SQLParams();
@@ -232,7 +232,7 @@ public class UserService {
 			return user;
 			
 		} catch (Exception e) {
-			throw new UserManagerException("Ìí¼ÓÓÃ»§Ê§°Ü",e);
+			throw new UserManagerException("æ·»åŠ ç”¨æˆ·å¤±è´¥",e);
 		}
 		
 	}

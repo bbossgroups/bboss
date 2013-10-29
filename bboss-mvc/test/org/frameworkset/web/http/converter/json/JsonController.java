@@ -80,7 +80,7 @@ public class JsonController {
 		Person person1 = new Person();
 		person1.setId(new Long(2));
 		person1.setName("Kevin");
-		person1.setTitle("WhoÖÐÎÄ");
+		person1.setTitle("Whoä¸­æ–‡");
 		list.add(person1);
 		
 		for(int i = 3; i < 10000; i ++)

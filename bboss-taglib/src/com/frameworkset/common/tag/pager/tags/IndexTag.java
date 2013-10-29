@@ -47,7 +47,7 @@ import org.apache.ecs.html.Option;
 import org.apache.ecs.html.Script;
 import org.apache.ecs.html.Select;
 import org.frameworkset.spi.ApplicationContext;
-import org.frameworkset.web.servlet.support.RequestContextUtils;
+import org.frameworkset.util.I18NUtil;
 
 import com.frameworkset.common.tag.TagUtil;
 import com.frameworkset.common.tag.pager.config.PageConfig;
@@ -56,7 +56,7 @@ import com.frameworkset.util.StringUtil;
 
 /**
  *
- * Éú³Éµ¼º½°´Å¥£¬ÀıÈç£ºÉÏÒ»Ò³£¬ÏÂÒ»Ò³£¬Ê×Ò³£¬Î²Ò³µÈµÈ
+ * ç”Ÿæˆå¯¼èˆªæŒ‰é’®ï¼Œä¾‹å¦‚ï¼šä¸Šä¸€é¡µï¼Œä¸‹ä¸€é¡µï¼Œé¦–é¡µï¼Œå°¾é¡µç­‰ç­‰
  *
  * @author biaoping.yin
  * @version 1.0
@@ -64,7 +64,7 @@ import com.frameworkset.util.StringUtil;
 public final class IndexTag extends PagerTagSupport {
 	
 	/**
-	 * À©Õ¹ÊôĞÔ£¬µ¼º½°´Å¥ÊÇ·ñÊ¹ÓÃÍ¼Æ¬
+	 * æ‰©å±•å±æ€§ï¼Œå¯¼èˆªæŒ‰é’®æ˜¯å¦ä½¿ç”¨å›¾ç‰‡
 	 */
     private boolean useimage = false;
     private boolean usegoimage = false;
@@ -74,26 +74,26 @@ public final class IndexTag extends PagerTagSupport {
     private static boolean enable_page_size_set = ApplicationContext.getApplicationContext().getBooleanProperty("enable_page_size_set",true);
     private static boolean enable_page_total_size = ApplicationContext.getApplicationContext().getBooleanProperty("enable_page_total_size",true);
     /**
-     * ÉÏÏÂ·­Ò³Èç¹ûÃ»ÓĞÁ¬½ÓÊ±£¬ÊÇ·ñÌí¼Óa±ê¼Ç
-     * true£¨Ä¬ÈÏÖµ£© Ìí¼Ó£¬false²»Ìí¼Ó
+     * ä¸Šä¸‹ç¿»é¡µå¦‚æœæ²¡æœ‰è¿æ¥æ—¶ï¼Œæ˜¯å¦æ·»åŠ aæ ‡è®°
+     * trueï¼ˆé»˜è®¤å€¼ï¼‰ æ·»åŠ ï¼Œfalseä¸æ·»åŠ 
      */
     private boolean aindex = false;
     /**
-     * Êı×ÖÒ³ÃæË÷ÒıÇ°×º
+     * æ•°å­—é¡µé¢ç´¢å¼•å‰ç¼€
      */
     private String numberpre ;
     /**
-     * Êı×ÖÒ³ÃæË÷Òıºó×º
+     * æ•°å­—é¡µé¢ç´¢å¼•åç¼€
      */
     private String numberend;
     
 //    /**
-//     * jqueryÄÚÈİÈİÆ÷
+//     * jqueryå†…å®¹å®¹å™¨
 //     */
 //    private String containerid ;
 //    
 //    /**
-//     * jqueryÄÚÈİÑ¡ÔñÆ÷
+//     * jqueryå†…å®¹é€‰æ‹©å™¨
 //     */
 //    private String selector;
     
@@ -119,12 +119,12 @@ public final class IndexTag extends PagerTagSupport {
     }
     
     /**
-     * µ¼º½Í¼Æ¬µÄÀ©Õ¹ÊôĞÔ´®
+     * å¯¼èˆªå›¾ç‰‡çš„æ‰©å±•å±æ€§ä¸²
      */
     private String imageextend = " border=0 ";
     
     /**
-     * µ¼º½Í¼Æ¬µÄÀ©Õ¹ÊôĞÔ´®
+     * å¯¼èˆªå›¾ç‰‡çš„æ‰©å±•å±æ€§ä¸²
      */
     private String centerextend ;
     public String getCenterextend()
@@ -158,7 +158,7 @@ public final class IndexTag extends PagerTagSupport {
     
 
     /**
-     * À©Õ¹ÊôĞÔ£¬µ¼º½°´Å¥Í¼Æ¬¶ÔÓ¦µÄÄ¿Â¼
+     * æ‰©å±•å±æ€§ï¼Œå¯¼èˆªæŒ‰é’®å›¾ç‰‡å¯¹åº”çš„ç›®å½•
      */
     private String imagedir = "/include/images";
     
@@ -168,16 +168,16 @@ public final class IndexTag extends PagerTagSupport {
     public static final String last_image = "last.gif";
     public static final String go_image = "go.jpg";
     
-    /**±¾ÊôĞÔ¿ØÖÆ·ÖÒ³±êÇ©ÖĞÄÄĞ©µ¼º½°´Å¥³öÏÖÔÚÒ³ÃæÉÏ*/
+    /**æœ¬å±æ€§æ§åˆ¶åˆ†é¡µæ ‡ç­¾ä¸­å“ªäº›å¯¼èˆªæŒ‰é’®å‡ºç°åœ¨é¡µé¢ä¸Š*/
 	private String export = null;
     private String style = "V";
     
     
     
     /**
-     * ×Ô¶¨ÒåÌø×ªº¯ÊıÇĞ»»±êÊ¶
-     * Îªtrue£¬jspÒ³ÃæÖĞ±ØĞë·ÅÖÃÒ»¸öÃû³ÆÎª
-     * com.frameworkset.goformµÄform±íµ¥£¬²»ĞèÒªÖ¸¶¨action£¬methodÎªpost
+     * è‡ªå®šä¹‰è·³è½¬å‡½æ•°åˆ‡æ¢æ ‡è¯†
+     * ä¸ºtrueï¼Œjspé¡µé¢ä¸­å¿…é¡»æ”¾ç½®ä¸€ä¸ªåç§°ä¸º
+     * com.frameworkset.goformçš„formè¡¨å•ï¼Œä¸éœ€è¦æŒ‡å®šactionï¼Œmethodä¸ºpost
      */
     private boolean custom = false;
 
@@ -198,14 +198,14 @@ public final class IndexTag extends PagerTagSupport {
     }
 
     /**
-	 * ±¾ÊôĞÔÎª7¸öbyte×Ö½Ú£¬Ã¿¸ö×Ö½ÚµÄÖµÓòÎª0ºÍ1£¬
-	 * ·Ö±ğ¿ØÖÆ¶ÔÓ¦Î»ÖÃÉÏµÄ°´Å¥ÊÇ·ñ³öÏÖ
-	 * 0±íÊ¾¶ÔÓ¦Î»ÖÃÉÏµÄ°´Å¥³öÏÖ£¬·ñÔò²»³öÏÖ
+	 * æœ¬å±æ€§ä¸º7ä¸ªbyteå­—èŠ‚ï¼Œæ¯ä¸ªå­—èŠ‚çš„å€¼åŸŸä¸º0å’Œ1ï¼Œ
+	 * åˆ†åˆ«æ§åˆ¶å¯¹åº”ä½ç½®ä¸Šçš„æŒ‰é’®æ˜¯å¦å‡ºç°
+	 * 0è¡¨ç¤ºå¯¹åº”ä½ç½®ä¸Šçš„æŒ‰é’®å‡ºç°ï¼Œå¦åˆ™ä¸å‡ºç°
 	 */
 	protected byte[] switchcase = new byte[9];
 
 	/**
-	 * ÖĞ¼äÒ³Ãæ±ê¼Ç¸öÊı£¬Îª-1Ê±Ã»ÓĞÖĞ¼äÒ³Ãæ
+	 * ä¸­é—´é¡µé¢æ ‡è®°ä¸ªæ•°ï¼Œä¸º-1æ—¶æ²¡æœ‰ä¸­é—´é¡µé¢
 	 */
 	
     private int tagnumber = -1;
@@ -222,7 +222,7 @@ public final class IndexTag extends PagerTagSupport {
     }
 
     /**
-     * ÖĞ¼äÒ³ÃæÑùÊ½Ãû³Æ
+     * ä¸­é—´é¡µé¢æ ·å¼åç§°
      */
     private String classname;
 
@@ -283,7 +283,7 @@ public final class IndexTag extends PagerTagSupport {
 			return SKIP_BODY;
 		}
 
-		//·ÖÎö¿ØÖÆÒ³ÃæÉÏÄÄĞ©°´Å¥ĞèÒª±»ÏÔÊ¾µÄÊôĞÔexport
+		//åˆ†ææ§åˆ¶é¡µé¢ä¸Šå“ªäº›æŒ‰é’®éœ€è¦è¢«æ˜¾ç¤ºçš„å±æ€§export
 		parser();
 		if(imagedir != null)
         {
@@ -326,7 +326,7 @@ public final class IndexTag extends PagerTagSupport {
 		//			}
 		//		}
 		//
-		super.doEndTag();//ÊÇ·ñ´æÔÚÎÊÌâ£¬biaoping.yin´ò¿ªÓÚ20081121ÈÕ
+		super.doEndTag();//æ˜¯å¦å­˜åœ¨é—®é¢˜ï¼Œbiaoping.yinæ‰“å¼€äº20081121æ—¥
 		this.custom = false;
 		export = null;
 	    style = "V";
@@ -362,14 +362,14 @@ public final class IndexTag extends PagerTagSupport {
 	 */
 	public String generateContent() {
 		StringBuffer ret = new StringBuffer();
-        //Õë¶ÔwebÓ¦ÓÃÒıÈëjavascript½Å±¾ÎÄ¼ş£¬wapÓ¦ÓÃÎŞĞèÒıÈë
+        //é’ˆå¯¹webåº”ç”¨å¼•å…¥javascriptè„šæœ¬æ–‡ä»¶ï¼Œwapåº”ç”¨æ— éœ€å¼•å…¥
 		boolean needScript = (pagerContext.indexs == null || pagerContext.indexs.isEmpty());
 		if(needScript)
 		{
             if(!pagerContext.isWapflag())
 			    ret.append(this.getScript());
 		}
-		Locale locale = RequestContextUtils.getRequestContextLocal(request);
+		Locale locale = I18NUtil.getRequestContextLocal(request);
 		String total_label = TagUtil.tagmessageSource.getMessage("bboss.tag.pager.total",locale) ;
 		String total_page_label = TagUtil.tagmessageSource.getMessage("bboss.tag.pager.total.page",locale) ;
 		String total_records_label = TagUtil.tagmessageSource.getMessage("bboss.tag.pager.total.records",locale) ;
@@ -387,8 +387,8 @@ public final class IndexTag extends PagerTagSupport {
         if( switchcase[8] == 0)
         {
         	if(enable_page_total_size && !pagerContext.isMore())
-        		ret.append(total_label)//¹²
-        		.append("<span class='Total'>").append(!pagerContext.ListMode()?pagerContext.getItemCount():pagerContext.getDataSize()).append("</span>").append(total_records_label);//Ìõ¼ÇÂ¼  
+        		ret.append(total_label)//å…±
+        		.append("<span class='Total'>").append(!pagerContext.ListMode()?pagerContext.getItemCount():pagerContext.getDataSize()).append("</span>").append(total_records_label);//æ¡è®°å½•  
         }
 
 		//ret.append("<div align=\"right\">");
@@ -405,18 +405,18 @@ public final class IndexTag extends PagerTagSupport {
 			else
 			{
 				if(!pagerContext.isWapflag())
-				    ret.append("<span class='current'>µÚ" + serial + "Ò³</span>");
+				    ret.append("<span class='current'>ç¬¬" + serial + "é¡µ</span>");
 	            else
-	                ret.append("<span class='current'>µÚ" + serial + "Ò³</span>");
+	                ret.append("<span class='current'>ç¬¬" + serial + "é¡µ</span>");
 			}
 		}
 		if (switchcase[1] == 0 && !pagerContext.isMore()) {
             if(!pagerContext.isWapflag())
                 ret.append(
-                		pagerContext.getPageCount()).append(total_page_label);//" Ò³"
+                		pagerContext.getPageCount()).append(total_page_label);//" é¡µ"
             else
                 ret.append(
-                		pagerContext.getPageCount()).append(total_page_label);//" Ò³"
+                		pagerContext.getPageCount()).append(total_page_label);//" é¡µ"
 
 		}
 		
@@ -434,7 +434,7 @@ public final class IndexTag extends PagerTagSupport {
             else
                 ret.append(this.getWapPrevContent()).append("	");
 		}
-		if(this.tagnumber > 0)//´ı´¦Àí
+		if(this.tagnumber > 0)//å¾…å¤„ç†
         {
             StringBuffer center = new StringBuffer();
             
@@ -480,13 +480,13 @@ public final class IndexTag extends PagerTagSupport {
 		}
 //            else
 //               	ret.append(this.getWapGoContent());
-		/* ÖĞ¼äÒ³Âë */
+		/* ä¸­é—´é¡µç  */
         
 //		ret.append("</div>");
 //		ret.append("</td>");
 //		ret.append("</tr>");
 //		ret.append("</table>");
-		//±êÇ©±¾Éí½øÕ»£¬ÒÔ±ã·ÖÒ³±êÇ©½øĞĞ¸ú×Ù
+		//æ ‡ç­¾æœ¬èº«è¿›æ ˆï¼Œä»¥ä¾¿åˆ†é¡µæ ‡ç­¾è¿›è¡Œè·Ÿè¸ª
 		push();
 		return ret.toString();
 
@@ -515,7 +515,7 @@ public final class IndexTag extends PagerTagSupport {
 		
 //		Option  option = new Option();
 //		option.setValue(defaultsize);
-//		option.setTagText("¼ÇÂ¼ÉèÖÃ");
+//		option.setTagText("è®°å½•è®¾ç½®");
 //		select.addElement(option);
 		Option  option = null;
 		String[] ops = null;
@@ -535,11 +535,11 @@ public final class IndexTag extends PagerTagSupport {
 			}
 			select.addElement(option);
 		}
-		Locale locale = RequestContextUtils.getRequestContextLocal(request);
+		Locale locale = I18NUtil.getRequestContextLocal(request);
 		String everypage_label = TagUtil.tagmessageSource.getMessage("bboss.tag.pager.everypageshow",locale) ;
 		String everypagerecords_label = TagUtil.tagmessageSource.getMessage("bboss.tag.pager.everypageshow.records",locale) ;
-		return new StringBuffer(" <span class='pages1'>").append(everypage_label)//Ã¿Ò³ÏÔÊ¾
-		.append(select.toString()).append(everypagerecords_label)//Ìõ
+		return new StringBuffer(" <span class='pages1'>").append(everypage_label)//æ¯é¡µæ˜¾ç¤º
+		.append(select.toString()).append(everypagerecords_label)//æ¡
 		.append("</span>").toString();
 		
 	}
@@ -578,8 +578,8 @@ public final class IndexTag extends PagerTagSupport {
 
 //	/**
 //	 * notified by biaoping.yin on 2005-02-16
-//	 * ×¢ÏúÔ­Òò£ºÒÑ¾­ÒÆµ½pagerContextÖĞ
-//	 * Description:Éú³É×Ô¶¨ÒåµÄ·­Ò³Ë÷ÒıµÄÁ´½ÓµØÖ·
+//	 * æ³¨é”€åŸå› ï¼šå·²ç»ç§»åˆ°pagerContextä¸­
+//	 * Description:ç”Ÿæˆè‡ªå®šä¹‰çš„ç¿»é¡µç´¢å¼•çš„é“¾æ¥åœ°å€
 //	 * @param formName
 //	 * @param params
 //	 * @param promotion
@@ -609,9 +609,9 @@ public final class IndexTag extends PagerTagSupport {
         customFirstUrl = firstUrl;
         customFirstUrl = StringUtil.replace(customFirstUrl,"&","&amp;");
         if(this.getStyle().equals("V"))
-            return "<br/>" + new A().setHref(customFirstUrl).setTagText("Ê×Ò³").toString();
+            return "<br/>" + new A().setHref(customFirstUrl).setTagText("é¦–é¡µ").toString();
         else
-            return "  " + new A().setHref(customFirstUrl).setTagText("Ê×Ò³").toString();
+            return "  " + new A().setHref(customFirstUrl).setTagText("é¦–é¡µ").toString();
 
     }
     private static String buildPath(String dir,String fileName)
@@ -640,7 +640,7 @@ public final class IndexTag extends PagerTagSupport {
     
 	private String getFirstContent() {
 		String firstUrl = pagerContext.getPageUrl(getJumpPage(PagerConst.FIRST_PAGE));
-		Locale locale = RequestContextUtils.getRequestContextLocal(request);
+		Locale locale = I18NUtil.getRequestContextLocal(request);
 		String firstpage_label = TagUtil.tagmessageSource.getMessage("bboss.tag.pager.firstpage",locale) ;
 		if (firstUrl.equals(""))
 		{
@@ -649,7 +649,7 @@ public final class IndexTag extends PagerTagSupport {
 		    	if(this.aindex)
 		    	{
 			        return new StringBuffer("<a href='#'>")
-			    			.append(firstpage_label)//Ê× Ò³
+			    			.append(firstpage_label)//é¦– é¡µ
 			    			.append("</a>").toString();
 		    	}
 		    	else
@@ -662,7 +662,7 @@ public final class IndexTag extends PagerTagSupport {
 		        IMG image = new IMG();
 		        
 		        image.setSrc(buildPath(this.getImagedir(), first_image));
-		        image.setAlt(firstpage_label);//Ê× Ò³
+		        image.setAlt(firstpage_label);//é¦– é¡µ
 		        if(this.imageextend != null)
 		        {
 		            
@@ -688,7 +688,7 @@ public final class IndexTag extends PagerTagSupport {
 		if(!this.useimage)
 		{
 		    A a = new A();
-		    a.setTagText(firstpage_label);//Ê× Ò³;
+		    a.setTagText(firstpage_label);//é¦– é¡µ;
 		    if(pagerContext.getContainerid() == null || pagerContext.getContainerid().equals(""))
 		    {
 		        a.setHref(customFirstUrl);
@@ -706,7 +706,7 @@ public final class IndexTag extends PagerTagSupport {
 		    IMG image = new IMG();
             
             image.setSrc(buildPath(this.getImagedir(), first_image));
-            image.setAlt(firstpage_label);//Ê× Ò³
+            image.setAlt(firstpage_label);//é¦– é¡µ
             if(this.imageextend != null)
             {                
                 image.setExtend(this.imageextend);
@@ -725,7 +725,7 @@ public final class IndexTag extends PagerTagSupport {
             
 		}
 
-		//¹²1Ò³¡¡ Ê×Ò³¡¡ÉÏÒ»Ò³¡¡ÏÂÒ»Ò³¡¡Î²Ò³ ¡¡ Ìø×ª  Ò³
+		//å…±1é¡µã€€ é¦–é¡µã€€ä¸Šä¸€é¡µã€€ä¸‹ä¸€é¡µã€€å°¾é¡µ ã€€ è·³è½¬  é¡µ
 
 		//return  ret.toString();
 	}
@@ -736,13 +736,13 @@ public final class IndexTag extends PagerTagSupport {
 //        if (firstUrl.equals(""))
 //        {
 //            if(!this.useimage)
-//                return "Ê× Ò³";
+//                return "é¦– é¡µ";
 //            else
 //            {
 //                IMG image = new IMG();
 //                
 //                image.setSrc(buildPath(this.getImagedir(), first_image));
-//                image.setAlt("Ê× Ò³");
+//                image.setAlt("é¦– é¡µ");
 //                if(this.imageextend != null)
 //                {
 //                    
@@ -767,14 +767,14 @@ public final class IndexTag extends PagerTagSupport {
 //
 //        if(!this.useimage)
 //        {
-//            return new A().setHref(customFirstUrl).setTagText("Ê× Ò³").toString();
+//            return new A().setHref(customFirstUrl).setTagText("é¦– é¡µ").toString();
 //        }
 //        else
 //        {
 //            IMG image = new IMG();
 //            
 //            image.setSrc(buildPath(this.getImagedir(), first_image));
-//            image.setAlt("Ê× Ò³");
+//            image.setAlt("é¦– é¡µ");
 //            if(this.imageextend != null)
 //            {                
 //                image.setExtend(this.imageextend);
@@ -783,7 +783,7 @@ public final class IndexTag extends PagerTagSupport {
 //            
 //        }
 //
-//        //¹²1Ò³¡¡ Ê×Ò³¡¡ÉÏÒ»Ò³¡¡ÏÂÒ»Ò³¡¡Î²Ò³ ¡¡ Ìø×ª  Ò³
+//        //å…±1é¡µã€€ é¦–é¡µã€€ä¸Šä¸€é¡µã€€ä¸‹ä¸€é¡µã€€å°¾é¡µ ã€€ è·³è½¬  é¡µ
 //
 //        //return  ret.toString();
 //    }
@@ -792,7 +792,7 @@ public final class IndexTag extends PagerTagSupport {
 	{
 //	    IMG image = new IMG();        
 //        image.setSrc(buildPath("aaa", "bbb.gif"));
-//        image.setAlt("Ê×Ò³");
+//        image.setAlt("é¦–é¡µ");
 //        image.setExtend(" border=0 ");
 //        System.out.println(new A().setHref("www.sina.com.cn").addElement(image).toString());
 		 System.out.println(UUID.randomUUID().toString());
@@ -826,7 +826,7 @@ public final class IndexTag extends PagerTagSupport {
 //		return customUrl;
 //	}
 	/**
-	 * »ñÈ¡ÉÏÒ»Ò³µÄhtml´úÂë
+	 * è·å–ä¸Šä¸€é¡µçš„htmlä»£ç 
 	 * @return String
 	 */
     private String getWapPrevContent()
@@ -842,31 +842,31 @@ public final class IndexTag extends PagerTagSupport {
         //String prevurl = pagerContext.getPageUrl(getJumpPage(PagerConst.PRE_PAGE));
         customPrevutl = StringUtil.replace(customPrevutl,"&","&amp;");
         if(this.getStyle().equals("V"))
-            return "<br/>" + new A().setHref(customPrevutl).setTagText("ÉÏÒ»Ò³");
+            return "<br/>" + new A().setHref(customPrevutl).setTagText("ä¸Šä¸€é¡µ");
         else
-            return "    " + new A().setHref(customPrevutl).setTagText("ÉÏÒ»Ò³");
+            return "    " + new A().setHref(customPrevutl).setTagText("ä¸Šä¸€é¡µ");
 
     }
     
     
 	private String getPrevContent() {
 		
-		Locale locale = RequestContextUtils.getRequestContextLocal(request);
+		Locale locale = I18NUtil.getRequestContextLocal(request);
 		String prepage_label = TagUtil.tagmessageSource.getMessage("bboss.tag.pager.prepage",locale) ;
 		if (!pagerContext.hasPrevPage())
 		{
-//			return "¡¡ÉÏÒ»Ò³";
+//			return "ã€€ä¸Šä¸€é¡µ";
 			if(!this.useimage)
 			{
 				if(this.aindex)
 				{
 		            return new StringBuffer("<a href='#'>")
-					.append(prepage_label)//ÉÏÒ»Ò³
+					.append(prepage_label)//ä¸Šä¸€é¡µ
 					.append("</a>").toString();
 				}
 				else
 				{
-					return prepage_label//ÉÏÒ»Ò³
+					return prepage_label//ä¸Šä¸€é¡µ
 					;
 				}
 			}
@@ -875,7 +875,7 @@ public final class IndexTag extends PagerTagSupport {
 	            IMG image = new IMG();
 	            
 	            image.setSrc(buildPath(this.getImagedir(), this.pre_image));
-	            image.setAlt(prepage_label);//ÉÏÒ»Ò³
+	            image.setAlt(prepage_label);//ä¸Šä¸€é¡µ
 	            if(this.imageextend != null)
 	            {
 	                
@@ -903,7 +903,7 @@ public final class IndexTag extends PagerTagSupport {
 		if(!this.useimage)
         {
 		    A a = new A();
-            a.setTagText(prepage_label);//ÉÏÒ»Ò³
+            a.setTagText(prepage_label);//ä¸Šä¸€é¡µ
             if(pagerContext.getContainerid() == null || pagerContext.getContainerid().equals(""))
             {
                 a.setHref(customPrevutl);
@@ -915,14 +915,14 @@ public final class IndexTag extends PagerTagSupport {
             }
             
             return  a.toString();
-//		    return "¡¡" + new A().setHref(customPrevutl).setTagText("ÉÏÒ»Ò³");
+//		    return "ã€€" + new A().setHref(customPrevutl).setTagText("ä¸Šä¸€é¡µ");
         }
         else
         {
             IMG image = new IMG();
             
             image.setSrc(buildPath(this.getImagedir(), pre_image));
-            image.setAlt(prepage_label);//ÉÏÒ»Ò³
+            image.setAlt(prepage_label);//ä¸Šä¸€é¡µ
             if(this.imageextend != null)
             {                
                 image.setExtend(this.imageextend);
@@ -937,8 +937,8 @@ public final class IndexTag extends PagerTagSupport {
                 a.setOnClick(this.getJqueryUrl(customPrevutl,pagerContext.getContainerid(),pagerContext.getSelector()));
             }
             a.addElement(image);
-            return "¡¡" + a.toString();
-//            return "¡¡" + new A().setHref(customPrevutl).addElement(image).toString();
+            return "ã€€" + a.toString();
+//            return "ã€€" + new A().setHref(customPrevutl).addElement(image).toString();
 //          return new A().setHref(customFirstUrl).addElement(image).toString();
             
         }
@@ -970,7 +970,7 @@ public final class IndexTag extends PagerTagSupport {
     }
 
     /**
-     * »ñÈ¡wapµÃÏÂÒ»Ò³µØÖ·
+     * è·å–wapå¾—ä¸‹ä¸€é¡µåœ°å€
      * @return String
      */
     private String getWapNextContent()
@@ -987,16 +987,16 @@ public final class IndexTag extends PagerTagSupport {
 
             //String nextUrl = pagerContext.getPageUrl(getJumpPage(PagerConst.NEXT_PAGE));
             if(this.getStyle().equals("V"))
-                return "<br/>" + new A().setHref(customNextUrl).setTagText("ÏÂÒ»Ò³");
+                return "<br/>" + new A().setHref(customNextUrl).setTagText("ä¸‹ä¸€é¡µ");
             else
-                return "    " + new A().setHref(customNextUrl).setTagText("ÏÂÒ»Ò³");
+                return "    " + new A().setHref(customNextUrl).setTagText("ä¸‹ä¸€é¡µ");
         }
         return "";
 
     }
 
 	/**
-	 * »ñÈ¡ÏÂÒ»Ò³µÄhtml´úÂë
+	 * è·å–ä¸‹ä¸€é¡µçš„htmlä»£ç 
 
 	 *
 	 * To change the template for this generated type comment go to
@@ -1004,7 +1004,7 @@ public final class IndexTag extends PagerTagSupport {
 	 */
 
 	private String getNextContent() {
-		Locale locale = RequestContextUtils.getRequestContextLocal(request);
+		Locale locale = I18NUtil.getRequestContextLocal(request);
 		String nextpage_label = TagUtil.tagmessageSource.getMessage("bboss.tag.pager.nextpage",locale) ;
 		if (pagerContext.hasNextPage()) {
 			long offset = pagerContext.getNextOffset();
@@ -1027,7 +1027,7 @@ public final class IndexTag extends PagerTagSupport {
 			if(!this.useimage)
 	        {
 			    A a = new A();
-	            a.setTagText(nextpage_label);//"ÏÂÒ»Ò³"
+	            a.setTagText(nextpage_label);//"ä¸‹ä¸€é¡µ"
 	            if(pagerContext.getContainerid() == null || pagerContext.getContainerid().equals(""))
 	            {
 	                a.setHref(customNextUrl);
@@ -1044,7 +1044,7 @@ public final class IndexTag extends PagerTagSupport {
 	            IMG image = new IMG();
 	            
 	            image.setSrc(buildPath(this.getImagedir(), this.next_image));
-	            image.setAlt(nextpage_label);//"ÏÂÒ»Ò³"
+	            image.setAlt(nextpage_label);//"ä¸‹ä¸€é¡µ"
 	            if(this.imageextend != null)
 	            {                
 	                image.setExtend(this.imageextend);
@@ -1070,12 +1070,12 @@ public final class IndexTag extends PagerTagSupport {
 		{
 			if(this.aindex)
             {
-				return new StringBuffer("<a href='#'>").append(nextpage_label)//"ÏÂÒ»Ò³"            
+				return new StringBuffer("<a href='#'>").append(nextpage_label)//"ä¸‹ä¸€é¡µ"            
             		.append("</a>").toString();
             }
 			else
 			{
-				return nextpage_label//"ÏÂÒ»Ò³"            
+				return nextpage_label//"ä¸‹ä¸€é¡µ"            
 	            		;
 			}
 		}
@@ -1083,7 +1083,7 @@ public final class IndexTag extends PagerTagSupport {
         {
             IMG image = new IMG();            
             image.setSrc(buildPath(this.getImagedir(), next_image));
-            image.setAlt(nextpage_label);//"ÏÂÒ»Ò³"
+            image.setAlt(nextpage_label);//"ä¸‹ä¸€é¡µ"
             if(this.imageextend != null)
             {
                 
@@ -1092,11 +1092,11 @@ public final class IndexTag extends PagerTagSupport {
            
             return image.toString();
         }
-//		return "¡¡ÏÂÒ»Ò³";
+//		return "ã€€ä¸‹ä¸€é¡µ";
 	}
 
     /**
-     * »ñÈ¡wapÎ²Ò³°´Å¥
+     * è·å–wapå°¾é¡µæŒ‰é’®
      * @return String
      */
     private String getWapLastContent() {
@@ -1110,14 +1110,14 @@ public final class IndexTag extends PagerTagSupport {
         customLastUrl = lastUrl;
         customLastUrl = StringUtil.replaceAll(customLastUrl,"&","&amp;");
         if(this.getStyle().equals("V"))
-            return "<br/>" + new A().setHref(customLastUrl).setTagText("Î² Ò³");
+            return "<br/>" + new A().setHref(customLastUrl).setTagText("å°¾ é¡µ");
         else
-            return "    " + new A().setHref(customLastUrl).setTagText("Î² Ò³");
+            return "    " + new A().setHref(customLastUrl).setTagText("å°¾ é¡µ");
 
     }
     
     /**
-     * Éú³ÉÖĞ¼äÒ³ÃæµØÖ·
+     * ç”Ÿæˆä¸­é—´é¡µé¢åœ°å€
      * @param tagnumber
      * @param currentPage
      * @param totalPage
@@ -1126,7 +1126,7 @@ public final class IndexTag extends PagerTagSupport {
      */
     private void getCenterContent(int currentPage,int totalPage,StringBuffer output)
     {
-/* ÆğÊ¼Ò³ */
+/* èµ·å§‹é¡µ */
 //        System.out.println("currentPage:"+currentPage);
 //        System.out.println("totalPage:"+totalPage);
         if(tagnumber >0){       
@@ -1145,10 +1145,10 @@ public final class IndexTag extends PagerTagSupport {
 	                    
 	                }
 	                start = start<=0?1:start;           
-	                /* Î²Ò³ */
+	                /* å°¾é¡µ */
 	                end = (int)this.tagnumber + start  ;
 	                if(end > totalPage) {
-	                    //Ò³ÂëÊÇ´Ó1¿ªÊ¼µÄ
+	                    //é¡µç æ˜¯ä»1å¼€å§‹çš„
 	                    end = (int)totalPage + 1;
 	                    start = end - (int)this.tagnumber;
 	                    if(start<=0) start = 1;
@@ -1156,7 +1156,7 @@ public final class IndexTag extends PagerTagSupport {
             	}
             	else
             	{
-            		if(pagerContext.getDataResultSize() < pagerContext.getMaxPageItems())//×îºóÒ»Ò³
+            		if(pagerContext.getDataResultSize() < pagerContext.getMaxPageItems())//æœ€åä¸€é¡µ
             		{
             			if(currentPage > 1)
             			{
@@ -1181,10 +1181,10 @@ public final class IndexTag extends PagerTagSupport {
 		                    
 		                }
 		                start = start<=0?1:start;           
-		                /* Î²Ò³ */
+		                /* å°¾é¡µ */
 		                end = (int)this.tagnumber + start  ;
 //		                if(end > totalPage) {
-//		                    //Ò³ÂëÊÇ´Ó1¿ªÊ¼µÄ
+//		                    //é¡µç æ˜¯ä»1å¼€å§‹çš„
 //		                    end = (int)totalPage + 1;
 //		                    start = end - (int)this.tagnumber;
 //		                    if(start<=0) start = 1;
@@ -1272,22 +1272,22 @@ public final class IndexTag extends PagerTagSupport {
         }
     }
 	/**
-	 * »ñÈ¡Î²Ò³°´Å¥
+	 * è·å–å°¾é¡µæŒ‰é’®
 	 * @return String
 	 */
 	private String getLastContent() {
-		 String lastpage_label = TagUtil.tagmessageSource.getMessage("bboss.tag.pager.lastpage",RequestContextUtils.getRequestContextLocal(request)) ;
+		 String lastpage_label = TagUtil.tagmessageSource.getMessage("bboss.tag.pager.lastpage",I18NUtil.getRequestContextLocal(request)) ;
 	    
 		String lastUrl = pagerContext.getPageUrl(getJumpPage(PagerConst.LAST_PAGE));
 		if (lastUrl.equals(""))
 		{
-//			return "¡¡Î² Ò³";
+//			return "ã€€å°¾ é¡µ";
 			if(!this.useimage)
 			{
 				if(this.aindex)
 				{
 	                return new StringBuffer().append(" <a href='#'>")
-	                		.append(lastpage_label)//Î²Ò³
+	                		.append(lastpage_label)//å°¾é¡µ
 	                		.append("</a>").toString();
 				}
 				else
@@ -1300,7 +1300,7 @@ public final class IndexTag extends PagerTagSupport {
                 IMG image = new IMG();
                 
                 image.setSrc(buildPath(this.getImagedir(), last_image));
-                image.setAlt(lastpage_label);//Î²Ò³
+                image.setAlt(lastpage_label);//å°¾é¡µ
                 if(this.imageextend != null)
                 {
                     
@@ -1328,7 +1328,7 @@ public final class IndexTag extends PagerTagSupport {
         {
 		    
 		    A a = new A();
-            a.setTagText(lastpage_label);//Î²Ò³
+            a.setTagText(lastpage_label);//å°¾é¡µ
             if(pagerContext.getContainerid() == null || pagerContext.getContainerid().equals(""))
             {
                 a.setHref(customLastUrl);
@@ -1339,14 +1339,14 @@ public final class IndexTag extends PagerTagSupport {
                 a.setOnClick(this.getJqueryUrl(customLastUrl,pagerContext.getContainerid(),pagerContext.getSelector()));
             }
             return a.toString();
-//		    return "¡¡" + new A().setHref(customLastUrl).setTagText("Î² Ò³");
+//		    return "ã€€" + new A().setHref(customLastUrl).setTagText("å°¾ é¡µ");
         }
         else
         {
             IMG image = new IMG();
             
             image.setSrc(buildPath(this.getImagedir(), this.last_image));
-            image.setAlt(lastpage_label);//Î²Ò³
+            image.setAlt(lastpage_label);//å°¾é¡µ
             if(this.imageextend != null)
             {                
                 image.setExtend(this.imageextend);
@@ -1377,7 +1377,7 @@ public final class IndexTag extends PagerTagSupport {
 	 *     var goPage = parserInt(go);
 	 *     if(isNaN(goPage))
 	 * 	   {
-	 * 			alert("Ìø×ªÒ³±ØĞëÊÇÊı×Ö");
+	 * 			alert("è·³è½¬é¡µå¿…é¡»æ˜¯æ•°å­—");
 	 * 			return;
 	 * 	   }
 	 * 	   var offset = (goPage - 1) * maxPageItems;
@@ -1436,12 +1436,12 @@ public final class IndexTag extends PagerTagSupport {
 //		System.out.println(new Script().setTagText("commitevent = \"turnPageSumbmitSet()\";").toString());
 //	}
     /**
-     * »ñÈ¡wapµÃÌø×ª°´Å¥
+     * è·å–wapå¾—è·³è½¬æŒ‰é’®
      * @return String
      */
     private String getWapGoContent()
     {
-        StringBuffer ret = new StringBuffer(); //.append("Ìø×ªµ½");
+        StringBuffer ret = new StringBuffer(); //.append("è·³è½¬åˆ°");
         //ret.append("<a id=\"bridge\"></a>");
         //ret.append(this.getScript());
         long pages = pagerContext.getPageCount();
@@ -1467,8 +1467,8 @@ public final class IndexTag extends PagerTagSupport {
                     + ",'"
                     + pagerContext.getId()
                     + "')";
-            // µ÷ÓÃvalidator.wmlsÖĞµÄÍâ²¿º¯Êıvalidate()½øĞĞÓĞĞ§ĞÔ¼ìÑé
-            String doEvent = "<do type=\"accept\" label=\"Ìø×ªµ½\">"
+            // è°ƒç”¨validator.wmlsä¸­çš„å¤–éƒ¨å‡½æ•°validate()è¿›è¡Œæœ‰æ•ˆæ€§æ£€éªŒ
+            String doEvent = "<do type=\"accept\" label=\"è·³è½¬åˆ°\">"
                         + "<go href=\"" + goTo + "\"/>"
                         + "</do>";
 
@@ -1477,10 +1477,10 @@ public final class IndexTag extends PagerTagSupport {
             ret.append(doEvent);
             ret
                 .append("<input name='gotopage' type='text' size='2'/>")
-                .append("Ò³");
+                .append("é¡µ");
         } else {
 //            ret
-//                .append("Ìø×ªµ½ ")
+//                .append("è·³è½¬åˆ° ")
 //                .append(
 //                    new Input()
 //                        .setName("gotopage")
@@ -1488,11 +1488,11 @@ public final class IndexTag extends PagerTagSupport {
 //                        .setSize(2)
 //                        .setDisabled(true)
 //                        )
-//                .append(" Ò³");
+//                .append(" é¡µ");
         }
 
         //<input name="txtName2" type="text" size="4" attrib="editor">
-        //							<a href="#">Ò³</a>
+        //							<a href="#">é¡µ</a>
         if(this.getStyle().equals("V"))
             return "<br/>" + ret.toString();
         else
@@ -1502,11 +1502,11 @@ public final class IndexTag extends PagerTagSupport {
 
     
 //    /**
-//     * »ñÈ¡Ìø×ª°´Å¥
+//     * è·å–è·³è½¬æŒ‰é’®
 //     * @return String
 //     */
 //    private String getGoContent() {
-//		StringBuffer ret = new StringBuffer(); //.append("Ìø×ªµ½");
+//		StringBuffer ret = new StringBuffer(); //.append("è·³è½¬åˆ°");
 //		//ret.append("<a id=\"bridge\"></a>");
 //		//ret.append(this.getScript());
 //		long pages = pagerContext.getPageCount();
@@ -1623,13 +1623,13 @@ public final class IndexTag extends PagerTagSupport {
 //			{
 //			    a.setOnClick(goTo);
 //			
-//			    a.setTagText("Ìø×ªµ½ ");
+//			    a.setTagText("è·³è½¬åˆ° ");
 //			}
 //			else
 //			{
 //			    IMG image = new IMG();                
 //                image.setSrc(buildPath(this.getImagedir(), this.go_image));
-//                image.setAlt("Ìø×ªµ½");
+//                image.setAlt("è·³è½¬åˆ°");
 //                if(this.imageextend != null)
 //                {
 //                    
@@ -1654,7 +1654,7 @@ public final class IndexTag extends PagerTagSupport {
 //			ret
 //				.append(
 //					go.toString())
-//				.append(" Ò³");
+//				.append(" é¡µ");
 //		} else {
 //		    if(!this.useimage)
 //            {
@@ -1666,17 +1666,17 @@ public final class IndexTag extends PagerTagSupport {
 //	            .setDisabled(true);
 //	            
 //	            ret
-//	                .append("Ìø×ªµ½ ")
+//	                .append("è·³è½¬åˆ° ")
 //	                .append(
 //	                    go.toString()                       
 //	                        )
-//	                .append(" Ò³");
+//	                .append(" é¡µ");
 //            }
 //            else
 //            {
 //                IMG image = new IMG();                
 //                image.setSrc(buildPath(this.getImagedir(), this.go_image));
-//                image.setAlt("Ìø×ªµ½");
+//                image.setAlt("è·³è½¬åˆ°");
 //                if(this.imageextend != null)
 //                {
 //                    
@@ -1695,13 +1695,13 @@ public final class IndexTag extends PagerTagSupport {
 //                    .append(
 //                        go.toString()                       
 //                            )
-//                    .append(" Ò³");
+//                    .append(" é¡µ");
 //            }
 //			
 //		}
 //
 //		//<input name="txtName2" type="text" size="4" attrib="editor">
-//		//							<a href="#">Ò³</a>
+//		//							<a href="#">é¡µ</a>
 ////		if(pagerContext.indexs == null || pagerContext.indexs.isEmpty())
 ////		{
 ////			
@@ -1710,20 +1710,20 @@ public final class IndexTag extends PagerTagSupport {
 //		return ret.toString();
 //	}
     
-    private static final String gopageerror_msg = "ÇëÊäÈëÌø×ªÒ³»òÕßÌø×ªÒ³±ØĞëÎªÕûÊı";
+    private static final String gopageerror_msg = "è¯·è¾“å…¥è·³è½¬é¡µæˆ–è€…è·³è½¬é¡µå¿…é¡»ä¸ºæ•´æ•°";
     /**
-     * »ñÈ¡Ìø×ª°´Å¥
+     * è·å–è·³è½¬æŒ‰é’®
      * @return String
      */
     private String getGoContent() {
-        StringBuffer ret = new StringBuffer(); //.append("Ìø×ªµ½");
+        StringBuffer ret = new StringBuffer(); //.append("è·³è½¬åˆ°");
         //ret.append("<a id=\"bridge\"></a>");
         //ret.append(this.getScript());
         long pages = pagerContext.getPageCount();
         //System.out.println("pagerContext.getPageCount():"+pagerContext.getPageCount());
         String uuid = UUID.randomUUID().toString();
         String gotopageid = uuid+".go";
-        Locale locale = RequestContextUtils.getRequestContextLocal(request);
+        Locale locale = I18NUtil.getRequestContextLocal(request);
         String gotopage_label = TagUtil.tagmessageSource.getMessage("bboss.tag.pager.gotopage",locale) ;
         String page_label = TagUtil.tagmessageSource.getMessage("bboss.tag.pager.page",locale) ;
         String gopageerror_msg = TagUtil.tagmessageSource.getMessage("bboss.tag.pager.gopageerror_msg",locale) ;
@@ -1918,9 +1918,9 @@ public final class IndexTag extends PagerTagSupport {
             
             	if(this.usegoimage){
             		ret.append(" ")
-                    .append(gotopage_label)//Ìø×ªµ½
+                    .append(gotopage_label)//è·³è½¬åˆ°
                     .append(go.toString())
-                    .append(page_label); //Ò³
+                    .append(page_label); //é¡µ
             		IMG image = new IMG(); 
             		image.setID(pagerjumpto);
             		image.setName(pagerjumpto);
@@ -1939,8 +1939,8 @@ public final class IndexTag extends PagerTagSupport {
             		a.setID(pagerjumpto);
             		a.setName(pagerjumpto);
             		a.setOnClick(goTo);            
-                    a.setTagText(gotopage_label);//Ìø×ªµ½
-                    ret.append(a.toString()).append(go.toString()).append(page_label); //Ò³
+                    a.setTagText(gotopage_label);//è·³è½¬åˆ°
+                    ret.append(a.toString()).append(go.toString()).append(page_label); //é¡µ
                     
             	}                
             
@@ -1956,12 +1956,12 @@ public final class IndexTag extends PagerTagSupport {
                     .setClass("page_input"))
                     .setDisabled(true);
             		ret.append(" ")
-                    .append(gotopage_label)//Ìø×ªµ½
+                    .append(gotopage_label)//è·³è½¬åˆ°
                     .append(go.toString())
-                    .append(page_label); //Ò³
+                    .append(page_label); //é¡µ
             		IMG image = new IMG();                
                     image.setSrc(buildPath(this.getImagedir(), this.go_image));
-                    image.setAlt(gotopage_label);//Ìø×ªµ½
+                    image.setAlt(gotopage_label);//è·³è½¬åˆ°
                     if(this.imageextend != null)
                     {
                         
@@ -1979,10 +1979,10 @@ public final class IndexTag extends PagerTagSupport {
                     .setDisabled(true);
                     
                     ret.append(" ")
-                    .append(gotopage_label)//Ìø×ªµ½
+                    .append(gotopage_label)//è·³è½¬åˆ°
                     .append(go.toString()                       
                                 )
-                        .append(page_label); //Ò³
+                        .append(page_label); //é¡µ
                     
             	}     
                 
@@ -1991,7 +1991,7 @@ public final class IndexTag extends PagerTagSupport {
         }
 
         //<input name="txtName2" type="text" size="4" attrib="editor">
-        //                          <a href="#">Ò³</a>
+        //                          <a href="#">é¡µ</a>
 //      if(pagerContext.indexs == null || pagerContext.indexs.isEmpty())
 //      {
 //          
@@ -2004,15 +2004,15 @@ public final class IndexTag extends PagerTagSupport {
 		switch (type) {
 			case PagerConst.FIRST_PAGE :
 				return 0;
-				//			case PagerConst.PRE_PAGE://±£Áô¹Ø¼ü×Ö£¬Ä¿Ç°Ã»ÓĞÊ¹ÓÃ
+				//			case PagerConst.PRE_PAGE://ä¿ç•™å…³é”®å­—ï¼Œç›®å‰æ²¡æœ‰ä½¿ç”¨
 				//				return pagerContext.getPrevOffset();
-				//			case PagerConst.INDEX_PAGE://±£Áô¹Ø¼ü×Ö£¬Ä¿Ç°Ã»ÓĞÊ¹ÓÃ
+				//			case PagerConst.INDEX_PAGE://ä¿ç•™å…³é”®å­—ï¼Œç›®å‰æ²¡æœ‰ä½¿ç”¨
 				//				return 2;
 				//			case PagerConst.NEXT_PAGE:
 				//				return pagerContext.getNextOffset();
 			case PagerConst.LAST_PAGE :
 				return pagerContext.getLastPageNumber();
-				//			case PagerConst.GO_PAGE://±£Áô¹Ø¼ü×Ö£¬Ä¿Ç°Ã»ÓĞÊ¹ÓÃ
+				//			case PagerConst.GO_PAGE://ä¿ç•™å…³é”®å­—ï¼Œç›®å‰æ²¡æœ‰ä½¿ç”¨
 				//				return 2;
 			default :
 				return 2;
@@ -2020,7 +2020,7 @@ public final class IndexTag extends PagerTagSupport {
 	}
 
 	/**
-	 * ½«Index±êÇ©ÊµÀıÑ¹Õ»
+	 * å°†Indexæ ‡ç­¾å®ä¾‹å‹æ ˆ
 	 * Description:
 	 * @return
 	 * Object

@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding='gb2312'?>
+<?xml version="1.0" encoding='UTF-8'?>
 	<!--
-		bboss-rss配置文件,mapping follow urls:
+		bboss-rss閰嶇疆鏂囦欢,mapping follow urls:
 		http://ip:port/contextpath/rss/rss.html
 		http://ip:port/contextpath/rss/atom.html
 	-->

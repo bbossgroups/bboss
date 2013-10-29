@@ -25,9 +25,9 @@ import com.frameworkset.orm.doclet.HandlerORMapping;
 /**
  * <p>Title: ORMappingTask</p>
  *
- * <p>Description: Ö´ĞĞ½âÎöo/r mappingµÄant ÈÎÎñ¶ÔÏó£¬
- * ´Óorg.apache.tools.ant.TaskÀà¼¯³É£¬Òò´Ë¿ÉÔÚant½Å±¾ÖĞÍê³Æ½âÎö¹¤×÷£¬
- * ²¢ÇÒ½«½âÎö³öÀ´µÄ±í¶ÔÏóÓ³Éä¹ØÏµ»º³åµ½ÎïÀíÎÄ¼şÖĞ£¬¼´Éú³É¶ÔÏó/Êı¾İ¿âÓ³ÉäschemaÎÄ¼ş
+ * <p>Description: æ‰§è¡Œè§£æo/r mappingçš„ant ä»»åŠ¡å¯¹è±¡ï¼Œ
+ * ä»org.apache.tools.ant.Taskç±»é›†æˆï¼Œå› æ­¤å¯åœ¨antè„šæœ¬ä¸­å®Œç§°è§£æå·¥ä½œï¼Œ
+ * å¹¶ä¸”å°†è§£æå‡ºæ¥çš„è¡¨å¯¹è±¡æ˜ å°„å…³ç³»ç¼“å†²åˆ°ç‰©ç†æ–‡ä»¶ä¸­ï¼Œå³ç”Ÿæˆå¯¹è±¡/æ•°æ®åº“æ˜ å°„schemaæ–‡ä»¶
  * </p>
  *
  * <p>Copyright: Copyright (c) 2005</p>
@@ -40,17 +40,17 @@ import com.frameworkset.orm.doclet.HandlerORMapping;
 public class ORMappingTask extends Task{
     private static Logger log = Logger.getLogger(ORMappingTask.class);
     /**
-     * Ô´ÎÄ¼şÂ·¾¶
+     * æºæ–‡ä»¶è·¯å¾„
      */
     private String src = null;
 
     /**
-     * schemeÎÄ¼ş´æ·ÅÂ·¾¶
+     * schemeæ–‡ä»¶å­˜æ”¾è·¯å¾„
      */
     private String schemaDir = null;
 
     /**
-     * database»º³åÎÄ¼ş´æ·ÅÂ·¾¶
+     * databaseç¼“å†²æ–‡ä»¶å­˜æ”¾è·¯å¾„
      */
     private String cacheDir = null;
 
@@ -62,11 +62,11 @@ public class ORMappingTask extends Task{
             log.debug("Build O/R Mapping error occur:" + src + "=null.");
             throw new BuildException("Build O/R Mapping error occur:" + src + "=null.");
         }
-        //³õÊ¼»¯handlerµÄÔ´ÎÄ¼şÂ·¾¶
+        //åˆå§‹åŒ–handlerçš„æºæ–‡ä»¶è·¯å¾„
         handler.init(src);
-        //¿ªÊ¼Ö´ĞĞÓ³Éä¹ØÏµ
+        //å¼€å§‹æ‰§è¡Œæ˜ å°„å…³ç³»
         handler.execute();
-        //»º³åÓ³Éä¹ØÏµ
+        //ç¼“å†²æ˜ å°„å…³ç³»
         if(cacheDir != null)
             handler.cache(cacheDir);
         if(schemaDir != null)

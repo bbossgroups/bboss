@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="gb2312"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <poolman>
 	<datasource>
 		<dbname>bspf</dbname>

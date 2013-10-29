@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset=gb2312" session="false" language="java" %>
+<%@ page contentType="text/html; charset=UTF-8" session="false" language="java" %>
 <%
 System.out.println("run System.gc() begin.");
 long start = System.currentTimeMillis();

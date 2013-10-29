@@ -20,25 +20,25 @@ package org.frameworkset.spi.remote.webservice;
 
 /**
  * <p>Title: JaxWsProxyFactory.java</p> 
- * <p>Description: ws ´úÀí¹¤³§£¬ÓÃÀ´webservice ¿Í»§¶Ëµ÷ÓÃ×é¼ş
- * Ê¹ÓÃÊµÀı:
+ * <p>Description: ws ä»£ç†å·¥å‚ï¼Œç”¨æ¥webservice å®¢æˆ·ç«¯è°ƒç”¨ç»„ä»¶
+ * ä½¿ç”¨å®ä¾‹:
  * org.frameworkset.web.ws.WSService wsservice = JaxWsProxyFactory.getWSClient("http://localhost:8080/bboss-mvc/cxfservices/mysfirstwsservicePort",
  *                                                org.frameworkset.web.ws.WSService.class);
  * </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2011-10-22 ÏÂÎç12:21:22
+ * @Date 2011-10-22 ä¸‹åˆ12:21:22
  * @author biaoping.yin
  * @version 1.0
  */
 public class JaxWsProxyFactory
 {
 	/**
-	 * ¸ù¾İ·şÎñ·ÃÎÊµØÖ·ºÍ·şÎñ¶ÔÓ¦µÄ½Ó¿Ú¶¯Ì¬Éú³É·şÎñµÄ¿Í»§¶Ëµ÷ÓÃÊµÀı
-	 * @param <T> ·şÎñ½Ó¿ÚÀàĞÍ
-	 * @param wsurl ·şÎñ·ÃÎÊµØÖ·
-	 * @param wsinf ·şÎñ½Ó¿Ú
-	 * @return ¿Í»§¶Ëµ÷ÓÃÊµÀı
+	 * æ ¹æ®æœåŠ¡è®¿é—®åœ°å€å’ŒæœåŠ¡å¯¹åº”çš„æ¥å£åŠ¨æ€ç”ŸæˆæœåŠ¡çš„å®¢æˆ·ç«¯è°ƒç”¨å®ä¾‹
+	 * @param <T> æœåŠ¡æ¥å£ç±»å‹
+	 * @param wsurl æœåŠ¡è®¿é—®åœ°å€
+	 * @param wsinf æœåŠ¡æ¥å£
+	 * @return å®¢æˆ·ç«¯è°ƒç”¨å®ä¾‹
 	 */
 	public static  <T> T getWSClient(String wsurl,Class<T> wsinf)
 	{

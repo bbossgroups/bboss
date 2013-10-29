@@ -49,7 +49,7 @@ import org.apache.log4j.Logger;
 import org.frameworkset.util.io.Resource;
 
 /**
- * To change for your class or interface DAOÖĞVOObject StringÀàĞÍÓëPOÊı¾İÀàĞÍ×ª»»¹¤¾ßÀà.
+ * To change for your class or interface DAOä¸­VOObject Stringç±»å‹ä¸POæ•°æ®ç±»å‹è½¬æ¢å·¥å…·ç±».
  * 
  * @author biaoping.yin
  * @version 1.0
@@ -163,7 +163,7 @@ public class StringUtil extends SimpleStringUtil {
 		if (contextPath == null || contextPath.equals("") || contextPath.equals("/")) {
 //			System.out.println("StringUtil.getRealPath() contextPath:"
 //					+ contextPath);
-			if(usebase)//Èç¹ûĞèÒª¼ì²âÉÏÏÂÎÄÂ·¾¶Îª¿Õ´®£¬ÄÇÃ´Èç¹ûpathµÚÒ»¸ö×Ö·û²»ÊÇ/£¬ÄÇÃ´ĞèÒª²¹³ä×Ö·û/µ½µÚÒ»¸öÎ»ÖÃ
+			if(usebase)//å¦‚æœéœ€è¦æ£€æµ‹ä¸Šä¸‹æ–‡è·¯å¾„ä¸ºç©ºä¸²ï¼Œé‚£ä¹ˆå¦‚æœpathç¬¬ä¸€ä¸ªå­—ç¬¦ä¸æ˜¯/ï¼Œé‚£ä¹ˆéœ€è¦è¡¥å……å­—ç¬¦/åˆ°ç¬¬ä¸€ä¸ªä½ç½®
 			{
 				if(isEmpty(path))
 					return "/";
@@ -205,7 +205,7 @@ public class StringUtil extends SimpleStringUtil {
 	}
 
 	public static void main(String args[]) {
-//		String str = "ÖĞÎÄ,'bb,cc,'dd";
+//		String str = "ä¸­æ–‡,'bb,cc,'dd";
 //		try {
 //			str = new String(str.getBytes(), "utf-8");
 //		} catch (UnsupportedEncodingException ex) {
@@ -218,11 +218,11 @@ public class StringUtil extends SimpleStringUtil {
 //		System.out.println("?".getBytes()[0]);
 		int maxlength = 16;
 		String replace  ="...";
-		String outStr = "2010Äê02ÔÂ04ÈÕ12Ê±Ğí£¬ºÎ½ğÑş£¨Å®¡¢1987Äê06ÔÂ18ÈÕÉú¡¢Éí·İÖ¤£º430981198706184686¡¢ºşÄÏÊ¡ãä½­ÊĞãä½­ÊĞÄÏ´óÉÅÕò¿µÄş´åÊ®¶ş´åÃñ×é24ºÅ£©±¨¾¯£ºÆä¾­ÓªµÄÒæÑôÊĞµçĞÅ¶ÔÃæµÄÇçÌì·ş×°µê±»µÁÁË¡£½Ó¾¯ºóÎÒËùÃñ¾¯Á¢¼´¸ÏÖÁÏÖ³¡ÁË½âÏµ£¬½ñÈÕÖĞÎç12Ê±ĞíºÎ½ğÑşÓëÄ¸Ç×»ÆÖ¾ÔªÔÚµêÄÚ×öÉúÒâ£¬ÓĞÁ½ÄĞ×Ó½øÈëµêÄÚ£¬ÆäÖĞÒ»ÄĞ×ÓÒÔ°áµêÄÚµÄÊÔÒÂ¾µ³öÈ¥ÎüÒı×¢ÒâÁ¦¡£ÁíÒ»ÄĞ×Ó¾Í½øĞĞµÁÇÔ£¬µÁÈ¡ÁËÆäµêÄÚÊÕÒøÌ¨³éÌëÄÚ700ÔªÈËÃñ±Ò";
+		String outStr = "2010å¹´02æœˆ04æ—¥12æ—¶è®¸ï¼Œä½•é‡‘ç‘¶ï¼ˆå¥³ã€1987å¹´06æœˆ18æ—¥ç”Ÿã€èº«ä»½è¯ï¼š430981198706184686ã€æ¹–å—çœæ²…æ±Ÿå¸‚æ²…æ±Ÿå¸‚å—å¤§è†³é•‡åº·å®æ‘åäºŒæ‘æ°‘ç»„24å·ï¼‰æŠ¥è­¦ï¼šå…¶ç»è¥çš„ç›Šé˜³å¸‚ç”µä¿¡å¯¹é¢çš„æ™´å¤©æœè£…åº—è¢«ç›—äº†ã€‚æ¥è­¦åæˆ‘æ‰€æ°‘è­¦ç«‹å³èµ¶è‡³ç°åœºäº†è§£ç³»ï¼Œä»Šæ—¥ä¸­åˆ12æ—¶è®¸ä½•é‡‘ç‘¶ä¸æ¯äº²é»„å¿—å…ƒåœ¨åº—å†…åšç”Ÿæ„ï¼Œæœ‰ä¸¤ç”·å­è¿›å…¥åº—å†…ï¼Œå…¶ä¸­ä¸€ç”·å­ä»¥æ¬åº—å†…çš„è¯•è¡£é•œå‡ºå»å¸å¼•æ³¨æ„åŠ›ã€‚å¦ä¸€ç”·å­å°±è¿›è¡Œç›—çªƒï¼Œç›—å–äº†å…¶åº—å†…æ”¶é“¶å°æŠ½å±‰å†…700å…ƒäººæ°‘å¸";
 		
 		System.out.println(StringUtil.getHandleString(maxlength,replace,false,false,outStr));
 		
-outStr = "2010Äê02ÔÂ07ÈÕ11Ê±Ğí£¬ÖÜÁéÓ±±¨¾¯£ºÔÚ2Â·¹«½»³µÉÏ±»°ÇÇÔ£¬²¢×¥»ñÒ»ÃûÏÓÒÉÈË¡£Ãñ¾¯³ö¾¯ºó£¬¾­µ÷²é£¬ÖÜÁéÓ±ÓÚµ±ÈÕ10Ê±40·ÖĞí×ø2Â·³µµ½ÇÅÄÏ£¬Í¾ÖĞ±»¶şÃûÄĞ×Ó°ÇÇÔÏÖ½ğ3100Ôª¡£Ò»Ãû±»µ±³¡×¥»ñ£¬ÁíÒ»ÃûÒÑÌÓ×ß¡£ ";
+outStr = "2010å¹´02æœˆ07æ—¥11æ—¶è®¸ï¼Œå‘¨çµé¢–æŠ¥è­¦ï¼šåœ¨2è·¯å…¬äº¤è½¦ä¸Šè¢«æ‰’çªƒï¼Œå¹¶æŠ“è·ä¸€åå«Œç–‘äººã€‚æ°‘è­¦å‡ºè­¦åï¼Œç»è°ƒæŸ¥ï¼Œå‘¨çµé¢–äºå½“æ—¥10æ—¶40åˆ†è®¸å2è·¯è½¦åˆ°æ¡¥å—ï¼Œé€”ä¸­è¢«äºŒåç”·å­æ‰’çªƒç°é‡‘3100å…ƒã€‚ä¸€åè¢«å½“åœºæŠ“è·ï¼Œå¦ä¸€åå·²é€ƒèµ°ã€‚ ";
 		
 		System.out.println(StringUtil.getHandleString(maxlength,replace,false,false,outStr));
 	}
@@ -360,7 +360,7 @@ outStr = "2010Äê02ÔÂ07ÈÕ11Ê±Ğí£¬ÖÜÁéÓ±±¨¾¯£ºÔÚ2Â·¹«½»³µÉÏ±»°ÇÇÔ£¬²¢×¥»ñÒ»ÃûÏÓÒÉÈ
  public static boolean isIE6(HttpServletRequest request)
  {
 	 String clientInfo = request.getHeader("User-Agent");
-	  if(clientInfo.indexOf("MSIE 6") > 0 || clientInfo.indexOf("MSIE 5") > 0){//IE6£¬ÓÃGBK£¬´Ë´¦ÊµÏÖÓÉ¾ÖÏŞĞÔ
+	  if(clientInfo.indexOf("MSIE 6") > 0 || clientInfo.indexOf("MSIE 5") > 0){//IE6ï¼Œç”¨GBKï¼Œæ­¤å¤„å®ç°ç”±å±€é™æ€§
 	        return true;
 	  }
 	  else
@@ -396,7 +396,7 @@ outStr = "2010Äê02ÔÂ07ÈÕ11Ê±Ğí£¬ÖÜÁéÓ±±¨¾¯£ºÔÚ2Â·¹«½»³µÉÏ±»°ÇÇÔ£¬²¢×¥»ñÒ»ÃûÏÓÒÉÈ
 
  public static void sendFile_(HttpServletRequest request, HttpServletResponse response, Resource in) throws Exception {
 //	 if(in == null || in.exists())
-//		 throw new IOException("×ÊÔ´²»´æÔÚ,ÏÂÔØÊ§°Ü");
+//		 throw new IOException("èµ„æºä¸å­˜åœ¨,ä¸‹è½½å¤±è´¥");
 	try
 	{
 		sendFile_(request, response, in.getFilename(),in.getInputStream());	
@@ -815,7 +815,7 @@ outStr = "2010Äê02ÔÂ07ÈÕ11Ê±Ğí£¬ÖÜÁéÓ±±¨¾¯£ºÔÚ2Â·¹«½»³µÉÏ±»°ÇÇÔ£¬²¢×¥»ñÒ»ÃûÏÓÒÉÈ
      }  
      else
      {
-    	 String[] temp = ip.split(",");//¶àÖØ·´Ïò´úÀí»áÓĞ¶à¸öÖĞ¼ä´úÀíip
+    	 String[] temp = ip.split(",");//å¤šé‡åå‘ä»£ç†ä¼šæœ‰å¤šä¸ªä¸­é—´ä»£ç†ip
     	 ip = temp[0];
      }
 	  

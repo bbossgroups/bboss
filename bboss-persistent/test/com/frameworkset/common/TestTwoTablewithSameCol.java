@@ -98,7 +98,7 @@ public class TestTwoTablewithSameCol {
                         System.out.println(db.getValue(0, i));
                 }catch(NullPointerException e){
                         e.printStackTrace();
-                        System.out.println("----------¶ÁÖµ´íÎó£ºÁĞĞòºÅ£º"+i);
+                        System.out.println("----------è¯»å€¼é”™è¯¯ï¼šåˆ—åºå·ï¼š"+i);
                 }
         }
         } catch (SQLException e1) {

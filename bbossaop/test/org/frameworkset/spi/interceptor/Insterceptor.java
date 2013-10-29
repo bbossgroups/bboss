@@ -20,7 +20,7 @@ import java.lang.reflect.Method;
 import com.frameworkset.proxy.Interceptor;
 
 /**
- * ·½·¨À¹½ØÆ÷
+ * æ–¹æ³•æ‹¦æˆªå™¨
  * 
  * <p>Title: Insterceptor.java</p>
  *
@@ -30,7 +30,7 @@ import com.frameworkset.proxy.Interceptor;
  *
  * <p>bboss workgroup</p>
  * @Date Sep 5, 2008 4:43:47 PM
- * @author biaoping.yin,Òü±êÆ½
+ * @author biaoping.yin,å°¹æ ‡å¹³
  * @version 1.0
  */
 public class Insterceptor implements Interceptor {

@@ -29,17 +29,17 @@ import org.frameworkset.spi.remote.RPCMethodCall;
 
 import com.frameworkset.orm.annotation.TransactionType;
 import com.frameworkset.orm.transaction.TransactionException;
-import com.frameworkset.orm.transaction.TransactionManager;
+
 import com.frameworkset.util.RegexUtil;
 
 /**
  * <p>Title: SynchronizedMethod</p>
  *
- * <p>Description: °ü×°Í¬²½·½·¨£¬ÊÂÎñĞÔ·½·¨ĞÅÏ¢</p>
+ * <p>Description: åŒ…è£…åŒæ­¥æ–¹æ³•ï¼Œäº‹åŠ¡æ€§æ–¹æ³•ä¿¡æ¯</p>
  *
  * <p>Copyright: Copyright (c) 2006</p>
  *
- * <p>Company: ³¤É³¿Æ´´¼ÆËã»úÏµÍ³¼¯³ÉÓĞÏŞ¹«Ë¾</p>
+ * <p>Company: é•¿æ²™ç§‘åˆ›è®¡ç®—æœºç³»ç»Ÿé›†æˆæœ‰é™å…¬å¸</p>
  *
  * @author biaoping.yin
  * @version 1.0
@@ -48,36 +48,36 @@ public class SynchronizedMethod implements java.io.Serializable {
 	private static Logger log = Logger.getLogger(SynchronizedMethod.class);
 	
 	/**
-	 * ×¢½âÊÂÎñ·½·¨
+	 * æ³¨è§£äº‹åŠ¡æ–¹æ³•
 	 */
 //	private Method txMethod = null;
 	/**
-	 * ÉùÃ÷µÄ·½·¨Ãû³Æ£¬Èç¹ûÖ¸¶¨ÁËpatternÊôĞÔ£¬·½·¨Ãû³Æ¾Í»áÎŞĞ§
+	 * å£°æ˜çš„æ–¹æ³•åç§°ï¼Œå¦‚æœæŒ‡å®šäº†patternå±æ€§ï¼Œæ–¹æ³•åç§°å°±ä¼šæ— æ•ˆ
 	 */
     private String methodName;
     
     /**
-     * Æ¥Åä·½·¨Ãû³ÆµÄÕıÔò±í´ïÊ½Ä£Ê½´®
+     * åŒ¹é…æ–¹æ³•åç§°çš„æ­£åˆ™è¡¨è¾¾å¼æ¨¡å¼ä¸²
      */
     private String pattern;
     /**
-     * ²ÎÊıÀàĞÍ´®ÁĞ±í
+     * å‚æ•°ç±»å‹ä¸²åˆ—è¡¨
      * List<Pro>
      */
     private List<Pro> params;
     private Map<String,Pro> paramIndexs;
     
     /**
-     * ·½·¨ÊÂÎñ»Ø¹öÒì³£ÁĞ±í
+     * æ–¹æ³•äº‹åŠ¡å›æ»šå¼‚å¸¸åˆ—è¡¨
      * List<RollbackException>
      */
     private List<RollbackException> rollbackExceptions;
     
     /**
-     * ·½·¨ÊÂÎñĞÔÒì³£ĞÅÏ¢Ë÷Òı±í
-     * Èç¹ûÒ»¸öÒì³£ÊÇÊÂÎñĞÔÒì³££¬ÔòÒÔÒì³£µÄÃû×ÖÎªË÷Òı¼ü£¬Boolean(true)ÎªË÷ÒıÖµ
-     * Èç¹ûÒ»¸öÒì³£²»ÊÇÊÂÎñĞÔÒì³££¬ÔòÒÔÒì³£µÄÃû×ÖÎªË÷Òı¼ü£¬Boolean(false)ÎªË÷ÒıÖµ
-     * ÏÂ´ÎÏµÍ³ÔÙÅĞ±ğ¸ÃÒì³£Ê±£¬Ö±½ÓÒÔ¸ÃË÷ÒıÎª×¼£¬²»ÔÚ½øĞĞ¸´ÔÓµÄÂß¼­ÅĞ¶Ï
+     * æ–¹æ³•äº‹åŠ¡æ€§å¼‚å¸¸ä¿¡æ¯ç´¢å¼•è¡¨
+     * å¦‚æœä¸€ä¸ªå¼‚å¸¸æ˜¯äº‹åŠ¡æ€§å¼‚å¸¸ï¼Œåˆ™ä»¥å¼‚å¸¸çš„åå­—ä¸ºç´¢å¼•é”®ï¼ŒBoolean(true)ä¸ºç´¢å¼•å€¼
+     * å¦‚æœä¸€ä¸ªå¼‚å¸¸ä¸æ˜¯äº‹åŠ¡æ€§å¼‚å¸¸ï¼Œåˆ™ä»¥å¼‚å¸¸çš„åå­—ä¸ºç´¢å¼•é”®ï¼ŒBoolean(false)ä¸ºç´¢å¼•å€¼
+     * ä¸‹æ¬¡ç³»ç»Ÿå†åˆ¤åˆ«è¯¥å¼‚å¸¸æ—¶ï¼Œç›´æ¥ä»¥è¯¥ç´¢å¼•ä¸ºå‡†ï¼Œä¸åœ¨è¿›è¡Œå¤æ‚çš„é€»è¾‘åˆ¤æ–­
      * Map<exceptionClass,Boolean>
      */
     private Map<String,Boolean> rollbackExceptionIndexs;
@@ -87,9 +87,9 @@ public class SynchronizedMethod implements java.io.Serializable {
     
     
     /**
-     * ÊÂÎñÀàĞÍ
+     * äº‹åŠ¡ç±»å‹
      */
-    private TransactionType txtype = TransactionManager.REQUIRED_TRANSACTION;
+    private TransactionType txtype = TransactionType.REQUIRED_TRANSACTION;
     
 //    private Map 
     
@@ -234,7 +234,7 @@ public class SynchronizedMethod implements java.io.Serializable {
     
     private String uuid ;
     /**
-     * »ñÈ¡·½·¨µÄÎ©Ò»±êÊ¶
+     * è·å–æ–¹æ³•çš„æƒŸä¸€æ ‡è¯†
      * @return
      */
     public String getUUID()
@@ -271,11 +271,11 @@ public class SynchronizedMethod implements java.io.Serializable {
     
     
     /**
-     * ¹¹½¨·½·¨µÄÎ©Ò»±êÊ¶id£¬Ò»¸öÀàÖĞµÄÒ»¸ö·½·¨Ö»¶ÔÓ¦Ò»¸ö±êÊ¶£¬±êÊ¶Éú³ÉµÄ¹æÔò
-     * ÊÇ£º·½·¨Ãû+'_' + ²ÎÊıÀàĞÍ1 + ... + '_' +  ²ÎÊıÀàĞÍn
-     * @param method ·½·¨¶ÔÏó£¬´æ·ÅËùÓĞµÄ·½·¨ĞÅÏ¢£¬°üÀ¨·½·¨Ãû£¬·½·¨²ÎÊıÀàĞÍÊı×é£¬·½·¨·µ»ØÖµÀàĞÍ£¬·½·¨Òì³£ÀàĞÍµÈµÈ
-     * @param args ·½·¨²ÎÊı
-     * @return ·½·¨±êÊ¶
+     * æ„å»ºæ–¹æ³•çš„æƒŸä¸€æ ‡è¯†idï¼Œä¸€ä¸ªç±»ä¸­çš„ä¸€ä¸ªæ–¹æ³•åªå¯¹åº”ä¸€ä¸ªæ ‡è¯†ï¼Œæ ‡è¯†ç”Ÿæˆçš„è§„åˆ™
+     * æ˜¯ï¼šæ–¹æ³•å+'_' + å‚æ•°ç±»å‹1 + ... + '_' +  å‚æ•°ç±»å‹n
+     * @param method æ–¹æ³•å¯¹è±¡ï¼Œå­˜æ”¾æ‰€æœ‰çš„æ–¹æ³•ä¿¡æ¯ï¼ŒåŒ…æ‹¬æ–¹æ³•åï¼Œæ–¹æ³•å‚æ•°ç±»å‹æ•°ç»„ï¼Œæ–¹æ³•è¿”å›å€¼ç±»å‹ï¼Œæ–¹æ³•å¼‚å¸¸ç±»å‹ç­‰ç­‰
+     * @param args æ–¹æ³•å‚æ•°
+     * @return æ–¹æ³•æ ‡è¯†
      */
     public static String buildMethodUUID(RPCMethodCall method_call)
     {
@@ -303,11 +303,11 @@ public class SynchronizedMethod implements java.io.Serializable {
     }
     
     /**
-     * ¹¹½¨·½·¨µÄÎ©Ò»±êÊ¶id£¬Ò»¸öÀàÖĞµÄÒ»¸ö·½·¨Ö»¶ÔÓ¦Ò»¸ö±êÊ¶£¬±êÊ¶Éú³ÉµÄ¹æÔò
-     * ÊÇ£º·½·¨Ãû+'_' + ²ÎÊıÀàĞÍ1 + ... + '_' +  ²ÎÊıÀàĞÍn
-     * @param method ·½·¨¶ÔÏó£¬´æ·ÅËùÓĞµÄ·½·¨ĞÅÏ¢£¬°üÀ¨·½·¨Ãû£¬·½·¨²ÎÊıÀàĞÍÊı×é£¬·½·¨·µ»ØÖµÀàĞÍ£¬·½·¨Òì³£ÀàĞÍµÈµÈ
-     * @param args ·½·¨²ÎÊı
-     * @return ·½·¨±êÊ¶
+     * æ„å»ºæ–¹æ³•çš„æƒŸä¸€æ ‡è¯†idï¼Œä¸€ä¸ªç±»ä¸­çš„ä¸€ä¸ªæ–¹æ³•åªå¯¹åº”ä¸€ä¸ªæ ‡è¯†ï¼Œæ ‡è¯†ç”Ÿæˆçš„è§„åˆ™
+     * æ˜¯ï¼šæ–¹æ³•å+'_' + å‚æ•°ç±»å‹1 + ... + '_' +  å‚æ•°ç±»å‹n
+     * @param method æ–¹æ³•å¯¹è±¡ï¼Œå­˜æ”¾æ‰€æœ‰çš„æ–¹æ³•ä¿¡æ¯ï¼ŒåŒ…æ‹¬æ–¹æ³•åï¼Œæ–¹æ³•å‚æ•°ç±»å‹æ•°ç»„ï¼Œæ–¹æ³•è¿”å›å€¼ç±»å‹ï¼Œæ–¹æ³•å¼‚å¸¸ç±»å‹ç­‰ç­‰
+     * @param args æ–¹æ³•å‚æ•°
+     * @return æ–¹æ³•æ ‡è¯†
      */
     public static String buildMethodUUID(Method method, Object[] args)
     {
@@ -336,11 +336,11 @@ public class SynchronizedMethod implements java.io.Serializable {
     }
     
     /**
-     * ¹¹½¨·½·¨µÄÎ©Ò»±êÊ¶id£¬Ò»¸öÀàÖĞµÄÒ»¸ö·½·¨Ö»¶ÔÓ¦Ò»¸ö±êÊ¶£¬±êÊ¶Éú³ÉµÄ¹æÔò
-     * ÊÇ£º·½·¨Ãû+'_' + ²ÎÊıÀàĞÍ1 + ... + '_' +  ²ÎÊıÀàĞÍn
-     * @param method ·½·¨¶ÔÏó£¬´æ·ÅËùÓĞµÄ·½·¨ĞÅÏ¢£¬°üÀ¨·½·¨Ãû£¬·½·¨²ÎÊıÀàĞÍÊı×é£¬·½·¨·µ»ØÖµÀàĞÍ£¬·½·¨Òì³£ÀàĞÍµÈµÈ
-     * @param args ·½·¨²ÎÊı
-     * @return ·½·¨±êÊ¶
+     * æ„å»ºæ–¹æ³•çš„æƒŸä¸€æ ‡è¯†idï¼Œä¸€ä¸ªç±»ä¸­çš„ä¸€ä¸ªæ–¹æ³•åªå¯¹åº”ä¸€ä¸ªæ ‡è¯†ï¼Œæ ‡è¯†ç”Ÿæˆçš„è§„åˆ™
+     * æ˜¯ï¼šæ–¹æ³•å+'_' + å‚æ•°ç±»å‹1 + ... + '_' +  å‚æ•°ç±»å‹n
+     * @param method æ–¹æ³•å¯¹è±¡ï¼Œå­˜æ”¾æ‰€æœ‰çš„æ–¹æ³•ä¿¡æ¯ï¼ŒåŒ…æ‹¬æ–¹æ³•åï¼Œæ–¹æ³•å‚æ•°ç±»å‹æ•°ç»„ï¼Œæ–¹æ³•è¿”å›å€¼ç±»å‹ï¼Œæ–¹æ³•å¼‚å¸¸ç±»å‹ç­‰ç­‰
+     * @param args æ–¹æ³•å‚æ•°
+     * @return æ–¹æ³•æ ‡è¯†
      */
     public static String buildMethodUUID(String method, Class[] paramTypes)
     {
@@ -408,7 +408,7 @@ public class SynchronizedMethod implements java.io.Serializable {
 	}
 	
 	/**
-	 * ÅĞ¶Ï·½·¨ÊÇ²»ÊÇÒ»¸öÄ£Ê½Æ¥Åä·½·¨£¬Èç¹ûÊÇ£¬Ôò°´ÕÕÄ£Ê½À´Æ¥ÅäĞèÒªÍ¬²½»òĞèÒª½øĞĞÊÂÎñ¿ØÖÆµÄ·½·¨
+	 * åˆ¤æ–­æ–¹æ³•æ˜¯ä¸æ˜¯ä¸€ä¸ªæ¨¡å¼åŒ¹é…æ–¹æ³•ï¼Œå¦‚æœæ˜¯ï¼Œåˆ™æŒ‰ç…§æ¨¡å¼æ¥åŒ¹é…éœ€è¦åŒæ­¥æˆ–éœ€è¦è¿›è¡Œäº‹åŠ¡æ§åˆ¶çš„æ–¹æ³•
 	 * 
 	 * @return
 	 */
@@ -418,11 +418,11 @@ public class SynchronizedMethod implements java.io.Serializable {
 	}
 	
 	/**
-	 * ÅĞ¶Ï²ÎÊı´«ÈëµÄ·½·¨ÊÇ·ñÓëÍ¬²½·½·¨Æ¥Åä
-	 * Ê×ÏÈÅĞ±ğËùÓĞµÄÍ¬²½·½·¨ÖĞÊÇ·ñÓĞÄ£Ê½Æ¥Åä·½·¨
-     * Ã»ÓĞÔòÖ±½Ó¹¹½¨·½·¨Î©Ò»id
-	 * @return true Æ¥Åä
-	 *         false ²»Æ¥Åä
+	 * åˆ¤æ–­å‚æ•°ä¼ å…¥çš„æ–¹æ³•æ˜¯å¦ä¸åŒæ­¥æ–¹æ³•åŒ¹é…
+	 * é¦–å…ˆåˆ¤åˆ«æ‰€æœ‰çš„åŒæ­¥æ–¹æ³•ä¸­æ˜¯å¦æœ‰æ¨¡å¼åŒ¹é…æ–¹æ³•
+     * æ²¡æœ‰åˆ™ç›´æ¥æ„å»ºæ–¹æ³•æƒŸä¸€id
+	 * @return true åŒ¹é…
+	 *         false ä¸åŒ¹é…
 	 */
 	public boolean match(Method method)
 	{
@@ -431,13 +431,13 @@ public class SynchronizedMethod implements java.io.Serializable {
 	}
 	
 	/**
-	 * ÅĞ¶Ï·½·¨ÊÇ·ñÓëµ±Ç°·½·¨Æ¥Åä
-	 * ×¢Òâ£º±¾·½·¨ÒÑ¾­²»¿¼ÂÇÀÏ°æÏµÍ³¹ÜÀíÖĞÖ±½ÓÍ¨¹ı·½·¨Ãû³ÆÖ¸¶¨Í¬²½·½·¨µÄÊ¹ÓÃÄ£Ê½£¬Òò´ËÈç¹û
-	 * ÀÏ°æÇ¨ÒÆµ½ĞÂ°æÊ±£¬ĞèÒªÃ÷È·µØÖ¸¶¨·½·¨µÄÃû³ÆºÍ·½·¨µÄ²ÎÊı²ÅÄÜÕı³£ÔËĞĞ
-	 * @param method ·½·¨¶ÔÏó£¬Èç¹ûmethodÎªnull£¬½«±¨¿ÕÖ¸ÕëÒì³£
-	 * @param methodUUID ·½·¨Î©Ò»±êÊ¶
-	 * @return true-Æ¥ÅäÉÏ
-	 *         false-Ã»ÓĞÆ¥ÅäÉÏ
+	 * åˆ¤æ–­æ–¹æ³•æ˜¯å¦ä¸å½“å‰æ–¹æ³•åŒ¹é…
+	 * æ³¨æ„ï¼šæœ¬æ–¹æ³•å·²ç»ä¸è€ƒè™‘è€ç‰ˆç³»ç»Ÿç®¡ç†ä¸­ç›´æ¥é€šè¿‡æ–¹æ³•åç§°æŒ‡å®šåŒæ­¥æ–¹æ³•çš„ä½¿ç”¨æ¨¡å¼ï¼Œå› æ­¤å¦‚æœ
+	 * è€ç‰ˆè¿ç§»åˆ°æ–°ç‰ˆæ—¶ï¼Œéœ€è¦æ˜ç¡®åœ°æŒ‡å®šæ–¹æ³•çš„åç§°å’Œæ–¹æ³•çš„å‚æ•°æ‰èƒ½æ­£å¸¸è¿è¡Œ
+	 * @param method æ–¹æ³•å¯¹è±¡ï¼Œå¦‚æœmethodä¸ºnullï¼Œå°†æŠ¥ç©ºæŒ‡é’ˆå¼‚å¸¸
+	 * @param methodUUID æ–¹æ³•æƒŸä¸€æ ‡è¯†
+	 * @return true-åŒ¹é…ä¸Š
+	 *         false-æ²¡æœ‰åŒ¹é…ä¸Š
 	 *         
 	 */
 	public boolean match(Method method,String methodUUID)
@@ -447,7 +447,7 @@ public class SynchronizedMethod implements java.io.Serializable {
 	    	boolean match = false;
 			if(isPattern())
 			{
-				if(pattern.equals("*")) //Èç¹ûÄ£Ê½Îª*£¬±íÊ¾Æ¥ÅäËùÓĞµÄ·½·¨
+				if(pattern.equals("*")) //å¦‚æœæ¨¡å¼ä¸º*ï¼Œè¡¨ç¤ºåŒ¹é…æ‰€æœ‰çš„æ–¹æ³•
 					return true;
 				String methodname = method.getName();
 				match = RegexUtil.isMatch(methodname, this.getPattern());	
@@ -488,24 +488,24 @@ public class SynchronizedMethod implements java.io.Serializable {
 //		txtype_s = txtype;
 		if(txtype.equals("NEW_TRANSACTION"))
 		{
-			this.txtype = TransactionManager.NEW_TRANSACTION;
+			this.txtype = TransactionType.NEW_TRANSACTION;
 		}
 		else if(txtype.equals("REQUIRED_TRANSACTION"))
 		{
-			this.txtype = TransactionManager.REQUIRED_TRANSACTION;
+			this.txtype = TransactionType.REQUIRED_TRANSACTION;
 		}
 		else if(txtype.equals("MAYBE_TRANSACTION"))
 		{
-			this.txtype = TransactionManager.MAYBE_TRANSACTION;
+			this.txtype = TransactionType.MAYBE_TRANSACTION;
 		}
 		else if(txtype.equals("NO_TRANSACTION"))
 		{
-			this.txtype = TransactionManager.NO_TRANSACTION;
+			this.txtype = TransactionType.NO_TRANSACTION;
 		}
 		
 		else if(txtype.equals("RW_TRANSACTION"))
         {
-            this.txtype = TransactionManager.RW_TRANSACTION;
+            this.txtype = TransactionType.RW_TRANSACTION;
         }
 			
 	
@@ -543,20 +543,20 @@ public class SynchronizedMethod implements java.io.Serializable {
     }
 	
 	/**
-	 * ÅĞ¶ÏÒì³£ÊÇ·ñÊÇĞèÒª»Ø¹öÊÂÎñµÄÒì³£
-	 * ÒÔÏÂÒì³£±ØĞë»Ø¹ö£º
+	 * åˆ¤æ–­å¼‚å¸¸æ˜¯å¦æ˜¯éœ€è¦å›æ»šäº‹åŠ¡çš„å¼‚å¸¸
+	 * ä»¥ä¸‹å¼‚å¸¸å¿…é¡»å›æ»šï¼š
 	 * com.frameworkset.orm.transaction.TransactionException
 	 * javax.transaction.RollbackException
 	 * java.sql.SQLException
 	 * 
-	 * ÏµÍ³¼¶±ğµÄÒì³£Ò²±ØĞë»Ø¹ö£º
+	 * ç³»ç»Ÿçº§åˆ«çš„å¼‚å¸¸ä¹Ÿå¿…é¡»å›æ»šï¼š
 	 * java.lang.NullpointException
 	 * 
-	 * ÆäËûÀàĞÍµÄÒì³£Òª¿´¿´ÊÇ·ñ°üº¬µÄrollbackExceptionsÖĞ£¬Èç¹ûÔÚÔòĞèÒª»Ø¹öÊÂÎñ£¬
-	 * ·ñÔòÌá½»ÊÂÎñ¡£
-	 * ÅĞ¶ÏÒì³£ÊÇ·ñÊÇ»Ø¹öÊÂÎñÒì³£ÓĞÁ½¸ö¹æÔò£º
-	 * ¹æÔò1£ºÒì³£Ö»ÒªÊÇ»Ø¹öÒì³£ÁĞ±íÖĞËù¶¨ÒåµÄÒì³£µÄ±¾Éí»òÕß×ÓÀà£¬ÔòÎª»Ø¹öÒì³£
-	 * ¹æÔò2£ºÒì³£±ØĞëÊÇ
+	 * å…¶ä»–ç±»å‹çš„å¼‚å¸¸è¦çœ‹çœ‹æ˜¯å¦åŒ…å«çš„rollbackExceptionsä¸­ï¼Œå¦‚æœåœ¨åˆ™éœ€è¦å›æ»šäº‹åŠ¡ï¼Œ
+	 * å¦åˆ™æäº¤äº‹åŠ¡ã€‚
+	 * åˆ¤æ–­å¼‚å¸¸æ˜¯å¦æ˜¯å›æ»šäº‹åŠ¡å¼‚å¸¸æœ‰ä¸¤ä¸ªè§„åˆ™ï¼š
+	 * è§„åˆ™1ï¼šå¼‚å¸¸åªè¦æ˜¯å›æ»šå¼‚å¸¸åˆ—è¡¨ä¸­æ‰€å®šä¹‰çš„å¼‚å¸¸çš„æœ¬èº«æˆ–è€…å­ç±»ï¼Œåˆ™ä¸ºå›æ»šå¼‚å¸¸
+	 * è§„åˆ™2ï¼šå¼‚å¸¸å¿…é¡»æ˜¯
 	 * @param throwable
 	 * @return
 	 */
@@ -574,7 +574,7 @@ public class SynchronizedMethod implements java.io.Serializable {
 		{
 			try
 			{				
-				//ÏµÍ³¼¶±ğµÄÒì³££¬ĞèÒª»Ø¹ö
+				//ç³»ç»Ÿçº§åˆ«çš„å¼‚å¸¸ï¼Œéœ€è¦å›æ»š
 				if((throwable instanceof TransactionException) 
 						|| (throwable instanceof javax.transaction.RollbackException)
 						|| throwable instanceof java.sql.SQLException
@@ -585,7 +585,7 @@ public class SynchronizedMethod implements java.io.Serializable {
 					rollbackExceptionIndexs.put(key, t);
 					return true;
 				}
-				//Èç¹ûÉùÃ÷ÁËĞèÒª»Ø¹öÊÂÎñµÄÒì³£ÁĞ±í£¬ÔòÅĞ¶ÏÒì³£ÊÇ·ñÊÇÁĞ±íÖĞµÄÒì³£
+				//å¦‚æœå£°æ˜äº†éœ€è¦å›æ»šäº‹åŠ¡çš„å¼‚å¸¸åˆ—è¡¨ï¼Œåˆ™åˆ¤æ–­å¼‚å¸¸æ˜¯å¦æ˜¯åˆ—è¡¨ä¸­çš„å¼‚å¸¸
 				else if(rollbackExceptions != null && rollbackExceptions.size() > 0) 
 				{
 					for(int i = 0;  i < this.rollbackExceptions.size(); i ++)
@@ -616,7 +616,7 @@ public class SynchronizedMethod implements java.io.Serializable {
 					rollbackExceptionIndexs.put(key, t);
 					return false;
 				}
-				//Èç¹û²»ÊÇÏµÍ³Òì³££¬²¢ÇÒÃ»ÓĞÉùÃ÷»Ø¹öÊÂÎñµÄÒì³££¬ÔòÄ¬ÈÏÎª»Ø¹öÊÂÎñÒì³£
+				//å¦‚æœä¸æ˜¯ç³»ç»Ÿå¼‚å¸¸ï¼Œå¹¶ä¸”æ²¡æœ‰å£°æ˜å›æ»šäº‹åŠ¡çš„å¼‚å¸¸ï¼Œåˆ™é»˜è®¤ä¸ºå›æ»šäº‹åŠ¡å¼‚å¸¸
 				else
 				{
 					t = new Boolean( true);

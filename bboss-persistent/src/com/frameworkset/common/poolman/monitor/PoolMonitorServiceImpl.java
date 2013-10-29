@@ -88,7 +88,7 @@ public class PoolMonitorServiceImpl implements PoolMonitorService {
 
 	public String statusCheckPool(String dbname) {
 		try {
-			// stop°¢start°¢unknown
+			// stop„ÄÅstart„ÄÅunknown
 			String status = DBUtil.statusCheck(dbname);
 			if ("start".equals(status)) {
 				return "START";

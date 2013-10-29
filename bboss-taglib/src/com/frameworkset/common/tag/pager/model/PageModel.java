@@ -45,31 +45,31 @@ import com.frameworkset.common.tag.pager.tags.LoadDataException;
 import com.frameworkset.common.tag.pager.tags.PagerTag;
 
 /**
- * Êä³öÊı¾İµ½word£¬pdf£¬excel£¬cvs£¬xmlÎÄ¼ş£¬
- * °üÀ¨ÏêÏ¸ĞÅÏ¢µÄÊä³ö£¬·ÖÒ³Êı¾İµÄÊä³ö£¬ÁĞ±íÊı¾İµÄÊä³ö£¬
- * ·ÖÒ³Êı¾İÊä³öÓÖ°üÀ¨Ö»Êä³öµ±Ç°Ò³Êı¾İºÍÈ«²¿Êı¾İµÄÁ½ÖÖÄ£Ê½
+ * è¾“å‡ºæ•°æ®åˆ°wordï¼Œpdfï¼Œexcelï¼Œcvsï¼Œxmlæ–‡ä»¶ï¼Œ
+ * åŒ…æ‹¬è¯¦ç»†ä¿¡æ¯çš„è¾“å‡ºï¼Œåˆ†é¡µæ•°æ®çš„è¾“å‡ºï¼Œåˆ—è¡¨æ•°æ®çš„è¾“å‡ºï¼Œ
+ * åˆ†é¡µæ•°æ®è¾“å‡ºåˆåŒ…æ‹¬åªè¾“å‡ºå½“å‰é¡µæ•°æ®å’Œå…¨éƒ¨æ•°æ®çš„ä¸¤ç§æ¨¡å¼
  * @author biaoping.yin
  * created on 2005-5-18
  * version 1.0
  */
 public class PageModel extends PagerTag implements ModelObject
 {
-    /**´æ´¢·ÖÒ³ĞÅÏ¢*/
+    /**å­˜å‚¨åˆ†é¡µä¿¡æ¯*/
     private PageInfo pageInfo;
 
-    /**Êı¾İ»ñÈ¡½Ó¿Ú*/
+    /**æ•°æ®è·å–æ¥å£*/
     private DataInfo dataInfo;
 
-    /**Èç¹û²»µ¹³öÈ«²¿¼ÇÂ¼£¬ÔòÖ±½Ó´ÓÒ³ÃædataSetÖĞ»ñÈ¡Êı¾İ*/
+    /**å¦‚æœä¸å€’å‡ºå…¨éƒ¨è®°å½•ï¼Œåˆ™ç›´æ¥ä»é¡µé¢dataSetä¸­è·å–æ•°æ®*/
     private Stack dataSet;
 
     /**
-     * ¿ØÖÆdataSetµÄ³õÊ¼»¯£¬µ±ÒªÇóµ¼³öÈ«²¿¼ÇÂ¼Ê±µ÷ÓÃinitial·½·¨Ê±ĞŞ¸ÄfirstµÄÖµ
+     * æ§åˆ¶dataSetçš„åˆå§‹åŒ–ï¼Œå½“è¦æ±‚å¯¼å‡ºå…¨éƒ¨è®°å½•æ—¶è°ƒç”¨initialæ–¹æ³•æ—¶ä¿®æ”¹firstçš„å€¼
      */
     private boolean first = true;
 
     /**
-     * ³õÊ¼»¯ËùÓĞµÄÉú³ÉÎÄ¼şµÄ±ØÒª²ÎÊı
+     * åˆå§‹åŒ–æ‰€æœ‰çš„ç”Ÿæˆæ–‡ä»¶çš„å¿…è¦å‚æ•°
      * @param pageInfo
      * @param dataInfo
      * @param dataSet
@@ -89,7 +89,7 @@ public class PageModel extends PagerTag implements ModelObject
     }
 
     /**
-     * ³õÊ¼»¯£¬·Ö±ğ»ñÈ¡Ã¿Ò»Ò³µÄÊı¾İ£¬Ò³ÃæÏÔÊ¾Ä£Ê½Îª·ÖÒ³Ê±µ÷ÓÃ¸Ã·½·¨
+     * åˆå§‹åŒ–ï¼Œåˆ†åˆ«è·å–æ¯ä¸€é¡µçš„æ•°æ®ï¼Œé¡µé¢æ˜¾ç¤ºæ¨¡å¼ä¸ºåˆ†é¡µæ—¶è°ƒç”¨è¯¥æ–¹æ³•
      * @param offset int
      * @param maxPageItem int
      */
@@ -97,13 +97,13 @@ public class PageModel extends PagerTag implements ModelObject
     {
     	HttpServletRequest request = getHttpServletRequest();
 		HttpSession session = request.getSession(false) ;
-        //Èç¹û²»ÊÇÁĞ±í
+        //å¦‚æœä¸æ˜¯åˆ—è¡¨
         //if(pageInfo.isEportAll())
         {
             if (dataInfo instanceof DefaultDataInfoImpl) {
 
                 DataInfo defaultDataInfo = (DefaultDataInfoImpl) dataInfo;
-                //·ÖÒ³ÁĞ±íµÄĞÎÊ½pagerTag²»»áÎª¿Õ£¬µ«ÊÇÏêÏ¸ĞÅÏ¢ÏÔÊ¾Ê±¾Í»áÎª¿Õ
+                //åˆ†é¡µåˆ—è¡¨çš„å½¢å¼pagerTagä¸ä¼šä¸ºç©ºï¼Œä½†æ˜¯è¯¦ç»†ä¿¡æ¯æ˜¾ç¤ºæ—¶å°±ä¼šä¸ºç©º
 
                 defaultDataInfo.initial(pageInfo.getStatement(),
                                         pageInfo.getDbName(),
@@ -124,10 +124,10 @@ public class PageModel extends PagerTag implements ModelObject
 //                catch (LoadDataException ex) {
 //                    ex.printStackTrace();
 //                }
-                //³õÊ¼»¯Ò³ÃæµÄ²ÎÊı
+                //åˆå§‹åŒ–é¡µé¢çš„å‚æ•°
                 pageInfo.initContext(offset,dataInfo.getItemCount());
             }
-            //ÉèÖÃµ±Ç°Ò³ÃæÊı¾İ
+            //è®¾ç½®å½“å‰é¡µé¢æ•°æ®
             if(first)
             {
 	            this.dataSet = new Stack();

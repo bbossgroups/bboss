@@ -14,10 +14,10 @@ import com.frameworkset.orm.transaction.TransactionManager;
 /**
  * 
  * <p>Title: PathController.java</p> 
- * <p>Description: 测试path:类型跳转配置，对应的配置文件为bboss-path.xml</p>
+ * <p>Description: 娴嬭瘯path:绫诲瀷璺宠浆閰嶇疆锛屽搴旂殑閰嶇疆鏂囦欢涓篵boss-path.xml</p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2008</p>
- * @Date 2011-3-31 下午12:57:04
+ * @Date 2011-3-31 涓嬪崍12:57:04
  * @author biaoping.yin
  * @version 1.0
  */

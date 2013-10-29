@@ -25,7 +25,7 @@ import java.util.Locale;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2010-9-24 œ¬ŒÁ05:02:50
+ * @Date 2010-9-24 ‰∏ãÂçà05:02:50
  * @author biaoping.yin
  * @version 1.0
  */

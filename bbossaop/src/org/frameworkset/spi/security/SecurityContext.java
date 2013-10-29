@@ -22,7 +22,7 @@ import org.frameworkset.spi.remote.context.RequestContext;
 /**
  * 
  * <p>Title: SecurityContext.java</p> 
- * <p>Description: Ô¶³Ì·şÎñµ÷ÓÃ°²È«ÉÏÏÂÎÄĞÅÏ¢</p>
+ * <p>Description: è¿œç¨‹æœåŠ¡è°ƒç”¨å®‰å…¨ä¸Šä¸‹æ–‡ä¿¡æ¯</p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
  * @Date Apr 28, 2009 10:57:05 PM
@@ -32,7 +32,7 @@ import org.frameworkset.spi.remote.context.RequestContext;
 public class SecurityContext implements java.io.Serializable{
 	private RequestContext request;
 	/**
-	 * ÓÃ»§ÕËºÅ
+	 * ç”¨æˆ·è´¦å·
 	 */
 	private String user;
 	public void setUser(String user)
@@ -46,7 +46,7 @@ public class SecurityContext implements java.io.Serializable{
     }
 
     /**
-	 * ÓÃ»§ÃÜÂë
+	 * ç”¨æˆ·å¯†ç 
 	 */
 	private String password;
 	

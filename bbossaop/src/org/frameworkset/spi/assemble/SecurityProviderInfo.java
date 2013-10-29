@@ -74,12 +74,12 @@ public class SecurityProviderInfo implements java.io.Serializable,BeanInf
     private Constructor constructor;
 
     /**
-     * ÉèÖÃ¶à¸ö·şÎñÌá¹©ÕßÍ¬²½·½·¨µ÷ÓÃÊ±µÄÓÅÏÈË³Ğò£¬Èç¹û²»Ö¸¶¨¸ÃÊôĞÔÊ±°´Ã¿¸öÌá¹©ÕßµÄÅäÖÃË³ĞòÀ´µ÷ÓÃ
+     * è®¾ç½®å¤šä¸ªæœåŠ¡æä¾›è€…åŒæ­¥æ–¹æ³•è°ƒç”¨æ—¶çš„ä¼˜å…ˆé¡ºåºï¼Œå¦‚æœä¸æŒ‡å®šè¯¥å±æ€§æ—¶æŒ‰æ¯ä¸ªæä¾›è€…çš„é…ç½®é¡ºåºæ¥è°ƒç”¨
      */
     private int prior = 0;
 
     /**
-     * µ¥ÁĞÄ£Ê½ÏÂ´´½¨¶ÔÏóÊµÀıµÄÍ¬²½Ëø
+     * å•åˆ—æ¨¡å¼ä¸‹åˆ›å»ºå¯¹è±¡å®ä¾‹çš„åŒæ­¥é”
      */
     private Object lock = new Object();
 
@@ -181,7 +181,7 @@ public class SecurityProviderInfo implements java.io.Serializable,BeanInf
     // }
 
     /**
-     * »ñÈ¡ĞÂµÄ·şÎñÊµÀıÒıÓÃ
+     * è·å–æ–°çš„æœåŠ¡å®ä¾‹å¼•ç”¨
      * 
      * @return
      */
@@ -239,7 +239,7 @@ public class SecurityProviderInfo implements java.io.Serializable,BeanInf
     }
 
 //    /**
-//     * »ñÈ¡·şÎñµÄµ¥ÊµÀıÒıÓÃ
+//     * è·å–æœåŠ¡çš„å•å®ä¾‹å¼•ç”¨
 //     * 
 //     * @return
 //     * @throws CurrentlyInCreationException
@@ -259,17 +259,17 @@ public class SecurityProviderInfo implements java.io.Serializable,BeanInf
 //    }
 
     // /**
-    // * Îª·şÎñÌá¹©Õß×¢ÈëÆäËû·şÎñÌá¹©ÕßµÄÒıÓÃÊµÀı
-    // * Èç¹ûÏàÓ¦refidºÍreftype¶ÔÓ¦µÄ·şÎñÌá¹©Õß²»´æÔÚ£¬»òÕß²ÎÊı¶ÔÓ¦µÄ·şÎñÌá¹©ÕßÃ»ÓĞÌá¹©
-    // * ÒıÓÃµÄ×¢Èë·½·¨£¬Ôò¸ÃÒıÓÃ½«±»ºöÂÔµô
-    // * @param context ¼ì²âÊÇ·ñÓĞÑ­»·×¢ÈëµÄÉÏÏÂÎÄ±äÁ¿
+    // * ä¸ºæœåŠ¡æä¾›è€…æ³¨å…¥å…¶ä»–æœåŠ¡æä¾›è€…çš„å¼•ç”¨å®ä¾‹
+    // * å¦‚æœç›¸åº”refidå’Œreftypeå¯¹åº”çš„æœåŠ¡æä¾›è€…ä¸å­˜åœ¨ï¼Œæˆ–è€…å‚æ•°å¯¹åº”çš„æœåŠ¡æä¾›è€…æ²¡æœ‰æä¾›
+    // * å¼•ç”¨çš„æ³¨å…¥æ–¹æ³•ï¼Œåˆ™è¯¥å¼•ç”¨å°†è¢«å¿½ç•¥æ‰
+    // * @param context æ£€æµ‹æ˜¯å¦æœ‰å¾ªç¯æ³¨å…¥çš„ä¸Šä¸‹æ–‡å˜é‡
     // * @param provider
     // * @throws IntrospectionException
     // */
     // private void injectReferences(Context context,
     // Object provider) throws CurrentlyInCreationException
     // {
-    // //Ã»ÓĞÖ¸¶¨ÒıÓÃĞÅÏ¢£¬Ö±½Ó·µ»Ø
+    // //æ²¡æœ‰æŒ‡å®šå¼•ç”¨ä¿¡æ¯ï¼Œç›´æ¥è¿”å›
     //    	
     // try {
     // BeanInfo beanInfo = Introspector.getBeanInfo(provider.getClass());
@@ -363,7 +363,7 @@ public class SecurityProviderInfo implements java.io.Serializable,BeanInf
     // else if(ref.getRefid() != null)
     // {
     //		    		
-    // if(filedName == null) //Èç¹ûÃ»ÓĞÖ¸¶¨ÒıÓÃ×Ö¶Î¶ÔÓ¦µÄÃû³Æ£¬ÔòÖ±½ÓÊ¹ÓÃrefid×÷Îª×Ö¶ÎÃû³Æ
+    // if(filedName == null) //å¦‚æœæ²¡æœ‰æŒ‡å®šå¼•ç”¨å­—æ®µå¯¹åº”çš„åç§°ï¼Œåˆ™ç›´æ¥ä½¿ç”¨refidä½œä¸ºå­—æ®µåç§°
     // filedName = ref.getRefid();
     // for (int n = 0; n < attributes.length; n++) {
     //	
@@ -416,12 +416,12 @@ public class SecurityProviderInfo implements java.io.Serializable,BeanInf
     // }
     // }
     // }
-    // if(!flag) //ÒıÓÃ×Ö¶ÎÃû³ÆÔÚproviderÖĞÃ»ÓĞ¶¨Òå
+    // if(!flag) //å¼•ç”¨å­—æ®µåç§°åœ¨providerä¸­æ²¡æœ‰å®šä¹‰
     // {
-    // System.out.println("ÒıÓÃ×Ö¶Î[" + filedName + "]ÔÚprovider[" +
-    // provider.getClass() + "]ÖĞÃ»ÓĞ¶¨Òå");
-    // log.warn("ÒıÓÃ×Ö¶Î[" + filedName + "]ÔÚprovider[" + provider.getClass() +
-    // "]ÖĞÃ»ÓĞ¶¨Òå");
+    // System.out.println("å¼•ç”¨å­—æ®µ[" + filedName + "]åœ¨provider[" +
+    // provider.getClass() + "]ä¸­æ²¡æœ‰å®šä¹‰");
+    // log.warn("å¼•ç”¨å­—æ®µ[" + filedName + "]åœ¨provider[" + provider.getClass() +
+    // "]ä¸­æ²¡æœ‰å®šä¹‰");
     // }
     //	    		
     // }
@@ -446,11 +446,11 @@ public class SecurityProviderInfo implements java.io.Serializable,BeanInf
     // }
 
     /**
-     * Îª·şÎñÌá¹©Õß×¢ÈëÆäËû·şÎñÌá¹©ÕßµÄÒıÓÃÊµÀı Èç¹ûÏàÓ¦refidºÍreftype¶ÔÓ¦µÄ·şÎñÌá¹©Õß²»´æÔÚ£¬»òÕß²ÎÊı¶ÔÓ¦µÄ·şÎñÌá¹©ÕßÃ»ÓĞÌá¹©
-     * ÒıÓÃµÄ×¢Èë·½·¨£¬Ôò¸ÃÒıÓÃ½«±»ºöÂÔµô
+     * ä¸ºæœåŠ¡æä¾›è€…æ³¨å…¥å…¶ä»–æœåŠ¡æä¾›è€…çš„å¼•ç”¨å®ä¾‹ å¦‚æœç›¸åº”refidå’Œreftypeå¯¹åº”çš„æœåŠ¡æä¾›è€…ä¸å­˜åœ¨ï¼Œæˆ–è€…å‚æ•°å¯¹åº”çš„æœåŠ¡æä¾›è€…æ²¡æœ‰æä¾›
+     * å¼•ç”¨çš„æ³¨å…¥æ–¹æ³•ï¼Œåˆ™è¯¥å¼•ç”¨å°†è¢«å¿½ç•¥æ‰
      * 
      * @param context
-     *            ¼ì²âÊÇ·ñÓĞÑ­»·×¢ÈëµÄÉÏÏÂÎÄ±äÁ¿
+     *            æ£€æµ‹æ˜¯å¦æœ‰å¾ªç¯æ³¨å…¥çš„ä¸Šä¸‹æ–‡å˜é‡
      * @param provider
      * @throws ClassNotFoundException
      * @throws IllegalAccessException
@@ -470,7 +470,7 @@ public class SecurityProviderInfo implements java.io.Serializable,BeanInf
     // InvocationTargetException, IntrospectionException,
     // NoSupportTypeCastException
     // {
-    // //Ã»ÓĞÖ¸¶¨ÒıÓÃĞÅÏ¢£¬Ö±½Ó·µ»Ø
+    // //æ²¡æœ‰æŒ‡å®šå¼•ç”¨ä¿¡æ¯ï¼Œç›´æ¥è¿”å›
     //    	
     // // try {
     //			
@@ -490,7 +490,7 @@ public class SecurityProviderInfo implements java.io.Serializable,BeanInf
     // // param.getRefid();
     // // param.getValue();
     //				
-    // if(param.getRefid() != null) //ÒıÓÃÆäËûµÄ¹ÜÀí·şÎñ
+    // if(param.getRefid() != null) //å¼•ç”¨å…¶ä»–çš„ç®¡ç†æœåŠ¡
     // {
     // // ProviderManagerInfo providerManagerInfo =
     // ServiceProviderManager.getInstance().
@@ -717,18 +717,18 @@ public class SecurityProviderInfo implements java.io.Serializable,BeanInf
     }
     
     /**
-     * init-method£¬destroy-methodÁ½¸öÊôĞÔ·Ö±ğ¶ÔÓ¦aop¿ò¼ÜÌá¹©µÄÁ½¸öInitializingBeanºÍDisposableBean
-		ÊµÏÖµÄ·½·¨£¬Èç¹û×é¼şÒÑ¾­ÊµÏÖÁËInitializingBean¾Í²»ĞèÒªÖ¸¶¨init-methodÊôĞÔ
-		Èç¹û×é¼şÊµÏÖÁËDisposableBean½Ó¿Ú¾Í²»ĞèÒªÖ¸¶¨destroy-methodÊôĞÔ
+     * init-methodï¼Œdestroy-methodä¸¤ä¸ªå±æ€§åˆ†åˆ«å¯¹åº”aopæ¡†æ¶æä¾›çš„ä¸¤ä¸ªInitializingBeanå’ŒDisposableBean
+		å®ç°çš„æ–¹æ³•ï¼Œå¦‚æœç»„ä»¶å·²ç»å®ç°äº†InitializingBeanå°±ä¸éœ€è¦æŒ‡å®šinit-methodå±æ€§
+		å¦‚æœç»„ä»¶å®ç°äº†DisposableBeanæ¥å£å°±ä¸éœ€è¦æŒ‡å®šdestroy-methodå±æ€§
      */
     
     /**
-     * beanÏú»Ù·½·¨£¬µ¥ÁĞÄ£Ê½Ê±Ê¹ÓÃ
+     * beané”€æ¯æ–¹æ³•ï¼Œå•åˆ—æ¨¡å¼æ—¶ä½¿ç”¨
      */
     private String destroyMethod = null;
     
     /**
-     * bean³õÊ¼»¯·½·¨
+     * beanåˆå§‹åŒ–æ–¹æ³•
      */
     private String initMethod = null;
     

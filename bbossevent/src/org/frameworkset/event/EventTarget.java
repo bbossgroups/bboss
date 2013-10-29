@@ -21,10 +21,10 @@ import org.frameworkset.spi.serviceidentity.TargetImpl;
  * 
  * <p>Title: EventTarget.java</p>
  *
- * <p>Description:  ÊÂ¼şÏûÏ¢¹ã²¥µÄÄ¿µÄµØÖ·£¬Ö»ÓĞeventBroadcastTypeÎªÔ¶³Ì´«²¥(Event.REMOTE)
- * ±¾µØÔ¶³Ì´«²¥ (Event.REMOTELOCAL)Á½ÖÖÀàĞÍÊ±£¬²Å¿ÉÒÔÖ¸¶¨targetÊôĞÔ
- * Èç¹ûtargetÎªnull£¬ÄÇÃ´ÊÂ¼ş½«±»¹ã²¥µ½ËùÓĞµÄÔ¶³Ì½ÚµãÉÏÃæµÄ¼àÌıÆ÷£¬·ñÔòÖ»¹ã²¥µ½target
- * Ö¸¶¨µÄÄ¿µÄµØÖ·¶ÔÓ¦µÄÔ¶³Ì¼àÌıÆ÷ÉÏÃæ£¬Èç¹û¶ÔÓ¦µÄtarget²»´æÔÚ£¬ÄÇÃ´Ö±½Ó¶ªÆúÕâ¸öÊÂ¼şÏûÏ¢</p>
+ * <p>Description:  äº‹ä»¶æ¶ˆæ¯å¹¿æ’­çš„ç›®çš„åœ°å€ï¼Œåªæœ‰eventBroadcastTypeä¸ºè¿œç¨‹ä¼ æ’­(Event.REMOTE)
+ * æœ¬åœ°è¿œç¨‹ä¼ æ’­ (Event.REMOTELOCAL)ä¸¤ç§ç±»å‹æ—¶ï¼Œæ‰å¯ä»¥æŒ‡å®štargetå±æ€§
+ * å¦‚æœtargetä¸ºnullï¼Œé‚£ä¹ˆäº‹ä»¶å°†è¢«å¹¿æ’­åˆ°æ‰€æœ‰çš„è¿œç¨‹èŠ‚ç‚¹ä¸Šé¢çš„ç›‘å¬å™¨ï¼Œå¦åˆ™åªå¹¿æ’­åˆ°target
+ * æŒ‡å®šçš„ç›®çš„åœ°å€å¯¹åº”çš„è¿œç¨‹ç›‘å¬å™¨ä¸Šé¢ï¼Œå¦‚æœå¯¹åº”çš„targetä¸å­˜åœ¨ï¼Œé‚£ä¹ˆç›´æ¥ä¸¢å¼ƒè¿™ä¸ªäº‹ä»¶æ¶ˆæ¯</p>
  *
  * <p>Copyright (c) 2009</p>
  *
@@ -39,11 +39,11 @@ public class EventTarget extends TargetImpl implements java.io.Serializable {
 	 */
 	private static final long	serialVersionUID	= 1L;
 	/**
-	 * ÊÂ¼ş·¢ËÍµÄÄ¿µÄµØ
+	 * äº‹ä»¶å‘é€çš„ç›®çš„åœ°
 	 */
 	private String destination;
 	/**
-	 * ÊÂ¼şÄ¿µÄµØ¼à¿Ø¶Ë¿Ú
+	 * äº‹ä»¶ç›®çš„åœ°ç›‘æ§ç«¯å£
 	 */
 	private int port;
 	private String userAccount = "admin";

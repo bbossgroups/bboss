@@ -21,9 +21,9 @@ import org.frameworkset.web.servlet.ModelAndView;
  * 
  * @Title: FormSubmintController.java
  * @Package com.chinacreator.demo.Formsubmint.web
- * @Description TODO(±íµ¥Àý×Ó¿ØÖÆÆ÷)
+ * @Description TODO(è¡¨å•ä¾‹å­æŽ§åˆ¶å™¨)
  * @Copyright:Copyright (c) 2012
- * @Company: ºþÄÏ¿Æ´´
+ * @Company: æ¹–å—ç§‘åˆ›
  * @author: yahui.hu
  * @Date:2012-1-17
  */
@@ -36,7 +36,7 @@ public class FormSubmintController {
 	}
 	
 	/**
-	 * ÆÕÍ¨±íµ¥
+	 * æ™®é€šè¡¨å•
 	 * @param request
 	 * @param response
 	 * @return
@@ -48,7 +48,7 @@ public class FormSubmintController {
 	}
 	
 	/**
-	 * easyUiForm ±íµ¥
+	 * easyUiForm è¡¨å•
 	 * @param request
 	 * @param response
 	 */
@@ -58,15 +58,15 @@ public class FormSubmintController {
 		ajaxResponseBean.setStatus("success");
 		ObjectMapper objectMapper = new ObjectMapper();
 		/***
-		 * µ±±íµ¥ÊÇÍ¨¹ýajax(jquery)Ìá½»µÄ
-		 * Ìá½»ÉÏÀ´µÄ±íµ¥±àÂëÊÇ UTF-8 £¨Ä¬ÈÏ£©
-		 * ·þÎñÆ÷×ö³öÏìÓ¦Ê±ÐèÒª½« responseµÄ±àÂëÉèÖÃ³ÉÍ¨requestÇëÇóÒ»Ñù
-		 * ÆÕÍ¨±íµ¥Ìá½»µÄÊý¾Ý request.getCharacterEncoding() ÎªNULL
-		 * ¶øeasyuifrom ÊÇ¶ÔÓÚjqueryµÄÒ»¸ö·â×° ËùÓÐÒ»ÑùÒªÊ¹ÓÃ  ¶øËüÌá½»µÄ±íµ¥
-		 * request.getCharacterEncoding() ÊÇÎª £ºNULL
-		 * ËùÒÔÉèÖÃresponse.setCharacterEncoding("utf-8");
+		 * å½“è¡¨å•æ˜¯é€šè¿‡ajax(jquery)æäº¤çš„
+		 * æäº¤ä¸Šæ¥çš„è¡¨å•ç¼–ç æ˜¯ UTF-8 ï¼ˆé»˜è®¤ï¼‰
+		 * æœåŠ¡å™¨åšå‡ºå“åº”æ—¶éœ€è¦å°† responseçš„ç¼–ç è®¾ç½®æˆé€šrequestè¯·æ±‚ä¸€æ ·
+		 * æ™®é€šè¡¨å•æäº¤çš„æ•°æ® request.getCharacterEncoding() ä¸ºNULL
+		 * è€Œeasyuifrom æ˜¯å¯¹äºŽjqueryçš„ä¸€ä¸ªå°è£… æ‰€æœ‰ä¸€æ ·è¦ä½¿ç”¨  è€Œå®ƒæäº¤çš„è¡¨å•
+		 * request.getCharacterEncoding() æ˜¯ä¸º ï¼šNULL
+		 * æ‰€ä»¥è®¾ç½®response.setCharacterEncoding("utf-8");
 		 */	
-		response.setCharacterEncoding("gbk");
+		response.setCharacterEncoding("UTF-8");
 		System.out.println(request.getCharacterEncoding());
 		try {
 			ajaxResponseBean.setData(objectMapper.writeValueAsString(entity));
@@ -82,7 +82,7 @@ public class FormSubmintController {
 	}
 	
 	/**
-	 * easyUiForm ±íµ¥
+	 * easyUiForm è¡¨å•
 	 * @param request
 	 * @param response
 	 */
@@ -92,15 +92,15 @@ public class FormSubmintController {
 		ajaxResponseBean.setStatus("success");
 		ObjectMapper objectMapper = new ObjectMapper();
 		/***
-		 * µ±±íµ¥ÊÇÍ¨¹ýajax(jquery)Ìá½»µÄ
-		 * Ìá½»ÉÏÀ´µÄ±íµ¥±àÂëÊÇ UTF-8 £¨Ä¬ÈÏ£©
-		 * ·þÎñÆ÷×ö³öÏìÓ¦Ê±ÐèÒª½« responseµÄ±àÂëÉèÖÃ³ÉÍ¨requestÇëÇóÒ»Ñù
-		 * ÆÕÍ¨±íµ¥Ìá½»µÄÊý¾Ý request.getCharacterEncoding() ÎªNULL
-		 * ¶øeasyuifrom ÊÇ¶ÔÓÚjqueryµÄÒ»¸ö·â×° ËùÓÐÒ»ÑùÒªÊ¹ÓÃ  ¶øËüÌá½»µÄ±íµ¥
-		 * request.getCharacterEncoding() ÊÇÎª £ºNULL
-		 * ËùÒÔÉèÖÃresponse.setCharacterEncoding("utf-8");
+		 * å½“è¡¨å•æ˜¯é€šè¿‡ajax(jquery)æäº¤çš„
+		 * æäº¤ä¸Šæ¥çš„è¡¨å•ç¼–ç æ˜¯ UTF-8 ï¼ˆé»˜è®¤ï¼‰
+		 * æœåŠ¡å™¨åšå‡ºå“åº”æ—¶éœ€è¦å°† responseçš„ç¼–ç è®¾ç½®æˆé€šrequestè¯·æ±‚ä¸€æ ·
+		 * æ™®é€šè¡¨å•æäº¤çš„æ•°æ® request.getCharacterEncoding() ä¸ºNULL
+		 * è€Œeasyuifrom æ˜¯å¯¹äºŽjqueryçš„ä¸€ä¸ªå°è£… æ‰€æœ‰ä¸€æ ·è¦ä½¿ç”¨  è€Œå®ƒæäº¤çš„è¡¨å•
+		 * request.getCharacterEncoding() æ˜¯ä¸º ï¼šNULL
+		 * æ‰€ä»¥è®¾ç½®response.setCharacterEncoding("utf-8");
 		 */	
-		response.setCharacterEncoding("gbk");
+		response.setCharacterEncoding("UTF-8");
 		System.out.println(request.getCharacterEncoding());
 		try {
 			ajaxResponseBean.setData(objectMapper.writeValueAsString(entity));
@@ -116,7 +116,7 @@ public class FormSubmintController {
 	}
 	
 	/**
-	 * ÆÕÍ¨ajaxÇëÇó
+	 * æ™®é€šajaxè¯·æ±‚
 	 * @param request
 	 * @param response
 	 */
@@ -125,10 +125,10 @@ public class FormSubmintController {
 		ajaxResponseBean.setStatus("success");
 		ObjectMapper objectMapper = new ObjectMapper();
 		/***
-		 * µ±±íµ¥ÊÇÍ¨¹ýajax(jquery)Ìá½»µÄ
-		 * Ìá½»ÉÏÀ´µÄ±íµ¥±àÂëÊÇ UTF-8 £¨Ä¬ÈÏ£©
-		 * ·þÎñÆ÷×ö³öÏìÓ¦Ê±ÐèÒª½« responseµÄ±àÂëÉèÖÃ³ÉÍ¨requestÇëÇóÒ»Ñù
-		 * ÆÕÍ¨±íµ¥Ìá½»µÄÊý¾Ý request.getCharacterEncoding() ÎªNULL
+		 * å½“è¡¨å•æ˜¯é€šè¿‡ajax(jquery)æäº¤çš„
+		 * æäº¤ä¸Šæ¥çš„è¡¨å•ç¼–ç æ˜¯ UTF-8 ï¼ˆé»˜è®¤ï¼‰
+		 * æœåŠ¡å™¨åšå‡ºå“åº”æ—¶éœ€è¦å°† responseçš„ç¼–ç è®¾ç½®æˆé€šrequestè¯·æ±‚ä¸€æ ·
+		 * æ™®é€šè¡¨å•æäº¤çš„æ•°æ® request.getCharacterEncoding() ä¸ºNULL
 		 * 
 		 */		
 		response.setCharacterEncoding(request.getCharacterEncoding());
@@ -147,7 +147,7 @@ public class FormSubmintController {
 	}
 	
 	/**
-	 * ÆÕÍ¨ajaxÇëÇó(GET)
+	 * æ™®é€šajaxè¯·æ±‚(GET)
 	 * @param request
 	 * @param response
 	 */
@@ -172,7 +172,7 @@ public class FormSubmintController {
 	}
 	
 	/**
-	 * ÎÄ¼þÉÏ´«±íµ¥
+	 * æ–‡ä»¶ä¸Šä¼ è¡¨å•
 	 * @param request
 	 * @param response
 	 * @return
@@ -197,12 +197,12 @@ public class FormSubmintController {
 	}
 	
 	/**
-	 * ÎÄ¼þÏÂÔØ±íµ¥
+	 * æ–‡ä»¶ä¸‹è½½è¡¨å•
 	 * @param request
 	 * @param response
 	 */
 	public void  flieDownloadForm(HttpServletRequest request,HttpServletResponse response){
-		String path=request.getSession().getServletContext().getRealPath("/")+"\\demo\\formsubmint\\files\\iReportÈëÃÅ.pdf";
+		String path=request.getSession().getServletContext().getRealPath("/")+"\\demo\\formsubmint\\files\\iReportå…¥é—¨.pdf";
 		//System.out.println(path);
 		File file=new File(path);
 		response.setHeader("Content-Disposition", "attachment;filename=\""
@@ -251,7 +251,7 @@ public class FormSubmintController {
 	}
 	
 	/**
-	 * ×ª³Éjson¶ÔÏó£¬Ö±½ÓÓÃresponseµÄprint·½·¨
+	 * è½¬æˆjsonå¯¹è±¡ï¼Œç›´æŽ¥ç”¨responseçš„printæ–¹æ³•
 	 * 
 	 * @param response
 	 * @param ajaxResponseBean
@@ -267,10 +267,10 @@ public class FormSubmintController {
 	
 	
 	/**
-	 * °ÑÎÄ¼þÃû×ª»»³ÉUTF-8±àÂë
+	 * æŠŠæ–‡ä»¶åè½¬æ¢æˆUTF-8ç¼–ç 
 	 * 
 	 * @param s
-	 *            Òª×ª»»µÄString
+	 *            è¦è½¬æ¢çš„String
 	 * @return
 	 */
 	public String encodFileName(String s) {
@@ -278,7 +278,7 @@ public class FormSubmintController {
 
 		if (s.getBytes().length > 32) {
 			try {
-				return new String(s.getBytes("gb2312"), "ISO8859-1");
+				return new String(s.getBytes("UTF-8"), "ISO8859-1");
 			} catch (UnsupportedEncodingException e) {
 				e.printStackTrace();
 			}

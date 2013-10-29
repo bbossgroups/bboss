@@ -22,6 +22,7 @@ import bboss.org.apache.velocity.exception.MethodInvocationException;
 import bboss.org.apache.velocity.exception.ParseErrorException;
 import bboss.org.apache.velocity.exception.ResourceNotFoundException;
 //import org.frameworkset.spi.BaseApplicationContext;
+import bboss.org.apache.velocity.runtime.resource.Resource;
 
 
 //
@@ -196,7 +197,7 @@ public class VelocityUtil implements Serializable{
 //	    	        File configurationFile = new File(appDir, "/classes/velocity.properties");
 //	    	        log.debug("configurationFile.getAbsolutePath():"+configurationFile.getAbsolutePath());
 	    	        log.debug("velocity.properties:"+ VelocityUtil.class.getResource("/bboss-velocity.properties"));
-	    	        log.debug("file.resource.loader.path:"+ templatePath);
+//	    	        log.debug("file.resource.loader.path:"+ templatePath);
 	    	       java.util.Properties pros =SimpleStringUtil.getProperties("/bboss-velocity.properties", VelocityUtil.class);
 	    	       
 //	    	       pros.load(new java.io.FileInputStream(configurationFile));
@@ -212,7 +213,7 @@ public class VelocityUtil implements Serializable{
 	    	       }
 	             
 	
-	             //³õÊ¼»¯velocity
+	             //åˆå§‹åŒ–velocity
 	             try { 
 	
 	            	 Velocity.init(pros);
@@ -231,17 +232,17 @@ public class VelocityUtil implements Serializable{
 	             	try {
 	 					Velocity.init("velocity.properties");
 	 					inited = true;
-	 					log.error("Init velocity failed:velocity.properties (ÏµÍ³ÕÒ²»µ½Ö¸¶¨µÄÎÄ¼ş¡£) ¼ì²éclasspathÖĞÊÇ·ñÅäÖÃÕıÈ·:"+ ex.getMessage(),ex) ;
+	 					log.error("Init velocity failed:velocity.properties (ç³»ç»Ÿæ‰¾ä¸åˆ°æŒ‡å®šçš„æ–‡ä»¶ã€‚) æ£€æŸ¥classpathä¸­æ˜¯å¦é…ç½®æ­£ç¡®:"+ ex.getMessage(),ex) ;
 	 				} catch (Exception e) {
 	 					inited = true;
-	 					log.error("Init velocity failed:velocity.properties (ÏµÍ³ÕÒ²»µ½Ö¸¶¨µÄÎÄ¼ş¡£) ¼ì²éclasspathÖĞÊÇ·ñÅäÖÃÕıÈ·:"+ ex.getMessage(),e);
+	 					log.error("Init velocity failed:velocity.properties (ç³»ç»Ÿæ‰¾ä¸åˆ°æŒ‡å®šçš„æ–‡ä»¶ã€‚) æ£€æŸ¥classpathä¸­æ˜¯å¦é…ç½®æ­£ç¡®:"+ ex.getMessage(),e);
 	 				}
 	                
 	             }
 	            
 	         } catch (Exception e) {
 	        	 inited = true;
-	             log.error("Init velocity failed:velocity.properties (ÏµÍ³ÕÒ²»µ½Ö¸¶¨µÄÎÄ¼ş¡£) ¼ì²éclasspathÖĞÊÇ·ñÅäÖÃÕıÈ·:"+ e.getMessage(),e);
+	             log.error("Init velocity failed:velocity.properties (ç³»ç»Ÿæ‰¾ä¸åˆ°æŒ‡å®šçš„æ–‡ä»¶ã€‚) æ£€æŸ¥classpathä¸­æ˜¯å¦é…ç½®æ­£ç¡®:"+ e.getMessage(),e);
 	         }
     	 }
     	 
@@ -279,7 +280,7 @@ public class VelocityUtil implements Serializable{
     }
     
     /**
-     * ×Ö·û´®Ä£°å½âÎö
+     * å­—ç¬¦ä¸²æ¨¡æ¿è§£æ
      * @param context
      * @param templateName
      * @param template
@@ -310,7 +311,7 @@ public class VelocityUtil implements Serializable{
     
     
     /**
-     * ×Ö·û´®Ä£°å½âÎö
+     * å­—ç¬¦ä¸²æ¨¡æ¿è§£æ
      * @param context
      * @param templateName
      * @param template
@@ -340,7 +341,7 @@ public class VelocityUtil implements Serializable{
     
     
     /**
-     * ×Ö·û´®Ä£°å½âÎö
+     * å­—ç¬¦ä¸²æ¨¡æ¿è§£æ
      * @param context
      * @param templateName
      * @param template
@@ -371,7 +372,7 @@ public class VelocityUtil implements Serializable{
     
     
     /**
-     * ×Ö·û´®Ä£°å½âÎö
+     * å­—ç¬¦ä¸²æ¨¡æ¿è§£æ
      * @param context
      * @param templateName
      * @param template
@@ -400,7 +401,7 @@ public class VelocityUtil implements Serializable{
     }
     
     /**
-     * ×Ö·û´®Ä£°å½âÎö
+     * å­—ç¬¦ä¸²æ¨¡æ¿è§£æ
      * @param context
      * @param templateName
      * @param template
@@ -431,7 +432,7 @@ public class VelocityUtil implements Serializable{
     
     
     /**
-     * ×Ö·û´®Ä£°å½âÎö
+     * å­—ç¬¦ä¸²æ¨¡æ¿è§£æ
      * @param context
      * @param templateName
      * @param template
@@ -476,7 +477,7 @@ public class VelocityUtil implements Serializable{
     	
     }
     /**
-     * ×Ö·û´®Ä£°å½âÎö
+     * å­—ç¬¦ä¸²æ¨¡æ¿è§£æ
      * @param context
      * @param templateName
      * @param template
@@ -507,7 +508,7 @@ public class VelocityUtil implements Serializable{
     
     
     /**
-     * ×Ö·û´®Ä£°å½âÎö
+     * å­—ç¬¦ä¸²æ¨¡æ¿è§£æ
      * @param context
      * @param templateName
      * @param template
@@ -537,7 +538,7 @@ public class VelocityUtil implements Serializable{
     
     
     /**
-     * ×Ö·û´®Ä£°å½âÎö
+     * å­—ç¬¦ä¸²æ¨¡æ¿è§£æ
      * @param context
      * @param templateName
      * @param template
@@ -568,7 +569,7 @@ public class VelocityUtil implements Serializable{
     
     
     /**
-     * ×Ö·û´®Ä£°å½âÎö
+     * å­—ç¬¦ä¸²æ¨¡æ¿è§£æ
      * @param context
      * @param templateName
      * @param template
@@ -597,7 +598,7 @@ public class VelocityUtil implements Serializable{
     }
     
     /**
-     * ×Ö·û´®Ä£°å½âÎö
+     * å­—ç¬¦ä¸²æ¨¡æ¿è§£æ
      * @param context
      * @param templateName
      * @param template
@@ -628,7 +629,7 @@ public class VelocityUtil implements Serializable{
     
     
     /**
-     * ×Ö·û´®Ä£°å½âÎö
+     * å­—ç¬¦ä¸²æ¨¡æ¿è§£æ
      * @param context
      * @param templateName
      * @param template
@@ -656,7 +657,17 @@ public class VelocityUtil implements Serializable{
     	
     }
     
+    public static void initTemplate(Resource template)
+    {
+    	init(null);
+    	Velocity.initTemplate(template);
+    }
     
+    public static void initTemplate(Resource template,String encoding)
+    {
+    	init(null);
+    	Velocity.initTemplate(template, encoding);
+    }
 
     public static void main(String[] args) {
         VelocityUtil velocityutil = new VelocityUtil();

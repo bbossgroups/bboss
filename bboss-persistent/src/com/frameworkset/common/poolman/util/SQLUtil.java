@@ -85,15 +85,15 @@ public class SQLUtil implements Serializable{
 	private static final Logger log = Logger.getLogger(SQLUtil.class);
 
 //	private static SQLUtil myself;
-	/** Ã¿´Î²éÑ¯Êı¾İ¿â»ñÈ¡µÄÊµ¼Ê¼ÇÂ¼ÌõÊı */
+	/** æ¯æ¬¡æŸ¥è¯¢æ•°æ®åº“è·å–çš„å®é™…è®°å½•æ¡æ•° */
 	protected int size = 0;
 	/**
-	 * ¿ØÖÆÊı¾İ²Ù×÷Ìá½»Ä£Ê½ true:×Ô¶¯Ìá½» false£ºÊÖ¶¯Ìá½» È±Ê¡Îªtrue£¬×Ô¶¯Ìá½»
+	 * æ§åˆ¶æ•°æ®æ“ä½œæäº¤æ¨¡å¼ true:è‡ªåŠ¨æäº¤ falseï¼šæ‰‹åŠ¨æäº¤ ç¼ºçœä¸ºtrueï¼Œè‡ªåŠ¨æäº¤
 	 */
 	protected boolean autocommit = true;
 	
 	/**
-	 * Åú´¦ÀíµÄ×Ô¶¯Ìá½»Ä£Ê½£¬true:×Ô¶¯Ìá½» false£ºÊÖ¶¯Ìá½» È±Ê¡Îªfalse£¬ÊÖ¶¯Ìá½»
+	 * æ‰¹å¤„ç†çš„è‡ªåŠ¨æäº¤æ¨¡å¼ï¼Œtrue:è‡ªåŠ¨æäº¤ falseï¼šæ‰‹åŠ¨æäº¤ ç¼ºçœä¸ºfalseï¼Œæ‰‹åŠ¨æäº¤
 	 */
 	protected boolean batchautocommit = false;
 
@@ -104,10 +104,10 @@ public class SQLUtil implements Serializable{
 
 	private Properties props;
 
-//	/** ±£´æÃ¿´Î²éÑ¯Êı¾İ¿â±íµÄ×Ö¶Î´óĞ´×ÖÄ¸Öµ */
+//	/** ä¿å­˜æ¯æ¬¡æŸ¥è¯¢æ•°æ®åº“è¡¨çš„å­—æ®µå¤§å†™å­—æ¯å€¼ */
 //	protected String[] f_temps;
 
-//	/** ±£´æÃ¿´Î²éÑ¯Êı¾İ¿â±íµÄ×Ö¶Î */
+//	/** ä¿å­˜æ¯æ¬¡æŸ¥è¯¢æ•°æ®åº“è¡¨çš„å­—æ®µ */
 //	protected String[] fields;
 
 	protected PoolManResultSetMetaData meta;
@@ -227,7 +227,7 @@ public class SQLUtil implements Serializable{
 	 * @param sql
 	 * @return
 	 * @throws SQLException
-	 * @deprecated ²»½¨ÒéÊ¹ÓÃ
+	 * @deprecated ä¸å»ºè®®ä½¿ç”¨
 	 */
 	public SQLResult execute(String sql) throws SQLException {
 		return execute(null, sql);
@@ -239,7 +239,7 @@ public class SQLUtil implements Serializable{
 	 * @param sql
 	 * @return
 	 * @throws SQLException
-	 * @deprecated ²»½¨ÒéÊ¹ÓÃ
+	 * @deprecated ä¸å»ºè®®ä½¿ç”¨
 	 */
 	public SQLResult execute(String dbname, String sql) throws SQLException {
 		return makeResult(executeSql(dbname, sql,null));
@@ -252,7 +252,7 @@ public class SQLUtil implements Serializable{
 	 * @param sql
 	 * @return
 	 * @throws SQLException
-	 * @deprecated ²»½¨ÒéÊ¹ÓÃ
+	 * @deprecated ä¸å»ºè®®ä½¿ç”¨
 	 */
 	public SQLResult execute(String dbname, String sql,Connection con) throws SQLException {
 		return makeResult(executeSql(dbname, sql,con));
@@ -271,7 +271,7 @@ public class SQLUtil implements Serializable{
 	/**
 	 * Wraps an array of Hashtables into a more convenient data structure,
 	 * called a SQLResult.
-	 * @deprecated ²»½¨ÒéÊ¹ÓÃ
+	 * @deprecated ä¸å»ºè®®ä½¿ç”¨
 	 */
 	protected SQLResult makeResult(Hashtable[] h) throws SQLException {
 		return new SQLResult(h);
@@ -295,7 +295,7 @@ public class SQLUtil implements Serializable{
 	}
 	
 	/**
-     * »ñÈ¡Êı¾İ¿âÊÊÅäÆ÷
+     * è·å–æ•°æ®åº“é€‚é…å™¨
      * @return DB
      */
     public static DB getDBAdapter()
@@ -304,7 +304,7 @@ public class SQLUtil implements Serializable{
     }
 
     /**
-     * »ñÈ¡¸ø¶¨Êı¾İ¿âÃû³ÆµÄÊı¾İ¿âÊÊÅäÆ÷
+     * è·å–ç»™å®šæ•°æ®åº“åç§°çš„æ•°æ®åº“é€‚é…å™¨
      * @return DB
      */
     public static DB getDBAdapter(String dbName)
@@ -445,7 +445,7 @@ public class SQLUtil implements Serializable{
 	    }
 
 	/**
-	 * ·µ»ØÈ±Ê¡µÄÊı¾İ¿âÁ´½Ó³Ø
+	 * è¿”å›ç¼ºçœçš„æ•°æ®åº“é“¾æ¥æ± 
 	 * 
 	 * @param dbname
 	 * @return
@@ -533,7 +533,7 @@ public class SQLUtil implements Serializable{
 	}
 	
 	/**
-	 * ÅĞ¶ÏÊı¾İ¿âÁ´½Ó³ØÊÇ·ñÏÔÊ¾sqlÓï¾ä
+	 * åˆ¤æ–­æ•°æ®åº“é“¾æ¥æ± æ˜¯å¦æ˜¾ç¤ºsqlè¯­å¥
 	 * @param dbname
 	 * @return
 	 */
@@ -585,7 +585,7 @@ public class SQLUtil implements Serializable{
 				if(resultMap != null)
 					this.size = resultMap.getSize();
 			}
-			else //·Ç²éÑ¯²Ù×÷½á¹û¼¯
+			else //éæŸ¥è¯¢æ“ä½œç»“æœé›†
 			{
 				
 				results = stmtInfo.buildCommonResult(s);
@@ -601,7 +601,7 @@ public class SQLUtil implements Serializable{
 			return resultMap;
 
 		} catch (SQLException sqle) {
-			// Èç¹ûÊÇÊÖ¶¯Ìá½»Êı¾İ¿âÄ£Ê½£¬µ±´íÎó·¢ÉúÊ±»Ø¹öËùÓĞµÄÊı¾İ¿â²Ù×÷
+			// å¦‚æœæ˜¯æ‰‹åŠ¨æäº¤æ•°æ®åº“æ¨¡å¼ï¼Œå½“é”™è¯¯å‘ç”Ÿæ—¶å›æ»šæ‰€æœ‰çš„æ•°æ®åº“æ“ä½œ
 			try{
 				
 				log.error(stmtInfo.getSql(), sqle);
@@ -759,7 +759,7 @@ public class SQLUtil implements Serializable{
 //			stmtInfo.commit();
 //
 //		} catch (SQLException sqle) {
-//			// Èç¹ûÊÇÊÖ¶¯Ìá½»Êı¾İ¿âÄ£Ê½£¬µ±´íÎó·¢ÉúÊ±»Ø¹öËùÓĞµÄÊı¾İ¿â²Ù×÷
+//			// å¦‚æœæ˜¯æ‰‹åŠ¨æäº¤æ•°æ®åº“æ¨¡å¼ï¼Œå½“é”™è¯¯å‘ç”Ÿæ—¶å›æ»šæ‰€æœ‰çš„æ•°æ®åº“æ“ä½œ
 //
 //			if(stmtInfo != null)
 //				stmtInfo.errorHandle(sqle);
@@ -783,7 +783,7 @@ public class SQLUtil implements Serializable{
 	}
 
 	/**
-	 * ÉèÖÃÊı¾İ¿âÊÂÎñÌá½»Ä£Ê½ true£º×Ô¶¯Ìá½»Êı¾İ¿âÊÂÎñÄ£Ê½ false:ÊÖ¶¯Ìá½»Êı¾İ¿âÊÂÎñÄ£Ê½ È±Ê¡Îª:true,×Ô¶¯Ìá½»Êı¾İ¿âÊÂÎñ
+	 * è®¾ç½®æ•°æ®åº“äº‹åŠ¡æäº¤æ¨¡å¼ trueï¼šè‡ªåŠ¨æäº¤æ•°æ®åº“äº‹åŠ¡æ¨¡å¼ false:æ‰‹åŠ¨æäº¤æ•°æ®åº“äº‹åŠ¡æ¨¡å¼ ç¼ºçœä¸º:true,è‡ªåŠ¨æäº¤æ•°æ®åº“äº‹åŠ¡
 	 * 
 	 * @param autocommit
 	 */
@@ -803,9 +803,9 @@ public class SQLUtil implements Serializable{
 	
 	
 	/**
-	 * »ñÈ¡Êı¾İ¿âÁ´½Ó
+	 * è·å–æ•°æ®åº“é“¾æ¥
 	 * 
-	 * @return Connection Êı¾İ¿âÁ´½Ó
+	 * @return Connection æ•°æ®åº“é“¾æ¥
 	 * @throws SQLException
 	 */
 	public static Connection getConection() throws SQLException {
@@ -813,9 +813,9 @@ public class SQLUtil implements Serializable{
 	}
 
 	/**
-	 * »ñÈ¡Êı¾İ¿âÁ´½Ó,Èç¹ûÏµÍ³ÊôÓÚÏµÍ³ÉÏÏÂÎÄÊÂÎñ»·¾³Ê±£¬½«·µ»ØÊÂÎñÖĞµÄÁ´½Ó
+	 * è·å–æ•°æ®åº“é“¾æ¥,å¦‚æœç³»ç»Ÿå±äºç³»ç»Ÿä¸Šä¸‹æ–‡äº‹åŠ¡ç¯å¢ƒæ—¶ï¼Œå°†è¿”å›äº‹åŠ¡ä¸­çš„é“¾æ¥
 	 * 
-	 * @return Connection Êı¾İ¿âÁ´½Ó
+	 * @return Connection æ•°æ®åº“é“¾æ¥
 	 * @throws SQLException
 	 */
 	public static Connection getConection(String dbName) throws SQLException {
@@ -842,9 +842,9 @@ public class SQLUtil implements Serializable{
 	}
 	
 	/**
-	 * »ñÈ¡Êı¾İ¿âÁ´½Ó,Èç¹ûÏµÍ³ÊôÓÚÏµÍ³ÉÏÏÂÎÄÊÂÎñ»·¾³Ê±£¬½«·µ»ØÊÂÎñÖĞµÄÁ´½Ó
+	 * è·å–æ•°æ®åº“é“¾æ¥,å¦‚æœç³»ç»Ÿå±äºç³»ç»Ÿä¸Šä¸‹æ–‡äº‹åŠ¡ç¯å¢ƒæ—¶ï¼Œå°†è¿”å›äº‹åŠ¡ä¸­çš„é“¾æ¥
 	 * 
-	 * @return Connection Êı¾İ¿âÁ´½Ó
+	 * @return Connection æ•°æ®åº“é“¾æ¥
 	 * @throws SQLException
 	 */
 	public static Connection getConectionFromDatasource(DataSource datasource) throws SQLException {
@@ -856,8 +856,8 @@ public class SQLUtil implements Serializable{
 		} else {
 			try {
 				/*
-				 * Êı¾İÔ´Èç¹ûÊÇbboss Êı¾İÔ´ÔòÖ±½Ó´Ó¸ù¾İÊı¾İÔ´Ãû³Æ»ñÈ¡ÊÂÎñÁ´½Ó
-				 * ·ñÔò´ÓÊı¾İÔ´ 
+				 * æ•°æ®æºå¦‚æœæ˜¯bboss æ•°æ®æºåˆ™ç›´æ¥ä»æ ¹æ®æ•°æ®æºåç§°è·å–äº‹åŠ¡é“¾æ¥
+				 * å¦åˆ™ä»æ•°æ®æº 
 				 */
 				if(datasource instanceof PoolManDataSource)
 				{
@@ -885,7 +885,7 @@ public class SQLUtil implements Serializable{
 		}
 	}
 	/**
-	 * ÅĞ¶Ïµ±Ç°³ÌĞòÊÇ·ñ°üº¬ÊÂÎñ
+	 * åˆ¤æ–­å½“å‰ç¨‹åºæ˜¯å¦åŒ…å«äº‹åŠ¡
 	 * @return
 	 */
 	public static boolean joinTX()
@@ -937,7 +937,7 @@ public class SQLUtil implements Serializable{
 	}
 
 	/**
-	 * »ñÈ¡È±Ê¡Êı¾İ¿âµÄ·ÖÒ³sqlÓï¾ä
+	 * è·å–ç¼ºçœæ•°æ®åº“çš„åˆ†é¡µsqlè¯­å¥
 	 * 
 	 * @param sql
 	 * @return
@@ -954,7 +954,7 @@ public class SQLUtil implements Serializable{
 	
 
 	/**
-	 * »ñÈ¡Ö¸¶¨Êı¾İ¿âµÄ·ÖÒ³Êı¾İsqlÓï¾ä£¬Í¨¹ıoracleµÄ¸ßĞ§²éÑ¯Óï¾ä
+	 * è·å–æŒ‡å®šæ•°æ®åº“çš„åˆ†é¡µæ•°æ®sqlè¯­å¥ï¼Œé€šè¿‡oracleçš„é«˜æ•ˆæŸ¥è¯¢è¯­å¥
 	 * 
 	 * @param dbName
 	 * @param sql
@@ -968,7 +968,7 @@ public class SQLUtil implements Serializable{
 	}
 
 	/**
-	 * ½«clob×Ö¶ÎµÄÖµÉèÖÃµ½×Ö·û´®ÖĞ
+	 * å°†clobå­—æ®µçš„å€¼è®¾ç½®åˆ°å­—ç¬¦ä¸²ä¸­
 	 * 
 	 * @param clob
 	 * @return
@@ -984,7 +984,7 @@ public class SQLUtil implements Serializable{
 	}
 
 	/**
-	 * ½«blob×Ö¶ÎÖĞµÄÖµ×ª»»Îª×Ö·û´®
+	 * å°†blobå­—æ®µä¸­çš„å€¼è½¬æ¢ä¸ºå­—ç¬¦ä¸²
 	 * 
 	 * @param blob
 	 * @return
@@ -1002,7 +1002,7 @@ public class SQLUtil implements Serializable{
 	}
 
 	/**
-	 * ½«blob×Ö¶ÎÖĞµÄÖµ×ª»»Îª×Ö·û´®
+	 * å°†blobå­—æ®µä¸­çš„å€¼è½¬æ¢ä¸ºå­—ç¬¦ä¸²
 	 * 
 	 * @param blob
 	 * @return
@@ -1020,7 +1020,7 @@ public class SQLUtil implements Serializable{
 	}
 
 	/**
-	 * ·µ»ØÊı¾İ¿â²éÑ¯×Ö¶Î
+	 * è¿”å›æ•°æ®åº“æŸ¥è¯¢å­—æ®µ
 	 * @return
 	 */
 	public String[] getFields() {
@@ -1028,13 +1028,13 @@ public class SQLUtil implements Serializable{
 	}
 	
 	/**
-	 * ´æ·ÅÖ´ĞĞ´óÊÂÎñµÄÊı¾İ¿âÁ´½Ó
+	 * å­˜æ”¾æ‰§è¡Œå¤§äº‹åŠ¡çš„æ•°æ®åº“é“¾æ¥
 	 */
 	private static ThreadLocal threadLocal = new ThreadLocal();
 	
 	
 	/**
-	 * ¿ªÊ¼Ò»¸öÊı¾İ¿âÊÂÎñ
+	 * å¼€å§‹ä¸€ä¸ªæ•°æ®åº“äº‹åŠ¡
 	 * @throws SQLException 
 	 */
 	public void beginTransaction() throws SQLException
@@ -1045,8 +1045,8 @@ public class SQLUtil implements Serializable{
 	}
 	
 	/**
-	 * Ã»ÓĞ´´½¨£¬ÓĞµÄ»°Ê¹ÓÃÏÖ³ÉµÄ
-	 * ×ÜÊÇ´´½¨
+	 * æ²¡æœ‰åˆ›å»ºï¼Œæœ‰çš„è¯ä½¿ç”¨ç°æˆçš„
+	 * æ€»æ˜¯åˆ›å»º
 	 * @param created
 	 * @throws SQLException
 	 */
@@ -1060,7 +1060,7 @@ public class SQLUtil implements Serializable{
 	
 
 	/**
-	 * Ìá½»ÊÂÎñ
+	 * æäº¤äº‹åŠ¡
 	 *
 	 */
 	public void commitTransaction() throws SQLException
@@ -1071,7 +1071,7 @@ public class SQLUtil implements Serializable{
 	}
 	
 	/**
-	 * »Ø¹öÊÂÎñ
+	 * å›æ»šäº‹åŠ¡
 	 */
 	public void rollbackTransaction() throws SQLException
 
@@ -1209,8 +1209,8 @@ public class SQLUtil implements Serializable{
 		}
 	}
 	/**
-	 * »ñÈ¡µ±Ç°Á´½Ó³ØÖĞÕıÔÚÊ¹ÓÃµÄÁ´½Ó
-	 * ½Ó¿ÚÖ»¶ÔÄÚ²¿Êı¾İÔ´ÓĞÓÃ£¬Íâ²¿Êı¾İÔ´·µ»Ø-1
+	 * è·å–å½“å‰é“¾æ¥æ± ä¸­æ­£åœ¨ä½¿ç”¨çš„é“¾æ¥
+	 * æ¥å£åªå¯¹å†…éƒ¨æ•°æ®æºæœ‰ç”¨ï¼Œå¤–éƒ¨æ•°æ®æºè¿”å›-1
 	 * @return
 	 */
 	public static int getNumActive(String dbName)
@@ -1223,8 +1223,8 @@ public class SQLUtil implements Serializable{
 	}
 	
 	/**
-	 * »ñÈ¡µ±Ç°Á´½Ó³ØÖĞ¿ÕÏĞµÄÁ´½ÓÊı
-	 * ½Ó¿ÚÖ»¶ÔÄÚ²¿Êı¾İÔ´ÓĞÓÃ£¬Íâ²¿Êı¾İÔ´·µ»Ø-1
+	 * è·å–å½“å‰é“¾æ¥æ± ä¸­ç©ºé—²çš„é“¾æ¥æ•°
+	 * æ¥å£åªå¯¹å†…éƒ¨æ•°æ®æºæœ‰ç”¨ï¼Œå¤–éƒ¨æ•°æ®æºè¿”å›-1
 	 * @return
 	 */
 	public static int getNumIdle(String dbName)
@@ -1238,8 +1238,8 @@ public class SQLUtil implements Serializable{
 	}
 	
 	/**
-     * »ñÈ¡µ±Ç°Á´½Ó³ØÖĞ¿ÕÏĞµÄÁ´½ÓÊı
-     * ½Ó¿ÚÖ»¶ÔÄÚ²¿Êı¾İÔ´ÓĞÓÃ£¬Íâ²¿Êı¾İÔ´·µ»Ø-1
+     * è·å–å½“å‰é“¾æ¥æ± ä¸­ç©ºé—²çš„é“¾æ¥æ•°
+     * æ¥å£åªå¯¹å†…éƒ¨æ•°æ®æºæœ‰ç”¨ï¼Œå¤–éƒ¨æ•°æ®æºè¿”å›-1
      * @return
      */
     public static long getStartTime(String dbName)
@@ -1254,8 +1254,8 @@ public class SQLUtil implements Serializable{
     
     
     /**
-     * »ñÈ¡µ±Ç°Á´½Ó³ØÖĞ¿ÕÏĞµÄÁ´½ÓÊı
-     * ½Ó¿ÚÖ»¶ÔÄÚ²¿Êı¾İÔ´ÓĞÓÃ£¬Íâ²¿Êı¾İÔ´·µ»Ø-1
+     * è·å–å½“å‰é“¾æ¥æ± ä¸­ç©ºé—²çš„é“¾æ¥æ•°
+     * æ¥å£åªå¯¹å†…éƒ¨æ•°æ®æºæœ‰ç”¨ï¼Œå¤–éƒ¨æ•°æ®æºè¿”å›-1
      * @return
      */
     public static String getStatus(String dbName)
@@ -1270,8 +1270,8 @@ public class SQLUtil implements Serializable{
     
     
     /**
-     * »ñÈ¡µ±Ç°Á´½Ó³ØÖĞ¿ÕÏĞµÄÁ´½ÓÊı
-     * ½Ó¿ÚÖ»¶ÔÄÚ²¿Êı¾İÔ´ÓĞÓÃ£¬Íâ²¿Êı¾İÔ´·µ»Ø-1
+     * è·å–å½“å‰é“¾æ¥æ± ä¸­ç©ºé—²çš„é“¾æ¥æ•°
+     * æ¥å£åªå¯¹å†…éƒ¨æ•°æ®æºæœ‰ç”¨ï¼Œå¤–éƒ¨æ•°æ®æºè¿”å›-1
      * @return
      */
     public static long getStopTime(String dbName)
@@ -1288,8 +1288,8 @@ public class SQLUtil implements Serializable{
 	
 	
 	/**
-	 * »ñÈ¡µ±Ç°Á´½Ó³ØÖĞÕıÔÚÊ¹ÓÃµÄÁ´½Ó
-	 * ½Ó¿ÚÖ»¶ÔÄÚ²¿Êı¾İÔ´ÓĞÓÃ£¬Íâ²¿Êı¾İÔ´·µ»Ø-1
+	 * è·å–å½“å‰é“¾æ¥æ± ä¸­æ­£åœ¨ä½¿ç”¨çš„é“¾æ¥
+	 * æ¥å£åªå¯¹å†…éƒ¨æ•°æ®æºæœ‰ç”¨ï¼Œå¤–éƒ¨æ•°æ®æºè¿”å›-1
 	 * @return
 	 */
 	public static int getNumActive()
@@ -1301,8 +1301,8 @@ public class SQLUtil implements Serializable{
 	
 	
 	/**
-	 * »ñÈ¡µ±Ç°Á´½Ó³ØÖĞÕıÔÚÊ¹ÓÃµÄÁ´½Ó
-	 * ½Ó¿ÚÖ»¶ÔÄÚ²¿Êı¾İÔ´ÓĞÓÃ£¬Íâ²¿Êı¾İÔ´·µ»Ø-1
+	 * è·å–å½“å‰é“¾æ¥æ± ä¸­æ­£åœ¨ä½¿ç”¨çš„é“¾æ¥
+	 * æ¥å£åªå¯¹å†…éƒ¨æ•°æ®æºæœ‰ç”¨ï¼Œå¤–éƒ¨æ•°æ®æºè¿”å›-1
 	 * @return
 	 */
 	public static int getMaxNumActive()
@@ -1314,8 +1314,8 @@ public class SQLUtil implements Serializable{
 	
 
 	/**
-	 * »ñÈ¡µ±Ç°Á´½Ó³ØÖĞÁ´½Ó
-	 * ½Ó¿ÚÖ»¶ÔÄÚ²¿Êı¾İÔ´ÓĞÓÃ£¬Íâ²¿Êı¾İÔ´·µ»Ø-1
+	 * è·å–å½“å‰é“¾æ¥æ± ä¸­é“¾æ¥
+	 * æ¥å£åªå¯¹å†…éƒ¨æ•°æ®æºæœ‰ç”¨ï¼Œå¤–éƒ¨æ•°æ®æºè¿”å›-1
 	 * @return
 	 */
 	public static List getTraceObjects()
@@ -1326,8 +1326,8 @@ public class SQLUtil implements Serializable{
 	
 	
 	/**
-	 * »ñÈ¡µ±Ç°Á´½Ó³ØÖĞÁ´½Ó
-	 * ½Ó¿ÚÖ»¶ÔÄÚ²¿Êı¾İÔ´ÓĞÓÃ£¬Íâ²¿Êı¾İÔ´·µ»Ø-1
+	 * è·å–å½“å‰é“¾æ¥æ± ä¸­é“¾æ¥
+	 * æ¥å£åªå¯¹å†…éƒ¨æ•°æ®æºæœ‰ç”¨ï¼Œå¤–éƒ¨æ•°æ®æºè¿”å›-1
 	 * @return
 	 */
 	public static List getTraceObjects(String dbname)
@@ -1341,8 +1341,8 @@ public class SQLUtil implements Serializable{
 	}
 	
 	/**
-	 * »ñÈ¡µ±Ç°Á´½Ó³ØÖĞÕıÔÚÊ¹ÓÃµÄÁ´½Ó
-	 * ½Ó¿ÚÖ»¶ÔÄÚ²¿Êı¾İÔ´ÓĞÓÃ£¬Íâ²¿Êı¾İÔ´·µ»Ø-1
+	 * è·å–å½“å‰é“¾æ¥æ± ä¸­æ­£åœ¨ä½¿ç”¨çš„é“¾æ¥
+	 * æ¥å£åªå¯¹å†…éƒ¨æ•°æ®æºæœ‰ç”¨ï¼Œå¤–éƒ¨æ•°æ®æºè¿”å›-1
 	 * @return
 	 */
 	public static int getMaxNumActive(String dbName)
@@ -1356,8 +1356,8 @@ public class SQLUtil implements Serializable{
 	}
 	
 	/**
-	 * »ñÈ¡µ±Ç°Á´½Ó³ØÖĞ¿ÕÏĞµÄÁ´½ÓÊı
-	 * ½Ó¿ÚÖ»¶ÔÄÚ²¿Êı¾İÔ´ÓĞÓÃ£¬Íâ²¿Êı¾İÔ´·µ»Ø-1
+	 * è·å–å½“å‰é“¾æ¥æ± ä¸­ç©ºé—²çš„é“¾æ¥æ•°
+	 * æ¥å£åªå¯¹å†…éƒ¨æ•°æ®æºæœ‰ç”¨ï¼Œå¤–éƒ¨æ•°æ®æºè¿”å›-1
 	 * @return
 	 */
 	public static int getNumIdle()
@@ -1380,8 +1380,8 @@ public class SQLUtil implements Serializable{
 	 * 
 	 * <p>Title: DBHashtable.java</p>
 	 *
-	 * <p>Description: ÓÃÀ´ÅĞ¶Ï¹şÏ£±íÊÇ·ñÊÇ´ÓdbutilÖĞÖ±½Ó»ñÈ¡µÄhash±íµÄ±êÊ¶Àà
-	 * ¹¦ÄÜÓëjava.util.HashtableÒ»ÖÂ
+	 * <p>Description: ç”¨æ¥åˆ¤æ–­å“ˆå¸Œè¡¨æ˜¯å¦æ˜¯ä»dbutilä¸­ç›´æ¥è·å–çš„hashè¡¨çš„æ ‡è¯†ç±»
+	 * åŠŸèƒ½ä¸java.util.Hashtableä¸€è‡´
 	 * </p>
 	 *
  * <p>
@@ -1391,7 +1391,7 @@ public class SQLUtil implements Serializable{
  * Copyright (c) 2007
  * </p>
  * 
- * @Date 2009-6-1 ÏÂÎç08:58:51
+ * @Date 2009-6-1 ä¸‹åˆ08:58:51
  * @author biaoping.yin
  * @version 1.0
  */
@@ -1438,7 +1438,7 @@ public class SQLUtil implements Serializable{
 			try {
 				getPool(name).refreshDatabaseMetaData();
 			} catch (Exception e) {
-				log.error("Ë¢ĞÂÊı¾İ¿âÁ¬½Ó³Ø"+name+"¶ÔÓ¦µÄdbÔªÊı¾İÊ§°Ü:", e);
+				log.error("åˆ·æ–°æ•°æ®åº“è¿æ¥æ± "+name+"å¯¹åº”çš„dbå…ƒæ•°æ®å¤±è´¥:", e);
 			}
 		}
 	}

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ps>
+	<p n="person" cs="org.frameworkset.soa.xblink.Person">
+		<p n="fax" cs="org.frameworkset.soa.xblink.PhoneNumber">
+			<p n="code" soa:type="int" v="123" />
+			<p n="number" soa:type="String"><![CDATA[9999-999]]></p>
+		</p>
+		<p n="firstname" soa:type="String"><![CDATA[Joe]]></p>
+		<p n="lastname" soa:type="String"><![CDATA[Walnes]]></p>
+		<p n="phone" cs="org.frameworkset.soa.xblink.PhoneNumber">
+			<p n="code" soa:type="int" v="123" />
+			<p n="number" soa:type="String"><![CDATA[1234-456]]></p>
+		</p>
+	</p>
+</ps>

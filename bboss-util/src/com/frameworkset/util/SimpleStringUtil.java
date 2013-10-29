@@ -81,7 +81,7 @@ import org.frameworkset.util.ObjectUtils;
 import sun.security.action.GetPropertyAction;
 
 /**
- * To change for your class or interface DAOÖĞVOObject StringÀàĞÍÓëPOÊı¾İÀàĞÍ×ª»»¹¤¾ßÀà.
+ * To change for your class or interface DAOä¸­VOObject Stringç±»å‹ä¸POæ•°æ®ç±»å‹è½¬æ¢å·¥å…·ç±».
  * 
  * @author biaoping.yin
  * @version 1.0
@@ -92,10 +92,10 @@ public class SimpleStringUtil  {
 //			"yyyy-MM-dd HH:mm:ss");
 
 	protected static final Logger logger = Logger.getLogger(SimpleStringUtil.class);
-	// ¶ººÅ³£Á¿
+	// é€—å·å¸¸é‡
 	public static final String COMMA = ",";
 
-	// ¿Õ´®³£Á¿
+	// ç©ºä¸²å¸¸é‡
 	public static final String BLANK = "";
 
 	/**
@@ -105,8 +105,8 @@ public class SimpleStringUtil  {
 	public static final int SPLIT_ALL = 0;
 
 	/**
-	 * ÒÔÏÂµÄ±äÁ¿£ºdontNeedEncoding£¬dfltEncName£¬caseDiff ÊÇ´Ójdk 1.4 java.net.URLEncoder
-	 * ÏÂÒÆÖ²¹ıÀ´
+	 * ä»¥ä¸‹çš„å˜é‡ï¼šdontNeedEncodingï¼ŒdfltEncNameï¼ŒcaseDiff æ˜¯ä»jdk 1.4 java.net.URLEncoder
+	 * ä¸‹ç§»æ¤è¿‡æ¥
 	 */
 
 	private static BitSet dontNeedEncoding;
@@ -173,14 +173,14 @@ public class SimpleStringUtil  {
 	}
 
 	/**
-	 * ½«Ò»¸ö×Ö·û´®¸ù¾İ¶ººÅ·Ö²ğ
+	 * å°†ä¸€ä¸ªå­—ç¬¦ä¸²æ ¹æ®é€—å·åˆ†æ‹†
 	 */
 	public static String[] split(String s) {
 		return split(s, COMMA);
 	}
 
 	/**
-	 * ½«×Ö·û´®¸ù¾İ¸ø¶¨·Ö¸ô·û·Ö²ğ
+	 * å°†å­—ç¬¦ä¸²æ ¹æ®ç»™å®šåˆ†éš”ç¬¦åˆ†æ‹†
 	 */
 	public static String[] split(String s, String delimiter) {
 		return split(s, delimiter, true);
@@ -258,7 +258,7 @@ public class SimpleStringUtil  {
 		if (contextPath == null || contextPath.equals("") || contextPath.equals("/")) {
 //			System.out.println("SimpleStringUtil.getRealPath() contextPath:"
 //					+ contextPath);
-			if(usebase)//Èç¹ûĞèÒª¼ì²âÉÏÏÂÎÄÂ·¾¶Îª¿Õ´®£¬ÄÇÃ´Èç¹ûpathµÚÒ»¸ö×Ö·û²»ÊÇ/£¬ÄÇÃ´ĞèÒª²¹³ä×Ö·û/µ½µÚÒ»¸öÎ»ÖÃ
+			if(usebase)//å¦‚æœéœ€è¦æ£€æµ‹ä¸Šä¸‹æ–‡è·¯å¾„ä¸ºç©ºä¸²ï¼Œé‚£ä¹ˆå¦‚æœpathç¬¬ä¸€ä¸ªå­—ç¬¦ä¸æ˜¯/ï¼Œé‚£ä¹ˆéœ€è¦è¡¥å……å­—ç¬¦/åˆ°ç¬¬ä¸€ä¸ªä½ç½®
 			{
 				if(isEmpty(path))
 					return "/";
@@ -353,10 +353,10 @@ public class SimpleStringUtil  {
 	}
 
 	/**
-	 * »ñÈ¡ÎÄ¼şÃû³Æ
+	 * è·å–æ–‡ä»¶åç§°
 	 * 
 	 * @param path
-	 *            ÎÄ¼şÂ·¾­
+	 *            æ–‡ä»¶è·¯ç»
 	 * @return String
 	 */
 	public static String getFileName(String path) {
@@ -388,11 +388,11 @@ public class SimpleStringUtil  {
 	}
 
 	/**
-	 * ½«ÈÕÆÚÊı×é×ª»»³É×Ö·û´®Êı×é
+	 * å°†æ—¥æœŸæ•°ç»„è½¬æ¢æˆå­—ç¬¦ä¸²æ•°ç»„
 	 * 
 	 * @param dates
-	 *            Date[] ÈÕÆÚÊı×é
-	 * @return String[] ×Ö·û´®Êı×é
+	 *            Date[] æ—¥æœŸæ•°ç»„
+	 * @return String[] å­—ç¬¦ä¸²æ•°ç»„
 	 */
 	public static String[] dateArrayTOStringArray(Date[] dates) {
 		if (dates == null) {
@@ -407,11 +407,11 @@ public class SimpleStringUtil  {
 	}
 
 	/**
-	 * ½«×Ö·û´®Êı×é×ª»»³ÉÈÕÆÚÊı×é
+	 * å°†å­—ç¬¦ä¸²æ•°ç»„è½¬æ¢æˆæ—¥æœŸæ•°ç»„
 	 * 
 	 * @param dates
-	 *            Date[] ×Ö·û´®Êı×é
-	 * @return String[] ÈÕÆÚÊı×é
+	 *            Date[] å­—ç¬¦ä¸²æ•°ç»„
+	 * @return String[] æ—¥æœŸæ•°ç»„
 	 */
 	public static Date[] stringArrayTODateArray(String[] dates_s,SimpleDateFormat dateformat) {
 		if (dates_s == null) {
@@ -447,11 +447,11 @@ public class SimpleStringUtil  {
 	}
 	
 	/**
-	 * ½«×Ö·û´®Êı×é×ª»»³ÉÈÕÆÚÊı×é
+	 * å°†å­—ç¬¦ä¸²æ•°ç»„è½¬æ¢æˆæ—¥æœŸæ•°ç»„
 	 * 
 	 * @param dates
-	 *            Date[] ×Ö·û´®Êı×é
-	 * @return String[] ÈÕÆÚÊı×é
+	 *            Date[] å­—ç¬¦ä¸²æ•°ç»„
+	 * @return String[] æ—¥æœŸæ•°ç»„
 	 */
 	public static Date[] longArrayTODateArray(long[] dates_s,SimpleDateFormat dateformat) {
 		if (dates_s == null) {
@@ -469,11 +469,11 @@ public class SimpleStringUtil  {
 	}
 
 	/**
-	 * ½«×Ö·û´®Êı×é×ª»»³ÉÈÕÆÚÊı×é
+	 * å°†å­—ç¬¦ä¸²æ•°ç»„è½¬æ¢æˆæ—¥æœŸæ•°ç»„
 	 * 
 	 * @param dates
-	 *            Date[] ×Ö·û´®Êı×é
-	 * @return String[] ÈÕÆÚÊı×é
+	 *            Date[] å­—ç¬¦ä¸²æ•°ç»„
+	 * @return String[] æ—¥æœŸæ•°ç»„
 	 */
 	public static java.sql.Date[] stringArrayTOSQLDateArray(String[] dates_s,SimpleDateFormat dateformat) {
 		if (dates_s == null) {
@@ -513,11 +513,11 @@ public class SimpleStringUtil  {
 	}
 	
 	/**
-	 * ½«×Ö·û´®Êı×é×ª»»³ÉÈÕÆÚÊı×é
+	 * å°†å­—ç¬¦ä¸²æ•°ç»„è½¬æ¢æˆæ—¥æœŸæ•°ç»„
 	 * 
 	 * @param dates
-	 *            Date[] ×Ö·û´®Êı×é
-	 * @return String[] ÈÕÆÚÊı×é
+	 *            Date[] å­—ç¬¦ä¸²æ•°ç»„
+	 * @return String[] æ—¥æœŸæ•°ç»„
 	 */
 	public static java.sql.Date[] longArrayTOSQLDateArray(long[] dates_s,SimpleDateFormat dateformat) {
 		if (dates_s == null) {
@@ -535,11 +535,11 @@ public class SimpleStringUtil  {
 	}
 	
 	/**
-	 * ½«×Ö·û´®Êı×é×ª»»³ÉÈÕÆÚÊı×é
+	 * å°†å­—ç¬¦ä¸²æ•°ç»„è½¬æ¢æˆæ—¥æœŸæ•°ç»„
 	 * 
 	 * @param dates
-	 *            Date[] ×Ö·û´®Êı×é
-	 * @return String[] ÈÕÆÚÊı×é
+	 *            Date[] å­—ç¬¦ä¸²æ•°ç»„
+	 * @return String[] æ—¥æœŸæ•°ç»„
 	 */
 	public static java.sql.Timestamp[] stringArrayTOTimestampArray(String[] dates_s,SimpleDateFormat dateformat) {
 		if (dates_s == null) {
@@ -578,11 +578,11 @@ public class SimpleStringUtil  {
 	}
 	
 	/**
-	 * ½«×Ö·û´®Êı×é×ª»»³ÉÈÕÆÚÊı×é
+	 * å°†å­—ç¬¦ä¸²æ•°ç»„è½¬æ¢æˆæ—¥æœŸæ•°ç»„
 	 * 
 	 * @param dates
-	 *            Date[] ×Ö·û´®Êı×é
-	 * @return String[] ÈÕÆÚÊı×é
+	 *            Date[] å­—ç¬¦ä¸²æ•°ç»„
+	 * @return String[] æ—¥æœŸæ•°ç»„
 	 */
 	public static java.sql.Timestamp[] longArrayTOTimestampArray(long[] dates_s,SimpleDateFormat dateformat) {
 		if (dates_s == null) {
@@ -725,7 +725,7 @@ public class SimpleStringUtil  {
 
 
 	/**
-	 * ×Ö·û´®Ìæ»»º¯Êı
+	 * å­—ç¬¦ä¸²æ›¿æ¢å‡½æ•°
 	 * 
 	 * @param val
 	 *            String
@@ -748,8 +748,8 @@ public class SimpleStringUtil  {
 		String patternStr = str1;
 
 		/**
-		 * ±àÒëÕıÔò±í´ïÊ½patternStr£¬²¢ÓÃ¸Ã±í´ïÊ½Óë´«ÈëµÄsqlÓï¾ä½øĞĞÄ£Ê½Æ¥Åä,
-		 * Èç¹ûÆ¥ÅäÕıÈ·£¬Ôò´ÓÆ¥Åä¶ÔÏóÖĞÌáÈ¡³öÒÔÉÏ¶¨ÒåºÃµÄ6²¿·Ö£¬´æ·Åµ½Êı×éÖĞ²¢·µ»Ø ¸ÃÊı×é
+		 * ç¼–è¯‘æ­£åˆ™è¡¨è¾¾å¼patternStrï¼Œå¹¶ç”¨è¯¥è¡¨è¾¾å¼ä¸ä¼ å…¥çš„sqlè¯­å¥è¿›è¡Œæ¨¡å¼åŒ¹é…,
+		 * å¦‚æœåŒ¹é…æ­£ç¡®ï¼Œåˆ™ä»åŒ¹é…å¯¹è±¡ä¸­æå–å‡ºä»¥ä¸Šå®šä¹‰å¥½çš„6éƒ¨åˆ†ï¼Œå­˜æ”¾åˆ°æ•°ç»„ä¸­å¹¶è¿”å› è¯¥æ•°ç»„
 		 */
 
 		PatternCompiler compiler = new Perl5Compiler();
@@ -780,8 +780,8 @@ public class SimpleStringUtil  {
 		String patternStr = str1;
 
 		/**
-		 * ±àÒëÕıÔò±í´ïÊ½patternStr£¬²¢ÓÃ¸Ã±í´ïÊ½Óë´«ÈëµÄsqlÓï¾ä½øĞĞÄ£Ê½Æ¥Åä,
-		 * Èç¹ûÆ¥ÅäÕıÈ·£¬Ôò´ÓÆ¥Åä¶ÔÏóÖĞÌáÈ¡³öÒÔÉÏ¶¨ÒåºÃµÄ6²¿·Ö£¬´æ·Åµ½Êı×éÖĞ²¢·µ»Ø ¸ÃÊı×é
+		 * ç¼–è¯‘æ­£åˆ™è¡¨è¾¾å¼patternStrï¼Œå¹¶ç”¨è¯¥è¡¨è¾¾å¼ä¸ä¼ å…¥çš„sqlè¯­å¥è¿›è¡Œæ¨¡å¼åŒ¹é…,
+		 * å¦‚æœåŒ¹é…æ­£ç¡®ï¼Œåˆ™ä»åŒ¹é…å¯¹è±¡ä¸­æå–å‡ºä»¥ä¸Šå®šä¹‰å¥½çš„6éƒ¨åˆ†ï¼Œå­˜æ”¾åˆ°æ•°ç»„ä¸­å¹¶è¿”å› è¯¥æ•°ç»„
 		 */
 
 		PatternCompiler compiler = new Perl5Compiler();
@@ -812,8 +812,8 @@ public class SimpleStringUtil  {
 		String patternStr = str1;
 
 		/**
-		 * ±àÒëÕıÔò±í´ïÊ½patternStr£¬²¢ÓÃ¸Ã±í´ïÊ½Óë´«ÈëµÄsqlÓï¾ä½øĞĞÄ£Ê½Æ¥Åä,
-		 * Èç¹ûÆ¥ÅäÕıÈ·£¬Ôò´ÓÆ¥Åä¶ÔÏóÖĞÌáÈ¡³öÒÔÉÏ¶¨ÒåºÃµÄ6²¿·Ö£¬´æ·Åµ½Êı×éÖĞ²¢·µ»Ø ¸ÃÊı×é
+		 * ç¼–è¯‘æ­£åˆ™è¡¨è¾¾å¼patternStrï¼Œå¹¶ç”¨è¯¥è¡¨è¾¾å¼ä¸ä¼ å…¥çš„sqlè¯­å¥è¿›è¡Œæ¨¡å¼åŒ¹é…,
+		 * å¦‚æœåŒ¹é…æ­£ç¡®ï¼Œåˆ™ä»åŒ¹é…å¯¹è±¡ä¸­æå–å‡ºä»¥ä¸Šå®šä¹‰å¥½çš„6éƒ¨åˆ†ï¼Œå­˜æ”¾åˆ°æ•°ç»„ä¸­å¹¶è¿”å› è¯¥æ•°ç»„
 		 */
 
 		PatternCompiler compiler = new Perl5Compiler();
@@ -837,7 +837,7 @@ public class SimpleStringUtil  {
 	}
 
 	/**
-	 * ·Ö¸î×Ö·û´®ÎªÊı×éº¯Êı
+	 * åˆ†å‰²å­—ç¬¦ä¸²ä¸ºæ•°ç»„å‡½æ•°
 	 * 
 	 * @param val
 	 *            String
@@ -851,8 +851,8 @@ public class SimpleStringUtil  {
 			boolean CASE_INSENSITIVE) {
 		String patternStr = token;
 		/**
-		 * ±àÒëÕıÔò±í´ïÊ½patternStr£¬²¢ÓÃ¸Ã±í´ïÊ½Óë´«ÈëµÄsqlÓï¾ä½øĞĞÄ£Ê½Æ¥Åä,
-		 * Èç¹ûÆ¥ÅäÕıÈ·£¬Ôò´ÓÆ¥Åä¶ÔÏóÖĞÌáÈ¡³öÒÔÉÏ¶¨ÒåºÃµÄ6²¿·Ö£¬´æ·Åµ½Êı×éÖĞ²¢·µ»Ø ¸ÃÊı×é
+		 * ç¼–è¯‘æ­£åˆ™è¡¨è¾¾å¼patternStrï¼Œå¹¶ç”¨è¯¥è¡¨è¾¾å¼ä¸ä¼ å…¥çš„sqlè¯­å¥è¿›è¡Œæ¨¡å¼åŒ¹é…,
+		 * å¦‚æœåŒ¹é…æ­£ç¡®ï¼Œåˆ™ä»åŒ¹é…å¯¹è±¡ä¸­æå–å‡ºä»¥ä¸Šå®šä¹‰å¥½çš„6éƒ¨åˆ†ï¼Œå­˜æ”¾åˆ°æ•°ç»„ä¸­å¹¶è¿”å› è¯¥æ•°ç»„
 		 */
 
 		PatternCompiler compiler = new Perl5Compiler();
@@ -886,7 +886,7 @@ public class SimpleStringUtil  {
 	}
 	
 	/**
-	 * ·Ö¸î×Ö·û´®ÎªÊı×éº¯Êı
+	 * åˆ†å‰²å­—ç¬¦ä¸²ä¸ºæ•°ç»„å‡½æ•°
 	 * 
 	 * @param val
 	 *            String
@@ -900,8 +900,8 @@ public class SimpleStringUtil  {
 			int mask) {
 		String patternStr = token;
 		/**
-		 * ±àÒëÕıÔò±í´ïÊ½patternStr£¬²¢ÓÃ¸Ã±í´ïÊ½Óë´«ÈëµÄsqlÓï¾ä½øĞĞÄ£Ê½Æ¥Åä,
-		 * Èç¹ûÆ¥ÅäÕıÈ·£¬Ôò´ÓÆ¥Åä¶ÔÏóÖĞÌáÈ¡³öÒÔÉÏ¶¨ÒåºÃµÄ6²¿·Ö£¬´æ·Åµ½Êı×éÖĞ²¢·µ»Ø ¸ÃÊı×é
+		 * ç¼–è¯‘æ­£åˆ™è¡¨è¾¾å¼patternStrï¼Œå¹¶ç”¨è¯¥è¡¨è¾¾å¼ä¸ä¼ å…¥çš„sqlè¯­å¥è¿›è¡Œæ¨¡å¼åŒ¹é…,
+		 * å¦‚æœåŒ¹é…æ­£ç¡®ï¼Œåˆ™ä»åŒ¹é…å¯¹è±¡ä¸­æå–å‡ºä»¥ä¸Šå®šä¹‰å¥½çš„6éƒ¨åˆ†ï¼Œå­˜æ”¾åˆ°æ•°ç»„ä¸­å¹¶è¿”å› è¯¥æ•°ç»„
 		 */
 
 		PatternCompiler compiler = new Perl5Compiler();
@@ -957,7 +957,7 @@ public class SimpleStringUtil  {
 	
 
 	public static void main(String args[]) {
-//		String str = "ÖĞÎÄ,'bb,cc,'dd";
+//		String str = "ä¸­æ–‡,'bb,cc,'dd";
 //		try {
 //			str = new String(str.getBytes(), "utf-8");
 //		} catch (UnsupportedEncodingException ex) {
@@ -970,11 +970,11 @@ public class SimpleStringUtil  {
 //		System.out.println("?".getBytes()[0]);
 		int maxlength = 16;
 		String replace  ="...";
-		String outStr = "2010Äê02ÔÂ04ÈÕ12Ê±Ğí£¬ºÎ½ğÑş£¨Å®¡¢1987Äê06ÔÂ18ÈÕÉú¡¢Éí·İÖ¤£º430981198706184686¡¢ºşÄÏÊ¡ãä½­ÊĞãä½­ÊĞÄÏ´óÉÅÕò¿µÄş´åÊ®¶ş´åÃñ×é24ºÅ£©±¨¾¯£ºÆä¾­ÓªµÄÒæÑôÊĞµçĞÅ¶ÔÃæµÄÇçÌì·ş×°µê±»µÁÁË¡£½Ó¾¯ºóÎÒËùÃñ¾¯Á¢¼´¸ÏÖÁÏÖ³¡ÁË½âÏµ£¬½ñÈÕÖĞÎç12Ê±ĞíºÎ½ğÑşÓëÄ¸Ç×»ÆÖ¾ÔªÔÚµêÄÚ×öÉúÒâ£¬ÓĞÁ½ÄĞ×Ó½øÈëµêÄÚ£¬ÆäÖĞÒ»ÄĞ×ÓÒÔ°áµêÄÚµÄÊÔÒÂ¾µ³öÈ¥ÎüÒı×¢ÒâÁ¦¡£ÁíÒ»ÄĞ×Ó¾Í½øĞĞµÁÇÔ£¬µÁÈ¡ÁËÆäµêÄÚÊÕÒøÌ¨³éÌëÄÚ700ÔªÈËÃñ±Ò";
+		String outStr = "2010å¹´02æœˆ04æ—¥12æ—¶è®¸ï¼Œä½•é‡‘ç‘¶ï¼ˆå¥³ã€1987å¹´06æœˆ18æ—¥ç”Ÿã€èº«ä»½è¯ï¼š430981198706184686ã€æ¹–å—çœæ²…æ±Ÿå¸‚æ²…æ±Ÿå¸‚å—å¤§è†³é•‡åº·å®æ‘åäºŒæ‘æ°‘ç»„24å·ï¼‰æŠ¥è­¦ï¼šå…¶ç»è¥çš„ç›Šé˜³å¸‚ç”µä¿¡å¯¹é¢çš„æ™´å¤©æœè£…åº—è¢«ç›—äº†ã€‚æ¥è­¦åæˆ‘æ‰€æ°‘è­¦ç«‹å³èµ¶è‡³ç°åœºäº†è§£ç³»ï¼Œä»Šæ—¥ä¸­åˆ12æ—¶è®¸ä½•é‡‘ç‘¶ä¸æ¯äº²é»„å¿—å…ƒåœ¨åº—å†…åšç”Ÿæ„ï¼Œæœ‰ä¸¤ç”·å­è¿›å…¥åº—å†…ï¼Œå…¶ä¸­ä¸€ç”·å­ä»¥æ¬åº—å†…çš„è¯•è¡£é•œå‡ºå»å¸å¼•æ³¨æ„åŠ›ã€‚å¦ä¸€ç”·å­å°±è¿›è¡Œç›—çªƒï¼Œç›—å–äº†å…¶åº—å†…æ”¶é“¶å°æŠ½å±‰å†…700å…ƒäººæ°‘å¸";
 		
 		System.out.println(SimpleStringUtil.getHandleString(maxlength,replace,false,false,outStr));
 		
-outStr = "2010Äê02ÔÂ07ÈÕ11Ê±Ğí£¬ÖÜÁéÓ±±¨¾¯£ºÔÚ2Â·¹«½»³µÉÏ±»°ÇÇÔ£¬²¢×¥»ñÒ»ÃûÏÓÒÉÈË¡£Ãñ¾¯³ö¾¯ºó£¬¾­µ÷²é£¬ÖÜÁéÓ±ÓÚµ±ÈÕ10Ê±40·ÖĞí×ø2Â·³µµ½ÇÅÄÏ£¬Í¾ÖĞ±»¶şÃûÄĞ×Ó°ÇÇÔÏÖ½ğ3100Ôª¡£Ò»Ãû±»µ±³¡×¥»ñ£¬ÁíÒ»ÃûÒÑÌÓ×ß¡£ ";
+outStr = "2010å¹´02æœˆ07æ—¥11æ—¶è®¸ï¼Œå‘¨çµé¢–æŠ¥è­¦ï¼šåœ¨2è·¯å…¬äº¤è½¦ä¸Šè¢«æ‰’çªƒï¼Œå¹¶æŠ“è·ä¸€åå«Œç–‘äººã€‚æ°‘è­¦å‡ºè­¦åï¼Œç»è°ƒæŸ¥ï¼Œå‘¨çµé¢–äºå½“æ—¥10æ—¶40åˆ†è®¸å2è·¯è½¦åˆ°æ¡¥å—ï¼Œé€”ä¸­è¢«äºŒåç”·å­æ‰’çªƒç°é‡‘3100å…ƒã€‚ä¸€åè¢«å½“åœºæŠ“è·ï¼Œå¦ä¸€åå·²é€ƒèµ°ã€‚ ";
 		
 		System.out.println(SimpleStringUtil.getHandleString(maxlength,replace,false,false,outStr));
 	}
@@ -1157,7 +1157,7 @@ outStr = "2010Äê02ÔÂ07ÈÕ11Ê±Ğí£¬ÖÜÁéÓ±±¨¾¯£ºÔÚ2Â·¹«½»³µÉÏ±»°ÇÇÔ£¬²¢×¥»ñÒ»ÃûÏÓÒÉÈ
 
 	public static String toGB2312(String inpara) {
 
-		// System.out.println("Ô­À´µÄ×Ö·û´®Îª£º" + inpara);
+		// System.out.println("åŸæ¥çš„å­—ç¬¦ä¸²ä¸ºï¼š" + inpara);
 
 		if (inpara == null) {
 
@@ -1171,9 +1171,9 @@ outStr = "2010Äê02ÔÂ07ÈÕ11Ê±Ğí£¬ÖÜÁéÓ±±¨¾¯£ºÔÚ2Â·¹«½»³µÉÏ±»°ÇÇÔ£¬²¢×¥»ñÒ»ÃûÏÓÒÉÈ
 
 			byte[] b = new byte[temp.length];
 
-			// System.out.println("·Ö³Échar[]ºó×Ö·û´®µÄÎª£º" + temp);
+			// System.out.println("åˆ†æˆchar[]åå­—ç¬¦ä¸²çš„ä¸ºï¼š" + temp);
 
-			// System.out.println("´«µİ×Ö·û´®µÄ³¤¶ÈÎª£º" + temp.length);
+			// System.out.println("ä¼ é€’å­—ç¬¦ä¸²çš„é•¿åº¦ä¸ºï¼š" + temp.length);
 
 			int tempint;
 
@@ -1183,8 +1183,8 @@ outStr = "2010Äê02ÔÂ07ÈÕ11Ê±Ğí£¬ÖÜÁéÓ±±¨¾¯£ºÔÚ2Â·¹«½»³µÉÏ±»°ÇÇÔ£¬²¢×¥»ñÒ»ÃûÏÓÒÉÈ
 
 				tempint = (int) b[i];
 
-				// System.out.println("µÚ" + i + "¸ö×Ö·ûµÄ±àÂëÎª£º" + tempint +
-				// "\t¶ş½øÖÆÂëÎª£º" +
+				// System.out.println("ç¬¬" + i + "ä¸ªå­—ç¬¦çš„ç¼–ç ä¸ºï¼š" + tempint +
+				// "\täºŒè¿›åˆ¶ç ä¸ºï¼š" +
 				// Integer.toBinaryString(tempint));
 			}
 
@@ -1195,7 +1195,7 @@ outStr = "2010Äê02ÔÂ07ÈÕ11Ê±Ğí£¬ÖÜÁéÓ±±¨¾¯£ºÔÚ2Â·¹«½»³µÉÏ±»°ÇÇÔ£¬²¢×¥»ñÒ»ÃûÏÓÒÉÈ
 			return deststring;
 
 		} catch (java.io.UnsupportedEncodingException e) {
-			return "²»Ö§³ÖµÄ×Ö·û±àÂë";
+			return "ä¸æ”¯æŒçš„å­—ç¬¦ç¼–ç ";
 		}
 	}
 
@@ -1287,7 +1287,7 @@ outStr = "2010Äê02ÔÂ07ÈÕ11Ê±Ğí£¬ÖÜÁéÓ±±¨¾¯£ºÔÚ2Â·¹«½»³µÉÏ±»°ÇÇÔ£¬²¢×¥»ñÒ»ÃûÏÓÒÉÈ
 	}
 
 	/**
-	 * ÅĞ¶ÏÁ´½ÓÊÇ·ñÊÇjavascriptº¯Êı
+	 * åˆ¤æ–­é“¾æ¥æ˜¯å¦æ˜¯javascriptå‡½æ•°
 	 * 
 	 * @param nodeLink
 	 * @return
@@ -1299,7 +1299,7 @@ outStr = "2010Äê02ÔÂ07ÈÕ11Ê±Ğí£¬ÖÜÁéÓ±±¨¾¯£ºÔÚ2Â·¹«½»³µÉÏ±»°ÇÇÔ£¬²¢×¥»ñÒ»ÃûÏÓÒÉÈ
 	}
 
 	/**
-	 * ½«htmlÖĞ±ê¼ÇÓïÑÔ×Ö·û×ª»»Îª×ªÒå·û
+	 * å°†htmlä¸­æ ‡è®°è¯­è¨€å­—ç¬¦è½¬æ¢ä¸ºè½¬ä¹‰ç¬¦
 	 * 
 	 * @param text
 	 * @return
@@ -1320,7 +1320,7 @@ outStr = "2010Äê02ÔÂ07ÈÕ11Ê±Ğí£¬ÖÜÁéÓ±±¨¾¯£ºÔÚ2Â·¹«½»³µÉÏ±»°ÇÇÔ£¬²¢×¥»ñÒ»ÃûÏÓÒÉÈ
 	
 	
 	/**
-	 * ½«htmlÖĞ±ê¼ÇÓïÑÔ×Ö·û×ª»»Îª×ªÒå·û
+	 * å°†htmlä¸­æ ‡è®°è¯­è¨€å­—ç¬¦è½¬æ¢ä¸ºè½¬ä¹‰ç¬¦
 	 * 
 	 * @param text
 	 * @return
@@ -1340,7 +1340,7 @@ outStr = "2010Äê02ÔÂ07ÈÕ11Ê±Ğí£¬ÖÜÁéÓ±±¨¾¯£ºÔÚ2Â·¹«½»³µÉÏ±»°ÇÇÔ£¬²¢×¥»ñÒ»ÃûÏÓÒÉÈ
 	}
 
 	/**
-	 * ½«×ªÒåµÄ×Ö·û´®»¹Ô­
+	 * å°†è½¬ä¹‰çš„å­—ç¬¦ä¸²è¿˜åŸ
 	 * 
 	 * @param text
 	 * @return
@@ -1359,7 +1359,7 @@ outStr = "2010Äê02ÔÂ07ÈÕ11Ê±Ğí£¬ÖÜÁéÓ±±¨¾¯£ºÔÚ2Â·¹«½»³µÉÏ±»°ÇÇÔ£¬²¢×¥»ñÒ»ÃûÏÓÒÉÈ
 		return text;
 	}
 	/**
-	 * ½«×ªÒåµÄ×Ö·û´®»¹Ô­
+	 * å°†è½¬ä¹‰çš„å­—ç¬¦ä¸²è¿˜åŸ
 	 * 
 	 * @param text
 	 * @return
@@ -1396,7 +1396,7 @@ outStr = "2010Äê02ÔÂ07ÈÕ11Ê±Ğí£¬ÖÜÁéÓ±±¨¾¯£ºÔÚ2Â·¹«½»³µÉÏ±»°ÇÇÔ£¬²¢×¥»ñÒ»ÃûÏÓÒÉÈ
 	}
 
 	/**
-	 * ¹¹½¨ÏûÏ¢ÈÕÖ¾
+	 * æ„å»ºæ¶ˆæ¯æ—¥å¿—
 	 * 
 	 * @param messages
 	 * @return
@@ -2154,7 +2154,7 @@ outStr = "2010Äê02ÔÂ07ÈÕ11Ê±Ğí£¬ÖÜÁéÓ±±¨¾¯£ºÔÚ2Â·¹«½»³µÉÏ±»°ÇÇÔ£¬²¢×¥»ñÒ»ÃûÏÓÒÉÈ
 	}
 	
 //	/**
-//	 * ¶Ôvalue²ÉÓÃcharset½øĞĞURLEncode±àÂë£¬±àÂëµÄ´ÎÊı¸ù¾İencoudtimesÖ¸¶¨
+//	 * å¯¹valueé‡‡ç”¨charsetè¿›è¡ŒURLEncodeç¼–ç ï¼Œç¼–ç çš„æ¬¡æ•°æ ¹æ®encoudtimesæŒ‡å®š
 //	 * @param value
 //	 * @param charset
 //	 * @param encoudtimes
@@ -2201,7 +2201,7 @@ outStr = "2010Äê02ÔÂ07ÈÕ11Ê±Ğí£¬ÖÜÁéÓ±±¨¾¯£ºÔÚ2Â·¹«½»³µÉÏ±»°ÇÇÔ£¬²¢×¥»ñÒ»ÃûÏÓÒÉÈ
 //	}
 	
 	/**
-	 * ¶Ôvalue²ÉÓÃcharset½øĞĞURLEncode±àÂë£¬±àÂëµÄ´ÎÊı¸ù¾İencoudtimesÖ¸¶¨
+	 * å¯¹valueé‡‡ç”¨charsetè¿›è¡ŒURLEncodeç¼–ç ï¼Œç¼–ç çš„æ¬¡æ•°æ ¹æ®encoudtimesæŒ‡å®š
 	 * @param value
 	 * @param charset
 	 * @param encoudtimes
@@ -2248,7 +2248,7 @@ outStr = "2010Äê02ÔÂ07ÈÕ11Ê±Ğí£¬ÖÜÁéÓ±±¨¾¯£ºÔÚ2Â·¹«½»³µÉÏ±»°ÇÇÔ£¬²¢×¥»ñÒ»ÃûÏÓÒÉÈ
 	}
 	
 	/**
-	 * ¶Ôvalue²ÉÓÃcharset½øĞĞURLEncode±àÂë£¬±àÂëµÄ´ÎÊıÎª1
+	 * å¯¹valueé‡‡ç”¨charsetè¿›è¡ŒURLEncodeç¼–ç ï¼Œç¼–ç çš„æ¬¡æ•°ä¸º1
 	 * @param value
 	 * @param charset
 	 * @return
@@ -2365,7 +2365,7 @@ outStr = "2010Äê02ÔÂ07ÈÕ11Ê±Ğí£¬ÖÜÁéÓ±±¨¾¯£ºÔÚ2Â·¹«½»³µÉÏ±»°ÇÇÔ£¬²¢×¥»ñÒ»ÃûÏÓÒÉÈ
 	    		lm.put("ROOT", Locale.ROOT);   			
 	//    		else
 	//    		{
-	//    			log.debug("²»ÕıÈ·µÄÓïÑÔ´úÂë:"+ locale);
+	//    			log.debug("ä¸æ­£ç¡®çš„è¯­è¨€ä»£ç :"+ locale);
 	//    		}    		
 	    	}
 	    	localesIndexByString = lm;
@@ -2470,7 +2470,7 @@ outStr = "2010Äê02ÔÂ07ÈÕ11Ê±Ğí£¬ÖÜÁéÓ±±¨¾¯£ºÔÚ2Â·¹«½»³µÉÏ±»°ÇÇÔ£¬²¢×¥»ñÒ»ÃûÏÓÒÉÈ
     		}
     		else
     		{
-    			logger.debug("²»ÕıÈ·µÄÓïÑÔ´úÂë:"+ locale + ",build new Locale for " + locale + "." );
+    			logger.debug("ä¸æ­£ç¡®çš„è¯­è¨€ä»£ç :"+ locale + ",build new Locale for " + locale + "." );
     			lm.put(locale, new Locale(locale));   			
     		}    		
     	}
@@ -2480,7 +2480,7 @@ outStr = "2010Äê02ÔÂ07ÈÕ11Ê±Ğí£¬ÖÜÁéÓ±±¨¾¯£ºÔÚ2Â·¹«½»³µÉÏ±»°ÇÇÔ£¬²¢×¥»ñÒ»ÃûÏÓÒÉÈ
     public static <T> T json2Object(String jsonString,Class<T> toclass,boolean ALLOW_SINGLE_QUOTES) {
 		// TODO Auto-generated method stub
 
-//		String jsonString = "[{'from_date':'2001-09-21','to_date':'2011-04-02','company':'ÈËÊÙ±£ÏÕ','department':'xxx','position':'Ö÷¹Ü' },{'from_date':'0002-12-01','to_date':'2011-04-02', 'company':'ÈËÊÙ±£ÏÕ','department':'xxx','position':'Ö÷¹Ü' }]";
+//		String jsonString = "[{'from_date':'2001-09-21','to_date':'2011-04-02','company':'äººå¯¿ä¿é™©','department':'xxx','position':'ä¸»ç®¡' },{'from_date':'0002-12-01','to_date':'2011-04-02', 'company':'äººå¯¿ä¿é™©','department':'xxx','position':'ä¸»ç®¡' }]";
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.configure(Feature.ALLOW_SINGLE_QUOTES, ALLOW_SINGLE_QUOTES); 
 		try {

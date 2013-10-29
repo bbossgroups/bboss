@@ -51,12 +51,12 @@ public class HelloWord
 
 		if (ynum != 0)
 		{
-			model.addAttribute("serverHelloNumber", "ĞÒÔËÊı×ÖÎª[" + ynum + "]£¡");
+			model.addAttribute("serverHelloNumber", "å¹¸è¿æ•°å­—ä¸º[" + ynum + "]ï¼");
 			
 		}
 		else
-			model.addAttribute("serverHelloNumber", "ĞÒÔËÊı×ÖÎª[" + ynum
-					+ "]£¡£¬ºÃÏñÓĞµã²»¶ÔÅ¶¡£");
+			model.addAttribute("serverHelloNumber", "å¹¸è¿æ•°å­—ä¸º[" + ynum
+					+ "]ï¼ï¼Œå¥½åƒæœ‰ç‚¹ä¸å¯¹å“¦ã€‚");
 
 		return "path:sayHello";
 	}
@@ -66,9 +66,9 @@ public class HelloWord
 	{
 
 		if (yourname != null && !"".equals(yourname))
-			model.addAttribute("serverHello", "·şÎñÆ÷ÏòÄú[" + yourname + "]ÎÊºÃ£¡");
+			model.addAttribute("serverHello", "æœåŠ¡å™¨å‘æ‚¨[" + yourname + "]é—®å¥½ï¼");
 		else
-			model.addAttribute("serverHello", "ÇëÊäÈëÄúµÄÃû×Ö£¡");
+			model.addAttribute("serverHello", "è¯·è¾“å…¥æ‚¨çš„åå­—ï¼");
 		return "path:sayHello";
 	}
 
@@ -138,40 +138,40 @@ public class HelloWord
 	}
 	
 	/**
-	 * ²âÊÔµ¥¸ö×Ö·û´®ÏòÃ¶¾ÙÀàĞÍÖµ×ª»»
+	 * æµ‹è¯•å•ä¸ªå­—ç¬¦ä¸²å‘æšä¸¾ç±»å‹å€¼è½¬æ¢
 	 * @param type
 	 * @param response
 	 * @throws IOException
 	 */
-	public   @ResponseBody(charset="GBK") 
+	public   @ResponseBody(charset="UTF-8") 
 	String sayHelloEnum(@RequestParam(name="sex") SexType type) throws IOException
 	{
 		if(type != null)
 		{
 			if(type == SexType.F)
 			{
-				return "Å®";
+				return "å¥³";
 			}
 			else if(type == SexType.M)
 			{
-				return "ÄĞ";
+				return "ç”·";
 			}
 			else if(type == SexType.UN)
 			{
-				return "Î´Öª";
+				return "æœªçŸ¥";
 			}
 				
 		}
 		
-		return "Î´Öª";
+		return "æœªçŸ¥";
 	}
 	/**
-	 * ²âÊÔµ¥¸ö×Ö·û´®ÏòÃ¶¾ÙÀàĞÍÖµ×ª»»
+	 * æµ‹è¯•å•ä¸ªå­—ç¬¦ä¸²å‘æšä¸¾ç±»å‹å€¼è½¬æ¢
 	 * @param type
 	 * @param response
 	 * @throws IOException
 	 */
-	public  @ResponseBody(charset="GBK") 
+	public  @ResponseBody(charset="UTF-8") 
 	String  sayHelloEnums(@RequestParam(name="sex") SexType[] types) throws IOException
 	{
 		
@@ -180,19 +180,19 @@ public class HelloWord
 			if(types[0] == SexType.F)
 			{
 				
-				return "Å®";
+				return "å¥³";
 			}
 			else if(types[0] == SexType.M)
 			{
 				
-				return "ÄĞ";
+				return "ç”·";
 			}
 			else if(types[0] == SexType.UN)
 			{
-				return "Î´Öª";
+				return "æœªçŸ¥";
 			}				
 		}	
-		return "Î´Öª";
+		return "æœªçŸ¥";
 	}
 	
 	public String index()

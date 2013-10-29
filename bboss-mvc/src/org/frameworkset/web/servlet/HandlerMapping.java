@@ -41,7 +41,7 @@ public interface HandlerMapping {
 	public static String HANDLER_REQUESTURI_ATTRIBUTE = HandlerMapping.class.getName() + ".requesturi";
 	
 	/**
-	 * ÓÃÀ´±íÊ¾¿ØÖÆ·½·¨ÊÇ·ñÊÇ·ÖÒ³·½·¨
+	 * ç”¨æ¥è¡¨ç¤ºæ§åˆ¶æ–¹æ³•æ˜¯å¦æ˜¯åˆ†é¡µæ–¹æ³•
 	 */
 	public static String PAGER_METHOD_FLAG_ATTRIBUTE = HandlerMapping.class.getName() + ".PAGER_METHOD_FLAG";
 	public static String PAGER_PAGESIZE_FLAG_ATTRIBUTE = HandlerMapping.class.getName() + ".PAGER_PAGESIZE_FLAG";

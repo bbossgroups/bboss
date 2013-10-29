@@ -23,7 +23,7 @@ import org.frameworkset.spi.ApplicationContext;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2010-9-15 œ¬ŒÁ02:55:46
+ * @Date 2010-9-15 ‰∏ãÂçà02:55:46
  * @author biaoping.yin
  * @version 1.0
  */

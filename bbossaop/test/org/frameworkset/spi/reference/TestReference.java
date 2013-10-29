@@ -29,12 +29,12 @@ import org.frameworkset.spi.SPIException;
  *
  * <p>bboss workgroup</p>
  * @Date Aug 19, 2008 10:27:28 AM
- * @author biaoping.yin,Òü±êÆ½
+ * @author biaoping.yin,å°¹æ ‡å¹³
  * @version 1.0
  */
 public class TestReference {
 	/**
-	 * ²âÊÔ±¾·½·¨Ê±£¬ĞèÒª½«D¶ÔaµÄÒıÓÃÅäÖÃ×¢ÊÍ£¬±ÜÃâÖØ¸´ÒıÓÃÇé¿ö·¢Éú
+	 * æµ‹è¯•æœ¬æ–¹æ³•æ—¶ï¼Œéœ€è¦å°†Då¯¹açš„å¼•ç”¨é…ç½®æ³¨é‡Šï¼Œé¿å…é‡å¤å¼•ç”¨æƒ…å†µå‘ç”Ÿ
 	 */
 	/**
 	 * @org.junit.Test
@@ -78,7 +78,7 @@ public class TestReference {
 	
 	
 	/**
-	 * ²âÊÔ±¾·½·¨Ê±£¬ĞèÒª½«D¶ÔaµÄÒıÓÃÅäÖÃ×¢ÊÍÈ¥µô£¬ÖØ¸´ÒıÓÃÇé¿ö·¢Éú
+	 * æµ‹è¯•æœ¬æ–¹æ³•æ—¶ï¼Œéœ€è¦å°†Då¯¹açš„å¼•ç”¨é…ç½®æ³¨é‡Šå»æ‰ï¼Œé‡å¤å¼•ç”¨æƒ…å†µå‘ç”Ÿ
 	 */
 	/**
 	 * @org.junit.Test

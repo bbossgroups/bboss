@@ -41,9 +41,9 @@ import java.util.ListIterator;
 
 import com.frameworkset.common.tag.sort.ListSort;
 /**
- * °ü×°java.util.ArrayListÀà£¬ÏŞ¶¨Ö»ÄÜÈİÄÉClassDataÀàĞÍµÄ¶ÔÏó
+ * åŒ…è£…java.util.ArrayListç±»ï¼Œé™å®šåªèƒ½å®¹çº³ClassDataç±»å‹çš„å¯¹è±¡
  * 
- * Ìá¹©¶ÔËùÓĞµÄClassData¶ÔÏóµÄÅÅĞò¹¦ÄÜ 
+ * æä¾›å¯¹æ‰€æœ‰çš„ClassDataå¯¹è±¡çš„æ’åºåŠŸèƒ½ 
  * @author biaoping.yin
  * 2005-3-25
  * version 1.0
@@ -54,7 +54,7 @@ public class ClassDataList
 {
 	ListSort sort = new ListSort();    
     /**
-     * ÈİÄÉClassData¶ÔÏóµÄList     */
+     * å®¹çº³ClassDataå¯¹è±¡çš„List     */
     
     public List theClassData = new ArrayList();    
     
@@ -72,7 +72,7 @@ public class ClassDataList
     }
     
     /**
-     * @param index - »ñÈ¡Ò»Ìõ¼ÇÂ¼
+     * @param index - è·å–ä¸€æ¡è®°å½•
    
      */
     public ClassData get(int index) 
@@ -308,15 +308,15 @@ public class ClassDataList
     
     
     /**
-     * ¶ÔlistÖĞµÄ¶ÔÏóÅÅĞò£¬·½·¨ÖĞ´´½¨ListSortµÄÊµÀılsort£¬µ÷ÓÃlsort.sort(list,sortKey,d
-     * esc)Íê³ÉÅÅĞò
-     * desc²ÎÊı¾ö¶¨ÅÅĞòµÄÖÈĞò£º
-     * true :½µĞò
-     * false:ÉıĞò
+     * å¯¹listä¸­çš„å¯¹è±¡æ’åºï¼Œæ–¹æ³•ä¸­åˆ›å»ºListSortçš„å®ä¾‹lsortï¼Œè°ƒç”¨lsort.sort(list,sortKey,d
+     * esc)å®Œæˆæ’åº
+     * descå‚æ•°å†³å®šæ’åºçš„ç§©åºï¼š
+     * true :é™åº
+     * false:å‡åº
      * 
-     * sortKey²ÎÊı£ºÅÅĞò×Ö¶Î
+     * sortKeyå‚æ•°ï¼šæ’åºå­—æ®µ
      * 
-     * @param sortKey - ÅÅĞò¹Ø¼ü×Ö
+     * @param sortKey - æ’åºå…³é”®å­—
      * @param desc
      * @return void
      */

@@ -148,7 +148,7 @@ public class Database implements Serializable
     }
 
     /**
-     * Ìí¼ÓÒ»ÅúschemaÎÄ¼şµÄÃû³Æ
+     * æ·»åŠ ä¸€æ‰¹schemaæ–‡ä»¶çš„åç§°
      * @param names Set
      */
     public void setFileNames(Set names)
@@ -345,9 +345,9 @@ public class Database implements Serializable
         tbl.setDatabase(this);
         
         tableList.add(tbl);
-        //±íÃûµÄ´æ´¢Ãû³ÆÓÉ±íÃû+$+javaNameÉú³É
-        //Èç¹û±íÃûÎª¿ÕÔò´æ´¢Ãû³ÆÎªjavaName
-        //2010.01.26×¢ÊÍ£¬
+        //è¡¨åçš„å­˜å‚¨åç§°ç”±è¡¨å+$+javaNameç”Ÿæˆ
+        //å¦‚æœè¡¨åä¸ºç©ºåˆ™å­˜å‚¨åç§°ä¸ºjavaName
+        //2010.01.26æ³¨é‡Šï¼Œ
 //        tablesByName.put(tbl.getName() != null && !tbl.getName().equals("")?tbl.getJavaName() + "$" + tbl.getName():tbl.getJavaName(), tbl);
         tablesByName.put(tbl.getName(), tbl);
         
@@ -555,7 +555,7 @@ public class Database implements Serializable
     }
 
     /**
-     * ½«Ò»¸öÊı¾İ¿âÖĞµÄËùÓĞ±í¸´ÖÆµ½ÄãÒ»¸öÊı¾İ¿âÖĞ
+     * å°†ä¸€ä¸ªæ•°æ®åº“ä¸­çš„æ‰€æœ‰è¡¨å¤åˆ¶åˆ°ä½ ä¸€ä¸ªæ•°æ®åº“ä¸­
      *
      * @param db Database
      */
@@ -578,7 +578,7 @@ public class Database implements Serializable
     }
 
     /**
-     * ÅĞ¶ÏÊÇ·ñ°üº¬Í¬Ò»¸ö±í
+     * åˆ¤æ–­æ˜¯å¦åŒ…å«åŒä¸€ä¸ªè¡¨
      * @param table
      * @return
      */

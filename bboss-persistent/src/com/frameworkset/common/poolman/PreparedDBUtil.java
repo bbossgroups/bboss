@@ -60,15 +60,15 @@ import com.frameworkset.common.poolman.util.StatementParser;
 import com.frameworkset.util.FileUtil;
 
 /**
- * Ö´ĞĞÔ¤±àsqlÓï¾ä
+ * æ‰§è¡Œé¢„ç¼–sqlè¯­å¥
  * 
  * @author biaoping.yin created on 2005-6-8 version 1.0
  */
 public class PreparedDBUtil extends DBUtil {
 	
 	/**
-	 * more·ÖÒ³²éÑ¯£¬²»»á¼ÆËã×Ü¼ÇÂ¼Êı£¬Èç¹ûÃ»ÓĞ¼ÇÂ¼ÄÇÃ´·µ»ØµÄListInfoµÄdatasµÄsizeÎª0,
-	 * ÌáÉıĞÔÄÜ£¬Í¬Ê±Ç°Ì¨±êÇ©¿âÒ²»á×öÏìÓ¦µÄµ÷Õû
+	 * moreåˆ†é¡µæŸ¥è¯¢ï¼Œä¸ä¼šè®¡ç®—æ€»è®°å½•æ•°ï¼Œå¦‚æœæ²¡æœ‰è®°å½•é‚£ä¹ˆè¿”å›çš„ListInfoçš„datasçš„sizeä¸º0,
+	 * æå‡æ€§èƒ½ï¼ŒåŒæ—¶å‰å°æ ‡ç­¾åº“ä¹Ÿä¼šåšå“åº”çš„è°ƒæ•´
 	 */
     private boolean more = false;
    
@@ -86,26 +86,26 @@ public class PreparedDBUtil extends DBUtil {
 		this.more = more;
 	}
 	/**
-	 * Ö´ĞĞµ¥ÌõÔ¤±àÒësqlÊ±²ÎÊı·â×°¶ÔÏó
+	 * æ‰§è¡Œå•æ¡é¢„ç¼–è¯‘sqlæ—¶å‚æ•°å°è£…å¯¹è±¡
 	 */
 	protected Params Params = null;
 	
 	/**
-	 * Åú´¦ÀíÔ¤±àÒë²Ù×÷²ÎÊı¼¯£¬
+	 * æ‰¹å¤„ç†é¢„ç¼–è¯‘æ“ä½œå‚æ•°é›†ï¼Œ
 	 * List<Params>
 	 */
 	protected List<Params> batchparams;
 	
 //	/**
-//	 * Åú´¦ÀíÔ¤±àÒë²Ù×÷²ÎÊı¼¯£¬Èç¹ûÔÚÒ»´ÎÅú´¦ÀíÔ¤±à²Ù×÷ÖĞ³öÏÖ¶àÌõ
+//	 * æ‰¹å¤„ç†é¢„ç¼–è¯‘æ“ä½œå‚æ•°é›†ï¼Œå¦‚æœåœ¨ä¸€æ¬¡æ‰¹å¤„ç†é¢„ç¼–æ“ä½œä¸­å‡ºç°å¤šæ¡
 //	 * Map<sql,Params>
 //	 */
 //	private Map batchparamsIDXBySQL;
 	
 	/**
-	 * ÊÇ·ñĞèÒª¶ÔÔ¤±àÒëÅú´¦Àí½øĞĞÓÅ»¯£¬Èç¹ûĞèÒªÔò¶ÔËùÓĞµÄbatchparams°´ÕÕsqlÓï¾äÊÇ·ñÏàÍ¬½øĞĞÅÅĞò
-	 * Èç¹ûÓï¾äÏàÍ¬Ôò·Åµ½Ò»Æğ£¬ÕâÑù±ÜÃâ³öÏÖÍ¬Ò»ÌõsqlÓï¾ä´æÔÚ¶à¸öpreparedstatement¾ä±ú
-	 * Ä¬ÈÏ²»ÅÅĞò£¬·ñÔòÅÅĞò
+	 * æ˜¯å¦éœ€è¦å¯¹é¢„ç¼–è¯‘æ‰¹å¤„ç†è¿›è¡Œä¼˜åŒ–ï¼Œå¦‚æœéœ€è¦åˆ™å¯¹æ‰€æœ‰çš„batchparamsæŒ‰ç…§sqlè¯­å¥æ˜¯å¦ç›¸åŒè¿›è¡Œæ’åº
+	 * å¦‚æœè¯­å¥ç›¸åŒåˆ™æ”¾åˆ°ä¸€èµ·ï¼Œè¿™æ ·é¿å…å‡ºç°åŒä¸€æ¡sqlè¯­å¥å­˜åœ¨å¤šä¸ªpreparedstatementå¥æŸ„
+	 * é»˜è®¤ä¸æ’åºï¼Œå¦åˆ™æ’åº
 	 */
 	protected boolean batchOptimize = false;
 
@@ -132,21 +132,21 @@ public class PreparedDBUtil extends DBUtil {
 	public static final int DELETE = 2;
 
 	/**
-	 * ·ÖÒ³²éÑ¯Àà±ğ
+	 * åˆ†é¡µæŸ¥è¯¢ç±»åˆ«
 	 */
 	public static final int SELECT = 3;
 
 	/**
-	 * Í¨ÓÃ²éÑ¯Àà±ğ
+	 * é€šç”¨æŸ¥è¯¢ç±»åˆ«
 	 */
 	public static final int SELECT_COMMON = 4;
 
 
 	
 	/**
-	 * ±êÊ¶Ö´ĞĞÔ¤±àÒëµÄÁ´½ÓÊÇÍâ²¿´«µİ½øÀ´µÄÁ´½Ó
-	 * true±êÊ¶ÊÇÍâ²¿Á´½Ó
-	 * false±êÊ¶²»ÊÇÍâ²¿Á´½Ó
+	 * æ ‡è¯†æ‰§è¡Œé¢„ç¼–è¯‘çš„é“¾æ¥æ˜¯å¤–éƒ¨ä¼ é€’è¿›æ¥çš„é“¾æ¥
+	 * trueæ ‡è¯†æ˜¯å¤–éƒ¨é“¾æ¥
+	 * falseæ ‡è¯†ä¸æ˜¯å¤–éƒ¨é“¾æ¥
 	 */
 //	protected boolean outcon = true;
 
@@ -157,7 +157,7 @@ public class PreparedDBUtil extends DBUtil {
 	
 
 	/**
-	 * ´óÊı¾İ×Ö¶ÎÊı¾İĞÅÏ¢
+	 * å¤§æ•°æ®å­—æ®µæ•°æ®ä¿¡æ¯
 	 * 
 	 * <p>
  * bboss workgroup
@@ -166,7 +166,7 @@ public class PreparedDBUtil extends DBUtil {
  * Copyright (c) 2007
  * </p>
  * 
- * @Date 2009-6-1 ÏÂÎç08:58:51
+ * @Date 2009-6-1 ä¸‹åˆ08:58:51
  * @author biaoping.yin
  * @version 1.0
  */
@@ -182,20 +182,20 @@ public class PreparedDBUtil extends DBUtil {
 		int type;
 
 		/**
-		 * ×Ö¶ÎµÄÖµ
+		 * å­—æ®µçš„å€¼
 		 */
 		Object bigdata;
 
 		String bigdataField;
 
 		/**
-		 * ×Ö¶Î¶ÔÓ¦µÄË÷Òı
+		 * å­—æ®µå¯¹åº”çš„ç´¢å¼•
 		 */
 		int index;
 	}
 
 	/**
-	 * ¸üĞÂÊı¾İ¿âÊ±µÄÖ÷¼üĞÅÏ¢
+	 * æ›´æ–°æ•°æ®åº“æ—¶çš„ä¸»é”®ä¿¡æ¯
 	 * 
  * <p>
  * bboss workgroup
@@ -204,7 +204,7 @@ public class PreparedDBUtil extends DBUtil {
  * Copyright (c) 2007
  * </p>
  * 
- * @Date 2009-6-1 ÏÂÎç08:58:51
+ * @Date 2009-6-1 ä¸‹åˆ08:58:51
  * @author biaoping.yin
  * @version 1.0
  */
@@ -499,7 +499,7 @@ public class PreparedDBUtil extends DBUtil {
 					
 				}
 			}
-			else if(param.method.equals(Param.setBlob_int_blob))//#5 //blob×Ö¶Î°üº¬StringºÍBlob¶ÔÏó´æ´¢µ½BlobÀàĞÍ×Ö¶ÎµÄ¹¦ÄÜ
+			else if(param.method.equals(Param.setBlob_int_blob))//#5 //blobå­—æ®µåŒ…å«Stringå’ŒBlobå¯¹è±¡å­˜å‚¨åˆ°Blobç±»å‹å­—æ®µçš„åŠŸèƒ½
 			{
 				if(param.data == null)
 				{
@@ -1109,7 +1109,7 @@ public class PreparedDBUtil extends DBUtil {
 		}
 	}
 	/*******************************************************************
-	 * Í¨ÓÃÔ¤±àÒë´¦Àí¿ªÊ¼
+	 * é€šç”¨é¢„ç¼–è¯‘å¤„ç†å¼€å§‹
 	 * 
 	 */
 	public Object executePrepared() throws SQLException {
@@ -1118,10 +1118,10 @@ public class PreparedDBUtil extends DBUtil {
 		return executePrepared((Connection)null);
 	}
 	/**
-	 * Èç¹ûgetCUDResult²ÎÊıÎªtrue£¬Ôò·µ»ØGetCUDResultÀàĞÍ¶ÔÏó£¬GetCUDResultµÄÊôĞÔº¬ÒåÈçÏÂ£º
-	 * result£º²Ù×÷½á¹û£¬Èç¹ûÊı¾İÔ´autoprimarykeyÎªtrue£¬²¢ÇÒÔÚtableinfo±íÖĞ±£´æÁË±íµÄÖ÷¼üĞÅÏ¢resultÎª×ÔÔöµÄÖ÷¼ü£¬·´Ö®resultÎª¸üĞÂµÄ¼ÇÂ¼Êı
-	 * updateCount:¸üĞÂµÄ¼ÇÂ¼Êı
-	 * keys:×Ô¶¯²úÉúµÄÖ÷¼ü£¬Èç¹ûÖ»ÓĞÒ»Ìõ¼ÇÂ¼ÔòÎªÆÕÍ¨¶ÔÏó£¬Èç¹ûÓĞ¶àÌõ¼ÇÂ¼ÔòÎªList<Object>ÀàĞÍ
+	 * å¦‚æœgetCUDResultå‚æ•°ä¸ºtrueï¼Œåˆ™è¿”å›GetCUDResultç±»å‹å¯¹è±¡ï¼ŒGetCUDResultçš„å±æ€§å«ä¹‰å¦‚ä¸‹ï¼š
+	 * resultï¼šæ“ä½œç»“æœï¼Œå¦‚æœæ•°æ®æºautoprimarykeyä¸ºtrueï¼Œå¹¶ä¸”åœ¨tableinfoè¡¨ä¸­ä¿å­˜äº†è¡¨çš„ä¸»é”®ä¿¡æ¯resultä¸ºè‡ªå¢çš„ä¸»é”®ï¼Œåä¹‹resultä¸ºæ›´æ–°çš„è®°å½•æ•°
+	 * updateCount:æ›´æ–°çš„è®°å½•æ•°
+	 * keys:è‡ªåŠ¨äº§ç”Ÿçš„ä¸»é”®ï¼Œå¦‚æœåªæœ‰ä¸€æ¡è®°å½•åˆ™ä¸ºæ™®é€šå¯¹è±¡ï¼Œå¦‚æœæœ‰å¤šæ¡è®°å½•åˆ™ä¸ºList<Object>ç±»å‹
 	 * @param getCUDResult
 	 * @return
 	 * @throws SQLException
@@ -1193,7 +1193,7 @@ public class PreparedDBUtil extends DBUtil {
     }
 	
 	/******************************************************************
-	 * ´øĞĞ´¦ÀíÆ÷µÄ·½·¨¿ªÊ¼
+	 * å¸¦è¡Œå¤„ç†å™¨çš„æ–¹æ³•å¼€å§‹
 	 *****************************************************************/
 	public Object executePreparedForObject(Class objectType,RowHandler rowhandler) throws SQLException {
 		if(this.batchparams != null && batchparams.size() > 0)
@@ -1261,7 +1261,7 @@ public class PreparedDBUtil extends DBUtil {
 			throw new SQLException("Can not execute batch prepared operations as single prepared operation,Please call method executePreparedBatch(Connection con)!");
 		if(Params.prepareSqlifo == null || Params.prepareSqlifo.getNewsql() == null || Params.prepareSqlifo.getNewsql().equals(""))
 		{
-			throw new SQLException("Ö´ĞĞ´íÎó£ºÇëÏÈÉèÖÃÔ¤Ö´ĞĞsqlÓï¾ä£¡");
+			throw new SQLException("æ‰§è¡Œé”™è¯¯ï¼šè¯·å…ˆè®¾ç½®é¢„æ‰§è¡Œsqlè¯­å¥ï¼");
 		}
 		StatementInfo stmtInfo = null;
 
@@ -1279,7 +1279,7 @@ public class PreparedDBUtil extends DBUtil {
 
 
 			if (Params.action == INSERT) {
-				// ³õÊ¼»¯Åú´¦ÀíÊı¾İ¿âÖ´ĞĞÓï¾ä
+				// åˆå§‹åŒ–æ‰¹å¤„ç†æ•°æ®åº“æ‰§è¡Œè¯­å¥
 				boolean autokey = isAutoprimarykey(prepareDBName);
 				if(autokey)
 				{
@@ -1287,12 +1287,12 @@ public class PreparedDBUtil extends DBUtil {
 					// String tableName = this.fabricateTableName(sql,0);
 					/**
 					 * added by biaoping.yin on 2005.03.29
-					 * ÖØ¹¹insertÓï¾ä,Ìí¼ÓÖ÷¼üĞÅÏ¢£¬Ê×ÏÈ»ñÈ¡Ö÷¼üÖµ
+					 * é‡æ„insertè¯­å¥,æ·»åŠ ä¸»é”®ä¿¡æ¯ï¼Œé¦–å…ˆè·å–ä¸»é”®å€¼
 					 * 
-					 * @param insertStmt£ºÊı¾İ¿â²åÈëÓï¾ä
-					 * @return ret ret[0]:´æ·ÅinsertÓï¾ä ret[1]:´æ·ÅĞÂµÄÖ÷¼üÖµ
-					 *         ret[2]:¸üĞÂ±ítableinfoÖĞ²åÈë±í¶ÔÓ¦Ö÷¼üÖµÓï¾ä
-					 *         ret[3]:PrimaryKey¶ÔÏó
+					 * @param insertStmtï¼šæ•°æ®åº“æ’å…¥è¯­å¥
+					 * @return ret ret[0]:å­˜æ”¾insertè¯­å¥ ret[1]:å­˜æ”¾æ–°çš„ä¸»é”®å€¼
+					 *         ret[2]:æ›´æ–°è¡¨tableinfoä¸­æ’å…¥è¡¨å¯¹åº”ä¸»é”®å€¼è¯­å¥
+					 *         ret[3]:PrimaryKeyå¯¹è±¡
 					 */
 					
 					temp = StatementParser.refactorInsertStatement(stmtInfo);
@@ -1302,7 +1302,7 @@ public class PreparedDBUtil extends DBUtil {
 					}
 					statement = stmtInfo.prepareStatement(temp[0].toString());
 	
-					// Èç¹ûsqlÎªinsertÓï¾ä²¢ÇÒÓĞĞÂµÄÖ÷¼üÖµÉú³É£¬Ôò±£´æ¸ÃÖ÷¼üÖµ
+					// å¦‚æœsqlä¸ºinsertè¯­å¥å¹¶ä¸”æœ‰æ–°çš„ä¸»é”®å€¼ç”Ÿæˆï¼Œåˆ™ä¿å­˜è¯¥ä¸»é”®å€¼
 					if (temp[1] != null) {
 						result = temp[1];
 					}
@@ -1347,7 +1347,7 @@ public class PreparedDBUtil extends DBUtil {
 				
 
 				// /**
-				// * ¸üĞÂ´ó×Ö¶Î
+				// * æ›´æ–°å¤§å­—æ®µ
 				// */
 				//                    
 				// this.updateBigDatas();
@@ -1357,7 +1357,7 @@ public class PreparedDBUtil extends DBUtil {
 					log.debug("Execute JDBC prepared update statement:"+stmtInfo.getSql());
 				}
 				statement = stmtInfo.prepareStatement();
-				//oracle´ó×Ö¶Î´¦Àí·ÖÎö³ÌĞò¶Î£¬ÏµÍ³ÓÚ2008.11.5ÈÕ¶Ô´ó×Ö¶ÎµÄ´¦Àí½øĞĞÁËÓÅ»¯ºóÎŞĞèÔÙ½øĞĞµ¥¶ÀµÄ´ó×Ö¶Î´¦ÀíÁË
+				//oracleå¤§å­—æ®µå¤„ç†åˆ†æç¨‹åºæ®µï¼Œç³»ç»Ÿäº2008.11.5æ—¥å¯¹å¤§å­—æ®µçš„å¤„ç†è¿›è¡Œäº†ä¼˜åŒ–åæ— éœ€å†è¿›è¡Œå•ç‹¬çš„å¤§å­—æ®µå¤„ç†äº†
 				//biaoping.yin
 //				try {
 //					Object[] obj = StatementParser.refactorUpdateStatement(stmtInfo);
@@ -1404,7 +1404,7 @@ public class PreparedDBUtil extends DBUtil {
 //				}
 
 			} 
-			else if (Params.action == SELECT)// ·ÖÒ³²éÑ¯²Ù×÷
+			else if (Params.action == SELECT)// åˆ†é¡µæŸ¥è¯¢æ“ä½œ
 			{
 				boolean showsql = showsql(stmtInfo.getDbname()); 
 				if(showsql)
@@ -1429,7 +1429,7 @@ public class PreparedDBUtil extends DBUtil {
 				
 
 			} 
-			else // deleteºÍÍ¨ÓÃ²éÑ¯²Ù×÷
+			else // deleteå’Œé€šç”¨æŸ¥è¯¢æ“ä½œ
 			{
 				if(showsql(stmtInfo.getDbname()))
 				{
@@ -1464,7 +1464,7 @@ public class PreparedDBUtil extends DBUtil {
 						
 				}
 //				ResultSet keys = statement.getGeneratedKeys();
-				//oracle´ó×Ö¶Î´¦Àí·ÖÎö³ÌĞò¶Î£¬ÏµÍ³ÓÚ2008.11.5ÈÕ¶Ô´ó×Ö¶ÎµÄ´¦Àí½øĞĞÁËÓÅ»¯ºóÎŞĞèÔÙ½øĞĞµ¥¶ÀµÄ´ó×Ö¶Î´¦ÀíÁË
+				//oracleå¤§å­—æ®µå¤„ç†åˆ†æç¨‹åºæ®µï¼Œç³»ç»Ÿäº2008.11.5æ—¥å¯¹å¤§å­—æ®µçš„å¤„ç†è¿›è¡Œäº†ä¼˜åŒ–åæ— éœ€å†è¿›è¡Œå•ç‹¬çš„å¤§å­—æ®µå¤„ç†äº†
 				//biaoping.yin
 //				this.updateBigDatas(Params,Params.updateKeyInfo,
 //										stmtInfo.getCon(),
@@ -1533,7 +1533,7 @@ public class PreparedDBUtil extends DBUtil {
 					return resultMap.getCommonresult();
 				}
 			} 
-			else // Î´ÖªÀàĞÍµÄ²Ù×÷
+			else // æœªçŸ¥ç±»å‹çš„æ“ä½œ
 			{
 				return null;
 			}
@@ -1633,7 +1633,7 @@ public class PreparedDBUtil extends DBUtil {
 //					System.out.println("aa");
 //					this.debugMemory();
 //					x.length();
-//					in = this.getInputStream(x);//Õ¼ÓÃÌ«¶àµÄÄÚ´æ
+//					in = this.getInputStream(x);//å ç”¨å¤ªå¤šçš„å†…å­˜
 //					in = new java.io.BufferedInputStream(new FileInputStream(x));
 //					in = new FileInputStream(x);
 	
@@ -1667,10 +1667,10 @@ public class PreparedDBUtil extends DBUtil {
 		}
 	}
 	/************************************************************************
-	 * ´øĞĞ´¦ÀíÆ÷µÄ·½·¨½áÊø
+	 * å¸¦è¡Œå¤„ç†å™¨çš„æ–¹æ³•ç»“æŸ
 	 **************************************************************************/
 	/**
-	 * Ö´ĞĞÔ¤±àÒëÅú³öÀí²Ù×÷,Ö§³ÖÊÂÎñ
+	 * æ‰§è¡Œé¢„ç¼–è¯‘æ‰¹å‡ºç†æ“ä½œ,æ”¯æŒäº‹åŠ¡
 	 * @return
 	 * @throws SQLException
 	 */
@@ -1701,9 +1701,9 @@ public class PreparedDBUtil extends DBUtil {
 		return executePrepared(con,false);
 	}
 	/**
-	 * Ö´ĞĞprepareÓï¾ä£¬²¢ÇÒ·µ»ØÖ´ĞĞºóµÄ½á¹û(ÀıÈç²åÈëÓï¾äºóÉú³ÉµÄÖ÷¼üÖµ)
+	 * æ‰§è¡Œprepareè¯­å¥ï¼Œå¹¶ä¸”è¿”å›æ‰§è¡Œåçš„ç»“æœ(ä¾‹å¦‚æ’å…¥è¯­å¥åç”Ÿæˆçš„ä¸»é”®å€¼)
 	 * 
-	 * @return Object Ö÷¼üÖµ
+	 * @return Object ä¸»é”®å€¼
 	 * @throws SQLException
 	 */
 	public Object executePrepared(Connection con,boolean getCUDResult) throws SQLException {
@@ -1711,7 +1711,7 @@ public class PreparedDBUtil extends DBUtil {
 //			throw new SQLException("Can not execute batch prepared operations as single prepared operation,Please call method executePreparedBatch(Connection con)!");
 //		if(Params.prepareselect_sql == null || Params.prepareselect_sql.equals(""))
 //		{
-//			throw new SQLException("Ö´ĞĞ´íÎó£ºÇëÏÈÉèÖÃÔ¤Ö´ĞĞsqlÓï¾ä£¡");
+//			throw new SQLException("æ‰§è¡Œé”™è¯¯ï¼šè¯·å…ˆè®¾ç½®é¢„æ‰§è¡Œsqlè¯­å¥ï¼");
 //		}
 //		StatementInfo stmtInfo = new StatementInfo(this.prepareDBName, this.Params.prepareselect_sql,
 //		
@@ -1728,22 +1728,22 @@ public class PreparedDBUtil extends DBUtil {
 //
 //
 //			if (Params.action == INSERT) {
-//				// ³õÊ¼»¯Åú´¦ÀíÊı¾İ¿âÖ´ĞĞÓï¾ä
+//				// åˆå§‹åŒ–æ‰¹å¤„ç†æ•°æ®åº“æ‰§è¡Œè¯­å¥
 //				Object[] temp;
 //				// String tableName = this.fabricateTableName(sql,0);
 //				/**
 //				 * added by biaoping.yin on 2005.03.29
-//				 * ÖØ¹¹insertÓï¾ä,Ìí¼ÓÖ÷¼üĞÅÏ¢£¬Ê×ÏÈ»ñÈ¡Ö÷¼üÖµ
+//				 * é‡æ„insertè¯­å¥,æ·»åŠ ä¸»é”®ä¿¡æ¯ï¼Œé¦–å…ˆè·å–ä¸»é”®å€¼
 //				 * 
-//				 * @param insertStmt£ºÊı¾İ¿â²åÈëÓï¾ä
-//				 * @return ret ret[0]:´æ·ÅinsertÓï¾ä ret[1]:´æ·ÅĞÂµÄÖ÷¼üÖµ
-//				 *         ret[2]:¸üĞÂ±ítableinfoÖĞ²åÈë±í¶ÔÓ¦Ö÷¼üÖµÓï¾ä
-//				 *         ret[3]:PrimaryKey¶ÔÏó
+//				 * @param insertStmtï¼šæ•°æ®åº“æ’å…¥è¯­å¥
+//				 * @return ret ret[0]:å­˜æ”¾insertè¯­å¥ ret[1]:å­˜æ”¾æ–°çš„ä¸»é”®å€¼
+//				 *         ret[2]:æ›´æ–°è¡¨tableinfoä¸­æ’å…¥è¡¨å¯¹åº”ä¸»é”®å€¼è¯­å¥
+//				 *         ret[3]:PrimaryKeyå¯¹è±¡
 //				 */
 //				temp = StatementParser.refactorInsertStatement(stmtInfo);
 //				statement = stmtInfo.prepareStatement(temp[0].toString());
 //
-//				// Èç¹ûsqlÎªinsertÓï¾ä²¢ÇÒÓĞĞÂµÄÖ÷¼üÖµÉú³É£¬Ôò±£´æ¸ÃÖ÷¼üÖµ
+//				// å¦‚æœsqlä¸ºinsertè¯­å¥å¹¶ä¸”æœ‰æ–°çš„ä¸»é”®å€¼ç”Ÿæˆï¼Œåˆ™ä¿å­˜è¯¥ä¸»é”®å€¼
 //				if (temp[1] != null) {
 //					result = temp[1];
 //				}
@@ -1779,7 +1779,7 @@ public class PreparedDBUtil extends DBUtil {
 //				
 //
 //				// /**
-//				// * ¸üĞÂ´ó×Ö¶Î
+//				// * æ›´æ–°å¤§å­—æ®µ
 //				// */
 //				//                    
 //				// this.updateBigDatas();
@@ -1830,7 +1830,7 @@ public class PreparedDBUtil extends DBUtil {
 //				}
 //
 //			} 
-//			else if (Params.action == SELECT)// ·ÖÒ³²éÑ¯²Ù×÷
+//			else if (Params.action == SELECT)// åˆ†é¡µæŸ¥è¯¢æ“ä½œ
 //			{
 //
 //				statement = stmtInfo.preparePagineStatement();
@@ -1838,7 +1838,7 @@ public class PreparedDBUtil extends DBUtil {
 //				statement_count = stmtInfo.prepareCountStatement();
 //
 //			} 
-//			else // deleteºÍÍ¨ÓÃ²éÑ¯²Ù×÷
+//			else // deleteå’Œé€šç”¨æŸ¥è¯¢æ“ä½œ
 //			{
 //				statement = stmtInfo.prepareStatement();
 //			}
@@ -1863,7 +1863,7 @@ public class PreparedDBUtil extends DBUtil {
 //				this.size = allResults == null ? 0 : allResults.length;
 //				return null;
 //			} 
-//			else // Î´ÖªÀàĞÍµÄ²Ù×÷
+//			else // æœªçŸ¥ç±»å‹çš„æ“ä½œ
 //			{
 //				return null;
 //			}
@@ -1891,10 +1891,10 @@ public class PreparedDBUtil extends DBUtil {
 
 	/**
 	 * Executes a pagination prepared statement and returns results in the form
-	 * of a Hashtable array. ±¾·½·¨Ö´ĞĞÍê±ÏºóÎŞĞè¶Ô½á¹û¼¯½øĞĞ»º³å
+	 * of a Hashtable array. æœ¬æ–¹æ³•æ‰§è¡Œå®Œæ¯•åæ— éœ€å¯¹ç»“æœé›†è¿›è¡Œç¼“å†²
 	 * 
 	 * 
-	 * @return ½á¹û¼¯
+	 * @return ç»“æœé›†
 	 * @throws SQLException
 	 */
 
@@ -1924,9 +1924,9 @@ public class PreparedDBUtil extends DBUtil {
 							}
 							long oldoffset = this.offset;
 							this.offset = stmtInfo.rebuildOffset(totalSize);
-							if(this.offset < oldoffset)//ÖØÖÃÊı¾İ»ñÈ¡·¶Î§
+							if(this.offset < oldoffset)//é‡ç½®æ•°æ®è·å–èŒƒå›´
 							{
-								if(haspaginsql)//Ö§³Ösql·ÖÒ³µÄÊı¾İ¿â²ÅĞèÒªÖØÖÃÊı¾İ·¶Î§
+								if(haspaginsql)//æ”¯æŒsqlåˆ†é¡µçš„æ•°æ®åº“æ‰éœ€è¦é‡ç½®æ•°æ®èŒƒå›´
 									stmtInfo.resetPostion(statement,startidx,endidx,this.offset);
 //								statement.setLong(startidx, this.offset);
 //								statement.setLong(endidx, totalSize - 1);
@@ -1934,7 +1934,7 @@ public class PreparedDBUtil extends DBUtil {
 							}
 						}
 					}
-					finally//¾Í½ü¹Ø±Õ
+					finally//å°±è¿‘å…³é—­
 					{
 						if(rs != null)
 						{
@@ -1972,7 +1972,7 @@ public class PreparedDBUtil extends DBUtil {
 					resultMap = stmtInfo.buildResultMap(res, objectType, rowhandler, stmtInfo.getMaxsize(), true, result_type);
 	
 				}		
-				else //Èç¹ûÃ»ÓĞÊı¾İ£¬ÔòĞèÒª»ñÈ¡Ô´Êı¾İ
+				else //å¦‚æœæ²¡æœ‰æ•°æ®ï¼Œåˆ™éœ€è¦è·å–æºæ•°æ®
 				{
 					res = statement.executeQuery();
 					stmtInfo.addResultSet(res);
@@ -1983,7 +1983,7 @@ public class PreparedDBUtil extends DBUtil {
 					this.meta = stmtInfo.getMeta();
 				}
 			}
-			else//more²Ù×÷Ö±½Ó»ùÓÚ´«µİ¹ıÀ´µÄoffsetºÍmaxsize²éÑ¯Êı¾İ¿â£¬Èç¹ûÊı¾İsizeÎª0£¬ÔòĞèÒªÔÚlistinfoÖĞ½øĞĞÌØÊâÖµÉèÖÃ£¬¿¼ÂÇÃ»ÓĞÖµµÄÇé¿öµÄ´¦Àí
+			else//moreæ“ä½œç›´æ¥åŸºäºä¼ é€’è¿‡æ¥çš„offsetå’ŒmaxsizeæŸ¥è¯¢æ•°æ®åº“ï¼Œå¦‚æœæ•°æ®sizeä¸º0ï¼Œåˆ™éœ€è¦åœ¨listinfoä¸­è¿›è¡Œç‰¹æ®Šå€¼è®¾ç½®ï¼Œè€ƒè™‘æ²¡æœ‰å€¼çš„æƒ…å†µçš„å¤„ç†
 			{
 				res = statement.executeQuery();
 				stmtInfo.addResultSet(res);
@@ -2010,10 +2010,10 @@ public class PreparedDBUtil extends DBUtil {
 	/**
 	 * Executes a prepared statement and returns results in the form of a
 	 * Hashtable array. 
-	 * ±¾·½·¨Ö´ĞĞÍê±ÏºóÎŞĞè¶Ô½á¹û¼¯½øĞĞ»º³å
-	 * Ö´ĞĞÆÕÍ¨²éÑ¯£¬Ã»ÓĞ¶Ô½á¹û¼¯½øĞĞ·ÖÒ³²Ù×÷
+	 * æœ¬æ–¹æ³•æ‰§è¡Œå®Œæ¯•åæ— éœ€å¯¹ç»“æœé›†è¿›è¡Œç¼“å†²
+	 * æ‰§è¡Œæ™®é€šæŸ¥è¯¢ï¼Œæ²¡æœ‰å¯¹ç»“æœé›†è¿›è¡Œåˆ†é¡µæ“ä½œ
 	 * 
-	 * @return ½á¹û¼¯
+	 * @return ç»“æœé›†
 	 * @throws SQLException
 	 */
 
@@ -2109,7 +2109,7 @@ public class PreparedDBUtil extends DBUtil {
 //	}
 
 //	/**
-//	 * ´´½¨È±Ê¡Êı¾İ¿âµÄÔ¤±àÒë²åÈëÓï¾ä
+//	 * åˆ›å»ºç¼ºçœæ•°æ®åº“çš„é¢„ç¼–è¯‘æ’å…¥è¯­å¥
 //	 * 
 //	 * @param sql
 //	 * @throws SQLException
@@ -2119,7 +2119,7 @@ public class PreparedDBUtil extends DBUtil {
 //	}
 	
 	/**
-	 * ´´½¨È±Ê¡Êı¾İ¿âµÄÔ¤±àÒë²åÈëÓï¾ä
+	 * åˆ›å»ºç¼ºçœæ•°æ®åº“çš„é¢„ç¼–è¯‘æ’å…¥è¯­å¥
 	 * 
 	 * @param sql
 	 * @throws SQLException
@@ -2130,7 +2130,7 @@ public class PreparedDBUtil extends DBUtil {
 	}
 	
 	/**
-     * ´´½¨È±Ê¡Êı¾İ¿âµÄÔ¤±àÒë²åÈëÓï¾ä
+     * åˆ›å»ºç¼ºçœæ•°æ®åº“çš„é¢„ç¼–è¯‘æ’å…¥è¯­å¥
      * 
      * @param sql
      * @throws SQLException
@@ -2193,7 +2193,7 @@ public class PreparedDBUtil extends DBUtil {
 	
 
 	/**
-	 * ¸ù¾İÊäÈëÁ÷¸üĞÂ
+	 * æ ¹æ®è¾“å…¥æµæ›´æ–°
 	 * 
 	 * @param value
 	 * @param conn
@@ -2216,8 +2216,8 @@ public class PreparedDBUtil extends DBUtil {
 	
 
 	/**
-	 * ±¾·½·¨ÊÊÓÃÓÚÔÚtableinfoÖĞÖ¸¶¨±íµÄÖ÷¼üĞÅÏ¢£¬µ«ÊÇ²»Í¨¹ıpoolmanÀ´×Ô¶¯Éú³ÉÖ÷¼üµÄÇé¿ö
-	 * ¸üĞÂ´øÓĞ´ó×Ö¶Îclob,blobÊı¾İ¿â¼ÇÂ¼Ê±ĞèÒªÉèÖÃ±¾¼ÇÂ¼µÄÎ¨Ò»±êÊ¶£¨Ò»°ãÎªÊı¾İ¿âÖ÷¼ü£© ²¢ÇÒÊı¾İ¿âÖ÷¼üµÄÀàĞÍÎªlongĞÍ
+	 * æœ¬æ–¹æ³•é€‚ç”¨äºåœ¨tableinfoä¸­æŒ‡å®šè¡¨çš„ä¸»é”®ä¿¡æ¯ï¼Œä½†æ˜¯ä¸é€šè¿‡poolmanæ¥è‡ªåŠ¨ç”Ÿæˆä¸»é”®çš„æƒ…å†µ
+	 * æ›´æ–°å¸¦æœ‰å¤§å­—æ®µclob,blobæ•°æ®åº“è®°å½•æ—¶éœ€è¦è®¾ç½®æœ¬è®°å½•çš„å”¯ä¸€æ ‡è¯†ï¼ˆä¸€èˆ¬ä¸ºæ•°æ®åº“ä¸»é”®ï¼‰ å¹¶ä¸”æ•°æ®åº“ä¸»é”®çš„ç±»å‹ä¸ºlongå‹
 	 * 
 	 * @param i
 	 * @param keyvalue
@@ -2237,8 +2237,8 @@ public class PreparedDBUtil extends DBUtil {
 	}
 
 	/**
-	 * ±¾·½·¨ÊÊÓÃÓÚÃ»ÓĞÔÚtableinfoÖĞÖ¸¶¨±íµÄÖ÷¼üĞÅÏ¢µÄ±í
-	 * ¸üĞÂ´øÓĞ´ó×Ö¶Îclob,blobÊı¾İ¿â¼ÇÂ¼Ê±ĞèÒªÉèÖÃ±¾¼ÇÂ¼µÄÎ¨Ò»±êÊ¶£¨Ò»°ãÎªÊı¾İ¿âÖ÷¼ü£© ²¢ÇÒÊı¾İ¿âÖ÷¼üµÄÀàĞÍÎªlongĞÍ
+	 * æœ¬æ–¹æ³•é€‚ç”¨äºæ²¡æœ‰åœ¨tableinfoä¸­æŒ‡å®šè¡¨çš„ä¸»é”®ä¿¡æ¯çš„è¡¨
+	 * æ›´æ–°å¸¦æœ‰å¤§å­—æ®µclob,blobæ•°æ®åº“è®°å½•æ—¶éœ€è¦è®¾ç½®æœ¬è®°å½•çš„å”¯ä¸€æ ‡è¯†ï¼ˆä¸€èˆ¬ä¸ºæ•°æ®åº“ä¸»é”®ï¼‰ å¹¶ä¸”æ•°æ®åº“ä¸»é”®çš„ç±»å‹ä¸ºlongå‹
 	 * 
 	 * @param i
 	 * @param keyvalue
@@ -2264,7 +2264,7 @@ public class PreparedDBUtil extends DBUtil {
 	}
 
 	/**
-	 * °üº¬´ó×Ö¶ÎclobºÍblobµÄ¼ÇÂ¼ÅúÁ¿¸üĞÂÊ±£¬ ÉèÖÃÔ¤´¦ÀíµÄÌõ¼ş²ÎÊıÊ±ĞèÒªÍ¨¹ı±¾·½·¨ÉèÖÃ³ıÖ÷¼üÒÔÍâµÄ²ÎÊıÌõ¼ş
+	 * åŒ…å«å¤§å­—æ®µclobå’Œblobçš„è®°å½•æ‰¹é‡æ›´æ–°æ—¶ï¼Œ è®¾ç½®é¢„å¤„ç†çš„æ¡ä»¶å‚æ•°æ—¶éœ€è¦é€šè¿‡æœ¬æ–¹æ³•è®¾ç½®é™¤ä¸»é”®ä»¥å¤–çš„å‚æ•°æ¡ä»¶
 	 * 
 	 * @param i
 	 * @param value
@@ -2287,7 +2287,7 @@ public class PreparedDBUtil extends DBUtil {
 	}
 
 	/**
-	 * °üº¬´ó×Ö¶ÎclobºÍblobµÄ¼ÇÂ¼ÅúÁ¿¸üĞÂÊ±£¬ ÉèÖÃÔ¤´¦ÀíµÄÌõ¼ş²ÎÊıÊ±ĞèÒªÍ¨¹ı±¾·½·¨ÉèÖÃ³ıÖ÷¼üÒÔÍâµÄ²ÎÊıÌõ¼ş
+	 * åŒ…å«å¤§å­—æ®µclobå’Œblobçš„è®°å½•æ‰¹é‡æ›´æ–°æ—¶ï¼Œ è®¾ç½®é¢„å¤„ç†çš„æ¡ä»¶å‚æ•°æ—¶éœ€è¦é€šè¿‡æœ¬æ–¹æ³•è®¾ç½®é™¤ä¸»é”®ä»¥å¤–çš„å‚æ•°æ¡ä»¶
 	 * 
 	 * @param i
 	 * @param value
@@ -2311,8 +2311,8 @@ public class PreparedDBUtil extends DBUtil {
 	}
 
 	/**
-	 * ±¾·½·¨ÊÊÓÃÓÚÔÚtableinfoÖĞÖ¸¶¨±íµÄÖ÷¼üĞÅÏ¢£¬µ«ÊÇ²»Í¨¹ıpoolmanÀ´×Ô¶¯Éú³ÉÖ÷¼üµÄÇé¿ö
-	 * ¸üĞÂ´øÓĞ´ó×Ö¶Îclob,blobÊı¾İ¿â¼ÇÂ¼Ê±ĞèÒªÉèÖÃ±¾¼ÇÂ¼µÄÎ¨Ò»±êÊ¶£¨Ò»°ãÎªÊı¾İ¿âÖ÷¼ü£© ²¢ÇÒÊı¾İ¿âÖ÷¼üµÄÀàĞÍÎªintĞÍ
+	 * æœ¬æ–¹æ³•é€‚ç”¨äºåœ¨tableinfoä¸­æŒ‡å®šè¡¨çš„ä¸»é”®ä¿¡æ¯ï¼Œä½†æ˜¯ä¸é€šè¿‡poolmanæ¥è‡ªåŠ¨ç”Ÿæˆä¸»é”®çš„æƒ…å†µ
+	 * æ›´æ–°å¸¦æœ‰å¤§å­—æ®µclob,blobæ•°æ®åº“è®°å½•æ—¶éœ€è¦è®¾ç½®æœ¬è®°å½•çš„å”¯ä¸€æ ‡è¯†ï¼ˆä¸€èˆ¬ä¸ºæ•°æ®åº“ä¸»é”®ï¼‰ å¹¶ä¸”æ•°æ®åº“ä¸»é”®çš„ç±»å‹ä¸ºintå‹
 	 * 
 	 * @param i
 	 * @param keyvalue
@@ -2332,8 +2332,8 @@ public class PreparedDBUtil extends DBUtil {
 	}
 
 	/**
-	 * ±¾·½·¨ÊÊÓÃÓÚÃ»ÓĞÔÚtableinfoÖĞÖ¸¶¨±íµÄÖ÷¼üĞÅÏ¢µÄ±í
-	 * ¸üĞÂ´øÓĞ´ó×Ö¶Îclob,blobÊı¾İ¿â¼ÇÂ¼Ê±ĞèÒªÉèÖÃ±¾¼ÇÂ¼µÄÎ¨Ò»±êÊ¶£¨Ò»°ãÎªÊı¾İ¿âÖ÷¼ü£© ²¢ÇÒÊı¾İ¿âÖ÷¼üµÄÀàĞÍÎªintĞÍ
+	 * æœ¬æ–¹æ³•é€‚ç”¨äºæ²¡æœ‰åœ¨tableinfoä¸­æŒ‡å®šè¡¨çš„ä¸»é”®ä¿¡æ¯çš„è¡¨
+	 * æ›´æ–°å¸¦æœ‰å¤§å­—æ®µclob,blobæ•°æ®åº“è®°å½•æ—¶éœ€è¦è®¾ç½®æœ¬è®°å½•çš„å”¯ä¸€æ ‡è¯†ï¼ˆä¸€èˆ¬ä¸ºæ•°æ®åº“ä¸»é”®ï¼‰ å¹¶ä¸”æ•°æ®åº“ä¸»é”®çš„ç±»å‹ä¸ºintå‹
 	 * 
 	 * @param i
 	 * @param keyvalue
@@ -2359,8 +2359,8 @@ public class PreparedDBUtil extends DBUtil {
 	}
 
 	/**
-	 * ±¾·½·¨ÊÊÓÃÓÚÔÚtableinfoÖĞÖ¸¶¨±íµÄÖ÷¼üĞÅÏ¢£¬µ«ÊÇ²»Í¨¹ıpoolmanÀ´×Ô¶¯Éú³ÉÖ÷¼üµÄÇé¿ö
-	 * ¸üĞÂ´øÓĞ´ó×Ö¶Îclob,blobÊı¾İ¿â¼ÇÂ¼Ê±ĞèÒªÉèÖÃ±¾¼ÇÂ¼µÄÎ¨Ò»±êÊ¶£¨Ò»°ãÎªÊı¾İ¿âÖ÷¼ü£© ²¢ÇÒÊı¾İ¿âÖ÷¼üµÄÀàĞÍÎªString£¬int£¬longĞÍ
+	 * æœ¬æ–¹æ³•é€‚ç”¨äºåœ¨tableinfoä¸­æŒ‡å®šè¡¨çš„ä¸»é”®ä¿¡æ¯ï¼Œä½†æ˜¯ä¸é€šè¿‡poolmanæ¥è‡ªåŠ¨ç”Ÿæˆä¸»é”®çš„æƒ…å†µ
+	 * æ›´æ–°å¸¦æœ‰å¤§å­—æ®µclob,blobæ•°æ®åº“è®°å½•æ—¶éœ€è¦è®¾ç½®æœ¬è®°å½•çš„å”¯ä¸€æ ‡è¯†ï¼ˆä¸€èˆ¬ä¸ºæ•°æ®åº“ä¸»é”®ï¼‰ å¹¶ä¸”æ•°æ®åº“ä¸»é”®çš„ç±»å‹ä¸ºStringï¼Œintï¼Œlongå‹
 	 * 
 	 * @param i
 	 * @param keyvalue
@@ -2390,8 +2390,8 @@ public class PreparedDBUtil extends DBUtil {
 //							throw e;
 //						} 
 //						catch (Exception e) {
-//							throw new SQLException("·Ç·¨µÄÊäÈë²ÎÊı£ºindex=" + i
-//									+ ",value=" + keyvalue + ",ÒªÇóÀàĞÍÎªÕûÊı");
+//							throw new SQLException("éæ³•çš„è¾“å…¥å‚æ•°ï¼šindex=" + i
+//									+ ",value=" + keyvalue + ",è¦æ±‚ç±»å‹ä¸ºæ•´æ•°");
 //						}
 //					}
 //
@@ -2407,8 +2407,8 @@ public class PreparedDBUtil extends DBUtil {
 //							throw e;
 //						}
 //						catch (Exception e) {
-//							throw new SQLException("·Ç·¨µÄÊäÈë²ÎÊı£ºindex=" + i
-//									+ ",value=" + keyvalue + ",ÒªÇóÀàĞÍÎªlongÕûÊı");
+//							throw new SQLException("éæ³•çš„è¾“å…¥å‚æ•°ï¼šindex=" + i
+//									+ ",value=" + keyvalue + ",è¦æ±‚ç±»å‹ä¸ºlongæ•´æ•°");
 //						}
 //					} else {
 ////						this.statement.setString(i, keyvalue);
@@ -2435,8 +2435,8 @@ public class PreparedDBUtil extends DBUtil {
 	}
 
 	/**
-	 * ±¾·½·¨ÊÊÓÃÓÚÃ»ÓĞÔÚtableinfoÖĞÖ¸¶¨±íµÄÖ÷¼üĞÅÏ¢µÄ±í
-	 * ¸üĞÂ´øÓĞ´ó×Ö¶Îclob,blobÊı¾İ¿â¼ÇÂ¼Ê±ĞèÒªÉèÖÃ±¾¼ÇÂ¼µÄÎ¨Ò»±êÊ¶£¨Ò»°ãÎªÊı¾İ¿âÖ÷¼ü£© ²¢ÇÒÊı¾İ¿âÖ÷¼üµÄÀàĞÍÎªString£¬int£¬longĞÍ
+	 * æœ¬æ–¹æ³•é€‚ç”¨äºæ²¡æœ‰åœ¨tableinfoä¸­æŒ‡å®šè¡¨çš„ä¸»é”®ä¿¡æ¯çš„è¡¨
+	 * æ›´æ–°å¸¦æœ‰å¤§å­—æ®µclob,blobæ•°æ®åº“è®°å½•æ—¶éœ€è¦è®¾ç½®æœ¬è®°å½•çš„å”¯ä¸€æ ‡è¯†ï¼ˆä¸€èˆ¬ä¸ºæ•°æ®åº“ä¸»é”®ï¼‰ å¹¶ä¸”æ•°æ®åº“ä¸»é”®çš„ç±»å‹ä¸ºStringï¼Œintï¼Œlongå‹
 	 * 
 	 * @param i
 	 * @param keyvalue
@@ -2468,8 +2468,8 @@ public class PreparedDBUtil extends DBUtil {
 //							throw e;
 //						} 
 //						catch (Exception e) {
-//							throw new SQLException("·Ç·¨µÄÊäÈë²ÎÊı£ºindex=" + i
-//									+ ",value=" + keyvalue + ",ÒªÇóÀàĞÍÎªÕûÊı");
+//							throw new SQLException("éæ³•çš„è¾“å…¥å‚æ•°ï¼šindex=" + i
+//									+ ",value=" + keyvalue + ",è¦æ±‚ç±»å‹ä¸ºæ•´æ•°");
 //						}
 //					}
 //
@@ -2485,8 +2485,8 @@ public class PreparedDBUtil extends DBUtil {
 //							throw e;
 //						}
 //						catch (Exception e) {
-//							throw new SQLException("·Ç·¨µÄÊäÈë²ÎÊı£ºindex=" + i
-//									+ ",value=" + keyvalue + ",ÒªÇóÀàĞÍÎªlongÕûÊı");
+//							throw new SQLException("éæ³•çš„è¾“å…¥å‚æ•°ï¼šindex=" + i
+//									+ ",value=" + keyvalue + ",è¦æ±‚ç±»å‹ä¸ºlongæ•´æ•°");
 //						}
 //					}
 //					else 
@@ -2518,7 +2518,7 @@ public class PreparedDBUtil extends DBUtil {
 	}
 
 	/**
-	 * ´´½¨ÌØ¶¨Êı¾İ¿âµÄÔ¤±àÒë²åÈëÓï¾ä
+	 * åˆ›å»ºç‰¹å®šæ•°æ®åº“çš„é¢„ç¼–è¯‘æ’å…¥è¯­å¥
 	 * 
 	 * @param dbName
 	 * @param sql
@@ -2530,7 +2530,7 @@ public class PreparedDBUtil extends DBUtil {
 	}
 	
 	/**
-     * ´´½¨ÌØ¶¨Êı¾İ¿âµÄÔ¤±àÒë²åÈëÓï¾ä
+     * åˆ›å»ºç‰¹å®šæ•°æ®åº“çš„é¢„ç¼–è¯‘æ’å…¥è¯­å¥
      * 
      * @param dbName
      * @param sql
@@ -2547,7 +2547,7 @@ public class PreparedDBUtil extends DBUtil {
     }
     
     /**
-     * ´´½¨ÌØ¶¨Êı¾İ¿âµÄÔ¤±àÒë²åÈëÓï¾ä
+     * åˆ›å»ºç‰¹å®šæ•°æ®åº“çš„é¢„ç¼–è¯‘æ’å…¥è¯­å¥
      * 
      * @param dbName
      * @param sql
@@ -2559,7 +2559,7 @@ public class PreparedDBUtil extends DBUtil {
         
     }
     /**
-     * ´´½¨ÌØ¶¨Êı¾İ¿âµÄÔ¤±àÒë²åÈëÓï¾ä
+     * åˆ›å»ºç‰¹å®šæ•°æ®åº“çš„é¢„ç¼–è¯‘æ’å…¥è¯­å¥
      * 
      * @param dbName
      * @param sql
@@ -2572,7 +2572,7 @@ public class PreparedDBUtil extends DBUtil {
     }
     
     /**
-     * ´´½¨ÌØ¶¨Êı¾İ¿âµÄÔ¤±àÒë²åÈëÓï¾ä
+     * åˆ›å»ºç‰¹å®šæ•°æ®åº“çš„é¢„ç¼–è¯‘æ’å…¥è¯­å¥
      * 
      * @param dbName
      * @param sql
@@ -2584,7 +2584,7 @@ public class PreparedDBUtil extends DBUtil {
     }
     
     /**
-     * ´´½¨ÌØ¶¨Êı¾İ¿âµÄÔ¤±àÒë²åÈëÓï¾ä
+     * åˆ›å»ºç‰¹å®šæ•°æ®åº“çš„é¢„ç¼–è¯‘æ’å…¥è¯­å¥
      * 
      * @param dbName
      * @param sql
@@ -2597,7 +2597,7 @@ public class PreparedDBUtil extends DBUtil {
     
 	
 //	/**
-//	 * ´´½¨ÌØ¶¨Êı¾İ¿âµÄÔ¤±àÒë²åÈëÓï¾ä
+//	 * åˆ›å»ºç‰¹å®šæ•°æ®åº“çš„é¢„ç¼–è¯‘æ’å…¥è¯­å¥
 //	 * 
 //	 * @param dbName
 //	 * @param sql
@@ -2627,7 +2627,7 @@ public class PreparedDBUtil extends DBUtil {
 	}
 
 	/**
-	 * µ±Ô¤±àÒë´¦Àí¹ı³ÌÖĞ³öÏÖÒì³££¬ÊÍ·Å×ÊÔ´µÄ·½·¨
+	 * å½“é¢„ç¼–è¯‘å¤„ç†è¿‡ç¨‹ä¸­å‡ºç°å¼‚å¸¸ï¼Œé‡Šæ”¾èµ„æºçš„æ–¹æ³•
 	 * 
 	 * @param e
 	 * @throws SQLException
@@ -2714,7 +2714,7 @@ public class PreparedDBUtil extends DBUtil {
 	}
 
 	/**
-	 * ¸üĞÂ´óÊı¾İĞÅÏ¢
+	 * æ›´æ–°å¤§æ•°æ®ä¿¡æ¯
 	 * 
 	 * @throws IOException
 	 * @throws SQLException
@@ -2729,12 +2729,12 @@ public class PreparedDBUtil extends DBUtil {
 			String bigdataField = bigdata.bigdataField;
 			if (bigdataField == null)
 			{
-				//ÓÉÓÚË÷ÒıµÄindexµÄÎ»ÖÃºÍprepared²ÎÊıµÄÎ»ÖÃ±£³ÖÒ»ÖÂ£¬¶¼ÊÇ´Ó1¿ªÊ¼µÄ£¬ËùÒÔÔÚ»ñÈ¡×Ö¶ÎÊ±£¬ĞèÒª½«ÏÂ±êÖÃÎªindex-1
+				//ç”±äºç´¢å¼•çš„indexçš„ä½ç½®å’Œpreparedå‚æ•°çš„ä½ç½®ä¿æŒä¸€è‡´ï¼Œéƒ½æ˜¯ä»1å¼€å§‹çš„ï¼Œæ‰€ä»¥åœ¨è·å–å­—æ®µæ—¶ï¼Œéœ€è¦å°†ä¸‹æ ‡ç½®ä¸ºindex-1
 				bigdataField = preparedfields[bigdata.index -1];
 			}
-			String msg = "Ã»ÓĞÖ¸¶¨²åÈëµÄ´ó×Ö¶ÎÃû³Æ";
+			String msg = "æ²¡æœ‰æŒ‡å®šæ’å…¥çš„å¤§å­—æ®µåç§°";
 			if (params.action == UPDATE)
-				msg = "Ã»ÓĞÖ¸¶¨²åÈëµÄ´ó×Ö¶ÎÃû³Æ";
+				msg = "æ²¡æœ‰æŒ‡å®šæ’å…¥çš„å¤§å­—æ®µåç§°";
 
 			if (bigdataField == null)
 				throw new SQLException(msg);
@@ -2762,11 +2762,11 @@ public class PreparedDBUtil extends DBUtil {
 							updateKeyInfo.keyName,
 							updateKeyInfo.keyValue, prepareDBName);
 				else
-					throw new SQLException("Blob ×Ö¶ÎÄÚÈİÒì³££ºÎ´ÖªµÄÀàĞÍ["
+					throw new SQLException("Blob å­—æ®µå†…å®¹å¼‚å¸¸ï¼šæœªçŸ¥çš„ç±»å‹["
 							+ bigdata.bigdata + "]");
 				break;
 			default:
-				throw new SQLException("Î´ÖªµÄ´ó×Ö¶ÎÀàĞÍ£º[type=" + bigdata.type + "]");
+				throw new SQLException("æœªçŸ¥çš„å¤§å­—æ®µç±»å‹ï¼š[type=" + bigdata.type + "]");
 
 			}
 
@@ -2776,7 +2776,7 @@ public class PreparedDBUtil extends DBUtil {
 
 	
 	/**
-	 * ´´½¨Ô¤±àÒë¸üĞÂÓï¾ä
+	 * åˆ›å»ºé¢„ç¼–è¯‘æ›´æ–°è¯­å¥
 	 * 
 	 * @param sql
 	 * @throws SQLException
@@ -2788,7 +2788,7 @@ public class PreparedDBUtil extends DBUtil {
 	}
 
 	/**
-	 * ´´½¨Ô¤±àÒë¸üĞÂÓï¾ä
+	 * åˆ›å»ºé¢„ç¼–è¯‘æ›´æ–°è¯­å¥
 	 * 
 	 * @param sql
 	 * @throws SQLException
@@ -2799,7 +2799,7 @@ public class PreparedDBUtil extends DBUtil {
 	}
 	
 	/**
-     * ´´½¨Ô¤±àÒë¸üĞÂÓï¾ä
+     * åˆ›å»ºé¢„ç¼–è¯‘æ›´æ–°è¯­å¥
      * 
      * @param sql
      * @throws SQLException
@@ -2811,7 +2811,7 @@ public class PreparedDBUtil extends DBUtil {
     
     
     /**
-     * ´´½¨Ô¤±àÒë¸üĞÂÓï¾ä
+     * åˆ›å»ºé¢„ç¼–è¯‘æ›´æ–°è¯­å¥
      * 
      * @param sql
      * @throws SQLException
@@ -2825,7 +2825,7 @@ public class PreparedDBUtil extends DBUtil {
     
 	
 //	/**
-//	 * ´´½¨Ô¤±àÒë¸üĞÂÓï¾ä
+//	 * åˆ›å»ºé¢„ç¼–è¯‘æ›´æ–°è¯­å¥
 //	 * 
 //	 * @param sql
 //	 * @throws SQLException
@@ -2836,7 +2836,7 @@ public class PreparedDBUtil extends DBUtil {
 //	}
 
 //	/**
-//	 * ´´½¨Ô¤±àÒë¸üĞÂÓï¾ä
+//	 * åˆ›å»ºé¢„ç¼–è¯‘æ›´æ–°è¯­å¥
 //	 * 
 //	 * @param sql
 //	 * @throws SQLException
@@ -2857,7 +2857,7 @@ public class PreparedDBUtil extends DBUtil {
 //	    preparedSelect(sql, (long)offset, pagesize);        
 //    }
 	/**
-	 * ´´½¨Ô¤±àÒë²éÑ¯Óï¾ä
+	 * åˆ›å»ºé¢„ç¼–è¯‘æŸ¥è¯¢è¯­å¥
 	 * 
 	 * @param sql
 	 * @throws SQLException
@@ -2869,7 +2869,7 @@ public class PreparedDBUtil extends DBUtil {
 	}
 	
 	/**
-	 * ´´½¨Ô¤±àÒë²éÑ¯Óï¾ä
+	 * åˆ›å»ºé¢„ç¼–è¯‘æŸ¥è¯¢è¯­å¥
 	 * @mark
 	 * @param sql
 	 * @throws SQLException
@@ -2881,7 +2881,7 @@ public class PreparedDBUtil extends DBUtil {
 	}
 	
 	/**
-	 * ´´½¨Ô¤±àÒë²éÑ¯Óï¾ä
+	 * åˆ›å»ºé¢„ç¼–è¯‘æŸ¥è¯¢è¯­å¥
 	 * 
 	 * @param sql
 	 * @throws SQLException
@@ -2904,7 +2904,7 @@ public class PreparedDBUtil extends DBUtil {
 //    }
 
 	/**
-	 * ´´½¨Ô¤±àÒë²éÑ¯Óï¾ä
+	 * åˆ›å»ºé¢„ç¼–è¯‘æŸ¥è¯¢è¯­å¥
 	 * @mark
 	 * @param sql
 	 * @throws SQLException
@@ -2916,7 +2916,7 @@ public class PreparedDBUtil extends DBUtil {
 	}
 	
 	/**
-	 * ´´½¨Ô¤±àÒë²éÑ¯Óï¾ä
+	 * åˆ›å»ºé¢„ç¼–è¯‘æŸ¥è¯¢è¯­å¥
 	 * 
 	 * @param sql
 	 * @throws SQLException
@@ -2928,7 +2928,7 @@ public class PreparedDBUtil extends DBUtil {
 	}
 	
 	/**
-	 * ´´½¨Ô¤±àÒë²éÑ¯Óï¾ä
+	 * åˆ›å»ºé¢„ç¼–è¯‘æŸ¥è¯¢è¯­å¥
 	 * 
 	 * @param sql
 	 * @throws SQLException
@@ -2940,7 +2940,7 @@ public class PreparedDBUtil extends DBUtil {
 	}
 
 //	/**
-//	 * ´´½¨Ô¤±àÒë¸üĞÂÓï¾ä
+//	 * åˆ›å»ºé¢„ç¼–è¯‘æ›´æ–°è¯­å¥
 //	 * 
 //	 * @param sql
 //	 * @throws SQLException
@@ -2950,7 +2950,7 @@ public class PreparedDBUtil extends DBUtil {
 //		preparedSelect(prepareDBName, sql,(Connection)null);
 //	}
 	/**
-	 * ´´½¨Ô¤±àÒë¸üĞÂÓï¾ä
+	 * åˆ›å»ºé¢„ç¼–è¯‘æ›´æ–°è¯­å¥
 	 * 
 	 * @param sql
 	 * @throws SQLException
@@ -2962,7 +2962,7 @@ public class PreparedDBUtil extends DBUtil {
 	}
 	
 //	/**
-//     * ´´½¨Ô¤±àÒë¸üĞÂÓï¾ä
+//     * åˆ›å»ºé¢„ç¼–è¯‘æ›´æ–°è¯­å¥
 //     * 
 //     * @param sql
 //     * @throws SQLException
@@ -2985,7 +2985,7 @@ public class PreparedDBUtil extends DBUtil {
     
     
     /**
-     * ´´½¨Ô¤±àÒë¸üĞÂÓï¾ä
+     * åˆ›å»ºé¢„ç¼–è¯‘æ›´æ–°è¯­å¥
      * 
      * @param sql
      * @throws SQLException
@@ -3006,7 +3006,7 @@ public class PreparedDBUtil extends DBUtil {
     }
     
     /**
-     * ´´½¨Ô¤±àÒë¸üĞÂÓï¾ä
+     * åˆ›å»ºé¢„ç¼–è¯‘æ›´æ–°è¯­å¥
      * 
      * @param sql
      * @throws SQLException
@@ -3026,7 +3026,7 @@ public class PreparedDBUtil extends DBUtil {
 
 
 //	/**
-//	 * ´´½¨Ô¤±àÒë¸üĞÂÓï¾ä
+//	 * åˆ›å»ºé¢„ç¼–è¯‘æ›´æ–°è¯­å¥
 //	 * 
 //	 * @param sql
 //	 * @throws SQLException
@@ -3037,7 +3037,7 @@ public class PreparedDBUtil extends DBUtil {
 //	}
 	
 //	/**
-//     * Ô¤±àÒë²éÑ¯·½·¨
+//     * é¢„ç¼–è¯‘æŸ¥è¯¢æ–¹æ³•
 //     * @deprecated see preparedSelect(String prepareDBName, String sql, long offset,
 //            int pagesize)
 //     */
@@ -3048,7 +3048,7 @@ public class PreparedDBUtil extends DBUtil {
 //                pagesize);
 //    }
 	/**
-	 * Ô¤±àÒë²éÑ¯·½·¨
+	 * é¢„ç¼–è¯‘æŸ¥è¯¢æ–¹æ³•
 	 * 
 	 * @param sql
 	 * @throws SQLException
@@ -3060,7 +3060,7 @@ public class PreparedDBUtil extends DBUtil {
 	}
 	
 	/**
-	 * Ô¤±àÒë²éÑ¯·½·¨
+	 * é¢„ç¼–è¯‘æŸ¥è¯¢æ–¹æ³•
 	 * @mark
 	 * @param sql
 	 * @throws SQLException
@@ -3072,7 +3072,7 @@ public class PreparedDBUtil extends DBUtil {
 	}
 	
 	/**
-	 * Ô¤±àÒë²éÑ¯·½·¨
+	 * é¢„ç¼–è¯‘æŸ¥è¯¢æ–¹æ³•
 	 * 
 	 * @param sql
 	 * @throws SQLException
@@ -3084,7 +3084,7 @@ public class PreparedDBUtil extends DBUtil {
 	}
 	
 	/**
-	 * Ô¤±àÒë²éÑ¯·½·¨
+	 * é¢„ç¼–è¯‘æŸ¥è¯¢æ–¹æ³•
 	 * @mark
 	 * @param sql
 	 * @throws SQLException
@@ -3097,7 +3097,7 @@ public class PreparedDBUtil extends DBUtil {
 	
 	
 //	/**
-//	 * Ô¤±àÒë²éÑ¯·½·¨
+//	 * é¢„ç¼–è¯‘æŸ¥è¯¢æ–¹æ³•
 //	 * @mark
 //	 * @param sql
 //	 * @throws SQLException
@@ -3109,7 +3109,7 @@ public class PreparedDBUtil extends DBUtil {
 //	}
 	
 	/**
-	 * Ô¤±àÒë²éÑ¯·½·¨
+	 * é¢„ç¼–è¯‘æŸ¥è¯¢æ–¹æ³•
 	 * preparedSelectWithTotalsizesql((Params)null,prepareDBName, sql, offset, pagesize,totalsizesql)
 	 * @param sql
 	 * @throws SQLException
@@ -3122,7 +3122,7 @@ public class PreparedDBUtil extends DBUtil {
 
 	
 	/**
-	 * Ô¤±àÒë²éÑ¯·½·¨
+	 * é¢„ç¼–è¯‘æŸ¥è¯¢æ–¹æ³•
 	 * 
 	 * @param sql
 	 * @throws SQLException
@@ -3134,7 +3134,7 @@ public class PreparedDBUtil extends DBUtil {
 	}
 	
 	/**
-     * Ô¤±àÒë·ÖÒ³²éÑ¯·½·¨ £¬Íâ²¿´«Èë×Ü¼ÇÂ¼Êı
+     * é¢„ç¼–è¯‘åˆ†é¡µæŸ¥è¯¢æ–¹æ³• ï¼Œå¤–éƒ¨ä¼ å…¥æ€»è®°å½•æ•°
      * @mark
      * @param sql
      * @throws SQLException
@@ -3151,7 +3151,7 @@ public class PreparedDBUtil extends DBUtil {
     }
     
     /**
-     * Ô¤±àÒë·ÖÒ³²éÑ¯·½·¨£¬×Ü¼ÇÂ¼ÊıÍ¨¹ıtotalsizesql²éÑ¯»ñÈ¡
+     * é¢„ç¼–è¯‘åˆ†é¡µæŸ¥è¯¢æ–¹æ³•ï¼Œæ€»è®°å½•æ•°é€šè¿‡totalsizesqlæŸ¥è¯¢è·å–
      * 
      * @param sql
      * @throws SQLException
@@ -3168,7 +3168,7 @@ public class PreparedDBUtil extends DBUtil {
     }
     
     /**
-     * Ô¤±àÒë²éÑ¯·½·¨
+     * é¢„ç¼–è¯‘æŸ¥è¯¢æ–¹æ³•
      * 
      * @param sql
      * @throws SQLException
@@ -3187,7 +3187,7 @@ public class PreparedDBUtil extends DBUtil {
     
     
     /**
-     * Ô¤±àÒë²éÑ¯·½·¨
+     * é¢„ç¼–è¯‘æŸ¥è¯¢æ–¹æ³•
      * @mark
      * @param sql
      * @throws SQLException
@@ -3199,7 +3199,7 @@ public class PreparedDBUtil extends DBUtil {
     }
     
     /**
-     * Ô¤±àÒë²éÑ¯·½·¨
+     * é¢„ç¼–è¯‘æŸ¥è¯¢æ–¹æ³•
      * 
      * @param sql
      * @throws SQLException
@@ -3211,7 +3211,7 @@ public class PreparedDBUtil extends DBUtil {
     }
     
     /**
-     * Ô¤±àÒë²éÑ¯·½·¨
+     * é¢„ç¼–è¯‘æŸ¥è¯¢æ–¹æ³•
      * 
      * @param sql
      * @throws SQLException
@@ -3223,7 +3223,7 @@ public class PreparedDBUtil extends DBUtil {
     }
 
 //	/**
-//	 * ´´½¨Ô¤±àÒë¸üĞÂÓï¾ä
+//	 * åˆ›å»ºé¢„ç¼–è¯‘æ›´æ–°è¯­å¥
 //	 * 
 //	 * @param sql
 //	 * @throws SQLException
@@ -3234,7 +3234,7 @@ public class PreparedDBUtil extends DBUtil {
 //	}
 	
 //	/**
-//     * ´´½¨Ô¤±àÒë²éÑ¯Óï¾ä
+//     * åˆ›å»ºé¢„ç¼–è¯‘æŸ¥è¯¢è¯­å¥
 //     * @deprecated see preparedSelect(String prepareDBName, String sql, long offset,
 //            int pagesize, String oraclerownum)
 //     */
@@ -3244,7 +3244,7 @@ public class PreparedDBUtil extends DBUtil {
 //                pagesize, oraclerownum);
 //    }
 	/**
-	 * ´´½¨Ô¤±àÒë²éÑ¯Óï¾ä
+	 * åˆ›å»ºé¢„ç¼–è¯‘æŸ¥è¯¢è¯­å¥
 	 * @mark
 	 * @param sql
 	 * @throws SQLException
@@ -3257,7 +3257,7 @@ public class PreparedDBUtil extends DBUtil {
 	}
 	
 	/**
-	 * ´´½¨Ô¤±àÒë²éÑ¯Óï¾ä
+	 * åˆ›å»ºé¢„ç¼–è¯‘æŸ¥è¯¢è¯­å¥
 	 * @mark
 	 * @param sql
 	 * @throws SQLException
@@ -3272,7 +3272,7 @@ public class PreparedDBUtil extends DBUtil {
 	}
 	
 	/**
-	 * ´´½¨Ô¤±àÒë²éÑ¯Óï¾ä
+	 * åˆ›å»ºé¢„ç¼–è¯‘æŸ¥è¯¢è¯­å¥
 	 * 
 	 * @param sql
 	 * @throws SQLException
@@ -3285,7 +3285,7 @@ public class PreparedDBUtil extends DBUtil {
 	}
 	
 	/**
-	 * ´´½¨Ô¤±àÒë²éÑ¯Óï¾ä
+	 * åˆ›å»ºé¢„ç¼–è¯‘æŸ¥è¯¢è¯­å¥
 	 * preparedSelectWithTotalsizesql((Params)null,prepareDBName, sql, offset, pagesize,totalsizesql)
 	 * @param sql
 	 * @throws SQLException
@@ -3300,7 +3300,7 @@ public class PreparedDBUtil extends DBUtil {
 	}
 	
 	/**
-	 * ´´½¨Ô¤±àÒë²éÑ¯Óï¾ä
+	 * åˆ›å»ºé¢„ç¼–è¯‘æŸ¥è¯¢è¯­å¥
 	 *
 	 * @param sql
 	 * @throws SQLException
@@ -3313,7 +3313,7 @@ public class PreparedDBUtil extends DBUtil {
 	}
 	
 //	/**
-//	 * ´´½¨Ô¤±àÒë²éÑ¯Óï¾ä
+//	 * åˆ›å»ºé¢„ç¼–è¯‘æŸ¥è¯¢è¯­å¥
 //	 * @mark
 //	 * @param sql
 //	 * @throws SQLException
@@ -3339,7 +3339,7 @@ public class PreparedDBUtil extends DBUtil {
 //	}
 	
 	/**
-	 * ´´½¨Ô¤±àÒë²éÑ¯Óï¾ä
+	 * åˆ›å»ºé¢„ç¼–è¯‘æŸ¥è¯¢è¯­å¥
 	 * @mark
 	 * @param sql
 	 * @throws SQLException
@@ -3365,7 +3365,7 @@ public class PreparedDBUtil extends DBUtil {
 	
 	
 	/**
-	 * ´´½¨Ô¤±àÒë·ÖÒ³²éÑ¯£¬¶îÍâÔö¼Ó·ÖÒ³×Ü¼ÇÂ¼ÊısqlÓï¾ä
+	 * åˆ›å»ºé¢„ç¼–è¯‘åˆ†é¡µæŸ¥è¯¢ï¼Œé¢å¤–å¢åŠ åˆ†é¡µæ€»è®°å½•æ•°sqlè¯­å¥
 	 * 
 	 * @param sql
 	 * @throws SQLException
@@ -3387,7 +3387,7 @@ public class PreparedDBUtil extends DBUtil {
 	}
 	
 	/**
-	 * ´´½¨Ô¤±àÒë²éÑ¯Óï¾ä
+	 * åˆ›å»ºé¢„ç¼–è¯‘æŸ¥è¯¢è¯­å¥
 	 * 
 	 * @param sql
 	 * @throws SQLException
@@ -3401,7 +3401,7 @@ public class PreparedDBUtil extends DBUtil {
 	
 	
 	/**
-     * ´´½¨Ô¤±àÒë²éÑ¯Óï¾ä
+     * åˆ›å»ºé¢„ç¼–è¯‘æŸ¥è¯¢è¯­å¥
      * @mark
      * @param sql
      * @throws SQLException
@@ -3422,7 +3422,7 @@ public class PreparedDBUtil extends DBUtil {
     }
     
 	/**
-     * ´´½¨Ô¤±àÒë²éÑ¯Óï¾ä
+     * åˆ›å»ºé¢„ç¼–è¯‘æŸ¥è¯¢è¯­å¥
      * 
      * @param sql
      * @throws SQLException
@@ -3443,7 +3443,7 @@ public class PreparedDBUtil extends DBUtil {
     }
     
     /**
-     * ´´½¨Ô¤±àÒë²éÑ¯Óï¾ä
+     * åˆ›å»ºé¢„ç¼–è¯‘æŸ¥è¯¢è¯­å¥
      * 
      * @param sql
      * @throws SQLException
@@ -3465,7 +3465,7 @@ public class PreparedDBUtil extends DBUtil {
     
     
     /**
-     * ´´½¨Ô¤±àÒë²éÑ¯Óï¾ä
+     * åˆ›å»ºé¢„ç¼–è¯‘æŸ¥è¯¢è¯­å¥
      * @mark
      * @param sql
      * @throws SQLException
@@ -3477,7 +3477,7 @@ public class PreparedDBUtil extends DBUtil {
     }
     
     /**
-     * ´´½¨Ô¤±àÒë²éÑ¯Óï¾ä
+     * åˆ›å»ºé¢„ç¼–è¯‘æŸ¥è¯¢è¯­å¥
      * 
      * @param sql
      * @throws SQLException
@@ -3489,7 +3489,7 @@ public class PreparedDBUtil extends DBUtil {
     }
     
     /**
-     * ´´½¨Ô¤±àÒë²éÑ¯Óï¾ä
+     * åˆ›å»ºé¢„ç¼–è¯‘æŸ¥è¯¢è¯­å¥
      * 
      * @param sql
      * @throws SQLException
@@ -3522,7 +3522,7 @@ public class PreparedDBUtil extends DBUtil {
 	
 	
 //	/**
-//	 * ´´½¨ÌØ¶¨Êı¾İ¿âµÄÔ¤±àÒë¸üĞÂÓï¾ä
+//	 * åˆ›å»ºç‰¹å®šæ•°æ®åº“çš„é¢„ç¼–è¯‘æ›´æ–°è¯­å¥
 //	 * 
 //	 * @param dbName
 //	 * @param sql
@@ -3533,7 +3533,7 @@ public class PreparedDBUtil extends DBUtil {
 //	}
 	
 	/**
-	 * ´´½¨ÌØ¶¨Êı¾İ¿âµÄÔ¤±àÒë¸üĞÂÓï¾ä
+	 * åˆ›å»ºç‰¹å®šæ•°æ®åº“çš„é¢„ç¼–è¯‘æ›´æ–°è¯­å¥
 	 * 
 	 * @param dbName
 	 * @param sql
@@ -3547,7 +3547,7 @@ public class PreparedDBUtil extends DBUtil {
 	}
 	
 //	/**
-//     * ´´½¨ÌØ¶¨Êı¾İ¿âµÄÔ¤±àÒë¸üĞÂÓï¾ä
+//     * åˆ›å»ºç‰¹å®šæ•°æ®åº“çš„é¢„ç¼–è¯‘æ›´æ–°è¯­å¥
 //     * 
 //     * @param dbName
 //     * @param sql
@@ -3558,7 +3558,7 @@ public class PreparedDBUtil extends DBUtil {
 //    }
     
     /**
-     * ´´½¨ÌØ¶¨Êı¾İ¿âµÄÔ¤±àÒë¸üĞÂÓï¾ä
+     * åˆ›å»ºç‰¹å®šæ•°æ®åº“çš„é¢„ç¼–è¯‘æ›´æ–°è¯­å¥
      * 
      * @param dbName
      * @param sql
@@ -3575,7 +3575,7 @@ public class PreparedDBUtil extends DBUtil {
     }
     
     /**
-     * ´´½¨ÌØ¶¨Êı¾İ¿âµÄÔ¤±àÒë¸üĞÂÓï¾ä
+     * åˆ›å»ºç‰¹å®šæ•°æ®åº“çš„é¢„ç¼–è¯‘æ›´æ–°è¯­å¥
      * 
      * @param dbName
      * @param sql
@@ -3594,7 +3594,7 @@ public class PreparedDBUtil extends DBUtil {
     }
     
     /**
-     * ´´½¨ÌØ¶¨Êı¾İ¿âµÄÔ¤±àÒë¸üĞÂÓï¾ä
+     * åˆ›å»ºç‰¹å®šæ•°æ®åº“çš„é¢„ç¼–è¯‘æ›´æ–°è¯­å¥
      * 
      * @param dbName
      * @param sql
@@ -3612,7 +3612,7 @@ public class PreparedDBUtil extends DBUtil {
         }
     }
     /**
-     * ´´½¨ÌØ¶¨Êı¾İ¿âµÄÔ¤±àÒë¸üĞÂÓï¾ä
+     * åˆ›å»ºç‰¹å®šæ•°æ®åº“çš„é¢„ç¼–è¯‘æ›´æ–°è¯­å¥
      * 
      * @param dbName
      * @param sql
@@ -3624,7 +3624,7 @@ public class PreparedDBUtil extends DBUtil {
     }
     
     /**
-     * ´´½¨ÌØ¶¨Êı¾İ¿âµÄÔ¤±àÒë¸üĞÂÓï¾ä
+     * åˆ›å»ºç‰¹å®šæ•°æ®åº“çš„é¢„ç¼–è¯‘æ›´æ–°è¯­å¥
      * 
      * @param dbName
      * @param sql
@@ -3636,7 +3636,7 @@ public class PreparedDBUtil extends DBUtil {
     }
     
     /**
-     * ´´½¨ÌØ¶¨Êı¾İ¿âµÄÔ¤±àÒë¸üĞÂÓï¾ä
+     * åˆ›å»ºç‰¹å®šæ•°æ®åº“çš„é¢„ç¼–è¯‘æ›´æ–°è¯­å¥
      * 
      * @param dbName
      * @param sql
@@ -3647,7 +3647,7 @@ public class PreparedDBUtil extends DBUtil {
     }
 
 //	/**
-//	 * ´´½¨È±Ê¡Êı¾İ¿âÔ¤±àÒëÉ¾³ıÓï¾ä
+//	 * åˆ›å»ºç¼ºçœæ•°æ®åº“é¢„ç¼–è¯‘åˆ é™¤è¯­å¥
 //	 * 
 //	 * @param sql
 //	 * @throws SQLException
@@ -3657,7 +3657,7 @@ public class PreparedDBUtil extends DBUtil {
 //	}
 	
 	/**
-	 * ´´½¨È±Ê¡Êı¾İ¿âÔ¤±àÒëÉ¾³ıÓï¾ä
+	 * åˆ›å»ºç¼ºçœæ•°æ®åº“é¢„ç¼–è¯‘åˆ é™¤è¯­å¥
 	 * 
 	 * @param sql
 	 * @throws SQLException
@@ -3667,7 +3667,7 @@ public class PreparedDBUtil extends DBUtil {
 	}
 	
 	/**
-     * ´´½¨È±Ê¡Êı¾İ¿âÔ¤±àÒëÉ¾³ıÓï¾ä
+     * åˆ›å»ºç¼ºçœæ•°æ®åº“é¢„ç¼–è¯‘åˆ é™¤è¯­å¥
      * 
      * @param sql
      * @throws SQLException
@@ -3677,7 +3677,7 @@ public class PreparedDBUtil extends DBUtil {
     }
 
 //	/**
-//	 * ´´½¨ÌØ¶¨Êı¾İ¿âÔ¤±àÒëÉ¾³ıÓï¾ä
+//	 * åˆ›å»ºç‰¹å®šæ•°æ®åº“é¢„ç¼–è¯‘åˆ é™¤è¯­å¥
 //	 * 
 //	 * @param dbName
 //	 * @param sql
@@ -3688,7 +3688,7 @@ public class PreparedDBUtil extends DBUtil {
 //	}
 	
 	/**
-	 * ´´½¨ÌØ¶¨Êı¾İ¿âÔ¤±àÒëÉ¾³ıÓï¾ä
+	 * åˆ›å»ºç‰¹å®šæ•°æ®åº“é¢„ç¼–è¯‘åˆ é™¤è¯­å¥
 	 * 
 	 * @param dbName
 	 * @param sql
@@ -3699,7 +3699,7 @@ public class PreparedDBUtil extends DBUtil {
 	}
 	
 //	/**
-//     * ´´½¨ÌØ¶¨Êı¾İ¿âÔ¤±àÒëÉ¾³ıÓï¾ä
+//     * åˆ›å»ºç‰¹å®šæ•°æ®åº“é¢„ç¼–è¯‘åˆ é™¤è¯­å¥
 //     * 
 //     * @param dbName
 //     * @param sql
@@ -3710,7 +3710,7 @@ public class PreparedDBUtil extends DBUtil {
 //    }
     
     /**
-     * ´´½¨ÌØ¶¨Êı¾İ¿âÔ¤±àÒëÉ¾³ıÓï¾ä
+     * åˆ›å»ºç‰¹å®šæ•°æ®åº“é¢„ç¼–è¯‘åˆ é™¤è¯­å¥
      * 
      * @param dbName
      * @param sql
@@ -3726,7 +3726,7 @@ public class PreparedDBUtil extends DBUtil {
     }
     
     /**
-     * ´´½¨ÌØ¶¨Êı¾İ¿âÔ¤±àÒëÉ¾³ıÓï¾ä
+     * åˆ›å»ºç‰¹å®šæ•°æ®åº“é¢„ç¼–è¯‘åˆ é™¤è¯­å¥
      * 
      * @param dbName
      * @param sql
@@ -3761,7 +3761,7 @@ public class PreparedDBUtil extends DBUtil {
     }
     
     /**
-     * ´´½¨ÌØ¶¨Êı¾İ¿âÔ¤±àÒëÉ¾³ıÓï¾ä
+     * åˆ›å»ºç‰¹å®šæ•°æ®åº“é¢„ç¼–è¯‘åˆ é™¤è¯­å¥
      * 
      * @param dbName
      * @param sql
@@ -3772,7 +3772,7 @@ public class PreparedDBUtil extends DBUtil {
     }
     
     /**
-     * ´´½¨ÌØ¶¨Êı¾İ¿âÔ¤±àÒëÉ¾³ıÓï¾ä
+     * åˆ›å»ºç‰¹å®šæ•°æ®åº“é¢„ç¼–è¯‘åˆ é™¤è¯­å¥
      * 
      * @param dbName
      * @param sql
@@ -3792,7 +3792,7 @@ public class PreparedDBUtil extends DBUtil {
 	}
 	
 	/**
-	 * ¹¹ÔìÔ¤±àÒë²ÎÊı
+	 * æ„é€ é¢„ç¼–è¯‘å‚æ•°
 	 * @param index
 	 * @param data
 	 * @param method
@@ -4294,8 +4294,8 @@ public class PreparedDBUtil extends DBUtil {
 
 	
 	/**
-	 * ÉèÖÃclob×Ö¶ÎµÄÖµ£¬clob×Ö¶ÎµÄÃû³Æ´ÓinsertÓï¾äµÄfields×Ö¶ÎÖĞ²éÕÒ»ñµÃ,Õâ
-	 * ÒªÇó×Ö¶ÎµÄÎ»ÖÃºÍi±£³ÖÒ»ÖÂ
+	 * è®¾ç½®clobå­—æ®µçš„å€¼ï¼Œclobå­—æ®µçš„åç§°ä»insertè¯­å¥çš„fieldså­—æ®µä¸­æŸ¥æ‰¾è·å¾—,è¿™
+	 * è¦æ±‚å­—æ®µçš„ä½ç½®å’Œiä¿æŒä¸€è‡´
 	 * @param i
 	 * @param content
 	 * @throws SQLException
@@ -4373,11 +4373,11 @@ public class PreparedDBUtil extends DBUtil {
 	}
 
 	/**
-	 * ÊÊÓÃÓÚÍ¨ÓÃµÄdateÀàĞÍµÄÊı¾İ
+	 * é€‚ç”¨äºé€šç”¨çš„dateç±»å‹çš„æ•°æ®
 	 * 
 	 * @param i
 	 * @param d
-	 *            ÈÕÆÚÀàĞÍ
+	 *            æ—¥æœŸç±»å‹
 	 * @throws SQLException
 	 */
 	public void setDate(int i, java.util.Date d) throws SQLException {
@@ -4435,7 +4435,7 @@ public class PreparedDBUtil extends DBUtil {
 	}
 
 	// /**
-	// * µ±¸üĞÂ´øÓĞclobºÍblob×Ö¶ÎµÄ
+	// * å½“æ›´æ–°å¸¦æœ‰clobå’Œblobå­—æ®µçš„
 	// *
 	// * @param i
 	// * @param key
@@ -4451,7 +4451,7 @@ public class PreparedDBUtil extends DBUtil {
 	// }
 
 	// /**
-	// * µ±¸üĞÂ´øÓĞclobºÍblob×Ö¶ÎµÄ
+	// * å½“æ›´æ–°å¸¦æœ‰clobå’Œblobå­—æ®µçš„
 	// *
 	// * @param i
 	// * @param key
@@ -4665,7 +4665,7 @@ public class PreparedDBUtil extends DBUtil {
 	}
 
 	/**
-	 * ÖØÖÃÔ¤±àÒë²ÎÊı
+	 * é‡ç½®é¢„ç¼–è¯‘å‚æ•°
 	 * 
 	 */
 	public void resetPrepare() {
@@ -4678,15 +4678,15 @@ public class PreparedDBUtil extends DBUtil {
 	}
 	
 	/*******************************************************************************************
-	 *  À©Õ¹prepared×é¼ş¹¦ÄÜ£¬Ôö¼ÓÅúÁ¿Ô¤±àÒë²Ù×÷µÄ´¦Àí,Ïà¹ØµÄ·½·¨ÈçÏÂ£º
+	 *  æ‰©å±•preparedç»„ä»¶åŠŸèƒ½ï¼Œå¢åŠ æ‰¹é‡é¢„ç¼–è¯‘æ“ä½œçš„å¤„ç†,ç›¸å…³çš„æ–¹æ³•å¦‚ä¸‹ï¼š
 	 *  void addPreparedBatch()
 	 *  Object[] executePreparedBatch()
 	 *  
 	 *******************************************************************************************/
 	/**
-	 * ±íÊ¾Ò»ÌõÅú´¦ÀíÓï¾äµÄ²ÎÊıÉèÖÃÍê±Ï
-	 * ×¼±¸ÉèÖÃÏÂÒ»ÌõÅú´¦ÀíÓï¾ä£¬Èç¹ûÖ»ÓĞÒ»ÌõÅú´¦ÀíÓï¾ä¼ÇÂ¼ĞèÒª´¦ÀíÔòÖ±½ÓÊ¹ÓÃparams±äÁ¿±£³Ö
-	 * ÕâÌõ¼ÇÂ¼µÄ²ÎÊı£¬È»ºóµ÷ÓÃexecutePrepared()Íê³ÉÅú´¦Àí²Ù×÷¼´¿É
+	 * è¡¨ç¤ºä¸€æ¡æ‰¹å¤„ç†è¯­å¥çš„å‚æ•°è®¾ç½®å®Œæ¯•
+	 * å‡†å¤‡è®¾ç½®ä¸‹ä¸€æ¡æ‰¹å¤„ç†è¯­å¥ï¼Œå¦‚æœåªæœ‰ä¸€æ¡æ‰¹å¤„ç†è¯­å¥è®°å½•éœ€è¦å¤„ç†åˆ™ç›´æ¥ä½¿ç”¨paramså˜é‡ä¿æŒ
+	 * è¿™æ¡è®°å½•çš„å‚æ•°ï¼Œç„¶åè°ƒç”¨executePrepared()å®Œæˆæ‰¹å¤„ç†æ“ä½œå³å¯
 	 */
 	
 	public void addPreparedBatch()
@@ -4746,8 +4746,8 @@ public class PreparedDBUtil extends DBUtil {
 	}
 	
 	/**
-	 * ÓÃ»§¿ÉÒÔµ÷ÓÃÔ¤±àÒëÅú´¦ÀíÓÅ»¯±êÊ¶£¬ÎªtrueÊ±»á½«ËùÓĞµÄÅú´¦ÀíÓï¾äÅÅĞò£¬½«ÏàÍ¬µÄsqlÓï¾ä·Åµ½Ò»Æğ
-	 * Í¨¹ıÍ³Ò»µÄpreparedstatementÀ´½øĞĞÅú´¦Àí²Ù×÷¡£
+	 * ç”¨æˆ·å¯ä»¥è°ƒç”¨é¢„ç¼–è¯‘æ‰¹å¤„ç†ä¼˜åŒ–æ ‡è¯†ï¼Œä¸ºtrueæ—¶ä¼šå°†æ‰€æœ‰çš„æ‰¹å¤„ç†è¯­å¥æ’åºï¼Œå°†ç›¸åŒçš„sqlè¯­å¥æ”¾åˆ°ä¸€èµ·
+	 * é€šè¿‡ç»Ÿä¸€çš„preparedstatementæ¥è¿›è¡Œæ‰¹å¤„ç†æ“ä½œã€‚
 	 * @param batchOptimize
 	 */
 	public void setBatchOptimize(boolean batchOptimize)
@@ -4778,13 +4778,13 @@ public class PreparedDBUtil extends DBUtil {
 		executePreparedBatch(con_,null) ;
 	}
 	/**
-	 * Ö´ĞĞÔ¤±àÒëÅú³öÀí²Ù×÷,Ö§³ÖÊÂÎñ£¬Èç¹ûcon²ÎÊı±¾Éí¾ÍÊÇÊÂÎñÁ´½Ó£¬ÔòÊ¹ÓÃ¸ÃÊÂÎñÁ´½Ó
-	 * Èç¹ûcon == nullÔòÅĞ¶ÏÍâ²¿ÊÂÎñÊÇ·ñ´æÔÚ£¬Èç¹û´æÔÚ´ÓÍâ²¿ÊÂÎñÖĞ»ñÈ¡Ò»¸öÊÂÎñÁ´½ÓÀ´Íê³ÉÅú´¦Àí²Ù×÷
-	 * Èç¹û²»´æÔÚÔò´ÓÁ´½Ó³ØÖĞ»ñÈ¡Ò»¸öÁ´½Ó,ËùÓĞµÄÅú´¦Àí²Ù×÷²»»á°üº¬ÔÚÒ»¸öÊÂÎñÖ®ÖĞ¡£
-	 * Èç¹ûÏëÖ¸¶¨ÌØ¶¨Êı¾İ¿âµÄÊÂÎñÔòĞèÒªµ÷ÓÃthis.setPrepareDBName(prepareDBName);·½·¨Ö¸¶¨Ö´ĞĞµÄÂß¼­
-	 * Êı¾İ¿âÃû³Æ	
-	 * @param con Íâ²¿´«ÈëµÄÊı¾İ¿âÁ´½Ó
-	 * @param getCUDResult ÊÇ·ñ·µ»Ø´¦Àí½á¹û£ºÅú´¦ÀíÊı¾İµÄ´¦ÀíÇé¿ö£¬±ÈÈç¸üĞÂ¼ÇÂ¼Êı£¬×Ô¶¯²úÉúµÄÖ÷¼üĞÅÏ¢
+	 * æ‰§è¡Œé¢„ç¼–è¯‘æ‰¹å‡ºç†æ“ä½œ,æ”¯æŒäº‹åŠ¡ï¼Œå¦‚æœconå‚æ•°æœ¬èº«å°±æ˜¯äº‹åŠ¡é“¾æ¥ï¼Œåˆ™ä½¿ç”¨è¯¥äº‹åŠ¡é“¾æ¥
+	 * å¦‚æœcon == nullåˆ™åˆ¤æ–­å¤–éƒ¨äº‹åŠ¡æ˜¯å¦å­˜åœ¨ï¼Œå¦‚æœå­˜åœ¨ä»å¤–éƒ¨äº‹åŠ¡ä¸­è·å–ä¸€ä¸ªäº‹åŠ¡é“¾æ¥æ¥å®Œæˆæ‰¹å¤„ç†æ“ä½œ
+	 * å¦‚æœä¸å­˜åœ¨åˆ™ä»é“¾æ¥æ± ä¸­è·å–ä¸€ä¸ªé“¾æ¥,æ‰€æœ‰çš„æ‰¹å¤„ç†æ“ä½œä¸ä¼šåŒ…å«åœ¨ä¸€ä¸ªäº‹åŠ¡ä¹‹ä¸­ã€‚
+	 * å¦‚æœæƒ³æŒ‡å®šç‰¹å®šæ•°æ®åº“çš„äº‹åŠ¡åˆ™éœ€è¦è°ƒç”¨this.setPrepareDBName(prepareDBName);æ–¹æ³•æŒ‡å®šæ‰§è¡Œçš„é€»è¾‘
+	 * æ•°æ®åº“åç§°	
+	 * @param con å¤–éƒ¨ä¼ å…¥çš„æ•°æ®åº“é“¾æ¥
+	 * @param getCUDResult æ˜¯å¦è¿”å›å¤„ç†ç»“æœï¼šæ‰¹å¤„ç†æ•°æ®çš„å¤„ç†æƒ…å†µï¼Œæ¯”å¦‚æ›´æ–°è®°å½•æ•°ï¼Œè‡ªåŠ¨äº§ç”Ÿçš„ä¸»é”®ä¿¡æ¯
 	 * @return
 	 * @throws SQLException
 	 */
@@ -4810,7 +4810,7 @@ public class PreparedDBUtil extends DBUtil {
 					 con_,
 					 false);
 			stmtInfo.init();
-			//Èç¹ûĞèÒªÓÅ»¯´¦Àísql£¬ÔòĞèÒªÅÅĞò
+			//å¦‚æœéœ€è¦ä¼˜åŒ–å¤„ç†sqlï¼Œåˆ™éœ€è¦æ’åº
 			if(this.batchOptimize)
 			{
 				java.util.Collections.sort(batchparams);

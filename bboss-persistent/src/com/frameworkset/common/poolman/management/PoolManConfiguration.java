@@ -69,7 +69,7 @@ public class PoolManConfiguration implements Serializable {
 	public static String pooltemplates;
 
 	/**
-	 * ÓÃ»§×Ô¶¨ÒåµÄÊÊÅäÆ÷
+	 * ç”¨æˆ·è‡ªå®šä¹‰çš„é€‚é…å™¨
 	 */
 	public Map<String, String> adaptors = new HashMap<String, String>();
 
@@ -160,7 +160,7 @@ public class PoolManConfiguration implements Serializable {
 							temp.write(buffer, 0, len);
 						}
 						temp.flush();
-						pooltemplates = swriter.toString("GBK");
+						pooltemplates = swriter.toString("UTF-8");
 
 					} catch (Exception e) {
 						// TODO Auto-generated catch block
@@ -183,7 +183,7 @@ public class PoolManConfiguration implements Serializable {
 							}
 					}
 					// pooltemplates =
-					// ValueObjectUtil.getFileContent(PoolManConstants.XML_CONFIG_FILE_TEMPLATE,"GBK");
+					// ValueObjectUtil.getFileContent(PoolManConstants.XML_CONFIG_FILE_TEMPLATE,"UTF-8");
 				}
 			}
 

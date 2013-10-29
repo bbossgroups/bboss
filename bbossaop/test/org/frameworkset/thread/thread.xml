@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding='gb2312'?>
+<?xml version="1.0" encoding='UTF-8'?>
 
 <manager-config>
 	<properties>
@@ -9,8 +9,8 @@
 				<property name="maximumPoolSize" value="10" />
 				<!--
 					TimeUnit.SECONDS TimeUnit.MICROSECONDS TimeUnit.MILLISECONDS
-					TimeUnit.NANOSECONDS Ê±¼äµ¥Î»ÊÊÓÃÓÚÒÔÏÂ²ÎÊý£º keepAliveTime waitTime
-					delayTime£¨µ±delayTimeÎªÕûÊýÊ±¼ä¶ø²»ÊÇ°Ù·Ö±ÈÊ±ÓÐÐ§£©
+					TimeUnit.NANOSECONDS æ—¶é—´å•ä½é€‚ç”¨äºŽä»¥ä¸‹å‚æ•°ï¼š keepAliveTime waitTime
+					delayTimeï¼ˆå½“delayTimeä¸ºæ•´æ•°æ—¶é—´è€Œä¸æ˜¯ç™¾åˆ†æ¯”æ—¶æœ‰æ•ˆï¼‰
 				-->
 				<property name="timeUnit" value="TimeUnit.SECONDS" />
 				<property name="keepAliveTime" value="40" />
@@ -23,19 +23,19 @@
 
 				<!--
 					RejectedExecutionHandler
-					±ØÐëÊµÏÖjava.util.concurrent.RejectedExecutionHandler½Ó¿Ú Ä¿Ç°ÏµÍ³Ìá¹©ÒÔÏÂÈ±Ê¡ÊµÏÖ£º
+					å¿…é¡»å®žçŽ°java.util.concurrent.RejectedExecutionHandleræŽ¥å£ ç›®å‰ç³»ç»Ÿæä¾›ä»¥ä¸‹ç¼ºçœå®žçŽ°ï¼š
 					org.frameworkset.thread.WaitPolicy
-					Ñ­»·µÈ´ýevent.threadpool.waitTimeÖ¸¶¨µÄÊ±¼ä£¬µ¥Î»ÎªÃë
-					java.util.concurrent.ThreadPoolExecutor.DiscardPolicy Ö±½Ó¶ªÆúÈÎÎñ£¬²»Å×³öÒì³£
+					å¾ªçŽ¯ç­‰å¾…event.threadpool.waitTimeæŒ‡å®šçš„æ—¶é—´ï¼Œå•ä½ä¸ºç§’
+					java.util.concurrent.ThreadPoolExecutor.DiscardPolicy ç›´æŽ¥ä¸¢å¼ƒä»»åŠ¡ï¼Œä¸æŠ›å‡ºå¼‚å¸¸
 					java.util.concurrent.ThreadPoolExecutor.AbortPolicy
-					Ö±½Ó¶ªÆúÈÎÎñ£¬Å×³öÒì³£RejectedExecutionException
-					java.util.concurrent.ThreadPoolExecutor.CallerRunsPolicy Ö±½ÓÔËÐÐ
+					ç›´æŽ¥ä¸¢å¼ƒä»»åŠ¡ï¼ŒæŠ›å‡ºå¼‚å¸¸RejectedExecutionException
+					java.util.concurrent.ThreadPoolExecutor.CallerRunsPolicy ç›´æŽ¥è¿è¡Œ
 					java.util.concurrent.ThreadPoolExecutor.DiscardOldestPolicy
-					·ÅÈë¶ÓÁÐ£¬½«×îÀÏµÄÈÎÎñÉ¾³ý
+					æ”¾å…¥é˜Ÿåˆ—ï¼Œå°†æœ€è€çš„ä»»åŠ¡åˆ é™¤
 				-->
 				<property name="rejectedExecutionHandler" value="org.frameworkset.thread.WaitPolicy" />
 				<!--
-					ÒÔÏÂ²ÎÊýÖ»ÓÐÔÚÅäÖÃµÄorg.frameworkset.thread.WaitPolicy²ßÂÔÊ±²ÅÐèÒªÅäÖÃ
+					ä»¥ä¸‹å‚æ•°åªæœ‰åœ¨é…ç½®çš„org.frameworkset.thread.WaitPolicyç­–ç•¥æ—¶æ‰éœ€è¦é…ç½®
 				-->
 				<property name="waitTime" value="1" />
 				<property name="delayTime" value="10%" />

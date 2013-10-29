@@ -35,7 +35,7 @@ import java.io.ObjectOutput;
  * Copyright (c) 2007
  * </p>
  * 
- * @Date 2009-10-8 ÏÂÎç10:19:44
+ * @Date 2009-10-8 ä¸‹åˆ10:19:44
  * @author biaoping.yin
  * @version 1.0
  */

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+    <!-- 通过test1对应的复杂对象Test1来说明IOC的循环依赖功能以及局部属性引用功能 -->
+	<property name="test1" class="org.frameworkset.soa.xblink.Test1">
+		<property name="test2" class="org.frameworkset.soa.xblink.Test2">
+		    <!--内部组件test2的test1属性引用外层组件test1-->		
+			<property name="test1" refid="attr:test1" />
+			<!--内部组件test2的test3属性引用外层组件test1的test3属性-->
+			<property name="test3" refid="attr:test1->test3" />
+		</property>
+		<!--内部组件test3的test2属性引用外层组件test1的test2属性-->
+		<property name="test3" class="org.frameworkset.soa.xblink.Test3"
+			f:test2="attr:test1->test2"/>
+		<!--test4属性直接引用外层组件test1-->
+		<property name="test4" refid="attr:test1"/>
+		<property name="testmap" >
+			<map componentType="bean">
+			    <!--Map类型属性testmap的test4索引对应的值是对外层组件test1引用-->
+				<property name="test4" refid="attr:test1"/>
+			</map>
+		</property>
+		<property name="testlist" >
+			<list componentType="bean">
+			 <!--List类型属性testlist的第一个值是对外层组件test1引用-->
+				<property refid="attr:test1"/>
+			 <!--List类型属性testlist的第二个值是对外层组件test1的数组属性testarraybasic的引用-->
+				<property refid="attr:test1->testarraybasic"/>
+			</list>
+		</property>
+		<property name="testarray" >
+			<array componentType="org.frameworkset.soa.xblink.Test1">
+				<!--数组类型属性testlist的第一个值是对外层组件test1引用-->
+				<property refid="attr:test1"/>
+				<!--数组类型属性testlist的第二个值是对外层组件test1的数组属性testarraybasic的第二个值得引用-->
+				<property refid="attr:test1->testarraybasic[1]"/>
+			</array>
+		</property>
+		<!--数组类型属性testarraybasic用来验证属性多维引用功能-->
+		<property name="testarraybasic" >
+			<array componentType="org.frameworkset.soa.xblink.Test1">
+				<property class="org.frameworkset.soa.xblink.Test1"/>
+				<property class="org.frameworkset.soa.xblink.Test1"/>
+				<property class="org.frameworkset.soa.xblink.Test1"/>
+				<property class="org.frameworkset.soa.xblink.Test1"/>
+			</array>
+		</property>
+		<!--属性innerelement用来验证属性多维引用功能-->
+		<property name="innerelement" refid="attr:test1->testlist[1][0]"/>
+		<!--test5属性直接引用外层test1组件的属性test4-->
+		<property name="test5" refid="attr:test1->test4"/>
+		<!--test6属性直接引用外层test1组件的数组属性testarray的第一个元素对象的test2属性-->
+		<property name="test6" refid="attr:test1->testarray[0]->test2"/>
+		<!--test7属性直接引用外层test1组件的List属性testlist的第一个元素对象的test2属性-->
+		<property name="test7" refid="attr:test1->testlist[0]->test2"/>
+		<!--test8属性直接引用外层test1组件的Map属性testmap的key为test4对应的值对象的test2属性-->
+		<property name="test8" refid="attr:test1->testmap[test4]->test2"/>
+		<!--test9属性直接引用外层test1组件的数组属性testarray的第一个元素对象-->
+		<property name="test9" refid="attr:test1->testarray[0]"/>
+		<!--test10属性直接引用外层test1组件的List属性testlist的第一个元素对象-->
+		<property name="test10" refid="attr:test1->testlist[0]"/>
+		<!--test11属性直接引用外层test1组件的Map属性testmap的key为test4对应的值对象-->
+		<property name="test11" refid="attr:test1->testmap[test4]"/>
+		<!--test12属性直接引用外层test1组件的属性test3对象中的test2属性-->
+		<property name="test12" refid="attr:test1->test3->test2"/>
+	</property>
+</properties>

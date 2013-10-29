@@ -40,7 +40,7 @@ import org.jboss.netty.channel.socket.nio.NioServerSocketChannelFactory;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2010-4-19 ÏÂÎç05:35:56
+ * @Date 2010-4-19 ä¸‹åˆ05:35:56
  * @author biaoping.yin
  * @version 1.0
  */
@@ -73,7 +73,7 @@ public class NettyRPCServer
     }
     public boolean validateAddress(RPCAddress address)
     {
-        //Ê×ÏÈÅĞ¶ÏµØÖ·ÊÇ·ñÔÚµØÖ··¶Î§ÖĞ
+        //é¦–å…ˆåˆ¤æ–­åœ°å€æ˜¯å¦åœ¨åœ°å€èŒƒå›´ä¸­
         
         return NettyClinentTransport.validateAddress(address);
     }

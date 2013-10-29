@@ -707,7 +707,7 @@ public class WriteDoc {
     }
     
     public @Test void getSWFTempAllUseOpenOffice() throws Exception  {
-		System.out.println("--------------³ÌĞòÖ´ĞĞµ½´Ë´¦------------------");
+		System.out.println("--------------ç¨‹åºæ‰§è¡Œåˆ°æ­¤å¤„------------------");
 		String[] bookMarks = new String[] { "DealerName", "Name", "CgName",
 				"TypeName", "OrderQty", "CoolCode", "ChassisCode", "CustPrice",
 				"CustAmt", "sumall", "EarnestPayDays", "EarnestAmt",
@@ -717,11 +717,11 @@ public class WriteDoc {
 				"FinanceAmt", "FinanceFC", "LackAmtPayDate",
 				"LackAmtFinalPayDate", "ReceiverName", "ReceiverID",   
 				"ReceiverTel", "Insurer","authoriate" };
-		String[] bookdatas = new String[] { "¹«Ë¾", "¹«Ë¾",
-				"³µ", "dd 52E(6)", "2", "·çÀä", "V09660", "300.00",
-				"600.00", "Â½°ÛÍòÔªÕû", "7", "100", "2012Äê8ÔÂ31ÈÕ", "60", "5", "3",
-				"10", "6", "10", "5", "10", "21", "540", "10", "2012Äê8ÔÂ31ÈÕ",
-				"2012Äê8ÔÂ31ÈÕ", "ÁÕ", "430111199910102121", "13800138200", "ÁÕ","bboss" };
+		String[] bookdatas = new String[] { "å…¬å¸", "å…¬å¸",
+				"è½¦", "dd 52E(6)", "2", "é£å†·", "V09660", "300.00",
+				"600.00", "é™†ä½°ä¸‡å…ƒæ•´", "7", "100", "2012å¹´8æœˆ31æ—¥", "60", "5", "3",
+				"10", "6", "10", "5", "10", "21", "540", "10", "2012å¹´8æœˆ31æ—¥",
+				"2012å¹´8æœˆ31æ—¥", "ç³", "430111199910102121", "13800138200", "ç³","bboss" };
 		String hetongbianhao="20121222";
 		String wordtemplate = "D:\\bbossgroups-3.5.1\\bboss-plugin-wordpdf\\plugin\\wordpdf\\anjie.doc";
 		String pdfpath = "d:\\test\\anjieswftools_"+hetongbianhao+".pdf";

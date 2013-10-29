@@ -100,8 +100,8 @@ public class PaginController {
 				db.setString(1, "%" + tablename + "%");
 			List<TableInfo> tables = db.executePreparedForList(TableInfo.class);
 			
-			datas.setTotalSize(db.getTotalSize());//设置总记录数
-			datas.setDatas(tables);//设置当页数据
+			datas.setTotalSize(db.getTotalSize());//璁剧疆鎬昏褰曟暟
+			datas.setDatas(tables);//璁剧疆褰撻〉鏁版嵁
 //			datas.setMaxPageItems(pagesize);
 			
 			
@@ -117,8 +117,8 @@ public class PaginController {
 	public void testcn(HttpServletResponse response)
 	{
 		try {
-			response.setContentType("text/html; charset=GBK");
-			response.getWriter().print("中文");
+			response.setContentType("text/html; charset=UTF-8");
+			response.getWriter().print("涓枃");
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

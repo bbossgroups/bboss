@@ -32,7 +32,7 @@
 package com.frameworkset.common.tag.export;
 
 /**
- * 导出数据到xml文件
+ * 瀵煎嚭鏁版嵁鍒皒ml鏂囦欢
  * @author biaoping.yin
  * created on 2005-3-13
  * version 1.0 

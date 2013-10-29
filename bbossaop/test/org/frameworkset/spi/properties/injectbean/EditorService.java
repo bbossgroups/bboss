@@ -21,7 +21,7 @@ package org.frameworkset.spi.properties.injectbean;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2010-2-21 ÏÂÎç05:56:16
+ * @Date 2010-2-21 ä¸‹åˆ05:56:16
  * @author biaoping.yin
  * @version 1.0
  */

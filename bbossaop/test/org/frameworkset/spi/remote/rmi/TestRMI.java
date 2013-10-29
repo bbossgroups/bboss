@@ -28,7 +28,7 @@ import org.junit.Test;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2010-6-17 ÏÂÎç03:35:18
+ * @Date 2010-6-17 ä¸‹åˆ03:35:18
  * @author biaoping.yin
  * @version 1.0
  */
@@ -70,7 +70,7 @@ public class TestRMI extends TestBase{
     }
     
     /**
-     * ²âÊÔµØÖ·ÊÇ·ñ¿ÉÁ¬Í¨
+     * æµ‹è¯•åœ°å€æ˜¯å¦å¯è¿é€š
      */
     public static void testValidateAddress()
     {
@@ -88,35 +88,35 @@ public static void main(String[] args)
 //    t.start();
 //    RPCHelper s = new RPCHelper(); 
     /**
-     * ²âÊÔµ¥Ïß³Ìµ÷ÓÃ
+     * æµ‹è¯•å•çº¿ç¨‹è°ƒç”¨
      */
 //    testRMIRPC();
 //	testRMIExceptionRPC();
     
     /**
-     * ÎŞ·µ»ØÖµ²âÊÔ
+     * æ— è¿”å›å€¼æµ‹è¯•
      */
 //    testNoReturnJMSRPC();
 	/**
-	 * ²âÊÔ¶àÏß³Ìµ÷ÓÃ
+	 * æµ‹è¯•å¤šçº¿ç¨‹è°ƒç”¨
 	 */
 //    testMutiThreadJMSRPC();
     
     /**
-     * Ğ£ÑéµØÖ·ÊÇ·ñ¿ÉÁ¬Í¨
+     * æ ¡éªŒåœ°å€æ˜¯å¦å¯è¿é€š
      */
     testValidateAddress();
     /**
-     * ²âÊÔJMS¶à²¥µ÷ÓÃ
+     * æµ‹è¯•JMSå¤šæ’­è°ƒç”¨
      */
 //    testMuticastJMSRPC(); 
 
     /**
-     * ²âÊÔ±¾µØµ÷ÓÃ
+     * æµ‹è¯•æœ¬åœ°è°ƒç”¨
      */
 //    testJMSLocal();
     /**
-     * ²âÊÔJMSÁ¬½ÓÆ÷´´½¨¹¦ÄÜ
+     * æµ‹è¯•JMSè¿æ¥å™¨åˆ›å»ºåŠŸèƒ½
      */
 //    testClinentTransport();
          System.exit(0);
@@ -136,7 +136,7 @@ public  void testRMIRPC()
 	    System.out.println("testInf.getCount():" + i + " = "+testInf.getCount());
 	
 	long end = System.currentTimeMillis();
-	System.out.println("ÏûºÄÊ±¼ä£º" + (end - start)  + "ºÀÃë");
+	System.out.println("æ¶ˆè€—æ—¶é—´ï¼š" + (end - start)  + "è±ªç§’");
 	
 	
 	
@@ -171,7 +171,7 @@ long start = System.currentTimeMillis();
 	    testInf.getCount();
 	
 	long end = System.currentTimeMillis();
-	System.out.println("ÏûºÄÊ±¼ä£º" + (end - start)  + "ºÀÃë");
+	System.out.println("æ¶ˆè€—æ—¶é—´ï¼š" + (end - start)  + "è±ªç§’");
 	
 }
 
@@ -191,7 +191,7 @@ public void testRMIExceptionRPC()
 	
 	
 	long end = System.currentTimeMillis();
-	System.out.println("ÏûºÄÊ±¼ä£º" + (end - start) / 1000 + "Ãë");
+	System.out.println("æ¶ˆè€—æ—¶é—´ï¼š" + (end - start) / 1000 + "ç§’");
 	
 	
 	
@@ -205,10 +205,10 @@ public void testNoReturnRMIRPC()
             long start = System.currentTimeMillis();
             
             for(int i = 0; i < 1; i ++)
-                testInf.sayHello("Òü±êÆ½");
+                testInf.sayHello("å°¹æ ‡å¹³");
             
             long end = System.currentTimeMillis();
-            System.out.println("ÏûºÄÊ±¼ä£º" + (end - start) / 1000 + "Ãë");
+            System.out.println("æ¶ˆè€—æ—¶é—´ï¼š" + (end - start) / 1000 + "ç§’");
             
             
             
@@ -227,7 +227,7 @@ public void testMutiThreadRMIRPC()
 //                System.out.println("testInf.getCount():" + i + " = "+testInf.getCount());
 //            
 //            long end = System.currentTimeMillis();
-//            System.out.println("ÏûºÄÊ±¼ä£º" + (end - start) / 1000 + "Ãë");
+//            System.out.println("æ¶ˆè€—æ—¶é—´ï¼š" + (end - start) / 1000 + "ç§’");
     for(int i = 0; i < 10; i ++)
     {
         Thread t = new Thread(new RunRMIRPC(i));
@@ -254,7 +254,7 @@ public void testMutiThreadRMIRPC()
                 System.out.println("testInf.getCount():" + i + " = "+testInf.getCount());
             
             long end = System.currentTimeMillis();
-            System.out.println("ÈÎÎñ¡¾" + i + "¡¿ÏûºÄÊ±¼ä£º" + (end - start) / 1000 + "Ãë");
+            System.out.println("ä»»åŠ¡ã€" + i + "ã€‘æ¶ˆè€—æ—¶é—´ï¼š" + (end - start) / 1000 + "ç§’");
             
         }
     
@@ -266,7 +266,7 @@ public static void testSingleTimeout()
 }
 
 /**
- * ¶à²¥·şÎñµ÷ÓÃ
+ * å¤šæ’­æœåŠ¡è°ƒç”¨
  */
 @Test
 public void testMuticastRMIRPC()
@@ -292,7 +292,7 @@ public void testMuticastRMIRPC()
 				e.printStackTrace();
 			}
            
-            //µÈ¼ÛµÄµ÷ÓÃ·½·¨
+            //ç­‰ä»·çš„è°ƒç”¨æ–¹æ³•
 //            Object ret_12345 = context.getRPCResult("00-23-54-5A-E6-3A-jms", ret,Target.BROADCAST_TYPE_JMS);
 //            Object ret_12346 = context.getRPCResult("11-23-54-5A-E6-3A-jms", ret,Target.BROADCAST_TYPE_JMS);
             

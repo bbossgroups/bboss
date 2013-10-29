@@ -73,7 +73,7 @@ public class IFrameTag extends BaseTag {
 			iframe.setTitle(this.title);
 		if(this.width != null)
 			iframe.setWidth(this.width);
-		//ÊÇ·ñ¼ÓÔØsrcÒ³Ãæ
+		//æ˜¯å¦åŠ è½½srcé¡µé¢
 		loadSRC(iframe);
 			
 		int ret = super.doStartTag();
@@ -116,7 +116,7 @@ public class IFrameTag extends BaseTag {
 	}
 	
 	/**
-	 * ÖØÖÃËùÓĞµÄÊôĞÔ
+	 * é‡ç½®æ‰€æœ‰çš„å±æ€§
 	 *
 	 */
 	void reset()

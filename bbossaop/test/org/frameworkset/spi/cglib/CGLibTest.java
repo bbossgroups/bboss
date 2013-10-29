@@ -24,7 +24,7 @@ import org.junit.Test;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2010-6-21 上午10:30:57
+ * @Date 2010-6-21 涓婂崍10:30:57
  * @author biaoping.yin
  * @version 1.0
  */
@@ -33,18 +33,18 @@ public class CGLibTest {
 	@Test
 	public void test()
 	{
-		//远程调用
+		//杩滅▼璋冪敤
 		CGLibService service = (CGLibService)context_provider.getBeanObject("(rmi::172.16.17.216:1099)/cglibbean");
-		System.out.println(service.sayhello("多多"));
+		System.out.println(service.sayhello("澶氬"));
 	}
 	
 	
 	@Test
 	public void localtest()
 	{
-		//本地调用
+		//鏈湴璋冪敤
 		CGLibService service = (CGLibService)context_provider.getBeanObject("cglibbean");
-		System.out.println(service.sayhello("多多"));
+		System.out.println(service.sayhello("澶氬"));
 	}
 
 }

@@ -1,15 +1,15 @@
-<%@ page contentType="text/html; charset=GBK" language="java" %>
+<%@ page contentType="text/html; charset=UTF-8" language="java" %>
 <%@ taglib uri="/WEB-INF/pager-taglib.tld" prefix="pg"%>
 <%@ page import="com.frameworkset.common.tag.contextmenu.ContextMenu"%>
 <%@ page import="com.frameworkset.common.tag.contextmenu.ContextMenuImpl"%>
 <%@ page import="com.frameworkset.common.tag.contextmenu.Menu"%>
 <!-- 
-	²âÊÔÔÚÍ¨¹ıÊı¾İ¼ÓÔØÆ÷»ñÈ¡·ÖÒ³ÁĞ±íÊı¾İ
-	²¢ÇÒÔÚ±íÃûÉÏÌí¼ÓÓÒ¼ü²Ëµ¥¹¦ÄÜ
+	æµ‹è¯•åœ¨é€šè¿‡æ•°æ®åŠ è½½å™¨è·å–åˆ†é¡µåˆ—è¡¨æ•°æ®
+	å¹¶ä¸”åœ¨è¡¨åä¸Šæ·»åŠ å³é”®èœå•åŠŸèƒ½
 -->
 <html>
 <head>
-<title>²âÊÔÔÚÍ¨¹ıÊı¾İ¼ÓÔØÆ÷»ñÈ¡·ÖÒ³ÁĞ±íÊı¾İ</title>
+<title>æµ‹è¯•åœ¨é€šè¿‡æ•°æ®åŠ è½½å™¨è·å–åˆ†é¡µåˆ—è¡¨æ•°æ®</title>
 <script type="text/javascript"> 
 	function edit(message)
 	{
@@ -21,11 +21,11 @@
 	<table>
 	    
 				<pg:listdata dataInfo="test.pager.TableInfoListData" keyName="TableInfoListData" />
-				<!--·ÖÒ³ÏÔÊ¾¿ªÊ¼,·ÖÒ³±êÇ©³õÊ¼»¯-->
+				<!--åˆ†é¡µæ˜¾ç¤ºå¼€å§‹,åˆ†é¡µæ ‡ç­¾åˆå§‹åŒ–-->
 				<pg:pager maxPageItems="15" scope="request" data="TableInfoListData" 
 						  isList="false">
 					<tr class="cms_report_tr">
-						<!--ÉèÖÃ·ÖÒ³±íÍ·-->
+						<!--è®¾ç½®åˆ†é¡µè¡¨å¤´-->
 
 						<td width="2%" align=center style="width:5%">
 						<input class="checkbox" 
@@ -51,7 +51,7 @@
 				<pg:notify>
 						<tr  class="labeltable_middle_tr_01">
 							<td colspan=100 align='center' height="18px">
-								Ã»ÓĞÊı¾İ
+								æ²¡æœ‰æ•°æ®
 							</td>
 						</tr>
 				</pg:notify>
@@ -67,31 +67,31 @@
 						
 						
 						menu.setIdentity("conmenu_" + rowid);			
-						menu.addContextMenuItem("Ìí¼Ó","javascript:edit('Ìí¼Ó')",Menu.icon_edit);
+						menu.addContextMenuItem("æ·»åŠ ","javascript:edit('æ·»åŠ ')",Menu.icon_edit);
 						//Menu.ContextMenuItem sitemenuitem0 = new Menu.ContextMenuItem();
-						//sitemenuitem0.setName("±à¼­±à¼­±à¼­±à¼­");
-						//sitemenuitem0.setLink("javascript:edit('±à¼­')");
+						//sitemenuitem0.setName("ç¼–è¾‘ç¼–è¾‘ç¼–è¾‘ç¼–è¾‘");
+						//sitemenuitem0.setLink("javascript:edit('ç¼–è¾‘')");
 						//sitemenuitem0.setIcon(Menu.icon_edit);
 						//menu.addContextMenuItem(sitemenuitem0);
 						menu.addSeperate();
-						menu.addContextMenuItem("±à¼­±à¼­±à¼­±à¼­","javascript:edit('±à¼­')",Menu.icon_add);
+						menu.addContextMenuItem("ç¼–è¾‘ç¼–è¾‘ç¼–è¾‘ç¼–è¾‘","javascript:edit('ç¼–è¾‘')",Menu.icon_add);
 						
 						Menu.ContextMenuItem sitemenuitem2 = menu.addContextMenuItem("sitemenuitem2","javascript:edit('sitemenuitem2')",Menu.icon_ok);
-						sitemenuitem2.addSubContextMenuItem("×Ómenusubmenuitem_","javascript:edit('×Ómenusubmenuitem_')",Menu.icon_ok);	
-						sitemenuitem2.addSubContextMenuItem("×Ócut","javascript:edit('×Ócut')",Menu.icon_cut);				
-						sitemenuitem2.addSubContextMenuItem("×Óicon_back","javascript:edit('×Óicon_back')",Menu.icon_back);
-						sitemenuitem2.addSubContextMenuItem("×Óicon_cancel","javascript:edit('×Óicon_cancel')",Menu.icon_cancel);
-						sitemenuitem2.addSubContextMenuItem("×Óicon_help","javascript:edit('×Óicon_help')",Menu.icon_help);
-						sitemenuitem2.addSubContextMenuItem("×Óicon_no","javascript:edit('×Óicon_no')",Menu.icon_no);
-						sitemenuitem2.addSubContextMenuItem("×Óicon_print","javascript:edit('×Óicon_print')",Menu.icon_print);
-						sitemenuitem2.addSubContextMenuItem("×Óicon_redo","javascript:edit('×Óicon_redo')",Menu.icon_redo);
-						sitemenuitem2.addSubContextMenuItem("×Óicon_reload","javascript:edit('icon_reload')",Menu.icon_reload);
+						sitemenuitem2.addSubContextMenuItem("å­menusubmenuitem_","javascript:edit('å­menusubmenuitem_')",Menu.icon_ok);	
+						sitemenuitem2.addSubContextMenuItem("å­cut","javascript:edit('å­cut')",Menu.icon_cut);				
+						sitemenuitem2.addSubContextMenuItem("å­icon_back","javascript:edit('å­icon_back')",Menu.icon_back);
+						sitemenuitem2.addSubContextMenuItem("å­icon_cancel","javascript:edit('å­icon_cancel')",Menu.icon_cancel);
+						sitemenuitem2.addSubContextMenuItem("å­icon_help","javascript:edit('å­icon_help')",Menu.icon_help);
+						sitemenuitem2.addSubContextMenuItem("å­icon_no","javascript:edit('å­icon_no')",Menu.icon_no);
+						sitemenuitem2.addSubContextMenuItem("å­icon_print","javascript:edit('å­icon_print')",Menu.icon_print);
+						sitemenuitem2.addSubContextMenuItem("å­icon_redo","javascript:edit('å­icon_redo')",Menu.icon_redo);
+						sitemenuitem2.addSubContextMenuItem("å­icon_reload","javascript:edit('icon_reload')",Menu.icon_reload);
 						sitemenuitem2.addSubContextMenuItem("icon_remove","javascript:edit('icon_remove')",Menu.icon_remove);
 						sitemenuitem2.addSubContextMenuItem("icon_save","javascript:edit('icon_save')",Menu.icon_save);
 						Menu.ContextMenuItem sitemenuitem__ = sitemenuitem2.addSubContextMenuItem("icon_search","javascript:edit('icon_search')",Menu.icon_search);
 						
 						sitemenuitem__.setDisabled(true);
-						sitemenuitem__.setDisableMsg("½ûÓÃµÄ¹¦ÄÜ");
+						sitemenuitem__.setDisableMsg("ç¦ç”¨çš„åŠŸèƒ½");
 						
 						Menu.ContextMenuItem sitemenuitem3 = sitemenuitem2.addSubContextMenuItem("icon_undo","javascript:edit('icon_undo')",Menu.icon_undo);
 						sitemenuitem3.setDisabled(true);
@@ -127,10 +127,10 @@
 					<pg:contextmenu context="testcontextmenu" enablecontextmenu="true" scope="request"/>
 					<tr class="labeltable_middle_tr_01">
 						<td colspan=11 ><div class="Data_List_Table_Bottom"> 
-							¹²
+							å…±
 							<pg:rowcount />
-							Ìõ¼ÇÂ¼
-							Ã¿Ò³ÏÔÊ¾15Ìõ
+							æ¡è®°å½•
+							æ¯é¡µæ˜¾ç¤º15æ¡
 							<pg:index />					</div>  </td>
 					</tr>
 					<input id="queryString" name="queryString" value="<pg:querystring/>" type="hidden">

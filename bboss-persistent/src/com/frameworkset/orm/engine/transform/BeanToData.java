@@ -26,7 +26,7 @@ import com.frameworkset.util.SimpleStringUtil;
  * <p>Title: BeanData</p>
  *
  * <p>Description:
- *  ÊµÏÖjava¶ÔÏóÖĞµÄÊôĞÔÖµ×ª»»µ½¸Ãjava¶ÔÏóËù¶ÔÓ¦µÄ±íµÄÊôĞÔ
+ *  å®ç°javaå¯¹è±¡ä¸­çš„å±æ€§å€¼è½¬æ¢åˆ°è¯¥javaå¯¹è±¡æ‰€å¯¹åº”çš„è¡¨çš„å±æ€§
  * </p>
  *
  * <p>Copyright: Copyright (c) 2005</p>

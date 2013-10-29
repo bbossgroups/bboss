@@ -81,7 +81,7 @@ public abstract class AbstractMultipartHttpServletRequest extends RequestMethodH
 	
 	@Override
 	/**
-	 * ·µ»Ø½çÃæÉÏËùÓĞÎÄ¼ş
+	 * è¿”å›ç•Œé¢ä¸Šæ‰€æœ‰æ–‡ä»¶
 	 */
 	public MultipartFile[] getFirstFieldFiles() {
 		if(this.multipartFiles == null)

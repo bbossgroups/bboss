@@ -35,7 +35,7 @@ import com.frameworkset.util.StringUtil;
 
 public abstract class CommonsFileUploadSupport {
 	/**
-	 * Ä¬ÈÏµÄ²ÎÊı±àÂë¹æÔò
+	 * é»˜è®¤çš„å‚æ•°ç¼–ç è§„åˆ™
 	 */
 	private String encoding;
 

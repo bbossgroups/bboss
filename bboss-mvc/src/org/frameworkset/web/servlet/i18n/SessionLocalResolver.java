@@ -25,13 +25,13 @@ import org.frameworkset.web.servlet.LocaleResolver;
 
 /**
  * <p> SessionLocalResolver.java</p>
- * <p> Description: ´ÓsessionÖĞ»ñÈ¡¹ú¼ÒÇøÓò¶ÔÏó,Èç¹ûsessionÖĞÉèÖÃÁË¹ú±ğLocale¶ÔÏó
- * Ôò´ÓsessionÖĞ»ñÈ¡local¶ÔÏó£¬Èç¹ûÃ»ÓĞÔò·µ»ØrequestÖĞ°üº¬µÄLocale¶ÔÏó
+ * <p> Description: ä»sessionä¸­è·å–å›½å®¶åŒºåŸŸå¯¹è±¡,å¦‚æœsessionä¸­è®¾ç½®äº†å›½åˆ«Localeå¯¹è±¡
+ * åˆ™ä»sessionä¸­è·å–localå¯¹è±¡ï¼Œå¦‚æœæ²¡æœ‰åˆ™è¿”å›requestä¸­åŒ…å«çš„Localeå¯¹è±¡
  * </p>
  * <p> bboss workgroup </p>
  * <p> Copyright (c) 2009 </p>
  * 
- * @Date 2012-5-8 ÏÂÎç5:45:55
+ * @Date 2012-5-8 ä¸‹åˆ5:45:55
  * @author biaoping.yin
  * @version 1.0
  */

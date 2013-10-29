@@ -17,15 +17,15 @@ import java.io.Serializable;
 public class TextSpliting implements Serializable{
 
     /**
-     * »ñÈ¡¸ø¶¨Ò³ÃæµÄÎÄ±¾ÄÚÈİ£¬Ò³ÃæºÅÂë³¬³öÒ³ÃæµÄºÅÂë·¶Î§Ê±£¬
-     * È¡Ê×Ò³£¨Ò³ÃæºÅÂëĞ¡ÓÚ0£©»òÕß×îºóÒ»Ò³£¨Ò³ÃæºÅÂë´óÓÚ×îºóÒ»Ò³µÄÒ³Âë£©
-     * @param text String ÎÄ±¾ÄÚÈİ
-     * @param pageNumber int Ò³ÃæºÅÂë
-     * @param pageSize int Ã¿Ò³ÏÔÊ¾µÄÎÄ±¾³¤¶È
-     * @return TextListInfo ·â×°·µ»ØĞÅÏ¢£º
-     *                      ×ÜÒ³ÃæÊı£¬
-     *                      µ±Ç°Ò³ÃæºÅÂë£¬
-     *                      µ±Ç°Ò³ÃæÏÔÊ¾µÄÎÄ±¾
+     * è·å–ç»™å®šé¡µé¢çš„æ–‡æœ¬å†…å®¹ï¼Œé¡µé¢å·ç è¶…å‡ºé¡µé¢çš„å·ç èŒƒå›´æ—¶ï¼Œ
+     * å–é¦–é¡µï¼ˆé¡µé¢å·ç å°äº0ï¼‰æˆ–è€…æœ€åä¸€é¡µï¼ˆé¡µé¢å·ç å¤§äºæœ€åä¸€é¡µçš„é¡µç ï¼‰
+     * @param text String æ–‡æœ¬å†…å®¹
+     * @param pageNumber int é¡µé¢å·ç 
+     * @param pageSize int æ¯é¡µæ˜¾ç¤ºçš„æ–‡æœ¬é•¿åº¦
+     * @return TextListInfo å°è£…è¿”å›ä¿¡æ¯ï¼š
+     *                      æ€»é¡µé¢æ•°ï¼Œ
+     *                      å½“å‰é¡µé¢å·ç ï¼Œ
+     *                      å½“å‰é¡µé¢æ˜¾ç¤ºçš„æ–‡æœ¬
      *
      */
     public static TextListInfo splitStringByPageNumber(String text,int pageNumber,int pageSize)
@@ -75,7 +75,7 @@ public class TextSpliting implements Serializable{
 
     public static void main(String[] args)
     {
-        String test = "ÖĞ»ªÈËÃñ¹²ºÍ¹ú³ÉÁ¢ÁË£¡£¡£¡ÖĞ»ªÈËÃñ¹²ºÍ¹úÍòËê£¡£¡£¡£¡";
+        String test = "ä¸­åäººæ°‘å…±å’Œå›½æˆç«‹äº†ï¼ï¼ï¼ä¸­åäººæ°‘å…±å’Œå›½ä¸‡å²ï¼ï¼ï¼ï¼";
         for(int i = 1; i <= 13; i ++)
         System.out.println( TextSpliting.splitStringByPageNumber(test,i,2));
     }

@@ -41,7 +41,7 @@ import com.frameworkset.util.RegexUtil;
 import com.frameworkset.util.SimpleStringUtil;
 
 /**
- * ½âÎösqlÓï¾ä³ÌĞò
+ * è§£æsqlè¯­å¥ç¨‹åº
  * 
  * @author biaoping.yin created on 2005-3-31 version 1.0
  */
@@ -50,35 +50,35 @@ public class StatementParser implements Serializable
 	 private static Logger log = Logger.getLogger(StatementParser.class);
 
 	/**
-	 * insertÕıÔò±í´ïÊ½½âÎöinsertÓï¾ä Èç¹ûinsertÓï¾äÓëÕıÔò±í´ïÊ½Æ¥Åä£¬±¾·½·¨¸ù¾İ±í´ïÊ½¶ÔÓï¾äµÄ·Ö×é
-	 * ½«insertÓï¾ä²ğ·ÖÎª6²¿·Ö,²¢ÇÒ½«Õâ¼¸²¿·Ö´æ·Åµ½×Ö·û´®Êı×é·µ»Ø ·Ö±ğÎª£º 1.insert¹Ø¼ü×Ö 2.into¹Ø¼ü×Ö 3.±íÃû³Æ 4.±í×Ö¶Î×é
-	 * 5.values¹Ø¼ü×Ö 6.²åÈë×Ö¶ÎÖµ×é
+	 * insertæ­£åˆ™è¡¨è¾¾å¼è§£æinsertè¯­å¥ å¦‚æœinsertè¯­å¥ä¸æ­£åˆ™è¡¨è¾¾å¼åŒ¹é…ï¼Œæœ¬æ–¹æ³•æ ¹æ®è¡¨è¾¾å¼å¯¹è¯­å¥çš„åˆ†ç»„
+	 * å°†insertè¯­å¥æ‹†åˆ†ä¸º6éƒ¨åˆ†,å¹¶ä¸”å°†è¿™å‡ éƒ¨åˆ†å­˜æ”¾åˆ°å­—ç¬¦ä¸²æ•°ç»„è¿”å› åˆ†åˆ«ä¸ºï¼š 1.insertå…³é”®å­— 2.intoå…³é”®å­— 3.è¡¨åç§° 4.è¡¨å­—æ®µç»„
+	 * 5.valueså…³é”®å­— 6.æ’å…¥å­—æ®µå€¼ç»„
 	 * 
-	 * ±ÈÈçinsertÓï¾ä£º Insert into oa_meetingpromptsound ( soundCode , soundName ,
-	 * soundFileName ) values ( '¡£.Òü±êÆ½','bb','d()d' ) ½«±»·Ö½âÎªÒÔÏÂ²¿·Ö£º 1.Insert 2.into
+	 * æ¯”å¦‚insertè¯­å¥ï¼š Insert into oa_meetingpromptsound ( soundCode , soundName ,
+	 * soundFileName ) values ( 'ã€‚.å°¹æ ‡å¹³','bb','d()d' ) å°†è¢«åˆ†è§£ä¸ºä»¥ä¸‹éƒ¨åˆ†ï¼š 1.Insert 2.into
 	 * 3.oa_meetingpromptsound 4.( soundCode , soundName , soundFileName )
-	 * 5.values 6.( '¡£.Òü±êÆ½','bb','d()d' )
+	 * 5.values 6.( 'ã€‚.å°¹æ ‡å¹³','bb','d()d' )
 	 */
 	public static String[] parserInsert(String insert)
 	{
 		/**
-		 * ¶¨ÒåinsertÓï¾äµÄÕıÔò±í´ïÊ½ ¸Ã±í´ïÊ½½«insertÓï¾ä²ğ·ÖÎª6²¿·Ö,·Ö±ğÎª£º 1.insert¹Ø¼ü×Ö 2.into¹Ø¼ü×Ö 3.±íÃû³Æ
-		 * 4.±í×Ö¶Î×é 5.values¹Ø¼ü×Ö 6.²åÈë×Ö¶ÎÖµ×é ±ÈÈçinsertÓï¾ä£º Insert into
+		 * å®šä¹‰insertè¯­å¥çš„æ­£åˆ™è¡¨è¾¾å¼ è¯¥è¡¨è¾¾å¼å°†insertè¯­å¥æ‹†åˆ†ä¸º6éƒ¨åˆ†,åˆ†åˆ«ä¸ºï¼š 1.insertå…³é”®å­— 2.intoå…³é”®å­— 3.è¡¨åç§°
+		 * 4.è¡¨å­—æ®µç»„ 5.valueså…³é”®å­— 6.æ’å…¥å­—æ®µå€¼ç»„ æ¯”å¦‚insertè¯­å¥ï¼š Insert into
 		 * oa_meetingpromptsound ( soundCode , soundName , soundFileName )
-		 * values ( '¡£.Òü±êÆ½','bb','d()d' ) ½«±»·Ö½âÎªÒÔÏÂ²¿·Ö£º 1.Insert 2.into
+		 * values ( 'ã€‚.å°¹æ ‡å¹³','bb','d()d' ) å°†è¢«åˆ†è§£ä¸ºä»¥ä¸‹éƒ¨åˆ†ï¼š 1.Insert 2.into
 		 * 3.oa_meetingpromptsound 4.( soundCode , soundName , soundFileName )
-		 * 5.values 6.( '¡£.Òü±êÆ½','bb','d()d' )
+		 * 5.values 6.( 'ã€‚.å°¹æ ‡å¹³','bb','d()d' )
 		 */
-		String patternStr = "\\s*(insert)\\s+" + // ½âÎöinsert¹Ø¼ü´Ê
-				"(into)\\s+" + // ½âÎöinto¹Ø¼ü´Ê
-				"([^\\(^\\s]+)\\s*" + // ½âÎö±íÃû³Æ
-				"(\\([^\\)]+\\))\\s*" + // ½âÎö±í×Ö¶Î
-				"(values)\\s*" + // ½âÎövalue¹Ø¼ü´Ê
-				"(\\(.*(.*\n*)*.*)"; // ½âÎö×Ö¶ÎÖµ
+		String patternStr = "\\s*(insert)\\s+" + // è§£æinsertå…³é”®è¯
+				"(into)\\s+" + // è§£æintoå…³é”®è¯
+				"([^\\(^\\s]+)\\s*" + // è§£æè¡¨åç§°
+				"(\\([^\\)]+\\))\\s*" + // è§£æè¡¨å­—æ®µ
+				"(values)\\s*" + // è§£ævalueå…³é”®è¯
+				"(\\(.*(.*\n*)*.*)"; // è§£æå­—æ®µå€¼
 
 		/**
-		 * ±àÒëÕıÔò±í´ïÊ½patternStr£¬²¢ÓÃ¸Ã±í´ïÊ½Óë´«ÈëµÄsqlÓï¾ä½øĞĞÄ£Ê½Æ¥Åä,
-		 * Èç¹ûÆ¥ÅäÕıÈ·£¬Ôò´ÓÆ¥Åä¶ÔÏóÖĞÌáÈ¡³öÒÔÉÏ¶¨ÒåºÃµÄ6²¿·Ö£¬´æ·Åµ½Êı×éÖĞ²¢·µ»Ø ¸ÃÊı×é
+		 * ç¼–è¯‘æ­£åˆ™è¡¨è¾¾å¼patternStrï¼Œå¹¶ç”¨è¯¥è¡¨è¾¾å¼ä¸ä¼ å…¥çš„sqlè¯­å¥è¿›è¡Œæ¨¡å¼åŒ¹é…,
+		 * å¦‚æœåŒ¹é…æ­£ç¡®ï¼Œåˆ™ä»åŒ¹é…å¯¹è±¡ä¸­æå–å‡ºä»¥ä¸Šå®šä¹‰å¥½çš„6éƒ¨åˆ†ï¼Œå­˜æ”¾åˆ°æ•°ç»„ä¸­å¹¶è¿”å› è¯¥æ•°ç»„
 		 */
 
 		PatternCompiler compiler = new Perl5Compiler();
@@ -152,13 +152,13 @@ public class StatementParser implements Serializable
 	public static String[] parserValues(String values)
 	{
 		
-		String patternStr = "([^\\,]*)[\\,]?"; // ½âÎö×Ö¶ÎÖµ
+		String patternStr = "([^\\,]*)[\\,]?"; // è§£æå­—æ®µå€¼
 		
-		String patternStr1 = "('?[^\\,]*'?)[\\,]?"; // ½âÎö×Ö¶ÎÖµ
+		String patternStr1 = "('?[^\\,]*'?)[\\,]?"; // è§£æå­—æ®µå€¼
 
 		/**
-		 * ±àÒëÕıÔò±í´ïÊ½patternStr£¬²¢ÓÃ¸Ã±í´ïÊ½Óë´«ÈëµÄsqlÓï¾ä½øĞĞÄ£Ê½Æ¥Åä,
-		 * Èç¹ûÆ¥ÅäÕıÈ·£¬Ôò´ÓÆ¥Åä¶ÔÏóÖĞÌáÈ¡³öÒÔÉÏ¶¨ÒåºÃµÄ6²¿·Ö£¬´æ·Åµ½Êı×éÖĞ²¢·µ»Ø ¸ÃÊı×é
+		 * ç¼–è¯‘æ­£åˆ™è¡¨è¾¾å¼patternStrï¼Œå¹¶ç”¨è¯¥è¡¨è¾¾å¼ä¸ä¼ å…¥çš„sqlè¯­å¥è¿›è¡Œæ¨¡å¼åŒ¹é…,
+		 * å¦‚æœåŒ¹é…æ­£ç¡®ï¼Œåˆ™ä»åŒ¹é…å¯¹è±¡ä¸­æå–å‡ºä»¥ä¸Šå®šä¹‰å¥½çš„6éƒ¨åˆ†ï¼Œå­˜æ”¾åˆ°æ•°ç»„ä¸­å¹¶è¿”å› è¯¥æ•°ç»„
 		 */
 		String[] ret = RegexUtil.containWithPatternMatcherInput(values,patternStr1);
 
@@ -206,12 +206,12 @@ public class StatementParser implements Serializable
 		parserInsert(insert);
 //		String update = "update table1 set name='aaa' where id='1'";
 //		parserUpdateSQL(update);
-//		String patternStr = "(insert)\\s+" + // ½âÎöinsert¹Ø¼ü´Ê
-//				"(into)\\s+" + // ½âÎöinto¹Ø¼ü´Ê
-//				"([^\\(]+)\\s*" + // ½âÎö±íÃû³Æ
-//				"(\\([^\\)]+\\))\\s+" + // ½âÎö±í×Ö¶Î
-//				"(values)\\s*" + // ½âÎövalue¹Ø¼ü´Ê
-//				"(\\(.+)"; // ½âÎö×Ö¶ÎÖµ
+//		String patternStr = "(insert)\\s+" + // è§£æinsertå…³é”®è¯
+//				"(into)\\s+" + // è§£æintoå…³é”®è¯
+//				"([^\\(]+)\\s*" + // è§£æè¡¨åç§°
+//				"(\\([^\\)]+\\))\\s+" + // è§£æè¡¨å­—æ®µ
+//				"(values)\\s*" + // è§£ævalueå…³é”®è¯
+//				"(\\(.+)"; // è§£æå­—æ®µå€¼
 //
 //		// parseField("( soundCode , soundName , soundFileName )");\
 //		/**
@@ -222,9 +222,9 @@ public class StatementParser implements Serializable
 //		 * ,
 //		 * ',XXXXX'
 //		 */
-//		String sql = "'½ªÈåÕñ Í¬Ö¾ÔÚ 2005-05-12 ÅúÊ¾£º\r\n"
-//				+ "¾İÏ¤£¬³¤É³ÊĞÕş¸®Äâ¸ÄÀ©½¨¸·²ºÂ·£¬ÕâÊÇ¶ÔÁ½Ëù¸ß,Ğ£8ÍòÊ¦ÉúËù×öµÄÒ»¼ş´óºÃÊÂ¡£¸Ã±¨¸æËùÌá½¨Òé£¬Çë³¤É³ÊĞÕş¸®ÈÏÕæÑĞ¾¿£¬Í×ÉÆ´¦Àí¡£\r\n"
-//				+ "ÇëÔÆÕÑÊ¡³¤ÅúÊ¾¡£',to_date('2005-04-23 11:04:44','yyyy-mm-dd hh24:mi:ss'),2,1558";
+//		String sql = "'å§œå„’æŒ¯ åŒå¿—åœ¨ 2005-05-12 æ‰¹ç¤ºï¼š\r\n"
+//				+ "æ®æ‚‰ï¼Œé•¿æ²™å¸‚æ”¿åºœæ‹Ÿæ”¹æ‰©å»ºé˜œåŸ è·¯ï¼Œè¿™æ˜¯å¯¹ä¸¤æ‰€é«˜,æ ¡8ä¸‡å¸ˆç”Ÿæ‰€åšçš„ä¸€ä»¶å¤§å¥½äº‹ã€‚è¯¥æŠ¥å‘Šæ‰€æå»ºè®®ï¼Œè¯·é•¿æ²™å¸‚æ”¿åºœè®¤çœŸç ”ç©¶ï¼Œå¦¥å–„å¤„ç†ã€‚\r\n"
+//				+ "è¯·äº‘æ˜­çœé•¿æ‰¹ç¤ºã€‚',to_date('2005-04-23 11:04:44','yyyy-mm-dd hh24:mi:ss'),2,1558";
 ////		for (int i = 0; i < 1; i++)
 ////			parserValues(sql);
 //        
@@ -247,8 +247,8 @@ public class StatementParser implements Serializable
 	}
 	
 //	/**
-//	 * ·ÖÎöupdatesqlÓï¾äÖĞ°üº¬µÄ±íÃû£¬¹Ø¼ü×Ö£¬ºÍ¸üĞÂ²¿·Ö£ºtable name
-//	 * ÀıÈç£ºupdate table1 set name='aaa' where id='1';
+//	 * åˆ†æupdatesqlè¯­å¥ä¸­åŒ…å«çš„è¡¨åï¼Œå…³é”®å­—ï¼Œå’Œæ›´æ–°éƒ¨åˆ†ï¼štable name
+//	 * ä¾‹å¦‚ï¼šupdate table1 set name='aaa' where id='1';
 //	 * @param updateSQL
 //	 * @return String[4] {update,table1,set,values and where clause}
 //	 */
@@ -290,7 +290,7 @@ public class StatementParser implements Serializable
 //		return refactorUpdateStatement(stateinfo.getCon(),stateinfo.getSql(),stateinfo.getDbname());
 //	}
 //	 /**
-//     * ²ğ·ÖupdateÓï¾ä£¬»ñÈ¡updateµÄ±íºÍ¶ÔÓ¦µÄÖ÷¼ü×Ö¶ÎĞÅÏ¢
+//     * æ‹†åˆ†updateè¯­å¥ï¼Œè·å–updateçš„è¡¨å’Œå¯¹åº”çš„ä¸»é”®å­—æ®µä¿¡æ¯
 //     * @param updateStmt
 //     * @param dbname
 //     * @return
@@ -301,7 +301,7 @@ public class StatementParser implements Serializable
 //    	//{update,table1,set,values and where clause}
 //    	String[] updateInfos = StatementParser.parserUpdateSQL(updateStmt);
 //    	if(updateInfos == null)
-//    		throw new ParserException("·Ç·¨µÄ¸üĞÂÓï¾ä£º" + updateStmt);
+//    		throw new ParserException("éæ³•çš„æ›´æ–°è¯­å¥ï¼š" + updateStmt);
 //    		
 //    	String tableName = updateInfos[1];
 //    	PrimaryKey primaryKey = null;
@@ -313,10 +313,10 @@ public class StatementParser implements Serializable
 //														  .getIDTable(con,tableName.toLowerCase());
 //	        if(primaryKey == null)
 //			{
-//				//System.out.println("±í'" + tableName + "'Ã»ÓĞ¶¨ÒåÖ÷¼ü»ò¶¨ÒåÁË¶àÖ÷¼ü£¡");
+//				//System.out.println("è¡¨'" + tableName + "'æ²¡æœ‰å®šä¹‰ä¸»é”®æˆ–å®šä¹‰äº†å¤šä¸»é”®ï¼");
 //	        	primaryKey = new PrimaryKey(dbname,updateInfos[1],null,null,con);
 //	        	primaryKey.setHasTableinfo(false);
-//				log.debug("Î´¸ø±í["+ tableName + "]¶¨ÒåÖ÷¼üĞÅÏ¢,Çë¼ì²étableinfo±íÖĞÊÇ·ñ´æÔÚ¸Ã±íµÄ¼ÇÂ¼£º" + updateStmt);
+//				log.debug("æœªç»™è¡¨["+ tableName + "]å®šä¹‰ä¸»é”®ä¿¡æ¯,è¯·æ£€æŸ¥tableinfoè¡¨ä¸­æ˜¯å¦å­˜åœ¨è¯¥è¡¨çš„è®°å½•ï¼š" + updateStmt);
 //			}
 //	        return new Object[] {primaryKey,updateInfos};
 //
@@ -331,7 +331,7 @@ public class StatementParser implements Serializable
 //        	        + "'s information has been inserted into tableinfo"
 //        	        + "]\r\n please check log to view detail.");
 //        	//e.printStackTrace();
-//        	throw new ParserException("Î´¸ø±í["+ tableName + "]¶¨ÒåÖ÷¼üĞÅÏ¢,Çë¼ì²étableinfo±íÖĞÊÇ·ñ´æÔÚ¸Ã±íµÄ¼ÇÂ¼£º" + updateStmt);
+//        	throw new ParserException("æœªç»™è¡¨["+ tableName + "]å®šä¹‰ä¸»é”®ä¿¡æ¯,è¯·æ£€æŸ¥tableinfoè¡¨ä¸­æ˜¯å¦å­˜åœ¨è¯¥è¡¨çš„è®°å½•ï¼š" + updateStmt);
 //        	
 //
 //			
@@ -342,18 +342,18 @@ public class StatementParser implements Serializable
     
     /**
      * added by biaoping.yin on 2005.03.29
-     * ÖØ¹¹insertÓï¾ä,Ìí¼ÓÖ÷¼üĞÅÏ¢£¬Ê×ÏÈ»ñÈ¡Ö÷¼üÖµ
-     * @param insertStmt Êı¾İ¿â²åÈëÓï¾ä
-     * @param dbname Êı¾İ¿âÃû³Æ
+     * é‡æ„insertè¯­å¥,æ·»åŠ ä¸»é”®ä¿¡æ¯ï¼Œé¦–å…ˆè·å–ä¸»é”®å€¼
+     * @param insertStmt æ•°æ®åº“æ’å…¥è¯­å¥
+     * @param dbname æ•°æ®åº“åç§°
      * @return ret
-     * ret[0]:´æ·ÅinsertÓï¾ä
-     * ret[1]:´æ·ÅĞÂµÄÖ÷¼üÖµ,Èç¹û²»ÊÇ²åÈëÓï¾äÔòÎª¿Õ
-     * ret[2]:¸üĞÂ±ítableinfoÖĞ²åÈë±í¶ÔÓ¦Ö÷¼üÖµÓï¾ä,Èç¹û²»ÊÇ²åÈëÓï¾äÔòÎª¿Õ
-     * ret[3]:PrimaryKey¶ÔÏó,Èç¹û²»ÊÇ²åÈëÓï¾äÔòÎª¿Õ
-     * ret[4]:±êÊ¶Ö÷¼üÊÇ×Ô¶¯²úÉú»¹ÊÇÓÃ»§Ö¸¶¨,0-±êÊ¶×Ô¶¯
-     * 		  1-±êÊ¶ÓÃ»§Ö¸¶¨
-     *        Èç¹û²»ÊÇ²åÈëÓï¾äÔòÎª¿Õ
-     * ret[6]:field×Ö¶ÎÊı×é£»
+     * ret[0]:å­˜æ”¾insertè¯­å¥
+     * ret[1]:å­˜æ”¾æ–°çš„ä¸»é”®å€¼,å¦‚æœä¸æ˜¯æ’å…¥è¯­å¥åˆ™ä¸ºç©º
+     * ret[2]:æ›´æ–°è¡¨tableinfoä¸­æ’å…¥è¡¨å¯¹åº”ä¸»é”®å€¼è¯­å¥,å¦‚æœä¸æ˜¯æ’å…¥è¯­å¥åˆ™ä¸ºç©º
+     * ret[3]:PrimaryKeyå¯¹è±¡,å¦‚æœä¸æ˜¯æ’å…¥è¯­å¥åˆ™ä¸ºç©º
+     * ret[4]:æ ‡è¯†ä¸»é”®æ˜¯è‡ªåŠ¨äº§ç”Ÿè¿˜æ˜¯ç”¨æˆ·æŒ‡å®š,0-æ ‡è¯†è‡ªåŠ¨
+     * 		  1-æ ‡è¯†ç”¨æˆ·æŒ‡å®š
+     *        å¦‚æœä¸æ˜¯æ’å…¥è¯­å¥åˆ™ä¸ºç©º
+     * ret[6]:fieldå­—æ®µæ•°ç»„ï¼›
      * @throws SQLException 
      * 
      */
@@ -370,18 +370,18 @@ public class StatementParser implements Serializable
 
     /**
      * added by biaoping.yin on 2005.03.29
-     * ÖØ¹¹insertÓï¾ä,Ìí¼ÓÖ÷¼üĞÅÏ¢£¬Ê×ÏÈ»ñÈ¡Ö÷¼üÖµ
-     * @param insertStmt Êı¾İ¿â²åÈëÓï¾ä
-     * @param dbname Êı¾İ¿âÃû³Æ
+     * é‡æ„insertè¯­å¥,æ·»åŠ ä¸»é”®ä¿¡æ¯ï¼Œé¦–å…ˆè·å–ä¸»é”®å€¼
+     * @param insertStmt æ•°æ®åº“æ’å…¥è¯­å¥
+     * @param dbname æ•°æ®åº“åç§°
      * @return ret
-     * ret[0]:´æ·ÅinsertÓï¾ä
-     * ret[1]:´æ·ÅĞÂµÄÖ÷¼üÖµ,Èç¹û²»ÊÇ²åÈëÓï¾äÔòÎª¿Õ
-     * ret[2]:¸üĞÂ±ítableinfoÖĞ²åÈë±í¶ÔÓ¦Ö÷¼üÖµÓï¾ä,Èç¹û²»ÊÇ²åÈëÓï¾äÔòÎª¿Õ
-     * ret[3]:PrimaryKey¶ÔÏó,Èç¹û²»ÊÇ²åÈëÓï¾äÔòÎª¿Õ
-     * ret[4]:±êÊ¶Ö÷¼üÊÇ×Ô¶¯²úÉú»¹ÊÇÓÃ»§Ö¸¶¨,0-±êÊ¶×Ô¶¯
-     * 		  1-±êÊ¶ÓÃ»§Ö¸¶¨
-     *        Èç¹û²»ÊÇ²åÈëÓï¾äÔòÎª¿Õ
-     * ret[6]:field×Ö¶ÎÊı×é£»
+     * ret[0]:å­˜æ”¾insertè¯­å¥
+     * ret[1]:å­˜æ”¾æ–°çš„ä¸»é”®å€¼,å¦‚æœä¸æ˜¯æ’å…¥è¯­å¥åˆ™ä¸ºç©º
+     * ret[2]:æ›´æ–°è¡¨tableinfoä¸­æ’å…¥è¡¨å¯¹åº”ä¸»é”®å€¼è¯­å¥,å¦‚æœä¸æ˜¯æ’å…¥è¯­å¥åˆ™ä¸ºç©º
+     * ret[3]:PrimaryKeyå¯¹è±¡,å¦‚æœä¸æ˜¯æ’å…¥è¯­å¥åˆ™ä¸ºç©º
+     * ret[4]:æ ‡è¯†ä¸»é”®æ˜¯è‡ªåŠ¨äº§ç”Ÿè¿˜æ˜¯ç”¨æˆ·æŒ‡å®š,0-æ ‡è¯†è‡ªåŠ¨
+     * 		  1-æ ‡è¯†ç”¨æˆ·æŒ‡å®š
+     *        å¦‚æœä¸æ˜¯æ’å…¥è¯­å¥åˆ™ä¸ºç©º
+     * ret[6]:fieldå­—æ®µæ•°ç»„ï¼›
      * @throws SQLException 
      * 
      */
@@ -397,7 +397,7 @@ public class StatementParser implements Serializable
 		 * 	3.oa_meetingpromptsound
 		 * 	4.( soundCode , soundName , soundFileName )
 		 * 	5.values
-		 * 	6.( '¡£.Òü±êÆ½','bb','d()d' )
+		 * 	6.( 'ã€‚.å°¹æ ‡å¹³','bb','d()d' )
          */
         String tableInfos[] = StatementParser.parserInsert(insertStmt);
         if(tableInfos == null)
@@ -421,7 +421,7 @@ public class StatementParser implements Serializable
 														  .getIDTable(con,tableName.toLowerCase());
 
 		}
-        catch(Exception e)//Èç¹ûÅ×³ösqlÒì³££¬ºöÂÔ£¬²»Ó°ÏìÕû¸öÊÂÎñµÄ´¦Àí¡£
+        catch(Exception e)//å¦‚æœæŠ›å‡ºsqlå¼‚å¸¸ï¼Œå¿½ç•¥ï¼Œä¸å½±å“æ•´ä¸ªäº‹åŠ¡çš„å¤„ç†ã€‚
 		{
         	log.info("[db:"
         	        + dbname
@@ -438,7 +438,7 @@ public class StatementParser implements Serializable
 		}
 		if(primaryKey == null)
 		{
-			//System.out.println("±í'" + tableName + "'Ã»ÓĞ¶¨ÒåÖ÷¼ü»ò¶¨ÒåÁË¶àÖ÷¼ü£¡");
+			//System.out.println("è¡¨'" + tableName + "'æ²¡æœ‰å®šä¹‰ä¸»é”®æˆ–å®šä¹‰äº†å¤šä¸»é”®ï¼");
 			ret[0] = insertStmt;
 			PrimaryKey t_p = new PrimaryKey(dbname,tableName,null,null,con);
 	        ret[3] = t_p;
@@ -446,7 +446,7 @@ public class StatementParser implements Serializable
 		}
 
 
-        //¶¨Òå±íµÄÖ÷¼üÃû³Æ±äÁ¿
+        //å®šä¹‰è¡¨çš„ä¸»é”®åç§°å˜é‡
         String idName = primaryKey.getPrimaryKeyName();
         boolean contain = containKey(fields,idName);
         ret[4] = new Integer(0);
@@ -467,14 +467,14 @@ public class StatementParser implements Serializable
             ret[4] = new Integer(1);            
             return ret;
         }
-        //½«±íµÄÖ÷¼ü×Ö¶ÎÊôĞÔ²åÈëµ½insertÓï¾äÖĞ
+        //å°†è¡¨çš„ä¸»é”®å­—æ®µå±æ€§æ’å…¥åˆ°insertè¯­å¥ä¸­
         StringBuffer temp = new StringBuffer(fields);
         temp.insert(1,idName + ",");
         fields = temp.toString();
 
         
         temp = new StringBuffer(values);
-//      //¶¨ÒåÖ÷¼üÖµ±äÁ¿
+//      //å®šä¹‰ä¸»é”®å€¼å˜é‡
         Sequence idValue = primaryKey.generateObjectKey(con);
         temp.insert(1,PrimaryKey.changeID(idValue.getPrimaryKey(),dbname,primaryKey.getType()) + ",");
         values = temp.toString();
@@ -488,11 +488,11 @@ public class StatementParser implements Serializable
 			.append(values_key)
 			.append(values);
         //started here
-        //ÉèÖÃinsertÓï¾ä
+        //è®¾ç½®insertè¯­å¥
         ret[0] = temp.toString();
-        //ÉèÖÃĞÂµÄÖ÷¼üÖµ
+        //è®¾ç½®æ–°çš„ä¸»é”®å€¼
         ret[1] = idValue.getPrimaryKey();
-        //ÉèÖÃ¸üĞÂtableinfoµÄÓï¾ä
+        //è®¾ç½®æ›´æ–°tableinfoçš„è¯­å¥
         List datas = new ArrayList();
         datas.add(new Long(idValue.getSequence()));
         datas.add(tableName.toLowerCase());
@@ -502,7 +502,7 @@ public class StatementParser implements Serializable
 //        ret[2] = "update tableinfo set table_id_value=" + idValue.getSequence() +" where table_name='"+ tableName.toLowerCase() + "' and table_id_value <" + idValue.getSequence()  ;
         ret[2] = preparedUpdate  ;
 
-        //ÉèÖÃ±íÖ÷¼üĞÅÏ¢·â×°Àà
+        //è®¾ç½®è¡¨ä¸»é”®ä¿¡æ¯å°è£…ç±»
         ret[3] = primaryKey;
 //        ret[4] = new Integer(0);
 
@@ -516,7 +516,7 @@ public class StatementParser implements Serializable
 	}
     
     /**
-     * ÅĞ¶ÏÊÇ·ñÒÑÓĞÖ÷¼ü
+     * åˆ¤æ–­æ˜¯å¦å·²æœ‰ä¸»é”®
      * @param fields
      * @param idName
      * @return boolean

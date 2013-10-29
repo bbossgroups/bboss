@@ -5,18 +5,18 @@ import java.io.Serializable;
 /**
  * 
  *<p>Title:AjaxResponseBean.java</p>
- *<p>Description: ¹æ·¶·â×°ºóÌ¨²Ù×÷µÄ½á¹ûĞÅÏ¢£¬±ãÓÚ×ª»»³Éjson¸ñÊ½</p>
+ *<p>Description: è§„èŒƒå°è£…åå°æ“ä½œçš„ç»“æœä¿¡æ¯ï¼Œä¾¿äºè½¬æ¢æˆjsonæ ¼å¼</p>
  *<p>Copyright:Copyright (c) 2010</p>
- *<p>Company:ºşÄÏ¿Æ´´</p>
- *@author Áõ½£·å
+ *<p>Company:æ¹–å—ç§‘åˆ›</p>
+ *@author åˆ˜å‰‘å³°
  *@version 1.0
  *2011-4-19
  */
 public class AjaxResponseBean implements Serializable {
-	//×´Ì¬,success±íÊ¾³É¹¦£¬error±íÊ¾Ê§°Ü
+	//çŠ¶æ€,successè¡¨ç¤ºæˆåŠŸï¼Œerrorè¡¨ç¤ºå¤±è´¥
 	private String status;
 	
-	//ĞÅÏ¢
+	//ä¿¡æ¯
 	private String data;
 	
 	private String e;

@@ -2,20 +2,20 @@ package com.frameworkset.sqlexecutor;
 
 /**
  * <br>
- * ÁÙ¿ØÖ¸ÁîÉêÇëÁ÷³Ì±í ¶ÔÓ¦±í T_ZT_ZDRY_LKZLSQLC
+ * ä¸´æ§æŒ‡ä»¤ç”³è¯·æµç¨‹è¡¨ å¯¹åº”è¡¨ T_ZT_ZDRY_LKZLSQLC
  * 
- * @author: <a href="mailto:zhangye.lin@chinacreator.com">ÁÖÕÃÒ¶</a>
+ * @author: <a href="mailto:zhangye.lin@chinacreator.com">æ—å½°å¶</a>
  */
 public class TlkzlsqlcBean implements java.io.Serializable {
-	private String bksqlcbh;// bksqlcbh ÁÙ¿ØÖ¸ÁîÁ÷³Ì±àºÅ varchar2(27) true false true
-	private String lkzlbh;// lkzlbh ÁÙ¿ØÖ¸Áî±àºÅ varchar2(27) false false false
-	private String lkzlspr;// lkzlspr ÁÙ¿ØÖ¸ÁîÉóÅúÈË varchar2(10) false false false
-	private String lkzlspdwid;// lkzlspdwid ÁÙ¿ØÖ¸ÁîÉóÅúµ¥Î»±àºÅ varchar2(12) false false false
-	private String lkzlspdwmc;// lkzlspdwmc ÁÙ¿ØÖ¸ÁîÉóÅúµ¥Î»Ãû³Æ varchar2(70) false false false
-	private String lkzlspzt;// lkzlspzt ÁÙ¿ØÖ¸ÁîÉóÅú×´Ì¬£¨1¡¢»ù²ãÁìµ¼ÉóÅú£¬2¡¢ÊĞ¾ÖÁìµ¼ÉóÅú£¬3¡¢Çé±¨ÖĞĞÄÁìµ¼ÉóÅú£© varchar2(1) false false false
-	private String lkzlspsj;// lkzlspsj ÁÙ¿ØÖ¸ÁîÉóÅúÊ±¼ä date false false false
-	private String lkzlspyj;// lkzlspyj ÁÙ¿ØÖ¸ÁîÉóÅúÒâ¼û£¨0¡¢²»Í¬Òâ£¬1¡¢Í¬Òâ£© varchar2(1) false false false
-	private String lkzlspyjsm;// lkzlspyjsm ÁÙ¿ØÖ¸ÁîÉóÅúÒâ¼ûËµÃ÷ varchar2(400) false false false
+	private String bksqlcbh;// bksqlcbh ä¸´æ§æŒ‡ä»¤æµç¨‹ç¼–å· varchar2(27) true false true
+	private String lkzlbh;// lkzlbh ä¸´æ§æŒ‡ä»¤ç¼–å· varchar2(27) false false false
+	private String lkzlspr;// lkzlspr ä¸´æ§æŒ‡ä»¤å®¡æ‰¹äºº varchar2(10) false false false
+	private String lkzlspdwid;// lkzlspdwid ä¸´æ§æŒ‡ä»¤å®¡æ‰¹å•ä½ç¼–å· varchar2(12) false false false
+	private String lkzlspdwmc;// lkzlspdwmc ä¸´æ§æŒ‡ä»¤å®¡æ‰¹å•ä½åç§° varchar2(70) false false false
+	private String lkzlspzt;// lkzlspzt ä¸´æ§æŒ‡ä»¤å®¡æ‰¹çŠ¶æ€ï¼ˆ1ã€åŸºå±‚é¢†å¯¼å®¡æ‰¹ï¼Œ2ã€å¸‚å±€é¢†å¯¼å®¡æ‰¹ï¼Œ3ã€æƒ…æŠ¥ä¸­å¿ƒé¢†å¯¼å®¡æ‰¹ï¼‰ varchar2(1) false false false
+	private String lkzlspsj;// lkzlspsj ä¸´æ§æŒ‡ä»¤å®¡æ‰¹æ—¶é—´ date false false false
+	private String lkzlspyj;// lkzlspyj ä¸´æ§æŒ‡ä»¤å®¡æ‰¹æ„è§ï¼ˆ0ã€ä¸åŒæ„ï¼Œ1ã€åŒæ„ï¼‰ varchar2(1) false false false
+	private String lkzlspyjsm;// lkzlspyjsm ä¸´æ§æŒ‡ä»¤å®¡æ‰¹æ„è§è¯´æ˜ varchar2(400) false false false
 	public String getBksqlcbh() {
 		return bksqlcbh;
 	}

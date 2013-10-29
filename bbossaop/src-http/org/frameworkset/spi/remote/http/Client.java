@@ -102,7 +102,7 @@ public class Client {
 	{
 		
 		 
-		int so_timeout = conparams.getInt("http.socket.timeout", 30);//ÒÔÃëÎªµ¥Î»
+		int so_timeout = conparams.getInt("http.socket.timeout", 30);//ä»¥ç§’ä¸ºå•ä½
 		
 		
 		int CONNECTION_TIMEOUT = conparams.getInt("http.connection.timeout",30); 
@@ -133,7 +133,7 @@ public class Client {
 				 registry.register(
 			                new Scheme("https", SSLSocketFactory.getSocketFactory(), 443));
 //				throw new Exception(
-//						"ÆôÓÃÁËsslÄ£Ê½£¬ µ«ÊÇÃ»ÓĞÖ¸¶¨rpc.protocol.http.ssl.server ²ÎÊı£¬Çë¼ì²éÎÄ¼şorg/frameworkset/spi/manager-rpc-http.xmlÊÇ·ñÕıÈ·ÉèÖÃÁË¸Ã²ÎÊı¡£");
+//						"å¯ç”¨äº†sslæ¨¡å¼ï¼Œ ä½†æ˜¯æ²¡æœ‰æŒ‡å®šrpc.protocol.http.ssl.server å‚æ•°ï¼Œè¯·æ£€æŸ¥æ–‡ä»¶org/frameworkset/spi/manager-rpc-http.xmlæ˜¯å¦æ­£ç¡®è®¾ç½®äº†è¯¥å‚æ•°ã€‚");
 			}
 			else
 			{
@@ -176,7 +176,7 @@ public class Client {
 //					.getMapProperty("rpc.protocol.http.ssl.client");
 //			if (ssls == null) {
 //				throw new Exception(
-//						"ÆôÓÃÁËsslÄ£Ê½£¬ µ«ÊÇÃ»ÓĞÖ¸¶¨rpc.protocol.http.ssl.server ²ÎÊı£¬Çë¼ì²éÎÄ¼şorg/frameworkset/spi/manager-rpc-http.xmlÊÇ·ñÕıÈ·ÉèÖÃÁË¸Ã²ÎÊı¡£");
+//						"å¯ç”¨äº†sslæ¨¡å¼ï¼Œ ä½†æ˜¯æ²¡æœ‰æŒ‡å®šrpc.protocol.http.ssl.server å‚æ•°ï¼Œè¯·æ£€æŸ¥æ–‡ä»¶org/frameworkset/spi/manager-rpc-http.xmlæ˜¯å¦æ­£ç¡®è®¾ç½®äº†è¯¥å‚æ•°ã€‚");
 //			}
 //			String trustStore_ = ssls.getString("trustStore");
 //			String trustStorePassword = ssls
@@ -256,7 +256,7 @@ public class Client {
 //			XStream stream_ = new XStream();
 			String message_ = ObjectSerializable.toXML(srcmessag);
 //			System.out.println(message_);
-			StringEntity reqEntity = new StringEntity(message_,BBossHttp.GBK);
+			StringEntity reqEntity = new StringEntity(message_,BBossHttp.UTF_8);
 			reqEntity.setContentType(BBossHttp.XML_TEXT_TYPE);
 			
 
@@ -289,7 +289,7 @@ public class Client {
 					// ObjectInputStream(entity.getContent());
 					InputStream instream = entity.getContent();
 					ByteArrayOutputStream out = new ByteArrayOutputStream();
-//					String xml = getFileContent( instream,"GBK");
+//					String xml = getFileContent( instream,"UTF-8");
 //					System.out.println(xml);
 					
 //					XStream stream = new XStream();

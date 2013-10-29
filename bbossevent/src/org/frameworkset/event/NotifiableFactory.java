@@ -19,7 +19,7 @@ package org.frameworkset.event;
 
 
 /**
- * 工厂类，用来获取相应类型的事件源
+ * 宸ュ巶绫伙紝鐢ㄦ潵鑾峰彇鐩稿簲绫诲瀷鐨勪簨浠舵簮
  *
  * @author biaoping.yin
  * @version 1.0

@@ -21,7 +21,7 @@ import org.apache.log4j.Logger;
 import com.frameworkset.common.poolman.util.SQLUtil.DBHashtable;
 import com.frameworkset.util.ValueObjectUtil;
 /**
- * ·â×°µ÷ÓÃÒµÎñ·½·¨²úÉúµÄ¼¯ºÏÖĞµÄÖµ¶ÔÏóµÄClass¾ä±úºÍpublic fields  
+ * å°è£…è°ƒç”¨ä¸šåŠ¡æ–¹æ³•äº§ç”Ÿçš„é›†åˆä¸­çš„å€¼å¯¹è±¡çš„Classå¥æŸ„å’Œpublic fields  
  * @author biaoping.yin
  * 2005-3-25
  * version 1.0
@@ -34,7 +34,7 @@ public class ClassData
 	private static final Logger log = Logger.getLogger(ClassData.class);
 	
 	/**
-	 * Öµ¶ÔÏó
+	 * å€¼å¯¹è±¡
 	 */
 	private Object valueObject;
 	private Map data = null;
@@ -42,7 +42,7 @@ public class ClassData
 	
 	private boolean toUpercase = true;
 	/**
-//	 * Öµ¶ÔÏó¶¨ÒåµÄ·½·¨
+//	 * å€¼å¯¹è±¡å®šä¹‰çš„æ–¹æ³•
 //	 */
 //	private Method[] methods;
 //	private Field[] fields;
@@ -69,10 +69,10 @@ public class ClassData
 	    this.toUpercase = toUpercase;
 	}
 	/**
-	 * ¹¹½¨Æ÷£¬ÒÔÒ»¸öÖµ¶ÔÏóºÍFieldÊı×é×÷Îª²ÎÊı£¬¹¹½¨ÌåÄÚ¶ÔË½ÓĞµÄvalueObject¶ÔÏó¡¢fields
-	 * Êı×é½øĞĞ³õÊ¼»¯
-	 * @param valueObject - Öµ¶ÔÏó,ÓÃÀ´³õÊ¼»¯valueObjce±äÁ¿
-	 * @param fields - Öµ¶ÔÏóÖĞÍâ½ç¿ÉÒÔ·ÃÎÊµ½µÄËùÓĞÊôĞÔ
+	 * æ„å»ºå™¨ï¼Œä»¥ä¸€ä¸ªå€¼å¯¹è±¡å’ŒFieldæ•°ç»„ä½œä¸ºå‚æ•°ï¼Œæ„å»ºä½“å†…å¯¹ç§æœ‰çš„valueObjectå¯¹è±¡ã€fields
+	 * æ•°ç»„è¿›è¡Œåˆå§‹åŒ–
+	 * @param valueObject - å€¼å¯¹è±¡,ç”¨æ¥åˆå§‹åŒ–valueObjceå˜é‡
+	 * @param fields - å€¼å¯¹è±¡ä¸­å¤–ç•Œå¯ä»¥è®¿é—®åˆ°çš„æ‰€æœ‰å±æ€§
 	 */
 //	public ClassData(Object valueObject, 
 //					 Method[] methods, 
@@ -142,7 +142,7 @@ public class ClassData
 	}
 	
 	/**
-	 * ´ÓmethodsÖĞ²éÑ¯¸ø¶¨×Ö¶ÎµÄgetter Method¶ÔÏó,Èç¹ûÕÒµ½Ôò·µ»Ø¸Ã¶ÔÏó£¬·ñÔò·µ»Ønull»òÕßÅ×³öÒì³£
+	 * ä»methodsä¸­æŸ¥è¯¢ç»™å®šå­—æ®µçš„getter Methodå¯¹è±¡,å¦‚æœæ‰¾åˆ°åˆ™è¿”å›è¯¥å¯¹è±¡ï¼Œå¦åˆ™è¿”å›nullæˆ–è€…æŠ›å‡ºå¼‚å¸¸
 	 * 
 	 * @return Method
 	 */
@@ -160,7 +160,7 @@ public class ClassData
 //		return null;
 //	}
 	/**
-	 * ´ÓfieldsÖĞ²éÑ¯¸ø¶¨Ãû³ÆµÄField¶ÔÏó,Èç¹ûÕÒµ½Ôò·µ»Ø¸Ã¶ÔÏó£¬·ñÔò·µ»Ønull»òÕßÅ×³öÒì³£
+	 * ä»fieldsä¸­æŸ¥è¯¢ç»™å®šåç§°çš„Fieldå¯¹è±¡,å¦‚æœæ‰¾åˆ°åˆ™è¿”å›è¯¥å¯¹è±¡ï¼Œå¦åˆ™è¿”å›nullæˆ–è€…æŠ›å‡ºå¼‚å¸¸
 	 * 
 	 * @return Field
 	 */
@@ -178,9 +178,9 @@ public class ClassData
 	
 
 	/**
-	 * ·µ»Ø¸ø¶¨ÊôĞÔfieldNameµÄÖµ£¬
-	 * ·µ»ØÖµµÃÀàĞÍÎªObject
-	 * @param fieldName - ÊôĞÔÃû³Æ
+	 * è¿”å›ç»™å®šå±æ€§fieldNameçš„å€¼ï¼Œ
+	 * è¿”å›å€¼å¾—ç±»å‹ä¸ºObject
+	 * @param fieldName - å±æ€§åç§°
 	 * @return Object
 	 */
 	public Object getValue(String fieldName)
@@ -188,8 +188,8 @@ public class ClassData
 		if (fieldName == null)
 			return null;
 		/**
-		 * Èç¹û·â×°Êı¾İµÄÖµ¶ÔÏóÎªHashtableÊ±Ö±½Ó´ÓhashtableÖĞ»ñÈ¡Êı¾İ£¬
-		 * ·ñÔòÍ¨¹ıÖµ¶ÔÏó»ñÈ¡ÏàÓ¦×Ö¶ÎµÄÖµ
+		 * å¦‚æœå°è£…æ•°æ®çš„å€¼å¯¹è±¡ä¸ºHashtableæ—¶ç›´æ¥ä»hashtableä¸­è·å–æ•°æ®ï¼Œ
+		 * å¦åˆ™é€šè¿‡å€¼å¯¹è±¡è·å–ç›¸åº”å­—æ®µçš„å€¼
 		 */
 		if(data != null)
 		{

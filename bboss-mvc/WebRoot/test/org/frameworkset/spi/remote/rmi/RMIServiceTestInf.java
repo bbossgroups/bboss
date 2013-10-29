@@ -23,7 +23,7 @@ import java.rmi.RemoteException;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2011-5-18 œ¬ŒÁ05:36:07
+ * @Date 2011-5-18 ‰∏ãÂçà05:36:07
  * @author biaoping.yin
  * @version 1.0
  */

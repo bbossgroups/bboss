@@ -22,7 +22,7 @@ import com.frameworkset.common.poolman.PreparedDBUtil;
 import com.frameworkset.common.poolman.handle.ValueExchange;
 
 /**
- * ²âÊÔÈçÏÂ·½·¨ÊÇ·ñÕı³£¹¤×÷
+ * æµ‹è¯•å¦‚ä¸‹æ–¹æ³•æ˜¯å¦æ­£å¸¸å·¥ä½œ
  * dbUtil.getBinaryStream
  * dbUtil.getUnicodeStream(
  * dbUtil.getAsciiStream(
@@ -69,7 +69,7 @@ public class TestStream {
 			System.out.println("UnicodeStream:" + ValueExchange.getStringFromStream(dbUtil.getUnicodeStream(0, 0)));
 			System.out.println("AsciiStream:" + ValueExchange.getStringFromStream(dbUtil.getAsciiStream(0, 0)));
 			/**
-			 * blobÀàĞÍµÄ×Ö¶Î²»ÄÜÖ±½Ó×ª»»ÎªReader¶ÔÏó,Ö´ĞĞÏÂÊö´úÂë£¬ÏµÍ³»á°üÒÔÏÂÒì³£
+			 * blobç±»å‹çš„å­—æ®µä¸èƒ½ç›´æ¥è½¬æ¢ä¸ºReaderå¯¹è±¡,æ‰§è¡Œä¸‹è¿°ä»£ç ï¼Œç³»ç»Ÿä¼šåŒ…ä»¥ä¸‹å¼‚å¸¸
 			 * java.sql.SQLException: Error type cast column index[0]:From [oracle.sql.BLOB] to [java.io.Reader]
 				at com.frameworkset.common.poolman.Record.getCharacterStream(Record.java:780)
 				at com.frameworkset.common.poolman.DBUtil.getCharacterStream(DBUtil.java:3033)

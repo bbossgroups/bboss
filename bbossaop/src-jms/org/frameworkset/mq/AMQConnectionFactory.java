@@ -65,7 +65,7 @@ import org.frameworkset.spi.remote.SSLHelper;
  * Copyright (c) 2007
  * </p>
  * 
- * @Date 2009-11-22 ÉÏÎç10:56:33
+ * @Date 2009-11-22 ä¸Šåˆ10:56:33
  * @author biaoping.yin
  * @version 1.0
  */
@@ -168,14 +168,14 @@ public class AMQConnectionFactory extends JMSConnectionFactory
     public static String connection_params_redirectPolicy = "connection.params.redirectPolicy";
 
     /**
-     * tcp Ğ­Òé»ñÈ¡Á´½Ó
+     * tcp åè®®è·å–é“¾æ¥
      * 
      * @param brokerURL
-     *            tcpµØÖ·-(tcp://192.168.11.107:61615)
+     *            tcpåœ°å€-(tcp://192.168.11.107:61615)
      * @param name
-     *            ÓÃ»§Ãû-£¨name£©
+     *            ç”¨æˆ·å-ï¼ˆnameï¼‰
      * @param password
-     *            ÃÜÂë-£¨password£©
+     *            å¯†ç -ï¼ˆpasswordï¼‰
      * @return
      */
     @SuppressWarnings("unchecked")
@@ -274,7 +274,7 @@ public class AMQConnectionFactory extends JMSConnectionFactory
 
     }
 //    /**
-//     * Ä¬ÈÏ´æÔÚµÄ²ÎÊı backOffMultiplier change reconnectDelayExponent ÎÄµµÌá¹©µÄ²ÎÊı²»ÕıÈ·
+//     * é»˜è®¤å­˜åœ¨çš„å‚æ•° backOffMultiplier change reconnectDelayExponent æ–‡æ¡£æä¾›çš„å‚æ•°ä¸æ­£ç¡®
 //     */
 //    public static final String[] param = { "initialReconnectDelay",
 //            "maxReconnectDelay", "useExponentialBackOff",
@@ -305,7 +305,7 @@ public class AMQConnectionFactory extends JMSConnectionFactory
         
     }
     /**
-     * ÊÇ·ñÆôÓÃ¹ÊÕÏ»Ö¸´»úÖÆ£¬Èç¹ûÊ¹ÓÃÁË½«urlÔö¼Ó²ÎÊı
+     * æ˜¯å¦å¯ç”¨æ•…éšœæ¢å¤æœºåˆ¶ï¼Œå¦‚æœä½¿ç”¨äº†å°†urlå¢åŠ å‚æ•°
      * 
      * @param mq
      * @return
@@ -333,18 +333,18 @@ public class AMQConnectionFactory extends JMSConnectionFactory
             String SERVER_URL = brokerurl;
             
             boolean USE_FAILOVER = reconnectPolicy.getBoolean("USE_FAILOVER", globalreconnectPolicy.getBoolean("USE_FAILOVER",true));
-            // ÊÇ·ñÆôÓÃ¹ÊÕÏÖØÁ¬»úÖÆ
+            // æ˜¯å¦å¯ç”¨æ•…éšœé‡è¿æœºåˆ¶
             
             if (USE_FAILOVER) {
                 String[] exitsParam = null;
-                // ÅĞ¶ÏËùÌîĞ´µÄµØÖ·ÊÇ·ñ´ø²ÎÊı
+                // åˆ¤æ–­æ‰€å¡«å†™çš„åœ°å€æ˜¯å¦å¸¦å‚æ•°
                 int isParam = SERVER_URL.indexOf("?");
                 if (isParam != -1) {
                     exitsParam = (SERVER_URL.substring(isParam + 1, SERVER_URL
                             .length())).split("&");
                     SERVER_URL = SERVER_URL.substring(0, isParam);
                 }
-                // ÌîĞ´µÄ·şÎñµØÖ·ÖĞÊÇ·ñÊ¹ÓÃÁËfailover
+                // å¡«å†™çš„æœåŠ¡åœ°å€ä¸­æ˜¯å¦ä½¿ç”¨äº†failover
                 if (SERVER_URL.startsWith("failover")) {
                     url.append(SERVER_URL).append("?");
                 } else {

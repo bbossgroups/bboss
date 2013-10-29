@@ -26,7 +26,7 @@ import com.frameworkset.common.poolman.sql.PoolManResultSetMetaData;
  * <p>Description: </p>
  *
  * <p>Copyright: Copyright (c) 2007</p>
- * @Date 2010-1-20 œ¬ŒÁ05:34:07
+ * @Date 2010-1-20 ‰∏ãÂçà05:34:07
  * @author biaoping.yin
  * @version 1.0
  */

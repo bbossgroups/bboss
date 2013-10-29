@@ -28,7 +28,7 @@ import org.junit.Test;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2010-3-7 ÏÂÎç12:11:36
+ * @Date 2010-3-7 ä¸‹åˆ12:11:36
  * @author biaoping.yin
  * @version 1.0
  */
@@ -56,7 +56,7 @@ public class RestfulTest extends TestBase
 		}
 		
 		long end = System.currentTimeMillis();
-		System.out.println("ÏûºÄÊ±¼ä£º" + (end - start) / 1000 + "Ãë");
+		System.out.println("æ¶ˆè€—æ—¶é—´ï¼š" + (end - start) / 1000 + "ç§’");
 		
 		
 		
@@ -83,7 +83,7 @@ public class RestfulTest extends TestBase
         }
         
         long end = System.currentTimeMillis();
-        System.out.println("ÏûºÄÊ±¼ä£º" + (end - start) / 1000 + "Ãë");
+        System.out.println("æ¶ˆè€—æ—¶é—´ï¼š" + (end - start) / 1000 + "ç§’");
         
         
         
@@ -111,7 +111,7 @@ public class RestfulTest extends TestBase
         }
         
         long end = System.currentTimeMillis();
-        System.out.println("ÏûºÄÊ±¼ä£º" + (end - start) / 1000 + "Ãë");
+        System.out.println("æ¶ˆè€—æ—¶é—´ï¼š" + (end - start) / 1000 + "ç§’");
         
         
         
@@ -124,10 +124,10 @@ public class RestfulTest extends TestBase
                 long start = System.currentTimeMillis();
                 
                 for(int i = 0; i < 1; i ++)
-                    testInf.sayHello("Òü±êÆ½");
+                    testInf.sayHello("å°¹æ ‡å¹³");
                 
                 long end = System.currentTimeMillis();
-                System.out.println("ÏûºÄÊ±¼ä£º" + (end - start) / 1000 + "Ãë");
+                System.out.println("æ¶ˆè€—æ—¶é—´ï¼š" + (end - start) / 1000 + "ç§’");
                 
                 
                 
@@ -143,7 +143,7 @@ public class RestfulTest extends TestBase
 //                    System.out.println("testInf.getCount():" + i + " = "+testInf.getCount());
 //                
 //                long end = System.currentTimeMillis();
-//                System.out.println("ÏûºÄÊ±¼ä£º" + (end - start) / 1000 + "Ãë");
+//                System.out.println("æ¶ˆè€—æ—¶é—´ï¼š" + (end - start) / 1000 + "ç§’");
 	    for(int i = 0; i < 10; i ++)
 	    {
 	        Thread t = new Thread(new RunRestRPC(i));
@@ -170,7 +170,7 @@ public class RestfulTest extends TestBase
                     System.out.println("testInf.getCount():" + i + " = "+testInf.getCount());
                 
                 long end = System.currentTimeMillis();
-                System.out.println("ÈÎÎñ¡¾" + i + "¡¿ÏûºÄÊ±¼ä£º" + (end - start) / 1000 + "Ãë");
+                System.out.println("ä»»åŠ¡ã€" + i + "ã€‘æ¶ˆè€—æ—¶é—´ï¼š" + (end - start) / 1000 + "ç§’");
                 
             }
 	    
@@ -182,7 +182,7 @@ public class RestfulTest extends TestBase
 	}
 	
 	/**
-	 * ¶à²¥·şÎñµ÷ÓÃ
+	 * å¤šæ’­æœåŠ¡è°ƒç”¨
 	 */
 	@Test
 	public  void testMuticastRestRPC()
@@ -203,7 +203,7 @@ public class RestfulTest extends TestBase
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-                //µÈ¼ÛµÄµ÷ÓÃ·½·¨
+                //ç­‰ä»·çš„è°ƒç”¨æ–¹æ³•
                 
 //                Object ret_12345 = context.getRPCResult("127.0.0.1:12345", ret,Target.BROADCAST_TYPE_MINA);
 //                Object ret_12346 = context.getRPCResult("127.0.0.1:12346", ret,Target.BROADCAST_TYPE_MINA);

@@ -1,9 +1,9 @@
-<%@ page contentType="text/html; charset=GBK" language="java" import="java.sql.*,java.util.List" errorPage=""%>
+<%@ page contentType="text/html; charset=UTF-8" language="java" import="java.sql.*,java.util.List" errorPage=""%>
 <%@ taglib uri="/WEB-INF/pager-taglib.tld" prefix="pg"%>
 <!-- 
-	²âÊÔÔÚbeaninfo±êÇ©ÉÏÖ±½ÓÖ´ĞĞÔ¤±àÒë²éÑ¯²Ù×÷£¬»ñÈ¡ÏêÏ¸ĞÅÏ¢ÊµÀı
-	statement:Êı¾İ¿â²éÑ¯Óï¾ä
-	dbname:²éÑ¯µÄÏàÓ¦Êı¾İ¿âÃû³Æ£¬ÔÚpoolman.xmlÎÄ¼şÖĞ½øĞĞÅäÖÃ
+	æµ‹è¯•åœ¨beaninfoæ ‡ç­¾ä¸Šç›´æ¥æ‰§è¡Œé¢„ç¼–è¯‘æŸ¥è¯¢æ“ä½œï¼Œè·å–è¯¦ç»†ä¿¡æ¯å®ä¾‹
+	statement:æ•°æ®åº“æŸ¥è¯¢è¯­å¥
+	dbname:æŸ¥è¯¢çš„ç›¸åº”æ•°æ®åº“åç§°ï¼Œåœ¨poolman.xmlæ–‡ä»¶ä¸­è¿›è¡Œé…ç½®
 -->
 
 <%
@@ -13,7 +13,7 @@
 %>
 <html>
 <head>
-<title>²âÊÔÔÚbeaninfo±êÇ©ÉÏÖ±½ÓÖ´ĞĞÊı¾İ¿â£¬»ñÈ¡·ÖÒ³ÁĞ±íĞÅÏ¢ÊµÀı</title>
+<title>æµ‹è¯•åœ¨beaninfoæ ‡ç­¾ä¸Šç›´æ¥æ‰§è¡Œæ•°æ®åº“ï¼Œè·å–åˆ†é¡µåˆ—è¡¨ä¿¡æ¯å®ä¾‹</title>
 </head>
 <body>
 
@@ -34,7 +34,7 @@
 					<pg:cell colName="table_name" defaultValue=""/>
 				</td> 
 				<td>
-					table_id_name£º
+					table_id_nameï¼š
 				</td>
 				<td>
 					<pg:cell colName="table_id_name" defaultValue="" />

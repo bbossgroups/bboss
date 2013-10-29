@@ -21,7 +21,7 @@ package com.frameworkset.util;
  * <p> bboss workgroup </p>
  * <p> Copyright (c) 2009 </p>
  * 
- * @Date 2012-4-6 ÏÂÎç4:31:39
+ * @Date 2012-4-6 ä¸‹åˆ4:31:39
  * @author biaoping.yin
  * @version 1.0
  */

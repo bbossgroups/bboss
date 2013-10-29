@@ -22,11 +22,11 @@ import org.frameworkset.util.annotations.AttributeScope;
 /**
  * 
  * <p>AttributeWraper.java</p>
- * <p> Description: ¶Ô×¢½âAttributeµÄ·â×°Àà£¬½«Ä¬ÈÏÖµºÍ³õÊ¼Öµ×ª»»µ½WrapperÀàÖĞ</p>
+ * <p> Description: å¯¹æ³¨è§£Attributeçš„å°è£…ç±»ï¼Œå°†é»˜è®¤å€¼å’Œåˆå§‹å€¼è½¬æ¢åˆ°Wrapperç±»ä¸­</p>
  * <p> bboss workgroup </p>
  * <p> Copyright (c) 2005-2013 </p>
  * 
- * @Date 2013Äê9ÔÂ30ÈÕ
+ * @Date 2013å¹´9æœˆ30æ—¥
  * @author biaoping.yin
  * @version 1.0
  */
@@ -37,7 +37,7 @@ public class AttributeWraper {
 	private AttributeScope scope;
 	private String defaultvalue;
 	/**
-	 * Ö¸¶¨ÈÕÆÚ¸ñÊ½
+	 * æŒ‡å®šæ—¥æœŸæ ¼å¼
 	 * @return
 	 */
 	private String dateformat;
@@ -50,16 +50,16 @@ public class AttributeWraper {
 		this.dateformat =  AnnotationUtils.converDefaultValue(attr.dateformat());
 		this.defaultvalue = AnnotationUtils.converDefaultValue(attr.defaultvalue());
 		
-//		name = attr¡£name();
-//		required =  attr¡£required();
-//		editor =  attr¡£editor() ;
-//		scope =  attr¡£scope() ;
-//		defaultvalue =  attr¡£defaultvalue();// default ValueConstants.DEFAULT_NONE;
+//		name = attrã€‚name();
+//		required =  attrã€‚required();
+//		editor =  attrã€‚editor() ;
+//		scope =  attrã€‚scope() ;
+//		defaultvalue =  attrã€‚defaultvalue();// default ValueConstants.DEFAULT_NONE;
 //		/**
-//		 * Ö¸¶¨ÈÕÆÚ¸ñÊ½
+//		 * æŒ‡å®šæ—¥æœŸæ ¼å¼
 //		 * @return
 //		 */
-//		dateformat = attr¡£dateformat();// default ValueConstants.DEFAULT_NONE;
+//		dateformat = attrã€‚dateformat();// default ValueConstants.DEFAULT_NONE;
 	}
 	public String name() {
 		return name;

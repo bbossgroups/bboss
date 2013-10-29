@@ -1,4 +1,4 @@
 #######update function list since bbossgroups-3.6.2 begin###########
-新增hessian协议调用服务
+鏂板hessian鍗忚璋冪敤鏈嶅姟
 
 

@@ -50,7 +50,7 @@ import org.frameworkset.spi.remote.webservice.WSUtil;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2009-11-4 œ¬ŒÁ04:56:02
+ * @Date 2009-11-4 ‰∏ãÂçà04:56:02
  * @author biaoping.yin
  * @version 1.0
  */

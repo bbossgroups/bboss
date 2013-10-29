@@ -23,7 +23,7 @@ import com.frameworkset.common.poolman.Record;
  * <p>Description: </p>
  *
  * <p>Copyright: Copyright (c) 2007</p>
- * @Date 2010-1-22 œ¬ŒÁ06:13:30
+ * @Date 2010-1-22 ‰∏ãÂçà06:13:30
  * @author biaoping.yin
  * @version 1.0
  * @param <T>

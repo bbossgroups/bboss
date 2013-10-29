@@ -26,7 +26,7 @@ import com.frameworkset.orm.transaction.TransactionManager;
  * 
  * <p>Title: TemplateDBUtil.java</p>
  *
- * <p>Description: Ö´ÐÐÊý¾Ý¿â²Ù×÷µÄÄ£°åÀà</p>
+ * <p>Description: æ‰§è¡Œæ•°æ®åº“æ“ä½œçš„æ¨¡æ¿ç±»</p>
  *
  * <p>Copyright: Copyright (c) 2007</p>
  *
@@ -37,16 +37,16 @@ import com.frameworkset.orm.transaction.TransactionManager;
  * Copyright (c) 2007
  * </p>
  * 
- * @Date 2009-6-1 ÏÂÎç08:58:51
+ * @Date 2009-6-1 ä¸‹åˆ08:58:51
  * @author biaoping.yin
  * @version 1.0
  */
 public class TemplateDBUtil extends PreparedDBUtil{
 	
 	/**
-	 * Ö´ÐÐJDBCTemplateµÄexecute·½·¨£¬Õû¸ö·½·¨µÄÖ´ÐÐ¹ý³Ì±»°üº¬ÔÚ
-	 * Ò»¸öÊÂÎñÖÐ£¬Èç¹ûÓÐÒì³£·¢ÉúÔòÊÂÎñ½«±»»Ø¹ö£¬Èç¹ûÕû¸öÊÂÎñ±»Õý³£½áÊø£¬Ôò±»Ìá½»
-	 * Èç¹ûÄ£°å·½·¨ÔÚÖ´ÐÐµÄ¹ý³Ìµ±ÖÐÅ×³öÒì³££¬Ôò¸ÃÒì³£½«±»¼ÌÐøÅ×³ö¸øÒµÎñ²ã
+	 * æ‰§è¡ŒJDBCTemplateçš„executeæ–¹æ³•ï¼Œæ•´ä¸ªæ–¹æ³•çš„æ‰§è¡Œè¿‡ç¨‹è¢«åŒ…å«åœ¨
+	 * ä¸€ä¸ªäº‹åŠ¡ä¸­ï¼Œå¦‚æžœæœ‰å¼‚å¸¸å‘ç”Ÿåˆ™äº‹åŠ¡å°†è¢«å›žæ»šï¼Œå¦‚æžœæ•´ä¸ªäº‹åŠ¡è¢«æ­£å¸¸ç»“æŸï¼Œåˆ™è¢«æäº¤
+	 * å¦‚æžœæ¨¡æ¿æ–¹æ³•åœ¨æ‰§è¡Œçš„è¿‡ç¨‹å½“ä¸­æŠ›å‡ºå¼‚å¸¸ï¼Œåˆ™è¯¥å¼‚å¸¸å°†è¢«ç»§ç»­æŠ›å‡ºç»™ä¸šåŠ¡å±‚
 	 * @param template
 	 * @throws Throwable
 	 */
@@ -80,10 +80,10 @@ public class TemplateDBUtil extends PreparedDBUtil{
 	}
 	
 	 /**
-	 * Ö´ÐÐJDBCValueTemplateµÄexecute·½·¨£¬¸Ã·½·¨ÓÐ·µ»ØÖµ
-	 * Õû¸ö·½·¨µÄÖ´ÐÐ¹ý³Ì±»°üº¬ÔÚÒ»¸öÊÂÎñÖÐ£¬Èç¹ûÓÐÒì³£·¢ÉúÔòÊÂÎñ½«±»»Ø¹ö£¬Èç¹ûÕû¸öÊÂÎñ±»Õý³£½áÊø£¬Ôò±»Ìá½»
-	 * ²¢ÇÒ½«·µ»ØÖµ·µ»Ø¸øÒµÎñ²ã¡£
-	 * Èç¹ûÄ£°å·½·¨ÔÚÖ´ÐÐµÄ¹ý³Ìµ±ÖÐÅ×³öÒì³££¬Ôò¸ÃÒì³£½«±»¼ÌÐøÅ×³ö¸øÒµÎñ²ã
+	 * æ‰§è¡ŒJDBCValueTemplateçš„executeæ–¹æ³•ï¼Œè¯¥æ–¹æ³•æœ‰è¿”å›žå€¼
+	 * æ•´ä¸ªæ–¹æ³•çš„æ‰§è¡Œè¿‡ç¨‹è¢«åŒ…å«åœ¨ä¸€ä¸ªäº‹åŠ¡ä¸­ï¼Œå¦‚æžœæœ‰å¼‚å¸¸å‘ç”Ÿåˆ™äº‹åŠ¡å°†è¢«å›žæ»šï¼Œå¦‚æžœæ•´ä¸ªäº‹åŠ¡è¢«æ­£å¸¸ç»“æŸï¼Œåˆ™è¢«æäº¤
+	 * å¹¶ä¸”å°†è¿”å›žå€¼è¿”å›žç»™ä¸šåŠ¡å±‚ã€‚
+	 * å¦‚æžœæ¨¡æ¿æ–¹æ³•åœ¨æ‰§è¡Œçš„è¿‡ç¨‹å½“ä¸­æŠ›å‡ºå¼‚å¸¸ï¼Œåˆ™è¯¥å¼‚å¸¸å°†è¢«ç»§ç»­æŠ›å‡ºç»™ä¸šåŠ¡å±‚
 	 * 
 	 * @param template
 	 * @throws Throwable

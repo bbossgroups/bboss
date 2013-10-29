@@ -17,56 +17,56 @@ import java.util.Set;
  */
 public interface ContextMenu extends Serializable{
 	/**
-	 * »ñÈ¡ÔÚµ¥¶ÀµÄ½ÚµãÉÏ¹¹ÔìµÄÓÒ¼ü²Ëµ¥
+	 * è·å–åœ¨å•ç‹¬çš„èŠ‚ç‚¹ä¸Šæ„é€ çš„å³é”®èœå•
 	 * @return
 	 */	
 	public Set getNodeContextmenus();
 	/**
-	 * »ñÈ¡Àà±ğµÄÓÒ¼ü²Ëµ¥ÁĞ±í
+	 * è·å–ç±»åˆ«çš„å³é”®èœå•åˆ—è¡¨
 	 * @return
 	 */
 	public Set getTypeContextmenus();
 	
 	/**
-	 * Çå³ı½ÚµãÓÒ¼ü²Ëµ¥
+	 * æ¸…é™¤èŠ‚ç‚¹å³é”®èœå•
 	 *
 	 */
 	public void clearNodeContextmenus();
 	/**
-	 * Çå³ıÀà±ğÓÒ¼ü²Ëµ¥
+	 * æ¸…é™¤ç±»åˆ«å³é”®èœå•
 	 *
 	 */
 	public void clearTypeContextmenus();
 	/**
-	 * Çå³ıËùÓĞµÄÓÒ¼ü²Ëµ¥
+	 * æ¸…é™¤æ‰€æœ‰çš„å³é”®èœå•
 	 *
 	 */
 	public void clearContextmenus();
 	/**
-	 * Ìí¼ÓÀà±ğÓÒ¼ü²Ëµ¥
+	 * æ·»åŠ ç±»åˆ«å³é”®èœå•
 	 * @param menu
 	 */
 	public void addContextMenuOfType(Menu menu);
 	/**
-	 * ºÏ²¢ÀàĞÍÓÒ¼ü²Ëµ¥ºÍ½ÚµãÓÒ¼ü²Ëµ¥
+	 * åˆå¹¶ç±»å‹å³é”®èœå•å’ŒèŠ‚ç‚¹å³é”®èœå•
 	 *
 	 */
 	public void mergeContextMenus();
 	
 	/**
-	 * »ñÈ¡ËùÓĞµÄÓÒ¼ü²Ëµ¥
+	 * è·å–æ‰€æœ‰çš„å³é”®èœå•
 	 * @return
 	 */
 	public Set getContextmenus();
 	
 	/**
-	 * Ìí¼Ó½ÚµãÓÒ¼ü²Ëµ¥
+	 * æ·»åŠ èŠ‚ç‚¹å³é”®èœå•
 	 * @param node
 	 * @param menu
 	 */
 	public void addContextMenuOfNode(AttachElement node,Menu menu);
 	/**
-	 * Ìí¼ÓÒ»°ãµÄÓÒ¼ü²Ëµ¥¹¦ÄÜ
+	 * æ·»åŠ ä¸€èˆ¬çš„å³é”®èœå•åŠŸèƒ½
 	 * @param menu
 	 */
 	public void addContextMenu(Menu menu);

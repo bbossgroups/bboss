@@ -19,7 +19,7 @@ import com.frameworkset.util.ListInfo;
 /**
  * <p>Title: BaseDAOHibernate</p>
  *
- * <p>Description: daoµÄ¹«¹²»ùÀà£¬Ìá¹©ÁËÒ»Ğ©¹«ÓÃµÄÊı¾İ¿â²éÑ¯</p>
+ * <p>Description: daoçš„å…¬å…±åŸºç±»ï¼Œæä¾›äº†ä¸€äº›å…¬ç”¨çš„æ•°æ®åº“æŸ¥è¯¢</p>
  *
 
  *
@@ -30,7 +30,7 @@ import com.frameworkset.util.ListInfo;
  * Copyright (c) 2007
  * </p>
  * 
- * @Date 2009-6-1 ÏÂÎç08:58:51
+ * @Date 2009-6-1 ä¸‹åˆ08:58:51
  * @author biaoping.yin
  * @version 1.0
  */
@@ -85,11 +85,11 @@ public class BaseDAOHibernate
 	}
 
 	/**
-	 * ²éÑ¯ÀàĞÍÎªclazzµÄËùÓĞ¼ÇÂ¼
+	 * æŸ¥è¯¢ç±»å‹ä¸ºclazzçš„æ‰€æœ‰è®°å½•
 	 * @param clazz Class
-	 * @param start ·ÖÒ³Êı¾İÆğÊ¼Î»ÖÃ
- 	 * @param maxSize »ñÈ¡¼ÇÂ¼×î´óÌõÊı
-	 * @return ListInfo ·â×°½á¹ûÁĞ±íºÍ×Ü¼ÇÂ¼Êı
+	 * @param start åˆ†é¡µæ•°æ®èµ·å§‹ä½ç½®
+ 	 * @param maxSize è·å–è®°å½•æœ€å¤§æ¡æ•°
+	 * @return ListInfo å°è£…ç»“æœåˆ—è¡¨å’Œæ€»è®°å½•æ•°
 	 * @throws DataAccessException
 	 */
 	public ListInfo getObjects(Class clazz,long start,int maxSize)
@@ -101,15 +101,15 @@ public class BaseDAOHibernate
 
 
 	/**
-	 * Ö´ĞĞÔ¤±àÒë·ÖÒ³²éÑ¯£¬²¢ÇÒ·µ»Ø²éÑ¯½á¹ûºÍÏà¹ØµÄ·ÖÒ³ĞÅÏ¢£¨×Ü¼ÇÂ¼Êı£©
-	 * @param sql String Ô¤±àÒë²éÑ¯Óï¾ä
-	 * @param objs Object[] Ô¤±àÒë²éÑ¯Óï¾ä²ÎÊıÊı×é
-	 * @param types Type[] Ô¤±àÒë²éÑ¯Óï¾ä²ÎÊıÀàĞÍÊı×é
- 	 * @param start ·ÖÒ³Êı¾İÆğÊ¼Î»ÖÃ
- 	 * @param maxSize »ñÈ¡¼ÇÂ¼×î´óÌõÊı
-	 * @return ListInfo ·â×°½á¹ûÁĞ±íºÍ×Ü¼ÇÂ¼Êı
+	 * æ‰§è¡Œé¢„ç¼–è¯‘åˆ†é¡µæŸ¥è¯¢ï¼Œå¹¶ä¸”è¿”å›æŸ¥è¯¢ç»“æœå’Œç›¸å…³çš„åˆ†é¡µä¿¡æ¯ï¼ˆæ€»è®°å½•æ•°ï¼‰
+	 * @param sql String é¢„ç¼–è¯‘æŸ¥è¯¢è¯­å¥
+	 * @param objs Object[] é¢„ç¼–è¯‘æŸ¥è¯¢è¯­å¥å‚æ•°æ•°ç»„
+	 * @param types Type[] é¢„ç¼–è¯‘æŸ¥è¯¢è¯­å¥å‚æ•°ç±»å‹æ•°ç»„
+ 	 * @param start åˆ†é¡µæ•°æ®èµ·å§‹ä½ç½®
+ 	 * @param maxSize è·å–è®°å½•æœ€å¤§æ¡æ•°
+	 * @return ListInfo å°è£…ç»“æœåˆ—è¡¨å’Œæ€»è®°å½•æ•°
 	 * @throws DataAccessException
-	 * @deprecated ±¾·½·¨ÊÇÓëhibernate 2.x¼æÈİ¶øĞ´£¬Ìæ´úµÄ·½·¨Îªprotected List find(String sql, Object objs[], Pagination pagination)
+	 * @deprecated æœ¬æ–¹æ³•æ˜¯ä¸hibernate 2.xå…¼å®¹è€Œå†™ï¼Œæ›¿ä»£çš„æ–¹æ³•ä¸ºprotected List find(String sql, Object objs[], Pagination pagination)
 	 */
 	public ListInfo find(String sql, Object objs[], Type types[], long start,int maxSize)
 		throws DataAccessException
@@ -118,13 +118,13 @@ public class BaseDAOHibernate
 	}
 
 	/**
-	 * Ö´ĞĞÔ¤±àÒë·ÖÒ³²éÑ¯£¬²¢ÇÒ·µ»Ø²éÑ¯½á¹ûºÍÏà¹ØµÄ·ÖÒ³ĞÅÏ¢£¨×Ü¼ÇÂ¼Êı£©
-	 * @param sql String Ô¤±àÒë²éÑ¯Óï¾ä
-	 * @param objs Object[] Ô¤±àÒë²éÑ¯Óï¾ä²ÎÊıÊı×é
-	 * @param types Type[] Ô¤±àÒë²éÑ¯Óï¾ä²ÎÊıÀàĞÍÊı×é
-	 * @return ListInfo ·â×°½á¹ûÁĞ±íºÍ×Ü¼ÇÂ¼Êı
+	 * æ‰§è¡Œé¢„ç¼–è¯‘åˆ†é¡µæŸ¥è¯¢ï¼Œå¹¶ä¸”è¿”å›æŸ¥è¯¢ç»“æœå’Œç›¸å…³çš„åˆ†é¡µä¿¡æ¯ï¼ˆæ€»è®°å½•æ•°ï¼‰
+	 * @param sql String é¢„ç¼–è¯‘æŸ¥è¯¢è¯­å¥
+	 * @param objs Object[] é¢„ç¼–è¯‘æŸ¥è¯¢è¯­å¥å‚æ•°æ•°ç»„
+	 * @param types Type[] é¢„ç¼–è¯‘æŸ¥è¯¢è¯­å¥å‚æ•°ç±»å‹æ•°ç»„
+	 * @return ListInfo å°è£…ç»“æœåˆ—è¡¨å’Œæ€»è®°å½•æ•°
 	 * @throws DataAccessException
-	 * @deprecated ±¾·½·¨ÊÇÓëhibernate 2.x¼æÈİ¶øĞ´£¬Ìæ´úµÄ·½·¨Îªprotected List find(String sql, Object objs[])
+	 * @deprecated æœ¬æ–¹æ³•æ˜¯ä¸hibernate 2.xå…¼å®¹è€Œå†™ï¼Œæ›¿ä»£çš„æ–¹æ³•ä¸ºprotected List find(String sql, Object objs[])
 	 */
 	public List find(String sql, Object objs[], Type types[])
 		throws DataAccessException
@@ -133,14 +133,14 @@ public class BaseDAOHibernate
 	}
 
 	/**
-	 * Ö´ĞĞÔ¤±àÒë·ÖÒ³²éÑ¯£¬²¢ÇÒ·µ»Ø²éÑ¯½á¹ûºÍÏà¹ØµÄ·ÖÒ³ĞÅÏ¢£¨×Ü¼ÇÂ¼Êı£©
-	 * @param sql String Ô¤±àÒë²éÑ¯Óï¾ä
-	 * @param objs Object[] Ô¤±àÒë²éÑ¯Óï¾ä²ÎÊıÊı×é
-	 * @param types Type[] Ô¤±àÒë²éÑ¯Óï¾ä²ÎÊıÀàĞÍÊı×é
+	 * æ‰§è¡Œé¢„ç¼–è¯‘åˆ†é¡µæŸ¥è¯¢ï¼Œå¹¶ä¸”è¿”å›æŸ¥è¯¢ç»“æœå’Œç›¸å…³çš„åˆ†é¡µä¿¡æ¯ï¼ˆæ€»è®°å½•æ•°ï¼‰
+	 * @param sql String é¢„ç¼–è¯‘æŸ¥è¯¢è¯­å¥
+	 * @param objs Object[] é¢„ç¼–è¯‘æŸ¥è¯¢è¯­å¥å‚æ•°æ•°ç»„
+	 * @param types Type[] é¢„ç¼–è¯‘æŸ¥è¯¢è¯­å¥å‚æ•°ç±»å‹æ•°ç»„
 	 *
-	 * @return ListInfo ·â×°½á¹ûÁĞ±íºÍ×Ü¼ÇÂ¼Êı
+	 * @return ListInfo å°è£…ç»“æœåˆ—è¡¨å’Œæ€»è®°å½•æ•°
 	 * @throws DataAccessException
-	 * @deprecated ±¾·½·¨ÊÇÓëhibernate 2.x¼æÈİ¶øĞ´£¬Ìæ´úµÄ·½·¨Îªprotected List find(String sql, Object objs[])
+	 * @deprecated æœ¬æ–¹æ³•æ˜¯ä¸hibernate 2.xå…¼å®¹è€Œå†™ï¼Œæ›¿ä»£çš„æ–¹æ³•ä¸ºprotected List find(String sql, Object objs[])
 	 */
 	public List find(String sql, Object objs[])
 		throws DataAccessException
@@ -150,12 +150,12 @@ public class BaseDAOHibernate
 
 
 	/**
-	 * Ö´ĞĞÔ¤±àÒë·ÖÒ³²éÑ¯£¬²¢ÇÒ·µ»Ø²éÑ¯½á¹ûºÍÏà¹ØµÄ·ÖÒ³ĞÅÏ¢£¨×Ü¼ÇÂ¼Êı£©
-	 * @param sql String Ô¤±àÒë²éÑ¯Óï¾ä
-	 * @param objs Object[] Ô¤±àÒë²éÑ¯Óï¾ä²ÎÊıÊı×é
-	 * @param start ·ÖÒ³Êı¾İÆğÊ¼Î»ÖÃ
- 	 * @param maxSize »ñÈ¡¼ÇÂ¼×î´óÌõÊı
-	 * @return ListInfo ·â×°½á¹ûÁĞ±íºÍ×Ü¼ÇÂ¼Êı
+	 * æ‰§è¡Œé¢„ç¼–è¯‘åˆ†é¡µæŸ¥è¯¢ï¼Œå¹¶ä¸”è¿”å›æŸ¥è¯¢ç»“æœå’Œç›¸å…³çš„åˆ†é¡µä¿¡æ¯ï¼ˆæ€»è®°å½•æ•°ï¼‰
+	 * @param sql String é¢„ç¼–è¯‘æŸ¥è¯¢è¯­å¥
+	 * @param objs Object[] é¢„ç¼–è¯‘æŸ¥è¯¢è¯­å¥å‚æ•°æ•°ç»„
+	 * @param start åˆ†é¡µæ•°æ®èµ·å§‹ä½ç½®
+ 	 * @param maxSize è·å–è®°å½•æœ€å¤§æ¡æ•°
+	 * @return ListInfo å°è£…ç»“æœåˆ—è¡¨å’Œæ€»è®°å½•æ•°
 	 * @throws DataAccessException
 	 */
 	public ListInfo find(String sql, Object objs[],long start,int maxSize)
@@ -189,11 +189,11 @@ public class BaseDAOHibernate
 	}
 
 	/**
-	 * Ö´ĞĞ·ÖÒ³²éÑ¯
-	 * @param sql String ²éÑ¯Óï¾ä
-	 * @param start ·ÖÒ³Êı¾İÆğÊ¼Î»ÖÃ
- 	 * @param maxSize »ñÈ¡¼ÇÂ¼×î´óÌõÊı
-	 * @return ListInfo ·â×°½á¹ûÁĞ±íºÍ×Ü¼ÇÂ¼Êı
+	 * æ‰§è¡Œåˆ†é¡µæŸ¥è¯¢
+	 * @param sql String æŸ¥è¯¢è¯­å¥
+	 * @param start åˆ†é¡µæ•°æ®èµ·å§‹ä½ç½®
+ 	 * @param maxSize è·å–è®°å½•æœ€å¤§æ¡æ•°
+	 * @return ListInfo å°è£…ç»“æœåˆ—è¡¨å’Œæ€»è®°å½•æ•°
 	 * @throws DataAccessException
 	 */
 	public ListInfo find(String sql, long start,int maxSize)
@@ -203,9 +203,9 @@ public class BaseDAOHibernate
 	}
 
 	/**
-	 * Ö´ĞĞ²éÑ¯
-	 * @param sql String ²éÑ¯Óï¾ä
-	 * @return List ½á¹ûÁĞ±í
+	 * æ‰§è¡ŒæŸ¥è¯¢
+	 * @param sql String æŸ¥è¯¢è¯­å¥
+	 * @return List ç»“æœåˆ—è¡¨
 	 * @throws DataAccessException
 	 */
 	public List find(String sql)
@@ -216,15 +216,15 @@ public class BaseDAOHibernate
 
 
 	/**
-	 * Ö´ĞĞÔ¤±àÒë²éÑ¯Óï¾ä£¬·µ»Ø½á¹ûÁĞ±í
-	 * @param sql String Ô¤±àÒëÓï¾ä
-	 * @param obj Object Ô¤±àÒë²éÑ¯²ÎÊıÖµ
-	 * @param type Type Ô¤±àÒë²éÑ¯²ÎÊıÀàĞÍ
-	 * @param start ·ÖÒ³Êı¾İÆğÊ¼Î»ÖÃ
- 	 * @param maxSize »ñÈ¡¼ÇÂ¼×î´óÌõÊı
-	 * @return ListInfo ·â×°½á¹ûÁĞ±íºÍ×Ü¼ÇÂ¼Êı
+	 * æ‰§è¡Œé¢„ç¼–è¯‘æŸ¥è¯¢è¯­å¥ï¼Œè¿”å›ç»“æœåˆ—è¡¨
+	 * @param sql String é¢„ç¼–è¯‘è¯­å¥
+	 * @param obj Object é¢„ç¼–è¯‘æŸ¥è¯¢å‚æ•°å€¼
+	 * @param type Type é¢„ç¼–è¯‘æŸ¥è¯¢å‚æ•°ç±»å‹
+	 * @param start åˆ†é¡µæ•°æ®èµ·å§‹ä½ç½®
+ 	 * @param maxSize è·å–è®°å½•æœ€å¤§æ¡æ•°
+	 * @return ListInfo å°è£…ç»“æœåˆ—è¡¨å’Œæ€»è®°å½•æ•°
 	 * @throws DataAccessException
-	 * @deprecated ±¾·½·¨ÎªÓëhibernate 2.x¼æÈİ¶øÉè¼ÆµÄ,hibernate 3.xÌæ´úµÄ·½·¨Îªprotected List find(String sql, Object obj, Pagination pagination)
+	 * @deprecated æœ¬æ–¹æ³•ä¸ºä¸hibernate 2.xå…¼å®¹è€Œè®¾è®¡çš„,hibernate 3.xæ›¿ä»£çš„æ–¹æ³•ä¸ºprotected List find(String sql, Object obj, Pagination pagination)
 	 */
 	public ListInfo find(String sql, Object obj, Type type, long start, int maxSize)
 		throws DataAccessException
@@ -233,12 +233,12 @@ public class BaseDAOHibernate
 	}
 
 	/**
-	 * Ö´ĞĞÔ¤±àÒë²éÑ¯Óï¾ä£¬·µ»Ø½á¹ûÁĞ±í
-	 * @param sql String Ô¤±àÒëÓï¾ä
-	 * @param obj Object Ô¤±àÒë²éÑ¯²ÎÊıÖµ
-	 * @param start ·ÖÒ³Êı¾İÆğÊ¼Î»ÖÃ
- 	 * @param maxSize »ñÈ¡¼ÇÂ¼×î´óÌõÊı
-	 * @return ListInfo ·â×°½á¹ûÁĞ±íºÍ×Ü¼ÇÂ¼Êı
+	 * æ‰§è¡Œé¢„ç¼–è¯‘æŸ¥è¯¢è¯­å¥ï¼Œè¿”å›ç»“æœåˆ—è¡¨
+	 * @param sql String é¢„ç¼–è¯‘è¯­å¥
+	 * @param obj Object é¢„ç¼–è¯‘æŸ¥è¯¢å‚æ•°å€¼
+	 * @param start åˆ†é¡µæ•°æ®èµ·å§‹ä½ç½®
+ 	 * @param maxSize è·å–è®°å½•æœ€å¤§æ¡æ•°
+	 * @return ListInfo å°è£…ç»“æœåˆ—è¡¨å’Œæ€»è®°å½•æ•°
 	 * @throws DataAccessException
 	 */
 	public ListInfo find(String sql, Object obj,long start, int maxSize)
@@ -252,10 +252,10 @@ public class BaseDAOHibernate
 
 
 	/**
-	 * Ö´ĞĞÔ¤±àÒë²éÑ¯Óï¾ä£¬·µ»Ø½á¹ûÁĞ±í
-	 * @param sql String Ô¤±àÒëÓï¾ä
-	 * @param obj Object Ô¤±àÒë²éÑ¯²ÎÊıÖµ
-	 * @return List ½á¹ûÁĞ±í
+	 * æ‰§è¡Œé¢„ç¼–è¯‘æŸ¥è¯¢è¯­å¥ï¼Œè¿”å›ç»“æœåˆ—è¡¨
+	 * @param sql String é¢„ç¼–è¯‘è¯­å¥
+	 * @param obj Object é¢„ç¼–è¯‘æŸ¥è¯¢å‚æ•°å€¼
+	 * @return List ç»“æœåˆ—è¡¨
 	 * @throws DataAccessException
 	 */
 	public List find(String sql, Object obj)
@@ -267,7 +267,7 @@ public class BaseDAOHibernate
 
 
 	/**
-	 * Ö´ĞĞÔ¤±àÒësqlÓï¾ä£¬»ñÈ¡²éÑ¯½á¹ûµÄ×Ü¼ÇÂ¼Êı£¬objs[]Êı×é´æ·Å²éÑ¯²ÎÊı
+	 * æ‰§è¡Œé¢„ç¼–è¯‘sqlè¯­å¥ï¼Œè·å–æŸ¥è¯¢ç»“æœçš„æ€»è®°å½•æ•°ï¼Œobjs[]æ•°ç»„å­˜æ”¾æŸ¥è¯¢å‚æ•°
 	 * @param sql String
 	 * @param objs Object[]
 	 * @return long
@@ -282,7 +282,7 @@ public class BaseDAOHibernate
 			String midSql = getCountSql(sql);
 			midSql = "select count(*) " + midSql;
 
-			//hibernate 3.x ÖĞ¶ÔÓ¦µÄ·½·¨
+			//hibernate 3.x ä¸­å¯¹åº”çš„æ–¹æ³•
 			List ls = getHibernateTemplate().find(midSql, objs);
 			if(ls != null && ls.size() > 0)
 			{
@@ -302,14 +302,14 @@ public class BaseDAOHibernate
 	}
 
 	/**
-	 * »ñÈ¡¼ÇÂ¼×ÜÊı
-	 * Óëhibernate 2.x¼æÈİµÄ·½·¨
+	 * è·å–è®°å½•æ€»æ•°
+	 * ä¸hibernate 2.xå…¼å®¹çš„æ–¹æ³•
 	 * @param sql String
 	 * @param objs Object[]
 	 * @param types Type[]
 	 * @return long
 	 * @throws DataAccessException
-	 * @deprecated Ìæ´úµÄ·½·¨Îªprotected long loadTotalSize(String sql, Object objs[])
+	 * @deprecated æ›¿ä»£çš„æ–¹æ³•ä¸ºprotected long loadTotalSize(String sql, Object objs[])
 	 */
 	public long loadTotalSize(String sql, Object objs[], Type types[])
 		throws DataAccessException
@@ -318,7 +318,7 @@ public class BaseDAOHibernate
 	}
 
 	/**
-	 * »ñÈ¡hqlÖĞµÄfrom×Ó¾ä
+	 * è·å–hqlä¸­çš„fromå­å¥
 	 * @param sql String
 	 * @return String
 	 */
@@ -331,7 +331,7 @@ public class BaseDAOHibernate
 	}
 
 	/**
-	 * ÅúÁ¿²åÈë
+	 * æ‰¹é‡æ’å…¥
 	 * @param objs Collection
 	 * @return Object
 	 */
@@ -341,7 +341,7 @@ public class BaseDAOHibernate
 	}
 
 	/**
-	 * ÅúÁ¿¸üĞÂ
+	 * æ‰¹é‡æ›´æ–°
 	 * @param objs Collection
 	 */
 	public void batchUpdate(Collection objs)
@@ -350,7 +350,7 @@ public class BaseDAOHibernate
 	}
 
 	/**
-	 * ÅúÁ¿É¾³ı
+	 * æ‰¹é‡åˆ é™¤
 	 * @param objs Collection
 	 */
 	public void batchDelete(Collection objs)

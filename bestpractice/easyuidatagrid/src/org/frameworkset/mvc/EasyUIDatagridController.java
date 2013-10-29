@@ -27,12 +27,12 @@ import org.frameworkset.util.annotations.ResponseBody;
  * <p> Description: </p>
  * <p> bboss workgroup </p>
  * <p> Copyright (c) 2009 </p>
- * ±¾ÎÄ½éÉÜbbossgroups mvc½áºÏjquery easyui datagridµÄÒ»¸ö¼òµ¥°¸Àı£º
+ * æœ¬æ–‡ä»‹ç»bbossgroups mvcç»“åˆjquery easyui datagridçš„ä¸€ä¸ªç®€å•æ¡ˆä¾‹ï¼š
 
-1.Í¨¹ıbbossgroups ¿ØÖÆÆ÷·½·¨·µ»Ø¶ÔÏó£¬È»ºómvc¿ò¼Ü½«¶ÔÏó×ª»»Îªjson¶ÔÏó·µ»Ø¸øjquery easyui datagridÕ¹Ê¾
-2.jquery easyui datagridÍ¨¹ıÖ¸¶¨¶ÔÓ¦¿ØÖÆÆ÷·½·¨µÄÇëÇóurlÀ´»ñÈ¡datagridµÄÊı¾İ£¬È»ºóÕ¹Ê¾³öÀ´
+1.é€šè¿‡bbossgroups æ§åˆ¶å™¨æ–¹æ³•è¿”å›å¯¹è±¡ï¼Œç„¶åmvcæ¡†æ¶å°†å¯¹è±¡è½¬æ¢ä¸ºjsonå¯¹è±¡è¿”å›ç»™jquery easyui datagridå±•ç¤º
+2.jquery easyui datagridé€šè¿‡æŒ‡å®šå¯¹åº”æ§åˆ¶å™¨æ–¹æ³•çš„è¯·æ±‚urlæ¥è·å–datagridçš„æ•°æ®ï¼Œç„¶åå±•ç¤ºå‡ºæ¥
 
-ÏÂÃæ¿´¿ØÖÆÆ÷µÄÊµÏÖ£º
+ä¸‹é¢çœ‹æ§åˆ¶å™¨çš„å®ç°ï¼š
 [code="java"][/code]
  * @Date 2011-6-19
  * @author biaoping.yin
@@ -47,10 +47,10 @@ public class EasyUIDatagridController
 		for(int i = 0; i < 10000; i ++)
 		{
 			Address address = new Address();
-			address.setAddr("µØÖ·-" + i);
-			address.setCode("´úÂë-" + i);
-			address.setCol4("col4 Êı¾İ-" + i);
-			address.setName("Ãû³Æ" + i);
+			address.setAddr("åœ°å€-" + i);
+			address.setCode("ä»£ç -" + i);
+			address.setCol4("col4 æ•°æ®-" + i);
+			address.setName("åç§°" + i);
 			addresses.add(address);
 		}
 	}
@@ -84,11 +84,11 @@ public class EasyUIDatagridController
 		p.setStatus("P");
 		p.setListprice(16.50 + i);
 		if(i % 3 == 0)
-			p.setAttr1("ÌÒ×Ó");
+			p.setAttr1("æ¡ƒå­");
 		else if(i % 3 == 1)
-			p.setAttr1("»ğÁú¹û");
+			p.setAttr1("ç«é¾™æœ");
 		if(i % 3 == 2)
-			p.setAttr1("Ã¢¹û");	
+			p.setAttr1("èŠ’æœ");	
 		p.setItemid("EST-" + i);
 		return p;
 	}
@@ -109,11 +109,11 @@ public class EasyUIDatagridController
 		return footer;
 	}
 	/**
-	 * ¶ÔÁĞ±í½øĞĞ·ÖÒ³²Ù×÷,Êı¾İÔ´ÊÇÒ»¸öÁĞ±í
-	 * @param datas ÁĞ±íÊı¾İ
-	 * @param offset »ñÈ¡Êı¾İµÄÆğÊ¼Î»ÖÃ
-	 * @param pageItems »ñÈ¡Êı¾İµÄÌõÊı
-	 * @return ListInfo ¶Ô·ÖÒ³Êı¾İºÍ×Ü¼ÇÂ¼ÌõÊıµÄ·â×°Àà
+	 * å¯¹åˆ—è¡¨è¿›è¡Œåˆ†é¡µæ“ä½œ,æ•°æ®æºæ˜¯ä¸€ä¸ªåˆ—è¡¨
+	 * @param datas åˆ—è¡¨æ•°æ®
+	 * @param offset è·å–æ•°æ®çš„èµ·å§‹ä½ç½®
+	 * @param pageItems è·å–æ•°æ®çš„æ¡æ•°
+	 * @return ListInfo å¯¹åˆ†é¡µæ•°æ®å’Œæ€»è®°å½•æ¡æ•°çš„å°è£…ç±»
 	 */
 
 	private static Addresses pagerList(List datas,int offset,int pageItems)

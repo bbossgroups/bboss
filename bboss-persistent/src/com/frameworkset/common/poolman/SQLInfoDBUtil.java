@@ -30,7 +30,7 @@ public class SQLInfoDBUtil extends PreparedDBUtil {
 	
 	
 	 /**
-     * ´´½¨ÌØ¶¨Êı¾İ¿âÔ¤±àÒëÉ¾³ıÓï¾ä
+     * åˆ›å»ºç‰¹å®šæ•°æ®åº“é¢„ç¼–è¯‘åˆ é™¤è¯­å¥
      * 
      * @param dbName
      * @param sql
@@ -50,7 +50,7 @@ public class SQLInfoDBUtil extends PreparedDBUtil {
         
     }
 	 /**
-     * ´´½¨ÌØ¶¨Êı¾İ¿âµÄÔ¤±àÒë¸üĞÂÓï¾ä
+     * åˆ›å»ºç‰¹å®šæ•°æ®åº“çš„é¢„ç¼–è¯‘æ›´æ–°è¯­å¥
      * 
      * @param dbName
      * @param sql
@@ -68,7 +68,7 @@ public class SQLInfoDBUtil extends PreparedDBUtil {
         }
     }
 	 /**
-     * ´´½¨ÌØ¶¨Êı¾İ¿âµÄÔ¤±àÒë²åÈëÓï¾ä
+     * åˆ›å»ºç‰¹å®šæ•°æ®åº“çš„é¢„ç¼–è¯‘æ’å…¥è¯­å¥
      * 
      * @param dbName
      * @param sql
@@ -80,7 +80,7 @@ public class SQLInfoDBUtil extends PreparedDBUtil {
         
     }
 	/**
-	 * ´´½¨ÌØ¶¨Êı¾İ¿âµÄÔ¤±àÒë¸üĞÂÓï¾ä
+	 * åˆ›å»ºç‰¹å®šæ•°æ®åº“çš„é¢„ç¼–è¯‘æ›´æ–°è¯­å¥
 	 * 
 	 * @param dbName
 	 * @param sql
@@ -93,7 +93,7 @@ public class SQLInfoDBUtil extends PreparedDBUtil {
 		preparedSql(Params,dbName, new NewSQLInfo(sql));
 	}
 	/**
-	 * ´´½¨ÌØ¶¨Êı¾İ¿âÔ¤±àÒëÉ¾³ıÓï¾ä
+	 * åˆ›å»ºç‰¹å®šæ•°æ®åº“é¢„ç¼–è¯‘åˆ é™¤è¯­å¥
 	 * 
 	 * @param dbName
 	 * @param sql
@@ -103,7 +103,7 @@ public class SQLInfoDBUtil extends PreparedDBUtil {
 	    preparedDelete((Params)null,dbName, new NewSQLInfo(sql));
 	}
 	/**
-	 * ´´½¨ÌØ¶¨Êı¾İ¿âµÄÔ¤±àÒë²åÈëÓï¾ä
+	 * åˆ›å»ºç‰¹å®šæ•°æ®åº“çš„é¢„ç¼–è¯‘æ’å…¥è¯­å¥
 	 * 
 	 * @param dbName
 	 * @param sql
@@ -115,7 +115,7 @@ public class SQLInfoDBUtil extends PreparedDBUtil {
 	}
 	
 	/**
-     * ´´½¨ÌØ¶¨Êı¾İ¿âµÄÔ¤±àÒë²åÈëÓï¾ä
+     * åˆ›å»ºç‰¹å®šæ•°æ®åº“çš„é¢„ç¼–è¯‘æ’å…¥è¯­å¥
      * 
      * @param dbName
      * @param sql
@@ -132,7 +132,7 @@ public class SQLInfoDBUtil extends PreparedDBUtil {
     }
 	
 	/**
-	 * Ô¤±àÒë²éÑ¯·½·¨
+	 * é¢„ç¼–è¯‘æŸ¥è¯¢æ–¹æ³•
 	 * 
 	 * @param sql
 	 * @throws SQLException
@@ -144,7 +144,7 @@ public class SQLInfoDBUtil extends PreparedDBUtil {
 	}
 	
 	/**
-	 * ´´½¨Ô¤±àÒë²éÑ¯Óï¾ä
+	 * åˆ›å»ºé¢„ç¼–è¯‘æŸ¥è¯¢è¯­å¥
 	 * @mark
 	 * @param sql
 	 * @throws SQLException
@@ -155,7 +155,7 @@ public class SQLInfoDBUtil extends PreparedDBUtil {
 		preparedSelect(prepareDBName, sql, offset, pagesize,totalsize);
 	}
 	/**
-	 * Ô¤±àÒë²éÑ¯·½·¨
+	 * é¢„ç¼–è¯‘æŸ¥è¯¢æ–¹æ³•
 	 * @mark
 	 * @param sql
 	 * @throws SQLException
@@ -166,7 +166,7 @@ public class SQLInfoDBUtil extends PreparedDBUtil {
 		preparedSelect(prepareDBName, sql, offset, pagesize, oraclerownum,totalsize);
 	}
 	/**
-	 * Ô¤±àÒë²éÑ¯·½·¨
+	 * é¢„ç¼–è¯‘æŸ¥è¯¢æ–¹æ³•
 	 * 
 	 * @param sql
 	 * @throws SQLException
@@ -177,7 +177,7 @@ public class SQLInfoDBUtil extends PreparedDBUtil {
 		preparedSelectWithTotalsizesql(prepareDBName, sql, offset, pagesize, oraclerownum,totalsizesql);
 	}
 	/**
-	 * ´´½¨Ô¤±àÒë¸üĞÂÓï¾ä
+	 * åˆ›å»ºé¢„ç¼–è¯‘æ›´æ–°è¯­å¥
 	 * 
 	 * @param sql
 	 * @throws SQLException
@@ -189,7 +189,7 @@ public class SQLInfoDBUtil extends PreparedDBUtil {
 	}
 
 	/**
-     * Ô¤±àÒë·ÖÒ³²éÑ¯·½·¨ £¬Íâ²¿´«Èë×Ü¼ÇÂ¼Êı
+     * é¢„ç¼–è¯‘åˆ†é¡µæŸ¥è¯¢æ–¹æ³• ï¼Œå¤–éƒ¨ä¼ å…¥æ€»è®°å½•æ•°
      * @mark
      * @param sql
      * @throws SQLException
@@ -205,7 +205,7 @@ public class SQLInfoDBUtil extends PreparedDBUtil {
     		preparedSelect((Params)null,prepareDBName, new NewSQLInfo(sql), offset, pagesize,totalsize);
     }
 	/**
-     * Ô¤±àÒë·ÖÒ³²éÑ¯·½·¨£¬×Ü¼ÇÂ¼ÊıÍ¨¹ıtotalsizesql²éÑ¯»ñÈ¡
+     * é¢„ç¼–è¯‘åˆ†é¡µæŸ¥è¯¢æ–¹æ³•ï¼Œæ€»è®°å½•æ•°é€šè¿‡totalsizesqlæŸ¥è¯¢è·å–
      * 
      * @param sql
      * @throws SQLException
@@ -222,7 +222,7 @@ public class SQLInfoDBUtil extends PreparedDBUtil {
     }
 
 	/**
-     * ´´½¨Ô¤±àÒë¸üĞÂÓï¾ä
+     * åˆ›å»ºé¢„ç¼–è¯‘æ›´æ–°è¯­å¥
      * 
      * @param sql
      * @throws SQLException

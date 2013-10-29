@@ -40,7 +40,7 @@ public @interface Attribute {
 	AttributeScope scope() default AttributeScope.REQUEST_ATTRIBUTE;
 	String defaultvalue() default ValueConstants.DEFAULT_NONE;
 	/**
-	 * 指定日期格式
+	 * 鎸囧畾鏃ユ湡鏍煎紡
 	 * @return
 	 */
 	String dateformat() default ValueConstants.DEFAULT_NONE;

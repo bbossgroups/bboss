@@ -20,5 +20,6 @@
 	<classpathentry kind="lib" path="lib/jackson-all-1.6.2.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="lib" path="lib/bboss-velocity.jar"/>
+	<classpathentry kind="lib" path="lib/ext/jsp-api.jar"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>

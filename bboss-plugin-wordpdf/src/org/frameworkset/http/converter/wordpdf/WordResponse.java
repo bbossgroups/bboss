@@ -39,7 +39,7 @@ import com.frameworkset.util.StringUtil;
  * <p> bboss workgroup </p>
  * <p> Copyright (c) 2009 </p>
  * 
- * @Date 2012-9-17 ÉÏÎç9:15:25
+ * @Date 2012-9-17 ä¸Šåˆ9:15:25
  * @author biaoping.yin
  * @version 1.0
  */
@@ -354,7 +354,7 @@ public class WordResponse {
 	protected File getRealWord() throws Exception {
 		return FileConvertor.getRealWord(getWordtemplate(), getWordFile(), bookdatas);
 //		/*
-//		 * 1.½«ÏÖÓĞµÄwordÄ£°å¸´ÖÆÒ»·İ£¬±£´æÎªºÏÍ¬±àºÅ.doc 2.ÔÚĞÂµÄÎÄµµÀïÃæ²åÈë¶¯Ì¬Öµ 3.×ªÎªpdf
+//		 * 1.å°†ç°æœ‰çš„wordæ¨¡æ¿å¤åˆ¶ä¸€ä»½ï¼Œä¿å­˜ä¸ºåˆåŒç¼–å·.doc 2.åœ¨æ–°çš„æ–‡æ¡£é‡Œé¢æ’å…¥åŠ¨æ€å€¼ 3.è½¬ä¸ºpdf
 //		 */
 ////		String[] bookMarks = new String[] { "DealerName", "Name", "CgName",
 ////				"TypeName", "OrderQty", "CoolCode", "ChassisCode", "CustPrice",
@@ -365,12 +365,12 @@ public class WordResponse {
 ////				"FinanceAmt", "FinanceFC", "LackAmtPayDate",
 ////				"LackAmtFinalPayDate", "ReceiverName", "ReceiverID",
 ////				"ReceiverTel", "Insurer" };
-////		String[] mapValue = new String[] { "ºşÄÏÈıÒ»¹¤³Ì»úĞµÓĞÏŞ¹«Ë¾", "ºşÄÏÈıÒ»¹¤³Ì»úĞµÓĞÏŞ¹«Ë¾",
-////				"ÁùÇÅ±Ã³µ", "SY5419THB 52E(6)", "2", "·çÀä", "V09660", "300.00",
-////				"600.00", "Â½°ÛÍòÔªÕû", "7", "100", "2012Äê8ÔÂ31ÈÕ", "60", "5", "3",
-////				"10", "6", "10", "5", "10", "21", "540", "10", "2012Äê8ÔÂ31ÈÕ",
-////				"2012Äê8ÔÂ31ÈÕ", "ÇäÁÕ", "430111199910102121", "13800138200", "ÇäÁÕ" };
-//		// 1.½«ÏÖÓĞµÄwordÄ£°å¸´ÖÆÒ»·İ£¬±£´æÎªºÏÍ¬±àºÅ.doc
+////		String[] mapValue = new String[] { "æ¹–å—ä¸‰ä¸€å·¥ç¨‹æœºæ¢°æœ‰é™å…¬å¸", "æ¹–å—ä¸‰ä¸€å·¥ç¨‹æœºæ¢°æœ‰é™å…¬å¸",
+////				"å…­æ¡¥æ³µè½¦", "SY5419THB 52E(6)", "2", "é£å†·", "V09660", "300.00",
+////				"600.00", "é™†ä½°ä¸‡å…ƒæ•´", "7", "100", "2012å¹´8æœˆ31æ—¥", "60", "5", "3",
+////				"10", "6", "10", "5", "10", "21", "540", "10", "2012å¹´8æœˆ31æ—¥",
+////				"2012å¹´8æœˆ31æ—¥", "å¿ç³", "430111199910102121", "13800138200", "å¿ç³" };
+//		// 1.å°†ç°æœ‰çš„wordæ¨¡æ¿å¤åˆ¶ä¸€ä»½ï¼Œä¿å­˜ä¸ºåˆåŒç¼–å·.doc
 //		
 //		if(getWordtemplate() != null && this.bookdatas != null && this.bookdatas.size() > 0)
 //			{
@@ -396,7 +396,7 @@ public class WordResponse {
 //					contract.close();
 //				}
 //			}
-//			// 2.ÔÚĞÂµÄÎÄµµÀïÃæ²åÈë¶¯Ì¬Öµ
+//			// 2.åœ¨æ–°çš„æ–‡æ¡£é‡Œé¢æ’å…¥åŠ¨æ€å€¼
 //			ActiveXComponent word = null;
 //			Dispatch doc = null;
 //			try
@@ -411,13 +411,13 @@ public class WordResponse {
 //				Set<String> keys = this.bookdatas.keySet();
 //				for (String key:keys) {
 //					boolean bookMarkExist = ActiveXComponent.call(Marks, "Exists", key)
-//							.toBoolean(); // ²éÕÒ±êÇ©
+//							.toBoolean(); // æŸ¥æ‰¾æ ‡ç­¾
 //					if (bookMarkExist) {
 //		
 //						Dispatch rangeItem = Dispatch.call(Marks, "Item", key)
 //								.toDispatch();
 //						Dispatch range = Dispatch.call(rangeItem, "Range").toDispatch();
-//						Dispatch.put(range, "Text", new Variant(this.bookdatas.get(key)));// ²åÈëÊéÇ©µÄÖµ
+//						Dispatch.put(range, "Text", new Variant(this.bookdatas.get(key)));// æ’å…¥ä¹¦ç­¾çš„å€¼
 //					}
 //				}
 //				Dispatch.call(doc, "Save");			   	
@@ -453,8 +453,8 @@ public class WordResponse {
 		
 
 	}
-	static final int wdFormatPDF = 17;// PDF ¸ñÊ½ 
-	static final int ppSaveAsPDF = 32;// PDF ¸ñÊ½ 
+	static final int wdFormatPDF = 17;// PDF æ ¼å¼ 
+	static final int ppSaveAsPDF = 32;// PDF æ ¼å¼ 
 	private long waittimes = -1;
 	public long getWaittimes() {
 		return waittimes;
@@ -473,7 +473,7 @@ public class WordResponse {
 	protected File realWord2PDF(String pdfpath,long waittimes) throws Exception {
 		return FileConvertor.realWordConvertorByFlashPaper(flashpaperWorkDir, getWordtemplate(), getWordFile(), bookdatas, pdfpath, waittimes);
 		/*
-		 * 1.½«ÏÖÓĞµÄwordÄ£°å¸´ÖÆÒ»·İ£¬±£´æÎªºÏÍ¬±àºÅ.doc 2.ÔÚĞÂµÄÎÄµµÀïÃæ²åÈë¶¯Ì¬Öµ 3.×ªÎªpdf
+		 * 1.å°†ç°æœ‰çš„wordæ¨¡æ¿å¤åˆ¶ä¸€ä»½ï¼Œä¿å­˜ä¸ºåˆåŒç¼–å·.doc 2.åœ¨æ–°çš„æ–‡æ¡£é‡Œé¢æ’å…¥åŠ¨æ€å€¼ 3.è½¬ä¸ºpdf
 		 */
 //		String[] bookMarks = new String[] { "DealerName", "Name", "CgName",
 //				"TypeName", "OrderQty", "CoolCode", "ChassisCode", "CustPrice",
@@ -484,12 +484,12 @@ public class WordResponse {
 //				"FinanceAmt", "FinanceFC", "LackAmtPayDate",
 //				"LackAmtFinalPayDate", "ReceiverName", "ReceiverID",
 //				"ReceiverTel", "Insurer" };
-//		String[] mapValue = new String[] { "ºşÄÏÈıÒ»¹¤³Ì»úĞµÓĞÏŞ¹«Ë¾", "ºşÄÏÈıÒ»¹¤³Ì»úĞµÓĞÏŞ¹«Ë¾",
-//				"ÁùÇÅ±Ã³µ", "SY5419THB 52E(6)", "2", "·çÀä", "V09660", "300.00",
-//				"600.00", "Â½°ÛÍòÔªÕû", "7", "100", "2012Äê8ÔÂ31ÈÕ", "60", "5", "3",
-//				"10", "6", "10", "5", "10", "21", "540", "10", "2012Äê8ÔÂ31ÈÕ",
-//				"2012Äê8ÔÂ31ÈÕ", "ÇäÁÕ", "430111199910102121", "13800138200", "ÇäÁÕ" };
-		// 1.½«ÏÖÓĞµÄwordÄ£°å¸´ÖÆÒ»·İ£¬±£´æÎªºÏÍ¬±àºÅ.doc
+//		String[] mapValue = new String[] { "æ¹–å—ä¸‰ä¸€å·¥ç¨‹æœºæ¢°æœ‰é™å…¬å¸", "æ¹–å—ä¸‰ä¸€å·¥ç¨‹æœºæ¢°æœ‰é™å…¬å¸",
+//				"å…­æ¡¥æ³µè½¦", "SY5419THB 52E(6)", "2", "é£å†·", "V09660", "300.00",
+//				"600.00", "é™†ä½°ä¸‡å…ƒæ•´", "7", "100", "2012å¹´8æœˆ31æ—¥", "60", "5", "3",
+//				"10", "6", "10", "5", "10", "21", "540", "10", "2012å¹´8æœˆ31æ—¥",
+//				"2012å¹´8æœˆ31æ—¥", "å¿ç³", "430111199910102121", "13800138200", "å¿ç³" };
+		// 1.å°†ç°æœ‰çš„wordæ¨¡æ¿å¤åˆ¶ä¸€ä»½ï¼Œä¿å­˜ä¸ºåˆåŒç¼–å·.doc
 		
 //		if(getWordtemplate() != null )
 //		{
@@ -526,7 +526,7 @@ public class WordResponse {
 ////			return new File(getWordFile()) ;
 ////		}
 //		
-//		// 2.ÔÚĞÂµÄÎÄµµÀïÃæ²åÈë¶¯Ì¬Öµ
+//		// 2.åœ¨æ–°çš„æ–‡æ¡£é‡Œé¢æ’å…¥åŠ¨æ€å€¼
 //		ActiveXComponent word = null;
 //		Dispatch doc = null;
 //		Dispatch wordObject;
@@ -549,13 +549,13 @@ public class WordResponse {
 //				Set<String> keys = this.bookdatas.keySet();
 //				for (String key:keys) {
 //					boolean bookMarkExist = ActiveXComponent.call(Marks, "Exists", key)
-//							.toBoolean(); // ²éÕÒ±êÇ©
+//							.toBoolean(); // æŸ¥æ‰¾æ ‡ç­¾
 //					if (bookMarkExist) {
 //		
 //						Dispatch rangeItem = Dispatch.call(Marks, "Item", key)
 //								.toDispatch();
 //						Dispatch range = Dispatch.call(rangeItem, "Range").toDispatch();
-//						Dispatch.put(range, "Text", new Variant(this.bookdatas.get(key)));// ²åÈëÊéÇ©µÄÖµ
+//						Dispatch.put(range, "Text", new Variant(this.bookdatas.get(key)));// æ’å…¥ä¹¦ç­¾çš„å€¼
 //					}
 //				}
 //			}

@@ -26,7 +26,7 @@ import com.frameworkset.proxy.Interceptor;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2010-1-28 œ¬ŒÁ09:53:25
+ * @Date 2010-1-28 ‰∏ãÂçà09:53:25
  * @author biaoping.yin
  * @version 1.0
  */

@@ -33,7 +33,7 @@ import org.frameworkset.spi.remote.Target;
  * </p>
  * 
  * <p>
- * Description: ·şÎñ¹ÜÀíÀà£¬Ìá¹©aopµÄ×îµ×²ãµÄ°ü×°£¬ÊµÏÖ¼òµ¥aopÀ¹½Ø¹¦ÄÜ£¬Ìá¹©ÈÕÖ¾µÄ¹ÜÀí£¬ÊÂÎñµÄ¹ÜÀí¹¦ÄÜ
+ * Description: æœåŠ¡ç®¡ç†ç±»ï¼Œæä¾›aopçš„æœ€åº•å±‚çš„åŒ…è£…ï¼Œå®ç°ç®€å•aopæ‹¦æˆªåŠŸèƒ½ï¼Œæä¾›æ—¥å¿—çš„ç®¡ç†ï¼Œäº‹åŠ¡çš„ç®¡ç†åŠŸèƒ½
  * </p>
  * 
  * <p>
@@ -89,7 +89,7 @@ public abstract class BaseSPIManager
     
 
     /**
-     * Ìí¼ÓÏµÍ³ÖĞÍ£Ö¹Ê±µÄ»Øµ÷³ÌĞò
+     * æ·»åŠ ç³»ç»Ÿä¸­åœæ­¢æ—¶çš„å›è°ƒç¨‹åº
      * 
      * @param destroyVMHook
      */
@@ -172,18 +172,18 @@ public abstract class BaseSPIManager
 //    private static Logger log = Logger.getLogger(BaseSPIManager.class);
 
 //    /**
-//     * È±Ê¡½Ó¿Úkey
+//     * ç¼ºçœæ¥å£key
 //     */
 //    public static final String DEFAULT_CACHE_KEY = "DEFAULT_CACHE_KEY";
 //
 //    /**
-//     * Í¬²½»º³åkey
+//     * åŒæ­¥ç¼“å†²key
 //     */
 //
 //    public static final String SYNCHRO_CACHE_KEY = "SYNCHRO_CACHE_KEY";
 
 //    /**
-//     * ´´½¨²»¾ßÓĞÍ¬²½¿ØÖÆµÄprovider´úÀí½Ó¿ÚÊµÀı ¸Ã´úÀí½Ó¿Ú¿ÉÄÜÓĞÊÂÎñ¿ØÖÆµÄ¹¦ÄÜÒ²¿ÉÄÜÃ»ÓĞÓĞÊÂÎñ¿ØÖÆ£¬¸ù¾İ¾ßÌåµÄÅäÖÃÀ´¾ö¶¨ createInf
+//     * åˆ›å»ºä¸å…·æœ‰åŒæ­¥æ§åˆ¶çš„providerä»£ç†æ¥å£å®ä¾‹ è¯¥ä»£ç†æ¥å£å¯èƒ½æœ‰äº‹åŠ¡æ§åˆ¶çš„åŠŸèƒ½ä¹Ÿå¯èƒ½æ²¡æœ‰æœ‰äº‹åŠ¡æ§åˆ¶ï¼Œæ ¹æ®å…·ä½“çš„é…ç½®æ¥å†³å®š createInf
 //     * 
 //     * @return Object
 //     */
@@ -200,8 +200,8 @@ public abstract class BaseSPIManager
 //                    try
 //                    {
 //
-//                        Object obj = null;// Ö»·µ»ØdelegateÖĞ·½·¨·µ»ØµÄÖµ
-//                        // Èç¹û²»ÊÇÍ¬²½·½·¨£¬ÔòÎŞĞèÍ¬²½µ÷ÓÃÆäËû½Ó¿Ú·½·¨
+//                        Object obj = null;// åªè¿”å›delegateä¸­æ–¹æ³•è¿”å›çš„å€¼
+//                        // å¦‚æœä¸æ˜¯åŒæ­¥æ–¹æ³•ï¼Œåˆ™æ— éœ€åŒæ­¥è°ƒç”¨å…¶ä»–æ¥å£æ–¹æ³•
 //                        // log.debug("method.getName():" + method.getName());
 //                        //log.debug("providerManagerInfo.getSynchronizedMethod("
 //                        // +
@@ -231,7 +231,7 @@ public abstract class BaseSPIManager
 //                            }
 //                        }
 //
-//                        // ½«·½·¨Å×³öµÄÒì³£Ö±½ÓÅ×³ö·½·¨Òì³£
+//                        // å°†æ–¹æ³•æŠ›å‡ºçš„å¼‚å¸¸ç›´æ¥æŠ›å‡ºæ–¹æ³•å¼‚å¸¸
 //                        throw e.getTargetException();
 //                    }
 //                    catch (Throwable t)
@@ -276,7 +276,7 @@ public abstract class BaseSPIManager
 //    }
 
 //    /**
-//     * ´´½¨Ã»ÓĞÍ¬²½µ«ÓĞÊÂÎñ¿ØÖÆµÄprovider´úÀí½Ó¿ÚÊµÀı ¸Ã·½·¨µÄÊµÏÖÂß¼­Ä¿Ç°ºÍcreateInf·½·¨Ò»ÖÂ
+//     * åˆ›å»ºæ²¡æœ‰åŒæ­¥ä½†æœ‰äº‹åŠ¡æ§åˆ¶çš„providerä»£ç†æ¥å£å®ä¾‹ è¯¥æ–¹æ³•çš„å®ç°é€»è¾‘ç›®å‰å’ŒcreateInfæ–¹æ³•ä¸€è‡´
 //     * 
 //     * @return Object
 //     */
@@ -288,7 +288,7 @@ public abstract class BaseSPIManager
 //    }
 
 //    /**
-//     * ´´½¨¼´¾ßÓĞÍ¬²½¿ØÖÆ¹¦ÄÜµ«²»¾ß±¸ÊÂÎñ¹ÜÀí¹¦ÄÜµÄprovider´úÀí½Ó¿ÚÊµÀı createInf
+//     * åˆ›å»ºå³å…·æœ‰åŒæ­¥æ§åˆ¶åŠŸèƒ½ä½†ä¸å…·å¤‡äº‹åŠ¡ç®¡ç†åŠŸèƒ½çš„providerä»£ç†æ¥å£å®ä¾‹ createInf
 //     * 
 //     * @return Object
 //     */
@@ -305,8 +305,8 @@ public abstract class BaseSPIManager
 //                    try
 //                    {
 //
-//                        Object obj = null;// Ö»·µ»ØdelegateÖĞ·½·¨·µ»ØµÄÖµ
-//                        // Èç¹û²»ÊÇÍ¬²½·½·¨£¬ÔòÎŞĞèÍ¬²½µ÷ÓÃÆäËû½Ó¿Ú·½·¨
+//                        Object obj = null;// åªè¿”å›delegateä¸­æ–¹æ³•è¿”å›çš„å€¼
+//                        // å¦‚æœä¸æ˜¯åŒæ­¥æ–¹æ³•ï¼Œåˆ™æ— éœ€åŒæ­¥è°ƒç”¨å…¶ä»–æ¥å£æ–¹æ³•
 //                        // log.debug("method.getName():" + method.getName());
 //                        //log.debug("providerManagerInfo.getSynchronizedMethod("
 //                        // +
@@ -315,9 +315,9 @@ public abstract class BaseSPIManager
 //                        // (method.getName()));
 //                        if (!providerManagerInfo.isSynchronizedEnabled()
 //                                || !providerManagerInfo.isSynchronizedMethod(method))
-//                        {// Èç¹ûÃ»ÓĞÅäÖÃÒÔ·½·¨¼°ÏàÓ¦µÄ·½·¨²ÎÊıµÄÎª±êÊ¶µÄÍ¬²½·½·¨
-//                            // £¬
-//                            // Èç¹ûÓĞÔòÖ´ĞĞËùÓĞproviderµÄÍ¬²½·½·¨
+//                        {// å¦‚æœæ²¡æœ‰é…ç½®ä»¥æ–¹æ³•åŠç›¸åº”çš„æ–¹æ³•å‚æ•°çš„ä¸ºæ ‡è¯†çš„åŒæ­¥æ–¹æ³•
+//                            // ï¼Œ
+//                            // å¦‚æœæœ‰åˆ™æ‰§è¡Œæ‰€æœ‰providerçš„åŒæ­¥æ–¹æ³•
 //
 //                            if (interceptor != null)
 //                                interceptor.before(method, args);
@@ -329,11 +329,11 @@ public abstract class BaseSPIManager
 //                        }
 //                        else
 //                        {
-//                            // »ñÈ¡·şÎñÌá¹©Õß¶ÓÁĞ£¬¸Ã¶ÓÁĞÒÑ¾­°´ÕÕÖ¸¶¨µÄÓÅÏÈ¼¶Ë³Ğò½øĞĞÅÅĞò
+//                            // è·å–æœåŠ¡æä¾›è€…é˜Ÿåˆ—ï¼Œè¯¥é˜Ÿåˆ—å·²ç»æŒ‰ç…§æŒ‡å®šçš„ä¼˜å…ˆçº§é¡ºåºè¿›è¡Œæ’åº
 //                            ProviderInfoQueue providerInfoQueue = providerManagerInfo.getProviderInfoQueue();
 //
-//                            //Í¬²½µ÷ÓÃËùÓĞµÄ½Ó¿Ú·½·¨£¬Èç¹ûÍ¬²½·½·¨ÊÇÊÇÊÂÎñĞÔ·½·¨£¬ÔòĞèÒª½øĞĞÊÂÎñ´¦Àí£¬¼°ÒªÃ´È«²¿³É¹¦£¬ÒªÃ´È«²¿Ê§°Ü
-//                            // ·ñÔòÔÚ´¦ÀíµÄ¹ı³ÌÖĞ,Ò»Ğ©·şÎñÌá¹©Õß·½·¨±»Ö´ĞĞÊ±Å×³öÒì³££¬½«¼ÌĞøÖ´ĞĞºóĞøµÄÍ¬²½·½·¨
+//                            //åŒæ­¥è°ƒç”¨æ‰€æœ‰çš„æ¥å£æ–¹æ³•ï¼Œå¦‚æœåŒæ­¥æ–¹æ³•æ˜¯æ˜¯äº‹åŠ¡æ€§æ–¹æ³•ï¼Œåˆ™éœ€è¦è¿›è¡Œäº‹åŠ¡å¤„ç†ï¼ŒåŠè¦ä¹ˆå…¨éƒ¨æˆåŠŸï¼Œè¦ä¹ˆå…¨éƒ¨å¤±è´¥
+//                            // å¦åˆ™åœ¨å¤„ç†çš„è¿‡ç¨‹ä¸­,ä¸€äº›æœåŠ¡æä¾›è€…æ–¹æ³•è¢«æ‰§è¡Œæ—¶æŠ›å‡ºå¼‚å¸¸ï¼Œå°†ç»§ç»­æ‰§è¡Œåç»­çš„åŒæ­¥æ–¹æ³•
 //
 //                            Throwable throwable = null;
 //                            if (interceptor != null)
@@ -354,17 +354,17 @@ public abstract class BaseSPIManager
 //                                // (parent);
 //                                Object provider = securityProviderInfo.getProvider(callcontext);
 //                                boolean isdelegate = provider.getClass() == delegate.getClass();
-//                                // È±Ê¡µÄproviderºÍ±»±êÊ¶ÎªÊ¹ÓÃµÄprovider¶¼ĞèÒª½øĞĞÍ¬²½µ÷ÓÃ
+//                                // ç¼ºçœçš„providerå’Œè¢«æ ‡è¯†ä¸ºä½¿ç”¨çš„provideréƒ½éœ€è¦è¿›è¡ŒåŒæ­¥è°ƒç”¨
 //                                if (isdelegate || securityProviderInfo.isUsed() || securityProviderInfo.isIsdefault())
 //                                {
 //                                    if (isdelegate && !securityProviderInfo.isUsed())
 //                                    {
-//                                        log.warn("µ÷ÓÃµÄProvider[" + delegate.getClass() + "]£¬[" + securityProviderInfo
-//                                                + "]±»ÉèÖÃÎªÎ´Ê¹ÓÃµÄ·şÎñÌá¹©Õß¡£");
+//                                        log.warn("è°ƒç”¨çš„Provider[" + delegate.getClass() + "]ï¼Œ[" + securityProviderInfo
+//                                                + "]è¢«è®¾ç½®ä¸ºæœªä½¿ç”¨çš„æœåŠ¡æä¾›è€…ã€‚");
 //                                    }
 //
 //                                    /**
-//                                     * È±Ê¡µÄÌá¹©Õß£¬Ò²¾ÍÊÇÄ¬ÈÏµÄÌá¹©Õß£¬²»ĞèÒª½øĞĞÊÂÎñ´¦ÀíÊ±£¬Ö»±£Áô·şÎñÌá¹©ÕßµÄ·µ»ØÖµ
+//                                     * ç¼ºçœçš„æä¾›è€…ï¼Œä¹Ÿå°±æ˜¯é»˜è®¤çš„æä¾›è€…ï¼Œä¸éœ€è¦è¿›è¡Œäº‹åŠ¡å¤„ç†æ—¶ï¼Œåªä¿ç•™æœåŠ¡æä¾›è€…çš„è¿”å›å€¼
 //                                     */
 //                                    if (isdelegate)
 //                                    {
@@ -375,13 +375,13 @@ public abstract class BaseSPIManager
 //                                        catch (InvocationTargetException e)
 //                                        {
 //                                            throwable = e.getTargetException();
-//                                            log.error("µ÷ÓÃ·şÎñÌá¹©Õß[" + securityProviderInfo + "]ÖĞ·½·¨[" + method + "]Òì³££º"
+//                                            log.error("è°ƒç”¨æœåŠ¡æä¾›è€…[" + securityProviderInfo + "]ä¸­æ–¹æ³•[" + method + "]å¼‚å¸¸ï¼š"
 //                                                    + e.getMessage(), e);
 //                                        }
 //                                        catch (Exception e)
 //                                        {
 //                                            throwable = e;
-//                                            log.error("µ÷ÓÃ·şÎñÌá¹©Õß[" + securityProviderInfo + "]ÖĞ·½·¨[" + method + "]Òì³££º"
+//                                            log.error("è°ƒç”¨æœåŠ¡æä¾›è€…[" + securityProviderInfo + "]ä¸­æ–¹æ³•[" + method + "]å¼‚å¸¸ï¼š"
 //                                                    + e.getMessage(), e);
 //                                        }
 //
@@ -394,8 +394,8 @@ public abstract class BaseSPIManager
 //                                        }
 //                                        catch (Exception e)
 //                                        {
-//                                            // ²»ÊÇÊÂÎñ·½·¨µ÷ÓÃÊ±£¬ºöÂÔÆäËû·şÎñÌá¹©Õß·½·¨Ö´ĞĞÊ±µÄÒì³£
-//                                            log.error("Í¬²½µ÷ÓÃ·şÎñÌá¹©Õß[" + securityProviderInfo + "]ÖĞ·½·¨[" + method + "]Òì³££º"
+//                                            // ä¸æ˜¯äº‹åŠ¡æ–¹æ³•è°ƒç”¨æ—¶ï¼Œå¿½ç•¥å…¶ä»–æœåŠ¡æä¾›è€…æ–¹æ³•æ‰§è¡Œæ—¶çš„å¼‚å¸¸
+//                                            log.error("åŒæ­¥è°ƒç”¨æœåŠ¡æä¾›è€…[" + securityProviderInfo + "]ä¸­æ–¹æ³•[" + method + "]å¼‚å¸¸ï¼š"
 //                                                    + e.getMessage(), e);
 //                                        }
 //                                    }
@@ -408,7 +408,7 @@ public abstract class BaseSPIManager
 //                                // providerInfoQueue.getSecurityProviderInfo(i)
 //                                // .getProvider());
 //                            }
-//                            // Å×³öÈ±Ê¡·şÎñÌá¹©Õß·½·¨Òì³£
+//                            // æŠ›å‡ºç¼ºçœæœåŠ¡æä¾›è€…æ–¹æ³•å¼‚å¸¸
 //                            if (throwable != null)
 //                                throw throwable;
 //                            if (interceptor != null)
@@ -469,7 +469,7 @@ public abstract class BaseSPIManager
 //    }
 
 //    /**
-//     * ´´½¨¾ßÓĞÍ¬²½ºÍÊÂÎñ¿ØÖÆµÄprovider´úÀí½Ó¿ÚÊµÀı createInf
+//     * åˆ›å»ºå…·æœ‰åŒæ­¥å’Œäº‹åŠ¡æ§åˆ¶çš„providerä»£ç†æ¥å£å®ä¾‹ createInf
 //     * 
 //     * @return Object
 //     */
@@ -486,8 +486,8 @@ public abstract class BaseSPIManager
 //                    try
 //                    {
 //
-//                        Object obj = null;// Ö»·µ»ØdelegateÖĞ·½·¨·µ»ØµÄÖµ
-//                        // Èç¹û²»ÊÇÍ¬²½·½·¨£¬ÔòÎŞĞèÍ¬²½µ÷ÓÃÆäËû½Ó¿Ú·½·¨
+//                        Object obj = null;// åªè¿”å›delegateä¸­æ–¹æ³•è¿”å›çš„å€¼
+//                        // å¦‚æœä¸æ˜¯åŒæ­¥æ–¹æ³•ï¼Œåˆ™æ— éœ€åŒæ­¥è°ƒç”¨å…¶ä»–æ¥å£æ–¹æ³•
 //                        // log.debug("method.getName():" + method.getName());
 //                        //log.debug("providerManagerInfo.getSynchronizedMethod("
 //                        // +
@@ -496,9 +496,9 @@ public abstract class BaseSPIManager
 //                        // (method.getName()));
 //                        if (!providerManagerInfo.isSynchronizedEnabled()
 //                                || !providerManagerInfo.isSynchronizedMethod(method))
-//                        {// Èç¹ûÃ»ÓĞÅäÖÃÒÔ·½·¨¼°ÏàÓ¦µÄ·½·¨²ÎÊıµÄÎª±êÊ¶µÄÍ¬²½·½·¨
-//                            // £¬
-//                            // Èç¹ûÓĞÔòÖ´ĞĞËùÓĞproviderµÄÍ¬²½·½·¨
+//                        {// å¦‚æœæ²¡æœ‰é…ç½®ä»¥æ–¹æ³•åŠç›¸åº”çš„æ–¹æ³•å‚æ•°çš„ä¸ºæ ‡è¯†çš„åŒæ­¥æ–¹æ³•
+//                            // ï¼Œ
+//                            // å¦‚æœæœ‰åˆ™æ‰§è¡Œæ‰€æœ‰providerçš„åŒæ­¥æ–¹æ³•
 //
 //                            if (interceptor != null)
 //                                interceptor.before(method, args);
@@ -510,11 +510,11 @@ public abstract class BaseSPIManager
 //                        }
 //                        else
 //                        {
-//                            // »ñÈ¡·şÎñÌá¹©Õß¶ÓÁĞ£¬¸Ã¶ÓÁĞÒÑ¾­°´ÕÕÖ¸¶¨µÄÓÅÏÈ¼¶Ë³Ğò½øĞĞÅÅĞò
+//                            // è·å–æœåŠ¡æä¾›è€…é˜Ÿåˆ—ï¼Œè¯¥é˜Ÿåˆ—å·²ç»æŒ‰ç…§æŒ‡å®šçš„ä¼˜å…ˆçº§é¡ºåºè¿›è¡Œæ’åº
 //                            ProviderInfoQueue providerInfoQueue = providerManagerInfo.getProviderInfoQueue();
 //
-//                            //Í¬²½µ÷ÓÃËùÓĞµÄ½Ó¿Ú·½·¨£¬Èç¹ûÍ¬²½·½·¨ÊÇÊÇÊÂÎñĞÔ·½·¨£¬ÔòĞèÒª½øĞĞÊÂÎñ´¦Àí£¬¼°ÒªÃ´È«²¿³É¹¦£¬ÒªÃ´È«²¿Ê§°Ü
-//                            // ·ñÔòÔÚ´¦ÀíµÄ¹ı³ÌÖĞ,Ò»Ğ©·şÎñÌá¹©Õß·½·¨±»Ö´ĞĞÊ±Å×³öÒì³££¬½«¼ÌĞøÖ´ĞĞºóĞøµÄÍ¬²½·½·¨
+//                            //åŒæ­¥è°ƒç”¨æ‰€æœ‰çš„æ¥å£æ–¹æ³•ï¼Œå¦‚æœåŒæ­¥æ–¹æ³•æ˜¯æ˜¯äº‹åŠ¡æ€§æ–¹æ³•ï¼Œåˆ™éœ€è¦è¿›è¡Œäº‹åŠ¡å¤„ç†ï¼ŒåŠè¦ä¹ˆå…¨éƒ¨æˆåŠŸï¼Œè¦ä¹ˆå…¨éƒ¨å¤±è´¥
+//                            // å¦åˆ™åœ¨å¤„ç†çš„è¿‡ç¨‹ä¸­,ä¸€äº›æœåŠ¡æä¾›è€…æ–¹æ³•è¢«æ‰§è¡Œæ—¶æŠ›å‡ºå¼‚å¸¸ï¼Œå°†ç»§ç»­æ‰§è¡Œåç»­çš„åŒæ­¥æ–¹æ³•
 //
 //                            SynchronizedMethod synm = providerManagerInfo.isTransactionMethod(method);
 //                            boolean isTXMethod = synm != null;
@@ -537,22 +537,22 @@ public abstract class BaseSPIManager
 //                                // securityProviderInfo.getSingleProvider
 //                                // (parent);
 //                                boolean isdelegate = provider.getClass() == delegate.getClass();
-//                                // È±Ê¡µÄproviderºÍ±»±êÊ¶ÎªÊ¹ÓÃµÄprovider¶¼ĞèÒª½øĞĞÍ¬²½µ÷ÓÃ
+//                                // ç¼ºçœçš„providerå’Œè¢«æ ‡è¯†ä¸ºä½¿ç”¨çš„provideréƒ½éœ€è¦è¿›è¡ŒåŒæ­¥è°ƒç”¨
 //                                if (isdelegate || securityProviderInfo.isUsed() || securityProviderInfo.isIsdefault())
 //                                {
 //                                    if (isdelegate && !securityProviderInfo.isUsed())
 //                                    {
-//                                        log.warn("µ÷ÓÃµÄProvider[" + delegate.getClass() + "]£¬[" + securityProviderInfo
-//                                                + "]±»ÉèÖÃÎªÎ´Ê¹ÓÃµÄ·şÎñÌá¹©Õß¡£");
+//                                        log.warn("è°ƒç”¨çš„Provider[" + delegate.getClass() + "]ï¼Œ[" + securityProviderInfo
+//                                                + "]è¢«è®¾ç½®ä¸ºæœªä½¿ç”¨çš„æœåŠ¡æä¾›è€…ã€‚");
 //                                    }
 //
-//                                    if (!isTXMethod) // ²»ÊÇÊÂÎñ·½·¨Ê±£¬
-//                                                     // Ö´ĞĞËùÓĞµÄproviderµÄÍ¬Ò»¸ö·½·¨£¬
-//                                    // ºöÂÔÊ§°ÜµÄ·½·¨µ÷ÓÃ£¬
+//                                    if (!isTXMethod) // ä¸æ˜¯äº‹åŠ¡æ–¹æ³•æ—¶ï¼Œ
+//                                                     // æ‰§è¡Œæ‰€æœ‰çš„providerçš„åŒä¸€ä¸ªæ–¹æ³•ï¼Œ
+//                                    // å¿½ç•¥å¤±è´¥çš„æ–¹æ³•è°ƒç”¨ï¼Œ
 //                                    {
 //                                        /**
-//                                         * È±Ê¡µÄÌá¹©Õß£¬Ò²¾ÍÊÇÄ¬ÈÏµÄÌá¹©Õß£¬²»ĞèÒª½øĞĞÊÂÎñ´¦ÀíÊ±£¬
-//                                         * Ö»±£Áô·şÎñÌá¹©ÕßµÄ·µ»ØÖµ
+//                                         * ç¼ºçœçš„æä¾›è€…ï¼Œä¹Ÿå°±æ˜¯é»˜è®¤çš„æä¾›è€…ï¼Œä¸éœ€è¦è¿›è¡Œäº‹åŠ¡å¤„ç†æ—¶ï¼Œ
+//                                         * åªä¿ç•™æœåŠ¡æä¾›è€…çš„è¿”å›å€¼
 //                                         */
 //                                        if (isdelegate)
 //                                        {
@@ -563,13 +563,13 @@ public abstract class BaseSPIManager
 //                                            catch (InvocationTargetException e)
 //                                            {
 //                                                throwable = e.getTargetException();
-//                                                log.error("µ÷ÓÃ·şÎñÌá¹©Õß[" + securityProviderInfo + "]ÖĞ·½·¨[" + method + "]Òì³££º"
+//                                                log.error("è°ƒç”¨æœåŠ¡æä¾›è€…[" + securityProviderInfo + "]ä¸­æ–¹æ³•[" + method + "]å¼‚å¸¸ï¼š"
 //                                                        + e.getMessage(), e);
 //                                            }
 //                                            catch (Exception e)
 //                                            {
 //                                                throwable = e;
-//                                                log.error("µ÷ÓÃ·şÎñÌá¹©Õß[" + securityProviderInfo + "]ÖĞ·½·¨[" + method + "]Òì³££º"
+//                                                log.error("è°ƒç”¨æœåŠ¡æä¾›è€…[" + securityProviderInfo + "]ä¸­æ–¹æ³•[" + method + "]å¼‚å¸¸ï¼š"
 //                                                        + e.getMessage(), e);
 //                                            }
 //                                        }
@@ -579,19 +579,19 @@ public abstract class BaseSPIManager
 //                                            {
 //                                                method.invoke(provider, args);
 //                                            }
-//                                            catch (Exception e)// Å×³öÒì³£Ê±²»¼ÇÂ¼¸ÃÒì³££¬
-//                                            // ¼ÌĞøÖ´ĞĞºóĞøµÄproviderµÄ·½·¨
+//                                            catch (Exception e)// æŠ›å‡ºå¼‚å¸¸æ—¶ä¸è®°å½•è¯¥å¼‚å¸¸ï¼Œ
+//                                            // ç»§ç»­æ‰§è¡Œåç»­çš„providerçš„æ–¹æ³•
 //                                            {
-//                                                // ²»ÊÇÊÂÎñ·½·¨µ÷ÓÃÊ±£¬ºöÂÔÆäËû·şÎñÌá¹©Õß·½·¨Ö´ĞĞÊ±µÄÒì³£
-//                                                log.error("Í¬²½µ÷ÓÃ·şÎñÌá¹©Õß[" + securityProviderInfo + "]ÖĞ·½·¨[" + method
-//                                                        + "]Òì³££º" + e.getMessage(), e);
+//                                                // ä¸æ˜¯äº‹åŠ¡æ–¹æ³•è°ƒç”¨æ—¶ï¼Œå¿½ç•¥å…¶ä»–æœåŠ¡æä¾›è€…æ–¹æ³•æ‰§è¡Œæ—¶çš„å¼‚å¸¸
+//                                                log.error("åŒæ­¥è°ƒç”¨æœåŠ¡æä¾›è€…[" + securityProviderInfo + "]ä¸­æ–¹æ³•[" + method
+//                                                        + "]å¼‚å¸¸ï¼š" + e.getMessage(), e);
 //                                            }
 //                                        }
-//                                        // Å×³öÈ±Ê¡·şÎñÌá¹©Õß·½·¨Òì³££¬Í¬Ê±ÖÕÖ¹ÆäËûproviderÍ¬²½Ö´ĞĞÂß¼­
+//                                        // æŠ›å‡ºç¼ºçœæœåŠ¡æä¾›è€…æ–¹æ³•å¼‚å¸¸ï¼ŒåŒæ—¶ç»ˆæ­¢å…¶ä»–provideråŒæ­¥æ‰§è¡Œé€»è¾‘
 //
 //                                    }
 //                                    else
-//                                    // ÊÂÎñĞÔ·½·¨Ö´ĞĞÂß¼­£¬²»´¦ÀíÊÂÎñĞÔÒì³££¬µ«ÊÇĞèÒª´¦Àí·ÇÊÂÎñĞÔÒì³£
+//                                    // äº‹åŠ¡æ€§æ–¹æ³•æ‰§è¡Œé€»è¾‘ï¼Œä¸å¤„ç†äº‹åŠ¡æ€§å¼‚å¸¸ï¼Œä½†æ˜¯éœ€è¦å¤„ç†éäº‹åŠ¡æ€§å¼‚å¸¸
 //                                    {
 //                                        if (isdelegate)
 //                                        {
@@ -601,36 +601,36 @@ public abstract class BaseSPIManager
 //                                            }
 //                                            catch (InvocationTargetException e)
 //                                            {
-//                                                if (synm.isRollbackException(e.getTargetException())) // ÊÂÎñĞÔÒì³£
-//                                                // £¬
-//                                                // ¼ÌĞøÅ×³öÒì³£
-//                                                // £¬
-//                                                // ÖĞ¶ÏÆäËû·şÎñÌá¹©Õß·½·¨Ö´ĞĞ
+//                                                if (synm.isRollbackException(e.getTargetException())) // äº‹åŠ¡æ€§å¼‚å¸¸
+//                                                // ï¼Œ
+//                                                // ç»§ç»­æŠ›å‡ºå¼‚å¸¸
+//                                                // ï¼Œ
+//                                                // ä¸­æ–­å…¶ä»–æœåŠ¡æä¾›è€…æ–¹æ³•æ‰§è¡Œ
 //                                                {
 //                                                    throw e.getTargetException();
 //                                                }
 //                                                else
 //                                                {
-//                                                    throwable = e.getTargetException();// Å×³öÒì³£Ê±¼ÇÂ¼¸ÃÒì³£
-//                                                    // £¬
-//                                                    // ¼ÌĞøÖ´ĞĞºóĞøµÄproviderµÄÍ¬²½·½·¨
+//                                                    throwable = e.getTargetException();// æŠ›å‡ºå¼‚å¸¸æ—¶è®°å½•è¯¥å¼‚å¸¸
+//                                                    // ï¼Œ
+//                                                    // ç»§ç»­æ‰§è¡Œåç»­çš„providerçš„åŒæ­¥æ–¹æ³•
 //                                                }
 //                                            }
 //
 //                                            catch (Exception e)
 //                                            {
-//                                                if (synm.isRollbackException(e)) // ÊÂÎñĞÔÒì³£
-//                                                // £¬
-//                                                // ¼ÌĞøÅ×³öÒì³£
-//                                                // £¬
-//                                                // ÖĞ¶ÏÆäËû·şÎñÌá¹©Õß·½·¨Ö´ĞĞ
+//                                                if (synm.isRollbackException(e)) // äº‹åŠ¡æ€§å¼‚å¸¸
+//                                                // ï¼Œ
+//                                                // ç»§ç»­æŠ›å‡ºå¼‚å¸¸
+//                                                // ï¼Œ
+//                                                // ä¸­æ–­å…¶ä»–æœåŠ¡æä¾›è€…æ–¹æ³•æ‰§è¡Œ
 //                                                {
 //                                                    throw e;
 //                                                }
 //                                                else
 //                                                {
-//                                                    throwable = e;// Å×³öÒì³£Ê±¼ÇÂ¼¸ÃÒì³££¬
-//                                                    // ¼ÌĞøÖ´ĞĞºóĞøµÄproviderµÄÍ¬²½·½·¨
+//                                                    throwable = e;// æŠ›å‡ºå¼‚å¸¸æ—¶è®°å½•è¯¥å¼‚å¸¸ï¼Œ
+//                                                    // ç»§ç»­æ‰§è¡Œåç»­çš„providerçš„åŒæ­¥æ–¹æ³•
 //                                                }
 //                                            }
 //                                        }
@@ -642,34 +642,34 @@ public abstract class BaseSPIManager
 //                                            }
 //                                            catch (InvocationTargetException e)
 //                                            {
-//                                                if (synm.isRollbackException(e.getTargetException())) // ÊÂÎñĞÔÒì³£
-//                                                // £¬
-//                                                // ¼ÌĞøÅ×³öÒì³£
-//                                                // £¬
-//                                                // ÖĞ¶ÏÆäËû·şÎñÌá¹©Õß·½·¨Ö´ĞĞ
+//                                                if (synm.isRollbackException(e.getTargetException())) // äº‹åŠ¡æ€§å¼‚å¸¸
+//                                                // ï¼Œ
+//                                                // ç»§ç»­æŠ›å‡ºå¼‚å¸¸
+//                                                // ï¼Œ
+//                                                // ä¸­æ–­å…¶ä»–æœåŠ¡æä¾›è€…æ–¹æ³•æ‰§è¡Œ
 //                                                {
 //                                                    throw e;
 //                                                }
 //                                                else
 //                                                {
-//                                                    log.error("Í¬²½µ÷ÓÃ·şÎñÌá¹©Õß[" + securityProviderInfo + "]ÖĞ·½·¨[" + method
-//                                                            + "]Òì³££º" + e.getMessage(), e);
+//                                                    log.error("åŒæ­¥è°ƒç”¨æœåŠ¡æä¾›è€…[" + securityProviderInfo + "]ä¸­æ–¹æ³•[" + method
+//                                                            + "]å¼‚å¸¸ï¼š" + e.getMessage(), e);
 //                                                }
 //                                            }
 //                                            catch (Exception e)
 //                                            {
-//                                                if (synm.isRollbackException(e)) // ÊÂÎñĞÔÒì³£
-//                                                // £¬
-//                                                // ¼ÌĞøÅ×³öÒì³£
-//                                                // £¬
-//                                                // ÖĞ¶ÏÆäËû·şÎñÌá¹©Õß·½·¨Ö´ĞĞ
+//                                                if (synm.isRollbackException(e)) // äº‹åŠ¡æ€§å¼‚å¸¸
+//                                                // ï¼Œ
+//                                                // ç»§ç»­æŠ›å‡ºå¼‚å¸¸
+//                                                // ï¼Œ
+//                                                // ä¸­æ–­å…¶ä»–æœåŠ¡æä¾›è€…æ–¹æ³•æ‰§è¡Œ
 //                                                {
 //                                                    throw e;
 //                                                }
 //                                                else
 //                                                {
-//                                                    log.error("Í¬²½µ÷ÓÃ·şÎñÌá¹©Õß[" + securityProviderInfo + "]ÖĞ·½·¨[" + method
-//                                                            + "]Òì³££º" + e.getMessage(), e);
+//                                                    log.error("åŒæ­¥è°ƒç”¨æœåŠ¡æä¾›è€…[" + securityProviderInfo + "]ä¸­æ–¹æ³•[" + method
+//                                                            + "]å¼‚å¸¸ï¼š" + e.getMessage(), e);
 //                                                }
 //                                            }
 //                                        }
@@ -682,7 +682,7 @@ public abstract class BaseSPIManager
 //                                // providerInfoQueue.getSecurityProviderInfo(i)
 //                                // .getProvider());
 //                            }
-//                            if (throwable != null)// Èç¹ûÔÚ·½·¨µÄÖ´ĞĞ¹ı³ÌÖĞ·¢ÉúÒì³££¬Å×³ö¸ÃÒì³£
+//                            if (throwable != null)// å¦‚æœåœ¨æ–¹æ³•çš„æ‰§è¡Œè¿‡ç¨‹ä¸­å‘ç”Ÿå¼‚å¸¸ï¼ŒæŠ›å‡ºè¯¥å¼‚å¸¸
 //                                throw throwable;
 //                            if (interceptor != null)
 //                                interceptor.after(method, args);
@@ -742,7 +742,7 @@ public abstract class BaseSPIManager
 //    }
 
     /**
-     * Í¨ÓÃÌØ¶¨·şÎñÌá¹©½Ó¿Ú»ñÈ¡Àà
+     * é€šç”¨ç‰¹å®šæœåŠ¡æä¾›æ¥å£è·å–ç±»
      * 
      * @param providerManagerType
      *            String
@@ -755,7 +755,7 @@ public abstract class BaseSPIManager
     }
 
     /**
-     * »ñÈ¡È«¾ÖÈ±Ê¡µÄprovider
+     * è·å–å…¨å±€ç¼ºçœçš„provider
      * 
      * @return Object
      * @throws SPIException
@@ -766,7 +766,7 @@ public abstract class BaseSPIManager
     }
 
     // /**
-    // * Í¨ÓÃÌØ¶¨·şÎñÀàĞÍÖĞÌØ¶¨Êı¾İÔ´ÊµÏÖµÄÌá¹©½Ó¿Ú»ñÈ¡Àà
+    // * é€šç”¨ç‰¹å®šæœåŠ¡ç±»å‹ä¸­ç‰¹å®šæ•°æ®æºå®ç°çš„æä¾›æ¥å£è·å–ç±»
     // * @param providerManagerType String
     // * @param sourceType String
     // * @return Provider
@@ -785,13 +785,13 @@ public abstract class BaseSPIManager
     // ConfigManager.getInstance().getDefaultProviderManagerInfo();
     // providerManagerType = providerManagerInfo.getId() ;
     // }
-    // //¸÷spi¹ÜÀíÕßµÄ»º³å¹Ø¼ü×ÖÎªproviderManagerType £« ":" + sourceType;
+    // //å„spiç®¡ç†è€…çš„ç¼“å†²å…³é”®å­—ä¸ºproviderManagerType ï¼‹ ":" + sourceType;
     // String cacheKey = sourceType != null?providerManagerType+":"+sourceType
     // :providerManagerType+":"+DEFAULT_CACHE_KEY;
     // String syncacheKey = providerManagerType+":"+SYNCHRO_CACHE_KEY;
     //
     // Provider provider = null;
-    // //ÅĞ¶ÏÊÇ·ñÔÊĞíÎªµ¥ÊµÀıÄ£Ê½£¬Èç¹ûÊÇ»ñÈ¡µ¥ÊµÀı£¬·ñÔòÖØĞÂ´´½¨providerÊµÀı
+    // //åˆ¤æ–­æ˜¯å¦å…è®¸ä¸ºå•å®ä¾‹æ¨¡å¼ï¼Œå¦‚æœæ˜¯è·å–å•å®ä¾‹ï¼Œå¦åˆ™é‡æ–°åˆ›å»ºproviderå®ä¾‹
     // if(providerManagerInfo.isSinglable())
     // {
     // provider = (Provider) providers.get(cacheKey);
@@ -827,10 +827,10 @@ public abstract class BaseSPIManager
     // getSecurityProviderInfoByType(sourceType)
     // .getProvider();
     // }
-    // //Èç¹û¿ªÆôÍ¬²½»úÖÆ£¬»ñÈ¡Í¬²½´úÀí½Ó¿Ú£¬·ñÔòÖ±½Ó·µ»ØÈ±Ê¡µÄ¹ÜÀí½Ó¿Ú
+    // //å¦‚æœå¼€å¯åŒæ­¥æœºåˆ¶ï¼Œè·å–åŒæ­¥ä»£ç†æ¥å£ï¼Œå¦åˆ™ç›´æ¥è¿”å›ç¼ºçœçš„ç®¡ç†æ¥å£
     // if (providerManagerInfo.isSynchronizedEnabled()) {
     // Provider synProvider = null;
-    // //Èç¹ûÊÇµ¥ÊµÀıÔò»ñÈ¡´úÀíµ¥ÊµÀı£¬·ñÔòÖØĞÂÉú³É´úÀíÊµÀı
+    // //å¦‚æœæ˜¯å•å®ä¾‹åˆ™è·å–ä»£ç†å•å®ä¾‹ï¼Œå¦åˆ™é‡æ–°ç”Ÿæˆä»£ç†å®ä¾‹
     // if(providerManagerInfo.isSinglable())
     // {
     // synProvider = (Provider) providers.get(
@@ -862,7 +862,7 @@ public abstract class BaseSPIManager
     // }
 
     /**
-     * »ñÈ¡¹ÜÀí·şÎñµÄÌØ¶¨Ìá¹©ÕßÊµÀı¶ÔÏó
+     * è·å–ç®¡ç†æœåŠ¡çš„ç‰¹å®šæä¾›è€…å®ä¾‹å¯¹è±¡
      */
     public static Object getProvider(String providerManagerType, String sourceType) throws SPIException
     {
@@ -876,7 +876,7 @@ public abstract class BaseSPIManager
 //    private static final List<DisposableBean> singleDestorys = new ArrayList<DisposableBean>();
 
     /**
-     * Í¨ÓÃÌØ¶¨·şÎñÀàĞÍÖĞÌØ¶¨Êı¾İÔ´ÊµÏÖµÄÌá¹©½Ó¿Ú»ñÈ¡Àà
+     * é€šç”¨ç‰¹å®šæœåŠ¡ç±»å‹ä¸­ç‰¹å®šæ•°æ®æºå®ç°çš„æä¾›æ¥å£è·å–ç±»
      * 
      * @param providerManagerType
      *            String
@@ -907,7 +907,7 @@ public abstract class BaseSPIManager
     // throw new SPIException("SPI[" + providerManagerType +"] in "
     // + parent + " does not exist.");
     // }
-    // //¸÷spi¹ÜÀíÕßµÄ»º³å¹Ø¼ü×ÖÎªproviderManagerType £« ":" + sourceType;
+    // //å„spiç®¡ç†è€…çš„ç¼“å†²å…³é”®å­—ä¸ºproviderManagerType ï¼‹ ":" + sourceType;
     // if(sourceType == null || sourceType.equals(""))
     // {
     // sourceType = providerManagerInfo.getDefaulProviderInfo().getType();
@@ -923,7 +923,7 @@ public abstract class BaseSPIManager
     // }
     //
     // Object provider = null;
-    // //ÅĞ¶ÏÊÇ·ñÔÊĞíÎªµ¥ÊµÀıÄ£Ê½£¬Èç¹ûÊÇ»ñÈ¡µ¥ÊµÀı£¬·ñÔòÖØĞÂ´´½¨providerÊµÀı
+    // //åˆ¤æ–­æ˜¯å¦å…è®¸ä¸ºå•å®ä¾‹æ¨¡å¼ï¼Œå¦‚æœæ˜¯è·å–å•å®ä¾‹ï¼Œå¦åˆ™é‡æ–°åˆ›å»ºproviderå®ä¾‹
     // if(providerManagerInfo.isSinglable())
     // {
     //            
@@ -953,11 +953,11 @@ public abstract class BaseSPIManager
     // }
     // }
     // if(provider == null)
-    // throw new SPIException("¹ÜÀí·şÎñ["+key + "]Îªnull,Çë¼ì²éÏà¹ØÅäÖÃÊÇ·ñÕıÈ·¡£");
+    // throw new SPIException("ç®¡ç†æœåŠ¡["+key + "]ä¸ºnull,è¯·æ£€æŸ¥ç›¸å…³é…ç½®æ˜¯å¦æ­£ç¡®ã€‚");
     //            
     // finalsynProvider = provider;
     //        
-    // //Éú³É¹ÜÀí·şÎñµÄ¶¯Ì¬´úÀíÊµÀı,Èç¹û²»ÊÇÒÔÏÂµÄÇé¿öÔò²»ĞèÒª´´½¨´úÀí
+    // //ç”Ÿæˆç®¡ç†æœåŠ¡çš„åŠ¨æ€ä»£ç†å®ä¾‹,å¦‚æœä¸æ˜¯ä»¥ä¸‹çš„æƒ…å†µåˆ™ä¸éœ€è¦åˆ›å»ºä»£ç†
     // try
     // {
     // if(providerManagerInfo.enableTransaction() &&
@@ -1063,7 +1063,7 @@ public abstract class BaseSPIManager
 //                return BaseSPIManager.getBeanObject(callContext,_name,null,true);
 //            }
 //        }
-//        // ¸÷spi¹ÜÀíÕßµÄ»º³å¹Ø¼ü×ÖÎªproviderManagerType £« ":" + sourceType;
+//        // å„spiç®¡ç†è€…çš„ç¼“å†²å…³é”®å­—ä¸ºproviderManagerType ï¼‹ ":" + sourceType;
 //        if (sourceType == null || sourceType.equals(""))
 //        {
 //            sourceType = providerManagerInfo.getDefaulProviderInfo().getType();
@@ -1082,11 +1082,11 @@ public abstract class BaseSPIManager
 //
 //        provider = providerManagerInfo.getSecurityProviderInfoByType(sourceType).getProvider(callContext);
 //        if (provider == null)
-//            throw new SPIException("¹ÜÀí·şÎñ[" + key + "]Îªnull,Çë¼ì²éÏà¹ØÅäÖÃÊÇ·ñÕıÈ·¡£");
+//            throw new SPIException("ç®¡ç†æœåŠ¡[" + key + "]ä¸ºnull,è¯·æ£€æŸ¥ç›¸å…³é…ç½®æ˜¯å¦æ­£ç¡®ã€‚");
 //
 //        finalsynProvider = provider;
 //
-//        // Éú³É¹ÜÀí·şÎñµÄ¶¯Ì¬´úÀíÊµÀı,Èç¹û²»ÊÇÒÔÏÂµÄÇé¿öÔò²»ĞèÒª´´½¨´úÀí
+//        // ç”Ÿæˆç®¡ç†æœåŠ¡çš„åŠ¨æ€ä»£ç†å®ä¾‹,å¦‚æœä¸æ˜¯ä»¥ä¸‹çš„æƒ…å†µåˆ™ä¸éœ€è¦åˆ›å»ºä»£ç†
 //        try
 //        {
 //            if (providerManagerInfo.enableTransaction() && providerManagerInfo.isSynchronizedEnabled())
@@ -1228,10 +1228,10 @@ public abstract class BaseSPIManager
     }
 
     /**
-     * ¸ù¾İÔ¶³Ìµ÷ÓÃÄ¿±êipµØÖ·ºÍ¶Ë¿Ú»ñÈ¡¶ÔÓ¦·şÎñÆ÷ÖĞ·µ»ØµÄ½á¹û
-     * ÊÊÓÃÓÚminaºÍjgroupĞ­Òé
-     * ÆäËûĞ­ÒéÓ¦¸ÃÍ¨¹ıÌØ¶¨Ğ­ÒéµÄ½Ó¿ÚºÍ´øĞ­ÒéµÄgetRPCResult·½·¨»ñÈ¡
-     * ¶ÔÓ¦·şÎñÆ÷µÄ½Ó¿Ú
+     * æ ¹æ®è¿œç¨‹è°ƒç”¨ç›®æ ‡ipåœ°å€å’Œç«¯å£è·å–å¯¹åº”æœåŠ¡å™¨ä¸­è¿”å›çš„ç»“æœ
+     * é€‚ç”¨äºminaå’Œjgroupåè®®
+     * å…¶ä»–åè®®åº”è¯¥é€šè¿‡ç‰¹å®šåè®®çš„æ¥å£å’Œå¸¦åè®®çš„getRPCResultæ–¹æ³•è·å–
+     * å¯¹åº”æœåŠ¡å™¨çš„æ¥å£
      * 
      * @param ip
      * @param port
@@ -1246,11 +1246,11 @@ public abstract class BaseSPIManager
     }
     
     /**
-     * ¸ù¾İurlµØÖ·»ñÈ¡¶ÔÓ¦µÄ½á¹ûÖµ
+     * æ ¹æ®urlåœ°å€è·å–å¯¹åº”çš„ç»“æœå€¼
      * 
-     * @param url ¶ÔÓ¦µÄÔ¶³ÌµØÖ·url
-     * @param values ¶à²¥µ÷ÓÃ·µ»ØµÄ½á¹û¼¯
-     * @param protocol rpc¶ÔÓ¦µÄÔ¶³ÌĞ­Òé£¬
+     * @param url å¯¹åº”çš„è¿œç¨‹åœ°å€url
+     * @param values å¤šæ’­è°ƒç”¨è¿”å›çš„ç»“æœé›†
+     * @param protocol rpcå¯¹åº”çš„è¿œç¨‹åè®®ï¼Œ
      * @see org.frameworkset.remote.Target.BROADCAST_TYPE_MUTICAST
             org.frameworkset.remote.Target.BROADCAST_TYPE_UNICAST        
         org.frameworkset.remote.Target.BROADCAST_TYPE_JRGOUP    
@@ -1285,7 +1285,7 @@ public abstract class BaseSPIManager
         return getBeanObject(name, null);
         // return ServiceProviderManager.getInstance().getObjectProperty(name);
         // if(value == null)
-        // throw new AssembleException("ÅäÖÃÎÄ¼şÃ»ÓĞÖ¸¶¨ÊôĞÔ[" + name + "]£¡");
+        // throw new AssembleException("é…ç½®æ–‡ä»¶æ²¡æœ‰æŒ‡å®šå±æ€§[" + name + "]ï¼");
 
     }
 
@@ -1295,7 +1295,7 @@ public abstract class BaseSPIManager
         // return ServiceProviderManager.getInstance().getObjectProperty(name,
         // defaultValue);
         // if(value == null)
-        // throw new AssembleException("ÅäÖÃÎÄ¼şÃ»ÓĞÖ¸¶¨ÊôĞÔ[" + name + "]£¡");
+        // throw new AssembleException("é…ç½®æ–‡ä»¶æ²¡æœ‰æŒ‡å®šå±æ€§[" + name + "]ï¼");
 
     }
 
@@ -1303,7 +1303,7 @@ public abstract class BaseSPIManager
     {
         return defaultContext.getSetProperty(name);
         // if(value == null)
-        // throw new AssembleException("ÅäÖÃÎÄ¼şÃ»ÓĞÖ¸¶¨ÊôĞÔ[" + name + "]£¡");
+        // throw new AssembleException("é…ç½®æ–‡ä»¶æ²¡æœ‰æŒ‡å®šå±æ€§[" + name + "]ï¼");
 
     }
 
@@ -1329,7 +1329,7 @@ public abstract class BaseSPIManager
     {
         return defaultContext.getMapProperty(name);
         // if(value == null)
-        // throw new AssembleException("ÅäÖÃÎÄ¼şÃ»ÓĞÖ¸¶¨ÊôĞÔ[" + name + "]£¡");
+        // throw new AssembleException("é…ç½®æ–‡ä»¶æ²¡æœ‰æŒ‡å®šå±æ€§[" + name + "]ï¼");
 
     }
 
@@ -1340,7 +1340,7 @@ public abstract class BaseSPIManager
     }
 
     /**
-     * »ñÈ¡µ±Ç°ËùÓĞÁ¬Í¨µÄ½ÚµãÇåµ¥
+     * è·å–å½“å‰æ‰€æœ‰è¿é€šçš„èŠ‚ç‚¹æ¸…å•
      */
     @SuppressWarnings("unchecked")
     public static List<RPCAddress> getAllNodes()
@@ -1375,7 +1375,7 @@ public abstract class BaseSPIManager
     }
 
     // /**
-    // * Õâ¸ö·½·¨ĞèÒª¶Ô·şÎñÊÂÎñ½øĞĞÏàÓ¦µÄ´¦Àí
+    // * è¿™ä¸ªæ–¹æ³•éœ€è¦å¯¹æœåŠ¡äº‹åŠ¡è¿›è¡Œç›¸åº”çš„å¤„ç†
     // * @param context
     // * @param name
     // * @param defaultValue
@@ -1398,7 +1398,7 @@ public abstract class BaseSPIManager
     // providerManagerInfo_ = ServiceProviderManager.getInstance()
     // .getProviderManagerInfo(serviceID.getService());
     // if(providerManagerInfo_ == null)
-    // throw new SPIException("Ã»ÓĞ¶¨ÒåÃû³ÆÎª[" + name + "]µÄbean¶ÔÏó¡£");
+    // throw new SPIException("æ²¡æœ‰å®šä¹‰åç§°ä¸º[" + name + "]çš„beanå¯¹è±¡ã€‚");
     // return BaseSPIManager.getProvider(context, name, null);
     // }
     //        
@@ -1441,7 +1441,7 @@ public abstract class BaseSPIManager
 //    	StringTokenizer tokenizer = new StringTokenizer(params,"&",false);
 //    	   
 //        /**
-//         * Ğ­ÒéÖĞ°üº¬µÄÊôĞÔ²ÎÊı£¬¿ÉÒÔÓÃÀ´×öÂ·ÓÉÌõ¼ş
+//         * åè®®ä¸­åŒ…å«çš„å±æ€§å‚æ•°ï¼Œå¯ä»¥ç”¨æ¥åšè·¯ç”±æ¡ä»¶
 //         */
 //        Headers headers = null;
 //    	SecurityContext securityContext = null;
@@ -1455,7 +1455,7 @@ public abstract class BaseSPIManager
 //    		int idex = parameter.indexOf("=");
 //    		if(idex <= 0)
 //    		{
-//    			throw new SPIException("·Ç·¨µÄ·şÎñ²ÎÊı´®[" + params +"]");
+//    			throw new SPIException("éæ³•çš„æœåŠ¡å‚æ•°ä¸²[" + params +"]");
 //    		}
 //    		StringTokenizer ptokenizer = new StringTokenizer(parameter,"=",false);
 //    		String name = ptokenizer.nextToken();
@@ -1486,7 +1486,7 @@ public abstract class BaseSPIManager
 //    }
     
     /**
-     * bean¹¤³§·½·¨
+     * beanå·¥å‚æ–¹æ³•
      * 
      * @param context
      * @param name
@@ -1496,7 +1496,7 @@ public abstract class BaseSPIManager
     @SuppressWarnings("unchecked")
     static Object getBeanObject(CallContext context, String name, Object defaultValue,boolean fromprovider)
     {
-//    	//·ÖÎö·şÎñ²ÎÊı
+//    	//åˆ†ææœåŠ¡å‚æ•°
 //    	int idx = name.indexOf("?");
 //    	
 //    	
@@ -1525,12 +1525,12 @@ public abstract class BaseSPIManager
 //    
 //                providerManagerInfo_ = defaultContext.getProviderManagerInfo(serviceID.getService());
 //                if (providerManagerInfo_ == null)
-//                    throw new SPIException("Ã»ÓĞ¶¨ÒåÃû³ÆÎª[" + name + "]µÄbean¶ÔÏó¡£");
+//                    throw new SPIException("æ²¡æœ‰å®šä¹‰åç§°ä¸º[" + name + "]çš„beanå¯¹è±¡ã€‚");
 //                return BaseSPIManager.getProvider(context, _name, null,true);
 //            }
 //            else
 //            {
-//                throw new SPIException("Ã»ÓĞ¶¨ÒåÃû³ÆÎª[" + name + "]µÄbean¶ÔÏó¡£");
+//                throw new SPIException("æ²¡æœ‰å®šä¹‰åç§°ä¸º[" + name + "]çš„beanå¯¹è±¡ã€‚");
 //            }
 //        }
 //        return getBeanObject(context, providerManagerInfo, defaultValue, serviceID);
@@ -1579,9 +1579,9 @@ public abstract class BaseSPIManager
     }
 
     /**
-     * bean×é¼ş¹¤³§·½·¨£¬ Èç¹ûserviceID²»Îª¿Õ£¬ÔòserviceIDÊÇ¸ù¾İgetBeanObject(Context context,
-     * String name,Object defaultValue)·½·¨µÄnameÉú³ÉµÄ
-     * ·ñÔòĞèÒª¸ù¾İproviderManagerInfoµÄname»òÕßrefidÀ´Éú³ÉserviceID
+     * beanç»„ä»¶å·¥å‚æ–¹æ³•ï¼Œ å¦‚æœserviceIDä¸ä¸ºç©ºï¼Œåˆ™serviceIDæ˜¯æ ¹æ®getBeanObject(Context context,
+     * String name,Object defaultValue)æ–¹æ³•çš„nameç”Ÿæˆçš„
+     * å¦åˆ™éœ€è¦æ ¹æ®providerManagerInfoçš„nameæˆ–è€…refidæ¥ç”ŸæˆserviceID
      * 
      * @param context
      * @param providerManagerInfo
@@ -1595,7 +1595,7 @@ public abstract class BaseSPIManager
         return defaultContext.getBeanObject( context,  providerManagerInfo,  defaultValue,
                  serviceID);
 //        if (providerManagerInfo == null)
-//            throw new SPIException("bean¶ÔÏóÎª¿Õ¡£");
+//            throw new SPIException("beanå¯¹è±¡ä¸ºç©ºã€‚");
 //        String key = providerManagerInfo.getName();
 //        if(providerManagerInfo.isRefereced())
 //        {
@@ -1615,7 +1615,7 @@ public abstract class BaseSPIManager
 //            if (providerManagerInfo.isSinglable() )
 //            {
 ////                String key = serviceID.getServiceID();
-//                if(context != null && !context.containHeaders() && !serviceID.isRestStyle() )//Èç¹û°üº¬Í·ĞÅÏ¢Ê±£¬´úÀíÀà½«²»ÄÜ±»»º³å£¬Ô­ÒòÊÇÍ·ĞÅÏ¢µÄ¶¯Ì¬ĞÔ»áµ¼ÖÂ»º³åÊµÀı¹ı¶à
+//                if(context != null && !context.containHeaders() && !serviceID.isRestStyle() )//å¦‚æœåŒ…å«å¤´ä¿¡æ¯æ—¶ï¼Œä»£ç†ç±»å°†ä¸èƒ½è¢«ç¼“å†²ï¼ŒåŸå› æ˜¯å¤´ä¿¡æ¯çš„åŠ¨æ€æ€§ä¼šå¯¼è‡´ç¼“å†²å®ä¾‹è¿‡å¤š
 //                {
 //                    Object provider = servicProviders.get(key);
 //                    if (provider != null)
@@ -1689,7 +1689,7 @@ public abstract class BaseSPIManager
 //    }
     
     /**
-     * Ğ£ÑéµØÖ·ÊÇ·ñÊÇºÏ·¨¿ÉÁ¬Í¨µÄµØÖ·
+     * æ ¡éªŒåœ°å€æ˜¯å¦æ˜¯åˆæ³•å¯è¿é€šçš„åœ°å€
      * @param address
      * @return
      */
@@ -1710,7 +1710,7 @@ public abstract class BaseSPIManager
     }
     
     /**
-     * ÅĞ¶ÏÏµÍ³ÊÇ·ñÆôÓÃÁË¼¯Èº¹¦ÄÜ          
+     * åˆ¤æ–­ç³»ç»Ÿæ˜¯å¦å¯ç”¨äº†é›†ç¾¤åŠŸèƒ½          
      * @return
      */
     public static boolean clusterstarted() {
@@ -1722,7 +1722,7 @@ public abstract class BaseSPIManager
     
     
     /**
-     * ÅĞ¶ÏÏµÍ³ÊÇ·ñÆôÓÃÁË¼¯Èº¹¦ÄÜ          
+     * åˆ¤æ–­ç³»ç»Ÿæ˜¯å¦å¯ç”¨äº†é›†ç¾¤åŠŸèƒ½          
      * @return
      */
     public static boolean clusterstarted(String protocol) {
@@ -1743,7 +1743,7 @@ public abstract class BaseSPIManager
 //        }
 //        else
 //        {
-//            throw new java.lang.IllegalArgumentException("Î´Ö§³ÖĞ­Òé£º" + protocol);
+//            throw new java.lang.IllegalArgumentException("æœªæ”¯æŒåè®®ï¼š" + protocol);
 //        }
         return ApplicationContext.clusterstarted(protocol);
         
@@ -1756,7 +1756,7 @@ public abstract class BaseSPIManager
     }
 
     /**
-     * »ñÈ¡webservice·şÎñµ÷ÓÃ½á¹û
+     * è·å–webserviceæœåŠ¡è°ƒç”¨ç»“æœ
      * @param url
      * @param ret
      * @return
@@ -1768,7 +1768,7 @@ public abstract class BaseSPIManager
 	}
 	
 	/**
-     * »ñÈ¡webservice·şÎñµ÷ÓÃ½á¹û
+     * è·å–webserviceæœåŠ¡è°ƒç”¨ç»“æœ
      * @param url
      * @param ret
      * @return
@@ -1780,7 +1780,7 @@ public abstract class BaseSPIManager
     }
     
     /**
-     * »ñÈ¡webservice·şÎñµ÷ÓÃ½á¹û
+     * è·å–webserviceæœåŠ¡è°ƒç”¨ç»“æœ
      * @param url
      * @param ret
      * @return
@@ -1792,7 +1792,7 @@ public abstract class BaseSPIManager
     }
     
     /**
-     * »ñÈ¡webservice·şÎñµ÷ÓÃ½á¹û
+     * è·å–webserviceæœåŠ¡è°ƒç”¨ç»“æœ
      * @param url
      * @param ret
      * @return
@@ -1804,7 +1804,7 @@ public abstract class BaseSPIManager
     }
     
     /**
-     * »ñÈ¡webservice·şÎñµ÷ÓÃ½á¹û
+     * è·å–webserviceæœåŠ¡è°ƒç”¨ç»“æœ
      * @param url
      * @param ret
      * @return
@@ -1816,7 +1816,7 @@ public abstract class BaseSPIManager
     }
     
     /**
-     * »ñÈ¡webservice·şÎñµ÷ÓÃ½á¹û
+     * è·å–webserviceæœåŠ¡è°ƒç”¨ç»“æœ
      * @param url
      * @param ret
      * @return

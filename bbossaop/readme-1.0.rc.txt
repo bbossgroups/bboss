@@ -6,7 +6,7 @@ lib--bboss-aop framework depends jars
 distrib--bboss-aop release package.
 
 ---------------------------------
-bbossaopÏà¹ØÁª¹¤³Ì£º
+bbossaopç›¸å…³è”å·¥ç¨‹ï¼š
 ---------------------------------
 
 bbossaop<-bbossevent 
@@ -60,58 +60,58 @@ bbossaop<-portal [bboss-aop.jar]
 bbossaop<-cas server [bboss-aop.jar]
 
 bbossaop->bboss-persistent [frameworkset-pool.jar]
-bbossaop->bboss-taglib [frameworkset.jar] ¼à¿ØÊ÷Ê¹ÓÃÁË±êÇ©¿â
+bbossaop->bboss-taglib [frameworkset.jar] ç›‘æ§æ ‘ä½¿ç”¨äº†æ ‡ç­¾åº“
 bbossaop->bboss-util [frameworkset-util.jar]
 
 
 
 ---------------------------------
-¹¹½¨·¢²¼°ü:
+æ„å»ºå‘å¸ƒåŒ…:
 ---------------------------------
-ÇĞ»»µ½ÃüÁîĞĞ£¬Ö±½ÓÔÚ¹¤³ÌÄ¿Â¼ÏÂÔËĞĞant¼´¿É
+åˆ‡æ¢åˆ°å‘½ä»¤è¡Œï¼Œç›´æ¥åœ¨å·¥ç¨‹ç›®å½•ä¸‹è¿è¡Œantå³å¯
 ---------------------------------
-×¢ÒâÊÂÏî£º
+æ³¨æ„äº‹é¡¹ï¼š
 ---------------------------------
-o ·¢²¼°üÃû---bboss-aop.jar src test src-log  src-thread      
+o å‘å¸ƒåŒ…å---bboss-aop.jar src test src-log  src-thread      
   
 
-o ·¢²¼°üÃû---bboss-ws.jar src-cxf
+o å‘å¸ƒåŒ…å---bboss-ws.jar src-cxf
 
-o ·¢²¼°üÃû---bboss-camel.jar src-camel
+o å‘å¸ƒåŒ…å---bboss-camel.jar src-camel
 
-o ·¢²¼°üÃû---bboss-mina.jar src-mina
+o å‘å¸ƒåŒ…å---bboss-mina.jar src-mina
 
-o ·¢²¼°üÃû---bboss-netty.jar src-netty
+o å‘å¸ƒåŒ…å---bboss-netty.jar src-netty
 
-o ·¢²¼°üÃû---bboss-schedule.jar src-schedule
-o ·¢²¼°üÃû---bboss-tlq.jar src-tlq
-o ·¢²¼°üÃû---bboss-rmi.jar src-rmi
-
-
-
-o resources---»ù±¾×ÊÔ´ÎÄ¼şÄ¿Â¼£¬´æ·ÅÅäÖÃÎÄ¼ş
+o å‘å¸ƒåŒ…å---bboss-schedule.jar src-schedule
+o å‘å¸ƒåŒ…å---bboss-tlq.jar src-tlq
+o å‘å¸ƒåŒ…å---bboss-rmi.jar src-rmi
 
 
 
-²¿ÊğËµÃ÷£º
-o distribÄ¿Â¼ÖĞ°üº¬ÁËbboss aop¿ò¼Ü·¢²¼µÄjar°ü£º
-bboss-aop.jar - aop¿ò¼ÜµÄºËĞÄjar°ü
-bboss-camel.jar - bboss camelÂ·ÓÉ×é¼ş°ü£¬Ìá¹©camelÂ·ÓÉ¹æÔòÖ§³Ö£¬´Ó¶øÊµÏÖbboss×é¼şÖ®¼äµÄÂ·ÓÉ¹¦ÄÜ£¬°üÀ¨±¾µØ·şÎñµ÷ÓÃÂ·ÓÉºÍÔ¶³Ì·şÎñµ÷ÓÃÂ·ÓÉ
-bboss-jms.jar - bboss aop¿ò¼ÜÌá¹©jmsµ÷ÓÃµÄ±ê×¼½Ó¿Ú£¬·ûºÏjms 1.1¹æ·¶£¬Í¬Ê±Ìá¹©ÁËbboss aopÔ¶³Ì·şÎñµ÷ÓÃµÄjmsĞ­ÒéÊµÏÖ
-bboss-mina.jar - bboss aop¿ò¼ÜÔ¶³Ì·şÎñµ÷ÓÃµÄminaĞ­ÒéÊµÏÖ
-bboss-ws.jar - bboss aop¿ò¼ÜÖĞµÄwebservcie·şÎñ·¢²¼¿ò¼ÜÊµÏÖ£¬Ä¿Ç°Ö§³Öapache cxf 2.2.4£¬Í¬Ê±Ìá¹©ÁËbboss aopÔ¶³Ì·şÎñµ÷ÓÃµÄwebserviceĞ­ÒéÊµÏÖ
-jgroups.jar - »ùÓÚJGroups-2.8.0.GAÀ©Õ¹°ü£¬Ìí¼ÓÁËbboss aop¿ò¼ÜµÄÈÏÖ¤¡¢¼øÈ¨¡¢¼Ó/½âÃÜ¹¦ÄÜ
+o resources---åŸºæœ¬èµ„æºæ–‡ä»¶ç›®å½•ï¼Œå­˜æ”¾é…ç½®æ–‡ä»¶
 
-Í¬Ê±Ò²°üº¬ÁËjms£¬mina£¬webserviceÔËĞĞÊ±ÒÀÀµµÄjar°ü£º
-lib\camel- camel×é¼ş¿â °æ±¾Îªcamel 2.0
-lib\cxf - webservice¿ò¼Üapache cxf 2.2.4×é¼ş°ü
 
-lib\jms - jms¹æ·¶jar°ü£¬active mq×é¼ş¿â active mq 5.2.0
-lib\mina - minaĞ­Òé×é¼ş¿â £¬apache mina-2.0.0-M6
-lib\ bboss aop¿ò¼ÜÒÀÀµµÄÒ»ÏÂ¹¤¾ß°ü
 
-o resourceÄ¿Â¼Îªbboss aop²¿ÊğÅäÖÃÎÄ¼şµÄ´æ·ÅÄ¿Â¼£¬²¿Êğµ½ÔËĞĞ»·¾³Ê±£¬ĞèÒª½«resourceÏÂµÄxmlÎÄ¼ş¿½±´µ½
-classpath¸ùÄ¿Â¼ÏÂ£¬ÀıÈçclassesÄ¿Â¼¡£
+éƒ¨ç½²è¯´æ˜ï¼š
+o distribç›®å½•ä¸­åŒ…å«äº†bboss aopæ¡†æ¶å‘å¸ƒçš„jaråŒ…ï¼š
+bboss-aop.jar - aopæ¡†æ¶çš„æ ¸å¿ƒjaråŒ…
+bboss-camel.jar - bboss camelè·¯ç”±ç»„ä»¶åŒ…ï¼Œæä¾›camelè·¯ç”±è§„åˆ™æ”¯æŒï¼Œä»è€Œå®ç°bbossç»„ä»¶ä¹‹é—´çš„è·¯ç”±åŠŸèƒ½ï¼ŒåŒ…æ‹¬æœ¬åœ°æœåŠ¡è°ƒç”¨è·¯ç”±å’Œè¿œç¨‹æœåŠ¡è°ƒç”¨è·¯ç”±
+bboss-jms.jar - bboss aopæ¡†æ¶æä¾›jmsè°ƒç”¨çš„æ ‡å‡†æ¥å£ï¼Œç¬¦åˆjms 1.1è§„èŒƒï¼ŒåŒæ—¶æä¾›äº†bboss aopè¿œç¨‹æœåŠ¡è°ƒç”¨çš„jmsåè®®å®ç°
+bboss-mina.jar - bboss aopæ¡†æ¶è¿œç¨‹æœåŠ¡è°ƒç”¨çš„minaåè®®å®ç°
+bboss-ws.jar - bboss aopæ¡†æ¶ä¸­çš„webservcieæœåŠ¡å‘å¸ƒæ¡†æ¶å®ç°ï¼Œç›®å‰æ”¯æŒapache cxf 2.2.4ï¼ŒåŒæ—¶æä¾›äº†bboss aopè¿œç¨‹æœåŠ¡è°ƒç”¨çš„webserviceåè®®å®ç°
+jgroups.jar - åŸºäºJGroups-2.8.0.GAæ‰©å±•åŒ…ï¼Œæ·»åŠ äº†bboss aopæ¡†æ¶çš„è®¤è¯ã€é‰´æƒã€åŠ /è§£å¯†åŠŸèƒ½
+
+åŒæ—¶ä¹ŸåŒ…å«äº†jmsï¼Œminaï¼Œwebserviceè¿è¡Œæ—¶ä¾èµ–çš„jaråŒ…ï¼š
+lib\camel- camelç»„ä»¶åº“ ç‰ˆæœ¬ä¸ºcamel 2.0
+lib\cxf - webserviceæ¡†æ¶apache cxf 2.2.4ç»„ä»¶åŒ…
+
+lib\jms - jmsè§„èŒƒjaråŒ…ï¼Œactive mqç»„ä»¶åº“ active mq 5.2.0
+lib\mina - minaåè®®ç»„ä»¶åº“ ï¼Œapache mina-2.0.0-M6
+lib\ bboss aopæ¡†æ¶ä¾èµ–çš„ä¸€ä¸‹å·¥å…·åŒ…
+
+o resourceç›®å½•ä¸ºbboss aopéƒ¨ç½²é…ç½®æ–‡ä»¶çš„å­˜æ”¾ç›®å½•ï¼Œéƒ¨ç½²åˆ°è¿è¡Œç¯å¢ƒæ—¶ï¼Œéœ€è¦å°†resourceä¸‹çš„xmlæ–‡ä»¶æ‹·è´åˆ°
+classpathæ ¹ç›®å½•ä¸‹ï¼Œä¾‹å¦‚classesç›®å½•ã€‚
 
 
 
@@ -121,31 +121,31 @@ update function list since bbossgroups-1.0-rc
 -----------------------------------------------
 2010-06-30
 -----------------------------------------------------
-o ĞŞ¸´rpc·½·¨µ÷ÓÃÒì³£¶ÑÕ»²»ÄÜÕıÈ··´Ó³µ÷ÓÃÖ´ĞĞ¶ÑÕ»µÄÎÊÌâ
+o ä¿®å¤rpcæ–¹æ³•è°ƒç”¨å¼‚å¸¸å †æ ˆä¸èƒ½æ­£ç¡®åæ˜ è°ƒç”¨æ‰§è¡Œå †æ ˆçš„é—®é¢˜
 -----------------------------------------------
 2010-06-24
 -----------------------------------------------------
-o jgroupsĞ­ÒéÉı¼¶µ½JGroups-2.10.0.CR1
-½¨Òé£ºÉı¼¶ÁËĞÂ°æµÄjgroupsºó£¬»ùÓÚjgroupsµÄrpcĞ­Òé×îºÃÖ»ÔÚ¼¯Èº»·¾³ÏÂÊ¹ÓÃ£¬Ê¹ÓÃµÄ·½·¨²Î¿¼²âÊÔÓÃÀı¡£
-Ô­À´½øĞĞjgroups¼¯Èºµ¥²¥ºÍ¶à²¥µ÷ÓÃµÄ·½·¨½øĞĞÁËµ÷Õû£¬ÏêÏ¸Çé¿öÇë¿´²âÊÔÓÃÀı£º
+o jgroupsåè®®å‡çº§åˆ°JGroups-2.10.0.CR1
+å»ºè®®ï¼šå‡çº§äº†æ–°ç‰ˆçš„jgroupsåï¼ŒåŸºäºjgroupsçš„rpcåè®®æœ€å¥½åªåœ¨é›†ç¾¤ç¯å¢ƒä¸‹ä½¿ç”¨ï¼Œä½¿ç”¨çš„æ–¹æ³•å‚è€ƒæµ‹è¯•ç”¨ä¾‹ã€‚
+åŸæ¥è¿›è¡Œjgroupsé›†ç¾¤å•æ’­å’Œå¤šæ’­è°ƒç”¨çš„æ–¹æ³•è¿›è¡Œäº†è°ƒæ•´ï¼Œè¯¦ç»†æƒ…å†µè¯·çœ‹æµ‹è¯•ç”¨ä¾‹ï¼š
 /bbossaop/test/org/frameworkset/spi/remote/jgroup/TestClient.java
-¹ã²¥µ÷ÓÃ£º
+å¹¿æ’­è°ƒç”¨ï¼š
 RPCTestInf testInf = (RPCTestInf)BaseSPIManager.getBeanObject("(jgroup::all)/rpc.test");
-¶à²¥µ÷ÓÃ£º
+å¤šæ’­è°ƒç”¨ï¼š
 RPCTestInf testInf = (RPCTestInf)BaseSPIManager.getBeanObject("(jgroup::creator-cc-27488;creator-cc-51859)/rpc.test");
-µ¥²¥µ÷ÓÃ£º
+å•æ’­è°ƒç”¨ï¼š
 String address_ = "test";
 	RPCTestInf testInf = (RPCTestInf)BaseSPIManager.getBeanObject("(jgroup::" + address_ + ")/rpc.test");
 	
 Address address_ = JGroupHelper.getJGroupHelper().getAppservers().get(0);
 	RPCTestInf testInf = (RPCTestInf)BaseSPIManager.getBeanObject("(jgroup::" + address_ + ")/rpc.test");
 	
-¹ã²¥ºÍ¶à²¥µ÷ÓÃµÄ½á¹û´¦Àí£º
-		·½Ê½Ò»£º
+å¹¿æ’­å’Œå¤šæ’­è°ƒç”¨çš„ç»“æœå¤„ç†ï¼š
+		æ–¹å¼ä¸€ï¼š
 			Object ret = testInf.getCount();
             Object ret_40561 = BaseSPIManager.getRPCResult("creator-cc-27488", ret,Target.BROADCAST_TYPE_JRGOUP);
             Object ret_64357 = BaseSPIManager.getRPCResult("creator-cc-51859", ret,Target.BROADCAST_TYPE_JRGOUP);
-    	·½Ê½¶ş£º
+    	æ–¹å¼äºŒï¼š
     	Object ret = testInf.getCount();
 		int size = BaseSPIManager.getRPCResultSize(ret);
 		for(int j = 0; j < size; j ++)
@@ -157,49 +157,49 @@ Address address_ = JGroupHelper.getJGroupHelper().getAppservers().get(0);
 -----------------------------------------------
 2010-06-19
 -----------------------------------------------------
-o ²ÉÓÃcglibÊµÏÖaop´úÀí
-±£ÁôÔ­À´µÄjava¶¯Ì¬´úÀíÄ£Ê½£¬Ôö¼ÓcglibÄ£Ê½µÄÖ§³Ö£¬Ä¬ÈÏ²ÉÓÃcglibÄ£Ê½
-ÓÃ»§¿ÉÒÔ×Ô¼ºÅäÖÃaop.proxy.typeÊôĞÔÀ´ÇĞ»»´úÀíÄ£Ê½
+o é‡‡ç”¨cglibå®ç°aopä»£ç†
+ä¿ç•™åŸæ¥çš„javaåŠ¨æ€ä»£ç†æ¨¡å¼ï¼Œå¢åŠ cglibæ¨¡å¼çš„æ”¯æŒï¼Œé»˜è®¤é‡‡ç”¨cglibæ¨¡å¼
+ç”¨æˆ·å¯ä»¥è‡ªå·±é…ç½®aop.proxy.typeå±æ€§æ¥åˆ‡æ¢ä»£ç†æ¨¡å¼
 <!-- 
-		aopÊµÏÖ»úÖÆ£º
-		default java¶¯Ì¬´úÀíÄ£Ê½
-		cglib cglibÄ£Ê½
+		aopå®ç°æœºåˆ¶ï¼š
+		default javaåŠ¨æ€ä»£ç†æ¨¡å¼
+		cglib cglibæ¨¡å¼
 	 -->
 	<property name="aop.proxy.type" value="cglib"/>
 	
-	aop.proxy.typeÊôĞÔÅäÖÃÔÚmanager-provider.xmlÎÄ¼şÖĞ
+	aop.proxy.typeå±æ€§é…ç½®åœ¨manager-provider.xmlæ–‡ä»¶ä¸­
 
 -----------------------------------------------
 2010-06-18
 -----------------------------------------------------
-o ĞŞ¸Äbean»º³å¹æÔò£¬´ø²ÎÊıµÄbeanÒ²¿É±»»º³å(×¢Òâ»º³åÇøÒç³ö)
-o Ôö¼Órmi×é¼ş£¬¿ÉÒÔÊ¹ÓÃrmiÀ´ÊµÏÖÔ¶³ÌÍ¨Ñ¶Ğ­Òé
-rmiĞ­ÒéµÄÌØĞÔ£¬rmi×é¼ş¿ÉÒÔ×¢²áµ½Í¬Ò»¸örmi×¢²áÖĞĞÄ£¬Òò´Ë¿ÉÒÔÀûÓÃrmiÔ¶³Ì·şÎñ×é¼şÖ¸¶¨Î¨Ò»µÄÓ¦ÓÃ±êÊ¶£¬È»ºó½«Æä×¢²áµ½rmi×¢²áÖĞĞÄ
-¿Í·ş¶ËÔÚµ÷ÓÃÊ±¿ÉÒÔÖ¸¶¨ÌØ¶¨µÄ±êÊ¶£¬È»ºó²éÕÒµ½¶ÔÓ¦·şÎñÆ÷µÄrmi×é¼şÈ»ºóÍê³É»ùÓÚrmiĞ­ÒéµÄÔ¶³Ì×é¼şµ÷ÓÃ£¬Èç¹ûÃ»ÓĞÖ¸¶¨Î¨Ò»µÄÓ¦ÓÃ±êÊ¶
-ÄÇÃ´Ä¬ÈÏÎª×¢²áÖĞĞÄºÍrmi×é¼ş·şÎñÆ÷ÔÚÍ¬Ò»¸ö·şÎñÆ÷ÉÏ
-Ê¹ÓÃ·½·¨ÈçÏÂ£º
-·şÎñÆ÷Æô¶¯£º
+o ä¿®æ”¹beanç¼“å†²è§„åˆ™ï¼Œå¸¦å‚æ•°çš„beanä¹Ÿå¯è¢«ç¼“å†²(æ³¨æ„ç¼“å†²åŒºæº¢å‡º)
+o å¢åŠ rmiç»„ä»¶ï¼Œå¯ä»¥ä½¿ç”¨rmiæ¥å®ç°è¿œç¨‹é€šè®¯åè®®
+rmiåè®®çš„ç‰¹æ€§ï¼Œrmiç»„ä»¶å¯ä»¥æ³¨å†Œåˆ°åŒä¸€ä¸ªrmiæ³¨å†Œä¸­å¿ƒï¼Œå› æ­¤å¯ä»¥åˆ©ç”¨rmiè¿œç¨‹æœåŠ¡ç»„ä»¶æŒ‡å®šå”¯ä¸€çš„åº”ç”¨æ ‡è¯†ï¼Œç„¶åå°†å…¶æ³¨å†Œåˆ°rmiæ³¨å†Œä¸­å¿ƒ
+å®¢æœç«¯åœ¨è°ƒç”¨æ—¶å¯ä»¥æŒ‡å®šç‰¹å®šçš„æ ‡è¯†ï¼Œç„¶åæŸ¥æ‰¾åˆ°å¯¹åº”æœåŠ¡å™¨çš„rmiç»„ä»¶ç„¶åå®ŒæˆåŸºäºrmiåè®®çš„è¿œç¨‹ç»„ä»¶è°ƒç”¨ï¼Œå¦‚æœæ²¡æœ‰æŒ‡å®šå”¯ä¸€çš„åº”ç”¨æ ‡è¯†
+é‚£ä¹ˆé»˜è®¤ä¸ºæ³¨å†Œä¸­å¿ƒå’Œrmiç»„ä»¶æœåŠ¡å™¨åœ¨åŒä¸€ä¸ªæœåŠ¡å™¨ä¸Š
+ä½¿ç”¨æ–¹æ³•å¦‚ä¸‹ï¼š
+æœåŠ¡å™¨å¯åŠ¨ï¼š
 RMIServer.getRMIServer().start();
-¿Í·ş¶Ë×é¼şµ÷ÓÃ£º
+å®¢æœç«¯ç»„ä»¶è°ƒç”¨ï¼š
 RPCTestInf testInf = (RPCTestInf)BaseSPIManager.getBeanObject("(rmi::172.16.17.216:1099)/rpc.test?app1");
 long start = System.currentTimeMillis();
 for(int i = 0; i < 10; i ++)
 	System.out.println("testInf.getCount():" + i + " = "+testInf.getCount());
 	
 long end = System.currentTimeMillis();
-System.out.println("ÏûºÄÊ±¼ä£º" + (end - start) / 1000 + "Ãë");
+System.out.println("æ¶ˆè€—æ—¶é—´ï¼š" + (end - start) / 1000 + "ç§’");
 
-o ĞŞ¸ÄĞ­ÒéĞ£ÑéÂß¼­£¬ËùÓĞµÄĞ­ÒéÈ«²¿²ÉÓÃFC×é¼şÀ´Íê³É¿ÉÓÃĞÔĞ£Ñé
+o ä¿®æ”¹åè®®æ ¡éªŒé€»è¾‘ï¼Œæ‰€æœ‰çš„åè®®å…¨éƒ¨é‡‡ç”¨FCç»„ä»¶æ¥å®Œæˆå¯ç”¨æ€§æ ¡éªŒ
 
-o ĞŞ¸Äcxf webserviceĞ­Òébug
+o ä¿®æ”¹cxf webserviceåè®®bug
 -----------------------------------------------
 2010-06-14
 -----------------------------------------------------
-o jmsÄ£¿éÔö¼Ó¶Ô¹úÄÚÏûÏ¢ÖĞ¼ä¼ş-¶«·½Í¨tlqµÄÖ§³Ö
+o jmsæ¨¡å—å¢åŠ å¯¹å›½å†…æ¶ˆæ¯ä¸­é—´ä»¶-ä¸œæ–¹é€štlqçš„æ”¯æŒ
 
-bboss-tlq.jar£¬Ôö¼ÓÁ¬½Ó¹¤Ààorg.frameworkset.tlq.TLQConnectionFactory
+bboss-tlq.jarï¼Œå¢åŠ è¿æ¥å·¥ç±»org.frameworkset.tlq.TLQConnectionFactory
 <!-- 
-		jmsÁ¬½Ó¹¤³§ÅäÖÃorg.frameworkset.tlq.TLQConnectionFactory
+		jmsè¿æ¥å·¥å‚é…ç½®org.frameworkset.tlq.TLQConnectionFactory
 	 -->
 	<property name="test.tlq.ConnectionFactory" singlable="true" class="org.frameworkset.tlq.TLQConnectionFactory">	
 		<construction>		
@@ -211,7 +211,7 @@ bboss-tlq.jar£¬Ôö¼ÓÁ¬½Ó¹¤Ààorg.frameworkset.tlq.TLQConnectionFactory
 				      value="manager" />
 		</construction>			
 	</property>
-	Ê¹ÓÃtlqµÄjmstemplate£º
+	ä½¿ç”¨tlqçš„jmstemplateï¼š
 	<property name="test.jmstemplate" class="org.frameworkset.mq.JMSTemplate">
 			<construction>		
 				<property name="connectionfactory" 
@@ -219,7 +219,7 @@ bboss-tlq.jar£¬Ôö¼ÓÁ¬½Ó¹¤Ààorg.frameworkset.tlq.TLQConnectionFactory
 			</construction>		
 	</property>
 	
-	¼òµ¥ÏûÏ¢·¢ËÍ·½·¨£º
+	ç®€å•æ¶ˆæ¯å‘é€æ–¹æ³•ï¼š
 	
 		ApplicationContext context = ApplicationContext.getApplicationContext("org/frameworkset/spi/remote/jms/tlq_jms.xml");
 		JMSTemplate template = (JMSTemplate)context.getBeanObject("test.jmstemplate");
@@ -237,7 +237,7 @@ bboss-tlq.jar£¬Ôö¼ÓÁ¬½Ó¹¤Ààorg.frameworkset.tlq.TLQConnectionFactory
         {
             template.stop();
         }
-	ÆäËûÊµÀı²Î¿¼²âÊÔÓÃÀı£º
+	å…¶ä»–å®ä¾‹å‚è€ƒæµ‹è¯•ç”¨ä¾‹ï¼š
 	org/frameworkset/spi/remote/jms/TestTlq.java
 
 
@@ -246,22 +246,22 @@ bboss-tlq.jar£¬Ôö¼ÓÁ¬½Ó¹¤Ààorg.frameworkset.tlq.TLQConnectionFactory
 
 2010-05-17
 -----------------------------------------------------
-o Ôö¼Ó¹ÊÕÏ¼ì²â×é¼ş
+o å¢åŠ æ•…éšœæ£€æµ‹ç»„ä»¶
 -----------------------------------------------
 org.frameworkset.spi.remote.health.RPCValidator
 public static boolean validator(String contextpath)
-·µ»Øtrue£¬±êÊ¶·şÎñÆ÷¿É´ï£¬²¢ÄÜÕı³£¹¤×÷
-·µ»Øfalse£¬±êÊ¶·şÎñÆ÷²»¿É´ï£¬²»ÄÜÕı³£¹¤×÷
-ApplicationContextÌí¼ÓÒÔÏÂ·½·¨£º
+è¿”å›trueï¼Œæ ‡è¯†æœåŠ¡å™¨å¯è¾¾ï¼Œå¹¶èƒ½æ­£å¸¸å·¥ä½œ
+è¿”å›falseï¼Œæ ‡è¯†æœåŠ¡å™¨ä¸å¯è¾¾ï¼Œä¸èƒ½æ­£å¸¸å·¥ä½œ
+ApplicationContextæ·»åŠ ä»¥ä¸‹æ–¹æ³•ï¼š
 public static String getRealPath(String parent,String file)
-¸Ã·½·¨ÓÃÀ´»ñÈ¡·şÎñµÄÕıÊ½Â·¾¶
-/bbossaop/resources/org/frameworkset/spi/manager-rpc-service.xmlÖĞÔö¼ÓÒÔÏÂ·şÎñ£º
+è¯¥æ–¹æ³•ç”¨æ¥è·å–æœåŠ¡çš„æ­£å¼è·¯å¾„
+/bbossaop/resources/org/frameworkset/spi/manager-rpc-service.xmlä¸­å¢åŠ ä»¥ä¸‹æœåŠ¡ï¼š
 <!-- 
-			Ğ­Òé½¡¿µ¼ì²â·şÎñ£¬ËùÓĞµÄ·şÎñ¶¼¿ÉÒÔ²ÉÓÃÕâ¸ö·şÎñÀ´×öÅĞ¶Ï
+			åè®®å¥åº·æ£€æµ‹æœåŠ¡ï¼Œæ‰€æœ‰çš„æœåŠ¡éƒ½å¯ä»¥é‡‡ç”¨è¿™ä¸ªæœåŠ¡æ¥åšåˆ¤æ–­
 		 -->		
 		<property name="rpc.fc" singlable="true"
 						  class="org.frameworkset.spi.remote.health.HealthCheckServiceImpl"/>
-/bbossaop/src/org/frameworkset/spi/remote/RPCHelper.javaÖĞÔö¼ÓÁËÒ»ÏÂ·½·¨£º
+/bbossaop/src/org/frameworkset/spi/remote/RPCHelper.javaä¸­å¢åŠ äº†ä¸€ä¸‹æ–¹æ³•ï¼š
 	public static String buildContextAddress(String protocol,String ip,String port)
     public static String buildContextAddress(String protocol,String url)
     
@@ -276,17 +276,17 @@ public static String getRealPath(String parent,String file)
 -----------------------------------------------------						  	
 2010-05-10
 -----------------------------------------------------
-o Ôö¼Ó·şÎñÆ÷Í£Ö¹·½·¨
+o å¢åŠ æœåŠ¡å™¨åœæ­¢æ–¹æ³•
 org.frameworkset.spi.remote.RPCHelper.getRPCHelper().stopRPCServices();
 -----------------------------------------------
 2010-05-05
 -----------------------------------------------------
-o SecurityContextÖĞÔö¼ÓÒ»ÏµÁĞÓ¦ÓÃ²ÎÊı»ñÈ¡·½·¨
+o SecurityContextä¸­å¢åŠ ä¸€ç³»åˆ—åº”ç”¨å‚æ•°è·å–æ–¹æ³•
 -----------------------------------------------
 2010-05-04
 -----------------------------------------------------
-o ĞÂÔöapplicationcontextºó£¬ÊôĞÔÒıÓÃ½âÎöÊ±£¬ÈÔÈ»´ÓÄ¬ÈÏÉÏÏÂÎÄÖĞ»ñÈ¡×é¼şÊµÀı£¬ÕâÊÇ¸öbug£¬ĞŞ¸ÄºóÏà¹ØµÄ³ÌĞòÈçÏÂ£º
-/bbossaop/src/org/frameworkset/spi/assemble/BeanAccembleHelper.javaÖĞµÄ·½·¨£º
+o æ–°å¢applicationcontextåï¼Œå±æ€§å¼•ç”¨è§£ææ—¶ï¼Œä»ç„¶ä»é»˜è®¤ä¸Šä¸‹æ–‡ä¸­è·å–ç»„ä»¶å®ä¾‹ï¼Œè¿™æ˜¯ä¸ªbugï¼Œä¿®æ”¹åç›¸å…³çš„ç¨‹åºå¦‚ä¸‹ï¼š
+/bbossaop/src/org/frameworkset/spi/assemble/BeanAccembleHelper.javaä¸­çš„æ–¹æ³•ï¼š
 public Object getRefValue(Pro property, CallContext callcontext,
 			Object defaultValue) 
 			
@@ -296,67 +296,67 @@ public Object getRefValue(Pro property, CallContext callcontext,
 -----------------------------------------------
 2010-04-07
 -----------------------------------------------------
-o ÒıÈëĞÂµÄ×é¼şµÄ´´½¨»úÖÆ£¨´ıÊµÏÖ£©
-propertyÔªËØÉÏÔö¼Ófactory-beanºÍfactory-methodÁ½¸öÊôĞÔ£¬Ò²¾ÍÊÇ¶ÔÓ¦propertyÔªËØ¹ÜÀíµÄ×é¼ş
-ÊµÀıÍ¨¹ıfactory-bean¶ÔÓ¦µÄ×é¼şÖĞfactory-method¶ÔÓ¦µÄ·½·¨À´´´½¨¡£
+o å¼•å…¥æ–°çš„ç»„ä»¶çš„åˆ›å»ºæœºåˆ¶ï¼ˆå¾…å®ç°ï¼‰
+propertyå…ƒç´ ä¸Šå¢åŠ factory-beanå’Œfactory-methodä¸¤ä¸ªå±æ€§ï¼Œä¹Ÿå°±æ˜¯å¯¹åº”propertyå…ƒç´ ç®¡ç†çš„ç»„ä»¶
+å®ä¾‹é€šè¿‡factory-beanå¯¹åº”çš„ç»„ä»¶ä¸­factory-methodå¯¹åº”çš„æ–¹æ³•æ¥åˆ›å»ºã€‚
 
-o Ô´Âë°üsrcÖĞÌí¼ÓÁËÒÔÏÂ³ÌĞò£¬±ãÓÚspring³ÌĞòÏòbbossaopÇ¨ÒÆ£¬»¹ĞèÑéÖ¤ºÍ²âÊÔ
+o æºç åŒ…srcä¸­æ·»åŠ äº†ä»¥ä¸‹ç¨‹åºï¼Œä¾¿äºspringç¨‹åºå‘bbossaopè¿ç§»ï¼Œè¿˜éœ€éªŒè¯å’Œæµ‹è¯•
 org.springframework.beans.factory.InitializingBean
 org.springframework.beans.factory.DisposableBean
-Í¬Ê±½«org.frameworkset.spi.InitializingBean´Óorg.springframework.beans.factory.InitializingBean
-¼Ì³Ğ
-Í¬Ê±½«org.frameworkset.spi.DisposableBean´Óorg.springframework.beans.factory.InitializingBean
-¼Ì³Ğ
+åŒæ—¶å°†org.frameworkset.spi.InitializingBeanä»org.springframework.beans.factory.InitializingBean
+ç»§æ‰¿
+åŒæ—¶å°†org.frameworkset.spi.DisposableBeanä»org.springframework.beans.factory.InitializingBean
+ç»§æ‰¿
 
-ÕâÑù¾Í¿ÉÒÔºÜ·½±ãµØ½«spring¹ÜÀíµÄ×é¼şÇ¨ÒÆµ½bbossaopÖĞÀ´
+è¿™æ ·å°±å¯ä»¥å¾ˆæ–¹ä¾¿åœ°å°†springç®¡ç†çš„ç»„ä»¶è¿ç§»åˆ°bbossaopä¸­æ¥
 
-o ĞÂÔörpcĞ­Òé£ºjboss-netty
+o æ–°å¢rpcåè®®ï¼šjboss-netty
 
-¶ÔÓ¦µÄÔ´ÂëÎÄ¼şÄ¿Â¼src-netty
-Ğ­ÒéÅäÖÃÎÄ¼şbbossaop/resources/org/frameworkset/spi/manager-rpc-netty.xml
-o minaĞ­ÒéÔö¼ÓsslÖ§³Ö
-/bbossaop/key_generate.bat Éú³ÉÖ¤ÊéµÄ½Å±¾£¬Éú³ÉµÄÖ¤ÊéÄ¬ÈÏ´æ·ÅÔÚD:\workspace\bbossgroup\bbossaop\resources\keystoreÄ¿Â¼ÏÂ
+å¯¹åº”çš„æºç æ–‡ä»¶ç›®å½•src-netty
+åè®®é…ç½®æ–‡ä»¶bbossaop/resources/org/frameworkset/spi/manager-rpc-netty.xml
+o minaåè®®å¢åŠ sslæ”¯æŒ
+/bbossaop/key_generate.bat ç”Ÿæˆè¯ä¹¦çš„è„šæœ¬ï¼Œç”Ÿæˆçš„è¯ä¹¦é»˜è®¤å­˜æ”¾åœ¨D:\workspace\bbossgroup\bbossaop\resources\keystoreç›®å½•ä¸‹
 
-¿Í·ş¶Ë·¢ÆğsslÍ¨Ñ¶£¬·şÎñ¶ËÎªÆä½¨Á¢ssl´«ÊäÍ¨µÀ¡£Èç¹ûÒªÆôÓÃmina ssl£¬ĞèÒªÔÚmanager-mina-rpc.xmlÎÄ¼şÖĞÅäÖÃsslµÄÏà¹ØÑ¡Ïî£º
+å®¢æœç«¯å‘èµ·sslé€šè®¯ï¼ŒæœåŠ¡ç«¯ä¸ºå…¶å»ºç«‹sslä¼ è¾“é€šé“ã€‚å¦‚æœè¦å¯ç”¨mina sslï¼Œéœ€è¦åœ¨manager-mina-rpc.xmlæ–‡ä»¶ä¸­é…ç½®sslçš„ç›¸å…³é€‰é¡¹ï¼š
 <property name="rpc.protocol.mina.params">
 		<map>
-			¡£¡£¡£¡£
+			ã€‚ã€‚ã€‚ã€‚
 			
 			<!-- 
-				sslÅäÖÃ²ÎÊı¿ªÊ¼
-				Èç¹ûÆôÓÃssl£¬ÄÇÃ´±ØĞëÔÚrpc.protocol.mina.ssl.clientºÍ
-				rpc.protocol.mina.ssl.serverÖĞÅäÖÃÖ¤ÊéµÄÏà¹ØĞÅÏ¢
-				·şÎñÆ÷¶ËÖ»ĞèÒªÅäÖÃrpc.protocol.mina.ssl.server
-				¿Í·ş¶ËÖ»ĞèÒªÅäÖÃrpc.protocol.mina.ssl.client
+				sslé…ç½®å‚æ•°å¼€å§‹
+				å¦‚æœå¯ç”¨sslï¼Œé‚£ä¹ˆå¿…é¡»åœ¨rpc.protocol.mina.ssl.clientå’Œ
+				rpc.protocol.mina.ssl.serverä¸­é…ç½®è¯ä¹¦çš„ç›¸å…³ä¿¡æ¯
+				æœåŠ¡å™¨ç«¯åªéœ€è¦é…ç½®rpc.protocol.mina.ssl.server
+				å®¢æœç«¯åªéœ€è¦é…ç½®rpc.protocol.mina.ssl.client
 			 -->
 			<property name="enablessl" value="true" />
 <!--			<property name="enabledCipherSuites" value="SSL_DH_anon_WITH_RC4_128_MD5"  >-->
 <!--				<editor class="org.frameworkset.spi.assemble.StringArrayEditor"/>-->
 <!--			</property>-->
-				<!-- ÏÂÊö²ÎÊı²»ÒªÅäÖÃ  -->
+				<!-- ä¸‹è¿°å‚æ•°ä¸è¦é…ç½®  -->
 <!--			<property name="enabledProtocols" value="TLS" >-->
 <!--				<editor class="org.frameworkset.spi.assemble.StringArrayEditor"/>-->
 <!--			</property>-->
 <!--			<property name="needClientAuth" value="false" />-->
 <!--			<property name="wantClientAuth" value="false" />-->
 			
-			<!-- sslÅäÖÃ²ÎÊı½áÊø -->
+			<!-- sslé…ç½®å‚æ•°ç»“æŸ -->
 		</map>
 	</property>
 	
 		<!--  
-			mina¿ò¼ÜµÄssl client²ÎÊı
+			minaæ¡†æ¶çš„ssl clientå‚æ•°
 		-->
 	<property name="rpc.protocol.mina.ssl.client">
 		<map>
-			<!-- Á¬½Ó³¬Ê±Ê±¼ä£¬Ä¬ÈÏÖµ60Ãë£¬µ¥Î»£ºÃë -->
+			<!-- è¿æ¥è¶…æ—¶æ—¶é—´ï¼Œé»˜è®¤å€¼60ç§’ï¼Œå•ä½ï¼šç§’ -->
 			<property name="keyStore" value="keystore/client.ks" />
 				<!-- 
-					·şÎñÆ÷°ó¶¨¶Ë¿Ú
+					æœåŠ¡å™¨ç»‘å®šç«¯å£
 				 -->
 			<property name="keyStorePassword" value="123456" />
 				<!-- 
-					·şÎñÆ÷°ó¶¨ip
+					æœåŠ¡å™¨ç»‘å®šip
 				 -->
 			<property name="trustStore" value="keystore/client.ts" />
 			
@@ -365,18 +365,18 @@ o minaĞ­ÒéÔö¼ÓsslÖ§³Ö
 	</property>
 	
 	<!--  
-			mina¿ò¼ÜµÄssl server²ÎÊı
+			minaæ¡†æ¶çš„ssl serverå‚æ•°
 		-->
 	<property name="rpc.protocol.mina.ssl.server">
 		<map>
-			<!-- Á¬½Ó³¬Ê±Ê±¼ä£¬Ä¬ÈÏÖµ60Ãë£¬µ¥Î»£ºÃë -->
+			<!-- è¿æ¥è¶…æ—¶æ—¶é—´ï¼Œé»˜è®¤å€¼60ç§’ï¼Œå•ä½ï¼šç§’ -->
 			<property name="keyStore" value="keystore/server.ks" />
 				<!-- 
-					·şÎñÆ÷°ó¶¨¶Ë¿Ú
+					æœåŠ¡å™¨ç»‘å®šç«¯å£
 				 -->
 			<property name="keyStorePassword" value="123456" />
 				<!-- 
-					·şÎñÆ÷°ó¶¨ip
+					æœåŠ¡å™¨ç»‘å®šip
 				 -->
 			<property name="trustStore" value="keystore/server.ts" />
 			
@@ -384,64 +384,64 @@ o minaĞ­ÒéÔö¼ÓsslÖ§³Ö
 		</map>
 	</property>
 
-o ĞŞ¸ÄÒÔÏÂbug
-ÊµÏÖorg.frameworkset.spi.DisposableBean½Ó¿ÚµÄ×é¼ş²»¹ÜÊÇµ¥ÊµÀıÄ£Ê½»¹ÊÇ¶àÀıÄ£Ê½£¬¶¼»á½«×é¼şÊµÀıÌí¼Ó
-µ½´ıÏú»ÙµÄ¶ÔÏó³ØÖĞ£¨javaĞéÄâ»ú¹Ø±ÕÇ°»áÖ÷¶¯Ïú»Ù·ÅÔÚÏú»Ù³ØÖĞµÄ¶ÔÏó£¬Ò²¾ÍÊÇµ÷ÓÃDisposableBean½Ó¿ÚÖĞµÄdestroy·½·¨£©£¬
-ÕâÑùµ¥ÊµÀıµÄ¶ÔÏóÊÇÃ»ÓĞÎÊÌâµÄ£¬µ«ÊÇ¶àÊµÀıµÄ×é¼ş¾Í»áÓĞÎÊÌâ£¨¶ÔÏóĞ¹Â©µÄÎÊÌâ£©£¬Õâ¸öÎÊÌâ±ØĞëĞŞ¸Ä¡£
-ĞŞ¸Ä·½·¨£º¶àÊµÀıµÄ×é¼ş£¨singlableÊôĞÔÎªfalse)¼´Ê¹ÊµÏÖÁËorg.frameworkset.spi.DisposableBean½Ó¿ÚÒ²²»»á
-·Åµ½Ïú»Ù³ØÖĞ¡£
-Éæ¼°µÄ³ÌĞò£º
-/bbossaop/src/org/frameworkset/spi/assemble/BeanAccembleHelper.java--¸ù¾İBeanInfµÄ½Ó¿ÚisSinglableÅĞ¶ÏDisposableBean×é¼şÊÇ·ñÒª·ÅÈëÏú»Ù³Ø
-/bbossaop/src/org/frameworkset/spi/assemble/BeanInf.java --Ôö¼Ó½Ó¿Ú public boolean isSinglable();
-/bbossaop/src/org/frameworkset/spi/assemble/SecurityProviderInfo.java--ÊµÏÖ½Ó¿Ú public boolean isSinglable();
+o ä¿®æ”¹ä»¥ä¸‹bug
+å®ç°org.frameworkset.spi.DisposableBeanæ¥å£çš„ç»„ä»¶ä¸ç®¡æ˜¯å•å®ä¾‹æ¨¡å¼è¿˜æ˜¯å¤šä¾‹æ¨¡å¼ï¼Œéƒ½ä¼šå°†ç»„ä»¶å®ä¾‹æ·»åŠ 
+åˆ°å¾…é”€æ¯çš„å¯¹è±¡æ± ä¸­ï¼ˆjavaè™šæ‹Ÿæœºå…³é—­å‰ä¼šä¸»åŠ¨é”€æ¯æ”¾åœ¨é”€æ¯æ± ä¸­çš„å¯¹è±¡ï¼Œä¹Ÿå°±æ˜¯è°ƒç”¨DisposableBeanæ¥å£ä¸­çš„destroyæ–¹æ³•ï¼‰ï¼Œ
+è¿™æ ·å•å®ä¾‹çš„å¯¹è±¡æ˜¯æ²¡æœ‰é—®é¢˜çš„ï¼Œä½†æ˜¯å¤šå®ä¾‹çš„ç»„ä»¶å°±ä¼šæœ‰é—®é¢˜ï¼ˆå¯¹è±¡æ³„æ¼çš„é—®é¢˜ï¼‰ï¼Œè¿™ä¸ªé—®é¢˜å¿…é¡»ä¿®æ”¹ã€‚
+ä¿®æ”¹æ–¹æ³•ï¼šå¤šå®ä¾‹çš„ç»„ä»¶ï¼ˆsinglableå±æ€§ä¸ºfalse)å³ä½¿å®ç°äº†org.frameworkset.spi.DisposableBeanæ¥å£ä¹Ÿä¸ä¼š
+æ”¾åˆ°é”€æ¯æ± ä¸­ã€‚
+æ¶‰åŠçš„ç¨‹åºï¼š
+/bbossaop/src/org/frameworkset/spi/assemble/BeanAccembleHelper.java--æ ¹æ®BeanInfçš„æ¥å£isSinglableåˆ¤æ–­DisposableBeanç»„ä»¶æ˜¯å¦è¦æ”¾å…¥é”€æ¯æ± 
+/bbossaop/src/org/frameworkset/spi/assemble/BeanInf.java --å¢åŠ æ¥å£ public boolean isSinglable();
+/bbossaop/src/org/frameworkset/spi/assemble/SecurityProviderInfo.java--å®ç°æ¥å£ public boolean isSinglable();
 -----------------------------------------------
 2010-03-25
 -----------------------------------------------------
-o ¼¯³Équartzµ÷¶ÈÒıÇæ
-Ô´Âë³ÌĞò°ü£ºsrc-schedule
-ÈÎÎñµ÷¶ÈÅäÖÃÎÄ¼ş£º/bbossaop/resources/org/frameworkset/task/quarts-task.xml
-quartzÅäÖÃÎÄ¼ş£º/bbossaop/resources/quartz.properties
-·¢²¼µÄjar£ºbboss-schedule.jar
-quartz°æ±¾£ºÖ§³ÖËùÓĞquartz°æ±¾£¬Ä¿Ç°bboss aop¿ò¼ÜÖĞ¼¯³ÉµÄ°æ±¾ºÅÎªquartz-all-1.6.6.jar
-¿ª·¢ÎÄµµ´ı²¹³ä
+o é›†æˆquartzè°ƒåº¦å¼•æ“
+æºç ç¨‹åºåŒ…ï¼šsrc-schedule
+ä»»åŠ¡è°ƒåº¦é…ç½®æ–‡ä»¶ï¼š/bbossaop/resources/org/frameworkset/task/quarts-task.xml
+quartzé…ç½®æ–‡ä»¶ï¼š/bbossaop/resources/quartz.properties
+å‘å¸ƒçš„jarï¼šbboss-schedule.jar
+quartzç‰ˆæœ¬ï¼šæ”¯æŒæ‰€æœ‰quartzç‰ˆæœ¬ï¼Œç›®å‰bboss aopæ¡†æ¶ä¸­é›†æˆçš„ç‰ˆæœ¬å·ä¸ºquartz-all-1.6.6.jar
+å¼€å‘æ–‡æ¡£å¾…è¡¥å……
 -----------------------------------------------
 2010-03-22
 -----------------------------------------------------
 
-o Ôö¼ÓÄ£¿é»¯µÄµ¥¶ÀÎÄ¼şµÄ¹¦ÄÜ
-bbossgroups-1.0¼°ÒÔÇ°µÄ°æ±¾È«²¿Ö»Ö§³Ömanager-provider.xmlÎÄ¼şÎª×Ü¸ùÅäÖÃÎÄ¼şµÄÅäÖÃÄ£ĞÍ
-bbossgroups-1.0-rc¼°ÒÔºóµÄ°æ±¾Ö§³Ö¶à¸öÅäÖÃÎÄ¼ş×÷Îª¸ùÅäÖÃÎÄ¼şµÄÅäÖÃÄ£ĞÍ£¬ÕâÖÖÄ£ĞÍÖĞÃ¿¸ö¸ùÎÄ¼ş±íÊ¾¶ÀÁ¢
-µÄ×é¼ş¹¤³§ÉÏÏÂÎÄ£¬±Ë´ËÖ®¼ä»¥²»Ïà¹Ø£¬ÕâÑù±Ø½«Ó°ÏìÔ¶³Ì·şÎñµ÷ÓÃÊ±×é¼şµÄÑ°Ö·Ëã·¨£¬Ô­À´Ö»ÔÚÒ»¸ö×é¼şÉÏÏÂÎÄ
-ÖĞÑ°Ö·£¬ÏÖÔÚÓĞ¶à¸öÉÏÏÂÎÄ£¬Ã¿¸öÉÏÏÂÎÄÖĞ¿ÉÄÜ´æÔÚÏàÍ¬±êÊ¶µÄ×é¼ş£¬Òò´ËÖØĞÂ¶¨ÒåÁË·şÎñ×é¼şµÄÑ°Ö·Ëã·¨£¬±£Ö¤µ÷ÓÃ×é¼ş¿Í·ş¶ËµÄÉÏÏÂÎÄºÍ×é¼ş
-·şÎñÆ÷¶ËµÄÉÏÏÂÎÄ±£³ÖÒ»ÖÂ¡£
-ĞÂÔö³ÌĞò£º
+o å¢åŠ æ¨¡å—åŒ–çš„å•ç‹¬æ–‡ä»¶çš„åŠŸèƒ½
+bbossgroups-1.0åŠä»¥å‰çš„ç‰ˆæœ¬å…¨éƒ¨åªæ”¯æŒmanager-provider.xmlæ–‡ä»¶ä¸ºæ€»æ ¹é…ç½®æ–‡ä»¶çš„é…ç½®æ¨¡å‹
+bbossgroups-1.0-rcåŠä»¥åçš„ç‰ˆæœ¬æ”¯æŒå¤šä¸ªé…ç½®æ–‡ä»¶ä½œä¸ºæ ¹é…ç½®æ–‡ä»¶çš„é…ç½®æ¨¡å‹ï¼Œè¿™ç§æ¨¡å‹ä¸­æ¯ä¸ªæ ¹æ–‡ä»¶è¡¨ç¤ºç‹¬ç«‹
+çš„ç»„ä»¶å·¥å‚ä¸Šä¸‹æ–‡ï¼Œå½¼æ­¤ä¹‹é—´äº’ä¸ç›¸å…³ï¼Œè¿™æ ·å¿…å°†å½±å“è¿œç¨‹æœåŠ¡è°ƒç”¨æ—¶ç»„ä»¶çš„å¯»å€ç®—æ³•ï¼ŒåŸæ¥åªåœ¨ä¸€ä¸ªç»„ä»¶ä¸Šä¸‹æ–‡
+ä¸­å¯»å€ï¼Œç°åœ¨æœ‰å¤šä¸ªä¸Šä¸‹æ–‡ï¼Œæ¯ä¸ªä¸Šä¸‹æ–‡ä¸­å¯èƒ½å­˜åœ¨ç›¸åŒæ ‡è¯†çš„ç»„ä»¶ï¼Œå› æ­¤é‡æ–°å®šä¹‰äº†æœåŠ¡ç»„ä»¶çš„å¯»å€ç®—æ³•ï¼Œä¿è¯è°ƒç”¨ç»„ä»¶å®¢æœç«¯çš„ä¸Šä¸‹æ–‡å’Œç»„ä»¶
+æœåŠ¡å™¨ç«¯çš„ä¸Šä¸‹æ–‡ä¿æŒä¸€è‡´ã€‚
+æ–°å¢ç¨‹åºï¼š
 org.frameworkset.spi.ApplicationContext
-ApplicationContextÀàÖ÷ÒªÓÃÀ´¹¹½¨²»Í¬µÄ×é¼şÈİÆ÷µÄÉÏÏÂÎÄ»·¾³£¬ApplicationContext°üº¬Ò»ÏÂÒÔÏÂ¾²Ì¬·½·¨£º
+ApplicationContextç±»ä¸»è¦ç”¨æ¥æ„å»ºä¸åŒçš„ç»„ä»¶å®¹å™¨çš„ä¸Šä¸‹æ–‡ç¯å¢ƒï¼ŒApplicationContextåŒ…å«ä¸€ä¸‹ä»¥ä¸‹é™æ€æ–¹æ³•ï¼š
 	/**
-	 * »ñÈ¡Ä¬ÈÏÉÏÏÂÎÄµÄbean×é¼ş¹ÜÀíÈİÆ÷£¬ÅäÖÃÎÄ¼ş´Ómanager-provider.xmlÎÄ¼ş¿ªÊ¼
+	 * è·å–é»˜è®¤ä¸Šä¸‹æ–‡çš„beanç»„ä»¶ç®¡ç†å®¹å™¨ï¼Œé…ç½®æ–‡ä»¶ä»manager-provider.xmlæ–‡ä»¶å¼€å§‹
 	 * @return
 	 */
 	public static ApplicationContext getApplicationContext()
 	/**
-	 * »ñÈ¡Ö¸¶¨¸ùÅäÖÃÎÄ¼şÉÏÏÂÎÄbean×é¼ş¹ÜÀíÈİÆ÷£¬ÅäÖÃÎÄ¼ş´Ó²ÎÊıconfigfile¶ÔÓ¦ÅäÖÃÎÄ¼ş¿ªÊ¼
-	 * ²»Í¬µÄÉÏÏÂÎÄ¼ş»·¾³ÈİÆ÷»¥Ïà¸ôÀë£¬×é¼ş¼ä²»´æÔÚÒÀÀµ¹ØÏµ£¬ÊôĞÔÒ²²»´æÔÚÈÎºÎÒıÓÃ¹ØÏµ¡£
+	 * è·å–æŒ‡å®šæ ¹é…ç½®æ–‡ä»¶ä¸Šä¸‹æ–‡beanç»„ä»¶ç®¡ç†å®¹å™¨ï¼Œé…ç½®æ–‡ä»¶ä»å‚æ•°configfileå¯¹åº”é…ç½®æ–‡ä»¶å¼€å§‹
+	 * ä¸åŒçš„ä¸Šä¸‹æ–‡ä»¶ç¯å¢ƒå®¹å™¨äº’ç›¸éš”ç¦»ï¼Œç»„ä»¶é—´ä¸å­˜åœ¨ä¾èµ–å…³ç³»ï¼Œå±æ€§ä¹Ÿä¸å­˜åœ¨ä»»ä½•å¼•ç”¨å…³ç³»ã€‚
 	 * @return
 	 */
 	public static ApplicationContext getApplicationContext(String configfile)
 	
-ÉÏÊöÁ½¸ö¾²Ì¬·½·¨ÓÃÀ´´´½¨×é¼şÈİÆ÷ÊµÀı£¬µ±´´½¨ºÃApplicationContextÊµÀıºó¾Í¿ÉÒÔÔÚÆäÉÏµ÷ÓÃÓëBaseSPIManager×é¼ş
-ÖĞÌá¹©µÄÒ»ÏµÁĞ¾²Ì¬·½·¨¹¦ÄÜÒ»ÖÂµÄÊµÓÃ·½·¨¡£Ä¬ÈÏApplicationContext×é¼şÈİÆ÷ÏàÓ¦·½·¨ºÍBaseSPIManager×é¼şÖĞ
-Ìá¹©µÄ·½·¨¹¦ÄÜÒ»ÖÂ¡£
-Ê¹ÓÃÊµÀı£º
+ä¸Šè¿°ä¸¤ä¸ªé™æ€æ–¹æ³•ç”¨æ¥åˆ›å»ºç»„ä»¶å®¹å™¨å®ä¾‹ï¼Œå½“åˆ›å»ºå¥½ApplicationContextå®ä¾‹åå°±å¯ä»¥åœ¨å…¶ä¸Šè°ƒç”¨ä¸BaseSPIManagerç»„ä»¶
+ä¸­æä¾›çš„ä¸€ç³»åˆ—é™æ€æ–¹æ³•åŠŸèƒ½ä¸€è‡´çš„å®ç”¨æ–¹æ³•ã€‚é»˜è®¤ApplicationContextç»„ä»¶å®¹å™¨ç›¸åº”æ–¹æ³•å’ŒBaseSPIManagerç»„ä»¶ä¸­
+æä¾›çš„æ–¹æ³•åŠŸèƒ½ä¸€è‡´ã€‚
+ä½¿ç”¨å®ä¾‹ï¼š
 
-±¾µØ·şÎñµ÷ÓÃ
+æœ¬åœ°æœåŠ¡è°ƒç”¨
 
 	ApplicationContext context = ApplicationContext.getApplicationContext("org/frameworkset/spi/beans/testapplicationcontext.xml");
 	  RestfulServiceConvertor convertor = (RestfulServiceConvertor)context.getBeanObject("rpc.restful.convertor");
 	
 	System.out.println(convertor.convert("a", "rpc.test"));
 
-Ô¶³Ì·şÎñµ÷ÓÃ
+è¿œç¨‹æœåŠ¡è°ƒç”¨
 
 	 ApplicationContext context = ApplicationContext.getApplicationContext("org/frameworkset/spi/beans/testapplicationcontext.xml");
      RestfulServiceConvertor convertor = (RestfulServiceConvertor)context.getBeanObject("(mina::192.168.11.102:1186)/rpc.restful.convertor");
@@ -454,26 +454,26 @@ update function list:
 ------------------------------
  1.0.7 - 2010-03-08
 ------------------------------
-o Ôö¼Órestful·ç¸ñrpc·şÎñĞ­Òérest,¶¨ÒåµÄÓï·¨ÈçÏÂ£º
+o å¢åŠ restfulé£æ ¼rpcæœåŠ¡åè®®rest,å®šä¹‰çš„è¯­æ³•å¦‚ä¸‹ï¼š
 (rest::a/b/c)/rpc.test
-ÏµÍ³½«Öğ²½½âÎöa/b/cÕâÈı¸ö½ÚµãµÄµØÖ·£º
-a,b,c·Ö±ğ´ú±íÔ¶³Ì·şÎñÆ÷µØÖ·
-ÏµÍ³¸ù¾İa,b,cµÄË³ĞòÀ´Â·ÓÉÔ¶³Ì·şÎñµ÷ÓÃ£¬Ê×ÏÈ½«Ô¶³ÌÇëÇó·¢ËÍµ½a·şÎñÆ÷£¬È»ºóÓÉaÂ·ÓÉµ½b·şÎñÆ÷£¬ÔÙÓÉbÂ·ÓÉµ½c·şÎñÆ÷
-µ±c´¦ÀíÍêÇëÇóºóÔÙ½«½á¹û·µ»Ø¸øb£¬bÔÙ·µ»Ø¸øa¡£ÕâÑù¾ÍÍê³ÉÁËÒ»²ãrestful·ç¸ñµÄÔ¶³Ì·şÎñµ÷ÓÃ¹ı³Ì¡£
+ç³»ç»Ÿå°†é€æ­¥è§£æa/b/cè¿™ä¸‰ä¸ªèŠ‚ç‚¹çš„åœ°å€ï¼š
+a,b,cåˆ†åˆ«ä»£è¡¨è¿œç¨‹æœåŠ¡å™¨åœ°å€
+ç³»ç»Ÿæ ¹æ®a,b,cçš„é¡ºåºæ¥è·¯ç”±è¿œç¨‹æœåŠ¡è°ƒç”¨ï¼Œé¦–å…ˆå°†è¿œç¨‹è¯·æ±‚å‘é€åˆ°aæœåŠ¡å™¨ï¼Œç„¶åç”±aè·¯ç”±åˆ°bæœåŠ¡å™¨ï¼Œå†ç”±bè·¯ç”±åˆ°cæœåŠ¡å™¨
+å½“cå¤„ç†å®Œè¯·æ±‚åå†å°†ç»“æœè¿”å›ç»™bï¼Œbå†è¿”å›ç»™aã€‚è¿™æ ·å°±å®Œæˆäº†ä¸€å±‚restfulé£æ ¼çš„è¿œç¨‹æœåŠ¡è°ƒç”¨è¿‡ç¨‹ã€‚
 
-a£¬b£¬c·Ö±ğ´ú±í·şÎñÆ÷µÄ±êÊ¶·û£¬Õâ¸ö±êÊ¶·û¿ÉÒÔ¶ÔÓ¦ÓÚÒ»¸öÕæÕıµÄÎïÀí·şÎñÆ÷µØÖ·£¬ËûÃÇÖ®¼äµÄÓ³Éä¹ØÏµ¿ÉÒÔÔÚÒ»¸ö×¢²áÖĞĞÄÖĞÎ¬»¤
-Ã¿¸ö·şÎñÆ÷¶¼»áÓĞÕâÑùÒ»¸ö×¢²áÖĞĞÄÓÃÀ´´æ·ÅÔÚ±¾»ú×¢²áµÄ±êÊ¶·ûºÏÎïÀí·şÎñÆ÷µØÖ·µÄÓ³Éä¹ØÏµ¡£
+aï¼Œbï¼Œcåˆ†åˆ«ä»£è¡¨æœåŠ¡å™¨çš„æ ‡è¯†ç¬¦ï¼Œè¿™ä¸ªæ ‡è¯†ç¬¦å¯ä»¥å¯¹åº”äºä¸€ä¸ªçœŸæ­£çš„ç‰©ç†æœåŠ¡å™¨åœ°å€ï¼Œä»–ä»¬ä¹‹é—´çš„æ˜ å°„å…³ç³»å¯ä»¥åœ¨ä¸€ä¸ªæ³¨å†Œä¸­å¿ƒä¸­ç»´æŠ¤
+æ¯ä¸ªæœåŠ¡å™¨éƒ½ä¼šæœ‰è¿™æ ·ä¸€ä¸ªæ³¨å†Œä¸­å¿ƒç”¨æ¥å­˜æ”¾åœ¨æœ¬æœºæ³¨å†Œçš„æ ‡è¯†ç¬¦åˆç‰©ç†æœåŠ¡å™¨åœ°å€çš„æ˜ å°„å…³ç³»ã€‚
 
-aop¿ò¼ÜÌá¹©ÁËÒ»¸ö½Ó¿ÚÀ´»ñÈ¡Ó³Éä¹ØÏµ£º
+aopæ¡†æ¶æä¾›äº†ä¸€ä¸ªæ¥å£æ¥è·å–æ˜ å°„å…³ç³»ï¼š
 org.frameworkset.spi.remote.restful.RestfulServiceConvertor
-½Ó¿Ú·½·¨Îª£º
+æ¥å£æ–¹æ³•ä¸ºï¼š
 public String convert(String restfuluddi,String serviceid);
-ÆäÖĞ²ÎÊırestfuluddi¶ÔÓ¦ÓÚ·şÎñÆ÷±êÊ¶·ûa,b,c£¬²ÎÊıserviceidÎªÇëÇóµÄÔ¶³Ì·şÎñid
-¾­¹ı¸Ã·½·¨×ª»»µÄµØÖ·£º¿ÉÒÔÎªÒÔÏÂ¸ñÊ½£º
+å…¶ä¸­å‚æ•°restfuluddiå¯¹åº”äºæœåŠ¡å™¨æ ‡è¯†ç¬¦a,b,cï¼Œå‚æ•°serviceidä¸ºè¯·æ±‚çš„è¿œç¨‹æœåŠ¡id
+ç»è¿‡è¯¥æ–¹æ³•è½¬æ¢çš„åœ°å€ï¼šå¯ä»¥ä¸ºä»¥ä¸‹æ ¼å¼ï¼š
 "(" + protocol + "::" +  uri + ")/" + serviceid + "?user=" + user + "&password=" + password;
-ÆäÖĞµÄprotocol£¬uri£¬user£¬password¾ÍÊÇ¸ù¾İ·şÎñÆ÷±êÊ¶·û´Ó×¢²áÖĞĞÄÖĞ²éÑ¯³öµÄĞÅÏ¢¡£
+å…¶ä¸­çš„protocolï¼Œuriï¼Œuserï¼Œpasswordå°±æ˜¯æ ¹æ®æœåŠ¡å™¨æ ‡è¯†ç¬¦ä»æ³¨å†Œä¸­å¿ƒä¸­æŸ¥è¯¢å‡ºçš„ä¿¡æ¯ã€‚
 
-ÒÔÏÂÊÇÒ»¸ö¼òµ¥µÄ½Ó¿ÚÊµÏÖ£º
+ä»¥ä¸‹æ˜¯ä¸€ä¸ªç®€å•çš„æ¥å£å®ç°ï¼š
 public class RestfulServiceConvertorImplTest implements RestfulServiceConvertor
 {
 
@@ -534,17 +534,17 @@ public class RestfulServiceConvertorImplTest implements RestfulServiceConvertor
     }
 
 }
-RestfulServiceConvertor½Ó¿ÚµÄÊµÏÖÀà±»ÅäÖÃÔÚmanager-rpc-service.xmlÎÄ¼şÖĞ£º
+RestfulServiceConvertoræ¥å£çš„å®ç°ç±»è¢«é…ç½®åœ¨manager-rpc-service.xmlæ–‡ä»¶ä¸­ï¼š
 		<!-- 
-			restful·ç¸ñµØÖ·×ª»»Æ÷
+			restfulé£æ ¼åœ°å€è½¬æ¢å™¨
 		 -->
 		<property name="rpc.restful.convertor" singlable="true"
 					      class="org.frameworkset.spi.serviceid.RestfulServiceConvertorImplTest"/>
-¿ª·¢ÈËÔ±¿ÉÒÔÊµÏÖ×Ô¼ºµÄµØÖ·×ª»»Æ÷£¬Ö±½ÓÌæ»»rpc.restful.convertorÅäÖÃ¼´¿É¡£
+å¼€å‘äººå‘˜å¯ä»¥å®ç°è‡ªå·±çš„åœ°å€è½¬æ¢å™¨ï¼Œç›´æ¥æ›¿æ¢rpc.restful.convertoré…ç½®å³å¯ã€‚
 				      
-ÔÙ¿´¿´Ò»¸ö¼òµ¥restful·ç¸ñµÄ·şÎñµ÷ÓÃÊ¾Àı£º
+å†çœ‹çœ‹ä¸€ä¸ªç®€å•restfulé£æ ¼çš„æœåŠ¡è°ƒç”¨ç¤ºä¾‹ï¼š
 		RPCTestInf testInf = (RPCTestInf)BaseSPIManager.getBeanObject("(rest::a/b/c/d)/rpc.test");
-        //Ñ­»·Ö´ĞĞ10´Î·şÎñµ÷ÓÃ
+        //å¾ªç¯æ‰§è¡Œ10æ¬¡æœåŠ¡è°ƒç”¨
         for(int i = 0; i < 10; i ++)
         {
             try
@@ -557,25 +557,25 @@ RestfulServiceConvertor½Ó¿ÚµÄÊµÏÖÀà±»ÅäÖÃÔÚmanager-rpc-service.xmlÎÄ¼şÖĞ£º
             }
         }
 
-²¹³äËµÃ÷£º
-¿ò¼ÜÔÚ½âÎörest·ç¸ñµÄµØÖ·Ê±£¬ÄÜ¹»×Ô¶¯Ê¶±ğ½Úµã¶ÔÓ¦µÄµØÖ·ÊÇ·ñÊÇ±¾µØµØÖ·£¬¼ÙÉè´æÔÚÒÔÏÂµØÖ·£º
+è¡¥å……è¯´æ˜ï¼š
+æ¡†æ¶åœ¨è§£æresté£æ ¼çš„åœ°å€æ—¶ï¼Œèƒ½å¤Ÿè‡ªåŠ¨è¯†åˆ«èŠ‚ç‚¹å¯¹åº”çš„åœ°å€æ˜¯å¦æ˜¯æœ¬åœ°åœ°å€ï¼Œå‡è®¾å­˜åœ¨ä»¥ä¸‹åœ°å€ï¼š
 	(rest::a/b/c)/rpc.test
-Èç¹û¿ò¼ÜÔÚ½âÎöµØÖ·Ê±£¬·¢ÏÖaÊÇ±¾µØµØÖ·£¬½«¼ÌĞø½âÎöÏÂÒ»¸öµØÖ·b£¬Ö±µ½Åöµ½Ò»¸öÔ¶³ÌµØÖ·Ê±²ÅÖ´ĞĞÔ¶³Ì·şÎñµ÷ÓÃ£¬Èç¹ûÈ«²¿ÊÇ±¾µØµØÖ·£¬ÄÇÃ´Õû¸örest·ç¸ñµÄÔ¶³Ì·şÎñ
-µ÷ÓÃ¾ÍÊÇÒ»¸ö±¾µØµ÷ÓÃ¡£
-rest·ç¸ñµØÖ·ÖĞ½Úµã¶ÔÓ¦µÄÎïÀíµØÖ·µÄĞ­Òé¿ÉÒÔÊÇaop¿ò¼ÜÄ¿Ç°Ìá¹©µÄĞ­ÒéÖĞµÄÈÎºÎÒ»ÖÖ£ºjms£¬webservice£¬mina£¬jgroups
+å¦‚æœæ¡†æ¶åœ¨è§£æåœ°å€æ—¶ï¼Œå‘ç°aæ˜¯æœ¬åœ°åœ°å€ï¼Œå°†ç»§ç»­è§£æä¸‹ä¸€ä¸ªåœ°å€bï¼Œç›´åˆ°ç¢°åˆ°ä¸€ä¸ªè¿œç¨‹åœ°å€æ—¶æ‰æ‰§è¡Œè¿œç¨‹æœåŠ¡è°ƒç”¨ï¼Œå¦‚æœå…¨éƒ¨æ˜¯æœ¬åœ°åœ°å€ï¼Œé‚£ä¹ˆæ•´ä¸ªresté£æ ¼çš„è¿œç¨‹æœåŠ¡
+è°ƒç”¨å°±æ˜¯ä¸€ä¸ªæœ¬åœ°è°ƒç”¨ã€‚
+resté£æ ¼åœ°å€ä¸­èŠ‚ç‚¹å¯¹åº”çš„ç‰©ç†åœ°å€çš„åè®®å¯ä»¥æ˜¯aopæ¡†æ¶ç›®å‰æä¾›çš„åè®®ä¸­çš„ä»»ä½•ä¸€ç§ï¼šjmsï¼Œwebserviceï¼Œminaï¼Œjgroups
 
-rest·ç¸ñµØÖ·ºóÃæ´øµÄÈÏÖ¤²ÎÊı½«±»ºöÂÔ¡£
+resté£æ ¼åœ°å€åé¢å¸¦çš„è®¤è¯å‚æ•°å°†è¢«å¿½ç•¥ã€‚
 
 
-o bboss.org.jgroups.protocols.pbcast.STREAMING_STATE_TRANSFERÉı¼¶µ½2.9
+o bboss.org.jgroups.protocols.pbcast.STREAMING_STATE_TRANSFERå‡çº§åˆ°2.9
 FIXED for https://jira.jboss.org/jira/browse/JGRP-1136
-o ÒÔÏÂÀàÉı¼¶µ½2.9
+o ä»¥ä¸‹ç±»å‡çº§åˆ°2.9
 bboss.org.jgroups.protocols.UNICAST
 bboss.org.jgroups.stack.AckReceiverWindow
 bboss.org.jgroups.stack.AckSenderWindow
 FIXED for https://jira.jboss.org/jira/browse/JGRP-1122
 
-o ÒÔÏÂÀàÉı¼¶µ½2.9
+o ä»¥ä¸‹ç±»å‡çº§åˆ°2.9
 bboss.org.jgroups.protocols.pbcast.NAKACK
 bboss.org.jgroups.stack.NakReceiverWindow
 
@@ -585,14 +585,14 @@ https://jira.jboss.org/jira/browse/JGRP-1133
 ------------------------------
  1.0.7 - 2010-02-11
 ------------------------------
-o jgroup 2.7.0 GA Éı¼¶µ½2.8.0 GA
+o jgroup 2.7.0 GA å‡çº§åˆ°2.8.0 GA
 
 
 ------------------------------
  1.0.7 - 2009-05-05
 ------------------------------
 
-o Ôö¼ÓÈ¨ÏŞ¡¢ÈÏÖ¤¡¢ÏûÏ¢¼ÓÃÜ¹¦ÄÜ£¬²å¼şÊ½Ä£¿é-org/frameworkset/spi/manager-rpc-service.xml
+o å¢åŠ æƒé™ã€è®¤è¯ã€æ¶ˆæ¯åŠ å¯†åŠŸèƒ½ï¼Œæ’ä»¶å¼æ¨¡å—-org/frameworkset/spi/manager-rpc-service.xml
 <property name="system.securityManager" class="org.frameworkset.spi.security.SecurityManagerImpl">
 			<construction>
 				<property name="securityconfig" 
@@ -607,27 +607,27 @@ o Ôö¼ÓÈ¨ÏŞ¡¢ÈÏÖ¤¡¢ÏûÏ¢¼ÓÃÜ¹¦ÄÜ£¬²å¼şÊ½Ä£¿é-org/frameworkset/spi/manager-rpc-serv
 				<property name="data.encrypt.module" enable="true" class="org.frameworkset.spi.security.EncryptModuleTest"/>	
 			</map>
 		</property>
-o Ôö¼Ó×é²¥µ÷ÓÃ½á¹ûÒì³£´¦Àí¹¦ÄÜ£¬Ò»µ©Ò»×é½Ó¿Úµ÷ÓÃÖĞÓĞÒ»¸ö·µ»ØÒì³££¬ÔòÕû¸öµ÷ÓÃÒÑÒì³£·½Ê½½áÊø
-o bean ×é¼şpropertyÖĞµÄÀ¹½ØÆ÷ÉúĞ§
+o å¢åŠ ç»„æ’­è°ƒç”¨ç»“æœå¼‚å¸¸å¤„ç†åŠŸèƒ½ï¼Œä¸€æ—¦ä¸€ç»„æ¥å£è°ƒç”¨ä¸­æœ‰ä¸€ä¸ªè¿”å›å¼‚å¸¸ï¼Œåˆ™æ•´ä¸ªè°ƒç”¨å·²å¼‚å¸¸æ–¹å¼ç»“æŸ
+o bean ç»„ä»¶propertyä¸­çš„æ‹¦æˆªå™¨ç”Ÿæ•ˆ
 org/frameworkset/spi/assemble/ProviderParser.java
 /bbossaop/src/org/frameworkset/spi/BaseSPIManager.java
-²âÊÔÓÃÀı
+æµ‹è¯•ç”¨ä¾‹
 /bbossaop/test/org/frameworkset/spi/properties/interceptor
-o Ôö¼Ó×¢½â·½Ê½µÄÊı¾İ¿âÊÂÎñ¹ÜÀí
+o å¢åŠ æ³¨è§£æ–¹å¼çš„æ•°æ®åº“äº‹åŠ¡ç®¡ç†
 	@Transaction("REQUIRED_TRANSACTION")
     @RollbackExceptions("") //@RollbackExceptions("{exception1,excpetion2}")
-    ÏêÏ¸Çé¿ö²Î¿´²âÊÔÓÃÀı/bbossaop/test/org/frameworkset/spi/transaction/annotation
-o ÊôĞÔÒıÓÃ¹¦ÄÜÍêÉÆ
-	bean´´½¨·½Ê½ĞŞ¸Ä
-	ĞÂÔö¾Ö²¿bean¹ÜÀíÈİÆ÷£¨ÌØ¶¨µÄÈİÆ÷¹ÜÀíÃüÃû¿Õ¼ä£©£¬Ö§³Ö×é¼ş¾Ö²¿·¶Î§ÒıÓÃ£¬ºÍ×é¼ş
+    è¯¦ç»†æƒ…å†µå‚çœ‹æµ‹è¯•ç”¨ä¾‹/bbossaop/test/org/frameworkset/spi/transaction/annotation
+o å±æ€§å¼•ç”¨åŠŸèƒ½å®Œå–„
+	beanåˆ›å»ºæ–¹å¼ä¿®æ”¹
+	æ–°å¢å±€éƒ¨beanç®¡ç†å®¹å™¨ï¼ˆç‰¹å®šçš„å®¹å™¨ç®¡ç†å‘½åç©ºé—´ï¼‰ï¼Œæ”¯æŒç»„ä»¶å±€éƒ¨èŒƒå›´å¼•ç”¨ï¼Œå’Œç»„ä»¶
 
-o ÍêÉÆ¼à¿Ø¹¦ÄÜ
-  a). ¼à¿ØÊ÷ÖÖÔö¼ÓÈ«¾ÖÊôĞÔproperty½ÚµãºÍÃ÷Ï¸²éÑ¯Ò³Ãæ
-  b). Ö§³Ö¶Ôproperty¶¨ÒåµÄ×é¼ş½ÚµãºÍÃ÷Ï¸²éÑ¯Ò³Ãæ
+o å®Œå–„ç›‘æ§åŠŸèƒ½
+  a). ç›‘æ§æ ‘ç§å¢åŠ å…¨å±€å±æ€§propertyèŠ‚ç‚¹å’Œæ˜ç»†æŸ¥è¯¢é¡µé¢
+  b). æ”¯æŒå¯¹propertyå®šä¹‰çš„ç»„ä»¶èŠ‚ç‚¹å’Œæ˜ç»†æŸ¥è¯¢é¡µé¢
 
-o propertyÔªËØĞÂÔöeditor×Ó½Úµã£¬Ö¸¶¨ÊôĞÔ×¢ÈëÊ±µÄÊôĞÔ±à¼­ºÍ×ª»»Æ÷
+o propertyå…ƒç´ æ–°å¢editorå­èŠ‚ç‚¹ï¼ŒæŒ‡å®šå±æ€§æ³¨å…¥æ—¶çš„å±æ€§ç¼–è¾‘å’Œè½¬æ¢å™¨
 
-ÏµÍ³Ä¬ÈÏÖ§³Ö×Ö·û´®ÏòÆäËû»ù±¾ÀàĞĞ×ª»»:					 
+ç³»ç»Ÿé»˜è®¤æ”¯æŒå­—ç¬¦ä¸²å‘å…¶ä»–åŸºæœ¬ç±»è¡Œè½¬æ¢:					 
 					 * int,char,short,double,float,long,boolean,byte
 					 * java.sql.Date,java.util.Date,
 					 * Integer
@@ -638,37 +638,37 @@ o propertyÔªËØĞÂÔöeditor×Ó½Úµã£¬Ö¸¶¨ÊôĞÔ×¢ÈëÊ±µÄÊôĞÔ±à¼­ºÍ×ª»»Æ÷
 					 * Character
 					 * Boolean
 					 * Byte
-					Èç¹û²»ÊÇ»ù±¾Êı¾İÀàĞÍÄÇ¾ÍĞèÒªÍ¨¹ı×Ô¶¨ÒåµÄÊôĞÔ±à¼­Æ÷À´ÊµÏÖ£¬ÊôĞÔ±à¼­Æ÷±ØĞèÊµÏÖ½Ó¿Ú:
+					å¦‚æœä¸æ˜¯åŸºæœ¬æ•°æ®ç±»å‹é‚£å°±éœ€è¦é€šè¿‡è‡ªå®šä¹‰çš„å±æ€§ç¼–è¾‘å™¨æ¥å®ç°ï¼Œå±æ€§ç¼–è¾‘å™¨å¿…éœ€å®ç°æ¥å£:
 						com.frameworkset.util.EditorInf
 						
 						Object getValueFromObject(Object fromValue) ;    
     					Object getValueFromString(String fromValue);
 
 
-o À©Õ¹aop¿ò¼ÜrpcĞ­Òé£¬Ö§³ÖminaĞ­ÒéÊµÏÖrpc·şÎñ£¬Ä¿Ç°Ö§³ÖËÄÖÖĞ­Òé£ºjgroup£¬mina,jms£¬webservice
-ÏêÏ¸µÄÅäÖÃÇë¿´ÅäÖÃÎÄ¼ş£º
+o æ‰©å±•aopæ¡†æ¶rpcåè®®ï¼Œæ”¯æŒminaåè®®å®ç°rpcæœåŠ¡ï¼Œç›®å‰æ”¯æŒå››ç§åè®®ï¼šjgroupï¼Œmina,jmsï¼Œwebservice
+è¯¦ç»†çš„é…ç½®è¯·çœ‹é…ç½®æ–‡ä»¶ï¼š
 /bbossaop/src/org/frameworkset/spi/manager-rpc-service.xml
 /bbossaop/src/org/frameworkset/spi/manager-rpc-webservice.xml
 /bbossaop/src/org/frameworkset/spi/manager-rpc-jms.xml
 /bbossaop/src/org/frameworkset/spi/manager-rpc-mina.xml
 
-Ïà¹ØÒÀÀµµÄµÄĞ­Òé¿ò¼Ü°æ±¾ËµÃ÷
+ç›¸å…³ä¾èµ–çš„çš„åè®®æ¡†æ¶ç‰ˆæœ¬è¯´æ˜
 webservice - apache-cxf-2.2.4
 mina - mina-2.0.0-M6
-jms - Ö§³Öjms ¹æ·¶½Ó¿Ú
+jms - æ”¯æŒjms è§„èŒƒæ¥å£
 jgroup - JGroups-2.7.0.GA
 
-Ê¹ÓÃ·½·¨Çë¿´²âÊÔÓÃÀı£º
+ä½¿ç”¨æ–¹æ³•è¯·çœ‹æµ‹è¯•ç”¨ä¾‹ï¼š
 org/frameworkset/spi/remote/xxxx/TestClient.java
 org/frameworkset/spi/remote/xxxx/TestServer.java
-ÆäÖĞµÄxxxx±êÊ¶¾ßÌåµÄĞ­ÒéÃû³Æ£ºjgroup£¬mina,jms£¬webservice
+å…¶ä¸­çš„xxxxæ ‡è¯†å…·ä½“çš„åè®®åç§°ï¼šjgroupï¼Œmina,jmsï¼Œwebservice
 
-o property½ÚµãÔö¼ÓÁËinit-method£¬destroy-methodÁ½¸öÊôĞÔ
-		init-method£¬destroy-methodÁ½¸öÊôĞÔ·Ö±ğ¶ÔÓ¦aop¿ò¼ÜÌá¹©µÄÁ½¸öInitializingBeanºÍDisposableBean
-		ÊµÏÖµÄ·½·¨£¬Èç¹û×é¼şÒÑ¾­ÊµÏÖÁËInitializingBean¾Í²»ĞèÒªÖ¸¶¨init-methodÊôĞÔ
-		Èç¹û×é¼şÊµÏÖÁËDisposableBean½Ó¿Ú¾Í²»ĞèÒªÖ¸¶¨destroy-methodÊôĞÔ
+o propertyèŠ‚ç‚¹å¢åŠ äº†init-methodï¼Œdestroy-methodä¸¤ä¸ªå±æ€§
+		init-methodï¼Œdestroy-methodä¸¤ä¸ªå±æ€§åˆ†åˆ«å¯¹åº”aopæ¡†æ¶æä¾›çš„ä¸¤ä¸ªInitializingBeanå’ŒDisposableBean
+		å®ç°çš„æ–¹æ³•ï¼Œå¦‚æœç»„ä»¶å·²ç»å®ç°äº†InitializingBeanå°±ä¸éœ€è¦æŒ‡å®šinit-methodå±æ€§
+		å¦‚æœç»„ä»¶å®ç°äº†DisposableBeanæ¥å£å°±ä¸éœ€è¦æŒ‡å®šdestroy-methodå±æ€§
 		
-o Ôö¼ÓÉúÃüÖÜÆÚ¹ÜÀí½Ó¿Ú
+o å¢åŠ ç”Ÿå‘½å‘¨æœŸç®¡ç†æ¥å£
 public interface InitializingBean {
     
     void afterPropertiesSet() throws Exception;
@@ -686,54 +686,54 @@ public interface DisposableBean
     void destroy() throws Exception;
 }
 
-InitializingBean½Ó¿ÚÖĞ¶¨ÒåÁËafterPropertiesSet·½·¨£¬×é¼ş¿ÉÒÔÊµÏÖÕâ¸ö·½·¨£¬Ò»µ©²¿ÊğµÄ×é¼şÊµÀı±»´´½¨ºó£¬aop¿ò¼Ü½«
-µ÷ÓÃ½Ó¿Ú·½·¨afterPropertiesSet¶Ô×é¼şÊµÀı½øĞĞ³õÊ¼»¯
+InitializingBeanæ¥å£ä¸­å®šä¹‰äº†afterPropertiesSetæ–¹æ³•ï¼Œç»„ä»¶å¯ä»¥å®ç°è¿™ä¸ªæ–¹æ³•ï¼Œä¸€æ—¦éƒ¨ç½²çš„ç»„ä»¶å®ä¾‹è¢«åˆ›å»ºåï¼Œaopæ¡†æ¶å°†
+è°ƒç”¨æ¥å£æ–¹æ³•afterPropertiesSetå¯¹ç»„ä»¶å®ä¾‹è¿›è¡Œåˆå§‹åŒ–
 
-DisposableBean¶¨ÒåÁËdestroy·½·¨£¬×é¼ş¿ÉÒÔÊµÏÖÕâ¸ö·½·¨£¬Ò»µ©ÏµÍ³ÍË³ö²Ù×÷±»µ÷ÓÃÊ±£¬aop¿ò¼Ü½«µ÷ÓÃ×é¼şµÄdestroy·½·¨À´
-Ïú»Ù×é¼şÊµÀı£¬ÒÔÊÍ·Å×ÊÔ´£¬ÊÊÓÃÓÚµ¥ÁĞÄ£Ê½
+DisposableBeanå®šä¹‰äº†destroyæ–¹æ³•ï¼Œç»„ä»¶å¯ä»¥å®ç°è¿™ä¸ªæ–¹æ³•ï¼Œä¸€æ—¦ç³»ç»Ÿé€€å‡ºæ“ä½œè¢«è°ƒç”¨æ—¶ï¼Œaopæ¡†æ¶å°†è°ƒç”¨ç»„ä»¶çš„destroyæ–¹æ³•æ¥
+é”€æ¯ç»„ä»¶å®ä¾‹ï¼Œä»¥é‡Šæ”¾èµ„æºï¼Œé€‚ç”¨äºå•åˆ—æ¨¡å¼
 
-Ïà¹Ø³ÌĞò
+ç›¸å…³ç¨‹åº
 /bbossaop/src/org/frameworkset/spi/BaseSPIManager.java
 /bbossaop/src/org/frameworkset/spi/BeanDestroyHook.java
 /bbossaop/src/org/frameworkset/spi/assemble/BeanAccembleHelper.java
   
-o BaseSPIManager×é¼şÖĞÔö¼ÓÁË·½·¨£º
-	public static Object getBeanObject(String name)--ÓÃÀ´»ñÈ¡ÆÕÍ¨×é¼şµÄÊµÀı<Í¨¹ıproperty¶¨ÒåµÄ×é¼ş>
-													 Í¨¹ımanager£¬providerÖ¸¶¨µÄ×é¼şÈÎÈ»Ê¹ÓÃ
-													 public static Object getProvider(String providerManagerType)½Ó¿Ú
-													 »ñÈ¡
+o BaseSPIManagerç»„ä»¶ä¸­å¢åŠ äº†æ–¹æ³•ï¼š
+	public static Object getBeanObject(String name)--ç”¨æ¥è·å–æ™®é€šç»„ä»¶çš„å®ä¾‹<é€šè¿‡propertyå®šä¹‰çš„ç»„ä»¶>
+													 é€šè¿‡managerï¼ŒprovideræŒ‡å®šçš„ç»„ä»¶ä»»ç„¶ä½¿ç”¨
+													 public static Object getProvider(String providerManagerType)æ¥å£
+													 è·å–
 	
 	
 	
-o ¸ù¾İĞÂµÄÊôĞÔ¶¨ÒåÓï·¨£¬ĞŞ¸ÄÏµÍ³µÄÒÀÀµ×¢Èë¹æÔò
+o æ ¹æ®æ–°çš„å±æ€§å®šä¹‰è¯­æ³•ï¼Œä¿®æ”¹ç³»ç»Ÿçš„ä¾èµ–æ³¨å…¥è§„åˆ™
 
-o Ôö¼Ó×Ô¶¨ÒåµÄMapÀàĞÍ£ºorg.frameworkset.spi.assemble.ProviderParser$ProMap<K, V>
-o Ôö¼Ó×Ô¶¨ÒåµÄMapÀàĞÍ£ºorg.frameworkset.spi.assemble.ProviderParser$ProList<K, V>
-o Ôö¼Ó×Ô¶¨ÒåµÄMapÀàĞÍ£ºorg.frameworkset.spi.assemble.ProviderParser$ProSet<K, V>
-o ĞŞ¸ÄÊôĞÔÅäÖÃÖĞproperty½ÚµãµÄ¶¨Òå£º
+o å¢åŠ è‡ªå®šä¹‰çš„Mapç±»å‹ï¼šorg.frameworkset.spi.assemble.ProviderParser$ProMap<K, V>
+o å¢åŠ è‡ªå®šä¹‰çš„Mapç±»å‹ï¼šorg.frameworkset.spi.assemble.ProviderParser$ProList<K, V>
+o å¢åŠ è‡ªå®šä¹‰çš„Mapç±»å‹ï¼šorg.frameworkset.spi.assemble.ProviderParser$ProSet<K, V>
+o ä¿®æ”¹å±æ€§é…ç½®ä¸­propertyèŠ‚ç‚¹çš„å®šä¹‰ï¼š
     properties(property*)
 	properties-attributelist{
-		name-Ö¸¶¨Ò»×éÊôĞÔµÄ·Ö×éÃû³Æ		
+		name-æŒ‡å®šä¸€ç»„å±æ€§çš„åˆ†ç»„åç§°		
 	}
 	property(property*,map,list,set)
 	property-attributelist{
-		name-Ö¸¶¨ÊôĞÔÃû³Æ
-		label-Ö¸¶¨ÊôĞÔµÄ±ê¼Ç
-		value-Ö¸¶¨ÊôĞÔµÄÖµ£¬ÊôĞÔÖµÒ²¿ÉÒÔÍ¨¹ıproperty½ÚµãµÄÄÚÖÃÎÄ±¾Ö¸¶¨
-		class-Ö¸¶¨Öµ¶ÔÓ¦µÄjavaÀàĞÍÃû³Æ£ºint,boolean,string,ÓÃ»§×Ô¶¨ÒåµÄÀàĞÍ	
-		refid-½ÚµãÊôĞÔÖµÎªrefid¶ÔÓ¦µÄÊôĞÔ»òÕß·şÎñÌá¹©ÕßµÄÖµ
-		      Èç¹ûÊÇÊôĞÔÇ°ÃæÓÃ£ºattr@×÷ÎªÇ°×º
-		      Èç¹ûÒıÓÃµÄÊÇ·şÎñ£ºservice@×÷ÎªÇ°×º£¬
-		      ¶ÔÓÚÒıÓÃµÄ½âÎö½«²ÉÓÃ·´ÏòË÷ÒıµÄ·½Ê½µÄÌæ»»»¹Ã»ÓĞ¼ÓÔØµÄÒıÓÃÊôĞÔºÍ·şÎñ
+		name-æŒ‡å®šå±æ€§åç§°
+		label-æŒ‡å®šå±æ€§çš„æ ‡è®°
+		value-æŒ‡å®šå±æ€§çš„å€¼ï¼Œå±æ€§å€¼ä¹Ÿå¯ä»¥é€šè¿‡propertyèŠ‚ç‚¹çš„å†…ç½®æ–‡æœ¬æŒ‡å®š
+		class-æŒ‡å®šå€¼å¯¹åº”çš„javaç±»å‹åç§°ï¼šint,boolean,string,ç”¨æˆ·è‡ªå®šä¹‰çš„ç±»å‹	
+		refid-èŠ‚ç‚¹å±æ€§å€¼ä¸ºrefidå¯¹åº”çš„å±æ€§æˆ–è€…æœåŠ¡æä¾›è€…çš„å€¼
+		      å¦‚æœæ˜¯å±æ€§å‰é¢ç”¨ï¼šattr@ä½œä¸ºå‰ç¼€
+		      å¦‚æœå¼•ç”¨çš„æ˜¯æœåŠ¡ï¼šservice@ä½œä¸ºå‰ç¼€ï¼Œ
+		      å¯¹äºå¼•ç”¨çš„è§£æå°†é‡‡ç”¨åå‘ç´¢å¼•çš„æ–¹å¼çš„æ›¿æ¢è¿˜æ²¡æœ‰åŠ è½½çš„å¼•ç”¨å±æ€§å’ŒæœåŠ¡
 	}
 	map(property+)
 	list(property+)
 	set(property+)
 
-  ĞŞ¸ÄÁË½ÚµãµÄ¶¨Òå·½·¨
+  ä¿®æ”¹äº†èŠ‚ç‚¹çš„å®šä¹‰æ–¹æ³•
   
-  Ê¹ÓÃËµÃ÷£º
-  ÅäÖÃ£º
+  ä½¿ç”¨è¯´æ˜ï¼š
+  é…ç½®ï¼š
   <property name="connection.params">
 		<!-- http://activemq.apache.org/maven/activemq-core/xsddoc/http___activemq.org_config_1.0/element/connectionFactory.html -->
 			<map>
@@ -808,56 +808,56 @@ o ĞŞ¸ÄÊôĞÔÅäÖÃÖĞproperty½ÚµãµÄ¶¨Òå£º
 				<property label="topicPrefetch" name="topicPrefetch" value="32766" >
 					<description> <![CDATA[ topicPrefetch ]]></description>
 				</property>
-				<property label="ÊÇ·ñÊ¹ÓÃÁ´½Ó³Ø" name="useConnectionPool" value="ÊÇ·ñÊ¹ÓÃÁ´½Ó³Ø" >
-					<description> <![CDATA[ trueÊ¹ÓÃ£¬false²»Ê¹ÓÃ ]]></description>
+				<property label="æ˜¯å¦ä½¿ç”¨é“¾æ¥æ± " name="useConnectionPool" value="æ˜¯å¦ä½¿ç”¨é“¾æ¥æ± " >
+					<description> <![CDATA[ trueä½¿ç”¨ï¼Œfalseä¸ä½¿ç”¨ ]]></description>
 				</property>				
 			</map>
 		</property>	
 		
-		java³ÌĞò£º
+		javaç¨‹åºï¼š
   ProMap map = BaseSPIManager.getMapProperty("connection.params");
         System.out.println(map);
-        System.out.println("alwaysSessionAsync£º" + map.getBoolean("alwaysSessionAsync"));
-        System.out.println("closeTimeout£º" + map.getInt("closeTimeout"));
-        System.out.println("useConnectionPool String£º" + map.getString("useConnectionPool"));
-        System.out.println("useConnectionPool Pro object:£º" + map.getPro("useConnectionPool"));
+        System.out.println("alwaysSessionAsyncï¼š" + map.getBoolean("alwaysSessionAsync"));
+        System.out.println("closeTimeoutï¼š" + map.getInt("closeTimeout"));
+        System.out.println("useConnectionPool Stringï¼š" + map.getString("useConnectionPool"));
+        System.out.println("useConnectionPool Pro object:ï¼š" + map.getPro("useConnectionPool"));
         
         /**
-         * ·Ç·¨»ñÈ¡ÕûÊı
+         * éæ³•è·å–æ•´æ•°
          */
         try
         {
-            System.out.println("useConnectionPool int£º" + map.getInt("useConnectionPool"));
+            System.out.println("useConnectionPool intï¼š" + map.getInt("useConnectionPool"));
         }
         catch (Exception e)
         {
             e.printStackTrace();
         }
         /**
-         * ·Ç·¨»ñÈ¡boolean
+         * éæ³•è·å–boolean
          */
         try
         {
-            System.out.println("useConnectionPool boolean£º" + map.getBoolean("useConnectionPool"));
+            System.out.println("useConnectionPool booleanï¼š" + map.getBoolean("useConnectionPool"));
         }
         catch (Exception e)
         {
             e.printStackTrace();
         }
-o BaseSPIManagerĞÂÔö»ñÈ¡µ±Ç°ËùÓĞÁ¬Í¨µÄ½ÚµãÇåµ¥µÄ·½·¨
+o BaseSPIManageræ–°å¢è·å–å½“å‰æ‰€æœ‰è¿é€šçš„èŠ‚ç‚¹æ¸…å•çš„æ–¹æ³•
 /**
-     * »ñÈ¡µ±Ç°ËùÓĞÁ¬Í¨µÄ½ÚµãÇåµ¥
+     * è·å–å½“å‰æ‰€æœ‰è¿é€šçš„èŠ‚ç‚¹æ¸…å•
      */
     @SuppressWarnings("unchecked")
     public static List<RPCAddress> getAllNodes()
     
-  ¾ßÌåµÄÊ¹ÓÃ·½·¨Îª£º
+  å…·ä½“çš„ä½¿ç”¨æ–¹æ³•ä¸ºï¼š
   public static void testGetAllNodes()
     {
         List<RPCAddress> addrs = BaseSPIManager.getAllNodes();
     }  
     
-   RPCAddressµÄ¶¨ÒåÈçÏÂ£º
+   RPCAddressçš„å®šä¹‰å¦‚ä¸‹ï¼š
    public class RPCAddress
 {
     private String ip;
@@ -901,9 +901,9 @@ o BaseSPIManagerĞÂÔö»ñÈ¡µ±Ç°ËùÓĞÁ¬Í¨µÄ½ÚµãÇåµ¥µÄ·½·¨
         return this.ipAddress.getCanonicalHostName();
     }
 } 
-o ĞŞ¸ÄD:\workspace\bbossaop\src\com\chinacreator\spi\assemble\ProviderParser.javaÀà
-	Ôö¼ÓProMapÄÚ²¿¾²Ì¬Àà£¬Õâ¸öÀàÀ©Õ¹ÁËjava.util.HashMapÀà£¬Ôö¼ÓÁËÒÔÏÂ·½·¨ÓÃÀ´Ìá¹©int£¬
-	boolean£¬StringÈıÖÖÀàĞÍÊôĞÔµÄ»ñÈ¡ºÍÄ¬ÈÏÖµ»ñÈ¡·½·¨£º
+o ä¿®æ”¹D:\workspace\bbossaop\src\com\chinacreator\spi\assemble\ProviderParser.javaç±»
+	å¢åŠ ProMapå†…éƒ¨é™æ€ç±»ï¼Œè¿™ä¸ªç±»æ‰©å±•äº†java.util.HashMapç±»ï¼Œå¢åŠ äº†ä»¥ä¸‹æ–¹æ³•ç”¨æ¥æä¾›intï¼Œ
+	booleanï¼ŒStringä¸‰ç§ç±»å‹å±æ€§çš„è·å–å’Œé»˜è®¤å€¼è·å–æ–¹æ³•ï¼š
 	
 	public int getInt(String key)
 	public int getInt(String key,int defaultValue)
@@ -912,13 +912,13 @@ o ĞŞ¸ÄD:\workspace\bbossaop\src\com\chinacreator\spi\assemble\ProviderParser.jav
 	public String getString(String key)
 	public String getString(String key,String defaultValue)
 	
-	bboss aop¿ò¼Ü½«»á²ÉÓÃProMapÀà×÷ÎªËùÓĞMapÀàĞÍµÄ²ÎÊı´æ´¢ÈİÆ÷
+	bboss aopæ¡†æ¶å°†ä¼šé‡‡ç”¨ProMapç±»ä½œä¸ºæ‰€æœ‰Mapç±»å‹çš„å‚æ•°å­˜å‚¨å®¹å™¨
 	
-o ¸üĞÂÊı¾İ¿âÁ¬½Ó³Ø
+o æ›´æ–°æ•°æ®åº“è¿æ¥æ± 
 bbossaop/lib/frameworkset-pool.jar
 
-o À©Õ¹ÊôĞÔproperty½Úµã¹¦ÄÜ
-  Ö§³ÖlistºÍmapÁ½ÖÖÀàĞÍµÄÊôĞÔ£¬Ö§³ÖÊôĞÔÇ¶Ì×
+o æ‰©å±•å±æ€§propertyèŠ‚ç‚¹åŠŸèƒ½
+  æ”¯æŒlistå’Œmapä¸¤ç§ç±»å‹çš„å±æ€§ï¼Œæ”¯æŒå±æ€§åµŒå¥—
  bbossaop/src/org/frameworkset/spi/BaseSPIManager.java
 bbossaop/test/com/chinacreator/spi/properties/TestProperties.java
 /bbossaop/test/com/chinacreator/spi/properties/mq-init.xml
@@ -927,7 +927,7 @@ bbossaop/src/org/frameworkset/spi/assemble/ServiceProviderManager.java
 /bbossaop/src/manager-provider.xml
 /bbossaop/src/org/framework/persitent/util/SQL.java
 
-BaseSPIManager.javaÖĞÔö¼ÓÒÔÏÂ½Ó¿Ú£º
+BaseSPIManager.javaä¸­å¢åŠ ä»¥ä¸‹æ¥å£ï¼š
 public static Object getObjectProperty(String name) ;
 public static Object getObjectProperty(String name,Object defaultValue) ;
 public static Set getSetProperty(String name) ;
@@ -937,67 +937,67 @@ public static List getListProperty(String name,List defaultValue) ;
 public static Map getMapProperty(String name) ;
 public static Map getMapProperty(String name,Map defaultValue) ;
 
-ÔÚÎÄ¼ş/bbossaop/test/com/chinacreator/spi/properties/mq-init.xmlÖĞ°üº¬ÁËmap£¬list£¬set²ÎÊıµÄÅäÖÃÊµÀı¡£
+åœ¨æ–‡ä»¶/bbossaop/test/com/chinacreator/spi/properties/mq-init.xmlä¸­åŒ…å«äº†mapï¼Œlistï¼Œsetå‚æ•°çš„é…ç½®å®ä¾‹ã€‚
   
-o Éı¼¶Ô¶³ÌÍ¨Ñ¶×é¼ş£¬ÌáÉıÔ¶³ÌÍ¨Ñ¶µÄĞÔÄÜ
-2009Äê5ÔÂ2ÈÕ
+o å‡çº§è¿œç¨‹é€šè®¯ç»„ä»¶ï¼Œæå‡è¿œç¨‹é€šè®¯çš„æ€§èƒ½
+2009å¹´5æœˆ2æ—¥
 
-Éı¼¶jgroup
-jgroupÓÉ2.4.1 Éı¼¶µ½2.7.0
+å‡çº§jgroup
+jgroupç”±2.4.1 å‡çº§åˆ°2.7.0
 
-ÊµÏÖbboss aop Ô¶³Ì·şÎñµÄ°²È«ÓëÈÏÖ¤¹¦ÄÜ
+å®ç°bboss aop è¿œç¨‹æœåŠ¡çš„å®‰å…¨ä¸è®¤è¯åŠŸèƒ½
 /bbossaop/src/org/frameworkset/remote/SecurityContext.java
 
-ÊµÏÖË¼Â·£º
+å®ç°æ€è·¯ï¼š
 
-ÈÏÖ¤£¬Ôö¼ÓÓÃ»§¿ÚÁîºÍÃÜÂëÑéÖ¤»úÖÆ£¬²ÉÓÃssl °²È«µÄÍøÂçÁ¬½Ó
-¼øÈ¨£¬Ö§³Ö×é¼ş½ÇÉ«·ÃÎÊ¿ØÖÆ¹¦ÄÜ£¬Ö§³Ö×é¼ş·½·¨·ÃÎÊ¿ØÖÆ¹¦ÄÜ
+è®¤è¯ï¼Œå¢åŠ ç”¨æˆ·å£ä»¤å’Œå¯†ç éªŒè¯æœºåˆ¶ï¼Œé‡‡ç”¨ssl å®‰å…¨çš„ç½‘ç»œè¿æ¥
+é‰´æƒï¼Œæ”¯æŒç»„ä»¶è§’è‰²è®¿é—®æ§åˆ¶åŠŸèƒ½ï¼Œæ”¯æŒç»„ä»¶æ–¹æ³•è®¿é—®æ§åˆ¶åŠŸèƒ½
 
 
-ÊµÏÖ¶àÖÖÍøÂç´«²¥·½Ê½
+å®ç°å¤šç§ç½‘ç»œä¼ æ’­æ–¹å¼
 
-unicast::192.19:1180;192.19:1182 µ¥²¥µ÷ÓÃ·½Ê½
-muticast::192.19:1180;192.19:1182 ¶à²¥µ÷ÓÃ·½Ê½£¬ÒªÇóÃ¿¸ö½Úµã±ØĞëÊÇµ±Ç°¼¯ÈºÖĞµÄ½Úµã£¬·ñÔòÏµÍ³±¨´í
+unicast::192.19:1180;192.19:1182 å•æ’­è°ƒç”¨æ–¹å¼
+muticast::192.19:1180;192.19:1182 å¤šæ’­è°ƒç”¨æ–¹å¼ï¼Œè¦æ±‚æ¯ä¸ªèŠ‚ç‚¹å¿…é¡»æ˜¯å½“å‰é›†ç¾¤ä¸­çš„èŠ‚ç‚¹ï¼Œå¦åˆ™ç³»ç»ŸæŠ¥é”™
 
-ÊµÏÖÂ·ÓÉ¹¦ÄÜ
+å®ç°è·¯ç”±åŠŸèƒ½
 
-ÊµÏÖunicat²»ÒÀÀµÓÚ×é²¥¹¦ÄÜ
+å®ç°unicatä¸ä¾èµ–äºç»„æ’­åŠŸèƒ½
 
-o ÊµÏÖÒì²½»Øµ÷¹¦ÄÜ
+o å®ç°å¼‚æ­¥å›è°ƒåŠŸèƒ½
 
-o Ğ­ÒéÎÄ¼şÅäÖÃ
+o åè®®æ–‡ä»¶é…ç½®
 tcp 
-udp -Ä¬ÈÏÖµ
-Ôö¼ÓÒÔÏÂÊôĞÔ
+udp -é»˜è®¤å€¼
+å¢åŠ ä»¥ä¸‹å±æ€§
 <property name="cluster_protocol" value="udp"/>	
-Ôö¼ÓÅäÖÃÎÄ¼ş
+å¢åŠ é…ç½®æ–‡ä»¶
 replSync-service-aop-tcp.xml
 
-o  ÊÂ¼ş¹ÜÀí¿ò¼ÜÔ¶³ÌÊÂ¼şÎŞ·¨·¢ËÍµÄÎÊÌâ
-Ô­ÒòÊÇ£º
-/bbossaop/src/org/frameworkset/remote/Target.javaÀàÃ»ÓĞĞòÁĞ»¯µ¼ÖÂÆä×ÓÀà
-/bbossevent/src/org/frameworkset/event/EventTarget.javaÔÚ·¢ËÍÊ±ÎŞ·¨Ê¶±ğ¸¸ÀàtargetÖĞµÄ¶ÔÏó
+o  äº‹ä»¶ç®¡ç†æ¡†æ¶è¿œç¨‹äº‹ä»¶æ— æ³•å‘é€çš„é—®é¢˜
+åŸå› æ˜¯ï¼š
+/bbossaop/src/org/frameworkset/remote/Target.javaç±»æ²¡æœ‰åºåˆ—åŒ–å¯¼è‡´å…¶å­ç±»
+/bbossevent/src/org/frameworkset/event/EventTarget.javaåœ¨å‘é€æ—¶æ— æ³•è¯†åˆ«çˆ¶ç±»targetä¸­çš„å¯¹è±¡
 
-o ĞŞ¸ÄÊôĞÔ¶¨ÒåÓï·¨£¬¿ÉÒÔÍ¨¹ı½ÚµãÖµÖ¸¶¨ÊôĞÔÖµ
-propertie½ÚµãÖĞ¿ÉÒÔ°üº¬ÊôĞÔÖµ
-ĞŞ¸ÄµÄ³ÌĞò
+o ä¿®æ”¹å±æ€§å®šä¹‰è¯­æ³•ï¼Œå¯ä»¥é€šè¿‡èŠ‚ç‚¹å€¼æŒ‡å®šå±æ€§å€¼
+propertieèŠ‚ç‚¹ä¸­å¯ä»¥åŒ…å«å±æ€§å€¼
+ä¿®æ”¹çš„ç¨‹åº
 /bbossaop/src/org/frameworkset/spi/assemble/ProviderParser.java
 
-Ìá¹©property½ÚµãµÄĞ£Ñé¹¦ÄÜ£¬Èç¹ûÃ»ÓĞÖ¸¶¨nameÊôĞÔ£¬ÔÚºóÌ¨Å×³öÏàÓ¦µÄÒì³£ĞÅÏ¢
+æä¾›propertyèŠ‚ç‚¹çš„æ ¡éªŒåŠŸèƒ½ï¼Œå¦‚æœæ²¡æœ‰æŒ‡å®šnameå±æ€§ï¼Œåœ¨åå°æŠ›å‡ºç›¸åº”çš„å¼‚å¸¸ä¿¡æ¯
 
-o  µ¥ÁĞÄ£Ê½ÏÂ´´½¨¶ÔÏóÊµÀıµÄÍ¬²½Ëø
-ĞŞ¸ÄµÄ³ÌĞòÈçÏÂ
+o  å•åˆ—æ¨¡å¼ä¸‹åˆ›å»ºå¯¹è±¡å®ä¾‹çš„åŒæ­¥é”
+ä¿®æ”¹çš„ç¨‹åºå¦‚ä¸‹
 D:\workspace\bbossaop\src\com\chinacreator\spi\assemble\SecurityProviderInfo.java
 public Object getSingleProvider(Context parent) 
  /**
-     * µ¥ÁĞÄ£Ê½ÏÂ´´½¨¶ÔÏóÊµÀıµÄÍ¬²½Ëø
+     * å•åˆ—æ¨¡å¼ä¸‹åˆ›å»ºå¯¹è±¡å®ä¾‹çš„åŒæ­¥é”
      */
     private Object lock = new Object();
 
-o Ôö¼ÓsqlÓï¾äÅäÖÃ¹ÜÀí´¦ÀíÀà
+o å¢åŠ sqlè¯­å¥é…ç½®ç®¡ç†å¤„ç†ç±»
 D:\workspace\bbossaop\src\org\framework\persitent\util\SQL.java
-Í¨¹ıÕâ¸öÀà£¬ÎÒÃÇ¿ÉÒÔÏÈ½«²»Í¬Êı¾İ¿âµÄsqlÓï¾äÅäÖÃÔÚaop¿ò¼ÜÈ«¾ÖÊôĞÔÎÄ¼şÖĞ£¬È»ºóÍ¨¹ıÕâ¸öSQL.java³ÌĞòÀ´»ñÈ¡²»Í¬µÄÊı¾İ¿âÀàĞÍµÄqlÓï¾ä
-ÀıÈç£º
+é€šè¿‡è¿™ä¸ªç±»ï¼Œæˆ‘ä»¬å¯ä»¥å…ˆå°†ä¸åŒæ•°æ®åº“çš„sqlè¯­å¥é…ç½®åœ¨aopæ¡†æ¶å…¨å±€å±æ€§æ–‡ä»¶ä¸­ï¼Œç„¶åé€šè¿‡è¿™ä¸ªSQL.javaç¨‹åºæ¥è·å–ä¸åŒçš„æ•°æ®åº“ç±»å‹çš„qlè¯­å¥
+ä¾‹å¦‚ï¼š
 <properties name="insertContact">		
 		<property name="insertContact-mysql">
 			<![CDATA[insert into CONTACTS (ANNIVERSARY_DAY, ANNIVERSARY_MONTH, BIRTH_DAY, 
@@ -1033,13 +1033,13 @@ D:\workspace\bbossaop\src\org\framework\persitent\util\SQL.java
 		</property>
 </properties>
 
-ÎÒÃÇÍ¨¹ıSQL.javaÌá¹©µÄ·½·¨À´»ñÈ¡ÏàÓ¦µÄsqlÓï¾ä£º
+æˆ‘ä»¬é€šè¿‡SQL.javaæä¾›çš„æ–¹æ³•æ¥è·å–ç›¸åº”çš„sqlè¯­å¥ï¼š
 
 String sql = SQL.getSQL(dbname,"insertContact");
-ËµÃ÷:
-dbname¶ÔÓ¦ÓÚpoolman.xmlÎÄ¼şÖĞÅäÖÃµÄÊı¾İÔ´ÖĞµÄdbname£¬³Ö¾Ã²ã¿ò¼Ü»á×Ô¶¯Ê¶±ğ¶ÔÓ¦µÄÊı¾İÔ´µÄÊı¾İ¿âÀàĞÍ£¬È»ºó»ñÈ¡µ½
-²»Í¬µÄinsertContactÓï¾ä£¬¼ÙÈçdbname¶ÔÓ¦µÄÊı¾İ¿âÊÇmysql£¬ÄÇÃ´¾Í»á»ñÈ¡µ½insertContact-mysql¶ÔÓ¦µÄsqlÓï¾ä
-Èç¹ûÊÇoracle£¬ÄÇÃ´»ñÈ¡µ½µÄinsertContact-oracle¶ÔÓ¦µÄÓï¾ä¡£
+è¯´æ˜:
+dbnameå¯¹åº”äºpoolman.xmlæ–‡ä»¶ä¸­é…ç½®çš„æ•°æ®æºä¸­çš„dbnameï¼ŒæŒä¹…å±‚æ¡†æ¶ä¼šè‡ªåŠ¨è¯†åˆ«å¯¹åº”çš„æ•°æ®æºçš„æ•°æ®åº“ç±»å‹ï¼Œç„¶åè·å–åˆ°
+ä¸åŒçš„insertContactè¯­å¥ï¼Œå‡å¦‚dbnameå¯¹åº”çš„æ•°æ®åº“æ˜¯mysqlï¼Œé‚£ä¹ˆå°±ä¼šè·å–åˆ°insertContact-mysqlå¯¹åº”çš„sqlè¯­å¥
+å¦‚æœæ˜¯oracleï¼Œé‚£ä¹ˆè·å–åˆ°çš„insertContact-oracleå¯¹åº”çš„è¯­å¥ã€‚
 
 
      
@@ -1054,9 +1054,9 @@ o add global system property confige function
 
 more details see my blog [http://blog.csdn.net/yin_bp]
 
-1.	Ôö¼ÓÔ¶³Ì¹ÜÀí×é¼ş
-2.	ÊµÏÖaop ¿ò¼ÜÔ¶³Ì·şÎñµ÷ÓÃ¹¦ÄÜ
-3.	Ôö¼ÓÈ«¾ÖÊôĞÔÅäÖÃ¹¦ÄÜ
+1.	å¢åŠ è¿œç¨‹ç®¡ç†ç»„ä»¶
+2.	å®ç°aop æ¡†æ¶è¿œç¨‹æœåŠ¡è°ƒç”¨åŠŸèƒ½
+3.	å¢åŠ å…¨å±€å±æ€§é…ç½®åŠŸèƒ½
 
 
 
@@ -1085,7 +1085,7 @@ more details see my blog [http://blog.csdn.net/yin_bp]
        give the value of a constructor parameter.
        give a service reference for a constructor parameter.
        give a common class that can been instance by the ioc container for a constructor parameter.    
- o extend properties ioc £¬add a properties [class] for reference node to support:
+ o extend properties ioc ï¼Œadd a properties [class] for reference node to support:
       give a common class that can been instance by the ioc container to set the value of a field of the service.
       such as:
       <reference fieldname="test" class="com.chinacreator.spi.reference.Test"/>

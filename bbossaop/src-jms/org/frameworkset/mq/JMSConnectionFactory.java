@@ -28,7 +28,7 @@ import javax.jms.Session;
  * JMSConnectionFactory.java
  * </p>
  * <p>
- * Description: ÓÃÀ´»ñÈ¡¸÷ÖÖ²»Í¬ÀàĞÍµÄJMS ·şÎñÆ÷µÄÁ¬½Ó¹¤³§Àà,Ä¬ÈÏµÄÁ¬½Ó¹¤³§Ìá¹©ÉÌÎªactivemq
+ * Description: ç”¨æ¥è·å–å„ç§ä¸åŒç±»å‹çš„JMS æœåŠ¡å™¨çš„è¿æ¥å·¥å‚ç±»,é»˜è®¤çš„è¿æ¥å·¥å‚æä¾›å•†ä¸ºactivemq
  * </p>
  * <p>
  * bboss workgroup
@@ -52,7 +52,7 @@ public abstract class JMSConnectionFactory implements org.frameworkset.spi.Initi
     protected ConnectionFactory conectionFactory;
 
     /**
-     * ÊÇ·ñ²ÉÓÃÁ¬½Ó³Ø
+     * æ˜¯å¦é‡‡ç”¨è¿æ¥æ± 
      */
     protected boolean usepool = false;
 
@@ -158,7 +158,7 @@ public abstract class JMSConnectionFactory implements org.frameworkset.spi.Initi
     }
 
     /**
-     * ¹¹½¨ÌØ¶¨Ìá¹©ÉÌµÄÁ¬½Ó¹¤³§
+     * æ„å»ºç‰¹å®šæä¾›å•†çš„è¿æ¥å·¥å‚
      * 
      * @return
      */
@@ -170,7 +170,7 @@ public abstract class JMSConnectionFactory implements org.frameworkset.spi.Initi
     }
 
     // /**
-    // * ¸ù¾İ½ÚµãÃû³ÆÊ¶±ğ½ÚµãÀàĞÍ£¬Èç¹û½ÚµãÃû³ÆÖĞ²»°üº¬½ÚµãÀàĞÍĞÅÏ¢£¬Ôò·µ»ØÄ¬ÈÏÀàĞÍdefaultType
+    // * æ ¹æ®èŠ‚ç‚¹åç§°è¯†åˆ«èŠ‚ç‚¹ç±»å‹ï¼Œå¦‚æœèŠ‚ç‚¹åç§°ä¸­ä¸åŒ…å«èŠ‚ç‚¹ç±»å‹ä¿¡æ¯ï¼Œåˆ™è¿”å›é»˜è®¤ç±»å‹defaultType
     // * @param destName
     // * @param defaultType
     // * @return
@@ -193,7 +193,7 @@ public abstract class JMSConnectionFactory implements org.frameworkset.spi.Initi
     // }
 
     // /**
-    // * ¸ù¾İ½ÚµãÃû³ÆÊ¶±ğ½ÚµãÀàĞÍ£¬Èç¹û½ÚµãÃû³ÆÖĞ²»°üº¬½ÚµãÀàĞÍĞÅÏ¢£¬Ôò·µ»ØÄ¬ÈÏÀàĞÍdefaultType
+    // * æ ¹æ®èŠ‚ç‚¹åç§°è¯†åˆ«èŠ‚ç‚¹ç±»å‹ï¼Œå¦‚æœèŠ‚ç‚¹åç§°ä¸­ä¸åŒ…å«èŠ‚ç‚¹ç±»å‹ä¿¡æ¯ï¼Œåˆ™è¿”å›é»˜è®¤ç±»å‹defaultType
     // * @param destName
     // * @param defaultType
     // * @return

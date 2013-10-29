@@ -102,7 +102,7 @@ public class HelloAgent extends Thread{
 ////            builder.addModelMBeanAttribute("MyAttribute",
 ////                                           "java.lang.String",
 ////                                           true, false, false, "", attDesc);
-//            //¶¨ÒåPoolManBootstrap start ·½·¨µÄÃèÊöĞÅÏ¢
+//            //å®šä¹‰PoolManBootstrap start æ–¹æ³•çš„æè¿°ä¿¡æ¯
 ////            Class clazz = com.frameworkset.common.poolman.management.
 ////                          PoolManBootstrap.class;
 //            Class clazz = null;
@@ -119,13 +119,13 @@ public class HelloAgent extends Thread{
 ////                "com.frameworkset.common.poolman.management.PoolManBootstrap",
 ////                "10");
 ////            builder.addModelMBeanMethod("start", null,
-////                                        null, null, "Æô¶¯poolman",
+////                                        null, null, "å¯åŠ¨poolman",
 ////                                        "java.lang.String",
 ////                                        MBeanOperationInfo.ACTION,
 ////                                        startDesc);
 //
 //
-//            //¶¨ÒåPoolManBootstrap stop ·½·¨µÄÃèÊöĞÅÏ¢
+//            //å®šä¹‰PoolManBootstrap stop æ–¹æ³•çš„æè¿°ä¿¡æ¯
 //            Descriptor stopParamDesc = builder.buildOperationDescriptor(
 //                "stop",
 //                null, "operation", null, null,
@@ -144,7 +144,7 @@ public class HelloAgent extends Thread{
 //                                        "void",
 //                                        MBeanOperationInfo.ACTION,
 //                                        startDesc);
-//            //¶¨ÒåPoolManBootstrap reStart ·½·¨µÄÃèÊöĞÅÏ¢
+//            //å®šä¹‰PoolManBootstrap reStart æ–¹æ³•çš„æè¿°ä¿¡æ¯
 //            Descriptor reStartParamDesc = builder.buildOperationDescriptor(
 //                "reStart",
 //                null, "operation", null, null,
@@ -157,7 +157,7 @@ public class HelloAgent extends Thread{
 //                                        "poolman",
 //                                        "void", MBeanOperationInfo.ACTION,
 //                                        reStartParamDesc);
-//            //¶¨ÒåPoolManBootstrap start With Param ·½·¨µÄÃèÊöĞÅÏ¢
+//            //å®šä¹‰PoolManBootstrap start With Param æ–¹æ³•çš„æè¿°ä¿¡æ¯
 //            Descriptor startWithParamDesc = builder.buildOperationDescriptor(
 //                "start",
 //                null, "operation", null, null,

@@ -3,7 +3,7 @@ package com.frameworkset.common.mbean;
 /**
  * <p>Title: ModelMBeanInfoBuilder</p>
  *
- * <p>Description: ¹¹½¨manager resource ModelMBeanInfo
+ * <p>Description: æž„å»ºmanager resource ModelMBeanInfo
  *   if(name.equalsIgnoreCase("descriptorType"))
             isValid = value != null && (value.equals("MBean") || value.equals("attribute") || value.equals("operation") || value.equals("notification"));
         else
@@ -213,7 +213,7 @@ public class ModelMBeanInfoBuilder {
             desc.setField("name", name);
         }
 
-        //tomcat×Ô´øµÄjmx°æ±¾±È½ÏµÍ
+        //tomcatè‡ªå¸¦çš„jmxç‰ˆæœ¬æ¯”è¾ƒä½Ž
         desc.setField("descriptorType", "MBean");
         if (displayName != null) {
             desc.setField("displayName", displayName);

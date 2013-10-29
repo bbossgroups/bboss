@@ -14,7 +14,7 @@ import org.frameworkset.spi.assemble.ProSet;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2009-4-17 ÏÂÎç03:31:53
+ * @Date 2009-4-17 ä¸‹åˆ03:31:53
  * @author biaoping.yin
  * @version 1.0
  */
@@ -54,7 +54,7 @@ public class TestProperties {
     }
     
     /**
-     * »ñÈ¡À©Õ¹ÊôĞÔ
+     * è·å–æ‰©å±•å±æ€§
      */
     public static void testExtendsProperties()
     {
@@ -73,28 +73,28 @@ public class TestProperties {
         Pro pro = context.getProBean("connection.params");
         Map attrs = pro.getExtendsAttributes();
         System.out.println(map);
-        System.out.println("alwaysSessionAsync£º" + map.getBoolean("alwaysSessionAsync"));
-        System.out.println("closeTimeout£º" + map.getInt("closeTimeout"));
-        System.out.println("useConnectionPool String£º" + map.getString("useConnectionPool"));
-        System.out.println("useConnectionPool Pro object:£º" + map.getPro("useConnectionPool"));
+        System.out.println("alwaysSessionAsyncï¼š" + map.getBoolean("alwaysSessionAsync"));
+        System.out.println("closeTimeoutï¼š" + map.getInt("closeTimeout"));
+        System.out.println("useConnectionPool Stringï¼š" + map.getString("useConnectionPool"));
+        System.out.println("useConnectionPool Pro object:ï¼š" + map.getPro("useConnectionPool"));
         
         /**
-         * ·Ç·¨»ñÈ¡ÕûÊı
+         * éæ³•è·å–æ•´æ•°
          */
         try
         {
-            System.out.println("useConnectionPool int£º" + map.getInt("useConnectionPool"));
+            System.out.println("useConnectionPool intï¼š" + map.getInt("useConnectionPool"));
         }
         catch (Exception e)
         {
             e.printStackTrace();
         }
         /**
-         * ·Ç·¨»ñÈ¡boolean
+         * éæ³•è·å–boolean
          */
         try
         {
-            System.out.println("useConnectionPool boolean£º" + map.getBoolean("useConnectionPool"));
+            System.out.println("useConnectionPool booleanï¼š" + map.getBoolean("useConnectionPool"));
         }
         catch (Exception e)
         {

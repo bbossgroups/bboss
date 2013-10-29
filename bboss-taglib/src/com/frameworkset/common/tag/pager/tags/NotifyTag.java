@@ -42,7 +42,7 @@ import javax.servlet.jsp.tagext.Tag;
 
 
 /**
- * ¸ù¾İÁĞ±í·ÖÒ³ÊÇ·ñÓĞÊı¾İÀ´Êä³öÏàÓ¦µÄÌáÊ¾ĞÅÏ¢
+ * æ ¹æ®åˆ—è¡¨åˆ†é¡µæ˜¯å¦æœ‰æ•°æ®æ¥è¾“å‡ºç›¸åº”çš„æç¤ºä¿¡æ¯
  * @author biaoping.yin
  * created on 2005-4-4
  * version 1.0
@@ -70,7 +70,7 @@ public class NotifyTag extends PagerTagSupport {
 		this.colid = colid;
 	}
 	/**
-	 * @return String ·µ»ØÊôĞÔÃû³Æ
+	 * @return String è¿”å›å±æ€§åç§°
 	 */
 	public String getColName() {
 		return colName;
@@ -195,12 +195,12 @@ public class NotifyTag extends PagerTagSupport {
 //	        }
 //	        
 //	        /**
-//		     * ±£´ædataModel
+//		     * ä¿å­˜dataModel
 //		     */
 //		    if(!notification.isHasAdded())
 //		    {			    
-//		        //Èç¹ûÃ»ÓĞ×îÉÏ²ãµÄdataSetÔªÊı¾İÔòÔÚpagerTagÖĞÌí¼ÓÌí¼Ó£¬
-//		        //·ñÔòÖ±½ÓËÑË÷¸¸dataSetÔªÊı¾İ£¬½«notificationÌí¼Óµ½ÆäÔªÊı¾İÄ£ĞÍÖĞ
+//		        //å¦‚æœæ²¡æœ‰æœ€ä¸Šå±‚çš„dataSetå…ƒæ•°æ®åˆ™åœ¨pagerTagä¸­æ·»åŠ æ·»åŠ ï¼Œ
+//		        //å¦åˆ™ç›´æ¥æœç´¢çˆ¶dataSetå…ƒæ•°æ®ï¼Œå°†notificationæ·»åŠ åˆ°å…¶å…ƒæ•°æ®æ¨¡å‹ä¸­
 //		        if(pagerContext != null && !pagerContext.getMetaDatas().hasDataModel())
 //		        {
 //		        	pagerContext.getMetaDatas().setNotification(notification);
@@ -208,7 +208,7 @@ public class NotifyTag extends PagerTagSupport {
 //		        }
 //		        else
 //		        {
-//		            //Ö±½Ó±£´æµ½ÉÏÒ»¼¶dataSetµÄÔªÊı¾İÄ£ĞÍÖĞ
+//		            //ç›´æ¥ä¿å­˜åˆ°ä¸Šä¸€çº§dataSetçš„å…ƒæ•°æ®æ¨¡å‹ä¸­
 //		            PagerDataSet data_father = (PagerDataSet)findAncestorWithClass(this, PagerDataSet.class);
 //		            data_father.getDataModel().getMetaDatas().setNotification(notification);		            		            
 //		        }

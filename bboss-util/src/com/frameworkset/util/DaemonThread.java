@@ -1,7 +1,6 @@
 package com.frameworkset.util;
 
 import java.io.File;
-import java.io.Serializable;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -98,8 +97,8 @@ public class DaemonThread extends java.lang.Thread
 	         this.lastModifiedTime = file.lastModified();
 	         if(this.oldModifiedTime != this.lastModifiedTime)
 	         {
-	             //System.out.println("Reload changed file£º" + file.getAbsolutePath());
-	             log.debug("Reload changed file£º" + file.getAbsolutePath());
+	             //System.out.println("Reload changed fileï¼š" + file.getAbsolutePath());
+	             log.debug("Reload changed fileï¼š" + file.getAbsolutePath());
 	             this.oldModifiedTime = this.lastModifiedTime;
 	             try {
 					init.reinit();
@@ -240,8 +239,8 @@ public class DaemonThread extends java.lang.Thread
 //            this.lastModifiedTime = file.lastModified();
 //            if(this.oldModifiedTime != this.lastModifiedTime)
 //            {
-//                //System.out.println("Reload changed file£º" + file.getAbsolutePath());
-//                log.debug("Reload changed file£º" + file.getAbsolutePath());
+//                //System.out.println("Reload changed fileï¼š" + file.getAbsolutePath());
+//                log.debug("Reload changed fileï¼š" + file.getAbsolutePath());
 //                this.oldModifiedTime = this.lastModifiedTime;
 //                init.reinit(); 
 //                

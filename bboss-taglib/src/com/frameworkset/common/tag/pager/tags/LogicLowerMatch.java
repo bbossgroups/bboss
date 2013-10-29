@@ -45,7 +45,7 @@ public class LogicLowerMatch extends MatchTag {
 
 
 	/**
-	 *  Description: –°”⁄
+	 *  Description: Â∞è‰∫é
 	 * @return boolean
 	 * @see com.frameworkset.common.tag.pager.tags.MatchTag#match()
 	 */

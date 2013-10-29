@@ -31,15 +31,15 @@ public abstract class AbstractCompositeVO implements Serializable
 {
 	private static Logger log = Logger.getLogger(AbstractCompositeVO.class);
 	/**
-	 * binMapÓÃÀ´ÈİÄÉÒ»¸öHashMap¶ÔÏóĞòÁĞ£¬
-	 * Ã¿¸öHashMap¶ÔÏóµÄkeyÎªhashmapÖĞËùÈİÄÉ¶ÔÏóµÄclass£¬
-	 * ĞòÁĞÖĞµÄMap¶ÔÏóÖ»°üº¬Ò»ÖÖÌØ¶¨ÀàĞÍµÄÖµ¶ÔÏóÉ¢ÁĞ¡£
+	 * binMapç”¨æ¥å®¹çº³ä¸€ä¸ªHashMapå¯¹è±¡åºåˆ—ï¼Œ
+	 * æ¯ä¸ªHashMapå¯¹è±¡çš„keyä¸ºhashmapä¸­æ‰€å®¹çº³å¯¹è±¡çš„classï¼Œ
+	 * åºåˆ—ä¸­çš„Mapå¯¹è±¡åªåŒ…å«ä¸€ç§ç‰¹å®šç±»å‹çš„å€¼å¯¹è±¡æ•£åˆ—ã€‚
 	 */
 	private Map binMap = new HashMap();
 
 	/**
-	 * »ñÈ¡´æ·ÅclazzµÄ¶ÔÏóÊµÀıµÄMap¶ÔÏó
-	 * @param clazz Òª»ñÈ¡Öµ¶ÔÏó¶ÔÓ¦µÄClass¶ÔÏó£¬ÀıÈç£ºxxVO.class
+	 * è·å–å­˜æ”¾clazzçš„å¯¹è±¡å®ä¾‹çš„Mapå¯¹è±¡
+	 * @param clazz è¦è·å–å€¼å¯¹è±¡å¯¹åº”çš„Classå¯¹è±¡ï¼Œä¾‹å¦‚ï¼šxxVO.class
 	 * @return Map
 	 */
 
@@ -49,9 +49,9 @@ public abstract class AbstractCompositeVO implements Serializable
 	}
 
 	/**
-	 * »ñÈ¡¶ÔÓ¦classµÄbinMap
+	 * è·å–å¯¹åº”classçš„binMap
 	 * @param clazz
-	 * @param createBin ¿ØÖÆ»ñÈ¡µÄbinÎªnullÊ±£¬ÊÇ·ñÎª¶ÔÓ¦µÄclass´´½¨Ò»¸öĞÂµÄbin
+	 * @param createBin æ§åˆ¶è·å–çš„binä¸ºnullæ—¶ï¼Œæ˜¯å¦ä¸ºå¯¹åº”çš„classåˆ›å»ºä¸€ä¸ªæ–°çš„bin
 	 * @return Map
 	 */
 	protected Map getMap(Class clazz,boolean createBin)
@@ -70,7 +70,7 @@ public abstract class AbstractCompositeVO implements Serializable
 		return voBin;
 	}
 	/**
-	 * ÎªÌØ¶¨ÀàĞÍµÄÖµ¶ÔÏó²úÉúÒ»¸öÎ´Ê¹ÓÃµÄkeyÖµ
+	 * ä¸ºç‰¹å®šç±»å‹çš„å€¼å¯¹è±¡äº§ç”Ÿä¸€ä¸ªæœªä½¿ç”¨çš„keyå€¼
 	 * Description:
 	 * @param iterator
 	 * @return
@@ -93,7 +93,7 @@ public abstract class AbstractCompositeVO implements Serializable
 	}
 
 	/**
-	 * »ñÈ¡Öµ¶ÔÏóµÄkeyÖµ
+	 * è·å–å€¼å¯¹è±¡çš„keyå€¼
 	 * Description:
 	 * @param dcVO
 	 * @return Object
@@ -104,14 +104,14 @@ public abstract class AbstractCompositeVO implements Serializable
 		throws IllegalArgumentException
 	{
 		if(dcVO == null)
-			throw new IllegalArgumentException("DecoratorVO dcVO Îª¿Õ!");
+			throw new IllegalArgumentException("DecoratorVO dcVO ä¸ºç©º!");
 		if(dcVO.vo == null)
-			throw new IllegalArgumentException("Öµ¶ÔÏóÎª¿Õ!");
+			throw new IllegalArgumentException("å€¼å¯¹è±¡ä¸ºç©º!");
 		return ((ValueObject)dcVO.vo).getKey();
 	}
 
 	/**
-	 * ¶ÔÌØ¶¨ÀàĞÍµÄÖµ¶ÔÏó½øĞĞÅÅĞò
+	 * å¯¹ç‰¹å®šç±»å‹çš„å€¼å¯¹è±¡è¿›è¡Œæ’åº
 	 * Description:
 	 * @param list
 	 * void
@@ -140,8 +140,8 @@ public abstract class AbstractCompositeVO implements Serializable
 			  });
 	}
 	/**
-	 * »ñÈ¡ÀàĞÍÎªclazz£¬·ûºÏfilterÖĞµÄÌõ¼şµÄÖµ¶ÔÏóµÄµü´úÆ÷
-	 * »á¸ù¾İÃ¿¸öÖµ¶ÔÏóµÄkey½øĞĞÅÅĞò
+	 * è·å–ç±»å‹ä¸ºclazzï¼Œç¬¦åˆfilterä¸­çš„æ¡ä»¶çš„å€¼å¯¹è±¡çš„è¿­ä»£å™¨
+	 * ä¼šæ ¹æ®æ¯ä¸ªå€¼å¯¹è±¡çš„keyè¿›è¡Œæ’åº
 	 * @param clazz
 	 * @param operations
 	 * @return Iterator
@@ -154,7 +154,7 @@ public abstract class AbstractCompositeVO implements Serializable
 	}
 
 	/**
-	 * ½«Öµ¶ÔÏóobjºÍ²Ù×÷ĞÅÏ¢·â×°³ÉDecoratorVO¶ÔÏó´æÈëµ½obj¶ÔÓ¦µÄÉ¢ÁĞÖĞ
+	 * å°†å€¼å¯¹è±¡objå’Œæ“ä½œä¿¡æ¯å°è£…æˆDecoratorVOå¯¹è±¡å­˜å…¥åˆ°objå¯¹åº”çš„æ•£åˆ—ä¸­
 	 * @param obj
 	 * @param operation
 	 */
@@ -165,7 +165,7 @@ public abstract class AbstractCompositeVO implements Serializable
 	}
 
 	/**
-	 * »ñÈ¡ÀàĞÍĞÅÏ¢Îªclazz,¹Ø¼ü×ÖÎªkeyµÄ¶ÔÏó
+	 * è·å–ç±»å‹ä¿¡æ¯ä¸ºclazz,å…³é”®å­—ä¸ºkeyçš„å¯¹è±¡
 	 * @param clazz
 	 * @param key
 	 * @return ValueObject
@@ -183,7 +183,7 @@ public abstract class AbstractCompositeVO implements Serializable
 
 
 	/**
-	 * Ïû³ıdeleteºÍstatusµÄ³åÍ»
+	 * æ¶ˆé™¤deleteå’Œstatusçš„å†²çª
 	 * @param obj
 	 */
 	protected boolean synchroDelete(ValueObject obj,int add)
@@ -205,7 +205,7 @@ public abstract class AbstractCompositeVO implements Serializable
 	}
 
 	/**
-	 * Ïû³ıupdateºÍstatusµÄ³åÍ»
+	 * æ¶ˆé™¤updateå’Œstatusçš„å†²çª
 	 * @param obj
 	 */
 	protected boolean synchroAdd(ValueObject obj,int delete)
@@ -227,7 +227,7 @@ public abstract class AbstractCompositeVO implements Serializable
 	}
 
 	/**
-	 * Ïû³ıupdateºÍstatusµÄ³åÍ»
+	 * æ¶ˆé™¤updateå’Œstatusçš„å†²çª
 	 * @param obj
 	 */
 	protected boolean synchroUpdate(ValueObject obj,int add)
@@ -249,9 +249,9 @@ public abstract class AbstractCompositeVO implements Serializable
 	}
 
 	/**
-	 * »ñÈ¡ËùÓĞ·ûºÏoperationsÌõ¼şµÄclazz¶ÔÏó
-	 * @param clazz :Òª»ñÈ¡Öµ¶ÔÏó¶ÔÓ¦µÄClass¶ÔÏó£¬ÀıÈç£ºxxVO.class
-	 * @return °üº¬Öµ¶ÔÏóµÄµü´úÆ÷
+	 * è·å–æ‰€æœ‰ç¬¦åˆoperationsæ¡ä»¶çš„clazzå¯¹è±¡
+	 * @param clazz :è¦è·å–å€¼å¯¹è±¡å¯¹åº”çš„Classå¯¹è±¡ï¼Œä¾‹å¦‚ï¼šxxVO.class
+	 * @return åŒ…å«å€¼å¯¹è±¡çš„è¿­ä»£å™¨
 	 */
 	public Iterator getVOByStatus(Class clazz,int[] status)
 	{
@@ -261,7 +261,7 @@ public abstract class AbstractCompositeVO implements Serializable
 
 
 	/**
-	 * ÅĞ¶Ï¸ø¶¨µÄÖµ¶ÔÏóÊÇ·ñ´æÔÚ
+	 * åˆ¤æ–­ç»™å®šçš„å€¼å¯¹è±¡æ˜¯å¦å­˜åœ¨
 	 * @param obj
 	 */
 	public boolean contain(ValueObject obj)
@@ -277,7 +277,7 @@ public abstract class AbstractCompositeVO implements Serializable
 	}
 
 	/**
-	 * ÅĞ¶Ï¸ø¶¨µÄÖµ¶ÔÏó²¢ÇÒ×´Ì¬ÎªstatusÊÇ·ñ´æÔÚ
+	 * åˆ¤æ–­ç»™å®šçš„å€¼å¯¹è±¡å¹¶ä¸”çŠ¶æ€ä¸ºstatusæ˜¯å¦å­˜åœ¨
 	 * Description:
 	 * @param obj
 	 * @param status
@@ -302,8 +302,8 @@ public abstract class AbstractCompositeVO implements Serializable
 	}
 
 	/**
-	 * Description:ÅĞ¶¨ÊÇ·ñ´æÔÚÀàĞÍÎªclazz²¢ÇÒ°üº¬ÊôĞÔfield,
-	 * ÊôĞÔÖµÎªfieldValueµÄÖµ¶ÔÏó£¬Èç¹û´æÔÚ·µ»Øtrue£¬·ñÔò·µ»Øfalse
+	 * Description:åˆ¤å®šæ˜¯å¦å­˜åœ¨ç±»å‹ä¸ºclazzå¹¶ä¸”åŒ…å«å±æ€§field,
+	 * å±æ€§å€¼ä¸ºfieldValueçš„å€¼å¯¹è±¡ï¼Œå¦‚æœå­˜åœ¨è¿”å›trueï¼Œå¦åˆ™è¿”å›false
 	 * @param clazz
 	 * @param field
 	 * @param fieldValue
@@ -317,8 +317,8 @@ public abstract class AbstractCompositeVO implements Serializable
 	}
 
 	/**
-	 * Description:ÅĞ¶¨ÊÇ·ñ´æÔÚÀàĞÍÎªclazz²¢ÇÒ°üº¬ÊôĞÔfield,
-	 * ÊôĞÔÖµÎªfieldValueÒÔ¼°×´Ì¬ÔÚÊı×éstatusÖĞµÄÖµ¶ÔÏó£¬Èç¹û´æÔÚ·µ»Øtrue£¬·ñÔò·µ»Øfalse
+	 * Description:åˆ¤å®šæ˜¯å¦å­˜åœ¨ç±»å‹ä¸ºclazzå¹¶ä¸”åŒ…å«å±æ€§field,
+	 * å±æ€§å€¼ä¸ºfieldValueä»¥åŠçŠ¶æ€åœ¨æ•°ç»„statusä¸­çš„å€¼å¯¹è±¡ï¼Œå¦‚æœå­˜åœ¨è¿”å›trueï¼Œå¦åˆ™è¿”å›false
 	 * @param clazz
 	 * @param field
 	 * @param fieldValue
@@ -339,8 +339,8 @@ public abstract class AbstractCompositeVO implements Serializable
 		return false;
 	}
 	/**
-	 * Description:ÅĞ¶¨ÊÇ·ñ´æÔÚÀàĞÍÎªclazz²¢ÇÒ°üº¬ÊôĞÔfield,
-	 * ÊôĞÔÖµÎªfieldValueÒÔ¼°×´Ì¬ÎªstatusµÄÖµ¶ÔÏó£¬Èç¹û´æÔÚ·µ»Øtrue£¬·ñÔò·µ»Øfalse
+	 * Description:åˆ¤å®šæ˜¯å¦å­˜åœ¨ç±»å‹ä¸ºclazzå¹¶ä¸”åŒ…å«å±æ€§field,
+	 * å±æ€§å€¼ä¸ºfieldValueä»¥åŠçŠ¶æ€ä¸ºstatusçš„å€¼å¯¹è±¡ï¼Œå¦‚æœå­˜åœ¨è¿”å›trueï¼Œå¦åˆ™è¿”å›false
 	 * @param clazz
 	 * @param field
 	 * @param fieldValue
@@ -354,11 +354,11 @@ public abstract class AbstractCompositeVO implements Serializable
 	}
 
 	/**
-	 * Description:»ñÈ¡ÀàĞÍÎªclazz£¬°üº¬ÊôĞÔfield£¬ÊôĞÔÖµÎªfieldValueµÄÖµ¶ÔÏóµü´úÆ÷
-	 * @param clazz Öµ¶ÔÏóµÄÀàĞÍ
-	 * @param field ×÷ÎªÌõ¼şµÄ×Ö¶Î
-	 * @param fieldValue ×÷ÎªÌõ¼şµÄ×Ö¶ÎµÄÖµ
-	 * @return Iterator ·ûºÏÌõ¼şµÄclazz¶ÔÏóµÄµü´úÆ÷
+	 * Description:è·å–ç±»å‹ä¸ºclazzï¼ŒåŒ…å«å±æ€§fieldï¼Œå±æ€§å€¼ä¸ºfieldValueçš„å€¼å¯¹è±¡è¿­ä»£å™¨
+	 * @param clazz å€¼å¯¹è±¡çš„ç±»å‹
+	 * @param field ä½œä¸ºæ¡ä»¶çš„å­—æ®µ
+	 * @param fieldValue ä½œä¸ºæ¡ä»¶çš„å­—æ®µçš„å€¼
+	 * @return Iterator ç¬¦åˆæ¡ä»¶çš„clazzå¯¹è±¡çš„è¿­ä»£å™¨
 	 */
 	public Iterator getVoBy(Class clazz,String field,Object fieldValue)
 	{
@@ -366,13 +366,13 @@ public abstract class AbstractCompositeVO implements Serializable
 	}
 
 	/**
-	 * Description:»ñÈ¡ÀàĞÍÎªclazz£¬°üº¬ÊôĞÔfield£¬
-	 * ÊôĞÔÖµÎªfieldValue²¢ÇÒ×´Ì¬ÎªÊı×éstatusÖĞÖ®Ò»µÄÖµ¶ÔÏóµü´úÆ÷
-	 * @param clazz Öµ¶ÔÏóµÄÀàĞÍ
-	 * @param field ×÷ÎªÌõ¼şµÄ×Ö¶Î
-	 * @param fieldValue ×÷ÎªÌõ¼şµÄ×Ö¶ÎµÄÖµ
-	 * @param status Öµ¶ÔÏó×´Ì¬Êı×é
-	 * @return Iterator ·ûºÏÌõ¼şµÄclazz¶ÔÏóµÄµü´úÆ÷
+	 * Description:è·å–ç±»å‹ä¸ºclazzï¼ŒåŒ…å«å±æ€§fieldï¼Œ
+	 * å±æ€§å€¼ä¸ºfieldValueå¹¶ä¸”çŠ¶æ€ä¸ºæ•°ç»„statusä¸­ä¹‹ä¸€çš„å€¼å¯¹è±¡è¿­ä»£å™¨
+	 * @param clazz å€¼å¯¹è±¡çš„ç±»å‹
+	 * @param field ä½œä¸ºæ¡ä»¶çš„å­—æ®µ
+	 * @param fieldValue ä½œä¸ºæ¡ä»¶çš„å­—æ®µçš„å€¼
+	 * @param status å€¼å¯¹è±¡çŠ¶æ€æ•°ç»„
+	 * @return Iterator ç¬¦åˆæ¡ä»¶çš„clazzå¯¹è±¡çš„è¿­ä»£å™¨
 	 */
 	public Iterator getVoBy(Class clazz,String field,Object fieldValue,int[] status)
 	{
@@ -384,13 +384,13 @@ public abstract class AbstractCompositeVO implements Serializable
 	}
 
 	/**
-	 * Description:»ñÈ¡ÀàĞÍÎªclazz£¬°üº¬ÊôĞÔfield£¬
-	 * ÊôĞÔÖµÎªfieldValue²¢ÇÒ×´Ì¬ÎªstatusµÄÖµ¶ÔÏóµü´úÆ÷
-	 * @param clazz Öµ¶ÔÏóµÄÀàĞÍ
-	 * @param field ×÷ÎªÌõ¼şµÄ×Ö¶Î
-	 * @param fieldValue ×÷ÎªÌõ¼şµÄ×Ö¶ÎµÄÖµ
-	 * @param status Öµ¶ÔÏó×´Ì¬
-	 * @return Iterator ·ûºÏÌõ¼şµÄclazz¶ÔÏóµÄµü´úÆ÷
+	 * Description:è·å–ç±»å‹ä¸ºclazzï¼ŒåŒ…å«å±æ€§fieldï¼Œ
+	 * å±æ€§å€¼ä¸ºfieldValueå¹¶ä¸”çŠ¶æ€ä¸ºstatusçš„å€¼å¯¹è±¡è¿­ä»£å™¨
+	 * @param clazz å€¼å¯¹è±¡çš„ç±»å‹
+	 * @param field ä½œä¸ºæ¡ä»¶çš„å­—æ®µ
+	 * @param fieldValue ä½œä¸ºæ¡ä»¶çš„å­—æ®µçš„å€¼
+	 * @param status å€¼å¯¹è±¡çŠ¶æ€
+	 * @return Iterator ç¬¦åˆæ¡ä»¶çš„clazzå¯¹è±¡çš„è¿­ä»£å™¨
 	 */
 	public Iterator getVoBy(Class clazz,String field,Object fieldValue,int status)
 	{
@@ -400,7 +400,7 @@ public abstract class AbstractCompositeVO implements Serializable
 
 
 	/**
-	 * »ñÈ¡ÀàĞÍĞÅÏ¢Îªclazz,¹Ø¼ü×ÖÎªkeyµÄ¶ÔÏó
+	 * è·å–ç±»å‹ä¿¡æ¯ä¸ºclazz,å…³é”®å­—ä¸ºkeyçš„å¯¹è±¡
 	 * @param clazz
 	 * @param key
 	 * @return ValueObject
@@ -430,7 +430,7 @@ public abstract class AbstractCompositeVO implements Serializable
 	}
 
 	/**
-	 * ÒÆ³ıËùÓĞÈİÆ÷ÖĞ»º´æµÄÀàĞÍÎªclazzµÄÖµ¶ÔÏó
+	 * ç§»é™¤æ‰€æœ‰å®¹å™¨ä¸­ç¼“å­˜çš„ç±»å‹ä¸ºclazzçš„å€¼å¯¹è±¡
 	 * @param clazz
 	 */
 	public void removeVO(Class clazz)
@@ -443,7 +443,7 @@ public abstract class AbstractCompositeVO implements Serializable
 	}
 
 	/**
-	 * ÒÆ³ıËùÓĞÈİÆ÷ÖĞ»º´æµÄÀàĞÍÎªclazzµÄ×´Ì¬ÎªstatusµÄÖµ¶ÔÏó
+	 * ç§»é™¤æ‰€æœ‰å®¹å™¨ä¸­ç¼“å­˜çš„ç±»å‹ä¸ºclazzçš„çŠ¶æ€ä¸ºstatusçš„å€¼å¯¹è±¡
 	 * @param clazz
 	 */
 	public void removeVO(Class clazz,int[] status)
@@ -456,7 +456,7 @@ public abstract class AbstractCompositeVO implements Serializable
 	}
 
 	/**
-	 * ½«clazzÀàĞÍµÄËùÓĞ¶ÔÏóµÄ×´Ì¬ĞŞ¸ÄÎªstatus
+	 * å°†clazzç±»å‹çš„æ‰€æœ‰å¯¹è±¡çš„çŠ¶æ€ä¿®æ”¹ä¸ºstatus
 	 * @param clazz
 	 * @param status
 	 */
@@ -563,7 +563,7 @@ public abstract class AbstractCompositeVO implements Serializable
 		 */
 		public void remove()
 		{
-			throw new UnsupportedOperationException("remove(),Î´Ö§³ÖµÄ²Ù×÷");
+			throw new UnsupportedOperationException("remove(),æœªæ”¯æŒçš„æ“ä½œ");
 		}
 	}
 
@@ -586,7 +586,7 @@ public abstract class AbstractCompositeVO implements Serializable
 		}
 		public MapIterator(Map bin,String field,Object fieldValue,int[] filter)
 		{
-		    //¹¹Ôìlist¶Ô¸÷ÖÖ¶ÔÏó½øĞĞÅÅĞò
+		    //æ„é€ listå¯¹å„ç§å¯¹è±¡è¿›è¡Œæ’åº
 		    List list = new ArrayList(bin.values());
 			sort(list);
 			this.allData = list.iterator();
@@ -646,7 +646,7 @@ public abstract class AbstractCompositeVO implements Serializable
 		 */
 		public void remove()
 		{
-			throw new UnsupportedOperationException("remove(),Î´Ö§³ÖµÄ²Ù×÷");
+			throw new UnsupportedOperationException("remove(),æœªæ”¯æŒçš„æ“ä½œ");
 		}
 	}
 }

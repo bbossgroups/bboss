@@ -35,7 +35,7 @@ import javax.servlet.jsp.JspException;
  * Copyright (c) 2008
  * </p>
  * 
- * @Date 2010-3-11 ÏÂÎç06:01:08
+ * @Date 2010-3-11 ä¸‹åˆ06:01:08
  * @author biaoping.yin
  * @version 1.0
  */

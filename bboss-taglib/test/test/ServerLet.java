@@ -85,7 +85,7 @@ public class ServerLet extends HttpServlet{
 	        bean.setName(ret);
 	        bean.setId("testid");
 //	        response.reset();      
-            response.setContentType("text/xml; charset=GBK");   
+            response.setContentType("text/xml; charset=UTF-8");   
             XStream steam = new XStream();
             steam.toXML(bean, response.getWriter());
 //           response.setHeader("Content-Length",  + "");  

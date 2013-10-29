@@ -1,52 +1,52 @@
-�־ò������¹��ܲο���frameworkset�����ֲ�.doc���½ڡ�4.20��3.0�汾�־ò���������api����˵��
-mvc��ܿ����ο���bboss mvc�����ֲ�.doc��
+持久层框架最新功能参考《frameworkset开发手册.doc》章节【4.20】3.0版本持久层框架中新增api功能说明
+mvc框架开发参考《bboss mvc开发手册.doc》
 
-[quote="ak121077313"]�ð� �����ܿ���bbossgroups XXX���� XX���ܸ���
+[quote="ak121077313"]好吧 经常能看到bbossgroups XXX发布 XX功能更新
 
-����û�п���һ����ϸ�Ľ��ܣ�����Ĳ��ͺ��Ǹ���̳��ûһ���ط����ᵽ�ġ�
+但是没有看到一个详细的介绍？？你的博客和那个论坛都没一个地方有提到的。
 
-bbossgroups ��ʲô����������ʲô��spring��springmvc���Լ���װ��servlet��
+bbossgroups 是什么东西？类似什么？spring？springmvc？自己封装的servlet？
 
-����s3h3�ܹ���     
+类似s3h3架构？     
 
-��ʲô�ص㣿���ƣ�����ʲô�ط���
-�����Щû����ϸ˵���Ļ����ٶ๦�ܹ���Ҳû�˿�������[/quote]
+有什么特点？优势？用于什么地方？
+如果这些没有详细说明的话，再多功能估计也没人看。。。[/quote]
 
-�Ǻǣ�ak121077313����ô������ʣ���ʵ������������Щ��ŵ�˵��������bbossgroups��Ŀ������ȷʵ�ṩ���٣��ⷽ���ҵĹ���ȷʵû������λ��ÿ�η�������Ҳֻ�Ǽ�����Ҫ�ؽ���һ���¼ӵĹ��ܺ��޸���bug��
-�����ٴβ���һ�£�
-bbossgroups��Ŀ�ǹ����׿aop/ioc��mvc��persistent��jsp taglib���ֲ�ʽrpc���񣬷ֲ�ʽ�¼������һ������ҵ��j2ee������� ��Ŀǰ��ϸ�����Ͽ�������ٷ������ҵ���[url]http://yin-bp.iteye.com/[/url]
+呵呵，ak121077313有这么多的疑问，其实在新闻中有了些大概的说明，但是bbossgroups项目的资料确实提供得少，这方面我的工作确实没有做到位，每次发布新闻也只是简明扼要地介绍一下新加的功能和修复的bug。
+这里再次补充一下：
+bbossgroups项目是国内首款集aop/ioc，mvc，persistent，jsp taglib，分布式rpc服务，分布式事件框架于一身的企业级j2ee开发框架 ，目前详细的资料可以在其官方博客找到：[url]http://yin-bp.iteye.com/[/url]
 
-bboss aop/ioc���������spring ��ioc��ܣ�����һ�����������ioc���ܡ�������������ʽ���������������quartz����������棬cxf webservice���񷢲����桢����cxf webservice����ͷ��˵Ĺ��ܣ��ṩ�˶�activemq �ͷ���api�ķ�װ�͹������ṩ�˻��ڶ���Э���rpc���������ã�����ض�aop�������Զ�̷�����ã�֧�ֵ���������ã��鲥������ã���Ⱥ���ڵ��Զ�̷�����ã�Ŀǰ�ṩ��Э��֧���У�rmi��http/https,mina,netty,cxf webservice,active mq/jms,jgroups��rest·�ɣ�
+bboss aop/ioc框架类似于spring 的ioc框架，包括一般组件管理、ioc功能、拦截器，声明式事务管理，集成了quartz任务调度引擎，cxf webservice服务发布引擎、生成cxf webservice服务客服端的功能，提供了对activemq 客服端api的封装和管理，提供了基于多种协议的rpc组件服务调用（方便地对aop组件进行远程服务调用，支持单播服务调用，组播服务调用，集群各节点见远程服务调用，目前提供的协议支持有：rmi，http/https,mina,netty,cxf webservice,active mq/jms,jgroups，rest路由）
 
-bboss mvc���������spring ��mvc��ܣ�����bbossaop���ʵ�֣�֧�ֶ෽����������ע���������restful���������ṩ�ḻ�����ݰ󶨻��ƣ������������͡����顢ö�����͡��������͡�po����po����list��map�ȵȣ����ܹ��ǳ��õغ�bboss aop���Эͬ������
+bboss mvc框架类似于spring 的mvc框架，基于bbossaop框架实现，支持多方法控制器，注解控制器，restful控制器，提供丰富的数据绑定机制（基础数据类型、数组、枚举类型、日期类型、po对象，po对象list，map等等）。能够非常好地和bboss aop框架协同工作。
 
-bboss persistent������spring ��jdbc��ܵ��ǹ���Ҫ��ǿ��һЩ��api�ǳ���ʵ�ã�֧��ͨ�õ�o/r mapping���ƣ��ṩ������������ɻ��ƣ��ܺõط�װ�˷�ҳ��ѯ���ƣ�֧�ֶ�����Դ���ù��������е�api������ָ������������Դ��֧�ֿ粻ͬ����Դ������������ṩ�ɱ�����������ע��ʽ�������������ʽ�������������ģ����������ṩ�˴�sql�����ļ��л�ȡsql���ִ�е�api��sql�����ļ�����ʵʱˢ�£��������� �����п���ͨ�����ùرգ���sql�����ļ��п���֧��ģ��sql��䣨ָ��ģ��������ɶ�Ӧpo�����е��������ơ�SQLParams�����еĲ������ơ�Map��key ���ƣ�����ʱ��ģ��sql�����Ԥ�������ִ�У���֧�ֶ�̬sql��䣨����velocityģ���﷨�����Ը��ݱ�����ֵ����Ϊ�����жϵ����ݶ�̬����ʵ�����е�sql��䣬���������ҵ���Ҳ����ڶ������ƵĶ�������֧�ּ��ϲ��������ϲ��롢ɾ�������£���Щ��������ȫ������jdbc��Ԥ������������ɣ���֤��õ����ܣ���֧�ֲ�ѯ�д��������ṩ�����ӳصļ��api�����õ�����ԴΪapache common dbcp���ܹ��ǳ��õغ�mvc���Эͬ����
+bboss persistent类似于spring 的jdbc框架但是功能要更强悍一些，api非常简单实用，支持通用的o/r mapping机制，提供方便的主键生成机制，很好地封装了分页查询机制，支持多数据源配置管理，所有的api都可以指定操作的数据源，支持跨不同数据源的事务管理（提供可编程事务管理、注解式事务管理、声明式事务管理，事务模板组件），提供了从sql配置文件中获取sql语句执行的api，sql配置文件可以实时刷新（生产运行 环境中可以通过配置关闭），sql配置文件中可以支持模板sql语句（指定模板变量，可对应po对象中的属性名称、SQLParams对象中的参数名称、Map中key 名称，运行时将模板sql翻译成预编译语句执行），支持动态sql语句（采用velocity模板语法，可以根据变量的值来作为条件判断的依据动态生成实际运行的sql语句，其灵活性在业界找不出第二个类似的东西），支持集合操作（集合插入、删除、更新，这些操作最终全部采用jdbc的预编译批处理完成，保证最好的性能），支持查询行处理器，提供了连接池的监控api，内置的数据源为apache common dbcp。能够非常好地和mvc框架协同工作
 
-bboss taglib���ṩ��һ������չʾ��ǩ����ҳ���б�����ϸ���ֵ�ת����������ǩ���߼���ǩ������ʽ��ǩ�����ݿ������ǩ���ܹ��ǳ��õغ�mvc���Э��������
+bboss taglib，提供了一套数据展示标签（分页、列表、明细、字典转换）、树标签、逻辑标签、抽屉式标签、数据库操作标签，能够非常好地和mvc框架协调工作。
 
-bboss event��ܻ���bboss aop��ܵ�rpcЭ����ʵ�ֲַ�ʽ�¼��������ܣ����������ṩ����������û����̫���˵����
+bboss event框架基于bboss aop框架的rpc协议来实现分布式事件管理功能（这个框架在提供的资料里面没有做太多的说明）
 
-�������bbossgroups��һ���򵥵Ľ��ܣ�һЩ����ϸ�Ĺ��ܿ��Բ鿴���͵�����ĵ��Լ���ܵ�һЩ�����ĵ�����ѵppt���������׿��Ŀǰ�Ŀ�����Աֻ����һ���ˣ����Ҳ���רְ��������飬�ܶ๤�����Ĳ��Ǻܵ�λ���������½⡣Ŀǰ�ṩ����Դ��Ҫ��������Щ��
-bbossgroupsԴ�빤�̣�http://sourceforge.net/projects/bboss/files/bbossgroups-3.1/bbossgroups-3.1-src.zip/download��
-mvc��ܵ�demo war����http://sourceforge.net/projects/bboss/files/bbossgroups-3.1/mvcdemo-war.zip/download����Ŀǰ����bboss mvc�����ȫ��demoӦ��
-��mvc eclipse�������̣����伴�ã�http://sourceforge.net/projects/bboss/files/bbossgroups-3.1/mvcdemo-eclipse.zip/download��������ָ���û����ٵش����bboss mvc��ܵĿ��������Ͳ����Լ���Ӧ��
-bbossgroups ��ѵppt��http://sourceforge.net/projects/bboss/files/bbossgroups-3.1/bbossgroups%203.1%20in%20action.zip/download�����Ƚ�ȫ��ؽ�����bbossgroups�ĸ����ֵĹ��ܺ��ص㣬��office 2010�� ppt����������2003�����µ��û���Ҫ��΢���¼��ݲ������ܿ���
+这个就是bbossgroups的一个简单的介绍，一些更详细的功能可以查看博客的相关文档以及框架的一些开发文档和培训ppt，由于这套框架目前的开发人员只有我一个人，而且不是专职做这个事情，很多工作做的不是很到位，还请大家谅解。目前提供的资源主要有以下这些：
+bbossgroups源码工程（http://sourceforge.net/projects/bboss/files/bbossgroups-3.1/bbossgroups-3.1-src.zip/download）
+mvc框架的demo war包（http://sourceforge.net/projects/bboss/files/bbossgroups-3.1/mvcdemo-war.zip/download），目前介绍bboss mvc框架最全的demo应用
+简单mvc eclipse开发工程，开箱即用（http://sourceforge.net/projects/bboss/files/bbossgroups-3.1/mvcdemo-eclipse.zip/download），可以指导用户快速地搭建基于bboss mvc框架的开发环境和部署自己的应用
+bbossgroups 培训ppt（http://sourceforge.net/projects/bboss/files/bbossgroups-3.1/bbossgroups%203.1%20in%20action.zip/download）（比较全面地介绍了bbossgroups的各部分的功能和特点，用office 2010版 ppt工具制作，2003及以下的用户需要到微软下兼容补丁才能看）
 
-�һ�߾����ܵ��ṩ��������Ϻ�demo���ƹ�bbossgroups��ܣ������ص㡢���Ƹ�����ȷ��չʾ�ڴ����ǰ
+我会竭尽所能地提供更多的资料和demo来推广bbossgroups框架，将其特点、优势更加明确地展示在大家面前
 
 
 
-�ر��л���Ͽƴ���Ϣ�ɷ����޹�˾��bbossgroups���������Ĵ���֧�֡�
-�ر��л�����Ŷӣ�
-���Ͽƴ���Ϣ�ɷ����޹�˾����ƽ̨������������Ŀ��
-���Ͽƴ���Ϣ�ɷ����޹�˾��������Ŀ��
-���Ͽƴ���Ϣ�ɷ����޹�˾��ҵ�Ӿ���ҵ��������Ŀ��
-���Ͽƴ���Ϣ�ɷ����޹�˾����������Ŀ��
+特别感谢湖南科创信息股份有限公司对bbossgroups开发工作的大力支持。
+特别感谢以下团队：
+湖南科创信息股份有限公司基础平台软件部整合项目组
+湖南科创信息股份有限公司公安部项目组
+湖南科创信息股份有限公司工业视觉企业软件部项目组
+湖南科创信息股份有限公司电子政务部项目组
 
-��л�����ŶӶ�bbossgroups�Ĵ���֧�֣�������Щ�Ŷ���ʹ��bbossgroups�Ĺ���������˷ǳ��õĽ��顢������bbossgroups�в������⣬Ϊbbossgroups�Ĳ������ƺ͹�����չ�����˷ǳ�������á�
+感谢上述团队对bbossgroups的大力支持，正是这些团队在使用bbossgroups的过程中提出了非常好的建议、发现了bbossgroups中不少问题，为bbossgroups的不断完善和功能扩展发挥了非常大的作用。
 
-�ر��л������ʿ��bbossgroups�Ĵ���֧�֣�
-�����棬�����������ٻ��������£���ǰ�����ߣ��Ƹߣ�����⣬��־�棬���ٲ�
+特别感谢以下人士对bbossgroups的大力支持：
+刘剑锋，何世军，张少华，孙智勇，王前，李峰高，唐高，唐宇光，李志锋，马荣昌
 
 
 

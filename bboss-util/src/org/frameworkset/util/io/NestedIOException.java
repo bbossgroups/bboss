@@ -27,7 +27,7 @@ import org.frameworkset.util.beans.NestedExceptionUtils;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2010-9-24 œ¬ŒÁ05:38:41
+ * @Date 2010-9-24 ‰∏ãÂçà05:38:41
  * @author biaoping.yin
  * @version 1.0
  */

@@ -56,7 +56,7 @@ public interface IExpandListener  extends Serializable{
 	public void nodeExpanded(ITreeNode node, ITree tree,int curLevel,boolean needNotifier); 
 	
 	/**
-	 * 隐含地展开没给节点
+	 * 闅愬惈鍦板睍寮�娌＄粰鑺傜偣
 	 * @param node
 	 * @param tree
 	 */

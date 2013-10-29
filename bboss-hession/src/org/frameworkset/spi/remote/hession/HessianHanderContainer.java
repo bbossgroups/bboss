@@ -30,7 +30,7 @@ import com.caucho.services.server.GenericService;
  * <p> bboss workgroup </p>
  * <p> Copyright (c) 2009 </p>
  * 
- * @Date 2013-2-21 ÏÂÎç5:25:30
+ * @Date 2013-2-21 ä¸‹åˆ5:25:30
  * @author biaoping.yin
  * @version 1.0
  */

@@ -39,7 +39,7 @@ package com.frameworkset.common.tag.pager.model;
  */
 public class Operation implements ModelObject{
 	/**
-	 * »ù±¾²Ù×÷£¬¼Ó£¨+£©¡¢¼õ(-)¡¢³Ë(*)¡¢Õû³ı(/)¡¢ÇóÓà(%)
+	 * åŸºæœ¬æ“ä½œï¼ŒåŠ ï¼ˆ+ï¼‰ã€å‡(-)ã€ä¹˜(*)ã€æ•´é™¤(/)ã€æ±‚ä½™(%)
 	 */
 	public final static int ADD = 0;
 	public final static String ADD_TOKEN = "+";
@@ -54,7 +54,7 @@ public class Operation implements ModelObject{
 
 
 	/**
-	 * ¾ÛºÏ²Ù×÷:ÇóºÍ£¨sum£©£¬¼ÆÊı£¨count£©
+	 * èšåˆæ“ä½œ:æ±‚å’Œï¼ˆsumï¼‰ï¼Œè®¡æ•°ï¼ˆcountï¼‰
 	 */
 	public final static int SUM = 5;
 	public final static String SUM_TOKEN = "sum";
@@ -63,10 +63,10 @@ public class Operation implements ModelObject{
 	public final static String COUNT_TOKEN = "count";
 
 	/**
-	 * ´Ó×óµ½ÓÒË³ĞòÖ´ĞĞ
-	 * ()ÓÅÏÈ¼¶Îª0 ×î¸ß
-	 * sum,countÓÅÏÈ¼¶Îª1´Î¸ß
-	 * *¡¢/¡¢%ÓÅÏÈ¼¶Îª2£¬´Î¸ß
+	 * ä»å·¦åˆ°å³é¡ºåºæ‰§è¡Œ
+	 * ()ä¼˜å…ˆçº§ä¸º0 æœ€é«˜
+	 * sum,countä¼˜å…ˆçº§ä¸º1æ¬¡é«˜
+	 * *ã€/ã€%ä¼˜å…ˆçº§ä¸º2ï¼Œæ¬¡é«˜
 	 */
 
 

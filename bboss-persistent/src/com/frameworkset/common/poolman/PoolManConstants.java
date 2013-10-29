@@ -42,7 +42,7 @@ public interface PoolManConstants extends Serializable{
     /* DEFAULT OBJECT POOL VALUES */
     public static final int DEFAULT_INITIAL_SIZE = 1;             // 1 object
     public static final int DEFAULT_TIMEOUT = 1200 ;               // 20 minutes
-    public static final int DEFAULT_SKIMMER_SLEEP = 60 ;	      // 60Ãë
+    public static final int DEFAULT_SKIMMER_SLEEP = 60 ;	      // 60ç§’
     public static final int DEFAULT_MAX_SIZE = Integer.MAX_VALUE; // System's max
     public static final int DEFAULT_MIN_SIZE = 0;                 // shrinks to 0
     public static final int DEFAULT_USERTIMEOUT = 60;	          // 60 seconds
@@ -69,7 +69,7 @@ public interface PoolManConstants extends Serializable{
     //add end
     
     /**
-     *  ±êÊ¶Êı¾İÔ´ÊÇ·ñÊÇÍâ²¿DataSource£¬Èç¹ûÊÇÍâ²¿DataSourceÔò±ØĞëÖ¸¶¨Íâ²¿datasourceµÄjndiÃû³Æ
+     *  æ ‡è¯†æ•°æ®æºæ˜¯å¦æ˜¯å¤–éƒ¨DataSourceï¼Œå¦‚æœæ˜¯å¤–éƒ¨DataSourceåˆ™å¿…é¡»æŒ‡å®šå¤–éƒ¨datasourceçš„jndiåç§°
      */
     public static final boolean EXTERNAL = false;
     public final static String PROP_USEPOOL = "usepool";
@@ -77,7 +77,7 @@ public interface PoolManConstants extends Serializable{
     
     
     /*****************************************************************************
-     * 					COMMONS-DBCP ÊôĞÔÃû³Æ¶¨Òå¿ªÊ¼								 *
+     * 					COMMONS-DBCP å±æ€§åç§°å®šä¹‰å¼€å§‹								 *
      *****************************************************************************/
     public final static String PROP_DEFAULTAUTOCOMMIT = "defaultAutoCommit";
     public final static String PROP_DEFAULTREADONLY = "defaultReadOnly";
@@ -114,7 +114,7 @@ public interface PoolManConstants extends Serializable{
     
     
     /*****************************************************************************
-     * 					COMMONS-DBCP ÊôĞÔÃû³Æ¶¨Òå½áÊø								 *
+     * 					COMMONS-DBCP å±æ€§åç§°å®šä¹‰ç»“æŸ								 *
      *****************************************************************************/
 
 
