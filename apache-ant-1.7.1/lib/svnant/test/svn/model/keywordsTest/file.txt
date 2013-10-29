@@ -1,3 +1,0 @@
-$LastChangedRevision$
-$Author$
-$Id$

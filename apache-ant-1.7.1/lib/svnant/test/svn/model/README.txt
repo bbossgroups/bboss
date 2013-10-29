@@ -1,1 +1,0 @@
-This is the test directory used for junit tests.
