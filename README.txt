@@ -1,5 +1,5 @@
-release version : bbossgroups-3.7.3
-release date: 2013/10/15
+release version : bbossgroups-3.7.5
+release date: 2013/10/28
 
 bboss group website:
 http://www.bbossgroups.com
@@ -24,3 +24,4 @@ bbossgroups-3.7.3 release futures
 6.去掉aop对持久层的依赖关系
 7.解除bboss对cms.jar依赖关系
 8.将平台中的htmlparser-1.5-20050925.jar及相关源码放到taglib工程中
+9.框架eclipse工程全部采用UTF-8编码
