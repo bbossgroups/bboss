@@ -3,6 +3,8 @@ package com.frameworkset.util;
 import java.io.Serializable;
 import java.util.List;
 
+import org.frameworkset.util.MoreListInfo;
+
 /**
  * <p>Title: ListInfo</p>
  *
@@ -203,5 +205,17 @@ public class ListInfo implements Serializable{
 	 */
 	public void setResultSize(int resultSize) {
 		this.resultSize = resultSize;
+	}
+	
+	public static MoreListInfo buildMoreListInfo(ListInfo listInfo)
+	{
+		MoreListInfo moreList = new MoreListInfo(listInfo.getResultSize() == listInfo.getMaxPageItems(),listInfo.getResultSize(),listInfo.getDatas());
+		return moreList;
+	}
+	
+	public MoreListInfo getMoreListInfo()
+	{
+//		MoreListInfo moreList = new MoreListInfo(listInfo.getResultSize() < listInfo.getMaxPageItems(),listInfo.getResultSize(),listInfo.getDatas());
+		return buildMoreListInfo(this);
 	}
 }
