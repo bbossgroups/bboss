@@ -17,7 +17,9 @@ package org.frameworkset.security;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.JspWriter;
+import javax.servlet.jsp.PageContext;
 
 /**
  * <p>DefaultAccessControl.java</p>
@@ -94,6 +96,61 @@ public class DefaultAccessControl implements AccessControlInf {
 	public String getChargeOrgId() {
 		// TODO Auto-generated method stub
 		return "";
+	}
+
+	public boolean allowIfNoRequiredRoles(String resourceType) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public boolean checkAccess(HttpServletRequest request,
+			HttpServletResponse response) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public boolean checkAccess(HttpServletRequest request,
+			HttpServletResponse response, boolean protect) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public boolean checkAdminAccess(HttpServletRequest request,
+			HttpServletResponse response) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public boolean checkManagerAccess(HttpServletRequest request,
+			HttpServletResponse response) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public boolean checkPermission(String resourceID, String action,
+			String resourceType, boolean redirect, String redirectPath) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public boolean checkURLPermission(String uri) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public HttpServletRequest getRequest() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public HttpSession getSession() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public PageContext getPageContext() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
