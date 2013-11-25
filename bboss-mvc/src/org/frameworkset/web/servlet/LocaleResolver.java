@@ -41,6 +41,8 @@ public interface LocaleResolver {
 	   * @return the current locale (never <code>null</code>)
 	   */
 		Locale resolveLocale(HttpServletRequest request);
+		
+		String resolveLocaleCode(HttpServletRequest request);
 
 	  /**
 	   * Set the current locale to the given one.
@@ -51,5 +53,16 @@ public interface LocaleResolver {
 		 * does not support dynamic changing of the theme
 	   */
 		void setLocale(HttpServletRequest request, HttpServletResponse response, Locale locale);
+		
+
+		  /**
+		   * Set the current locale to the given one.
+		   * @param request the request to be used for locale modification
+		   * @param response the response to be used for locale modification
+		   * @param locale the new locale, or <code>null</code> to clear the locale
+			 * @throws UnsupportedOperationException if the LocaleResolver implementation
+			 * does not support dynamic changing of the theme
+		   */
+			void setLocale(HttpServletRequest request, HttpServletResponse response, String locale);
 
 }

@@ -7,11 +7,10 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.frameworkset.web.servlet.LocaleResolver;
-
 import com.frameworkset.util.SimpleStringUtil;
+import com.frameworkset.util.StringUtil;
 
-public class CookieLocaleResolver implements LocaleResolver{
+public class CookieLocaleResolver extends AbstractLocaleResolver{
 	public static final String COOKIE_LOCAL_KEY = "org.frameworkset.web.servlet.i18n.COOKIE_LOCAL_KEY";
 	private String cookielocalkey = COOKIE_LOCAL_KEY;
 	@Override
@@ -38,15 +37,27 @@ public class CookieLocaleResolver implements LocaleResolver{
 	@Override
 	public void setLocale(HttpServletRequest request,
 			HttpServletResponse response, Locale locale) {
-		throw new UnsupportedOperationException(
-				"Cannot change HTTP accept header - use a different locale resolution strategy");
-		
+//		throw new UnsupportedOperationException(
+//				"Cannot change HTTP accept header - use a different locale resolution strategy");
+		if(locale == null)
+			locale = request.getLocale();
+		String language = String.valueOf(locale);
+		StringUtil.addCookieValue(request, response, cookielocalkey, language);
 	}
 
 	public String getCookielocalkey() {
 		return cookielocalkey;
 	}
 
+	@Override
+	public void setLocale(HttpServletRequest request,
+			HttpServletResponse response, String locale) {
+		if(locale == null)
+			locale = String.valueOf(request.getLocale());
+		
+		StringUtil.addCookieValue(request, response, cookielocalkey, locale);
+
+	}
 	public void setCookielocalkey(String cookielocalkey) {
 		this.cookielocalkey = cookielocalkey;
 	}

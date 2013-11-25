@@ -2260,6 +2260,11 @@ outStr = "2010年02月07日11时许，周灵颖报警：在2路公交车上被�
 	
 	
 	private static Map<String,Locale> localesIndexByString;
+	public static Locale getLocale(String locale)
+	{
+		return getAllLocales().get(locale);
+	}
+	
 	  /**
      * 
     

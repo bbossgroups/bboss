@@ -31,7 +31,7 @@ import org.frameworkset.web.servlet.LocaleResolver;
  * @author biaoping.yin
  * @version 1.0
  */
-public class AcceptHeaderLocaleResolver  implements LocaleResolver {
+public class AcceptHeaderLocaleResolver  extends AbstractLocaleResolver {
 
 	public Locale resolveLocale(HttpServletRequest request) {
 		return request.getLocale();
@@ -40,6 +40,14 @@ public class AcceptHeaderLocaleResolver  implements LocaleResolver {
 	public void setLocale(HttpServletRequest request, HttpServletResponse response, Locale locale) {
 		throw new UnsupportedOperationException(
 				"Cannot change HTTP accept header - use a different locale resolution strategy");
+	}
+	
+	@Override
+	public void setLocale(HttpServletRequest request,
+			HttpServletResponse response, String locale) {
+		throw new UnsupportedOperationException(
+				"Cannot change HTTP accept header - use a different locale resolution strategy");
+
 	}
 
 }

@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.frameworkset.web.servlet.LocaleResolver;
+import com.frameworkset.util.SimpleStringUtil;
 
 /**
  * <p> SessionLocalResolver.java</p>
@@ -35,7 +35,7 @@ import org.frameworkset.web.servlet.LocaleResolver;
  * @author biaoping.yin
  * @version 1.0
  */
-public class SessionLocalResolver  implements LocaleResolver {
+public class SessionLocalResolver extends AbstractLocaleResolver {
 	 
 	public static final String SESSION_LOCAL_KEY = "org.frameworkset.web.servlet.i18n.SESSION_LOCAL_KEY";
 	private String sessionlocalkey = SESSION_LOCAL_KEY;
@@ -46,13 +46,27 @@ public class SessionLocalResolver  implements LocaleResolver {
 	}
 
 	public void setLocale(HttpServletRequest request, HttpServletResponse response, Locale locale) {
-		throw new UnsupportedOperationException(
-				"Cannot change HTTP accept header - use a different locale resolution strategy");
+//		throw new UnsupportedOperationException(
+//				"Cannot change HTTP accept header - use a different locale resolution strategy");
+		
+		HttpSession session = request.getSession();
+		if(locale == null)
+			locale = request.getLocale();
+		session.setAttribute(sessionlocalkey,locale);
 	}
+	@Override
+	public void setLocale(HttpServletRequest request,
+			HttpServletResponse response, String locale) {
+		if(locale != null)
+			setLocale(request, response, SimpleStringUtil.getLocale(locale));
+		else
+			setLocale(request, response, request.getLocale());
 
+	}
 	public String getSessionlocalkey() {
 		return sessionlocalkey != null?sessionlocalkey:SESSION_LOCAL_KEY;
 	}
+	
 
 	public void setSessionlocalkey(String sessionlocalkey) {
 		this.sessionlocalkey = sessionlocalkey != null?sessionlocalkey:SESSION_LOCAL_KEY;
