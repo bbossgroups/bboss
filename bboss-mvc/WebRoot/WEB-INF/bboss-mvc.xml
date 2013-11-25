@@ -36,14 +36,7 @@
     </property>
 
    
-	<!-- 
-	
-	 -->
-    <property name="messageSource" class="org.frameworkset.spi.support.HotDeployResourceBundleMessageSource" >
-        <property name="basename" value="/WEB-INF/messages"/>
-        <property name="useCodeAsDefaultMessage" value="true"/>
-    </property>
-    
+
 
 	<!-- 
 		beanNameHandlerMapping识别器，通过组件名称识别url和controller 的映射关系
