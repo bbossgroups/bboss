@@ -99,8 +99,11 @@
      	
      	</list>
      </property>
-     
-     <property name="localeResolver" class="org.frameworkset.web.servlet.i18n.CookieLocaleResolver"/>
+    
+<!--      <property name="localeResolver" class="org.frameworkset.web.servlet.i18n.AcceptHeaderLocaleResolver" /> -->
+<!--      <property name="localeResolver" class="org.frameworkset.web.servlet.i18n.SessionLocalResolver"/> -->
+<!--      <property name="localeResolver" class="org.frameworkset.web.servlet.i18n.CookieLocaleResolver"/> -->
+     <property name="localeResolver" class="org.frameworkset.web.servlet.i18n.LanguageLocaleResolver" f:language="en_US"/>
      
 </properties>
 
