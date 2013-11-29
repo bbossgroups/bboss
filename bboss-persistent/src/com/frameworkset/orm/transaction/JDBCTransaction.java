@@ -584,7 +584,13 @@ public class JDBCTransaction {
 				this.commitAll();
 				this.status = Status.STATUS_COMMITTED;
 			} catch (SQLException e) {
-				this.status = Status.STATUS_MARKED_ROLLBACK;
+//				this.status = Status.STATUS_MARKED_ROLLBACK;
+				try {
+					this.setRollbackOnly();
+				} catch (SystemException se) {
+					// TODO Auto-generated catch block
+					se.printStackTrace();
+				}
 				this.increament(); //重新加1防止在回滚时重复减1
 				throw new RollbackException(e.getMessage());						
 			}
@@ -651,7 +657,13 @@ public class JDBCTransaction {
 		}
 		else
 		{
-			this.status = Status.STATUS_MARKED_ROLLBACK;
+//			this.status = Status.STATUS_MARKED_ROLLBACK;
+			try {
+				this.setRollbackOnly();
+			} catch (SystemException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		
 		/**
