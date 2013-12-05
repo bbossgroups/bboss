@@ -353,13 +353,15 @@ outStr = "2010年02月07日11时许，周灵颖报警：在2路公交车上被�
  {
 	 String agent = request.getHeader("User-Agent");
 //	 log.debug(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>isie:" + agent);
-     boolean isie = agent.contains("MSIE ");
+     boolean isie = agent != null? agent.contains("MSIE "):false;
 //     log.debug(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>isie:" + isie);
      return isie;
  }
  public static boolean isIE6(HttpServletRequest request)
  {
 	 String clientInfo = request.getHeader("User-Agent");
+	 if(clientInfo == null)
+		 return false;
 	  if(clientInfo.indexOf("MSIE 6") > 0 || clientInfo.indexOf("MSIE 5") > 0){//IE6，用GBK，此处实现由局限性
 	        return true;
 	  }
@@ -372,7 +374,7 @@ outStr = "2010年02月07日11时许，周灵颖报警：在2路公交车上被�
 	 
 	 String agent = request.getHeader("User-Agent");
 //	 log.debug(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>isie:" + agent);
-     boolean isie = agent.contains("MSIE ");
+     boolean isie = agent != null ?agent.contains("MSIE "):false;
      if(isie )
      {
 //    	 if( (agent.indexOf("MSIE 6") > 0 || agent.indexOf("MSIE 5") > 0))

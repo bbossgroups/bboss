@@ -216,7 +216,7 @@ public abstract class CommonsFileUploadSupport {
 		
         String method = request.getMethod();
         String agent = request.getHeader("User-Agent");        
-        boolean isie = agent.contains("MSIE ");
+        boolean isie = agent != null ?agent.contains("MSIE "):false;
 		boolean isutf8 = newEncoding.toLowerCase().equals("utf-8");
         boolean isget = method !=null && method.equals("GET");
 

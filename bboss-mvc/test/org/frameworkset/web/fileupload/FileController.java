@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.frameworkset.util.annotations.HandlerMapping;
 import org.frameworkset.util.annotations.RequestParam;
 import org.frameworkset.util.annotations.ResponseBody;
+import org.frameworkset.web.multipart.IgnoreFieldNameMultipartFile;
 import org.frameworkset.web.multipart.MultipartFile;
 import org.frameworkset.web.multipart.MultipartHttpServletRequest;
 import org.frameworkset.web.servlet.ModelMap;
@@ -63,7 +64,31 @@ public class FileController {
 		model.addAttribute("files", files);
 //		return "";
 	}
+	@HandlerMapping("/swfupload/svnfileupload.htm")
+	public @ResponseBody(datatype="json") UpFile  svnfileupload(IgnoreFieldNameMultipartFile file,HttpServletRequest request) {
+		
+			
+			
+			String temp = file.getOriginalFilename();
 
+			try {
+				file.transferTo(new File(request.getRealPath("/")+"filesdown/"+temp));
+			} catch (IllegalStateException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			UpFile uf = new UpFile();
+			uf.setFileName(temp);
+			uf.setFileType(file.getContentType());
+
+			return uf;
+		
+		
+//		return "";
+	}
 	/**
 	 * http://localhost:8080/bboss-mvc/swfupload/mutifileselects.htm
 	 * 
