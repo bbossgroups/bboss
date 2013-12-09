@@ -20,6 +20,7 @@ import java.util.Locale;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.PageContext;
 
 import org.frameworkset.spi.support.LocaleContext;
@@ -124,13 +125,37 @@ public abstract class RequestContextUtils {
 	 * @see javax.servlet.http.HttpServletRequest#getLocale()
 	 */
 	public static Locale getLocale(HttpServletRequest request) {
-		LocaleResolver localeResolver = getLocaleResolver(request);
-		if (localeResolver != null) {
-			return localeResolver.resolveLocale(request);
-		}
-		else {
-			return request.getLocale();
-		}
+//		LocaleResolver localeResolver = getLocaleResolver(request);
+//		if (localeResolver != null) {
+//			return localeResolver.resolveLocale(request);
+//		}
+//		else {
+//			return request.getLocale();
+//		}
+		return getRequestContextLocal(request);
+	}
+	
+	
+	/**
+	 * Retrieves the current locale from the given request,
+	 * using the LocaleResolver bound to the request by the DispatchServlet
+	 * (if available), falling back to the request's accept-header Locale.
+	 * @param request current HTTP request
+	 * @return the current locale, either from the LocaleResolver or from
+	 * the plain request
+	 * @see #getLocaleResolver
+	 * @see javax.servlet.http.HttpServletRequest#getLocale()
+	 */
+	public static String getLocaleCode(HttpServletRequest request) {
+//		LocaleResolver localeResolver = getLocaleResolver(request);
+//		if (localeResolver != null) {
+//			return localeResolver.resolveLocaleCode(request);
+//		}
+//		else {
+//			return String.valueOf(request.getLocale());
+//		}
+		Locale local = getLocalContext(request).getLocale();
+		return local.toString();
 	}
 
 	/**
@@ -242,6 +267,34 @@ public abstract class RequestContextUtils {
 		
 		
 	}
+	
+	/**
+	 * 根据code从mvc的国际化配置文件中获取对应语言的代码值,如果代码值为空，则返回defaultMessage
+	 * @param code
+	 * @param defaultMessage
+	 * @param request
+	 * @return
+	 */
+	public static String getI18nMessage(String code,String defaultMessage)
+	{
+		return getI18nMessage(code,(Object[])null,defaultMessage,null);
+		
+		
+	}
+	
+	/**
+	 * 根据code从mvc的国际化配置文件中获取对应语言的代码值,如果代码值为空，则返回defaultMessage
+	 * @param code
+	 * @param defaultMessage
+	 * @param request
+	 * @return
+	 */
+	public static String getI18nMessage(String code)
+	{
+		return getI18nMessage(code,(Object[])null,(String)null,null);
+		
+		
+	}
 	/**
 	 * 根据code从mvc的国际化配置文件中获取对应语言的代码值,并且将数组args中的每个元素替换到代码值中位置占位符，例如{0}会用数组的第一个元素替换
 	 * @param code
@@ -255,6 +308,14 @@ public abstract class RequestContextUtils {
 		
 		
 	}
+	public static String getI18nMessage(String code,Object[] args)
+	{
+		return getI18nMessage( code, args,(String )null);
+	}
+	public static String getI18nMessage(String code,Object[] args,String defaultMessage)
+	{
+		return  getI18nMessage( code,args, defaultMessage,null);
+	}
 	/**
 	 * 根据code从mvc的国际化配置文件中获取对应语言的代码值,如果代码值为空，则返回defaultMessage,并且将数组args中的每个元素替换到代码值中位置占位符，例如{0}会用数组的第一个元素替换
 	 * @param code
@@ -265,42 +326,71 @@ public abstract class RequestContextUtils {
 	 */
 	public static String getI18nMessage(String code,Object[] args,String defaultMessage,HttpServletRequest request)
 	{
-		Locale locale = RequestContextUtils.getRequestContextLocal(request);
-		MessageSource messageSource = WebApplicationContextUtils.getWebApplicationContext();
-		if(messageSource != null)
-			return  messageSource.getMessage(code, args, defaultMessage, locale);
+		if(request != null)
+		{
+			Locale locale = RequestContextUtils.getRequestContextLocal(request);
+			MessageSource messageSource = WebApplicationContextUtils.getWebApplicationContext();
+			if(messageSource != null)
+				return  messageSource.getMessage(code, args, defaultMessage, locale);
+			else
+			{
+				if(defaultMessage != null)
+					return defaultMessage;
+				else
+					return code;
+				
+			}
+		}
 		else
 		{
-			if(defaultMessage != null)
-				return defaultMessage;
-			else
-				return code;
 			
+			Locale locale = DispatchServlet.getLocaleResolver().resolveLocale(null);
+			MessageSource messageSource = WebApplicationContextUtils.getWebApplicationContext();
+			if(messageSource != null)
+				return  messageSource.getMessage(code, args, defaultMessage, locale);
+			else
+			{
+				if(defaultMessage != null)
+					return defaultMessage;
+				else
+					return code;
+				
+			}
 		}
 		
 		
 		
 	}
+	private static LocaleContext defaultLocalContext =  new SimpleLocaleContext(Locale.getDefault(),Locale.getDefault().toString());
 	public static LocaleContext getLocalContext(HttpServletRequest request)
 	{
-		LocaleContext lc = (LocaleContext)request.getAttribute(RequestContextUtils.LOCALE_CONTEXT_REQUEST_ATTRIBUTE);
-		if(lc == null)
+		if(request != null)
 		{
-			LocaleResolver localeResolver = RequestContextUtils.getLocaleResolver(request);
-			Locale locale = null;
-			if (localeResolver != null) {
-				// Try LocaleResolver (we're within a DispatcherServlet request).
-				locale = localeResolver.resolveLocale(request);
+			
+		
+			LocaleContext lc = (LocaleContext)request.getAttribute(RequestContextUtils.LOCALE_CONTEXT_REQUEST_ATTRIBUTE);
+			if(lc == null)
+			{
+				LocaleResolver localeResolver = RequestContextUtils.getLocaleResolver(request);
+				Locale locale = null;
+				if (localeResolver != null) {
+					// Try LocaleResolver (we're within a DispatcherServlet request).
+					locale = localeResolver.resolveLocale(request);
+				}
+				else {
+					// No LocaleResolver available -> try fallback.
+					locale =  request.getLocale();
+				}
+				String localeName = locale.toString();
+				lc = new SimpleLocaleContext(locale,localeName);
+				request.setAttribute(RequestContextUtils.LOCALE_CONTEXT_REQUEST_ATTRIBUTE,lc);
 			}
-			else {
-				// No LocaleResolver available -> try fallback.
-				locale =  request.getLocale();
-			}
-			String localeName = locale.toString();
-			lc = new SimpleLocaleContext(locale,localeName);
-			request.setAttribute(RequestContextUtils.LOCALE_CONTEXT_REQUEST_ATTRIBUTE,lc);
+			return lc;
 		}
-		return lc;
+		else
+		{
+			return defaultLocalContext;
+		}
 		
 	}
 	public static String getRequestContextLocalName(HttpServletRequest request)
@@ -308,6 +398,20 @@ public abstract class RequestContextUtils {
 		LocaleContext lc = getLocalContext( request);
 		return lc.getLocaleName();
 		
+		
+	}
+	
+	
+	
+	public static void setLocale(HttpServletRequest request,
+			HttpServletResponse response, String locale) {
+		RequestContextUtils.getLocaleResolver(request).setLocale(request, response, locale);
+		
+	}
+
+	public static void setLocale(HttpServletRequest request,
+			HttpServletResponse response, Locale locale) {
+		RequestContextUtils.getLocaleResolver(request).setLocale(request, response, locale);
 		
 	}
 	

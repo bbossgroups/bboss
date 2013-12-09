@@ -9,7 +9,7 @@
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/ditchnet-tabs-taglib.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/ecs-1.4.2.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/frameworkset-pool.jar"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/frameworkset-util.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/frameworkset-util.jar" sourcepath="/bboss-util"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/frameworkset.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/jakarta-oro-2.0.8.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/log4j-1.2.14.jar"/>

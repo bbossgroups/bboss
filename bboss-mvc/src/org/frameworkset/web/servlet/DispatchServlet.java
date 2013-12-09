@@ -64,7 +64,7 @@ import org.frameworkset.web.servlet.handler.HandlerMappingsTable;
 import org.frameworkset.web.servlet.handler.HandlerMeta;
 import org.frameworkset.web.servlet.handler.HandlerUtils;
 import org.frameworkset.web.servlet.handler.PathURLNotSetException;
-import org.frameworkset.web.servlet.i18n.AcceptHeaderLocaleResolver;
+import org.frameworkset.web.servlet.i18n.DefaultLocaleResolver;
 import org.frameworkset.web.servlet.support.RequestContext;
 import org.frameworkset.web.servlet.support.RequestContextUtils;
 import org.frameworkset.web.servlet.support.RequestMethodHttpServletRequest;
@@ -1470,6 +1470,20 @@ public class DispatchServlet extends HttpServlet {
 		}
 	}
 	
+	
+	public static LocaleResolver getLocaleResolver()
+	{
+		if(localeResolver != null)
+		{
+			return localeResolver;
+		}
+		else
+		{
+			initLocaleResolver(DispatchServlet.webApplicationContext);
+			return localeResolver;
+		}
+	}
+	
 	/**
 	 * Initialize the LocaleResolver used by this class.
 	 * <p>If no bean is defined with the given name in the BeanFactory
@@ -1490,7 +1504,7 @@ public class DispatchServlet extends HttpServlet {
 				try {
 					localeResolver = (LocaleResolver) getDefaultStrategy(context, LocaleResolver.class);
 				} catch (Exception e) {
-					localeResolver = new AcceptHeaderLocaleResolver();
+					localeResolver = new DefaultLocaleResolver();
 					e.printStackTrace();
 				}
 				if (logger.isDebugEnabled()) {

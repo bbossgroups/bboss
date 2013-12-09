@@ -18,6 +18,7 @@ package org.frameworkset.util.i18n;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * <p>DefaultI18N.java</p>
@@ -37,7 +38,13 @@ public class DefaultI18N implements I18n {
 
 	public Locale getRequestContextLocal(HttpServletRequest request) {
 		// TODO Auto-generated method stub
-		return  request.getLocale();
+		return request != null? request.getLocale():Locale.getDefault();
+	}
+	
+	public String getRequestContextLocalCode(HttpServletRequest request)
+	{
+		Locale locale = getRequestContextLocal(request);
+		return  locale.toString();
 	}
 
 //	public String getI18nMessage(String code, HttpServletRequest request) {
@@ -49,6 +56,56 @@ public class DefaultI18N implements I18n {
 			HttpServletRequest request) {
 		// TODO Auto-generated method stub
 		return defaultMessage;
+	}
+
+	public String getI18nMessage(String code, HttpServletRequest request) {
+		// TODO Auto-generated method stub
+		return code;
+	}
+
+	public String getI18nMessage(String code, String defaultMessage) {
+		// TODO Auto-generated method stub
+		return code;
+	}
+
+	public String getI18nMessage(String code) {
+		// TODO Auto-generated method stub
+		return code;
+	}
+
+	public String getI18nMessage(String code, Object[] args,
+			HttpServletRequest request) {
+		// TODO Auto-generated method stub
+		return code;
+	}
+
+	public String getI18nMessage(String code, Object[] args) {
+		// TODO Auto-generated method stub
+		return code;
+	}
+
+	public String getI18nMessage(String code, Object[] args,
+			String defaultMessage) {
+		// TODO Auto-generated method stub
+		return code;
+	}
+
+	public String getI18nMessage(String code, Object[] args,
+			String defaultMessage, HttpServletRequest request) {
+		// TODO Auto-generated method stub
+		return code;
+	}
+
+	public void setLocale(HttpServletRequest request,
+			HttpServletResponse response, String locale) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void setLocale(HttpServletRequest request,
+			HttpServletResponse response, Locale locale) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
