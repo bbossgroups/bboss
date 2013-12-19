@@ -52,7 +52,6 @@
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/datagride.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/dom4j-1.6.1.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/ezmorph-1.0.4.jar"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/frameworkset-util.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/geronimo-activation_1.1_spec-1.0.2.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/geronimo-annotation_1.0_spec-1.1.1.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/geronimo-jms_1.1_spec-1.1.1.jar"/>
