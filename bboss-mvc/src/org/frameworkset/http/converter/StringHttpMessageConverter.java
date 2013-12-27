@@ -43,7 +43,7 @@ public class StringHttpMessageConverter extends AbstractHttpMessageConverter<Str
 	
 	
 
-	public static  Charset DEFAULT_CHARSET = Charset.forName("ISO-8859-1");
+	public static  Charset DEFAULT_CHARSET = Charset.forName("UTF-8");
 
 	private final List<Charset> availableCharsets;
 
