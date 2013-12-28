@@ -31,7 +31,7 @@ import org.frameworkset.util.annotations.ResponseBody;
  */
 public class XMLRequestController
 {
-	public @ResponseBody(charset="UTF-8") String echo(@RequestBody String xml)
+	public @ResponseBody(datatype="xml") String echo(@RequestBody String xml)
 	{
 		System.out.println(xml);
 		return xml;

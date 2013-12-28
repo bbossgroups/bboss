@@ -95,6 +95,7 @@
      	<list>
 
      		<property class="org.frameworkset.http.converter.json.MappingJacksonHttpMessageConverter"/>
+     		<property class="org.frameworkset.http.converter.XMLHttpMessageConverter"/>
      		<property class="org.frameworkset.http.converter.StringHttpMessageConverter"/>
      		
      	</list>        

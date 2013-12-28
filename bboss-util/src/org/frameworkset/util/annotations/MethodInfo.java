@@ -412,6 +412,7 @@ public class MethodInfo {
 //					paramNames[i].setParameterName(param.value());
 				paramAnno.setDataBindScope(Scope.REQUEST_BODY);
 				mutilMethodParamAnnotations.add(paramAnno);
+				paramAnno.setIsrequestbody(true);
 				continue;
 				
 			}

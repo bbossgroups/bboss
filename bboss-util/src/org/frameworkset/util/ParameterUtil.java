@@ -73,6 +73,10 @@ public class ParameterUtil {
 	
 	public static String getParameterName(MethodParameter parameter,HttpServletRequest request ,int curposition)
 	{
+		if(parameter.isIsrequestbody())
+		{
+			return null;
+		}
 		
 		if(parameter.getRequestParameterName() != null)
 			return parameter.getRequestParameterName();

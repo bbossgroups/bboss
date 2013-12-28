@@ -77,6 +77,7 @@ public class MethodParameter {
 	private Object[] parameterAnnotations;
 
 	private ParameterNameDiscoverer parameterNameDiscoverer;
+	private boolean isrequestbody;
 
 	/**
 	 * 请求参数名称
@@ -640,6 +641,14 @@ public class MethodParameter {
 
 	public void setPagerParam(PagerParamWraper pagerParam) {
 		this.pagerParam = pagerParam;
+	}
+
+	public boolean isIsrequestbody() {
+		return isrequestbody;
+	}
+
+	public void setIsrequestbody(boolean isrequestbody) {
+		this.isrequestbody = isrequestbody;
 	}
 
 
