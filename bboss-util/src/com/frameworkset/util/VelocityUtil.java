@@ -38,7 +38,7 @@ import bboss.org.apache.velocity.runtime.resource.Resource;
  * @author biaoping.yin
  * @version 1.0
  */
-public class VelocityUtil implements Serializable{
+public class VelocityUtil{
 	private static Logger log = Logger.getLogger(VelocityUtil.class);
 	private static boolean inited = false;
 	private static boolean VERSION_OLD = true; 	

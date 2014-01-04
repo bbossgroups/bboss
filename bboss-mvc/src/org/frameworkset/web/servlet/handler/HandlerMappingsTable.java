@@ -21,6 +21,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
+import org.frameworkset.spi.DisposableBean;
 import org.frameworkset.web.servlet.DispatchServlet;
 import org.frameworkset.web.servlet.HandlerExecutionChain;
 import org.frameworkset.web.servlet.HandlerMapping;
@@ -34,7 +35,7 @@ import org.frameworkset.web.servlet.HandlerMapping;
  * @author biaoping.yin
  * @version 1.0
  */
-public class HandlerMappingsTable {
+public class HandlerMappingsTable implements DisposableBean{
 	private List<HandlerMapping> handlerMappings;
 	private static Logger logger = Logger.getLogger(DispatchServlet.class);
 	private boolean scanAllMappings = true;
@@ -75,6 +76,19 @@ public class HandlerMappingsTable {
 
 	public void setScanAllMappings(boolean scanAllMappings) {
 		this.scanAllMappings = scanAllMappings;
+	}
+
+	@Override
+	public void destroy() throws Exception {
+		if(handlerMappings != null)
+		{
+			for(int i = 0; i < handlerMappings.size(); i ++)
+			{
+				HandlerMapping mp = handlerMappings.get(i);
+				mp.destroy();
+			}
+		}
+		
 	}
 
 }

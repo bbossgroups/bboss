@@ -175,4 +175,10 @@ public class ParameterMethodNameResolver  implements MethodNameResolver {
 		return methodName;
 	}
 
+	@Override
+	public void destroy() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

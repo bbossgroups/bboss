@@ -1062,7 +1062,7 @@ bbossaop<-cas server [bboss-aop.jar]
 		
 		
 		<antcall target="build-bboss-taglib-only"/>
-		<antcall target="build-bboss-mvc-only"/>
+		<antcall target="build-bboss-mvc-only-noresources"/>
 		<antcall target="build-bboss-event-only"/>
 		<antcall target="build-bboss-jodconverter-core"/>
 		<antcall target="build-bboss-plugin-wordpdf"/>
@@ -1079,7 +1079,7 @@ bbossaop<-cas server [bboss-aop.jar]
 		<antcall target="build-bboss-soa"/>
 		<antcall target="build-bboss-velocity"/>
 		<antcall target="build-bboss-taglib-only"/>
-		<antcall target="build-bboss-mvc-only"/>
+		<antcall target="build-bboss-mvc-only-noresources"/>
 		<antcall target="build-bboss-event-only"/>
 		<antcall target="build-bboss-jodconverter-core"/>
 		<antcall target="build-bboss-schedule"/>

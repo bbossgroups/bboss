@@ -856,8 +856,11 @@ public class TaskService implements Service {
 			return;
 		}
 		try {
+			
 			this.scheduler.shutdown(forceshutdown);
+			Thread.sleep(4000);
 			schedulerServiceIndex.clear();
+			
 			started = false;
 			scheduler = null;
 		} catch (Exception e) {

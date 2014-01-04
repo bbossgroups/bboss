@@ -91,7 +91,6 @@ import org.frameworkset.util.annotations.RequestHeader;
 import org.frameworkset.util.annotations.RequestParam;
 import org.frameworkset.util.annotations.ResponseBody;
 import org.frameworkset.util.annotations.Scope;
-import org.frameworkset.util.annotations.ValueConstants;
 import org.frameworkset.util.annotations.wraper.AttributeWraper;
 import org.frameworkset.util.annotations.wraper.CookieValueWraper;
 import org.frameworkset.util.annotations.wraper.PathVariableWraper;

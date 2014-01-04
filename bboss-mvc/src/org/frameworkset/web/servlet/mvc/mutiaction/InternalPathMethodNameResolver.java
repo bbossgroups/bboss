@@ -11,7 +11,7 @@ public class InternalPathMethodNameResolver  extends AbstractUrlMethodNameResolv
 	private String suffix = "";
 
 	/** Request URL path String --> method name String */
-	private final Map methodNameCache = new java.util.concurrent.ConcurrentHashMap();
+	private  Map methodNameCache = new java.util.concurrent.ConcurrentHashMap();
 
 
 	/**
@@ -86,6 +86,16 @@ public class InternalPathMethodNameResolver  extends AbstractUrlMethodNameResolv
 	 */
 	protected String postProcessHandlerMethodName(String methodName) {
 		return getPrefix() + methodName + getSuffix();
+	}
+
+	@Override
+	public void destroy() {
+		if(methodNameCache != null)
+		{
+			methodNameCache.clear();
+			methodNameCache = null;
+		}
+		
 	}
 
 }

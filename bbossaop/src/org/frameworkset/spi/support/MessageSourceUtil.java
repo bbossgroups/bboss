@@ -17,8 +17,11 @@
 package org.frameworkset.spi.support;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
 
+import org.frameworkset.spi.BaseApplicationContext;
 import org.frameworkset.util.io.ResourceLoader;
 
 /**
@@ -26,12 +29,31 @@ import org.frameworkset.util.io.ResourceLoader;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2012-6-4 ÉÏÎç11:56:43
+ * @Date 2012-6-4 11:56:43
  * @author biaoping.yin
  * @version 1.0
  */
 public abstract class MessageSourceUtil {
-	protected static final Map<String,HotDeployResourceBundleMessageSource> messageSources = new HashMap<String,HotDeployResourceBundleMessageSource>();
+	protected static  Map<String,HotDeployResourceBundleMessageSource> messageSources = new HashMap<String,HotDeployResourceBundleMessageSource>();
+	static
+	{
+		BaseApplicationContext.addShutdownHook(new Runnable(){
+
+			public void run() {
+				HotDeployResourceBundleMessageSource.stopmonitor();	
+				if(messageSources != null)
+				{
+					Iterator<Entry<String, HotDeployResourceBundleMessageSource>> it = messageSources.entrySet().iterator();
+					while(it.hasNext())
+					{
+						Entry<String, HotDeployResourceBundleMessageSource> entry = it.next();
+						entry.getValue().destroy();
+					}
+					messageSources.clear();
+					messageSources = null;
+				}
+			}});
+	}
 	public static MessageSource getMessageSource(String basenames)
 	{
 		return getMessageSource(basenames,true);

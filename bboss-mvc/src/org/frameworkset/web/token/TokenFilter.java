@@ -64,7 +64,7 @@ public class TokenFilter implements Filter{
 			if(tokenstore_.toLowerCase().equals("mem") || tokenstore_.toLowerCase().equals("session"))
 			{
 				tokenstore = tokenstore_.toLowerCase();
-				log.debug("Set tokenstore["+tokenstore_+"] failed,tokens will be stored in session.");
+				log.debug("Set tokenstore["+tokenstore_+"] success,tokens will be stored in memorey.");
 			}
 			else
 			{

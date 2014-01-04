@@ -132,7 +132,7 @@ public class SQLUtil {
 	 /**
      * 默认的sql结构缓存器
      */
-    private static final GloableSQLUtil globalSQLUtil = new GloableSQLUtil();
+    private static GloableSQLUtil globalSQLUtil = new GloableSQLUtil();
 //	/**
 //	 * sql语句velocity模板索引表，以sql语句的名称为索引
 //	 * 当sql文件重新加载时，这些模板也会被重置
@@ -211,7 +211,25 @@ public class SQLUtil {
 		return this.hasrefs;
 	}
 	
-	
+	void _destroy()
+	{
+		if(sqls != null)
+		{
+			this.sqls.clear();
+			sqls = null;
+		}
+		if(sqlrefs != null)
+		{
+			this.sqlrefs.clear();
+			sqlrefs = null;
+		}
+		this.cache.clear();
+		if(sqlcontext != null)
+			sqlcontext.destroy(true);
+		
+		defaultDBName = null;
+		
+	}
 	           
 	void reinit()
 	{
@@ -287,7 +305,10 @@ public class SQLUtil {
 	{
 		try {
 			if(SQLUtil.damon != null)
+			{
 				SQLUtil.damon.stopped();
+				damon = null;
+			}
 		} catch (Throwable e) {
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();
@@ -298,6 +319,17 @@ public class SQLUtil {
 	{
 		return this.sqlcontext.getConfigfile();
 		
+	}
+	static
+	{
+		BaseApplicationContext.addShutdownHook(new Runnable(){
+
+			public void run() {
+				SQLUtil.stopmonitor();
+				destory();
+				globalSQLUtil._destroy();
+				globalSQLUtil = null;
+			}});
 	}
 	private static Object lock = new Object();
 	private static void checkSQLUtil(String sqlfile,SQLUtil sqlutil){
@@ -313,12 +345,7 @@ public class SQLUtil {
 					{
 						damon = new DaemonThread(refresh_interval,"SQL files Refresh Worker"); 
 						damon.start();
-						BaseApplicationContext.addShutdownHook(new Runnable(){
-
-							public void run() {
-								SQLUtil.stopmonitor();
-								
-							}});
+						
 					}
 				}
 			}
@@ -365,6 +392,21 @@ public class SQLUtil {
 		}
 		
 		return sqlUtil;
+	}
+	
+	static void destory()
+	{
+		if(sqlutils != null)
+		{
+			Iterator<Map.Entry<String,SQLUtil>> it = sqlutils.entrySet().iterator();
+			while(it.hasNext())
+			{
+				Map.Entry<String,SQLUtil> entry = it.next();
+				entry.getValue()._destroy();
+			}
+			sqlutils.clear();
+			sqlutils = null;
+		}
 	}
 	
 	private SQLInfo getReferSQLInfo(String dbname, String sqlname)

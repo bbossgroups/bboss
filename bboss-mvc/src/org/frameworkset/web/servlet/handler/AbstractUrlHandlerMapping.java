@@ -45,6 +45,17 @@ public abstract class AbstractUrlHandlerMapping extends AbstractHandlerMapping{
 
 	protected PathMatcher pathMatcher = new AntPathMatcher();
 	private static Logger logger = Logger.getLogger(AbstractUrlHandlerMapping.class);
+	public void destroy()
+	{
+		super.destroy();
+		if(handlerMap != null)
+		{
+			handlerMap.clear();handlerMap = null;
+		}
+		this.rootHandler = null;
+		this.urlPathHelper = null;
+		this.pathMatcher = null;
+	}
 	/**
 	 * 
 	 */

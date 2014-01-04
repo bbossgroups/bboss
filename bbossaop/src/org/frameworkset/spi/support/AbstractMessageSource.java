@@ -327,6 +327,10 @@ public abstract class AbstractMessageSource extends MessageSourceSupport  implem
 	 * @see #resolveCodeWithoutArguments(String, java.util.Locale)
 	 */
 	protected abstract MessageFormat resolveCode(String code, Locale locale);
+	public void destroy()
+	{
+		this.parentMessageSource = null;
+	}
 	
 
 }

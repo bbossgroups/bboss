@@ -50,9 +50,9 @@ import org.frameworkset.web.servlet.handler.HandlerUtils;
  */
 public class HandlerMethodResolver {
 	
-	private final Set<MethodInfo> handlerMethods = new LinkedHashSet<MethodInfo>();
+	private  Set<MethodInfo> handlerMethods = new LinkedHashSet<MethodInfo>();
 	/** Methods, keyed by exception class */
-	private final Map<Class, Method> exceptionHandlerMap = new HashMap<Class, Method>();
+	private  Map<Class, Method> exceptionHandlerMap = new HashMap<Class, Method>();
 	private final static Logger log = Logger.getLogger(HandlerMethodResolver.class);
 
 	private final Set<Method> initBinderMethods = new LinkedHashSet<Method>();
@@ -221,6 +221,20 @@ public class HandlerMethodResolver {
 
 	public Set<String> getActualSessionAttributeNames() {
 		return this.actualSessionAttributeNames;
+	}
+	public void destroy()
+	{
+		if(handlerMethods != null)
+		{
+			handlerMethods.clear();
+			handlerMethods = null;
+		}
+		
+		if(exceptionHandlerMap != null)
+		{
+			exceptionHandlerMap.clear();
+			exceptionHandlerMap = null;
+		}
 	}
 
 }

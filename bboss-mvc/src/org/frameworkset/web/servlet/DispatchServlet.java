@@ -92,7 +92,7 @@ import com.frameworkset.util.StringUtil;
  * @version 1.0
  */
 public class DispatchServlet extends HttpServlet {
-	private static final Properties defaultStrategies;
+	private static  Properties defaultStrategies;
 	
 	
 	
@@ -103,6 +103,15 @@ public class DispatchServlet extends HttpServlet {
 	
 	
 	
+	public static void destory()
+	{
+		DispatchServlet.defaultStrategies = null;
+		DispatchServlet.localeResolver = null;
+		DispatchServlet.viewResolvers = null;
+		DispatchServlet.webApplicationContext = null;
+		
+				
+	}
 	
 	/**
 	 * Name of the class path resource (relative to the DispatcherServlet class)
@@ -1735,5 +1744,23 @@ public class DispatchServlet extends HttpServlet {
 
 	public static String getUseCodeAsDefaultMessage() {
 		return useCodeAsDefaultMessage;
+	}
+
+
+
+	@Override
+	public void destroy() {
+		// TODO Auto-generated method stub
+		super.destroy();
+		if(this.handlerAdapters != null)
+		{
+			for(int i = 0 ; i < this.handlerAdapters.size() ;i ++)
+			{
+				HandlerAdapter ha = this.handlerAdapters.get(i);
+				ha.destroy();
+			}
+			this.handlerAdapters.clear();
+			this.handlerAdapters = null;
+		}
 	}
 }

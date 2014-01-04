@@ -37,5 +37,6 @@ public interface MethodNameResolver {
 	 * can be found for the given request
 	 */
 	String getHandlerMethodName(HttpServletRequest request) throws NoSuchRequestHandlingMethodException;
+	void destroy();
 
 }

@@ -39,12 +39,17 @@ public abstract class AbstractHandlerMapping  extends WebApplicationObjectSuppor
 	
 	private HandlerMeta defaultHandler;
 
-	private final List interceptors = new ArrayList();
+	private  List interceptors = new ArrayList();
 
 	private HandlerInterceptor[] adaptedInterceptors;
 	
 	
-
+	public void destroy()
+	{
+		this.defaultHandler = null;
+		this.adaptedInterceptors = null;
+		this.interceptors = null;
+	}
 
 	
 	/**

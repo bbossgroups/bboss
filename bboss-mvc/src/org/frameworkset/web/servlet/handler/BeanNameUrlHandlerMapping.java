@@ -15,10 +15,6 @@
  */
 package org.frameworkset.web.servlet.handler;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import org.frameworkset.util.annotations.HandlerMapping;
 
 
 
@@ -34,7 +30,7 @@ import org.frameworkset.util.annotations.HandlerMapping;
 public class BeanNameUrlHandlerMapping extends AbstractDetectingUrlHandlerMapping{
 	private boolean useDefaultSuffixPattern = true;
 
-	private final Map<Class, HandlerMapping> cachedMappings = new HashMap<Class, HandlerMapping>();
+
 
 
 	/**

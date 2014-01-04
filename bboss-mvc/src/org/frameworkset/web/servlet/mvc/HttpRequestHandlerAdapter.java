@@ -64,4 +64,10 @@ public class HttpRequestHandlerAdapter  implements HandlerAdapter {
 		return this.messageConverters != null && this.messageConverters.length > 0;
 	}
 
+	@Override
+	public void destroy() {
+		messageConverters = null;
+		
+	}
+
 }

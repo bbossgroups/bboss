@@ -15,7 +15,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.frameworkset.spi.BaseApplicationContext;
 import org.frameworkset.util.HashUtil;
 
 import com.frameworkset.util.StringUtil;
@@ -26,7 +25,19 @@ import com.frameworkset.util.StringUtil;
  *
  */
 public class MemTokenManager {
-	private final Map<MemToken,Object> temptokens = new HashMap<MemToken,Object>();
+	
+	
+	public void destory()
+	{
+		temptokens.clear();
+		temptokens = null;
+		if(this.tokenMonitor != null)
+		{
+			this.tokenMonitor.killdown();
+		}
+	}
+	
+	private  Map<MemToken,Object> temptokens = new HashMap<MemToken,Object>();
 	private TokenFilter tokenFilter;
 	/**
 	 * bboss跨站攻击token的参数名称，每个客户端页面通过这个名称将token传回服务端进行
@@ -92,15 +103,7 @@ public class MemTokenManager {
 		{
 			tokenMonitor = new TokenMonitor();
 			tokenMonitor.start();
-			BaseApplicationContext.addShutdownHook(new Runnable(){
-
-				@Override
-				public void run() {
-					tokenMonitor.killdown();
-					
-				}
-				
-			});
+			
 		}
 	}
 	

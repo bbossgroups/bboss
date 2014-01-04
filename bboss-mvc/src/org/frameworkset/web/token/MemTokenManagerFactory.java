@@ -1,7 +1,29 @@
 package org.frameworkset.web.token;
 
+import org.frameworkset.spi.BaseApplicationContext;
+
 public class MemTokenManagerFactory {
 	private static MemTokenManager memTokenManager;
+	static 
+	{
+		BaseApplicationContext.addShutdownHook(new Runnable(){
+
+			@Override
+			public void run() {
+				destory();
+			}
+			
+		});
+	}
+	
+	static void destory()
+	{
+		if(memTokenManager != null)
+		{
+			memTokenManager.destory();
+			memTokenManager = null;
+		}
+	}
 	/**
 	 * used by TokenFilter
 	 * @param dualtime

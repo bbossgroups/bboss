@@ -43,9 +43,9 @@ public class DefaultAnnotationHandlerMapping  extends AbstractDetectingUrlHandle
 
 	private boolean useDefaultSuffixPattern = true;
 
-	private final Map<Class, HandlerMapping> cachedMappings = new HashMap<Class, HandlerMapping>();
+	private Map<Class, HandlerMapping> cachedMappings = new HashMap<Class, HandlerMapping>();
 
-
+	
 	/**
 	 * Set whether to register paths using the default suffix pattern as well:
 	 * i.e. whether "/users" should be registered as "/users.*" too.
@@ -294,6 +294,19 @@ public class DefaultAnnotationHandlerMapping  extends AbstractDetectingUrlHandle
 					StringUtil.arrayToDelimitedString(mappedParams, ", ") +
 					"} not met for request parameters: " + request.getParameterMap());
 		}
+	}
+
+
+	@Override
+	public void destroy() {
+		// TODO Auto-generated method stub
+		super.destroy();
+		if(cachedMappings != null)
+		{
+			cachedMappings.clear();
+			cachedMappings = null;
+		}
+		
 	}
 
 }

@@ -833,11 +833,7 @@ public class HotDeployResourceBundleMessageSource extends AbstractMessageSource
 					{
 						damon = new DaemonThread(refresh_interval,"Message files Refresh Worker"); 
 						damon.start();
-						BaseApplicationContext.addShutdownHook(new Runnable(){
-
-							public void run() {
-								stopmonitor();								
-							}});
+						
 					}
 				}
 			}
@@ -868,7 +864,11 @@ public class HotDeployResourceBundleMessageSource extends AbstractMessageSource
 	{
 		try {
 			if(damon != null)
+			{
 				damon.stopped();
+				damon = null;
+			}
+			
 		} catch (Throwable e) {
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();
@@ -899,6 +899,7 @@ public class HotDeployResourceBundleMessageSource extends AbstractMessageSource
 		this.cachedFilenames.clear();
 		this.cachedMergedProperties.clear();
 		this.cachedProperties.clear();
+		super.destroy();
 		
 	}
 }

@@ -26,6 +26,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Properties;
 import java.util.Set;
 import java.util.StringTokenizer;
@@ -564,15 +565,53 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 	 */
 	public static void shutdown()
 	{
-		for(Runnable destroyVMHook:shutdownHooks)
+		if(shutdownHooks != null)
 		{
-			try {
-				destroyVMHook.run();
-				Thread.sleep(1000);
-			} catch (Throwable e) {
-				log.warn("execute shutdown hook error:", e);
+			for(Runnable destroyVMHook:shutdownHooks)
+			{
+				try {
+					destroyVMHook.run();
+					Thread.sleep(1000);
+				} catch (Throwable e) {
+					log.warn("execute shutdown hook error:", e);
+				}
 			}
+			shutdownHooks.clear();
+			shutdownHooks = null;
 		}
+		
+		if(applicationContexts!= null){
+			Iterator<Entry<String, BaseApplicationContext>> it = applicationContexts.entrySet().iterator();
+			while(it.hasNext())
+			{
+				Entry<String, BaseApplicationContext> entry = it.next();
+				entry.getValue().destroy();
+			}
+			applicationContexts.clear();
+			applicationContexts = null;
+		}
+		
+		rootFiles.clear();
+		
+	}
+	
+	static class WrapperRunnable implements Runnable
+	{
+		private Runnable executor;
+		WrapperRunnable(Runnable executor)
+		{
+			this.executor = executor;
+		}
+		private boolean executed = false;
+		public void run()
+		{
+			if(executed)
+				return;
+			
+			this.executor.run();
+			executed = true;
+		}
+		
 	}
 	/**
 	 * 添加系统中停止时的回调程序
@@ -583,6 +622,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 		try {
 			// use reflection and catch the Exception to allow PoolMan to work
 			// with 1.2 VM's
+			destroyVMHook = new WrapperRunnable(destroyVMHook);
 			Class r = Runtime.getRuntime().getClass();
 			java.lang.reflect.Method m = r.getDeclaredMethod("addShutdownHook",
 					new Class[] { Thread.class });

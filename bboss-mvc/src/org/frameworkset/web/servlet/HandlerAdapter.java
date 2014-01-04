@@ -76,6 +76,8 @@ public interface HandlerAdapter {
 	public void setMessageConverters(HttpMessageConverter[] messageConverters);
 	
 	public boolean containMessageConverters();
+
+	void destroy();
 	
 
 

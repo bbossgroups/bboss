@@ -15,10 +15,14 @@
  */
 package org.frameworkset.web.listener;
 
+import java.beans.Introspector;
+
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
 import org.frameworkset.spi.BaseApplicationContext;
+import org.frameworkset.util.ClassUtil;
+import org.frameworkset.web.servlet.DispatchServlet;
 
 /**
  * <p>Title: ApplicationLifeListener.java</p> 
@@ -47,7 +51,11 @@ public class ApplicationLifeListener implements ServletContextListener{
 	public void contextDestroyed(ServletContextEvent arg0) {
 		
 		BaseApplicationContext.shutdown();
+		ClassUtil.destroy();
+		DispatchServlet.destory();
+		Introspector.flushCaches();
 	}
+	
 	
 	
 	

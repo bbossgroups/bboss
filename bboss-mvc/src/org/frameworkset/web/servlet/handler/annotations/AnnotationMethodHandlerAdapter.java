@@ -15,7 +15,9 @@
  */
 package org.frameworkset.web.servlet.handler.annotations;
 
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.servlet.http.HttpServletRequest;
@@ -89,7 +91,7 @@ public class AnnotationMethodHandlerAdapter  extends WebContentGenerator impleme
 	private ParameterNameDiscoverer parameterNameDiscoverer = null;
 	private WebArgumentResolver[] customArgumentResolvers;
 
-	private final Map<Class<?>, ServletHandlerMethodResolver> methodResolverCache =
+	private  Map<Class<?>, ServletHandlerMethodResolver> methodResolverCache =
 			new ConcurrentHashMap<Class<?>, ServletHandlerMethodResolver>();
 
 
@@ -350,6 +352,30 @@ public class AnnotationMethodHandlerAdapter  extends WebContentGenerator impleme
 	public boolean containMessageConverters() {
 		
 		return this.messageConverters != null && this.messageConverters.length > 0;
+	}
+
+
+	@Override
+	public void destroy() {
+		if(methodNameResolver != null)
+		{
+			this.methodNameResolver.destroy();
+			methodNameResolver = null;
+		}
+		this.messageConverters = null;
+		if(methodResolverCache != null)
+		{
+			Iterator<Entry<Class<?>, ServletHandlerMethodResolver>> it = this.methodResolverCache.entrySet().iterator();
+			while(it.hasNext())
+			{
+				Entry<Class<?>, ServletHandlerMethodResolver> entry = it.next();
+				entry.getValue().destroy();
+			}
+			this.methodResolverCache.clear();
+			methodResolverCache = null;
+		}
+				
+		
 	}
 
 

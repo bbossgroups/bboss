@@ -68,4 +68,7 @@ public interface HandlerMapping {
 	 */
 	HandlerExecutionChain getHandler(HttpServletRequest request) throws Exception;
 
+
+	void destroy();
+
 }

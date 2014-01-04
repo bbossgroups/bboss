@@ -3351,6 +3351,18 @@ public class PagerDataSet extends PagerTagSupport {
 	public void setMoreQuery(boolean moreQuery) {
 		this.moreQuery = moreQuery;
 	}
+
+	@Override
+	public void doFinally() {
+		if(formulas != null)
+		{
+			this.formulas.clear();
+			formulas = null;
+		}
+		super.doFinally();
+	}
+	
+	
    
     
 

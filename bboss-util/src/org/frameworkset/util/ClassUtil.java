@@ -68,9 +68,17 @@ import com.frameworkset.util.ValueObjectUtil;
  */
 public class ClassUtil
 {
+	
 	private static final Logger log = Logger.getLogger(ClassUtil.class);
 	private static final ParameterNameDiscoverer parameterNameDiscoverer = new LocalVariableTableParameterNameDiscoverer();
-	
+	public static void destroy()
+	{
+		if(classInfos != null)
+		{
+			classInfos.clear();
+			classInfos=null;
+		}
+	}
 	public static ParameterNameDiscoverer getParameterNameDiscoverer()
 	{
 		return parameterNameDiscoverer;
