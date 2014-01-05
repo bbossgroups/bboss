@@ -34,7 +34,9 @@ package com.frameworkset.common.poolman.sql;
 import java.sql.Connection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.apache.log4j.Logger;
 
@@ -48,15 +50,36 @@ import com.frameworkset.common.poolman.util.SQLManager;
  */
 public class PrimaryKeyCacheManager {
     private static Logger log = Logger.getLogger(PrimaryKeyCacheManager.class);
-    private Map primaryKeyCaches;
-
+    private Map<String,PrimaryKeyCache> primaryKeyCaches;
+    public static void  destroy()
+    {
+    	if(self != null)
+    	{
+    		self._destroy();
+    		self = null;
+    	}
+    }
+    void _destroy()
+    {
+    	if(primaryKeyCaches != null)
+    	{
+    		Iterator<Entry<String, PrimaryKeyCache>> it = primaryKeyCaches.entrySet().iterator();
+    		while(it.hasNext())
+    		{
+    			Entry<String, PrimaryKeyCache> entry = it.next();
+    			entry.getValue().destroy();
+    		}
+    		primaryKeyCaches.clear();
+    		primaryKeyCaches = null;
+    	}
+    }
     private static PrimaryKeyCacheManager self;
 
     private PrimaryKeyCacheManager()
     {
         primaryKeyCaches = Collections.synchronizedMap(new HashMap());
     }
-
+    
     public static PrimaryKeyCacheManager getInstance()
     {
         if(self == null)

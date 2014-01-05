@@ -48,7 +48,14 @@ public class SQLManager extends PoolManager{
 
     private String configFile = PoolManConstants.XML_CONFIG_FILE;
 
-
+    public static void destroy()
+    {
+    	if(myself != null)
+    	{
+    		myself.destroyPools();
+    		myself = null;
+    	}
+    }
     /**
      * This method retrieves the singleton SQLManager instance
      * created when the class was first loaded.

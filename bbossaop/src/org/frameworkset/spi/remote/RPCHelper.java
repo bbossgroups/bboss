@@ -38,6 +38,7 @@ import org.frameworkset.spi.remote.mina.server.MinaRPCServer;
 import org.frameworkset.spi.remote.rmi.RMIServer;
 import org.frameworkset.spi.serviceidentity.ServiceIDImpl;
 import org.frameworkset.spi.serviceidentity.TargetImpl;
+
 import bboss.org.jgroups.Address;
 import bboss.org.jgroups.blocks.GroupRequest;
 import bboss.org.jgroups.blocks.RpcDispatcher;
@@ -1299,7 +1300,14 @@ public class RPCHelper
         return serviceID;
 
     }
-    
+    public static void destroy()
+    {
+    	if(instance != null)
+    	{
+    		instance.stopRPCServices();
+    		instance = null;
+    	}
+    }
     public void stopRPCServices()
     {
         if(startupProtocols == null || startupProtocols.size() <= 0)
@@ -1384,6 +1392,26 @@ public class RPCHelper
         StringBuffer address = new StringBuffer();
         address.append(buildAddress( rpcadress, serviceid)).append("?user=").append(user).append("&password=").append(password);
         return address.toString();
+    }
+    
+    static
+    {
+    	
+            // use reflection and catch the Exception to allow PoolMan to work with 1.2 VM's
+            BaseApplicationContext.addShutdownHook(new Runnable(){
+
+				public void run() {
+					 try {
+				           
+				           destroy();
+				           // GenericPoolManager.getInstance().destroyPools();
+				        } catch (Exception e) {
+				            System.out.println("Unable to properly shutdown: " + e);
+				        }
+					
+				}
+            	
+            });
     }
 
 	

@@ -58,7 +58,7 @@ public class TaskService implements Service {
 	}
 	static 
 	{
-		BaseApplicationContext.addShutdownHook(new ShutdownThread());
+		BaseApplicationContext.addShutdownHook(new ShutdownThread(),1000);
 	}
 	static class ShutdownThread extends Thread {
 //		TaskService taskService;
@@ -71,7 +71,10 @@ public class TaskService implements Service {
 //			if (taskService != null)
 //				taskService.stopService();
 			if(scheduleRepository != null)
+			{
 				scheduleRepository.stopTaskServices();
+				scheduleRepository = null;
+			}
 		}
 	}
 
@@ -863,6 +866,10 @@ public class TaskService implements Service {
 			
 			started = false;
 			scheduler = null;
+			scheduleRepository = null;
+			schedulerServiceIndex = null;
+			taskContext = null;
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

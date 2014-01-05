@@ -21,6 +21,8 @@ import java.io.InputStream;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -85,7 +87,26 @@ import com.frameworkset.util.SimpleStringUtil;
  */
 public abstract class  BaseApplicationContext extends DefaultResourceLoader implements
 		MessageSource, ResourcePatternResolver, ResourceLoader {
-	
+	static
+	{
+		try {
+			Class r = Runtime.getRuntime().getClass();
+			java.lang.reflect.Method m = r.getDeclaredMethod("addShutdownHook",
+					new Class[] { Thread.class });
+			m.invoke(Runtime.getRuntime(), new Object[] { new Thread(
+					new Runnable(){
+
+						public void run() {
+							shutdown();
+							
+						}
+						
+					}) });
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	/**
 	 * 定义5种组件容器的类型代码
 	 */
@@ -554,53 +575,80 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 //		instance.initApplicationContext();
 //		return instance;
 //	}
-	private static List<Runnable> shutdownHooks = new ArrayList<Runnable>();
-	private static void addShutdownHook_(Runnable destroyVMHook)
+	private static List<WrapperRunnable> shutdownHooks = new ArrayList<WrapperRunnable>();
+	private static void addShutdownHook_(WrapperRunnable destroyVMHook)
 	{
 		shutdownHooks.add(destroyVMHook);
+		
 	}
 	
+	static Object lockshutdown = new Object();
 	/**
 	 * invoke shutdown hooks by programs when application is undeployed.  
 	 */
-	public static void shutdown()
+	public static  void shutdown()
 	{
-		if(shutdownHooks != null)
+		synchronized(lockshutdown)
 		{
-			for(Runnable destroyVMHook:shutdownHooks)
+			if(shutdownHooks != null)
 			{
-				try {
-					destroyVMHook.run();
-					Thread.sleep(1000);
-				} catch (Throwable e) {
-					log.warn("execute shutdown hook error:", e);
+				Collections.sort(shutdownHooks, new Comparator<WrapperRunnable>(){
+	
+					public int compare(WrapperRunnable o1, WrapperRunnable o2) {
+						if(o1.getProir() > o2.getProir())
+							return 1;
+						else if(o1.getProir() == o2.getProir())
+						{
+							return 0;
+						}
+						else
+							return -1;
+							
+					}
+					
+				});
+				for(int i = shutdownHooks.size()-1; i >= 0; i --)
+				{
+					try {
+						
+						WrapperRunnable destroyVMHook = shutdownHooks.get(i);
+						destroyVMHook.run();
+						Thread.sleep(1000);
+					} catch (Throwable e) {
+						log.warn("execute shutdown hook error:", e);
+					}
 				}
+				shutdownHooks.clear();
+				shutdownHooks = null;
 			}
-			shutdownHooks.clear();
-			shutdownHooks = null;
-		}
-		
-		if(applicationContexts!= null){
-			Iterator<Entry<String, BaseApplicationContext>> it = applicationContexts.entrySet().iterator();
-			while(it.hasNext())
+			
+			if(applicationContexts!= null){
+				Iterator<Entry<String, BaseApplicationContext>> it = applicationContexts.entrySet().iterator();
+				while(it.hasNext())
+				{
+					Entry<String, BaseApplicationContext> entry = it.next();
+					entry.getValue().destroy();
+				}
+				applicationContexts.clear();
+				applicationContexts = null;
+			}
+			if(rootFiles != null)
 			{
-				Entry<String, BaseApplicationContext> entry = it.next();
-				entry.getValue().destroy();
+				rootFiles.clear();
+				rootFiles = null;
 			}
-			applicationContexts.clear();
-			applicationContexts = null;
 		}
-		
-		rootFiles.clear();
 		
 	}
 	
 	static class WrapperRunnable implements Runnable
 	{
 		private Runnable executor;
-		WrapperRunnable(Runnable executor)
+		private int proir;
+		WrapperRunnable(Runnable executor,int proir)
 		{
 			this.executor = executor;
+			this.proir = proir;
 		}
 		private boolean executed = false;
 		public void run()
@@ -611,6 +659,12 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 			this.executor.run();
 			executed = true;
 		}
+		public int getProir() {
+			return proir;
+		}
+		public void setProir(int proir) {
+			this.proir = proir;
+		}
 		
 	}
 	/**
@@ -618,20 +672,30 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 	 * 
 	 * @param destroyVMHook
 	 */
-	public static void addShutdownHook(Runnable destroyVMHook) {
+	public static void addShutdownHook(Runnable destroyVMHook,int proir) {
 		try {
 			// use reflection and catch the Exception to allow PoolMan to work
 			// with 1.2 VM's
-			destroyVMHook = new WrapperRunnable(destroyVMHook);
-			Class r = Runtime.getRuntime().getClass();
-			java.lang.reflect.Method m = r.getDeclaredMethod("addShutdownHook",
-					new Class[] { Thread.class });
-			m.invoke(Runtime.getRuntime(), new Object[] { new Thread(
-					destroyVMHook) });
+			destroyVMHook = new WrapperRunnable(destroyVMHook,proir);
+			addShutdownHook_((WrapperRunnable)destroyVMHook);
+//			Class r = Runtime.getRuntime().getClass();
+//			java.lang.reflect.Method m = r.getDeclaredMethod("addShutdownHook",
+//					new Class[] { Thread.class });
+//			m.invoke(Runtime.getRuntime(), new Object[] { new Thread(
+//					destroyVMHook) });
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		addShutdownHook_(destroyVMHook);
+		
+	}
+	
+	/**
+	 * 添加系统中停止时的回调程序
+	 * 
+	 * @param destroyVMHook
+	 */
+	public static void addShutdownHook(Runnable destroyVMHook) {
+		addShutdownHook(destroyVMHook,-1);
 	}
 
 	public void destroySingleBeans() {

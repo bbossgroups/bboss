@@ -227,6 +227,8 @@ public class DaemonThread extends java.lang.Thread
             	continue;
             for(FileBean f:files)
             {
+            	if(stopped)
+            		break;
             	f.checkChanged();
             }
             
@@ -255,6 +257,12 @@ public class DaemonThread extends java.lang.Thread
     	{
     		this.notifyAll();
     	}
+    	 if(files != null)
+    	 {
+    		 files.clear();
+    		 files = null;
+    	 }
+    	 
     }
     
     

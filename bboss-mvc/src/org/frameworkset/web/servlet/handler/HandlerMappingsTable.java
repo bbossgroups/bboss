@@ -37,7 +37,7 @@ import org.frameworkset.web.servlet.HandlerMapping;
  */
 public class HandlerMappingsTable implements DisposableBean{
 	private List<HandlerMapping> handlerMappings;
-	private static Logger logger = Logger.getLogger(DispatchServlet.class);
+	private static Logger logger = Logger.getLogger(HandlerMappingsTable.class);
 	private boolean scanAllMappings = true;
 
 	public List<HandlerMapping> getHandlerMappings() {

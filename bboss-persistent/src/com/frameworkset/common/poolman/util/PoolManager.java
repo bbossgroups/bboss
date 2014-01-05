@@ -15,7 +15,6 @@
  */
 package com.frameworkset.common.poolman.util;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
@@ -24,13 +23,14 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import com.frameworkset.common.poolman.PoolManConstants;
+import com.frameworkset.common.poolman.sql.PrimaryKeyCacheManager;
 
 
 /**
  * An object that manages several pools of objects.
  * @see SQLManager
  */
-public class PoolManager implements Serializable {
+public class PoolManager  {
 	private static Logger log = Logger.getLogger(PoolManager.class);
 
     protected Hashtable pools;
@@ -196,6 +196,16 @@ public class PoolManager implements Serializable {
 					log.error(e.getMessage(),e);
 				}
             }
+            pools.clear();
+            pools = null;
         }
+        this.defaultpool = null;
+        this.poolnames = null;
+        try {
+			PrimaryKeyCacheManager.destroy();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 }

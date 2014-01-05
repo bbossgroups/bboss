@@ -28,11 +28,13 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Properties;
 
+import org.frameworkset.spi.BaseApplicationContext;
+
 import com.frameworkset.common.poolman.util.JDBCPool;
 import com.frameworkset.common.poolman.util.JDBCPoolMetaData;
 import com.frameworkset.common.poolman.util.SQLManager;
 
-public class LocalPoolDeployer extends BaseTableManager implements PoolManDeployer, Runnable,Serializable {
+public class LocalPoolDeployer extends BaseTableManager implements PoolManDeployer,Serializable {
 	public static boolean addShutdownHook = false;
 	public static void shutdownHandle()
 	{
@@ -42,15 +44,12 @@ public class LocalPoolDeployer extends BaseTableManager implements PoolManDeploy
         try {
         	 
             // use reflection and catch the Exception to allow PoolMan to work with 1.2 VM's
-            Class r = Runtime.getRuntime().getClass();
-            java.lang.reflect.Method m =
-                    r.getDeclaredMethod("addShutdownHook", new Class[]{Thread.class});
-            m.invoke(Runtime.getRuntime(), new Object[]{new Thread(new Runnable(){
+            BaseApplicationContext.addShutdownHook(new Runnable(){
 
 				public void run() {
 					 try {
-				           
-				            SQLManager.getInstance().destroyPools();
+						 updateTableInfo();
+				            SQLManager.destroy();
 				           // GenericPoolManager.getInstance().destroyPools();
 				        } catch (Exception e) {
 				            System.out.println("Unable to properly shutdown: " + e);
@@ -58,7 +57,7 @@ public class LocalPoolDeployer extends BaseTableManager implements PoolManDeploy
 					
 				}
             	
-            })});
+            });
             addShutdownHook = true;
         } catch (Exception e) {
         	addShutdownHook = true;
@@ -91,16 +90,16 @@ public class LocalPoolDeployer extends BaseTableManager implements PoolManDeploy
 		shutdownHandle();
 	}
 
-    public void run() {
-        try {
-            // get SQLManager and closeAllResources
-        	updateTableInfo();
-            SQLManager.getInstance().destroyPools();
-           // GenericPoolManager.getInstance().destroyPools();
-        } catch (Exception e) {
-            System.out.println("Unable to properly shutdown: " + e);
-        }
-    }
+//    public void run() {
+//        try {
+//            // get SQLManager and closeAllResources
+//        	
+//            SQLManager.destroy();
+//           // GenericPoolManager.getInstance().destroyPools();
+//        } catch (Exception e) {
+//            System.out.println("Unable to properly shutdown: " + e);
+//        }
+//    }
 
     private void startDataSources(ArrayList datasources) throws Exception {
 

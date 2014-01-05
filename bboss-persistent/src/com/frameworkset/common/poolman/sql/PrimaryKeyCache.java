@@ -152,4 +152,13 @@ public class PrimaryKeyCache {
 		return null;
 	}
 
+	public void destroy() {
+		if(id_tables != null)
+		{
+			id_tables.clear();
+			id_tables = null;
+		}
+		
+	}
+
 }

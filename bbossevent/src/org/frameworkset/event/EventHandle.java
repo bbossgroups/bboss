@@ -43,7 +43,7 @@ import org.safehaus.uuid.UUIDGenerator;
  */
 public class EventHandle extends RejectCallback implements Notifiable {
 	private static final Logger log = Logger.getLogger(EventHandle.class);
-	private static final DefaultBaseLogger baselog = new DefaultBaseLogger (log);
+	private static  DefaultBaseLogger baselog = new DefaultBaseLogger (log);
 	
 	private static EventHandle instance;
 	
@@ -51,34 +51,34 @@ public class EventHandle extends RejectCallback implements Notifiable {
 	/**
 	 * 存放系统中所有的本地和远程事件都感兴趣的监听器,当某个事件被触发时，事件管理框架将向list中的所有监听器发送消息 List<Listener>
 	 */
-	private static final List list = new ArrayList();
+	private static List list = new ArrayList();
 
 	/**
 	 * 存放系统中所有本地事件都感兴趣的监听器,当某个事件被触发时，事件管理框架将向list中的所有监听器发送消息 List<Listener>
 	 */
-	private static final List locallist = new ArrayList();
+	private static List locallist = new ArrayList();
 	/**
 	 * 将监听器所监听的事件类型对监听器建立索引，当某个类型的本地或远程事件被激发时， 事件管理框架除了给所有的事件感兴趣的监听器发
 	 * 送消息时，还会给对该类型事件感兴趣的监听器发送消息
 	 * 需要注意的是，如果某个监听器即对某个特定类型的事件感兴趣又对其他所有的事件感兴趣，那么将该监听器 按照对所有事件感兴趣的监听器处理 Map<EventType,List<Listener>>
 	 */
-	private static final Map listenersIndexbyType = new HashMap();
+	private static Map listenersIndexbyType = new HashMap();
 
 	/**
 	 * 将监听器所监听的事件类型对监听器建立索引，当某个类型的本地事件被激发时， 事件管理框架除了给所有的事件感兴趣的监听器发
 	 * 送消息时，还会给对该类型事件感兴趣的监听器发送消息
 	 * 需要注意的是，如果某个监听器即对某个特定类型的事件感兴趣又对其他所有的事件感兴趣，那么将该监听器 按照对所有事件感兴趣的监听器处理 Map<EventType,List<Listener>>
 	 */
-	private static final Map localListenersIndexbyType = new HashMap();
+	private static Map localListenersIndexbyType = new HashMap();
 	
 	/**
 	 * 监听所有类型远程事件的监听器列表
 	 */
-	private static final List remoteListeners = new ArrayList();
+	private static List remoteListeners = new ArrayList();
 	/**
 	 * 监听特定类型远程事件的监听器列表
 	 */
-	private static final Map remoteListenersIndexbyType = new HashMap();
+	private static Map remoteListenersIndexbyType = new HashMap();
 	
 	private static String event_user = BaseSPIManager.getProperty("event.user","admin");
 	private static String event_password = BaseSPIManager.getProperty("event.password","123456");
@@ -832,24 +832,52 @@ public class EventHandle extends RejectCallback implements Notifiable {
 		stopped = true;
 		try {
 			if(evntHanderWorker != null)
+			{
 				synchronized(evntHanderWorker)
 				{
 					
 					evntHanderWorker.interrupt();
+					evntHanderWorker = null;
 					
 				}
+			}
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		try {
 			if(executor != null)
+			{
 				executor.shutdown();
+				executor = null;
+				
+			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		//inited = false;
+		baselog = null;
+		try {
+			if(commandsQueue != null)
+			{
+				commandsQueue.clear();
+				commandsQueue = null;
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		instance = null;
+		list = null;
+		listenersIndexbyType = null;
+		locallist = null;
+		localListenersIndexbyType = null;
+		remoteListeners = null;
+		remoteListeners = null;
+		
+		
+		
 	}
 
 

@@ -40,7 +40,7 @@ import com.frameworkset.orm.transaction.TransactionManager;
  *         Style - Code Templates
  */
 public abstract class BaseTableManager {
-	static PrimaryKeyCacheManager manager = PrimaryKeyCacheManager.getInstance();
+//	static PrimaryKeyCacheManager manager = PrimaryKeyCacheManager.getInstance();
 
 	private static Logger log = Logger.getLogger(BaseTableManager.class);
 
@@ -469,12 +469,12 @@ public abstract class BaseTableManager {
 			// PrimaryKeyCache keyCache = new PrimaryKeyCache(poolName);
 			try {
 				String _poolname = SQLManager.getRealDBNameFromExternalDBName(poolName);
-				if(manager.getPrimaryKeyCache(_poolname) == null)
+				if(PrimaryKeyCacheManager.getInstance().getPrimaryKeyCache(_poolname) == null)
 				{
 					PrimaryKeyCache keyCache = getPoolTableInfos(_poolname);
 					
 					if(keyCache != null)
-					    manager.addPrimaryKeyCache(keyCache);
+						PrimaryKeyCacheManager.getInstance().addPrimaryKeyCache(keyCache);
 				}
 			} catch (Exception e) {
 				// 获取表的主键信息失败时自动跳过本表主键信息初始化
@@ -501,12 +501,12 @@ public abstract class BaseTableManager {
 	
 			try {
 				String _poolname = SQLManager.getRealDBNameFromExternalDBNameIfExist(poolName);
-				if(manager.getPrimaryKeyCache(_poolname) == null)
+				if(PrimaryKeyCacheManager.getInstance().getPrimaryKeyCache(_poolname) == null)
 				{
 					PrimaryKeyCache keyCache = getPoolTableInfos(_poolname);
 					
 					if(keyCache != null)
-					    manager.addPrimaryKeyCache(keyCache);
+						PrimaryKeyCacheManager.getInstance().addPrimaryKeyCache(keyCache);
 				}
 			} catch (Exception e) {
 				// 获取表的主键信息失败时自动跳过本表主键信息初始化
@@ -525,15 +525,15 @@ public abstract class BaseTableManager {
 	
 	public static void removePrimaryKeyCache(String poolname)
 	{
-		if(manager != null)
+		if(PrimaryKeyCacheManager.getInstance() != null)
 		{
 //			String poolname_ = SQLManager.getRealDBNameFromExternalDBName(poolname);
-			manager.removePrimaryKeyCache(poolname);
+			PrimaryKeyCacheManager.getInstance().removePrimaryKeyCache(poolname);
 		}
 	}
 
 	// 更新缓冲区信息到数据库中
-	public void updateTableInfo() {
+	public static void updateTableInfo() {
 
 	}
 

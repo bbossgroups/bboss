@@ -35,7 +35,7 @@ public class ScheduleRepository {
 	public final static String taskconfig = "org/frameworkset/task/quarts-task.xml";
 	
 	
-	private Object lock = new Object();
+//	private Object lock = new Object();
 	public void addTaskService(String configfile,TaskService service)
 	{	
 		scheduleRepository.put(configfile, service);
@@ -60,6 +60,9 @@ public class ScheduleRepository {
 			TaskService service = this.scheduleRepository.get(key);
 			service.stopService();
 		}
+		scheduleRepository.clear();
+		scheduleRepository = null;
+		
 			
 		
 	}
