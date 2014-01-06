@@ -54,6 +54,7 @@ import oracle.sql.BLOB;
 import oracle.sql.CLOB;
 
 import com.frameworkset.common.poolman.NestedSQLException;
+import com.frameworkset.common.poolman.security.DBInfoEncrypt;
 import com.frameworkset.common.poolman.util.JDBCPoolMetaData;
 import com.frameworkset.common.poolman.util.SQLUtil;
 import com.frameworkset.orm.engine.model.Domain;
@@ -367,7 +368,13 @@ public class DBOracle extends DB
     	{
     		return null;
     	}
-        return info.getUserName().toUpperCase();
+		if(!info.isEncryptdbinfo())
+			return info.getUserName().toUpperCase();
+		else
+		{
+			DBInfoEncrypt dbInfoEncrypt = getDBInfoEncrypt();
+			return dbInfoEncrypt.decryptDBUser(info.getUserName()).toUpperCase();
+		}
     }
 
     /**

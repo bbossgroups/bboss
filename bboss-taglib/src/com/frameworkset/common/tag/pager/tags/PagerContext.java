@@ -1285,7 +1285,7 @@ public class PagerContext
 //						setDataInfo();
 					}
 				}
-				if(cmsCallBack == null && cmsrequest != null)
+				if(cmsCallBack != null && cmsrequest != null)
 				{
 					cmsCallBack = CMSCallBackUtil.getCMSCallBack(cmsrequest);
 					cmsCallBack.initContextData(offset,(int)newPageCount, this.getTotalSize());

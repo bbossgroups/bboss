@@ -46,9 +46,14 @@ import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Properties;
+
+import org.frameworkset.spi.BaseApplicationContext;
 
 import com.frameworkset.common.poolman.PreparedDBUtil;
 import com.frameworkset.common.poolman.handle.ValueExchange;
+import com.frameworkset.common.poolman.security.DBInfoEncrypt;
+import com.frameworkset.common.poolman.security.DESDBPasswordEncrypt;
 import com.frameworkset.common.poolman.util.JDBCPoolMetaData;
 import com.frameworkset.orm.engine.model.Domain;
 import com.frameworkset.orm.engine.model.SchemaType;
@@ -495,7 +500,47 @@ public abstract class DB implements Serializable, IDMethod,Platform
     	{
     		return null;
     	}
-		return info.getUserName().toUpperCase();
+		if(!info.isEncryptdbinfo())
+			return info.getUserName().toUpperCase();
+		else
+		{
+			DBInfoEncrypt dbInfoEncrypt = getDBInfoEncrypt();
+			return dbInfoEncrypt.decryptDBUser(info.getUserName()).toUpperCase();
+		}
+	}
+	
+	public static DBInfoEncrypt getDBInfoEncrypt()
+	{
+		try {
+			Properties  p = BaseApplicationContext.fillProperties();
+			if(p != null)
+			{
+				String DBInfoEncryptclass = p.getProperty("DBInfoEncryptclass");
+				if(DBInfoEncryptclass != null && !DBInfoEncryptclass.trim().equals(""))
+				{
+					DBInfoEncryptclass = DBInfoEncryptclass.trim();
+					return (DBInfoEncrypt)Class.forName(DBInfoEncryptclass).newInstance();
+				}
+				
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		catch (Throwable e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+		}
+		return new DESDBPasswordEncrypt();
 	}
 	
 	

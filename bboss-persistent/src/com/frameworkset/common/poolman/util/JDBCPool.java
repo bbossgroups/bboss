@@ -355,45 +355,14 @@ public class JDBCPool {
 		this.info.setDbtype(this.getDbAdapter().getDBTYPE());
 	}
 	
-	private DBInfoEncrypt getDBInfoEncrypt()
-	{
-		try {
-			Properties  p = BaseApplicationContext.fillProperties();
-			if(p != null)
-			{
-				String DBInfoEncryptclass = p.getProperty("DBInfoEncryptclass");
-				if(DBInfoEncryptclass != null && !DBInfoEncryptclass.trim().equals(""))
-				{
-					DBInfoEncryptclass = DBInfoEncryptclass.trim();
-					return (DBInfoEncrypt)Class.forName(DBInfoEncryptclass).newInstance();
-				}
-				
-			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		catch (Throwable e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-		}
-		return new DESDBPasswordEncrypt();
-	}
+	
+	
 	private Properties getProperties()
 	{
 		Properties p = new Properties();
 		p.setProperty(PoolManConstants.PROP_DRIVERCLASSNAME, info
 				.getDriver());
-		DBInfoEncrypt dbInfoEncrypt = getDBInfoEncrypt();
+		DBInfoEncrypt dbInfoEncrypt = DB.getDBInfoEncrypt();
 		if(this.info.isEncryptdbinfo())
 		{
 //			dbInfoEncrypt.decrypt(data)
