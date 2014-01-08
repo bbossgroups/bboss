@@ -1,5 +1,5 @@
-release version : bbossgroups-3.7.5
-release date: 2013/10/28
+﻿release version : bbossgroups-3.7.6
+release date: 2014/01/08
 
 bboss group website:
 http://www.bbossgroups.com
@@ -7,11 +7,14 @@ http://www.bbossgroups.com
 bboss group project blog:
 http://yin-bp.iteye.com/
 
-bboss group project sourceforge site url:
-http://sourceforge.net/projects/bboss/files/
 
 bboss group project github source url:
 https://github.com/bbossgroups/bbossgroups-3.5
+bbossgroups-3.7.6 release futures
+1.优化资源管理，应用卸载主动释放资源
+2.mvc添加xml插件
+3.标签库修复cms分页模板发布分页导航不起作用问题
+4.修复数据库连接池配置账号加密时导致工作流引擎activiti无法正常启动的bug
 
 bbossgroups-3.7.3 release futures
 
