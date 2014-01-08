@@ -371,6 +371,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						<li><a href="http://www.iteye.com/wiki/bbossgroups/3089-bbossgroups-aop-rmi" target="_blank">bbossgroups rmi组件服务发布和rmi客服端获取方法</a></li>
 						<li><a href="http://yin-bp.iteye.com/blog/1026245" target="_blank">bbossgroups mvc demo部署方法</a></li>
 						<li><a href="http://yin-bp.iteye.com/" target="_blank">bbossgroups官方博客</a></li>
+						<li><a href="http://www.kaifazhe.me/" target="_blank">开发者.我@一个开发者的网站</a></li>
 						
 						
 						
