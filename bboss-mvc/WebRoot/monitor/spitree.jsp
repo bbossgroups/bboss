@@ -2,7 +2,7 @@
 
 <%@ taglib prefix="tab" uri="/WEB-INF/pager-taglib.tld" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
-<%@page import="com.frameworkset.platform.security.AccessControl"%>
+
 <%
 /*
  * <p>Title: SPI服务监控树</p>

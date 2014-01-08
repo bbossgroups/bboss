@@ -153,9 +153,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							<th class="sortable">
 								<a href="?d-16387-o=2&amp;size=&amp;d-16387-s=2">访问地址</a>
 							</th>
-							<th class="sortable">
-								&nbsp;
-							</th>
+							
 							<th class="sortable">
 								描述
 							</th>
@@ -195,13 +193,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							</td>
 							
 							
-							<td>
-								<a href="#"
-									class="imglink"
-									onclick="#"> <img
-										border="0" title="" alt="reload"
-										src="${pageContext.request.contextPath}/css/classic/gifs/reset.gif" id="ri_2"> </a>
-							</td>
+							
 							<td>
 								<pg:cell colName="description" defaultValue=""></pg:cell>
 							</td>
