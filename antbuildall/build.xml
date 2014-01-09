@@ -1107,6 +1107,24 @@ bbossaop<-cas server [bboss-aop.jar]
 			<fileset dir="${bboss-plugin-hessian}/distrib" includes="*.jar" />
 			<fileset dir="${bboss-schedule}/distrib" includes="*.jar" />
 		</copy>
+		<delete dir="${bboss-util}/distrib"  />
+		<delete dir="${bboss-persistent}/distrib"  />
+		<delete dir="${bboss-taglib}/distrib" />
+		<delete dir="${bboss-soa}/distrib" />
+		<delete dir="${bboss-mvc}/distrib" />
+		<delete dir="${bbossevent}/distrib" />
+		<delete dir="${bboss-aop}/distrib"/>
+		<delete dir="${bboss-velocity}/distrib" />
+		<delete dir="${bboss-jodconverter-core}/distrib" />
+		<delete dir="${bboss-plugin-wordpdf}/distrib" />
+		<delete dir="${bboss-plugin-hessian}/distrib"  />
+		<delete dir="${bboss-schedule}/distrib"  />
+	</target>
+	
+	<target name="afterarchive" description="afterarchive">
+			<echo>afterarchive clean distrib jars</echo>
+			<delete dir="${alldistrib}"/>
+			
 	</target>
 		
 </project>
