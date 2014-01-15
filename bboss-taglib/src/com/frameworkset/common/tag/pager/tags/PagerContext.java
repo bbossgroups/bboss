@@ -673,7 +673,7 @@ public class PagerContext
 	 */
 	protected String getCustomUrl(String formName, String params,
 			boolean promotion, String forwardUrl, String id) {
-		String customFirstUrl = "javascript:pageSubmit('" + formName + "','"
+		String customFirstUrl = "javascript:bboss.pager.pageSubmit('" + formName + "','"
 				+ params + "','" + forwardUrl + "'," + promotion + ",'" + id
 				+ "')";
 		return customFirstUrl;

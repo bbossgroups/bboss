@@ -502,11 +502,11 @@ public final class IndexTag extends PagerTagSupport {
 		select.setName("__max_page_size");
 		if(pagerContext.getContainerid() == null || pagerContext.getContainerid().equals(""))
 		{
-			select.setOnChange("javascript:__chagePageSize(event,'" + pagerContext.getCookieid() + "','__max_page_size','" +  pagerContext.getTruePageUrl()  + "')");
+			select.setOnChange("javascript:bboss.pager.__chagePageSize(event,'" + pagerContext.getCookieid() + "','__max_page_size','" +  pagerContext.getTruePageUrl()  + "')");
 		}
 		else
 		{
-			select.setOnChange("javascript:__chagePageSize(event,'" + pagerContext.getCookieid() 
+			select.setOnChange("javascript:bboss.pager.__chagePageSize(event,'" + pagerContext.getCookieid() 
 							+ "','__max_page_size','"
 							+ pagerContext.getTruePageUrl() 
 							+ "','"+ pagerContext.getSelector() 
@@ -632,9 +632,9 @@ public final class IndexTag extends PagerTagSupport {
     {
         StringBuffer ret = new StringBuffer();
         if(selector != null)
-            ret.append("javascript:loadPageContent('").append(url).append("','").append(containerid).append("','").append(selector).append("');");
+            ret.append("javascript:bboss.pager.loadPageContent('").append(url).append("','").append(containerid).append("','").append(selector).append("');");
         else
-            ret.append("javascript:loadPageContent('").append(url).append("','").append(containerid).append("',null);");
+            ret.append("javascript:bboss.pager.loadPageContent('").append(url).append("','").append(containerid).append("',null);");
         return ret.toString();
     }
     
@@ -1419,11 +1419,11 @@ public final class IndexTag extends PagerTagSupport {
 		{
 			if(this.pagerContext.getCommitevent().startsWith("'") || this.pagerContext.getCommitevent().startsWith("\""))
 			{
-				script .append(new Script().setTagText("commitevent = "+ this.pagerContext.getCommitevent() + ";"));
+				script .append(new Script().setTagText("bboss.pager.beforeload = "+ this.pagerContext.getCommitevent() + ";"));
 			}
 			else 			
 			{
-				script .append(new Script().setTagText("commitevent = \"" + this.pagerContext.getCommitevent() + "\";"));
+				script .append(new Script().setTagText("bboss.pager.beforeload = \"" + this.pagerContext.getCommitevent() + "\";"));
 			}
 		}
 		return script.toString();
@@ -1736,7 +1736,7 @@ public final class IndexTag extends PagerTagSupport {
             {
                 if(pagerContext.getSortKey() != null)
                 {
-                    gogo.append("goTo('").append(gotopageid).append("','").append(gopageerror_msg).append("',");
+                    gogo.append("bboss.pager.goTo('").append(gotopageid).append("','").append(gopageerror_msg).append("',");
                     if(pagerContext.getContainerid() != null && !pagerContext.getContainerid().equals(""))
                     {
                         gogo.append("'").append(pagerContext.getContainerid()).append("'");                        
@@ -1772,7 +1772,7 @@ public final class IndexTag extends PagerTagSupport {
                 }
                 else
                 {
-                    gogo.append("goTo('").append(gotopageid).append("','").append(gopageerror_msg).append("',");
+                    gogo.append("bboss.pager.goTo('").append(gotopageid).append("','").append(gopageerror_msg).append("',");
                     if(pagerContext.getContainerid() != null && !pagerContext.getContainerid().equals(""))
                     {
                         gogo.append("'").append(pagerContext.getContainerid()).append("'");                        
@@ -1809,7 +1809,7 @@ public final class IndexTag extends PagerTagSupport {
             {
                 if(pagerContext.getSortKey() != null)
                 {
-                    gogo.append("goTo('").append(gotopageid).append("','").append(gopageerror_msg).append("',");
+                    gogo.append("bboss.pager.goTo('").append(gotopageid).append("','").append(gopageerror_msg).append("',");
                     if(pagerContext.getContainerid() != null && !pagerContext.getContainerid().equals(""))
                     {
                         gogo.append("'").append(pagerContext.getContainerid()).append("'");                        
@@ -1851,7 +1851,7 @@ public final class IndexTag extends PagerTagSupport {
                 }
                 else
                 {
-                    gogo.append("goTo('").append(gotopageid).append("','").append(gopageerror_msg).append("',");
+                    gogo.append("bboss.pager.goTo('").append(gotopageid).append("','").append(gopageerror_msg).append("',");
                     if(pagerContext.getContainerid() != null && !pagerContext.getContainerid().equals(""))
                     {
                         gogo.append("'").append(pagerContext.getContainerid()).append("'");                        
@@ -1911,7 +1911,7 @@ public final class IndexTag extends PagerTagSupport {
             .setSize(2)
             .setClass("page_input");
             go.setID(gotopageid);            
-            go.setOnKeyDown("___keydowngo(event,'"+ pagerjumpto + "')");
+            go.setOnKeyDown("bboss.pager.___keydowngo(event,'"+ pagerjumpto + "')");
             
            
                   

@@ -1,9 +1,9 @@
-
-jQuery.bboss.pager =  {
+var bboss = function () {};
+bboss.pager =  {
 		/**
-		 * 定义分页插件的处理事件，导航前事件:beforeload，ajaxload后事件。
+		 * 定义分页插件的处理事件，导航前事件:beforeload，ajaxload后事件:afterload。
 		 */
-		event:{},
+		pagerevent:{beforeload:null,afterload:null},
 		/**
 		 * @param containerid
 		 *            jquery容器id
@@ -96,14 +96,35 @@ jQuery.bboss.pager =  {
 		
 			var flag = false;
 			var executeflag = "false";
-			if (commitevent) {
+			if (this.pagerevent.beforeload && typeof (eval(this.pagerevent.beforeload)) == "function" ) {
 				executeflag = "true";
-				flag = eval(commitevent);
+				try
+				{
+					flag = this.pagerevent.beforeload({"gotopageid":gotopageid,"gopageerror_msg":gopageerror_msg,"containerid":containerid, "selector":selector, 
+						"url":url,
+						"pages": pages, 
+						"maxPageItem":maxPageItem, 
+						"hasParam":hasParam,
+						sort_key:sortKey, desc_key:desc, "id":id, "formName":formName, "params":params, "promotion":promotion,
+						"goPage":goPage,
+						offset_key:offset});
+				}
+				catch(e)
+				{
+					try
+					{
+						flag = this.pagerevent.beforeload();
+					}
+					catch(e)
+					{
+						alert(e);
+					}
+				}
 			}
 		
 			if (formName && flag) {
 		
-				pageSubmit(formName, params, forwardurl, promotion, id, executeflag,
+				this.pageSubmit(formName, params, forwardurl, promotion, id, executeflag,
 						flag);
 			} else {
 		
@@ -111,7 +132,7 @@ jQuery.bboss.pager =  {
 		
 					location.replace(forwardurl);
 				} else {
-					loadPageContent(forwardurl, containerid, selector);
+					this.loadPageContent(forwardurl, containerid, selector);
 				}
 			}
 		
@@ -128,8 +149,22 @@ jQuery.bboss.pager =  {
 			if (id)
 				paramsName = id + ".PAGE_QUERY_STRING";
 			var flag = flag_;
-			if (commitevent && (executeflag == null || executeflag == "false")) {
-				flag = eval(commitevent);
+			if (this.pagerevent.beforeload && typeof (eval(this.pagerevent.beforeload)) == "function"  && (executeflag == null || executeflag == "false")) {
+				try
+				{
+					flag = this.pagerevent.beforeload({"formName":formName,"params":params,"promotion":promotion, "id":id});
+				}
+				catch(e)
+				{
+					try
+					{
+						flag = this.pagerevent.beforeload();
+					}
+					catch(e)
+					{
+						alert(e);
+					}
+				}
 			}
 		
 			if (promotion && flag) {
@@ -327,7 +362,7 @@ jQuery.bboss.pager =  {
 		
 		
 		loadPageContent:function (pageurl, containerid, selector) {
-			containerid = convertValue(containerid, true);	
+			containerid = this.convertValue(containerid, true);	
 			if (selector && selector != "") {
 				$("#" + containerid).load(pageurl + " #" + selector,function(){
 					//setTable_grayCss();
@@ -339,12 +374,23 @@ jQuery.bboss.pager =  {
 				          }        
 						}
 						catch(e){}
+						
+						if (this.pagerevent.afterload && typeof (eval(this.pagerevent.afterload)) == "function" ) {
+							try
+							{
+								this.pagerevent.afterload({"pageurl":pageurl, "containerid":containerid, "selector":selector});
+							}
+							catch(e)
+							{
+								try{this.pagerevent.afterload();}catch(e){alert(e);}
+							}
+						}	
 				});
 				
 			} else {
 				$("#" + containerid).load(pageurl,function(){
 					try{
-						setTable_grayCss()
+						this.setTable_grayCss()
 					}catch(e){
 						
 					};
@@ -355,7 +401,17 @@ jQuery.bboss.pager =  {
 			        	  loadjs();
 			          }        
 					}
-					catch(e){}			
+					catch(e){}	
+					if (this.pagerevent.afterload && typeof (eval(this.pagerevent.afterload)) == "function" ) {						
+						try
+						{
+							this.pagerevent.afterload({"pageurl":pageurl, "containerid":containerid, "selector":selector});
+						}
+						catch(e)
+						{
+							try{this.pagerevent.afterload();}catch(e){alert(e);}
+						}
+					}	
 				});
 			}
 			
@@ -406,7 +462,7 @@ jQuery.bboss.pager =  {
 				datas += "'" + parameters.substring(pos + 1)+ "'}";
 			}
 			
-			return _____parseObj(datas);
+			return this._____parseObj(datas);
 		
 		},
 		_____parseObj:function ( strData ){
@@ -445,14 +501,14 @@ jQuery.bboss.pager =  {
 				// exp.setTime(exp.getTime() + Days*24*60*60*1000);
 				// document.cookie = name + "="+ pagesize +";expires="+
 				// exp.toGMTString();
-				cookiehandle(cookieid, pagesize, {
+				this.cookiehandle(cookieid, pagesize, {
 					path : '/',
 					expires : 100
 				});
 				
 				if(containerid && containerid != "")
 				{
-					loadPageContent(pageurl, containerid, selector);
+					this.loadPageContent(pageurl, containerid, selector);
 				}
 				else
 				{
@@ -462,14 +518,14 @@ jQuery.bboss.pager =  {
 				var select_ = window.event.srcElement;
 		
 				var pagesize = select_.options[select_.selectedIndex].value;
-				cookiehandle(cookieid, pagesize, {
+				this.cookiehandle(cookieid, pagesize, {
 					path : '/',
 					expires : 100
 				});
 				
 				if(containerid && containerid != "")
 				{
-					loadPageContent(pageurl, containerid, selector);
+					this.loadPageContent(pageurl, containerid, selector);
 				}
 				else
 				{
@@ -550,4 +606,7 @@ jQuery.bboss.pager =  {
 			   }
 			);
 		}
-}
+};
+
+var checkAll = bboss.pager.checkAll;
+var checkOne = bboss.pager.checkOne;
