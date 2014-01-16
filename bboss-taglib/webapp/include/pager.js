@@ -398,7 +398,7 @@ bboss.pager =  {
 						if (pagerevent["afterload"] && (typeof (eval(pagerevent["afterload"])) == "function" )) {
 							try
 							{
-								pagerevent["afterload"]({"pageurl":pageurl, "containerid":containerid, "selector":selector});
+								pagerevent["afterload"]({"pageurl":pageurl, "containerid":containerid, "selector":selector});  
 							}
 							catch(e)
 							{

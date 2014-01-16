@@ -126,6 +126,7 @@ String path = request.getContextPath();
 			<div id="pagecontainer2">
 				<script type="text/javascript">
 				$(document).ready(function(){
+					//opt:包含pageurl, containerid, selector三个属性
 					bboss.pager.pagerevent = {
 							beforeload:function(opt){
 								alert("beforeload containerid:"+opt.containerid);
