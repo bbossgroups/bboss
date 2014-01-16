@@ -365,6 +365,7 @@ bboss.pager =  {
 			containerid = this.convertValue(containerid, true);	
 			pagerevent = this.pagerevent;
 			setTable_grayCss = this.setTable_grayCss;
+			var flag = true;
 			if (pagerevent["beforeload"] && (typeof (eval(pagerevent["beforeload"])) == "function" )) {
 				
 				try
@@ -383,6 +384,9 @@ bboss.pager =  {
 					}
 				}
 			}
+			
+			if(flag === false)
+				return;
 			if (selector && selector != "") {
 				$("#" + containerid).load(pageurl + " #" + selector,function(){
 					//setTable_grayCss();
@@ -398,7 +402,7 @@ bboss.pager =  {
 						if (pagerevent["afterload"] && (typeof (eval(pagerevent["afterload"])) == "function" )) {
 							try
 							{
-								pagerevent["afterload"]({"pageurl":pageurl, "containerid":containerid, "selector":selector});
+								pagerevent["afterload"]({"pageurl":pageurl, "containerid":containerid, "selector":selector});  
 							}
 							catch(e)
 							{

@@ -129,10 +129,20 @@ String path = request.getContextPath();
 					//opt:包含pageurl, containerid, selector三个属性
 					bboss.pager.pagerevent = {
 							beforeload:function(opt){
-								alert("beforeload containerid:"+opt.containerid);
+								if(opt.containerid == 'pagecontainer2' || opt.containerid == 'pagecontainer1')
+									alert("beforeload containerid:"+opt.containerid);
+								if(opt.containerid == 'pagecontainer2')
+									{
+										alert("测试前处理返回结果为false效果！阻止页面跳转！");
+										return false;
+									
+									}
+									
+								
 							},
 							afterload:function(opt){
-								alert("afterload containerid:"+opt.containerid);
+								if(opt.containerid == 'pagecontainer2' || opt.containerid == 'pagecontainer1')
+									alert("afterload containerid:"+opt.containerid);
 							}};
 					   $("#pagecontainer").load("pagerqueryuser.htm #pagecontent");
 					   $("#pagecontainer1").load("pagerqueryuser1.htm #pagecontent"); 
