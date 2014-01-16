@@ -19,9 +19,9 @@ String path = request.getContextPath();
 		<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 		<meta http-equiv="description" content="This is my page">
 	
-		<pg:config/>
+		<pg:config enablecontextmenu="false"/>
 		<script type="text/javascript">
-			
+		
 		
 			function deleteUsers(){
 			  $("#form1").action="<%=path%>/jquerypagine/deleteusers.htm";
@@ -86,11 +86,7 @@ String path = request.getContextPath();
 			</table>
 			</form>		
 			<div id="pagecontainer">
-				<script type="text/javascript">
-				$(document).ready(function(){
-					  $("#pagecontainer").load("pagerqueryuser.htm #pagecontent");
-					});
-				</script>
+				
 			</div>
 			<table class="genericTbl">
 				
@@ -108,11 +104,7 @@ String path = request.getContextPath();
 					</tr>
 			</table>
 			<div id="pagecontainer1">
-				<script type="text/javascript">
-				$(document).ready(function(){
-					  $("#pagecontainer1").load("pagerqueryuser1.htm #pagecontent");
-					});
-				</script>
+				
 			</div>
 			
 			
@@ -134,6 +126,15 @@ String path = request.getContextPath();
 			<div id="pagecontainer2">
 				<script type="text/javascript">
 				$(document).ready(function(){
+					bboss.pager.pagerevent = {
+							beforeload:function(opt){
+								alert("beforeload containerid:"+opt.containerid);
+							},
+							afterload:function(opt){
+								alert("afterload containerid:"+opt.containerid);
+							}};
+					   $("#pagecontainer").load("pagerqueryuser.htm #pagecontent");
+					   $("#pagecontainer1").load("pagerqueryuser1.htm #pagecontent"); 
 					  $("#pagecontainer2").load("pagerqueryuser2.htm #pagecontent");
 					});
 				</script>

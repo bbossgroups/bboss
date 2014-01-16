@@ -18,8 +18,8 @@ String path = request.getContextPath();
 						<th width="2%" align=center style="width:5%" class="order1 sorted">
 						  &nbsp;&nbsp;全选<input class="checkbox" 
 							type="checkBox" hidefocus=true 
-							name="checkBoxAll1" 
-							onClick="checkAll('checkBoxAll1','id1')"> 
+							name="checkBoxAll2" 
+							onClick="checkAll('checkBoxAll2','id2')"> 
 						</th>
 						<th width="8%" class="order1 sorted">
 							用户ID:				</th>
@@ -41,8 +41,8 @@ String path = request.getContextPath();
 				<pg:list >
 					<tr class="even">
 						<td width="2%" align=center style="width:5%">
-							<input class="checkbox"  onClick="checkOne('checkBoxAll1','id1')" 
-							type="checkbox" name="id1" value="<pg:cell colName="userId" defaultValue=""/>"></td>
+							<input class="checkbox"  onClick="checkOne('checkBoxAll2','id2')" 
+							type="checkbox" name="id2" value="<pg:cell colName="userId" defaultValue=""/>"></td>
 						 <td ><pg:cell colName="userId" defaultValue=""/>  
                          </td>  
                          <td width="8%" >  

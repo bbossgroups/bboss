@@ -3,7 +3,7 @@ bboss.pager =  {
 		/**
 		 * 定义分页插件的处理事件，导航前事件:beforeload，ajaxload后事件:afterload。
 		 */
-		pagerevent:{beforeload:null,afterload:null},
+		pagerevent:{},
 		/**
 		 * @param containerid
 		 *            jquery容器id
@@ -96,11 +96,11 @@ bboss.pager =  {
 		
 			var flag = false;
 			var executeflag = "false";
-			if (this.pagerevent.beforeload && typeof (eval(this.pagerevent.beforeload)) == "function" ) {
+			if (containerid == null && this.pagerevent["beforeload"] && (typeof (eval(this.pagerevent["beforeload"])) == "function" )) {
 				executeflag = "true";
 				try
 				{
-					flag = this.pagerevent.beforeload({"gotopageid":gotopageid,"gopageerror_msg":gopageerror_msg,"containerid":containerid, "selector":selector, 
+					flag = this.pagerevent["beforeload"]({"gotopageid":gotopageid,"gopageerror_msg":gopageerror_msg,"containerid":containerid, "selector":selector, 
 						"url":url,
 						"pages": pages, 
 						"maxPageItem":maxPageItem, 
@@ -113,7 +113,7 @@ bboss.pager =  {
 				{
 					try
 					{
-						flag = this.pagerevent.beforeload();
+						flag = this.pagerevent["beforeload"]();
 					}
 					catch(e)
 					{
@@ -149,16 +149,16 @@ bboss.pager =  {
 			if (id)
 				paramsName = id + ".PAGE_QUERY_STRING";
 			var flag = flag_;
-			if (this.pagerevent.beforeload && typeof (eval(this.pagerevent.beforeload)) == "function"  && (executeflag == null || executeflag == "false")) {
+			if (this.pagerevent["beforeload"] && (typeof (eval(this.pagerevent["beforeload"])) == "function")  && (executeflag == null || executeflag == "false")) {
 				try
 				{
-					flag = this.pagerevent.beforeload({"formName":formName,"params":params,"promotion":promotion, "id":id});
+					flag = this.pagerevent["beforeload"]({"formName":formName,"params":params,"promotion":promotion, "id":id});
 				}
 				catch(e)
 				{
 					try
 					{
-						flag = this.pagerevent.beforeload();
+						flag = this.pagerevent["beforeload"]();
 					}
 					catch(e)
 					{
@@ -363,6 +363,26 @@ bboss.pager =  {
 		
 		loadPageContent:function (pageurl, containerid, selector) {
 			containerid = this.convertValue(containerid, true);	
+			pagerevent = this.pagerevent;
+			setTable_grayCss = this.setTable_grayCss;
+			if (pagerevent["beforeload"] && (typeof (eval(pagerevent["beforeload"])) == "function" )) {
+				
+				try
+				{
+					flag = pagerevent["beforeload"]({"pageurl":pageurl, "containerid":containerid, "selector":selector});
+				}
+				catch(e)
+				{
+					try
+					{
+						flag = pagerevent["beforeload"]();
+					}
+					catch(e)
+					{
+						alert(e);
+					}
+				}
+			}
 			if (selector && selector != "") {
 				$("#" + containerid).load(pageurl + " #" + selector,function(){
 					//setTable_grayCss();
@@ -375,14 +395,14 @@ bboss.pager =  {
 						}
 						catch(e){}
 						
-						if (this.pagerevent.afterload && typeof (eval(this.pagerevent.afterload)) == "function" ) {
+						if (pagerevent["afterload"] && (typeof (eval(pagerevent["afterload"])) == "function" )) {
 							try
 							{
-								this.pagerevent.afterload({"pageurl":pageurl, "containerid":containerid, "selector":selector});
+								pagerevent["afterload"]({"pageurl":pageurl, "containerid":containerid, "selector":selector});
 							}
 							catch(e)
 							{
-								try{this.pagerevent.afterload();}catch(e){alert(e);}
+								try{pagerevent["afterload"]();}catch(e){alert(e);}
 							}
 						}	
 				});
@@ -390,7 +410,7 @@ bboss.pager =  {
 			} else {
 				$("#" + containerid).load(pageurl,function(){
 					try{
-						this.setTable_grayCss()
+						setTable_grayCss()
 					}catch(e){
 						
 					};
@@ -402,14 +422,14 @@ bboss.pager =  {
 			          }        
 					}
 					catch(e){}	
-					if (this.pagerevent.afterload && typeof (eval(this.pagerevent.afterload)) == "function" ) {						
+					if (pagerevent["afterload"] && (typeof (eval(pagerevent["afterload"])) == "function") ) {						
 						try
 						{
-							this.pagerevent.afterload({"pageurl":pageurl, "containerid":containerid, "selector":selector});
+							pagerevent["afterload"]({"pageurl":pageurl, "containerid":containerid, "selector":selector});
 						}
 						catch(e)
 						{
-							try{this.pagerevent.afterload();}catch(e){alert(e);}
+							try{pagerevent["afterload"]();}catch(e){alert(e);}
 						}
 					}	
 				});
