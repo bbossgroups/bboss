@@ -37,7 +37,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<div id="caption">
 	
     <ul id="top">
-        <li id="logo"><a href="index.htm"><img alt="bboss Logo" src="${pageContext.request.contextPath}/jsp/logo.png" height="50"></a></li>
+        <li id="logo"><a href="index.htm"><!--<img alt="bboss Logo" src="${pageContext.request.contextPath}/jsp/getqrcode.jpg" height="50">  --><img alt="bboss Logo" height="80" width="80" src="${pageContext.request.contextPath}/jsp/getqrcode.jpg"></a></li>
         
         <li id="runtime">
             <span class="uptime"><P>最新资讯：
@@ -45,7 +45,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             	<a href="http://yin-bp.iteye.com/blog/1869404" target="_blank">bboss离线开发文档下载</a>
             	<a href="http://yin-bp.iteye.com/blog/1814978" target="_blank">bboss 发布和使用hessian服务方法介绍 </a> 
  							</P></span>
-        </li><li id="title">aop/ioc - mvc - persistent - taglib - rpc - soa - devent</li>
+        </li>
     </ul>
 </div>
 
@@ -90,7 +90,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<div class="info">
 					<p>
 						<ul>		
-									
+						<li>aop/ioc - mvc - persistent - taglib - rpc - soa - devent-serializable</li>			
 						<li>1.aop/ioc 业务组件管理、依赖注入、声明式事务等</li>
 						<li>2.rpc(hessian/http/netty/mina/jms/webservice/rmi/jgroups/restful) 安全高效</li>						
 						<li>3.persistent framework,multi db transaction,可方便托管hibernate、ibatis、mybatis事务,有效防止事务泄露</li>
