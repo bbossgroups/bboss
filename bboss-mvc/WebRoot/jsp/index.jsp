@@ -4,9 +4,9 @@ String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/index.htm";
 %><html>
 	<head>
-		<title>欢迎您访问BbossGroups官方网站 - 打造中国自主开发框架品牌</title>
+		<title>欢迎您访问Bboss官方网站 - 打造中国自主开发框架品牌</title>
 		  <meta name="description" content="Bboss mvc DEMO列表 资源和文档下载 bboss-mvc框架体系结构图 bboss-mvc框架请求处理流程图 web.xml部署文件部分说明了mvc框架的涉及web.xml主要配置内容 框架更新记录" />
-    <meta name="keywords" content="Bboss mvc DEMO列表,资源和文档下载 体系结构图, bboss-mvc框架请求处理流程图,web.xml部署文件,框架更新记录" />
+    <meta name="keywords" content="bboss,mvc,ioc,persistent,taglib,bbossgroups,hessian,cxf,webservice,quartz,activiti,Bboss mvc DEMO列表,事务,ibatis,mybatis,hibernate,资源和文档下载 体系结构图, bboss-mvc请求处理流程图,web.xml部署文件,框架更新记录" />
    <pg:config enablecontextmenu="false"/>
 		<link rel="shortcut icon"
 			href="${pageContext.request.contextPath}/css/favicon.gif">
@@ -32,15 +32,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<script language="javascript" src="${pageContext.request.contextPath}/include/syntaxhighlighter/shBrushJScript.js"></script>
 	</head>
 	<body>
+	<div><a name="top"></a><a href="http://yin-bp.iteye.com" target="_blank">bboss博客</a>&nbsp;&nbsp;&nbsp;<a href="https://github.com/bbossgroups/bbossgroups-3.5" target="_blank">Bboss GitHub</a>&nbsp;&nbsp;&nbsp;<a href="https://github.com/bbossgroups/bbossgroups-3.5/archive/master.zip" target="_blank">下载</a>&nbsp;&nbsp;&nbsp;<a href="#3719">友情链接</a>&nbsp;&nbsp;&nbsp;<a href="#1002">联系我们</a>	&nbsp;&nbsp;&nbsp;<a href="http://www.kaifazhe.me/" target="_blank">开发者.我@一个开发者的网站</a>	</div>
 	<div class="bshare-custom"><a title="分享到QQ空间" class="bshare-qzone"></a><a title="分享到新浪微博" class="bshare-sinaminiblog"></a><a title="分享到人人网" class="bshare-renren"></a><a title="分享到开心网" class="bshare-kaixin001"></a><a title="分享到豆瓣" class="bshare-douban"></a><a title="更多平台" class="bshare-more bshare-more-icon"></a><span class="BSHARE_COUNT bshare-share-count">0</span></div><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#style=-1&amp;uuid=c4e6c7ab-15cc-4511-9020-4ac5e8fe0edd&amp;pophcol=2&amp;lang=zh"></script><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/bshareC2.js"></script>
 	<div id="caption">
-	<a name="top"></a>
+	
     <ul id="top">
-        <li id="logo"><a href="index.htm"><img alt="BbossGroups Logo" src="${pageContext.request.contextPath}/jsp/logo.png" height="50"></a></li>
+        <li id="logo"><a href="index.htm"><img alt="bboss Logo" src="${pageContext.request.contextPath}/jsp/logo.png" height="50"></a></li>
         
         <li id="runtime">
             <span class="uptime"><P>最新资讯：
- <a href="http://yin-bp.iteye.com/blog/1506335" target="_blank">开源工作流引擎activiti与bboss整合使用方法浅析</a></P></span>
+            	<a href="http://yin-bp.iteye.com/blog/1877259" target="_blank">扩展Activiti-5.12轻松实现流程节点间自由跳转和任意驳回/撤回</a>&nbsp;
+            	<a href="http://yin-bp.iteye.com/blog/1869404" target="_blank">bboss离线开发文档下载</a>
+            	<a href="http://yin-bp.iteye.com/blog/1814978" target="_blank">bboss 发布和使用hessian服务方法介绍 </a> 
+ 							</P></span>
         </li><li id="title">aop/ioc - mvc - persistent - taglib - rpc - soa - devent</li>
     </ul>
 </div>
@@ -55,9 +59,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<div class="info">
 					<p>
 						<ul>		
-						<li><a href="#1000">bbossgroups特色</a></li>	
-						<li><a href="#999">bbossgroups源码ant构建方法</a></li>	
-						<li><a href="#998">bbossgroups下载</a></li>
+						<li><a href="#1000">bboss特色</a></li>	
+						<li><a href="#998">bboss下载及更新记录</a></li>
+						<li><a href="#999">bboss源码ant构建方法</a></li>	
+						<li><a href="#3723">bboss-mvc体系结构图</a></li>
+						<li><a href="#3724">bboss-mvc请求处理流程图</a></li>
 							
 						<li><a href="#3720">Demo列表中包含每个demo的基本信息，包括名称，访问地址清单，功能说明，查看demo相关的所有代码和配置文件明细</a>
 							<ul><li>点击demo的访问地址清单中的地址可以访问demo的实际功能并进行相应的操作</li>
@@ -66,11 +72,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						<li><a href="#3721">bboss-mvc框架demo的部署部分介绍了如何下载和部署demo应用</a></li>
 						<li><a href="#3722">资源和文档下载</a></li>
 						<li><a href="#4722">视频教程下载</a></li>
-						<li><a href="#3723">bboss-mvc框架体系结构图</a></li>
-						<li><a href="#3724">bboss-mvc框架请求处理流程图</a></li>
-						<li><a href="#3725">web.xml部署文件部分说明了mvc框架的涉及web.xml主要配置内容</a></li>						
-						
-						<li><a href="#3726">框架更新记录</a></li>
+						<li><a href="#8722">工具下载</a></li>
+						<li><a href="#3725">web.xml部署文件部分说明了mvc框架的涉及web.xml主要配置内容</a></li>		
 						
 						<li><a href="#3719">友情链接</a></li>
 						<li><a href="#1002">联系我们</a></li>		
@@ -79,7 +82,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				</div>
 			</div>
 			<h1>
-				bbossgroups特色<a href="#top" name="1000">
+				bboss特色<a href="#top" name="1000">
 			<img border="0" src="<%=request.getContextPath() %>/jsp/top.gif" alt="Top">
 			</a>
 			</h1>
@@ -89,8 +92,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						<ul>		
 									
 						<li>1.aop/ioc 业务组件管理、依赖注入、声明式事务等</li>
-						<li>2.rpc(http/netty/mina/jms/webservice/rmi/jgroups/restful) 安全高效</li>						
-						<li>3.persistent framework,multi db transaction</li>
+						<li>2.rpc(hessian/http/netty/mina/jms/webservice/rmi/jgroups/restful) 安全高效</li>						
+						<li>3.persistent framework,multi db transaction,可方便托管hibernate、ibatis、mybatis事务,有效防止事务泄露</li>
 						<li>4.mvc/restful</li>
 						<li>5.jsp taglib 分页、树、列表、抽屉式、逻辑标签</li>
 						<li>6.distribute event framework</li>
@@ -99,32 +102,31 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						  <li>9.quartz任务管理</li>
 						  <li>10.cluster with jgroups</li>
 						  <li>11.jms 开发套件</li>
-						  <li>12.完备的框架监控体系</li>
+						  <li>12.<a href="<%=request.getContextPath()%>/monitor/console.htm" target="_blank">完备的框架监控体系</a></li>
 						
 						</ul>
 					</p>
 				</div>
 			</div>
 			   <h1>
-				bboss下载<a href="#top" name="998">
+				bboss下载及更新记录<a href="#top" name="998">
 			<img border="0" src="<%=request.getContextPath() %>/jsp/top.gif" alt="Top">
 			</a>
 			</h1>
 			<div class="shadow">
 				<div class="info">
 					<p><ul>
-					<li><a href="http://www.bbossgroups.com/file/download.htm?fileName=bbossgroups-3.5.1.zip" target="_blank">官网下载发布版本</a></li>
-					 
-					
-						<li><a href="https://sourceforge.net/projects/bboss/files/" target="_blank">从sourceforge下载发布版本</a></li>
-						<li><a href="https://github.com/bbossgroups/bbossgroups-3.5" target="_blank">从github源码库下载最新代码（开发库，实时更新）</a></li>
+				
+						<li><a href="https://github.com/bbossgroups/bbossgroups-3.5" target="_blank">github源码库（开发库，实时更新）</a>&nbsp;<a href="https://github.com/bbossgroups/bbossgroups-3.5/archive/master.zip" target="_blank">下载</a></li>
+						<li><a href="https://github.com/bbossgroups/bbossgroups-3.5/commits/master" target="_blank">更新记录</a></li>
+						
 						</ul>	
 					</p>
 				</div>
 			</div>
 					
       <h1>
-				bbossgroups源码ant构建方法<a href="#top" name="999">
+				bboss源码ant构建方法<a href="#top" name="999">
 			<img border="0" src="<%=request.getContextPath() %>/jsp/top.gif" alt="Top">
 			</a>
 			</h1>
@@ -136,6 +138,34 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					</p>
 				</div>
 			</div>
+			 <h1>bboss-mvc体系结构图<a href="#top" name="3723">
+			<img border="0" src="<%=request.getContextPath() %>/jsp/top.gif" alt="Top">
+			</a></h1>
+			<div class="shadow">
+				<div class="info">
+					<p>
+						<div id="detail">
+		                    
+		                        <span class="value"><img src="<%=request.getContextPath()%>/jsp/bboss_archetech.png" width="800" height="400"/></span>
+		                </div>
+						
+					</p>
+				</div>
+			</div>
+			 <h1>bboss-mvc请求处理流程图<a href="#top" name="3724">
+			<img border="0" src="<%=request.getContextPath() %>/jsp/top.gif" alt="Top">
+			</a></h1>
+		<div class="shadow">
+				<div class="info">
+					<p>
+						<div id="detail">
+		                    
+		                        <span class="value"><img src="<%=request.getContextPath()%>/jsp/bboss_mvc_handler_flow.png"/></span>
+		                </div>
+						
+					</p>
+				</div>
+			</div>
 			<div class="blockContainer">
 
 				 <h1>Bboss mvc DEMO列表<a href="#top" name="3720">
@@ -144,22 +174,20 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<table cellspacing="0" cellpadding="0" id="app" class="genericTbl">
 					<thead>
 						<tr>
-							<th class="order1 sorted">
-								&nbsp;
-							</th>
+							
 							<th class="sortable">
 								<a href="?d-16387-o=2&amp;size=&amp;d-16387-s=1">名称</a>
 							</th>
 							<th class="sortable">
 								<a href="?d-16387-o=2&amp;size=&amp;d-16387-s=2">访问地址</a>
 							</th>
-							
+						<th class="sortable">
+								<a href="?d-16387-o=2&amp;size=&amp;d-16387-s=5">代码明细</a>
+							</th>
 							<th class="sortable">
 								描述
 							</th>
-							<th class="sortable">
-								<a href="?d-16387-o=2&amp;size=&amp;d-16387-s=5">代码明细</a>
-							</th>
+							
 						   
 						</tr>
 					</thead>
@@ -169,13 +197,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<tbody>
 					<pg:list requestKey="demobeans">
 						<tr class="odd">
-							<td class="leftMostIcon">
-								<a
-									href="#"
-									class="imglink"> <img title="Undeploy /bboss-mvc"
-										alt="Undeploy" src="${pageContext.request.contextPath}/css/classic/img/bin.jpg"
-										class="lnk"> </a>
-							</td>
+							
 							<td>
 							
 								<a href="#"><pg:cell colName="cnname" defaultValue=""/></a>
@@ -191,15 +213,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 									</div> </a>
 									</pg:list>
 							</td>
+							<td>
+								<a href="detail.htm?demoname=<pg:cell colName="name" />" target="detail">查看代码</a>
+							</td>
 							
-							
-							
+						
 							<td>
 								<pg:cell colName="description" defaultValue=""></pg:cell>
 							</td>
-							<td>
-								<a href="detail.htm?demoname=<pg:cell colName="name" />" target="detail">进入</a>
-							</td>
+							
 							
 						</tr>
 						
@@ -223,7 +245,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<p>
 						<div id="detail">
 		                    
-		                        <span class="value">参考博客文章：<a href="http://yin-bp.iteye.com/blog/1026245" target="demodeploy">《bbossgroups mvc demo构建部署方法》</a> </span>
+		                        <span class="value">参考博客文章：<a href="http://yin-bp.iteye.com/blog/1026245" target="demodeploy">《bboss mvc demo构建部署方法》</a> </span>
 		                </div>
 						
 					</p>
@@ -241,7 +263,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					});
 			</script>
 		</div>
-		
 		<h1>视频教程下载<a href="#top" name="4722">
 			<img border="0" src="<%=request.getContextPath() %>/jsp/top.gif" alt="Top">
 			</a></h1>
@@ -266,35 +287,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					});
 			</script>
 		</div>
-		 <h1>bboss-mvc框架体系结构图<a href="#top" name="3723">
-			<img border="0" src="<%=request.getContextPath() %>/jsp/top.gif" alt="Top">
-			</a></h1>
-			<div class="shadow">
-				<div class="info">
-					<p>
-						<div id="detail">
-		                    
-		                        <span class="value"><img src="<%=request.getContextPath()%>/jsp/bboss_archetech.png" width="800" height="400"/></span>
-		                </div>
-						
-					</p>
-				</div>
-			</div>
-			 <h1>bboss-mvc框架请求处理流程图<a href="#top" name="3724">
-			<img border="0" src="<%=request.getContextPath() %>/jsp/top.gif" alt="Top">
-			</a></h1>
-		<div class="shadow">
-				<div class="info">
-					<p>
-						<div id="detail">
-		                    
-		                        <span class="value"><img src="<%=request.getContextPath()%>/jsp/bboss_mvc_handler_flow.png"/></span>
-		                </div>
-						
-					</p>
-				</div>
-			</div>
-			 <h1>web.xml的配置<a href="#top" name="3725">
+			 <h1>web.xml配置示例<a href="#top" name="3725">
 			<img src="<%=request.getContextPath() %>/jsp/top.gif" border="0" alt="Top">
 			</a></h1>
 		<div class="shadow">
@@ -309,7 +302,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 										<td>
 											<pre name="code" class="xml"><%
 											String content = null;
-											content = DemoUtil.getDemoContentCache().getFileContent(request.getRealPath("/WEB-INF/web.xml"),"UTF-8",true);
+											content = DemoUtil.getDemoContentCache().getFileContent(request.getRealPath("/WEB-INF/web.xml.example"),"UTF-8",true);
 											out.print(content);							
 											%>
 											</pre>
@@ -320,9 +313,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 									
 				         </div> 
 				         <span class="value">
-				         此web.xml的主要功能是配置加载扩展包目录下jar包监听器，申明mvc请求分发器以及url和控制器映射匹配规则，设定字符编码过滤器和出错处理页面。<br/><br/><br/>
-						 <img src="<%=request.getContextPath()%>/jsp/tags.jpg"/><br/>
-						 这个监听器是指加载扩展jar包目录结构的监听器，声明它后它会加载引入扩展的jar包。<br/><br/><br/>
+				         web.xml中可以配置事务泄露监听器，申明mvc请求分发器以及url和控制器映射匹配规则，设定字符编码过滤器和出错处理页面，cxf webservice服务发布servlet,安全认证过滤器配置，http rpc servlet配置等<br/><br/><br/>
+						 
 						 
 						 <img src="<%=request.getContextPath()%>/jsp/mapping.jpg"/><br/>
 						 这个是控制器映射匹配，在web.xml中申明后缀名，mvc会自动识别并匹配以此后缀名的映射地址。并加载所有在WIN-INF目录下"bboss-"开头的xml文件.<br/><br/><br/>
@@ -330,31 +322,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					</p>
 				</div>
 			</div>
-			 <h1>框架更新记录<a href="#top" name="3726">
-			<img border="0" src="<%=request.getContextPath() %>/jsp/top.gif" alt="Top">
-			</a></h1>
-			<div class="shadow">
-				<div class="info">
-					<p>
-						<div id="detail">	
-						
-							<table cellspacing="0" id="resultsTable">
-								<tbody>
-									<tr>
-										<td>
-											<pre name="code" class="xml"><%
-											content = DemoUtil.getDemoContentCache().getFileContent(request.getRealPath("/filesdown/releasenote.txt"),"UTF-8",true);
-											out.print(content);							
-											%>
-											</pre>
-										</td>
-									</tr>
-								</tbody>
-							</table>
-				         </div> 
-					</p>
-				</div>
-			</div>
+			
+			
 			<div class="blockContainer">
 			<h1>友情链接<a href="#top" name="3719">
 			<img border="0" src="<%=request.getContextPath() %>/jsp/top.gif" alt="Top">
@@ -362,15 +331,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<div class="shadow">
 				<div class="info"><p>
 						<ul>			
-						<li><a href="https://sourceforge.net/projects/bboss/files/" target="_blank">bbossgroups源码工程sourceforge下载地址</a></li>
-						<li><a href="https://github.com/bbossgroups/bbossgroups-3.5" target="_blank">bbossgroups github托管地址</a></li>			
-						<li><a href="http://www.iteye.com/wiki/bbossgroups/3092-mvc-bboss-config" target="_blank">bbossgroups 开发系列文章之一 最佳实践</a> </li>
+						<li><a href="http://yin-bp.iteye.com/" target="_blank">bboss官方博客</a></li>
+						<li><a href="https://github.com/bbossgroups/bbossgroups-3.5" target="_blank">bboss github托管地址</a></li>			
+						<li><a href="http://www.iteye.com/wiki/bbossgroups/3092-mvc-bboss-config" target="_blank">bboss 开发系列文章之一 最佳实践</a> </li>
 						<li><a href="http://www.iteye.com/wiki/bbossgroups/3090-mvc-aop-bboss" target="_blank">搭建bboss mvc eclipse开发工程，编写第一个实例</a></li>
-						<li><a href="http://www.iteye.com/wiki/bbossgroups/3094-persistent" target="_blank">bbossgroups SQLExecutor组件api使用实例</a></li>
-						<li><a href="http://www.iteye.com/wiki/bbossgroups/3091-webservice-bboss-aop" target="_blank">bbossgroups webservice引擎使用方法</a></li>
-						<li><a href="http://www.iteye.com/wiki/bbossgroups/3089-bbossgroups-aop-rmi" target="_blank">bbossgroups rmi组件服务发布和rmi客服端获取方法</a></li>
-						<li><a href="http://yin-bp.iteye.com/blog/1026245" target="_blank">bbossgroups mvc demo部署方法</a></li>
-						<li><a href="http://yin-bp.iteye.com/" target="_blank">bbossgroups官方博客</a></li>
+						<li><a href="http://www.iteye.com/wiki/bbossgroups/3094-persistent" target="_blank">bboss SQLExecutor组件api使用实例</a></li>
+						<li><a href="http://www.iteye.com/wiki/bbossgroups/3091-webservice-bboss-aop" target="_blank">bboss webservice引擎使用方法</a></li>
+						<li><a href="http://www.iteye.com/wiki/bbossgroups/3089-bbossgroups-aop-rmi" target="_blank">bboss rmi组件服务发布和rmi客服端获取方法</a></li>
+						<li><a href="http://yin-bp.iteye.com/blog/1026245" target="_blank">bboss mvc demo部署方法</a></li>
 						<li><a href="http://www.kaifazhe.me/" target="_blank">开发者.我@一个开发者的网站</a></li>
 						
 						
