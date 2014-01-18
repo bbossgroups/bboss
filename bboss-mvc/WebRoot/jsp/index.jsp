@@ -90,19 +90,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<div class="info">
 					<p>
 						<ul>		
-						<li>aop/ioc - mvc - persistent - taglib - rpc - soa - devent-serializable</li>			
-						<li>1.aop/ioc 业务组件管理、依赖注入、声明式事务等</li>
-						<li>2.rpc(hessian/http/netty/mina/jms/webservice/rmi/jgroups/restful) 安全高效</li>						
-						<li>3.persistent framework,multi db transaction,可方便托管hibernate、ibatis、mybatis事务,有效防止事务泄露</li>
-						<li>4.mvc/restful</li>
-						<li>5.jsp taglib 分页、树、列表、抽屉式、逻辑标签</li>
-						<li>6.distribute event framework</li>
-						<li>7.xml-bean serializable</li>
-						 <li>8.cxf webservice 服务发布和客户端代理</li>
-						  <li>9.quartz任务管理</li>
-						  <li>10.cluster with jgroups</li>
-						  <li>11.jms 开发套件</li>
-						  <li>12.<a href="<%=request.getContextPath()%>/monitor/console.htm" target="_blank">完备的框架监控体系</a></li>
+						<li>1.aop/ioc - mvc - persistent - taglib - rpc - soa - devent-serializable</li>			
+						<li>2.aop/ioc业务组件管理、依赖注入（属性注入、构造器注入、工厂模式注入）、声明式事务等    </li>	
+    <li>3.rpc(http/netty/mina/jms/webservice/rmi/jgroups/restful) 安全高效 </li>	
+   <li>4.distribute event framework </li>	
+    <li>5.jsp taglib 分页、树、列表、抽屉式、逻辑标签 </li>	
+    <li>6.mvc/restful（很好地支持jsonp，传统/html5文件上传下载，json） </li>	
+    <li>7.国际化组件（属性文件热加载、缓冲、高性能、支持从classpath和web应用目录中加载资源文件） </li>	
+    <li>8.persistent framework，全局事务管理（可整合托管bboss，ibatis，hibernate，spring等持久层的事务），很好地和业界主流数据源结合（dbcp,c3p0,proxool,weblogic,druid等）</li>	
+     <li>9.xml-bean serializable（高效，很好地支持各种java数据类型和复杂对象结果，支持引用关系的序列化） </li>	
+    <li>10.jms 开发套件 </li>	
+    <li>11.cxf webservice 服务发布和客户端代理 </li>	
+    <li>12.cluster with jgroups </li>	
+    <li>13.quartz任务引擎管理 </li>	
+    <li>14.hession管理及发布，客户端调用支持 </li>	
+						  <li>15.<a href="<%=request.getContextPath()%>/monitor/console.htm" target="_blank">完备的框架监控体系</a></li>
 						
 						</ul>
 					</p>
