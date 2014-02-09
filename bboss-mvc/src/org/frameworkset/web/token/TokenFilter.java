@@ -10,7 +10,6 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
@@ -235,8 +234,8 @@ public class TokenFilter implements Filter{
 		}
 		if(!isforward)
 		{
-			
-			targetUrl = appendDTokenToTargetURL(request, targetUrl);
+			/**失效页面无需设置token*/
+			//targetUrl = appendDTokenToTargetURL(request, targetUrl);
 			if(!isinclude)
 			{
 				if (http10Compatible) {
