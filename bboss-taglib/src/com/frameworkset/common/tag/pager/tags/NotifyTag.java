@@ -158,8 +158,12 @@ public class NotifyTag extends PagerTagSupport {
 //				out.print(super.pagerContext.getItemCount());
         		if(!pagerContext.ListMode())
         		{
-        			if(pagerContext.getItemCount() <= 0)
-        				return EVAL_BODY_INCLUDE;
+        			if(pagerContext.getItemCount() <= 0 )
+        			{
+        				if(pagerContext.getDataResultSize() <= 0)
+        					return EVAL_BODY_INCLUDE;
+        			}
+        			
         		}
         		else
         		{
