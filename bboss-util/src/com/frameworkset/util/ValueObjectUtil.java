@@ -364,6 +364,29 @@ public class ValueObjectUtil {
 			throws Exception {
 		return method.invoke(obj, params);
 	}
+	/**
+	 * Description:实现在对象调用method并为该方法传入参数数组params
+	 * 
+	 * @param obj
+	 *            对象
+	 * @param method
+	 *            待调用的方法
+	 * @param params
+	 *            参数数组
+	 * @return Object
+	 * @throws Exception
+	 *             Object
+	 */
+	public static Object invoke(Object obj, String method, Object[] params)
+			throws Exception {
+		if(obj == null)
+		{
+			return null;
+		}
+		Class clazz = obj.getClass();
+		Method _m = ClassUtil.getDeclaredMethod(clazz, method);
+		return _m.invoke(obj, params);
+	}
 
 	/**
 	 * 获取fieldName的getter方法名称
