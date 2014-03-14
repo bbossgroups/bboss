@@ -34,7 +34,6 @@ package com.frameworkset.common.tag;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.security.Principal;
 import java.util.Enumeration;
@@ -57,13 +56,9 @@ import org.apache.turbine.util.RunData;
  * @author biaoping.yin
  * @version 1.0
  */
-public class CommonRequest implements HttpServletRequest,Serializable {
+public class CommonRequest implements HttpServletRequest {
     public CommonRequest() {
-        try {
-            jbInit();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+      
     }
 
     private static Logger log = Logger.getLogger(CommonRequest.class);

@@ -99,7 +99,12 @@ public class PagerDataSet extends PagerTagSupport {
 	protected boolean softparser = true;
 	protected Object actual;
 	
-	
+	/**
+	 * position属性用来指定集合中数据对象的位置，对应位置上的对象作为
+	 * list标签的数据源，如果是-1则忽略position属性
+	 * position只针对list标签起作用，对map标签不起作用
+	 */
+	protected int position = -1;
 	// protected Tag origineTag = null;
 
 	/***************************************************************************
@@ -1552,8 +1557,23 @@ public class PagerDataSet extends PagerTagSupport {
 //			theClassDataList = new ClassDataList();
 		if(this.softparsered())
 			return;
-		for (int i = 0; i < datas.length; i++) {
-			theClassDataList.add(new ClassData(datas[i], toUpercase));
+		if(position < 0)
+		{
+			for (int i = 0; i < datas.length; i++) {
+				theClassDataList.add(new ClassData(datas[i], toUpercase));
+			}
+		}
+		else
+		{
+		
+			if(this.position < datas.length)
+			{
+				theClassDataList.add(new ClassData(datas[position]));
+			}
+			else
+			{
+				throw new ArrayIndexOutOfBoundsException("Map数组长度为:"+datas.length+",指定的数据位置为:"+position);
+			}
 		}
 
 	}
@@ -1642,10 +1662,24 @@ public class PagerDataSet extends PagerTagSupport {
 		if(this.softparsered())
 			return;
 //		Class valueClass = null;
-		for (int i = 0; i < datas.length; i++) {
-//			if (valueClass == null)
-//				valueClass = datas[i].getClass();
-			theClassDataList.add(new ClassData(datas[i]));
+		if(position < 0)
+		{
+			for (int i = 0; i < datas.length; i++) {
+	//			if (valueClass == null)
+	//				valueClass = datas[i].getClass();
+				theClassDataList.add(new ClassData(datas[i]));
+			}
+		}
+		else
+		{
+			if(this.position < datas.length)
+			{
+				theClassDataList.add(new ClassData(datas[position]));
+			}
+			else
+			{
+				throw new ArrayIndexOutOfBoundsException("对象数组长度为:"+datas.length+",指定的数据位置为:"+position);
+			}
 		}
 
 	}
@@ -1683,10 +1717,36 @@ public class PagerDataSet extends PagerTagSupport {
 			throw new LoadDataException(
 					"load list Data error loadClassData(Iterator dataInfo, Class voClazz):数据对象为空");
 		// log.info();
+		if(this.softparsered())
+			return;
 		if (theClassDataList == null)
 			theClassDataList = new ClassDataList();
-		while (dataInfo.hasNext()) {
-			theClassDataList.add(new ClassData(dataInfo.next()));
+		if(position < 0)
+		{
+			while (dataInfo.hasNext()) {
+				theClassDataList.add(new ClassData(dataInfo.next()));
+			}
+		}
+		else
+		{
+			int i = 0;
+			while (dataInfo.hasNext()) {
+				if(i == position)
+				{
+					theClassDataList.add(new ClassData(dataInfo.next()));
+				}
+				else
+				{
+					dataInfo.next();
+				}
+					
+				i ++;
+				
+			}
+			if(this.position >= i)
+			{
+				throw new ArrayIndexOutOfBoundsException("集合大小为:"+i+",指定的数据位置为:"+position);
+			}
 		}
 
 	}
@@ -1720,6 +1780,8 @@ public class PagerDataSet extends PagerTagSupport {
 				if(!StringUtil.isEmpty(this.requestKey)) //对于直接指定的请求属性进行缓冲处理
 				{
 					String cachekey = softparser_cache_pre +requestKey;
+					if(this.position >= 0)
+						cachekey = cachekey + "|"+position; 
 					theClassDataList = (ClassDataList)request.getAttribute(cachekey);
 					if(theClassDataList != null)
 						return true;
@@ -1733,6 +1795,8 @@ public class PagerDataSet extends PagerTagSupport {
 					if(this.session != null)
 					{
 						String cachekey = softparser_cache_pre +sessionKey;
+						if(this.position >= 0)
+							cachekey = cachekey + "|"+position; 
 						theClassDataList = (ClassDataList)session.getAttribute(cachekey);
 						if(theClassDataList != null)
 							return true;
@@ -1744,6 +1808,8 @@ public class PagerDataSet extends PagerTagSupport {
 				{
 					
 					String cachekey = softparser_cache_pre +pageContextKey;
+					if(this.position >= 0)
+						cachekey = cachekey + "|"+position; 
 					theClassDataList = (ClassDataList)pageContext.getAttribute(cachekey);
 					if(theClassDataList != null)
 						return true;
@@ -1757,6 +1823,8 @@ public class PagerDataSet extends PagerTagSupport {
 					String key = buildColnameKey(colName);
 				
 					String cachekey = softparser_cache_pre +key;
+					if(this.position >= 0)
+						cachekey = cachekey + "|"+position; 
 					theClassDataList = (ClassDataList)request.getAttribute(cachekey);
 					if(theClassDataList != null)
 						return true;
@@ -1842,9 +1910,35 @@ public class PagerDataSet extends PagerTagSupport {
 //			}
 			if(this.softparsered())
 				return;
-			Iterator it = dataInfo.iterator();
-			while (it.hasNext()) {
-				theClassDataList.add(new ClassData(it.next()));
+			
+			if(position < 0)
+			{
+				Iterator it = dataInfo.iterator();
+				while (it.hasNext()) {
+					theClassDataList.add(new ClassData(it.next()));
+				}
+			}
+			else
+			{
+				int i = 0;
+				if(this.position < dataInfo.size())
+				{
+					Iterator it = dataInfo.iterator();
+					while (it.hasNext()) {
+						if(i == position)
+							theClassDataList.add(new ClassData(it.next()));
+						else
+						{
+							it.next();
+						}
+						i ++;
+						
+					}
+				}
+				else
+				{
+					throw new ArrayIndexOutOfBoundsException("集合大小为:"+i+",指定的数据位置为:"+position);
+				}
 			}
 				/**
 				 * 以下的代码对取到的数据进行排序
@@ -1890,19 +1984,20 @@ public class PagerDataSet extends PagerTagSupport {
 	 * 
 	 */
 	protected void loadClassData(Iterator dataInfo) throws LoadDataException {
-		if (dataInfo == null)
-			throw new LoadDataException(
-					"load list Data error in loadClassData(Object dataInfo, Class voClazz):数据对象为空");
-		// log.info();
-
-//		if (theClassDataList == null)
-//			theClassDataList = new ClassDataList();
-		if(this.softparsered())
-			return;
-		while (dataInfo.hasNext()) {
-			Object data = dataInfo.next();
-			theClassDataList.add(new ClassData(data));
-		}
+//		if (dataInfo == null)
+//			throw new LoadDataException(
+//					"load list Data error in loadClassData(Object dataInfo, Class voClazz):数据对象为空");
+//		// log.info();
+//
+////		if (theClassDataList == null)
+////			theClassDataList = new ClassDataList();
+//		if(this.softparsered())
+//			return;
+//		while (dataInfo.hasNext()) {
+//			Object data = dataInfo.next();
+//			theClassDataList.add(new ClassData(data));
+//		}
+		loadClassData(dataInfo, (Class) null);
 
 	}
 
@@ -2632,7 +2727,7 @@ public class PagerDataSet extends PagerTagSupport {
 	public void clear() {
 		theClassDataList = null;
 		// if(index == null || index.trim().equals(""))
-
+		position = -1;
 		rowid = 0;
 //		if(flag)
 		pop();
@@ -3362,7 +3457,13 @@ public class PagerDataSet extends PagerTagSupport {
 		super.doFinally();
 	}
 	
-	
+	public int getPosition() {
+		return position;
+	}
+
+	public void setPosition(int position) {
+		this.position = position;
+	}
    
     
 

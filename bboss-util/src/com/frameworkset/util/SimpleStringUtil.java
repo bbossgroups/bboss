@@ -33,12 +33,15 @@
 package com.frameworkset.util;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
+import java.io.Writer;
 import java.lang.reflect.Array;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
@@ -61,7 +64,6 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.StringTokenizer;
 import java.util.TreeSet;
-
 
 import org.apache.log4j.Logger;
 import org.apache.oro.text.regex.MalformedPatternException;
@@ -2507,6 +2509,116 @@ outStr = "2010年02月07日11时许，周灵颖报警：在2路公交车上被�
 		
 	
 	}
+    
+    public static String object2json(Object object,boolean ALLOW_SINGLE_QUOTES) {
+    	ObjectMapper mapper = new ObjectMapper();
+		mapper.configure(Feature.ALLOW_SINGLE_QUOTES, ALLOW_SINGLE_QUOTES); 
+		try {
+			String value = mapper.writeValueAsString(object);
+			
+			return value;
+			
+			
+		} catch (Exception e) {
+			throw new IllegalArgumentException("错误的json序列化操作",e);
+		}
+		
+		
+	
+	}
+    
+    public static String object2json(Object object) {
+    	return object2json(object,true) ;
+		
+		
+	
+	}
+    
+    public static void object2json(Object object,Writer writer,boolean ALLOW_SINGLE_QUOTES) {
+    	ObjectMapper mapper = new ObjectMapper();
+		mapper.configure(Feature.ALLOW_SINGLE_QUOTES, ALLOW_SINGLE_QUOTES); 
+		try {
+			mapper.writeValue(writer,object);
+			
+			
+			
+			
+		} catch (Exception e) {
+			throw new IllegalArgumentException("错误的json序列化操作",e);
+		}
+		
+		
+	
+	}
+    
+    public static void object2json(Object object,Writer writer) {
+    	object2json(object,writer,true) ;
+	}
+    
+    public static void object2json(Object object,OutputStream writer,boolean ALLOW_SINGLE_QUOTES) {
+    	ObjectMapper mapper = new ObjectMapper();
+		mapper.configure(Feature.ALLOW_SINGLE_QUOTES, ALLOW_SINGLE_QUOTES); 
+		try {
+			mapper.writeValue(writer,object);
+			
+			
+			
+			
+		} catch (Exception e) {
+			throw new IllegalArgumentException("错误的json序列化操作",e);
+		}
+		
+		
+	
+	}
+    
+    public static void object2json(Object object,OutputStream writer) {
+    	object2json(object,writer,true) ;
+	}
+    
+    public static void object2json(Object object,File writer,boolean ALLOW_SINGLE_QUOTES) {
+    	ObjectMapper mapper = new ObjectMapper();
+		mapper.configure(Feature.ALLOW_SINGLE_QUOTES, ALLOW_SINGLE_QUOTES); 
+		try {
+			mapper.writeValue(writer,object);
+			
+			
+			
+			
+		} catch (Exception e) {
+			throw new IllegalArgumentException("错误的json序列化操作",e);
+		}
+		
+		
+	
+	}
+    
+    public static void object2json(Object object,File writer) {
+    	object2json(object,writer,true) ;
+	}
+    
+    public static byte[] object2jsonAsbyte(Object object,boolean ALLOW_SINGLE_QUOTES) {
+    	ObjectMapper mapper = new ObjectMapper();
+		mapper.configure(Feature.ALLOW_SINGLE_QUOTES, ALLOW_SINGLE_QUOTES); 
+		try {
+			return mapper.writeValueAsBytes(object);
+			
+			
+			
+			
+		} catch (Exception e) {
+			throw new IllegalArgumentException("错误的json序列化操作",e);
+		}
+		
+		
+	
+	}
+    
+    public static byte[] object2jsonAsbyte(Object object) {
+    	return object2jsonAsbyte(object,true) ;
+	}
+    
+    
     
     public static String tostring(Object data)
     {

@@ -23,6 +23,7 @@ import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspWriter;
+import javax.servlet.jsp.PageContext;
 
 import com.frameworkset.util.ValueObjectUtil;
 
@@ -54,12 +55,40 @@ public class RequestUtil extends BaseTag {
 	 */
 	private String name;
 	private String property;
-	private int scope;
+	/**
+	 * request,session,application
+	 * 默认值为request
+	 */
+	private String scope;
 	private String method;
 
 	private String parameter;
 
 	private String attribute;
+	
+	private String setAttribute;
+	public String getSetAttribute() {
+		return setAttribute;
+	}
+
+	public void setSetAttribute(String setAttribute) {
+		this.setAttribute = setAttribute;
+	}
+
+	public Object getValue() {
+		return value;
+	}
+
+	public void setValue(Object value) {
+		this.value = value;
+	}
+
+	/**
+	 * 当method为set时，指定值到request中
+	 * 
+	 */
+	private Object value;
+	
 	private String dateformat;
 
 	private String defaultValue = null;
@@ -79,6 +108,7 @@ public class RequestUtil extends BaseTag {
 		HttpServletRequest request = getHttpServletRequest();
 //		HttpSession session = request.getSession(false) ;
 		if (name != null)
+		{
 			try {
 				//获取对象属性的值
 				if (property != null)
@@ -90,22 +120,57 @@ public class RequestUtil extends BaseTag {
 				e.printStackTrace();
 				return SKIP_BODY;
 			}
-
+		}
+		if(this.setAttribute != null )
+		{
+			if(value != null)
+			{
+				if(this.scope == null || this.scope.equals("request"))
+					request.setAttribute(setAttribute, value);
+				else if(this.scope.equals("session"))
+				{
+					request.getSession(true).setAttribute(setAttribute, value);
+				}
+				else if(this.scope.equals("application"))
+				{
+					this.pageContext.setAttribute(setAttribute, value,PageContext.APPLICATION_SCOPE);
+				}
+			}
+			else
+			{
+				if(this.scope == null || this.scope.equals("request"))
+					request.removeAttribute(setAttribute);
+				else if(this.scope.equals("session"))
+				{
+					request.getSession(true).removeAttribute(setAttribute);
+				}
+				else if(this.scope.equals("application"))
+				{
+					this.pageContext.removeAttribute(setAttribute, PageContext.APPLICATION_SCOPE);
+				}
+			}
+			
+				
+		}
+		else
 		if (method != null && method.trim().length() > 0) {
 			try {
-				//方法有参数时
-				if (getParameter() != null)
-					outStr =
-						 ValueObjectUtil.getValueByMethodName(
-							request,
-							method,
-							new Object[] { getParameter()});
-				//方法无参数时
-				else
-					outStr =
-						 (ValueObjectUtil
-							.getValueByMethodName(request, method, null));
+				
+				{
+					//方法有参数时
+					if (getParameter() != null)
+						outStr =
+							 ValueObjectUtil.getValueByMethodName(
+								request,
+								method,
+								new Object[] { getParameter()});
+					//方法无参数时
+					else
+						outStr =
+							 (ValueObjectUtil
+								.getValueByMethodName(request, method, null));
 
+				}
 			} catch (Exception e) {
 				e.printStackTrace();
 				return SKIP_BODY;
@@ -234,7 +299,7 @@ public class RequestUtil extends BaseTag {
 	/**
 	 * @return scope
 	 */
-	public int getScope() {
+	public String getScope() {
 		return scope;
 	}
 
@@ -255,7 +320,7 @@ public class RequestUtil extends BaseTag {
 	/**
 	 * @param i
 	 */
-	public void setScope(int i) {
+	public void setScope(String i) {
 		scope = i;
 	}
 
@@ -292,6 +357,48 @@ public class RequestUtil extends BaseTag {
 	 */
 	public void setAttribute(String string) {
 		attribute = string;
+	}
+
+	@Override
+	public void doFinally() {
+		// TODO Auto-generated method stub
+		super.doFinally();
+		/**
+		 * 属性或者参数名称
+		 */
+		name = null;
+		property = null;
+		/**
+		 * request,session,application
+		 * 默认值为request
+		 */
+		scope = null;
+		method = null;
+
+		parameter = null;
+
+		attribute = null;
+		
+		setAttribute = null;
+		/**
+		 * 当method为set时，指定值到request中
+		 * 
+		 */
+		value = null;
+		
+		dateformat = null;
+
+		defaultValue = null;
+
+		/**
+			 * 对输出进行编码
+			 */
+		encode = null;
+
+		/**
+		 * 对输出进行解码
+		 */
+		decode = null;
 	}
 
 	/**

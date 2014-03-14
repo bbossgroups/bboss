@@ -15,10 +15,15 @@
  */
 package com.frameworkset.common.tag.pager.tags;
 
+import java.lang.reflect.Array;
+import java.util.Collection;
+import java.util.Map;
+
 import javax.servlet.jsp.JspException;
 
 import com.frameworkset.common.tag.pager.tags.CellTag;
 import com.frameworkset.common.util.ValueObjectUtil;
+import com.frameworkset.util.ListInfo;
 
 
 /**
@@ -92,7 +97,39 @@ public class BaseValueTag extends CellTag
 	
 		this.parameter = parameter;
 	}
-	
+	protected int length(Object _actualValue)
+	{
+		if(_actualValue == null)
+			return 0;
+		else
+		{
+			if(_actualValue instanceof Collection)
+			{
+				return ((Collection)_actualValue).size();
+			}
+			else if(_actualValue instanceof Map)
+			{
+				return ((Map)_actualValue).size();
+			}
+			else if(_actualValue.getClass().isArray())
+			{
+				return Array.getLength(_actualValue);
+			}
+			else if(_actualValue instanceof String)
+			{
+				return ((String)_actualValue).length();
+			}
+			else if(_actualValue instanceof ListInfo) 
+			{
+				return ((ListInfo)_actualValue).getSize();
+			}
+			else //评估对象长度
+			{
+				throw new IllegalArgumentException("无法计算类型为"+_actualValue.getClass().getName()+"的对象长度length。");
+			}
+				
+		}
+	}
 	protected Object evaluateActualValue()
 	{
 		Object temp = null;

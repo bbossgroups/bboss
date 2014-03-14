@@ -80,6 +80,7 @@ public class DetailTag extends PagerDataSet implements FieldHelper{
 	 * 指定内置变量beaninfo的变量名称
 	 */
 	protected String beaninfoName = "beaninfo";
+	
 
 	/**
 	 * 重载父类的方法，分析详细显示页的显示的字段信息为字段数组
@@ -434,6 +435,7 @@ public class DetailTag extends PagerDataSet implements FieldHelper{
 			super.clear();
 			this.pagerContext = null;
 			
+			
 		}
 		catch(Exception e)
 		{
@@ -457,6 +459,7 @@ public class DetailTag extends PagerDataSet implements FieldHelper{
 //		this.out = null;
 //		flag = false;
 		sqlparamskey = "sql.params.key";
+		
 		return EVAL_PAGE;
 	}
 	
@@ -634,4 +637,6 @@ public class DetailTag extends PagerDataSet implements FieldHelper{
 	public void setBeaninfoName(String beaninfoName) {
 		this.beaninfoName = beaninfoName;
 	}
+
+	
 }

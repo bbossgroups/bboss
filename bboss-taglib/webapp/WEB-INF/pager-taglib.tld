@@ -760,6 +760,16 @@
 			<name>autosort</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
+		
+		<!-- 
+		  position属性用来指定集合中数据对象的位置，对应位置上的对象作为
+	      list标签的数据源，如果是-1则忽略position属性
+	      position只针对list标签起作用，对map标签不起作用,map标签中可以通过key来制定特定的数据源
+		 -->
+		<attribute>
+			<name>position</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
 	</tag>
 	
 	<!--
@@ -1389,6 +1399,89 @@
 			<name>actual</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
+		<!-- 
+		用于设置获取集合，字符串长度的变量名称，可对Collection,ListInfo,String,Map，Array类型对象求长度操作
+	  
+	 length属性值带有前缀cell,request,session,pagecontext:
+	 cell 从对象属性中获取属性值得长度
+	 request 从request属性中获取属性值得长度
+	 parameter 从request参数中获取属性值得长度
+	 session 从session属性中获取属性值得长度
+	 pagecontext 从pagecontext属性中获取属性值得长度
+	 默认从cell中获取对象属性
+	 length属性适用于equal,notequal,upper,lower,upperequal,lowerequal,
+	 in,notin标签
+		 -->
+		<attribute>
+			<name>length</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		
+	</tag>
+	
+	<!--
+		功能说明：用来输出Collection,Map,ListInfo,String,Array的长度
+		
+	-->
+	<tag>
+		<name>size</name>
+		<tagclass>com.frameworkset.common.tag.pager.tags.SizeTag</tagclass>
+		<bodycontent>jsp</bodycontent>
+		<attribute>
+			<name>value</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>colName</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>property</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>content</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>colid</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>index</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<!--
+			求实际值表达式 表达式支持的基本操作有：冥，乘法，除法，求余，加/减，字符串的加操作 表达式支持的聚合操作有：求和，求平均值，计数
+			操作数：可以为变量，整数，小数，字符串 其中变量是指列表/分页/页面详细信息中的对象属性名称，为如下形式： {variable name}
+			表达式中用"{"和"}"来标识变量 例如： 2 * 2 2 + 2 * 3 2 - 2 / 3 2 - 3 % 2 2* {var1} /
+			{var2} sum({var1}) avg({var1}) count({var1}) 上述操作可以任意组合
+		-->
+		<attribute>
+			<name>expression</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		
+		<attribute>
+			<name>requestKey</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>sessionKey</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>pageContextKey</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>parameter</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>actual</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
 		
 	</tag>
 	
@@ -1731,6 +1824,23 @@
 			<name>actual</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
+		<!-- 
+		用于设置获取集合，字符串长度的变量名称，可对Collection,ListInfo,String,Map，Array类型对象求长度操作
+	  
+	 length属性值带有前缀cell，request，session，pagecontext:
+	 cell 从对象属性中获取属性值得长度
+	 request 从request属性中获取属性值得长度
+	 parameter 从request参数中获取属性值得长度
+	 session 从session属性中获取属性值得长度
+	 pagecontext 从pagecontext属性中获取属性值得长度
+	 默认从cell中获取对象属性
+	 length属性适用于equal,notequal,upper,lower,upperequal,lowerequal,
+	 in,notin标签
+		 -->
+		<attribute>
+			<name>length</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
 	</tag>
 	<!--
 		功能说明：判断计算属性或者expression属性对应的表达式得到值是否包含
@@ -1801,6 +1911,23 @@
 		</attribute>
 		<attribute>
 			<name>actual</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<!-- 
+		用于设置获取集合，字符串长度的变量名称，可对Collection,ListInfo,String,Map，Array类型对象求长度操作
+	  
+	 length属性值带有前缀cell,request,session,pagecontext:
+	 cell 从对象属性中获取属性值得长度
+	 request 从request属性中获取属性值得长度
+	 parameter 从request参数中获取属性值得长度
+	 session 从session属性中获取属性值得长度
+	 pagecontext 从pagecontext属性中获取属性值得长度
+	 默认从cell中获取对象属性
+	 length属性适用于equal,notequal,upper,lower,upperequal,lowerequal,
+	 in,notin标签
+		 -->
+		<attribute>
+			<name>length</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
@@ -2021,6 +2148,23 @@
 			<name>actual</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
+		<!-- 
+		用于设置获取集合，字符串长度的变量名称，可对Collection,ListInfo,String,Map，Array类型对象求长度操作
+	  
+	 length属性值带有前缀cell,request,session,pagecontext:
+	 cell 从对象属性中获取属性值得长度
+	 request 从request属性中获取属性值得长度
+	 parameter 从request参数中获取属性值得长度
+	 session 从session属性中获取属性值得长度
+	 pagecontext 从pagecontext属性中获取属性值得长度
+	 默认从cell中获取对象属性
+	 length属性适用于equal,notequal,upper,lower,upperequal,lowerequal,
+	 in,notin标签
+		 -->
+		<attribute>
+			<name>length</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
 	</tag>
 	<!--
 		功能说明：判断属性的值与value属性指定的值相等或者大于该值
@@ -2098,6 +2242,23 @@
 			<name>actual</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
+		<!-- 
+		用于设置获取集合，字符串长度的变量名称，可对Collection,ListInfo,String,Map，Array类型对象求长度操作
+	  
+	 length属性值带有前缀cell,request,session,pagecontext:
+	 cell 从对象属性中获取属性值得长度
+	 request 从request属性中获取属性值得长度
+	 parameter 从request参数中获取属性值得长度
+	 session 从session属性中获取属性值得长度
+	 pagecontext 从pagecontext属性中获取属性值得长度
+	 默认从cell中获取对象属性
+	 length属性适用于equal,notequal,upper,lower,upperequal,lowerequal,
+	 in,notin标签
+		 -->
+		<attribute>
+			<name>length</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
 	</tag>
 	<!--
 		功能说明：判断属性的值是否大于value属性指定的值
@@ -2173,6 +2334,23 @@
 		</attribute>
 		<attribute>
 			<name>actual</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<!-- 
+		用于设置获取集合，字符串长度的变量名称，可对Collection,ListInfo,String,Map，Array类型对象求长度操作
+	  
+	 length属性值带有前缀cell,request,session,pagecontext:
+	 cell 从对象属性中获取属性值得长度
+	 request 从request属性中获取属性值得长度
+	 parameter 从request参数中获取属性值得长度
+	 session 从session属性中获取属性值得长度
+	 pagecontext 从pagecontext属性中获取属性值得长度
+	 默认从cell中获取对象属性
+	 length属性适用于equal,notequal,upper,lower,upperequal,lowerequal,
+	 in,notin标签
+		 -->
+		<attribute>
+			<name>length</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
@@ -2518,6 +2696,23 @@
 			<name>actual</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
+		<!-- 
+		用于设置获取集合，字符串长度的变量名称，可对Collection,ListInfo,String,Map，Array类型对象求长度操作
+	  
+	 length属性值带有前缀cell,request,session,pagecontext:
+	 cell 从对象属性中获取属性值得长度
+	 request 从request属性中获取属性值得长度
+	 parameter 从request参数中获取属性值得长度
+	 session 从session属性中获取属性值得长度
+	 pagecontext 从pagecontext属性中获取属性值得长度
+	 默认从cell中获取对象属性
+	 length属性适用于equal,notequal,upper,lower,upperequal,lowerequal,
+	 in,notin标签
+		 -->
+		<attribute>
+			<name>length</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
 	</tag>
 	<!--
 		功能说明：判断给定字段的值是否与value属性的值不相等，
@@ -2593,6 +2788,23 @@
 		</attribute>
 		<attribute>
 			<name>actual</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<!-- 
+		用于设置获取集合，字符串长度的变量名称，可对Collection,ListInfo,String,Map，Array类型对象求长度操作
+	  
+	 length属性值带有前缀cell,request,session,pagecontext:
+	 cell 从对象属性中获取属性值得长度
+	 request 从request属性中获取属性值得长度
+	 parameter 从request参数中获取属性值得长度
+	 session 从session属性中获取属性值得长度
+	 pagecontext 从pagecontext属性中获取属性值得长度
+	 默认从cell中获取对象属性
+	 length属性适用于equal,notequal,upper,lower,upperequal,lowerequal,
+	 in,notin标签
+		 -->
+		<attribute>
+			<name>length</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>

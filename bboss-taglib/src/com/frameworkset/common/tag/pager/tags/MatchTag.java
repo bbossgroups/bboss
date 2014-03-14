@@ -32,9 +32,14 @@
  *****************************************************************************/
 package com.frameworkset.common.tag.pager.tags;
 
+import java.lang.reflect.Array;
+import java.util.Collection;
+import java.util.Map;
+
 import javax.servlet.jsp.JspException;
 
 import com.frameworkset.common.tag.exception.FormulaException;
+import com.frameworkset.util.ListInfo;
 import com.frameworkset.util.StringUtil;
 
 /**
@@ -71,6 +76,66 @@ public abstract class MatchTag extends BaseValueTag {
 	
 	protected String[] scopes;
 	
+	/**
+	 * 用于设置获取集合，字符串长度的变量名称
+	 * <pg:notequal length="cell|request|parameter|session|pagecontext:rejectList" value="1">
+	 * length属性值带有前缀cell|request|session|pagecontext:
+	 * cell 从对象属性中获取属性值得长度
+	 * request 从request属性中获取属性值得长度
+	 * parameter 从request参数中获取属性值得长度
+	 * session 从session属性中获取属性值得长度
+	 * pagecontext 从pagecontext属性中获取属性值得长度
+	 * 默认从cell中获取对象属性
+	 * length属性适用于equal,notequal,upper,lower,upperequal,lowerequal,
+	 * in,notin标签
+	 */
+	protected String length;
+
+	public String getLength() {
+		return length;
+	}
+
+	public void setLength(String length) {
+		this.length = length;
+	}
+	
+	protected void evalLengthInfo()
+	{
+		
+		String[] infos = length.split(":");
+		if(infos.length == 1)
+		{
+			this.setColName(length);
+			
+		}
+		else
+		{
+			String prefix = infos[0];
+			if(prefix.equals("cell"))
+			{
+				this.setColName(infos[1]);
+			}
+			else if(prefix.equals("request"))
+			{
+				this.setRequestKey(infos[1]);
+			}
+			else if(prefix.equals("parameter"))
+			{
+				this.setParameter(infos[1]);
+			}
+			else if(prefix.equals("session"))
+			{
+				this.setSessionKey(infos[1]);
+			}
+			else if(prefix.equals("pagecontext"))
+			{
+				this.setPageContextKey(infos[1]);
+			}
+		}
+		Object _actualValue = evaluateActualValue();
+		actualValue = length(_actualValue);
+		
+	}
 	
 	
 	/**
@@ -93,7 +158,11 @@ public abstract class MatchTag extends BaseValueTag {
 	    init();
 //	    dataSet = searchDataSet(this,PagerDataSet.class);
 //	    t_formula = dataSet.getFormula(getExpression());
-	    actualValue = evaluateActualValue();
+	    if(StringUtil.isEmpty(length))
+	    	actualValue = evaluateActualValue();
+	    else
+	    	evalLengthInfo();
+	    
 //		actualValue = getOutStr();
 //		setMeta();
 		//如果期望值为表达式，则求解表达式的值来得到期望值
