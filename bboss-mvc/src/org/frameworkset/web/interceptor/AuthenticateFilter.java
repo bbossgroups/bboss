@@ -277,38 +277,40 @@ public abstract class AuthenticateFilter extends TokenFilter{
     	String requesturipath = getPathUrl(request);
 		//做控制逻辑检测，如果检测失败，则执行下述逻辑，否则执行正常的控制器方法	
     	boolean checkresult = check(request,
-				response, handlerMeta);
-    	if(checkresult)
-    	{
-    		request.setAttribute(accesscontrol_check_result, accesscontrol_check_result_ok);
-			return true;
-    	}
-		if(needCheck(requesturipath) )
+				response, handlerMeta);//在有些情况下对匿名用户允许访问的开放地址也需要设置已经登录过的会话信息，所以不管页面是否需要做认证保护，都需要执行会话对象设置动作
+    	boolean neadcheck = needCheck(requesturipath);
+//    	if(checkresult)
+//    	{
+//    		
+//    		request.setAttribute(accesscontrol_check_result, accesscontrol_check_result_ok);
+//			return true;
+//    	}
+		if(neadcheck )
 		{			
 			
-//			if(!checkresult)
-//			{
-			request.setAttribute(accesscontrol_check_result, accesscontrol_check_result_fail);
-			if(!response.isCommitted())
+			if(!checkresult)
 			{
-				String dispatcherPath = prepareForRendering(request, response,requesturipath);
-				StringBuffer targetUrl = new StringBuffer();
-				if (!this.isforward() && !this.isinclude && this.contextRelative && dispatcherPath.startsWith("/")) {
-					targetUrl.append(request.getContextPath());
+				request.setAttribute(accesscontrol_check_result, accesscontrol_check_result_fail);
+				if(!response.isCommitted())
+				{
+					String dispatcherPath = prepareForRendering(request, response,requesturipath);
+					StringBuffer targetUrl = new StringBuffer();
+					if (!this.isforward() && !this.isinclude && this.contextRelative && dispatcherPath.startsWith("/")) {
+						targetUrl.append(request.getContextPath());
+					}
+					targetUrl.append(dispatcherPath);
+					
+					sendRedirect(request, response, targetUrl.toString(), http10Compatible,this.isforward(),this.isinclude);
 				}
-				targetUrl.append(dispatcherPath);
-				
-				sendRedirect(request, response, targetUrl.toString(), http10Compatible,this.isforward(),this.isinclude);
+				return false;
 			}
-			return false;
-//			}
-//			else
-//			{
-//				request.setAttribute(accesscontrol_check_result, accesscontrol_check_result_ok);
-//				return true;
-//			}
+			else
+			{
+				request.setAttribute(accesscontrol_check_result, accesscontrol_check_result_ok);
+				return true;
+			}
 		}
-		else
+		else //无需认证的地址，直接设置允许访问标识以及授权成功标识
 		{
 			request.setAttribute(accesscontrol_check_result, accesscontrol_check_result_ok);
 			request.setAttribute(accesscontrol_permissioncheck_result, accesscontrol_permissioncheck_result_ok);

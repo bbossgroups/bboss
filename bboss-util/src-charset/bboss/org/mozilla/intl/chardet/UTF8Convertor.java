@@ -472,9 +472,9 @@ public class UTF8Convertor {
 //		convertor.convertCharsetToUtf_8("D:\\workspace\\SanyPDP\\src-htmlparser",
 //				new String[]{".svn","classes",".settings","文档","dbinit-system","distrib","doc","lib","lib-client","lib-compile"},
 //				new String[]{".jsp",".java",".js",".css",".txt",".properties",".html",".htm",".tld",".vm",".xml"});
-		convertor.convertCharsetToUtf_8("D:\\workspace\\SanyPDP\\src-htmlparser",
+		convertor.convertCharsetToUtf_8("D:\\d\\workspace\\bboss-cms",
 				new String[]{".svn"},
-				new String[]{".java"});
+				new String[]{".sql"});
 		
 		//获取文件内容编码集
 //		 String charset = convertor.takefilecharset(new File("D:\\workspace\\smc-desktop/src-sys/com/frameworkset/platform/sysmgrcore/purviewmanager/PurviewManagerOrgTree.java"));
