@@ -153,4 +153,10 @@ public class DefaultAccessControl implements AccessControlInf {
 		return null;
 	}
 
+	@Override
+	public boolean isGuest() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

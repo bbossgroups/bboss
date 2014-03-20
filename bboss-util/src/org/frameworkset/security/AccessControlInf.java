@@ -112,4 +112,5 @@ public interface AccessControlInf {
 	public HttpServletRequest getRequest();
 	public HttpSession getSession();
 	public PageContext getPageContext() ;
+	public boolean isGuest();
 }

@@ -275,32 +275,38 @@ public abstract class AuthenticateFilter extends TokenFilter{
 	{
 //    	String requesturipath = WebUtils.getHANDLER_Mappingpath(request);
     	String requesturipath = getPathUrl(request);
-		//做控制逻辑检测，如果检测失败，则执行下述逻辑，否则执行正常的控制器方法		
+		//做控制逻辑检测，如果检测失败，则执行下述逻辑，否则执行正常的控制器方法	
+    	boolean checkresult = check(request,
+				response, handlerMeta);
+    	if(checkresult)
+    	{
+    		request.setAttribute(accesscontrol_check_result, accesscontrol_check_result_ok);
+			return true;
+    	}
 		if(needCheck(requesturipath) )
 		{			
-			boolean checkresult = check(request,
-					response, handlerMeta);
-			if(!checkresult)
+			
+//			if(!checkresult)
+//			{
+			request.setAttribute(accesscontrol_check_result, accesscontrol_check_result_fail);
+			if(!response.isCommitted())
 			{
-				request.setAttribute(accesscontrol_check_result, accesscontrol_check_result_fail);
-				if(!response.isCommitted())
-				{
-					String dispatcherPath = prepareForRendering(request, response,requesturipath);
-					StringBuffer targetUrl = new StringBuffer();
-					if (!this.isforward() && !this.isinclude && this.contextRelative && dispatcherPath.startsWith("/")) {
-						targetUrl.append(request.getContextPath());
-					}
-					targetUrl.append(dispatcherPath);
-					
-					sendRedirect(request, response, targetUrl.toString(), http10Compatible,this.isforward(),this.isinclude);
+				String dispatcherPath = prepareForRendering(request, response,requesturipath);
+				StringBuffer targetUrl = new StringBuffer();
+				if (!this.isforward() && !this.isinclude && this.contextRelative && dispatcherPath.startsWith("/")) {
+					targetUrl.append(request.getContextPath());
 				}
-				return false;
+				targetUrl.append(dispatcherPath);
+				
+				sendRedirect(request, response, targetUrl.toString(), http10Compatible,this.isforward(),this.isinclude);
 			}
-			else
-			{
-				request.setAttribute(accesscontrol_check_result, accesscontrol_check_result_ok);
-				return true;
-			}
+			return false;
+//			}
+//			else
+//			{
+//				request.setAttribute(accesscontrol_check_result, accesscontrol_check_result_ok);
+//				return true;
+//			}
 		}
 		else
 		{
