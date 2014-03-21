@@ -17,7 +17,6 @@
 package org.frameworkset.spi.remote.webservice;
 
 import org.frameworkset.spi.ApplicationContext;
-import org.frameworkset.spi.BaseSPIManager;
 import org.frameworkset.spi.assemble.ProList;
 import org.frameworkset.spi.remote.RPCIOHandler;
 import org.frameworkset.spi.remote.Util;
@@ -38,7 +37,22 @@ public class WSUtil
     /**
      * 标记是否启用webservice服务，为false时，启动cxf的serverlet将失效
      */
-        public static boolean webservice_enable = BaseSPIManager.getBooleanProperty("rpc.webservice.enable",true);
+        public static boolean webservice_enable = WSLoader.webservice_enable;
+        public static ProList webservices = WSLoader.webservices;
+//        static
+//        {
+//        	try {
+//				webservice_enable = ApplicationContext.getApplicationContext().getBooleanProperty("rpc.webservice.enable",true);
+//			} catch (Exception e) {
+//				
+//			}
+//        	
+//        	 try {
+//				webservices = ApplicationContext.getApplicationContext().getListProperty("cxf.webservices.config")   ;
+//			} catch (Exception e) {
+//				
+//			}
+//        }
         
         
         
@@ -54,7 +68,8 @@ public class WSUtil
 //	   {
 //	       return (RPCCall)BaseSPIManager.getBeanObject(Util.rpc_webservice_RPCCall);
 //	   }
-	public static ProList webservices = ApplicationContext.getApplicationContext().getListProperty("cxf.webservices.config")   ;
+	
+	
 	   
 
 	   

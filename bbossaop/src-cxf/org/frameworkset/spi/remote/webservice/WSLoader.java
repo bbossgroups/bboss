@@ -20,11 +20,15 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.URL;
 
+import javax.servlet.ServletConfig;
 import javax.xml.ws.Endpoint;
 import javax.xml.ws.soap.SOAPBinding;
 
+import org.apache.cxf.Bus;
+import org.apache.cxf.BusFactory;
 import org.apache.cxf.jaxws.spi.ProviderImpl;
 import org.apache.log4j.Logger;
+import org.frameworkset.spi.ApplicationContext;
 import org.frameworkset.spi.BaseApplicationContext;
 import org.frameworkset.spi.assemble.Pro;
 import org.frameworkset.spi.assemble.ProList;
@@ -45,28 +49,147 @@ import org.frameworkset.spi.assemble.ServiceProviderManager;
 public class WSLoader {
 	private static final Logger logger = Logger.getLogger(WSLoader.class);
 	
-	
-	
-	public void loadAllWebService(ClassLoader classLoader)
+	 
+	private static boolean loadDefaultWebServiceOk = false;
+	private static boolean loadModuleWebServiceOk = false;
+	private static boolean loadMvcWebServiceOk = false;
+	 public static boolean webservice_enable = true;
+	 public static ProList webservices = null;
+	 public static String wsconfigFile = "org/frameworkset/spi/ws/webserivce-modules.xml";
+	 public static String managerProviderconfigFile = "manager-provider.xml";
+	 static
+     {
+		 if(WSLoader.fileexist(managerProviderconfigFile))
+		 {
+	     	try {
+	     		
+					webservice_enable = ApplicationContext.getApplicationContext().getBooleanProperty("rpc.webservice.enable",true);
+				} catch (Exception e) {
+					
+				}
+	     	
+	     	 try {
+					webservices = ApplicationContext.getApplicationContext().getListProperty("cxf.webservices.config")   ;
+				} catch (Exception e) {
+					
+				}
+		 }
+     }
+	 
+	 public static Bus loadBusNoConfig(ServletConfig servletConfig)
+     
+	 {
+	          	
+	         Bus bus = BusFactory.getDefaultBus(true);
+	         return bus;
+	     
+	//     ResourceManager resourceManager = (ResourceManager)bus.getExtension(org.apache.cxf.resource.ResourceManager.class);
+	//     resourceManager.addResourceResolver(new ServletContextResourceResolver(servletConfig.getServletContext()));
+	//     replaceDestinationFactory();
+	//     controller = createServletController(servletConfig);
+	 }
+	 /**
+	  * for mvc
+	  * @param classLoader
+	  * @param config
+	  */
+	 public static void publishAllWebService(ClassLoader classLoader,ServletConfig config)
+	 {		 
+		 if(WSLoader.webservice_enable)
+	        {        	
+	    //        super.loadBus(servletConfig);        
+			    WSLoader.loadBusNoConfig(config);
+	            // You could add the endpoint publish codes here
+//	        	org.apache.cxf.transport.servlet.AbstractCXFServlet.LOG.info("LOAD_BUS_WITHOUT_APPLICATION_CONTEXT");
+	    //        Bus bus = getBus();
+	    //        BusFactory.setDefaultBus(bus); 
+	        	
+	        	WSLoader.loadAllWebService(classLoader);
+//	            ProList webservices = WSUtil.webservices;
+//	            if(webservices != null)
+//	            {
+//	                for(int i = 0;i < webservices.size(); i ++)
+//	                {
+//	                    try
+//	                    {
+//	                        Pro pro = webservices.getPro(i);
+//	                        Object webservice = pro.getBeanObject();
+//	                        String servicePort = pro.getStringExtendAttribute("servicePort");
+//	                        if(servicePort == null || servicePort.trim().equals(""))
+//	                            throw new java.lang.IllegalArgumentException("web service ["+pro.getName() + "] config error: must config servicePort attribute for web service ["+pro.getName() + "]"  );
+//	                        String mtom = pro.getStringExtendAttribute("mtom");
+//	                        Endpoint ep = Endpoint.publish("/" + servicePort, webservice);
+//	                        SOAPBinding binding = (SOAPBinding) ep.getBinding();
+//	                        if(mtom != null && mtom.equalsIgnoreCase("true"))
+//	                            binding.setMTOMEnabled(true);
+//	                    }
+//	                    catch(Exception e)
+//	                    {
+//	                        e.printStackTrace();
+//	                    }
+//	                    
+//	                }
+//	            }
+	        }
+	        else
+	        {
+	            System.out.println("CXF not started,rpc.webservice.enable = false. Please check config file [org/frameworkset/spi/manager-rpc-service.xml] to enable you cxf webservice.");
+	        }
+	 }
+	public static void loadAllWebService(ClassLoader classLoader)
 	{
+		
 		try {
-			loadDefaultWebService( classLoader);
+			if(!WSLoader.loadDefaultWebServiceOk)
+			{
+				synchronized(WSLoader.class)
+				{
+					if(!WSLoader.loadDefaultWebServiceOk)
+					{
+						WSLoader.loadDefaultWebServiceOk = true;
+						loadDefaultWebService( classLoader);
+					}
+				}
+			}
 		} catch (Exception e) {
 			logger.error(e.getMessage(),e);
 		}
 		try {
-			loadModulesWebService( classLoader);
+			if(!WSLoader.loadModuleWebServiceOk)
+			{
+				synchronized(WSLoader.class)
+				{
+					if(!WSLoader.loadModuleWebServiceOk)
+					{
+						WSLoader.loadModuleWebServiceOk = true;
+						loadModulesWebService( classLoader);
+					}
+				}
+			}
+			
 		} catch (Exception e) {
 			logger.error(e.getMessage(),e);
 		}
 		try {
-			loadMvcWebService( classLoader);
+			if(!WSLoader.loadMvcWebServiceOk)
+			{
+				synchronized(WSLoader.class)
+				{
+					if(!WSLoader.loadMvcWebServiceOk)
+					{
+						WSLoader.loadMvcWebServiceOk = true;
+						loadMvcWebService( classLoader);
+					}
+				}
+			}
+			
 		} catch (Exception e) {
 			logger.error(e.getMessage(),e);
 		}
+	
 		
 	}
-	private  void loadDefaultWebService(ClassLoader classLoader)
+	private static void loadDefaultWebService(ClassLoader classLoader)
 	{
 		 ProList webservices = WSUtil.webservices;
          if(webservices != null)
@@ -122,7 +245,7 @@ public class WSLoader {
 	/**
 	 * 需要确保mvc分派器在webservice服务引擎之前启动，否则获取不到任何在mvc框架中配置的webservice服务
 	 */
-	private  void loadMvcWebService(ClassLoader classLoader)
+	private static void loadMvcWebService(ClassLoader classLoader)
 	{
 		
 		try {
@@ -131,6 +254,11 @@ public class WSLoader {
 			Class clas = Class.forName("org.frameworkset.web.servlet.support.WebApplicationContextUtils");
 			Method m = clas.getMethod("getWebApplicationContext", null);
 			org.frameworkset.spi.BaseApplicationContext context = (BaseApplicationContext)m.invoke(null, null);
+			if(context == null)
+			{
+				WSLoader.loadMvcWebServiceOk = false;
+				return;
+			}
 			WebServicePublisherUtil.loaderContextWebServices(context,classLoader);
 		} catch (Exception e) {
 			logger.warn(e.getMessage(),e);
@@ -145,10 +273,10 @@ public class WSLoader {
 	        }
 	        return (ClassLoader)method.invoke(Thread.currentThread(), null);
 	    }
-	private boolean fileexist()
+	public static boolean fileexist(String configFile)
 	{/////
 		
-		String configFile = "org/frameworkset/spi/ws/webserivce-modules.xml";
+//		String configFile = "org/frameworkset/spi/ws/webserivce-modules.xml";
 		 URL confURL = ServiceProviderManager.class.getClassLoader().getResource(configFile);
          if (confURL == null)
              confURL = ServiceProviderManager.class.getClassLoader().getResource("/" + configFile);
@@ -170,13 +298,13 @@ public class WSLoader {
         	 return false;
          return true;
 	}
-	private  void loadModulesWebService(ClassLoader classLoader)
+	private static void loadModulesWebService(ClassLoader classLoader)
 	{
 		
-		if(!fileexist())
+		if(!fileexist(wsconfigFile))
 			return;
 		org.frameworkset.spi.BaseApplicationContext context = org.frameworkset.spi.DefaultApplicationContext
-		.getApplicationContext("org/frameworkset/spi/ws/webserivce-modules.xml");
+		.getApplicationContext(wsconfigFile);
 		String[] cxf_webservices_modules = context.getStringArray("cxf.webservices.modules");
 		if(cxf_webservices_modules == null || cxf_webservices_modules.length == 0)
 			return ;

@@ -16,6 +16,7 @@
 package org.frameworkset.web.servlet;
 
 import java.io.IOException;
+import java.lang.reflect.Method;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -551,6 +552,24 @@ public class DispatchServlet extends HttpServlet {
 			this.logger.debug("FrameworkServlet '" + getServletName() + "': initialization completed in " +
 					elapsedTime + " ms");
 //		}
+	}
+	
+	protected final void publishWebService(ServletConfig config)
+	{
+		String wsloadclass = "org.frameworkset.spi.remote.webservice.WSLoader";
+		
+		try {
+			Class clazz = Class.forName(wsloadclass);
+			Method publishAllWebService = clazz.getMethod("publishAllWebService", ClassLoader.class,ServletConfig.class);
+			System.out.println("publishAllWebServicepublishAllWebService:"+publishAllWebService);
+			if(publishAllWebService != null)
+				publishAllWebService.invoke(null, this.getClass().getClassLoader(),config);
+//			WSLoader.publishAllWebService(this.getClass().getClassLoader(),config);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 	}
 	
 	/**
@@ -1161,7 +1180,7 @@ public class DispatchServlet extends HttpServlet {
 //		loadCustomJars(config);
 		initMessagesources(config);
 		this.initServletBean(config);
-		
+		publishWebService(config);
 //		WebApplicationContext context = this.initWebApplicationContext( config);
 		initMessageConverters(this.webApplicationContext);
 		initMultipartResolver(this.webApplicationContext);

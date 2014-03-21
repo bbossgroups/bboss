@@ -43,7 +43,6 @@ import org.apache.cxf.transport.http.DestinationRegistry;
 import org.apache.cxf.transport.http.HTTPTransportFactory;
 import org.apache.cxf.transport.servlet.servicelist.ServiceListGeneratorServlet;
 import org.frameworkset.spi.remote.webservice.WSLoader;
-import org.frameworkset.spi.remote.webservice.WSUtil;
 /**
  * 
  * <p>Title: RPCCXFServlet.java</p> 
@@ -209,7 +208,7 @@ public class RPCCXFServlet extends AbstractHTTPServlet {
 	
     
     protected void loadBus(ServletConfig servletConfig) {
-        if(WSUtil.webservice_enable)
+        if(WSLoader.webservice_enable)
         {        	
     //        super.loadBus(servletConfig);        
         	loadBusNoConfig(servletConfig);
@@ -217,9 +216,8 @@ public class RPCCXFServlet extends AbstractHTTPServlet {
 //        	org.apache.cxf.transport.servlet.AbstractCXFServlet.LOG.info("LOAD_BUS_WITHOUT_APPLICATION_CONTEXT");
     //        Bus bus = getBus();
     //        BusFactory.setDefaultBus(bus); 
-        	WSLoader loader = new WSLoader();
         	ClassLoader classLoader = this.getClass().getClassLoader();
-        	loader.loadAllWebService( classLoader);
+        	WSLoader.loadAllWebService( classLoader);
 //            ProList webservices = WSUtil.webservices;
 //            if(webservices != null)
 //            {
@@ -276,7 +274,8 @@ public class RPCCXFServlet extends AbstractHTTPServlet {
         if(bus == null)
         {
         	LOG.info("LOAD_BUS_WITHOUT_APPLICATION_CONTEXT");
-            bus = BusFactory.newInstance(BusFactory.DEFAULT_BUS_FACTORY).createBus();
+        	
+        	bus = WSLoader.loadBusNoConfig(servletConfig);
         }
 //        ResourceManager resourceManager = (ResourceManager)bus.getExtension(org.apache.cxf.resource.ResourceManager.class);
 //        resourceManager.addResourceResolver(new ServletContextResourceResolver(servletConfig.getServletContext()));
