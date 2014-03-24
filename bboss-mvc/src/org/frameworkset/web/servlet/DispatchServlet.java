@@ -559,15 +559,20 @@ public class DispatchServlet extends HttpServlet {
 		String wsloadclass = "org.frameworkset.spi.remote.webservice.WSLoader";
 		
 		try {
+			
 			Class clazz = Class.forName(wsloadclass);
 			Method publishAllWebService = clazz.getMethod("publishAllWebService", ClassLoader.class,ServletConfig.class);
-			System.out.println("publishAllWebServicepublishAllWebService:"+publishAllWebService);
+			
 			if(publishAllWebService != null)
+			{
+				logger.debug("Publish MVC webservice start.");
 				publishAllWebService.invoke(null, this.getClass().getClassLoader(),config);
+				logger.debug("Publish MVC webservice finished.");
+			}
 //			WSLoader.publishAllWebService(this.getClass().getClassLoader(),config);
 			
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.debug(" Not found "+wsloadclass + " in classpath,ignore publish mvc webservices:"+e.getMessage());
 		}
 		
 	}
