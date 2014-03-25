@@ -568,7 +568,7 @@ public class DispatchServlet extends HttpServlet {
 //			WSLoader.publishAllWebService(this.getClass().getClassLoader(),config);
 			
 		} catch (Throwable e) {
-			logger.debug(" Not found "+wsloadclass + " or "+e.getMessage()+"in classpath,Ignore publish mvc webservices.");
+			logger.debug(" Not found "+wsloadclass + " or "+e.getMessage()+" in classpath,Ignore publish mvc webservices.");
 		}
 		
 		try {
