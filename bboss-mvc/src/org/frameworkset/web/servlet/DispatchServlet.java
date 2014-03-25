@@ -16,6 +16,7 @@
 package org.frameworkset.web.servlet;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.security.Principal;
 import java.util.ArrayList;
@@ -557,23 +558,29 @@ public class DispatchServlet extends HttpServlet {
 	protected final void publishWebService(ServletConfig config)
 	{
 		String wsloadclass = "org.frameworkset.spi.remote.webservice.WSLoader";
-		
+		Method publishAllWebService = null;
 		try {
 			
 			Class clazz = Class.forName(wsloadclass);
-			Method publishAllWebService = clazz.getMethod("publishAllWebService", ClassLoader.class,ServletConfig.class);
+			publishAllWebService = clazz.getMethod("publishAllWebService", ClassLoader.class,ServletConfig.class);
 			
+			
+//			WSLoader.publishAllWebService(this.getClass().getClassLoader(),config);
+			
+		} catch (Throwable e) {
+			logger.debug(" Not found "+wsloadclass + " or "+e.getMessage()+"in classpath,Ignore publish mvc webservices.");
+		}
+		
+		try {
 			if(publishAllWebService != null)
 			{
 				logger.debug("Publish MVC webservice start.");
 				publishAllWebService.invoke(null, this.getClass().getClassLoader(),config);
 				logger.debug("Publish MVC webservice finished.");
 			}
-//			WSLoader.publishAllWebService(this.getClass().getClassLoader(),config);
-			
 		} catch (Exception e) {
-			logger.debug(" Not found "+wsloadclass + " in classpath,ignore publish mvc webservices:"+e.getMessage());
-		}
+			logger.debug("Publish mvc webservices failed:",e);
+		} 
 		
 	}
 	
