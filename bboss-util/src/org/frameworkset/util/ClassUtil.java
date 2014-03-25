@@ -934,8 +934,15 @@ public class ClassUtil
 	    	    for(int i = declaredFields.length - 1; i >=0; i --)
 	    	    {
 	    	    	Field f = declaredFields[i];
-	    	    	if(f.getName().equals(name) && f.getType() == type)
-	    	    		return f;
+	    	    	
+	    	    	if(f.getName().equals(name) )
+	    	    	{
+	    	    		if( f.getType() == type )
+	    	    			return f;
+	    	    		
+	    	    		
+	    	    		 
+	    	    	}
 	    	    }
 	    	    return null;
 	    	
@@ -1056,7 +1063,9 @@ public class ClassUtil
 						PropertyDescriptor attr = attributes[i];
 						if(attr.getName().equals("class"))
 							continue;
-						propertyDescriptors.add( buildPropertieDescription(declaredFields, copyFields,attr));
+						PropertieDescription p = buildPropertieDescription(declaredFields, copyFields,attr);
+						if(p != null)
+						propertyDescriptors.add( p);
 					}
 					
 					if(copyFields != null && copyFields.size() > 0)
@@ -1088,9 +1097,28 @@ public class ClassUtil
 	    {
 	    	Method wm = attr.getWriteMethod();
 	    	Method rm = attr.getReadMethod();
-	    	Field field = this.getDeclaredField(declaredFields,attr.getName(),attr.getPropertyType());
+	    	if(rm != null && (rm.getParameterTypes() != null && rm.getParameterTypes().length > 0))
+	    	{
+	    		return null;
+	    	}
 	    	
-	    	this.containFieldAndRemove(attr.getName(), copeFields) ;    	
+	    	if(wm != null && (wm.getParameterTypes() != null && wm.getParameterTypes().length > 1))
+	    	{
+	    		return null;
+	    	}
+	    	
+	    	if(attr.getPropertyType() == null)
+	    	{
+	    		return null;
+	    	}
+	    	
+	    	Field field = this.getDeclaredField(declaredFields,attr.getName(),attr.getPropertyType());
+	    	if(field != null)
+	    	{
+	    		
+	    		this.containFieldAndRemove(attr.getName(), copeFields) ;
+	    	}
+	    	
 	    	PropertieDescription pd = new PropertieDescription(attr.getPropertyType(),
 	    			                    field,wm,
 	    								rm,attr.getName());
