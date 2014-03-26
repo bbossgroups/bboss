@@ -1099,12 +1099,12 @@ public class ClassUtil
 	    	Method rm = attr.getReadMethod();
 	    	if(rm != null && (rm.getParameterTypes() != null && rm.getParameterTypes().length > 0))
 	    	{
-	    		return null;
+	    		rm = null;
 	    	}
 	    	
 	    	if(wm != null && (wm.getParameterTypes() != null && wm.getParameterTypes().length > 1))
 	    	{
-	    		return null;
+	    		wm = null;
 	    	}
 	    	
 	    	if(attr.getPropertyType() == null)
@@ -1112,12 +1112,11 @@ public class ClassUtil
 	    		return null;
 	    	}
 	    	
+	    	
 	    	Field field = this.getDeclaredField(declaredFields,attr.getName(),attr.getPropertyType());
-	    	if(field != null)
-	    	{
-	    		
-	    		this.containFieldAndRemove(attr.getName(), copeFields) ;
-	    	}
+	    	
+	    	this.containFieldAndRemove(attr.getName(), copeFields) ;
+	    	
 	    	
 	    	PropertieDescription pd = new PropertieDescription(attr.getPropertyType(),
 	    			                    field,wm,
