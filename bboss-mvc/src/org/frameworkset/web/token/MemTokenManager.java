@@ -6,16 +6,14 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.UUID;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import org.frameworkset.util.HashUtil;
+import org.frameworkset.security.session.Session;
 
 import com.frameworkset.util.StringUtil;
 
@@ -26,18 +24,20 @@ import com.frameworkset.util.StringUtil;
  */
 public class MemTokenManager {
 	
-	
+	private TokenStore tokenStore;
+	private static ThreadLocal<Session> localSession = new ThreadLocal<Session>();  
 	public void destory()
 	{
-		temptokens.clear();
-		temptokens = null;
+//		temptokens.clear();
+//		temptokens = null;
+		this.tokenStore.destory();
 		if(this.tokenMonitor != null)
 		{
 			this.tokenMonitor.killdown();
 		}
 	}
 	
-	private  Map<MemToken,Object> temptokens = new HashMap<MemToken,Object>();
+//	private  Map<MemToken,Object> temptokens = new HashMap<MemToken,Object>();
 	private TokenFilter tokenFilter;
 	/**
 	 * bboss跨站攻击token的参数名称，每个客户端页面通过这个名称将token传回服务端进行
@@ -60,12 +60,13 @@ public class MemTokenManager {
 	 * AssertDToken和AssertDTokenTag主要用来防止客户端把令牌去掉后欺骗服务器进行访问
 	 */
 	public static final Integer temptoken_request_validateresult_nodtoken = new Integer(2);
-	private final Object c = new Object();
-	private final Object checkLock = new Object();
+	
+	public static final Integer temptoken_request_validateresult_notenabletoken = new Integer(3);
+	public static final Integer temptoken_request_validateresult_expired = new Integer(4);
+	
 	private boolean enableToken = false;
 	private TokenMonitor tokenMonitor;
-	public static final int tokenstore_in_session = 1;
-	public static final int tokenstore_in_mem = 0;
+	
 	
 	
 	/**
@@ -75,12 +76,12 @@ public class MemTokenManager {
 	 * session：将令牌存储在session中
 	 * 默认存储在session中
 	 */
-	protected String tokenstore = "session";
-	protected int tokenstore_i = tokenstore_in_session;
+//	protected String tokenstore = "session";
+//	protected int tokenstore_i = tokenstore_in_session;
 	/**
 	 * 令牌持续时间,默认为1个小时
 	 */
-	private long tokendualtime = 3600000;
+//	private long tokendualtime = 3600000;
 	/**
 	 * 令牌超时检测时间间隔，默认为-1，不检测
 	 * 如果需要检测，那么只要令牌持续时间超过tokendualtime
@@ -90,15 +91,17 @@ public class MemTokenManager {
 	
 	MemTokenManager(long tokendualtime,long tokenscaninterval,boolean enableToken,String tokenstore,TokenFilter tokenFilter)
 	{
-		this.tokendualtime = tokendualtime;
+//		this.tokendualtime = tokendualtime;
 		this.tokenscaninterval = tokenscaninterval;
 		this.enableToken = enableToken;
-		this.tokenstore = tokenstore; 
+//		this.tokenstore = tokenstore; 
+		this.tokenStore = TokenStoreFactory.getTokenStore(tokenstore);
+		this.tokenStore.setTempTokendualtime(tokendualtime);
 		this.tokenFilter = tokenFilter;
-		if(tokenstore.equals("mem"))
-			tokenstore_i = tokenstore_in_mem;
-		else
-			tokenstore_i = tokenstore_in_session;
+//		if(tokenstore.equals("mem"))
+//			tokenstore_i = tokenstore_in_mem;
+//		else
+//			tokenstore_i = tokenstore_in_session;
 		if(enableToken && tokenscaninterval > 0 && tokendualtime > 0)
 		{
 			tokenMonitor = new TokenMonitor();
@@ -107,52 +110,43 @@ public class MemTokenManager {
 		}
 	}
 	
-	public void put(String token)
-	{
-		if(this.enableToken)
-		{
-			synchronized(checkLock)
-			{
-				temptokens.put(new MemToken(token,System.currentTimeMillis()), c);
-			}
-		}
-	}
+
 	
-	public Integer sessionmemhash(String token,HttpSession session)
-	{
-//		String sessionid = session.getId();
-//		String token = request.getParameter(temptoken_param_name);
-		if(token == null)
-			return MemTokenManager.temptoken_request_validateresult_nodtoken;
-		
-//		String hash = String.valueOf(HashUtil.mixHash(new StringBuffer().append(sessionid).append("_").append(token).toString()));
-//		if(session.getAttribute(hash) != null)
+//	public Integer sessionmemhash(String token,HttpSession session)
+//	{
+////		String sessionid = session.getId();
+////		String token = request.getParameter(temptoken_param_name);
+//		if(token == null)
+//			return MemTokenManager.temptoken_request_validateresult_nodtoken;
+//		
+////		String hash = String.valueOf(HashUtil.mixHash(new StringBuffer().append(sessionid).append("_").append(token).toString()));
+////		if(session.getAttribute(hash) != null)
+////		{
+////			session.removeAttribute(hash);
+////			return true;
+////		}
+////		else
+////			return false;
+//		if(this.tokenstore_i == tokenstore_in_session)
 //		{
-//			session.removeAttribute(hash);
-//			return true;
+//			
+//			if(session.getAttribute(token) != null)
+//			{
+//				session.removeAttribute(token);
+//				return MemTokenManager.temptoken_request_validateresult_ok;
+//			}
+//			else
+//				return MemTokenManager.temptoken_request_validateresult_fail;
 //		}
-//		else
-//			return false;
-		if(this.tokenstore_i == tokenstore_in_session)
-		{
-			
-			if(session.getAttribute(token) != null)
-			{
-				session.removeAttribute(token);
-				return MemTokenManager.temptoken_request_validateresult_ok;
-			}
-			else
-				return MemTokenManager.temptoken_request_validateresult_fail;
-		}
-		else//in memory
-		{
-			String sessionid = session.getId();
-			token = token + "_" + sessionid;
-			return _mem(token);
-		}
-		
-		
-	}
+//		else//in memory
+//		{
+//			String sessionid = session.getId();
+//			token = token + "_" + sessionid;
+//			return _mem(token);
+//		}
+//		
+//		
+//	}
 	
 	/**
 	 * 如果动态令牌校验成功或者令牌没有设置返回true
@@ -161,7 +155,7 @@ public class MemTokenManager {
 	 */
 	private boolean assertDToken(Integer result)
 	{
-		return result == temptoken_request_validateresult_ok || result == temptoken_request_validateresult_nodtoken;
+		return result == temptoken_request_validateresult_ok || result == temptoken_request_validateresult_nodtoken || result == temptoken_request_validateresult_notenabletoken;
 	}
 	/**
 	 * 判断令牌是否有效，一次请求只判断一次，避免多次判断
@@ -171,29 +165,36 @@ public class MemTokenManager {
 	 */
 	protected boolean firstRequest(ServletRequest request) 
 	{
-		Integer result = (Integer)request.getAttribute(MemTokenManager.temptoken_request_validateresult_key);//
+		Integer result = null;
+		if(!this.enableToken)
+		{
+			result = MemTokenManager.temptoken_request_validateresult_notenabletoken;
+			request.setAttribute(MemTokenManager.temptoken_request_validateresult_key,result);
+			return true;
+		}
+		result = (Integer)request.getAttribute(MemTokenManager.temptoken_request_validateresult_key);//
 		if(result != null)
 		{
 			return assertDToken(result);
 		}
 		
 		String token = request.getParameter(MemTokenManager.temptoken_param_name);
-		if(request instanceof HttpServletRequest)
+//		if(request instanceof HttpServletRequest)
+//		{
+//			
+//			HttpSession session = ((HttpServletRequest)request).getSession(false);
+//			if(session == null)
+//			{
+//				result = mem(token);
+//			}
+//			else
+//			{
+//				result = sessionmemhash(token,session);
+//			}
+//		}
+//		else
 		{
-			
-			HttpSession session = ((HttpServletRequest)request).getSession(false);
-			if(session == null)
-			{
-				result = mem(token);
-			}
-			else
-			{
-				result = sessionmemhash(token,session);
-			}
-		}
-		else
-		{
-			result = mem(token);
+			result = this.tokenStore.existToken(token);
 		}
 		request.setAttribute(MemTokenManager.temptoken_request_validateresult_key,result);
 		return 	assertDToken(result);
@@ -235,7 +236,7 @@ public class MemTokenManager {
 	{
 //		return !(result == MemTokenManager.temptoken_request_validateresult_nodtoken 
 //				|| result == MemTokenManager.temptoken_request_validateresult_fail);		
-		return result == MemTokenManager.temptoken_request_validateresult_ok;
+		return result == MemTokenManager.temptoken_request_validateresult_ok || result == MemTokenManager.temptoken_request_validateresult_notenabletoken;
 	}
 	
 	/**
@@ -251,36 +252,7 @@ public class MemTokenManager {
 		
 	}
 	
-	public Integer mem(String token)
-	{
-//		String token = request.getParameter(temptoken_param_name);
-		return _mem(token);
-	}
-	
-	private Integer _mem(String token)
-	{
-		
-		if(token != null)
-		{
-			synchronized(checkLock)
-			{
-				Object tt =temptokens.remove(new MemToken(token,-1));
-				if(tt != null)//is first request,and clear temp token to against Cross Site Request Forgery
-				{
-//					temptokens.remove(token);				
-					return MemTokenManager.temptoken_request_validateresult_ok;
-				}
-				else
-				{
-					return MemTokenManager.temptoken_request_validateresult_fail;
-				}
-			}
-		}
-		else 
-		{
-			return MemTokenManager.temptoken_request_validateresult_nodtoken;
-		}
-	}
+
 	
 	public String genToken(ServletRequest request,String fid,boolean cache)
 	{
@@ -294,21 +266,9 @@ public class MemTokenManager {
 				return tmp;
 		}
 		
-		if(request instanceof HttpServletRequest)
+		
 		{
-			HttpSession session = ((HttpServletRequest)request).getSession(false);
-			if(session == null)
-			{
-				tmp = memToken( cache);
-			}
-			else
-			{
-				tmp = sessionmemhashToken(request,session,cache);
-			}
-		}
-		else
-		{
-			tmp = memToken( cache);
+			tmp = genMemToken( cache);
 		}
 		if(fid != null)
 		{
@@ -317,33 +277,36 @@ public class MemTokenManager {
 		return tmp;
 	}
 	
-	private String sessionmemhashToken(ServletRequest request,HttpSession session,boolean cache)
+	
+	private String genMemToken(boolean cache)
 	{
-		String sessionid = session.getId();
-		String token = UUID.randomUUID().toString();
-		String hash = String.valueOf(HashUtil.mixHash(new StringBuffer().append(sessionid).append("_").append(token).toString()));
+		
 		if(this.enableToken)
 		{
+			
+			
 			if(cache)
 			{
-				if(this.tokenstore_i == tokenstore_in_session)
+//				if(this.tokenstore_i == tokenstore_in_session)
+//				{
+//					session.setAttribute(hash, c);
+//				}
+//				else
 				{
-					session.setAttribute(hash, c);
-				}
-				else
-				{
-					put(hash + "_" + sessionid);
+					return this.tokenStore.genToken().getToken();
 				}
 			}
+			else
+			{
+				String token = UUID.randomUUID().toString();
+				return token;
+			}
 		}
-		return hash;
-	}
-	private String memToken(boolean cache)
-	{
-		String token = UUID.randomUUID().toString();
-		if(cache)
-			put(token);
-		return token;
+		else
+		{
+			String token = UUID.randomUUID().toString();
+			return token;
+		}
 	}
 	
 	class TokenMonitor extends Thread
@@ -380,7 +343,8 @@ public class MemTokenManager {
 				}
 				if(killdown)
 					break;
-				check();				
+//				check();
+				tokenStore.livecheck();
 			}
 		}
 		public boolean isKilldown() {
@@ -389,44 +353,44 @@ public class MemTokenManager {
 		
 	}
 	
-	private void check()
-	{
-		List<MemToken> olds = new ArrayList<MemToken>();
-		synchronized(this.checkLock)
-		{
-			Set<MemToken> keySet = this.temptokens.keySet();
-			Iterator<MemToken> itr = keySet.iterator();
-			
-			while(itr.hasNext())
-			{
-				
-				MemToken token = itr.next();
-				if(isold(token))
-				{
-					olds.add(token);
-//					temptokens.remove(token);
-				}
-			}
-		}
-		MemToken token = null;
-		for(int i = 0; i < olds.size(); i ++)
-		{
-			if(tokenMonitor.isKilldown())
-				break;
-			token = olds.get(i);
-			temptokens.remove(token);
-		}
-		olds = null;
-		
-	}
+//	private void check()
+//	{
+//		List<MemToken> olds = new ArrayList<MemToken>();
+//		synchronized(this.checkLock)
+//		{
+//			Set<MemToken> keySet = this.temptokens.keySet();
+//			Iterator<MemToken> itr = keySet.iterator();
+//			
+//			while(itr.hasNext())
+//			{
+//				
+//				MemToken token = itr.next();
+//				if(isold(token))
+//				{
+//					olds.add(token);
+////					temptokens.remove(token);
+//				}
+//			}
+//		}
+//		MemToken token = null;
+//		for(int i = 0; i < olds.size(); i ++)
+//		{
+//			if(tokenMonitor.isKilldown())
+//				break;
+//			token = olds.get(i);
+//			temptokens.remove(token);
+//		}
+//		olds = null;
+//		
+//	}
 	
-	private boolean isold(MemToken token)
-	{
-		long currentTime = System.currentTimeMillis();
-		long age = currentTime - token.getCreateTime();		
-		return age > this.tokendualtime;
-		
-	}
+//	private boolean isold(MemToken token)
+//	{
+//		long currentTime = System.currentTimeMillis();
+//		long age = currentTime - token.getCreateTime();		
+//		return age > this.tokendualtime;
+//		
+//	}
 	
 	public String buildDToken(String elementType,HttpServletRequest request)
 	{
