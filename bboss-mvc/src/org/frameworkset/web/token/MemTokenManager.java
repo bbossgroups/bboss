@@ -63,6 +63,7 @@ public class MemTokenManager {
 	
 	public static final Integer temptoken_request_validateresult_notenabletoken = new Integer(3);
 	public static final Integer temptoken_request_validateresult_expired = new Integer(4);
+	public static final Integer temptoken_request_validateresult_invalidated = new Integer(5);
 	
 	private boolean enableToken = false;
 	private TokenMonitor tokenMonitor;

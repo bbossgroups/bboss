@@ -110,9 +110,9 @@ public class MemTokenStore extends BaseTokenStore{
 	
 
 	@Override
-	public Integer existToken(String appid, String statictoken,
+	public Integer existToken(String appid, String secret,
 			String dynamictoken) {
-		String key = appid + ":" + statictoken;
+		String key = appid + ":" + secret;
 		if(dynamictoken != null)
 		{
 			synchronized(dualcheckLock)
@@ -163,9 +163,9 @@ public class MemTokenStore extends BaseTokenStore{
 	}
 
 	@Override
-	public MemToken genToken(String appid, String statictoken, long livetime) {
+	public MemToken genToken(String appid, String secret, long livetime) {
 		String token = this.randomToken();
-		String key = appid + ":"+statictoken;
+		String key = appid + ":"+secret;
 		MemToken token_m = null;
 		synchronized(this.dualcheckLock)
 		{

@@ -67,7 +67,8 @@ public class TokenFilter implements Filter{
 			}
 			else
 			{
-				log.debug("Set tokenstore["+tokenstore_+"] success,tokens will be stored in session.");
+				tokenstore = tokenstore_.trim();
+				log.debug("Set tokenstore["+tokenstore_+"] success,tokens will be stored in "+tokenstore_+".");
 			}
 		}
 		

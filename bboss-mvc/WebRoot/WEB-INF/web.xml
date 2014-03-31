@@ -140,7 +140,7 @@
 			默认存储在session中 -->
 		<init-param>
 			<param-name>tokenstore</param-name>
-			<param-value>mem</param-value>
+			<param-value>org.frameworkset.web.token.MongodbTokenStore</param-value>
 		</init-param>
 		<!-- 指定动态令牌校验失败跳转地址
 		如果没有指定直接响应403错误-->

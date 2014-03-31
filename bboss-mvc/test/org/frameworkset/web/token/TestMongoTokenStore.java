@@ -1,6 +1,6 @@
 package org.frameworkset.web.token;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -23,8 +23,8 @@ public class TestMongoTokenStore {
 	@Test
 	public void gendualtokenAndValidate()
 	{
-		MemToken token = mongodbTokenStore.genToken("sim","xxxxxxxxxxxxxxxxxxxxxx",30*24*60*60*1000);
-		Assert.assertEquals(MemTokenManager.temptoken_request_validateresult_ok, mongodbTokenStore.existToken(token.getAppid(),token.getStatictoken(),token.getToken()));
+		MemToken token = mongodbTokenStore.genToken("sim","xxxxxxxxxxxxxxxxxxxxxx",30l*24l*60l*60l*1000l);
+		Assert.assertTrue(MemTokenManager.temptoken_request_validateresult_ok == mongodbTokenStore.existToken(token.getAppid(),token.getSecret(),token.getToken()));
 	}
 
 }

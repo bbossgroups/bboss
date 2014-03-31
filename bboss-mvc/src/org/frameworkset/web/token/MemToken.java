@@ -14,7 +14,7 @@ public class MemToken {
 	private long lastVistTime;
 	private long livetime;
 	private String appid;
-	private String statictoken;
+	private String secret;
 	public String getToken() {
 		return token;
 	}
@@ -96,12 +96,14 @@ public class MemToken {
 		this.appid = appid;
 	}
 
-	public String getStatictoken() {
-		return statictoken;
+	public String getSecret() {
+		return secret;
 	}
 
-	public void setStatictoken(String statictoken) {
-		this.statictoken = statictoken;
+	public void setSecret(String secret) {
+		this.secret = secret;
 	}
+
+
 
 }
