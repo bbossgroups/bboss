@@ -6,11 +6,15 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 
+import org.apache.log4j.Logger;
+
+
 import bboss.org.mozilla.intl.chardet.UTF8Convertor;
 
 public class CharacterEncodingHttpServletRequestWrapper
     extends HttpServletRequestWrapper{
 	private Map<String,String[]> parameters = null;
+	private static Logger logger = Logger.getLogger(CharacterEncodingHttpServletRequestWrapper.class); 
 //	private Object lock = new Object();
     private String newecoding = null;
     private String oldEncoding = null;
@@ -103,9 +107,10 @@ public class CharacterEncodingHttpServletRequestWrapper
 	    	for(int i = 0;i <wallfilterrules.length; i ++)
 	    	{
 	    	
-	    		if(value.indexOf(wallfilterrules[i]) > 0)
+	    		if(value.indexOf(wallfilterrules[i]) >= 0)
 	    		{
 	    			values[j] = null;
+	    			logger.debug("参数"+name+"值"+value+"包含敏感词:"+wallfilterrules[i]+",存在安全隐患,系统自动过滤掉参数值!");
 	    			break;
 	    		}
 	    	}

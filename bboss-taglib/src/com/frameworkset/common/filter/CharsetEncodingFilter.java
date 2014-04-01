@@ -11,6 +11,8 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.frameworkset.util.StringUtil;
+
 /**
  *
  * 配置示例：
@@ -44,13 +46,18 @@ public class CharsetEncodingFilter implements Filter {
     private boolean checkiemodeldialog;
     private static String[] wallfilterrules;
     private String[] wallwhilelist;
+    private boolean refererDefender = false;
+    private String[] refererwallwhilelist;
     private static String[] wallfilterrules_default = new String[]{"<script","%3Cscript","script","<img","%3Cimg","alert(","alert%28","eval(","eval%28","style=","style%3D",
     	"javascript","update ","drop ","delete ","insert ","create ","select ","truncate "};
+    
     
     public void init(FilterConfig arg0) throws ServletException {
         this.config = arg0;
         this.RequestEncoding = config.getInitParameter("RequestEncoding");
         this.ResponseEncoding = config.getInitParameter("ResponseEncoding");
+        String refererDefender_ =  config.getInitParameter("refererDefender");
+        refererDefender = StringUtil.getBoolean(refererDefender_, false);
         String wallfilterrules_ = config.getInitParameter("wallfilterrules");
         String wallwhilelist_ = config.getInitParameter("wallwhilelist");
         
@@ -74,7 +81,17 @@ public class CharsetEncodingFilter implements Filter {
         if(mode == null)
             mode = "0";
     }
-
+    private boolean iswhilerefer(String referer)
+    {
+    	if(this.refererwallwhilelist == null || this.refererwallwhilelist.length == 0)
+    		return true;
+    	for(String whilereferername:this.refererwallwhilelist)
+    	{
+    		if(whilereferername.startsWith(referer))
+    			return true;
+    	}
+    	return false;
+    }
     /* (non-Javadoc)
      * @see javax.servlet.Filter#doFilter(javax.servlet.ServletRequest, javax.servlet.ServletResponse, javax.servlet.FilterChain)
      */
@@ -92,10 +109,38 @@ public class CharsetEncodingFilter implements Filter {
         String filterEnabled = request.getParameter("filterEnabled");
 
         HttpServletResponse response = (HttpServletResponse)res;
-        response.setHeader("Cache-Control", "no-cache"); 
-        response.setHeader("Pragma", "no-cache"); 
-        response.setDateHeader("Expires", -1);  
-        response.setDateHeader("max-age", 0); 
+//        response.setHeader("Cache-Control", "no-cache"); 
+//        response.setHeader("Pragma", "no-cache"); 
+//        response.setDateHeader("Expires", -1);  
+//        response.setDateHeader("max-age", 0);
+        /**
+         *  向所有会话cookie 添加“HttpOnly”属性,  解决方案，过滤器中
+         */
+        response.setHeader( "Set-Cookie", "name=value; HttpOnly");
+        if(refererDefender)
+        {
+	        /**
+	         * 跨站点请求伪造。修复任务： 拒绝恶意请求。解决方案，过滤器中
+	         * 
+	         */
+	        String referer = request.getHeader("Referer");   //REFRESH
+//	        if(!iswhilerefer(referer))
+	        {
+		        String basePath = request.getContextPath();
+		        
+		        if(referer!=null && referer.indexOf(basePath)<0){            
+		        	request.getRequestDispatcher(request.getRequestURI()).forward(request, response);
+		        	return;
+		        }  
+	        }
+        }
+
+
+
+
+
+
+
 //        response.set
 
         if(filterEnabled != null && !filterEnabled.trim().equalsIgnoreCase("true"))

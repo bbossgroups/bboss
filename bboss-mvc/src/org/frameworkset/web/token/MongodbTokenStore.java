@@ -117,9 +117,41 @@ public class MongodbTokenStore extends BaseTokenStore{
 		return token;
 	}
 	
+	public Integer checkAuthTempToken(String token)
+	{
+		
+		if(token != null)
+		{
+//			synchronized(checkLock)
+			BasicDBObject dbobject = new BasicDBObject("token", token);
+			DBCursor cursor = temptokens.find(dbobject);
+			if(cursor.hasNext())
+			{
+				DBObject tt = cursor.next();
+				temptokens.remove(dbobject);
+				MemToken token_m = totempToken(tt);					
+				if(!this.isold(token_m))
+				{
+					return MemTokenManager.temptoken_request_validateresult_ok;
+				}
+				else
+				{
+					return MemTokenManager.temptoken_request_validateresult_expired;
+				}
+				
+			}
+			else
+			{
+				return MemTokenManager.temptoken_request_validateresult_fail;
+			}			
+		}
+		else 
+		{
+			return MemTokenManager.temptoken_request_validateresult_nodtoken;
+		}
+	}
 	
-	
-	public Integer existToken(String token)
+	public Integer checkTempToken(String token)
 	{
 		
 		if(token != null)
@@ -183,8 +215,9 @@ public class MongodbTokenStore extends BaseTokenStore{
 		return tt;
 	}
 	@Override
-	public Integer existToken(String appid, String secret,
-			String dynamictoken) {
+	public Integer checkDualToken(String token) {
+		String appid=null;String secret=null;
+		String dynamictoken=null;
 		
 		if(dynamictoken != null)
 		{	
@@ -294,6 +327,16 @@ public class MongodbTokenStore extends BaseTokenStore{
 		}
 		return token_m ;
 		
+	}
+	/**
+	 * 创建带认证的临时令牌
+	 * @param string
+	 * @param string2
+	 * @return
+	 */
+	public MemToken genToken(String appid, String secret) {
+		
+		return null;
 	}
 
 }

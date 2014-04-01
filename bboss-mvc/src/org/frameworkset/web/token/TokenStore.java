@@ -8,8 +8,9 @@ public interface TokenStore {
 
 	public abstract void livecheck();
 
-	public abstract Integer existToken(String token);
-	public abstract Integer existToken(String appid,String statictoken,String dynamictoken);
+	public abstract Integer checkTempToken(String token);
+	public abstract Integer checkAuthTempToken(String token);
+	public abstract Integer checkDualToken(String token);
 
 	public abstract long getTempTokendualtime();
 
@@ -19,8 +20,9 @@ public interface TokenStore {
 //
 //	public abstract void setSession(Session session);
 	
-	public MemToken genToken();
-	public MemToken genToken(String appid,String statictoken,long livetime);
+	public MemToken getTempToken();
+	public MemToken getDualToken(String appid,String secret,long livetime);
+	public MemToken genAuthTempToken(String appid, String secret);
 	
 
 }

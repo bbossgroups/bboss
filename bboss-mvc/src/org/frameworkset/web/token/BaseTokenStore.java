@@ -36,5 +36,12 @@ public abstract class BaseTokenStore implements TokenStore {
 		this.tempTokendualtime = tempTokendualtime;
 		
 	}
+	
+	public MemToken genToken(String appid, String secret)
+	{
+		return null;
+	}
+	
+	
 
 }
