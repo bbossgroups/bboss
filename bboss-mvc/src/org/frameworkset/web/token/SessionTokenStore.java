@@ -1,13 +1,5 @@
 package org.frameworkset.web.token;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.Map.Entry;
-
 import org.frameworkset.security.session.Session;
 
 public class SessionTokenStore extends BaseTokenStore {
@@ -30,72 +22,82 @@ public class SessionTokenStore extends BaseTokenStore {
 	
 	
 	
-	public Integer existToken(String token)
+	public Integer checkTempToken(TokenInfo token)
 	{
 		
 		if(token != null)
 		{
 			synchronized(checkLock)
 			{
-				MemToken tt =(MemToken)session.getAttribute(token);
+				MemToken tt =(MemToken)session.getAttribute(token.getToken());
 				if(tt != null  )//is first request,and clear temp token to against Cross Site Request Forgery
 				{
 					if(!this.isold(tt))
 					{
 //						temptokens.remove(token);				
-						return MemTokenManager.temptoken_request_validateresult_ok;
+						return TokenStore.temptoken_request_validateresult_ok;
 					}
 					else
 					{
-						return MemTokenManager.temptoken_request_validateresult_expired;
+						return TokenStore.temptoken_request_validateresult_expired;
 					}
 				}
 				else
 				{
-					return MemTokenManager.temptoken_request_validateresult_fail;
+					return TokenStore.temptoken_request_validateresult_fail;
 				}
 			}
 		}
 		else 
 		{
-			return MemTokenManager.temptoken_request_validateresult_nodtoken;
+			return TokenStore.temptoken_request_validateresult_nodtoken;
 		}
 	}
 
 	
 
 	@Override
-	public Integer existToken(String appid, String statictoken,
-			String dynamictoken) {
-		String key = appid + ":" + statictoken;
-		if(dynamictoken != null)
+	public Integer checkDualToken(TokenInfo token) {
+		
+		if(token != null)
 		{
+//			String[] tokeninfos = decodeToken(token);
+			String appid = token.getAppid(); String statictoken = token.getSecret();
+			String dynamictoken = token.getToken();
+			String key = appid + ":" + statictoken;
 			synchronized(dualcheckLock)
 			{
 				MemToken tt = (MemToken)session.getAttribute(key);
 				if(tt != null )//is first request,and clear temp token to against Cross Site Request Forgery
 				{
 					long vistTime = System.currentTimeMillis();
-					if(!this.isold(tt,tt.getLivetime(),vistTime))
+					if(dynamictoken.equals(tt.getToken()))
 					{
-						tt.setLastVistTime(vistTime);
-//					temptokens.remove(token);				
-						return MemTokenManager.temptoken_request_validateresult_ok;
+						if(!this.isold(tt,tt.getLivetime(),vistTime))
+						{
+							tt.setLastVistTime(vistTime);
+	//					temptokens.remove(token);				
+							return TokenStore.temptoken_request_validateresult_ok;
+						}
+						else
+						{
+							return TokenStore.temptoken_request_validateresult_expired;
+						}
 					}
 					else
 					{
-						return MemTokenManager.temptoken_request_validateresult_expired;
+						return TokenStore.temptoken_request_validateresult_fail;
 					}
 				}
 				else
 				{
-					return MemTokenManager.temptoken_request_validateresult_fail;
+					return TokenStore.temptoken_request_validateresult_fail;
 				}
 			}
 		}
 		else 
 		{
-			return MemTokenManager.temptoken_request_validateresult_nodtoken;
+			return TokenStore.temptoken_request_validateresult_nodtoken;
 		}
 		
 		
@@ -104,7 +106,7 @@ public class SessionTokenStore extends BaseTokenStore {
 	
 
 	@Override
-	public MemToken genToken() {
+	public MemToken genTempToken() {
 		String token = this.randomToken();
 		MemToken token_m = new MemToken(token,System.currentTimeMillis());
 		synchronized(checkLock)
@@ -118,7 +120,7 @@ public class SessionTokenStore extends BaseTokenStore {
 	}
 
 	@Override
-	public MemToken genToken(String appid, String statictoken, long livetime) {
+	public MemToken genDualToken(String appid, String statictoken, long livetime) {
 		String token = this.randomToken();
 		String key = appid + ":"+statictoken;
 		MemToken token_m = null;

@@ -43,27 +43,8 @@ public class MemTokenManager {
 	 * bboss跨站攻击token的参数名称，每个客户端页面通过这个名称将token传回服务端进行
 	 * 校验
 	 */
-	public static final String temptoken_param_name = "_dt_token_";
-	private static final String temptoken_request_attribute = "org.frameworkset.web.token.bboss_csrf_Token"; 
-	public static final String temptoken_request_validateresult_key = "temptoken_request_validateresult_key";
-	/**
-	 * 令牌校验成功
-	 */
-	public static final Integer temptoken_request_validateresult_ok = new Integer(1);
-	/**
-	 * 令牌校验失败
-	 */
-	public static final Integer temptoken_request_validateresult_fail = new Integer(0);
-	/**
-	 * 无令牌状态，这个状态配合控制器方法的AssertDToken注解和jsp页面上的AssertDTokenTag一起使用，如果控制器方法AssertDToken注解或者jsp页面设置了AssertDTokenTag标签，则要求必须使用令牌
-	 * 如果客户端没有传输令牌，则拒绝请求。
-	 * AssertDToken和AssertDTokenTag主要用来防止客户端把令牌去掉后欺骗服务器进行访问
-	 */
-	public static final Integer temptoken_request_validateresult_nodtoken = new Integer(2);
 	
-	public static final Integer temptoken_request_validateresult_notenabletoken = new Integer(3);
-	public static final Integer temptoken_request_validateresult_expired = new Integer(4);
-	public static final Integer temptoken_request_validateresult_invalidated = new Integer(5);
+	
 	
 	private boolean enableToken = false;
 	private TokenMonitor tokenMonitor;
@@ -156,7 +137,7 @@ public class MemTokenManager {
 	 */
 	private boolean assertDToken(Integer result)
 	{
-		return result == temptoken_request_validateresult_ok || result == temptoken_request_validateresult_nodtoken || result == temptoken_request_validateresult_notenabletoken;
+		return result == TokenStore.temptoken_request_validateresult_ok || result == TokenStore.temptoken_request_validateresult_nodtoken || result == TokenStore.temptoken_request_validateresult_notenabletoken;
 	}
 	/**
 	 * 判断令牌是否有效，一次请求只判断一次，避免多次判断
@@ -169,17 +150,17 @@ public class MemTokenManager {
 		Integer result = null;
 		if(!this.enableToken)
 		{
-			result = MemTokenManager.temptoken_request_validateresult_notenabletoken;
-			request.setAttribute(MemTokenManager.temptoken_request_validateresult_key,result);
+			result = TokenStore.temptoken_request_validateresult_notenabletoken;
+			request.setAttribute(TokenStore.temptoken_request_validateresult_key,result);
 			return true;
 		}
-		result = (Integer)request.getAttribute(MemTokenManager.temptoken_request_validateresult_key);//
+		result = (Integer)request.getAttribute(TokenStore.temptoken_request_validateresult_key);//
 		if(result != null)
 		{
 			return assertDToken(result);
 		}
 		
-		String token = request.getParameter(MemTokenManager.temptoken_param_name);
+		String token = request.getParameter(TokenStore.temptoken_param_name);
 //		if(request instanceof HttpServletRequest)
 //		{
 //			
@@ -195,12 +176,12 @@ public class MemTokenManager {
 //		}
 //		else
 		{
-			result = this.tokenStore.existToken(token);
+			result = this.tokenStore.checkToken(token);
 		}
-		request.setAttribute(MemTokenManager.temptoken_request_validateresult_key,result);
+		request.setAttribute(TokenStore.temptoken_request_validateresult_key,result);
 		return 	assertDToken(result);
 	}
-	public static final String temptoken_param_name_word = temptoken_param_name + "=";
+	public static final String temptoken_param_name_word = TokenStore.temptoken_param_name + "=";
 	/**
 	 * 为url追加动态令牌参数
 	 * @param url
@@ -217,11 +198,11 @@ public class MemTokenManager {
 		int idx = url.indexOf("?");
 		if(idx > 0)
 		{
-			ret.append(url).append("&").append(temptoken_param_name).append("=").append(token);
+			ret.append(url).append("&").append(TokenStore.temptoken_param_name).append("=").append(token);
 		}
 		else
 		{
-			ret.append(url).append("?").append(temptoken_param_name).append("=").append(token);
+			ret.append(url).append("?").append(TokenStore.temptoken_param_name).append("=").append(token);
 		}
 		return ret.toString();
 			
@@ -237,7 +218,7 @@ public class MemTokenManager {
 	{
 //		return !(result == MemTokenManager.temptoken_request_validateresult_nodtoken 
 //				|| result == MemTokenManager.temptoken_request_validateresult_fail);		
-		return result == MemTokenManager.temptoken_request_validateresult_ok || result == MemTokenManager.temptoken_request_validateresult_notenabletoken;
+		return result == TokenStore.temptoken_request_validateresult_ok || result == TokenStore.temptoken_request_validateresult_notenabletoken;
 	}
 	
 	/**
@@ -248,7 +229,7 @@ public class MemTokenManager {
 	public boolean assertDTokenSetted(ServletRequest request)
 	{
 
-		Integer result = (Integer)request.getAttribute(temptoken_request_validateresult_key);
+		Integer result = (Integer)request.getAttribute(TokenStore.temptoken_request_validateresult_key);
 		return assertDTokenSetted(result);
 		
 	}
@@ -261,7 +242,7 @@ public class MemTokenManager {
 		String k = null;
 		if(fid != null)
 		{
-			k = temptoken_request_attribute+ "_" + fid;
+			k = TokenStore.temptoken_request_attribute+ "_" + fid;
 			tmp = (String)request.getAttribute(k);
 			if(tmp != null)//如果已经生产token，则直接返回生产的toke，无需重复生产token
 				return tmp;
@@ -294,7 +275,7 @@ public class MemTokenManager {
 //				}
 //				else
 				{
-					return this.tokenStore.genToken().getToken();
+					return this.tokenStore.genTempToken().getToken();
 				}
 			}
 			else
@@ -455,15 +436,15 @@ public class MemTokenManager {
 		StringBuffer buffer = new StringBuffer();
 		if(StringUtil.isEmpty(elementType) || elementType.equals("input"))
 		{
-			buffer.append("<input type=\"hidden\" name=\"").append(temptoken_param_name).append("\" value=\"").append(this.genToken(request,fid, cache)).append("\">");
+			buffer.append("<input type=\"hidden\" name=\"").append(TokenStore.temptoken_param_name).append("\" value=\"").append(this.genToken(request,fid, cache)).append("\">");
 		}
 		else if(elementType.equals("json"))//json
 		{
-			buffer.append(temptoken_param_name).append(":").append(jsonsplit).append(this.genToken(request,fid,cache)).append(jsonsplit);
+			buffer.append(TokenStore.temptoken_param_name).append(":").append(jsonsplit).append(this.genToken(request,fid,cache)).append(jsonsplit);
 		}
 		else if(elementType.equals("param"))//参数
 		{
-			buffer.append(temptoken_param_name).append("=").append(this.genToken(request,fid,cache));
+			buffer.append(TokenStore.temptoken_param_name).append("=").append(this.genToken(request,fid,cache));
 		}
 		else if(elementType.equals("token"))//只输出token
 		{
@@ -471,7 +452,7 @@ public class MemTokenManager {
 		}
 		else
 		{
-			buffer.append("<input type=\"hidden\" name=\"").append(temptoken_param_name).append("\" value=\"").append(this.genToken(request,fid, cache)).append("\">");
+			buffer.append("<input type=\"hidden\" name=\"").append(TokenStore.temptoken_param_name).append("\" value=\"").append(this.genToken(request,fid, cache)).append("\">");
 		}
 		return buffer.toString();
 	}

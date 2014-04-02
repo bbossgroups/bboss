@@ -116,7 +116,8 @@ public class CharsetEncodingFilter implements Filter {
         /**
          *  向所有会话cookie 添加“HttpOnly”属性,  解决方案，过滤器中
          */
-        response.setHeader( "Set-Cookie", "name=value; HttpOnly");
+//        response.setHeader( "Set-Cookie", "name=value; HttpOnly");
+        response.setHeader( "Set-Cookie", "name=value;HttpOnly"); 
         if(refererDefender)
         {
 	        /**
@@ -125,15 +126,71 @@ public class CharsetEncodingFilter implements Filter {
 	         */
 	        String referer = request.getHeader("Referer");   //REFRESH
 //	        if(!iswhilerefer(referer))
-	        {
-		        String basePath = request.getContextPath();
-		        
-		        if(referer!=null && referer.indexOf(basePath)<0){            
-		        	request.getRequestDispatcher(request.getRequestURI()).forward(request, response);
-		        	return;
-		        }  
-	        }
+	       
+	        	
+	        if(referer!=null){
+	        	String basePath = null;
+	        	String basePath80 = null;
+	        	if(!request.getContextPath().equals("/"))
+	        	{
+	        		if(request.getServerPort() != 80)
+	        		{
+		        		basePath = request.getScheme() + "://" 
+		        			+ request.getServerName() + ":" + request.getServerPort() 
+		        			+ request.getContextPath() + "/";
+	        		}
+	        		else
+	        		{
+	        			basePath = request.getScheme() + "://" 
+			        			+ request.getServerName() + ":" + request.getServerPort() 
+			        			+ request.getContextPath() + "/";
+	        			basePath80 = request.getScheme() + "://" 
+			        			+ request.getServerName() + 
+			        			request.getContextPath() + "/";
+	        		}
+	        	}
+	        	else
+	        	{
+	        		if(request.getServerPort() != 80)
+	        		{
+		        		basePath = request.getScheme() + "://" 
+		        	
+		    	        			+ request.getServerName() + ":" + request.getServerPort()
+		        	
+		    	        			+ request.getContextPath();
+	        		}
+	        		else
+	        		{
+	        			basePath = request.getScheme() + "://" 
+	        		        	
+		    	        			+ request.getServerName() + ":" + request.getServerPort()
+		        	
+		    	        			+ request.getContextPath();
+	        			basePath80 = request.getScheme() + "://" 
+			        			+ request.getServerName() + 
+			        			request.getContextPath() ;
+	        		}
+	        	}
+	        	if(basePath80 == null)
+	        	{
+	        		if(referer.indexOf(basePath)<0)
+	        		{
+	        			request.getRequestDispatcher(request.getRequestURI()).forward(request, response);
+	        			return;
+	        		}
+	        	}
+	        	else
+	        	{
+	        		if(referer.indexOf(basePath)<0 && referer.indexOf(basePath80)<0)
+	        		{
+	        			request.getRequestDispatcher(request.getRequestURI()).forward(request, response);
+	        			return;
+	        		}
+	        	}
+	        	
+	        }  
         }
+        
 
 
 

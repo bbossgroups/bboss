@@ -16,23 +16,23 @@ public class TestMongoTokenStore {
 	@Test
 	public void genTemptokenAndValidate()
 	{		
-		MemToken token = mongodbTokenStore.genToken();
-		Assert.assertEquals(MemTokenManager.temptoken_request_validateresult_ok, mongodbTokenStore.existToken(token.getToken()));
+		MemToken token = mongodbTokenStore.genTempToken();
+		Assert.assertEquals(TokenStore.temptoken_request_validateresult_ok, mongodbTokenStore.checkToken(token.getToken()));
 	}
 	
 	@Test
 	public void gendualtokenAndValidate()
 	{
-		MemToken token = mongodbTokenStore.genToken("sim","xxxxxxxxxxxxxxxxxxxxxx",30l*24l*60l*60l*1000l);
-		Assert.assertTrue(MemTokenManager.temptoken_request_validateresult_ok == mongodbTokenStore.existToken(token.getAppid(),token.getSecret(),token.getToken()));
+		MemToken token = mongodbTokenStore.genDualToken("sim","xxxxxxxxxxxxxxxxxxxxxx",30l*24l*60l*60l*1000l);
+		Assert.assertTrue(TokenStore.temptoken_request_validateresult_ok == mongodbTokenStore.checkToken(token.getToken()));
 	}
 	
 	
 	@Test
 	public void gentempauthortokenAndValidate()
 	{
-		MemToken token = mongodbTokenStore.genToken("sim","xxxxxxxxxxxxxxxxxxxxxx");
-		Assert.assertTrue(MemTokenManager.temptoken_request_validateresult_ok == mongodbTokenStore.existToken(token.getAppid(),token.getSecret(),token.getToken()));
+		MemToken token = mongodbTokenStore.genAuthTempToken("sim","xxxxxxxxxxxxxxxxxxxxxx");
+		Assert.assertTrue(TokenStore.temptoken_request_validateresult_ok == mongodbTokenStore.checkToken(token.getToken()));
 	}
 
 }
