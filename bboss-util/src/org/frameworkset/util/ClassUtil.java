@@ -576,6 +576,7 @@ public class ClassUtil
 	    private volatile transient Method[] declaredMethods;
 	    
 	    private volatile transient Constructor defaultConstruction;
+	    private volatile transient Constructor[] constructions;
 
 	    private Class clazz;
 	    /**
@@ -592,6 +593,11 @@ public class ClassUtil
 	    	try {
 				defaultConstruction  = clazz.getDeclaredConstructor();
 				ReflectionUtils.makeAccessible(defaultConstruction);
+				constructions = clazz.getDeclaredConstructors();
+				for(int i = 0; constructions != null && i < constructions.length;i ++)
+				{
+					ReflectionUtils.makeAccessible(constructions[i]);
+				}
 			} catch (Exception e) {
 //				// TODO Auto-generated catch block
 //				e.printStackTrace();
@@ -1171,6 +1177,10 @@ public class ClassUtil
 
 		public boolean isBaseprimary() {
 			return baseprimary;
+		}
+
+		public Constructor[] getConstructions() {
+			return constructions;
 		}
 
 		

@@ -25,6 +25,8 @@ import java.io.Writer;
 import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -963,7 +965,26 @@ public class ObjectSerializable {
 						ValueObjectUtil.getSimpleTypeName(type)).append(
 						"\" v=\"").append(String.valueOf(value)).append("\"/>");
 			return true;
-		} else if (type == Class.class) {
+		}
+		 else if (type == BigInteger.class) {
+				if (name == null)
+					ret.append("<p s:t=\"bigint\" v=\"").append(
+							(obj.toString())).append("\"/>");
+				else
+					ret.append("<p n=\"").append(name).append(
+							"\" s:t=\"bigint\" v=\"").append(obj.toString()).append("\"/>");
+				return true;
+			}
+		 else if (type == BigDecimal.class) {
+				if (name == null)
+					ret.append("<p s:t=\"bigdecimal\" v=\"").append(
+							(obj.toString())).append("\"/>");
+				else
+					ret.append("<p n=\"").append(name).append(
+							"\" s:t=\"bigdecimal\" v=\"").append(obj.toString()).append("\"/>");
+				return true;
+			}
+		else if (type == Class.class) {
 			if (name == null)
 				ret.append("<p s:t=\"Class\" v=\"").append(
 						((Class) obj).getCanonicalName()).append("\"/>");

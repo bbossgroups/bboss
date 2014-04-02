@@ -233,7 +233,7 @@ public  class ProList<V extends Pro> extends ArrayList<V>
         					if(listtype != ArrayList.class)
     						{
         						try {
-        							componentList = (ArrayList)listtype.newInstance();
+        							componentList = (List)listtype.newInstance();
     							} catch (InstantiationException e) {
     								throw new BeanInstanceException(e);
     							} catch (IllegalAccessException e) {
@@ -267,7 +267,7 @@ public  class ProList<V extends Pro> extends ArrayList<V>
     						if(listtype != ArrayList.class)
     						{
         						try {
-        							componentList = (ArrayList)listtype.newInstance();
+        							componentList = (List)listtype.newInstance();
     							} catch (InstantiationException e) {
     								throw new BeanInstanceException(e);
     							} catch (IllegalAccessException e) {
@@ -289,7 +289,7 @@ public  class ProList<V extends Pro> extends ArrayList<V>
     						if(listtype != ArrayList.class)
     						{
         						try {
-        							componentList = (ArrayList)listtype.newInstance();
+        							componentList = (List)listtype.newInstance();
     							} catch (InstantiationException e) {
     								throw new BeanInstanceException(e);
     							} catch (IllegalAccessException e) {
@@ -319,7 +319,7 @@ public  class ProList<V extends Pro> extends ArrayList<V>
     						if(listtype != ArrayList.class)
     						{
         						try {
-        							componentList = (ArrayList)listtype.newInstance();
+        							componentList = (List)listtype.newInstance();
     							} catch (InstantiationException e) {
     								throw new BeanInstanceException(e);
     							} catch (IllegalAccessException e) {

@@ -1,10 +1,7 @@
 package org.frameworkset.spi.assemble;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -255,7 +252,7 @@ public  class ProSet<V extends Pro> extends TreeSet<V>
     						if(settype != TreeSet.class)
     						{
         						try {
-        							componentSet = (TreeSet)settype.newInstance();
+        							componentSet = (Set)settype.newInstance();
     							} catch (InstantiationException e) {
     								throw new BeanInstanceException(e);
     							} catch (IllegalAccessException e) {
@@ -286,7 +283,7 @@ public  class ProSet<V extends Pro> extends TreeSet<V>
     						if(settype != TreeSet.class)
     						{
         						try {
-        							componentSet = (TreeSet)settype.newInstance();
+        							componentSet = (Set)settype.newInstance();
     							} catch (InstantiationException e) {
     								throw new BeanInstanceException(e);
     							} catch (IllegalAccessException e) {
@@ -309,7 +306,7 @@ public  class ProSet<V extends Pro> extends TreeSet<V>
     						if(settype != TreeSet.class)
     						{
         						try {
-        							componentSet = (TreeSet)settype.newInstance();
+        							componentSet = (Set)settype.newInstance();
     							} catch (InstantiationException e) {
     								throw new BeanInstanceException(e);
     							} catch (IllegalAccessException e) {
@@ -342,7 +339,7 @@ public  class ProSet<V extends Pro> extends TreeSet<V>
     					if(settype != TreeSet.class)
 						{
     						try {
-    							componentSet = (TreeSet)settype.newInstance();
+    							componentSet = (Set)settype.newInstance();
 							} catch (InstantiationException e) {
 								throw new BeanInstanceException(e);
 							} catch (IllegalAccessException e) {

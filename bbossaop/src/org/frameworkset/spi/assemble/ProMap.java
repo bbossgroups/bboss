@@ -269,7 +269,7 @@ public class ProMap<K,V extends Pro> extends HashMap<K,V>
     						if(maptype != HashMap.class)
     						{
 	    						try {
-									componentMap = (HashMap)maptype.newInstance();
+									componentMap = (Map)maptype.newInstance();
 								} catch (InstantiationException e) {
 									throw new BeanInstanceException(e);
 								} catch (IllegalAccessException e) {
@@ -303,7 +303,7 @@ public class ProMap<K,V extends Pro> extends HashMap<K,V>
     						if(maptype != HashMap.class)
     						{
 	    						try {
-									componentMap = (HashMap)maptype.newInstance();
+									componentMap = (Map)maptype.newInstance();
 								} catch (InstantiationException e) {
 									throw new BeanInstanceException(e);
 								} catch (IllegalAccessException e) {
@@ -327,7 +327,7 @@ public class ProMap<K,V extends Pro> extends HashMap<K,V>
     						if(maptype != HashMap.class)
     						{
 	    						try {
-									componentMap = (HashMap)maptype.newInstance();
+									componentMap = (Map)maptype.newInstance();
 								} catch (InstantiationException e) {
 									throw new BeanInstanceException(e);
 								} catch (IllegalAccessException e) {
@@ -366,7 +366,7 @@ public class ProMap<K,V extends Pro> extends HashMap<K,V>
     					if(maptype != HashMap.class)
 						{
     						try {
-								componentMap = (HashMap)maptype.newInstance();
+								componentMap = (Map)maptype.newInstance();
 							} catch (InstantiationException e) {
 								throw new BeanInstanceException(e);
 							} catch (IllegalAccessException e) {

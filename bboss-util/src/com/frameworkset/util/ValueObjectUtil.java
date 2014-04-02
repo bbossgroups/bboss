@@ -51,6 +51,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.net.URL;
 import java.sql.Blob;
 import java.sql.Clob;
@@ -106,7 +107,7 @@ public class ValueObjectUtil {
 		char.class ,Character.class,
 		
 		byte.class ,Byte.class,
-		BigDecimal.class};
+		BigDecimal.class,BigInteger.class};
 	/**
 	 * 用于序列化机制识别基础数据类型   
 	 */
@@ -120,7 +121,7 @@ public class ValueObjectUtil {
 		double.class,
 		char.class ,
 		byte.class ,
-		Class.class
+		Class.class,BigInteger.class,BigDecimal.class
 		};
 	private static final Logger log = Logger.getLogger(ValueObjectUtil.class);
 
@@ -1644,6 +1645,11 @@ public class ValueObjectUtil {
 			return converObjToBigDecimal(obj);
 			
 		}
+		if(toType == BigInteger.class)
+		{
+			return converObjToBigInteger(obj);
+			
+		}
 		// 如果是字符串则直接返回obj.toString()
 		if (toType == String.class) {
 			if (obj instanceof java.util.Date)
@@ -1858,6 +1864,20 @@ public class ValueObjectUtil {
 		if(obj.getClass() == float.class || obj.getClass() == Float.class)
 			return BigDecimal.valueOf((Float)obj);
 		return new BigDecimal(obj.toString());
+	}
+	public static BigInteger converObjToBigInteger(Object obj)
+	{
+		if(obj.getClass() == long.class || obj.getClass() == Long.class)
+			return BigInteger.valueOf((Long)obj);
+		if(obj.getClass() == short.class || obj.getClass() == Short.class)
+			return BigInteger.valueOf((Short)obj);
+		if(obj.getClass() == int.class || obj.getClass() == Integer.class)
+			return BigInteger.valueOf((Integer)obj);
+		if(obj.getClass() == double.class || obj.getClass() == Double.class)
+			return BigInteger.valueOf(((Double)obj).longValue());
+		if(obj.getClass() == float.class || obj.getClass() == Float.class)
+			return BigInteger.valueOf(((Float)obj).longValue());
+		return new BigInteger(obj.toString());
 	}
 	public static Object convertObjToDate(Object obj,Class toType,String dateformat)
 	{
@@ -2306,6 +2326,13 @@ public class ValueObjectUtil {
 		{
 			
 			return toBigDecimalArray(obj, null);
+			
+		}
+		
+		if(toType == BigInteger[].class)
+		{
+			
+			return toBigIntegerArray(obj, null);
 			
 		}
 
@@ -4532,6 +4559,26 @@ public class ValueObjectUtil {
 
 		
 	}
+	public static BigInteger[] toBigIntegerArray(Object value, Class componentType) {
+		if (!value.getClass().isArray()) {
+			
+				return new BigInteger[] { converObjToBigInteger(value)};
+			
+		}
+
+		BigInteger[] ret = null;
+		int length = Array.getLength(value);
+		ret = new BigInteger[length];
+		for (int i = 0; i < length; i++) {
+			ret[i] = converObjToBigInteger(Array.get(value, i));
+		}
+		return ret;
+		
+
+		
+
+		
+	}
 	
 	
 	public static Double[] toDoubleArray(Object value, Class componentType) {
@@ -4860,6 +4907,12 @@ public class ValueObjectUtil {
 				|| type.equals("character"))
 			
 			return Character.class;
+		else if (type.equals("bigint") )
+			
+			return BigInteger.class;
+		else if (type.equals("bigdecimal") )
+			
+			return BigDecimal.class;
 		else if( type.equals("String[]"))
 		{
 			return String[].class;

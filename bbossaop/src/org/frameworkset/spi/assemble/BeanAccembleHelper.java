@@ -26,6 +26,7 @@ import org.frameworkset.spi.support.MessageSourceAware;
 import org.frameworkset.util.ClassUtil;
 import org.frameworkset.util.ClassUtil.ClassInfo;
 import org.frameworkset.util.ClassUtil.PropertieDescription;
+import org.frameworkset.util.ReflectionUtils;
 
 import com.frameworkset.spi.assemble.BeanInstanceException;
 import com.frameworkset.spi.assemble.CurrentlyInCreationException;
@@ -400,17 +401,24 @@ public class BeanAccembleHelper<V> {
 		try {
 			
 			Class<V> cls = null;
+			ClassInfo classInfo = null;
 			if(!ignoreconstruction)
+			{
 				cls = providerManagerInfo.getBeanClass();
+				classInfo = ClassUtil.getClassInfo(cls);
+			}
 			else
 			{
 				cls = providerManagerInfo.getFactoryClass();
-				return (V)context.getLoopContext().setCurrentObj(cls.newInstance());
+				classInfo = ClassUtil.getClassInfo(cls);
+				return (V)context.getLoopContext().setCurrentObj(classInfo.getDefaultConstruction().newInstance());
 			}
+			
 			if (providerManagerInfo.getConstruction() == null
 					|| providerManagerInfo.getConstructorParams() == null
 					|| providerManagerInfo.getConstructorParams().size() == 0 ) {
-				return (V)context.getLoopContext().setCurrentObj(cls.newInstance());
+				
+				return (V)context.getLoopContext().setCurrentObj(classInfo.getDefaultConstruction().newInstance());
 			}
 			List<Pro> params = providerManagerInfo.getConstructorParams();
 			Object[] valuetypes = getValue2ndTypes(params, context);

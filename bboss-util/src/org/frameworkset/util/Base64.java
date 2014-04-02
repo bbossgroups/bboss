@@ -25,6 +25,12 @@ public class Base64 implements Serializable {
 	public static String encode(byte[] bytes){
 		return (new sun.misc.BASE64Encoder()).encode(bytes);
 	}
+	
+	/**
+	 */
+	public static byte[] encodetobyte(byte[] bytes){
+		return (new sun.misc.BASE64Encoder()).encode(bytes).getBytes();
+	}
 	/**
 	 * base64 decode arithmetic
 	 * @param s
