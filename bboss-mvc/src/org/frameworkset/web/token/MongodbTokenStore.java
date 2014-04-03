@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.frameworkset.nosql.mongodb.MongodbHelper;
+import org.frameworkset.security.ecc.ECCCoder;
+import org.frameworkset.security.ecc.ECCCoder.ECKeyPair;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
@@ -26,6 +28,7 @@ public class MongodbTokenStore extends BaseTokenStore{
 	private DBCollection temptokens = null;
 	private DBCollection authtemptokens = null;
 	private DBCollection dualtokens = null;
+	private DBCollection eckeypairs = null;
 	
 	public MongodbTokenStore()
 	{
@@ -37,6 +40,8 @@ public class MongodbTokenStore extends BaseTokenStore{
 		temptokens.createIndex(new BasicDBObject("token", 1));
 		dualtokens = db.getCollection("dualtokens");
 		dualtokens.createIndex(new BasicDBObject("appid", 1).append("secret", 1));
+		eckeypairs = db.getCollection("eckeypair");
+		eckeypairs.createIndex(new BasicDBObject("appid", 1));
 	}
 	public void destory()
 	{
@@ -321,7 +326,7 @@ public class MongodbTokenStore extends BaseTokenStore{
 	}
 
 	@Override
-	public MemToken genDualToken(String appid, String secret, long livetime) {
+	public MemToken genDualToken(String appid,String account, String secret, long livetime) {
 		String token = this.randomToken();
 		
 		MemToken token_m = null;
@@ -362,7 +367,7 @@ public class MongodbTokenStore extends BaseTokenStore{
 	 * @param string2
 	 * @return
 	 */
-	public MemToken genAuthTempToken(String appid, String secret) {
+	public MemToken genAuthTempToken(String appid,String account, String secret) {
 		
 		String token = this.randomToken();//需要将appid,secret,token进行混合加密，生成最终的token进行存储，校验时，只对令牌进行拆分校验
 		
@@ -380,6 +385,37 @@ public class MongodbTokenStore extends BaseTokenStore{
 			}
 		}
 		return token_m ;
+	}
+	
+	public ECKeyPair getKeyPairs(String account,String secret) throws Exception
+	{
+		DBCursor cursor = null;
+		cursor = eckeypairs.find(new BasicDBObject("appid", account));
+		if(cursor.hasNext())
+		{
+			DBObject value = cursor.next();
+			return toECKeyPair(value);
+			
+		}
+		else
+		{
+			ECKeyPair keypair = ECCCoder.genECKeyPair();
+			insertECKeyPair( account, secret, keypair);
+			return keypair;
+		}
+	}
+	private void insertECKeyPair(String account,String secret,ECKeyPair keypair)
+	{
+		this.eckeypairs.insert(new BasicDBObject("appid",account)		
+		.append("privateKey", keypair.getPrivateKey())
+		.append("createTime", System.currentTimeMillis())
+		.append("publicKey", keypair.getPublicKey()) );
+	}
+	
+	private ECKeyPair toECKeyPair(DBObject value)
+	{
+		ECKeyPair ECKeyPair = new ECKeyPair((String)value.get("privateKey"),(String)value.get("publicKey"),null,null);
+		return ECKeyPair;
 	}
 
 }

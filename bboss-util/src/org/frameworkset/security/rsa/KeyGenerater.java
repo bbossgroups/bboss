@@ -7,6 +7,7 @@ import java.security.SecureRandom;
 
 import org.frameworkset.util.Base64;
 
+
 public class KeyGenerater {
 	 private String priKey;
 	 private String pubKey;

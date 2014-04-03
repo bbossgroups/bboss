@@ -1,5 +1,6 @@
 package org.frameworkset.web.token;
 
+import org.frameworkset.security.ecc.ECCCoder.ECKeyPair;
 import org.frameworkset.web.token.BaseTokenStore.TokenInfo;
 
 
@@ -47,8 +48,9 @@ public interface TokenStore {
 //	public abstract void setSession(Session session);
 	
 	public MemToken genTempToken();
-	public MemToken genDualToken(String appid,String secret,long livetime);
-	public MemToken genAuthTempToken(String appid, String secret);
+	public MemToken genDualToken(String appid,String account,String secret,long livetime);
+	public MemToken genAuthTempToken(String appid, String account,String secret);
+	public ECKeyPair getKeyPairs(String appid,String account,String secret) throws Exception;
 	
 	
 	

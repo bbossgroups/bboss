@@ -6,7 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class TestMongoTokenStore {
-	private MongodbTokenStore mongodbTokenStore;
+	private TokenStore mongodbTokenStore;
 	@Before
 	public void init()
 	{
@@ -23,7 +23,7 @@ public class TestMongoTokenStore {
 	@Test
 	public void gendualtokenAndValidate()
 	{
-		MemToken token = mongodbTokenStore.genDualToken("sim","xxxxxxxxxxxxxxxxxxxxxx",30l*24l*60l*60l*1000l);
+		MemToken token = mongodbTokenStore.genDualToken("sim","yinbp","xxxxxxxxxxxxxxxxxxxxxx",30l*24l*60l*60l*1000l);
 		Assert.assertTrue(TokenStore.temptoken_request_validateresult_ok == mongodbTokenStore.checkToken(token.getToken()));
 	}
 	
@@ -31,7 +31,7 @@ public class TestMongoTokenStore {
 	@Test
 	public void gentempauthortokenAndValidate()
 	{
-		MemToken token = mongodbTokenStore.genAuthTempToken("sim","xxxxxxxxxxxxxxxxxxxxxx");
+		MemToken token = mongodbTokenStore.genAuthTempToken("sim","yinbp","xxxxxxxxxxxxxxxxxxxxxx");
 		Assert.assertTrue(TokenStore.temptoken_request_validateresult_ok == mongodbTokenStore.checkToken(token.getToken()));
 	}
 

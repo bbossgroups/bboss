@@ -15,6 +15,8 @@ public class MemToken {
 	private long livetime;
 	private String appid;
 	private String secret;
+	
+	private String signtoken;
 	public String getToken() {
 		return token;
 	}
@@ -102,6 +104,14 @@ public class MemToken {
 
 	public void setSecret(String secret) {
 		this.secret = secret;
+	}
+
+	public String getSigntoken() {
+		return signtoken;
+	}
+
+	public void setSigntoken(String signtoken) {
+		this.signtoken = signtoken;
 	}
 
 

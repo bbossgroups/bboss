@@ -93,9 +93,18 @@ public class RSAEncrypt {
 	public static void main(String[] args) throws Exception {
 		String source = "Hello World!";// 要加密的字符串
 		String cryptograph = encrypt(source);// 生成的密文
-		System.out.println(cryptograph);
-
 		String target = decrypt(cryptograph);// 解密密文
+		source = "尹标平";// 要加密的字符串
+		long start = System.currentTimeMillis();
+		
+		cryptograph = encrypt(source);// 生成的密文
+		long end = System.currentTimeMillis();
+		System.out.println("加密耗时:"+(end-start));
+		System.out.println(cryptograph);
+		start = System.currentTimeMillis();
+		target = decrypt(cryptograph);// 解密密文
+		end = System.currentTimeMillis();
+		System.out.println("解密耗时:"+(end-start));
 		System.out.println(target);
 	}
 
