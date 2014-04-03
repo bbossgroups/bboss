@@ -33,7 +33,7 @@ public interface TokenStore {
 	public abstract void destory();
 
 	public abstract void livecheck();
-	public abstract Integer checkToken(String tokeninfo);
+	public abstract Integer checkToken(String appid,String secret,String tokeninfo)  throws Exception;
 
 	public abstract Integer checkTempToken(TokenInfo tokeninfo);
 	public abstract Integer checkAuthTempToken(TokenInfo tokeninfo);

@@ -247,7 +247,7 @@ public class MemTokenStore extends BaseTokenStore{
 	}
 
 	@Override
-	public MemToken genDualToken(String appid, String secret, long livetime) {
+	public MemToken genDualToken(String appid,String account, String secret, long livetime) {
 		String token = this.randomToken();
 		String key = appid + ":"+secret;
 		MemToken token_m = null;
@@ -280,7 +280,7 @@ public class MemTokenStore extends BaseTokenStore{
 	}
 	
 	@Override
-	public MemToken genAuthTempToken(String appid, String secret) {
+	public MemToken genAuthTempToken(String appid,String account, String secret) {
 		String token = this.randomToken();
 		String key = appid + ":"+secret +":"+token;
 		MemToken token_m = null;

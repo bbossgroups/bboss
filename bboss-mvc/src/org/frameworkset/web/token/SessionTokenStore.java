@@ -120,7 +120,7 @@ public class SessionTokenStore extends BaseTokenStore {
 	}
 
 	@Override
-	public MemToken genDualToken(String appid, String statictoken, long livetime) {
+	public MemToken genDualToken(String appid,String account, String statictoken, long livetime) {
 		String token = this.randomToken();
 		String key = appid + ":"+statictoken;
 		MemToken token_m = null;

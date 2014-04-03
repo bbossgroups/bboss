@@ -176,7 +176,15 @@ public class MemTokenManager {
 //		}
 //		else
 		{
-			result = this.tokenStore.checkToken(token);
+			String appid= request.getParameter("appid");
+			String secret= request.getParameter("secret");
+			
+			
+			try {
+				result = this.tokenStore.checkToken(appid,secret,token);
+			} catch (Exception e) {
+				result = TokenStore.temptoken_request_validateresult_fail;
+			}
 		}
 		request.setAttribute(TokenStore.temptoken_request_validateresult_key,result);
 		return 	assertDToken(result);

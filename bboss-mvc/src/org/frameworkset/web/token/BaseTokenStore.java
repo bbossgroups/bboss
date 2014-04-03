@@ -84,6 +84,7 @@ public abstract class BaseTokenStore implements TokenStore {
 	{
 		TokenInfo tokenInfo = new TokenInfo();
 		char line = token.charAt(2);
+		String signtoken = null;
 		if(line =='_')
 		{
 			String tokentype = token.substring(0,1);
@@ -92,17 +93,34 @@ public abstract class BaseTokenStore implements TokenStore {
 			{
 				
 				tokenInfo.setTokentype(tokentype);
+				
 				tokenInfo.setToken(token.substring(3));
 			}
 			else if(tokentype.equals(TokenStore.type_temptoken))//需要认证的临时令牌
 			{
 				tokenInfo.setTokentype(tokentype);
-				tokenInfo.setToken(token.substring(3));
+				signtoken = token.substring(3);
+				ECKeyPair keyPairs = getKeyPairs(appid,null,secret);
+				
+				tokenInfo.setAppid(appid);
+				String mw = new String(ECCCoder.decrypt(signtoken.getBytes(), keyPairs.getPrivateKey()));
+				String[] t = mw.split("|");
+				tokenInfo.setToken(t[0]);
+				tokenInfo.setAccount(t[1]);
+				tokenInfo.setSecret(secret);
 			}
 			else if(tokentype.equals("dt"))//有效期令牌校验
 			{
 				tokenInfo.setTokentype(tokentype);
-				tokenInfo.setToken(token.substring(3));
+				signtoken = token.substring(3);
+				ECKeyPair keyPairs = getKeyPairs(appid,null,secret);
+				
+				tokenInfo.setAppid(appid);
+				String mw = new String(ECCCoder.decrypt(signtoken.getBytes(), keyPairs.getPrivateKey()));
+				String[] t = mw.split("|");
+				tokenInfo.setToken(t[0]);
+				tokenInfo.setAccount(t[1]);
+				tokenInfo.setSecret(secret);
 			}
 			else
 			{
@@ -115,12 +133,7 @@ public abstract class BaseTokenStore implements TokenStore {
 			tokenInfo.setTokentype(TokenStore.type_temptoken);
 			tokenInfo.setToken(token);
 		}
-		ECKeyPair keyPairs = getKeyPairs(appid,null,secret);
 		
-		tokenInfo.setAppid("appid");
-		tokenInfo.setToken(token);
-		tokenInfo.setSecret("secret");
-		tokenInfo.setTokentype("tt");
 		return tokenInfo;
 	}
 	protected boolean isold(MemToken token,long livetime,long currentTime)
@@ -195,30 +208,25 @@ public abstract class BaseTokenStore implements TokenStore {
 		}
 		
 		TokenInfo tokeninfo = this.decodeToken(appid,secret,token);
-		if(line =='_')
+		
+		
+		if(tokeninfo.getTokentype().equals(TokenStore.type_temptoken))//无需认证的临时令牌
 		{
-			
-			
-			if(tokeninfo.getTokentype().equals("tt"))//无需认证的临时令牌
-			{
-				return this.checkTempToken(tokeninfo);
-			}
-			else if(tokeninfo.getTokentype().equals("at"))//需要认证的临时令牌
-			{
-				return this.checkAuthTempToken(tokeninfo);
-			}
-			else if(tokeninfo.getTokentype().equals("dt"))//有效期令牌校验
-			{
-				return this.checkAuthTempToken(tokeninfo);
-			}
-			
-		}
-		else
-		{
-			TokenInfo tokeninfo = new TokenInfo();
-			tokeninfo.setToken(token);
 			return this.checkTempToken(tokeninfo);
 		}
+		else if(tokeninfo.getTokentype().equals(TokenStore.type_authtemptoken))//需要认证的临时令牌
+		{
+			return this.checkAuthTempToken(tokeninfo);
+		}
+		else if(tokeninfo.getTokentype().equals(TokenStore.type_dualtoken))//有效期令牌校验
+		{
+			return this.checkAuthTempToken(tokeninfo);
+		}
+		
+		throw new TokenException("无法识别的token：appid="+appid+",secret="+ secret+",token="+token);
+			
+		
+		
 			
 			
 	}
