@@ -9,6 +9,7 @@ import org.frameworkset.security.ecc.ECCCoder;
 import org.frameworkset.security.ecc.ECCCoder.ECKeyPair;
 
 import com.mongodb.BasicDBObject;
+import com.mongodb.CommandResult;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
@@ -29,6 +30,29 @@ public class MongodbTokenStore extends BaseTokenStore{
 	private DBCollection authtemptokens = null;
 	private DBCollection dualtokens = null;
 	private DBCollection eckeypairs = null;
+	public void requestStart()
+	{
+		if(db != null)
+		{
+			db.requestStart();
+		}
+	}
+	public void requestDone()
+	{
+		if(db != null)
+		{
+			db.requestDone();
+		}
+	}
+	
+	public CommandResult getLastError()
+	{
+		if(db != null)
+		{
+			return db.getLastError();
+		}
+		return null;
+	}
 	
 	public MongodbTokenStore()
 	{
@@ -60,17 +84,28 @@ public class MongodbTokenStore extends BaseTokenStore{
 	public void livecheck()
 	{
 		List<BasicDBObject> dolds = new ArrayList<BasicDBObject>();
+		DBCursor cursor = null;
 //		synchronized(this.checkLock)
 		{
-			DBCursor cursor = this.temptokens.find();
-			
-			while(cursor.hasNext())
-			{	
-				DBObject tt = cursor.next();
-				MemToken token_m = totempToken(tt);				
-				if(isold(token_m))
+			try
+			{
+				cursor = this.temptokens.find();				
+				while(cursor.hasNext())
+				{	
+					DBObject tt = cursor.next();
+					MemToken token_m = totempToken(tt);				
+					if(isold(token_m))
+					{
+						dolds.add(new BasicDBObject("token", token_m.getToken()));
+					}
+				}
+			}
+			finally
+			{
+				if(cursor != null)
 				{
-					dolds.add(new BasicDBObject("token", token_m.getToken()));
+					cursor.close();
+					cursor = null;
 				}
 			}
 		}
@@ -83,9 +118,9 @@ public class MongodbTokenStore extends BaseTokenStore{
 		}
 		
 		dolds = new ArrayList<BasicDBObject>();
-//		synchronized(this.dualcheckLock)
+		try
 		{
-			DBCursor cursor = this.dualtokens.find();
+			cursor = this.dualtokens.find();
 			while(cursor.hasNext())
 			{	
 				DBObject tt = cursor.next();
@@ -97,6 +132,14 @@ public class MongodbTokenStore extends BaseTokenStore{
 				}
 			}
 		}
+		finally
+		{
+			if(cursor != null)
+			{
+				cursor.close();
+				cursor = null;
+			}
+		}
 		
 		for(int i = 0; i < dolds.size(); i ++)
 		{
@@ -104,9 +147,9 @@ public class MongodbTokenStore extends BaseTokenStore{
 		}
 		
 		dolds = new ArrayList<BasicDBObject>();
-//		synchronized(this.dualcheckLock)
+		try
 		{
-			DBCursor cursor = this.authtemptokens.find();
+			cursor = this.authtemptokens.find();
 			while(cursor.hasNext())
 			{	
 				DBObject tt = cursor.next();
@@ -118,7 +161,14 @@ public class MongodbTokenStore extends BaseTokenStore{
 				}
 			}
 		}
-		
+		finally
+		{
+			if(cursor != null)
+			{
+				cursor.close();
+				cursor = null;
+			}
+		}
 		for(int i = 0; i < dolds.size(); i ++)
 		{
 			authtemptokens.remove(dolds.get(i));
@@ -154,27 +204,39 @@ public class MongodbTokenStore extends BaseTokenStore{
 		{
 			
 //			synchronized(checkLock)
+//			DBCursor cursor = null;
 			BasicDBObject dbobject = new BasicDBObject("token", tokeninfo.getToken()).append("appid", tokeninfo.getAppid()).append("secret", tokeninfo.getSecret());
-			DBCursor cursor = this.authtemptokens.find(dbobject);
-			if(cursor.hasNext())
+			try
 			{
-				DBObject tt = cursor.next();
-				authtemptokens.remove(dbobject);
-				MemToken token_m = totempToken(tt);					
-				if(!this.isold(token_m))
+				DBObject tt = this.authtemptokens.findAndRemove(dbobject);
+				if(tt != null)
 				{
-					return TokenStore.temptoken_request_validateresult_ok;
+//					DBObject tt = cursor.next();
+	//				authtemptokens.remove(dbobject);
+					MemToken token_m = totempToken(tt);					
+					if(!this.isold(token_m))
+					{
+						return TokenStore.temptoken_request_validateresult_ok;
+					}
+					else
+					{
+						return TokenStore.temptoken_request_validateresult_expired;
+					}
+					
 				}
 				else
 				{
-					return TokenStore.temptoken_request_validateresult_expired;
-				}
-				
+					return TokenStore.temptoken_request_validateresult_fail;
+				}			
 			}
-			else
+			finally
 			{
-				return TokenStore.temptoken_request_validateresult_fail;
-			}			
+//				if(cursor != null)
+//				{
+//					cursor.close();
+//					cursor = null;
+//				}
+			}
 		}
 		else 
 		{
@@ -189,11 +251,10 @@ public class MongodbTokenStore extends BaseTokenStore{
 		{
 //			synchronized(checkLock)
 			BasicDBObject dbobject = new BasicDBObject("token", tokeninfo.getToken());
-			DBCursor cursor = temptokens.find(dbobject);
-			if(cursor.hasNext())
+			DBObject tt = temptokens.findAndRemove(dbobject);
+			if(tt != null)
 			{
-				DBObject tt = cursor.next();
-				temptokens.remove(dbobject);
+//				DBObject tt = cursor.next();
 				MemToken token_m = totempToken(tt);					
 				if(!this.isold(token_m))
 				{
@@ -234,11 +295,21 @@ public class MongodbTokenStore extends BaseTokenStore{
 		}
 		else
 		{
-			cursor = dualtokens.find(dbobject);
-			if(cursor.hasNext())
+			try
 			{
-				dt = cursor.next();
-				tt = todualToken(dt); 
+				cursor = dualtokens.find(dbobject);
+				if(cursor.hasNext())
+				{
+					dt = cursor.next();
+					tt = todualToken(dt); 
+				}
+			}
+			finally
+			{
+				if(cursor != null)
+				{
+					cursor.close();
+				}
 			}
 		}
 		
@@ -320,14 +391,15 @@ public class MongodbTokenStore extends BaseTokenStore{
 	public MemToken genTempToken() {
 		String token = this.randomToken();
 		MemToken token_m = new MemToken(token,System.currentTimeMillis());
-		temptokens.insert(new BasicDBObject("token",token_m.getToken()).append("createTime", token_m.getCreateTime()).append("livetime", this.tempTokendualtime));
+		temptokens.insert(new BasicDBObject("token",token_m.getToken()).append("createTime", token_m.getCreateTime()).append("livetime", this.tempTokendualtime).append("validate", true));
+		this.signToken(token_m, type_temptoken, null);
 		return token_m;
 		
 	}
 
 	@Override
 	public MemToken genDualToken(String appid,String account, String secret, long livetime) {
-		String token = this.randomToken();
+		
 		
 		MemToken token_m = null;
 //		synchronized(this.dualcheckLock)
@@ -338,6 +410,8 @@ public class MongodbTokenStore extends BaseTokenStore{
 				long lastVistTime = System.currentTimeMillis();
 				if(isold(token_m, livetime,lastVistTime))//如果令牌已经过期，重新申请新的令牌
 				{
+					//刷新过期的有效期令牌
+					String token = this.randomToken();
 					token_m.setLastVistTime(lastVistTime);
 //					this.dualtokens.remove(key);
 					long createTime = System.currentTimeMillis();
@@ -346,10 +420,12 @@ public class MongodbTokenStore extends BaseTokenStore{
 					token_m.setAppid(appid);
 					token_m.setSecret(secret);
 					updateDualToken(token_m);
+					
 				}
 			}
 			else
 			{
+				String token = this.randomToken();
 				long createTime = System.currentTimeMillis();
 				token_m = new MemToken(token, createTime, true,
 						createTime, livetime);
@@ -358,6 +434,7 @@ public class MongodbTokenStore extends BaseTokenStore{
 				this.insertDualToken(this.dualtokens,token_m);
 			}
 		}
+		this.signToken(token_m,TokenStore.type_dualtoken,account);
 		return token_m ;
 		
 	}
@@ -384,29 +461,40 @@ public class MongodbTokenStore extends BaseTokenStore{
 				this.insertDualToken(this.authtemptokens,token_m);
 			}
 		}
+		this.signToken(token_m,TokenStore.type_authtemptoken,account);
 		return token_m ;
 	}
 	
-	public ECKeyPair getKeyPairs(String account,String secret) throws Exception
+	public ECKeyPair getKeyPairs(String appid,String account,String secret) throws Exception
 	{
 		DBCursor cursor = null;
-		cursor = eckeypairs.find(new BasicDBObject("appid", account));
-		if(cursor.hasNext())
+		try
 		{
-			DBObject value = cursor.next();
-			return toECKeyPair(value);
-			
+			cursor = eckeypairs.find(new BasicDBObject("appid", appid));
+			if(cursor.hasNext())
+			{
+				DBObject value = cursor.next();
+				return toECKeyPair(value);
+				
+			}
+			else
+			{
+				ECKeyPair keypair = ECCCoder.genECKeyPair();
+				insertECKeyPair( appid, secret, keypair);
+				return keypair;
+			}
 		}
-		else
+		finally
 		{
-			ECKeyPair keypair = ECCCoder.genECKeyPair();
-			insertECKeyPair( account, secret, keypair);
-			return keypair;
+			if(cursor != null)
+			{
+				cursor.close();
+			}
 		}
 	}
-	private void insertECKeyPair(String account,String secret,ECKeyPair keypair)
+	private void insertECKeyPair(String appid,String secret,ECKeyPair keypair)
 	{
-		this.eckeypairs.insert(new BasicDBObject("appid",account)		
+		this.eckeypairs.insert(new BasicDBObject("appid",appid)		
 		.append("privateKey", keypair.getPrivateKey())
 		.append("createTime", System.currentTimeMillis())
 		.append("publicKey", keypair.getPublicKey()) );

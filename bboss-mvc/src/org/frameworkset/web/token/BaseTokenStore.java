@@ -23,61 +23,75 @@ public abstract class BaseTokenStore implements TokenStore {
 		return age > this.tempTokendualtime;
 		
 	}
-	protected String encodeToken(MemToken token,String tokentype,String account) throws Exception
+	protected String encodeToken(MemToken token,String tokentype,String account) throws TokenException
 	{
-		if(tokentype == null || tokentype.equals(TokenStore.type_temptoken))
-		{
-			return TokenStore.type_temptoken+"_" + token.getToken();
-		}
-		else if(tokentype.equals(TokenStore.type_authtemptoken))
-		{			
-			ECKeyPair keyPairs = getKeyPairs(token.getAppid(),account,token.getSecret());
-			String input = account + "|" + token.getToken();
-			byte[] data =  null;
-			if(keyPairs.getPubKey() != null)
+		signToken( token, tokentype, account);
+		return token.getSigntoken();
+			
+	}
+	
+	protected void signToken(MemToken token,String tokentype,String account) throws TokenException
+	{
+		try {
+			if(tokentype == null || tokentype.equals(TokenStore.type_temptoken))
 			{
+				token.setSigntoken(TokenStore.type_temptoken+"_" + token.getToken());
+			}
+			else if(tokentype.equals(TokenStore.type_authtemptoken))
+			{			
+				ECKeyPair keyPairs = getKeyPairs(token.getAppid(),account,token.getSecret());
+				String input = account + "|" + token.getToken();
+				byte[] data =  null;
+				if(keyPairs.getPubKey() != null)
+				{
+					
+					data = ECCCoder.encrypt(input.getBytes(), keyPairs.getPubKey());
+					String signtoken =TokenStore.type_authtemptoken+"_"+ Base64.encode(data);
+					token.setSigntoken(signtoken);
+//					return signtoken;
+				}
+				else
+				{
+					data = ECCCoder.encrypt(input.getBytes(), keyPairs.getPublicKey());
+					String signtoken = TokenStore.type_authtemptoken+"_"+Base64.encode(data);
+					token.setSigntoken(signtoken);
+//					return signtoken;
+				}
 				
-				data = ECCCoder.encrypt(input.getBytes(), keyPairs.getPubKey());
-				String signtoken =TokenStore.type_authtemptoken+"_"+ Base64.encode(data);
-				token.setSigntoken(signtoken);
-				return signtoken;
+				
+			}
+			else if(tokentype.equals(TokenStore.type_dualtoken))
+			{			
+				ECKeyPair keyPairs = getKeyPairs(token.getAppid(),account,token.getSecret());
+				String input = account + "|" + token.getToken();
+				byte[] data =  null;
+				if(keyPairs.getPubKey() != null)
+				{				
+					data = ECCCoder.encrypt(input.getBytes(), keyPairs.getPubKey());
+					String signtoken = TokenStore.type_dualtoken+"_"+Base64.encode(data);
+					token.setSigntoken(signtoken);
+//					return signtoken;
+				}
+				else
+				{
+					data = ECCCoder.encrypt(input.getBytes(), keyPairs.getPublicKey());
+					String signtoken = TokenStore.type_dualtoken+"_"+Base64.encode(data);
+					token.setSigntoken(signtoken);
+//					return signtoken;
+				}
+				
+				
 			}
 			else
 			{
-				data = ECCCoder.encrypt(input.getBytes(), keyPairs.getPublicKey());
-				String signtoken = TokenStore.type_authtemptoken+"_"+Base64.encode(data);
-				token.setSigntoken(signtoken);
-				return signtoken;
+				throw new TokenException("无法识别的令牌类型："+tokentype+",token="+token.getToken()+",appid="+token.getAppid()+",account="+account);
 			}
-			
-			
+		} catch (TokenException e) {
+			throw e;
+		} catch (Exception e) {
+			throw  new TokenException(e);
 		}
-		else if(tokentype.equals(TokenStore.type_dualtoken))
-		{			
-			ECKeyPair keyPairs = getKeyPairs(token.getAppid(),account,token.getSecret());
-			String input = account + "|" + token.getToken();
-			byte[] data =  null;
-			if(keyPairs.getPubKey() != null)
-			{				
-				data = ECCCoder.encrypt(input.getBytes(), keyPairs.getPubKey());
-				String signtoken = TokenStore.type_dualtoken+"_"+Base64.encode(data);
-				token.setSigntoken(signtoken);
-				return signtoken;
-			}
-			else
-			{
-				data = ECCCoder.encrypt(input.getBytes(), keyPairs.getPublicKey());
-				String signtoken = Base64.encode(data)+"_"+TokenStore.type_dualtoken;
-				token.setSigntoken(signtoken);
-				return signtoken;
-			}
-			
-			
-		}
-		else
-		{
-			throw new TokenException("无法识别的令牌类型："+tokentype+",token="+token.getToken()+",appid="+token.getAppid()+",account="+account);
-		}
+		
 			
 	}
 	protected TokenInfo decodeToken(String appid,String secret,String token) throws Exception
@@ -87,7 +101,7 @@ public abstract class BaseTokenStore implements TokenStore {
 		String signtoken = null;
 		if(line =='_')
 		{
-			String tokentype = token.substring(0,1);
+			String tokentype = token.substring(0,2);
 			 
 			if(tokentype.equals(TokenStore.type_temptoken))//无需认证的临时令牌
 			{
@@ -96,30 +110,30 @@ public abstract class BaseTokenStore implements TokenStore {
 				
 				tokenInfo.setToken(token.substring(3));
 			}
-			else if(tokentype.equals(TokenStore.type_temptoken))//需要认证的临时令牌
+			else if(tokentype.equals(TokenStore.type_authtemptoken))//需要认证的临时令牌
 			{
 				tokenInfo.setTokentype(tokentype);
 				signtoken = token.substring(3);
 				ECKeyPair keyPairs = getKeyPairs(appid,null,secret);
 				
 				tokenInfo.setAppid(appid);
-				String mw = new String(ECCCoder.decrypt(signtoken.getBytes(), keyPairs.getPrivateKey()));
-				String[] t = mw.split("|");
-				tokenInfo.setToken(t[0]);
-				tokenInfo.setAccount(t[1]);
+				String mw = new String(ECCCoder.decrypt(Base64.decode(signtoken), keyPairs.getPrivateKey()));
+				String[] t = mw.split("\\|");
+				tokenInfo.setToken(t[1]);
+				tokenInfo.setAccount(t[0]);
 				tokenInfo.setSecret(secret);
 			}
-			else if(tokentype.equals("dt"))//有效期令牌校验
+			else if(tokentype.equals(TokenStore.type_dualtoken))//有效期令牌校验
 			{
 				tokenInfo.setTokentype(tokentype);
 				signtoken = token.substring(3);
 				ECKeyPair keyPairs = getKeyPairs(appid,null,secret);
 				
 				tokenInfo.setAppid(appid);
-				String mw = new String(ECCCoder.decrypt(signtoken.getBytes(), keyPairs.getPrivateKey()));
-				String[] t = mw.split("|");
-				tokenInfo.setToken(t[0]);
-				tokenInfo.setAccount(t[1]);
+				String mw = new String(ECCCoder.decrypt(Base64.decode(signtoken), keyPairs.getPrivateKey()));
+				String[] t = mw.split("\\|");
+				tokenInfo.setToken(t[1]);
+				tokenInfo.setAccount(t[0]);
 				tokenInfo.setSecret(secret);
 			}
 			else
@@ -220,7 +234,7 @@ public abstract class BaseTokenStore implements TokenStore {
 		}
 		else if(tokeninfo.getTokentype().equals(TokenStore.type_dualtoken))//有效期令牌校验
 		{
-			return this.checkAuthTempToken(tokeninfo);
+			return this.checkDualToken(tokeninfo);
 		}
 		
 		throw new TokenException("无法识别的token：appid="+appid+",secret="+ secret+",token="+token);

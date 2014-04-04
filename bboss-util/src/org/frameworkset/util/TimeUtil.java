@@ -22,7 +22,7 @@ import java.util.concurrent.TimeUnit;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2008</p>
- * @Date 2011-4-22 …œŒÁ09:49:08
+ * @Date 2011-4-22 ‰∏äÂçà09:49:08
  * @author biaoping.yin
  * @version 1.0
  */

@@ -1,7 +1,6 @@
 package org.frameworkset.security.ecc;
 
 import java.math.BigInteger;
-import java.security.Key;
 import java.security.KeyFactory;
 import java.security.interfaces.ECPrivateKey;
 import java.security.interfaces.ECPublicKey;
@@ -131,6 +130,35 @@ public abstract class ECCCoder  {
 		cipher.init(Cipher.DECRYPT_MODE, priKey, ecPrivateKeySpec.getParams());
 
 		return cipher.doFinal(data);
+	}
+	
+	/**
+	 * 解密<br>
+	 * 用私钥解密
+	 * 
+	 * @param data
+	 * @param key
+	 * @return
+	 * @throws Exception
+	 */
+	public static byte[] decrypt(String database64, String privatekey) throws Exception {
+		byte[] data = Base64.decode(database64);
+		return decrypt(data,  privatekey);
+	}
+	
+	/**
+	 * 解密<br>
+	 * 用私钥解密
+	 * 
+	 * @param data
+	 * @param key
+	 * @return
+	 * @throws Exception
+	 */
+	public static byte[] decrypt(String database64, ECPrivateKey priKey) throws Exception {
+		
+		
+		return decrypt(Base64.decode(database64),  priKey) ;
 	}
 	
 	/**
