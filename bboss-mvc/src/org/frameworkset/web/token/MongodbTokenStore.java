@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-import org.frameworkset.nosql.mongodb.MongodbHelper;
+import org.frameworkset.nosql.mongodb.MongoDB;
+import org.frameworkset.nosql.mongodb.MongoDBHelper;
 import org.frameworkset.security.ecc.ECCCoder;
 import org.frameworkset.security.ecc.ECCCoder.ECKeyPair;
 
@@ -56,7 +57,7 @@ public class MongodbTokenStore extends BaseTokenStore{
 	
 	public MongodbTokenStore()
 	{
-		mongoClient = MongodbHelper.getMongoClient("");
+		mongoClient = MongoDBHelper.getMongoClient(MongoDBHelper.defaultMongoDB);
 		db = mongoClient.getDB( "tokendb" );
 		authtemptokens = db.getCollection("authtemptokens");
 		authtemptokens.createIndex(new BasicDBObject("appid", 1).append("secret", 1).append("token", 1));
