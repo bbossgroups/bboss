@@ -8,8 +8,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import org.frameworkset.web.token.BaseTokenStore.TokenInfo;
-
 public class MemTokenStore extends BaseTokenStore{
 	private  Map<String,MemToken> temptokens = new HashMap<String,MemToken>();
 	private  Map<String,MemToken> authtemptokens = new HashMap<String,MemToken>();
@@ -242,6 +240,7 @@ public class MemTokenStore extends BaseTokenStore{
 			temptokens.put(token, token_m);
 			
 		}
+		this.signToken(token_m, type_temptoken, null);
 		return token_m;
 		
 	}
@@ -275,6 +274,7 @@ public class MemTokenStore extends BaseTokenStore{
 				dualtokens.put(key, token_m);
 			}
 		}
+		this.signToken(token_m, type_dualtoken, account);
 		return token_m ;
 		
 	}
@@ -294,6 +294,7 @@ public class MemTokenStore extends BaseTokenStore{
 				this.authtemptokens.put(key, token_m);
 			}
 		}
+		this.signToken(token_m, TokenStore.type_authtemptoken, account);
 		return token_m ;
 		
 	}
