@@ -1,12 +1,11 @@
 package org.frameworkset.web.token;
 
-import java.security.interfaces.ECPublicKey;
 import java.util.UUID;
 
 import org.frameworkset.security.ecc.ECCCoder;
 import org.frameworkset.security.ecc.ECCCoder.ECKeyPair;
+import org.frameworkset.util.Base64;
 
-import com.sun.org.apache.xml.internal.security.utils.Base64;
 
 public abstract class BaseTokenStore implements TokenStore {
 	protected long tempTokendualtime;
