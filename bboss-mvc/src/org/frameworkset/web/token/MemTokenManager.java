@@ -14,8 +14,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.frameworkset.security.session.Session;
+import org.frameworkset.web.token.BaseTokenStore.TokenResult;
 
 import com.frameworkset.util.StringUtil;
+import common.Logger;
 
 /**
  * @author biaoping.yin
@@ -23,7 +25,7 @@ import com.frameworkset.util.StringUtil;
  *
  */
 public class MemTokenManager {
-	
+	private static Logger log = Logger.getLogger(MemTokenManager.class);
 	private TokenStore tokenStore;
 	private static ThreadLocal<Session> localSession = new ThreadLocal<Session>();  
 	public void destory()
@@ -181,8 +183,13 @@ public class MemTokenManager {
 			
 			
 			try {
-				result = this.tokenStore.checkToken(appid,secret,token);
+				TokenResult tokenResult = this.tokenStore.checkToken(appid,secret,token);
+				request.setAttribute(TokenStore.token_request_validatetoken_key, tokenResult);
+				if( tokenResult.getTokenInfo() != null &&  tokenResult.getTokenInfo().getAccount() != null)
+					request.setAttribute(TokenStore.token_request_account_key, tokenResult.getTokenInfo().getAccount());
+				result = tokenResult.getResult();
 			} catch (Exception e) {
+				log.error("令牌校验失败:",e);
 				result = TokenStore.temptoken_request_validateresult_fail;
 			}
 		}
@@ -506,6 +513,23 @@ public class MemTokenManager {
 				throw new DTokenValidateFailedException();
 			}
 		}
+	}
+	
+	
+	public String genDualToken(String appid,String secret,String account,long dualtime) throws Exception
+	{
+		//long start = System.currentTimeMillis();
+//		long dualtime = 30l*24l*60l*60l*1000l;
+		MemToken token = this.tokenStore.genDualToken(appid,account,secret,dualtime);
+		return token.getSigntoken();
+	}
+	
+	
+	public String genAuthTempToken(String appid,String secret,String account) throws Exception
+	{
+		MemToken token = tokenStore.genAuthTempToken(appid,account,secret);
+		return token.getSigntoken();
+//		Assert.assertTrue(TokenStore.temptoken_request_validateresult_ok == mongodbTokenStore.checkToken("sim","xxxxxxxxxxxxxxxxxxxxxx",token.getSigntoken()).getResult());
 	}
 	
 

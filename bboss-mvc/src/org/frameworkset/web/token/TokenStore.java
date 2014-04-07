@@ -2,6 +2,7 @@ package org.frameworkset.web.token;
 
 import org.frameworkset.security.ecc.ECCCoder.ECKeyPair;
 import org.frameworkset.web.token.BaseTokenStore.TokenInfo;
+import org.frameworkset.web.token.BaseTokenStore.TokenResult;
 
 
 public interface TokenStore {
@@ -30,10 +31,12 @@ public interface TokenStore {
 	public static final String temptoken_param_name = "_dt_token_";
 	public static final String temptoken_request_attribute = "org.frameworkset.web.token.bboss_csrf_Token"; 
 	public static final String temptoken_request_validateresult_key = "temptoken_request_validateresult_key";
+	public static final String token_request_validatetoken_key = "token_request_validatetoken_key";
+	public static final String token_request_account_key = "token_request_account_key";
 	public abstract void destory();
 
 	public abstract void livecheck();
-	public abstract Integer checkToken(String appid,String secret,String tokeninfo)  throws Exception;
+	public abstract TokenResult checkToken(String appid,String secret,String tokeninfo)  throws Exception;
 
 	public abstract Integer checkTempToken(TokenInfo tokeninfo);
 	public abstract Integer checkAuthTempToken(TokenInfo tokeninfo);

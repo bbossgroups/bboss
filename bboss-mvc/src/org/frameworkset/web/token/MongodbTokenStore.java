@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-import org.frameworkset.nosql.mongodb.MongoDB;
 import org.frameworkset.nosql.mongodb.MongoDBHelper;
 import org.frameworkset.security.ecc.ECCCoder;
 import org.frameworkset.security.ecc.ECCCoder.ECKeyPair;

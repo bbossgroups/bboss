@@ -172,7 +172,23 @@ public abstract class BaseTokenStore implements TokenStore {
 	{
 		return null;
 	}
-	
+	public static class TokenResult
+	{
+		public TokenResult(Integer result, TokenInfo tokenInfo) {
+			super();
+			this.result = result;
+			this.tokenInfo = tokenInfo;
+		}
+		private Integer result;
+		private TokenInfo tokenInfo;
+		public Integer getResult() {
+			return result;
+		}
+		public TokenInfo getTokenInfo() {
+			return tokenInfo;
+		}
+		
+	}
 	public static class TokenInfo
 	{
 		private String appid;
@@ -212,29 +228,31 @@ public abstract class BaseTokenStore implements TokenStore {
 		}
 	}
 	
-	public Integer checkToken(String appid,String secret,String token) throws Exception
+	public TokenResult checkToken(String appid,String secret,String token) throws Exception
 	{
 		
 		if(token == null)
 		{
-			return TokenStore.temptoken_request_validateresult_nodtoken; 
+			return new TokenResult(TokenStore.temptoken_request_validateresult_nodtoken,null); 
 		}
 		
 		TokenInfo tokeninfo = this.decodeToken(appid,secret,token);
-		
+		Integer result = null;
 		
 		if(tokeninfo.getTokentype().equals(TokenStore.type_temptoken))//无需认证的临时令牌
 		{
-			return this.checkTempToken(tokeninfo);
+			result = this.checkTempToken(tokeninfo);			
 		}
 		else if(tokeninfo.getTokentype().equals(TokenStore.type_authtemptoken))//需要认证的临时令牌
 		{
-			return this.checkAuthTempToken(tokeninfo);
+			result = this.checkAuthTempToken(tokeninfo);
 		}
 		else if(tokeninfo.getTokentype().equals(TokenStore.type_dualtoken))//有效期令牌校验
 		{
-			return this.checkDualToken(tokeninfo);
+			result = this.checkDualToken(tokeninfo);
 		}
+		if(result != null)
+			return new TokenResult(result ,tokeninfo);
 		
 		throw new TokenException("无法识别的token：appid="+appid+",secret="+ secret+",token="+token);
 			

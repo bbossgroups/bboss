@@ -44,5 +44,8 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface AssertDToken {
-
+//	String appid() default "appid";
+//	String secret() default "secret";
+//	String token() default "_dt_token_";
+//	String tokentype() default "tt";
 }

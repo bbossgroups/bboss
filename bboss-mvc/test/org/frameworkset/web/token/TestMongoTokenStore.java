@@ -12,14 +12,14 @@ public class TestMongoTokenStore {
 		mongodbTokenStore = new MongodbTokenStore();
 		mongodbTokenStore.setTempTokendualtime(18000000);
 		MemToken token = mongodbTokenStore.genDualToken("sim","yinbp","xxxxxxxxxxxxxxxxxxxxxx",30l*24l*60l*60l*1000l);
-		Assert.assertTrue(TokenStore.temptoken_request_validateresult_ok == mongodbTokenStore.checkToken("sim","xxxxxxxxxxxxxxxxxxxxxx",token.getSigntoken()));
+		Assert.assertTrue(TokenStore.temptoken_request_validateresult_ok == mongodbTokenStore.checkToken("sim","xxxxxxxxxxxxxxxxxxxxxx",token.getSigntoken()).getResult());
 	}
 	@Test
 	public void genTemptokenAndValidate() throws Exception
 	{		
 		
 		MemToken token = mongodbTokenStore.genTempToken();
-		Assert.assertEquals(TokenStore.temptoken_request_validateresult_ok, mongodbTokenStore.checkToken(null,null,token.getToken()));
+		Assert.assertTrue(TokenStore.temptoken_request_validateresult_ok == mongodbTokenStore.checkToken(null,null,token.getToken()).getResult());
 	}
 	
 	@Test
@@ -30,7 +30,7 @@ public class TestMongoTokenStore {
 		//long end = System.currentTimeMillis();
 		//System.out.println(end - start);
 		//start = System.currentTimeMillis();
-		Assert.assertTrue(TokenStore.temptoken_request_validateresult_ok == mongodbTokenStore.checkToken("sim","xxxxxxxxxxxxxxxxxxxxxx",token.getSigntoken()));
+		Assert.assertTrue(TokenStore.temptoken_request_validateresult_ok == mongodbTokenStore.checkToken("sim","xxxxxxxxxxxxxxxxxxxxxx",token.getSigntoken()).getResult());
 		//end = System.currentTimeMillis();
 		//System.out.println(end - start);
 	}
@@ -40,7 +40,7 @@ public class TestMongoTokenStore {
 	public void gentempauthortokenAndValidate() throws Exception
 	{
 		MemToken token = mongodbTokenStore.genAuthTempToken("sim","yinbp","xxxxxxxxxxxxxxxxxxxxxx");
-		Assert.assertTrue(TokenStore.temptoken_request_validateresult_ok == mongodbTokenStore.checkToken("sim","xxxxxxxxxxxxxxxxxxxxxx",token.getSigntoken()));
+		Assert.assertTrue(TokenStore.temptoken_request_validateresult_ok == mongodbTokenStore.checkToken("sim","xxxxxxxxxxxxxxxxxxxxxx",token.getSigntoken()).getResult());
 	}
 	
 	
