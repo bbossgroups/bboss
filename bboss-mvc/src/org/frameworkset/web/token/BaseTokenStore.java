@@ -272,6 +272,11 @@ public abstract class BaseTokenStore implements TokenStore {
 		return null;
 	}
 	
+	public ECKeyPair getKeyPair(String appid, String secret) throws Exception
+	{
+		return getKeyPairs(appid,null,secret);
+	}
+	
 	
 
 }

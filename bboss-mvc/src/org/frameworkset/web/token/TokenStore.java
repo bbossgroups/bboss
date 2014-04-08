@@ -54,8 +54,7 @@ public interface TokenStore {
 	public MemToken genDualToken(String appid,String account,String secret,long livetime);
 	public MemToken genAuthTempToken(String appid, String account,String secret);
 	public ECKeyPair getKeyPairs(String appid,String account,String secret) throws Exception;
-	
-	
+	public ECKeyPair getKeyPair(String appid,String secret) throws Exception;
 	
 
 }

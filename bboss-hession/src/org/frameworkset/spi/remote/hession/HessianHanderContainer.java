@@ -16,10 +16,15 @@
 package org.frameworkset.spi.remote.hession;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 
+import org.apache.log4j.Logger;
 import org.frameworkset.spi.BaseApplicationContext;
 import org.frameworkset.spi.assemble.Pro;
+import org.frameworkset.util.ObjectUtils;
+import org.frameworkset.web.servlet.handler.HandlerMeta;
 
 import com.caucho.hessian.io.SerializerFactory;
 import com.caucho.services.server.GenericService;
@@ -38,9 +43,12 @@ public class HessianHanderContainer {
 
 	private Map<String,AbstractHessionHandler> hessionHandlers;
 	private BaseApplicationContext context;
+	private static final Logger log = Logger.getLogger(HessianHanderContainer.class);
+	private Map<String,Pro> hessionPortServices = new HashMap<String,Pro>();
 	public HessianHanderContainer(BaseApplicationContext context) {
 		hessionHandlers = new HashMap<String,AbstractHessionHandler>();
 		this.context = context;
+		initHessionPortServices();
 	}
 	public AbstractHessionHandler getHessionHandler(String service) throws Exception
 	{
@@ -58,12 +66,79 @@ public class HessianHanderContainer {
 		return handler;
 			
 	}
+	private void initHessionPortServices()
+	{
+		if(context != null)
+		{
+			
+			Set<String> beanNames = context.getPropertyKeys();
+			if(beanNames == null || beanNames.size() == 0)
+				return ;
+			// Take any bean name that we can determine URLs for.
+			Iterator<String> beanNamesItr = beanNames.iterator();
+			Pro pro = null;
+			while(beanNamesItr.hasNext()) {
+				String beanName = beanNamesItr.next();
+				try
+				{
+					pro = context.getProBean(beanName);
+					if(pro == null)
+						continue;
+					String servicePort = pro.getStringExtendAttribute("hessian:servicePort");
+					if(servicePort != null)
+						this.hessionPortServices.put(servicePort, pro);
+				}
+				catch(Exception e)
+				{
+//					if (logger.) 
+					{
+						log.debug("Detect Hession servicePort Handler from '" + beanName + "' failed: " + e.getMessage(),e);
+					}
+				}
+				
+			}
+		}
+	}
+	private Pro _searchWithHessionPort(String service)
+	{
+//		if(context != null)
+//		{
+//			
+//			Set<String> beanNames = context.getPropertyKeys();
+//			if(beanNames == null || beanNames.size() == 0)
+//				return null;
+//			// Take any bean name that we can determine URLs for.
+//			Iterator<String> beanNamesItr = beanNames.iterator();
+//			Pro pro = null;
+//			while(beanNamesItr.hasNext()) {
+//				String beanName = beanNamesItr.next();
+//				try
+//				{
+//					pro = context.getProBean(beanName);
+//					if(pro == null)
+//						continue;
+//					String servicePort = pro.getStringExtendAttribute("hessian:servicePort");
+//				}
+//				catch(Exception e)
+//				{
+////					if (logger.) 
+//					{
+//						logger.error("Detect Handler bean name '" + beanName + "' failed: " + e.getMessage(),e);
+//					}
+//				}
+//				
+//			}
+//		}
+		return hessionPortServices.get(service);
+	}
 	/**
 	 * hessian:api
 	 * hessian:serializable xml|bin
 	 * hessian:debug default false used by serializable="bin".
 	 * hessian:sendCollectionType used by serializable="bin". default true Set whether to send the Java collection type for each serialized collection.
 	 * hessian:serializerFactory used by serializable="bin".default com.caucho.hessian.io.SerializerFactory 
+	 * hessian:servicePort 指定服务的唯一标识，一般无需指定hessian:servicePort属性，hessian服务的标识直接为组件的名称name或者id，但是如果在mvc控制器模式下的组件名称不是很友好可以
+	 * 使用hessian:servicePort来指定一个简单的hessian服务名称
 	 * @param service
 	 * @return
 	 * @throws Exception 
@@ -71,8 +146,14 @@ public class HessianHanderContainer {
 	private AbstractHessionHandler parserHessionHandler(String service) throws Exception
 	{
 		Pro pro = this.context.getProBean(service);
-		if(pro == null)
-			throw new Exception("Parser Hession Handler failed:hession service not found in "+context.getConfigfile());
+		if(pro == null)//检索hessian:servicePort值为service的组件元数据
+		{
+			
+			pro = _searchWithHessionPort(service);
+			service = pro.getName();
+			if(pro == null)
+				throw new Exception("Parser Hession Handler failed:hession service not found in "+context.getConfigfile());
+		}
 		String api = pro.getStringExtendAttribute("hessian:api");
 		String serialtype = pro.getStringExtendAttribute("hessian:serializable");
 		if(serialtype == null || "".equals(serialtype))

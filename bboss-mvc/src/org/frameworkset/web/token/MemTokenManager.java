@@ -13,6 +13,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.frameworkset.security.ecc.ECCCoder.ECKeyPair;
 import org.frameworkset.security.session.Session;
 import org.frameworkset.web.token.BaseTokenStore.TokenResult;
 
@@ -514,7 +515,10 @@ public class MemTokenManager {
 			}
 		}
 	}
-	
+	public String genTempToken() throws Exception
+	{
+		return tokenStore.genTempToken().getSigntoken();
+	}
 	
 	public String genDualToken(String appid,String secret,String account,long dualtime) throws Exception
 	{
@@ -530,6 +534,24 @@ public class MemTokenManager {
 		MemToken token = tokenStore.genAuthTempToken(appid,account,secret);
 		return token.getSigntoken();
 //		Assert.assertTrue(TokenStore.temptoken_request_validateresult_ok == mongodbTokenStore.checkToken("sim","xxxxxxxxxxxxxxxxxxxxxx",token.getSigntoken()).getResult());
+	}
+	
+	public String getPublicKey(String appid,String secret) throws Exception
+	{
+		ECKeyPair pairs = tokenStore.getKeyPair(appid,secret);
+		return pairs.getPublicKey();
+	}
+	
+	public String getPrivateKey(String appid,String secret) throws Exception
+	{
+		ECKeyPair pairs = tokenStore.getKeyPair(appid,secret);
+		return pairs.getPrivateKey();
+	}
+	
+	public ECKeyPair getKeyPair(String appid,String secret) throws Exception
+	{
+		ECKeyPair pairs = tokenStore.getKeyPair(appid,secret);
+		return pairs;
 	}
 	
 

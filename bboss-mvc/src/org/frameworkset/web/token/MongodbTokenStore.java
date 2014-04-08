@@ -464,7 +464,10 @@ public class MongodbTokenStore extends BaseTokenStore{
 		this.signToken(token_m,TokenStore.type_authtemptoken,account);
 		return token_m ;
 	}
-	
+	public ECKeyPair getKeyPair(String appid, String secret) throws Exception
+	{
+		return getKeyPairs(appid,null,secret);
+	}
 	public ECKeyPair getKeyPairs(String appid,String account,String secret) throws Exception
 	{
 		DBCursor cursor = null;

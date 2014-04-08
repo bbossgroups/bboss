@@ -203,7 +203,8 @@ public class Pro<V> extends BaseTXManager implements Comparable<V>, BeanInf {
 	}
 
 	public void setExtendsAttributes(Map<String, Object> extendsAttributes) {
-		this.extendsAttributes = extendsAttributes;
+		this.extendsAttributes.clear();
+		this.extendsAttributes.putAll(extendsAttributes);
 	}
 
 	public boolean isSinglable() {
