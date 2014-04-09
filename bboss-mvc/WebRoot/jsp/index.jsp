@@ -376,6 +376,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			
 	</body>
 	<script language="javascript">
+	
 if(!$.browser.msie) {	
 dp.SyntaxHighlighter.ClipboardSwf = '${pageContext.request.contextPath}/include/syntaxhighlighter/clipboard.swf';
 dp.SyntaxHighlighter.HighlightAll('code');

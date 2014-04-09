@@ -8,6 +8,7 @@ import org.frameworkset.nosql.mongodb.MongoDBHelper;
 import org.frameworkset.security.ecc.ECCCoder;
 import org.frameworkset.security.ecc.ECCCoder.ECKeyPair;
 
+import com.frameworkset.common.poolman.ConfigSQLExecutor;
 import com.mongodb.BasicDBObject;
 import com.mongodb.CommandResult;
 import com.mongodb.DB;
@@ -16,9 +17,10 @@ import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.mongodb.Mongo;
 
+public class DBTokenStore extends BaseTokenStore {
+	private ConfigSQLExecutor executor;
 
-public class MongodbTokenStore extends BaseTokenStore{
-	private static Logger log = Logger.getLogger(MongodbTokenStore.class);
+	private static Logger log = Logger.getLogger(DBTokenStore.class);
 //	private  Map<String,MemToken> temptokens = new HashMap<String,MemToken>();
 //	private  Map<String,MemToken> dualtokens = new HashMap<String,MemToken>();
 //	private final Object checkLock = new Object();
@@ -54,30 +56,23 @@ public class MongodbTokenStore extends BaseTokenStore{
 		return null;
 	}
 	
-	public MongodbTokenStore()
+	public DBTokenStore()
 	{
-		mongoClient = MongoDBHelper.getMongoClient(MongoDBHelper.defaultMongoDB);
-		db = mongoClient.getDB( "tokendb" );
-		authtemptokens = db.getCollection("authtemptokens");
-		authtemptokens.createIndex(new BasicDBObject("appid", 1).append("secret", 1).append("token", 1));
-		temptokens = db.getCollection("temptokens");
-		temptokens.createIndex(new BasicDBObject("token", 1));
-		dualtokens = db.getCollection("dualtokens");
-		dualtokens.createIndex(new BasicDBObject("appid", 1).append("secret", 1));
-		eckeypairs = db.getCollection("eckeypair");
-		eckeypairs.createIndex(new BasicDBObject("appid", 1));
+//		mongoClient = MongoDBHelper.getMongoClient(MongoDBHelper.defaultMongoDB);
+//		db = mongoClient.getDB( "tokendb" );
+//		authtemptokens = db.getCollection("authtemptokens");
+//		authtemptokens.createIndex(new BasicDBObject("appid", 1).append("secret", 1).append("token", 1));
+//		temptokens = db.getCollection("temptokens");
+//		temptokens.createIndex(new BasicDBObject("token", 1));
+//		dualtokens = db.getCollection("dualtokens");
+//		dualtokens.createIndex(new BasicDBObject("appid", 1).append("secret", 1));
+//		eckeypairs = db.getCollection("eckeypair");
+//		eckeypairs.createIndex(new BasicDBObject("appid", 1));
+		executor = new ConfigSQLExecutor("org/frameworkset/web/token/apptoken.xml");
 	}
 	public void destory()
 	{
-		
-		if(mongoClient != null)
-		{
-			try {
-				mongoClient.close();
-			} catch (Exception e) {
-				log.error("", e);
-			}
-		}
+		executor = null;
 		
 	}
 	
@@ -502,7 +497,5 @@ public class MongodbTokenStore extends BaseTokenStore{
 		.append("createTime", System.currentTimeMillis())
 		.append("publicKey", keypair.getPublicKey()) );
 	}
-	
-	
 
 }

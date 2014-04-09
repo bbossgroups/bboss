@@ -24,13 +24,7 @@ import sun.security.ec.ECKeyFactory;
 import sun.security.ec.ECPrivateKeyImpl;
 import sun.security.ec.ECPublicKeyImpl;
 
-/**
- * ECC安全编码组件
- * 
- * @author 梁栋
- * @version 1.0
- * @since 1.0
- */
+
 public abstract class ECCCoder  {
 
 //	public static final String ALGORITHM = "EC";

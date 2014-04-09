@@ -6,6 +6,8 @@ import org.frameworkset.security.ecc.ECCCoder;
 import org.frameworkset.security.ecc.ECCCoder.ECKeyPair;
 import org.frameworkset.util.Base64;
 
+import com.mongodb.DBObject;
+
 
 public abstract class BaseTokenStore implements TokenStore {
 	protected long tempTokendualtime;
@@ -277,6 +279,10 @@ public abstract class BaseTokenStore implements TokenStore {
 		return getKeyPairs(appid,null,secret);
 	}
 	
-	
+	protected ECKeyPair toECKeyPair(DBObject value)
+	{
+		ECKeyPair ECKeyPair = new ECKeyPair((String)value.get("privateKey"),(String)value.get("publicKey"),null,null);
+		return ECKeyPair;
+	}
 
 }
