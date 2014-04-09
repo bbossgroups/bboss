@@ -8,6 +8,7 @@ public class MemToken {
 	/**
 	 * 令牌信息
 	 */
+	private String id;
 	private String token;
 	private long createTime;
 	private boolean validate = true;
@@ -31,6 +32,10 @@ public class MemToken {
 	public int hashCode() {
 		// TODO Auto-generated method stub
 		return token.hashCode();
+	}
+	public MemToken()
+	{
+		
 	}
 	public MemToken(String token, long createTime) {
 		super();
@@ -112,6 +117,14 @@ public class MemToken {
 
 	public void setSigntoken(String signtoken) {
 		this.signtoken = signtoken;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 
 

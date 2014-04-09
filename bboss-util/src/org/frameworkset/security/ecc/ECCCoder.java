@@ -272,6 +272,9 @@ public abstract class ECCCoder  {
 		private String publicKey;
 		private ECPublicKey pubKey;
 		private ECPrivateKey priKey;
+		public ECKeyPair(){
+			
+		}
 		public ECKeyPair(String privateKey, String publicKey,
 				ECPublicKey pubKey, ECPrivateKey priKey) {
 			super();
@@ -291,6 +294,12 @@ public abstract class ECCCoder  {
 		}
 		public ECPrivateKey getPriKey() {
 			return priKey;
+		}
+		public void setPrivateKey(String privateKey) {
+			this.privateKey = privateKey;
+		}
+		public void setPublicKey(String publicKey) {
+			this.publicKey = publicKey;
 		}
 	}
 

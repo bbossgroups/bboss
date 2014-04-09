@@ -1,0 +1,71 @@
+<properties>
+<property name="genTempToken">
+<![CDATA[
+    insert into temptokens(id,token,createTime,livetime,validate) values(?,?,?,?)
+ ]]>
+</property>
+<property name="getTempToken">
+<![CDATA[
+    select * from temptokens where token=?
+ ]]> 
+</property>
+<property name="deleteTempToken">
+<![CDATA[
+    delete from temptokens where token=?
+ ]]> 
+</property>
+
+<property name="updateDualToken">
+<![CDATA[
+    update table dualtokens set token=#[token],createTime=#[createTime],lastVistTime=#[lastVistTime],livetime=#[livetime],validate=#[validate] where appid=#[appid] and secret=#[secret]
+ ]]>
+</property>
+<property name="updateDualTokenLastVistime">
+<![CDATA[
+    update table dualtokens set lastVistTime=? where appid=? and secret=?
+ ]]>
+</property>
+<property name="queryDualToken">
+<![CDATA[
+    select * from  dualtokens  where appid=? and secret=?
+ ]]>
+</property>
+
+<property name="insertDualToken">
+<![CDATA[
+
+    insert into dualtokens(id,token,createTime,lastVistTime,livetime,appid,secret,validate) values(#[id],#[token],#[createTime],#[lastVistTime],#[livetime],#[appid],#[secret],#[validate])
+ ]]>
+</property>
+<property name="genAuthTempToken">
+<![CDATA[
+
+    insert into authtemptokens(id,token,createTime,lastVistTime,livetime,appid,secret,validate) values(#[id],#[token],#[createTime],#[lastVistTime],#[livetime],#[appid],#[secret],#[validate])
+ ]]>
+</property>
+
+<property name="getAuthTempToken">
+<![CDATA[
+
+    select * from authtemptokens where token=? and appid=? and secret=?
+ ]]>
+</property>
+<property name="deleteAuthTempToken">
+<![CDATA[
+
+    delete from authtemptokens where token=? and appid=? and secret=?
+ ]]>
+</property>
+<property name="getKeyPairs">
+<![CDATA[
+select * from eckeypairs where appid=?
+ ]]>
+</property>
+<property name="insertECKeyPair">
+<![CDATA[
+
+insert into eckeypairs(appid,privateKey,createTime,publicKey) values(?,?,?,?)
+ ]]>
+</property>
+
+</properties>

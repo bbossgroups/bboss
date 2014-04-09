@@ -1,14 +1,20 @@
 package org.frameworkset.web.token;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.transaction.RollbackException;
+
 import org.apache.log4j.Logger;
-import org.frameworkset.nosql.mongodb.MongoDBHelper;
 import org.frameworkset.security.ecc.ECCCoder;
 import org.frameworkset.security.ecc.ECCCoder.ECKeyPair;
 
 import com.frameworkset.common.poolman.ConfigSQLExecutor;
+import com.frameworkset.common.poolman.Record;
+import com.frameworkset.common.poolman.handle.RowHandler;
+import com.frameworkset.orm.transaction.TransactionException;
+import com.frameworkset.orm.transaction.TransactionManager;
 import com.mongodb.BasicDBObject;
 import com.mongodb.CommandResult;
 import com.mongodb.DB;
@@ -173,23 +179,23 @@ public class DBTokenStore extends BaseTokenStore {
 		
 	}
 	
-	private MemToken todualToken(DBObject object)
-	{
-		if(object == null)
-			return null;
-		MemToken token = new MemToken((String)object.get("token"),(Long)object.get("createTime"), (Boolean)object.get("validate"),
-					(Long)object.get("lastVistTime"), (Long)object.get("livetime"));
-		token.setAppid((String)object.get("appid"));
-		token.setSecret((String)object.get("secret"));
-		return token;
-	}
+//	private MemToken todualToken(DBObject object)
+//	{
+//		if(object == null)
+//			return null;
+//		MemToken token = new MemToken((String)object.get("token"),(Long)object.get("createTime"), (Boolean)object.get("validate"),
+//					(Long)object.get("lastVistTime"), (Long)object.get("livetime"));
+//		token.setAppid((String)object.get("appid"));
+//		token.setSecret((String)object.get("secret"));
+//		return token;
+//	}
 	
-	private MemToken totempToken(DBObject object)
-	{
-		MemToken token = new MemToken((String)object.get("token"),(Long)object.get("createTime"));
-		token.setLivetime((Long)object.get("livetime"));
-		return token;
-	}
+//	private MemToken totempToken(DBObject object)
+//	{
+//		MemToken token = new MemToken((String)object.get("token"),(Long)object.get("createTime"));
+//		token.setLivetime((Long)object.get("livetime"));
+//		return token;
+//	}
 	
 	
 	public Integer checkAuthTempToken(TokenInfo tokeninfo)
@@ -197,18 +203,34 @@ public class DBTokenStore extends BaseTokenStore {
 		
 		if(tokeninfo != null)
 		{
+//			MemToken token = new MemToken((String)object.get("token"),(Long)object.get("createTime"));
+//			token.setLivetime((Long)object.get("livetime"));
 			
 //			synchronized(checkLock)
 //			DBCursor cursor = null;
 			BasicDBObject dbobject = new BasicDBObject("token", tokeninfo.getToken()).append("appid", tokeninfo.getAppid()).append("secret", tokeninfo.getSecret());
-			try
-			{
-				DBObject tt = this.authtemptokens.findAndRemove(dbobject);
-				if(tt != null)
+			TransactionManager tm = new TransactionManager();
+			try {
+				tm.begin();
+				MemToken token_m = this.executor.queryObjectByRowHandler(new RowHandler<MemToken>(){
+
+					@Override
+					public void handleRow(MemToken rowValue, Record record)
+							throws Exception {
+						rowValue.setToken(record.getString("token"));
+						rowValue.setCreateTime(record.getLong("createTime"));
+						rowValue.setLivetime(record.getLong("livetime"));
+					}
+					
+				}, MemToken.class, "getAuthTempToken", tokeninfo.getToken(),tokeninfo.getAppid(),tokeninfo.getSecret());
+				executor.delete("deleteAuthTempToken", tokeninfo.getToken(),tokeninfo.getAppid(),tokeninfo.getSecret());
+//				DBObject tt = this.authtemptokens.findAndRemove(dbobject);
+				tm.commit();
+				if(token_m != null)
 				{
 //					DBObject tt = cursor.next();
 	//				authtemptokens.remove(dbobject);
-					MemToken token_m = totempToken(tt);					
+//					MemToken token_m = totempToken(tt);					
 					if(!this.isold(token_m))
 					{
 						return TokenStore.temptoken_request_validateresult_ok;
@@ -223,9 +245,12 @@ public class DBTokenStore extends BaseTokenStore {
 				{
 					return TokenStore.temptoken_request_validateresult_fail;
 				}			
+			} catch (Exception e) {
+				throw new TokenException(e);
 			}
 			finally
 			{
+				tm.release();
 //				if(cursor != null)
 //				{
 //					cursor.close();
@@ -244,27 +269,67 @@ public class DBTokenStore extends BaseTokenStore {
 		
 		if(tokeninfo != null)
 		{
-//			synchronized(checkLock)
-			BasicDBObject dbobject = new BasicDBObject("token", tokeninfo.getToken());
-			DBObject tt = temptokens.findAndRemove(dbobject);
-			if(tt != null)
-			{
-//				DBObject tt = cursor.next();
-				MemToken token_m = totempToken(tt);					
-				if(!this.isold(token_m))
+			TransactionManager tm = new TransactionManager();
+			try {
+				tm.begin();
+				MemToken token_m = this.executor.queryObjectByRowHandler(new RowHandler<MemToken>(){
+
+					@Override
+					public void handleRow(MemToken rowValue, Record record)
+							throws Exception {
+						rowValue.setToken(record.getString("token"));
+						rowValue.setCreateTime(record.getLong("createTime"));
+						rowValue.setLivetime(record.getLong("livetime"));
+					}
+					
+				}, MemToken.class, "getTempToken", tokeninfo.getToken());
+				executor.delete("deleteTempToken", tokeninfo.getToken());
+				tm.commit();
+				if(token_m != null)
 				{
-					return TokenStore.temptoken_request_validateresult_ok;
+					if(!this.isold(token_m))
+					{
+						return TokenStore.temptoken_request_validateresult_ok;
+					}
+					else
+					{
+						return TokenStore.temptoken_request_validateresult_expired;
+					}
 				}
 				else
 				{
-					return TokenStore.temptoken_request_validateresult_expired;
+					return TokenStore.temptoken_request_validateresult_fail;
 				}
+					
 				
+			} catch (Exception e) {
+				throw new TokenException(e);
 			}
-			else
+			finally
 			{
-				return TokenStore.temptoken_request_validateresult_fail;
-			}			
+				tm.release();
+			}
+////			synchronized(checkLock)
+//			BasicDBObject dbobject = new BasicDBObject("token", tokeninfo.getToken());
+//			DBObject tt = temptokens.findAndRemove(dbobject);
+//			if(tt != null)
+//			{
+////				DBObject tt = cursor.next();
+//				MemToken token_m = totempToken(tt);					
+//				if(!this.isold(token_m))
+//				{
+//					return TokenStore.temptoken_request_validateresult_ok;
+//				}
+//				else
+//				{
+//					return TokenStore.temptoken_request_validateresult_expired;
+//				}
+//				
+//			}
+//			else
+//			{
+//				return TokenStore.temptoken_request_validateresult_fail;
+//			}			
 		}
 		else 
 		{
@@ -278,33 +343,49 @@ public class DBTokenStore extends BaseTokenStore {
 	}
 	private MemToken queryDualToken(String appid, String secret,long lastVistTime)
 	{
-		BasicDBObject dbobject = new BasicDBObject("appid", appid).append("secret", secret);
+		
 		MemToken tt = null;
-		DBCursor cursor = null;
-		DBObject dt = null;
+		
 		if(lastVistTime > 0)
 		{
-			
-			dt = dualtokens.findAndModify(dbobject, new BasicDBObject("$set",new BasicDBObject("lastVistTime", lastVistTime)));
-			tt = todualToken(dt); 
-		}
-		else
-		{
-			try
-			{
-				cursor = dualtokens.find(dbobject);
-				if(cursor.hasNext())
-				{
-					dt = cursor.next();
-					tt = todualToken(dt); 
-				}
+			TransactionManager tm = new TransactionManager();
+			try {
+				tm.begin();
+				this.executor.update("updateDualTokenLastVistime", lastVistTime,appid,secret);
+				tt = executor.queryObject(MemToken.class, appid, secret);
+				tm.commit();
+			} catch (Exception e) {
+				throw new TokenException(e);
 			}
 			finally
 			{
-				if(cursor != null)
-				{
-					cursor.close();
-				}
+				tm.release();
+			}
+//			dt = dualtokens.findAndModify(dbobject, new BasicDBObject("$set",new BasicDBObject("lastVistTime", lastVistTime)));
+//			tt = todualToken(dt); 
+		}
+		else
+		{
+//			try
+//			{
+//				cursor = dualtokens.find(dbobject);
+//				if(cursor.hasNext())
+//				{
+//					dt = cursor.next();
+//					tt = todualToken(dt); 
+//				}
+//			}
+//			finally
+//			{
+//				if(cursor != null)
+//				{
+//					cursor.close();
+//				}
+//			}
+			try {
+				tt = executor.queryObject(MemToken.class, appid, secret);
+			} catch (SQLException e) {
+				throw new TokenException(e);
 			}
 		}
 		
@@ -357,36 +438,57 @@ public class DBTokenStore extends BaseTokenStore {
 		
 	}
 
-	private void insertDualToken(DBCollection dualtokens,MemToken dualToken)
+	private void insertDualToken(String sqlname,MemToken dualToken)
 	{
-		dualtokens.insert(new BasicDBObject("token",dualToken.getToken())
-		.append("createTime", dualToken.getCreateTime())
-		.append("lastVistTime", dualToken.getLastVistTime())
-		.append("livetime", dualToken.getLivetime())
-		.append("appid", dualToken.getAppid())
-		.append("secret", dualToken.getSecret())
-		.append("validate", dualToken.isValidate()));
+//		dualtokens.insert(new BasicDBObject("token",dualToken.getToken())
+//		.append("createTime", dualToken.getCreateTime())
+//		.append("lastVistTime", dualToken.getLastVistTime())
+//		.append("livetime", dualToken.getLivetime())
+//		.append("appid", dualToken.getAppid())
+//		.append("secret", dualToken.getSecret())
+//		.append("validate", dualToken.isValidate()));
+		dualToken.setId(getID());
+		try {
+			this.executor.insertBean(sqlname, dualToken);
+		} catch (SQLException e) {
+			throw new TokenException(e);
+		}
 	}
 	
 	private void updateDualToken(MemToken dualToken)
 	{
-		this.dualtokens.update(new BasicDBObject(
-		"appid", dualToken.getAppid())
-		.append("secret", dualToken.getSecret()),
-		new BasicDBObject("token",dualToken.getToken())
-		.append("createTime", dualToken.getCreateTime())
-		.append("lastVistTime", dualToken.getLastVistTime())
-		.append("livetime", dualToken.getLivetime())
-		.append("appid", dualToken.getAppid())
-		.append("secret", dualToken.getSecret())
-		.append("validate", dualToken.isValidate()));
+		try {
+			this.executor.updateBean("updateDualToken", dualToken);
+		} catch (SQLException e) {
+			throw new TokenException(e);
+		}
+//		this.dualtokens.update(new BasicDBObject(
+//		"appid", dualToken.getAppid())
+//		.append("secret", dualToken.getSecret()),
+//		new BasicDBObject("token",dualToken.getToken())
+//		.append("createTime", dualToken.getCreateTime())
+//		.append("lastVistTime", dualToken.getLastVistTime())
+//		.append("livetime", dualToken.getLivetime())
+//		.append("appid", dualToken.getAppid())
+//		.append("secret", dualToken.getSecret())
+//		.append("validate", dualToken.isValidate()));
+	}
+	
+	private String getID()
+	{
+		return java.util.UUID.randomUUID().toString();
 	}
 
 	@Override
 	public MemToken genTempToken() {
 		String token = this.randomToken();
 		MemToken token_m = new MemToken(token,System.currentTimeMillis());
-		temptokens.insert(new BasicDBObject("token",token_m.getToken()).append("createTime", token_m.getCreateTime()).append("livetime", this.tempTokendualtime).append("validate", true));
+		try {
+			this.executor.insert("genTempToken", getID(),token_m.getToken(),token_m.getCreateTime(),this.tempTokendualtime,"true");
+		} catch (SQLException e) {
+			throw new TokenException(e);
+		}
+//		temptokens.insert(new BasicDBObject("token",token_m.getToken()).append("createTime", token_m.getCreateTime()).append("livetime", this.tempTokendualtime).append("validate", true));
 		this.signToken(token_m, type_temptoken, null);
 		return token_m;
 		
@@ -397,8 +499,10 @@ public class DBTokenStore extends BaseTokenStore {
 		
 		
 		MemToken token_m = null;
-//		synchronized(this.dualcheckLock)
+		TransactionManager tm = new TransactionManager();
+		try
 		{
+			tm.begin();
 			token_m = queryDualToken( appid, secret);
 			if(token_m != null)
 			{
@@ -426,8 +530,17 @@ public class DBTokenStore extends BaseTokenStore {
 						createTime, livetime);
 				token_m.setAppid(appid);
 				token_m.setSecret(secret);
-				this.insertDualToken(this.dualtokens,token_m);
+				this.insertDualToken("insertDualToken",token_m);
 			}
+			tm.commit();
+		} catch (RollbackException e) {
+			throw new TokenException(e);
+		} catch (TransactionException e) {
+			throw new TokenException(e);
+		}
+		finally
+		{
+			tm.release();
 		}
 		this.signToken(token_m,TokenStore.type_dualtoken,account);
 		return token_m ;
@@ -453,7 +566,7 @@ public class DBTokenStore extends BaseTokenStore {
 						createTime, this.tempTokendualtime);
 				token_m.setAppid(appid);
 				token_m.setSecret(secret);
-				this.insertDualToken(this.authtemptokens,token_m);
+				this.insertDualToken("genAuthTempToken",token_m);
 			}
 		}
 		this.signToken(token_m,TokenStore.type_authtemptoken,account);
@@ -465,37 +578,47 @@ public class DBTokenStore extends BaseTokenStore {
 	}
 	public ECKeyPair getKeyPairs(String appid,String account,String secret) throws Exception
 	{
-		DBCursor cursor = null;
-		try
-		{
-			cursor = eckeypairs.find(new BasicDBObject("appid", appid));
-			if(cursor.hasNext())
-			{
-				DBObject value = cursor.next();
-				return toECKeyPair(value);
+		
+		
+		ECKeyPair ECKeyPair =this.executor.queryObjectByRowHandler(new RowHandler<ECKeyPair>(){
+
+			@Override
+			public void handleRow(ECKeyPair rowValue, Record record)
+					throws Exception {
+				rowValue.setPrivateKey(record.getString("privateKey"));
+				rowValue.setPublicKey("publicKey");
+//					ECKeyPair ECKeyPair = new ECKeyPair((String)value.get("privateKey"),(String)value.get("publicKey"),null,null);
 				
 			}
-			else
-			{
-				ECKeyPair keypair = ECCCoder.genECKeyPair();
-				insertECKeyPair( appid, secret, keypair);
-				return keypair;
-			}
-		}
-		finally
+			
+		},ECKeyPair.class, "getKeyPairs", appid);
+//			cursor = eckeypairs.find(new BasicDBObject("appid", appid));
+		if(ECKeyPair != null)
 		{
-			if(cursor != null)
-			{
-				cursor.close();
-			}
+//				DBObject value = cursor.next();
+//				return toECKeyPair(value);
+			return ECKeyPair;
+			
 		}
+		else
+		{
+			ECKeyPair keypair = ECCCoder.genECKeyPair();
+			insertECKeyPair( appid, secret, keypair);
+			return keypair;
+		}
+		
 	}
 	private void insertECKeyPair(String appid,String secret,ECKeyPair keypair)
 	{
-		this.eckeypairs.insert(new BasicDBObject("appid",appid)		
-		.append("privateKey", keypair.getPrivateKey())
-		.append("createTime", System.currentTimeMillis())
-		.append("publicKey", keypair.getPublicKey()) );
+//		this.eckeypairs.insert(new BasicDBObject("appid",appid)		
+//		.append("privateKey", keypair.getPrivateKey())
+//		.append("createTime", System.currentTimeMillis())
+//		.append("publicKey", keypair.getPublicKey()) );
+		try {
+			this.executor.insert("insertECKeyPair", appid, keypair.getPrivateKey(),System.currentTimeMillis(),keypair.getPublicKey());
+		} catch (SQLException e) {
+			throw new TokenException(e);
+		}
 	}
 
 }
