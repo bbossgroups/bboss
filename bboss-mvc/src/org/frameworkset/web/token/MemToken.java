@@ -1,4 +1,7 @@
 package org.frameworkset.web.token;
+
+import com.frameworkset.orm.annotation.Column;
+
 /**
  * @author biaoping.yin
  * 
@@ -11,6 +14,7 @@ public class MemToken {
 	private String id;
 	private String token;
 	private long createTime;
+	@Column(name="validate_")
 	private boolean validate = true;
 	private long lastVistTime;
 	private long livetime;

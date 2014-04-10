@@ -1558,6 +1558,52 @@ public class ValueObjectUtil {
 //		dataformats.put(dateformat, f);
 		return f;
 	}
+	
+	public static Boolean toBoolean(Object obj)
+	{
+		if(obj == null)
+			return new Boolean(false);
+		if(obj instanceof String)
+		{
+			String ret = obj.toString();
+			if (ret.equals("1") || ret.equals("true")) {
+				return new Boolean(true);
+			} else if (ret.equals("0") || ret.equals("false")) {
+				return new Boolean(false);
+			}
+			else
+				return false;
+		}
+		else if(obj instanceof Integer)
+		{
+			return ((Integer)obj).intValue() > 0;
+		}
+		else if(obj instanceof Long)
+		{
+			return ((Long)obj).longValue() > 0;
+		}
+		else if(obj instanceof Double)
+		{
+			return ((Double)obj).doubleValue() > 0;
+		}
+		else if(obj instanceof Float)
+		{
+			return ((Float)obj).floatValue() > 0;
+		}
+		else if(obj instanceof Short)
+		{
+			return ((Short)obj).shortValue() > 0;
+		}
+		else if(obj instanceof BigInteger)
+		{
+			return ((BigInteger)obj).intValue() > 0;
+		}
+		else if(obj instanceof BigDecimal)
+		{
+			return ((BigDecimal)obj).floatValue() > 0;
+		}
+		return false;
+	}
 	/**
 	 * Description:基本的数据类型转圜
 	 * 
@@ -1629,13 +1675,14 @@ public class ValueObjectUtil {
 			return new Character(obj.toString().charAt(0));
 
 		if (toType == boolean.class || toType == Boolean.class) {
-			String ret = obj.toString();
-			if (ret.equals("1")) {
-				return new Boolean(true);
-			} else if (ret.equals("0")) {
-				return new Boolean(false);
-			}
-			return new Boolean(obj.toString());
+//			String ret = obj.toString();
+//			if (ret.equals("1") || ret.equals("true")) {
+//				return new Boolean(true);
+//			} else if (ret.equals("0") || ret.equals("false")) {
+//				return new Boolean(false);
+//			}
+//			return new Boolean(ret);
+			return toBoolean(obj);
 		}
 
 		if (toType == byte.class || toType == Byte.class)
@@ -1770,13 +1817,14 @@ public class ValueObjectUtil {
 			return new Character(obj.toString().charAt(0));
 
 		if (toType == boolean.class || toType == Boolean.class) {
-			String ret = obj.toString();
-			if (ret.equals("1")) {
-				return new Boolean(true);
-			} else if (ret.equals("0")) {
-				return new Boolean(false);
-			}
-			return new Boolean(obj.toString());
+//			String ret = obj.toString();
+//			if (ret.equals("1") || ret.equals("true")) {
+//				return new Boolean(true);
+//			} else if (ret.equals("0") || ret.equals("false")) {
+//				return new Boolean(false);
+//			}
+//			return new Boolean(obj.toString());
+			return toBoolean(obj);
 		}
 
 		if (toType == byte.class || toType == Byte.class)
@@ -2357,7 +2405,7 @@ public class ValueObjectUtil {
 			String[] values = (String[]) obj;
 			boolean[] ret = new boolean[values.length];
 			for (int i = 0; i < values.length; i++) {
-				ret[i] = new Boolean(values[i]).booleanValue();
+				ret[i] = toBoolean(values[i]);//new Boolean(values[i]).booleanValue();
 			}
 			return ret;
 		}
@@ -2365,7 +2413,7 @@ public class ValueObjectUtil {
 			String[] values = (String[]) obj;
 			Boolean[] ret = new Boolean[values.length];
 			for (int i = 0; i < values.length; i++) {
-				ret[i] = new Boolean(values[i]);
+				ret[i] = toBoolean(values[i]);//new Boolean(values[i]);
 			}
 			return ret;
 		}

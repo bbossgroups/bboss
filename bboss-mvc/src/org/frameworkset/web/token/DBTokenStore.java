@@ -1,8 +1,6 @@
 package org.frameworkset.web.token;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.transaction.RollbackException;
 
@@ -15,52 +13,15 @@ import com.frameworkset.common.poolman.Record;
 import com.frameworkset.common.poolman.handle.RowHandler;
 import com.frameworkset.orm.transaction.TransactionException;
 import com.frameworkset.orm.transaction.TransactionManager;
-import com.mongodb.BasicDBObject;
-import com.mongodb.CommandResult;
-import com.mongodb.DB;
-import com.mongodb.DBCollection;
-import com.mongodb.DBCursor;
-import com.mongodb.DBObject;
-import com.mongodb.Mongo;
+
 
 public class DBTokenStore extends BaseTokenStore {
 	private ConfigSQLExecutor executor;
 
 	private static Logger log = Logger.getLogger(DBTokenStore.class);
-//	private  Map<String,MemToken> temptokens = new HashMap<String,MemToken>();
-//	private  Map<String,MemToken> dualtokens = new HashMap<String,MemToken>();
-//	private final Object checkLock = new Object();
-//	private final Object dualcheckLock = new Object();
-	private Mongo mongoClient;
+
 	
-	private DB db = null;
-	private DBCollection temptokens = null;
-	private DBCollection authtemptokens = null;
-	private DBCollection dualtokens = null;
-	private DBCollection eckeypairs = null;
-	public void requestStart()
-	{
-		if(db != null)
-		{
-			db.requestStart();
-		}
-	}
-	public void requestDone()
-	{
-		if(db != null)
-		{
-			db.requestDone();
-		}
-	}
 	
-	public CommandResult getLastError()
-	{
-		if(db != null)
-		{
-			return db.getLastError();
-		}
-		return null;
-	}
 	
 	public DBTokenStore()
 	{
@@ -84,98 +45,48 @@ public class DBTokenStore extends BaseTokenStore {
 	
 	public void livecheck()
 	{
-		List<BasicDBObject> dolds = new ArrayList<BasicDBObject>();
-		DBCursor cursor = null;
+		
+		long curtime = System.currentTimeMillis();
 //		synchronized(this.checkLock)
-		{
-			try
-			{
-				cursor = this.temptokens.find();				
-				while(cursor.hasNext())
-				{	
-					DBObject tt = cursor.next();
-					MemToken token_m = totempToken(tt);				
-					if(isold(token_m))
-					{
-						dolds.add(new BasicDBObject("token", token_m.getToken()));
-					}
-				}
-			}
-			finally
-			{
-				if(cursor != null)
-				{
-					cursor.close();
-					cursor = null;
-				}
-			}
-		}
 		
-		for(int i = 0; i < dolds.size(); i ++)
-		{
-//			if(tokenMonitor.isKilldown())
-//				break;
-			temptokens.remove(dolds.get(i));
-		}
-		
-		dolds = new ArrayList<BasicDBObject>();
 		try
 		{
-			cursor = this.dualtokens.find();
-			while(cursor.hasNext())
-			{	
-				DBObject tt = cursor.next();
-//				MemToken token_m = new MemToken((String)tt.get("token"),(Long)tt.get("createTime"));		
-				MemToken token_m = todualToken(tt);
-				if(isold(token_m,token_m.getLivetime(),System.currentTimeMillis()))
-				{
-					dolds.add(new BasicDBObject("appid", (String)tt.get("appid")).append("secret", (String)tt.get("secret")));
-				}
-			}
+			
+			this.executor.delete("deleteExpiredTempToken", curtime);
+			
+		} catch (Exception e) {
+			log.debug("deleteExpiredTempToken",e);
 		}
 		finally
 		{
-			if(cursor != null)
-			{
-				cursor.close();
-				cursor = null;
-			}
+			
 		}
 		
-		for(int i = 0; i < dolds.size(); i ++)
-		{
-			dualtokens.remove(dolds.get(i));
-		}
 		
-		dolds = new ArrayList<BasicDBObject>();
+		
 		try
 		{
-			cursor = this.authtemptokens.find();
-			while(cursor.hasNext())
-			{	
-				DBObject tt = cursor.next();
-//				MemToken token_m = new MemToken((String)tt.get("token"),(Long)tt.get("createTime"));		
-				MemToken token_m = todualToken(tt);
-				if(isold(token_m,token_m.getLivetime(),System.currentTimeMillis()))
-				{
-					dolds.add(new BasicDBObject("appid", (String)tt.get("appid")).append("secret", (String)tt.get("secret")).append("token", (String)tt.get("token")));
-				}
-			}
+			this.executor.delete("deleteExpiredAuthTempToken", curtime);
+		} catch (Exception e) {
+			log.debug("deleteExpiredAuthTempToken",e);
 		}
 		finally
 		{
-			if(cursor != null)
-			{
-				cursor.close();
-				cursor = null;
-			}
-		}
-		for(int i = 0; i < dolds.size(); i ++)
-		{
-			authtemptokens.remove(dolds.get(i));
+			
 		}
 		
-		dolds = null;
+		
+		try
+		{
+			this.executor.delete("deleteExpiredAuthdualToken", curtime);
+		} catch (Exception e) {
+			log.debug("deleteExpiredAuthdualToken",e);
+		}
+		finally
+		{
+			
+		}
+		
 		
 	}
 	
@@ -208,7 +119,7 @@ public class DBTokenStore extends BaseTokenStore {
 			
 //			synchronized(checkLock)
 //			DBCursor cursor = null;
-			BasicDBObject dbobject = new BasicDBObject("token", tokeninfo.getToken()).append("appid", tokeninfo.getAppid()).append("secret", tokeninfo.getSecret());
+//			BasicDBObject dbobject = new BasicDBObject("token", tokeninfo.getToken()).append("appid", tokeninfo.getAppid()).append("secret", tokeninfo.getSecret());
 			TransactionManager tm = new TransactionManager();
 			try {
 				tm.begin();
@@ -352,7 +263,7 @@ public class DBTokenStore extends BaseTokenStore {
 			try {
 				tm.begin();
 				this.executor.update("updateDualTokenLastVistime", lastVistTime,appid,secret);
-				tt = executor.queryObject(MemToken.class, appid, secret);
+				tt = executor.queryObject(MemToken.class, "queryDualToken",appid, secret);
 				tm.commit();
 			} catch (Exception e) {
 				throw new TokenException(e);
@@ -383,7 +294,7 @@ public class DBTokenStore extends BaseTokenStore {
 //				}
 //			}
 			try {
-				tt = executor.queryObject(MemToken.class, appid, secret);
+				tt = executor.queryObject(MemToken.class, "queryDualToken",appid, secret);
 			} catch (SQLException e) {
 				throw new TokenException(e);
 			}
@@ -484,7 +395,7 @@ public class DBTokenStore extends BaseTokenStore {
 		String token = this.randomToken();
 		MemToken token_m = new MemToken(token,System.currentTimeMillis());
 		try {
-			this.executor.insert("genTempToken", getID(),token_m.getToken(),token_m.getCreateTime(),this.tempTokendualtime,"true");
+			this.executor.insert("genTempToken", getID(),token_m.getToken(),token_m.getCreateTime(),this.tempTokendualtime,"1");
 		} catch (SQLException e) {
 			throw new TokenException(e);
 		}
@@ -586,7 +497,7 @@ public class DBTokenStore extends BaseTokenStore {
 			public void handleRow(ECKeyPair rowValue, Record record)
 					throws Exception {
 				rowValue.setPrivateKey(record.getString("privateKey"));
-				rowValue.setPublicKey("publicKey");
+				rowValue.setPublicKey(record.getString("publicKey"));
 //					ECKeyPair ECKeyPair = new ECKeyPair((String)value.get("privateKey"),(String)value.get("publicKey"),null,null);
 				
 			}
