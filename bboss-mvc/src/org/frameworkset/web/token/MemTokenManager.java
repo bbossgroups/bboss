@@ -13,12 +13,12 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
 import org.frameworkset.security.ecc.ECCCoder.ECKeyPair;
 import org.frameworkset.security.session.Session;
 import org.frameworkset.web.token.BaseTokenStore.TokenResult;
 
 import com.frameworkset.util.StringUtil;
-import common.Logger;
 
 /**
  * @author biaoping.yin
@@ -330,6 +330,15 @@ public class MemTokenManager {
 		public void run() {
 			while(!killdown)
 			{
+				
+//				check();
+				log.debug("过期令牌清理开始....");
+				try {
+					tokenStore.livecheck();
+				} catch (Exception e1) {
+					log.debug("过期令牌扫描异常：",e1);
+				}
+				log.debug("过期令牌清理结束.");
 				synchronized(this)
 				{
 					try {
@@ -341,8 +350,6 @@ public class MemTokenManager {
 				}
 				if(killdown)
 					break;
-//				check();
-				tokenStore.livecheck();
 			}
 		}
 		public boolean isKilldown() {
