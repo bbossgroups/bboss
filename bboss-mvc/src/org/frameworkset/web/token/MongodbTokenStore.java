@@ -80,103 +80,154 @@ public class MongodbTokenStore extends BaseTokenStore{
 		}
 		
 	}
-	
 	public void livecheck()
 	{
-		List<BasicDBObject> dolds = new ArrayList<BasicDBObject>();
-		DBCursor cursor = null;
+		
+		long curtime = System.currentTimeMillis();
 //		synchronized(this.checkLock)
-		{
-			try
-			{
-				cursor = this.temptokens.find();				
-				while(cursor.hasNext())
-				{	
-					DBObject tt = cursor.next();
-					MemToken token_m = totempToken(tt);				
-					if(isold(token_m))
-					{
-						dolds.add(new BasicDBObject("token", token_m.getToken()));
-					}
-				}
-			}
-			finally
-			{
-				if(cursor != null)
-				{
-					cursor.close();
-					cursor = null;
-				}
-			}
-		}
 		
-		for(int i = 0; i < dolds.size(); i ++)
-		{
-//			if(tokenMonitor.isKilldown())
-//				break;
-			temptokens.remove(dolds.get(i));
-		}
-		
-		dolds = new ArrayList<BasicDBObject>();
+		StringBuffer wherefun = new StringBuffer();
+		wherefun.append("function() ")
+				.append("{")			
+			    .append(" if(this.createTime + this.livetime < ").append(curtime).append(")")
+			    .append("{")
+				.append("return true;")				
+				.append("}")
+				.append("else")
+				.append(" {")
+				.append(" return false;")		
+				.append("}")
+				.append("}");
+		String temp = wherefun.toString();
+
 		try
 		{
-			cursor = this.dualtokens.find();
-			while(cursor.hasNext())
-			{	
-				DBObject tt = cursor.next();
-//				MemToken token_m = new MemToken((String)tt.get("token"),(Long)tt.get("createTime"));		
-				MemToken token_m = todualToken(tt);
-				if(isold(token_m,token_m.getLivetime(),System.currentTimeMillis()))
-				{
-					dolds.add(new BasicDBObject("appid", (String)tt.get("appid")).append("secret", (String)tt.get("secret")));
-				}
-			}
+			temptokens.remove(new BasicDBObject("$where",temp));
+			
 		}
 		finally
 		{
-			if(cursor != null)
-			{
-				cursor.close();
-				cursor = null;
-			}
-		}
-		
-		for(int i = 0; i < dolds.size(); i ++)
-		{
-			dualtokens.remove(dolds.get(i));
-		}
-		
-		dolds = new ArrayList<BasicDBObject>();
+			
+		}		
+//		
+
 		try
 		{
-			cursor = this.authtemptokens.find();
-			while(cursor.hasNext())
-			{	
-				DBObject tt = cursor.next();
-//				MemToken token_m = new MemToken((String)tt.get("token"),(Long)tt.get("createTime"));		
-				MemToken token_m = todualToken(tt);
-				if(isold(token_m,token_m.getLivetime(),System.currentTimeMillis()))
-				{
-					dolds.add(new BasicDBObject("appid", (String)tt.get("appid")).append("secret", (String)tt.get("secret")).append("token", (String)tt.get("token")));
-				}
-			}
+			dualtokens.remove(new BasicDBObject("$where",temp));
+			
 		}
 		finally
 		{
-			if(cursor != null)
-			{
-				cursor.close();
-				cursor = null;
-			}
-		}
-		for(int i = 0; i < dolds.size(); i ++)
+			
+		}		
+
+		try
 		{
-			authtemptokens.remove(dolds.get(i));
+			authtemptokens.remove(new BasicDBObject("$where",temp));
+		}
+		finally
+		{
+			
 		}
 		
-		dolds = null;
 		
 	}
+//	public void livecheck()
+//	{
+//		List<BasicDBObject> dolds = new ArrayList<BasicDBObject>();
+//		DBCursor cursor = null;
+////		synchronized(this.checkLock)
+//		{
+//			try
+//			{
+//				cursor = this.temptokens.find();				
+//				while(cursor.hasNext())
+//				{	
+//					DBObject tt = cursor.next();
+//					MemToken token_m = totempToken(tt);				
+//					if(isold(token_m))
+//					{
+//						dolds.add(new BasicDBObject("token", token_m.getToken()));
+//					}
+//				}
+//			}
+//			finally
+//			{
+//				if(cursor != null)
+//				{
+//					cursor.close();
+//					cursor = null;
+//				}
+//			}
+//		}
+//		
+//		for(int i = 0; i < dolds.size(); i ++)
+//		{
+////			if(tokenMonitor.isKilldown())
+////				break;
+//			temptokens.remove(dolds.get(i));
+//		}
+//		
+//		dolds = new ArrayList<BasicDBObject>();
+//		try
+//		{
+//			cursor = this.dualtokens.find();
+//			while(cursor.hasNext())
+//			{	
+//				DBObject tt = cursor.next();
+////				MemToken token_m = new MemToken((String)tt.get("token"),(Long)tt.get("createTime"));		
+//				MemToken token_m = todualToken(tt);
+//				if(isold(token_m,token_m.getLivetime(),System.currentTimeMillis()))
+//				{
+//					dolds.add(new BasicDBObject("appid", (String)tt.get("appid")).append("secret", (String)tt.get("secret")));
+//				}
+//			}
+//		}
+//		finally
+//		{
+//			if(cursor != null)
+//			{
+//				cursor.close();
+//				cursor = null;
+//			}
+//		}
+//		
+//		for(int i = 0; i < dolds.size(); i ++)
+//		{
+//			dualtokens.remove(dolds.get(i));
+//		}
+//		
+//		dolds = new ArrayList<BasicDBObject>();
+//		try
+//		{
+//			cursor = this.authtemptokens.find();
+//			while(cursor.hasNext())
+//			{	
+//				DBObject tt = cursor.next();
+////				MemToken token_m = new MemToken((String)tt.get("token"),(Long)tt.get("createTime"));		
+//				MemToken token_m = todualToken(tt);
+//				if(isold(token_m,token_m.getLivetime(),System.currentTimeMillis()))
+//				{
+//					dolds.add(new BasicDBObject("appid", (String)tt.get("appid")).append("secret", (String)tt.get("secret")).append("token", (String)tt.get("token")));
+//				}
+//			}
+//		}
+//		finally
+//		{
+//			if(cursor != null)
+//			{
+//				cursor.close();
+//				cursor = null;
+//			}
+//		}
+//		for(int i = 0; i < dolds.size(); i ++)
+//		{
+//			authtemptokens.remove(dolds.get(i));
+//		}
+//		
+//		dolds = null;
+//		
+//	}
 	
 	private MemToken todualToken(DBObject object)
 	{

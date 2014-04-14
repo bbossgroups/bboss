@@ -43,6 +43,13 @@ public class TestMongoTokenStore {
 		Assert.assertTrue(TokenStore.temptoken_request_validateresult_ok == mongodbTokenStore.checkToken("sim","xxxxxxxxxxxxxxxxxxxxxx",token.getSigntoken()).getResult());
 	}
 	
+	@Test
+	public void livecheck() throws Exception
+	{
+		mongodbTokenStore.livecheck();
+		System.out.println("aer:"+mongodbTokenStore.getLastError());
+	}
+	
 	
 	public static void main(String[] args) throws Exception
 	{

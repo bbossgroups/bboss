@@ -105,6 +105,7 @@
 
 		<copy todir="${classes-bboss-aop-test}">
 			<fileset dir="test" includes="**/*.xml" />
+			<fileset dir="test" includes="**/*.sql" />
 		</copy>
 	</target>
 	<target name="jar-bboss-mvc-test" depends="compile-bboss-mvc-test" description="generate the bboss-mvc library bboss-mvc-test.jar">
