@@ -15,7 +15,11 @@
  */
 package org.frameworkset.security.session.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.log4j.Logger;
+import org.frameworkset.security.session.SessionListener;
 import org.frameworkset.security.session.SessionStore;
 
 
@@ -40,6 +44,7 @@ public class SessionManager {
 	private String sessionStore_;
 	private SessionStore sessionStore;
 	private SessionMonitor	sessionMonitor;
+	private List<SessionListener> sessionListeners;
 	/**
 	 * 令牌超时检测时间间隔，默认为-1，不检测
 	 * 如果需要检测，那么只要令牌持续时间超过tokendualtime
@@ -48,15 +53,33 @@ public class SessionManager {
 	private long sessionscaninterval = 1800000;
 	public SessionManager(long sessionTimeout, String sessionStore,
 			String cookiename, boolean httponly,
-			long cookieLiveTime) {
+			long cookieLiveTime,String[] listeners) {
 		this.sessionTimeout = sessionTimeout;
 		this.sessionStore_ = sessionStore;
 		this.sessionStore = SessionStoreFactory.getTokenStore(sessionStore_);
 		this.cookiename = cookiename;
 		this.httpOnly = httponly;
 		this.cookieLiveTime = cookieLiveTime;
+		initSessionListeners(listeners);
 		sessionMonitor = new SessionMonitor();
 		sessionMonitor.start();
+	}
+	private void initSessionListeners(String[] listeners)
+	{
+		sessionListeners = new ArrayList<SessionListener>();
+		for(int i = 0; listeners != null && i < listeners.length; i ++)
+		{
+			try {
+				SessionListener l = (SessionListener)Class.forName(listeners[i]).newInstance();
+				sessionListeners.add(l);
+			} catch (InstantiationException e) {
+				throw new SessionManagerException(e);
+			} catch (IllegalAccessException e) {
+				throw new SessionManagerException(e);
+			} catch (ClassNotFoundException e) {
+				throw new SessionManagerException(e);
+			}
+		}
 	}
 
 	public SessionStore getSessionStore()

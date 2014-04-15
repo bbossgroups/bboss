@@ -38,5 +38,29 @@ public abstract class BaseSessionStore implements SessionStore {
 
 	}
 	public abstract Session createSession(Object sessionSource);
+	public long getSessionTimeout() {
+		return sessionTimeout;
+	}
+	public void setSessionTimeout(long sessionTimeout) {
+		this.sessionTimeout = sessionTimeout;
+	}
+	public String getCookiename() {
+		return cookiename;
+	}
+	public void setCookiename(String cookiename) {
+		this.cookiename = cookiename;
+	}
+	public boolean isHttpOnly() {
+		return httpOnly;
+	}
+	public void setHttpOnly(boolean httpOnly) {
+		this.httpOnly = httpOnly;
+	}
+	public long getCookieLiveTime() {
+		return cookieLiveTime;
+	}
+	public void setCookieLiveTime(long cookieLiveTime) {
+		this.cookieLiveTime = cookieLiveTime;
+	}
 
 }

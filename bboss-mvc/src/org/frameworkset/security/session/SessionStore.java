@@ -15,6 +15,8 @@
  */
 package org.frameworkset.security.session;
 
+import java.util.Enumeration;
+
 /**
  * <p>Title: SessionStore.java</p> 
  * <p>Description: </p>
@@ -31,6 +33,24 @@ public interface SessionStore {
 	void livecheck();
 	
 	Session createSession(Object source);
+
+	Object getAttribute(String sessionID, String attribute);
+
+	Enumeration getAttributeNames(String sessionID);
+
+	void updateLastAccessedTime(String sessionID, long lastAccessedTime);
+
+	long getLastAccessedTime(String sessionID);
+
+	String[] getValueNames(String sessionID);
+
+	void invalidate(String sessionID);
+
+	boolean isNew(String sessionID);
+
+	void removeAttribute(String sessionID, String attribute);
+
+	void addAttribute(String sessionID, String attribute, Object value);
 	
 
 }
