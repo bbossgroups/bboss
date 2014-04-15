@@ -53,6 +53,7 @@ public class DBFactory
     public static final String  DBInstantDB =  "instantdb";
     public static final String  DBMSSQL = "mssql";
     public static final String  DBMMysql = "mysql";
+    public static final String  DBMariaDB = "mariadb";
     public static final String  DBOracle = "oracle";
     public static final String  DBPostgres = "postgresql";
     public static final String  DBSapDB = "sapdb";
@@ -92,7 +93,7 @@ public class DBFactory
         adapters.put("com.jnetdirect.jsql.JSQLDriver", DBMSSQL.class);
         adapters.put("org.gjt.mm.mysql.Driver", DBMM.class);
         adapters.put("com.mysql.jdbc.Driver", DBMM.class);
-        
+        adapters.put("org.mariadb.jdbc.Driver", DBMariaDB.class);
         adapters.put("oracle.jdbc.driver.OracleDriver", DBOracle.class);
         adapters.put("oracle.jdbc.OracleDriver", DBOracle.class);
         adapters.put("org.postgresql.Driver", DBPostgres.class);
@@ -120,6 +121,7 @@ public class DBFactory
         adapters.put("instantdb", DBInstantDB.class);
         adapters.put("mssql", DBMSSQL.class);
         adapters.put("mysql", DBMM.class);
+        adapters.put("mariadb", DBMariaDB.class);
         adapters.put("oracle", DBOracle.class);
         adapters.put("postgresql", DBPostgres.class);
         adapters.put("sapdb", DBSapDB.class);
