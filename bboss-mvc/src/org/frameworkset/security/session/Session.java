@@ -14,8 +14,12 @@ public interface Session {
 	public long getCreationTime() ;
 	
 	public String getId() ;
+	/**
+	 * 更新最后访问时间
+	 */
+	public void touch();
 	public long getLastAccessedTime() ;
-	public int getMaxInactiveInterval();
+	public long getMaxInactiveInterval();
 
 //	@Override
 //	public ServletContext getServletContext() {
@@ -40,7 +44,7 @@ public interface Session {
 	public void removeAttribute(String attribute) ;
 	public void removeValue(String attribute) ;
 	public void setAttribute(String attribute, Object value) ;
-	public void setMaxInactiveInterval(int maxInactiveInterval) ;
+	public void setMaxInactiveInterval(long maxInactiveInterval) ;
 //	public String getSessionID();
 //	public Object getAttribute(String attribute);
 //	public void setAttribute(String attribute,Object value);

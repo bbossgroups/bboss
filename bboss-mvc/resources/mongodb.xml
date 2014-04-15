@@ -5,9 +5,10 @@
 		
 		<!-- 这里不需要配置destroy-method，因为bboss持久层在jvm退出时会自动调用数据源的close方法 -->
 		<property name="serverAddresses" >
-			192.168.1.101:27017
-			192.168.1.101:27018
-			192.168.1.101:27019
+			10.0.15.134:27017
+			10.0.15.134:27018
+			10.0.15.38:27017
+			10.0.15.39:27017
 		</property>
 		<property name="option" >
 			QUERYOPTION_SLAVEOK

@@ -66,7 +66,7 @@
 		</javac>
 		
 		<copy todir="${classes-bboss-aop}">
-			<fileset dir="src" includes="org/frameworkset/web/servlet/DispatcherServlet.properties org/frameworkset/web/servlet/mime.types **/*.xml" />
+			<fileset dir="src" includes="org/frameworkset/web/servlet/DispatcherServlet.properties org/frameworkset/web/servlet/mime.types **/*.xml **/*.sql" />
 		</copy>
 	</target>
 	<target name="jar-bboss-mvc" depends="compile-bboss-mvc" description="generate the bboss-mvc library bboss-mvc.jar">
@@ -105,7 +105,7 @@
 
 		<copy todir="${classes-bboss-aop-test}">
 			<fileset dir="test" includes="**/*.xml" />
-			<fileset dir="test" includes="**/*.sql" />
+			
 		</copy>
 	</target>
 	<target name="jar-bboss-mvc-test" depends="compile-bboss-mvc-test" description="generate the bboss-mvc library bboss-mvc-test.jar">
