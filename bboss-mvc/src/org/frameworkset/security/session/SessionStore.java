@@ -17,6 +17,8 @@ package org.frameworkset.security.session;
 
 import java.util.Enumeration;
 
+import org.frameworkset.security.session.impl.SessionManager;
+
 /**
  * <p>Title: SessionStore.java</p> 
  * <p>Description: </p>
@@ -26,13 +28,13 @@ import java.util.Enumeration;
  * @author biaoping.yin
  * @version 3.8.0
  */
-public interface SessionStore {
+public interface SessionStore{
 
 	void destory();
 
 	void livecheck();
 	
-	Session createSession(Object source);
+	Session createSession(String appKey);
 
 	Object getAttribute(String appKey,String sessionID, String attribute);
 
@@ -51,6 +53,8 @@ public interface SessionStore {
 	void removeAttribute(String appKey,String sessionID, String attribute);
 
 	void addAttribute(String appKey,String sessionID, String attribute, Object value);
+
+	void setSessionManager(SessionManager sessionManager);
 	
 
 }

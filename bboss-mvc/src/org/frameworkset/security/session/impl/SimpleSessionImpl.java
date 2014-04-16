@@ -7,7 +7,7 @@ import org.frameworkset.security.session.SessionStore;
 
 public class SimpleSessionImpl implements Session{
 	private String appKey;
-	private String sessionID;
+	private String id;
 	private long creationTime;
 	private long lastAccessedTime;
 	private long maxInactiveInterval;
@@ -15,12 +15,12 @@ public class SimpleSessionImpl implements Session{
 	@Override
 	public Object getAttribute(String attribute) {
 		
-		return sessionStore.getAttribute(appKey,sessionID,attribute);
+		return sessionStore.getAttribute(appKey,id,attribute);
 	}
 
 	@Override
 	public Enumeration getAttributeNames() {
-		return sessionStore.getAttributeNames(appKey,sessionID);
+		return sessionStore.getAttributeNames(appKey,id);
 	}
 
 	@Override
@@ -32,20 +32,20 @@ public class SimpleSessionImpl implements Session{
 	@Override
 	public String getId() {
 		// TODO Auto-generated method stub
-		return sessionID;
+		return id;
 	}
 
 	@Override
 	public void touch() {
 		lastAccessedTime = System.currentTimeMillis();
-		sessionStore.updateLastAccessedTime(appKey,sessionID,lastAccessedTime);
+		sessionStore.updateLastAccessedTime(appKey,id,lastAccessedTime);
 		
 	}
 
 	@Override
 	public long getLastAccessedTime() {
 		// TODO Auto-generated method stub
-		return lastAccessedTime = sessionStore.getLastAccessedTime(appKey,sessionID);
+		return lastAccessedTime = sessionStore.getLastAccessedTime(appKey,id);
 	}
 
 	@Override
@@ -63,19 +63,19 @@ public class SimpleSessionImpl implements Session{
 	@Override
 	public String[] getValueNames() {
 		// TODO Auto-generated method stub
-		return sessionStore.getValueNames(appKey,sessionID);
+		return sessionStore.getValueNames(appKey,id);
 	}
 
 	@Override
 	public void invalidate() {
-		sessionStore.invalidate(appKey,sessionID);
+		sessionStore.invalidate(appKey,id);
 		
 	}
 
 	@Override
 	public boolean isNew() {
 		// TODO Auto-generated method stub
-		return sessionStore.isNew(appKey,sessionID);
+		return sessionStore.isNew(appKey,id);
 	}
 
 	@Override
@@ -86,7 +86,7 @@ public class SimpleSessionImpl implements Session{
 
 	@Override
 	public void removeAttribute(String attribute) {
-		sessionStore.removeAttribute(appKey,sessionID,attribute);
+		sessionStore.removeAttribute(appKey,id,attribute);
 		
 	}
 
@@ -98,7 +98,7 @@ public class SimpleSessionImpl implements Session{
 
 	@Override
 	public void setAttribute(String attribute, Object value) {
-		sessionStore.addAttribute(appKey,sessionID,attribute,value);
+		sessionStore.addAttribute(appKey,id,attribute,value);
 		
 	}
 
@@ -106,6 +106,36 @@ public class SimpleSessionImpl implements Session{
 	public void setMaxInactiveInterval(long maxInactiveInterval) {
 		this.maxInactiveInterval = maxInactiveInterval;
 		
+	}
+
+	public String getAppKey() {
+		return appKey;
+	}
+
+	public void setAppKey(String appKey) {
+		this.appKey = appKey;
+	}
+
+	
+
+	public SessionStore _getSessionStore() {
+		return sessionStore;
+	}
+
+	public void _setSessionStore(SessionStore sessionStore) {
+		this.sessionStore = sessionStore;
+	}
+
+	public void setCreationTime(long creationTime) {
+		this.creationTime = creationTime;
+	}
+
+	public void setLastAccessedTime(long lastAccessedTime) {
+		this.lastAccessedTime = lastAccessedTime;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 
 }

@@ -15,6 +15,8 @@
  */
 package org.frameworkset.security.session.impl;
 
+import java.util.UUID;
+
 import org.frameworkset.security.session.Session;
 import org.frameworkset.security.session.SessionStore;
 
@@ -28,39 +30,41 @@ import org.frameworkset.security.session.SessionStore;
  * @version 3.8.0
  */
 public abstract class BaseSessionStore implements SessionStore {
-	private long sessionTimeout;
-	private String cookiename;
-	private boolean httpOnly;
-	private long cookieLiveTime;
+	protected SessionManager sessionManager;
+	protected String randomToken()
+	{
+		String token = UUID.randomUUID().toString();
+		return token;
+	}
+	@Override
+	public void setSessionManager(SessionManager sessionManager) {
+		this.sessionManager = sessionManager;
+	}
+
+	public SessionManager getSessionManager() {
+		return sessionManager;
+	}
 	@Override
 	public void destory() {
 		// TODO Auto-generated method stub
 
 	}
-	public abstract Session createSession(Object sessionSource);
+	public abstract Session createSession(String appKey);
 	public long getSessionTimeout() {
-		return sessionTimeout;
+		return sessionManager.getSessionTimeout();
 	}
-	public void setSessionTimeout(long sessionTimeout) {
-		this.sessionTimeout = sessionTimeout;
-	}
+	
 	public String getCookiename() {
-		return cookiename;
+		return sessionManager.getCookiename();
 	}
-	public void setCookiename(String cookiename) {
-		this.cookiename = cookiename;
-	}
+	
 	public boolean isHttpOnly() {
-		return httpOnly;
+		return sessionManager.isHttpOnly();
 	}
-	public void setHttpOnly(boolean httpOnly) {
-		this.httpOnly = httpOnly;
-	}
+	
 	public long getCookieLiveTime() {
-		return cookieLiveTime;
+		return sessionManager.getCookieLiveTime();
 	}
-	public void setCookieLiveTime(long cookieLiveTime) {
-		this.cookieLiveTime = cookieLiveTime;
-	}
+	
 
 }

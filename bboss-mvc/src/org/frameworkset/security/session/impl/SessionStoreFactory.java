@@ -29,7 +29,7 @@ import com.frameworkset.util.StringUtil;
  * @version 3.8.0
  */
 public class SessionStoreFactory {
-	public static SessionStore getTokenStore(String sessionStore)
+	public static SessionStore getTokenStore(String sessionStore,SessionManager sessionManager)
 	{
 		if(StringUtil.isEmpty(sessionStore)||sessionStore.equals("session"))
 		{
@@ -40,6 +40,7 @@ public class SessionStoreFactory {
 			
 			try {
 				SessionStore sessionStore_ = (SessionStore)Class.forName(sessionStore).newInstance();
+				sessionStore_.setSessionManager(sessionManager);
 				return sessionStore_;
 			} catch (Exception e) {
 				return new HttpSessionStore();

@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.frameworkset.security.session.SessionEvent;
 import org.frameworkset.security.session.SessionListener;
 import org.frameworkset.security.session.SessionStore;
 
@@ -56,7 +57,7 @@ public class SessionManager {
 			long cookieLiveTime,String[] listeners) {
 		this.sessionTimeout = sessionTimeout;
 		this.sessionStore_ = sessionStore;
-		this.sessionStore = SessionStoreFactory.getTokenStore(sessionStore_);
+		this.sessionStore = SessionStoreFactory.getTokenStore(sessionStore_,this);
 		this.cookiename = cookiename;
 		this.httpOnly = httponly;
 		this.cookieLiveTime = cookieLiveTime;
@@ -139,6 +140,66 @@ public class SessionManager {
 		}
 		public boolean isKilldown() {
 			return killdown;
+		}
+		
+	}
+
+	public long getSessionTimeout() {
+		return sessionTimeout;
+	}
+	public String getCookiename() {
+		return cookiename;
+	}
+	public boolean isHttpOnly() {
+		return httpOnly;
+	}
+	public long getCookieLiveTime() {
+		return cookieLiveTime;
+	}
+	public List<SessionListener> getSessionListeners() {
+		return sessionListeners;
+	}
+	public long getSessionscaninterval() {
+		return sessionscaninterval;
+	}
+	public void dispatchEvent(SessionEventImpl sessionEvent) {
+		for(int i = 0; i < this.sessionListeners.size(); i ++)
+		{
+			
+				switch(sessionEvent.getEventType())
+				{
+					case SessionEvent.EventType_create:
+						try {
+							sessionListeners.get(i).createSession(sessionEvent);
+						} catch (Exception e) {
+							log.error("",e);
+						}
+						break;
+					case SessionEvent.EventType_destroy:
+						try {
+							sessionListeners.get(i).destroySession(sessionEvent);
+						} catch (Exception e) {
+							log.error("",e);
+						}
+						break;
+					case SessionEvent.EventType_addAttibute:
+						try {
+							sessionListeners.get(i).addAttribute(sessionEvent);
+						} catch (Exception e) {
+							log.error("",e);
+						}
+						break;
+					case SessionEvent.EventType_removeAttibute:
+						try {
+							sessionListeners.get(i).removeAttribute(sessionEvent);
+						} catch (Exception e) {
+							log.error("",e);
+						}
+						break;
+					default:
+						throw new RuntimeException("未知的事务类型："+sessionEvent.getEventType());
+				}
+			
 		}
 		
 	}

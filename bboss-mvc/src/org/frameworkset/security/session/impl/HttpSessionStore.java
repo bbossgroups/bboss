@@ -31,7 +31,7 @@ import org.frameworkset.security.session.SessionStore;
  * @author biaoping.yin
  * @version 3.8.0
  */
-public class HttpSessionStore implements SessionStore {
+public class HttpSessionStore extends BaseSessionStore {
 	
 	@Override
 	public void destory() {		
@@ -105,6 +105,15 @@ public class HttpSessionStore implements SessionStore {
 	public void addAttribute(String appKey,String sessionID, String attribute, Object value) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public void setSessionManager(SessionManager sessionManager) {
+		this.sessionManager = sessionManager;
+	}
+
+	public SessionManager getSessionManager() {
+		return sessionManager;
 	}
 
 }

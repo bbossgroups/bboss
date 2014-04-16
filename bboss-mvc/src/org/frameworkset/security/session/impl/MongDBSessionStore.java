@@ -7,10 +7,12 @@ import java.util.Set;
 import org.apache.log4j.Logger;
 import org.frameworkset.nosql.mongodb.MongoDBHelper;
 import org.frameworkset.security.session.Session;
+import org.frameworkset.security.session.SessionEvent;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
+import com.mongodb.DBObject;
 import com.mongodb.Mongo;
 
 public class MongDBSessionStore extends BaseSessionStore{
@@ -44,7 +46,7 @@ public class MongDBSessionStore extends BaseSessionStore{
 		StringBuffer wherefun = new StringBuffer();
 		wherefun.append("function() ")
 				.append("{")			
-			    .append(" if(this.lastAccessedTime + this.livetime < ").append(curtime).append(")")
+			    .append(" if(this.lastAccessedTime + this.maxInactiveInterval < ").append(curtime).append(")")
 			    .append("{")
 				.append("return true;")				
 				.append("}")
@@ -64,16 +66,49 @@ public class MongDBSessionStore extends BaseSessionStore{
 		
 	}
 
+	private String getAppSessionTableName(String appKey)
+	{
+		return appKey+"_sessions";
+	}
+	private DBCollection getAppSessionDBCollection(String appKey)
+	{
+		 DBCollection sessions = db.getCollection(getAppSessionTableName( appKey));
+		 sessions.ensureIndex("sessionid");
+		 return sessions;
+	}
+	
 	@Override
-	public Session createSession(Object sessionSource) {
-		// TODO Auto-generated method stub
-		return null;
+	public Session createSession(String appKey) {
+		String sessionid = this.randomToken();
+		long creationTime = System.currentTimeMillis();
+		long maxInactiveInterval = this.getSessionTimeout();
+		long lastAccessedTime = creationTime;
+		DBCollection sessions =getAppSessionDBCollection( appKey);
+		sessions.insert(new BasicDBObject("sessionid",sessionid)
+		.append("creationTime", creationTime)
+		.append("maxInactiveInterval",maxInactiveInterval)
+		.append("lastAccessedTime", lastAccessedTime)
+		.append("appKey", appKey));
+		SimpleSessionImpl session = new SimpleSessionImpl();
+		session.setMaxInactiveInterval(maxInactiveInterval);
+		session.setAppKey(appKey);
+		session.setCreationTime(creationTime);
+		session.setLastAccessedTime(lastAccessedTime);
+		session.setId(sessionid);
+		session._setSessionStore(this);
+		this.sessionManager.dispatchEvent(new SessionEventImpl(session,SessionEvent.EventType_create));
+		return session;
 	}
 
 	@Override
 	public Object getAttribute(String appKey,String sessionID, String attribute) {
-		// TODO Auto-generated method stub
-		return null;
+		DBCollection sessions =getAppSessionDBCollection( appKey);
+		BasicDBObject keys = new BasicDBObject();
+		keys.put(attribute, 1);
+		
+		DBObject obj = sessions.findOne(new BasicDBObject("sessionid",sessionID),keys);
+		return obj.get(attribute);
+//		return null;
 	}
 
 	@Override
