@@ -34,23 +34,23 @@ public interface SessionStore {
 	
 	Session createSession(Object source);
 
-	Object getAttribute(String sessionID, String attribute);
+	Object getAttribute(String appKey,String sessionID, String attribute);
 
-	Enumeration getAttributeNames(String sessionID);
+	Enumeration getAttributeNames(String appKey,String sessionID);
 
-	void updateLastAccessedTime(String sessionID, long lastAccessedTime);
+	void updateLastAccessedTime(String appKey,String sessionID, long lastAccessedTime);
 
-	long getLastAccessedTime(String sessionID);
+	long getLastAccessedTime(String appKey,String sessionID);
 
-	String[] getValueNames(String sessionID);
+	String[] getValueNames(String appKey,String sessionID);
 
-	void invalidate(String sessionID);
+	void invalidate(String appKey,String sessionID);
 
-	boolean isNew(String sessionID);
+	boolean isNew(String appKey,String sessionID);
 
-	void removeAttribute(String sessionID, String attribute);
+	void removeAttribute(String appKey,String sessionID, String attribute);
 
-	void addAttribute(String sessionID, String attribute, Object value);
+	void addAttribute(String appKey,String sessionID, String attribute, Object value);
 	
 
 }

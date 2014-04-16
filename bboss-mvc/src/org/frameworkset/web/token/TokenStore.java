@@ -1,8 +1,6 @@
 package org.frameworkset.web.token;
 
 import org.frameworkset.security.ecc.ECCCoder.ECKeyPair;
-import org.frameworkset.web.token.BaseTokenStore.TokenInfo;
-import org.frameworkset.web.token.BaseTokenStore.TokenResult;
 
 
 public interface TokenStore {
@@ -36,11 +34,11 @@ public interface TokenStore {
 	public abstract void destory();
 
 	public abstract void livecheck();
-	public abstract TokenResult checkToken(String appid,String secret,String tokeninfo)  throws Exception;
+	public abstract TokenResult checkToken(String appid,String secret,String tokeninfo)  throws TokenException;
 
-	public abstract Integer checkTempToken(TokenInfo tokeninfo);
-	public abstract Integer checkAuthTempToken(TokenInfo tokeninfo);
-	public abstract Integer checkDualToken(TokenInfo tokeninfo);
+	public abstract Integer checkTempToken(TokenResult tokeninfo);
+	public abstract Integer checkAuthTempToken(TokenResult tokeninfo);
+	public abstract Integer checkDualToken(TokenResult tokeninfo);
 
 	public abstract long getTempTokendualtime();
 
@@ -53,8 +51,8 @@ public interface TokenStore {
 	public MemToken genTempToken();
 	public MemToken genDualToken(String appid,String account,String secret,long livetime);
 	public MemToken genAuthTempToken(String appid, String account,String secret);
-	public ECKeyPair getKeyPairs(String appid,String account,String secret) throws Exception;
-	public ECKeyPair getKeyPair(String appid,String secret) throws Exception;
+	public ECKeyPair getKeyPairs(String appid,String account,String secret) throws TokenException;
+	public ECKeyPair getKeyPair(String appid,String secret) throws TokenException;
 	
 
 }

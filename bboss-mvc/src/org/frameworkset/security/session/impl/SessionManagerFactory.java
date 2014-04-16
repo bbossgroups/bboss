@@ -17,6 +17,8 @@ package org.frameworkset.security.session.impl;
 
 import org.frameworkset.spi.BaseApplicationContext;
 
+import com.frameworkset.util.StringUtil;
+
 
 /**
  * <p>Title: SessionManagerFactory.java</p> 
@@ -59,27 +61,39 @@ public class SessionManagerFactory {
 		return sessionManager;
 	}
 	
-	public static SessionManager getSessionManager(String sessionstore,long sessionTimeout)
+	private static String[] parserListeners(String listeners)
+	{
+		if(StringUtil.isEmpty(listeners))
+			return null;
+		String[] temp = listeners.split("\n");
+		for(int i = 0; i < temp.length; i++)
+		{
+			temp[i] = temp[i].trim();
+		}
+		return temp;
+	}
+	
+	public static SessionManager getSessionManager(String sessionstore,long sessionTimeout,String listeners)
 	{
 		if(sessionManager == null)
 		{
 			synchronized(SessionManager.class)
 			{
 				if(sessionManager == null)
-					sessionManager = new SessionManager(sessionTimeout,sessionstore,SessionManager.default_cookiename,SessionManager.default_httpOnly, SessionManager.default_cookieLiveTime);
+					sessionManager = new SessionManager(sessionTimeout,sessionstore,SessionManager.default_cookiename,SessionManager.default_httpOnly, SessionManager.default_cookieLiveTime,parserListeners(listeners));
 			}
 		}
 		return sessionManager;
 	}
 	
-	public static SessionManager getSessionManager(String sessionstore,long sessionTimeout,String cookiename,boolean httpOnly,long cookieLiveTime)
+	public static SessionManager getSessionManager(String sessionstore,long sessionTimeout,String cookiename,boolean httpOnly,long cookieLiveTime,String listeners)
 	{
 		if(sessionManager == null)
 		{
 			synchronized(SessionManager.class)
 			{
 				if(sessionManager == null)
-					sessionManager = new SessionManager(sessionTimeout,sessionstore,cookiename,httpOnly, cookieLiveTime);
+					sessionManager = new SessionManager(sessionTimeout,sessionstore,cookiename,httpOnly, cookieLiveTime,parserListeners(listeners));
 			}
 		}
 		return sessionManager;

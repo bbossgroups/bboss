@@ -6,7 +6,7 @@ import org.frameworkset.security.ecc.ECCCoder;
 import org.frameworkset.security.ecc.ECCCoder.ECKeyPair;
 import org.frameworkset.util.Base64;
 
-import com.mongodb.DBObject;
+//import com.mongodb.DBObject;
 
 
 public abstract class BaseTokenStore implements TokenStore {
@@ -95,9 +95,9 @@ public abstract class BaseTokenStore implements TokenStore {
 		
 			
 	}
-	protected TokenInfo decodeToken(String appid,String secret,String token) throws Exception
+	protected TokenResult decodeToken(String appid,String secret,String token) throws TokenException
 	{
-		TokenInfo tokenInfo = new TokenInfo();
+		TokenResult tokenInfo = new TokenResult();
 		char line = token.charAt(2);
 		String signtoken = null;
 		if(line =='_')
@@ -113,29 +113,37 @@ public abstract class BaseTokenStore implements TokenStore {
 			}
 			else if(tokentype.equals(TokenStore.type_authtemptoken))//需要认证的临时令牌
 			{
-				tokenInfo.setTokentype(tokentype);
-				signtoken = token.substring(3);
-				ECKeyPair keyPairs = getKeyPairs(appid,null,secret);
-				
-				tokenInfo.setAppid(appid);
-				String mw = new String(ECCCoder.decrypt(Base64.decode(signtoken), keyPairs.getPrivateKey()));
-				String[] t = mw.split("\\|");
-				tokenInfo.setToken(t[1]);
-				tokenInfo.setAccount(t[0]);
-				tokenInfo.setSecret(secret);
+				try {
+					tokenInfo.setTokentype(tokentype);
+					signtoken = token.substring(3);
+					ECKeyPair keyPairs = getKeyPairs(appid,null,secret);
+					
+					tokenInfo.setAppid(appid);
+					String mw = new String(ECCCoder.decrypt(Base64.decode(signtoken), keyPairs.getPrivateKey()));
+					String[] t = mw.split("\\|");
+					tokenInfo.setToken(t[1]);
+					tokenInfo.setAccount(t[0]);
+					tokenInfo.setSecret(secret);
+				} catch (Exception e) {
+					throw new TokenException(e);
+				}
 			}
 			else if(tokentype.equals(TokenStore.type_dualtoken))//有效期令牌校验
 			{
-				tokenInfo.setTokentype(tokentype);
-				signtoken = token.substring(3);
-				ECKeyPair keyPairs = getKeyPairs(appid,null,secret);
-				
-				tokenInfo.setAppid(appid);
-				String mw = new String(ECCCoder.decrypt(Base64.decode(signtoken), keyPairs.getPrivateKey()));
-				String[] t = mw.split("\\|");
-				tokenInfo.setToken(t[1]);
-				tokenInfo.setAccount(t[0]);
-				tokenInfo.setSecret(secret);
+				try {
+					tokenInfo.setTokentype(tokentype);
+					signtoken = token.substring(3);
+					ECKeyPair keyPairs = getKeyPairs(appid,null,secret);
+					
+					tokenInfo.setAppid(appid);
+					String mw = new String(ECCCoder.decrypt(Base64.decode(signtoken), keyPairs.getPrivateKey()));
+					String[] t = mw.split("\\|");
+					tokenInfo.setToken(t[1]);
+					tokenInfo.setAccount(t[0]);
+					tokenInfo.setSecret(secret);
+				} catch (Exception e) {
+					throw new TokenException(e);
+				}
 			}
 			else
 			{
@@ -174,71 +182,20 @@ public abstract class BaseTokenStore implements TokenStore {
 	{
 		return null;
 	}
-	public static class TokenResult
-	{
-		public TokenResult(Integer result, TokenInfo tokenInfo) {
-			super();
-			this.result = result;
-			this.tokenInfo = tokenInfo;
-		}
-		private Integer result;
-		private TokenInfo tokenInfo;
-		public Integer getResult() {
-			return result;
-		}
-		public TokenInfo getTokenInfo() {
-			return tokenInfo;
-		}
-		
-	}
-	public static class TokenInfo
-	{
-		private String appid;
-		private String secret;
-		private String token;
-		private String tokentype;
-		private String account;
-		public String getAppid() {
-			return appid;
-		}
-		public void setAppid(String appid) {
-			this.appid = appid;
-		}
-		public String getSecret() {
-			return secret;
-		}
-		public void setSecret(String secret) {
-			this.secret = secret;
-		}
-		public String getToken() {
-			return token;
-		}
-		public void setToken(String token) {
-			this.token = token;
-		}
-		public String getTokentype() {
-			return tokentype;
-		}
-		public void setTokentype(String tokentype) {
-			this.tokentype = tokentype;
-		}
-		public String getAccount() {
-			return account;
-		}
-		public void setAccount(String account) {
-			this.account = account;
-		}
-	}
 	
-	public TokenResult checkToken(String appid,String secret,String token) throws Exception
+	
+	
+	public TokenResult checkToken(String appid,String secret,String token) throws TokenException
 	{
 		
 		if(token == null)
 		{
-			return new TokenResult(TokenStore.temptoken_request_validateresult_nodtoken,null); 
+			TokenResult result = new TokenResult();
+			result.setResult(TokenStore.temptoken_request_validateresult_nodtoken);
+			return result; 
 		}
 		
-		TokenInfo tokeninfo = this.decodeToken(appid,secret,token);
+		TokenResult tokeninfo = this.decodeToken(appid,secret,token);
 		Integer result = null;
 		
 		if(tokeninfo.getTokentype().equals(TokenStore.type_temptoken))//无需认证的临时令牌
@@ -254,7 +211,10 @@ public abstract class BaseTokenStore implements TokenStore {
 			result = this.checkDualToken(tokeninfo);
 		}
 		if(result != null)
-			return new TokenResult(result ,tokeninfo);
+		{
+			tokeninfo.setResult(result);
+			return tokeninfo;
+		}
 		
 		throw new TokenException("无法识别的token：appid="+appid+",secret="+ secret+",token="+token);
 			
@@ -264,25 +224,21 @@ public abstract class BaseTokenStore implements TokenStore {
 			
 	}
 	
-	public Integer checkAuthTempToken(TokenInfo token)
+	public Integer checkAuthTempToken(TokenResult token)
 	{
 		return TokenStore.temptoken_request_validateresult_fail;
 	}
 	
-	public ECKeyPair getKeyPairs(String appid,String account,String secret) throws Exception
+	public ECKeyPair getKeyPairs(String appid,String account,String secret) throws TokenException
 	{
 		return null;
 	}
 	
-	public ECKeyPair getKeyPair(String appid, String secret) throws Exception
+	public ECKeyPair getKeyPair(String appid, String secret) throws TokenException
 	{
 		return getKeyPairs(appid,null,secret);
 	}
 	
-	protected ECKeyPair toECKeyPair(DBObject value)
-	{
-		ECKeyPair ECKeyPair = new ECKeyPair((String)value.get("privateKey"),(String)value.get("publicKey"),null,null);
-		return ECKeyPair;
-	}
+	
 
 }

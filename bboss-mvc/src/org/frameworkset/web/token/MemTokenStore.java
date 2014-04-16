@@ -16,7 +16,7 @@ public class MemTokenStore extends BaseTokenStore{
 	private final Object dualcheckLock = new Object();
 	private final Object authtempcheckLock = new Object();
 	
-	public Integer checkAuthTempToken(TokenInfo token)
+	public Integer checkAuthTempToken(TokenResult token)
 	{
 		if(token != null)
 		{
@@ -145,7 +145,7 @@ public class MemTokenStore extends BaseTokenStore{
 	
 	
 	
-	public Integer checkTempToken(TokenInfo token)
+	public Integer checkTempToken(TokenResult token)
 	{
 		
 		if(token != null)
@@ -180,7 +180,7 @@ public class MemTokenStore extends BaseTokenStore{
 	
 
 	@Override
-	public Integer checkDualToken(TokenInfo token) {
+	public Integer checkDualToken(TokenResult token) {
 	
 		if(token != null)
 		{

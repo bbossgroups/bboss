@@ -54,55 +54,55 @@ public class HttpSessionStore implements SessionStore {
 	}
 
 	@Override
-	public Object getAttribute(String sessionID, String attribute) {
+	public Object getAttribute(String appKey,String sessionID, String attribute) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Enumeration getAttributeNames(String sessionID) {
+	public Enumeration getAttributeNames(String appKey,String sessionID) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void updateLastAccessedTime(String sessionID, long lastAccessedTime) {
+	public void updateLastAccessedTime(String appKey,String sessionID, long lastAccessedTime) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public long getLastAccessedTime(String sessionID) {
+	public long getLastAccessedTime(String appKey,String sessionID) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public String[] getValueNames(String sessionID) {
+	public String[] getValueNames(String appKey,String sessionID) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void invalidate(String sessionID) {
+	public void invalidate(String appKey,String sessionID) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public boolean isNew(String sessionID) {
+	public boolean isNew(String appKey,String sessionID) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public void removeAttribute(String sessionID, String attribute) {
+	public void removeAttribute(String appKey,String sessionID, String attribute) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void addAttribute(String sessionID, String attribute, Object value) {
+	public void addAttribute(String appKey,String sessionID, String attribute, Object value) {
 		// TODO Auto-generated method stub
 		
 	}

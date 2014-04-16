@@ -1,8 +1,5 @@
 package org.frameworkset.web.token;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.apache.log4j.Logger;
 import org.frameworkset.nosql.mongodb.MongoDBHelper;
 import org.frameworkset.security.ecc.ECCCoder;
@@ -248,7 +245,7 @@ public class MongodbTokenStore extends BaseTokenStore{
 	}
 	
 	
-	public Integer checkAuthTempToken(TokenInfo tokeninfo)
+	public Integer checkAuthTempToken(TokenResult tokeninfo)
 	{
 		
 		if(tokeninfo != null)
@@ -295,7 +292,7 @@ public class MongodbTokenStore extends BaseTokenStore{
 		}
 	}
 	
-	public Integer checkTempToken(TokenInfo tokeninfo)
+	public Integer checkTempToken(TokenResult tokeninfo)
 	{
 		
 		if(tokeninfo != null)
@@ -368,7 +365,7 @@ public class MongodbTokenStore extends BaseTokenStore{
 		return tt;
 	}
 	@Override
-	public Integer checkDualToken(TokenInfo tokeninfo) {
+	public Integer checkDualToken(TokenResult tokeninfo) {
 		
 		
 		if(tokeninfo != null)
@@ -515,11 +512,11 @@ public class MongodbTokenStore extends BaseTokenStore{
 		this.signToken(token_m,TokenStore.type_authtemptoken,account);
 		return token_m ;
 	}
-	public ECKeyPair getKeyPair(String appid, String secret) throws Exception
+	public ECKeyPair getKeyPair(String appid, String secret) throws TokenException
 	{
 		return getKeyPairs(appid,null,secret);
 	}
-	public ECKeyPair getKeyPairs(String appid,String account,String secret) throws Exception
+	public ECKeyPair getKeyPairs(String appid,String account,String secret) throws TokenException
 	{
 		DBCursor cursor = null;
 		try
@@ -533,9 +530,13 @@ public class MongodbTokenStore extends BaseTokenStore{
 			}
 			else
 			{
-				ECKeyPair keypair = ECCCoder.genECKeyPair();
-				insertECKeyPair( appid, secret, keypair);
-				return keypair;
+				try {
+					ECKeyPair keypair = ECCCoder.genECKeyPair();
+					insertECKeyPair( appid, secret, keypair);
+					return keypair;
+				} catch (Exception e) {
+					throw new TokenException(e);
+				}
 			}
 		}
 		finally
@@ -554,6 +555,10 @@ public class MongodbTokenStore extends BaseTokenStore{
 		.append("publicKey", keypair.getPublicKey()) );
 	}
 	
-	
+	protected ECKeyPair toECKeyPair(DBObject value)
+	{
+		ECKeyPair ECKeyPair = new ECKeyPair((String)value.get("privateKey"),(String)value.get("publicKey"),null,null);
+		return ECKeyPair;
+	}	
 
 }

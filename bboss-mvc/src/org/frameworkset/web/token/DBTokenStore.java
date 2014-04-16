@@ -109,7 +109,7 @@ public class DBTokenStore extends BaseTokenStore {
 //	}
 	
 	
-	public Integer checkAuthTempToken(TokenInfo tokeninfo)
+	public Integer checkAuthTempToken(TokenResult tokeninfo)
 	{
 		
 		if(tokeninfo != null)
@@ -175,7 +175,7 @@ public class DBTokenStore extends BaseTokenStore {
 		}
 	}
 	
-	public Integer checkTempToken(TokenInfo tokeninfo)
+	public Integer checkTempToken(TokenResult tokeninfo)
 	{
 		
 		if(tokeninfo != null)
@@ -304,7 +304,7 @@ public class DBTokenStore extends BaseTokenStore {
 		return tt;
 	}
 	@Override
-	public Integer checkDualToken(TokenInfo tokeninfo) {
+	public Integer checkDualToken(TokenResult tokeninfo) {
 		
 		
 		if(tokeninfo != null)
@@ -483,39 +483,48 @@ public class DBTokenStore extends BaseTokenStore {
 		this.signToken(token_m,TokenStore.type_authtemptoken,account);
 		return token_m ;
 	}
-	public ECKeyPair getKeyPair(String appid, String secret) throws Exception
+	public ECKeyPair getKeyPair(String appid, String secret) throws TokenException
 	{
 		return getKeyPairs(appid,null,secret);
 	}
-	public ECKeyPair getKeyPairs(String appid,String account,String secret) throws Exception
+	public ECKeyPair getKeyPairs(String appid,String account,String secret) throws TokenException
 	{
 		
 		
-		ECKeyPair ECKeyPair =this.executor.queryObjectByRowHandler(new RowHandler<ECKeyPair>(){
+		try {
+			ECKeyPair ECKeyPair =this.executor.queryObjectByRowHandler(new RowHandler<ECKeyPair>(){
 
-			@Override
-			public void handleRow(ECKeyPair rowValue, Record record)
-					throws Exception {
-				rowValue.setPrivateKey(record.getString("privateKey"));
-				rowValue.setPublicKey(record.getString("publicKey"));
+				@Override
+				public void handleRow(ECKeyPair rowValue, Record record)
+						throws Exception {
+					rowValue.setPrivateKey(record.getString("privateKey"));
+					rowValue.setPublicKey(record.getString("publicKey"));
 //					ECKeyPair ECKeyPair = new ECKeyPair((String)value.get("privateKey"),(String)value.get("publicKey"),null,null);
+					
+				}
 				
-			}
-			
-		},ECKeyPair.class, "getKeyPairs", appid);
+			},ECKeyPair.class, "getKeyPairs", appid);
 //			cursor = eckeypairs.find(new BasicDBObject("appid", appid));
-		if(ECKeyPair != null)
-		{
+			if(ECKeyPair != null)
+			{
 //				DBObject value = cursor.next();
 //				return toECKeyPair(value);
-			return ECKeyPair;
-			
+				return ECKeyPair;
+				
+			}
+			else
+			{
+				ECKeyPair keypair = ECCCoder.genECKeyPair();
+				insertECKeyPair( appid, secret, keypair);
+				return keypair;
+			}
+		} catch (SQLException e) {
+			throw new TokenException(e);
+		} catch (TokenException e) {
+			throw new TokenException(e);
 		}
-		else
-		{
-			ECKeyPair keypair = ECCCoder.genECKeyPair();
-			insertECKeyPair( appid, secret, keypair);
-			return keypair;
+		catch (Exception e) {
+			throw new TokenException(e);
 		}
 		
 	}

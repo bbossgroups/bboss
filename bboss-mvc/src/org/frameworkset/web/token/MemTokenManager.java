@@ -16,7 +16,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 import org.frameworkset.security.ecc.ECCCoder.ECKeyPair;
 import org.frameworkset.security.session.Session;
-import org.frameworkset.web.token.BaseTokenStore.TokenResult;
 
 import com.frameworkset.util.StringUtil;
 
@@ -186,8 +185,8 @@ public class MemTokenManager {
 			try {
 				TokenResult tokenResult = this.tokenStore.checkToken(appid,secret,token);
 				request.setAttribute(TokenStore.token_request_validatetoken_key, tokenResult);
-				if( tokenResult.getTokenInfo() != null &&  tokenResult.getTokenInfo().getAccount() != null)
-					request.setAttribute(TokenStore.token_request_account_key, tokenResult.getTokenInfo().getAccount());
+				if( tokenResult != null &&  tokenResult.getAccount() != null)
+					request.setAttribute(TokenStore.token_request_account_key, tokenResult.getAccount());
 				result = tokenResult.getResult();
 			} catch (Exception e) {
 				log.error("令牌校验失败:",e);
@@ -560,6 +559,14 @@ public class MemTokenManager {
 		ECKeyPair pairs = tokenStore.getKeyPair(appid,secret);
 		return pairs;
 	}
+	public TokenResult checkToken(String appid,String secret,String token)
+	{
+		return this.tokenStore.checkToken(appid, secret, token);
+	}
 	
+	public int checkTempToken(String token)
+	{
+		return this.tokenStore.checkToken(null,null,token).getResult();
+	}
 
 }

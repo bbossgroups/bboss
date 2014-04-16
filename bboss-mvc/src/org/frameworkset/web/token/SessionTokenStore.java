@@ -22,7 +22,7 @@ public class SessionTokenStore extends BaseTokenStore {
 	
 	
 	
-	public Integer checkTempToken(TokenInfo token)
+	public Integer checkTempToken(TokenResult token)
 	{
 		
 		if(token != null)
@@ -57,7 +57,7 @@ public class SessionTokenStore extends BaseTokenStore {
 	
 
 	@Override
-	public Integer checkDualToken(TokenInfo token) {
+	public Integer checkDualToken(TokenResult token) {
 		
 		if(token != null)
 		{
