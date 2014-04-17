@@ -253,7 +253,7 @@ public class MongodbTokenStore extends BaseTokenStore{
 			
 //			synchronized(checkLock)
 //			DBCursor cursor = null;
-			BasicDBObject dbobject = new BasicDBObject("token", tokeninfo.getToken()).append("appid", tokeninfo.getAppid()).append("secret", tokeninfo.getSecret());
+			BasicDBObject dbobject = new BasicDBObject("token", tokeninfo.getToken()).append("appid", tokeninfo.getAppid());
 			try
 			{
 				DBObject tt = this.authtemptokens.findAndRemove(dbobject);
@@ -331,7 +331,7 @@ public class MongodbTokenStore extends BaseTokenStore{
 	}
 	private MemToken queryDualToken(String appid, String secret,long lastVistTime)
 	{
-		BasicDBObject dbobject = new BasicDBObject("appid", appid).append("secret", secret);
+		BasicDBObject dbobject = new BasicDBObject("appid", appid);
 		MemToken tt = null;
 		DBCursor cursor = null;
 		DBObject dt = null;
@@ -424,8 +424,7 @@ public class MongodbTokenStore extends BaseTokenStore{
 	private void updateDualToken(MemToken dualToken)
 	{
 		this.dualtokens.update(new BasicDBObject(
-		"appid", dualToken.getAppid())
-		.append("secret", dualToken.getSecret()),
+		"appid", dualToken.getAppid()),
 		new BasicDBObject("token",dualToken.getToken())
 		.append("createTime", dualToken.getCreateTime())
 		.append("lastVistTime", dualToken.getLastVistTime())
@@ -446,7 +445,7 @@ public class MongodbTokenStore extends BaseTokenStore{
 	}
 
 	@Override
-	public MemToken genDualToken(String appid,String account, String secret, long livetime) {
+	public MemToken genDualToken(String appid,String ticket, String secret, long livetime) {
 		
 		
 		MemToken token_m = null;
@@ -482,7 +481,7 @@ public class MongodbTokenStore extends BaseTokenStore{
 				this.insertDualToken(this.dualtokens,token_m);
 			}
 		}
-		this.signToken(token_m,TokenStore.type_dualtoken,account);
+		this.signToken(token_m,TokenStore.type_dualtoken,ticket);
 		return token_m ;
 		
 	}
@@ -492,8 +491,8 @@ public class MongodbTokenStore extends BaseTokenStore{
 	 * @param string2
 	 * @return
 	 */
-	public MemToken genAuthTempToken(String appid,String account, String secret) {
-		
+	public MemToken genAuthTempToken(String appid,String ticket, String secret) {
+		String accountinfo[] = this.decodeTicket(ticket, appid, secret);
 		String token = this.randomToken();//需要将appid,secret,token进行混合加密，生成最终的token进行存储，校验时，只对令牌进行拆分校验
 		
 		MemToken token_m = null;
@@ -509,7 +508,7 @@ public class MongodbTokenStore extends BaseTokenStore{
 				this.insertDualToken(this.authtemptokens,token_m);
 			}
 		}
-		this.signToken(token_m,TokenStore.type_authtemptoken,account);
+		this.signToken(token_m,TokenStore.type_authtemptoken,accountinfo);
 		return token_m ;
 	}
 	public ECKeyPair getKeyPair(String appid, String secret) throws TokenException

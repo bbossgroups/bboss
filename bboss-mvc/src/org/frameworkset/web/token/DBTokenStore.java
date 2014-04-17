@@ -133,8 +133,8 @@ public class DBTokenStore extends BaseTokenStore {
 						rowValue.setLivetime(record.getLong("livetime"));
 					}
 					
-				}, MemToken.class, "getAuthTempToken", tokeninfo.getToken(),tokeninfo.getAppid(),tokeninfo.getSecret());
-				executor.delete("deleteAuthTempToken", tokeninfo.getToken(),tokeninfo.getAppid(),tokeninfo.getSecret());
+				}, MemToken.class, "getAuthTempToken", tokeninfo.getToken(),tokeninfo.getAppid());
+				executor.delete("deleteAuthTempToken", tokeninfo.getToken(),tokeninfo.getAppid());
 //				DBObject tt = this.authtemptokens.findAndRemove(dbobject);
 				tm.commit();
 				if(token_m != null)
@@ -262,8 +262,8 @@ public class DBTokenStore extends BaseTokenStore {
 			TransactionManager tm = new TransactionManager();
 			try {
 				tm.begin();
-				this.executor.update("updateDualTokenLastVistime", lastVistTime,appid,secret);
-				tt = executor.queryObject(MemToken.class, "queryDualToken",appid, secret);
+				this.executor.update("updateDualTokenLastVistime", lastVistTime,appid);
+				tt = executor.queryObject(MemToken.class, "queryDualToken",appid);
 				tm.commit();
 			} catch (Exception e) {
 				throw new TokenException(e);
@@ -294,7 +294,7 @@ public class DBTokenStore extends BaseTokenStore {
 //				}
 //			}
 			try {
-				tt = executor.queryObject(MemToken.class, "queryDualToken",appid, secret);
+				tt = executor.queryObject(MemToken.class, "queryDualToken",appid);
 			} catch (SQLException e) {
 				throw new TokenException(e);
 			}
@@ -406,7 +406,7 @@ public class DBTokenStore extends BaseTokenStore {
 	}
 
 	@Override
-	public MemToken genDualToken(String appid,String account, String secret, long livetime) {
+	public MemToken genDualToken(String appid,String ticket, String secret, long livetime) {
 		
 		
 		MemToken token_m = null;
@@ -453,7 +453,7 @@ public class DBTokenStore extends BaseTokenStore {
 		{
 			tm.release();
 		}
-		this.signToken(token_m,TokenStore.type_dualtoken,account);
+		this.signToken(token_m,TokenStore.type_dualtoken,ticket);
 		return token_m ;
 		
 	}
@@ -463,7 +463,7 @@ public class DBTokenStore extends BaseTokenStore {
 	 * @param string2
 	 * @return
 	 */
-	public MemToken genAuthTempToken(String appid,String account, String secret) {
+	public MemToken genAuthTempToken(String appid,String ticket, String secret) {
 		
 		String token = this.randomToken();//需要将appid,secret,token进行混合加密，生成最终的token进行存储，校验时，只对令牌进行拆分校验
 		
@@ -480,7 +480,7 @@ public class DBTokenStore extends BaseTokenStore {
 				this.insertDualToken("genAuthTempToken",token_m);
 			}
 		}
-		this.signToken(token_m,TokenStore.type_authtemptoken,account);
+		this.signToken(token_m,TokenStore.type_authtemptoken,ticket);
 		return token_m ;
 	}
 	public ECKeyPair getKeyPair(String appid, String secret) throws TokenException

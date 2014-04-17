@@ -11,6 +11,7 @@ import org.frameworkset.util.Base64;
 
 public abstract class BaseTokenStore implements TokenStore {
 	protected long tempTokendualtime;
+	protected long ticketdualtime;
 	protected String randomToken()
 	{
 		String token = UUID.randomUUID().toString();
@@ -24,14 +25,88 @@ public abstract class BaseTokenStore implements TokenStore {
 		return age > this.tempTokendualtime;
 		
 	}
-	protected String encodeToken(MemToken token,String tokentype,String account) throws TokenException
+//	protected String encodeToken(MemToken token,String tokentype,String ticket) throws TokenException
+//	{
+//		signToken( token, tokentype, ticket);
+//		return token.getSigntoken();
+//			
+//	}
+	
+	public String genTicket(String account, String worknumber,
+			String appid, String secret) throws TokenException
 	{
-		signToken( token, tokentype, account);
-		return token.getSigntoken();
-			
+		long createTime = System.currentTimeMillis();
+		if(worknumber == null)
+		{
+			worknumber = "";
+		}
+		try {
+			String ticket = account+"|"+worknumber +"|"+createTime;
+			ECKeyPair keyPairs = getKeyPairs(appid,secret);
+			byte[] data =  null;
+			if(keyPairs.getPubKey() != null)
+			{
+				
+				data = ECCCoder.encrypt(ticket.getBytes(), keyPairs.getPubKey());
+				ticket= Base64.encode(data);
+				
+			}
+			else
+			{
+				data = ECCCoder.encrypt(ticket.getBytes(), keyPairs.getPublicKey());
+				ticket= Base64.encode(data);
+			}
+			return ticket;
+		} catch (TokenException e) {
+			throw e;
+		} catch (Exception e) {
+			throw new TokenException(e);
+		}
+		
+		
+	}
+	/**
+	 * 0 account 1 worknumber
+	 */
+	public String[] decodeTicket(String ticket,
+			String appid, String secret) throws TokenException
+	{
+		
+		try {
+			String accountinfo = null;
+			ECKeyPair keyPairs = getKeyPairs(appid,secret);
+			byte[] data =  null;
+			if(keyPairs.getPriKey() != null)
+			{
+				
+				data = ECCCoder.decrypt(ticket, keyPairs.getPriKey());
+				accountinfo = new String(data);
+				
+//			return signtoken;
+			}
+			else
+			{
+				data = ECCCoder.encrypt(ticket.getBytes(), keyPairs.getPublicKey());
+				accountinfo = new String(data);
+//			return signtoken;
+			}
+			String infs[] = accountinfo.split("\\|");
+			long createTime = Long.parseLong(infs[2]);
+			if(createTime + this.ticketdualtime < System.currentTimeMillis())
+			{
+				throw new TokenException("ticketexpired");
+			}
+			return infs;
+		} catch (TokenException e) {
+			throw e;
+		} catch (Exception e) {
+			throw new TokenException(e);
+		}
+		
+		
 	}
 	
-	protected void signToken(MemToken token,String tokentype,String account) throws TokenException
+	protected void signToken(MemToken token,String tokentype,String accountinfo[],String ticket) throws TokenException
 	{
 		try {
 			if(tokentype == null || tokentype.equals(TokenStore.type_temptoken))
@@ -40,8 +115,8 @@ public abstract class BaseTokenStore implements TokenStore {
 			}
 			else if(tokentype.equals(TokenStore.type_authtemptoken))
 			{			
-				ECKeyPair keyPairs = getKeyPairs(token.getAppid(),account,token.getSecret());
-				String input = account + "|" + token.getToken();
+				ECKeyPair keyPairs = getKeyPairs(token.getAppid(),token.getSecret());
+				String input = accountinfo[0] + "|" + accountinfo[1] + "|" + token.getToken();
 				byte[] data =  null;
 				if(keyPairs.getPubKey() != null)
 				{
@@ -63,8 +138,8 @@ public abstract class BaseTokenStore implements TokenStore {
 			}
 			else if(tokentype.equals(TokenStore.type_dualtoken))
 			{			
-				ECKeyPair keyPairs = getKeyPairs(token.getAppid(),account,token.getSecret());
-				String input = account + "|" + token.getToken();
+				ECKeyPair keyPairs = getKeyPairs(token.getAppid(),token.getSecret());
+				String input = accountinfo[0] + "|" + accountinfo[1] + "|" + "|" + token.getToken();
 				byte[] data =  null;
 				if(keyPairs.getPubKey() != null)
 				{				
@@ -85,7 +160,7 @@ public abstract class BaseTokenStore implements TokenStore {
 			}
 			else
 			{
-				throw new TokenException("无法识别的令牌类型："+tokentype+",token="+token.getToken()+",appid="+token.getAppid()+",account="+account);
+				throw new TokenException("unknowntokentype："+tokentype+",token="+token.getToken()+",appid="+token.getAppid()+",ticket="+ticket);
 			}
 		} catch (TokenException e) {
 			throw e;
@@ -116,7 +191,7 @@ public abstract class BaseTokenStore implements TokenStore {
 				try {
 					tokenInfo.setTokentype(tokentype);
 					signtoken = token.substring(3);
-					ECKeyPair keyPairs = getKeyPairs(appid,null,secret);
+					ECKeyPair keyPairs = getKeyPairs(appid,secret);
 					
 					tokenInfo.setAppid(appid);
 					String mw = new String(ECCCoder.decrypt(Base64.decode(signtoken), keyPairs.getPrivateKey()));
@@ -133,7 +208,7 @@ public abstract class BaseTokenStore implements TokenStore {
 				try {
 					tokenInfo.setTokentype(tokentype);
 					signtoken = token.substring(3);
-					ECKeyPair keyPairs = getKeyPairs(appid,null,secret);
+					ECKeyPair keyPairs = getKeyPairs(appid,secret);
 					
 					tokenInfo.setAppid(appid);
 					String mw = new String(ECCCoder.decrypt(Base64.decode(signtoken), keyPairs.getPrivateKey()));
@@ -216,7 +291,7 @@ public abstract class BaseTokenStore implements TokenStore {
 			return tokeninfo;
 		}
 		
-		throw new TokenException("无法识别的token：appid="+appid+",secret="+ secret+",token="+token);
+		throw new TokenException("unknowntoken:appid="+appid+",secret="+ secret+",token="+token);
 			
 		
 		
@@ -229,14 +304,19 @@ public abstract class BaseTokenStore implements TokenStore {
 		return TokenStore.temptoken_request_validateresult_fail;
 	}
 	
-	public ECKeyPair getKeyPairs(String appid,String account,String secret) throws TokenException
+	public ECKeyPair getKeyPairs(String appid,String secret) throws TokenException
 	{
 		return null;
 	}
 	
-	public ECKeyPair getKeyPair(String appid, String secret) throws TokenException
-	{
-		return getKeyPairs(appid,null,secret);
+	
+
+	public void setTicketdualtime(long ticketdualtime) {
+		this.ticketdualtime = ticketdualtime;
+	}
+
+	public long getTicketdualtime() {
+		return ticketdualtime;
 	}
 	
 	

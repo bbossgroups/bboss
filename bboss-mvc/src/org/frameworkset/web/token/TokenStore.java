@@ -36,23 +36,27 @@ public interface TokenStore {
 	public abstract void livecheck();
 	public abstract TokenResult checkToken(String appid,String secret,String tokeninfo)  throws TokenException;
 
-	public abstract Integer checkTempToken(TokenResult tokeninfo);
-	public abstract Integer checkAuthTempToken(TokenResult tokeninfo);
-	public abstract Integer checkDualToken(TokenResult tokeninfo);
+	public abstract Integer checkTempToken(TokenResult tokeninfo)throws TokenException;
+	public abstract Integer checkAuthTempToken(TokenResult tokeninfo)throws TokenException;
+	public abstract Integer checkDualToken(TokenResult tokeninfo)throws TokenException;
 
-	public abstract long getTempTokendualtime();
+	public abstract long getTempTokendualtime()throws TokenException;
 
-	public abstract void setTempTokendualtime(long tokendualtime);
+	public abstract void setTempTokendualtime(long tokendualtime)throws TokenException;
 
 //	public abstract Session getSession();
 //
 //	public abstract void setSession(Session session);
 	
 	public MemToken genTempToken();
-	public MemToken genDualToken(String appid,String account,String secret,long livetime);
-	public MemToken genAuthTempToken(String appid, String account,String secret);
-	public ECKeyPair getKeyPairs(String appid,String account,String secret) throws TokenException;
+	public MemToken genDualToken(String appid,String ticket,String secret,long livetime)throws TokenException;
+	public MemToken genAuthTempToken(String appid, String ticket,String secret)throws TokenException;
+
 	public ECKeyPair getKeyPair(String appid,String secret) throws TokenException;
-	
+
+	public abstract String genTicket(String account, String worknumber,
+			String appid, String secret)throws TokenException;
+	public String[] decodeTicket(String ticket,
+			String appid, String secret) throws TokenException;
 
 }

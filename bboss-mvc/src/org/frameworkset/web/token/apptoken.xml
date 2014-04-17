@@ -17,17 +17,17 @@
 
 <property name="updateDualToken">
 <![CDATA[
-    update  dualtokens set token=#[token],createTime=#[createTime],lastVistTime=#[lastVistTime],livetime=#[livetime],validate_=#[validate] where appid=#[appid] and secret=#[secret]
+    update  dualtokens set token=#[token],createTime=#[createTime],lastVistTime=#[lastVistTime],livetime=#[livetime],validate_=#[validate] where appid=#[appid]
  ]]>
 </property>
 <property name="updateDualTokenLastVistime">
 <![CDATA[
-    update  dualtokens set lastVistTime=? where appid=? and secret=?
+    update  dualtokens set lastVistTime=? where appid=?
  ]]>
 </property>
 <property name="queryDualToken">
 <![CDATA[
-    select * from  dualtokens  where appid=? and secret=?
+    select * from  dualtokens  where appid=?
  ]]>
 </property>
 
@@ -46,13 +46,13 @@
 
 <property name="getAuthTempToken">
 <![CDATA[
-    select * from authtemptokens where token=? and appid=? and secret=?
+    select * from authtemptokens where token=? and appid=?
  ]]>
 </property>
 <property name="deleteAuthTempToken">
 <![CDATA[
 
-    delete from authtemptokens where token=? and appid=? and secret=?
+    delete from authtemptokens where token=? and appid=?
  ]]>
 </property>
 <!-- 删除过期令牌 -->

@@ -50,6 +50,13 @@ public class TestMongoTokenStore {
 		System.out.println("aer:"+mongodbTokenStore.getLastError());
 	}
 	
+	@Test
+	public void testticket() throws Exception
+	{
+		String ticket = mongodbTokenStore.genTicket("yinbp", "10006673", "sim", "xxxxxxxxxxxxxxxxxxxxxx");
+		System.out.println("aer:"+mongodbTokenStore.getLastError());
+	}
+	
 	
 	public static void main(String[] args) throws Exception
 	{

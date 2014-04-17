@@ -568,5 +568,9 @@ public class MemTokenManager {
 	{
 		return this.tokenStore.checkToken(null,null,token).getResult();
 	}
+	public String genTicket(String account,String worknumber,String appid,String secret)
+	{
+		return this.tokenStore.genTicket( account, worknumber, appid, secret);
+	}
 
 }
