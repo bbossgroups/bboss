@@ -38,13 +38,13 @@ public class HttpSessionStore extends BaseSessionStore {
 		
 	}
 	
-	public Session createSession(Object source)
+	public Session createSession()
 	{
-		if(source == null)
-			return null;
-		HttpSessionImpl session = new HttpSessionImpl();
-		session.setSession((HttpSession)source);
-		return session; 
+////		if(source == null)
+////			return null;
+//		HttpSessionImpl session = new HttpSessionImpl();
+//		session.setSession((HttpSession)source);
+		return SessionManager.getCurrentSession(); 
 	}
 
 	@Override
@@ -114,6 +114,12 @@ public class HttpSessionStore extends BaseSessionStore {
 
 	public SessionManager getSessionManager() {
 		return sessionManager;
+	}
+
+	@Override
+	public Session createSession(String appKey) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

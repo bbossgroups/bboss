@@ -240,13 +240,15 @@ public class MemTokenStore extends BaseTokenStore{
 			temptokens.put(token, token_m);
 			
 		}
-		this.signToken(token_m, type_temptoken, null);
+		this.signToken(token_m, type_temptoken, null,null);
 		return token_m;
 		
 	}
 
 	@Override
 	public MemToken genDualToken(String appid,String ticket, String secret, long livetime) {
+		String[] accountinfo = decodeTicket( ticket,
+				 appid,  secret);
 		String token = this.randomToken();
 		String key = appid + ":"+secret;
 		MemToken token_m = null;
@@ -274,13 +276,15 @@ public class MemTokenStore extends BaseTokenStore{
 				dualtokens.put(key, token_m);
 			}
 		}
-		this.signToken(token_m, type_dualtoken, ticket);
+		this.signToken(token_m, type_dualtoken,accountinfo, ticket);
 		return token_m ;
 		
 	}
 	
 	@Override
 	public MemToken genAuthTempToken(String appid,String ticket, String secret) {
+		String[] accountinfo = decodeTicket( ticket,
+				 appid,  secret);
 		String token = this.randomToken();
 		String key = appid + ":"+secret +":"+token;
 		MemToken token_m = null;
@@ -294,7 +298,7 @@ public class MemTokenStore extends BaseTokenStore{
 				this.authtemptokens.put(key, token_m);
 			}
 		}
-		this.signToken(token_m, TokenStore.type_authtemptoken, ticket);
+		this.signToken(token_m, TokenStore.type_authtemptoken, accountinfo,ticket);
 		return token_m ;
 		
 	}

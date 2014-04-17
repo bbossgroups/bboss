@@ -42,7 +42,7 @@ public abstract class BaseTokenStore implements TokenStore {
 		}
 		try {
 			String ticket = account+"|"+worknumber +"|"+createTime;
-			ECKeyPair keyPairs = getKeyPairs(appid,secret);
+			ECKeyPair keyPairs = getKeyPair(appid,secret);
 			byte[] data =  null;
 			if(keyPairs.getPubKey() != null)
 			{
@@ -74,7 +74,7 @@ public abstract class BaseTokenStore implements TokenStore {
 		
 		try {
 			String accountinfo = null;
-			ECKeyPair keyPairs = getKeyPairs(appid,secret);
+			ECKeyPair keyPairs = getKeyPair(appid,secret);
 			byte[] data =  null;
 			if(keyPairs.getPriKey() != null)
 			{
@@ -115,7 +115,7 @@ public abstract class BaseTokenStore implements TokenStore {
 			}
 			else if(tokentype.equals(TokenStore.type_authtemptoken))
 			{			
-				ECKeyPair keyPairs = getKeyPairs(token.getAppid(),token.getSecret());
+				ECKeyPair keyPairs = getKeyPair(token.getAppid(),token.getSecret());
 				String input = accountinfo[0] + "|" + accountinfo[1] + "|" + token.getToken();
 				byte[] data =  null;
 				if(keyPairs.getPubKey() != null)
@@ -138,7 +138,7 @@ public abstract class BaseTokenStore implements TokenStore {
 			}
 			else if(tokentype.equals(TokenStore.type_dualtoken))
 			{			
-				ECKeyPair keyPairs = getKeyPairs(token.getAppid(),token.getSecret());
+				ECKeyPair keyPairs = getKeyPair(token.getAppid(),token.getSecret());
 				String input = accountinfo[0] + "|" + accountinfo[1] + "|" + "|" + token.getToken();
 				byte[] data =  null;
 				if(keyPairs.getPubKey() != null)
@@ -191,7 +191,7 @@ public abstract class BaseTokenStore implements TokenStore {
 				try {
 					tokenInfo.setTokentype(tokentype);
 					signtoken = token.substring(3);
-					ECKeyPair keyPairs = getKeyPairs(appid,secret);
+					ECKeyPair keyPairs = getKeyPair(appid,secret);
 					
 					tokenInfo.setAppid(appid);
 					String mw = new String(ECCCoder.decrypt(Base64.decode(signtoken), keyPairs.getPrivateKey()));
@@ -208,7 +208,7 @@ public abstract class BaseTokenStore implements TokenStore {
 				try {
 					tokenInfo.setTokentype(tokentype);
 					signtoken = token.substring(3);
-					ECKeyPair keyPairs = getKeyPairs(appid,secret);
+					ECKeyPair keyPairs = getKeyPair(appid,secret);
 					
 					tokenInfo.setAppid(appid);
 					String mw = new String(ECCCoder.decrypt(Base64.decode(signtoken), keyPairs.getPrivateKey()));
@@ -304,7 +304,7 @@ public abstract class BaseTokenStore implements TokenStore {
 		return TokenStore.temptoken_request_validateresult_fail;
 	}
 	
-	public ECKeyPair getKeyPairs(String appid,String secret) throws TokenException
+	public ECKeyPair getKeyPair(String appid,String secret) throws TokenException
 	{
 		return null;
 	}

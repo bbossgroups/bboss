@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.frameworkset.security.session.Session;
 import org.frameworkset.security.session.SessionEvent;
 import org.frameworkset.security.session.SessionListener;
 import org.frameworkset.security.session.SessionStore;
@@ -46,6 +47,7 @@ public class SessionManager {
 	private SessionStore sessionStore;
 	private SessionMonitor	sessionMonitor;
 	private List<SessionListener> sessionListeners;
+	private static ThreadLocal<Session> currentSession = new ThreadLocal<Session>();
 	/**
 	 * 令牌超时检测时间间隔，默认为-1，不检测
 	 * 如果需要检测，那么只要令牌持续时间超过tokendualtime
@@ -203,5 +205,8 @@ public class SessionManager {
 		}
 		
 	}
-
+	public static Session getCurrentSession()
+	{
+		return currentSession.get();
+	}
 }
