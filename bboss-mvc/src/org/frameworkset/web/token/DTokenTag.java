@@ -65,7 +65,7 @@ public class DTokenTag extends BaseTag {
 		}
 		catch (RuntimeException e) {
 			//
-		}
+		} 
 		return ret;
 	}
 	public String getFid() {

@@ -2,8 +2,6 @@ package org.frameworkset.web.token;
 
 import java.sql.SQLException;
 
-import javax.transaction.RollbackException;
-
 import org.apache.log4j.Logger;
 import org.frameworkset.security.ecc.ECCCoder;
 import org.frameworkset.security.ecc.ECCCoder.ECKeyPair;
@@ -11,7 +9,6 @@ import org.frameworkset.security.ecc.ECCCoder.ECKeyPair;
 import com.frameworkset.common.poolman.ConfigSQLExecutor;
 import com.frameworkset.common.poolman.Record;
 import com.frameworkset.common.poolman.handle.RowHandler;
-import com.frameworkset.orm.transaction.TransactionException;
 import com.frameworkset.orm.transaction.TransactionManager;
 
 
@@ -55,7 +52,7 @@ public class DBTokenStore extends BaseTokenStore {
 			this.executor.delete("deleteExpiredTempToken", curtime);
 			
 		} catch (Exception e) {
-			log.debug("deleteExpiredTempToken",e);
+			log.debug(TokenStore.ERROR_CODE_DELETEEXPIREDTEMPTOKENFAILED,e);
 		}
 		finally
 		{
@@ -68,7 +65,7 @@ public class DBTokenStore extends BaseTokenStore {
 		{
 			this.executor.delete("deleteExpiredAuthTempToken", curtime);
 		} catch (Exception e) {
-			log.debug("deleteExpiredAuthTempToken",e);
+			log.debug(TokenStore.ERROR_CODE_DELETEEXPIREDAUTHTEMPTOKENFAILED,e);
 		}
 		finally
 		{
@@ -80,7 +77,7 @@ public class DBTokenStore extends BaseTokenStore {
 		{
 			this.executor.delete("deleteExpiredAuthdualToken", curtime);
 		} catch (Exception e) {
-			log.debug("deleteExpiredAuthdualToken",e);
+			log.debug(TokenStore.ERROR_CODE_DELETEEXPIREDAUTHDUALTOKENFAILED,e);
 		}
 		finally
 		{
@@ -109,7 +106,7 @@ public class DBTokenStore extends BaseTokenStore {
 //	}
 	
 	
-	public Integer checkAuthTempToken(TokenResult tokeninfo)
+	public Integer checkAuthTempToken(TokenResult tokeninfo) throws TokenException
 	{
 		
 		if(tokeninfo != null)
@@ -157,7 +154,7 @@ public class DBTokenStore extends BaseTokenStore {
 					return TokenStore.temptoken_request_validateresult_fail;
 				}			
 			} catch (Exception e) {
-				throw new TokenException(e);
+				throw new TokenException(TokenStore.ERROR_CODE_CHECKAUTHTEMPTOKENFAILED,e);
 			}
 			finally
 			{
@@ -175,7 +172,7 @@ public class DBTokenStore extends BaseTokenStore {
 		}
 	}
 	
-	public Integer checkTempToken(TokenResult tokeninfo)
+	public Integer checkTempToken(TokenResult tokeninfo) throws TokenException
 	{
 		
 		if(tokeninfo != null)
@@ -214,7 +211,7 @@ public class DBTokenStore extends BaseTokenStore {
 					
 				
 			} catch (Exception e) {
-				throw new TokenException(e);
+				throw new TokenException(TokenStore.ERROR_CODE_CHECKTEMPTOKENFAILED,e);
 			}
 			finally
 			{
@@ -248,11 +245,11 @@ public class DBTokenStore extends BaseTokenStore {
 		}
 	}
 
-	private MemToken queryDualToken(String appid, String secret)
+	private MemToken queryDualToken(String appid, String secret) throws TokenException
 	{
 		return queryDualToken(appid, secret,-1);
 	}
-	private MemToken queryDualToken(String appid, String secret,long lastVistTime)
+	private MemToken queryDualToken(String appid, String secret,long lastVistTime) throws TokenException
 	{
 		
 		MemToken tt = null;
@@ -266,7 +263,7 @@ public class DBTokenStore extends BaseTokenStore {
 				tt = executor.queryObject(MemToken.class, "queryDualToken",appid);
 				tm.commit();
 			} catch (Exception e) {
-				throw new TokenException(e);
+				throw new TokenException(TokenStore.ERROR_CODE_QUERYDUALTOKENFAILED,e);
 			}
 			finally
 			{
@@ -296,7 +293,7 @@ public class DBTokenStore extends BaseTokenStore {
 			try {
 				tt = executor.queryObject(MemToken.class, "queryDualToken",appid);
 			} catch (SQLException e) {
-				throw new TokenException(e);
+				throw new TokenException(TokenStore.ERROR_CODE_QUERYDUALTOKENFAILED,e);
 			}
 		}
 		
@@ -304,7 +301,7 @@ public class DBTokenStore extends BaseTokenStore {
 		return tt;
 	}
 	@Override
-	public Integer checkDualToken(TokenResult tokeninfo) {
+	public Integer checkDualToken(TokenResult tokeninfo) throws TokenException {
 		
 		
 		if(tokeninfo != null)
@@ -349,7 +346,7 @@ public class DBTokenStore extends BaseTokenStore {
 		
 	}
 
-	private void insertDualToken(String sqlname,MemToken dualToken)
+	private void insertDualToken(String sqlname,MemToken dualToken) throws TokenException
 	{
 //		dualtokens.insert(new BasicDBObject("token",dualToken.getToken())
 //		.append("createTime", dualToken.getCreateTime())
@@ -362,16 +359,16 @@ public class DBTokenStore extends BaseTokenStore {
 		try {
 			this.executor.insertBean(sqlname, dualToken);
 		} catch (SQLException e) {
-			throw new TokenException(e);
+			throw new TokenException(TokenStore.ERROR_CODE_STOREDUALTOKENFAILED,e);
 		}
 	}
 	
-	private void updateDualToken(MemToken dualToken)
+	private void updateDualToken(MemToken dualToken) throws TokenException
 	{
 		try {
 			this.executor.updateBean("updateDualToken", dualToken);
 		} catch (SQLException e) {
-			throw new TokenException(e);
+			throw new TokenException(TokenStore.ERROR_CODE_UPDATEDUALTOKENFAILED,e);
 		}
 //		this.dualtokens.update(new BasicDBObject(
 //		"appid", dualToken.getAppid())
@@ -391,13 +388,13 @@ public class DBTokenStore extends BaseTokenStore {
 	}
 
 	@Override
-	public MemToken genTempToken() {
+	public MemToken genTempToken() throws TokenException {
 		String token = this.randomToken();
 		MemToken token_m = new MemToken(token,System.currentTimeMillis());
 		try {
 			this.executor.insert("genTempToken", getID(),token_m.getToken(),token_m.getCreateTime(),this.tempTokendualtime,"1");
-		} catch (SQLException e) {
-			throw new TokenException(e);
+		} catch (Exception e) {
+			throw new TokenException(TokenStore.ERROR_CODE_GENTEMPTOKENFAILED,e);
 		}
 //		temptokens.insert(new BasicDBObject("token",token_m.getToken()).append("createTime", token_m.getCreateTime()).append("livetime", this.tempTokendualtime).append("validate", true));
 		this.signToken(token_m, type_temptoken, null,null);
@@ -406,7 +403,7 @@ public class DBTokenStore extends BaseTokenStore {
 	}
 
 	@Override
-	public MemToken genDualToken(String appid,String ticket, String secret, long livetime) {
+	public MemToken genDualToken(String appid,String ticket, String secret, long livetime) throws TokenException {
 		
 		String[] accountinfo = decodeTicket( ticket,
 				 appid,  secret);
@@ -445,11 +442,11 @@ public class DBTokenStore extends BaseTokenStore {
 				this.insertDualToken("insertDualToken",token_m);
 			}
 			tm.commit();
-		} catch (RollbackException e) {
-			throw new TokenException(e);
-		} catch (TransactionException e) {
-			throw new TokenException(e);
-		}
+		}catch (TokenException e) {
+			throw (e);
+		} catch (Exception e) {
+			throw new TokenException(TokenStore.ERROR_CODE_GENDUALTOKENFAILED,e);
+		} 
 		finally
 		{
 			tm.release();
@@ -463,25 +460,23 @@ public class DBTokenStore extends BaseTokenStore {
 	 * @param string
 	 * @param string2
 	 * @return
+	 * @throws TokenException 
 	 */
-	public MemToken genAuthTempToken(String appid,String ticket, String secret) {
+	public MemToken genAuthTempToken(String appid,String ticket, String secret) throws TokenException {
 		String[] accountinfo = decodeTicket( ticket,
 				 appid,  secret);
 		String token = this.randomToken();//需要将appid,secret,token进行混合加密，生成最终的token进行存储，校验时，只对令牌进行拆分校验
 		
 		MemToken token_m = null;
 //		synchronized(this.dualcheckLock)
-		{
 		
-			{
-				long createTime = System.currentTimeMillis();
-				token_m = new MemToken(token, createTime, true,
-						createTime, this.tempTokendualtime);
-				token_m.setAppid(appid);
-				token_m.setSecret(secret);
-				this.insertDualToken("genAuthTempToken",token_m);
-			}
-		}
+		long createTime = System.currentTimeMillis();
+		token_m = new MemToken(token, createTime, true,
+				createTime, this.tempTokendualtime);
+		token_m.setAppid(appid);
+		token_m.setSecret(secret);
+		this.insertDualToken("genAuthTempToken",token_m);
+		
 		this.signToken(token_m,TokenStore.type_authtemptoken,accountinfo,ticket);
 		return token_m ;
 	}
@@ -517,17 +512,15 @@ public class DBTokenStore extends BaseTokenStore {
 				insertECKeyPair( appid, secret, keypair);
 				return keypair;
 			}
-		} catch (SQLException e) {
-			throw new TokenException(e);
-		} catch (TokenException e) {
-			throw new TokenException(e);
-		}
+		}catch (TokenException e) {
+			throw (e);
+		} 
 		catch (Exception e) {
-			throw new TokenException(e);
+			throw new TokenException(TokenStore.ERROR_CODE_GETKEYPAIRFAILED,e);
 		}
 		
 	}
-	private void insertECKeyPair(String appid,String secret,ECKeyPair keypair)
+	private void insertECKeyPair(String appid,String secret,ECKeyPair keypair) throws TokenException
 	{
 //		this.eckeypairs.insert(new BasicDBObject("appid",appid)		
 //		.append("privateKey", keypair.getPrivateKey())
@@ -536,7 +529,7 @@ public class DBTokenStore extends BaseTokenStore {
 		try {
 			this.executor.insert("insertECKeyPair", appid, keypair.getPrivateKey(),System.currentTimeMillis(),keypair.getPublicKey());
 		} catch (SQLException e) {
-			throw new TokenException(e);
+			throw new TokenException(TokenStore.ERROR_CODE_STOREKEYPAIRFAILED,e);
 		}
 	}
 

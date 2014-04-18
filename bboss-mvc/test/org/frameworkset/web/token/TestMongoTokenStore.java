@@ -6,13 +6,22 @@ import org.junit.Test;
 
 public class TestMongoTokenStore {
 	private static MongodbTokenStore mongodbTokenStore;
+	private String account = "yinbp";
+	private String worknumber = "10006673";
+	private String appid = "sim";
+	private String secret = "xxxxxxxxxxxxxxxxxxxxxx";
+	
 	@Before
 	public void init() throws Exception
 	{
 		mongodbTokenStore = new MongodbTokenStore();
-		mongodbTokenStore.setTempTokendualtime(18000000);
-		MemToken token = mongodbTokenStore.genDualToken("sim","yinbp","xxxxxxxxxxxxxxxxxxxxxx",30l*24l*60l*60l*1000l);
-		Assert.assertTrue(TokenStore.temptoken_request_validateresult_ok == mongodbTokenStore.checkToken("sim","xxxxxxxxxxxxxxxxxxxxxx",token.getSigntoken()).getResult());
+		mongodbTokenStore.setTempTokendualtime(TokenStore.DEFAULT_TEMPTOKENLIVETIME);
+		mongodbTokenStore.setTicketdualtime(TokenStore.DEFAULT_TICKETTOKENLIVETIME);
+		mongodbTokenStore.setDualtokenlivetime(TokenStore.DEFAULT_DUALTOKENLIVETIME);
+		
+		String ticket = mongodbTokenStore.genTicket(account, worknumber, appid, secret);
+		MemToken token = mongodbTokenStore.genDualToken(appid,ticket,secret,TokenStore.DEFAULT_DUALTOKENLIVETIME);
+		Assert.assertTrue(TokenStore.temptoken_request_validateresult_ok == mongodbTokenStore.checkToken(appid,secret,token.getSigntoken()).getResult());
 	}
 	@Test
 	public void genTemptokenAndValidate() throws Exception
@@ -25,12 +34,13 @@ public class TestMongoTokenStore {
 	@Test
 	public void gendualtokenAndValidate() throws Exception
 	{
+		String ticket = mongodbTokenStore.genTicket(account, worknumber, appid, secret);
 		//long start = System.currentTimeMillis();
-		MemToken token = mongodbTokenStore.genDualToken("sim","yinbp","xxxxxxxxxxxxxxxxxxxxxx",30l*24l*60l*60l*1000l);
+		MemToken token = mongodbTokenStore.genDualToken(appid,ticket,secret,TokenStore.DEFAULT_DUALTOKENLIVETIME);
 		//long end = System.currentTimeMillis();
 		//System.out.println(end - start);
 		//start = System.currentTimeMillis();
-		Assert.assertTrue(TokenStore.temptoken_request_validateresult_ok == mongodbTokenStore.checkToken("sim","xxxxxxxxxxxxxxxxxxxxxx",token.getSigntoken()).getResult());
+		Assert.assertTrue(TokenStore.temptoken_request_validateresult_ok == mongodbTokenStore.checkToken(appid,secret,token.getSigntoken()).getResult());
 		//end = System.currentTimeMillis();
 		//System.out.println(end - start);
 	}
@@ -39,8 +49,9 @@ public class TestMongoTokenStore {
 	@Test
 	public void gentempauthortokenAndValidate() throws Exception
 	{
-		MemToken token = mongodbTokenStore.genAuthTempToken("sim","yinbp","xxxxxxxxxxxxxxxxxxxxxx");
-		Assert.assertTrue(TokenStore.temptoken_request_validateresult_ok == mongodbTokenStore.checkToken("sim","xxxxxxxxxxxxxxxxxxxxxx",token.getSigntoken()).getResult());
+		String ticket = mongodbTokenStore.genTicket(account, worknumber, appid, secret);
+		MemToken token = mongodbTokenStore.genAuthTempToken(appid,ticket,secret);
+		Assert.assertTrue(TokenStore.temptoken_request_validateresult_ok == mongodbTokenStore.checkToken(appid,secret,token.getSigntoken()).getResult());
 	}
 	
 	@Test
@@ -53,8 +64,8 @@ public class TestMongoTokenStore {
 	@Test
 	public void testticket() throws Exception
 	{
-		String ticket = mongodbTokenStore.genTicket("yinbp", "10006673", "sim", "xxxxxxxxxxxxxxxxxxxxxx");
-		System.out.println("aer:"+mongodbTokenStore.getLastError());
+		String ticket = mongodbTokenStore.genTicket(account, worknumber, appid, secret);
+		System.out.println("aer:"+mongodbTokenStore.getLastError() +":\n"+ticket);
 	}
 	
 	

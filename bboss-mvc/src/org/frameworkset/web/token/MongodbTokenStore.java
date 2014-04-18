@@ -435,7 +435,7 @@ public class MongodbTokenStore extends BaseTokenStore{
 	}
 
 	@Override
-	public MemToken genTempToken() {
+	public MemToken genTempToken() throws TokenException {
 		String token = this.randomToken();
 		MemToken token_m = new MemToken(token,System.currentTimeMillis());
 		temptokens.insert(new BasicDBObject("token",token_m.getToken()).append("createTime", token_m.getCreateTime()).append("livetime", this.tempTokendualtime).append("validate", true));
@@ -443,9 +443,9 @@ public class MongodbTokenStore extends BaseTokenStore{
 		return token_m;
 		
 	}
-
+	
 	@Override
-	public MemToken genDualToken(String appid,String ticket, String secret, long livetime) {
+	public MemToken genDualToken(String appid,String ticket, String secret, long livetime) throws TokenException {
 		
 		String accountinfo[] = this.decodeTicket(ticket, appid, secret);
 		MemToken token_m = null;
@@ -490,8 +490,9 @@ public class MongodbTokenStore extends BaseTokenStore{
 	 * @param string
 	 * @param string2
 	 * @return
+	 * @throws TokenException 
 	 */
-	public MemToken genAuthTempToken(String appid,String ticket, String secret) {
+	public MemToken genAuthTempToken(String appid,String ticket, String secret) throws TokenException {
 		String accountinfo[] = this.decodeTicket(ticket, appid, secret);
 		String token = this.randomToken();//需要将appid,secret,token进行混合加密，生成最终的token进行存储，校验时，只对令牌进行拆分校验
 		
@@ -531,7 +532,7 @@ public class MongodbTokenStore extends BaseTokenStore{
 					insertECKeyPair( appid, secret, keypair);
 					return keypair;
 				} catch (Exception e) {
-					throw new TokenException(e);
+					throw new TokenException(TokenStore.ERROR_CODE_GETKEYPAIRFAILED,e);
 				}
 			}
 		}

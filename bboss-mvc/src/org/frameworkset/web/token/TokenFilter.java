@@ -54,7 +54,12 @@ public class TokenFilter implements Filter{
 	
 	public void init(FilterConfig arg0) throws ServletException
 	{
-		String tokendualtime = arg0.getInitParameter("tokendualtime");
+		String temptokenlivetime = arg0.getInitParameter("temptokenlivetime");
+		if(StringUtil.isEmpty(temptokenlivetime))
+			temptokenlivetime = arg0.getInitParameter("tokendualtime");
+		String dualtokenlivetime = arg0.getInitParameter("dualtokenlivetime");
+				
+		String ticketdualtime = arg0.getInitParameter("ticketdualtime");
 		String redirectpath_ =  arg0.getInitParameter("redirecturl");
 		String tokenfailpath_ =   arg0.getInitParameter("tokenfailpath");
 		String tokenstore_ = arg0.getInitParameter("tokenstore");
@@ -99,14 +104,14 @@ public class TokenFilter implements Filter{
 //		String tmp = arg0.getServletContext().getServletContextName();
 //		this.redirectpath = StringUtil.getRealPath(tmp, redirectpath);
 		
-		long dualtime =  3600000;
-		long tokenscaninterval_ = 1800000;
-		if(!StringUtil.isEmpty(tokendualtime))
+		long temptokenlivetime_ =  TokenStore.DEFAULT_TEMPTOKENLIVETIME;
+		long tokenscaninterval_ = TokenStore.DEFAULT_TOKENSCANINTERVAL;
+		if(!StringUtil.isEmpty(temptokenlivetime))
 		{
 			try {
-				dualtime = Long.parseLong(tokendualtime);
+				temptokenlivetime_ = Long.parseLong(temptokenlivetime);
 			} catch (NumberFormatException e) {
-				log.debug("Set tokendualtime failed,-1 will be used.",(e));
+				log.debug("Set temptokenlivetime failed,"+TokenStore.DEFAULT_TEMPTOKENLIVETIME+" will be used.",(e));
 			}
 		}
 		if(!StringUtil.isEmpty(tokenscaninterval))
@@ -114,11 +119,29 @@ public class TokenFilter implements Filter{
 			try {
 				tokenscaninterval_ = Long.parseLong(tokenscaninterval);
 			} catch (NumberFormatException e) {
-				log.debug("Set tokendualtime failed,-1 will be used.",(e));
+				log.debug("Set tokenscaninterval failed,"+TokenStore.DEFAULT_TOKENSCANINTERVAL+" will be used.",(e));
+			}
+		}
+		long ticketdualtime_ = TokenStore.DEFAULT_TICKETTOKENLIVETIME;
+		if(!StringUtil.isEmpty(ticketdualtime))
+		{
+			try {
+				ticketdualtime_ = Long.parseLong(ticketdualtime);
+			} catch (NumberFormatException e) {
+				log.debug("Set ticketdualtime failed,"+TokenStore.DEFAULT_TICKETTOKENLIVETIME+" will be used.",(e));
+			}
+		}
+		long dualtokenlivetime_ = TokenStore.DEFAULT_DUALTOKENLIVETIME;
+		if(!StringUtil.isEmpty(dualtokenlivetime))
+		{
+			try {
+				dualtokenlivetime_ = Long.parseLong(dualtokenlivetime);
+			} catch (NumberFormatException e) {
+				log.debug("Set dualtokenlivetime failed,"+TokenStore.DEFAULT_TICKETTOKENLIVETIME+" will be used.",(e));
 			}
 		}
 		if(enableToken)
-			memTokenManager = MemTokenManagerFactory.getMemTokenManager(dualtime,tokenscaninterval_,enableToken,this.tokenstore,this);
+			memTokenManager = MemTokenManagerFactory.getMemTokenManager(ticketdualtime_,temptokenlivetime_,dualtokenlivetime_,tokenscaninterval_,enableToken,this.tokenstore,this);
 	}
 	
 	@Override
@@ -197,7 +220,7 @@ public class TokenFilter implements Filter{
 			response.sendError(HttpServletResponse.SC_FORBIDDEN);
 		}
 	}
-	protected String appendDTokenToTargetURL(HttpServletRequest request, String targetUrl)
+	protected String appendDTokenToTargetURL(HttpServletRequest request, String targetUrl) throws TokenException
 	{
 		if(this.memTokenManager != null)
 		{

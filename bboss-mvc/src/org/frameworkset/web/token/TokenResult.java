@@ -44,6 +44,7 @@ public class TokenResult{
 	private String token;
 	private String tokentype;
 	private String account;
+	private String worknumber;
 	public String getAppid() {
 		return appid;
 	}
@@ -73,6 +74,14 @@ public class TokenResult{
 	}
 	public void setAccount(String account) {
 		this.account = account;
+	}
+
+	public String getWorknumber() {
+		return worknumber;
+	}
+
+	public void setWorknumber(String worknumber) {
+		this.worknumber = worknumber;
 	}
 	
 }

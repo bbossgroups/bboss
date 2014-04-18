@@ -29,14 +29,14 @@ public class MemTokenManagerFactory {
 	 * @param dualtime
 	 * @return
 	 */
-	public static MemTokenManager getMemTokenManager(long dualtime,long tokenscaninterval,boolean enableToken,String tokenstore,TokenFilter tokenFilter)
+	public static MemTokenManager getMemTokenManager(long ticketlivetime,long temptokenlivetime,long dualtokenlivetime,long tokenscaninterval,boolean enableToken,String tokenstore,TokenFilter tokenFilter)
 	{
 		if(memTokenManager == null)
 		{
 			synchronized(MemTokenManager.class)
 			{
 				if(memTokenManager == null)
-					memTokenManager = new MemTokenManager(dualtime,tokenscaninterval,enableToken,tokenstore, tokenFilter);
+					memTokenManager = new MemTokenManager(ticketlivetime,temptokenlivetime,dualtokenlivetime,tokenscaninterval,enableToken,tokenstore, tokenFilter);
 			}
 		}
 		return memTokenManager;

@@ -73,20 +73,22 @@ public class MemTokenManager {
 	 */
 	private long tokenscaninterval = 1800000;
 	
-	MemTokenManager(long tokendualtime,long tokenscaninterval,boolean enableToken,String tokenstore,TokenFilter tokenFilter)
+	MemTokenManager(long ticketdualtime,long temptokenlivetime,long dualtokenlivetime,long tokenscaninterval,boolean enableToken,String tokenstore,TokenFilter tokenFilter)
 	{
 //		this.tokendualtime = tokendualtime;
 		this.tokenscaninterval = tokenscaninterval;
 		this.enableToken = enableToken;
 //		this.tokenstore = tokenstore; 
 		this.tokenStore = TokenStoreFactory.getTokenStore(tokenstore);
-		this.tokenStore.setTempTokendualtime(tokendualtime);
+		this.tokenStore.setTempTokendualtime(temptokenlivetime);
+		this.tokenStore.setTicketdualtime(ticketdualtime);
+		tokenStore.setDualtokenlivetime(dualtokenlivetime);
 		this.tokenFilter = tokenFilter;
 //		if(tokenstore.equals("mem"))
 //			tokenstore_i = tokenstore_in_mem;
 //		else
 //			tokenstore_i = tokenstore_in_session;
-		if(enableToken && tokenscaninterval > 0 && tokendualtime > 0)
+		if(enableToken && tokenscaninterval > 0 && (temptokenlivetime > 0 || dualtokenlivetime > 0))
 		{
 			tokenMonitor = new TokenMonitor();
 			tokenMonitor.start();
@@ -201,8 +203,9 @@ public class MemTokenManager {
 	 * 为url追加动态令牌参数
 	 * @param url
 	 * @return
+	 * @throws TokenException 
 	 */
-	public String appendDTokenToURL(HttpServletRequest request,String url)
+	public String appendDTokenToURL(HttpServletRequest request,String url) throws TokenException
 	{
 		if(url == null)
 			return url;
@@ -251,7 +254,7 @@ public class MemTokenManager {
 	
 
 	
-	public String genToken(ServletRequest request,String fid,boolean cache)
+	public String genToken(ServletRequest request,String fid,boolean cache) throws TokenException
 	{
 		String tmp = null;
 		String k = null;
@@ -275,7 +278,7 @@ public class MemTokenManager {
 	}
 	
 	
-	private String genMemToken(boolean cache)
+	private String genMemToken(boolean cache) throws TokenException
 	{
 		
 		if(this.enableToken)
@@ -396,11 +399,11 @@ public class MemTokenManager {
 //		
 //	}
 	
-	public String buildDToken(String elementType,HttpServletRequest request)
+	public String buildDToken(String elementType,HttpServletRequest request) throws TokenException
 	{
 		return buildDToken(elementType,"'",request,null);
 	}
-	public String buildDToken(String elementType,String jsonsplit,HttpServletRequest request,String fid)
+	public String buildDToken(String elementType,String jsonsplit,HttpServletRequest request,String fid) throws TokenException
 	{
 		return buildDToken(elementType,jsonsplit,request,fid,true);
 	}
@@ -409,8 +412,9 @@ public class MemTokenManager {
 	 * <input type="hidden" name="_dt_token_" value="-1518435257">
 	 * @param request
 	 * @return
+	 * @throws TokenException 
 	 */
-	public String buildHiddenDToken(HttpServletRequest request)
+	public String buildHiddenDToken(HttpServletRequest request) throws TokenException
 	{
 		return buildDToken("input",null,request,null,true);
 	}
@@ -423,8 +427,9 @@ public class MemTokenManager {
 	 * @param jsonsplit
 	 * @param request
 	 * @return
+	 * @throws TokenException 
 	 */
-	public String buildJsonDToken(String jsonsplit,HttpServletRequest request)
+	public String buildJsonDToken(String jsonsplit,HttpServletRequest request) throws TokenException
 	{
 		return buildDToken("json","'",request,null,true);
 	}
@@ -434,8 +439,9 @@ public class MemTokenManager {
 	 * _dt_token_=1518435257
 	 * @param request
 	 * @return
+	 * @throws TokenException 
 	 */
-	public String buildParameterDToken(HttpServletRequest request)
+	public String buildParameterDToken(HttpServletRequest request) throws TokenException
 	{
 		return buildDToken("param",null,request,null,true);
 	}
@@ -445,13 +451,14 @@ public class MemTokenManager {
 	 * 1518435257
 	 * @param request
 	 * @return
+	 * @throws TokenException 
 	 */
-	public String buildDToken(HttpServletRequest request)
+	public String buildDToken(HttpServletRequest request) throws TokenException
 	{
 		return buildDToken("token",null,request,null,true);
 	}
 	
-	public String buildDToken(String elementType,String jsonsplit,HttpServletRequest request,String fid,boolean cache)
+	public String buildDToken(String elementType,String jsonsplit,HttpServletRequest request,String fid,boolean cache) throws TokenException
 	{
 //		if(!this.enableToken)
 //			return "";
@@ -559,16 +566,16 @@ public class MemTokenManager {
 		ECKeyPair pairs = tokenStore.getKeyPair(appid,secret);
 		return pairs;
 	}
-	public TokenResult checkToken(String appid,String secret,String token)
+	public TokenResult checkToken(String appid,String secret,String token) throws TokenException
 	{
 		return this.tokenStore.checkToken(appid, secret, token);
 	}
 	
-	public int checkTempToken(String token)
+	public int checkTempToken(String token) throws TokenException
 	{
 		return this.tokenStore.checkToken(null,null,token).getResult();
 	}
-	public String genTicket(String account,String worknumber,String appid,String secret)
+	public String genTicket(String account,String worknumber,String appid,String secret) throws TokenException
 	{
 		return this.tokenStore.genTicket( account, worknumber, appid, secret);
 	}

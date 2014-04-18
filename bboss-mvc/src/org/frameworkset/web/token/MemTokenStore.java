@@ -231,7 +231,7 @@ public class MemTokenStore extends BaseTokenStore{
 	
 
 	@Override
-	public MemToken genTempToken() {
+	public MemToken genTempToken() throws TokenException {
 		String token = this.randomToken();
 		MemToken token_m = new MemToken(token,System.currentTimeMillis());
 		synchronized(checkLock)
@@ -246,7 +246,7 @@ public class MemTokenStore extends BaseTokenStore{
 	}
 
 	@Override
-	public MemToken genDualToken(String appid,String ticket, String secret, long livetime) {
+	public MemToken genDualToken(String appid,String ticket, String secret, long livetime) throws TokenException {
 		String[] accountinfo = decodeTicket( ticket,
 				 appid,  secret);
 		String token = this.randomToken();
@@ -282,7 +282,7 @@ public class MemTokenStore extends BaseTokenStore{
 	}
 	
 	@Override
-	public MemToken genAuthTempToken(String appid,String ticket, String secret) {
+	public MemToken genAuthTempToken(String appid,String ticket, String secret) throws TokenException {
 		String[] accountinfo = decodeTicket( ticket,
 				 appid,  secret);
 		String token = this.randomToken();

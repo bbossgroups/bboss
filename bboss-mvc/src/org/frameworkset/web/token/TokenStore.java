@@ -31,6 +31,35 @@ public interface TokenStore {
 	public static final String temptoken_request_validateresult_key = "temptoken_request_validateresult_key";
 	public static final String token_request_validatetoken_key = "token_request_validatetoken_key";
 	public static final String token_request_account_key = "token_request_account_key";
+	public static final String ERROR_CODE_GETKEYPAIRFAILED = "GETKEYPAIRFAILED";
+	public static final String ERROR_CODE_STOREKEYPAIRFAILED = "STOREKEYPAIRFAILED";
+	
+	public static final String ERROR_CODE_TICKETEXPIRED = "TICKETEXPIRED";
+	public static final String ERROR_CODE_DECODETOKENFAILED = "DECODETOKENFAILED";
+	public static final String ERROR_CODE_GENTICKETFAILED = "GENTICKETFAILED";
+	public static final String ERROR_CODE_GENDUALTOKENFAILED = "GENDUALTOKENFAILED";
+	
+	public static final String ERROR_CODE_BACKENDERROR = "BACKENDERROR";
+	public static final String ERROR_CODE_DECODETICKETFAILED = "DECODETICKETFAILED";
+	public static final String ERROR_CODE_SIGNTOKENFAILED = "SIGNTOKENFAILED";
+	public static final String ERROR_CODE_UNKNOWNTOKENTYPE = "UNKNOWNTOKENTYPE";
+	public static final String ERROR_CODE_UNKNOWNTOKEN = "UNKNOWNTOKEN";
+	public static final String ERROR_CODE_GENTEMPTOKENFAILED = "GENTEMPTOKENFAILED";
+	public static final String ERROR_CODE_DELETEEXPIREDTEMPTOKENFAILED = "DELETEEXPIREDTEMPTOKENFAILED";
+	public static final String ERROR_CODE_DELETEEXPIREDAUTHTEMPTOKENFAILED = "DELETEEXPIREDAUTHTEMPTOKENFAILED";
+	public static final String ERROR_CODE_DELETEEXPIREDAUTHDUALTOKENFAILED = "DELETEEXPIREDAUTHDUALTOKENFAILED";
+	public static final String ERROR_CODE_CHECKAUTHTEMPTOKENFAILED = "CHECKAUTHTEMPTOKENFAILED";
+	public static final String ERROR_CODE_CHECKTEMPTOKENFAILED = "CHECKTEMPTOKENFAILED";
+	public static final String ERROR_CODE_QUERYDUALTOKENFAILED = "QUERYDUALTOKENFAILED";
+	public static final String ERROR_CODE_STOREDUALTOKENFAILED = "STOREDUALTOKENFAILED";
+	public static final String ERROR_CODE_UPDATEDUALTOKENFAILED = "UPDATEDUALTOKENFAILED";
+	public static final long DEFAULT_DUALTOKENLIVETIME = 30*24*60*60*1000L;
+	public static final long DEFAULT_TEMPTOKENLIVETIME = 1*60*60*1000L;
+	public static final long DEFAULT_TICKETTOKENLIVETIME = 1*60*60*1000L;
+	public static final long DEFAULT_TOKENSCANINTERVAL = 60*1000L;
+	
+	
+	
 	public abstract void destory();
 
 	public abstract void livecheck();
@@ -42,14 +71,15 @@ public interface TokenStore {
 
 	public abstract long getTempTokendualtime()throws TokenException;
 
-	public abstract void setTempTokendualtime(long tokendualtime)throws TokenException;
+	public abstract void setTempTokendualtime(long tokendualtime);
 
 //	public abstract Session getSession();
 //
 //	public abstract void setSession(Session session);
 	
-	public MemToken genTempToken();
+	public MemToken genTempToken()  throws TokenException ;
 	public MemToken genDualToken(String appid,String ticket,String secret,long livetime)throws TokenException;
+	public MemToken genDualTokenWithDefaultLiveTime(String appid,String ticket,String secret)throws TokenException;
 	public MemToken genAuthTempToken(String appid, String ticket,String secret)throws TokenException;
 
 	public ECKeyPair getKeyPair(String appid,String secret) throws TokenException;
@@ -58,5 +88,10 @@ public interface TokenStore {
 			String appid, String secret)throws TokenException;
 	public String[] decodeTicket(String ticket,
 			String appid, String secret) throws TokenException;
+	public void setTicketdualtime(long ticketdualtime);
 
+	public long getTicketdualtime() ;
+	public long getDualtokenlivetime() ;
+
+	public void setDualtokenlivetime(long dualtokenlivetime);
 }
