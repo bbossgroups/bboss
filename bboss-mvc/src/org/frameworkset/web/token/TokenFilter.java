@@ -37,11 +37,11 @@ import com.frameworkset.util.StringUtil;
  *
  */
 public class TokenFilter implements Filter{
-	protected MemTokenManager memTokenManager;
 	private static Logger log = Logger.getLogger(TokenFilter.class);
 	protected String tokenfailpath = null;
 	protected String redirectpath = "/login.jsp";
-	protected boolean enableToken = false;
+	private TokenService tokenService = null;
+	
 	/**
 	 * tokenstore
 	 * 指定令牌存储机制，目前提供两种机制：
@@ -49,35 +49,30 @@ public class TokenFilter implements Filter{
 	 * session：将令牌存储在session中
 	 * 默认存储在session中
 	 */
-	protected String tokenstore = "session";
 //	protected String tokenstore = "mem";
 	
 	public void init(FilterConfig arg0) throws ServletException
 	{
-		String temptokenlivetime = arg0.getInitParameter("temptokenlivetime");
-		if(StringUtil.isEmpty(temptokenlivetime))
-			temptokenlivetime = arg0.getInitParameter("tokendualtime");
-		String dualtokenlivetime = arg0.getInitParameter("dualtokenlivetime");
-				
-		String ticketdualtime = arg0.getInitParameter("ticketdualtime");
+		tokenService = TokenHelper.getTokenService();
+		
 		String redirectpath_ =  arg0.getInitParameter("redirecturl");
 		String tokenfailpath_ =   arg0.getInitParameter("tokenfailpath");
-		String tokenstore_ = arg0.getInitParameter("tokenstore");
-		if(!StringUtil.isEmpty(tokenstore_))
-		{
-			if(tokenstore_.toLowerCase().equals("mem") || tokenstore_.toLowerCase().equals("session"))
-			{
-				tokenstore = tokenstore_.toLowerCase();
-				log.debug("Set tokenstore["+tokenstore_+"] success,tokens will be stored in memorey.");
-			}
-			else
-			{
-				tokenstore = tokenstore_.trim();
-				log.debug("Set tokenstore["+tokenstore_+"] success,tokens will be stored in "+tokenstore_+".");
-			}
-		}
+//		String tokenstore_ = arg0.getInitParameter("tokenstore");
+//		if(!StringUtil.isEmpty(tokenstore_))
+//		{
+//			if(tokenstore_.toLowerCase().equals("mem") || tokenstore_.toLowerCase().equals("session"))
+//			{
+//				tokenstore = tokenstore_.toLowerCase();
+//				log.debug("Set tokenstore["+tokenstore_+"] success,tokens will be stored in memorey.");
+//			}
+//			else
+//			{
+//				tokenstore = tokenstore_.trim();
+//				log.debug("Set tokenstore["+tokenstore_+"] success,tokens will be stored in "+tokenstore_+".");
+//			}
+//		}
 		
-		String tokenscaninterval = arg0.getInitParameter("tokenscaninterval");
+		
 		if(!StringUtil.isEmpty(redirectpath_))
 		{
 			redirectpath = redirectpath_; 
@@ -92,61 +87,19 @@ public class TokenFilter implements Filter{
 //			tokenfailpath = redirectpath; 
 //		}
 		
-		String enableToken_ = arg0.getInitParameter("enableToken");
-		if(!StringUtil.isEmpty(enableToken_))
-		{
-			try {
-				enableToken = Boolean.parseBoolean(enableToken_);
-			} catch (Exception e) {
-				log.debug("Set enableToken failed,false will be used.",(e));
-			} 
-		}
+		
 //		String tmp = arg0.getServletContext().getServletContextName();
 //		this.redirectpath = StringUtil.getRealPath(tmp, redirectpath);
+		TokenHelper.setTokenFilter(this);
 		
-		long temptokenlivetime_ =  TokenStore.DEFAULT_TEMPTOKENLIVETIME;
-		long tokenscaninterval_ = TokenStore.DEFAULT_TOKENSCANINTERVAL;
-		if(!StringUtil.isEmpty(temptokenlivetime))
-		{
-			try {
-				temptokenlivetime_ = Long.parseLong(temptokenlivetime);
-			} catch (NumberFormatException e) {
-				log.debug("Set temptokenlivetime failed,"+TokenStore.DEFAULT_TEMPTOKENLIVETIME+" will be used.",(e));
-			}
-		}
-		if(!StringUtil.isEmpty(tokenscaninterval))
-		{
-			try {
-				tokenscaninterval_ = Long.parseLong(tokenscaninterval);
-			} catch (NumberFormatException e) {
-				log.debug("Set tokenscaninterval failed,"+TokenStore.DEFAULT_TOKENSCANINTERVAL+" will be used.",(e));
-			}
-		}
-		long ticketdualtime_ = TokenStore.DEFAULT_TICKETTOKENLIVETIME;
-		if(!StringUtil.isEmpty(ticketdualtime))
-		{
-			try {
-				ticketdualtime_ = Long.parseLong(ticketdualtime);
-			} catch (NumberFormatException e) {
-				log.debug("Set ticketdualtime failed,"+TokenStore.DEFAULT_TICKETTOKENLIVETIME+" will be used.",(e));
-			}
-		}
-		long dualtokenlivetime_ = TokenStore.DEFAULT_DUALTOKENLIVETIME;
-		if(!StringUtil.isEmpty(dualtokenlivetime))
-		{
-			try {
-				dualtokenlivetime_ = Long.parseLong(dualtokenlivetime);
-			} catch (NumberFormatException e) {
-				log.debug("Set dualtokenlivetime failed,"+TokenStore.DEFAULT_TICKETTOKENLIVETIME+" will be used.",(e));
-			}
-		}
-		if(enableToken)
-			memTokenManager = MemTokenManagerFactory.getMemTokenManager(ticketdualtime_,temptokenlivetime_,dualtokenlivetime_,tokenscaninterval_,enableToken,this.tokenstore,this);
+		
+//MemTokenManagerFactory.getMemTokenManager(ticketdualtime_,temptokenlivetime_,dualtokenlivetime_,tokenscaninterval_,enableToken,this.tokenstore,this);
 	}
 	
 	@Override
 	public void destroy() {
-		// TODO Auto-generated method stub
+		TokenHelper.destroy();
+		tokenService = null;
 		
 	}
 	@Override
@@ -169,9 +122,9 @@ public class TokenFilter implements Filter{
 	}
 	protected boolean checkTokenExist(HttpServletRequest request,HttpServletResponse response) throws Exception
 	{
-		if(!this.enableToken)//如果没有启用令牌机制，则直接声明令牌存在
+		if(!this.tokenService.isEnableToken())//如果没有启用令牌机制，则直接声明令牌存在
 			return true;
-		if(!this.memTokenManager.firstRequest(request))
+		if(!firstRequest(request))
 		{
 //			if(!response.isCommitted())
 //			{
@@ -222,9 +175,9 @@ public class TokenFilter implements Filter{
 	}
 	protected String appendDTokenToTargetURL(HttpServletRequest request, String targetUrl) throws TokenException
 	{
-		if(this.memTokenManager != null)
+		if(this.tokenService.isEnableToken())
 		{
-			return memTokenManager.appendDTokenToURL(request, targetUrl);
+			return tokenService.appendDTokenToURL(request, targetUrl);
 		}
 		else
 		{
@@ -312,6 +265,83 @@ public class TokenFilter implements Filter{
 	public void setRedirecturl(String redirecturl) {
 
 		this.redirectpath = redirecturl;
+	}
+	
+	/**
+	 * 判断令牌是否有效，一次请求只判断一次，避免多次判断
+	 * 同时记录判断结果，以便后续处理操作获取这个结果进行相应的处理
+	 * @param request
+	 * @return
+	 */
+	protected boolean firstRequest(ServletRequest request) 
+	{
+		Integer result = null;
+		if(!this.tokenService.isEnableToken())
+		{
+			result = TokenStore.temptoken_request_validateresult_notenabletoken;
+			request.setAttribute(TokenStore.temptoken_request_validateresult_key,result);
+			return true;
+		}
+		result = (Integer)request.getAttribute(TokenStore.temptoken_request_validateresult_key);//
+		if(result != null)
+		{
+			return tokenService.assertDToken(result);
+		}
+		
+		String token = request.getParameter(TokenStore.temptoken_param_name);
+//		if(request instanceof HttpServletRequest)
+//		{
+//			
+//			HttpSession session = ((HttpServletRequest)request).getSession(false);
+//			if(session == null)
+//			{
+//				result = mem(token);
+//			}
+//			else
+//			{
+//				result = sessionmemhash(token,session);
+//			}
+//		}
+//		else
+		{
+			String appid= request.getParameter("appid");
+			String secret= request.getParameter("secret");
+			
+			
+			try {
+				TokenResult tokenResult = this.tokenService.checkToken(appid,secret,token);
+				request.setAttribute(TokenStore.token_request_validatetoken_key, tokenResult);
+				if( tokenResult != null )
+				{
+					if(tokenResult.getAccount() != null)
+						request.setAttribute(TokenStore.token_request_account_key, tokenResult.getAccount());
+					if(tokenResult.getWorknumber() != null)
+						request.setAttribute(TokenStore.token_request_worknumber_key, tokenResult.getWorknumber());
+				}
+				result = tokenResult.getResult();
+			} catch (Exception e) {
+				log.error("令牌校验失败:",e);
+				result = TokenStore.temptoken_request_validateresult_fail;
+			}
+		}
+		request.setAttribute(TokenStore.temptoken_request_validateresult_key,result);
+		return 	tokenService.assertDToken(result);
+	}
+	
+	
+	public void doDTokencheck(ServletRequest request,ServletResponse response) throws IOException, DTokenValidateFailedException
+	{
+		if(!tokenService.assertDTokenSetted(request))
+		{
+			if(request instanceof HttpServletRequest)
+			{
+				sendRedirect((HttpServletRequest) request,(HttpServletResponse) response);
+			}
+			else
+			{
+				throw new DTokenValidateFailedException();
+			}
+		}
 	}
 	
 

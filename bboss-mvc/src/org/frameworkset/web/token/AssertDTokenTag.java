@@ -43,11 +43,11 @@ public class AssertDTokenTag extends BaseTag{
 		// TODO Auto-generated method stub
 		int ret = super.doStartTag();
 		
-		MemTokenManager memTokenManager = MemTokenManagerFactory.getMemTokenManagerNoexception();
-		if(memTokenManager == null)
+		
+		if(!TokenHelper.isEnableToken() )
 			return ret;
 		try {
-			memTokenManager.doDTokencheck(request, response);
+			TokenHelper.doDTokencheck(request, response);
 		} catch (IOException e) {
 			throw new JspException(e);
 		} catch (DTokenValidateFailedException e) {

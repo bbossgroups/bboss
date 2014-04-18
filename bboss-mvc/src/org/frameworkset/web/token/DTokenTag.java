@@ -59,7 +59,7 @@ public class DTokenTag extends BaseTag {
 		
 		int ret = super.doStartTag();
 		try {
-			out.print(MemTokenManagerFactory.getMemTokenManager().buildDToken(element,this.jsonsplit,request,fid,this.cache));
+			out.print(TokenHelper.getTokenService().buildDToken(element,this.jsonsplit,request,fid,this.cache));
 		} catch (IOException e) {
 			throw new JspException(e);
 		}

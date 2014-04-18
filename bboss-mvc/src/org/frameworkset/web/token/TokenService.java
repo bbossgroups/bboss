@@ -1,6 +1,20 @@
+/*
+ *  Copyright 2008 bbossgroups
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
 package org.frameworkset.web.token;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -9,25 +23,27 @@ import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 import org.frameworkset.security.ecc.ECCCoder.ECKeyPair;
-import org.frameworkset.security.session.Session;
 
 import com.frameworkset.util.StringUtil;
 
 /**
+ * <p>Title: TokenService.java</p> 
+ * <p>Description: </p>
+ * <p>bboss workgroup</p>
+ * <p>Copyright (c) 2008</p>
+ * @Date 2014年4月18日
  * @author biaoping.yin
- * 
- *
+ * @version 3.8.0
  */
-public class MemTokenManager {
-	private static Logger log = Logger.getLogger(MemTokenManager.class);
+public class TokenService {
+	private static Logger log = Logger.getLogger(TokenService.class);
 	private TokenStore tokenStore;
-	private static ThreadLocal<Session> localSession = new ThreadLocal<Session>();  
+	private boolean enableToken = false;
+	
 	public void destory()
 	{
 //		temptokens.clear();
@@ -39,16 +55,11 @@ public class MemTokenManager {
 		}
 	}
 	
-//	private  Map<MemToken,Object> temptokens = new HashMap<MemToken,Object>();
-	private TokenFilter tokenFilter;
-	/**
-	 * bboss跨站攻击token的参数名称，每个客户端页面通过这个名称将token传回服务端进行
-	 * 校验
-	 */
+
 	
 	
 	
-	private boolean enableToken = false;
+	
 	private TokenMonitor tokenMonitor;
 	
 	
@@ -73,22 +84,21 @@ public class MemTokenManager {
 	 */
 	private long tokenscaninterval = 1800000;
 	
-	MemTokenManager(long ticketdualtime,long temptokenlivetime,long dualtokenlivetime,long tokenscaninterval,boolean enableToken,String tokenstore,TokenFilter tokenFilter)
+	public TokenService(long ticketdualtime,long temptokenlivetime,long dualtokenlivetime,long tokenscaninterval,String tokenstore,boolean enableToken)
 	{
 //		this.tokendualtime = tokendualtime;
 		this.tokenscaninterval = tokenscaninterval;
-		this.enableToken = enableToken;
 //		this.tokenstore = tokenstore; 
 		this.tokenStore = TokenStoreFactory.getTokenStore(tokenstore);
 		this.tokenStore.setTempTokendualtime(temptokenlivetime);
 		this.tokenStore.setTicketdualtime(ticketdualtime);
 		tokenStore.setDualtokenlivetime(dualtokenlivetime);
-		this.tokenFilter = tokenFilter;
 //		if(tokenstore.equals("mem"))
 //			tokenstore_i = tokenstore_in_mem;
 //		else
 //			tokenstore_i = tokenstore_in_session;
-		if(enableToken && tokenscaninterval > 0 && (temptokenlivetime > 0 || dualtokenlivetime > 0))
+		this.enableToken = enableToken;
+		if(tokenscaninterval > 0 && (temptokenlivetime > 0 || dualtokenlivetime > 0))
 		{
 			tokenMonitor = new TokenMonitor();
 			tokenMonitor.start();
@@ -139,66 +149,12 @@ public class MemTokenManager {
 	 * @param result
 	 * @return
 	 */
-	private boolean assertDToken(Integer result)
+	public boolean assertDToken(Integer result)
 	{
 		return result == TokenStore.temptoken_request_validateresult_ok || result == TokenStore.temptoken_request_validateresult_nodtoken || result == TokenStore.temptoken_request_validateresult_notenabletoken;
 	}
-	/**
-	 * 判断令牌是否有效，一次请求只判断一次，避免多次判断
-	 * 同时记录判断结果，以便后续处理操作获取这个结果进行相应的处理
-	 * @param request
-	 * @return
-	 */
-	protected boolean firstRequest(ServletRequest request) 
-	{
-		Integer result = null;
-		if(!this.enableToken)
-		{
-			result = TokenStore.temptoken_request_validateresult_notenabletoken;
-			request.setAttribute(TokenStore.temptoken_request_validateresult_key,result);
-			return true;
-		}
-		result = (Integer)request.getAttribute(TokenStore.temptoken_request_validateresult_key);//
-		if(result != null)
-		{
-			return assertDToken(result);
-		}
-		
-		String token = request.getParameter(TokenStore.temptoken_param_name);
-//		if(request instanceof HttpServletRequest)
-//		{
-//			
-//			HttpSession session = ((HttpServletRequest)request).getSession(false);
-//			if(session == null)
-//			{
-//				result = mem(token);
-//			}
-//			else
-//			{
-//				result = sessionmemhash(token,session);
-//			}
-//		}
-//		else
-		{
-			String appid= request.getParameter("appid");
-			String secret= request.getParameter("secret");
-			
-			
-			try {
-				TokenResult tokenResult = this.tokenStore.checkToken(appid,secret,token);
-				request.setAttribute(TokenStore.token_request_validatetoken_key, tokenResult);
-				if( tokenResult != null &&  tokenResult.getAccount() != null)
-					request.setAttribute(TokenStore.token_request_account_key, tokenResult.getAccount());
-				result = tokenResult.getResult();
-			} catch (Exception e) {
-				log.error("令牌校验失败:",e);
-				result = TokenStore.temptoken_request_validateresult_fail;
-			}
-		}
-		request.setAttribute(TokenStore.temptoken_request_validateresult_key,result);
-		return 	assertDToken(result);
-	}
-	public static final String temptoken_param_name_word = TokenStore.temptoken_param_name + "=";
+	
+	
 	/**
 	 * 为url追加动态令牌参数
 	 * @param url
@@ -209,7 +165,7 @@ public class MemTokenManager {
 	{
 		if(url == null)
 			return url;
-		if(url.indexOf(temptoken_param_name_word) > 0)
+		if(url.indexOf(TokenStore.temptoken_param_name_word) > 0)
 			return url;
 		StringBuffer ret = new StringBuffer();
 		String token = this.buildDToken(request);
@@ -281,32 +237,22 @@ public class MemTokenManager {
 	private String genMemToken(boolean cache) throws TokenException
 	{
 		
-		if(this.enableToken)
+		
+		
+			
+			
+		if(cache)
 		{
-			
-			
-			if(cache)
-			{
-//				if(this.tokenstore_i == tokenstore_in_session)
-//				{
-//					session.setAttribute(hash, c);
-//				}
-//				else
-				{
-					return this.tokenStore.genTempToken().getToken();
-				}
-			}
-			else
-			{
-				String token = UUID.randomUUID().toString();
-				return token;
-			}
+
+			return this.tokenStore.genTempToken().getToken();
 		}
 		else
 		{
 			String token = UUID.randomUUID().toString();
 			return token;
 		}
+		
+		
 	}
 	
 	class TokenMonitor extends Thread
@@ -360,44 +306,7 @@ public class MemTokenManager {
 		
 	}
 	
-//	private void check()
-//	{
-//		List<MemToken> olds = new ArrayList<MemToken>();
-//		synchronized(this.checkLock)
-//		{
-//			Set<MemToken> keySet = this.temptokens.keySet();
-//			Iterator<MemToken> itr = keySet.iterator();
-//			
-//			while(itr.hasNext())
-//			{
-//				
-//				MemToken token = itr.next();
-//				if(isold(token))
-//				{
-//					olds.add(token);
-////					temptokens.remove(token);
-//				}
-//			}
-//		}
-//		MemToken token = null;
-//		for(int i = 0; i < olds.size(); i ++)
-//		{
-//			if(tokenMonitor.isKilldown())
-//				break;
-//			token = olds.get(i);
-//			temptokens.remove(token);
-//		}
-//		olds = null;
-//		
-//	}
-	
-//	private boolean isold(MemToken token)
-//	{
-//		long currentTime = System.currentTimeMillis();
-//		long age = currentTime - token.getCreateTime();		
-//		return age > this.tokendualtime;
-//		
-//	}
+
 	
 	public String buildDToken(String elementType,HttpServletRequest request) throws TokenException
 	{
@@ -486,9 +395,7 @@ public class MemTokenManager {
 		return buffer.toString();
 	}
 
-	public boolean isEnableToken() {
-		return enableToken;
-	}
+	
 	
 	public static void main(String[] args)
 	{
@@ -509,25 +416,9 @@ public class MemTokenManager {
 			h.remove(token);
 		}
 	}
-	public void sendRedirect(HttpServletRequest request,
-			HttpServletResponse response) throws IOException {
-		this.tokenFilter.sendRedirect(request, response);
-	}
 	
-	public void doDTokencheck(ServletRequest request,ServletResponse response) throws IOException, DTokenValidateFailedException
-	{
-		if(!assertDTokenSetted(request))
-		{
-			if(request instanceof HttpServletRequest)
-			{
-				sendRedirect((HttpServletRequest) request,(HttpServletResponse) response);
-			}
-			else
-			{
-				throw new DTokenValidateFailedException();
-			}
-		}
-	}
+	
+	
 	public String genTempToken() throws Exception
 	{
 		return tokenStore.genTempToken().getSigntoken();
@@ -579,5 +470,13 @@ public class MemTokenManager {
 	{
 		return this.tokenStore.genTicket( account, worknumber, appid, secret);
 	}
+
+
+
+	public boolean isEnableToken() {
+		return enableToken;
+	}
+
+
 
 }

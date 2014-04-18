@@ -31,6 +31,8 @@ public interface TokenStore {
 	public static final String temptoken_request_validateresult_key = "temptoken_request_validateresult_key";
 	public static final String token_request_validatetoken_key = "token_request_validatetoken_key";
 	public static final String token_request_account_key = "token_request_account_key";
+	public static final String token_request_worknumber_key = "token_request_worknumber_key";
+	
 	public static final String ERROR_CODE_GETKEYPAIRFAILED = "GETKEYPAIRFAILED";
 	public static final String ERROR_CODE_STOREKEYPAIRFAILED = "STOREKEYPAIRFAILED";
 	
@@ -57,7 +59,7 @@ public interface TokenStore {
 	public static final long DEFAULT_TEMPTOKENLIVETIME = 1*60*60*1000L;
 	public static final long DEFAULT_TICKETTOKENLIVETIME = 1*60*60*1000L;
 	public static final long DEFAULT_TOKENSCANINTERVAL = 60*1000L;
-	
+	public static final String temptoken_param_name_word = TokenStore.temptoken_param_name + "=";
 	
 	
 	public abstract void destory();

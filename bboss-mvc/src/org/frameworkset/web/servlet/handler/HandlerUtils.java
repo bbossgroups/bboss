@@ -120,8 +120,7 @@ import org.frameworkset.web.servlet.view.AbstractUrlBasedView;
 import org.frameworkset.web.servlet.view.UrlBasedViewResolver;
 import org.frameworkset.web.servlet.view.View;
 import org.frameworkset.web.token.DTokenValidateFailedException;
-import org.frameworkset.web.token.MemTokenManager;
-import org.frameworkset.web.token.MemTokenManagerFactory;
+import org.frameworkset.web.token.TokenHelper;
 import org.frameworkset.web.util.UrlPathHelper;
 import org.frameworkset.web.util.WebUtils;
 
@@ -3212,11 +3211,10 @@ public abstract class HandlerUtils {
 			ServletResponse response, MethodData handlerMethod)
 			throws IOException, DTokenValidateFailedException {
 		if (handlerMethod.getMethodInfo().isRequiredDToken()) {
-			MemTokenManager memTokenManager = MemTokenManagerFactory
-					.getMemTokenManagerNoexception();
-			if (memTokenManager == null)
+			
+			if (!TokenHelper.isEnableToken())
 				return;
-			memTokenManager.doDTokencheck(request, response);
+			TokenHelper.doDTokencheck(request, response);
 			// if(!memTokenManager.assertDTokenSetted(request))
 			// {
 			// if(request instanceof HttpServletRequest)
