@@ -309,16 +309,23 @@ public class TokenFilter implements Filter{
 			
 			
 			try {
-				TokenResult tokenResult = this.tokenService.checkToken(appid,secret,token);
-				request.setAttribute(TokenStore.token_request_validatetoken_key, tokenResult);
-				if( tokenResult != null )
+				if(token == null || token.equals(""))
 				{
-					if(tokenResult.getAccount() != null)
-						request.setAttribute(TokenStore.token_request_account_key, tokenResult.getAccount());
-					if(tokenResult.getWorknumber() != null)
-						request.setAttribute(TokenStore.token_request_worknumber_key, tokenResult.getWorknumber());
+					result = TokenStore.temptoken_request_validateresult_nodtoken;
 				}
-				result = tokenResult.getResult();
+				else
+				{
+					TokenResult tokenResult = this.tokenService.checkToken(appid,secret,token);
+					request.setAttribute(TokenStore.token_request_validatetoken_key, tokenResult);
+					if( tokenResult != null )
+					{
+						if(tokenResult.getAccount() != null)
+							request.setAttribute(TokenStore.token_request_account_key, tokenResult.getAccount());
+						if(tokenResult.getWorknumber() != null)
+							request.setAttribute(TokenStore.token_request_worknumber_key, tokenResult.getWorknumber());
+					}
+					result = tokenResult.getResult();
+				}
 			} catch (Exception e) {
 				log.error("令牌校验失败:",e);
 				result = TokenStore.temptoken_request_validateresult_fail;

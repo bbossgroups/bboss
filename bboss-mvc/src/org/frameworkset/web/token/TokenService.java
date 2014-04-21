@@ -83,13 +83,24 @@ public class TokenService {
 	 * 对应的时间将会被清除
 	 */
 	private long tokenscaninterval = 1800000;
-	
-	public TokenService(long ticketdualtime,long temptokenlivetime,long dualtokenlivetime,long tokenscaninterval,String tokenstore,boolean enableToken)
+	public TokenService(TokenStore tokenStore,boolean enableToken)
+	{
+		this.tokenStore = tokenStore;
+		this.enableToken = enableToken;
+	}
+	public TokenService(long ticketdualtime,long temptokenlivetime,long dualtokenlivetime,long tokenscaninterval,Object tokenstore,boolean enableToken)
 	{
 //		this.tokendualtime = tokendualtime;
 		this.tokenscaninterval = tokenscaninterval;
 //		this.tokenstore = tokenstore; 
-		this.tokenStore = TokenStoreFactory.getTokenStore(tokenstore);
+		if(tokenstore instanceof String)
+		{
+			this.tokenStore = TokenStoreFactory.getTokenStore((String)tokenstore);
+		}
+		else
+		{
+			this.tokenStore = (TokenStore)tokenstore;
+		}
 		this.tokenStore.setTempTokendualtime(temptokenlivetime);
 		this.tokenStore.setTicketdualtime(ticketdualtime);
 		tokenStore.setDualtokenlivetime(dualtokenlivetime);
@@ -151,7 +162,7 @@ public class TokenService {
 	 */
 	public boolean assertDToken(Integer result)
 	{
-		return result == TokenStore.temptoken_request_validateresult_ok || result == TokenStore.temptoken_request_validateresult_nodtoken || result == TokenStore.temptoken_request_validateresult_notenabletoken;
+		return result.intValue() == TokenStore.temptoken_request_validateresult_ok.intValue() || result.intValue() == TokenStore.temptoken_request_validateresult_nodtoken.intValue() || result.intValue() == TokenStore.temptoken_request_validateresult_notenabletoken.intValue();
 	}
 	
 	
@@ -192,7 +203,7 @@ public class TokenService {
 	{
 //		return !(result == MemTokenManager.temptoken_request_validateresult_nodtoken 
 //				|| result == MemTokenManager.temptoken_request_validateresult_fail);		
-		return result == TokenStore.temptoken_request_validateresult_ok || result == TokenStore.temptoken_request_validateresult_notenabletoken;
+		return result.intValue() == TokenStore.temptoken_request_validateresult_ok.intValue() || result.intValue() == TokenStore.temptoken_request_validateresult_notenabletoken.intValue();
 	}
 	
 	/**
@@ -274,7 +285,7 @@ public class TokenService {
 			}
 			
 		}
-		@Override
+		
 		public void run() {
 			while(!killdown)
 			{
@@ -419,26 +430,51 @@ public class TokenService {
 	
 	
 	
+	/* (non-Javadoc)
+	 * @see org.frameworkset.web.token.TokenServiceInf#genTempToken()
+	 */
+	
 	public String genTempToken() throws Exception
 	{
 		return tokenStore.genTempToken().getSigntoken();
 	}
 	
-	public String genDualToken(String appid,String secret,String account,long dualtime) throws Exception
+	/* (non-Javadoc)
+	 * @see org.frameworkset.web.token.TokenServiceInf#genDualToken(java.lang.String, java.lang.String, java.lang.String, long)
+	 */
+	
+	public String genDualToken(String appid,String secret,String ticket,long dualtime) throws Exception
 	{
 		//long start = System.currentTimeMillis();
 //		long dualtime = 30l*24l*60l*60l*1000l;
-		MemToken token = this.tokenStore.genDualToken(appid,account,secret,dualtime);
+		MemToken token = this.tokenStore.genDualToken(appid,ticket,secret,dualtime);
+		return token.getSigntoken();
+	}
+
+	public String genDualTokenWithDefaultLiveTime(String appid,String secret,String ticket) throws Exception
+	{
+		//long start = System.currentTimeMillis();
+//		long dualtime = 30l*24l*60l*60l*1000l;
+		MemToken token = this.tokenStore.genDualTokenWithDefaultLiveTime(appid,ticket,secret);
 		return token.getSigntoken();
 	}
 	
 	
-	public String genAuthTempToken(String appid,String secret,String account) throws Exception
+	
+	/* (non-Javadoc)
+	 * @see org.frameworkset.web.token.TokenServiceInf#genAuthTempToken(java.lang.String, java.lang.String, java.lang.String)
+	 */
+	
+	public String genAuthTempToken(String appid,String secret,String ticket) throws Exception
 	{
-		MemToken token = tokenStore.genAuthTempToken(appid,account,secret);
+		MemToken token = tokenStore.genAuthTempToken(appid,ticket,secret);
 		return token.getSigntoken();
 //		Assert.assertTrue(TokenStore.temptoken_request_validateresult_ok == mongodbTokenStore.checkToken("sim","xxxxxxxxxxxxxxxxxxxxxx",token.getSigntoken()).getResult());
 	}
+	
+	/* (non-Javadoc)
+	 * @see org.frameworkset.web.token.TokenServiceInf#getPublicKey(java.lang.String, java.lang.String)
+	 */
 	
 	public String getPublicKey(String appid,String secret) throws Exception
 	{
@@ -457,15 +493,39 @@ public class TokenService {
 		ECKeyPair pairs = tokenStore.getKeyPair(appid,secret);
 		return pairs;
 	}
+	/* (non-Javadoc)
+	 * @see org.frameworkset.web.token.TokenServiceInf#checkToken(java.lang.String, java.lang.String, java.lang.String)
+	 */
+	
 	public TokenResult checkToken(String appid,String secret,String token) throws TokenException
 	{
+		if(token == null)
+		{
+			TokenResult result = new TokenResult();
+			result.setResult(TokenStore.temptoken_request_validateresult_nodtoken);
+			
+			return result;
+		}
 		return this.tokenStore.checkToken(appid, secret, token);
 	}
 	
+	/* (non-Javadoc)
+	 * @see org.frameworkset.web.token.TokenServiceInf#checkTempToken(java.lang.String)
+	 */
+	
 	public int checkTempToken(String token) throws TokenException
 	{
+		if(token == null)
+		{
+			
+			return TokenStore.temptoken_request_validateresult_nodtoken;
+		}
 		return this.tokenStore.checkToken(null,null,token).getResult();
 	}
+	/* (non-Javadoc)
+	 * @see org.frameworkset.web.token.TokenServiceInf#genTicket(java.lang.String, java.lang.String, java.lang.String, java.lang.String)
+	 */
+	
 	public String genTicket(String account,String worknumber,String appid,String secret) throws TokenException
 	{
 		return this.tokenStore.genTicket( account, worknumber, appid, secret);

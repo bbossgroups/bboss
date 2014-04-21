@@ -24,7 +24,7 @@ package org.frameworkset.web.token;
  * @author biaoping.yin
  * @version 3.8.0
  */
-public class TokenResult{
+public class TokenResult implements java.io.Serializable{
 	
 	public TokenResult() {
 		super();

@@ -44,6 +44,10 @@ public abstract class BaseTokenStore implements TokenStore {
 		{
 			worknumber = "";
 		}
+		if(account == null)
+		{
+			account = "";
+		}
 		try {
 			String ticket = account+"|"+worknumber +"|"+createTime;
 			ECKeyPair keyPairs = getKeyPair(appid,secret);
@@ -265,7 +269,7 @@ public abstract class BaseTokenStore implements TokenStore {
 		
 	}
 	
-	public MemToken genAuthTempToken(String appid, String account,String secret)  throws TokenException 
+	public MemToken genAuthTempToken(String appid, String ticket,String secret)  throws TokenException 
 	{
 		return null;
 	}

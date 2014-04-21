@@ -6,22 +6,27 @@ public class TokenStoreFactory {
 	{
 		if(tokenstore.equals("mem"))
 		{
+			tokenstore = "org.frameworkset.web.token.MemTokenStore";
+		}
+		else if(tokenstore.equals("mongodb"))
+		{
+			tokenstore = "org.frameworkset.web.token.MongodbTokenStore";
+			
+		}
+		else if(tokenstore.equals("db"))
+		{
+			tokenstore = "org.frameworkset.web.token.DBTokenStore";
+		}
+		
+		
+			
+		try {
+			TokenStore tokenStore = (TokenStore)Class.forName(tokenstore).newInstance();
+			return tokenStore;
+		} catch (Exception e) {
 			return new MemTokenStore();
 		}
-		else if(tokenstore.equals("session"))
-		{
-			return new SessionTokenStore();
-		}
-		else
-		{
-			
-			try {
-				TokenStore tokenStore = (TokenStore)Class.forName(tokenstore).newInstance();
-				return tokenStore;
-			} catch (Exception e) {
-				return new MemTokenStore();
-			}
-		}
+		
 			
 	}
 

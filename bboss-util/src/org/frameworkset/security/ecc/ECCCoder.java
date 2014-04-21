@@ -270,8 +270,8 @@ public abstract class ECCCoder  {
 		
 		private String privateKey;
 		private String publicKey;
-		private ECPublicKey pubKey;
-		private ECPrivateKey priKey;
+		private transient ECPublicKey pubKey;
+		private transient ECPrivateKey priKey;
 		public ECKeyPair(){
 			
 		}

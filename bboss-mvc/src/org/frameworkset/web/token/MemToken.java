@@ -7,7 +7,7 @@ import com.frameworkset.orm.annotation.Column;
  * 
  *
  */
-public class MemToken {
+public class MemToken implements java.io.Serializable{
 	/**
 	 * 令牌信息
 	 */
