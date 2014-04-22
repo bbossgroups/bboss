@@ -92,7 +92,7 @@ public class TokenService {
 	}
 	public TokenService(long ticketdualtime,long temptokenlivetime,long dualtokenlivetime,long tokenscaninterval,Object tokenstore,boolean enableToken)
 	{
-		this(ticketdualtime,temptokenlivetime,dualtokenlivetime,tokenscaninterval,tokenstore,enableToken,ECCHelper.ECC_ECIES);
+		this(ticketdualtime,temptokenlivetime,dualtokenlivetime,tokenscaninterval,tokenstore,enableToken,ECCHelper.ECC_RSA);
 	}
 	public TokenService(long ticketdualtime,long temptokenlivetime,long dualtokenlivetime,long tokenscaninterval,Object tokenstore,boolean enableToken,String ecctype)
 	{

@@ -13,31 +13,26 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package org.frameworkset.security.ecc;
+package org.frameworkset.security.rsa;
 
+import java.security.KeyFactory;
 import java.security.KeyPair;
-import java.security.KeyPairGenerator;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.SecureRandom;
-import java.security.Security;
+import java.security.spec.PKCS8EncodedKeySpec;
+import java.security.spec.X509EncodedKeySpec;
 
 import javax.crypto.Cipher;
 
+import org.frameworkset.security.ecc.BaseECCCoder;
+import org.frameworkset.security.ecc.SimpleKeyPair;
 import org.frameworkset.util.Base64;
 
-import de.flexiprovider.api.keys.KeyFactory;
-import de.flexiprovider.common.ies.IESParameterSpec;
-import de.flexiprovider.core.FlexiCoreProvider;
-import de.flexiprovider.ec.FlexiECProvider;
-import de.flexiprovider.ec.keys.ECKeyFactory;
-import de.flexiprovider.ec.parameters.CurveParams;
-import de.flexiprovider.ec.parameters.CurveRegistry.BrainpoolP160r1;
-import de.flexiprovider.pki.PKCS8EncodedKeySpec;
-import de.flexiprovider.pki.X509EncodedKeySpec;
+
 
 /**
- * <p>Title: FlexiECCCoder.java</p> 
+ * <p>Title: RsaCoder.java</p> 
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2008</p>
@@ -45,14 +40,12 @@ import de.flexiprovider.pki.X509EncodedKeySpec;
  * @author biaoping.yin
  * @version 3.8.0
  */
-public class FlexiECCCoder extends BaseECCCoder{
-	static
-	{
-		Security.addProvider(new FlexiCoreProvider());
-		Security.addProvider(new FlexiECProvider());
-	}
-	
-	
+public class RsaCoder extends BaseECCCoder {
+	/** 指定加密算法为RSA */
+	private static String ALGORITHM = "RSA";
+	/** 指定key的大小 */
+	private static int KEYSIZE = 1024;
+
 	public  PrivateKey evalECPrivateKey(String privateKey)
 	{
 		PrivateKey priKey = PrivateKeyIndex.get(privateKey);
@@ -68,7 +61,7 @@ public class FlexiECCCoder extends BaseECCCoder{
 				// 对密钥解密
 				byte[] keyBytes = Base64.decode(privateKey);
 				PKCS8EncodedKeySpec pkcs8KeySpec = new PKCS8EncodedKeySpec(keyBytes);
-				KeyFactory keyFactory = new ECKeyFactory();
+				KeyFactory keyFactory = KeyFactory.getInstance(ALGORITHM);
 	
 				 priKey = (PrivateKey) keyFactory
 						.generatePrivate(pkcs8KeySpec);
@@ -97,7 +90,7 @@ public class FlexiECCCoder extends BaseECCCoder{
 
 				// 取得公钥
 				X509EncodedKeySpec x509KeySpec = new X509EncodedKeySpec(keyBytes);
-				KeyFactory keyFactory = new ECKeyFactory();
+				KeyFactory keyFactory = KeyFactory.getInstance(ALGORITHM);
 
 				pubKey = (PublicKey) keyFactory
 						.generatePublic(x509KeySpec);
@@ -109,7 +102,6 @@ public class FlexiECCCoder extends BaseECCCoder{
 		}
 		
 	}
-
 
 	
 	
@@ -123,13 +115,12 @@ public class FlexiECCCoder extends BaseECCCoder{
 	 * @throws Exception
 	 */
 	public  byte[] decrypt(byte[] data, PrivateKey priKey) throws Exception {
-		// 对数据解密
-		// TODO Chipher不支持EC算法 未能实现
-		Cipher cipher = Cipher.getInstance("ECIES", "FlexiEC");
-		IESParameterSpec iesParams = new IESParameterSpec("AES128_CBC",
-				"HmacSHA1", null, null);
-		cipher.init(Cipher.DECRYPT_MODE, priKey, iesParams);
-		return cipher.doFinal(data);
+		Cipher cipher = Cipher.getInstance(ALGORITHM);
+		cipher.init(Cipher.DECRYPT_MODE, priKey);
+		
+		/** 执行解密操作 */
+		byte[] b = cipher.doFinal(data);
+		return b;
 	}
 
 	
@@ -147,12 +138,11 @@ public class FlexiECCCoder extends BaseECCCoder{
 			throws Exception {
 		
 
-		Cipher cipher = Cipher.getInstance("ECIES", "FlexiEC");
-
-		IESParameterSpec iesParams = new IESParameterSpec("AES128_CBC",
-				"HmacSHA1", null, null);
-		cipher.init(Cipher.ENCRYPT_MODE, pubKey, iesParams);
-		return cipher.doFinal(data);
+		Cipher cipher = Cipher.getInstance(ALGORITHM);
+		cipher.init(Cipher.ENCRYPT_MODE, pubKey);
+		/** 执行加密操作 */
+		byte[] b1 = cipher.doFinal(data);
+		return b1;
 	}
 	
 	/**
@@ -171,31 +161,26 @@ public class FlexiECCCoder extends BaseECCCoder{
 		return encrypt(data.getBytes(),  pubKey);
 	}
 
-
-	
-	/**
-	 * 初始化密钥
-	 * 
-	 * @return
-	 * @throws Exception
-	 */
-	public  SimpleKeyPair genECKeyPair() throws Exception {
-		KeyPairGenerator kpg = KeyPairGenerator.getInstance("ECIES", "FlexiEC");
-		
-		CurveParams ecParams = new BrainpoolP160r1();
-
-		kpg.initialize(ecParams, new SecureRandom());
-		KeyPair keyPair = kpg.generateKeyPair();
-		PublicKey pubKey = keyPair.getPublic();
-		PrivateKey privKey = keyPair.getPrivate();
-		String sprivateKey = Base64.encode(privKey.getEncoded());
-		String spublicKey = Base64.encode(pubKey.getEncoded());
-		SimpleKeyPair ECKeyPair = new SimpleKeyPair(sprivateKey, spublicKey,
-				pubKey, privKey);
-		PrivateKeyPairIndex.put(sprivateKey, ECKeyPair);
-		ECPublicKeyPairIndex.put(spublicKey, ECKeyPair);
-		return ECKeyPair;
-		
+	@Override
+	public SimpleKeyPair genECKeyPair() throws Exception {
+				java.security.KeyPairGenerator keygen = java.security.KeyPairGenerator
+			     .getInstance(ALGORITHM);
+			   SecureRandom secrand = new SecureRandom();
+			   
+			   secrand.setSeed(randomToken().getBytes()); // 初始化随机产生器
+			   keygen.initialize(KEYSIZE, secrand);
+			   KeyPair keys = keygen.genKeyPair();
+			 
+			   PublicKey pubkey = keys.getPublic();
+			   PrivateKey prikey = keys.getPrivate();
+			 
+			   String sprivateKey = Base64.encode(prikey.getEncoded());
+				String spublicKey = Base64.encode(pubkey.getEncoded());
+				SimpleKeyPair ECKeyPair = new SimpleKeyPair(sprivateKey, spublicKey,
+						pubkey, prikey);
+				PrivateKeyPairIndex.put(sprivateKey, ECKeyPair);
+				ECPublicKeyPairIndex.put(spublicKey, ECKeyPair);
+				return ECKeyPair;
 	}
 
 }

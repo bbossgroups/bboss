@@ -14,8 +14,6 @@ import java.security.spec.ECPublicKeySpec;
 import java.security.spec.EllipticCurve;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.crypto.Cipher;
 import javax.crypto.NullCipher;
@@ -27,16 +25,13 @@ import sun.security.ec.ECPrivateKeyImpl;
 import sun.security.ec.ECPublicKeyImpl;
 
 
-public class ECCCoder implements ECCCoderInf  {
+public class ECCCoder extends BaseECCCoder  {
 
 //	public static final String ALGORITHM = "EC";
 //	public static final String PUBLIC_KEY = "ECCPublicKey";
 //	public static final String PRIVATE_KEY = "ECCPrivateKey";
 	
-	private  Map<String,PrivateKey> ECPrivateKeyIndex = new HashMap<String,PrivateKey>();
-	private  Map<String,PublicKey> ECPublicKeyIndex = new HashMap<String,PublicKey>();
-	private  Map<String,SimpleKeyPair> ECPrivateKeyPairIndex = new HashMap<String,SimpleKeyPair>();
-	private  Map<String,SimpleKeyPair> ECPublicKeyPairIndex = new HashMap<String,SimpleKeyPair>();
+	
 	
 	/* (non-Javadoc)
 	 * @see org.frameworkset.security.ecc.ECCCoderInf#evalECPrivateKey(java.lang.String)
@@ -44,12 +39,12 @@ public class ECCCoder implements ECCCoderInf  {
 	@Override
 	public PrivateKey evalECPrivateKey(String privateKey)
 	{
-		ECPrivateKey priKey = (ECPrivateKey)ECPrivateKeyIndex.get(privateKey);
+		ECPrivateKey priKey = (ECPrivateKey)PrivateKeyIndex.get(privateKey);
 		if(priKey != null)
 			return priKey;
-		synchronized(ECPrivateKeyIndex)
+		synchronized(PrivateKeyIndex)
 		{
-			priKey = (ECPrivateKey)ECPrivateKeyIndex.get(privateKey);
+			priKey = (ECPrivateKey)PrivateKeyIndex.get(privateKey);
 			if(priKey != null)
 				return priKey;
 			try {
@@ -61,7 +56,7 @@ public class ECCCoder implements ECCCoderInf  {
 	
 				 priKey = (ECPrivateKey) keyFactory
 						.generatePrivate(pkcs8KeySpec);
-				 ECPrivateKeyIndex.put(privateKey, priKey);
+				 PrivateKeyIndex.put(privateKey, priKey);
 				return priKey;
 			} catch (Exception e) {
 				throw new java.lang.RuntimeException(e);
@@ -104,36 +99,7 @@ public class ECCCoder implements ECCCoderInf  {
 	}
 
 
-	/* (non-Javadoc)
-	 * @see org.frameworkset.security.ecc.ECCCoderInf#decrypt(byte[], java.lang.String)
-	 */
-	@Override
-	public  byte[] decrypt(byte[] data, String privatekey) throws Exception {
-		// 对密钥解密
 
-		ECPrivateKey priKey = (ECPrivateKey) evalECPrivateKey(privatekey);
-
-		return decrypt( data, priKey);
-	}
-	
-	/* (non-Javadoc)
-	 * @see org.frameworkset.security.ecc.ECCCoderInf#decrypt(java.lang.String, java.lang.String)
-	 */
-	@Override
-	public  byte[] decrypt(String database64, String privatekey) throws Exception {
-		byte[] data = Base64.decode(database64);
-		return decrypt(data,  privatekey);
-	}
-	
-	/* (non-Javadoc)
-	 * @see org.frameworkset.security.ecc.ECCCoderInf#decrypt(java.lang.String, java.security.PrivateKey)
-	 */
-	@Override
-	public  byte[] decrypt(String database64, PrivateKey priKey) throws Exception {
-		
-		
-		return decrypt(Base64.decode(database64),  priKey) ;
-	}
 	
 	/* (non-Javadoc)
 	 * @see org.frameworkset.security.ecc.ECCCoderInf#decrypt(byte[], java.security.PrivateKey)
@@ -167,15 +133,7 @@ public class ECCCoder implements ECCCoderInf  {
 		return encrypt( data,  pubKey);
 	}
 	
-	/* (non-Javadoc)
-	 * @see org.frameworkset.security.ecc.ECCCoderInf#encrypt(java.lang.String, java.lang.String)
-	 */
-	@Override
-	public  byte[] encrypt(String data, String publicKey)
-			throws Exception
-			{
-				return encrypt(data.getBytes(), publicKey);
-			}
+	
 	
 	/* (non-Javadoc)
 	 * @see org.frameworkset.security.ecc.ECCCoderInf#encrypt(byte[], java.security.PublicKey)
@@ -197,15 +155,7 @@ public class ECCCoder implements ECCCoderInf  {
 		return cipher.doFinal(data);
 	}
 	
-	/* (non-Javadoc)
-	 * @see org.frameworkset.security.ecc.ECCCoderInf#encrypt(java.lang.String, java.security.PublicKey)
-	 */
-	@Override
-	public  byte[] encrypt(String data, PublicKey pubKey_)
-			throws Exception {
-		return encrypt(data.getBytes(), pubKey_);
-	}
-
+	
 
 	
 	/* (non-Javadoc)
@@ -247,7 +197,7 @@ public class ECCCoder implements ECCCoderInf  {
 		String sprivateKey = Base64.encode(privateKey.getEncoded());
 		SimpleKeyPair ECKeyPair = new SimpleKeyPair(sprivateKey, spublicKey,
 				publicKey, privateKey);
-		ECPrivateKeyPairIndex.put(sprivateKey, ECKeyPair);
+		PrivateKeyPairIndex.put(sprivateKey, ECKeyPair);
 		ECPublicKeyPairIndex.put(spublicKey, ECKeyPair);
 		return ECKeyPair;
 	}
