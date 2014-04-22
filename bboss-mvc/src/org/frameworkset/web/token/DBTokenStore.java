@@ -3,8 +3,7 @@ package org.frameworkset.web.token;
 import java.sql.SQLException;
 
 import org.apache.log4j.Logger;
-import org.frameworkset.security.ecc.ECCCoder;
-import org.frameworkset.security.ecc.ECCCoder.ECKeyPair;
+import org.frameworkset.security.ecc.SimpleKeyPair;
 
 import com.frameworkset.common.poolman.ConfigSQLExecutor;
 import com.frameworkset.common.poolman.Record;
@@ -481,15 +480,15 @@ public class DBTokenStore extends BaseTokenStore {
 		return token_m ;
 	}
 	
-	public ECKeyPair getKeyPair(String appid,String secret) throws TokenException
+	public SimpleKeyPair getKeyPair(String appid,String secret) throws TokenException
 	{
 		
 		
 		try {
-			ECKeyPair ECKeyPair =this.executor.queryObjectByRowHandler(new RowHandler<ECKeyPair>(){
+			SimpleKeyPair ECKeyPair =this.executor.queryObjectByRowHandler(new RowHandler<SimpleKeyPair>(){
 
 				@Override
-				public void handleRow(ECKeyPair rowValue, Record record)
+				public void handleRow(SimpleKeyPair rowValue, Record record)
 						throws Exception {
 					rowValue.setPrivateKey(record.getString("privateKey"));
 					rowValue.setPublicKey(record.getString("publicKey"));
@@ -497,7 +496,7 @@ public class DBTokenStore extends BaseTokenStore {
 					
 				}
 				
-			},ECKeyPair.class, "getKeyPairs", appid);
+			},SimpleKeyPair.class, "getKeyPairs", appid);
 //			cursor = eckeypairs.find(new BasicDBObject("appid", appid));
 			if(ECKeyPair != null)
 			{
@@ -508,7 +507,7 @@ public class DBTokenStore extends BaseTokenStore {
 			}
 			else
 			{
-				ECKeyPair keypair = ECCCoder.genECKeyPair();
+				SimpleKeyPair keypair = ECCCoder.genECKeyPair();
 				insertECKeyPair( appid, secret, keypair);
 				return keypair;
 			}
@@ -520,7 +519,7 @@ public class DBTokenStore extends BaseTokenStore {
 		}
 		
 	}
-	private void insertECKeyPair(String appid,String secret,ECKeyPair keypair) throws TokenException
+	private void insertECKeyPair(String appid,String secret,SimpleKeyPair keypair) throws TokenException
 	{
 //		this.eckeypairs.insert(new BasicDBObject("appid",appid)		
 //		.append("privateKey", keypair.getPrivateKey())

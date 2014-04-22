@@ -26,7 +26,9 @@ import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
-import org.frameworkset.security.ecc.ECCCoder.ECKeyPair;
+import org.frameworkset.security.ecc.ECCCoderInf;
+import org.frameworkset.security.ecc.ECCHelper;
+import org.frameworkset.security.ecc.SimpleKeyPair;
 
 import com.frameworkset.util.StringUtil;
 
@@ -90,17 +92,29 @@ public class TokenService {
 	}
 	public TokenService(long ticketdualtime,long temptokenlivetime,long dualtokenlivetime,long tokenscaninterval,Object tokenstore,boolean enableToken)
 	{
+		this(ticketdualtime,temptokenlivetime,dualtokenlivetime,tokenscaninterval,tokenstore,enableToken,ECCHelper.ECC_ECIES);
+	}
+	public TokenService(long ticketdualtime,long temptokenlivetime,long dualtokenlivetime,long tokenscaninterval,Object tokenstore,boolean enableToken,String ecctype)
+	{
 //		this.tokendualtime = tokendualtime;
 		this.tokenscaninterval = tokenscaninterval;
 //		this.tokenstore = tokenstore; 
 		if(tokenstore instanceof String)
 		{
 			this.tokenStore = TokenStoreFactory.getTokenStore((String)tokenstore);
+			ECCCoderInf ECCCoder= ECCHelper.getECCCoder(ecctype);
+			tokenStore.setECCCoder(ECCCoder);
 		}
 		else
 		{
 			this.tokenStore = (TokenStore)tokenstore;
+			if(this.tokenStore.getECCCoder() == null)
+			{
+				ECCCoderInf ECCCoder= ECCHelper.getECCCoder(ecctype);
+				tokenStore.setECCCoder(ECCCoder);
+			}
 		}
+		
 		this.tokenStore.setTempTokendualtime(temptokenlivetime);
 		this.tokenStore.setTicketdualtime(ticketdualtime);
 		tokenStore.setDualtokenlivetime(dualtokenlivetime);
@@ -478,19 +492,19 @@ public class TokenService {
 	
 	public String getPublicKey(String appid,String secret) throws Exception
 	{
-		ECKeyPair pairs = tokenStore.getKeyPair(appid,secret);
+		SimpleKeyPair pairs = tokenStore.getKeyPair(appid,secret);
 		return pairs.getPublicKey();
 	}
 	
 	public String getPrivateKey(String appid,String secret) throws Exception
 	{
-		ECKeyPair pairs = tokenStore.getKeyPair(appid,secret);
+		SimpleKeyPair pairs = tokenStore.getKeyPair(appid,secret);
 		return pairs.getPrivateKey();
 	}
 	
-	public ECKeyPair getKeyPair(String appid,String secret) throws Exception
+	public SimpleKeyPair getKeyPair(String appid,String secret) throws Exception
 	{
-		ECKeyPair pairs = tokenStore.getKeyPair(appid,secret);
+		SimpleKeyPair pairs = tokenStore.getKeyPair(appid,secret);
 		return pairs;
 	}
 	/* (non-Javadoc)

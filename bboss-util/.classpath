@@ -21,5 +21,8 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="lib" path="lib/bboss-velocity.jar" sourcepath="/bboss-velocity"/>
 	<classpathentry kind="lib" path="lib/ext/jsp-api.jar"/>
+	<classpathentry kind="lib" path="lib/FlexiCoreProvider-1.7p7.signed.jar" sourcepath="lib/FlexiProvider-1.7p7_src.zip"/>
+	<classpathentry kind="lib" path="lib/FlexiECProvider-1.7p7.signed.jar" sourcepath="lib/FlexiProvider-1.7p7_src.zip"/>
+	<classpathentry kind="lib" path="lib/CoDec-build17-jdk13.jar"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>

@@ -1,5 +1,6 @@
 package org.frameworkset.web.token;
 
+import org.frameworkset.security.ecc.ECCHelper;
 import org.frameworkset.web.token.DBTokenStore;
 import org.frameworkset.web.token.MemToken;
 import org.frameworkset.web.token.TokenStore;
@@ -18,6 +19,7 @@ public class DBTokenTest {
 	public void init() throws Exception
 	{
 		mongodbTokenStore = new DBTokenStore();
+		mongodbTokenStore.setECCCoder(ECCHelper.getECCCoder());
 		mongodbTokenStore.setTempTokendualtime(TokenStore.DEFAULT_TEMPTOKENLIVETIME);
 		mongodbTokenStore.setTicketdualtime(TokenStore.DEFAULT_TICKETTOKENLIVETIME);
 		mongodbTokenStore.setDualtokenlivetime(TokenStore.DEFAULT_DUALTOKENLIVETIME);

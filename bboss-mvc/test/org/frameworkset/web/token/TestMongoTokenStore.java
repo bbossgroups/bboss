@@ -1,5 +1,6 @@
 package org.frameworkset.web.token;
 
+import org.frameworkset.security.ecc.ECCHelper;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,7 +19,7 @@ public class TestMongoTokenStore {
 		mongodbTokenStore.setTempTokendualtime(TokenStore.DEFAULT_TEMPTOKENLIVETIME);
 		mongodbTokenStore.setTicketdualtime(TokenStore.DEFAULT_TICKETTOKENLIVETIME);
 		mongodbTokenStore.setDualtokenlivetime(TokenStore.DEFAULT_DUALTOKENLIVETIME);
-		
+		mongodbTokenStore.setECCCoder(ECCHelper.getECCCoder());
 		String ticket = mongodbTokenStore.genTicket(account, worknumber, appid, secret);
 		MemToken token = mongodbTokenStore.genDualToken(appid,ticket,secret,TokenStore.DEFAULT_DUALTOKENLIVETIME);
 		Assert.assertTrue(TokenStore.temptoken_request_validateresult_ok == mongodbTokenStore.checkToken(appid,secret,token.getSigntoken()).getResult());

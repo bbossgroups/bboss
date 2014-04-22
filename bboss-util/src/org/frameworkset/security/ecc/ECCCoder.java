@@ -2,6 +2,8 @@ package org.frameworkset.security.ecc;
 
 import java.math.BigInteger;
 import java.security.KeyFactory;
+import java.security.PrivateKey;
+import java.security.PublicKey;
 import java.security.interfaces.ECPrivateKey;
 import java.security.interfaces.ECPublicKey;
 import java.security.spec.ECFieldF2m;
@@ -25,25 +27,29 @@ import sun.security.ec.ECPrivateKeyImpl;
 import sun.security.ec.ECPublicKeyImpl;
 
 
-public abstract class ECCCoder  {
+public class ECCCoder implements ECCCoderInf  {
 
 //	public static final String ALGORITHM = "EC";
 //	public static final String PUBLIC_KEY = "ECCPublicKey";
 //	public static final String PRIVATE_KEY = "ECCPrivateKey";
 	
-	private static Map<String,ECPrivateKey> ECPrivateKeyIndex = new HashMap<String,ECPrivateKey>();
-	private static Map<String,ECPublicKey> ECPublicKeyIndex = new HashMap<String,ECPublicKey>();
-	private static Map<String,ECKeyPair> ECPrivateKeyPairIndex = new HashMap<String,ECKeyPair>();
-	private static Map<String,ECKeyPair> ECPublicKeyPairIndex = new HashMap<String,ECKeyPair>();
+	private  Map<String,PrivateKey> ECPrivateKeyIndex = new HashMap<String,PrivateKey>();
+	private  Map<String,PublicKey> ECPublicKeyIndex = new HashMap<String,PublicKey>();
+	private  Map<String,SimpleKeyPair> ECPrivateKeyPairIndex = new HashMap<String,SimpleKeyPair>();
+	private  Map<String,SimpleKeyPair> ECPublicKeyPairIndex = new HashMap<String,SimpleKeyPair>();
 	
-	public static ECPrivateKey evalECPrivateKey(String privateKey)
+	/* (non-Javadoc)
+	 * @see org.frameworkset.security.ecc.ECCCoderInf#evalECPrivateKey(java.lang.String)
+	 */
+	@Override
+	public PrivateKey evalECPrivateKey(String privateKey)
 	{
-		ECPrivateKey priKey = ECPrivateKeyIndex.get(privateKey);
+		ECPrivateKey priKey = (ECPrivateKey)ECPrivateKeyIndex.get(privateKey);
 		if(priKey != null)
 			return priKey;
 		synchronized(ECPrivateKeyIndex)
 		{
-			priKey = ECPrivateKeyIndex.get(privateKey);
+			priKey = (ECPrivateKey)ECPrivateKeyIndex.get(privateKey);
 			if(priKey != null)
 				return priKey;
 			try {
@@ -63,15 +69,19 @@ public abstract class ECCCoder  {
 		}
 	}
 	
-	public static ECPublicKey evalECPublicKey(String publicKey)
+	/* (non-Javadoc)
+	 * @see org.frameworkset.security.ecc.ECCCoderInf#evalECPublicKey(java.lang.String)
+	 */
+	@Override
+	public  PublicKey evalECPublicKey(String publicKey)
 	{
 		
-		ECPublicKey pubKey = ECPublicKeyIndex.get(publicKey);
+		ECPublicKey pubKey = (ECPublicKey)ECPublicKeyIndex.get(publicKey);
 		if(pubKey != null)
 			return pubKey;
 		synchronized(ECPublicKeyIndex)
 		{
-			pubKey = ECPublicKeyIndex.get(publicKey);
+			pubKey = (ECPublicKey)ECPublicKeyIndex.get(publicKey);
 			if(pubKey != null)
 				return pubKey;
 			try {
@@ -94,79 +104,44 @@ public abstract class ECCCoder  {
 	}
 
 
-	/**
-	 * 解密<br>
-	 * 用私钥解密
-	 * 
-	 * @param data
-	 * @param key
-	 * @return
-	 * @throws Exception
+	/* (non-Javadoc)
+	 * @see org.frameworkset.security.ecc.ECCCoderInf#decrypt(byte[], java.lang.String)
 	 */
-	public static byte[] decrypt(byte[] data, String privatekey) throws Exception {
+	@Override
+	public  byte[] decrypt(byte[] data, String privatekey) throws Exception {
 		// 对密钥解密
-		byte[] keyBytes = Base64.decode(privatekey);
 
-		// 取得私钥
-		PKCS8EncodedKeySpec pkcs8KeySpec = new PKCS8EncodedKeySpec(keyBytes);
-		KeyFactory keyFactory = ECKeyFactory.INSTANCE;
+		ECPrivateKey priKey = (ECPrivateKey) evalECPrivateKey(privatekey);
 
-		ECPrivateKey priKey = (ECPrivateKey) keyFactory
-				.generatePrivate(pkcs8KeySpec);
-
-		ECPrivateKeySpec ecPrivateKeySpec = new ECPrivateKeySpec(priKey.getS(),
-				priKey.getParams());
-
-		// 对数据解密
-		// TODO Chipher不支持EC算法 未能实现
-		Cipher cipher = new NullCipher();
-		// Cipher.getInstance(ALGORITHM, keyFactory.getProvider());
-		cipher.init(Cipher.DECRYPT_MODE, priKey, ecPrivateKeySpec.getParams());
-
-		return cipher.doFinal(data);
+		return decrypt( data, priKey);
 	}
 	
-	/**
-	 * 解密<br>
-	 * 用私钥解密
-	 * 
-	 * @param data
-	 * @param key
-	 * @return
-	 * @throws Exception
+	/* (non-Javadoc)
+	 * @see org.frameworkset.security.ecc.ECCCoderInf#decrypt(java.lang.String, java.lang.String)
 	 */
-	public static byte[] decrypt(String database64, String privatekey) throws Exception {
+	@Override
+	public  byte[] decrypt(String database64, String privatekey) throws Exception {
 		byte[] data = Base64.decode(database64);
 		return decrypt(data,  privatekey);
 	}
 	
-	/**
-	 * 解密<br>
-	 * 用私钥解密
-	 * 
-	 * @param data
-	 * @param key
-	 * @return
-	 * @throws Exception
+	/* (non-Javadoc)
+	 * @see org.frameworkset.security.ecc.ECCCoderInf#decrypt(java.lang.String, java.security.PrivateKey)
 	 */
-	public static byte[] decrypt(String database64, ECPrivateKey priKey) throws Exception {
+	@Override
+	public  byte[] decrypt(String database64, PrivateKey priKey) throws Exception {
 		
 		
 		return decrypt(Base64.decode(database64),  priKey) ;
 	}
 	
-	/**
-	 * 解密<br>
-	 * 用私钥解密
-	 * 
-	 * @param data
-	 * @param key
-	 * @return
-	 * @throws Exception
+	/* (non-Javadoc)
+	 * @see org.frameworkset.security.ecc.ECCCoderInf#decrypt(byte[], java.security.PrivateKey)
 	 */
-	public static byte[] decrypt(byte[] data, ECPrivateKey priKey) throws Exception {
+	@Override
+	public  byte[] decrypt(byte[] data, PrivateKey priKey_) throws Exception {
 		
-
+		ECPrivateKey priKey = (ECPrivateKey)priKey_;
 		ECPrivateKeySpec ecPrivateKeySpec = new ECPrivateKeySpec(priKey.getS(),
 				priKey.getParams());
 
@@ -179,27 +154,37 @@ public abstract class ECCCoder  {
 		return cipher.doFinal(data);
 	}
 
-	/**
-	 * 加密<br>
-	 * 用公钥加密
-	 * 
-	 * @param data
-	 * @param privateKey
-	 * @return
-	 * @throws Exception
+	/* (non-Javadoc)
+	 * @see org.frameworkset.security.ecc.ECCCoderInf#encrypt(byte[], java.lang.String)
 	 */
-	public static byte[] encrypt(byte[] data, String publicKey)
+	@Override
+	public  byte[] encrypt(byte[] data, String publicKey)
 			throws Exception {
-		// 对公钥解密
-		byte[] keyBytes = Base64.decode(publicKey);
+		
 
-		// 取得公钥
-		X509EncodedKeySpec x509KeySpec = new X509EncodedKeySpec(keyBytes);
-		KeyFactory keyFactory = ECKeyFactory.INSTANCE;
+		ECPublicKey pubKey = (ECPublicKey) evalECPublicKey(publicKey);
 
-		ECPublicKey pubKey = (ECPublicKey) keyFactory
-				.generatePublic(x509KeySpec);
-
+		return encrypt( data,  pubKey);
+	}
+	
+	/* (non-Javadoc)
+	 * @see org.frameworkset.security.ecc.ECCCoderInf#encrypt(java.lang.String, java.lang.String)
+	 */
+	@Override
+	public  byte[] encrypt(String data, String publicKey)
+			throws Exception
+			{
+				return encrypt(data.getBytes(), publicKey);
+			}
+	
+	/* (non-Javadoc)
+	 * @see org.frameworkset.security.ecc.ECCCoderInf#encrypt(byte[], java.security.PublicKey)
+	 */
+	@Override
+	public  byte[] encrypt(byte[] data, PublicKey pubKey_)
+			throws Exception {
+		
+		ECPublicKey pubKey = (ECPublicKey)pubKey_;
 		ECPublicKeySpec ecPublicKeySpec = new ECPublicKeySpec(pubKey.getW(),
 				pubKey.getParams());
 
@@ -212,150 +197,22 @@ public abstract class ECCCoder  {
 		return cipher.doFinal(data);
 	}
 	
-	/**
-	 * 加密<br>
-	 * 用公钥加密
-	 * 
-	 * @param data
-	 * @param privateKey
-	 * @return
-	 * @throws Exception
+	/* (non-Javadoc)
+	 * @see org.frameworkset.security.ecc.ECCCoderInf#encrypt(java.lang.String, java.security.PublicKey)
 	 */
-	public static byte[] encrypt(byte[] data, ECPublicKey pubKey)
+	@Override
+	public  byte[] encrypt(String data, PublicKey pubKey_)
 			throws Exception {
-		
-
-		ECPublicKeySpec ecPublicKeySpec = new ECPublicKeySpec(pubKey.getW(),
-				pubKey.getParams());
-
-		// 对数据加密
-		// TODO Chipher不支持EC算法 未能实现
-		Cipher cipher = new NullCipher();
-		// Cipher.getInstance(ALGORITHM, keyFactory.getProvider());
-		cipher.init(Cipher.ENCRYPT_MODE, pubKey, ecPublicKeySpec.getParams());
-
-		return cipher.doFinal(data);
+		return encrypt(data.getBytes(), pubKey_);
 	}
 
-//	/**
-//	 * 取得私钥
-//	 * 
-//	 * @param keyMap
-//	 * @return
-//	 * @throws Exception
-//	 */
-//	public static String getPrivateKey(Map<String, Key> keyMap)
-//			throws Exception {
-//		Key key = (Key) keyMap.get(PRIVATE_KEY);
-//
-//		return Base64.encode(key.getEncoded());
-//	}
-//
-//	/**
-//	 * 取得公钥
-//	 * 
-//	 * @param keyMap
-//	 * @return
-//	 * @throws Exception
-//	 */
-//	public static String getPublicKey(Map<String, Key> keyMap)
-//			throws Exception {
-//		Key key = (Key) keyMap.get(PUBLIC_KEY);
-//
-//		return Base64.encode(key.getEncoded());
-//	}
-	
-	public static class ECKeyPair
-	{
-		
-		private String privateKey;
-		private String publicKey;
-		private transient ECPublicKey pubKey;
-		private transient ECPrivateKey priKey;
-		public ECKeyPair(){
-			
-		}
-		public ECKeyPair(String privateKey, String publicKey,
-				ECPublicKey pubKey, ECPrivateKey priKey) {
-			super();
-			this.privateKey = privateKey;
-			this.publicKey = publicKey;
-			this.pubKey = pubKey;
-			this.priKey = priKey;
-		}
-		public String getPrivateKey() {
-			return privateKey;
-		}
-		public String getPublicKey() {
-			return publicKey;
-		}
-		public ECPublicKey getPubKey() {
-			return pubKey;
-		}
-		public ECPrivateKey getPriKey() {
-			return priKey;
-		}
-		public void setPrivateKey(String privateKey) {
-			this.privateKey = privateKey;
-		}
-		public void setPublicKey(String publicKey) {
-			this.publicKey = publicKey;
-		}
-	}
 
-//	/**
-//	 * 初始化密钥
-//	 * 
-//	 * @return
-//	 * @throws Exception
-//	 */
-//	public static Map<String, Key> initKey() throws Exception {
-//		BigInteger x1 = new BigInteger(
-//				"2fe13c0537bbc11acaa07d793de4e6d5e5c94eee8", 16);
-//		BigInteger x2 = new BigInteger(
-//				"289070fb05d38ff58321f2e800536d538ccdaa3d9", 16);
-//
-//		ECPoint g = new ECPoint(x1, x2);
-//
-//		// the order of generator
-//		BigInteger n = new BigInteger(
-//				"5846006549323611672814741753598448348329118574063", 10);
-//		// the cofactor
-//		int h = 2;
-//		int m = 163;
-//		int[] ks = { 7, 6, 3 };
-//		ECFieldF2m ecField = new ECFieldF2m(m, ks);
-//		// y^2+xy=x^3+x^2+1
-//		BigInteger a = new BigInteger("1", 2);
-//		BigInteger b = new BigInteger("1", 2);
-//
-//		EllipticCurve ellipticCurve = new EllipticCurve(ecField, a, b);
-//
-//		ECParameterSpec ecParameterSpec = new ECParameterSpec(ellipticCurve, g,
-//				n, h);
-//		// 公钥
-//		ECPublicKey publicKey = new ECPublicKeyImpl(g, ecParameterSpec);
-//
-//		BigInteger s = new BigInteger(
-//				"1234006549323611672814741753598448348329118574063", 10);
-//		// 私钥
-//		ECPrivateKey privateKey = new ECPrivateKeyImpl(s, ecParameterSpec);
-//
-//		Map<String, Key> keyMap = new HashMap<String, Key>(2);
-//
-//		keyMap.put(PUBLIC_KEY, publicKey);
-//		keyMap.put(PRIVATE_KEY, privateKey);
-//
-//		return keyMap;
-//	}
 	
-	/**
-	 * 初始化密钥
-	 * 
-	 * @return
-	 * @throws Exception
+	/* (non-Javadoc)
+	 * @see org.frameworkset.security.ecc.ECCCoderInf#genECKeyPair()
 	 */
-	public static ECKeyPair genECKeyPair() throws Exception {
+	@Override
+	public  SimpleKeyPair genECKeyPair() throws Exception {
 		BigInteger x1 = new BigInteger(
 				"2fe13c0537bbc11acaa07d793de4e6d5e5c94eee8", 16);
 		BigInteger x2 = new BigInteger(
@@ -388,7 +245,7 @@ public abstract class ECCCoder  {
 		// 私钥
 		ECPrivateKey privateKey = new ECPrivateKeyImpl(s, ecParameterSpec);
 		String sprivateKey = Base64.encode(privateKey.getEncoded());
-		ECKeyPair ECKeyPair = new ECKeyPair(sprivateKey, spublicKey,
+		SimpleKeyPair ECKeyPair = new SimpleKeyPair(sprivateKey, spublicKey,
 				publicKey, privateKey);
 		ECPrivateKeyPairIndex.put(sprivateKey, ECKeyPair);
 		ECPublicKeyPairIndex.put(spublicKey, ECKeyPair);

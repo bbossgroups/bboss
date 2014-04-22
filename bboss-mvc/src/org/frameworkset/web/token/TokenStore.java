@@ -1,6 +1,7 @@
 package org.frameworkset.web.token;
 
-import org.frameworkset.security.ecc.ECCCoder.ECKeyPair;
+import org.frameworkset.security.ecc.ECCCoderInf;
+import org.frameworkset.security.ecc.SimpleKeyPair;
 
 
 public interface TokenStore {
@@ -84,7 +85,7 @@ public interface TokenStore {
 	public MemToken genDualTokenWithDefaultLiveTime(String appid,String ticket,String secret)throws TokenException;
 	public MemToken genAuthTempToken(String appid, String ticket,String secret)throws TokenException;
 
-	public ECKeyPair getKeyPair(String appid,String secret) throws TokenException;
+	public SimpleKeyPair getKeyPair(String appid,String secret) throws TokenException;
 
 	public abstract String genTicket(String account, String worknumber,
 			String appid, String secret)throws TokenException;
@@ -96,4 +97,7 @@ public interface TokenStore {
 	public long getDualtokenlivetime() ;
 
 	public void setDualtokenlivetime(long dualtokenlivetime);
+
+	public abstract void setECCCoder(ECCCoderInf eCCCoder);
+	public abstract ECCCoderInf getECCCoder();
 }

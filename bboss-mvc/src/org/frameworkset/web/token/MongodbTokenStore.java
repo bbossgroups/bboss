@@ -2,8 +2,7 @@ package org.frameworkset.web.token;
 
 import org.apache.log4j.Logger;
 import org.frameworkset.nosql.mongodb.MongoDBHelper;
-import org.frameworkset.security.ecc.ECCCoder;
-import org.frameworkset.security.ecc.ECCCoder.ECKeyPair;
+import org.frameworkset.security.ecc.SimpleKeyPair;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.CommandResult;
@@ -513,7 +512,7 @@ public class MongodbTokenStore extends BaseTokenStore{
 		return token_m ;
 	}
 	
-	public ECKeyPair getKeyPair(String appid,String secret) throws TokenException
+	public SimpleKeyPair getKeyPair(String appid,String secret) throws TokenException
 	{
 		DBCursor cursor = null;
 		try
@@ -528,7 +527,7 @@ public class MongodbTokenStore extends BaseTokenStore{
 			else
 			{
 				try {
-					ECKeyPair keypair = ECCCoder.genECKeyPair();
+					SimpleKeyPair keypair = ECCCoder.genECKeyPair();
 					insertECKeyPair( appid, secret, keypair);
 					return keypair;
 				} catch (Exception e) {
@@ -544,7 +543,7 @@ public class MongodbTokenStore extends BaseTokenStore{
 			}
 		}
 	}
-	private void insertECKeyPair(String appid,String secret,ECKeyPair keypair)
+	private void insertECKeyPair(String appid,String secret,SimpleKeyPair keypair)
 	{
 		this.eckeypairs.insert(new BasicDBObject("appid",appid)		
 		.append("privateKey", keypair.getPrivateKey())
@@ -552,9 +551,9 @@ public class MongodbTokenStore extends BaseTokenStore{
 		.append("publicKey", keypair.getPublicKey()) );
 	}
 	
-	protected ECKeyPair toECKeyPair(DBObject value)
+	protected SimpleKeyPair toECKeyPair(DBObject value)
 	{
-		ECKeyPair ECKeyPair = new ECKeyPair((String)value.get("privateKey"),(String)value.get("publicKey"),null,null);
+		SimpleKeyPair ECKeyPair = new SimpleKeyPair((String)value.get("privateKey"),(String)value.get("publicKey"),null,null);
 		return ECKeyPair;
 	}	
 
