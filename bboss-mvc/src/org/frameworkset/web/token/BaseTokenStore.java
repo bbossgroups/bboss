@@ -14,6 +14,7 @@ public abstract class BaseTokenStore implements TokenStore {
 	protected long ticketdualtime;
 	protected long dualtokenlivetime;
 	protected ECCCoderInf ECCCoder = null;
+	protected ValidateApplication validateApplication;
 	protected String randomToken()
 	{
 		String token = UUID.randomUUID().toString();
@@ -46,9 +47,27 @@ public abstract class BaseTokenStore implements TokenStore {
 	{
 		return genDualToken(appid,ticket, secret, TokenStore.DEFAULT_DUALTOKENLIVETIME) ;
 	}
+	
+	protected void assertApplication(String appid,String secret) throws TokenException
+	{
+		try {
+			boolean result = validateApplication.checkApp(appid, secret);
+			if(!result)
+			{
+				throw new TokenException(TokenStore.ERROR_CODE_APPVALIDATEFAILED);
+			}
+		} catch (TokenException e) {
+			throw e;
+		} catch (Exception e) {
+			throw new TokenException(TokenStore.ERROR_CODE_APPVALIDATERROR,e);
+		}
+			
+	}
 	public String genTicket(String account, String worknumber,
 			String appid, String secret) throws TokenException
 	{
+		
+		this.assertApplication(appid, secret);
 		long createTime = System.currentTimeMillis();
 		if(worknumber == null)
 		{
@@ -281,8 +300,11 @@ public abstract class BaseTokenStore implements TokenStore {
 	
 	public MemToken genAuthTempToken(String appid, String ticket,String secret)  throws TokenException 
 	{
-		return null;
+		this.assertApplication(appid, secret);
+		return _genAuthTempToken(appid, ticket,secret);
 	}
+	
+	protected abstract MemToken _genAuthTempToken(String appid, String ticket,String secret)  throws TokenException;
 	
 	
 	
@@ -295,7 +317,7 @@ public abstract class BaseTokenStore implements TokenStore {
 			result.setResult(TokenStore.temptoken_request_validateresult_nodtoken);
 			return result; 
 		}
-		
+		assertApplication( appid, secret);
 		TokenResult tokeninfo = this.decodeToken(appid,secret,token);
 		Integer result = null;
 		
@@ -332,8 +354,11 @@ public abstract class BaseTokenStore implements TokenStore {
 	
 	public SimpleKeyPair getKeyPair(String appid,String secret) throws TokenException
 	{
-		return null;
+		this.assertApplication(appid, secret);		
+		return _getKeyPair( appid, secret);
 	}
+	
+	protected abstract SimpleKeyPair _getKeyPair(String appid,String secret) throws TokenException;
 	
 	
 
@@ -351,6 +376,24 @@ public abstract class BaseTokenStore implements TokenStore {
 
 	public void setDualtokenlivetime(long dualtokenlivetime) {
 		this.dualtokenlivetime = dualtokenlivetime;
+	}
+	
+	
+	@Override
+	public MemToken genDualToken(String appid, String ticket, String secret,
+			long livetime) throws TokenException {
+		assertApplication( appid, secret);
+		return  _genDualToken( appid,  ticket,  secret,
+				 livetime);
+	}
+	
+	protected abstract MemToken _genDualToken(String appid, String ticket, String secret,
+			long livetime) throws TokenException ;
+	public ValidateApplication getValidateApplication() {
+		return validateApplication;
+	}
+	public void setValidateApplication(ValidateApplication validateApplication) {
+		this.validateApplication = validateApplication;
 	}
 	
 	

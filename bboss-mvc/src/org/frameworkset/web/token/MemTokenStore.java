@@ -8,6 +8,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import org.frameworkset.security.ecc.SimpleKeyPair;
+
 public class MemTokenStore extends BaseTokenStore{
 	private  Map<String,MemToken> temptokens = new HashMap<String,MemToken>();
 	private  Map<String,MemToken> authtemptokens = new HashMap<String,MemToken>();
@@ -246,7 +248,7 @@ public class MemTokenStore extends BaseTokenStore{
 	}
 
 	@Override
-	public MemToken genDualToken(String appid,String ticket, String secret, long livetime) throws TokenException {
+	protected MemToken _genDualToken(String appid,String ticket, String secret, long livetime) throws TokenException {
 		String[] accountinfo = decodeTicket( ticket,
 				 appid,  secret);
 		String token = this.randomToken();
@@ -282,7 +284,7 @@ public class MemTokenStore extends BaseTokenStore{
 	}
 	
 	@Override
-	public MemToken genAuthTempToken(String appid,String ticket, String secret) throws TokenException {
+	protected MemToken _genAuthTempToken(String appid,String ticket, String secret) throws TokenException {
 		String[] accountinfo = decodeTicket( ticket,
 				 appid,  secret);
 		String token = this.randomToken();
@@ -301,6 +303,13 @@ public class MemTokenStore extends BaseTokenStore{
 		this.signToken(token_m, TokenStore.type_authtemptoken, accountinfo,ticket);
 		return token_m ;
 		
+	}
+
+	@Override
+	protected SimpleKeyPair _getKeyPair(String appid, String secret)
+			throws TokenException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	

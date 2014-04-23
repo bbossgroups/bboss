@@ -402,7 +402,7 @@ public class DBTokenStore extends BaseTokenStore {
 	}
 
 	@Override
-	public MemToken genDualToken(String appid,String ticket, String secret, long livetime) throws TokenException {
+	protected MemToken _genDualToken(String appid,String ticket, String secret, long livetime) throws TokenException {
 		
 		String[] accountinfo = decodeTicket( ticket,
 				 appid,  secret);
@@ -461,7 +461,7 @@ public class DBTokenStore extends BaseTokenStore {
 	 * @return
 	 * @throws TokenException 
 	 */
-	public MemToken genAuthTempToken(String appid,String ticket, String secret) throws TokenException {
+	protected MemToken _genAuthTempToken(String appid,String ticket, String secret) throws TokenException {
 		String[] accountinfo = decodeTicket( ticket,
 				 appid,  secret);
 		String token = this.randomToken();//需要将appid,secret,token进行混合加密，生成最终的token进行存储，校验时，只对令牌进行拆分校验
@@ -480,7 +480,7 @@ public class DBTokenStore extends BaseTokenStore {
 		return token_m ;
 	}
 	
-	public SimpleKeyPair getKeyPair(String appid,String secret) throws TokenException
+	protected SimpleKeyPair _getKeyPair(String appid,String secret) throws TokenException
 	{
 		
 		

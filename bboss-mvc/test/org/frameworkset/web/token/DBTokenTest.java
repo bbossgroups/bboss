@@ -20,6 +20,7 @@ public class DBTokenTest {
 	{
 		mongodbTokenStore = new DBTokenStore();
 		mongodbTokenStore.setECCCoder(ECCHelper.getECCCoder());
+		mongodbTokenStore.setValidateApplication(new NullValidateApplication());
 		mongodbTokenStore.setTempTokendualtime(TokenStore.DEFAULT_TEMPTOKENLIVETIME);
 		mongodbTokenStore.setTicketdualtime(TokenStore.DEFAULT_TICKETTOKENLIVETIME);
 		mongodbTokenStore.setDualtokenlivetime(TokenStore.DEFAULT_DUALTOKENLIVETIME);

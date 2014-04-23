@@ -96,6 +96,10 @@ public class TokenService {
 	}
 	public TokenService(long ticketdualtime,long temptokenlivetime,long dualtokenlivetime,long tokenscaninterval,Object tokenstore,boolean enableToken,String ecctype)
 	{
+		this(ticketdualtime,temptokenlivetime,dualtokenlivetime,tokenscaninterval,tokenstore,enableToken,ecctype,new NullValidateApplication());
+	}
+	public TokenService(long ticketdualtime,long temptokenlivetime,long dualtokenlivetime,long tokenscaninterval,Object tokenstore,boolean enableToken,String ecctype,ValidateApplication validateApplication)
+	{
 //		this.tokendualtime = tokendualtime;
 		this.tokenscaninterval = tokenscaninterval;
 //		this.tokenstore = tokenstore; 
@@ -104,6 +108,7 @@ public class TokenService {
 			this.tokenStore = TokenStoreFactory.getTokenStore((String)tokenstore);
 			ECCCoderInf ECCCoder= ECCHelper.getECCCoder(ecctype);
 			tokenStore.setECCCoder(ECCCoder);
+			tokenStore.setValidateApplication(validateApplication);
 		}
 		else
 		{
@@ -113,7 +118,13 @@ public class TokenService {
 				ECCCoderInf ECCCoder= ECCHelper.getECCCoder(ecctype);
 				tokenStore.setECCCoder(ECCCoder);
 			}
+			if(tokenStore.getValidateApplication() == null)
+			{
+				tokenStore.setValidateApplication(validateApplication);
+			}
 		}
+		
+		
 		
 		this.tokenStore.setTempTokendualtime(temptokenlivetime);
 		this.tokenStore.setTicketdualtime(ticketdualtime);

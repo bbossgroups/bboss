@@ -20,6 +20,7 @@ public class TestMongoTokenStore {
 		mongodbTokenStore.setTicketdualtime(TokenStore.DEFAULT_TICKETTOKENLIVETIME);
 		mongodbTokenStore.setDualtokenlivetime(TokenStore.DEFAULT_DUALTOKENLIVETIME);
 		mongodbTokenStore.setECCCoder(ECCHelper.getECCCoder());
+		mongodbTokenStore.setValidateApplication(new NullValidateApplication());
 		String ticket = mongodbTokenStore.genTicket(account, worknumber, appid, secret);
 		MemToken token = mongodbTokenStore.genDualToken(appid,ticket,secret,TokenStore.DEFAULT_DUALTOKENLIVETIME);
 		Assert.assertTrue(TokenStore.temptoken_request_validateresult_ok == mongodbTokenStore.checkToken(appid,secret,token.getSigntoken()).getResult());

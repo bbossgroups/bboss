@@ -41,6 +41,8 @@ public interface TokenStore {
 	public static final String ERROR_CODE_DECODETOKENFAILED = "DECODETOKENFAILED";
 	public static final String ERROR_CODE_GENTICKETFAILED = "GENTICKETFAILED";
 	public static final String ERROR_CODE_GENDUALTOKENFAILED = "GENDUALTOKENFAILED";
+	public static final String ERROR_CODE_APPVALIDATEFAILED = "APPVALIDATEFAILED";
+	public static final String ERROR_CODE_APPVALIDATERROR = "APPVALIDATERROR";
 	
 	public static final String ERROR_CODE_BACKENDERROR = "BACKENDERROR";
 	public static final String ERROR_CODE_DECODETICKETFAILED = "DECODETICKETFAILED";
@@ -100,4 +102,6 @@ public interface TokenStore {
 
 	public abstract void setECCCoder(ECCCoderInf eCCCoder);
 	public abstract ECCCoderInf getECCCoder();
+	public ValidateApplication getValidateApplication() ;
+	public void setValidateApplication(ValidateApplication validateApplication) ;
 }

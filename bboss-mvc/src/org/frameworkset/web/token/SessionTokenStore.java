@@ -1,5 +1,6 @@
 package org.frameworkset.web.token;
 
+import org.frameworkset.security.ecc.SimpleKeyPair;
 import org.frameworkset.security.session.Session;
 
 public class SessionTokenStore extends BaseTokenStore {
@@ -120,7 +121,7 @@ public class SessionTokenStore extends BaseTokenStore {
 	}
 
 	@Override
-	public MemToken genDualToken(String appid,String account, String statictoken, long livetime) {
+	protected MemToken _genDualToken(String appid,String account, String statictoken, long livetime) {
 		String token = this.randomToken();
 		String key = appid + ":"+statictoken;
 		MemToken token_m = null;
@@ -150,6 +151,20 @@ public class SessionTokenStore extends BaseTokenStore {
 		}
 		return token_m ;
 		
+	}
+
+	@Override
+	protected MemToken _genAuthTempToken(String appid, String ticket,
+			String secret) throws TokenException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	protected SimpleKeyPair _getKeyPair(String appid, String secret)
+			throws TokenException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	

@@ -145,21 +145,7 @@ public class RsaCoder extends BaseECCCoder {
 		return b1;
 	}
 	
-	/**
-	 * 加密<br>
-	 * 用公钥加密
-	 * 
-	 * @param data
-	 * @param privateKey
-	 * @return
-	 * @throws Exception
-	 */
-	public  byte[] encrypt(String data, PublicKey pubKey)
-			throws Exception {
-		
-
-		return encrypt(data.getBytes(),  pubKey);
-	}
+	
 
 	@Override
 	public SimpleKeyPair genECKeyPair() throws Exception {
