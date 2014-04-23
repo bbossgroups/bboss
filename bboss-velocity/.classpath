@@ -6,7 +6,6 @@
 	<classpathentry kind="lib" path="lib/antlr-2.7.5.jar"/>
 	<classpathentry kind="lib" path="lib/avalon-logkit-2.1.jar"/>
 	<classpathentry kind="lib" path="lib/commons-collections-3.2.1.jar"/>
-	<classpathentry kind="lib" path="lib/commons-lang-2.4.jar"/>
 	<classpathentry kind="lib" path="lib/commons-logging-1.1.jar"/>
 	<classpathentry kind="lib" path="lib/jdom-1.0.jar"/>
 	<classpathentry kind="lib" path="lib/log4j-1.2.12.jar"/>
@@ -16,5 +15,6 @@
 	<classpathentry kind="lib" path="lib/werken-xpath-0.9.4.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="lib" path="lib/test/ant-1.5.3.jar"/>
+	<classpathentry kind="lib" path="lib/commons-lang-2.6.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

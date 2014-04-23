@@ -6,13 +6,23 @@
 	</projects>
 	<buildSpec>
 		<buildCommand>
-			<name>org.eclipse.wst.jsdt.core.javascriptValidator</name>
+			<name>org.eclipse.ui.externaltools.ExternalToolBuilder</name>
+			<triggers>full,incremental,</triggers>
 			<arguments>
+				<dictionary>
+					<key>LaunchConfigHandle</key>
+					<value>&lt;project&gt;/.externalToolBuilders/org.eclipse.wst.jsdt.core.javascriptValidator.launch</value>
+				</dictionary>
 			</arguments>
 		</buildCommand>
 		<buildCommand>
-			<name>com.genuitec.eclipse.j2eedt.core.WebClasspathBuilder</name>
+			<name>org.eclipse.ui.externaltools.ExternalToolBuilder</name>
+			<triggers>full,incremental,</triggers>
 			<arguments>
+				<dictionary>
+					<key>LaunchConfigHandle</key>
+					<value>&lt;project&gt;/.externalToolBuilders/com.genuitec.eclipse.j2eedt.core.WebClasspathBuilder.launch</value>
+				</dictionary>
 			</arguments>
 		</buildCommand>
 		<buildCommand>
@@ -21,23 +31,43 @@
 			</arguments>
 		</buildCommand>
 		<buildCommand>
-			<name>com.genuitec.eclipse.j2eedt.core.J2EEProjectValidator</name>
+			<name>org.eclipse.ui.externaltools.ExternalToolBuilder</name>
+			<triggers>full,incremental,</triggers>
 			<arguments>
+				<dictionary>
+					<key>LaunchConfigHandle</key>
+					<value>&lt;project&gt;/.externalToolBuilders/com.genuitec.eclipse.j2eedt.core.J2EEProjectValidator.launch</value>
+				</dictionary>
 			</arguments>
 		</buildCommand>
 		<buildCommand>
-			<name>com.genuitec.eclipse.j2eedt.core.DeploymentDescriptorValidator</name>
+			<name>org.eclipse.ui.externaltools.ExternalToolBuilder</name>
+			<triggers>full,incremental,</triggers>
 			<arguments>
+				<dictionary>
+					<key>LaunchConfigHandle</key>
+					<value>&lt;project&gt;/.externalToolBuilders/com.genuitec.eclipse.j2eedt.core.DeploymentDescriptorValidator.launch</value>
+				</dictionary>
 			</arguments>
 		</buildCommand>
 		<buildCommand>
-			<name>org.eclipse.wst.validation.validationbuilder</name>
+			<name>org.eclipse.ui.externaltools.ExternalToolBuilder</name>
+			<triggers>full,incremental,</triggers>
 			<arguments>
+				<dictionary>
+					<key>LaunchConfigHandle</key>
+					<value>&lt;project&gt;/.externalToolBuilders/org.eclipse.wst.validation.validationbuilder.launch</value>
+				</dictionary>
 			</arguments>
 		</buildCommand>
 		<buildCommand>
-			<name>com.genuitec.eclipse.ast.deploy.core.DeploymentBuilder</name>
+			<name>org.eclipse.ui.externaltools.ExternalToolBuilder</name>
+			<triggers>full,incremental,</triggers>
 			<arguments>
+				<dictionary>
+					<key>LaunchConfigHandle</key>
+					<value>&lt;project&gt;/.externalToolBuilders/com.genuitec.eclipse.ast.deploy.core.DeploymentBuilder.launch</value>
+				</dictionary>
 			</arguments>
 		</buildCommand>
 	</buildSpec>
