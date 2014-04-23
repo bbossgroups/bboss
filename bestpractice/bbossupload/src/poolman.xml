@@ -10,7 +10,7 @@
     <loadmetadata>false</loadmetadata>
     <jndiName>jdbc/derby-ds</jndiName>
     <driver>org.apache.derby.jdbc.EmbeddedDriver</driver>
-     <url>jdbc:derby:D:/workspace/bbossgroups-3.5/bestpractice/bbossupload/database/cimdb</url> 
+     <url>jdbc:derby:D:/d/workspace/bbossgroups-3.6.0/bestpractice/bbossupload/database/cimdb</url> 
     <username></username>   
     <password></password>
     <txIsolationLevel>READ_COMMITTED</txIsolationLevel>
