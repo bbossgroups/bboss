@@ -20,7 +20,7 @@ import java.io.Serializable;
 /**
  * <p>Title: DataBaseType</p>
  *
- * <p>Description: ÁĞ¾ÙÊı¾İ¿âÀàĞÍ³£Á¿</p>
+ * <p>Description: åˆ—ä¸¾æ•°æ®åº“ç±»å‹å¸¸é‡</p>
  *
  * <p>Copyright: Copyright (c) 2005</p>
  *

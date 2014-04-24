@@ -31,7 +31,7 @@ import com.frameworkset.util.SimpleStringUtil;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2010-7-23 …œŒÁ11:39:22
+ * @Date 2010-7-23 ‰∏äÂçà11:39:22
  * @author biaoping.yin
  * @version 1.0
  */

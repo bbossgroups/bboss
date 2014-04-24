@@ -22,7 +22,7 @@ package com.frameworkset.common.poolman;
  * <p>Description: </p>
  *
  * <p>Copyright: Copyright (c) 2007</p>
- * @Date 2010-3-11 …œŒÁ10:08:07
+ * @Date 2010-3-11 ‰∏äÂçà10:08:07
  * @author biaoping.yin
  * @version 1.0
  */

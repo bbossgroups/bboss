@@ -226,6 +226,7 @@ public abstract class BaseTokenStore implements TokenStore {
 			else if(tokentype.equals(TokenStore.type_authtemptoken))//需要认证的临时令牌
 			{
 				try {
+					assertApplication( appid, secret);
 					tokenInfo.setTokentype(tokentype);
 					signtoken = token.substring(3);
 					SimpleKeyPair keyPairs = getKeyPair(appid,secret);
@@ -247,6 +248,7 @@ public abstract class BaseTokenStore implements TokenStore {
 			else if(tokentype.equals(TokenStore.type_dualtoken))//有效期令牌校验
 			{
 				try {
+					assertApplication( appid, secret);
 					tokenInfo.setTokentype(tokentype);
 					signtoken = token.substring(3);
 					SimpleKeyPair keyPairs = getKeyPair(appid,secret);
@@ -317,7 +319,7 @@ public abstract class BaseTokenStore implements TokenStore {
 			result.setResult(TokenStore.temptoken_request_validateresult_nodtoken);
 			return result; 
 		}
-		assertApplication( appid, secret);
+		
 		TokenResult tokeninfo = this.decodeToken(appid,secret,token);
 		Integer result = null;
 		

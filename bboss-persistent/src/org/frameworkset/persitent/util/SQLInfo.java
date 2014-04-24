@@ -21,7 +21,7 @@ package org.frameworkset.persitent.util;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2012-12-5 …œŒÁ9:46:28
+ * @Date 2012-12-5 ‰∏äÂçà9:46:28
  * @author biaoping.yin
  * @version 1.0
  */

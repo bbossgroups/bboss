@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry excluding="xjavadoc/" kind="src" path="src"/>
-	<classpathentry kind="src" path="src-jdk6"/>
+	<classpathentry kind="src" path="src-jdk7"/>
 	<classpathentry kind="src" path="resources"/>
 	<classpathentry kind="src" path="test"/>
 	<classpathentry kind="src" path="listener"/>

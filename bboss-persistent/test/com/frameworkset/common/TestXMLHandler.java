@@ -32,7 +32,7 @@ import com.frameworkset.orm.engine.model.SchemaType;
  * <p>Description: </p>
  *
  * <p>Copyright: Copyright (c) 2007</p>
- * @Date 2009-5-14 …œŒÁ10:45:37
+ * @Date 2009-5-14 ‰∏äÂçà10:45:37
  * @author biaoping.yin
  * @version 1.0
  */
