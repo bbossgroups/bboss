@@ -147,7 +147,7 @@
 			</antcall>
 		</target>
 	<target name="distrib-bboss-persistent-jars" description="distrib-bboss-persistent-jars">
-		<for list="${bboss-schedule-lib},${bboss-plugin-wordpdf-lib-depends},${bbossupload-lib},${demoproject-lib},${portallib},${casserverlib},${active-ext-lib},${cms_baseline-lib},${bboss-taglib-lib},${kettle-lib},${monitorconsole-lib},${monitorconsole-compilelib},${bboss-mvc-lib},${creatoresb-lib},${mvc-lib},${persistent-lib},${xmlrequest-lib},${bboss-plugin-hibernate-lib}" param="destdir">
+		<for list="${bboss-security-lib},${bboss-schedule-lib},${bboss-plugin-wordpdf-lib-depends},${bbossupload-lib},${demoproject-lib},${portallib},${casserverlib},${active-ext-lib},${cms_baseline-lib},${bboss-taglib-lib},${kettle-lib},${monitorconsole-lib},${monitorconsole-compilelib},${bboss-mvc-lib},${creatoresb-lib},${mvc-lib},${persistent-lib},${xmlrequest-lib},${bboss-plugin-hibernate-lib}" param="destdir">
 			<sequential>
 				<echo>@{destdir}-------------------------------</echo>
 				<antcall target="svn-update-procedure">
@@ -229,7 +229,7 @@
 			</sequential>
 			
 		</for>
-		<for list="${bboss-plugin-wordpdf-lib-depends}" param="destdir">
+		<for list="${bboss-security-lib},${bboss-plugin-wordpdf-lib-depends}" param="destdir">
 			<sequential>
 				<echo>@{destdir}-------------------------------</echo>
 				<antcall target="svn-update-procedure">
@@ -303,7 +303,7 @@
 		</target>
 
 	<target name="distrib-bboss-util-jars" description="distrib-bboss-util-jars">
-		<for list="${bboss-schedule-lib},${bboss-plugin-wordpdf-lib-depends},${bboss-plugin-hessian-lib},${bbossupload-lib},${demoproject-lib},${active-ext-lib},${bboss-aop-lib},${bbossevent-lib},${cms_baseline-lib},${bboss-persistent-lib},${bboss-taglib-lib},${kettle-lib},${portallib},${casserverlib},${monitorconsole-lib},${monitorconsole-compilelib},${bboss-mvc-lib},${creatoresb-lib},${bboss-clientproxy-lib},${mvc-lib},${persistent-lib},${xmlrequest-lib},${xmlserializable-lib},${bboss-plugin-hibernate-lib}" param="destdir">
+		<for list="${bboss-security-lib},${bboss-schedule-lib},${bboss-plugin-wordpdf-lib-depends},${bboss-plugin-hessian-lib},${bbossupload-lib},${demoproject-lib},${active-ext-lib},${bboss-aop-lib},${bbossevent-lib},${cms_baseline-lib},${bboss-persistent-lib},${bboss-taglib-lib},${kettle-lib},${portallib},${casserverlib},${monitorconsole-lib},${monitorconsole-compilelib},${bboss-mvc-lib},${creatoresb-lib},${bboss-clientproxy-lib},${mvc-lib},${persistent-lib},${xmlrequest-lib},${xmlserializable-lib},${bboss-plugin-hibernate-lib}" param="destdir">
 			<sequential>
 				<echo>@{destdir}-------------------------------</echo>
 				<antcall target="svn-update-procedure">
@@ -328,7 +328,7 @@
 			</for>
 		</target>
 	<target name="distrib-bboss-velocity-jars" description="distrib-bboss-velocity-jars">
-		<for list="${bboss-util-lib},${bbossupload-lib},${demoproject-lib},${active-ext-lib},${bboss-aop-lib},${bbossevent-lib},${cms_baseline-lib},${bboss-persistent-lib}/velocity,${bboss-taglib-lib},${kettle-lib},${portallib},${casserverlib},${monitorconsole-lib},${monitorconsole-compilelib},${bboss-mvc-lib},${creatoresb-lib},${bboss-clientproxy-lib},${mvc-lib},${persistent-lib},${xmlrequest-lib},${xmlserializable-lib},${bboss-plugin-hibernate-lib}" param="destdir">
+		<for list="${bboss-security-lib},${bboss-util-lib},${bbossupload-lib},${demoproject-lib},${active-ext-lib},${bboss-aop-lib},${bbossevent-lib},${cms_baseline-lib},${bboss-persistent-lib}/velocity,${bboss-taglib-lib},${kettle-lib},${portallib},${casserverlib},${monitorconsole-lib},${monitorconsole-compilelib},${bboss-mvc-lib},${creatoresb-lib},${bboss-clientproxy-lib},${mvc-lib},${persistent-lib},${xmlrequest-lib},${xmlserializable-lib},${bboss-plugin-hibernate-lib}" param="destdir">
 			<sequential>
 				<echo>@{destdir}-------------------------------</echo>
 				<antcall target="svn-update-procedure">
@@ -368,6 +368,11 @@
 		<ant dir="${bboss-mvc}" />
 		<antcall target="distrib-bboss-mvc-jars" />
 		<antcall target="distrib-bboss-mvc-resources" />
+	</target>
+	
+	<target name="build-bboss-security" description="build bboss-security project">
+			<ant dir="${bboss-security}" />
+			<antcall target="distrib-bboss-security-jars" />			
 	</target>
 	
 	<target name="build-bboss-mvc-only-noresources" description="build bboss-mvc project">
@@ -474,7 +479,7 @@ bbossaop<-cas server [bboss-aop.jar]
 			</sequential>
 		</for>
 
-		<for list="${bboss-schedule-lib},${bboss-plugin-wordpdf-lib-depends},${bboss-plugin-hessian-lib},${bboss-persistent-lib},${bbossupload-lib},${bboss-taglib-lib},${portallib},${casserverlib},${mvc-lib},${xmlrequest-lib},${xmlserializable-lib},${persistent-lib},${bboss-plugin-hibernate-lib}" param="destdir">
+		<for list="${bboss-security-lib},${bboss-schedule-lib},${bboss-plugin-wordpdf-lib-depends},${bboss-plugin-hessian-lib},${bboss-persistent-lib},${bbossupload-lib},${bboss-taglib-lib},${portallib},${casserverlib},${mvc-lib},${xmlrequest-lib},${xmlserializable-lib},${persistent-lib},${bboss-plugin-hibernate-lib}" param="destdir">
 			<sequential>
 				<echo>@{destdir}-------------------------------</echo>
 				<antcall target="svn-update-procedure">
@@ -533,6 +538,18 @@ bbossaop<-cas server [bboss-aop.jar]
 				</sequential>
 			</for>
 		</target>
+	<target name="distrib-bboss-security-jars" description="distrib-bboss-security-jars">
+				<for list="${bboss-plugin-wordpdf-lib-depends},${bboss-plugin-hessian-lib},${bbossupload-lib},${demoproject-lib},${cms_baseline-lib},${monitorconsole-compilelib},${monitorconsole-lib},${creatoresb-lib},${mvc-lib},${xmlrequest-lib}" param="destdir">
+					<sequential>
+						<echo>@{destdir}-------------------------------</echo>
+						<antcall target="svn-update-procedure">
+							<param name="sourcedir" value="${bboss-security}/distrib" />
+							<param name="filedir" value="@{destdir}" />
+							<param name="files" value="bboss-security.jar" />
+						</antcall>
+					</sequential>
+				</for>
+			</target>
 	<target name="distrib-bboss-mvc-resources" description="distrib-bboss-mvc-resources">
 			<!--<for list="${demoproject}/WebRoot/WEB-INF,${bbossupload}/WebRoot/WEB-INF,${mvc}/WebRoot/WEB-INF,${xmlrequest}/WebRoot/WEB-INF" param="destdir">
 				<sequential>

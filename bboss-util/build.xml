@@ -42,7 +42,6 @@
 			<src path="src-charset" />			
 			<classpath id="cp-classes-bboss-util">
 				<fileset dir="lib/" includes="*.jar *.zip" />
-				<fileset dir="lib/bc" includes="*.jar *.zip" />
 				<fileset dir="lib/ext" includes="jsp-api.jar junit-4.6.jar servlet-api.jar rt-ecc.jar" />
 				
 				

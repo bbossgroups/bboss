@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="src-encoder"/>
+	<classpathentry kind="src" path="src-token"/>
+	<classpathentry kind="src" path="test"/>
+	<classpathentry kind="src" path="resources"/>
+	<classpathentry kind="lib" path="lib/bc/bcpkix-jdk15on-150.jar"/>
+	<classpathentry kind="lib" path="lib/bc/bcprov-ext-jdk15on-150.jar"/>
+	<classpathentry kind="lib" path="lib/bc/bcprov-jdk15on-150.jar"/>
+	<classpathentry kind="lib" path="lib/CoDec-build17-jdk13.jar"/>
+	<classpathentry kind="lib" path="lib/FlexiCoreProvider-1.7p7.signed.jar"/>
+	<classpathentry kind="lib" path="lib/FlexiECProvider-1.7p7.signed.jar"/>
+	<classpathentry kind="lib" path="lib/mongo-java-driver-2.9.3-sources.jar"/>
+	<classpathentry kind="lib" path="lib/mongo-java-driver-2.9.3.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="lib-compile/jsp-api.jar"/>
+	<classpathentry kind="lib" path="lib-compile/junit-4.6.jar"/>
+	<classpathentry kind="lib" path="lib-compile/servlet-api.jar"/>
+	<classpathentry kind="lib" path="lib/log4j-1.2.14.jar"/>
+	<classpathentry kind="lib" path="lib/bboss-aop.jar"/>
+	<classpathentry kind="lib" path="lib/bboss-velocity.jar"/>
+	<classpathentry kind="lib" path="lib/commons-lang-2.6.jar"/>
+	<classpathentry kind="lib" path="lib/frameworkset-pool.jar"/>
+	<classpathentry kind="lib" path="lib/frameworkset-util.jar"/>
+	<classpathentry kind="lib" path="lib/frameworkset.jar"/>
+	<classpathentry kind="output" path="classes"/>
+</classpath>

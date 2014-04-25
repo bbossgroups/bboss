@@ -37,7 +37,6 @@
 	<target name="compile-frameworkset-pool" description="compile the bboss-persistent source ">
 		<echo>compile the frameworkset-pool source ...</echo>
 		<javac encoding="UTF-8" destdir="classes-bboss-persistent" 
-			executable="${JDK}/bin/javac"
 			target="1.5" source="1.5" deprecation="true" debug="${debug}" optimize="${optimize}" memorymaximumsize="256M" fork="true" verbose="yes">
 			<src path="src" />			
 			<src path="src-jdk5" />
