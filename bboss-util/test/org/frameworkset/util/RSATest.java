@@ -18,6 +18,7 @@ package org.frameworkset.util;
 import org.frameworkset.security.ecc.ECCCoderInf;
 import org.frameworkset.security.ecc.ECCHelper;
 import org.frameworkset.security.ecc.SimpleKeyPair;
+import org.frameworkset.util.encoder.Hex;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -39,8 +40,15 @@ public class RSATest {
 	@Test
 	public void test() throws Exception {
 		String inputStr = "尹标平";
+		
 		byte[] data = inputStr.getBytes();
-		ECCCoderInf ECCCoder = ECCHelper.getECCCoder(ECCHelper.ECC_RSA);
+		String ddd = Hex.toHexString(data);
+		System.out.println("hex ddd:"+ddd);
+		byte[] data0 = Hex.decode(ddd);
+		System.out.println("hex data0:"+new String(data0));
+		
+		
+		ECCCoderInf ECCCoder = ECCHelper.getECCCoder(ECCHelper.RSA);
 		SimpleKeyPair keyMap = ECCCoder.genECKeyPair();
 
 		String publicKey = keyMap.getPublicKey();
@@ -48,8 +56,10 @@ public class RSATest {
 		System.err.println("公钥: \n" + publicKey);
 		System.err.println("私钥： \n" + privateKey);
 		byte[] encodedData = ECCCoder.encrypt(data, publicKey);
-		System.out.println("明文:"+Base64.encode(inputStr.getBytes()));
-		System.out.println("密文:"+Base64.encode(encodedData));
+		System.out.println("HEX明文:"+Hex.toHexString(encodedData));
+		System.out.println("Base64 密文:"+Base64.encode(encodedData));
+//		String sss = Base64.toHex(encodedData);
+//		encodedData = Base64.hexStringToBytes(sss);
 		byte[] decodedData = ECCCoder.decrypt(encodedData, privateKey);
 		inputStr = "解密局解密局";
 		data = inputStr.getBytes();
@@ -69,7 +79,7 @@ public class RSATest {
 	@Test
 	public void testGenKey() throws Exception {
 		
-		ECCCoderInf ECCCoder = ECCHelper.getECCCoder(ECCHelper.ECC_RSA);
+		ECCCoderInf ECCCoder = ECCHelper.getECCCoder(ECCHelper.RSA);
 		SimpleKeyPair keyMap = ECCCoder.genECKeyPair();
 
 		String publicKey = keyMap.getPublicKey();

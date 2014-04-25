@@ -4,7 +4,8 @@ import java.util.UUID;
 
 import org.frameworkset.security.ecc.ECCCoderInf;
 import org.frameworkset.security.ecc.SimpleKeyPair;
-import org.frameworkset.util.Base64;
+import org.frameworkset.util.encoder.Hex;
+
 
 //import com.mongodb.DBObject;
 
@@ -85,13 +86,13 @@ public abstract class BaseTokenStore implements TokenStore {
 			{
 				
 				data = ECCCoder.encrypt(ticket.getBytes(), keyPairs.getPubKey());
-				ticket= Base64.encode(data);
+				ticket= Hex.toHexString(data);
 				
 			}
 			else
 			{
 				data = ECCCoder.encrypt(ticket.getBytes(), keyPairs.getPublicKey());
-				ticket= Base64.encode(data);
+				ticket= Hex.toHexString(data);
 			}
 			return ticket;
 		} catch (TokenException e) {
@@ -116,14 +117,14 @@ public abstract class BaseTokenStore implements TokenStore {
 			if(keyPairs.getPriKey() != null)
 			{
 				
-				data = ECCCoder.decrypt(Base64.decode(ticket), keyPairs.getPriKey());
+				data = ECCCoder.decrypt(Hex.decode(ticket), keyPairs.getPriKey());
 				accountinfo = new String(data);
 				
 //			return signtoken;
 			}
 			else
 			{
-				data = ECCCoder.decrypt(Base64.decode(ticket), keyPairs.getPrivateKey());
+				data = ECCCoder.decrypt(Hex.decode(ticket), keyPairs.getPrivateKey());
 				accountinfo = new String(data);
 //			return signtoken;
 			}
@@ -159,14 +160,14 @@ public abstract class BaseTokenStore implements TokenStore {
 				{
 					
 					data = ECCCoder.encrypt(input.getBytes(), keyPairs.getPubKey());
-					String signtoken =TokenStore.type_authtemptoken+"_"+ Base64.encode(data);
+					String signtoken =TokenStore.type_authtemptoken+"_"+ Hex.toHexString(data);
 					token.setSigntoken(signtoken);
 //					return signtoken;
 				}
 				else
 				{
 					data = ECCCoder.encrypt(input.getBytes(), keyPairs.getPublicKey());
-					String signtoken = TokenStore.type_authtemptoken+"_"+Base64.encode(data);
+					String signtoken = TokenStore.type_authtemptoken+"_"+Hex.toHexString(data);
 					token.setSigntoken(signtoken);
 //					return signtoken;
 				}
@@ -181,14 +182,14 @@ public abstract class BaseTokenStore implements TokenStore {
 				if(keyPairs.getPubKey() != null)
 				{				
 					data = ECCCoder.encrypt(input.getBytes(), keyPairs.getPubKey());
-					String signtoken = TokenStore.type_dualtoken+"_"+Base64.encode(data);
+					String signtoken = TokenStore.type_dualtoken+"_"+Hex.toHexString(data);
 					token.setSigntoken(signtoken);
 //					return signtoken;
 				}
 				else
 				{
 					data = ECCCoder.encrypt(input.getBytes(), keyPairs.getPublicKey());
-					String signtoken = TokenStore.type_dualtoken+"_"+Base64.encode(data);
+					String signtoken = TokenStore.type_dualtoken+"_"+Hex.toHexString(data);
 					token.setSigntoken(signtoken);
 //					return signtoken;
 				}
@@ -232,7 +233,7 @@ public abstract class BaseTokenStore implements TokenStore {
 					SimpleKeyPair keyPairs = getKeyPair(appid,secret);
 					
 					tokenInfo.setAppid(appid);
-					String mw = new String(ECCCoder.decrypt(Base64.decode(signtoken), keyPairs.getPrivateKey()));
+					String mw = new String(ECCCoder.decrypt(Hex.decode(signtoken), keyPairs.getPrivateKey()));
 					String[] t = mw.split("\\|");
 					tokenInfo.setToken(t[2]);
 					tokenInfo.setWorknumber(t[1]);
@@ -254,7 +255,7 @@ public abstract class BaseTokenStore implements TokenStore {
 					SimpleKeyPair keyPairs = getKeyPair(appid,secret);
 					
 					tokenInfo.setAppid(appid);
-					String mw = new String(ECCCoder.decrypt(Base64.decode(signtoken), keyPairs.getPrivateKey()));
+					String mw = new String(ECCCoder.decrypt(Hex.decode(signtoken), keyPairs.getPrivateKey()));
 					String[] t = mw.split("\\|");
 					tokenInfo.setToken(t[2]);
 					tokenInfo.setWorknumber(t[1]);

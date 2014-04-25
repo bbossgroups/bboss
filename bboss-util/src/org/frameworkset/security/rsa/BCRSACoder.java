@@ -17,9 +17,11 @@ package org.frameworkset.security.rsa;
 
 import java.security.KeyFactory;
 import java.security.KeyPair;
+import java.security.KeyPairGenerator;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.SecureRandom;
+import java.security.Security;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 
@@ -29,109 +31,96 @@ import org.frameworkset.security.ecc.BaseECCCoder;
 
 
 
+
 /**
- * <p>Title: RsaCoder.java</p> 
+ * <p>Title: BCRSACoder.java</p> 
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2008</p>
- * @Date 2014年4月22日
+ * @Date 2014年4月25日
  * @author biaoping.yin
  * @version 3.8.0
  */
-public class RsaCoder extends BaseECCCoder {
-	/** 指定加密算法为RSA */
-	private static String ALGORITHM = "RSA";
-	/** 指定key的大小 */
-	private static int KEYSIZE = 1024;
-
+public class BCRSACoder extends BaseECCCoder {
+	static
+	{
+		Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
+	}
 	public  PrivateKey _evalECPrivateKey(byte[] privateKey)
 	{
+		
 			try {
 				
 				// 对密钥解密
 				PKCS8EncodedKeySpec pkcs8KeySpec = new PKCS8EncodedKeySpec(privateKey);
-				KeyFactory keyFactory = KeyFactory.getInstance(ALGORITHM);
+				KeyFactory keyFactory = KeyFactory.getInstance("RSA", "BC");
 	
 				PrivateKey priKey = (PrivateKey) keyFactory
 						.generatePrivate(pkcs8KeySpec);
+				 
 				return priKey;
 			} catch (Exception e) {
 				throw new java.lang.RuntimeException(e);
 			}
+		
 	}
 	
 	public  PublicKey _evalECPublicKey(byte[] publicKey)
 	{
+		
 		
 			try {
 				// 对公钥解密
 
 				// 取得公钥
 				X509EncodedKeySpec x509KeySpec = new X509EncodedKeySpec(publicKey);
-				KeyFactory keyFactory = KeyFactory.getInstance(ALGORITHM);
+				KeyFactory keyFactory = KeyFactory.getInstance("RSA", "BC");
 
 				PublicKey pubKey = (PublicKey) keyFactory
 						.generatePublic(x509KeySpec);
+				
 				return pubKey;
 			} catch (Exception e) {
 				throw new java.lang.RuntimeException(e);
 			}
 		
-	}
-
-	
-	
-	/**
-	 * 解密<br>
-	 * 用私钥解密
-	 * 
-	 * @param data
-	 * @param key
-	 * @return
-	 * @throws Exception
-	 */
-	public  byte[] decrypt(byte[] data, PrivateKey priKey) throws Exception {
-		Cipher cipher = Cipher.getInstance(ALGORITHM);
-		cipher.init(Cipher.DECRYPT_MODE, priKey);
 		
-		/** 执行解密操作 */
-		byte[] b = cipher.doFinal(data);
-		return b;
+	}
+	@Override
+	public byte[] decrypt(byte[] data, PrivateKey priKey_) throws Exception {
+		 Cipher	         cipher = Cipher.getInstance("RSA/NONE/PKCS1Padding", "BC");
+		  cipher.init(Cipher.DECRYPT_MODE, priKey_);
+
+	     byte[] cipherText = cipher.doFinal(data);
+		return cipherText;
 	}
 
-	
-	
-	/**
-	 * 加密<br>
-	 * 用公钥加密
-	 * 
-	 * @param data
-	 * @param privateKey
-	 * @return
-	 * @throws Exception
-	 */
-	public  byte[] encrypt(byte[] data, PublicKey pubKey)
-			throws Exception {
-		
+	@Override
+	public byte[] encrypt(byte[] data, PublicKey pubKey_) throws Exception {
+		Cipher	         cipher = Cipher.getInstance("RSA/NONE/PKCS1Padding", "BC");
+		  cipher.init(Cipher.ENCRYPT_MODE, pubKey_);
 
-		Cipher cipher = Cipher.getInstance(ALGORITHM);
-		cipher.init(Cipher.ENCRYPT_MODE, pubKey);
-		/** 执行加密操作 */
-		byte[] b1 = cipher.doFinal(data);
-		return b1;
+	        byte[] cipherText = cipher.doFinal(data);
+		return cipherText;
 	}
-	
-	
 
 	@Override
 	public KeyPair _genECKeyPair() throws Exception {
-				java.security.KeyPairGenerator keygen = java.security.KeyPairGenerator
-			     .getInstance(ALGORITHM);
-			   SecureRandom secrand = new SecureRandom();
-			   secrand.setSeed(randomToken().getBytes()); // 初始化随机产生器
-			   keygen.initialize(KEYSIZE, secrand);
-			   KeyPair keys = keygen.genKeyPair();
-			   return keys;
+	
+//      SecureRandom     random = Utils.createFixedRandom();
+      SecureRandom secrand = new SecureRandom();
+		   secrand.setSeed(randomToken().getBytes()); // 初始化随机产生器
+      
+      // create the keys
+      KeyPairGenerator generator = KeyPairGenerator.getInstance("RSA", "BC");
+      
+      generator.initialize(1024, secrand);
+
+      KeyPair          pair = generator.generateKeyPair();
+     
+		return  pair;
+		
+		
 	}
 
 }

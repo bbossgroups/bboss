@@ -10,7 +10,7 @@ public class TestMongoTokenStore {
 	private String account = "yinbp";
 	private String worknumber = "10006673";
 	private String appid = "sim";
-	private String secret = "xxxxxxxxxxxxxxxxxxxxxx";
+	private String secret = "A75399B0158B6A1AABBF8F7C3211EB13";
 	
 	@Before
 	public void init() throws Exception

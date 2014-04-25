@@ -15,13 +15,18 @@
  */
 package org.frameworkset.security.ecc;
 
+import java.security.KeyFactory;
+import java.security.KeyPair;
 import java.security.PrivateKey;
 import java.security.PublicKey;
+import java.security.spec.PKCS8EncodedKeySpec;
+import java.security.spec.X509EncodedKeySpec;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-import org.frameworkset.util.Base64;
+import org.frameworkset.util.encoder.Hex;
+
 
 /**
  * <p>Title: BaseECCCoder.java</p> 
@@ -42,16 +47,53 @@ public abstract class BaseECCCoder implements ECCCoderInf {
 		String token = UUID.randomUUID().toString();
 		return token;
 	}
-	@Override
-	public PrivateKey evalECPrivateKey(String privateKey) {
-		// TODO Auto-generated method stub
-		return null;
+	public  abstract PrivateKey _evalECPrivateKey(byte[] privateKey);
+	public  PrivateKey evalECPrivateKey(String privateKey)
+	{
+		PrivateKey priKey = PrivateKeyIndex.get(privateKey);
+		if(priKey != null)
+			return priKey;
+		synchronized(PrivateKeyIndex)
+		{
+			priKey = PrivateKeyIndex.get(privateKey);
+			if(priKey != null)
+				return priKey;
+			try {
+				
+				// 对密钥解密
+				byte[] keyBytes = Hex.decode(privateKey);
+				 priKey = _evalECPrivateKey( keyBytes);
+				 PrivateKeyIndex.put(privateKey, priKey);
+				return priKey;
+			} catch (Exception e) {
+				throw new java.lang.RuntimeException(e);
+			}
+		}
 	}
+	public  abstract PublicKey _evalECPublicKey(byte[] publicKey);
+	public  PublicKey evalECPublicKey(String publicKey)
+	{
+		
+		PublicKey pubKey = ECPublicKeyIndex.get(publicKey);
+		if(pubKey != null)
+			return pubKey;
+		synchronized(ECPublicKeyIndex)
+		{
+			pubKey = ECPublicKeyIndex.get(publicKey);
+			if(pubKey != null)
+				return pubKey;
+			try {
+				// 对公钥解密
+				byte[] keyBytes = Hex.decode(publicKey);
 
-	@Override
-	public PublicKey evalECPublicKey(String publicKey) {
-		// TODO Auto-generated method stub
-		return null;
+				pubKey = _evalECPublicKey(keyBytes);
+				ECPublicKeyIndex.put(publicKey, pubKey);
+				return pubKey;
+			} catch (Exception e) {
+				throw new java.lang.RuntimeException(e);
+			}
+		}
+		
 	}
 
 	/**
@@ -78,7 +120,7 @@ public abstract class BaseECCCoder implements ECCCoderInf {
 	 * @throws Exception
 	 */
 	public  byte[] decrypt(String database64, String privatekey) throws Exception {
-		byte[] data = Base64.decode(database64);
+		byte[] data = Hex.decode(database64);
 		return decrypt(data,  privatekey);
 	}
 	
@@ -94,7 +136,7 @@ public abstract class BaseECCCoder implements ECCCoderInf {
 	public  byte[] decrypt(String database64, PrivateKey priKey) throws Exception {
 		
 		
-		return decrypt(Base64.decode(database64),  priKey) ;
+		return decrypt(Hex.decode(database64),  priKey) ;
 	}
 	
 
@@ -154,10 +196,24 @@ public abstract class BaseECCCoder implements ECCCoderInf {
 		return encrypt(data.getBytes(),  pubKey);
 	}
 
-	@Override
+	
+	public abstract KeyPair _genECKeyPair() throws Exception ;
 	public SimpleKeyPair genECKeyPair() throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+			KeyPair pair = _genECKeyPair();	      
+	        PublicKey              pubKey = pair.getPublic();
+	        PrivateKey              privKey = pair.getPrivate();
+	        String sprivateKey = Hex.toHexString(privKey.getEncoded());
+	  		String spublicKey = Hex.toHexString(pubKey.getEncoded());
+	  		SimpleKeyPair ECKeyPair = new SimpleKeyPair(sprivateKey, spublicKey,
+	  				pubKey, privKey);
+	  		PrivateKeyPairIndex.put(sprivateKey, ECKeyPair);
+	  		this.PrivateKeyIndex.put(sprivateKey, privKey);
+	  		
+	  		ECPublicKeyPairIndex.put(spublicKey, ECKeyPair);
+	  		this.ECPublicKeyIndex.put(spublicKey, pubKey);
+	  		return ECKeyPair;
+	       
 	}
+	
 
 }

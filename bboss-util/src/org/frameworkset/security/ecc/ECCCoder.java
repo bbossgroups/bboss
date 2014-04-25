@@ -2,6 +2,7 @@ package org.frameworkset.security.ecc;
 
 import java.math.BigInteger;
 import java.security.KeyFactory;
+import java.security.KeyPair;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.interfaces.ECPrivateKey;
@@ -18,7 +19,10 @@ import java.security.spec.X509EncodedKeySpec;
 import javax.crypto.Cipher;
 import javax.crypto.NullCipher;
 
-import org.frameworkset.util.Base64;
+
+
+
+import org.frameworkset.util.encoder.Hex;
 
 import sun.security.ec.ECKeyFactory;
 import sun.security.ec.ECPrivateKeyImpl;
@@ -37,64 +41,46 @@ public class ECCCoder extends BaseECCCoder  {
 	 * @see org.frameworkset.security.ecc.ECCCoderInf#evalECPrivateKey(java.lang.String)
 	 */
 	@Override
-	public PrivateKey evalECPrivateKey(String privateKey)
+	public PrivateKey _evalECPrivateKey(byte[] privateKey)
 	{
-		ECPrivateKey priKey = (ECPrivateKey)PrivateKeyIndex.get(privateKey);
-		if(priKey != null)
-			return priKey;
-		synchronized(PrivateKeyIndex)
-		{
-			priKey = (ECPrivateKey)PrivateKeyIndex.get(privateKey);
-			if(priKey != null)
-				return priKey;
+		
 			try {
 				
 				// 对密钥解密
-				byte[] keyBytes = Base64.decode(privateKey);
-				PKCS8EncodedKeySpec pkcs8KeySpec = new PKCS8EncodedKeySpec(keyBytes);
+				PKCS8EncodedKeySpec pkcs8KeySpec = new PKCS8EncodedKeySpec(privateKey);
 				KeyFactory keyFactory = ECKeyFactory.INSTANCE;
 	
-				 priKey = (ECPrivateKey) keyFactory
+				ECPrivateKey priKey = (ECPrivateKey) keyFactory
 						.generatePrivate(pkcs8KeySpec);
-				 PrivateKeyIndex.put(privateKey, priKey);
 				return priKey;
 			} catch (Exception e) {
 				throw new java.lang.RuntimeException(e);
 			}
-		}
+		
 	}
 	
 	/* (non-Javadoc)
 	 * @see org.frameworkset.security.ecc.ECCCoderInf#evalECPublicKey(java.lang.String)
 	 */
 	@Override
-	public  PublicKey evalECPublicKey(String publicKey)
+	public  PublicKey _evalECPublicKey(byte[] publicKey)
 	{
 		
-		ECPublicKey pubKey = (ECPublicKey)ECPublicKeyIndex.get(publicKey);
-		if(pubKey != null)
-			return pubKey;
-		synchronized(ECPublicKeyIndex)
-		{
-			pubKey = (ECPublicKey)ECPublicKeyIndex.get(publicKey);
-			if(pubKey != null)
-				return pubKey;
+		
 			try {
 				// 对公钥解密
-				byte[] keyBytes = Base64.decode(publicKey);
 
 				// 取得公钥
-				X509EncodedKeySpec x509KeySpec = new X509EncodedKeySpec(keyBytes);
+				X509EncodedKeySpec x509KeySpec = new X509EncodedKeySpec(publicKey);
 				KeyFactory keyFactory = ECKeyFactory.INSTANCE;
 
-				pubKey = (ECPublicKey) keyFactory
+				ECPublicKey pubKey = (ECPublicKey) keyFactory
 						.generatePublic(x509KeySpec);
-				ECPublicKeyIndex.put(publicKey, pubKey);
 				return pubKey;
 			} catch (Exception e) {
 				throw new java.lang.RuntimeException(e);
 			}
-		}
+		
 		
 	}
 
@@ -188,18 +174,24 @@ public class ECCCoder extends BaseECCCoder  {
 				n, h);
 		// 公钥
 		ECPublicKey publicKey = new ECPublicKeyImpl(g, ecParameterSpec);
-		String spublicKey = Base64.encode(publicKey.getEncoded());
+		String spublicKey = Hex.toHexString(publicKey.getEncoded());
 
 		BigInteger s = new BigInteger(
 				"1234006549323611672814741753598448348329118574063", 10);
 		// 私钥
 		ECPrivateKey privateKey = new ECPrivateKeyImpl(s, ecParameterSpec);
-		String sprivateKey = Base64.encode(privateKey.getEncoded());
+		String sprivateKey = Hex.toHexString(privateKey.getEncoded());
 		SimpleKeyPair ECKeyPair = new SimpleKeyPair(sprivateKey, spublicKey,
 				publicKey, privateKey);
 		PrivateKeyPairIndex.put(sprivateKey, ECKeyPair);
 		ECPublicKeyPairIndex.put(spublicKey, ECKeyPair);
 		return ECKeyPair;
+	}
+
+	@Override
+	public KeyPair _genECKeyPair() throws Exception {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

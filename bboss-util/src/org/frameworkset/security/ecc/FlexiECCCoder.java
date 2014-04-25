@@ -24,7 +24,9 @@ import java.security.Security;
 
 import javax.crypto.Cipher;
 
-import org.frameworkset.util.Base64;
+
+
+import org.frameworkset.util.encoder.Hex;
 
 import de.flexiprovider.api.keys.KeyFactory;
 import de.flexiprovider.common.ies.IESParameterSpec;
@@ -53,60 +55,38 @@ public class FlexiECCCoder extends BaseECCCoder{
 	}
 	
 	
-	public  PrivateKey evalECPrivateKey(String privateKey)
+	public  PrivateKey _evalECPrivateKey(byte[] privateKey)
 	{
-		PrivateKey priKey = PrivateKeyIndex.get(privateKey);
-		if(priKey != null)
-			return priKey;
-		synchronized(PrivateKeyIndex)
-		{
-			priKey = PrivateKeyIndex.get(privateKey);
-			if(priKey != null)
-				return priKey;
 			try {
 				
 				// 对密钥解密
-				byte[] keyBytes = Base64.decode(privateKey);
-				PKCS8EncodedKeySpec pkcs8KeySpec = new PKCS8EncodedKeySpec(keyBytes);
+				PKCS8EncodedKeySpec pkcs8KeySpec = new PKCS8EncodedKeySpec(privateKey);
 				KeyFactory keyFactory = new ECKeyFactory();
 	
-				 priKey = (PrivateKey) keyFactory
+				PrivateKey priKey = (PrivateKey) keyFactory
 						.generatePrivate(pkcs8KeySpec);
-				 PrivateKeyIndex.put(privateKey, priKey);
 				return priKey;
 			} catch (Exception e) {
 				throw new java.lang.RuntimeException(e);
 			}
-		}
 	}
 	
-	public  PublicKey evalECPublicKey(String publicKey)
+	public  PublicKey _evalECPublicKey(byte[] publicKey)
 	{
 		
-		PublicKey pubKey = ECPublicKeyIndex.get(publicKey);
-		if(pubKey != null)
-			return pubKey;
-		synchronized(ECPublicKeyIndex)
-		{
-			pubKey = ECPublicKeyIndex.get(publicKey);
-			if(pubKey != null)
-				return pubKey;
 			try {
 				// 对公钥解密
-				byte[] keyBytes = Base64.decode(publicKey);
 
 				// 取得公钥
-				X509EncodedKeySpec x509KeySpec = new X509EncodedKeySpec(keyBytes);
+				X509EncodedKeySpec x509KeySpec = new X509EncodedKeySpec(publicKey);
 				KeyFactory keyFactory = new ECKeyFactory();
 
-				pubKey = (PublicKey) keyFactory
+				PublicKey pubKey = (PublicKey) keyFactory
 						.generatePublic(x509KeySpec);
-				ECPublicKeyIndex.put(publicKey, pubKey);
 				return pubKey;
 			} catch (Exception e) {
 				throw new java.lang.RuntimeException(e);
 			}
-		}
 		
 	}
 
@@ -179,22 +159,16 @@ public class FlexiECCCoder extends BaseECCCoder{
 	 * @return
 	 * @throws Exception
 	 */
-	public  SimpleKeyPair genECKeyPair() throws Exception {
+	public  KeyPair _genECKeyPair() throws Exception {
 		KeyPairGenerator kpg = KeyPairGenerator.getInstance("ECIES", "FlexiEC");
 		
 		CurveParams ecParams = new BrainpoolP160r1();
-
-		kpg.initialize(ecParams, new SecureRandom());
+		  SecureRandom secrand = new SecureRandom();
+		   secrand.setSeed(randomToken().getBytes()); // 初始化随机产生器
+		kpg.initialize(ecParams, secrand);
 		KeyPair keyPair = kpg.generateKeyPair();
-		PublicKey pubKey = keyPair.getPublic();
-		PrivateKey privKey = keyPair.getPrivate();
-		String sprivateKey = Base64.encode(privKey.getEncoded());
-		String spublicKey = Base64.encode(pubKey.getEncoded());
-		SimpleKeyPair ECKeyPair = new SimpleKeyPair(sprivateKey, spublicKey,
-				pubKey, privKey);
-		PrivateKeyPairIndex.put(sprivateKey, ECKeyPair);
-		ECPublicKeyPairIndex.put(spublicKey, ECKeyPair);
-		return ECKeyPair;
+		
+		return keyPair;
 		
 	}
 

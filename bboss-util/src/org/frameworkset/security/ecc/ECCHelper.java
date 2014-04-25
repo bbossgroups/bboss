@@ -30,24 +30,30 @@ import java.util.Map;
 public class ECCHelper {
 	
 	public static final String  ECC_SIMPLE = "SIMPLE";
-	public static final String  ECC_ECIES = "ECIES";
-	public static final String  ECC_RSA = "RSA";
+	public static final String  ECC_Flexi = "FlexiECIES";
+	public static final String  ECC_BC = "BCECIES";	
+	public static final String  RSA = "RSA";
+	public static final String  BCRSA = "BCRSA";
 	private static Map<String,String> ecccoderClasses = new HashMap<String,String>();
 	private static Map<String,ECCCoderInf> ecccoders = new HashMap<String,ECCCoderInf>();
 	static 
 	{
 		ecccoderClasses.put(ECC_SIMPLE, "org.frameworkset.security.ecc.ECCCoder");
-		ecccoderClasses.put(ECC_ECIES, "org.frameworkset.security.ecc.FlexiECCCoder");
-		ecccoderClasses.put(ECC_RSA, "org.frameworkset.security.rsa.RsaCoder");
+		ecccoderClasses.put(ECC_Flexi, "org.frameworkset.security.ecc.FlexiECCCoder");
+		ecccoderClasses.put(ECC_BC, "org.frameworkset.security.ecc.BCECCoder");
+		ecccoderClasses.put(RSA, "org.frameworkset.security.rsa.RsaCoder");
+		ecccoderClasses.put(BCRSA, "org.frameworkset.security.rsa.BCRSACoder");
+		
+		
 	}
 	public static ECCCoderInf getECCCoder()
 	{
-		return getECCCoder(ECC_RSA);
+		return getECCCoder(RSA);
 	}
 	public static ECCCoderInf getECCCoder(String type)
 	{
 		if(type == null)
-			type = ECC_RSA;
+			type = RSA;
 		ECCCoderInf ecccoderInf = ecccoders.get(type);
 		if(ecccoderInf != null)
 			return ecccoderInf;
@@ -58,15 +64,15 @@ public class ECCHelper {
 				return ecccoderInf;
 			String clazz = ecccoderClasses.get(type);
 			if(clazz == null)
-				throw new java.lang.IllegalArgumentException("不支持的ecc加密类型:"+type+"，系统只支持"+ECC_RSA+","+ECC_SIMPLE+"和"+ECC_ECIES+"三种机制.");
+				throw new java.lang.IllegalArgumentException("不支持的加密类型:"+type+"，系统只支持"+RSA+","+ECC_SIMPLE+","+ECC_Flexi+","+ECC_BC+","+BCRSA+"五种机制.");
 			try {
 				ecccoderInf = (ECCCoderInf)Class.forName(clazz).newInstance();
 			} catch (InstantiationException e) {
-				throw new java.lang.IllegalArgumentException("不支持的ecc加密类型:"+type+"，系统只支持"+ECC_RSA+","+ECC_SIMPLE+"和"+ECC_ECIES+"三种机制.",e);
+				throw new java.lang.IllegalArgumentException("不支持的加密类型:"+type+"，系统只支持"+RSA+","+ECC_SIMPLE+","+ECC_Flexi+","+ECC_BC+","+BCRSA+"五种机制.",e);
 			} catch (IllegalAccessException e) {
-				throw new java.lang.IllegalArgumentException("不支持的ecc加密类型:"+type+"，系统只支持"+ECC_RSA+","+ECC_SIMPLE+"和"+ECC_ECIES+"三种机制.",e);
+				throw new java.lang.IllegalArgumentException("不支持的加密类型:"+type+"，系统只支持"+RSA+","+ECC_SIMPLE+","+ECC_Flexi+","+ECC_BC+","+BCRSA+"五种机制.",e);
 			} catch (ClassNotFoundException e) {
-				throw new java.lang.IllegalArgumentException("不支持的ecc加密类型:"+type+"，系统只支持"+ECC_RSA+","+ECC_SIMPLE+"和"+ECC_ECIES+"三种机制.",e);
+				throw new java.lang.IllegalArgumentException("不支持的加密类型:"+type+"，系统只支持"+RSA+","+ECC_SIMPLE+","+ECC_Flexi+","+ECC_BC+","+BCRSA+"五种机制.",e);
 			}
 			ecccoders.put(type, ecccoderInf);
 			return ecccoderInf;
