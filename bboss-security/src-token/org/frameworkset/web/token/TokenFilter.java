@@ -278,7 +278,7 @@ public class TokenFilter implements Filter{
 		Integer result = null;
 		if(!this.tokenService.isEnableToken())
 		{
-			result = TokenStore.temptoken_request_validateresult_notenabletoken;
+			result = TokenStore.token_request_validateresult_notenabletoken;
 			request.setAttribute(TokenStore.temptoken_request_validateresult_key,result);
 			return true;
 		}
@@ -311,7 +311,7 @@ public class TokenFilter implements Filter{
 			try {
 				if(token == null || token.equals(""))
 				{
-					result = TokenStore.temptoken_request_validateresult_nodtoken;
+					result = TokenStore.token_request_validateresult_nodtoken;
 				}
 				else
 				{
@@ -328,7 +328,7 @@ public class TokenFilter implements Filter{
 				}
 			} catch (Exception e) {
 				log.error("令牌校验失败:",e);
-				result = TokenStore.temptoken_request_validateresult_fail;
+				result = TokenStore.token_request_validateresult_fail;
 			}
 		}
 		request.setAttribute(TokenStore.temptoken_request_validateresult_key,result);

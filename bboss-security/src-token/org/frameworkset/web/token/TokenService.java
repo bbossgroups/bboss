@@ -187,7 +187,7 @@ public class TokenService {
 	 */
 	public boolean assertDToken(Integer result)
 	{
-		return result.intValue() == TokenStore.temptoken_request_validateresult_ok.intValue() || result.intValue() == TokenStore.temptoken_request_validateresult_nodtoken.intValue() || result.intValue() == TokenStore.temptoken_request_validateresult_notenabletoken.intValue();
+		return result.intValue() == TokenStore.token_request_validateresult_ok.intValue() || result.intValue() == TokenStore.token_request_validateresult_nodtoken.intValue() || result.intValue() == TokenStore.token_request_validateresult_notenabletoken.intValue();
 	}
 	
 	
@@ -228,7 +228,7 @@ public class TokenService {
 	{
 //		return !(result == MemTokenManager.temptoken_request_validateresult_nodtoken 
 //				|| result == MemTokenManager.temptoken_request_validateresult_fail);		
-		return result.intValue() == TokenStore.temptoken_request_validateresult_ok.intValue() || result.intValue() == TokenStore.temptoken_request_validateresult_notenabletoken.intValue();
+		return result.intValue() == TokenStore.token_request_validateresult_ok.intValue() || result.intValue() == TokenStore.token_request_validateresult_notenabletoken.intValue();
 	}
 	
 	/**
@@ -461,7 +461,7 @@ public class TokenService {
 	
 	public String genTempToken() throws Exception
 	{
-		return tokenStore.genTempToken().getSigntoken();
+		return tokenStore.genTempToken().getToken();
 	}
 	
 	/* (non-Javadoc)
@@ -473,7 +473,7 @@ public class TokenService {
 		//long start = System.currentTimeMillis();
 //		long dualtime = 30l*24l*60l*60l*1000l;
 		MemToken token = this.tokenStore.genDualToken(appid,ticket,secret,dualtime);
-		return token.getSigntoken();
+		return token.getToken();
 	}
 
 	public String genDualTokenWithDefaultLiveTime(String appid,String secret,String ticket) throws Exception
@@ -481,7 +481,7 @@ public class TokenService {
 		//long start = System.currentTimeMillis();
 //		long dualtime = 30l*24l*60l*60l*1000l;
 		MemToken token = this.tokenStore.genDualTokenWithDefaultLiveTime(appid,ticket,secret);
-		return token.getSigntoken();
+		return token.getToken();
 	}
 	
 	
@@ -493,7 +493,7 @@ public class TokenService {
 	public String genAuthTempToken(String appid,String secret,String ticket) throws Exception
 	{
 		MemToken token = tokenStore.genAuthTempToken(appid,ticket,secret);
-		return token.getSigntoken();
+		return token.getToken();
 //		Assert.assertTrue(TokenStore.temptoken_request_validateresult_ok == mongodbTokenStore.checkToken("sim","xxxxxxxxxxxxxxxxxxxxxx",token.getSigntoken()).getResult());
 	}
 	
@@ -527,7 +527,7 @@ public class TokenService {
 		if(token == null)
 		{
 			TokenResult result = new TokenResult();
-			result.setResult(TokenStore.temptoken_request_validateresult_nodtoken);
+			result.setResult(TokenStore.token_request_validateresult_nodtoken);
 			
 			return result;
 		}
@@ -543,7 +543,7 @@ public class TokenService {
 		if(token == null)
 		{
 			
-			return TokenStore.temptoken_request_validateresult_nodtoken;
+			return TokenStore.token_request_validateresult_nodtoken;
 		}
 		return this.tokenStore.checkToken(null,null,token).getResult();
 	}

@@ -23,14 +23,14 @@ public class TestMongoTokenStore {
 		mongodbTokenStore.setValidateApplication(new NullValidateApplication());
 		String ticket = mongodbTokenStore.genTicket(account, worknumber, appid, secret);
 		MemToken token = mongodbTokenStore.genDualToken(appid,ticket,secret,TokenStore.DEFAULT_DUALTOKENLIVETIME);
-		Assert.assertTrue(TokenStore.temptoken_request_validateresult_ok == mongodbTokenStore.checkToken(appid,secret,token.getSigntoken()).getResult());
+		Assert.assertTrue(TokenStore.token_request_validateresult_ok == mongodbTokenStore.checkToken(appid,secret,token.getToken()).getResult());
 	}
 	@Test
 	public void genTemptokenAndValidate() throws Exception
 	{		
 		
 		MemToken token = mongodbTokenStore.genTempToken();
-		Assert.assertTrue(TokenStore.temptoken_request_validateresult_ok == mongodbTokenStore.checkToken(null,null,token.getToken()).getResult());
+		Assert.assertTrue(TokenStore.token_request_validateresult_ok == mongodbTokenStore.checkToken(null,null,token.getToken()).getResult());
 	}
 	
 	@Test
@@ -42,7 +42,7 @@ public class TestMongoTokenStore {
 		//long end = System.currentTimeMillis();
 		//System.out.println(end - start);
 		//start = System.currentTimeMillis();
-		Assert.assertTrue(TokenStore.temptoken_request_validateresult_ok == mongodbTokenStore.checkToken(appid,secret,token.getSigntoken()).getResult());
+		Assert.assertTrue(TokenStore.token_request_validateresult_ok == mongodbTokenStore.checkToken(appid,secret,token.getToken()).getResult());
 		//end = System.currentTimeMillis();
 		//System.out.println(end - start);
 	}
@@ -53,7 +53,7 @@ public class TestMongoTokenStore {
 	{
 		String ticket = mongodbTokenStore.genTicket(account, worknumber, appid, secret);
 		MemToken token = mongodbTokenStore.genAuthTempToken(appid,ticket,secret);
-		Assert.assertTrue(TokenStore.temptoken_request_validateresult_ok == mongodbTokenStore.checkToken(appid,secret,token.getSigntoken()).getResult());
+		Assert.assertTrue(TokenStore.token_request_validateresult_ok == mongodbTokenStore.checkToken(appid,secret,token.getToken()).getResult());
 	}
 	
 	@Test

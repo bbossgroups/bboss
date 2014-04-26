@@ -2,6 +2,7 @@ package org.frameworkset.web.token;
 
 import org.frameworkset.security.ecc.ECCCoderInf;
 import org.frameworkset.security.ecc.SimpleKeyPair;
+import org.frameworkset.web.token.BaseTokenStore.TokenInfo;
 
 
 public interface TokenStore {
@@ -12,21 +13,23 @@ public interface TokenStore {
 	/**
 	 * 令牌校验成功
 	 */
-	public static final Integer temptoken_request_validateresult_ok = new Integer(1);
+	public static final Integer token_request_validateresult_ok = new Integer(1);
 	/**
 	 * 令牌校验失败
 	 */
-	public static final Integer temptoken_request_validateresult_fail = new Integer(0);
+	public static final Integer token_request_validateresult_fail = new Integer(0);
 	/**
 	 * 无令牌状态，这个状态配合控制器方法的AssertDToken注解和jsp页面上的AssertDTokenTag一起使用，如果控制器方法AssertDToken注解或者jsp页面设置了AssertDTokenTag标签，则要求必须使用令牌
 	 * 如果客户端没有传输令牌，则拒绝请求。
 	 * AssertDToken和AssertDTokenTag主要用来防止客户端把令牌去掉后欺骗服务器进行访问
 	 */
-	public static final Integer temptoken_request_validateresult_nodtoken = new Integer(2);
+	public static final Integer token_request_validateresult_nodtoken = new Integer(2);
 	
-	public static final Integer temptoken_request_validateresult_notenabletoken = new Integer(3);
-	public static final Integer temptoken_request_validateresult_expired = new Integer(4);
-	public static final Integer temptoken_request_validateresult_invalidated = new Integer(5);
+	public static final Integer token_request_validateresult_notenabletoken = new Integer(3);
+	public static final Integer token_request_validateresult_expired = new Integer(4);
+	public static final Integer token_request_validateresult_invalidated = new Integer(5);
+	public static final Integer token_request_validateresult_notexist = new Integer(6);
+	
 	public static final String temptoken_param_name = "_dt_token_";
 	public static final String temptoken_request_attribute = "org.frameworkset.web.token.bboss_csrf_Token"; 
 	public static final String temptoken_request_validateresult_key = "temptoken_request_validateresult_key";
@@ -37,9 +40,14 @@ public interface TokenStore {
 	public static final String ERROR_CODE_GETKEYPAIRFAILED = "GETKEYPAIRFAILED";
 	public static final String ERROR_CODE_STOREKEYPAIRFAILED = "STOREKEYPAIRFAILED";
 	
+	public static final String ERROR_CODE_GETTICKETFAILED = "GETTICKETFAILED";
 	public static final String ERROR_CODE_TICKETEXPIRED = "TICKETEXPIRED";
-	public static final String ERROR_CODE_DECODETOKENFAILED = "DECODETOKENFAILED";
 	public static final String ERROR_CODE_GENTICKETFAILED = "GENTICKETFAILED";
+	public static final String ERROR_CODE_TICKETNOTEXIST = "TICKETNOTEXIST";
+	public static final String ERROR_CODE_PERSISTENTTICKETFAILED = "PERSISTENTTICKETFAILED";
+	
+	public static final String ERROR_CODE_DECODETOKENFAILED = "DECODETOKENFAILED";
+	
 	public static final String ERROR_CODE_GENDUALTOKENFAILED = "GENDUALTOKENFAILED";
 	public static final String ERROR_CODE_APPVALIDATEFAILED = "APPVALIDATEFAILED";
 	public static final String ERROR_CODE_APPVALIDATERROR = "APPVALIDATERROR";
@@ -49,6 +57,9 @@ public interface TokenStore {
 	public static final String ERROR_CODE_SIGNTOKENFAILED = "SIGNTOKENFAILED";
 	public static final String ERROR_CODE_UNKNOWNTOKENTYPE = "UNKNOWNTOKENTYPE";
 	public static final String ERROR_CODE_UNKNOWNTOKEN = "UNKNOWNTOKEN";
+	public static final String ERROR_CODE_AUTHTEMPTOKENNOTEXIST = "AUTHTEMP TOKEN NOT EXIST";
+	public static final String ERROR_CODE_DUALTOKENNOTEXIST = "DUAL TOKEN NOT EXIST";
+	
 	public static final String ERROR_CODE_GENTEMPTOKENFAILED = "GENTEMPTOKENFAILED";
 	public static final String ERROR_CODE_DELETEEXPIREDTEMPTOKENFAILED = "DELETEEXPIREDTEMPTOKENFAILED";
 	public static final String ERROR_CODE_DELETEEXPIREDAUTHTEMPTOKENFAILED = "DELETEEXPIREDAUTHTEMPTOKENFAILED";
@@ -70,9 +81,9 @@ public interface TokenStore {
 	public abstract void livecheck();
 	public abstract TokenResult checkToken(String appid,String secret,String tokeninfo)  throws TokenException;
 
-	public abstract Integer checkTempToken(TokenResult tokeninfo)throws TokenException;
-	public abstract Integer checkAuthTempToken(TokenResult tokeninfo)throws TokenException;
-	public abstract Integer checkDualToken(TokenResult tokeninfo)throws TokenException;
+//	public abstract Integer checkTempToken(TokenInfo tokeninfo)throws TokenException;
+//	public abstract Integer checkAuthTempToken(TokenInfo tokeninfo)throws TokenException;
+	public abstract Integer checkDualToken(TokenInfo tokeninfo)throws TokenException;
 
 	public abstract long getTempTokendualtime()throws TokenException;
 
@@ -91,8 +102,8 @@ public interface TokenStore {
 
 	public abstract String genTicket(String account, String worknumber,
 			String appid, String secret)throws TokenException;
-	public String[] decodeTicket(String ticket,
-			String appid, String secret) throws TokenException;
+//	public String[] decodeTicket(String ticket,
+//			String appid, String secret) throws TokenException;
 	public void setTicketdualtime(long ticketdualtime);
 
 	public long getTicketdualtime() ;

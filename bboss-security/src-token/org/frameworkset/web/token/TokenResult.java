@@ -30,7 +30,7 @@ public class TokenResult implements java.io.Serializable{
 		super();
 		
 	}
-	private Integer result;
+	private Integer result = null;
 	
 	public Integer getResult() {
 		return result;

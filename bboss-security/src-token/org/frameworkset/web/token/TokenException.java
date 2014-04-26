@@ -2,7 +2,10 @@ package org.frameworkset.web.token;
 
 public class TokenException extends RuntimeException {
 
-	
+	public TokenException()
+	{
+		super();
+	}
 	public TokenException(String message)
 	{
 		super(message);

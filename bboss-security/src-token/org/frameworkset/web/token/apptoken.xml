@@ -34,13 +34,13 @@
 <property name="insertDualToken">
 <![CDATA[
 
-    insert into dualtokens(id,token,createTime,lastVistTime,livetime,appid,secret,validate_) values(#[id],#[token],#[createTime],#[lastVistTime],#[livetime],#[appid],#[secret],#[validate])
+    insert into dualtokens(id,token,signtoken,createTime,lastVistTime,livetime,appid,secret,validate_) values(#[id],#[token],#[signtoken],#[createTime],#[lastVistTime],#[livetime],#[appid],#[secret],#[validate])
  ]]>
 </property>
 <property name="genAuthTempToken">
 <![CDATA[
 
-    insert into authtemptokens(id,token,createTime,lastVistTime,livetime,appid,secret,validate_) values(#[id],#[token],#[createTime],#[lastVistTime],#[livetime],#[appid],#[secret],#[validate])
+    insert into authtemptokens(id,token,signtoken,createTime,lastVistTime,livetime,appid,secret,validate_) values(#[id],#[token],#[signtoken],#[createTime],#[lastVistTime],#[livetime],#[appid],#[secret],#[validate])
  ]]>
 </property>
 
@@ -76,6 +76,14 @@
     delete from temptokens where (createTime + livetime) < ?
  ]]>
 </property>
+<!-- 删除过期ticket -->
+<property name="deleteExpiredTicket">
+<![CDATA[
+
+    delete from tickets where (createtime + livetime) < ?
+ ]]>
+</property>
+
 <property name="getKeyPairs">
 <![CDATA[
 select * from eckeypairs where appid=?
@@ -87,5 +95,15 @@ select * from eckeypairs where appid=?
 insert into eckeypairs(appid,privateKey,createTime,publicKey) values(?,?,?,?)
  ]]>
 </property>
+<property name="persisteTicket">
+<![CDATA[
 
+insert into tickets(token,ticket,createtime,livetime,appid) values(#[token],#[ticket],#[createtime],#[livetime],#[appid])
+ ]]>
+</property>
+<property name="persisteTicket">
+<![CDATA[
+select * from tickets where token = ?
+ ]]>
+</property>
 </properties>

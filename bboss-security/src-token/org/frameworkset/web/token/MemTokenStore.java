@@ -14,56 +14,13 @@ public class MemTokenStore extends BaseTokenStore{
 	private  Map<String,MemToken> temptokens = new HashMap<String,MemToken>();
 	private  Map<String,MemToken> authtemptokens = new HashMap<String,MemToken>();
 	private  Map<String,MemToken> dualtokens = new HashMap<String,MemToken>();
+	private  Map<String,Ticket> tickets = new HashMap<String,Ticket>();
+	private  Map<String,SimpleKeyPair> keypairs = new HashMap<String,SimpleKeyPair>();
 	private final Object checkLock = new Object();
 	private final Object dualcheckLock = new Object();
 	private final Object authtempcheckLock = new Object();
 	
-	public Integer checkAuthTempToken(TokenResult token)
-	{
-		if(token != null)
-		{
-//			String[] tokeninfos = decodeToken(token);
-			String appid = token.getAppid(); String secret = token.getSecret();
-			String dynamictoken = token.getToken();
-			String key = appid + ":" + secret + ":"+dynamictoken;
-			
-			synchronized(dualcheckLock)
-			{
-				MemToken tt = authtemptokens.remove(key);
-				
-				if(tt != null )//is first request,and clear temp token to against Cross Site Request Forgery
-				{
-					if(tt.getToken().equals(dynamictoken))
-					{
-						long lastVistTime = System.currentTimeMillis();
-						if(!this.isold(tt,tt.getLivetime(),lastVistTime))
-						{
-							tt.setLastVistTime(lastVistTime);
-	//					temptokens.remove(token);				
-							return TokenStore.temptoken_request_validateresult_ok;
-						}
-						else
-						{
-							return TokenStore.temptoken_request_validateresult_expired;
-						}
-					}
-					else
-					{
-						return TokenStore.temptoken_request_validateresult_fail;
-					}
-				}
-				else
-				{
-					return TokenStore.temptoken_request_validateresult_fail;
-				}
-			}
-		}
-		else 
-		{
-			return TokenStore.temptoken_request_validateresult_nodtoken;
-		}
-		
-	}
+	
 	
 	public void destory()
 	{
@@ -74,6 +31,7 @@ public class MemTokenStore extends BaseTokenStore{
 	
 	public void livecheck()
 	{
+		long curtime = System.currentTimeMillis();
 		List<String> olds = new ArrayList<String>();
 		synchronized(this.checkLock)
 		{
@@ -82,7 +40,7 @@ public class MemTokenStore extends BaseTokenStore{
 			while(itr.hasNext())
 			{	
 				Entry<String, MemToken> token = itr.next();
-				if(isold(token.getValue()))
+				if(isold(token.getValue(),curtime))
 				{
 					olds.add(token.getKey());
 				}
@@ -105,7 +63,7 @@ public class MemTokenStore extends BaseTokenStore{
 			{	
 				Entry<String, MemToken> token = itr.next();
 				
-				if(isold(token.getValue(),token.getValue().getLivetime(),System.currentTimeMillis()))
+				if(isold(token.getValue(),token.getValue().getLivetime(),curtime))
 				{
 					olds.add(token.getKey());
 				}
@@ -128,7 +86,7 @@ public class MemTokenStore extends BaseTokenStore{
 				{	
 					Entry<String, MemToken> token = itr.next();
 					
-					if(isold(token.getValue(),token.getValue().getLivetime(),System.currentTimeMillis()))
+					if(isold(token.getValue(),token.getValue().getLivetime(),curtime))
 					{
 						olds.add(token.getKey());
 					}
@@ -141,99 +99,65 @@ public class MemTokenStore extends BaseTokenStore{
 //						break;
 				authtemptokens.remove(olds.get(i));
 			}
+			
+			
 		olds = null;
 		
-	}
-	
-	
-	
-	public Integer checkTempToken(TokenResult token)
-	{
-		
-		if(token != null)
-		{
-			synchronized(checkLock)
+		//清理过期ticket
+		 olds = new ArrayList<String>();
+			synchronized(this.tickets)
 			{
-				MemToken tt =temptokens.remove(token.getToken());
-				if(tt != null  )//is first request,and clear temp token to against Cross Site Request Forgery
-				{
-					if(!this.isold(tt))
+				Set<Entry<String, Ticket>> keySet = this.tickets.entrySet();
+				Iterator<Entry<String, Ticket>> itr = keySet.iterator();			
+				while(itr.hasNext())
+				{	
+					Entry<String, Ticket> ticket = itr.next();
+					
+					if(isoldticket(ticket.getValue(),curtime))
 					{
-//						temptokens.remove(token);				
-						return TokenStore.temptoken_request_validateresult_ok;
+						olds.add(ticket.getKey());
 					}
-					else
-					{
-						return TokenStore.temptoken_request_validateresult_expired;
-					}
-				}
-				else
-				{
-					return TokenStore.temptoken_request_validateresult_fail;
 				}
 			}
-		}
-		else 
-		{
-			return TokenStore.temptoken_request_validateresult_nodtoken;
-		}
-	}
-
-	
-
-	@Override
-	public Integer checkDualToken(TokenResult token) {
-	
-		if(token != null)
-		{
-//			String[] tokeninfos = decodeToken(token);
-			String appid = token.getAppid(); String secret = token.getSecret();
-			String dynamictoken = token.getToken();
-			String key = appid + ":" + secret;
 			
-			synchronized(dualcheckLock)
+			for(int i = 0; i < olds.size(); i ++)
 			{
-				MemToken tt = dualtokens.get(key);
-				
-				if(tt != null )//is first request,and clear temp token to against Cross Site Request Forgery
-				{
-					if(tt.getToken().equals(dynamictoken))
-					{
-						long lastVistTime = System.currentTimeMillis();
-						if(!this.isold(tt,tt.getLivetime(),lastVistTime))
-						{
-							tt.setLastVistTime(lastVistTime);
-	//					temptokens.remove(token);				
-							return TokenStore.temptoken_request_validateresult_ok;
-						}
-						else
-						{
-							return TokenStore.temptoken_request_validateresult_expired;
-						}
-					}
-					else
-					{
-						return TokenStore.temptoken_request_validateresult_fail;
-					}
-				}
-				else
-				{
-					return TokenStore.temptoken_request_validateresult_fail;
-				}
+				tickets.remove(olds.get(i));
 			}
-		}
-		else 
-		{
-			return TokenStore.temptoken_request_validateresult_nodtoken;
-		}
-		
 		
 	}
+	
+	
+	
+	
+	
+	@Override
+	protected MemToken getDualMemToken(String token, String appid,
+			long lastVistTime) {
+		String key = appid;
+		MemToken tt = dualtokens.get(key);
+		return tt;
+	}
+
+	@Override
+	protected MemToken getAuthTempMemToken(String token, String appid) {
+		String key = appid + ":"+token;
+		
+		MemToken tt = authtemptokens.remove(key);
+		return tt;
+	}
+
+	@Override
+	protected MemToken getTempMemToken(String token, String appid) {
+		MemToken tt =temptokens.remove(token);
+		return tt;
+	}
+	
 
 	
 
 	@Override
-	public MemToken genTempToken() throws TokenException {
+	public MemToken _genTempToken() throws TokenException {
 		String token = this.randomToken();
 		MemToken token_m = new MemToken(token,System.currentTimeMillis());
 		synchronized(checkLock)
@@ -308,9 +232,45 @@ public class MemTokenStore extends BaseTokenStore{
 	@Override
 	protected SimpleKeyPair _getKeyPair(String appid, String secret)
 			throws TokenException {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			SimpleKeyPair ECKeyPair = keypairs.get(appid);//			cursor = eckeypairs.find(new BasicDBObject("appid", appid));
+			if(ECKeyPair != null)
+			{
+//				DBObject value = cursor.next();
+//				return toECKeyPair(value);
+				return ECKeyPair;
+				
+			}
+			else
+			{
+				ECKeyPair = ECCCoder.genECKeyPair();
+				this.keypairs.put(appid, ECKeyPair);
+				return ECKeyPair;
+			}
+		}catch (TokenException e) {
+			throw (e);
+		} 
+		catch (Exception e) {
+			throw new TokenException(TokenStore.ERROR_CODE_GETKEYPAIRFAILED,e);
+		}
 	}
+
+	@Override
+	protected void persisteTicket(Ticket ticket) {
+		synchronized(tickets)
+		{
+			tickets.put(ticket.getToken(), ticket);
+		}
+		
+	}
+
+	@Override
+	protected Ticket getTicket(String token, String appid) {
+		
+		return this.tickets.get(token);
+	}
+
+	
 	
 	
 	

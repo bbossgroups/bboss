@@ -83,7 +83,27 @@ public class DBTokenStore extends BaseTokenStore {
 			
 		}
 		
+		try
+		{
+			this.executor.delete("deleteExpiredAuthdualToken", curtime);
+		} catch (Exception e) {
+			log.debug(TokenStore.ERROR_CODE_DELETEEXPIREDAUTHDUALTOKENFAILED,e);
+		}
+		finally
+		{
+			
+		}
 		
+		try
+		{
+			this.executor.delete("deleteExpiredTicket", curtime);
+		} catch (Exception e) {
+			log.debug(TokenStore.ERROR_CODE_DELETEEXPIREDAUTHDUALTOKENFAILED,e);
+		}
+		finally
+		{
+			
+		}
 	}
 	
 //	private MemToken todualToken(DBObject object)
@@ -103,146 +123,65 @@ public class DBTokenStore extends BaseTokenStore {
 //		token.setLivetime((Long)object.get("livetime"));
 //		return token;
 //	}
-	
-	
-	public Integer checkAuthTempToken(TokenResult tokeninfo) throws TokenException
+	protected MemToken getAuthTempMemToken(String token,String appid)
 	{
-		
-		if(tokeninfo != null)
-		{
-//			MemToken token = new MemToken((String)object.get("token"),(Long)object.get("createTime"));
-//			token.setLivetime((Long)object.get("livetime"));
-			
-//			synchronized(checkLock)
-//			DBCursor cursor = null;
-//			BasicDBObject dbobject = new BasicDBObject("token", tokeninfo.getToken()).append("appid", tokeninfo.getAppid()).append("secret", tokeninfo.getSecret());
-			TransactionManager tm = new TransactionManager();
-			try {
-				tm.begin();
-				MemToken token_m = this.executor.queryObjectByRowHandler(new RowHandler<MemToken>(){
+		TransactionManager tm = new TransactionManager();
+		try {
+			tm.begin();
+			MemToken token_m = this.executor.queryObjectByRowHandler(new RowHandler<MemToken>(){
 
-					@Override
-					public void handleRow(MemToken rowValue, Record record)
-							throws Exception {
-						rowValue.setToken(record.getString("token"));
-						rowValue.setCreateTime(record.getLong("createTime"));
-						rowValue.setLivetime(record.getLong("livetime"));
-					}
-					
-				}, MemToken.class, "getAuthTempToken", tokeninfo.getToken(),tokeninfo.getAppid());
-				executor.delete("deleteAuthTempToken", tokeninfo.getToken(),tokeninfo.getAppid());
-//				DBObject tt = this.authtemptokens.findAndRemove(dbobject);
-				tm.commit();
-				if(token_m != null)
-				{
-//					DBObject tt = cursor.next();
-	//				authtemptokens.remove(dbobject);
-//					MemToken token_m = totempToken(tt);					
-					if(!this.isold(token_m))
-					{
-						return TokenStore.temptoken_request_validateresult_ok;
-					}
-					else
-					{
-						return TokenStore.temptoken_request_validateresult_expired;
-					}
-					
+				@Override
+				public void handleRow(MemToken rowValue, Record record)
+						throws Exception {
+					rowValue.setToken(record.getString("token"));
+					rowValue.setCreateTime(record.getLong("createTime"));
+					rowValue.setLivetime(record.getLong("livetime"));
 				}
-				else
-				{
-					return TokenStore.temptoken_request_validateresult_fail;
-				}			
-			} catch (Exception e) {
-				throw new TokenException(TokenStore.ERROR_CODE_CHECKAUTHTEMPTOKENFAILED,e);
-			}
-			finally
-			{
-				tm.release();
-//				if(cursor != null)
-//				{
-//					cursor.close();
-//					cursor = null;
-//				}
-			}
-		}
-		else 
-		{
-			return TokenStore.temptoken_request_validateresult_nodtoken;
-		}
-	}
-	
-	public Integer checkTempToken(TokenResult tokeninfo) throws TokenException
-	{
-		
-		if(tokeninfo != null)
-		{
-			TransactionManager tm = new TransactionManager();
-			try {
-				tm.begin();
-				MemToken token_m = this.executor.queryObjectByRowHandler(new RowHandler<MemToken>(){
-
-					@Override
-					public void handleRow(MemToken rowValue, Record record)
-							throws Exception {
-						rowValue.setToken(record.getString("token"));
-						rowValue.setCreateTime(record.getLong("createTime"));
-						rowValue.setLivetime(record.getLong("livetime"));
-					}
-					
-				}, MemToken.class, "getTempToken", tokeninfo.getToken());
-				executor.delete("deleteTempToken", tokeninfo.getToken());
-				tm.commit();
-				if(token_m != null)
-				{
-					if(!this.isold(token_m))
-					{
-						return TokenStore.temptoken_request_validateresult_ok;
-					}
-					else
-					{
-						return TokenStore.temptoken_request_validateresult_expired;
-					}
-				}
-				else
-				{
-					return TokenStore.temptoken_request_validateresult_fail;
-				}
-					
 				
-			} catch (Exception e) {
-				throw new TokenException(TokenStore.ERROR_CODE_CHECKTEMPTOKENFAILED,e);
-			}
-			finally
-			{
-				tm.release();
-			}
-////			synchronized(checkLock)
-//			BasicDBObject dbobject = new BasicDBObject("token", tokeninfo.getToken());
-//			DBObject tt = temptokens.findAndRemove(dbobject);
-//			if(tt != null)
-//			{
-////				DBObject tt = cursor.next();
-//				MemToken token_m = totempToken(tt);					
-//				if(!this.isold(token_m))
-//				{
-//					return TokenStore.temptoken_request_validateresult_ok;
-//				}
-//				else
-//				{
-//					return TokenStore.temptoken_request_validateresult_expired;
-//				}
-//				
-//			}
-//			else
-//			{
-//				return TokenStore.temptoken_request_validateresult_fail;
-//			}			
+			}, MemToken.class, "getAuthTempToken", token,appid);
+			if(token_m != null)
+				executor.delete("deleteAuthTempToken", token,appid);
+//			DBObject tt = this.authtemptokens.findAndRemove(dbobject);
+			tm.commit();
+			return token_m;
 		}
-		else 
+		catch(Exception e)
 		{
-			return TokenStore.temptoken_request_validateresult_nodtoken;
+			throw new TokenException(TokenStore.ERROR_CODE_CHECKAUTHTEMPTOKENFAILED,e);
 		}
 	}
+	
+	
+	protected MemToken getTempMemToken(String token,String appid)
+	{
+		TransactionManager tm = new TransactionManager();
+		try {
+			tm.begin();
+			MemToken token_m = this.executor.queryObjectByRowHandler(new RowHandler<MemToken>(){
+
+				@Override
+				public void handleRow(MemToken rowValue, Record record)
+						throws Exception {
+					rowValue.setToken(record.getString("token"));
+					rowValue.setCreateTime(record.getLong("createTime"));
+					rowValue.setLivetime(record.getLong("livetime"));
+				}
+				
+			}, MemToken.class, "getTempToken", token);
+			if(token_m != null)
+				executor.delete("deleteTempToken", token);
+			tm.commit();
+			return token_m;
+		}catch (Exception e) {
+			throw new TokenException(TokenStore.ERROR_CODE_CHECKTEMPTOKENFAILED,e);
+		}
+		finally
+		{
+			tm.release();
+		}
+		
+	}
+
 
 	private MemToken queryDualToken(String appid, String secret) throws TokenException
 	{
@@ -299,51 +238,15 @@ public class DBTokenStore extends BaseTokenStore {
 		
 		return tt;
 	}
-	@Override
-	public Integer checkDualToken(TokenResult tokeninfo) throws TokenException {
+	
+	protected MemToken getDualMemToken(String token,String appid,long lastVistTime )
+	{
 		
-		
-		if(tokeninfo != null)
-		{	
-			
-			String appid=tokeninfo.getAppid();String secret=tokeninfo.getSecret();
-			String dynamictoken=tokeninfo.getToken();
-			long lastVistTime = System.currentTimeMillis();
-			MemToken tt = queryDualToken( appid, secret,lastVistTime);
-			if(tt != null )//is first request,and clear temp token to against Cross Site Request Forgery
-			{
-				if(tt.getToken().equals(dynamictoken))
-				{
-					if(!this.isold(tt,tt.getLivetime(),lastVistTime))
-					{
-						tt.setLastVistTime(lastVistTime);
-						if(tt.isValidate())
-							return TokenStore.temptoken_request_validateresult_ok;
-						else
-							return TokenStore.temptoken_request_validateresult_invalidated;
-					}
-					else
-					{
-						return TokenStore.temptoken_request_validateresult_expired;
-					}
-					
-				}
-				else
-					return TokenStore.temptoken_request_validateresult_fail;
-				
-			}
-			else
-			{
-				return TokenStore.temptoken_request_validateresult_fail;
-			}
-		}
-		else 
-		{
-			return TokenStore.temptoken_request_validateresult_nodtoken;
-		}
-		
-		
+		MemToken tt = queryDualToken( appid, null,lastVistTime);
+		return tt;
 	}
+	
+	
 
 	private void insertDualToken(String sqlname,MemToken dualToken) throws TokenException
 	{
@@ -387,16 +290,17 @@ public class DBTokenStore extends BaseTokenStore {
 	}
 
 	@Override
-	public MemToken genTempToken() throws TokenException {
+	public MemToken _genTempToken() throws TokenException {
 		String token = this.randomToken();
 		MemToken token_m = new MemToken(token,System.currentTimeMillis());
 		try {
+			this.signToken(token_m, type_temptoken, null,null);
 			this.executor.insert("genTempToken", getID(),token_m.getToken(),token_m.getCreateTime(),this.tempTokendualtime,"1");
 		} catch (Exception e) {
 			throw new TokenException(TokenStore.ERROR_CODE_GENTEMPTOKENFAILED,e);
 		}
 //		temptokens.insert(new BasicDBObject("token",token_m.getToken()).append("createTime", token_m.getCreateTime()).append("livetime", this.tempTokendualtime).append("validate", true));
-		this.signToken(token_m, type_temptoken, null,null);
+		
 		return token_m;
 		
 	}
@@ -438,6 +342,7 @@ public class DBTokenStore extends BaseTokenStore {
 						createTime, livetime);
 				token_m.setAppid(appid);
 				token_m.setSecret(secret);
+				this.signToken(token_m,TokenStore.type_dualtoken,accountinfo,ticket);
 				this.insertDualToken("insertDualToken",token_m);
 			}
 			tm.commit();
@@ -450,7 +355,7 @@ public class DBTokenStore extends BaseTokenStore {
 		{
 			tm.release();
 		}
-		this.signToken(token_m,TokenStore.type_dualtoken,accountinfo,ticket);
+		
 		return token_m ;
 		
 	}
@@ -474,9 +379,10 @@ public class DBTokenStore extends BaseTokenStore {
 				createTime, this.tempTokendualtime);
 		token_m.setAppid(appid);
 		token_m.setSecret(secret);
+		this.signToken(token_m,TokenStore.type_authtemptoken,accountinfo,ticket);
 		this.insertDualToken("genAuthTempToken",token_m);
 		
-		this.signToken(token_m,TokenStore.type_authtemptoken,accountinfo,ticket);
+		
 		return token_m ;
 	}
 	
@@ -529,6 +435,23 @@ public class DBTokenStore extends BaseTokenStore {
 			this.executor.insert("insertECKeyPair", appid, keypair.getPrivateKey(),System.currentTimeMillis(),keypair.getPublicKey());
 		} catch (SQLException e) {
 			throw new TokenException(TokenStore.ERROR_CODE_STOREKEYPAIRFAILED,e);
+		}
+	}
+	@Override
+	protected void persisteTicket(Ticket ticket) throws TokenException{
+		try {
+			this.executor.insertBean("persisteTicket",ticket);
+		} catch (SQLException e) {
+			throw new TokenException(TokenStore.ERROR_CODE_PERSISTENTTICKETFAILED,e);
+		}
+		
+	}
+	@Override
+	protected Ticket getTicket(String token, String appid) {
+		try {
+			return this.executor.queryObject(Ticket.class,"getTicket",token);
+		} catch (SQLException e) {
+			throw new TokenException(TokenStore.ERROR_CODE_GETTICKETFAILED,e);
 		}
 	}
 
