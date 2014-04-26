@@ -136,6 +136,7 @@ public class DBTokenStore extends BaseTokenStore {
 					rowValue.setToken(record.getString("token"));
 					rowValue.setCreateTime(record.getLong("createTime"));
 					rowValue.setLivetime(record.getLong("livetime"));
+					rowValue.setSigntoken(record.getString("signtoken"));
 				}
 				
 			}, MemToken.class, "getAuthTempToken", token,appid);

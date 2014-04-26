@@ -101,7 +101,7 @@ insert into eckeypairs(appid,privateKey,createTime,publicKey) values(?,?,?,?)
 insert into tickets(token,ticket,createtime,livetime,appid) values(#[token],#[ticket],#[createtime],#[livetime],#[appid])
  ]]>
 </property>
-<property name="persisteTicket">
+<property name="getTicket">
 <![CDATA[
 select * from tickets where token = ?
  ]]>

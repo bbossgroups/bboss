@@ -90,7 +90,7 @@ public abstract class BaseTokenStore implements TokenStore {
 		try {
 			String token = this.randomToken();
 			String ticket = account+"|"+worknumber +"|"+createTime;
-			SimpleKeyPair keyPairs = getKeyPair(appid,secret);
+			SimpleKeyPair keyPairs = _getKeyPair(appid,secret,false);
 			byte[] data =  null;
 			if(keyPairs.getPubKey() != null)
 			{
@@ -274,7 +274,7 @@ public abstract class BaseTokenStore implements TokenStore {
 				throw new TokenException(TokenStore.ERROR_CODE_TICKETNOTEXIST);
 			}
 			String accountinfo = null;
-			SimpleKeyPair keyPairs = getKeyPair(appid,secret);
+			SimpleKeyPair keyPairs = _getKeyPair(appid,secret,false);
 			byte[] data =  null;
 			
 			if(keyPairs.getPriKey() != null)
@@ -316,7 +316,7 @@ public abstract class BaseTokenStore implements TokenStore {
 			}
 			else if(tokentype.equals(TokenStore.type_authtemptoken))
 			{			
-				SimpleKeyPair keyPairs = getKeyPair(token.getAppid(),token.getSecret());
+				SimpleKeyPair keyPairs = _getKeyPair(token.getAppid(),token.getSecret(),false);
 				String input = accountinfo[0] + "|" + accountinfo[1] + "|" + token.getToken();
 				byte[] data =  null;
 				if(keyPairs.getPubKey() != null)
@@ -339,7 +339,7 @@ public abstract class BaseTokenStore implements TokenStore {
 			}
 			else if(tokentype.equals(TokenStore.type_dualtoken))
 			{			
-				SimpleKeyPair keyPairs = getKeyPair(token.getAppid(),token.getSecret());
+				SimpleKeyPair keyPairs = _getKeyPair(token.getAppid(),token.getSecret(),false);
 				String input = accountinfo[0] + "|" + accountinfo[1] +  "|" + token.getToken();
 				byte[] data =  null;
 				if(keyPairs.getPubKey() != null)
@@ -413,6 +413,8 @@ public abstract class BaseTokenStore implements TokenStore {
 				 if(memtoken == null)
 					{
 //						throw new TokenException(TokenStore.ERROR_CODE_AUTHTEMPTOKENNOTEXIST);
+					    decodetokenResult.setTokentype(tokentype);
+						decodetokenResult.setAppid(appid);
 						decodetokenResult.setResult(token_request_validateresult_notexist);
 						return tokenInfo;
 					}
@@ -433,12 +435,14 @@ public abstract class BaseTokenStore implements TokenStore {
 					{
 //						throw new TokenException(TokenStore.ERROR_CODE_AUTHTEMPTOKENNOTEXIST);
 						decodetokenResult.setResult(token_request_validateresult_notexist);
+						decodetokenResult.setTokentype(tokentype);
+						decodetokenResult.setAppid(appid);
 						return tokenInfo;
 					}
 					tokenInfo.setTokenInfo(memtoken);
 					decodetokenResult.setTokentype(tokentype);
 					signtoken = memtoken.getSigntoken();
-					SimpleKeyPair keyPairs = getKeyPair(appid,secret);
+					SimpleKeyPair keyPairs = _getKeyPair(appid,secret,false);
 					
 					decodetokenResult.setAppid(appid);
 					String mw = new String(ECCCoder.decrypt(Hex.decode(signtoken), keyPairs.getPrivateKey()));
@@ -464,12 +468,14 @@ public abstract class BaseTokenStore implements TokenStore {
 					if(memtoken == null)
 					{
 						decodetokenResult.setResult(token_request_validateresult_notexist);
+						decodetokenResult.setTokentype(tokentype);
+						decodetokenResult.setAppid(appid);
 						return tokenInfo;
 					}
 					tokenInfo.setTokenInfo(memtoken);
 					decodetokenResult.setTokentype(tokentype);
 					signtoken = memtoken.getSigntoken();
-					SimpleKeyPair keyPairs = getKeyPair(appid,secret);
+					SimpleKeyPair keyPairs = _getKeyPair(appid,secret,false);
 					
 					decodetokenResult.setAppid(appid);
 					String mw = new String(ECCCoder.decrypt(Hex.decode(signtoken), keyPairs.getPrivateKey()));
@@ -494,6 +500,7 @@ public abstract class BaseTokenStore implements TokenStore {
 		else
 		{
 			decodetokenResult.setTokentype(TokenStore.type_temptoken);
+			decodetokenResult.setAppid(appid);
 			decodetokenResult.setToken(token);
 			 MemToken memtoken = getTempMemToken(decodetokenResult.getToken(),appid);
 			 if(memtoken == null)
@@ -591,7 +598,13 @@ public abstract class BaseTokenStore implements TokenStore {
 	
 	public SimpleKeyPair getKeyPair(String appid,String secret) throws TokenException
 	{
-		this.assertApplication(appid, secret);		
+		return _getKeyPair(appid,secret,true);
+	}
+	
+	protected SimpleKeyPair _getKeyPair(String appid,String secret,boolean validateapp) throws TokenException
+	{
+		if(validateapp)
+			this.assertApplication(appid, secret);		
 		return _getKeyPair( appid, secret);
 	}
 	

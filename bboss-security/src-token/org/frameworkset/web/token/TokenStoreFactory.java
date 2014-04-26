@@ -24,7 +24,7 @@ public class TokenStoreFactory {
 			TokenStore tokenStore = (TokenStore)Class.forName(tokenstore).newInstance();
 			return tokenStore;
 		} catch (Exception e) {
-			return new MemTokenStore();
+			throw new TokenException("不支持的tokenstore类型："+tokenstore,e);
 		}
 		
 			
