@@ -7,7 +7,8 @@ DROP TABLE authtemptokens CASCADE CONSTRAINTS;
 CREATE TABLE authtemptokens
 (
     ID VARCHAR2(100) NOT NULL,
-    token VARCHAR2(500),
+    token VARCHAR2(100),
+    signtoken VARCHAR2(1000),
     createTime NUMBER(20),
     lastVistTime NUMBER(20),
     livetime NUMBER(20),
@@ -33,7 +34,8 @@ DROP TABLE dualtokens CASCADE CONSTRAINTS;
 CREATE TABLE dualtokens
 (
     ID VARCHAR2(100) NOT NULL,
-    token VARCHAR2(1000),
+    token VARCHAR2(100),
+    signtoken VARCHAR2(1000),
     createTime NUMBER(20),
     lastVistTime NUMBER(20),
     livetime NUMBER(20),
@@ -82,14 +84,40 @@ DROP TABLE eckeypairs CASCADE CONSTRAINTS;
 CREATE TABLE eckeypairs
 (
     appid VARCHAR2(100) NOT NULL,
-    privateKey VARCHAR2(500),
+    privateKey VARCHAR2(1500),
     createTime NUMBER(20),
-    publicKey VARCHAR2(500)
+    publicKey VARCHAR2(1500)
 );
 
 ALTER TABLE eckeypairs
     ADD CONSTRAINT eckeypairs_PK
 PRIMARY KEY (appid);
+
+
+
+
+
+
+-----------------------------------------------------------------------------
+-- tickets
+-----------------------------------------------------------------------------
+DROP TABLE tickets CASCADE CONSTRAINTS;
+
+CREATE TABLE tickets
+(
+    token VARCHAR2(100) NOT NULL,
+    ticket VARCHAR2(1500),
+    createTime NUMBER(20),
+    livetime NUMBER(20),
+    appid VARCHAR2(100),
+    lastVistTime NUMBER(20)
+);
+
+ALTER TABLE tickets
+    ADD CONSTRAINT tickets_PK
+PRIMARY KEY (token);
+
+
 
 
 

@@ -304,8 +304,7 @@ public class TokenFilter implements Filter{
 //		}
 //		else
 		{
-			String appid= request.getParameter("appid");
-			String secret= request.getParameter("secret");
+			
 			
 			
 			try {
@@ -315,6 +314,8 @@ public class TokenFilter implements Filter{
 				}
 				else
 				{
+					String appid= request.getParameter(TokenStore.app_param_name);
+					String secret= request.getParameter(TokenStore.app_secret_param_name);
 					TokenResult tokenResult = this.tokenService.checkToken(appid,secret,token);
 					request.setAttribute(TokenStore.token_request_validatetoken_key, tokenResult);
 					if( tokenResult != null )
