@@ -176,7 +176,7 @@ public class MemTokenStore extends BaseTokenStore{
 		String[] accountinfo = decodeTicket( ticket,
 				 appid,  secret);
 		String token = this.randomToken();
-		String key = appid + ":"+secret;
+		String key = appid ;
 		MemToken token_m = null;
 		synchronized(this.dualcheckLock)
 		{
@@ -191,6 +191,9 @@ public class MemTokenStore extends BaseTokenStore{
 					long createTime = System.currentTimeMillis();
 					token_m = new MemToken(token, createTime, true,
 							createTime, livetime);
+					token_m.setAppid(appid);
+					token_m.setSecret(secret);
+					this.signToken(token_m, TokenStore.type_authtemptoken, accountinfo,ticket);
 					dualtokens.put(key, token_m);
 				}
 			}
@@ -199,10 +202,13 @@ public class MemTokenStore extends BaseTokenStore{
 				long createTime = System.currentTimeMillis();
 				token_m = new MemToken(token, createTime, true,
 						createTime, livetime);
+				token_m.setAppid(appid);
+				token_m.setSecret(secret);
+				this.signToken(token_m, TokenStore.type_authtemptoken, accountinfo,ticket);
 				dualtokens.put(key, token_m);
 			}
 		}
-		this.signToken(token_m, type_dualtoken,accountinfo, ticket);
+		
 		return token_m ;
 		
 	}
@@ -212,19 +218,22 @@ public class MemTokenStore extends BaseTokenStore{
 		String[] accountinfo = decodeTicket( ticket,
 				 appid,  secret);
 		String token = this.randomToken();
-		String key = appid + ":"+secret +":"+token;
+		String key = appid + ":"+token;
 		MemToken token_m = null;
 		synchronized(this.authtempcheckLock)
 		{
 			
-			{
-				long createTime = System.currentTimeMillis();
-				token_m = new MemToken(token, createTime, true,
-						createTime, this.tempTokendualtime);
-				this.authtemptokens.put(key, token_m);
-			}
+			
+			long createTime = System.currentTimeMillis();
+			token_m = new MemToken(token, createTime, true,
+					createTime, this.tempTokendualtime);
+			token_m.setAppid(appid);
+			token_m.setSecret(secret);
+			this.signToken(token_m, TokenStore.type_authtemptoken, accountinfo,ticket);
+			this.authtemptokens.put(key, token_m);
+			
 		}
-		this.signToken(token_m, TokenStore.type_authtemptoken, accountinfo,ticket);
+		
 		return token_m ;
 		
 	}

@@ -410,6 +410,7 @@ public class MongodbTokenStore extends BaseTokenStore{
 						createTime, livetime);
 				token_m.setAppid(appid);
 				token_m.setSecret(secret);
+				this.signToken(token_m,TokenStore.type_dualtoken,accountinfo,ticket);
 				updateDualToken(token_m);
 				
 			}
