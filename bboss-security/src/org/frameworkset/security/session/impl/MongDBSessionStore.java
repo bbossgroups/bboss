@@ -88,6 +88,7 @@ public class MongDBSessionStore extends BaseSessionStore{
 		.append("creationTime", creationTime)
 		.append("maxInactiveInterval",maxInactiveInterval)
 		.append("lastAccessedTime", lastAccessedTime)
+		.append("_validate", true)
 		.append("appKey", appKey));
 		SimpleSessionImpl session = new SimpleSessionImpl();
 		session.setMaxInactiveInterval(maxInactiveInterval);
@@ -113,52 +114,101 @@ public class MongDBSessionStore extends BaseSessionStore{
 
 	@Override
 	public Enumeration getAttributeNames(String appKey,String sessionID) {
-		// TODO Auto-generated method stub
-		return null;
+//		DBCollection sessions =getAppSessionDBCollection( appKey);
+//		
+//		DBObject obj = sessions.findOne(new BasicDBObject("sessionid",sessionID));
+//		
+//		if(obj == null)
+//			throw new SessionException("SessionID["+sessionID+"],appKey["+appKey+"] do not exist or is invalidated!" );
+//		String[] valueNames = null;
+//		if(obj.keySet() != null)
+//		{
+//			return obj.keySet().iterator();
+//		}
+		throw new java.lang.UnsupportedOperationException();
 	}
 
 	@Override
 	public void updateLastAccessedTime(String appKey,String sessionID, long lastAccessedTime) {
-		// TODO Auto-generated method stub
+		DBCollection sessions =getAppSessionDBCollection( appKey);
+		
+		sessions.update(new BasicDBObject("sessionid",sessionID), new BasicDBObject("$set",new BasicDBObject("lastAccessedTime", lastAccessedTime)));
 		
 	}
 
 	@Override
 	public long getLastAccessedTime(String appKey,String sessionID) {
-		// TODO Auto-generated method stub
-		return 0;
+		DBCollection sessions =getAppSessionDBCollection( appKey);
+		BasicDBObject keys = new BasicDBObject();
+		keys.put("lastVistTime", 1);
+		
+		DBObject obj = sessions.findOne(new BasicDBObject("sessionid",sessionID),keys);
+		if(obj == null)
+			throw new SessionException("SessionID["+sessionID+"],appKey["+appKey+"] do not exist or is invalidated!" );
+		return (Long)obj.get("lastAccessedTime");
 	}
 
 	@Override
 	public String[] getValueNames(String appKey,String sessionID) {
-		// TODO Auto-generated method stub
-		return null;
+		DBCollection sessions =getAppSessionDBCollection( appKey);
+		
+		DBObject obj = sessions.findOne(new BasicDBObject("sessionid",sessionID));
+		
+		if(obj == null)
+			throw new SessionException("SessionID["+sessionID+"],appKey["+appKey+"] do not exist or is invalidated!" );
+		String[] valueNames = null;
+		if(obj.keySet() != null)
+		{
+			valueNames = new String[obj.keySet().size()];
+			Iterator<String> keys = obj.keySet().iterator();
+			int i = 0; 
+			while(keys.hasNext())
+			{
+				valueNames[i] = keys.next();
+				i ++;
+			}
+			
+		}
+		return valueNames ;
 	}
 
 	@Override
 	public void invalidate(String appKey,String sessionID) {
-		// TODO Auto-generated method stub
+		DBCollection sessions = getAppSessionDBCollection( appKey);		
+		sessions.update(new BasicDBObject("sessionid",sessionID), new BasicDBObject("$set",new BasicDBObject("_validate", false)));
 		
 	}
 
 	@Override
 	public boolean isNew(String appKey,String sessionID) {
-		// TODO Auto-generated method stub
-		return false;
+		DBCollection sessions =getAppSessionDBCollection( appKey);
+		BasicDBObject keys = new BasicDBObject();
+		keys.put("lastAccessedTime", 1);
+		keys.put("creationTime", 1);
+		DBObject obj = sessions.findOne(new BasicDBObject("sessionid",sessionID),keys);
+		
+		if(obj == null)
+			throw new SessionException("SessionID["+sessionID+"],appKey["+appKey+"] do not exist or is invalidated!" );
+		 long lastAccessedTime =(Long)obj.get("lastAccessedTime");
+		 long creationTime =(Long)obj.get("creationTime");
+		 return creationTime == lastAccessedTime;
 	}
 
 	@Override
 	public void removeAttribute(String appKey,String sessionID, String attribute) {
-		// TODO Auto-generated method stub
+		DBCollection sessions = getAppSessionDBCollection( appKey);		
+		sessions.update(new BasicDBObject("sessionid",sessionID), new BasicDBObject("$set",new BasicDBObject(attribute, null)));
 		
 	}
 
 	@Override
 	public void addAttribute(String appKey,String sessionID, String attribute, Object value) {
-		
+		DBCollection sessions = getAppSessionDBCollection( appKey);		
+		sessions.update(new BasicDBObject("sessionid",sessionID), new BasicDBObject("$set",new BasicDBObject(attribute, value)));
 		
 	}
 
 
 }
+
 
