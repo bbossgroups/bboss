@@ -15,44 +15,37 @@
  */
 package org.frameworkset.security.session.impl;
 
-import java.io.IOException;
-
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequestWrapper;
+import javax.servlet.http.HttpSession;
 
 /**
- * <p>Title: SessionFilter.java</p> 
+ * <p>Title: SessionHttpServletRequestWrapper.java</p> 
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2008</p>
- * @Date 2014年4月15日
+ * @Date 2014年4月30日
  * @author biaoping.yin
  * @version 3.8.0
  */
-public class SessionFilter implements Filter{
+public class SessionHttpServletRequestWrapper extends HttpServletRequestWrapper {
+
+	public SessionHttpServletRequestWrapper(HttpServletRequest request) {
+		super(request);
+		
+	}
+
+	@Override
+	public HttpSession getSession() {
 	
-
-	@Override
-	public void destroy() {
 		// TODO Auto-generated method stub
-		
+		return super.getSession();
 	}
 
 	@Override
-	public void doFilter(ServletRequest arg0, ServletResponse arg1,
-			FilterChain arg2) throws IOException, ServletException {
+	public HttpSession getSession(boolean create) {
 		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void init(FilterConfig arg0) throws ServletException {
-		// TODO Auto-generated method stub
-		
+		return super.getSession(create);
 	}
 
 }

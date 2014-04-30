@@ -38,7 +38,7 @@ import com.frameworkset.util.StringUtil;
  * version 1.0
  */
 
-public class CharsetEncodingFilter implements Filter {
+public class CharsetEncodingFilter extends SessionFilter {
     private FilterConfig config = null;
     private String RequestEncoding = null;
     private String ResponseEncoding = null;
@@ -117,7 +117,7 @@ public class CharsetEncodingFilter implements Filter {
          *  向所有会话cookie 添加“HttpOnly”属性,  解决方案，过滤器中
          */
 //        response.setHeader( "Set-Cookie", "name=value; HttpOnly");
-        response.setHeader( "Set-Cookie", "name=value;HttpOnly"); 
+        //response.setHeader( "Set-Cookie", "name=value;HttpOnly"); 
         if(refererDefender)
         {
 	        /**

@@ -86,6 +86,11 @@ public class StringUtil extends SimpleStringUtil {
 	
 	public static void  addCookieValue(HttpServletRequest request,HttpServletResponse response ,String name,String value,int maxage)
 	{
+		addCookieValue( request, response , name, value, maxage, true);
+	}
+	
+	public static void  addCookieValue(HttpServletRequest request,HttpServletResponse response ,String name,String value,int maxage,boolean httponly)
+	{
 		try
 		{
 			Cookie[] cookies = request.getCookies();
@@ -106,14 +111,16 @@ public class StringUtil extends SimpleStringUtil {
 			{
 				 loginPathCookie = new Cookie(name, value);			 
 				loginPathCookie.setMaxAge(maxage);
-				loginPathCookie.setPath(request.getContextPath());			
+				loginPathCookie.setPath(request.getContextPath());
+				loginPathCookie.setHttpOnly(httponly);				
 				response.addCookie(loginPathCookie);
 			}
 			else
 			{
 				loginPathCookie.setMaxAge(maxage);
 				loginPathCookie.setValue(value);
-				loginPathCookie.setPath(request.getContextPath());	
+				loginPathCookie.setPath(request.getContextPath());
+				loginPathCookie.setHttpOnly(httponly);
 				response.addCookie(loginPathCookie);
 	//			loginPathCookie.setPath(request.getContextPath());
 			}
