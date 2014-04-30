@@ -58,6 +58,11 @@ public class DTokenTag extends BaseTag {
 	public int doStartTag() throws JspException {
 		
 		int ret = super.doStartTag();
+		if(!TokenHelper.isEnableToken() )
+		{
+			return ret;
+		}
+		
 		try {
 			out.print(TokenHelper.getTokenService().buildDToken(element,this.jsonsplit,request,fid,this.cache));
 		} catch (IOException e) {
