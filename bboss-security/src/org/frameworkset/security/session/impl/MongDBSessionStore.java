@@ -78,7 +78,7 @@ public class MongDBSessionStore extends BaseSessionStore{
 	}
 	
 	@Override
-	public Session createSession(String appKey) {
+	public Session createSession(String appKey,String referip) {
 		String sessionid = this.randomToken();
 		long creationTime = System.currentTimeMillis();
 		long maxInactiveInterval = this.getSessionTimeout();
@@ -89,7 +89,7 @@ public class MongDBSessionStore extends BaseSessionStore{
 		.append("maxInactiveInterval",maxInactiveInterval)
 		.append("lastAccessedTime", lastAccessedTime)
 		.append("_validate", true)
-		.append("appKey", appKey));
+		.append("appKey", appKey).append("referip", referip));
 		SimpleSessionImpl session = new SimpleSessionImpl();
 		session.setMaxInactiveInterval(maxInactiveInterval);
 		session.setAppKey(appKey);
@@ -206,6 +206,37 @@ public class MongDBSessionStore extends BaseSessionStore{
 		DBCollection sessions = getAppSessionDBCollection( appKey);		
 		sessions.update(new BasicDBObject("sessionid",sessionID), new BasicDBObject("$set",new BasicDBObject(attribute, value)));
 		
+	}
+	@Override
+	public Session getSession(String appKey, String sessionid) {
+		DBCollection sessions =getAppSessionDBCollection( appKey);
+		BasicDBObject keys = new BasicDBObject();
+		keys.put("creationTime", 1);
+		keys.put("maxInactiveInterval", 1);
+		keys.put("lastAccessedTime", 1);
+		keys.put("_validate", 1);
+		keys.put("appKey", 1);
+		keys.put("referip", 1);
+		
+		
+		DBObject object = sessions.findOne(new BasicDBObject("sessionid",sessionid),keys);
+		if(object != null)
+		{
+			SimpleSessionImpl session = new SimpleSessionImpl();
+			session.setMaxInactiveInterval((Long)object.get("maxInactiveInterval"));
+			session.setAppKey(appKey);
+			session.setCreationTime((Long)object.get("creationTime"));
+			session.setLastAccessedTime((Long)object.get("lastAccessedTime"));
+			session.setId(sessionid);
+			session.setReferip((String)object.get("referip"));
+			session.setValidate((Boolean)object.get("_validate"));
+			session._setSessionStore(this);
+			return session;
+		}
+		else
+		{
+			return null;
+		}
 	}
 
 

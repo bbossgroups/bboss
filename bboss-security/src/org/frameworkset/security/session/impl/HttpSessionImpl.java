@@ -32,8 +32,14 @@ import org.frameworkset.security.session.Session;
  * @author biaoping.yin
  * @version 3.8.0
  */
-public class HttpSessionImpl implements Session {
-	private HttpSession session = null;
+public class HttpSessionImpl implements HttpSession {
+	private Session session = null;
+	private ServletContext servletContext;
+	public HttpSessionImpl(Session session,ServletContext servletContext)
+	{
+		this.session = session;
+		this.servletContext = servletContext;
+	}
 	@Override
 	public Object getAttribute(String attribute) {
 		// TODO Auto-generated method stub
@@ -58,9 +64,9 @@ public class HttpSessionImpl implements Session {
 		return this.session.getId();
 	}
 
-	@Override
+	
 	public void touch() {
-		
+		session.touch();
 
 	}
 
@@ -70,10 +76,10 @@ public class HttpSessionImpl implements Session {
 		return this.session.getLastAccessedTime();
 	}
 
-	@Override
-	public long getMaxInactiveInterval() {
+	
+	public int getMaxInactiveInterval() {
 		
-		return session.getMaxInactiveInterval();
+		return (int)session.getMaxInactiveInterval();
 	}
 
 	@Override
@@ -123,30 +129,29 @@ public class HttpSessionImpl implements Session {
 		session.setAttribute(attribute, value);
 
 	}
+//
+//	@Override
+//	public void setMaxInactiveInterval(long maxInactiveInterval) {
+//		session.setMaxInactiveInterval((int)maxInactiveInterval);
+//
+//	}
 
-	@Override
-	public void setMaxInactiveInterval(long maxInactiveInterval) {
-		session.setMaxInactiveInterval((int)maxInactiveInterval);
-
-	}
-
-	public HttpSession getSession() {
-		return session;
-	}
-
-	public void setSession(HttpSession session) {
-		this.session = session;
-	}
+	
 	
 	public ServletContext getServletContext() {
 		// TODO Auto-generated method stub
-		return session.getServletContext();
+		return this.servletContext;
 	}
 
 	
 	public HttpSessionContext getSessionContext() {
-		// TODO Auto-generated method stub
-		return session.getSessionContext();
+		return null;
+	}
+
+	@Override
+	public void setMaxInactiveInterval(int arg0) {
+		this.session.setMaxInactiveInterval(arg0);
+		
 	}
 
 }

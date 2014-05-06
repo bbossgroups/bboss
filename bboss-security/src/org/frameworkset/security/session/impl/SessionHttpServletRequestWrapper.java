@@ -15,9 +15,15 @@
  */
 package org.frameworkset.security.session.impl;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import org.frameworkset.security.session.Session;
+
+import com.frameworkset.util.StringUtil;
 
 /**
  * <p>Title: SessionHttpServletRequestWrapper.java</p> 
@@ -29,23 +35,79 @@ import javax.servlet.http.HttpSession;
  * @version 3.8.0
  */
 public class SessionHttpServletRequestWrapper extends HttpServletRequestWrapper {
-
-	public SessionHttpServletRequestWrapper(HttpServletRequest request) {
+	private String sessionid;
+	private HttpSessionImpl session;
+	private HttpServletResponse response;
+	private ServletContext servletContext;	
+	public SessionHttpServletRequestWrapper(HttpServletRequest request,HttpServletResponse response,ServletContext servletContext) {
 		super(request);
-		
+		sessionid = StringUtil.getCookieValue((HttpServletRequest)request, SessionHelper.getSessionManager().getCookiename());
+		this.servletContext = servletContext;
+		this.response = response;
 	}
 
 	@Override
 	public HttpSession getSession() {
-	
-		// TODO Auto-generated method stub
-		return super.getSession();
+		
+		 return getSession(true);
 	}
 
 	@Override
 	public HttpSession getSession(boolean create) {
-		// TODO Auto-generated method stub
-		return super.getSession(create);
+		if( SessionHelper.getSessionManager().usewebsession())
+		{
+			// TODO Auto-generated method stub
+			return super.getSession();
+		}
+		if(sessionid == null)
+		{
+			if(create)
+			{
+				Session session = SessionHelper.createSession(this.getContextPath(),StringUtil.getClientIP(this));				
+				sessionid = session.getId();
+				this.session = new HttpSessionImpl(session,servletContext);
+				StringUtil.addCookieValue(this, response, SessionHelper.getSessionManager().getCookiename(), sessionid,Integer.MAX_VALUE);
+				return this.session;
+			}
+			else
+			{
+				return null;
+			}
+		}
+		else if(session != null)
+		{
+			return session;
+		}
+		else
+		{
+			Session session = SessionHelper.getSession(this.getContextPath(),sessionid);
+			if(session == null)//session不存在，创建新的session
+			{				
+				if(create)
+				{
+					session = SessionHelper.createSession(this.getContextPath(),StringUtil.getClientIP(this));
+					
+					sessionid = session.getId();
+					this.session =  new HttpSessionImpl(session,servletContext);
+					StringUtil.addCookieValue(this, response, SessionHelper.getSessionManager().getCookiename(), sessionid,Integer.MAX_VALUE);
+				}
+			}
+			else
+			{
+				this.session =  new HttpSessionImpl(session,servletContext);
+			}
+			return this.session;
+		}
+		
+		
+	}
+
+	public void touch() {
+		if(this.session != null && !session.isNew())
+		{
+			session.touch();
+		}
+		
 	}
 
 }

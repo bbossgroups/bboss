@@ -29,22 +29,34 @@ import com.frameworkset.util.StringUtil;
  * @version 3.8.0
  */
 public class SessionStoreFactory {
-	public static SessionStore getTokenStore(String sessionStore,SessionManager sessionManager)
+	public static SessionStore getTokenStore(Object sessionStore,SessionManager sessionManager)
 	{
-		if(StringUtil.isEmpty(sessionStore)||sessionStore.equals("session"))
-		{
-			return new HttpSessionStore();
-		}
+		if(sessionStore == null)
+			return null;
+		
 		else
 		{
-			
-			try {
-				SessionStore sessionStore_ = (SessionStore)Class.forName(sessionStore).newInstance();
-				sessionStore_.setSessionManager(sessionManager);
-				return sessionStore_;
-			} catch (Exception e) {
-				return new HttpSessionStore();
+			if(sessionStore instanceof String)
+			{
+				String str = (String)sessionStore;
+				if(StringUtil.isEmpty(str)||str.equals("session"))
+				{
+					return null;
+				}
+				try {
+					SessionStore sessionStore_ = (SessionStore)Class.forName(str.trim()).newInstance();
+					sessionStore_.setSessionManager(sessionManager);
+					return new DelegateSessionStore(sessionStore_);
+				} catch (Exception e) {
+					throw new SessionManagerException("获取sessionstore失败："+sessionStore,e);
+				}
 			}
+			else
+			{
+				SessionStore sessionStore_ = (SessionStore)sessionStore;
+				return new DelegateSessionStore(sessionStore_);
+			}
+			
 		}
 			
 	}

@@ -29,6 +29,6 @@
 	<classpathentry kind="lib" path="lib/bboss-velocity.jar"/>
 	<classpathentry kind="lib" path="lib/bboss-aop.jar" sourcepath="/bbossaop"/>
 	<classpathentry kind="src" path="src-htmlparser"/>
-	<classpathentry kind="lib" path="lib/bboss-security.jar"/>
+	<classpathentry kind="lib" path="lib/bboss-security.jar" sourcepath="/bboss-security"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>

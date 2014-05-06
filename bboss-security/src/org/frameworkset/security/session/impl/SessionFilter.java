@@ -13,19 +13,19 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.frameworkset.common.filter;
+package org.frameworkset.security.session.impl;
 
 import java.io.IOException;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
-
-import org.frameworkset.security.session.impl.SessionHttpServletRequestWrapper;
+import javax.servlet.http.HttpServletResponse;
 
 
 
@@ -40,7 +40,7 @@ import org.frameworkset.security.session.impl.SessionHttpServletRequestWrapper;
  */
 public class SessionFilter implements Filter{
 	
-	
+	private ServletContext servletContext;
 	@Override
 	public void destroy() {
 		
@@ -50,14 +50,17 @@ public class SessionFilter implements Filter{
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response,
 			FilterChain fc) throws IOException, ServletException {
-		SessionHttpServletRequestWrapper mrequestw = new	SessionHttpServletRequestWrapper((HttpServletRequest)request);
-	      fc.doFilter(mrequestw, response);
+		
+		
+		SessionHttpServletRequestWrapper mrequestw = new	SessionHttpServletRequestWrapper((HttpServletRequest)request,(HttpServletResponse)response,this.servletContext);
+		mrequestw.touch();
+	    fc.doFilter(mrequestw, response);
 	}
 
 	@Override
 	public void init(FilterConfig arg0) throws ServletException {
 	
-		
+		servletContext = arg0.getServletContext();
 	}
 
 }

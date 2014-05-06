@@ -48,24 +48,41 @@ public class SessionManager {
 	private SessionMonitor	sessionMonitor;
 	private List<SessionListener> sessionListeners;
 	private static ThreadLocal<Session> currentSession = new ThreadLocal<Session>();
+	
 	/**
 	 * 令牌超时检测时间间隔，默认为-1，不检测
 	 * 如果需要检测，那么只要令牌持续时间超过tokendualtime
 	 * 对应的时间将会被清除
 	 */
 	private long sessionscaninterval = 1800000;
-	public SessionManager(long sessionTimeout, String sessionStore,
+	private boolean usewebsession = false;
+	public SessionManager(long sessionTimeout, Object sessionStore,
 			String cookiename, boolean httponly,
 			long cookieLiveTime,String[] listeners) {
 		this.sessionTimeout = sessionTimeout;
-		this.sessionStore_ = sessionStore;
-		this.sessionStore = SessionStoreFactory.getTokenStore(sessionStore_,this);
+		if(sessionStore instanceof String)
+		{
+			this.sessionStore_ = (String)sessionStore;
+			this.sessionStore = SessionStoreFactory.getTokenStore(sessionStore_,this);
+			if(this.sessionStore == null)
+			{
+				usewebsession = true;
+			}
+		}
+		else
+		{
+			this.sessionStore = (SessionStore)sessionStore;
+		}
 		this.cookiename = cookiename;
 		this.httpOnly = httponly;
 		this.cookieLiveTime = cookieLiveTime;
 		initSessionListeners(listeners);
 		sessionMonitor = new SessionMonitor();
 		sessionMonitor.start();
+	}
+	public boolean usewebsession()
+	{
+		return this.usewebsession;
 	}
 	private void initSessionListeners(String[] listeners)
 	{

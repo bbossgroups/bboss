@@ -45,6 +45,7 @@ public interface Session {
 	public void removeValue(String attribute) ;
 	public void setAttribute(String attribute, Object value) ;
 	public void setMaxInactiveInterval(long maxInactiveInterval) ;
+	public String getReferip();
 //	public String getSessionID();
 //	public Object getAttribute(String attribute);
 //	public void setAttribute(String attribute,Object value);

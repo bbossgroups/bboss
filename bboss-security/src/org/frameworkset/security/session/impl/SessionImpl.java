@@ -130,4 +130,10 @@ public class SessionImpl implements Session {
 		
 	}
 
+	@Override
+	public String getReferip() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

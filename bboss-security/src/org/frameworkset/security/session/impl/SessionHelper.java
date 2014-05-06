@@ -15,17 +15,10 @@
  */
 package org.frameworkset.security.session.impl;
 
-import java.io.IOException;
-
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-
+import org.frameworkset.security.session.Session;
+import org.frameworkset.security.session.SessionEvent;
 import org.frameworkset.spi.BaseApplicationContext;
 import org.frameworkset.spi.DefaultApplicationContext;
-import org.frameworkset.web.token.DTokenValidateFailedException;
-import org.frameworkset.web.token.TokenFilter;
-import org.frameworkset.web.token.TokenHelper;
-import org.frameworkset.web.token.TokenService;
 
 /**
  * <p>Title: SessionHelper.java</p> 
@@ -53,5 +46,21 @@ public class SessionHelper {
 
 	public static SessionManager getSessionManager() {
 		return sessionManager;
+	}
+	
+	public static Session createSession(String appkey,String referip)
+	{
+		Session session = sessionManager.getSessionStore().createSession(appkey,referip);
+		
+		return session;
+	}
+	public static void dispatchEvent(SessionEventImpl sessionEvent) 
+	{
+		sessionManager.dispatchEvent(sessionEvent);
+	}
+
+	public static Session getSession(String contextPath, String sessionid) {
+		// TODO Auto-generated method stub
+		return sessionManager.getSessionStore().getSession(contextPath, sessionid);
 	}
 }

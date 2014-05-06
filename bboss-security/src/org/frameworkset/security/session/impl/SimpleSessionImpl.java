@@ -11,6 +11,8 @@ public class SimpleSessionImpl implements Session{
 	private long creationTime;
 	private long lastAccessedTime;
 	private long maxInactiveInterval;
+	private String referip;
+	private boolean validate;
 	private transient SessionStore sessionStore;
 	@Override
 	public Object getAttribute(String attribute) {
@@ -75,7 +77,8 @@ public class SimpleSessionImpl implements Session{
 	@Override
 	public boolean isNew() {
 		// TODO Auto-generated method stub
-		return sessionStore.isNew(appKey,id);
+		//return sessionStore.isNew(appKey,id);
+		return this.creationTime == this.lastAccessedTime;
 	}
 
 	@Override
@@ -136,6 +139,23 @@ public class SimpleSessionImpl implements Session{
 
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	public String getReferip() {
+		return referip;
+	}
+
+	public void setReferip(String referip) {
+		this.referip = referip;
+	}
+	public boolean isValidate()
+	{
+		return validate;
+	}
+	
+	public void setValidate(boolean validate)
+	{
+		this.validate = validate;
 	}
 
 }
