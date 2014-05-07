@@ -12,7 +12,7 @@
 	<classpathentry kind="lib" path="lib/FlexiCoreProvider-1.7p7.signed.jar"/>
 	<classpathentry kind="lib" path="lib/FlexiECProvider-1.7p7.signed.jar"/>
 	<classpathentry kind="lib" path="lib/mongo-java-driver-2.9.3-sources.jar"/>
-	<classpathentry kind="lib" path="lib/mongo-java-driver-2.9.3.jar"/>
+	<classpathentry kind="lib" path="lib/mongo-java-driver-2.9.3.jar" sourcepath="lib/mongo-java-driver-2.9.3-sources.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib-compile/jsp-api.jar"/>
 	<classpathentry kind="lib" path="lib-compile/junit-4.6.jar"/>

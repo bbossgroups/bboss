@@ -1,6 +1,8 @@
 package org.frameworkset.security.session.impl;
 
 import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.frameworkset.security.session.Session;
 import org.frameworkset.security.session.SessionStore;
@@ -14,10 +16,35 @@ public class SimpleSessionImpl implements Session{
 	private String referip;
 	private boolean validate;
 	private transient SessionStore sessionStore;
+	private transient Map<String,Object> attributes;
+	private static final Object NULL = new Object(); 
+	public SimpleSessionImpl()
+	{
+		attributes = new HashMap<String,Object>();
+	}
 	@Override
 	public Object getAttribute(String attribute) {
-		
-		return sessionStore.getAttribute(appKey,id,attribute);
+		Object value = this.attributes.get(attribute);
+		if(value == null)
+		{
+			value = sessionStore.getAttribute(appKey,id,attribute);
+			if(value != null)
+			{
+				this.attributes.put(attribute, value);
+			}
+			else
+			{
+				this.attributes.put(attribute, NULL);
+			}
+			return value;
+		}
+		else
+		{
+			if(value == NULL)
+				return null;
+			else
+				return value;
+		}
 	}
 
 	@Override
@@ -71,6 +98,7 @@ public class SimpleSessionImpl implements Session{
 	@Override
 	public void invalidate() {
 		sessionStore.invalidate(appKey,id);
+		this.validate =false;
 		
 	}
 
@@ -90,6 +118,7 @@ public class SimpleSessionImpl implements Session{
 	@Override
 	public void removeAttribute(String attribute) {
 		sessionStore.removeAttribute(appKey,id,attribute);
+		this.attributes.remove(attribute);
 		
 	}
 
@@ -102,7 +131,7 @@ public class SimpleSessionImpl implements Session{
 	@Override
 	public void setAttribute(String attribute, Object value) {
 		sessionStore.addAttribute(appKey,id,attribute,value);
-		
+		this.attributes.put(attribute, value);
 	}
 
 	@Override
@@ -157,5 +186,12 @@ public class SimpleSessionImpl implements Session{
 	{
 		this.validate = validate;
 	}
+	public Map<String, Object> getAttributes() {
+		return attributes;
+	}
+	public void setAttributes(Map<String, Object> attributes) {
+		this.attributes = attributes;
+	}
+	
 
 }

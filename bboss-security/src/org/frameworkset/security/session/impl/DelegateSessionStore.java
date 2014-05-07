@@ -20,6 +20,7 @@ import java.util.Enumeration;
 import org.frameworkset.security.session.Session;
 import org.frameworkset.security.session.SessionEvent;
 import org.frameworkset.security.session.SessionStore;
+import org.frameworkset.soa.ObjectSerializable;
 
 /**
  * <p>Title: DelegateSessionStrore.java</p> 
@@ -52,6 +53,9 @@ public class DelegateSessionStore implements SessionStore {
 	public Session createSession(String appKey, String referip) {
 		// TODO Auto-generated method stub
 		Session session = sessionStore.createSession(appKey, referip);
+		if(session == null)
+			return null;
+		session._setSessionStore(this);
 		SessionHelper.dispatchEvent(new SessionEventImpl(session,SessionEvent.EventType_create));
 		return session;
 	}
@@ -88,9 +92,15 @@ public class DelegateSessionStore implements SessionStore {
 	}
 
 	@Override
-	public void invalidate(String appKey, String sessionID) {
-		this.sessionStore.invalidate(appKey, sessionID);
-
+	public Session invalidate(String appKey, String sessionID) {
+		Session session = this.sessionStore.invalidate(appKey, sessionID);
+		if(session == null)
+		{
+			return null;
+		}
+		session._setSessionStore(this);
+		SessionHelper.dispatchEvent(new SessionEventImpl(session,SessionEvent.EventType_destroy));
+		return session;
 	}
 
 	@Override
@@ -100,17 +110,32 @@ public class DelegateSessionStore implements SessionStore {
 	}
 
 	@Override
-	public void removeAttribute(String appKey, String sessionID,
+	public Object removeAttribute(String appKey, String sessionID,
 			String attribute) {
-		this.sessionStore.removeAttribute(appKey, sessionID, attribute);
+		Session session = (Session)this.sessionStore.removeAttribute(appKey, sessionID, attribute);		
+		if(session == null)
+			return null;
+		session._setSessionStore(this);
+		SessionHelper.dispatchEvent(new SessionEventImpl(session,SessionEvent.EventType_removeAttibute)
+										.setAttributeName(attribute)
+										.setAttributeValue(session.getAttribute(attribute)));
+		return session;
 
 	}
 
 	@Override
-	public void addAttribute(String appKey, String sessionID, String attribute,
+	public Object addAttribute(String appKey, String sessionID, String attribute,
 			Object value) {
-		this.sessionStore.addAttribute(appKey, sessionID, attribute, value);
-
+		Object temp = value;
+		
+		Session session = (Session)this.sessionStore.addAttribute(appKey, sessionID, attribute, BaseSessionStore.serial(value));
+		if(session == null)
+			return null;
+		session._setSessionStore(this);
+		SessionHelper.dispatchEvent(new SessionEventImpl(session,SessionEvent.EventType_addAttibute)
+										.setAttributeName(attribute)
+										.setAttributeValue(temp));
+		return session;
 	}
 
 	@Override
@@ -123,7 +148,10 @@ public class DelegateSessionStore implements SessionStore {
 	@Override
 	public Session getSession(String appKey, String sessionid) {
 		// TODO Auto-generated method stub
-		return this.sessionStore.getSession(appKey, sessionid);
+		Session session = this.sessionStore.getSession(appKey, sessionid);
+		if(session != null)
+			session._setSessionStore(this);
+		return session;
 	}
 
 }

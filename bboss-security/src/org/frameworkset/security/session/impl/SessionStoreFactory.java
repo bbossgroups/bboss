@@ -54,6 +54,7 @@ public class SessionStoreFactory {
 			else
 			{
 				SessionStore sessionStore_ = (SessionStore)sessionStore;
+				sessionStore_.setSessionManager(sessionManager);
 				return new DelegateSessionStore(sessionStore_);
 			}
 			

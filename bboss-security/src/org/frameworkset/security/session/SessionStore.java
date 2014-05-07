@@ -46,13 +46,13 @@ public interface SessionStore{
 
 	String[] getValueNames(String appKey,String sessionID);
 
-	void invalidate(String appKey,String sessionID);
+	Session invalidate(String appKey,String sessionID);
 
 	boolean isNew(String appKey,String sessionID);
 
-	void removeAttribute(String appKey,String sessionID, String attribute);
+	Object removeAttribute(String appKey,String sessionID, String attribute);
 
-	void addAttribute(String appKey,String sessionID, String attribute, Object value);
+	Object addAttribute(String appKey,String sessionID, String attribute, Object value);
 
 	void setSessionManager(SessionManager sessionManager);
 	

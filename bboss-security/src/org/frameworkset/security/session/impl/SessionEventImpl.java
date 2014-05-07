@@ -5,6 +5,8 @@ import org.frameworkset.security.session.SessionEvent;
 
 public class SessionEventImpl implements SessionEvent {
 	private Session session;
+	private String attributeName;
+	private Object attributeValue; 
 	private int eventType;
 	public SessionEventImpl(Session session,int eventType) {
 		this.session = session;
@@ -21,6 +23,24 @@ public class SessionEventImpl implements SessionEvent {
 	public int getEventType() {
 		// TODO Auto-generated method stub
 		return eventType;
+	}
+
+	public String getAttributeName() {
+		return attributeName;
+	}
+
+	public SessionEventImpl setAttributeName(String attributeName) {
+		this.attributeName = attributeName;
+		return this;
+	}
+
+	public Object getAttributeValue() {
+		return attributeValue;
+	}
+
+	public SessionEventImpl setAttributeValue(Object attributeValue) {
+		this.attributeValue = attributeValue;
+		return this;
 	}
 
 }

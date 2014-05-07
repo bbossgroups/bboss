@@ -46,6 +46,8 @@ public interface Session {
 	public void setAttribute(String attribute, Object value) ;
 	public void setMaxInactiveInterval(long maxInactiveInterval) ;
 	public String getReferip();
+	public boolean isValidate();
+	public void _setSessionStore(SessionStore sessionStore);
 //	public String getSessionID();
 //	public Object getAttribute(String attribute);
 //	public void setAttribute(String attribute,Object value);

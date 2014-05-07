@@ -16,7 +16,6 @@
 package org.frameworkset.security.session.impl;
 
 import org.frameworkset.security.session.Session;
-import org.frameworkset.security.session.SessionEvent;
 import org.frameworkset.spi.BaseApplicationContext;
 import org.frameworkset.spi.DefaultApplicationContext;
 

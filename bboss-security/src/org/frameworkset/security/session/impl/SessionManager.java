@@ -24,6 +24,8 @@ import org.frameworkset.security.session.SessionEvent;
 import org.frameworkset.security.session.SessionListener;
 import org.frameworkset.security.session.SessionStore;
 
+import com.frameworkset.util.StringUtil;
+
 
 /**
  * <p>Title: SessionManager.java</p> 
@@ -58,25 +60,18 @@ public class SessionManager {
 	private boolean usewebsession = false;
 	public SessionManager(long sessionTimeout, Object sessionStore,
 			String cookiename, boolean httponly,
-			long cookieLiveTime,String[] listeners) {
+			long cookieLiveTime,String listeners) {
 		this.sessionTimeout = sessionTimeout;
-		if(sessionStore instanceof String)
-		{
-			this.sessionStore_ = (String)sessionStore;
-			this.sessionStore = SessionStoreFactory.getTokenStore(sessionStore_,this);
-			if(this.sessionStore == null)
-			{
-				usewebsession = true;
-			}
-		}
-		else
-		{
-			this.sessionStore = (SessionStore)sessionStore;
-		}
+		this.sessionStore = SessionStoreFactory.getTokenStore(sessionStore,this);
+		
 		this.cookiename = cookiename;
 		this.httpOnly = httponly;
 		this.cookieLiveTime = cookieLiveTime;
-		initSessionListeners(listeners);
+		if(!StringUtil.isEmpty(listeners))
+		{
+			String[] temp = listeners.trim().split("");
+			initSessionListeners(temp);
+		}
 		sessionMonitor = new SessionMonitor();
 		sessionMonitor.start();
 	}
@@ -137,13 +132,13 @@ public class SessionManager {
 			{
 				
 //				check();
-				log.debug("过期令牌清理开始....");
+				log.debug("过期会话清理开始....");
 				try {
 					sessionStore.livecheck();
 				} catch (Exception e1) {
-					log.debug("过期令牌扫描异常：",e1);
+					log.debug("过期会话扫描异常：",e1);
 				}
-				log.debug("过期令牌清理结束.");
+				log.debug("过期会话清理结束.");
 				synchronized(this)
 				{
 					try {
@@ -182,7 +177,7 @@ public class SessionManager {
 		return sessionscaninterval;
 	}
 	public void dispatchEvent(SessionEventImpl sessionEvent) {
-		for(int i = 0; i < this.sessionListeners.size(); i ++)
+		for(int i = 0; sessionListeners != null && i < this.sessionListeners.size(); i ++)
 		{
 			
 				switch(sessionEvent.getEventType())

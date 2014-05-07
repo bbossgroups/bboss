@@ -63,10 +63,10 @@ public class SessionHttpServletRequestWrapper extends HttpServletRequestWrapper 
 		{
 			if(create)
 			{
-				Session session = SessionHelper.createSession(this.getContextPath(),StringUtil.getClientIP(this));				
+				Session session = SessionHelper.createSession(this.getContextPath().replace("/", ""),StringUtil.getClientIP(this));				
 				sessionid = session.getId();
 				this.session = new HttpSessionImpl(session,servletContext);
-				StringUtil.addCookieValue(this, response, SessionHelper.getSessionManager().getCookiename(), sessionid,Integer.MAX_VALUE);
+				StringUtil.addCookieValue(this, response, SessionHelper.getSessionManager().getCookiename(), sessionid, (int)SessionHelper.getSessionManager().getSessionTimeout());
 				return this.session;
 			}
 			else
@@ -80,16 +80,16 @@ public class SessionHttpServletRequestWrapper extends HttpServletRequestWrapper 
 		}
 		else
 		{
-			Session session = SessionHelper.getSession(this.getContextPath(),sessionid);
+			Session session = SessionHelper.getSession(this.getContextPath().replace("/", ""),sessionid);
 			if(session == null)//session不存在，创建新的session
 			{				
 				if(create)
 				{
-					session = SessionHelper.createSession(this.getContextPath(),StringUtil.getClientIP(this));
+					session = SessionHelper.createSession(this.getContextPath().replace("/", ""),StringUtil.getClientIP(this));
 					
 					sessionid = session.getId();
 					this.session =  new HttpSessionImpl(session,servletContext);
-					StringUtil.addCookieValue(this, response, SessionHelper.getSessionManager().getCookiename(), sessionid,Integer.MAX_VALUE);
+					StringUtil.addCookieValue(this, response, SessionHelper.getSessionManager().getCookiename(), sessionid, (int)SessionHelper.getSessionManager().getSessionTimeout());
 				}
 			}
 			else
@@ -103,9 +103,19 @@ public class SessionHttpServletRequestWrapper extends HttpServletRequestWrapper 
 	}
 
 	public void touch() {
-		if(this.session != null && !session.isNew())
+		if(this.sessionid != null )
 		{
-			session.touch();
+			if(session == null)
+			{
+				Session session_ = SessionHelper.getSession(this.getContextPath().replace("/", ""), sessionid);
+				if(session_ == null || !session_.isValidate())
+					return;
+				this.session =  new HttpSessionImpl(session_,servletContext);
+			}
+			if(session != null && !session.isNew() )
+			{
+				session.touch();
+			}
 		}
 		
 	}

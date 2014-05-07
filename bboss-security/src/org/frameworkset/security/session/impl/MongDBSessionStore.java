@@ -1,13 +1,16 @@
 package org.frameworkset.security.session.impl;
 
+import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.frameworkset.nosql.mongodb.MongoDBHelper;
 import org.frameworkset.security.session.Session;
-import org.frameworkset.security.session.SessionEvent;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
@@ -60,8 +63,11 @@ public class MongDBSessionStore extends BaseSessionStore{
 		while(itr.hasNext())
 		{
 			String app = itr.next();
-			DBCollection appsessions = db.getCollection(app);
-			appsessions.remove(new BasicDBObject("$where",temp));
+			if(app.endsWith("_sessions"))
+			{
+				DBCollection appsessions = db.getCollection(app);
+				appsessions.remove(new BasicDBObject("$where",temp));
+			}
 		}
 		
 	}
@@ -96,8 +102,8 @@ public class MongDBSessionStore extends BaseSessionStore{
 		session.setCreationTime(creationTime);
 		session.setLastAccessedTime(lastAccessedTime);
 		session.setId(sessionid);
-		session._setSessionStore(this);
-		this.sessionManager.dispatchEvent(new SessionEventImpl(session,SessionEvent.EventType_create));
+//		session._setSessionStore(this);
+		
 		return session;
 	}
 
@@ -108,7 +114,7 @@ public class MongDBSessionStore extends BaseSessionStore{
 		keys.put(attribute, 1);
 		
 		DBObject obj = sessions.findOne(new BasicDBObject("sessionid",sessionID),keys);
-		return obj.get(attribute);
+		return this.unserial((String)obj.get(attribute));
 //		return null;
 	}
 
@@ -173,9 +179,11 @@ public class MongDBSessionStore extends BaseSessionStore{
 	}
 
 	@Override
-	public void invalidate(String appKey,String sessionID) {
-		DBCollection sessions = getAppSessionDBCollection( appKey);		
-		sessions.update(new BasicDBObject("sessionid",sessionID), new BasicDBObject("$set",new BasicDBObject("_validate", false)));
+	public Session invalidate(String appKey,String sessionID) {
+//		DBCollection sessions = getAppSessionDBCollection( appKey);		
+//		sessions.update(new BasicDBObject("sessionid",sessionID), new BasicDBObject("$set",new BasicDBObject("_validate", false)));
+		Session session = _getSession(appKey, sessionID);
+		return session;
 		
 	}
 
@@ -195,17 +203,66 @@ public class MongDBSessionStore extends BaseSessionStore{
 	}
 
 	@Override
-	public void removeAttribute(String appKey,String sessionID, String attribute) {
-		DBCollection sessions = getAppSessionDBCollection( appKey);		
+	public Object removeAttribute(String appKey,String sessionID, String attribute) {
+		DBCollection sessions = getAppSessionDBCollection( appKey);
+		List<String> list = new ArrayList<String>();
+		list.add(attribute);
+		Session value = getSession(appKey, sessionID,list);
 		sessions.update(new BasicDBObject("sessionid",sessionID), new BasicDBObject("$set",new BasicDBObject(attribute, null)));
+		return value;
 		
 	}
 
 	@Override
-	public void addAttribute(String appKey,String sessionID, String attribute, Object value) {
-		DBCollection sessions = getAppSessionDBCollection( appKey);		
+	public Object addAttribute(String appKey,String sessionID, String attribute, Object value) {
+		DBCollection sessions = getAppSessionDBCollection( appKey);	
+		Session session = getSession(appKey, sessionID);
 		sessions.update(new BasicDBObject("sessionid",sessionID), new BasicDBObject("$set",new BasicDBObject(attribute, value)));
 		
+		return session;
+		
+	}
+	public Session getSession(String appKey, String sessionid,List<String> attributeNames) {
+		DBCollection sessions =getAppSessionDBCollection( appKey);
+		BasicDBObject keys = new BasicDBObject();
+		keys.put("creationTime", 1);
+		keys.put("maxInactiveInterval", 1);
+		keys.put("lastAccessedTime", 1);
+		keys.put("_validate", 1);
+		keys.put("appKey", 1);
+		keys.put("referip", 1);
+		for(int i = 0; attributeNames != null && i < attributeNames.size(); i ++)
+		{
+			keys.put(attributeNames.get(i), 1);
+		}
+		
+		
+		DBObject object = sessions.findOne(new BasicDBObject("sessionid",sessionid),keys);
+		if(object != null)
+		{
+			SimpleSessionImpl session = new SimpleSessionImpl();
+			session.setMaxInactiveInterval((Long)object.get("maxInactiveInterval"));
+			session.setAppKey(appKey);
+			session.setCreationTime((Long)object.get("creationTime"));
+			session.setLastAccessedTime((Long)object.get("lastAccessedTime"));
+			session.setId(sessionid);
+			session.setReferip((String)object.get("referip"));
+			session.setValidate((Boolean)object.get("_validate"));
+//			session._setSessionStore(this);
+			Map<String,Object> attributes = new HashMap<String,Object>();
+			for(int i = 0; attributeNames != null && i < attributeNames.size(); i ++)
+			{
+				String name = attributeNames.get(i);
+				Object value = object.get(name);
+				attributes.put(attributeNames.get(i), this.unserial((String)value));
+			}
+			session.setAttributes(attributes);
+			return session;
+		}
+		else
+		{
+			return null;
+		}
 	}
 	@Override
 	public Session getSession(String appKey, String sessionid) {
@@ -230,7 +287,63 @@ public class MongDBSessionStore extends BaseSessionStore{
 			session.setId(sessionid);
 			session.setReferip((String)object.get("referip"));
 			session.setValidate((Boolean)object.get("_validate"));
-			session._setSessionStore(this);
+//			session._setSessionStore(this);
+			return session;
+		}
+		else
+		{
+			return null;
+		}
+	}
+	private Map toMap(DBObject object)
+	{
+		
+		Set set = object.keySet();
+		if(set != null && set.size() > 0)
+		{
+			Map attrs = new HashMap();
+			Iterator it = set.iterator();
+			while(it.hasNext())
+			{
+				String key = (String)it.next();
+				if(!filter( key))
+				{
+					Object value = object.get(key);
+					attrs.put(key, this.unserial((String)value));
+				}
+			}
+			return attrs;
+		}
+		return null;
+	}
+	private boolean filter(String key)
+	{
+		return key.equals("maxInactiveInterval") || key.equals("creationTime") 
+				|| key.equals("lastAccessedTime") 
+				|| key.equals("referip") 
+				|| key.equals("_validate") 
+				|| key.equals("sessionid") 
+				|| key.equals("_id");
+	}
+	private Session _getSession(String appKey, String sessionid) {
+		DBCollection sessions =getAppSessionDBCollection( appKey);
+	
+		
+		
+		DBObject object = sessions.findAndRemove(new BasicDBObject("sessionid",sessionid));
+		if(object != null)
+		{
+			SimpleSessionImpl session = new SimpleSessionImpl();
+			session.setMaxInactiveInterval((Long)object.get("maxInactiveInterval"));
+			session.setAppKey(appKey);
+			session.setCreationTime((Long)object.get("creationTime"));
+			session.setLastAccessedTime((Long)object.get("lastAccessedTime"));
+			session.setId(sessionid);
+			session.setReferip((String)object.get("referip"));
+			session.setValidate((Boolean)object.get("_validate"));
+//			session._setSessionStore(this);
+			Map<String,Object> attributes = toMap(object);
+			session.setAttributes(attributes);
 			return session;
 		}
 		else

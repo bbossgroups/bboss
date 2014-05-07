@@ -19,6 +19,7 @@ import java.util.UUID;
 
 import org.frameworkset.security.session.Session;
 import org.frameworkset.security.session.SessionStore;
+import org.frameworkset.soa.ObjectSerializable;
 
 /**
  * <p>Title: BaseSessionStore.java</p> 
@@ -30,6 +31,25 @@ import org.frameworkset.security.session.SessionStore;
  * @version 3.8.0
  */
 public abstract class BaseSessionStore implements SessionStore {
+	public static Object serial(Object value)
+	{
+		if(value != null)
+		{
+			try {
+				value = ObjectSerializable.toXML(value);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return value;
+	}
+	
+	public static Object unserial(String value)
+	{
+		if(value == null)
+			return null;
+		return ObjectSerializable.toBean(value, Object.class);
+	}
 	protected SessionManager sessionManager;
 	protected String randomToken()
 	{

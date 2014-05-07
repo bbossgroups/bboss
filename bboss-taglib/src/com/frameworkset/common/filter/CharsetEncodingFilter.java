@@ -2,7 +2,6 @@ package com.frameworkset.common.filter;
 
 import java.io.IOException;
 
-import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
@@ -10,6 +9,8 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.frameworkset.security.session.impl.SessionFilter;
 
 import com.frameworkset.util.StringUtil;
 
@@ -202,7 +203,8 @@ public class CharsetEncodingFilter extends SessionFilter {
 
         if(filterEnabled != null && !filterEnabled.trim().equalsIgnoreCase("true"))
         {
-            fc.doFilter(request, response);
+//            fc.doFilter(request, response);
+        	  super.doFilter(request, response, fc);
             return;
         }
 //        System.out.println("old request:" + request.getClass());
@@ -215,14 +217,16 @@ public class CharsetEncodingFilter extends SessionFilter {
                 CharacterEncodingHttpServletRequestWrapper(request, RequestEncoding,checkiemodeldialog,wallfilterrules,wallwhilelist);
             CharacterEncodingHttpServletResponseWrapper wresponsew = new
                 CharacterEncodingHttpServletResponseWrapper(response, ResponseEncoding);
-            fc.doFilter(mrequestw, wresponsew);
+//            fc.doFilter(mrequestw, wresponsew);
+            super.doFilter(mrequestw, wresponsew, fc);
         }
         //模式1：对请求参数编码，对响应不编码
         //      服务器对url进行编码
         else if(mode.equals("1"))
         {
             request.setCharacterEncoding(RequestEncoding);
-            fc.doFilter(request,response);
+//            fc.doFilter(request,response);
+            super.doFilter(request, response, fc);
         }
         //其他模式
         else
@@ -231,7 +235,8 @@ public class CharsetEncodingFilter extends SessionFilter {
                 CharacterEncodingHttpServletRequestWrapper(request, this.RequestEncoding,checkiemodeldialog,wallfilterrules,wallwhilelist);
             CharacterEncodingHttpServletResponseWrapper wresponsew = new
                 CharacterEncodingHttpServletResponseWrapper(response, ResponseEncoding);
-            fc.doFilter(mrequestw, wresponsew);
+//            fc.doFilter(mrequestw, wresponsew);
+            super.doFilter(mrequestw, wresponsew, fc);
         }
     }
 

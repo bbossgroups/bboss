@@ -43,7 +43,7 @@ public class HttpSessionImpl implements HttpSession {
 	@Override
 	public Object getAttribute(String attribute) {
 		// TODO Auto-generated method stub
-		return this.getAttribute(attribute);
+		return session.getAttribute(attribute);
 	}
 
 	@Override
