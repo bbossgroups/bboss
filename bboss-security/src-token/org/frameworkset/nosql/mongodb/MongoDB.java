@@ -18,6 +18,7 @@ public class MongoDB {
 	private String writeConcern;
 	private String readPreference;
 	private Mongo mongoclient;
+	private String mode = null;
 	public Mongo getMongoClient()
 	{
 	
@@ -42,8 +43,17 @@ public class MongoDB {
 	{
 		if(StringUtil.isEmpty(serverAddresses))
 			return null;
+		
 		serverAddresses = serverAddresses.trim();
 		List<ServerAddress> trueaddresses = new ArrayList<ServerAddress>();
+		if(mode != null && mode.equals("simple"))
+		{
+			String info[] = serverAddresses.split(":");
+			ServerAddress ad = new ServerAddress(info[0].trim(),Integer.parseInt(info[1].trim()));
+			trueaddresses.add(ad);
+			return trueaddresses;
+		}
+		
 		String[] addresses = this.serverAddresses.split("\n");
 		for(String address:addresses)
 		{
@@ -148,7 +158,40 @@ public class MongoDB {
 	public void init()
 	{
 		try {
-			Mongo mongoClient = new Mongo(parserAddress());
+			if(mode != null && mode.equals("simple"))
+			{
+				this.initsimple();
+			}
+			else
+			{
+				Mongo mongoClient = new Mongo(parserAddress());
+				int[] ops = parserOption();
+				for(int i = 0; ops != null && i < ops.length; i ++)
+					mongoClient.addOption( ops[i] );
+				WriteConcern wc = this._getWriteConcern();
+				if(wc != null)
+					mongoClient.setWriteConcern(wc);
+		//ReadPreference.secondaryPreferred();
+				ReadPreference rf = _getReadPreference();
+				if(rf != null)
+					mongoClient.setReadPreference(ReadPreference.nearest());
+		//		mongoClient.setReadPreference(ReadPreference.primaryPreferred());
+				this.mongoclient = mongoClient;
+			}
+		} catch (RuntimeException e) {
+			throw e;
+			
+		} 
+		catch (Exception e) {
+			throw new RuntimeException(e);
+			
+		} 
+	}
+	
+	public void initsimple()
+	{
+		try {
+			Mongo mongoClient = new Mongo(parserAddress().get(0));
 			int[] ops = parserOption();
 			for(int i = 0; ops != null && i < ops.length; i ++)
 				mongoClient.addOption( ops[i] );
@@ -156,9 +199,7 @@ public class MongoDB {
 			if(wc != null)
 				mongoClient.setWriteConcern(wc);
 	//ReadPreference.secondaryPreferred();
-			ReadPreference rf = _getReadPreference();
-			if(rf != null)
-				mongoClient.setReadPreference(ReadPreference.nearest());
+			
 	//		mongoClient.setReadPreference(ReadPreference.primaryPreferred());
 			this.mongoclient = mongoClient;
 		} catch (RuntimeException e) {

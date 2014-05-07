@@ -56,14 +56,15 @@ public class SessionManager {
 	 * 如果需要检测，那么只要令牌持续时间超过tokendualtime
 	 * 对应的时间将会被清除
 	 */
-	private long sessionscaninterval = 1800000;
+	private long sessionscaninterval = 60000;
 	private boolean usewebsession = false;
 	public SessionManager(long sessionTimeout, Object sessionStore,
 			String cookiename, boolean httponly,
 			long cookieLiveTime,String listeners) {
 		this.sessionTimeout = sessionTimeout;
 		this.sessionStore = SessionStoreFactory.getTokenStore(sessionStore,this);
-		
+		if(this.sessionStore == null)
+			this.usewebsession = true;
 		this.cookiename = cookiename;
 		this.httpOnly = httponly;
 		this.cookieLiveTime = cookieLiveTime;
@@ -72,8 +73,11 @@ public class SessionManager {
 			String[] temp = listeners.trim().split("");
 			initSessionListeners(temp);
 		}
-		sessionMonitor = new SessionMonitor();
-		sessionMonitor.start();
+		if(!usewebsession)
+		{
+			sessionMonitor = new SessionMonitor();
+			sessionMonitor.start();
+		}
 	}
 	public boolean usewebsession()
 	{
