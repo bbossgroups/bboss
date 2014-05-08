@@ -4812,7 +4812,7 @@ public class ValueObjectUtil {
 		}
 		else
 		{
-			String ret = array.getCanonicalName() ;
+			String ret = array.getName() ;
 			if(ret.equals("java.lang.String"))
 				return "String";
 			else if(ret.equals("java.lang.Object"))
@@ -4832,7 +4832,7 @@ public class ValueObjectUtil {
 			return null;
 		if(array.isArray())
 		{	
-			String ret = array.getComponentType().getCanonicalName();
+			String ret = array.getComponentType().getName();
 			if(ret.equals("java.lang.String"))
 				return "String[]";
 			else if(ret.equals("java.lang.Object"))
@@ -4894,7 +4894,7 @@ public class ValueObjectUtil {
 		}
 		else
 		{
-			String ret = array.getCanonicalName() ;
+			String ret = array.getName() ;
 			
 			if(ret.equals("java.lang.String"))
 				return "String";

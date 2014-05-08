@@ -309,7 +309,7 @@ public class MongDBSessionStore extends BaseSessionStore{
 				if(!filter( key))
 				{
 					Object value = object.get(key);
-					attrs.put(key, this.unserial((String)value));
+					attrs.put(key, unserial((String)value));
 				}
 			}
 			return attrs;
@@ -323,7 +323,9 @@ public class MongDBSessionStore extends BaseSessionStore{
 				|| key.equals("referip") 
 				|| key.equals("_validate") 
 				|| key.equals("sessionid") 
-				|| key.equals("_id");
+				|| key.equals("_id")
+				|| key.equals("appKey")
+				;
 	}
 	private Session _getSession(String appKey, String sessionid) {
 		DBCollection sessions =getAppSessionDBCollection( appKey);

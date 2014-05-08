@@ -138,7 +138,7 @@ public class ObjectSerializable {
 			if (charset.equals(CHARSET_UTF_8)) {
 				ret.append(content_header_utf_8);
 			} else
-				ret.append(content_header_utf_8);
+				ret.append(content_header_gbk);
 			ret.append(call_header);
 			convertMethodCallToXMLMethod(ret, method.getName(), params, paramTypes,
 					charset);
@@ -159,7 +159,7 @@ public class ObjectSerializable {
 			if (charset.equals(CHARSET_UTF_8)) {
 				ret.append(content_header_utf_8);
 			} else
-				ret.append(content_header_utf_8);
+				ret.append(content_header_gbk);
 			ret.append(call_header);
 			SerialStack stack = new SerialStack();
 			convertBeanObjectToXML("soamethodcall", method, method.getClass(),
@@ -260,6 +260,7 @@ public class ObjectSerializable {
 			throws NumberFormatException, IllegalArgumentException,
 			IntrospectionException {
 		StringWriter ret = new StringWriter();
+		
 
 //		if (charset.equals(CHARSET_UTF_8)) {
 //			ret.append(content_header_utf_8);
@@ -284,7 +285,7 @@ public class ObjectSerializable {
 			if (charset.equals(CHARSET_UTF_8)) {
 				ret.append(content_header_utf_8);
 			} else
-				ret.append(content_header_utf_8);
+				ret.append(content_header_gbk);
 			ret.append("<ps>");
 			SerialStack stack = new SerialStack();
 			convertBeanObjectToXML(name, obj, type, dateformat, ret,stack,name);
@@ -330,7 +331,7 @@ public class ObjectSerializable {
 			if (charset.equals(CHARSET_UTF_8)) {
 				ret.append(content_header_utf_8);
 			} else
-				ret.append(content_header_utf_8);
+				ret.append(content_header_gbk);
 			ret.append("<ps>");
 			if (objs != null && objs.size() > 0) {
 				int i = 0;
@@ -568,29 +569,29 @@ public class ObjectSerializable {
 			} else {
 				if (name == null)
 				{
-					if(!obj.equals(""))
+//					if(!obj.equals(""))
 					{
-						ret.append("<p s:t=\"String\"><![CDATA[").append(obj.toString())
+						ret.append("<p s:t=\"String\"><![CDATA[").append((String)obj)
 								.append("]]></p>");
 					}
-					else
-					{
-						ret.append("<p s:t=\"String\" v=\"\"/>");
-					}
+//					else
+//					{
+//						ret.append("<p s:t=\"String\" v=\"\"/>");
+//					}
 				}
 				else
 				{
-					if(!obj.equals(""))
+//					if(!obj.equals(""))
 					{
 						ret.append("<p n=\"").append(name).append(
-							"\" s:t=\"String\"><![CDATA[").append(obj.toString()).append(
+							"\" s:t=\"String\"><![CDATA[").append((String)obj).append(
 							"]]></p>");
 					}
-					else
-					{
-						ret.append("<p n=\"").append(name).append(
-								"\" s:t=\"String\" v=\"\"/>");
-					}
+//					else
+//					{
+//						ret.append("<p n=\"").append(name).append(
+//								"\" s:t=\"String\" v=\"\"/>");
+//					}
 				}
 			}
 			return;
@@ -987,11 +988,11 @@ public class ObjectSerializable {
 		else if (type == Class.class) {
 			if (name == null)
 				ret.append("<p s:t=\"Class\" v=\"").append(
-						((Class) obj).getCanonicalName()).append("\"/>");
+						((Class) obj).getName()).append("\"/>");
 			else
 				ret.append("<p n=\"").append(name).append(
 						"\" s:t=\"Class\" v=\"").append(
-						((Class) obj).getCanonicalName()).append("\"/>");
+						((Class) obj).getName()).append("\"/>");
 			return true;
 		} else if (type.isEnum()) {
 			if (name == null)
@@ -1009,11 +1010,11 @@ public class ObjectSerializable {
 		{
 			if (name == null)
 				ret.append("<p cs=\"")
-						.append(obj.getClass().getCanonicalName())
+						.append(obj.getClass().getName())
 						.append("\">");
 			else
 				ret.append("<p n=\"").append(name).append("\" cs=\"").append(
-						obj.getClass().getCanonicalName()).append("\">");
+						obj.getClass().getName()).append("\">");
 			if (StackTraceElement.class.isAssignableFrom(type))
 				appendStackTraceElementProperties(obj, type, dateformat, ret, stack,currentAddress);
 			else if (Throwable.class.isAssignableFrom(type))

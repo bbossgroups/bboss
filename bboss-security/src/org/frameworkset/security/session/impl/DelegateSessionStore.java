@@ -20,7 +20,6 @@ import java.util.Enumeration;
 import org.frameworkset.security.session.Session;
 import org.frameworkset.security.session.SessionEvent;
 import org.frameworkset.security.session.SessionStore;
-import org.frameworkset.soa.ObjectSerializable;
 
 /**
  * <p>Title: DelegateSessionStrore.java</p> 
@@ -127,8 +126,9 @@ public class DelegateSessionStore implements SessionStore {
 	public Object addAttribute(String appKey, String sessionID, String attribute,
 			Object value) {
 		Object temp = value;
+		value = BaseSessionStore.serial(value);
 		
-		Session session = (Session)this.sessionStore.addAttribute(appKey, sessionID, attribute, BaseSessionStore.serial(value));
+		Session session = (Session)this.sessionStore.addAttribute(appKey, sessionID, attribute, value);
 		if(session == null)
 			return null;
 		session._setSessionStore(this);

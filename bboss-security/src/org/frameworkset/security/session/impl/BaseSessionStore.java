@@ -15,6 +15,7 @@
  */
 package org.frameworkset.security.session.impl;
 
+import java.nio.charset.Charset;
 import java.util.UUID;
 
 import org.frameworkset.security.session.Session;
@@ -37,8 +38,9 @@ public abstract class BaseSessionStore implements SessionStore {
 		{
 			try {
 				value = ObjectSerializable.toXML(value);
+//				value = new String(((String)value).getBytes(Charset.defaultCharset()),"UTF-8");
 			} catch (Exception e) {
-				e.printStackTrace();
+				throw new RuntimeException(e);
 			}
 		}
 		return value;

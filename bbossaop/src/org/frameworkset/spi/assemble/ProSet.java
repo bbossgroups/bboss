@@ -1,11 +1,15 @@
 package org.frameworkset.spi.assemble;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.TreeSet;
 
 import org.frameworkset.spi.CallContext;
+import org.frameworkset.util.ClassUtil;
+import org.frameworkset.util.ClassUtil.ClassInfo;
 
 
 /**
@@ -248,21 +252,34 @@ public  class ProSet<V extends Pro> extends TreeSet<V>
     				{
     					if(this.componentType.equalsIgnoreCase(Pro.COMPONENT_BEAN) || this.componentType.equalsIgnoreCase(Pro.COMPONENT_OBJECT_SHORTNAME) || this.componentType.equalsIgnoreCase(Pro.COMPONENT_OBJECT))
     					{
-//    						componentSet = new TreeSet();
-    						if(settype != TreeSet.class)
-    						{
-        						try {
-        							componentSet = (Set)settype.newInstance();
-    							} catch (InstantiationException e) {
-    								throw new BeanInstanceException(e);
-    							} catch (IllegalAccessException e) {
-    								throw new BeanInstanceException(e);
-    							}
-    						}
-    						else
-    						{
-    							componentSet = new TreeSet();
-    						}
+    						componentSet =  _getSet(settype);
+//    						if(settype != TreeSet.class)
+//    						{
+//        						try {
+//        							if(!settype.getName().equals("java.util.Collections$SynchronizedSet"))
+//        							{
+//        								componentSet = (Set)settype.newInstance();
+//        							}
+//        							else
+//        							{
+//        								ClassInfo beaninfo = ClassUtil.getClassInfo(settype);
+//        								Constructor c = beaninfo.getConstructor(Set.class);
+//        								componentSet = (Set)c.newInstance(new TreeSet());
+//        							}
+//    							} catch (InstantiationException e) {
+//    								throw new BeanInstanceException(e);
+//    							} catch (IllegalAccessException e) {
+//    								throw new BeanInstanceException(e);
+//    							} catch (IllegalArgumentException e) {
+//    								throw new BeanInstanceException(e);
+//								} catch (InvocationTargetException e) {
+//									throw new BeanInstanceException(e);
+//								}
+//    						}
+//    						else
+//    						{
+//    							componentSet = new TreeSet();
+//    						}
     						Iterator keys = this.iterator();
     						Context currentLoopContext = callcontext != null?callcontext.getLoopContext():null;
 	    					while(keys.hasNext())
@@ -280,20 +297,21 @@ public  class ProSet<V extends Pro> extends TreeSet<V>
     					}
     					else if(this.componentType.equalsIgnoreCase(Pro.COMPONENT_STRING_SHORTNAME) || this.componentType.equalsIgnoreCase(Pro.COMPONENT_STRING))
     					{
-    						if(settype != TreeSet.class)
-    						{
-        						try {
-        							componentSet = (Set)settype.newInstance();
-    							} catch (InstantiationException e) {
-    								throw new BeanInstanceException(e);
-    							} catch (IllegalAccessException e) {
-    								throw new BeanInstanceException(e);
-    							}
-    						}
-    						else
-    						{
-    							componentSet = new TreeSet();
-    						}
+//    						if(settype != TreeSet.class)
+//    						{
+//        						try {
+//        							componentSet = (Set)settype.newInstance();
+//    							} catch (InstantiationException e) {
+//    								throw new BeanInstanceException(e);
+//    							} catch (IllegalAccessException e) {
+//    								throw new BeanInstanceException(e);
+//    							}
+//    						}
+//    						else
+//    						{
+//    							componentSet = new TreeSet();
+//    						}
+    						componentSet =  _getSet(settype);
     						Iterator keys = this.iterator();
 	    					while(keys.hasNext())
 	    					{
@@ -303,20 +321,21 @@ public  class ProSet<V extends Pro> extends TreeSet<V>
     					}
     					else
     					{
-    						if(settype != TreeSet.class)
-    						{
-        						try {
-        							componentSet = (Set)settype.newInstance();
-    							} catch (InstantiationException e) {
-    								throw new BeanInstanceException(e);
-    							} catch (IllegalAccessException e) {
-    								throw new BeanInstanceException(e);
-    							}
-    						}
-    						else
-    						{
-    							componentSet = new TreeSet();
-    						}
+//    						if(settype != TreeSet.class)
+//    						{
+//        						try {
+//        							componentSet = (Set)settype.newInstance();
+//    							} catch (InstantiationException e) {
+//    								throw new BeanInstanceException(e);
+//    							} catch (IllegalAccessException e) {
+//    								throw new BeanInstanceException(e);
+//    							}
+//    						}
+//    						else
+//    						{
+//    							componentSet = new TreeSet();
+//    						}
+    						componentSet =  _getSet(settype);
     						Iterator keys = this.iterator();
     						Context currentLoopContext = callcontext != null?callcontext.getLoopContext():null;
 	    					while(keys.hasNext())
@@ -336,24 +355,59 @@ public  class ProSet<V extends Pro> extends TreeSet<V>
     				}
     				else
     				{
-    					if(settype != TreeSet.class)
-						{
-    						try {
-    							componentSet = (Set)settype.newInstance();
-							} catch (InstantiationException e) {
-								throw new BeanInstanceException(e);
-							} catch (IllegalAccessException e) {
-								throw new BeanInstanceException(e);
-							}
-						}
-						else
-						{
-							componentSet = new TreeSet();
-						}
+//    					if(settype != TreeSet.class)
+//						{
+//    						try {
+//    							componentSet = (Set)settype.newInstance();
+//							} catch (InstantiationException e) {
+//								throw new BeanInstanceException(e);
+//							} catch (IllegalAccessException e) {
+//								throw new BeanInstanceException(e);
+//							}
+//						}
+//						else
+//						{
+//							componentSet = new TreeSet();
+//						}
+    					componentSet =  _getSet(settype);
     				}    				
     			}
     		}
     	}
+    	return componentSet;
+    }
+    
+    private Set _getSet(Class settype)
+    {
+    	Set componentSet = null;
+    	try {
+    		if(settype != TreeSet.class)
+    		{
+    			
+				if(!settype.getName().equals("java.util.Collections$SynchronizedSet"))
+				{
+					componentSet = (Set)settype.newInstance();
+				}
+				else
+				{
+					ClassInfo beaninfo = ClassUtil.getClassInfo(settype);
+					Constructor c = beaninfo.getConstructor(Set.class);
+					componentSet = (Set)c.newInstance(new TreeSet());
+				}
+    		}
+    		else
+    		{
+    			componentSet = new TreeSet();
+    		}
+		} catch (InstantiationException e) {
+			throw new BeanInstanceException(e);
+		} catch (IllegalAccessException e) {
+			throw new BeanInstanceException(e);
+		} catch (IllegalArgumentException e) {
+			throw new BeanInstanceException(e);
+		} catch (InvocationTargetException e) {
+			throw new BeanInstanceException(e);
+		}
     	return componentSet;
     }
 }

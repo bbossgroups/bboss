@@ -298,7 +298,15 @@ public class ClassUtil
 				annotations = this.field.getAnnotations();
 				initParam(this.field.getAnnotations());
 			}
+			if(this.readMethod != null)
+			{
+				ReflectionUtils.makeAccessible(this.readMethod);
+			}
 			
+			if(this.writeMethod != null)
+			{
+				ReflectionUtils.makeAccessible(this.writeMethod);
+			}
 				
 		}
 		
@@ -587,12 +595,51 @@ public class ClassUtil
 	     * 识别class是否是基本数据类型
 	     */
 	    private boolean baseprimary;
-	    
+	    public Constructor getConstructor(Class... paramTypes )
+	    {
+	    	try {
+	    		if(paramTypes == null || paramTypes.length == 0)
+	    			return this.defaultConstruction;
+	    		for(int i = 0; constructions != null && i < this.constructions.length; i ++)
+	    		{
+	    			Constructor c = constructions[i];
+	    			Class[] pt = c.getParameterTypes();
+	    			if(pt.length == paramTypes.length)
+	    			{
+	    				int j = 0;
+	    				for(; j < pt.length; j ++)
+	    				{
+	    					if(pt[j] != paramTypes[j])
+	    						break;
+	    				}
+	    				if(j == pt.length)
+	    					return c;
+	    					
+	    			}
+	    		}
+//				Constructor c = this.clazz.getDeclaredConstructor(paramTypes);
+				
+				//ReflectionUtils.makeAccessible(c);
+				
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	    	return null;
+	    }
 	    private  ClassInfo(Class clazz){
 	    	this.clazz = clazz;
 	    	try {
 				defaultConstruction  = clazz.getDeclaredConstructor();
-				ReflectionUtils.makeAccessible(defaultConstruction);
+				if(defaultConstruction != null)
+					ReflectionUtils.makeAccessible(defaultConstruction);
+				
+			} catch (Exception e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+			} 
+	    	try {
+				
 				constructions = clazz.getDeclaredConstructors();
 				for(int i = 0; constructions != null && i < constructions.length;i ++)
 				{
