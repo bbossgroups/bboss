@@ -12,6 +12,7 @@ import org.apache.log4j.Logger;
 import org.frameworkset.nosql.mongodb.MongoDBHelper;
 import org.frameworkset.security.session.Session;
 
+import com.frameworkset.util.SimpleStringUtil;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
@@ -95,13 +96,14 @@ public class MongDBSessionStore extends BaseSessionStore{
 		.append("maxInactiveInterval",maxInactiveInterval)
 		.append("lastAccessedTime", lastAccessedTime)
 		.append("_validate", true)
-		.append("appKey", appKey).append("referip", referip));
+		.append("appKey", appKey).append("referip", referip).append("host", SimpleStringUtil.getHostIP()));
 		SimpleSessionImpl session = new SimpleSessionImpl();
 		session.setMaxInactiveInterval(maxInactiveInterval);
 		session.setAppKey(appKey);
 		session.setCreationTime(creationTime);
 		session.setLastAccessedTime(lastAccessedTime);
 		session.setId(sessionid);
+		session.setHost(SimpleStringUtil.getHostIP());
 //		session._setSessionStore(this);
 		
 		return session;
@@ -114,7 +116,9 @@ public class MongDBSessionStore extends BaseSessionStore{
 		keys.put(attribute, 1);
 		
 		DBObject obj = sessions.findOne(new BasicDBObject("sessionid",sessionID),keys);
-		return this.unserial((String)obj.get(attribute));
+		if(obj == null)
+			return null;
+		return unserial((String)obj.get(attribute));
 //		return null;
 	}
 
@@ -231,6 +235,7 @@ public class MongDBSessionStore extends BaseSessionStore{
 		keys.put("_validate", 1);
 		keys.put("appKey", 1);
 		keys.put("referip", 1);
+		keys.put("host", 1);
 		for(int i = 0; attributeNames != null && i < attributeNames.size(); i ++)
 		{
 			keys.put(attributeNames.get(i), 1);
@@ -248,13 +253,19 @@ public class MongDBSessionStore extends BaseSessionStore{
 			session.setId(sessionid);
 			session.setReferip((String)object.get("referip"));
 			session.setValidate((Boolean)object.get("_validate"));
+			session.setHost((String)object.get("host"));
 //			session._setSessionStore(this);
 			Map<String,Object> attributes = new HashMap<String,Object>();
 			for(int i = 0; attributeNames != null && i < attributeNames.size(); i ++)
 			{
 				String name = attributeNames.get(i);
 				Object value = object.get(name);
-				attributes.put(attributeNames.get(i), this.unserial((String)value));
+				try {
+					attributes.put(attributeNames.get(i), this.unserial((String)value));
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 			session.setAttributes(attributes);
 			return session;
@@ -274,7 +285,7 @@ public class MongDBSessionStore extends BaseSessionStore{
 		keys.put("_validate", 1);
 		keys.put("appKey", 1);
 		keys.put("referip", 1);
-		
+		keys.put("host", 1);
 		
 		DBObject object = sessions.findOne(new BasicDBObject("sessionid",sessionid),keys);
 		if(object != null)
@@ -287,6 +298,7 @@ public class MongDBSessionStore extends BaseSessionStore{
 			session.setId(sessionid);
 			session.setReferip((String)object.get("referip"));
 			session.setValidate((Boolean)object.get("_validate"));
+			session.setHost((String)object.get("host"));
 //			session._setSessionStore(this);
 			return session;
 		}
@@ -309,24 +321,19 @@ public class MongDBSessionStore extends BaseSessionStore{
 				if(!filter( key))
 				{
 					Object value = object.get(key);
-					attrs.put(key, unserial((String)value));
+					try {
+						attrs.put(key, unserial((String)value));
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 			}
 			return attrs;
 		}
 		return null;
 	}
-	private boolean filter(String key)
-	{
-		return key.equals("maxInactiveInterval") || key.equals("creationTime") 
-				|| key.equals("lastAccessedTime") 
-				|| key.equals("referip") 
-				|| key.equals("_validate") 
-				|| key.equals("sessionid") 
-				|| key.equals("_id")
-				|| key.equals("appKey")
-				;
-	}
+	
 	private Session _getSession(String appKey, String sessionid) {
 		DBCollection sessions =getAppSessionDBCollection( appKey);
 	
@@ -343,6 +350,7 @@ public class MongDBSessionStore extends BaseSessionStore{
 			session.setId(sessionid);
 			session.setReferip((String)object.get("referip"));
 			session.setValidate((Boolean)object.get("_validate"));
+			session.setHost((String)object.get("host"));
 //			session._setSessionStore(this);
 			Map<String,Object> attributes = toMap(object);
 			session.setAttributes(attributes);

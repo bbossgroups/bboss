@@ -410,6 +410,16 @@ public abstract class ReflectionUtils {
 			method.setAccessible(true);
 		}
 	}
+	
+	public static boolean isAccessible(Method method)
+	{
+		if (!Modifier.isPublic(method.getModifiers() ) ||
+				!Modifier.isPublic(method.getDeclaringClass().getModifiers())) {
+			return false;
+		}
+		else
+			return true;
+	}
 
 	/**
 	 * Make the given constructor accessible, explicitly setting it accessible if necessary.

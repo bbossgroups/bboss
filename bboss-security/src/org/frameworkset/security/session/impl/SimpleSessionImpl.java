@@ -15,15 +15,43 @@ public class SimpleSessionImpl implements Session{
 	private long maxInactiveInterval;
 	private String referip;
 	private boolean validate;
+	private boolean dovalidate;
+	private Boolean assertValidate = null;
 	private transient SessionStore sessionStore;
 	private transient Map<String,Object> attributes;
-	private static final Object NULL = new Object(); 
+	private static final Object NULL = new Object();
+	private String host ;
 	public SimpleSessionImpl()
 	{
 		attributes = new HashMap<String,Object>();
 	}
+	private void assertSession() 
+	{
+		if(assertValidate != null)
+		{
+			
+		}
+		else
+		{
+			synchronized(this)
+			{
+				if(assertValidate == null)
+				{
+					assertValidate = new Boolean(this.isValidate());
+				}
+			}
+			
+		}
+		if(!assertValidate.booleanValue())
+		{
+			this.invalidate();
+			throw new SessionInvalidateException("Session " +this.getId() + "已经失效!");
+		}
+			
+	}
 	@Override
 	public Object getAttribute(String attribute) {
+		assertSession() ;
 		Object value = this.attributes.get(attribute);
 		if(value == null)
 		{
@@ -49,6 +77,7 @@ public class SimpleSessionImpl implements Session{
 
 	@Override
 	public Enumeration getAttributeNames() {
+		assertSession() ;
 		return sessionStore.getAttributeNames(appKey,id);
 	}
 
@@ -66,8 +95,10 @@ public class SimpleSessionImpl implements Session{
 
 	@Override
 	public void touch() {
-		lastAccessedTime = System.currentTimeMillis();
+		
+		lastAccessedTime = System.currentTimeMillis();		
 		sessionStore.updateLastAccessedTime(appKey,id,lastAccessedTime);
+		assertSession() ;
 		
 	}
 
@@ -91,21 +122,25 @@ public class SimpleSessionImpl implements Session{
 
 	@Override
 	public String[] getValueNames() {
-		// TODO Auto-generated method stub
+		assertSession() ;
 		return sessionStore.getValueNames(appKey,id);
 	}
 
 	@Override
 	public void invalidate() {
-		sessionStore.invalidate(appKey,id);
-		this.validate =false;
+		if(!dovalidate)
+		{
+			this.dovalidate = true;
+			sessionStore.invalidate(appKey,id);
+			this.validate =false;
+		}
+		
 		
 	}
 
 	@Override
 	public boolean isNew() {
-		// TODO Auto-generated method stub
-		//return sessionStore.isNew(appKey,id);
+		
 		return this.creationTime == this.lastAccessedTime;
 	}
 
@@ -117,6 +152,7 @@ public class SimpleSessionImpl implements Session{
 
 	@Override
 	public void removeAttribute(String attribute) {
+		assertSession() ;
 		sessionStore.removeAttribute(appKey,id,attribute);
 		this.attributes.remove(attribute);
 		
@@ -130,6 +166,7 @@ public class SimpleSessionImpl implements Session{
 
 	@Override
 	public void setAttribute(String attribute, Object value) {
+		assertSession() ;
 		sessionStore.addAttribute(appKey,id,attribute,value);
 		this.attributes.put(attribute, value);
 	}
@@ -179,7 +216,8 @@ public class SimpleSessionImpl implements Session{
 	}
 	public boolean isValidate()
 	{
-		return validate;
+		return (this.lastAccessedTime + this.maxInactiveInterval) > System.currentTimeMillis(); 
+//		return validate;
 	}
 	
 	public void setValidate(boolean validate)
@@ -191,6 +229,13 @@ public class SimpleSessionImpl implements Session{
 	}
 	public void setAttributes(Map<String, Object> attributes) {
 		this.attributes = attributes;
+	}
+	
+	public String getHost() {
+		return host;
+	}
+	public void setHost(String host) {
+		this.host = host;
 	}
 	
 

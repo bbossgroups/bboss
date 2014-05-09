@@ -43,6 +43,7 @@ import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import java.lang.reflect.Array;
+import java.net.InetAddress;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.security.AccessController;
@@ -174,6 +175,28 @@ public class SimpleStringUtil  {
 		dfltEncName = (String) AccessController
 				.doPrivileged(new GetPropertyAction("file.encoding"));
 	}
+	private static String ip;
+	static
+	{
+		try {
+			InetAddress addr = InetAddress.getLocalHost();
+			String ip_=addr.getHostAddress();//获得本机IP
+			String address=addr.getHostName();//获得本机名称
+			ip = ip_ + "-" + address;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			ip = "";
+		}
+	}
+	/**
+	 * 获取服务器IP和名称
+	 * @return
+	 */
+	public static String getHostIP()
+	  {
+		return ip;
+	  }
 
 	/**
 	 * 将一个字符串根据逗号分拆

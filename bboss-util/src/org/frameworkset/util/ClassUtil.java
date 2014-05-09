@@ -208,12 +208,22 @@ public class ClassUtil
 			super();
 			this.propertyType = propertyType;
 			this.writeMethod = writeMethod;
+			this.readMethod = readMethod;
+			if(this.readMethod != null && !ReflectionUtils.isAccessible(readMethod))
+			{
+				this.readMethod = null;
+			}
+			
+			if(this.writeMethod != null && !ReflectionUtils.isAccessible(writeMethod))
+			{
+				this.writeMethod = null;
+			}
 			this.name = name;
 			if(name != null)
 				this.uperName = name.toUpperCase();
 			this.field = field;
 			
-			this.readMethod = readMethod;
+			
 			if(this.field != null)
 				oldAccessible = this.field.isAccessible();
 			if((writeMethod == null || this.readMethod == null))
@@ -298,15 +308,7 @@ public class ClassUtil
 				annotations = this.field.getAnnotations();
 				initParam(this.field.getAnnotations());
 			}
-			if(this.readMethod != null)
-			{
-				ReflectionUtils.makeAccessible(this.readMethod);
-			}
 			
-			if(this.writeMethod != null)
-			{
-				ReflectionUtils.makeAccessible(this.writeMethod);
-			}
 				
 		}
 		

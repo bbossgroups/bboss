@@ -38,6 +38,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.RandomAccessFile;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Method;
 import java.sql.Blob;
 import java.sql.Clob;
 
@@ -57,6 +58,16 @@ import org.frameworkset.util.io.Resource;
 
 public class StringUtil extends SimpleStringUtil {
 	private static Logger log = Logger.getLogger(StringUtil.class);
+	private static Method httpOnlyMethod = null;
+	static
+	{
+		try {
+			httpOnlyMethod = Cookie.class.getMethod("setHttpOnly", boolean.class);
+			
+		} catch (Exception e) {
+			
+		} 
+	}
 	public static String getCookieValue(HttpServletRequest request,String name,String defaultvalue)
 	{
 		Cookie[] cookies = request.getCookies();
@@ -112,7 +123,11 @@ public class StringUtil extends SimpleStringUtil {
 				 loginPathCookie = new Cookie(name, value);			 
 				loginPathCookie.setMaxAge(maxage);
 				loginPathCookie.setPath(request.getContextPath());
-				loginPathCookie.setHttpOnly(httponly);				
+				if(httpOnlyMethod != null)
+				{
+					httpOnlyMethod.invoke(loginPathCookie, httponly);
+					
+				}
 				response.addCookie(loginPathCookie);
 			}
 			else
@@ -120,7 +135,11 @@ public class StringUtil extends SimpleStringUtil {
 				loginPathCookie.setMaxAge(maxage);
 				loginPathCookie.setValue(value);
 				loginPathCookie.setPath(request.getContextPath());
-				loginPathCookie.setHttpOnly(httponly);
+				if(httpOnlyMethod != null)
+				{
+					httpOnlyMethod.invoke(loginPathCookie, httponly);
+					
+				}
 				response.addCookie(loginPathCookie);
 	//			loginPathCookie.setPath(request.getContextPath());
 			}
@@ -832,6 +851,8 @@ outStr = "2010年02月07日11时许，周灵颖报警：在2路公交车上被�
 	  return ip;
 
   }
+  
+  
  
  	
 }

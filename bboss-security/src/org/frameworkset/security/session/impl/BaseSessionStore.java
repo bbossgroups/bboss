@@ -32,6 +32,19 @@ import org.frameworkset.soa.ObjectSerializable;
  * @version 3.8.0
  */
 public abstract class BaseSessionStore implements SessionStore {
+	protected boolean filter(String key)
+	{
+		return key.equals("maxInactiveInterval") || key.equals("creationTime") 
+				|| key.equals("lastAccessedTime") 
+				|| key.equals("referip") 
+				|| key.equals("_validate") 
+				|| key.equals("sessionid") 
+				|| key.equals("_id")
+				|| key.equals("appKey")
+				|| key.equals("host")
+				
+				;
+	}
 	public static Object serial(Object value)
 	{
 		if(value != null)
