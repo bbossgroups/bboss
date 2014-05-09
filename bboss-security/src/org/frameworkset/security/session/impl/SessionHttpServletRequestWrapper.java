@@ -103,6 +103,8 @@ public class SessionHttpServletRequestWrapper extends HttpServletRequestWrapper 
 	}
 
 	public void touch() {
+		if( SessionHelper.getSessionManager().usewebsession())
+			return;
 		if(this.sessionid != null )
 		{
 			if(session == null)

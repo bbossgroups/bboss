@@ -85,23 +85,26 @@ public class TokenService {
 	 * 对应的时间将会被清除
 	 */
 	private long tokenscaninterval = 1800000;
-	public TokenService(TokenStore tokenStore,boolean enableToken)
+	private String tokenfailpath;
+	public TokenService(TokenStore tokenStore,boolean enableToken,String tokenfailpath)
 	{
 		this.tokenStore = tokenStore;
 		this.enableToken = enableToken;
+		this.tokenfailpath = tokenfailpath;
 	}
-	public TokenService(long ticketdualtime,long temptokenlivetime,long dualtokenlivetime,long tokenscaninterval,Object tokenstore,boolean enableToken)
+	public TokenService(long ticketdualtime,long temptokenlivetime,long dualtokenlivetime,long tokenscaninterval,Object tokenstore,boolean enableToken,String tokenfailpath)
 	{
-		this(ticketdualtime,temptokenlivetime,dualtokenlivetime,tokenscaninterval,tokenstore,enableToken,ECCHelper.RSA);
+		this(ticketdualtime,temptokenlivetime,dualtokenlivetime,tokenscaninterval,tokenstore,enableToken,ECCHelper.RSA, tokenfailpath);
 	}
-	public TokenService(long ticketdualtime,long temptokenlivetime,long dualtokenlivetime,long tokenscaninterval,Object tokenstore,boolean enableToken,String ecctype)
+	public TokenService(long ticketdualtime,long temptokenlivetime,long dualtokenlivetime,long tokenscaninterval,Object tokenstore,boolean enableToken,String ecctype,String tokenfailpath)
 	{
-		this(ticketdualtime,temptokenlivetime,dualtokenlivetime,tokenscaninterval,tokenstore,enableToken,ecctype,new NullValidateApplication());
+		this(ticketdualtime,temptokenlivetime,dualtokenlivetime,tokenscaninterval,tokenstore,enableToken,ecctype,new NullValidateApplication(), tokenfailpath);
 	}
-	public TokenService(long ticketdualtime,long temptokenlivetime,long dualtokenlivetime,long tokenscaninterval,Object tokenstore,boolean enableToken,String ecctype,ValidateApplication validateApplication)
+	public TokenService(long ticketdualtime,long temptokenlivetime,long dualtokenlivetime,long tokenscaninterval,Object tokenstore,boolean enableToken,String ecctype,ValidateApplication validateApplication,String tokenfailpath)
 	{
 //		this.tokendualtime = tokendualtime;
 		this.tokenscaninterval = tokenscaninterval;
+		this.tokenfailpath = tokenfailpath;
 //		this.tokenstore = tokenstore; 
 		if(tokenstore instanceof String)
 		{
@@ -560,6 +563,9 @@ public class TokenService {
 
 	public boolean isEnableToken() {
 		return enableToken;
+	}
+	public String getTokenfailpath() {
+		return tokenfailpath;
 	}
 
 

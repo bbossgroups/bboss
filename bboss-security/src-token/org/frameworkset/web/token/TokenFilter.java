@@ -38,7 +38,7 @@ import com.frameworkset.util.StringUtil;
  */
 public class TokenFilter implements Filter{
 	private static Logger log = Logger.getLogger(TokenFilter.class);
-	protected String tokenfailpath = null;
+	
 	protected String redirectpath = "/login.jsp";
 	private TokenService tokenService = null;
 	
@@ -56,7 +56,7 @@ public class TokenFilter implements Filter{
 		tokenService = TokenHelper.getTokenService();
 		
 		String redirectpath_ =  arg0.getInitParameter("redirecturl");
-		String tokenfailpath_ =   arg0.getInitParameter("tokenfailpath");
+		
 //		String tokenstore_ = arg0.getInitParameter("tokenstore");
 //		if(!StringUtil.isEmpty(tokenstore_))
 //		{
@@ -78,10 +78,7 @@ public class TokenFilter implements Filter{
 			redirectpath = redirectpath_; 
 		}
 		
-		if(!StringUtil.isEmpty(tokenfailpath_))
-		{
-			tokenfailpath = tokenfailpath_; 
-		}
+		
 //		else
 //		{
 //			tokenfailpath = redirectpath; 
@@ -149,13 +146,13 @@ public class TokenFilter implements Filter{
 			HttpServletResponse response) throws IOException {
 		if(!response.isCommitted())
 		{
-			if(this.tokenfailpath != null)
+			if(this.tokenService.getTokenfailpath() != null)
 			{
 				StringBuffer targetUrl = new StringBuffer();
-				if ( this.tokenfailpath.startsWith("/")) {
+				if ( this.tokenService.getTokenfailpath().startsWith("/")) {
 					targetUrl.append(request.getContextPath());
 				}
-				targetUrl.append(this.tokenfailpath);
+				targetUrl.append(this.tokenService.getTokenfailpath());
 				
 				sendRedirect(request, response,targetUrl.toString(),  true,false,false);
 			}

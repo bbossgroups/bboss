@@ -11,6 +11,9 @@
 			</construction>
 		</property>
 		<property name="enableToken" value="true"/>
+		<!-- 指定动态令牌校验失败跳转地址
+		如果没有指定直接采用redirecturl对应的地址作为跳转地址 -->
+		<property name="tokenfailpath" value="/common/jsp/tokenfail.jsp"/>
 	</construction>
 </property>
 
