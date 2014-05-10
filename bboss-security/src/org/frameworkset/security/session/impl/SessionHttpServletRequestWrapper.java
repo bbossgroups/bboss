@@ -63,10 +63,15 @@ public class SessionHttpServletRequestWrapper extends HttpServletRequestWrapper 
 		{
 			if(create)
 			{
+				int cookielivetime = (int)SessionHelper.getSessionManager().getSessionTimeout();
+				if(cookielivetime <= 0)
+				{
+					cookielivetime = Integer.MAX_VALUE;
+				}
 				Session session = SessionHelper.createSession(this.getContextPath().replace("/", ""),StringUtil.getClientIP(this));				
 				sessionid = session.getId();
 				this.session = new HttpSessionImpl(session,servletContext);
-				StringUtil.addCookieValue(this, response, SessionHelper.getSessionManager().getCookiename(), sessionid, (int)SessionHelper.getSessionManager().getSessionTimeout());
+				StringUtil.addCookieValue(this, response, SessionHelper.getSessionManager().getCookiename(), sessionid, cookielivetime);
 				return this.session;
 			}
 			else
@@ -85,11 +90,16 @@ public class SessionHttpServletRequestWrapper extends HttpServletRequestWrapper 
 			{				
 				if(create)
 				{
+					int cookielivetime = (int)SessionHelper.getSessionManager().getSessionTimeout();
+					if(cookielivetime <= 0)
+					{
+						cookielivetime = Integer.MAX_VALUE;
+					}
 					session = SessionHelper.createSession(this.getContextPath().replace("/", ""),StringUtil.getClientIP(this));
 					
 					sessionid = session.getId();
 					this.session =  new HttpSessionImpl(session,servletContext);
-					StringUtil.addCookieValue(this, response, SessionHelper.getSessionManager().getCookiename(), sessionid, (int)SessionHelper.getSessionManager().getSessionTimeout());
+					StringUtil.addCookieValue(this, response, SessionHelper.getSessionManager().getCookiename(), sessionid, cookielivetime);
 				}
 			}
 			else

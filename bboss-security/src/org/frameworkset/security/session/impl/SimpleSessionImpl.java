@@ -27,6 +27,7 @@ public class SimpleSessionImpl implements Session{
 	}
 	private void assertSession() 
 	{
+		
 		if(assertValidate != null)
 		{
 			
@@ -131,8 +132,11 @@ public class SimpleSessionImpl implements Session{
 		if(!dovalidate)
 		{
 			this.dovalidate = true;
-			sessionStore.invalidate(appKey,id);
-			this.validate =false;
+			if(validate)
+			{
+				sessionStore.invalidate(appKey,id);
+				this.validate =false;
+			}
 		}
 		
 		
@@ -216,7 +220,9 @@ public class SimpleSessionImpl implements Session{
 	}
 	public boolean isValidate()
 	{
-		return (this.lastAccessedTime + this.maxInactiveInterval) > System.currentTimeMillis(); 
+		if(!validate)
+			return false;
+		return this.maxInactiveInterval <= 0 || (this.lastAccessedTime + this.maxInactiveInterval) > System.currentTimeMillis(); 
 //		return validate;
 	}
 	

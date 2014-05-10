@@ -41,7 +41,7 @@ import com.frameworkset.util.StringUtil;
  * @author biaoping.yin
  * @version 3.8.0
  */
-public class TokenService {
+public class TokenService implements TokenServiceInf {
 	private static Logger log = Logger.getLogger(TokenService.class);
 	private TokenStore tokenStore;
 	private boolean enableToken = false;
@@ -249,6 +249,10 @@ public class TokenService {
 	
 
 	
+	/* (non-Javadoc)
+	 * @see org.frameworkset.web.token.TokenServiceInf#genToken(javax.servlet.ServletRequest, java.lang.String, boolean)
+	 */
+	@Override
 	public String genToken(ServletRequest request,String fid,boolean cache) throws TokenException
 	{
 		String tmp = null;
@@ -347,65 +351,59 @@ public class TokenService {
 	
 
 	
+	/* (non-Javadoc)
+	 * @see org.frameworkset.web.token.TokenServiceInf#buildDToken(java.lang.String, javax.servlet.http.HttpServletRequest)
+	 */
+	@Override
 	public String buildDToken(String elementType,HttpServletRequest request) throws TokenException
 	{
 		return buildDToken(elementType,"'",request,null);
 	}
+	/* (non-Javadoc)
+	 * @see org.frameworkset.web.token.TokenServiceInf#buildDToken(java.lang.String, java.lang.String, javax.servlet.http.HttpServletRequest, java.lang.String)
+	 */
+	@Override
 	public String buildDToken(String elementType,String jsonsplit,HttpServletRequest request,String fid) throws TokenException
 	{
 		return buildDToken(elementType,jsonsplit,request,fid,true);
 	}
-	/**
-	 * 生成隐藏域令牌,输出值为：
-	 * <input type="hidden" name="_dt_token_" value="-1518435257">
-	 * @param request
-	 * @return
-	 * @throws TokenException 
+	/* (non-Javadoc)
+	 * @see org.frameworkset.web.token.TokenServiceInf#buildHiddenDToken(javax.servlet.http.HttpServletRequest)
 	 */
+	@Override
 	public String buildHiddenDToken(HttpServletRequest request) throws TokenException
 	{
 		return buildDToken("input",null,request,null,true);
 	}
-	/**
-	 * 生成json串令牌
-	 * 如果jsonsplit为'，则输出值为：
-	 * _dt_token_:'1518435257'
-	 * 如果如果jsonsplit为",则输出值为：
-	 * _dt_token_:"1518435257"
-	 * @param jsonsplit
-	 * @param request
-	 * @return
-	 * @throws TokenException 
+	/* (non-Javadoc)
+	 * @see org.frameworkset.web.token.TokenServiceInf#buildJsonDToken(java.lang.String, javax.servlet.http.HttpServletRequest)
 	 */
+	@Override
 	public String buildJsonDToken(String jsonsplit,HttpServletRequest request) throws TokenException
 	{
 		return buildDToken("json","'",request,null,true);
 	}
-	/**
-	 * 生成url参数串令牌
-	 * 输出值为：
-	 * _dt_token_=1518435257
-	 * @param request
-	 * @return
-	 * @throws TokenException 
+	/* (non-Javadoc)
+	 * @see org.frameworkset.web.token.TokenServiceInf#buildParameterDToken(javax.servlet.http.HttpServletRequest)
 	 */
+	@Override
 	public String buildParameterDToken(HttpServletRequest request) throws TokenException
 	{
 		return buildDToken("param",null,request,null,true);
 	}
-	/**
-	 * 只生成令牌，对于这种方式，客户端必须将该token以参数名_dt_token_传回服务端，否则不起作用
-	 * 输出值为：
-	 * 1518435257
-	 * @param request
-	 * @return
-	 * @throws TokenException 
+	/* (non-Javadoc)
+	 * @see org.frameworkset.web.token.TokenServiceInf#buildDToken(javax.servlet.http.HttpServletRequest)
 	 */
+	@Override
 	public String buildDToken(HttpServletRequest request) throws TokenException
 	{
 		return buildDToken("token",null,request,null,true);
 	}
 	
+	/* (non-Javadoc)
+	 * @see org.frameworkset.web.token.TokenServiceInf#buildDToken(java.lang.String, java.lang.String, javax.servlet.http.HttpServletRequest, java.lang.String, boolean)
+	 */
+	@Override
 	public String buildDToken(String elementType,String jsonsplit,HttpServletRequest request,String fid,boolean cache) throws TokenException
 	{
 //		if(!this.enableToken)
@@ -462,6 +460,10 @@ public class TokenService {
 	 * @see org.frameworkset.web.token.TokenServiceInf#genTempToken()
 	 */
 	
+	/* (non-Javadoc)
+	 * @see org.frameworkset.web.token.TokenServiceInf#genTempToken()
+	 */
+	@Override
 	public String genTempToken() throws Exception
 	{
 		return tokenStore.genTempToken().getToken();
@@ -471,6 +473,10 @@ public class TokenService {
 	 * @see org.frameworkset.web.token.TokenServiceInf#genDualToken(java.lang.String, java.lang.String, java.lang.String, long)
 	 */
 	
+	/* (non-Javadoc)
+	 * @see org.frameworkset.web.token.TokenServiceInf#genDualToken(java.lang.String, java.lang.String, java.lang.String, long)
+	 */
+	@Override
 	public String genDualToken(String appid,String secret,String ticket,long dualtime) throws Exception
 	{
 		//long start = System.currentTimeMillis();
@@ -479,6 +485,10 @@ public class TokenService {
 		return token.getToken();
 	}
 
+	/* (non-Javadoc)
+	 * @see org.frameworkset.web.token.TokenServiceInf#genDualTokenWithDefaultLiveTime(java.lang.String, java.lang.String, java.lang.String)
+	 */
+	@Override
 	public String genDualTokenWithDefaultLiveTime(String appid,String secret,String ticket) throws Exception
 	{
 		//long start = System.currentTimeMillis();
@@ -493,6 +503,10 @@ public class TokenService {
 	 * @see org.frameworkset.web.token.TokenServiceInf#genAuthTempToken(java.lang.String, java.lang.String, java.lang.String)
 	 */
 	
+	/* (non-Javadoc)
+	 * @see org.frameworkset.web.token.TokenServiceInf#genAuthTempToken(java.lang.String, java.lang.String, java.lang.String)
+	 */
+	@Override
 	public String genAuthTempToken(String appid,String secret,String ticket) throws Exception
 	{
 		MemToken token = tokenStore.genAuthTempToken(appid,ticket,secret);
@@ -554,6 +568,10 @@ public class TokenService {
 	 * @see org.frameworkset.web.token.TokenServiceInf#genTicket(java.lang.String, java.lang.String, java.lang.String, java.lang.String)
 	 */
 	
+	/* (non-Javadoc)
+	 * @see org.frameworkset.web.token.TokenServiceInf#genTicket(java.lang.String, java.lang.String, java.lang.String, java.lang.String)
+	 */
+	@Override
 	public String genTicket(String account,String worknumber,String appid,String secret) throws TokenException
 	{
 		return this.tokenStore.genTicket( account, worknumber, appid, secret);
@@ -561,6 +579,10 @@ public class TokenService {
 
 
 
+	/* (non-Javadoc)
+	 * @see org.frameworkset.web.token.TokenServiceInf#isEnableToken()
+	 */
+	@Override
 	public boolean isEnableToken() {
 		return enableToken;
 	}

@@ -49,7 +49,9 @@ public class MongDBSessionStore extends BaseSessionStore{
 		long curtime = System.currentTimeMillis();
 		StringBuffer wherefun = new StringBuffer();
 		wherefun.append("function() ")
-				.append("{")			
+				.append("{")	
+				 .append(" if(!this._validate) return true;")
+				 .append(" if(this.maxInactiveInterval <= 0) return false;")
 			    .append(" if(this.lastAccessedTime + this.maxInactiveInterval < ").append(curtime).append(")")
 			    .append("{")
 				.append("return true;")				
