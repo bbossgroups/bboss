@@ -20,13 +20,14 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.StringWriter;
+import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.nio.charset.Charset;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -40,7 +41,6 @@ import org.frameworkset.util.ClassUtil.PropertieDescription;
 
 import com.frameworkset.spi.assemble.BeanInstanceException;
 import com.frameworkset.spi.assemble.CurrentlyInCreationException;
-import com.frameworkset.util.NoSupportTypeCastException;
 import com.frameworkset.util.ValueObjectUtil;
 
 /**
@@ -91,11 +91,9 @@ public class ObjectSerializable {
 
 	}
 
-	private static void convertMethodCallToXMLMethod(StringWriter ret,
+	private static void convertMethodCallToXMLMethod(Writer ret,
 			String methodName, Object[] params, Class[] paramTypes,
-			String charset) throws NoSupportTypeCastException,
-			NumberFormatException, IllegalArgumentException,
-			IntrospectionException, IOException {
+			String charset) throws Exception {
 		SerialStack stack = new SerialStack();
 		ret
 				.append("<p n=\"soamethodcall\" ")
@@ -130,10 +128,12 @@ public class ObjectSerializable {
 
 	public static String convertMethodCallToXMLMethod(Method method,
 			Object[] params, Class[] paramTypes, String charset)
-			throws NoSupportTypeCastException, NumberFormatException,
-			IllegalArgumentException, IntrospectionException {
+			throws Exception {
+		java.io.ByteArrayOutputStream out = null;
+		Writer ret = null;
 		try {
-			StringWriter ret = new StringWriter();
+			out = new java.io.ByteArrayOutputStream();
+			ret = new OutputStreamWriter(out,Charset.forName(charset));
 
 			if (charset.equals(CHARSET_UTF_8)) {
 				ret.append(content_header_utf_8);
@@ -143,19 +143,39 @@ public class ObjectSerializable {
 			convertMethodCallToXMLMethod(ret, method.getName(), params, paramTypes,
 					charset);
 			ret.append(call_tailer);
-			return ret.toString();
+			ret.flush();
+			return new String(out.toByteArray());
 		} catch (Exception e) {
 			throw new IllegalArgumentException(e);
+		}		
+		finally
+		{
+			if(out != null)
+				try {
+					out.close();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			if(ret != null)
+				try {
+					ret.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 		}
 
 	}
 
 	public static String convertSOAMethodCallToXMLMethod(SOAMethodCall method,
-			String charset) throws NoSupportTypeCastException,
-			NumberFormatException, IllegalArgumentException,
+			String charset) throws Exception,
 			IntrospectionException {
+		java.io.ByteArrayOutputStream out = null;
+		Writer ret = null;
 		try {
-			StringWriter ret = new StringWriter();
+			out = new java.io.ByteArrayOutputStream();
+			ret = new OutputStreamWriter(out,Charset.forName(charset));
 			if (charset.equals(CHARSET_UTF_8)) {
 				ret.append(content_header_utf_8);
 			} else
@@ -166,25 +186,67 @@ public class ObjectSerializable {
 					null, ret,stack,"soamethodcall");
 			stack.clear();
 			ret.append(call_tailer);
-			return ret.toString();
+			ret.flush();
+			return new String(out.toByteArray());
 		} catch (Exception e) {
 			throw new IllegalArgumentException(e);
+		}
+		
+		finally
+		{
+			if(out != null)
+				try {
+					out.close();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			if(ret != null)
+				try {
+					ret.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 		}
 	}
 
 	public final static String convertBeanObjectToXML(Object obj, Class type,
-			String dateformat) throws NoSupportTypeCastException,
-			NumberFormatException, IllegalArgumentException,
+			String dateformat) throws Exception,
 			IntrospectionException {
+		java.io.ByteArrayOutputStream out = null;
+		Writer ret = null;
 		try {
-			StringWriter ret = new StringWriter();
+			out = new java.io.ByteArrayOutputStream();
+			ret = new OutputStreamWriter(out,Charset.forName(CHARSET_UTF_8));
 			SerialStack stack = new SerialStack();
 			String name = UUID.randomUUID().toString();
 			convertBeanObjectToXML(name, obj, type, dateformat, ret,stack,name);
 			stack.clear();
-			return ret.toString();
+			ret.flush();
+			return new String(out.toByteArray());
 		} catch (Exception e) {
 			throw new IllegalArgumentException(e);
+		}
+		
+		
+		
+		finally
+		{
+			if(out != null)
+				try {
+					out.close();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			if(ret != null)
+				try {
+					ret.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 		}
 	}
 
@@ -192,14 +254,12 @@ public class ObjectSerializable {
 	 * @deprecated use Method toXML( Object obj).
 	 */
 	public final static String convertBeanObjectToXML(String name, Object obj,
-			Class type) throws NumberFormatException, IllegalArgumentException,
-			IntrospectionException {
+			Class type) throws Exception {
 		return convertBeanObjectToXML(name, obj, type, (String) null,
 				CHARSET_UTF_8);
 	}
 
-	public final static String toXML(Object obj) throws NumberFormatException,
-			IllegalArgumentException, IntrospectionException {
+	public final static String toXML(Object obj) throws Exception {
 		if (obj == null)
 			return null;
 		return convertBeanObjectToXML("_dflt_", obj, obj.getClass(),
@@ -207,8 +267,7 @@ public class ObjectSerializable {
 	}
 
 	public final static void toXML(Object obj, Writer out)
-			throws NumberFormatException, IllegalArgumentException,
-			IntrospectionException {
+			throws Exception {
 		if (obj == null)
 			return ;
 		convertBeanObjectToXML("_dflt_", obj,
@@ -257,28 +316,41 @@ public class ObjectSerializable {
 	
 	public final static String convertBeanObjectToXML(String name, Object obj,
 			Class type, String dateformat, String charset)
-			throws NumberFormatException, IllegalArgumentException,
-			IntrospectionException {
-		StringWriter ret = new StringWriter();
-		
-
-//		if (charset.equals(CHARSET_UTF_8)) {
-//			ret.append(content_header_utf_8);
-//		} else
-//			ret.append(content_header_utf_8);
-//		ret.append("<ps>");
-//		convertBeanObjectToXML(name, obj, type, dateformat, ret);
-//		ret.append("</ps>");
-		convertBeanObjectToXML(name, obj,
-				type, dateformat, charset,ret);
-		return ret.toString();
+			throws Exception {
+		java.io.ByteArrayOutputStream out = null;
+		Writer ret = null;
+		try
+		{
+			out = new java.io.ByteArrayOutputStream();
+			ret = new OutputStreamWriter(out,Charset.forName(charset));
+			convertBeanObjectToXML(name, obj,
+					type, dateformat, charset,ret);
+			ret.flush();
+			return new String(out.toByteArray());
+		}
+		finally
+		{
+			if(out != null)
+				try {
+					out.close();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			if(ret != null)
+				try {
+					ret.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		}
 	}
 	
 	
 	public final static void convertBeanObjectToXML(String name, Object obj,
 			Class type, String dateformat, String charset,Writer ret)
-			throws NumberFormatException, IllegalArgumentException,
-			IntrospectionException {
+			throws Exception {
 //		StringBuffer ret = new StringBuffer();
 
 		try {
@@ -298,23 +370,54 @@ public class ObjectSerializable {
 	}
 
 	public final static String convertBeanObjectToXML(Object obj, Class type)
-			throws NoSupportTypeCastException, NumberFormatException,
-			IllegalArgumentException, IntrospectionException {
-		StringWriter ret = new StringWriter();
-		try {
+			throws Exception {
+//		StringWriter ret = new StringWriter();
+//		try {
+//			SerialStack stack = new SerialStack();
+//			String name = UUID.randomUUID().toString();
+//			convertBeanObjectToXML(name, obj, type, null, ret,stack,name);
+//			stack.clear();
+//		} catch (IOException e) {
+//			throw new IllegalArgumentException(e);
+//		}
+//		return ret.toString();
+//		
+		java.io.ByteArrayOutputStream out = null;
+		OutputStreamWriter ret = null;
+		
+
+		try
+		{
+			out = new java.io.ByteArrayOutputStream();
+			ret = new OutputStreamWriter(out,Charset.forName(CHARSET_UTF_8));
 			SerialStack stack = new SerialStack();
 			String name = UUID.randomUUID().toString();
 			convertBeanObjectToXML(name, obj, type, null, ret,stack,name);
 			stack.clear();
-		} catch (IOException e) {
-			throw new IllegalArgumentException(e);
+			ret.flush();
+			return new String(out.toByteArray());
 		}
-		return ret.toString();
+		finally
+		{
+			if(out != null)
+				try {
+					out.close();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			if(ret != null)
+				try {
+					ret.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		}
 	}
 
 	public final static String convertBeanObjectsToXML(List<String> names,
-			List<Object> objs, List<Class> types) throws NumberFormatException,
-			IllegalArgumentException, IntrospectionException {
+			List<Object> objs, List<Class> types) throws Exception {
 
 		
 			return convertBeanObjectsToXML(names, objs, types, CHARSET_UTF_8);
@@ -323,11 +426,12 @@ public class ObjectSerializable {
 
 	public final static String convertBeanObjectsToXML(List<String> names,
 			List<Object> objs, List<Class> types, String charset)
-			throws NumberFormatException, IllegalArgumentException,
-			IntrospectionException, NoSupportTypeCastException {
-
+			throws Exception {
+		java.io.ByteArrayOutputStream out = null;
+		OutputStreamWriter ret = null;
 		try {
-			StringWriter ret = new StringWriter();
+			out = new java.io.ByteArrayOutputStream();
+			ret = new OutputStreamWriter(out,Charset.forName(charset));
 			if (charset.equals(CHARSET_UTF_8)) {
 				ret.append(content_header_utf_8);
 			} else
@@ -343,9 +447,29 @@ public class ObjectSerializable {
 				}
 			}
 			ret.append("</ps>");
-			return ret.toString();
+			
+			ret.flush();
+			return new String(out.toByteArray());
 		} catch (IOException e) {
 			throw new IllegalArgumentException(e);
+		}
+		
+		finally
+		{
+			if(out != null)
+				try {
+					out.close();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			if(ret != null)
+				try {
+					ret.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 		}
 	}
 
@@ -356,16 +480,11 @@ public class ObjectSerializable {
 	 * @param type
 	 * @param dateformat
 	 * @param ret
-	 * @throws NoSupportTypeCastException
-	 * @throws NumberFormatException
-	 * @throws IllegalArgumentException
-	 * @throws IntrospectionException
-	 * @throws IOException 
+	 * @throws Exception 
 	 */
 	private final static void convertBeanObjectToXML(String name, Object obj,
 			Class type, String dateformat, Writer ret,SerialStack serialStack,String currentAddress)
-			throws NoSupportTypeCastException, NumberFormatException,
-			IllegalArgumentException, IntrospectionException, IOException {
+			throws Exception {
 		if (obj != null)
 		{
 			type = obj.getClass();
@@ -823,16 +942,13 @@ public class ObjectSerializable {
 	 * @param type
 	 * @param toType
 	 * @return Object
-	 * @throws NoSupportTypeCastException
-	 * @throws NumberFormatException
-	 * @throws IntrospectionException
-	 * @throws IOException 
+	 * 
+	 * @throws Exception 
 	 * 
 	 */
 	private final static boolean basicTypeCast(String name, Object obj,
 			Class type, String dateformat, Writer ret,SerialStack stack,String currentAddress)
-			throws NoSupportTypeCastException, NumberFormatException,
-			IntrospectionException, IOException {
+			throws Exception {
 		if (obj == null) {
 			if (name == null)
 				ret.append("<p s:nvl=\"true\" s:t=\"").append(
@@ -1028,7 +1144,7 @@ public class ObjectSerializable {
 	}
 
 	private static void appendThrowableProperties(Object obj, Class type,
-			String dateformat, Writer ret,SerialStack stack,String currentAddress) throws IntrospectionException, IOException {
+			String dateformat, Writer ret,SerialStack stack,String currentAddress) throws Exception {
 
 //		BeanInfo beanInfo = Introspector.getBeanInfo(type);
 //		ClassInfo beanInfo = ClassUtil.getClassInfo(type);
@@ -1072,7 +1188,7 @@ public class ObjectSerializable {
 
 	private static void appendStackTraceElementProperties(Object obj,
 			Class type, String dateformat, Writer ret,SerialStack serialStack,String currentAddress)
-			throws IntrospectionException, IOException {
+			throws Exception {
 
 //		BeanInfo beanInfo = Introspector.getBeanInfo(type);
 //
@@ -1114,7 +1230,7 @@ public class ObjectSerializable {
 	}
 
 	private static void appendBeanProperties(Object obj, Class type,
-			String dateformat, Writer ret,SerialStack stack,String currentAddress) throws IntrospectionException {
+			String dateformat, Writer ret,SerialStack stack,String currentAddress) throws Exception {
 
 		appendBeanProperties(obj, type, dateformat, ret, null, stack,currentAddress);
 
@@ -1132,7 +1248,7 @@ public class ObjectSerializable {
 
 	private static void appendBeanProperties(Object obj, Class type,
 			String dateformat, Writer ret, String[] filters,SerialStack stack,String currentAddress)
-			throws IntrospectionException {
+			throws Exception {
 		ClassInfo beanInfo = ClassUtil.getClassInfo(type);		
 //		beanInfo_.getDeclaredFields();
 //		beanInfo_.getPropertyDescriptor("");
@@ -1190,8 +1306,7 @@ public class ObjectSerializable {
 
 	private static void convertParams(Writer ret, Object[] params,
 			Class[] paramTypes, String dateformat,SerialStack stack,String currentAddress)
-			throws NoSupportTypeCastException, NumberFormatException,
-			IllegalArgumentException, IntrospectionException, IOException {
+			throws Exception {
 		
 		for (int i = 0; i < params.length; i++) {
 			ObjectSerializable.convertBeanObjectToXML(null, params[i],

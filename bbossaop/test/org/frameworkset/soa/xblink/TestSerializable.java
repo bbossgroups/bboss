@@ -15,7 +15,6 @@
  */
 package org.frameworkset.soa.xblink;
 
-import java.beans.IntrospectionException;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -62,7 +61,7 @@ public class TestSerializable
 	private static Logger log = Logger.getLogger(TestSerializable.class);
 	 private static XStream xStream = new XStream();
 	 @Test
-	 public void testTransientBeantoxml() throws NumberFormatException, IllegalArgumentException, IntrospectionException
+	 public void testTransientBeantoxml() throws Exception
 	{
 		TransientFieldBean transientFieldBean = new TransientFieldBean("onlyField");
 		transientFieldBean.setExcludeField("exccc");

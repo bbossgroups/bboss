@@ -44,7 +44,7 @@ import com.frameworkset.util.ValueObjectUtil;
  */
 public class SOAApplicationContextTest {
 	@Test
-	public void testXMLToBean() throws NoSupportTypeCastException, NumberFormatException, IllegalArgumentException, IntrospectionException
+	public void testXMLToBean() throws Exception
 	{
 		String content = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
 			"<esb>"+
@@ -111,7 +111,7 @@ public class SOAApplicationContextTest {
 		System.out.println(context);
 	}
 	@Test
-	public void bytearraybeantoxml() throws NumberFormatException, IllegalArgumentException, IntrospectionException
+	public void bytearraybeantoxml() throws Exception
 	{
 		ArrayBean bean = new ArrayBean();
 		Exception e = new Exception("异常发生。");
@@ -241,7 +241,7 @@ public class SOAApplicationContextTest {
 		
 	}
 	@org.junit.Test
-	public void testMap() throws NumberFormatException, IllegalArgumentException, IntrospectionException
+	public void testMap() throws Exception
 	{
 		Map mapdata = new HashMap();
 		mapdata.put("data", "datavalue");
