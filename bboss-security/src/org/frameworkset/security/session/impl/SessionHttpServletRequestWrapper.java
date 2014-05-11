@@ -63,11 +63,12 @@ public class SessionHttpServletRequestWrapper extends HttpServletRequestWrapper 
 		{
 			if(create)
 			{
-				int cookielivetime = (int)SessionHelper.getSessionManager().getSessionTimeout();
-				if(cookielivetime <= 0)
-				{
-					cookielivetime = Integer.MAX_VALUE;
-				}
+//				int cookielivetime = (int)SessionHelper.getSessionManager().getSessionTimeout();
+//				if(cookielivetime <= 0)
+//				{
+//					cookielivetime = Integer.MAX_VALUE;
+//				}
+				int cookielivetime = -1;
 				Session session = SessionHelper.createSession(this.getContextPath().replace("/", ""),StringUtil.getClientIP(this));				
 				sessionid = session.getId();
 				this.session = new HttpSessionImpl(session,servletContext);
@@ -90,11 +91,12 @@ public class SessionHttpServletRequestWrapper extends HttpServletRequestWrapper 
 			{				
 				if(create)
 				{
-					int cookielivetime = (int)SessionHelper.getSessionManager().getSessionTimeout();
-					if(cookielivetime <= 0)
-					{
-						cookielivetime = Integer.MAX_VALUE;
-					}
+//					int cookielivetime = (int)SessionHelper.getSessionManager().getSessionTimeout();
+//					if(cookielivetime <= 0)
+//					{
+//						cookielivetime = Integer.MAX_VALUE;
+//					}
+					int cookielivetime = -1;
 					session = SessionHelper.createSession(this.getContextPath().replace("/", ""),StringUtil.getClientIP(this));
 					
 					sessionid = session.getId();
