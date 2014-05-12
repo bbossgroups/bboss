@@ -108,6 +108,10 @@ public class SessionManager {
 
 	public void destory() {
 		this.sessionStore.destory();
+		if(this.sessionMonitor != null)
+		{
+			this.sessionMonitor.killdown();
+		}
 		
 	}
 	
