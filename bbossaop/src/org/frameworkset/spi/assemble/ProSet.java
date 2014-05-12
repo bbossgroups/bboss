@@ -2,8 +2,11 @@ package org.frameworkset.spi.assemble;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -237,7 +240,34 @@ public  class ProSet<V extends Pro> extends TreeSet<V>
 	
 	private Set componentSet;
     private Object lock = new Object();
-    
+    private Set _getSet(Class maptype)
+    {
+    	Set componentMap = null;
+    	if(maptype != ArrayList.class)
+		{
+    		
+			try {
+				if(maptype.getName().equals("java.util.Collections$SynchronizedSet"))
+				{
+					componentMap = Collections
+							.synchronizedSet(new TreeSet());
+				}
+				else
+				{
+					componentMap = (Set)maptype.newInstance();
+				}
+			} catch (InstantiationException e) {
+				throw new BeanInstanceException(e);
+			} catch (IllegalAccessException e) {
+				throw new BeanInstanceException(e);
+			}
+		}
+		else
+		{
+			componentMap = new TreeSet();
+		}
+    	return componentMap;
+    }
     public Set getComponentSet(Class settype,CallContext callcontext)
     {
     	if(this.getComponentType() == null)
@@ -377,37 +407,5 @@ public  class ProSet<V extends Pro> extends TreeSet<V>
     	return componentSet;
     }
     
-    private Set _getSet(Class settype)
-    {
-    	Set componentSet = null;
-    	try {
-    		if(settype != TreeSet.class)
-    		{
-    			
-				if(!settype.getName().equals("java.util.Collections$SynchronizedSet"))
-				{
-					componentSet = (Set)settype.newInstance();
-				}
-				else
-				{
-					ClassInfo beaninfo = ClassUtil.getClassInfo(settype);
-					Constructor c = beaninfo.getConstructor(Set.class);
-					componentSet = (Set)c.newInstance(new TreeSet());
-				}
-    		}
-    		else
-    		{
-    			componentSet = new TreeSet();
-    		}
-		} catch (InstantiationException e) {
-			throw new BeanInstanceException(e);
-		} catch (IllegalAccessException e) {
-			throw new BeanInstanceException(e);
-		} catch (IllegalArgumentException e) {
-			throw new BeanInstanceException(e);
-		} catch (InvocationTargetException e) {
-			throw new BeanInstanceException(e);
-		}
-    	return componentSet;
-    }
+   
 }

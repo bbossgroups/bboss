@@ -1,5 +1,6 @@
 package org.frameworkset.spi.assemble;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -249,6 +250,35 @@ public class ProMap<K,V extends Pro> extends HashMap<K,V>
 	
 	private Map componentMap;
     private Object lock = new Object();
+    
+    private Map _getMap(Class maptype)
+    {
+    	Map componentMap = null;
+    	if(maptype != HashMap.class)
+		{
+    		
+			try {
+				if(maptype.getName().equals("java.util.Collections$SynchronizedMap"))
+				{
+					componentMap = Collections
+							.synchronizedMap(new HashMap());
+				}
+				else
+				{
+					componentMap = (Map)maptype.newInstance();
+				}
+			} catch (InstantiationException e) {
+				throw new BeanInstanceException(e);
+			} catch (IllegalAccessException e) {
+				throw new BeanInstanceException(e);
+			}
+		}
+		else
+		{
+			componentMap = new HashMap(this.size());
+		}
+    	return componentMap;
+    }
     public Map getComponentMap(Class maptype,CallContext callcontext)
     {
     	if(this.getComponentType() == null)
@@ -265,21 +295,7 @@ public class ProMap<K,V extends Pro> extends HashMap<K,V>
     							|| this.componentType.equalsIgnoreCase(Pro.COMPONENT_OBJECT) || this.componentType.equalsIgnoreCase(Pro.COMPONENT_OBJECT_SHORTNAME))
     					{
     						
-//    						componentMap = new HashMap(this.size());
-    						if(maptype != HashMap.class)
-    						{
-	    						try {
-									componentMap = (Map)maptype.newInstance();
-								} catch (InstantiationException e) {
-									throw new BeanInstanceException(e);
-								} catch (IllegalAccessException e) {
-									throw new BeanInstanceException(e);
-								}
-    						}
-    						else
-    						{
-    							componentMap = new HashMap(this.size());
-    						}
+    						componentMap = _getMap(maptype);
     						Iterator<String> keys = (Iterator<String>)this.keySet().iterator();
     						Context currentLoopContext = callcontext != null?callcontext.getLoopContext():null;	    					
 	    					while(keys.hasNext())
@@ -300,20 +316,7 @@ public class ProMap<K,V extends Pro> extends HashMap<K,V>
     					else if(this.componentType.equalsIgnoreCase(Pro.COMPONENT_STRING_SHORTNAME) || this.componentType.equalsIgnoreCase(Pro.COMPONENT_STRING))
     					{
 //    						componentMap = new HashMap(this.size());
-    						if(maptype != HashMap.class)
-    						{
-	    						try {
-									componentMap = (Map)maptype.newInstance();
-								} catch (InstantiationException e) {
-									throw new BeanInstanceException(e);
-								} catch (IllegalAccessException e) {
-									throw new BeanInstanceException(e);
-								}
-    						}
-    						else
-    						{
-    							componentMap = new HashMap(this.size());
-    						}
+    						componentMap = _getMap(maptype);
     						Iterator<String> keys = (Iterator<String>)this.keySet().iterator();
 	    					while(keys.hasNext())
 	    					{
@@ -324,20 +327,7 @@ public class ProMap<K,V extends Pro> extends HashMap<K,V>
     					else
     					{
 //    						componentMap = new HashMap(this.size());
-    						if(maptype != HashMap.class)
-    						{
-	    						try {
-									componentMap = (Map)maptype.newInstance();
-								} catch (InstantiationException e) {
-									throw new BeanInstanceException(e);
-								} catch (IllegalAccessException e) {
-									throw new BeanInstanceException(e);
-								}
-    						}
-    						else
-    						{
-    							componentMap = new HashMap(this.size());
-    						}
+    						componentMap = _getMap(maptype);
     						Iterator<String> keys = (Iterator<String>)this.keySet().iterator();
 //	    					while(keys.hasNext())
 //	    					{
@@ -363,20 +353,7 @@ public class ProMap<K,V extends Pro> extends HashMap<K,V>
     				else
     				{
 //    					componentMap = new HashMap(this.size());
-    					if(maptype != HashMap.class)
-						{
-    						try {
-								componentMap = (Map)maptype.newInstance();
-							} catch (InstantiationException e) {
-								throw new BeanInstanceException(e);
-							} catch (IllegalAccessException e) {
-								throw new BeanInstanceException(e);
-							}
-						}
-						else
-						{
-							componentMap = new HashMap(this.size());
-						}
+    					componentMap = _getMap(maptype);
     				}    				
     			}
     		}

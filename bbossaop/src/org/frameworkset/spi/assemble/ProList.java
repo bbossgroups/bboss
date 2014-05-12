@@ -2,8 +2,11 @@ package org.frameworkset.spi.assemble;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.frameworkset.spi.CallContext;
 
@@ -215,6 +218,39 @@ public  class ProList<V extends Pro> extends ArrayList<V>
     }
     private List componentList;
     private Object lock = new Object();
+    private List _getList(Class maptype)
+    {
+    	List componentMap = null;
+    	if(maptype != ArrayList.class)
+		{
+    		
+			try {
+				if(maptype.getName().equals("java.util.Collections$SynchronizedRandomAccessList"))
+				{
+					componentMap = Collections
+							.synchronizedList(new ArrayList());
+				}
+				else if(maptype.getName().equals("java.util.Collections$SynchronizedList"))
+				{
+					componentMap = Collections
+							.synchronizedList(new ArrayList());
+				}
+				else
+				{
+					componentMap = (List)maptype.newInstance();
+				}
+			} catch (InstantiationException e) {
+				throw new BeanInstanceException(e);
+			} catch (IllegalAccessException e) {
+				throw new BeanInstanceException(e);
+			}
+		}
+		else
+		{
+			componentMap = new ArrayList(this.size());
+		}
+    	return componentMap;
+    }
     public List getComponentList(Class listtype,CallContext callcontext)
     {
     	if(this.getComponentType() == null)
@@ -229,21 +265,8 @@ public  class ProList<V extends Pro> extends ArrayList<V>
     				{
     					if(this.componentType.equals(Pro.COMPONENT_BEAN))
     					{
-//    						componentList = new ArrayList(this.size());
-        					if(listtype != ArrayList.class)
-    						{
-        						try {
-        							componentList = (List)listtype.newInstance();
-    							} catch (InstantiationException e) {
-    								throw new BeanInstanceException(e);
-    							} catch (IllegalAccessException e) {
-    								throw new BeanInstanceException(e);
-    							}
-    						}
-    						else
-    						{
-    							componentList = new ArrayList(this.size());
-    						}
+    						componentList = _getList( listtype);
+        					
         					Context currentLoopContext = callcontext != null?callcontext.getLoopContext():null;
 	    					for(Pro pro:this)
 	    					{
@@ -264,20 +287,7 @@ public  class ProList<V extends Pro> extends ArrayList<V>
 								.equalsIgnoreCase(Pro.COMPONENT_STRING))
     					{
 //    						componentList = new ArrayList(this.size());
-    						if(listtype != ArrayList.class)
-    						{
-        						try {
-        							componentList = (List)listtype.newInstance();
-    							} catch (InstantiationException e) {
-    								throw new BeanInstanceException(e);
-    							} catch (IllegalAccessException e) {
-    								throw new BeanInstanceException(e);
-    							}
-    						}
-    						else
-    						{
-    							componentList = new ArrayList(this.size());
-    						}
+    						componentList = _getList( listtype);
     						for(Pro pro:this)
 	    					{
     							componentList.add(pro.getString());	
@@ -286,20 +296,7 @@ public  class ProList<V extends Pro> extends ArrayList<V>
     					else if(this.componentType.equalsIgnoreCase(Pro.COMPONENT_OBJECT_SHORTNAME) || this.componentType.equalsIgnoreCase(Pro.COMPONENT_OBJECT))
     					{
 //    						componentList = new ArrayList(this.size());
-    						if(listtype != ArrayList.class)
-    						{
-        						try {
-        							componentList = (List)listtype.newInstance();
-    							} catch (InstantiationException e) {
-    								throw new BeanInstanceException(e);
-    							} catch (IllegalAccessException e) {
-    								throw new BeanInstanceException(e);
-    							}
-    						}
-    						else
-    						{
-    							componentList = new ArrayList(this.size());
-    						}
+    						componentList = _getList( listtype);
     						Context currentLoopContext = callcontext != null?callcontext.getLoopContext():null;
 	    					for(Pro pro:this)
 	    					{
@@ -316,20 +313,7 @@ public  class ProList<V extends Pro> extends ArrayList<V>
     					else
     					{
 //    						componentList = new ArrayList(this.size());
-    						if(listtype != ArrayList.class)
-    						{
-        						try {
-        							componentList = (List)listtype.newInstance();
-    							} catch (InstantiationException e) {
-    								throw new BeanInstanceException(e);
-    							} catch (IllegalAccessException e) {
-    								throw new BeanInstanceException(e);
-    							}
-    						}
-    						else
-    						{
-    							componentList = new ArrayList(this.size());
-    						}
+    						componentList = _getList( listtype);
 //	    					for(Pro pro:this)
 //	    					{
 //	    						componentList.add(pro.getBean());	
