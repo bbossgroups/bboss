@@ -37,7 +37,7 @@ import com.frameworkset.util.ValueObjectUtil;
  */
 public class SOAApplicationContextTest {
 	@Test
-	public void bytearraybeantoxml() throws NumberFormatException, IllegalArgumentException, IntrospectionException
+	public void bytearraybeantoxml() throws Exception
 	{
 		ArrayBean bean = new ArrayBean();
 		Exception e = new Exception("异常发生。");

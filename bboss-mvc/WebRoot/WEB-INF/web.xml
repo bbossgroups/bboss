@@ -174,7 +174,7 @@
 		<servlet-class>org.frameworkset.web.servlet.DispatchServlet</servlet-class>
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
-			<param-value>/WEB-INF/bboss-*.xml,/WEB-INF/conf/bboss-*.xml</param-value>
+			<param-value>/WEB-INF/bboss-*.xml,/WEB-INF/conf/bboss-*.xml,/WEB-INF/conf/commons/bboss-*.xml</param-value>
 		</init-param>
 		<init-param>
 			<param-name>messagesources</param-name>
