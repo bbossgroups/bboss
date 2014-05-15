@@ -34,8 +34,13 @@ import org.frameworkset.spi.remote.ServiceID;
  */
 public class SOAApplicationContext extends DefaultApplicationContext {
 	private static Logger log = Logger.getLogger(SOAApplicationContext.class);
+	private String charset;
 	public SOAApplicationContext(String soacontent) {
 		super((String)soacontent,false);
+	}
+	public SOAApplicationContext(String soacontent,String charset) {
+		
+		super((String)soacontent,false,charset);
 	}
 	
 	

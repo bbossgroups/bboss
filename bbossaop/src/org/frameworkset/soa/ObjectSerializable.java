@@ -144,7 +144,7 @@ public class ObjectSerializable {
 					charset);
 			ret.append(call_tailer);
 			ret.flush();
-			return new String(out.toByteArray());
+			return out.toString(charset);
 		} catch (Exception e) {
 			throw new IllegalArgumentException(e);
 		}		
@@ -187,7 +187,7 @@ public class ObjectSerializable {
 			stack.clear();
 			ret.append(call_tailer);
 			ret.flush();
-			return new String(out.toByteArray());
+			return out.toString(charset);
 		} catch (Exception e) {
 			throw new IllegalArgumentException(e);
 		}
@@ -224,7 +224,7 @@ public class ObjectSerializable {
 			convertBeanObjectToXML(name, obj, type, dateformat, ret,stack,name);
 			stack.clear();
 			ret.flush();
-			return new String(out.toByteArray());
+			return out.toString(CHARSET_UTF_8);
 		} catch (Exception e) {
 			throw new IllegalArgumentException(e);
 		}
@@ -265,6 +265,13 @@ public class ObjectSerializable {
 		return convertBeanObjectToXML("_dflt_", obj, obj.getClass(),
 				(String) null, CHARSET_UTF_8);
 	}
+	
+	public final static String toXML(Object obj,String charset) throws Exception {
+		if (obj == null)
+			return null;
+		return convertBeanObjectToXML("_dflt_", obj, obj.getClass(),
+				(String) null, charset);
+	}
 
 	public final static void toXML(Object obj, Writer out)
 			throws Exception {
@@ -276,11 +283,17 @@ public class ObjectSerializable {
 //				(String) null, CHARSET_UTF_8);
 		
 	}
-
+	public static <T> T toBean(String beanxml, Class<T> beantype,String charset)
+	{
+		SOAApplicationContext context = new SOAApplicationContext(beanxml,charset);
+		T object = context.getTBeanObject("_dflt_", beantype);
+		context.destroy();
+		return object;
+	}
 	public static <T> T toBean(String beanxml, Class<T> beantype) {
 		if (beanxml == null || beanxml.equals(""))
 			return null;
-		SOAApplicationContext context = new SOAApplicationContext(beanxml);
+		SOAApplicationContext context = new SOAApplicationContext(beanxml,CHARSET_UTF_8);
 		T object = context.getTBeanObject("_dflt_", beantype);
 		context.destroy();
 		return object;
@@ -326,7 +339,8 @@ public class ObjectSerializable {
 			convertBeanObjectToXML(name, obj,
 					type, dateformat, charset,ret);
 			ret.flush();
-			return new String(out.toByteArray());
+//			return new String(out.toByteArray(),charset);
+			return out.toString(charset);
 		}
 		finally
 		{
@@ -395,7 +409,7 @@ public class ObjectSerializable {
 			convertBeanObjectToXML(name, obj, type, null, ret,stack,name);
 			stack.clear();
 			ret.flush();
-			return new String(out.toByteArray());
+			return out.toString(CHARSET_UTF_8);
 		}
 		finally
 		{
@@ -449,7 +463,7 @@ public class ObjectSerializable {
 			ret.append("</ps>");
 			
 			ret.flush();
-			return new String(out.toByteArray());
+			return out.toString(charset);
 		} catch (IOException e) {
 			throw new IllegalArgumentException(e);
 		}

@@ -245,6 +245,15 @@ public class ServiceProviderManager {
         traceFiles = new ArrayList();
         this.applicationContext = applicationContext;
     }
+    private String charset = "UTF-8";
+    public ServiceProviderManager(BaseApplicationContext applicationContext,String charset) {
+        parsedList = new HashMap();
+        managers = new HashMap();
+        managerimports = new HashMap();
+        traceFiles = new ArrayList();
+        this.applicationContext = applicationContext;
+        this.charset = charset;
+    }
 
     /**
      * 解析并加载imports配置文件列表中的包含的管理服务，parentFile是指导入这些配置文件的配置文件，便于系统 进行调试和跟踪
@@ -379,7 +388,7 @@ public class ServiceProviderManager {
             factory.setValidating(false);
             
             SAXParser parser = factory.newSAXParser();        
-            sr = new ByteArrayInputStream(content.getBytes());
+            sr = new ByteArrayInputStream(content.getBytes(this.charset));
 //            in = new java.io.BufferedInputStream(sr);
 //            parser.parse(in, handler);    
             parser.parse(sr, handler);    

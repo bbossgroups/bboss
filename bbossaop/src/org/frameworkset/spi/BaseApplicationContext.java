@@ -293,6 +293,19 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 		
 		this(AssembleCallback.classpathprex, "", (String)content,isfile);
 	}
+	
+	protected BaseApplicationContext(String content,boolean isfile,String charset) {
+		// if (configfile == null || configfile.equals(""))
+		// throw new NullPointerException(
+		// "build ApplicationContext failed:configfile is "
+		// + configfile);
+		// this.configfile = configfile;
+		// rootFiles.add(configfile);
+		// providerManager = new ServiceProviderManager(this);
+		// providerManager.init(this.configfile);
+		
+		this(AssembleCallback.classpathprex, "", (String)content,isfile,charset);
+	}
 	protected BaseApplicationContext(String docbaseType, String docbase,
 			String configfile)
 	{
@@ -318,6 +331,29 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 			this.needRecordFile = false;
 		}
 		providerManager = new ServiceProviderManager(this);
+		providerManager.init(docbaseType, docbase, configfile);
+		
+	}
+	
+	protected BaseApplicationContext(String docbaseType, String docbase,
+			String configfile,boolean isfile,String charset) {
+		if (configfile == null || configfile.equals(""))
+			throw new NullPointerException(
+					"build ApplicationContext failed:configfile is "
+							+ configfile);
+		this.isfile = isfile;
+		
+		
+		if(isfile)
+		{
+			this.configfile = configfile;
+			rootFiles.add(configfile);
+		}
+		else			
+		{
+			this.needRecordFile = false;
+		}
+		providerManager = new ServiceProviderManager(this,charset);
 		providerManager.init(docbaseType, docbase, configfile);
 		
 	}

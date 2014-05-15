@@ -99,7 +99,7 @@ public class SimpleSessionImpl implements Session{
 		
 		lastAccessedTime = System.currentTimeMillis();		
 		sessionStore.updateLastAccessedTime(appKey,id,lastAccessedTime);
-		assertSession() ;
+//		assertSession() ;
 		
 	}
 

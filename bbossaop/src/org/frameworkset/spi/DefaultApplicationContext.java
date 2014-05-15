@@ -104,6 +104,10 @@ public class DefaultApplicationContext extends BaseApplicationContext {
 	{
 		super((String)configfile,isfile);
 	}
+	protected DefaultApplicationContext(String configfile, boolean isfile,String charset)
+	{
+		super((String)configfile,isfile,charset);
+	}
 	protected DefaultApplicationContext(String docbaseType, String docbase,
 			String configfile)
 	{
