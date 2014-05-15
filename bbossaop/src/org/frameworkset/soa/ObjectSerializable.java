@@ -20,14 +20,13 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStreamWriter;
+import java.io.StringWriter;
 import java.io.Writer;
 import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.nio.charset.Charset;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -129,37 +128,30 @@ public class ObjectSerializable {
 	public static String convertMethodCallToXMLMethod(Method method,
 			Object[] params, Class[] paramTypes, String charset)
 			throws Exception {
-		java.io.ByteArrayOutputStream out = null;
 		Writer ret = null;
 		try {
-			out = new java.io.ByteArrayOutputStream();
-			ret = new OutputStreamWriter(out,Charset.forName(charset));
-
-			if (charset.equals(CHARSET_UTF_8)) {
-				ret.append(content_header_utf_8);
-			} else
-				ret.append(content_header_gbk);
+			ret = new StringWriter();
+//			if (charset.equals(CHARSET_UTF_8)) {
+//				ret.append(content_header_utf_8);
+//			} else
+//				ret.append(content_header_gbk);
 			ret.append(call_header);
 			convertMethodCallToXMLMethod(ret, method.getName(), params, paramTypes,
 					charset);
 			ret.append(call_tailer);
-			ret.flush();
-			return out.toString(charset);
+//			ret.flush();
+//			return out.toString(charset);
+			return ret.toString();
 		} catch (Exception e) {
 			throw new IllegalArgumentException(e);
 		}		
 		finally
 		{
-			if(out != null)
-				try {
-					out.close();
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+			
 			if(ret != null)
 				try {
 					ret.close();
+					ret = null;
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -171,39 +163,31 @@ public class ObjectSerializable {
 	public static String convertSOAMethodCallToXMLMethod(SOAMethodCall method,
 			String charset) throws Exception,
 			IntrospectionException {
-		java.io.ByteArrayOutputStream out = null;
 		Writer ret = null;
 		try {
-			out = new java.io.ByteArrayOutputStream();
-			ret = new OutputStreamWriter(out,Charset.forName(charset));
-			if (charset.equals(CHARSET_UTF_8)) {
-				ret.append(content_header_utf_8);
-			} else
-				ret.append(content_header_gbk);
+			ret = new StringWriter();
+//			if (charset.equals(CHARSET_UTF_8)) {
+//				ret.append(content_header_utf_8);
+//			} else
+//				ret.append(content_header_gbk);
 			ret.append(call_header);
 			SerialStack stack = new SerialStack();
 			convertBeanObjectToXML("soamethodcall", method, method.getClass(),
 					null, ret,stack,"soamethodcall");
 			stack.clear();
 			ret.append(call_tailer);
-			ret.flush();
-			return out.toString(charset);
+			return ret.toString();
 		} catch (Exception e) {
 			throw new IllegalArgumentException(e);
 		}
 		
 		finally
 		{
-			if(out != null)
-				try {
-					out.close();
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+			
 			if(ret != null)
 				try {
 					ret.close();
+					ret = null;
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -214,17 +198,15 @@ public class ObjectSerializable {
 	public final static String convertBeanObjectToXML(Object obj, Class type,
 			String dateformat) throws Exception,
 			IntrospectionException {
-		java.io.ByteArrayOutputStream out = null;
 		Writer ret = null;
 		try {
-			out = new java.io.ByteArrayOutputStream();
-			ret = new OutputStreamWriter(out,Charset.forName(CHARSET_UTF_8));
+			ret = new StringWriter();
 			SerialStack stack = new SerialStack();
 			String name = UUID.randomUUID().toString();
 			convertBeanObjectToXML(name, obj, type, dateformat, ret,stack,name);
 			stack.clear();
-			ret.flush();
-			return out.toString(CHARSET_UTF_8);
+			
+			return ret.toString();
 		} catch (Exception e) {
 			throw new IllegalArgumentException(e);
 		}
@@ -233,16 +215,11 @@ public class ObjectSerializable {
 		
 		finally
 		{
-			if(out != null)
-				try {
-					out.close();
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+			
 			if(ret != null)
 				try {
 					ret.close();
+					ret = null;
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -293,7 +270,7 @@ public class ObjectSerializable {
 	public static <T> T toBean(String beanxml, Class<T> beantype) {
 		if (beanxml == null || beanxml.equals(""))
 			return null;
-		SOAApplicationContext context = new SOAApplicationContext(beanxml,CHARSET_UTF_8);
+		SOAApplicationContext context = new SOAApplicationContext(beanxml);
 		T object = context.getTBeanObject("_dflt_", beantype);
 		context.destroy();
 		return object;
@@ -327,33 +304,62 @@ public class ObjectSerializable {
 //	}
 	
 	
-	public final static String convertBeanObjectToXML(String name, Object obj,
+	public final static String convertBeanObjectToXML1(String name, Object obj,
 			Class type, String dateformat, String charset)
 			throws Exception {
-		java.io.ByteArrayOutputStream out = null;
 		Writer ret = null;
 		try
 		{
-			out = new java.io.ByteArrayOutputStream();
-			ret = new OutputStreamWriter(out,Charset.forName(charset));
+			ret = new StringWriter();
 			convertBeanObjectToXML(name, obj,
 					type, dateformat, charset,ret);
-			ret.flush();
 //			return new String(out.toByteArray(),charset);
-			return out.toString(charset);
+			return ret.toString();
 		}
 		finally
 		{
-			if(out != null)
-				try {
-					out.close();
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+			
 			if(ret != null)
 				try {
 					ret.close();
+					ret = null;
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		}
+	}
+	
+	public final static String convertBeanObjectToXML(String name, Object obj,
+			Class type, String dateformat, String charset)
+			throws Exception {
+//		java.io.ByteArrayOutputStream out = null;
+		StringWriter ret = null;
+		try
+		{
+//			out = new java.io.ByteArrayOutputStream();
+//			ret = new OutputStreamWriter(out,Charset.forName(charset));
+			ret = new StringWriter();
+			convertBeanObjectToXML(name, obj,
+					type, dateformat, charset,ret);
+
+			//			return new String(out.toByteArray(),charset);
+//			return out.toString(charset);
+			return ret.toString();
+		}
+		finally
+		{
+//			if(out != null)
+//				try {
+//					out.close();
+//				} catch (IOException e1) {
+//					// TODO Auto-generated catch block
+//					e1.printStackTrace();
+//				}
+			if(ret != null)
+				try {
+					ret.close();
+					ret = null;
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -368,10 +374,10 @@ public class ObjectSerializable {
 //		StringBuffer ret = new StringBuffer();
 
 		try {
-			if (charset.equals(CHARSET_UTF_8)) {
-				ret.append(content_header_utf_8);
-			} else
-				ret.append(content_header_gbk);
+//			if (charset.equals(CHARSET_UTF_8)) {
+//				ret.append(content_header_utf_8);
+//			} else
+//				ret.append(content_header_gbk);
 			ret.append("<ps>");
 			SerialStack stack = new SerialStack();
 			convertBeanObjectToXML(name, obj, type, dateformat, ret,stack,name);
@@ -385,49 +391,49 @@ public class ObjectSerializable {
 
 	public final static String convertBeanObjectToXML(Object obj, Class type)
 			throws Exception {
-//		StringWriter ret = new StringWriter();
-//		try {
-//			SerialStack stack = new SerialStack();
-//			String name = UUID.randomUUID().toString();
-//			convertBeanObjectToXML(name, obj, type, null, ret,stack,name);
-//			stack.clear();
-//		} catch (IOException e) {
-//			throw new IllegalArgumentException(e);
-//		}
-//		return ret.toString();
-//		
-		java.io.ByteArrayOutputStream out = null;
-		OutputStreamWriter ret = null;
-		
-
-		try
-		{
-			out = new java.io.ByteArrayOutputStream();
-			ret = new OutputStreamWriter(out,Charset.forName(CHARSET_UTF_8));
+		StringWriter ret = new StringWriter();
+		try {
 			SerialStack stack = new SerialStack();
 			String name = UUID.randomUUID().toString();
 			convertBeanObjectToXML(name, obj, type, null, ret,stack,name);
 			stack.clear();
-			ret.flush();
-			return out.toString(CHARSET_UTF_8);
+		} catch (IOException e) {
+			throw new IllegalArgumentException(e);
 		}
-		finally
-		{
-			if(out != null)
-				try {
-					out.close();
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-			if(ret != null)
-				try {
-					ret.close();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-		}
+		return ret.toString();
+//		
+//		java.io.ByteArrayOutputStream out = null;
+//		OutputStreamWriter ret = null;
+//		
+//
+//		try
+//		{
+//			out = new java.io.ByteArrayOutputStream();
+//			ret = new OutputStreamWriter(out,Charset.forName(CHARSET_UTF_8));
+//			SerialStack stack = new SerialStack();
+//			String name = UUID.randomUUID().toString();
+//			convertBeanObjectToXML(name, obj, type, null, ret,stack,name);
+//			stack.clear();
+//			ret.flush();
+//			return out.toString(CHARSET_UTF_8);
+//		}
+//		finally
+//		{
+//			if(out != null)
+//				try {
+//					out.close();
+//				} catch (IOException e1) {
+//					// TODO Auto-generated catch block
+//					e1.printStackTrace();
+//				}
+//			if(ret != null)
+//				try {
+//					ret.close();
+//				} catch (IOException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+//		}
 	}
 
 	public final static String convertBeanObjectsToXML(List<String> names,
@@ -441,15 +447,13 @@ public class ObjectSerializable {
 	public final static String convertBeanObjectsToXML(List<String> names,
 			List<Object> objs, List<Class> types, String charset)
 			throws Exception {
-		java.io.ByteArrayOutputStream out = null;
-		OutputStreamWriter ret = null;
+		StringWriter ret = null;
 		try {
-			out = new java.io.ByteArrayOutputStream();
-			ret = new OutputStreamWriter(out,Charset.forName(charset));
-			if (charset.equals(CHARSET_UTF_8)) {
-				ret.append(content_header_utf_8);
-			} else
-				ret.append(content_header_gbk);
+			ret = new StringWriter();
+//			if (charset.equals(CHARSET_UTF_8)) {
+//				ret.append(content_header_utf_8);
+//			} else
+//				ret.append(content_header_gbk);
 			ret.append("<ps>");
 			if (objs != null && objs.size() > 0) {
 				int i = 0;
@@ -462,28 +466,22 @@ public class ObjectSerializable {
 			}
 			ret.append("</ps>");
 			
-			ret.flush();
-			return out.toString(charset);
+			return ret.toString();
 		} catch (IOException e) {
 			throw new IllegalArgumentException(e);
 		}
 		
 		finally
 		{
-			if(out != null)
+			if(ret != null)
 				try {
-					out.close();
+					ret.close();
+					ret = null;
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-			if(ret != null)
-				try {
-					ret.close();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+			
 		}
 	}
 

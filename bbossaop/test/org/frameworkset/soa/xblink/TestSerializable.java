@@ -412,7 +412,7 @@ public class TestSerializable
 	   dataSet.add("bb");
 	   
 	   List dataList = new ArrayList();
-	   dataList.add("aa");
+	   dataList.add("中国人阿斯顿发水电费");
 	   dataList.add("bb");
 	   
 	   Map dataMap = new HashMap();

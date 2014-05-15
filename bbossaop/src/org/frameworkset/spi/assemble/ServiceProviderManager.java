@@ -18,6 +18,8 @@ package org.frameworkset.spi.assemble;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.InputStream;
+import java.io.Reader;
+import java.io.StringReader;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.URL;
@@ -36,6 +38,7 @@ import org.frameworkset.spi.BaseApplicationContext;
 import org.frameworkset.spi.CallContext;
 import org.frameworkset.spi.assemble.RefID.Index;
 import org.frameworkset.spi.assemble.callback.AssembleCallback;
+import org.xml.sax.InputSource;
 
 /**
  * 
@@ -378,8 +381,9 @@ public class ServiceProviderManager {
     
     
     private void parseXML(String content) {
-    	InputStream in = null;
-    	ByteArrayInputStream sr = null;
+    	InputSource is  = null;
+    	
+    	Reader reader = null;
     		try
     		{
             ProviderParser handler = new ProviderParser(this.getApplicationContext());
@@ -388,10 +392,12 @@ public class ServiceProviderManager {
             factory.setValidating(false);
             
             SAXParser parser = factory.newSAXParser();        
-            sr = new ByteArrayInputStream(content.getBytes(this.charset));
-//            in = new java.io.BufferedInputStream(sr);
-//            parser.parse(in, handler);    
-            parser.parse(sr, handler);    
+//            sr = new ByteArrayInputStream(content.getBytes(this.charset));
+//            parser.parse(sr, handler); 
+            reader = new StringReader(content);
+            is = new InputSource(reader);
+            
+            parser.parse(is, handler);
             
             this.addProperties(handler.getProperties());
             handler = null;
@@ -400,19 +406,16 @@ public class ServiceProviderManager {
         }
         finally
         {
-        	if(sr != null) {
+        	if(reader != null) {
 				try {
-					sr.close();
+					reader.close();
+					reader = null;
 				} catch (Exception e2) {
 					
 				}
 			}
-        	if(in != null) {
-				try {
-					in.close();
-				} catch (Exception e2) {
-					
-				}
+        	if(is != null) {
+				is = null;
 			}
         }
 
