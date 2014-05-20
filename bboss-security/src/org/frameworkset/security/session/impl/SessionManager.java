@@ -43,9 +43,14 @@ public class SessionManager {
 	public static final long default_cookieLiveTime = -1l;
 	private long sessionTimeout;
 	private String cookiename;
+	private Object sessionstore;
+	
+	/**
+	 * session监听器,多个用,号分隔
+	 */
+	private String sessionlisteners;
 	private boolean httpOnly;
 	private long cookieLiveTime;
-	private String sessionStore_;
 	private SessionStore sessionStore;
 	private SessionMonitor	sessionMonitor;
 	private List<SessionListener> sessionListeners;
@@ -58,6 +63,10 @@ public class SessionManager {
 	 */
 	private long sessionscaninterval = 60000;
 	private boolean usewebsession = false;
+	public SessionManager()
+	{
+		
+	}
 	public SessionManager(long sessionTimeout, Object sessionStore,
 			String cookiename, boolean httponly,
 			long cookieLiveTime,String listeners) {
@@ -79,6 +88,23 @@ public class SessionManager {
 			sessionMonitor.start();
 		}
 	}
+	
+	public void init()
+	{
+		this.sessionStore = SessionStoreFactory.getTokenStore(sessionstore,this);
+		if(this.sessionStore == null)
+			this.usewebsession = true;
+		if(!StringUtil.isEmpty(this.sessionlisteners))
+		{
+			String[] temp = sessionlisteners.trim().split("");
+			initSessionListeners(temp);
+		}
+		if(!usewebsession)
+		{
+			sessionMonitor = new SessionMonitor();
+			sessionMonitor.start();
+		}
+	}
 	public boolean usewebsession()
 	{
 		return this.usewebsession;
@@ -89,7 +115,7 @@ public class SessionManager {
 		for(int i = 0; listeners != null && i < listeners.length; i ++)
 		{
 			try {
-				SessionListener l = (SessionListener)Class.forName(listeners[i]).newInstance();
+				SessionListener l = (SessionListener)Class.forName(listeners[i].trim()).newInstance();
 				sessionListeners.add(l);
 			} catch (InstantiationException e) {
 				throw new SessionManagerException(e);
@@ -225,8 +251,30 @@ public class SessionManager {
 		}
 		
 	}
-	public static Session getCurrentSession()
-	{
-		return currentSession.get();
+	
+	
+	public String getSessionlisteners() {
+		return sessionlisteners;
+	}
+	public void setSessionlisteners(String sessionlisteners) {
+		this.sessionlisteners = sessionlisteners;
+	}
+	public void setSessionTimeout(long sessionTimeout) {
+		this.sessionTimeout = sessionTimeout;
+	}
+	public void setCookiename(String cookiename) {
+		this.cookiename = cookiename;
+	}
+	public void setSessionstore(Object sessionstore) {
+		this.sessionstore = sessionstore;
+	}
+	public void setHttpOnly(boolean httpOnly) {
+		this.httpOnly = httpOnly;
+	}
+	public void setCookieLiveTime(long cookieLiveTime) {
+		this.cookieLiveTime = cookieLiveTime;
+	}
+	public void setSessionscaninterval(long sessionscaninterval) {
+		this.sessionscaninterval = sessionscaninterval;
 	}
 }
