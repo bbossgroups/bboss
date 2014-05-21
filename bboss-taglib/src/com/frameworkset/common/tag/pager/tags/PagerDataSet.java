@@ -1810,11 +1810,11 @@ public class PagerDataSet extends PagerTagSupport {
 					String cachekey = softparser_cache_pre +pageContextKey;
 					if(this.position >= 0)
 						cachekey = cachekey + "|"+position; 
-					theClassDataList = (ClassDataList)pageContext.getAttribute(cachekey);
+					theClassDataList = (ClassDataList)pageContext.getAttribute(cachekey,PageContext.APPLICATION_SCOPE);
 					if(theClassDataList != null)
 						return true;
 					theClassDataList = new ClassDataList();
-					pageContext.setAttribute(cachekey,theClassDataList);
+					pageContext.setAttribute(cachekey,theClassDataList,PageContext.APPLICATION_SCOPE);
 					
 				}
 				
@@ -2703,8 +2703,8 @@ public class PagerDataSet extends PagerTagSupport {
 		// }
 		// else
 		{
-			pageContext.removeAttribute(this.getDataSetName());
-			pageContext.removeAttribute(this.getRowidName());
+			pageContext.removeAttribute(this.getDataSetName(),PageContext.PAGE_SCOPE);
+			pageContext.removeAttribute(this.getRowidName(),PageContext.PAGE_SCOPE);
 		}
 	}
 	
@@ -2741,7 +2741,7 @@ public class PagerDataSet extends PagerTagSupport {
 			else if (session != null && sessionKey != null)
 				session.removeAttribute(sessionKey);
 			else if (pageContextKey != null)
-				pageContext.removeAttribute(pageContextKey);
+				pageContext.removeAttribute(pageContextKey,PageContext.APPLICATION_SCOPE);
 
 			/**
 			 * 这个条件可能不成立，因为web容器可能对request做了相应的wraper封装，

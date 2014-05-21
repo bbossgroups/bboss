@@ -22,6 +22,7 @@ package com.frameworkset.common.tag.pager.tags;
 
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspTagException;
+import javax.servlet.jsp.PageContext;
 
 import com.frameworkset.common.tag.pager.parser.PageTagExport;
 import com.frameworkset.common.tag.pager.parser.ParseException;
@@ -118,22 +119,22 @@ public abstract class PageTagSupport extends PagerTagSupport {
 
 	protected final void removeAttributes() {
 		if (pageTagExport == null) {
-			pageContext.removeAttribute(PageTagExport.PAGE_URL);
-			pageContext.removeAttribute(PageTagExport.PAGE_NUMBER);
+			pageContext.removeAttribute(PageTagExport.PAGE_URL,PageContext.PAGE_SCOPE);
+			pageContext.removeAttribute(PageTagExport.PAGE_NUMBER,PageContext.PAGE_SCOPE);
 		} else {
 			String name;
 
 			if ((name = pageTagExport.getPageUrl()) != null)
-				pageContext.removeAttribute(name);
+				pageContext.removeAttribute(name,PageContext.PAGE_SCOPE);
 
 			if ((name = pageTagExport.getPageNumber()) != null)
-				pageContext.removeAttribute(name);
+				pageContext.removeAttribute(name,PageContext.PAGE_SCOPE);
 
 			if ((name = pageTagExport.getFirstItem()) != null)
-				pageContext.removeAttribute(name);
+				pageContext.removeAttribute(name,PageContext.PAGE_SCOPE);
 
 			if ((name = pageTagExport.getLastItem()) != null)
-				pageContext.removeAttribute(name);
+				pageContext.removeAttribute(name,PageContext.PAGE_SCOPE);
 		}
 	}
 

@@ -22,6 +22,7 @@ package com.frameworkset.common.tag.pager.tags;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.PageContext;
 
 import com.frameworkset.common.tag.BaseTag;
 import com.frameworkset.platform.cms.driver.jsp.CMSServletRequest;
@@ -62,7 +63,7 @@ public abstract class PagerTagSupport extends BaseTag {
 		if (oldValue != null)
 			pageContext.setAttribute(name, oldValue);
 		else 
-			pageContext.removeAttribute(name);
+			pageContext.removeAttribute(name,PageContext.PAGE_SCOPE);
 	}
 	
 	protected PagerContext findPageContext()

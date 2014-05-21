@@ -37,6 +37,7 @@ package com.frameworkset.common.tag.pager.tags;
 import java.util.Map;
 
 import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.PageContext;
 
 import org.apache.log4j.Logger;
 
@@ -509,7 +510,7 @@ public class DetailTag extends PagerDataSet implements FieldHelper{
 //		}
 //		else
 		{
-		    pageContext.removeAttribute(this.getBeaninfoName());
+		    pageContext.removeAttribute(this.getBeaninfoName(),PageContext.PAGE_SCOPE);
 		}
 		super.removeVariable();
 	}
