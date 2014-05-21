@@ -79,7 +79,7 @@ public class SessionManager {
 		this.cookieLiveTime = cookieLiveTime;
 		if(!StringUtil.isEmpty(listeners))
 		{
-			String[] temp = listeners.trim().split("");
+			String[] temp = listeners.trim().split("\\,");
 			initSessionListeners(temp);
 		}
 		if(!usewebsession)
@@ -96,7 +96,7 @@ public class SessionManager {
 			this.usewebsession = true;
 		if(!StringUtil.isEmpty(this.sessionlisteners))
 		{
-			String[] temp = sessionlisteners.trim().split("");
+			String[] temp = sessionlisteners.trim().split("\\,");
 			initSessionListeners(temp);
 		}
 		if(!usewebsession)
