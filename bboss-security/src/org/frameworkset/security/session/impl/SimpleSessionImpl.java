@@ -46,7 +46,7 @@ public class SimpleSessionImpl implements Session{
 		if(!assertValidate.booleanValue())
 		{
 			this.invalidate();
-			throw new SessionInvalidateException("Session " +this.getId() + "已经失效!");
+//			throw new SessionInvalidateException("Session " +this.getId() + "已经失效!");
 		}
 			
 	}

@@ -2,6 +2,7 @@ package com.frameworkset.common.filter;
 
 import java.io.IOException;
 
+import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
@@ -10,37 +11,14 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.frameworkset.security.session.impl.SessionFilter;
-
 import com.frameworkset.util.StringUtil;
-
 /**
- *带会话共享功能的字符串过滤器
- * 配置示例：
- * <filter>
-    	<filter-name>CharsetEncoding</filter-name>
-    	<filter-class>com.frameworkset.platform.oa.meeting.util.CharsetEncodingFilter</filter-class>
-    	<init-param>
-      		<param-name>RequestEncoding</param-name>
-      		<param-value>iso-8859-1</param-value>
-    	</init-param>
-    	<init-param>
-      		<param-name>ResponseEncoding</param-name>
-      		<param-value>UTF-8</param-value>
-    	</init-param>
-  	</filter>
-
-  	<filter-mapping>
-  		<filter-name>CharsetEncoding</filter-name>
-  		<url-pattern>/*</url-pattern>
-  	</filter-mapping>
- * @author biaoping.yin
- * created on 2005-6-14
- * version 1.0
+ * 不带session管理功能的字符过滤器
+ * @author yinbp
+ *
  */
-
-public class CharsetEncodingFilter extends SessionFilter {
-    private FilterConfig config = null;
+public class SimpleCharsetEncodingFilter  implements Filter{
+	private FilterConfig config = null;
     private String RequestEncoding = null;
     private String ResponseEncoding = null;
     private String mode = "0";
@@ -110,10 +88,10 @@ public class CharsetEncodingFilter extends SessionFilter {
         String filterEnabled = request.getParameter("filterEnabled");
 
         HttpServletResponse response = (HttpServletResponse)res;
-        response.setHeader("Cache-Control", "no-cache"); 
-        response.setHeader("Pragma", "no-cache"); 
-        response.setDateHeader("Expires", -1);  
-        response.setDateHeader("max-age", 0);
+//        response.setHeader("Cache-Control", "no-cache"); 
+//        response.setHeader("Pragma", "no-cache"); 
+//        response.setDateHeader("Expires", -1);  
+//        response.setDateHeader("max-age", 0);
         /**
          *  向所有会话cookie 添加“HttpOnly”属性,  解决方案，过滤器中
          */
@@ -203,8 +181,8 @@ public class CharsetEncodingFilter extends SessionFilter {
 
         if(filterEnabled != null && !filterEnabled.trim().equalsIgnoreCase("true"))
         {
-//            fc.doFilter(request, response);
-        	  super.doFilter(request, response, fc);
+            fc.doFilter(request, response);
+//        	  super.doFilter(request, response, fc);
             return;
         }
 //        System.out.println("old request:" + request.getClass());
@@ -217,16 +195,16 @@ public class CharsetEncodingFilter extends SessionFilter {
                 CharacterEncodingHttpServletRequestWrapper(request, RequestEncoding,checkiemodeldialog,wallfilterrules,wallwhilelist);
             CharacterEncodingHttpServletResponseWrapper wresponsew = new
                 CharacterEncodingHttpServletResponseWrapper(response, ResponseEncoding);
-//            fc.doFilter(mrequestw, wresponsew);
-            super.doFilter(mrequestw, wresponsew, fc);
+            fc.doFilter(mrequestw, wresponsew);
+//            super.doFilter(mrequestw, wresponsew, fc);
         }
         //模式1：对请求参数编码，对响应不编码
         //      服务器对url进行编码
         else if(mode.equals("1"))
         {
             request.setCharacterEncoding(RequestEncoding);
-//            fc.doFilter(request,response);
-            super.doFilter(request, response, fc);
+            fc.doFilter(request,response);
+//            super.doFilter(request, response, fc);
         }
         //其他模式
         else
@@ -235,8 +213,8 @@ public class CharsetEncodingFilter extends SessionFilter {
                 CharacterEncodingHttpServletRequestWrapper(request, this.RequestEncoding,checkiemodeldialog,wallfilterrules,wallwhilelist);
             CharacterEncodingHttpServletResponseWrapper wresponsew = new
                 CharacterEncodingHttpServletResponseWrapper(response, ResponseEncoding);
-//            fc.doFilter(mrequestw, wresponsew);
-            super.doFilter(mrequestw, wresponsew, fc);
+            fc.doFilter(mrequestw, wresponsew);
+//            super.doFilter(mrequestw, wresponsew, fc);
         }
     }
 

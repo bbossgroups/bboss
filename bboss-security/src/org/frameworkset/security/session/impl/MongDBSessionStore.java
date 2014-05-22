@@ -110,11 +110,43 @@ public class MongDBSessionStore extends BaseSessionStore{
 		
 		return session;
 	}
+	
+	private String converterSpecialChar(String attribute)
+	{
+		attribute = attribute.replace(".", dianhaochar);
+		if(attribute.startsWith("$"))
+		{
+			if(attribute.length() == 1)
+			{
+				attribute = moneychar;
+			}
+			else
+			{
+				attribute = moneychar + attribute.substring(1);
+			}
+		}
+		return attribute;
+	}
+	private static final String dianhaochar = "____";
+	private static final String moneychar = "_____";
+	private static final int msize = moneychar.length();
+	private static final int dsize = dianhaochar.length();
+	private String recoverSpecialChar(String attribute)
+	{
+		if(attribute.startsWith(moneychar))
+		{
+			attribute = "$" + attribute.substring(msize);
+		}
+		
+		attribute = attribute.replace(dianhaochar, ".");
+		return attribute;
+	}
 
 	@Override
 	public Object getAttribute(String appKey,String sessionID, String attribute) {
 		DBCollection sessions =getAppSessionDBCollection( appKey);
 		BasicDBObject keys = new BasicDBObject();
+		attribute = converterSpecialChar( attribute);
 		keys.put(attribute, 1);
 		
 		DBObject obj = sessions.findOne(new BasicDBObject("sessionid",sessionID),keys);
@@ -212,15 +244,17 @@ public class MongDBSessionStore extends BaseSessionStore{
 	public Object removeAttribute(String appKey,String sessionID, String attribute) {
 		DBCollection sessions = getAppSessionDBCollection( appKey);
 		List<String> list = new ArrayList<String>();
+//		attribute = converterSpecialChar( attribute);
 		list.add(attribute);
 		Session value = getSession(appKey, sessionID,list);
-		sessions.update(new BasicDBObject("sessionid",sessionID), new BasicDBObject("$set",new BasicDBObject(attribute, null)));
+		sessions.update(new BasicDBObject("sessionid",sessionID), new BasicDBObject("$set",new BasicDBObject(list.get(0), null)));
 		return value;
 		
 	}
 
 	@Override
 	public Object addAttribute(String appKey,String sessionID, String attribute, Object value) {
+		attribute = converterSpecialChar( attribute);
 		DBCollection sessions = getAppSessionDBCollection( appKey);	
 		Session session = getSession(appKey, sessionID);
 		sessions.update(new BasicDBObject("sessionid",sessionID), new BasicDBObject("$set",new BasicDBObject(attribute, value)));
@@ -238,10 +272,14 @@ public class MongDBSessionStore extends BaseSessionStore{
 		keys.put("appKey", 1);
 		keys.put("referip", 1);
 		keys.put("host", 1);
+		List<String> copy = new ArrayList<String>(attributeNames);
 		for(int i = 0; attributeNames != null && i < attributeNames.size(); i ++)
 		{
-			keys.put(attributeNames.get(i), 1);
+			String r = this.converterSpecialChar(attributeNames.get(i));
+			attributeNames.set(i, r);
+			keys.put(r, 1);
 		}
+		
 		
 		
 		DBObject object = sessions.findOne(new BasicDBObject("sessionid",sessionid),keys);
@@ -263,7 +301,7 @@ public class MongDBSessionStore extends BaseSessionStore{
 				String name = attributeNames.get(i);
 				Object value = object.get(name);
 				try {
-					attributes.put(attributeNames.get(i), this.unserial((String)value));
+					attributes.put(copy.get(i), this.unserial((String)value));
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -324,7 +362,7 @@ public class MongDBSessionStore extends BaseSessionStore{
 				{
 					Object value = object.get(key);
 					try {
-						attrs.put(key, unserial((String)value));
+						attrs.put(this.recoverSpecialChar(key), unserial((String)value));
 					} catch (Exception e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
