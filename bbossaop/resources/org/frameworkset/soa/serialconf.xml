@@ -1,0 +1,7 @@
+<!-- 
+自定义对象序列化插件，对于bboss无法序列化的对象，可以自行定义序列化插件，只要将对象序列化和反序列化机制定义好即可
+ -->
+ <properties>
+     <property name="1" magic="java.util.Locale" serial="org.frameworkset.soa.JDKSerial"/>
+     <property name="2" magic="net.sf.jasperreports.engine.JasperPrint" serial="org.frameworkset.soa.JDKSerial"/>
+ </properties>

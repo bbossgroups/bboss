@@ -24,6 +24,9 @@ package org.frameworkset.util;
  * @author biaoping.yin
  * @version 1.0
  */
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.Arrays;
 
@@ -824,6 +827,88 @@ public abstract class ObjectUtils {
 		}
 		buffer.append(ARRAY_END);
 		return buffer.toString();
+	}
+	public static byte[] toBytes(java.io.Serializable object) throws SerialException
+	{
+		java.io.ByteArrayOutputStream out = null; 
+		java.io.ObjectOutputStream output = null;
+		try
+		{
+			out = new ByteArrayOutputStream(); 
+			output = new java.io.ObjectOutputStream(out); 
+			output.writeObject(object);
+			output.flush();
+			return out.toByteArray();
+		} catch (IOException e) {
+			throw new SerialException(e);
+		}
+		finally
+		{
+			try {
+				if(out != null)
+				{
+					out.close();
+					out = null;
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			try {
+				if(output != null)
+				{
+					output.close();
+					output = null;
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public static Object toObject(byte[] values)  throws SerialException
+	{
+		Object object = null;
+	
+		java.io.ObjectInputStream output = null;
+		java.io.ByteArrayInputStream intput = null;
+		try
+		{
+			 
+			intput = new ByteArrayInputStream(values);
+			output = new java.io.ObjectInputStream(intput); 
+			object = output.readObject();
+			return object;
+			
+		}
+		catch(Exception e)
+		{
+			throw new SerialException(e);
+		}
+		finally
+		{
+			try {
+				if(intput != null)
+				{
+					intput.close();
+					intput = null;
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			try {
+				if(output != null)
+				{
+					output.close();
+					output = null;
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 
 }

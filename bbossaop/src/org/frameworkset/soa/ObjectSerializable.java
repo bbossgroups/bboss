@@ -33,6 +33,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
+import org.frameworkset.soa.SerialFactory.MagicClass;
 import org.frameworkset.spi.SOAApplicationContext;
 import org.frameworkset.util.ClassUtil;
 import org.frameworkset.util.ClassUtil.ClassInfo;
@@ -1136,19 +1137,62 @@ public class ObjectSerializable {
 
 		else // 对象转换及对象状态转换
 		{
-			if (name == null)
-				ret.append("<p cs=\"")
-						.append(obj.getClass().getName())
-						.append("\">");
-			else
-				ret.append("<p n=\"").append(name).append("\" cs=\"").append(
-						obj.getClass().getName()).append("\">");
+			
 			if (StackTraceElement.class.isAssignableFrom(type))
+			{
+				if (name == null)
+					ret.append("<p cs=\"")
+							.append(obj.getClass().getName())
+							.append("\">");
+				else
+					ret.append("<p n=\"").append(name).append("\" cs=\"").append(
+							obj.getClass().getName()).append("\">");
 				appendStackTraceElementProperties(obj, type, dateformat, ret, stack,currentAddress);
+			}
 			else if (Throwable.class.isAssignableFrom(type))
+			{
+				if (name == null)
+					ret.append("<p cs=\"")
+							.append(obj.getClass().getName())
+							.append("\">");
+				else
+					ret.append("<p n=\"").append(name).append("\" cs=\"").append(
+							obj.getClass().getName()).append("\">");
 				appendThrowableProperties(obj, type, dateformat, ret,stack,currentAddress);
+			}
 			else
-				appendBeanProperties(obj, type, dateformat, ret,stack,currentAddress);
+			{
+				String className = obj.getClass().getName();
+				MagicClass magicclass = SerialFactory.getSerialFactory().getMagicClass(className);
+				if(magicclass == null)
+				{
+					if (name == null)
+						ret.append("<p cs=\"")
+								.append(obj.getClass().getName())
+								.append("\">");
+					else
+						ret.append("<p n=\"").append(name).append("\" cs=\"").append(
+								obj.getClass().getName()).append("\">");
+					appendBeanProperties(obj, type, dateformat, ret,stack,currentAddress);
+				}
+				else
+				{
+					byte[] object = magicclass.getSerailObject().serialize(obj);
+					if (name == null)
+						ret.append("<p mg=\"")
+								.append(magicclass.getMagicnumber())
+								.append("\">");
+								
+					
+					else
+						ret.append("<p n=\"").append(name).append("\" mg=\"").append(magicclass.getMagicnumber()).append("\">");
+						ret.append("<![CDATA[")
+						.append(
+								ValueObjectUtil
+										.byteArrayEncoder(object))
+						.append("]]>");
+				}
+			}
 			ret.append("</p>");
 			return true;
 		}
