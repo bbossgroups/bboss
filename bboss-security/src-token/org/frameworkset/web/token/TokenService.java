@@ -46,7 +46,7 @@ public class TokenService implements TokenServiceInf {
 	private TokenStore tokenStore;
 	private boolean enableToken = false;
 	
-	public void destory()
+	public void destroy()
 	{
 //		temptokens.clear();
 //		temptokens = null;

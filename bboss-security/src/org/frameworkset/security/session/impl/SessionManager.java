@@ -132,7 +132,7 @@ public class SessionManager {
 		return sessionStore;
 	}
 
-	public void destory() {
+	public void destroy() {
 		this.sessionStore.destory();
 		if(this.sessionMonitor != null)
 		{
