@@ -176,7 +176,17 @@ public class CharsetEncodingFilter extends SessionFilter {
 	        	{
 	        		if(referer.indexOf(basePath)<0)
 	        		{
-	        			request.getRequestDispatcher(request.getRequestURI()).forward(request, response);
+	        			String context = request.getContextPath();
+	        			if(!context.equals("/"))
+	        			{
+		        			String uri = request.getRequestURI();
+		        			uri = uri.substring(request.getContextPath().length());
+		        			request.getRequestDispatcher(uri).forward(request, response);
+	        			}
+	        			else
+	        			{
+	        				request.getRequestDispatcher(context).forward(request, response);
+	        			}
 	        			return;
 	        		}
 	        	}
@@ -184,7 +194,17 @@ public class CharsetEncodingFilter extends SessionFilter {
 	        	{
 	        		if(referer.indexOf(basePath)<0 && referer.indexOf(basePath80)<0)
 	        		{
-	        			request.getRequestDispatcher(request.getRequestURI()).forward(request, response);
+	        			String context = request.getContextPath();
+	        			if(!context.equals("/"))
+	        			{
+		        			String uri = request.getRequestURI();
+		        			uri = uri.substring(request.getContextPath().length());
+		        			request.getRequestDispatcher(uri).forward(request, response);
+	        			}
+	        			else
+	        			{
+	        				request.getRequestDispatcher(context).forward(request, response);
+	        			}
 	        			return;
 	        		}
 	        	}

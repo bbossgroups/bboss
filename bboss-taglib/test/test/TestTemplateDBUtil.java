@@ -503,10 +503,14 @@ public class TestTemplateDBUtil {
 //		TestTemplateDBUtil.testrollbackWithConnection();
 //		TestTemplateDBUtil.testcommitWithoutdbname();
 //		TestTemplateDBUtil.testcommitWithConnection();
-		testcommitWithoutTableinfo();
-		System.out.println(DBUtil.getNumActive());
-		System.out.println(DBUtil.getNumIdle());
-		System.out.println(DBUtil.getMaxNumActive());
+//		testcommitWithoutTableinfo();
+//		System.out.println(DBUtil.getNumActive());
+//		System.out.println(DBUtil.getNumIdle());
+//		System.out.println(DBUtil.getMaxNumActive());
+		
+		String c = "/";
+		c = c.substring("/".length() );
+		System.out.println(c);
 		
 	}
 
