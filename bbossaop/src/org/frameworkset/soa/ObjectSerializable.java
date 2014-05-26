@@ -263,7 +263,9 @@ public class ObjectSerializable {
 	}
 	public static <T> T toBean(String beanxml, Class<T> beantype,String charset)
 	{
-		SOAApplicationContext context = new SOAApplicationContext(beanxml,charset);
+		SOAApplicationContext context = new SOAApplicationContext(beanxml,charset,false);
+		context.setSerial(true);
+		context.init();
 		T object = context.getTBeanObject("_dflt_", beantype);
 		context.destroy();
 		return object;
@@ -271,7 +273,9 @@ public class ObjectSerializable {
 	public static <T> T toBean(String beanxml, Class<T> beantype) {
 		if (beanxml == null || beanxml.equals(""))
 			return null;
-		SOAApplicationContext context = new SOAApplicationContext(beanxml);
+		SOAApplicationContext context = new SOAApplicationContext(beanxml,false);
+		context.setSerial(true);
+		context.init();
 		T object = context.getTBeanObject("_dflt_", beantype);
 		context.destroy();
 		return object;
@@ -281,7 +285,9 @@ public class ObjectSerializable {
 	public static <T> T toBean(InputStream instream, Class<T> beantype) {
 		if (instream == null)
 			return null;
-		SOAApplicationContext context = new SOAApplicationContext(instream);
+		SOAApplicationContext context = new SOAApplicationContext(instream,false);
+		context.setSerial(true);
+		context.init();
 		T object = context.getTBeanObject("_dflt_", beantype);
 		context.destroy();
 		return object;

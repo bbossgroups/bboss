@@ -281,7 +281,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 		this(AssembleCallback.classpathprex, "", configfile);
 	}
 	
-	protected BaseApplicationContext(String content,boolean isfile) {
+	protected BaseApplicationContext(String content,boolean isfile,boolean init) {
 		// if (configfile == null || configfile.equals(""))
 		// throw new NullPointerException(
 		// "build ApplicationContext failed:configfile is "
@@ -291,10 +291,10 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 		// providerManager = new ServiceProviderManager(this);
 		// providerManager.init(this.configfile);
 		
-		this(AssembleCallback.classpathprex, "", (String)content,isfile);
+		this(AssembleCallback.classpathprex, "", (String)content,isfile,init);
 	}
 	
-	protected BaseApplicationContext(String content,boolean isfile,String charset) {
+	protected BaseApplicationContext(String content,boolean isfile,String charset,boolean init) {
 		// if (configfile == null || configfile.equals(""))
 		// throw new NullPointerException(
 		// "build ApplicationContext failed:configfile is "
@@ -304,16 +304,16 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 		// providerManager = new ServiceProviderManager(this);
 		// providerManager.init(this.configfile);
 		
-		this(AssembleCallback.classpathprex, "", (String)content,isfile,charset);
+		this(AssembleCallback.classpathprex, "", (String)content,isfile,charset, init);
 	}
 	protected BaseApplicationContext(String docbaseType, String docbase,
 			String configfile)
 	{
 		this(docbaseType, docbase,
-				configfile,true);
+				configfile,true,true);
 	}
 	protected BaseApplicationContext(String docbaseType, String docbase,
-			String configfile,boolean isfile) {
+			String configfile,boolean isfile,boolean init) {
 		if (configfile == null || configfile.equals(""))
 			throw new NullPointerException(
 					"build ApplicationContext failed:configfile is "
@@ -330,13 +330,55 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 		{
 			this.needRecordFile = false;
 		}
-		providerManager = new ServiceProviderManager(this);
-		providerManager.init(docbaseType, docbase, configfile);
+		if(init)
+		{
+			providerManager = new ServiceProviderManager(this);
+			providerManager.init(docbaseType, docbase, configfile);
+		}
+		else
+		{
+			this.docbaseType = docbaseType;
+			this.docbase = docbase;
+			this.configfile = configfile;
+		}
 		
 	}
+	protected String docbaseType;
+	protected String docbase;
+	protected InputStream instream; 
+	/**
+	 * 序列化初始化方法
+	 */
+    public void init()
+    {
+    	try
+    	{
+	    	providerManager = new ServiceProviderManager(this);
+	    	if(this.instream == null)
+	    	{
+	    		providerManager.init(docbaseType, docbase, configfile);
+	    		
+	    	}
+	    	else
+	    	{
+	    		providerManager.init(docbaseType, docbase, instream);
+	    		
+	    	}
+			
+    	}
+    	finally
+    	{
+    		this.docbaseType = null;
+			this.docbase = null;
+			this.configfile = null;
+			this.instream = null;
+    	}
+		
+		
+    }
 	
 	protected BaseApplicationContext(String docbaseType, String docbase,
-			String configfile,boolean isfile,String charset) {
+			String configfile,boolean isfile,String charset,boolean init) {
 		if (configfile == null || configfile.equals(""))
 			throw new NullPointerException(
 					"build ApplicationContext failed:configfile is "
@@ -353,13 +395,21 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 		{
 			this.needRecordFile = false;
 		}
-		providerManager = new ServiceProviderManager(this,charset);
-		providerManager.init(docbaseType, docbase, configfile);
-		
+		if(init)
+		{
+			providerManager = new ServiceProviderManager(this,charset);
+			providerManager.init(docbaseType, docbase, configfile);
+		}
+		else
+		{
+			this.docbaseType = docbaseType;
+			this.docbase = docbase;
+			this.configfile = configfile;
+		}
 	}
 	
 	public BaseApplicationContext(String docbaseType, String docbase,
-			InputStream instream, boolean isfile) {
+			InputStream instream, boolean isfile,boolean init) {
 		if (instream == null )
 			throw new NullPointerException(
 					"build ApplicationContext failed:instream is null.");
@@ -375,9 +425,18 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 		{
 			this.needRecordFile = false;
 		}
-		providerManager = new ServiceProviderManager(this);
-		providerManager.init(docbaseType, docbase, 
-				instream);
+		if(init)
+		{
+			providerManager = new ServiceProviderManager(this);
+			providerManager.init(docbaseType, docbase, 
+					instream);
+		}
+		else
+		{
+			this.docbaseType = docbaseType;
+			this.docbase = docbase;
+			this.instream = instream;
+		}
 	}
 	
 	public BaseApplicationContext(String docbaseType, String docbase,
@@ -416,8 +475,8 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 		providerManager = new ServiceProviderManager(this);
 		providerManager.init(AssembleCallback.classpathprex, "", configfile,file);
 	}
-	public BaseApplicationContext(InputStream instream, boolean isfile) {
-		this(AssembleCallback.classpathprex, "", (InputStream)instream,isfile);
+	public BaseApplicationContext(InputStream instream, boolean isfile,boolean init) {
+		this(AssembleCallback.classpathprex, "", (InputStream)instream,isfile, init);
 	}
 	
 	public boolean isfile()

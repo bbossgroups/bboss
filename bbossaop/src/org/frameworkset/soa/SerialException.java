@@ -16,31 +16,40 @@
 
 package org.frameworkset.soa;
 
-import java.io.Serializable;
-
-import org.frameworkset.util.ObjectUtils;
-
 /**
- * <p>Title: LocalSerial.java</p> 
+ * <p>Title: SerialException.java</p> 
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2014年5月23日 上午9:06:42
+ * @Date 2014年5月26日 上午11:31:18
  * @author biaoping.yin
  * @version 1.0
  */
-public class JDKSerial extends BaseSerial<java.io.Serializable> {
+public class SerialException extends RuntimeException {
 
-	public byte[] serialize(Serializable object) {
-		// TODO Auto-generated method stub
-		
-		return ObjectUtils.toBytes(object);
-		
+	public SerialException() {
+		// TODO Auto-generated constructor stub
 	}
 
-	public Serializable deserialize(byte[] object) {
-		// TODO Auto-generated method stub
-		return (Serializable)ObjectUtils.toObject((byte[])object);
+	public SerialException(String message) {
+		super(message);
+		// TODO Auto-generated constructor stub
+	}
+
+	public SerialException(Throwable cause) {
+		super(cause);
+		// TODO Auto-generated constructor stub
+	}
+
+	public SerialException(String message, Throwable cause) {
+		super(message, cause);
+		// TODO Auto-generated constructor stub
+	}
+
+	public SerialException(String message, Throwable cause,
+			boolean enableSuppression, boolean writableStackTrace) {
+		super(message, cause, enableSuppression, writableStackTrace);
+		// TODO Auto-generated constructor stub
 	}
 
 }

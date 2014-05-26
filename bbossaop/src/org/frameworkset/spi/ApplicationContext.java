@@ -62,7 +62,7 @@ public class ApplicationContext extends BaseApplicationContext {
 	}
 	protected ApplicationContext(String configfile, boolean isfile)
 	{
-		super(configfile,isfile);
+		super(configfile,isfile,true);
 	}
 	protected ApplicationContext(String docbaseType, String docbase,
 			String configfile)
@@ -74,7 +74,7 @@ public class ApplicationContext extends BaseApplicationContext {
 			String configfile,boolean isfile)
 	{
 		super( docbaseType,  docbase,
-				 configfile, isfile);
+				 configfile, isfile,true);
 	}
 	
 

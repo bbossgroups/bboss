@@ -16,17 +16,36 @@
 
 package org.frameworkset.soa;
 
+import com.frameworkset.util.ValueObjectUtil;
+
 /**
- * <p>Title: Serial.java</p> 
- * <p>Description: 对象序列化工厂</p>
+ * <p>Title: BaseSerial.java</p> 
+ * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2014年5月23日 上午9:06:58
+ * @Date 2014年5月26日 上午11:28:49
  * @author biaoping.yin
  * @version 1.0
+ * @param <T>
  */
-public interface Serial<T> {
-	public byte[] serialize(T object); 
-	public T deserialize(byte[] object);
-	public T deserialize(String object);
+public abstract class BaseSerial<T> implements Serial<T> {
+
+	public T deserialize(String object) {
+		try
+		{
+			byte[] bytes = ValueObjectUtil.byteArrayDecoder(object);
+			return this.deserialize(bytes);
+		}
+		catch(RuntimeException e)
+		{
+			throw e;
+		}
+		catch(Exception d)
+		{
+			throw new SerialException(d);
+		}
+	}
+
+	
+
 }

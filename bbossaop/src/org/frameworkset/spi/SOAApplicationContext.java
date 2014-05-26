@@ -35,12 +35,23 @@ import org.frameworkset.spi.remote.ServiceID;
 public class SOAApplicationContext extends DefaultApplicationContext {
 	private static Logger log = Logger.getLogger(SOAApplicationContext.class);
 	private String charset;
+	protected boolean serial; 
+	
 	public SOAApplicationContext(String soacontent) {
-		super((String)soacontent,false);
+		super((String)soacontent,false,true);
+	}
+	
+	public SOAApplicationContext(String soacontent,boolean init) {
+		super((String)soacontent,false,init);
 	}
 	public SOAApplicationContext(String soacontent,String charset) {
 		
-		super((String)soacontent,false,charset);
+		super((String)soacontent,false,charset,true);
+	}
+	
+	public SOAApplicationContext(String soacontent,String charset,boolean init) {
+		
+		super((String)soacontent,false,charset,init);
 	}
 	
 	
@@ -55,7 +66,13 @@ public class SOAApplicationContext extends DefaultApplicationContext {
 	
 	public SOAApplicationContext(InputStream instream)
 	{
-		super((InputStream)instream,  false);
+		super((InputStream)instream,  false,true);
+		
+	}
+	
+	public SOAApplicationContext(InputStream instream,boolean init)
+	{
+		super((InputStream)instream,  false, init);
 		
 	}
 
@@ -97,7 +114,43 @@ public class SOAApplicationContext extends DefaultApplicationContext {
 		instance.initApplicationContext();
 		return instance;
 	}
+	public boolean isSerial() {
+		return serial;
+	}
+
+	public void setSerial(boolean serial) {
+		this.serial = serial;
+	}
 	
+	 public void init()
+    {
+    	try
+    	{
+	    	providerManager = new ServiceProviderManager(this);
+	    	providerManager.setSerial(serial);
+	    	if(this.instream == null)
+	    	{
+	    		providerManager.init(docbaseType, docbase, configfile);
+	    		
+	    	}
+	    	else
+	    	{
+	    		providerManager.init(docbaseType, docbase, instream);
+	    		
+	    	}
+			
+    	}
+    	finally
+    	{
+    		this.docbaseType = null;
+			this.docbase = null;
+			this.configfile = null;
+			this.instream = null;
+    	}
+		
+		
+    }
+
 	
 	/**
 	 * bean组件工厂方法， 如果serviceID不为空，则serviceID是根据getBeanObject(Context context,

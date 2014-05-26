@@ -100,13 +100,13 @@ public class DefaultApplicationContext extends BaseApplicationContext {
 	{
 		super(configfile);
 	}
-	protected DefaultApplicationContext(String configfile, boolean isfile)
+	protected DefaultApplicationContext(String configfile, boolean isfile,boolean init)
 	{
-		super((String)configfile,isfile);
+		super((String)configfile,isfile,init);
 	}
-	protected DefaultApplicationContext(String configfile, boolean isfile,String charset)
+	protected DefaultApplicationContext(String configfile, boolean isfile,String charset,boolean init)
 	{
-		super((String)configfile,isfile,charset);
+		super((String)configfile,isfile,charset, init);
 	}
 	protected DefaultApplicationContext(String docbaseType, String docbase,
 			String configfile)
@@ -118,7 +118,7 @@ public class DefaultApplicationContext extends BaseApplicationContext {
 			String configfile,boolean isfile)
 	{
 		super( docbaseType,  docbase,
-				 configfile, isfile);
+				 configfile, isfile,true);
 	}
 	public DefaultApplicationContext(URL file, String path)
 	{
@@ -126,8 +126,8 @@ public class DefaultApplicationContext extends BaseApplicationContext {
 		super((URL)file,  path);
 	}
 
-	public DefaultApplicationContext(InputStream instream, boolean isfile) {
-		super((InputStream)instream,isfile);
+	public DefaultApplicationContext(InputStream instream, boolean isfile,boolean init) {
+		super((InputStream)instream,isfile,true);
 	}
 	
 	/**

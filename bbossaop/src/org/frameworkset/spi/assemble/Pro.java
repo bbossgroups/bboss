@@ -8,6 +8,8 @@ import java.util.Map;
 import java.util.TreeSet;
 
 import org.apache.log4j.Logger;
+import org.frameworkset.soa.SerialFactory;
+import org.frameworkset.soa.SerialFactory.MagicClass;
 import org.frameworkset.spi.BaseApplicationContext;
 import org.frameworkset.spi.CallContext;
 import org.frameworkset.spi.async.annotation.Async;
@@ -106,6 +108,10 @@ public class Pro<V> extends BaseTXManager implements Comparable<V>, BeanInf {
 	private boolean singlable = true;
 
 	private boolean isfreeze = false;
+	/**
+	 * 序列化/反序列化指定对象的序列化机制
+	 */
+	private String magicNumber = null;
 	/**
 	 * init-method，destroy-
 	 * method两个属性分别对应aop框架提供的两个InitializingBean和DisposableBean
@@ -469,6 +475,7 @@ public class Pro<V> extends BaseTXManager implements Comparable<V>, BeanInf {
 					.length());
 		}
 	}
+	
 
 	public String getName() {
 		return name;
@@ -869,7 +876,17 @@ public class Pro<V> extends BaseTXManager implements Comparable<V>, BeanInf {
 			boolean convertcontainer,boolean useeditor) {
 		Object retvalue = null;
 		if (value != null) {
-			if (!convertcontainer) {//如果不需要将容器转换为实际类型那么直接返回对应的值
+			if(this.magicNumber != null)
+			{
+				MagicClass magicclass = SerialFactory.getSerialFactory().getMagicClassByMagicNumber(magicNumber);
+				if(magicclass == null)
+				{
+					throw new BeanInstanceException("反序列化数据异常:magicNumber " +magicNumber+"不存在。检查resources/org/frameworkset/soa/serialconf.xml中是否配置正确!");
+				}
+				retvalue = magicclass.getSerailObject().deserialize((String)value);
+				return retvalue;
+			}
+			else if (!convertcontainer) {//如果不需要将容器转换为实际类型那么直接返回对应的值
 				retvalue = value;
 			} else if (value instanceof ProList) {
 				String soatype = this.getSOAAttribute(soa_type_attribute);
@@ -922,7 +939,9 @@ public class Pro<V> extends BaseTXManager implements Comparable<V>, BeanInf {
 				
 			} else if (value instanceof ProArray) {
 				retvalue = ((ProArray) value).getComponentArray(context);
-			} else {
+			} 
+			
+			else {
 				String soatype = this.getSOAAttribute(soa_type_attribute);
 				if(soatype == null)
 				{
@@ -1780,6 +1799,14 @@ public class Pro<V> extends BaseTXManager implements Comparable<V>, BeanInf {
 
 	public RefID getRefidLink() {
 		return refidLink;
+	}
+
+	public String getMagicNumber() {
+		return magicNumber;
+	}
+
+	public void setMagicNumber(String magicNumber) {
+		this.magicNumber = magicNumber;
 	}
 	
 	

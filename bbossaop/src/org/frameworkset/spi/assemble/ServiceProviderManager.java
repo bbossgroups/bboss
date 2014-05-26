@@ -15,7 +15,6 @@
  */
 package org.frameworkset.spi.assemble;
 
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.InputStream;
 import java.io.Reader;
@@ -248,6 +247,14 @@ public class ServiceProviderManager {
         traceFiles = new ArrayList();
         this.applicationContext = applicationContext;
     }
+    private boolean serial;
+	public boolean isSerial() {
+		return serial;
+	}
+
+	public void setSerial(boolean serial) {
+		this.serial = serial;
+	}
     private String charset = "UTF-8";
     public ServiceProviderManager(BaseApplicationContext applicationContext,String charset) {
         parsedList = new HashMap();
@@ -387,6 +394,7 @@ public class ServiceProviderManager {
     		try
     		{
             ProviderParser handler = new ProviderParser(this.getApplicationContext());
+            handler.setSerial(this.serial);
             SAXParserFactory factory = SAXParserFactory.newInstance();
             factory.setNamespaceAware(false);
             factory.setValidating(false);
@@ -428,6 +436,7 @@ public class ServiceProviderManager {
     		try
     		{
             ProviderParser handler = new ProviderParser(this.getApplicationContext());
+            handler.setSerial(this.serial);
             SAXParserFactory factory = SAXParserFactory.newInstance();
             factory.setNamespaceAware(false);
             factory.setValidating(false);
@@ -918,6 +927,7 @@ public class ServiceProviderManager {
 			this.reverseServiceRefids.clear();
 		if(traceFiles != null)
 			this.traceFiles.clear();
+		this.serial = false;
 		
 	}
 	

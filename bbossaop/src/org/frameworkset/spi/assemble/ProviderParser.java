@@ -75,9 +75,13 @@ public class ProviderParser extends DefaultHandler
 
     private List mangerimports;
     
-    private boolean isSOAApplicationContext = false;
+    private boolean serial = false;
 
-    private Map<String,Pro> properties = new HashMap<String,Pro>();
+    public void setSerial(boolean serial) {
+		this.serial = serial;
+	}
+
+	private Map<String,Pro> properties = new HashMap<String,Pro>();
     
     private BaseApplicationContext applicationContext;  
     
@@ -103,7 +107,7 @@ public class ProviderParser extends DefaultHandler
         this.file = file;
         this.parent = parent;
         this.applicationContext = applicationContext;
-        isSOAApplicationContext = applicationContext instanceof SOAApplicationContext;
+//        isSOAApplicationContext = applicationContext instanceof SOAApplicationContext;
     }
     
     public ProviderParser(BaseApplicationContext applicationContext)
@@ -113,12 +117,12 @@ public class ProviderParser extends DefaultHandler
         {
 	        managers = new HashMap();
 	        mangerimports = new ArrayList();
-	        this.file = file;
-	        this.parent = parent;
+//	        this.file = applicationContext.getConfigfile();
+//	        this.parent = applicationContext.getp;
         }
         currentValue = new StringBuffer();
         this.applicationContext = applicationContext;
-        isSOAApplicationContext = applicationContext instanceof SOAApplicationContext;
+//        isSOAApplicationContext = applicationContext instanceof SOAApplicationContext;
         traceStack = new Stack();
     }
 
@@ -165,7 +169,7 @@ public class ProviderParser extends DefaultHandler
 	        if ( p.getValue() == null)
 	        {		
 	        	String _value = null;
-	        	if(this.isSOAApplicationContext)
+	        	if(this.serial)
 	        		_value = currentValue.toString();
 	        	else
 	        		_value = currentValue.toString().trim();
@@ -456,6 +460,7 @@ public class ProviderParser extends DefaultHandler
     		{
     			continue;
     		}
+    		
     		else if(name.startsWith("s:"))//soa:
     		{
     			
@@ -465,6 +470,7 @@ public class ProviderParser extends DefaultHandler
     		{
     			continue;
     		}
+    		
     		else if(name.startsWith("f:"))//通过property的属性来制定对象中field的值
     		{
     			Pro f = new Pro(applicationContext);
@@ -639,7 +645,7 @@ public class ProviderParser extends DefaultHandler
         String name_ = null;
         String value = null;
         String clazz = null;
-        if(this.isSOAApplicationContext)
+        if(this.serial)
         {
         	 name_ = attributes.getValue("n");
         	 if(name_ == null)
@@ -708,6 +714,11 @@ public class ProviderParser extends DefaultHandler
         p
         .setCallorder_sequence(getBoolean(attributes.getValue("callorder_sequence"), false));
         this.buildXpath(p);
+        if(this.serial)
+        {
+	        String mg = attributes.getValue("mg");
+	        p.setMagicNumber(mg);
+        }
         setFAttr(p, attributes);
         if(label != null && !label.equals(""))
             p.setLabel(label);
@@ -717,6 +728,7 @@ public class ProviderParser extends DefaultHandler
             p.setRefid(refid);
         }
         
+       
        
     }
     public void startElement(String s1, String s2, String name, Attributes attributes)
@@ -735,7 +747,7 @@ public class ProviderParser extends DefaultHandler
         {
         	ProList list = new ProList();
         	String componentType = null;        	 
-        	if(this.isSOAApplicationContext)
+        	if(this.serial)
         	{
         		componentType = attributes.getValue("cmt");
         		if(componentType == null)
@@ -753,7 +765,7 @@ public class ProviderParser extends DefaultHandler
         {
         	ProMap map = new ProMap<String,Pro>();
         	String componentType = null;        	 
-        	if(this.isSOAApplicationContext)
+        	if(this.serial)
         	{
         		componentType = attributes.getValue("cmt");
         		if(componentType == null)
@@ -772,7 +784,7 @@ public class ProviderParser extends DefaultHandler
         {
         	ProArray array = new ProArray();
         	String componentType = null;        	 
-        	if(this.isSOAApplicationContext)
+        	if(this.serial)
         	{
         		componentType = attributes.getValue("cmt");
         		if(componentType == null)
@@ -812,7 +824,7 @@ public class ProviderParser extends DefaultHandler
         {
         	ProSet set = new ProSet();
         	String componentType = null;        	 
-        	if(this.isSOAApplicationContext)
+        	if(this.serial)
         	{
         		componentType = attributes.getValue("cmt");
         		if(componentType == null)
