@@ -109,9 +109,9 @@ public class SerialFactory {
 		Iterator it = context.getPropertyKeys().iterator();
 		while(it.hasNext())
 		{
-			String magicNumber = (String)it.next();
-			Pro magic = context.getProBean(magicNumber);
-			String magicClasss = magic.getStringExtendAttribute("magic");
+			String magicClasss = (String)it.next();
+			Pro magic = context.getProBean(magicClasss);
+			String magicNumber = magic.getStringExtendAttribute("magic");
 			String serial = magic.getStringExtendAttribute("serial");
 			MagicClass MagicClass = new MagicClass();
 			MagicClass.setMagicclass(magicClasss);

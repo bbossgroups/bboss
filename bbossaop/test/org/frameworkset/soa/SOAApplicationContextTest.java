@@ -17,7 +17,6 @@ package org.frameworkset.soa;
 
 
 
-import java.beans.IntrospectionException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -29,7 +28,6 @@ import org.junit.Test;
 
 import sun.misc.FloatingDecimal;
 
-import com.frameworkset.util.NoSupportTypeCastException;
 import com.frameworkset.util.ValueObjectUtil;
 
 
@@ -257,6 +255,19 @@ public class SOAApplicationContextTest {
 		double d = Double.parseDouble("2.2250738585072012e-308");
 		System.out.println("Value: " + d);
 		FloatingDecimal s;
+	}
+	@org.junit.Test
+	public void testSerialPlugin()
+	{		
+		try {
+			java.util.Locale locale = java.util.Locale.CHINESE;
+			String xml = ObjectSerializable.toXML(locale);
+			locale = ObjectSerializable.toBean(xml, java.util.Locale.class);
+			System.out.println(locale);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
 	}
 	
 
