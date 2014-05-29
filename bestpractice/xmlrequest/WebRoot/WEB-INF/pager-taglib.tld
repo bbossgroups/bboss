@@ -769,6 +769,13 @@
 			<name>position</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
+		<!-- 
+		  start属性用来指定集合循环起点位置，默认为0	   ,如果小于0则从0开始，如果大于集合长度则不输出数据   
+		 -->
+		<attribute>
+			<name>start</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
 	</tag>
 	<!--
 		功能：循环输出map中的数据，每次循环展示map中的一个对象，对象的属性通过cell标签输出

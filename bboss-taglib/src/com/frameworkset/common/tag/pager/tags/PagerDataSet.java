@@ -105,6 +105,10 @@ public class PagerDataSet extends PagerTagSupport {
 	 * position只针对list标签起作用，对map标签不起作用
 	 */
 	protected int position = -1;
+	/**
+	 *  start属性用来指定集合循环起点位置，默认为0,小于0，就从0开始，大于集合长度将不做任何输出
+	 */
+	protected int start;
 	// protected Tag origineTag = null;
 
 	/***************************************************************************
@@ -2422,8 +2426,24 @@ public class PagerDataSet extends PagerTagSupport {
 		if (dataInfo == null)
 			return SKIP_BODY;
 		doDataLoading();
-		if(this.size() > 0)
+		int size = this.size();
+		if(size > 0)
+		{
+			if(start > 0)
+			{
+				if(start < size)
+				{
+					this.rowid = start;
+				}
+				else
+				{
+					return SKIP_BODY;
+				}
+			}
+			
 			return EVAL_BODY_INCLUDE;
+			
+		}
 		else
 			return SKIP_BODY;
 
@@ -2729,6 +2749,7 @@ public class PagerDataSet extends PagerTagSupport {
 		// if(index == null || index.trim().equals(""))
 		position = -1;
 		rowid = 0;
+		start = 0;
 //		if(flag)
 		pop();
 		HttpServletRequest request = this.getHttpServletRequest();
@@ -3463,6 +3484,15 @@ public class PagerDataSet extends PagerTagSupport {
 
 	public void setPosition(int position) {
 		this.position = position;
+	}
+
+
+	public int getStart() {
+		return start;
+	}
+
+	public void setStart(int start) {
+		this.start = start;
 	}
    
     
