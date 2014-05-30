@@ -4,10 +4,24 @@ https://haproxy.1wt.eu/
 tar -xf haproxy-ss-20140519.tar.gz
 编译和安装haproxy
 make TARGET=linux26 PREFIX=/usr/local/haproxy install
-
+mkdir /etc/haproxy
+#cp examples/haproxy.cfg  /etc/haproxy
+cp /usr/local/haproxy/haproxy.cfg /etc/haproxy
+cp /opt/haproxy/haproxy-1.5-dev25/examples/haproxy.init  /etc/init.d/haproxy
+chmod +x /etc/init.d/haproxy
+ln -s /usr/local/haproxy/sbin/haproxy /usr/sbin/
 keepalived安装：
 http://www.keepalived.org/
+
+cp /usr/local/keepalived/sbin/keepalived /usr/sbin/
+cp /usr/local/keepalived/etc/sysconfig/keepalived /etc/sysconfig/
+cp /usr/local/keepalived/etc/rc.d/init.d/keepalived /etc/init.d/
+mkdir /etc/keepalived
+cp /usr/local/keepalived/etc/keepalived/keepalived.conf  /etc/keepalived/
+启动keepalived
+ ./keepalived -f /usr/local/keepalived/etc/keepalived/keepalived.conf
  
+ tail -f /var/log/messages
 1.启动haproxy
 cd /usr/local/haproxy/sbin/
 ./haproxy -f /usr/local/haproxy/haproxy.cfg

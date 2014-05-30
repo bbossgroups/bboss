@@ -11,7 +11,7 @@ import javax.servlet.jsp.tagext.Tag;
  *
  */
 public class SizeTag extends BaseValueTag{
-
+	private int increament = 0;
 	@Override
 	public int doStartTag() throws JspException {
 		 init();
@@ -20,12 +20,18 @@ public class SizeTag extends BaseValueTag{
 		 Object obj = this.evaluateActualValue();
 		 int len = this.length(obj);
 		 try {
-			out.print(len);
+			out.print(len + increament);
 		} catch (IOException e) {
 			throw new JspException(e);
 		}
 		
 		return Tag.SKIP_BODY;
+	}
+	public int getIncreament() {
+		return increament;
+	}
+	public void setIncreament(int increament) {
+		this.increament = increament;
 	}
 
 }
