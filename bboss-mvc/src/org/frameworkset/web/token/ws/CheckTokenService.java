@@ -33,8 +33,10 @@ import org.frameworkset.web.token.TokenResult;
  */
 @WebService(name="CheckTokenService",targetNamespace="org.frameworkset.web.token.ws.CheckTokenService")
 public interface CheckTokenService {
-	public  @WebResult(name = "tokenResult", partName = "partTokenResult") TokenResult checkToken(@WebParam(name = "appid", partName = "partAppid") String appid,
+	public  @WebResult(name = "tokenResult", partName = "partTokenResult") boolean checkToken(@WebParam(name = "appid", partName = "partAppid") String appid,
 			@WebParam(name = "secret", partName = "partSecret") String secret,@WebParam(name = "token", partName = "partToken") String token)throws TokenException;
-	public @WebResult(name = "tokenResult", partName = "partTokenResult") Integer checkTempToken(@WebParam(name = "token", partName = "partToken") String token) throws TokenException;
+	public @WebResult(name = "tokenResult", partName = "partTokenResult") boolean checkTempToken(@WebParam(name = "token", partName = "partToken") String token) throws TokenException;
+	
+	
 
 }

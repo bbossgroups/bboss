@@ -188,7 +188,7 @@ public class TokenService implements TokenServiceInf {
 	 * @param result
 	 * @return
 	 */
-	public boolean assertDToken(Integer result)
+	public static boolean assertDToken(Integer result)
 	{
 		return result.intValue() == TokenStore.token_request_validateresult_ok.intValue() || result.intValue() == TokenStore.token_request_validateresult_nodtoken.intValue() || result.intValue() == TokenStore.token_request_validateresult_notenabletoken.intValue();
 	}
@@ -227,7 +227,7 @@ public class TokenService implements TokenServiceInf {
 	 * @param result
 	 * @return
 	 */
-	private boolean assertDTokenSetted(Integer result)
+	public static boolean assertDTokenSetted(Integer result)
 	{
 //		return !(result == MemTokenManager.temptoken_request_validateresult_nodtoken 
 //				|| result == MemTokenManager.temptoken_request_validateresult_fail);		
@@ -239,7 +239,7 @@ public class TokenService implements TokenServiceInf {
 	 * @param result
 	 * @return
 	 */
-	public boolean assertDTokenSetted(ServletRequest request)
+	public static boolean assertDTokenSetted(ServletRequest request)
 	{
 
 		Integer result = (Integer)request.getAttribute(TokenStore.temptoken_request_validateresult_key);
