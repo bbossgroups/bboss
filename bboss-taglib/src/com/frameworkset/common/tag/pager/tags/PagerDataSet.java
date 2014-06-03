@@ -188,7 +188,7 @@ public class PagerDataSet extends PagerTagSupport {
 	/**
 	 * 定义数据集的堆栈
 	 */
-	protected Stack stack = null;
+	protected Stack<PagerDataSet> stack = null;
 
 	protected String sessionKey = null;
 
@@ -1822,19 +1822,19 @@ public class PagerDataSet extends PagerTagSupport {
 					
 				}
 				
-				else if(this.colName != null )//如果对应的集合来自于外层或者本层对象属性对应的map或者list或者数组
-				{
-					String key = buildColnameKey(colName);
-				
-					String cachekey = softparser_cache_pre +key;
-					if(this.position >= 0)
-						cachekey = cachekey + "|"+position; 
-					theClassDataList = (ClassDataList)request.getAttribute(cachekey);
-					if(theClassDataList != null)
-						return true;
-					theClassDataList = new ClassDataList();
-					request.setAttribute(cachekey,theClassDataList);
-				}
+//				else if(this.colName != null )//如果对应的集合来自于外层或者本层对象属性对应的map或者list或者数组
+//				{
+//					String key = buildColnameKey(colName);
+//				
+//					String cachekey = softparser_cache_pre +key;
+//					if(this.position >= 0)
+//						cachekey = cachekey + "|"+position; 
+//					theClassDataList = (ClassDataList)request.getAttribute(cachekey);
+//					if(theClassDataList != null)
+//						return true;
+//					theClassDataList = new ClassDataList();
+//					request.setAttribute(cachekey,theClassDataList);
+//				}
 				else
 				{
 					theClassDataList = new ClassDataList();
@@ -2109,11 +2109,11 @@ public class PagerDataSet extends PagerTagSupport {
 	public void write(OutputStream output) {
 
 	}
-
 	public void push() {
 		HttpServletRequest request = this.getHttpServletRequest();
 		stack = (Stack) request.getAttribute(PAGERDATASET_STACK);
 		if (stack == null) {
+			
 			stack = new Stack();
 			request.setAttribute(PAGERDATASET_STACK, stack);
 		}
@@ -2122,6 +2122,7 @@ public class PagerDataSet extends PagerTagSupport {
 		// if(isExportMeta())
 		// savecopy();
 	}
+	
 
 	// /**
 	// * 在pagerContext中保存pageDataSet的副本，其他的页面功能使用数据集合
@@ -3494,7 +3495,7 @@ public class PagerDataSet extends PagerTagSupport {
 	public void setStart(int start) {
 		this.start = start;
 	}
-   
+
     
 
 }

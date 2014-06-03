@@ -51,6 +51,9 @@ public interface Session {
 //	public String getSessionID();
 //	public Object getAttribute(String attribute);
 //	public void setAttribute(String attribute,Object value);
+
+
+	public void putNewStatus();
 	
 
 }

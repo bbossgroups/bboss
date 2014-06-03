@@ -55,6 +55,7 @@ public class DelegateSessionStore implements SessionStore {
 		if(session == null)
 			return null;
 		session._setSessionStore(this);
+		session.putNewStatus();
 		SessionHelper.dispatchEvent(new SessionEventImpl(session,SessionEvent.EventType_create));
 		return session;
 	}

@@ -100,6 +100,7 @@ public class MongDBSessionStore extends BaseSessionStore{
 		.append("_validate", true)
 		.append("appKey", appKey).append("referip", referip).append("host", SimpleStringUtil.getHostIP()));
 		SimpleSessionImpl session = new SimpleSessionImpl();
+		
 		session.setMaxInactiveInterval(maxInactiveInterval);
 		session.setAppKey(appKey);
 		session.setCreationTime(creationTime);

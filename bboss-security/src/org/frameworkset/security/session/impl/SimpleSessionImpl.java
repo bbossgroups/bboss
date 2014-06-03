@@ -47,12 +47,14 @@ public class SimpleSessionImpl implements Session{
 		{
 			this.invalidate();
 //			throw new SessionInvalidateException("Session " +this.getId() + "已经失效!");
+			throw new IllegalStateException("Session " +this.getId() + "已经失效!"); 
 		}
 			
 	}
 	@Override
 	public Object getAttribute(String attribute) {
 		assertSession() ;
+		
 		Object value = this.attributes.get(attribute);
 		if(value == null)
 		{
@@ -79,12 +81,13 @@ public class SimpleSessionImpl implements Session{
 	@Override
 	public Enumeration getAttributeNames() {
 		assertSession() ;
+		
 		return sessionStore.getAttributeNames(appKey,id);
 	}
 
 	@Override
 	public long getCreationTime() {
-		// TODO Auto-generated method stub
+//		assertSession() ;
 		return creationTime;
 	}
 
@@ -96,7 +99,7 @@ public class SimpleSessionImpl implements Session{
 
 	@Override
 	public void touch() {
-		
+		assertSession() ;
 		lastAccessedTime = System.currentTimeMillis();		
 		sessionStore.updateLastAccessedTime(appKey,id,lastAccessedTime);
 //		assertSession() ;
@@ -124,11 +127,16 @@ public class SimpleSessionImpl implements Session{
 	@Override
 	public String[] getValueNames() {
 		assertSession() ;
+		if(!this.isValidate())
+		{
+			return null;
+		}
 		return sessionStore.getValueNames(appKey,id);
 	}
 
 	@Override
 	public void invalidate() {
+		assertSession() ;		
 		if(!dovalidate)
 		{
 			this.dovalidate = true;
@@ -136,6 +144,7 @@ public class SimpleSessionImpl implements Session{
 			{
 				sessionStore.invalidate(appKey,id);
 				this.validate =false;
+				this.attributes.clear();
 			}
 		}
 		
@@ -145,9 +154,14 @@ public class SimpleSessionImpl implements Session{
 	@Override
 	public boolean isNew() {
 		
-		return this.creationTime == this.lastAccessedTime;
+//		return this.creationTime == this.lastAccessedTime;
+		return isNew;
 	}
-
+	protected boolean isNew = false;
+	public void putNewStatus()
+	{
+		this.isNew = true;
+	}
 	@Override
 	public void putValue(String attribute, Object value) {
 		setAttribute( attribute,  value) ;
@@ -157,6 +171,10 @@ public class SimpleSessionImpl implements Session{
 	@Override
 	public void removeAttribute(String attribute) {
 		assertSession() ;
+		if(!this.isValidate())
+		{
+			return ;
+		}
 		sessionStore.removeAttribute(appKey,id,attribute);
 		this.attributes.remove(attribute);
 		
@@ -171,6 +189,7 @@ public class SimpleSessionImpl implements Session{
 	@Override
 	public void setAttribute(String attribute, Object value) {
 		assertSession() ;
+		
 		sessionStore.addAttribute(appKey,id,attribute,value);
 		this.attributes.put(attribute, value);
 	}
@@ -231,9 +250,11 @@ public class SimpleSessionImpl implements Session{
 		this.validate = validate;
 	}
 	public Map<String, Object> getAttributes() {
+		assertSession() ;
 		return attributes;
 	}
 	public void setAttributes(Map<String, Object> attributes) {
+		assertSession() ;
 		this.attributes = attributes;
 	}
 	

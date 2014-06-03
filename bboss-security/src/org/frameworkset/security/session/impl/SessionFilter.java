@@ -39,7 +39,7 @@ import javax.servlet.http.HttpServletResponse;
  * @version 3.8.0
  */
 public class SessionFilter implements Filter{
-	
+	protected boolean dosessionfilter = true;
 	private ServletContext servletContext;
 	@Override
 	public void destroy() {
@@ -52,9 +52,16 @@ public class SessionFilter implements Filter{
 			FilterChain fc) throws IOException, ServletException {
 		
 		
-		SessionHttpServletRequestWrapper mrequestw = new	SessionHttpServletRequestWrapper((HttpServletRequest)request,(HttpServletResponse)response,this.servletContext);
-		mrequestw.touch();
-	    fc.doFilter(mrequestw, response);
+		if(dosessionfilter)
+		{
+			SessionHttpServletRequestWrapper mrequestw = new	SessionHttpServletRequestWrapper((HttpServletRequest)request,(HttpServletResponse)response,this.servletContext);
+			mrequestw.touch();
+		    fc.doFilter(mrequestw, response);
+		}
+		else
+		{
+			fc.doFilter(request, response);
+		}
 	}
 
 	@Override

@@ -940,7 +940,13 @@
 		<name>mapkey</name>
 		<tagclass>com.frameworkset.common.tag.pager.tags.MapKeyTag</tagclass>
 		<bodycontent>JSP</bodycontent>
-		
+		<!--
+			查找祖先(map或者list，beaninfo)索引
+		-->
+		<attribute>
+			<name>index</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
 	</tag>	
 	<!--
 		功能：用来显示对象的详细信息，包括字段值，对象中包含的集合（list/set/map等等）中的对象的所有信息
