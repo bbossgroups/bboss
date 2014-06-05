@@ -121,8 +121,12 @@ public class FileMessageConvertor<T> implements HttpMessageConverter<T>
 			{
 				if(fb.isdownload())
 				{
-					if(!fb.isFile())
+					if(fb.isBlob())
 						StringUtil.sendFile(inputMessage.getServletRequest(), outputMessage.getResponse(), fb.getFileName(),fb.getData());
+					else if(fb.isStream())
+					{
+						StringUtil.sendFile(inputMessage.getServletRequest(), outputMessage.getResponse(), fb.getFileName(),fb.getInputStream());
+					}
 					else
 						StringUtil.sendFile(inputMessage.getServletRequest(), outputMessage.getResponse(), fb.getFileData());
 				}

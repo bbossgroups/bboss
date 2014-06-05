@@ -370,6 +370,12 @@ outStr = "2010年02月07日11时许，周灵颖报警：在2路公交车上被�
 	 sendFile_( request,  response,  filename,blob.getBinaryStream(),blob.length());
  }
  
+ public static void sendFile(HttpServletRequest request, HttpServletResponse response, String filename,InputStream stream) throws Exception {
+	 if(stream == null)
+		 return ;
+	 sendFile_( request,  response,  filename,stream);
+ }
+ 
  public static void sendFile(HttpServletRequest request, HttpServletResponse response, String filename,Clob clob) throws Exception {
 	 if(clob == null)
 		 return ;

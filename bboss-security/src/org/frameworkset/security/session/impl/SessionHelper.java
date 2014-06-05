@@ -16,6 +16,8 @@
 package org.frameworkset.security.session.impl;
 
 import org.frameworkset.security.session.Session;
+import org.frameworkset.security.session.statics.NullSessionStaticManagerImpl;
+import org.frameworkset.security.session.statics.SessionStaticManager;
 import org.frameworkset.spi.BaseApplicationContext;
 import org.frameworkset.spi.DefaultApplicationContext;
 
@@ -30,10 +32,15 @@ import org.frameworkset.spi.DefaultApplicationContext;
  */
 public class SessionHelper {
 	private static SessionManager sessionManager;
+	private static SessionStaticManager sessionStaticManager;
 	
 	static {
 		BaseApplicationContext context = DefaultApplicationContext.getApplicationContext("sessionconf.xml");
 		sessionManager = context.getTBeanObject("sessionManager", SessionManager.class);
+		if(!sessionManager.usewebsession())
+			sessionStaticManager = context.getTBeanObject("sessionStaticManager", SessionStaticManager.class);
+		else
+			sessionStaticManager = new NullSessionStaticManagerImpl();
 	}
 	
 
@@ -45,6 +52,11 @@ public class SessionHelper {
 
 	public static SessionManager getSessionManager() {
 		return sessionManager;
+	}
+	
+	public static SessionStaticManager getSessionStaticManager()
+	{
+		return sessionStaticManager;
 	}
 	
 	public static Session createSession(String appkey,String referip)

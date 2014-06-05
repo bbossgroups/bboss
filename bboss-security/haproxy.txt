@@ -20,12 +20,12 @@ mkdir /etc/keepalived
 cp /usr/local/keepalived/etc/keepalived/keepalived.conf  /etc/keepalived/
 启动keepalived
  ./keepalived -f /usr/local/keepalived/etc/keepalived/keepalived.conf
- 
+service keepalived start|restart|stop 
  tail -f /var/log/messages
 1.启动haproxy
 cd /usr/local/haproxy/sbin/
 ./haproxy -f /usr/local/haproxy/haproxy.cfg
-
+service haproxy start|restart|stop
 
 2.配置haproxy
 /usr/local/haproxy/haproxy.cfg
@@ -123,6 +123,18 @@ listen tatus
     stats hide-version 
 stats admin if TRUE
 
+server
 
+vip1 10.0.15.222
+vip2 10.0.15.223
 
+haproxy1 10.0.15.137
+haproxy2 10.0.15.138
+
+web1 10.0.15.134
+web2 10.0.15.38
+web3 10.0.15.137
+web4 10.0.15.138
+web5 10.0.15.141
+web6 10.0.15.231
 			 

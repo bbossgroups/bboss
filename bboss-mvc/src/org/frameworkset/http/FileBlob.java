@@ -16,6 +16,7 @@
 package org.frameworkset.http;
 
 import java.io.File;
+import java.io.InputStream;
 import java.sql.Blob;
 
 
@@ -41,12 +42,32 @@ public class FileBlob
 
 	public static int BROWSER = 0;
 	public static int DOWNLOAD = 1;
+	/**
+	 * 0:file
+	 * 1:blob
+	 * 2:inputstream
+	 */
+	private int dataType = 0;
+	public boolean isBlob()
+	{
+		return dataType == 1;
+	}
 	public FileBlob(String fileName, Blob data)
 	{
 
 		super();
 		this.fileName = fileName;
 		this.data = data;
+		dataType = 1;
+	}
+	
+	public FileBlob(String fileName, InputStream data)
+	{
+
+		super();
+		this.fileName = fileName;
+		this.data = data;
+		dataType = 2;
 	}
 	public FileBlob( File data,int rendtype)
 	{
@@ -55,6 +76,7 @@ public class FileBlob
 		this.fileName = data.getName();
 		this.data = data;
 		this.rendtype = rendtype;
+		dataType = 0;
 	}
 	
 	
@@ -94,11 +116,12 @@ public class FileBlob
 	}
 	public boolean isFile()
 	{
-		if(this.data != null)
-		{
-			return data instanceof File;
-		}
-		return false;
+		return dataType == 0;
+	}
+	
+	public boolean isStream()
+	{
+		return dataType == 2;
 	}
 	
 	public Blob getData()
@@ -111,6 +134,12 @@ public class FileBlob
 	{
 	
 		return (File)data;
+	}
+	
+	public InputStream getInputStream()
+	{
+	
+		return (InputStream)data;
 	}
 	
 	
