@@ -136,7 +136,7 @@ public class SimpleSessionImpl implements Session{
 
 	@Override
 	public void invalidate() {
-		assertSession() ;		
+		
 		if(!dovalidate)
 		{
 			this.dovalidate = true;

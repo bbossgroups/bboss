@@ -127,7 +127,7 @@ public class DelegateSessionStore implements SessionStore {
 	public Object addAttribute(String appKey, String sessionID, String attribute,
 			Object value) {
 		Object temp = value;
-		value = BaseSessionStore.serial(value);
+		value = SessionHelper.serial(value);
 		
 		Session session = (Session)this.sessionStore.addAttribute(appKey, sessionID, attribute, value);
 		if(session == null)

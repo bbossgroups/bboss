@@ -1,10 +1,9 @@
 package org.frameworkset.security.session.statics;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class NullSessionStaticManagerImpl implements SessionStaticManager{
+public class NullSessionStaticManagerImpl implements SessionStaticManager {
 
 	public NullSessionStaticManagerImpl() {
 		// TODO Auto-generated constructor stub
@@ -13,42 +12,38 @@ public class NullSessionStaticManagerImpl implements SessionStaticManager{
 	@Override
 	public List<SessionAPP> getSessionAPP() {
 		// TODO Auto-generated method stub
-		return new ArrayList<SessionAPP>();
+		return null;
 	}
 
 	@Override
-	public List<SessionInfo> getSessionInfos(String appkey, long start, long end) {
-		// TODO Auto-generated method stub
-		return new ArrayList<SessionInfo>();
-	}
-
-	@Override
-	public List<SessionInfo> getAllSessionInfos(Map params, long start, long end) {
-		return new ArrayList<SessionInfo>();
-	}
-
-	@Override
-	public SessionInfo getSessionInfo(String sessionid) {
+	public List<SessionInfo> getAllSessionInfos(Map queryParams, int row,
+			int page) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void removeSessionInfo(String sessionid) {
+	public SessionInfo getSessionInfo(String appKey, String sessionid) {
 		// TODO Auto-generated method stub
-		
+		return null;
 	}
 
 	@Override
-	public void removeSessionInfos(String[] sessionid) {
+	public void removeSessionInfo(String appKey, String sessionid) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
-	public void removeAppSessionInfo(String appkey) {
+	public void removeSessionInfos(String appKey, String[] sessionid) {
 		// TODO Auto-generated method stub
-		
+
+	}
+
+	@Override
+	public void removeAllSession(String appKey) {
+		// TODO Auto-generated method stub
+
 	}
 
 }

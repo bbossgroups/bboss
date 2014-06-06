@@ -19,7 +19,6 @@ import java.util.UUID;
 
 import org.frameworkset.security.session.Session;
 import org.frameworkset.security.session.SessionStore;
-import org.frameworkset.soa.ObjectSerializable;
 
 /**
  * <p>Title: BaseSessionStore.java</p> 
@@ -31,39 +30,7 @@ import org.frameworkset.soa.ObjectSerializable;
  * @version 3.8.0
  */
 public abstract class BaseSessionStore implements SessionStore {
-	protected boolean filter(String key)
-	{
-		return key.equals("maxInactiveInterval") || key.equals("creationTime") 
-				|| key.equals("lastAccessedTime") 
-				|| key.equals("referip") 
-				|| key.equals("_validate") 
-				|| key.equals("sessionid") 
-				|| key.equals("_id")
-				|| key.equals("appKey")
-				|| key.equals("host")
-				
-				;
-	}
-	public static Object serial(Object value)
-	{
-		if(value != null)
-		{
-			try {
-				value = ObjectSerializable.toXML(value);
-//				value = new String(((String)value).getBytes(Charset.defaultCharset()),"UTF-8");
-			} catch (Exception e) {
-				throw new RuntimeException(e);
-			}
-		}
-		return value;
-	}
 	
-	public static Object unserial(String value)
-	{
-		if(value == null)
-			return null;
-		return ObjectSerializable.toBean(value, Object.class);
-	}
 	protected SessionManager sessionManager;
 	protected String randomToken()
 	{

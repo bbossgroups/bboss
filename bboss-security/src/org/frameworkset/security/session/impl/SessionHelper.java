@@ -18,6 +18,7 @@ package org.frameworkset.security.session.impl;
 import org.frameworkset.security.session.Session;
 import org.frameworkset.security.session.statics.NullSessionStaticManagerImpl;
 import org.frameworkset.security.session.statics.SessionStaticManager;
+import org.frameworkset.soa.ObjectSerializable;
 import org.frameworkset.spi.BaseApplicationContext;
 import org.frameworkset.spi.DefaultApplicationContext;
 
@@ -73,5 +74,27 @@ public class SessionHelper {
 	public static Session getSession(String contextPath, String sessionid) {
 		// TODO Auto-generated method stub
 		return sessionManager.getSessionStore().getSession(contextPath, sessionid);
+	}
+	
+
+	public static Object serial(Object value)
+	{
+		if(value != null)
+		{
+			try {
+				value = ObjectSerializable.toXML(value);
+//				value = new String(((String)value).getBytes(Charset.defaultCharset()),"UTF-8");
+			} catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		}
+		return value;
+	}
+	
+	public static Object unserial(String value)
+	{
+		if(value == null)
+			return null;
+		return ObjectSerializable.toBean(value, Object.class);
 	}
 }

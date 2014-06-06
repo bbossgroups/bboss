@@ -1,9 +1,16 @@
 package org.frameworkset.nosql.mongodb;
 
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
+
+import org.frameworkset.security.session.impl.SessionHelper;
 import org.frameworkset.spi.BaseApplicationContext;
 import org.frameworkset.spi.DefaultApplicationContext;
 
 import com.frameworkset.util.StringUtil;
+import com.mongodb.DBObject;
 import com.mongodb.Mongo;
 
 public class MongoDBHelper {
@@ -23,5 +30,70 @@ public class MongoDBHelper {
 	{
 		return getMongoClient(null);
 	}
+	private static final String dianhaochar = "____";
+	private static final String moneychar = "_____";
+	private static final int msize = moneychar.length();
 
+	public static String recoverSpecialChar(String attribute) {
+		if (attribute.startsWith(moneychar)) {
+			attribute = "$" + attribute.substring(msize);
+		}
+
+		attribute = attribute.replace(dianhaochar, ".");
+		return attribute;
+	}
+	public static String converterSpecialChar(String attribute)
+	{
+		attribute = attribute.replace(".", dianhaochar);
+		if(attribute.startsWith("$"))
+		{
+			if(attribute.length() == 1)
+			{
+				attribute = moneychar;
+			}
+			else
+			{
+				attribute = moneychar + attribute.substring(1);
+			}
+		}
+		return attribute;
+	}
+	public static boolean filter(String key) {
+		return key.equals("maxInactiveInterval") || key.equals("creationTime")
+				|| key.equals("lastAccessedTime") || key.equals("referip")
+				|| key.equals("_validate") || key.equals("sessionid")
+				|| key.equals("_id") || key.equals("appKey")
+				|| key.equals("host")
+
+		;
+	}
+	
+	public static String getAppSessionTableName(String appKey)
+	{
+		return appKey+"_sessions";
+	}
+	
+	public static Map toMap(DBObject object,boolean deserial) {
+
+		Set set = object.keySet();
+		if (set != null && set.size() > 0) {
+			Map attrs = new HashMap();
+			Iterator it = set.iterator();
+			while (it.hasNext()) {
+				String key = (String) it.next();
+				if (!MongoDBHelper.filter(key)) {
+					Object value = object.get(key);
+					try {
+						attrs.put(MongoDBHelper.recoverSpecialChar(key),
+								deserial?SessionHelper.unserial((String) value):value);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+			return attrs;
+		}
+		return null;
+	}
 }
