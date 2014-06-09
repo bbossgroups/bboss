@@ -102,10 +102,7 @@ public class MongoSessionStaticManagerImpl implements SessionStaticManager {
 
 		String sessionid = (String) queryParams.get("sessionid");
 		if (!StringUtil.isEmpty(sessionid)) {
-			Pattern sessionss = Pattern.compile("^.*" + sessionid + ".*$",
-					Pattern.CASE_INSENSITIVE);
-			query.append("sessionid", new BasicDBObject("$regex",sessionss));
-			
+			query.append("sessionid", sessionid);
 		}
 
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
