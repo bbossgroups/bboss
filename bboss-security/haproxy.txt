@@ -1,3 +1,4 @@
+ps -ef | grep /opt/env/apache-tomcat-7.0.54/bin | awk '{print $2}' | xargs kill -9 
 首先从以下站点下载最新版本的haproxy
 https://haproxy.1wt.eu/
 解压haproxy-ss-20140519.tar.gz

@@ -104,6 +104,7 @@ public class MongDBSessionStore extends BaseSessionStore{
 		session.setLastAccessedTime(lastAccessedTime);
 		session.setId(sessionid);
 		session.setHost(SimpleStringUtil.getHostIP());
+		session.setValidate(true);
 //		session._setSessionStore(this);
 		
 		return session;
@@ -119,7 +120,7 @@ public class MongDBSessionStore extends BaseSessionStore{
 		attribute = MongoDBHelper.converterSpecialChar( attribute);
 		keys.put(attribute, 1);
 		
-		DBObject obj = sessions.findOne(new BasicDBObject("sessionid",sessionID),keys);
+		DBObject obj = sessions.findOne(new BasicDBObject("sessionid",sessionID).append("_validate", true),keys);
 		if(obj == null)
 			return null;
 		return SessionHelper.unserial((String)obj.get(attribute));
@@ -146,7 +147,7 @@ public class MongDBSessionStore extends BaseSessionStore{
 	public void updateLastAccessedTime(String appKey,String sessionID, long lastAccessedTime) {
 		DBCollection sessions =getAppSessionDBCollection( appKey);
 		
-		sessions.update(new BasicDBObject("sessionid",sessionID), new BasicDBObject("$set",new BasicDBObject("lastAccessedTime", lastAccessedTime)));
+		sessions.update(new BasicDBObject("sessionid",sessionID).append("_validate", true), new BasicDBObject("$set",new BasicDBObject("lastAccessedTime", lastAccessedTime)));
 		
 	}
 
@@ -252,7 +253,7 @@ public class MongDBSessionStore extends BaseSessionStore{
 		
 		
 		
-		DBObject object = sessions.findOne(new BasicDBObject("sessionid",sessionid),keys);
+		DBObject object = sessions.findOne(new BasicDBObject("sessionid",sessionid).append("_validate", true),keys);
 		if(object != null)
 		{
 			SimpleSessionImpl session = new SimpleSessionImpl();
@@ -297,7 +298,7 @@ public class MongDBSessionStore extends BaseSessionStore{
 		keys.put("referip", 1);
 		keys.put("host", 1);
 		
-		DBObject object = sessions.findOne(new BasicDBObject("sessionid",sessionid),keys);
+		DBObject object = sessions.findOne(new BasicDBObject("sessionid",sessionid).append("_validate", true),keys);
 		if(object != null)
 		{
 			SimpleSessionImpl session = new SimpleSessionImpl();
