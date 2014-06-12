@@ -7,6 +7,7 @@ import java.util.List;
 import com.frameworkset.util.StringUtil;
 import com.mongodb.Bytes;
 import com.mongodb.Mongo;
+import com.mongodb.MongoOptions;
 import com.mongodb.ReadPreference;
 import com.mongodb.ServerAddress;
 import com.mongodb.WriteConcern;
@@ -19,6 +20,12 @@ public class MongoDB {
 	private String readPreference;
 	private Mongo mongoclient;
 	private String mode = null;
+	private boolean autoConnectRetry = true;
+	private int connectionsPerHost = 500;
+	private int maxWaitTime = 120000;
+	private int socketTimeout = 0;
+	private int connectTimeout = 15000;
+	private int threadsAllowedToBlockForConnectionMultiplier = 50;
 	public Mongo getMongoClient()
 	{
 	
@@ -164,7 +171,14 @@ public class MongoDB {
 			}
 			else
 			{
-				Mongo mongoClient = new Mongo(parserAddress());
+				MongoOptions options = new MongoOptions();
+	            options.autoConnectRetry = autoConnectRetry;
+	            options.connectionsPerHost = connectionsPerHost;
+	            options.maxWaitTime = maxWaitTime;
+	            options.socketTimeout = socketTimeout;
+	            options.connectTimeout = connectTimeout;
+	            options.threadsAllowedToBlockForConnectionMultiplier = threadsAllowedToBlockForConnectionMultiplier;
+				Mongo mongoClient = new Mongo(parserAddress(),options);
 				int[] ops = parserOption();
 				for(int i = 0; ops != null && i < ops.length; i ++)
 					mongoClient.addOption( ops[i] );
@@ -191,7 +205,15 @@ public class MongoDB {
 	public void initsimple()
 	{
 		try {
-			Mongo mongoClient = new Mongo(parserAddress().get(0));
+			MongoOptions options = new MongoOptions();
+            options.autoConnectRetry = autoConnectRetry;
+            options.connectionsPerHost = connectionsPerHost;
+            options.maxWaitTime = maxWaitTime;
+            options.socketTimeout = socketTimeout;
+            options.connectTimeout = connectTimeout;
+            options.threadsAllowedToBlockForConnectionMultiplier = threadsAllowedToBlockForConnectionMultiplier;
+			Mongo mongoClient = new Mongo(parserAddress().get(0),options);
+			
 			int[] ops = parserOption();
 			for(int i = 0; ops != null && i < ops.length; i ++)
 				mongoClient.addOption( ops[i] );
