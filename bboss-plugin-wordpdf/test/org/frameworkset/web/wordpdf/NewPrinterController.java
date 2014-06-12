@@ -224,7 +224,7 @@ public class NewPrinterController {
 		{
 			System.out.println("officeHome__________:" + officeHome);
 			FileConvertor.init( officeHome);
-						
+			System.out.println("swftoolWorkDir__________:" + swftoolWorkDir);		
 			FileConvertor.getRealWordByOpenoffice(wordtemplate, wordfile,bookMarks, bookdatas);
 			FileConvertor.wordToPDFByOpenOffice(wordfile, pdfpath);
 			FileConvertor.swftoolsConvert(swftoolWorkDir, pdfpath, toswfpath);

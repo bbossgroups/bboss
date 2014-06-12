@@ -160,7 +160,7 @@ public class MongoSessionStaticManagerImpl implements SessionStaticManager {
 		keys.put("_validate", 1);
 		keys.put("host", 1);
 
-		DBCursor cursor = sessions.find(query, keys).limit(row).skip(page)
+		DBCursor cursor = sessions.find(query, keys).skip(page).limit(row)
 				.sort(new BasicDBObject("creationTime", -1));// 1升序，-1降序
 		try {
 
