@@ -26,6 +26,7 @@ public class MongoDB {
 	private int socketTimeout = 0;
 	private int connectTimeout = 15000;
 	private int threadsAllowedToBlockForConnectionMultiplier = 50;
+	private boolean socketKeepAlive = true;
 	public Mongo getMongoClient()
 	{
 	
@@ -178,6 +179,7 @@ public class MongoDB {
 	            options.socketTimeout = socketTimeout;
 	            options.connectTimeout = connectTimeout;
 	            options.threadsAllowedToBlockForConnectionMultiplier = threadsAllowedToBlockForConnectionMultiplier;
+	            options.socketKeepAlive=socketKeepAlive;
 				Mongo mongoClient = new Mongo(parserAddress(),options);
 				int[] ops = parserOption();
 				for(int i = 0; ops != null && i < ops.length; i ++)
@@ -212,6 +214,7 @@ public class MongoDB {
             options.socketTimeout = socketTimeout;
             options.connectTimeout = connectTimeout;
             options.threadsAllowedToBlockForConnectionMultiplier = threadsAllowedToBlockForConnectionMultiplier;
+            options.socketKeepAlive=socketKeepAlive;
 			Mongo mongoClient = new Mongo(parserAddress().get(0),options);
 			
 			int[] ops = parserOption();

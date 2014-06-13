@@ -13,6 +13,7 @@ public class SessionInfo {
 	private boolean validate;
 	private Map<String, Object> attributes;
 	private String host;
+	private String requesturi;
 
 	public SessionInfo() {
 		// TODO Auto-generated constructor stub
@@ -88,6 +89,15 @@ public class SessionInfo {
 
 	public void setHost(String host) {
 		this.host = host;
+	}
+
+	
+	public String getRequesturi() {
+		return requesturi;
+	}
+
+	public void setRequesturi(String requesturi) {
+		this.requesturi = requesturi;
 	}
 
 }

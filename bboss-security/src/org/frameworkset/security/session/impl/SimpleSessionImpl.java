@@ -21,6 +21,7 @@ public class SimpleSessionImpl implements Session{
 	private transient Map<String,Object> attributes;
 	private static final Object NULL = new Object();
 	private String host ;
+	private String requesturi;
 	public SimpleSessionImpl()
 	{
 		attributes = new HashMap<String,Object>();
@@ -263,6 +264,13 @@ public class SimpleSessionImpl implements Session{
 	}
 	public void setHost(String host) {
 		this.host = host;
+	}
+	
+	public String getRequesturi() {
+		return requesturi;
+	}
+	public void setRequesturi(String requesturi) {
+		this.requesturi = requesturi;
 	}
 	
 

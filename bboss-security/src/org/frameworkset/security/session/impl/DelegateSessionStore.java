@@ -49,9 +49,9 @@ public class DelegateSessionStore implements SessionStore {
 	}
 
 	@Override
-	public Session createSession(String appKey, String referip) {
+	public Session createSession(String appKey, String referip,String reqesturi) {
 		// TODO Auto-generated method stub
-		Session session = sessionStore.createSession(appKey, referip);
+		Session session = sessionStore.createSession(appKey, referip,reqesturi);
 		if(session == null)
 			return null;
 		session._setSessionStore(this);

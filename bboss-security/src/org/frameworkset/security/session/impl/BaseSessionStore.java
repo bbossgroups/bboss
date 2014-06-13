@@ -50,7 +50,7 @@ public abstract class BaseSessionStore implements SessionStore {
 		// TODO Auto-generated method stub
 
 	}
-	public abstract Session createSession(String appKey,String referip);
+	public abstract Session createSession(String appKey,String referip,String reqesturi);
 	public long getSessionTimeout() {
 		return sessionManager.getSessionTimeout();
 	}

@@ -60,9 +60,9 @@ public class SessionHelper {
 		return sessionStaticManager;
 	}
 	
-	public static Session createSession(String appkey,String referip)
+	public static Session createSession(String appkey,String referip,String reqesturi)
 	{
-		Session session = sessionManager.getSessionStore().createSession(appkey,referip);
+		Session session = sessionManager.getSessionStore().createSession(appkey,referip, reqesturi);
 		
 		return session;
 	}

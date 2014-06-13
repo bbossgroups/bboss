@@ -55,5 +55,6 @@ public interface Session {
 
 	public void putNewStatus();
 	
-
+	public String getRequesturi() ;
+	public void setRequesturi(String requesturi);
 }
