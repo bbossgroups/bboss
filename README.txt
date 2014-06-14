@@ -1,5 +1,5 @@
 ﻿release version : bbossgroups-3.9.1
-release date: 2014/01/08
+release date: 2014/06/14
 新增功能：
 1.会话共享框架
 2.增加序列化插件机制
