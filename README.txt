@@ -1,4 +1,16 @@
-﻿release version : bbossgroups-3.7.6
+﻿release version : bbossgroups-3.9.1
+release date: 2014/01/08
+新增功能：
+1.会话共享框架
+2.增加序列化插件机制
+改进功能：
+1.令牌模块功能扩展，增加临时认证令牌和持久化认证令牌，以及ticket机制（用于sso），解决集群环境下token校验问题
+2.标签库功能改进：性能提升，增加size标签
+3.FileBlob增加流下载功能
+修复一系列bug.
+
+
+release version : bbossgroups-3.7.6
 release date: 2014/01/08
 
 bboss group website:
