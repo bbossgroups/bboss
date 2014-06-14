@@ -11,8 +11,6 @@
 	<classpathentry kind="lib" path="lib/CoDec-build17-jdk13.jar"/>
 	<classpathentry kind="lib" path="lib/FlexiCoreProvider-1.7p7.signed.jar"/>
 	<classpathentry kind="lib" path="lib/FlexiECProvider-1.7p7.signed.jar"/>
-	<classpathentry kind="lib" path="lib/mongo-java-driver-2.9.3-sources.jar"/>
-	<classpathentry kind="lib" path="lib/mongo-java-driver-2.9.3.jar" sourcepath="lib/mongo-java-driver-2.9.3-sources.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib-compile/jsp-api.jar"/>
 	<classpathentry kind="lib" path="lib-compile/junit-4.6.jar"/>
@@ -29,5 +27,8 @@
 	<classpathentry kind="lib" path="lib/asm/jarjar.jar"/>
 	<classpathentry kind="lib" path="lib/cglib-2.2.jar"/>
 	<classpathentry kind="lib" path="lib/jakarta-oro-2.0.8.jar"/>
+	<classpathentry kind="lib" path="lib/mongo-java-driver-2.12.2.jar"/>
+	<classpathentry kind="lib" path="lib/mongo-java-driver-javadoc-2.12.2.jar"/>
+	<classpathentry kind="lib" path="lib/mongo-java-driver-source-2.12.2.jar"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>
