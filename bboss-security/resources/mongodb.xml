@@ -6,7 +6,7 @@
 		<!-- 这里不需要配置destroy-method，因为bboss持久层在jvm退出时会自动调用数据源的close方法 -->
 		<!-- 这里不需要配置destroy-method，因为bboss持久层在jvm退出时会自动调用数据源的close方法 -->
 		<property name="serverAddresses" >
-			192.168.1.102:27016
+			88.88.88.138:27016
 		</property>
 		<property name="option" ></property>
 			

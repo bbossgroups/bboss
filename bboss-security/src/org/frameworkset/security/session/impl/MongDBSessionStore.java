@@ -79,7 +79,8 @@ public class MongDBSessionStore extends BaseSessionStore{
 	private DBCollection getAppSessionDBCollection(String appKey)
 	{
 		 DBCollection sessions = db.getCollection(MongoDBHelper.getAppSessionTableName( appKey));
-		 sessions.ensureIndex("sessionid");
+//		 sessions.ensureIndex("sessionid");
+		 sessions.createIndex(new BasicDBObject( "sessionid" , 1 ));
 		 return sessions;
 	}
 	

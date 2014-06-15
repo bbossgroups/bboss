@@ -7,6 +7,9 @@ import java.util.List;
 import com.frameworkset.util.StringUtil;
 import com.mongodb.Bytes;
 import com.mongodb.Mongo;
+import com.mongodb.MongoClient;
+import com.mongodb.MongoClientOptions;
+import com.mongodb.MongoClientOptions.Builder;
 import com.mongodb.MongoOptions;
 import com.mongodb.ReadPreference;
 import com.mongodb.ServerAddress;
@@ -172,15 +175,25 @@ public class MongoDB {
 			}
 			else
 			{
-				MongoOptions options = new MongoOptions();
-	            options.autoConnectRetry = autoConnectRetry;
-	            options.connectionsPerHost = connectionsPerHost;
-	            options.maxWaitTime = maxWaitTime;
-	            options.socketTimeout = socketTimeout;
-	            options.connectTimeout = connectTimeout;
-	            options.threadsAllowedToBlockForConnectionMultiplier = threadsAllowedToBlockForConnectionMultiplier;
-	            options.socketKeepAlive=socketKeepAlive;
-				Mongo mongoClient = new Mongo(parserAddress(),options);
+				
+				
+//				options.autoConnectRetry = autoConnectRetry;
+//				options.connectionsPerHost = connectionsPerHost;
+//				options.maxWaitTime = maxWaitTime;
+//	            options.socketTimeout = socketTimeout;
+//	            options.connectTimeout = connectTimeout;
+//	            options.threadsAllowedToBlockForConnectionMultiplier = threadsAllowedToBlockForConnectionMultiplier;
+//	            options.socketKeepAlive=socketKeepAlive;
+				Builder builder = MongoClientOptions.builder();
+				builder.autoConnectRetry( autoConnectRetry);
+				builder.connectionsPerHost( connectionsPerHost);
+				builder.maxWaitTime( maxWaitTime);
+				builder.socketTimeout( socketTimeout);
+				builder.connectTimeout( connectTimeout);
+				builder.threadsAllowedToBlockForConnectionMultiplier( threadsAllowedToBlockForConnectionMultiplier);
+				builder.socketKeepAlive(socketKeepAlive);
+	            MongoClientOptions options = builder.build();//new MongoClientOptions();
+	            MongoClient mongoClient = new MongoClient(parserAddress(),options);
 				int[] ops = parserOption();
 				for(int i = 0; ops != null && i < ops.length; i ++)
 					mongoClient.addOption( ops[i] );
@@ -207,15 +220,25 @@ public class MongoDB {
 	public void initsimple()
 	{
 		try {
-			MongoOptions options = new MongoOptions();
-            options.autoConnectRetry = autoConnectRetry;
-            options.connectionsPerHost = connectionsPerHost;
-            options.maxWaitTime = maxWaitTime;
-            options.socketTimeout = socketTimeout;
-            options.connectTimeout = connectTimeout;
-            options.threadsAllowedToBlockForConnectionMultiplier = threadsAllowedToBlockForConnectionMultiplier;
-            options.socketKeepAlive=socketKeepAlive;
-			Mongo mongoClient = new Mongo(parserAddress().get(0),options);
+//			MongoOptions options = new MongoOptions();
+//            options.autoConnectRetry = autoConnectRetry;
+//            options.connectionsPerHost = connectionsPerHost;
+//            options.maxWaitTime = maxWaitTime;
+//            options.socketTimeout = socketTimeout;
+//            options.connectTimeout = connectTimeout;
+//            options.threadsAllowedToBlockForConnectionMultiplier = threadsAllowedToBlockForConnectionMultiplier;
+//            options.socketKeepAlive=socketKeepAlive;
+//			Mongo mongoClient = new Mongo(parserAddress().get(0),options);
+			Builder builder = MongoClientOptions.builder();
+			builder.autoConnectRetry( autoConnectRetry);
+			builder.connectionsPerHost( connectionsPerHost);
+			builder.maxWaitTime( maxWaitTime);
+			builder.socketTimeout( socketTimeout);
+			builder.connectTimeout( connectTimeout);
+			builder.threadsAllowedToBlockForConnectionMultiplier( threadsAllowedToBlockForConnectionMultiplier);
+			builder.socketKeepAlive(socketKeepAlive);
+            MongoClientOptions options = builder.build();//new MongoClientOptions();
+            MongoClient mongoClient = new MongoClient(parserAddress().get(0),options);
 			
 			int[] ops = parserOption();
 			for(int i = 0; ops != null && i < ops.length; i ++)
