@@ -74,8 +74,8 @@ public class DelegateSessionStore implements SessionStore {
 
 	@Override
 	public void updateLastAccessedTime(String appKey, String sessionID,
-			long lastAccessedTime) {
-		this.sessionStore.updateLastAccessedTime(appKey, sessionID, lastAccessedTime);
+			long lastAccessedTime,String lastAccessedUrl) {
+		this.sessionStore.updateLastAccessedTime(appKey, sessionID, lastAccessedTime, lastAccessedUrl);
 
 	}
 

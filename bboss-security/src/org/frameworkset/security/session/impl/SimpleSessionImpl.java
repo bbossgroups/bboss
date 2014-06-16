@@ -22,6 +22,7 @@ public class SimpleSessionImpl implements Session{
 	private static final Object NULL = new Object();
 	private String host ;
 	private String requesturi;
+	private String lastAccessedUrl;
 	public SimpleSessionImpl()
 	{
 		attributes = new HashMap<String,Object>();
@@ -99,10 +100,10 @@ public class SimpleSessionImpl implements Session{
 	}
 
 	@Override
-	public void touch() {
+	public void touch(String lastAccessedUrl) {
 		assertSession() ;
 		lastAccessedTime = System.currentTimeMillis();		
-		sessionStore.updateLastAccessedTime(appKey,id,lastAccessedTime);
+		sessionStore.updateLastAccessedTime(appKey,id,lastAccessedTime, lastAccessedUrl);
 //		assertSession() ;
 		
 	}
@@ -271,6 +272,12 @@ public class SimpleSessionImpl implements Session{
 	}
 	public void setRequesturi(String requesturi) {
 		this.requesturi = requesturi;
+	}
+	public String getLastAccessedUrl() {
+		return lastAccessedUrl;
+	}
+	public void setLastAccessedUrl(String lastAccessedUrl) {
+		this.lastAccessedUrl = lastAccessedUrl;
 	}
 	
 

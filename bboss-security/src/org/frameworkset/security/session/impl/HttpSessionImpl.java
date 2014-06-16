@@ -65,8 +65,8 @@ public class HttpSessionImpl implements HttpSession {
 	}
 
 	
-	public void touch() {
-		session.touch();
+	public void touch(String lastAccessedUrl) {
+		session.touch( lastAccessedUrl);
 
 	}
 

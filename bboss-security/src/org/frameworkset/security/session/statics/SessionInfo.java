@@ -14,7 +14,7 @@ public class SessionInfo {
 	private Map<String, Object> attributes;
 	private String host;
 	private String requesturi;
-
+	private String lastAccessedUrl;
 	public SessionInfo() {
 		// TODO Auto-generated constructor stub
 	}
@@ -98,6 +98,14 @@ public class SessionInfo {
 
 	public void setRequesturi(String requesturi) {
 		this.requesturi = requesturi;
+	}
+
+	public String getLastAccessedUrl() {
+		return lastAccessedUrl;
+	}
+
+	public void setLastAccessedUrl(String lastAccessedUrl) {
+		this.lastAccessedUrl = lastAccessedUrl;
 	}
 
 }

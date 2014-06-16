@@ -40,7 +40,7 @@ public interface SessionStore{
 
 	Enumeration getAttributeNames(String appKey,String sessionID);
 
-	void updateLastAccessedTime(String appKey,String sessionID, long lastAccessedTime);
+	void updateLastAccessedTime(String appKey,String sessionID, long lastAccessedTime,String lastAccessedUrl);
 
 	long getLastAccessedTime(String appKey,String sessionID);
 

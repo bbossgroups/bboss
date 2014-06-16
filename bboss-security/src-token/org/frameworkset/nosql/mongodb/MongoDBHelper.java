@@ -64,7 +64,8 @@ public class MongoDBHelper {
 				|| key.equals("_validate") || key.equals("sessionid")
 				|| key.equals("_id") || key.equals("appKey")
 				|| key.equals("host")
-				|| key.equals("requesturi");
+				|| key.equals("requesturi")
+				|| key.equals("lastAccessedUrl");
 	}
 	
 	public static String getAppSessionTableName(String appKey)

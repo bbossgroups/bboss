@@ -17,7 +17,7 @@ public interface Session {
 	/**
 	 * 更新最后访问时间
 	 */
-	public void touch();
+	public void touch(String lastAccessedUrl);
 	public long getLastAccessedTime() ;
 	public long getMaxInactiveInterval();
 

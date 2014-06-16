@@ -128,7 +128,7 @@ public class SessionHttpServletRequestWrapper extends HttpServletRequestWrapper 
 			}
 			if(session != null && !session.isNew() )
 			{
-				session.touch();
+				session.touch(this.getRequestURI());
 			}
 		}
 		

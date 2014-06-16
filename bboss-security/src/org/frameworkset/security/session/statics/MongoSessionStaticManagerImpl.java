@@ -160,6 +160,7 @@ public class MongoSessionStaticManagerImpl implements SessionStaticManager {
 		keys.put("_validate", 1);
 		keys.put("host", 1);
 		keys.put("requesturi", 1);
+		keys.put("lastAccessedUrl", 1);
 		DBCursor cursor = sessions.find(query, keys).skip(page).limit(row)
 				.sort(new BasicDBObject("creationTime", -1));// 1升序，-1降序
 		try {
@@ -198,6 +199,7 @@ public class MongoSessionStaticManagerImpl implements SessionStaticManager {
 				info.setValidate((Boolean) dbobject.get("_validate"));
 				info.setHost(dbobject.get("host") + "");
 				info.setRequesturi((String)dbobject.get("requesturi"));
+				info.setLastAccessedUrl((String)dbobject.get("lastAccessedUrl"));
 				sessionList.add(info);
 			}
 		} finally {
@@ -255,6 +257,7 @@ public class MongoSessionStaticManagerImpl implements SessionStaticManager {
 				info.setValidate((Boolean) obj.get("_validate"));
 				info.setHost((String) obj.get("host"));
 				info.setRequesturi((String)obj.get("requesturi"));
+				info.setLastAccessedUrl((String)obj.get("lastAccessedUrl"));
 				Map<String, Object> attributes = MongoDBHelper
 						.toMap(obj, false);
 				info.setAttributes(attributes);
