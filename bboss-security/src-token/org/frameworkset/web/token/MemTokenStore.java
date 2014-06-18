@@ -276,7 +276,9 @@ public class MemTokenStore extends BaseTokenStore{
 	@Override
 	protected Ticket getTicket(String token, String appid) {
 		
-		return this.tickets.get(token);
+		Ticket ticket = this.tickets.get(token);
+		ticket.setLastVistTime(System.currentTimeMillis());
+		return ticket;
 	}
 
 	

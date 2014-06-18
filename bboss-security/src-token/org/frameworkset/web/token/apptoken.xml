@@ -80,7 +80,7 @@
 <property name="deleteExpiredTicket">
 <![CDATA[
 
-    delete from tickets where (createtime + livetime) < ?
+    delete from tickets where livetime > 0 and (lastVistTime + livetime) < ?
  ]]>
 </property>
 
@@ -98,12 +98,17 @@ insert into eckeypairs(appid,privateKey,createTime,publicKey) values(?,?,?,?)
 <property name="persisteTicket">
 <![CDATA[
 
-insert into tickets(token,ticket,createtime,livetime,appid) values(#[token],#[ticket],#[createtime],#[livetime],#[appid])
+insert into tickets(token,ticket,createtime,livetime,appid,lastVistTime) values(#[token],#[ticket],#[createtime],#[livetime],#[appid],#[lastVistTime])
  ]]>
 </property>
 <property name="getTicket">
 <![CDATA[
 select * from tickets where token = ?
+ ]]>
+</property>
+<property name="updateTicketlastAccessedtime">
+<![CDATA[
+update tickets set lastVistTime = ? where token = ?
  ]]>
 </property>
 </properties>

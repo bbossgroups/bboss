@@ -450,10 +450,19 @@ public class DBTokenStore extends BaseTokenStore {
 	}
 	@Override
 	protected Ticket getTicket(String token, String appid) {
+		TransactionManager tm = new TransactionManager();
 		try {
-			return this.executor.queryObject(Ticket.class,"getTicket",token);
-		} catch (SQLException e) {
+			tm.begin();
+			Ticket ticket = this.executor.queryObject(Ticket.class,"getTicket",token);
+			this.executor.update("updateTicketlastAccessedtime", System.currentTimeMillis(),token);
+			tm.commit();
+			return ticket;
+		} catch (Exception e) {
 			throw new TokenException(TokenStore.ERROR_CODE_GETTICKETFAILED,e);
+		}
+		finally
+		{
+			tm.release();
 		}
 	}
 

@@ -28,6 +28,7 @@ public class Ticket {
 	private String token;
 	private String ticket;
 	private long createtime;
+	private long lastVistTime;
 	private long livetime;
 	private String appid;
 	public String getToken() {
@@ -60,5 +61,12 @@ public class Ticket {
 	public void setAppid(String appid) {
 		this.appid = appid;
 	}
+	public long getLastVistTime() {
+		return lastVistTime;
+	}
+	public void setLastVistTime(long lastVistTime) {
+		this.lastVistTime = lastVistTime;
+	}
+	
 
 }

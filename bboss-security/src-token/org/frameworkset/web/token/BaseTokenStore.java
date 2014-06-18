@@ -40,7 +40,9 @@ public abstract class BaseTokenStore implements TokenStore {
 	
 	protected boolean isoldticket(Ticket ticket,long currentTime)
 	{
-		long age = currentTime - ticket.getCreatetime();		
+		if(ticket.getLivetime() <= 0)
+			return false;
+		long age = currentTime - ticket.getLastVistTime();	
 		return age > ticket.getLivetime();
 	}
 //	protected String encodeToken(MemToken token,String tokentype,String ticket) throws TokenException
@@ -106,6 +108,7 @@ public abstract class BaseTokenStore implements TokenStore {
 			_ticket.setLivetime(this.ticketdualtime);
 			_ticket.setTicket(ticket);
 			_ticket.setToken(token);
+			_ticket.setLastVistTime(createTime);
 			this.persisteTicket(_ticket);
 			return token;
 		} catch (TokenException e) {

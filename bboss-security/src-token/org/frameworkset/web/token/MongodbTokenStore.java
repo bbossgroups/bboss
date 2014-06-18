@@ -133,7 +133,11 @@ public class MongodbTokenStore extends BaseTokenStore{
 		wherefun = new StringBuffer();
 		wherefun.append("function() ")
 				.append("{")			
-			    .append(" if(this.createtime + this.livetime < ").append(curtime).append(")")
+				 .append(" if(this.livetime <= 0)")
+			    .append("{")
+				.append("return false;")				
+				.append("}")
+			    .append(" if(this.lastVistTime + this.livetime < ").append(curtime).append(")")
 			    .append("{")
 				.append("return true;")				
 				.append("}")
@@ -514,7 +518,8 @@ public class MongodbTokenStore extends BaseTokenStore{
 		.append("token", ticket.getToken())
 		.append("ticket", ticket.getTicket())
 		.append("livetime", ticket.getLivetime())
-		.append("createtime", ticket.getCreatetime()) );
+		.append("createtime", ticket.getCreatetime()) 
+		.append("lastVistTime", ticket.getLastVistTime()) );
 		
 	}
 	@Override
@@ -522,15 +527,19 @@ public class MongodbTokenStore extends BaseTokenStore{
 		DBCursor cursor = null;
 		try
 		{
-			cursor = tickets.find(new BasicDBObject("token", token));
-			if(cursor.hasNext())
+			DBObject value = tickets.findAndModify(new BasicDBObject("token", token), 
+												   new BasicDBObject("$set",
+														  			new BasicDBObject("lastVistTime", System.currentTimeMillis())
+														  		    )
+							 					  );
+			if(value != null)
 			{
-				DBObject value = cursor.next();
 				Ticket ticket = new Ticket();
 				ticket.setAppid((String)value.get("appid"));
 				ticket.setCreatetime((Long)value.get("createtime"));
 				ticket.setLivetime((Long)value.get("livetime"));
 				ticket.setTicket((String)value.get("ticket"));
+				ticket.setLastVistTime((Long)value.get("lastVistTime"));
 				ticket.setToken((String)value.get("token"));
 				return ticket;
 				
