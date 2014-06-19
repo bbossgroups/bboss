@@ -82,8 +82,17 @@ public class DBMSSQL extends DBSybase
         if(dbdriver == null || dbdriver.equals("com.microsoft.jdbc.sqlserver.SQLServerDriver"))
             return super.getCusorType(dbdriver);
         else
-            return ResultSet.CONCUR_READ_ONLY;
+            return ResultSet.CONCUR_UPDATABLE;
     }
+    
+//    public int getSCROLLType(String dbdriver)
+//    {
+//    	
+//        if(dbdriver == null || dbdriver.equals("com.microsoft.jdbc.sqlserver.SQLServerDriver"))
+//            return super.getSCROLLType(dbdriver);
+//        else
+//            return ResultSet.;
+//    }
     
     public String getSchema(JDBCPoolMetaData info)
 	{

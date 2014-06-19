@@ -3,20 +3,27 @@
 <poolman>
 
   <management-mode>local</management-mode>
-  
-  <datasource>
 
-    <dbname>cim</dbname>
-    <loadmetadata>false</loadmetadata>
-    <jndiName>jdbc/derby-ds</jndiName>
-    <driver>org.apache.derby.jdbc.EmbeddedDriver</driver>
-     <url>jdbc:derby:D:/workspace/bbossgroups-3.2/bboss-mvc/database/cimdb</url> 
-    <username></username>   
-    <password></password>
+<datasource>
+	
+    <dbname>bspf</dbname>
+	<loadmetadata>false</loadmetadata>
+    <jndiName>jdbc/sqlserver-ds</jndiName>
+    <driver>net.sourceforge.jtds.jdbc.Driver</driver>
+    <encryptdbinfo>false</encryptdbinfo>
+     <url>jdbc:jtds:sqlserver://10.8.99.185:1433;DatabaseName=call</url> 
+
+    <username>sa</username>
+    <password>sogrand</password>
+
     <txIsolationLevel>READ_COMMITTED</txIsolationLevel>
+
     <nativeResults>true</nativeResults>
+
     <poolPreparedStatements>false</poolPreparedStatements>
-    <initialConnections>2</initialConnections>    
+
+    <initialConnections>2</initialConnections>
+    
     <minimumSize>2</minimumSize>
     <maximumSize>10</maximumSize>
 	<!--控制connection达到maximumSize是否允许再创建新的connection
@@ -40,7 +47,7 @@
     	true-输出，默认值
     	false-不输出
      -->
-    <logAbandoned>true</logAbandoned>
+    <logAbandoned>false</logAbandoned>
     
     <!-- 
     	数据库会话是否是readonly，缺省为false
@@ -101,14 +108,12 @@
     <!-- 
     	链接有效性检查sql语句
      -->
-    <validationQuery></validationQuery>
+    <validationQuery>select 1</validationQuery>
     
     <autoprimarykey>false</autoprimarykey>
-	<showsql>true</showsql>
+	<showsql>false</showsql>
 
   </datasource>
 
-  
-  
- 
+
 </poolman>
