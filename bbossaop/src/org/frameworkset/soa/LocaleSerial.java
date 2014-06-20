@@ -16,18 +16,27 @@
 
 package org.frameworkset.soa;
 
+import java.util.Locale;
 
 /**
- * <p>Title: Serial.java</p> 
- * <p>Description: 对象序列化工厂</p>
+ * <p>Title: LocaleSerial.java</p> 
+ * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2014年5月23日 上午9:06:58
+ * @Date 2014年6月20日 下午10:52:21
  * @author biaoping.yin
  * @version 1.0
  */
-public interface Serial<T> {
-	
-	public String serialize(T object); 
-	public T deserialize(String object);
+public class LocaleSerial extends BaseSerial<Locale> {
+
+	public String serialize(Locale object) {
+		// TODO Auto-generated method stub
+		return object.toString();
+	}
+
+	public Locale deserialize(String object) {
+		// TODO Auto-generated method stub
+		return new Locale(object);
+	}
+
 }

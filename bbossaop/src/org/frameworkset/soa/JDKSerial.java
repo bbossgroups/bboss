@@ -20,6 +20,8 @@ import java.io.Serializable;
 
 import org.frameworkset.util.ObjectUtils;
 
+import com.frameworkset.util.ValueObjectUtil;
+
 /**
  * <p>Title: LocalSerial.java</p> 
  * <p>Description: </p>
@@ -31,16 +33,30 @@ import org.frameworkset.util.ObjectUtils;
  */
 public class JDKSerial extends BaseSerial<java.io.Serializable> {
 
-	public byte[] serialize(Serializable object) {
+	public String serialize(Serializable object) {
 		// TODO Auto-generated method stub
 		
-		return ObjectUtils.toBytes(object);
+		return ValueObjectUtil
+				.byteArrayEncoder(ObjectUtils.toBytes(object));
 		
 	}
 
-	public Serializable deserialize(byte[] object) {
-		// TODO Auto-generated method stub
-		return (Serializable)ObjectUtils.toObject((byte[])object);
-	}
+	
+	public Serializable deserialize(String object) {
+		try
+		{
+			byte[] bytes = ValueObjectUtil.byteArrayDecoder(object);
+			return (Serializable)ObjectUtils.toObject(bytes);
+		}
+		catch(RuntimeException e)
+		{
+			throw e;
+		}
+		catch(Exception d)
+		{
+			throw new SerialException(d);
+		}
+	}	
+	
 
 }

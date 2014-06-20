@@ -60,7 +60,11 @@ public class SerialFactory {
 		private String magicclass;
 		private String serial;
 		private Serial serailObject;
+		private String preserial;
+		private PreSerial preserialObject;
 		public Serial getSerailObject() {
+			if(serial == null)
+				return null;
 			if(serailObject == null)
 			{
 				try {
@@ -97,6 +101,35 @@ public class SerialFactory {
 		public void setSerial(String serial) {
 			this.serial = serial;
 		}
+
+		public String getPreserial() {
+			return preserial;
+		}
+
+		public PreSerial getPreserialObject() {
+			if(preserial == null)
+				return null;
+			if(this.preserialObject == null)
+			{
+				try {
+					preserialObject = (PreSerial)Class.forName(preserial).newInstance();
+				} catch (InstantiationException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IllegalAccessException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			return preserialObject;
+		}
+
+		public void setPreserial(String preserial) {
+			this.preserial = preserial;
+		}
 		
 	}
 	
@@ -113,10 +146,12 @@ public class SerialFactory {
 			Pro magic = context.getProBean(magicClasss);
 			String magicNumber = magic.getStringExtendAttribute("magic");
 			String serial = magic.getStringExtendAttribute("serial");
+			String preserial = magic.getStringExtendAttribute("preserial");
 			MagicClass MagicClass = new MagicClass();
 			MagicClass.setMagicclass(magicClasss);
 			MagicClass.setSerial(serial);
 			MagicClass.setMagicnumber(magicNumber);
+			MagicClass.setPreserial(preserial);
 			magicclassesByName.put(magicClasss, MagicClass);
 			this.magicclassesByMagicNumber.put(magicNumber, MagicClass);
 			

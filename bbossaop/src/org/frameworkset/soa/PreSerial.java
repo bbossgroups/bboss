@@ -16,18 +16,15 @@
 
 package org.frameworkset.soa;
 
-
 /**
- * <p>Title: Serial.java</p> 
- * <p>Description: 对象序列化工厂</p>
+ * <p>Title: PreSerial.java</p> 
+ * <p>Description: 对序列化对象进行预处理</p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2014年5月23日 上午9:06:58
+ * @Date 2014年6月20日 下午11:46:46
  * @author biaoping.yin
  * @version 1.0
  */
-public interface Serial<T> {
-	
-	public String serialize(T object); 
-	public T deserialize(String object);
+public interface PreSerial<T> {
+	public T prehandle(T object);
 }

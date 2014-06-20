@@ -874,16 +874,28 @@ public class Pro<V> extends BaseTXManager implements Comparable<V>, BeanInf {
 	 */
 	private Object getTrueValue_(CallContext context, Object defaultValue,
 			boolean convertcontainer,boolean useeditor) {
+		MagicClass magicclass = null;
+		if(this.magicNumber != null)
+		{
+			magicclass = SerialFactory.getSerialFactory().getMagicClassByMagicNumber(magicNumber);
+			if(magicclass == null)
+			{
+				throw new BeanInstanceException("反序列化数据异常:magicNumber " +magicNumber+"不存在。检查resources/org/frameworkset/soa/serialconf.xml中是否配置正确!");
+			}
+		}
 		Object retvalue = null;
 		if (value != null) {
-			if(this.magicNumber != null)
+			if(magicclass != null)
 			{
-				MagicClass magicclass = SerialFactory.getSerialFactory().getMagicClassByMagicNumber(magicNumber);
-				if(magicclass == null)
+				
+				if(magicclass.getSerailObject() != null)
 				{
-					throw new BeanInstanceException("反序列化数据异常:magicNumber " +magicNumber+"不存在。检查resources/org/frameworkset/soa/serialconf.xml中是否配置正确!");
+					retvalue = magicclass.getSerailObject().deserialize((String)value);
 				}
-				retvalue = magicclass.getSerailObject().deserialize(this,(String)value);
+				else
+				{
+					retvalue = value;
+				}
 				return retvalue;
 			}
 			else if (!convertcontainer) {//如果不需要将容器转换为实际类型那么直接返回对应的值

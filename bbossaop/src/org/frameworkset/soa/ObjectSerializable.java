@@ -1170,7 +1170,11 @@ public class ObjectSerializable {
 			{
 				String className = obj.getClass().getName();
 				MagicClass magicclass = SerialFactory.getSerialFactory().getMagicClass(className);
-				if(magicclass == null)
+				if(magicclass != null && magicclass.getPreserialObject() != null)
+				{
+					obj = magicclass.getPreserialObject().prehandle(obj);
+				}
+				if(magicclass == null || magicclass.getSerailObject() == null)
 				{
 					if (name == null)
 						ret.append("<p cs=\"")
@@ -1183,7 +1187,8 @@ public class ObjectSerializable {
 				}
 				else
 				{
-					byte[] object = magicclass.getSerailObject().serialize(obj);
+					
+					String object = magicclass.getSerailObject().serialize(obj);
 					if (name == null)
 						ret.append("<p mg=\"")
 								.append(magicclass.getMagicnumber())
@@ -1192,11 +1197,9 @@ public class ObjectSerializable {
 					
 					else
 						ret.append("<p n=\"").append(name).append("\" mg=\"").append(magicclass.getMagicnumber()).append("\">");
-						ret.append("<![CDATA[")
-						.append(
-								ValueObjectUtil
-										.byteArrayEncoder(object))
-						.append("]]>");
+					ret.append("<![CDATA[")
+					.append(object)
+					.append("]]>");
 				}
 			}
 			ret.append("</p>");
