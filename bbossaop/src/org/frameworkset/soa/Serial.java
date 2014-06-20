@@ -16,6 +16,8 @@
 
 package org.frameworkset.soa;
 
+import org.frameworkset.spi.assemble.Pro;
+
 /**
  * <p>Title: Serial.java</p> 
  * <p>Description: 对象序列化工厂</p>
@@ -28,5 +30,5 @@ package org.frameworkset.soa;
 public interface Serial<T> {
 	public byte[] serialize(T object); 
 	public T deserialize(byte[] object);
-	public T deserialize(String object);
+	public T deserialize(Pro pro,String object);
 }

@@ -883,7 +883,7 @@ public class Pro<V> extends BaseTXManager implements Comparable<V>, BeanInf {
 				{
 					throw new BeanInstanceException("反序列化数据异常:magicNumber " +magicNumber+"不存在。检查resources/org/frameworkset/soa/serialconf.xml中是否配置正确!");
 				}
-				retvalue = magicclass.getSerailObject().deserialize((String)value);
+				retvalue = magicclass.getSerailObject().deserialize(this,(String)value);
 				return retvalue;
 			}
 			else if (!convertcontainer) {//如果不需要将容器转换为实际类型那么直接返回对应的值

@@ -16,6 +16,8 @@
 
 package org.frameworkset.soa;
 
+import org.frameworkset.spi.assemble.Pro;
+
 import com.frameworkset.util.ValueObjectUtil;
 
 /**
@@ -30,7 +32,7 @@ import com.frameworkset.util.ValueObjectUtil;
  */
 public abstract class BaseSerial<T> implements Serial<T> {
 
-	public T deserialize(String object) {
+	public T deserialize(Pro pro,String object) {
 		try
 		{
 			byte[] bytes = ValueObjectUtil.byteArrayDecoder(object);
