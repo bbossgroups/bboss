@@ -589,6 +589,7 @@ public class ClassUtil
 	    private volatile transient Constructor[] constructions;
 
 	    private Class clazz;
+	    private List<Class> superClasses; 
 	    /**
 	     * 识别class是否是基本数据类型或者基本数据类型数组
 	     */
@@ -629,10 +630,27 @@ public class ClassUtil
 			}
 	    	return null;
 	    }
-	    private  ClassInfo(Class clazz){
-	    	this.clazz = clazz;
+	    public String getName()
+	    {
+	    	return this.clazz.getName();
+	    }
+	    private boolean cglib = false;
+	    @SuppressWarnings("unchecked")
+		private  ClassInfo(Class clazz){
+	    	//处理cglib代理类，还原原始类型信息
+	    	String name = clazz.getName();
+	    	int idx = name.indexOf("$$EnhancerByCGLIB$$") ;
+	    	if(idx < 0)
+	    	{
+	    		this.clazz = clazz;
+	    	}
+	    	else
+	    	{
+	    		this.clazz = clazz.getSuperclass();
+	    		cglib = true;
+	    	}
 	    	try {
-				defaultConstruction  = clazz.getDeclaredConstructor();
+				defaultConstruction  = this.clazz.getDeclaredConstructor();
 				if(defaultConstruction != null)
 					ReflectionUtils.makeAccessible(defaultConstruction);
 				
@@ -642,7 +660,7 @@ public class ClassUtil
 			} 
 	    	try {
 				
-				constructions = clazz.getDeclaredConstructors();
+				constructions = this.clazz.getDeclaredConstructors();
 				for(int i = 0; constructions != null && i < constructions.length;i ++)
 				{
 					ReflectionUtils.makeAccessible(constructions[i]);
@@ -734,47 +752,59 @@ public class ClassUtil
 	    
 	    private void init()
 	    {
+	    	
 	    	this.primary = ValueObjectUtil.isPrimaryType(clazz);
 	    	this.baseprimary = ValueObjectUtil.isBasePrimaryType(clazz);
-//	    	if(declaredFields == null)
+	    	//初始化所有父类信息：
+	    	if(superClasses == null)
 	    	{
-//	    		synchronized(prodescLock)
-    			{
-    				if(declaredFields == null)
-    	    		{
-    					Field[] retfs = null;
-		    			try
-		    			{		    				
-		    				retfs = getRecursiveDeclaredFileds();
-		    				
-		    			}
-		    			catch(Exception e)
-		    			{
-		    				log.error(e.getMessage(),e);
-//		    				declaredFields =NULL;
-		    			}
-		    			List<PropertieDescription> retpropertyDescriptors = null;
-		    			try
-    	    			{		    				
-		    				retpropertyDescriptors = initBeaninfo(retfs);	 
-		    				
-    	    			}
-    	    			catch(Exception e)
-    	    			{
-    	    				log.error(e.getMessage(),e);
-    	    				retpropertyDescriptors = NULL_P;
-    	    			}
-		    			
-		    			this.propertyDescriptors = retpropertyDescriptors;
-		    			
-		    			if(retfs == null)
-	    					declaredFields = NULL;
-	    				else
-	    					declaredFields = retfs;
-		    			
-    	    		}
-    			}
+		    	superClasses = new ArrayList<Class> ();
+		    	Class superclass = this.clazz.getSuperclass();
+		    	while(superclass != null )
+		    	{
+		    		if(superclass == java.lang.Object.class)
+		    			break;
+		    		this.superClasses.add(superclass);
+		    		superclass = superclass.getSuperclass();
+		    	}
 	    	}
+
+			if(declaredFields == null)
+    		{
+				Field[] retfs = null;
+    			try
+    			{		    				
+    				retfs = getRecursiveDeclaredFileds();
+    				
+    			}
+    			catch(Exception e)
+    			{
+    				log.error(e.getMessage(),e);
+//		    				declaredFields =NULL;
+    			}
+    			List<PropertieDescription> retpropertyDescriptors = null;
+    			try
+    			{		    				
+    				retpropertyDescriptors = initBeaninfo(retfs);	 
+    				
+    			}
+    			catch(Exception e)
+    			{
+    				log.error(e.getMessage(),e);
+    				retpropertyDescriptors = NULL_P;
+    			}
+    			
+    			this.propertyDescriptors = retpropertyDescriptors;
+    			
+    			if(retfs == null)
+					declaredFields = NULL;
+				else
+					declaredFields = retfs;
+    			
+    		}
+    		
+	    	
+	    	
 	    }
 	    public Field[] getDeclaredFields()
 	    {
@@ -1230,6 +1260,12 @@ public class ClassUtil
 
 		public Constructor[] getConstructions() {
 			return constructions;
+		}
+		public List<Class> getSuperClasses() {
+			return superClasses;
+		}
+		public boolean isCglib() {
+			return cglib;
 		}
 
 		

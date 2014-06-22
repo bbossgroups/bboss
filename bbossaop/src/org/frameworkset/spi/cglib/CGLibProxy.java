@@ -35,8 +35,12 @@ import org.frameworkset.spi.remote.ServiceID;
  */
 public class CGLibProxy extends BaseCGLibProxy{
 
-	
-
+	protected boolean isioc = true;
+	public CGLibProxy(Object delegate)
+	{
+		super(delegate);
+		isioc = false;
+	}
 	public CGLibProxy(Object delegate,CallContext callcontext, ServiceID serviceID,
 			BaseTXManager providerManagerInfo) {
 		super(delegate,providerManagerInfo,
@@ -45,7 +49,14 @@ public class CGLibProxy extends BaseCGLibProxy{
 
 	public Object intercept(Object delegate, Method method, Object[] args,
 			MethodProxy proxy) throws Throwable {
-		return CGLibUtil.invoke(this.delegate, method, args, proxy, callcontext, serviceID, providerManagerInfo);
+		if(isioc)
+		{
+			return CGLibUtil.invoke(this.delegate, method, args, proxy, callcontext, serviceID, providerManagerInfo);
+		}
+		else
+		{
+			return method.invoke(this.delegate, args);
+		}
 	}
 
 }

@@ -37,7 +37,10 @@ public abstract class BaseCGLibProxy  implements MethodInterceptor{
 	protected ServiceID serviceID;
 	protected CallContext callcontext;
 	protected Object delegate;
-
+	public BaseCGLibProxy(Object delegate)
+	{
+		this.delegate = delegate;
+	}
 	public BaseCGLibProxy(Object delegate,BaseTXManager providerManagerInfo,
 			ServiceID serviceID, CallContext callcontext) {
 		super();

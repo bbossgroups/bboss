@@ -175,5 +175,12 @@ public class SerialFactory {
 		MagicClass magicClass = this.magicclassesByName.get(magicclassName);
 		return magicClass;
 	}
+	
+	public MagicClass getMagicClass(Class magicclass)
+	{
+		String magicclassName = magicclass.getName();
+		MagicClass magicClass = this.magicclassesByName.get(magicclassName);
+		return magicClass;
+	}
 
 }
