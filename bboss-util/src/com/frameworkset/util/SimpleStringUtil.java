@@ -1412,9 +1412,9 @@ outStr = "2010年02月07日11时许，周灵颖报警：在2路公交车上被�
 				outStr += replace;
 		}
 		if (htmlencode) {
-			return SimpleStringUtil.HTMLEncode(outStr);
-		} else if (htmlencode) {
-			return SimpleStringUtil.HTMLEncodej(outStr);
+			return SimpleStringUtil.HTMLNoBREncode(outStr);
+		} else if (htmldecode) {
+			return SimpleStringUtil.HTMLNoBREncodej(outStr);
 		} else {
 			return outStr;
 		}

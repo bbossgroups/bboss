@@ -11,6 +11,13 @@
 			<!-- <property name="sessionstore" value="session"/>-->
 			<property name="cookiename" value="b_sessionid"/>			
 			<property name="httpOnly" value="true"/>
+			<property name="secure" value="false"/>
+	<!--
+	  应用编码，如果没有指定appcode值默认为应用上下文
+	  appcode的作用：当所有的应用上下文为“/”时，用来区分后台统计的会话信息
+	  如果应用上下文为“/”时,appcode为ROOT
+	 -->
+<!-- 			<property name="appcode" value="pdp"/> -->
 			<property name="sessionlisteners" value="org.frameworkset.security.session.impl.NullSessionListener"/>		
 	</property>
 	

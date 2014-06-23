@@ -50,11 +50,17 @@ public class SessionManager {
 	 */
 	private String sessionlisteners;
 	private boolean httpOnly;
+	private boolean secure;
+	private String domain;
+	/**
+	 * 应用编码，如果没有指定appcode值默认为应用上下文
+	 * appcode的作用：当所有的应用上下文为/时，用来区分后台统计的会话信息
+	 */
+	private String appcode;
 	private long cookieLiveTime;
 	private SessionStore sessionStore;
 	private SessionMonitor	sessionMonitor;
 	private List<SessionListener> sessionListeners;
-	private static ThreadLocal<Session> currentSession = new ThreadLocal<Session>();
 	
 	/**
 	 * 令牌超时检测时间间隔，默认为-1，不检测
@@ -276,5 +282,23 @@ public class SessionManager {
 	}
 	public void setSessionscaninterval(long sessionscaninterval) {
 		this.sessionscaninterval = sessionscaninterval;
+	}
+	public boolean isSecure() {
+		return secure;
+	}
+	public void setSecure(boolean secure) {
+		this.secure = secure;
+	}
+	public String getDomain() {
+		return domain;
+	}
+	public void setDomain(String domain) {
+		this.domain = domain;
+	}
+	public String getAppcode() {
+		return appcode;
+	}
+	public void setAppcode(String appcode) {
+		this.appcode = appcode;
 	}
 }

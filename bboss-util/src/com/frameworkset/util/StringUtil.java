@@ -99,8 +99,11 @@ public class StringUtil extends SimpleStringUtil {
 	{
 		addCookieValue( request, response , name, value, maxage, true);
 	}
-	
-	public static void  addCookieValue(HttpServletRequest request,HttpServletResponse response ,String name,String value,int maxage,boolean httponly)
+	public static void  addCookieValue(HttpServletRequest request,HttpServletResponse response ,String name,String value,int maxage,boolean httponly,boolean secure)
+	{
+		addCookieValue(request,response ,name,value,maxage,httponly,secure,null);
+	}
+	public static void  addCookieValue(HttpServletRequest request,HttpServletResponse response ,String name,String value,int maxage,boolean httponly,boolean secure,String domain)
 	{
 		try
 		{
@@ -128,6 +131,11 @@ public class StringUtil extends SimpleStringUtil {
 					httpOnlyMethod.invoke(loginPathCookie, httponly);
 					
 				}
+				loginPathCookie.setSecure(secure);
+				if(domain != null)
+				{
+					loginPathCookie.setDomain(domain);
+				}
 				response.addCookie(loginPathCookie);
 			}
 			else
@@ -140,6 +148,10 @@ public class StringUtil extends SimpleStringUtil {
 					httpOnlyMethod.invoke(loginPathCookie, httponly);
 					
 				}
+				if(domain != null)
+				{
+					loginPathCookie.setDomain(domain);
+				}
 				response.addCookie(loginPathCookie);
 	//			loginPathCookie.setPath(request.getContextPath());
 			}
@@ -148,6 +160,10 @@ public class StringUtil extends SimpleStringUtil {
 		{
 			
 		}
+	}
+	public static void  addCookieValue(HttpServletRequest request,HttpServletResponse response ,String name,String value,int maxage,boolean httponly)
+	{
+		addCookieValue(request,response ,name,value,maxage,httponly,false);
 	}
 	
 	public static void  addCookieValue(HttpServletRequest request,HttpServletResponse response ,String name,String value)

@@ -90,13 +90,21 @@ public class MongDBSessionStore extends BaseSessionStore{
 		long creationTime = System.currentTimeMillis();
 		long maxInactiveInterval = this.getSessionTimeout();
 		long lastAccessedTime = creationTime;
+		String appcode = SessionHelper.getSessionManager().getAppcode();
+		if(appcode != null)
+		{
+			appKey = appcode;
+		}
 		DBCollection sessions =getAppSessionDBCollection( appKey);
 		sessions.insert(new BasicDBObject("sessionid",sessionid)
 		.append("creationTime", creationTime)
 		.append("maxInactiveInterval",maxInactiveInterval)
 		.append("lastAccessedTime", lastAccessedTime)
 		.append("_validate", true)
-		.append("appKey", appKey).append("referip", referip).append("host", SimpleStringUtil.getHostIP()).append("requesturi", requesturi).append("lastAccessedUrl", requesturi));
+		.append("appKey", appKey).append("referip", referip)
+		.append("host", SimpleStringUtil.getHostIP())
+		.append("requesturi", requesturi)
+		.append("lastAccessedUrl", requesturi));
 		SimpleSessionImpl session = new SimpleSessionImpl();
 		
 		session.setMaxInactiveInterval(maxInactiveInterval);

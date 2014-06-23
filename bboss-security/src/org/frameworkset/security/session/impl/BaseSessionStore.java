@@ -63,6 +63,12 @@ public abstract class BaseSessionStore implements SessionStore {
 		return sessionManager.isHttpOnly();
 	}
 	
+	public boolean isSecure() {
+		return sessionManager.isSecure();
+	}
+	public String getDomain() {
+		return sessionManager.getDomain();
+	}
 	public long getCookieLiveTime() {
 		return sessionManager.getCookieLiveTime();
 	}

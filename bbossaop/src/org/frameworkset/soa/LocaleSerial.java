@@ -23,11 +23,15 @@ import java.util.Locale;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2014年6月20日 下午10:52:21
+ * @Date 2014年6月23日 上午9:06:32
  * @author biaoping.yin
  * @version 1.0
  */
-public class LocaleSerial extends BaseSerial<Locale> {
+public class LocaleSerial extends BaseSerial<Locale>{
+
+	public LocaleSerial() {
+		// TODO Auto-generated constructor stub
+	}
 
 	public String serialize(Locale object) {
 		// TODO Auto-generated method stub
