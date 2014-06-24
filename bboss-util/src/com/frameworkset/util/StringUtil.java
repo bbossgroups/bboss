@@ -103,6 +103,10 @@ public class StringUtil extends SimpleStringUtil {
 	{
 		addCookieValue(request,response ,name,value,maxage,httponly,secure,null);
 	}
+	public static boolean hasHttpOnlyMethod()
+	{
+		return httpOnlyMethod != null;
+	}
 	public static void  addCookieValue(HttpServletRequest request,HttpServletResponse response ,String name,String value,int maxage,boolean httponly,boolean secure,String domain)
 	{
 		try

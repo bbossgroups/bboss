@@ -13,6 +13,7 @@ import org.frameworkset.nosql.mongodb.MongoDBHelper;
 import org.frameworkset.security.session.Session;
 
 import com.frameworkset.util.SimpleStringUtil;
+import com.frameworkset.util.StringUtil;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
@@ -90,11 +91,9 @@ public class MongDBSessionStore extends BaseSessionStore{
 		long creationTime = System.currentTimeMillis();
 		long maxInactiveInterval = this.getSessionTimeout();
 		long lastAccessedTime = creationTime;
-		String appcode = SessionHelper.getSessionManager().getAppcode();
-		if(appcode != null)
-		{
-			appKey = appcode;
-		}
+	
+		boolean isHttpOnly = StringUtil.hasHttpOnlyMethod()?SessionHelper.getSessionManager().isHttpOnly():false;
+		boolean secure = SessionHelper.getSessionManager().isSecure();
 		DBCollection sessions =getAppSessionDBCollection( appKey);
 		sessions.insert(new BasicDBObject("sessionid",sessionid)
 		.append("creationTime", creationTime)
@@ -104,9 +103,10 @@ public class MongDBSessionStore extends BaseSessionStore{
 		.append("appKey", appKey).append("referip", referip)
 		.append("host", SimpleStringUtil.getHostIP())
 		.append("requesturi", requesturi)
-		.append("lastAccessedUrl", requesturi));
+		.append("lastAccessedUrl", requesturi)
+		.append("httpOnly",isHttpOnly)
+		.append("secure", secure));
 		SimpleSessionImpl session = new SimpleSessionImpl();
-		
 		session.setMaxInactiveInterval(maxInactiveInterval);
 		session.setAppKey(appKey);
 		session.setCreationTime(creationTime);
@@ -116,8 +116,8 @@ public class MongDBSessionStore extends BaseSessionStore{
 		session.setValidate(true);
 		session.setRequesturi(requesturi);
 		session.setLastAccessedUrl(requesturi);
-//		session._setSessionStore(this);
-		
+		session.setSecure(secure);
+		session.setHttpOnly(isHttpOnly);		
 		return session;
 	}
 	
@@ -256,6 +256,8 @@ public class MongDBSessionStore extends BaseSessionStore{
 		keys.put("host", 1);
 		keys.put("requesturi",1);
 		keys.put("lastAccessedUrl", 1);
+		keys.put("secure",1);
+		keys.put("httpOnly", 1);
 		List<String> copy = new ArrayList<String>(attributeNames);
 		for(int i = 0; attributeNames != null && i < attributeNames.size(); i ++)
 		{
@@ -281,6 +283,16 @@ public class MongDBSessionStore extends BaseSessionStore{
 //			session._setSessionStore(this);
 			session.setRequesturi((String)object.get("requesturi"));
 			session.setLastAccessedUrl((String)object.get("lastAccessedUrl"));
+			Object secure_ = object.get("secure");
+			if(secure_ != null)
+			{
+				session.setSecure((Boolean)secure_);
+			}
+			Object httpOnly_ = object.get("httpOnly");
+			if(httpOnly_ != null)
+			{
+				session.setHttpOnly((Boolean)httpOnly_);
+			}
 			Map<String,Object> attributes = new HashMap<String,Object>();
 			for(int i = 0; attributeNames != null && i < attributeNames.size(); i ++)
 			{
@@ -314,6 +326,8 @@ public class MongDBSessionStore extends BaseSessionStore{
 		keys.put("host", 1);
 		keys.put("requesturi", 1);
 		keys.put("lastAccessedUrl", 1);
+		keys.put("secure",1);
+		keys.put("httpOnly", 1);
 		DBObject object = sessions.findOne(new BasicDBObject("sessionid",sessionid).append("_validate", true),keys);
 		if(object != null)
 		{
@@ -329,6 +343,16 @@ public class MongDBSessionStore extends BaseSessionStore{
 //			session._setSessionStore(this);
 			session.setRequesturi((String)object.get("requesturi"));
 			session.setLastAccessedUrl((String)object.get("lastAccessedUrl"));
+			Object secure_ = object.get("secure");
+			if(secure_ != null)
+			{
+				session.setSecure((Boolean)secure_);
+			}
+			Object httpOnly_ = object.get("httpOnly");
+			if(httpOnly_ != null)
+			{
+				session.setHttpOnly((Boolean)httpOnly_);
+			}	
 			return session;
 		}
 		else
@@ -356,7 +380,16 @@ public class MongDBSessionStore extends BaseSessionStore{
 			session.setHost((String)object.get("host"));
 			session.setRequesturi((String)object.get("requesturi"));
 			session.setLastAccessedUrl((String)object.get("lastAccessedUrl"));
-			
+			Object secure_ = object.get("secure");
+			if(secure_ != null)
+			{
+				session.setSecure((Boolean)secure_);
+			}
+			Object httpOnly_ = object.get("httpOnly");
+			if(httpOnly_ != null)
+			{
+				session.setHttpOnly((Boolean)httpOnly_);
+			}	
 //			session._setSessionStore(this);
 			Map<String,Object> attributes = MongoDBHelper.toMap(object,true);
 			session.setAttributes(attributes);

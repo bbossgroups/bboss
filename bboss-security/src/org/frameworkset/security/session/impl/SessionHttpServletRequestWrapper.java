@@ -52,6 +52,18 @@ public class SessionHttpServletRequestWrapper extends HttpServletRequestWrapper 
 		 return getSession(true);
 	}
 
+	private String getAppKey()
+	{
+		String appcode = SessionHelper.getSessionManager().getAppcode();
+		if(appcode != null)
+		{
+			return appcode;
+		}
+		String contextpath = this.getContextPath().replace("/", "");
+		if(contextpath.equals(""))
+			contextpath = "ROOT";
+		return contextpath;
+	}
 	@Override
 	public HttpSession getSession(boolean create) {
 		if( SessionHelper.getSessionManager().usewebsession())
@@ -69,9 +81,7 @@ public class SessionHttpServletRequestWrapper extends HttpServletRequestWrapper 
 //					cookielivetime = Integer.MAX_VALUE;
 //				}
 				int cookielivetime = -1;
-				String contextpath = this.getContextPath().replace("/", "");
-				if(contextpath.equals(""))
-					contextpath = "ROOT";
+				String contextpath = getAppKey();
 				Session session = SessionHelper.createSession(contextpath,StringUtil.getClientIP(this),this.getRequestURI());				
 				sessionid = session.getId();
 				this.session = new HttpSessionImpl(session,servletContext);
@@ -101,9 +111,7 @@ public class SessionHttpServletRequestWrapper extends HttpServletRequestWrapper 
 //						cookielivetime = Integer.MAX_VALUE;
 //					}
 					int cookielivetime = -1;
-					String contextpath = this.getContextPath().replace("/", "");
-					if(contextpath.equals(""))
-						contextpath = "ROOT";
+					String contextpath = getAppKey();
 					session = SessionHelper.createSession(contextpath,StringUtil.getClientIP(this),this.getRequestURI());
 					
 					sessionid = session.getId();
@@ -129,9 +137,7 @@ public class SessionHttpServletRequestWrapper extends HttpServletRequestWrapper 
 		{
 			if(session == null)
 			{
-				String contextpath = this.getContextPath().replace("/", "");
-				if(contextpath.equals(""))
-					contextpath = "ROOT";
+				String contextpath = getAppKey();
 				Session session_ = SessionHelper.getSession(contextpath, sessionid);
 				if(session_ == null || !session_.isValidate())
 					return;

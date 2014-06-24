@@ -23,6 +23,8 @@ public class SimpleSessionImpl implements Session{
 	private String host ;
 	private String requesturi;
 	private String lastAccessedUrl;
+	private boolean httpOnly;
+	private boolean secure;
 	public SimpleSessionImpl()
 	{
 		attributes = new HashMap<String,Object>();
@@ -278,6 +280,18 @@ public class SimpleSessionImpl implements Session{
 	}
 	public void setLastAccessedUrl(String lastAccessedUrl) {
 		this.lastAccessedUrl = lastAccessedUrl;
+	}
+	public boolean isHttpOnly() {
+		return httpOnly;
+	}
+	public void setHttpOnly(boolean httpOnly) {
+		this.httpOnly = httpOnly;
+	}
+	public boolean isSecure() {
+		return secure;
+	}
+	public void setSecure(boolean secure) {
+		this.secure = secure;
 	}
 	
 
