@@ -44,7 +44,8 @@ public class SessionFilter implements Filter{
 	@Override
 	public void destroy() {
 		
-		
+		servletContext = null;
+		dosessionfilter = true;
 	}
 
 	@Override

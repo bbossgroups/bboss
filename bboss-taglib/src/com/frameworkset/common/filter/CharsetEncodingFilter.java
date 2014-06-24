@@ -1,18 +1,5 @@
 package com.frameworkset.common.filter;
 
-import java.io.IOException;
-
-import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.frameworkset.security.session.impl.SessionFilter;
-
-import com.frameworkset.util.StringUtil;
 
 /**
  *带会话共享功能的字符串过滤器

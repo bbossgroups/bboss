@@ -32,6 +32,7 @@ public class SimpleCharsetEncodingFilter  implements Filter{
     
     
     public void init(FilterConfig arg0) throws ServletException {
+    	
         this.config = arg0;
         this.RequestEncoding = config.getInitParameter("RequestEncoding");
         this.ResponseEncoding = config.getInitParameter("ResponseEncoding");

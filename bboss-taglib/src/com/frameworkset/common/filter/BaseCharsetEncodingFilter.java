@@ -30,6 +30,7 @@ public abstract class BaseCharsetEncodingFilter extends SessionFilter{
     
     
     public void init(FilterConfig arg0) throws ServletException {
+    	super.init(arg0);
         this.config = arg0;
         this.RequestEncoding = config.getInitParameter("RequestEncoding");
         this.ResponseEncoding = config.getInitParameter("ResponseEncoding");
@@ -237,6 +238,7 @@ public abstract class BaseCharsetEncodingFilter extends SessionFilter{
     }
 
     public void destroy() {
+    	super.destroy();
     }
     
     
