@@ -11,6 +11,7 @@ import java.util.Set;
 import java.util.regex.Pattern;
 
 import org.frameworkset.nosql.mongodb.MongoDBHelper;
+import org.frameworkset.security.session.impl.SessionHelper;
 
 import com.frameworkset.util.StringUtil;
 import com.mongodb.BasicDBObject;
@@ -212,6 +213,10 @@ public class MongoSessionStaticManagerImpl implements SessionStaticManager {
 				{
 					info.setHttpOnly((Boolean)httpOnly);
 				}
+				else
+				{
+					info.setHttpOnly(StringUtil.hasHttpOnlyMethod()?SessionHelper.getSessionManager().isHttpOnly():false);
+				}
 				sessionList.add(info);
 			}
 		} finally {
@@ -279,6 +284,10 @@ public class MongoSessionStaticManagerImpl implements SessionStaticManager {
 				if(httpOnly != null)
 				{
 					info.setHttpOnly((Boolean)httpOnly);
+				}
+				else
+				{
+					info.setHttpOnly(StringUtil.hasHttpOnlyMethod()?SessionHelper.getSessionManager().isHttpOnly():false);
 				}
 				Map<String, Object> attributes = MongoDBHelper
 						.toMap(obj, false);

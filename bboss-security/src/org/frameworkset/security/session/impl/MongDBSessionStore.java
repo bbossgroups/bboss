@@ -293,6 +293,10 @@ public class MongDBSessionStore extends BaseSessionStore{
 			{
 				session.setHttpOnly((Boolean)httpOnly_);
 			}
+			else
+			{
+				session.setHttpOnly(StringUtil.hasHttpOnlyMethod()?SessionHelper.getSessionManager().isHttpOnly():false);
+			}
 			Map<String,Object> attributes = new HashMap<String,Object>();
 			for(int i = 0; attributeNames != null && i < attributeNames.size(); i ++)
 			{
@@ -352,7 +356,11 @@ public class MongDBSessionStore extends BaseSessionStore{
 			if(httpOnly_ != null)
 			{
 				session.setHttpOnly((Boolean)httpOnly_);
-			}	
+			}
+			else
+			{
+				session.setHttpOnly(StringUtil.hasHttpOnlyMethod()?SessionHelper.getSessionManager().isHttpOnly():false);
+			}
 			return session;
 		}
 		else
@@ -390,6 +398,10 @@ public class MongDBSessionStore extends BaseSessionStore{
 			{
 				session.setHttpOnly((Boolean)httpOnly_);
 			}	
+			else
+			{
+				session.setHttpOnly(StringUtil.hasHttpOnlyMethod()?SessionHelper.getSessionManager().isHttpOnly():false);
+			}
 //			session._setSessionStore(this);
 			Map<String,Object> attributes = MongoDBHelper.toMap(object,true);
 			session.setAttributes(attributes);
