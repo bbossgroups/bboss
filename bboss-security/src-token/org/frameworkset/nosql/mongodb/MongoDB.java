@@ -4,19 +4,21 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import com.frameworkset.util.StringUtil;
 import com.mongodb.Bytes;
 import com.mongodb.Mongo;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientOptions;
 import com.mongodb.MongoClientOptions.Builder;
-import com.mongodb.MongoOptions;
 import com.mongodb.ReadPreference;
 import com.mongodb.ServerAddress;
 import com.mongodb.WriteConcern;
 
+
 public class MongoDB {
-	
+	private static Logger log = Logger.getLogger(MongoDB.class);
 	private String serverAddresses;
 	private String option;
 	private String writeConcern;
@@ -208,16 +210,18 @@ public class MongoDB {
 				this.mongoclient = mongoClient;
 			}
 		} catch (RuntimeException e) {
+			log.error("初始化mongodb client failed.", e);
 			throw e;
 			
 		} 
 		catch (Exception e) {
+			log.error("初始化mongodb client failed.", e);
 			throw new RuntimeException(e);
 			
 		} 
 	}
 	
-	public void initsimple()
+	public void initsimple() throws Exception
 	{
 		try {
 //			MongoOptions options = new MongoOptions();
@@ -255,7 +259,7 @@ public class MongoDB {
 			
 		} 
 		catch (Exception e) {
-			throw new RuntimeException(e);
+			throw e;
 			
 		} 
 	}
