@@ -1176,7 +1176,7 @@ public class ObjectSerializable {
 				{
 					obj = magicclass.getPreserialObject().prehandle(obj);
 				}
-				if(magicclass == null || magicclass.getSerailObject() == null)
+				if(magicclass == null )
 				{
 					if (name == null)
 						ret.append("<p cs=\"")
@@ -1187,7 +1187,7 @@ public class ObjectSerializable {
 								className).append("\">");
 					appendBeanProperties(obj, type,classInfo, dateformat, ret,stack,currentAddress);
 				}
-				else
+				else if(magicclass.getSerailObject() != null)//指定了序列化插件				
 				{
 					
 					String object = magicclass.getSerailObject().serialize(obj);
@@ -1202,6 +1202,18 @@ public class ObjectSerializable {
 					ret.append("<![CDATA[")
 					.append(object)
 					.append("]]>");
+				}
+				
+				else
+				{
+					if (name == null)
+						ret.append("<p mg=\"")
+								.append(magicclass.getMagicnumber())
+								.append("\">");
+					else
+						ret.append("<p n=\"").append(name).append("\" mg=\"").append(
+								magicclass.getMagicnumber()).append("\">");
+					appendBeanProperties(obj, type,classInfo, dateformat, ret,stack,currentAddress);
 				}
 			}
 			ret.append("</p>");

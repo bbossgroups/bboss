@@ -23,8 +23,9 @@ import java.util.Set;
 import java.util.Stack;
 
 import org.apache.log4j.Logger;
+import org.frameworkset.soa.SerialFactory;
+import org.frameworkset.soa.SerialFactory.MagicClass;
 import org.frameworkset.spi.BaseApplicationContext;
-import org.frameworkset.spi.SOAApplicationContext;
 import org.frameworkset.spi.SPIException;
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
@@ -717,7 +718,20 @@ public class ProviderParser extends DefaultHandler
         if(this.serial)
         {
 	        String mg = attributes.getValue("mg");
-	        p.setMagicNumber(mg);
+	        if(mg != null)
+	        {
+		        p.setMagicNumber(mg);
+		        String serial = attributes.getValue("serial");
+		        String preserial = attributes.getValue("preserial");
+		        if(serial == null && preserial == null)
+		        {
+		        	MagicClass mgc = SerialFactory.getSerialFactory().getMagicClassByMagicNumber(mg);
+		        	if(mgc.getMagicclass() != null)
+		        	{
+		        		 p.setClazz(mgc.getMagicclass());
+		        	}
+		        }
+	        }
         }
         setFAttr(p, attributes);
         if(label != null && !label.equals(""))

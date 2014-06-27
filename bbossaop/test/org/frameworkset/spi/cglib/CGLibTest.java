@@ -65,47 +65,6 @@ public class CGLibTest {
 		System.out.println(service.sayhello("多多"));
 	}
 	
-	@Test
-	public void testCGlibSerial() throws Exception
-	{
-		//远程调用
-		SerialPO po = new SerialPO();
-		po.setJob("架构工程师");
-		po.setName("多多");
-		CGLibProxy proxy = new CGLibProxy(po);
-		SerialPO po1 = CGLibUtil.getBeanInstance(po.getClass(), po
-				.getClass(), proxy);
-		System.out.println(po1.getClass().getName());
-		 po = new SerialPO();
-			po.setJob("架构工程师");
-			po.setName("多多");
-		 proxy = new CGLibProxy(po);
-		 SerialPO po2 = CGLibUtil.getBeanInstance(po.getClass(), po
-				.getClass(), proxy);
-		System.out.println(po2.getClass().getName());
-		String xml = ObjectSerializable.toXML(po2);
-		System.out.println(xml);
-		po = ObjectSerializable.toBean(xml, SerialPO.class);
-		System.out.println("name:"+po.getName());
-		System.out.println("job:"+po.getJob());
-	}
 	
-	public static class SerialPO
-	{
-		private String name;
-		private String job;
-		public String getName() {
-			return name;
-		}
-		public void setName(String name) {
-			this.name = name;
-		}
-		public String getJob() {
-			return job;
-		}
-		public void setJob(String job) {
-			this.job = job;
-		}
-	}
 
 }

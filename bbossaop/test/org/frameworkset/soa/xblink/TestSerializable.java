@@ -38,6 +38,8 @@ import org.frameworkset.soa.ObjectSerializable;
 import org.frameworkset.soa.TransientFieldBean;
 import org.frameworkset.spi.BaseApplicationContext;
 import org.frameworkset.spi.DefaultApplicationContext;
+import org.frameworkset.spi.cglib.CGLibProxy;
+import org.frameworkset.spi.cglib.CGLibUtil;
 import org.junit.Test;
 
 import com.caucho.hessian.io.HessianInput;
@@ -60,6 +62,41 @@ public class TestSerializable
 {
 	private static Logger log = Logger.getLogger(TestSerializable.class);
 	 private static XStream xStream = new XStream();
+	 @Test
+		public void testCGlibSerial() throws Exception
+		{
+			//远程调用
+			SerialPO po = new SerialPO();
+			po.setJob("架构工程师");
+			po.setName("多多");
+			CGLibProxy proxy = new CGLibProxy(po);
+			SerialPO po1 = CGLibUtil.getBeanInstance(po.getClass(), po
+					.getClass(), proxy);
+		
+			String xml = ObjectSerializable.toXML(po1);
+			System.out.println(xml);
+			po = ObjectSerializable.toBean(xml, SerialPO.class);
+			System.out.println("name:"+po.getName());
+			System.out.println("job:"+po.getJob());
+		}
+		
+		public static class SerialPO
+		{
+			private String name;
+			private String job;
+			public String getName() {
+				return name;
+			}
+			public void setName(String name) {
+				this.name = name;
+			}
+			public String getJob() {
+				return job;
+			}
+			public void setJob(String job) {
+				this.job = job;
+			}
+		}
 	 @Test
 	 public void testTransientBeantoxml() throws Exception
 	{

@@ -270,5 +270,20 @@ public class SOAApplicationContextTest {
 		}		
 	}
 	
+	
+	@org.junit.Test
+	public void testMagicNumber()
+	{		
+		try {
+			java.util.Locale locale = java.util.Locale.CHINESE;
+			String xml = ObjectSerializable.toXML(locale);
+			locale = ObjectSerializable.toBean(xml, java.util.Locale.class);
+			System.out.println(locale);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
+	}
+	
 
 }

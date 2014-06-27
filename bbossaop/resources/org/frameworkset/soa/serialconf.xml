@@ -7,4 +7,12 @@
      <property name="java.util.Locale" magic="1" serial="org.frameworkset.soa.LocaleSerial"/>
      <property name="net.sf.jasperreports.engine.JasperPrint" magic="2" serial="org.frameworkset.soa.JDKSerial"/>
 <!--      <property name="com.xxx.xxx.POXxxxx" magic="3" preserial="org.frameworkset.soa.POXxxxxSerial"/> -->
+	<!--      <property name="com.frameworkset.platform.security.authentication.CheckCallBack$Attribute" magic="4"/> -->
+	<!--      <property name="com.frameworkset.platform.security.authentication.CheckCallBack" magic="5"/> -->
+	<!--      <property name="com.frameworkset.platform.security.authentication.Credential" magic="6"/> -->
+	
+	<!--      <property name="com.frameworkset.platform.security.authorization.AuthPrincipal" magic="7"/> -->
+	<property name="org.frameworkset.soa.xblink.TestSerializable$SerialPO" magic="8"/> 
+	
+	
  </properties>
