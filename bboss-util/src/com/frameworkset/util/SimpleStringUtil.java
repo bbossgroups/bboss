@@ -2143,6 +2143,11 @@ outStr = "2010年02月07日11时许，周灵颖报警：在2路公交车上被�
 		return value == null || "".equals(value);
 	}
 	
+	public static boolean isNotEmpty(String value)
+	{
+		return value != null && !"".equals(value);
+	}
+	
 	public static String formatException(Throwable exception)
 	{
 		StringWriter out = new StringWriter();
