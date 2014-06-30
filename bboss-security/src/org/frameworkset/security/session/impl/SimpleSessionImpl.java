@@ -25,6 +25,7 @@ public class SimpleSessionImpl implements Session{
 	private String lastAccessedUrl;
 	private boolean httpOnly;
 	private boolean secure;
+	private String lastAccessedHostIP;
 	public SimpleSessionImpl()
 	{
 		attributes = new HashMap<String,Object>();
@@ -292,6 +293,12 @@ public class SimpleSessionImpl implements Session{
 	}
 	public void setSecure(boolean secure) {
 		this.secure = secure;
+	}
+	public String getLastAccessedHostIP() {
+		return lastAccessedHostIP;
+	}
+	public void setLastAccessedHostIP(String lastAccessedHostIP) {
+		this.lastAccessedHostIP = lastAccessedHostIP;
 	}
 	
 

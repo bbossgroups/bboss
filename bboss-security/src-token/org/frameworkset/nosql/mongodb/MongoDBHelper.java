@@ -67,7 +67,8 @@ public class MongoDBHelper {
 				|| key.equals("secure")
 				|| key.equals("httpOnly")
 				|| key.equals("requesturi")
-				|| key.equals("lastAccessedUrl");
+				|| key.equals("lastAccessedUrl")
+				|| key.equals("lastAccessedHostIP");
 			
 	}
 	

@@ -11,6 +11,7 @@ import java.util.Set;
 import org.apache.log4j.Logger;
 import org.frameworkset.nosql.mongodb.MongoDBHelper;
 import org.frameworkset.security.session.Session;
+import org.frameworkset.security.session.SessionBasicInfo;
 
 import com.frameworkset.util.SimpleStringUtil;
 import com.frameworkset.util.StringUtil;
@@ -86,7 +87,7 @@ public class MongDBSessionStore extends BaseSessionStore{
 	}
 	
 	@Override
-	public Session createSession(String appKey,String referip,String requesturi) {
+	public Session createSession(SessionBasicInfo sessionBasicInfo) {
 		String sessionid = this.randomToken();
 		long creationTime = System.currentTimeMillis();
 		long maxInactiveInterval = this.getSessionTimeout();
@@ -94,30 +95,32 @@ public class MongDBSessionStore extends BaseSessionStore{
 	
 		boolean isHttpOnly = StringUtil.hasHttpOnlyMethod()?SessionHelper.getSessionManager().isHttpOnly():false;
 		boolean secure = SessionHelper.getSessionManager().isSecure();
-		DBCollection sessions =getAppSessionDBCollection( appKey);
+		DBCollection sessions =getAppSessionDBCollection( sessionBasicInfo.getAppKey());
 		sessions.insert(new BasicDBObject("sessionid",sessionid)
 		.append("creationTime", creationTime)
 		.append("maxInactiveInterval",maxInactiveInterval)
 		.append("lastAccessedTime", lastAccessedTime)
 		.append("_validate", true)
-		.append("appKey", appKey).append("referip", referip)
+		.append("appKey", sessionBasicInfo.getAppKey()).append("referip", sessionBasicInfo.getReferip())
 		.append("host", SimpleStringUtil.getHostIP())
-		.append("requesturi", requesturi)
-		.append("lastAccessedUrl", requesturi)
+		.append("requesturi", sessionBasicInfo.getRequesturi())
+		.append("lastAccessedUrl", sessionBasicInfo.getRequesturi())
 		.append("httpOnly",isHttpOnly)
-		.append("secure", secure));
+		.append("secure", secure)
+		.append("lastAccessedHostIP", SimpleStringUtil.getHostIP()));
 		SimpleSessionImpl session = new SimpleSessionImpl();
 		session.setMaxInactiveInterval(maxInactiveInterval);
-		session.setAppKey(appKey);
+		session.setAppKey(sessionBasicInfo.getAppKey());
 		session.setCreationTime(creationTime);
 		session.setLastAccessedTime(lastAccessedTime);
 		session.setId(sessionid);
 		session.setHost(SimpleStringUtil.getHostIP());
 		session.setValidate(true);
-		session.setRequesturi(requesturi);
-		session.setLastAccessedUrl(requesturi);
+		session.setRequesturi(sessionBasicInfo.getRequesturi());
+		session.setLastAccessedUrl(sessionBasicInfo.getRequesturi());
 		session.setSecure(secure);
-		session.setHttpOnly(isHttpOnly);		
+		session.setHttpOnly(isHttpOnly);
+		session.setLastAccessedHostIP(SimpleStringUtil.getHostIP());
 		return session;
 	}
 	
@@ -158,7 +161,7 @@ public class MongDBSessionStore extends BaseSessionStore{
 	public void updateLastAccessedTime(String appKey,String sessionID, long lastAccessedTime,String lastAccessedUrl) {
 		DBCollection sessions =getAppSessionDBCollection( appKey);
 		
-		sessions.update(new BasicDBObject("sessionid",sessionID).append("_validate", true), new BasicDBObject("$set",new BasicDBObject("lastAccessedTime", lastAccessedTime).append("lastAccessedUrl", lastAccessedUrl)));
+		sessions.update(new BasicDBObject("sessionid",sessionID).append("_validate", true), new BasicDBObject("$set",new BasicDBObject("lastAccessedTime", lastAccessedTime).append("lastAccessedUrl", lastAccessedUrl).append("lastAccessedHostIP", SimpleStringUtil.getHostIP())));
 		
 	}
 
@@ -258,6 +261,8 @@ public class MongDBSessionStore extends BaseSessionStore{
 		keys.put("lastAccessedUrl", 1);
 		keys.put("secure",1);
 		keys.put("httpOnly", 1);
+		keys.put("lastAccessedHostIP", 1);
+//		.append("lastAccessedHostIP", SimpleStringUtil.getHostIP())
 		List<String> copy = new ArrayList<String>(attributeNames);
 		for(int i = 0; attributeNames != null && i < attributeNames.size(); i ++)
 		{
@@ -283,6 +288,7 @@ public class MongDBSessionStore extends BaseSessionStore{
 //			session._setSessionStore(this);
 			session.setRequesturi((String)object.get("requesturi"));
 			session.setLastAccessedUrl((String)object.get("lastAccessedUrl"));
+			session.setLastAccessedHostIP((String)object.get("lastAccessedHostIP"));
 			Object secure_ = object.get("secure");
 			if(secure_ != null)
 			{
@@ -332,6 +338,7 @@ public class MongDBSessionStore extends BaseSessionStore{
 		keys.put("lastAccessedUrl", 1);
 		keys.put("secure",1);
 		keys.put("httpOnly", 1);
+		keys.put("lastAccessedHostIP", 1);
 		DBObject object = sessions.findOne(new BasicDBObject("sessionid",sessionid).append("_validate", true),keys);
 		if(object != null)
 		{
@@ -361,6 +368,7 @@ public class MongDBSessionStore extends BaseSessionStore{
 			{
 				session.setHttpOnly(StringUtil.hasHttpOnlyMethod()?SessionHelper.getSessionManager().isHttpOnly():false);
 			}
+			session.setLastAccessedHostIP((String)object.get("lastAccessedHostIP"));
 			return session;
 		}
 		else
@@ -388,6 +396,7 @@ public class MongDBSessionStore extends BaseSessionStore{
 			session.setHost((String)object.get("host"));
 			session.setRequesturi((String)object.get("requesturi"));
 			session.setLastAccessedUrl((String)object.get("lastAccessedUrl"));
+			session.setLastAccessedHostIP((String)object.get("lastAccessedHostIP"));
 			Object secure_ = object.get("secure");
 			if(secure_ != null)
 			{

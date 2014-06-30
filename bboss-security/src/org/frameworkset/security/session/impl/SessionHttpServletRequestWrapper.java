@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.frameworkset.security.session.Session;
+import org.frameworkset.security.session.SessionBasicInfo;
 
 import com.frameworkset.util.StringUtil;
 
@@ -82,7 +83,12 @@ public class SessionHttpServletRequestWrapper extends HttpServletRequestWrapper 
 //				}
 				int cookielivetime = -1;
 				String contextpath = getAppKey();
-				Session session = SessionHelper.createSession(contextpath,StringUtil.getClientIP(this),this.getRequestURI());				
+				SessionBasicInfo sessionBasicInfo = new SessionBasicInfo();
+				sessionBasicInfo.setAppKey(contextpath);
+				sessionBasicInfo.setReferip(StringUtil.getClientIP(this));
+				sessionBasicInfo.setRequesturi(this.getRequestURI());
+				
+				Session session = SessionHelper.createSession(sessionBasicInfo);				
 				sessionid = session.getId();
 				this.session = new HttpSessionImpl(session,servletContext);
 				StringUtil.addCookieValue(this, response, SessionHelper.getSessionManager().getCookiename(), sessionid, cookielivetime,SessionHelper.getSessionManager().isHttpOnly(),
@@ -112,8 +118,12 @@ public class SessionHttpServletRequestWrapper extends HttpServletRequestWrapper 
 //					}
 					int cookielivetime = -1;
 					String contextpath = getAppKey();
-					session = SessionHelper.createSession(contextpath,StringUtil.getClientIP(this),this.getRequestURI());
+					SessionBasicInfo sessionBasicInfo = new SessionBasicInfo();
+					sessionBasicInfo.setAppKey(contextpath);
+					sessionBasicInfo.setReferip(StringUtil.getClientIP(this));
+					sessionBasicInfo.setRequesturi(this.getRequestURI());
 					
+					session = SessionHelper.createSession(sessionBasicInfo);
 					sessionid = session.getId();
 					this.session =  new HttpSessionImpl(session,servletContext);
 					StringUtil.addCookieValue(this, response, SessionHelper.getSessionManager().getCookiename(), sessionid, cookielivetime,SessionHelper.getSessionManager().isHttpOnly(),

@@ -34,7 +34,8 @@ public interface SessionStore{
 
 	void livecheck();
 	
-	Session createSession(String appKey,String referip,String reqesturi);
+//	Session createSession(String appKey,String referip,String reqesturi);
+	Session createSession(SessionBasicInfo sessionBasicInfo);
 
 	Object getAttribute(String appKey,String sessionID, String attribute);
 

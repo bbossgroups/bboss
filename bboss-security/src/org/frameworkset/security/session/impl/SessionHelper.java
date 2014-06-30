@@ -16,6 +16,7 @@
 package org.frameworkset.security.session.impl;
 
 import org.frameworkset.security.session.Session;
+import org.frameworkset.security.session.SessionBasicInfo;
 import org.frameworkset.security.session.statics.NullSessionStaticManagerImpl;
 import org.frameworkset.security.session.statics.SessionStaticManager;
 import org.frameworkset.soa.ObjectSerializable;
@@ -60,9 +61,9 @@ public class SessionHelper {
 		return sessionStaticManager;
 	}
 	
-	public static Session createSession(String appkey,String referip,String reqesturi)
+	public static Session createSession(SessionBasicInfo sessionBasicInfo)
 	{
-		Session session = sessionManager.getSessionStore().createSession(appkey,referip, reqesturi);
+		Session session = sessionManager.getSessionStore().createSession( sessionBasicInfo);
 		
 		return session;
 	}

@@ -18,6 +18,7 @@ package org.frameworkset.security.session.impl;
 import java.util.Enumeration;
 
 import org.frameworkset.security.session.Session;
+import org.frameworkset.security.session.SessionBasicInfo;
 import org.frameworkset.security.session.SessionEvent;
 import org.frameworkset.security.session.SessionStore;
 
@@ -49,9 +50,9 @@ public class DelegateSessionStore implements SessionStore {
 	}
 
 	@Override
-	public Session createSession(String appKey, String referip,String reqesturi) {
+	public Session createSession(SessionBasicInfo sessionBasicInfo) {
 		// TODO Auto-generated method stub
-		Session session = sessionStore.createSession(appKey, referip,reqesturi);
+		Session session = sessionStore.createSession( sessionBasicInfo);
 		if(session == null)
 			return null;
 		session._setSessionStore(this);

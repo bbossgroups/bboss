@@ -164,6 +164,8 @@ public class MongoSessionStaticManagerImpl implements SessionStaticManager {
 		keys.put("lastAccessedUrl", 1);
 		keys.put("secure",1);
 		keys.put("httpOnly", 1);
+		keys.put("lastAccessedHostIP", 1);
+		
 		DBCursor cursor = sessions.find(query, keys).skip(page).limit(row)
 				.sort(new BasicDBObject("creationTime", -1));// 1升序，-1降序
 		try {
@@ -217,6 +219,7 @@ public class MongoSessionStaticManagerImpl implements SessionStaticManager {
 				{
 					info.setHttpOnly(StringUtil.hasHttpOnlyMethod()?SessionHelper.getSessionManager().isHttpOnly():false);
 				}
+				info.setLastAccessedHostIP((String)dbobject.get("lastAccessedHostIP"));
 				sessionList.add(info);
 			}
 		} finally {
@@ -275,6 +278,7 @@ public class MongoSessionStaticManagerImpl implements SessionStaticManager {
 				info.setHost((String) obj.get("host"));
 				info.setRequesturi((String)obj.get("requesturi"));
 				info.setLastAccessedUrl((String)obj.get("lastAccessedUrl"));
+				info.setLastAccessedHostIP((String)obj.get("lastAccessedHostIP"));
 				Object secure_ = obj.get("secure");
 				if(secure_ != null)
 				{

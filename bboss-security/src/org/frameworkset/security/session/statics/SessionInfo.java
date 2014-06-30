@@ -17,6 +17,7 @@ public class SessionInfo {
 	private String lastAccessedUrl;
 	private boolean httpOnly;
 	private boolean secure;
+	private String lastAccessedHostIP;
 	public SessionInfo() {
 		// TODO Auto-generated constructor stub
 	}
@@ -124,6 +125,14 @@ public class SessionInfo {
 
 	public void setSecure(boolean secure) {
 		this.secure = secure;
+	}
+
+	public String getLastAccessedHostIP() {
+		return lastAccessedHostIP;
+	}
+
+	public void setLastAccessedHostIP(String lastAccessedHostIP) {
+		this.lastAccessedHostIP = lastAccessedHostIP;
 	}
 
 }
