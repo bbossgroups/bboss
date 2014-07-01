@@ -1217,7 +1217,7 @@ public class ValueObjectUtil {
 			} catch (ClassNotFoundException e) {
 				throw new IllegalArgumentException(new StringBuffer(
 						"类型无法转换,不支持[").append(type.getName()).append("]向[")
-						.append(toType.getName()).append("]转换").append(",value is").append(obj).toString());
+						.append(toType.getName()).append("]转换").toString(),e);
 			}
 		}
 		Object arrayObj;
@@ -1472,7 +1472,7 @@ public class ValueObjectUtil {
 			} catch (ClassNotFoundException e) {
 				throw new IllegalArgumentException(new StringBuffer(
 						"类型无法转换,不支持[").append(type.getName()).append("]向[")
-						.append(toType.getName()).append("]转换").append(",value is").append(obj).toString());
+						.append(toType.getName()).append("]转换").toString(),e);
 			}
 		}
 		Object arrayObj;
@@ -1720,7 +1720,7 @@ public class ValueObjectUtil {
 			} catch (ClassNotFoundException e) {
 				throw new IllegalArgumentException(new StringBuffer(
 						"类型无法转换,不支持[").append(type.getName()).append("]向[")
-						.append(toType.getName()).append("]转换").append(",value is ").append(obj).toString());
+						.append(toType.getName()).append("]转换").toString(),e);
 			}
 		}
 		
@@ -1861,7 +1861,7 @@ public class ValueObjectUtil {
 			} catch (ClassNotFoundException e) {
 				throw new IllegalArgumentException(new StringBuffer(
 						"类型无法转换,不支持[").append(type.getName()).append("]向[")
-						.append(toType.getName()).append("]转换").append(",value is ").append(obj).toString());
+						.append(toType.getName()).append("]转换").toString(),e);
 			}
 		}
 		
