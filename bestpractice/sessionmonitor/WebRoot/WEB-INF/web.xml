@@ -18,7 +18,10 @@
 	   <filter-name>sessionFilter</filter-name>
 	   <url-pattern>*.jsp</url-pattern>
 	 </filter-mapping>
-	 
+	 <filter-mapping>
+	   <filter-name>sessionFilter</filter-name>
+	   <url-pattern>*.page</url-pattern>
+	 </filter-mapping>
   <servlet>
 		<servlet-name>mvcdispather</servlet-name>
 		<servlet-class>org.frameworkset.web.servlet.DispatchServlet</servlet-class>
