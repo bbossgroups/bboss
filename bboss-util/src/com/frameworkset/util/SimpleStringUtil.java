@@ -2148,6 +2148,37 @@ outStr = "2010年02月07日11时许，周灵颖报警：在2路公交车上被�
 		return value != null && !"".equals(value);
 	}
 	
+	
+	public static boolean isEmpty(Collection cl)
+	{
+		return cl == null || cl.size() == 0;
+	}
+	
+	public static boolean isNotEmpty(Collection cl)
+	{
+		return !isEmpty( cl);
+	}
+	
+	public static boolean isEmpty(Object obj)
+	{
+		if(obj == null)
+			return true;
+		if(!obj.getClass().isArray())
+		{
+			return false;
+		}
+		else
+		{
+			return Array.getLength(obj) == 0; 
+		}
+		
+	}
+	
+	public static boolean isNotEmpty(Object obj)
+	{
+		return !isEmpty( obj);
+	}
+	
 	public static String formatException(Throwable exception)
 	{
 		StringWriter out = new StringWriter();
