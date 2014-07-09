@@ -81,9 +81,15 @@ public class NotEmptyTag extends MatchTag
 				else
 					return true;
 			}
-			
+			else
+			{
+				return true;
+			}
 		}
-		return false;		
+		else
+		{
+			return false;
+		}
 	}
 
 }

@@ -83,7 +83,10 @@ public class EmptyTag extends MatchTag
 			else
 				return false;
 		}
-		return false;
+		else
+		{
+			return false;
+		}
 	}
 
 }
