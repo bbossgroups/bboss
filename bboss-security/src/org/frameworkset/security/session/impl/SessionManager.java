@@ -19,10 +19,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-import org.frameworkset.security.session.Session;
 import org.frameworkset.security.session.SessionEvent;
 import org.frameworkset.security.session.SessionListener;
 import org.frameworkset.security.session.SessionStore;
+import org.frameworkset.security.session.domain.CrossDomain;
 
 import com.frameworkset.util.StringUtil;
 
@@ -44,6 +44,7 @@ public class SessionManager {
 	private long sessionTimeout;
 	private String cookiename;
 	private Object sessionstore;
+	private CrossDomain crossDomain;
 	
 	/**
 	 * session监听器,多个用,号分隔
@@ -300,5 +301,11 @@ public class SessionManager {
 	}
 	public void setAppcode(String appcode) {
 		this.appcode = appcode;
+	}
+	public CrossDomain getCrossDomain() {
+		return crossDomain;
+	}
+	public void setCrossDomain(CrossDomain crossDomain) {
+		this.crossDomain = crossDomain;
 	}
 }

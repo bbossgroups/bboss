@@ -109,27 +109,35 @@ public class StringUtil extends SimpleStringUtil {
 	}
 	public static void  addCookieValue(HttpServletRequest request,HttpServletResponse response ,String name,String value,int maxage,boolean httponly,boolean secure,String domain)
 	{
+		addCookieValue( request,null, response , name, value, maxage, httponly, secure, domain);
+	}
+	
+	public static void  addCookieValue(HttpServletRequest request,String path,HttpServletResponse response ,String name,String value,int maxage,boolean httponly,boolean secure,String domain)
+	{
 		try
 		{
-			Cookie[] cookies = request.getCookies();
-			
+			if(path == null)
+				path = request.getContextPath();
+//			Cookie[] cookies = request.getCookies();
+//			
+//			Cookie loginPathCookie = null;
+//			if(cookies != null)
+//			{
+//				for(Cookie cookie:cookies)
+//				{
+//					if(name.equals(cookie.getName()))
+//					{
+//						loginPathCookie = cookie;
+//						break;
+//					}
+//				}
+//			}
 			Cookie loginPathCookie = null;
-			if(cookies != null)
+//			if(loginPathCookie == null)
 			{
-				for(Cookie cookie:cookies)
-				{
-					if(name.equals(cookie.getName()))
-					{
-						loginPathCookie = cookie;
-						break;
-					}
-				}
-			}
-			if(loginPathCookie == null)
-			{
-				 loginPathCookie = new Cookie(name, value);			 
+				loginPathCookie = new Cookie(name, value);			 
 				loginPathCookie.setMaxAge(maxage);
-				loginPathCookie.setPath(request.getContextPath());
+				loginPathCookie.setPath(path);
 				if(httpOnlyMethod != null)
 				{
 					httpOnlyMethod.invoke(loginPathCookie, httponly);
@@ -142,23 +150,23 @@ public class StringUtil extends SimpleStringUtil {
 				}
 				response.addCookie(loginPathCookie);
 			}
-			else
-			{
-				loginPathCookie.setMaxAge(maxage);
-				loginPathCookie.setValue(value);
-				loginPathCookie.setPath(request.getContextPath());
-				if(httpOnlyMethod != null)
-				{
-					httpOnlyMethod.invoke(loginPathCookie, httponly);
-					
-				}
-				if(domain != null)
-				{
-					loginPathCookie.setDomain(domain);
-				}
-				response.addCookie(loginPathCookie);
-	//			loginPathCookie.setPath(request.getContextPath());
-			}
+//			else
+//			{
+//				loginPathCookie.setMaxAge(maxage);
+//				loginPathCookie.setValue(value);
+//				loginPathCookie.setPath(path);
+//				if(httpOnlyMethod != null)
+//				{
+//					httpOnlyMethod.invoke(loginPathCookie, httponly);
+//					
+//				}
+//				if(domain != null)
+//				{
+//					loginPathCookie.setDomain(domain);
+//				}
+//				response.addCookie(loginPathCookie);
+//	//			loginPathCookie.setPath(request.getContextPath());
+//			}
 		}
 		catch(Throwable e)
 		{

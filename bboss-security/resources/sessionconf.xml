@@ -17,12 +17,39 @@
 	  appcode的作用：当所有的应用上下文为“/”时，用来区分后台统计的会话信息
 	  如果应用上下文为“/”时,appcode为ROOT
 	 -->
-<!-- 			<property name="appcode" value="pdp"/> -->
-			<property name="sessionlisteners" value="org.frameworkset.security.session.impl.NullSessionListener"/>		
+			<!--<property name="appcode" value="10_25_192_142_pdp"/>-->
+			
+			<property name="appcode" value="pdp"/>
+			<!-- 
+			domain：指定跨应用之间共享session的cookie域名
+			shareSessionAttrs:配置需要在应用间共享的会话数据属性名称，以逗号分隔；如果没有配置shareSessionAttrs属性，则所有的属性都是共享数据 
+			domainApps：指定需要session共享的应用列表，每个应用必须指定path属性（对应应用上下文路径），如果应用指定了attributeNamespace属性，则用attributeNamespace对应的值来限定应用私有的会话数据名称
+						每个app的attributeNamespace属性只有在CrossDomain上指定了shareSessionAttrs属性才有意义
+			-->
+			<property name="crossDomain" class="org.frameworkset.security.session.domain.CrossDomain" 
+			    f:domain="sany.com.cn"
+			    f:shareSessionAttrs="CREDENTIAL_INDEXS,SESSIONID_CACHE_KEY,PRINCIPAL_INDEXS"
+			    init-method="init">
+			    <property name="domainApps">
+				    <list componentType="bean">
+				        <property class="org.frameworkset.security.session.domain.App"
+				            	f:path="/SanyPDP"
+				            	f:attributeNamespace="pdp_sany_com_cn_"
+				            	init-method="init"
+				            />				        
+				        <property class="org.frameworkset.security.session.domain.App"				            	
+				            	f:path="/g4studio"	
+				            	f:attributeNamespace="g4_sany_com_cn_"
+				            	init-method="init"
+				            />    
+				    </list>
+			    </property>
+			</property>    
+            <property name="sessionlisteners" value="org.frameworkset.security.session.impl.NullSessionListener"/>
 	</property>
 	
 	<property name="sessionStaticManager" class="org.frameworkset.security.session.statics.MongoSessionStaticManagerImpl"/>	
-			
+	
 	<property name="sessionstore" class="org.frameworkset.security.session.impl.MongDBSessionStore"/>
 </properties>
 

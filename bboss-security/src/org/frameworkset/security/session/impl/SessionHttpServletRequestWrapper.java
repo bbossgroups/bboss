@@ -15,6 +15,8 @@
  */
 package org.frameworkset.security.session.impl;
 
+import java.util.List;
+
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
@@ -23,6 +25,8 @@ import javax.servlet.http.HttpSession;
 
 import org.frameworkset.security.session.Session;
 import org.frameworkset.security.session.SessionBasicInfo;
+import org.frameworkset.security.session.domain.App;
+import org.frameworkset.security.session.domain.CrossDomain;
 
 import com.frameworkset.util.StringUtil;
 
@@ -76,12 +80,7 @@ public class SessionHttpServletRequestWrapper extends HttpServletRequestWrapper 
 		{
 			if(create)
 			{
-//				int cookielivetime = (int)SessionHelper.getSessionManager().getSessionTimeout();
-//				if(cookielivetime <= 0)
-//				{
-//					cookielivetime = Integer.MAX_VALUE;
-//				}
-				int cookielivetime = -1;
+
 				String contextpath = getAppKey();
 				SessionBasicInfo sessionBasicInfo = new SessionBasicInfo();
 				sessionBasicInfo.setAppKey(contextpath);
@@ -91,8 +90,8 @@ public class SessionHttpServletRequestWrapper extends HttpServletRequestWrapper 
 				Session session = SessionHelper.createSession(sessionBasicInfo);				
 				sessionid = session.getId();
 				this.session = new HttpSessionImpl(session,servletContext);
-				StringUtil.addCookieValue(this, response, SessionHelper.getSessionManager().getCookiename(), sessionid, cookielivetime,SessionHelper.getSessionManager().isHttpOnly(),
-						SessionHelper.getSessionManager().isSecure(),SessionHelper.getSessionManager().getDomain()); 
+
+				writeCookies( );
 				return this.session;
 			}
 			else
@@ -106,18 +105,16 @@ public class SessionHttpServletRequestWrapper extends HttpServletRequestWrapper 
 		}
 		else
 		{
-			Session session = SessionHelper.getSession(this.getContextPath().replace("/", ""),sessionid);
+			String contextpath = getAppKey();
+
+			Session session = SessionHelper.getSession(contextpath,sessionid);
 			if(session == null)//session不存在，创建新的session
 			{				
 				if(create)
 				{
-//					int cookielivetime = (int)SessionHelper.getSessionManager().getSessionTimeout();
-//					if(cookielivetime <= 0)
-//					{
-//						cookielivetime = Integer.MAX_VALUE;
-//					}
-					int cookielivetime = -1;
-					String contextpath = getAppKey();
+
+				
+					
 					SessionBasicInfo sessionBasicInfo = new SessionBasicInfo();
 					sessionBasicInfo.setAppKey(contextpath);
 					sessionBasicInfo.setReferip(StringUtil.getClientIP(this));
@@ -126,8 +123,8 @@ public class SessionHttpServletRequestWrapper extends HttpServletRequestWrapper 
 					session = SessionHelper.createSession(sessionBasicInfo);
 					sessionid = session.getId();
 					this.session =  new HttpSessionImpl(session,servletContext);
-					StringUtil.addCookieValue(this, response, SessionHelper.getSessionManager().getCookiename(), sessionid, cookielivetime,SessionHelper.getSessionManager().isHttpOnly(),
-							SessionHelper.getSessionManager().isSecure(),SessionHelper.getSessionManager().getDomain());
+
+					writeCookies( );
 				}
 			}
 			else
@@ -159,6 +156,53 @@ public class SessionHttpServletRequestWrapper extends HttpServletRequestWrapper 
 			}
 		}
 		
+	}
+	private void writeCookies( )
+	{
+		int cookielivetime = -1;
+		CrossDomain crossDomain = SessionHelper.getSessionManager().getCrossDomain() ;
+		if(SessionHelper.getSessionManager().getCrossDomain() == null)
+		{
+			StringUtil.addCookieValue(this, response, SessionHelper.getSessionManager().getCookiename(), sessionid, cookielivetime,SessionHelper.getSessionManager().isHttpOnly(),
+					SessionHelper.getSessionManager().isSecure(),SessionHelper.getSessionManager().getDomain());
+		}
+		else
+		{
+			List<App> apps = crossDomain.getApps();
+			if(crossDomain.get_paths() != null)
+			{
+				for(String path:crossDomain.get_paths())
+				{
+					StringUtil.addCookieValue(this, path,
+												response, 
+												SessionHelper.getSessionManager().getCookiename(), 
+												sessionid, cookielivetime,
+												SessionHelper.getSessionManager().isHttpOnly(),								
+												SessionHelper.getSessionManager().isSecure(),
+												crossDomain.getDomain());
+				}
+			}
+			else
+			{
+				for(App app:apps)
+				{
+					if(app.getPath() == null)
+					{
+						StringUtil.addCookieValue(this, response, SessionHelper.getSessionManager().getCookiename(), sessionid, cookielivetime,SessionHelper.getSessionManager().isHttpOnly(),
+								SessionHelper.getSessionManager().isSecure(),crossDomain.getDomain());
+					}
+					else
+					{
+						
+						StringUtil.addCookieValue(this, app.getPath(),response, SessionHelper.getSessionManager().getCookiename(), sessionid, cookielivetime,SessionHelper.getSessionManager().isHttpOnly(),								
+								SessionHelper.getSessionManager().isSecure(),crossDomain.getDomain());
+						
+						
+					}
+				}
+			}
+			
+		}
 	}
 
 }
