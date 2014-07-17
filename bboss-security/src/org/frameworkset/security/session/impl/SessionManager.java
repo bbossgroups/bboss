@@ -78,7 +78,7 @@ public class SessionManager {
 			String cookiename, boolean httponly,
 			long cookieLiveTime,String listeners) {
 		this.sessionTimeout = sessionTimeout;
-		this.sessionStore = SessionStoreFactory.getTokenStore(sessionStore,this);
+		this.sessionStore = SessionStoreFactory.getSessionStore(sessionStore,this);
 		if(this.sessionStore == null)
 			this.usewebsession = true;
 		this.cookiename = cookiename;
@@ -98,7 +98,7 @@ public class SessionManager {
 	
 	public void init()
 	{
-		this.sessionStore = SessionStoreFactory.getTokenStore(sessionstore,this);
+		this.sessionStore = SessionStoreFactory.getSessionStore(sessionstore,this);
 		if(this.sessionStore == null)
 			this.usewebsession = true;
 		if(!StringUtil.isEmpty(this.sessionlisteners))

@@ -62,15 +62,16 @@ public class DelegateSessionStore implements SessionStore {
 	}
 
 	@Override
-	public Object getAttribute(String appKey, String sessionID, String attribute) {
+	public Object getAttribute(String appKey,String contextpath, String sessionID, String attribute) {
 		// TODO Auto-generated method stub
-		return sessionStore.getAttribute(appKey, sessionID, attribute);
+		String _attribute = SessionHelper.wraperAttributeName(appKey,contextpath,  attribute);
+		return sessionStore.getAttribute(appKey, contextpath, sessionID, _attribute);
 	}
 
 	@Override
-	public Enumeration getAttributeNames(String appKey, String sessionID) {
+	public Enumeration getAttributeNames(String appKey,String contextpath, String sessionID) {
 		// TODO Auto-generated method stub
-		return this.sessionStore.getAttributeNames(appKey, sessionID);
+		return this.sessionStore.getAttributeNames(appKey, contextpath, sessionID);
 	}
 
 	@Override
@@ -87,14 +88,14 @@ public class DelegateSessionStore implements SessionStore {
 	}
 
 	@Override
-	public String[] getValueNames(String appKey, String sessionID) {
+	public String[] getValueNames(String appKey,String contextpath, String sessionID) {
 		// TODO Auto-generated method stub
-		return this.sessionStore.getValueNames(appKey, sessionID);
+		return this.sessionStore.getValueNames(appKey, contextpath, sessionID);
 	}
 
 	@Override
-	public Session invalidate(String appKey, String sessionID) {
-		Session session = this.sessionStore.invalidate(appKey, sessionID);
+	public Session invalidate(String appKey,String contextpath, String sessionID) {
+		Session session = this.sessionStore.invalidate(appKey, contextpath, sessionID);
 		if(session == null)
 		{
 			return null;
@@ -111,26 +112,27 @@ public class DelegateSessionStore implements SessionStore {
 	}
 
 	@Override
-	public Object removeAttribute(String appKey, String sessionID,
+	public Object removeAttribute(String appKey,String contextpath, String sessionID,
 			String attribute) {
-		Session session = (Session)this.sessionStore.removeAttribute(appKey, sessionID, attribute);		
+		String _attribute = SessionHelper.wraperAttributeName(appKey,contextpath,  attribute);
+		Session session = (Session)this.sessionStore.removeAttribute(appKey, contextpath, sessionID, _attribute);		
 		if(session == null)
 			return null;
 		session._setSessionStore(this);
 		SessionHelper.dispatchEvent(new SessionEventImpl(session,SessionEvent.EventType_removeAttibute)
 										.setAttributeName(attribute)
-										.setAttributeValue(session.getAttribute(attribute)));
+										.setAttributeValue(session.getCacheAttribute(attribute)));
 		return session;
 
 	}
 
 	@Override
-	public Object addAttribute(String appKey, String sessionID, String attribute,
+	public Object addAttribute(String appKey,String contextpath, String sessionID, String attribute,
 			Object value) {
 		Object temp = value;
 		value = SessionHelper.serial(value);
-		
-		Session session = (Session)this.sessionStore.addAttribute(appKey, sessionID, attribute, value);
+		String _attribute = SessionHelper.wraperAttributeName(appKey,contextpath,  attribute);
+		Session session = (Session)this.sessionStore.addAttribute(appKey, contextpath, sessionID, _attribute, value);
 		if(session == null)
 			return null;
 		session._setSessionStore(this);
@@ -148,12 +150,14 @@ public class DelegateSessionStore implements SessionStore {
 	}
 
 	@Override
-	public Session getSession(String appKey, String sessionid) {
+	public Session getSession(String appKey,String contextpath, String sessionid) {
 		// TODO Auto-generated method stub
-		Session session = this.sessionStore.getSession(appKey, sessionid);
+		Session session = this.sessionStore.getSession(appKey, contextpath, sessionid);
 		if(session != null)
 			session._setSessionStore(this);
 		return session;
 	}
+	
+	
 
 }

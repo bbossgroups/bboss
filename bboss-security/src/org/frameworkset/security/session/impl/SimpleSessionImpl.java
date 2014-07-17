@@ -30,7 +30,7 @@ public class SimpleSessionImpl implements Session{
 	{
 		attributes = new HashMap<String,Object>();
 	}
-	private void assertSession() 
+	private void assertSession(String contextpath) 
 	{
 		
 		if(assertValidate != null)
@@ -50,20 +50,25 @@ public class SimpleSessionImpl implements Session{
 		}
 		if(!assertValidate.booleanValue())
 		{
-			this.invalidate();
+			this.invalidate(contextpath);
 //			throw new SessionInvalidateException("Session " +this.getId() + "已经失效!");
 			throw new IllegalStateException("Session " +this.getId() + "已经失效!"); 
 		}
 			
 	}
+	public Object getCacheAttribute(String attribute)
+	{
+		Object value = this.attributes.get(attribute);
+		return value;
+	}
 	@Override
-	public Object getAttribute(String attribute) {
-		assertSession() ;
+	public Object getAttribute(String attribute,String contextpath) {
+		assertSession(contextpath) ;
 		
 		Object value = this.attributes.get(attribute);
 		if(value == null)
 		{
-			value = sessionStore.getAttribute(appKey,id,attribute);
+			value = sessionStore.getAttribute(appKey, contextpath,id,attribute);
 			if(value != null)
 			{
 				this.attributes.put(attribute, value);
@@ -84,10 +89,10 @@ public class SimpleSessionImpl implements Session{
 	}
 
 	@Override
-	public Enumeration getAttributeNames() {
-		assertSession() ;
+	public Enumeration getAttributeNames(String contextpath) {
+		assertSession(contextpath) ;
 		
-		return sessionStore.getAttributeNames(appKey,id);
+		return sessionStore.getAttributeNames(appKey, contextpath,id);
 	}
 
 	@Override
@@ -103,8 +108,8 @@ public class SimpleSessionImpl implements Session{
 	}
 
 	@Override
-	public void touch(String lastAccessedUrl) {
-		assertSession() ;
+	public void touch(String lastAccessedUrl,String contextpath) {
+		assertSession(contextpath) ;
 		lastAccessedTime = System.currentTimeMillis();		
 		sessionStore.updateLastAccessedTime(appKey,id,lastAccessedTime, lastAccessedUrl);
 //		assertSession() ;
@@ -124,30 +129,30 @@ public class SimpleSessionImpl implements Session{
 	}
 
 	@Override
-	public Object getValue(String attribute) {
+	public Object getValue(String attribute,String contextpath) {
 		// TODO Auto-generated method stub
-		return getAttribute( attribute);
+		return getAttribute( attribute, contextpath);
 	}
 
 	@Override
-	public String[] getValueNames() {
-		assertSession() ;
+	public String[] getValueNames(String contextpath) {
+		assertSession(contextpath) ;
 		if(!this.isValidate())
 		{
 			return null;
 		}
-		return sessionStore.getValueNames(appKey,id);
+		return sessionStore.getValueNames(appKey, contextpath,id);
 	}
 
 	@Override
-	public void invalidate() {
+	public void invalidate(String contextpath) {
 		
 		if(!dovalidate)
 		{
 			this.dovalidate = true;
 			if(validate)
 			{
-				sessionStore.invalidate(appKey,id);
+				sessionStore.invalidate(appKey, contextpath,id);
 				this.validate =false;
 				this.attributes.clear();
 			}
@@ -168,34 +173,34 @@ public class SimpleSessionImpl implements Session{
 		this.isNew = true;
 	}
 	@Override
-	public void putValue(String attribute, Object value) {
-		setAttribute( attribute,  value) ;
+	public void putValue(String attribute, Object value,String contextpath) {
+		setAttribute( attribute,  value, contextpath) ;
 		
 	}
 
 	@Override
-	public void removeAttribute(String attribute) {
-		assertSession() ;
+	public void removeAttribute(String attribute,String contextpath) {
+		assertSession( contextpath) ;
 		if(!this.isValidate())
 		{
 			return ;
 		}
-		sessionStore.removeAttribute(appKey,id,attribute);
+		sessionStore.removeAttribute(appKey, contextpath,id,attribute);
 		this.attributes.remove(attribute);
 		
 	}
 
 	@Override
-	public void removeValue(String attribute) {
-		removeAttribute( attribute);
+	public void removeValue(String attribute,String contextpath) {
+		removeAttribute( attribute, contextpath);
 		
 	}
 
 	@Override
-	public void setAttribute(String attribute, Object value) {
-		assertSession() ;
+	public void setAttribute(String attribute, Object value,String contextpath) {
+		assertSession( contextpath) ;
 		
-		sessionStore.addAttribute(appKey,id,attribute,value);
+		sessionStore.addAttribute(appKey, contextpath,id,attribute,value);
 		this.attributes.put(attribute, value);
 	}
 
@@ -255,11 +260,11 @@ public class SimpleSessionImpl implements Session{
 		this.validate = validate;
 	}
 	public Map<String, Object> getAttributes() {
-		assertSession() ;
+//		assertSession() ;
 		return attributes;
 	}
 	public void setAttributes(Map<String, Object> attributes) {
-		assertSession() ;
+//		assertSession() ;
 		this.attributes = attributes;
 	}
 	

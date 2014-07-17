@@ -29,7 +29,7 @@ import com.frameworkset.util.StringUtil;
  * @version 3.8.0
  */
 public class SessionStoreFactory {
-	public static SessionStore getTokenStore(Object sessionStore,SessionManager sessionManager)
+	public static SessionStore getSessionStore(Object sessionStore,SessionManager sessionManager)
 	{
 		if(sessionStore == null)
 			return null;

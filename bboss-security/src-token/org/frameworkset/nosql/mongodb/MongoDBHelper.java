@@ -77,11 +77,11 @@ public class MongoDBHelper {
 		return appKey+"_sessions";
 	}
 	
-	public static Map toMap(DBObject object,boolean deserial) {
+	public static Map<String,Object> toMap(DBObject object,boolean deserial) {
 
 		Set set = object.keySet();
 		if (set != null && set.size() > 0) {
-			Map attrs = new HashMap();
+			Map<String,Object> attrs = new HashMap<String,Object>();
 			Iterator it = set.iterator();
 			while (it.hasNext()) {
 				String key = (String) it.next();
@@ -90,6 +90,33 @@ public class MongoDBHelper {
 					try {
 						attrs.put(MongoDBHelper.recoverSpecialChar(key),
 								deserial?SessionHelper.unserial((String) value):value);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+			return attrs;
+		}
+		return null;
+	}
+	
+	public static Map<String,Object> toMap(String appkey,String contextpath,DBObject object,boolean deserial) {
+
+		Set set = object.keySet();
+		if (set != null && set.size() > 0) {
+			Map<String,Object> attrs = new HashMap<String,Object>();
+			Iterator it = set.iterator();
+			while (it.hasNext()) {
+				String key = (String) it.next();
+				if (!MongoDBHelper.filter(key)) {
+					Object value = object.get(key);
+					try {
+						String temp = MongoDBHelper.recoverSpecialChar(key);
+						temp = SessionHelper.dewraperAttributeName(appkey, contextpath, temp);
+						if(temp != null)
+							attrs.put(temp,
+									deserial?SessionHelper.unserial((String) value):value);
 					} catch (Exception e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();

@@ -37,27 +37,27 @@ public interface SessionStore{
 //	Session createSession(String appKey,String referip,String reqesturi);
 	Session createSession(SessionBasicInfo sessionBasicInfo);
 
-	Object getAttribute(String appKey,String sessionID, String attribute);
+	Object getAttribute(String appKey,String contextpath,String sessionID, String attribute);
 
-	Enumeration getAttributeNames(String appKey,String sessionID);
+	Enumeration getAttributeNames(String appKey,String contextpath,String sessionID);
 
 	void updateLastAccessedTime(String appKey,String sessionID, long lastAccessedTime,String lastAccessedUrl);
 
 	long getLastAccessedTime(String appKey,String sessionID);
 
-	String[] getValueNames(String appKey,String sessionID);
+	String[] getValueNames(String appKey,String contextpath,String sessionID);
 
-	Session invalidate(String appKey,String sessionID);
+	Session invalidate(String appKey,String contextpath,String sessionID);
 
 	boolean isNew(String appKey,String sessionID);
 
-	Object removeAttribute(String appKey,String sessionID, String attribute);
+	Object removeAttribute(String appKey,String contextpath,String sessionID, String attribute);
 
-	Object addAttribute(String appKey,String sessionID, String attribute, Object value);
+	Object addAttribute(String appKey,String contextpath,String sessionID, String attribute, Object value);
 
 	void setSessionManager(SessionManager sessionManager);
 	
-	Session getSession(String appKey,String sessionid);
+	Session getSession(String appKey,String contextpath,String sessionid);
 	
 
 }

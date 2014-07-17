@@ -81,15 +81,15 @@ public class SessionHttpServletRequestWrapper extends HttpServletRequestWrapper 
 			if(create)
 			{
 
-				String contextpath = getAppKey();
+				String appkey = getAppKey();
 				SessionBasicInfo sessionBasicInfo = new SessionBasicInfo();
-				sessionBasicInfo.setAppKey(contextpath);
+				sessionBasicInfo.setAppKey(appkey);
 				sessionBasicInfo.setReferip(StringUtil.getClientIP(this));
 				sessionBasicInfo.setRequesturi(this.getRequestURI());
 				
 				Session session = SessionHelper.createSession(sessionBasicInfo);				
 				sessionid = session.getId();
-				this.session = new HttpSessionImpl(session,servletContext);
+				this.session = new HttpSessionImpl(session,servletContext,this.getContextPath());
 
 				writeCookies( );
 				return this.session;
@@ -105,9 +105,9 @@ public class SessionHttpServletRequestWrapper extends HttpServletRequestWrapper 
 		}
 		else
 		{
-			String contextpath = getAppKey();
+			String appkey = getAppKey();
 
-			Session session = SessionHelper.getSession(contextpath,sessionid);
+			Session session = SessionHelper.getSession(appkey,this.getContextPath(),sessionid);
 			if(session == null)//session不存在，创建新的session
 			{				
 				if(create)
@@ -116,20 +116,20 @@ public class SessionHttpServletRequestWrapper extends HttpServletRequestWrapper 
 				
 					
 					SessionBasicInfo sessionBasicInfo = new SessionBasicInfo();
-					sessionBasicInfo.setAppKey(contextpath);
+					sessionBasicInfo.setAppKey(appkey);
 					sessionBasicInfo.setReferip(StringUtil.getClientIP(this));
 					sessionBasicInfo.setRequesturi(this.getRequestURI());
 					
 					session = SessionHelper.createSession(sessionBasicInfo);
 					sessionid = session.getId();
-					this.session =  new HttpSessionImpl(session,servletContext);
+					this.session =  new HttpSessionImpl(session,servletContext,this.getContextPath());
 
 					writeCookies( );
 				}
 			}
 			else
 			{
-				this.session =  new HttpSessionImpl(session,servletContext);
+				this.session =  new HttpSessionImpl(session,servletContext,this.getContextPath());
 			}
 			return this.session;
 		}
@@ -144,11 +144,11 @@ public class SessionHttpServletRequestWrapper extends HttpServletRequestWrapper 
 		{
 			if(session == null)
 			{
-				String contextpath = getAppKey();
-				Session session_ = SessionHelper.getSession(contextpath, sessionid);
+				String appkey = getAppKey();
+				Session session_ = SessionHelper.getSession(appkey,this.getContextPath(), sessionid);
 				if(session_ == null || !session_.isValidate())
 					return;
-				this.session =  new HttpSessionImpl(session_,servletContext);
+				this.session =  new HttpSessionImpl(session_,servletContext,this.getContextPath());
 			}
 			if(session != null && !session.isNew() )
 			{

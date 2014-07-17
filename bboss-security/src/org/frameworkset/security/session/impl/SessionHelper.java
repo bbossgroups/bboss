@@ -17,6 +17,7 @@ package org.frameworkset.security.session.impl;
 
 import org.frameworkset.security.session.Session;
 import org.frameworkset.security.session.SessionBasicInfo;
+import org.frameworkset.security.session.domain.CrossDomain;
 import org.frameworkset.security.session.statics.NullSessionStaticManagerImpl;
 import org.frameworkset.security.session.statics.SessionStaticManager;
 import org.frameworkset.soa.ObjectSerializable;
@@ -72,9 +73,9 @@ public class SessionHelper {
 		sessionManager.dispatchEvent(sessionEvent);
 	}
 
-	public static Session getSession(String contextPath, String sessionid) {
+	public static Session getSession(String appkey,String contextPath, String sessionid) {
 		// TODO Auto-generated method stub
-		return sessionManager.getSessionStore().getSession(contextPath, sessionid);
+		return sessionManager.getSessionStore().getSession(appkey,contextPath, sessionid);
 	}
 	
 
@@ -98,4 +99,21 @@ public class SessionHelper {
 			return null;
 		return ObjectSerializable.toBean(value, Object.class);
 	}
+	
+	public static String wraperAttributeName(String appkey,String contextpath, String attribute)
+	{
+		CrossDomain crossDomain = sessionManager.getCrossDomain();
+		if(crossDomain == null)
+			return attribute;
+		return crossDomain.wraperAttributeName(appkey, contextpath, attribute);
+	}
+	
+	public static String dewraperAttributeName(String appkey,String contextpath, String attribute)
+	{
+		CrossDomain crossDomain = sessionManager.getCrossDomain();
+		if(crossDomain == null)
+			return attribute;
+		return crossDomain.dewraperAttributeName(appkey, contextpath, attribute);
+	}
+	
 }

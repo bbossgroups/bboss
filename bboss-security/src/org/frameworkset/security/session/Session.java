@@ -5,10 +5,10 @@ import java.util.Enumeration;
 public interface Session {
 
 	
-	public Object getAttribute(String attribute) ;
+	public Object getAttribute(String attribute,String contextpath) ;
 
-	
-	public Enumeration getAttributeNames() ;
+	public Object getCacheAttribute(String attribute);
+	public Enumeration getAttributeNames(String contextpath) ;
 
 	
 	public long getCreationTime() ;
@@ -17,7 +17,7 @@ public interface Session {
 	/**
 	 * 更新最后访问时间
 	 */
-	public void touch(String lastAccessedUrl);
+	public void touch(String lastAccessedUrl,String contextpath);
 	public long getLastAccessedTime() ;
 	public long getMaxInactiveInterval();
 
@@ -34,16 +34,16 @@ public interface Session {
 //	}
 
 	
-	public Object getValue(String attribute) ;
-	public String[] getValueNames() ;
-	public void invalidate() ;
+	public Object getValue(String attribute,String contextpath) ;
+	public String[] getValueNames(String contextpath) ;
+	public void invalidate(String contextpath) ;
 	public boolean isNew() ;
-	public void putValue(String attribute, Object value) ;
+	public void putValue(String attribute, Object value,String contextpath) ;
 
 	
-	public void removeAttribute(String attribute) ;
-	public void removeValue(String attribute) ;
-	public void setAttribute(String attribute, Object value) ;
+	public void removeAttribute(String attribute,String contextpath) ;
+	public void removeValue(String attribute,String contextpath) ;
+	public void setAttribute(String attribute, Object value,String contextpath) ;
 	public void setMaxInactiveInterval(long maxInactiveInterval) ;
 	public String getReferip();
 	public boolean isValidate();

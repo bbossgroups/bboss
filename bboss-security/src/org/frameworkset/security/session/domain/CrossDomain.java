@@ -1,7 +1,9 @@
 package org.frameworkset.security.session.domain;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.frameworkset.util.SimpleStringUtil;
 
@@ -54,8 +56,10 @@ public class CrossDomain {
 			this._shareSessionAttrs = Arrays.asList(temp);
 			if(this.apps != null)
 			{
+				appsIdxs = new HashMap<String,App>();
 				for(App app:apps)
 				{
+					
 					if(SimpleStringUtil.isEmpty(app.getAttributeNamespace()))
 					{
 						String ns = this.domain.replace('.', '#') + "#";
@@ -65,13 +69,64 @@ public class CrossDomain {
 							ns = app.getPath()+"#"+ns;
 						app.setAttributeNamespace(ns);
 					}
+					appsIdxs.put(app.getPath(), app);
 				}
 			}
 		}
 		
 	}
+	public App getApp(String contextPath)
+	{
+		if(appsIdxs == null)
+			return null;
+		return this.appsIdxs.get(contextPath);
+	}
+	private Map<String,App> appsIdxs ;
 	public List<String> get_paths() {
 		return _paths;
+	}
+	
+	public boolean isShareAttribute(String attribute)
+	{
+		if(SimpleStringUtil.isEmpty(this.shareSessionAttrs))
+			return true;
+		return this.shareSessionAttrs.contains(attribute);
+	}
+	
+	public String wraperAttributeName(String appkey,String contextpath, String attribute)
+	{
+		
+		App app = this.getApp(contextpath);
+		if(app == null)
+			return attribute;
+		if(isShareAttribute(attribute))
+		{
+			return attribute;
+		}
+		return app.getAttributeNamespace() + attribute;
+	}
+	
+	/**
+	 * 如果属性石共享属性或者是contextpath应用的属性则返回相应的属性，否则返回null
+	 * @param appkey
+	 * @param contextpath
+	 * @param attribute
+	 * @return
+	 */
+	public String dewraperAttributeName(String appkey,String contextpath, String attribute)
+	{
+		
+		App app = this.getApp(contextpath);
+		if(app == null)
+			return attribute;
+		if(isShareAttribute(attribute))
+		{
+			return attribute;
+		}
+		if(attribute.startsWith(app.getAttributeNamespace()))
+			return attribute.substring(app.getAttributeNamespace().length());
+		else
+			return null;
 	}
 
 }

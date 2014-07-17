@@ -35,21 +35,23 @@ import org.frameworkset.security.session.Session;
 public class HttpSessionImpl implements HttpSession {
 	private Session session = null;
 	private ServletContext servletContext;
-	public HttpSessionImpl(Session session,ServletContext servletContext)
+	private String contextpath;
+	public HttpSessionImpl(Session session,ServletContext servletContext,String contextpath)
 	{
 		this.session = session;
 		this.servletContext = servletContext;
+		this.contextpath = contextpath;
 	}
 	@Override
 	public Object getAttribute(String attribute) {
 		// TODO Auto-generated method stub
-		return session.getAttribute(attribute);
+		return session.getAttribute(attribute,contextpath);
 	}
 
 	@Override
 	public Enumeration getAttributeNames() {
 		// TODO Auto-generated method stub
-		return this.session.getAttributeNames();
+		return this.session.getAttributeNames(contextpath);
 	}
 
 	@Override
@@ -66,7 +68,7 @@ public class HttpSessionImpl implements HttpSession {
 
 	
 	public void touch(String lastAccessedUrl) {
-		session.touch( lastAccessedUrl);
+		session.touch( lastAccessedUrl,contextpath);
 
 	}
 
@@ -85,18 +87,18 @@ public class HttpSessionImpl implements HttpSession {
 	@Override
 	public Object getValue(String attribute) {
 		
-		return this.session.getValue(attribute);
+		return this.session.getValue(attribute,contextpath);
 	}
 
 	@Override
 	public String[] getValueNames() {
 		// TODO Auto-generated method stub
-		return session.getValueNames();
+		return session.getValueNames(contextpath);
 	}
 
 	@Override
 	public void invalidate() {
-		this.session.invalidate();
+		this.session.invalidate(contextpath);
 
 	}
 
@@ -108,25 +110,25 @@ public class HttpSessionImpl implements HttpSession {
 
 	@Override
 	public void putValue(String attribute, Object value) {
-		session.putValue(attribute, value);
+		session.putValue(attribute, value,contextpath);
 
 	}
 
 	@Override
 	public void removeAttribute(String attribute) {
-		session.removeAttribute(attribute);
+		session.removeAttribute(attribute,contextpath);
 
 	}
 
 	@Override
 	public void removeValue(String attribute) {
-		session.removeValue(attribute);
+		session.removeValue(attribute,contextpath);
 
 	}
 
 	@Override
 	public void setAttribute(String attribute, Object value) {
-		session.setAttribute(attribute, value);
+		session.setAttribute(attribute, value,contextpath);
 
 	}
 //

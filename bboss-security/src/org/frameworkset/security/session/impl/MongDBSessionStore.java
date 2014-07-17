@@ -128,7 +128,7 @@ public class MongDBSessionStore extends BaseSessionStore{
 	
 
 	@Override
-	public Object getAttribute(String appKey,String sessionID, String attribute) {
+	public Object getAttribute(String appKey,String contextpath,String sessionID, String attribute) {
 		DBCollection sessions =getAppSessionDBCollection( appKey);
 		BasicDBObject keys = new BasicDBObject();
 		attribute = MongoDBHelper.converterSpecialChar( attribute);
@@ -142,7 +142,7 @@ public class MongDBSessionStore extends BaseSessionStore{
 	}
 
 	@Override
-	public Enumeration getAttributeNames(String appKey,String sessionID) {
+	public Enumeration getAttributeNames(String appKey,String contextpath,String sessionID) {
 //		DBCollection sessions =getAppSessionDBCollection( appKey);
 //		
 //		DBObject obj = sessions.findOne(new BasicDBObject("sessionid",sessionID));
@@ -178,7 +178,8 @@ public class MongDBSessionStore extends BaseSessionStore{
 	}
 
 	@Override
-	public String[] getValueNames(String appKey,String sessionID) {
+	public String[] getValueNames(String appKey,String contextpath,String sessionID) {
+		
 		DBCollection sessions =getAppSessionDBCollection( appKey);
 		
 		DBObject obj = sessions.findOne(new BasicDBObject("sessionid",sessionID));
@@ -189,23 +190,28 @@ public class MongDBSessionStore extends BaseSessionStore{
 		if(obj.keySet() != null)
 		{
 			valueNames = new String[obj.keySet().size()];
+			List<String> temp = new ArrayList<String>();
 			Iterator<String> keys = obj.keySet().iterator();
-			int i = 0; 
 			while(keys.hasNext())
 			{
-				valueNames[i] = keys.next();
-				i ++;
+				String tempstr = keys.next();
+				tempstr = SessionHelper.dewraperAttributeName(appKey, contextpath, tempstr);
+				if(tempstr != null)
+				{
+					temp.add(tempstr);
+				}
 			}
+			valueNames = (String[]) temp.toArray();
 			
 		}
 		return valueNames ;
 	}
 
 	@Override
-	public Session invalidate(String appKey,String sessionID) {
+	public Session invalidate(String appKey,String contextpath,String sessionID) {
 //		DBCollection sessions = getAppSessionDBCollection( appKey);		
 //		sessions.update(new BasicDBObject("sessionid",sessionID), new BasicDBObject("$set",new BasicDBObject("_validate", false)));
-		Session session = _getSession(appKey, sessionID);
+		Session session = _getSession(appKey, contextpath, sessionID);
 		return session;
 		
 	}
@@ -226,28 +232,28 @@ public class MongDBSessionStore extends BaseSessionStore{
 	}
 
 	@Override
-	public Object removeAttribute(String appKey,String sessionID, String attribute) {
+	public Object removeAttribute(String appKey,String contextpath,String sessionID, String attribute) {
 		DBCollection sessions = getAppSessionDBCollection( appKey);
 		List<String> list = new ArrayList<String>();
 //		attribute = converterSpecialChar( attribute);
 		list.add(attribute);
-		Session value = getSession(appKey, sessionID,list);
+		Session value = getSession(appKey, contextpath, sessionID,list);
 		sessions.update(new BasicDBObject("sessionid",sessionID), new BasicDBObject("$set",new BasicDBObject(list.get(0), null)));
 		return value;
 		
 	}
 
 	@Override
-	public Object addAttribute(String appKey,String sessionID, String attribute, Object value) {
+	public Object addAttribute(String appKey,String contextpath,String sessionID, String attribute, Object value) {
 		attribute = MongoDBHelper.converterSpecialChar( attribute);
 		DBCollection sessions = getAppSessionDBCollection( appKey);	
-		Session session = getSession(appKey, sessionID);
+		Session session = getSession(appKey,contextpath, sessionID);
 		sessions.update(new BasicDBObject("sessionid",sessionID), new BasicDBObject("$set",new BasicDBObject(attribute, value)));
 		
 		return session;
 		
 	}
-	public Session getSession(String appKey, String sessionid,List<String> attributeNames) {
+	private Session getSession(String appKey,String contextpath, String sessionid,List<String> attributeNames) {
 		DBCollection sessions =getAppSessionDBCollection( appKey);
 		BasicDBObject keys = new BasicDBObject();
 		keys.put("creationTime", 1);
@@ -309,7 +315,9 @@ public class MongDBSessionStore extends BaseSessionStore{
 				String name = attributeNames.get(i);
 				Object value = object.get(name);
 				try {
-					attributes.put(copy.get(i), SessionHelper.unserial((String)value));
+					String temp = SessionHelper.dewraperAttributeName(appKey, contextpath, copy.get(i));		
+					if(temp != null)
+						attributes.put(temp, SessionHelper.unserial((String)value));
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -324,7 +332,7 @@ public class MongDBSessionStore extends BaseSessionStore{
 		}
 	}
 	@Override
-	public Session getSession(String appKey, String sessionid) {
+	public Session getSession(String appKey,String contextpath, String sessionid) {
 		DBCollection sessions =getAppSessionDBCollection( appKey);
 		BasicDBObject keys = new BasicDBObject();
 		keys.put("creationTime", 1);
@@ -377,7 +385,7 @@ public class MongDBSessionStore extends BaseSessionStore{
 		}
 	}
 	
-	private Session _getSession(String appKey, String sessionid) {
+	private Session _getSession(String appKey,String contextpath, String sessionid) {
 		DBCollection sessions =getAppSessionDBCollection( appKey);
 	
 		
@@ -412,7 +420,7 @@ public class MongDBSessionStore extends BaseSessionStore{
 				session.setHttpOnly(StringUtil.hasHttpOnlyMethod()?SessionHelper.getSessionManager().isHttpOnly():false);
 			}
 //			session._setSessionStore(this);
-			Map<String,Object> attributes = MongoDBHelper.toMap(object,true);
+			Map<String,Object> attributes = MongoDBHelper.toMap(appKey, contextpath,object,true);
 			session.setAttributes(attributes);
 			return session;
 		}
