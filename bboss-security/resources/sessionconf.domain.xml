@@ -18,7 +18,7 @@
 	 当启用跨域会话共享时，就必须指定appcode
 	 -->
 		
-<!-- 			<property name="appcode" value="pdp"/> -->
+			<property name="appcode" value="pdp"/>
 			<!-- 
 			domain：指定跨域共享的根域，基于该域名的子域名都可以共享session
 			shareSessionAttrs:配置需要在应用间共享的会话数据属性名称，以逗号分隔；如果没有配置shareSessionAttrs属性，则所有的属性都是共享数据 
@@ -27,7 +27,7 @@
 			path:共享session的应用上下文名称
 			attributeNamespace:共享session应用私有session属性名称命名空间，用来限定应用私有session数据的存储空间  ，如果指定了shareSessionAttrs则必须指定每个应用的attributeNamespace			
 			-->
-			<!-- <property name="crossDomain" class="org.frameworkset.security.session.domain.CrossDomain" 
+			<property name="crossDomain" class="org.frameworkset.security.session.domain.CrossDomain" 
 			    f:domain="sany.com.cn"  
 			    f:shareSessionAttrs="CREDENTIAL_INDEXS,PRINCIPAL_INDEXS" 
 			    init-method="init">
@@ -51,7 +51,7 @@
 				            />
 				    </list>
 			    </property>
-			</property>  -->  
+			</property>    
 <!--             <property name="sessionlisteners" value="org.frameworkset.security.session.impl.NullSessionListener"/> -->
 	</property>
 	

@@ -57,7 +57,10 @@ public class DelegateSessionStore implements SessionStore {
 			return null;
 		session._setSessionStore(this);
 		session.putNewStatus();
-		SessionHelper.dispatchEvent(new SessionEventImpl(session,SessionEvent.EventType_create));
+		if(SessionHelper.haveSessionListener())
+		{
+			SessionHelper.dispatchEvent(new SessionEventImpl(session,SessionEvent.EventType_create));
+		}
 		return session;
 	}
 
@@ -101,7 +104,10 @@ public class DelegateSessionStore implements SessionStore {
 			return null;
 		}
 		session._setSessionStore(this);
-		SessionHelper.dispatchEvent(new SessionEventImpl(session,SessionEvent.EventType_destroy));
+		if(SessionHelper.haveSessionListener())
+		{
+			SessionHelper.dispatchEvent(new SessionEventImpl(session,SessionEvent.EventType_destroy));
+		}
 		return session;
 	}
 
@@ -119,9 +125,12 @@ public class DelegateSessionStore implements SessionStore {
 		if(session == null)
 			return null;
 		session._setSessionStore(this);
-		SessionHelper.dispatchEvent(new SessionEventImpl(session,SessionEvent.EventType_removeAttibute)
+		if(SessionHelper.haveSessionListener())
+		{
+			SessionHelper.dispatchEvent(new SessionEventImpl(session,SessionEvent.EventType_removeAttibute)
 										.setAttributeName(attribute)
 										.setAttributeValue(session.getCacheAttribute(attribute)));
+		}
 		return session;
 
 	}
@@ -136,9 +145,12 @@ public class DelegateSessionStore implements SessionStore {
 		if(session == null)
 			return null;
 		session._setSessionStore(this);
-		SessionHelper.dispatchEvent(new SessionEventImpl(session,SessionEvent.EventType_addAttibute)
+		if(SessionHelper.haveSessionListener())
+		{
+			SessionHelper.dispatchEvent(new SessionEventImpl(session,SessionEvent.EventType_addAttibute)
 										.setAttributeName(attribute)
 										.setAttributeValue(temp));
+		}
 		return session;
 	}
 

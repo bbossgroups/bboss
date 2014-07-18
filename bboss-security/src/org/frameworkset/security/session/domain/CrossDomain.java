@@ -9,7 +9,7 @@ import com.frameworkset.util.SimpleStringUtil;
 
 public class CrossDomain {
 	private String domain;
-	private List<App> apps;
+	private List<App> domainApps;
 	/**
 	 * session共享对应的cookie 路径名称，多个应用path以,号分隔
 	 */
@@ -31,12 +31,7 @@ public class CrossDomain {
 	public void setDomain(String domain) {
 		this.domain = domain;
 	}
-	public List<App> getApps() {
-		return apps;
-	}
-	public void setApps(List<App> apps) {
-		this.apps = apps;
-	}
+	
 	public List<String> get_shareSessionAttrs() {
 		return _shareSessionAttrs;
 	}
@@ -54,20 +49,33 @@ public class CrossDomain {
 		{
 			String[] temp = shareSessionAttrs.split(",");
 			this._shareSessionAttrs = Arrays.asList(temp);
-			if(this.apps != null)
+			if(this.domainApps != null)
 			{
 				appsIdxs = new HashMap<String,App>();
-				for(App app:apps)
+				for(App app:domainApps)
 				{
 					
 					if(SimpleStringUtil.isEmpty(app.getAttributeNamespace()))
 					{
-						String ns = this.domain.replace('.', '#') + "#";
-						if(app.getPath().startsWith("/"))
-							ns = app.getPath().substring(1)+"#"+ns;
+						String ns = this.domain.replace('.', '_') + "#";
+						if(app.getPath().equals("/"))
+						{
+							ns = "ROOT_"+ns;
+						}
+						else if(app.getPath().startsWith("/"))
+						{
+							ns = app.getPath().substring(1)+"_"+ns;
+						}
 						else
-							ns = app.getPath()+"#"+ns;
+						{
+							ns = app.getPath()+"_"+ns;
+						}
 						app.setAttributeNamespace(ns);
+					}
+					else
+					{
+						if(!app.getAttributeNamespace().endsWith("#"))
+							app.setAttributeNamespace(app.getAttributeNamespace()+"#");
 					}
 					appsIdxs.put(app.getPath(), app);
 				}
@@ -79,8 +87,13 @@ public class CrossDomain {
 	{
 		if(appsIdxs == null)
 			return null;
-		return this.appsIdxs.get(contextPath);
+		if(currentApp != null)
+		{
+			return currentApp;
+		}
+		return currentApp = this.appsIdxs.get(contextPath);
 	}
+	private App currentApp;
 	private Map<String,App> appsIdxs ;
 	public List<String> get_paths() {
 		return _paths;
@@ -128,5 +141,12 @@ public class CrossDomain {
 		else
 			return null;
 	}
+	public List<App> getDomainApps() {
+		return domainApps;
+	}
+	public void setDomainApps(List<App> domainApps) {
+		this.domainApps = domainApps;
+	}
+	
 
 }

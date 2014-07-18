@@ -72,6 +72,11 @@ public class SessionHelper {
 	{
 		sessionManager.dispatchEvent(sessionEvent);
 	}
+	
+	public static boolean haveSessionListener() 
+	{
+		return sessionManager.haveSessionListener();
+	}
 
 	public static Session getSession(String appkey,String contextPath, String sessionid) {
 		// TODO Auto-generated method stub

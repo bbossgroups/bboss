@@ -64,10 +64,10 @@ public class SessionHttpServletRequestWrapper extends HttpServletRequestWrapper 
 		{
 			return appcode;
 		}
-		String contextpath = this.getContextPath().replace("/", "");
-		if(contextpath.equals(""))
-			contextpath = "ROOT";
-		return contextpath;
+		String appKey = this.getContextPath().replace("/", "");
+		if(appKey.equals(""))
+			appKey = "ROOT";
+		return appKey;
 	}
 	@Override
 	public HttpSession getSession(boolean create) {
@@ -168,7 +168,7 @@ public class SessionHttpServletRequestWrapper extends HttpServletRequestWrapper 
 		}
 		else
 		{
-			List<App> apps = crossDomain.getApps();
+			List<App> apps = crossDomain.getDomainApps();
 			if(crossDomain.get_paths() != null)
 			{
 				for(String path:crossDomain.get_paths())

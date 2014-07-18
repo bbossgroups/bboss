@@ -234,12 +234,22 @@ public class MongDBSessionStore extends BaseSessionStore{
 	@Override
 	public Object removeAttribute(String appKey,String contextpath,String sessionID, String attribute) {
 		DBCollection sessions = getAppSessionDBCollection( appKey);
-		List<String> list = new ArrayList<String>();
-//		attribute = converterSpecialChar( attribute);
-		list.add(attribute);
-		Session value = getSession(appKey, contextpath, sessionID,list);
-		sessions.update(new BasicDBObject("sessionid",sessionID), new BasicDBObject("$set",new BasicDBObject(list.get(0), null)));
-		return value;
+		if(SessionHelper.haveSessionListener())
+		{
+			List<String> list = new ArrayList<String>();
+	//		attribute = converterSpecialChar( attribute);
+			list.add(attribute);
+			Session value = getSession(appKey, contextpath, sessionID,list);
+			sessions.update(new BasicDBObject("sessionid",sessionID), new BasicDBObject("$unset",new BasicDBObject(list.get(0), 1)));
+			return value;
+		}
+		else
+		{
+			attribute = MongoDBHelper.converterSpecialChar(attribute);
+			sessions.update(new BasicDBObject("sessionid",sessionID), new BasicDBObject("$unset",new BasicDBObject(attribute, 1)));
+			//sessions.update(new BasicDBObject("sessionid",sessionID), new BasicDBObject("$set",new BasicDBObject(attribute, null)));
+			return null;
+		}
 		
 	}
 
@@ -389,40 +399,47 @@ public class MongDBSessionStore extends BaseSessionStore{
 		DBCollection sessions =getAppSessionDBCollection( appKey);
 	
 		
-		
-		DBObject object = sessions.findAndRemove(new BasicDBObject("sessionid",sessionid));
-		if(object != null)
+		if(SessionHelper.haveSessionListener())
 		{
-			SimpleSessionImpl session = new SimpleSessionImpl();
-			session.setMaxInactiveInterval((Long)object.get("maxInactiveInterval"));
-			session.setAppKey(appKey);
-			session.setCreationTime((Long)object.get("creationTime"));
-			session.setLastAccessedTime((Long)object.get("lastAccessedTime"));
-			session.setId(sessionid);
-			session.setReferip((String)object.get("referip"));
-			session.setValidate((Boolean)object.get("_validate"));
-			session.setHost((String)object.get("host"));
-			session.setRequesturi((String)object.get("requesturi"));
-			session.setLastAccessedUrl((String)object.get("lastAccessedUrl"));
-			session.setLastAccessedHostIP((String)object.get("lastAccessedHostIP"));
-			Object secure_ = object.get("secure");
-			if(secure_ != null)
+			DBObject object = sessions.findAndRemove(new BasicDBObject("sessionid",sessionid));
+			if(object != null)
 			{
-				session.setSecure((Boolean)secure_);
+				SimpleSessionImpl session = new SimpleSessionImpl();
+				session.setMaxInactiveInterval((Long)object.get("maxInactiveInterval"));
+				session.setAppKey(appKey);
+				session.setCreationTime((Long)object.get("creationTime"));
+				session.setLastAccessedTime((Long)object.get("lastAccessedTime"));
+				session.setId(sessionid);
+				session.setReferip((String)object.get("referip"));
+				session.setValidate((Boolean)object.get("_validate"));
+				session.setHost((String)object.get("host"));
+				session.setRequesturi((String)object.get("requesturi"));
+				session.setLastAccessedUrl((String)object.get("lastAccessedUrl"));
+				session.setLastAccessedHostIP((String)object.get("lastAccessedHostIP"));
+				Object secure_ = object.get("secure");
+				if(secure_ != null)
+				{
+					session.setSecure((Boolean)secure_);
+				}
+				Object httpOnly_ = object.get("httpOnly");
+				if(httpOnly_ != null)
+				{
+					session.setHttpOnly((Boolean)httpOnly_);
+				}	
+				else
+				{
+					session.setHttpOnly(StringUtil.hasHttpOnlyMethod()?SessionHelper.getSessionManager().isHttpOnly():false);
+				}
+	//			session._setSessionStore(this);
+				Map<String,Object> attributes = MongoDBHelper.toMap(appKey, contextpath,object,true);
+				session.setAttributes(attributes);
+				return session;
 			}
-			Object httpOnly_ = object.get("httpOnly");
-			if(httpOnly_ != null)
-			{
-				session.setHttpOnly((Boolean)httpOnly_);
-			}	
 			else
 			{
-				session.setHttpOnly(StringUtil.hasHttpOnlyMethod()?SessionHelper.getSessionManager().isHttpOnly():false);
+				sessions.remove(new BasicDBObject("sessionid",sessionid));
+				return null;
 			}
-//			session._setSessionStore(this);
-			Map<String,Object> attributes = MongoDBHelper.toMap(appKey, contextpath,object,true);
-			session.setAttributes(attributes);
-			return session;
 		}
 		else
 		{

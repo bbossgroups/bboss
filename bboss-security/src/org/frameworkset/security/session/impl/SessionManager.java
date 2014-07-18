@@ -217,6 +217,10 @@ public class SessionManager {
 	public long getSessionscaninterval() {
 		return sessionscaninterval;
 	}
+	public boolean haveSessionListener()
+	{
+		return this.sessionListeners != null && this.sessionListeners.size() > 0;
+	}
 	public void dispatchEvent(SessionEventImpl sessionEvent) {
 		for(int i = 0; sessionListeners != null && i < this.sessionListeners.size(); i ++)
 		{
