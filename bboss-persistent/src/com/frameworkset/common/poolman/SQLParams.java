@@ -39,14 +39,15 @@ import org.frameworkset.util.BigFile;
 import org.frameworkset.util.ClassUtil;
 import org.frameworkset.util.ClassUtil.ClassInfo;
 import org.frameworkset.util.ClassUtil.PropertieDescription;
-import org.frameworkset.util.annotations.ValueConstants;
 import org.frameworkset.util.annotations.wraper.ColumnWraper;
 
 import bboss.org.apache.velocity.VelocityContext;
 
+import com.frameworkset.common.poolman.sql.IdGenerator;
 import com.frameworkset.common.poolman.util.JDBCPool;
 import com.frameworkset.common.poolman.util.SQLManager;
 import com.frameworkset.orm.annotation.PrimaryKey;
+import com.frameworkset.util.StringUtil;
 import com.frameworkset.util.VariableHandler;
 import com.frameworkset.util.VariableHandler.SQLStruction;
 import com.frameworkset.util.VariableHandler.Variable;
@@ -914,18 +915,27 @@ public class SQLParams
 						if(pka.auto() && action == PreparedDBUtil.INSERT)
 						{
 							String pkname = pka.pkname();
-							if(type == long.class || type == int.class
-									|| type == Long.class || type == Integer.class)
+							if(StringUtil.isNotEmpty(pkname))
 							{
-								
-								long _value = DBUtil.getNextPrimaryKey(con,dbname,pkname);
-								if(type == int.class)
-									value = (int)_value;
-								else  if(type == Integer.class)
-									value = new Integer((int)_value);
+							
+								if(type == long.class || type == int.class
+										|| type == Long.class || type == Integer.class)
+								{
+									
+									long _value = DBUtil.getNextPrimaryKey(con,dbname,pkname);
+									if(type == int.class)
+										value = (int)_value;
+									else  if(type == Integer.class)
+										value = new Integer((int)_value);
+								}
+								else 
+									value = DBUtil.getNextStringPrimaryKey(con,dbname,pkname);
 							}
-							else 
-								value = DBUtil.getNextStringPrimaryKey(con,dbname,pkname);
+							else
+							{
+								IdGenerator idGenerator = SQLManager.getInstance().getPool(dbname).getIdGenerator();
+								value = idGenerator.getNextId();
+							}
 							//设置主键到对象中
 //								Method writeMethod = null;
 //								try

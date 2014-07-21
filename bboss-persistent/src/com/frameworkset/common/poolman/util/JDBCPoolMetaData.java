@@ -91,6 +91,7 @@ public class JDBCPoolMetaData implements Serializable{
     /* DATASOURCE ATTRIBUTES */
     private String JNDIName;
     private String interceptor = "com.frameworkset.common.poolman.interceptor.DummyInterceptor";
+    private String idGenerator;
     
     private String jndiclass;
     private String jndiuser;
@@ -965,6 +966,14 @@ public class JDBCPoolMetaData implements Serializable{
 
 	public void setSeqfunction(String seqfunction) {
 		this.seqfunction = seqfunction;
+	}
+
+	public String getIdGenerator() {
+		return idGenerator;
+	}
+
+	public void setIdGenerator(String idGenerator) {
+		this.idGenerator = idGenerator;
 	}
 
 //	public boolean isNeadGetGenerateKeys() {

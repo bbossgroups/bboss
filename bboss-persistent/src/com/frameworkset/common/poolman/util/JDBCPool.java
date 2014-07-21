@@ -15,7 +15,6 @@
  */
 package com.frameworkset.common.poolman.util;
 
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
@@ -46,9 +45,9 @@ import com.frameworkset.common.poolman.interceptor.InterceptorInf;
 import com.frameworkset.common.poolman.jndi.ContextUtil;
 import com.frameworkset.common.poolman.jndi.DummyContextFactory;
 import com.frameworkset.common.poolman.security.DBInfoEncrypt;
-import com.frameworkset.common.poolman.security.DESDBPasswordEncrypt;
 import com.frameworkset.common.poolman.sql.ColumnMetaData;
 import com.frameworkset.common.poolman.sql.ForeignKeyMetaData;
+import com.frameworkset.common.poolman.sql.IdGenerator;
 import com.frameworkset.common.poolman.sql.PoolManDataSource;
 import com.frameworkset.common.poolman.sql.PrimaryKeyMetaData;
 import com.frameworkset.common.poolman.sql.TableMetaData;
@@ -111,7 +110,7 @@ public class JDBCPool {
 	private  Context ctx = null;
 	private  Context dummyctx = null;
 	private  boolean initcontexted = false;
-	
+	private IdGenerator idGenerator;
 	private static Context buildContext(JDBCPoolMetaData meta)
 	{
 		Context ctx = null;
@@ -709,7 +708,18 @@ public class JDBCPool {
 		
 		this.deployedDataSource = false;
 		this.info = metad;
-		
+		if(StringUtil.isNotEmpty(info.getIdGenerator()))
+		{
+			try
+			{
+				this.idGenerator = (IdGenerator)Class.forName(info.getIdGenerator()).newInstance();
+			}
+			catch(Exception e)
+			{
+				log.info("初始化主键生成个器失败："+info.getIdGenerator()+",使用默认com.frameworkset.common.poolman.sql.StrongUuidGenerator.");
+				idGenerator = new com.frameworkset.common.poolman.sql.StrongUuidGenerator();
+			}
+		}
 		this.preparedStatementPool = new Hashtable();
 		if (null == info.getJNDIName() || info.getJNDIName().equals(""))
 			log
@@ -2514,5 +2524,17 @@ public class JDBCPool {
 	public boolean showsql()
 	{
 		return this.info.isShowsql();
+	}
+
+	public IdGenerator getIdGenerator() {
+		if(this.externalDBName == null)
+		{
+			
+			return this.idGenerator;
+		}
+		else
+		{
+			return SQLManager.getInstance().getPool(externalDBName).getIdGenerator();
+		}
 	}
 }

@@ -30,7 +30,7 @@ public @interface PrimaryKey {
 	 * @return
 	 */
 	String name() default "";
-	String pkname();
+	String pkname() default "";
 	
 	boolean auto() default false;
 	

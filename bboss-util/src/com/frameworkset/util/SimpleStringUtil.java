@@ -276,7 +276,10 @@ public class SimpleStringUtil  {
 				||  path.startsWith("ftp://")   
 				||  path.startsWith("tps://")  ;
 	}
-	
+	public static String getUUID()
+	{
+		return java.util.UUID.randomUUID().toString();
+	}
 	public static String getRealPath(String contextPath, String path,boolean usebase) {
 		
 		if(isHttpUrl(path))

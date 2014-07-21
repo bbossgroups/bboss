@@ -38,5 +38,6 @@
 	<classpathentry kind="lib" path="lib-test/jsp-api.jar"/>
 	<classpathentry kind="lib" path="lib-test/servlet-api.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/bbossaop"/>
+	<classpathentry kind="lib" path="lib/java-uuid-generator-3.1.2.jar"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>
