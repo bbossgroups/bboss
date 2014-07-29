@@ -53,7 +53,6 @@ public class SessionHttpServletRequestWrapper extends HttpServletRequestWrapper 
 
 	@Override
 	public HttpSession getSession() {
-		
 		 return getSession(true);
 	}
 
@@ -147,7 +146,10 @@ public class SessionHttpServletRequestWrapper extends HttpServletRequestWrapper 
 				String appkey = getAppKey();
 				Session session_ = SessionHelper.getSession(appkey,this.getContextPath(), sessionid);
 				if(session_ == null || !session_.isValidate())
+				{
+					this.sessionid = null;
 					return;
+				}
 				this.session =  new HttpSessionImpl(session_,servletContext,this.getContextPath());
 			}
 			if(session != null && !session.isNew() )
@@ -163,14 +165,20 @@ public class SessionHttpServletRequestWrapper extends HttpServletRequestWrapper 
 		CrossDomain crossDomain = SessionHelper.getSessionManager().getCrossDomain() ;
 		if(SessionHelper.getSessionManager().getCrossDomain() == null)
 		{
+			boolean secure = SessionHelper.getSessionManager().isSecure();
+			if(!this.isSecure())
+				secure = false;
 			StringUtil.addCookieValue(this, response, SessionHelper.getSessionManager().getCookiename(), sessionid, cookielivetime,SessionHelper.getSessionManager().isHttpOnly(),
-					SessionHelper.getSessionManager().isSecure(),SessionHelper.getSessionManager().getDomain());
+					secure,SessionHelper.getSessionManager().getDomain());
 		}
 		else
 		{
 			List<App> apps = crossDomain.getDomainApps();
 			if(crossDomain.get_paths() != null)
 			{
+				boolean secure = SessionHelper.getSessionManager().isSecure();
+				if(!this.isSecure())
+					secure = false;
 				for(String path:crossDomain.get_paths())
 				{
 					StringUtil.addCookieValue(this, path,
@@ -178,24 +186,27 @@ public class SessionHttpServletRequestWrapper extends HttpServletRequestWrapper 
 												SessionHelper.getSessionManager().getCookiename(), 
 												sessionid, cookielivetime,
 												SessionHelper.getSessionManager().isHttpOnly(),								
-												SessionHelper.getSessionManager().isSecure(),
+												secure,
 												crossDomain.getDomain());
 				}
 			}
 			else
 			{
+				boolean secure = SessionHelper.getSessionManager().isSecure();
+				if(!this.isSecure())
+					secure = false;
 				for(App app:apps)
 				{
 					if(app.getPath() == null)
 					{
 						StringUtil.addCookieValue(this, response, SessionHelper.getSessionManager().getCookiename(), sessionid, cookielivetime,SessionHelper.getSessionManager().isHttpOnly(),
-								SessionHelper.getSessionManager().isSecure(),crossDomain.getDomain());
+								secure,crossDomain.getDomain());
 					}
 					else
 					{
 						
 						StringUtil.addCookieValue(this, app.getPath(),response, SessionHelper.getSessionManager().getCookiename(), sessionid, cookielivetime,SessionHelper.getSessionManager().isHttpOnly(),								
-								SessionHelper.getSessionManager().isSecure(),crossDomain.getDomain());
+								secure,crossDomain.getDomain());
 						
 						
 					}
@@ -203,6 +214,61 @@ public class SessionHttpServletRequestWrapper extends HttpServletRequestWrapper 
 			}
 			
 		}
+	}
+
+	@Override
+	public String getRequestedSessionId() {
+		if( SessionHelper.getSessionManager().usewebsession())
+		{
+			return super.getRequestedSessionId();
+		}
+		if(this.sessionid != null)
+			return sessionid;
+		HttpSession session = this.getSession(false);
+		if(session == null)
+			return null;
+		else
+			return session.getId();
+	}
+
+	@Override
+	public boolean isRequestedSessionIdFromCookie() {
+		if( SessionHelper.getSessionManager().usewebsession())
+		{
+			return super.isRequestedSessionIdFromCookie();
+		}
+		return true;
+	}
+
+	@Override
+	public boolean isRequestedSessionIdFromURL() {
+		if( SessionHelper.getSessionManager().usewebsession())
+		{
+			return super.isRequestedSessionIdFromURL();
+		}
+		return false;
+	}
+
+	@Override
+	public boolean isRequestedSessionIdFromUrl() {
+		if( SessionHelper.getSessionManager().usewebsession())
+		{
+			return super.isRequestedSessionIdFromUrl();
+		}
+		return false;
+	}
+
+	@Override
+	public boolean isRequestedSessionIdValid() {
+		if( SessionHelper.getSessionManager().usewebsession())
+		{
+			return super.isRequestedSessionIdValid();
+		}
+		HttpSessionImpl session = (HttpSessionImpl)this.getSession(false);
+		if(session == null)
+			return false;
+		else
+			return session.getInnerSession().isValidate();
 	}
 
 }

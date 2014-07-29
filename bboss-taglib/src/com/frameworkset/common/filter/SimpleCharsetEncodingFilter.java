@@ -25,8 +25,8 @@ public class SimpleCharsetEncodingFilter  implements Filter{
     private boolean checkiemodeldialog;
     private static String[] wallfilterrules;
     private String[] wallwhilelist;
-    private boolean refererDefender = false;
-    private String[] refererwallwhilelist;
+    private ReferHelper referHelper;
+   
     private static String[] wallfilterrules_default = new String[]{"<script","%3Cscript","script","<img","%3Cimg","alert(","alert%28","eval(","eval%28","style=","style%3D",
     	"javascript","update ","drop ","delete ","insert ","create ","select ","truncate "};
     
@@ -37,22 +37,31 @@ public class SimpleCharsetEncodingFilter  implements Filter{
         this.RequestEncoding = config.getInitParameter("RequestEncoding");
         this.ResponseEncoding = config.getInitParameter("ResponseEncoding");
         String refererDefender_ =  config.getInitParameter("refererDefender");
-        refererDefender = StringUtil.getBoolean(refererDefender_, false);
+        boolean refererDefender = StringUtil.getBoolean(refererDefender_, false);
+        referHelper = new ReferHelper();
+        referHelper.setRefererDefender(refererDefender);
         String wallfilterrules_ = config.getInitParameter("wallfilterrules");
         String wallwhilelist_ = config.getInitParameter("wallwhilelist");
-        
+        String refererwallwhilelist_ = config.getInitParameter("refererwallwhilelist");
         String defaultwall = config.getInitParameter("defaultwall");
-        if(wallwhilelist_ != null )
+        if(StringUtil.isNotEmpty(wallwhilelist_ ))
         {
         	wallwhilelist = wallwhilelist_.split(",");
         }
-        if(wallfilterrules_ != null )
+        if(StringUtil.isNotEmpty(wallfilterrules_))
         {
         	wallfilterrules = wallfilterrules_.split(",");
         }
         else if(defaultwall != null && defaultwall.equals("true"))
         {
         	wallfilterrules = wallfilterrules_default;
+        }
+        
+        
+        if(StringUtil.isNotEmpty(refererwallwhilelist_))
+        {
+        	String[] refererwallwhilelist = refererwallwhilelist_.split(",");
+        	referHelper.setRefererwallwhilelist(refererwallwhilelist);
         }
         String _checkiemodeldialog = config.getInitParameter("checkiemodeldialog");
         if(_checkiemodeldialog != null && _checkiemodeldialog.equals("true"))
@@ -61,17 +70,7 @@ public class SimpleCharsetEncodingFilter  implements Filter{
         if(mode == null)
             mode = "0";
     }
-    private boolean iswhilerefer(String referer)
-    {
-    	if(this.refererwallwhilelist == null || this.refererwallwhilelist.length == 0)
-    		return true;
-    	for(String whilereferername:this.refererwallwhilelist)
-    	{
-    		if(whilereferername.startsWith(referer))
-    			return true;
-    	}
-    	return false;
-    }
+   
     /* (non-Javadoc)
      * @see javax.servlet.Filter#doFilter(javax.servlet.ServletRequest, javax.servlet.ServletResponse, javax.servlet.FilterChain)
      */
@@ -98,101 +97,10 @@ public class SimpleCharsetEncodingFilter  implements Filter{
          */
 //        response.setHeader( "Set-Cookie", "name=value; HttpOnly");
         //response.setHeader( "Set-Cookie", "name=value;HttpOnly"); 
-        if(refererDefender)
+        if(referHelper.dorefer(request, response))
         {
-	        /**
-	         * 跨站点请求伪造。修复任务： 拒绝恶意请求。解决方案，过滤器中
-	         * 
-	         */
-	        String referer = request.getHeader("Referer");   //REFRESH
-//	        if(!iswhilerefer(referer))
-	       
-	        	
-	        if(referer!=null){
-	        	String basePath = null;
-	        	String basePath80 = null;
-	        	if(!request.getContextPath().equals("/"))
-	        	{
-	        		if(request.getServerPort() != 80)
-	        		{
-		        		basePath = request.getScheme() + "://" 
-		        			+ request.getServerName() + ":" + request.getServerPort() 
-		        			+ request.getContextPath() + "/";
-	        		}
-	        		else
-	        		{
-	        			basePath = request.getScheme() + "://" 
-			        			+ request.getServerName() + ":" + request.getServerPort() 
-			        			+ request.getContextPath() + "/";
-	        			basePath80 = request.getScheme() + "://" 
-			        			+ request.getServerName() + 
-			        			request.getContextPath() + "/";
-	        		}
-	        	}
-	        	else
-	        	{
-	        		if(request.getServerPort() != 80)
-	        		{
-		        		basePath = request.getScheme() + "://" 
-		        	
-		    	        			+ request.getServerName() + ":" + request.getServerPort()
-		        	
-		    	        			+ request.getContextPath();
-	        		}
-	        		else
-	        		{
-	        			basePath = request.getScheme() + "://" 
-	        		        	
-		    	        			+ request.getServerName() + ":" + request.getServerPort()
-		        	
-		    	        			+ request.getContextPath();
-	        			basePath80 = request.getScheme() + "://" 
-			        			+ request.getServerName() + 
-			        			request.getContextPath() ;
-	        		}
-	        	}
-	        	if(basePath80 == null)
-	        	{
-	        		if(referer.indexOf(basePath)<0)
-	        		{
-	        			String context = request.getContextPath();
-	        			if(!context.equals("/"))
-	        			{
-		        			String uri = request.getRequestURI();
-		        			uri = uri.substring(request.getContextPath().length());
-		        			request.getRequestDispatcher(uri).forward(request, response);
-	        			}
-	        			else
-	        			{
-	        				request.getRequestDispatcher(context).forward(request, response);
-	        			}
-	        			return;
-	        		}
-	        	}
-	        	else
-	        	{
-	        		if(referer.indexOf(basePath)<0 && referer.indexOf(basePath80)<0)
-	        		{
-	        			String context = request.getContextPath();
-	        			if(!context.equals("/"))
-	        			{
-		        			String uri = request.getRequestURI();
-		        			uri = uri.substring(request.getContextPath().length());
-		        			request.getRequestDispatcher(uri).forward(request, response);
-	        			}
-	        			else
-	        			{
-	        				request.getRequestDispatcher(context).forward(request, response);
-	        			}
-	        			return;
-	        		}
-	        	}
-	        	
-	        }  
+        	return;
         }
-        
-
-
 
 
 
@@ -223,7 +131,8 @@ public class SimpleCharsetEncodingFilter  implements Filter{
         //      服务器对url进行编码
         else if(mode.equals("1"))
         {
-            request.setCharacterEncoding(RequestEncoding);
+        	 CharacterEncodingHttpServletRequestWrapper mrequestw = new
+                     CharacterEncodingHttpServletRequestWrapper(request, RequestEncoding,checkiemodeldialog,wallfilterrules,wallwhilelist);
             fc.doFilter(request,response);
 //            super.doFilter(request, response, fc);
         }

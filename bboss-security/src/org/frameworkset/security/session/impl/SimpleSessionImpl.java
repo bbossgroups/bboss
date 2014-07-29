@@ -59,7 +59,10 @@ public class SimpleSessionImpl implements Session{
 	public Object getCacheAttribute(String attribute)
 	{
 		Object value = this.attributes.get(attribute);
-		return value;
+		if(value == NULL)
+			return null;
+		else
+			return value;
 	}
 	@Override
 	public Object getAttribute(String attribute,String contextpath) {
@@ -186,7 +189,9 @@ public class SimpleSessionImpl implements Session{
 			return ;
 		}
 		sessionStore.removeAttribute(appKey, contextpath,id,attribute);
-		this.attributes.remove(attribute);
+//		this.attributes.remove(attribute);
+		//将属性设置为空避免重复从mongodb获取数据
+		this.attributes.put(attribute, NULL);
 		
 	}
 

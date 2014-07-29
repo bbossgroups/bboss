@@ -22,6 +22,15 @@
       <param-name>mode</param-name>
       <param-value>0</param-value>
     </init-param>
+     <init-param>
+      <param-name>refererDefender</param-name>
+      <param-value>true</param-value>
+    </init-param>
+    <init-param>
+      <param-name>refererwallwhilelist</param-name>
+      <param-value></param-value>
+    </init-param>
+    
   </filter>
   <filter-mapping>
     <filter-name>CharsetEncoding</filter-name>

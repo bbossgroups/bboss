@@ -155,5 +155,10 @@ public class HttpSessionImpl implements HttpSession {
 		this.session.setMaxInactiveInterval(arg0);
 		
 	}
+	
+	public Session getInnerSession()
+	{
+		return this.session;
+	}
 
 }
