@@ -64,7 +64,7 @@ public class AntPathMatcher implements PathMatcher {
 
 	private boolean trimTokens = true;
 
-	private volatile Boolean cachePatterns;
+	private volatile Boolean cachePatterns = true;
 
 	final Map<String, AntPathStringMatcher> stringMatcherCache =
 			new ConcurrentHashMap<String, AntPathStringMatcher>(256);

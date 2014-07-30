@@ -218,7 +218,7 @@
 	</target>
 
 	<target name="distrib-bboss-taglib-jars" description="distrib-bboss-taglib-jars">
-		<for list="${bbossupload-lib},${demoproject-lib},${portallib},${casserverlib},${cms_baseline-lib},${monitorconsole-lib},${monitorconsole-compilelib},${bboss-mvc-lib},${creatoresb-lib},${mvc-lib},${xmlrequest-lib},${sessionmonitor-lib}" param="destdir">
+		<for list="${bbossupload-lib},${demoproject-lib},${portallib},${casserverlib},${cms_baseline-lib},${monitorconsole-lib},${monitorconsole-compilelib},${bboss-mvc-lib},${creatoresb-lib},${mvc-lib},${xmlrequest-lib}" param="destdir">
 			<sequential>
 				<echo>@{destdir}-------------------------------</echo>
 				<antcall target="svn-update-procedure">
@@ -229,6 +229,17 @@
 			</sequential>
 			
 		</for>
+		<for list="${sessionmonitor-lib}" param="destdir">
+					<sequential>
+						<echo>@{destdir}-------------------------------</echo>
+						<antcall target="svn-update-procedure">
+							<param name="sourcedir" value="${bboss-taglib}/distrib" />
+							<param name="filedir" value="@{destdir}" />
+							<param name="files" value="frameworkset.jar,htmlparser-1.5-20050925.jar" />
+						</antcall>
+					</sequential>
+					
+				</for>
 		<for list="${bboss-plugin-wordpdf-lib-depends}" param="destdir">
 			<sequential>
 				<echo>@{destdir}-------------------------------</echo>

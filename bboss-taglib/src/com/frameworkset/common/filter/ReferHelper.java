@@ -5,13 +5,17 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.frameworkset.util.AntPathMatcher;
+import org.frameworkset.util.PathMatcher;
+
 import com.frameworkset.util.StringUtil;
 
 public class ReferHelper {
 	private String[] refererwallwhilelist;
 	 private boolean refererDefender = false;
+	 private PathMatcher pathMatcher;
 	public ReferHelper() {
-		
+		pathMatcher = new AntPathMatcher();
 	}
 
 	 private boolean iswhilerefer(String referer)
@@ -20,7 +24,8 @@ public class ReferHelper {
 	    		return true;
 	    	for(String whilereferername:this.refererwallwhilelist)
 	    	{
-	    		if(referer.startsWith(whilereferername))
+	    		
+	    		if(pathMatcher.match(whilereferername, referer))
 	    			return true;
 	    	}
 	    	return false;
