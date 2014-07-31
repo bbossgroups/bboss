@@ -39,7 +39,7 @@ import org.frameworkset.util.FileCopyUtils;
  * @author Arjen Poutsma
  * @since 3.0
  */
-public class StringHttpMessageConverter extends AbstractHttpMessageConverter<String> {
+public class StringHttpMessageConverter extends AbstractHttpMessageConverter<Object> {
 	
 	
 
@@ -75,7 +75,14 @@ public class StringHttpMessageConverter extends AbstractHttpMessageConverter<Str
 	}
 
 	@Override
-	protected Long getContentLength(String s, MediaType contentType) {
+	protected Long getContentLength(Object data, MediaType contentType) {
+		String s = null;
+		if(data instanceof String)
+		{
+			s = (String)data;
+		}
+		else
+			s = String.valueOf(data);
 		if (contentType != null && contentType.getCharSet() != null) {
 			Charset charset = contentType.getCharSet();
 			try {
@@ -92,10 +99,17 @@ public class StringHttpMessageConverter extends AbstractHttpMessageConverter<Str
 	}
 
 	@Override
-	protected void writeInternal(String s, HttpOutputMessage outputMessage,HttpInputMessage inputMessage) throws IOException {
+	protected void writeInternal(Object data, HttpOutputMessage outputMessage,HttpInputMessage inputMessage) throws IOException {
 		if (writeAcceptCharset) {
 			outputMessage.getHeaders().setAcceptCharset(getAcceptedCharsets());
 		}
+		String s = null;
+		if(data instanceof String)
+		{
+			s = (String)data;
+		}
+		else
+			s = String.valueOf(data);
 		MediaType contentType = outputMessage.getHeaders().getContentType();
 		Charset charset = contentType.getCharSet() != null ? contentType.getCharSet() : DEFAULT_CHARSET;
 		FileCopyUtils.copy(s, new OutputStreamWriter(outputMessage.getBody(), charset));
@@ -115,7 +129,11 @@ public class StringHttpMessageConverter extends AbstractHttpMessageConverter<Str
 	public void setResponseCharset(String charset) {
 		super.responsecontenteype = new MediaType("text","html",Charset.forName(charset));
 	}
-
+	public boolean isdefault()
+	{
+		return true;
+	}
+	
 	
 
 }

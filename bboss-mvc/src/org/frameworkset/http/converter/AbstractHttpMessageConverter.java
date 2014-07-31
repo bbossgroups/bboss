@@ -245,5 +245,17 @@ public abstract class AbstractHttpMessageConverter<T> implements HttpMessageConv
 	 */
 	protected abstract void writeInternal(T t, HttpOutputMessage outputMessage,HttpInputMessage inputMessage)
 			throws IOException, HttpMessageNotWritableException;
-
+	public boolean isdefault()
+	{
+		return false;
+	}
+	protected MediaType defaultAcceptedMediaType;
+	public MediaType getDefaultAcceptedMediaType()
+	{
+		if(defaultAcceptedMediaType != null)
+			return defaultAcceptedMediaType;
+		synchronized(this){
+			return defaultAcceptedMediaType = this.getSupportedMediaTypes().get(0);
+		}
+	}
 }

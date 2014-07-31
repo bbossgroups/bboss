@@ -54,7 +54,11 @@ import com.frameworkset.util.StringUtil;
  */
 public class FileMessageConvertor<T> implements HttpMessageConverter<T>
 {
-
+	@Override
+	public boolean isdefault() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 	public boolean canRead(Class<?> clazz, MediaType mediaType)
 	{
 
@@ -145,5 +149,13 @@ public class FileMessageConvertor<T> implements HttpMessageConverter<T>
 		}
 
 	}
-	 
+	protected MediaType defaultAcceptedMediaType;
+	public MediaType getDefaultAcceptedMediaType()
+	{
+		if(defaultAcceptedMediaType != null)
+			return defaultAcceptedMediaType;
+		synchronized(this){
+			return defaultAcceptedMediaType = this.getSupportedMediaTypes().get(0);
+		}
+	}
 }

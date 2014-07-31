@@ -84,6 +84,8 @@ public interface HttpMessageConverter<T> {
 	 */
 	void write(T t, MediaType contentType, HttpOutputMessage outputMessage,HttpInputMessage inputMessage,boolean usecustomMediaTypeByMethod)
 			throws IOException, HttpMessageNotWritableException;
-
+	boolean isdefault();
+	public MediaType getDefaultAcceptedMediaType();
+	
 
 }

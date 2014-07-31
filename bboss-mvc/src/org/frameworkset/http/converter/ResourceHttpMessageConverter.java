@@ -69,7 +69,20 @@ public class ResourceHttpMessageConverter implements HttpMessageConverter<Resour
 		byte[] body = FileCopyUtils.copyToByteArray(inputMessage.getBody());
 		return new ByteArrayResource(body);
 	}
-
+	@Override
+	public boolean isdefault() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	protected MediaType defaultAcceptedMediaType;
+	public MediaType getDefaultAcceptedMediaType()
+	{
+		if(defaultAcceptedMediaType != null)
+			return defaultAcceptedMediaType;
+		synchronized(this){
+			return defaultAcceptedMediaType = this.getSupportedMediaTypes().get(0);
+		}
+	}
 	public void write(Resource resource, MediaType contentType, HttpOutputMessage outputMessage,HttpInputMessage inputMessage,boolean usecustomMediaTypeByMethod)
 			throws IOException, HttpMessageNotWritableException {
 

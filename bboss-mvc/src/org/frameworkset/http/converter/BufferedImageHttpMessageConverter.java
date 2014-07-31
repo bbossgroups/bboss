@@ -254,4 +254,20 @@ public class BufferedImageHttpMessageConverter implements HttpMessageConverter<B
 	protected void process(ImageWriteParam iwp) {
 	}
 
+	@Override
+	public boolean isdefault() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
+	protected MediaType defaultAcceptedMediaType;
+	public MediaType getDefaultAcceptedMediaType()
+	{
+		if(defaultAcceptedMediaType != null)
+			return defaultAcceptedMediaType;
+		synchronized(this){
+			return defaultAcceptedMediaType = this.getSupportedMediaTypes().get(0);
+		}
+	}
+
 }

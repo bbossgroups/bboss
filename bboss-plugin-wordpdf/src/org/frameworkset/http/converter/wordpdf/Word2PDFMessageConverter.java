@@ -150,6 +150,18 @@ public class Word2PDFMessageConverter <T> implements HttpMessageConverter<T>{
 	public void setOpenoffice(boolean openoffice) {
 		this.openoffice = openoffice;
 	}
+
+	@Override
+	public boolean isdefault() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public MediaType getDefaultAcceptedMediaType() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 	
 

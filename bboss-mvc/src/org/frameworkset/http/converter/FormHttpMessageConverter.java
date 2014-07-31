@@ -131,7 +131,11 @@ public class FormHttpMessageConverter implements HttpMessageConverter<MultiValue
 	public void setCharset(Charset charset) {
 		this.charset = charset;
 	}
-
+	@Override
+	public boolean isdefault() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 
 	public boolean canRead(Class<?> clazz, MediaType mediaType) {
 		if (!MultiValueMap.class.isAssignableFrom(clazz)) {
@@ -399,6 +403,15 @@ public class FormHttpMessageConverter implements HttpMessageConverter<MultiValue
 
 			// TODO Auto-generated method stub
 			return response;
+		}
+	}
+	protected MediaType defaultAcceptedMediaType;
+	public MediaType getDefaultAcceptedMediaType()
+	{
+		if(defaultAcceptedMediaType != null)
+			return defaultAcceptedMediaType;
+		synchronized(this){
+			return defaultAcceptedMediaType = this.getSupportedMediaTypes().get(0);
 		}
 	}
 

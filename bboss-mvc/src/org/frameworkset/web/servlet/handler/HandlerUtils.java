@@ -3745,8 +3745,11 @@ public abstract class HandlerUtils {
 			Class<?> returnValueType = returnValue.getClass();
 			List<MediaType> allSupportedMediaTypes = new ArrayList<MediaType>();
 			if (getMessageConverters() != null) {
+				HttpMessageConverter defaultMessageConverter = null;
 				for (MediaType acceptedMediaType : acceptedMediaTypes) {
 					for (HttpMessageConverter messageConverter : getMessageConverters()) {
+						if(defaultMessageConverter == null && messageConverter.isdefault())
+							defaultMessageConverter = messageConverter;
 						if (messageConverter.canWrite(returnValueType,
 								acceptedMediaType)) {
 							messageConverter.write(returnValue,
@@ -3767,7 +3770,16 @@ public abstract class HandlerUtils {
 							this.responseArgumentUsed = true;
 							return;
 						}
+						
 					}
+				}
+				if(defaultMessageConverter != null)
+				{
+					defaultMessageConverter.write(returnValue,
+							defaultMessageConverter.getDefaultAcceptedMediaType(), outputMessage,
+							inputMessage, usecustomMediaTypeByMethod);
+					this.responseArgumentUsed = true;
+					return;
 				}
 				for (HttpMessageConverter messageConverter : messageConverters) {
 					if (messageConverter.getSupportedMediaTypes() != null
