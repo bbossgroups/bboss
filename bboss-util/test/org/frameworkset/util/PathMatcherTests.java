@@ -280,5 +280,21 @@ public class PathMatcherTests extends TestCase {
 		assertEquals("docs/cvs/commit", pathMatcher.extractPathWithinPattern("/d?cs/**", "/docs/cvs/commit"));
 		assertEquals("docs/cvs/commit.html", pathMatcher.extractPathWithinPattern("/d?cs/**/*.html", "/docs/cvs/commit.html"));
 	}
+	public void testrefer()
+	{
+		PathMatcher pathMatcher = new AntPathMatcher();
+		System.out.println(pathMatcher.urlContain("*.sany.com.cn", "http://test.sany.com.cn/test"));
+		System.out.println(pathMatcher.urlContain("http://*.sany.com.cn", "http://test.sany.com.cn/test"));
+		System.out.println("###############################################");
+		System.out.println(pathMatcher.urlContain("*.sany.com.cn", "http://test.sdany.com.cn/test"));
+		System.out.println(pathMatcher.urlContain("http://*.sany.com.cn", "https://test.sany.com.cn/test"));
+		System.out.println("###############################################");
+		System.out.println(pathMatcher.urlMatch("*.sany.com.cn/test", "http://test.sany.com.cn/test"));
+		System.out.println(pathMatcher.urlMatch("http://*.sany.com.cn/test", "http://test.sany.com.cn/test"));
+		
+		System.out.println("###############################################");
+		System.out.println(pathMatcher.urlMatch("*.sany.com.cn/test", "http://test.sany.com.cn/test/f"));
+		System.out.println(pathMatcher.urlMatch("http://*.sany.com.cn/test", "http://test.sany.com.cn/test/4"));
+	}
 
 }

@@ -11,6 +11,8 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.frameworkset.util.ReferHelper;
+
 import com.frameworkset.util.StringUtil;
 /**
  * 不带session管理功能的字符过滤器

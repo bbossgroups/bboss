@@ -1,4 +1,4 @@
-package com.frameworkset.common.filter;
+package org.frameworkset.util;
 
 import java.io.IOException;
 
@@ -25,7 +25,7 @@ public class ReferHelper {
 	    	for(String whilereferername:this.refererwallwhilelist)
 	    	{
 	    		
-	    		if(pathMatcher.match(whilereferername, referer))
+	    		if(pathMatcher.urlContain(whilereferername, referer))
 	    			return true;
 	    	}
 	    	return false;

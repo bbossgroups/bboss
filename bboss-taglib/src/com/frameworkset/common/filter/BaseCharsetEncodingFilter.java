@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.frameworkset.security.session.impl.SessionFilter;
+import org.frameworkset.util.ReferHelper;
 
 import com.frameworkset.util.StringUtil;
 

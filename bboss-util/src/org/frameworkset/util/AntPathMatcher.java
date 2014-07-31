@@ -611,5 +611,67 @@ public class AntPathMatcher implements PathMatcher {
 			return VARIABLE_PATTERN.matcher(pattern).replaceAll("#").length();
 		}
 	}
+	/**
+	 * 简单的地址模式包含:
+	 * pattern *.aa.bb.cn
+	 * url http://test.aa.bb.cn/c
+	 * 
+	 * pattern http://*.aa.bb.cn
+	 * url http://test.aa.bb.cn/c
+	 * @param pattern
+	 * @param url
+	 * @return
+	 */
+	public boolean urlContain(String pattern,String url)
+	{
+		int index = pattern.indexOf("*");
+		if(index >=0)
+		{
+			String[] token = pattern.split("\\*");
+			if(token[0].equals(""))
+			{
+				return url.contains(pattern.substring(1));
+			}
+			else
+			{
+				return url.startsWith(token[0]) && url.substring(token[0].length()).contains(token[1]);
+			}
+			
+		}
+		else
+		{
+			return url.startsWith(pattern);
+		}
+	}
+	/**
+	 * 简单的地址模式匹配:
+	 * pattern *.aa.bb.cn
+	 * url http://test.aa.bb.cn
+	 * @param pattern
+	 * @param url
+	 * @return
+	 */
+	public boolean urlMatch(String pattern,String url)
+	{
+		int index = pattern.indexOf("*");
+		if(index >=0)
+		{
+			String[] token = pattern.split("\\*");
+			if(token[0].equals(""))
+			{
+				return url.endsWith(pattern.substring(1));
+			}
+			else
+			{
+				return url.startsWith(token[0]) && url.substring(token[0].length()).endsWith(token[1]);
+			}
+			
+		}
+		
+		else
+		{
+			return url.equals(pattern);
+		}
+	}
 
 }

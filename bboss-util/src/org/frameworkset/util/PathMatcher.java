@@ -120,5 +120,22 @@ public interface PathMatcher {
 	 * @throws IllegalArgumentException when the two patterns cannot be combined
 	 */
 	String combine(String pattern1, String pattern2);
-
+	/**
+	 * 简单的地址模式包含:
+	 * pattern *.aa.bb.cn
+	 * url http://test.aa.bb.cn/c
+	 * @param pattern
+	 * @param url
+	 * @return
+	 */
+	public boolean urlContain(String pattern,String url);
+	/**
+	 * 简单的地址模式匹配:
+	 * pattern *.aa.bb.cn
+	 * url http://test.aa.bb.cn
+	 * @param pattern
+	 * @param url
+	 * @return
+	 */
+	public boolean urlMatch(String pattern,String url);
 }
