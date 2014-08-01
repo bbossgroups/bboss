@@ -18,7 +18,6 @@ package org.frameworkset.web.token.ws;
 import javax.jws.WebService;
 
 import org.frameworkset.util.annotations.ResponseBody;
-import org.frameworkset.web.token.TokenException;
 import org.frameworkset.web.token.TokenHelper;
 import org.frameworkset.web.token.TokenResult;
 import org.frameworkset.web.token.TokenService;
@@ -35,7 +34,7 @@ import org.frameworkset.web.token.TokenService;
 @WebService(name="CheckTokenService",targetNamespace="org.frameworkset.web.token.ws.CheckTokenService")
 public class CheckTokenContoller implements CheckTokenService{
 	
-	public @ResponseBody(datatype="json") boolean checkToken(String appid,String secret,String token) throws TokenException
+	public @ResponseBody(datatype="json") boolean checkToken(String appid,String secret,String token) 
 	{
 		
 		if(TokenHelper.isEnableToken())//如果开启令牌机制就会存在memTokenManager对象，否则不存在
@@ -49,7 +48,7 @@ public class CheckTokenContoller implements CheckTokenService{
 			return true;
 		}
 	}
-	public @ResponseBody boolean checkTempToken(String token) throws TokenException
+	public @ResponseBody(datatype="json") boolean checkTempToken(String token)
 	{
 		if(TokenHelper.isEnableToken())//如果开启令牌机制就会存在memTokenManager对象，否则不存在
 		{
@@ -62,6 +61,7 @@ public class CheckTokenContoller implements CheckTokenService{
 			return true;
 		}
 	}
+
 
 
 }

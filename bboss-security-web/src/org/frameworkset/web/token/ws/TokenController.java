@@ -115,24 +115,24 @@ public class TokenController implements TokenService {
 			return null;
 		}
 	}
-	/**
-	 * 获取应用公钥
-	 * @param appid
-	 * @param secret
-	 * @return
-	 * @throws Exception 
-	 */
-	public @ResponseBody String getPublicKey(String appid,String secret) throws Exception
-	{
-		if(TokenHelper.isEnableToken())//如果开启令牌机制就会存在memTokenManager对象，否则不存在
-		{
-			return  TokenHelper.getTokenService().getPublicKey(appid, secret);
-		}
-		else
-		{
-			return null;
-		}
-	}
+//	/**
+//	 * 获取应用公钥
+//	 * @param appid
+//	 * @param secret
+//	 * @return
+//	 * @throws Exception 
+//	 */
+//	public @ResponseBody String getPublicKey(String appid,String secret) throws Exception
+//	{
+//		if(TokenHelper.isEnableToken())//如果开启令牌机制就会存在memTokenManager对象，否则不存在
+//		{
+//			return  TokenHelper.getTokenService().getPublicKey(appid, secret);
+//		}
+//		else
+//		{
+//			return null;
+//		}
+//	}
 	
 	/**
 	 * 获取令牌请求
