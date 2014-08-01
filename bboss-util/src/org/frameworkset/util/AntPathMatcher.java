@@ -634,7 +634,7 @@ public class AntPathMatcher implements PathMatcher {
 			}
 			else
 			{
-				return url.startsWith(token[0]) && url.substring(token[0].length()).contains(token[1]);
+				return url.startsWith(token[0]) && url.substring(token[0].length()+1).contains(token[1]);
 			}
 			
 		}
@@ -653,6 +653,9 @@ public class AntPathMatcher implements PathMatcher {
 	 */
 	public boolean urlMatch(String pattern,String url)
 	{
+		int idx = url.indexOf("?");
+		if(idx > 0)//去除参数部分
+			url = url.substring(0,idx);
 		int index = pattern.indexOf("*");
 		if(index >=0)
 		{
@@ -663,7 +666,7 @@ public class AntPathMatcher implements PathMatcher {
 			}
 			else
 			{
-				return url.startsWith(token[0]) && url.substring(token[0].length()).endsWith(token[1]);
+				return url.startsWith(token[0]) && url.substring(token[0].length()+1).endsWith(token[1]);
 			}
 			
 		}
