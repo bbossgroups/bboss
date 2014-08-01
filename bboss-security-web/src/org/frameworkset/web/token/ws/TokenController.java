@@ -152,11 +152,14 @@ public class TokenController implements TokenService {
 			return null;
 		}
 	}
-	public @ResponseBody String genTicket(String account,String worknumber,String appid,String secret) throws TokenException
+	public @ResponseBody TokenGetResponse genTicket(String account,String worknumber,String appid,String secret) throws TokenException
 	{
 		if(TokenHelper.isEnableToken())//如果开启令牌机制就会存在memTokenManager对象，否则不存在
 		{
-			return  TokenHelper.getTokenService().genTicket( account, worknumber, appid, secret);
+			TokenGetResponse tokenGetResponse = new TokenGetResponse();
+			String ticket =  TokenHelper.getTokenService().genTicket( account, worknumber, appid, secret);
+			tokenGetResponse.setTicket(ticket);
+			return tokenGetResponse;
 		}
 		else
 		{
