@@ -22,11 +22,11 @@ public abstract class BaseCharsetEncodingFilter extends SessionFilter{
     private String ResponseEncoding = null;
     private String mode = "0";
     private boolean checkiemodeldialog;
-    private static String[] wallfilterrules;
-    private String[] wallwhilelist;
+//    private static String[] wallfilterrules;
+//    private String[] wallwhilelist;
     private ReferHelper referHelper;
-    private static String[] wallfilterrules_default = new String[]{"<script","%3Cscript","script","<img","%3Cimg","alert(","alert%28","eval(","eval%28","style=","style%3D",
-    	"javascript","update ","drop ","delete ","insert ","create ","select ","truncate "};
+//    private static String[] wallfilterrules_default = new String[]{"<script","%3Cscript","script","<img","%3Cimg","alert(","alert%28","eval(","eval%28","style=","style%3D",
+//    	"javascript","update ","drop ","delete ","insert ","create ","select ","truncate "};
     
     
     public void init(FilterConfig arg0) throws ServletException {
@@ -45,15 +45,18 @@ public abstract class BaseCharsetEncodingFilter extends SessionFilter{
         String defaultwall = config.getInitParameter("defaultwall");
         if(StringUtil.isNotEmpty(wallwhilelist_ ))
         {
-        	wallwhilelist = wallwhilelist_.split(",");
+        	String[] wallwhilelist = wallwhilelist_.split(",");
+        	referHelper.setWallwhilelist(wallwhilelist);
         }
         if(StringUtil.isNotEmpty(wallfilterrules_))
         {
-        	wallfilterrules = wallfilterrules_.split(",");
+        	String[] wallfilterrules = wallfilterrules_.split(",");
+        	referHelper.setWallfilterrules(wallfilterrules);
         }
         else if(defaultwall != null && defaultwall.equals("true"))
         {
-        	wallfilterrules = wallfilterrules_default;
+        	String[] wallfilterrules = ReferHelper.wallfilterrules_default;
+        	referHelper.setWallfilterrules(wallfilterrules);
         }
         
         
@@ -123,7 +126,7 @@ public abstract class BaseCharsetEncodingFilter extends SessionFilter{
         {
 
             CharacterEncodingHttpServletRequestWrapper mrequestw = new
-                CharacterEncodingHttpServletRequestWrapper(request, RequestEncoding,checkiemodeldialog,wallfilterrules,wallwhilelist);
+                CharacterEncodingHttpServletRequestWrapper(request, RequestEncoding,checkiemodeldialog,referHelper);
             CharacterEncodingHttpServletResponseWrapper wresponsew = new
                 CharacterEncodingHttpServletResponseWrapper(response, ResponseEncoding);
 //            fc.doFilter(mrequestw, wresponsew);
@@ -134,7 +137,7 @@ public abstract class BaseCharsetEncodingFilter extends SessionFilter{
         else if(mode.equals("1"))
         {
         	 CharacterEncodingHttpServletRequestWrapper mrequestw = new
-                     CharacterEncodingHttpServletRequestWrapper(request, RequestEncoding,checkiemodeldialog,wallfilterrules,wallwhilelist);
+                     CharacterEncodingHttpServletRequestWrapper(request, RequestEncoding,checkiemodeldialog,referHelper);
             request.setCharacterEncoding(RequestEncoding);
 //            fc.doFilter(request,response);
             super.doFilter(request, response, fc);
@@ -143,7 +146,7 @@ public abstract class BaseCharsetEncodingFilter extends SessionFilter{
         else
         {
             CharacterEncodingHttpServletRequestWrapper mrequestw = new
-                CharacterEncodingHttpServletRequestWrapper(request, this.RequestEncoding,checkiemodeldialog,wallfilterrules,wallwhilelist);
+                CharacterEncodingHttpServletRequestWrapper(request, this.RequestEncoding,checkiemodeldialog,referHelper);
             CharacterEncodingHttpServletResponseWrapper wresponsew = new
                 CharacterEncodingHttpServletResponseWrapper(response, ResponseEncoding);
 //            fc.doFilter(mrequestw, wresponsew);

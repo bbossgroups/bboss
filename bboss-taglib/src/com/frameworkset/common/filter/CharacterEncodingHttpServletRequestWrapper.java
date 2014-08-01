@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletRequestWrapper;
 import org.apache.log4j.Logger;
 
 
+import org.frameworkset.util.ReferHelper;
+
 import bboss.org.mozilla.intl.chardet.UTF8Convertor;
 
 public class CharacterEncodingHttpServletRequestWrapper
@@ -26,13 +28,13 @@ public class CharacterEncodingHttpServletRequestWrapper
     private boolean checkiemodeldialog;
     private static final String system_encoding = System.getProperty("sun.jnu.encoding");
     public static final String USE_MVC_DENCODE_KEY = "org.frameworkset.web.servlet.handler.HandlerUtils.USE_MVC_DENCODE_KEY";
-    private String[] wallfilterrules;
-    private String[] wallwhilelist;
+    private ReferHelper referHelper;
 
-    public CharacterEncodingHttpServletRequestWrapper(HttpServletRequest request, String encoding,boolean checkiemodeldialog,String[] wallfilterrules,String[] wallwhilelist) {
+    public CharacterEncodingHttpServletRequestWrapper(HttpServletRequest request, String encoding,boolean checkiemodeldialog,ReferHelper referHelper) {
         super(request);
-        this.wallfilterrules = wallfilterrules;
-        this.wallwhilelist = wallwhilelist;
+//        this.wallfilterrules = wallfilterrules;
+//        this.wallwhilelist = wallwhilelist;
+        this.referHelper = referHelper;
         String agent = request.getHeader("User-Agent");
         if(agent != null)
         	isie = agent.contains("MSIE ");
@@ -79,45 +81,7 @@ public class CharacterEncodingHttpServletRequestWrapper
     }
     
 
-    private boolean iswhilename(String name)
-    {
-    	if(this.wallwhilelist == null || this.wallwhilelist.length == 0)
-    		return true;
-    	for(String whilename:this.wallwhilelist)
-    	{
-    		if(whilename.equals(name))
-    			return true;
-    	}
-    	return false;
-    }
-    private void wallfilter(String name,String[] values)
-    {
-    	if(this.wallfilterrules == null || this.wallfilterrules.length == 0 || values == null || values.length == 0 || iswhilename(name))
-    		return;
-    	
-    	int j = 0;
-    	for(String value:values)
-    	{
-	    	if(value == null || value.equals(""))
-	    	{
-	    		j++;
-	    		continue;
-	    	}
-	    	
-	    	for(int i = 0;i <wallfilterrules.length; i ++)
-	    	{
-	    	
-	    		if(value.indexOf(wallfilterrules[i]) >= 0)
-	    		{
-	    			values[j] = null;
-	    			logger.debug("参数"+name+"值"+value+"包含敏感词:"+wallfilterrules[i]+",存在安全隐患,系统自动过滤掉参数值!");
-	    			break;
-	    		}
-	    	}
-	    	j++;
-	    	
-    	}
-    }
+   
     public String[] getParameterValues(String name) {
     	
     	  
@@ -165,13 +129,13 @@ public class CharacterEncodingHttpServletRequestWrapper
                     	clone[i] = tempArray[i];
                     }
                 }
-                this.wallfilter(name,clone);
+                this.referHelper.wallfilter(name,clone);
                 parameters.put(name,clone);
                 return clone;
             }
             else
             {
-            	this.wallfilter(name,tempArray);
+            	this.referHelper.wallfilter(name,tempArray);
             	parameters.put(name,tempArray);
             	return tempArray;
             }
@@ -179,7 +143,7 @@ public class CharacterEncodingHttpServletRequestWrapper
         }
         catch (Exception e) {
         	String[] tempArray = super.getParameterValues(name);
-        	this.wallfilter(name,tempArray);
+        	this.referHelper.wallfilter(name,tempArray);
         	parameters.put(name,tempArray);
             return tempArray ;
         }
