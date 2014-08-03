@@ -19,8 +19,6 @@ import javax.jws.WebParam;
 import javax.jws.WebResult;
 import javax.jws.WebService;
 
-import org.frameworkset.web.token.TokenException;
-
 /**
  * <p>Title: CheckTokenService.java</p> 
  * <p>Description: </p>
@@ -32,9 +30,9 @@ import org.frameworkset.web.token.TokenException;
  */
 @WebService(name="CheckTokenService",targetNamespace="org.frameworkset.web.token.ws.CheckTokenService")
 public interface CheckTokenService {
-	public  @WebResult(name = "tokenResult", partName = "partTokenResult") boolean checkToken(@WebParam(name = "appid", partName = "partAppid") String appid,
+	public  @WebResult(name = "tokenResult", partName = "partTokenResult") TokenCheckResponse checkToken(@WebParam(name = "appid", partName = "partAppid") String appid,
 			@WebParam(name = "secret", partName = "partSecret") String secret,@WebParam(name = "token", partName = "partToken") String token);
-	public @WebResult(name = "tokenResult", partName = "partTokenResult") boolean checkTempToken(@WebParam(name = "token", partName = "partToken") String token);
+	public @WebResult(name = "tokenResult", partName = "partTokenResult") TokenCheckResponse checkTempToken(@WebParam(name = "token", partName = "partToken") String token);
 	
 	
 

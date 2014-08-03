@@ -5,16 +5,17 @@ public class TokenCheckResponse  implements java.io.Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = -4298093947423068003L;
-	private int resultcode;
+	private String resultcode;
 	private String userAccount;
 	private String worknumber;
+	private boolean validateResult;
 	public TokenCheckResponse () {
 		// TODO Auto-generated constructor stub
 	}
-	public int getResultcode() {
+	public String getResultcode() {
 		return resultcode;
 	}
-	public void setResultcode(int resultcode) {
+	public void setResultcode(String resultcode) {
 		this.resultcode = resultcode;
 	}
 	public String getUserAccount() {
@@ -28,6 +29,12 @@ public class TokenCheckResponse  implements java.io.Serializable{
 	}
 	public void setWorknumber(String worknumber) {
 		this.worknumber = worknumber;
+	}
+	public boolean isValidateResult() {
+		return validateResult;
+	}
+	public void setValidateResult(boolean validateResult) {
+		this.validateResult = validateResult;
 	}
 
 }

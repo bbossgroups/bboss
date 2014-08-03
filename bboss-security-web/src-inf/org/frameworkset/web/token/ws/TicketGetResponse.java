@@ -1,10 +1,15 @@
 package org.frameworkset.web.token.ws;
 
-public class TokenGetResponse implements java.io.Serializable{
+public class TicketGetResponse implements java.io.Serializable{
+
+	
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -2533519006415287132L;
+	private static final long serialVersionUID = 2143517020077964021L;
+	/**
+	 * 
+	 */
 	/**
 	 * @see org.frameworkset.web.token.TokenStore
 	 * public static final String ERROR_CODE_GETKEYPAIRFAILED = "GETKEYPAIRFAILED";
@@ -42,8 +47,8 @@ public class TokenGetResponse implements java.io.Serializable{
 	public static final String RESULT_OK = "ok";
 	 */
 	private String resultcode;
-	private String token;
-	public TokenGetResponse() {
+	private String ticket;	
+	public TicketGetResponse() {
 		// TODO Auto-generated constructor stub
 	}
 	public String getResultcode() {
@@ -52,12 +57,13 @@ public class TokenGetResponse implements java.io.Serializable{
 	public void setResultcode(String resultcode) {
 		this.resultcode = resultcode;
 	}
-	public String getToken() {
-		return token;
-	}
-	public void setToken(String token) {
-		this.token = token;
-	}
 	
+	public String getTicket() {
+		return ticket;
+	}
+	public void setTicket(String ticket) {
+		this.ticket = ticket;
+	}
+
 
 }

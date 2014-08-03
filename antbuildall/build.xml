@@ -573,7 +573,7 @@ bbossaop<-cas server [bboss-aop.jar]
 					<antcall target="svn-update-procedure">
 						<param name="sourcedir" value="${bboss-security-web}/distrib" />
 						<param name="filedir" value="@{destdir}" />
-						<param name="files" value="bboss-security-web.jar,bboss-security-web-sources.jar" />
+						<param name="files" value="bboss-security-web.jar,bboss-security-web-inf.jar,bboss-security-web-sources.jar" />
 					</antcall>
 				</sequential>
 			</for>

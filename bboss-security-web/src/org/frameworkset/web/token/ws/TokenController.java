@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.frameworkset.util.annotations.ResponseBody;
 import org.frameworkset.web.token.TokenException;
 import org.frameworkset.web.token.TokenHelper;
+import org.frameworkset.web.token.TokenStore;
 
 /**
  * <p>
@@ -50,14 +51,23 @@ public class TokenController implements TokenService {
 	
 	public @ResponseBody String genTempToken() throws Exception
 	{
-		if(TokenHelper.isEnableToken())//如果开启令牌机制就会存在memTokenManager对象，否则不存在
-		{
 			return  TokenHelper.getTokenService().genTempToken();
-		}
-		else
-		{
-			return null;
-		}
+	}
+	
+	@Override
+	public @ResponseBody(datatype="json") TokenGetResponse getTempToken() throws Exception {
+		TokenGetResponse tokenGetResponse = new TokenGetResponse();
+			try {
+				tokenGetResponse.setToken(TokenHelper.getTokenService().genTempToken());
+				tokenGetResponse.setResultcode(TokenStore.RESULT_OK);
+			
+			}catch (TokenException e) {
+				tokenGetResponse.setResultcode(e.getMessage());
+			
+			} catch (Exception e) {
+				tokenGetResponse.setResultcode(TokenStore.ERROR_CODE_BACKENDERROR);
+			}
+			return  tokenGetResponse;
 	}
 	
 	/**
@@ -68,16 +78,24 @@ public class TokenController implements TokenService {
 	 */
 	public @ResponseBody String genAuthTempToken(String appid,String secret,String ticket) throws Exception
 	{
-		if(TokenHelper.isEnableToken())//如果开启令牌机制就会存在memTokenManager对象，否则不存在
-		{
 			return  TokenHelper.getTokenService().genAuthTempToken(appid, secret, ticket);
-		}
-		else
-		{
-			return null;
-		}
 	}
-	
+	@Override
+	public @ResponseBody(datatype="json") TokenGetResponse getAuthTempToken(String appid, String secret,
+			String ticket) throws Exception {
+		TokenGetResponse tokenGetResponse = new TokenGetResponse();
+			try {
+				tokenGetResponse.setToken( TokenHelper.getTokenService().genAuthTempToken(appid, secret, ticket));
+				tokenGetResponse.setResultcode(TokenStore.RESULT_OK);
+			
+			}catch (TokenException e) {
+				tokenGetResponse.setResultcode(e.getMessage());
+			
+			} catch (Exception e) {
+				tokenGetResponse.setResultcode(TokenStore.ERROR_CODE_BACKENDERROR);
+			}
+			return  tokenGetResponse;
+	}
 	/**
 	 * 获取令牌请求
 	 * @param request
@@ -86,17 +104,27 @@ public class TokenController implements TokenService {
 	 */
 	public @ResponseBody String genDualToken(String appid,String secret,String ticket) throws Exception
 	{
-		if(TokenHelper.isEnableToken())//如果开启令牌机制就会存在memTokenManager对象，否则不存在
-		{
 			long dualtime = 30l*24l*60l*60l*1000l;
 			return  TokenHelper.getTokenService().genDualToken(appid, secret, ticket,dualtime);
-		}
-		else
-		{
-			return null;
-		}
 	}
 	
+	@Override
+	public @ResponseBody(datatype="json") TokenGetResponse getDualToken(String appid, String secret,
+			String ticket) throws Exception {
+		TokenGetResponse tokenGetResponse = new TokenGetResponse();
+			try {
+				long dualtime = 30l*24l*60l*60l*1000l;
+				tokenGetResponse.setToken( TokenHelper.getTokenService().genDualToken(appid, secret, ticket,dualtime));
+				tokenGetResponse.setResultcode(TokenStore.RESULT_OK);
+			
+			}catch (TokenException e) {
+				tokenGetResponse.setResultcode(e.getMessage());
+			
+			} catch (Exception e) {
+				tokenGetResponse.setResultcode(TokenStore.ERROR_CODE_BACKENDERROR);
+			}
+			return  tokenGetResponse;
+	}
 	/**
 	 * 获取令牌请求
 	 * @param request
@@ -105,14 +133,32 @@ public class TokenController implements TokenService {
 	 */
 	public @ResponseBody String genDualTokenWithDefaultLiveTime(String appid,String secret,String ticket) throws Exception
 	{
-		if(TokenHelper.isEnableToken())//如果开启令牌机制就会存在memTokenManager对象，否则不存在
-		{
 
 			return  TokenHelper.getTokenService().genDualTokenWithDefaultLiveTime(appid, secret, ticket);
-		}
-		else
+	}
+	
+	/**
+	 * 获取令牌请求
+	 * @param request
+	 * @return
+	 * @throws Exception 
+	 */
+	public @ResponseBody(datatype="json") TokenGetResponse getDualTokenWithDefaultLiveTime(String appid,String secret,String ticket) throws Exception
+	{
+		TokenGetResponse tokenGetResponse = new TokenGetResponse();
+//		if(TokenHelper.isEnableToken())//如果开启令牌机制就会存在memTokenManager对象，否则不存在
 		{
-			return null;
+			try {
+				tokenGetResponse.setToken( TokenHelper.getTokenService().genDualTokenWithDefaultLiveTime(appid, secret, ticket));
+				tokenGetResponse.setResultcode(TokenStore.RESULT_OK);
+			
+			}catch (TokenException e) {
+				tokenGetResponse.setResultcode(e.getMessage());
+			
+			} catch (Exception e) {
+				tokenGetResponse.setResultcode(TokenStore.ERROR_CODE_BACKENDERROR);
+			}
+			return  tokenGetResponse;
 		}
 	}
 //	/**
@@ -152,18 +198,35 @@ public class TokenController implements TokenService {
 			return null;
 		}
 	}
-	public @ResponseBody TokenGetResponse genTicket(String account,String worknumber,String appid,String secret) throws TokenException
+	public @ResponseBody(datatype="json") TicketGetResponse getTicket(String account,String worknumber,String appid,String secret) throws TokenException
 	{
-		if(TokenHelper.isEnableToken())//如果开启令牌机制就会存在memTokenManager对象，否则不存在
-		{
-			TokenGetResponse tokenGetResponse = new TokenGetResponse();
+
+		TicketGetResponse tokenGetResponse = new TicketGetResponse();
+		try {
 			String ticket =  TokenHelper.getTokenService().genTicket( account, worknumber, appid, secret);
 			tokenGetResponse.setTicket(ticket);
-			return tokenGetResponse;
+			tokenGetResponse.setResultcode(TokenStore.RESULT_OK);
+			
+		} catch (TokenException e) {
+			tokenGetResponse.setResultcode(e.getMessage());
+		
+		} catch (Exception e) {
+			tokenGetResponse.setResultcode(TokenStore.ERROR_CODE_BACKENDERROR);
 		}
-		else
-		{
-			return null;
-		}
+		return tokenGetResponse;
+		
 	}
+
+	@Override
+	public @ResponseBody String genTicket(String account, String worknumber, String appid,
+			String secret) throws Exception {
+		String ticket =  TokenHelper.getTokenService().genTicket( account, worknumber, appid, secret);
+		return  ticket;
+	}
+
+	
+
+
+
+	
 }

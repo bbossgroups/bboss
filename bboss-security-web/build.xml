@@ -32,7 +32,7 @@
 		<echo>Construct the distribution package...</echo>
 	</target>
 
-	<target name="compile-security-web" description="compile the bboss-security-web source ">
+	<target name="compile-security-web" depends="jar-security-web-inf" description="compile the bboss-security-web source ">
 		<echo>compile the security-web source ...</echo>
 		<javac encoding="UTF-8" destdir="classes-bboss-security-web" 
 			
@@ -40,6 +40,7 @@
 			<src path="src" />			
 			
 			<classpath id="cp-classes-bboss-security-web">
+				<fileset dir="distrib" includes="**/*.jar *.zip" />
 				<fileset dir="WebRoot/WEB-INF/lib" includes="**/*.jar *.zip" />
 				<fileset dir="../bboss-security/lib-compile" includes="**/*.jar *.zip" />			
 			</classpath>
@@ -64,7 +65,39 @@
 			</jar>
 		</target>	
 	
-		
+	<target name="compile-security-web-inf" description="compile the bboss-security-web source ">
+			<echo>compile the security-web source ...</echo>
+			<javac encoding="UTF-8" destdir="classes-bboss-security-web" 
+				
+				target="1.6" source="1.6" deprecation="true" debug="${debug}" optimize="${optimize}" memorymaximumsize="256M" fork="true" verbose="yes">
+				<src path="src-inf" />			
+				
+				<classpath id="cp-classes-bboss-security-web">
+					<fileset dir="WebRoot/WEB-INF/lib" includes="**/*.jar *.zip" />
+					<fileset dir="../bboss-security/lib-compile" includes="**/*.jar *.zip" />			
+				</classpath>
+			</javac>
+			<copy todir="classes-bboss-security-web" >
+				<fileset dir="src-inf" includes="**/*.xml" />
+				<fileset dir="src-inf" includes="**/*.sql" />
+			</copy>	
+		</target>
+		<target name="jar-security-web-inf" depends="compile-security-web-inf" description="generate the bboss-security-web library bboss-security-web.jar">
+				<echo>Generate the bboss-security-web library bboss-security-web.jar ...</echo>
+				<jar jarfile="distrib/bboss-security-web-inf.jar" basedir="classes-bboss-security-web" includes="**/*">
+					<manifest>
+						
+						<attribute name="Implementation-Version" value="${impl.version}" />
+						<attribute name="Specification-Version" value="${revision}" />
+						<attribute name="Implementation-Vendor" value="${impl.vendor}" />
+						<attribute name="Implementation-ProductID" value="${impl.productID}" />
+						<attribute name="Compile-Timestamp" value="${compile.timestamp}" />
+						<attribute name="Compile-User" value="${username}" />
+					</manifest>
+				</jar>
+			<delete dir="classes-bboss-security-web" />	
+			<mkdir dir="classes-bboss-security-web" />
+		</target>		
 	
 	<target name="jar-sources" description="jar sources">
 				<echo>Generate the bboss-security-web library sources.jar ...</echo>
@@ -77,7 +110,8 @@
 						<attribute name="Compile-Timestamp" value="${compile.timestamp}" />
 						<attribute name="Compile-User" value="${username}" />
 					</manifest>
-					<fileset dir="src" includes="**/*"/>					
+					<fileset dir="src" includes="**/*"/>			
+					<fileset dir="src-inf" includes="**/*"/>			
 				</jar>
 			</target>
 		

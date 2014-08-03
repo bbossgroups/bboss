@@ -18,9 +18,11 @@ package org.frameworkset.web.token.ws;
 import javax.jws.WebService;
 
 import org.frameworkset.util.annotations.ResponseBody;
+import org.frameworkset.web.token.TokenException;
 import org.frameworkset.web.token.TokenHelper;
 import org.frameworkset.web.token.TokenResult;
 import org.frameworkset.web.token.TokenService;
+import org.frameworkset.web.token.TokenStore;
 
 /**
  * <p>Title: CheckTokenContoller.java</p> 
@@ -34,32 +36,37 @@ import org.frameworkset.web.token.TokenService;
 @WebService(name="CheckTokenService",targetNamespace="org.frameworkset.web.token.ws.CheckTokenService")
 public class CheckTokenContoller implements CheckTokenService{
 	
-	public @ResponseBody(datatype="json") boolean checkToken(String appid,String secret,String token) 
+	public @ResponseBody(datatype="json") TokenCheckResponse checkToken(String appid,String secret,String token) 
 	{
-		
-		if(TokenHelper.isEnableToken())//如果开启令牌机制就会存在memTokenManager对象，否则不存在
-		{
-			
+		TokenCheckResponse tokenCheckResponse = new TokenCheckResponse();
+		try {
 			TokenResult result = TokenHelper.getTokenService().checkToken(appid,secret,token);
-			return TokenService.assertDToken(result.getResult());
+			tokenCheckResponse.setResultcode(TokenStore.RESULT_OK );
+			tokenCheckResponse.setValidateResult(TokenService.assertDToken(result.getResult()));
+			tokenCheckResponse.setUserAccount(result.getAccount());
+			tokenCheckResponse.setWorknumber(result.getWorknumber());
+			
+		} catch (TokenException e) {
+			tokenCheckResponse.setResultcode(e.getMessage());
 		}
-		else
-		{
-			return true;
+		 catch (Exception e) {
+			 tokenCheckResponse.setResultcode(TokenStore.ERROR_CODE_BACKENDERROR);
 		}
+		return tokenCheckResponse;
 	}
-	public @ResponseBody(datatype="json") boolean checkTempToken(String token)
+	public @ResponseBody(datatype="json") TokenCheckResponse checkTempToken(String token)
 	{
-		if(TokenHelper.isEnableToken())//如果开启令牌机制就会存在memTokenManager对象，否则不存在
-		{
-//			return  TokenHelper.getTokenService().checkTempToken(token);
-			return TokenService.assertDToken(TokenHelper.getTokenService().checkTempToken(token));
-		}
-		else
-		{
-//			return TokenStore.token_request_validateresult_notenabletoken;
-			return true;
-		}
+		TokenCheckResponse tokenCheckResponse = new TokenCheckResponse();
+			try {
+				tokenCheckResponse.setValidateResult(TokenService.assertDToken(TokenHelper.getTokenService().checkTempToken(token)));
+				tokenCheckResponse.setResultcode(TokenStore.RESULT_OK);
+			} catch (TokenException e) {
+				tokenCheckResponse.setResultcode(e.getMessage());
+			}
+			 catch (Exception e) {
+				 tokenCheckResponse.setResultcode(TokenStore.ERROR_CODE_BACKENDERROR);
+				}
+			return tokenCheckResponse;
 	}
 
 
