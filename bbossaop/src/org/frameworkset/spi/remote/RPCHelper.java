@@ -140,13 +140,13 @@ public class RPCHelper
     public boolean httpenabled = false;
     public boolean webserviceenabled = false;
 
-    public Object rpcService(ServiceID serviceID,// 服务标识
+    public Object rpcService(RemoteServiceID serviceID,// 服务标识
             Method method,// 需要在服务上调用的方法
             Object[] parameters ,CallContext callContext// 服务参数
     ) throws Throwable
     {
 
-        Target target = serviceID.getTarget();
+        Target target = ((RemoteServiceID)serviceID).getTarget();
         return innerRpcService(serviceID,// 服务标识
                 method,// 需要在服务上调用的方法
                 parameters ,callContext,// 服务参数
@@ -155,7 +155,7 @@ public class RPCHelper
     }
     
     
-    private Object innerRpcService(ServiceID serviceID,// 服务标识
+    private Object innerRpcService(RemoteServiceID serviceID,// 服务标识
             Method method,// 需要在服务上调用的方法
             Object[] parameters ,CallContext callContext,// 服务参数
             Target target
@@ -238,16 +238,16 @@ public class RPCHelper
         }
     }
     
-    private Object rpcRestService(ServiceID serviceID, Method method,
+    private Object rpcRestService(RemoteServiceID serviceID, Method method,
 			Object[] parameters, CallContext callContext) throws Throwable
 	{
     	
-    	Target target = serviceID.getRestfulTarget();
+    	Target target = ((RemoteServiceID)serviceID).getRestfulTarget();
     	/**
     	 * 构建特定组件管理容器远程请求调用上下文中参数头信息和安全上下文信息
     	 * @fixed biaoping.yin 2010-10-11 begin
     	 */
-    	ServiceID restServiceID = serviceID.getRestServiceID();
+    	RemoteServiceID restServiceID = (RemoteServiceID)serviceID.getRestServiceID();
     	if(restServiceID != null && restServiceID.getUrlParams() != null)
     	{
     		ApplicationContext.buildCallContext(restServiceID.getUrlParams(), callContext, null);
@@ -279,13 +279,13 @@ public class RPCHelper
     	return ret;
     }
 
-    private Object rpcJGroupService(ServiceID serviceID,// 服务标识
+    private Object rpcJGroupService(RemoteServiceID serviceID,// 服务标识
             Method method,// 需要在服务上调用的方法
             Object[] parameters // 服务参数
             ,CallContext callContext
     ) throws Throwable
     {
-        Target target = !serviceID.isRestStyle()?serviceID.getTarget():serviceID.getRestfulTarget();
+        Target target = !serviceID.isRestStyle()?((RemoteServiceID)serviceID).getTarget():((RemoteServiceID)serviceID).getRestfulTarget();
         List<RPCAddress> list = target.getTargets();
 //        Vector<Address> list = (Vector<Address>) target.getTargets();
         RpcDispatcher dispatcher = JGroupHelper.getJGroupHelper().getRpcDispatcher();
@@ -321,7 +321,7 @@ public class RPCHelper
     }
 
     @SuppressWarnings("unchecked")
-    public Object rpcMinaService(ServiceID serviceID,// 服务标识
+    public Object rpcMinaService(RemoteServiceID serviceID,// 服务标识
             Method method,// 需要在服务上调用的方法
             Object[] parameters // 服务参数
             ,CallContext callContext) throws Throwable
@@ -381,7 +381,7 @@ public class RPCHelper
     }
     
     @SuppressWarnings("unchecked")
-    public Object rpcNettyService(ServiceID serviceID,// 服务标识
+    public Object rpcNettyService(RemoteServiceID serviceID,// 服务标识
             Method method,// 需要在服务上调用的方法
             Object[] parameters // 服务参数
             ,CallContext callContext) throws Throwable
@@ -444,7 +444,7 @@ public class RPCHelper
     
     
     @SuppressWarnings("unchecked")
-    public Object rpcWebServiceService(ServiceID serviceID,// 服务标识
+    public Object rpcWebServiceService(RemoteServiceID serviceID,// 服务标识
             Method method,// 需要在服务上调用的方法
             Object[] parameters // 服务参数
             ,CallContext callContext
@@ -459,7 +459,7 @@ public class RPCHelper
     }
     
     @SuppressWarnings("unchecked")
-    public Object rpcJMSService(ServiceID serviceID,// 服务标识
+    public Object rpcJMSService(RemoteServiceID serviceID,// 服务标识
             Method method,// 需要在服务上调用的方法
             Object[] parameters // 服务参数
             ,CallContext callContext
@@ -474,7 +474,7 @@ public class RPCHelper
     }
     
     @SuppressWarnings("unchecked")
-    public Object rpcRMIService(ServiceID serviceID,// 服务标识
+    public Object rpcRMIService(RemoteServiceID serviceID,// 服务标识
             Method method,// 需要在服务上调用的方法
             Object[] parameters // 服务参数
             ,CallContext callContext
@@ -488,7 +488,7 @@ public class RPCHelper
 	    	    		Target.BROADCAST_TYPE_RMI,callContext);
     }
     
-    public Object rpcHTTPService(ServiceID serviceID,// 服务标识
+    public Object rpcHTTPService(RemoteServiceID serviceID,// 服务标识
             Method method,// 需要在服务上调用的方法
             Object[] parameters // 服务参数
             ,CallContext callContext
@@ -503,7 +503,7 @@ public class RPCHelper
     }
     
     @SuppressWarnings("unchecked")
-    public Object rpcEJBService(ServiceID serviceID,// 服务标识
+    public Object rpcEJBService(RemoteServiceID serviceID,// 服务标识
             Method method,// 需要在服务上调用的方法
             Object[] parameters // 服务参数
             ,CallContext callContext
@@ -519,13 +519,13 @@ public class RPCHelper
     
     
     @SuppressWarnings("unchecked")
-    public Object _rpcService(ServiceID serviceID,// 服务标识
+    public Object _rpcService(RemoteServiceID serviceID,// 服务标识
             Method method,// 需要在服务上调用的方法
             Object[] parameters, // 服务参数
     		String protocol,CallContext callContext) throws Throwable
     {
 
-    	Target target = !serviceID.isRestStyle()?serviceID.getTarget():serviceID.getRestfulTarget();
+    	Target target = !serviceID.isRestStyle()?((RemoteServiceID)serviceID).getTarget():((RemoteServiceID)serviceID).getRestfulTarget();
         List<RPCAddress> list = target.getTargets();
 
         Class[] paramsTypes = method.getParameterTypes();
@@ -640,15 +640,15 @@ public class RPCHelper
         {
             switch (resultType)
             {
-            case ServiceID.result_first:
+            case RemoteServiceID.result_first:
                 return getFirst(rsp_list);
-            case ServiceID.result_list:
+            case RemoteServiceID.result_list:
                 return getListResults(rsp_list);
-            case ServiceID.result_map:
+            case RemoteServiceID.result_map:
                 return buildMapResult(rsp_list);
-            case ServiceID.result_object:
+            case RemoteServiceID.result_object:
                 return getFirst(rsp_list);
-            case ServiceID.result_rsplist:
+            case RemoteServiceID.result_rsplist:
 //                return rsp_list;
             	return convertJGroupResult(rsp_list);
             default:
@@ -698,15 +698,15 @@ public class RPCHelper
         {
             switch (resultType)
             {
-            case ServiceID.result_first:
+            case RemoteServiceID.result_first:
                 return getFirst(rsp_list);
-            case ServiceID.result_list:
+            case RemoteServiceID.result_list:
                 return getListResults(rsp_list);
-            case ServiceID.result_map:
+            case RemoteServiceID.result_map:
                 return buildMapResult(rsp_list);
-            case ServiceID.result_object:
+            case RemoteServiceID.result_object:
                 return getFirst(rsp_list);
-            case ServiceID.result_rsplist:
+            case RemoteServiceID.result_rsplist:
                 return rsp_list;
             default:
                 return rsp_list;
@@ -1254,7 +1254,7 @@ public class RPCHelper
                 if (serviceID != null)
                     return serviceID;
                 long timeout = getRPCRequestTimeout();
-                serviceID = new ServiceIDImpl(serviceid, providertype, GroupRequest.GET_ALL, timeout, ServiceID.result_rsplist,
+                serviceID = new ServiceIDImpl(serviceid, providertype, GroupRequest.GET_ALL, timeout, RemoteServiceID.result_rsplist,
                         serviceType, applicationcontext);
                
                 serviceids.put(key, serviceID);
@@ -1264,7 +1264,7 @@ public class RPCHelper
         else
         {
             long timeout = getRPCRequestTimeout();
-            ServiceID serviceID = new ServiceIDImpl(serviceid, providertype, GroupRequest.GET_ALL, timeout, ServiceID.result_rsplist,
+            ServiceID serviceID = new ServiceIDImpl(serviceid, providertype, GroupRequest.GET_ALL, timeout, RemoteServiceID.result_rsplist,
                     serviceType,applicationcontext);
             return serviceID;
         }
@@ -1278,7 +1278,7 @@ public class RPCHelper
         
         
             long timeout = getRPCRequestTimeout();
-            ServiceID serviceID = new ServiceIDImpl(serviceid, null, GroupRequest.GET_ALL, timeout, ServiceID.result_rsplist,
+            ServiceID serviceID = new ServiceIDImpl(serviceid, null, GroupRequest.GET_ALL, timeout, RemoteServiceID.result_rsplist,
                     serviceType,applicationcontext);
            
            
@@ -1286,14 +1286,14 @@ public class RPCHelper
 
     }
     
-    public static ServiceID buildClientServiceID(String serviceid,  String applicationcontext,int containerType)
+    public static RemoteServiceID buildClientServiceID(String serviceid,  String applicationcontext,int containerType)
     {
        
 //        SoftReference<ServiceID> reference;
         
         
             long timeout = getRPCRequestTimeout();
-            ServiceID serviceID = new ServiceIDImpl(serviceid, null, applicationcontext,containerType,GroupRequest.GET_ALL, timeout, ServiceID.result_rsplist,
+            RemoteServiceID serviceID = new ServiceIDImpl(serviceid, null, applicationcontext,containerType,GroupRequest.GET_ALL, timeout, RemoteServiceID.result_rsplist,
                                                     ServiceID.PROPERTY_BEAN_SERVICE);
            
            

@@ -55,6 +55,7 @@ import com.frameworkset.common.poolman.handle.NullRowHandler;
 import com.frameworkset.common.poolman.handle.RowHandler;
 import com.frameworkset.common.poolman.handle.XMLMark;
 import com.frameworkset.common.poolman.sql.PrimaryKey;
+import com.frameworkset.common.poolman.util.JDBCPool;
 import com.frameworkset.common.poolman.util.SQLManager;
 import com.frameworkset.common.poolman.util.StatementParser;
 import com.frameworkset.util.FileUtil;
@@ -1272,9 +1273,11 @@ public class PreparedDBUtil extends DBUtil {
 //		String[] preparedfields = null; 
 		List resources = null;
 		try {
+			JDBCPool pool = SQLManager.getInstance().getPool(this.prepareDBName);
 			stmtInfo = new StatementInfo(this.prepareDBName, this.Params.prepareSqlifo,
 					
-					false, offset, this.pagesize, isRobotQuery(this.prepareDBName), con,oraclerownum,true);
+					false, offset, this.pagesize, pool.isRobotQuery(), con,oraclerownum,true);
+			
 			stmtInfo.init();
 
 
@@ -1337,11 +1340,13 @@ public class PreparedDBUtil extends DBUtil {
 				}
 				else
 				{
+					
+					stmtInfo.setRETURN_GENERATED_KEYS(pool.getRETURN_GENERATED_KEYS());
 					if(showsql(stmtInfo.getDbname()))
 					{
 						log.debug("Execute JDBC prepared statement:"+stmtInfo.getSql());
 					}
-					statement = stmtInfo.prepareStatement(stmtInfo.getSql());
+					statement = stmtInfo.prepareStatement(stmtInfo.getSql(),getCUDResult);
 				}
 					
 				
@@ -4810,6 +4815,12 @@ public class PreparedDBUtil extends DBUtil {
 					 con_,
 					 false);
 			stmtInfo.init();
+			boolean getCUDResult = CUDResult != null;
+			if(getCUDResult)
+			{
+				JDBCPool pool = SQLManager.getInstance().getPool(this.prepareDBName);
+				stmtInfo.setRETURN_GENERATED_KEYS(pool.getRETURN_GENERATED_KEYS());
+			}
 			//如果需要优化处理sql，则需要排序
 			if(this.batchOptimize)
 			{
@@ -4836,7 +4847,7 @@ public class PreparedDBUtil extends DBUtil {
 						log.debug("Execute JDBC prepared batch statement:"+Params.prepareSqlifo.getNewsql());
 					}
 					statement = stmtInfo
-							.prepareStatement(Params.prepareSqlifo.getNewsql());
+							.prepareStatement(Params.prepareSqlifo.getNewsql(),getCUDResult);
 					if(resources == null)
 						resources = new ArrayList();
 					setUpParams(Params,statement,resources);
@@ -4886,7 +4897,7 @@ public class PreparedDBUtil extends DBUtil {
 						log.debug("Execute JDBC prepared batch statement:"+Params.prepareSqlifo.getNewsql());
 					}
 					statement = stmtInfo
-							.prepareStatement(Params.prepareSqlifo.getNewsql());
+							.prepareStatement(Params.prepareSqlifo.getNewsql(),getCUDResult);
 					if(resources == null)
 						resources = new ArrayList();
 					setUpParams(Params,statement,resources);	

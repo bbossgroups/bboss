@@ -25,7 +25,7 @@ import org.apache.log4j.Logger;
 import org.frameworkset.spi.async.annotation.Async;
 import org.frameworkset.spi.async.annotation.Constants;
 import org.frameworkset.spi.async.annotation.Result;
-import org.frameworkset.spi.remote.RPCMethodCall;
+//import org.frameworkset.spi.remote.RPCMethodCall;
 
 import com.frameworkset.orm.annotation.TransactionType;
 import com.frameworkset.orm.transaction.TransactionException;
@@ -270,37 +270,37 @@ public class SynchronizedMethod implements java.io.Serializable {
     }
     
     
-    /**
-     * 构建方法的惟一标识id，一个类中的一个方法只对应一个标识，标识生成的规则
-     * 是：方法名+'_' + 参数类型1 + ... + '_' +  参数类型n
-     * @param method 方法对象，存放所有的方法信息，包括方法名，方法参数类型数组，方法返回值类型，方法异常类型等等
-     * @param args 方法参数
-     * @return 方法标识
-     */
-    public static String buildMethodUUID(RPCMethodCall method_call)
-    {
-    	try
-    	{
-	    	StringBuffer uuid = new StringBuffer();
-	    	Class[] paramTypes = method_call.getTypes();
-	    	uuid.append(method_call.getMethodName());
-	    	if(paramTypes == null || paramTypes.length == 0)
-	    	{
-	    		return uuid.toString();
-	    	}
-	    	for(int i = 0; i < paramTypes.length; i ++)
-	    	{
-	    		uuid.append("_").append(paramTypes[i].getName());
-	    	}
-	    	return uuid.toString();
-    	}
-    	catch(Exception e)
-    	{
-//    		e.printStackTrace();
-    		log.error(e.getMessage(),e);
-    		return null;
-    	}
-    }
+//    /**
+//     * 构建方法的惟一标识id，一个类中的一个方法只对应一个标识，标识生成的规则
+//     * 是：方法名+'_' + 参数类型1 + ... + '_' +  参数类型n
+//     * @param method 方法对象，存放所有的方法信息，包括方法名，方法参数类型数组，方法返回值类型，方法异常类型等等
+//     * @param args 方法参数
+//     * @return 方法标识
+//     */
+//    public static String buildMethodUUID(RPCMethodCall method_call)
+//    {
+//    	try
+//    	{
+//	    	StringBuffer uuid = new StringBuffer();
+//	    	Class[] paramTypes = method_call.getTypes();
+//	    	uuid.append(method_call.getMethodName());
+//	    	if(paramTypes == null || paramTypes.length == 0)
+//	    	{
+//	    		return uuid.toString();
+//	    	}
+//	    	for(int i = 0; i < paramTypes.length; i ++)
+//	    	{
+//	    		uuid.append("_").append(paramTypes[i].getName());
+//	    	}
+//	    	return uuid.toString();
+//    	}
+//    	catch(Exception e)
+//    	{
+////    		e.printStackTrace();
+//    		log.error(e.getMessage(),e);
+//    		return null;
+//    	}
+//    }
     
     /**
      * 构建方法的惟一标识id，一个类中的一个方法只对应一个标识，标识生成的规则

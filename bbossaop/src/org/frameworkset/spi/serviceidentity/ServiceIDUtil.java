@@ -32,27 +32,14 @@ import org.frameworkset.spi.remote.ServiceID;
  * @version 1.0
  */
 public final class ServiceIDUtil {
-	public static ServiceID buildServiceID(Map<String,ServiceID> serviceids,String serviceid, int serviceType, String providertype,BaseApplicationContext applicationcontext)
+	public static ServiceID buildServiceID(String serviceid, int serviceType, String providertype,BaseApplicationContext applicationcontext)
     {   
-        String key = serviceid ;
-        if(providertype != null)
-            key = serviceid + "|" + providertype;
-//        SoftReference<ServiceID> reference;
-        ServiceID serviceID = serviceids.get(key);
-        if (serviceID != null)
-            return serviceID;
         
-        synchronized (serviceids)
-        {
-            serviceID = serviceids.get(key);
-            if (serviceID != null)
-                return serviceID;
-            long timeout = -1;
-            serviceID = new DummyServiceIDImpl(serviceid, providertype, 2, timeout, ServiceID.result_rsplist,
+     
+        	ServiceID serviceID = new DummyServiceIDImpl(serviceid, providertype,
                     serviceType, applicationcontext);
            
-            serviceids.put(key, serviceID);
-        }
+      
         return serviceID;
         
         
@@ -65,8 +52,7 @@ public final class ServiceIDUtil {
 //        SoftReference<ServiceID> reference;
         
         
-        long timeout = -1;
-        ServiceID serviceID = new DummyServiceIDImpl(serviceid, null, 2, timeout, ServiceID.result_rsplist,
+        ServiceID serviceID = new DummyServiceIDImpl(serviceid, null, 
                 serviceType,applicationcontext);
            
            

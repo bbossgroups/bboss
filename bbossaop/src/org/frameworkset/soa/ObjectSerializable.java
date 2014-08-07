@@ -173,7 +173,7 @@ public class ObjectSerializable {
 //				ret.append(content_header_gbk);
 			ret.append(call_header);
 			SerialStack stack = new SerialStack();
-			convertBeanObjectToXML("soamethodcall", method, method.getClass(),
+			convertBeanObjectToXML("soamethodcall", method, method.getClass(),false,
 					null, ret,stack,"soamethodcall");
 			stack.clear();
 			ret.append(call_tailer);
@@ -204,7 +204,7 @@ public class ObjectSerializable {
 			ret = new StringWriter();
 			SerialStack stack = new SerialStack();
 			String name = UUID.randomUUID().toString();
-			convertBeanObjectToXML(name, obj, type, dateformat, ret,stack,name);
+			convertBeanObjectToXML(name, obj, type, ValueObjectUtil.isBasePrimaryType(type),dateformat, ret,stack,name);
 			stack.clear();
 			
 			return ret.toString();
@@ -376,7 +376,7 @@ public class ObjectSerializable {
 	
 	
 	public final static void convertBeanObjectToXML(String name, Object obj,
-			Class type, String dateformat, String charset,Writer ret)
+			Class ptype, String dateformat, String charset,Writer ret)
 			throws Exception {
 //		StringBuffer ret = new StringBuffer();
 
@@ -387,7 +387,7 @@ public class ObjectSerializable {
 //				ret.append(content_header_gbk);
 			ret.append("<ps>");
 			SerialStack stack = new SerialStack();
-			convertBeanObjectToXML(name, obj, type, dateformat, ret,stack,name);
+			convertBeanObjectToXML(name, obj, ptype,ValueObjectUtil.isBasePrimaryType(ptype), dateformat, ret,stack,name);
 			stack.clear();
 			ret.append("</ps>");
 		} catch (Exception e) {
@@ -402,7 +402,7 @@ public class ObjectSerializable {
 		try {
 			SerialStack stack = new SerialStack();
 			String name = UUID.randomUUID().toString();
-			convertBeanObjectToXML(name, obj, type, null, ret,stack,name);
+			convertBeanObjectToXML(name, obj, type,ValueObjectUtil.isBasePrimaryType(type), null, ret,stack,name);
 			stack.clear();
 		} catch (IOException e) {
 			throw new IllegalArgumentException(e);
@@ -466,7 +466,7 @@ public class ObjectSerializable {
 				int i = 0;
 				SerialStack stack = new SerialStack();
 				for (Object obj : objs) {
-					convertBeanObjectToXML(names.get(i), obj, types.get(i), null,
+					convertBeanObjectToXML(names.get(i), obj, types.get(i), ValueObjectUtil.isBasePrimaryType(types.get(i)),null,
 							ret,stack,names.get(i));
 					i++;
 				}
@@ -502,15 +502,18 @@ public class ObjectSerializable {
 	 * @throws Exception 
 	 */
 	private final static void convertBeanObjectToXML(String name, Object obj,
-			Class type, String dateformat, Writer ret,SerialStack serialStack,String currentAddress)
+			Class ptype,boolean pisbasetype, String dateformat, Writer ret,SerialStack serialStack,String currentAddress)
 			throws Exception {
 		ClassInfo classinfo = null;
+		Class vtype = null;
 		if (obj != null)
 		{
-			type = obj.getClass();
-			classinfo = ClassUtil.getClassInfo(type);
-			if(!classinfo.isBaseprimary())
+			
+			
+			if(!pisbasetype)
 			{
+				vtype = obj.getClass();
+				classinfo = ClassUtil.getClassInfo(vtype);
 				String address = serialStack.getRefID(obj);
 				if(address != null)
 				{
@@ -535,31 +538,37 @@ public class ObjectSerializable {
 					serialStack.addStack(obj, currentAddress);
 				}
 			}
+			else
+				vtype = ptype;
 			
 		}
+		else
+		{
+			vtype = ptype;
+		}
 		
-		if (type == byte[].class) {
+		if (vtype == byte[].class) {
 			if (obj == null) {
 				if (name == null)
 					ret.append("<p s:nvl=\"true\" s:t=\"").append(
-							ValueObjectUtil.getSimpleTypeName(type)).append(
+							ValueObjectUtil.getSimpleTypeName(vtype)).append(
 							"\"/>");
 				else
 					ret.append("<p n=\"").append(name).append(
 							"\" s:nvl=\"true\" s:t=\"").append(
-							ValueObjectUtil.getSimpleTypeName(type)).append(
+							ValueObjectUtil.getSimpleTypeName(vtype)).append(
 							"\"/>");
 
 				return;
 			} else {
 				
-				if (!File.class.isAssignableFrom(type)) {
+				if (!File.class.isAssignableFrom(vtype)) {
 					
 					if (name == null)
 					{
 						ret
 								.append("<p s:t=\"")
-								.append(ValueObjectUtil.getSimpleTypeName(type))
+								.append(ValueObjectUtil.getSimpleTypeName(vtype))
 								.append("\"><![CDATA[")
 								.append(
 										ValueObjectUtil
@@ -571,7 +580,7 @@ public class ObjectSerializable {
 								.append("<p n=\"")
 								.append(name)
 								.append("\" s:t=\"")
-								.append(ValueObjectUtil.getSimpleTypeName(type))
+								.append(ValueObjectUtil.getSimpleTypeName(vtype))
 								.append("\"><![CDATA[")
 								.append(
 										ValueObjectUtil
@@ -597,7 +606,7 @@ public class ObjectSerializable {
 						fileOut.flush();
 						if (name == null)
 							ret.append("<p s:t=\"").append(
-									ValueObjectUtil.getSimpleTypeName(type))
+									ValueObjectUtil.getSimpleTypeName(vtype))
 									.append("\"><![CDATA[").append(
 											ValueObjectUtil
 													.byteArrayEncoder(fileOut
@@ -606,7 +615,7 @@ public class ObjectSerializable {
 						else
 							ret.append("<p n=\"").append(name).append(
 									"\" s:t=\"").append(
-									ValueObjectUtil.getSimpleTypeName(type))
+									ValueObjectUtil.getSimpleTypeName(vtype))
 									.append("\"><![CDATA[").append(
 											ValueObjectUtil
 													.byteArrayEncoder(fileOut
@@ -638,7 +647,7 @@ public class ObjectSerializable {
 			return;
 		}
 
-		else if (type != null && File.class.isAssignableFrom(type)) {
+		else if (vtype != null && File.class.isAssignableFrom(vtype)) {
 			if (obj == null) {
 				if (name == null)
 					ret.append("<p s:nvl=\"true\" s:t=\"File\"/>");
@@ -697,7 +706,7 @@ public class ObjectSerializable {
 			}
 
 			return;
-		} else if (type == String.class) {
+		} else if (vtype == String.class) {
 			if (obj == null) {
 				if (name == null)
 					ret.append("<p s:nvl=\"true\" s:t=\"String\"/>");
@@ -734,16 +743,16 @@ public class ObjectSerializable {
 				}
 			}
 			return;
-		} else if (type != null && List.class.isAssignableFrom(type)) {
+		} else if (vtype != null && List.class.isAssignableFrom(vtype)) {
 			if (obj == null) {
 				if (name == null)
 					ret.append("<p s:nvl=\"true\" s:t=\"").append(
-							ValueObjectUtil.getSimpleTypeName(type)).append(
+							ValueObjectUtil.getSimpleTypeName(vtype)).append(
 							"\"/>");
 				else
 					ret.append("<p n=\"").append(name).append(
 							"\" s:nvl=\"true\" s:t=\"").append(
-							ValueObjectUtil.getSimpleTypeName(type)).append(
+							ValueObjectUtil.getSimpleTypeName(vtype)).append(
 							"\"/>");
 
 			} else {
@@ -752,14 +761,14 @@ public class ObjectSerializable {
 				if (name == null)
 				{
 					ret.append("<p s:t=\"").append(
-							ValueObjectUtil.getSimpleTypeName(type)).append(
+							ValueObjectUtil.getSimpleTypeName(vtype)).append(
 							"\">");
 					
 				}
 				else
 				{
 					ret.append("<p n=\"").append(name).append("\" s:t=\"")
-							.append(ValueObjectUtil.getSimpleTypeName(type))
+							.append(ValueObjectUtil.getSimpleTypeName(vtype))
 							.append("\">");
 //					currentAddress = currentAddress + "->" + name;
 				}
@@ -772,10 +781,10 @@ public class ObjectSerializable {
 						 * convertBeanObjectToXML(String name, Object obj,
 			Class type, String dateformat, Writer ret,SerialStack serialStack,String currentAddress)
 						 */
-						convertBeanObjectToXML(null, value, null, dateformat,
+						convertBeanObjectToXML(null, value, (Class)null,false, dateformat,
 								ret,serialStack,currentAddress + "[" + i + "]");
 					else
-						convertBeanObjectToXML(null, value, value.getClass(),
+						convertBeanObjectToXML(null, value, value.getClass(),ValueObjectUtil.isBasePrimaryType(value.getClass()),
 								dateformat, ret,serialStack,currentAddress + "[" + i + "]");
 				}
 				ret.append("</l>");
@@ -784,16 +793,16 @@ public class ObjectSerializable {
 
 		}
 
-		else if (type != null && Set.class.isAssignableFrom(type)) {
+		else if (vtype != null && Set.class.isAssignableFrom(vtype)) {
 			if (obj == null) {
 				if (name == null)
 					ret.append("<p s:nvl=\"true\" s:t=\"").append(
-							ValueObjectUtil.getSimpleTypeName(type)).append(
+							ValueObjectUtil.getSimpleTypeName(vtype)).append(
 							"\"/>");
 				else
 					ret.append("<p n=\"").append(name).append(
 							"\" s:nvl=\"true\" s:t=\"").append(
-							ValueObjectUtil.getSimpleTypeName(type)).append(
+							ValueObjectUtil.getSimpleTypeName(vtype)).append(
 							"\"/>");
 
 			} else {
@@ -801,12 +810,12 @@ public class ObjectSerializable {
 
 				if (name == null)
 					ret.append("<p s:t=\"").append(
-							ValueObjectUtil.getSimpleTypeName(type)).append(
+							ValueObjectUtil.getSimpleTypeName(vtype)).append(
 							"\">");
 				else
 				{
 					ret.append("<p n=\"").append(name).append("\" s:t=\"")
-							.append(ValueObjectUtil.getSimpleTypeName(type))
+							.append(ValueObjectUtil.getSimpleTypeName(vtype))
 							.append("\">");
 //					currentAddress = currentAddress + "->" + name;
 				}
@@ -819,10 +828,10 @@ public class ObjectSerializable {
 				{
 					value = itr.next();
 					if (value == null)
-						convertBeanObjectToXML(null, value, null, dateformat,
+						convertBeanObjectToXML(null, value, (Class)null,false, dateformat,
 								ret,serialStack,currentAddress + "[" + i + "]");
 					else
-						convertBeanObjectToXML(null, value, value.getClass(),
+						convertBeanObjectToXML(null, value, value.getClass(),ValueObjectUtil.isBasePrimaryType(value.getClass()),
 								dateformat, ret,serialStack,currentAddress + "[" + i + "]");
 					i ++;
 				}
@@ -830,16 +839,16 @@ public class ObjectSerializable {
 				ret.append("</p>");
 			}
 
-		} else if (type != null && Map.class.isAssignableFrom(type)) {
+		} else if (vtype != null && Map.class.isAssignableFrom(vtype)) {
 			if (obj == null) {
 				if (name == null)
 					ret.append("<p s:nvl=\"true\" s:t=\"").append(
-							ValueObjectUtil.getSimpleTypeName(type)).append(
+							ValueObjectUtil.getSimpleTypeName(vtype)).append(
 							"\"/>");
 				else
 					ret.append("<p n=\"").append(name).append(
 							"\" s:nvl=\"true\" s:t=\"").append(
-							ValueObjectUtil.getSimpleTypeName(type)).append(
+							ValueObjectUtil.getSimpleTypeName(vtype)).append(
 							"\"/>");
 
 			} else {
@@ -847,12 +856,12 @@ public class ObjectSerializable {
 
 				if (name == null)
 					ret.append("<p s:t=\"").append(
-							ValueObjectUtil.getSimpleTypeName(type)).append(
+							ValueObjectUtil.getSimpleTypeName(vtype)).append(
 							"\">");
 				else
 				{
 					ret.append("<p n=\"").append(name).append("\" s:t=\"")
-							.append(ValueObjectUtil.getSimpleTypeName(type))
+							.append(ValueObjectUtil.getSimpleTypeName(vtype))
 							.append("\">");
 //					currentAddress = currentAddress + "->" + name;
 				}
@@ -866,26 +875,26 @@ public class ObjectSerializable {
 					value = entry.getValue();
 					if (value == null)
 						convertBeanObjectToXML(String.valueOf(entry.getKey()),
-								value, null, dateformat, ret,serialStack,currentAddress + "[" + entry.getKey() + "]");
+								value, (Class)null,false, dateformat, ret,serialStack,currentAddress + "[" + entry.getKey() + "]");
 					else
 						convertBeanObjectToXML(String.valueOf(entry.getKey()),
-								value, value.getClass(), dateformat, ret,serialStack,currentAddress + "[" + entry.getKey() + "]");
+								value, value.getClass(), ValueObjectUtil.isBasePrimaryType(value.getClass()),dateformat, ret,serialStack,currentAddress + "[" + entry.getKey() + "]");
 				}
 				ret.append("</m>");
 				ret.append("</p>");
 			}
 
-		} else if (type != null && type.isArray()) {
+		} else if (vtype != null && vtype.isArray()) {
 
 			if (obj == null) {
 				if (name == null)
 					ret.append("<p s:nvl=\"true\" s:t=\"").append(
-							ValueObjectUtil.getTypeName(type)).append(
+							ValueObjectUtil.getTypeName(vtype)).append(
 							"\"/>");
 				else
 					ret.append("<p n=\"").append(name).append(
 							"\" s:nvl=\"true\" s:t=\"").append(
-							ValueObjectUtil.getTypeName(type)).append(
+							ValueObjectUtil.getTypeName(vtype)).append(
 							"\"/>");
 				return;
 			} else {
@@ -903,19 +912,19 @@ public class ObjectSerializable {
 				
 				if (name == null)
 					ret.append("<p s:t=\"").append(
-							ValueObjectUtil.getTypeName(type)).append(
+							ValueObjectUtil.getTypeName(vtype)).append(
 							"\">");
 				else
 				{
 					ret.append("<p n=\"").append(name).append("\" s:t=\"")
-							.append(ValueObjectUtil.getTypeName(type))
+							.append(ValueObjectUtil.getTypeName(vtype))
 							.append("\">");
 //					currentAddress = currentAddress + "->" + name;
 				}
 
 			}
 			ret.append("<a cmt=\"").append(
-					ValueObjectUtil.getComponentTypeName(type)).append("\">");
+					ValueObjectUtil.getComponentTypeName(vtype)).append("\">");
 			Object value = null;
 			int len = Array.getLength(obj);
 
@@ -923,9 +932,9 @@ public class ObjectSerializable {
 				value = Array.get(obj, i);
 
 				if (value == null)
-					convertBeanObjectToXML(null, value, null, dateformat, ret,serialStack,currentAddress + "[" + i + "]");
+					convertBeanObjectToXML(null, value, (Class)null, false,dateformat, ret,serialStack,currentAddress + "[" + i + "]");
 				else
-					convertBeanObjectToXML(null, value, value.getClass(),
+					convertBeanObjectToXML(null, value, value.getClass(), ValueObjectUtil.isBasePrimaryType(value.getClass()),
 							dateformat, ret,serialStack,currentAddress + "[" + i + "]");
 			}
 			ret.append("</a>");
@@ -933,7 +942,7 @@ public class ObjectSerializable {
 		}
 
 		else {
-			basicTypeCast(name, obj, type, classinfo, dateformat, ret, serialStack,currentAddress);
+			basicTypeCast(name, obj, vtype, classinfo, dateformat, ret, serialStack,currentAddress);
 		}
 
 		// Object arrayObj;
@@ -967,21 +976,21 @@ public class ObjectSerializable {
 	 * 
 	 */
 	private final static boolean basicTypeCast(String name, Object obj,
-			Class type, ClassInfo classInfo,String dateformat, Writer ret,SerialStack stack,String currentAddress)
+			Class ptype, ClassInfo classInfo,String dateformat, Writer ret,SerialStack stack,String currentAddress)
 			throws Exception {
 		if (obj == null) {
 			if (name == null)
 				ret.append("<p s:nvl=\"true\" s:t=\"").append(
-						ValueObjectUtil.getSimpleTypeName(type)).append("\"/>");
+						ValueObjectUtil.getSimpleTypeName(ptype)).append("\"/>");
 			else
 				ret.append("<p n=\"").append(name).append(
 						"\" s:nvl=\"true\" s:t=\"").append(
-						ValueObjectUtil.getSimpleTypeName(type)).append("\"/>");
+						ValueObjectUtil.getSimpleTypeName(ptype)).append("\"/>");
 
 			return true;
 		}
 
-		type = obj.getClass();
+		Class vtype = obj.getClass();
 		//		
 		// if (type.isAssignableFrom(toType)) //
 		// type是toType的父类，父类向子类转换的过程，这个转换过程是不安全的
@@ -1003,7 +1012,16 @@ public class ObjectSerializable {
 		/*******************************************
 		 * 字符串向基本类型及其包装器转换 * 如果obj不是相应得数据格式,将抛出 * NumberFormatException *
 		 ******************************************/
-		if (type == long.class || type == Long.class) {
+		// 如果是字符串则直接返回obj.toString()
+		if (ptype == String.class) {
+			if (name == null)
+				ret.append("<p s:t=\"String\" v=\"").append(obj.toString()).append("\"/>");
+			else
+				ret.append("<p n=\"").append(name).append(
+						"\" s:t=\"String\" v=\"").append(obj.toString()).append("\"/>");
+			return true;
+		} 
+		else if (ptype == long.class ) {
 			// if (ValueObjectUtil.isNumber(obj))
 			// return ((Number) obj).longValue();
 			// else if (java.util.Date.class.isAssignableFrom(type)) {
@@ -1018,7 +1036,22 @@ public class ObjectSerializable {
 
 			return true;
 		}
-		if (type == int.class || type == Integer.class) {
+		else if (ptype == Long.class) {
+			// if (ValueObjectUtil.isNumber(obj))
+			// return ((Number) obj).longValue();
+			// else if (java.util.Date.class.isAssignableFrom(type)) {
+			// return ((java.util.Date) obj).getTime();
+			// }
+			// return Long.parseLong(obj.toString());
+			if (name == null)
+				ret.append("<p s:t=\"Long\" v=\"").append(obj.toString()).append("\"/>");
+			else
+				ret.append("<p n=\"").append(name).append(
+						"\" s:t=\"Long\" v=\"").append(obj.toString()).append("\"/>");
+
+			return true;
+		}
+		else if (ptype == int.class ) {
 			if (name == null)
 				ret.append("<p s:t=\"int\" v=\"").append(obj.toString()).append("\"/>");
 			else
@@ -1028,7 +1061,17 @@ public class ObjectSerializable {
 
 			return true;
 		}
-		if (type == float.class || type == Float.class) {
+		else if (ptype == Integer.class) {
+			if (name == null)
+				ret.append("<p s:t=\"Integer\" v=\"").append(obj.toString()).append("\"/>");
+			else
+				ret.append("<p n=\"").append(name)
+						.append("\" s:t=\"Integer\" v=\"").append(obj.toString()).append(
+								"\"/>");
+
+			return true;
+		}
+		else if (ptype == float.class) {
 			if (name == null)
 				ret.append("<p s:t=\"float\" v=\"").append(obj.toString()).append("\"/>");
 			else
@@ -1037,7 +1080,16 @@ public class ObjectSerializable {
 
 			return true;
 		}
-		if (type == short.class || type == Short.class) {
+		else if (ptype == Float.class) {
+			if (name == null)
+				ret.append("<p s:t=\"Float\" v=\"").append(obj.toString()).append("\"/>");
+			else
+				ret.append("<p n=\"").append(name).append(
+						"\" s:t=\"Float\" v=\"").append(obj.toString()).append("\"/>");
+
+			return true;
+		}
+		else if (ptype == short.class) {
 			if (name == null)
 				ret.append("<p s:t=\"short\" v=\"").append(obj.toString()).append("\"/>");
 			else
@@ -1045,7 +1097,15 @@ public class ObjectSerializable {
 						"\" s:t=\"short\" v=\"").append(obj.toString()).append("\"/>");
 			return true;
 		}
-		if (type == double.class || type == Double.class) {
+		else if (ptype == Short.class) {
+			if (name == null)
+				ret.append("<p s:t=\"Short\" v=\"").append(obj.toString()).append("\"/>");
+			else
+				ret.append("<p n=\"").append(name).append(
+						"\" s:t=\"Short\" v=\"").append(obj.toString()).append("\"/>");
+			return true;
+		}
+		else if (ptype == double.class) {
 			if (name == null)
 				ret.append("<p s:t=\"double\" v=\"").append(obj.toString()).append("\"/>");
 			else
@@ -1053,7 +1113,15 @@ public class ObjectSerializable {
 						"\" s:t=\"double\" v=\"").append(obj.toString()).append("\"/>");
 			return true;
 		}
-		if (type == char.class || type == Character.class) {
+		else if (ptype == Double.class) {
+			if (name == null)
+				ret.append("<p s:t=\"Double\" v=\"").append(obj.toString()).append("\"/>");
+			else
+				ret.append("<p n=\"").append(name).append(
+						"\" s:t=\"Double\" v=\"").append(obj.toString()).append("\"/>");
+			return true;
+		}
+		else if (ptype == char.class ) {
 			if (name == null)
 				ret.append("<p s:t=\"char\" v=\"").append(obj.toString()).append("\"/>");
 			else
@@ -1061,8 +1129,15 @@ public class ObjectSerializable {
 						"\" s:t=\"char\" v=\"").append(obj.toString()).append("\"/>");
 			return true;
 		}
-
-		if (type == boolean.class || type == Boolean.class) {
+		else if ( ptype == Character.class) {
+			if (name == null)
+				ret.append("<p s:t=\"Character\" v=\"").append(obj.toString()).append("\"/>");
+			else
+				ret.append("<p n=\"").append(name).append(
+						"\" s:t=\"Character\" v=\"").append(obj.toString()).append("\"/>");
+			return true;
+		}
+		else if (ptype == boolean.class) {
 			if (name == null)
 				ret.append("<p s:t=\"boolean\" v=\"").append(obj.toString())
 						.append("\"/>");
@@ -1071,8 +1146,17 @@ public class ObjectSerializable {
 						"\" s:t=\"boolean\" v=\"").append(obj.toString()).append("\"/>");
 			return true;
 		}
+		else if (ptype == Boolean.class) {
+			if (name == null)
+				ret.append("<p s:t=\"Boolean\" v=\"").append(obj.toString())
+						.append("\"/>");
+			else
+				ret.append("<p n=\"").append(name).append(
+						"\" s:t=\"Boolean\" v=\"").append(obj.toString()).append("\"/>");
+			return true;
+		}
 
-		if (type == byte.class || type == Byte.class) {
+		else if (ptype == byte.class) {
 			if (name == null)
 				ret.append("<p s:t=\"byte\" v=\"").append(obj.toString()).append("\"/>");
 			else
@@ -1080,30 +1164,30 @@ public class ObjectSerializable {
 						"\" s:t=\"byte\" v=\"").append(obj.toString()).append("\"/>");
 			return true;
 		}
-
-		// 如果是字符串则直接返回obj.toString()
-		if (type == String.class) {
+		else if ( ptype == Byte.class) {
 			if (name == null)
-				ret.append("<p s:t=\"String\" v=\"").append(obj.toString()).append("\"/>");
+				ret.append("<p s:t=\"Byte\" v=\"").append(obj.toString()).append("\"/>");
 			else
 				ret.append("<p n=\"").append(name).append(
-						"\" s:t=\"String\" v=\"").append(obj.toString()).append("\"/>");
+						"\" s:t=\"Byte\" v=\"").append(obj.toString()).append("\"/>");
 			return true;
-		} else if (java.util.Date.class.isAssignableFrom(type)) {
+		}
+
+		else if (java.util.Date.class.isAssignableFrom(vtype)) {
 			// String value = ValueObjectUtil.getDateFormat(dateformat).format(
 			// (java.util.Date) obj);
 			long value = ((java.util.Date) obj).getTime();
 			if (name == null)
 				ret.append("<p s:t=\"").append(
-						ValueObjectUtil.getSimpleTypeName(type)).append(
+						ValueObjectUtil.getSimpleTypeName(vtype)).append(
 						"\" v=\"").append(String.valueOf(value)).append("\"/>");
 			else
 				ret.append("<p n=\"").append(name).append("\" s:t=\"").append(
-						ValueObjectUtil.getSimpleTypeName(type)).append(
+						ValueObjectUtil.getSimpleTypeName(vtype)).append(
 						"\" v=\"").append(String.valueOf(value)).append("\"/>");
 			return true;
 		}
-		 else if (type == BigInteger.class) {
+		 else if (vtype == BigInteger.class) {
 				if (name == null)
 					ret.append("<p s:t=\"bigint\" v=\"").append(
 							(obj.toString())).append("\"/>");
@@ -1112,7 +1196,7 @@ public class ObjectSerializable {
 							"\" s:t=\"bigint\" v=\"").append(obj.toString()).append("\"/>");
 				return true;
 			}
-		 else if (type == BigDecimal.class) {
+		 else if (vtype == BigDecimal.class) {
 				if (name == null)
 					ret.append("<p s:t=\"bigdecimal\" v=\"").append(
 							(obj.toString())).append("\"/>");
@@ -1121,7 +1205,7 @@ public class ObjectSerializable {
 							"\" s:t=\"bigdecimal\" v=\"").append(obj.toString()).append("\"/>");
 				return true;
 			}
-		else if (type == Class.class) {
+		else if (ptype == Class.class) {
 			if (name == null)
 				ret.append("<p s:t=\"Class\" v=\"").append(
 						((Class) obj).getName()).append("\"/>");
@@ -1130,14 +1214,14 @@ public class ObjectSerializable {
 						"\" s:t=\"Class\" v=\"").append(
 						((Class) obj).getName()).append("\"/>");
 			return true;
-		} else if (type.isEnum()) {
+		} else if (vtype.isEnum()) {
 			if (name == null)
 				ret.append("<p s:t=\"").append(
-						ValueObjectUtil.getSimpleTypeName(type)).append(
+						ValueObjectUtil.getSimpleTypeName(vtype)).append(
 						"\" v=\"").append(obj.toString()).append("\"/>");
 			else
 				ret.append("<p n=\"").append(name).append("\" s:t=\"").append(
-						ValueObjectUtil.getSimpleTypeName(type)).append(
+						ValueObjectUtil.getSimpleTypeName(vtype)).append(
 						"\" v=\"").append(obj.toString()).append("\"/>");
 			return true;
 		}
@@ -1145,7 +1229,7 @@ public class ObjectSerializable {
 		else // 对象转换及对象状态转换
 		{
 			
-			if (StackTraceElement.class.isAssignableFrom(type))
+			if (StackTraceElement.class.isAssignableFrom(vtype))
 			{
 				if (name == null)
 					ret.append("<p cs=\"")
@@ -1154,9 +1238,9 @@ public class ObjectSerializable {
 				else
 					ret.append("<p n=\"").append(name).append("\" cs=\"").append(
 							obj.getClass().getName()).append("\">");
-				appendStackTraceElementProperties(obj, type, dateformat, ret, stack,currentAddress);
+				appendStackTraceElementProperties(obj, vtype, dateformat, ret, stack,currentAddress);
 			}
-			else if (Throwable.class.isAssignableFrom(type))
+			else if (Throwable.class.isAssignableFrom(vtype))
 			{
 				if (name == null)
 					ret.append("<p cs=\"")
@@ -1165,7 +1249,7 @@ public class ObjectSerializable {
 				else
 					ret.append("<p n=\"").append(name).append("\" cs=\"").append(
 							obj.getClass().getName()).append("\">");
-				appendThrowableProperties(obj, type, dateformat, ret,stack,currentAddress);
+				appendThrowableProperties(obj, vtype, dateformat, ret,stack,currentAddress);
 			}
 			else
 			{
@@ -1185,7 +1269,7 @@ public class ObjectSerializable {
 					else
 						ret.append("<p n=\"").append(name).append("\" cs=\"").append(
 								className).append("\">");
-					appendBeanProperties(obj, type,classInfo, dateformat, ret,stack,currentAddress);
+					appendBeanProperties(obj, vtype,classInfo, dateformat, ret,stack,currentAddress);
 				}
 				else if(magicclass.getSerailObject() != null)//指定了序列化插件				
 				{
@@ -1213,7 +1297,7 @@ public class ObjectSerializable {
 					else
 						ret.append("<p n=\"").append(name).append("\" mg=\"").append(
 								magicclass.getMagicnumber()).append("\">");
-					appendBeanProperties(obj, type,classInfo, dateformat, ret,stack,currentAddress);
+					appendBeanProperties(obj, vtype,classInfo, dateformat, ret,stack,currentAddress);
 				}
 			}
 			ret.append("</p>");
@@ -1236,14 +1320,14 @@ public class ObjectSerializable {
 
 			Object value = ValueObjectUtil.getValue(obj, "message");
 
-			convertBeanObjectToXML("message", value, String.class, dateformat,
+			convertBeanObjectToXML("message", value, String.class, true,dateformat,
 					ret,stack,currentAddress + "{0}"  );
 			value = ValueObjectUtil.getValue(obj, "cause");
 			if (value != null) {
-				convertBeanObjectToXML("cause", value, value.getClass(),
+				convertBeanObjectToXML("cause", value, value.getClass(),false,
 						dateformat, ret,stack,currentAddress + "{1}" );
 			} else {
-				convertBeanObjectToXML("cause", value, Throwable.class,
+				convertBeanObjectToXML("cause", value, Throwable.class,false,
 						dateformat, ret,stack,currentAddress + "{2}" );
 			}
 
@@ -1279,19 +1363,19 @@ public class ObjectSerializable {
 
 			Object value = ValueObjectUtil.getValue(obj, "className");
 
-			convertBeanObjectToXML("declaringClass", value, String.class,
+			convertBeanObjectToXML("declaringClass", value, String.class,true,
 					dateformat, ret,serialStack, currentAddress + "{0}");
 			value = ValueObjectUtil.getValue(obj, "methodName");
 
-			convertBeanObjectToXML("methodName", value, String.class,
+			convertBeanObjectToXML("methodName", value, String.class,true,
 					dateformat, ret,serialStack, currentAddress + "{1}");
 			value = ValueObjectUtil.getValue(obj, "fileName");
 
-			convertBeanObjectToXML("fileName", value, String.class, dateformat,
+			convertBeanObjectToXML("fileName", value, String.class, true,dateformat,
 					ret,serialStack, currentAddress + "{2}");
 			value = ValueObjectUtil.getValue(obj, "lineNumber");
 
-			convertBeanObjectToXML("lineNumber", value, int.class, dateformat,
+			convertBeanObjectToXML("lineNumber", value, int.class, true,dateformat,
 					ret,serialStack, currentAddress + "{3}");
 		} catch (CurrentlyInCreationException e) {
 			throw e;
@@ -1358,10 +1442,14 @@ public class ObjectSerializable {
 			try {
 
 				Object value = propertyDescriptor.getValue(obj);
-				if (value != null)
+				boolean pisbasetype = ValueObjectUtil.isBasePrimaryType(ptype);
+				if (!pisbasetype && value != null && ValueObjectUtil.isBasePrimaryType(value.getClass()))
+				{
+					pisbasetype = true;
 					ptype = value.getClass();
+				}
 				
-				convertBeanObjectToXML(attrName, value, ptype, dateformat, ret,stack,currentAddress + "->" + attrName);
+				convertBeanObjectToXML(attrName, value, ptype, pisbasetype,dateformat, ret,stack,currentAddress + "->" + attrName);
 			} catch (IllegalArgumentException e) {
 				throw new CurrentlyInCreationException("", e);
 			} catch (IllegalAccessException e) {
@@ -1388,8 +1476,9 @@ public class ObjectSerializable {
 			throws Exception {
 		
 		for (int i = 0; i < params.length; i++) {
+			 
 			ObjectSerializable.convertBeanObjectToXML(null, params[i],
-					paramTypes[i], dateformat, ret, stack,currentAddress + "[" + i+"]");
+					paramTypes[i], ValueObjectUtil.isBasePrimaryType(paramTypes[i]),dateformat, ret, stack,currentAddress + "[" + i+"]");
 		}
 	}
 

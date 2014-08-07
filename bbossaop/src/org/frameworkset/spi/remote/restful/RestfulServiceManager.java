@@ -16,9 +16,10 @@
 
 package org.frameworkset.spi.remote.restful;
 
-import org.frameworkset.spi.ApplicationContext;
 import org.frameworkset.spi.BaseApplicationContext;
 import org.frameworkset.spi.BaseSPIManager;
+import org.frameworkset.spi.remote.RPCHelper;
+import org.frameworkset.spi.remote.RemoteServiceID;
 import org.frameworkset.spi.remote.ServiceID;
 
 /**
@@ -56,12 +57,13 @@ public class RestfulServiceManager {
 		return instance;
 	}
 	
-	public ServiceID convert(ServiceID restserviceid,BaseApplicationContext applicationcontext)
+	public ServiceID convert(RemoteServiceID restserviceid,BaseApplicationContext applicationcontext)
 	{
 		String restfuluddi = restserviceid.getFistRestNode();
 		String service = restserviceid.getService();
 		String serviceid = this.restfulServiceConvertor.convert(restfuluddi, service);
-		ServiceID ret = ApplicationContext.buildServiceID(serviceid, ServiceID.PROPERTY_BEAN_SERVICE,applicationcontext);
+		ServiceID ret = RPCHelper.buildServiceID(serviceid,  ServiceID.PROPERTY_BEAN_SERVICE,
+				applicationcontext);
 		return ret;
 	}
 

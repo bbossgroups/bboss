@@ -16,6 +16,7 @@
 
 package org.frameworkset.spi.remote.jms;
 
+import org.frameworkset.spi.ClientProxyContext;
 import org.frameworkset.spi.remote.RPCAddress;
 import org.frameworkset.spi.remote.RPCHelper;
 import org.frameworkset.spi.remote.RPCTestInf;
@@ -127,7 +128,9 @@ public class TestClient  extends TestBase
 	@Test
 	public void testJMSRPC()
 	{
-		RPCTestInf testInf = (RPCTestInf)context.getBeanObject("(jms::yinbiaoping-jms)/rpc.test");
+		RPCTestInf testInf = ClientProxyContext.getApplicationClientBean("org/frameworkset/spi/remote/manager-rpc-test.xml","(jms::yinbiaoping-jms)/rpc.test",RPCTestInf.class);
+    	
+//		RPCTestInf testInf = (RPCTestInf)context.getBeanObject("(jms::yinbiaoping-jms)/rpc.test");
 //		RPCTestInf testInf = (RPCTestInf)context.getBeanObject("rpc.test");
 		testInf.getCount();
 		long start = System.currentTimeMillis();
@@ -145,7 +148,8 @@ public class TestClient  extends TestBase
 	@Test
 	public void testNoReturnJMSRPC()
         {
-                RPCTestInf testInf = (RPCTestInf)context.getBeanObject("(jms::00-23-54-5A-E6-3A-jms)/rpc.test");
+		RPCTestInf testInf = ClientProxyContext.getApplicationClientBean("org/frameworkset/spi/remote/manager-rpc-test.xml","(jms::00-23-54-5A-E6-3A-jms)/rpc.test",RPCTestInf.class);
+//                RPCTestInf testInf = (RPCTestInf)context.getBeanObject("(jms::00-23-54-5A-E6-3A-jms)/rpc.test");
 //              RPCTestInf testInf = (RPCTestInf)context.getBeanObject("rpc.test");
                 long start = System.currentTimeMillis();
                 
@@ -173,9 +177,10 @@ public class TestClient  extends TestBase
 //                
 //                long end = System.currentTimeMillis();
 //                System.out.println("消耗时间：" + (end - start) / 1000 + "秒");
+		RPCTestInf testInf = ClientProxyContext.getApplicationClientBean("org/frameworkset/spi/remote/manager-rpc-test.xml","(jms::00-23-54-5A-E6-3A-jms)/rpc.test",RPCTestInf.class);
 	    for(int i = 0; i < 10; i ++)
 	    {
-	        Thread t = new Thread(new RunJMSRPC(i));
+	        Thread t = new Thread(new RunJMSRPC(i,testInf));
 	        t.start();
 	    }
                 
@@ -185,13 +190,15 @@ public class TestClient  extends TestBase
 	 class RunJMSRPC implements Runnable
 	{
 	    int i = 0;
-	    RunJMSRPC(int i)
+	    RPCTestInf testInf;
+	    RunJMSRPC(int i,RPCTestInf testInf)
 	    {
+	    	this.testInf = testInf;
 	        this.i = i;
 	    }
             public void run()
             {
-                RPCTestInf testInf = (RPCTestInf)context.getBeanObject("(jms::00-23-54-5A-E6-3A-jms)/rpc.test");
+//                RPCTestInf testInf = (RPCTestInf)context.getBeanObject("(jms::00-23-54-5A-E6-3A-jms)/rpc.test");
 //              RPCTestInf testInf = (RPCTestInf)context.getBeanObject("rpc.test");
                 long start = System.currentTimeMillis();
                 
@@ -216,13 +223,14 @@ public class TestClient  extends TestBase
 	@Test
 	public void testMuticastJMSRPC()
         {
-                RPCTestInf testInf = (RPCTestInf)context.getBeanObject("(jms::yinbiaoping-jms;xiongchao-jms)/rpc.test");
+//                RPCTestInf testInf = (RPCTestInf)context.getBeanObject("(jms::yinbiaoping-jms;xiongchao-jms)/rpc.test");
+                RPCTestInf testInf = ClientProxyContext.getApplicationClientBean("org/frameworkset/spi/remote/manager-rpc-test.xml","(jms::yinbiaoping-jms;xiongchao-jms)/rpc.test",RPCTestInf.class);
 //              RPCTestInf testInf = (RPCTestInf)context.getBeanObject("rpc.test");
                 Object ret = testInf.getCount();
                 Object ret_12345 = null;
 				try {
-					ret_12345 = context.getJMSRPCResult("yinbiaoping-jms", ret);
-					Object ret_12346 = context.getJMSRPCResult("xiongchao-jms", ret);
+					ret_12345 = ClientProxyContext.getJMSRPCResult("yinbiaoping-jms", ret);
+					Object ret_12346 = ClientProxyContext.getJMSRPCResult("xiongchao-jms", ret);
 					System.out.println("00-23-54-5A-E6-3A-jms:" +ret_12345);
 	                System.out.println("00-13-A9-2B-FC-E9-jms:" +ret_12346);
 				} catch (Throwable e) {

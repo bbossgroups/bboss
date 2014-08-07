@@ -36,7 +36,7 @@ public class RPCTest implements RPCTestInf
 	public Object getCount()
 	{
 	    SecurityContext securityContext = SecurityContext.getSecurityContext();	    
-
+	    String value = RequestContext.getRequestContext().getStringParameter("server_uuid");
 //		System.out.println(this);
 		
 		return ret ++;
@@ -85,7 +85,7 @@ public class RPCTest implements RPCTestInf
 	public Object getParameter()
 	{
 		String value = RequestContext.getRequestContext().getStringParameter("server_uuid");
-		System.out.println("value:" + value);
+		System.out.println("ret value:" + value);
 		return value + ":aa";
 	}
 	

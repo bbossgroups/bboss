@@ -99,5 +99,6 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/bboss-util"/>
 	<classpathentry kind="lib" path="lib/http/commons-httpclient-3.1.jar"/>
 	<classpathentry kind="lib" path="lib/http/httpmime-4.1.3.jar"/>
+	<classpathentry kind="lib" path="lib/test/xpp3-1.1.4c.jar"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>

@@ -239,6 +239,12 @@ public class TestValueObjectUtil extends TestCase
 		}
 		
 	}
+	@org.junit.Test
+	public void testcast()
+	{
+		Object value = ValueObjectUtil.typeCast(new Boolean(true), Boolean.class, boolean.class);
+		System.out.println(value);
+	}
 	
 //	public static void main(String[] args)
 //	{

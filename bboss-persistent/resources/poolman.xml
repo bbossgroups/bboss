@@ -85,7 +85,7 @@
      -->
     <maxWait>60</maxWait>
     <validationQuery>select 1 from dual</validationQuery>
-
+	<RETURN_GENERATED_KEYS>false</RETURN_GENERATED_KEYS>
   </datasource>
   
   

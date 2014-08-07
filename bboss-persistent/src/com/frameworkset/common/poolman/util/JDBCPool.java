@@ -2537,4 +2537,15 @@ public class JDBCPool {
 			return SQLManager.getInstance().getPool(externalDBName).getIdGenerator();
 		}
 	}
+	public boolean getRETURN_GENERATED_KEYS()
+	{
+		if(this.externalDBName == null)
+		{
+			return this.info.getRETURN_GENERATED_KEYS();
+		}
+		else
+		{
+			return SQLManager.getInstance().getPool(externalDBName).getRETURN_GENERATED_KEYS();
+		}
+	}
 }

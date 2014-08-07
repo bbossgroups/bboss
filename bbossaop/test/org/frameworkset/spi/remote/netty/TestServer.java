@@ -23,7 +23,7 @@ import org.frameworkset.netty.NettyRPCServer;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2010-4-20 ионГ11:47:22
+ * @Date 2010-4-20 11:47:22
  * @author biaoping.yin
  * @version 1.0
  */

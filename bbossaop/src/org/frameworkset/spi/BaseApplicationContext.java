@@ -58,6 +58,7 @@ import org.frameworkset.spi.remote.Headers;
 import org.frameworkset.spi.remote.ServiceID;
 import org.frameworkset.spi.security.SecurityContext;
 import org.frameworkset.spi.security.SecurityManager;
+import org.frameworkset.spi.serviceidentity.ServiceIDUtil;
 import org.frameworkset.spi.support.DelegatingMessageSource;
 import org.frameworkset.spi.support.HotDeployResourceBundleMessageSource;
 import org.frameworkset.spi.support.MessageSource;
@@ -117,7 +118,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 	public static int container_type_mvc = 4;
 	public static String mvccontainer_identifier = "webmvc";
 	protected static Map<String, BaseApplicationContext> applicationContexts = new HashMap<String, BaseApplicationContext>();
-	public Map<String, ServiceID> serviceids = new java.util.WeakHashMap<String, ServiceID>();
+//	public Map<String, ServiceID> serviceids = new java.util.WeakHashMap<String, ServiceID>();
 	protected static List<String> rootFiles = new ArrayList<String>();
 	protected boolean started = true;
 	/**
@@ -240,8 +241,8 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 		if (!started)
 			return;
 
-		if (serviceids != null)
-			this.serviceids.clear();
+//		if (serviceids != null)
+//			this.serviceids.clear();
 		if (servicProviders != null)
 			this.servicProviders.clear();
 		// this.rootFiles.clear();
@@ -1169,7 +1170,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 			callContext = buildCallContext(params, callContext);
 			providerManagerType = providerManagerType.substring(0, idx);
 		}
-		ServiceID serviceID = buildServiceID(serviceids, providerManagerType,
+		ServiceID serviceID = buildServiceID( providerManagerType,
 				ServiceID.PROVIDER_BEAN_SERVICE, sourceType, this);
 //		serviceID.setApplicationContext(this.configfile);
 		// if(callContext != null && callContext.getSecutiryContext() != null)
@@ -1246,13 +1247,14 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 			} else if (providerManagerInfo.usedCustomInterceptor() || providerManagerInfo.enableAsyncCall()) {
 				finalsynProvider = createInf(callContext, providerManagerInfo,
 						finalsynProvider, serviceID);
-			} else if (serviceID.isRemote()) {
-				finalsynProvider = createInf(callContext, providerManagerInfo,
-						finalsynProvider, serviceID);
-			}
+			} 
+//			else if (serviceID.isRemote()) {
+//				finalsynProvider = createInf(callContext, providerManagerInfo,
+//						finalsynProvider, serviceID);
+//			}
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			
 			throw new SPIException(e);
 
 		}
@@ -1260,12 +1262,14 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 				&& (providerManagerInfo.enableTransaction()
 						|| providerManagerInfo.enableAsyncCall()
 						|| providerManagerInfo.isSynchronizedEnabled()
-						|| providerManagerInfo.usedCustomInterceptor() || serviceID
-						.isRemote())) {
+						|| providerManagerInfo.usedCustomInterceptor() 
+//						|| serviceID.isRemote()
+						)) {
 			// if(callContext == null || (callContext != null &&
 			// !callContext.containHeaders() && !serviceID.isRestStyle()))
-			if (callContext == null
-					|| (callContext != null && !serviceID.isRestStyle())) {
+			if (callContext == null					
+//					|| (callContext != null && !serviceID.isRestStyle())
+					) {
 				synchronized (servicProviders) {
 
 					Object temp = servicProviders.get(key);
@@ -1704,18 +1708,18 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 	protected Object getBeanObject(CallContext context, String name, Object defaultValue,
 			boolean fromprovider) {
 		// 分析服务参数
-		int idx = name.indexOf("?");
+//		int idx = name.indexOf("?");
 
 		String _name = name;
 		if (context == null)
 			context = new CallContext(this);
-		if (idx > 0) {
-			String params = name.substring(idx + 1);
-			context = buildCallContext(params, context);
-			// name = name.substring(0,idx);
-		}
+//		if (idx > 0) {
+//			String params = name.substring(idx + 1);
+//			context = buildCallContext(params, context);
+//			// name = name.substring(0,idx);
+//		}
 
-		ServiceID serviceID = buildServiceID(serviceids, name,
+		ServiceID serviceID = buildServiceID( name,
 				ServiceID.PROPERTY_BEAN_SERVICE, this.configfile, this);
 //		serviceID.setApplicationContext(this.configfile);
 		// new ServiceID(name,GroupRequest.GET_ALL,0,ServiceID.result_rsplist,
@@ -1773,7 +1777,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 			// name = name.substring(0,idx);
 		}
 
-		ServiceID serviceID = buildServiceID(serviceids, name,
+		ServiceID serviceID = buildServiceID( name,
 				ServiceID.PROPERTY_BEAN_SERVICE, this.configfile, this);
 		
 //		serviceID.setApplicationContext(this.configfile);
@@ -1842,8 +1846,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 
 		Object finalsynProvider = null;
 		if (serviceID == null) {
-			serviceID = buildServiceID(serviceids, key,
-					ServiceID.PROPERTY_BEAN_SERVICE, this);
+			serviceID = buildBeanServiceID( key, this);
 			// serviceID.setApplicationContext(this.configfile);
 		}
 		// new ServiceID(key, GroupRequest.GET_ALL
@@ -1854,13 +1857,16 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 		if (providerManagerInfo.enableTransaction()
 				|| providerManagerInfo.enableAsyncCall()
 				|| providerManagerInfo.usedCustomInterceptor()
-				|| serviceID.isRemote() ) {
+//				|| serviceID.isRemote() 
+				) {
 			if (providerManagerInfo.isSinglable()) {
 				// String key = serviceID.getServiceID();
 				// if(context != null && !context.containHeaders() &&
 				// !serviceID.isRestStyle()
 				// )//如果包含头信息时，代理类将不能被缓冲，原因是头信息的动态性会导致缓冲实例过多
-				if (context != null && !serviceID.isRestStyle())// 如果包含头信息时，代理类将不能被缓冲，原因是头信息的动态性会导致缓冲实例过多
+				if (context != null 
+//						&& !serviceID.isRestStyle()
+						)// 如果包含头信息时，代理类将不能被缓冲，原因是头信息的动态性会导致缓冲实例过多
 				{
 					Object provider = servicProviders.get(key);
 					if (provider != null)
@@ -2340,18 +2346,26 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 	// private static Map<String, ServiceID> serviceids = new
 	// java.util.WeakHashMap<String, ServiceID>();
 
-	public abstract ServiceID buildServiceID(Map<String, ServiceID> serviceids,
-			String serviceid, int serviceType, String providertype,
-			BaseApplicationContext applicationcontext) ;
-
 	
 
-	public abstract ServiceID buildServiceID(Map<String, ServiceID> serviceids,
-			String serviceid, int serviceType,
-			BaseApplicationContext applicationcontext) ;
 
-	public abstract ServiceID buildBeanServiceID(Map<String, ServiceID> serviceids,
-			String serviceid, BaseApplicationContext applicationcontext) ;
+
+	public ServiceID buildServiceID(
+			String serviceid, int serviceType,String providertype,
+			BaseApplicationContext applicationcontext) {
+
+		return ServiceIDUtil.buildServiceID(serviceid, serviceType,providertype,
+				 applicationcontext);
+
+	}
+
+	public ServiceID buildBeanServiceID(
+			String serviceid, BaseApplicationContext applicationcontext) {
+		return ServiceIDUtil.buildServiceID(serviceid, ServiceID.PROPERTY_BEAN_SERVICE,
+				 applicationcontext);
+		
+
+	}
 	
 	/**
 	 * 获取parent对应的属性内部的名称为name的Pro对象

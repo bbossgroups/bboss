@@ -22,6 +22,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.FutureTask;
 import java.util.concurrent.TimeoutException;
 
+import org.frameworkset.spi.ClientProxyContext;
 import org.frameworkset.spi.remote.RPCAddress;
 import org.frameworkset.spi.remote.RPCHelper;
 import org.frameworkset.spi.remote.RPCTestInf;
@@ -46,7 +47,8 @@ public class TestClient  extends TestBase
 	public  void testWithParameter()
 	{
 //		RPCTestInf testInf = (RPCTestInf)context.getBeanObject("(192.168.11.102:1186)/rpc.test");
-		RPCTestInf testInf = (RPCTestInf)context.getBeanObject("(mina::192.168.1.22:12346)/rpc.test?parameterKey=多多");
+		RPCTestInf testInf = ClientProxyContext.getApplicationClientBean("org/frameworkset/spi/remote/manager-rpc-test.xml","(mina::192.168.1.22:12346)/rpc.test?parameterKey=多多",RPCTestInf.class);
+//		RPCTestInf testInf = (RPCTestInf)context.getBeanObject("(mina::192.168.1.22:12346)/rpc.test?parameterKey=多多");
 		
 		for(int i = 0; i < 10; i ++)
 		{
@@ -158,7 +160,8 @@ public class TestClient  extends TestBase
 	@Test
 	public void testFuture() throws InterruptedException, ExecutionException, TimeoutException
 	{
-	    final RPCTestInf testInf = (RPCTestInf)context.getBeanObject("(mina::172.16.17.216:12347)/rpc.test?user=admin&password=123456");
+		final RPCTestInf testInf = ClientProxyContext.getApplicationClientBean("org/frameworkset/spi/remote/manager-rpc-test.xml","(mina::172.16.17.216:12347)/rpc.test?user=admin&password=123456",RPCTestInf.class);
+//	    final RPCTestInf testInf = (RPCTestInf)context.getBeanObject("(mina::172.16.17.216:12347)/rpc.test?user=admin&password=123456");
 	    FutureTask<Object> task = new FutureTask<Object>(new Callable<Object>(){
             public Object call() throws Exception
             {
@@ -177,7 +180,8 @@ public class TestClient  extends TestBase
 	@Test
 	public void testMinaRPC()
 	{
-		final RPCTestInf testInf = (RPCTestInf)context.getBeanObject("(mina::172.16.17.216:12347)/rpc.test?user=admin&password=123456");
+		RPCTestInf testInf = ClientProxyContext.getApplicationClientBean("org/frameworkset/spi/remote/manager-rpc-test.xml","(mina::172.16.17.216:12347)/rpc.test?user=admin&password=123456",RPCTestInf.class);
+//		final RPCTestInf testInf = (RPCTestInf)context.getBeanObject("(mina::172.16.17.216:12347)/rpc.test?user=admin&password=123456");
 		
 		Object ret = testInf.getCount();
 		
@@ -197,7 +201,8 @@ public class TestClient  extends TestBase
 	@Test
 	public void testNoReturnMinaRPC()
         {
-                RPCTestInf testInf = (RPCTestInf)context.getBeanObject("(127.0.0.1:12347)/rpc.test");
+		RPCTestInf testInf = ClientProxyContext.getApplicationClientBean("org/frameworkset/spi/remote/manager-rpc-test.xml","(127.0.0.1:12347)/rpc.test",RPCTestInf.class);
+//                RPCTestInf testInf = (RPCTestInf)context.getBeanObject("(127.0.0.1:12347)/rpc.test");
 //              RPCTestInf testInf = (RPCTestInf)context.getBeanObject("rpc.test");
                 long start = System.currentTimeMillis();
                 
@@ -230,9 +235,10 @@ public class TestClient  extends TestBase
 //                
 //                long end = System.currentTimeMillis();
 //                System.out.println("消耗时间：" + (end - start) / 1000 + "秒");
+		RPCTestInf testInf = ClientProxyContext.getApplicationClientBean("org/frameworkset/spi/remote/manager-rpc-test.xml","(127.0.0.1:12346)/rpc.test",RPCTestInf.class);
 	    for(int i = 0; i < 10; i ++)
 	    {
-	        Thread t = new Thread(new RunMinaRPC(i));
+	        Thread t = new Thread(new RunMinaRPC(i, testInf));
 	        t.start();
 	    }
                 
@@ -242,8 +248,10 @@ public class TestClient  extends TestBase
 	 class RunMinaRPC implements Runnable
 	{
 	    int i = 0;
-	    RunMinaRPC(int i)
+	    RPCTestInf testInf;
+	    RunMinaRPC(int i,RPCTestInf testInf)
 	    {
+	    	this.testInf = testInf;
 	        this.i = i;
 	    }
             public void run()
@@ -273,18 +281,19 @@ public class TestClient  extends TestBase
 	@Test
 	public void testMuticastMinaRPC()
         {
-                RPCTestInf testInf = (RPCTestInf)context.getBeanObject("(mina::127.0.0.1:12345;127.0.0.1:12346)/rpc.test");
+		RPCTestInf testInf = ClientProxyContext.getApplicationClientBean("org/frameworkset/spi/remote/manager-rpc-test.xml","(mina::127.0.0.1:12345;127.0.0.1:12346)/rpc.test",RPCTestInf.class);
+//                RPCTestInf testInf = (RPCTestInf)context.getBeanObject("(mina::127.0.0.1:12345;127.0.0.1:12346)/rpc.test");
 //              RPCTestInf testInf = (RPCTestInf)context.getBeanObject("rpc.test");
                 Object ret = testInf.getCount();
                 try {
-					Object ret_12345 = context.getRPCResult("127.0.0.1", "12345", ret);
+					Object ret_12345 = ClientProxyContext.getRPCResult("127.0.0.1", "12345", ret);
 				} catch (Throwable e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 
                 try {
-					Object ret_12346 = context.getMinaRPCResult("127.0.0.1:12346", ret);
+					Object ret_12346 = ClientProxyContext.getMinaRPCResult("127.0.0.1:12346", ret);
 				} catch (Throwable e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

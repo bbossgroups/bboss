@@ -30,7 +30,7 @@ import org.frameworkset.spi.SPIException;
  * @version 1.0
  */
 public interface RemoteHandler {
-	 public Object callMethod(ServiceID serviceID,
+	 public Object callMethod(RemoteServiceID serviceID,
              String methodName,
              Object[] parameters,
              Class[] types) throws SPIException, 

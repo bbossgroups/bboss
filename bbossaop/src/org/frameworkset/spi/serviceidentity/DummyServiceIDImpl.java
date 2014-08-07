@@ -24,7 +24,7 @@ import org.frameworkset.spi.BaseApplicationContext;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2011-5-11 ÉÏÎç11:24:01
+ * @Date 2011-5-11 11:24:01
  * @author biaoping.yin
  * @version 1.0
  */
@@ -34,33 +34,14 @@ public class DummyServiceIDImpl extends BaseServiceIDImpl {
     {
     	super();
     }
-	public DummyServiceIDImpl(String serviceID, int resultMode, int waittime,
-			int resultType, int beanType,
+	public DummyServiceIDImpl(String serviceID, String providertype, int beanType,
 			BaseApplicationContext applicationcontext) {
-		super(serviceID, resultMode, waittime, resultType, beanType, applicationcontext);
-		this.service = serviceID;
+//		super(serviceID,  beanType, applicationcontext);
+		 super( serviceID, providertype,applicationcontext, beanType);
 		// TODO Auto-generated constructor stub
 	}
-	public DummyServiceIDImpl(String serviceID, int resultMode, long timeout,
-			int resultType, int beanType,
-			BaseApplicationContext applicationcontext) {
-		super(serviceID, resultMode, timeout, resultType, beanType, applicationcontext);
-		this.service = serviceID;
-		// TODO Auto-generated constructor stub
-	}
-	public DummyServiceIDImpl(String serviceID, String providerID,
-			int resultMode, long timeout, int resultType, int beanType,
-			BaseApplicationContext applicationcontext) {
-		super(serviceID, providerID, resultMode, timeout, resultType, beanType,
-				applicationcontext);
-		this.service = serviceID;
-		// TODO Auto-generated constructor stub
-	}
-	@Override
-	public String getNextRestfulServiceAddress() {
-		
-		return null;
-	}
+
+	
 
 	
 

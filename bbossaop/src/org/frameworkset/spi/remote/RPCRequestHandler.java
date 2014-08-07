@@ -42,7 +42,7 @@ public class RPCRequestHandler implements RequestHandler
 	{
 		this.server_obj = server_obj;
 		try {
-			this.callMethod = server_obj.getClass().getDeclaredMethod("callMethod", new Class[]{ServiceID.class,
+			this.callMethod = server_obj.getClass().getDeclaredMethod("callMethod", new Class[]{RemoteServiceID.class,
 			                     String.class,
 			                     Object[].class,
 			                     Class[].class});

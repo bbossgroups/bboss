@@ -141,31 +141,31 @@ public class DefaultApplicationContext extends BaseApplicationContext {
 	}
 
 
-	public ServiceID buildServiceID(Map<String, ServiceID> serviceids,
-			String serviceid, int serviceType, String providertype,
-			BaseApplicationContext applicationcontext) {
-		return ServiceIDUtil.buildServiceID(serviceids, serviceid, serviceType,
-				providertype, applicationcontext);
-
-	}
-
-
-
-	public ServiceID buildServiceID(Map<String, ServiceID> serviceids,
-			String serviceid, int serviceType,
-			BaseApplicationContext applicationcontext) {
-
-		return buildServiceID(serviceids, serviceid, serviceType, null,
-				applicationcontext);
-
-	}
-
-	public ServiceID buildBeanServiceID(Map<String, ServiceID> serviceids,
-			String serviceid, BaseApplicationContext applicationcontext) {
-
-		return buildServiceID(serviceids, serviceid,
-				ServiceID.PROPERTY_BEAN_SERVICE, null, applicationcontext);
-
-	}
+//	public ServiceID buildServiceID(Map<String, ServiceID> serviceids,
+//			String serviceid, int serviceType, String providertype,
+//			BaseApplicationContext applicationcontext) {
+//		return ServiceIDUtil.buildServiceID(serviceids, serviceid, serviceType,
+//				providertype, applicationcontext);
+//
+//	}
+//
+//
+//
+//	public ServiceID buildServiceID(Map<String, ServiceID> serviceids,
+//			String serviceid, int serviceType,
+//			BaseApplicationContext applicationcontext) {
+//
+//		return buildServiceID(serviceids, serviceid, serviceType, null,
+//				applicationcontext);
+//
+//	}
+//
+//	public ServiceID buildBeanServiceID(Map<String, ServiceID> serviceids,
+//			String serviceid, BaseApplicationContext applicationcontext) {
+//
+//		return buildServiceID(serviceids, serviceid,
+//				ServiceID.PROPERTY_BEAN_SERVICE, null, applicationcontext);
+//
+//	}
 
 }

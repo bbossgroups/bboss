@@ -19,10 +19,13 @@ package org.frameworkset.spi.serviceid;
 import java.util.List;
 
 import org.frameworkset.spi.remote.RPCAddress;
+import org.frameworkset.spi.remote.RemoteServiceID;
 import org.frameworkset.spi.remote.ServiceID;
 import org.frameworkset.spi.serviceidentity.ServiceIDImpl;
 import org.frameworkset.spi.serviceidentity.TargetImpl;
+
 import bboss.org.jgroups.blocks.GroupRequest;
+
 import org.junit.Test;
 
 
@@ -48,10 +51,10 @@ public class TestServiceID
 	{
 	    String serviceid = "(a|b|c)/serviceid";
 	    
-	    ServiceID id = new ServiceIDImpl(serviceid, null, GroupRequest.GET_ALL, ServiceID.result_object, 0,
+	    ServiceID id = new ServiceIDImpl(serviceid, null, GroupRequest.GET_ALL, RemoteServiceID.result_object, 0,
                 ServiceID.PROVIDER_BEAN_SERVICE,null);
         System.out.println(id.getService());
-        System.out.println(id.getTarget().getTargets());
+        System.out.println(((RemoteServiceID)id).getTarget().getTargets());
 	}
 	
 	/**
@@ -77,7 +80,7 @@ public class TestServiceID
 		//默认的远程服务调用标识,其协议由框架配置中设置的缺省配置协议决定：
 		
         String serviceid = "(192.168.0.17:1010;192.168.0.18:1020)/serviceid";        
-        ServiceID id = new ServiceIDImpl(serviceid, null, GroupRequest.GET_ALL, ServiceID.result_object, 0,
+        ServiceID id = new ServiceIDImpl(serviceid, null, GroupRequest.GET_ALL, RemoteServiceID.result_object, 0,
                                      ServiceID.PROVIDER_BEAN_SERVICE,null);
                              System.out.println(id);
         
@@ -87,7 +90,7 @@ public class TestServiceID
 	{
 		 //webservice远程服务调用标识
 		String serviceid = "(webservice::http://192.168.0.17:1010/webroot/;http://192.168.0.17:1010/webroot/)/serviceid";
-                ServiceID id = new ServiceIDImpl(serviceid, null, GroupRequest.GET_ALL, ServiceID.result_object, 0,
+                ServiceID id = new ServiceIDImpl(serviceid, null, GroupRequest.GET_ALL, RemoteServiceID.result_object, 0,
                                              ServiceID.PROVIDER_BEAN_SERVICE,null);
                 System.out.println(id);
                              
@@ -98,9 +101,9 @@ public class TestServiceID
 		 //webservice远程服务调用标识
 //		String serviceid = "(webservice::http://192.168.0.17:1010/webroot;http://192.168.0.17:1011/webroot/)/serviceid";
 		String serviceid = "(webservice::http://192.168.0.17:1010;http://192.168.0.17:1011/)/serviceid";
-        ServiceID id = new ServiceIDImpl(serviceid, null, GroupRequest.GET_ALL, ServiceID.result_object, 0,
+        ServiceID id = new ServiceIDImpl(serviceid, null, GroupRequest.GET_ALL, RemoteServiceID.result_object, 0,
                                      ServiceID.PROVIDER_BEAN_SERVICE,null);
-        List<RPCAddress> rpcAddresses = id.getTarget().getTargets();
+        List<RPCAddress> rpcAddresses = ((RemoteServiceID)id).getTarget().getTargets();
         for(RPCAddress address :rpcAddresses)
         {
         	System.out.println(TargetImpl.buildWebserviceURL(address));
@@ -112,7 +115,7 @@ public class TestServiceID
 	{
 		 //mina远程服务调用标识
 		String serviceid = "(mina::192.168.0.17:1010;192.168.0.17:1011)/serviceid";
-        ServiceID id = new ServiceIDImpl(serviceid, null, GroupRequest.GET_ALL, ServiceID.result_object, 0,
+        ServiceID id = new ServiceIDImpl(serviceid, null, GroupRequest.GET_ALL, RemoteServiceID.result_object, 0,
                                      ServiceID.PROVIDER_BEAN_SERVICE,null);
         System.out.println(id);
                              
@@ -123,7 +126,7 @@ public class TestServiceID
 	{
 		 //jgroup远程服务调用标识
 		String serviceid = "(jgroup::192.168.0.17:1010;192.168.0.17:1011)/serviceid";
-        ServiceID id = new ServiceIDImpl(serviceid, null, GroupRequest.GET_ALL, ServiceID.result_object, 0,
+        ServiceID id = new ServiceIDImpl(serviceid, null, GroupRequest.GET_ALL, RemoteServiceID.result_object, 0,
                                      ServiceID.PROVIDER_BEAN_SERVICE,null);
         System.out.println(id);
                              
@@ -133,7 +136,7 @@ public class TestServiceID
 	{
 		 //rmi远程服务调用标识
 		String serviceid = "(rmi::192.168.0.17:1010;192.168.0.17:1011)/serviceid";
-        ServiceID id = new ServiceIDImpl(serviceid, null, GroupRequest.GET_ALL, ServiceID.result_object, 0,
+        ServiceID id = new ServiceIDImpl(serviceid, null, GroupRequest.GET_ALL, RemoteServiceID.result_object, 0,
                                      ServiceID.PROVIDER_BEAN_SERVICE,null);
         System.out.println(id);
                              
@@ -143,7 +146,7 @@ public class TestServiceID
 	{
 		 //ejb远程服务调用标识
 		String serviceid = "(ejb::192.168.0.17:1010;192.168.0.17:1011)/serviceid";
-        ServiceID id = new ServiceIDImpl(serviceid, null, GroupRequest.GET_ALL, ServiceID.result_object, 0,
+        ServiceID id = new ServiceIDImpl(serviceid, null, GroupRequest.GET_ALL, RemoteServiceID.result_object, 0,
                                      ServiceID.PROVIDER_BEAN_SERVICE,null);
         System.out.println(id);
                              
@@ -153,7 +156,7 @@ public class TestServiceID
 	{
 		 //corba远程服务调用标识
 		String serviceid = "(corba::192.168.0.17:1010;192.168.0.17:1011)/serviceid";
-        ServiceID id = new ServiceIDImpl(serviceid, null, GroupRequest.GET_ALL, ServiceID.result_object, 0,
+        ServiceID id = new ServiceIDImpl(serviceid, null, GroupRequest.GET_ALL, RemoteServiceID.result_object, 0,
                                      ServiceID.PROVIDER_BEAN_SERVICE,null);
         System.out.println(id);
                              

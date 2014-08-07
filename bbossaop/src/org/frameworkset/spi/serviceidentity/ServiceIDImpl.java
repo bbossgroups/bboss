@@ -20,11 +20,11 @@ import java.util.StringTokenizer;
 
 import org.apache.log4j.Logger;
 import org.frameworkset.netty.NettyRPCServer;
-import org.frameworkset.spi.ApplicationContext;
 import org.frameworkset.spi.BaseApplicationContext;
 import org.frameworkset.spi.remote.JGroupHelper;
 import org.frameworkset.spi.remote.RPCAddress;
 import org.frameworkset.spi.remote.RemoteException;
+import org.frameworkset.spi.remote.RemoteServiceID;
 import org.frameworkset.spi.remote.ServiceID;
 import org.frameworkset.spi.remote.Target;
 import org.frameworkset.spi.remote.Util;
@@ -32,6 +32,7 @@ import org.frameworkset.spi.remote.http.HttpServer;
 import org.frameworkset.spi.remote.mina.server.MinaRPCServer;
 import org.frameworkset.spi.remote.restful.RestfulServiceManager;
 import org.frameworkset.spi.remote.rmi.RMIServer;
+
 import bboss.org.jgroups.Address;
 import bboss.org.jgroups.blocks.GroupRequest;
 
@@ -44,11 +45,38 @@ import bboss.org.jgroups.blocks.GroupRequest;
  * @author biaoping.yin
  * @version 1.0
  */
-public class ServiceIDImpl extends BaseServiceIDImpl{
+public class ServiceIDImpl extends BaseServiceIDImpl implements RemoteServiceID{
 	private static Logger log = Logger.getLogger(ServiceIDImpl.class);
-      
+	protected transient Target target;
+	/**
+	 * serviceID: (ip:port;ip:port)/serviceid
+	 */
+	protected String urlParams;
+	/**
+	 * 多个远程调用时，返回的结果集类型 result_object = 0; result_first = 1; result_map = 2;
+	 * result_rsplist = 3; result_list = 4;
+	 */
+	protected transient int resultType = result_rsplist;
+
+	protected transient int resultMode = 2;// GET_ALL
+	protected String sourceport;
+
+	protected String sourcename;
+
+	protected String sourceip;
+	protected boolean restStyle = false;
+	protected transient ServiceID rest;
+	protected String nextRestNode;
+	protected String fistRestNode;
+
+	protected transient long timeout = 60 * 1000;
     public static final boolean evaluatelocaladdress = Util.defaultContext.getBooleanProperty("rpc.evaluatelocaladdress", false);
-   
+    public Target getRestfulTarget() {
+		return ((RemoteServiceID)this.rest).getTarget();
+	}
+    public Target getTarget() {
+		return this.target;
+	}
 	private boolean rpcserviceStarted(Target target)
     {
         if(target == null)
@@ -133,6 +161,8 @@ public class ServiceIDImpl extends BaseServiceIDImpl{
 
     private boolean isLocalAddress(Target target,boolean fromrest)
     {
+    	if(true)
+    		return false;
     	if(!evaluatelocaladdress)
     		return false;
         if(target == null)
@@ -327,9 +357,14 @@ public class ServiceIDImpl extends BaseServiceIDImpl{
     {
         this(serviceID, null, resultMode, timeout, resultType, bean_type,applicationcontext);
     }
+    
     public ServiceIDImpl(String serviceID, String providerID, int resultMode, long timeout, int resultType, int bean_type,BaseApplicationContext applicationcontext)
     {
-    	super(serviceID, providerID, resultMode, timeout, resultType, bean_type,(BaseApplicationContext)applicationcontext);
+//    	super(serviceID, providerID, resultMode, timeout, resultType, bean_type,(BaseApplicationContext)applicationcontext);
+    	super( serviceID,  providerID, applicationcontext,  bean_type);    	
+		this.resultMode = resultMode;
+		this.timeout = timeout;
+		this.resultType = resultType;
         this.buildService();
         isremote = this.target != null && !this.target.isSelf();
         if (this.isremote)
@@ -357,8 +392,11 @@ public class ServiceIDImpl extends BaseServiceIDImpl{
     
     public ServiceIDImpl(String serviceID, String providerID,String applicationcontext,int containerType, int resultMode, long timeout, int resultType, int bean_type)
     {
-    	super(serviceID, providerID,(String)applicationcontext, containerType, resultMode, timeout, resultType, bean_type);
-    	
+//    	super(serviceID, providerID,(String)applicationcontext, containerType, resultMode, timeout, resultType, bean_type);
+    	super( serviceID,  providerID, applicationcontext, containerType,  bean_type);
+		this.resultMode = resultMode;
+		this.timeout = timeout;
+		this.resultType = resultType;
         this.buildService();
         isremote = this.target != null && !this.target.isSelf();
         if (this.isremote)
@@ -389,6 +427,8 @@ public class ServiceIDImpl extends BaseServiceIDImpl{
 
     private void setLocalAddress()
     {
+    	if(true)
+    		return;
         if(target == null)
             return;
         if (target.protocol_jgroup())
@@ -567,5 +607,83 @@ public class ServiceIDImpl extends BaseServiceIDImpl{
     {
     	
     }
+	public long getTimeout() {
+		return timeout;
+	}
 
+	public boolean isRestStyle() {
+		return this.restStyle;
+	}
+
+	public void setRestStyle(boolean restStyle) {
+		this.restStyle = restStyle;
+	}
+
+	public String getSourceport() {
+		return sourceport;
+	}
+
+	public String getSourcename() {
+		return sourcename;
+	}
+
+
+	
+	public int getResultMode() {
+		return resultMode;
+	}
+
+	public int getResultType() {
+		return resultType;
+	}
+	public void setSourceip(String sourceip) {
+		this.sourceip = sourceip;
+	}
+
+	public void setSourceport(String sourceport) {
+		this.sourceport = sourceport;
+	}
+
+	public void setSourcename(String sourcename) {
+		this.sourcename = sourcename;
+	}
+	/**
+	 * @fixed biaoping.yin 2010-10-11
+	 * @return the rest
+	 */
+	public ServiceID getRestServiceID() {
+		return rest;
+	}
+
+	public String getFistRestNode() {
+		return fistRestNode;
+	}
+
+	public void setFistRestNode(String fistRestNode) {
+		this.fistRestNode = fistRestNode;
+	}
+
+	public String getNextRestNode() {
+		return nextRestNode;
+	}
+
+	public void setNextRestNode(String nextRestNode) {
+		this.nextRestNode = nextRestNode;
+	}
+
+	public ServiceID getRestfulServiceID() {
+		return this.rest;
+	}
+
+	
+	public String getUrlParams() {
+		return urlParams;
+	}
+
+	public void setUrlParams(String urlParams) {
+		this.urlParams = urlParams;
+	}
+	public String getSourceip() {
+		return sourceip;
+	}
 }

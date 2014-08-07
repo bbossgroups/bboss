@@ -66,7 +66,7 @@ public class NettyIOHandler extends BaseRPCIOHandler implements ChannelUpstreamH
     {
         super(name, handler, null);
         
-        this.src_address = NettyRPCServer.getNettyRPCServer().getLocalAddress();
+//        this.src_address = NettyRPCServer.getNettyRPCServer().getLocalAddress();
         // this.local_addr = local_addr;
     }
 

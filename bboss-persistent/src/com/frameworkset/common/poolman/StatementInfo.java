@@ -224,6 +224,39 @@ public class StatementInfo {
 		this.statements.add(pstmt);
 		return pstmt;
 	}
+	
+	public PreparedStatement prepareStatement(String sql,boolean getgenkeys) throws SQLException {
+		if(dbname == null)
+			dbname = SQLManager.getInstance().getDefaultDBName();
+		sql = this.interceptorInf.convertSQL(sql, this.dbadapter.getDBTYPE(), dbname);
+		if(!getgenkeys)
+		{
+			/**
+			 * must be removed.
+			 */
+			
+			PreparedStatement pstmt = this.con.prepareStatement(sql,this.getScrollType(dbname),this.getCursorType(dbname));
+			this.statements.add(pstmt);
+			return pstmt;
+		}
+		else
+		{
+			if(this.RETURN_GENERATED_KEYS)
+			{
+				PreparedStatement pstmt = this.con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+				this.statements.add(pstmt);
+				return pstmt;
+			}
+			else
+			{
+				
+				PreparedStatement pstmt = this.con.prepareStatement(sql,this.getScrollType(dbname),this.getCursorType(dbname));
+				this.statements.add(pstmt);
+				return pstmt;
+			}
+			
+		}
+	}
 
 	public PreparedStatement preparePagineStatement(boolean showsql) throws SQLException {
 		paginesql = new PagineSql(this.sql,true);
@@ -1141,5 +1174,13 @@ public class StatementInfo {
 //	public boolean isNeadGetGenerateKeys() {
 //		return neadGetGenerateKeys;
 //	}
+	private boolean RETURN_GENERATED_KEYS;
+	public void setRETURN_GENERATED_KEYS(boolean rETURN_GENERATED_KEYS) {
+		this.RETURN_GENERATED_KEYS = rETURN_GENERATED_KEYS;
+	}
+
+	public boolean isRETURN_GENERATED_KEYS() {
+		return RETURN_GENERATED_KEYS;
+	}
 
 }

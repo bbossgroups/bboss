@@ -16,13 +16,16 @@
 
 package org.frameworkset.spi.remote.jgroup;
 
+import org.frameworkset.spi.ClientProxyContext;
 import org.frameworkset.spi.remote.JGroupHelper;
 import org.frameworkset.spi.remote.RPCAddress;
 import org.frameworkset.spi.remote.RPCHelper;
 import org.frameworkset.spi.remote.RPCTestInf;
 import org.frameworkset.spi.remote.Target;
 import org.frameworkset.spi.remote.TestBase;
+
 import bboss.org.jgroups.Address;
+
 import org.junit.Test;
 
 
@@ -145,7 +148,8 @@ public static void main(String[] args)
 public  void testJGroupProtocolRPC()
 {
 	String address_ = "test";
-	RPCTestInf testInf = (RPCTestInf)context.getBeanObject("(jgroup::" + address_ + ")/rpc.test");
+	RPCTestInf testInf = ClientProxyContext.getApplicationClientBean("org/frameworkset/spi/remote/manager-rpc-test.xml","(jgroup::" + address_ + ")/rpc.test",(RPCTestInf.class));
+//	RPCTestInf testInf = (RPCTestInf)context.getBeanObject("(jgroup::" + address_ + ")/rpc.test");
 //	RPCTestInf testInf = (RPCTestInf)context.getBeanObject("rpc.test");
 	long start = System.currentTimeMillis();
 	
@@ -163,7 +167,8 @@ public  void testJGroupProtocolRPC()
 public   void testJGroupSelfProtocolRPC()
 {
 	Address address_ = JGroupHelper.getJGroupHelper().getAppservers().get(2);
-	RPCTestInf testInf = (RPCTestInf)context.getBeanObject("(jgroup::" + address_ + ")/rpc.test");
+	RPCTestInf testInf = ClientProxyContext.getApplicationClientBean("org/frameworkset/spi/remote/manager-rpc-test.xml","(jgroup::" + address_ + ")/rpc.test",(RPCTestInf.class));
+//	RPCTestInf testInf = (RPCTestInf)context.getBeanObject("(jgroup::" + address_ + ")/rpc.test");
 //	RPCTestInf testInf = (RPCTestInf)context.getBeanObject("rpc.test");
 	long start = System.currentTimeMillis();
 	
@@ -189,9 +194,10 @@ public   void testMutiThreadJGroupRPC()
 //            
 //            long end = System.currentTimeMillis();
 //            System.out.println("消耗时间：" + (end - start) / 1000 + "秒");
+	RPCTestInf testInf = ClientProxyContext.getApplicationClientBean("org/frameworkset/spi/remote/manager-rpc-test.xml","(jgroup::all)/rpc.test",(RPCTestInf.class));
     for(int i = 0; i < 10; i ++)
     {
-        Thread t = new Thread(new RunJGroupRPC(i));
+        Thread t = new Thread(new RunJGroupRPC(i,testInf));
         t.start();
     }
             
@@ -201,13 +207,15 @@ public   void testMutiThreadJGroupRPC()
  class RunJGroupRPC implements Runnable
 {
     int i = 0;
-    RunJGroupRPC(int i)
+    RPCTestInf testInf;
+    RunJGroupRPC(int i,RPCTestInf testInf)
     {
+    	this.testInf = testInf;
         this.i = i;
     }
         public void run()
         {
-            RPCTestInf testInf = (RPCTestInf)context.getBeanObject("(jgroup::all)/rpc.test");
+//            RPCTestInf testInf = (RPCTestInf)context.getBeanObject("(jgroup::all)/rpc.test");
 //          RPCTestInf testInf = (RPCTestInf)context.getBeanObject("rpc.test");
             long start = System.currentTimeMillis();
             
@@ -232,12 +240,13 @@ public static void testSingleTimeout()
 @Test
 public   void testMuticastJGroupRPC()
     {
-            RPCTestInf testInf = (RPCTestInf)context.getBeanObject("(jgroup::creator-cc-27488;creator-cc-51859)/rpc.test");
+//            RPCTestInf testInf = (RPCTestInf)context.getBeanObject("(jgroup::creator-cc-27488;creator-cc-51859)/rpc.test");
+	 		RPCTestInf testInf = ClientProxyContext.getApplicationClientBean("org/frameworkset/spi/remote/manager-rpc-test.xml","(jgroup::creator-cc-27488;creator-cc-51859)/rpc.test",RPCTestInf.class);
 //          RPCTestInf testInf = (RPCTestInf)context.getBeanObject("rpc.test");
             Object ret = testInf.getCount();
             Object ret_40561;
 			try {
-				ret_40561 = context.getRPCResult("creator-cc-27488", ret,Target.BROADCAST_TYPE_JRGOUP);
+				ret_40561 = ClientProxyContext.getRPCResult("creator-cc-27488", ret,Target.BROADCAST_TYPE_JRGOUP);
 				System.out.println("ret_40561:"+ret_40561);
 			} catch (Throwable e) {
 				// TODO Auto-generated catch block
@@ -245,7 +254,7 @@ public   void testMuticastJGroupRPC()
 			}
             Object ret_64357;
 			try {
-				ret_64357 = context.getRPCResult("creator-cc-51859", ret,Target.BROADCAST_TYPE_JRGOUP);
+				ret_64357 = ClientProxyContext.getRPCResult("creator-cc-51859", ret,Target.BROADCAST_TYPE_JRGOUP);
 				System.out.println("ret_64357:"+ret_64357);
 			} catch (Throwable e) {
 				// TODO Auto-generated catch block
@@ -278,17 +287,18 @@ public   void testJGroupLocal()
 public   void testJGroupAll()
 {
 //	RPCTestInf testInf = (RPCTestInf)context.getBeanObject("(192.168.11.102:1186)/rpc.test");
-	RPCTestInf testInf = (RPCTestInf)context.getBeanObject("(jgroup::all)/rpc.test?parameterKey=多多");
+	RPCTestInf testInf =  ClientProxyContext.getApplicationClientBean("org/frameworkset/spi/remote/manager-rpc-test.xml","(jgroup::all)/rpc.test?parameterKey=多多", RPCTestInf.class);
+//	RPCTestInf testInf = (RPCTestInf)context.getBeanObject("(jgroup::all)/rpc.test?parameterKey=多多");
 	
 	for(int i = 0; i < 10; i ++)
 	{
 		Object ret = testInf.getCount();
-		int size = context.getRPCResultSize(ret);
+		int size = ClientProxyContext.getRPCResultSize(ret);
 		for(int j = 0; j < size; j ++)
 		{
 			Object ret_1186;
 			try {
-				ret_1186 = context.getRPCResult(j, ret);
+				ret_1186 = ClientProxyContext.getRPCResult(j, ret);
 				System.out.println("ret_1186:" + j + " = "+ret_1186);
 			} catch (Throwable e) {
 				// TODO Auto-generated catch block
@@ -314,17 +324,18 @@ public   void testJGroupAllWithParameter()
 {
 	JGroupHelper.getJGroupHelper().start();	
 //	RPCTestInf testInf = (RPCTestInf)context.getBeanObject("(192.168.11.102:1186)/rpc.test");
-	RPCTestInf testInf = (RPCTestInf)context.getBeanObject("(jgroup::all)/rpc.test?server_uuid=aa");
-	
+	 
+//	RPCTestInf testInf = (RPCTestInf)context.getBeanObject("(jgroup::all)/rpc.test?server_uuid=aa");
+	RPCTestInf testInf = ClientProxyContext.getApplicationClientBean("org/frameworkset/spi/remote/manager-rpc-test.xml","(jgroup::all)/rpc.test?server_uuid=aa",RPCTestInf.class);
 	for(int i = 0; i < 10; i ++)
 	{
 		Object ret = testInf.getParameter();
-		int size = context.getRPCResultSize(ret);
+		int size = ClientProxyContext.getRPCResultSize(ret);
 		for(int j = 0; j < size; j ++)
 		{
 			Object ret_1186;
 			try {
-				ret_1186 = context.getRPCResult(j, ret);
+				ret_1186 = ClientProxyContext.getRPCResult(j, ret);
 				System.out.println("ret_1186:" + j + " = "+ret_1186);
 			} catch (Throwable e) {
 				// TODO Auto-generated catch block

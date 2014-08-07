@@ -40,6 +40,7 @@ import org.frameworkset.spi.async.CallBackServiceImpl;
 import org.frameworkset.spi.async.CallService;
 import org.frameworkset.spi.interceptor.AfterThrowable;
 import org.frameworkset.spi.remote.RPCHelper;
+import org.frameworkset.spi.remote.RemoteServiceID;
 import org.frameworkset.spi.remote.ServiceID;
 
 import com.frameworkset.proxy.Interceptor;
@@ -181,7 +182,7 @@ public class CGLibUtil {
 	private static Object invoke_(Object delegate, Method method, Object[] args,
 			MethodProxy proxy,CallContext callcontext,ServiceID serviceID,BaseTXManager providerManagerInfo) throws Throwable
     {
-        if (!serviceID.isRemote())
+//        if (!serviceID.isRemote())
         {
         	
             Interceptor txinterceptor = null;
@@ -281,12 +282,12 @@ public class CGLibUtil {
                 }
             }
         }
-        else
-        {
-
-            return RPCHelper.getRPCHelper().rpcService(serviceID, method, args,callcontext);
-
-        }
+//        else
+//        {
+//
+//            return RPCHelper.getRPCHelper().rpcService((RemoteServiceID)serviceID, method, args,callcontext);
+//
+//        }
     }
 	
 	private static Object txinvoke_(Object delegate, Method method, Object[] args,
@@ -509,7 +510,7 @@ public class CGLibUtil {
 	}
 	private static Object invokeSynTX_(Object delegate, Method method, Object[] args,
 			MethodProxy proxy,CallContext callcontext,ServiceID serviceID,ProviderManagerInfo providerManagerInfo) throws Throwable {
-		if (!serviceID.isRemote())
+//		if (!serviceID.isRemote())
         {
 			String uuid = SynchronizedMethod.buildMethodUUID(method);
             Interceptor interceptor = providerManagerInfo.getSynTransactionInterceptor(method,uuid);
@@ -774,10 +775,10 @@ public class CGLibUtil {
                 interceptor = null;
             }
         }
-        else
-        {
-            return RPCHelper.getRPCHelper().rpcService(serviceID, method, args,callcontext);
-        }
+//        else
+//        {
+//            return RPCHelper.getRPCHelper().rpcService((RemoteServiceID)serviceID, method, args,callcontext);
+//        }
 	}
 	public static Object invokeSyn(final Object delegate, final Method method, final Object[] args,
 			final MethodProxy proxy,final CallContext callcontext,final ServiceID serviceID,final ProviderManagerInfo providerManagerInfo) throws Throwable{
@@ -831,7 +832,7 @@ public class CGLibUtil {
 			MethodProxy proxy,CallContext callcontext,ServiceID serviceID,ProviderManagerInfo providerManagerInfo) throws Throwable
 	
     {
-        if (!serviceID.isRemote())
+//        if (!serviceID.isRemote())
         {
             Interceptor interceptor = providerManagerInfo.getSynTransactionInterceptor(method,null);
             try
@@ -999,10 +1000,10 @@ public class CGLibUtil {
             }
 
         }
-        else
-        {
-            return RPCHelper.getRPCHelper().rpcService(serviceID, method, args,callcontext);
-        }
+//        else
+//        {
+//            return RPCHelper.getRPCHelper().rpcService((RemoteServiceID)serviceID, method, args,callcontext);
+//        }
     }
 	
 	/**

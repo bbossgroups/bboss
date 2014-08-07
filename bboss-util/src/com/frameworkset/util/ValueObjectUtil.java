@@ -121,7 +121,8 @@ public class ValueObjectUtil {
 		double.class,
 		char.class ,
 		byte.class ,
-		Class.class,BigInteger.class,BigDecimal.class
+		Class.class,BigInteger.class,BigDecimal.class,
+		java.sql.Timestamp.class,java.sql.Date.class,java.util.Date.class
 		};
 	private static final Logger log = Logger.getLogger(ValueObjectUtil.class);
 
@@ -536,7 +537,10 @@ public class ValueObjectUtil {
 			// if(type.getName().equals(toType.getName()))
 			// return true;
 		}
-
+	 else if ((type == boolean.class && toType == Boolean.class)
+				|| type == Boolean.class && toType == boolean.class) {
+			return true;
+		}
 		else if ((type == int.class && toType == Integer.class)
 				|| type == Integer.class && toType == int.class) {
 			return true;
@@ -1563,7 +1567,11 @@ public class ValueObjectUtil {
 	{
 		if(obj == null)
 			return new Boolean(false);
-		if(obj instanceof String)
+		if(obj instanceof Boolean)
+		{
+			return ((Boolean)obj);
+		}
+		else if(obj instanceof String)
 		{
 			String ret = obj.toString();
 			if (ret.equals("1") || ret.equals("true")) {
@@ -1602,6 +1610,7 @@ public class ValueObjectUtil {
 		{
 			return ((BigDecimal)obj).floatValue() > 0;
 		}
+		
 		return false;
 	}
 	/**
@@ -4917,6 +4926,8 @@ public class ValueObjectUtil {
 		}
 		else if (type.equals("int"))
 			return int.class;
+		else if (type.equals("Integer"))
+			return Integer.class;
 		else if (type.equals("long"))
 			return long.class;
 		else if (type.equals("Long"))
@@ -4967,6 +4978,8 @@ public class ValueObjectUtil {
 		}
 		else if (type.equals("int[]"))
 			return int[].class;
+		else if (type.equals("Integer[]"))
+			return Integer[].class;
 		else if (type.equals("byte[]"))
 			return byte[].class;
 		else if (type.equals("string[]")  || type.equals("java.lang.String[]"))
@@ -4994,6 +5007,12 @@ public class ValueObjectUtil {
 			return Float[].class;
 		else if (type.equals("Short[]"))
 			return Short[].class;
+		else if (type.equals("bigint[]") )
+			
+			return BigInteger[].class;
+		else if (type.equals("bigdecimal[]") )
+			
+			return BigDecimal[].class;
 		else if (type.equals("Char[]") || type.equals("Character[]")
 				|| type.equals("character[]"))
 			return Character[].class;

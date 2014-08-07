@@ -89,7 +89,7 @@ public class NettyRPCServer
                 return server;
             NettyRPCServer server_ = (NettyRPCServer)BaseSPIManager.getBeanObject("rpc.netty.server");
             
-            BaseApplicationContext.addShutdownHook(new ShutDownNettyServer(server_));
+           
             server = server_;
             
         }
@@ -183,7 +183,7 @@ public class NettyRPCServer
                 
                 System.out.println("Netty server is listenig at port " + PORT);
                 System.out.println("Netty server started.");
-                
+                BaseApplicationContext.addShutdownHook(new ShutDownNettyServer(this));
                 this.started = true;
             }
             catch(Exception e)

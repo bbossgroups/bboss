@@ -56,7 +56,7 @@
 			将使用rpc.default.protocol指定的协议
 		 -->			      
 		<property name="rpc.default.protocol" 
-					      value="jgroup"/>
+					      value="netty"/>
 		
 		<!-- 
 			rpc服务启动模式配置

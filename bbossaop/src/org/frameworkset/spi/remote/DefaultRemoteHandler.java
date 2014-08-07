@@ -49,7 +49,7 @@ public class DefaultRemoteHandler implements RemoteHandler{
      * @throws IllegalAccessException 
      * @throws IllegalArgumentException 
      */
-    public Object callMethod(ServiceID serviceID,
+    public Object callMethod(RemoteServiceID serviceID,
                              String methodName,
                              Object[] parameters,
                              Class[] types) throws SPIException, 

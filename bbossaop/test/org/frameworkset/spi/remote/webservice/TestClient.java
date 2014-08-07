@@ -16,6 +16,7 @@
 
 package org.frameworkset.spi.remote.webservice;
 
+import org.frameworkset.spi.ClientProxyContext;
 import org.frameworkset.spi.remote.RPCAddress;
 import org.frameworkset.spi.remote.RPCHelper;
 import org.frameworkset.spi.remote.RPCTestInf;
@@ -144,7 +145,8 @@ public class TestClient extends TestBase
     @Test
     public void testWebserviceRPC()
     {
-            RPCTestInf testInf = (RPCTestInf)context.getBeanObject("(webservice::http://localhost:8080/WebRoot/cxfservices)/rpc.test?" + org.frameworkset.spi.security.SecurityManager.USER_ACCOUNT_KEY+"=admin&" +org.frameworkset.spi.security.SecurityManager.USER_PASSWORD_KEY + "=123456"  );
+    	RPCTestInf testInf = ClientProxyContext.getApplicationClientBean("org/frameworkset/spi/remote/manager-rpc-test.xml","(webservice::http://localhost:8080/WebRoot/cxfservices)/rpc.test?" + org.frameworkset.spi.security.SecurityManager.USER_ACCOUNT_KEY+"=admin&" +org.frameworkset.spi.security.SecurityManager.USER_PASSWORD_KEY + "=123456" ,RPCTestInf.class);
+//            RPCTestInf testInf = (RPCTestInf)context.getBeanObject("(webservice::http://localhost:8080/WebRoot/cxfservices)/rpc.test?" + org.frameworkset.spi.security.SecurityManager.USER_ACCOUNT_KEY+"=admin&" +org.frameworkset.spi.security.SecurityManager.USER_PASSWORD_KEY + "=123456"  );
 //          RPCTestInf testInf = (RPCTestInf)context.getBeanObject("rpc.test");
             long start = System.currentTimeMillis();
             
@@ -161,7 +163,8 @@ public class TestClient extends TestBase
     @Test
     public void testWebserviceAuthenticatedFailedRPC()
     {
-            RPCTestInf testInf = (RPCTestInf)context.getBeanObject("(webservice::http://localhost:8080/WebRoot/cxfservices)/rpc.test?" + org.frameworkset.spi.security.SecurityManager.USER_ACCOUNT_KEY+"=admin&" +org.frameworkset.spi.security.SecurityManager.USER_PASSWORD_KEY + "=12345622"  );
+    	RPCTestInf testInf = ClientProxyContext.getApplicationClientBean("org/frameworkset/spi/remote/manager-rpc-test.xml","(webservice::http://localhost:8080/WebRoot/cxfservices)/rpc.test?" + org.frameworkset.spi.security.SecurityManager.USER_ACCOUNT_KEY+"=admin&" +org.frameworkset.spi.security.SecurityManager.USER_PASSWORD_KEY + "=12345622" ,RPCTestInf.class);
+//            RPCTestInf testInf = (RPCTestInf)context.getBeanObject("(webservice::http://localhost:8080/WebRoot/cxfservices)/rpc.test?" + org.frameworkset.spi.security.SecurityManager.USER_ACCOUNT_KEY+"=admin&" +org.frameworkset.spi.security.SecurityManager.USER_PASSWORD_KEY + "=12345622"  );
 //          RPCTestInf testInf = (RPCTestInf)context.getBeanObject("rpc.test");
             long start = System.currentTimeMillis();
             
@@ -178,7 +181,8 @@ public class TestClient extends TestBase
     @Test
     public void testNoReturnWebserviceRPC()
     {
-            RPCTestInf testInf = (RPCTestInf)context.getBeanObject("(webservice::http://localhost:8080/WebRoot/cxfservices)/rpc.test");
+    	RPCTestInf testInf = ClientProxyContext.getApplicationClientBean("org/frameworkset/spi/remote/manager-rpc-test.xml","(webservice::http://localhost:8080/WebRoot/cxfservices)/rpc.test" ,RPCTestInf.class);
+//            RPCTestInf testInf = (RPCTestInf)context.getBeanObject("(webservice::http://localhost:8080/WebRoot/cxfservices)/rpc.test");
 //          RPCTestInf testInf = (RPCTestInf)context.getBeanObject("rpc.test");
             long start = System.currentTimeMillis();
             
@@ -204,9 +208,10 @@ public class TestClient extends TestBase
 //            
 //            long end = System.currentTimeMillis();
 //            System.out.println("消耗时间：" + (end - start) / 1000 + "秒");
+    	RPCTestInf testInf = ClientProxyContext.getApplicationClientBean("org/frameworkset/spi/remote/manager-rpc-test.xml","(webservice::http://localhost:8080/WebRoot/cxfservices)/rpc.test" ,RPCTestInf.class);
         for(int i = 0; i < 10; i ++)
         {
-            Thread t = new Thread(new RunWebserviceRPC(i));
+            Thread t = new Thread(new RunWebserviceRPC(i,testInf));
             t.start();
         }
             
@@ -216,13 +221,15 @@ public class TestClient extends TestBase
      class RunWebserviceRPC implements Runnable
     {
         int i = 0;
-        RunWebserviceRPC(int i)
+        RPCTestInf testInf;
+        RunWebserviceRPC(int i,RPCTestInf testInf)
         {
+        	this.testInf = testInf;
             this.i = i;
         }
         public void run()
         {
-            RPCTestInf testInf = (RPCTestInf)context.getBeanObject("(webservice::http://localhost:8080/WebRoot/cxfservices)/rpc.test");
+//            RPCTestInf testInf = (RPCTestInf)context.getBeanObject("(webservice::http://localhost:8080/WebRoot/cxfservices)/rpc.test");
 //          RPCTestInf testInf = (RPCTestInf)context.getBeanObject("rpc.test");
             long start = System.currentTimeMillis();
             
@@ -247,18 +254,20 @@ public class TestClient extends TestBase
     @Test
     public void testMuticastWebserviceRPC()
     {
-            RPCTestInf testInf = (RPCTestInf)context.getBeanObject("(webservice::http://localhost:8080/WebRoot/cxfservices;" +
-            		"http://localhost:8088/rpcws/cxfservices)/rpc.test");
+    	RPCTestInf testInf = ClientProxyContext.getApplicationClientBean("org/frameworkset/spi/remote/manager-rpc-test.xml","(webservice::http://localhost:8080/WebRoot/cxfservices;" +
+        		"http://localhost:8088/rpcws/cxfservices)/rpc.test" ,RPCTestInf.class);
+//            RPCTestInf testInf = (RPCTestInf)context.getBeanObject("(webservice::http://localhost:8080/WebRoot/cxfservices;" +
+//            		"http://localhost:8088/rpcws/cxfservices)/rpc.test");
 //          RPCTestInf testInf = (RPCTestInf)context.getBeanObject("rpc.test");
             Object ret = testInf.getCount();
             try {
-				Object ret_8080 = context.getWSRPCResult("http://localhost:8080/WebRoot/cxfservices", ret);
+				Object ret_8080 = ClientProxyContext.getWSRPCResult("http://localhost:8080/WebRoot/cxfservices", ret);
 			} catch (Throwable e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
             try {
-				Object ret_8088 = context.getWSRPCResult("http://localhost:8088/WebRoot/cxfservices", ret);
+				Object ret_8088 = ClientProxyContext.getWSRPCResult("http://localhost:8088/WebRoot/cxfservices", ret);
 			} catch (Throwable e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

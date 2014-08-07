@@ -96,6 +96,7 @@ public class JDBCPoolMetaData implements Serializable{
     private String jndiclass;
     private String jndiuser;
     private String jndipassword;
+    private boolean RETURN_GENERATED_KEYS;
     /**
      * 是否对数据库信息进行加密：
      * 账号信息
@@ -822,6 +823,7 @@ public class JDBCPoolMetaData implements Serializable{
 			this.setDatasourceFile(extenalInfo.getDatasourceFile());
 			this.setDatasourceParameters(getDatasourceParameters());
 			this.setSeqfunction(extenalInfo.getSeqfunction());
+			this.setRETURN_GENERATED_KEYS(extenalInfo.getRETURN_GENERATED_KEYS());
 //			this.setNeadGetGenerateKeys(extenalInfo.isNeadGetGenerateKeys());
 		}
 	}
@@ -974,6 +976,14 @@ public class JDBCPoolMetaData implements Serializable{
 
 	public void setIdGenerator(String idGenerator) {
 		this.idGenerator = idGenerator;
+	}
+
+	public boolean getRETURN_GENERATED_KEYS() {
+		return RETURN_GENERATED_KEYS;
+	}
+
+	public void setRETURN_GENERATED_KEYS(boolean rETURN_GENERATED_KEYS) {
+		this.RETURN_GENERATED_KEYS = rETURN_GENERATED_KEYS;
 	}
 
 //	public boolean isNeadGetGenerateKeys() {

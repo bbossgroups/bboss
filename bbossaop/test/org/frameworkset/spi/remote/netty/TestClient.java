@@ -16,6 +16,7 @@
 
 package org.frameworkset.spi.remote.netty;
 
+import org.frameworkset.spi.ClientProxyContext;
 import org.frameworkset.spi.remote.RPCTest;
 import org.frameworkset.spi.remote.RPCTestInf;
 import org.frameworkset.spi.remote.TestBase;
@@ -36,11 +37,16 @@ import com.frameworkset.util.ValueObjectUtil;
  */
 public class TestClient extends TestBase
 {
+	public void init()
+	{
+		
+	}
 	@Test
 	public void testBigDatas()
 	{
 		byte[] datas = ValueObjectUtil.getBytesFileContent("D:/workspace/bbossgroups-3.2/文档/bbossgroups框架培训教程.ppt") ;
-		RPCTest test = context.getTBeanObject("(netty::172.16.33.46:12347)/rpc.test",RPCTest.class);
+//		RPCTest test = context.getTBeanObject("(netty::172.16.33.46:12347)/rpc.test",RPCTest.class);
+		RPCTest test = ClientProxyContext.getApplicationClientBean("org/frameworkset/spi/remote/manager-rpc-test.xml","(netty::172.16.33.46:12347)/rpc.test",RPCTest.class);
 		datas = test.echo18M(datas);
 		
 	}
@@ -49,8 +55,9 @@ public class TestClient extends TestBase
 	{
 //		AssembleUtil.registAssembleCallback(new WebDocbaseAssembleCallback("D:/workspace/bbossgroup-2.0-RC2/bbossaop/"));
 //		RPCTestInf testInf = (RPCTestInf)context.getBeanObject("(192.168.11.102:1186)/rpc.test");
-		RPCTestInf testInf = (RPCTestInf)context.getBeanObject("(netty::192.168.1.22:12347)/rpc.test?user=admin&password=123456&server_uuid=多多");
 		
+//		RPCTestInf testInf = (RPCTestInf)context.getBeanObject("(netty::192.168.1.22:12347)/rpc.test?user=admin&password=123456&server_uuid=多多");
+		RPCTestInf testInf = ClientProxyContext.getApplicationClientBean("org/frameworkset/spi/remote/manager-rpc-test.xml","(netty::10.25.192.142:12347)/rpc.test?user=admin&password=123456&server_uuid=多多",RPCTestInf.class);
 		for(int i = 0; i < 10; i ++)
 		{
 			Object ret = testInf.getParameter();
@@ -103,12 +110,13 @@ public class TestClient extends TestBase
     @Test
 	public void testMuticastNettyRPC()
         {
-                RPCTestInf testInf = (RPCTestInf)context.getBeanObject("(netty::172.16.17.216:12345;172.16.17.216:12347)/rpc.test?" + SecurityManager.USER_ACCOUNT_KEY + "=admin&" + SecurityManager.USER_PASSWORD_KEY + "=123456");
+//                RPCTestInf testInf = (RPCTestInf)context.getBeanObject("(netty::172.16.17.216:12345;172.16.17.216:12347)/rpc.test?" + SecurityManager.USER_ACCOUNT_KEY + "=admin&" + SecurityManager.USER_PASSWORD_KEY + "=123456");
+                RPCTestInf testInf = ClientProxyContext.getApplicationClientBean("org/frameworkset/spi/remote/manager-rpc-test.xml","(netty::172.16.17.216:12345;172.16.17.216:12347)/rpc.test?" + SecurityManager.USER_ACCOUNT_KEY + "=admin&" + SecurityManager.USER_PASSWORD_KEY + "=123456",RPCTestInf.class);
 //              RPCTestInf testInf = (RPCTestInf)context.getBeanObject("rpc.test");
                 Object ret = testInf.getCount();
                 Object ret_12345 = null;
 				try {
-					ret_12345 = context.getNettyRPCResult("172.16.17.216:12345", ret);
+					ret_12345 = ClientProxyContext.getNettyRPCResult("172.16.17.216:12345", ret);
 					System.out.println("ret_12345："+ret_12345);
 	                
 				} catch (Throwable e) {
@@ -118,7 +126,7 @@ public class TestClient extends TestBase
 
                 Object ret_12347 = null;
 				try {
-					ret_12347 = context.getNettyRPCResult("172.16.17.216:12347", ret);
+					ret_12347 = ClientProxyContext.getNettyRPCResult("172.16.17.216:12347", ret);
 					
 	                System.out.println("ret_12347："+ret_12347);
 				} catch (Throwable e) {
@@ -140,7 +148,8 @@ public class TestClient extends TestBase
     @Test
     public void testException()
     {
-    	RPCTestInf testInf = (RPCTestInf)context.getBeanObject("(netty::172.16.7.108:12347)/rpc.test?" + SecurityManager.USER_ACCOUNT_KEY + "=admin&" + SecurityManager.USER_PASSWORD_KEY + "=123456");
+//    	RPCTestInf testInf = (RPCTestInf)context.getBeanObject("(netty::172.16.7.108:12347)/rpc.test?" + SecurityManager.USER_ACCOUNT_KEY + "=admin&" + SecurityManager.USER_PASSWORD_KEY + "=123456");
+    	RPCTestInf testInf = ClientProxyContext.getApplicationClientBean("org/frameworkset/spi/remote/manager-rpc-test.xml","(netty::172.16.7.108:12347)/rpc.test?" + SecurityManager.USER_ACCOUNT_KEY + "=admin&" + SecurityManager.USER_PASSWORD_KEY + "=123456",RPCTestInf.class);
     	try {
 			testInf.throwexcpetion();
 		} catch (Exception e) {
@@ -151,7 +160,8 @@ public class TestClient extends TestBase
     @Test
 	public void testNettyRPC()
     {
-        RPCTestInf testInf = (RPCTestInf)context.getBeanObject("(netty::172.16.17.216:12347)/rpc.test?" + SecurityManager.USER_ACCOUNT_KEY + "=admin&" + SecurityManager.USER_PASSWORD_KEY + "=123456");
+    	RPCTestInf testInf = ClientProxyContext.getApplicationClientBean("org/frameworkset/spi/remote/manager-rpc-test.xml","(netty::172.16.17.216:12347)/rpc.test?" + SecurityManager.USER_ACCOUNT_KEY + "=admin&" + SecurityManager.USER_PASSWORD_KEY + "=123456",RPCTestInf.class);
+//        RPCTestInf testInf = (RPCTestInf)context.getBeanObject("(netty::172.16.17.216:12347)/rpc.test?" + SecurityManager.USER_ACCOUNT_KEY + "=admin&" + SecurityManager.USER_PASSWORD_KEY + "=123456");
     //  RPCTestInf testInf = (RPCTestInf)context.getBeanObject("rpc.test");
         long start = System.currentTimeMillis();
         
