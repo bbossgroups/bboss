@@ -26,5 +26,21 @@ package org.frameworkset.soa;
  * @version 1.0
  */
 public interface PreSerial<T> {
+	/**
+	 * 获取预处理前的类型路径
+	 * @return
+	 */
+	public String getClazz();
+	/**
+	 * 在序列化之前调用prehandle方法预处理对象
+	 * @param object
+	 * @return
+	 */
 	public T prehandle(T object);
+	/**
+	 * 在反序列化后调用posthandle方法处理生成的对象
+	 * @param object
+	 * @return
+	 */
+	public T posthandle(T object);
 }

@@ -36,6 +36,22 @@ import org.frameworkset.spi.assemble.Pro;
 public class SerialFactory {
 	private Map<String,MagicClass> magicclassesByName = new HashMap<String,MagicClass>();
 	private Map<String,MagicClass> magicclassesByMagicNumber = new HashMap<String,MagicClass>();
+	/**
+	 * 默认序列化插件
+	 */
+	private Map<String,MagicClass> defaultPlugins = new HashMap<String,MagicClass>();
+	private Map<String,MagicClass> defaultmagicclassesByMagicNumber = new HashMap<String,MagicClass>();
+	
+	private static String defaultPluginNames[] = new String[]{
+		"org.frameworkset.soa.plugin.UnmodifiableRandomAccessListPreSerial",
+		"org.frameworkset.soa.plugin.SublistPreSerial",
+		"org.frameworkset.soa.plugin.UnmodifiableCollectionPreSerial",
+		"org.frameworkset.soa.plugin.UnmodifiableListPreSerial",
+		"org.frameworkset.soa.plugin.UnmodifiableMapPreSerial",
+		"org.frameworkset.soa.plugin.UnmodifiableSetPreSerial",
+		"org.frameworkset.soa.plugin.UnmodifiableSortedMapPreSerial",
+		"org.frameworkset.soa.plugin.UnmodifiableSortedSetPreSerial"
+	};
 	private static SerialFactory serialFactory;
 	public static SerialFactory getSerialFactory()
 	{
@@ -46,6 +62,7 @@ public class SerialFactory {
 			if(serialFactory == null)
 			{
 				SerialFactory serialFactory = new SerialFactory();
+				serialFactory.initDefaultPlugins();
 				serialFactory.init();
 				SerialFactory.serialFactory = serialFactory;
 			}
@@ -130,6 +147,10 @@ public class SerialFactory {
 		public void setPreserial(String preserial) {
 			this.preserial = preserial;
 		}
+
+		public void setPreserialObject(PreSerial preserialObject) {
+			this.preserialObject = preserialObject;
+		}
 		
 	}
 	
@@ -157,6 +178,41 @@ public class SerialFactory {
 			
 		}
 	}
+
+	private MagicClass buildMagicClass(String preclazz )
+	{
+		MagicClass magicClass = new MagicClass();
+		magicClass.setPreserial("org.frameworkset.soa.plugin.UnmodifiableRandomAccessListPreSerial");
+		try {
+			PreSerial preSerial = (PreSerial)Class.forName(preclazz).newInstance();
+			 
+			magicClass.setPreserialObject(preSerial);
+			magicClass.setMagicclass(preSerial.getClazz());
+			magicClass.setMagicnumber(preSerial.getClazz());
+			this.defaultmagicclassesByMagicNumber.put(preSerial.getClazz(), magicClass);
+			this.defaultPlugins.put(preSerial.getClazz(), magicClass);
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return magicClass;
+	}
+	/**
+	 * 
+	 */
+	public void initDefaultPlugins()
+	{
+		for(String clazz:defaultPluginNames)
+		{
+			this.buildMagicClass(clazz);
+		}
+	}
 	
 	public String getMagicNumber(String className)
 	{
@@ -167,20 +223,23 @@ public class SerialFactory {
 	public MagicClass getMagicClassByMagicNumber(String magicnumber)
 	{
 		MagicClass magicClass = this.magicclassesByMagicNumber.get(magicnumber);
+		if(magicClass == null)
+			magicClass = this.defaultmagicclassesByMagicNumber.get(magicnumber);
 		return magicClass;
 	}
 	
 	public MagicClass getMagicClass(String magicclassName)
 	{
 		MagicClass magicClass = this.magicclassesByName.get(magicclassName);
+		if(magicClass == null)
+			magicClass = this.defaultPlugins.get(magicclassName);
 		return magicClass;
 	}
 	
 	public MagicClass getMagicClass(Class magicclass)
 	{
 		String magicclassName = magicclass.getName();
-		MagicClass magicClass = this.magicclassesByName.get(magicclassName);
-		return magicClass;
+		return getMagicClass( magicclassName);
 	}
 
 }

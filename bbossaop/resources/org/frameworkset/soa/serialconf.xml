@@ -13,6 +13,9 @@
 	
 	<!--      <property name="com.frameworkset.platform.security.authorization.AuthPrincipal" magic="7"/> -->
 	<property name="org.frameworkset.soa.xblink.TestSerializable$SerialPO" magic="8"/> 
+	<property name="java.lang.StackTraceElement" magic="9"/>
+	<property name="java.lang.Exception" magic="10"/>
+	
 	
 	
  </properties>

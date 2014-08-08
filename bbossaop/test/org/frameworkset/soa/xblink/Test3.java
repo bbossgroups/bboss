@@ -26,6 +26,7 @@ package org.frameworkset.soa.xblink;
  */
 public class Test3  implements java.io.Serializable{
 	Test2 test2;
+	Exception e;
 
 	public Test2 getTest2() {
 		return test2;
@@ -33,5 +34,13 @@ public class Test3  implements java.io.Serializable{
 
 	public void setTest2(Test2 test2) {
 		this.test2 = test2;
+	}
+
+	public Exception getE() {
+		return e;
+	}
+
+	public void setE(Exception e) {
+		this.e = e;
 	}
 }

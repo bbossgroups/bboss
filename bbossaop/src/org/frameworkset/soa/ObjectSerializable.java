@@ -491,7 +491,547 @@ public class ObjectSerializable {
 			
 		}
 	}
+	private static void arraytoxml(Writer ret,Object obj,String dateformat,String name,Class vtype,SerialStack serialStack,String currentAddress) throws Exception
+	{
+		if (obj == null) {
+			if (name == null)
+				ret.append("<p s:nvl=\"true\" s:t=\"").append(
+						ValueObjectUtil.getTypeName(vtype)).append(
+						"\"/>");
+			else
+				ret.append("<p n=\"").append(name).append(
+						"\" s:nvl=\"true\" s:t=\"").append(
+						ValueObjectUtil.getTypeName(vtype)).append(
+						"\"/>");
+			return;
+		} else {
+//			if (name == null)
+//				ret.append("<p s:t=\"").append(
+//						ValueObjectUtil.getSimpleTypeName(type)).append(
+//						"\">");
+//			else
+//			{
+//				ret.append("<p n=\"").append(name).append("\" s:t=\"")
+//						.append(ValueObjectUtil.getSimpleTypeName(type))
+//						.append("\">");
+//				currentAddress = currentAddress + "->" + name;
+//			}
+			
+			if (name == null)
+				ret.append("<p s:t=\"").append(
+						ValueObjectUtil.getTypeName(vtype)).append(
+						"\">");
+			else
+			{
+				ret.append("<p n=\"").append(name).append("\" s:t=\"")
+						.append(ValueObjectUtil.getTypeName(vtype))
+						.append("\">");
+//				currentAddress = currentAddress + "->" + name;
+			}
 
+		}
+		ret.append("<a cmt=\"").append(
+				ValueObjectUtil.getComponentTypeName(vtype)).append("\">");
+		Object value = null;
+		int len = Array.getLength(obj);
+
+		for (int i = 0; i < len; i++) {
+			value = Array.get(obj, i);
+
+			if (value == null)
+				convertBeanObjectToXML(null, value, (Class)null, false,dateformat, ret,serialStack,currentAddress + "[" + i + "]");
+			else
+				convertBeanObjectToXML(null, value, value.getClass(), ValueObjectUtil.isBasePrimaryType(value.getClass()),
+						dateformat, ret,serialStack,currentAddress + "[" + i + "]");
+		}
+		ret.append("</a>");
+		ret.append("</p>");
+	}
+	private static void maptoxml(Writer ret,Object obj,String dateformat,String name,Class vtype,SerialStack serialStack,String currentAddress,ClassInfo classInfo) throws Exception
+	{
+		if (obj == null) {
+			if (name == null)
+				ret.append("<p s:nvl=\"true\" s:t=\"").append(
+						ValueObjectUtil.getSimpleTypeName(vtype)).append(
+						"\"/>");
+			else
+				ret.append("<p n=\"").append(name).append(
+						"\" s:nvl=\"true\" s:t=\"").append(
+						ValueObjectUtil.getSimpleTypeName(vtype)).append(
+						"\"/>");
+
+		}
+		else 
+		{
+			obj = serialContainerObject( ret,
+					 obj,
+					 name,
+					 vtype,
+					 classInfo) ;
+			if(obj != null)
+			{
+				Map datas = (Map) obj;
+	
+	//			if (name == null)
+	//				ret.append("<p s:t=\"").append(
+	//						ValueObjectUtil.getSimpleTypeName(vtype)).append(
+	//						"\">");
+	//			else
+	//			{
+	//				ret.append("<p n=\"").append(name).append("\" s:t=\"")
+	//						.append(ValueObjectUtil.getSimpleTypeName(vtype))
+	//						.append("\">");
+	////				currentAddress = currentAddress + "->" + name;
+	//			}
+				ret.append("<m cmt=\"bean\">");
+				Object value = null;
+				Iterator itr = datas.entrySet().iterator();
+				while (itr.hasNext())
+	
+				{
+					Map.Entry entry = (Map.Entry) itr.next();
+					value = entry.getValue();
+					if (value == null)
+						convertBeanObjectToXML(String.valueOf(entry.getKey()),
+								value, (Class)null,false, dateformat, ret,serialStack,currentAddress + "[" + entry.getKey() + "]");
+					else
+						convertBeanObjectToXML(String.valueOf(entry.getKey()),
+								value, value.getClass(), ValueObjectUtil.isBasePrimaryType(value.getClass()),dateformat, ret,serialStack,currentAddress + "[" + entry.getKey() + "]");
+				}
+				ret.append("</m>");
+				ret.append("</p>");
+			}
+		}
+	}
+	private static void settoxml(Writer ret,Object obj,String dateformat,String name,Class vtype,SerialStack serialStack,String currentAddress,ClassInfo classInfo) throws Exception
+	{
+		if (obj == null) {
+			if (name == null)
+				ret.append("<p s:nvl=\"true\" s:t=\"").append(
+						ValueObjectUtil.getSimpleTypeName(vtype)).append(
+						"\"/>");
+			else
+				ret.append("<p n=\"").append(name).append(
+						"\" s:nvl=\"true\" s:t=\"").append(
+						ValueObjectUtil.getSimpleTypeName(vtype)).append(
+						"\"/>");
+
+		} 
+		else 
+		{
+			obj = serialContainerObject( ret,
+					 obj,
+					 name,
+					 vtype,
+					 classInfo) ;
+			if(obj != null)
+			{
+				Set datas = (Set) obj;
+
+//				if (name == null)
+//					ret.append("<p s:t=\"").append(
+//							ValueObjectUtil.getSimpleTypeName(vtype)).append(
+//							"\">");
+//				else
+//				{
+//					ret.append("<p n=\"").append(name).append("\" s:t=\"")
+//							.append(ValueObjectUtil.getSimpleTypeName(vtype))
+//							.append("\">");
+//	//				currentAddress = currentAddress + "->" + name;
+//				}
+				ret.append("<s cmt=\"bean\">");
+				Object value = null;
+				Iterator itr = datas.iterator();
+				int i = 0;
+				while (itr.hasNext())
+	
+				{
+					value = itr.next();
+					if (value == null)
+						convertBeanObjectToXML(null, value, (Class)null,false, dateformat,
+								ret,serialStack,currentAddress + "[" + i + "]");
+					else
+						convertBeanObjectToXML(null, value, value.getClass(),ValueObjectUtil.isBasePrimaryType(value.getClass()),
+								dateformat, ret,serialStack,currentAddress + "[" + i + "]");
+					i ++;
+				}
+				ret.append("</s>");
+				ret.append("</p>");
+			}
+		}
+	}
+	
+	private static void pluginserial(Object obj,MagicClass magicclass,String handleObjectClass,String name,Writer ret) throws IOException
+	{
+		String object = magicclass.getSerailObject().serialize(obj);
+		if (name == null)
+		{
+			if(handleObjectClass != null)
+			{
+				ret.append("<p cs=\"")
+						.append(handleObjectClass)
+						.append("\" mg=\"")
+						.append(magicclass.getMagicnumber())
+						.append("\">");
+			}
+			else
+			{
+				ret.append("<p mg=\"")
+				.append(magicclass.getMagicnumber())
+				.append("\">");
+			}
+		}
+					
+		
+		else
+		{
+			if(handleObjectClass != null)
+			{
+				ret.append("<p cs=\"")
+						.append(handleObjectClass)
+						.append("\" n=\"").append(name).append("\" mg=\"").append(magicclass.getMagicnumber()).append("\">");
+			}
+			else
+			{
+				ret.append("<p n=\"").append(name).append("\" mg=\"").append(magicclass.getMagicnumber()).append("\">");
+			}
+		}
+		ret.append("<![CDATA[")
+		.append(object)
+		.append("]]></p>");
+	}
+	private static void appendmghead(String name,MagicClass magicclass,String handleObjectClass,Writer ret,String className) throws IOException
+	{
+		if (name == null)
+		{
+			if(handleObjectClass != null)
+			{
+				ret.append("<p cs=\"")
+						.append(handleObjectClass)
+						.append("\" mg=\"")
+						.append(magicclass.getMagicnumber())
+						.append("\">");
+			}
+			else
+			{
+				ret.append("<p mg=\"")
+				.append(magicclass.getMagicnumber())
+				.append("\">");
+			}
+		}
+		else
+		{
+			if(handleObjectClass != null)
+			{
+				ret.append("<p cs=\"")
+				.append(handleObjectClass)
+				.append("\" n=\"").append(name).append("\" mg=\"").append(
+				magicclass.getMagicnumber()).append("\">");
+			}
+			else
+			{
+				ret.append("<p n=\"").append(name).append("\" mg=\"").append(
+				magicclass.getMagicnumber()).append("\">");
+			}
+			
+		}
+	}
+	
+	private static Object serialContainerObject(Writer ret,
+			Object obj,
+			String name,
+			Class vtype,
+			ClassInfo classInfo) throws IOException
+	{
+		String className = classInfo.getName();
+		MagicClass magicclass = SerialFactory.getSerialFactory().getMagicClass(className);
+		String handleObjectClass = null;
+		if(magicclass != null)
+		{
+			
+			if(magicclass.getPreserialObject() != null)
+			{
+				obj = magicclass.getPreserialObject().prehandle(obj);
+				handleObjectClass = obj.getClass().getName();
+				if(handleObjectClass.equals(className))
+					handleObjectClass = null;
+					
+			}
+			if(magicclass.getSerailObject() != null)//指定了序列化插件				
+			{
+				
+				pluginserial( obj, magicclass, handleObjectClass, name, ret);
+				return null;
+			}
+			
+			else//根据魔法数字构建list头
+			{
+				appendmghead( name, magicclass, handleObjectClass, ret, className);
+				
+			}
+		}
+		else
+		{
+			if (name == null)
+			{
+				ret.append("<p s:t=\"").append(
+						ValueObjectUtil.getSimpleTypeName(vtype)).append(
+						"\">");
+				
+			}
+			else
+			{
+				ret.append("<p n=\"").append(name).append("\" s:t=\"")
+						.append(ValueObjectUtil.getSimpleTypeName(vtype))
+						.append("\">");
+//				currentAddress = currentAddress + "->" + name;
+			}
+		}
+		return obj;
+	}
+	private static void listtoxml(Writer ret,Object obj,String dateformat,String name,Class vtype,SerialStack serialStack,String currentAddress,ClassInfo classInfo) throws Exception
+	{
+		if (obj == null) {
+			if (name == null)
+				ret.append("<p s:nvl=\"true\" s:t=\"").append(
+						ValueObjectUtil.getSimpleTypeName(vtype)).append(
+						"\"/>");
+			else
+				ret.append("<p n=\"").append(name).append(
+						"\" s:nvl=\"true\" s:t=\"").append(
+						ValueObjectUtil.getSimpleTypeName(vtype)).append(
+						"\"/>");
+			return;
+
+		} 
+		else 
+		{
+			obj = serialContainerObject( ret,
+					 obj,
+					 name,
+					 vtype,
+					 classInfo) ;//如果已经序列化完毕，则obj为null
+			if(obj != null)
+			{			
+			
+				List datas = (List) obj;	
+				ret.append("<l cmt=\"bean\">");
+				Object value = null;
+				for (int i = 0; i < datas.size(); i++) {
+					value = datas.get(i);
+					if (value == null)
+						/**
+						 * convertBeanObjectToXML(String name, Object obj,
+			Class type, String dateformat, Writer ret,SerialStack serialStack,String currentAddress)
+						 */
+						convertBeanObjectToXML(null, value, (Class)null,false, dateformat,
+								ret,serialStack,currentAddress + "[" + i + "]");
+					else
+						convertBeanObjectToXML(null, value, value.getClass(),ValueObjectUtil.isBasePrimaryType(value.getClass()),
+								dateformat, ret,serialStack,currentAddress + "[" + i + "]");
+				}
+				ret.append("</l>");
+				ret.append("</p>");
+			}
+			
+		}
+	}
+	private static void stringtoxml(Writer ret,Object obj,String name,Class vtype) throws IOException
+	{
+		if (obj == null) {
+			if (name == null)
+				ret.append("<p s:nvl=\"true\" s:t=\"String\"/>");
+			else
+				ret.append("<p n=\"").append(name).append(
+						"\" s:nvl=\"true\" s:t=\"String\"/>");
+
+		} else {
+			if (name == null)
+			{
+//				if(!obj.equals(""))
+				{
+					ret.append("<p s:t=\"String\"><![CDATA[").append((String)obj)
+							.append("]]></p>");
+				}
+//				else
+//				{
+//					ret.append("<p s:t=\"String\" v=\"\"/>");
+//				}
+			}
+			else
+			{
+//				if(!obj.equals(""))
+				{
+					ret.append("<p n=\"").append(name).append(
+						"\" s:t=\"String\"><![CDATA[").append((String)obj).append(
+						"]]></p>");
+				}
+//				else
+//				{
+//					ret.append("<p n=\"").append(name).append(
+//							"\" s:t=\"String\" v=\"\"/>");
+//				}
+			}
+		}
+	}
+	private static void filetoxml(Writer ret,Object obj,String name,Class vtype) throws IOException
+	{
+		if (obj == null) {
+			if (name == null)
+				ret.append("<p s:nvl=\"true\" s:t=\"File\"/>");
+			else
+				ret.append("<p n=\"").append(name).append(
+						"\" s:nvl=\"true\" s:t=\"File\"/>");
+
+			return;
+		} else {
+			File object = (File) obj;
+
+			java.io.FileInputStream byteIn = null;
+			java.io.ByteArrayOutputStream fileOut = null;
+			try {
+				byteIn = new java.io.FileInputStream(object);
+				fileOut = new java.io.ByteArrayOutputStream();
+				byte v[] = new byte[1024];
+
+				int i = 0;
+
+				while ((i = byteIn.read(v)) > 0) {
+					fileOut.write(v, 0, i);
+
+				}
+				fileOut.flush();
+				if (name == null)
+					ret.append("<p s:t=\"File\"><![CDATA[").append(
+							ValueObjectUtil.byteArrayEncoder(fileOut
+									.toByteArray())).append("]]></p>");
+				else
+					ret.append("<p n=\"").append(name).append(
+							"\" s:t=\"File\"><![CDATA[").append(
+							ValueObjectUtil.byteArrayEncoder(fileOut
+									.toByteArray())).append("]]></p>");
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} finally {
+				try {
+					if (byteIn != null)
+						byteIn.close();
+				} catch (Exception e) {
+
+				}
+				try {
+					if (fileOut != null)
+						fileOut.close();
+				} catch (Exception e) {
+
+				}
+			}
+
+		}
+	}
+	private static void bytearraytoxml(Writer ret,Object obj,String name,Class vtype) throws IOException
+	{
+		if (obj == null) {
+			if (name == null)
+				ret.append("<p s:nvl=\"true\" s:t=\"").append(
+						ValueObjectUtil.getSimpleTypeName(vtype)).append(
+						"\"/>");
+			else
+				ret.append("<p n=\"").append(name).append(
+						"\" s:nvl=\"true\" s:t=\"").append(
+						ValueObjectUtil.getSimpleTypeName(vtype)).append(
+						"\"/>");
+
+			return;
+		} else {
+			
+			if (!File.class.isAssignableFrom(vtype)) {
+				
+				if (name == null)
+				{
+					ret
+							.append("<p s:t=\"")
+							.append(ValueObjectUtil.getSimpleTypeName(vtype))
+							.append("\"><![CDATA[")
+							.append(
+									ValueObjectUtil
+											.byteArrayEncoder((byte[]) obj))
+							.append("]]></p>");
+				}
+				else
+					ret
+							.append("<p n=\"")
+							.append(name)
+							.append("\" s:t=\"")
+							.append(ValueObjectUtil.getSimpleTypeName(vtype))
+							.append("\"><![CDATA[")
+							.append(
+									ValueObjectUtil
+											.byteArrayEncoder((byte[]) obj))
+							.append("]]></p>");
+			} else {
+
+				File object = (File) obj;
+
+				java.io.FileInputStream byteIn = null;
+				java.io.ByteArrayOutputStream fileOut = null;
+				try {
+					byteIn = new java.io.FileInputStream(object);
+					fileOut = new java.io.ByteArrayOutputStream();
+					byte v[] = new byte[1024];
+
+					int i = 0;
+
+					while ((i = byteIn.read(v)) > 0) {
+						fileOut.write(v, 0, i);
+
+					}
+					fileOut.flush();
+					if (name == null)
+						ret.append("<p s:t=\"").append(
+								ValueObjectUtil.getSimpleTypeName(vtype))
+								.append("\"><![CDATA[").append(
+										ValueObjectUtil
+												.byteArrayEncoder(fileOut
+														.toByteArray()))
+								.append("]]></p>");
+					else
+						ret.append("<p n=\"").append(name).append(
+								"\" s:t=\"").append(
+								ValueObjectUtil.getSimpleTypeName(vtype))
+								.append("\"><![CDATA[").append(
+										ValueObjectUtil
+												.byteArrayEncoder(fileOut
+														.toByteArray()))
+								.append("]]></p>");
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} finally {
+					try {
+						if (byteIn != null)
+							byteIn.close();
+					} catch (Exception e) {
+
+					}
+					try {
+						if (fileOut != null)
+							fileOut.close();
+					} catch (Exception e) {
+
+					}
+				}
+
+			}
+		}
+	}
 	/**
 	 * 根据对象值，对象类型查找到对应的方法，这个玩意儿，比较麻烦
 	 * 需要判读currentAddress为空的情况，biaoping.yin
@@ -548,420 +1088,40 @@ public class ObjectSerializable {
 		}
 		
 		if (vtype == byte[].class) {
-			if (obj == null) {
-				if (name == null)
-					ret.append("<p s:nvl=\"true\" s:t=\"").append(
-							ValueObjectUtil.getSimpleTypeName(vtype)).append(
-							"\"/>");
-				else
-					ret.append("<p n=\"").append(name).append(
-							"\" s:nvl=\"true\" s:t=\"").append(
-							ValueObjectUtil.getSimpleTypeName(vtype)).append(
-							"\"/>");
-
-				return;
-			} else {
-				
-				if (!File.class.isAssignableFrom(vtype)) {
-					
-					if (name == null)
-					{
-						ret
-								.append("<p s:t=\"")
-								.append(ValueObjectUtil.getSimpleTypeName(vtype))
-								.append("\"><![CDATA[")
-								.append(
-										ValueObjectUtil
-												.byteArrayEncoder((byte[]) obj))
-								.append("]]></p>");
-					}
-					else
-						ret
-								.append("<p n=\"")
-								.append(name)
-								.append("\" s:t=\"")
-								.append(ValueObjectUtil.getSimpleTypeName(vtype))
-								.append("\"><![CDATA[")
-								.append(
-										ValueObjectUtil
-												.byteArrayEncoder((byte[]) obj))
-								.append("]]></p>");
-				} else {
-
-					File object = (File) obj;
-
-					java.io.FileInputStream byteIn = null;
-					java.io.ByteArrayOutputStream fileOut = null;
-					try {
-						byteIn = new java.io.FileInputStream(object);
-						fileOut = new java.io.ByteArrayOutputStream();
-						byte v[] = new byte[1024];
-
-						int i = 0;
-
-						while ((i = byteIn.read(v)) > 0) {
-							fileOut.write(v, 0, i);
-
-						}
-						fileOut.flush();
-						if (name == null)
-							ret.append("<p s:t=\"").append(
-									ValueObjectUtil.getSimpleTypeName(vtype))
-									.append("\"><![CDATA[").append(
-											ValueObjectUtil
-													.byteArrayEncoder(fileOut
-															.toByteArray()))
-									.append("]]></p>");
-						else
-							ret.append("<p n=\"").append(name).append(
-									"\" s:t=\"").append(
-									ValueObjectUtil.getSimpleTypeName(vtype))
-									.append("\"><![CDATA[").append(
-											ValueObjectUtil
-													.byteArrayEncoder(fileOut
-															.toByteArray()))
-									.append("]]></p>");
-					} catch (FileNotFoundException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} finally {
-						try {
-							if (byteIn != null)
-								byteIn.close();
-						} catch (Exception e) {
-
-						}
-						try {
-							if (fileOut != null)
-								fileOut.close();
-						} catch (Exception e) {
-
-						}
-					}
-
-				}
-			}
+			bytearraytoxml( ret, obj, name, vtype);
 			return;
 		}
 
 		else if (vtype != null && File.class.isAssignableFrom(vtype)) {
-			if (obj == null) {
-				if (name == null)
-					ret.append("<p s:nvl=\"true\" s:t=\"File\"/>");
-				else
-					ret.append("<p n=\"").append(name).append(
-							"\" s:nvl=\"true\" s:t=\"File\"/>");
-
-				return;
-			} else {
-				File object = (File) obj;
-
-				java.io.FileInputStream byteIn = null;
-				java.io.ByteArrayOutputStream fileOut = null;
-				try {
-					byteIn = new java.io.FileInputStream(object);
-					fileOut = new java.io.ByteArrayOutputStream();
-					byte v[] = new byte[1024];
-
-					int i = 0;
-
-					while ((i = byteIn.read(v)) > 0) {
-						fileOut.write(v, 0, i);
-
-					}
-					fileOut.flush();
-					if (name == null)
-						ret.append("<p s:t=\"File\"><![CDATA[").append(
-								ValueObjectUtil.byteArrayEncoder(fileOut
-										.toByteArray())).append("]]></p>");
-					else
-						ret.append("<p n=\"").append(name).append(
-								"\" s:t=\"File\"><![CDATA[").append(
-								ValueObjectUtil.byteArrayEncoder(fileOut
-										.toByteArray())).append("]]></p>");
-				} catch (FileNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} finally {
-					try {
-						if (byteIn != null)
-							byteIn.close();
-					} catch (Exception e) {
-
-					}
-					try {
-						if (fileOut != null)
-							fileOut.close();
-					} catch (Exception e) {
-
-					}
-				}
-
-			}
+			filetoxml(ret, obj, name, vtype);
 
 			return;
 		} else if (vtype == String.class) {
-			if (obj == null) {
-				if (name == null)
-					ret.append("<p s:nvl=\"true\" s:t=\"String\"/>");
-				else
-					ret.append("<p n=\"").append(name).append(
-							"\" s:nvl=\"true\" s:t=\"String\"/>");
-
-			} else {
-				if (name == null)
-				{
-//					if(!obj.equals(""))
-					{
-						ret.append("<p s:t=\"String\"><![CDATA[").append((String)obj)
-								.append("]]></p>");
-					}
-//					else
-//					{
-//						ret.append("<p s:t=\"String\" v=\"\"/>");
-//					}
-				}
-				else
-				{
-//					if(!obj.equals(""))
-					{
-						ret.append("<p n=\"").append(name).append(
-							"\" s:t=\"String\"><![CDATA[").append((String)obj).append(
-							"]]></p>");
-					}
-//					else
-//					{
-//						ret.append("<p n=\"").append(name).append(
-//								"\" s:t=\"String\" v=\"\"/>");
-//					}
-				}
-			}
+			stringtoxml( ret, obj, name, vtype);
 			return;
 		} else if (vtype != null && List.class.isAssignableFrom(vtype)) {
-			if (obj == null) {
-				if (name == null)
-					ret.append("<p s:nvl=\"true\" s:t=\"").append(
-							ValueObjectUtil.getSimpleTypeName(vtype)).append(
-							"\"/>");
-				else
-					ret.append("<p n=\"").append(name).append(
-							"\" s:nvl=\"true\" s:t=\"").append(
-							ValueObjectUtil.getSimpleTypeName(vtype)).append(
-							"\"/>");
-
-			} else {
-				List datas = (List) obj;
-
-				if (name == null)
-				{
-					ret.append("<p s:t=\"").append(
-							ValueObjectUtil.getSimpleTypeName(vtype)).append(
-							"\">");
-					
-				}
-				else
-				{
-					ret.append("<p n=\"").append(name).append("\" s:t=\"")
-							.append(ValueObjectUtil.getSimpleTypeName(vtype))
-							.append("\">");
-//					currentAddress = currentAddress + "->" + name;
-				}
-				ret.append("<l cmt=\"bean\">");
-				Object value = null;
-				for (int i = 0; i < datas.size(); i++) {
-					value = datas.get(i);
-					if (value == null)
-						/**
-						 * convertBeanObjectToXML(String name, Object obj,
-			Class type, String dateformat, Writer ret,SerialStack serialStack,String currentAddress)
-						 */
-						convertBeanObjectToXML(null, value, (Class)null,false, dateformat,
-								ret,serialStack,currentAddress + "[" + i + "]");
-					else
-						convertBeanObjectToXML(null, value, value.getClass(),ValueObjectUtil.isBasePrimaryType(value.getClass()),
-								dateformat, ret,serialStack,currentAddress + "[" + i + "]");
-				}
-				ret.append("</l>");
-				ret.append("</p>");
-			}
-
+			listtoxml( ret, obj, dateformat, name, vtype, serialStack, currentAddress,classinfo);
+			return;
 		}
 
 		else if (vtype != null && Set.class.isAssignableFrom(vtype)) {
-			if (obj == null) {
-				if (name == null)
-					ret.append("<p s:nvl=\"true\" s:t=\"").append(
-							ValueObjectUtil.getSimpleTypeName(vtype)).append(
-							"\"/>");
-				else
-					ret.append("<p n=\"").append(name).append(
-							"\" s:nvl=\"true\" s:t=\"").append(
-							ValueObjectUtil.getSimpleTypeName(vtype)).append(
-							"\"/>");
-
-			} else {
-				Set datas = (Set) obj;
-
-				if (name == null)
-					ret.append("<p s:t=\"").append(
-							ValueObjectUtil.getSimpleTypeName(vtype)).append(
-							"\">");
-				else
-				{
-					ret.append("<p n=\"").append(name).append("\" s:t=\"")
-							.append(ValueObjectUtil.getSimpleTypeName(vtype))
-							.append("\">");
-//					currentAddress = currentAddress + "->" + name;
-				}
-				ret.append("<s cmt=\"bean\">");
-				Object value = null;
-				Iterator itr = datas.iterator();
-				int i = 0;
-				while (itr.hasNext())
-
-				{
-					value = itr.next();
-					if (value == null)
-						convertBeanObjectToXML(null, value, (Class)null,false, dateformat,
-								ret,serialStack,currentAddress + "[" + i + "]");
-					else
-						convertBeanObjectToXML(null, value, value.getClass(),ValueObjectUtil.isBasePrimaryType(value.getClass()),
-								dateformat, ret,serialStack,currentAddress + "[" + i + "]");
-					i ++;
-				}
-				ret.append("</s>");
-				ret.append("</p>");
-			}
+			settoxml( ret, obj, dateformat, name, vtype, serialStack, currentAddress,classinfo);
+			
 
 		} else if (vtype != null && Map.class.isAssignableFrom(vtype)) {
-			if (obj == null) {
-				if (name == null)
-					ret.append("<p s:nvl=\"true\" s:t=\"").append(
-							ValueObjectUtil.getSimpleTypeName(vtype)).append(
-							"\"/>");
-				else
-					ret.append("<p n=\"").append(name).append(
-							"\" s:nvl=\"true\" s:t=\"").append(
-							ValueObjectUtil.getSimpleTypeName(vtype)).append(
-							"\"/>");
-
-			} else {
-				Map datas = (Map) obj;
-
-				if (name == null)
-					ret.append("<p s:t=\"").append(
-							ValueObjectUtil.getSimpleTypeName(vtype)).append(
-							"\">");
-				else
-				{
-					ret.append("<p n=\"").append(name).append("\" s:t=\"")
-							.append(ValueObjectUtil.getSimpleTypeName(vtype))
-							.append("\">");
-//					currentAddress = currentAddress + "->" + name;
-				}
-				ret.append("<m cmt=\"bean\">");
-				Object value = null;
-				Iterator itr = datas.entrySet().iterator();
-				while (itr.hasNext())
-
-				{
-					Map.Entry entry = (Map.Entry) itr.next();
-					value = entry.getValue();
-					if (value == null)
-						convertBeanObjectToXML(String.valueOf(entry.getKey()),
-								value, (Class)null,false, dateformat, ret,serialStack,currentAddress + "[" + entry.getKey() + "]");
-					else
-						convertBeanObjectToXML(String.valueOf(entry.getKey()),
-								value, value.getClass(), ValueObjectUtil.isBasePrimaryType(value.getClass()),dateformat, ret,serialStack,currentAddress + "[" + entry.getKey() + "]");
-				}
-				ret.append("</m>");
-				ret.append("</p>");
-			}
+			maptoxml( ret, obj, dateformat, name, vtype, serialStack, currentAddress,classinfo);
+			
 
 		} else if (vtype != null && vtype.isArray()) {
-
-			if (obj == null) {
-				if (name == null)
-					ret.append("<p s:nvl=\"true\" s:t=\"").append(
-							ValueObjectUtil.getTypeName(vtype)).append(
-							"\"/>");
-				else
-					ret.append("<p n=\"").append(name).append(
-							"\" s:nvl=\"true\" s:t=\"").append(
-							ValueObjectUtil.getTypeName(vtype)).append(
-							"\"/>");
-				return;
-			} else {
-//				if (name == null)
-//					ret.append("<p s:t=\"").append(
-//							ValueObjectUtil.getSimpleTypeName(type)).append(
-//							"\">");
-//				else
-//				{
-//					ret.append("<p n=\"").append(name).append("\" s:t=\"")
-//							.append(ValueObjectUtil.getSimpleTypeName(type))
-//							.append("\">");
-//					currentAddress = currentAddress + "->" + name;
-//				}
-				
-				if (name == null)
-					ret.append("<p s:t=\"").append(
-							ValueObjectUtil.getTypeName(vtype)).append(
-							"\">");
-				else
-				{
-					ret.append("<p n=\"").append(name).append("\" s:t=\"")
-							.append(ValueObjectUtil.getTypeName(vtype))
-							.append("\">");
-//					currentAddress = currentAddress + "->" + name;
-				}
-
-			}
-			ret.append("<a cmt=\"").append(
-					ValueObjectUtil.getComponentTypeName(vtype)).append("\">");
-			Object value = null;
-			int len = Array.getLength(obj);
-
-			for (int i = 0; i < len; i++) {
-				value = Array.get(obj, i);
-
-				if (value == null)
-					convertBeanObjectToXML(null, value, (Class)null, false,dateformat, ret,serialStack,currentAddress + "[" + i + "]");
-				else
-					convertBeanObjectToXML(null, value, value.getClass(), ValueObjectUtil.isBasePrimaryType(value.getClass()),
-							dateformat, ret,serialStack,currentAddress + "[" + i + "]");
-			}
-			ret.append("</a>");
-			ret.append("</p>");
+			arraytoxml( ret, obj, dateformat, name, vtype, serialStack, currentAddress);
+			
 		}
 
 		else {
 			basicTypeCast(name, obj, vtype, classinfo, dateformat, ret, serialStack,currentAddress);
 		}
 
-		// Object arrayObj;
-		//
-		// /**
-		// * 基本类型转换和基本类型之间相互转换
-		// */
-		// if (!type.isArray() && !toType.isArray()) {
-		// arrayObj = basicTypeCast(obj, type, toType, dateformat);
-		// }
-		//
-		// /**
-		// * 字符串数组向其他类型数组之间转换 数组和数组之间的转换 基础类型数据向数组转换
-		// */
-		// else {
-		//
-		// arrayObj = arrayTypeCast(obj, type, toType, dateformat);
-		// }
-		// return arrayObj;
+		
 	}
 
 	/**
@@ -1231,74 +1391,60 @@ public class ObjectSerializable {
 			
 			if (StackTraceElement.class.isAssignableFrom(vtype))
 			{
-				if (name == null)
-					ret.append("<p cs=\"")
-							.append(obj.getClass().getName())
-							.append("\">");
+				obj = serialContainerObject(ret, obj, name, vtype, classInfo);
+				if(obj != null)
+				{
+					appendStackTraceElementProperties(obj, vtype, dateformat, ret, stack,currentAddress);
+				}
 				else
-					ret.append("<p n=\"").append(name).append("\" cs=\"").append(
-							obj.getClass().getName()).append("\">");
-				appendStackTraceElementProperties(obj, vtype, dateformat, ret, stack,currentAddress);
+				{
+					return true;
+				}
+//				if (name == null)
+//					ret.append("<p cs=\"")
+//							.append(obj.getClass().getName())
+//							.append("\">");
+//				else
+//					ret.append("<p n=\"").append(name).append("\" cs=\"").append(
+//							obj.getClass().getName()).append("\">");
+//				appendStackTraceElementProperties(obj, vtype, dateformat, ret, stack,currentAddress);
 			}
 			else if (Throwable.class.isAssignableFrom(vtype))
 			{
-				if (name == null)
-					ret.append("<p cs=\"")
-							.append(obj.getClass().getName())
-							.append("\">");
+				obj = serialContainerObject(ret, obj, name, vtype, classInfo);
+				if(obj != null)
+				{
+					appendThrowableProperties(obj, vtype, dateformat, ret,stack,currentAddress);
+				}
 				else
-					ret.append("<p n=\"").append(name).append("\" cs=\"").append(
-							obj.getClass().getName()).append("\">");
-				appendThrowableProperties(obj, vtype, dateformat, ret,stack,currentAddress);
+				{
+					return true;
+				}
+//				if (name == null)
+//					ret.append("<p cs=\"")
+//							.append(obj.getClass().getName())
+//							.append("\">");
+//				else
+//					ret.append("<p n=\"").append(name).append("\" cs=\"").append(
+//							obj.getClass().getName()).append("\">");
+//				appendThrowableProperties(obj, vtype, dateformat, ret,stack,currentAddress);
 			}
 			else
 			{
 //				ClassInfo classInfo = ClassUtil.getClassInfo(obj.getClass());
-				String className = classInfo.getName();
-				MagicClass magicclass = SerialFactory.getSerialFactory().getMagicClass(className);
-				if(magicclass != null && magicclass.getPreserialObject() != null)
+				obj = serialContainerObject(ret, obj, name, vtype, classInfo);
+				if(obj != null)
 				{
-					obj = magicclass.getPreserialObject().prehandle(obj);
+					appendBeanProperties(obj, vtype,classInfo, dateformat, ret,stack,currentAddress);					
 				}
-				if(magicclass == null )
-				{
-					if (name == null)
-						ret.append("<p cs=\"")
-								.append(className)
-								.append("\">");
-					else
-						ret.append("<p n=\"").append(name).append("\" cs=\"").append(
-								className).append("\">");
-					appendBeanProperties(obj, vtype,classInfo, dateformat, ret,stack,currentAddress);
-				}
-				else if(magicclass.getSerailObject() != null)//指定了序列化插件				
-				{
-					
-					String object = magicclass.getSerailObject().serialize(obj);
-					if (name == null)
-						ret.append("<p mg=\"")
-								.append(magicclass.getMagicnumber())
-								.append("\">");
-								
-					
-					else
-						ret.append("<p n=\"").append(name).append("\" mg=\"").append(magicclass.getMagicnumber()).append("\">");
-					ret.append("<![CDATA[")
-					.append(object)
-					.append("]]>");
-				}
-				
 				else
 				{
-					if (name == null)
-						ret.append("<p mg=\"")
-								.append(magicclass.getMagicnumber())
-								.append("\">");
-					else
-						ret.append("<p n=\"").append(name).append("\" mg=\"").append(
-								magicclass.getMagicnumber()).append("\">");
-					appendBeanProperties(obj, vtype,classInfo, dateformat, ret,stack,currentAddress);
+					return true;
 				}
+				
+				
+				
+				
 			}
 			ret.append("</p>");
 			return true;

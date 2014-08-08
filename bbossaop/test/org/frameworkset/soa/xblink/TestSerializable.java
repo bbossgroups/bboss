@@ -284,6 +284,8 @@ public class TestSerializable
 	}
 	
 	
+	
+	
 	@Test
 	public void testBBossSerializable() throws Exception
 	{
@@ -301,6 +303,38 @@ public class TestSerializable
 		String xmlXstream = xStream.toXML(test1);
 		System.out.println(xmlXstream);
 		
+	}
+	
+	
+
+	@Test
+	public void testBBossSerializableException() throws Exception
+	{
+		Test1 test1 = new Test1();
+		Test2 test2 = new Test2();
+		Test3 test3 = new Test3();
+		test2.setTest1(test1);
+		test1.setTest2(test2);
+		test1.setTest3(test3);
+		test3.setTest2(test2);
+		Exception e = new Exception("asdfasdf");
+		test3.setE(e);
+		String ss = ObjectSerializable.toXML(test1);
+		long starttime = System.currentTimeMillis();
+		ss = ObjectSerializable.toXML(test1);
+		long endtime = System.currentTimeMillis();
+		System.out.println("bboss:"+ss.getBytes().length +"\r\n"+ss);
+		System.out.println("bboss time:"+(endtime -starttime));
+//		Test1 test1_ =  (Test1)ObjectSerializable.toBean(ss,Test1.class);
+		
+//		String xmlXstream = xStream.toXML(test1);
+//		starttime = System.currentTimeMillis();
+//		xmlXstream = xStream.toXML(test1);
+//		endtime = System.currentTimeMillis();
+////		System.out.println(xmlXstream);
+//		test1 = (Test1) xStream.fromXML(xmlXstream);
+//		System.out.println("xStream time:"+(endtime -starttime));
+	
 	}
 	
 	@Test
