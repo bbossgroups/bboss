@@ -26,7 +26,6 @@ import org.frameworkset.spi.support.MessageSourceAware;
 import org.frameworkset.util.ClassUtil;
 import org.frameworkset.util.ClassUtil.ClassInfo;
 import org.frameworkset.util.ClassUtil.PropertieDescription;
-import org.frameworkset.util.ReflectionUtils;
 
 import com.frameworkset.spi.assemble.BeanInstanceException;
 import com.frameworkset.spi.assemble.CurrentlyInCreationException;

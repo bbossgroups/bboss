@@ -325,9 +325,9 @@ public class TestSerializable
 		long endtime = System.currentTimeMillis();
 		System.out.println("bboss:"+ss.getBytes().length +"\r\n"+ss);
 		System.out.println("bboss time:"+(endtime -starttime));
-//		Test1 test1_ =  (Test1)ObjectSerializable.toBean(ss,Test1.class);
+		Test1 test1_ =  (Test1)ObjectSerializable.toBean(ss,Test1.class);
 		
-//		String xmlXstream = xStream.toXML(test1);
+		String xmlXstream = xStream.toXML(test1);
 //		starttime = System.currentTimeMillis();
 //		xmlXstream = xStream.toXML(test1);
 //		endtime = System.currentTimeMillis();

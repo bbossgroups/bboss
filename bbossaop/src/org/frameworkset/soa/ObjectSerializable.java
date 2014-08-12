@@ -174,7 +174,7 @@ public class ObjectSerializable {
 			ret.append(call_header);
 			SerialStack stack = new SerialStack();
 			convertBeanObjectToXML("soamethodcall", method, method.getClass(),false,
-					null, ret,stack,"soamethodcall");
+					null, ret,stack,"soamethodcall",false);
 			stack.clear();
 			ret.append(call_tailer);
 			return ret.toString();
@@ -204,7 +204,7 @@ public class ObjectSerializable {
 			ret = new StringWriter();
 			SerialStack stack = new SerialStack();
 			String name = UUID.randomUUID().toString();
-			convertBeanObjectToXML(name, obj, type, ValueObjectUtil.isBasePrimaryType(type),dateformat, ret,stack,name);
+			convertBeanObjectToXML(name, obj, type, ValueObjectUtil.isBasePrimaryType(type),dateformat, ret,stack,name,false);
 			stack.clear();
 			
 			return ret.toString();
@@ -387,7 +387,7 @@ public class ObjectSerializable {
 //				ret.append(content_header_gbk);
 			ret.append("<ps>");
 			SerialStack stack = new SerialStack();
-			convertBeanObjectToXML(name, obj, ptype,ValueObjectUtil.isBasePrimaryType(ptype), dateformat, ret,stack,name);
+			convertBeanObjectToXML(name, obj, ptype,ValueObjectUtil.isBasePrimaryType(ptype), dateformat, ret,stack,name,false);
 			stack.clear();
 			ret.append("</ps>");
 		} catch (Exception e) {
@@ -402,7 +402,7 @@ public class ObjectSerializable {
 		try {
 			SerialStack stack = new SerialStack();
 			String name = UUID.randomUUID().toString();
-			convertBeanObjectToXML(name, obj, type,ValueObjectUtil.isBasePrimaryType(type), null, ret,stack,name);
+			convertBeanObjectToXML(name, obj, type,ValueObjectUtil.isBasePrimaryType(type), null, ret,stack,name,false);
 			stack.clear();
 		} catch (IOException e) {
 			throw new IllegalArgumentException(e);
@@ -467,7 +467,7 @@ public class ObjectSerializable {
 				SerialStack stack = new SerialStack();
 				for (Object obj : objs) {
 					convertBeanObjectToXML(names.get(i), obj, types.get(i), ValueObjectUtil.isBasePrimaryType(types.get(i)),null,
-							ret,stack,names.get(i));
+							ret,stack,names.get(i),false);
 					i++;
 				}
 			}
@@ -539,10 +539,10 @@ public class ObjectSerializable {
 			value = Array.get(obj, i);
 
 			if (value == null)
-				convertBeanObjectToXML(null, value, (Class)null, false,dateformat, ret,serialStack,currentAddress + "[" + i + "]");
+				convertBeanObjectToXML(null, value, (Class)null, false,dateformat, ret,serialStack,currentAddress + "[" + i + "]",false);
 			else
 				convertBeanObjectToXML(null, value, value.getClass(), ValueObjectUtil.isBasePrimaryType(value.getClass()),
-						dateformat, ret,serialStack,currentAddress + "[" + i + "]");
+						dateformat, ret,serialStack,currentAddress + "[" + i + "]",false);
 		}
 		ret.append("</a>");
 		ret.append("</p>");
@@ -567,7 +567,7 @@ public class ObjectSerializable {
 					 obj,
 					 name,
 					 vtype,
-					 classInfo) ;
+					 classInfo,false) ;
 			if(obj != null)
 			{
 				Map datas = (Map) obj;
@@ -593,10 +593,10 @@ public class ObjectSerializable {
 					value = entry.getValue();
 					if (value == null)
 						convertBeanObjectToXML(String.valueOf(entry.getKey()),
-								value, (Class)null,false, dateformat, ret,serialStack,currentAddress + "[" + entry.getKey() + "]");
+								value, (Class)null,false, dateformat, ret,serialStack,currentAddress + "[" + entry.getKey() + "]",false);
 					else
 						convertBeanObjectToXML(String.valueOf(entry.getKey()),
-								value, value.getClass(), ValueObjectUtil.isBasePrimaryType(value.getClass()),dateformat, ret,serialStack,currentAddress + "[" + entry.getKey() + "]");
+								value, value.getClass(), ValueObjectUtil.isBasePrimaryType(value.getClass()),dateformat, ret,serialStack,currentAddress + "[" + entry.getKey() + "]",false);
 				}
 				ret.append("</m>");
 				ret.append("</p>");
@@ -623,7 +623,7 @@ public class ObjectSerializable {
 					 obj,
 					 name,
 					 vtype,
-					 classInfo) ;
+					 classInfo,false) ;
 			if(obj != null)
 			{
 				Set datas = (Set) obj;
@@ -649,10 +649,10 @@ public class ObjectSerializable {
 					value = itr.next();
 					if (value == null)
 						convertBeanObjectToXML(null, value, (Class)null,false, dateformat,
-								ret,serialStack,currentAddress + "[" + i + "]");
+								ret,serialStack,currentAddress + "[" + i + "]",false);
 					else
 						convertBeanObjectToXML(null, value, value.getClass(),ValueObjectUtil.isBasePrimaryType(value.getClass()),
-								dateformat, ret,serialStack,currentAddress + "[" + i + "]");
+								dateformat, ret,serialStack,currentAddress + "[" + i + "]",false);
 					i ++;
 				}
 				ret.append("</s>");
@@ -741,7 +741,7 @@ public class ObjectSerializable {
 			Object obj,
 			String name,
 			Class vtype,
-			ClassInfo classInfo) throws IOException
+			ClassInfo classInfo,boolean isobject) throws IOException
 	{
 		String className = classInfo.getName();
 		MagicClass magicclass = SerialFactory.getSerialFactory().getMagicClass(className);
@@ -772,16 +772,23 @@ public class ObjectSerializable {
 		}
 		else
 		{
+			String typename = null;
+			if(isobject)
+				typename = "cs";
+			else
+				typename = "s:t";
 			if (name == null)
 			{
-				ret.append("<p s:t=\"").append(
+				ret.append("<p ").append(typename).append(
+						"=\"").append(
 						ValueObjectUtil.getSimpleTypeName(vtype)).append(
 						"\">");
 				
 			}
 			else
 			{
-				ret.append("<p n=\"").append(name).append("\" s:t=\"")
+				ret.append("<p n=\"").append(name).append("\" ").append(typename).append(
+						"=\"")
 						.append(ValueObjectUtil.getSimpleTypeName(vtype))
 						.append("\">");
 //				currentAddress = currentAddress + "->" + name;
@@ -810,7 +817,7 @@ public class ObjectSerializable {
 					 obj,
 					 name,
 					 vtype,
-					 classInfo) ;//如果已经序列化完毕，则obj为null
+					 classInfo,false) ;//如果已经序列化完毕，则obj为null
 			if(obj != null)
 			{			
 			
@@ -825,10 +832,10 @@ public class ObjectSerializable {
 			Class type, String dateformat, Writer ret,SerialStack serialStack,String currentAddress)
 						 */
 						convertBeanObjectToXML(null, value, (Class)null,false, dateformat,
-								ret,serialStack,currentAddress + "[" + i + "]");
+								ret,serialStack,currentAddress + "[" + i + "]",false);
 					else
 						convertBeanObjectToXML(null, value, value.getClass(),ValueObjectUtil.isBasePrimaryType(value.getClass()),
-								dateformat, ret,serialStack,currentAddress + "[" + i + "]");
+								dateformat, ret,serialStack,currentAddress + "[" + i + "]",false);
 				}
 				ret.append("</l>");
 				ret.append("</p>");
@@ -1042,7 +1049,7 @@ public class ObjectSerializable {
 	 * @throws Exception 
 	 */
 	private final static void convertBeanObjectToXML(String name, Object obj,
-			Class ptype,boolean pisbasetype, String dateformat, Writer ret,SerialStack serialStack,String currentAddress)
+			Class ptype,boolean pisbasetype, String dateformat, Writer ret,SerialStack serialStack,String currentAddress,boolean frombeanpropety)
 			throws Exception {
 		ClassInfo classinfo = null;
 		Class vtype = null;
@@ -1084,7 +1091,10 @@ public class ObjectSerializable {
 		}
 		else
 		{
-			vtype = ptype;
+			if(!frombeanpropety)
+				vtype = ptype;
+			else
+				return;
 		}
 		
 		if (vtype == byte[].class) {
@@ -1391,7 +1401,7 @@ public class ObjectSerializable {
 			
 			if (StackTraceElement.class.isAssignableFrom(vtype))
 			{
-				obj = serialContainerObject(ret, obj, name, vtype, classInfo);
+				obj = serialContainerObject(ret, obj, name, vtype, classInfo,true);
 				if(obj != null)
 				{
 					appendStackTraceElementProperties(obj, vtype, dateformat, ret, stack,currentAddress);
@@ -1411,7 +1421,7 @@ public class ObjectSerializable {
 			}
 			else if (Throwable.class.isAssignableFrom(vtype))
 			{
-				obj = serialContainerObject(ret, obj, name, vtype, classInfo);
+				obj = serialContainerObject(ret, obj, name, vtype, classInfo,true);
 				if(obj != null)
 				{
 					appendThrowableProperties(obj, vtype, dateformat, ret,stack,currentAddress);
@@ -1432,7 +1442,7 @@ public class ObjectSerializable {
 			else
 			{
 //				ClassInfo classInfo = ClassUtil.getClassInfo(obj.getClass());
-				obj = serialContainerObject(ret, obj, name, vtype, classInfo);
+				obj = serialContainerObject(ret, obj, name, vtype, classInfo,true);
 				if(obj != null)
 				{
 					appendBeanProperties(obj, vtype,classInfo, dateformat, ret,stack,currentAddress);					
@@ -1467,14 +1477,14 @@ public class ObjectSerializable {
 			Object value = ValueObjectUtil.getValue(obj, "message");
 
 			convertBeanObjectToXML("message", value, String.class, true,dateformat,
-					ret,stack,currentAddress + "{0}"  );
+					ret,stack,currentAddress + "{0}"  ,false);
 			value = ValueObjectUtil.getValue(obj, "cause");
 			if (value != null) {
 				convertBeanObjectToXML("cause", value, value.getClass(),false,
-						dateformat, ret,stack,currentAddress + "{1}" );
+						dateformat, ret,stack,currentAddress + "{1}" ,false);
 			} else {
 				convertBeanObjectToXML("cause", value, Throwable.class,false,
-						dateformat, ret,stack,currentAddress + "{2}" );
+						dateformat, ret,stack,currentAddress + "{2}",false );
 			}
 
 		} catch (CurrentlyInCreationException e) {
@@ -1510,19 +1520,19 @@ public class ObjectSerializable {
 			Object value = ValueObjectUtil.getValue(obj, "className");
 
 			convertBeanObjectToXML("declaringClass", value, String.class,true,
-					dateformat, ret,serialStack, currentAddress + "{0}");
+					dateformat, ret,serialStack, currentAddress + "{0}",false);
 			value = ValueObjectUtil.getValue(obj, "methodName");
 
 			convertBeanObjectToXML("methodName", value, String.class,true,
-					dateformat, ret,serialStack, currentAddress + "{1}");
+					dateformat, ret,serialStack, currentAddress + "{1}",false);
 			value = ValueObjectUtil.getValue(obj, "fileName");
 
 			convertBeanObjectToXML("fileName", value, String.class, true,dateformat,
-					ret,serialStack, currentAddress + "{2}");
+					ret,serialStack, currentAddress + "{2}",false);
 			value = ValueObjectUtil.getValue(obj, "lineNumber");
 
 			convertBeanObjectToXML("lineNumber", value, int.class, true,dateformat,
-					ret,serialStack, currentAddress + "{3}");
+					ret,serialStack, currentAddress + "{3}",false);
 		} catch (CurrentlyInCreationException e) {
 			throw e;
 		} catch (BeanInstanceException e) {
@@ -1595,7 +1605,7 @@ public class ObjectSerializable {
 					ptype = value.getClass();
 				}
 				
-				convertBeanObjectToXML(attrName, value, ptype, pisbasetype,dateformat, ret,stack,currentAddress + "->" + attrName);
+				convertBeanObjectToXML(attrName, value, ptype, pisbasetype,dateformat, ret,stack,currentAddress + "->" + attrName,true);
 			} catch (IllegalArgumentException e) {
 				throw new CurrentlyInCreationException("", e);
 			} catch (IllegalAccessException e) {
@@ -1624,7 +1634,7 @@ public class ObjectSerializable {
 		for (int i = 0; i < params.length; i++) {
 			 
 			ObjectSerializable.convertBeanObjectToXML(null, params[i],
-					paramTypes[i], ValueObjectUtil.isBasePrimaryType(paramTypes[i]),dateformat, ret, stack,currentAddress + "[" + i+"]");
+					paramTypes[i], ValueObjectUtil.isBasePrimaryType(paramTypes[i]),dateformat, ret, stack,currentAddress + "[" + i+"]",false);
 		}
 	}
 

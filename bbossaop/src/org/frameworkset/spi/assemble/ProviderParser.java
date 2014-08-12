@@ -104,7 +104,7 @@ public class ProviderParser extends DefaultHandler
         traceStack = new Stack();
         managers = new HashMap();
         mangerimports = new ArrayList();
-        currentValue = new StringBuffer();
+//        currentValue = new StringBuffer();
         this.file = file;
         this.parent = parent;
         this.applicationContext = applicationContext;
@@ -121,7 +121,7 @@ public class ProviderParser extends DefaultHandler
 //	        this.file = applicationContext.getConfigfile();
 //	        this.parent = applicationContext.getp;
         }
-        currentValue = new StringBuffer();
+//        currentValue = new StringBuffer();
         this.applicationContext = applicationContext;
 //        isSOAApplicationContext = applicationContext instanceof SOAApplicationContext;
         traceStack = new Stack();
@@ -129,6 +129,8 @@ public class ProviderParser extends DefaultHandler
 
     public void characters(char[] ch, int start, int length)
     {    	
+    	if(currentValue == null)
+    		currentValue = new StringBuffer();
         currentValue.append(ch, start, length);
     }
     /**
@@ -146,9 +148,15 @@ public class ProviderParser extends DefaultHandler
 //    	}
 //    	else 
     	{
-    		boolean isbean = p.getClazz() != null && 
-			!p.getClazz().equals("") && 
-			(p.getRefid() == null || p.getRefid().equals(""));
+    		boolean isbean = p.getValue() == null && p.getClazz() != null && !p.getClazz().equals("") && (p.getRefid() == null || p.getRefid().equals("")) ;
+	    	if(isbean)
+	    		return true;
+	    	if(p.getMagicclass() != null)
+	    		return true;
+	    	if(p.getValue() != null)
+	    	{
+	    		isbean = p.getValue() instanceof ProList || p.getValue() instanceof ProMap || p.getValue() instanceof ProSet || p.getValue() instanceof ProArray; 
+	    	}
 	    	if(isbean)
 	    		return true;
 	    	String factory_bean = p.getFactory_bean();
@@ -170,25 +178,47 @@ public class ProviderParser extends DefaultHandler
 	        if ( p.getValue() == null)
 	        {		
 	        	String _value = null;
-	        	if(this.serial)
-	        		_value = currentValue.toString();
-	        	else
-	        		_value = currentValue.toString().trim();
-	        	if(_value.length() > 0)
-	            {
-	        		p.setValue(_value);
-	            	currentValue.delete(0, currentValue.length());
-	            }
+//	        	if(this.serial)
+//	        		_value = currentValue.toString();
+//	        	else
+//	        		_value = currentValue.toString().trim();
+	        	if(this.currentValue != null)
+	        	{
+	        		if(this.serial)
+	        		{
+	        			
+	        			_value = this.currentValue.toString();
+	        			
+	    	            {
+	    	        		p.setValue(_value);
+//	    	            	currentValue.delete(0, currentValue.length());
+	    	        		this.currentValue = null;
+	    	            }
+	        		}
+	        		else
+	        		{
+	        			_value = this.currentValue.toString().trim();
+	        			if(_value.length() > 0)
+	    	            {
+	    	        		p.setValue(_value);
+//	    	            	currentValue.delete(0, currentValue.length());
+	    	        		this.currentValue = null;
+	    	            }
+	        		}
+	        	}
+	        	
 	//            else if(p.getClazz() != null && !p.getClazz().equals("") 
 	//                    && (p.getRefid() == null || p.getRefid().equals("")))
-	            else if(isbean(p))
-	            {
-	                p.setBean(true);
-	                
-	            }
+//	            else if(isbean(p))@setBean 注释开始
+//	            {
+//	                p.setBean(true);
+//	                
+//	            }@setBean 注释结束
 	        }
     	}
-    	else
+    	if(p.getClazz() != null && p.getClazz().equals("org.frameworkset.soa.xblink.Person"))//@setDebug begin
+    		System.out.print("");//@setDebug begin
+//    	else @setBean 注释
     	{
     		if(isbean(p))
             {
@@ -406,7 +436,8 @@ public class ProviderParser extends DefaultHandler
             {
                 
 //                System.out.println(currentValue);
-                currentValue.delete(0, currentValue.length());
+//                currentValue.delete(0, currentValue.length());
+            	this.currentValue = null;
                 return ;
             }
             Object p = this.traceStack.peek();
@@ -437,7 +468,8 @@ public class ProviderParser extends DefaultHandler
 
         }
 
-       currentValue.delete(0, currentValue.length());
+//       currentValue.delete(0, currentValue.length());
+       this.currentValue = null;
        
 
     }
@@ -662,8 +694,13 @@ public class ProviderParser extends DefaultHandler
         	if(value == null)
         		value = attributes.getValue("value");
         	 clazz = attributes.getValue("cs");
-	            if(clazz == null)
-	            	clazz = attributes.getValue("class");
+//	          if(clazz == null) //@setBean 注释开始
+//	          {
+//	        	  clazz = attributes.getValue(Pro.soa_type_attribute);
+//	          }//@setBean 注释结束
+	          if(clazz == null)
+	            clazz = attributes.getValue("class");
+	            
         }
         else
         {
@@ -715,21 +752,24 @@ public class ProviderParser extends DefaultHandler
         p
         .setCallorder_sequence(getBoolean(attributes.getValue("callorder_sequence"), false));
         this.buildXpath(p);
-        if(this.serial)
+//        if(this.serial)
         {
 	        String mg = attributes.getValue("mg");
 	        if(mg != null)
 	        {
 		        p.setMagicNumber(mg);
-		        String serial = attributes.getValue("serial");
-		        String preserial = attributes.getValue("preserial");
-		        if(serial == null && preserial == null)
+//		        String serial = attributes.getValue("serial");
+//		        String preserial = attributes.getValue("preserial");
+//		        if(serial == null && preserial == null)
 		        {
 		        	MagicClass mgc = SerialFactory.getSerialFactory().getMagicClassByMagicNumber(mg);
-		        	if(mgc.getMagicclass() != null)
+		        	if(mgc == null)
+		        		throw new java.lang.IllegalArgumentException("magic="+mg + "对应的MagicClass不存在,请检查org/frameworkset/soa/serialconf.xml文件中是否定义了magic='"+mg+"'的序列化插件.");
+		        	if(mgc.getMagicclass() != null && p.getClazz() == null)
 		        	{
 		        		 p.setClazz(mgc.getMagicclass());
 		        	}
+		        	p.setMagicclass(mgc);
 		        }
 	        }
         }
@@ -748,7 +788,8 @@ public class ProviderParser extends DefaultHandler
     public void startElement(String s1, String s2, String name, Attributes attributes)
     {
     	    	
-        currentValue.delete(0, currentValue.length());
+//        currentValue.delete(0, currentValue.length());
+    	currentValue = null;
         if (name.equals("p") || name.equals("property"))
         {    
 
@@ -761,16 +802,16 @@ public class ProviderParser extends DefaultHandler
         {
         	ProList list = new ProList();
         	String componentType = null;        	 
-        	if(this.serial)
+//        	if(this.serial)
         	{
         		componentType = attributes.getValue("cmt");
         		if(componentType == null)
         			componentType = attributes.getValue("componentType");
         	}
-        	else
-        	{
-        		componentType = attributes.getValue("componentType");
-        	}
+//        	else
+//        	{
+//        		componentType = attributes.getValue("componentType");
+//        	}
         	 list.setComponentType(componentType);
             this.traceStack.push(list);
 
@@ -779,16 +820,16 @@ public class ProviderParser extends DefaultHandler
         {
         	ProMap map = new ProMap<String,Pro>();
         	String componentType = null;        	 
-        	if(this.serial)
+//        	if(this.serial)
         	{
         		componentType = attributes.getValue("cmt");
         		if(componentType == null)
         			componentType = attributes.getValue("componentType");
         	}
-        	else
-        	{
-        		componentType = attributes.getValue("componentType");
-        	}
+//        	else
+//        	{
+//        		componentType = attributes.getValue("componentType");
+//        	}
             map.setComponentType(componentType);
             
             this.traceStack.push(map);
@@ -798,16 +839,16 @@ public class ProviderParser extends DefaultHandler
         {
         	ProArray array = new ProArray();
         	String componentType = null;        	 
-        	if(this.serial)
+//        	if(this.serial)
         	{
         		componentType = attributes.getValue("cmt");
         		if(componentType == null)
         			componentType = attributes.getValue("componentType");
         	}
-        	else
-        	{
-        		componentType = attributes.getValue("componentType");
-        	}
+//        	else
+//        	{
+//        		componentType = attributes.getValue("componentType");
+//        	}
         	 array.setComponentType(componentType);
             this.traceStack.push(array);
 
@@ -838,16 +879,16 @@ public class ProviderParser extends DefaultHandler
         {
         	ProSet set = new ProSet();
         	String componentType = null;        	 
-        	if(this.serial)
+//        	if(this.serial)
         	{
         		componentType = attributes.getValue("cmt");
         		if(componentType == null)
         			componentType = attributes.getValue("componentType");
         	}
-        	else
-        	{
-        		componentType = attributes.getValue("componentType");
-        	}
+//        	else
+//        	{
+//        		componentType = attributes.getValue("componentType");
+//        	}
             set.setComponentType(componentType);
             this.traceStack.push(set);
 
@@ -1027,7 +1068,8 @@ public class ProviderParser extends DefaultHandler
 
         else if (name.equals("description"))
         {
-            this.currentValue.delete(0, this.currentValue.length());
+//            this.currentValue.delete(0, this.currentValue.length());
+        	this.currentValue = null;
 //            Object p = this.traceStack.peek();
 //            if(p instanceof Pro)
 //            {

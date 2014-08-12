@@ -316,7 +316,7 @@ public  class ProSet<V extends Pro> extends TreeSet<V>
 	    					{
 	    						Pro pro = (Pro)keys.next();
 	    						try{
-	    							componentSet.add(pro.getBean(callcontext));	
+	    							componentSet.add(pro.getBean(callcontext,true));	
 	    						}
 	    						finally
 	    						{
@@ -373,7 +373,7 @@ public  class ProSet<V extends Pro> extends TreeSet<V>
 	    						Pro pro = (Pro)keys.next();
 	    						try
 	    						{
-	    							componentSet.add(pro.getBean(callcontext));	
+	    							componentSet.add(pro.getBean(callcontext,true));	
 	    						}
 	    						finally
 	    						{

@@ -230,7 +230,7 @@ public class ProArray implements Serializable{
 								Context currentLoopContext = callcontext != null?callcontext.getLoopContext():null;
 								for (Pro v : this.pros) {
 									try{
-										Array.set(componentArray, i, v.getBean(callcontext));
+										Array.set(componentArray, i, v.getBean(callcontext,true));
 									}
 									finally
 		    						{
@@ -267,7 +267,7 @@ public class ProArray implements Serializable{
 								Context currentLoopContext = callcontext != null?callcontext.getLoopContext():null;
 								for (Pro v : this.pros) {
 									try{
-										Array.set(componentArray, i, v.getBean(callcontext));
+										Array.set(componentArray, i, v.getBean(callcontext,true));
 									}
 									finally
 		    						{
@@ -289,7 +289,7 @@ public class ProArray implements Serializable{
 								Context currentLoopContext = callcontext != null?callcontext.getLoopContext():null;
 								for (Pro v : this.pros) {
 								try{
-									Object value = v.getBean(callcontext);
+									Object value = v.getBean(callcontext,true);
 									Array.set(componentArray, i, ValueObjectUtil.typeCast(value, Class.class));
 								}
 								finally
@@ -311,7 +311,7 @@ public class ProArray implements Serializable{
 									Context currentLoopContext = callcontext != null?callcontext.getLoopContext():null;
 									for (Pro v : this.pros) {
 										try{
-											Array.set(componentArray, i, v.getBean(callcontext));
+											Array.set(componentArray, i, v.getBean(callcontext,true));
 										}
 										finally
 										{

@@ -269,7 +269,7 @@ public class Pro<V> extends BaseTXManager implements Comparable<V>, BeanInf {
 	BeanAccembleHelper<V> accember = new BeanAccembleHelper<V>();
 
 	public Object getBean() {
-		return getBean((CallContext) null);
+		return getBean((CallContext) null,true);
 	}
 
 	/**
@@ -277,15 +277,35 @@ public class Pro<V> extends BaseTXManager implements Comparable<V>, BeanInf {
 	 * @param context
 	 * @return
 	 */
-	public Object getBean(CallContext context) {
+	public Object getBean(CallContext context,boolean convertcontainer) {		
 		if (this.isSinglable()) // 单列模式
 		{
+			
 			if (beaninstance == null) {
 				synchronized (this) {
 					if (beaninstance != null)
 						return beaninstance;
+				
 					if (bean) {
-						beaninstance = accember.getBean(this, context);
+						if(value != null)
+						{
+							
+							Object _beaninstance = processValue(context, convertcontainer);
+							if(magicclass != null && magicclass.getPreserialObject() != null)
+							{
+								_beaninstance = magicclass.getPreserialObject().posthandle(_beaninstance);
+							}
+							beaninstance = _beaninstance;
+						}
+						else
+						{
+							Object _beaninstance = accember.getBean(this, context);
+							if(magicclass != null && magicclass.getPreserialObject() != null)
+							{
+								_beaninstance = magicclass.getPreserialObject().posthandle(_beaninstance);
+							}
+							beaninstance = _beaninstance;
+						}
 					} else {
 						beaninstance = this.getTrueValue(context);
 					}
@@ -296,7 +316,24 @@ public class Pro<V> extends BaseTXManager implements Comparable<V>, BeanInf {
 			}
 		} else {
 			if (this.isBean()) {
-				return accember.getBean(this, context);
+				Object retvalue = null;
+				if(value != null)
+				{
+					retvalue = processValue(context, convertcontainer);
+					if(magicclass != null && magicclass.getPreserialObject() != null)
+					{
+						retvalue = magicclass.getPreserialObject().posthandle(retvalue);
+					}
+				}
+				else
+				{
+					retvalue = accember.getBean(this, context);
+					if(magicclass != null && magicclass.getPreserialObject() != null)
+					{
+						retvalue = magicclass.getPreserialObject().posthandle(retvalue);
+					}
+				}
+				return retvalue ;
 			} else {
 				return this.getTrueValue(context);
 			}
@@ -304,6 +341,139 @@ public class Pro<V> extends BaseTXManager implements Comparable<V>, BeanInf {
 
 		}
 
+	}
+	/**
+	 * 容器类型配置元数据处理
+	 * @return
+	 */
+	private Object processValue(CallContext context,boolean convertcontainer)
+	{
+		if(value == null)
+			return null;
+		Object retvalue = null;
+		
+		if(magicclass != null)
+		{			
+			if(magicclass.getSerailObject() != null)
+			{
+				retvalue = magicclass.getSerailObject().deserialize((String)value);
+				if(magicclass.getPreserialObject() != null)
+				{
+					retvalue = magicclass.getPreserialObject().posthandle(retvalue);
+				}
+				return retvalue;
+			}
+			
+			
+		}
+		if (!convertcontainer) {//如果不需要将容器转换为实际类型那么直接返回对应的值
+			return value;
+		
+		} 
+		else if (value instanceof ProList) {
+//			String soatype = this.getSOAAttribute(soa_type_attribute);
+			String soatype = this.getClazz();
+			if(soatype == null)
+				soatype = this.getSOAAttribute(soa_type_attribute);
+			if(soatype != null)
+			{
+				try {
+					Class clazz = ValueObjectUtil.getClass(soatype);
+					retvalue = ((ProList) value).getComponentList(clazz,context);
+					if(magicclass != null && magicclass.getPreserialObject() != null)
+					{
+						retvalue = magicclass.getPreserialObject().posthandle(retvalue);
+					}
+				} catch (ClassNotFoundException e) {
+					throw new BeanInstanceException(e);
+				}
+//				retvalue = ((ProList) value).getComponentList();
+			}
+			else
+			{
+				retvalue = ((ProList) value).getComponentList(ArrayList.class,context);
+				if(magicclass != null && magicclass.getPreserialObject() != null)
+				{
+					retvalue = magicclass.getPreserialObject().posthandle(retvalue);
+				}
+			}
+		} 
+		else if (value instanceof ProMap) {
+//			String soatype = this.getSOAAttribute(soa_type_attribute);
+			String soatype = this.getClazz();
+			if(soatype == null)
+				soatype = this.getSOAAttribute(soa_type_attribute);
+			if(soatype != null)
+			{
+				try {
+					Class clazz = ValueObjectUtil.getClass(soatype);
+					retvalue = ((ProMap) value).getComponentMap(clazz,context);
+					if(magicclass != null && magicclass.getPreserialObject() != null)
+					{
+						retvalue = magicclass.getPreserialObject().posthandle(retvalue);
+					}
+				} catch (ClassNotFoundException e) {
+					throw new BeanInstanceException(e);
+				}
+			}
+			else
+			{
+				retvalue = ((ProMap) value).getComponentMap(HashMap.class,context);
+				if(magicclass != null && magicclass.getPreserialObject() != null)
+				{
+					retvalue = magicclass.getPreserialObject().posthandle(retvalue);
+				}
+			}
+			
+		} else if (value instanceof ProSet) {
+//			String soatype = this.getSOAAttribute(soa_type_attribute);
+			String soatype = this.getClazz();
+			if(soatype == null)
+				soatype = this.getSOAAttribute(soa_type_attribute);
+			if(soatype != null)
+			{
+				try {
+					Class clazz = ValueObjectUtil.getClass(soatype);
+					retvalue = ((ProSet) value).getComponentSet(clazz,context);
+					if(magicclass != null && magicclass.getPreserialObject() != null)
+					{
+						retvalue = magicclass.getPreserialObject().posthandle(retvalue);
+					}
+				} catch (ClassNotFoundException e) {
+					throw new BeanInstanceException(e);
+				}
+//				retvalue = ((ProList) value).getComponentList();
+			}
+			else
+			{
+				retvalue = ((ProSet) value).getComponentSet(TreeSet.class,context);
+				if(magicclass != null && magicclass.getPreserialObject() != null)
+				{
+					retvalue = magicclass.getPreserialObject().posthandle(retvalue);
+				}
+			}
+			
+		} else if (value instanceof ProArray) {
+			retvalue = ((ProArray) value).getComponentArray(context);
+			if(magicclass != null && magicclass.getPreserialObject() != null)
+			{
+				retvalue = magicclass.getPreserialObject().posthandle(retvalue);
+			}
+		} 
+		else {
+//			if (this.clazz != null) {
+//				retvalue = accember.getBean(this, context);
+//				if(magicclass != null && magicclass.getPreserialObject() != null)
+//				{
+//					retvalue = magicclass.getPreserialObject().posthandle(retvalue);
+//				}
+//			} else 
+			{
+				retvalue = value;
+			}
+		}
+		
+		return retvalue;
 	}
 	
 	/**
@@ -313,7 +483,7 @@ public class Pro<V> extends BaseTXManager implements Comparable<V>, BeanInf {
 	 */
 	public Object getProxyBean(CallContext context) {
 		return getApplicationContext().proxyObject(this, 
-				this.getBean(context), 
+				this.getBean(context,true), 
 				this.getXpath());
 
 	}
@@ -863,7 +1033,7 @@ public class Pro<V> extends BaseTXManager implements Comparable<V>, BeanInf {
 
 	}
 	
-	
+	private MagicClass magicclass = null;
 	
 	/**
 	 * 
@@ -874,86 +1044,126 @@ public class Pro<V> extends BaseTXManager implements Comparable<V>, BeanInf {
 	 */
 	private Object getTrueValue_(CallContext context, Object defaultValue,
 			boolean convertcontainer,boolean useeditor) {
-		MagicClass magicclass = null;
-		if(this.magicNumber != null)
-		{
-			magicclass = SerialFactory.getSerialFactory().getMagicClassByMagicNumber(magicNumber);
-			if(magicclass == null)
-			{
-				throw new BeanInstanceException("反序列化数据异常:magicNumber " +magicNumber+"不存在。检查resources/org/frameworkset/soa/serialconf.xml中是否配置正确!");
-			}
-		}
+//		MagicClass magicclass = null;
+//		if(this.magicclass != null)
+//		{
+//			magicclass = SerialFactory.getSerialFactory().getMagicClassByMagicNumber(magicNumber);
+//			if(magicclass == null)
+//			{
+//				throw new BeanInstanceException("反序列化数据异常:magicNumber " +magicNumber+"不存在。检查resources/org/frameworkset/soa/serialconf.xml中是否配置正确!");
+//			}
+//		}
 		Object retvalue = null;
-		if (value != null) {
-			if(magicclass != null)
+		if (bean) {
+//			if (convertcontainer) 
 			{
+				Object ret = this.getBean(context,convertcontainer);
+				retvalue = ret != null ? ret : defaultValue;
 				
-				if(magicclass.getSerailObject() != null)
-				{
-					retvalue = magicclass.getSerailObject().deserialize((String)value);
-				}
-				else
-				{
-					retvalue = value;
-				}
-				return retvalue;
 			}
-			else if (!convertcontainer) {//如果不需要将容器转换为实际类型那么直接返回对应的值
-				retvalue = value;
-			} else if (value instanceof ProList) {
-				String soatype = this.getSOAAttribute(soa_type_attribute);
-				if(soatype != null)
-				{
-					try {
-						Class clazz = ValueObjectUtil.getClass(soatype);
-						retvalue = ((ProList) value).getComponentList(clazz,context);
-					} catch (ClassNotFoundException e) {
-						throw new BeanInstanceException(e);
-					}
-//					retvalue = ((ProList) value).getComponentList();
-				}
-				else
-				{
-					retvalue = ((ProList) value).getComponentList(ArrayList.class,context);
-				}
-			} else if (value instanceof ProMap) {
-				String soatype = this.getSOAAttribute(soa_type_attribute);
-				if(soatype != null)
-				{
-					try {
-						Class clazz = ValueObjectUtil.getClass(soatype);
-						retvalue = ((ProMap) value).getComponentMap(clazz,context);
-					} catch (ClassNotFoundException e) {
-						throw new BeanInstanceException(e);
-					}
-				}
-				else
-				{
-					retvalue = ((ProMap) value).getComponentMap(HashMap.class,context);
-				}
-				
-			} else if (value instanceof ProSet) {
-				String soatype = this.getSOAAttribute(soa_type_attribute);
-				if(soatype != null)
-				{
-					try {
-						Class clazz = ValueObjectUtil.getClass(soatype);
-						retvalue = ((ProSet) value).getComponentSet(clazz,context);
-					} catch (ClassNotFoundException e) {
-						throw new BeanInstanceException(e);
-					}
-//					retvalue = ((ProList) value).getComponentList();
-				}
-				else
-				{
-					retvalue = ((ProSet) value).getComponentSet(TreeSet.class,context);
-				}
-				
-			} else if (value instanceof ProArray) {
-				retvalue = ((ProArray) value).getComponentArray(context);
-			} 
+//			else
+//			{
+//				retvalue = defaultValue;
+//			}
 			
-			else {
+		} 
+		else if (this.isRefereced()) {
+			retvalue = this.getRefValue(context, defaultValue);
+		} 
+//		else {
+//			if (this.clazz != null) {
+//				try {
+//					if (!convertcontainer) 
+//					{
+//						retvalue = defaultValue;
+//					}
+//					else
+//					{
+//						retvalue = Class.forName(this.clazz).newInstance();
+//					}
+//				} catch (InstantiationException e) {
+//					throw new BeanInstanceException(e);
+//				} catch (IllegalAccessException e) {
+//					throw new BeanInstanceException(e);
+//				} catch (ClassNotFoundException e) {
+//					throw new BeanInstanceException(e);
+//				}
+//			} else {
+//				retvalue = defaultValue;
+//			}
+//		}
+		else if (value != null) {
+//			retvalue = value;
+//			if(magicclass != null)
+//			{
+//				
+//				if(magicclass.getSerailObject() != null)
+//				{
+//					retvalue = magicclass.getSerailObject().deserialize((String)value);
+//				}
+//				else
+//				{
+//					retvalue = value;
+//				}
+//				return retvalue;
+//			}
+//			else if (!convertcontainer) {//如果不需要将容器转换为实际类型那么直接返回对应的值
+//				retvalue = value;
+//			} else if (value instanceof ProList) {
+//				String soatype = this.getSOAAttribute(soa_type_attribute);
+//				if(soatype != null)
+//				{
+//					try {
+//						Class clazz = ValueObjectUtil.getClass(soatype);
+//						retvalue = ((ProList) value).getComponentList(clazz,context);
+//					} catch (ClassNotFoundException e) {
+//						throw new BeanInstanceException(e);
+//					}
+////					retvalue = ((ProList) value).getComponentList();
+//				}
+//				else
+//				{
+//					retvalue = ((ProList) value).getComponentList(ArrayList.class,context);
+//				}
+//			} else if (value instanceof ProMap) {
+//				String soatype = this.getSOAAttribute(soa_type_attribute);
+//				if(soatype != null)
+//				{
+//					try {
+//						Class clazz = ValueObjectUtil.getClass(soatype);
+//						retvalue = ((ProMap) value).getComponentMap(clazz,context);
+//					} catch (ClassNotFoundException e) {
+//						throw new BeanInstanceException(e);
+//					}
+//				}
+//				else
+//				{
+//					retvalue = ((ProMap) value).getComponentMap(HashMap.class,context);
+//				}
+//				
+//			} else if (value instanceof ProSet) {
+//				String soatype = this.getSOAAttribute(soa_type_attribute);
+//				if(soatype != null)
+//				{
+//					try {
+//						Class clazz = ValueObjectUtil.getClass(soatype);
+//						retvalue = ((ProSet) value).getComponentSet(clazz,context);
+//					} catch (ClassNotFoundException e) {
+//						throw new BeanInstanceException(e);
+//					}
+////					retvalue = ((ProList) value).getComponentList();
+//				}
+//				else
+//				{
+//					retvalue = ((ProSet) value).getComponentSet(TreeSet.class,context);
+//				}
+//				
+//			} else if (value instanceof ProArray) {
+//				retvalue = ((ProArray) value).getComponentArray(context);
+//			} 
+			
+//			else 
+//			{
 				String soatype = this.getSOAAttribute(soa_type_attribute);
 				if(soatype == null)
 				{
@@ -978,45 +1188,13 @@ public class Pro<V> extends BaseTXManager implements Comparable<V>, BeanInf {
 						}
 					}
 				}
-			}
+//			}
 		}
-		else if (bean) {
-			if (convertcontainer) 
-			{
-				Object ret = this.getBean(context);
-				retvalue = ret != null ? ret : defaultValue;
-				
-			}
-			else
-			{
-				retvalue = defaultValue;
-			}
-			
-		} 
-		else if (this.isRefereced()) {
-			retvalue = this.getRefValue(context, defaultValue);
-		} else {
-			if (this.clazz != null) {
-				try {
-					if (!convertcontainer) 
-					{
-						retvalue = defaultValue;
-					}
-					else
-					{
-						retvalue = Class.forName(this.clazz).newInstance();
-					}
-				} catch (InstantiationException e) {
-					throw new BeanInstanceException(e);
-				} catch (IllegalAccessException e) {
-					throw new BeanInstanceException(e);
-				} catch (ClassNotFoundException e) {
-					throw new BeanInstanceException(e);
-				}
-			} else {
-				retvalue = defaultValue;
-			}
+		else {
+			retvalue = defaultValue;
 		}
+		
+		
 
 		if(useeditor)
 		{
@@ -1819,6 +1997,14 @@ public class Pro<V> extends BaseTXManager implements Comparable<V>, BeanInf {
 
 	public void setMagicNumber(String magicNumber) {
 		this.magicNumber = magicNumber;
+	}
+
+	public MagicClass getMagicclass() {
+		return magicclass;
+	}
+
+	public void setMagicclass(MagicClass magicclass) {
+		this.magicclass = magicclass;
 	}
 	
 	
