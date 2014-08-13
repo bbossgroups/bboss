@@ -18,6 +18,7 @@ package org.frameworkset.spi.assemble;
 
 import org.frameworkset.netty.NettyRPCServer;
 import org.frameworkset.spi.ApplicationContext;
+import org.frameworkset.spi.ClientProxyContext;
 import org.frameworkset.spi.assemble.callback.WebDocbaseAssembleCallback;
 import org.frameworkset.spi.remote.RPCTestInf;
 import org.junit.Test;
@@ -35,20 +36,19 @@ public class TestApplicationContextLoader {
 	@Test
 	public void testWebApplicationcontext()
 	{
-		AssembleUtil.registAssembleCallback(new WebDocbaseAssembleCallback("D:/workspace/bbossgroup-2.0-RC2/bbossaop/"));
+		AssembleUtil.registAssembleCallback(new WebDocbaseAssembleCallback("F:\\workspace\\bbossgroups-3.5\\bbossaop"));
 		ApplicationContext context = ApplicationContext.getApplicationContext();
 	}
 	@Test
 	public void testWebApplicationClient()
 	{
 			//单独运行服务端时一定要在初始化ApplicationContext之前运行这条语句，用来指定webbase路径,否则系统将无法找到通过docbase导入的组件
-	    	AssembleUtil.registAssembleCallback(new WebDocbaseAssembleCallback("D:/workspace/bbossgroup-2.0-RC2/bbossaop/"));
+	    	AssembleUtil.registAssembleCallback(new WebDocbaseAssembleCallback("F:\\workspace\\bbossgroups-3.5\\bbossaop"));
 	        NettyRPCServer.getNettyRPCServer().start();
 	      //单独运行客服端时一定要在初始化ApplicationContext之前运行这条语句，用来指定webbase路径,否则系统将无法找到通过docbase导入的组件
 //	        AssembleUtil.registAssembleCallback(new WebDocbaseAssembleCallback("D:/workspace/bbossgroup-2.0-RC2/bbossaop/")); 
 
-	        ApplicationContext context = ApplicationContext.getApplicationContext();
-			RPCTestInf testInf = (RPCTestInf)context.getBeanObject("(netty::172.16.7.108:12347)/rpc.test?user=admin&password=123456&server_uuid=多多");
+			RPCTestInf testInf = ClientProxyContext.getApplicationClientBean("(netty::10.25.192.142:12347)/rpc.test?user=admin&password=123456&server_uuid=多多",RPCTestInf.class);
 			
 			for(int i = 0; i < 10; i ++)
 			{

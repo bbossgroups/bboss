@@ -67,18 +67,18 @@ public class TestloopInject
 	@Test
 	public void selfcontaininjectloop()
 	{
-		BaseApplicationContext context = ApplicationContext.getApplicationContext("org/frameworkset/spi/properties/loopinject/testcontainref.xml"); 
+		BaseApplicationContext context = DefaultApplicationContext.getApplicationContext("org/frameworkset/spi/properties/loopinject/testcontainref.xml"); 
 		Test1 a = (Test1)context.getBeanObject("test1");
 		System.out.println(a);
 	}
 	@Test
 	public void refinjectloop()
 	{
-		BaseApplicationContext context = ApplicationContext.getApplicationContext("org/frameworkset/spi/properties/loopinject/test.xml"); 
-		Test1 a = (Test1)context.getBeanObject("test5");
-		Test1 test6 = (Test1)context.getBeanObject("test6");
-		Test1 test7 = (Test1)context.getBeanObject("test7");
-		Test1 test8 = (Test1)context.getBeanObject("test8");
+		BaseApplicationContext context = DefaultApplicationContext.getApplicationContext("org/frameworkset/spi/properties/loopinject/test.xml"); 
+		Test1 a = (Test1)context.getBeanObject("test1");
+		Test2 test6 = (Test2)context.getBeanObject("test6");
+		Test2 test7 = (Test2)context.getBeanObject("test7");
+		Test2 test8 = (Test2)context.getBeanObject("test8");
 		
 		System.out.println(a);
 	}

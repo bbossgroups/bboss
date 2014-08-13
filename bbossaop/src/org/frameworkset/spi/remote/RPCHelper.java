@@ -247,7 +247,7 @@ public class RPCHelper
     	 * 构建特定组件管理容器远程请求调用上下文中参数头信息和安全上下文信息
     	 * @fixed biaoping.yin 2010-10-11 begin
     	 */
-    	RemoteServiceID restServiceID = (RemoteServiceID)serviceID.getRestServiceID();
+    	RemoteServiceID restServiceID = (RemoteServiceID)serviceID.getRestfulServiceID();
     	if(restServiceID != null && restServiceID.getUrlParams() != null)
     	{
     		ApplicationContext.buildCallContext(restServiceID.getUrlParams(), callContext, null);
@@ -285,13 +285,13 @@ public class RPCHelper
             ,CallContext callContext
     ) throws Throwable
     {
-        Target target = !serviceID.isRestStyle()?((RemoteServiceID)serviceID).getTarget():((RemoteServiceID)serviceID).getRestfulTarget();
+        Target target = !serviceID.isRestStyle()?(serviceID).getTarget():(serviceID).getRestfulTarget();
         List<RPCAddress> list = target.getTargets();
 //        Vector<Address> list = (Vector<Address>) target.getTargets();
         RpcDispatcher dispatcher = JGroupHelper.getJGroupHelper().getRpcDispatcher();
         Class<?>[] paramsTypes = method.getParameterTypes();
         Object[] params = new Object[] { serviceID, method.getName(), parameters, paramsTypes };
-        Class[] rpTypes = new Class[] { ServiceID.class, String.class, Object[].class, Class[].class };
+        Class[] rpTypes = new Class[] { RemoteServiceID.class, String.class, Object[].class, Class[].class };
 
         if (list.size() == 1)
         {
@@ -524,13 +524,13 @@ public class RPCHelper
             Object[] parameters, // 服务参数
     		String protocol,CallContext callContext) throws Throwable
     {
-
-    	Target target = !serviceID.isRestStyle()?((RemoteServiceID)serviceID).getTarget():((RemoteServiceID)serviceID).getRestfulTarget();
+    	//setDebug
+    	Target target = !serviceID.isRestStyle()?(serviceID).getTarget():(serviceID).getRestfulTarget();
         List<RPCAddress> list = target.getTargets();
 
         Class[] paramsTypes = method.getParameterTypes();
         Object[] params = new Object[] { serviceID, method.getName(), parameters, paramsTypes };
-        Class[] rpTypes = new Class[] { ServiceID.class, String.class, Object[].class, Class[].class };
+        Class[] rpTypes = new Class[] { RemoteServiceID.class, String.class, Object[].class, Class[].class };
 
         if (list.size() == 1 && !target.isAll())
         {
@@ -1285,7 +1285,35 @@ public class RPCHelper
         return serviceID;
 
     }
-    
+    public static RemoteServiceID buildClientServiceIDFromRestID(RemoteServiceID restid)
+    {
+    	 long timeout = getRPCRequestTimeout();
+         RemoteServiceID serviceID = new ServiceIDImpl(restid.getNextRestfulServiceAddress(), 
+								        		 restid.getProviderID(), 
+								        		 restid.getApplicationContext(),
+								        		 restid.getContainerType(),
+								        		 restid.getResultMode(), 
+								        		 timeout, 
+								        		 restid.getResultType(),
+								        		 restid.getBean_type());
+         serviceID.setUrlParams(restid.getUrlParams());
+         serviceID.setInfType(restid.getInfType());
+         return serviceID;
+    }
+    public static RemoteServiceID buildClientServiceIDFromRestID(RemoteServiceID restid,String serviceid)
+    {
+    	 long timeout = getRPCRequestTimeout();
+         RemoteServiceID serviceID = new ServiceIDImpl(serviceid, 
+								        		 restid.getProviderID(), 
+								        		 restid.getApplicationContext(),
+								        		 restid.getContainerType(),
+								        		 restid.getResultMode(), 
+								        		 timeout, 
+								        		 restid.getResultType(),
+								        		 restid.getBean_type());
+         serviceID.setInfType(restid.getInfType());
+         return serviceID;
+    }
     public static RemoteServiceID buildClientServiceID(String serviceid,  String applicationcontext,int containerType)
     {
        

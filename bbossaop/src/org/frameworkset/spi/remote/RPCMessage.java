@@ -263,10 +263,10 @@ public class RPCMessage implements Serializable
      
         retval.encrypt = this.encrypt;
 
-        if (copy_buffer && buf != null)
+        if (copy_buffer )
         {
-
-            retval.setBuffer(buf, offset, length);
+        	if(buf != null)
+        		retval.setBuffer(buf, offset, length);
             retval.data = this.data;
             retval.resultSerial = this.resultSerial;
         }

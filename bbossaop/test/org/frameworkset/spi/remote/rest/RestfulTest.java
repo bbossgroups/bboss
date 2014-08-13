@@ -68,11 +68,11 @@ public class RestfulTest extends TestBase
     public  void testRestRPC()
     {     
 //        RPCTestInf testInf = (RPCTestInf)context.getBeanObject("(rest::a/b/c/d)/rpc.test?user=admin&password=123456");
-        RPCTestInf testInf = ClientProxyContext.getApplicationClientBean("org/frameworkset/spi/remote/manager-rpc-test.xml","(rest::a/b/c/d)/rpc.test?user=admin&password=123456",RPCTestInf.class);
+        RPCTestInf testInf = ClientProxyContext.getApplicationClientBean("org/frameworkset/spi/remote/manager-rpc-test.xml","(rest::a/b)/rpc.test?server_uuid=多多",RPCTestInf.class);
 //      RPCTestInf testInf = (RPCTestInf)context.getBeanObject("rpc.test");
         long start = System.currentTimeMillis();
         
-        for(int i = 0; i < 10000; i ++)
+        for(int i = 0; i < 1; i ++)
         {
             try
             {

@@ -265,7 +265,7 @@ public final class RPCClient
 		}		
 //		prehandleResponses(rsp_list);		
 //		if (log.isTraceEnabled())
-		log.info("responses: " + rsp_list);
+//		log.info("responses: " + rsp_list);
 		return rsp_list;
 	}
 	

@@ -23,7 +23,7 @@
 		<!-- max_bundle_size="64000" -->
 		<attribute name="ClusterConfig">
 			<config>
-				<TCP bind_port="7800" loopback="true" recv_buf_size="20M"
+				<TCP bind_port="7801" bind_addr="10.25.192.142" loopback="true" recv_buf_size="20M"
 					send_buf_size="640K"
 					discard_incompatible_packets="true" max_bundle_size="64K"
 					max_bundle_timeout="30" enable_bundling="true" use_send_queues="true"
@@ -39,8 +39,8 @@
 					oob_thread_pool.rejection_policy="discard" />
 
 				<TCPPING timeout="3000"
-					initial_hosts="localhost[7800],localhost[7801]"
-					port_range="1" num_initial_members="3" />
+					initial_hosts="10.25.192.142[7801],10.25.192.62[7801]"
+					port_range="0" num_initial_members="2" />
 				<MERGE2 min_interval="10000" max_interval="30000" />
 				<FD_SOCK />
 				<FD timeout="3000" max_tries="3" />

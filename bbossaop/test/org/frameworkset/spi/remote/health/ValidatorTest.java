@@ -23,7 +23,7 @@ import org.junit.Test;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2010-5-16 ионГ08:42:05
+ * @Date 2010-5-16 08:42:05
  * @author biaoping.yin
  * @version 1.0
  */
@@ -32,13 +32,13 @@ public class ValidatorTest {
 	@Test
 	public void validateAuth()
 	{
-		RPCValidator.validator("netty","172.16.17.216","12347","admin","123456");
+		RPCValidator.validator("netty","10.25.192.142","12347","admin","123456");
 	}
 	
 	@Test
 	public void validate()
 	{
-		RPCValidator.validator("netty","172.16.17.216","12347");
+		RPCValidator.validator("netty","10.25.192.142","12347");
 	}
 
 }

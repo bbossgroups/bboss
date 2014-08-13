@@ -216,8 +216,7 @@ public class ProviderParser extends DefaultHandler
 //	            }@setBean 注释结束
 	        }
     	}
-    	if(p.getClazz() != null && p.getClazz().equals("org.frameworkset.soa.xblink.Person"))//@setDebug begin
-    		System.out.print("");//@setDebug begin
+    	
 //    	else @setBean 注释
     	{
     		if(isbean(p))

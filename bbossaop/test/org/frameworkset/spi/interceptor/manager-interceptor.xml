@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding='UTF-8'?>
 <manager-config>
-	<manager id="interceptor.a" 
+	<manager id="interceptor.b" 
 		singlable="true">
 		<provider type="A" default="true"
 			class="org.frameworkset.spi.interceptor.A" />

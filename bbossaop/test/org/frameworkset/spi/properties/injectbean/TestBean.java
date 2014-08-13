@@ -1,45 +1,47 @@
 package org.frameworkset.spi.properties.injectbean;
 
-import org.frameworkset.spi.BaseSPIManager;
+import org.frameworkset.spi.BaseApplicationContext;
+import org.frameworkset.spi.DefaultApplicationContext;
 import org.junit.Test;
 
 public class TestBean
 {
+	static BaseApplicationContext context = DefaultApplicationContext.getApplicationContext("org/frameworkset/spi/properties/injectbean/injectbean.xml");
     public static void Ptest()
     {
-        InjectServiceInf is = (InjectServiceInf)BaseSPIManager.getBeanObject("inject.p.injectbean");
+        InjectServiceInf is = (InjectServiceInf)context.getBeanObject("inject.p.injectbean");
         System.out.println("is:" +is);
     }
     
     public static void Ftest()
     {
-        InjectServiceInf is = (InjectServiceInf)BaseSPIManager.getBeanObject("inject.f.injectbean");
+        InjectServiceInf is = (InjectServiceInf)context.getBeanObject("inject.f.injectbean");
         System.out.println("is:" +is);
     }
     
     public static void Ctest()
     {
-        InjectServiceInf is = (InjectServiceInf)BaseSPIManager.getBeanObject("inject.c.injectbean");
+        InjectServiceInf is = (InjectServiceInf)context.getBeanObject("inject.c.injectbean");
         System.out.println("is:" +is);
     }
     @Test
     public void testEditor0()
     {
-        EditorService editorService = (EditorService)BaseSPIManager.getBeanObject("inject.editor.injectbean.0");
+        EditorService editorService = (EditorService)context.getBeanObject("inject.editor.injectbean.0");
         org.junit.Assert.assertEquals("男", editorService.getSex());
         System.out.println("sex:" + editorService.getSex());
     }
     @Test
     public void testEditor1()
     {
-        EditorService editorService = (EditorService)BaseSPIManager.getBeanObject("inject.editor.injectbean.1");
+        EditorService editorService = (EditorService)context.getBeanObject("inject.editor.injectbean.1");
         org.junit.Assert.assertEquals("女", editorService.getSex());
     }
     
     @Test
     public void testEditor2()
     {
-        EditorService editorService = (EditorService)BaseSPIManager.getBeanObject("inject.editor.injectbean.2");
+        EditorService editorService = (EditorService)context.getBeanObject("inject.editor.injectbean.2");
         System.out.println("sex:" + editorService.getSex());
         org.junit.Assert.assertEquals("未知", editorService.getSex());
     }

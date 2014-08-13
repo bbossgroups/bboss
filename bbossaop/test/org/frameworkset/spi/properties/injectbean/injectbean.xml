@@ -200,9 +200,9 @@
 				-->
 			<method name="testTXWithSpecialExceptions">
 				<rollbackexceptions>
-					<exception class="org.frameworkset.spi.transaction.RollbackInstanceofException" 
+					<exception class="org.frameworkset.spi.properties.injectbean.RollbackInstanceofException" 
 					type="INSTANCEOF"/>
-					<exception class="org.frameworkset.spi.transaction.Exception1" 
+					<exception class="org.frameworkset.spi.properties.injectbean.Exception1" 
 					type="IMPLEMENTS"/>
 				</rollbackexceptions>
 				<param type="java.lang.String"/>

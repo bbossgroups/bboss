@@ -119,6 +119,7 @@ public class ClientProxyContext
 	public static <T> T getSimpleClientBean(String context,String name,Class<T> type)
 	{
 		RemoteServiceID serviceID = buildServiceID(name,context,BaseApplicationContext.container_type_simple);
+		serviceID.setInfType(type);
 		CallContext ccontext = new CallContext(context,BaseApplicationContext.container_type_simple);
 		BaseApplicationContext.buildClientCallContext(serviceID.getUrlParams(), ccontext);
 		return CGLibUtil.getBeanInstance(type, new RemoteCGLibProxy(serviceID,ccontext));
@@ -148,9 +149,40 @@ public class ClientProxyContext
 	public static <T> T getApplicationClientBean(String context,String name,Class<T> type)
 	{
 		RemoteServiceID serviceID = buildServiceID(name,context,BaseApplicationContext.container_type_application);
+		serviceID.setInfType(type);
 		CallContext ccontext = new CallContext(context,BaseApplicationContext.container_type_application);
 		BaseApplicationContext.buildClientCallContext(serviceID.getUrlParams(), ccontext);
 		return CGLibUtil.getBeanInstance(type, new RemoteCGLibProxy(serviceID,ccontext));
+	}
+	
+	/**
+	  * 获取ApplicationContext类型容器中的服务组件调用代理
+	 * @param <T> 泛型类型
+	 * @param context 容器标识，一般是容器初始化的配置文件路径
+	 * @param name  服务组件访问地址
+	 * @param type  组件接口类型，使用泛型来实现接口的自动类型转换
+	 * @return 服务组件调用代理
+	 */
+	public static <T> T getApplicationClientBean(String context,String name,Class<T> type,int containertype)
+	{
+		RemoteServiceID serviceID = buildServiceID(name,context,containertype);
+		serviceID.setInfType(type);
+		CallContext ccontext = new CallContext(context,containertype);
+		BaseApplicationContext.buildClientCallContext(serviceID.getUrlParams(), ccontext);
+		return CGLibUtil.getBeanInstance(type, new RemoteCGLibProxy(serviceID,ccontext));
+	}
+	
+	
+	public static Object getRestClientBean(RemoteServiceID restid)
+	{
+		RemoteServiceID serviceID = copyServiceID( restid);
+		
+		CallContext ccontext = new CallContext(restid.getApplicationContext(),restid.getContainerType());
+		BaseApplicationContext.buildClientCallContext(serviceID.getUrlParams(), ccontext);
+		if(serviceID.getRestfulServiceID() != null && !serviceID.getRestfulServiceID().isRestStyle())
+			return CGLibUtil.getBeanInstance(restid.getInfType(), new RemoteCGLibProxy(serviceID.getRestfulServiceID(),ccontext));
+		else
+			return CGLibUtil.getBeanInstance(restid.getInfType(), new RemoteCGLibProxy(serviceID,ccontext));
 	}
 	
 	/**
@@ -163,6 +195,7 @@ public class ClientProxyContext
 	public static <T> T getWebMVCClientBean(String name,Class<T> type)
 	{
 		RemoteServiceID serviceID = buildServiceID(name,BaseApplicationContext.mvccontainer_identifier,BaseApplicationContext.container_type_mvc);
+		serviceID.setInfType(type);
 		CallContext ccontext = new CallContext(BaseApplicationContext.mvccontainer_identifier,BaseApplicationContext.container_type_mvc);
 		BaseApplicationContext.buildClientCallContext(serviceID.getUrlParams(), ccontext);
 		return CGLibUtil.getBeanInstance(type, new RemoteCGLibProxy(serviceID,ccontext));
@@ -170,6 +203,11 @@ public class ClientProxyContext
 	
 	public static RemoteServiceID buildServiceID(String serviceid,String applicationcontext,int containerType) {
 		return RPCHelper.buildClientServiceID(serviceid, applicationcontext		, containerType		 );
+
+	}
+	
+	public static RemoteServiceID copyServiceID(RemoteServiceID restid) {
+		return RPCHelper.buildClientServiceIDFromRestID(restid	 );
 
 	}
 	

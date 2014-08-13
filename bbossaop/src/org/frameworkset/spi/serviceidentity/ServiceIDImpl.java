@@ -48,6 +48,7 @@ import bboss.org.jgroups.blocks.GroupRequest;
 public class ServiceIDImpl extends BaseServiceIDImpl implements RemoteServiceID{
 	private static Logger log = Logger.getLogger(ServiceIDImpl.class);
 	protected transient Target target;
+	protected Class<?> infType;
 	/**
 	 * serviceID: (ip:port;ip:port)/serviceid
 	 */
@@ -65,14 +66,14 @@ public class ServiceIDImpl extends BaseServiceIDImpl implements RemoteServiceID{
 
 	protected String sourceip;
 	protected boolean restStyle = false;
-	protected transient ServiceID rest;
+	protected transient RemoteServiceID restfulServiceID;
 	protected String nextRestNode;
 	protected String fistRestNode;
 
 	protected transient long timeout = 60 * 1000;
     public static final boolean evaluatelocaladdress = Util.defaultContext.getBooleanProperty("rpc.evaluatelocaladdress", false);
     public Target getRestfulTarget() {
-		return ((RemoteServiceID)this.rest).getTarget();
+		return ((RemoteServiceID)this.restfulServiceID).getTarget();
 	}
     public Target getTarget() {
 		return this.target;
@@ -154,7 +155,7 @@ public class ServiceIDImpl extends BaseServiceIDImpl implements RemoteServiceID{
             String[] nodes = TargetImpl.parserRestFulPath(nextRestNode);
             this.fistRestNode = nodes[0];
             this.nextRestNode = nodes[1];
-            this.rest = RestfulServiceManager.getRestfulServiceManager().convert(this,this.applicationcontext_);                        
+            this.restfulServiceID = RestfulServiceManager.getRestfulServiceManager().convert(this,this.applicationContext);                        
             return this.isLocalAddress(this.getRestfulTarget(), true);
         }
 	}
@@ -571,7 +572,7 @@ public class ServiceIDImpl extends BaseServiceIDImpl implements RemoteServiceID{
             	this.setRestStyle(target.protocol_rest());
             	this.fistRestNode = this.target.getFirstNode();
                 this.nextRestNode = this.target.getNextNode();
-            	this.rest = RestfulServiceManager.getRestfulServiceManager().convert(this,this.applicationcontext_);
+            	this.restfulServiceID = RestfulServiceManager.getRestfulServiceManager().convert(this,this.applicationContext);
             	
             }
         }
@@ -651,9 +652,7 @@ public class ServiceIDImpl extends BaseServiceIDImpl implements RemoteServiceID{
 	 * @fixed biaoping.yin 2010-10-11
 	 * @return the rest
 	 */
-	public ServiceID getRestServiceID() {
-		return rest;
-	}
+	
 
 	public String getFistRestNode() {
 		return fistRestNode;
@@ -671,8 +670,8 @@ public class ServiceIDImpl extends BaseServiceIDImpl implements RemoteServiceID{
 		this.nextRestNode = nextRestNode;
 	}
 
-	public ServiceID getRestfulServiceID() {
-		return this.rest;
+	public RemoteServiceID getRestfulServiceID() {
+		return this.restfulServiceID;
 	}
 
 	
@@ -682,8 +681,18 @@ public class ServiceIDImpl extends BaseServiceIDImpl implements RemoteServiceID{
 
 	public void setUrlParams(String urlParams) {
 		this.urlParams = urlParams;
+		if(restfulServiceID != null)
+			this.restfulServiceID.setUrlParams(urlParams);
 	}
 	public String getSourceip() {
 		return sourceip;
+	}
+	public Class<?> getInfType() {
+		return infType;
+	}
+	public void setInfType(Class<?> infType) {
+		this.infType = infType;
+		if(restfulServiceID != null)
+			this.restfulServiceID.setInfType(infType);
 	}
 }

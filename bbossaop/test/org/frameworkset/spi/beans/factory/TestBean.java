@@ -21,7 +21,7 @@ package org.frameworkset.spi.beans.factory;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2011-1-14 ионГ10:13:42
+ * @Date 2011-1-14 10:13:42
  * @author biaoping.yin
  * @version 1.0
  */

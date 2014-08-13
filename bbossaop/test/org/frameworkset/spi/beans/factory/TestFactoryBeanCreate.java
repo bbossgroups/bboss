@@ -21,7 +21,7 @@ package org.frameworkset.spi.beans.factory;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2011-1-14 ÉÏÎç10:13:31
+ * @Date 2011-1-14 10:13:31
  * @author biaoping.yin
  * @version 1.0
  */
@@ -46,7 +46,7 @@ public class TestFactoryBeanCreate {
 	
 	public TestBean createWithArgsThrowException(String name,int id) throws Exception
 	{
-		throw new Exception("createWithArgsThrowException name:"+name+",id£º" + id );
+		throw new Exception("createWithArgsThrowException name:"+name+",id" + id );
 	}
 	
 

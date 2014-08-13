@@ -65,12 +65,14 @@ public interface RemoteServiceID extends ServiceID {
 		
 		public void setRestStyle(boolean restStyle);
 
-		public ServiceID getRestfulServiceID();
+		public RemoteServiceID getRestfulServiceID();
 	    /**
 		 * @fixed biaoping.yin 2010-10-11
 		 * @return the rest
 		 */
-		public ServiceID getRestServiceID() ;
 	    public String getNextRestfulServiceAddress();
+	    public Class<?> getInfType();
+	    
+	    public void setInfType(Class<?> infType);
 	    
 }

@@ -18,6 +18,7 @@ package org.frameworkset.spi.beans;
 
 import org.frameworkset.spi.ApplicationContext;
 import org.frameworkset.spi.BaseApplicationContext;
+import org.frameworkset.spi.ClientProxyContext;
 import org.frameworkset.spi.DefaultApplicationContext;
 import org.frameworkset.spi.assemble.Pro;
 import org.frameworkset.spi.remote.restful.RestfulServiceConvertor;
@@ -53,8 +54,10 @@ public class TestBeanContext {
 	@Test
 	public void testRPCContext()
 	{
-	    ApplicationContext context = ApplicationContext.getApplicationContext("org/frameworkset/spi/beans/testapplicationcontext.xml");
-	    RestfulServiceConvertor convertor = (RestfulServiceConvertor)context.getBeanObject("(rmi::172.16.17.216:1099)/rpc.restful.convertor");
+	    
+	    RestfulServiceConvertor convertor = ClientProxyContext.getApplicationClientBean("org/frameworkset/spi/beans/testapplicationcontext.xml", 
+	    		"(rmi::172.16.17.216:1099)/rpc.restful.convertor",
+	    		RestfulServiceConvertor.class);
 	    System.out.println(convertor.toString());
 	    String ret =	    convertor.convert("a", "rpc.test");
 //	    RestfulServiceConvertor convertor = (RestfulServiceConvertor)context.getBeanObject("rpc.restful.convertor");

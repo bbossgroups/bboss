@@ -35,7 +35,7 @@
 				<!-- 
 					服务器绑定ip
 				 -->
-			<property name="connection.bind.ip" value="192.168.1.22" />
+			<property name="connection.bind.ip" value="10.25.192.142" />
 			<!-- 
 				当多个应用公用统一的注册中心时，用来区分每个服务器的协议组件名称的唯一标识
 				注册的语法如下：

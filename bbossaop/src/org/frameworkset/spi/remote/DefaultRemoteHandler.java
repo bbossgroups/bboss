@@ -21,6 +21,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import org.frameworkset.spi.BaseApplicationContext;
+import org.frameworkset.spi.ClientProxyContext;
 import org.frameworkset.spi.SPIException;
 /**
  * 
@@ -78,8 +79,10 @@ public class DefaultRemoteHandler implements RemoteHandler{
         }
         else //需要考虑转换成ClientProxyContext的调用模式，无需中介代理包含服务配置文件和实现组件类，可作为服务总线的实现技术
         {
-        	BaseApplicationContext context = BaseApplicationContext.getBaseApplicationContext(serviceID.getApplicationContext(),serviceID.getContainerType());
-        	instance = context.getBeanObject(serviceID.getNextRestfulServiceAddress());
+//        	BaseApplicationContext context = BaseApplicationContext.getBaseApplicationContext(serviceID.getApplicationContext(),serviceID.getContainerType());        	
+//        	instance = context.getBeanObject(serviceID.getNextRestfulServiceAddress());
+//        	instance = ClientProxyContext.getApplicationClientBean(serviceID.getApplicationContext(),serviceID.getNextRestfulServiceAddress(),serviceID.getInfType(),serviceID.getContainerType());
+        	instance = ClientProxyContext.getRestClientBean(serviceID);
         }
         
         Method method = instance.getClass().getMethod(methodName, types);

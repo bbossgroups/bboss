@@ -37,7 +37,7 @@ public class RPCTest implements RPCTestInf
 	{
 	    SecurityContext securityContext = SecurityContext.getSecurityContext();	    
 	    String value = RequestContext.getRequestContext().getStringParameter("server_uuid");
-//		System.out.println(this);
+		System.out.println("receve server_uuid:"+value);
 		
 		return ret ++;
 	}

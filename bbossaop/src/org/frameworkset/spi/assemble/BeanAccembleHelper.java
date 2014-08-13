@@ -689,8 +689,11 @@ public class BeanAccembleHelper<V> {
 				{
 					// System.out.println("引用字段[" + filedName + "]在provider[" +
 					// bean.getClass() + "]中没有定义");
-					log.warn("引用字段[" + filedName + "]在provider["
+//					log.warn("引用字段[" + filedName + "]在组件["
+//							+ bean.getClass() + "]中没有定义");
+					Exception e = new Exception("引用字段[" + filedName + "]在组件["
 							+ bean.getClass() + "]中没有定义");
+					log.warn("", e);
 				}
 			} 
 			catch(CurrentlyInCreationException e)
@@ -845,8 +848,11 @@ public class BeanAccembleHelper<V> {
 				{
 					// System.out.println("引用字段[" + filedName + "]在provider[" +
 					// bean.getClass() + "]中没有定义");
-					log.warn("引用字段[" + filedName + "]在provider["
+//					log.warn("引用字段[" + filedName + "]在provider["
+//							+ bean.getClass() + "]中没有定义");
+					Exception e = new Exception("引用字段[" + filedName + "]在组件["
 							+ bean.getClass() + "]中没有定义");
+					log.warn("", e);
 				}
 			}
 			catch(CurrentlyInCreationException e)
@@ -1621,8 +1627,11 @@ public class BeanAccembleHelper<V> {
 					else // 引用字段名称在provider中没有定义
 					{
 						
-						log.warn("引用字段[" + filedName + "]在provider["
+//						log.warn("引用字段[" + filedName + "]在provider["
+//								+ instance.getClass() + "]中没有定义");
+						Exception e = new Exception("引用字段[" + filedName + "]在组件["
 								+ instance.getClass() + "]中没有定义");
+						log.warn("", e);
 					}
 				}
 			}

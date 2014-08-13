@@ -111,12 +111,14 @@ public class TestClient extends TestBase
 	public void testMuticastNettyRPC()
         {
 //                RPCTestInf testInf = (RPCTestInf)context.getBeanObject("(netty::172.16.17.216:12345;172.16.17.216:12347)/rpc.test?" + SecurityManager.USER_ACCOUNT_KEY + "=admin&" + SecurityManager.USER_PASSWORD_KEY + "=123456");
-                RPCTestInf testInf = ClientProxyContext.getApplicationClientBean("org/frameworkset/spi/remote/manager-rpc-test.xml","(netty::172.16.17.216:12345;172.16.17.216:12347)/rpc.test?" + SecurityManager.USER_ACCOUNT_KEY + "=admin&" + SecurityManager.USER_PASSWORD_KEY + "=123456",RPCTestInf.class);
+                RPCTestInf testInf = ClientProxyContext.getApplicationClientBean("org/frameworkset/spi/remote/manager-rpc-test.xml",
+                		"(netty::10.25.192.142:12345;10.25.192.142:12347)/rpc.test?" + SecurityManager.USER_ACCOUNT_KEY + "=admin&" + SecurityManager.USER_PASSWORD_KEY + "=123456",
+                		RPCTestInf.class);
 //              RPCTestInf testInf = (RPCTestInf)context.getBeanObject("rpc.test");
                 Object ret = testInf.getCount();
                 Object ret_12345 = null;
 				try {
-					ret_12345 = ClientProxyContext.getNettyRPCResult("172.16.17.216:12345", ret);
+					ret_12345 = ClientProxyContext.getNettyRPCResult("10.25.192.142:12345", ret);
 					System.out.println("ret_12345："+ret_12345);
 	                
 				} catch (Throwable e) {
@@ -126,7 +128,7 @@ public class TestClient extends TestBase
 
                 Object ret_12347 = null;
 				try {
-					ret_12347 = ClientProxyContext.getNettyRPCResult("172.16.17.216:12347", ret);
+					ret_12347 = ClientProxyContext.getNettyRPCResult("10.25.192.142:12347", ret);
 					
 	                System.out.println("ret_12347："+ret_12347);
 				} catch (Throwable e) {

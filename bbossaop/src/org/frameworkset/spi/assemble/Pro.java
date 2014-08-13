@@ -280,7 +280,8 @@ public class Pro<V> extends BaseTXManager implements Comparable<V>, BeanInf {
 	public Object getBean(CallContext context,boolean convertcontainer) {		
 		if (this.isSinglable()) // 单列模式
 		{
-			
+			if(!convertcontainer)
+				return value;
 			if (beaninstance == null) {
 				synchronized (this) {
 					if (beaninstance != null)

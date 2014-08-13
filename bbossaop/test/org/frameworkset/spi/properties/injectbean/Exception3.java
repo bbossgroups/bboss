@@ -11,27 +11,13 @@
  *  distributed under the License is distributed on an "AS IS" BASIS,
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  *  See the License for the specific language governing permissions and
- *  limitations under the License.
+ *  limitations under the License.  
  */
+package org.frameworkset.spi.properties.injectbean;
 
-package org.frameworkset.spi.cglib;
-
-
-/**
- * <p>Title: CGLibService.java</p> 
- * <p>Description: </p>
- * <p>bboss workgroup</p>
- * <p>Copyright (c) 2007</p>
- * @Date 2010-6-21 10:31:54
- * @author biaoping.yin
- * @version 1.0
- */
-public class CGLibService {
-	
-	public String sayhello(String name)
+public class Exception3 extends Exception{
+	public Exception3(String msg)
 	{
-		System.out.println("remote from "+ name);
-		return "Hello," + name;
+		super(msg);
 	}
-
 }

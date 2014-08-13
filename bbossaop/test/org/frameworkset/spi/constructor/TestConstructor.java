@@ -8,6 +8,7 @@ public class TestConstructor {
 	public void testConstructor()
 	{
 		try {
+			ConstructorInf b = (ConstructorInf)BaseSPIManager.getProvider("constructor.b");
 			ConstructorInf a = (ConstructorInf)BaseSPIManager.getProvider("constructor.a");
 			try {
 				a.testHelloworld();

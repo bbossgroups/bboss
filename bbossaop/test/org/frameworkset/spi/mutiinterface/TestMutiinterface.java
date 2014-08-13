@@ -1,6 +1,7 @@
 package org.frameworkset.spi.mutiinterface;
 
 import org.frameworkset.spi.ApplicationContext;
+import org.frameworkset.spi.ClientProxyContext;
 import org.junit.Test;
 
 public class TestMutiinterface {
@@ -27,15 +28,14 @@ public class TestMutiinterface {
     public void testProperty()
     {
     	 
-        AI rpc = (AI)context_bean
-        .getBeanObject("(rmi::172.16.17.216:1099)/mutiinfservice");
+        AI rpc = ClientProxyContext.getApplicationClientBean("(rmi::10.25.192.142:1090)/mutiinfservice",AI.class);
 //        AI rpc = (AI)context_bean
 //        .getBeanObject("(rmi::172.16.17.216:1099)/mutiinfservice");
         System.out.println("rpc.testAI():" + rpc.testAI());
         System.out.println("rpc.testBaseAI():" + rpc.testBaseAI());
-        AnotherAI arpc = (AnotherAI)rpc;
-        System.out.println("arpc.testAnotherAI():" + arpc.testAnotherAI());
-        System.out.println("arpc.testBaseAI():" + arpc.testBaseAI());
+//        AnotherAI arpc = (AnotherAI)rpc;
+//        System.out.println("arpc.testAnotherAI():" + arpc.testAnotherAI());
+//        System.out.println("arpc.testBaseAI():" + arpc.testBaseAI());
         BaseAI brpc = (BaseAI)rpc;
         
         System.out.println("brpc.testBaseAI():" + brpc.testBaseAI());

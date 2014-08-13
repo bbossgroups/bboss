@@ -33,6 +33,7 @@ import org.frameworkset.spi.SPIException;
  * @version 1.0
  */
 public class TestReference {
+	
 	/**
 	 * 测试本方法时，需要将D对a的引用配置注释，避免重复引用情况发生
 	 */

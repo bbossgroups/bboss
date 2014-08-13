@@ -21,6 +21,7 @@ import org.frameworkset.spi.BaseSPIManager;
 import org.frameworkset.spi.remote.RPCHelper;
 import org.frameworkset.spi.remote.RemoteServiceID;
 import org.frameworkset.spi.remote.ServiceID;
+import org.frameworkset.spi.serviceidentity.ServiceIDImpl;
 
 /**
  * <p>Title: RestfulServiceManager.java</p> 
@@ -57,13 +58,22 @@ public class RestfulServiceManager {
 		return instance;
 	}
 	
-	public ServiceID convert(RemoteServiceID restserviceid,BaseApplicationContext applicationcontext)
+	public RemoteServiceID convert(RemoteServiceID restserviceid,String applicationcontext)
 	{
 		String restfuluddi = restserviceid.getFistRestNode();
 		String service = restserviceid.getService();
 		String serviceid = this.restfulServiceConvertor.convert(restfuluddi, service);
-		ServiceID ret = RPCHelper.buildServiceID(serviceid,  ServiceID.PROPERTY_BEAN_SERVICE,
-				applicationcontext);
+//		ServiceID ret = RPCHelper.buildClientServiceID(serviceid, applicationcontext, restserviceid.getContainerType());
+		RemoteServiceID ret = RPCHelper.buildClientServiceIDFromRestID(restserviceid,serviceid);
+		
+//		new ServiceIDImpl(restid.getNextRestfulServiceAddress(), 
+//       		 restid.getProviderID(), 
+//       		 restid.getApplicationContext(),
+//       		 restid.getContainerType(),
+//       		 restid.getResultMode(), 
+//       		 timeout, 
+//       		 restid.getResultType(),
+//       		 restid.getBean_type());
 		return ret;
 	}
 

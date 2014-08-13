@@ -18,8 +18,8 @@ package org.frameworkset.spi.cglib;
 
 import java.util.List;
 
-import org.frameworkset.soa.ObjectSerializable;
 import org.frameworkset.spi.ApplicationContext;
+import org.frameworkset.spi.ClientProxyContext;
 import org.frameworkset.util.ClassUtil;
 import org.frameworkset.util.ClassUtil.ClassInfo;
 import org.junit.Test;
@@ -39,7 +39,7 @@ public class CGLibTest {
 	public void test()
 	{
 		//远程调用
-		CGLibService service = (CGLibService)context_provider.getBeanObject("(rmi::172.16.17.216:1099)/cglibbean");
+		CGLibService service = ClientProxyContext.getApplicationClientBean("org/frameworkset/spi/cglib/service-bean-assemble.xml","(rmi::172.16.17.216:1099)/cglibbean",CGLibService.class);
 		System.out.println(service.sayhello("多多"));
 	}
 	
@@ -47,7 +47,7 @@ public class CGLibTest {
 	public void testCGlib()
 	{
 		//远程调用
-		CGLibService service = (CGLibService)context_provider.getBeanObject("(rmi::172.16.17.216:1099)/cglibbean");
+		CGLibService service = ClientProxyContext.getApplicationClientBean("org/frameworkset/spi/cglib/service-bean-assemble.xml","(rmi::172.16.17.216:1099)/cglibbean",CGLibService.class);
 		ClassInfo into = ClassUtil.getClassInfo(service.getClass());
 		List<Class> classes = into.getSuperClasses();
 		System.out.println(service instanceof CGLibService);

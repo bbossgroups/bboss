@@ -16,6 +16,7 @@
 
 package org.frameworkset.spi.remote.http;
 
+import org.frameworkset.spi.ClientProxyContext;
 import org.frameworkset.spi.remote.RPCHelper;
 import org.frameworkset.spi.remote.RPCTestInf;
 import org.frameworkset.spi.remote.TestBase;
@@ -36,7 +37,7 @@ public class TestHttp extends TestBase{
 	@Test
 	public void testFromHttpServer()
 	{
-		RPCTestInf testInf = (RPCTestInf)context.getBeanObject("(http::172.16.7.108:8080)/rpc.test?user=admin&password=123456&server_uuid=app1");
+		RPCTestInf testInf = ClientProxyContext.getApplicationClientBean("(http::172.16.7.108:8080)/rpc.test?user=admin&password=123456&server_uuid=app1",RPCTestInf.class);
 //		RPCTestInf testInf = (RPCTestInf)BaseSPIManager.getBeanObject("rpc.test");
 		 System.out.println("testInf.getCount() = "+testInf.getCount());
 		long start = System.currentTimeMillis();
@@ -52,7 +53,7 @@ public class TestHttp extends TestBase{
 	@Test
 	public void testAuthsuccessHttpServer()
 	{
-		RPCTestInf testInf = (RPCTestInf)context.getBeanObject("(http::172.16.7.108:8080)/rpc.test?user=admin&password=123456&server_uuid=app1");
+		RPCTestInf testInf = ClientProxyContext.getApplicationClientBean("(http::172.16.7.108:8080)/rpc.test?user=admin&password=123456&server_uuid=app1",RPCTestInf.class);
 //		RPCTestInf testInf = (RPCTestInf)BaseSPIManager.getBeanObject("rpc.test");
 		 System.out.println("testInf.getCount() = "+testInf.getCount());
 		long start = System.currentTimeMillis();
@@ -69,8 +70,7 @@ public class TestHttp extends TestBase{
 	public void testAuthfailedHttpServer()
 	{
 		try {
-			RPCTestInf testInf = (RPCTestInf) context
-					.getBeanObject("(http::172.16.7.108:8080)/rpc.test?user=admin&password=1234576&server_uuid=app1");
+			RPCTestInf testInf = ClientProxyContext.getApplicationClientBean("(http::172.16.7.108:8080)/rpc.test?user=admin&password=1234576&server_uuid=app1",RPCTestInf.class);
 			//		RPCTestInf testInf = (RPCTestInf)BaseSPIManager.getBeanObject("rpc.test");
 			System.out.println("testInf.getCount() = " + testInf.getCount());
 			long start = System.currentTimeMillis();
@@ -87,7 +87,7 @@ public class TestHttp extends TestBase{
 	@Test
 	public void testFromMutiHttpServers()
 	{
-		RPCTestInf testInf = (RPCTestInf)context.getBeanObject("(http::172.16.7.108:8080;172.16.7.108:8081)/rpc.test?user=admin&password=123456&server_uuid=app1");
+		RPCTestInf testInf = ClientProxyContext.getApplicationClientBean("(http::172.16.7.108:8080;172.16.7.108:8081)/rpc.test?user=admin&password=123456&server_uuid=app1",RPCTestInf.class);
 //		RPCTestInf testInf = (RPCTestInf)BaseSPIManager.getBeanObject("rpc.test");
 		 System.out.println("testInf.getCount() = "+testInf.getCount());
 		long start = System.currentTimeMillis();
@@ -116,7 +116,7 @@ public class TestHttp extends TestBase{
 	@Test
 	public void testFromHttpsServer()
 	{
-		RPCTestInf testInf = (RPCTestInf)context.getBeanObject("(https::172.16.7.108:8080)/rpc.test?user=admin&password=123456&server_uuid=app1");
+		RPCTestInf testInf = ClientProxyContext.getApplicationClientBean("(https::172.16.7.108:8080)/rpc.test?user=admin&password=123456&server_uuid=app1",RPCTestInf.class);
 //		RPCTestInf testInf = (RPCTestInf)BaseSPIManager.getBeanObject("rpc.test");
 		  System.out.println("testInf.getCount() = "+testInf.getCount());
 		long start = System.currentTimeMillis();
@@ -133,7 +133,7 @@ public class TestHttp extends TestBase{
 	@Test
 	public void testParameterFromHttpsServer()
 	{
-		RPCTestInf testInf = (RPCTestInf)context.getBeanObject("(https::172.16.7.108:8080)/rpc.test?user=admin&password=123456&server_uuid=app1");
+		RPCTestInf testInf = ClientProxyContext.getApplicationClientBean("(https::172.16.7.108:8080)/rpc.test?user=admin&password=123456&server_uuid=app1",RPCTestInf.class);
 //		RPCTestInf testInf = (RPCTestInf)BaseSPIManager.getBeanObject("rpc.test");
 		 System.out.println("testInf.getString(): = "+testInf.getParameter());
 			
@@ -149,7 +149,7 @@ public class TestHttp extends TestBase{
 	@Test
 	public void testFromAppServer()
 	{
-		RPCTestInf testInf = (RPCTestInf)context.getBeanObject("(http::172.16.7.108:8080/WebRoot/http.rpc)/rpc.test?user=admin&password=123456&server_uuid=app1");
+		RPCTestInf testInf = ClientProxyContext.getApplicationClientBean("(http::172.16.7.108:8080/WebRoot/http.rpc)/rpc.test?user=admin&password=123456&server_uuid=app1",RPCTestInf.class);
 //		RPCTestInf testInf = (RPCTestInf)BaseSPIManager.getBeanObject("rpc.test");
 		 System.out.println("testInf.getCount():= "+testInf.getCount());
 		long start = System.currentTimeMillis();
@@ -164,7 +164,7 @@ public class TestHttp extends TestBase{
 	
 	public void testFromApphttpsServer()
 	{
-		RPCTestInf testInf = (RPCTestInf)context.getBeanObject("(https::172.16.7.108:8080/monitor/http.hc)/rpc.test?user=admin&password=123456&server_uuid=app1");
+		RPCTestInf testInf = ClientProxyContext.getApplicationClientBean("(https::172.16.7.108:8080/monitor/http.hc)/rpc.test?user=admin&password=123456&server_uuid=app1",RPCTestInf.class);
 //		RPCTestInf testInf = (RPCTestInf)BaseSPIManager.getBeanObject("rpc.test");
 		long start = System.currentTimeMillis();
 		
