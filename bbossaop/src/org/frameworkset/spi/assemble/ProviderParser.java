@@ -279,7 +279,14 @@ public class ProviderParser extends DefaultHandler
             else if(value instanceof ProviderManagerInfo)
             {
             	ProviderManagerInfo providerManagerInfo = (ProviderManagerInfo) value;
-            	providerManagerInfo.addReference(p);
+            	if(!isinterceptor )
+            	{
+            		providerManagerInfo.addReference(p);
+            	}
+            	else
+            	{
+            		providerManagerInfo.addInterceptor((InterceptorInfo)p);
+            	}
 //            	if(p.getName() != null)
 //            		p.setUuid(providerManagerInfo.getId() + Pro.id_mask + p.getName());
 //            	else
@@ -648,8 +655,14 @@ public class ProviderParser extends DefaultHandler
             
             else if(value instanceof ProviderManagerInfo)
             {
-            	ProviderManagerInfo providerManagerInfo = (ProviderManagerInfo) value;
-            	providerManagerInfo.addReference(p);
+//            	ProviderManagerInfo providerManagerInfo = (ProviderManagerInfo) value;
+//            	
+//            	
+//            	
+//            	xpath = providerManagerInfo.getXpath() + Pro.REF_TOKEN + p.getName();
+//            	p.setXpath(xpath);
+            	xpath = p.getName();
+           	 	p.setXpath(xpath);
 //            	if(p.getName() != null)
 //            		p.setUuid(providerManagerInfo.getId() + Pro.id_mask + p.getName());
 //            	else
