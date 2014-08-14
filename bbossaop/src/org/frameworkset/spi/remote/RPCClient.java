@@ -23,7 +23,7 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
-import org.frameworkset.spi.CallContext;
+import org.frameworkset.spi.RemoteCallContext;
 import org.frameworkset.spi.remote.BaseRPCIOHandler.Marshaller2;
 import org.frameworkset.spi.security.SecurityContext;
 
@@ -92,7 +92,7 @@ public final class RPCClient
 
 	@SuppressWarnings("unchecked")
 	public Object callRemoteMethod(String host, int port, String method_name,
-			Object[] args, Class[] types, int mode, long timeout,String protocol,CallContext callContext)
+			Object[] args, Class[] types, int mode, long timeout,String protocol,RemoteCallContext callContext)
 			throws Throwable
 	{
 
@@ -103,7 +103,7 @@ public final class RPCClient
 
 	@SuppressWarnings("unchecked")
 	public Object callRemoteMethod(RPCAddress dest, String method_name,
-			Object[] args, Class[] types, int mode, long timeout,String protocol,CallContext callContext)
+			Object[] args, Class[] types, int mode, long timeout,String protocol,RemoteCallContext callContext)
 			throws Throwable
 	{
 
@@ -338,7 +338,7 @@ public final class RPCClient
 
 	@SuppressWarnings("unchecked")
 	public RPCResponseList callRemoteMethod(List<RPCAddress> dests, String method_name,
-			Object[] params, Class[] rpTypes, int resultMode, long timeout,boolean use_anycasting,  ResponseFilter filter,String protocol,CallContext callContext)
+			Object[] params, Class[] rpTypes, int resultMode, long timeout,boolean use_anycasting,  ResponseFilter filter,String protocol,RemoteCallContext callContext)
 	{
 		RPCMethodCall method_call = new RPCMethodCall(method_name, params, rpTypes,callContext == null?null:callContext.getSecutiryContext());
 		return callRemoteMethods(dests,

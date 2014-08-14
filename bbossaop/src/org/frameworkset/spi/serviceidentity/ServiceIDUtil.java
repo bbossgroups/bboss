@@ -16,8 +16,6 @@
 
 package org.frameworkset.spi.serviceidentity;
 
-import java.util.Map;
-
 import org.frameworkset.spi.BaseApplicationContext;
 import org.frameworkset.spi.remote.ServiceID;
 

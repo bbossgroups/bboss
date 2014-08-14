@@ -17,8 +17,6 @@ package org.frameworkset.spi.interceptor;
 
 import java.lang.reflect.Method;
 
-import org.testng.log4testng.Logger;
-
 import com.frameworkset.proxy.Interceptor;
 
 /**

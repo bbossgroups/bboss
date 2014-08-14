@@ -27,10 +27,10 @@ import java.util.StringTokenizer;
 import java.util.Vector;
 
 import org.frameworkset.netty.NettyRPCServer;
-import org.frameworkset.spi.ApplicationContext;
 import org.frameworkset.spi.BaseApplicationContext;
 import org.frameworkset.spi.BaseSPIManager;
-import org.frameworkset.spi.CallContext;
+import org.frameworkset.spi.ClientProxyContext;
+import org.frameworkset.spi.RemoteCallContext;
 import org.frameworkset.spi.remote.health.RPCValidator;
 import org.frameworkset.spi.remote.http.HttpServer;
 import org.frameworkset.spi.remote.jms.JMSServer;
@@ -142,7 +142,7 @@ public class RPCHelper
 
     public Object rpcService(RemoteServiceID serviceID,// 服务标识
             Method method,// 需要在服务上调用的方法
-            Object[] parameters ,CallContext callContext// 服务参数
+            Object[] parameters ,RemoteCallContext callContext// 服务参数
     ) throws Throwable
     {
 
@@ -157,7 +157,7 @@ public class RPCHelper
     
     private Object innerRpcService(RemoteServiceID serviceID,// 服务标识
             Method method,// 需要在服务上调用的方法
-            Object[] parameters ,CallContext callContext,// 服务参数
+            Object[] parameters ,RemoteCallContext callContext,// 服务参数
             Target target
     ) throws Throwable
     {
@@ -239,7 +239,7 @@ public class RPCHelper
     }
     
     private Object rpcRestService(RemoteServiceID serviceID, Method method,
-			Object[] parameters, CallContext callContext) throws Throwable
+			Object[] parameters, RemoteCallContext callContext) throws Throwable
 	{
     	
     	Target target = ((RemoteServiceID)serviceID).getRestfulTarget();
@@ -250,7 +250,7 @@ public class RPCHelper
     	RemoteServiceID restServiceID = (RemoteServiceID)serviceID.getRestfulServiceID();
     	if(restServiceID != null && restServiceID.getUrlParams() != null)
     	{
-    		ApplicationContext.buildCallContext(restServiceID.getUrlParams(), callContext, null);
+    		ClientProxyContext.buildCallContext(restServiceID.getUrlParams(), callContext, null);
     	}
     	/**
     	 * @fixed biaoping.yin 2010-10-11 end
@@ -282,7 +282,7 @@ public class RPCHelper
     private Object rpcJGroupService(RemoteServiceID serviceID,// 服务标识
             Method method,// 需要在服务上调用的方法
             Object[] parameters // 服务参数
-            ,CallContext callContext
+            ,RemoteCallContext callContext
     ) throws Throwable
     {
         Target target = !serviceID.isRestStyle()?(serviceID).getTarget():(serviceID).getRestfulTarget();
@@ -324,7 +324,7 @@ public class RPCHelper
     public Object rpcMinaService(RemoteServiceID serviceID,// 服务标识
             Method method,// 需要在服务上调用的方法
             Object[] parameters // 服务参数
-            ,CallContext callContext) throws Throwable
+            ,RemoteCallContext callContext) throws Throwable
     {
 
 //        Target target = serviceID.getTarget();
@@ -384,7 +384,7 @@ public class RPCHelper
     public Object rpcNettyService(RemoteServiceID serviceID,// 服务标识
             Method method,// 需要在服务上调用的方法
             Object[] parameters // 服务参数
-            ,CallContext callContext) throws Throwable
+            ,RemoteCallContext callContext) throws Throwable
     {
 
 //        Target target = serviceID.getTarget();
@@ -447,7 +447,7 @@ public class RPCHelper
     public Object rpcWebServiceService(RemoteServiceID serviceID,// 服务标识
             Method method,// 需要在服务上调用的方法
             Object[] parameters // 服务参数
-            ,CallContext callContext
+            ,RemoteCallContext callContext
     ) throws Throwable
     {
 
@@ -462,7 +462,7 @@ public class RPCHelper
     public Object rpcJMSService(RemoteServiceID serviceID,// 服务标识
             Method method,// 需要在服务上调用的方法
             Object[] parameters // 服务参数
-            ,CallContext callContext
+            ,RemoteCallContext callContext
     ) throws Throwable
     {
 
@@ -477,7 +477,7 @@ public class RPCHelper
     public Object rpcRMIService(RemoteServiceID serviceID,// 服务标识
             Method method,// 需要在服务上调用的方法
             Object[] parameters // 服务参数
-            ,CallContext callContext
+            ,RemoteCallContext callContext
     ) throws Throwable
     {
 
@@ -491,7 +491,7 @@ public class RPCHelper
     public Object rpcHTTPService(RemoteServiceID serviceID,// 服务标识
             Method method,// 需要在服务上调用的方法
             Object[] parameters // 服务参数
-            ,CallContext callContext
+            ,RemoteCallContext callContext
     ) throws Throwable
     {
 
@@ -506,7 +506,7 @@ public class RPCHelper
     public Object rpcEJBService(RemoteServiceID serviceID,// 服务标识
             Method method,// 需要在服务上调用的方法
             Object[] parameters // 服务参数
-            ,CallContext callContext
+            ,RemoteCallContext callContext
     ) throws Throwable
     {
 
@@ -522,7 +522,7 @@ public class RPCHelper
     public Object _rpcService(RemoteServiceID serviceID,// 服务标识
             Method method,// 需要在服务上调用的方法
             Object[] parameters, // 服务参数
-    		String protocol,CallContext callContext) throws Throwable
+    		String protocol,RemoteCallContext callContext) throws Throwable
     {
     	//setDebug
     	Target target = !serviceID.isRestStyle()?(serviceID).getTarget():(serviceID).getRestfulTarget();

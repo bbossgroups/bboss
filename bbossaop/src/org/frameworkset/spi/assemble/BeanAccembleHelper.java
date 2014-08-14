@@ -19,6 +19,7 @@ import org.frameworkset.spi.BeanNameAware;
 import org.frameworkset.spi.CallContext;
 import org.frameworkset.spi.DisposableBean;
 import org.frameworkset.spi.InitializingBean;
+import org.frameworkset.spi.LocalCallContextImpl;
 import org.frameworkset.spi.ResourceLoaderAware;
 import org.frameworkset.spi.SPIException;
 import org.frameworkset.spi.support.ApplicationObjectSupport;
@@ -908,7 +909,7 @@ public class BeanAccembleHelper<V> {
 			//1.构建工厂创建路径上下文，防止工厂对象在创建组件实例时产生循环依赖
 			Context context = null;
 			if (callcontext == null)
-				callcontext = new CallContext(providerManagerInfo
+				callcontext = new LocalCallContextImpl(providerManagerInfo
 						.getApplicationContext());
 			if (callcontext.getLoopContext() == null) {
 				context = new Context(providerManagerInfo.getXpath());
@@ -932,7 +933,7 @@ public class BeanAccembleHelper<V> {
 				//1.构建工厂创建路径上下文，防止工厂对象在创建组件实例时产生循环依赖
 				Context context = null;
 				if (callcontext == null)
-					callcontext = new CallContext(providerManagerInfo
+					callcontext = new LocalCallContextImpl(providerManagerInfo
 							.getApplicationContext());
 				if (callcontext.getLoopContext() == null) {
 					context = new Context(providerManagerInfo.getXpath());
@@ -1669,7 +1670,7 @@ public class BeanAccembleHelper<V> {
 	public V getBean(BeanInf providerManagerInfo, CallContext callcontext) {
 		Context context = null;
 		if (callcontext == null)
-			callcontext = new CallContext(providerManagerInfo
+			callcontext = new LocalCallContextImpl(providerManagerInfo
 					.getApplicationContext());
 //		if(callcontext.isSOAApplication())
 //		{

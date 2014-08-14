@@ -16,12 +16,9 @@
 
 package org.frameworkset.spi.remote.restful;
 
-import org.frameworkset.spi.BaseApplicationContext;
 import org.frameworkset.spi.BaseSPIManager;
 import org.frameworkset.spi.remote.RPCHelper;
 import org.frameworkset.spi.remote.RemoteServiceID;
-import org.frameworkset.spi.remote.ServiceID;
-import org.frameworkset.spi.serviceidentity.ServiceIDImpl;
 
 /**
  * <p>Title: RestfulServiceManager.java</p> 

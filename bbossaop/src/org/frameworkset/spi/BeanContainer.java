@@ -17,10 +17,8 @@ package org.frameworkset.spi;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.WeakHashMap;
 
 import org.frameworkset.spi.assemble.Pro;
-import org.frameworkset.spi.remote.ServiceID;
 
 
 /**
@@ -35,7 +33,6 @@ import org.frameworkset.spi.remote.ServiceID;
 public class BeanContainer
 {
 	private Map<String,Pro> properties = new HashMap<String,Pro>();
-	private Map<String, ServiceID> serviceids = new WeakHashMap<String, ServiceID>();
 	private Map<String, Object>	servicProviders = new HashMap<String, Object>();
 	private BeanContainer parentContainer ;
 	private String configfile;

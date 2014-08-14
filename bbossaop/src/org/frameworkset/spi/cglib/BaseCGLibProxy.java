@@ -20,7 +20,6 @@ import net.sf.cglib.proxy.MethodInterceptor;
 
 import org.frameworkset.spi.CallContext;
 import org.frameworkset.spi.assemble.BaseTXManager;
-import org.frameworkset.spi.remote.ServiceID;
 
 /**
  * <p>Title: BaseCGLibProxy.java</p> 

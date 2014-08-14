@@ -8,7 +8,6 @@ import java.util.Map;
 import java.util.TreeSet;
 
 import org.apache.log4j.Logger;
-import org.frameworkset.soa.SerialFactory;
 import org.frameworkset.soa.SerialFactory.MagicClass;
 import org.frameworkset.spi.BaseApplicationContext;
 import org.frameworkset.spi.CallContext;

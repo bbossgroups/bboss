@@ -18,7 +18,6 @@ package org.frameworkset.spi.support;
 
 
 import org.apache.log4j.Logger;
-import org.frameworkset.spi.ApplicationContext;
 import org.frameworkset.spi.ApplicationContextException;
 import org.frameworkset.spi.BaseApplicationContext;
 

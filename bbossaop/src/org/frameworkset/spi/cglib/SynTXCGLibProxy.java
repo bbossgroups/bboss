@@ -22,7 +22,6 @@ import net.sf.cglib.proxy.MethodProxy;
 
 import org.frameworkset.spi.CallContext;
 import org.frameworkset.spi.assemble.ProviderManagerInfo;
-import org.frameworkset.spi.remote.ServiceID;
 
 /**
  * <p>Title: SybTXCGLibProxy.java</p> 

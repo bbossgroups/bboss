@@ -18,6 +18,7 @@ package org.frameworkset.spi;
 
 
 
+
 /**
  * <p>Title: BeanNameAware.java</p> 
  * <p>Description: </p>

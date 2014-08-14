@@ -17,8 +17,6 @@
 package org.frameworkset.spi;
 
 import org.frameworkset.spi.assemble.Context;
-import org.frameworkset.spi.remote.Headers;
-import org.frameworkset.spi.security.SecurityContext;
 
 /**
  * <p>Title: CallContext.java</p> 
@@ -29,90 +27,18 @@ import org.frameworkset.spi.security.SecurityContext;
  * @author biaoping.yin
  * @version 1.0
  */
-public class CallContext implements java.io.Serializable
+public interface CallContext extends java.io.Serializable
 {
-	private boolean isSOAApplication = false;
-	private int  containerType = BaseApplicationContext.container_type_simple;
-	private transient BaseApplicationContext applicationContext;
-	private String  applicationContextPath ;
 	
-    /**
-     * 服务调用安全上下文
-     */
-    private SecurityContext secutiryContext; 
-    /**
-     * 服务调用的消息头属性集
-     */
-    private Headers headers;
-    /**
-     * 服务调用循环依赖注入上下文
-     */
-    private transient Context loopcontext;
-    /**
-     * 应用模块上下文
-     * @param applicationContext
-     */
-    public CallContext(BaseApplicationContext applicationContext)
-    {
-    	
-        this.applicationContext = applicationContext;
-        this.isSOAApplication = this.applicationContext instanceof SOAApplicationContext;
-    }
     
-    public CallContext(String applicationContext,int containerType)
-    {
-    	
-        this.applicationContextPath = applicationContext;
-        this.containerType = containerType;
-        
-    }
+    public Context getLoopContext();
+    public void setLoopContext(Context loopcontext);
     
-    public SecurityContext getSecutiryContext()
-    {
-        return secutiryContext;
-    }
-    public void setSecutiryContext(SecurityContext secutiryContext)
-    {
-        this.secutiryContext = secutiryContext;
-    }
-    public Headers getHeaders()
-    {
-        return headers;
-    }
-    public void setHeaders(Headers headers)
-    {
-        this.headers = headers;
-    }
-    public Context getLoopContext()
-    {
-        return loopcontext;
-    }
-    public void setLoopContext(Context loopcontext)
-    {
-        this.loopcontext = loopcontext;
-    }
     
-    public boolean containHeaders()
-    {
-        return this.headers != null && this.headers.size() > 0;
-    }
-    public BaseApplicationContext getApplicationContext()
-    {
-    	if(applicationContext != null)
-    	{
-    		return applicationContext;
-    	}
-    	
-    	return applicationContext = BaseApplicationContext.getBaseApplicationContext(this.applicationContextPath,this.containerType);
-    	
-    }
+    public BaseApplicationContext getApplicationContext();
     
 	
-	public boolean isSOAApplication()
-	{
-	
-		return isSOAApplication;
-	}
+	public boolean isSOAApplication();
 	
 	
    

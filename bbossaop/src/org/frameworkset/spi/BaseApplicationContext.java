@@ -31,7 +31,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Properties;
 import java.util.Set;
-import java.util.StringTokenizer;
 
 import org.apache.log4j.Logger;
 import org.frameworkset.spi.assemble.BaseTXManager;
@@ -53,12 +52,6 @@ import org.frameworkset.spi.cglib.CGLibUtil;
 import org.frameworkset.spi.cglib.SimpleCGLibProxy;
 import org.frameworkset.spi.cglib.SynCGLibProxy;
 import org.frameworkset.spi.cglib.SynTXCGLibProxy;
-import org.frameworkset.spi.remote.Header;
-import org.frameworkset.spi.remote.Headers;
-import org.frameworkset.spi.remote.ServiceID;
-import org.frameworkset.spi.security.SecurityContext;
-import org.frameworkset.spi.security.SecurityManager;
-import org.frameworkset.spi.serviceidentity.ServiceIDUtil;
 import org.frameworkset.spi.support.DelegatingMessageSource;
 import org.frameworkset.spi.support.HotDeployResourceBundleMessageSource;
 import org.frameworkset.spi.support.MessageSource;
@@ -1158,16 +1151,12 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 	Object getProvider(CallContext callContext, String providerManagerType,
 			String sourceType, boolean frombeanobject) throws SPIException {
 
-		int idx = providerManagerType.indexOf("?");
+		
 
 		String _name = providerManagerType;
 		if (callContext == null)
-			callContext = new CallContext(this);
-		if (idx > 0) {
-			String params = providerManagerType.substring(idx + 1);
-			callContext = buildCallContext(params, callContext);
-			providerManagerType = providerManagerType.substring(0, idx);
-		}
+			callContext = new LocalCallContextImpl(this);
+		
 //		ServiceID serviceID = buildServiceID( providerManagerType,
 //				ServiceID.PROVIDER_BEAN_SERVICE, sourceType, this);
 //		serviceID.setApplicationContext(this.configfile);
@@ -1498,168 +1487,10 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 		return getBeanObject(context, name, defaultValue, false);
 	}
 
-	/**
-	 * 构建请求应用调用上下文中参数头信息和安全上下文信息
-	 * 
-	 * @fixed biaoping.yin 2010-10-11
-	 * @param params
-	 * @param context
-	 * @return
-	 */
-	public CallContext buildCallContext(String params, CallContext context) {
-		// if (context == null)
-		// context = new CallContext(this);
-		// StringTokenizer tokenizer = new StringTokenizer(params, "&", false);
-		//
-		// /**
-		// * 协议中包含的属性参数，可以用来做路由条件
-		// */
-		// Headers headers = null;
-		// SecurityContext securityContext = null;
-		// String user = null;
-		// String password = null;
-		// while (tokenizer.hasMoreTokens()) {
-		//
-		// String parameter = tokenizer.nextToken();
-		//
-		// int idex = parameter.indexOf("=");
-		// if (idex <= 0) {
-		// throw new SPIException("非法的服务参数串[" + params + "]");
-		// }
-		// StringTokenizer ptokenizer = new StringTokenizer(parameter, "=",
-		// false);
-		// String name = ptokenizer.nextToken();
-		// String value = ptokenizer.nextToken();
-		// Header header = new Header(name, value);
-		// if (name.equals(SecurityManager.USER_ACCOUNT_KEY)) {
-		// user = value;
-		//
-		// } else if (name.equals(SecurityManager.USER_PASSWORD_KEY)) {
-		// password = value;
-		//
-		// } else {
-		// if (headers == null)
-		// headers = new Headers();
-		// headers.put(header.getName(), header);
-		// }
-		// }
-		// if (securityContext == null)
-		// securityContext = new SecurityContext(user, password);
-		// context.setSecutiryContext(securityContext);
-		// context.setHeaders(headers);
-		// return context;
-		return buildCallContext(params, context, this);
-	}
+	
 
-	/**
-	 * 构建特定组件管理容器远程请求调用上下文中参数头信息和安全上下文信息
-	 * 
-	 * @fixed biaoping.yin 2010-10-11
-	 * @param params
-	 * @param context
-	 * @param applicationContext
-	 * @return
-	 */
-	public static CallContext buildCallContext(String params,
-			CallContext context, BaseApplicationContext applicationContext) {
-		if (context == null) {
-			context = new CallContext(applicationContext);
-		}
-		StringTokenizer tokenizer = new StringTokenizer(params, "&", false);
-
-		/**
-		 * 协议中包含的属性参数，可以用来做路由条件
-		 */
-		Headers headers = null;
-		SecurityContext securityContext = null;
-		String user = null;
-		String password = null;
-		while (tokenizer.hasMoreTokens()) {
-
-			String parameter = tokenizer.nextToken();
-
-			int idex = parameter.indexOf("=");
-			if (idex <= 0) {
-				throw new SPIException("非法的服务参数串[" + params + "]");
-			}
-			StringTokenizer ptokenizer = new StringTokenizer(parameter, "=",
-					false);
-			String name = ptokenizer.nextToken();
-			String value = ptokenizer.nextToken();
-			Header header = new Header(name, value);
-			if (name.equals(SecurityManager.USER_ACCOUNT_KEY)) {
-				user = value;
-
-			} else if (name.equals(SecurityManager.USER_PASSWORD_KEY)) {
-				password = value;
-
-			} else {
-				if (headers == null)
-					headers = new Headers();
-				headers.put(header.getName(), header);
-			}
-		}
-		if (securityContext == null)
-			securityContext = new SecurityContext(user, password);
-		context.setSecutiryContext(securityContext);
-		context.setHeaders(headers);
-		return context;
-	}
 	
 	
-	/**
-	 * 构建特定组件管理容器远程请求调用上下文中参数头信息和安全上下文信息
-	 * 
-	 * @fixed biaoping.yin 2010-10-11
-	 * @param params
-	 * @param context
-	 * @param applicationContext
-	 * @return
-	 */
-	public static CallContext buildClientCallContext(String params,
-			CallContext context) {
-		if(params == null || params.equals(""))
-			return context;
-		StringTokenizer tokenizer = new StringTokenizer(params, "&", false);
-		
-		/**
-		 * 协议中包含的属性参数，可以用来做路由条件
-		 */
-		Headers headers = null;
-		SecurityContext securityContext = null;
-		String user = null;
-		String password = null;
-		while (tokenizer.hasMoreTokens()) {
-
-			String parameter = tokenizer.nextToken();
-
-			int idex = parameter.indexOf("=");
-			if (idex <= 0) {
-				throw new SPIException("非法的服务参数串[" + params + "]");
-			}
-			StringTokenizer ptokenizer = new StringTokenizer(parameter, "=",
-					false);
-			String name = ptokenizer.nextToken();
-			String value = ptokenizer.nextToken();
-			Header header = new Header(name, value);
-			if (name.equals(SecurityManager.USER_ACCOUNT_KEY)) {
-				user = value;
-
-			} else if (name.equals(SecurityManager.USER_PASSWORD_KEY)) {
-				password = value;
-
-			} else {
-				if (headers == null)
-					headers = new Headers();
-				headers.put(header.getName(), header);
-			}
-		}
-		if (securityContext == null)
-			securityContext = new SecurityContext(user, password);
-		context.setSecutiryContext(securityContext);
-		context.setHeaders(headers);
-		return context;
-	}
 	
 	
 	/**
@@ -1677,7 +1508,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 //
 //		String _name = name;
 		if (context == null)
-			context = new CallContext(this);
+			context = new LocalCallContextImpl(this);
 
 		Pro providerManagerInfo = this.providerManager
 				.getInnerPropertyBean(name,strrefid);
@@ -1710,7 +1541,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 
 		String _name = name;
 		if (context == null)
-			context = new CallContext(this);
+			context = new LocalCallContextImpl(this);
 //		if (idx > 0) {
 //			String params = name.substring(idx + 1);
 //			context = buildCallContext(params, context);
@@ -1763,16 +1594,10 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 	@SuppressWarnings("unchecked")
 	protected <T> T getTBeanObject(CallContext context, String name,T defaultValue,Class<T> interfaceclazz) {
 		// 分析服务参数
-		int idx = name.indexOf("?");
 
 		String _name = name;
 		if (context == null)
-			context = new CallContext(this);
-		if (idx > 0) {
-			String params = name.substring(idx + 1);
-			context = buildCallContext(params, context);
-			// name = name.substring(0,idx);
-		}
+			context = new LocalCallContextImpl(this);
 
 //		ServiceID serviceID = buildServiceID( name,
 //				ServiceID.PROPERTY_BEAN_SERVICE, this.configfile, this);
@@ -2346,22 +2171,22 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 
 
 
-	public ServiceID buildServiceID(
-			String serviceid, int serviceType,String providertype,
-			BaseApplicationContext applicationcontext) {
-
-		return ServiceIDUtil.buildServiceID(serviceid, serviceType,providertype,
-				 applicationcontext);
-
-	}
-
-	public ServiceID buildBeanServiceID(
-			String serviceid, BaseApplicationContext applicationcontext) {
-		return ServiceIDUtil.buildServiceID(serviceid, ServiceID.PROPERTY_BEAN_SERVICE,
-				 applicationcontext);
-		
-
-	}
+//	public ServiceID buildServiceID(
+//			String serviceid, int serviceType,String providertype,
+//			BaseApplicationContext applicationcontext) {
+//
+//		return ServiceIDUtil.buildServiceID(serviceid, serviceType,providertype,
+//				 applicationcontext);
+//
+//	}
+//
+//	public ServiceID buildBeanServiceID(
+//			String serviceid, BaseApplicationContext applicationcontext) {
+//		return ServiceIDUtil.buildServiceID(serviceid, ServiceID.PROPERTY_BEAN_SERVICE,
+//				 applicationcontext);
+//		
+//
+//	}
 	
 	/**
 	 * 获取parent对应的属性内部的名称为name的Pro对象

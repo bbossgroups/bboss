@@ -18,7 +18,6 @@ package org.frameworkset.soa.plugin;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 import org.frameworkset.soa.PreSerial;
 import org.frameworkset.util.ClassUtil;

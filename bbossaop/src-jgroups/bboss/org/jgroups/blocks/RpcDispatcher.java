@@ -11,9 +11,11 @@ import java.util.List;
 import java.util.Vector;
 
 import org.frameworkset.spi.CallContext;
+import org.frameworkset.spi.RemoteCallContext;
 import org.frameworkset.spi.remote.ServiceID;
 import org.frameworkset.spi.remote.context.RequestContext;
 import org.frameworkset.spi.security.SecurityContext;
+
 import bboss.org.jgroups.Address;
 import bboss.org.jgroups.Channel;
 import bboss.org.jgroups.ChannelListener;
@@ -221,13 +223,13 @@ public class RpcDispatcher extends MessageDispatcher implements ChannelListener 
 	public RspList callRemoteMethods(Vector<Address> dests, String method_name,
 			Object[] args, Class[] types, int mode, long timeout) {
 		return callRemoteMethods(dests, method_name, args, types, mode,
-				timeout, true, (CallContext) null);
+				timeout, true, (RemoteCallContext) null);
 	}
 
 	@Deprecated
 	public RspList callRemoteMethods(Vector<Address> dests, String method_name,
 			Object[] args, Class[] types, int mode, long timeout,
-			CallContext callContext) {
+			RemoteCallContext callContext) {
 		return callRemoteMethods(dests, method_name, args, types, mode,
 				timeout, false, callContext);
 	}
@@ -237,13 +239,13 @@ public class RpcDispatcher extends MessageDispatcher implements ChannelListener 
 			Object[] args, Class[] types, int mode, long timeout,
 			boolean use_anycasting) {
 		return callRemoteMethods(dests, method_name, args, types, mode,
-				timeout, use_anycasting, null, (CallContext) null);
+				timeout, use_anycasting, null, (RemoteCallContext) null);
 	}
 
 	@Deprecated
 	public RspList callRemoteMethods(Vector<Address> dests, String method_name,
 			Object[] args, Class[] types, int mode, long timeout,
-			boolean use_anycasting, CallContext callContext) {
+			boolean use_anycasting, RemoteCallContext callContext) {
 		return callRemoteMethods(dests, method_name, args, types, mode,
 				timeout, use_anycasting, null, callContext);
 	}
@@ -260,7 +262,7 @@ public class RpcDispatcher extends MessageDispatcher implements ChannelListener 
 	@Deprecated
 	public RspList callRemoteMethods(Vector<Address> dests, String method_name,
 			Object[] args, Class[] types, int mode, long timeout,
-			boolean use_anycasting, RspFilter filter, CallContext callContext) {
+			boolean use_anycasting, RspFilter filter, RemoteCallContext callContext) {
 		MethodCall method_call = new MethodCall(method_name, args, types,
 				callContext != null ? callContext.getSecutiryContext() : null);
 		method_call.setCallContext(callContext);
@@ -277,7 +279,7 @@ public class RpcDispatcher extends MessageDispatcher implements ChannelListener 
 
 	public RspList callRemoteMethods(Collection<Address> dests,
 			String method_name, Object[] args, Class[] types,
-			RequestOptions options, CallContext callContext) {
+			RequestOptions options, RemoteCallContext callContext) {
 		MethodCall method_call = new MethodCall(method_name, args, types,
 				callContext != null ? callContext.getSecutiryContext() : null);
 		method_call.setCallContext(callContext);
@@ -288,13 +290,13 @@ public class RpcDispatcher extends MessageDispatcher implements ChannelListener 
 	public RspList callRemoteMethods(Vector<Address> dests, String method_name,
 			Object[] args, String[] signature, int mode, long timeout) {
 		return callRemoteMethods(dests, method_name, args, signature, mode,
-				timeout, false, (CallContext) null);
+				timeout, false, (RemoteCallContext) null);
 	}
 
 	@Deprecated
 	public RspList callRemoteMethods(Vector<Address> dests, String method_name,
 			Object[] args, String[] signature, int mode, long timeout,
-			CallContext callContext) {
+			RemoteCallContext callContext) {
 		return callRemoteMethods(dests, method_name, args, signature, mode,
 				timeout, false, callContext);
 	}
@@ -311,7 +313,7 @@ public class RpcDispatcher extends MessageDispatcher implements ChannelListener 
 	@Deprecated
 	public RspList callRemoteMethods(Vector<Address> dests, String method_name,
 			Object[] args, String[] signature, int mode, long timeout,
-			boolean use_anycasting, CallContext callContext) {
+			boolean use_anycasting, RemoteCallContext callContext) {
 		MethodCall method_call = new MethodCall(method_name, args, signature,
 				callContext != null ? callContext.getSecutiryContext() : null);
 		method_call.setCallContext(callContext);
@@ -563,7 +565,7 @@ public class RpcDispatcher extends MessageDispatcher implements ChannelListener 
 	@Deprecated
 	public Object callRemoteMethod(Address dest, String method_name,
 			Object[] args, Class[] types, int mode, long timeout,
-			CallContext callContext) throws Throwable {
+			RemoteCallContext callContext) throws Throwable {
 		MethodCall method_call = new MethodCall(method_name, args, types,
 				callContext != null ? callContext.getSecutiryContext() : null);
 		method_call.setCallContext(callContext);
@@ -579,7 +581,7 @@ public class RpcDispatcher extends MessageDispatcher implements ChannelListener 
 
 	public Object callRemoteMethod(Address dest, String method_name,
 			Object[] args, Class[] types, RequestOptions options,
-			CallContext callContext) throws Throwable {
+			RemoteCallContext callContext) throws Throwable {
 		MethodCall method_call = new MethodCall(method_name, args, types,
 				callContext != null ? callContext.getSecutiryContext() : null);
 		method_call.setCallContext(callContext);
@@ -597,7 +599,7 @@ public class RpcDispatcher extends MessageDispatcher implements ChannelListener 
 	@Deprecated
 	public Object callRemoteMethod(Address dest, String method_name,
 			Object[] args, String[] signature, int mode, long timeout,
-			CallContext callContext) throws Throwable {
+			RemoteCallContext callContext) throws Throwable {
 		MethodCall method_call = new MethodCall(method_name, args, signature,
 				callContext != null ? callContext.getSecutiryContext() : null);
 		method_call.setCallContext(callContext);

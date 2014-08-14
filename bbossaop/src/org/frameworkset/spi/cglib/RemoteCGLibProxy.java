@@ -20,7 +20,7 @@ import java.lang.reflect.Method;
 
 import net.sf.cglib.proxy.MethodProxy;
 
-import org.frameworkset.spi.CallContext;
+import org.frameworkset.spi.RemoteCallContext;
 import org.frameworkset.spi.remote.RPCHelper;
 import org.frameworkset.spi.remote.RemoteServiceID;
 
@@ -38,7 +38,7 @@ public class RemoteCGLibProxy extends BaseCGLibProxy
 {
 	private RemoteServiceID serviceID;
 	public RemoteCGLibProxy(
-			RemoteServiceID serviceID, CallContext callcontext)
+			RemoteServiceID serviceID, RemoteCallContext callcontext)
 	{
 
 		super(null, null,  callcontext);
@@ -49,7 +49,7 @@ public class RemoteCGLibProxy extends BaseCGLibProxy
 			MethodProxy arg3) throws Throwable
 	{
 
-		return RPCHelper.getRPCHelper().rpcService((RemoteServiceID)serviceID, method, arg2,callcontext);
+		return RPCHelper.getRPCHelper().rpcService((RemoteServiceID)serviceID, method, arg2,(RemoteCallContext)callcontext);
 	}
 
 }

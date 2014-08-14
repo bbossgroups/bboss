@@ -13,8 +13,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.frameworkset.spi.CallContext;
+import org.frameworkset.spi.RemoteCallContext;
 import org.frameworkset.spi.security.SecurityContext;
+
 import bboss.org.jgroups.logging.Log;
 import bboss.org.jgroups.logging.LogFactory;
 
@@ -74,7 +75,7 @@ public class MethodCall implements Externalizable {
     /**
      * added by biaoping.yin
      */
-    private transient CallContext callContext;
+    private transient RemoteCallContext callContext;
 
 
 
@@ -626,12 +627,12 @@ public class MethodCall implements Externalizable {
     }
 
 
-	public CallContext getCallContext() {
+	public RemoteCallContext getCallContext() {
 		return callContext;
 	}
 
 
-	public void setCallContext(CallContext callContext) {
+	public void setCallContext(RemoteCallContext callContext) {
 		this.callContext = callContext;
 	}
 }

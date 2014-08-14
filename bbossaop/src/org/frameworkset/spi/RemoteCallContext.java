@@ -14,36 +14,26 @@
  *  limitations under the License.
  */
 
-package org.frameworkset.spi.support;
+package org.frameworkset.spi;
 
-
-
-
+import org.frameworkset.spi.remote.Headers;
+import org.frameworkset.spi.security.SecurityContext;
 
 /**
- * <p>Title: StylerUtils.java</p> 
+ * <p>Title: RemoteCallContext.java</p> 
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2010-10-12 下午11:18:34
+ * @Date 2014年8月14日 下午12:08:52
  * @author biaoping.yin
  * @version 1.0
  */
-public abstract class StylerUtils {
-	/**
-	 * Default ValueStyler instance used by the <code>style</code> method.
-	 * Also available for the {@link ToStringCreator} class in this package.
-	 */
-	static final ValueStyler DEFAULT_VALUE_STYLER = new DefaultValueStyler();
+public interface RemoteCallContext extends CallContext{
 
-	/**
-	 * Style the specified value according to default conventions.
-	 * @param value the Object value to style
-	 * @return the styled String
-	 * @see DefaultValueStyler
-	 */
-	public static String style(Object value) {
-		return DEFAULT_VALUE_STYLER.style(value);
-	}
+	public SecurityContext getSecutiryContext();
+    public void setSecutiryContext(SecurityContext secutiryContext);
+    public Headers getHeaders();
+    public void setHeaders(Headers headers);
+    public boolean containHeaders();
 
 }

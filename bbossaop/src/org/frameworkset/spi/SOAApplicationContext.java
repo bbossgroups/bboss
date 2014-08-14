@@ -21,7 +21,6 @@ import java.net.URL;
 import org.apache.log4j.Logger;
 import org.frameworkset.spi.assemble.Pro;
 import org.frameworkset.spi.assemble.ServiceProviderManager;
-import org.frameworkset.spi.remote.ServiceID;
 
 /**
  * <p>Title: SOAApplicationContext.java</p> 
@@ -164,7 +163,7 @@ public class SOAApplicationContext extends DefaultApplicationContext {
 	 * @return
 	 */
 	public Object getBeanObject(CallContext context, Pro providerManagerInfo,
-			Object defaultValue, ServiceID serviceID) {
+			Object defaultValue) {
 		if (providerManagerInfo == null)
 			throw new SPIException("bean对象为空。");
 //		String key = providerManagerInfo.getName();
@@ -196,7 +195,7 @@ public class SOAApplicationContext extends DefaultApplicationContext {
 
 //		String _name = name;
 		if (context == null)
-			context = new CallContext(this);
+			context = new LocalCallContextImpl(this);
 //		if (idx > 0) {
 //			String params = name.substring(idx + 1);
 //			context = buildCallContext(params, context);
@@ -208,8 +207,7 @@ public class SOAApplicationContext extends DefaultApplicationContext {
 		// ServiceID.PROPERTY_BEAN_SERVICE);
 		Pro providerManagerInfo = this.providerManager
 				.getPropertyBean(name);
-		return getBeanObject(context, providerManagerInfo, defaultValue,
-				null);
+		return getBeanObject(context, providerManagerInfo, defaultValue);
 		
 	}
 	

@@ -20,12 +20,10 @@ import java.util.StringTokenizer;
 
 import org.apache.log4j.Logger;
 import org.frameworkset.netty.NettyRPCServer;
-import org.frameworkset.spi.BaseApplicationContext;
 import org.frameworkset.spi.remote.JGroupHelper;
 import org.frameworkset.spi.remote.RPCAddress;
 import org.frameworkset.spi.remote.RemoteException;
 import org.frameworkset.spi.remote.RemoteServiceID;
-import org.frameworkset.spi.remote.ServiceID;
 import org.frameworkset.spi.remote.Target;
 import org.frameworkset.spi.remote.Util;
 import org.frameworkset.spi.remote.http.HttpServer;
@@ -34,7 +32,6 @@ import org.frameworkset.spi.remote.restful.RestfulServiceManager;
 import org.frameworkset.spi.remote.rmi.RMIServer;
 
 import bboss.org.jgroups.Address;
-import bboss.org.jgroups.blocks.GroupRequest;
 
 /**
  * <p>Title: ServiceIDImpl.java</p> 
