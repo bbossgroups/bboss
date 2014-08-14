@@ -36,13 +36,13 @@ import org.frameworkset.spi.remote.RemoteServiceID;
  */
 public class RemoteCGLibProxy extends BaseCGLibProxy
 {
-
+	private RemoteServiceID serviceID;
 	public RemoteCGLibProxy(
 			RemoteServiceID serviceID, CallContext callcontext)
 	{
 
-		super(null, null, serviceID, callcontext);
-		// TODO Auto-generated constructor stub
+		super(null, null,  callcontext);
+		this.serviceID = serviceID;
 	}
 
 	public Object intercept(Object arg0, Method method, Object[] arg2,

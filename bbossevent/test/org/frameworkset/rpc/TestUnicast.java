@@ -1,6 +1,6 @@
 package org.frameworkset.rpc;
 
-import org.frameworkset.spi.BaseSPIManager;
+import org.frameworkset.spi.ClientProxyContext;
 import org.frameworkset.spi.SPIException;
 import org.frameworkset.spi.rpc.RPCTest;
 
@@ -8,7 +8,7 @@ public class TestUnicast {
     
     public static void testsinglerpcCall() {
         try {
-            RPCTest rpc = (RPCTest)BaseSPIManager.getProvider("(192.168.11.102:1186)/event.remoteserivce");
+            RPCTest rpc = ClientProxyContext.getApplicationClientBean("(192.168.11.102:1186)/event.remoteserivce",RPCTest.class);
           
 //            long s = System.currentTimeMillis();
 

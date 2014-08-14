@@ -18,6 +18,7 @@ package org.frameworkset.spi.security;
 
 import java.security.Security;
 
+import org.apache.log4j.Logger;
 import org.jasypt.encryption.pbe.PBEByteEncryptor;
 import org.jasypt.encryption.pbe.StandardPBEByteEncryptor;
 import org.jasypt.encryption.pbe.config.SimplePBEConfig;
@@ -34,6 +35,7 @@ import org.jasypt.encryption.pbe.config.SimplePBEConfig;
  */
 public class SimpleEncryptModule implements EncryptModule
 {
+	private static Logger log = Logger.getLogger(SimpleEncryptModule.class);
 
 	PBEByteEncryptor  encryptor = null;
     
@@ -66,6 +68,7 @@ public class SimpleEncryptModule implements EncryptModule
     {
     	if(encryptor == null)
     		throw new java.lang.IllegalArgumentException("encryptor == null");
+    	
     	this.encryptor = encryptor;
     	
     }
@@ -74,13 +77,13 @@ public class SimpleEncryptModule implements EncryptModule
     {
 //        StandardPBEByteEncryptor  encryptor = new StandardPBEByteEncryptor();
 //        encryptor.setPassword(password);
-//        System.out.println("decode byte code.");
+        System.out.println("decode byte code.");
         return encryptor.decrypt(value);
     }
 
     public byte[] encode(byte[] value)
     {
-//        System.out.println("encode byte code");
+        System.out.println("encode byte code");
 //        StandardPBEByteEncryptor  encryptor = new StandardPBEByteEncryptor();
 //        encryptor.setPassword(password);
         return encryptor.encrypt(value);

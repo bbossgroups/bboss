@@ -34,18 +34,16 @@ import org.frameworkset.spi.remote.ServiceID;
 public abstract class BaseCGLibProxy  implements MethodInterceptor{
 
 	protected BaseTXManager providerManagerInfo;
-	protected ServiceID serviceID;
 	protected CallContext callcontext;
 	protected Object delegate;
 	public BaseCGLibProxy(Object delegate)
 	{
 		this.delegate = delegate;
 	}
-	public BaseCGLibProxy(Object delegate,BaseTXManager providerManagerInfo,
-			ServiceID serviceID, CallContext callcontext) {
+	public BaseCGLibProxy(Object delegate,BaseTXManager providerManagerInfo, CallContext callcontext) {
 		super();
 		this.providerManagerInfo = providerManagerInfo;
-		this.serviceID = serviceID;
+		
 		this.callcontext = callcontext;
 		this.delegate = delegate;
 	}

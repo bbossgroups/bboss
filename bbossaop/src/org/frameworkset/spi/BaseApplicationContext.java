@@ -883,18 +883,17 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 	 * @return Object
 	 */
 	public static Object createInf(final CallContext callcontext,
-			final BaseTXManager providerManagerInfo, final Object delegate,
-			final ServiceID serviceID) {
+			final BaseTXManager providerManagerInfo, final Object delegate) {
 		if (BaseApplicationContext.getAOPProxyType() != BaseApplicationContext.aop_proxy_type_cglib) {
 			return ProxyFactory.createProxy(new InvocationHandler(delegate) {
 				public Object invoke(Object proxy, Method method, Object[] args)
 						throws Throwable {
 					return CGLibUtil.invoke(delegate, method, args, null,
-							callcontext, serviceID, providerManagerInfo);
+							callcontext, providerManagerInfo);
 				}
 			});
 		} else {
-			CGLibProxy proxy = new CGLibProxy(delegate, callcontext, serviceID,
+			CGLibProxy proxy = new CGLibProxy(delegate, callcontext, 
 					providerManagerInfo);
 			return CGLibUtil.getBeanInstance(delegate.getClass(), delegate
 					.getClass(), proxy);
@@ -964,9 +963,8 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 	 * @return Object
 	 */
 	protected static Object createTXInf(final CallContext callcontext,
-			final BaseTXManager providerManagerInfo, final Object delegate,
-			ServiceID serviceID) {
-		return createInf(callcontext, providerManagerInfo, delegate, serviceID);
+			final BaseTXManager providerManagerInfo, final Object delegate) {
+		return createInf(callcontext, providerManagerInfo, delegate);
 
 	}
 
@@ -977,18 +975,18 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 	 */
 	protected static Object createSynInf(final CallContext callcontext,
 			final ProviderManagerInfo providerManagerInfo,
-			final Object delegate, final ServiceID serviceID) {
+			final Object delegate) {
 		if (BaseApplicationContext.getAOPProxyType() != BaseApplicationContext.aop_proxy_type_cglib) {
 			return ProxyFactory.createProxy(new InvocationHandler(delegate) {
 				public Object invoke(Object proxy, Method method, Object[] args)
 						throws Throwable {
 					return CGLibUtil.invokeSyn(delegate, method, args, null,
-							callcontext, serviceID, providerManagerInfo);
+							callcontext,  providerManagerInfo);
 				}
 			});
 		} else {
 			SynCGLibProxy proxy = new SynCGLibProxy(delegate,
-					providerManagerInfo, serviceID, callcontext);
+					providerManagerInfo,  callcontext);
 			return CGLibUtil.getBeanInstance(delegate.getClass(), delegate
 					.getClass(), proxy);
 		}
@@ -1001,19 +999,19 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 	 */
 	protected static Object createSynTXInf(final CallContext callcontext,
 			final ProviderManagerInfo providerManagerInfo,
-			final Object delegate, final ServiceID serviceID) {
+			final Object delegate) {
 		if (BaseApplicationContext.getAOPProxyType() != BaseApplicationContext.aop_proxy_type_cglib) {
 			return ProxyFactory.createProxy(new InvocationHandler(delegate) {
 				public Object invoke(Object proxy, Method method, Object[] args)
 						throws Throwable {
 					return CGLibUtil.invokeSynTX(delegate, method, args, null,
-							callcontext, serviceID, providerManagerInfo);
+							callcontext,  providerManagerInfo);
 
 				}
 			});
 		} else {
 			SynTXCGLibProxy proxy = new SynTXCGLibProxy(delegate,
-					providerManagerInfo, serviceID, callcontext);
+					providerManagerInfo,  callcontext);
 			return CGLibUtil.getBeanInstance(delegate.getClass(), delegate
 					.getClass(), proxy);
 		}
@@ -1170,8 +1168,8 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 			callContext = buildCallContext(params, callContext);
 			providerManagerType = providerManagerType.substring(0, idx);
 		}
-		ServiceID serviceID = buildServiceID( providerManagerType,
-				ServiceID.PROVIDER_BEAN_SERVICE, sourceType, this);
+//		ServiceID serviceID = buildServiceID( providerManagerType,
+//				ServiceID.PROVIDER_BEAN_SERVICE, sourceType, this);
 //		serviceID.setApplicationContext(this.configfile);
 		// if(callContext != null && callContext.getSecutiryContext() != null)
 		// callContext.getSecutiryContext().setServiceid(serviceID.getService());
@@ -1183,7 +1181,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 		ProviderManagerInfo providerManagerInfo = null;
 		if (providerManagerType != null) {
 			providerManagerInfo = this.providerManager
-					.getProviderManagerInfo(serviceID.getService());
+					.getProviderManagerInfo(providerManagerType);
 		} else {
 			providerManagerInfo = this.providerManager
 					.getDefaultProviderManagerInfo();
@@ -1226,27 +1224,27 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 					&& providerManagerInfo.isSynchronizedEnabled()) {
 				if (providerManagerInfo.getProviderInfoQueue().size() > 1)
 					finalsynProvider = createSynTXInf(callContext,
-							providerManagerInfo, finalsynProvider, serviceID);
+							providerManagerInfo, finalsynProvider);
 				else {
 					finalsynProvider = createTXInf(callContext,
-							providerManagerInfo, finalsynProvider, serviceID);
+							providerManagerInfo, finalsynProvider);
 				}
 
 			} else if (providerManagerInfo.enableTransaction()) {
 				finalsynProvider = createTXInf(callContext,
-						providerManagerInfo, finalsynProvider, serviceID);
+						providerManagerInfo, finalsynProvider);
 			} else if (providerManagerInfo.isSynchronizedEnabled()) {
 				if (providerManagerInfo.getProviderInfoQueue().size() > 1) {
 					finalsynProvider = createSynInf(callContext,
-							providerManagerInfo, finalsynProvider, serviceID);
+							providerManagerInfo, finalsynProvider);
 				} else if (providerManagerInfo.usedCustomInterceptor()) {
 					finalsynProvider = createInf(callContext,
-							providerManagerInfo, finalsynProvider, serviceID);
+							providerManagerInfo, finalsynProvider);
 				}
 
 			} else if (providerManagerInfo.usedCustomInterceptor() || providerManagerInfo.enableAsyncCall()) {
 				finalsynProvider = createInf(callContext, providerManagerInfo,
-						finalsynProvider, serviceID);
+						finalsynProvider);
 			} 
 //			else if (serviceID.isRemote()) {
 //				finalsynProvider = createInf(callContext, providerManagerInfo,
@@ -1719,13 +1717,13 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 //			// name = name.substring(0,idx);
 //		}
 
-		ServiceID serviceID = buildServiceID( name,
-				ServiceID.PROPERTY_BEAN_SERVICE, this.configfile, this);
+//		ServiceID serviceID = buildServiceID( name,
+//				ServiceID.PROPERTY_BEAN_SERVICE, this.configfile, this);
 //		serviceID.setApplicationContext(this.configfile);
 		// new ServiceID(name,GroupRequest.GET_ALL,0,ServiceID.result_rsplist,
 		// ServiceID.PROPERTY_BEAN_SERVICE);
 		Pro providerManagerInfo = this.providerManager
-				.getPropertyBean(serviceID.getService());
+				.getPropertyBean(name);
 		// if(context != null && context.getSecutiryContext() != null)
 		// context.getSecutiryContext().setServiceid(serviceID.getService());
 		if (providerManagerInfo == null) {
@@ -1733,7 +1731,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 				ProviderManagerInfo providerManagerInfo_ = null;
 
 				providerManagerInfo_ = this.providerManager
-						.getProviderManagerInfo(serviceID.getService());
+						.getProviderManagerInfo(name);
 				if (providerManagerInfo_ == null)
 				{
 					if(defaultValue == null)
@@ -1749,8 +1747,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 					return defaultValue;
 			}
 		}
-		return getBeanObject(context, providerManagerInfo, defaultValue,
-				serviceID);
+		return getBeanObject(context, providerManagerInfo, defaultValue);
 		
 	}
 	
@@ -1777,14 +1774,14 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 			// name = name.substring(0,idx);
 		}
 
-		ServiceID serviceID = buildServiceID( name,
-				ServiceID.PROPERTY_BEAN_SERVICE, this.configfile, this);
+//		ServiceID serviceID = buildServiceID( name,
+//				ServiceID.PROPERTY_BEAN_SERVICE, this.configfile, this);
 		
 //		serviceID.setApplicationContext(this.configfile);
 		// new ServiceID(name,GroupRequest.GET_ALL,0,ServiceID.result_rsplist,
 		// ServiceID.PROPERTY_BEAN_SERVICE);
 		Pro providerManagerInfo = this.providerManager
-				.getPropertyBean(serviceID.getService());
+				.getPropertyBean(name);
 		// if(context != null && context.getSecutiryContext() != null)
 		// context.getSecutiryContext().setServiceid(serviceID.getService());
 		if (providerManagerInfo == null) {
@@ -1801,8 +1798,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 				throw new SPIException("容器["+this.getConfigfile()+"]没有定义名称为[" + name + "]的bean对象。");
 			}
 		}
-		return (T)getBeanObject(context, providerManagerInfo, null,
-				serviceID);
+		return (T)getBeanObject(context, providerManagerInfo, null);
 		
 	}
 	
@@ -1819,7 +1815,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 	}
 
 	public Object getBeanObject(CallContext context, Pro providerManagerInfo) {
-		return getBeanObject(context, providerManagerInfo, null, null);
+		return getBeanObject(context, providerManagerInfo, null);
 	}
 
 	/**
@@ -1834,7 +1830,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 	 * @return
 	 */
 	public Object getBeanObject(CallContext context, Pro providerManagerInfo,
-			Object defaultValue, ServiceID serviceID) {
+			Object defaultValue) {
 		if (providerManagerInfo == null)
 			throw new SPIException("容器["+this.getConfigfile()+"]bean对象为空。");
 		String key = providerManagerInfo.getName();
@@ -1845,13 +1841,13 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 		}
 
 		Object finalsynProvider = null;
-		if (serviceID == null) {
-			serviceID = buildBeanServiceID( key, this);
-			// serviceID.setApplicationContext(this.configfile);
-		}
-		// new ServiceID(key, GroupRequest.GET_ALL
-		// ,0,ServiceID.result_rsplist,ServiceID.PROPERTY_BEAN_SERVICE);
-		key = serviceID.getOrigineServiceID();
+//		if (serviceID == null) {
+//			serviceID = buildBeanServiceID( key, this);
+//			// serviceID.setApplicationContext(this.configfile);
+//		}
+//		// new ServiceID(key, GroupRequest.GET_ALL
+//		// ,0,ServiceID.result_rsplist,ServiceID.PROPERTY_BEAN_SERVICE);
+//		key = serviceID.getOrigineServiceID();
 		finalsynProvider = this.providerManager.getBeanObject(context,
 				providerManagerInfo, defaultValue);
 		if (providerManagerInfo.enableTransaction()
@@ -1876,19 +1872,19 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 						if (provider != null)
 							return provider;
 						provider = createInf(context, providerManagerInfo,
-								finalsynProvider, serviceID);
+								finalsynProvider);
 						servicProviders.put(key, provider);
 					}
 					return provider;
 				} else {
 					finalsynProvider = createInf(context, providerManagerInfo,
-							finalsynProvider, serviceID);
+							finalsynProvider);
 					return finalsynProvider;
 				}
 
 			} else {
 				finalsynProvider = createInf(context, providerManagerInfo,
-						finalsynProvider, serviceID);
+						finalsynProvider);
 				return finalsynProvider;
 			}
 		} else {

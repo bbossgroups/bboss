@@ -41,17 +41,17 @@ public class CGLibProxy extends BaseCGLibProxy{
 		super(delegate);
 		isioc = false;
 	}
-	public CGLibProxy(Object delegate,CallContext callcontext, ServiceID serviceID,
+	public CGLibProxy(Object delegate,CallContext callcontext,
 			BaseTXManager providerManagerInfo) {
 		super(delegate,providerManagerInfo,
-				serviceID, callcontext); 
+				 callcontext); 
 	}
 
 	public Object intercept(Object delegate, Method method, Object[] args,
 			MethodProxy proxy) throws Throwable {
 		if(isioc)
 		{
-			return CGLibUtil.invoke(this.delegate, method, args, proxy, callcontext, serviceID, providerManagerInfo);
+			return CGLibUtil.invoke(this.delegate, method, args, proxy, callcontext,  providerManagerInfo);
 		}
 		else
 		{

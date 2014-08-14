@@ -37,16 +37,15 @@ public class SynTXCGLibProxy extends BaseCGLibProxy{
 
 	
 
-	public SynTXCGLibProxy(Object delegate,ProviderManagerInfo providerManagerInfo,
-			ServiceID serviceID, CallContext callcontext) {
+	public SynTXCGLibProxy(Object delegate,ProviderManagerInfo providerManagerInfo, CallContext callcontext) {
 		super(delegate,providerManagerInfo,
-				serviceID, callcontext); 
+				 callcontext); 
 	}
 
 	public Object intercept(Object delegate, Method method, Object[] args,
 			MethodProxy proxy) throws Throwable {
 		// TODO Auto-generated method stub
-		return CGLibUtil.invokeSynTX(this.delegate, method, args, proxy, callcontext, serviceID, (ProviderManagerInfo)providerManagerInfo);
+		return CGLibUtil.invokeSynTX(this.delegate, method, args, proxy, callcontext,  (ProviderManagerInfo)providerManagerInfo);
 	}
 
 }

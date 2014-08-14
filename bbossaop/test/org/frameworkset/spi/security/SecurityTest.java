@@ -17,6 +17,7 @@
 package org.frameworkset.spi.security;
 
 import org.frameworkset.spi.BaseSPIManager;
+import org.frameworkset.spi.ClientProxyContext;
 import org.frameworkset.spi.assemble.Pro;
 import org.junit.Test;
 
@@ -82,7 +83,7 @@ public class SecurityTest
     @Test
     public void testMinaSecurityBean()
     {
-        BussinessBeanInf beaninf = (BussinessBeanInf)BaseSPIManager.getBeanObject("(mina::172.16.17.216:12347)/test.security.bean?USERACCOUNT=admin&PASSWORD=123456");
+        BussinessBeanInf beaninf = ClientProxyContext.getApplicationClientBean("(mina::172.16.17.216:12347)/test.security.bean?USERACCOUNT=admin&PASSWORD=123456",BussinessBeanInf.class);
         System.out.println("testMinaSecurityBean beaninf.getCount():"+beaninf.getCount());
         System.out.println("testMinaSecurityBean beaninf.printMessage(message):"+beaninf.printMessage("test.security.bean"));
     }
@@ -90,7 +91,7 @@ public class SecurityTest
     @Test
     public void testJmsSecurityBean()
     {
-        BussinessBeanInf beaninf = (BussinessBeanInf)BaseSPIManager.getBeanObject("(jms::yinbiaoping-jms)/test.security.bean?USERACCOUNT=admin&PASSWORD=123456");
+        BussinessBeanInf beaninf = ClientProxyContext.getApplicationClientBean("(jms::yinbiaoping-jms)/test.security.bean?USERACCOUNT=admin&PASSWORD=123456",BussinessBeanInf.class);
         System.out.println("testJmsSecurityBean beaninf.getCount():"+beaninf.getCount());
         System.out.println("testJmsSecurityBean beaninf.printMessage(message):"+beaninf.printMessage("test.security.bean"));
     }
@@ -98,7 +99,7 @@ public class SecurityTest
     @Test
     public void testJGroupSecurityBean()
     {
-        BussinessBeanInf beaninf = (BussinessBeanInf)BaseSPIManager.getBeanObject("(jgroup::172.16.17.216:1186)/test.security.bean?USERACCOUNT=admin&PASSWORD=123456");
+        BussinessBeanInf beaninf = ClientProxyContext.getApplicationClientBean("(jgroup::172.16.17.216:1186)/test.security.bean?USERACCOUNT=admin&PASSWORD=123456",BussinessBeanInf.class);
         System.out.println("testJGroupSecurityBean beaninf.getCount():"+beaninf.getCount());
         System.out.println("testJGroupSecurityBean beaninf.printMessage(message):"+beaninf.printMessage("test.security.bean"));
     }
@@ -106,7 +107,7 @@ public class SecurityTest
     @Test
     public void testWebServiceSecurityBean()
     {
-        BussinessBeanInf beaninf = (BussinessBeanInf)BaseSPIManager.getBeanObject("(webservice::http://172.16.17.216:8080/WebRoot/cxfservices)/test.security.bean?USERACCOUNT=admin&PASSWORD=123456");
+        BussinessBeanInf beaninf = ClientProxyContext.getApplicationClientBean("(webservice::http://172.16.17.216:8080/WebRoot/cxfservices)/test.security.bean?USERACCOUNT=admin&PASSWORD=123456",BussinessBeanInf.class);
         System.out.println("testJGroupSecurityBean beaninf.getCount():"+beaninf.getCount());
         System.out.println("testJGroupSecurityBean beaninf.printMessage(message):"+beaninf.printMessage("test.security.bean"));
     }
@@ -115,7 +116,7 @@ public class SecurityTest
     @Test
     public void testMuticallSecurityBean()
     {
-        BussinessBeanInf beaninf = (BussinessBeanInf)BaseSPIManager.getBeanObject("(mina::172.16.17.216:12346)/test.security.bean?USERACCOUNT=admin&PASSWORD=123456");
+        BussinessBeanInf beaninf = ClientProxyContext.getApplicationClientBean("(mina::172.16.17.216:12346)/test.security.bean?USERACCOUNT=admin&PASSWORD=123456",BussinessBeanInf.class);
         System.out.println("testMuticallSecurityBean beaninf.getCount():"+beaninf.getCount());
         System.out.println("testMuticallSecurityBean beaninf.printMessage(message):"+beaninf.printMessage("test.security.bean"));
     }

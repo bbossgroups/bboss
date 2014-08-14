@@ -1490,7 +1490,7 @@ public abstract class BaseSPIManager
 
     public static Object getBeanObject(CallContext context, Pro providerManagerInfo)
     {
-        return getBeanObject(context, providerManagerInfo, null, null);
+        return getBeanObject(context, providerManagerInfo, null);
     }
 
     /**
@@ -1504,11 +1504,9 @@ public abstract class BaseSPIManager
      * @param serviceID
      * @return
      */
-    public static Object getBeanObject(CallContext context, Pro providerManagerInfo, Object defaultValue,
-            ServiceID serviceID)
+    public static Object getBeanObject(CallContext context, Pro providerManagerInfo, Object defaultValue)
     {
-        return defaultContext.getBeanObject( context,  providerManagerInfo,  defaultValue,
-                 serviceID);
+        return defaultContext.getBeanObject( context,  providerManagerInfo,  defaultValue);
 //        if (providerManagerInfo == null)
 //            throw new SPIException("bean对象为空。");
 //        String key = providerManagerInfo.getName();

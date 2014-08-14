@@ -32,7 +32,7 @@ public class SimpleLoginModule implements LoginModule
 	public boolean checkUser(SecurityContext context) throws SecurityException
 	{
 
-//		System.out.println("checkUser:" + context);
+		System.out.println("checkUser:" + context);
         if(context.getUser().equals("admin") && context.getPassword().equals("123456"))
             return true;
         return false;

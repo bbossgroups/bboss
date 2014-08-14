@@ -465,22 +465,22 @@ public class ClientProxyContext
 		// TODO Auto-generated method stub
 		return getRPCResult(url, ret, Target.BROADCAST_TYPE_JRGOUP);
 	}
-	public static ServiceID buildServiceID(String serviceid, int serviceType,
-			BaseApplicationContext applicationcontext) {
-
-		// // SoftReference<ServiceID> reference;
-		//        
-		//        
-		// long timeout = getRPCRequestTimeout();
-		// ServiceID serviceID = new ServiceID(serviceid, null,
-		// GroupRequest.GET_ALL, timeout, ServiceID.result_rsplist,
-		// serviceType);
-		//           
-
-		return RPCHelper.buildServiceID(serviceid, serviceType,
-				applicationcontext);
-
-	}
+//	public static ServiceID buildServiceID(String serviceid, int serviceType,
+//			BaseApplicationContext applicationcontext) {
+//
+//		// // SoftReference<ServiceID> reference;
+//		//        
+//		//        
+//		// long timeout = getRPCRequestTimeout();
+//		// ServiceID serviceID = new ServiceID(serviceid, null,
+//		// GroupRequest.GET_ALL, timeout, ServiceID.result_rsplist,
+//		// serviceType);
+//		//           
+//
+//		return RPCHelper.buildServiceID(serviceid, serviceType,
+//				applicationcontext);
+//
+//	}
 	
 	
 	

@@ -22,7 +22,7 @@ import net.sf.cglib.proxy.MethodProxy;
 
 import org.frameworkset.spi.CallContext;
 import org.frameworkset.spi.assemble.ProviderManagerInfo;
-import org.frameworkset.spi.remote.ServiceID;
+
 
 /**
  * <p>Title: SynCGLibProxy.java</p> 
@@ -35,9 +35,8 @@ import org.frameworkset.spi.remote.ServiceID;
  */
 public class SynCGLibProxy  extends BaseCGLibProxy{
 
-	public SynCGLibProxy(Object delegate,ProviderManagerInfo providerManagerInfo,
-			ServiceID serviceID, CallContext callcontext) {
-		super(delegate,providerManagerInfo, serviceID, callcontext);
+	public SynCGLibProxy(Object delegate,ProviderManagerInfo providerManagerInfo, CallContext callcontext) {
+		super(delegate,providerManagerInfo,  callcontext);
 		
 	}
 
@@ -45,7 +44,7 @@ public class SynCGLibProxy  extends BaseCGLibProxy{
 			MethodProxy proxy) throws Throwable {
 		// TODO Auto-generated method stub
 		
-		return CGLibUtil.invokeSyn(this.delegate, method, args, proxy, callcontext, serviceID, (ProviderManagerInfo)providerManagerInfo);
+		return CGLibUtil.invokeSyn(this.delegate, method, args, proxy, callcontext, (ProviderManagerInfo)providerManagerInfo);
 	}
 
 }

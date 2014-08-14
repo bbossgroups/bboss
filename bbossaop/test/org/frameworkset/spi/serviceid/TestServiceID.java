@@ -43,16 +43,24 @@ public class TestServiceID
 	public static void main(String[] args)
 	{
 //		testBuildWebServiceURL();
-	    buildAllTargets();
+//	    buildAllTargets();
 	}
 	
 	@Test
 	public void testRESTFulServiceID()
 	{
-	    String serviceid = "(a|b|c)/serviceid";
+	    String serviceID = "(rest::a/b/c)/serviceid";
+	    String providerID = null;
+	    String applicationcontext = "";
+	    int containerType = 0;
 	    
-	    ServiceID id = new ServiceIDImpl(serviceid, null, GroupRequest.GET_ALL, RemoteServiceID.result_object, 0,
-                ServiceID.PROVIDER_BEAN_SERVICE,null);
+	    int resultMode = GroupRequest.GET_ALL;
+	    long timeout = -1;
+	    int resultType = RemoteServiceID.result_object;
+	    int bean_type =  ServiceID.PROVIDER_BEAN_SERVICE;
+//	    ServiceID id = new ServiceIDImpl(serviceid, null, GroupRequest.GET_ALL, RemoteServiceID.result_object, 0,
+//                ServiceID.PROVIDER_BEAN_SERVICE,null);
+	    ServiceID id = new  ServiceIDImpl(serviceID,  providerID, applicationcontext, containerType,  resultMode,  timeout,  resultType,  bean_type);
         System.out.println(id.getService());
         System.out.println(((RemoteServiceID)id).getTarget().getTargets());
 	}
@@ -75,34 +83,69 @@ public class TestServiceID
 		<property name="rpc.default.protocol" 
 					      value="mina"/>
 	 */
-	public static void defaultServiceID()
+	@Test
+	public  void defaultServiceID()
 	{
 		//默认的远程服务调用标识,其协议由框架配置中设置的缺省配置协议决定：
 		
-        String serviceid = "(192.168.0.17:1010;192.168.0.18:1020)/serviceid";        
-        ServiceID id = new ServiceIDImpl(serviceid, null, GroupRequest.GET_ALL, RemoteServiceID.result_object, 0,
-                                     ServiceID.PROVIDER_BEAN_SERVICE,null);
-                             System.out.println(id);
+        String serviceID = "(192.168.0.17:1010;192.168.0.18:1020)/serviceid";        
+	    String providerID = null;
+	    String applicationcontext = "";
+	    int containerType = 0;
+	    
+	    int resultMode = GroupRequest.GET_ALL;
+	    long timeout = -1;
+	    int resultType = RemoteServiceID.result_object;
+	    int bean_type =  ServiceID.PROVIDER_BEAN_SERVICE;
+//	    ServiceID id = new ServiceIDImpl(serviceid, null, GroupRequest.GET_ALL, RemoteServiceID.result_object, 0,
+//                ServiceID.PROVIDER_BEAN_SERVICE,null);
+	    ServiceID id = new  ServiceIDImpl(serviceID,  providerID, applicationcontext, containerType,  resultMode,  timeout,  resultType,  bean_type);
+        System.out.println(id.getService());
+        System.out.println(((RemoteServiceID)id).getTarget().getTargets());
         
 	}
 	
-	public static void webserviceServiceID()
+	@Test
+	public   void webserviceServiceID()
 	{
 		 //webservice远程服务调用标识
-		String serviceid = "(webservice::http://192.168.0.17:1010/webroot/;http://192.168.0.17:1010/webroot/)/serviceid";
-                ServiceID id = new ServiceIDImpl(serviceid, null, GroupRequest.GET_ALL, RemoteServiceID.result_object, 0,
-                                             ServiceID.PROVIDER_BEAN_SERVICE,null);
-                System.out.println(id);
+		String serviceID = "(webservice::http://192.168.0.17:1010/webroot/;http://192.168.0.17:1010/webroot/)/serviceid";
+	    String providerID = null;
+	    String applicationcontext = "";
+	    int containerType = 0;
+	    
+	    int resultMode = GroupRequest.GET_ALL;
+	    long timeout = -1;
+	    int resultType = RemoteServiceID.result_object;
+	    int bean_type =  ServiceID.PROVIDER_BEAN_SERVICE;
+//	    ServiceID id = new ServiceIDImpl(serviceid, null, GroupRequest.GET_ALL, RemoteServiceID.result_object, 0,
+//                ServiceID.PROVIDER_BEAN_SERVICE,null);
+	    ServiceID id = new  ServiceIDImpl(serviceID,  providerID, applicationcontext, containerType,  resultMode,  timeout,  resultType,  bean_type);
+        System.out.println(id.getService());
+        System.out.println(((RemoteServiceID)id).getTarget().getTargets());
                              
 	}
 	
-	public static void testBuildWebServiceURL()
+	@Test
+	public   void testBuildWebServiceURL()
 	{
 		 //webservice远程服务调用标识
 //		String serviceid = "(webservice::http://192.168.0.17:1010/webroot;http://192.168.0.17:1011/webroot/)/serviceid";
-		String serviceid = "(webservice::http://192.168.0.17:1010;http://192.168.0.17:1011/)/serviceid";
-        ServiceID id = new ServiceIDImpl(serviceid, null, GroupRequest.GET_ALL, RemoteServiceID.result_object, 0,
-                                     ServiceID.PROVIDER_BEAN_SERVICE,null);
+		String serviceID = "(webservice::http://192.168.0.17:1010;http://192.168.0.17:1011/)/serviceid";
+		 //webservice远程服务调用标识
+	    String providerID = null;
+	    String applicationcontext = "";
+	    int containerType = 0;
+	    
+	    int resultMode = GroupRequest.GET_ALL;
+	    long timeout = -1;
+	    int resultType = RemoteServiceID.result_object;
+	    int bean_type =  ServiceID.PROVIDER_BEAN_SERVICE;
+//	    ServiceID id = new ServiceIDImpl(serviceid, null, GroupRequest.GET_ALL, RemoteServiceID.result_object, 0,
+//                ServiceID.PROVIDER_BEAN_SERVICE,null);
+	    ServiceID id = new  ServiceIDImpl(serviceID,  providerID, applicationcontext, containerType,  resultMode,  timeout,  resultType,  bean_type);
+        System.out.println(id.getService());
+        System.out.println(((RemoteServiceID)id).getTarget().getTargets());
         List<RPCAddress> rpcAddresses = ((RemoteServiceID)id).getTarget().getTargets();
         for(RPCAddress address :rpcAddresses)
         {
@@ -111,58 +154,119 @@ public class TestServiceID
                              
 	}
 	
-	public static void minaServiceID()
+	@Test
+	public   void minaServiceID()
 	{
 		 //mina远程服务调用标识
-		String serviceid = "(mina::192.168.0.17:1010;192.168.0.17:1011)/serviceid";
-        ServiceID id = new ServiceIDImpl(serviceid, null, GroupRequest.GET_ALL, RemoteServiceID.result_object, 0,
-                                     ServiceID.PROVIDER_BEAN_SERVICE,null);
-        System.out.println(id);
+		String serviceID = "(mina::192.168.0.17:1010;192.168.0.17:1011)/serviceid";
+		 //webservice远程服务调用标识
+	    String providerID = null;
+	    String applicationcontext = "";
+	    int containerType = 0;
+	    
+	    int resultMode = GroupRequest.GET_ALL;
+	    long timeout = -1;
+	    int resultType = RemoteServiceID.result_object;
+	    int bean_type =  ServiceID.PROVIDER_BEAN_SERVICE;
+//	    ServiceID id = new ServiceIDImpl(serviceid, null, GroupRequest.GET_ALL, RemoteServiceID.result_object, 0,
+//                ServiceID.PROVIDER_BEAN_SERVICE,null);
+	    ServiceID id = new  ServiceIDImpl(serviceID,  providerID, applicationcontext, containerType,  resultMode,  timeout,  resultType,  bean_type);
+        System.out.println(id.getService());
+        System.out.println(((RemoteServiceID)id).getTarget().getTargets());
                              
 	}
 	
 	
-	public static void jgroupServiceID()
+	@Test
+	public   void jgroupServiceID()
 	{
 		 //jgroup远程服务调用标识
-		String serviceid = "(jgroup::192.168.0.17:1010;192.168.0.17:1011)/serviceid";
-        ServiceID id = new ServiceIDImpl(serviceid, null, GroupRequest.GET_ALL, RemoteServiceID.result_object, 0,
-                                     ServiceID.PROVIDER_BEAN_SERVICE,null);
-        System.out.println(id);
+		String serviceID = "(jgroup::192.168.0.17:1010;192.168.0.17:1011)/serviceid";
+		 //webservice远程服务调用标识
+	    String providerID = null;
+	    String applicationcontext = "";
+	    int containerType = 0;
+	    
+	    int resultMode = GroupRequest.GET_ALL;
+	    long timeout = -1;
+	    int resultType = RemoteServiceID.result_object;
+	    int bean_type =  ServiceID.PROVIDER_BEAN_SERVICE;
+//	    ServiceID id = new ServiceIDImpl(serviceid, null, GroupRequest.GET_ALL, RemoteServiceID.result_object, 0,
+//                ServiceID.PROVIDER_BEAN_SERVICE,null);
+	    ServiceID id = new  ServiceIDImpl(serviceID,  providerID, applicationcontext, containerType,  resultMode,  timeout,  resultType,  bean_type);
+        System.out.println(id.getService());
+        System.out.println(((RemoteServiceID)id).getTarget().getTargets());
                              
 	}
 	
-	public static void rmiServiceID()
+	@Test
+	public   void rmiServiceID()
 	{
 		 //rmi远程服务调用标识
-		String serviceid = "(rmi::192.168.0.17:1010;192.168.0.17:1011)/serviceid";
-        ServiceID id = new ServiceIDImpl(serviceid, null, GroupRequest.GET_ALL, RemoteServiceID.result_object, 0,
-                                     ServiceID.PROVIDER_BEAN_SERVICE,null);
-        System.out.println(id);
+		String serviceID = "(rmi::192.168.0.17:1010;192.168.0.17:1011)/serviceid";
+		 //webservice远程服务调用标识
+	    String providerID = null;
+	    String applicationcontext = "";
+	    int containerType = 0;
+	    
+	    int resultMode = GroupRequest.GET_ALL;
+	    long timeout = -1;
+	    int resultType = RemoteServiceID.result_object;
+	    int bean_type =  ServiceID.PROVIDER_BEAN_SERVICE;
+//	    ServiceID id = new ServiceIDImpl(serviceid, null, GroupRequest.GET_ALL, RemoteServiceID.result_object, 0,
+//                ServiceID.PROVIDER_BEAN_SERVICE,null);
+	    ServiceID id = new  ServiceIDImpl(serviceID,  providerID, applicationcontext, containerType,  resultMode,  timeout,  resultType,  bean_type);
+        System.out.println(id.getService());
+        System.out.println(((RemoteServiceID)id).getTarget().getTargets());
                              
 	}
 	
-	public static void ejbServiceID()
+	@Test
+	public   void ejbServiceID()
 	{
 		 //ejb远程服务调用标识
-		String serviceid = "(ejb::192.168.0.17:1010;192.168.0.17:1011)/serviceid";
-        ServiceID id = new ServiceIDImpl(serviceid, null, GroupRequest.GET_ALL, RemoteServiceID.result_object, 0,
-                                     ServiceID.PROVIDER_BEAN_SERVICE,null);
-        System.out.println(id);
+		String serviceID = "(ejb::192.168.0.17:1010;192.168.0.17:1011)/serviceid";
+		 //webservice远程服务调用标识
+	    String providerID = null;
+	    String applicationcontext = "";
+	    int containerType = 0;
+	    
+	    int resultMode = GroupRequest.GET_ALL;
+	    long timeout = -1;
+	    int resultType = RemoteServiceID.result_object;
+	    int bean_type =  ServiceID.PROVIDER_BEAN_SERVICE;
+//	    ServiceID id = new ServiceIDImpl(serviceid, null, GroupRequest.GET_ALL, RemoteServiceID.result_object, 0,
+//                ServiceID.PROVIDER_BEAN_SERVICE,null);
+	    ServiceID id = new  ServiceIDImpl(serviceID,  providerID, applicationcontext, containerType,  resultMode,  timeout,  resultType,  bean_type);
+        System.out.println(id.getService());
+        System.out.println(((RemoteServiceID)id).getTarget().getTargets());
                              
 	}
 	
-	public static void corbaServiceID()
+	@Test
+	public   void corbaServiceID()
 	{
 		 //corba远程服务调用标识
-		String serviceid = "(corba::192.168.0.17:1010;192.168.0.17:1011)/serviceid";
-        ServiceID id = new ServiceIDImpl(serviceid, null, GroupRequest.GET_ALL, RemoteServiceID.result_object, 0,
-                                     ServiceID.PROVIDER_BEAN_SERVICE,null);
-        System.out.println(id);
+		String serviceID = "(corba::192.168.0.17:1010;192.168.0.17:1011)/serviceid";
+		 //webservice远程服务调用标识
+	    String providerID = null;
+	    String applicationcontext = "";
+	    int containerType = 0;
+	    
+	    int resultMode = GroupRequest.GET_ALL;
+	    long timeout = -1;
+	    int resultType = RemoteServiceID.result_object;
+	    int bean_type =  ServiceID.PROVIDER_BEAN_SERVICE;
+//	    ServiceID id = new ServiceIDImpl(serviceid, null, GroupRequest.GET_ALL, RemoteServiceID.result_object, 0,
+//                ServiceID.PROVIDER_BEAN_SERVICE,null);
+	    ServiceID id = new  ServiceIDImpl(serviceID,  providerID, applicationcontext, containerType,  resultMode,  timeout,  resultType,  bean_type);
+        System.out.println(id.getService());
+        System.out.println(((RemoteServiceID)id).getTarget().getTargets());
                              
 	}
 	
-	public static void buildAllTargets()
+	@Test
+	public   void buildAllTargets()
 	{
 	    List<RPCAddress> dests = TargetImpl.buildAllTargets("127.0.0.1:12347;127.0.0.1:12346", "mina");
 	    System.out.println("dests:" + dests);

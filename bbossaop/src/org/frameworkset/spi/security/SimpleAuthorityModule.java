@@ -36,7 +36,7 @@ public class SimpleAuthorityModule implements AuthorityModule
 //		context.getServiceid();
 //		context.getMethodop();
 //		context.getUser();
-//		 System.out.println("checkPermission:" + context);
+		 System.out.println("checkPermission:" + context);
 	        return true;
 	}
 

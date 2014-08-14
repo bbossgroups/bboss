@@ -30,7 +30,7 @@
 				<!-- 
 					服务器绑定端口
 				 -->
-			<property name="connection.bind.port" value="12346" />
+			<property name="connection.bind.port" value="12347" />
 			
 			<!-- 能够解码的最大数据size，超过时，将抛异常，默认20M -->
 			<property name="maxFramgeLength_" value="20971520" />

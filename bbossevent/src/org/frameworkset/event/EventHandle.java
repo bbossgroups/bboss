@@ -27,6 +27,7 @@ import org.frameworkset.remote.EventRemoteService;
 import org.frameworkset.remote.EventUtils;
 import org.frameworkset.spi.ApplicationContext;
 import org.frameworkset.spi.BaseSPIManager;
+import org.frameworkset.spi.ClientProxyContext;
 import org.frameworkset.spi.security.SecurityManager;
 import org.frameworkset.thread.DelayThread;
 import org.frameworkset.thread.RejectCallback;
@@ -126,7 +127,7 @@ public class EventHandle extends RejectCallback implements Notifiable {
 	 * Description:
 	 * 
 	 * @param listener
-	 * @see com.chinacreator.security.authorization.ACLNotifiable#addListener(com.chinacreator.security.authorization.ACLListener)
+	 * @see com.frameworkset.platform.security.authorization.ACLNotifiable#addListener(com.chinacreator.security.authorization.ACLListener)
 	 */
 	public void addListener(Listener listener, boolean remote) {
 		
@@ -451,7 +452,7 @@ public class EventHandle extends RejectCallback implements Notifiable {
 				{
 					
 					try{
-						EventRemoteService eventRemoteService = (EventRemoteService)BaseSPIManager.getBeanObject(getEVENT_SERVICEName(null));
+						EventRemoteService eventRemoteService = ClientProxyContext.getApplicationClientBean(getEVENT_SERVICEName(null),EventRemoteService.class);
 						UUIDGenerator uuid_gen = UUIDGenerator.getInstance();
 						UUID uuid = uuid_gen.generateRandomBasedUUID();
 						String key = uuid.toString();
@@ -466,7 +467,7 @@ public class EventHandle extends RejectCallback implements Notifiable {
 				else if(event.getEventTarget() != null)
 				{	
 					try{
-						EventRemoteService eventRemoteService = (EventRemoteService)BaseSPIManager.getBeanObject(getEVENT_SERVICEName(event.getEventTarget()));
+						EventRemoteService eventRemoteService = ClientProxyContext.getApplicationClientBean(getEVENT_SERVICEName(event.getEventTarget()),EventRemoteService.class);
 						UUIDGenerator uuid_gen = UUIDGenerator.getInstance();
 						UUID uuid = uuid_gen.generateRandomBasedUUID();
 						String key = uuid.toString();
@@ -503,7 +504,7 @@ public class EventHandle extends RejectCallback implements Notifiable {
 			{
 				if(EventUtils.cluster_enable() || event.getEventTarget() != null)
 				{
-				    EventRemoteService eventRemoteService = (EventRemoteService)BaseSPIManager.getBeanObject(getEVENT_SERVICEName(event.getEventTarget()));
+				    EventRemoteService eventRemoteService = ClientProxyContext.getApplicationClientBean(getEVENT_SERVICEName(event.getEventTarget()),EventRemoteService.class);
 					UUIDGenerator uuid_gen = UUIDGenerator.getInstance();
 					UUID uuid = uuid_gen.generateRandomBasedUUID();
 					String key = uuid.toString();

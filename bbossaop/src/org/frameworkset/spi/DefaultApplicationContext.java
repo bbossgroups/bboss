@@ -18,13 +18,10 @@ package org.frameworkset.spi;
 
 import java.io.InputStream;
 import java.net.URL;
-import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.frameworkset.spi.assemble.ServiceProviderManager;
 import org.frameworkset.spi.assemble.callback.AssembleCallback;
-import org.frameworkset.spi.remote.ServiceID;
-import org.frameworkset.spi.serviceidentity.ServiceIDUtil;
 
 /**
  * <p>Title: DefaultApplicationContext.java</p> 

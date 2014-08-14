@@ -354,41 +354,41 @@ public class ServiceIDImpl extends BaseServiceIDImpl implements RemoteServiceID{
         }
     }
 
-    public ServiceIDImpl(String serviceID,  int resultMode, long timeout, int resultType, int bean_type,BaseApplicationContext applicationcontext)
-    {
-        this(serviceID, null, resultMode, timeout, resultType, bean_type,applicationcontext);
-    }
+//    public ServiceIDImpl(String serviceID,  int resultMode, long timeout, int resultType, int bean_type,BaseApplicationContext applicationcontext)
+//    {
+//        this(serviceID, null, resultMode, timeout, resultType, bean_type,applicationcontext);
+//    }
     
-    public ServiceIDImpl(String serviceID, String providerID, int resultMode, long timeout, int resultType, int bean_type,BaseApplicationContext applicationcontext)
-    {
-//    	super(serviceID, providerID, resultMode, timeout, resultType, bean_type,(BaseApplicationContext)applicationcontext);
-    	super( serviceID,  providerID, applicationcontext,  bean_type);    	
-		this.resultMode = resultMode;
-		this.timeout = timeout;
-		this.resultType = resultType;
-        this.buildService();
-        isremote = this.target != null && !this.target.isSelf();
-        if (this.isremote)
-        {
-//            rpcserviceStarted(target);
-
-            // IpAddress address =
-            // (IpAddress)JGroupHelper.getJGroupHelper().getLocalAddress();
-            // if(this.compared(address, target))
-            // {
-            // isremote = false;
-            // return;
-            // }
-            if (isLocalAddress(target,false))
-            {
-//                if(serviceID.equals("(jms::yinbiaoping-jms)/rpc.test"))
-//                    isremote = true;
-                return;
-            }
-            setLocalAddress();
-        }
-
-    }
+//    public ServiceIDImpl(String serviceID, String providerID, int resultMode, long timeout, int resultType, int bean_type,BaseApplicationContext applicationcontext)
+//    {
+////    	super(serviceID, providerID, resultMode, timeout, resultType, bean_type,(BaseApplicationContext)applicationcontext);
+//    	super( serviceID,  providerID, applicationcontext,  bean_type);    	
+//		this.resultMode = resultMode;
+//		this.timeout = timeout;
+//		this.resultType = resultType;
+//        this.buildService();
+//        isremote = this.target != null && !this.target.isSelf();
+//        if (this.isremote)
+//        {
+////            rpcserviceStarted(target);
+//
+//            // IpAddress address =
+//            // (IpAddress)JGroupHelper.getJGroupHelper().getLocalAddress();
+//            // if(this.compared(address, target))
+//            // {
+//            // isremote = false;
+//            // return;
+//            // }
+//            if (isLocalAddress(target,false))
+//            {
+////                if(serviceID.equals("(jms::yinbiaoping-jms)/rpc.test"))
+////                    isremote = true;
+//                return;
+//            }
+//            setLocalAddress();
+//        }
+//
+//    }
     
     
     public ServiceIDImpl(String serviceID, String providerID,String applicationcontext,int containerType, int resultMode, long timeout, int resultType, int bean_type)
@@ -503,11 +503,11 @@ public class ServiceIDImpl extends BaseServiceIDImpl implements RemoteServiceID{
 
     }
 
-    public ServiceIDImpl(String serviceID, int resultMode, int waittime, int resultType, int bean_type,BaseApplicationContext applicationcontext)
-    {
-        this(serviceID, null, resultMode, waittime, resultType, bean_type, applicationcontext);
-
-    }
+//    public ServiceIDImpl(String serviceID, int resultMode, int waittime, int resultType, int bean_type,BaseApplicationContext applicationcontext)
+//    {
+//        this(serviceID, null, resultMode, waittime, resultType, bean_type, applicationcontext);
+//
+//    }
 
     public boolean compared(Address address, Target target)
     {
@@ -588,9 +588,9 @@ public class ServiceIDImpl extends BaseServiceIDImpl implements RemoteServiceID{
         serviceid = "(webservice::http://17:1010/webroot/;http://17:1010/webroot/)/serviceid";
 
 //        serviceid = "(all)/serviceid";
-        ServiceID id = new ServiceIDImpl(serviceid, null, GroupRequest.GET_ALL, result_object, 0,
-                ServiceID.PROVIDER_BEAN_SERVICE,null);
-        System.out.println(id);
+//        ServiceID id = new ServiceIDImpl(serviceid, null, GroupRequest.GET_ALL, result_object, 0,
+//                ServiceID.PROVIDER_BEAN_SERVICE,null);
+//        System.out.println(id);
 
     }
     

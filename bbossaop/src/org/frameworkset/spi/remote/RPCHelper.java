@@ -1236,55 +1236,55 @@ public class RPCHelper
     }
 //    public static Map<String, ServiceID> serviceids = new java.util.WeakHashMap<String, ServiceID>();
 
-    public static ServiceID buildServiceID(Map<String,ServiceID> serviceids,String serviceid, int serviceType, String providertype,BaseApplicationContext applicationcontext)
-    {
-        if(!serviceid.startsWith("(rest::"))//rest风格的地址不做缓冲
-        {
-            String key = serviceid ;
-            if(providertype != null)
-                key = serviceid + "|" + providertype;
-    //        SoftReference<ServiceID> reference;
-            ServiceID serviceID = serviceids.get(key);
-            if (serviceID != null)
-                return serviceID;
-            
-            synchronized (serviceids)
-            {
-                serviceID = serviceids.get(key);
-                if (serviceID != null)
-                    return serviceID;
-                long timeout = getRPCRequestTimeout();
-                serviceID = new ServiceIDImpl(serviceid, providertype, GroupRequest.GET_ALL, timeout, RemoteServiceID.result_rsplist,
-                        serviceType, applicationcontext);
-               
-                serviceids.put(key, serviceID);
-            }
-            return serviceID;
-        }
-        else
-        {
-            long timeout = getRPCRequestTimeout();
-            ServiceID serviceID = new ServiceIDImpl(serviceid, providertype, GroupRequest.GET_ALL, timeout, RemoteServiceID.result_rsplist,
-                    serviceType,applicationcontext);
-            return serviceID;
-        }
-
-    }
+//    public static ServiceID buildServiceID(Map<String,ServiceID> serviceids,String serviceid, int serviceType, String providertype,BaseApplicationContext applicationcontext)
+//    {
+//        if(!serviceid.startsWith("(rest::"))//rest风格的地址不做缓冲
+//        {
+//            String key = serviceid ;
+//            if(providertype != null)
+//                key = serviceid + "|" + providertype;
+//    //        SoftReference<ServiceID> reference;
+//            ServiceID serviceID = serviceids.get(key);
+//            if (serviceID != null)
+//                return serviceID;
+//            
+//            synchronized (serviceids)
+//            {
+//                serviceID = serviceids.get(key);
+//                if (serviceID != null)
+//                    return serviceID;
+//                long timeout = getRPCRequestTimeout();
+//                serviceID = new ServiceIDImpl(serviceid, providertype, GroupRequest.GET_ALL, timeout, RemoteServiceID.result_rsplist,
+//                        serviceType, applicationcontext);
+//               
+//                serviceids.put(key, serviceID);
+//            }
+//            return serviceID;
+//        }
+//        else
+//        {
+//            long timeout = getRPCRequestTimeout();
+//            ServiceID serviceID = new ServiceIDImpl(serviceid, providertype, GroupRequest.GET_ALL, timeout, RemoteServiceID.result_rsplist,
+//                    serviceType,applicationcontext);
+//            return serviceID;
+//        }
+//
+//    }
     
-    public static ServiceID buildServiceID(String serviceid, int serviceType, BaseApplicationContext applicationcontext)
-    {
-       
-//        SoftReference<ServiceID> reference;
-        
-        
-            long timeout = getRPCRequestTimeout();
-            ServiceID serviceID = new ServiceIDImpl(serviceid, null, GroupRequest.GET_ALL, timeout, RemoteServiceID.result_rsplist,
-                    serviceType,applicationcontext);
-           
-           
-        return serviceID;
-
-    }
+//    public static ServiceID buildServiceID(String serviceid, int serviceType, BaseApplicationContext applicationcontext)
+//    {
+//       
+////        SoftReference<ServiceID> reference;
+//        
+//        
+//            long timeout = getRPCRequestTimeout();
+//            ServiceID serviceID = new ServiceIDImpl(serviceid, null, GroupRequest.GET_ALL, timeout, RemoteServiceID.result_rsplist,
+//                    serviceType,applicationcontext);
+//           
+//           
+//        return serviceID;
+//
+//    }
     public static RemoteServiceID buildClientServiceIDFromRestID(RemoteServiceID restid)
     {
     	 long timeout = getRPCRequestTimeout();

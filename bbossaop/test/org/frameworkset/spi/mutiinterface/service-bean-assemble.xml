@@ -9,6 +9,9 @@
 			class：实现类代码
 			used：标识是否使用，默认为false
 		-->
-		<property id="mutiinfservice" singlable="true"  class="org.frameworkset.spi.mutiinterface.TestImpl" />
+		<property id="mutiinfservice" singlable="true" 
+		     class="org.frameworkset.spi.mutiinterface.TestImpl" 
+		     f:aaa="aa"
+		     />
 
 </manager-config>

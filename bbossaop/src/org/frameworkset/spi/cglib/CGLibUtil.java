@@ -39,9 +39,6 @@ import org.frameworkset.spi.async.CallBackService;
 import org.frameworkset.spi.async.CallBackServiceImpl;
 import org.frameworkset.spi.async.CallService;
 import org.frameworkset.spi.interceptor.AfterThrowable;
-import org.frameworkset.spi.remote.RPCHelper;
-import org.frameworkset.spi.remote.RemoteServiceID;
-import org.frameworkset.spi.remote.ServiceID;
 
 import com.frameworkset.proxy.Interceptor;
 
@@ -74,13 +71,13 @@ public class CGLibUtil {
 		
 	}
 	public static Object invoke(final Object delegate, final Method method, final Object[] args,
-			final MethodProxy proxy,final CallContext callcontext,final ServiceID serviceID,final BaseTXManager providerManagerInfo) throws Throwable
+			final MethodProxy proxy,final CallContext callcontext,final BaseTXManager providerManagerInfo) throws Throwable
 	{
 		final SynchronizedMethod synmethod = providerManagerInfo.isAsyncMethod(method,null) ;
 		if(synmethod == null )
 		{
 			return invoke_(delegate, method, args,
-					proxy,callcontext,serviceID,providerManagerInfo) ;
+					proxy,callcontext,providerManagerInfo) ;
 		}
 		else
 		{
@@ -111,7 +108,7 @@ public class CGLibUtil {
 					
 					try {
 						return invoke_(delegate, method, args,
-								proxy,callcontext,serviceID,providerManagerInfo);
+								proxy,callcontext,providerManagerInfo);
 					} catch (Exception e) {
 						throw e;
 					}
@@ -180,7 +177,7 @@ public class CGLibUtil {
 	}
 	
 	private static Object invoke_(Object delegate, Method method, Object[] args,
-			MethodProxy proxy,CallContext callcontext,ServiceID serviceID,BaseTXManager providerManagerInfo) throws Throwable
+			MethodProxy proxy,CallContext callcontext,BaseTXManager providerManagerInfo) throws Throwable
     {
 //        if (!serviceID.isRemote())
         {
@@ -460,13 +457,13 @@ public class CGLibUtil {
       
     }
 	public static Object invokeSynTX(final Object delegate, final Method method, final Object[] args,
-			final MethodProxy proxy,final CallContext callcontext,final ServiceID serviceID,final ProviderManagerInfo providerManagerInfo) throws Throwable {
+			final MethodProxy proxy,final CallContext callcontext,final ProviderManagerInfo providerManagerInfo) throws Throwable {
 		final SynchronizedMethod synmethod = providerManagerInfo.isAsyncMethod(method,null) ;
 		if(synmethod == null )
 		{
 			
 			return invokeSynTX_(delegate, method, args,
-					proxy,callcontext,serviceID,providerManagerInfo) ;
+					proxy,callcontext,providerManagerInfo) ;
 		}
 		else
 		{
@@ -495,7 +492,7 @@ public class CGLibUtil {
 				public Object call() throws Exception {					
 					try {
 						return invokeSynTX_(delegate, method, args,
-								proxy,callcontext,serviceID,providerManagerInfo) ;
+								proxy,callcontext,providerManagerInfo) ;
 					} catch (Exception e) {
 						throw e;
 					}
@@ -509,7 +506,7 @@ public class CGLibUtil {
 		
 	}
 	private static Object invokeSynTX_(Object delegate, Method method, Object[] args,
-			MethodProxy proxy,CallContext callcontext,ServiceID serviceID,ProviderManagerInfo providerManagerInfo) throws Throwable {
+			MethodProxy proxy,CallContext callcontext,ProviderManagerInfo providerManagerInfo) throws Throwable {
 //		if (!serviceID.isRemote())
         {
 			String uuid = SynchronizedMethod.buildMethodUUID(method);
@@ -592,6 +589,7 @@ public class CGLibUtil {
                                 {
                                     try
                                     {
+                                    	method = provider.getClass().getMethod(method.getName(), method.getParameterTypes());
                                     	if(proxy == null)
                                     		obj = method.invoke(provider, args);
                                     	else
@@ -636,6 +634,7 @@ public class CGLibUtil {
                                 {
                                     try
                                     {
+                                    	method = provider.getClass().getMethod(method.getName(), method.getParameterTypes());
                                     	if(proxy == null)
                                         	obj = method.invoke(provider, args);
                                     	else
@@ -781,14 +780,14 @@ public class CGLibUtil {
 //        }
 	}
 	public static Object invokeSyn(final Object delegate, final Method method, final Object[] args,
-			final MethodProxy proxy,final CallContext callcontext,final ServiceID serviceID,final ProviderManagerInfo providerManagerInfo) throws Throwable{
+			final MethodProxy proxy,final CallContext callcontext,final ProviderManagerInfo providerManagerInfo) throws Throwable{
 		
 		final SynchronizedMethod synmethod = providerManagerInfo.isAsyncMethod(method,null) ;
 		if(synmethod == null )
 		{
 			
 			return invokeSyn_(delegate, method, args,
-					proxy,callcontext,serviceID,providerManagerInfo);
+					proxy,callcontext,providerManagerInfo);
 		}
 		else
 		{
@@ -817,7 +816,7 @@ public class CGLibUtil {
 				public Object call() throws Exception {					
 					try {
 						return invokeSyn_(delegate, method, args,
-								proxy,callcontext,serviceID,providerManagerInfo);
+								proxy,callcontext,providerManagerInfo);
 					} catch (Exception e) {
 						throw e;
 					}
@@ -829,7 +828,7 @@ public class CGLibUtil {
 		}
 	}
 	private static Object invokeSyn_(Object delegate, Method method, Object[] args,
-			MethodProxy proxy,CallContext callcontext,ServiceID serviceID,ProviderManagerInfo providerManagerInfo) throws Throwable
+			MethodProxy proxy,CallContext callcontext,ProviderManagerInfo providerManagerInfo) throws Throwable
 	
     {
 //        if (!serviceID.isRemote())
@@ -851,7 +850,7 @@ public class CGLibUtil {
                 {// 如果没有配置以方法及相应的方法参数的为标识的同步方法
                     // ，
                     // 如果有则执行所有provider的同步方法
-
+//                	method = delegate.getClass().getMethod(method.getName(), method.getParameterTypes());
                     if (interceptor != null)
                         interceptor.before(method, args);
                     if(proxy == null)
@@ -906,6 +905,7 @@ public class CGLibUtil {
                             {
                                 try
                                 {
+                                	method = provider.getClass().getMethod(method.getName(), method.getParameterTypes());
                                 	if(proxy == null)
                                     	obj = method.invoke(provider, args);
                                 	else

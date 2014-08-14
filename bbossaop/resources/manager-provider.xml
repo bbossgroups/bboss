@@ -165,7 +165,7 @@
 <!--	<managerimport file="org/frameworkset/spi/security/security-provider.xml" />-->
 <!--	<managerimport file="org/frameworkset/spi/properties/injectbean/injectbean.xml" />-->
 <!--	<managerimport file="org/frameworkset/spi/transaction/annotation/annotationtx.xml" />-->
-<!--	<managerimport file="org/frameworkset/spi/syn/manager-synchronize.xml" />-->
+    <managerimport file="org/frameworkset/spi/syn/manager-synchronize.xml" />
 	<managerimport file="org/frameworkset/spi/mutiinterface/service-bean-assemble.xml" />
 	
 <!--	-->

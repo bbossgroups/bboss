@@ -23,7 +23,7 @@
 		<!-- max_bundle_size="64000" -->
 		<attribute name="ClusterConfig">
 			<config>
-				<TCP bind_port="7800" loopback="true" recv_buf_size="20M"
+				<TCP bind_port="7800"  bind_addr="10.25.192.142" loopback="true" recv_buf_size="20M"
 					send_buf_size="640K"
 					discard_incompatible_packets="true" max_bundle_size="64K"
 					max_bundle_timeout="30" enable_bundling="true" use_send_queues="true"

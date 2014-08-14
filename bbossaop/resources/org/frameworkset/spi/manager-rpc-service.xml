@@ -131,9 +131,9 @@
 		
 		<property name="rpc.security" >
 			<map>
-				<property name="rpc.login.module" enable="false" class="org.frameworkset.spi.security.SimpleLoginModule"/>
-				<property name="rpc.authority.module" enable="false" class="org.frameworkset.spi.security.SimpleAuthorityModule"/>
-				<property name="data.encrypt.module" enable="false" class="org.frameworkset.spi.security.SimpleEncryptModule"/>	
+				<property name="rpc.login.module" enable="true" class="org.frameworkset.spi.security.SimpleLoginModule"/>
+				<property name="rpc.authority.module" enable="true" class="org.frameworkset.spi.security.SimpleAuthorityModule"/>
+				<property name="data.encrypt.module" enable="true" class="org.frameworkset.spi.security.SimpleEncryptModule"/>	
 			</map>
 		</property>
 		
