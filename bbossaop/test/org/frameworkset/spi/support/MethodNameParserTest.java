@@ -18,7 +18,6 @@ package org.frameworkset.spi.support;
 
 import java.lang.reflect.Method;
 
-import org.apache.oro.text.regex.Perl5Compiler;
 import org.frameworkset.util.ClassUtil.ClassInfo;
 import org.frameworkset.util.LocalVariableTableParameterNameDiscoverer;
 import org.junit.Test;
@@ -41,17 +40,7 @@ public class MethodNameParserTest {
 		String[] names = r.getParameterNames(method);
 		System.out.println(names);
 	}
-	@Test
-	public void testOutMethod() throws SecurityException, NoSuchMethodException
-	{
-//		Perl5Compiler s;
-//		s.compile(arg0);
-		LocalVariableTableParameterNameDiscoverer r = new LocalVariableTableParameterNameDiscoverer();
-		Method method = Perl5Compiler.class.getMethod("compile", String.class);
-		String[] names = r.getParameterNames(method);
-		System.out.println(names);
-	}
-	
+
 	@Test
 	public void testClassInfo() throws SecurityException, NoSuchMethodException
 	{

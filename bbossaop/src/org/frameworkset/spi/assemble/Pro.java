@@ -844,7 +844,7 @@ public class Pro<V> extends BaseTXManager implements Comparable<V>, BeanInf {
 		try {
 			return (ProMap) ret;
 		} catch (Exception e) {
-			log.warn(e);
+			log.warn("",e);
 			return defaultValue;
 		}
 	}
@@ -1345,7 +1345,7 @@ public class Pro<V> extends BaseTXManager implements Comparable<V>, BeanInf {
 		try {
 			return (ProList) ret;
 		} catch (Exception e) {
-			log.warn(e);
+			log.warn("",e);
 			return defaultValue;
 		}
 	}
@@ -1369,7 +1369,7 @@ public class Pro<V> extends BaseTXManager implements Comparable<V>, BeanInf {
 		try {
 			return (ProArray) ret;
 		} catch (Exception e) {
-			log.warn(e);
+			log.warn("",e);
 			if (defaultValue == null) {
 				try {
 					return (ProArray) this.value;
@@ -1389,7 +1389,7 @@ public class Pro<V> extends BaseTXManager implements Comparable<V>, BeanInf {
 		try {
 			return (ProSet) ret;
 		} catch (Exception e) {
-			log.warn(e);
+			log.warn("",e);
 			return defaultValue;
 		}
 	}

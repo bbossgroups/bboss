@@ -1,7 +1,6 @@
 package org.frameworkset.spi.mutiinterface;
 
 import org.frameworkset.spi.ApplicationContext;
-import org.frameworkset.spi.ClientProxyContext;
 import org.junit.Test;
 
 public class TestMutiinterface {
@@ -41,54 +40,7 @@ public class TestMutiinterface {
         System.out.println("brpc.testBaseAI():" + brpc.testBaseAI());
     }
     static ApplicationContext context_bean = ApplicationContext.getApplicationContext("org/frameworkset/spi/mutiinterface/service-bean-assemble.xml");
-    @Test
-    public void testProperty()
-    {
-    	 
-        AI rpc = ClientProxyContext.getApplicationClientBean("(rmi::10.25.192.142:1090)/mutiinfservice",AI.class);
-//        AI rpc = (AI)context_bean
-//        .getBeanObject("(rmi::172.16.17.216:1099)/mutiinfservice");
-        System.out.println("rpc.testAI():" + rpc.testAI());
-        System.out.println("rpc.testBaseAI():" + rpc.testBaseAI());
-//        AnotherAI arpc = (AnotherAI)rpc;
-//        System.out.println("arpc.testAnotherAI():" + arpc.testAnotherAI());
-//        System.out.println("arpc.testBaseAI():" + arpc.testBaseAI());
-        BaseAI brpc = (BaseAI)rpc;
-        
-        System.out.println("brpc.testBaseAI():" + brpc.testBaseAI());
-    }
     
-    public static void main(String args[])
-    {
-    	TestMutiinterface test = new TestMutiinterface();
-    	long start = System.currentTimeMillis();
-    	for(int i = 0; i < 1000 ; i ++)
-    	{
-    		test.testProperty();
-    	}
-    	long end = System.currentTimeMillis();
-    	
-    	
-    	
-    	long start1 = System.currentTimeMillis();
-    	for(int i = 0; i < 1000 ; i ++)
-    	{
-    		test.testProperty();
-    	}
-    	
-    	
-    	long end1 = System.currentTimeMillis();
-    	long start2 = System.currentTimeMillis();
-    	for(int i = 0; i < 1000 ; i ++)
-    	{
-    		test.testProperty();
-    	}
-    	
-    	
-    	long end2 = System.currentTimeMillis();
-    	System.out.println("耗时:"+(end - start));
-    	System.out.println("耗时 1:"+(end1 - start1));
-    	System.out.println("耗时 2:"+(end2 - start2));
-    }
+   
 
 }

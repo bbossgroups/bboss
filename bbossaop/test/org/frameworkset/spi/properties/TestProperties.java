@@ -49,7 +49,7 @@ public class TestProperties {
     
     public static void testMapProperties()
     {
-        ProMap map = context.getMapProperty("addpermission-map");
+        ProMap map = context.getMapProperty("connection.params");
         System.out.println(map);
     }
     
@@ -105,20 +105,20 @@ public class TestProperties {
     
     public static void testListProperties()
     {
-        ProList list = context.getListProperty("addpermission-list");
+        ProList list = context.getListProperty("aaa.connection.list.params");
         System.out.println(list);
     }
     
     public static void testFreeze()
     {
-        ProList list = context.getListProperty("addpermission-list");
+        ProList list = context.getListProperty("aaa.connection.list.params");
         
         list.add(new Pro());
     }
     
     public static void testSetProperties()
     {
-        ProSet set = context.getSetProperty("addpermission-set");
+        ProSet set = context.getSetProperty("aaa.connection.set.params");
         System.out.println(set);
     }
     
