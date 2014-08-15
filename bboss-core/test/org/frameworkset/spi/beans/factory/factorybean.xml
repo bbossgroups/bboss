@@ -1,0 +1,93 @@
+<!-- 
+Warning: Factory pattern can not against loop ioc,while loop ioc occured , unknown exception will be throwed.
+ -->
+<properties>
+	<!-- 
+		bean [testbean] will be created used facctory method [createNoArgs] of factory bean [testfactorybean].
+		testfactorybean is defined by another composinent.
+	 -->
+	<property name="testbeanCreateNoArgs" factory-bean="testfactorybean" factory-method="createNoArgs"/>
+	<!-- 
+		bean [testbean] will be created used facctory method [createWithArgs] of factory bean [testfactorybean].
+		testfactorybean is defined by another component.
+		constructions parameters will be used as the parameters of createWithArgs method.
+	 -->
+	<property name="testbeanCreateByArgs" factory-bean="testfactorybean" factory-method="createWithArgs">
+		<construction>
+			<property name="name" value="duoduo"/>
+			<property name="id" value="12"/>	
+		</construction>
+	</property>
+	<!-- 
+		bean [testbean] will be created used facctory method [createNoArgsThrowException] of factory bean [testfactorybean].
+		testfactorybean is defined by another component.
+	 -->
+	<property name="testbeanCreateNoArgsThrowException" factory-bean="testfactorybean" factory-method="createNoArgsThrowException"/>
+	<!-- 
+		bean [testbean] will be created used factory method [createWithArgsThrowException] of factory bean [testfactorybean].
+		testfactorybean is defined by another component.
+		constructions parameters will be used as the parameters of createWithArgsThrowException method.
+		A Exception occur when call createWithArgsThrowException method and component created failed.
+	 -->
+	<property name="testbeanCreateByArgsThrowException" factory-bean="testfactorybean" factory-method="createWithArgsThrowException">
+		<construction>
+			<property name="name" value="duoduo"/>
+			<property name="id" value="12"/>	
+		</construction>
+	</property>
+	
+	<!-- 
+		bean [testbean] will be created used factory method [createWithArgs] of factory class [org.frameworkset.spi.beans.factory.TestFactoryBeanCreate].
+		constructions parameters will be used as the parameters of createWithArgs method.
+		createWithArgs is a no static method.
+		
+	 -->
+	<property name="testbeanCreateByArgsUseFactoryClassButNoStatic" 
+		f:factorydata1="duoduo"
+		f:factorydata2="12"	 
+		factory-class="org.frameworkset.spi.beans.factory.TestFactoryBeanCreate" 
+		factory-method="createWithArgs">
+		<construction>
+			<property name="name" value="duoduo"/>
+			<property name="id" value="12"/>	
+		</construction>
+	</property>
+	
+	<property name="testfactorybean" class="org.frameworkset.spi.beans.factory.TestFactoryBeanCreate">
+		<property name="factorydata1" value="duoduo"/>
+		<property name="factorydata2" value="12"/>	      
+	</property>
+	
+	<!-- createWithArgs method must be a static method of factory class org.frameworkset.spi.beans.factory.TestFactoryBeanCreate, 
+		 constructions parameters will be used as the parameters of createWithArgs method.-->
+	<property name="staticTestbeanCreateByArgs" factory-class="org.frameworkset.spi.beans.factory.StaticBeanFactory" factory-method="createWithArgs">
+		<construction>
+			<property name="name" value="duoduo"/>
+			<property name="id" value="12"/>	
+		</construction>
+	</property>
+	
+	<!-- createNoArgs method must be a static method of factory class org.frameworkset.spi.beans.factory.TestFactoryBeanCreate
+		
+		 -->
+	<property name="staticTestbeanCreateNoArgs" factory-class="org.frameworkset.spi.beans.factory.StaticBeanFactory" factory-method="createNoArgs"/>
+	
+	
+	<!-- createWithArgsThrowException method must be a static method of factory class org.frameworkset.spi.beans.factory.TestFactoryBeanCreate, 
+		 constructions parameters will be used as the parameters of createWithArgsThrowException method.
+		 A Exception occur when call createWithArgsThrowException method and component created failed.
+		 -->
+	<property name="staticTestbeanCreateByArgsThrowException" factory-class="org.frameworkset.spi.beans.factory.StaticBeanFactory" factory-method="createWithArgsThrowException">
+		<construction>
+			<property name="name" value="duoduo"/>
+			<property name="id" value="12"/>	
+		</construction>
+	</property>
+	
+	
+	
+	<!-- createNoArgsThrowException method must be a static method of factory class org.frameworkset.spi.beans.factory.TestFactoryBeanCreate
+	A Exception occur when call createNoArgsThrowException method and component created failed.
+		 -->
+	<property name="staticTestbeanCreateNoArgsThrowException" factory-class="org.frameworkset.spi.beans.factory.StaticBeanFactory" factory-method="createNoArgsThrowException"/>	
+</properties>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+	<property name="test1" class="org.frameworkset.soa.xblink.Test1">
+		<property name="test2" class="org.frameworkset.soa.xblink.Test2">
+			<property name="test1" refid="attr:test1" />
+		</property>
+		<property name="test3" class="org.frameworkset.soa.xblink.Test3">
+			<property name="test2" refid="attr:test1->test2" />
+		</property>
+		<property name="test4" refid="attr:test1"/>
+	</property>
+</properties>

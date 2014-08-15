@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding='UTF-8'?>
+<properties>
+	<property name="a" f:b="attr:b" class="org.frameworkset.spi.onlyproperty.A"/>
+	<property name="b" class="org.frameworkset.spi.onlyproperty.B"/>
+	
+</properties>

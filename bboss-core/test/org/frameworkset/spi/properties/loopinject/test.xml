@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+	<property name="test1" class="org.frameworkset.spi.properties.loopinject.Test1">
+		<property name="test2" class="org.frameworkset.spi.properties.loopinject.Test2">
+		    <!--内部组件test2的test1属性引用外层组件test1-->		
+			<property name="test1" refid="attr:test1" />
+			<!--内部组件test2的test3属性引用外层组件test1的test3属性-->
+			<property name="test3" refid="attr:test1->test3" />
+		</property>
+		<!--内部组件test3的test2属性引用外层组件test1的test2属性-->
+		<property name="test3" class="org.frameworkset.spi.properties.loopinject.Test3"
+			f:test2="attr:test1->test2"/>
+		<!--test4属性直接引用外层组件test1-->
+		<property name="test4" refid="attr:test1"/>
+		<property name="testmap" >
+			<map componentType="bean">
+			    <!--Map类型属性testmap的test4索引对应的值是对外层组件test1引用-->
+				<property name="test4" refid="attr:test1"/>
+			</map>
+		</property>
+		<property name="testlist" >
+			<list componentType="bean">
+			 <!--List类型属性testlist的第一个值是对外层组件test1引用-->
+				<property refid="attr:test1"/>
+			</list>
+		</property>
+		<property name="testarray" >
+			<array componentType="org.frameworkset.spi.properties.loopinject.Test1">
+				<!--数组类型属性testlist的第一个值是对外层组件test1引用-->
+				<property refid="attr:test1"/>
+			</array>
+		</property>
+		
+	</property>
+	<property name="test5" refid="attr:test1->test4"/>
+		<property name="test6" refid="attr:test1->testarray[0]->test2"/>
+		<property name="test7" refid="attr:test1->testlist[0]->test2"/>
+		<property name="test8" refid="attr:test1->testmap[test4]->test2"/>
+		<property name="test9" refid="attr:test1->testarray[0]"/>
+		<property name="test10" refid="attr:test1->testlist[0]"/>
+		<property name="test11" refid="attr:test1->testmap[test4]"/>
+		<property name="test12" refid="attr:test1->test3->test2"/>
+</properties>

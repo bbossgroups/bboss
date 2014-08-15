@@ -21,7 +21,7 @@
 				${casserverlib},
 				${active-ext-lib},
 				${bboss-ws-lib},
-				${bboss-aop-lib},
+				${bboss-core-lib},
 				${cms_baseline-lib},
 				${bboss-taglib-lib},
 				${kettle-lib}
@@ -41,7 +41,7 @@
 			ant distrib-bboss-util-jars:分发工具包到以下目录[frameworkset-util.jar]
 				${active-ext-lib},
 				${bboss-ws-lib},
-				${bboss-aop-lib},
+				${bboss-core-lib},
 				${bbossevent-lib},
 				${cms_baseline-lib},
 				${bboss-persistent-lib},
@@ -52,18 +52,18 @@
 				${monitorconsole-lib}
 			    ${bboss-mvc-lib}
 			ant build-bboss-mvc :构建mvc框架包，并且执行依赖构建
-			ant build-bboss-aop :构建aop框架包，并且执行依赖构建
-			ant build-bboss-aop-only :构建aop框架包，不执行依赖构建
-			ant distrib-bboss-aop-jars :分发aop框架包到以下工程[bboss-schedule.jar,bboss-netty.jar,bboss-aop.jar,bboss-camel.jar,bboss-mina.jar,bboss-jms.jar,bboss-ws.jar,bboss-tlq.jar,bboss-rmi.jar,bboss-http.jar]
+			ant build-bboss-core :构建core框架包，并且执行依赖构建
+			ant build-bboss-core-only :构建core框架包，不执行依赖构建
+			ant distrib-bboss-core-jars :分发core框架包到以下工程[bboss-schedule.jar,bboss-netty.jar,bboss-core.jar,bboss-camel.jar,bboss-mina.jar,bboss-jms.jar,bboss-ws.jar,bboss-tlq.jar,bboss-rmi.jar,bboss-http.jar]
 				${bbossevent-lib},
 				${bbossevent-client-lib},				
 				${cms_baseline-lib},
 				${bboss-ws-lib},
 				${active-ext-lib},
 				${kettle-lib}
-				${bbossaop-client-lib}
+				${bbosscore-client-lib}
 			    ${bboss-mvc-lib}
-			ant distrib-bboss-aop-rpc-conf:分发aop框架rpc服务调用配置文件到以下工程[manager-rpc-service.xml,manager-rpc-mina.xml,manager-rpc-jms.xml,manager-rpc-webservice.xml,manager-rpc-netty.xml]
+			ant distrib-bboss-core-rpc-conf:分发core框架rpc服务调用配置文件到以下工程[manager-rpc-service.xml,manager-rpc-mina.xml,manager-rpc-jms.xml,manager-rpc-webservice.xml,manager-rpc-netty.xml]
 				${cms_baseline_resources},
 				${active-ext_resources},
 				${bboss-ws_resources},
@@ -101,7 +101,7 @@
 
 	<!-- set global properties for this build -->
 	<property file="build.properties" />
-	<target name="complete" depends="build-persistent,build-bboss-taglib,build-bboss-util,build-bboss-aop,build-bboss-event,build-active-ext-withdepends,build-cms_baseline,build-kettle" description="copy depends liberarys">
+	<target name="complete" depends="build-persistent,build-bboss-taglib,build-bboss-util,build-bboss-core,build-bboss-rpc,build-bboss-event,build-active-ext-withdepends,build-cms_baseline,build-kettle" description="copy depends liberarys">
 
 	</target>
 	<target name="build-persistent" description="build bboss persistent project">
@@ -111,7 +111,7 @@
 		<echo>update ${casserverlib}/frameworkset-pool.jar</echo>
 		<echo>update ${active-ext-lib}/frameworkset-pool.jar</echo>
 		<echo>update ${bboss-ws-lib}/frameworkset-pool.jar</echo>
-		<echo>update ${bboss-aop-lib}/frameworkset-pool.jar</echo>
+		<echo>update ${bboss-core-lib}/frameworkset-pool.jar</echo>
 		<echo>update ${cms_baseline-lib}/frameworkset-pool.jar</echo>
 		<echo>update ${bboss-taglib-lib}/frameworkset-pool.jar</echo>
 		<echo>update ${kettle-lib}/frameworkset-pool.jar</echo>
@@ -125,7 +125,7 @@
 		<echo>update ${casserverlib}/frameworkset-pool.jar</echo>
 		<echo>update ${active-ext-lib}/frameworkset-pool.jar</echo>
 		<echo>update ${bboss-ws-lib}/frameworkset-pool.jar</echo>
-		<echo>update ${bboss-aop-lib}/frameworkset-pool.jar</echo>
+		<echo>update ${bboss-core-lib}/frameworkset-pool.jar</echo>
 		<echo>update ${cms_baseline-lib}/frameworkset-pool.jar</echo>
 		<echo>update ${bboss-taglib-lib}/frameworkset-pool.jar</echo>
 		<echo>update ${kettle-lib}/frameworkset-pool.jar</echo>
@@ -139,7 +139,7 @@
 			<echo>update ${casserverlib}/frameworkset-pool.jar</echo>
 			<echo>update ${active-ext-lib}/frameworkset-pool.jar</echo>
 			<echo>update ${bboss-ws-lib}/frameworkset-pool.jar</echo>
-			<echo>update ${bboss-aop-lib}/frameworkset-pool.jar</echo>
+			<echo>update ${bboss-core-lib}/frameworkset-pool.jar</echo>
 			<echo>update ${cms_baseline-lib}/frameworkset-pool.jar</echo>
 			<echo>update ${bboss-taglib-lib}/frameworkset-pool.jar</echo>
 			<echo>update ${kettle-lib}/frameworkset-pool.jar</echo>
@@ -196,7 +196,7 @@
 			</sequential>
 		</for>
 	</target>
-	<target name="build-bboss-taglib" depends="build-persistent,build-bboss-aop,build-bboss-util" description="build bboss taglib project">
+	<target name="build-bboss-taglib" depends="build-persistent,build-bboss-core,build-bboss-util" description="build bboss taglib project">
 		<echo>build bboss taglib project</echo>
 		<antcall target="build-bboss-taglib-only">
 		</antcall>
@@ -207,7 +207,7 @@
 		<ant dir="${bboss-taglib}" />
 		<!--
 			common_old_tag<-cms_baseline [frameworkset.jar]
-			common_old_tag<-bbossaop [frameworkset.jar]
+			common_old_tag<-bbosscore [frameworkset.jar]
 			common_old_tag<-cas server [frameworkset.jar]
 			common_old_tag<-portal [frameworkset.jar]
 			common_old_tag<-bboss-ws [frameworkset.jar]
@@ -260,7 +260,7 @@
 		<!--
 		common_old_util<-active-ext [frameworkset-util.jar]
 		common_old_util<-bboss-ws [frameworkset-util.jar]
-		common_old_util<-bbossaop [frameworkset-util.jar]
+		common_old_util<-bbosscore [frameworkset-util.jar]
 		common_old_util<-bbossevent [frameworkset-util.jar]
 		common_old_util<-cms_baseline [frameworkset-util.jar]
 		
@@ -298,7 +298,7 @@
 			<!--
 			common_old_util<-active-ext [frameworkset-util.jar]
 			common_old_util<-bboss-ws [frameworkset-util.jar]
-			common_old_util<-bbossaop [frameworkset-util.jar]
+			common_old_util<-bbosscore [frameworkset-util.jar]
 			common_old_util<-bbossevent [frameworkset-util.jar]
 			common_old_util<-cms_baseline [frameworkset-util.jar]
 			
@@ -314,7 +314,7 @@
 		</target>
 
 	<target name="distrib-bboss-util-jars" description="distrib-bboss-util-jars">
-		<for list="${bboss-security-lib},${bboss-security-web-lib},${bboss-schedule-lib},${bboss-plugin-wordpdf-lib-depends},${bboss-plugin-hessian-lib},${bbossupload-lib},${demoproject-lib},${active-ext-lib},${bboss-aop-lib},${bbossevent-lib},${cms_baseline-lib},${bboss-persistent-lib},${bboss-taglib-lib},${kettle-lib},${portallib},${casserverlib},${monitorconsole-lib},${monitorconsole-compilelib},${bboss-mvc-lib},${creatoresb-lib},${bboss-clientproxy-lib},${mvc-lib},${persistent-lib},${xmlrequest-lib},${xmlserializable-lib},${bboss-plugin-hibernate-lib},${session-lib},${sessionmonitor-lib}" param="destdir">
+		<for list="${bboss-security-lib},${bboss-security-web-lib},${bboss-schedule-lib},${bboss-plugin-wordpdf-lib-depends},${bboss-plugin-hessian-lib},${bbossupload-lib},${demoproject-lib},${active-ext-lib},${bboss-core-lib},${bboss-rpc-lib},${bbossevent-lib},${cms_baseline-lib},${bboss-persistent-lib},${bboss-taglib-lib},${kettle-lib},${portallib},${casserverlib},${monitorconsole-lib},${monitorconsole-compilelib},${bboss-mvc-lib},${creatoresb-lib},${bboss-clientproxy-lib},${mvc-lib},${persistent-lib},${xmlrequest-lib},${xmlserializable-lib},${bboss-plugin-hibernate-lib},${session-lib},${sessionmonitor-lib}" param="destdir">
 			<sequential>
 				<echo>@{destdir}-------------------------------</echo>
 				<antcall target="svn-update-procedure">
@@ -339,7 +339,7 @@
 			</for>
 		</target>
 	<target name="distrib-bboss-velocity-jars" description="distrib-bboss-velocity-jars">
-		<for list="${bboss-security-lib},${bboss-util-lib},${bbossupload-lib},${demoproject-lib},${active-ext-lib},${bboss-aop-lib},${bbossevent-lib},${cms_baseline-lib},${bboss-persistent-lib}/velocity,${bboss-taglib-lib},${kettle-lib},${portallib},${casserverlib},${monitorconsole-lib},${monitorconsole-compilelib},${bboss-mvc-lib},${creatoresb-lib},${bboss-clientproxy-lib},${mvc-lib},${persistent-lib},${xmlrequest-lib},${xmlserializable-lib},${bboss-plugin-hibernate-lib},${sessionmonitor-lib}" param="destdir">
+		<for list="${bboss-security-lib},${bboss-util-lib},${bbossupload-lib},${demoproject-lib},${active-ext-lib},${bbossevent-lib},${cms_baseline-lib},${bboss-persistent-lib}/velocity,${bboss-taglib-lib},${kettle-lib},${portallib},${casserverlib},${monitorconsole-lib},${monitorconsole-compilelib},${bboss-mvc-lib},${creatoresb-lib},${bboss-clientproxy-lib},${mvc-lib},${persistent-lib},${xmlrequest-lib},${xmlserializable-lib},${bboss-plugin-hibernate-lib},${sessionmonitor-lib}" param="destdir">
 			<sequential>
 				<echo>@{destdir}-------------------------------</echo>
 				<antcall target="svn-update-procedure">
@@ -354,7 +354,7 @@
 	
 	
 	<target name="distrib-bboss-soa-jars" description="distrib-bboss-soa-jars">
-			<for list="${demoproject-lib},${portallib},${casserverlib},${active-ext-lib},${bboss-aop-lib},${cms_baseline-lib},${bboss-taglib-lib},${kettle-lib},${monitorconsole-lib},${monitorconsole-compilelib},${bboss-mvc-lib},${creatoresb-lib},${bboss-clientproxy-lib},${xmlserializable-lib},${session-lib},${sessionmonitor-lib}" param="destdir">
+			<for list="${demoproject-lib},${portallib},${casserverlib},${active-ext-lib},${bboss-rpc-lib},${bboss-core-lib},${cms_baseline-lib},${bboss-taglib-lib},${kettle-lib},${monitorconsole-lib},${monitorconsole-compilelib},${bboss-mvc-lib},${creatoresb-lib},${bboss-clientproxy-lib},${xmlserializable-lib},${session-lib},${sessionmonitor-lib}" param="destdir">
 				<sequential>
 					<echo>@{destdir}-------------------------------</echo>
 					<antcall target="svn-update-procedure">
@@ -365,11 +365,16 @@
 				</sequential>
 			</for>
 		</target>
-	<target name="build-bboss-aop" depends="build-persistent,build-bboss-util" description="build bboss-aop project">
-		<antcall target="build-bboss-aop-only">
+	<target name="build-bboss-core" depends="build-bboss-util" description="build bboss-core project">
+		<antcall target="build-bboss-core-only">
 		</antcall>
 	</target>
-	<target name="build-bboss-mvc" depends="build-bboss-aop,build-persistent,build-bboss-util,build-bboss-taglib" description="build bboss-mvc project">
+	
+	<target name="build-bboss-rpc" depends="build-bboss-core" description="build bboss-rpc project">
+			<antcall target="build-bboss-rpc-only">
+			</antcall>
+		</target>
+	<target name="build-bboss-mvc" depends="build-bboss-core,build-persistent,build-bboss-util,build-bboss-taglib" description="build bboss-mvc project">
 			<antcall target="build-bboss-mvc-only">
 			</antcall>
 	</target>
@@ -398,45 +403,55 @@
 		
 	
 
-	<target name="build-bboss-aop-only" description="build bboss-aop project">
-		<echo>build bboss-aop project</echo>
-		<ant dir="${bboss-aop}" />
+	<target name="build-bboss-core-only" description="build bboss-core project">
+		<echo>build bboss-core project</echo>
+		<ant dir="${bboss-core}" />
 		<!--
-		bbossaop<-bbossevent [bboss-aop.jar,bboss-camel.jar,bboss-mina.jar,bboss-jms.jar,bboss-ws.jar]
-bbossaop<-cms_baseline [bboss-aop.jar,bboss-camel.jar,bboss-mina.jar,bboss-jms.jar,bboss-ws.jar]
-bbossaop<-bboss-ws [bboss-aop.jar,bboss-camel.jar,bboss-mina.jar,bboss-jms.jar,bboss-ws.jar]
-bbossaop<-active-ext [bboss-aop.jar,bboss-camel.jar,bboss-mina.jar,bboss-jms.jar,bboss-ws.jar]
-bbossaop<-common_old_tag [bboss-aop.jar]
-bbossaop<-common_old_util [bboss-aop.jar]
-bbossaop<-kettle [bboss-aop.jar,bboss-camel.jar,bboss-mina.jar,bboss-jms.jar,bboss-ws.jar]
-bbossaop<-portal [bboss-aop.jar]
-bbossaop<-cas server [bboss-aop.jar]
+		bbosscore<-bbossevent [bboss-core.jar,bboss-camel.jar,bboss-mina.jar,bboss-jms.jar,bboss-ws.jar]
+bbosscore<-cms_baseline [bboss-core.jar,bboss-camel.jar,bboss-mina.jar,bboss-jms.jar,bboss-ws.jar]
+bbosscore<-bboss-ws [bboss-core.jar,bboss-camel.jar,bboss-mina.jar,bboss-jms.jar,bboss-ws.jar]
+bbosscore<-active-ext [bboss-core.jar,bboss-camel.jar,bboss-mina.jar,bboss-jms.jar,bboss-ws.jar]
+bbosscore<-common_old_tag [bboss-core.jar]
+bbosscore<-common_old_util [bboss-core.jar]
+bbosscore<-kettle [bboss-core.jar,bboss-camel.jar,bboss-mina.jar,bboss-jms.jar,bboss-ws.jar]
+bbosscore<-portal [bboss-core.jar]
+bbosscore<-cas server [bboss-core.jar]
 		-->
-		<echo>update bboss aop jars</echo>
-		<antcall target="distrib-bboss-aop-jars" />
-		<antcall target="distrib-netty-jars" />
-		<!--<antcall target="distrib-bboss-aop-rpc-conf" />-->
+		<echo>update bboss core jars</echo>
+		<antcall target="distrib-bboss-core-jars" />
+		
+		<!--<antcall target="distrib-bboss-core-rpc-conf" />-->
 
 	</target>
 	
+	<target name="build-bboss-rpc-only" description="build bboss-rpc project">
+			<echo>build bboss-rpc project</echo>
+			<ant dir="${bboss-rpc}" />
+			
+			<echo>update bboss rpc jars</echo>
+			<antcall target="distrib-bboss-rpc-jars" />
+			
+			<!--<antcall target="distrib-bboss-core-rpc-conf" />-->
+
+		</target>
 	
- <target name="build-bboss-aop-jars-only" description="build bboss-aop project">
-		<echo>build-bboss-aop-jars-only</echo>
-		<ant dir="${bboss-aop}" />
+	
+ <target name="build-bboss-core-jars-only" description="build bboss-core project">
+		<echo>build-bboss-core-jars-only</echo>
+		<ant dir="${bboss-core}" />
 		<!--
-		bbossaop<-bbossevent [bboss-aop.jar,bboss-camel.jar,bboss-mina.jar,bboss-jms.jar,bboss-ws.jar]
-bbossaop<-cms_baseline [bboss-aop.jar,bboss-camel.jar,bboss-mina.jar,bboss-jms.jar,bboss-ws.jar]
-bbossaop<-bboss-ws [bboss-aop.jar,bboss-camel.jar,bboss-mina.jar,bboss-jms.jar,bboss-ws.jar]
-bbossaop<-active-ext [bboss-aop.jar,bboss-camel.jar,bboss-mina.jar,bboss-jms.jar,bboss-ws.jar]
-bbossaop<-common_old_tag [bboss-aop.jar]
-bbossaop<-common_old_util [bboss-aop.jar]
-bbossaop<-kettle [bboss-aop.jar,bboss-camel.jar,bboss-mina.jar,bboss-jms.jar,bboss-ws.jar]
-bbossaop<-portal [bboss-aop.jar]
-bbossaop<-cas server [bboss-aop.jar]
+		bbosscore<-bbossevent [bboss-core.jar,bboss-camel.jar,bboss-mina.jar,bboss-jms.jar,bboss-ws.jar]
+bbosscore<-cms_baseline [bboss-core.jar,bboss-camel.jar,bboss-mina.jar,bboss-jms.jar,bboss-ws.jar]
+bbosscore<-bboss-ws [bboss-core.jar,bboss-camel.jar,bboss-mina.jar,bboss-jms.jar,bboss-ws.jar]
+bbosscore<-active-ext [bboss-core.jar,bboss-camel.jar,bboss-mina.jar,bboss-jms.jar,bboss-ws.jar]
+bbosscore<-common_old_tag [bboss-core.jar]
+bbosscore<-common_old_util [bboss-core.jar]
+bbosscore<-kettle [bboss-core.jar,bboss-camel.jar,bboss-mina.jar,bboss-jms.jar,bboss-ws.jar]
+bbosscore<-portal [bboss-core.jar]
+bbosscore<-cas server [bboss-core.jar]
 		-->
-		<echo>update bboss aop jars</echo>
-		<antcall target="distrib-bboss-aop-jars" />
-		<antcall target="distrib-netty-jars" />
+		<echo>update bboss core jars</echo>
+		<antcall target="distrib-bboss-core-jars" />
 	</target>
 
 	<target name="distrib-netty-jars" description="distrib-netty-jars">
@@ -444,7 +459,7 @@ bbossaop<-cas server [bboss-aop.jar]
 			<sequential>
 				<echo>@{destdir}-------------------------------</echo>
 				<antcall target="svn-update-procedure">
-					<param name="sourcedir" value="${bboss-aop}/distrib/lib/netty" />
+					<param name="sourcedir" value="${bboss-rpc}/distrib/lib/netty" />
 					<param name="filedir" value="@{destdir}" />
 					<param name="files" value="netty-3.2.1.Final.jar" />
 				</antcall>
@@ -457,51 +472,39 @@ bbossaop<-cas server [bboss-aop.jar]
 				<sequential>
 					<echo>@{destdir}-------------------------------</echo>
 					<antcall target="svn-update-procedure">
-						<param name="sourcedir" value="${bboss-aop}/distrib/lib/asm/" />
+						<param name="sourcedir" value="${bboss-rpc}/distrib/lib/asm/" />
 						<param name="filedir" value="@{destdir}" />
 						<param name="files" value="asm-3.1.jar" />
 					</antcall>
 					<antcall target="svn-update-procedure">
-						<param name="sourcedir" value="${bboss-aop}/distrib/lib/cglib/" />
+						<param name="sourcedir" value="${bboss-rpc}/distrib/lib/cglib/" />
 						<param name="filedir" value="@{destdir}" />
 						<param name="files" value="cglib-2.2.jar" />
 					</antcall>
 				</sequential>
 			</for>
 		</target>
-	<target name="distrib-bboss-aop-jars" description="distrib-bboss-aop-jars">
+	<target name="distrib-bboss-core-jars" description="distrib-bboss-core-jars">
 		<for list="${demoproject-lib},${bbossevent-lib},${cms_baseline-lib},${active-ext-lib},${kettle-lib},${monitorconsole-compilelib},${monitorconsole-lib},${creatoresb-lib}" param="destdir">
 			<sequential>
 				<echo>@{destdir}-------------------------------</echo>
 				<antcall target="svn-update-procedure">
-					<param name="sourcedir" value="${bboss-aop}/distrib" />
+					<param name="sourcedir" value="${bboss-core}/distrib" />
 					<param name="filedir" value="@{destdir}" />
-					<param name="files" value="bboss-aop.jar,bboss-camel.jar,bboss-mina.jar,bboss-jms.jar,bboss-ws.jar,jgroups.jar,bboss-tlq.jar,bboss-rmi.jar,bboss-http.jar" />
+					<param name="files" value="bboss-core.jar" />
 				</antcall>
 			</sequential>
 		</for>
 		
 		
 		
-
-		<for list="${bbossevent-lib}" param="destdir">
-			<sequential>
-				<echo>@{destdir}-------------------------------</echo>
-				<antcall target="svn-update-procedure">
-					<param name="sourcedir" value="${bboss-aop}/distrib/test" />
-					<param name="filedir" value="@{destdir}" />
-					<param name="files" value="bboss-aop-test.jar" />
-				</antcall>
-			</sequential>
-		</for>
-
 		<for list="${bboss-security-lib},${bboss-security-web-lib},${bboss-schedule-lib},${bboss-plugin-wordpdf-lib-depends},${bboss-plugin-hessian-lib},${bboss-persistent-lib},${bbossupload-lib},${bboss-taglib-lib},${portallib},${casserverlib},${mvc-lib},${xmlrequest-lib},${xmlserializable-lib},${persistent-lib},${bboss-plugin-hibernate-lib},${session-lib},${sessionmonitor-lib}" param="destdir">
 			<sequential>
 				<echo>@{destdir}-------------------------------</echo>
 				<antcall target="svn-update-procedure">
-					<param name="sourcedir" value="${bboss-aop}/distrib" />
+					<param name="sourcedir" value="${bboss-core}/distrib" />
 					<param name="filedir" value="@{destdir}" />
-					<param name="files" value="bboss-aop.jar" />
+					<param name="files" value="bboss-core.jar" />
 				</antcall>
 			</sequential>
 		</for>
@@ -510,37 +513,68 @@ bbossaop<-cas server [bboss-aop.jar]
 					<sequential>
 						<echo>@{destdir}-------------------------------</echo>
 						<antcall target="svn-update-procedure">
-							<param name="sourcedir" value="${bboss-aop}/distrib" />
+							<param name="sourcedir" value="${bboss-core}/distrib" />
 							<param name="filedir" value="@{destdir}" />
-							<param name="files" value="bboss-aop.jar,jgroups.jar,bboss-http.jar" />
+							<param name="files" value="bboss-core.jar" />
 						</antcall>
 					</sequential>
 				</for>
-		<for list="${bboss-clientproxy-lib}" param="destdir">
-					<sequential>
-						<echo>@{destdir}/cxf-------------------------------</echo>
-						<antcall target="svn-update-procedure">
-							<param name="sourcedir" value="${bboss-aop}/distrib" />
-							<param name="filedir" value="@{destdir}/cxf" />
-							<param name="files" value="bboss-ws.jar" />
-						</antcall>
-					</sequential>
-				</for>
-				<for list="${xmlrequest-lib}" param="destdir">
-					<sequential>
-						<echo>@{destdir}/cxf-------------------------------</echo>
-						<antcall target="svn-update-procedure">
-							<param name="sourcedir" value="${bboss-aop}/distrib" />
-							<param name="filedir" value="@{destdir}" />
-							<param name="files" value="bboss-ws.jar" />
-						</antcall>
-					</sequential>
-				</for>
+		
+				
 				
 		
 		
 	</target>
-	
+	<target name="distrib-bboss-rpc-jars" description="distrib-bboss-rpc-jars">
+			<for list="${demoproject-lib},${bbossevent-lib},${cms_baseline-lib},${active-ext-lib},${kettle-lib},${monitorconsole-compilelib},${monitorconsole-lib},${creatoresb-lib}" param="destdir">
+				<sequential>
+					<echo>@{destdir}-------------------------------</echo>
+					<antcall target="svn-update-procedure">
+						<param name="sourcedir" value="${bboss-rpc}/distrib" />
+						<param name="filedir" value="@{destdir}" />
+						<param name="files" value="bboss-rpc.jar" />
+					</antcall>
+				</sequential>
+			</for>
+			
+			
+			
+			
+			
+			<for list="${bboss-mvc-lib},${bboss-clientproxy-lib}" param="destdir">
+						<sequential>
+							<echo>@{destdir}-------------------------------</echo>
+							<antcall target="svn-update-procedure">
+								<param name="sourcedir" value="${bboss-rpc}/distrib" />
+								<param name="filedir" value="@{destdir}" />
+								<param name="files" value="bboss-rpc.jar" />
+							</antcall>
+						</sequential>
+					</for>
+			<for list="${bboss-clientproxy-lib}" param="destdir">
+						<sequential>
+							<echo>@{destdir}/cxf-------------------------------</echo>
+							<antcall target="svn-update-procedure">
+								<param name="sourcedir" value="${bboss-rpc}/distrib" />
+								<param name="filedir" value="@{destdir}/cxf" />
+								<param name="files" value="bboss-rpc.jar" />
+							</antcall>
+						</sequential>
+					</for>
+					<for list="${xmlrequest-lib}" param="destdir">
+						<sequential>
+							<echo>@{destdir}/cxf-------------------------------</echo>
+							<antcall target="svn-update-procedure">
+								<param name="sourcedir" value="${bboss-rpc}/distrib" />
+								<param name="filedir" value="@{destdir}" />
+								<param name="files" value="bboss-rpc.jar" />
+							</antcall>
+						</sequential>
+					</for>
+					
+			
+			
+		</target>
 	
 	<target name="distrib-bboss-mvc-jars" description="distrib-bboss-mvc-jars">
 			<for list="${bboss-plugin-wordpdf-lib-depends},${bboss-plugin-hessian-lib},${bbossupload-lib},${demoproject-lib},${cms_baseline-lib},${monitorconsole-compilelib},${monitorconsole-lib},${creatoresb-lib},${mvc-lib},${xmlrequest-lib},${sessionmonitor-lib},${bboss-security-web-lib}" param="destdir">
@@ -603,7 +637,7 @@ bbossaop<-cas server [bboss-aop.jar]
 		</target>	
 		
 
-	<target name="distrib-bboss-aop-rpc-conf" description="distrib-bboss-aop-rpc-conf">
+	<target name="distrib-bboss-core-rpc-conf" description="distrib-bboss-core-rpc-conf">
 		<!--
 				
 			-->
@@ -611,7 +645,7 @@ bbossaop<-cas server [bboss-aop.jar]
 			<sequential>
 				<echo>@{destdir}-------------------------------</echo>
 				<antcall target="svn-update-procedure">
-					<param name="sourcedir" value="${bboss-aop_resources}/org/frameworkset/spi" />
+					<param name="sourcedir" value="${bboss-rpc_resources}/org/frameworkset/spi" />
 					<param name="filedir" value="@{destdir}/org/frameworkset/spi" />
 					<param name="files" value="manager-rpc-service.xml,manager-rpc-rmi.xml,manager-rpc-jms.xml,manager-rpc-mina.xml,manager-rpc-netty.xml,manager-rpc-webservices.xml,manager-rpc-http.xml" />
 				</antcall>				
@@ -620,7 +654,7 @@ bbossaop<-cas server [bboss-aop.jar]
 
 	</target>
 	
-	<target name="distrib-bboss-aop-jgroups-conf" description="distrib-bboss-aop-jgroups-conf">
+	<target name="distrib-bboss-core-jgroups-conf" description="distrib-bboss-core-jgroups-conf">
 			<!--
 					
 				-->
@@ -628,13 +662,13 @@ bbossaop<-cas server [bboss-aop.jar]
 				<sequential>
 					<echo>@{destdir}-------------------------------</echo>
 					<antcall target="svn-update-procedure">
-						<param name="sourcedir" value="${bboss-aop_resources}/org/frameworkset/spi/jgroups" />
+						<param name="sourcedir" value="${bboss-rpc_resources}/org/frameworkset/spi/jgroups" />
 						<param name="filedir" value="@{destdir}/org/frameworkset/spi/jgroups" />
 						<param name="files" value="jgroups-tcp.xml,jgroups-udp.xml," />
 					</antcall>
 					
 					<antcall target="svn-update-procedure">
-										<param name="sourcedir" value="${bboss-aop_resources}/org/frameworkset/spi" />
+										<param name="sourcedir" value="${bboss-rpc_resources}/org/frameworkset/spi" />
 										<param name="filedir" value="@{destdir}/org/frameworkset/spi" />
 										<param name="files" value="manager-rpc-service.xml" />
 					</antcall>
@@ -646,7 +680,7 @@ bbossaop<-cas server [bboss-aop.jar]
 
 		</target>
 
-	<target name="build-bboss-event" depends="build-bboss-aop,build-bboss-util" description="build bbossevent project">
+	<target name="build-bboss-event" depends="build-bboss-rpc,build-bboss-util" description="build bbossevent project">
 		<echo>build bbossevent project</echo>
 
 		<antcall target="build-bboss-event-only">
@@ -699,14 +733,10 @@ bbossaop<-cas server [bboss-aop.jar]
 
 	</target>
 
-	<target name="build-bboss-ws" depends="build-bboss-aop,build-persistent,build-bboss-event,build-bboss-util,build-bboss-taglib" description="build bboss-ws project">
-		<echo>build bboss-ws project</echo>
-		<ant dir="${bboss-ws}" />
-	</target>
 
 
 
-	<target name="build-active-ext-withdepends" depends="build-bboss-aop,build-persistent,build-bboss-event,build-bboss-util,build-bboss-taglib" description="build active-ext project">
+	<target name="build-active-ext-withdepends" depends="build-bboss-rpc,build-persistent,build-bboss-event,build-bboss-util,build-bboss-taglib" description="build active-ext project">
 		<antcall target="build-active-ext-only">
 		</antcall>
 	</target>
@@ -749,7 +779,7 @@ bbossaop<-cas server [bboss-aop.jar]
 
 	</target>
 
-	<target name="build-cms_baseline" depends="build-active-ext-withdepends,build-bboss-aop,build-persistent,build-bboss-event,build-bboss-util,build-bboss-taglib" description="build cms_baseline project">
+	<target name="build-cms_baseline" depends="build-active-ext-withdepends,build-bboss-rpc,build-persistent,build-bboss-event,build-bboss-util,build-bboss-taglib" description="build cms_baseline project">
 		<antcall target="build-cms_baseline_only" />
 	</target>
 
@@ -770,7 +800,6 @@ bbossaop<-cas server [bboss-aop.jar]
 		</for>
 
 	</target>
-	<!--<target name="build-cms_baseline" depends="build-active-ext,build-bboss-aop,build-persistent,build-bboss-event,build-bboss-util,build-bboss-taglib" description="build cms_baseline project">-->
 	<target name="build-cms_baseline_only" description="build cms_baseline project">
 		<echo>build cms_baseline project only</echo>
 		<!--
@@ -1069,7 +1098,8 @@ bbossaop<-cas server [bboss-aop.jar]
 			<delete dir="${bboss-taglib}/distrib" />
 			<delete dir="${bboss-util}/distrib" />
 			
-			<delete dir="${bboss-aop}/distrib" />
+			<delete dir="${bboss-core}/distrib" />
+		<delete dir="${bboss-rpc}/distrib" />
 			
 			<delete dir="${bbossevent}/distrib" />
 			
@@ -1087,9 +1117,11 @@ bbossaop<-cas server [bboss-aop.jar]
 			</delete>
 			
 			<delete includeemptydirs="true">
-				<fileset dir="${bboss-aop}/classes" includes="**/*" />
+				<fileset dir="${bboss-core}/classes" includes="**/*" />
 			</delete>
-			
+		<delete includeemptydirs="true">
+						<fileset dir="${bboss-rpc}/classes" includes="**/*" />
+					</delete>
 			<delete includeemptydirs="true">
 				<fileset dir="${bbossevent}/classes" includes="**/*" />
 			</delete>
@@ -1115,7 +1147,8 @@ bbossaop<-cas server [bboss-aop.jar]
 	<target name="build-all" description="build bboss all project">
 		<echo>build bboss all project</echo>		
 		<antcall target="build-bboss-util"/>
-		<antcall target="build-bboss-aop-only"/>
+		<antcall target="build-bboss-core-only"/>
+		<antcall target="build-bboss-rpc-only"/>
 		<antcall target="build-persistent"/>
 		<antcall target="build-bboss-soa"/>
 		<antcall target="build-bboss-velocity"/>
@@ -1134,8 +1167,8 @@ bbossaop<-cas server [bboss-aop.jar]
 	
 	<target name="build-all-jdk6" description="build bboss all project">
 		<echo>build bboss all project</echo>		
-		<antcall target="build-bboss-util"/>
-		<antcall target="build-bboss-aop-only"/>
+		<antcall target="build-bboss-core-only"/>
+				<antcall target="build-bboss-rpc-only"/>
 		<antcall target="build-persistent-jdk6"/>
 		<antcall target="build-bboss-soa"/>
 		<antcall target="build-bboss-velocity"/>
@@ -1154,7 +1187,8 @@ bbossaop<-cas server [bboss-aop.jar]
 	<target name="build-all-jdk7" description="build bboss all project">
 			<echo>build bboss all project</echo>		
 			<antcall target="build-bboss-util"/>
-			<antcall target="build-bboss-aop-only"/>
+		<antcall target="build-bboss-core-only"/>
+				<antcall target="build-bboss-rpc-only"/>
 			<antcall target="build-persistent-jdk7"/>
 			<antcall target="build-bboss-soa"/>
 			<antcall target="build-bboss-velocity"/>
@@ -1182,7 +1216,8 @@ bbossaop<-cas server [bboss-aop.jar]
 			<fileset dir="${bboss-soa}/distrib" includes="*.jar" />
 			<fileset dir="${bboss-mvc}/distrib" includes="*.jar,*.war" />
 			<fileset dir="${bbossevent}/distrib" includes="*.jar" />
-			<fileset dir="${bboss-aop}/distrib" includes="*.jar" />
+			<fileset dir="${bboss-core}/distrib" includes="*.jar" />
+			<fileset dir="${bboss-rpc}/distrib" includes="*.jar" />
 			<fileset dir="${bboss-velocity}/distrib" includes="*.jar" />
 			<fileset dir="${bboss-jodconverter-core}/distrib" includes="*.jar" />
 			<fileset dir="${bboss-plugin-wordpdf}/distrib" includes="*.jar" />
@@ -1198,7 +1233,8 @@ bbossaop<-cas server [bboss-aop.jar]
 		<delete dir="${bboss-soa}/distrib" />
 		<delete dir="${bboss-mvc}/distrib" />
 		<delete dir="${bbossevent}/distrib" />
-		<delete dir="${bboss-aop}/distrib"/>
+		<delete dir="${bboss-core}/distrib"/>
+		<delete dir="${bboss-rpc}/distrib"/>
 		<delete dir="${bboss-velocity}/distrib" />
 		<delete dir="${bboss-jodconverter-core}/distrib" />
 		<delete dir="${bboss-plugin-wordpdf}/distrib" />

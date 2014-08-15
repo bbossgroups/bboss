@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ps>
+	<p n="_dflt_" cs="org.frameworkset.spi.remote.RPCMessage">
+		<p n="buffer" s:nvl="true" s:t="byte[]" />
+		<p n="data" cs="org.frameworkset.spi.remote.RPCMethodCall">
+			<p n="args" s:t="Object[]">
+				<a cmt="Object">
+					<p cs="org.frameworkset.spi.serviceidentity.ServiceIDImpl">
+						<p n="applicationContext" s:t="String"><![CDATA[org/frameworkset/web/ws/testwsmodule.xml]]></p>
+						<p n="containerType" s:t="int" v="0" />
+						<p n="fistRestNode" s:nvl="true" s:t="String" />
+						<p n="nextRestNode" s:nvl="true" s:t="String" />
+						<p n="providerID" s:nvl="true" s:t="String" />
+						<p n="restStyle" s:t="boolean" v="false" />
+						<p n="service" s:t="String"><![CDATA[mysfirstwsservice]]></p>
+						<p n="serviceID" s:t="String"><![CDATA[(http::localhost:8080/bboss-mvc/http.rpc)/mysfirstwsservice]]></p>
+						<p n="sourceip" s:t="String"><![CDATA[172.16.7.108]]></p>
+						<p n="sourcename" s:t="String"><![CDATA[172.16.7.108]]></p>
+						<p n="sourceport" s:t="String"><![CDATA[8080]]></p>
+						<p n="urlParams" s:nvl="true" s:t="String" />
+					</p>
+					<p s:t="String"><![CDATA[sayHello]]></p>
+					<p s:t="Object[]">
+						<a cmt="Object">
+							<p s:t="String"><![CDATA[你好，多多,你好，多多你好，多多你好，多多你好，多多你好，多多你好，多多你好，多多你好，多多你好，多多你好，多多你好，多多你好，多多你好，多多你好，多多你好，多多你好，多多你好，多多你好，多多你好，多多你好，多多]]></p>
+						</a>
+					</p>
+					<p s:t="Class[]">
+						<a cmt="Class">
+							<p s:t="Class" v="java.lang.String" />
+						</a>
+					</p>
+				</a>
+			</p>
+			<p n="method_name" s:t="String"><![CDATA[callMethod]]></p>
+			<p n="securityContext" s:nvl="true"
+				s:t="org.frameworkset.spi.security.SecurityContext" />
+			<p n="types" s:t="Class[]">
+				<a cmt="Class">
+					<p s:t="Class" v="org.frameworkset.spi.remote.ServiceID" />
+					<p s:t="Class" v="java.lang.String" />
+					<p s:t="Class" v="java.lang.Object[]" />
+					<p s:t="Class" v="java.lang.Class[]" />
+				</a>
+			</p>
+		</p>
+		<p n="dest" cs="org.frameworkset.spi.remote.RPCAddress">
+			<p n="contextpath" s:t="String"><![CDATA[/bboss-mvc/http.rpc]]></p>
+			<p n="ip" s:t="String"><![CDATA[localhost]]></p>
+			<p n="port" s:t="int" v="8080" />
+			<p n="protocol" s:t="String"><![CDATA[http]]></p>
+			<p n="security" s:t="boolean" v="false" />
+		</p>
+		<p n="headers" s:t="org.frameworkset.spi.remote.Headers">
+			<m cmt="bean">
+				<p n="RPCServerIoHandler" cs="org.frameworkset.spi.remote.Header">
+					<p n="corrName" s:t="String"><![CDATA[RPCServerIoHandler]]></p>
+					<p n="id" s:t="long" v="1325048370984" />
+					<p n="rsp_expected" s:t="boolean" v="true" />
+					<p n="type" s:t="byte" v="0" />
+					<p n="value" s:nvl="true" s:t="Object" />
+				</p>
+			</m>
+		</p>
+		<p n="resultSerial" s:t="int" v="2" />
+		<p n="src" s:nvl="true" s:t="org.frameworkset.spi.remote.RPCAddress" />
+	</p>
+</ps>

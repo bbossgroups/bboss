@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding='UTF-8'?>
+
+<manager-config>
+
+		<!--
+			事件管理远程服务
+			属性描述：
+			type：不同provider实现的标识
+			class：实现类代码
+			used：标识是否使用，默认为false
+		-->
+		<property id="mutiinfservice" singlable="true" 
+		     class="org.frameworkset.spi.mutiinterface.TestImpl" 
+		     f:aaa="aa"
+		     />
+
+</manager-config>

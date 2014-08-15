@@ -1,0 +1,9 @@
+<properties>
+		<!-- 
+			异步调用处理服务组件
+		 -->
+		<property name="asyn.AsynbeanTest" 
+					      class="org.frameworkset.spi.asyn.AsynbeanTest"/>
+		<property name="asyn.AsynbeanCallBackTest" 
+					      class="org.frameworkset.spi.asyn.AsynbeanCallBackTest"/>						
+</properties>

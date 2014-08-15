@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding='UTF-8'?>
+<manager-config>
+	<manager id="constructor.a" 
+		singlable="true">
+		<provider type="A" default="true"
+			class="org.frameworkset.spi.constructor.ConstructorImpl" />		
+		<construction>	
+			<param value="hello world"/>
+			<param refid="interceptor.a"/>
+			<param class="org.frameworkset.spi.constructor.Test"/>
+		</construction>
+	</manager>
+	<manager id="constructor.b" 
+		singlable="true">
+		<provider type="A" default="true"
+			class="org.frameworkset.spi.constructor.ConstructorImpl" />		
+		<construction>	
+			<param value="hello world"/>
+			<param refid="interceptor.b"/>
+			<param class="org.frameworkset.spi.constructor.Test"/>
+		</construction>
+	</manager>
+</manager-config>

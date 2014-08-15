@@ -1,0 +1,12 @@
+<properties>
+	<property name="test.beans" long="1" int="1" boolean="true" string="string" object="object"
+		class="org.frameworkset.spi.beans.TestInit">
+		      
+	</property>
+	
+	<property name="test.destorybeans" init-method="init" destroy-method="destroy"
+		class="org.frameworkset.spi.beans.DestroyBean"/>
+		
+	<property name="test.beaninfoawary" 
+		class="org.frameworkset.spi.beans.BeanInfoAwareTest"/>	
+</properties>

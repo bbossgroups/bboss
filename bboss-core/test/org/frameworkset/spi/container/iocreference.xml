@@ -1,0 +1,85 @@
+<!-- 
+   本实例说明如何在ioc容器中获取其他ioc容器中定义的组件，其他容器类型包括：
+   org.frameworkset.spi.DefaultApplicationContext 
+   MVC容器
+   org.frameworkset.spi.ApplicationContext 
+   
+   bboss ioc容器请参考文章：
+   http://yin-bp.iteye.com/blog/1153798
+   
+        涉及到的工厂模式请参考文章：
+   http://yin-bp.iteye.com/blog/1014361
+ -->
+<properties>
+	<!-- 
+		使用工厂模式，定义一个外部org.frameworkset.spi.ApplicationContext类型的容器对象引用，以便引用容器中的组件
+	            该容器对象通过加载配置文件 org/frameworkset/spi/beans/testapplicationcontext.xml
+	           创建
+	-->
+	<property name="test.outnerapplicationcontext" 
+			  factory-class="org.frameworkset.spi.ApplicationContext" 
+			  factory-method="getApplicationContext">
+		<construction>
+			<property  value="org/frameworkset/spi/beans/testapplicationcontext.xml"/>	
+		</construction>
+	</property>
+	
+	<!-- 
+		使用工厂模式定义一个对外部组件的引用组件test_refbean_from_outnerapplicationcontext，
+		从外部容器test.outnerapplicationcontext中获取名称为rpc.restful.convertor的组件
+	-->
+	<property name="test_refbean_from_outnerapplicationcontext" 
+			  factory-bean="test.outnerapplicationcontext" 
+			  factory-method="getBeanObject">
+		<construction>
+			<property  value="rpc.restful.convertor"/>	
+		</construction>
+	</property>
+	
+	
+	<!-- 
+		使用工厂模式，定义bboss MVC类型的容器对象引用，以便引用容器中的组件
+	            该容器对象通过MVC框架自动创建
+	-->
+	<property name="test.mvcapplicationcontext" 
+			  factory-class="org.frameworkset.web.servlet.support.WebApplicationContextUtils" 
+			  factory-method="getWebApplicationContext"/>
+	
+	<!-- 
+		使用工厂模式定义一个对外部组件的引用组件test_refbean_from_mvcapplicationcontext，从MVC容器中获取名称为deskTopMenuShorcutManager的组件
+	-->
+	<property name="test_refbean_from_mvcapplicationcontext" 
+			  factory-bean="test.mvcapplicationcontext" 
+			  factory-method="getBeanObject">
+		<construction>
+			<property  value="deskTopMenuShorcutManager"/>	
+		</construction>
+	</property>
+	
+	
+	<!-- 
+		使用工厂模式，定义一个外部org.frameworkset.spi.DefaultApplicationContext 类型的容器对象，以便引用改容器中的组件
+	            该容器对象通过加载配置文件 org/frameworkset/spi/beans/testapplicationcontext.xml
+	           创建
+	-->
+	<property name="test.outnerdefaultapplicationcontext" 
+			  factory-class="org.frameworkset.spi.DefaultApplicationContext" 
+			  factory-method="getApplicationContext">
+		<construction>
+			<property  value="org/frameworkset/spi/beans/testapplicationcontext.xml"/>	
+		</construction>
+	</property>
+	
+	<!-- 
+		使用工厂模式定义一个对外部组件的引用组件test_refbean_from_outnerdefaultapplicationcontext，
+		从外部容器test.outnerdefaultapplicationcontext中获取名称为rpc.restful.convertor的组件
+	-->
+	<property name="test_refbean_from_outnerdefaultapplicationcontext" 
+			  factory-bean="test.outnerdefaultapplicationcontext" 
+			  factory-method="getBeanObject">
+		<construction>
+			<property  value="rpc.restful.convertor"/>	
+		</construction>
+	</property>
+	
+</properties>

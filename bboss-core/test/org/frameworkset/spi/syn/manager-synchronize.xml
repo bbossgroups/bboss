@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding='UTF-8'?>
+<!--
+同步方法配置文件，包含正则表达式指定的方法名称
+-->
+<manager-config>
+	<manager id="syn.a" singlable="false">
+		<!--
+			基于数据库的用户管理实现
+			属性描述：
+			type：代表数据存储的类型,例如DB，LDAP,ACTIVEDIRECTORY等等
+			default:缺省实现，不管used是否指定都会在同步方法中调用
+			class：实现类代码
+			used：标识是否使用，默认为false
+		-->
+		<provider type="DB" default="true"
+			class="org.frameworkset.spi.syn.A1" />
+		<provider type="ldap" used="true"
+			class="org.frameworkset.spi.syn.A2" />
+		<!--
+			定义同步方法:
+			enabled:是否需要同步，true表示同步，false表示不同步，缺省值为false
+			所有同步方法都会在客服端调用的时候同时被调用。
+		-->
+		<synchronize enabled="true">
+			<!-- 
+			模式匹配，模式匹配的顺序受配置位置的影响，如果配置在后面或者中间，那么会先执行之前的方法匹配，如果匹配上了就不会
+			对该模式方法进行匹配了，否则执行匹配操作。
+		
+			如果匹配上特定的方法名称，那么这个方法就是需要进行同步的方法
+			模式testInt.*匹配接口中以testInt开头的任何方法
+			 -->
+			<method pattern="testInt.*" />			
+		</synchronize>
+	</manager>
+</manager-config>

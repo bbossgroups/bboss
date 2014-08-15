@@ -1,0 +1,20 @@
+<properties>
+	<property name="test.interceptorbean" singlable="true" class="org.frameworkset.spi.properties.interceptor.A">
+		<interceptor class="org.frameworkset.spi.properties.interceptor.InterceptorImpl"			
+			f:a="attr:test.bean"
+		/>		
+	</property>
+	
+	<property name="test.interceptorbeanmethod" singlable="true" class="org.frameworkset.spi.properties.interceptor.A">
+		<interceptor class="org.frameworkset.spi.properties.interceptor.InterceptorImpl"			
+			f:a="attr:test.bean"
+		>
+			<method name="test">
+				<param type="java.lang.String"/>
+			</method>			
+		</interceptor>		
+	</property>
+	
+	<property name="test.bean" singlable="true" class="org.frameworkset.spi.properties.interceptor.A">
+	</property>
+</properties>

@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding='UTF-8'?>
+<manager-config>
+	<properties>
+		<property name="int_enable" value="1"/>
+		<property name="cluster_str" value="cluster_str" testattrint="1" testattrstring="duoduo" testattrboolean="true"/>
+		
+		<property name="connection.params">
+		<!-- http://activemq.apache.org/maven/activemq-core/xsddoc/http___activemq.org_config_1.0/element/connectionFactory.html -->
+			<map>
+				<property label="alwaysSessionAsync"  name="alwaysSessionAsync" value="true" class="boolean">
+					<description> <![CDATA[If this flag is set then a seperate thread is not used for dispatching messages for each Session in the Connection.
+									 However, a separate thread is always used if there is more than one session, 
+									or the session isn't in auto acknowledge or dups ok mode]]></description>
+				</property>
+				<property label="alwaysSyncSend" name="alwaysSyncSend" value="false" class="boolean">
+					<description> <![CDATA[Set true if always require messages to be sync sent  ]]></description>
+				</property>
+				<property label="closeTimeout" name="closeTimeout" value="15000" >
+					<description> <![CDATA[Sets the timeout before a close is considered complete. ]]></description>
+				</property>
+				<property label="copyMessageOnSend" name="copyMessageOnSend" value="true" >
+					<description> <![CDATA[Should a JMS message be copied to a new JMS Message object as part of the send() method in JMS.  ]]></description>
+				</property>
+				<property label="disableTimeStampsByDefault" name="disableTimeStampsByDefault" value="false" >
+					 <description> <![CDATA[Sets whether or not timestamps on messages should be disabled or not.]]></description>
+				</property>
+				<property label="dispatchAsync" name="dispatchAsync" value="true" >
+					<description> <![CDATA[ Enables or disables the default setting of whether or not consumers have their messages <a href="http://activemq.apache.org/consumer-dispatch-async.html">dispatched synchronously or asynchronously by the broker</a>. ]]></description>
+				</property>
+				<property label="objectMessageSerializationDefered" name="objectMessageSerializationDefered" value="false" >
+					<description> <![CDATA[When an object is set on an ObjectMessage, the JMS spec requires the object to be serialized by that set method. ]]></description>
+				</property>
+				<property label="optimizeAcknowledge" name="optimizeAcknowledge" value="false" >
+					<description> <![CDATA[ ]]></description>
+				</property>
+				<property label="optimizedMessageDispatch" name="optimizedMessageDispatch" value="true" >
+					<description> <![CDATA[ If this flag is set then an larger prefetch limit is used - only applicable for durable topic subscribers. ]]></description>
+				</property>
+				<property label="producerWindowSize" name="producerWindowSize" value="0" >
+					<description> <![CDATA[ producerWindowSize ]]></description>
+				</property>
+				<property label="statsEnabled" name="statsEnabled" value="false" >
+					<description> <![CDATA[ statsEnabled ]]></description>
+				</property>
+				<property label="useAsyncSend" name="useAsyncSend" value="false" >
+					<description> <![CDATA[ Forces the use of <a href="http://activemq.apache.org/async-sends.html">Async Sends</a> which adds a massive performance boost; but means that the send() method will return immediately whether the message has been sent or not which could lead to message loss.   ]]></description>
+				</property>
+				<property label="useCompression" name="useCompression" value="false" >
+					<description> <![CDATA[  Enables the use of compression of the message bodies   ]]></description>
+				</property>
+				<property label="useRetroactiveConsumer" name="useRetroactiveConsumer" value="false" >
+					<description> <![CDATA[  Sets whether or not retroactive consumers are enabled   ]]></description>
+				</property>
+				<property label="watchTopicAdvisories" name="watchTopicAdvisories" value="true" >
+					<description> <![CDATA[  watchTopicAdvisories   ]]></description>
+				</property>
+				<property label="sendTimeout" name="sendTimeout" value="0" >
+					<description> <![CDATA[  sendTimeout   ]]></description>
+				</property>
+				<property label="durableTopicPrefetch" name="durableTopicPrefetch" value="100">
+					<description> <![CDATA[  durableTopicPrefetch   ]]></description>
+				</property>
+				<property label="inputStreamPrefetch" name="inputStreamPrefetch" value="100" >
+					<description> <![CDATA[  inputStreamPrefetch   ]]></description>
+				</property>
+				<property label="maximumPendingMessageLimit" name="maximumPendingMessageLimit" value="0" >
+					<description> <![CDATA[  maximumPendingMessageLimit   ]]></description>
+				</property>
+				<property label="optimizeDurableTopicPrefetch" name="optimizeDurableTopicPrefetch" value="1000" >
+					<description> <![CDATA[  optimizeDurableTopicPrefetch  ]]></description>
+				</property>
+				<property label="queueBrowserPrefetch" name="queueBrowserPrefetch" value="500" >
+					<description> <![CDATA[  queueBrowserPrefetch]]></description>
+				</property>
+				<property label="queuePrefetch" name="queuePrefetch" value="1000" >
+					<description> <![CDATA[  queuePrefetch]]></description>
+				</property>
+				<property label="topicPrefetch" name="topicPrefetch" value="32766" >
+					<description> <![CDATA[ topicPrefetch ]]></description>
+				</property>
+				<property label="是否使用链接池" name="useConnectionPool" value="是否使用链接池" >
+					<description> <![CDATA[ true使用，false不使用 ]]></description>
+				</property>				
+			</map>
+		</property>	
+		<property name="aaa.connection.list.params">
+		<!-- http://activemq.apache.org/maven/activemq-core/xsddoc/http___activemq.org_config_1.0/element/connectionFactory.html -->
+			<list>
+				<property label="alwaysSessionAsync"  name="alwaysSessionAsync" value="true" class="boolean">
+					<description> <![CDATA[If this flag is set then a seperate thread is not used for dispatching messages for each Session in the Connection.
+									 However, a separate thread is always used if there is more than one session, 
+									or the session isn't in auto acknowledge or dups ok mode]]></description>
+				</property>
+				<property label="alwaysSyncSend" name="alwaysSyncSend" value="false" class="boolean">
+					<description> <![CDATA[Set true if always require messages to be sync sent  ]]></description>
+				</property>
+				<property label="closeTimeout" name="closeTimeout" value="15000" >
+					<description> <![CDATA[Sets the timeout before a close is considered complete. ]]></description>
+				</property>
+				<property label="copyMessageOnSend" name="copyMessageOnSend" value="true" >
+					<description> <![CDATA[Should a JMS message be copied to a new JMS Message object as part of the send() method in JMS.  ]]></description>
+				</property>
+				<property label="disableTimeStampsByDefault" name="disableTimeStampsByDefault" value="false" >
+					 <description> <![CDATA[Sets whether or not timestamps on messages should be disabled or not.]]></description>
+				</property>
+				<property label="dispatchAsync" name="dispatchAsync" value="true" >
+					<description> <![CDATA[ Enables or disables the default setting of whether or not consumers have their messages <a href="http://activemq.apache.org/consumer-dispatch-async.html">dispatched synchronously or asynchronously by the broker</a>. ]]></description>
+				</property>
+				<property label="objectMessageSerializationDefered" name="objectMessageSerializationDefered" value="false" >
+					<description> <![CDATA[When an object is set on an ObjectMessage, the JMS spec requires the object to be serialized by that set method. ]]></description>
+				</property>
+				<property label="optimizeAcknowledge" name="optimizeAcknowledge" value="false" >
+					<description> <![CDATA[ ]]></description>
+				</property>
+				<property label="optimizedMessageDispatch" name="optimizedMessageDispatch" value="true" >
+					<description> <![CDATA[ If this flag is set then an larger prefetch limit is used - only applicable for durable topic subscribers. ]]></description>
+				</property>
+				<property label="producerWindowSize" name="producerWindowSize" value="0" >
+					<description> <![CDATA[ producerWindowSize ]]></description>
+				</property>
+				<property label="statsEnabled" name="statsEnabled" value="false" >
+					<description> <![CDATA[ statsEnabled ]]></description>
+				</property>
+				<property label="useAsyncSend" name="useAsyncSend" value="false" >
+					<description> <![CDATA[ Forces the use of <a href="http://activemq.apache.org/async-sends.html">Async Sends</a> which adds a massive performance boost; but means that the send() method will return immediately whether the message has been sent or not which could lead to message loss.   ]]></description>
+				</property>
+				<property label="useCompression" name="useCompression" value="false" >
+					<description> <![CDATA[  Enables the use of compression of the message bodies   ]]></description>
+				</property>
+				<property label="useRetroactiveConsumer" name="useRetroactiveConsumer" value="false" >
+					<description> <![CDATA[  Sets whether or not retroactive consumers are enabled   ]]></description>
+				</property>
+				<property label="watchTopicAdvisories" name="watchTopicAdvisories" value="true" >
+					<description> <![CDATA[  watchTopicAdvisories   ]]></description>
+				</property>
+				<property label="sendTimeout" name="sendTimeout" value="0" >
+					<description> <![CDATA[  sendTimeout   ]]></description>
+				</property>
+				<property label="durableTopicPrefetch" name="durableTopicPrefetch" value="100">
+					<description> <![CDATA[  durableTopicPrefetch   ]]></description>
+				</property>
+				<property label="inputStreamPrefetch" name="inputStreamPrefetch" value="100" >
+					<description> <![CDATA[  inputStreamPrefetch   ]]></description>
+				</property>
+				<property label="maximumPendingMessageLimit" name="maximumPendingMessageLimit" value="0" >
+					<description> <![CDATA[  maximumPendingMessageLimit   ]]></description>
+				</property>
+				<property label="optimizeDurableTopicPrefetch" name="optimizeDurableTopicPrefetch" value="1000" >
+					<description> <![CDATA[  optimizeDurableTopicPrefetch  ]]></description>
+				</property>
+				<property label="queueBrowserPrefetch" name="queueBrowserPrefetch" value="500" >
+					<description> <![CDATA[  queueBrowserPrefetch]]></description>
+				</property>
+				<property label="queuePrefetch" name="queuePrefetch" value="1000" >
+					<description> <![CDATA[  queuePrefetch]]></description>
+				</property>
+				<property label="topicPrefetch" name="topicPrefetch" value="32766" >
+					<description> <![CDATA[ topicPrefetch ]]></description>
+				</property>
+				<property label="是否使用链接池" name="useConnectionPool" value="false" >
+					<description> <![CDATA[ true使用，false不使用 ]]></description>
+				</property>				
+			</list>
+		</property>	
+		<property name="aaa.connection.set.params">
+		<!-- http://activemq.apache.org/maven/activemq-core/xsddoc/http___activemq.org_config_1.0/element/connectionFactory.html -->
+			<set>
+				<property label="alwaysSessionAsync"  name="alwaysSessionAsync" value="true" class="boolean">
+					<description> <![CDATA[If this flag is set then a seperate thread is not used for dispatching messages for each Session in the Connection.
+									 However, a separate thread is always used if there is more than one session, 
+									or the session isn't in auto acknowledge or dups ok mode]]></description>
+				</property>
+				<property label="alwaysSyncSend" name="alwaysSyncSend" value="false" class="boolean">
+					<description> <![CDATA[Set true if always require messages to be sync sent  ]]></description>
+				</property>
+				<property label="closeTimeout" name="closeTimeout" value="15000" >
+					<description> <![CDATA[Sets the timeout before a close is considered complete. ]]></description>
+				</property>
+				<property label="copyMessageOnSend" name="copyMessageOnSend" value="true" >
+					<description> <![CDATA[Should a JMS message be copied to a new JMS Message object as part of the send() method in JMS.  ]]></description>
+				</property>
+				<property label="disableTimeStampsByDefault" name="disableTimeStampsByDefault" value="false" >
+					 <description> <![CDATA[Sets whether or not timestamps on messages should be disabled or not.]]></description>
+				</property>
+				<property label="dispatchAsync" name="dispatchAsync" value="true" >
+					<description> <![CDATA[ Enables or disables the default setting of whether or not consumers have their messages <a href="http://activemq.apache.org/consumer-dispatch-async.html">dispatched synchronously or asynchronously by the broker</a>. ]]></description>
+				</property>
+				<property label="objectMessageSerializationDefered" name="objectMessageSerializationDefered" value="false" >
+					<description> <![CDATA[When an object is set on an ObjectMessage, the JMS spec requires the object to be serialized by that set method. ]]></description>
+				</property>
+				<property label="optimizeAcknowledge" name="optimizeAcknowledge" value="false" >
+					<description> <![CDATA[ ]]></description>
+				</property>
+				<property label="optimizedMessageDispatch" name="optimizedMessageDispatch" value="true" >
+					<description> <![CDATA[ If this flag is set then an larger prefetch limit is used - only applicable for durable topic subscribers. ]]></description>
+				</property>
+				<property label="producerWindowSize" name="producerWindowSize" value="0" >
+					<description> <![CDATA[ producerWindowSize ]]></description>
+				</property>
+				<property label="statsEnabled" name="statsEnabled" value="false" >
+					<description> <![CDATA[ statsEnabled ]]></description>
+				</property>
+				<property label="useAsyncSend" name="useAsyncSend" value="false" >
+					<description> <![CDATA[ Forces the use of <a href="http://activemq.apache.org/async-sends.html">Async Sends</a> which adds a massive performance boost; but means that the send() method will return immediately whether the message has been sent or not which could lead to message loss.   ]]></description>
+				</property>
+				<property label="useCompression" name="useCompression" value="false" >
+					<description> <![CDATA[  Enables the use of compression of the message bodies   ]]></description>
+				</property>
+				<property label="useRetroactiveConsumer" name="useRetroactiveConsumer" value="false" >
+					<description> <![CDATA[  Sets whether or not retroactive consumers are enabled   ]]></description>
+				</property>
+				<property label="watchTopicAdvisories" name="watchTopicAdvisories" value="true" >
+					<description> <![CDATA[  watchTopicAdvisories   ]]></description>
+				</property>
+				<property label="sendTimeout" name="sendTimeout" value="0" >
+					<description> <![CDATA[  sendTimeout   ]]></description>
+				</property>
+				<property label="durableTopicPrefetch" name="durableTopicPrefetch" value="100">
+					<description> <![CDATA[  durableTopicPrefetch   ]]></description>
+				</property>
+				<property label="inputStreamPrefetch" name="inputStreamPrefetch" value="100" >
+					<description> <![CDATA[  inputStreamPrefetch   ]]></description>
+				</property>
+				<property label="maximumPendingMessageLimit" name="maximumPendingMessageLimit" value="0" >
+					<description> <![CDATA[  maximumPendingMessageLimit   ]]></description>
+				</property>
+				<property label="optimizeDurableTopicPrefetch" name="optimizeDurableTopicPrefetch" value="1000" >
+					<description> <![CDATA[  optimizeDurableTopicPrefetch  ]]></description>
+				</property>
+				<property label="queueBrowserPrefetch" name="queueBrowserPrefetch" value="500" >
+					<description> <![CDATA[  queueBrowserPrefetch]]></description>
+				</property>
+				<property label="queuePrefetch" name="queuePrefetch" value="1000" >
+					<description> <![CDATA[  queuePrefetch]]></description>
+				</property>
+				<property label="topicPrefetch" name="topicPrefetch" value="32766" >
+					<description> <![CDATA[ topicPrefetch ]]></description>
+				</property>
+				<property label="是否使用链接池" name="useConnectionPool" value="false" >
+					<description> <![CDATA[ true使用，false不使用 ]]></description>
+				</property>				
+			</set>
+		</property>	
+	</properties>
+	
+</manager-config>

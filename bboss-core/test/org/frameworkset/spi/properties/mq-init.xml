@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding='UTF-8'?>
+<manager-config>
+<description>
+<![CDATA[
+	新增broker时，添加默认的用户，用户组，用户和用户组关系，用户组权限数据库脚本
+ ]]>
+</description>
+<!-- 
+<properties name="insert">
+<property name="insert-mysql">
+	
+	<![CDATA[insert into mq_users
+  				(broker_id, user_id, user_name, user_password)
+				values
+  				(?, ?, 'system', 'manager')]]>
+	</property>
+	<property name="insert-oracle">
+	
+	<![CDATA[insert into mq_users
+  				(broker_id, user_id, user_name, user_password)
+				values
+  				(?, ?, 'system', 'manager')]]>
+	</property>
+</properties>
+ -->
+<properties>
+	
+	<property name="insertuser">
+	
+	<![CDATA[insert into mq_users
+  				(broker_id, user_id, user_name, user_password)
+				values
+  				(?, ?, 'system', 'manager')]]>
+	</property>
+	<property name="insertgroup">
+	<![CDATA[  insert into mq_group
+			    (broker_id, group_id, group_name)
+			  values
+			    (?, ?, 'admin')]]>
+	</property>
+	<property name="insertusergroup">
+	<![CDATA[   insert into group_users
+		     (user_id, group_id)
+		   values
+		     (?, ?)]]>
+	</property>
+	<property name="addpermission-list-oralce">
+		<list>
+			<property index="0"><![CDATA[insert into mq_permissions
+									  (resource_type,
+									   res_name,
+									   res_op,
+									   group_type,
+									   group_name,
+									   broker_id,
+									   author,
+									   auth_date)
+									values
+									  ('queue',
+									   '>',
+									   'write',
+									   'group',
+									   'admin',
+									   ?,
+									   'admin',
+									   sysdate)]]></property>
+			<property index="1"><![CDATA[insert into mq_permissions
+									  (resource_type,
+									   res_name,
+									   res_op,
+									   group_type,
+									   group_name,
+									   broker_id,
+									   author,
+									   auth_date)
+									values
+									  ('queue',
+									   '>',
+									   'read',
+									   'group',
+									   'admin',
+									   ?,
+									   'admin',
+									   sysdate)]]></property>
+			
+		</list>
+	</property>
+	<!-- SQLUtil.getInstance(String sqlfile).getSQL(dbname,addpermission-list) -->
+	<property name="addpermission-list-mysql">
+		<list>
+			<property index="0"><![CDATA[insert into mq_permissions
+									  (resource_type,
+									   res_name,
+									   res_op,
+									   group_type,
+									   group_name,
+									   broker_id,
+									   author,
+									   auth_date)
+									values
+									  ('queue',
+									   '>',
+									   'write',
+									   'group',
+									   'admin',
+									   ?,
+									   'admin',
+									   sysdate)]]></property>
+			<property index="1"><![CDATA[insert into mq_permissions
+									  (resource_type,
+									   res_name,
+									   res_op,
+									   group_type,
+									   group_name,
+									   broker_id,
+									   author,
+									   auth_date)
+									values
+									  ('queue',
+									   '>',
+									   'read',
+									   'group',
+									   'admin',
+									   ?,
+									   'admin',
+									   sysdate)]]></property>
+			
+		</list>
+	</property>
+	<property name="addpermission-map">
+		<map>
+			<property name="0"><![CDATA[insert into mq_permissions
+									  (resource_type,
+									   res_name,
+									   res_op,
+									   group_type,
+									   group_name,
+									   broker_id,
+									   author,
+									   auth_date)
+									values
+									  ('queue',
+									   '>',
+									   'write',
+									   'group',
+									   'admin',
+									   ?,
+									   'admin',
+									   sysdate)]]></property>
+			<property name="1"><![CDATA[insert into mq_permissions
+									  (resource_type,
+									   res_name,
+									   res_op,
+									   group_type,
+									   group_name,
+									   broker_id,
+									   author,
+									   auth_date)
+									values
+									  ('queue',
+									   '>',
+									   'read',
+									   'group',
+									   'admin',
+									   ?,
+									   'admin',
+									   sysdate)]]></property>
+			
+		</map>
+	</property>
+	
+	<property name="addpermission-set">
+		<set>
+			<property index="0"><![CDATA[insert into mq_permissions
+									  (resource_type,
+									   res_name,
+									   res_op,
+									   group_type,
+									   group_name,
+									   broker_id,
+									   author,
+									   auth_date)
+									values
+									  ('queue',
+									   '>',
+									   'write',
+									   'group',
+									   'admin',
+									   ?,
+									   'admin',
+									   sysdate)]]></property>
+			<property index="1"><![CDATA[insert into mq_permissions
+									  (resource_type,
+									   res_name,
+									   res_op,
+									   group_type,
+									   group_name,
+									   broker_id,
+									   author,
+									   auth_date)
+									values
+									  ('queue',
+									   '>',
+									   'read',
+									   'group',
+									   'admin',
+									   ?,
+									   'admin',
+									   sysdate)]]></property>
+			
+		</set>
+	</property>
+</properties>
+</manager-config>
