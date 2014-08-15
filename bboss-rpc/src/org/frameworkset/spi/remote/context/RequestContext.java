@@ -16,10 +16,10 @@
 
 package org.frameworkset.spi.remote.context;
 
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import org.frameworkset.spi.UtilMap;
 import org.frameworkset.spi.assemble.SynchronizedMethod;
 import org.frameworkset.spi.remote.Header;
 import org.frameworkset.spi.remote.ServiceID;
@@ -76,8 +76,12 @@ public class RequestContext {
 	}
 
 	public static RequestContext getRequestContext() {
+		return getRequestContext(true);
+	}
+	
+	public static RequestContext getRequestContext(boolean create) {
 		RequestContext context = requestLocal.get();
-		if (context == null)
+		if (context == null && create)
 			context = new RequestContext(new SecurityContext(), false);
 		return context;
 	}
@@ -111,14 +115,16 @@ public class RequestContext {
 						+ securityContext);
 			}
 			if (headers != null && headers.size() > 0) {
-				Iterator<String> keys = headers.keySet().iterator();
-				while (keys.hasNext()) {
-					String key = keys.next();
-					Header head = headers.get(key);
-					this.addParameters(key, head.getValue());
-				}
+//				Iterator<String> keys = headers.keySet().iterator();
+//				while (keys.hasNext()) {
+//					String key = keys.next();
+//					Header head = headers.get(key);
+//					this.addParameters(key, head.getValue());
+//				}
+				callparameters.putAll(headers);
 				// this.addParameters(headers);
 			}
+			
 		} catch (SecurityException e) {
 			throw e;
 		}
@@ -126,7 +132,10 @@ public class RequestContext {
 			throw new SecurityException("" + securityContext,e);
 		}
 	}
-
+	public Map<String,Header> getHeaders()
+	{
+		return this.callparameters;
+	}
 	private void initPermissionInfo(ServiceID id, String method, Class[] types) {
 		// SecurityContext securityContext = method_call.getSecurityContext();
 
@@ -140,7 +149,108 @@ public class RequestContext {
 		setMethodop(SynchronizedMethod.buildMethodUUID(method, types));
 
 	}
-
+	static class UtilMap extends HashMap<String,Header>
+	{
+	    public int getInt(String key)
+	    {            
+	    	Object header = this.getObject(key);
+	    	
+	        if(header == null )
+	            return 0;
+	        int value_ = Integer.parseInt((String)header);
+	        return value_;
+	    }
+	    
+	    public long getLong(String key)
+	    {            
+	        Object value = this.getObject(key);
+	        if(value == null)
+	            return 0;
+	        long value_ = Integer.parseInt(value.toString());
+	        return value_;
+//	        return value.getLong();
+	    }
+	    
+	    public int getInt(String key,int defaultValue)
+	    {
+	        Object value = this.getObject(key);
+	        if(value == null)
+	            return defaultValue;
+	        int value_ = Integer.parseInt(value.toString());
+	        return value_;
+	    }
+	    
+	    
+	    public long getLong(String key,long defaultValue)
+	    {
+	        Object value = this.getObject(key);
+	        if(value == null)
+	            return defaultValue;
+	        long value_ = Long.parseLong(value.toString());
+	        return value_;
+	    }
+	    
+	    
+	    
+	    public boolean getBoolean(String key)
+	    {
+	        Object value = this.getObject(key);
+	        if(value == null)
+	            return false;
+	        boolean value_ = Boolean.parseBoolean(value.toString());
+	        return value_;
+	    }
+	    public boolean getBoolean(String key,boolean defaultValue)
+	    {
+	        Object value = this.getObject(key);
+	        if(value == null)
+	            return defaultValue;
+	        boolean value_ =  Boolean.parseBoolean(value.toString());
+	        return value_;
+	    }
+	    
+	    public String getString(String key)
+	    {
+	        Object value = this.getObject(key);
+	        if(value == null)
+	            return null;
+	        
+	        return value.toString();
+	    }
+	    public String getString(String key,String defaultValue)
+	    {
+	        Object value = this.getObject(key);
+	        
+	        if(value == null)
+	            return defaultValue;
+	        
+	        return value.toString();
+	    }
+	    
+	    
+	    
+	    
+	    
+	    
+	    public Object getObject(String key)
+	    {
+	        Header value = this.get(key);
+	        if(value != null)
+	        	return value.getValue();
+	        return value;
+	    }
+	   
+	    
+	    public Object getObject(String key,Object defaultValue)
+	    {
+	        Object value = getObject( key);
+	        
+	        if(value == null)
+	            return defaultValue;
+	        
+	        return value;
+	    }
+	}
 	/**
 	 * 访问的方法标识，用来进行权限控制
 	 */
@@ -155,13 +265,13 @@ public class RequestContext {
 	 */
 	private UtilMap callparameters = new UtilMap();
 
-	public void addParameters(Object key, Object value) {
-		this.callparameters.put(key, value);
-	}
-
-	public void addParameters(Map parameters) {
-		this.callparameters.putAll(parameters);
-	}
+//	public void addParameters(Object key, Object value) {
+//		this.callparameters.put(key, value);
+//	}
+//
+//	public void addParameters(Map parameters) {
+//		this.callparameters.putAll(parameters);
+//	}
 
 	public Object getParameter(Object key) {
 		return this.callparameters.get(key);
@@ -226,12 +336,6 @@ public class RequestContext {
 		this.methodop = methodop;
 	}
 
-	public void setCallparameters(UtilMap callparameters) {
-		if (callparameters != null && callparameters.size() > 0) {
-			if (this.callparameters == null)
-				this.callparameters = new UtilMap();
-			this.callparameters.putAll(callparameters);
-		}
-	}
+
 
 }

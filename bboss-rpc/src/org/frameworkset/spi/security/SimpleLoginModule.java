@@ -33,7 +33,7 @@ public class SimpleLoginModule implements LoginModule
 	{
 
 		System.out.println("checkUser:" + context);
-        if(context.getUser().equals("admin") && context.getPassword().equals("123456"))
+        if(context.getUser().equals("admin") && (context.getPassword().equals("123456")||context.getPassword().equals("1234567")))
             return true;
         return false;
 	}

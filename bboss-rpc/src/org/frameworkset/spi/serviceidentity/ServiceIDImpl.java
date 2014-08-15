@@ -66,6 +66,8 @@ public class ServiceIDImpl extends BaseServiceIDImpl implements RemoteServiceID{
 	protected transient RemoteServiceID restfulServiceID;
 	protected String nextRestNode;
 	protected String fistRestNode;
+	protected String serviceUUID;
+	
 
 	protected transient long timeout = 60 * 1000;
     public static final boolean evaluatelocaladdress = Util.defaultContext.getBooleanProperty("rpc.evaluatelocaladdress", false);
@@ -678,8 +680,12 @@ public class ServiceIDImpl extends BaseServiceIDImpl implements RemoteServiceID{
 
 	public void setUrlParams(String urlParams) {
 		this.urlParams = urlParams;
-		if(restfulServiceID != null)
-			this.restfulServiceID.setUrlParams(urlParams);
+//		if(this.urlParams == null)
+//			this.urlParams = urlParams;
+//		else
+//			this.urlParams = this.urlParams + "&"+urlParams;
+//		if(restfulServiceID != null)
+//			this.restfulServiceID.setUrlParams(urlParams);
 	}
 	public String getSourceip() {
 		return sourceip;
@@ -692,4 +698,23 @@ public class ServiceIDImpl extends BaseServiceIDImpl implements RemoteServiceID{
 		if(restfulServiceID != null)
 			this.restfulServiceID.setInfType(infType);
 	}
+//	@Override
+//	public void apendUrlParams(RemoteServiceID restid) {
+//		if(this.urlParams != null )
+//		{
+//			if( restid.getUrlParams() != null)
+//			{
+//				this.urlParams = this.urlParams +"&"+ restid.getUrlParams();
+//				restid.setUrlParams(this.urlParams);
+//			}
+//			else
+//			{
+//				this.urlParams = restid.getUrlParams();
+//			}
+//		}
+//		else
+//			this.urlParams = restid.getUrlParams();
+//		
+//	}
+	
 }

@@ -35,7 +35,7 @@ public class RestfulServiceConvertorImplTest implements RestfulServiceConvertor
     	System.out.println("restfuluddi:" + restfuluddi);
         if(restfuluddi.equals("a"))
         {
-            String uri = "10.25.192.142:12345";
+            String uri = "192.168.1.102:12345";
             String user = "admin";
             String password = "123456";
             String protocol = "netty";
@@ -45,9 +45,9 @@ public class RestfulServiceConvertorImplTest implements RestfulServiceConvertor
         }
         else if(restfuluddi.equals("b"))
         {
-            String uri = "10.25.192.142:12347";
+            String uri = "192.168.1.102:12347";
             String user = "admin";
-            String password = "123456";
+            String password = "1234567";
             String protocol = "netty";
             String returl = "(" + protocol + "::" +  uri + ")/" + serviceid + "?user=" + user + "&password=" + password;
             

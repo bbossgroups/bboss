@@ -35,6 +35,7 @@ public interface RemoteServiceID extends ServiceID {
     public static final int result_rsplist = 3;
 
     public static final int result_list = 4;
+  
     public int getResultMode();
 
     public long getTimeout();
@@ -74,5 +75,7 @@ public interface RemoteServiceID extends ServiceID {
 	    public Class<?> getInfType();
 	    
 	    public void setInfType(Class<?> infType);
+
+//		public void apendUrlParams(RemoteServiceID restid);
 	    
 }

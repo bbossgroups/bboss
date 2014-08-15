@@ -17,6 +17,7 @@
 package org.frameworkset.spi;
 
 import java.util.List;
+import java.util.Map;
 import java.util.StringTokenizer;
 
 import org.frameworkset.netty.NettyRPCServer;
@@ -31,6 +32,7 @@ import org.frameworkset.spi.remote.RPCHelper;
 import org.frameworkset.spi.remote.RemoteServiceID;
 import org.frameworkset.spi.remote.Target;
 import org.frameworkset.spi.remote.Util;
+import org.frameworkset.spi.remote.context.RequestContext;
 import org.frameworkset.spi.remote.jms.JMSServer;
 import org.frameworkset.spi.remote.mina.server.MinaRPCServer;
 import org.frameworkset.spi.remote.rmi.RMIServer;
@@ -125,7 +127,7 @@ public class ClientProxyContext
 		RemoteServiceID serviceID = buildServiceID(name,context,BaseApplicationContext.container_type_simple);
 		serviceID.setInfType(type);
 		RemoteCallContext ccontext = new RemoteCallContextImpl(context,BaseApplicationContext.container_type_simple);
-		buildClientCallContext(serviceID.getUrlParams(), ccontext);
+		buildClientCallContext(serviceID, ccontext);
 		return CGLibUtil.getBeanInstance(type, new RemoteCGLibProxy(serviceID,ccontext));
 		
 	}
@@ -139,49 +141,88 @@ public class ClientProxyContext
 	 * @param applicationContext
 	 * @return
 	 */
-	public static RemoteCallContext buildClientCallContext(String params,
+	public static RemoteCallContext buildClientCallContext(RemoteServiceID remoteServiceID,
 			RemoteCallContext context) {
-		if(params == null || params.equals(""))
-			return context;
-		StringTokenizer tokenizer = new StringTokenizer(params, "&", false);
-		
-		/**
-		 * 协议中包含的属性参数，可以用来做路由条件
-		 */
+		String params = null;
 		Headers headers = null;
 		SecurityContext securityContext = null;
 		String user = null;
 		String password = null;
-		while (tokenizer.hasMoreTokens()) {
-
-			String parameter = tokenizer.nextToken();
-
-			int idex = parameter.indexOf("=");
-			if (idex <= 0) {
-				throw new SPIException("非法的服务参数串[" + params + "]");
+		boolean hasparams = false;
+//		Map<String,Header> contextHeaders = null;
+		Map<String,Header> contextHeaders = RequestContext.getRequestContext(false) != null ?RequestContext.getRequestContext(false).getHeaders():null;
+		do
+		{
+			params = remoteServiceID.getUrlParams();
+			if(params == null || params.equals(""))
+			{
+				remoteServiceID = remoteServiceID.getRestfulServiceID();
+				continue;
 			}
-			StringTokenizer ptokenizer = new StringTokenizer(parameter, "=",
-					false);
-			String name = ptokenizer.nextToken();
-			String value = ptokenizer.nextToken();
-			Header header = new Header(name, value);
-			if (name.equals(SecurityManager.USER_ACCOUNT_KEY)) {
-				user = value;
-
-			} else if (name.equals(SecurityManager.USER_PASSWORD_KEY)) {
-				password = value;
-
-			} else {
-				if (headers == null)
-					headers = new Headers();
-				headers.put(header.getName(), header);
+			else
+			{
+				if(!hasparams)
+					hasparams = true;
+				remoteServiceID = remoteServiceID.getRestfulServiceID();
 			}
+			StringTokenizer tokenizer = new StringTokenizer(params, "&", false);
+			
+			/**
+			 * 协议中包含的属性参数，可以用来做路由条件
+			 */
+			
+			while (tokenizer.hasMoreTokens()) {
+	
+				String parameter = tokenizer.nextToken();
+	
+				int idex = parameter.indexOf("=");
+				if (idex <= 0) {
+					throw new SPIException("非法的服务参数串[" + params + "]");
+				}
+				StringTokenizer ptokenizer = new StringTokenizer(parameter, "=",
+						false);
+				String name = ptokenizer.nextToken();
+				String value = ptokenizer.nextToken();
+				Header header = new Header(name, value);
+				if (name.equals(SecurityManager.USER_ACCOUNT_KEY)) {
+					user = value;
+	
+				} else if (name.equals(SecurityManager.USER_PASSWORD_KEY)) {
+					password = value;
+	
+				} else {
+					if (headers == null)
+						headers = new Headers();
+					headers.put(header.getName(), header);
+				}
+			}
+		}while(remoteServiceID != null);
+		if(!hasparams)
+		{
+			if(contextHeaders != null&& contextHeaders.size() > 0)
+			{
+				headers = new Headers();
+				headers.putAll(contextHeaders);
+				context.setHeaders(headers);
+			}
+			
+			return context;
 		}
-		if (securityContext == null)
-			securityContext = new SecurityContext(user, password);
-		context.setSecutiryContext(securityContext);
-		context.setHeaders(headers);
-		return context;
+		else
+		{
+			if (securityContext == null)
+				securityContext = new SecurityContext(user, password);
+			context.setSecutiryContext(securityContext);
+			if(contextHeaders != null && contextHeaders.size() > 0)
+			{
+				if(headers == null)
+					headers = new Headers();
+				headers.putAll(contextHeaders);
+				
+			}
+			context.setHeaders(headers);
+			return context;
+		}
 	}
 	/**
 	  * 获取服务端默认容器中的服务组件调用代理
@@ -208,7 +249,7 @@ public class ClientProxyContext
 		RemoteServiceID serviceID = buildServiceID(name,context,BaseApplicationContext.container_type_application);
 		serviceID.setInfType(type);
 		RemoteCallContext ccontext = new RemoteCallContextImpl(context,BaseApplicationContext.container_type_application);
-		buildClientCallContext(serviceID.getUrlParams(), ccontext);
+		buildClientCallContext(serviceID, ccontext);
 		return CGLibUtil.getBeanInstance(type, new RemoteCGLibProxy(serviceID,ccontext));
 	}
 	
@@ -225,7 +266,7 @@ public class ClientProxyContext
 		RemoteServiceID serviceID = buildServiceID(name,context,containertype);
 		serviceID.setInfType(type);
 		RemoteCallContext ccontext = new RemoteCallContextImpl(context,containertype);
-		buildClientCallContext(serviceID.getUrlParams(), ccontext);
+		buildClientCallContext(serviceID, ccontext);
 		return CGLibUtil.getBeanInstance(type, new RemoteCGLibProxy(serviceID,ccontext));
 	}
 	
@@ -235,7 +276,7 @@ public class ClientProxyContext
 		RemoteServiceID serviceID = copyServiceID( restid);
 		
 		RemoteCallContext ccontext = new RemoteCallContextImpl(restid.getApplicationContext(),restid.getContainerType());
-		buildClientCallContext(serviceID.getUrlParams(), ccontext);
+		buildClientCallContext(serviceID, ccontext);
 		if(serviceID.getRestfulServiceID() != null && !serviceID.getRestfulServiceID().isRestStyle())
 			return CGLibUtil.getBeanInstance(restid.getInfType(), new RemoteCGLibProxy(serviceID.getRestfulServiceID(),ccontext));
 		else
@@ -254,7 +295,7 @@ public class ClientProxyContext
 		RemoteServiceID serviceID = buildServiceID(name,BaseApplicationContext.mvccontainer_identifier,BaseApplicationContext.container_type_mvc);
 		serviceID.setInfType(type);
 		RemoteCallContext ccontext = new RemoteCallContextImpl(BaseApplicationContext.mvccontainer_identifier,BaseApplicationContext.container_type_mvc);
-		buildClientCallContext(serviceID.getUrlParams(), ccontext);
+		buildClientCallContext(serviceID, ccontext);
 		return CGLibUtil.getBeanInstance(type, new RemoteCGLibProxy(serviceID,ccontext));
 	}
 	

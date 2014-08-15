@@ -38,9 +38,9 @@
 			<!-- 编码块大小 -->
 			<property name="estimatedLength_" value="1024" />
 				<!-- 
-					服务器绑定ip
+					服务器绑定ip 192.168.1.102 10.25.192.142
 				 -->
-			<property name="connection.bind.ip" value="10.25.192.142" />
+			<property name="connection.bind.ip" value="192.168.1.102" />
 			
 			<!-- 
 				ssl配置参数开始

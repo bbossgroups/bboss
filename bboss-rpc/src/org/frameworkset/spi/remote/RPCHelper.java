@@ -243,15 +243,15 @@ public class RPCHelper
 	{
     	
     	Target target = ((RemoteServiceID)serviceID).getRestfulTarget();
-    	/**
-    	 * 构建特定组件管理容器远程请求调用上下文中参数头信息和安全上下文信息
-    	 * @fixed biaoping.yin 2010-10-11 begin
-    	 */
-    	RemoteServiceID restServiceID = (RemoteServiceID)serviceID.getRestfulServiceID();
-    	if(restServiceID != null && restServiceID.getUrlParams() != null)
-    	{
-    		ClientProxyContext.buildCallContext(restServiceID.getUrlParams(), callContext, null);
-    	}
+//    	/**
+//    	 * 构建特定组件管理容器远程请求调用上下文中参数头信息和安全上下文信息
+//    	 * @fixed biaoping.yin 2010-10-11 begin
+//    	 */
+//    	RemoteServiceID restServiceID = (RemoteServiceID)serviceID.getRestfulServiceID();
+//    	if(restServiceID != null && restServiceID.getUrlParams() != null)
+//    	{
+//    		ClientProxyContext.buildCallContext(restServiceID.getUrlParams(), callContext, null);
+//    	}
     	/**
     	 * @fixed biaoping.yin 2010-10-11 end
     	 */
@@ -1296,7 +1296,8 @@ public class RPCHelper
 								        		 timeout, 
 								        		 restid.getResultType(),
 								        		 restid.getBean_type());
-         serviceID.setUrlParams(restid.getUrlParams());
+//         serviceID.setUrlParams(restid.getUrlParams());
+//         serviceID.apendUrlParams(restid);
          serviceID.setInfType(restid.getInfType());
          return serviceID;
     }
@@ -1312,6 +1313,7 @@ public class RPCHelper
 								        		 restid.getResultType(),
 								        		 restid.getBean_type());
          serviceID.setInfType(restid.getInfType());
+//         serviceID.apendUrlParams(restid);
          return serviceID;
     }
     public static RemoteServiceID buildClientServiceID(String serviceid,  String applicationcontext,int containerType)
