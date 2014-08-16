@@ -95,7 +95,6 @@ public class RPCRequestHandler implements RequestHandler
         method_call=(RPCMethodCall)body;
         
         
-
         try {
             if(log.isTraceEnabled())
                 log.trace("[sender=" + req.getSrc_addr() + "], method_call: " + method_call);
