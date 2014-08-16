@@ -3,18 +3,10 @@
 	<classpathentry kind="src" path="resources"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/asm-3.1.jar"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/bboss-aop.jar"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/bboss-camel.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/bboss-event.jar"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/bboss-http.jar"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/bboss-jms.jar"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/bboss-mina.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/bboss-mvc.jar"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/bboss-rmi.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/bboss-schedule.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/bboss-soa.jar"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/bboss-tlq.jar"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/bboss-ws.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/cglib-nodep-2.2.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/commons-io-2.0.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/derby.jar"/>
@@ -33,5 +25,7 @@
 	<classpathentry kind="lib" path="compilelib/jsp-api.jar"/>
 	<classpathentry kind="lib" path="compilelib/servlet-api.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/bboss-security.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/bboss-core.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/bboss-rpc.jar"/>
 	<classpathentry kind="output" path="WebRoot/WEB-INF/classes"/>
 </classpath>

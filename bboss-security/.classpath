@@ -16,7 +16,6 @@
 	<classpathentry kind="lib" path="lib-compile/junit-4.6.jar"/>
 	<classpathentry kind="lib" path="lib-compile/servlet-api.jar"/>
 	<classpathentry kind="lib" path="lib/log4j-1.2.14.jar"/>
-	<classpathentry kind="lib" path="lib/bboss-aop.jar" sourcepath="/bbossaop"/>
 	<classpathentry kind="lib" path="lib/bboss-velocity.jar"/>
 	<classpathentry kind="lib" path="lib/commons-lang-2.6.jar"/>
 	<classpathentry kind="lib" path="lib/frameworkset-pool.jar"/>
@@ -30,5 +29,6 @@
 	<classpathentry kind="lib" path="lib/mongo-java-driver-2.12.2.jar" sourcepath="lib/mongo-java-driver-source-2.12.2.jar"/>
 	<classpathentry kind="lib" path="lib/mongo-java-driver-javadoc-2.12.2.jar"/>
 	<classpathentry kind="lib" path="lib/mongo-java-driver-source-2.12.2.jar"/>
+	<classpathentry kind="lib" path="lib/bboss-core.jar"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>

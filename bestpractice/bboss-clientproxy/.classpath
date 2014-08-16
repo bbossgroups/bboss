@@ -3,8 +3,6 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="resources"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="lib/bboss-aop.jar" sourcepath="/bbossaop"/>
-	<classpathentry kind="lib" path="lib/bboss-http.jar" sourcepath="/bbossaop"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="lib" path="lib/cglib-2.2.jar"/>
 	<classpathentry kind="lib" path="lib/jasypt-1.6.jar"/>
@@ -36,5 +34,7 @@
 	<classpathentry kind="lib" path="lib/cxf/wsdl4j-1.6.3.jar"/>
 	<classpathentry kind="lib" path="lib/cxf/xml-resolver-1.2.jar"/>
 	<classpathentry kind="lib" path="lib/cxf/xmlschema-core-2.0.3.jar"/>
+	<classpathentry kind="lib" path="lib/bboss-core.jar"/>
+	<classpathentry kind="lib" path="lib/bboss-rpc.jar"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>

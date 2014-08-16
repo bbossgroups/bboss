@@ -27,8 +27,8 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/bboss-util"/>
 	<classpathentry kind="lib" path="lib/frameworkset-pool.jar" sourcepath="/bboss-persistent"/>
 	<classpathentry kind="lib" path="lib/bboss-velocity.jar"/>
-	<classpathentry kind="lib" path="lib/bboss-aop.jar" sourcepath="/bbossaop"/>
 	<classpathentry kind="src" path="src-htmlparser"/>
 	<classpathentry kind="lib" path="lib/bboss-security.jar" sourcepath="/bboss-security"/>
+	<classpathentry kind="lib" path="lib/bboss-core.jar"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>

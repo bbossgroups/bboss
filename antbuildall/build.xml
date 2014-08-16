@@ -485,7 +485,7 @@ bbosscore<-cas server [bboss-core.jar]
 			</for>
 		</target>
 	<target name="distrib-bboss-core-jars" description="distrib-bboss-core-jars">
-		<for list="${demoproject-lib},${bbossevent-lib},${cms_baseline-lib},${active-ext-lib},${kettle-lib},${monitorconsole-compilelib},${monitorconsole-lib},${creatoresb-lib}" param="destdir">
+		<for list="${easyuidatagrid-lib},${demoproject-lib},${bbossevent-lib},${cms_baseline-lib},${active-ext-lib},${kettle-lib},${monitorconsole-compilelib},${monitorconsole-lib},${creatoresb-lib}" param="destdir">
 			<sequential>
 				<echo>@{destdir}-------------------------------</echo>
 				<antcall target="svn-update-procedure">
@@ -525,6 +525,78 @@ bbosscore<-cas server [bboss-core.jar]
 		
 		
 	</target>
+	
+	<target name="delete-bboss-aop-jars" description="delete-bboss-aop-jars">
+			<for list="${demoproject-lib},${bbossevent-lib},${cms_baseline-lib},${active-ext-lib},${kettle-lib},${monitorconsole-compilelib},${monitorconsole-lib},${creatoresb-lib}" param="destdir">
+				<sequential>
+					<echo>@{destdir}-------------------------------</echo>
+					<antcall target="clear-jars">
+						
+						<param name="filedir" value="@{destdir}" />
+						<param name="files" value="bboss-aop.jar" />
+					</antcall>
+				</sequential>
+			</for>
+			
+			
+			
+			<for list="${bboss-security-lib},${bboss-security-web-lib},${bboss-schedule-lib},${bboss-plugin-wordpdf-lib-depends},${bboss-plugin-hessian-lib},${bboss-persistent-lib},${bbossupload-lib},${bboss-taglib-lib},${portallib},${casserverlib},${mvc-lib},${xmlrequest-lib},${xmlserializable-lib},${persistent-lib},${bboss-plugin-hibernate-lib},${session-lib},${sessionmonitor-lib}" param="destdir">
+				<sequential>
+					<echo>@{destdir}-------------------------------</echo>
+					<antcall target="clear-jars">
+						<param name="filedir" value="@{destdir}" />
+						<param name="files" value="bboss-aop.jar" />
+					</antcall>
+				</sequential>
+			</for>
+			
+			<for list="${bboss-mvc-lib},${bboss-clientproxy-lib}" param="destdir">
+						<sequential>
+							<echo>@{destdir}-------------------------------</echo>
+							<antcall target="clear-jars">
+								<param name="filedir" value="@{destdir}" />
+								<param name="files" value="bboss-aop.jar" />
+							</antcall>
+						</sequential>
+					</for>
+			
+					
+		<for list="${demoproject-lib},${bbossevent-lib},${cms_baseline-lib},${active-ext-lib},${kettle-lib},${monitorconsole-compilelib},${monitorconsole-lib},${creatoresb-lib}" param="destdir">
+						<sequential>
+							<echo>@{destdir}-------------------------------</echo>
+							<antcall target="clear-jars">
+								<param name="filedir" value="@{destdir}" />
+								<param name="files" value="bboss-http.jar,bboss-camel.jar,bboss-jms.jar,bboss-mina.jar,bboss-rmi.jar,bboss-tlq.jar,bboss-ws.jar,bboss-netty.jar" />
+							</antcall>
+						</sequential>
+					</for>
+					
+					
+					
+					
+					
+					<for list="${bboss-mvc-lib},${bboss-clientproxy-lib}" param="destdir">
+								<sequential>
+									<echo>@{destdir}-------------------------------</echo>
+									<antcall target="clear-jars">
+										<param name="filedir" value="@{destdir}" />
+										<param name="files" value="bboss-http.jar,bboss-camel.jar,bboss-jms.jar,bboss-mina.jar,bboss-rmi.jar,bboss-tlq.jar,bboss-ws.jar,bboss-netty.jar" />
+									</antcall>
+								</sequential>
+							</for>
+					
+							<for list="${xmlrequest-lib}" param="destdir">
+								<sequential>
+									<echo>@{destdir}/cxf-------------------------------</echo>
+									<antcall target="clear-jars">
+										<param name="filedir" value="@{destdir}" />
+										<param name="files" value="bboss-http.jar,bboss-camel.jar,bboss-jms.jar,bboss-mina.jar,bboss-rmi.jar,bboss-tlq.jar,bboss-ws.jar,bboss-netty.jar" />
+									</antcall>
+								</sequential>
+							</for>		
+			
+			
+		</target>
 	<target name="distrib-bboss-rpc-jars" description="distrib-bboss-rpc-jars">
 			<for list="${demoproject-lib},${bbossevent-lib},${cms_baseline-lib},${active-ext-lib},${kettle-lib},${monitorconsole-compilelib},${monitorconsole-lib},${creatoresb-lib}" param="destdir">
 				<sequential>
@@ -922,7 +994,14 @@ bbosscore<-cas server [bboss-core.jar]
 	
 	
 
+	<target name="clear-jars" description="clear-jars">
+		<delete includeEmptyDirs="true">
 
+		    <fileset dir="${filedir}" includes="${files}"/>
+
+		  </delete>
+			
+		</target>
 	<!--
 		实现文件更新到svn功能
 		接收三个参数:		

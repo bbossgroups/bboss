@@ -35,18 +35,10 @@
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/syndication-1.0.0.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/text-2.0.8.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/xmlbeans-2.4.0.jar"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/bboss-aop.jar" sourcepath="/bbossaop"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/bboss-rmi.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/frameworkset-pool.jar" sourcepath="/bboss-persistent"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/frameworkset.jar" sourcepath="/bboss-tablib"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/bboss-util"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/bboss-camel.jar"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/bboss-http.jar"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/bboss-jms.jar"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/bboss-mina.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/bboss-soa.jar"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/bboss-tlq.jar"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/bboss-ws.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/commons-beanutils-1.7.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/datagride.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/dom4j-1.6.1.jar"/>
@@ -90,5 +82,7 @@
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/mongo-java-driver-2.12.2.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/mongo-java-driver-javadoc-2.12.2.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/mongo-java-driver-source-2.12.2.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/bboss-core.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/bboss-rpc.jar"/>
 	<classpathentry kind="output" path="WebRoot/WEB-INF/classes"/>
 </classpath>

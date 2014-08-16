@@ -5,15 +5,7 @@
 	<classpathentry kind="src" path="test"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/asm-3.1.jar"/>
-	<classpathentry kind="lib" path="lib/bboss-aop.jar" sourcepath="/bbossaop"/>
-	<classpathentry kind="lib" path="lib/bboss-camel.jar"/>
-	<classpathentry kind="lib" path="lib/bboss-jms.jar"/>
-	<classpathentry kind="lib" path="lib/bboss-mina.jar"/>
-	<classpathentry kind="lib" path="lib/bboss-netty.jar"/>
-	<classpathentry kind="lib" path="lib/bboss-rmi.jar"/>
 	<classpathentry kind="lib" path="lib/bboss-schedule.jar"/>
-	<classpathentry kind="lib" path="lib/bboss-tlq.jar"/>
-	<classpathentry kind="lib" path="lib/bboss-ws.jar"/>
 	<classpathentry kind="lib" path="lib/cglib-2.2.jar"/>
 	<classpathentry kind="lib" path="lib/commons-lang-2.1.jar"/>
 	<classpathentry kind="lib" path="lib/commons-logging-1.0.4.jar"/>
@@ -30,5 +22,7 @@
 	<classpathentry kind="lib" path="lib/commons-codec-1.1.jar"/>
 	<classpathentry kind="lib" path="lib/icu4j-4_2_1.jar"/>
 	<classpathentry kind="lib" path="lib/jasypt-1.6.jar"/>
+	<classpathentry kind="lib" path="lib/bboss-core.jar"/>
+	<classpathentry kind="lib" path="lib/bboss-rpc.jar"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>

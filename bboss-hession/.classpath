@@ -4,11 +4,11 @@
 	<classpathentry kind="src" path="test"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib-compile/javaee.jar"/>
-	<classpathentry kind="lib" path="lib-compile/bboss-aop.jar"/>
 	<classpathentry kind="lib" path="lib-compile/log4j-1.2.16.jar"/>
 	<classpathentry kind="lib" path="lib-compile/frameworkset-util.jar"/>
 	<classpathentry kind="lib" path="lib-compile/bboss-mvc.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="lib" path="lib-compile/hessian-4.0.7.jar"/>
+	<classpathentry kind="lib" path="lib-compile/bboss-core.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
