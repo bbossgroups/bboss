@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<properties>
-	<property name="test1" class="org.frameworkset.spi.properties.loopinject.Test1">
-		
-		<property name="test5" refid="attr:test5"/>
-	</property>
-	
-	<property name="test5" refid="attr:test1"/>
-</properties>

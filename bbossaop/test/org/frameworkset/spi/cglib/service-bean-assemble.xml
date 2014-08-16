@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding='UTF-8'?>
-
-<manager-config>
-
-		
-		<property id="cglibbean" singlable="true"  class="org.frameworkset.spi.cglib.CGLibService" />
-
-</manager-config>

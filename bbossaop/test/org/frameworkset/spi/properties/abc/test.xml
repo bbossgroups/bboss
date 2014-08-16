@@ -1,6 +1,0 @@
-<properties>
-	<property name="test" class="org.frameworkset.spi.properties.abc.Test">
-		<property name="id"><![CDATA[aa&aaa]]></property>
-	</property>
-			
-</properties>

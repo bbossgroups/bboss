@@ -1,9 +1,0 @@
-<properties>
-	<property name="loop.a" singlable="true" class="org.frameworkset.spi.properties.loopinject.A">
-		<property name="b" refid="attr:loop.b"/>
-	</property>
-	
-	<property name="loop.b" singlable="true" class="org.frameworkset.spi.properties.loopinject.B">
-		<property name="a" refid="loop.a"/>
-	</property>
-</properties>

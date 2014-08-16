@@ -1,5 +1,0 @@
-<manager-config>
-	<property name="test.security.bean" 
-		class="org.frameworkset.spi.security.BussinessBean">		      
-	</property>
-</manager-config>
