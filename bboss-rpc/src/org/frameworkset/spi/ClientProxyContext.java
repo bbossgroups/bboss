@@ -16,6 +16,7 @@
 
 package org.frameworkset.spi;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
@@ -115,6 +116,31 @@ import org.frameworkset.spi.security.SecurityManager;
 public class ClientProxyContext
 {
 	/**
+	 * 缓存客户端代理组件类：
+	 * key String类型，对应容器根配置文件
+	 * value  Map<String,Object>类型，key表示组件url地址，Object代表客户端代理组件
+	 */
+	private static Map<String,Map<String,Object>> clientbeans = new HashMap<String,Map<String,Object>>();
+	private static Object findObjectFromcache(String context,String name)
+	{
+		Map<String,Object> objects = clientbeans.get(context);
+		if(objects == null)
+			return null;
+		Object val = objects.get(name);
+		return val;
+	}
+	private static void cacheObject(String context,String name,Object value)
+	{
+		Map<String,Object> objects = clientbeans.get(context);
+		if(objects == null)
+		{
+			objects = new HashMap<String,Object>();
+			clientbeans.put(context, objects);
+		}
+		
+		objects.put(name,value);		
+	}
+	/**
 	 * 获取DefaultApplicationContext类型容器中的服务组件调用代理
 	 * @param <T> 泛型类型
 	 * @param context 容器标识，一般是容器初始化的配置文件路径
@@ -122,13 +148,52 @@ public class ClientProxyContext
 	 * @param type  组件接口类型，使用泛型来实现接口的自动类型转换
 	 * @return 服务组件调用代理
 	 */
+	@SuppressWarnings("unchecked")
 	public static <T> T getSimpleClientBean(String context,String name,Class<T> type)
 	{
-		RemoteServiceID serviceID = buildServiceID(name,context,BaseApplicationContext.container_type_simple);
-		serviceID.setInfType(type);
-		RemoteCallContext ccontext = new RemoteCallContextImpl(context,BaseApplicationContext.container_type_simple);
-		buildClientCallContext(serviceID, ccontext,false);
-		return CGLibUtil.getBeanInstance(type, new RemoteCGLibProxy(serviceID,ccontext));
+//    	T value = (T)findObjectFromcache( context,name);
+//		if(value != null)
+//			return value;
+//		synchronized(ClientProxyContext.class)
+//		{
+//			
+//			value = (T)findObjectFromcache( context,name);
+//			if(value != null)
+//				return value;
+//			RemoteServiceID serviceID = buildServiceID(name,context,BaseApplicationContext.container_type_simple);
+//			serviceID.setInfType(type);
+//			RemoteCallContext ccontext = new RemoteCallContextImpl(context,BaseApplicationContext.container_type_simple);
+//			buildClientCallContext(serviceID, ccontext,false);
+//			value =  CGLibUtil.getBeanInstance(type, new RemoteCGLibProxy(serviceID,ccontext));
+//			cacheObject(context,name,value);
+//			
+//		}
+//		return value;
+		return _getClientBean(context,name,type,BaseApplicationContext.container_type_simple);
+		
+	}
+	
+	@SuppressWarnings("unchecked")
+	private static <T> T _getClientBean(String context,String name,Class<T> type,int containerType)
+	{
+    	T value = (T)findObjectFromcache( context,name);
+		if(value != null)
+			return value;
+		synchronized(ClientProxyContext.class)
+		{
+			
+			value = (T)findObjectFromcache( context,name);
+			if(value != null)
+				return value;
+			RemoteServiceID serviceID = buildServiceID(name,context,containerType);
+			serviceID.setInfType(type);
+			RemoteCallContext ccontext = new RemoteCallContextImpl(context,containerType);
+			buildClientCallContext(serviceID, ccontext,false);
+			value =  CGLibUtil.getBeanInstance(type, new RemoteCGLibProxy(serviceID,ccontext));
+			cacheObject(context,name,value);
+			
+		}
+		return value;
 		
 	}
 
@@ -246,11 +311,12 @@ public class ClientProxyContext
 	 */
 	public static <T> T getApplicationClientBean(String context,String name,Class<T> type)
 	{
-		RemoteServiceID serviceID = buildServiceID(name,context,BaseApplicationContext.container_type_application);
-		serviceID.setInfType(type);
-		RemoteCallContext ccontext = new RemoteCallContextImpl(context,BaseApplicationContext.container_type_application);
-		buildClientCallContext(serviceID, ccontext,false);
-		return CGLibUtil.getBeanInstance(type, new RemoteCGLibProxy(serviceID,ccontext));
+//		RemoteServiceID serviceID = buildServiceID(name,context,BaseApplicationContext.container_type_application);
+//		serviceID.setInfType(type);
+//		RemoteCallContext ccontext = new RemoteCallContextImpl(context,BaseApplicationContext.container_type_application);
+//		buildClientCallContext(serviceID, ccontext,false);
+//		return CGLibUtil.getBeanInstance(type, new RemoteCGLibProxy(serviceID,ccontext));
+		return _getClientBean(context,name,type,BaseApplicationContext.container_type_application);
 	}
 	
 	/**
@@ -263,11 +329,12 @@ public class ClientProxyContext
 	 */
 	public static <T> T getApplicationClientBean(String context,String name,Class<T> type,int containertype)
 	{
-		RemoteServiceID serviceID = buildServiceID(name,context,containertype);
-		serviceID.setInfType(type);
-		RemoteCallContext ccontext = new RemoteCallContextImpl(context,containertype);
-		buildClientCallContext(serviceID, ccontext,false);
-		return CGLibUtil.getBeanInstance(type, new RemoteCGLibProxy(serviceID,ccontext));
+//		RemoteServiceID serviceID = buildServiceID(name,context,containertype);
+//		serviceID.setInfType(type);
+//		RemoteCallContext ccontext = new RemoteCallContextImpl(context,containertype);
+//		buildClientCallContext(serviceID, ccontext,false);
+//		return CGLibUtil.getBeanInstance(type, new RemoteCGLibProxy(serviceID,ccontext));
+		return _getClientBean(context,name,type,containertype);
 	}
 	
 	
@@ -292,11 +359,12 @@ public class ClientProxyContext
 	 */
 	public static <T> T getWebMVCClientBean(String name,Class<T> type)
 	{
-		RemoteServiceID serviceID = buildServiceID(name,BaseApplicationContext.mvccontainer_identifier,BaseApplicationContext.container_type_mvc);
-		serviceID.setInfType(type);
-		RemoteCallContext ccontext = new RemoteCallContextImpl(BaseApplicationContext.mvccontainer_identifier,BaseApplicationContext.container_type_mvc);
-		buildClientCallContext(serviceID, ccontext,false);
-		return CGLibUtil.getBeanInstance(type, new RemoteCGLibProxy(serviceID,ccontext));
+//		RemoteServiceID serviceID = buildServiceID(name,BaseApplicationContext.mvccontainer_identifier,BaseApplicationContext.container_type_mvc);
+//		serviceID.setInfType(type);
+//		RemoteCallContext ccontext = new RemoteCallContextImpl(BaseApplicationContext.mvccontainer_identifier,BaseApplicationContext.container_type_mvc);
+//		buildClientCallContext(serviceID, ccontext,false);
+//		return CGLibUtil.getBeanInstance(type, new RemoteCGLibProxy(serviceID,ccontext));
+		return _getClientBean(BaseApplicationContext.mvccontainer_identifier,name,type,BaseApplicationContext.container_type_mvc);
 	}
 	
 	public static RemoteServiceID buildServiceID(String serviceid,String applicationcontext,int containerType) {

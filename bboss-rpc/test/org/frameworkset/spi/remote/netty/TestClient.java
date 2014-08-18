@@ -57,10 +57,11 @@ public class TestClient extends TestBase
 //		RPCTestInf testInf = (RPCTestInf)context.getBeanObject("(192.168.11.102:1186)/rpc.test");
 		
 //		RPCTestInf testInf = (RPCTestInf)context.getBeanObject("(netty::192.168.1.22:12347)/rpc.test?user=admin&password=123456&server_uuid=多多");
-		RPCTestInf testInf = ClientProxyContext.getApplicationClientBean("org/frameworkset/spi/remote/manager-rpc-test.xml",
-				"(netty::192.168.1.102:12347)/rpc.test?user=admin&password=123456&server_uuid=多多",RPCTestInf.class);
+		
 		for(int i = 0; i < 10; i ++)
 		{
+			RPCTestInf testInf = ClientProxyContext.getApplicationClientBean("org/frameworkset/spi/remote/manager-rpc-test.xml",
+					"(netty::10.25.192.142:12347)/rpc.test?user=admin&password=123456&server_uuid=多多",RPCTestInf.class);
 			Object ret = testInf.getParameter();
 			
 			
