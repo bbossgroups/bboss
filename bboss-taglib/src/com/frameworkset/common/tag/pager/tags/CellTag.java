@@ -188,12 +188,8 @@ public class CellTag  extends PagerTagSupport {
 	public void write(OutputStream output) {
 
 	}
-	public int doStartTag() throws JspException {
-		//super.doStartTag();
-	    //初始化dataSet
-		
-	    init();
-	   
+	protected String getStringValue()
+	{
 		String outStr = null;
 		if(!this.actualseted)
 		{
@@ -210,6 +206,15 @@ public class CellTag  extends PagerTagSupport {
 				outStr = outStr.trim();
 			}
 		}
+		return outStr;
+	}
+	public int doStartTag() throws JspException {
+		//super.doStartTag();
+	    //初始化dataSet
+		
+	    init();
+	   
+		String outStr = getStringValue();
 		if(outStr != null)
 		{
 			if(getEncode() != null && getEncode().equals("true"))

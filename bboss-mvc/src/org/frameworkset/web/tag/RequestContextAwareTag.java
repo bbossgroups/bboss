@@ -17,16 +17,16 @@ package org.frameworkset.web.tag;
 
 import java.io.IOException;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspTagException;
-import javax.servlet.jsp.tagext.TagSupport;
 import javax.servlet.jsp.tagext.TryCatchFinally;
 
 import org.apache.log4j.Logger;
 import org.frameworkset.spi.support.MessageSource;
 import org.frameworkset.web.servlet.support.RequestContext;
 import org.frameworkset.web.servlet.support.RequestContextUtils;
+
+import com.frameworkset.common.tag.pager.tags.CellTag;
 
 /**
  * <p>Title: RequestContextAwareTag.java</p> 
@@ -37,7 +37,7 @@ import org.frameworkset.web.servlet.support.RequestContextUtils;
  * @author biaoping.yin
  * @version 1.0
  */
-public abstract class RequestContextAwareTag extends TagSupport implements TryCatchFinally {
+public abstract class RequestContextAwareTag extends CellTag implements TryCatchFinally {
 
 
 
@@ -55,7 +55,7 @@ public abstract class RequestContextAwareTag extends TagSupport implements TryCa
 	 * @see #REQUEST_CONTEXT_PAGE_ATTRIBUTE
 	 
 	 */
-	public final int doStartTag() throws JspException {
+	public  int doStartTag() throws JspException {
 		this.requestContext = RequestContextUtils.getRequestContext(pageContext);
 		try {
 //			if (this.requestContext == null) {

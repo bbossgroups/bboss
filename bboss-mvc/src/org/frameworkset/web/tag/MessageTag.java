@@ -28,6 +28,7 @@ import org.frameworkset.web.util.JavaScriptUtils;
 import org.frameworkset.web.util.TagUtils;
 
 import com.frameworkset.util.HtmlUtils;
+import com.frameworkset.util.StringUtil;
 
 
 /**
@@ -187,6 +188,18 @@ public class MessageTag extends HtmlEscapingAwareTag {
 
 	protected String getText() {
 		return text;
+	}
+
+	@Override
+	public int doStartTag() throws JspException {
+		 
+		 if(StringUtil.isEmpty(code))
+		 {
+			 init();
+			 this.code = super.getStringValue();
+		 }
+			
+		return super.doStartTag();
 	}
 
 }
