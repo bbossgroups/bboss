@@ -201,5 +201,8 @@ public class MessageTag extends HtmlEscapingAwareTag {
 			
 		return super.doStartTag();
 	}
-
+	public void doFinally() {
+		this.code = null;
+		super.doFinally();
+	}
 }

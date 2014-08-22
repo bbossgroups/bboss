@@ -137,7 +137,7 @@ public class TokenService implements TokenServiceInf {
 //		else
 //			tokenstore_i = tokenstore_in_session;
 		this.enableToken = enableToken;
-		if(tokenscaninterval > 0 && (temptokenlivetime > 0 || dualtokenlivetime > 0))
+		if(enableToken && tokenscaninterval > 0 && (temptokenlivetime > 0 || dualtokenlivetime > 0))
 		{
 			tokenMonitor = new TokenMonitor();
 			tokenMonitor.start();
