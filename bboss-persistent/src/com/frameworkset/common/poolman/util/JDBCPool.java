@@ -720,6 +720,10 @@ public class JDBCPool {
 				idGenerator = new com.frameworkset.common.poolman.sql.StrongUuidGenerator();
 			}
 		}
+		else
+		{
+			idGenerator = new com.frameworkset.common.poolman.sql.StrongUuidGenerator();
+		}
 		this.preparedStatementPool = new Hashtable();
 		if (null == info.getJNDIName() || info.getJNDIName().equals(""))
 			log

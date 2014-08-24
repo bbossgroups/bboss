@@ -44,6 +44,7 @@ import org.frameworkset.http.converter.HttpMessageConverter;
 import org.frameworkset.spi.BaseApplicationContext;
 import org.frameworkset.spi.assemble.Pro;
 import org.frameworkset.spi.assemble.ProList;
+import org.frameworkset.spi.event.IocLifeCycleEventListener;
 import org.frameworkset.spi.io.PropertiesLoaderUtils;
 import org.frameworkset.spi.support.LocaleContext;
 import org.frameworkset.spi.support.LocaleContextHolder;
@@ -95,7 +96,8 @@ import com.frameworkset.util.StringUtil;
 public class DispatchServlet extends HttpServlet {
 	private static  Properties defaultStrategies;
 	
-	
+	private String iocLifeCycleEventListeners;
+	private List<IocLifeCycleEventListener> iocLifeCycleEventListenerList ;
 	
 	public static Properties getDefaultStrategies()
 	{
@@ -535,7 +537,7 @@ public class DispatchServlet extends HttpServlet {
 		long startTime = System.currentTimeMillis();
 
 		try {
-			this.webApplicationContext = initWebApplicationContext( config);
+			initWebApplicationContext( config);
 //			initFrameworkServlet();
 		}
 //		catch (ServletException ex) {
@@ -655,10 +657,27 @@ public class DispatchServlet extends HttpServlet {
 	protected WebApplicationContext createWebApplicationContext(ServletConfig config)
 	{
 		String contextConfigLocation = config.getInitParameter("contextConfigLocation");
-		
-		WebApplicationContext context = WebApplicationContext.getWebApplicationContext(config.getServletContext(),contextConfigLocation);
-
-		return context;
+		//start event
+		for(int i = 0; this.iocLifeCycleEventListenerList != null && i < this.iocLifeCycleEventListenerList.size(); i ++)
+		{
+			IocLifeCycleEventListener l = this.iocLifeCycleEventListenerList.get(i);
+			try {
+				l.beforestart();
+			} catch (Exception e) {
+				logger.debug("before start WebApplicationContext:",e);
+			}
+		}
+		this.webApplicationContext = WebApplicationContext.getWebApplicationContext(config.getServletContext(),contextConfigLocation);
+		for(int i = 0; this.iocLifeCycleEventListenerList != null && i < this.iocLifeCycleEventListenerList.size(); i ++)
+		{
+			IocLifeCycleEventListener l = this.iocLifeCycleEventListenerList.get(i);
+			try {
+				l.afterstart(webApplicationContext);
+			} catch (Exception e) {
+				logger.debug("After start WebApplicationContext:",e);
+			}
+		}
+		return webApplicationContext;
 	}
 	
 	/**
@@ -1181,6 +1200,34 @@ public class DispatchServlet extends HttpServlet {
 		
 		
 	}
+	protected void initIocLifeCycleEventListeners(ServletConfig config)
+	{
+		iocLifeCycleEventListeners = config.getInitParameter("iocLifeCycleEventListeners");
+		if(StringUtil.isNotEmpty(iocLifeCycleEventListeners ))
+		{
+			
+			String[]  iocLifeCycleEventListeners_ = iocLifeCycleEventListeners.split(",");
+			this.iocLifeCycleEventListenerList = new ArrayList<IocLifeCycleEventListener>();
+			for(String iocLifeCycleEventListener:iocLifeCycleEventListeners_)
+			{
+				
+				try {
+					IocLifeCycleEventListener l = (IocLifeCycleEventListener)Class.forName(iocLifeCycleEventListener).newInstance();
+					iocLifeCycleEventListenerList.add(l);
+				} catch (InstantiationException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IllegalAccessException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+			}
+		}
+	}
 	/**
 	 * Initialize the strategy objects that this servlet uses.
 	 * <p>May be overridden in subclasses in order to initialize
@@ -1190,6 +1237,7 @@ public class DispatchServlet extends HttpServlet {
 	protected void init_(ServletConfig config) throws Exception {
 //		loadCustomJars(config);
 		initMessagesources(config);
+		this.initIocLifeCycleEventListeners( config);
 		this.initServletBean(config);
 		publishWebService(config);
 //		WebApplicationContext context = this.initWebApplicationContext( config);

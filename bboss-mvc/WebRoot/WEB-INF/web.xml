@@ -180,6 +180,12 @@
 			<param-name>messagesources</param-name>
 			<param-value>/WEB-INF/messages,/WEB-INF/messages1</param-value>
 		</init-param>
+		<!-- 配置mvc启动监听器 -->
+		<init-param>
+			<param-name>iocLifeCycleEventListeners</param-name>
+			<param-value></param-value>
+		</init-param>
+		
 		<init-param>
 			<param-name>useCodeAsDefaultMessage</param-name>
 			<param-value>true</param-value>
