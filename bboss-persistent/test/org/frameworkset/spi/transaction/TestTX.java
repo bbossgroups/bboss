@@ -24,6 +24,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.frameworkset.common.poolman.DBUtil;
+import com.frameworkset.common.poolman.SQLExecutor;
 import com.frameworkset.orm.transaction.TransactionManager;
 
 public class TestTX {
@@ -456,7 +457,117 @@ testTXInvoke
 		}
 	}
 	
+	@Test
+	public void testRWTX()
+	{
+		TransactionManager tm = new TransactionManager();
+		try{
+			tm.begin(TransactionManager.RW_TRANSACTION);
+			try{
+				SQLExecutor.queryObject(int.class, "select 1 from ddd");
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+			}
+			System.out.println("data:"+SQLExecutor.queryObject(int.class, "select 1 from tableinfo"));
+			
+			TransactionManager tm1 = new TransactionManager();
+			try{
+				tm1.begin(TransactionManager.RW_TRANSACTION);
+				try{
+					SQLExecutor.queryObject(int.class, "select 1 from ddd");
+				}
+				catch(Exception e)
+				{
+					e.printStackTrace();
+				}
+				System.out.println("data inner:"+SQLExecutor.queryObject(int.class, "select 1 from tableinfo"));
+				tm1.commit();
+				
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+			}
+			finally
+			{
+				tm1.release();
+			}
+			DBUtil.debugStatus();
+			tm.commit();
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			tm.release();
+		}
+		DBUtil.debugStatus();
+	}
 	
+	@Test
+	public void testRequiredTX()
+	{
+		TransactionManager tm = new TransactionManager();
+		try{
+			tm.begin( );
+			try{
+				SQLExecutor.queryObject(int.class, "select 1 from ddd");
+			}
+			catch(Exception e)
+			{
+				DBUtil.debugStatus();
+				e.printStackTrace();
+			}
+			try {
+				System.out.println("data:"+SQLExecutor.queryObject(int.class, "select 1 from tableinfo"));
+			} catch (Exception e1) {
+				DBUtil.debugStatus();
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
+			TransactionManager tm1 = new TransactionManager();
+			try{
+				tm1.begin( );
+				try{
+					SQLExecutor.queryObject(int.class, "select 1 from ddd");
+				}
+				catch(Exception e)
+				{
+					DBUtil.debugStatus();
+					e.printStackTrace();
+				}
+				System.out.println("data inner:"+SQLExecutor.queryObject(int.class, "select 1 from tableinfo"));
+				tm1.commit();
+				
+			}
+			catch(Exception e)
+			{
+				DBUtil.debugStatus();
+				e.printStackTrace();
+			}
+			finally
+			{
+				tm1.release();
+			}
+			DBUtil.debugStatus();
+			tm.commit();
+		}
+		catch(Exception e)
+		{
+			DBUtil.debugStatus();
+			e.printStackTrace();
+		}
+		finally
+		{
+			tm.release();
+		}
+		DBUtil.debugStatus();
+	}
 	/**
 	 * 测试模式方法事务控制
 	 */

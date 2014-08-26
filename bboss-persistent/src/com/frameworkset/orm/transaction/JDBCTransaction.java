@@ -46,6 +46,7 @@ import javax.transaction.Synchronization;
 import javax.transaction.SystemException;
 import javax.transaction.xa.XAResource;
 
+import com.frameworkset.common.poolman.NestedSQLException;
 import com.frameworkset.common.poolman.util.SQLManager;
 import com.frameworkset.commons.dbcp.AbandonedTrace;
 import com.frameworkset.orm.annotation.TransactionType;
@@ -192,8 +193,8 @@ public class JDBCTransaction {
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 		//			this.status = Status.STATUS_COMMITTED;
-				e.printStackTrace();
-				throw new SQLException(e.getMessage());
+			
+				throw new NestedSQLException(e.getMessage(),e);
 			}
 			finally
 			{
@@ -323,7 +324,12 @@ public class JDBCTransaction {
 		
 		if(this.wasCommitted())
 			throw new TransactionException(new SQLException("JDBCTransaction.getConnectionFromDS：TX was committed."));
-		if(this.status == Status.STATUS_MARKED_ROLLBACK)
+		//注释：对应RW事务，然后允许进行相应的数据库操作,保留修改痕迹而注释
+//		if(this.status == Status.STATUS_MARKED_ROLLBACK)
+//		{
+//			throw new TransactionException(new SQLException("JDBCTransaction.getConnectionFromDS：TX was remarked rollingback."));
+//		}
+		if(this.currenttxtype != TransactionManager.RW_TRANSACTION && this.status == Status.STATUS_MARKED_ROLLBACK)
 		{
 			throw new TransactionException(new SQLException("JDBCTransaction.getConnectionFromDS：TX was remarked rollingback."));
 		}
@@ -352,13 +358,20 @@ public class JDBCTransaction {
     		else
     		{
     			if(txentity.getStatus() == Status.STATUS_COMMITTED 
-    					|| txentity.getStatus() == Status.STATUS_MARKED_ROLLBACK
+    					
     					|| txentity.getStatus() == Status.STATUS_ROLLEDBACK
     					|| txentity.getStatus() == Status.STATUS_ROLLING_BACK)
     				throw new TransactionException(new SQLException("JDBCTransaction.getConnectionFromDS：" + "TransactionEntity.getStatus() == Status.STATUS_COMMITTED "
         					+ "|| TransactionEntity.getStatus() == Status.STATUS_MARKED_ROLLBACK"
         					+ "|| TransactionEntity.getStatus() == Status.STATUS_ROLLEDBACK"
         					+ "|| TransactionEntity.getStatus() == Status.STATUS_ROLLING_BACK"));
+    			else if(this.currenttxtype != TransactionManager.RW_TRANSACTION &&  txentity.getStatus() == Status.STATUS_MARKED_ROLLBACK)
+    			{
+    				throw new TransactionException(new SQLException("JDBCTransaction.getConnectionFromDS：" + "TransactionEntity.getStatus() == Status.STATUS_COMMITTED "
+        					+ "|| TransactionEntity.getStatus() == Status.STATUS_MARKED_ROLLBACK"
+        					+ "|| TransactionEntity.getStatus() == Status.STATUS_ROLLEDBACK"
+        					+ "|| TransactionEntity.getStatus() == Status.STATUS_ROLLING_BACK"));
+    			}
     			txentity.increament();
     		}
     		return txentity.getConnection();
@@ -400,7 +413,7 @@ public class JDBCTransaction {
 		
 		if(this.wasCommitted())
 			throw new TransactionException(new SQLException("JDBCTransaction.getConnection(dbName="+ dbName +")：TX was committed."));
-		if(this.status == Status.STATUS_MARKED_ROLLBACK)
+		if(this.currenttxtype != TransactionManager.RW_TRANSACTION && this.status == Status.STATUS_MARKED_ROLLBACK)
 		{
 			throw new TransactionException(new SQLException("JDBCTransaction.getConnection(dbName="+ dbName +")：TX was remarked rollingback."));
 		}
@@ -428,14 +441,20 @@ public class JDBCTransaction {
     		}
     		else
     		{
-    			if(txentity.getStatus() == Status.STATUS_COMMITTED 
-    					|| txentity.getStatus() == Status.STATUS_MARKED_ROLLBACK
+    			if(txentity.getStatus() == Status.STATUS_COMMITTED     					
     					|| txentity.getStatus() == Status.STATUS_ROLLEDBACK
     					|| txentity.getStatus() == Status.STATUS_ROLLING_BACK)
     				throw new TransactionException(new SQLException("JDBCTransaction.getConnection(dbName="+ dbName +")：" + "TransactionEntity.getStatus() == Status.STATUS_COMMITTED "
         					+ "|| TransactionEntity.getStatus() == Status.STATUS_MARKED_ROLLBACK"
         					+ "|| TransactionEntity.getStatus() == Status.STATUS_ROLLEDBACK"
         					+ "|| TransactionEntity.getStatus() == Status.STATUS_ROLLING_BACK"));
+    			else if(this.currenttxtype != TransactionManager.RW_TRANSACTION &&  txentity.getStatus() == Status.STATUS_MARKED_ROLLBACK)
+    			{
+    				throw new TransactionException(new SQLException("JDBCTransaction.getConnection(dbName="+ dbName +")：" + "TransactionEntity.getStatus() == Status.STATUS_COMMITTED "
+        					+ "|| TransactionEntity.getStatus() == Status.STATUS_MARKED_ROLLBACK"
+        					+ "|| TransactionEntity.getStatus() == Status.STATUS_ROLLEDBACK"
+        					+ "|| TransactionEntity.getStatus() == Status.STATUS_ROLLING_BACK"));
+    			}
     			txentity.increament();
     		}
     		return txentity.getConnection();
@@ -610,7 +629,28 @@ public class JDBCTransaction {
 			{
 				txentity.commit();
 			}
-		}			
+		}		
+		this.txentities.clear();
+	}
+
+	private void rollbackAll() 
+	{
+		
+		/**
+		 * 每次显示地调用回滚操作后，立即释放所有的资源，回滚所有的数据库事务
+		 */
+		while (executeStack.size() > 0)
+		{
+			TransactionEntity txentity = this.executeStack.pop() ;
+			if(txentity == null)
+				break;
+			else
+			{
+				txentity.rollback();
+				
+			}
+		}	
+		this.txentities.clear();
 	}
 	public void registerSynchronization(Synchronization arg0) throws RollbackException, IllegalStateException, SystemException {
 		
@@ -653,6 +693,7 @@ public class JDBCTransaction {
 		this.decreament();
 		if(this.count <= 0)
 		{
+			this.rollbackAll();
 			this.status = Status.STATUS_ROLLEDBACK;
 		}
 		else
@@ -664,23 +705,13 @@ public class JDBCTransaction {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			if(this.currenttxtype != TransactionManager.RW_TRANSACTION)
+			{
+				this.rollbackAll();
+			}
 		}
 		
-		/**
-		 * 每次显示地调用回滚操作后，立即释放所有的资源，回滚所有的数据库事务
-		 */
-		while (executeStack.size() > 0)
-		{
-			TransactionEntity txentity = this.executeStack.pop() ;
-			if(txentity == null)
-				break;
-			else
-			{
-				txentity.rollback();
-				
-			}
-		}	
-		this.txentities.clear();
+		
 		
 	}
 

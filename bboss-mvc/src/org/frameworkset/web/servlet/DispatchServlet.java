@@ -658,25 +658,9 @@ public class DispatchServlet extends HttpServlet {
 	{
 		String contextConfigLocation = config.getInitParameter("contextConfigLocation");
 		//start event
-		for(int i = 0; this.iocLifeCycleEventListenerList != null && i < this.iocLifeCycleEventListenerList.size(); i ++)
-		{
-			IocLifeCycleEventListener l = this.iocLifeCycleEventListenerList.get(i);
-			try {
-				l.beforestart();
-			} catch (Exception e) {
-				logger.debug("before start WebApplicationContext:",e);
-			}
-		}
-		this.webApplicationContext = WebApplicationContext.getWebApplicationContext(config.getServletContext(),contextConfigLocation);
-		for(int i = 0; this.iocLifeCycleEventListenerList != null && i < this.iocLifeCycleEventListenerList.size(); i ++)
-		{
-			IocLifeCycleEventListener l = this.iocLifeCycleEventListenerList.get(i);
-			try {
-				l.afterstart(webApplicationContext);
-			} catch (Exception e) {
-				logger.debug("After start WebApplicationContext:",e);
-			}
-		}
+		
+		webApplicationContext = WebApplicationContext.getWebApplicationContext(config.getServletContext(),contextConfigLocation);
+		
 		return webApplicationContext;
 	}
 	
@@ -1238,19 +1222,41 @@ public class DispatchServlet extends HttpServlet {
 //		loadCustomJars(config);
 		initMessagesources(config);
 		this.initIocLifeCycleEventListeners( config);
-		this.initServletBean(config);
-		publishWebService(config);
+		for(int i = 0; this.iocLifeCycleEventListenerList != null && i < this.iocLifeCycleEventListenerList.size(); i ++)
+		{
+			IocLifeCycleEventListener l = this.iocLifeCycleEventListenerList.get(i);
+			try {
+				l.beforestart();
+			} catch (Exception e) {
+				logger.warn("before start WebApplicationContext:",e);
+			}
+		}
+		try {
+			this.initServletBean(config);
+			publishWebService(config);
 //		WebApplicationContext context = this.initWebApplicationContext( config);
-		initMessageConverters(this.webApplicationContext);
-		initMultipartResolver(this.webApplicationContext);
-		initLocaleResolver(this.webApplicationContext);
-		initThemeResolver(this.webApplicationContext);
-		initHandlerMappings(this.webApplicationContext);
-		initHandlerAdapters(this.webApplicationContext);
-		initHandlerExceptionResolvers(this.webApplicationContext);
-		initRequestToViewNameTranslator(this.webApplicationContext);
-		initViewResolvers(this.webApplicationContext);
-		initGloabelHandlerInterceptors(this.webApplicationContext);
+			initMessageConverters(this.webApplicationContext);
+			initMultipartResolver(this.webApplicationContext);
+			initLocaleResolver(this.webApplicationContext);
+			initThemeResolver(this.webApplicationContext);
+			initHandlerMappings(this.webApplicationContext);
+			initHandlerAdapters(this.webApplicationContext);
+			initHandlerExceptionResolvers(this.webApplicationContext);
+			initRequestToViewNameTranslator(this.webApplicationContext);
+			initViewResolvers(this.webApplicationContext);
+			initGloabelHandlerInterceptors(this.webApplicationContext);
+		} catch (Exception e1) {
+			logger.warn("Init WebApplicationContext:",e1);
+		}
+		for(int i = 0; this.iocLifeCycleEventListenerList != null && i < this.iocLifeCycleEventListenerList.size(); i ++)
+		{
+			IocLifeCycleEventListener l = this.iocLifeCycleEventListenerList.get(i);
+			try {
+				l.afterstart(webApplicationContext);
+			} catch (Exception e) {
+				logger.warn("After start WebApplicationContext:",e);
+			}
+		}
 	}
 	
 	private void initMessageConverters(
@@ -1731,7 +1737,7 @@ public class DispatchServlet extends HttpServlet {
 		{
 			throw e;
 		} catch (Exception e) {
-			e.printStackTrace();
+			
 			throw new NestedServletException("",e);
 		}
 	}

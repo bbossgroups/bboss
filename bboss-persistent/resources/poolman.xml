@@ -2,10 +2,7 @@
 
 <poolman>
 
-  <datasource>
-
-   
-  <datasource>
+ <datasource>
 
     <dbname>bspf</dbname>
 	<loadmetadata>false</loadmetadata>
@@ -14,9 +11,9 @@
      <cachequerymetadata>false</cachequerymetadata>
     <driver>oracle.jdbc.driver.OracleDriver</driver>
 
-     <url>jdbc:oracle:thin:@//10.0.15.134:1521/orcl</url> 
-    <username>ddd</username>
-    <password>sanygcmp</password>
+     <url>jdbc:oracle:thin:@//10.0.15.51:1521/orcl</url> 
+    <username>testpdp1</username>
+    <password>testpdp1</password>
 
     <txIsolationLevel>READ_COMMITTED</txIsolationLevel>
 
@@ -98,9 +95,9 @@
      <cachequerymetadata>false</cachequerymetadata>
     <driver>oracle.jdbc.driver.OracleDriver</driver>
 
-     <url>jdbc:oracle:thin:@//10.0.15.134:1521/orcl</url> 
-    <username>sanygcmp</username>
-    <password>sanygcmp</password>
+     <url>jdbc:oracle:thin:@//10.0.15.51:1521/orcl</url> 
+    <username>testpdp1</username>
+    <password>testpdp1</password>
 
     <txIsolationLevel>READ_COMMITTED</txIsolationLevel>
 
@@ -171,9 +168,9 @@
     <validationQuery>select 1 from dual</validationQuery>
 
   </datasource> 
-</poolman>[/
+</poolman>
   
    
   
  
-</poolman>
+

@@ -511,7 +511,7 @@ public class TransactionManager implements java.io.Serializable {
 		{
 			if(context_tx == tx) //该条件是否会成立呢
 			{
-				System.out.println("context_tx == tx");
+			
 				this.rollbacked = true;
 				return;
 			}

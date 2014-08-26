@@ -25,7 +25,6 @@
 	<classpathentry kind="lib" path="lib/commons-lang-2.4.jar"/>
 	<classpathentry kind="lib" path="lib/cglib/cglib-nodep-2.2.jar"/>
 	<classpathentry kind="lib" path="lib/xjavadoc-1.1.jar"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/bboss-util"/>
 	<classpathentry kind="lib" path="lib/c3p0/c3p0-0.9.2-pre4.jar" sourcepath="lib-source/c3p0-0.9.2-pre4-sources.jar"/>
 	<classpathentry kind="lib" path="lib-source/c3p0-0.9.2-pre4-sources.jar"/>
 	<classpathentry kind="lib" path="lib/proxool/proxool-0.9.1.jar"/>
@@ -34,10 +33,11 @@
 	<classpathentry kind="lib" path="lib-test/commons-logging-1.1.1.jar"/>
 	<classpathentry kind="lib" path="lib/dbcp/commons-dbcp-1.4.jar"/>
 	<classpathentry kind="lib" path="lib/dbcp/commons-pool-1.5.4.jar"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/bboss-velocity"/>
 	<classpathentry kind="lib" path="lib-test/jsp-api.jar"/>
 	<classpathentry kind="lib" path="lib-test/servlet-api.jar"/>
 	<classpathentry kind="lib" path="lib/java-uuid-generator-3.1.2.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/bboss-core"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/bboss-util"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/bboss-velocity"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>
