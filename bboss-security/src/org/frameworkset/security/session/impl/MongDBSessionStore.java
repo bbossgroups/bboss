@@ -211,7 +211,7 @@ public class MongDBSessionStore extends BaseSessionStore{
 	public Session invalidate(String appKey,String contextpath,String sessionID) {
 //		DBCollection sessions = getAppSessionDBCollection( appKey);		
 //		sessions.update(new BasicDBObject("sessionid",sessionID), new BasicDBObject("$set",new BasicDBObject("_validate", false)));
-		Session session = _getSession(appKey, contextpath, sessionID);
+		Session session = getSessionAndRemove(appKey, contextpath, sessionID);
 		return session;
 		
 	}
@@ -395,7 +395,7 @@ public class MongDBSessionStore extends BaseSessionStore{
 		}
 	}
 	
-	private Session _getSession(String appKey,String contextpath, String sessionid) {
+	private Session getSessionAndRemove(String appKey,String contextpath, String sessionid) {
 		DBCollection sessions =getAppSessionDBCollection( appKey);
 	
 		
@@ -437,12 +437,13 @@ public class MongDBSessionStore extends BaseSessionStore{
 			}
 			else
 			{
-				sessions.remove(new BasicDBObject("sessionid",sessionid));
+//				sessions.remove(new BasicDBObject("sessionid",sessionid));
 				return null;
 			}
 		}
 		else
 		{
+			sessions.remove(new BasicDBObject("sessionid",sessionid));
 			return null;
 		}
 	}
