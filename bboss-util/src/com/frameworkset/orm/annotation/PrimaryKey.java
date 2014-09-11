@@ -32,7 +32,7 @@ public @interface PrimaryKey {
 	String name() default "";
 	String pkname() default "";
 	
-	boolean auto() default false;
+	boolean auto() default true;
 	
 	/**
 	 * sequence,string,int,long
