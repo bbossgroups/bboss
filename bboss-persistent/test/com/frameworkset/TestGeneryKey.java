@@ -54,8 +54,8 @@ public class TestGeneryKey {
 			SQLExecutor.insertBean("insert into testpk(id,ct) values(#[id],#[ct])", test);
 			System.out.println("id:"+test.getId());
 			TestPK test1 =  SQLExecutor.queryObjectBean(TestPK.class, "select * from testpk where id=#[id]", test);
-			System.out.println("id:"+test.getId());
-			System.out.println("ct:"+test.getCt());
+			System.out.println("id:"+test1.getId());
+			System.out.println("ct:"+test1.getCt());
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
