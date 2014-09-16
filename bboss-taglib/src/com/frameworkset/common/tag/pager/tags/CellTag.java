@@ -21,6 +21,7 @@ import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.Tag;
 
@@ -29,6 +30,7 @@ import org.apache.log4j.Logger;
 import com.frameworkset.common.tag.exception.FormulaException;
 import com.frameworkset.common.tag.pager.model.Field;
 import com.frameworkset.common.tag.pager.model.Formula;
+import com.frameworkset.common.util.ValueObjectUtil;
 import com.frameworkset.platform.cms.driver.htmlconverter.CmsLinkProcessorInf;
 import com.frameworkset.platform.cms.driver.htmlconverter.CmsLinkProcessorUtil;
 import com.frameworkset.platform.cms.driver.jsp.CMSServletRequest;
@@ -45,6 +47,65 @@ import com.frameworkset.util.StringUtil;
 public class CellTag  extends PagerTagSupport {
 	protected Object actual;
 	protected boolean actualseted = false;
+	protected String requestKey;
+	protected String sessionKey;
+	protected String pageContextKey;
+	protected String parameter;
+	
+	public String getRequestKey()
+	{
+	
+		return requestKey;
+	}
+
+	
+	public void setRequestKey(String requestKey)
+	{
+	
+		this.requestKey = requestKey;
+	}
+
+	
+	public String getSessionKey()
+	{
+	
+		return sessionKey;
+	}
+
+	
+	public void setSessionKey(String sessionKey)
+	{
+	
+		this.sessionKey = sessionKey;
+	}
+
+	
+	public String getPageContextKey()
+	{
+	
+		return pageContextKey;
+	}
+
+	
+	public void setPageContextKey(String pageContextKey)
+	{
+	
+		this.pageContextKey = pageContextKey;
+	}
+
+	
+	public String getParameter()
+	{
+	
+		return parameter;
+	}
+
+	
+	public void setParameter(String parameter)
+	{
+	
+		this.parameter = parameter;
+	}
     private static Logger log = Logger.getLogger (CellTag.class);
     /**
      * 记录cell的元模型元素
@@ -191,21 +252,21 @@ public class CellTag  extends PagerTagSupport {
 	protected String getStringValue()
 	{
 		String outStr = null;
-		if(!this.actualseted)
-		{
+//		if(!this.actualseted)
+//		{
 			
 			outStr = this.getOutStr();
 			
 				
-		}
-		else
-		{
-			outStr = (this.actual == null?null:String.valueOf(this.actual));
-			if(trim && outStr != null)
-			{
-				outStr = outStr.trim();
-			}
-		}
+//		}
+//		else
+//		{
+//			outStr = (this.actual == null?null:String.valueOf(this.actual));
+//			if(trim && outStr != null)
+//			{
+//				outStr = outStr.trim();
+//			}
+//		}
 		return outStr;
 	}
 	public int doStartTag() throws JspException {
@@ -764,61 +825,121 @@ public class CellTag  extends PagerTagSupport {
 	{
 		try
 		{
-			if(this.dataSet == null)
-				return null;
-			Object outStr = null;
-	//		在setMeta方法中初始化t_formula对象
-			//如果设置了表达式，则通过表达式求解返回的值
-			if(this.t_formula != null)
+//			if(this.actualseted)
+//			{
+//				
+//				Object outStr = (this.actual == null?null:this.actual);
+//				return outStr;
+//				
+//					
+//			}
+//			if(!StringUtil.isEmpty(this.sessionAttr ))
+//			{
+////				HttpSession session = request.getSession(false);
+//				return session != null ?session.getAttribute(sessionAttr):null;
+//			}
+			if(this.actualseted)
 			{
-			    try {
-			        Object data = t_formula.getValue();
-			        if(data != null && getNumerformat() != null)
-			        {
-			            NumberFormat numerFormat = new DecimalFormat(getNumerformat());
-			            outStr = numerFormat.format(data);
-			        }
-			        outStr = data;
-	            } catch (FormulaException e) {
-	                //System.out.println(e.getMessage());
-	                log.error(e);
-	            }
+				return (this.actual == null?getDefaultValue():this.actual);
 			}
-			else if (this.getColid() != -1) {
-				if (getProperty() == null)
+			else if(this.requestKey == null && this.sessionKey == null && this.pageContextKey == null && parameter == null)
+			{
+				if(this.dataSet == null)
+//					return getDefaultValue() != null?getObjectValue(getDefaultValue()) :null;
+					return null;
+				Object outStr = null;
+				//		在setMeta方法中初始化t_formula对象
+						//如果设置了表达式，则通过表达式求解返回的值
+						if(this.t_formula != null)
+						{
+						    try {
+						        Object data = t_formula.getValue();
+						        if(data != null && getNumerformat() != null)
+						        {
+						            NumberFormat numerFormat = new DecimalFormat(getNumerformat());
+						            outStr = numerFormat.format(data);
+						        }
+						        outStr = data;
+				            } catch (FormulaException e) {
+				                //System.out.println(e.getMessage());
+				                log.error(e);
+				            }
+						}
+						else if (this.getColid() != -1) {
+							if (getProperty() == null)
+							{
+								//outStr = dataSet.getString(dataSet.getRowid(), this.getColId());
+							    outStr = getObjectValue(dataSet, dataSet.getRowid(), getColid());
+							}
+							else
+							    outStr =
+							    	getObjectValue(
+											dataSet,
+											dataSet.getRowid(),
+											getColid(),
+											getProperty());
+						} else if (getColName() != null) {
+							if (getProperty() == null)
+							    outStr =
+							    	getObjectValue(dataSet, dataSet.getRowid(), getColName());
+							else
+							    outStr =
+							    	getObjectValue(
+											dataSet,
+											dataSet.getRowid(),
+											this.getColName(),
+											getProperty());
+							//outStr = dataSet.getString(dataSet.getRowid(), this.getColName());
+						} 
+						else if(this.content != null)				
+							outStr = getContent();
+						else
+							outStr = getObjectValue(dataSet, dataSet.getRowid());
+						if(outStr == null && getDefaultValue() != null)
+							outStr = getObjectValue(getDefaultValue());
+						
+						return outStr;
+			}	
+			else 
+			{
+				Object outStr = null;
+//				Object temp = null;
+				if(this.requestKey != null)
 				{
-					//outStr = dataSet.getString(dataSet.getRowid(), this.getColId());
-				    outStr = getObjectValue(dataSet, dataSet.getRowid(), getColid());
+					outStr = request.getAttribute(requestKey);
+					
 				}
-				else
-				    outStr =
-				    	getObjectValue(
-								dataSet,
-								dataSet.getRowid(),
-								getColid(),
-								getProperty());
-			} else if (getColName() != null) {
-				if (getProperty() == null)
-				    outStr =
-				    	getObjectValue(dataSet, dataSet.getRowid(), getColName());
-				else
-				    outStr =
-				    	getObjectValue(
-								dataSet,
-								dataSet.getRowid(),
-								this.getColName(),
-								getProperty());
-				//outStr = dataSet.getString(dataSet.getRowid(), this.getColName());
-			} 
-			else if(this.content != null)				
-				outStr = getContent();
-			else
-				outStr = getObjectValue(dataSet, dataSet.getRowid());
-			if(outStr == null && getDefaultValue() != null)
-				outStr = getObjectValue(getDefaultValue());
-			if(outStr == null)
-			    outStr = null;
-			return outStr;
+				else if(this.sessionKey != null)
+				{
+					outStr = session.getAttribute(sessionKey);
+					
+				}
+				else if(this.pageContextKey != null)
+				{
+					outStr = this.pageContext.getAttribute(pageContextKey);
+					
+				}
+				else if(this.parameter != null)
+				{
+					outStr = this.request.getParameter(parameter);
+					
+				}
+				if(outStr != null)
+				{
+					if(this.getProperty() != null)
+					{
+						outStr = ValueObjectUtil.getValue(outStr,this.getProperty());
+					}
+				}
+				if(outStr == null && getDefaultValue() != null)
+					outStr = getObjectValue(getDefaultValue());
+				
+				return outStr;
+
+			}
+			
+			
+			
 		}
 		catch(Exception e)
 		{
@@ -1155,6 +1276,10 @@ public class CellTag  extends PagerTagSupport {
 		this.replace = null;
 		this.actual = null;
 		this.actualseted = false;
+		this.requestKey = null ;
+		this.sessionKey= null ;
+		this.pageContextKey= null ;
+		this.parameter= null ;
 		this.trim = false;
 		
 		int ret = super.doEndTag();

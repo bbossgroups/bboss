@@ -2166,7 +2166,15 @@ outStr = "2010年02月07日11时许，周灵颖报警：在2路公交车上被�
 	{
 		if(obj == null)
 			return true;
-		if(!obj.getClass().isArray())
+		if(obj instanceof String)
+		{
+			return isEmpty((String)obj);
+		}
+		if(obj instanceof Collection)
+		{
+			return isEmpty((Collection)obj);
+		}
+		else if(!obj.getClass().isArray())
 		{
 			return false;
 		}

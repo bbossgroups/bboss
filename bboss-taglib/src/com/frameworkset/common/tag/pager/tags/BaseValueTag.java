@@ -38,65 +38,7 @@ import com.frameworkset.util.ListInfo;
  */
 public class BaseValueTag extends CellTag
 {
-	protected String requestKey;
-	protected String sessionKey;
-	protected String pageContextKey;
-	protected String parameter;
 	
-	public String getRequestKey()
-	{
-	
-		return requestKey;
-	}
-
-	
-	public void setRequestKey(String requestKey)
-	{
-	
-		this.requestKey = requestKey;
-	}
-
-	
-	public String getSessionKey()
-	{
-	
-		return sessionKey;
-	}
-
-	
-	public void setSessionKey(String sessionKey)
-	{
-	
-		this.sessionKey = sessionKey;
-	}
-
-	
-	public String getPageContextKey()
-	{
-	
-		return pageContextKey;
-	}
-
-	
-	public void setPageContextKey(String pageContextKey)
-	{
-	
-		this.pageContextKey = pageContextKey;
-	}
-
-	
-	public String getParameter()
-	{
-	
-		return parameter;
-	}
-
-	
-	public void setParameter(String parameter)
-	{
-	
-		this.parameter = parameter;
-	}
 	protected int length(Object _actualValue)
 	{
 		if(_actualValue == null)
@@ -132,63 +74,60 @@ public class BaseValueTag extends CellTag
 	}
 	protected Object evaluateActualValue()
 	{
-		Object temp = null;
-		if(this.actual != null)
-		{
-			return actual;
-		}
-		if(this.requestKey == null && this.sessionKey == null && this.pageContextKey == null && parameter == null)
-//			temp = getOutStr();
-			temp = super.getObjectValue();
-		else 
-		{
-//			Object temp = null;
-			if(this.requestKey != null)
-			{
-				 temp = request.getAttribute(requestKey);
-				
-			}
-			else if(this.sessionKey != null)
-			{
-				temp = session.getAttribute(sessionKey);
-				
-			}
-			else if(this.pageContextKey != null)
-			{
-				temp = this.pageContext.getAttribute(pageContextKey);
-				
-			}
-			else if(this.parameter != null)
-			{
-				temp = this.request.getParameter(parameter);
-				
-			}
-			if(temp != null)
-			{
-				if(this.getProperty() != null)
-				{
-					temp = ValueObjectUtil.getValue(temp,this.getProperty());
-				}
-			}
-//			if(temp == null)
+		Object temp = super.getObjectValue();
+//		if(this.actual != null)
+//		{
+//			return actual;
+//		}
+//		if(this.requestKey == null && this.sessionKey == null && this.pageContextKey == null && parameter == null)
+////			temp = getOutStr();
+//			temp = super.getObjectValue();
+//		else 
+//		{
+////			Object temp = null;
+//			if(this.requestKey != null)
 //			{
-//				actualValue = null;
+//				 temp = request.getAttribute(requestKey);
+//				
 //			}
-//			else
+//			else if(this.sessionKey != null)
 //			{
-//				actualValue = temp;
+//				temp = session.getAttribute(sessionKey);
+//				
 //			}
-		}
+//			else if(this.pageContextKey != null)
+//			{
+//				temp = this.pageContext.getAttribute(pageContextKey);
+//				
+//			}
+//			else if(this.parameter != null)
+//			{
+//				temp = this.request.getParameter(parameter);
+//				
+//			}
+//			if(temp != null)
+//			{
+//				if(this.getProperty() != null)
+//				{
+//					temp = ValueObjectUtil.getValue(temp,this.getProperty());
+//				}
+//			}
+////			if(temp == null)
+////			{
+////				actualValue = null;
+////			}
+////			else
+////			{
+////				actualValue = temp;
+////			}
+//		}
 		return temp;
 	}
 
 	public int doEndTag() throws JspException 
 	{
 		int ret = super.doEndTag();
-		this.requestKey = null ;
-		this.sessionKey= null ;
-		this.pageContextKey= null ;
-		this.parameter= null ;
+		
 		
 		
 		return ret;
