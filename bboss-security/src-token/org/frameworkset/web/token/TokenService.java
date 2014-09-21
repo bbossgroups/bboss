@@ -64,7 +64,8 @@ public class TokenService implements TokenServiceInf,InitializingBean {
 	{
 //		temptokens.clear();
 //		temptokens = null;
-		this.tokenStore.destory();
+		if(tokenStore != null)
+			this.tokenStore.destory();
 		if(this.tokenMonitor != null)
 		{
 			this.tokenMonitor.killdown();

@@ -140,7 +140,8 @@ public class SessionManager {
 	}
 
 	public void destroy() {
-		this.sessionStore.destory();
+		if(sessionStore != null)
+			this.sessionStore.destory();
 		if(this.sessionMonitor != null)
 		{
 			this.sessionMonitor.killdown();
