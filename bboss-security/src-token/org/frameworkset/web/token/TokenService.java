@@ -29,6 +29,7 @@ import org.apache.log4j.Logger;
 import org.frameworkset.security.ecc.ECCCoderInf;
 import org.frameworkset.security.ecc.ECCHelper;
 import org.frameworkset.security.ecc.SimpleKeyPair;
+import org.frameworkset.spi.InitializingBean;
 
 import com.frameworkset.util.StringUtil;
 
@@ -41,11 +42,24 @@ import com.frameworkset.util.StringUtil;
  * @author biaoping.yin
  * @version 3.8.0
  */
-public class TokenService implements TokenServiceInf {
+public class TokenService implements TokenServiceInf,InitializingBean {
 	private static Logger log = Logger.getLogger(TokenService.class);
 	private TokenStore tokenStore;
 	private boolean enableToken = false;
+	private long ticketdualtime = 172800000;
+	private long temptokenlivetime = 3600000;		
+	private long dualtokenlivetime = 2592000000L;
+	private Object tokenstore ="mem";
+	private String ecctype;
+	private boolean inited;
 	
+	/**
+	<property name="tokenstore" value="mongodb|org.frameworkset.web.token.MongodbTokenStore"/>
+	<property name="tokenstore" value="db|org.frameworkset.web.token.DBTokenStore"/>
+	<property name="tokenstore" value="mem|org.frameworkset.web.token.MemTokenStore"/>*/
+	
+	private String ALGORITHM ="RSA";
+	private ValidateApplication validateApplication = new NullValidateApplication();
 	public void destroy()
 	{
 //		temptokens.clear();
@@ -60,7 +74,10 @@ public class TokenService implements TokenServiceInf {
 
 	
 	
-	
+	public TokenService()
+	{
+		
+	}
 	
 	private TokenMonitor tokenMonitor;
 	
@@ -91,6 +108,7 @@ public class TokenService implements TokenServiceInf {
 		this.tokenStore = tokenStore;
 		this.enableToken = enableToken;
 		this.tokenfailpath = tokenfailpath;
+		inited = true;
 	}
 	public TokenService(long ticketdualtime,long temptokenlivetime,long dualtokenlivetime,long tokenscaninterval,Object tokenstore,boolean enableToken,String tokenfailpath)
 	{
@@ -100,12 +118,27 @@ public class TokenService implements TokenServiceInf {
 	{
 		this(ticketdualtime,temptokenlivetime,dualtokenlivetime,tokenscaninterval,tokenstore,enableToken,ecctype,new NullValidateApplication(), tokenfailpath);
 	}
-	public TokenService(long ticketdualtime,long temptokenlivetime,long dualtokenlivetime,long tokenscaninterval,Object tokenstore,boolean enableToken,String ecctype,ValidateApplication validateApplication,String tokenfailpath)
+	public TokenService(long ticketdualtime,
+			long temptokenlivetime,
+			long dualtokenlivetime,long tokenscaninterval,
+			Object tokenstore,boolean enableToken,String ecctype,
+			ValidateApplication validateApplication,String tokenfailpath)
 	{
-//		this.tokendualtime = tokendualtime;
-		this.tokenscaninterval = tokenscaninterval;
-		this.tokenfailpath = tokenfailpath;
-//		this.tokenstore = tokenstore; 
+		inited = true;
+
+		
+		
+		this.ticketdualtime = ticketdualtime;
+		this.temptokenlivetime = temptokenlivetime;
+		this.dualtokenlivetime = dualtokenlivetime;this. tokenscaninterval = tokenscaninterval;
+		this. tokenstore = tokenstore;this. enableToken = enableToken;this. ecctype = ecctype;
+		this. validateApplication = validateApplication;this. tokenfailpath = tokenfailpath;
+		init();
+	}
+	
+	private void init()
+	{
+
 		if(tokenstore instanceof String)
 		{
 			this.tokenStore = TokenStoreFactory.getTokenStore((String)tokenstore);
@@ -136,7 +169,6 @@ public class TokenService implements TokenServiceInf {
 //			tokenstore_i = tokenstore_in_mem;
 //		else
 //			tokenstore_i = tokenstore_in_session;
-		this.enableToken = enableToken;
 		if(enableToken && tokenscaninterval > 0 && (temptokenlivetime > 0 || dualtokenlivetime > 0))
 		{
 			tokenMonitor = new TokenMonitor();
@@ -588,6 +620,144 @@ public class TokenService implements TokenServiceInf {
 	}
 	public String getTokenfailpath() {
 		return tokenfailpath;
+	}
+
+
+
+
+	public long getTicketdualtime() {
+		return ticketdualtime;
+	}
+
+
+
+
+	public void setTicketdualtime(long ticketdualtime) {
+		this.ticketdualtime = ticketdualtime;
+	}
+
+
+
+
+	public long getTemptokenlivetime() {
+		return temptokenlivetime;
+	}
+
+
+
+
+	public void setTemptokenlivetime(long temptokenlivetime) {
+		this.temptokenlivetime = temptokenlivetime;
+	}
+
+
+
+
+	public long getDualtokenlivetime() {
+		return dualtokenlivetime;
+	}
+
+
+
+
+	public void setDualtokenlivetime(long dualtokenlivetime) {
+		this.dualtokenlivetime = dualtokenlivetime;
+	}
+
+
+
+
+	public Object getTokenstore() {
+		return tokenstore;
+	}
+
+
+
+
+	public void setTokenstore(Object tokenstore) {
+		this.tokenstore = tokenstore;
+	}
+
+
+
+
+	public String getEcctype() {
+		return ecctype;
+	}
+
+
+
+
+	public void setEcctype(String ecctype) {
+		this.ecctype = ecctype;
+	}
+
+
+
+
+	public String getALGORITHM() {
+		return ALGORITHM;
+	}
+
+
+
+
+	public void setALGORITHM(String aLGORITHM) {
+		ALGORITHM = aLGORITHM;
+	}
+
+
+
+
+	public ValidateApplication getValidateApplication() {
+		return validateApplication;
+	}
+
+
+
+
+	public void setValidateApplication(ValidateApplication validateApplication) {
+		this.validateApplication = validateApplication;
+	}
+
+
+
+
+	public long getTokenscaninterval() {
+		return tokenscaninterval;
+	}
+
+
+
+
+	public void setTokenscaninterval(long tokenscaninterval) {
+		this.tokenscaninterval = tokenscaninterval;
+	}
+
+
+
+
+	public void setEnableToken(boolean enableToken) {
+		this.enableToken = enableToken;
+	}
+
+
+
+
+	public void setTokenfailpath(String tokenfailpath) {
+		this.tokenfailpath = tokenfailpath;
+	}
+
+
+
+
+	@Override
+	public void afterPropertiesSet() throws Exception {
+		if(inited)
+			return;
+		inited = true;
+		init();
+		
 	}
 
 

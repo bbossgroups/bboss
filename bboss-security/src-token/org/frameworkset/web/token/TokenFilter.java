@@ -53,7 +53,11 @@ public class TokenFilter implements Filter{
 	
 	public void init(FilterConfig arg0) throws ServletException
 	{
-		tokenService = TokenHelper.getTokenService();
+		try {
+			tokenService = TokenHelper.getTokenService();
+		} catch (Exception e) {
+			log.warn("",e);
+		}
 		
 		String redirectpath_ =  arg0.getInitParameter("redirecturl");
 		
