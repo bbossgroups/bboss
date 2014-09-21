@@ -2,7 +2,7 @@
 	<!-- 令牌服务配置-->
 	<property name="token.TokenService" class="org.frameworkset.web.token.TokenService"
 		destroy-method="destroy">
-		<construction>
+		
 			<property name="ticketdualtime" value="3600000"/>
 			<property name="temptokenlivetime" value="3600000"/>			
 			<property name="dualtokenlivetime" value="2592000000"/>
@@ -19,7 +19,7 @@
 		如果没有指定直接采用redirecturl对应的地址作为跳转地址 -->
 			<property name="tokenfailpath" value="/common/jsp/tokenfail.jsp"/>
 			
-		</construction>
+		
 	</property>
 	<property name="tokenStoreService" class="org.frameworkset.web.token.MongodbTokenStore">
 		<property name="validateApplication" class="org.frameworkset.web.token.NullValidateApplication"/>
