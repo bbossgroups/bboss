@@ -45,7 +45,7 @@ public class SessionManager {
 	private String cookiename;
 	private Object sessionstore;
 	private CrossDomain crossDomain;
-	
+	private boolean startLifeScan = false;
 	/**
 	 * session监听器,多个用,号分隔
 	 */
@@ -89,7 +89,7 @@ public class SessionManager {
 			String[] temp = listeners.trim().split("\\,");
 			initSessionListeners(temp);
 		}
-		if(!usewebsession)
+		if(!usewebsession && startLifeScan)
 		{
 			sessionMonitor = new SessionMonitor();
 			sessionMonitor.start();
@@ -106,7 +106,7 @@ public class SessionManager {
 			String[] temp = sessionlisteners.trim().split("\\,");
 			initSessionListeners(temp);
 		}
-		if(!usewebsession)
+		if(!usewebsession&&startLifeScan)
 		{
 			sessionMonitor = new SessionMonitor();
 			sessionMonitor.start();
@@ -312,5 +312,11 @@ public class SessionManager {
 	}
 	public void setCrossDomain(CrossDomain crossDomain) {
 		this.crossDomain = crossDomain;
+	}
+	public boolean isStartLifeScan() {
+		return startLifeScan;
+	}
+	public void setStartLifeScan(boolean startLifeScan) {
+		this.startLifeScan = startLifeScan;
 	}
 }

@@ -1,4 +1,7 @@
 package com.frameworkset.common.tag.pager.tags;
+
+import com.frameworkset.util.ValueObjectUtil;
+
 /**
  * 
  * <p>Title: LogicNotInTag</p>
@@ -18,11 +21,12 @@ public class LogicNotInTag extends MatchTag {
 	protected boolean match() {
 
 		if(actualValue == null)
-			return false;
+			return true;
 		this.scopes = this.getScopes();
+//		String tmp = String.valueOf(this.actualValue);
 		for(int i = 0; i < this.scopes.length; i ++)
 		{
-			if(String.valueOf(this.actualValue).equals(scopes[i]))
+			if(ValueObjectUtil.typecompare(actualValue,scopes[i]) == 0)
 				return false;
 		}
 		return true;

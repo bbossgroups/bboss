@@ -7,7 +7,7 @@ public class LogicNotRexMatchTag extends MatchTag {
 	protected boolean match() {
 		
 		if(actualValue == null)
-			return false;
+			return true;
 		if(!RegexUtil.isMatch(String.valueOf(actualValue),pattern))
 			return true;
 		else

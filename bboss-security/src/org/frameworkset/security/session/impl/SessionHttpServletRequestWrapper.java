@@ -15,7 +15,9 @@
  */
 package org.frameworkset.security.session.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -159,6 +161,7 @@ public class SessionHttpServletRequestWrapper extends HttpServletRequestWrapper 
 		}
 		
 	}
+	private static Object dummy = new Object();
 	private void writeCookies( )
 	{
 		int cookielivetime = -1;
@@ -187,7 +190,7 @@ public class SessionHttpServletRequestWrapper extends HttpServletRequestWrapper 
 												sessionid, cookielivetime,
 												SessionHelper.getSessionManager().isHttpOnly(),								
 												secure,
-												crossDomain.getDomain());
+												crossDomain.getRootDomain());
 				}
 			}
 			else
@@ -195,22 +198,31 @@ public class SessionHttpServletRequestWrapper extends HttpServletRequestWrapper 
 				boolean secure = SessionHelper.getSessionManager().isSecure();
 				if(!this.isSecure())
 					secure = false;
+				Map<String,Object> setted = new HashMap<String,Object>();
 				for(App app:apps)
 				{
 					if(app.getPath() == null)
 					{
 						StringUtil.addCookieValue(this, response, SessionHelper.getSessionManager().getCookiename(), sessionid, cookielivetime,SessionHelper.getSessionManager().isHttpOnly(),
-								secure,crossDomain.getDomain());
+								secure,crossDomain.getRootDomain());
 					}
 					else
 					{
-						
-						StringUtil.addCookieValue(this, app.getPath(),response, SessionHelper.getSessionManager().getCookiename(), sessionid, cookielivetime,SessionHelper.getSessionManager().isHttpOnly(),								
-								secure,crossDomain.getDomain());
+						if(!setted.containsKey(app.getPath()))
+						{
+							StringUtil.addCookieValue(this, app.getPath(),response, SessionHelper.getSessionManager().getCookiename(), sessionid, cookielivetime,SessionHelper.getSessionManager().isHttpOnly(),								
+									secure,crossDomain.getRootDomain());
+							setted.put(app.getPath(), dummy);
+						}
+						else
+						{
+							
+						}
 						
 						
 					}
 				}
+				setted = null;
 			}
 			
 		}

@@ -6,9 +6,16 @@ import java.util.List;
 import java.util.Map;
 
 import com.frameworkset.util.SimpleStringUtil;
+import com.frameworkset.util.StringUtil;
 
 public class CrossDomain {
+	private String rootDomain;
+	/**
+	 * 改为使用rootDomain属性
+	 */
+	@Deprecated 
 	private String domain;
+	
 	private List<App> domainApps;
 	/**
 	 * session共享对应的cookie 路径名称，多个应用path以,号分隔
@@ -25,12 +32,7 @@ public class CrossDomain {
 	public CrossDomain() {
 		// TODO Auto-generated constructor stub
 	}
-	public String getDomain() {
-		return domain;
-	}
-	public void setDomain(String domain) {
-		this.domain = domain;
-	}
+	
 	
 	public List<String> get_shareSessionAttrs() {
 		return _shareSessionAttrs;
@@ -44,6 +46,8 @@ public class CrossDomain {
 			String[] temp = path.split(",");
 			this._paths = Arrays.asList(temp);
 		}
+		if(SimpleStringUtil.isEmpty(rootDomain))
+			this.rootDomain = this.domain;
 		
 		if(SimpleStringUtil.isNotEmpty(this.shareSessionAttrs))
 		{
@@ -57,27 +61,50 @@ public class CrossDomain {
 					
 					if(SimpleStringUtil.isEmpty(app.getAttributeNamespace()))
 					{
-						String ns = this.domain.replace('.', '_') + "#";
-						if(app.getPath().equals("/"))
+						if(StringUtil.isEmpty(app.getDomain()))
 						{
-							ns = "ROOT_"+ns;
-						}
-						else if(app.getPath().startsWith("/"))
-						{
-							ns = app.getPath().substring(1)+"_"+ns;
+							String ns = this.rootDomain.replace('.', '_') + "#";
+							if(app.getPath().equals("/"))
+							{
+								ns = "ROOT_"+ns;
+							}
+							else if(app.getPath().startsWith("/"))
+							{
+								ns = app.getPath().substring(1)+"_"+ns;
+							}
+							else
+							{
+								ns = app.getPath()+"_"+ns;
+							}
+							app.setAttributeNamespace(ns);
 						}
 						else
 						{
-							ns = app.getPath()+"_"+ns;
+							String ns = app.getDomain().replace('.', '_') + "#";
+							if(app.getPath().equals("/"))
+							{
+								ns = "ROOT_"+ns;
+							}
+							else if(app.getPath().startsWith("/"))
+							{
+								ns = app.getPath().substring(1)+"_"+ns;
+							}
+							else
+							{
+								ns = app.getPath()+"_"+ns;
+							}
+							app.setAttributeNamespace(ns);
 						}
-						app.setAttributeNamespace(ns);
 					}
 					else
 					{
 						if(!app.getAttributeNamespace().endsWith("#"))
 							app.setAttributeNamespace(app.getAttributeNamespace()+"#");
 					}
-					appsIdxs.put(app.getPath(), app);
+					app.initUUID();
+					appsIdxs.put(app.getUuid(), app);
+					if(app.isCurrentApp())
+						this.currentApp = app;
 				}
 			}
 		}
@@ -147,6 +174,27 @@ public class CrossDomain {
 	public void setDomainApps(List<App> domainApps) {
 		this.domainApps = domainApps;
 	}
+
+
+	public String getRootDomain() {
+		return rootDomain;
+	}
+
+
+	public void setRootDomain(String rootDomain) {
+		this.rootDomain = rootDomain;
+	}
+
+
+	public String getDomain() {
+		return domain;
+	}
+
+
+	public void setDomain(String domain) {
+		this.domain = domain;
+	}
+	
 	
 
 }

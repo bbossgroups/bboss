@@ -60,10 +60,7 @@ public class LogicNotMatchTag extends MatchTag {
 //			return false;
 //	}
 	protected boolean match() {
-//		if(actualValue == null && getValue() == null)
-//			return true;
-//		if(actualValue == null || getValue() == null)
-//			return true;
+	
 		if(ValueObjectUtil.typecompare(actualValue,getValue()) != 0)
 			return true;
 		else

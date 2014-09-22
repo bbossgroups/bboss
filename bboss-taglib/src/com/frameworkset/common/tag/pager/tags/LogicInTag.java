@@ -19,10 +19,10 @@ public class LogicInTag extends MatchTag {
 
 		if(actualValue == null)
 			return false;
-		
+		String tmp = String.valueOf(this.actualValue);
 		for(int i = 0; i < this.getScopes().length; i ++)
 		{
-			if(String.valueOf(this.actualValue).equals(scopes[i]))
+			if(tmp.equals(scopes[i]))
 				return true;
 		}
 		return false;
