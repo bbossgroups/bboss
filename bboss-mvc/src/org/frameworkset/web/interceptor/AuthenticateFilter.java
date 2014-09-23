@@ -47,7 +47,7 @@ public abstract class AuthenticateFilter extends TokenFilter{
 	public static final String accesscontrol_check_result_ok = "ok";
 	public static final String accesscontrol_check_result_free = "free";
 	public static final String accesscontrol_check_result_fail = "fail";
-	public static final String referpath_parametername = "com.frameworkset.platform.security.accesscontrol.bboss_referpath";
+	public static final String referpath_parametername = "accesscontrol_check_referpath";
 	
 	
 	public static final String accesscontrol_permissioncheck_result = "com.frameworkset.platform.security.accesscontrol_permissioncheck_result";
