@@ -1,7 +1,9 @@
 package org.frameworkset.web.interceptor;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
 
 import javax.servlet.FilterChain;
@@ -45,6 +47,7 @@ public abstract class AuthenticateFilter extends TokenFilter{
 	public static final String accesscontrol_check_result_ok = "ok";
 	public static final String accesscontrol_check_result_free = "free";
 	public static final String accesscontrol_check_result_fail = "fail";
+	public static final String referpath_parametername = "com.frameworkset.platform.security.accesscontrol.bboss_referpath";
 	
 	
 	public static final String accesscontrol_permissioncheck_result = "com.frameworkset.platform.security.accesscontrol_permissioncheck_result";
@@ -269,6 +272,40 @@ public abstract class AuthenticateFilter extends TokenFilter{
     	requesturipath = requesturipath.substring(contextpath.length());
     	return requesturipath;
 	}
+	
+	private void appendReferBackPath(HttpServletRequest request,StringBuffer path,boolean hasParams) throws UnsupportedEncodingException
+	{
+//		String referer = request.getHeader("Referer"); 
+		
+		{
+			StringBuffer referer = new StringBuffer();
+			referer.append(request.getRequestURI());
+			Enumeration<String> names = request.getParameterNames();
+			boolean first = true;
+			while(names.hasMoreElements())
+			{
+				String name = names.nextElement();
+				String[] values = request.getParameterValues(name);
+				for(int i = 0; values != null && i < values.length; i ++)
+				{
+					if(first)
+					{
+						referer.append("?").append(name).append("=").append(values[i]);
+						first = false;
+					}
+					else
+					{
+						referer.append("&").append(name).append("=").append(values[i]);						
+					}
+				}
+				
+			}
+			if(hasParams)
+				path.append("&").append(referpath_parametername).append("=").append(java.net.URLEncoder.encode(referer.toString(), "UTF-8"));
+			else
+				path.append("?").append(referpath_parametername).append("=").append(java.net.URLEncoder.encode(referer.toString(), "UTF-8"));
+		}
+	}
     protected boolean _preHandle(HttpServletRequest request,
 			HttpServletResponse response, HandlerMeta handlerMeta)
 	throws Exception
@@ -299,7 +336,7 @@ public abstract class AuthenticateFilter extends TokenFilter{
 						targetUrl.append(request.getContextPath());
 					}
 					targetUrl.append(dispatcherPath);
-					
+					this.appendReferBackPath(request, targetUrl, dispatcherPath != null?dispatcherPath.indexOf("?")>=0:false);
 					sendRedirect(request, response, targetUrl.toString(), http10Compatible,this.isforward(),this.isinclude);
 				}
 				return false;
