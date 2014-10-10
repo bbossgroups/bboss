@@ -19,6 +19,7 @@ import org.frameworkset.util.AntPathMatcher;
 import org.frameworkset.util.PathMatcher;
 import org.frameworkset.web.servlet.handler.HandlerMeta;
 import org.frameworkset.web.token.TokenFilter;
+import org.frameworkset.web.token.TokenStore;
 import org.frameworkset.web.util.UrlPathHelper;
 import org.frameworkset.web.util.WebUtils;
 
@@ -87,7 +88,14 @@ public abstract class AuthenticateFilter extends TokenFilter{
 	 * 权限检测定向方法暂时不用，和认证检测公用directtype属性
 	 */
 	protected String permissiondirecttype = "redirect";
-	
+	/**
+	 * 是否启用认证失败重新登录后仍然回到请求页面
+	 */
+	protected boolean failedback = false;
+	/**
+	 * 指定需要failedback的url地址模式，只有符合相关的模式，这个地址才能被failedback
+	 */
+	protected String[] failedbackurlpattern = null;
 	public String getPermissiondirecttype() {
 		return permissiondirecttype;
 	}
@@ -264,47 +272,65 @@ public abstract class AuthenticateFilter extends TokenFilter{
 			HttpServletResponse response, HandlerMeta handlerMeta,String uri); 
 	protected String getPathUrl(HttpServletRequest request)
 	{
-		String requesturipath = WebUtils.getHANDLER_Mappingpath(request);
-		if(requesturipath != null)
-			return requesturipath;
-		String contextpath = request.getContextPath();
-    	requesturipath = request.getRequestURI();
-    	requesturipath = requesturipath.substring(contextpath.length());
-    	return requesturipath;
+//		String requesturipath = WebUtils.getHANDLER_Mappingpath(request);
+//		if(requesturipath != null)
+//			return requesturipath;
+//		String contextpath = request.getContextPath();
+//    	requesturipath = request.getRequestURI();
+//    	requesturipath = requesturipath.substring(contextpath.length());
+//    	return requesturipath;
+		return UrlPathHelper.getPathWithinApplication(request);
 	}
-	
+	private boolean needfailedback(String uri)
+	{
+		if(this.failedbackurlpattern == null || this.failedbackurlpattern.length == 0)
+		{
+			return true;
+		}
+		for(String pattern:this.failedbackurlpattern)
+		{
+			if(this.pathMatcher.match(pattern, uri))
+				return true;
+		}
+		return false;
+	}
 	private void appendReferBackPath(HttpServletRequest request,StringBuffer path,boolean hasParams) throws UnsupportedEncodingException
 	{
-//		String referer = request.getHeader("Referer"); 
+//		String referer = request.getHeader("Referer");
+		String uri = UrlPathHelper.getPathWithinApplication(request);
+		if(!needfailedback(uri)) 
+			return;
 		
+		
+		StringBuffer referer = new StringBuffer();
+		referer.append(request.getRequestURI());
+		Enumeration<String> names = request.getParameterNames();
+		boolean first = true;
+		while(names.hasMoreElements())
 		{
-			StringBuffer referer = new StringBuffer();
-			referer.append(request.getRequestURI());
-			Enumeration<String> names = request.getParameterNames();
-			boolean first = true;
-			while(names.hasMoreElements())
+			String name = names.nextElement();
+			String[] values = request.getParameterValues(name);
+			for(int i = 0; values != null && i < values.length; i ++)
 			{
-				String name = names.nextElement();
-				String[] values = request.getParameterValues(name);
-				for(int i = 0; values != null && i < values.length; i ++)
+				if(name.equals(TokenStore.temptoken_param_name))//忽略令牌参数
+					continue;
+				if(first)
 				{
-					if(first)
-					{
-						referer.append("?").append(name).append("=").append(values[i]);
-						first = false;
-					}
-					else
-					{
-						referer.append("&").append(name).append("=").append(values[i]);						
-					}
+					referer.append("?").append(name).append("=").append(values[i]);
+					first = false;
 				}
-				
+				else
+				{
+					referer.append("&").append(name).append("=").append(values[i]);						
+				}
 			}
-			if(hasParams)
-				path.append("&").append(referpath_parametername).append("=").append(java.net.URLEncoder.encode(referer.toString(), "UTF-8"));
-			else
-				path.append("?").append(referpath_parametername).append("=").append(java.net.URLEncoder.encode(referer.toString(), "UTF-8"));
+			
 		}
+		if(hasParams)
+			path.append("&").append(referpath_parametername).append("=").append(java.net.URLEncoder.encode(referer.toString(), "UTF-8"));
+		else
+			path.append("?").append(referpath_parametername).append("=").append(java.net.URLEncoder.encode(referer.toString(), "UTF-8"));
+		
 	}
     protected boolean _preHandle(HttpServletRequest request,
 			HttpServletResponse response, HandlerMeta handlerMeta)
@@ -336,7 +362,8 @@ public abstract class AuthenticateFilter extends TokenFilter{
 						targetUrl.append(request.getContextPath());
 					}
 					targetUrl.append(dispatcherPath);
-					this.appendReferBackPath(request, targetUrl, dispatcherPath != null?dispatcherPath.indexOf("?")>=0:false);
+					if(failedback)
+						this.appendReferBackPath(request, targetUrl, dispatcherPath != null?dispatcherPath.indexOf("?")>=0:false);
 					sendRedirect(request, response, targetUrl.toString(), http10Compatible,this.isforward(),this.isinclude);
 				}
 				return false;
@@ -603,12 +630,26 @@ public abstract class AuthenticateFilter extends TokenFilter{
 
 	public void init(FilterConfig arg0) throws ServletException {
 		super.init(arg0);
+		
 		String preventDispatchLoop = arg0.getInitParameter("preventDispatchLoop");
 		if(preventDispatchLoop != null && preventDispatchLoop.equals("true"))
 		{
 			setPreventDispatchLoop(true);
 		}
+		;
+		String failedback = arg0.getInitParameter("failedback");
 		
+		if(failedback != null && failedback.equals("true"))
+		{
+			this.setFailedback(true);
+		}
+		
+		String failedbackurlpattern = arg0.getInitParameter("failedbackurlpattern");
+		
+		if(!StringUtil.isEmpty(failedbackurlpattern))
+		{
+			this.setFailedbackurlpattern(failedbackurlpattern);
+		}
 		String authorfailedurl = arg0.getInitParameter("authorfailedurl");
 		
 		if(authorfailedurl != null && !authorfailedurl.equals(""))
@@ -698,6 +739,36 @@ public abstract class AuthenticateFilter extends TokenFilter{
 	}
 	public void setAuthorfailedurl(String authorfailedurl) {
 		this.authorfailedurl = authorfailedurl;
+	}
+
+
+	public boolean isFailedback() {
+		return failedback;
+	}
+
+
+	public void setFailedback(boolean failedback) {
+		this.failedback = failedback;
+	}
+
+
+	public String[] getFailedbackurlpattern() {
+		return failedbackurlpattern;
+	}
+
+
+	public void setFailedbackurlpattern(String failedbackurlpattern_) {
+		String[] failedbackurlpatterns = failedbackurlpattern_.split("\\,");
+		List temp = new ArrayList();
+		for(int i = 0; i < failedbackurlpatterns.length; i ++)
+		{
+			String t = failedbackurlpatterns[i].trim();
+			if(!t.equals("")){
+				temp.add(t);
+			}
+		}
+		String[] as = new String[temp.size()];
+		this.failedbackurlpattern = (String[]) temp.toArray(as);
 	} 
 	
 	/*************Filter接口实现结束********************/

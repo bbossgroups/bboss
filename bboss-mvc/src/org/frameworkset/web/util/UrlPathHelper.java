@@ -55,13 +55,13 @@ public class UrlPathHelper {
 	public static final String INCLUDE_SERVLET_PATH_REQUEST_ATTRIBUTE = WebUtils.INCLUDE_SERVLET_PATH_ATTRIBUTE;
 
 
-	private final Logger logger = Logger.getLogger(getClass());
+	private final static Logger logger = Logger.getLogger(UrlPathHelper.class);
 
 	private boolean alwaysUseFullPath = false;
 
-	private boolean urlDecode = true;
+	private static boolean urlDecode = true;
 
-	private String defaultEncoding = WebUtils.DEFAULT_CHARACTER_ENCODING;
+	private static String defaultEncoding = WebUtils.DEFAULT_CHARACTER_ENCODING;
 
 
 	/**
@@ -112,8 +112,8 @@ public class UrlPathHelper {
 	/**
 	 * Return the default character encoding to use for URL decoding.
 	 */
-	protected String getDefaultEncoding() {
-		return this.defaultEncoding;
+	protected static String getDefaultEncoding() {
+		return defaultEncoding;
 	}
 
 
@@ -167,24 +167,30 @@ public class UrlPathHelper {
 		}
 	}
 
+	public static String requesturi_cachekey = "org.frameworkset.web.util.requesturi.cachekey";
 	/**
 	 * Return the path within the web application for the given request.
 	 * <p>Detects include request URL if called within a RequestDispatcher include.
 	 * @param request current HTTP request
 	 * @return the path within the web application
 	 */
-	public String getPathWithinApplication(HttpServletRequest request) {
+	public static String getPathWithinApplication(HttpServletRequest request) {
+		String uri = (String)request.getAttribute(requesturi_cachekey);
+		if(uri != null)
+			return uri;
 		String contextPath = getContextPath(request);
 		String requestUri = getRequestUri(request);
 		if (StringUtil.startsWithIgnoreCase(requestUri, contextPath)) {
 			// Normal case: URI contains context path.
 			String path = requestUri.substring(contextPath.length());
-			return (StringUtil.hasText(path) ? path : "/");
+			uri = (StringUtil.hasText(path) ? path : "/");
 		}
 		else {
 			// Special case: rather unusual.
-			return requestUri;
+			uri = requestUri;
 		}
+		request.setAttribute(requesturi_cachekey, uri);
+		return uri;
 	}
 	
 
@@ -200,7 +206,7 @@ public class UrlPathHelper {
 	 * @param request current HTTP request
 	 * @return the request URI
 	 */
-	public String getRequestUri(HttpServletRequest request) {
+	public static String getRequestUri(HttpServletRequest request) {
 		String uri = (String) request.getAttribute(WebUtils.INCLUDE_REQUEST_URI_ATTRIBUTE);
 		if (uri == null) {
 			uri = request.getRequestURI();
@@ -216,7 +222,7 @@ public class UrlPathHelper {
 	 * @param request current HTTP request
 	 * @return the context path
 	 */
-	public String getContextPath(HttpServletRequest request) {
+	public static String getContextPath(HttpServletRequest request) {
 		String contextPath = (String) request.getAttribute(WebUtils.INCLUDE_CONTEXT_PATH_ATTRIBUTE);
 		if (contextPath == null) {
 			contextPath = request.getContextPath();
@@ -297,7 +303,7 @@ public class UrlPathHelper {
 	/**
 	 * Decode the supplied URI string and strips any extraneous portion after a ';'.
 	 */
-	private String decodeAndCleanUriString(HttpServletRequest request, String uri) {
+	private static String decodeAndCleanUriString(HttpServletRequest request, String uri) {
 		uri = decodeRequestString(request, uri);
 		int semicolonIndex = uri.indexOf(';');
 		return (semicolonIndex != -1 ? uri.substring(0, semicolonIndex) : uri);
@@ -315,8 +321,8 @@ public class UrlPathHelper {
 	 * @see java.net.URLDecoder#decode(String, String)
 	 * @see java.net.URLDecoder#decode(String)
 	 */
-	public String decodeRequestString(HttpServletRequest request, String source) {
-		if (this.urlDecode) {
+	public static String decodeRequestString(HttpServletRequest request, String source) {
+		if (  urlDecode) {
 			String enc = determineEncoding(request);
 			try {
 				return URLDecoder.decode(source, enc);
@@ -343,7 +349,7 @@ public class UrlPathHelper {
 	 * @see javax.servlet.ServletRequest#getCharacterEncoding()
 	 * @see #setDefaultEncoding
 	 */
-	protected String determineEncoding(HttpServletRequest request) {
+	protected static String determineEncoding(HttpServletRequest request) {
 		String enc = request.getCharacterEncoding();
 		if (enc == null) {
 			enc = getDefaultEncoding();

@@ -34,6 +34,7 @@ import org.frameworkset.web.servlet.HandlerInterceptor;
 import org.frameworkset.web.servlet.ModelAndView;
 import org.frameworkset.web.servlet.handler.HandlerMeta;
 import org.frameworkset.web.servlet.mvc.RequestMap;
+import org.frameworkset.web.util.UrlPathHelper;
 import org.frameworkset.web.util.WebUtils;
 
 import com.frameworkset.util.BeanUtils;
@@ -79,7 +80,7 @@ public abstract class AuthenticateInterceptor extends AuthenticateFilter impleme
 	public boolean _preHandle(HttpServletRequest request,
 			HttpServletResponse response, HandlerMeta handlerMeta)
 			throws Exception {
-		String requesturipath = WebUtils.getHANDLER_Mappingpath(request);
+		String requesturipath = UrlPathHelper.getPathWithinApplication(request);
 		//做控制逻辑检测，如果检测失败，则执行下述逻辑，否则执行正常的控制器方法		
 		if(needCheck(requesturipath) )
 		{			
