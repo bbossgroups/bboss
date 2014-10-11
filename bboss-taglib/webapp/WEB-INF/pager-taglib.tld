@@ -1579,6 +1579,12 @@
 			<name>actual</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
+		<!--  检测值得类型是否与typeof对应的类型或者接口的类型一致，或者是其子类
+	         typeof可以是一个表示类路径的String，或者直接是一个Class对象 -->
+		<attribute>
+			<name>typeof</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
 		
 	</tag>
 	
@@ -1642,7 +1648,12 @@
 			<name>actual</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
-		
+		<!--  检测值得类型是否与typeof对应的类型或者接口的类型一致，或者是其子类
+	         typeof可以是一个表示类路径的String，或者直接是一个Class对象 -->
+		<attribute>
+			<name>typeof</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
 	</tag>
 	<!--
 		功能说明：逻辑匹配标签， 判断当前的值是否和pattern属性对应正则表达式相匹配，匹配则执行标签体中的代码 否则不执行

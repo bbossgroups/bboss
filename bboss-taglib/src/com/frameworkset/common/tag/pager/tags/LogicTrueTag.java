@@ -22,14 +22,25 @@ public class LogicTrueTag  extends MatchTag {
 			return false;
 		else
 		{
-			if(actualValue instanceof Boolean  )
-				return (((Boolean)actualValue).booleanValue());
-			else if(actualValue instanceof String && actualValue.equals("false"))
+			if(typeof == null)
 			{
-				return false;
+				if(actualValue instanceof Boolean  )
+					return (((Boolean)actualValue).booleanValue());
+				else if(actualValue instanceof String && actualValue.equals("false"))
+				{
+					return false;
+				}
+				else
+					return true;
 			}
 			else
-				return true;
+			{
+				return istypeof();
+					
+			}
+			
 		}
 	}
+	
+	
 }

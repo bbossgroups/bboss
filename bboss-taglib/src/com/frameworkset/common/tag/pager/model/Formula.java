@@ -1111,19 +1111,19 @@ public class Formula implements ModelObject
             	}
                 else if(variables[1].equals("rowcount"))
             	{
-            		return dataSet.getRowcount();
+            		return dataSet_t.getRowcount();
             	}
                 else if(variables[1].equals("pagesize"))
             	{
-            		return dataSet.getPageSize();
+            		return dataSet_t.getPageSize();
             	}
             	else if(variables[1].equals("mapkey"))//
             	{
-            		return dataSet.getMapKey();
+            		return dataSet_t.getMapKey();
             	}
             	else if(variables[1].equals("currentcell"))
             	{
-            		return dataSet.getObject();
+            		return dataSet_t.getObject();
             	}
                 Object t = dataSet_t.getValue(dataSet_t.getRowid(),variables[1]);
                 for(int i = 2; i < variables.length; i ++)

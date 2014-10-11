@@ -16,20 +16,26 @@ public class LogicFalseTag  extends MatchTag {
 //		else
 //			return false;
 //	}
-	
 	protected boolean match() {
 		if(actualValue == null )
 			return true;
 		else
 		{
-			if(actualValue instanceof Boolean  )
-				return !(((Boolean)actualValue).booleanValue());
-			else if(actualValue instanceof String && actualValue.equals("false"))
+			if(typeof == null)
 			{
-				return true;
+				if(actualValue instanceof Boolean  )
+					return !(((Boolean)actualValue).booleanValue());
+				else if(actualValue instanceof String && actualValue.equals("false"))
+				{
+					return true;
+				}
+				else
+					return false;
 			}
 			else
-				return false;
+			{
+				return !this.istypeof();
+			}
 		}
 	}
 	

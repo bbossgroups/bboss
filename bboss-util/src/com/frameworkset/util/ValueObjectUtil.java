@@ -2995,22 +2995,30 @@ public class ValueObjectUtil {
 			{
 				return intcompare(((Integer)value1).intValue(),value2);
 			}
-			else if(vc1 == long.class
-					|| Long.class.isAssignableFrom(vc1))
-				return longCompare(((Long)value1).longValue(),value2);
-			else if(vc1 == double.class
-					|| Double.class.isAssignableFrom(vc1))
-				return doubleCompare(((Double)value1).doubleValue(),value2);
-			else if(vc1 == float.class
-					|| Float.class.isAssignableFrom(vc1))
-				return floatCompare(((Float)value1).floatValue(),value2);
-			else if(vc1 == short.class
-					|| Short.class.isAssignableFrom(vc1))
-				return shortCompare(((Short)value1).shortValue(),value2);
-			else if(java.util.Date.class.isAssignableFrom(vc1))
-				return dateCompare((java.util.Date)value1,value2);
-			else if(value1 instanceof java.util.Date && value2 instanceof java.util.Date)
-				return ((java.util.Date)value1).compareTo(((java.util.Date)value2));
+			else
+			{
+				if(value2 instanceof String)
+				{
+					if(((String)value2).equals(""))
+						return -100;
+				}
+				if(vc1 == long.class
+						|| Long.class.isAssignableFrom(vc1))
+					return longCompare(((Long)value1).longValue(),value2);
+				else if(vc1 == double.class
+						|| Double.class.isAssignableFrom(vc1))
+					return doubleCompare(((Double)value1).doubleValue(),value2);
+				else if(vc1 == float.class
+						|| Float.class.isAssignableFrom(vc1))
+					return floatCompare(((Float)value1).floatValue(),value2);
+				else if(vc1 == short.class
+						|| Short.class.isAssignableFrom(vc1))
+					return shortCompare(((Short)value1).shortValue(),value2);
+				else if(java.util.Date.class.isAssignableFrom(vc1))
+					return dateCompare((java.util.Date)value1,value2);
+				else if(value1 instanceof java.util.Date && value2 instanceof java.util.Date)
+					return ((java.util.Date)value1).compareTo(((java.util.Date)value2));
+			}
 		}
 		catch(Throwable e)
 		{

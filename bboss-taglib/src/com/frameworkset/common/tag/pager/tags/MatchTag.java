@@ -32,14 +32,9 @@
  *****************************************************************************/
 package com.frameworkset.common.tag.pager.tags;
 
-import java.lang.reflect.Array;
-import java.util.Collection;
-import java.util.Map;
-
 import javax.servlet.jsp.JspException;
 
 import com.frameworkset.common.tag.exception.FormulaException;
-import com.frameworkset.util.ListInfo;
 import com.frameworkset.util.StringUtil;
 
 /**
@@ -50,7 +45,11 @@ import com.frameworkset.util.StringUtil;
  * @version 1.0
  */
 public abstract class MatchTag extends BaseValueTag {
-	
+	/**
+	 * 检测值得类型是否与typeof对应的类型或者接口的类型一致，或者是其子类
+	 * typeof可以是一个表示类路径的String，或者直接是一个Class对象
+	 */
+	protected Object typeof;
     /**实际值*/
 	protected Object actualValue;
 	
@@ -286,5 +285,45 @@ public abstract class MatchTag extends BaseValueTag {
 	}
 
 	
-	
+	protected boolean istypeof()
+	{
+		if(typeof instanceof String)
+		{
+			try {
+				Class clazz = Class.forName((String)typeof);
+				if(clazz.isAssignableFrom(this.actualValue.getClass()))
+				{
+					return true;
+				}
+				else
+					return false;
+			} catch (Exception e) {
+				throw new java.lang.IllegalArgumentException(typeof +"不存在或者不正确",e);
+			}
+		}
+		else //if(typeof instanceof Class)
+		{
+			try {
+				Class clazz =(Class)typeof;
+				if(clazz.isAssignableFrom(this.actualValue.getClass()))
+				{
+					return true;
+				}
+				else
+					return false;
+			} catch (Exception e) {
+				throw new java.lang.IllegalArgumentException(typeof +"不存在或者不正确,或者必须是Class类型的对象",e);
+			}
+		}
+	}
+	public Object getTypeof() {
+		return typeof;
+	}
+	public void setTypeof(Object typeof) {
+		this.typeof = typeof;
+	}
+	public void doFinally() {
+		this.typeof = null;
+		super.doFinally();
+	}
 }
