@@ -145,4 +145,4 @@ bboss工具包工程,独立ant构建指令：bboss-util/run.bat,发布的jar和�
 ant构建补充说明：bboss提供了统一的ant构建指令集，执行这些构建指令时会将产生的jar包同步更新到其他相关的工程中；同时在每个工程目录下都提供了单独的ant构建指令，如果只需构建对应的工程模块同时不需要将构建的jar包分发到其他相关工程中，
 则可以执行工程下的ant构建指令。
 
-bboss项目下载地址，参考文档：[url]http://yin-bp.iteye.com/blog/1080824[/url]
+bboss项目下载地址，参考文档：http://yin-bp.iteye.com/blog/1080824
