@@ -133,7 +133,7 @@ bboss工具包工程,独立ant构建指令：bboss-util/run.bat,发布的jar和�
 
 |--bestpractice
 
-  包含了bboss各模块最佳实践和最小依赖包demo工程，demo具体说明请参考文档：[url]http://yin-bp.iteye.com/blog/2122876[/url]
+  包含了bboss各模块最佳实践和最小依赖包demo工程，demo具体说明请参考文档：http://yin-bp.iteye.com/blog/2122876
 
 |--database   
 
