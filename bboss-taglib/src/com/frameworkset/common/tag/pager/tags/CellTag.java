@@ -862,7 +862,7 @@ public class CellTag  extends PagerTagSupport {
 						        outStr = data;
 				            } catch (FormulaException e) {
 				                //System.out.println(e.getMessage());
-				                log.error(e);
+				                log.debug(e.getMessage());
 				            }
 						}
 						else if (this.getColid() != -1) {

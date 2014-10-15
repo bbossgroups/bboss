@@ -1183,6 +1183,10 @@ public class Formula implements ModelObject
             	}
             	return t;
         	}
+        	catch(FormulaException e)
+        	{
+        		throw e;
+        	}
         	catch(Exception e)
         	{
         		throw new FormulaException("eval attribute '" + variableName + "' value failed:",e);
