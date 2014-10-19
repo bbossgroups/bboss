@@ -23,7 +23,7 @@ import java.lang.annotation.Target;
 
 /**
  * <p>Title: RequestBody.java</p> 
- * <p>Description: </p>
+ * <p>Description: 对请求体进行处理的注解</p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2008</p>
  * @Date 2010-11-21
@@ -34,6 +34,16 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface RequestBody {
+	/**
+	 * 指定请求的数据类型，String,json两个值
+	 * @return
+	 */
+	String datatype() default ValueConstants.DEFAULT_NONE;
+	/**
+	 * 指定请求的数据编码字符集（暂时没有起作用）
+	 * @return
+	 */
+	String charset() default ValueConstants.DEFAULT_NONE;
 	
 
 
