@@ -29,6 +29,7 @@ import org.frameworkset.util.annotations.wraper.AttributeWraper;
 import org.frameworkset.util.annotations.wraper.CookieValueWraper;
 import org.frameworkset.util.annotations.wraper.PagerParamWraper;
 import org.frameworkset.util.annotations.wraper.PathVariableWraper;
+import org.frameworkset.util.annotations.wraper.RequestBodyWraper;
 import org.frameworkset.util.annotations.wraper.RequestHeaderWraper;
 import org.frameworkset.util.annotations.wraper.RequestParamWraper;
 
@@ -132,6 +133,7 @@ public class MethodParameter {
 	private RequestHeaderWraper requestHeader;
 	private AttributeWraper attribute;
 	private PagerParamWraper pagerParam;
+	private RequestBodyWraper requestBody;
 
 	private MapKey	mapKey;
 	
@@ -649,6 +651,14 @@ public class MethodParameter {
 
 	public void setIsrequestbody(boolean isrequestbody) {
 		this.isrequestbody = isrequestbody;
+	}
+
+	public RequestBodyWraper getRequestBody() {
+		return requestBody;
+	}
+
+	public void setRequestBody(RequestBodyWraper requestBody) {
+		this.requestBody = requestBody;
 	}
 
 

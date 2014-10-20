@@ -35,6 +35,7 @@ import org.frameworkset.util.annotations.wraper.AttributeWraper;
 import org.frameworkset.util.annotations.wraper.CookieValueWraper;
 import org.frameworkset.util.annotations.wraper.PagerParamWraper;
 import org.frameworkset.util.annotations.wraper.PathVariableWraper;
+import org.frameworkset.util.annotations.wraper.RequestBodyWraper;
 import org.frameworkset.util.annotations.wraper.RequestHeaderWraper;
 import org.frameworkset.util.annotations.wraper.RequestParamWraper;
 import org.frameworkset.util.annotations.wraper.ResponseBodyWraper;
@@ -406,11 +407,12 @@ public class MethodInfo {
 			 if(annotation instanceof RequestBody)
 			{
 				 paramAnno = new MethodParameter(method,parampostion);
-				RequestBody param = (RequestBody)annotation;
+				RequestBodyWraper param = new RequestBodyWraper((RequestBody)annotation,paramType);
 //					if(param.editor() != null && !param.editor().equals(""))
 //						paramNames[i].setEditor((EditorInf)BeanUtils.instantiateClass(param.editor()));
 //					paramNames[i].setParameterName(param.value());
 				paramAnno.setDataBindScope(Scope.REQUEST_BODY);
+				paramAnno.setRequestBody(param);
 				mutilMethodParamAnnotations.add(paramAnno);
 				paramAnno.setIsrequestbody(true);
 				continue;

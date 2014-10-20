@@ -43,6 +43,7 @@ import org.frameworkset.util.annotations.wraper.AttributeWraper;
 import org.frameworkset.util.annotations.wraper.ColumnWraper;
 import org.frameworkset.util.annotations.wraper.CookieValueWraper;
 import org.frameworkset.util.annotations.wraper.PathVariableWraper;
+import org.frameworkset.util.annotations.wraper.RequestBodyWraper;
 import org.frameworkset.util.annotations.wraper.RequestHeaderWraper;
 import org.frameworkset.util.annotations.wraper.RequestParamWraper;
 
@@ -165,7 +166,7 @@ public class ClassUtil
 		private CookieValueWraper cookie;
 		private RequestHeaderWraper header;
 		private PathVariableWraper pathVariable;
-		private RequestBody requestBody;
+		private RequestBodyWraper requestBody;
 		private DataBind dataBind;
 		private IgnoreBind ignoreBind;
 		public IgnoreBind getIgnoreBind() {
@@ -371,7 +372,7 @@ public class ClassUtil
 				}
 				else if(a instanceof RequestBody )
 				{
-					requestBody = ((RequestBody )a);
+					requestBody = new RequestBodyWraper(((RequestBody )a),propertyType);
 				}
 				else if(a instanceof CookieValue )
 				{
@@ -562,7 +563,7 @@ public class ClassUtil
 			return dataBind;
 		}
 
-		public RequestBody getRequestBody() {
+		public RequestBodyWraper getRequestBody() {
 			return requestBody;
 		}
 

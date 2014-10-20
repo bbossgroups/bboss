@@ -41,6 +41,15 @@ public interface HttpMessageConverter<T> {
 	 * @return {@code true} if readable; {@code false} otherwise
 	 */
 	boolean canRead(Class<?> clazz, MediaType mediaType);
+	
+	/**
+	 * Indicates whether the given class can be read by this converter.
+	 * @param clazz the class to test for readability
+	 * @param mediaType the media type to read, can be {@code null} if not specified.
+	 * Typically the value of a {@code Content-Type} header.
+	 * @return {@code true} if readable; {@code false} otherwise
+	 */
+	boolean canRead(String datatype);
 
 	/**
 	 * Indicates whether the given class can be written by this converter.
@@ -86,6 +95,12 @@ public interface HttpMessageConverter<T> {
 			throws IOException, HttpMessageNotWritableException;
 	boolean isdefault();
 	public MediaType getDefaultAcceptedMediaType();
+	/**
+	 * 获取用户请求报文对应的数据类型：String,json
+	 * @return
+	 */
+	public String getRequetBodyDataType();
+
 	
 
 }

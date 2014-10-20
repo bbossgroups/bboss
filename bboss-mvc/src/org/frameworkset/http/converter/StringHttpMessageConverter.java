@@ -134,6 +134,13 @@ public class StringHttpMessageConverter extends AbstractHttpMessageConverter<Obj
 		return true;
 	}
 	
-	
+	/**
+	 * 获取用户请求报文对应的数据类型：String,json
+	 * @return
+	 */
+	public String getRequetBodyDataType()
+	{
+		return "String";
+	}
 
 }

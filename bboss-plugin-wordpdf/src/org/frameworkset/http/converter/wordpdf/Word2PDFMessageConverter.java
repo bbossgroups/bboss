@@ -162,7 +162,16 @@ public class Word2PDFMessageConverter <T> implements HttpMessageConverter<T>{
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public String getRequetBodyDataType() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
-	
+	public boolean canRead(String datatype)
+	{
+		return false;
+	}
 
 }

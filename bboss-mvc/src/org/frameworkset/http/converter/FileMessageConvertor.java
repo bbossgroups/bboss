@@ -158,4 +158,16 @@ public class FileMessageConvertor<T> implements HttpMessageConverter<T>
 			return defaultAcceptedMediaType = this.getSupportedMediaTypes().get(0);
 		}
 	}
+	/**
+	 * 获取用户请求报文对应的数据类型：String,json
+	 * @return
+	 */
+	public String getRequetBodyDataType()
+	{
+		return null;
+	}
+	public boolean canRead(String datatype)
+	{
+		return false;
+	}
 }

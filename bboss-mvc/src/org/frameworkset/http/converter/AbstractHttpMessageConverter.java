@@ -49,8 +49,7 @@ public abstract class AbstractHttpMessageConverter<T> implements HttpMessageConv
 	 */
 	protected MediaType responsecontenteype;
 	private List<MediaType> supportedMediaTypes = Collections.emptyList();
-
-
+	
 	public void setResponseCharset(String charset) {
 		
 	}
@@ -257,5 +256,21 @@ public abstract class AbstractHttpMessageConverter<T> implements HttpMessageConv
 		synchronized(this){
 			return defaultAcceptedMediaType = this.getSupportedMediaTypes().get(0);
 		}
+	}
+	/**
+	 * 获取用户请求报文对应的数据类型：String,json
+	 * @return
+	 */
+	public String getRequetBodyDataType()
+	{
+		return null;
+	}
+	
+	public boolean canRead(String datatype)
+	{
+		String supportdatatype = this.getRequetBodyDataType();
+		if(supportdatatype == null)
+			return false;
+		return supportdatatype.equals(datatype);
 	}
 }

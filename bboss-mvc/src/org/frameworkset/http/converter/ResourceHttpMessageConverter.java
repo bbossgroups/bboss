@@ -161,5 +161,16 @@ public class ResourceHttpMessageConverter implements HttpMessageConverter<Resour
 			return (StringUtil.hasText(mediaType) ? MediaType.parseMediaType(mediaType) : null);
 		}
 	}
-
+	/**
+	 * 获取用户请求报文对应的数据类型：String,json
+	 * @return
+	 */
+	public String getRequetBodyDataType()
+	{
+		return null;
+	}
+	public boolean canRead(String datatype)
+	{
+		return false;
+	}
 }

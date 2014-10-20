@@ -212,5 +212,14 @@ public class MappingJacksonHttpMessageConverter extends AbstractHttpMessageConve
 		}
 		return JsonEncoding.UTF8;
 	}
+	
+	/**
+	 * 获取用户请求报文对应的数据类型：String,json
+	 * @return
+	 */
+	public String getRequetBodyDataType()
+	{
+		return "json";
+	}
 
 }

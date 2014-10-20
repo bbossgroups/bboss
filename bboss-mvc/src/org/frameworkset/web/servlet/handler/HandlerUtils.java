@@ -56,6 +56,7 @@ import org.frameworkset.http.ServerHttpResponse;
 import org.frameworkset.http.ServletServerHttpRequest;
 import org.frameworkset.http.ServletServerHttpResponse;
 import org.frameworkset.http.converter.HttpMessageConverter;
+import org.frameworkset.http.converter.StringHttpMessageConverter;
 import org.frameworkset.spi.BaseApplicationContext;
 import org.frameworkset.spi.assemble.Pro;
 import org.frameworkset.spi.support.validate.BindingResult;
@@ -94,6 +95,7 @@ import org.frameworkset.util.annotations.Scope;
 import org.frameworkset.util.annotations.wraper.AttributeWraper;
 import org.frameworkset.util.annotations.wraper.CookieValueWraper;
 import org.frameworkset.util.annotations.wraper.PathVariableWraper;
+import org.frameworkset.util.annotations.wraper.RequestBodyWraper;
 import org.frameworkset.util.annotations.wraper.RequestHeaderWraper;
 import org.frameworkset.util.annotations.wraper.RequestParamWraper;
 import org.frameworkset.web.HttpMediaTypeNotAcceptableException;
@@ -1316,7 +1318,7 @@ public abstract class HandlerUtils {
 
 		return resolveRequestBody(methodParam.getParameterType(),
 				methodParam.getRequestParameterName(), webRequest,
-				messageConverters);
+				messageConverters,  methodParam.getRequestBody());
 	}
 
 	/**
@@ -1324,9 +1326,9 @@ public abstract class HandlerUtils {
 	 */
 	protected static Object resolveRequestBody(Class paramType,
 			String paramName, HttpServletRequest webRequest,
-			HttpMessageConverter[] messageConverters) throws Exception {
+			HttpMessageConverter[] messageConverters,RequestBodyWraper requestBody) throws Exception {
 		return readWithMessageConverters(paramType, paramName,
-				createHttpInputMessage(webRequest), messageConverters);
+				createHttpInputMessage(webRequest), messageConverters,   requestBody);
 		// return readWithMessageConverters(methodParam,
 		// createHttpInputMessage(webRequest), methodParam
 		// .getParameterType(), messageConverters);
@@ -1424,7 +1426,7 @@ public abstract class HandlerUtils {
 
 	private static Object readWithMessageConverters(Class paramType,
 			String paramName, HttpInputMessage inputMessage,
-			HttpMessageConverter[] messageConverters) throws Exception {
+			HttpMessageConverter[] messageConverters,RequestBodyWraper requestBody) throws Exception {
 
 		MediaType contentType = inputMessage.getHeaders().getContentType();
 		if (contentType == null) {
@@ -1440,12 +1442,17 @@ public abstract class HandlerUtils {
 							+ "): no Content-Type found");
 		}
 
-		List<MediaType> allSupportedMediaTypes = new ArrayList<MediaType>();
+//		List<MediaType> allSupportedMediaTypes = new ArrayList<MediaType>();
+		HttpMessageConverter defaultmessageConverter = null;
 		if (messageConverters != null) {
 			for (HttpMessageConverter<?> messageConverter : messageConverters) {
-				allSupportedMediaTypes.addAll(messageConverter
-						.getSupportedMediaTypes());
-				if (messageConverter.canRead(paramType, contentType)) {
+//				allSupportedMediaTypes.addAll(messageConverter
+//						.getSupportedMediaTypes());
+				if(messageConverter.isdefault())
+				{
+					defaultmessageConverter = messageConverter;
+				}
+				if (messageConverter.canRead(requestBody.getDatatype())) {
 					if (logger.isDebugEnabled()) {
 						logger.debug("Reading [" + paramType.getName()
 								+ "] as \"" + contentType + "\" using ["
@@ -1455,8 +1462,13 @@ public abstract class HandlerUtils {
 				}
 			}
 		}
-		throw new HttpMediaTypeNotSupportedException(contentType,
-				allSupportedMediaTypes);
+		if(defaultmessageConverter != null)
+		{
+			return defaultmessageConverter.read(paramType, inputMessage);
+		}
+		
+			
+		throw new java.lang.IllegalAccessException("RequestBody resolve failed:No messageConverter found.Please check the field or method parameter "+paramName+"'s annotation is been setted correct.");
 	}
 
 	private static Object resolveCookieValue(MethodParameter methodParam,
@@ -2685,9 +2697,10 @@ public abstract class HandlerUtils {
 				}
 			}
 
-			else if (field.isAnnotationPresent(RequestBody.class)) {
+//			else if (field.isAnnotationPresent(RequestBody.class)) {
+			else if (property.getRequestBody() != null) {
 				value = resolveRequestBody(type, name, request,
-						messageConverters);
+						messageConverters,property.getRequestBody());
 				if (holder.needAddData()) {
 					holder.addData(name, value);
 				}
