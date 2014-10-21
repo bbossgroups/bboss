@@ -130,7 +130,7 @@ public class MethodInfo {
 //		this.responsebodyAnno = method.getAnnotation(ResponseBody.class);
 		if(body != null)
 		{
-			responsebodyAnno = new ResponseBodyWraper(body);
+			responsebodyAnno = new ResponseBodyWraper(body,method);
 			responsebody = true;
 			this.responseMediaType = convertMediaType();
 		}
@@ -157,7 +157,7 @@ public class MethodInfo {
 //		this.responsebodyAnno = method.getAnnotation(ResponseBody.class);
 		if(body != null)
 		{
-			this.responsebodyAnno = new ResponseBodyWraper(body);
+			this.responsebodyAnno = new ResponseBodyWraper(body,method);
 			responsebody = true;
 			this.responseMediaType = convertMediaType();
 		}
@@ -382,7 +382,7 @@ public class MethodInfo {
 		
 		if(body != null)
 		{
-			this.responsebodyAnno = new ResponseBodyWraper(body);
+			this.responsebodyAnno = new ResponseBodyWraper(body,method );
 			responsebody = true;
 			this.responseMediaType = convertMediaType();
 		}

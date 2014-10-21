@@ -37,8 +37,8 @@ public class WSUtil
     /**
      * 标记是否启用webservice服务，为false时，启动cxf的serverlet将失效
      */
-        public static boolean webservice_enable = WSLoader.webservice_enable;
-        public static ProList webservices = WSLoader.webservices;
+//        public static boolean webservice_enable = WSLoader.webservice_enable;
+//        public static ProList webservices = WSLoader.webservices;
 //        static
 //        {
 //        	try {

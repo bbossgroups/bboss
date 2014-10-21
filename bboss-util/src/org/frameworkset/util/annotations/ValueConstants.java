@@ -37,5 +37,13 @@ public interface ValueConstants {
 	 * @see CookieValue#defaultValue()
 	 */
 	String DEFAULT_NONE = "\n\t\t\n\t\t\n\uE000\uE001\uE002\n\t\t\t\t\n";
-
+	public static final String datatype_string = "String"; 
+	public static final String datatype_file = "file"; 
+	public static final String datatype_bytearray = "bytearray"; 
+	public static final String datatype_rss = "rss"; 
+	public static final String datatype_atom = "atom"; 
+	public static final String datatype_json = "json"; 
+	public static final String datatype_jsonp = "jsonp";
+	public static final String datatype_xml = "xml";
+	public static final String datatype_word = "word";
 }

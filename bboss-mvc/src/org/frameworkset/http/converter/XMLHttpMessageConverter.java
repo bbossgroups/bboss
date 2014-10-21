@@ -31,6 +31,7 @@ import org.frameworkset.http.MediaType;
 import org.frameworkset.util.Assert;
 import org.frameworkset.util.ClassUtils;
 import org.frameworkset.util.FileCopyUtils;
+import org.frameworkset.util.annotations.ValueConstants;
 
 import com.thoughtworks.xstream.XStream;
 
@@ -327,5 +328,31 @@ public class XMLHttpMessageConverter  extends AbstractHttpMessageConverter<Objec
 		if (contentType != null && contentType.getCharSet() != null) {
 			marshaller.setProperty(Marshaller.JAXB_ENCODING, contentType.getCharSet().name());
 		}
+	}
+
+	@Override
+	public String getRequetBodyDataType() {
+		
+		return ValueConstants.datatype_xml;
+	}
+	/**
+	 * 获取用户响应报文对应的数据类型：String,json,xml
+	 * @return
+	 */
+	public String getResponseBodyDataType()
+	{
+		return ValueConstants.datatype_xml;
+	}
+	
+	@Override
+	public boolean canWrite(String datatype) {
+		// TODO Auto-generated method stub
+		if(datatype == null)
+			return false;
+		
+		if(datatype.equals(ValueConstants.datatype_xml))
+				return true;
+		else
+			return false;
 	}
 }

@@ -24,6 +24,7 @@ import org.frameworkset.http.MediaType;
 import org.frameworkset.http.converter.HttpMessageConverter;
 import org.frameworkset.http.converter.HttpMessageNotReadableException;
 import org.frameworkset.http.converter.HttpMessageNotWritableException;
+import org.frameworkset.util.annotations.ValueConstants;
 
 
 
@@ -73,7 +74,7 @@ public class Word2PDFMessageConverter <T> implements HttpMessageConverter<T>{
 	}
 
 	@Override
-	public boolean canWrite(Class<?> clazz, MediaType mediaType) {
+	public boolean canWrite( Class<?> clazz, MediaType mediaType) {
 		// TODO Auto-generated method stub
 		return WordResponse.class.isAssignableFrom(clazz);
 	}
@@ -173,5 +174,22 @@ public class Word2PDFMessageConverter <T> implements HttpMessageConverter<T>{
 	{
 		return false;
 	}
+	public String getResponseBodyDataType()
+	{
+		return ValueConstants.datatype_word;
+	}
 
+	@Override
+	public boolean canWrite(String datatype) {
+		// TODO Auto-generated method stub
+		if(datatype == null)
+			return false;
+		if(datatype.equals(ValueConstants.datatype_word))
+		{
+			return true;
+		}
+		else
+			return false;
+			
+	}
 }

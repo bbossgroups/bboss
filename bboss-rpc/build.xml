@@ -76,7 +76,7 @@
 			<fileset dir="src-rmi/" includes="rmi.server.policy" />
 		</copy>
 		<copy todir="${classes-bboss-rpc}">
-			<fileset dir="resources" includes="**/*.xml" />
+			<fileset dir="resources" includes="bboss-magic-map.xml bboss-protocol-ids.xml" />
 		</copy>
 		
 		<copy todir="classes-bboss-rpc/META-INF">

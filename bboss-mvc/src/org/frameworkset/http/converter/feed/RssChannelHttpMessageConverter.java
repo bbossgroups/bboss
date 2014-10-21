@@ -17,6 +17,7 @@
 package org.frameworkset.http.converter.feed;
 
 import org.frameworkset.http.MediaType;
+import org.frameworkset.util.annotations.ValueConstants;
 
 import com.sun.syndication.feed.rss.Channel;
 
@@ -42,6 +43,16 @@ public class RssChannelHttpMessageConverter extends AbstractWireFeedHttpMessageC
 	protected boolean supports(Class<?> clazz) {
 		return Channel.class.isAssignableFrom(clazz);
 	}
-
+	@Override
+	public boolean canWrite(String datatype) {
+		// TODO Auto-generated method stub
+		if(datatype == null)
+			return false;
+		
+		if(datatype.equals(ValueConstants.datatype_rss))
+				return true;
+		else
+			return false;
+	}
 
 }

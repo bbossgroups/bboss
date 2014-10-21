@@ -286,7 +286,7 @@ public class FormHttpMessageConverter implements HttpMessageConverter<MultiValue
 		HttpHeaders partHeaders = partEntity.getHeaders();
 		MediaType partContentType = partHeaders.getContentType();
 		for (HttpMessageConverter messageConverter : partConverters) {
-			if (messageConverter.canWrite(partType, partContentType)) {
+			if (messageConverter.canWrite( partType, partContentType)) {
 				HttpOutputMessage multipartOutputMessage = new MultipartHttpOutputMessage(os,null);
 				multipartOutputMessage.getHeaders().setContentDispositionFormData(name, getFilename(partBody));
 				if (!partHeaders.isEmpty()) {
@@ -424,6 +424,16 @@ public class FormHttpMessageConverter implements HttpMessageConverter<MultiValue
 	}
 	public boolean canRead(String datatype)
 	{
+		return false;
+	}
+	public String getResponseBodyDataType()
+	{
+		return null;
+	}
+
+	@Override
+	public boolean canWrite(String datatype) {
+		// TODO Auto-generated method stub
 		return false;
 	}
 }

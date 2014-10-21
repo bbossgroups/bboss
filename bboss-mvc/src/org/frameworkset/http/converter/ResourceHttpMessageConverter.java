@@ -30,6 +30,7 @@ import org.frameworkset.http.HttpOutputMessage;
 import org.frameworkset.http.MediaType;
 import org.frameworkset.util.ClassUtils;
 import org.frameworkset.util.FileCopyUtils;
+import org.frameworkset.util.annotations.ValueConstants;
 import org.frameworkset.util.io.ByteArrayResource;
 import org.frameworkset.util.io.ClassPathResource;
 import org.frameworkset.util.io.Resource;
@@ -55,7 +56,7 @@ public class ResourceHttpMessageConverter implements HttpMessageConverter<Resour
 		return Resource.class.isAssignableFrom(clazz);
 	}
 
-	public boolean canWrite(Class<?> clazz, MediaType mediaType) {
+	public boolean canWrite( Class<?> clazz, MediaType mediaType) {
 		return Resource.class.isAssignableFrom(clazz);
 	}
 
@@ -171,6 +172,15 @@ public class ResourceHttpMessageConverter implements HttpMessageConverter<Resour
 	}
 	public boolean canRead(String datatype)
 	{
+		return false;
+	}
+	public String getResponseBodyDataType()
+	{
+		return null;
+	}
+
+	@Override
+	public boolean canWrite(String datatype) {
 		return false;
 	}
 }

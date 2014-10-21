@@ -32,6 +32,7 @@ import java.util.TreeSet;
 import org.frameworkset.util.Assert;
 import org.frameworkset.util.CollectionUtils;
 import org.frameworkset.util.LinkedCaseInsensitiveMap;
+import org.frameworkset.util.annotations.ValueConstants;
 
 import com.frameworkset.util.SimpleStringUtil;
 
@@ -270,6 +271,9 @@ public class MediaType implements Comparable<MediaType> {
 		checkToken(subtype);
 		this.type = type.toLowerCase(Locale.ENGLISH);
 		this.subtype = subtype.toLowerCase(Locale.ENGLISH);
+		
+		jsonp = this.jsonp(subtype);
+		json = this.json(subtype);
 		if (!CollectionUtils.isEmpty(parameters)) {
 			Map<String, String> m = new LinkedCaseInsensitiveMap<String>(parameters.size(), Locale.ENGLISH);
 			for (Map.Entry<String, String> entry : parameters.entrySet()) {
@@ -283,6 +287,21 @@ public class MediaType implements Comparable<MediaType> {
 		else {
 			this.parameters = Collections.emptyMap();
 		}
+	}
+	
+	private boolean json(String subtype)
+	{
+		if(subtype != null)
+			return subtype.equals(ValueConstants.datatype_json);
+		return false;
+	}
+	private boolean jsonp = false; 
+	private boolean json = false;
+	private boolean jsonp(String subtype)
+	{
+		if(subtype != null)
+			return subtype.equals(ValueConstants.datatype_jsonp);
+		return false;
 	}
 
 	/**
@@ -775,5 +794,12 @@ public class MediaType implements Comparable<MediaType> {
 			}
 		}
 	};
+	public boolean isJsonp() {
+		return jsonp;
+	}
+
+	public boolean isJson() {
+		return json;
+	}
 
 }

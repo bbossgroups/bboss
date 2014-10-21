@@ -53,27 +53,23 @@ public class WSLoader {
 	private static boolean loadDefaultWebServiceOk = false;
 	private static boolean loadModuleWebServiceOk = false;
 	private static boolean loadMvcWebServiceOk = false;
-	 public static boolean webservice_enable = true;
-	 public static ProList webservices = null;
 	 public static String wsconfigFile = "org/frameworkset/spi/ws/webserivce-modules.xml";
 	 public static String managerProviderconfigFile = "manager-provider.xml";
-	 static
+	 public static boolean webservice_enable()	 
      {
 		 if(WSLoader.fileexist(managerProviderconfigFile))
 		 {
 	     	try {
 	     		
-					webservice_enable = ApplicationContext.getApplicationContext().getBooleanProperty("rpc.webservice.enable",true);
+					return  ApplicationContext.getApplicationContext().getBooleanProperty("rpc.webservice.enable",true);
 				} catch (Exception e) {
-					
+					return true;
 				}
 	     	
-	     	 try {
-					webservices = ApplicationContext.getApplicationContext().getListProperty("cxf.webservices.config")   ;
-				} catch (Exception e) {
-					
-				}
+	     	
 		 }
+		 else
+			 return true;
      }
 	 
 	 public static Bus loadBusNoConfig(ServletConfig servletConfig)
@@ -95,7 +91,8 @@ public class WSLoader {
 	  */
 	 public static void publishAllWebService(ClassLoader classLoader,ServletConfig config)
 	 {		 
-		 if(WSLoader.webservice_enable)
+		 boolean webservice_enable =  WSLoader.webservice_enable();
+		 if(webservice_enable)
 	        {        	
 	    //        super.loadBus(servletConfig);        
 			    WSLoader.loadBusNoConfig(config);
@@ -191,7 +188,7 @@ public class WSLoader {
 	}
 	private static void loadDefaultWebService(ClassLoader classLoader)
 	{
-		 ProList webservices = WSUtil.webservices;
+		 ProList webservices =  ApplicationContext.getApplicationContext().getListProperty("cxf.webservices.config")   ;
          if(webservices != null)
          {
              for(int i = 0;i < webservices.size(); i ++)

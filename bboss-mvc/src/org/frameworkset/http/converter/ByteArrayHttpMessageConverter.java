@@ -23,6 +23,7 @@ import org.frameworkset.http.HttpInputMessage;
 import org.frameworkset.http.HttpOutputMessage;
 import org.frameworkset.http.MediaType;
 import org.frameworkset.util.FileCopyUtils;
+import org.frameworkset.util.annotations.ValueConstants;
 
 /**
  * Implementation of {@link HttpMessageConverter} that can read and write byte arrays.
@@ -68,5 +69,15 @@ public class ByteArrayHttpMessageConverter extends AbstractHttpMessageConverter<
 	protected void writeInternal(byte[] bytes, HttpOutputMessage outputMessage,HttpInputMessage inputMessage) throws IOException {
 		FileCopyUtils.copy(bytes, outputMessage.getBody());
 	}
-
+	@Override
+	public boolean canWrite(String datatype) {
+		// TODO Auto-generated method stub
+		if(datatype == null)
+			return false;
+		
+		if(datatype.equals(ValueConstants.datatype_bytearray))
+				return true;
+		else
+			return false;
+	}
 }

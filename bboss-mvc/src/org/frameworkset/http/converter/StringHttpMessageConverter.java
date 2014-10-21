@@ -28,6 +28,7 @@ import org.frameworkset.http.HttpInputMessage;
 import org.frameworkset.http.HttpOutputMessage;
 import org.frameworkset.http.MediaType;
 import org.frameworkset.util.FileCopyUtils;
+import org.frameworkset.util.annotations.ValueConstants;
 
 /**
  * Implementation of {@link HttpMessageConverter} that can read and write strings.
@@ -140,7 +141,34 @@ public class StringHttpMessageConverter extends AbstractHttpMessageConverter<Obj
 	 */
 	public String getRequetBodyDataType()
 	{
-		return "String";
+		return ValueConstants.datatype_string;
 	}
-
+	public String getResponseBodyDataType()
+	{
+		return ValueConstants.datatype_string;
+	}
+	
+	protected boolean canWrite(MediaType mediaType) {
+//		if (mediaType == null || MediaType.ALL.equals(mediaType)) {
+//			return true;
+//		}
+//		for (MediaType supportedMediaType : getSupportedMediaTypes()) {
+//			if (supportedMediaType.isCompatibleWith(mediaType)) {
+//				return true;
+//			}
+//		}
+		return false;
+	}
+	
+	@Override
+	public boolean canWrite(String datatype) {
+		// TODO Auto-generated method stub
+		if(datatype == null)
+			return false;
+		
+		if(datatype.equals(ValueConstants.datatype_string))
+				return true;
+		else
+			return false;
+	}
 }

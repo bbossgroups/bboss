@@ -17,6 +17,7 @@
 package org.frameworkset.http.converter.feed;
 
 import org.frameworkset.http.MediaType;
+import org.frameworkset.util.annotations.ValueConstants;
 
 import com.sun.syndication.feed.atom.Feed;
 
@@ -43,5 +44,15 @@ public class AtomFeedHttpMessageConverter extends AbstractWireFeedHttpMessageCon
 		return Feed.class.isAssignableFrom(clazz);
 	}
 
-
+	@Override
+	public boolean canWrite(String datatype) {
+		// TODO Auto-generated method stub
+		if(datatype == null)
+			return false;
+		
+		if(datatype.equals(ValueConstants.datatype_atom))
+				return true;
+		else
+			return false;
+	}
 }

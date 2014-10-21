@@ -208,7 +208,8 @@ public class RPCCXFServlet extends AbstractHTTPServlet {
 	
     
     protected void loadBus(ServletConfig servletConfig) {
-        if(WSLoader.webservice_enable)
+    	boolean webservice_enable =  WSLoader.webservice_enable();
+    	if(webservice_enable)
         {        	
     //        super.loadBus(servletConfig);        
         	loadBusNoConfig(servletConfig);

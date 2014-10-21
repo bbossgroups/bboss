@@ -24,6 +24,7 @@ import org.frameworkset.http.FileBlob;
 import org.frameworkset.http.HttpInputMessage;
 import org.frameworkset.http.HttpOutputMessage;
 import org.frameworkset.http.MediaType;
+import org.frameworkset.util.annotations.ValueConstants;
 import org.frameworkset.util.io.ByteArrayResource;
 import org.frameworkset.util.io.ClassPathResource;
 import org.frameworkset.util.io.FileSystemResource;
@@ -169,5 +170,20 @@ public class FileMessageConvertor<T> implements HttpMessageConverter<T>
 	public boolean canRead(String datatype)
 	{
 		return false;
+	}
+	public String getResponseBodyDataType()
+	{
+		return null;
+	}
+
+	@Override
+	public boolean canWrite(String datatype) {
+		// TODO Auto-generated method stub
+		if(datatype == null)
+			return false;
+		if(datatype.equals(ValueConstants.datatype_file))
+			return true;
+		else
+			return false;
 	}
 }

@@ -128,7 +128,7 @@ public class BufferedImageHttpMessageConverter implements HttpMessageConverter<B
 		return imageReaders.hasNext();
 	}
 
-	public boolean canWrite(Class<?> clazz, MediaType mediaType) {
+	public boolean canWrite( Class<?> clazz, MediaType mediaType) {
 		return (BufferedImage.class.equals(clazz) && isWritable(mediaType));
 	}
 
@@ -281,5 +281,14 @@ public class BufferedImageHttpMessageConverter implements HttpMessageConverter<B
 	{
 		return false;
 	}
+	public String getResponseBodyDataType()
+	{
+		return null;
+	}
 
+	@Override
+	public boolean canWrite(String datatype) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

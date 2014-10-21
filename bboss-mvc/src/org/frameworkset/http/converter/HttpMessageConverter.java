@@ -101,6 +101,11 @@ public interface HttpMessageConverter<T> {
 	 */
 	public String getRequetBodyDataType();
 
-	
+	public boolean canWrite(String datatype);
+	/**
+	 * 获取用户响应报文对应的数据类型：String,json,xml
+	 * @return
+	 */
+	public String getResponseBodyDataType();
 
 }

@@ -36,6 +36,7 @@ import org.frameworkset.http.converter.AbstractHttpMessageConverter;
 import org.frameworkset.http.converter.HttpMessageNotReadableException;
 import org.frameworkset.http.converter.HttpMessageNotWritableException;
 import org.frameworkset.util.Assert;
+import org.frameworkset.util.annotations.ValueConstants;
 
 /**
  * Implementation of {@link converter.HttpMessageConverter HttpMessageConverter}
@@ -132,8 +133,8 @@ public class MappingJacksonHttpMessageConverter extends AbstractHttpMessageConve
 	}
 
 	@Override
-	public boolean canWrite(Class<?> clazz, MediaType mediaType) {
-		return this.objectMapper.canSerialize(clazz) && this.canWrite(mediaType);
+	public boolean canWrite( Class<?> clazz, MediaType mediaType) {
+		return  (this.objectMapper.canSerialize(clazz) && this.canWrite(mediaType));
 	}
 
 	@Override
@@ -219,7 +220,28 @@ public class MappingJacksonHttpMessageConverter extends AbstractHttpMessageConve
 	 */
 	public String getRequetBodyDataType()
 	{
-		return "json";
+		return ValueConstants.datatype_json;
+	}
+	/**
+	 * 获取用户请求报文对应的数据类型：String,json
+	 * @return
+	 */
+	public String getResponseBodyDataType()
+	{
+		return ValueConstants.datatype_json;
 	}
 
+	@Override
+	public boolean canWrite(String datatype) {
+		// TODO Auto-generated method stub
+		if(datatype == null)
+			return false;
+		
+		if(datatype.equals(ValueConstants.datatype_json))
+				return true;
+		else if(datatype.equals(ValueConstants.datatype_jsonp))
+				return true;
+		else
+			return false;
+	}
 }

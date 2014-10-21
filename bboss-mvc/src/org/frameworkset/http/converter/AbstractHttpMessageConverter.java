@@ -127,7 +127,7 @@ public abstract class AbstractHttpMessageConverter<T> implements HttpMessageConv
 	 * {@linkplain MediaType#includes(MediaType) include} the given media type.
 	 */
 	public boolean canWrite(Class<?> clazz, MediaType mediaType) {
-		return supports(clazz) && canWrite(mediaType);
+		return   (supports(clazz) && canWrite(mediaType));
 		}
 
 	/**
@@ -258,10 +258,19 @@ public abstract class AbstractHttpMessageConverter<T> implements HttpMessageConv
 		}
 	}
 	/**
-	 * 获取用户请求报文对应的数据类型：String,json
+	 * 获取用户请求报文对应的数据类型：String,json,xml
 	 * @return
 	 */
 	public String getRequetBodyDataType()
+	{
+		return null;
+	}
+	
+	/**
+	 * 获取用户响应报文对应的数据类型：String,json,xml
+	 * @return
+	 */
+	public String getResponseBodyDataType()
 	{
 		return null;
 	}
@@ -273,4 +282,13 @@ public abstract class AbstractHttpMessageConverter<T> implements HttpMessageConv
 			return false;
 		return supportdatatype.equals(datatype);
 	}
+	
+//	public MediaType canWrite(String datatype)
+//	{
+////		String supportdatatype = this.getResponseBodyDataType();
+////		if(supportdatatype == null)
+////			return false;
+////		return supportdatatype.equals(datatype);
+//		return null;
+//	}
 }

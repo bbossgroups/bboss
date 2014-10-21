@@ -92,12 +92,14 @@ import org.frameworkset.util.annotations.RequestHeader;
 import org.frameworkset.util.annotations.RequestParam;
 import org.frameworkset.util.annotations.ResponseBody;
 import org.frameworkset.util.annotations.Scope;
+import org.frameworkset.util.annotations.ValueConstants;
 import org.frameworkset.util.annotations.wraper.AttributeWraper;
 import org.frameworkset.util.annotations.wraper.CookieValueWraper;
 import org.frameworkset.util.annotations.wraper.PathVariableWraper;
 import org.frameworkset.util.annotations.wraper.RequestBodyWraper;
 import org.frameworkset.util.annotations.wraper.RequestHeaderWraper;
 import org.frameworkset.util.annotations.wraper.RequestParamWraper;
+import org.frameworkset.util.annotations.wraper.ResponseBodyWraper;
 import org.frameworkset.web.HttpMediaTypeNotAcceptableException;
 import org.frameworkset.web.HttpMediaTypeNotSupportedException;
 import org.frameworkset.web.HttpSessionRequiredException;
@@ -3584,8 +3586,7 @@ public abstract class HandlerUtils {
 				throws Exception {
 
 			if (handlerMethod.isResponseBody()) {
-
-				handleResponseBody(returnValue, webRequest,
+				handleResponseBody(handlerMethod.getResponsebodyAnno(),returnValue, webRequest,
 						handlerMethod.getResponseMediaType());
 				return null;
 			} else if (returnValue instanceof ModelAndView) {
@@ -3650,7 +3651,7 @@ public abstract class HandlerUtils {
 			}
 
 			else if (returnValue instanceof HttpEntity) {
-				handleHttpEntityResponse((HttpEntity<?>) returnValue,
+				handleHttpEntityResponse(handlerMethod.getResponsebodyAnno(),(HttpEntity<?>) returnValue,
 						webRequest);
 				return null;
 			} else if (returnValue == null) {
@@ -3686,7 +3687,7 @@ public abstract class HandlerUtils {
 			}
 		}
 
-		private void handleResponseBody(Object returnValue,
+		private void handleResponseBody(ResponseBodyWraper responsebodyAnno,Object returnValue,
 				ServletWebRequest webRequest, MediaType responseMediaType)
 				throws Exception {
 			if (returnValue == null) {
@@ -3696,11 +3697,11 @@ public abstract class HandlerUtils {
 					.createHttpInputMessage(webRequest.getRequest());
 			HttpOutputMessage outputMessage = HandlerUtils
 					.createHttpOutputMessage(webRequest.getResponse());
-			writeWithMessageConverters(returnValue, inputMessage,
+			writeWithMessageConverters(  responsebodyAnno,returnValue, inputMessage,
 					outputMessage, responseMediaType);
 		}
 
-		private void handleHttpEntityResponse(HttpEntity<?> responseEntity,
+		private void handleHttpEntityResponse(ResponseBodyWraper responsebodyAnno,HttpEntity<?> responseEntity,
 				ServletWebRequest webRequest) throws Exception {
 			if (responseEntity == null) {
 				return;
@@ -3721,7 +3722,7 @@ public abstract class HandlerUtils {
 			}
 			Object body = responseEntity.getBody();
 			if (body != null) {
-				writeWithMessageConverters(body, inputMessage, outputMessage,
+				writeWithMessageConverters(  responsebodyAnno,body, inputMessage, outputMessage,
 						null);
 			} else {
 				// flush headers
@@ -3730,80 +3731,132 @@ public abstract class HandlerUtils {
 		}
 
 		@SuppressWarnings("unchecked")
-		private void writeWithMessageConverters(Object returnValue,
+		private void writeWithMessageConverters(ResponseBodyWraper responsebodyAnno,Object returnValue,
 				HttpInputMessage inputMessage, HttpOutputMessage outputMessage,
 				MediaType responseMediaType) throws IOException,
 				HttpMediaTypeNotAcceptableException {
-			List<MediaType> acceptedMediaTypes = inputMessage.getHeaders()
-					.getAccept();
-			boolean usecustomMediaTypeByMethod = false;
-			if (acceptedMediaTypes.isEmpty()) {
-				if (responseMediaType == null)
-					acceptedMediaTypes = Collections
-							.singletonList(MediaType.ALL);
-				else
-					acceptedMediaTypes = Collections
-							.singletonList(responseMediaType);
-
-			} else {
-				if (responseMediaType != null) {
-					acceptedMediaTypes.clear();
-					acceptedMediaTypes.add(responseMediaType);
-					usecustomMediaTypeByMethod = true;
-				} else {
-					MediaType.sortByQualityValue(acceptedMediaTypes);
-				}
-			}
-
-			Class<?> returnValueType = returnValue.getClass();
-			List<MediaType> allSupportedMediaTypes = new ArrayList<MediaType>();
-			if (getMessageConverters() != null) {
-				HttpMessageConverter defaultMessageConverter = null;
-				for (MediaType acceptedMediaType : acceptedMediaTypes) {
-					for (HttpMessageConverter messageConverter : getMessageConverters()) {
-						if(defaultMessageConverter == null && messageConverter.isdefault())
-							defaultMessageConverter = messageConverter;
-						if (messageConverter.canWrite(returnValueType,
-								acceptedMediaType)) {
-							messageConverter.write(returnValue,
-									acceptedMediaType, outputMessage,
-									inputMessage, usecustomMediaTypeByMethod);
-							// if (logger.isDebugEnabled()) {
-							// MediaType contentType = outputMessage
-							// .getHeaders().getContentType();
-							// if (contentType == null) {
-							// contentType = acceptedMediaType;
-							// }
-							// logger
-							// .debug("Written [" + returnValue
-							// + "] as \"" + contentType
-							// + "\" using ["
-							// + messageConverter + "]");
-							// }
-							this.responseArgumentUsed = true;
-							return;
-						}
-						
-					}
-				}
-				if(defaultMessageConverter != null)
+			HttpMessageConverter defaultMessageConverter = null;
+			
+			if(responsebodyAnno != null)
+			{
+				String datatype = responsebodyAnno.datatype();
+				MediaType contentType = inputMessage.getHeaders().getContentType();
+				boolean usecustomMediaTypeByMethod = responseMediaType != null;
+				if(datatype.equals(ValueConstants.datatype_string) && contentType != null)
 				{
-					defaultMessageConverter.write(returnValue,
-							defaultMessageConverter.getDefaultAcceptedMediaType(), outputMessage,
-							inputMessage, usecustomMediaTypeByMethod);
-					this.responseArgumentUsed = true;
-					return;
-				}
-				for (HttpMessageConverter messageConverter : messageConverters) {
-					if (messageConverter.getSupportedMediaTypes() != null
-							&& messageConverter.getSupportedMediaTypes().size() > 0) {
-						allSupportedMediaTypes.addAll(messageConverter
-								.getSupportedMediaTypes());
+					if(contentType.isJson())
+					{
+						datatype = ValueConstants.datatype_json;
+						responseMediaType = contentType;
+						usecustomMediaTypeByMethod = false;
 					}
+					else if(contentType.isJsonp())
+					{
+						datatype = ValueConstants.datatype_jsonp;
+						responseMediaType = contentType;
+						usecustomMediaTypeByMethod = false;
+					}
+					
+				}
+				for (HttpMessageConverter messageConverter : getMessageConverters()) {
+					if(defaultMessageConverter == null && messageConverter.isdefault())
+						defaultMessageConverter = messageConverter;
+					if (messageConverter.canWrite(datatype)) {
+						messageConverter.write(returnValue,
+								responseMediaType, outputMessage,
+								inputMessage, usecustomMediaTypeByMethod);
+						// if (logger.isDebugEnabled()) {
+						// MediaType contentType = outputMessage
+						// .getHeaders().getContentType();
+						// if (contentType == null) {
+						// contentType = acceptedMediaType;
+						// }
+						// logger
+						// .debug("Written [" + returnValue
+						// + "] as \"" + contentType
+						// + "\" using ["
+						// + messageConverter + "]");
+						// }
+						this.responseArgumentUsed = true;
+						return;
+					}
+					
 				}
 			}
-			throw new HttpMediaTypeNotAcceptableException(
-					allSupportedMediaTypes);
+			else
+			{
+				List<MediaType> acceptedMediaTypes = inputMessage.getHeaders()
+						.getAccept();
+				boolean usecustomMediaTypeByMethod = false;
+				if (acceptedMediaTypes.isEmpty()) {
+					if (responseMediaType == null)
+						acceptedMediaTypes = Collections
+								.singletonList(MediaType.ALL);
+					else
+						acceptedMediaTypes = Collections
+								.singletonList(responseMediaType);
+
+				} else {
+					if (responseMediaType != null) {
+						acceptedMediaTypes.clear();
+						acceptedMediaTypes.add(responseMediaType);
+						usecustomMediaTypeByMethod = true;
+					} else {
+						MediaType.sortByQualityValue(acceptedMediaTypes);
+					}
+				}
+
+				Class<?> returnValueType = returnValue.getClass();
+				List<MediaType> allSupportedMediaTypes = new ArrayList<MediaType>();
+				if (getMessageConverters() != null) {
+					
+					for (MediaType acceptedMediaType : acceptedMediaTypes) {
+						for (HttpMessageConverter messageConverter : getMessageConverters()) {
+							if(defaultMessageConverter == null && messageConverter.isdefault())
+								defaultMessageConverter = messageConverter;
+							if (messageConverter.canWrite(returnValueType,
+									acceptedMediaType)) {
+								messageConverter.write(returnValue,
+										acceptedMediaType, outputMessage,
+										inputMessage, usecustomMediaTypeByMethod);
+								// if (logger.isDebugEnabled()) {
+								// MediaType contentType = outputMessage
+								// .getHeaders().getContentType();
+								// if (contentType == null) {
+								// contentType = acceptedMediaType;
+								// }
+								// logger
+								// .debug("Written [" + returnValue
+								// + "] as \"" + contentType
+								// + "\" using ["
+								// + messageConverter + "]");
+								// }
+								this.responseArgumentUsed = true;
+								return;
+							}
+							
+						}
+					}
+					if(defaultMessageConverter != null)
+					{
+						defaultMessageConverter.write(returnValue,
+								defaultMessageConverter.getDefaultAcceptedMediaType(), outputMessage,
+								inputMessage, usecustomMediaTypeByMethod);
+						this.responseArgumentUsed = true;
+						return;
+					}
+					for (HttpMessageConverter messageConverter : messageConverters) {
+						if (messageConverter.getSupportedMediaTypes() != null
+								&& messageConverter.getSupportedMediaTypes().size() > 0) {
+							allSupportedMediaTypes.addAll(messageConverter
+									.getSupportedMediaTypes());
+						}
+					}
+				}
+				throw new HttpMediaTypeNotAcceptableException(
+						allSupportedMediaTypes);
+			}
+			
 		}
 
 		// protected void doBind(NativeWebRequest webRequest,

@@ -15,8 +15,15 @@
  */
 package org.frameworkset.util.annotations.wraper;
 
+import java.io.File;
+import java.lang.reflect.Method;
+import java.sql.Blob;
+
+import org.frameworkset.http.FileBlob;
 import org.frameworkset.util.annotations.AnnotationUtils;
 import org.frameworkset.util.annotations.ResponseBody;
+import org.frameworkset.util.annotations.ValueConstants;
+import org.frameworkset.util.io.Resource;
 
 /**
  * <p>ResponseBodyWraper.java</p>
@@ -30,17 +37,97 @@ import org.frameworkset.util.annotations.ResponseBody;
  */
 public class ResponseBodyWraper {
 	/**
+	 * com.sun.syndication.feed.rss.Channel
+	 */
+	private static Class rsschannel = null;
+	/**
+	 * com.sun.syndication.feed.atom.Feed
+	 */
+	private static Class atomFeed = null;
+	
+	/**
+	 *  org.frameworkset.http.converter.wordpdf.WordResponse
+	 */
+	private static Class wordResponse = null;
+	static 
+	{
+		try
+		{
+			wordResponse = Class.forName("org.frameworkset.http.converter.wordpdf.WordResponse");
+		}
+		catch(Throwable e)
+		{
+			
+		}
+		
+		try
+		{
+			rsschannel = Class.forName("com.sun.syndication.feed.rss.Channel");
+		}
+		catch(Throwable e)
+		{
+			
+		}
+		try
+		{
+			atomFeed = Class.forName("com.sun.syndication.feed.atom.Feed");
+		}
+		catch(Throwable e)
+		{
+			
+		}
+	}
+	
+	/**
 	 * 指定响应的数据类型
 	 * @return
 	 */
 	private String datatype;
+	private String evalDataType(Class responseClass)
+	{
+		if(String.class.isAssignableFrom(responseClass))
+		{
+			return ValueConstants.datatype_string;
+		}
+		else if(
+				File.class.isAssignableFrom(responseClass)||
+				FileBlob.class.isAssignableFrom(responseClass)
+				||Blob.class.isAssignableFrom(responseClass)
+				||Resource.class.isAssignableFrom(responseClass) )
+		{
+			return ValueConstants.datatype_file;
+		}
+		else if(byte[].class.isAssignableFrom(responseClass))
+		{
+			return ValueConstants.datatype_bytearray; 
+		}
+		else if(rsschannel != null && rsschannel.isAssignableFrom(responseClass))
+		{
+			return ValueConstants.datatype_rss;
+		}
+		else if(atomFeed != null && atomFeed.isAssignableFrom(responseClass))
+		{
+			return ValueConstants.datatype_atom;
+		}
+		else if(wordResponse != null && wordResponse.isAssignableFrom(responseClass))
+		{
+			return ValueConstants.datatype_word;
+		}
+		else
+		{
+			return ValueConstants.datatype_json;
+		}
+			
+	}
 	/**
 	 * 指定响应的数据编码字符集
 	 * @return
 	 */
 	private String charset;
-	public ResponseBodyWraper(ResponseBody body) {
+	public ResponseBodyWraper(ResponseBody body,Method method) {
 		datatype = AnnotationUtils.converDefaultValue(body.datatype());
+		if(datatype == null)
+			datatype = this.evalDataType(method.getClass());
 		charset =AnnotationUtils.converDefaultValue( body.charset());
 	}
 	
