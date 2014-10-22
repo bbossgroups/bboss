@@ -68,7 +68,7 @@ public abstract class AbstractHttpMessageConverter<T> implements HttpMessageConv
 	protected AbstractHttpMessageConverter(MediaType supportedMediaType) {
 		setSupportedMediaTypes(Collections.singletonList(supportedMediaType));
 	}
-
+	protected abstract boolean canWrite(MediaType mediaType);
 	/**
 	 * Construct an {@code AbstractHttpMessageConverter} with multiple supported media type.
 	 * @param supportedMediaTypes the supported media types
@@ -130,24 +130,24 @@ public abstract class AbstractHttpMessageConverter<T> implements HttpMessageConv
 		return   (supports(clazz) && canWrite(mediaType));
 		}
 
-	/**
-	 * Returns true if the given media type includes any of the
-	 * {@linkplain #setSupportedMediaTypes(List) supported media types}.
-	 * @param mediaType the media type to write, can be {@code null} if not specified. Typically the value of an
-	 * 		  			{@code Accept} header.
-	 * @return true if the supported media types are compatible with the media type, or if the media type is {@code null}
-	 */
-	protected boolean canWrite(MediaType mediaType) {
-		if (mediaType == null || MediaType.ALL.equals(mediaType)) {
-			return true;
-		}
-		for (MediaType supportedMediaType : getSupportedMediaTypes()) {
-			if (supportedMediaType.isCompatibleWith(mediaType)) {
-				return true;
-			}
-		}
-		return false;
-	}
+//	/**
+//	 * Returns true if the given media type includes any of the
+//	 * {@linkplain #setSupportedMediaTypes(List) supported media types}.
+//	 * @param mediaType the media type to write, can be {@code null} if not specified. Typically the value of an
+//	 * 		  			{@code Accept} header.
+//	 * @return true if the supported media types are compatible with the media type, or if the media type is {@code null}
+//	 */
+//	protected boolean canWrite(MediaType mediaType) {
+//		if (mediaType == null || MediaType.ALL.equals(mediaType)) {
+//			return true;
+//		}
+//		for (MediaType supportedMediaType : getSupportedMediaTypes()) {
+//			if (supportedMediaType.isCompatibleWith(mediaType)) {
+//				return true;
+//			}
+//		}
+//		return false;
+//	}
 
 	/**
 	 * {@inheritDoc}

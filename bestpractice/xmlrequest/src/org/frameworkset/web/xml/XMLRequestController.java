@@ -31,9 +31,40 @@ import org.frameworkset.util.annotations.ResponseBody;
  */
 public class XMLRequestController
 {
-	public @ResponseBody(datatype="xml") String echo(@RequestBody String xml)
+	public static class XMLBean 
 	{
-		System.out.println(xml);
+		private String id;
+		private String data;
+		public String getId() {
+			return id;
+		}
+		public void setId(String id) {
+			this.id = id;
+		}
+		public String getData() {
+			return data;
+		}
+		public void setData(String data) {
+			this.data = data;
+		}
+	}
+	public @ResponseBody(datatype="xml") XMLBean echoxml(@RequestBody(datatype="xml") XMLBean xml)
+	{
+//		
+//		XMLBean XMLBean = new XMLBean();
+//		XMLBean.setData(xml);
+//		XMLBean.setId(StringUtil.getUUID());
+		xml.setData("Response:"+xml.getData());
+		return xml;
+	}
+	
+	public @ResponseBody(datatype="json") XMLBean echojson(@RequestBody(datatype="json") XMLBean xml)
+	{
+//		
+//		XMLBean XMLBean = new XMLBean();
+//		XMLBean.setData(xml);
+//		XMLBean.setId(StringUtil.getUUID());
+		xml.setData("Response:"+xml.getData());
 		return xml;
 	}
 	public String index()

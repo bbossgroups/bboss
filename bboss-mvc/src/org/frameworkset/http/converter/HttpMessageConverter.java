@@ -16,6 +16,7 @@
 package org.frameworkset.http.converter;
 
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.List;
 
 import org.frameworkset.http.HttpInputMessage;
@@ -32,7 +33,9 @@ import org.frameworkset.http.MediaType;
  * @version 1.0
  */
 public interface HttpMessageConverter<T> {
-
+	public static final Charset DEFAULT_CHARSET = Charset.forName("UTF-8");
+	public static final MediaType[] jsonmediatypes = new MediaType[] {new MediaType("application", "json", DEFAULT_CHARSET),new MediaType("application", "jsonp", DEFAULT_CHARSET)}; 
+    public static final MediaType[] xmlmediatypes = new MediaType[] {MediaType.APPLICATION_XML, MediaType.TEXT_XML, new MediaType("application", "*+xml")};
 	/**
 	 * Indicates whether the given class can be read by this converter.
 	 * @param clazz the class to test for readability
@@ -101,11 +104,14 @@ public interface HttpMessageConverter<T> {
 	 */
 	public String getRequetBodyDataType();
 
-	public boolean canWrite(String datatype);
+	
+	
+	
 	/**
 	 * 获取用户响应报文对应的数据类型：String,json,xml
 	 * @return
 	 */
-	public String getResponseBodyDataType();
+//	public String getResponseBodyDataType();
+
 
 }

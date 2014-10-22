@@ -69,7 +69,7 @@ public class ByteArrayHttpMessageConverter extends AbstractHttpMessageConverter<
 	protected void writeInternal(byte[] bytes, HttpOutputMessage outputMessage,HttpInputMessage inputMessage) throws IOException {
 		FileCopyUtils.copy(bytes, outputMessage.getBody());
 	}
-	@Override
+	 
 	public boolean canWrite(String datatype) {
 		// TODO Auto-generated method stub
 		if(datatype == null)
@@ -79,5 +79,10 @@ public class ByteArrayHttpMessageConverter extends AbstractHttpMessageConverter<
 				return true;
 		else
 			return false;
+	}
+	
+	protected boolean canWrite(MediaType mediaType)
+	{
+		return true;
 	}
 }

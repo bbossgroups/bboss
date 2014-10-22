@@ -44,7 +44,7 @@ public class AtomFeedHttpMessageConverter extends AbstractWireFeedHttpMessageCon
 		return Feed.class.isAssignableFrom(clazz);
 	}
 
-	@Override
+	 
 	public boolean canWrite(String datatype) {
 		// TODO Auto-generated method stub
 		if(datatype == null)
@@ -54,5 +54,9 @@ public class AtomFeedHttpMessageConverter extends AbstractWireFeedHttpMessageCon
 				return true;
 		else
 			return false;
+	}
+	protected   boolean canWrite(MediaType mediaType)
+	{
+		return true;
 	}
 }

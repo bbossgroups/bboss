@@ -30,7 +30,6 @@
 	
 	
     <property f:viewName="demo" 
-    		  f:listviewName="demolist"
     	name="/demo.htm" 
     	class="org.frameworkset.spi.mvc.DemoController" singlable="true">
     </property>

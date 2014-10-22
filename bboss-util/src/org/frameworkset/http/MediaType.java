@@ -272,8 +272,8 @@ public class MediaType implements Comparable<MediaType> {
 		this.type = type.toLowerCase(Locale.ENGLISH);
 		this.subtype = subtype.toLowerCase(Locale.ENGLISH);
 		
-		jsonp = this.jsonp(subtype);
-		json = this.json(subtype);
+		
+		
 		if (!CollectionUtils.isEmpty(parameters)) {
 			Map<String, String> m = new LinkedCaseInsensitiveMap<String>(parameters.size(), Locale.ENGLISH);
 			for (Map.Entry<String, String> entry : parameters.entrySet()) {
@@ -289,20 +289,30 @@ public class MediaType implements Comparable<MediaType> {
 		}
 	}
 	
-	private boolean json(String subtype)
+	private void evalcontenttype(String subtype)
 	{
 		if(subtype != null)
-			return subtype.equals(ValueConstants.datatype_json);
-		return false;
+		{
+			if(subtype.equalsIgnoreCase(ValueConstants.datatype_json))
+			{
+				this.json = true;
+			}
+			else if(subtype.equalsIgnoreCase(ValueConstants.datatype_jsonp))
+			{
+				this.jsonp = true;
+			}
+			else if(subtype.equalsIgnoreCase(ValueConstants.datatype_xml))
+			{
+				this.xml = true;
+			}
+			
+		}
 	}
+	private boolean xml = false; 
+	
 	private boolean jsonp = false; 
 	private boolean json = false;
-	private boolean jsonp(String subtype)
-	{
-		if(subtype != null)
-			return subtype.equals(ValueConstants.datatype_jsonp);
-		return false;
-	}
+	
 
 	/**
 	 * Checks the given token string for illegal characters, as defined in RFC 2616, section 2.2.
@@ -800,6 +810,10 @@ public class MediaType implements Comparable<MediaType> {
 
 	public boolean isJson() {
 		return json;
+	}
+
+	public boolean isXml() {
+		return xml;
 	}
 
 }

@@ -53,14 +53,13 @@ import org.frameworkset.util.annotations.ValueConstants;
  */
 public class MappingJacksonHttpMessageConverter extends AbstractHttpMessageConverter<Object> {
 
-	public static final Charset DEFAULT_CHARSET = Charset.forName("UTF-8");
+
 	public static final String JSONPCALLBACK_PARAM_NAME = "jsonp_callback";
 	private ObjectMapper objectMapper = new ObjectMapper();
 
 	private boolean prefixJson = false;
 	private String jsonpCallback = JSONPCALLBACK_PARAM_NAME;
-	public static final MediaType[] jsonmediatypes = new MediaType[] {new MediaType("application", "json", DEFAULT_CHARSET),new MediaType("application", "jsonp", DEFAULT_CHARSET)}; 
-
+	
 
 	/**
 	 * Construct a new {@code BindingJacksonHttpMessageConverter}.
@@ -231,7 +230,7 @@ public class MappingJacksonHttpMessageConverter extends AbstractHttpMessageConve
 		return ValueConstants.datatype_json;
 	}
 
-	@Override
+	
 	public boolean canWrite(String datatype) {
 		// TODO Auto-generated method stub
 		if(datatype == null)

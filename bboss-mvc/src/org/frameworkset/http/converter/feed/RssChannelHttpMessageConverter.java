@@ -43,7 +43,7 @@ public class RssChannelHttpMessageConverter extends AbstractWireFeedHttpMessageC
 	protected boolean supports(Class<?> clazz) {
 		return Channel.class.isAssignableFrom(clazz);
 	}
-	@Override
+	 
 	public boolean canWrite(String datatype) {
 		// TODO Auto-generated method stub
 		if(datatype == null)
@@ -53,6 +53,10 @@ public class RssChannelHttpMessageConverter extends AbstractWireFeedHttpMessageC
 				return true;
 		else
 			return false;
+	}
+	protected   boolean canWrite(MediaType mediaType)
+	{
+		return true;
 	}
 
 }

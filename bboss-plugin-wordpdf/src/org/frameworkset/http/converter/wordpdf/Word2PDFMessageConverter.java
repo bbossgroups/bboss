@@ -179,7 +179,7 @@ public class Word2PDFMessageConverter <T> implements HttpMessageConverter<T>{
 		return ValueConstants.datatype_word;
 	}
 
-	@Override
+	 
 	public boolean canWrite(String datatype) {
 		// TODO Auto-generated method stub
 		if(datatype == null)
@@ -191,5 +191,9 @@ public class Word2PDFMessageConverter <T> implements HttpMessageConverter<T>{
 		else
 			return false;
 			
+	}
+	protected   boolean canWrite(MediaType mediaType)
+	{
+		return true;
 	}
 }

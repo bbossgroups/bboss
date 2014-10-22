@@ -53,7 +53,7 @@ String rootPath = org.frameworkset.mvc.FileController.getWorkFoldPath();
 		   type: "POST",
 			url : "${pageContext.request.contextPath}/file/mkdir.page",
 			data :{workfolder:workfolder,uri:dir},
-			dataType : 'json',
+			
 			async:false,
 			beforeSend: function(XMLHttpRequest){
 					

@@ -179,8 +179,6 @@ public class ResourceHttpMessageConverter implements HttpMessageConverter<Resour
 		return null;
 	}
 
-	@Override
-	public boolean canWrite(String datatype) {
-		return false;
-	}
+	
+	
 }

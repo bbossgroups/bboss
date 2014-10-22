@@ -286,7 +286,6 @@ public class BufferedImageHttpMessageConverter implements HttpMessageConverter<B
 		return null;
 	}
 
-	@Override
 	public boolean canWrite(String datatype) {
 		// TODO Auto-generated method stub
 		return false;

@@ -83,42 +83,49 @@ public class ResponseBodyWraper {
 	 * @return
 	 */
 	private String datatype;
-	private String evalDataType(Class responseClass)
-	{
-		if(String.class.isAssignableFrom(responseClass))
-		{
-			return ValueConstants.datatype_string;
-		}
-		else if(
-				File.class.isAssignableFrom(responseClass)||
-				FileBlob.class.isAssignableFrom(responseClass)
-				||Blob.class.isAssignableFrom(responseClass)
-				||Resource.class.isAssignableFrom(responseClass) )
-		{
-			return ValueConstants.datatype_file;
-		}
-		else if(byte[].class.isAssignableFrom(responseClass))
-		{
-			return ValueConstants.datatype_bytearray; 
-		}
-		else if(rsschannel != null && rsschannel.isAssignableFrom(responseClass))
-		{
-			return ValueConstants.datatype_rss;
-		}
-		else if(atomFeed != null && atomFeed.isAssignableFrom(responseClass))
-		{
-			return ValueConstants.datatype_atom;
-		}
-		else if(wordResponse != null && wordResponse.isAssignableFrom(responseClass))
-		{
-			return ValueConstants.datatype_word;
-		}
-		else
-		{
-			return ValueConstants.datatype_json;
-		}
-			
-	}
+//	private boolean eval = false;
+//	private String evalDataType(Class responseClass)
+//	{
+//		if(String.class.isAssignableFrom(responseClass))
+//		{
+//			eval = true;
+//			return ValueConstants.datatype_string;
+//		}
+//		else if(
+//				File.class.isAssignableFrom(responseClass)||
+//				FileBlob.class.isAssignableFrom(responseClass)
+//				||Blob.class.isAssignableFrom(responseClass)
+//				||Resource.class.isAssignableFrom(responseClass) )
+//		{
+//			return ValueConstants.datatype_file;
+//		}
+//		else if(byte[].class.isAssignableFrom(responseClass))
+//		{
+//			return ValueConstants.datatype_bytearray; 
+//		}
+//		else if(rsschannel != null && rsschannel.isAssignableFrom(responseClass))
+//		{
+//			return ValueConstants.datatype_rss;
+//		}
+//		else if(atomFeed != null && atomFeed.isAssignableFrom(responseClass))
+//		{
+//			return ValueConstants.datatype_atom;
+//		}
+//		else if(wordResponse != null && wordResponse.isAssignableFrom(responseClass))
+//		{
+//			return ValueConstants.datatype_word;
+//		}
+//		else if(Enum.class.isAssignableFrom(responseClass))
+//		{			
+//			eval = true;
+//			return ValueConstants.datatype_string;
+//		}
+//		else
+//		{
+//			return ValueConstants.datatype_json;
+//		}
+//			
+//	}
 	/**
 	 * 指定响应的数据编码字符集
 	 * @return
@@ -126,8 +133,8 @@ public class ResponseBodyWraper {
 	private String charset;
 	public ResponseBodyWraper(ResponseBody body,Method method) {
 		datatype = AnnotationUtils.converDefaultValue(body.datatype());
-		if(datatype == null)
-			datatype = this.evalDataType(method.getClass());
+//		if(datatype == null)
+//			datatype = this.evalDataType(method.getReturnType());
 		charset =AnnotationUtils.converDefaultValue( body.charset());
 	}
 	
@@ -145,4 +152,8 @@ public class ResponseBodyWraper {
 	public String charset(){
 		return this.charset;
 	}
+
+//	public boolean isEval() {
+//		return eval;
+//	}
 }

@@ -46,7 +46,7 @@ public class XMLHttpMessageConverter  extends AbstractHttpMessageConverter<Objec
 	private boolean writeAcceptCharset = true;
 
 	public XMLHttpMessageConverter() {
-		super(MediaType.APPLICATION_XML, MediaType.TEXT_XML, new MediaType("application", "*+xml"));
+		super(xmlmediatypes);
 		this.availableCharsets = new ArrayList<Charset>(Charset.availableCharsets().values());
 	}
 
@@ -115,7 +115,7 @@ public class XMLHttpMessageConverter  extends AbstractHttpMessageConverter<Objec
 		}
 	}
 	protected boolean canWrite(MediaType mediaType) {
-		if (mediaType == null) {
+		if (mediaType == null || MediaType.ALL.equals(mediaType)) {
 			return false;
 		}
 		for (MediaType supportedMediaType : getSupportedMediaTypes()) {
@@ -344,7 +344,7 @@ public class XMLHttpMessageConverter  extends AbstractHttpMessageConverter<Objec
 		return ValueConstants.datatype_xml;
 	}
 	
-	@Override
+
 	public boolean canWrite(String datatype) {
 		// TODO Auto-generated method stub
 		if(datatype == null)

@@ -51,7 +51,7 @@ public class StringHttpMessageConverter extends AbstractHttpMessageConverter<Obj
 	private boolean writeAcceptCharset = true;
 
 	public StringHttpMessageConverter() {
-		super(new MediaType("text", "plain", DEFAULT_CHARSET),new MediaType("text", "html"), new MediaType("text", "javascript"),MediaType.ALL);
+		super(new MediaType("text", "plain", DEFAULT_CHARSET),new MediaType("text", "html"), new MediaType("text", "javascript"));
 		this.availableCharsets = new ArrayList<Charset>(Charset.availableCharsets().values());
 	}
 
@@ -149,18 +149,18 @@ public class StringHttpMessageConverter extends AbstractHttpMessageConverter<Obj
 	}
 	
 	protected boolean canWrite(MediaType mediaType) {
-//		if (mediaType == null || MediaType.ALL.equals(mediaType)) {
-//			return true;
-//		}
-//		for (MediaType supportedMediaType : getSupportedMediaTypes()) {
-//			if (supportedMediaType.isCompatibleWith(mediaType)) {
-//				return true;
-//			}
-//		}
+		if (mediaType == null || MediaType.ALL.equals(mediaType)) {
+			return false;
+		}
+		for (MediaType supportedMediaType : getSupportedMediaTypes()) {
+			if (supportedMediaType.isCompatibleWith(mediaType)) {
+				return true;
+			}
+		}
 		return false;
 	}
 	
-	@Override
+	
 	public boolean canWrite(String datatype) {
 		// TODO Auto-generated method stub
 		if(datatype == null)

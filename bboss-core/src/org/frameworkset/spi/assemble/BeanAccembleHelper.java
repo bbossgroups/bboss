@@ -852,7 +852,9 @@ public class BeanAccembleHelper<V> {
 //					log.warn("引用字段[" + filedName + "]在provider["
 //							+ bean.getClass() + "]中没有定义");
 					Exception e = new Exception("引用字段[" + filedName + "]在组件["
-							+ bean.getClass() + "]中没有定义");
+							+ bean.getClass() + "]中没有定义,请检查配置文件是否配置正确["
+											+ pro
+													.getConfigFile() + "]");
 					log.warn("", e);
 				}
 			}
@@ -1631,7 +1633,9 @@ public class BeanAccembleHelper<V> {
 //						log.warn("引用字段[" + filedName + "]在provider["
 //								+ instance.getClass() + "]中没有定义");
 						Exception e = new Exception("引用字段[" + filedName + "]在组件["
-								+ instance.getClass() + "]中没有定义");
+								+ instance.getClass() + "]中没有定义,请检查配置文件是否配置正确["
+											+ providerManagerInfo
+													.getConfigFile() + "]");
 						log.warn("", e);
 					}
 				}

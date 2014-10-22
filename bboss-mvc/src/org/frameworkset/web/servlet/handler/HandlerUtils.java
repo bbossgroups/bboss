@@ -3737,125 +3737,78 @@ public abstract class HandlerUtils {
 				HttpMediaTypeNotAcceptableException {
 			HttpMessageConverter defaultMessageConverter = null;
 			
-			if(responsebodyAnno != null)
-			{
-				String datatype = responsebodyAnno.datatype();
-				MediaType contentType = inputMessage.getHeaders().getContentType();
-				boolean usecustomMediaTypeByMethod = responseMediaType != null;
-				if(datatype.equals(ValueConstants.datatype_string) && contentType != null)
-				{
-					if(contentType.isJson())
-					{
-						datatype = ValueConstants.datatype_json;
-						responseMediaType = contentType;
-						usecustomMediaTypeByMethod = false;
-					}
-					else if(contentType.isJsonp())
-					{
-						datatype = ValueConstants.datatype_jsonp;
-						responseMediaType = contentType;
-						usecustomMediaTypeByMethod = false;
-					}
-					
-				}
-				for (HttpMessageConverter messageConverter : getMessageConverters()) {
-					if(defaultMessageConverter == null && messageConverter.isdefault())
-						defaultMessageConverter = messageConverter;
-					if (messageConverter.canWrite(datatype)) {
-						messageConverter.write(returnValue,
-								responseMediaType, outputMessage,
-								inputMessage, usecustomMediaTypeByMethod);
-						// if (logger.isDebugEnabled()) {
-						// MediaType contentType = outputMessage
-						// .getHeaders().getContentType();
-						// if (contentType == null) {
-						// contentType = acceptedMediaType;
-						// }
-						// logger
-						// .debug("Written [" + returnValue
-						// + "] as \"" + contentType
-						// + "\" using ["
-						// + messageConverter + "]");
-						// }
-						this.responseArgumentUsed = true;
-						return;
-					}
-					
-				}
-			}
-			else
-			{
-				List<MediaType> acceptedMediaTypes = inputMessage.getHeaders()
-						.getAccept();
-				boolean usecustomMediaTypeByMethod = false;
-				if (acceptedMediaTypes.isEmpty()) {
-					if (responseMediaType == null)
-						acceptedMediaTypes = Collections
-								.singletonList(MediaType.ALL);
-					else
-						acceptedMediaTypes = Collections
-								.singletonList(responseMediaType);
 
+			List<MediaType> acceptedMediaTypes = inputMessage.getHeaders()
+					.getAccept();
+			boolean usecustomMediaTypeByMethod = false;
+			if (acceptedMediaTypes.isEmpty()) {
+				if (responseMediaType == null)
+					acceptedMediaTypes = Collections
+							.singletonList(MediaType.ALL);
+				else
+					acceptedMediaTypes = Collections
+							.singletonList(responseMediaType);
+
+			} else {
+				if (responseMediaType != null) {
+					acceptedMediaTypes.clear();
+					acceptedMediaTypes.add(responseMediaType);
+					usecustomMediaTypeByMethod = true;
 				} else {
-					if (responseMediaType != null) {
-						acceptedMediaTypes.clear();
-						acceptedMediaTypes.add(responseMediaType);
-						usecustomMediaTypeByMethod = true;
-					} else {
-						MediaType.sortByQualityValue(acceptedMediaTypes);
-					}
+					MediaType.sortByQualityValue(acceptedMediaTypes);
 				}
-
-				Class<?> returnValueType = returnValue.getClass();
-				List<MediaType> allSupportedMediaTypes = new ArrayList<MediaType>();
-				if (getMessageConverters() != null) {
-					
-					for (MediaType acceptedMediaType : acceptedMediaTypes) {
-						for (HttpMessageConverter messageConverter : getMessageConverters()) {
-							if(defaultMessageConverter == null && messageConverter.isdefault())
-								defaultMessageConverter = messageConverter;
-							if (messageConverter.canWrite(returnValueType,
-									acceptedMediaType)) {
-								messageConverter.write(returnValue,
-										acceptedMediaType, outputMessage,
-										inputMessage, usecustomMediaTypeByMethod);
-								// if (logger.isDebugEnabled()) {
-								// MediaType contentType = outputMessage
-								// .getHeaders().getContentType();
-								// if (contentType == null) {
-								// contentType = acceptedMediaType;
-								// }
-								// logger
-								// .debug("Written [" + returnValue
-								// + "] as \"" + contentType
-								// + "\" using ["
-								// + messageConverter + "]");
-								// }
-								this.responseArgumentUsed = true;
-								return;
-							}
-							
-						}
-					}
-					if(defaultMessageConverter != null)
-					{
-						defaultMessageConverter.write(returnValue,
-								defaultMessageConverter.getDefaultAcceptedMediaType(), outputMessage,
-								inputMessage, usecustomMediaTypeByMethod);
-						this.responseArgumentUsed = true;
-						return;
-					}
-					for (HttpMessageConverter messageConverter : messageConverters) {
-						if (messageConverter.getSupportedMediaTypes() != null
-								&& messageConverter.getSupportedMediaTypes().size() > 0) {
-							allSupportedMediaTypes.addAll(messageConverter
-									.getSupportedMediaTypes());
-						}
-					}
-				}
-				throw new HttpMediaTypeNotAcceptableException(
-						allSupportedMediaTypes);
 			}
+
+			Class<?> returnValueType = returnValue.getClass();
+			List<MediaType> allSupportedMediaTypes = new ArrayList<MediaType>();
+			if (getMessageConverters() != null) {
+				
+				for (MediaType acceptedMediaType : acceptedMediaTypes) {
+					for (HttpMessageConverter messageConverter : getMessageConverters()) {
+						if(defaultMessageConverter == null && messageConverter.isdefault())
+							defaultMessageConverter = messageConverter;
+						if (messageConverter.canWrite(returnValueType,
+								acceptedMediaType)) {
+							messageConverter.write(returnValue,
+									acceptedMediaType, outputMessage,
+									inputMessage, usecustomMediaTypeByMethod);
+							// if (logger.isDebugEnabled()) {
+							// MediaType contentType = outputMessage
+							// .getHeaders().getContentType();
+							// if (contentType == null) {
+							// contentType = acceptedMediaType;
+							// }
+							// logger
+							// .debug("Written [" + returnValue
+							// + "] as \"" + contentType
+							// + "\" using ["
+							// + messageConverter + "]");
+							// }
+							this.responseArgumentUsed = true;
+							return;
+						}
+						
+					}
+				}
+				if(defaultMessageConverter != null)
+				{
+					defaultMessageConverter.write(returnValue,
+							defaultMessageConverter.getDefaultAcceptedMediaType(), outputMessage,
+							inputMessage, usecustomMediaTypeByMethod);
+					this.responseArgumentUsed = true;
+					return;
+				}
+				for (HttpMessageConverter messageConverter : messageConverters) {
+					if (messageConverter.getSupportedMediaTypes() != null
+							&& messageConverter.getSupportedMediaTypes().size() > 0) {
+						allSupportedMediaTypes.addAll(messageConverter
+								.getSupportedMediaTypes());
+					}
+				}
+			}
+			throw new HttpMediaTypeNotAcceptableException(
+					allSupportedMediaTypes);
+			
 			
 		}
 
