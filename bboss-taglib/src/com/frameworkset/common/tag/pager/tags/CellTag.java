@@ -21,7 +21,6 @@ import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.Tag;
 
@@ -51,6 +50,8 @@ public class CellTag  extends PagerTagSupport {
 	protected String sessionKey;
 	protected String pageContextKey;
 	protected String parameter;
+	private boolean currentcelltoColName=false;
+	private String usecurrentCellValuetoCellName;
 	
 	public String getRequestKey()
 	{
@@ -182,6 +183,7 @@ public class CellTag  extends PagerTagSupport {
 	 * 包含cell标签的dataSet
 	 */
 	protected PagerDataSet dataSet;
+	protected PagerDataSet currentDataSet;
 	
 	protected boolean htmlEncode = false;
 	
@@ -668,6 +670,8 @@ public class CellTag  extends PagerTagSupport {
 		if (this.getIndex() < 0) {
 			dataSet =
 				(PagerDataSet) findAncestorWithClass(obj, clazz);
+//			if(this.currentcelltoColName || this.usecurrentCellValuetoCellName != null)
+//				this.currentDataSet = dataSet;
 		} else {
 			//int idx = index();
 			HttpServletRequest request = getHttpServletRequest();
@@ -677,6 +681,9 @@ public class CellTag  extends PagerTagSupport {
 					PagerDataSet.PAGERDATASET_STACK);
 			
 			dataSet = (PagerDataSet) stack.elementAt(this.getIndex());
+			
+			if(this.currentcelltoColName || this.usecurrentCellValuetoCellName != null)
+				currentDataSet =  (PagerDataSet) findAncestorWithClass(obj, clazz);
 		}
 		
 		return dataSet;
@@ -821,6 +828,20 @@ public class CellTag  extends PagerTagSupport {
 //		    outStr = "";
 //		return outStr;
 	}
+	private void evalColName()
+	{
+		if(this.index >= 0 && colName == null)
+		{
+			if(this.currentcelltoColName)
+			{
+				this.colName = String.valueOf(this.currentDataSet.getObject());
+			}
+			else if(this.usecurrentCellValuetoCellName != null)
+			{
+				this.colName = String.valueOf(this.currentDataSet.getObject(currentDataSet.getRowid(), usecurrentCellValuetoCellName));
+			}
+		}
+	}
 	protected Object getObjectValue()
 	{
 		try
@@ -838,12 +859,14 @@ public class CellTag  extends PagerTagSupport {
 ////				HttpSession session = request.getSession(false);
 //				return session != null ?session.getAttribute(sessionAttr):null;
 //			}
+			evalColName();
 			if(this.actualseted)
 			{
 				return (this.actual == null?getDefaultValue():this.actual);
 			}
 			else if(this.requestKey == null && this.sessionKey == null && this.pageContextKey == null && parameter == null)
 			{
+				
 				if(this.dataSet == null)
 //					return getDefaultValue() != null?getObjectValue(getDefaultValue()) :null;
 					return null;
@@ -1018,7 +1041,7 @@ public class CellTag  extends PagerTagSupport {
 ////			log.debug("error:" ,e);
 //			return null;
 //		}
-		Object ret = getObjectValue();
+		Object ret = getObjectValue(false);
 		if(ret == null)
 			return null;
 		return String.valueOf(ret);
@@ -1347,5 +1370,28 @@ public class CellTag  extends PagerTagSupport {
 
 	public void setTrim(boolean trim) {
 		this.trim = trim;
+	}
+
+
+	
+
+	public boolean isCurrentcelltoColName() {
+		return currentcelltoColName;
+	}
+
+
+	public void setCurrentcelltoColName(boolean currentcelltoColName) {
+		this.currentcelltoColName = currentcelltoColName;
+	}
+
+
+	public String getUsecurrentCellValuetoCellName() {
+		return usecurrentCellValuetoCellName;
+	}
+
+
+	public void setUsecurrentCellValuetoCellName(
+			String usecurrentCellValuetoCellName) {
+		this.usecurrentCellValuetoCellName = usecurrentCellValuetoCellName;
 	}
 }

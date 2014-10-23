@@ -511,7 +511,7 @@ public class PagerDataSet extends PagerTagSupport {
 		}
 		catch(Exception e)
 		{
-		    throw new RuntimeException("获取属性[colName=" + colName + "]失败：" + theClassDataList + "=" + theClassDataList,e);
+		    throw new RuntimeException("获取属性[colName=" + colName + "]失败：" ,e);
 		}
 	}
 	
