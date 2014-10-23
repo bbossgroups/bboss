@@ -1,4 +1,13 @@
-﻿bboss eclipse工程目录一览表
+﻿bboss group website:
+http://www.bbossgroups.com
+
+bboss group project blog:
+http://yin-bp.iteye.com/
+
+bboss group project source url:
+https://github.com/bbossgroups/bbossgroups-3.5
+
+bboss eclipse工程目录一览表
 |--antbuildall    
 包含bboss所有项目的ant构建指令，指令一栏表:
    build-all.bat
