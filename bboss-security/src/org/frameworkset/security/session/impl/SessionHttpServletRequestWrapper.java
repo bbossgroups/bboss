@@ -166,7 +166,7 @@ public class SessionHttpServletRequestWrapper extends HttpServletRequestWrapper 
 	{
 		int cookielivetime = -1;
 		CrossDomain crossDomain = SessionHelper.getSessionManager().getCrossDomain() ;
-		if(SessionHelper.getSessionManager().getCrossDomain() == null)
+		if(crossDomain == null)
 		{
 			boolean secure = SessionHelper.getSessionManager().isSecure();
 			if(!this.isSecure())

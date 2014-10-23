@@ -118,6 +118,8 @@ public class StringUtil extends SimpleStringUtil {
 		{
 			if(path == null)
 				path = request.getContextPath();
+			if(path.equals(""))
+				path = "/";
 //			Cookie[] cookies = request.getCookies();
 //			
 //			Cookie loginPathCookie = null;
