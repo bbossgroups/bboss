@@ -1203,6 +1203,27 @@
 			<name>parameter</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
+		<!--
+			为cell标签特有属性
+			功能说明：与index标签结合使用，将usecurrentCellValuetoCellName对应的当前记录
+			属性名称的值作为index索引对应的外围容器对象记录的属性名称，
+			cell标签输出这个名称对应的外围记录的属性值
+		-->
+		<attribute>
+			<name>usecurrentCellValuetoCellName</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<!--
+		为cell标签特有属性
+		    currentcelltoColName为boolean类型，默认为false，为true时标识生效
+			功能说明：与index标签结合使用，currentcelltoColName标识将当前记录
+			对应的对象作为index索引对应的外围容器对象记录的属性名称，
+			cell标签输出这个名称对应的外围记录的属性值
+		-->
+		<attribute>
+			<name>currentcelltoColName</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
 	</tag>
 	
 	<!--

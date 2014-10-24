@@ -1041,7 +1041,7 @@ public class CellTag  extends PagerTagSupport {
 ////			log.debug("error:" ,e);
 //			return null;
 //		}
-		Object ret = getObjectValue(false);
+		Object ret = getObjectValue();
 		if(ret == null)
 			return null;
 		return String.valueOf(ret);
@@ -1304,6 +1304,9 @@ public class CellTag  extends PagerTagSupport {
 		this.pageContextKey= null ;
 		this.parameter= null ;
 		this.trim = false;
+		this.usecurrentCellValuetoCellName = null;
+		this.currentcelltoColName = false;
+		this.currentDataSet = null;
 		
 		int ret = super.doEndTag();
 		return ret;
