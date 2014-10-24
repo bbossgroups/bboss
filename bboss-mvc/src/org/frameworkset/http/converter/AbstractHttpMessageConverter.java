@@ -164,20 +164,19 @@ public abstract class AbstractHttpMessageConverter<T> implements HttpMessageConv
 	 * type was not provided, calls {@link #getContentLength}, and sets the corresponding headers
 	 * on the output message. It then calls {@link #writeInternal}.
 	 */
-	public final void write(T t, MediaType contentType, HttpOutputMessage outputMessage,HttpInputMessage inputMessage,boolean usecustomMediaTypeByMethod)
+	public final void write(T t, MediaType contentType, HttpOutputMessage outputMessage,HttpInputMessage inputMessage )
 			throws IOException, HttpMessageNotWritableException {
-
 		HttpHeaders headers = outputMessage.getHeaders();
 		if (headers.getContentType() == null) {
-			if (contentType == null || contentType.isWildcardType() || contentType.isWildcardSubtype()) {
-				contentType = getDefaultContentType(t);
-			}
-			if(!usecustomMediaTypeByMethod && this.responsecontenteype != null)
+			if( this.responsecontenteype != null)
 			{
 				contentType = this.responsecontenteype;
 			}
-			if (contentType != null) {
-				
+			else if (contentType == null || contentType.isWildcardType() || contentType.isWildcardSubtype()) {
+				contentType = getDefaultContentType(t);
+			}
+			
+			if (contentType != null) {				
 				headers.setContentType(contentType);
 			}
 		}

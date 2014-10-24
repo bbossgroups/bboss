@@ -189,7 +189,7 @@ public class BufferedImageHttpMessageConverter implements HttpMessageConverter<B
 		}
 	}
 
-	public void write(BufferedImage image, MediaType contentType, HttpOutputMessage outputMessage,HttpInputMessage inputMessage,boolean usecustomMediaTypeByMethod)
+	public void write(BufferedImage image, MediaType contentType, HttpOutputMessage outputMessage,HttpInputMessage inputMessage )
 			throws IOException, HttpMessageNotWritableException {
 
 		if (contentType == null) {

@@ -94,8 +94,7 @@ public class Word2PDFMessageConverter <T> implements HttpMessageConverter<T>{
 
 	@Override
 	public void write(T t, MediaType contentType,
-			HttpOutputMessage outputMessage, HttpInputMessage inputMessage,
-			boolean usecustomMediaTypeByMethod) throws IOException,
+			HttpOutputMessage outputMessage, HttpInputMessage inputMessage ) throws IOException,
 			HttpMessageNotWritableException {
 		// TODO Auto-generated method stub
 		if(t instanceof WordResponse)

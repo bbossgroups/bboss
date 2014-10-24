@@ -41,6 +41,7 @@ import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Method;
 import java.sql.Blob;
 import java.sql.Clob;
+import java.util.Enumeration;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -71,7 +72,6 @@ public class StringUtil extends SimpleStringUtil {
 	public static String getCookieValue(HttpServletRequest request,String name,String defaultvalue)
 	{
 		Cookie[] cookies = request.getCookies();
-	
 		if(cookies == null)
 		{
 			return defaultvalue;

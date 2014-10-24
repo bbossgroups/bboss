@@ -75,7 +75,7 @@ public class MethodInfo {
 	private AssertDToken assertDToken;
 	private boolean responsebody = false;
 	private ResponseBodyWraper responsebodyAnno ;
-	private MediaType responseMediaType;
+	
 	private HttpMethod[] requestMethods;
 	private String[] paths;
 	private String[] pathPattern;
@@ -132,7 +132,7 @@ public class MethodInfo {
 		{
 			responsebodyAnno = new ResponseBodyWraper(body,method);
 			responsebody = true;
-			this.responseMediaType = convertMediaType();
+//			this.responseMediaType = convertMediaType();
 		}
 		if(mapping != null)
 			this.requestMethods = mapping.method();
@@ -159,7 +159,7 @@ public class MethodInfo {
 		{
 			this.responsebodyAnno = new ResponseBodyWraper(body,method);
 			responsebody = true;
-			this.responseMediaType = convertMediaType();
+//			this.responseMediaType = convertMediaType();
 		}
 		if(mapping != null)
 			this.requestMethods = mapping.method();
@@ -191,6 +191,10 @@ public class MethodInfo {
 				{
 					temp = new MediaType("text","html",Charset.forName(charset));
 				}
+				else
+				{
+					temp = new MediaType("text","html",Charset.forName("UTF-8"));
+				}
 			}
 			else if(type.equals("json"))
 			{
@@ -218,7 +222,7 @@ public class MethodInfo {
 					temp = new MediaType("application","xml",Charset.forName(charset));
 				}
 				else
-					temp = MediaType.APPLICATION_XML;
+					temp = new MediaType("application","xml",Charset.forName("UTF-8"));
 			}
 			else if(type.equals("javascript"))
 			{
@@ -227,7 +231,7 @@ public class MethodInfo {
 					temp = new MediaType("application","javascript",Charset.forName(charset));
 				}
 				else
-					temp = MediaType.JAVASCRIPT_HTML;
+					temp = new MediaType("application","javascript",Charset.forName("UTF-8"));
 			}
 			//javascript
 			
@@ -384,7 +388,7 @@ public class MethodInfo {
 		{
 			this.responsebodyAnno = new ResponseBodyWraper(body,method );
 			responsebody = true;
-			this.responseMediaType = convertMediaType();
+//			this.responseMediaType = convertMediaType();
 		}
 		this.parserInfo();
 //		genericParameterTypes();
@@ -856,18 +860,18 @@ public class MethodInfo {
 	}
 
 	
-	public MediaType getResponseMediaType()
-	{
-	
-		return responseMediaType;
-	}
+//	public MediaType getResponseMediaType()
+//	{
+//	
+//		return responseMediaType;
+//	}
 
 	
-	public void setResponseMediaType(MediaType responseMediaType)
-	{
-	
-		this.responseMediaType = responseMediaType;
-	}
+//	public void setResponseMediaType(MediaType responseMediaType)
+//	{
+//	
+//		this.responseMediaType = responseMediaType;
+//	}
 
 	public boolean isRequiredDToken() {
 		return requiredDToken;

@@ -17,9 +17,11 @@ package org.frameworkset.util.annotations.wraper;
 
 import java.io.File;
 import java.lang.reflect.Method;
+import java.nio.charset.Charset;
 import java.sql.Blob;
 
 import org.frameworkset.http.FileBlob;
+import org.frameworkset.http.MediaType;
 import org.frameworkset.util.annotations.AnnotationUtils;
 import org.frameworkset.util.annotations.ResponseBody;
 import org.frameworkset.util.annotations.ValueConstants;
@@ -44,7 +46,7 @@ public class ResponseBodyWraper {
 	 * com.sun.syndication.feed.atom.Feed
 	 */
 	private static Class atomFeed = null;
-	
+	private MediaType responseMediaType;
 	/**
 	 *  org.frameworkset.http.converter.wordpdf.WordResponse
 	 */
@@ -83,49 +85,49 @@ public class ResponseBodyWraper {
 	 * @return
 	 */
 	private String datatype;
-//	private boolean eval = false;
-//	private String evalDataType(Class responseClass)
-//	{
-//		if(String.class.isAssignableFrom(responseClass))
-//		{
-//			eval = true;
-//			return ValueConstants.datatype_string;
-//		}
-//		else if(
-//				File.class.isAssignableFrom(responseClass)||
-//				FileBlob.class.isAssignableFrom(responseClass)
-//				||Blob.class.isAssignableFrom(responseClass)
-//				||Resource.class.isAssignableFrom(responseClass) )
-//		{
-//			return ValueConstants.datatype_file;
-//		}
-//		else if(byte[].class.isAssignableFrom(responseClass))
-//		{
-//			return ValueConstants.datatype_bytearray; 
-//		}
-//		else if(rsschannel != null && rsschannel.isAssignableFrom(responseClass))
-//		{
-//			return ValueConstants.datatype_rss;
-//		}
-//		else if(atomFeed != null && atomFeed.isAssignableFrom(responseClass))
-//		{
-//			return ValueConstants.datatype_atom;
-//		}
-//		else if(wordResponse != null && wordResponse.isAssignableFrom(responseClass))
-//		{
-//			return ValueConstants.datatype_word;
-//		}
-//		else if(Enum.class.isAssignableFrom(responseClass))
-//		{			
-//			eval = true;
-//			return ValueConstants.datatype_string;
-//		}
-//		else
-//		{
-//			return ValueConstants.datatype_json;
-//		}
-//			
-//	}
+	private boolean eval = false;
+	private String evalDataType(Class responseClass)
+	{
+		if(String.class.isAssignableFrom(responseClass))
+		{
+			eval = true;
+			return ValueConstants.datatype_string;
+		}
+		else if(
+				File.class.isAssignableFrom(responseClass)||
+				FileBlob.class.isAssignableFrom(responseClass)
+				||Blob.class.isAssignableFrom(responseClass)
+				||Resource.class.isAssignableFrom(responseClass) )
+		{
+			return ValueConstants.datatype_file;
+		}
+		else if(byte[].class.isAssignableFrom(responseClass))
+		{
+			return ValueConstants.datatype_bytearray; 
+		}
+		else if(rsschannel != null && rsschannel.isAssignableFrom(responseClass))
+		{
+			return ValueConstants.datatype_rss;
+		}
+		else if(atomFeed != null && atomFeed.isAssignableFrom(responseClass))
+		{
+			return ValueConstants.datatype_atom;
+		}
+		else if(wordResponse != null && wordResponse.isAssignableFrom(responseClass))
+		{
+			return ValueConstants.datatype_word;
+		}
+		else if(Enum.class.isAssignableFrom(responseClass))
+		{			
+			eval = true;
+			return ValueConstants.datatype_string;
+		}
+		else
+		{
+			return ValueConstants.datatype_json;
+		}
+			
+	}
 	/**
 	 * 指定响应的数据编码字符集
 	 * @return
@@ -133,11 +135,69 @@ public class ResponseBodyWraper {
 	private String charset;
 	public ResponseBodyWraper(ResponseBody body,Method method) {
 		datatype = AnnotationUtils.converDefaultValue(body.datatype());
-//		if(datatype == null)
-//			datatype = this.evalDataType(method.getReturnType());
-		charset =AnnotationUtils.converDefaultValue( body.charset());
-	}
+		if(datatype == null)
+			datatype = this.evalDataType(method.getReturnType());
 	
+		charset =AnnotationUtils.converDefaultValue( body.charset());
+		this.responseMediaType = convertMediaType();
+	}
+	private MediaType convertMediaType()
+	{
+		MediaType temp = null;		 
+		
+		String type =  datatype();
+		String charset =  charset();
+		if(type == null)
+		{
+			if(charset != null)
+			{
+				temp = new MediaType("text","html",Charset.forName(charset));
+			}
+			else
+			{
+				temp = new MediaType("text","html",Charset.forName("UTF-8"));
+			}
+		}
+		else if(type.equals("json"))
+		{
+			if(charset != null)
+			{
+				temp = new MediaType("application","json",Charset.forName(charset));
+			}
+			else
+				temp = new MediaType("application","json",Charset.forName("UTF-8"));
+		}
+		else if(type.equals("jsonp"))
+		{
+			if(charset != null)
+			{
+				temp = new MediaType("application","jsonp",Charset.forName(charset));
+			}
+			else
+				temp = new MediaType("application","jsonp",Charset.forName("UTF-8"));
+		}
+		
+		else if(type.equals("xml"))
+		{
+			if(charset != null)
+			{
+				temp = new MediaType("application","xml",Charset.forName(charset));
+			}
+			else
+				temp = new MediaType("application","xml",Charset.forName("UTF-8"));
+		}
+		else if(type.equals("javascript"))
+		{
+			if(charset != null)
+			{
+				temp = new MediaType("application","javascript",Charset.forName(charset));
+			}
+			else
+				temp = new MediaType("application","javascript",Charset.forName("UTF-8"));
+		}
+			//javascript
+		return temp;
+	}
 	/**
 	 * 指定响应的数据类型
 	 * @return
@@ -151,6 +211,12 @@ public class ResponseBodyWraper {
 	 */
 	public String charset(){
 		return this.charset;
+	}
+	public MediaType getResponseMediaType() {
+		return responseMediaType;
+	}
+	public boolean isEval() {
+		return eval;
 	}
 
 //	public boolean isEval() {

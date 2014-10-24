@@ -273,7 +273,7 @@ public class MediaType implements Comparable<MediaType> {
 		this.subtype = subtype.toLowerCase(Locale.ENGLISH);
 		
 		
-		
+		evalcontenttype( subtype);
 		if (!CollectionUtils.isEmpty(parameters)) {
 			Map<String, String> m = new LinkedCaseInsensitiveMap<String>(parameters.size(), Locale.ENGLISH);
 			for (Map.Entry<String, String> entry : parameters.entrySet()) {

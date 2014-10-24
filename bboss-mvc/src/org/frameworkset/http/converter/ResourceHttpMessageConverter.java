@@ -84,7 +84,7 @@ public class ResourceHttpMessageConverter implements HttpMessageConverter<Resour
 			return defaultAcceptedMediaType = this.getSupportedMediaTypes().get(0);
 		}
 	}
-	public void write(Resource resource, MediaType contentType, HttpOutputMessage outputMessage,HttpInputMessage inputMessage,boolean usecustomMediaTypeByMethod)
+	public void write(Resource resource, MediaType contentType, HttpOutputMessage outputMessage,HttpInputMessage inputMessage )
 			throws IOException, HttpMessageNotWritableException {
 
 		HttpHeaders headers = outputMessage.getHeaders();
@@ -177,6 +177,12 @@ public class ResourceHttpMessageConverter implements HttpMessageConverter<Resour
 	public String getResponseBodyDataType()
 	{
 		return null;
+	}
+
+	@Override
+	public boolean canWrite(String dataype) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 	

@@ -192,7 +192,7 @@ public class FormHttpMessageConverter implements HttpMessageConverter<MultiValue
 	}
 
 	@SuppressWarnings("unchecked")
-	public void write(MultiValueMap<String, ?> map, MediaType contentType, HttpOutputMessage outputMessage,HttpInputMessage inputMessage,boolean usecustomMediaTypeByMethod)
+	public void write(MultiValueMap<String, ?> map, MediaType contentType, HttpOutputMessage outputMessage,HttpInputMessage inputMessage )
 			throws IOException, HttpMessageNotWritableException {
 		if (!isMultipart(map, contentType)) {
 			writeForm((MultiValueMap<String, String>) map, outputMessage);
@@ -292,7 +292,7 @@ public class FormHttpMessageConverter implements HttpMessageConverter<MultiValue
 				if (!partHeaders.isEmpty()) {
 					multipartOutputMessage.getHeaders().putAll(partHeaders);
 				}
-				messageConverter.write(partBody, partContentType, multipartOutputMessage, inputMessage,false);
+				messageConverter.write(partBody, partContentType, multipartOutputMessage, inputMessage);
 				return;
 			}
 		}

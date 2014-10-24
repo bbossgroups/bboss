@@ -35,7 +35,7 @@ import org.frameworkset.http.MediaType;
 public interface HttpMessageConverter<T> {
 	public static final Charset DEFAULT_CHARSET = Charset.forName("UTF-8");
 	public static final MediaType[] jsonmediatypes = new MediaType[] {new MediaType("application", "json", DEFAULT_CHARSET),new MediaType("application", "jsonp", DEFAULT_CHARSET)}; 
-    public static final MediaType[] xmlmediatypes = new MediaType[] {MediaType.APPLICATION_XML, MediaType.TEXT_XML, new MediaType("application", "*+xml")};
+    public static final MediaType[] xmlmediatypes = new MediaType[] {new MediaType("text","xml", DEFAULT_CHARSET),new MediaType("application","xml", DEFAULT_CHARSET), new MediaType("application", "*+xml", DEFAULT_CHARSET)};
 	/**
 	 * Indicates whether the given class can be read by this converter.
 	 * @param clazz the class to test for readability
@@ -94,7 +94,7 @@ public interface HttpMessageConverter<T> {
 	 * @throws IOException in case of I/O errors
 	 * @throws HttpMessageNotWritableException in case of conversion errors
 	 */
-	void write(T t, MediaType contentType, HttpOutputMessage outputMessage,HttpInputMessage inputMessage,boolean usecustomMediaTypeByMethod)
+	void write(T t, MediaType contentType, HttpOutputMessage outputMessage,HttpInputMessage inputMessage )
 			throws IOException, HttpMessageNotWritableException;
 	boolean isdefault();
 	public MediaType getDefaultAcceptedMediaType();
@@ -104,7 +104,7 @@ public interface HttpMessageConverter<T> {
 	 */
 	public String getRequetBodyDataType();
 
-	
+	boolean canWrite(String dataype);
 	
 	
 	/**
