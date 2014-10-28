@@ -2774,5 +2774,28 @@ outStr = "2010年02月07日11时许，周灵颖报警：在2路公交车上被�
 
 		return sb.toString();
 	}
+    
+    public static Enumeration arryToenum(final Object[] values)
+    {
+		
+		return new  Enumeration()
+		{
+			int length = values!= null ?values.length:0;
+			int count = 0;
+			@Override
+			public boolean hasMoreElements() {
+				
+				return count < length;
+			}
+
+			@Override
+			public Object nextElement() {
+				Object element = values[count];
+				count ++ ;
+				return element;
+			}
+			
+		};
+    }
 	
 }

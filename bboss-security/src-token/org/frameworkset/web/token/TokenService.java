@@ -52,6 +52,7 @@ public class TokenService implements TokenServiceInf,InitializingBean {
 	private Object tokenstore ="mem";
 	private String ecctype;
 	private boolean inited;
+	private boolean remote;
 	
 	/**
 	<property name="tokenstore" value="mongodb|org.frameworkset.web.token.MongodbTokenStore"/>
@@ -64,11 +65,14 @@ public class TokenService implements TokenServiceInf,InitializingBean {
 	{
 //		temptokens.clear();
 //		temptokens = null;
-		if(tokenStore != null)
-			this.tokenStore.destory();
-		if(this.tokenMonitor != null)
+		if(!this.isRemote())
 		{
-			this.tokenMonitor.killdown();
+			if(tokenStore != null)
+				this.tokenStore.destory();
+			if(this.tokenMonitor != null)
+			{
+				this.tokenMonitor.killdown();
+			}
 		}
 	}
 	
@@ -143,38 +147,46 @@ public class TokenService implements TokenServiceInf,InitializingBean {
 		if(tokenstore instanceof String)
 		{
 			this.tokenStore = TokenStoreFactory.getTokenStore((String)tokenstore);
-			ECCCoderInf ECCCoder= ECCHelper.getECCCoder(ecctype);
-			tokenStore.setECCCoder(ECCCoder);
-			tokenStore.setValidateApplication(validateApplication);
+			if(!this.isRemote())
+			{
+				ECCCoderInf ECCCoder= ECCHelper.getECCCoder(ecctype);
+				tokenStore.setECCCoder(ECCCoder);
+				tokenStore.setValidateApplication(validateApplication);
+			}
 		}
 		else
 		{
 			this.tokenStore = (TokenStore)tokenstore;
-			if(this.tokenStore.getECCCoder() == null)
+			if(!this.isRemote())
 			{
-				ECCCoderInf ECCCoder= ECCHelper.getECCCoder(ecctype);
-				tokenStore.setECCCoder(ECCCoder);
-			}
-			if(tokenStore.getValidateApplication() == null)
-			{
-				tokenStore.setValidateApplication(validateApplication);
+				if(this.tokenStore.getECCCoder() == null)
+				{
+					ECCCoderInf ECCCoder= ECCHelper.getECCCoder(ecctype);
+					tokenStore.setECCCoder(ECCCoder);
+				}
+				if(tokenStore.getValidateApplication() == null)
+				{
+					tokenStore.setValidateApplication(validateApplication);
+				}
 			}
 		}
 		
 		
-		
-		this.tokenStore.setTempTokendualtime(temptokenlivetime);
-		this.tokenStore.setTicketdualtime(ticketdualtime);
-		tokenStore.setDualtokenlivetime(dualtokenlivetime);
-//		if(tokenstore.equals("mem"))
-//			tokenstore_i = tokenstore_in_mem;
-//		else
-//			tokenstore_i = tokenstore_in_session;
-		if(enableToken && tokenscaninterval > 0 && (temptokenlivetime > 0 || dualtokenlivetime > 0))
+		if(!this.isRemote())
 		{
-			tokenMonitor = new TokenMonitor();
-			tokenMonitor.start();
-			
+			this.tokenStore.setTempTokendualtime(temptokenlivetime);
+			this.tokenStore.setTicketdualtime(ticketdualtime);
+			tokenStore.setDualtokenlivetime(dualtokenlivetime);
+	//		if(tokenstore.equals("mem"))
+	//			tokenstore_i = tokenstore_in_mem;
+	//		else
+	//			tokenstore_i = tokenstore_in_session;
+			if(enableToken && tokenscaninterval > 0 && (temptokenlivetime > 0 || dualtokenlivetime > 0))
+			{
+				tokenMonitor = new TokenMonitor();
+				tokenMonitor.start();
+				
+			}
 		}
 	}
 	
@@ -759,6 +771,20 @@ public class TokenService implements TokenServiceInf,InitializingBean {
 		inited = true;
 		init();
 		
+	}
+
+
+
+
+	public boolean isRemote() {
+		return remote;
+	}
+
+
+
+
+	public void setRemote(boolean remote) {
+		this.remote = remote;
 	}
 
 

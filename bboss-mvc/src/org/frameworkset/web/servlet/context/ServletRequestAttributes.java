@@ -238,33 +238,62 @@ public class ServletRequestAttributes  extends AbstractRequestAttributes {
 	}
 
 
+//	/**
+//	 * Update all accessed session attributes through <code>session.setAttribute</code>
+//	 * calls, explicitly indicating to the container that they might have been modified.
+//	 */
+//	protected void updateAccessedSessionAttributes() {
+//		// Store session reference for access after request completion.
+//		this.session = this.request.getSession(false);
+//		// Update all affected session attributes.
+//		synchronized (this.sessionAttributesToUpdate) {
+//			if (this.session != null) {
+//				try {
+//					for (Iterator it = this.sessionAttributesToUpdate.entrySet().iterator(); it.hasNext();) {
+//						Map.Entry entry = (Map.Entry) it.next();
+//						String name = (String) entry.getKey();
+//						Object newValue = entry.getValue();
+//						Object oldValue = this.session.getAttribute(name);
+//						if (oldValue == newValue) {
+//							this.session.setAttribute(name, newValue);
+//						}
+//					}
+//				}
+//				catch (IllegalStateException ex) {
+//					// Session invalidated - shouldn't usually happen.
+//				}
+//			}
+//			this.sessionAttributesToUpdate.clear();
+//		}
+//	}
+	
 	/**
 	 * Update all accessed session attributes through <code>session.setAttribute</code>
 	 * calls, explicitly indicating to the container that they might have been modified.
 	 */
 	protected void updateAccessedSessionAttributes() {
-		// Store session reference for access after request completion.
-		this.session = this.request.getSession(false);
-		// Update all affected session attributes.
-		synchronized (this.sessionAttributesToUpdate) {
-			if (this.session != null) {
-				try {
-					for (Iterator it = this.sessionAttributesToUpdate.entrySet().iterator(); it.hasNext();) {
-						Map.Entry entry = (Map.Entry) it.next();
-						String name = (String) entry.getKey();
-						Object newValue = entry.getValue();
-						Object oldValue = this.session.getAttribute(name);
-						if (oldValue == newValue) {
-							this.session.setAttribute(name, newValue);
-						}
-					}
-				}
-				catch (IllegalStateException ex) {
-					// Session invalidated - shouldn't usually happen.
-				}
-			}
-			this.sessionAttributesToUpdate.clear();
-		}
+//		// Store session reference for access after request completion.
+//		this.session = this.request.getSession(false);
+//		// Update all affected session attributes.
+//		synchronized (this.sessionAttributesToUpdate) {
+//			if (this.session != null) {
+//				try {
+//					for (Iterator it = this.sessionAttributesToUpdate.entrySet().iterator(); it.hasNext();) {
+//						Map.Entry entry = (Map.Entry) it.next();
+//						String name = (String) entry.getKey();
+//						Object newValue = entry.getValue();
+//						Object oldValue = this.session.getAttribute(name);
+//						if (oldValue == newValue) {
+//							this.session.setAttribute(name, newValue);
+//						}
+//					}
+//				}
+//				catch (IllegalStateException ex) {
+//					// Session invalidated - shouldn't usually happen.
+//				}
+//			}
+//			this.sessionAttributesToUpdate.clear();
+//		}
 	}
 
 	/**

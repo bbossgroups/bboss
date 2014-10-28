@@ -1,18 +1,15 @@
 <!-- 令牌服务配置-->
-<property name="token.TokenService" class="org.frameworkset.web.token.TokenService"
-	>
+<property name="token.TokenService" class="org.frameworkset.web.token.TokenService">
+	
 		<property name="tokenstore" factory-class="com.caucho.hessian.client.HessianProxyFactory" factory-method="create">
 			<construction>
 				<property value="org.frameworkset.web.token.TokenStore"/>		
 				<property>
-					<![CDATA[http://localhost:8081/bboss-mvc/hessian?service=tokenStoreService&container=tokenconf.xml]]>
-				</property>	
-			</construction>
+					<![CDATA[http://10.0.15.223/SanyToken/hessian?service=tokenStoreService&container=tokenconf.xml]]>
+				</property>
+			</construction>			
 		</property>
+		<property name="remote" value="true"/>
 		<property name="enableToken" value="true"/>
-		<!-- 指定动态令牌校验失败跳转地址
-		如果没有指定直接采用redirecturl对应的地址作为跳转地址 -->
-		<property name="tokenfailpath" value="/common/jsp/tokenfail.jsp"/>
+		<property name="tokenfailpath" value="/common/jsp/tokenfail.jsp"/>	
 </property>
-
-	

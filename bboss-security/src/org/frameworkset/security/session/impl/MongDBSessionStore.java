@@ -154,7 +154,11 @@ public class MongDBSessionStore extends BaseSessionStore{
 //		{
 //			return obj.keySet().iterator();
 //		}
-		throw new java.lang.UnsupportedOperationException();
+//		throw new java.lang.UnsupportedOperationException();
+		String[] names = getValueNames(appKey,contextpath,sessionID);
+		
+		return SimpleStringUtil.arryToenum(names);
+		
 	}
 
 	@Override
@@ -189,19 +193,23 @@ public class MongDBSessionStore extends BaseSessionStore{
 		String[] valueNames = null;
 		if(obj.keySet() != null)
 		{
-			valueNames = new String[obj.keySet().size()];
+//			valueNames = new String[obj.keySet().size()];
 			List<String> temp = new ArrayList<String>();
 			Iterator<String> keys = obj.keySet().iterator();
 			while(keys.hasNext())
 			{
 				String tempstr = keys.next();
-				tempstr = SessionHelper.dewraperAttributeName(appKey, contextpath, tempstr);
-				if(tempstr != null)
+				if(!MongoDBHelper.filter(tempstr))
 				{
-					temp.add(tempstr);
+					tempstr = SessionHelper.dewraperAttributeName(appKey, contextpath, tempstr);
+					if(tempstr != null)
+					{
+						temp.add(tempstr);
+					}
 				}
 			}
-			valueNames = (String[]) temp.toArray();
+			valueNames = new String[temp.size()];
+			valueNames = temp.toArray(valueNames);
 			
 		}
 		return valueNames ;
