@@ -269,7 +269,7 @@ public class TokenFilter implements Filter{
 	}
 	
 	/**
-	 * 判断令牌是否有效，一次请求只判断一次，避免多次判断
+	 * 判断令牌或者ticket是否有效，一次请求只判断一次，避免多次判断
 	 * 同时记录判断结果，以便后续处理操作获取这个结果进行相应的处理
 	 * @param request
 	 * @return
@@ -290,6 +290,7 @@ public class TokenFilter implements Filter{
 		}
 		
 		String token = request.getParameter(TokenStore.temptoken_param_name);
+		String ticket = request.getParameter(TokenStore.ticket_param_name);
 //		if(request instanceof HttpServletRequest)
 //		{
 //			
@@ -311,7 +312,23 @@ public class TokenFilter implements Filter{
 			try {
 				if(token == null || token.equals(""))
 				{
-					result = TokenStore.token_request_validateresult_nodtoken;
+					if(ticket == null || ticket.equals(""))
+						result = TokenStore.token_request_validateresult_nodtoken;
+					else//校验ticket
+					{
+						String appid= request.getParameter(TokenStore.app_param_name);
+						String secret= request.getParameter(TokenStore.app_secret_param_name);
+						TokenResult tokenResult = this.tokenService.checkTicket(appid, secret, ticket);
+						request.setAttribute(TokenStore.token_request_validatetoken_key, tokenResult);
+						if( tokenResult != null )
+						{
+							if(tokenResult.getAccount() != null)
+								request.setAttribute(TokenStore.token_request_account_key, tokenResult.getAccount());
+							if(tokenResult.getWorknumber() != null)
+								request.setAttribute(TokenStore.token_request_worknumber_key, tokenResult.getWorknumber());
+						}
+						result = tokenResult.getResult();
+					}
 				}
 				else
 				{
@@ -339,6 +356,21 @@ public class TokenFilter implements Filter{
 	
 	
 	public void doDTokencheck(ServletRequest request,ServletResponse response) throws IOException, DTokenValidateFailedException
+	{
+		if(!tokenService.assertDTokenSetted(request))
+		{
+			if(request instanceof HttpServletRequest)
+			{
+				sendRedirect((HttpServletRequest) request,(HttpServletResponse) response);
+			}
+			else
+			{
+				throw new DTokenValidateFailedException();
+			}
+		}
+	}
+	
+	public void doTicketcheck(ServletRequest request,ServletResponse response) throws IOException, DTokenValidateFailedException
 	{
 		if(!tokenService.assertDTokenSetted(request))
 		{

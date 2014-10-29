@@ -73,6 +73,8 @@ public class MethodInfo {
 	private HandlerMapping mapping = null;
 	private HandlerMapping typeLevelMapping;
 	private AssertDToken assertDToken;
+	private AssertTicket assertTicket;
+	private boolean requireTicket;
 	private boolean responsebody = false;
 	private ResponseBodyWraper responsebodyAnno ;
 	
@@ -122,8 +124,10 @@ public class MethodInfo {
 	public MethodInfo(Method method, HandlerMapping typeLevelMapping) {
 		super();
 		this.method = method;
-		this.assertDToken = method.getAnnotation(AssertDToken.class);
+		this.assertDToken = method.getAnnotation(AssertDToken.class);		
 		this.requiredDToken = assertDToken != null;
+		this.assertTicket = method.getAnnotation(AssertTicket.class);
+		this.requireTicket = assertTicket != null;
 		mapping = method.getAnnotation(HandlerMapping.class);
 		
 		ResponseBody body = method.getAnnotation(ResponseBody.class);
@@ -153,6 +157,8 @@ public class MethodInfo {
 		mapping = method.getAnnotation(HandlerMapping.class);
 		this.assertDToken = method.getAnnotation(AssertDToken.class);
 		this.requiredDToken = assertDToken != null;
+		this.assertTicket = method.getAnnotation(AssertTicket.class);
+		this.requireTicket = assertTicket != null;
 		ResponseBody body = method.getAnnotation(ResponseBody.class);
 //		this.responsebodyAnno = method.getAnnotation(ResponseBody.class);
 		if(body != null)
@@ -382,6 +388,9 @@ public class MethodInfo {
 		this.method = method;
 		this.assertDToken = method.getAnnotation(AssertDToken.class);
 		this.requiredDToken = assertDToken != null;
+		
+		this.assertTicket = method.getAnnotation(AssertTicket.class);
+		this.requireTicket = assertTicket != null;
 		ResponseBody body = method.getAnnotation(ResponseBody.class);
 		
 		if(body != null)
@@ -879,6 +888,14 @@ public class MethodInfo {
 
 	public AssertDToken getAssertDToken() {
 		return assertDToken;
+	}
+
+	public boolean isRequireTicket() {
+		return requireTicket;
+	}
+
+	public AssertTicket getAssertTicket() {
+		return assertTicket;
 	}
 
 }

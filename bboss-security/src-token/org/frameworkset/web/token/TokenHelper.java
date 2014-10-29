@@ -57,6 +57,12 @@ public class TokenHelper {
 	{
 		tokenFilter.doDTokencheck(request, response);
 	}
+	
+	public static void doTicketcheck(ServletRequest request,
+			ServletResponse response) throws IOException, DTokenValidateFailedException
+	{
+		tokenFilter.doTicketcheck(request, response);
+	}
 
 	public static void destroy() {
 		tokenService = null;

@@ -52,7 +52,7 @@ public class TokenService implements TokenServiceInf,InitializingBean {
 	private Object tokenstore ="mem";
 	private String ecctype;
 	private boolean inited;
-	private boolean remote;
+	private boolean client;
 	
 	/**
 	<property name="tokenstore" value="mongodb|org.frameworkset.web.token.MongodbTokenStore"/>
@@ -65,7 +65,7 @@ public class TokenService implements TokenServiceInf,InitializingBean {
 	{
 //		temptokens.clear();
 //		temptokens = null;
-		if(!this.isRemote())
+		if(!this.isClient())
 		{
 			if(tokenStore != null)
 				this.tokenStore.destory();
@@ -147,7 +147,7 @@ public class TokenService implements TokenServiceInf,InitializingBean {
 		if(tokenstore instanceof String)
 		{
 			this.tokenStore = TokenStoreFactory.getTokenStore((String)tokenstore);
-			if(!this.isRemote())
+			if(!this.isClient())
 			{
 				ECCCoderInf ECCCoder= ECCHelper.getECCCoder(ecctype);
 				tokenStore.setECCCoder(ECCCoder);
@@ -157,7 +157,7 @@ public class TokenService implements TokenServiceInf,InitializingBean {
 		else
 		{
 			this.tokenStore = (TokenStore)tokenstore;
-			if(!this.isRemote())
+			if(!this.isClient())
 			{
 				if(this.tokenStore.getECCCoder() == null)
 				{
@@ -172,7 +172,7 @@ public class TokenService implements TokenServiceInf,InitializingBean {
 		}
 		
 		
-		if(!this.isRemote())
+		if(!this.isClient())
 		{
 			this.tokenStore.setTempTokendualtime(temptokenlivetime);
 			this.tokenStore.setTicketdualtime(ticketdualtime);
@@ -580,6 +580,17 @@ public class TokenService implements TokenServiceInf,InitializingBean {
 		SimpleKeyPair pairs = tokenStore.getKeyPair(appid,secret);
 		return pairs;
 	}
+	public TokenResult checkTicket(String appid,String secret,String ticket) throws TokenException
+	{
+		if(ticket == null)
+		{
+			TokenResult result = new TokenResult();
+			result.setResult(TokenStore.token_request_validateresult_nodtoken);
+			
+			return result;
+		}
+		return this.tokenStore.checkTicket(appid, secret, ticket);
+	}
 	/* (non-Javadoc)
 	 * @see org.frameworkset.web.token.TokenServiceInf#checkToken(java.lang.String, java.lang.String, java.lang.String)
 	 */
@@ -776,15 +787,20 @@ public class TokenService implements TokenServiceInf,InitializingBean {
 
 
 
-	public boolean isRemote() {
-		return remote;
+	
+
+
+
+
+	public boolean isClient() {
+		return client;
 	}
 
 
 
 
-	public void setRemote(boolean remote) {
-		this.remote = remote;
+	public void setClient(boolean client) {
+		this.client = client;
 	}
 
 

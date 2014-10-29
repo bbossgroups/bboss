@@ -3243,6 +3243,10 @@ public abstract class HandlerUtils {
 			// }
 			// }
 		}
+		else if (handlerMethod.getMethodInfo().isRequireTicket())
+		{			
+			TokenHelper.doTicketcheck(request, response);
+		}
 
 	}
 

@@ -32,6 +32,9 @@ import javax.jws.WebService;
 public interface CheckTokenService {
 	public  @WebResult(name = "tokenResult", partName = "partTokenResult") TokenCheckResponse checkToken(@WebParam(name = "appid", partName = "partAppid") String appid,
 			@WebParam(name = "secret", partName = "partSecret") String secret,@WebParam(name = "token", partName = "partToken") String token);
+	
+	public  @WebResult(name = "tokenResult", partName = "partTokenResult") TokenCheckResponse checkTicket(@WebParam(name = "appid", partName = "partAppid") String appid,
+			@WebParam(name = "secret", partName = "partSecret") String secret,@WebParam(name = "ticket", partName = "partTicket") String ticket);
 	public @WebResult(name = "tokenResult", partName = "partTokenResult") TokenCheckResponse checkTempToken(@WebParam(name = "token", partName = "partToken") String token);
 	
 	

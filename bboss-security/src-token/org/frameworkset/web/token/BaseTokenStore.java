@@ -590,6 +590,30 @@ public abstract class BaseTokenStore implements TokenStore {
 			
 	}
 	
+	public TokenResult checkTicket(String appid,String secret,String ticket) throws TokenException
+	{
+		assertApplication( appid, secret);
+		if(ticket == null)
+		{
+			TokenResult result = new TokenResult();
+			result.setResult(TokenStore.token_request_validateresult_nodtoken);
+			return result; 
+		}
+		String[] accountinfos = this.decodeTicket(ticket, appid, secret);
+		TokenResult result = new TokenResult();
+		result.setAccount(accountinfos[0]);
+		result.setWorknumber(accountinfos[1]);
+		result.setResult(token_request_validateresult_ok);
+		return result;
+		
+//		throw new TokenException(TokenStore.ERROR_CODE_UNKNOWNTOKEN,new Exception("unknowntoken:appid="+appid+",secret="+ secret+",token="+ticket));
+			
+		
+		
+			
+			
+	}
+	
 	public Integer checkAuthTempToken(TokenResult token)  throws TokenException 
 	{
 		return TokenStore.token_request_validateresult_fail;

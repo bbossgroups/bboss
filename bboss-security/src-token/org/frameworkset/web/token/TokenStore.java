@@ -31,6 +31,7 @@ public interface TokenStore {
 	public static final Integer token_request_validateresult_notexist = new Integer(6);
 	
 	public static final String temptoken_param_name = "_dt_token_";
+	public static final String ticket_param_name = "_dt_ticket_";
 	public static final String app_param_name = "_dt_appid_";
 	public static final String app_secret_param_name = "_dt_appid_secret";
 	public static final String temptoken_request_attribute = "org.frameworkset.web.token.bboss_csrf_Token"; 
@@ -83,6 +84,7 @@ public interface TokenStore {
 	public abstract void destory();
 
 	public abstract void livecheck();
+	public abstract TokenResult checkTicket(String appid,String secret,String ticket)  throws TokenException;
 	public abstract TokenResult checkToken(String appid,String secret,String tokeninfo)  throws TokenException;
 
 //	public abstract Integer checkTempToken(TokenInfo tokeninfo)throws TokenException;

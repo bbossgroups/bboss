@@ -54,6 +54,24 @@ public class CheckTokenContoller implements CheckTokenService{
 		}
 		return tokenCheckResponse;
 	}
+	public @ResponseBody(datatype="json") TokenCheckResponse checkTicket(String appid,String secret,String ticket) 
+	{
+		TokenCheckResponse tokenCheckResponse = new TokenCheckResponse();
+		try {
+			TokenResult result = TokenHelper.getTokenService().checkToken(appid,secret,ticket);
+			tokenCheckResponse.setResultcode(TokenStore.RESULT_OK );
+			tokenCheckResponse.setValidateResult(TokenService.assertDToken(result.getResult()));
+			tokenCheckResponse.setUserAccount(result.getAccount());
+			tokenCheckResponse.setWorknumber(result.getWorknumber());
+			
+		} catch (TokenException e) {
+			tokenCheckResponse.setResultcode(e.getMessage());
+		}
+		 catch (Exception e) {
+			 tokenCheckResponse.setResultcode(TokenStore.ERROR_CODE_BACKENDERROR);
+		}
+		return tokenCheckResponse;
+	}
 	public @ResponseBody(datatype="json") TokenCheckResponse checkTempToken(String token)
 	{
 		TokenCheckResponse tokenCheckResponse = new TokenCheckResponse();

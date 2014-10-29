@@ -9,7 +9,7 @@
 				</property>
 			</construction>			
 		</property>
-		<property name="remote" value="true"/>
+		<property name="client" value="true"/>
 		<property name="enableToken" value="true"/>
 		<property name="tokenfailpath" value="/common/jsp/tokenfail.jsp"/>	
 </property>

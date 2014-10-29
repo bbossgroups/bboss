@@ -661,7 +661,7 @@ bbosscore<-cas server [bboss-core.jar]
 			</for>
 		</target>
 	<target name="distrib-bboss-security-jars" description="distrib-bboss-security-jars">
-		<for list="${bboss-taglib-lib},${bboss-plugin-wordpdf-lib-depends},${bboss-plugin-hessian-lib},${bbossupload-lib},${demoproject-lib},${cms_baseline-lib},${monitorconsole-compilelib},${monitorconsole-lib},${creatoresb-lib},${mvc-lib},${xmlrequest-lib},${session-lib},${sessionmonitor-lib},${bboss-security-web-lib}" param="destdir">
+		<for list="${bboss-mvc-lib},${bboss-taglib-lib},${bboss-plugin-wordpdf-lib-depends},${bboss-plugin-hessian-lib},${bbossupload-lib},${demoproject-lib},${cms_baseline-lib},${monitorconsole-compilelib},${monitorconsole-lib},${creatoresb-lib},${mvc-lib},${xmlrequest-lib},${session-lib},${sessionmonitor-lib},${bboss-security-web-lib}" param="destdir">
 			<sequential>
 				<echo>@{destdir}-------------------------------</echo>
 				<antcall target="svn-update-procedure">
