@@ -79,5 +79,7 @@ public interface TokenServiceInf {
 			String appid, String secret) throws TokenException;
 
 	public abstract boolean isEnableToken();
+	public String getSecret();
+	public String getAppid();
 
 }

@@ -202,7 +202,7 @@ public class TokenFilter implements Filter{
 	}
 	protected void sendRedirect(HttpServletRequest request,
 			HttpServletResponse response, String targetUrl,
-			boolean http10Compatible,boolean isforward,boolean isinclude) throws IOException {
+			boolean http10Compatible,boolean isforward,boolean isinclude) throws IOException  {
 
 		if(isloopredirect(request,
 				targetUrl))
@@ -234,8 +234,7 @@ public class TokenFilter implements Filter{
 					}
 					catch (ServletException e)
 					{
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+						log.error("", e);
 					}
 			}
 		}
@@ -247,8 +246,7 @@ public class TokenFilter implements Filter{
 			}
 			catch (ServletException e)
 			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				log.error("", e);
 			}
 		}
 	}
@@ -316,8 +314,11 @@ public class TokenFilter implements Filter{
 						result = TokenStore.token_request_validateresult_nodtoken;
 					else//校验ticket
 					{
-						String appid= request.getParameter(TokenStore.app_param_name);
-						String secret= request.getParameter(TokenStore.app_secret_param_name);
+//						String appid= request.getParameter(TokenStore.app_param_name);
+//						String secret= request.getParameter(TokenStore.app_secret_param_name);
+						
+						String appid= tokenService.getAppid();
+						String secret= tokenService.getSecret();
 						TokenResult tokenResult = this.tokenService.checkTicket(appid, secret, ticket);
 						request.setAttribute(TokenStore.token_request_validatetoken_key, tokenResult);
 						if( tokenResult != null )
@@ -332,8 +333,10 @@ public class TokenFilter implements Filter{
 				}
 				else
 				{
-					String appid= request.getParameter(TokenStore.app_param_name);
-					String secret= request.getParameter(TokenStore.app_secret_param_name);
+//					String appid= request.getParameter(TokenStore.app_param_name);
+//					String secret= request.getParameter(TokenStore.app_secret_param_name);
+					String appid= tokenService.getAppid();
+					String secret= tokenService.getSecret();
 					TokenResult tokenResult = this.tokenService.checkToken(appid,secret,token);
 					request.setAttribute(TokenStore.token_request_validatetoken_key, tokenResult);
 					if( tokenResult != null )

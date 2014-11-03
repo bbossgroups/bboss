@@ -53,6 +53,8 @@ public class TokenService implements TokenServiceInf,InitializingBean {
 	private String ecctype;
 	private boolean inited;
 	private boolean client;
+	private String appid;
+	private String secret;
 	
 	/**
 	<property name="tokenstore" value="mongodb|org.frameworkset.web.token.MongodbTokenStore"/>
@@ -801,6 +803,34 @@ public class TokenService implements TokenServiceInf,InitializingBean {
 
 	public void setClient(boolean client) {
 		this.client = client;
+	}
+
+
+
+
+	public String getAppid() {
+		return appid;
+	}
+
+
+
+
+	public void setAppid(String appid) {
+		this.appid = appid;
+	}
+
+
+
+
+	public String getSecret() {
+		return secret;
+	}
+
+
+
+
+	public void setSecret(String secret) {
+		this.secret = secret;
 	}
 
 
