@@ -70,6 +70,40 @@ public class ParameterUtil {
 		}
 	}
 	
+	/**
+	 * 获取识别集合是否有记录的参数名称
+	 * @param property
+	 * @param defaultName
+	 * @param request
+	 * @param curposition
+	 * @return
+	 * 2014年11月11日
+	 */
+	public static String getAssertHasdataParameterName(PropertieDescription property,String defaultName,HttpServletRequest request ,int curposition)
+	{
+		List<Var> vars = property.getRequestParamNameToken();
+		if(property.getRequestParamName() != null)
+			return property.getRequestParamName();
+		else if(vars != null && vars.size() > 0)
+		{			
+			for(Var var:vars)
+			{
+				if(!var.isIsvar())
+					;
+				else
+				{
+					return var.getName();
+					
+				}
+			}			
+			return defaultName;
+		}
+		else
+		{
+			return defaultName;
+		}
+	}
+	
 	
 	public static String getParameterName(MethodParameter parameter,HttpServletRequest request ,int curposition)
 	{

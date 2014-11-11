@@ -2590,8 +2590,8 @@ public abstract class HandlerUtils {
 				useEditor = false;
 			} else if (Map.class.isAssignableFrom(type)) {
 				MapKey mapKey = null;
-				if (field != null)
-					mapKey = field.getAnnotation(MapKey.class);
+				if (property != null)
+					mapKey = property.getMapkey();
 				if (mapKey == null) {
 					value = buildParameterMaps(request);
 				}

@@ -31,6 +31,7 @@ import javax.servlet.jsp.PageContext;
 import org.frameworkset.http.converter.HttpMessageConverter;
 import org.frameworkset.spi.support.validate.BindingResult;
 import org.frameworkset.util.ClassUtil;
+import org.frameworkset.util.ParameterUtil;
 import org.frameworkset.util.ClassUtil.ClassInfo;
 import org.frameworkset.util.ClassUtil.PropertieDescription;
 import org.frameworkset.util.annotations.MethodData;
@@ -533,7 +534,7 @@ public class WebDataBinder  {//extends DataBinder {
 					continue;
 				}
 				
-				String name = property.getName();
+				String name = ParameterUtil.getAssertHasdataParameterName(property, property.getName(), request, 0);
 				
 				Class type = property.getPropertyType();
 				if(!HandlerUtils.isMultipartFile(type))

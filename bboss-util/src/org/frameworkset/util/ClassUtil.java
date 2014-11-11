@@ -35,6 +35,7 @@ import org.frameworkset.util.annotations.Attribute;
 import org.frameworkset.util.annotations.CookieValue;
 import org.frameworkset.util.annotations.DataBind;
 import org.frameworkset.util.annotations.IgnoreBind;
+import org.frameworkset.util.annotations.MapKey;
 import org.frameworkset.util.annotations.PathVariable;
 import org.frameworkset.util.annotations.RequestBody;
 import org.frameworkset.util.annotations.RequestHeader;
@@ -169,6 +170,7 @@ public class ClassUtil
 		private RequestBodyWraper requestBody;
 		private DataBind dataBind;
 		private IgnoreBind ignoreBind;
+		private MapKey mapkey;
 		public IgnoreBind getIgnoreBind() {
 			return ignoreBind;
 		}
@@ -382,6 +384,10 @@ public class ClassUtil
 				{
 					this.ignoreBind = (IgnoreBind)a;
 				}
+				else if(a instanceof MapKey)
+				{
+					this.mapkey = (MapKey)a;
+				}
 			}
 		}
 		
@@ -565,6 +571,10 @@ public class ClassUtil
 
 		public RequestBodyWraper getRequestBody() {
 			return requestBody;
+		}
+
+		public MapKey getMapkey() {
+			return mapkey;
 		}
 
 	}
