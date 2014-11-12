@@ -7,10 +7,19 @@ public class LogicNotRexContainTag extends MatchTag{
 		
 		if(actualValue == null)
 			return true;
-		if(!RegexUtil.isContain(String.valueOf(actualValue),pattern))
-			return true;
+		if(this.pattern != null)
+		{
+			if(!RegexUtil.isContain(String.valueOf(actualValue),pattern))
+				return true;		
+			else
+				return false;
+		}
+		else if(this.getValue() != null)
+		{
+			return !String.valueOf(actualValue).contains(String.valueOf(this.getValue()));
+		}
 		else
-			return false;
+			throw new java.lang.IllegalArgumentException("Tag notcontain must set value or pattern or expressionValue atrribute.");
 	}	
 
 }

@@ -36,6 +36,7 @@ import javax.servlet.jsp.JspException;
 
 import com.frameworkset.common.tag.exception.FormulaException;
 import com.frameworkset.util.StringUtil;
+import com.frameworkset.util.ValueObjectUtil;
 
 /**
  * 所有用于分页/列表/详细信息标签逻辑判断的标签基类，
@@ -63,7 +64,10 @@ public abstract class MatchTag extends BaseValueTag {
 	 * 控制是否将真值添加到该字段的枚举值中（扩展字段，生成报表时有用）
 	 */
 	protected boolean addTruevalue = false; 
-	
+	/**
+	 * equal和notequal时是否忽略字符串大小写
+	 */
+	private boolean ignoreCase = false;
 	protected String pattern;
 	
 	/**
@@ -74,7 +78,7 @@ public abstract class MatchTag extends BaseValueTag {
 	protected String scope;
 	
 	protected String[] scopes;
-	
+	protected int offset = -1;
 	/**
 	 * 用于设置获取集合，字符串长度的变量名称
 	 * <pg:notequal length="cell|request|parameter|session|pagecontext:rejectList" value="1">
@@ -197,6 +201,8 @@ public abstract class MatchTag extends BaseValueTag {
 		this.pattern = null;
 		this.scope = null;
 		this.scopes = null;
+		ignoreCase = false;
+		offset  = -1;
 //		this.requestKey = null ;
 //		this.sessionKey= null ;
 //		this.pageContextKey= null ;
@@ -326,4 +332,87 @@ public abstract class MatchTag extends BaseValueTag {
 		this.typeof = null;
 		super.doFinally();
 	}
+
+	public boolean isIgnoreCase() {
+		return ignoreCase;
+	}
+
+	public void setIgnoreCase(boolean ignoreCase) {
+		this.ignoreCase = ignoreCase;
+	}
+	public int getOffset() {
+		return offset;
+	}
+	public void setOffset(int offset) {
+		this.offset = offset;
+	}
+	protected boolean startWith()
+	{
+		Object temp =  getValue();
+		if(actualValue == null && temp != null)
+			return false;
+		if(actualValue != null && temp == null)
+			return false;
+		if(actualValue == null && temp == null)
+			return true;
+		if (actualValue instanceof String && getValue() instanceof String)
+		{
+			if(this.offset  == -1)
+				return ((String)actualValue).startsWith((String)temp);
+			else
+				return ((String)actualValue).startsWith((String)temp,this.offset);
+			
+		}
+		return false;
+	}
+	
+	
+	
+	protected boolean endWith()
+	{
+		Object temp =  getValue();
+		if(actualValue == null && temp != null)
+			return false;
+		if(actualValue != null && temp == null)
+			return false;
+		if(actualValue == null && temp == null)
+			return true;
+		if (actualValue instanceof String && getValue() instanceof String)
+		{
+			return ((String)actualValue).endsWith((String)temp);
+			
+		}
+		return false;
+	}
+	
+	protected boolean equalCompare()
+	{
+		Object temp =  getValue();
+		if(actualValue == null && temp != null)
+			return false;
+		if(actualValue != null && temp == null)
+			return false;
+		if(actualValue == null && temp == null)
+			return true;
+		if (actualValue instanceof String && getValue() instanceof String)
+		{
+			if(!this.isIgnoreCase())
+			{
+				return ((String)actualValue).equals((String)temp);
+			}
+			else
+			{
+				return ((String)actualValue).equalsIgnoreCase((String)temp);
+			}
+		}
+		else
+		{
+			if(ValueObjectUtil.typecompare(actualValue,temp) == 0)
+				return true;
+			else
+				return false;
+		}
+	}
+	
+	
 }

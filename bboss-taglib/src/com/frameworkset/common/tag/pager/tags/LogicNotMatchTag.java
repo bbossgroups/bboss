@@ -32,7 +32,6 @@
  *****************************************************************************/
 package com.frameworkset.common.tag.pager.tags;
 
-import com.frameworkset.util.ValueObjectUtil;
 
 /**
  * 如果对象属性值与给定value值不匹配时输出本标签得内容，否则不输出
@@ -61,10 +60,12 @@ public class LogicNotMatchTag extends MatchTag {
 //	}
 	protected boolean match() {
 	
-		if(ValueObjectUtil.typecompare(actualValue,getValue()) != 0)
-			return true;
-		else
-			return false;
+//		if(ValueObjectUtil.typecompare(actualValue,getValue()) != 0)
+//			return true;
+//		else
+//			return false;
+		
+		return !equalCompare();
 	}
 	
 

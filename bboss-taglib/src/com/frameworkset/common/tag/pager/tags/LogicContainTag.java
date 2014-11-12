@@ -12,7 +12,7 @@ import com.frameworkset.util.RegexUtil;
  *
  * <p>Copyright: Copyright (c) 2006</p>
  *
- * <p>Company: 长沙科创计算机系统集成有限公司</p>
+ * <p>Company: bbossgroups</p>
  * @Date 2007-12-6 20:26:14
  * @author biaoping.yin
  * @version 1.0
@@ -23,10 +23,19 @@ public class LogicContainTag extends MatchTag {
 		
 		if(actualValue == null)
 			return false;
-		if(RegexUtil.isContain(String.valueOf(actualValue),pattern))
-			return true;
+		if(pattern != null)
+		{
+			if(RegexUtil.isContain(String.valueOf(actualValue),pattern))
+				return true;
+			else
+				return false;
+		}
+		else if(this.getValue() != null)
+		{
+			return String.valueOf(actualValue).contains(String.valueOf(this.getValue()));
+		}
 		else
-			return false;
+			throw new java.lang.IllegalArgumentException("Tag Contain must set value or pattern or expressionValue atrribute.");
 	}	
 
 }

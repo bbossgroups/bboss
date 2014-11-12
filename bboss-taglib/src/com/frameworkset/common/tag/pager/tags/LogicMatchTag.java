@@ -43,6 +43,7 @@ import com.frameworkset.util.ValueObjectUtil;
 public class LogicMatchTag extends MatchTag
 {
 
+	
 	/**
 	 *  Description: 等于
 	 * @return  boolean
@@ -66,9 +67,7 @@ public class LogicMatchTag extends MatchTag
 //		{
 //			return false;
 //		}
-		if(ValueObjectUtil.typecompare(actualValue,getValue()) == 0)
-			return true;
-		return false;
+		return equalCompare();
 	}
 	
 

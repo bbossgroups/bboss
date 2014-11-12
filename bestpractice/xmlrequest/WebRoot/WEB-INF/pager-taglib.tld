@@ -1465,7 +1465,11 @@
 			<name>length</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
-		
+		<!-- 字符串比较是否忽略大小写：true 忽略，false不忽略，默认值值false -->
+		<attribute>
+			<name>ignoreCase</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
 	</tag>
 	
 	<!--
@@ -2061,6 +2065,15 @@
 			<name>actual</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
+		<attribute>
+			<name>expressionValue</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		
+		<attribute>
+			<name>value</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
 	</tag>
 	
 	<!--
@@ -2130,6 +2143,15 @@
 		</attribute>
 		<attribute>
 			<name>actual</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>expressionValue</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		
+		<attribute>
+			<name>value</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
@@ -2866,6 +2888,11 @@
 		 -->
 		<attribute>
 			<name>length</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<!-- 字符串比较是否忽略大小写：true 忽略，false不忽略，默认值值false -->
+		<attribute>
+			<name>ignoreCase</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
@@ -3626,5 +3653,338 @@
 		</description>
 	</tag>		
 	<!-- 定义bboss mvc标签结束 -->
+	<!--
+		功能说明：判断字符串是否以另一个字符串开头，可以指定offset位置
+		如果判断成立，则执行标签体内容，否则不执行
+	-->
+	<tag>
+		<name>startwith</name>
+		<tagclass>com.frameworkset.common.tag.pager.tags.StartWithTag</tagclass>
+		<bodycontent>jsp</bodycontent>
+		<attribute>
+			<name>value</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>colName</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>property</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>content</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>colid</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>index</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<!--
+			求实际值表达式 表达式支持的基本操作有：冥，乘法，除法，求余，加/减，字符串的加操作 表达式支持的聚合操作有：求和，求平均值，计数
+			操作数：可以为变量，整数，小数，字符串 其中变量是指列表/分页/页面详细信息中的对象属性名称，为如下形式： {variable name}
+			表达式中用"{"和"}"来标识变量 例如： 2 * 2 2 + 2 * 3 2 - 2 / 3 2 - 3 % 2 2* {var1} /
+			{var2} sum({var1}) avg({var1}) count({var1}) 上述操作可以任意组合
+		-->
+		<attribute>
+			<name>expression</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<!--
+			求期望值表达式 表达式支持的基本操作有：冥，乘法，除法，求余，加/减，字符串的加操作 表达式支持的聚合操作有：求和，求平均值，计数
+			操作数：可以为变量，整数，小数，字符串 其中变量是指列表/分页/页面详细信息中的对象属性名称，为如下形式： {variable name}
+			表达式中用"{"和"}"来标识变量 例如： 2 * 2 2 + 2 * 3 2 - 2 / 3 2 - 3 % 2 2* {var1} /
+			{var2} sum({var1}) avg({var1}) count({var1}) 上述操作可以任意组合
+		-->
+		<attribute>
+			<name>expressionValue</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>dateformat</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>requestKey</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>sessionKey</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>pageContextKey</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>parameter</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>actual</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<!-- 
+		startWith的起点位置，默认为0
+		 -->
+		<attribute>
+			<name>offset</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		
+		
+	</tag>
 	
+	<!--
+		功能说明：判断字符串是否不以另一个字符串开头，可以指定offset位置
+		如果判断成立，则执行标签体内容，否则不执行
+	-->
+	<tag>
+		<name>notstartwith</name>
+		<tagclass>com.frameworkset.common.tag.pager.tags.NotStartWithTag</tagclass>
+		<bodycontent>jsp</bodycontent>
+		<attribute>
+			<name>value</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>colName</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>property</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>content</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>colid</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>index</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<!--
+			求实际值表达式 表达式支持的基本操作有：冥，乘法，除法，求余，加/减，字符串的加操作 表达式支持的聚合操作有：求和，求平均值，计数
+			操作数：可以为变量，整数，小数，字符串 其中变量是指列表/分页/页面详细信息中的对象属性名称，为如下形式： {variable name}
+			表达式中用"{"和"}"来标识变量 例如： 2 * 2 2 + 2 * 3 2 - 2 / 3 2 - 3 % 2 2* {var1} /
+			{var2} sum({var1}) avg({var1}) count({var1}) 上述操作可以任意组合
+		-->
+		<attribute>
+			<name>expression</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<!--
+			求期望值表达式 表达式支持的基本操作有：冥，乘法，除法，求余，加/减，字符串的加操作 表达式支持的聚合操作有：求和，求平均值，计数
+			操作数：可以为变量，整数，小数，字符串 其中变量是指列表/分页/页面详细信息中的对象属性名称，为如下形式： {variable name}
+			表达式中用"{"和"}"来标识变量 例如： 2 * 2 2 + 2 * 3 2 - 2 / 3 2 - 3 % 2 2* {var1} /
+			{var2} sum({var1}) avg({var1}) count({var1}) 上述操作可以任意组合
+		-->
+		<attribute>
+			<name>expressionValue</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>dateformat</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>requestKey</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>sessionKey</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>pageContextKey</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>parameter</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>actual</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<!-- 
+		startWith的起点位置，默认为0
+		 -->
+		<attribute>
+			<name>offset</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		
+		
+	</tag>
+	
+	<!--
+		功能说明：判断字符串是否以另一个字符串结尾
+		如果判断成立，则执行标签体内容，否则不执行
+	-->
+	<tag>
+		<name>endwith</name>
+		<tagclass>com.frameworkset.common.tag.pager.tags.EndWithTag</tagclass>
+		<bodycontent>jsp</bodycontent>
+		<attribute>
+			<name>value</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>colName</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>property</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>content</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>colid</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>index</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<!--
+			求实际值表达式 表达式支持的基本操作有：冥，乘法，除法，求余，加/减，字符串的加操作 表达式支持的聚合操作有：求和，求平均值，计数
+			操作数：可以为变量，整数，小数，字符串 其中变量是指列表/分页/页面详细信息中的对象属性名称，为如下形式： {variable name}
+			表达式中用"{"和"}"来标识变量 例如： 2 * 2 2 + 2 * 3 2 - 2 / 3 2 - 3 % 2 2* {var1} /
+			{var2} sum({var1}) avg({var1}) count({var1}) 上述操作可以任意组合
+		-->
+		<attribute>
+			<name>expression</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<!--
+			求期望值表达式 表达式支持的基本操作有：冥，乘法，除法，求余，加/减，字符串的加操作 表达式支持的聚合操作有：求和，求平均值，计数
+			操作数：可以为变量，整数，小数，字符串 其中变量是指列表/分页/页面详细信息中的对象属性名称，为如下形式： {variable name}
+			表达式中用"{"和"}"来标识变量 例如： 2 * 2 2 + 2 * 3 2 - 2 / 3 2 - 3 % 2 2* {var1} /
+			{var2} sum({var1}) avg({var1}) count({var1}) 上述操作可以任意组合
+		-->
+		<attribute>
+			<name>expressionValue</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>dateformat</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>requestKey</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>sessionKey</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>pageContextKey</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>parameter</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>actual</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		
+		
+		
+	</tag>
+	
+	<!--
+		功能说明：判断字符串是否不以另一个字符串结尾
+		如果判断成立，则执行标签体内容，否则不执行
+	-->
+	<tag>
+		<name>notendwith</name>
+		<tagclass>com.frameworkset.common.tag.pager.tags.NotEndWithTag</tagclass>
+		<bodycontent>jsp</bodycontent>
+		<attribute>
+			<name>value</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>colName</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>property</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>content</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>colid</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>index</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<!--
+			求实际值表达式 表达式支持的基本操作有：冥，乘法，除法，求余，加/减，字符串的加操作 表达式支持的聚合操作有：求和，求平均值，计数
+			操作数：可以为变量，整数，小数，字符串 其中变量是指列表/分页/页面详细信息中的对象属性名称，为如下形式： {variable name}
+			表达式中用"{"和"}"来标识变量 例如： 2 * 2 2 + 2 * 3 2 - 2 / 3 2 - 3 % 2 2* {var1} /
+			{var2} sum({var1}) avg({var1}) count({var1}) 上述操作可以任意组合
+		-->
+		<attribute>
+			<name>expression</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<!--
+			求期望值表达式 表达式支持的基本操作有：冥，乘法，除法，求余，加/减，字符串的加操作 表达式支持的聚合操作有：求和，求平均值，计数
+			操作数：可以为变量，整数，小数，字符串 其中变量是指列表/分页/页面详细信息中的对象属性名称，为如下形式： {variable name}
+			表达式中用"{"和"}"来标识变量 例如： 2 * 2 2 + 2 * 3 2 - 2 / 3 2 - 3 % 2 2* {var1} /
+			{var2} sum({var1}) avg({var1}) count({var1}) 上述操作可以任意组合
+		-->
+		<attribute>
+			<name>expressionValue</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>dateformat</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>requestKey</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>sessionKey</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>pageContextKey</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>parameter</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>actual</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		
+		
+	</tag>
 </taglib>
