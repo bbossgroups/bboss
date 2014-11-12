@@ -2044,7 +2044,7 @@
 		-->
 		<attribute>
 			<name>pattern</name>
-			<required>true</required>
+			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
@@ -2125,7 +2125,7 @@
 		-->
 		<attribute>
 			<name>pattern</name>
-			<required>true</required>
+			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
