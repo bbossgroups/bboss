@@ -855,9 +855,19 @@ public abstract class DB implements Serializable, IDMethod,Platform
             return    res.getObject(parameterIndex);
         }
 	    
+	    public Object getLONGVARCHAR(ResultSet res,String colName) throws SQLException
+        {
+            return    res.getObject(colName);
+        }
+	    
 	    public Object getLONGVARBINARY(ResultSet res,int parameterIndex) throws SQLException
         {
             return    res.getObject(parameterIndex);
+        }
+	    
+	    public Object getLONGVARBINARY(ResultSet res,String colName) throws SQLException
+        {
+            return    res.getObject(colName);
         }
 
 		

@@ -1062,7 +1062,7 @@ public class ValueExchange {
 //	}
 	
 	public static Object getValueFromResultSet(ResultSet rs,
-			int columnIndex, int sqltype, Class javaType,String dbname) throws SQLException{
+			String column, int sqltype, Class javaType,String dbname) throws SQLException{
 //		Object value = null;
 //		try {
 //			TypeHandler handler = getTypeHandler(sqltype);
@@ -1074,7 +1074,7 @@ public class ValueExchange {
 //			throw new NestedSQLException(ee);
 //		}
 //		return value;
-		Object value = getValueFromRS(rs, columnIndex, sqltype,
+		Object value = getValueFromRS(rs, column, sqltype,
 				 dbname);
 		if(value == null)
 			return ValueObjectUtil.getDefaultValue(javaType);;
@@ -1119,6 +1119,74 @@ public class ValueExchange {
 			switch (type) {
 
 			// case Types.LONGVARBINARY:
+			case Types.VARCHAR:
+				value = res.getString(i);break;
+			
+			case Types.INTEGER:
+				/**
+				 * 处理long类型的字段时需要，当应用程序向long形字段中存放大文本时需要，存放Reader
+				 * res.getCharacterStream();
+				 */
+//				Object reader = null;
+//				reader = res.getCharacterStream(i);
+//				Object temp = res.getObject(i);
+//				value = new Object[] { temp, reader };
+				value  = res.getInt(i);
+//				value = new Long(temp);				
+				break;
+			case Types.DECIMAL:	
+				value =res.getBigDecimal(i);
+				break;
+				
+			case Types.BIGINT:
+				/**
+				 * 处理long类型的字段时需要，当应用程序向long形字段中存放大文本时需要，存放Reader
+				 * res.getCharacterStream();
+				 */
+//				Object reader = null;
+//				reader = res.getCharacterStream(i);
+//				Object temp = res.getObject(i);
+//				value = new Object[] { temp, reader };
+				value = res.getLong(i);
+//				value = new Long(temp);				
+				break;
+			case Types.DOUBLE:
+				/**
+				 * 处理long类型的字段时需要，当应用程序向long形字段中存放大文本时需要，存放Reader
+				 * res.getCharacterStream();
+				 */
+//				Object reader = null;
+//				reader = res.getCharacterStream(i);
+//				Object temp = res.getObject(i);
+//				value = new Object[] { temp, reader };
+				value = res.getDouble(i);
+//				value = new Long(temp);				
+				break;	
+				
+			case Types.TIMESTAMP:
+				value = res.getTimestamp(i);
+				break;
+			case Types.DATE:
+//				try
+//				{
+//					value = res.getTimestamp(i);break;
+//				}
+//				catch(Exception e)
+				{
+					value = res.getDate(i);break;
+				}
+			case Types.FLOAT:
+				/**
+				 * 处理long类型的字段时需要，当应用程序向long形字段中存放大文本时需要，存放Reader
+				 * res.getCharacterStream();
+				 */
+//				Object reader = null;
+//				reader = res.getCharacterStream(i);
+//				Object temp = res.getObject(i);
+//				value = new Object[] { temp, reader };
+				value = res.getFloat(i);
+//				value = new Long(temp);				
+				break;		
 			case Types.CHAR:
 				try {
 					// not sure about this fix, so be overly cautious
@@ -1126,8 +1194,8 @@ public class ValueExchange {
 
 					value = res.getString(i);
 					
-					value = db.getCharValue(res, i,
-							(String) value);
+//					value = db.getCharValue(res, i,
+//							(String) value);
 
 				} catch (SQLException _e) {
 //					// _e.printStackTrace();
@@ -1151,20 +1219,14 @@ public class ValueExchange {
 					throw new NestedSQLException(_e);
 					
 				}
-				break;
-			case Types.BIGINT:
-				/**
-				 * 处理long类型的字段时需要，当应用程序向long形字段中存放大文本时需要，存放Reader
-				 * res.getCharacterStream();
-				 */
-//				Object reader = null;
-//				reader = res.getCharacterStream(i);
-//				Object temp = res.getObject(i);
-//				value = new Object[] { temp, reader };
-				long temp = res.getLong(i);
-				value = new Long(temp);				
-				break;
-			case Types.BLOB:
+				break;	
+			case Types.CLOB:
+				
+			    Clob clob = res.getClob(i);
+                value = clob;
+                //value = this.clobToString(clob);
+                break;	
+			case Types.BLOB:			
 			    Blob blob = res.getBlob(i);
                 value = blob;
                 //value = this.blobToByteArray(blob);
@@ -1174,11 +1236,7 @@ public class ValueExchange {
 				value = db.getLONGVARBINARY(res, i);
 				//value = this.blobToByteArray(blob);
 				break;
-			case Types.CLOB:
-			    Clob clob = res.getClob(i);
-                value = clob;
-                //value = this.clobToString(clob);
-                break;
+			
 			case Types.LONGVARCHAR:
 				
 				value = db.getLONGVARCHAR(res, i);
@@ -1193,22 +1251,12 @@ public class ValueExchange {
 			case OracleTypes.TIMESTAMPTZ:
 				value = res.getTimestamp(i);
 				break;
-			case Types.TIMESTAMP:
-				value = res.getTimestamp(i);
-				break;
+				
 			case Types.TIME:
 				value = res.getTime(i);
 			
 				break;
-			case Types.DATE:
-				try
-				{
-					value = res.getTimestamp(i);break;
-				}
-				catch(Exception e)
-				{
-					value = res.getDate(i);break;
-				}
+			
 			default:
 				// System.out.println("column :" + i + " " +
 				// meta.getColumnLabel(i));
@@ -1217,6 +1265,176 @@ public class ValueExchange {
 				// 读取零字节异常，造成数据读取失败
 				
 				value = res.getObject(i);
+				
+				// value = res.getObject(i);
+				break;
+			}
+		} 
+		catch(SQLException ioe)
+		{
+			throw ioe;
+		}
+		catch(Exception e)
+		{
+			throw new NestedSQLException(e);
+		}
+		return value;
+	}
+	
+	public static Object getValueFromRS(ResultSet res, String colName, int type,
+			String dbname) throws SQLException {
+		Object value = null;
+		DB db = SQLUtil.getPool(dbname).getDbAdapter();
+		try {
+			switch (type) {
+
+			// case Types.LONGVARBINARY:
+			case Types.VARCHAR:
+				value = res.getString(colName);break;
+			
+			case Types.INTEGER:
+				/**
+				 * 处理long类型的字段时需要，当应用程序向long形字段中存放大文本时需要，存放Reader
+				 * res.getCharacterStream();
+				 */
+//				Object reader = null;
+//				reader = res.getCharacterStream(i);
+//				Object temp = res.getObject(i);
+//				value = new Object[] { temp, reader };
+				value  = res.getInt(colName);
+//				value = new Long(temp);				
+				break;
+			case Types.DECIMAL:	
+				value =res.getBigDecimal(colName);
+				break;
+				
+			case Types.BIGINT:
+				/**
+				 * 处理long类型的字段时需要，当应用程序向long形字段中存放大文本时需要，存放Reader
+				 * res.getCharacterStream();
+				 */
+//				Object reader = null;
+//				reader = res.getCharacterStream(i);
+//				Object temp = res.getObject(i);
+//				value = new Object[] { temp, reader };
+				value = res.getLong(colName);
+//				value = new Long(temp);				
+				break;
+			case Types.DOUBLE:
+				/**
+				 * 处理long类型的字段时需要，当应用程序向long形字段中存放大文本时需要，存放Reader
+				 * res.getCharacterStream();
+				 */
+//				Object reader = null;
+//				reader = res.getCharacterStream(i);
+//				Object temp = res.getObject(i);
+//				value = new Object[] { temp, reader };
+				value = res.getDouble(colName);
+//				value = new Long(temp);				
+				break;	
+				
+			case Types.TIMESTAMP:
+				value = res.getTimestamp(colName);
+				break;
+			case Types.DATE:
+//				try
+//				{
+//					value = res.getTimestamp(i);break;
+//				}
+//				catch(Exception e)
+				{
+					value = res.getDate(colName);break;
+				}
+			case Types.FLOAT:
+				/**
+				 * 处理long类型的字段时需要，当应用程序向long形字段中存放大文本时需要，存放Reader
+				 * res.getCharacterStream();
+				 */
+//				Object reader = null;
+//				reader = res.getCharacterStream(i);
+//				Object temp = res.getObject(i);
+//				value = new Object[] { temp, reader };
+				value = res.getFloat(colName);
+//				value = new Long(temp);				
+				break;		
+			case Types.CHAR:
+				try {
+					// not sure about this fix, so be overly cautious
+					// 判断是否有中文如果有中文则，有些数据库需要处理调后面多余的空格，比如oracle
+
+					value = res.getString(colName);
+					
+//					value = db.getCharValue(res, i,
+//							(String) value);
+
+				} catch (SQLException _e) {
+//					// _e.printStackTrace();
+//					// System.out.println("column :" + i + " " +
+//					// meta.getColumnLabel(i));
+//					// 捕获异常：有些数据库中（例如mssql
+//					// server2000）表字段的值为空的情况下调用res.getObject(i)会报
+//					// 读取零字节异常，造成数据读取失败
+//					value = res.getObject(i);
+					throw _e;
+					
+				}
+				catch (Exception _e) {
+//					// _e.printStackTrace();
+//					// System.out.println("column :" + i + " " +
+//					// meta.getColumnLabel(i));
+//					// 捕获异常：有些数据库中（例如mssql
+//					// server2000）表字段的值为空的情况下调用res.getObject(i)会报
+//					// 读取零字节异常，造成数据读取失败
+//					value = res.getObject(i);
+					throw new NestedSQLException(_e);
+					
+				}
+				break;	
+			case Types.CLOB:
+				
+			    Clob clob = res.getClob(colName);
+                value = clob;
+                //value = this.clobToString(clob);
+                break;	
+			case Types.BLOB:			
+			    Blob blob = res.getBlob(colName);
+                value = blob;
+                //value = this.blobToByteArray(blob);
+                break;
+			case Types.LONGVARBINARY:
+				
+				value = db.getLONGVARBINARY(res, colName);
+				//value = this.blobToByteArray(blob);
+				break;
+			
+			case Types.LONGVARCHAR:
+				
+				value = db.getLONGVARCHAR(res, colName);
+				//value = this.clobToString(clob);
+				break;
+			case OracleTypes.TIMESTAMPLTZ:
+				value = res.getTimestamp(colName);
+				break;
+			case OracleTypes.TIMESTAMPNS:
+				value = res.getTimestamp(colName);
+				break;
+			case OracleTypes.TIMESTAMPTZ:
+				value = res.getTimestamp(colName);
+				break;
+				
+			case Types.TIME:
+				value = res.getTime(colName);
+			
+				break;
+			
+			default:
+				// System.out.println("column :" + i + " " +
+				// meta.getColumnLabel(i));
+				// 捕获异常：有些数据库中（例如mssql
+				// server2000）表字段的值为空的情况下调用res.getObject(i)会报
+				// 读取零字节异常，造成数据读取失败
+				
+				value = res.getObject(colName);
 				
 				// value = res.getObject(i);
 				break;

@@ -72,10 +72,20 @@ public class SQLCache {
 		SoftReference<PoolManResultSetMetaData> wr =  dbmetas.get(sqlkey);
 		if (wr != null) {
 			meta = (PoolManResultSetMetaData) wr.get();
-			if (meta == null) {
+			
+			if (meta == null) {				
 				meta = PoolManResultSetMetaData.getCopy(rsmetadata);
 				SoftReference<PoolManResultSetMetaData> wr1 = new SoftReference<PoolManResultSetMetaData>(meta);				
 				dbmetas.put(sqlkey, wr1);
+			}
+			else
+			{
+				if(meta.getColumnCount() != rsmetadata.getColumnCount())
+				{
+					meta = PoolManResultSetMetaData.getCopy(rsmetadata);
+					wr = new SoftReference<PoolManResultSetMetaData>(meta);
+					dbmetas.put(sqlkey, wr);
+				}
 			}
 		} else {
 			meta = PoolManResultSetMetaData.getCopy(rsmetadata);

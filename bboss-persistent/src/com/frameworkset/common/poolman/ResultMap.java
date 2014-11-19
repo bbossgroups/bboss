@@ -308,7 +308,7 @@ public class ResultMap {
 		//														stmtInfo.getMeta().getColumnType(i + 1), 
 		//														type, 
 		//														stmtInfo.getDbname());
-							propsVal = ValueExchange.getValueFromResultSet(rs, cidx, 
+							propsVal = ValueExchange.getValueFromResultSet(rs, meta.getColumnLabel(cidx), 
 									stmtInfo.getMeta().getColumnType(cidx), 
 									type, 
 									stmtInfo.getDbname());
@@ -352,7 +352,8 @@ public class ResultMap {
 			}
 			else
 			{
-				valueObject = (T)ValueExchange.getValueFromResultSet(rs,  1, 
+				PoolManResultSetMetaData meta = stmtInfo.getMeta();
+				valueObject = (T)ValueExchange.getValueFromResultSet(rs, meta.getColumnLabel(1), 
 						stmtInfo.getMeta().getColumnType(1), 
 						valueObjectType, 
 						stmtInfo.getDbname());
@@ -700,12 +701,13 @@ public class ResultMap {
 	public static Record buildMap(ResultSet rs,StatementInfo stmtInfo)
 			throws SQLException {
 		Record record = null;
+		PoolManResultSetMetaData meta = stmtInfo.getMeta();
 		if (rs != null && stmtInfo != null) {
-		        int cols = stmtInfo.getMeta().getColumnCounts();
-			record = new Record(cols,stmtInfo.getMeta().get_columnLabel_upper(),stmtInfo.getMeta().getSamecols());
+		        int cols = meta.getColumnCounts();
+			record = new Record(cols,meta.get_columnLabel_upper(),meta.getSamecols());
 			record.setRowid(rs.getRow());	
 			for (int i = 1; i <= cols; i++) {
-				Object value = ValueExchange.getValueFromRS(rs, i, stmtInfo.getMeta()
+				Object value = ValueExchange.getValueFromRS(rs,  meta.getColumnLabel(i), meta
 						.getColumnType(i), stmtInfo.getDbname());
 
 				
@@ -713,11 +715,11 @@ public class ResultMap {
 				if (value != null)
 				{
 				    
-				    WrapInteger wi = stmtInfo.getMeta().getSameColumns(i);
+				    WrapInteger wi = meta.getSameColumns(i);
 				    
 				    if(wi == null || i == 1)
 				    {
-				        record.put(stmtInfo.getMeta()
+				        record.put(meta
     				               .getColumnLabelUpper(i),
     						value);
 				    }
@@ -774,8 +776,9 @@ public class ResultMap {
 	public static <T> T buildMap(Class<T> valueObjectType,ResultSet rs,StatementInfo stmtInfo)
 	throws SQLException {
 		 Map valueObject = null;
+		 PoolManResultSetMetaData meta = stmtInfo.getMeta();
 		if (rs != null && stmtInfo != null) {
-		        int cols = stmtInfo.getMeta().getColumnCounts();
+		        int cols = meta.getColumnCounts();
 		       
 				try {
 					valueObject = findMapObject(valueObjectType,cols);
@@ -783,10 +786,10 @@ public class ResultMap {
 					// TODO Auto-generated catch block
 					throw new NestedSQLException(e);
 				}
-//			record = new Record(cols,stmtInfo.getMeta().get_columnLabel_upper(),stmtInfo.getMeta().getSamecols());
+//			record = new Record(cols,meta.get_columnLabel_upper(),meta.getSamecols());
 //			record.setRowid(rs.getRow());	
 			for (int i = 1; i <= cols; i++) {
-				Object value = ValueExchange.getValueFromRS(rs, i, stmtInfo.getMeta()
+				Object value = ValueExchange.getValueFromRS(rs, meta.getColumnLabel(i), meta
 						.getColumnType(i), stmtInfo.getDbname());
 		
 				
@@ -794,11 +797,11 @@ public class ResultMap {
 				if (value != null)
 				{
 				    
-				    WrapInteger wi = stmtInfo.getMeta().getSameColumns(i);
+				    WrapInteger wi = meta.getSameColumns(i);
 				    
 				    if(wi == null || i == 1)
 				    {
-				    	valueObject.put(stmtInfo.getMeta()
+				    	valueObject.put(meta
 					               .getColumnLabelUpper(i),
 							value);
 				    }

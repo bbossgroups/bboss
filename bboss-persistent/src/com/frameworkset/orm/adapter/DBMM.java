@@ -462,6 +462,27 @@ public class DBMM extends DB
         return    res.getBlob(parameterIndex);
     }
     
+    
+    
+    public Object getLONGVARBINARY(CallableStatement cstmt,String parameterIndex) throws SQLException
+    {
+        return    cstmt.getBlob(parameterIndex);
+    }
+    
+    public Object getLONGVARCHAR(CallableStatement cstmt,String parameterIndex) throws SQLException
+    {
+        return    cstmt.getClob(parameterIndex);
+    }
+    public Object getLONGVARCHAR(ResultSet res,String parameterIndex) throws SQLException
+    {
+        return    res.getClob(parameterIndex);
+    }
+    
+    public Object getLONGVARBINARY(ResultSet res,String parameterIndex) throws SQLException
+    {
+        return    res.getBlob(parameterIndex);
+    }
+    
 
 	public String concat(String ... concatString)
 	{
