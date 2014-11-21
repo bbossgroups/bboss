@@ -58,7 +58,7 @@ public class CheckTokenContoller implements CheckTokenService{
 	{
 		TokenCheckResponse tokenCheckResponse = new TokenCheckResponse();
 		try {
-			TokenResult result = TokenHelper.getTokenService().checkToken(appid,secret,ticket);
+			TokenResult result = TokenHelper.getTokenService().checkTicket(appid,secret,ticket);
 			tokenCheckResponse.setResultcode(TokenStore.RESULT_OK );
 			tokenCheckResponse.setValidateResult(TokenService.assertDToken(result.getResult()));
 			tokenCheckResponse.setUserAccount(result.getAccount());
