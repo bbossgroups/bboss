@@ -15,38 +15,23 @@
  */
 package com.frameworkset.tag.logic;
 
-import java.io.IOException;
-
 import javax.servlet.jsp.JspException;
 
 import com.frameworkset.common.tag.BaseTag;
 import com.frameworkset.common.tag.pager.tags.MatchTag;
 
-public class NoTag extends BaseTag{
-
-	public NoTag() {
-		// TODO Auto-generated constructor stub
-	}
-
-	@Override
-	public int doAfterBody() throws JspException {
-		// TODO Auto-generated method stub
-		return super.doAfterBody();
-	}
-
+public class OtherTag extends BaseTag {
 	@Override
 	public int doStartTag() throws JspException {
 		MatchTag matchTag = (MatchTag)super.findAncestorWithClass(this, MatchTag.class);
-		if(matchTag.isResult())
-		{
-			return SKIP_BODY;
-		}
-		else
+		if(!matchTag.isResolvedResult())
 		{
 			matchTag.setResolvedResult(true);
 			return EVAL_BODY_INCLUDE;
 		}
-		
+		else
+		{
+			return SKIP_BODY;
+		}
 	}
-
 }

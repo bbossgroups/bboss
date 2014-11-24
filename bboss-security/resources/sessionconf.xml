@@ -54,8 +54,13 @@
 			</property>  -->  
 <!--             <property name="sessionlisteners" value="org.frameworkset.security.session.impl.NullSessionListener"/> -->
 	</property>
-	
-	<property name="sessionStaticManager" class="org.frameworkset.security.session.statics.MongoSessionStaticManagerImpl"/>	
+	<!-- 
+	monitorScope="self|all" 指定监控管理的session数据的应用系统范围:
+	self:表示只能监控管理本应用的会话数据
+	all:表示监控管理所有应用的会话数据
+	 -->
+	<property name="sessionStaticManager"
+	    f:monitorScope="all" class="org.frameworkset.security.session.statics.MongoSessionStaticManagerImpl"/>	
 	
 	<property name="sessionstore" class="org.frameworkset.security.session.impl.MongDBSessionStore"/>
 </properties>

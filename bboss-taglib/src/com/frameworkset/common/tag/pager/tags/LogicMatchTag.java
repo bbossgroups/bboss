@@ -32,7 +32,6 @@
  *****************************************************************************/
 package com.frameworkset.common.tag.pager.tags;
 
-import com.frameworkset.util.ValueObjectUtil;
 
 
 /**

@@ -33,8 +33,10 @@
 package com.frameworkset.common.tag.pager.tags;
 
 import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.tagext.Tag;
 
 import com.frameworkset.common.tag.exception.FormulaException;
+import com.frameworkset.tag.logic.CaseTag;
 import com.frameworkset.util.StringUtil;
 import com.frameworkset.util.ValueObjectUtil;
 
@@ -51,6 +53,17 @@ public abstract class MatchTag extends BaseValueTag {
 	 * typeof可以是一个表示类路径的String，或者直接是一个Class对象
 	 */
 	protected Object typeof;
+	/**
+	 * result evalbody resolvedResult三个属性结合起来为整个逻辑标签提供if-else功能和case-then功能
+	 * evalbody 用来指示逻辑标签不管结果如何直接执行标签体
+	 * result 用来存放逻辑比较的结果,yes,no,other标签根据result和resolvedResult的值来进行相应的逻辑处理操作
+	 * resolvedResult存放内置的yes,no,other的执行情况，只要其中一个执行了，则resolvedResult为true，other标签依赖resolvedResult来决定是否执行other标签体的内容，如果resolvedResult为false则
+	 * 执行other标签体的内容，否则不执行，执行完毕后将resolvedResult设置为true
+	 */
+	private boolean result = false;
+	private boolean evalbody = false;
+	private boolean resolvedResult = false;
+	protected CaseTag caseTag = null;
     /**实际值*/
 	protected Object actualValue;
 	
@@ -101,7 +114,13 @@ public abstract class MatchTag extends BaseValueTag {
 	public void setLength(String length) {
 		this.length = length;
 	}
-	
+	public boolean isResult() {
+		return result;
+	}
+
+	public void setResult(boolean result) {
+		this.result = result;
+	}
 	protected void evalLengthInfo()
 	{
 		
@@ -161,10 +180,26 @@ public abstract class MatchTag extends BaseValueTag {
 	    init();
 //	    dataSet = searchDataSet(this,PagerDataSet.class);
 //	    t_formula = dataSet.getFormula(getExpression());
-	    if(StringUtil.isEmpty(length))
-	    	actualValue = evaluateActualValue();
+	    Tag tag = findAncestorWithClass(this, Tag.class);
+	    if(tag != null  && (tag instanceof CaseTag))
+	    {
+	    	this.caseTag = (CaseTag)tag;
+	    	if(caseTag.isResolvedResult())//如果case分支已经被执行过了，则不管条件满不满足都跳出case分支
+	    	{
+	    		return SKIP_BODY;
+	    	}
+	    }
+	    if(caseTag == null)//是否case-when场景
+	    {
+		    if(StringUtil.isEmpty(length))
+		    	actualValue = evaluateActualValue();
+		    else
+		    	evalLengthInfo();
+	    }
 	    else
-	    	evalLengthInfo();
+	    {
+	    	actualValue = caseTag.getActualValue();
+	    }
 	    
 //		actualValue = getOutStr();
 //		setMeta();
@@ -185,10 +220,18 @@ public abstract class MatchTag extends BaseValueTag {
                 e.printStackTrace();
                 return SKIP_BODY;                
             }
-		if(match())		
-			return EVAL_BODY_INCLUDE;
+		if(!this.evalbody)
+		{
+			if(result = match())		
+				return EVAL_BODY_INCLUDE;
+			else
+				return SKIP_BODY;
+		}
 		else
-			return SKIP_BODY;
+		{
+			result = match();
+			return EVAL_BODY_INCLUDE;
+		}
 	}
 	
 	public int doEndTag() throws JspException 
@@ -203,6 +246,24 @@ public abstract class MatchTag extends BaseValueTag {
 		this.scopes = null;
 		ignoreCase = false;
 		offset  = -1;
+		if(!this.evalbody && this.result)
+		{
+			if(this.caseTag != null)
+			{
+				caseTag.setResolvedResult(true);
+			}
+		}
+		else if(resolvedResult)
+		{
+			if(this.caseTag != null)
+			{
+				caseTag.setResolvedResult(true);
+			}
+			this.resolvedResult = false;
+		}
+		this.evalbody = false;
+		this.result = false;
+		this.caseTag = null;
 //		this.requestKey = null ;
 //		this.sessionKey= null ;
 //		this.pageContextKey= null ;
@@ -213,6 +274,8 @@ public abstract class MatchTag extends BaseValueTag {
 	}
 	
 	protected abstract boolean match();
+	
+	
 
     /**
      * @return Returns the addTruevalue.
@@ -412,6 +475,22 @@ public abstract class MatchTag extends BaseValueTag {
 			else
 				return false;
 		}
+	}
+
+	public boolean isEvalbody() {
+		return evalbody;
+	}
+
+	public void setEvalbody(boolean evalbody) {
+		this.evalbody = evalbody;
+	}
+
+	public boolean isResolvedResult() {
+		return resolvedResult;
+	}
+
+	public void setResolvedResult(boolean resolvedResult) {
+		this.resolvedResult = resolvedResult;
 	}
 	
 	

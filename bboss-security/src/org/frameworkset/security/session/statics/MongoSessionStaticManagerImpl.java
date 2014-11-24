@@ -24,6 +24,12 @@ import com.mongodb.Mongo;
 public class MongoSessionStaticManagerImpl implements SessionStaticManager {
 	private Mongo mongoClient;
 	private DB db = null;
+	/**
+	 * monitorScope="self|all" 指定监控管理的session数据的应用系统范围:
+	self:表示只能监控管理本应用的会话数据
+	all:表示监控管理所有应用的会话数据
+	 */
+	private String monitorScope;
 
 	public MongoSessionStaticManagerImpl() {
 		mongoClient = MongoDBHelper
@@ -416,6 +422,14 @@ public class MongoSessionStaticManagerImpl implements SessionStaticManager {
 		// }
 		// }
 
+	}
+
+	public String getMonitorScope() {
+		return monitorScope;
+	}
+
+	public void setMonitorScope(String monitorScope) {
+		this.monitorScope = monitorScope;
 	}
 
 }

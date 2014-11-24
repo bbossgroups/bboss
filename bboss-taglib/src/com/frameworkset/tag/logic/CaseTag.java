@@ -15,37 +15,37 @@
  */
 package com.frameworkset.tag.logic;
 
-import java.io.IOException;
-
 import javax.servlet.jsp.JspException;
 
-import com.frameworkset.common.tag.BaseTag;
 import com.frameworkset.common.tag.pager.tags.MatchTag;
+import com.frameworkset.util.StringUtil;
 
-public class NoTag extends BaseTag{
-
-	public NoTag() {
-		// TODO Auto-generated constructor stub
-	}
+/**
+ * 
+ * @author yinbp
+ *
+ */
+public class CaseTag extends MatchTag {
 
 	@Override
-	public int doAfterBody() throws JspException {
+	protected boolean match() {
 		// TODO Auto-generated method stub
-		return super.doAfterBody();
+		return false;
 	}
-
-	@Override
+	
 	public int doStartTag() throws JspException {
-		MatchTag matchTag = (MatchTag)super.findAncestorWithClass(this, MatchTag.class);
-		if(matchTag.isResult())
-		{
-			return SKIP_BODY;
-		}
-		else
-		{
-			matchTag.setResolvedResult(true);
-			return EVAL_BODY_INCLUDE;
-		}
+	    init();
+//	    dataSet = searchDataSet(this,PagerDataSet.class);
+//	    t_formula = dataSet.getFormula(getExpression());
+	    if(StringUtil.isEmpty(length))
+	    	actualValue = evaluateActualValue();
+	    else
+	    	evalLengthInfo();
+	    
+//		actualValue = getOutStr();
+//		setMeta();
+		//如果期望值为表达式，则求解表达式的值来得到期望值	
+		return EVAL_BODY_INCLUDE;
 		
 	}
 
