@@ -215,7 +215,7 @@ public class UserService {
 	
 	public User addUser(User user) throws UserManagerException {
 		try {
-			int userId = (int) DBUtil.getNextPrimaryKey("tb_user");//获取用户的主键信息
+			int userId = SQLExecutor.queryObject(int.class, "select max(userId)+1 from tb_user");//获取用户的主键信息
 			String sql = "insert into tb_user(userId,userName,userPassword) " +
 					"values(#[userId],#[userName],#[userPassword])";
 			SQLParams params = new SQLParams();

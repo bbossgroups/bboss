@@ -1470,6 +1470,13 @@
 			<name>ignoreCase</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
+		<!-- 
+		强制执行标签中的内容，配置yes/no标签使用，实现if-else逻辑
+		 -->
+		<attribute>
+			<name>evalbody</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
 	</tag>
 	
 	<!--
@@ -1607,6 +1614,13 @@
 			<name>typeof</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
+		<!-- 
+		强制执行标签中的内容，配置yes/no标签使用，实现if-else逻辑
+		 -->
+		<attribute>
+			<name>evalbody</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
 	</tag>
 	
 	<!--
@@ -1673,6 +1687,13 @@
 	         typeof可以是一个表示类路径的String，或者直接是一个Class对象 -->
 		<attribute>
 			<name>typeof</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<!-- 
+		强制执行标签中的内容，配置yes/no标签使用，实现if-else逻辑
+		 -->
+		<attribute>
+			<name>evalbody</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
@@ -1745,6 +1766,13 @@
 			<name>actual</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
+		<!-- 
+		强制执行标签中的内容，配置yes/no标签使用，实现if-else逻辑
+		 -->
+		<attribute>
+			<name>evalbody</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
 	</tag>
 	
 	
@@ -1815,6 +1843,13 @@
 		</attribute>
 		<attribute>
 			<name>actual</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<!-- 
+		强制执行标签中的内容，配置yes/no标签使用，实现if-else逻辑
+		 -->
+		<attribute>
+			<name>evalbody</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
@@ -1906,6 +1941,13 @@
 			<name>length</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
+		<!-- 
+		强制执行标签中的内容，配置yes/no标签使用，实现if-else逻辑
+		 -->
+		<attribute>
+			<name>evalbody</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
 	</tag>
 	<!--
 		功能说明：判断计算属性或者expression属性对应的表达式得到值是否包含
@@ -1995,6 +2037,13 @@
 			<name>length</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
+		<!-- 
+		强制执行标签中的内容，配置yes/no标签使用，实现if-else逻辑
+		 -->
+		<attribute>
+			<name>evalbody</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
 	</tag>
 	<!--
 		功能说明：逻辑包含标签， 判断当前的值是否和pattern属性对应正则表达式相包含，包含则执行标签体中的代码 否则不执行
@@ -2072,6 +2121,13 @@
 		
 		<attribute>
 			<name>value</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<!-- 
+		强制执行标签中的内容，配置yes/no标签使用，实现if-else逻辑
+		 -->
+		<attribute>
+			<name>evalbody</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
@@ -2152,6 +2208,13 @@
 		
 		<attribute>
 			<name>value</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<!-- 
+		强制执行标签中的内容，配置yes/no标签使用，实现if-else逻辑
+		 -->
+		<attribute>
+			<name>evalbody</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
@@ -2248,6 +2311,13 @@
 			<name>length</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
+		<!-- 
+		强制执行标签中的内容，配置yes/no标签使用，实现if-else逻辑
+		 -->
+		<attribute>
+			<name>evalbody</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
 	</tag>
 	<!--
 		功能说明：判断属性的值与value属性指定的值相等或者大于该值
@@ -2340,6 +2410,13 @@
 		 -->
 		<attribute>
 			<name>length</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<!-- 
+		强制执行标签中的内容，配置yes/no标签使用，实现if-else逻辑
+		 -->
+		<attribute>
+			<name>evalbody</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
@@ -2436,6 +2513,13 @@
 			<name>length</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
+		<!-- 
+		强制执行标签中的内容，配置yes/no标签使用，实现if-else逻辑
+		 -->
+		<attribute>
+			<name>evalbody</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
 	</tag>
 	<tag>
 		<name>null</name>
@@ -2499,6 +2583,13 @@
 		</attribute>
 		<attribute>
 			<name>actual</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<!-- 
+		强制执行标签中的内容，配置yes/no标签使用，实现if-else逻辑
+		 -->
+		<attribute>
+			<name>evalbody</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
@@ -2570,6 +2661,13 @@
 			<name>actual</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
+		<!-- 
+		强制执行标签中的内容，配置yes/no标签使用，实现if-else逻辑
+		 -->
+		<attribute>
+			<name>evalbody</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
 	</tag>
 	<!-- empty判断指定的字段的值是否是null，或者空串，如果条件成立，则执行标签体中的逻辑 -->
 	<tag>
@@ -2636,6 +2734,13 @@
 			<name>actual</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
+		<!-- 
+		强制执行标签中的内容，配置yes/no标签使用，实现if-else逻辑
+		 -->
+		<attribute>
+			<name>evalbody</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
 	</tag>
 	<!-- notempty判断指定的字段的值既不是null也不是空串，则执行标签体得内容 -->
 	<tag>
@@ -2700,6 +2805,13 @@
 		</attribute>
 		<attribute>
 			<name>actual</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<!-- 
+		强制执行标签中的内容，配置yes/no标签使用，实现if-else逻辑
+		 -->
+		<attribute>
+			<name>evalbody</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
@@ -2794,6 +2906,13 @@
 		 -->
 		<attribute>
 			<name>length</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<!-- 
+		强制执行标签中的内容，配置yes/no标签使用，实现if-else逻辑
+		 -->
+		<attribute>
+			<name>evalbody</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
@@ -2893,6 +3012,13 @@
 		<!-- 字符串比较是否忽略大小写：true 忽略，false不忽略，默认值值false -->
 		<attribute>
 			<name>ignoreCase</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<!-- 
+		强制执行标签中的内容，配置yes/no标签使用，实现if-else逻辑
+		 -->
+		<attribute>
+			<name>evalbody</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
@@ -3736,6 +3862,13 @@
 			<name>offset</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
+		<!-- 
+		强制执行标签中的内容，配置yes/no标签使用，实现if-else逻辑
+		 -->
+		<attribute>
+			<name>evalbody</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
 		
 		
 	</tag>
@@ -3823,6 +3956,13 @@
 			<name>offset</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
+		<!-- 
+		强制执行标签中的内容，配置yes/no标签使用，实现if-else逻辑
+		 -->
+		<attribute>
+			<name>evalbody</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
 		
 		
 	</tag>
@@ -3901,6 +4041,13 @@
 		</attribute>
 		<attribute>
 			<name>actual</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<!-- 
+		强制执行标签中的内容，配置yes/no标签使用，实现if-else逻辑
+		 -->
+		<attribute>
+			<name>evalbody</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		
@@ -3984,7 +4131,99 @@
 			<name>actual</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
+		<!-- 
+		强制执行标签中的内容，配置yes/no标签使用，实现if-else逻辑
+		 -->
+		<attribute>
+			<name>evalbody</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
 		
 		
+	</tag>
+	
+	<!--
+		功能说明：case标签，可以内嵌其他非case逻辑标签实现if-else if-else逻辑结构
+		如果判断成立，则执行标签体内容，否则不执行
+	-->
+	<tag>
+		<name>case</name>
+		<tagclass>com.frameworkset.tag.logic.CaseTag</tagclass>
+		<bodycontent>jsp</bodycontent>
+		<attribute>
+			<name>colName</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>property</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>colid</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>index</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<!--
+			求实际值表达式 表达式支持的基本操作有：冥，乘法，除法，求余，加/减，字符串的加操作 表达式支持的聚合操作有：求和，求平均值，计数
+			操作数：可以为变量，整数，小数，字符串 其中变量是指列表/分页/页面详细信息中的对象属性名称，为如下形式： {variable name}
+			表达式中用"{"和"}"来标识变量 例如： 2 * 2 2 + 2 * 3 2 - 2 / 3 2 - 3 % 2 2* {var1} /
+			{var2} sum({var1}) avg({var1}) count({var1}) 上述操作可以任意组合
+		-->
+		<attribute>
+			<name>expression</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>dateformat</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>dataformat</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>requestKey</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>sessionKey</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>pageContextKey</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>parameter</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>actual</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		
+		
+	</tag>	
+	
+	<tag>
+		<name>yes</name>
+		<tagclass>com.frameworkset.tag.logic.YesTag</tagclass>
+		<bodycontent>jsp</bodycontent>
+		 
+	</tag>
+	<tag>
+		<name>no</name>
+		<tagclass>com.frameworkset.tag.logic.NoTag</tagclass>
+		<bodycontent>jsp</bodycontent>
+		 
+	</tag>
+	<tag>
+		<name>other</name>
+		<tagclass>com.frameworkset.tag.logic.OtherTag</tagclass>
+		<bodycontent>jsp</bodycontent>
+		 
 	</tag>
 </taglib>
