@@ -15,8 +15,6 @@
  */
 package com.frameworkset.tag.logic;
 
-import java.io.IOException;
-
 import javax.servlet.jsp.JspException;
 
 import com.frameworkset.common.tag.BaseTag;
