@@ -12,6 +12,7 @@ import com.mongodb.Mongo;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientOptions;
 import com.mongodb.MongoClientOptions.Builder;
+import com.mongodb.MongoCredential;
 import com.mongodb.ReadPreference;
 import com.mongodb.ServerAddress;
 import com.mongodb.WriteConcern;
@@ -32,6 +33,8 @@ public class MongoDB {
 	private int connectTimeout = 15000;
 	private int threadsAllowedToBlockForConnectionMultiplier = 50;
 	private boolean socketKeepAlive = true;
+	private List<ClientMongoCredential> credentials;
+	private List<MongoCredential> mongoCredentials;
 	public Mongo getMongoClient()
 	{
 	
@@ -167,10 +170,37 @@ public class MongoDB {
 			return ReadPreference.nearest();
 		throw new RuntimeException("未知的ReadPreference:"+readPreference);
 	}
-	
+	private void buildCredentials()
+	{
+		if(this.credentials != null && this.credentials.size() > 0)
+		{
+			this.mongoCredentials = new ArrayList<MongoCredential>();
+			for(ClientMongoCredential clientMongoCredential:this.credentials)
+			{
+				if(StringUtil.isEmpty(clientMongoCredential.getMechanism()) 
+						||clientMongoCredential.getMechanism().equals(MongoCredential.PLAIN_MECHANISM))
+				{
+					mongoCredentials.add(MongoCredential.createPlainCredential(clientMongoCredential.getUserName(), clientMongoCredential.getDatabase(),clientMongoCredential.getPassword().toCharArray()));
+				}
+				else if(clientMongoCredential.getMechanism().equals(MongoCredential.MONGODB_CR_MECHANISM))
+				{
+					mongoCredentials.add(MongoCredential.createMongoCRCredential(clientMongoCredential.getUserName(), clientMongoCredential.getDatabase(),clientMongoCredential.getPassword().toCharArray()));
+				}
+				else if(clientMongoCredential.getMechanism().equals(MongoCredential.MONGODB_X509_MECHANISM))
+				{
+					mongoCredentials.add(MongoCredential.createMongoX509Credential(clientMongoCredential.getUserName()));
+				}
+				else if(clientMongoCredential.getMechanism().equals(MongoCredential.GSSAPI_MECHANISM))
+				{
+					mongoCredentials.add(MongoCredential.createGSSAPICredential(clientMongoCredential.getUserName()));
+				}
+			}
+		}
+	}
 	public void init()
 	{
 		try {
+			buildCredentials();
 			if(mode != null && mode.equals("simple"))
 			{
 				this.initsimple();
@@ -195,7 +225,15 @@ public class MongoDB {
 				builder.threadsAllowedToBlockForConnectionMultiplier( threadsAllowedToBlockForConnectionMultiplier);
 				builder.socketKeepAlive(socketKeepAlive);
 	            MongoClientOptions options = builder.build();//new MongoClientOptions();
-	            MongoClient mongoClient = new MongoClient(parserAddress(),options);
+	            MongoClient mongoClient = null;
+	            if(mongoCredentials == null || mongoCredentials.size() == 0)
+	            {
+	            	mongoClient = new MongoClient(parserAddress(),options);
+	            }
+	            else
+	            {
+	            	mongoClient = new MongoClient(parserAddress(),mongoCredentials,options);
+	            }
 				int[] ops = parserOption();
 				for(int i = 0; ops != null && i < ops.length; i ++)
 					mongoClient.addOption( ops[i] );
@@ -242,7 +280,15 @@ public class MongoDB {
 			builder.threadsAllowedToBlockForConnectionMultiplier( threadsAllowedToBlockForConnectionMultiplier);
 			builder.socketKeepAlive(socketKeepAlive);
             MongoClientOptions options = builder.build();//new MongoClientOptions();
-            MongoClient mongoClient = new MongoClient(parserAddress().get(0),options);
+            MongoClient mongoClient = null;
+            if(mongoCredentials == null || mongoCredentials.size() == 0)
+            {
+            	mongoClient = new MongoClient(parserAddress().get(0),options);
+            }
+            else
+            {
+            	mongoClient = new MongoClient(parserAddress().get(0),mongoCredentials,options);
+            }
 			
 			int[] ops = parserOption();
 			for(int i = 0; ops != null && i < ops.length; i ++)

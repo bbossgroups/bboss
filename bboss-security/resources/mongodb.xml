@@ -22,7 +22,24 @@
 		<property name="socketTimeout" value="0"/>	
 		<property name="connectTimeout" value="15000"/>	
 		<property name="threadsAllowedToBlockForConnectionMultiplier" value="5"/>	
-		<property name="socketKeepAlive" value="true"/>	
+		<property name="socketKeepAlive" value="true"/>
+		<!-- 如果需要用户认证则在下面配置mongodb的数据库验证用户和口令以及机制 -->	
+		<property name="credentials">
+		    <list componentType="bean"> 
+		        <!-- mechanism 取值范围：PLAIN GSSAPI MONGODB-CR MONGODB-X509，默认为PLAIN  -->
+				<property class="org.frameworkset.nosql.mongodb.ClientMongoCredential"
+				    f:mechanism="PLAIN"
+				    f:database="sessiondb"
+				    f:userName="bboss"				    
+				    f:password="bboss"/> 
+				<property class="org.frameworkset.nosql.mongodb.ClientMongoCredential"
+				    f:mechanism="PLAIN"
+				    f:database="tokendb"
+				    f:userName="bboss"				    
+				    f:password="bboss"/> 
+				 
+			</list>
+		</property>
 	</property>
 	<property name="mongodb" class="org.frameworkset.nosql.mongodb.MongoDB"
 		init-method="init" destroy-method="close">
