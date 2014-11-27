@@ -15,6 +15,8 @@
  */
 package org.frameworkset.security.session.impl;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.frameworkset.security.session.Session;
 import org.frameworkset.security.session.SessionBasicInfo;
 import org.frameworkset.security.session.domain.CrossDomain;
@@ -120,5 +122,26 @@ public class SessionHelper {
 			return attribute;
 		return crossDomain.dewraperAttributeName(appkey, contextpath, attribute);
 	}
+	public static String getAppKey(HttpServletRequest request)
+	{
+		String appcode = getSessionManager().getAppcode();
+		if(appcode != null)
+		{
+			return appcode;
+		}
+		if(request != null)
+		{
+			String appKey = request.getContextPath().replace("/", "");
+			if(appKey.equals(""))
+				appKey = "ROOT";
+			return appKey;
+		}
+		return null;
+		
+	}
 	
+	public static boolean hasMonitorPermission(String app, HttpServletRequest request)
+	{
+		return getSessionStaticManager().hasMonitorPermission(app, request);
+	}
 }

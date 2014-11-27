@@ -58,18 +58,7 @@ public class SessionHttpServletRequestWrapper extends HttpServletRequestWrapper 
 		 return getSession(true);
 	}
 
-	private String getAppKey()
-	{
-		String appcode = SessionHelper.getSessionManager().getAppcode();
-		if(appcode != null)
-		{
-			return appcode;
-		}
-		String appKey = this.getContextPath().replace("/", "");
-		if(appKey.equals(""))
-			appKey = "ROOT";
-		return appKey;
-	}
+
 	@Override
 	public HttpSession getSession(boolean create) {
 		if( SessionHelper.getSessionManager().usewebsession())
@@ -82,7 +71,7 @@ public class SessionHttpServletRequestWrapper extends HttpServletRequestWrapper 
 			if(create)
 			{
 
-				String appkey = getAppKey();
+				String appkey = SessionHelper.getAppKey(this);
 				SessionBasicInfo sessionBasicInfo = new SessionBasicInfo();
 				sessionBasicInfo.setAppKey(appkey);
 				sessionBasicInfo.setReferip(StringUtil.getClientIP(this));
@@ -106,7 +95,7 @@ public class SessionHttpServletRequestWrapper extends HttpServletRequestWrapper 
 		}
 		else
 		{
-			String appkey = getAppKey();
+			String appkey =  SessionHelper.getAppKey(this);
 
 			Session session = SessionHelper.getSession(appkey,this.getContextPath(),sessionid);
 			if(session == null)//session不存在，创建新的session
@@ -145,7 +134,7 @@ public class SessionHttpServletRequestWrapper extends HttpServletRequestWrapper 
 		{
 			if(session == null)
 			{
-				String appkey = getAppKey();
+				String appkey =  SessionHelper.getAppKey(this);
 				Session session_ = SessionHelper.getSession(appkey,this.getContextPath(), sessionid);
 				if(session_ == null || !session_.isValidate())
 				{

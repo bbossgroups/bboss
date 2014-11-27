@@ -16,6 +16,7 @@
 package com.frameworkset.tag.logic;
 
 import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.tagext.Tag;
 
 import com.frameworkset.common.tag.BaseTag;
 import com.frameworkset.common.tag.pager.tags.MatchTag;
@@ -23,15 +24,24 @@ import com.frameworkset.common.tag.pager.tags.MatchTag;
 public class OtherTag extends BaseTag {
 	@Override
 	public int doStartTag() throws JspException {
-		MatchTag matchTag = (MatchTag)super.findAncestorWithClass(this, MatchTag.class);
-		if(!matchTag.isResolvedResult())
+		Tag tag = super.findAncestorWithClass(this, Tag.class);
+		if(tag instanceof CaseTag)
 		{
-			matchTag.setResolvedResult(true);
-			return EVAL_BODY_INCLUDE;
+			MatchTag  matchTag = (CaseTag)tag;
+			if(!matchTag.isResolvedResult())
+			{
+				matchTag.setResolvedResult(true);
+				return EVAL_BODY_INCLUDE;
+			}
+			else
+			{
+				return SKIP_BODY;
+			}
 		}
 		else
 		{
-			return SKIP_BODY;
+			throw new JspException("other tag must be included in case tag。");
 		}
+			
 	}
 }

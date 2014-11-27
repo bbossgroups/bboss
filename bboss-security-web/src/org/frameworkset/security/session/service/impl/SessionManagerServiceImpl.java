@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.frameworkset.security.session.entity.SessionCondition;
 import org.frameworkset.security.session.entity.SessionInfoBean;
 import org.frameworkset.security.session.impl.SessionHelper;
@@ -89,9 +91,9 @@ public class SessionManagerServiceImpl implements SessionManagerService {
 	}
 
 	@Override
-	public List<SessionAPP> queryAppSessionData(String appKey) {
+	public List<SessionAPP> queryAppSessionData(String appKey,HttpServletRequest request) {
 
-		return SessionHelper.getSessionStaticManager().getSessionAPP();
+		return SessionHelper.getSessionStaticManager().getSessionAPP(request);
 	}
 
 	@Override

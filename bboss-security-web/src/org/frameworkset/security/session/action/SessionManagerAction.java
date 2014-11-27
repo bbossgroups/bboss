@@ -2,8 +2,11 @@ package org.frameworkset.security.session.action;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.frameworkset.security.session.entity.SessionCondition;
 import org.frameworkset.security.session.entity.SessionInfoBean;
+import org.frameworkset.security.session.impl.SessionHelper;
 import org.frameworkset.security.session.service.SessionManagerService;
 import org.frameworkset.security.session.statics.SessionAPP;
 import org.frameworkset.util.annotations.PagerParam;
@@ -37,14 +40,21 @@ public class SessionManagerAction {
 			@PagerParam(name = PagerParam.DESC, defaultvalue = "false") boolean desc,
 			@PagerParam(name = PagerParam.OFFSET) int offset,
 			@PagerParam(name = PagerParam.PAGE_SIZE, defaultvalue = "10") int pagesize,
-			SessionCondition condition, ModelMap model)  throws Exception{
+			SessionCondition condition, ModelMap model,HttpServletRequest request)  throws Exception{
 
 		try {
-			// 分页获取session数据
-			ListInfo sessionList = sessionService.querySessionDataForPage(
-					condition, offset, pagesize);
-
-			model.addAttribute("sessionList", sessionList);
+			if(!SessionHelper.hasMonitorPermission(condition.getAppkey(), request))
+			{
+				model.addAttribute("message","对不起，没有查询应用"+condition.getAppkey()+"session数据的权限");
+			}
+			else
+			{
+				// 分页获取session数据
+				ListInfo sessionList = sessionService.querySessionDataForPage(
+						condition, offset, pagesize);
+	
+				model.addAttribute("sessionList", sessionList);
+			}
 
 			return "path:sessionList";
 
@@ -61,11 +71,11 @@ public class SessionManagerAction {
 	 * @return 2014年6月5日
 	 */
 	public @ResponseBody(datatype = "json")
-	List<SessionAPP> getAppSessionData(String appKey)  throws Exception{
+	List<SessionAPP> getAppSessionData(String appKey,HttpServletRequest request)  throws Exception{
 
 		try {
 			List<SessionAPP> appSessionList = sessionService
-					.queryAppSessionData(appKey);
+					.queryAppSessionData(appKey,  request);
 
 			return appSessionList;
 
@@ -82,14 +92,20 @@ public class SessionManagerAction {
 	 * @return 2014年6月5日
 	 */
 	public @ResponseBody
-	String delSessions(String appkey, String sessionids, ModelMap model) {
+	String delSessions(String appkey, String sessionids, ModelMap model,HttpServletRequest request) {
 		try {
-
-			sessionService.delSession(appkey, sessionids);
-
-			return "success";
+			if(!SessionHelper.hasMonitorPermission(appkey, request))
+			{
+				return "对不起，没有删除应用"+appkey+"session数据的权限";
+			}
+			else
+			{
+				sessionService.delSession(appkey, sessionids);
+	
+				return "success";
+			}
 		} catch (Exception e) {
-			return "fail" + e.getMessage();
+			return "fail:" + e.getMessage();
 		}
 	}
 
@@ -101,12 +117,18 @@ public class SessionManagerAction {
 	 * @return 2014年6月5日
 	 */
 	public @ResponseBody
-	String delAllSessions(String appkey, ModelMap model) {
+	String delAllSessions(String appkey, ModelMap model,HttpServletRequest request) {
 		try {
-
-			sessionService.delAllSessions(appkey);
-
-			return "success";
+			if(!SessionHelper.hasMonitorPermission(appkey, request))
+			{
+				return "对不起，没有删除应用"+appkey+"session数据的权限";
+			}
+			else
+			{
+				sessionService.delAllSessions(appkey);
+	
+				return "success";
+			}
 		} catch (Exception e) {
 			return "fail" + e.getMessage();
 		}
@@ -119,19 +141,26 @@ public class SessionManagerAction {
 	 * @return 2014年5月7日
 	 */
 	public String viewSessionInfo(String sessionid, String appkey,
-			ModelMap model)  throws Exception{
+			ModelMap model,HttpServletRequest request)  throws Exception{
 		try {
-
-			SessionInfoBean sessionInfo = sessionService.getSessionInfo(appkey,
-					sessionid);
-
-			model.addAttribute("sessionInfo", sessionInfo);
+			if(!SessionHelper.hasMonitorPermission(appkey, request))
+			{
+				model.addAttribute("message","对不起，没有查看应用"+appkey+"session数据的权限");
+			}
+			else
+			{
+				SessionInfoBean sessionInfo = sessionService.getSessionInfo(appkey,
+						sessionid);
+	
+				model.addAttribute("sessionInfo", sessionInfo);
+			}
 
 			return "path:viewSessionInfo";
 
 		} catch (Exception e) {
 			
-			throw e;
+			model.addAttribute("message","对不起，"+appkey+"session数据["+sessionid+"]不存在");
+			return "path:viewSessionInfo";
 		}
 	}
 

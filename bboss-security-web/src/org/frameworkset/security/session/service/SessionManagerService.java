@@ -2,6 +2,8 @@ package org.frameworkset.security.session.service;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.frameworkset.security.session.entity.SessionCondition;
 import org.frameworkset.security.session.entity.SessionInfoBean;
 import org.frameworkset.security.session.statics.SessionAPP;
@@ -29,7 +31,7 @@ public interface SessionManagerService {
 	 * @throws Exception
 	 *             2014年6月5日
 	 */
-	public List<SessionAPP> queryAppSessionData(String appKey) throws Exception;
+	public List<SessionAPP> queryAppSessionData(String appKey,HttpServletRequest request) throws Exception;
 	
 	/** 删除应用下的session
 	 * @param appkey

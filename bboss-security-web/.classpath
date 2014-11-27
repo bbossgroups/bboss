@@ -6,9 +6,9 @@
 	<classpathentry kind="lib" path="/bboss-security/lib-compile/jsp-api.jar"/>
 	<classpathentry kind="lib" path="/bboss-security/lib-compile/servlet-api.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/bboss-mvc.jar"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/bboss-security-sources.jar"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/bboss-security.jar" sourcepath="/bboss-security"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/frameworkset-util.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/bboss-core.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/bboss-security-sources.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/bboss-security.jar"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>

@@ -85,7 +85,8 @@ public class TitleTag  extends PagerTagSupport
 
 	private int pageItems = 0;
 	private String type = "th";
-
+	private String extend = null;
+	private int rowspan = 0;
 	/**
 	 * 指定标题对应的属性名称
 	 */
@@ -98,20 +99,15 @@ public class TitleTag  extends PagerTagSupport
 		this.titlecode = null;
 		sort = false;
 		colid = -1;
-
-
 		className = null;
-
 		align = null;
-
-		nowrap = false;
-       
+		nowrap = false;       
 		colspan = 0;
 		width = null;
-
 		pageItems = 0;
-
 		colName = null;
+		extend = null;
+		rowspan = 0;
 		type = "th";
 		this.pagerContext = null;
 		this.fieldHelper = null;
@@ -296,6 +292,12 @@ public class TitleTag  extends PagerTagSupport
 		td.setNoWrap(nowrap);
 		if(this.getColspan() != 0)
 		    td.setColSpan(getColspan());
+		if(this.getRowspan() != 0)
+		    td.setRowSpan(getRowspan());
+		if(StringUtil.isNotEmpty(this.getExtend()))
+		{
+			td.setExtend(getExtend());
+		}
 		if(title_lable == null)//如果没有设定标题
 		{
 			/**
@@ -503,6 +505,12 @@ public class TitleTag  extends PagerTagSupport
 		td.setNoWrap(nowrap);
 		if(this.getColspan() != 0)
 		    td.setColSpan(getColspan());
+		if(this.getRowspan() != 0)
+		    td.setRowSpan(getRowspan());
+		if(StringUtil.isNotEmpty(this.getExtend()))
+		{
+			td.setExtend(getExtend());
+		}
 		if(title_lable == null)//如果没有设定标题
 		{
 			/**
@@ -879,5 +887,17 @@ public class TitleTag  extends PagerTagSupport
 	}
 	public void setTitlecode(String titlecode) {
 		this.titlecode = titlecode;
+	}
+	public String getExtend() {
+		return extend;
+	}
+	public void setExtend(String extend) {
+		this.extend = extend;
+	}
+	public int getRowspan() {
+		return rowspan;
+	}
+	public void setRowspan(int rowspan) {
+		this.rowspan = rowspan;
 	}
 }

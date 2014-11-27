@@ -10,6 +10,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.frameworkset.nosql.mongodb.MongoDBHelper;
 import org.frameworkset.security.session.impl.SessionHelper;
 
@@ -30,6 +32,8 @@ public class MongoSessionStaticManagerImpl implements SessionStaticManager {
 	all:表示监控管理所有应用的会话数据
 	 */
 	private String monitorScope;
+	public static final String MONITOR_SCOPE_ALL = "all";
+	public static final String MONITOR_SCOPE_SELF = "self";
 
 	public MongoSessionStaticManagerImpl() {
 		mongoClient = MongoDBHelper
@@ -39,9 +43,32 @@ public class MongoSessionStaticManagerImpl implements SessionStaticManager {
 
 	@Override
 	public List<SessionAPP> getSessionAPP() {
+//		List<SessionAPP> appList = new ArrayList<SessionAPP>();
+//
+//		List<String> list = getAPPName();
+//
+//		for (String appkey : list) {
+//			SessionAPP sessionApp = new SessionAPP();
+//
+//			DBCollection coll = db.getCollection(appkey);
+//
+//			sessionApp.setAppkey(appkey.substring(0,
+//					appkey.indexOf("_sessions")));
+//			sessionApp.setSessions(coll.getCount());
+//
+//			appList.add(sessionApp);
+//
+//		}
+//
+//		return appList;
+		return getSessionAPP((HttpServletRequest )null);
+	}
+	
+	@Override
+	public List<SessionAPP> getSessionAPP(HttpServletRequest request) {
 		List<SessionAPP> appList = new ArrayList<SessionAPP>();
 
-		List<String> list = getAPPName();
+		List<String> list = getAPPName(request);
 
 		for (String appkey : list) {
 			SessionAPP sessionApp = new SessionAPP();
@@ -58,7 +85,104 @@ public class MongoSessionStaticManagerImpl implements SessionStaticManager {
 
 		return appList;
 	}
+	/**
+	 * 判断应用是否有查询会话权限，除了总控应用可以看所有会话外，其他的应用只能看当前应用的会话数据
+	 * @param app 
+	 * @param currentapp
+	 * @return
+	 */
+	public boolean hasMonitorPermission(String app,String currentapp)
+	{
+		if(this.monitorScope == null || this.monitorScope.equals(MONITOR_SCOPE_SELF))
+		{
+			return app.equals(currentapp);
+		}
+		else if(this.monitorScope.equals(MONITOR_SCOPE_ALL))
+		{
+			return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * 判断用户是有使用app的session管理权限
+	 * @param app 
+	 * @param currentapp
+	 * @return
+	 */
+	public boolean hasMonitorPermission(String app,HttpServletRequest request)
+	{
+		String currentAPP = SessionHelper.getAppKey(request);
+		if(this.monitorScope == null || this.monitorScope.equals(MONITOR_SCOPE_SELF))
+		{
+			return app.equals(currentAPP);
+		}
+		else if(this.monitorScope.equals(MONITOR_SCOPE_ALL))
+		{
+			return true;
+		}
+		return false;
+	}
+	/**
+	 * 获取当前db中以_sessions结尾的表名
+	 * 如果request不为空就是需要获取带权限的会话表数据
+	 * 
+	 * @return 2014年6月5日
+	 */
+	public List<String> getAPPName(HttpServletRequest request) {
 
+		List<String> appList = new ArrayList<String>();
+		
+		if(request == null)
+		{
+			
+			// 获取所有当前db所有信息集合
+			Set<String> apps = db.getCollectionNames();
+	
+			if (apps == null || apps.size() == 0) {
+				return null;
+			}
+	
+			Iterator<String> itr = apps.iterator();
+	
+			while (itr.hasNext()) {
+	
+				String app = itr.next();
+	
+				if (app.endsWith("_sessions")) {
+					appList.add(app);
+				}
+	
+			}
+			return appList;
+		}
+		else
+		{
+			String currentAPP = SessionHelper.getAppKey(request);
+			String currentAPPTableName = currentAPP + "_sessions";
+			// 获取所有当前db所有信息集合
+			Set<String> apps = db.getCollectionNames();
+	
+			if (apps == null || apps.size() == 0) {
+				return null;
+			}
+	
+			Iterator<String> itr = apps.iterator();
+	
+			while (itr.hasNext()) {
+	
+				String app = itr.next();
+				
+				if (app.endsWith("_sessions")) {
+					if(hasMonitorPermission( app,currentAPPTableName))
+						appList.add(app);
+				}
+	
+			}
+			return appList;
+		}
+	}
+	
 	/**
 	 * 获取当前db中以_sessions结尾的表名
 	 * 
@@ -66,27 +190,28 @@ public class MongoSessionStaticManagerImpl implements SessionStaticManager {
 	 */
 	public List<String> getAPPName() {
 
-		List<String> appList = new ArrayList<String>();
-
-		// 获取所有当前db所有信息集合
-		Set<String> apps = db.getCollectionNames();
-
-		if (apps == null || apps.size() == 0) {
-			return null;
-		}
-
-		Iterator<String> itr = apps.iterator();
-
-		while (itr.hasNext()) {
-
-			String app = itr.next();
-
-			if (app.endsWith("_sessions")) {
-				appList.add(app);
-			}
-
-		}
-		return appList;
+//		List<String> appList = new ArrayList<String>();
+//
+//		// 获取所有当前db所有信息集合
+//		Set<String> apps = db.getCollectionNames();
+//
+//		if (apps == null || apps.size() == 0) {
+//			return null;
+//		}
+//
+//		Iterator<String> itr = apps.iterator();
+//
+//		while (itr.hasNext()) {
+//
+//			String app = itr.next();
+//
+//			if (app.endsWith("_sessions")) {
+//				appList.add(app);
+//			}
+//
+//		}
+//		return appList;
+		return getAPPName((HttpServletRequest)null);
 	}
 
 	@Override
@@ -94,7 +219,7 @@ public class MongoSessionStaticManagerImpl implements SessionStaticManager {
 			int page) throws Exception {
 		List<SessionInfo> sessionList = new ArrayList<SessionInfo>();
 
-		String appKey = queryParams.get("appKey") + "";
+		String appKey = (String)queryParams.get("appKey");
 		if (StringUtil.isEmpty(appKey)) {
 			return null;
 		}
@@ -102,7 +227,7 @@ public class MongoSessionStaticManagerImpl implements SessionStaticManager {
 		// 获取当前表
 		DBCollection sessions = db.getCollection(MongoDBHelper
 				.getAppSessionTableName(appKey));
-		sessions.ensureIndex("sessionid");
+		sessions.createIndex(new BasicDBObject("sessionid",1));
 
 		// 查询条件
 		BasicDBObject query = new BasicDBObject();
@@ -318,7 +443,7 @@ public class MongoSessionStaticManagerImpl implements SessionStaticManager {
 
 			DBCollection sessions = db.getCollection(MongoDBHelper
 					.getAppSessionTableName(appKey));
-			sessions.ensureIndex("sessionid");
+			sessions.createIndex(new BasicDBObject("sessionid",1));
 
 			// 条件
 			BasicDBObject wheresql = new BasicDBObject();

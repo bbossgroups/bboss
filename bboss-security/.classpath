@@ -26,9 +26,9 @@
 	<classpathentry kind="lib" path="lib/asm/jarjar.jar"/>
 	<classpathentry kind="lib" path="lib/cglib-2.2.jar"/>
 	<classpathentry kind="lib" path="lib/jakarta-oro-2.0.8.jar"/>
-	<classpathentry kind="lib" path="lib/mongo-java-driver-2.12.2.jar" sourcepath="lib/mongo-java-driver-source-2.12.2.jar"/>
-	<classpathentry kind="lib" path="lib/mongo-java-driver-javadoc-2.12.2.jar"/>
-	<classpathentry kind="lib" path="lib/mongo-java-driver-source-2.12.2.jar"/>
 	<classpathentry kind="lib" path="lib/bboss-core.jar"/>
+	<classpathentry kind="lib" path="lib/mongo-java-driver-2.12.4-javadoc.jar"/>
+	<classpathentry kind="lib" path="lib/mongo-java-driver-2.12.4-sources.jar"/>
+	<classpathentry kind="lib" path="lib/mongo-java-driver-2.12.4.jar" sourcepath="lib/mongo-java-driver-2.12.4-sources.jar"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>

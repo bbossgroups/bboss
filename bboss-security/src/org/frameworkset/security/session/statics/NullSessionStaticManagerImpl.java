@@ -3,6 +3,8 @@ package org.frameworkset.security.session.statics;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 public class NullSessionStaticManagerImpl implements SessionStaticManager {
 
 	public NullSessionStaticManagerImpl() {
@@ -14,7 +16,18 @@ public class NullSessionStaticManagerImpl implements SessionStaticManager {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	public List<SessionAPP> getSessionAPP(HttpServletRequest request)
+	{
+		return null;
+	}
+	public boolean hasMonitorPermission(String app,HttpServletRequest request)
+	{
+		return false;
+	}
+	public boolean hasMonitorPermission(String app,String currentapp)
+	{
+		return false;
+	}
 	@Override
 	public List<SessionInfo> getAllSessionInfos(Map queryParams, int row,
 			int page) throws Exception {

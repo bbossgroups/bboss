@@ -542,6 +542,14 @@
 			<name>type</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
+		<attribute>
+			<name>extend</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>rowspan</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
 	</tag>
 	<!--
 		功能：循环输出列表数据，可嵌套list tag 如果是嵌套列表则可设置如下属性：

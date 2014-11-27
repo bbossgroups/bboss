@@ -16,6 +16,7 @@
 package com.frameworkset.tag.logic;
 
 import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.tagext.Tag;
 
 import com.frameworkset.common.tag.BaseTag;
 import com.frameworkset.common.tag.pager.tags.MatchTag;
@@ -34,15 +35,23 @@ public class NoTag extends BaseTag{
 
 	@Override
 	public int doStartTag() throws JspException {
-		MatchTag matchTag = (MatchTag)super.findAncestorWithClass(this, MatchTag.class);
-		if(matchTag.isResult())
+		Tag tag = super.findAncestorWithClass(this, Tag.class);
+		if(tag instanceof MatchTag)
 		{
-			return SKIP_BODY;
+			MatchTag  matchTag = (MatchTag)tag;
+			if(matchTag.isResult())
+			{
+				return SKIP_BODY;
+			}
+			else
+			{
+				matchTag.setResolvedResult(true);
+				return EVAL_BODY_INCLUDE;
+			}
 		}
 		else
 		{
-			matchTag.setResolvedResult(true);
-			return EVAL_BODY_INCLUDE;
+			throw new JspException("no tag must be included in logic tag。");
 		}
 		
 	}

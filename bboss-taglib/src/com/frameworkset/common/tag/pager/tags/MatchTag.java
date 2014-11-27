@@ -63,6 +63,12 @@ public abstract class MatchTag extends BaseValueTag {
 	private boolean result = false;
 	private boolean evalbody = false;
 	private boolean resolvedResult = false;
+	/**
+	 * evalbody为true时，逻辑标签运算完毕后，hasyes和hasno必须都为true，也就是说必须要有yes和no标签一起成对
+	 * 出现在逻辑标签中
+	 */
+	private boolean hasyes;
+	private boolean hasno;
 	protected CaseTag caseTag = null;
     /**实际值*/
 	protected Object actualValue;
@@ -246,21 +252,31 @@ public abstract class MatchTag extends BaseValueTag {
 		this.scopes = null;
 		ignoreCase = false;
 		offset  = -1;
-		if(!this.evalbody && this.result)
+		if(!this.evalbody)
 		{
-			if(this.caseTag != null)
+			if( this.result)
 			{
-				caseTag.setResolvedResult(true);
+				if(this.caseTag != null)
+				{
+					caseTag.setResolvedResult(true);
+				}
 			}
 		}
-		else if(resolvedResult)
+		else 
 		{
-			if(this.caseTag != null)
+			if(!this.hasyes || !this.hasno )
+				throw new JspException("标签"+this.getClass().getSimpleName()+"属性evalbody=true时,两个内嵌标签yes和no必须成对出现.");
+			if(resolvedResult)
 			{
-				caseTag.setResolvedResult(true);
+				if(this.caseTag != null)
+				{
+					caseTag.setResolvedResult(true);
+				}
+				this.resolvedResult = false;
 			}
-			this.resolvedResult = false;
 		}
+		this.hasno = false;
+		this.hasyes =false;
 		this.evalbody = false;
 		this.result = false;
 		this.caseTag = null;
@@ -491,6 +507,22 @@ public abstract class MatchTag extends BaseValueTag {
 
 	public void setResolvedResult(boolean resolvedResult) {
 		this.resolvedResult = resolvedResult;
+	}
+
+	public boolean isHasyes() {
+		return hasyes;
+	}
+
+	public void setHasyes(boolean hasyes) {
+		this.hasyes = hasyes;
+	}
+
+	public boolean isHasno() {
+		return hasno;
+	}
+
+	public void setHasno(boolean hasno) {
+		this.hasno = hasno;
 	}
 	
 	
