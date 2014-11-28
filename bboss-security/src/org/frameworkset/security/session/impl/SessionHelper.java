@@ -144,4 +144,19 @@ public class SessionHelper {
 	{
 		return getSessionStaticManager().hasMonitorPermission(app, request);
 	}
+	
+	public static boolean hasDeleteAppPermission(String app, HttpServletRequest request)
+	{
+		return getSessionStaticManager().hasMonitorPermission(app, request);
+	}
+	
+	public static boolean deleteApp(String app) throws Exception
+	{
+		return getSessionStaticManager().deleteApp(app);
+	}
+	
+	public static boolean isMonitorAll() throws Exception
+	{
+		return getSessionStaticManager().isMonitorAll();
+	}
 }

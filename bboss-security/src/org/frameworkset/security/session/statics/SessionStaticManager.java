@@ -21,6 +21,8 @@ public interface SessionStaticManager {
 	 * @return
 	 */
 	public boolean hasMonitorPermission(String app,HttpServletRequest request);
+	public boolean hasDeleteAppPermission(String app,HttpServletRequest request);
+	
 	/**
 	 * 判断应用是否有查询会话权限，除了总控应用可以看所有会话外，其他的应用只能看当前应用的会话数据
 	 * @param app 
@@ -46,6 +48,8 @@ public interface SessionStaticManager {
 
 	void removeSessionInfos(String appKey, String[] sessionid);
 	
-	void removeAllSession(String appKey);
+	void removeAllSession(String appKey,String currentappkey,String currentsessionid);
+	boolean deleteApp(String app) throws Exception;
+	boolean isMonitorAll();
 
 }

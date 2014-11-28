@@ -67,7 +67,7 @@ public class MongoSessionStaticManagerImpl implements SessionStaticManager {
 	@Override
 	public List<SessionAPP> getSessionAPP(HttpServletRequest request) {
 		List<SessionAPP> appList = new ArrayList<SessionAPP>();
-
+		
 		List<String> list = getAPPName(request);
 
 		for (String appkey : list) {
@@ -77,6 +77,8 @@ public class MongoSessionStaticManagerImpl implements SessionStaticManager {
 
 			sessionApp.setAppkey(appkey.substring(0,
 					appkey.indexOf("_sessions")));
+			boolean hasDeletePermission = this.hasDeleteAppPermission(sessionApp.getAppkey(),request);
+			sessionApp.setHasDeletePermission(hasDeletePermission);
 			sessionApp.setSessions(coll.getCount());
 
 			appList.add(sessionApp);
@@ -469,15 +471,31 @@ public class MongoSessionStaticManagerImpl implements SessionStaticManager {
 	}
 
 	@Override
-	public void removeAllSession(String appKey) {
+	public void removeAllSession(String appKey,String currentappkey,String currentsessionid) {
 		if (!StringUtil.isEmpty(appKey)) {
 
 			DBCollection sessions = db.getCollection(MongoDBHelper
 					.getAppSessionTableName(appKey));
 
 			// 条件
-			BasicDBObject wheresql = new BasicDBObject();
-
+			BasicDBObject wheresql = null;
+			
+			if(StringUtil.isEmpty((String)currentsessionid))
+			{
+				wheresql = new BasicDBObject();
+			}
+				
+			else
+			{
+				if(appKey.equals(currentappkey))
+				{
+					wheresql = new BasicDBObject("sessionid", new BasicDBObject("$ne", currentsessionid));
+				}
+				else
+				{
+					wheresql = new BasicDBObject();
+				}
+			}
 			sessions.remove(wheresql);
 
 		}
@@ -555,6 +573,26 @@ public class MongoSessionStaticManagerImpl implements SessionStaticManager {
 
 	public void setMonitorScope(String monitorScope) {
 		this.monitorScope = monitorScope;
+	}
+
+	@Override
+	public boolean hasDeleteAppPermission(String app, HttpServletRequest request) {
+		
+		return this.monitorScope != null && this.monitorScope.equals(MONITOR_SCOPE_ALL);
+	}
+
+	@Override
+	public boolean deleteApp(String appKey) throws Exception {
+		DBCollection table = db.getCollection(MongoDBHelper
+				.getAppSessionTableName(appKey));
+		table.drop();
+		return true;
+	}
+
+	@Override
+	public boolean isMonitorAll() {
+		
+		return this.monitorScope != null && this.monitorScope.equals(MONITOR_SCOPE_ALL);
 	}
 
 }

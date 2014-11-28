@@ -54,9 +54,27 @@ public class NullSessionStaticManagerImpl implements SessionStaticManager {
 	}
 
 	@Override
-	public void removeAllSession(String appKey) {
+	public void removeAllSession(String appKey,String currentappkey,String currentsessionid) {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public boolean hasDeleteAppPermission(String app, HttpServletRequest request) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean deleteApp(String app) throws Exception {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isMonitorAll() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

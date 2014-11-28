@@ -33,6 +33,11 @@ public class YesTag extends BaseTag{
 		if(tag instanceof MatchTag)
 		{
 			MatchTag  matchTag = (MatchTag)tag;
+			if(!matchTag.isEvalbody())
+			{
+				throw new JspException("yes tag must be included in a logic tag whith attribute evalbody=\"true\"。");
+			}
+			matchTag.setHasyes(true);
 			if(matchTag.isResult())
 			{
 				matchTag.setResolvedResult(true);

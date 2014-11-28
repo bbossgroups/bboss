@@ -97,12 +97,12 @@ public class SessionManagerServiceImpl implements SessionManagerService {
 	}
 
 	@Override
-	public void delSession(String appkey, String sessionids)  throws Exception{
+	public void delSession(String appkey, String[] sessionids)  throws Exception{
 		try {
 
-			String[] ids = sessionids.split(",");
+			
 
-			for (String sessionid : ids) {
+			for (String sessionid : sessionids) {
 
 				if (StringUtil.isNotEmpty(sessionid)) {
 
@@ -152,13 +152,15 @@ public class SessionManagerServiceImpl implements SessionManagerService {
 	}
 
 	@Override
-	public void delAllSessions(String appkey) throws Exception {
+	public void delAllSessions(String appkey,String currentappkey,String currentsessionid) throws Exception {
 		try {
-			SessionHelper.getSessionStaticManager().removeAllSession(appkey);
+			SessionHelper.getSessionStaticManager().removeAllSession(appkey,  currentappkey,currentsessionid);
 		} catch (Exception e) {
 			throw e;
 		}
 	}
+	
+	
 
 	
 }

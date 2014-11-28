@@ -38,14 +38,14 @@ public interface SessionManagerService {
 	 * @param sessionid
 	 * 2014年6月5日
 	 */
-	public void delSession(String appkey, String sessionid) throws Exception;
+	public void delSession(String appkey, String[] sessionids) throws Exception;
 	
 	/** 删除应用下的session
 	 * @param appkey
 	 * @param sessionid
 	 * 2014年6月5日
 	 */
-	public void delAllSessions(String appkey)  throws Exception;
+	public void delAllSessions(String appkey,String currentappkey,String currentsessionid)  throws Exception;
 	
 	/** 获取单个session明细信息
 	 * @param appkey

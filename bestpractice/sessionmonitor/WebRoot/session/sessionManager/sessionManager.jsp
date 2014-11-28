@@ -1,4 +1,5 @@
 <%@ page language="java" pageEncoding="utf-8"%>
+<%@page import=" org.frameworkset.security.session.impl.SessionHelper"%>
 <%@ taglib uri="/WEB-INF/pager-taglib.tld" prefix="pg"%>
 <%--
 	描述：session管理
@@ -14,7 +15,6 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/include/dialog/lhgdialog.js"></script>
 <script language="javascript" type="text/javascript"
 src="${pageContext.request.contextPath}/include/datepicker/My97DatePicker/WdatePicker.js?lang=zh_CN"></script>
-
 <style type="text/css">
 <!--
   #rightContentDiv{
@@ -54,6 +54,11 @@ $(document).ready(function() {
 	$('#delAllButton').click(function() {
 		delAllSessions();
     });
+    <%if(SessionHelper.isMonitorAll()){%>
+    $('#delAppButton').click(function() {
+		delApp();
+    });
+    <%}%>
 	
 });
        
@@ -76,7 +81,7 @@ function queryList(){
     $("#sessionContainer").load("<%=request.getContextPath()%>/session/sessionManager/querySessionData.page #customContent", 
     	{"appkey":appkey,"sessionid":sessionid,"createtime_start":createtime_start,"createtime_end":createtime_end,
     	"referip":referip,"host":host,"validate":validate},
-    	function(){loadjs();});
+    	function(){});
     
     getTreeDate();
 }
@@ -99,13 +104,15 @@ function getTreeDate(){
 		success : function(data){
 			if (data) {
 				treeData = data;
+				
 			} else {
 				
 			}
+			initTreeModule('');
 		}	
 	 });
 	
-	initTreeModule('');
+	
 }
 
 function initTreeModule(app_query){
@@ -152,7 +159,7 @@ function doClickTreeNode(app_id,selectedNode){
    	$("#wf_app_name_td").html("&nbsp;");
 
 	queryList();
-}
+} 
 
 function sessionInfo(sessionid){
 	
@@ -176,10 +183,10 @@ function delSession (sessionid) {
 			},
 		success : function(data){
 			if (data != 'success') {
-				 $.dialog.alert("删除session出错："+data);
+				 $.dialog.alert("删除session失败："+data);
 			}else {
 				queryList();
-				close();	
+				
 			}
 		}	
 	 });
@@ -205,7 +212,44 @@ function delSessions () {
     
     delSession(ids);
 }
+function delApp()
+{
+	if($("#app_key").val() == '')
+	{
+		  $.dialog.alert('请选择左边的应用,然后再删除应用!');
+		return;
+	}
+	$.dialog.confirm('确定要删除'+$("#app_key").val()+'应用吗？', function(){
+     	$.ajax({
+	 	type: "POST",
+	 	url : "<%=request.getContextPath()%>/session/sessionManager/deleteApp.page",
+	 	data :{"appkey":$("#app_key").val()},
+		dataType : 'json',
+		async:false,
+		beforeSend: function(XMLHttpRequest){
+			 	XMLHttpRequest.setRequestHeader("RequestType", "ajax");
+		},
+		success : function(data){
+			if (data != 'success') {
+				 $.dialog.alert("删除"+$("#app_key").val()+"应用失败："+data);
+			}else {
+				
+			reloadpage();
+				
+				
+			}
+		}	
+	 });
+	},function(){
+	  		
+	});   
+}
 
+function reloadpage()
+{
+	alert("删除"+$("#app_key").val()+"应用成功");
+	window.location.reload() ; 
+}
 function delAllSessions () {
 	if($("#app_key").val() == '')
 	{
@@ -224,10 +268,10 @@ function delAllSessions () {
 		},
 		success : function(data){
 			if (data != 'success') {
-				 $.dialog.alert("清空"+$("#app_key").val()+"应用下所有session出错："+data);
+				 $.dialog.alert("清空"+$("#app_key").val()+"应用下所有session失败："+data);
 			}else {
 				queryList();
-				close();	
+				
 			}
 		}	
 	 });
@@ -242,7 +286,7 @@ function delAllSessions () {
 <body>
 <div class="mcontent" style="width:98%;margin:0 auto;overflow:auto;">
 	
-
+	
 
 	<div id="leftContentDiv">
 			    
@@ -289,7 +333,7 @@ function delAllSessions () {
 											 onclick="new WdatePicker({dateFmt:'yyyy/MM/dd HH:mm:ss'})" class="w120" />
 										</td>
 										<td rowspan="2" style="text-align:right">
-											<a href="javascript:void(0)" class="bt_1" id="queryButton" onclick="queryList()"><span>查询</span></a>
+																						<a href="javascript:void(0)" class="bt_1" id="queryButton" onclick="queryList()"><span>查询</span></a>
 											<a href="javascript:void(0)" class="bt_2" id="resetButton" onclick="doreset()"><span>重置</span></a>
 											<input type="reset" id="reset" style="display:none"/>
 										</td>
@@ -324,10 +368,11 @@ function delAllSessions () {
 			<div class="rightbtn">
 				<a href="#" class="bt_small" id="delAllButton"><span>清空应用下Session</span></a>
 				<a href="#" class="bt_small" id="delBatchButton"><span>批量删除</span></a>
+				 <%if(SessionHelper.isMonitorAll()){%><a href="#" class="bt_small" id="delAppButton"><span>删除应用（慎用）</span></a><%} %>
 			</div>
 					
 			<strong><span id="titileSpan">Session列表</span></strong>
-			<img id="wait" src="<%=request.getContextPath()%>/images/wait.gif" />				
+			<img id="wait" src="<%=request.getContextPath()%>/images/wait.gif" />
 		</div>
 			
 		<div id="sessionContainer" style="overflow:auto"></div>

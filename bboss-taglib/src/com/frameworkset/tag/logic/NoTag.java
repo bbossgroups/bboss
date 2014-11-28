@@ -39,6 +39,11 @@ public class NoTag extends BaseTag{
 		if(tag instanceof MatchTag)
 		{
 			MatchTag  matchTag = (MatchTag)tag;
+			if(!matchTag.isEvalbody())
+			{
+				throw new JspException("no tag must be included in a logic tag whith attribute evalbody=\"true\"。");
+			}
+			matchTag.setHasno(true);
 			if(matchTag.isResult())
 			{
 				return SKIP_BODY;

@@ -8,7 +8,7 @@
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/bboss-mvc.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/frameworkset-util.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/bboss-core.jar"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/bboss-security-sources.jar"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/bboss-security.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/bboss-security"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/log4j-1.2.14.jar"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>

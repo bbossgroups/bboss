@@ -8,6 +8,7 @@ public class SessionAPP {
 	
 	private String appkey;
 	private long sessions;
+	private boolean hasDeletePermission;
 	public String getAppkey() {
 		return appkey;
 	}
@@ -19,6 +20,12 @@ public class SessionAPP {
 	}
 	public void setSessions(long sessions) {
 		this.sessions = sessions;
+	}
+	public boolean isHasDeletePermission() {
+		return hasDeletePermission;
+	}
+	public void setHasDeletePermission(boolean hasDeletePermission) {
+		this.hasDeletePermission = hasDeletePermission;
 	}
 
 }

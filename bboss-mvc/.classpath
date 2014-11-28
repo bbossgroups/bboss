@@ -79,9 +79,6 @@
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/xstream-1.3.1.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/jxl-2.6.6.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/bboss-security.jar" sourcepath="/bboss-security"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/mongo-java-driver-2.12.2.jar"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/mongo-java-driver-javadoc-2.12.2.jar"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/mongo-java-driver-source-2.12.2.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/bboss-core.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/bboss-rpc.jar"/>
 	<classpathentry kind="output" path="WebRoot/WEB-INF/classes"/>

@@ -60,7 +60,8 @@ import com.frameworkset.common.tag.contextmenu.ContextMenu;
 public abstract class BaseTag extends TagSupport implements TryCatchFinally
 {
 	public void doCatch(Throwable arg0) throws Throwable {
-		// TODO Auto-generated method stub
+		
+		throw arg0;
 		
 	}
 

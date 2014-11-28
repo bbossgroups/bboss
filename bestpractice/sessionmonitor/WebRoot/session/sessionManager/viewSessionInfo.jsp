@@ -7,7 +7,7 @@
 <head>
 <title>Session详情</title>
 <%@ include file="/include/css.jsp"%>
-
+<script type="text/javascript" src="${pageContext.request.contextPath}/html/js/dialog/lhgdialog.js?self=false&skin=sany"></script>
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/include/syntaxhighlighter/styles/SyntaxHighlighter.css"></link>
 <script language="javascript" src="${pageContext.request.contextPath}/include/syntaxhighlighter/shCore.js"></script>
 <script language="javascript" src="${pageContext.request.contextPath}/include/syntaxhighlighter/shBrushJava.js"></script>
@@ -44,17 +44,20 @@
 								<td width="150"><pg:cell colName="loseTime" dateformat="yyyy-MM-dd HH:mm:ss"/></td>
 								<th width="100"><strong>状态:</strong></th>
 								<td width="150">
-									<pg:true colName="validate">有效</pg:true>
-						       		<pg:false colName="validate">无效</pg:false>
+									<pg:true colName="validate"  evalbody="true"><pg:yes>有效</pg:yes><pg:no>无效</pg:no></pg:true>
 					       		</td>
 							</tr>
 							<tr>
 								<th width="60"><strong>Cookie HttpOnly:</strong></th>
-								<td width="300" ><pg:true colName="httpOnly">启用</pg:true>
-	       		<pg:false colName="httpOnly"><span style=" color: red;">关闭</span></pg:false></td>	
+								<td width="300" ><pg:true colName="httpOnly" evalbody="true">
+									<pg:yes>启用</pg:yes>
+									<pg:no><span style=" color: red;">关闭</span></pg:no>
+								</pg:true>
+	       						</td>	
 								<th width="60"><strong>Cookie Secure:</strong></th>
-								<td width="300" colspan="10"><pg:true colName="secure">启用</pg:true>
-	       		<pg:false colName="secure"><span style=" color: red;">关闭</span></pg:false></td>									
+								<td width="300" colspan="10"><pg:true colName="secure" evalbody="true"><pg:yes>启用</pg:yes>
+									<pg:no><span style=" color: red;">关闭</span></pg:no></pg:true>
+	       						</td>									
 							</tr>
 							<tr>
 								<th width="60"><strong>请求地址:</strong></th>
@@ -84,7 +87,7 @@
 								<pg:map actual='${sessionInfo.attributes}'>
 									<tr><td ><pg:mapkey/></td><td><pre name='code' class='xml'><pg:cell htmlEncode='true'/></pre></td></tr>
 								</pg:map>
-							</pg:notempty> 	
+							</pg:notempty>
 						</tbody></table></div></p></div>
 						<%}else{ %>
 							<table border='1' cellpadding='0' cellspacing='0' class='table2' width='100%'>
@@ -98,8 +101,7 @@
 									           style='width: 800px;font-size: 12px;height:60px;' ><pg:cell htmlEncode='true'/></textarea>
 									</td></tr>
 								</pg:map>
-							</pg:notempty> 	
-							
+							</pg:notempty>
 							</table>
 						<%} %>
 						</div>

@@ -140,7 +140,7 @@ public abstract class BaseBodyTag extends BodyTagSupport  implements TryCatchFin
 //    public String generateContent(){return null;}
 
 	public void doCatch(Throwable arg0) throws Throwable {
-		// TODO Auto-generated method stub
+		throw arg0;
 		
 	}
 
