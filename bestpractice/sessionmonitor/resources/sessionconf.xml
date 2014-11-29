@@ -19,6 +19,7 @@
 	 -->
 			<!--<property name="appcode" value="10_25_192_142_pdp"/>-->
             <property name="sessionlisteners" value="org.frameworkset.security.session.impl.NullSessionListener"/>
+             <property name="startLifeScan" value="false"/>
 	</property>
 	
 	<property name="sessionStaticManager" f:monitorScope="all" class="org.frameworkset.security.session.statics.MongoSessionStaticManagerImpl"/>	

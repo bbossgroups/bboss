@@ -51,7 +51,7 @@ public class SessionManagerServiceImpl implements SessionManagerService {
 
 			List<SessionInfoBean> beanList = new ArrayList<SessionInfoBean>();
 			if (infoList != null && infoList.size() != 0) {
-
+				long ctime = System.currentTimeMillis();
 				for (SessionInfo info : infoList) {
 					SessionInfoBean bean = new SessionInfoBean();
 					bean.setAppKey(info.getAppKey());
@@ -63,14 +63,20 @@ public class SessionManagerServiceImpl implements SessionManagerService {
 							.getMaxInactiveInterval()));
 					bean.setReferip(info.getReferip());
 					bean.setSessionid(info.getSessionid());
-					bean.setValidate(info.isValidate());
-
+					
 					GregorianCalendar gc = new GregorianCalendar();
 					gc.setTime(info.getLastAccessedTime());
 					gc.add(Calendar.MILLISECOND,
 							(int) info.getMaxInactiveInterval());
 
 					bean.setLoseTime(gc.getTime());
+					if(bean.getLoseTime().getTime() < ctime)
+					{
+						bean.setValidate(false);
+					}
+					else
+						bean.setValidate(info.isValidate());
+
 					bean.setRequesturi(info.getRequesturi());
 					bean.setLastAccessedUrl(info.getLastAccessedUrl());
 					bean.setSecure(info.isSecure());
@@ -134,7 +140,7 @@ public class SessionManagerServiceImpl implements SessionManagerService {
 
 			bean.setReferip(info.getReferip());
 			bean.setSessionid(info.getSessionid());
-			bean.setValidate(info.isValidate());
+			
 			bean.setRequesturi(info.getRequesturi());
 			bean.setLastAccessedUrl(info.getLastAccessedUrl());
 			GregorianCalendar gc = new GregorianCalendar();
@@ -143,6 +149,12 @@ public class SessionManagerServiceImpl implements SessionManagerService {
 			bean.setSecure(info.isSecure());
 			bean.setHttpOnly(info.isHttpOnly());
 			bean.setLoseTime(gc.getTime());
+			if(bean.getLoseTime().getTime() < System.currentTimeMillis())
+			{
+				bean.setValidate(false);
+			}
+			else
+				bean.setValidate(info.isValidate());
 			bean.setLastAccessedHostIP(info.getLastAccessedHostIP());
 
 			return bean;
