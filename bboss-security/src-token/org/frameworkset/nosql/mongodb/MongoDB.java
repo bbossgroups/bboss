@@ -180,11 +180,11 @@ public class MongoDB {
 				if(StringUtil.isEmpty(clientMongoCredential.getMechanism()) 
 						||clientMongoCredential.getMechanism().equals(MongoCredential.MONGODB_CR_MECHANISM))
 				{
-					mongoCredentials.add(MongoCredential.createPlainCredential(clientMongoCredential.getUserName(), clientMongoCredential.getDatabase(),clientMongoCredential.getPassword().toCharArray()));
+					mongoCredentials.add(MongoCredential.createMongoCRCredential(clientMongoCredential.getUserName(), clientMongoCredential.getDatabase(),clientMongoCredential.getPassword().toCharArray()));
 				}
 				else if(clientMongoCredential.getMechanism().equals(MongoCredential.PLAIN_MECHANISM))
 				{
-					mongoCredentials.add(MongoCredential.createMongoCRCredential(clientMongoCredential.getUserName(), clientMongoCredential.getDatabase(),clientMongoCredential.getPassword().toCharArray()));
+					mongoCredentials.add(MongoCredential.createPlainCredential(clientMongoCredential.getUserName(), clientMongoCredential.getDatabase(),clientMongoCredential.getPassword().toCharArray()));
 				}
 				else if(clientMongoCredential.getMechanism().equals(MongoCredential.MONGODB_X509_MECHANISM))
 				{

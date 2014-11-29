@@ -3,29 +3,19 @@
 	<property name="default" factory-class="org.frameworkset.nosql.mongodb.MongoDB"
 		init-method="init" destroy-method="close" factory-method="getMongoClient">
 		
-		<!-- 这里不需要配置destroy-method，因为bboss持久层在jvm退出时会自动调用数据源的close方法 -->
+		
 		<property name="serverAddresses" >
-			10.0.15.134:27017
-			10.0.15.134:27018
-			10.0.15.38:27017
-			10.0.15.39:27017
+			 127.0.0.1:27016
 		</property>
-		<property name="option" >
-			QUERYOPTION_SLAVEOK
-		</property>
+		<property name="option" ></property>
 			
+		
 		<property name="writeConcern" value="JOURNAL_SAFE"/>
-		<property name="readPreference" value="NEAREST"/>		
-		<property name="autoConnectRetry" value="true"/>		
-		<property name="connectionsPerHost" value="50"/>	
-		<property name="maxWaitTime" value="120000"/>	
-		<property name="socketTimeout" value="0"/>	
-		<property name="connectTimeout" value="15000"/>	
-		<property name="threadsAllowedToBlockForConnectionMultiplier" value="5"/>	
-		<property name="socketKeepAlive" value="true"/>	
+		
+		<property name="readPreference" value=""/>	
 		<!-- 如果需要用户认证则在下面配置mongodb的数据库验证用户和口令以及机制 -->	
 		<!-- mechanism 取值范围：PLAIN GSSAPI MONGODB-CR MONGODB-X509，默认为MONGODB-CR  -->
-		<!--<property name="credentials">
+		<property name="credentials">
 		    <list componentType="bean"> 
 		        
 				<property class="org.frameworkset.nosql.mongodb.ClientMongoCredential"
@@ -40,6 +30,6 @@
 				    f:password="bboss"/> 
 				 
 			</list>
-		</property> -->
+		</property> 
 	</property>
 </properties>
