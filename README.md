@@ -10,69 +10,69 @@ https://github.com/bbossgroups/bbossgroups-3.5
 # bboss eclipse工程目录一览表
 ## |--antbuildall    
 包含bboss所有项目的ant构建指令，指令一栏表:
-   ### build-all.bat
+### build-all.bat
    jdk 1.5一次性打包所有工程指令，发布的jar和依赖资源文件存放在distrib目录下，会将各个模块依赖的jar包更新为新发布的jar文件
 
-   ### build-all-jdk6.bat
+### build-all-jdk6.bat
    jdk 1.6一次性打包所有工程指令，发布的jar和依赖资源文件存放在distrib目录下，会将各个模块依赖的jar包更新为新发布的jar文件
    
-   ### build-all-jdk7.bat
+### build-all-jdk7.bat
      jdk 1.7一次性打包所有工程指令，发布的jar和依赖资源文件存放在distrib目录下，会将各个模块引用jar包更新为新发布的jar文件
    
-   ### cleanall.bat
+### cleanall.bat
     清空所有已经发布出来的jar包和资源文件，并且清空各个工程的classes目录
    
-   ### build-cleanjars.bat
+### build-cleanjars.bat
     清空所有已经发布出来的jar包和资源文件
    
-   ### build-bboss-core-only.bat
+### build-bboss-core-only.bat
     ioc工程打包指令，发布的jar和依赖资源文件存放在bboss-core/distrib目录下，其他模块引用的jar包全部更新为新发布的jar文件
    
-   ### build-bboss-rpc-only.bat
+### build-bboss-rpc-only.bat
     rpc工程打包指令，发布的jar和依赖资源文件存放在bboss-rpc/distrib目录下，其他模块引用的jar包全部更新为新发布的jar文件
    
-   ### build-bboss-security-web.bat
+### build-bboss-security-web.bat
     bboss会话共享监控服务和令牌服务工程，发布的jar和依赖资源文件存放在bboss-security-web/distrib目录下，其他模块引用的jar包全部更新为新发布的jar文件
    
-   ### build-bboss-persistent.bat
+### build-bboss-persistent.bat
     持久层jdk5打包指令，发布的jar和依赖资源文件存放在bboss-persistent/distrib目录下，其他模块引用的jar包全部更新为新发布的jar文件
    
-   ### build-bboss-persistent-jdk6.bat
+### build-bboss-persistent-jdk6.bat
     持久层jdk6打包指令，发布的jar和依赖资源文件存放在bboss-persistent/distrib目录下，其他模块引用的jar包更新为新发布的jar文件
    
-   ### build-bboss-persistent-jdk7.bat
+### build-bboss-persistent-jdk7.bat
     持久层jdk7打包指令，发布的jar和依赖资源文件存放在bboss-persistent/distrib目录下，其他模块引用的jar包更新为新发布的jar文件
 
-   ### build-bboss-security.bat
+### build-bboss-security.bat
     会话共享和令牌管理打包指令，发布的jar和依赖资源文件存放在bboss-security/distrib目录下，其他模块引用的jar包更新为新发布的jar文件
 
-   ### build-bboss-schedule.bat
+### build-bboss-schedule.bat
     quartz任务管理打包指令，发布的jar和依赖资源文件存放在bboss-schedule/distrib目录下，其他模块引用的jar包更新为新发布的jar文件
 
-   ### build-bboss-event-only.bat
+### build-bboss-event-only.bat
     分布式事件打包指令，发布的jar和依赖资源文件存放在bbossevent/distrib目录下，其他模块引用的jar包更新为新发布的jar文件
 
-   ### build-bboss-hessian.bat
+### build-bboss-hessian.bat
     hessian服务发布打包指令，发布的jar和依赖资源文件存放在bboss-hession/distrib目录下，其他模块引用的jar包更新为新发布的jar文件
 
-   ### build-bboss-jodconverter-core.bat
+### build-bboss-jodconverter-core.bat
     文档处理jodconverter插件打包指令，发布的jar和依赖资源文件存放在bboss-jodconverter-core/distrib目录下，其他模块引用的jar包更新为新发布的jar文件
 
-   ### build-bboss-mvc-only-noresources.bat mvc工程打包指令，发布的jar和依赖资源文件存放在bboss-mvc/distrib目录下，其他模块引用的jar包更新为新发布的jar文件
+### build-bboss-mvc-only-noresources.bat mvc工程打包指令，发布的jar和依赖资源文件存放在bboss-mvc/distrib目录下，其他模块引用的jar包更新为新发布的jar文件
 
-   ### build-bboss-soa.bat
+### build-bboss-soa.bat
     序列化核心工程打包指令，发布的jar和依赖资源文件存放在bboss-soa/distrib目录下，其他模块引用的jar包更新为新发布的jar文件
 
-   ### build-bboss-taglib.bat
+### build-bboss-taglib.bat
     标签库打包指令，发布的jar和依赖资源文件存放在bboss-taglib/distrib目录下，其他模块引用的jar包更新为新发布的jar文件
 
-   ### build-bboss-util.bat
+### build-bboss-util.bat
     工具包打包指令，发布的jar和依赖资源文件存放在bboss-util/distrib目录下，其他模块引用的jar包更新为新发布的jar文件
 
-   ### build-bboss-velocity.bat
+### build-bboss-velocity.bat
     velocity引擎打包指令，发布的jar和依赖资源文件存放在bboss-velocity/distrib目录下，其他模块引用的jar包更新为新发布的jar文件
 
-   ### build-bboss-wordpdf.bat
+### build-bboss-wordpdf.bat
     文档处理jodconverter插件web工程打包指令，发布的jar和依赖资源文件存放在bboss-plugin-wordpdf/distrib目录下，其他模块引用的jar包更新为新发布的jar文件                  
                   
 ## |--apache-ant-1.7.1  
