@@ -8,7 +8,7 @@ http://yin-bp.iteye.com/
 https://github.com/bbossgroups/bbossgroups-3.5
 
 # bboss eclipse工程目录一览表
-##|--antbuildall    
+## |--antbuildall    
 包含bboss所有项目的ant构建指令，指令一栏表:
    ### build-all.bat
    jdk 1.5一次性打包所有工程指令，发布的jar和依赖资源文件存放在distrib目录下，会将各个模块依赖的jar包更新为新发布的jar文件
