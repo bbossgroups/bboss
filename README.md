@@ -155,3 +155,9 @@ ant构建补充说明：bboss提供了统一的ant构建指令集，执行这些
 则可以执行工程下的ant构建指令。
 
 ## bboss项目下载地址，参考文档：http://yin-bp.iteye.com/blog/1080824
+
+## License
+
+The BBoss Framework is released under version 2.0 of the [Apache License][].
+
+[Apache License]: http://www.apache.org/licenses/LICENSE-2.0
