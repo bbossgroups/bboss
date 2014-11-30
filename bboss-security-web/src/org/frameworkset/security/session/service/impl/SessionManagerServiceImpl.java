@@ -70,7 +70,11 @@ public class SessionManagerServiceImpl implements SessionManagerService {
 							(int) info.getMaxInactiveInterval());
 
 					bean.setLoseTime(gc.getTime());
-					if(bean.getLoseTime().getTime() < ctime)
+					if(info.getMaxInactiveInterval() <= 0)
+					{
+						bean.setValidate(true);
+					}
+					else if(bean.getLoseTime().getTime() < ctime)
 					{
 						bean.setValidate(false);
 					}
@@ -149,8 +153,13 @@ public class SessionManagerServiceImpl implements SessionManagerService {
 			bean.setSecure(info.isSecure());
 			bean.setHttpOnly(info.isHttpOnly());
 			bean.setLoseTime(gc.getTime());
-			if(bean.getLoseTime().getTime() < System.currentTimeMillis())
+			if(info.getMaxInactiveInterval() <= 0)
 			{
+				bean.setValidate(true);
+			}
+			else if(bean.getLoseTime().getTime() < System.currentTimeMillis())
+			{
+				
 				bean.setValidate(false);
 			}
 			else
