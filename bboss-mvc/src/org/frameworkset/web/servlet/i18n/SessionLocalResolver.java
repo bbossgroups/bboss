@@ -40,8 +40,8 @@ public class SessionLocalResolver extends AbstractLocaleResolver {
 	public static final String SESSION_LOCAL_KEY = "org.frameworkset.web.servlet.i18n.SESSION_LOCAL_KEY";
 	private String sessionlocalkey = SESSION_LOCAL_KEY;
 	public Locale resolveLocale(HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		Locale local = (Locale)session.getAttribute(sessionlocalkey);
+		HttpSession session = request.getSession(false);
+		Locale local = session != null?(Locale)session.getAttribute(sessionlocalkey):null;
 		return (local == null ?request.getLocale():local);
 	}
 
