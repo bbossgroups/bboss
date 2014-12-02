@@ -49,6 +49,7 @@ import org.frameworkset.util.annotations.wraper.RequestHeaderWraper;
 import org.frameworkset.util.annotations.wraper.RequestParamWraper;
 
 import com.frameworkset.orm.annotation.Column;
+import com.frameworkset.orm.annotation.IgnoreORMapping;
 import com.frameworkset.orm.annotation.PrimaryKey;
 import com.frameworkset.util.BeanUtils;
 import com.frameworkset.util.EditorInf;
@@ -170,6 +171,7 @@ public class ClassUtil
 		private RequestBodyWraper requestBody;
 		private DataBind dataBind;
 		private IgnoreBind ignoreBind;
+		private IgnoreORMapping ignoreORMapping;
 		private MapKey mapkey;
 		public IgnoreBind getIgnoreBind() {
 			return ignoreBind;
@@ -384,6 +386,10 @@ public class ClassUtil
 				{
 					this.ignoreBind = (IgnoreBind)a;
 				}
+				else if(a instanceof IgnoreORMapping)
+				{
+					this.ignoreORMapping = (IgnoreORMapping)a;
+				}
 				else if(a instanceof MapKey)
 				{
 					this.mapkey = (MapKey)a;
@@ -575,6 +581,10 @@ public class ClassUtil
 
 		public MapKey getMapkey() {
 			return mapkey;
+		}
+
+		public IgnoreORMapping getIgnoreORMapping() {
+			return ignoreORMapping;
 		}
 
 	}

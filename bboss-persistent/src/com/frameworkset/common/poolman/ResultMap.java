@@ -40,7 +40,6 @@ import com.frameworkset.common.poolman.sql.PoolManResultSetMetaData;
 import com.frameworkset.common.poolman.sql.PoolManResultSetMetaData.WrapInteger;
 import com.frameworkset.common.poolman.util.JDBCPool;
 import com.frameworkset.common.poolman.util.SQLUtil;
-import com.frameworkset.orm.annotation.Column;
 import com.frameworkset.orm.annotation.PrimaryKey;
 import com.frameworkset.orm.engine.model.SchemaType;
 import com.frameworkset.util.ValueObjectUtil;
@@ -216,6 +215,8 @@ public class ResultMap {
 				PoolManResultSetMetaData meta = stmtInfo.getMeta();
 				for (int n = 0; attributes != null && n < attributes.size(); n++) {
 					PropertieDescription attribute = attributes.get(n);
+					if(attribute.getIgnoreORMapping() != null)
+						continue;
 					String attrName = attribute.getName();
 					String upname = attribute.getUperName();
 					
@@ -465,6 +466,8 @@ public class ResultMap {
 				List<PropertieDescription> attributes = beanInfo.getPropertyDescriptors();
 				for (int n = 0; attributes != null && n < attributes.size(); n++) {
 					PropertieDescription attribute = attributes.get(n);
+					if(attribute.getIgnoreORMapping() != null)
+						continue;
 					String attrName = attribute.getName();
 	//				if(attrName.equals("class"))
 	//					continue;
