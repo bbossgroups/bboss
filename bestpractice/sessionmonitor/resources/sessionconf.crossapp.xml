@@ -1,12 +1,13 @@
 <properties>
 	<!-- 
 	会话共享配置:跨越配置实例
+	http://127.0.0.1:8080/sessionmonitor/sessiontest.jsp
 	-->
 	<property name="sessionManager" class="org.frameworkset.security.session.impl.SessionManager"
 		init-method="init" destroy-method="destroy">		
 			<property name="sessionTimeout" value="3600000"/>
 			<property name="sessionstore" refid="attr:sessionstore"/> 
-			<!--<property name="sessionstore" value="session"/>-->
+			<!-- <property name="sessionstore" value="session"/>-->
 			<property name="cookiename" value="b_sessionid"/>			
 			<property name="httpOnly" value="true"/>
 			<property name="secure" value="false"/>
@@ -44,13 +45,13 @@
 				    <list componentType="bean">
 				        <property class="org.frameworkset.security.session.domain.App"
 				            	f:path="/session" 
-                                                f:currentApp="true"
+                                                f:currentApp="false"
 				            	f:attributeNamespace="session_bboss_com_cn"  
 				            	init-method="init"
 				            />				        
 				        <property class="org.frameworkset.security.session.domain.App"				            	
 				            	f:path="/sessionmonitor"	
-                                                f:currentApp="false"
+                                                f:currentApp="true"
 				            	f:attributeNamespace="sessionmonitor_bboss_com_cn"
 				            	init-method="init"
 				            />

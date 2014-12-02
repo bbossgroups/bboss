@@ -30,5 +30,8 @@ testVO = (TestVO)session.getAttribute("testVO");
 testVO.setId("testvoidaaaaa");
 //需要将修改后的对象重新设置到session中否则无法存储最新的testVO到mongodb中
 session.setAttribute("testVO", testVO);
-
+session.setAttribute("userAccount","john");//跨应用共享属性
+out.println("<br>");
  %>
+ 
+ <a href="http://127.0.0.1:8080/sessionmonitor/sessiontest.jsp" target="_blank">sessionmonitor</a>

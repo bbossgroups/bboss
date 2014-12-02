@@ -3,17 +3,33 @@
 	<property name="default" factory-class="org.frameworkset.nosql.mongodb.MongoDB"
 		init-method="init" destroy-method="close" factory-method="getMongoClient">
 		
-
+		
 		<property name="serverAddresses" >
-			 192.168.1.105:27016
+			 127.0.0.1:27016
 		</property>
 		<property name="option" ></property>
 			
 		
 		<property name="writeConcern" value="JOURNAL_SAFE"/>
 		
-		<property name="readPreference" value=""/>		
-		
-		
+		<property name="readPreference" value=""/>	
+		<!-- 如果需要用户认证则在下面配置mongodb的数据库验证用户和口令以及机制 -->	
+		<!-- mechanism 取值范围：PLAIN GSSAPI MONGODB-CR MONGODB-X509，默认为MONGODB-CR  -->
+		<!--<property name="credentials">
+		    <list componentType="bean"> 
+		        
+				<property class="org.frameworkset.nosql.mongodb.ClientMongoCredential"
+				    f:mechanism="MONGODB-CR"
+				    f:database="sessiondb"
+				    f:userName="bboss"				    
+				    f:password="bboss"/> 
+				<property class="org.frameworkset.nosql.mongodb.ClientMongoCredential"
+				    f:mechanism="MONGODB-CR"
+				    f:database="tokendb"
+				    f:userName="bboss"				    
+				    f:password="bboss"/> 
+				 
+			</list>
+		</property> -->
 	</property>
 </properties>
