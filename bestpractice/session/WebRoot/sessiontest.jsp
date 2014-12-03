@@ -7,16 +7,13 @@ if(value == null)
 	session.setAttribute("$a.b.c", "a");
 }
 value = (String)session.getAttribute("$a.b.c");
-out.println("before remove:"+value);
+out.println("$a.b.c:"+value);
 out.println("<br>");
-session.removeAttribute("$a.b.c");
-value = (String)session.getAttribute("$a.b.c");
-out.println("after remove:"+value);
-out.println("<br>");
+
 session.setAttribute("local", java.util.Locale.CHINESE);
-out.println("SS:"+session.getServletContext());
+out.println("session.getServletContext():"+session.getServletContext());
 out.println("<br>");
-out.println(session.getAttribute("local"));
+out.println("local:"+session.getAttribute("local"));
 
 //下面的功能演示存储一个复杂对象（包含引用关系）到session中，然后读取出来验证对象关系是否正确还原
 TestVO testVO = new TestVO();
@@ -32,6 +29,8 @@ testVO.setId("testvoidaaaaa");
 session.setAttribute("testVO", testVO);
 session.setAttribute("userAccount","john");//跨应用共享属性
 out.println("<br>");
+String privateAttr = (String)session.getAttribute("privateAttr");//session应用设置的共享会话属性
+out.println("sessionmonitor's private attribute:"+privateAttr+"<br>");
  %>
  
  <a href="http://127.0.0.1:8080/sessionmonitor/sessiontest.jsp" target="_blank">sessionmonitor</a>

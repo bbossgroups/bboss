@@ -1,6 +1,7 @@
 <properties>
 	<!-- 
 	会话共享配置:跨越配置实例
+	http://127.0.0.1:8080/session/sessiontest.jsp
 	-->
 	<property name="sessionManager" class="org.frameworkset.security.session.impl.SessionManager"
 		init-method="init" destroy-method="destroy">		
