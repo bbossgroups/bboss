@@ -832,7 +832,25 @@ public class TokenService implements TokenServiceInf,InitializingBean {
 	public void setSecret(String secret) {
 		this.secret = secret;
 	}
-
+	/**
+	 * 销毁令牌票据ticket
+	 * @param token
+	 * @param appid
+	 * @param secret
+	 */
+	public boolean destroyTicket(String ticket,String appid,String secret) throws TokenException{
+		return this.tokenStore.destroyTicket(ticket, appid, secret);
+	}
+	/**
+	 * 刷新令牌票据ticket有效时间，如果ticket已经失效则抛出异常
+	 * @param token
+	 * @param appid
+	 * @param secret
+	 */
+	public boolean refreshTicket(String ticket,String appid,String secret) throws TokenException{
+		return this.refreshTicket(ticket, appid, secret);
+				
+	}
 
 
 }

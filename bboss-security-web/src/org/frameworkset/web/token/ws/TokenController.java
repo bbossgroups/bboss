@@ -3,6 +3,7 @@ package org.frameworkset.web.token.ws;
 import javax.jws.WebService;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.log4j.Logger;
 import org.frameworkset.util.annotations.ResponseBody;
 import org.frameworkset.web.token.TokenException;
 import org.frameworkset.web.token.TokenHelper;
@@ -31,6 +32,7 @@ import org.frameworkset.web.token.TokenStore;
  */
 @WebService(name="TokenService",targetNamespace="org.frameworkset.web.token.ws.TokenService")
 public class TokenController implements TokenService {
+	private static final Logger log = Logger.getLogger(TokenController.class);
 	/**
 	 * 获取令牌请求
 	 * @param request
@@ -65,7 +67,8 @@ public class TokenController implements TokenService {
 				tokenGetResponse.setResultcode(e.getMessage());
 			
 			} catch (Exception e) {
-				tokenGetResponse.setResultcode(TokenStore.ERROR_CODE_BACKENDERROR);
+				log.debug(TokenStore.ERROR_CODE_BACKENDERROR, e);
+				tokenGetResponse.setResultcode(TokenStore.ERROR_CODE_BACKENDERROR+":" +e.getMessage());
 			}
 			return  tokenGetResponse;
 	}
@@ -92,7 +95,8 @@ public class TokenController implements TokenService {
 				tokenGetResponse.setResultcode(e.getMessage());
 			
 			} catch (Exception e) {
-				tokenGetResponse.setResultcode(TokenStore.ERROR_CODE_BACKENDERROR);
+				log.debug(TokenStore.ERROR_CODE_BACKENDERROR, e);
+				tokenGetResponse.setResultcode(TokenStore.ERROR_CODE_BACKENDERROR+":" +e.getMessage());
 			}
 			return  tokenGetResponse;
 	}
@@ -121,7 +125,8 @@ public class TokenController implements TokenService {
 				tokenGetResponse.setResultcode(e.getMessage());
 			
 			} catch (Exception e) {
-				tokenGetResponse.setResultcode(TokenStore.ERROR_CODE_BACKENDERROR);
+				log.debug(TokenStore.ERROR_CODE_BACKENDERROR, e);
+				tokenGetResponse.setResultcode(TokenStore.ERROR_CODE_BACKENDERROR+":" +e.getMessage());
 			}
 			return  tokenGetResponse;
 	}
@@ -156,7 +161,8 @@ public class TokenController implements TokenService {
 				tokenGetResponse.setResultcode(e.getMessage());
 			
 			} catch (Exception e) {
-				tokenGetResponse.setResultcode(TokenStore.ERROR_CODE_BACKENDERROR);
+				log.debug(TokenStore.ERROR_CODE_BACKENDERROR, e);
+				tokenGetResponse.setResultcode(TokenStore.ERROR_CODE_BACKENDERROR+":" +e.getMessage());
 			}
 			return  tokenGetResponse;
 		}
@@ -211,7 +217,8 @@ public class TokenController implements TokenService {
 			tokenGetResponse.setResultcode(e.getMessage());
 		
 		} catch (Exception e) {
-			tokenGetResponse.setResultcode(TokenStore.ERROR_CODE_BACKENDERROR);
+			log.debug(TokenStore.ERROR_CODE_BACKENDERROR, e);
+			tokenGetResponse.setResultcode(TokenStore.ERROR_CODE_BACKENDERROR+":" +e.getMessage());
 		}
 		return tokenGetResponse;
 		
@@ -222,6 +229,50 @@ public class TokenController implements TokenService {
 			String secret) throws Exception {
 		String ticket =  TokenHelper.getTokenService().genTicket( account, worknumber, appid, secret);
 		return  ticket;
+	}
+
+	@Override
+	public @ResponseBody(datatype="json") TicketGetResponse destroyTicket(String ticket, String appid,
+			String secret) throws Exception {
+		TicketGetResponse tokenGetResponse = new TicketGetResponse();
+		try {
+			boolean result = TokenHelper.getTokenService().destroyTicket(ticket, appid, secret);
+			if(result)
+				tokenGetResponse.setResultcode(TokenStore.RESULT_OK);
+			else
+				tokenGetResponse.setResultcode(TokenStore.RESULT_FAIL);
+			
+		} catch (TokenException e) {
+			tokenGetResponse.setResultcode(e.getMessage());
+		
+		} catch (Exception e) {
+			log.debug(TokenStore.ERROR_CODE_BACKENDERROR, e);
+			tokenGetResponse.setResultcode(TokenStore.ERROR_CODE_BACKENDERROR+":" +e.getMessage());
+		}
+		return tokenGetResponse;
+		
+	}
+
+	@Override
+	public @ResponseBody(datatype="json") TicketGetResponse refreshTicket(String ticket, String appid,
+			String secret) throws Exception {
+		
+		TicketGetResponse tokenGetResponse = new TicketGetResponse();
+		try {
+			boolean result = TokenHelper.getTokenService().refreshTicket(ticket, appid, secret);
+			if(result)
+				tokenGetResponse.setResultcode(TokenStore.RESULT_OK);
+			else
+				tokenGetResponse.setResultcode(TokenStore.RESULT_FAIL);
+			
+		} catch (TokenException e) {
+			tokenGetResponse.setResultcode(e.getMessage());
+		
+		} catch (Exception e) {
+			log.debug(TokenStore.ERROR_CODE_BACKENDERROR, e);
+			tokenGetResponse.setResultcode(TokenStore.ERROR_CODE_BACKENDERROR+":" +e.getMessage());
+		}
+		return tokenGetResponse;
 	}
 
 	

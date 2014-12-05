@@ -40,6 +40,7 @@ public interface TokenStore {
 	public static final String token_request_account_key = "token_request_account_key";
 	public static final String token_request_worknumber_key = "token_request_worknumber_key";
 	public static final String RESULT_OK = "ok";
+	public static final String RESULT_FAIL = "fail";
 	public static final String ERROR_CODE_NOENABLETICKET = "NOENABLETICKET";
 	public static final String ERROR_CODE_NOENABLETOKEN = "NOENABLETOKEN";
 	public static final String ERROR_CODE_GETKEYPAIRFAILED = "GETKEYPAIRFAILED";
@@ -121,4 +122,18 @@ public interface TokenStore {
 	public abstract ECCCoderInf getECCCoder();
 	public ValidateApplication getValidateApplication() ;
 	public void setValidateApplication(ValidateApplication validateApplication) ;
+	/**
+	 * 销毁令牌票据ticket
+	 * @param token
+	 * @param appid
+	 * @param secret
+	 */
+	public boolean destroyTicket(String ticket,String appid,String secret) throws TokenException;
+	/**
+	 * 刷新令牌票据ticket有效时间，如果ticket已经失效则抛出异常
+	 * @param token
+	 * @param appid
+	 * @param secret
+	 */
+	public boolean refreshTicket(String ticket,String appid,String secret) throws TokenException;
 }

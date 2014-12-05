@@ -106,9 +106,21 @@ insert into tickets(token,ticket,createtime,livetime,appid,lastVistTime) values(
 select * from tickets where token = ?
  ]]>
 </property>
+
+<property name="getTicketLivetimeandLastVisttime">
+<![CDATA[
+select livetime,lastVistTime from tickets where token = ?
+ ]]>
+</property>
 <property name="updateTicketlastAccessedtime">
 <![CDATA[
 update tickets set lastVistTime = ? where token = ?
  ]]>
 </property>
+<property name="destroyTicket">
+<![CDATA[
+	delete from tickets where token = ?
+ ]]>
+</property>
+
 </properties>

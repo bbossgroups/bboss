@@ -16,6 +16,46 @@ public abstract class BaseTokenStore implements TokenStore {
 	protected long dualtokenlivetime;
 	protected ECCCoderInf ECCCoder = null;
 	protected ValidateApplication validateApplication;
+	protected abstract boolean destroyTicket(String token,String appid);
+	protected abstract boolean refreshTicket(String token,String appid);
+	
+	
+	public boolean destroyTicket(String token,String appid,String secret) throws TokenException
+	{
+		try {
+			boolean result = false;
+			this.assertApplication(appid, secret);
+			result = this.destroyTicket(token, appid);
+			return result;
+		} catch (Exception e) {
+			throw new TokenException("destroy ticket["+token+"] of app["+appid+"] failed:",e);
+		}
+	}
+	public boolean refreshTicket(String token,String appid,String secret) throws TokenException
+	{
+		try {
+			boolean result = false;
+			this.assertApplication(appid, secret);
+			result = this.refreshTicket(token, appid);
+			return result;
+		} catch (TokenException e) {
+			throw e;
+		}
+		catch (Exception e) {
+			throw new TokenException("refresh ticket["+token+"] of app["+appid+"] failed:",e);
+		}
+		
+		
+	}
+	
+	protected void assertExpiredTicket(Ticket ticket,String appid,long lastVistTime)
+	{
+		if(isoldticket(ticket, lastVistTime))
+		{
+			destroyTicket(ticket.getToken(), appid);
+			throw new TokenException(TokenStore.ERROR_CODE_TICKETEXPIRED);
+		}
+	}
 	protected String randomToken()
 	{
 		String token = UUID.randomUUID().toString();
@@ -56,14 +96,15 @@ public abstract class BaseTokenStore implements TokenStore {
 		return genDualToken(appid,ticket, secret, TokenStore.DEFAULT_DUALTOKENLIVETIME) ;
 	}
 	
-	protected void assertApplication(String appid,String secret) throws TokenException
+	protected Application assertApplication(String appid,String secret) throws TokenException
 	{
 		try {
-			boolean result = validateApplication.checkApp(appid, secret);
-			if(!result)
+			AppValidateResult result = validateApplication.validateApp(appid, secret);
+			if(result == null || !result.getResult())
 			{
 				throw new TokenException(TokenStore.ERROR_CODE_APPVALIDATEFAILED);
 			}
+			return result.getApplication();
 		} catch (TokenException e) {
 			throw e;
 		} catch (Exception e) {
@@ -75,7 +116,7 @@ public abstract class BaseTokenStore implements TokenStore {
 			String appid, String secret) throws TokenException
 	{
 		
-		this.assertApplication(appid, secret);
+		Application application = this.assertApplication(appid, secret);
 		long createTime = System.currentTimeMillis();
 		if(worknumber == null)
 		{
@@ -104,8 +145,11 @@ public abstract class BaseTokenStore implements TokenStore {
 			}
 			Ticket _ticket = new Ticket();
 			_ticket.setAppid(appid);
-			_ticket.setCreatetime(createTime);			
-			_ticket.setLivetime(this.ticketdualtime);
+			_ticket.setCreatetime(createTime);	
+			if(application.getTicketlivetime() == -2l)
+				_ticket.setLivetime(this.ticketdualtime);
+			else
+				_ticket.setLivetime(application.getTicketlivetime());
 			_ticket.setTicket(ticket);
 			_ticket.setToken(token);
 			_ticket.setLastVistTime(createTime);

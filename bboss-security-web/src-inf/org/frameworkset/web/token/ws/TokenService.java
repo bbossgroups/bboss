@@ -59,4 +59,21 @@ public interface TokenService {
 			@WebParam(name = "worknumber", partName = "partWorknumber") String worknumber,
 			@WebParam(name = "appid", partName = "partAppid") String appid,
 			@WebParam(name = "secret", partName = "partSecret") String secret)throws Exception;
+	
+	/**
+	 * 销毁令牌票据ticket
+	 * @param token
+	 * @param appid
+	 * @param secret
+	 */
+	public @WebResult(name = "destroyTicket", partName = "partDestroyTicket") TicketGetResponse destroyTicket(@WebParam(name = "ticket", partName = "partTicket")  String ticket,@WebParam(name = "appid", partName = "partAppid") String appid,
+			@WebParam(name = "secret", partName = "partSecret") String secret)throws Exception;
+	/**
+	 * 刷新令牌票据ticket有效时间，如果ticket已经失效则抛出异常
+	 * @param token
+	 * @param appid
+	 * @param secret
+	 */
+	public @WebResult(name = "refreshTicket", partName = "partRefreshTicket") TicketGetResponse refreshTicket(@WebParam(name = "ticket", partName = "partTicket")  String ticket,@WebParam(name = "appid", partName = "partAppid") String appid,
+			@WebParam(name = "secret", partName = "partSecret") String secret) throws Exception;
 }

@@ -25,5 +25,23 @@ package org.frameworkset.web.token;
  * @version 3.8.0
  */
 public interface ValidateApplication {
+	/**
+	 * 通过appid和secret校验应用是否有效
+	 * @param appid
+	 * @param secret
+	 * @return
+	 * @throws TokenException
+	 * @Deprecated use Application validateApp(String appid,String secret) throws TokenException;
+	 */
+	@Deprecated
 	public boolean checkApp(String appid,String secret) throws TokenException;
+	/**
+	 * 通过appid和secret校验应用是否有效,成功返回校验的Application对象，否则返回null
+	 * @param appid
+	 * @param secret
+	 * @return
+	 * @throws TokenException
+	 */
+	
+	public AppValidateResult validateApp(String appid,String secret) throws TokenException;
 }

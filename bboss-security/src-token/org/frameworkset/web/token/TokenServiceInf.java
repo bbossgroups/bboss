@@ -81,5 +81,19 @@ public interface TokenServiceInf {
 	public abstract boolean isEnableToken();
 	public String getSecret();
 	public String getAppid();
+	/**
+	 * 销毁令牌票据ticket
+	 * @param token
+	 * @param appid
+	 * @param secret
+	 */
+	public boolean destroyTicket(String ticket,String appid,String secret) throws TokenException;
+	/**
+	 * 刷新令牌票据ticket有效时间，如果ticket已经失效则抛出异常
+	 * @param token
+	 * @param appid
+	 * @param secret
+	 */
+	public boolean refreshTicket(String ticket,String appid,String secret) throws TokenException;
 
 }

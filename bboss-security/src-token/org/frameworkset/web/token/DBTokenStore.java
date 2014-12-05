@@ -448,16 +448,73 @@ public class DBTokenStore extends BaseTokenStore {
 		}
 		
 	}
+	protected boolean refreshTicket(String token,String appid) 
+	{
+		TransactionManager tm = new TransactionManager();
+		try {
+			tm.begin();
+			
+			Ticket ticket = this.executor.queryObjectByRowHandler(new RowHandler<Ticket>(){
+
+				@Override
+				public void handleRow(Ticket arg0, Record arg1)
+						throws Exception {
+					arg0.setLivetime(arg1.getLong("livetime"));
+					arg0.setLastVistTime(arg1.getLong("lastVistTime"));
+					
+				}
+				
+			},Ticket.class,"getTicketLivetimeandLastVisttime",token);
+			if(ticket != null)
+			{
+				long lastVistTime =  System.currentTimeMillis();
+				assertExpiredTicket(ticket,appid,lastVistTime);
+				this.executor.update("updateTicketlastAccessedtime", lastVistTime,token);
+				return true;
+			}
+			tm.commit();
+			return false;
+		}
+		catch (TokenException e) {
+			throw e;
+		}
+		catch (Exception e) {
+			throw new TokenException("refresh ticket["+token+"] of app["+appid+"] failed:",e);
+		}
+		finally
+		{
+			tm.release();
+		}
+	}
+	protected boolean destroyTicket(String token,String appid)
+	{
+		try {
+			this.executor.delete("destroyTicket", token);
+			return true;
+		} catch (Exception e) {
+			throw new TokenException("destroy ticket["+token+"] of app["+appid+"] failed:",e);
+		}
+	}
 	@Override
 	protected Ticket getTicket(String token, String appid) {
 		TransactionManager tm = new TransactionManager();
 		try {
 			tm.begin();
+			
 			Ticket ticket = this.executor.queryObject(Ticket.class,"getTicket",token);
-			this.executor.update("updateTicketlastAccessedtime", System.currentTimeMillis(),token);
+			if(ticket != null)
+			{
+				long lastVistTime =  System.currentTimeMillis();
+				assertExpiredTicket(ticket,appid,lastVistTime);
+				this.executor.update("updateTicketlastAccessedtime", lastVistTime,token);
+			}
 			tm.commit();
 			return ticket;
-		} catch (Exception e) {
+		}
+		catch (TokenException e) {
+			throw e;
+		}
+		catch (Exception e) {
 			throw new TokenException(TokenStore.ERROR_CODE_GETTICKETFAILED,e);
 		}
 		finally

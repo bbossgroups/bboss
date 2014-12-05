@@ -10,6 +10,8 @@ import java.util.Set;
 
 import org.frameworkset.security.ecc.SimpleKeyPair;
 
+import com.mongodb.BasicDBObject;
+
 public class MemTokenStore extends BaseTokenStore{
 	private  Map<String,MemToken> temptokens = new HashMap<String,MemToken>();
 	private  Map<String,MemToken> authtemptokens = new HashMap<String,MemToken>();
@@ -277,11 +279,33 @@ public class MemTokenStore extends BaseTokenStore{
 	protected Ticket getTicket(String token, String appid) {
 		
 		Ticket ticket = this.tickets.get(token);
-		ticket.setLastVistTime(System.currentTimeMillis());
+		if(ticket != null)
+		{
+			long lastVistTime =  System.currentTimeMillis();
+			assertExpiredTicket(ticket,appid,lastVistTime);
+			ticket.setLastVistTime(lastVistTime);
+		}
+		
 		return ticket;
 	}
 
-	
+	protected boolean refreshTicket(String token,String appid) 
+	{
+		if(getTicket( token,  appid) != null)
+			return true;
+		else
+			return false;
+	}
+	protected boolean destroyTicket(String token,String appid)
+	{
+		try {
+			if(this.tickets.remove( token) != null)
+				return true;
+			return false;
+		} catch (Exception e) {
+			throw new TokenException("destroy ticket["+token+"] of app["+appid+"] failed:",e);
+		}
+	}
 	
 	
 	

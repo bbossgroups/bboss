@@ -17,6 +17,7 @@ package org.frameworkset.web.token.ws;
 
 import javax.jws.WebService;
 
+import org.apache.log4j.Logger;
 import org.frameworkset.util.annotations.ResponseBody;
 import org.frameworkset.web.token.TokenException;
 import org.frameworkset.web.token.TokenHelper;
@@ -35,7 +36,7 @@ import org.frameworkset.web.token.TokenStore;
  */
 @WebService(name="CheckTokenService",targetNamespace="org.frameworkset.web.token.ws.CheckTokenService")
 public class CheckTokenContoller implements CheckTokenService{
-	
+	private static final Logger log = Logger.getLogger(TokenController.class);
 	public @ResponseBody(datatype="json") TokenCheckResponse checkToken(String appid,String secret,String token) 
 	{
 		TokenCheckResponse tokenCheckResponse = new TokenCheckResponse();
@@ -50,7 +51,8 @@ public class CheckTokenContoller implements CheckTokenService{
 			tokenCheckResponse.setResultcode(e.getMessage());
 		}
 		 catch (Exception e) {
-			 tokenCheckResponse.setResultcode(TokenStore.ERROR_CODE_BACKENDERROR);
+			 log.debug(TokenStore.ERROR_CODE_BACKENDERROR, e);
+			 tokenCheckResponse.setResultcode(TokenStore.ERROR_CODE_BACKENDERROR+":" +e.getMessage());
 		}
 		return tokenCheckResponse;
 	}
@@ -68,7 +70,8 @@ public class CheckTokenContoller implements CheckTokenService{
 			tokenCheckResponse.setResultcode(e.getMessage());
 		}
 		 catch (Exception e) {
-			 tokenCheckResponse.setResultcode(TokenStore.ERROR_CODE_BACKENDERROR);
+			 log.debug(TokenStore.ERROR_CODE_BACKENDERROR, e);
+			 tokenCheckResponse.setResultcode(TokenStore.ERROR_CODE_BACKENDERROR+":" +e.getMessage());
 		}
 		return tokenCheckResponse;
 	}
@@ -82,7 +85,8 @@ public class CheckTokenContoller implements CheckTokenService{
 				tokenCheckResponse.setResultcode(e.getMessage());
 			}
 			 catch (Exception e) {
-				 tokenCheckResponse.setResultcode(TokenStore.ERROR_CODE_BACKENDERROR);
+				 log.debug(TokenStore.ERROR_CODE_BACKENDERROR, e);
+				 tokenCheckResponse.setResultcode(TokenStore.ERROR_CODE_BACKENDERROR+":" +e.getMessage());
 				}
 			return tokenCheckResponse;
 	}

@@ -11,6 +11,7 @@ import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.mongodb.Mongo;
+import com.mongodb.WriteResult;
 
 
 public class MongodbTokenStore extends BaseTokenStore{
@@ -522,14 +523,56 @@ public class MongodbTokenStore extends BaseTokenStore{
 		.append("lastVistTime", ticket.getLastVistTime()) );
 		
 	}
+	
+	protected boolean refreshTicket(String token,String appid) 
+	{
+		try
+		{
+			BasicDBObject keys = new BasicDBObject();
+			keys.put("lastVistTime", 1);
+			keys.put("livetime", 1);
+			DBObject value = tickets.findOne(new BasicDBObject("token", token),keys);
+			if(value != null)
+			{
+				Ticket ticket = new Ticket();
+				long lastVistTime =  System.currentTimeMillis();
+				ticket.setLivetime((Long)value.get("livetime"));
+				ticket.setLastVistTime( (Long)value.get("lastVistTime"));
+				assertExpiredTicket(ticket,appid,lastVistTime);
+				this.tickets.update(new BasicDBObject("token", token), 
+													   new BasicDBObject("$set",
+															  			new BasicDBObject("lastVistTime", lastVistTime)
+															  		    ));
+				return true;
+			}
+			return false;
+		}
+		catch (TokenException e) {
+			throw e;
+		}
+		catch (Exception e) {
+			throw new TokenException("refresh ticket["+token+"] of app["+appid+"] failed:",e);
+		}
+		
+	}
+	protected boolean destroyTicket(String token,String appid)
+	{
+		try {
+			this.tickets.remove(new BasicDBObject("token", token));			
+			return true;
+		} catch (Exception e) {
+			throw new TokenException("destroy ticket["+token+"] of app["+appid+"] failed:",e);
+		}
+	}
 	@Override
 	protected Ticket getTicket(String token, String appid) {
 		DBCursor cursor = null;
 		try
 		{
+			long lastVistTime =  System.currentTimeMillis();
 			DBObject value = tickets.findAndModify(new BasicDBObject("token", token), 
 												   new BasicDBObject("$set",
-														  			new BasicDBObject("lastVistTime", System.currentTimeMillis())
+														  			new BasicDBObject("lastVistTime", lastVistTime)
 														  		    )
 							 					  );
 			if(value != null)
@@ -539,12 +582,20 @@ public class MongodbTokenStore extends BaseTokenStore{
 				ticket.setCreatetime((Long)value.get("createtime"));
 				ticket.setLivetime((Long)value.get("livetime"));
 				ticket.setTicket((String)value.get("ticket"));
-				ticket.setLastVistTime((Long)value.get("lastVistTime"));
-				ticket.setToken((String)value.get("token"));
+				ticket.setLastVistTime( (Long)value.get("lastVistTime"));
+				ticket.setToken(token);
+				
+				assertExpiredTicket(ticket,appid,lastVistTime);
 				return ticket;
 				
 			}
 			return null;
+		}
+		catch (TokenException e) {
+			throw e;
+		}
+		catch (Exception e) {
+			throw new TokenException(TokenStore.ERROR_CODE_GETTICKETFAILED,e);
 		}
 		finally
 		{
