@@ -4,8 +4,6 @@ import javax.jws.WebParam;
 import javax.jws.WebResult;
 import javax.jws.WebService;
 
-import org.frameworkset.util.annotations.ResponseBody;
-
 @WebService(name = "TokenService", targetNamespace = "org.frameworkset.web.token.ws.TokenService")
 public interface TokenService {
 	public @WebResult(name = "authTempToken", partName = "partAuthTempToken")

@@ -848,7 +848,7 @@ public class TokenService implements TokenServiceInf,InitializingBean {
 	 * @param secret
 	 */
 	public boolean refreshTicket(String ticket,String appid,String secret) throws TokenException{
-		return this.refreshTicket(ticket, appid, secret);
+		return this.tokenStore.refreshTicket(ticket, appid, secret);
 				
 	}
 
