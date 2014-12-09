@@ -272,9 +272,10 @@ public abstract class MatchTag extends BaseValueTag {
 				{
 					caseTag.setResolvedResult(true);
 				}
-				this.resolvedResult = false;
+				
 			}
 		}
+		this.resolvedResult = false;
 		this.hasno = false;
 		this.hasyes =false;
 		this.evalbody = false;
