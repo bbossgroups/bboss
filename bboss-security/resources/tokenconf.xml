@@ -18,6 +18,12 @@
 			<!-- 指定动态令牌校验失败跳转地址
 		如果没有指定直接采用redirecturl对应的地址作为跳转地址 -->
 			<property name="tokenfailpath" value="/common/jsp/tokenfail.jsp"/>
+			<!--
+				是否启用token生命周期管理机制 true 开启，定时销毁过期token和ticket数据
+	 			 只有在token服务器端才能开启token Life scan monitor，
+	 			默认不开启 
+	 		-->
+			<property name="tokenLifescan" value="false"/>
 			
 		
 	</property>

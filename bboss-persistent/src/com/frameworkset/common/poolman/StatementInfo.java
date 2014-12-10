@@ -263,9 +263,9 @@ public class StatementInfo {
 		if (this.rownum == null) {
 			// if (this.isRobotQuery(prepareDBName))
 			paginesql = getDBPagineSql(true);
-			if(showsql)
+			if(showsql && paginesql != null)
 			{
-				log.debug("Execute JDBC prepared pagine query statement:"+paginesql);
+				log.debug("Execute JDBC prepared pagine query statement:"+paginesql.getSql());
 			}
 		} else {
 			paginesql = getDBPagineSqlForOracle(true);

@@ -6,7 +6,7 @@
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/asm-3.1.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/asm-commons-3.1.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/asm-util-3.1.jar"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/bboss-security.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/bboss-security.jar" sourcepath="WebRoot/WEB-INF/lib/bboss-security-sources.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/bboss-soa.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/cglib-nodep-2.2.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/frameworkset-util.jar"/>

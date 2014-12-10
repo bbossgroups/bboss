@@ -55,6 +55,12 @@ public class TokenService implements TokenServiceInf,InitializingBean {
 	private boolean client;
 	private String appid;
 	private String secret;
+	/**
+	 * 是否启用token有效期检测机制
+	 * 只有在token服务器端才能开启token Life scan monitor，
+	 * 默认不开启
+	 */
+	private boolean tokenLifescan = false;
 	
 	/**
 	<property name="tokenstore" value="mongodb|org.frameworkset.web.token.MongodbTokenStore"/>
@@ -183,8 +189,10 @@ public class TokenService implements TokenServiceInf,InitializingBean {
 	//			tokenstore_i = tokenstore_in_mem;
 	//		else
 	//			tokenstore_i = tokenstore_in_session;
-			if(enableToken && tokenscaninterval > 0 && (temptokenlivetime > 0 || dualtokenlivetime > 0))
+			
+			if(this.tokenLifescan )
 			{
+				 log.debug("Token/Ticket life scan monitor start.");
 				tokenMonitor = new TokenMonitor();
 				tokenMonitor.start();
 				
@@ -850,6 +858,20 @@ public class TokenService implements TokenServiceInf,InitializingBean {
 	public boolean refreshTicket(String ticket,String appid,String secret) throws TokenException{
 		return this.tokenStore.refreshTicket(ticket, appid, secret);
 				
+	}
+
+
+
+
+	public boolean isTokenLifescan() {
+		return tokenLifescan;
+	}
+
+
+
+
+	public void setTokenLifescan(boolean tokenLifescan) {
+		this.tokenLifescan = tokenLifescan;
 	}
 
 
