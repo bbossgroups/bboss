@@ -846,6 +846,15 @@ public class CellTag  extends PagerTagSupport {
 	}
 	protected Object getObjectValue()
 	{
+		return _getObjectValue(true);
+	}
+	/**
+	 * 
+	 * @param returncurrentObject 是否返回当前记录 true返回，false不返回
+	 * @return
+	 */
+	protected Object _getObjectValue(boolean returncurrentObject)
+	{
 		try
 		{
 //			if(this.actualseted)
@@ -918,7 +927,7 @@ public class CellTag  extends PagerTagSupport {
 						} 
 						else if(this.content != null)				
 							outStr = getContent();
-						else
+						else if(returncurrentObject)
 							outStr = getObjectValue(dataSet, dataSet.getRowid());
 						if(outStr == null && getDefaultValue() != null)
 							outStr = getObjectValue(getDefaultValue());
@@ -968,8 +977,8 @@ public class CellTag  extends PagerTagSupport {
 		}
 		catch(Exception e)
 		{
-			e.printStackTrace();
-//			log.debug("error:" ,e);
+			
+			log.debug("eval cell value error:" ,e);
 			return null;
 		}
 	}
