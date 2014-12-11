@@ -1167,11 +1167,11 @@ public class ValueExchange {
 				value = res.getTimestamp(i);
 				break;
 			case Types.DATE:
-//				try
-//				{
-//					value = res.getTimestamp(i);break;
-//				}
-//				catch(Exception e)
+				try
+				{
+					value = res.getTimestamp(i);break;
+				}
+				catch(Exception e)
 				{
 					value = res.getDate(i);break;
 				}
@@ -1337,11 +1337,11 @@ public class ValueExchange {
 				value = res.getTimestamp(colName);
 				break;
 			case Types.DATE:
-//				try
-//				{
-//					value = res.getTimestamp(i);break;
-//				}
-//				catch(Exception e)
+				try
+				{
+					value = res.getTimestamp(colName);break;
+				}
+				catch(Exception e)
 				{
 					value = res.getDate(colName);break;
 				}
