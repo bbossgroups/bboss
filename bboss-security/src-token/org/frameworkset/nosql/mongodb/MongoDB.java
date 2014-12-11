@@ -390,6 +390,19 @@ public class MongoDB {
 				return wr;
 			
 	 }
+	 public static DBObject findAndModify( DBCollection collection,DBObject query , DBObject update )
+	 {
+		 try
+			{
+				 DBObject object = collection.findAndModify(query,update);
+				 return object;
+			}
+		    catch(WriteConcernException e)
+			{
+				log.debug("findAndModify:",e);
+				return null;
+			}
+	 }
 	 public static DBObject findAndRemove(DBCollection collection, DBObject query )
 	 {
 		 try

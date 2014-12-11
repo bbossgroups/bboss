@@ -1,6 +1,7 @@
 package org.frameworkset.web.token;
 
 import org.apache.log4j.Logger;
+import org.frameworkset.nosql.mongodb.MongoDB;
 import org.frameworkset.nosql.mongodb.MongoDBHelper;
 import org.frameworkset.security.ecc.SimpleKeyPair;
 
@@ -11,7 +12,7 @@ import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.mongodb.Mongo;
-import com.mongodb.WriteResult;
+import com.mongodb.WriteConcern;
 
 
 public class MongodbTokenStore extends BaseTokenStore{
@@ -102,7 +103,8 @@ public class MongodbTokenStore extends BaseTokenStore{
 
 		try
 		{
-			temptokens.remove(new BasicDBObject("$where",temp));
+//			temptokens.remove(new BasicDBObject("$where",temp));
+			MongoDB.remove(temptokens,new BasicDBObject("$where",temp),WriteConcern.UNACKNOWLEDGED);
 			
 		}
 		finally
@@ -113,7 +115,8 @@ public class MongodbTokenStore extends BaseTokenStore{
 
 		try
 		{
-			dualtokens.remove(new BasicDBObject("$where",temp));
+//			dualtokens.remove(new BasicDBObject("$where",temp));
+			MongoDB.remove(dualtokens,new BasicDBObject("$where",temp),WriteConcern.UNACKNOWLEDGED);
 			
 		}
 		finally
@@ -123,7 +126,8 @@ public class MongodbTokenStore extends BaseTokenStore{
 
 		try
 		{
-			authtemptokens.remove(new BasicDBObject("$where",temp));
+//			authtemptokens.remove(new BasicDBObject("$where",temp));
+			MongoDB.remove(authtemptokens,new BasicDBObject("$where",temp),WriteConcern.UNACKNOWLEDGED);
 		}
 		finally
 		{
@@ -149,7 +153,8 @@ public class MongodbTokenStore extends BaseTokenStore{
 				.append("}");
 		try
 		{
-			this.tickets.remove(new BasicDBObject("$where",temp));
+//			this.tickets.remove(new BasicDBObject("$where",wherefun));
+			MongoDB.remove(tickets,new BasicDBObject("$where",wherefun),WriteConcern.UNACKNOWLEDGED);
 		}
 		finally
 		{
@@ -292,23 +297,28 @@ public class MongodbTokenStore extends BaseTokenStore{
 	@Override
 	protected MemToken getAuthTempMemToken(String token, String appid) {
 		BasicDBObject dbobject = new BasicDBObject("token", token).append("appid", appid);
+		DBObject tt = authtemptokens.findOne(dbobject);
 		
-		DBObject tt = this.authtemptokens.findAndRemove(dbobject);
 		if(tt == null)
 			return null;
+		MongoDB.remove(this.authtemptokens,dbobject);
 		MemToken token_m = toauthtempToken(tt);		
 		return token_m;
 	}
 	@Override
 	protected MemToken getTempMemToken(String token, String appid) {
 		BasicDBObject dbobject = new BasicDBObject("token", token);
-		DBObject tt = temptokens.findAndRemove(dbobject);
+		DBObject tt = temptokens.findOne(dbobject);
 		if(tt != null)
 		{
 //			DBObject tt = cursor.next();
+			MongoDB.remove(temptokens,dbobject);
 			MemToken token_m = totempToken(tt);	
+			
 			return token_m;
 		}
+		
+		
 		return null;
 		
 	}	
@@ -328,8 +338,9 @@ public class MongodbTokenStore extends BaseTokenStore{
 		DBObject dt = null;
 		if(lastVistTime > 0)
 		{
-			
-			dt = dualtokens.findAndModify(dbobject, new BasicDBObject("$set",new BasicDBObject("lastVistTime", lastVistTime)));
+			dt = dualtokens.findOne(dbobject);
+			MongoDB.update(dualtokens,dbobject, new BasicDBObject("$set",new BasicDBObject("lastVistTime", lastVistTime)));
+//			dt = dualtokens.findAndModify(dbobject, new BasicDBObject("$set",new BasicDBObject("lastVistTime", lastVistTime)));
 			tt = todualToken(dt); 
 		}
 		else
@@ -359,7 +370,7 @@ public class MongodbTokenStore extends BaseTokenStore{
 
 	private void insertDualToken(DBCollection dualtokens,MemToken dualToken)
 	{
-		dualtokens.insert(new BasicDBObject("token",dualToken.getToken())
+		MongoDB.insert(dualtokens,new BasicDBObject("token",dualToken.getToken())
 		.append("createTime", dualToken.getCreateTime())
 		.append("lastVistTime", dualToken.getLastVistTime())
 		.append("livetime", dualToken.getLivetime())
@@ -371,7 +382,7 @@ public class MongodbTokenStore extends BaseTokenStore{
 	
 	private void updateDualToken(MemToken dualToken)
 	{
-		this.dualtokens.update(new BasicDBObject(
+		MongoDB.update(this.dualtokens,new BasicDBObject(
 		"appid", dualToken.getAppid()),
 		new BasicDBObject("token",dualToken.getToken())
 		.append("createTime", dualToken.getCreateTime())
@@ -387,7 +398,7 @@ public class MongodbTokenStore extends BaseTokenStore{
 	public MemToken _genTempToken() throws TokenException {
 		String token = this.randomToken();
 		MemToken token_m = new MemToken(token,System.currentTimeMillis());
-		temptokens.insert(new BasicDBObject("token",token_m.getToken()).append("createTime", token_m.getCreateTime()).append("livetime", this.tempTokendualtime).append("validate", true));
+		MongoDB.insert(temptokens,new BasicDBObject("token",token_m.getToken()).append("createTime", token_m.getCreateTime()).append("livetime", this.tempTokendualtime).append("validate", true));
 		this.signToken(token_m, type_temptoken, null,null);
 		return token_m;
 		
@@ -495,7 +506,7 @@ public class MongodbTokenStore extends BaseTokenStore{
 	}
 	private void insertECKeyPair(String appid,String secret,SimpleKeyPair keypair)
 	{
-		this.eckeypairs.insert(new BasicDBObject("appid",appid)		
+		MongoDB.insert(this.eckeypairs,new BasicDBObject("appid",appid)		
 		.append("privateKey", keypair.getPrivateKey())
 		.append("createTime", System.currentTimeMillis())
 		.append("publicKey", keypair.getPublicKey()) );
@@ -515,7 +526,7 @@ public class MongodbTokenStore extends BaseTokenStore{
 	private long livetime;
 	private String appid
 		 */
-		this.tickets.insert(new BasicDBObject("appid",ticket.getAppid())		
+		MongoDB.insert(this.tickets,new BasicDBObject("appid",ticket.getAppid())		
 		.append("token", ticket.getToken())
 		.append("ticket", ticket.getTicket())
 		.append("livetime", ticket.getLivetime())
@@ -539,7 +550,7 @@ public class MongodbTokenStore extends BaseTokenStore{
 				ticket.setLivetime((Long)value.get("livetime"));
 				ticket.setLastVistTime( (Long)value.get("lastVistTime"));
 				assertExpiredTicket(ticket,appid,lastVistTime);
-				this.tickets.update(new BasicDBObject("token", token), 
+				MongoDB.update(this.tickets,new BasicDBObject("token", token), 
 													   new BasicDBObject("$set",
 															  			new BasicDBObject("lastVistTime", lastVistTime)
 															  		    ));
@@ -558,7 +569,7 @@ public class MongodbTokenStore extends BaseTokenStore{
 	protected boolean destroyTicket(String token,String appid)
 	{
 		try {
-			this.tickets.remove(new BasicDBObject("token", token));			
+			MongoDB.remove(this.tickets,new BasicDBObject("token", token));			
 			return true;
 		} catch (Exception e) {
 			throw new TokenException("destroy ticket["+token+"] of app["+appid+"] failed:",e);
@@ -570,7 +581,8 @@ public class MongodbTokenStore extends BaseTokenStore{
 		try
 		{
 			long lastVistTime =  System.currentTimeMillis();
-			DBObject value = tickets.findAndModify(new BasicDBObject("token", token), 
+			DBObject value = tickets.findOne(new BasicDBObject("token", token));
+			MongoDB.update(tickets,new BasicDBObject("token", token), 
 												   new BasicDBObject("$set",
 														  			new BasicDBObject("lastVistTime", lastVistTime)
 														  		    )
