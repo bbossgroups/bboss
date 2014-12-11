@@ -17,6 +17,9 @@ package org.frameworkset.security.session.impl;
 
 import java.util.Enumeration;
 
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpSession;
+
 import org.frameworkset.security.session.Session;
 import org.frameworkset.security.session.SessionBasicInfo;
 import org.frameworkset.security.session.SessionEvent;
@@ -48,7 +51,16 @@ public class DelegateSessionStore implements SessionStore {
 		sessionStore.livecheck();
 
 	}
-
+	public HttpSession createHttpSession(ServletContext servletContext,SessionBasicInfo sessionBasicInfo,String contextpath)
+	{
+		Session session = createSession(sessionBasicInfo);
+		HttpSession httpsession = new HttpSessionImpl(session,servletContext,contextpath);
+		if(SessionHelper.haveSessionListener())
+		{
+			SessionHelper.dispatchEvent(new SessionEventImpl(httpsession,SessionEvent.EventType_create));
+		}
+		return httpsession;
+	}
 	@Override
 	public Session createSession(SessionBasicInfo sessionBasicInfo) {
 		// TODO Auto-generated method stub
@@ -57,10 +69,7 @@ public class DelegateSessionStore implements SessionStore {
 			return null;
 		session._setSessionStore(this);
 		session.putNewStatus();
-		if(SessionHelper.haveSessionListener())
-		{
-			SessionHelper.dispatchEvent(new SessionEventImpl(session,SessionEvent.EventType_create));
-		}
+		
 		return session;
 	}
 
@@ -97,18 +106,16 @@ public class DelegateSessionStore implements SessionStore {
 	}
 
 	@Override
-	public Session invalidate(String appKey,String contextpath, String sessionID) {
-		Session session = this.sessionStore.invalidate(appKey, contextpath, sessionID);
-		if(session == null)
-		{
-			return null;
-		}
-		session._setSessionStore(this);
+	public void invalidate(HttpSession session,String appKey,String contextpath, String sessionID) {
 		if(SessionHelper.haveSessionListener())
 		{
 			SessionHelper.dispatchEvent(new SessionEventImpl(session,SessionEvent.EventType_destroy));
 		}
-		return session;
+		this.sessionStore.invalidate(session,appKey, contextpath, sessionID);
+		
+		
+		
+		
 	}
 
 	@Override
@@ -118,40 +125,35 @@ public class DelegateSessionStore implements SessionStore {
 	}
 
 	@Override
-	public Object removeAttribute(String appKey,String contextpath, String sessionID,
+	public void removeAttribute(HttpSession session,String appKey,String contextpath, String sessionID,
 			String attribute) {
-		String _attribute = SessionHelper.wraperAttributeName(appKey,contextpath,  attribute);
-		Session session = (Session)this.sessionStore.removeAttribute(appKey, contextpath, sessionID, _attribute);		
-		if(session == null)
-			return null;
-		session._setSessionStore(this);
 		if(SessionHelper.haveSessionListener())
 		{
 			SessionHelper.dispatchEvent(new SessionEventImpl(session,SessionEvent.EventType_removeAttibute)
-										.setAttributeName(attribute)
-										.setAttributeValue(session.getCacheAttribute(attribute)));
+										.setAttributeName(attribute));
 		}
-		return session;
-
+		String _attribute = SessionHelper.wraperAttributeName(appKey,contextpath,  attribute);
+		this.sessionStore.removeAttribute(  session,appKey, contextpath, sessionID, _attribute);		
+		
+		
+		
 	}
 
 	@Override
-	public Object addAttribute(String appKey,String contextpath, String sessionID, String attribute,
+	public void addAttribute(HttpSession session,String appKey,String contextpath, String sessionID, String attribute,
 			Object value) {
-		Object temp = value;
+		
 		value = SessionHelper.serial(value);
 		String _attribute = SessionHelper.wraperAttributeName(appKey,contextpath,  attribute);
-		Session session = (Session)this.sessionStore.addAttribute(appKey, contextpath, sessionID, _attribute, value);
-		if(session == null)
-			return null;
-		session._setSessionStore(this);
+		 this.sessionStore.addAttribute(  session,appKey, contextpath, sessionID, _attribute, value);
+		 
+		
 		if(SessionHelper.haveSessionListener())
 		{
 			SessionHelper.dispatchEvent(new SessionEventImpl(session,SessionEvent.EventType_addAttibute)
-										.setAttributeName(attribute)
-										.setAttributeValue(temp));
+										.setAttributeName(attribute));
 		}
-		return session;
+		
 	}
 
 	@Override

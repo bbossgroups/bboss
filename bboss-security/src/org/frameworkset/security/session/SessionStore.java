@@ -17,6 +17,9 @@ package org.frameworkset.security.session;
 
 import java.util.Enumeration;
 
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpSession;
+
 import org.frameworkset.security.session.impl.SessionManager;
 
 /**
@@ -33,7 +36,7 @@ public interface SessionStore{
 	void destory();
 
 	void livecheck();
-	
+	public HttpSession createHttpSession(ServletContext servletContext,SessionBasicInfo sessionBasicInfo,String contextpath);
 //	Session createSession(String appKey,String referip,String reqesturi);
 	Session createSession(SessionBasicInfo sessionBasicInfo);
 
@@ -47,13 +50,13 @@ public interface SessionStore{
 
 	String[] getValueNames(String appKey,String contextpath,String sessionID);
 
-	Session invalidate(String appKey,String contextpath,String sessionID);
+	void invalidate(HttpSession session,String appKey,String contextpath,String sessionID);
 
 	boolean isNew(String appKey,String sessionID);
 
-	Object removeAttribute(String appKey,String contextpath,String sessionID, String attribute);
+	void removeAttribute(HttpSession session,String appKey,String contextpath,String sessionID, String attribute);
 
-	Object addAttribute(String appKey,String contextpath,String sessionID, String attribute, Object value);
+	void addAttribute(HttpSession session,String appKey,String contextpath,String sessionID, String attribute, Object value);
 
 	void setSessionManager(SessionManager sessionManager);
 	

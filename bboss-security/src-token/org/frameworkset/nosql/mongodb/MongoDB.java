@@ -8,6 +8,8 @@ import org.apache.log4j.Logger;
 
 import com.frameworkset.util.StringUtil;
 import com.mongodb.Bytes;
+import com.mongodb.DBCollection;
+import com.mongodb.DBObject;
 import com.mongodb.Mongo;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientOptions;
@@ -16,6 +18,8 @@ import com.mongodb.MongoCredential;
 import com.mongodb.ReadPreference;
 import com.mongodb.ServerAddress;
 import com.mongodb.WriteConcern;
+import com.mongodb.WriteConcernException;
+import com.mongodb.WriteResult;
 
 
 public class MongoDB {
@@ -131,14 +135,20 @@ public class MongoDB {
 
 	 
 	}
-	
+	public static void main(String[] args)
+	{
+		String aa = "REPLICA_ACKNOWLEDGED(10)";
+		int idx = aa.indexOf("(") ;
+		String n = aa.substring(idx + 1,aa.length() - 1); 
+		System.out.println(n);
+	}
 	private WriteConcern  _getWriteConcern()
 	{
 		if(StringUtil.isEmpty(this.writeConcern))
 			return null;
 		writeConcern=writeConcern.trim();
 		if(this.writeConcern.equals("NONE"))
-			return WriteConcern.NONE;
+			return WriteConcern.UNACKNOWLEDGED;
 		else if(this.writeConcern.equals("NORMAL"))
 			return WriteConcern.NORMAL;
 		else if(this.writeConcern.equals("SAFE"))
@@ -151,6 +161,47 @@ public class MongoDB {
 			return WriteConcern.JOURNAL_SAFE;
 		else if(this.writeConcern.equals("REPLICAS_SAFE"))
 			return WriteConcern.REPLICAS_SAFE;
+		else if(this.writeConcern.startsWith("REPLICA_ACKNOWLEDGED"))
+		{
+			int idx = writeConcern.indexOf("(") ;
+			if(idx < 0)
+			{
+				return WriteConcern.REPLICA_ACKNOWLEDGED;
+			}
+			else
+			{
+				String n = this.writeConcern.substring(idx + 1,writeConcern.length() - 1); 
+				try {
+					if(n.indexOf(",") < 0)
+					{
+						int N = Integer.parseInt(n);
+						return new WriteConcern(N);
+					}
+					else
+					{
+						String[] p = n.split(",");
+					    n = p[0];
+					    String _wtimeout = p[1];
+					    int N = Integer.parseInt(n);
+					    int wtimeout = Integer.parseInt(_wtimeout);
+					    return new WriteConcern(N,wtimeout,false);
+					}
+				} catch (NumberFormatException e) {
+					return WriteConcern.REPLICA_ACKNOWLEDGED;
+				}
+			}
+		}
+		else if(this.writeConcern.equals("ACKNOWLEDGED"))
+			return WriteConcern.ACKNOWLEDGED;
+		else if(this.writeConcern.equals("UNACKNOWLEDGED"))
+			return WriteConcern.UNACKNOWLEDGED;
+		else if(this.writeConcern.equals("FSYNCED"))
+			return WriteConcern.FSYNCED;
+		else if(this.writeConcern.equals("JOURNALED"))
+			return WriteConcern.JOURNALED;
+		else if(this.writeConcern.equals("ERRORS_IGNORED"))
+			return WriteConcern.UNACKNOWLEDGED;
+		
 		throw new RuntimeException("未知的WriteConcern:"+writeConcern);
 	}
 	
@@ -315,5 +366,80 @@ public class MongoDB {
 		if(this.mongoclient != null)
 			this.mongoclient.close();
 	}
-
+	
+	 public static WriteResult update(DBCollection collection, DBObject q , DBObject o )
+	 {
+		 try
+			{
+				WriteResult wr = collection.update(q, o);
+				
+				return wr;
+			}
+			catch(WriteConcernException e)
+			{
+				log.debug("update:",e);
+				return null;
+			}
+	 }
+	 
+	 public static WriteResult update(DBCollection collection, DBObject q , DBObject o , WriteConcern concern)
+	 {
+		
+				WriteResult wr = collection.update(q, o, false , false,concern );
+				
+				return wr;
+			
+	 }
+	 public static DBObject findAndRemove(DBCollection collection, DBObject query )
+	 {
+		 try
+			{
+				 DBObject object = collection.findAndRemove(query);
+				 return object;
+			}
+		    catch(WriteConcernException e)
+			{
+				log.debug("findAndRemove:",e);
+				return null;
+			}
+	 }
+	 
+	  public static WriteResult insert(DBCollection collection,DBObject ... arr)
+	  {
+		  
+		  try
+			{
+			  return collection.insert(arr);
+			}
+		    catch(WriteConcernException e)
+			{
+				log.debug("insert:",e);
+				return null;
+			}
+	  }
+	  
+	  public static WriteResult insert(WriteConcern concern ,DBCollection collection,DBObject ... arr)
+	  {
+		  
+			return collection.insert(arr,concern);
+			
+	  }
+	  
+	  public static WriteResult remove(DBCollection collection, DBObject o )
+	  {
+		  try
+			{
+			  return collection.remove(o);
+			}
+		    catch(WriteConcernException e)
+			{
+				log.debug("remove:",e);
+				return null;
+			}
+	  }
+	  
+	  public static WriteResult remove(DBCollection collection, DBObject o , WriteConcern concern ){
+		  return collection.remove(o,concern);
+	    }
+	
 }

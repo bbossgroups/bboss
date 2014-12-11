@@ -45,13 +45,13 @@ public class HttpSessionImpl implements HttpSession {
 	@Override
 	public Object getAttribute(String attribute) {
 		// TODO Auto-generated method stub
-		return session.getAttribute(attribute,contextpath);
+		return session.getAttribute(this,attribute,contextpath);
 	}
 
 	@Override
 	public Enumeration getAttributeNames() {
 		// TODO Auto-generated method stub
-		return this.session.getAttributeNames(contextpath);
+		return this.session.getAttributeNames(this,contextpath);
 	}
 
 	@Override
@@ -68,9 +68,11 @@ public class HttpSessionImpl implements HttpSession {
 
 	
 	public void touch(String lastAccessedUrl) {
-		session.touch( lastAccessedUrl,contextpath);
+		session.touch(this, lastAccessedUrl,contextpath);
 
 	}
+	
+	
 
 	@Override
 	public long getLastAccessedTime() {
@@ -87,18 +89,18 @@ public class HttpSessionImpl implements HttpSession {
 	@Override
 	public Object getValue(String attribute) {
 		
-		return this.session.getValue(attribute,contextpath);
+		return this.session.getValue(this,attribute,contextpath);
 	}
 
 	@Override
 	public String[] getValueNames() {
 		// TODO Auto-generated method stub
-		return session.getValueNames(contextpath);
+		return session.getValueNames(this,contextpath);
 	}
 
 	@Override
 	public void invalidate() {
-		this.session.invalidate(contextpath);
+		this.session.invalidate(this,contextpath);
 
 	}
 
@@ -110,25 +112,25 @@ public class HttpSessionImpl implements HttpSession {
 
 	@Override
 	public void putValue(String attribute, Object value) {
-		session.putValue(attribute, value,contextpath);
+		session.putValue(this,attribute, value,contextpath);
 
 	}
 
 	@Override
 	public void removeAttribute(String attribute) {
-		session.removeAttribute(attribute,contextpath);
+		session.removeAttribute(this,attribute,contextpath);
 
 	}
 
 	@Override
 	public void removeValue(String attribute) {
-		session.removeValue(attribute,contextpath);
+		session.removeValue(this,attribute,contextpath);
 
 	}
 
 	@Override
 	public void setAttribute(String attribute, Object value) {
-		session.setAttribute(attribute, value,contextpath);
+		session.setAttribute(this,attribute, value,contextpath);
 
 	}
 //

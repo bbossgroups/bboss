@@ -2,13 +2,15 @@ package org.frameworkset.security.session;
 
 import java.util.Enumeration;
 
+import javax.servlet.http.HttpSession;
+
 public interface Session {
 
 	
-	public Object getAttribute(String attribute,String contextpath) ;
+	public Object getAttribute(HttpSession session,String attribute,String contextpath) ;
 
 	public Object getCacheAttribute(String attribute);
-	public Enumeration getAttributeNames(String contextpath) ;
+	public Enumeration getAttributeNames(HttpSession session,String contextpath) ;
 
 	
 	public long getCreationTime() ;
@@ -17,8 +19,9 @@ public interface Session {
 	/**
 	 * 更新最后访问时间
 	 */
-	public void touch(String lastAccessedUrl,String contextpath);
+	public void touch(HttpSession session,String lastAccessedUrl,String contextpath);
 	public long getLastAccessedTime() ;
+	public void setLastAccessedTime(long lastAccessedTime) ;
 	public long getMaxInactiveInterval();
 
 //	@Override
@@ -34,16 +37,16 @@ public interface Session {
 //	}
 
 	
-	public Object getValue(String attribute,String contextpath) ;
-	public String[] getValueNames(String contextpath) ;
-	public void invalidate(String contextpath) ;
+	public Object getValue(HttpSession session,String attribute,String contextpath) ;
+	public String[] getValueNames(HttpSession session,String contextpath) ;
+	public void invalidate(HttpSession session,String contextpath) ;
 	public boolean isNew() ;
-	public void putValue(String attribute, Object value,String contextpath) ;
+	public void putValue(HttpSession session,String attribute, Object value,String contextpath) ;
 
 	
-	public void removeAttribute(String attribute,String contextpath) ;
-	public void removeValue(String attribute,String contextpath) ;
-	public void setAttribute(String attribute, Object value,String contextpath) ;
+	public void removeAttribute(HttpSession session,String attribute,String contextpath) ;
+	public void removeValue(HttpSession session,String attribute,String contextpath) ;
+	public void setAttribute(HttpSession session,String attribute, Object value,String contextpath) ;
 	public void setMaxInactiveInterval(long maxInactiveInterval) ;
 	public String getReferip();
 	public boolean isValidate();

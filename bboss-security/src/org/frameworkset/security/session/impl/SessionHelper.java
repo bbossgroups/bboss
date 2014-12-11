@@ -15,7 +15,9 @@
  */
 package org.frameworkset.security.session.impl;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.frameworkset.security.session.Session;
 import org.frameworkset.security.session.SessionBasicInfo;
@@ -64,9 +66,9 @@ public class SessionHelper {
 		return sessionStaticManager;
 	}
 	
-	public static Session createSession(SessionBasicInfo sessionBasicInfo)
+	public static HttpSession createSession(ServletContext servletContext,SessionBasicInfo sessionBasicInfo,String contextpath)
 	{
-		Session session = sessionManager.getSessionStore().createSession( sessionBasicInfo);
+		HttpSession session = sessionManager.getSessionStore().createHttpSession(   servletContext,  sessionBasicInfo,  contextpath);
 		
 		return session;
 	}

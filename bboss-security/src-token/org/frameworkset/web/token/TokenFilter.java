@@ -41,7 +41,21 @@ public class TokenFilter implements Filter{
 	
 	protected String redirectpath = "/login.jsp";
 	private TokenService tokenService = null;
-	
+	private boolean inited =false;
+	private void _inited()
+	{
+		if(inited)
+			return;
+		synchronized(TokenFilter.class)
+		{
+			try {
+				tokenService = TokenHelper.getTokenService();
+			} catch (Throwable e) {
+				log.warn("",e);
+			}
+			inited = true;
+		}
+	}
 	/**
 	 * tokenstore
 	 * 指定令牌存储机制，目前提供两种机制：
@@ -53,11 +67,7 @@ public class TokenFilter implements Filter{
 	
 	public void init(FilterConfig arg0) throws ServletException
 	{
-		try {
-			tokenService = TokenHelper.getTokenService();
-		} catch (Throwable e) {
-			log.warn("",e);
-		}
+		
 		
 		String redirectpath_ =  arg0.getInitParameter("redirecturl");
 		
@@ -82,7 +92,7 @@ public class TokenFilter implements Filter{
 			redirectpath = redirectpath_; 
 		}
 		
-		
+		TokenHelper.setTokenFilter(this);
 //		else
 //		{
 //			tokenfailpath = redirectpath; 
@@ -91,7 +101,7 @@ public class TokenFilter implements Filter{
 		
 //		String tmp = arg0.getServletContext().getServletContextName();
 //		this.redirectpath = StringUtil.getRealPath(tmp, redirectpath);
-		TokenHelper.setTokenFilter(this);
+		
 		
 		
 //MemTokenManagerFactory.getMemTokenManager(ticketdualtime_,temptokenlivetime_,dualtokenlivetime_,tokenscaninterval_,enableToken,this.tokenstore,this);
@@ -106,6 +116,7 @@ public class TokenFilter implements Filter{
 	@Override
 	public void doFilter(ServletRequest arg0, ServletResponse arg1,
 			FilterChain arg2) throws IOException, ServletException {
+		_inited();
 		try {
 			if(!checkTokenExist((HttpServletRequest )arg0,(HttpServletResponse )arg1))//令牌检查，如果当前令牌已经失效则直接跳转到登录页，否则继续进行后去安全认证检查
 			{
@@ -123,6 +134,7 @@ public class TokenFilter implements Filter{
 	}
 	protected boolean checkTokenExist(HttpServletRequest request,HttpServletResponse response) throws Exception
 	{
+		_inited();
 		if(!this.tokenService.isEnableToken())//如果没有启用令牌机制，则直接声明令牌存在
 			return true;
 		if(!firstRequest(request))
@@ -148,6 +160,7 @@ public class TokenFilter implements Filter{
 	
 	public void sendRedirect(HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
+		_inited();
 		if(!response.isCommitted())
 		{
 			if(this.tokenService.getTokenfailpath() != null)
@@ -169,6 +182,7 @@ public class TokenFilter implements Filter{
 	
 	public void sendRedirect403(HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
+		_inited();
 		if(!response.isCommitted())
 		{
 			response.sendError(HttpServletResponse.SC_FORBIDDEN);
@@ -176,6 +190,7 @@ public class TokenFilter implements Filter{
 	}
 	protected String appendDTokenToTargetURL(HttpServletRequest request, String targetUrl) throws TokenException
 	{
+		_inited();
 		if(this.tokenService.isEnableToken())
 		{
 			return tokenService.appendDTokenToURL(request, targetUrl);
@@ -189,6 +204,7 @@ public class TokenFilter implements Filter{
 	protected boolean isloopredirect(HttpServletRequest request,
 			String targetUrl)
 	{
+		_inited();
 		String fromurl = request.getRequestURI();
 		int idx = targetUrl.indexOf("?");
 		String comp = targetUrl;
@@ -203,7 +219,7 @@ public class TokenFilter implements Filter{
 	protected void sendRedirect(HttpServletRequest request,
 			HttpServletResponse response, String targetUrl,
 			boolean http10Compatible,boolean isforward,boolean isinclude) throws IOException  {
-
+		_inited();
 		if(isloopredirect(request,
 				targetUrl))
 		{
@@ -274,6 +290,7 @@ public class TokenFilter implements Filter{
 	 */
 	protected boolean firstRequest(ServletRequest request) 
 	{
+		_inited();
 		Integer result = null;
 		if(!this.tokenService.isEnableToken())
 		{
@@ -360,6 +377,7 @@ public class TokenFilter implements Filter{
 	
 	public void doDTokencheck(ServletRequest request,ServletResponse response) throws IOException, DTokenValidateFailedException
 	{
+		_inited();
 		if(!tokenService.assertDTokenSetted(request))
 		{
 			if(request instanceof HttpServletRequest)
@@ -375,6 +393,7 @@ public class TokenFilter implements Filter{
 	
 	public void doTicketcheck(ServletRequest request,ServletResponse response) throws IOException, DTokenValidateFailedException
 	{
+		_inited();
 		if(!tokenService.assertDTokenSetted(request))
 		{
 			if(request instanceof HttpServletRequest)

@@ -1,20 +1,21 @@
 package org.frameworkset.security.session.impl;
 
-import org.frameworkset.security.session.Session;
+import javax.servlet.http.HttpSession;
+
 import org.frameworkset.security.session.SessionEvent;
 
 public class SessionEventImpl implements SessionEvent {
-	private Session session;
+	private HttpSession session;
 	private String attributeName;
-	private Object attributeValue; 
+	
 	private int eventType;
-	public SessionEventImpl(Session session,int eventType) {
+	public SessionEventImpl(HttpSession session,int eventType) {
 		this.session = session;
 		this.eventType = eventType;
 	}
 
 	@Override
-	public Session getSource() {
+	public HttpSession getSource() {
 		// TODO Auto-generated method stub
 		return session;
 	}
@@ -35,12 +36,9 @@ public class SessionEventImpl implements SessionEvent {
 	}
 
 	public Object getAttributeValue() {
-		return attributeValue;
+		return session.getAttribute(attributeName);
 	}
 
-	public SessionEventImpl setAttributeValue(Object attributeValue) {
-		this.attributeValue = attributeValue;
-		return this;
-	}
+	
 
 }

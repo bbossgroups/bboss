@@ -77,9 +77,9 @@ public class SessionHttpServletRequestWrapper extends HttpServletRequestWrapper 
 				sessionBasicInfo.setReferip(StringUtil.getClientIP(this));
 				sessionBasicInfo.setRequesturi(this.getRequestURI());
 				
-				Session session = SessionHelper.createSession(sessionBasicInfo);				
+				this.session = (HttpSessionImpl) SessionHelper.createSession(servletContext,sessionBasicInfo,this.getContextPath());				
 				sessionid = session.getId();
-				this.session = new HttpSessionImpl(session,servletContext,this.getContextPath());
+				 
 
 				writeCookies( );
 				return this.session;
@@ -110,9 +110,9 @@ public class SessionHttpServletRequestWrapper extends HttpServletRequestWrapper 
 					sessionBasicInfo.setReferip(StringUtil.getClientIP(this));
 					sessionBasicInfo.setRequesturi(this.getRequestURI());
 					
-					session = SessionHelper.createSession(sessionBasicInfo);
+					this.session = (HttpSessionImpl) SessionHelper.createSession(servletContext,sessionBasicInfo,this.getContextPath());
 					sessionid = session.getId();
-					this.session =  new HttpSessionImpl(session,servletContext,this.getContextPath());
+					
 
 					writeCookies( );
 				}

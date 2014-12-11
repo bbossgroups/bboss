@@ -4,6 +4,8 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.frameworkset.security.session.Session;
 import org.frameworkset.security.session.SessionStore;
 
@@ -30,7 +32,7 @@ public class SimpleSessionImpl implements Session{
 	{
 		attributes = new HashMap<String,Object>();
 	}
-	private void assertSession(String contextpath) 
+	private void assertSession(HttpSession session,String contextpath) 
 	{
 		
 		if(assertValidate != null)
@@ -50,7 +52,7 @@ public class SimpleSessionImpl implements Session{
 		}
 		if(!assertValidate.booleanValue())
 		{
-			this.invalidate(contextpath);
+			this.invalidate(session,contextpath);
 //			throw new SessionInvalidateException("Session " +this.getId() + "已经失效!");
 			throw new IllegalStateException("Session " +this.getId() + "已经失效!"); 
 		}
@@ -65,8 +67,8 @@ public class SimpleSessionImpl implements Session{
 			return value;
 	}
 	@Override
-	public Object getAttribute(String attribute,String contextpath) {
-		assertSession(contextpath) ;
+	public Object getAttribute(HttpSession session,String attribute,String contextpath) {
+		assertSession(session,contextpath) ;
 		
 		Object value = this.attributes.get(attribute);
 		if(value == null)
@@ -92,8 +94,8 @@ public class SimpleSessionImpl implements Session{
 	}
 
 	@Override
-	public Enumeration getAttributeNames(String contextpath) {
-		assertSession(contextpath) ;
+	public Enumeration getAttributeNames(HttpSession session,String contextpath) {
+		assertSession(  session,contextpath) ;
 		
 		return sessionStore.getAttributeNames(appKey, contextpath,id);
 	}
@@ -111,9 +113,9 @@ public class SimpleSessionImpl implements Session{
 	}
 
 	@Override
-	public void touch(String lastAccessedUrl,String contextpath) {
-		assertSession(contextpath) ;
-		lastAccessedTime = System.currentTimeMillis();		
+	public void touch(HttpSession session,String lastAccessedUrl,String contextpath) {
+		assertSession(  session,contextpath) ;
+		lastAccessedTime = System.currentTimeMillis();
 		sessionStore.updateLastAccessedTime(appKey,id,lastAccessedTime, lastAccessedUrl);
 //		assertSession() ;
 		
@@ -132,14 +134,14 @@ public class SimpleSessionImpl implements Session{
 	}
 
 	@Override
-	public Object getValue(String attribute,String contextpath) {
+	public Object getValue(HttpSession session,String attribute,String contextpath) {
 		// TODO Auto-generated method stub
-		return getAttribute( attribute, contextpath);
+		return getAttribute( session, attribute, contextpath);
 	}
 
 	@Override
-	public String[] getValueNames(String contextpath) {
-		assertSession(contextpath) ;
+	public String[] getValueNames(HttpSession session,String contextpath) {
+		assertSession(  session,contextpath) ;
 		if(!this.isValidate())
 		{
 			return null;
@@ -148,14 +150,14 @@ public class SimpleSessionImpl implements Session{
 	}
 
 	@Override
-	public void invalidate(String contextpath) {
+	public void invalidate(HttpSession session,String contextpath) {
 		
 		if(!dovalidate)
 		{
 			this.dovalidate = true;
 			if(validate)
 			{
-				sessionStore.invalidate(appKey, contextpath,id);
+				sessionStore.invalidate(session,appKey, contextpath,id);
 				this.validate =false;
 				this.attributes.clear();
 			}
@@ -176,19 +178,19 @@ public class SimpleSessionImpl implements Session{
 		this.isNew = true;
 	}
 	@Override
-	public void putValue(String attribute, Object value,String contextpath) {
-		setAttribute( attribute,  value, contextpath) ;
+	public void putValue(HttpSession session,String attribute, Object value,String contextpath) {
+		setAttribute(  session, attribute,  value, contextpath) ;
 		
 	}
 
 	@Override
-	public void removeAttribute(String attribute,String contextpath) {
-		assertSession( contextpath) ;
+	public void removeAttribute(HttpSession session,String attribute,String contextpath) {
+		assertSession(  session, contextpath) ;
 		if(!this.isValidate())
 		{
 			return ;
 		}
-		sessionStore.removeAttribute(appKey, contextpath,id,attribute);
+		sessionStore.removeAttribute(session,appKey, contextpath,id,attribute);
 //		this.attributes.remove(attribute);
 		//将属性设置为空避免重复从mongodb获取数据
 		this.attributes.put(attribute, NULL);
@@ -196,17 +198,17 @@ public class SimpleSessionImpl implements Session{
 	}
 
 	@Override
-	public void removeValue(String attribute,String contextpath) {
-		removeAttribute( attribute, contextpath);
+	public void removeValue(HttpSession session,String attribute,String contextpath) {
+		removeAttribute(  session, attribute, contextpath);
 		
 	}
 
 	@Override
-	public void setAttribute(String attribute, Object value,String contextpath) {
-		assertSession( contextpath) ;
-		
-		sessionStore.addAttribute(appKey, contextpath,id,attribute,value);
+	public void setAttribute(HttpSession session,String attribute, Object value,String contextpath) {
+		assertSession(  session, contextpath) ;
 		this.attributes.put(attribute, value);
+		sessionStore.addAttribute(session,appKey, contextpath,id,attribute,value);
+		
 	}
 
 	@Override

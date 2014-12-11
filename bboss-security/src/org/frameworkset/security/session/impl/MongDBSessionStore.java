@@ -8,7 +8,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpSession;
+
 import org.apache.log4j.Logger;
+import org.frameworkset.nosql.mongodb.MongoDB;
 import org.frameworkset.nosql.mongodb.MongoDBHelper;
 import org.frameworkset.security.session.Session;
 import org.frameworkset.security.session.SessionBasicInfo;
@@ -20,6 +24,7 @@ import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
 import com.mongodb.Mongo;
+import com.mongodb.WriteConcern;
 
 public class MongDBSessionStore extends BaseSessionStore{
 	private Mongo mongoClient;
@@ -71,7 +76,7 @@ public class MongDBSessionStore extends BaseSessionStore{
 			if(app.endsWith("_sessions"))
 			{
 				DBCollection appsessions = db.getCollection(app);
-				appsessions.remove(new BasicDBObject("$where",temp));
+				MongoDB.remove(appsessions,new BasicDBObject("$where",temp),WriteConcern.UNACKNOWLEDGED);
 			}
 		}
 		
@@ -96,7 +101,7 @@ public class MongDBSessionStore extends BaseSessionStore{
 		boolean isHttpOnly = StringUtil.hasHttpOnlyMethod()?SessionHelper.getSessionManager().isHttpOnly():false;
 		boolean secure = SessionHelper.getSessionManager().isSecure();
 		DBCollection sessions =getAppSessionDBCollection( sessionBasicInfo.getAppKey());
-		sessions.insert(new BasicDBObject("sessionid",sessionid)
+		MongoDB.insert(sessions,new BasicDBObject("sessionid",sessionid)
 		.append("creationTime", creationTime)
 		.append("maxInactiveInterval",maxInactiveInterval)
 		.append("lastAccessedTime", lastAccessedTime)
@@ -161,12 +166,22 @@ public class MongDBSessionStore extends BaseSessionStore{
 		
 	}
 
+	
 	@Override
 	public void updateLastAccessedTime(String appKey,String sessionID, long lastAccessedTime,String lastAccessedUrl) {
 		DBCollection sessions =getAppSessionDBCollection( appKey);
-		
-		sessions.update(new BasicDBObject("sessionid",sessionID).append("_validate", true), new BasicDBObject("$set",new BasicDBObject("lastAccessedTime", lastAccessedTime).append("lastAccessedUrl", lastAccessedUrl).append("lastAccessedHostIP", SimpleStringUtil.getHostIP())));
-		
+		MongoDB.update(sessions, new BasicDBObject("sessionid",sessionID).append("_validate", true), new BasicDBObject("$set",new BasicDBObject("lastAccessedTime", lastAccessedTime).append("lastAccessedUrl", lastAccessedUrl).append("lastAccessedHostIP", SimpleStringUtil.getHostIP())),WriteConcern.UNACKNOWLEDGED);
+//		try
+//		{
+//			WriteResult wr = sessions.update(new BasicDBObject("sessionid",sessionID).append("_validate", true), new BasicDBObject("$set",new BasicDBObject("lastAccessedTime", lastAccessedTime).append("lastAccessedUrl", lastAccessedUrl).append("lastAccessedHostIP", SimpleStringUtil.getHostIP())));
+//			System.out.println("wr.getN():"+wr.getN());
+//			System.out.println("wr:"+wr);
+//			System.out.println("wr.getLastConcern():"+wr.getLastConcern());
+//		}
+//		catch(WriteConcernException e)
+//		{
+//			log.debug("updateLastAccessedTime",e);
+//		}
 	}
 
 	@Override
@@ -216,11 +231,11 @@ public class MongDBSessionStore extends BaseSessionStore{
 	}
 
 	@Override
-	public Session invalidate(String appKey,String contextpath,String sessionID) {
-//		DBCollection sessions = getAppSessionDBCollection( appKey);		
+	public void invalidate(HttpSession session,String appKey,String contextpath,String sessionID) {
+		DBCollection sessions = getAppSessionDBCollection( appKey);		
 //		sessions.update(new BasicDBObject("sessionid",sessionID), new BasicDBObject("$set",new BasicDBObject("_validate", false)));
-		Session session = getSessionAndRemove(appKey, contextpath, sessionID);
-		return session;
+		MongoDB.remove(sessions,new BasicDBObject("sessionid",sessionID));
+//		return session;
 		
 	}
 
@@ -240,35 +255,37 @@ public class MongDBSessionStore extends BaseSessionStore{
 	}
 
 	@Override
-	public Object removeAttribute(String appKey,String contextpath,String sessionID, String attribute) {
+	public void removeAttribute(HttpSession session,String appKey,String contextpath,String sessionID, String attribute) {
 		DBCollection sessions = getAppSessionDBCollection( appKey);
-		if(SessionHelper.haveSessionListener())
-		{
-			List<String> list = new ArrayList<String>();
-	//		attribute = converterSpecialChar( attribute);
-			list.add(attribute);
-			Session value = getSession(appKey, contextpath, sessionID,list);
-			sessions.update(new BasicDBObject("sessionid",sessionID), new BasicDBObject("$unset",new BasicDBObject(list.get(0), 1)));
-			return value;
-		}
-		else
+//		if(SessionHelper.haveSessionListener())
+//		{
+//			List<String> list = new ArrayList<String>();
+//	//		attribute = converterSpecialChar( attribute);
+//			list.add(attribute);
+////			Session value = getSession(appKey, contextpath, sessionID,list);
+//			MongoDB.update(sessions, new BasicDBObject("sessionid",sessionID), new BasicDBObject("$unset",new BasicDBObject(list.get(0), 1)));
+////			sessions.update(new BasicDBObject("sessionid",sessionID), new BasicDBObject("$unset",new BasicDBObject(list.get(0), 1)));
+//			
+//		}
+//		else
 		{
 			attribute = MongoDBHelper.converterSpecialChar(attribute);
-			sessions.update(new BasicDBObject("sessionid",sessionID), new BasicDBObject("$unset",new BasicDBObject(attribute, 1)));
+//			sessions.update(new BasicDBObject("sessionid",sessionID), new BasicDBObject("$unset",new BasicDBObject(attribute, 1)));
+			MongoDB.update(sessions, new BasicDBObject("sessionid",sessionID), new BasicDBObject("$unset",new BasicDBObject(attribute, 1)));
 			//sessions.update(new BasicDBObject("sessionid",sessionID), new BasicDBObject("$set",new BasicDBObject(attribute, null)));
-			return null;
+			
 		}
 		
 	}
 
 	@Override
-	public Object addAttribute(String appKey,String contextpath,String sessionID, String attribute, Object value) {
+	public void addAttribute(HttpSession session,String appKey,String contextpath,String sessionID, String attribute, Object value) {
 		attribute = MongoDBHelper.converterSpecialChar( attribute);
 		DBCollection sessions = getAppSessionDBCollection( appKey);	
-		Session session = getSession(appKey,contextpath, sessionID);
-		sessions.update(new BasicDBObject("sessionid",sessionID), new BasicDBObject("$set",new BasicDBObject(attribute, value)));
-		
-		return session;
+//		Session session = getSession(appKey,contextpath, sessionID);
+//		sessions.update(new BasicDBObject("sessionid",sessionID), new BasicDBObject("$set",new BasicDBObject(attribute, value)));
+		MongoDB.update(sessions,new BasicDBObject("sessionid",sessionID), new BasicDBObject("$set",new BasicDBObject(attribute, value)));
+//		return session;
 		
 	}
 	private Session getSession(String appKey,String contextpath, String sessionid,List<String> attributeNames) {
@@ -402,59 +419,65 @@ public class MongDBSessionStore extends BaseSessionStore{
 			return null;
 		}
 	}
-	
-	private Session getSessionAndRemove(String appKey,String contextpath, String sessionid) {
-		DBCollection sessions =getAppSessionDBCollection( appKey);
-	
-		
-		if(SessionHelper.haveSessionListener())
-		{
-			DBObject object = sessions.findAndRemove(new BasicDBObject("sessionid",sessionid));
-			if(object != null)
-			{
-				SimpleSessionImpl session = new SimpleSessionImpl();
-				session.setMaxInactiveInterval((Long)object.get("maxInactiveInterval"));
-				session.setAppKey(appKey);
-				session.setCreationTime((Long)object.get("creationTime"));
-				session.setLastAccessedTime((Long)object.get("lastAccessedTime"));
-				session.setId(sessionid);
-				session.setReferip((String)object.get("referip"));
-				session.setValidate((Boolean)object.get("_validate"));
-				session.setHost((String)object.get("host"));
-				session.setRequesturi((String)object.get("requesturi"));
-				session.setLastAccessedUrl((String)object.get("lastAccessedUrl"));
-				session.setLastAccessedHostIP((String)object.get("lastAccessedHostIP"));
-				Object secure_ = object.get("secure");
-				if(secure_ != null)
-				{
-					session.setSecure((Boolean)secure_);
-				}
-				Object httpOnly_ = object.get("httpOnly");
-				if(httpOnly_ != null)
-				{
-					session.setHttpOnly((Boolean)httpOnly_);
-				}	
-				else
-				{
-					session.setHttpOnly(StringUtil.hasHttpOnlyMethod()?SessionHelper.getSessionManager().isHttpOnly():false);
-				}
-	//			session._setSessionStore(this);
-				Map<String,Object> attributes = MongoDBHelper.toMap(appKey, contextpath,object,true);
-				session.setAttributes(attributes);
-				return session;
-			}
-			else
-			{
-//				sessions.remove(new BasicDBObject("sessionid",sessionid));
-				return null;
-			}
-		}
-		else
-		{
-			sessions.remove(new BasicDBObject("sessionid",sessionid));
-			return null;
-		}
+	@Override
+	public HttpSession createHttpSession(ServletContext servletContext,
+			SessionBasicInfo sessionBasicInfo, String contextpath) {
+		// TODO Auto-generated method stub
+		return null;
 	}
+	
+//	private Session getSessionAndRemove(String appKey,String contextpath, String sessionid) {
+//		DBCollection sessions =getAppSessionDBCollection( appKey);
+//	
+//		
+//		if(SessionHelper.haveSessionListener())
+//		{
+//			DBObject object = MongoDB.findAndRemove(sessions,new BasicDBObject("sessionid",sessionid));
+//			if(object != null)
+//			{
+//				SimpleSessionImpl session = new SimpleSessionImpl();
+//				session.setMaxInactiveInterval((Long)object.get("maxInactiveInterval"));
+//				session.setAppKey(appKey);
+//				session.setCreationTime((Long)object.get("creationTime"));
+//				session.setLastAccessedTime((Long)object.get("lastAccessedTime"));
+//				session.setId(sessionid);
+//				session.setReferip((String)object.get("referip"));
+//				session.setValidate((Boolean)object.get("_validate"));
+//				session.setHost((String)object.get("host"));
+//				session.setRequesturi((String)object.get("requesturi"));
+//				session.setLastAccessedUrl((String)object.get("lastAccessedUrl"));
+//				session.setLastAccessedHostIP((String)object.get("lastAccessedHostIP"));
+//				Object secure_ = object.get("secure");
+//				if(secure_ != null)
+//				{
+//					session.setSecure((Boolean)secure_);
+//				}
+//				Object httpOnly_ = object.get("httpOnly");
+//				if(httpOnly_ != null)
+//				{
+//					session.setHttpOnly((Boolean)httpOnly_);
+//				}	
+//				else
+//				{
+//					session.setHttpOnly(StringUtil.hasHttpOnlyMethod()?SessionHelper.getSessionManager().isHttpOnly():false);
+//				}
+//	//			session._setSessionStore(this);
+//				Map<String,Object> attributes = MongoDBHelper.toMap(appKey, contextpath,object,true);
+//				session.setAttributes(attributes);
+//				return session;
+//			}
+//			else
+//			{
+////				sessions.remove(new BasicDBObject("sessionid",sessionid));
+//				return null;
+//			}
+//		}
+//		else
+//		{
+//			MongoDB.remove(sessions,new BasicDBObject("sessionid",sessionid));
+//			return null;
+//		}
+//	}
 
 
 }
