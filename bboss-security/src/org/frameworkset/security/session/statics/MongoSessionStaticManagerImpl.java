@@ -12,6 +12,7 @@ import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.frameworkset.nosql.mongodb.MongoDB;
 import org.frameworkset.nosql.mongodb.MongoDBHelper;
 import org.frameworkset.security.session.impl.SessionHelper;
 
@@ -22,6 +23,7 @@ import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.mongodb.Mongo;
+import com.mongodb.WriteConcern;
 
 public class MongoSessionStaticManagerImpl implements SessionStaticManager {
 	private Mongo mongoClient;
@@ -369,7 +371,7 @@ public class MongoSessionStaticManagerImpl implements SessionStaticManager {
 			// 获取当前表
 			DBCollection sessions = db.getCollection(MongoDBHelper
 					.getAppSessionTableName(appKey));
-			sessions.ensureIndex("sessionid");
+			sessions.createIndex(new BasicDBObject("sessionid", 1));
 
 			// 查询条件
 			BasicDBObject query = new BasicDBObject();
@@ -451,7 +453,7 @@ public class MongoSessionStaticManagerImpl implements SessionStaticManager {
 			BasicDBObject wheresql = new BasicDBObject();
 			wheresql.append("sessionid", sessionid);
 
-			sessions.remove(wheresql);
+			MongoDB.remove(sessions,wheresql,WriteConcern.JOURNAL_SAFE);
 
 		}
 	}
@@ -496,8 +498,8 @@ public class MongoSessionStaticManagerImpl implements SessionStaticManager {
 					wheresql = new BasicDBObject();
 				}
 			}
-			sessions.remove(wheresql);
-
+//			sessions.remove(wheresql);
+			MongoDB.remove(sessions,wheresql,WriteConcern.JOURNAL_SAFE);
 		}
 
 	}
