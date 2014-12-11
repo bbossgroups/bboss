@@ -453,7 +453,7 @@ public class MongoSessionStaticManagerImpl implements SessionStaticManager {
 			BasicDBObject wheresql = new BasicDBObject();
 			wheresql.append("sessionid", sessionid);
 
-			MongoDB.remove(sessions,wheresql,WriteConcern.JOURNAL_SAFE);
+			MongoDB.remove(sessions,wheresql);
 
 		}
 	}
@@ -499,7 +499,7 @@ public class MongoSessionStaticManagerImpl implements SessionStaticManager {
 				}
 			}
 //			sessions.remove(wheresql);
-			MongoDB.remove(sessions,wheresql,WriteConcern.JOURNAL_SAFE);
+			MongoDB.remove(sessions,wheresql);
 		}
 
 	}
