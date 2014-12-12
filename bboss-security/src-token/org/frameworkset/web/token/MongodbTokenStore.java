@@ -154,7 +154,7 @@ public class MongodbTokenStore extends BaseTokenStore{
 		try
 		{
 //			this.tickets.remove(new BasicDBObject("$where",wherefun));
-			MongoDB.remove(tickets,new BasicDBObject("$where",wherefun),WriteConcern.UNACKNOWLEDGED);
+			MongoDB.remove(tickets,new BasicDBObject("$where",wherefun.toString()),WriteConcern.UNACKNOWLEDGED);
 		}
 		finally
 		{
@@ -301,7 +301,7 @@ public class MongodbTokenStore extends BaseTokenStore{
 		
 		if(tt == null)
 			return null;
-		MongoDB.remove(this.authtemptokens,dbobject);
+		MongoDB.remove(this.authtemptokens,dbobject,WriteConcern.JOURNAL_SAFE);
 		MemToken token_m = toauthtempToken(tt);		
 		return token_m;
 	}
@@ -312,7 +312,7 @@ public class MongodbTokenStore extends BaseTokenStore{
 		if(tt != null)
 		{
 //			DBObject tt = cursor.next();
-			MongoDB.remove(temptokens,dbobject);
+			MongoDB.remove(temptokens,dbobject,WriteConcern.JOURNAL_SAFE);
 			MemToken token_m = totempToken(tt);	
 			
 			return token_m;
@@ -553,7 +553,7 @@ public class MongodbTokenStore extends BaseTokenStore{
 				MongoDB.update(this.tickets,new BasicDBObject("token", token), 
 													   new BasicDBObject("$set",
 															  			new BasicDBObject("lastVistTime", lastVistTime)
-															  		    ));
+															  		    ),WriteConcern.JOURNAL_SAFE);
 				return true;
 			}
 			return false;
@@ -569,7 +569,7 @@ public class MongodbTokenStore extends BaseTokenStore{
 	protected boolean destroyTicket(String token,String appid)
 	{
 		try {
-			MongoDB.remove(this.tickets,new BasicDBObject("token", token));			
+			MongoDB.remove(this.tickets,new BasicDBObject("token", token),WriteConcern.JOURNAL_SAFE);			
 			return true;
 		} catch (Exception e) {
 			throw new TokenException("destroy ticket["+token+"] of app["+appid+"] failed:",e);
@@ -586,7 +586,7 @@ public class MongodbTokenStore extends BaseTokenStore{
 												   new BasicDBObject("$set",
 														  			new BasicDBObject("lastVistTime", lastVistTime)
 														  		    )
-							 					  );
+			,WriteConcern.JOURNAL_SAFE);
 			if(value != null)
 			{
 				Ticket ticket = new Ticket();
