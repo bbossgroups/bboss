@@ -4867,9 +4867,8 @@ public class PreparedDBUtil extends DBUtil {
 						if(showsql)
 						{
 							log.debug(new StringBuffer("Execute prepared Batch sql[")
-							.append(old_sql)
-							.append("] success:")
-							.append(buildInfo(ret))
+							.append(old_sql.getNewsql())
+							.append("] success")
 							.toString());
 						}
 					}
@@ -4919,9 +4918,8 @@ public class PreparedDBUtil extends DBUtil {
 						if(showsql)
 						{
 							log.debug(new StringBuffer("Execute prepared Batch sql[")
-							.append(old_sql)
-							.append("] success:")
-							.append(buildInfo(ret))
+							.append(old_sql.getNewsql())
+							.append("] success")
 							.toString());
 						}
 					

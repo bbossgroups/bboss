@@ -322,7 +322,7 @@ public class DetailTag extends PagerDataSet implements FieldHelper{
 		}
 		catch(Exception e)
 		{
-			log.debug(e);
+			log.debug("",e);
 			return EVAL_BODY_INCLUDE;
 //			throw new JspException(e);
 		}
