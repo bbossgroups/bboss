@@ -15,7 +15,6 @@
  */
 package org.frameworkset.event;
 
-import org.frameworkset.spi.BaseSPIManager;
 
 
 /**
@@ -40,59 +39,60 @@ public final class EventImpl<T> implements Event {
 	EventTarget target = null;
 	
 	/**
+	 * 如果target不为空，则eventBroadcastType无效，只有在target为空的情况下eventBroadcastType才有效
 	 * 消息传播类型：
-	 * 本地传播(Event.LOCAL)
-	 * 远程传播(Event.REMOTE)
-	 * 本地远程传播 (Event.REMOTELOCAL)
+	 * 本地传播(Event.LOCAL)，事件只在本地广播
+	 * 远程传播(Event.REMOTE) 事件只在集群中的其他节点中广播（启用远程事件时才有效）
+	 * 本地远程传播 (Event.REMOTELOCAL) 事件在集群中所有节点广播 默认值（启用远程事件才有效）
 	 */
 	int eventBroadcastType = Event.REMOTELOCAL;
 	boolean issynchronized = false;
 	
 	static int defaultEventBroadcastType = Event.REMOTELOCAL;
-	static 
-	{
-	    String t = BaseSPIManager.getProperty("event.destinction.type","Event.REMOTELOCAL");
-	    if(t.equals("Event.REMOTELOCAL"))
-	    {
-	        defaultEventBroadcastType = Event.REMOTELOCAL;
-	    }
-	    else if(t.equals("Event.REMOTE"))
-	    {
-	        defaultEventBroadcastType = Event.REMOTE;
-	    }
-	    else if(t.equals("Event.LOCAL"))
-            {
-                defaultEventBroadcastType = Event.LOCAL;
-            }
-	    else
-	    {
-	        defaultEventBroadcastType = Event.REMOTELOCAL;
-	    }
-	}
+//	static 
+//	{
+//	    String t = BaseSPIManager.getProperty("event.destinction.type","Event.REMOTELOCAL");
+//	    if(t.equals("Event.REMOTELOCAL"))
+//	    {
+//	        defaultEventBroadcastType = Event.REMOTELOCAL;
+//	    }
+//	    else if(t.equals("Event.REMOTE"))
+//	    {
+//	        defaultEventBroadcastType = Event.REMOTE;
+//	    }
+//	    else if(t.equals("Event.LOCAL"))
+//            {
+//                defaultEventBroadcastType = Event.LOCAL;
+//            }
+//	    else
+//	    {
+//	        defaultEventBroadcastType = Event.REMOTELOCAL;
+//	    }
+//	}
 	
 	public EventImpl(T source,EventType type )
 	{
 		this(source,type ,Event.REMOTELOCAL);
 	}
 	
-	public EventImpl(T source,EventType type ,EventTarget target,int eventBroadcastType)
-	{
-		this.source = source;
-		this.type = type;
-		this.target = target;
-		if(eventBroadcastType == Event.LOCAL ||
-			eventBroadcastType == Event.REMOTE ||
-			eventBroadcastType == Event.REMOTELOCAL)
-		{
-			this.eventBroadcastType = eventBroadcastType;
-		}
-		else
-		{
-			System.out.println("Incorrect EventBroadcastType:" + eventBroadcastType + ", the Event.REMOTELOCAL will been used.");
-			this.eventBroadcastType = Event.REMOTELOCAL;
-		}
-		
-	}
+//	public EventImpl(T source,EventType type ,EventTarget target )
+//	{
+//		this.source = source;
+//		this.type = type;
+//		this.target = target;
+//		if(eventBroadcastType == Event.LOCAL ||
+//			eventBroadcastType == Event.REMOTE ||
+//			eventBroadcastType == Event.REMOTELOCAL)
+//		{
+//			this.eventBroadcastType = eventBroadcastType;
+//		}
+//		else
+//		{
+//			System.out.println("Incorrect EventBroadcastType:" + eventBroadcastType + ", the Event.REMOTELOCAL will been used.");
+//			this.eventBroadcastType = Event.REMOTELOCAL;
+//		}
+//		
+//	}
 	
 	public EventImpl(T source,EventType type ,EventTarget target)
 	{
@@ -115,8 +115,7 @@ public final class EventImpl<T> implements Event {
 		}
 		else
 		{
-			System.out.println("Incorrect EventBroadcastType:" + eventBroadcastType + ", the Event.REMOTELOCAL will been used.");
-			this.eventBroadcastType = Event.REMOTELOCAL;
+			throw new java.lang.IllegalArgumentException("event Broadcast Type ["+eventBroadcastType+"] should be Event.LOCAL or Event.REMOTE or Event.REMOTELOCAL.");
 		}
 	}
 	public EventImpl()

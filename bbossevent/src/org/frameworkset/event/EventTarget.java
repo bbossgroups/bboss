@@ -15,7 +15,10 @@
  */
 package org.frameworkset.event;
 
-import org.frameworkset.spi.serviceidentity.TargetImpl;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.jgroups.Address;
 
 /**
  * 
@@ -33,7 +36,7 @@ import org.frameworkset.spi.serviceidentity.TargetImpl;
  * @author biaoping.yin
  * @version 1.0
  */
-public class EventTarget extends TargetImpl implements java.io.Serializable {
+public class EventTarget   implements java.io.Serializable {
 	/**
 	 * 
 	 */
@@ -49,62 +52,40 @@ public class EventTarget extends TargetImpl implements java.io.Serializable {
 	private String userAccount = "admin";
 	private String userPassword = "123456";
 	
-	public EventTarget(String destination,int port)
+	transient List<Address> broadcastAddresses;	
+	
+	
+	private String targetAddress;
+	public EventTarget(Address address)
 	{
-		super(destination + ":" + port);
-		this.destination = destination;
-                this.port = port;
+		targetAddress = address.toString();
+		broadcastAddresses = new ArrayList<Address>();
+		broadcastAddresses.add(address);
 	}
-	
-	private String protocol = null;
-	
-	public String getProtocol()
+	public EventTarget(List<Address> addresses)
 	{
-	
-		return protocol;
+		broadcastAddresses = addresses;
+		targetAddress = addresses.toString();
 	}
 
 	
-	public void setProtocol(String protocol)
-	{
 	
-		this.protocol = protocol;
-	}
-
-	public EventTarget(String protocol,String destination,int port)
-	{
-		super(protocol + "::"+destination + ":" + port);
-		this.destination = destination;
-                this.port = port;
-                this.protocol = protocol;
-	}
 	
-	public EventTarget(String targets)
-        {
-                super(targets);
-                
-        }
-
-	public String getDestination() {
-		return destination;
-	}
-
-	public int getPort() {
-		return port;
-	}
+	 
 	
 	public String toString()
 	{
-		StringBuffer ret = new StringBuffer();
-		if(this.protocol != null)
-			ret.append(protocol).append("::");
-		if(destination != null)
-			ret.append(destination).append(":").append(port).toString();
-		else if(this.getStringTargets() != null)
-		{
-			ret.append(this.getStringTargets());
-		}
-		return ret.toString();
+//		StringBuffer ret = new StringBuffer();
+//		if(this.protocol != null)
+//			ret.append(protocol).append("::");
+//		if(destination != null)
+//			ret.append(destination).append(":").append(port).toString();
+//		else if(this.getStringTargets() != null)
+//		{
+//			ret.append(this.getStringTargets());
+//		}
+//		return ret.toString();
+		return targetAddress;
 	}
 
 
@@ -137,6 +118,15 @@ public class EventTarget extends TargetImpl implements java.io.Serializable {
 	 */
 	public void setUserPassword(String userPassword) {
 		this.userPassword = userPassword;
+	}
+
+
+	public List<Address> getBroadcastAddresses() {
+		return broadcastAddresses;
+	}
+	public boolean hasAddresses() {
+		// TODO Auto-generated method stub
+		return broadcastAddresses != null && broadcastAddresses.size() > 0;
 	}
 	
 

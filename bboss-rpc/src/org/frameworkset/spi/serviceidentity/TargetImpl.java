@@ -62,6 +62,10 @@ public class TargetImpl implements Target{
 		this.targets = targets;
 		this.targets_ = this.buildTargets();
 	}
+	public TargetImpl()
+	{
+		
+	}
 
 	public String getStringTargets()
 	{

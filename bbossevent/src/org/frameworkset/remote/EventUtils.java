@@ -15,9 +15,12 @@
  */
 package org.frameworkset.remote;
 
+import java.util.List;
+
 import org.apache.log4j.Logger;
-import org.frameworkset.spi.BaseSPIManager;
-import org.frameworkset.spi.remote.JGroupHelper;
+import org.frameworkset.spi.BaseApplicationContext;
+import org.frameworkset.spi.DefaultApplicationContext;
+import org.jgroups.Address;
 
 /**
  * 
@@ -35,15 +38,65 @@ import org.frameworkset.spi.remote.JGroupHelper;
 public class EventUtils {
 
 	private static final Logger log = Logger.getLogger(EventUtils.class);
-	private static boolean remoteevent_enabled = BaseSPIManager.getBooleanProperty("remoteevent.enabled",true); 
 	
-	public static boolean cluster_enable()
+	private static boolean remoteevent_enabled ; 
+	
+	private static EventRPCDispatcher eventRPCDispatcher;
+	private static boolean inited ;
+	public static void init()
 	{
-	    return JGroupHelper.getJGroupHelper().clusterstarted();
+		if(inited)
+			return;
+		synchronized(EventUtils.class)
+		{
+			if(inited)
+				return;
+			inited = true;
+			try {
+				BaseApplicationContext eventcontext = DefaultApplicationContext.getApplicationContext("eventconf.xml"); 
+				remoteevent_enabled =eventcontext.getBooleanProperty("remoteevent.enabled",true); 
+				if(remoteevent_enabled)
+					eventRPCDispatcher =eventcontext.getTBeanObject("eventRPCDispatcher", EventRPCDispatcher.class);
+			} catch (Throwable e) {
+				log.error("init event RPC Dispatcher failed:", e);
+			}
+		}
+		
 	}
 	
 	public static boolean remoteevent_enabled()
-        {
-            return remoteevent_enabled;
-        }
+    {
+		init();
+        return remoteevent_enabled;
+    }
+
+	public static boolean containSelf( List<Address> addresses)
+	{
+		init();		
+		
+		if(eventRPCDispatcher != null)
+			return eventRPCDispatcher.containSelf(addresses);
+		return false;
+	}
+	
+	public static List<Address> removeSelf( List<Address> addresses)
+	{
+		init();		
+		
+		if(eventRPCDispatcher != null)
+			return eventRPCDispatcher.removeSelf(addresses);
+		return addresses;
+	}
+	public static EventRPCDispatcher getEventRPCDispatcher() {
+		init();		
+		return eventRPCDispatcher;
+	}
+	
+	public static List<Address> getRPCAddresses() {
+		init();		
+		
+		if(eventRPCDispatcher != null)
+			return eventRPCDispatcher.getAddresses();
+		return null;
+	}
 }

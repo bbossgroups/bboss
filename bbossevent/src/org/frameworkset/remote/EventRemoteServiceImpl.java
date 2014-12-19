@@ -34,8 +34,8 @@ public class EventRemoteServiceImpl implements EventRemoteService {
      * @return
      * @throws Exception
      */
-    public Object remoteEventChange(String eventfqn,Event event) throws Exception {            
-            return EventHandle.remotechange(eventfqn,event);
+    public Object remoteEventChange( Event event) throws Exception {            
+            return EventHandle.remotechange( event);
     }
 
 }

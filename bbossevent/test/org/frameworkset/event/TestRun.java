@@ -15,7 +15,6 @@
  */
 package org.frameworkset.event;
 
-import org.frameworkset.spi.remote.JGroupHelper;
 import org.junit.Test;
 
 /**
@@ -34,17 +33,16 @@ import org.junit.Test;
 public class TestRun {
 	public static void main(String args[])
 	{
-		JGroupHelper.getJGroupHelper().start();
+		
 		ExampleListener listener = new ExampleListener();
 		//调用init方法注册监听器，这样就能收到事件发布器发布的事件
 		listener.init();
 //		
-////		ExampleEventPublish.publishEventtype1();
-////		ExampleEventPublish.publishEventtype2();
-////		ExampleEventPublish.publishEventtype1();
-////		ExampleEventPublish.publishAsynEventtype1();
-//		ExampleEventPublish.publishEventtype2Withtarget();
+		ExampleEventPublish.publishEventtype1();
+		ExampleEventPublish.publishEventtype2();
+		ExampleEventPublish.publishAsynEventtype1();
 		ExampleEventPublish.publishEventtype2Withtarget();
+
 //		TestRun run = new TestRun();
 ////		run.testAsyEvent();
 //		run.testAsyEvents();

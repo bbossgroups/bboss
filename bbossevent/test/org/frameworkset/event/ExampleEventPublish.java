@@ -15,12 +15,10 @@
  */
 package org.frameworkset.event;
 
-import java.util.Vector;
+import java.util.List;
 
-import org.frameworkset.spi.remote.JGroupHelper;
-import org.junit.Test;
-
-import bboss.org.jgroups.Address;
+import org.frameworkset.remote.EventUtils;
+import org.jgroups.Address;
 
 /**
  * 
@@ -49,7 +47,7 @@ public class ExampleEventPublish {
 		 *  消息在网络上传播，消息被发送给所有对ExampleEventType.type2类型消息感兴趣的远程消息监听器和本地远程事件监听器
 		 *  Event event = new EventImpl("hello world type2.",ExampleEventType.type2,Event.REMOTE);
 		 */
-		Event event = new EventImpl("hello world type1.",ExampleEventType.type1);
+		Event event = new EventImpl("hello world type1.",ExampleEventType.type1,Event.LOCAL);
 		
 		/**
 		 * 事件以同步方式传播
@@ -71,7 +69,7 @@ public class ExampleEventPublish {
 		 *  消息在网络上传播，消息被发送给所有对ExampleEventType.type2类型消息感兴趣的远程消息监听器和本地远程事件监听器
 		 *  Event event = new EventImpl("hello world type2.",ExampleEventType.type2,Event.REMOTE);
 		 */
-		Event event = new EventImpl("hello world type1.",ExampleEventType.type1);
+		Event event = new EventImpl("hello world type1.",ExampleEventType.type1, Event.REMOTE);
 		
 		/**
 		 * 事件以同步方式传播
@@ -94,7 +92,7 @@ public class ExampleEventPublish {
 		 *  Event event = new EventImpl("hello world type2.",ExampleEventType.type2,Event.REMOTE);
 		 */
 	
-		Event event = new EventImpl("hello world type2.",ExampleEventType.type2);
+		Event event = new EventImpl("hello world type2.",ExampleEventType.type2, Event.REMOTELOCAL);
 		/**
 		 * 消息以异步方式传递
 		 */
@@ -118,78 +116,68 @@ public class ExampleEventPublish {
 
 		EventTarget defualtprotocoltarget = null;
 		Event event = null;
-		Vector<Address> addresses = JGroupHelper.getJGroupHelper().getAppservers();
+		List<Address> addresses = EventUtils.getRPCAddresses();
 		if(addresses.size() > 0)//往一个节点发送数据
 		{
-			defualtprotocoltarget = new EventTarget("jgroup::" + addresses.get(0));
+			defualtprotocoltarget = new EventTarget( addresses.get(0));
 			
-			defualtprotocoltarget.setUserAccount("admin");
-			defualtprotocoltarget.setUserPassword("123456");
+			
 		    event = new EventImpl("hello world type2 with jgroup target[" + defualtprotocoltarget +"].",
-									ExampleEventType.type2withtarget,
-									defualtprotocoltarget,
-									Event.REMOTE);
-	
-			EventHandle.getInstance().change(event);
-		}
-		if(addresses.size() > 2)//往前两个节点发送数据
-		{
-			defualtprotocoltarget = new EventTarget("jgroup::" + addresses.get(0) + ";" + addresses.get(1) );
-			event = new EventImpl("hello world type2 with jgroups target[" + defualtprotocoltarget +"].",
-									ExampleEventType.type2withtarget,
-									defualtprotocoltarget,
-									Event.REMOTE);
-
-			EventHandle.getInstance().change(event);
-		}
-		
-		//往所有节点广播消息
-		{
-			defualtprotocoltarget = new EventTarget("jgroup::all" );
-			event = new EventImpl("hello world type2 with jgroups target[" + defualtprotocoltarget +"].",
 									ExampleEventType.type2withtarget,
 									defualtprotocoltarget);
 	
 			EventHandle.getInstance().change(event);
 		}
+		if(addresses.size() > 2)//往前两个节点发送数据
+		{
+			
+			defualtprotocoltarget = new EventTarget(addresses.subList(0, 2));
+			event = new EventImpl("hello world type2 with jgroups target[" + defualtprotocoltarget +"].",
+									ExampleEventType.type2withtarget,
+									defualtprotocoltarget);
+
+			EventHandle.getInstance().change(event);
+		}
+		
+		 
 	}
 	
-	@Test
-	public static void publishFileEvent()
-	{
-		/**
-		 * 构建事件消息【hello world type2.】，指定了事件的类型为ExampleEventType.type2withtarget
-		 * 默认的事件消息广播途径为Event.REMOTELOCAL,你可以指定自己的事件广播途径
-	
-		 *  消息在网络上传播，消息被发送给所有对ExampleEventType.type2类型消息感兴趣的远程消息监听器和本地远程事件监听器，同时也会直接发送给本地监听器
-		 *  Event event = new EventImpl("hello world type2.",ExampleEventType.type2,Event.REMOTELOCAL);
-		 *  消息在网络上传播，消息被发送给所有对ExampleEventType.type2类型消息感兴趣的远程消息监听器和本地远程事件监听器
-		 *  Event event = new EventImpl("hello world type2.",ExampleEventType.type2,Event.REMOTE);
-		 */
-		
-
-		EventTarget
-		defualtprotocoltarget = null;
-		Event event = null;
-//		Vector<Address> addresses = JGroupHelper.getJGroupHelper().getAppservers();
-		
-		
-		defualtprotocoltarget = new EventTarget("netty","172.16.7.108",12347);
-		event = new EventImpl("hello world type2 with jgroups target[" + defualtprotocoltarget +"].",
-								ExampleEventType.type2withtarget,
-								defualtprotocoltarget,
-								Event.REMOTE);
-
-		EventHandle.getInstance().change(event,true);
-		
-		
-	}
+//	@Test
+//	public static void publishFileEvent()
+//	{
+//		/**
+//		 * 构建事件消息【hello world type2.】，指定了事件的类型为ExampleEventType.type2withtarget
+//		 * 默认的事件消息广播途径为Event.REMOTELOCAL,你可以指定自己的事件广播途径
+//	
+//		 *  消息在网络上传播，消息被发送给所有对ExampleEventType.type2类型消息感兴趣的远程消息监听器和本地远程事件监听器，同时也会直接发送给本地监听器
+//		 *  Event event = new EventImpl("hello world type2.",ExampleEventType.type2,Event.REMOTELOCAL);
+//		 *  消息在网络上传播，消息被发送给所有对ExampleEventType.type2类型消息感兴趣的远程消息监听器和本地远程事件监听器
+//		 *  Event event = new EventImpl("hello world type2.",ExampleEventType.type2,Event.REMOTE);
+//		 */
+//		
+//
+//		EventTarget
+//		defualtprotocoltarget = null;
+//		Event event = null;
+////		Vector<Address> addresses = JGroupHelper.getJGroupHelper().getAppservers();
+//		
+//		
+//		defualtprotocoltarget = new EventTarget("netty","172.16.7.108",12347);
+//		event = new EventImpl("hello world type2 with jgroups target[" + defualtprotocoltarget +"].",
+//								ExampleEventType.type2withtarget,
+//								defualtprotocoltarget,
+//								Event.REMOTE);
+//
+//		EventHandle.getInstance().change(event,true);
+//		
+//		
+//	}
 	
 	public static void main(String[] args)
 	{
 
 
-		publishFileEvent();
+		publishEventtype2Withtarget();
 	}
 
 

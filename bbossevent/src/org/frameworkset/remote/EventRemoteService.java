@@ -26,5 +26,5 @@ import org.frameworkset.event.Event;
  * @version 1.0
  */
 public interface EventRemoteService {
-    public Object remoteEventChange(String eventfqn,Event event) throws Exception;
+    public Object remoteEventChange( Event event) throws Exception;
 }
