@@ -51,7 +51,7 @@ public class EventUtils {
 		{
 			if(inited)
 				return;
-			inited = true;
+			
 			try {
 				BaseApplicationContext eventcontext = DefaultApplicationContext.getApplicationContext("eventconf.xml"); 
 				remoteevent_enabled =eventcontext.getBooleanProperty("remoteevent.enabled",true); 
@@ -60,6 +60,7 @@ public class EventUtils {
 			} catch (Throwable e) {
 				log.error("init event RPC Dispatcher failed:", e);
 			}
+			inited = true;
 		}
 		
 	}
