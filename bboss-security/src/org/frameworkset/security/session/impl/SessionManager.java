@@ -68,7 +68,7 @@ public class SessionManager {
 	 * 如果需要检测，那么只要令牌持续时间超过sessionscaninterval
 	 * 对应的时间将会被清除
 	 */
-	private long sessionscaninterval = 5*60000;
+	private long sessionscaninterval = 60*60000;
 	private boolean usewebsession = false;
 	public SessionManager()
 	{

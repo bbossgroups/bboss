@@ -159,7 +159,7 @@ public class DaemonThread extends java.lang.Thread
     	}
     	return false;
     }
-    public void addFile(File file,ResourceInitial init)
+    public synchronized void addFile(File file,ResourceInitial init)
     {   
     	if(this.containFile(file))
     	{
@@ -225,11 +225,14 @@ public class DaemonThread extends java.lang.Thread
             }
             if(files == null || files.size() == 0)
             	continue;
-            for(FileBean f:files)
+            synchronized(this)
             {
-            	if(stopped)
-            		break;
-            	f.checkChanged();
+	            for(FileBean f:files)
+	            {
+	            	if(stopped)
+	            		break;
+	            	f.checkChanged();
+	            }
             }
             
 //            boolean exist = file.exists(); 
@@ -253,15 +256,19 @@ public class DaemonThread extends java.lang.Thread
     public void stopped()
     {
     	this.stopped = true;
-    	synchronized(this)
-    	{
+    	synchronized(this){
+    		if(files != null)
+	       	 {
+	       		 files.clear();
+	       		 files = null;
+	       	 }
     		this.notifyAll();
     	}
-    	 if(files != null)
-    	 {
-    		 files.clear();
-    		 files = null;
-    	 }
+//    	synchronized(this)
+//    	{
+//    		this.notifyAll();
+//    	}
+//    	 
     	 
     }
     

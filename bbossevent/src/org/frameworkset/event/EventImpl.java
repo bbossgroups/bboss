@@ -23,7 +23,7 @@ package org.frameworkset.event;
  * @author biaoping.yin
  * @version 1.0
  */
-public final class EventImpl<T> implements Event {
+public final class EventImpl<T> implements Event<T> {
 	/**
 	 *  
 	 */
@@ -127,7 +127,7 @@ public final class EventImpl<T> implements Event {
 	 * @return
 	 * @see com.chinacreator.security.authorization.ACLEvent#getSource()
 	 */
-	public Object getSource() {
+	public T getSource() {
 
 		return source;
 	}

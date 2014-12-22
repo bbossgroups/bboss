@@ -42,7 +42,13 @@ public interface Notifiable {
 	 * @see public void addListener(Listener listener,int listenerType);
 	 */
 	public void addListener(Listener listener,boolean remote);
-	
+	/**
+	 * Description 注册监听器方法
+	 * @param listener 需要注册的监听器
+	 * @param List<ResourceChangeEventType> 监听器需要监听的消息类型
+	 * void
+	 */
+	public void addListener(Listener listener,EventType eventtypes);
 	
 	/**
 	 * Description 注册监听器方法

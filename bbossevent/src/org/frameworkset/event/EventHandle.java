@@ -97,6 +97,11 @@ public class EventHandle  implements Notifiable {
 		}
 		return instance;
 	}
+	
+	public static void sendEvent(Event event)
+	{
+		getInstance().change(event);
+	}
 
 
 
@@ -107,15 +112,18 @@ public class EventHandle  implements Notifiable {
 	 * @see .authorization.ACLNotifiable#addListener(.authorization.ACLListener)
 	 */
 	public void addListener(Listener listener) {
-		addListener(listener, true);
+		if(!this.containListener(list, listener))
+			list.add(listener);
 	}
 
 	/**
 	 * Description:
 	 * 
 	 * @param listener
-	 * @see com.frameworkset.platform.security.authorization.ACLNotifiable#addListener(.authorization.ACLListener)
+	/**
+	 * @see addListener(Listener listener )
 	 */
+	@Deprecated 
 	public void addListener(Listener listener, boolean remote) {
 		
 
@@ -126,7 +134,7 @@ public class EventHandle  implements Notifiable {
 ////			}
 //		} else 
 		{
-			this.addListener(listener,Listener.LOCAL);
+			this.addListener(listener );
 //			if (!this.containListener(locallist, listener)) {
 //				locallist.add(listener);
 //			}
@@ -134,6 +142,19 @@ public class EventHandle  implements Notifiable {
 
 	}
 
+	public void addListener(Listener listener, EventType eventtype) {
+		if(eventtype == null)
+		{
+			this.addListener(listener);
+		}
+		else
+		{
+			List type = new ArrayList();
+			type.add(eventtype);
+			this.addListener(listener, type);
+		}
+		
+	}
 	/**
 	 * Description:注册监听器，被注册的监听器只对eventtypes中包含的事件类型的远程事件和本地事件感兴趣
 	 * 
@@ -144,28 +165,8 @@ public class EventHandle  implements Notifiable {
 	 */
 	public void addListener(Listener listener, List eventtypes) {
 
-		addListener(listener, eventtypes, true);
-	}
-
-	/**
-	 * 注册监听器，被注册的监听器只对eventtypes中包含的事件类型感兴趣，对其它类型的事件不敢兴趣
-	 * 根据remote的值决定监听器是否监听远程事件和本地事件，remote=true时监听远程和本地事件，false时 只监听本地事件。
-	 */
-	public void addListener(Listener listener, List eventtypes, boolean remote) {
-		if(remote)
-		{
-			this.addListener(listener, eventtypes, Listener.LOCAL_REMOTE);
-		}
-		else
-		{
-			this.addListener(listener, eventtypes, Listener.LOCAL);
-		}		
-	}
-	
-	
-	public void addListener(Listener listener, List eventtypes, int listenerType) {
 		if (eventtypes == null || eventtypes.size() == 0) {
-			this.addListener(listener, listenerType);
+			this.addListener(listener);
 		}
 		else
 		{
@@ -196,15 +197,40 @@ public class EventHandle  implements Notifiable {
 				}
 			 
 		}
+	}
+
+	/**
+	 * 注册监听器，被注册的监听器只对eventtypes中包含的事件类型感兴趣，对其它类型的事件不敢兴趣
+	 * 根据remote的值决定监听器是否监听远程事件和本地事件，remote=true时监听远程和本地事件，false时 只监听本地事件。
+	 * @see addListener(Listener listener, List eventtypes)
+	 */
+	@Deprecated 
+	public void addListener(Listener listener, List eventtypes, boolean remote) {
+		 
+			this.addListener(listener, eventtypes );
+		 	
+	}
+	
+
+	
+	/**
+	 *@see addListener(Listener listener, List eventtypes)
+	 */
+	@Deprecated 
+	public void addListener(Listener listener, List eventtypes, int listenerType) {
+		addListener(listener, eventtypes);
 				
 		
 	}
 
 
 
+	/**
+	 * @see addListener(Listener listener )
+	 */
+	@Deprecated 
 	public void addListener(Listener listener, int listenerType) {
-		if(!this.containListener(list, listener))
-			list.add(listener);
+		 addListener( listener ) ;
 //		if (listenerType == Listener.LOCAL_REMOTE) {
 //			
 //			if (!this.containListener(list, listener)) {
@@ -301,7 +327,14 @@ public class EventHandle  implements Notifiable {
 		if(event.getEventTarget() != null)
 		{
 			 List<Address> addresses = EventUtils.removeSelf(event.getEventTarget().getBroadcastAddresses());//如果包含本地地址则需要剔除本地地址，本地事件单独进行处理
-				
+			 if(addresses.size() != event.getEventTarget().getBroadcastAddresses().size())//单独处理本地地址
+				{
+					try {
+						_handleCommon (event);//如果没有启用集群，那么向本地远程事件类型监听器发送消息
+					} catch (Exception e) {
+						log.error("",e);
+					}
+				}
 				try{
 //						EventRemoteService eventRemoteService = ClientProxyContext.getApplicationClientBean(getEVENT_SERVICEName(event.getEventTarget()),EventRemoteService.class);
 //						 
@@ -312,14 +345,7 @@ public class EventHandle  implements Notifiable {
 					log.error("",e);
 				}
 			
-				if(addresses.size() != event.getEventTarget().getBroadcastAddresses().size())//单独处理本地地址
-				{
-					try {
-						_handleCommon (event);//如果没有启用集群，那么向本地远程事件类型监听器发送消息
-					} catch (Exception e) {
-						log.error("",e);
-					}
-				}
+				
 		}
 		else
 		{
@@ -349,9 +375,14 @@ public class EventHandle  implements Notifiable {
 				}
 				else
 				{		
+//					try {
+//						_handleCommon(event);//如果没有启用集群，那么向本地远程事件类型监听器发送消息
+//					} catch (Exception e) {
+//						log.error("",e);
+//					}
 					
 					try{
-						EventUtils.getEventRPCDispatcher().callRemote( true, event);
+						EventUtils.getEventRPCDispatcher().callRemote( false, event);
 //						EventRemoteService eventRemoteService = ClientProxyContext.getApplicationClientBean(getEVENT_SERVICEName(null),EventRemoteService.class);
 //						 
 //					    eventRemoteService.remoteEventChange( event);
@@ -361,11 +392,7 @@ public class EventHandle  implements Notifiable {
 						return;
 						
 					}
-					try {
-						_handleCommon(event);//如果没有启用集群，那么向本地远程事件类型监听器发送消息
-					} catch (Exception e) {
-						log.error("",e);
-					}
+					
 					
 					
 						

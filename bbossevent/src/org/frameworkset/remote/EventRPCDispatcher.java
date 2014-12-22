@@ -57,9 +57,10 @@ public class EventRPCDispatcher extends ReceiverAdapter implements
 			v.remove(channel.getAddress());
 			if(v.size() == 0)
 				return ;
+			boolean use_anycasting = true;
 			rpcDispatcher.callRemoteMethods(v, "remoteEventChange",
 					new Object[] {event}, new Class[] {   Event.class },
-					new RequestOptions(ResponseMode.GET_NONE, 0));
+					new RequestOptions(ResponseMode.GET_NONE, 0,use_anycasting));
 		} else {
 			rpcDispatcher.callRemoteMethods(null, "remoteEventChange",
 					new Object[] {event}, new Class[] {   Event.class },
@@ -83,10 +84,10 @@ public class EventRPCDispatcher extends ReceiverAdapter implements
 		// throw an exception because the underlying
 		// vector is unmodifiable
 		 
-			
+		   boolean use_anycasting = true;
 			rpcDispatcher.callRemoteMethods(addresses, "remoteEventChange",
 					new Object[] {event}, new Class[] {   Event.class },
-					new RequestOptions(ResponseMode.GET_NONE, 0));
+					new RequestOptions(ResponseMode.GET_NONE, 0,use_anycasting));
 		
 
 	}
