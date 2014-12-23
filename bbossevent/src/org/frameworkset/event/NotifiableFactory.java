@@ -15,6 +15,8 @@
  */
 package org.frameworkset.event;
 
+import java.util.List;
+
 
 
 
@@ -26,11 +28,7 @@ package org.frameworkset.event;
  */
 public abstract class NotifiableFactory implements java.io.Serializable {
     public NotifiableFactory() {
-        try {
-            jbInit();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+        
     }
 
 //    protected  NotifiableInfo notifiableInfo;
@@ -38,9 +36,28 @@ public abstract class NotifiableFactory implements java.io.Serializable {
     {
     	return EventHandle.getInstance();
     }
-
-    private void jbInit() throws Exception {
+    public static void addListener(Listener listener,EventType eventtypes)
+    {
+    	getNotifiable().addListener(  listener,  eventtypes);
     }
+    public static void addListener(Listener listener )
+    {
+    	getNotifiable().addListener(  listener );
+    }
+	
+	/**
+	 * Description 注册监听器方法
+	 * @param listener 需要注册的监听器
+	 * @param List<ResourceChangeEventType> 监听器需要监听的消息类型
+	 * void
+	 */
+	public static void addListener(Listener listener,List eventtypes)
+	{
+		getNotifiable().addListener(  listener,  eventtypes);
+	}
+	
+	
+    
 
 //    public NotifiableInfo getNotifiableInfo() {
 //        return notifiableInfo;
