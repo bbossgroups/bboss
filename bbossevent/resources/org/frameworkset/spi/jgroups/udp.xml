@@ -19,7 +19,7 @@
          mcast_send_buf_size="5M"
          max_bundle_size="64K"
          max_bundle_timeout="30"
-         enable_diagnostics="true"
+         enable_diagnostics="false"
          thread_naming_pattern="cl"
 
          timer_type="new3"

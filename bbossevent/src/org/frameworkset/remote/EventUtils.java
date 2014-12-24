@@ -16,6 +16,7 @@
 package org.frameworkset.remote;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.frameworkset.spi.BaseApplicationContext;
@@ -43,6 +44,9 @@ public class EventUtils {
 	
 	private static EventRPCDispatcher eventRPCDispatcher;
 	private static boolean inited ;
+	private static Map<String,String> protocols = null;
+	private static String defaultProtocol = "udp";
+	private static String protocol = null;
 	public static void init()
 	{
 		if(inited)
@@ -53,10 +57,13 @@ public class EventUtils {
 				return;
 			
 			try {
-				BaseApplicationContext eventcontext = DefaultApplicationContext.getApplicationContext("eventconf.xml"); 
+				BaseApplicationContext eventcontext = DefaultApplicationContext.getApplicationContext("eventconf.xml");
+				protocols = eventcontext.getTBeanObject("jgroup_protocols", Map.class);
+				protocol = (String)eventcontext.getExtendAttribute("jgroup_protocols", "use");
 				remoteevent_enabled =eventcontext.getBooleanProperty("remoteevent.enabled",true); 
-				if(remoteevent_enabled)
+				if(remoteevent_enabled)				
 					eventRPCDispatcher =eventcontext.getTBeanObject("eventRPCDispatcher", EventRPCDispatcher.class);
+				
 			} catch (Throwable e) {
 				log.error("init event RPC Dispatcher failed:", e);
 			}
@@ -64,7 +71,22 @@ public class EventUtils {
 		}
 		
 	}
-	
+	public static String getProtocolConfigFile()
+	{
+		
+		if(protocols != null)
+		{
+			
+			return protocols.get(protocol);
+		}
+		else
+		{
+			BaseApplicationContext eventcontext = DefaultApplicationContext.getApplicationContext("eventconf.xml");
+			protocols = eventcontext.getTBeanObject("jgroup_protocols", Map.class);
+			protocol = (String)eventcontext.getExtendAttribute("jgroup_protocols", "use");
+			return protocols.get(protocol);
+		}
+	}
 	public static boolean remoteevent_enabled()
     {
 		init();
@@ -99,5 +121,9 @@ public class EventUtils {
 		if(eventRPCDispatcher != null)
 			return eventRPCDispatcher.getAddresses();
 		return null;
+	}
+
+	public static String getDefaultProtocol() {
+		return defaultProtocol;
 	}
 }

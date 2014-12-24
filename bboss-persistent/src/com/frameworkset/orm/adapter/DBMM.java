@@ -171,7 +171,7 @@ public class DBMM extends DB
 //		}
 //		
 //    }
-    private static final String sql_sequence = "select nextval(?)";
+    private static final String sql_sequence = "select nextval(?) as pk";
     public long getNextValue(String sequence,Connection con,String dbname) throws SQLException
     {
 //    	long curValue = 0;
@@ -193,7 +193,7 @@ public class DBMM extends DB
 		if(seqfunctionname == null || seqfunctionname.equals(""))
 			dbutil.preparedSelect(dbname, sql_sequence);
 		else
-			dbutil.preparedSelect(dbname, "select " + seqfunctionname + "(?)");
+			dbutil.preparedSelect(dbname, "select " + seqfunctionname + "(?)  as pk");
 		dbutil.setString(1, sequence);
 		dbutil.executePrepared();
 		return dbutil.getLong(0, 0);

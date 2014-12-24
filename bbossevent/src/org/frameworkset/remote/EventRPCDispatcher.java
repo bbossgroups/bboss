@@ -124,7 +124,8 @@ public class EventRPCDispatcher extends ReceiverAdapter implements
 	}
 
 	private JChannel createChannel() throws Exception {
-		return new JChannel("org/frameworkset/spi/jgroups/udp.xml");
+		
+		return new JChannel(EventUtils.getProtocolConfigFile());
 	}
 
 	public void destroy() throws Exception {

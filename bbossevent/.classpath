@@ -10,7 +10,7 @@
 	<classpathentry kind="lib" path="lib/log4j-1.2.14.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="lib" path="lib/bboss-core.jar" sourcepath="/bboss-core"/>
-	<classpathentry kind="lib" path="lib/jgroups-3.6.1.Final.jar" sourcepath="/JGroups-JGroups-3.6.1.Final"/>
+	<classpathentry kind="lib" path="lib/jgroups-3.6.1.Final.jar" sourcepath="/JGroups-3.6.1_20141223"/>
 	<classpathentry kind="lib" path="lib/jakarta-oro-2.0.8.jar"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>

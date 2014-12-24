@@ -732,8 +732,8 @@ bbosscore<-cas server [bboss-core.jar]
 		<ant dir="${bbossevent}" />
 		<antcall target="distrib-bboss-event-jars">
 		</antcall>
-		<antcall target="distrib-bboss-event-resource">
-		</antcall>
+		<!--<antcall target="distrib-bboss-event-resource">
+		</antcall>-->
 
 	</target>
 

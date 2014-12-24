@@ -36,6 +36,14 @@
 			
 		-->
 	<property name="eventRPCDispatcher" f:eventService="attr:event.serivce" class="org.frameworkset.remote.EventRPCDispatcher"   />
+	<property name="jgroup_protocols" use="tcpnio">
+	    <map componentType="bean"> 
+			<property name="udp" value="org/frameworkset/spi/jgroups/udp.xml"/> 
+			<property name="tcp" value="org/frameworkset/spi/jgroups/tcp.xml"/>
+			<property name="tcpnio" value="org/frameworkset/spi/jgroups/tcp-nio.xml"/>
+			 
+		</map> 
+	</property>    
 		
 	
 </properties>
