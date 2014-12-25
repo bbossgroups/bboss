@@ -1060,7 +1060,27 @@ public class ValueExchange {
 ////		return value;
 //		
 //	}
-	
+	public static Object getValueFromResultSet(ResultSet rs,
+			int columnIndex, int sqltype, Class javaType,DB db) throws SQLException{
+//		Object value = null;
+//		try {
+//			TypeHandler handler = getTypeHandler(sqltype);
+//			if(handler != null)
+//				return handler.getResult(rs, columnIndex, javaType, null);
+//		} catch (SQLException ee) {
+//			throw ee;
+//		} catch (Exception ee) {
+//			throw new NestedSQLException(ee);
+//		}
+//		return value;
+		Object value = getValueFromRS(rs, columnIndex, sqltype,
+				  db);
+		if(value == null)
+			return ValueObjectUtil.getDefaultValue(javaType);;
+		return convert(value, value.getClass(), javaType);
+		
+		
+	}
 	public static Object getValueFromResultSet(ResultSet rs,
 			String column, int sqltype, Class javaType,String dbname) throws SQLException{
 //		Object value = null;
@@ -1112,32 +1132,15 @@ public class ValueExchange {
 //		return null;
 	}
 	public static Object getValueFromRS(ResultSet res, int i, int type,
-			String dbname) throws SQLException {
+			DB db) throws SQLException {
 		Object value = null;
-		DB db = SQLUtil.getPool(dbname).getDbAdapter();
+//		DB db = SQLUtil.getPool(dbname).getDbAdapter();
 		try {
 			switch (type) {
-
-			// case Types.LONGVARBINARY:
 			case Types.VARCHAR:
 				value = res.getString(i);break;
+			// case Types.LONGVARBINARY:
 			
-			case Types.INTEGER:
-				/**
-				 * 处理long类型的字段时需要，当应用程序向long形字段中存放大文本时需要，存放Reader
-				 * res.getCharacterStream();
-				 */
-//				Object reader = null;
-//				reader = res.getCharacterStream(i);
-//				Object temp = res.getObject(i);
-//				value = new Object[] { temp, reader };
-				value  = res.getInt(i);
-//				value = new Long(temp);				
-				break;
-			case Types.DECIMAL:	
-				value =res.getBigDecimal(i);
-				break;
-				
 			case Types.BIGINT:
 				/**
 				 * 处理long类型的字段时需要，当应用程序向long形字段中存放大文本时需要，存放Reader
@@ -1147,25 +1150,12 @@ public class ValueExchange {
 //				reader = res.getCharacterStream(i);
 //				Object temp = res.getObject(i);
 //				value = new Object[] { temp, reader };
-				value = res.getLong(i);
-//				value = new Long(temp);				
+				long temp = res.getLong(i);
+				value = new Long(temp);				
 				break;
-			case Types.DOUBLE:
-				/**
-				 * 处理long类型的字段时需要，当应用程序向long形字段中存放大文本时需要，存放Reader
-				 * res.getCharacterStream();
-				 */
-//				Object reader = null;
-//				reader = res.getCharacterStream(i);
-//				Object temp = res.getObject(i);
-//				value = new Object[] { temp, reader };
-				value = res.getDouble(i);
-//				value = new Long(temp);				
-				break;	
-				
 			case Types.TIMESTAMP:
 				value = res.getTimestamp(i);
-				break;
+				break;	
 			case Types.DATE:
 				try
 				{
@@ -1175,18 +1165,9 @@ public class ValueExchange {
 				{
 					value = res.getDate(i);break;
 				}
-			case Types.FLOAT:
-				/**
-				 * 处理long类型的字段时需要，当应用程序向long形字段中存放大文本时需要，存放Reader
-				 * res.getCharacterStream();
-				 */
-//				Object reader = null;
-//				reader = res.getCharacterStream(i);
-//				Object temp = res.getObject(i);
-//				value = new Object[] { temp, reader };
-				value = res.getFloat(i);
-//				value = new Long(temp);				
-				break;		
+			case Types.DECIMAL:	
+				value =res.getBigDecimal(i);
+				break;	
 			case Types.CHAR:
 				try {
 					// not sure about this fix, so be overly cautious
@@ -1220,13 +1201,7 @@ public class ValueExchange {
 					
 				}
 				break;	
-			case Types.CLOB:
-				
-			    Clob clob = res.getClob(i);
-                value = clob;
-                //value = this.clobToString(clob);
-                break;	
-			case Types.BLOB:			
+			case Types.BLOB:
 			    Blob blob = res.getBlob(i);
                 value = blob;
                 //value = this.blobToByteArray(blob);
@@ -1236,7 +1211,11 @@ public class ValueExchange {
 				value = db.getLONGVARBINARY(res, i);
 				//value = this.blobToByteArray(blob);
 				break;
-			
+			case Types.CLOB:
+			    Clob clob = res.getClob(i);
+                value = clob;
+                //value = this.clobToString(clob);
+                break;
 			case Types.LONGVARCHAR:
 				
 				value = db.getLONGVARCHAR(res, i);
@@ -1251,12 +1230,12 @@ public class ValueExchange {
 			case OracleTypes.TIMESTAMPTZ:
 				value = res.getTimestamp(i);
 				break;
-				
+			
 			case Types.TIME:
 				value = res.getTime(i);
 			
 				break;
-			
+				
 			default:
 				// System.out.println("column :" + i + " " +
 				// meta.getColumnLabel(i));
@@ -1281,33 +1260,16 @@ public class ValueExchange {
 		return value;
 	}
 	
-	public static Object getValueFromRS(ResultSet res, String colName, int type,
+	public static Object getValueFromRS(ResultSet res, String i, int type,
 			String dbname) throws SQLException {
 		Object value = null;
 		DB db = SQLUtil.getPool(dbname).getDbAdapter();
 		try {
 			switch (type) {
-
-			// case Types.LONGVARBINARY:
 			case Types.VARCHAR:
-				value = res.getString(colName);break;
+				value = res.getString(i);break;
+			// case Types.LONGVARBINARY:
 			
-			case Types.INTEGER:
-				/**
-				 * 处理long类型的字段时需要，当应用程序向long形字段中存放大文本时需要，存放Reader
-				 * res.getCharacterStream();
-				 */
-//				Object reader = null;
-//				reader = res.getCharacterStream(i);
-//				Object temp = res.getObject(i);
-//				value = new Object[] { temp, reader };
-				value  = res.getInt(colName);
-//				value = new Long(temp);				
-				break;
-			case Types.DECIMAL:	
-				value =res.getBigDecimal(colName);
-				break;
-				
 			case Types.BIGINT:
 				/**
 				 * 处理long类型的字段时需要，当应用程序向long形字段中存放大文本时需要，存放Reader
@@ -1317,52 +1279,30 @@ public class ValueExchange {
 //				reader = res.getCharacterStream(i);
 //				Object temp = res.getObject(i);
 //				value = new Object[] { temp, reader };
-				value = res.getLong(colName);
-//				value = new Long(temp);				
+				long temp = res.getLong(i);
+				value = new Long(temp);				
 				break;
-			case Types.DOUBLE:
-				/**
-				 * 处理long类型的字段时需要，当应用程序向long形字段中存放大文本时需要，存放Reader
-				 * res.getCharacterStream();
-				 */
-//				Object reader = null;
-//				reader = res.getCharacterStream(i);
-//				Object temp = res.getObject(i);
-//				value = new Object[] { temp, reader };
-				value = res.getDouble(colName);
-//				value = new Long(temp);				
-				break;	
-				
 			case Types.TIMESTAMP:
-				value = res.getTimestamp(colName);
-				break;
+				value = res.getTimestamp(i);
+				break;	
 			case Types.DATE:
 				try
 				{
-					value = res.getTimestamp(colName);break;
+					value = res.getTimestamp(i);break;
 				}
 				catch(Exception e)
 				{
-					value = res.getDate(colName);break;
+					value = res.getDate(i);break;
 				}
-			case Types.FLOAT:
-				/**
-				 * 处理long类型的字段时需要，当应用程序向long形字段中存放大文本时需要，存放Reader
-				 * res.getCharacterStream();
-				 */
-//				Object reader = null;
-//				reader = res.getCharacterStream(i);
-//				Object temp = res.getObject(i);
-//				value = new Object[] { temp, reader };
-				value = res.getFloat(colName);
-//				value = new Long(temp);				
-				break;		
+			case Types.DECIMAL:	
+				value =res.getBigDecimal(i);
+				break;	
 			case Types.CHAR:
 				try {
 					// not sure about this fix, so be overly cautious
 					// 判断是否有中文如果有中文则，有些数据库需要处理调后面多余的空格，比如oracle
 
-					value = res.getString(colName);
+					value = res.getString(i);
 					
 //					value = db.getCharValue(res, i,
 //							(String) value);
@@ -1390,43 +1330,41 @@ public class ValueExchange {
 					
 				}
 				break;	
-			case Types.CLOB:
-				
-			    Clob clob = res.getClob(colName);
-                value = clob;
-                //value = this.clobToString(clob);
-                break;	
-			case Types.BLOB:			
-			    Blob blob = res.getBlob(colName);
+			case Types.BLOB:
+			    Blob blob = res.getBlob(i);
                 value = blob;
                 //value = this.blobToByteArray(blob);
                 break;
 			case Types.LONGVARBINARY:
 				
-				value = db.getLONGVARBINARY(res, colName);
+				value = db.getLONGVARBINARY(res, i);
 				//value = this.blobToByteArray(blob);
 				break;
-			
+			case Types.CLOB:
+			    Clob clob = res.getClob(i);
+                value = clob;
+                //value = this.clobToString(clob);
+                break;
 			case Types.LONGVARCHAR:
 				
-				value = db.getLONGVARCHAR(res, colName);
+				value = db.getLONGVARCHAR(res, i);
 				//value = this.clobToString(clob);
 				break;
 			case OracleTypes.TIMESTAMPLTZ:
-				value = res.getTimestamp(colName);
+				value = res.getTimestamp(i);
 				break;
 			case OracleTypes.TIMESTAMPNS:
-				value = res.getTimestamp(colName);
+				value = res.getTimestamp(i);
 				break;
 			case OracleTypes.TIMESTAMPTZ:
-				value = res.getTimestamp(colName);
+				value = res.getTimestamp(i);
+				break;
+			
+			case Types.TIME:
+				value = res.getTime(i);
+			
 				break;
 				
-			case Types.TIME:
-				value = res.getTime(colName);
-			
-				break;
-			
 			default:
 				// System.out.println("column :" + i + " " +
 				// meta.getColumnLabel(i));
@@ -1434,7 +1372,7 @@ public class ValueExchange {
 				// server2000）表字段的值为空的情况下调用res.getObject(i)会报
 				// 读取零字节异常，造成数据读取失败
 				
-				value = res.getObject(colName);
+				value = res.getObject(i);
 				
 				// value = res.getObject(i);
 				break;

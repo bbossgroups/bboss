@@ -40,6 +40,7 @@ import com.frameworkset.common.poolman.sql.PoolManResultSetMetaData;
 import com.frameworkset.common.poolman.sql.PoolManResultSetMetaData.WrapInteger;
 import com.frameworkset.common.poolman.util.JDBCPool;
 import com.frameworkset.common.poolman.util.SQLUtil;
+import com.frameworkset.orm.adapter.DB;
 import com.frameworkset.orm.annotation.PrimaryKey;
 import com.frameworkset.orm.engine.model.SchemaType;
 import com.frameworkset.util.ValueObjectUtil;
@@ -158,7 +159,6 @@ public class ResultMap {
 			return null;
 		T valueObject = null;
 		
-		
 		if (rowHander != null) {
 			boolean isfieldRowHandler = isFieldRowHandler(rowHander);
 			try {
@@ -169,7 +169,7 @@ public class ResultMap {
 			} catch (IllegalAccessException e1) {
 				throw new NestedSQLException(e1);
 			}
-			Record data = buildMap(rs,  stmtInfo);
+			Record data = buildMap(rs,  stmtInfo,stmtInfo.getDbadapter());
 			try
             {
 				if(!isfieldRowHandler)
@@ -276,14 +276,14 @@ public class ResultMap {
 					for (int i = 0; i < meta.getColumnCounts(); i++) {
 						
 						int cidx = i+1;
-						String columnName = meta.getColumnLabelUpper(cidx);
+						String columnName = meta.getColumnLabelUpperByIndex(i);
 						
 		
 						if (!upname.equals(columnName))
 						{
 							if(!userAnnotation && JDBCPool.nameMapping)
 							{
-								String javaName = meta.getColumnJavaName(cidx);
+								String javaName = meta.getColumnJavaNameByIndex(i);
 								if(javaName != null )
 								{
 									if(!attrName.equals(javaName))
@@ -309,10 +309,10 @@ public class ResultMap {
 		//														stmtInfo.getMeta().getColumnType(i + 1), 
 		//														type, 
 		//														stmtInfo.getDbname());
-							propsVal = ValueExchange.getValueFromResultSet(rs, meta.getColumnLabel(cidx), 
-									stmtInfo.getMeta().getColumnType(cidx), 
+							propsVal = ValueExchange.getValueFromResultSet(rs, cidx, 
+									stmtInfo.getMeta().getColumnTypeByIndex(i), 
 									type, 
-									stmtInfo.getDbname());
+									stmtInfo.getDbadapter());
 		
 						} catch (Exception e) {
 							StringBuffer err = new StringBuffer(
@@ -353,11 +353,11 @@ public class ResultMap {
 			}
 			else
 			{
-				PoolManResultSetMetaData meta = stmtInfo.getMeta();
-				valueObject = (T)ValueExchange.getValueFromResultSet(rs, meta.getColumnLabel(1), 
-						stmtInfo.getMeta().getColumnType(1), 
+				
+				valueObject = (T)ValueExchange.getValueFromResultSet(rs,  1, 
+						stmtInfo.getMeta().getColumnTypeByIndex(0), 
 						valueObjectType, 
-						stmtInfo.getDbname());
+						stmtInfo.getDbadapter());
 			}
 		}
 		else
@@ -370,7 +370,7 @@ public class ResultMap {
 	
 	public static void buildRecord(ResultSet rs,
            
-            StatementInfo stmtInfo, RowHandler rowHander)
+            StatementInfo stmtInfo, RowHandler rowHander,DB db)
             throws SQLException {
         
         if (rs == null || stmtInfo == null)
@@ -379,7 +379,7 @@ public class ResultMap {
        
         if (rowHander != null) {
 
-            Record data = buildMap(rs,  stmtInfo);
+            Record data = buildMap(rs,  stmtInfo,db);
             try
             {
                 rowHander.handleRow(null, data);
@@ -701,7 +701,7 @@ public class ResultMap {
 	}
 	
 	
-	public static Record buildMap(ResultSet rs,StatementInfo stmtInfo)
+	public static Record buildMap(ResultSet rs,StatementInfo stmtInfo,DB db)
 			throws SQLException {
 		Record record = null;
 		PoolManResultSetMetaData meta = stmtInfo.getMeta();
@@ -710,8 +710,8 @@ public class ResultMap {
 			record = new Record(cols,meta.get_columnLabel_upper(),meta.getSamecols());
 			record.setRowid(rs.getRow());	
 			for (int i = 1; i <= cols; i++) {
-				Object value = ValueExchange.getValueFromRS(rs,  meta.getColumnLabel(i), meta
-						.getColumnType(i), stmtInfo.getDbname());
+				Object value = ValueExchange.getValueFromRS(rs,  i, meta
+						.getColumnType(i), db);
 
 				
 				// 将属性名称全部转换为大写，统一不同数据库之间的差异
@@ -780,6 +780,7 @@ public class ResultMap {
 	throws SQLException {
 		 Map valueObject = null;
 		 PoolManResultSetMetaData meta = stmtInfo.getMeta();
+		
 		if (rs != null && stmtInfo != null) {
 		        int cols = meta.getColumnCounts();
 		       
@@ -792,8 +793,8 @@ public class ResultMap {
 //			record = new Record(cols,meta.get_columnLabel_upper(),meta.getSamecols());
 //			record.setRowid(rs.getRow());	
 			for (int i = 1; i <= cols; i++) {
-				Object value = ValueExchange.getValueFromRS(rs, meta.getColumnLabel(i), meta
-						.getColumnType(i), stmtInfo.getDbname());
+				Object value = ValueExchange.getValueFromRS(rs,  i, meta
+						.getColumnType(i), stmtInfo.getDbadapter());
 		
 				
 				// 将属性名称全部转换为大写，统一不同数据库之间的差异
@@ -835,11 +836,11 @@ public class ResultMap {
 	
 	public static StringBuffer buildSingleRecordXMLString(ResultSet rs,
 			StatementInfo stmtInfo,
-			RowHandler rowHander) throws SQLException {			
+			RowHandler rowHander,DB db) throws SQLException {			
 		StringBuffer record = new StringBuffer();
 //		if (rowHander != null)
 //		{		        
-			Record data = buildMap(rs, stmtInfo);
+			Record data = buildMap(rs, stmtInfo,db);
 			try
             {
                 rowHander.handleRow(record, data);

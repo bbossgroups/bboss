@@ -72,7 +72,7 @@ public abstract class RowHandler<T> {
            }
             try {
                 int index = seekIndex(colName);
-                int sqltype = meta.getColumnType(index + 1);
+                int sqltype = meta.getColumnTypeByIndex(index );
                 SchemaType schemaType = SQLUtil.getSchemaType(dbname, sqltype); 
                 return schemaType;
             }

@@ -275,6 +275,11 @@ public class PoolManResultSetMetaData implements java.sql.ResultSetMetaData, jav
         return  getSameColumns(this.getColumnLabelUpper(colIndex));
 //        return  (WrapInteger)samecols.get(new Integer(colIndex));
     }
+    public WrapInteger getSameColumnsByIndex(int colIndex)
+    {
+        return  getSameColumns(this.getColumnLabelUpperByIndex(colIndex));
+//        return  (WrapInteger)samecols.get(new Integer(colIndex));
+    }
     
     public WrapInteger getSameColumns(String colName)
     {
@@ -295,6 +300,10 @@ public class PoolManResultSetMetaData implements java.sql.ResultSetMetaData, jav
     public java.lang.String getColumnTypeName(int column) throws java.sql.SQLException {
         return _columnTypeName[column - 1];
     }
+    
+    public java.lang.String getColumnTypeNameByIndex(int column) throws java.sql.SQLException {
+        return _columnTypeName[column ];
+    }
 
     public java.lang.String getColumnClassName(int column) throws java.sql.SQLException {
         if (_columnClassName == null) {
@@ -303,85 +312,167 @@ public class PoolManResultSetMetaData implements java.sql.ResultSetMetaData, jav
         }
         return _columnClassName[column - 1];
     }
+    public java.lang.String getColumnClassNameByIndex(int column) throws java.sql.SQLException {
+        if (_columnClassName == null) {
+            // java.sql.ResultSetMetaData.getColumnClassName(int col) requires a JDBC 2 compliant database driver.
+            throw new java.sql.SQLException(_sqlReason, _sqlState, _sqlVendorCode);
+        }
+        return _columnClassName[column];
+    }
 
     public int getScale(int column) throws java.sql.SQLException {
         return _scale[column - 1];
+    }
+    
+    public int getScaleByIndex(int column) throws java.sql.SQLException {
+        return _scale[column ];
     }
 
     public java.lang.String getColumnLabel(int column) throws java.sql.SQLException {
         return _columnLabel[column - 1];
     }
     
+    public java.lang.String getColumnLabelByIndex(int column) throws java.sql.SQLException {
+        return _columnLabel[column  ];
+    }
+    
     public java.lang.String getColumnLabelUpper(int column) {
         return _columnLabel_upper[column - 1];
+    }
+    
+    public java.lang.String getColumnLabelUpperByIndex(int column) {
+        return _columnLabel_upper[column ];
     }
     
     public java.lang.String getColumnJavaName(int column) {
         return this.columnJavaName[column - 1];
     }
+    
+    public java.lang.String getColumnJavaNameByIndex(int column) {
+        return this.columnJavaName[column ];
+    }
 
     public boolean isAutoIncrement(int column) throws java.sql.SQLException {
         return _autoIncrement[column - 1];
+    }
+    
+    public boolean isAutoIncrementByIndex(int column) throws java.sql.SQLException {
+        return _autoIncrement[column ];
     }
 
     public int getColumnDisplaySize(int column) throws java.sql.SQLException {
         return _columnDisplaySize[column - 1];
     }
+    public int getColumnDisplaySizeByIndex(int column) throws java.sql.SQLException {
+        return _columnDisplaySize[column];
+    }
 
     public java.lang.String getCatalogName(int column) throws java.sql.SQLException {
         return _catalogName[column - 1];
+    }
+    
+    public java.lang.String getCatalogNameByIndex(int column) throws java.sql.SQLException {
+        return _catalogName[column];
     }
 
     public java.lang.String getColumnName(int column) throws java.sql.SQLException {
         return _columnName[column - 1];
     }
+    
+    public java.lang.String getColumnNameByIndex(int column) throws java.sql.SQLException {
+        return _columnName[column ];
+    }
 
     public boolean isWritable(int column) throws java.sql.SQLException {
         return _writable[column - 1];
+    }
+    
+    public boolean isWritableByIndex(int column) throws java.sql.SQLException {
+        return _writable[column ];
     }
 
     public boolean isSearchable(int column) throws java.sql.SQLException {
         return _searchable[column - 1];
     }
+    
+    public boolean isSearchableByIndex(int column) throws java.sql.SQLException {
+        return _searchable[column];
+    }
 
     public int getColumnType(int column) throws java.sql.SQLException {
         return _columnType[column - 1];
+    }
+    
+    public int getColumnTypeByIndex(int column) throws java.sql.SQLException {
+        return _columnType[column ];
     }
 
     public boolean isCurrency(int column) throws java.sql.SQLException {
         return _currency[column - 1];
     }
+    
+    public boolean isCurrencyByIndex(int column) throws java.sql.SQLException {
+        return _currency[column ];
+    }
 
     public java.lang.String getTableName(int column) throws java.sql.SQLException {
         return _tableName[column - 1];
+    }
+    public java.lang.String getTableNameByIndex(int column) throws java.sql.SQLException {
+        return _tableName[column ];
     }
 
     public int isNullable(int column) throws java.sql.SQLException {
         return _nullable[column - 1];
     }
+    
+    public int isNullableByIndex(int column) throws java.sql.SQLException {
+        return _nullable[column];
+    }
 
     public boolean isSigned(int column) throws java.sql.SQLException {
         return _signed[column - 1];
+    }
+    public boolean isSignedByIndex(int column) throws java.sql.SQLException {
+        return _signed[column ];
     }
 
     public boolean isReadOnly(int column) throws java.sql.SQLException {
         return _readOnly[column - 1];
     }
+    public boolean isReadOnlyByIndex(int column) throws java.sql.SQLException {
+        return _readOnly[column ];
+    }
 
     public boolean isDefinitelyWritable(int column) throws java.sql.SQLException {
         return _definitelyWritable[column - 1];
+    }
+    
+    public boolean isDefinitelyWritableByIndex(int column) throws java.sql.SQLException {
+        return _definitelyWritable[column ];
     }
 
     public int getPrecision(int column) throws java.sql.SQLException {
         return _precision[column - 1];
     }
+    
+    public int getPrecisionByIndex(int column) throws java.sql.SQLException {
+        return _precision[column ];
+    }
 
     public java.lang.String getSchemaName(int column) throws java.sql.SQLException {
         return _schemaName[column - 1];
     }
+    
+    public java.lang.String getSchemaNameByIndex(int column) throws java.sql.SQLException {
+        return _schemaName[column ];
+    }
 
     public boolean isCaseSensitive(int column) throws java.sql.SQLException {
         return _caseSensitive[column - 1];
+    }
+    public boolean isCaseSensitiveByIndex(int column) throws java.sql.SQLException {
+        return _caseSensitive[column ];
     }
 
 	public String[] get_columnLabel_upper() {
@@ -450,69 +541,69 @@ public class PoolManResultSetMetaData implements java.sql.ResultSetMetaData, jav
 	 * @throws SQLException */
 	public String getCatalogName(String colName) throws SQLException
 	{
-		return this.getCatalogName(this.seekIndex(colName)+ 1);
+		return this.getCatalogNameByIndex(this.seekIndex(colName));
 	}
 	public String getColumnClassName(String colName) throws SQLException
 	{
-		return this.getColumnClassName(this.seekIndex(colName)+ 1);
+		return this.getColumnClassNameByIndex(this.seekIndex(colName));
 	}
 	public int getColumnDisplaySize(String colName) throws SQLException{
-		return this.getColumnDisplaySize(this.seekIndex(colName)+ 1);
+		return this.getColumnDisplaySizeByIndex(this.seekIndex(colName) );
 	}
 	public String getColumnLabel(String colName) throws SQLException{
-		return this.getColumnLabel(this.seekIndex(colName)+ 1);
+		return this.getColumnLabelByIndex(this.seekIndex(colName) );
 	}
 	public String getColumnLabelUpper(String colName) throws SQLException{
-		return this.getColumnLabelUpper(this.seekIndex(colName)+ 1);
+		return this.getColumnLabelUpperByIndex(this.seekIndex(colName) );
 	}
 	public String getColumnName(String colName) throws SQLException{
-		return this.getColumnName(this.seekIndex(colName)+ 1);
+		return this.getColumnNameByIndex(this.seekIndex(colName) );
 	}
 	public int getColumnType(String colName) throws SQLException{
-		return this.getColumnType(this.seekIndex(colName)+ 1);
+		return this.getColumnTypeByIndex(this.seekIndex(colName) );
 	}
 	public String getColumnTypeName(String colName) throws SQLException{
-		return this.getColumnTypeName(this.seekIndex(colName)+ 1);
+		return this.getColumnTypeNameByIndex(this.seekIndex(colName) );
 	}
 	
 	public int getPrecision(String colName) throws SQLException{
-		return this.getPrecision(this.seekIndex(colName)+ 1);
+		return this.getPrecisionByIndex(this.seekIndex(colName) );
 	}
 	public int getScale(String colName) throws SQLException{
-		return this.getScale(this.seekIndex(colName)+ 1);
+		return this.getScaleByIndex(this.seekIndex(colName) );
 	}
 	public String getSchemaName(String colName) throws SQLException{
-		return this.getSchemaName(this.seekIndex(colName)+ 1);
+		return this.getSchemaNameByIndex(this.seekIndex(colName) );
 	}
 	public String getTableName(String colName) throws SQLException{
-		return this.getTableName(this.seekIndex(colName)+ 1);
+		return this.getTableNameByIndex(this.seekIndex(colName) );
 	}
 	public boolean isAutoIncrement(String colName) throws SQLException{
-		return this.isAutoIncrement(this.seekIndex(colName)+ 1);
+		return this.isAutoIncrementByIndex(this.seekIndex(colName) );
 	}
 	public boolean isCaseSensitive(String colName) throws SQLException{
-		return this.isCaseSensitive(this.seekIndex(colName)+ 1);
+		return this.isCaseSensitiveByIndex(this.seekIndex(colName) );
 	}
 	public boolean isCurrency(String colName) throws SQLException{
-		return this.isCurrency(this.seekIndex(colName)+ 1);
+		return this.isCurrencyByIndex(this.seekIndex(colName) );
 	}
 	public boolean isDefinitelyWritable(String colName) throws SQLException{
-		return this.isDefinitelyWritable(this.seekIndex(colName)+ 1);
+		return this.isDefinitelyWritableByIndex(this.seekIndex(colName) );
 	}
 	public int isNullable(String colName) throws SQLException{
-		return this.isNullable(this.seekIndex(colName)+ 1);
+		return this.isNullableByIndex(this.seekIndex(colName) );
 	}
 	public boolean isReadOnly(String colName) throws SQLException{
-		return this.isReadOnly(this.seekIndex(colName)+ 1);
+		return this.isReadOnlyByIndex(this.seekIndex(colName) );
 	}
 	public boolean isSearchable(String colName) throws SQLException{
-		return this.isSearchable(this.seekIndex(colName)+ 1);
+		return this.isSearchableByIndex(this.seekIndex(colName) );
 	}
 	public boolean isSigned(String colName) throws SQLException{
-		return this.isSigned(this.seekIndex(colName)+ 1);
+		return this.isSignedByIndex(this.seekIndex(colName) );
 	}
 	public boolean isWritable(String colName) throws SQLException{
-		return this.isWritable(this.seekIndex(colName)+ 1);
+		return this.isWritableByIndex(this.seekIndex(colName) );
 	}
 	public <T> T unwrap(Class<T> iface) throws SQLException {
 		// TODO Auto-generated method stub
@@ -524,6 +615,12 @@ public class PoolManResultSetMetaData implements java.sql.ResultSetMetaData, jav
 	}
 	public String[] getColumnJavaName() {
 		return columnJavaName;
+	}
+	public String[] get_columnLabel() {
+		return _columnLabel;
+	}
+	public int[] get_columnType() {
+		return _columnType;
 	}
 
 }

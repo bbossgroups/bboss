@@ -51,6 +51,24 @@ public class SQLCache {
 		parserSQLStructions.clear();
 		parsertotalsizeSQLStructions.clear();
 	}
+	
+	private boolean needRefreshMeta(PoolManResultSetMetaData meta,ResultSetMetaData rsmetadata) throws SQLException
+	{
+		if(meta.getColumnCount() != rsmetadata.getColumnCount())//列数发生变化
+			return true;
+		String[] labels = meta.get_columnLabel();//判断列名称是否变化
+		int coltypes[] = meta.get_columnType();
+		for(int i = 0; i < labels.length;i ++)
+		{
+			if(!labels[i].equals(rsmetadata.getColumnLabel(i + 1)))//列名变化
+			{
+				return true;
+			}
+			if(coltypes[i] != rsmetadata.getColumnType(i + 1))//类型变化
+				return true;
+		}
+		return false;
+	}
 	public PoolManResultSetMetaData getPoolManResultSetMetaData(String dbname,String sqlkey,ResultSetMetaData rsmetadata) throws SQLException
 	{
 		PoolManResultSetMetaData meta = null;
@@ -80,7 +98,7 @@ public class SQLCache {
 			}
 			else
 			{
-				if(meta.getColumnCount() != rsmetadata.getColumnCount())
+				if(needRefreshMeta(meta,rsmetadata))
 				{
 					meta = PoolManResultSetMetaData.getCopy(rsmetadata);
 					wr = new SoftReference<PoolManResultSetMetaData>(meta);

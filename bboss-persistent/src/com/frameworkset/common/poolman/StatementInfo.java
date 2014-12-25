@@ -728,7 +728,7 @@ public class StatementInfo {
         // 从结果集中获取当前游标后maxsize条记录
         while (go) {
             ResultMap.buildRecord(res, this,
-                    rowHandler);
+                    rowHandler,this.dbadapter);
             rowcount++;
             if (ispagine)
                 go = res.next() && rowcount < getMaxsize();
@@ -795,7 +795,7 @@ public class StatementInfo {
         		// 从结果集中获取当前游标后maxsize条记录
         		while (go) {
         			StringBuffer record = ResultMap.buildSingleRecordXMLString(res,
-        					this, rowHandler);
+        					this, rowHandler,this.dbadapter);
         			results.append(record);
         			rowcount++;
         			if (ispagine)
@@ -848,7 +848,7 @@ public class StatementInfo {
 				results = temp;
 			}
 
-			Record record = ResultMap.buildMap(res, this);
+			Record record = ResultMap.buildMap(res, this,this.dbadapter);
 
 			results[rowcount] = record;
 			rowcount++;
@@ -1181,6 +1181,10 @@ public class StatementInfo {
 
 	public boolean isRETURN_GENERATED_KEYS() {
 		return RETURN_GENERATED_KEYS;
+	}
+
+	public DB getDbadapter() {
+		return dbadapter;
 	}
 
 }
