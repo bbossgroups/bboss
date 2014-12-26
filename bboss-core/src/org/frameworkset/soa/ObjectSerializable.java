@@ -1150,12 +1150,27 @@ public class ObjectSerializable {
 			throws Exception {
 		if (obj == null) {
 			if (name == null)
-				ret.append("<p s:nvl=\"true\" s:t=\"").append(
-						ValueObjectUtil.getSimpleTypeName(ptype)).append("\"/>");
+			{
+				if(ptype != null)
+					ret.append("<p s:nvl=\"true\" s:t=\"").append(
+							ValueObjectUtil.getSimpleTypeName(ptype)).append("\"/>");
+				else
+					ret.append("<p s:nvl=\"true\"/>");
+			}
 			else
-				ret.append("<p n=\"").append(name).append(
-						"\" s:nvl=\"true\" s:t=\"").append(
-						ValueObjectUtil.getSimpleTypeName(ptype)).append("\"/>");
+			{
+				if(ptype != null)
+				{
+					ret.append("<p n=\"").append(name).append(
+							"\" s:nvl=\"true\" s:t=\"").append(
+							ValueObjectUtil.getSimpleTypeName(ptype)).append("\"/>");
+				}
+				else
+				{
+					ret.append("<p n=\"").append(name).append(
+							"\" s:nvl=\"true\"/>");
+				}
+			}
 
 			return true;
 		}
