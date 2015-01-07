@@ -165,6 +165,16 @@ public class SessionHttpServletRequestWrapper extends HttpServletRequestWrapper 
 		}
 		else
 		{
+			String currentDomain = this.getServerName();
+			if(!currentDomain.equals(crossDomain.getRootDomain()) && !currentDomain.endsWith("."+crossDomain.getRootDomain()))//非跨域访问，则直接写应用的session cookieid,解决通过非共享域方式无法访问系统的问题
+			{
+				boolean secure = SessionHelper.getSessionManager().isSecure();
+				if(!this.isSecure())
+					secure = false;
+				StringUtil.addCookieValue(this, response, SessionHelper.getSessionManager().getCookiename(), sessionid, cookielivetime,SessionHelper.getSessionManager().isHttpOnly(),
+						secure,SessionHelper.getSessionManager().getDomain());
+				return;
+			}
 			List<App> apps = crossDomain.getDomainApps();
 			if(crossDomain.get_paths() != null)
 			{

@@ -21,6 +21,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import com.frameworkset.common.poolman.monitor.AbandonedTraceExt;
+import com.frameworkset.common.poolman.monitor.PoolMonitorUtil;
 import com.frameworkset.commons.pool.PoolableObjectFactory;
 import com.frameworkset.commons.pool.impl.GenericObjectPool;
 
@@ -178,6 +180,21 @@ public class AbandonedObjectPool extends GenericObjectPool {
 			
 		}
 		return dest;
+	}
+	
+	public List<AbandonedTraceExt> getTraceObjects() {
+		synchronized (trace) {
+			if(trace.size() > 0)
+			{
+				return PoolMonitorUtil.converAbandonedTrace(trace);
+			}
+			else
+			{
+				List<AbandonedTraceExt> list = new ArrayList<AbandonedTraceExt>();
+				return list;
+			}
+        }
+		
 	}
 }
 

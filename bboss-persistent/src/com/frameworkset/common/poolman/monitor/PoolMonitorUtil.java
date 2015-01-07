@@ -17,6 +17,7 @@ package com.frameworkset.common.poolman.monitor;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,12 +39,19 @@ public class PoolMonitorUtil {
 					if (obj instanceof AbandonedTrace) {
 						trace = (AbandonedTrace) obj;
 						
+						
 						AbandonedTraceExt item = new AbandonedTraceExt(String
 								.valueOf(i));
 						item.setDburl(trace.toString());
 						item.setLabel("Connection-" + i);
 						item.setCreateTime(trace.getCreateTime());
 						item.setParent(null);
+						item.setLastUsed(trace.getLastUsed());
+						if(trace instanceof Connection)
+						{
+							item.setAutocommit(((Connection)trace).getAutoCommit());
+							item.setReadOnly(((Connection)trace).isReadOnly());
+						}
 						stack = trace.getCreateBy();
 						if (stack != null) {
 							trace.getCreateBy().printStackTrace(pwriter);
@@ -62,6 +70,7 @@ public class PoolMonitorUtil {
 								statmTrace.setLabel("Statement-" + j);
 								statmTrace.setCreateTime(trace.getCreateTime());
 								statmTrace.setParent(item);
+								statmTrace.setLastUsed(trace.getLastUsed());
 								stack = trace.getCreateBy();
 								if (stack != null) {
 									trace.getCreateBy()
@@ -82,6 +91,7 @@ public class PoolMonitorUtil {
 														+ k);
 										resultTrace.setCreateTime(trace
 												.getCreateTime());
+										resultTrace.setLastUsed(trace.getLastUsed());
 										resultTrace.setLabel("ResultSet-" + k);
 										resultTrace.setParent(statmTrace);
 										stack = trace.getCreateBy();

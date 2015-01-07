@@ -28,6 +28,8 @@ import org.frameworkset.spi.BaseApplicationContext;
 import org.frameworkset.spi.DefaultApplicationContext;
 import org.frameworkset.spi.assemble.Pro;
 
+import com.frameworkset.common.poolman.monitor.AbandonedTraceExt;
+import com.frameworkset.common.poolman.monitor.PoolMonitorUtil;
 import com.frameworkset.common.poolman.sql.PoolManDataSource;
 import com.frameworkset.orm.transaction.TXDataSource;
 
@@ -76,6 +78,11 @@ public class DatasourceUtil {
 		return ds.getSRCDataSource();
 	}
 
+	/**
+	 * @deprecated see public static List<AbandonedTraceExt> getGoodTraceObjects(DataSource datasource)
+	 * @param datasource
+	 * @return
+	 */
 	public static List getTraceObjects(DataSource datasource) {
 
 		DataSource datasource_ = null;
@@ -119,6 +126,60 @@ public class DatasourceUtil {
 //			e.printStackTrace();
 		}
 		return new ArrayList();
+
+	}
+	
+	public static List<AbandonedTraceExt> getGoodTraceObjects(DataSource datasource) {
+
+		DataSource datasource_ = null;
+		if (datasource instanceof TXDataSource) {
+			datasource_ = getSRCDataSource((TXDataSource) datasource);
+		} else {
+			datasource_ = datasource;
+		}
+		if (datasource_ instanceof PoolManDataSource) {
+			PoolManDataSource temp = (PoolManDataSource) datasource_;
+			datasource_ = temp.getInnerDataSource();
+		}
+		try {
+			if (datasource_ != null) {
+				Method getTraceObjects = datasource_.getClass().getMethod(
+						"getGoodTraceObjects");
+
+				if (getTraceObjects == null) {
+					getTraceObjects = datasource_.getClass().getMethod(
+							"getTraces");
+					if (getTraceObjects != null) {
+						List   dd = (List  ) getTraceObjects.invoke(datasource_);
+						return PoolMonitorUtil.converAbandonedTrace(dd);
+					}
+				}
+				else
+				{
+					 
+						List<AbandonedTraceExt>  dd = (List<AbandonedTraceExt> ) getTraceObjects.invoke(datasource_);
+						return dd;
+					 
+				}
+				
+			}
+		} catch (SecurityException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+		} catch (NoSuchMethodException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+		}
+		return new ArrayList<AbandonedTraceExt>();
 
 	}
 

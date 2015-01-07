@@ -30,6 +30,9 @@ public class AbandonedTraceExt implements Serializable {
 	
 	private String dburl;
 	private AbandonedTraceExt parent;	
+	private long lastUsed;
+	private boolean autocommit;
+	private boolean readOnly;
 	private List<AbandonedTraceExt> traces = new ArrayList<AbandonedTraceExt>();
 	
 	public AbandonedTraceExt(String id)
@@ -89,5 +92,29 @@ public class AbandonedTraceExt implements Serializable {
 
 	public void setDburl(String dburl) {
 		this.dburl = dburl;
+	}
+
+	public long getLastUsed() {
+		return lastUsed;
+	}
+
+	public void setLastUsed(long lastUsed) {
+		this.lastUsed = lastUsed;
+	}
+
+	public boolean isAutocommit() {
+		return autocommit;
+	}
+
+	public void setAutocommit(boolean autocommit) {
+		this.autocommit = autocommit;
+	}
+
+	public boolean isReadOnly() {
+		return readOnly;
+	}
+
+	public void setReadOnly(boolean readOnly) {
+		this.readOnly = readOnly;
 	}
 }

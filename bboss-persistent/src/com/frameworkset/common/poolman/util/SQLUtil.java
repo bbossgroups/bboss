@@ -54,6 +54,7 @@ import com.frameworkset.common.poolman.StatementInfo;
 import com.frameworkset.common.poolman.handle.RowHandler;
 import com.frameworkset.common.poolman.interceptor.InterceptorInf;
 import com.frameworkset.common.poolman.management.PoolManBootstrap;
+import com.frameworkset.common.poolman.monitor.AbandonedTraceExt;
 import com.frameworkset.common.poolman.sql.ColumnMetaData;
 import com.frameworkset.common.poolman.sql.ForeignKeyMetaData;
 import com.frameworkset.common.poolman.sql.PoolManDataSource;
@@ -1316,6 +1317,7 @@ public class SQLUtil implements Serializable{
 	/**
 	 * 获取当前链接池中链接
 	 * 接口只对内部数据源有用，外部数据源返回-1
+	 * @deprecated see  public List<AbandonedTraceExt> getGoodTraceObjects()
 	 * @return
 	 */
 	public static List getTraceObjects()
@@ -1329,12 +1331,41 @@ public class SQLUtil implements Serializable{
 	 * 获取当前链接池中链接
 	 * 接口只对内部数据源有用，外部数据源返回-1
 	 * @return
+	 * @deprecated see  public List<AbandonedTraceExt> getGoodTraceObjects(String dbname)
 	 */
 	public static List getTraceObjects(String dbname)
 	{
 		JDBCPool pool = SQLManager.getInstance().getPool(dbname);
 		if(pool != null)
 			return pool.getTraceObjects();
+		else
+			return null;
+//		return SQLManager.getInstance().getPool(dbname).getTraceObjects();
+	}
+	
+	
+	/**
+	 * 获取当前链接池中链接
+	 * 接口只对内部数据源有用，外部数据源返回-1
+	 * @return
+	 */
+	public static List<AbandonedTraceExt> getGoodTraceObjects()
+	{
+		return getGoodTraceObjects(null);
+//		return SQLManager.getInstance().getPool(null).getTraceObjects();
+	}
+	
+	
+	/**
+	 * 获取当前链接池中链接
+	 * 接口只对内部数据源有用，外部数据源返回-1
+	 * @return
+	 */
+	public static List<AbandonedTraceExt> getGoodTraceObjects(String dbname)
+	{
+		JDBCPool pool = SQLManager.getInstance().getPool(dbname);
+		if(pool != null)
+			return pool.getGoodTraceObjects();
 		else
 			return null;
 //		return SQLManager.getInstance().getPool(dbname).getTraceObjects();

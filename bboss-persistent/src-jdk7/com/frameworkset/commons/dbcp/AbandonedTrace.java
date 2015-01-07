@@ -108,7 +108,7 @@ public class AbandonedTrace {
      *
      * @return long time in ms
      */
-    protected long getLastUsed() {
+    public long getLastUsed() {
         return lastUsed;
     }
 
@@ -135,6 +135,20 @@ public class AbandonedTrace {
      * object trace list.
      */
     protected void setStackTrace() {
+        if (config == null) {                 
+            return;                           
+        }                    
+        if (config.getLogAbandoned()) {
+            createdBy = new AbandonedObjectException();
+            createdTime = System.currentTimeMillis();
+        }
+    }
+    /**
+     * If logAbandoned=true generate a stack trace
+     * for this object then add this object to the parent
+     * object trace list.
+     */
+    protected void setGoodStackTrace() {
         if (config == null) {                 
             return;                           
         }                    
@@ -230,9 +244,13 @@ public class AbandonedTrace {
         // dates unless the log message will actually be used.
         public String getMessage() {
             String msg;
-            synchronized(format) {
+//            synchronized(format) 
+//            {
+            SimpleDateFormat format = new SimpleDateFormat
+                    ("'DBCP object created' yyyy-MM-dd HH:mm:ss " +
+                     "'by the following code was never closed:'");
                 msg = format.format(new Date(_createdTime));
-            }
+//            }
             return msg;
         }
     }
@@ -257,7 +275,7 @@ public class AbandonedTrace {
      * @return
      */
     public List<AbandonedTrace> getTraces() {
-    	return new ArrayList(traceList);
+    	return  getTrace();
     }
     
 }

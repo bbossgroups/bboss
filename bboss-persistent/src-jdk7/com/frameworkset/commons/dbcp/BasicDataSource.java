@@ -33,6 +33,7 @@ import java.util.logging.Logger;
 
 import javax.sql.DataSource;
 
+import com.frameworkset.common.poolman.monitor.AbandonedTraceExt;
 import com.frameworkset.commons.pool.KeyedObjectPoolFactory;
 import com.frameworkset.commons.pool.impl.GenericKeyedObjectPool;
 import com.frameworkset.commons.pool.impl.GenericKeyedObjectPoolFactory;
@@ -1535,6 +1536,10 @@ public class BasicDataSource implements DataSource {
         if ((abandonedConfig != null) && (abandonedConfig.getRemoveAbandoned())) {
             gop = new AbandonedObjectPool(null,abandonedConfig);
         }
+        else if ((abandonedConfig != null) && (abandonedConfig.getLogAbandoned())) {
+            gop = new LogAbandonedObjectPool(null,abandonedConfig);
+        }
+        
         else {
             gop = new GenericObjectPool();
         }
@@ -1626,12 +1631,40 @@ public class BasicDataSource implements DataSource {
             logWriter.println(message);
         }
     }
-    
+    /**
+     * @deprecated see  public List<AbandonedTraceExt> getGoodTraceObjects()
+     * @return
+     */
     public List getTraceObjects()
     {
-    	if (connectionPool != null && connectionPool instanceof AbandonedObjectPool)
+    	 
+    	if (connectionPool != null)
     	{
-    		return ((AbandonedObjectPool)connectionPool).getTraces();
+    		if( connectionPool instanceof AbandonedObjectPool)
+    			return ((AbandonedObjectPool)connectionPool).getTraces();
+    		else if( connectionPool instanceof LogAbandonedObjectPool)
+    		{
+    			return ((LogAbandonedObjectPool)connectionPool).getTraces();
+    		}
+    		else
+    			return new ArrayList();
+    	}
+    	return new ArrayList();
+    }
+    
+
+    public List<AbandonedTraceExt> getGoodTraceObjects()
+    {
+    	if (connectionPool != null)
+    	{
+    		if( connectionPool instanceof AbandonedObjectPool)
+    			return ((AbandonedObjectPool)connectionPool).getTraceObjects();
+    		else if( connectionPool instanceof LogAbandonedObjectPool)
+    		{
+    			return ((LogAbandonedObjectPool)connectionPool).getTraceObjects();
+    		}
+    		else
+    			return new ArrayList();
     	}
     	return new ArrayList();
     }

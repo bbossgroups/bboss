@@ -44,6 +44,7 @@ import com.frameworkset.common.poolman.PoolManConstants;
 import com.frameworkset.common.poolman.interceptor.InterceptorInf;
 import com.frameworkset.common.poolman.jndi.ContextUtil;
 import com.frameworkset.common.poolman.jndi.DummyContextFactory;
+import com.frameworkset.common.poolman.monitor.AbandonedTraceExt;
 import com.frameworkset.common.poolman.security.DBInfoEncrypt;
 import com.frameworkset.common.poolman.sql.ColumnMetaData;
 import com.frameworkset.common.poolman.sql.ForeignKeyMetaData;
@@ -2235,6 +2236,22 @@ public class JDBCPool {
 		else
 		{
 			return SQLManager.getInstance().getPool(externalDBName).getTraceObjects();
+		}
+	}
+	
+	/**
+	 * 获取当前链接池中正在使用的链接 接口只对内部数据源有用，外部数据源返回-1
+	 * 非连接池数据源为实现该功能
+	 * @return
+	 */
+	public List<AbandonedTraceExt> getGoodTraceObjects() {
+		if(this.externalDBName == null)
+		{
+			return DatasourceUtil.getGoodTraceObjects(datasource);
+		}
+		else
+		{
+			return SQLManager.getInstance().getPool(externalDBName).getGoodTraceObjects();
 		}
 	}
 	
