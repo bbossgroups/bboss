@@ -3,7 +3,7 @@
  * <p>Title: 监控连接池信息</p>
  * <p>Description: 连接池使用情况</p>
  * <p>Copyright: Copyright (c) 2008</p>
- * <p>Company: chinacreator</p>
+ * <p>Company: bboss</p>
  * @Date 2008-9-8
  * @author gao.tang
  * @version 1.0
@@ -47,14 +47,9 @@
 		</script>
 		</head>
 
-	<body class="contentbodymargin" onload="" scroll="no">
-	<div style="width:100%;height:100%;overflow:auto">
+	<body>	
 	<div align="right"><input type="button" class="input" value="刷新页面" onclick="flushBotton()"></div>
-	
-		
-	
-	
-	<tab:tabContainer id="singleMonitorinfo" selectedTabPaneId="<%%=selectedds %>">
+	<tab:tabContainer id="singleMonitorinfo" selectedTabPaneId="<%=selectedds %>">
 	<% 
 		//List poollist = new ArrayList();
 		DBUtil dbUtil = new DBUtil();
@@ -147,10 +142,12 @@
 					  %>
 					<tr><td colspan="3">
 						<%if(!isExternal){ %>
-						数据源：<%=poolname %> 的链接情况
+						数据源：<%=poolname %> 的链接情况 
+						 <a href="dbmonitor_activitedetail.jsp?ds=<%=poolname %>" target="deailactive">看实时链接信息</a>
 						<%}else{ %>
 						外部数据源：<%=poolname %> 的链接情况
 						<%} %>
+						
 					</td>
 					</tr>
 					<tr class="tr">
@@ -492,6 +489,6 @@
 	
 	</tab:tabContainer>
 
-	</div>
+	
 				</body>
 </html>
