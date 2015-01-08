@@ -15,6 +15,7 @@
  */
 package com.frameworkset.common.poolman.monitor;
 
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.sql.Connection;
@@ -27,11 +28,13 @@ public class PoolMonitorUtil {
 
 	public static List<AbandonedTraceExt> converAbandonedTrace(List objects){
 		List<AbandonedTraceExt> list = new ArrayList<AbandonedTraceExt>();
-		java.io.StringWriter writer = new StringWriter();
-		java.io.PrintWriter pwriter = new PrintWriter(writer);
+		java.io.StringWriter writer = null;
+		java.io.PrintWriter pwriter = null;
 		AbandonedTrace trace = null;
 		Exception stack = null;
 		try {
+			writer = new StringWriter();
+			pwriter = new PrintWriter(writer);
 			if (objects != null) {
 				for (int i = 0; i < objects.size(); i++) {
 					Object obj = objects.get(i);
@@ -42,16 +45,14 @@ public class PoolMonitorUtil {
 						
 						AbandonedTraceExt item = new AbandonedTraceExt(String
 								.valueOf(i));
-						item.setDburl(trace.toString());
+						item.setDburl(trace.getDbURLinfo());
 						item.setLabel("Connection-" + i);
 						item.setCreateTime(trace.getCreateTime());
 						item.setParent(null);
 						item.setLastUsed(trace.getLastUsed());
-						if(trace instanceof Connection)
-						{
-							item.setAutocommit(((Connection)trace).getAutoCommit());
-							item.setReadOnly(((Connection)trace).isReadOnly());
-						}
+						
+						 
+						
 						stack = trace.getCreateBy();
 						if (stack != null) {
 							trace.getCreateBy().printStackTrace(pwriter);
@@ -111,8 +112,25 @@ public class PoolMonitorUtil {
 				}
 			}
 		} catch (Exception e) {
-			pwriter.close();
-			e.printStackTrace();
+			
+		}
+		finally
+		{
+			if(writer != null)
+				try {
+					writer.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			if(pwriter != null)
+				try {
+					pwriter.close();
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			 
 		}
 		return list;
 	}

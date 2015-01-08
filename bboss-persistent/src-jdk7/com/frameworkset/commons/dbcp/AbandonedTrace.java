@@ -17,6 +17,8 @@
 
 package com.frameworkset.commons.dbcp;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -45,7 +47,12 @@ public class AbandonedTrace {
     private final List traceList = new ArrayList();
     /** Last time this connection was used */
     private volatile long lastUsed = 0;
-
+    /**
+     * 如果是数据库connection则设置连接地址
+     */
+    private String dbURLinfo;
+   
+    
     /**
      * Create a new AbandonedTrace without config and
      * without doing abandoned tracing.
@@ -149,13 +156,12 @@ public class AbandonedTrace {
      * object trace list.
      */
     protected void setGoodStackTrace() {
-        if (config == null) {                 
-            return;                           
-        }                    
-        if (config.getLogAbandoned()) {
+       
             createdBy = new AbandonedObjectException();
             createdTime = System.currentTimeMillis();
-        }
+            if(dbURLinfo == null)
+				this.dbURLinfo = this.toString();
+			
     }
 
     /**
@@ -192,6 +198,7 @@ public class AbandonedTrace {
 //        }
 //    }
 
+  
     /**
      * Prints a stack trace of the code that
      * created this object.
@@ -277,5 +284,13 @@ public class AbandonedTrace {
     public List<AbandonedTrace> getTraces() {
     	return  getTrace();
     }
-    
+   
+
+	public String getDbURLinfo() {
+		return dbURLinfo;
+	}
+
+	 
+
+	 
 }

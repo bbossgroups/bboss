@@ -1,7 +1,9 @@
 package com.frameworkset;
 
 import java.io.File;
+import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import javax.transaction.RollbackException;
 
@@ -29,7 +31,11 @@ public class TestPoolman
 //		}
 		
 		try {
-			DBUtil.getConection();
+			 Connection con = DBUtil.getConection();
+			 Statement smt = con.createStatement();
+			 smt.executeQuery("select 1 from dual");
+			 con.close();
+			 smt.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
