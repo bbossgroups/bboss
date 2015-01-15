@@ -116,7 +116,7 @@ public class PoolMonitorServiceImpl implements PoolMonitorService {
 	 * @deprecated see public List<AbandonedTraceExt> getGoodTraceObjects(String dbname)
 	 */
 	public List<AbandonedTraceExt> getTraceObjects(String dbname) {
-		return PoolMonitorUtil.converAbandonedTrace(DBUtil.getTraceObjects(dbname));
+		return DBUtil.getGoodTraceObjects(dbname);
 	}
 	
 	public List<AbandonedTraceExt> getGoodTraceObjects(String dbname) {

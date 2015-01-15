@@ -1320,7 +1320,7 @@ public class SQLUtil implements Serializable{
 	 * @deprecated see  public List<AbandonedTraceExt> getGoodTraceObjects()
 	 * @return
 	 */
-	public static List getTraceObjects()
+	public static List<AbandonedTraceExt> getTraceObjects()
 	{
 		return getTraceObjects(null);
 //		return SQLManager.getInstance().getPool(null).getTraceObjects();
@@ -1333,14 +1333,9 @@ public class SQLUtil implements Serializable{
 	 * @return
 	 * @deprecated see  public List<AbandonedTraceExt> getGoodTraceObjects(String dbname)
 	 */
-	public static List getTraceObjects(String dbname)
+	public static List<AbandonedTraceExt> getTraceObjects(String dbname)
 	{
-		JDBCPool pool = SQLManager.getInstance().getPool(dbname);
-		if(pool != null)
-			return pool.getTraceObjects();
-		else
-			return null;
-//		return SQLManager.getInstance().getPool(dbname).getTraceObjects();
+		return getGoodTraceObjects(dbname);
 	}
 	
 	

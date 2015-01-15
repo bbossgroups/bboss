@@ -31,13 +31,10 @@
 	<classpathentry kind="lib" path="lib/proxool/proxool-cglib.jar"/>
 	<classpathentry kind="lib" path="lib/c3p0/mchange-commons-java-0.2.2.jar"/>
 	<classpathentry kind="lib" path="lib-test/commons-logging-1.1.1.jar"/>
-	<classpathentry kind="lib" path="lib/dbcp/commons-dbcp-1.4.jar"/>
-	<classpathentry kind="lib" path="lib/dbcp/commons-pool-1.5.4.jar"/>
-	<classpathentry kind="lib" path="lib-test/jsp-api.jar"/>
-	<classpathentry kind="lib" path="lib-test/servlet-api.jar"/>
 	<classpathentry kind="lib" path="lib/java-uuid-generator-3.1.2.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/bboss-core"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/bboss-util"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/bboss-velocity"/>
+	<classpathentry kind="lib" path="lib-test/javaee.jar"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>

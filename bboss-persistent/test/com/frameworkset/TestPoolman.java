@@ -4,11 +4,14 @@ import java.io.File;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 
 import javax.transaction.RollbackException;
 
 import com.frameworkset.common.poolman.DBUtil;
 import com.frameworkset.common.poolman.PreparedDBUtil;
+import com.frameworkset.common.poolman.monitor.AbandonedTraceExt;
+import com.frameworkset.orm.transaction.TransactionException;
 import com.frameworkset.orm.transaction.TransactionManager;
 
 public class TestPoolman
@@ -34,12 +37,32 @@ public class TestPoolman
 			 Connection con = DBUtil.getConection();
 			 Statement smt = con.createStatement();
 			 smt.executeQuery("select 1 from dual");
+			 DBUtil.debugStatus();
+			 List<AbandonedTraceExt> traces = DBUtil.getGoodTraceObjects();
 			 con.close();
 			 smt.close();
+			 DBUtil.debugStatus();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		TransactionManager tm = new TransactionManager();
+		try {
+			tm.begin();
+			tm.getTransaction().getConnection();
+			tm.destroyTransaction();
+			
+			
+		} catch (TransactionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}  
+		finally
+		{
+			tm.release();
+		}
+		
 		
 		
 //		//new TestDB(0).delete();

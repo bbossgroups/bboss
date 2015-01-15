@@ -23,8 +23,8 @@ import org.junit.Test;
 
 import com.frameworkset.common.poolman.DBUtil;
 import com.frameworkset.common.poolman.SQLExecutor;
+import com.frameworkset.common.poolman.monitor.AbandonedTraceExt;
 import com.frameworkset.common.poolman.util.JDBCPoolMetaData;
-import com.frameworkset.commons.dbcp.AbandonedTrace;
 import com.frameworkset.orm.transaction.TransactionManager;
 
 public class UnpoolTest {
@@ -58,8 +58,8 @@ public class UnpoolTest {
 			tm.getTransaction().printStackTrace();
 			System.out.println("活动连接数:"+DBUtil.getNumActive());
 			System.out.println("活动高峰连接数:"+DBUtil.getMaxNumActive());
-			List t = DBUtil.getPool().getTraceObjects();
-			((AbandonedTrace)t.get(0)).printStackTrace();
+			List<AbandonedTraceExt> t = DBUtil.getGoodTraceObjects();
+			 t.get(0).printStackTrace();
 			tm.commit();
 			System.out.println("col1："+file);
 		} catch (Exception e) {

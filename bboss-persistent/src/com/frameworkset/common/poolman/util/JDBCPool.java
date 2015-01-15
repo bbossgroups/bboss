@@ -53,7 +53,6 @@ import com.frameworkset.common.poolman.sql.PoolManDataSource;
 import com.frameworkset.common.poolman.sql.PrimaryKeyMetaData;
 import com.frameworkset.common.poolman.sql.TableMetaData;
 import com.frameworkset.commons.dbcp.BasicDataSourceFactory;
-import com.frameworkset.commons.pool.impl.GenericObjectPool;
 import com.frameworkset.orm.adapter.DB;
 import com.frameworkset.orm.adapter.DBFactory;
 import com.frameworkset.orm.transaction.JDBCTransaction;
@@ -458,13 +457,13 @@ public class JDBCPool {
 		// if(info.getValidationQuery() != null)
 		// p.setProperty(PoolManConstants.PROP_VALIDATIONQUERY,
 		// info.getValidationQuery() );
-		if (info.isMaximumSoft())
-			p.setProperty(PoolManConstants.PROP_WHENEXHAUSTEDACTION,
-					GenericObjectPool.WHEN_EXHAUSTED_GROW + "");
-		else {
-			p.setProperty(PoolManConstants.PROP_WHENEXHAUSTEDACTION,
-					GenericObjectPool.WHEN_EXHAUSTED_BLOCK + "");
-		}
+//		if (info.isMaximumSoft())
+//			p.setProperty(PoolManConstants.PROP_WHENEXHAUSTEDACTION,
+//					GenericObjectPool.WHEN_EXHAUSTED_GROW + "");
+//		else {
+//			p.setProperty(PoolManConstants.PROP_WHENEXHAUSTEDACTION,
+//					GenericObjectPool.WHEN_EXHAUSTED_BLOCK + "");
+//		}
 		
 		p.setProperty(PoolManConstants.PROP_USEPOOL, info.isUsepool() + "");
 		// public final static String PROP_DEFAULTREADONLY =
@@ -525,7 +524,7 @@ public class JDBCPool {
 			{
 				Properties p = getProperties();
 				_datasource =  BasicDataSourceFactory
-						.createDataSource(p);
+						.createDBCP2DataSource(p);
 			}
 			else //从ioc配置文件中获取数据源实例
 			{
@@ -2222,23 +2221,7 @@ public class JDBCPool {
 		}
 	}
 	
-	/**
-	 * 获取当前链接池中正在使用的链接 接口只对内部数据源有用，外部数据源返回-1
-	 * 非连接池数据源为实现该功能
-	 * @deprecated 谨慎使用本接口
-	 * @return
-	 */
-	public List getTraceObjects() {
-		if(this.externalDBName == null)
-		{
-			return DatasourceUtil.getTraceObjects(datasource);
-		}
-		else
-		{
-			return SQLManager.getInstance().getPool(externalDBName).getTraceObjects();
-		}
-	}
-	
+ 
 	/**
 	 * 获取当前链接池中正在使用的链接 接口只对内部数据源有用，外部数据源返回-1
 	 * 非连接池数据源为实现该功能

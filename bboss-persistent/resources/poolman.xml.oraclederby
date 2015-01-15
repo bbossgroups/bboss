@@ -23,8 +23,7 @@
     <password>baseline</password>
 
     <txIsolationLevel>READ_COMMITTED</txIsolationLevel>
-
-    <nativeResults>true</nativeResults>
+ 
 
     <poolPreparedStatements>false</poolPreparedStatements>
 
@@ -32,17 +31,14 @@
     
     <minimumSize>2</minimumSize>
     <maximumSize>10</maximumSize>
-	<!--控制connection达到maximumSize是否允许再创建新的connection
-		true：允许，缺省值
-		false：不允许-->
-    <maximumSoft>false</maximumSoft>
+ 
     
     <!-- 
     是否检测超时链接（事务超时链接）
     true-检测，如果检测到有事务超时的链接，系统将强制回收（释放）该链接
     false-不检测，默认值
      -->
-    <removeAbandoned>true</removeAbandoned>
+    <removeAbandoned>false</removeAbandoned>
 	<!--
 		链接使用超时时间（事务超时时间）
 		单位：秒
@@ -53,7 +49,7 @@
     	true-输出，默认值
     	false-不输出
      -->
-    <logAbandoned>true</logAbandoned>
+    <logAbandoned>false</logAbandoned>
     
     <!-- 
     	数据库会话是否是readonly，缺省为false

@@ -51,6 +51,7 @@
 		</javac>
 		<copy todir="classes-bboss-persistent" >
 				<fileset dir="src" includes="**/*.xml" />
+			<fileset dir="src-jdk7" includes="**/*.properties" />
 				<fileset dir="resources" includes="poolman_template.xml" />
 		</copy>	
 	</target>
@@ -115,7 +116,7 @@
 							<attribute name="Compile-User" value="${username}" />
 						</manifest>
 						<fileset dir="src" includes="**/*"/>
-						<fileset dir="src-jdk6" includes="**/*"/>
+						<fileset dir="src-jdk7" includes="**/*" excludes="**/*.properties"/>
 						<fileset dir="listener" includes="**/*"/>
 
 					</jar>
@@ -125,7 +126,7 @@
 	<target name="copy-depends-liberary" description="copy depends liberarys">
 				<echo>copy depends liberarys ...</echo>
 				<copy todir="distrib/dependlibs">
-					<fileset dir="lib" includes="**/*" excludes="jsp-api.jar servlet-api.jar"/>
+					<fileset dir="lib" includes="**/*" />
 				</copy>
 				<copy todir="distrib/conf">
 					<fileset dir="src" includes="poolman.xml log4j.properties" />

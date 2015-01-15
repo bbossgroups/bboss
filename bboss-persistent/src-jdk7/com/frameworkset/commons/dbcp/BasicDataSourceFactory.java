@@ -19,11 +19,13 @@ package com.frameworkset.commons.dbcp;
 
 import java.io.ByteArrayInputStream;
 import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Enumeration;
 import java.util.Hashtable;
+import java.util.List;
 import java.util.Properties;
 import java.util.StringTokenizer;
-import java.util.Collections;
 
 import javax.naming.Context;
 import javax.naming.Name;
@@ -43,7 +45,7 @@ import javax.sql.DataSource;
  * @author Dirk Verbeeck
  * @version $Revision: 828639 $ $Date: 2009-10-22 06:27:43 -0400 (Thu, 22 Oct 2009) $
  */
-public class BasicDataSourceFactory implements ObjectFactory {
+public class BasicDataSourceFactory  {
 
     private final static String PROP_DEFAULTAUTOCOMMIT = "defaultAutoCommit";
     private final static String PROP_DEFAULTREADONLY = "defaultReadOnly";
@@ -112,50 +114,11 @@ public class BasicDataSourceFactory implements ObjectFactory {
         PROP_CONNECTIONPROPERTIES
     };
 
-    // -------------------------------------------------- ObjectFactory Methods
-
+    
     /**
-     * <p>Create and return a new <code>BasicDataSource</code> instance.  If no
-     * instance can be created, return <code>null</code> instead.</p>
-     *
-     * @param obj The possibly null object containing location or
-     *  reference information that can be used in creating an object
-     * @param name The name of this object relative to <code>nameCtx</code>
-     * @param nameCtx The context relative to which the <code>name</code>
-     *  parameter is specified, or <code>null</code> if <code>name</code>
-     *  is relative to the default initial context
-     * @param environment The possibly null environment that is used in
-     *  creating this object
-     *
-     * @exception Exception if an exception occurs creating the instance
+     * Internal constant to indicate the level is not set.
      */
-    public Object getObjectInstance(Object obj, Name name, Context nameCtx,
-                                    Hashtable environment)
-        throws Exception {
-
-        // We only know how to deal with <code>javax.naming.Reference</code>s
-        // that specify a class name of "javax.sql.DataSource"
-        if ((obj == null) || !(obj instanceof Reference)) {
-            return null;
-        }
-        Reference ref = (Reference) obj;
-        if (!"javax.sql.DataSource".equals(ref.getClassName())) {
-            return null;
-        }
-
-        Properties properties = new Properties();
-        for (int i = 0 ; i < ALL_PROPERTIES.length ; i++) {
-            String propertyName = ALL_PROPERTIES[i];
-            RefAddr ra = ref.get(propertyName);
-            if (ra != null) {
-                String propertyValue = ra.getContent().toString();
-                properties.setProperty(propertyName, propertyValue);
-            }
-        }
-
-        return createDataSource(properties);
-    }
-
+    static final int UNKNOWN_TRANSACTIONISOLATION = -1;
     /**
      * Creates and configures a {@link BasicDataSource} instance based on the
      * given properties.
@@ -163,8 +126,8 @@ public class BasicDataSourceFactory implements ObjectFactory {
      * @param properties the datasource configuration properties
      * @throws Exception if an error occurs creating the data source
      */
-    public static DataSource createDataSource(Properties properties) throws Exception {
-        BasicDataSource dataSource = new BasicDataSource();
+    public static DataSource createDBCP2DataSource(Properties properties) throws Exception {
+    	com.frameworkset.commons.dbcp2.BasicDataSource dataSource = new com.frameworkset.commons.dbcp2.BasicDataSource();
         String value = null;
 
         value = properties.getProperty(PROP_DEFAULTAUTOCOMMIT);
@@ -179,7 +142,7 @@ public class BasicDataSourceFactory implements ObjectFactory {
 
         value = properties.getProperty(PROP_DEFAULTTRANSACTIONISOLATION);
         if (value != null) {
-            int level = PoolableConnectionFactory.UNKNOWN_TRANSACTIONISOLATION;
+            int level = UNKNOWN_TRANSACTIONISOLATION;
             if ("NONE".equalsIgnoreCase(value)) {
                 level = Connection.TRANSACTION_NONE;
             }
@@ -202,7 +165,7 @@ public class BasicDataSourceFactory implements ObjectFactory {
                     System.err.println("Could not parse defaultTransactionIsolation: " + value);
                     System.err.println("WARNING: defaultTransactionIsolation not set");
                     System.err.println("using default value of database driver");
-                    level = PoolableConnectionFactory.UNKNOWN_TRANSACTIONISOLATION;
+                    level = UNKNOWN_TRANSACTIONISOLATION;
                 }
             }
             dataSource.setDefaultTransactionIsolation(level);
@@ -220,7 +183,7 @@ public class BasicDataSourceFactory implements ObjectFactory {
 
         value = properties.getProperty(PROP_MAXACTIVE);
         if (value != null) {
-            dataSource.setMaxActive(Integer.parseInt(value));
+            dataSource.setMaxTotal(Integer.parseInt(value));
         }
 
         value = properties.getProperty(PROP_MAXIDLE);
@@ -240,7 +203,7 @@ public class BasicDataSourceFactory implements ObjectFactory {
 
         value = properties.getProperty(PROP_MAXWAIT);
         if (value != null) {
-            dataSource.setMaxWait(Long.parseLong(value));
+            dataSource.setMaxWaitMillis(Long.parseLong(value));
         }
 
         value = properties.getProperty(PROP_TESTONBORROW);
@@ -305,7 +268,7 @@ public class BasicDataSourceFactory implements ObjectFactory {
 
         value = properties.getProperty(PROP_REMOVEABANDONED);
         if (value != null) {
-            dataSource.setRemoveAbandoned(Boolean.valueOf(value).booleanValue());
+            dataSource.setRemoveAbandonedOnBorrow(Boolean.valueOf(value).booleanValue());
         }
 
         value = properties.getProperty(PROP_REMOVEABANDONEDTIMEOUT);
@@ -331,7 +294,14 @@ public class BasicDataSourceFactory implements ObjectFactory {
         value = properties.getProperty(PROP_INITCONNECTIONSQLS);
         if (value != null) {
             StringTokenizer tokenizer = new StringTokenizer(value, ";");
-            dataSource.setConnectionInitSqls(Collections.list(tokenizer));
+            
+            List<String> sqls = new ArrayList<String>();
+            while(tokenizer.hasMoreTokens())
+            {
+            	sqls.add(tokenizer.nextToken());
+            }
+            
+            dataSource.setConnectionInitSqls(sqls);
         }
 
         value = properties.getProperty(PROP_CONNECTIONPROPERTIES);

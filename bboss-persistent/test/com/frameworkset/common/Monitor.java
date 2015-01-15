@@ -22,11 +22,12 @@ import org.junit.Test;
 
 import com.frameworkset.common.poolman.DBUtil;
 import com.frameworkset.common.poolman.PreparedDBUtil;
+import com.frameworkset.common.poolman.monitor.AbandonedTraceExt;
 import com.frameworkset.common.poolman.monitor.PoolmanStatic;
 import com.frameworkset.common.poolman.util.JDBCPool;
 import com.frameworkset.common.poolman.util.JDBCPoolMetaData;
 import com.frameworkset.common.poolman.util.SQLUtil;
-import com.frameworkset.commons.dbcp.PoolableConnection;
+import com.frameworkset.commons.dbcp2.PoolableConnection;
 import com.frameworkset.orm.transaction.TransactionManager;
 import com.frameworkset.util.TransferObjectFactory;
 
@@ -200,12 +201,12 @@ public class Monitor
     	int numactive = DBUtil.getNumActive("mysql");
     	int numIdle = DBUtil.getNumIdle("mysql");
     	DBUtil.getConection("mysql");
-    	List<PoolableConnection> objects = (List<PoolableConnection>)DBUtil.getTraceObjects("mysql");
+    	List<AbandonedTraceExt> objects = (List<AbandonedTraceExt>)DBUtil.getTraceObjects("mysql");
     	for(int i = 0;  objects != null && i < objects.size(); i ++)
     	{
-    		PoolableConnection con = objects.get(i);
-    		System.out.println(con.getAutoCommit());
-    		System.out.println(con.toString());
+    		AbandonedTraceExt con = objects.get(i);
+    		 
+    		System.out.println(con.getDburl());
     	}
     	System.out.println();
 //    	int numactive = DBUtil.getNumActive("bspf");

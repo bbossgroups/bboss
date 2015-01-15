@@ -12,8 +12,8 @@ import org.junit.Test;
 
 import com.frameworkset.common.poolman.DBUtil;
 import com.frameworkset.common.poolman.SQLExecutor;
+import com.frameworkset.common.poolman.monitor.AbandonedTraceExt;
 import com.frameworkset.common.poolman.util.SQLManager;
-import com.frameworkset.commons.dbcp.AbandonedTrace;
 import com.frameworkset.orm.transaction.JDBCTransaction;
 import com.frameworkset.orm.transaction.TransactionException;
 import com.frameworkset.orm.transaction.TransactionManager;
@@ -141,7 +141,7 @@ public class TestTransaction {
 		public void run() {
 			while(true)
 			{
-				 List objects = DBUtil.getTraceObjects();
+				List<AbandonedTraceExt> objects = DBUtil.getTraceObjects();
 				 printTrace( objects);
 				 try {
 					 synchronized(this)
@@ -161,12 +161,10 @@ public class TestTransaction {
 				return;
 			for(Object obj : objects)
 			 {
-				 AbandonedTrace trace = (AbandonedTrace)obj;
+				AbandonedTraceExt trace = (AbandonedTraceExt)obj;
 				 System.out.println("CreateTime:" + trace.getCreateTime());
 				 System.out.println("Stack:" );
-				 Exception stack = trace.getCreateBy();
-				 if(stack != null)
-					 trace.getCreateBy().printStackTrace(System.out);
+				 trace.printStackTrace();
 				 List subtraces = trace.getTraces();
 				 printTrace( subtraces);
 		     }

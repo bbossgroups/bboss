@@ -1,3 +1,7 @@
+内置连接池升级状况，并完成jdk 1.6兼容性改造
+commons-pool2-2.3 
+commons-dbcp2-2.0.1
+
 directory:
 src--source code
 test--test source code

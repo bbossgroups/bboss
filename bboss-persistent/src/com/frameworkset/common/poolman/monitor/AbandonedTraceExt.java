@@ -31,6 +31,13 @@ public class AbandonedTraceExt implements Serializable {
 	private String dburl;
 	private AbandonedTraceExt parent;	
 	private long lastUsed;
+	private long lastBorrowTime;
+	private long lastReturnTime;
+	private long borrowedCount;
+	 
+	    public long getLastBorrowTime() {
+	        return lastBorrowTime;
+	    }
 	 
 	private List<AbandonedTraceExt> traces = new ArrayList<AbandonedTraceExt>();
 	
@@ -99,6 +106,33 @@ public class AbandonedTraceExt implements Serializable {
 
 	public void setLastUsed(long lastUsed) {
 		this.lastUsed = lastUsed;
+	}
+
+	public void setLastBorrowTime(long lastBorrowTime) {
+		this.lastBorrowTime = lastBorrowTime;
+	}
+
+	public long getLastReturnTime() {
+		return lastReturnTime;
+	}
+
+	public void setLastReturnTime(long lastReturnTime) {
+		this.lastReturnTime = lastReturnTime;
+	}
+
+	public long getBorrowedCount() {
+		return borrowedCount;
+	}
+
+	public void setBorrowedCount(long borrowedCount) {
+		this.borrowedCount = borrowedCount;
+	}
+
+	public void printStackTrace() {
+		if(stackInfo != null)
+		{
+			System.out.println(this.stackInfo);
+		}
 	}
 
 	 
