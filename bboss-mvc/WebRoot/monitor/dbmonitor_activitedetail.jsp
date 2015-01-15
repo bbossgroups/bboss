@@ -18,7 +18,6 @@
 <%@ page import="com.frameworkset.common.poolman.DBUtil"%>
 
 <%@page import="java.util.*"%>
-<%@page import="com.frameworkset.common.poolman.util.JDBCPoolMetaData"%>
 
 <%@ taglib uri="/WEB-INF/pager-taglib.tld" prefix="pg"%>		
 <%
@@ -29,13 +28,13 @@ String sname = "";
 	if(dbname != null && !dbname.equals(""))
 	{
 		sname = "数据库："+dbname+" 的链接情况";
-		 PoolMonitorServiceImpl pm = new  PoolMonitorServiceImpl();
+		 
 		 //Connection con = DBUtil.getConection();
-		 //Statement smt = con.createStatement();
+		// Statement smt = con.createStatement();
 		 //smt.executeQuery("select 1 from dual");
-		 //con.close();
+		// con.close();
 		 //smt.close();
-		 java.util.List<AbandonedTraceExt> traceobjects = pm.getGoodTraceObjects(dbname);
+		 java.util.List<AbandonedTraceExt> traceobjects = DBUtil.getGoodTraceObjects(dbname);
 		 request.setAttribute("traceobjects", traceobjects);  
 	 	
 	}
@@ -76,34 +75,19 @@ String sname = "";
 	</div>
 	 
 		<table width="100%" border="0" cellpadding="0" cellspacing="0" class="stable" id="tb">
-		<tr> <td>基本信息</td><td>堆栈信息</td></tr>
+		<tr> <td width="40%"><strong>基本信息</strong></td><td><strong>堆栈信息</strong></td></tr>
 			<pg:list requestKey="traceobjects">
 			<tr>
 			 
 			<td>label:<pg:cell colName="label"/><br>
 			    dburl:<pg:cell colName="dburl"/><br>			        
 			    创建时间：<pg:cell colName="createTime" dateformat="yyyy-MM-dd HH:mm:ss"/><br>
-			    最后使用时间：<pg:cell colName="lastUsed" dateformat="yyyy-MM-dd HH:mm:ss"/></td>
-			<td><pre name='code' class='java'> <pg:cell colName="stackInfo" htmlEncode='true'/> </pre></td></tr>
-			<tr>
-			<td colspan="2" style="color: red"><pg:cell colName="label"/>内部信息</td></tr>
-			<pg:empty  colName="traces" evalbody="true">
-			<pg:yes>
-			<tr>
-				 
-				<td>无内部信息</td></tr>
-			</pg:yes>
-			<pg:no>
-			<pg:list colName="traces">
-				<tr>
-				 
-				<td>label:<pg:cell colName="label"/><br>
-				    创建时间<pg:cell colName="createTime" dateformat="yyyy-MM-dd HH:mm:ss"/><br>
-			    最后使用时间：<pg:cell colName="lastUsed" dateformat="yyyy-MM-dd HH:mm:ss"/></td>
-				<td><pre name='code' class='java'> <pg:cell colName="stackInfo" htmlEncode='true'/> </pre></td></tr>
-			</pg:list>
-			</pg:no>
-			</pg:empty>
+			    最后使用时间：<pg:cell colName="lastUsed" dateformat="yyyy-MM-dd HH:mm:ss"/><br>
+			 borrowedCount：<pg:cell colName="borrowedCount" /><br>
+			 lastBorrowTime：<pg:cell colName="lastBorrowTime" dateformat="yyyy-MM-dd HH:mm:ss"/><br>
+			 lastReturnTime：<pg:cell colName="lastReturnTime" dateformat="yyyy-MM-dd HH:mm:ss"/></td>				                 
+			<td><pg:null colName="stackInfo" evalbody="true"><pg:yes></pg:yes><pg:no><pre name='code' class='java'> <pg:cell colName="stackInfo" htmlEncode='true'/> </pre></pg:no></pg:null></td>
+			 </tr>
 			</pg:list>
 		</table>	
 	

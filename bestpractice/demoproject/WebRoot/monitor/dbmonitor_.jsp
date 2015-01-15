@@ -1,3 +1,4 @@
+<%@ page session="false" contentType="text/html; charset=UTF-8" language="java" import="java.util.List"%>
 <%
 /*
  * <p>Title: 监控连接池信息</p>
@@ -9,7 +10,7 @@
  * @version 1.0
  */
  %>
-<%@ page session="false" contentType="text/html; charset=UTF-8" language="java" import="java.util.List"%>
+
 <%@ page import="com.frameworkset.common.poolman.DBUtil"%>
 
 <%@page import="java.util.*"%>
@@ -82,6 +83,9 @@
 						
 						<%if(metadata.getDatasourceFile().startsWith("druid") ) {%>
 						   <a href="../druid/index.html" target="m">查看监控信息</a>
+						<%}  else if(metadata.getDatasourceFile().startsWith("dbcp") ) {%>
+						 
+						 <a href="dbmonitor_activitedetail.jsp?ds=<%=poolname %>" target="deailactive">查看实时链接信息</a>
 						<%} %>
 						
 						
