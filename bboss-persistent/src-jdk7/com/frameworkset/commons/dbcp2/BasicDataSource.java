@@ -1019,6 +1019,18 @@ public class BasicDataSource implements DataSource, BasicDataSourceMXBean, MBean
          return 0;
     }
     
+    /**
+     * 返回最大峰值出现的时间点
+     * @return
+     */
+    public long getMaxActiveNumTime()
+    {
+    	if (connectionPool != null) {
+            return connectionPool.getMaxActiveNumTime();
+        }
+        return 0;
+    }
+    
 
     /**
      * The connection password to be passed to our JDBC driver to establish

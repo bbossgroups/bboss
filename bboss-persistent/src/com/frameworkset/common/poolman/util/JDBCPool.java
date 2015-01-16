@@ -2260,6 +2260,24 @@ public class JDBCPool {
 			return SQLManager.getInstance().getPool(externalDBName).getMaxNumActive();
 		}
 	}
+	
+	 
+    /**
+     * 返回最大峰值出现的时间点
+     * @return
+     */
+    public long getMaxActiveNumTime()
+    {
+    	if(this.externalDBName == null)
+		{
+
+			return DatasourceUtil.getMaxActiveNumTime(datasource);
+		}
+		else
+		{
+			return SQLManager.getInstance().getPool(externalDBName).getMaxActiveNumTime();
+		}
+    }
 
 	/**
 	 * 获取当前链接池中空闲的链接数 接口只对内部数据源有用，外部数据源返回-1

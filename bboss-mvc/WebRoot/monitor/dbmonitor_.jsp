@@ -1,4 +1,3 @@
-<%@ page session="false" contentType="text/html; charset=UTF-8" language="java" import="java.util.List"%>
 <%
 /*
  * <p>Title: 监控连接池信息</p>
@@ -10,7 +9,7 @@
  * @version 1.0
  */
  %>
-
+<%@ page session="false" contentType="text/html; charset=UTF-8" language="java" import="java.util.List"%>
 <%@ page import="com.frameworkset.common.poolman.DBUtil"%>
 
 <%@page import="java.util.*"%>
@@ -85,16 +84,45 @@
 						   <a href="../druid/index.html" target="m">查看监控信息</a>
 						<%}  else if(metadata.getDatasourceFile().startsWith("dbcp") ) {%>
 						 
-						 <a href="dbmonitor_activitedetail.jsp?ds=<%=poolname %>" target="deailactive">查看实时链接信息</a>
+						 <a href="dbmonitor_activitedetail.jsp?ds=<%=poolname %>" target="deailactive">查看链接信息</a>
 						<%} %>
 						
 						
 						
 					</td>
 					</tr>
+					<tr class="tr">
+						
+						<td width="16%" height="25" class="detailtitle" align="right">空闲连接：</td>
+						<td height="25" colspan="3">
+						<%=DBUtil.getNumIdle(poolname)%>
+						</td>
+						</tr>
+						
+						<tr class="tr">
+						<td width="16%" height="25" class="detailtitle" align="right">正在使用连接：</td>
+						<td height="25" colspan="3">
+						<%=DBUtil.getNumActive(poolname)%>
+						</td>
+						</tr>
+						
+						<tr class="tr">
+						<td width="16%" height="25" class="detailtitle" align="right">使用连接高峰值：</td>
+						<td height="25" colspan="3">
+						<%=DBUtil.getMaxNumActive(poolname)%>
+						</td>
+						</tr>
+						
+						<tr class="tr">
+						<td width="16%" height="25" class="detailtitle" align="right">使用连接高峰值：</td>
+						<td height="25" colspan="3">
+						<%=DBUtil.getMaxActiveNumFormatTime(poolname)%>
+						</td>
+						</tr>
 						<tr>
 						<table border="1">
 						<caption>数据库：<%=poolname %>的配置信息</caption>
+						
 						<tr>
 						<th>配置属性名</th>
 						<th>属性对应值</th>
@@ -173,6 +201,13 @@
 						<td width="16%" height="25" class="detailtitle" align="right">使用连接高峰值：</td>
 						<td height="25" >
 						<%=DBUtil.getMaxNumActive(poolname)%>
+						</td>
+						</tr>
+						
+						<tr class="tr">
+						<td width="16%" height="25" class="detailtitle" align="right">使用连接高峰值：</td>
+						<td height="25" >
+						<%=DBUtil.getMaxActiveNumFormatTime(poolname)%>
 						</td>
 						</tr>
 					</table>

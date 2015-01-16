@@ -518,11 +518,18 @@ public class GenericObjectPool<T> extends BaseGenericObjectPool<T>
 
        
        
-        
-        updateStatsBorrow(p, System.currentTimeMillis() - waitTime);
+        long time_ = System.currentTimeMillis();
+        updateStatsBorrow(p, time_ - waitTime);
         int active = this.getNumActive();//add by biaoping.yin
         if(this._numMaxActive < active)
+        {
         	this._numMaxActive = active;
+        	this._numMaxActiveTime = time_;
+        }
+        else if(this._numMaxActive == active)
+        {
+        	this._numMaxActiveTime = time_;
+        }
         return p.getObject();
     }
 
@@ -1152,6 +1159,7 @@ public class GenericObjectPool<T> extends BaseGenericObjectPool<T>
      * the max number of active connections since pool is started
      */
     private int _numMaxActive = 0;
+    private long _numMaxActiveTime;
     /**
      * [Read Only] The max number of objects {@link #borrowObject} borrowed
      * from the pool since pool is started.
@@ -1161,6 +1169,15 @@ public class GenericObjectPool<T> extends BaseGenericObjectPool<T>
     public int getMaxNumActive() {
       
         return this._numMaxActive;
+    }
+    
+    /**
+     * 返回最大峰值出现的时间点
+     * @return
+     */
+    public long getMaxActiveNumTime()
+    {
+    	return _numMaxActiveTime;
     }
 
 	public List<AbandonedTraceExt> getGoodTraceObjects() {

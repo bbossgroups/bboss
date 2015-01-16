@@ -30,6 +30,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.sql.Types;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.Hashtable;
@@ -1381,6 +1382,59 @@ public class SQLUtil implements Serializable{
 //		return SQLManager.getInstance().getPool(dbName).getMaxNumActive();
 	}
 	
+	   /**
+     * 返回最大峰值出现的时间点
+     * @return
+     */
+    public static long getMaxActiveNumTime()
+    {
+    	return getMaxActiveNumTime(null);
+    }
+	 
+    /**
+     * 返回最大峰值出现的时间点
+     * @return
+     */
+    public static long getMaxActiveNumTime(String dbName)
+    {
+    	JDBCPool pool = SQLManager.getInstance().getPool(dbName);
+		if(pool != null)
+			return pool.getMaxActiveNumTime();
+		else
+			return -1;
+    }
+    
+    /**
+     * 返回最大峰值出现的时间点
+     * @return
+     */
+    public static String getMaxActiveNumFormatTime()
+    {
+    	return getMaxActiveNumFormatTime(null);
+    }
+	 
+    /**
+     * 返回最大峰值出现的时间点
+     * @return
+     */
+    public static String getMaxActiveNumFormatTime(String dbName)
+    {
+    	JDBCPool pool = SQLManager.getInstance().getPool(dbName);
+		if(pool != null)
+		{
+			
+			long time = pool.getMaxActiveNumTime();
+			String datestr = "";
+			if(time  > 0)
+			{
+				SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
+				datestr = format.format(new Date(time));
+			}
+			return datestr;
+		}
+		else
+			return "";
+    }
 	/**
 	 * 获取当前链接池中空闲的链接数
 	 * 接口只对内部数据源有用，外部数据源返回-1
@@ -1472,6 +1526,8 @@ public class SQLUtil implements Serializable{
 	{
 		System.out.println(new StringBuffer("[").append(DBName).append("] idle connenctions:").append(SQLUtil.getNumIdle(DBName)));
 		System.out.println(new StringBuffer("[").append(DBName).append("] active connenctions:").append(SQLUtil.getNumActive(DBName)));
+		System.out.println(new StringBuffer("[").append(DBName).append("] max active connenctions:").append(SQLUtil.getMaxNumActive(DBName)));		
+		System.out.println(new StringBuffer("[").append(DBName).append("] max active connenctions time:").append(SQLUtil.getMaxActiveNumFormatTime(DBName)));
 		
 	}
 	

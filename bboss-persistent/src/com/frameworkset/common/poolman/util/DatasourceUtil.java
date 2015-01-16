@@ -277,6 +277,58 @@ public class DatasourceUtil {
 	}
 	
 	
+	/**
+	 * 获取并发最大使用链接数发生的时间点，记录链接池到目前为止并发使用链接的最大数目的时间，内置dbcp2才有意义， 外部数据源返回-1
+	 * 
+	 * @return
+	 */
+	public static long getMaxActiveNumTime(DataSource datasource) {
+		
+		
+		DataSource datasource_ = null;
+		if(datasource instanceof TXDataSource)
+		{
+			datasource_ =getSRCDataSource((TXDataSource)datasource);
+		}
+		else
+		{
+			datasource_ = datasource;
+		}
+		if (datasource_  instanceof PoolManDataSource) {
+			PoolManDataSource temp = (PoolManDataSource) datasource_ ;
+			datasource_ = temp.getInnerDataSource();
+			
+		}
+
+		try {
+			if (datasource_ != null) {
+				Method getMaxActiveNumTime = datasource_.getClass().getMethod(
+						"getMaxActiveNumTime");
+
+				
+				if (getMaxActiveNumTime != null) {
+					return (Long) getMaxActiveNumTime.invoke(datasource_);
+				}
+			}
+		} catch (SecurityException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+		} catch (NoSuchMethodException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+		}
+		return -1;
+				
+	}
 	
 	/**
 	 * 获取并发最大使用链接数，记录链接池到目前为止并发使用链接的最大数目， 外部数据源返回-1
