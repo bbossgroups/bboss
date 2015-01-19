@@ -166,6 +166,9 @@ public class ProviderParser extends DefaultHandler
 	    	String factory_class = p.getFactory_class();
 	    	if(factory_class != null && !factory_class.equals(""))
 	    		return true;
+	    	String iocplugin = p.getIocplugin();
+			if(iocplugin != null && !iocplugin.equals(""))
+	    		return true;		
 	    	return false;
     	}
     }

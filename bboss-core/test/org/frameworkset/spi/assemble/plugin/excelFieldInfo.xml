@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<properties>
+	<property name="excelMapping" iocplugin="">
+		<map componentType="bean"> 
+			<property name="exceltemplatefile1" templatepath="/usr/local/exceltemplates/file1.xlsx" statrow="1" endrow="1000">
+			    <list componentType="bean"> 
+					<property cellpostion="1" javaFiledName="companyname" celltype="VARCHAR"/> 
+					<property cellpostion="2" javaFiledName="age" celltype="INTEGER"/> 
+					<property cellpostion="3" javaFiledName="sex" celltype="VARCHAR"/> 
+					<property cellpostion="4" javaFiledName="description" celltype="VARCHAR"/> 
+				</list>  
+			</property>   
+			<property name="exceltemplatefile2" templatepath="/usr/local/exceltemplates/file2.xlsx" statrow="1" endrow="1000">
+			    <list componentType="bean"> 
+					<property cellpostion="1" javaFiledName="factoryname" celltype="VARCHAR"/> 
+					<property cellpostion="2" javaFiledName="createyear" celltype="DATE"/> 
+					<property cellpostion="3" javaFiledName="address" celltype="VARCHAR"/> 
+					<property cellpostion="4" javaFiledName="worksers" celltype="VARCHAR"/> 
+				</list>  
+			</property>   
+			<property name="exceltemplatefile3" templatepath="/usr/local/exceltemplates/file3.xlsx" statrow="1" endrow="1000">
+			    <list componentType="bean"> 
+					<property cellpostion="1" javaFiledName="product" celltype="VARCHAR"/> 
+					<property cellpostion="2" javaFiledName="totalcount" celltype="INTEGER"/> 
+					<property cellpostion="3" javaFiledName="name" celltype="VARCHAR"/> 
+					<property cellpostion="4" javaFiledName="description" celltype="VARCHAR"/>
+				</list>  
+			</property>   
+		</map> 
+	</property>
+	
+	<property name="POIExcelUtil" class="com.sany.allowance.util.POIExcelUtil" f:excelTemplates="attr:excelMapping"/>
+</properties>

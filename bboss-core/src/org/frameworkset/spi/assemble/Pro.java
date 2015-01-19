@@ -43,7 +43,7 @@ public class Pro<V> extends BaseTXManager implements Comparable<V>, BeanInf {
 	/** 定义property节点的固定属性 */
 	public static String[] fixattrs = new String[] { "name", "n","label", "value","v",
 			"class","cs", "refid", "singlable", "init-method", "destroy-method",
-			"factory-bean", "factory-class", "factory-method" };
+			"factory-bean", "factory-class", "factory-method","iocplugin" };
 	
 	public static final String REF_TOKEN = "->";
 	
@@ -57,6 +57,10 @@ public class Pro<V> extends BaseTXManager implements Comparable<V>, BeanInf {
 	private String factory_bean;
 	private String factory_class;
 	private String factory_method;
+	/**
+	 * 指定元素的ioc依赖注入插件
+	 */
+	private String iocplugin;
 	
 
 	private Map<String, String> mvcpaths;
@@ -2005,6 +2009,15 @@ public class Pro<V> extends BaseTXManager implements Comparable<V>, BeanInf {
 
 	public void setMagicclass(MagicClass magicclass) {
 		this.magicclass = magicclass;
+	}
+
+	public String getIocplugin() {
+		return iocplugin;
+	}
+
+	public void setIocplugin(String iocplugin) {
+		modify();
+		this.iocplugin = iocplugin;
 	}
 	
 	
