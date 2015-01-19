@@ -884,20 +884,27 @@ public class VariableHandler
     	
 root:  	do
     	{
-			pro = ClassUtil.getPropertyDescriptor(temp.getClass(), var.getVariableName());
-			if(pro == null)
-				throw new EvalVariableValueFailedException("计算变量值失败：class["+bean.getClass().getCanonicalName()+"]没有定义属性["+var.getVariableName()+"]");
-			try {
-				temp = pro.getValue(temp);
-			} catch (EvalVariableValueFailedException e) {
-				throw e;
-			} catch (IllegalAccessException e) {
-				throw new EvalVariableValueFailedException(e);
-			} catch (InvocationTargetException e) {
-				throw new EvalVariableValueFailedException(e.getTargetException());
+			if(!(temp instanceof Map))
+			{
+				pro = ClassUtil.getPropertyDescriptor(temp.getClass(), var.getVariableName());
+				if(pro == null)
+					throw new EvalVariableValueFailedException("计算变量值失败：class["+bean.getClass().getCanonicalName()+"]没有定义属性["+var.getVariableName()+"]");
+				try {
+					temp = pro.getValue(temp);
+				} catch (EvalVariableValueFailedException e) {
+					throw e;
+				} catch (IllegalAccessException e) {
+					throw new EvalVariableValueFailedException(e);
+				} catch (InvocationTargetException e) {
+					throw new EvalVariableValueFailedException(e.getTargetException());
+				}
+				catch (Throwable e) {
+					throw new EvalVariableValueFailedException(e);
+				}
 			}
-			catch (Throwable e) {
-				throw new EvalVariableValueFailedException(e);
+			else
+			{
+				temp = ((Map)temp).get(var.getVariableName());
 			}
 			if(temp == null)
 				break;
