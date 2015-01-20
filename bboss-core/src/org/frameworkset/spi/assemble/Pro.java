@@ -1,6 +1,9 @@
 package org.frameworkset.spi.assemble;
 
 import java.lang.reflect.Method;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.lang.reflect.TypeVariable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -59,6 +62,8 @@ public class Pro<V> extends BaseTXManager implements Comparable<V>, BeanInf {
 	private String factory_method;
 	/**
 	 * 指定元素的ioc依赖注入插件
+	 * 插件必须实现接口
+	 * org.frameworkset.spi.assemble.plugin.IocPlugin<T,R>
 	 */
 	private String iocplugin;
 	
@@ -274,6 +279,11 @@ public class Pro<V> extends BaseTXManager implements Comparable<V>, BeanInf {
 	public Object getBean() {
 		return getBean((CallContext) null,true);
 	}
+	
+	public boolean useiocplugin()
+	{
+		return this.iocplugin != null;
+	}
 
 	/**
 	 * 本方法返回原始的bean组件
@@ -291,15 +301,23 @@ public class Pro<V> extends BaseTXManager implements Comparable<V>, BeanInf {
 						return beaninstance;
 				
 					if (bean) {
-						if(value != null)
+						if(useiocplugin())//pro
 						{
-							
-							Object _beaninstance = processValue(context, convertcontainer);
+							Object _beaninstance = accember.getBean(this, context);
 							if(magicclass != null && magicclass.getPreserialObject() != null)
 							{
 								_beaninstance = magicclass.getPreserialObject().posthandle(_beaninstance);
 							}
 							beaninstance = _beaninstance;
+						}
+						else if(value != null)
+						{							
+							Object _beaninstance = processValue(context, convertcontainer);
+							if(magicclass != null && magicclass.getPreserialObject() != null)
+							{
+								_beaninstance = magicclass.getPreserialObject().posthandle(_beaninstance);
+							}
+							beaninstance = _beaninstance;							 
 						}
 						else
 						{
@@ -2020,6 +2038,123 @@ public class Pro<V> extends BaseTXManager implements Comparable<V>, BeanInf {
 		this.iocplugin = iocplugin;
 	}
 	
+	
+	 private Class iocpluginClass;
+	 public static final int pro_type = 0;
+	 public static final int promap_type = 1;
+	 public static final int prolist_type = 2;
+	 public static final int proarray_type = 3;
+	 public static final int proset_type = 4;
+	 private int iocinputtype = pro_type;
+	 private Object iocinputData ;
+	 public Class getIocpluginClass()
+	 {
+		 try {
+
+				if (iocpluginClass != null)
+					return iocpluginClass;
+				if (this.iocplugin == null || iocplugin.equals(""))
+					return null;
+				
+				synchronized (this) {
+					if (iocpluginClass != null)
+						return iocpluginClass;
+					
+
+					iocpluginClass = Class.forName(iocplugin);
+					Class inputtype = firstgenericTypes(iocpluginClass);
+					if(inputtype != null)
+					{
+						if(inputtype == Pro.class)
+						{
+							this.iocinputtype =  pro_type;
+							iocinputData = this;
+						}
+						else if(inputtype == ProMap.class)
+						{
+							this.iocinputtype =  promap_type;
+							iocinputData = this.getMap();
+						}
+						else if(inputtype == ProList.class)
+						{
+							this.iocinputtype =  prolist_type;
+							iocinputData = this.getList();
+						}
+						else if(inputtype == ProArray.class)
+						{
+							this.iocinputtype =  proarray_type;
+							iocinputData = this.getArray();
+						}
+						else if(inputtype == ProSet.class)
+						{
+							this.iocinputtype =  proset_type;
+							iocinputData = this.getSet();
+						}
+						else
+						{
+							String error = "iocplugin["+iocplugin+"]@"+this.configFile+"'s first genericType["+inputtype.getCanonicalName()+"] is not support by bboss ioc,please change iocplugin class defined."; 
+							log.error(error);
+							throw new java.lang.IllegalArgumentException(error);
+						}
+						
+					}
+					else
+					{
+						iocinputData = this;
+					}
+				}
+				return iocpluginClass;
+			}
+
+			catch (ClassNotFoundException e) {
+				throw new BeanInstanceException(e);
+			} catch (Exception e) {
+				throw new BeanInstanceException(e);
+			}
+	 } 
+	 
+	 public static Class firstgenericTypes(Class clazz)
+		{
+			if (clazz == null )
+			{
+				return null;
+			}
+			Type[] types = clazz.getTypeParameters();
+			if(types == null || types.length == 0)
+				types = clazz.getGenericInterfaces();
+			if(types == null || types.length == 0)
+				return null;
+			// Class[] pts = method.getParameterTypes();
+			Type type = types[0];
+			if (type == null )
+			{
+				return null;
+			}
+
+			
+			if (type instanceof ParameterizedType)
+			{
+
+				Type[] ptypes = ((ParameterizedType) type)
+						.getActualTypeArguments();
+
+				
+				
+				return (Class)ptypes[0];
+
+			}
+			
+			return null;
+
+		}
+
+	public int getIocinputtype() {
+		return iocinputtype;
+	}
+
+	public Object getIocinputData() {
+		return iocinputData;
+	}
 	
 
 }

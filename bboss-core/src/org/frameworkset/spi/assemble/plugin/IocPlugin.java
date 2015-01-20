@@ -27,6 +27,12 @@ import org.frameworkset.spi.CallContext;
  * @version 1.0
  */
 public interface IocPlugin<T,R> {
+	/**
+	 * 返回扩展ioc机制生成的对象实例
+	 * @param object 输入的ioc元素对象,类型范围为：Pro,ProMap,ProList,ProArray,ProSet
+	 * @param callcontext ioc依赖注入上下文，用来提供对循环依赖注入支持的
+	 * @return
+	 */
 	public R ioc(T object, CallContext callcontext);
 
 }

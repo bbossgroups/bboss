@@ -802,4 +802,28 @@ public class SecurityProviderInfo implements java.io.Serializable,BeanInf
 		return null;
 	}
 
+	@Override
+	public String getIocplugin() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Class getIocpluginClass() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int getIocinputtype() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public Object getIocinputData() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

@@ -23,7 +23,10 @@ public interface BeanInf
     public Class getFactoryClass();
     public String getFactory_method();
     public String getFactory_bean();
-    
+    public String getIocplugin() ;
+    public Class getIocpluginClass();
     public boolean isSinglable();
-    
+    public int getIocinputtype();
+
+	public Object getIocinputData();
 }

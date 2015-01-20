@@ -141,36 +141,30 @@ public class ProviderParser extends DefaultHandler
      */
     private boolean isbean(Pro p)
     {
-//    	if(this.isSOAApplicationContext)
-//    	{
-//    		return p.getClazz() != null ;
-//
-//    	}
-//    	else 
+
+		boolean isbean = p.getValue() == null && p.getClazz() != null && !p.getClazz().equals("") && (p.getRefid() == null || p.getRefid().equals("")) ;
+    	if(isbean)
+    		return true;
+    	if(p.getMagicclass() != null)
+    		return true;
+    	if(p.getValue() != null)
     	{
-    		boolean isbean = p.getValue() == null && p.getClazz() != null && !p.getClazz().equals("") && (p.getRefid() == null || p.getRefid().equals("")) ;
-	    	if(isbean)
-	    		return true;
-	    	if(p.getMagicclass() != null)
-	    		return true;
-	    	if(p.getValue() != null)
-	    	{
-	    		isbean = p.getValue() instanceof ProList || p.getValue() instanceof ProMap || p.getValue() instanceof ProSet || p.getValue() instanceof ProArray; 
-	    	}
-	    	if(isbean)
-	    		return true;
-	    	String factory_bean = p.getFactory_bean();
-	    	
-	    	if(factory_bean != null && !factory_bean.equals(""))
-	    		return true;
-	    	String factory_class = p.getFactory_class();
-	    	if(factory_class != null && !factory_class.equals(""))
-	    		return true;
-	    	String iocplugin = p.getIocplugin();
-			if(iocplugin != null && !iocplugin.equals(""))
-	    		return true;		
-	    	return false;
+    		isbean = p.getValue() instanceof ProList || p.getValue() instanceof ProMap || p.getValue() instanceof ProSet || p.getValue() instanceof ProArray; 
     	}
+    	if(isbean)
+    		return true;
+    	String factory_bean = p.getFactory_bean();
+    	
+    	if(factory_bean != null && !factory_bean.equals(""))
+    		return true;
+    	String factory_class = p.getFactory_class();
+    	if(factory_class != null && !factory_class.equals(""))
+    		return true;
+    	String iocplugin = p.getIocplugin();
+		if(iocplugin != null && !iocplugin.equals(""))
+    		return true;		
+    	return false;
+    	
     }
     private void endProperty(Pro p,String s1, String s2, String name)
     {
@@ -220,14 +214,13 @@ public class ProviderParser extends DefaultHandler
 	        }
     	}
     	
-//    	else @setBean 注释
-    	{
-    		if(isbean(p))
-            {
-                p.setBean(true);
-                
-            }
-    	}
+
+		if(isbean(p))
+        {
+            p.setBean(true);
+            
+        }
+    	
         
         if(traceStack.size() > 0)
         {
@@ -320,6 +313,8 @@ public class ProviderParser extends DefaultHandler
     	if (name.equals("p") || name.equals("property"))
         {
     		Pro p = (Pro) traceStack.pop();
+    		if(p.getIocplugin()!= null)
+    			System.out.println();
     		endProperty(p, s1, s2, name);
 
         }
@@ -749,7 +744,13 @@ public class ProviderParser extends DefaultHandler
         String factory_bean = attributes.getValue("factory-bean");
         String factory_class = attributes.getValue("factory-class");
         String factory_method = attributes.getValue("factory-method");
-        boolean singlable = getBoolean(attributes.getValue("singlable"), true);  
+        String iocplugin = attributes.getValue("iocplugin");
+        boolean singlable = getBoolean(attributes.getValue("singlable"), true);
+        if(iocplugin != null)
+        {
+        	  p.setIocplugin(iocplugin);
+        }
+      
         p.setConfigFile(this.file);
         p.setSinglable(singlable);
         p.setFactory_bean(factory_bean);

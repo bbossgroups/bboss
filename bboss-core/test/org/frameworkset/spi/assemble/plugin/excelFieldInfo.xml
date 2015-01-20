@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <properties>
-	<property name="excelMapping" iocplugin="">
+	<property name="excelMapping" iocplugin="org.frameworkset.spi.assemble.plugin.ExcelIOCPlugin">
 		<map componentType="bean"> 
 			<property name="exceltemplatefile1" templatepath="/usr/local/exceltemplates/file1.xlsx" statrow="1" endrow="1000">
 			    <list componentType="bean"> 
@@ -30,5 +30,5 @@
 		</map> 
 	</property>
 	
-	<property name="POIExcelUtil" class="com.sany.allowance.util.POIExcelUtil" f:excelTemplates="attr:excelMapping"/>
+	<property name="POIExcelService" class="org.frameworkset.spi.assemble.plugin.POIExcelService" f:excelTemplates="attr:excelMapping"/>
 </properties>

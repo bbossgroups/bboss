@@ -22,6 +22,7 @@ import org.frameworkset.spi.InitializingBean;
 import org.frameworkset.spi.LocalCallContextImpl;
 import org.frameworkset.spi.ResourceLoaderAware;
 import org.frameworkset.spi.SPIException;
+import org.frameworkset.spi.assemble.plugin.IocPlugin;
 import org.frameworkset.spi.support.ApplicationObjectSupport;
 import org.frameworkset.spi.support.MessageSourceAware;
 import org.frameworkset.util.ClassUtil;
@@ -409,7 +410,10 @@ public class BeanAccembleHelper<V> {
 			}
 			else
 			{
-				cls = providerManagerInfo.getFactoryClass();
+				if(providerManagerInfo.getIocplugin() == null)
+					cls = providerManagerInfo.getFactoryClass();
+				else
+					cls = providerManagerInfo.getIocpluginClass();
 				classInfo = ClassUtil.getClassInfo(cls);
 				return (V)context.getLoopContext().setCurrentObj(classInfo.getDefaultConstruction().newInstance());
 			}
@@ -930,7 +934,7 @@ public class BeanAccembleHelper<V> {
 		{
 			String factoryClass = pro.getFactory_class();
 			try {
-				Class cls = Class.forName(factoryClass);
+				Class cls = pro.getFactoryClass();
 				//通过工厂对象创建组件实例
 				//1.构建工厂创建路径上下文，防止工厂对象在创建组件实例时产生循环依赖
 				Context context = null;
@@ -959,6 +963,54 @@ public class BeanAccembleHelper<V> {
 			}
 			catch (Exception e) {
 				throw new CurrentlyInCreationException(pro.getName()+"@" + pro.getConfigFile() + "，没有找到对象工厂["+factoryClass+"]类。请检查[factory-class]属性配置是否正确。",e);
+			}
+			
+			
+		}
+	}
+	
+	/**
+	 * 通过工厂方法获取组件实例
+	 * @param providerManagerInfo
+	 * @param callcontext
+	 * @return
+	 */
+	private V getBeanFromIOCPlugin(BeanInf providerManagerInfo, CallContext callcontext)
+	{
+		Pro pro = (Pro)providerManagerInfo;
+		
+		{
+		 
+			try {
+				Class cls = pro.getIocpluginClass();
+				//通过工厂对象创建组件实例
+				//1.构建工厂创建路径上下文，防止工厂对象在创建组件实例时产生循环依赖
+				Context context = null;
+				if (callcontext == null)
+					callcontext = new LocalCallContextImpl(providerManagerInfo
+							.getApplicationContext());
+				if (callcontext.getLoopContext() == null) {
+					context = new Context(providerManagerInfo.getXpath());
+					callcontext.setLoopContext(context);
+				} else {
+					context = new Context(callcontext.getLoopContext(),
+							providerManagerInfo.getXpath());
+					callcontext.setLoopContext(context);
+				}
+				V bean  = this.creatorBeanByIocPluginClass(pro, cls, callcontext);
+//				context.getLoopContext().setCurrentObj(bean);
+				return bean;
+			}
+			catch(CurrentlyInCreationException e)
+			{
+				throw e;
+			}
+			catch(BeanInstanceException e)
+			{
+				throw e;
+			}
+			catch (Exception e) {
+				throw new CurrentlyInCreationException(pro.getName()+"@" + pro.getConfigFile() + "，没有找到对象工厂["+pro.getIocplugin()+"]类。请检查[factory-class]属性配置是否正确。",e);
 			}
 			
 			
@@ -1283,6 +1335,46 @@ public class BeanAccembleHelper<V> {
 	}
 	
 	/**
+	 * 通过ioc插件类创建组件实例
+	 * @param providerManagerInfo
+	 * @param factory
+	 * @param context
+	 * @return
+	 */
+	private V creatorBeanByIocPluginClass(Pro  providerManagerInfo, Class iocpluginClass,CallContext context)
+	{
+		 
+			 
+			
+			  
+				try {
+					/**
+					 * 本地线程技术，存放CallContext上下文
+					 * 如果有旧的还需要保存旧的callContext
+					 */
+//					return (V) method.invoke(null);
+
+					
+					 IocPlugin factoryInf = (IocPlugin)getBeanFromClass( providerManagerInfo,  context,true);//先获取工厂类实例
+					 
+					 return (V)factoryInf.ioc(providerManagerInfo.getIocinputData(), context);
+					
+					 
+				}
+				catch(CurrentlyInCreationException e)
+				{
+					throw e;
+				}
+				catch (Exception e) {
+					throw new CurrentlyInCreationException(providerManagerInfo.getName()+"@" + providerManagerInfo.getConfigFile() + ",插件["+iocpluginClass.getName()+"]解析组件异常。请检查[iocplugin]属性配置是否正确。",e);
+				}
+				
+				
+				  
+	
+	}
+	
+	/**
 	 * 通过工厂对象创建组件实例
 	 * @param providerManagerInfo
 	 * @param factory
@@ -1479,24 +1571,7 @@ public class BeanAccembleHelper<V> {
 
     }
     
-//    private Object getSpecialObject(Pro providerManagerInfo, CallContext callcontext)
-//    {
-//    	Class<V> cls = providerManagerInfo.getBeanClass();
-//    	if(StackTraceElement.class.isAssignableFrom(cls) )
-//		{
-//    		/**<property name="className" soa:type="String"><![CDATA[org.frameworkset.soa.SOAApplicationContextTest]]></property>
-//			<property name="fileName" soa:type="String"><![CDATA[SOAApplicationContextTest.java]]></property>
-//			<property name="lineNumber" soa:type="int" value="113" />
-//			<property name="methodName" soa:type="String"><![CDATA[bytearraybeantoxml]]></property>
-//			<property name="nativeMethod" soa:type="boolean" value="false" />*/
-//    		
-//    		providerManagerInfo.get
-//		}
-//    	if(Throwable.class.isAssignableFrom(cls) )
-//		{
-//			
-//		}
-//    }
+
     
     private V getBeanFromClass(BeanInf providerManagerInfo, CallContext callcontext)
     {
@@ -1512,7 +1587,13 @@ public class BeanAccembleHelper<V> {
 			if(!ignoreconstruction)
 				cls = providerManagerInfo.getBeanClass();
 			else
-				cls = providerManagerInfo.getFactoryClass();
+			{
+				if(providerManagerInfo.getIocplugin() == null)
+					cls = providerManagerInfo.getFactoryClass();
+				else
+					cls = providerManagerInfo.getIocpluginClass();
+			}
+				
 			
 			instance = initbean(providerManagerInfo, callcontext,ignoreconstruction);
 
@@ -1700,7 +1781,10 @@ public class BeanAccembleHelper<V> {
 			}
 			if(providerManagerInfo.getFactory_bean() == null && providerManagerInfo.getFactory_class() == null)
 			{
-				return getBeanFromClass( providerManagerInfo,  callcontext);
+				if(providerManagerInfo.getIocplugin() == null)
+					return getBeanFromClass( providerManagerInfo,  callcontext);
+				else
+					return getBeanFromIOCPlugin(providerManagerInfo, callcontext);
 				
 			}
 			else
@@ -1838,149 +1922,5 @@ public class BeanAccembleHelper<V> {
 
 	}
 
-	// public Object getBean(SecurityProviderInfo providerManagerInfo, Context
-	// context_)
-	// {
-	// Object instance = null;
-	// try
-	// {
-	// Class cls = providerManagerInfo.getProviderClass_();
-	// Context context = null;
-	// if (context_ == null)
-	// {
-	// context = new
-	// Context(providerManagerInfo.getProviderManagerInfo().getId());
-	// }
-	// else
-	// {
-	// context = new Context(context_,
-	// providerManagerInfo.getProviderManagerInfo().getId());
-	// }
-	// instance = initbean(providerManagerInfo, context);
-	// BeanInfo beanInfo = Introspector.getBeanInfo(cls);
-	// PropertyDescriptor[] attributes = beanInfo.getPropertyDescriptors();
-	//
-	// List<Pro> refs =
-	// providerManagerInfo.getProviderManagerInfo().getReferences();
-	// if (refs != null && refs.size() > 0)
-	// {
-	//
-	// for (int i = 0; i < refs.size(); i++)
-	// {
-	// Pro ref = refs.get(i);
-	// boolean flag = false;
-	// String filedName = ref.getName();
-	//
-	// // Object refvalue = ref.getObject(context);
-	// Object refvalue = null;
-	// if (ref.isBean())
-	// {
-	// refvalue = BaseSPIManager.getBeanObject(context, ref);
-	// }
-	// else if (ref.isRefereced())
-	// {
-	// refvalue = BaseSPIManager.getBeanObject(context, ref);
-	// }
-	// else
-	// {
-	// refvalue = ref.getObject();
-	// }
-	// for (int n = 0; n < attributes.length; n++)
-	// {
-	//
-	// // get bean attribute name
-	// PropertyDescriptor propertyDescriptor = attributes[n];
-	// String attrName = propertyDescriptor.getName();
-	//
-	// if (filedName.equals(attrName))
-	// {
-	// flag = true;
-	//
-	// Class type = propertyDescriptor.getPropertyType();
-	//
-	// // create attribute value of correct type
-	// Object value = ValueObjectUtil.typeCast(refvalue, refvalue.getClass(),
-	// type);
-	// // PropertyEditor editor =
-	// // PropertyEditorManager.findEditor(type);
-	// // editor.setAsText(ref.getValue());
-	// // Object value = editor.getValue();
-	// Method wm = propertyDescriptor.getWriteMethod();
-	//
-	// try
-	// {
-	// wm.invoke(instance, new Object[] { value });
-	// }
-	// catch (IllegalArgumentException e)
-	// {
-	// throw new CurrentlyInCreationException(e);
-	// }
-	// catch (IllegalAccessException e)
-	// {
-	// throw new CurrentlyInCreationException(e);
-	// }
-	// catch (InvocationTargetException e)
-	// {
-	// throw new CurrentlyInCreationException(e);
-	// }
-	// // Object value = editor.getValue();
-	// // set attribute value on bean
-	//
-	// }
-	// }
-	//
-	// if (!flag) // 引用字段名称在provider中没有定义
-	// {
-	// System.out.println("引用字段[" + filedName + "]在provider[" +
-	// instance.getClass() + "]中没有定义");
-	// log.warn("引用字段[" + filedName + "]在provider[" + instance.getClass() +
-	// "]中没有定义");
-	// }
-	// }
-	// }
-	// }
-	// catch (IntrospectionException e1)
-	// {
-	// throw new CurrentlyInCreationException(e1);
-	// }
-	// catch (NumberFormatException e)
-	// {
-	// throw new CurrentlyInCreationException(e);
-	// }
-	// catch (IllegalArgumentException e)
-	// {
-	// throw new CurrentlyInCreationException(e);
-	// }
-	// catch (NoSupportTypeCastException e)
-	// {
-	// throw new CurrentlyInCreationException(e);
-	// }
-	// // catch (InstantiationException e)
-	// // {
-	// // throw new CurrentlyInCreationException(e);
-	// // }
-	// // catch (IllegalAccessException e)
-	// // {
-	// // throw new CurrentlyInCreationException(e);
-	// // }
-	//
-	// catch (BeanInstanceException e)
-	// {
-	// throw e;
-	// }
-	// catch (SPIException e)
-	// {
-	// throw e;
-	// }
-	// catch (CurrentlyInCreationException e)
-	// {
-	// throw e;
-	// }
-	//
-	// catch (Exception e)
-	// {
-	// throw new CurrentlyInCreationException(e);
-	// }
-	// return instance;
-	// }
+	
 }
