@@ -32,20 +32,28 @@ public class ExcelIOCPlugin implements IocPlugin<ProMap, Map<String, ExcelTempla
             template.setTemplatepath(templatepath);
             excelTemplates.put(name, template);
 
-            List<ExcelCell> cellList = new ArrayList<ExcelCell>();
-            template.setCells(cellList);
-
-            ProList templateCellList = pro.getList();
-
-            for (int i = 0; i < templateCellList.size(); i++) {
-
-                Pro cellPro = (Pro) templateCellList.get(i);
-
-                ExcelCell cellBean = new ExcelCell();
-                cellBean.setCellpostion(cellPro.getIntExtendAttribute("cellpostion"));
-                cellBean.setCellname(cellPro.getStringExtendAttribute("javaFiledName"));
-                cellBean.setCelltype(cellPro.getStringExtendAttribute("celltype"));
-                cellList.add(cellBean);
+            if(!name.equals("exceltemplatefile4"))
+            {
+	            List<ExcelCell> cellList = new ArrayList<ExcelCell>();
+	            ProList templateCellList = pro.getList();
+	
+	            for (int i = 0; i < templateCellList.size(); i++) {
+	
+	                Pro cellPro = (Pro) templateCellList.get(i);
+	
+	                ExcelCell cellBean = new ExcelCell();
+	                cellBean.setCellpostion(cellPro.getIntExtendAttribute("cellpostion"));
+	                cellBean.setJavaFiledName(cellPro.getStringExtendAttribute("javaFiledName"));
+	                cellBean.setCelltype(cellPro.getStringExtendAttribute("celltype"));
+	                cellList.add(cellBean);
+	            }
+	            template.setCells(cellList);
+            }
+            else
+            {
+            	 @SuppressWarnings("unchecked")
+				List<ExcelCell> cellList = (List<ExcelCell>) pro.getBeanObject(callcontext);
+ 	             template.setCells(cellList);
             }
         }
         return excelTemplates;

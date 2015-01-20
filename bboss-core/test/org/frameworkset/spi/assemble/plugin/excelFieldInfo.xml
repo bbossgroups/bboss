@@ -27,6 +27,15 @@
 					<property cellpostion="4" javaFiledName="description" celltype="VARCHAR"/>
 				</list>  
 			</property>   
+			
+			<property name="exceltemplatefile4" templatepath="/usr/local/exceltemplates/file3.xlsx" statrow="1" endrow="1000">
+			    <list componentType="bean"> 
+					<property class="org.frameworkset.spi.assemble.plugin.ExcelCell" f:cellpostion="1" f:javaFiledName="product" f:celltype="VARCHAR"/> 
+					<property class="org.frameworkset.spi.assemble.plugin.ExcelCell" f:cellpostion="2" f:javaFiledName="totalcount" f:celltype="INTEGER"/> 
+					<property class="org.frameworkset.spi.assemble.plugin.ExcelCell" f:cellpostion="3" f:javaFiledName="name" f:celltype="VARCHAR"/> 
+					<property class="org.frameworkset.spi.assemble.plugin.ExcelCell" f:cellpostion="4" f:javaFiledName="description" f:celltype="VARCHAR"/>
+				</list>  
+			</property>   
 		</map> 
 	</property>
 	

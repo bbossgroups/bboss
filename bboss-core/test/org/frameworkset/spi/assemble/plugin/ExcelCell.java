@@ -1,11 +1,11 @@
 package org.frameworkset.spi.assemble.plugin;
 
 public class ExcelCell {
-	int cellpostion;
+	private int cellpostion;
 
-    String cellname;
+	private String javaFiledName;
 
-    String celltype;
+	private String celltype;
 
     public int getCellpostion() {
         return cellpostion;
@@ -15,13 +15,7 @@ public class ExcelCell {
         this.cellpostion = cellpostion;
     }
 
-    public String getCellname() {
-        return cellname;
-    }
-
-    public void setCellname(String cellname) {
-        this.cellname = cellname;
-    }
+    
 
     public String getCelltype() {
         return celltype;
@@ -30,4 +24,12 @@ public class ExcelCell {
     public void setCelltype(String celltype) {
         this.celltype = celltype;
     }
+
+	public String getJavaFiledName() {
+		return javaFiledName;
+	}
+
+	public void setJavaFiledName(String javaFiledName) {
+		this.javaFiledName = javaFiledName;
+	}
 }
