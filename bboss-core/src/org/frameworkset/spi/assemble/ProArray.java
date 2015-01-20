@@ -115,7 +115,7 @@ public class ProArray implements Serializable{
 		return value.getInt();
 	}
 
-	public Pro<?> getPro(int i) {
+	public Pro getPro(int i) {
 		return pros[i];
 	}
 

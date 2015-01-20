@@ -55,12 +55,12 @@ import com.frameworkset.util.ValueObjectUtil;
  * @author biaoping.yin
  * @version 1.0
  */
-public class BeanAccembleHelper<V> {
+public class BeanAccembleHelper {
 	private static Logger log = Logger.getLogger(BeanAccembleHelper.class);
 
 	private Class<?>[] constructParamTypes = null;
 
-	private Constructor<V> constructor = null;
+	private Constructor constructor = null;
 	
 	public static class LoopObject
 	{
@@ -249,7 +249,7 @@ public class BeanAccembleHelper<V> {
 	}
 
 	// @SuppressWarnings("unchecked")
-	// public Constructor<V> getConstructor(Class<V> clazz, Class[] params)
+	// public Constructor<Object> getConstructor(Class<Object> clazz, Class[] params)
 	// {
 	// try
 	// {
@@ -260,7 +260,7 @@ public class BeanAccembleHelper<V> {
 	// }
 	//
 	// // Class[] params_ = this.getParamsTypes(params);
-	// Constructor<V> constructor = null;
+	// Constructor<Object> constructor = null;
 	// // if (params_ != null)
 	// constructor = clazz.getConstructor(params);
 	//            
@@ -268,7 +268,7 @@ public class BeanAccembleHelper<V> {
 	// }
 	// catch (NoSuchMethodException e)
 	// {
-	// Constructor<V>[] constructors = clazz.getConstructors();
+	// Constructor<Object>[] constructors = clazz.getConstructors();
 	// if (constructors == null || constructors.length == 0)
 	// throw new
 	// CurrentlyInCreationException("Inject constructor error: no construction
@@ -398,10 +398,10 @@ public class BeanAccembleHelper<V> {
 	 * @param ignoreconstruction 工厂模式实例化工厂实例时需要忽略构造函数，因为构造函数是作为工厂方法创建组件实例的参数
 	 * @return
 	 */
-	private V initbean(BeanInf providerManagerInfo, CallContext context,boolean ignoreconstruction) {
+	private Object initbean(BeanInf providerManagerInfo, CallContext context,boolean ignoreconstruction) {
 		try {
 			
-			Class<V> cls = null;
+			Class cls = null;
 			ClassInfo classInfo = null;
 			if(!ignoreconstruction)
 			{
@@ -415,14 +415,14 @@ public class BeanAccembleHelper<V> {
 				else
 					cls = providerManagerInfo.getIocpluginClass();
 				classInfo = ClassUtil.getClassInfo(cls);
-				return (V)context.getLoopContext().setCurrentObj(classInfo.getDefaultConstruction().newInstance());
+				return context.getLoopContext().setCurrentObj(classInfo.getDefaultConstruction().newInstance());
 			}
 			
 			if (providerManagerInfo.getConstruction() == null
 					|| providerManagerInfo.getConstructorParams() == null
 					|| providerManagerInfo.getConstructorParams().size() == 0 ) {
 				
-				return (V)context.getLoopContext().setCurrentObj(classInfo.getDefaultConstruction().newInstance());
+				return context.getLoopContext().setCurrentObj(classInfo.getDefaultConstruction().newInstance());
 			}
 			List<Pro> params = providerManagerInfo.getConstructorParams();
 			Object[] valuetypes = getValue2ndTypes(params, context);
@@ -465,7 +465,7 @@ public class BeanAccembleHelper<V> {
 
 			
 
-			return (V)context.getLoopContext().setCurrentObj(constructor.newInstance(values));
+			return context.getLoopContext().setCurrentObj(constructor.newInstance(values));
 		} catch (InstantiationException e) {
 			throw new BeanInstanceException("providerManagerInfo["
 					+ providerManagerInfo.getName() + "],请检查配置文件是否配置正确["
@@ -526,11 +526,11 @@ public class BeanAccembleHelper<V> {
 		return Type;
 	}
 
-	// private V initbean(Pro<V> providerManagerInfo, Context context)
+	// private Object initbean(Pro<Object> providerManagerInfo, Context context)
 	// {
 	// try
 	// {
-	// Class<V> cls = providerManagerInfo.getType();
+	// Class<Object> cls = providerManagerInfo.getType();
 	// if (providerManagerInfo.getConstruction() == null ||
 	// providerManagerInfo.getConstructorParams() == null
 	// || providerManagerInfo.getConstructorParams().size() == 0)
@@ -540,7 +540,7 @@ public class BeanAccembleHelper<V> {
 	//
 	// List<Pro> params = providerManagerInfo.getConstructorParams();
 	// Class<?>[] parameterTypes = this.getParamsTypes(params);
-	// Constructor<V> constructor = cls.getConstructor(parameterTypes);
+	// Constructor<Object> constructor = cls.getConstructor(parameterTypes);
 	// // constructor.newInstance(initargs);
 	//
 	// Object[] values = new Object[parameterTypes.length];
@@ -896,7 +896,7 @@ public class BeanAccembleHelper<V> {
 	 * @param callcontext
 	 * @return
 	 */
-	private V getBeanFromFactory(BeanInf providerManagerInfo, CallContext callcontext)
+	private Object getBeanFromFactory(BeanInf providerManagerInfo, CallContext callcontext)
 	{
 		Pro pro = (Pro)providerManagerInfo;
 		String factoryMethod = pro.getFactory_method();
@@ -905,29 +905,39 @@ public class BeanAccembleHelper<V> {
 		if(pro.getFactory_bean() != null)//使用工厂bean创建组件实例
 		{
 			//获取工厂对象
-			String beanname = providerManagerInfo.getFactory_bean();
-			Object factory = this.getFactoryRefValue(pro, beanname, callcontext, null);
-			if(factory == null)
+			Context cloopcontext = callcontext.getLoopContext();
+			Object factory = null;
+			try
 			{
-				throw new CurrentlyInCreationException(pro.getName()+"@" + pro.getConfigFile() + "，没有找到对象工厂["+beanname+"]。请检查[factory-bean]属性配置是否正确。");
+				String beanname = providerManagerInfo.getFactory_bean();
+				factory = this.getFactoryRefValue(pro, beanname, callcontext, null);
+				if(factory == null)
+				{
+					throw new CurrentlyInCreationException(pro.getName()+"@" + pro.getConfigFile() + "，没有找到对象工厂["+beanname+"]。请检查[factory-bean]属性配置是否正确。");
+				}
+//				//通过工厂对象创建组件实例
+//				//1.构建工厂创建路径上下文，防止工厂对象在创建组件实例时产生循环依赖
+//				
+//				if (callcontext == null)
+//					callcontext = new LocalCallContextImpl(providerManagerInfo
+//							.getApplicationContext());
+//				if (callcontext.getLoopContext() == null) {
+//					context = new Context(providerManagerInfo.getXpath());
+//					callcontext.setLoopContext(context);
+//				} else {
+//					context = new Context(callcontext.getLoopContext(),
+//							providerManagerInfo.getXpath());
+//					callcontext.setLoopContext(context);
+//				}
 			}
-			//通过工厂对象创建组件实例
-			//1.构建工厂创建路径上下文，防止工厂对象在创建组件实例时产生循环依赖
-			Context context = null;
-			if (callcontext == null)
-				callcontext = new LocalCallContextImpl(providerManagerInfo
-						.getApplicationContext());
-			if (callcontext.getLoopContext() == null) {
-				context = new Context(providerManagerInfo.getXpath());
-				callcontext.setLoopContext(context);
-			} else {
-				context = new Context(callcontext.getLoopContext(),
-						providerManagerInfo.getXpath());
-				callcontext.setLoopContext(context);
+			finally
+			{
+				if(cloopcontext != null)
+					callcontext.setLoopContext(cloopcontext);
 			}
 			//2.创建组件实例
-			V bean  = creatorBeanByFactoryBean(pro, factory,factoryMethod,callcontext);
-			context.setCurrentObj(bean);
+			Object bean  = creatorBeanByFactoryBean(pro, factory,factoryMethod,callcontext);
+			cloopcontext.setCurrentObj(bean);
 			return bean;
 		}
 		else//使用工厂类静态方法创建组件实例
@@ -935,22 +945,22 @@ public class BeanAccembleHelper<V> {
 			String factoryClass = pro.getFactory_class();
 			try {
 				Class cls = pro.getFactoryClass();
-				//通过工厂对象创建组件实例
-				//1.构建工厂创建路径上下文，防止工厂对象在创建组件实例时产生循环依赖
-				Context context = null;
-				if (callcontext == null)
-					callcontext = new LocalCallContextImpl(providerManagerInfo
-							.getApplicationContext());
-				if (callcontext.getLoopContext() == null) {
-					context = new Context(providerManagerInfo.getXpath());
-					callcontext.setLoopContext(context);
-				} else {
-					context = new Context(callcontext.getLoopContext(),
-							providerManagerInfo.getXpath());
-					callcontext.setLoopContext(context);
-				}
-				V bean  = creatorBeanByFactoryClass(pro, cls, factoryMethod,callcontext);
-//				context.getLoopContext().setCurrentObj(bean);
+//				//通过工厂对象创建组件实例
+//				//1.构建工厂创建路径上下文，防止工厂对象在创建组件实例时产生循环依赖
+//				Context context = null;
+//				if (callcontext == null)
+//					callcontext = new LocalCallContextImpl(providerManagerInfo
+//							.getApplicationContext());
+//				if (callcontext.getLoopContext() == null) {
+//					context = new Context(providerManagerInfo.getXpath());
+//					callcontext.setLoopContext(context);
+//				} else {
+//					context = new Context(callcontext.getLoopContext(),
+//							providerManagerInfo.getXpath());
+//					callcontext.setLoopContext(context);
+//				}
+				Object bean  = creatorBeanByFactoryClass(pro, cls, factoryMethod,callcontext);
+				callcontext.getLoopContext().setCurrentObj(bean);
 				return bean;
 			}
 			catch(CurrentlyInCreationException e)
@@ -975,7 +985,7 @@ public class BeanAccembleHelper<V> {
 	 * @param callcontext
 	 * @return
 	 */
-	private V getBeanFromIOCPlugin(BeanInf providerManagerInfo, CallContext callcontext)
+	private Object getBeanFromIOCPlugin(BeanInf providerManagerInfo, CallContext callcontext)
 	{
 		Pro pro = (Pro)providerManagerInfo;
 		
@@ -985,20 +995,20 @@ public class BeanAccembleHelper<V> {
 				Class cls = pro.getIocpluginClass();
 				//通过工厂对象创建组件实例
 				//1.构建工厂创建路径上下文，防止工厂对象在创建组件实例时产生循环依赖
-				Context context = null;
-				if (callcontext == null)
-					callcontext = new LocalCallContextImpl(providerManagerInfo
-							.getApplicationContext());
-				if (callcontext.getLoopContext() == null) {
-					context = new Context(providerManagerInfo.getXpath());
-					callcontext.setLoopContext(context);
-				} else {
-					context = new Context(callcontext.getLoopContext(),
-							providerManagerInfo.getXpath());
-					callcontext.setLoopContext(context);
-				}
-				V bean  = this.creatorBeanByIocPluginClass(pro, cls, callcontext);
-//				context.getLoopContext().setCurrentObj(bean);
+//				Context context = null;
+//				if (callcontext == null)
+//					callcontext = new LocalCallContextImpl(providerManagerInfo
+//							.getApplicationContext());
+//				if (callcontext.getLoopContext() == null) {
+//					context = new Context(providerManagerInfo.getXpath());
+//					callcontext.setLoopContext(context);
+//				} else {
+//					context = new Context(callcontext.getLoopContext(),
+//							providerManagerInfo.getXpath());
+//					callcontext.setLoopContext(context);
+//				}
+				Object bean  = this.creatorBeanByIocPluginClass(pro, cls, callcontext);
+				callcontext.getLoopContext().setCurrentObj(bean);
 				return bean;
 			}
 			catch(CurrentlyInCreationException e)
@@ -1024,7 +1034,7 @@ public class BeanAccembleHelper<V> {
 	 * @param context
 	 * @return
 	 */
-	private V creatorBeanByFactoryBean(Pro  providerManagerInfo, Object factory,String factoryMethod,CallContext context)
+	private Object creatorBeanByFactoryBean(Pro  providerManagerInfo, Object factory,String factoryMethod,CallContext context)
 	{
 		try {
 			Class cls = (Class) factory.getClass();
@@ -1041,7 +1051,7 @@ public class BeanAccembleHelper<V> {
 				 * 本地线程技术，存放CallContext上下文
 				 * 如果有旧的还需要保存旧的callContext
 				 */
-//				return (V) method.invoke(factory, null);
+//				return  method.invoke(factory, null);
 				return invokerMethod(  providerManagerInfo,factory,method,null,context);
 				
 				/**
@@ -1076,8 +1086,8 @@ public class BeanAccembleHelper<V> {
 			 * 如果有旧的还需要保存旧的callContext
 			 */
 			
-//			V bean =  (V)method.invoke(factory,values);
-			V bean = invokerMethod(  providerManagerInfo,factory,method,values,context);
+//			Object bean =  method.invoke(factory,values);
+			Object bean = invokerMethod(  providerManagerInfo,factory,method,values,context);
 			return bean;
 			
 			/**
@@ -1136,7 +1146,7 @@ public class BeanAccembleHelper<V> {
 				 * 本地线程技术，存放CallContext上下文
 				 * 如果有旧的还需要保存旧的callContext
 				 */
-//				return (V) method.invoke(factory, null);
+//				return  method.invoke(factory, null);
 				return new MethodInvoker(false, instance, null, method_,providerManagerInfo);
 				
 				/**
@@ -1187,14 +1197,14 @@ public class BeanAccembleHelper<V> {
 		}
 	}
 	
-	private V invokerMethod(Pro  providerManagerInfo,Object bean,Method method,Object[] params,CallContext context) throws IllegalArgumentException, IllegalAccessException, InvocationTargetException
+	private Object invokerMethod(Pro  providerManagerInfo,Object bean,Method method,Object[] params,CallContext context) throws IllegalArgumentException, IllegalAccessException, InvocationTargetException
 	{
 		try {
 			/**
 			 * 本地线程技术，存放CallContext上下文
 			 * 如果有旧的还需要保存旧的callContext
 			 */
-			return (V) method.invoke(bean, params);
+			return  method.invoke(bean, params);
 		} 
 		finally
 		{
@@ -1217,7 +1227,7 @@ public class BeanAccembleHelper<V> {
 	 * @param context
 	 * @return
 	 */
-	private V creatorBeanByFactoryClass(Pro  providerManagerInfo, Class factoryClass,String factoryMethod,CallContext context)
+	private Object creatorBeanByFactoryClass(Pro  providerManagerInfo, Class factoryClass,String factoryMethod,CallContext context)
 	{
 		try {
 			Class cls = factoryClass;
@@ -1236,7 +1246,7 @@ public class BeanAccembleHelper<V> {
 					 * 本地线程技术，存放CallContext上下文
 					 * 如果有旧的还需要保存旧的callContext
 					 */
-//					return (V) method.invoke(null);
+//					return  method.invoke(null);
 
 					 int mode = method.getModifiers();
 					 if( Modifier.isStatic(mode))//静态方法
@@ -1294,7 +1304,7 @@ public class BeanAccembleHelper<V> {
 			 * 如果有旧的还需要保存旧的callContext
 			 */
 			
-//			V bean =  (V)method.invoke(null,values);
+//			Object bean =  method.invoke(null,values);
 			 int mode = method.getModifiers();
 			 if( Modifier.isStatic(mode))//静态方法
 			 {
@@ -1341,7 +1351,7 @@ public class BeanAccembleHelper<V> {
 	 * @param context
 	 * @return
 	 */
-	private V creatorBeanByIocPluginClass(Pro  providerManagerInfo, Class iocpluginClass,CallContext context)
+	private Object creatorBeanByIocPluginClass(Pro  providerManagerInfo, Class iocpluginClass,CallContext context)
 	{
 		 
 			 
@@ -1352,12 +1362,12 @@ public class BeanAccembleHelper<V> {
 					 * 本地线程技术，存放CallContext上下文
 					 * 如果有旧的还需要保存旧的callContext
 					 */
-//					return (V) method.invoke(null);
+//					return  method.invoke(null);
 
 					
 					 IocPlugin factoryInf = (IocPlugin)getBeanFromClass( providerManagerInfo,  context,true);//先获取工厂类实例
 					 
-					 return (V)factoryInf.ioc(providerManagerInfo.getIocinputData(), context);
+					 return factoryInf.ioc(providerManagerInfo.getIocinputData(), context);
 					
 					 
 				}
@@ -1402,7 +1412,7 @@ public class BeanAccembleHelper<V> {
 					 * 本地线程技术，存放CallContext上下文
 					 * 如果有旧的还需要保存旧的callContext
 					 */
-//					return (V) method.invoke(null);
+//					return  method.invoke(null);
 					return new MethodInvoker(true, instance, null, method_,providerManagerInfo);
 				}
 				catch(CurrentlyInCreationException e)
@@ -1573,17 +1583,17 @@ public class BeanAccembleHelper<V> {
     
 
     
-    private V getBeanFromClass(BeanInf providerManagerInfo, CallContext callcontext)
+    private Object getBeanFromClass(BeanInf providerManagerInfo, CallContext callcontext)
     {
     	return  getBeanFromClass( providerManagerInfo,  callcontext,false);
     }
 	
-	private V getBeanFromClass(BeanInf providerManagerInfo, CallContext callcontext,boolean ignoreconstruction)
+	private Object getBeanFromClass(BeanInf providerManagerInfo, CallContext callcontext,boolean ignoreconstruction)
 	{
-		V instance = null;
+		Object instance = null;
 		try {
 			
-			Class<V> cls = null;
+			Class<Object> cls = null;
 			if(!ignoreconstruction)
 				cls = providerManagerInfo.getBeanClass();
 			else
@@ -1752,7 +1762,7 @@ public class BeanAccembleHelper<V> {
 		return instance;
 	}
 	@SuppressWarnings("unchecked")
-	public V getBean(BeanInf providerManagerInfo, CallContext callcontext) {
+	public Object getBean(BeanInf providerManagerInfo, CallContext callcontext) {
 		Context context = null;
 		if (callcontext == null)
 			callcontext = new LocalCallContextImpl(providerManagerInfo

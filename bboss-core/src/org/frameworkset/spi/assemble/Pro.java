@@ -42,7 +42,7 @@ import com.frameworkset.util.ValueObjectUtil;
  * @author biaoping.yin
  * @version 1.0
  */
-public class Pro<V> extends BaseTXManager implements Comparable<V>, BeanInf {
+public class Pro extends BaseTXManager implements Comparable, BeanInf {
 	/** 定义property节点的固定属性 */
 	public static String[] fixattrs = new String[] { "name", "n","label", "value","v",
 			"class","cs", "refid", "singlable", "init-method", "destroy-method",
@@ -274,7 +274,7 @@ public class Pro<V> extends BaseTXManager implements Comparable<V>, BeanInf {
 	}
 
 	private Object beaninstance;
-	BeanAccembleHelper<V> accember = new BeanAccembleHelper<V>();
+	BeanAccembleHelper accember = new BeanAccembleHelper();
 
 	public Object getBean() {
 		return getBean((CallContext) null,true);
@@ -1425,7 +1425,7 @@ public class Pro<V> extends BaseTXManager implements Comparable<V>, BeanInf {
 		return getBeanObject((CallContext) null);
 	}
 
-	public Object getBeanObject(V defaultValue) {
+	public Object getBeanObject(Object defaultValue) {
 		return getBeanObject(null, defaultValue);
 	}
 
@@ -1619,7 +1619,7 @@ public class Pro<V> extends BaseTXManager implements Comparable<V>, BeanInf {
 			}
 	 }
 
-	public int compareTo(V o) {
+	public int compareTo(Object o) {
 		if(o == null)
 			return 1;
 		

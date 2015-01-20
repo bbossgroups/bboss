@@ -31,4 +31,6 @@
 	</property>
 	
 	<property name="POIExcelService" class="org.frameworkset.spi.assemble.plugin.POIExcelService" f:excelTemplates="attr:excelMapping"/>
+	
+	
 </properties>

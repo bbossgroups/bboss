@@ -128,7 +128,7 @@ public  class ProList<V extends Pro> extends ArrayList<V>
 //        int value_ = Integer.parseInt(value.toString());
         return value.getInt();
     }
-    public Pro<?> getPro(int i)
+    public Pro getPro(int i)
     {
         return this.get(i);
     }

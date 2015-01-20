@@ -201,7 +201,7 @@ public class ProMap<K,V extends Pro> extends HashMap<K,V>
      */
     public Object getProxyObject(String key,CallContext callcontext)
     {
-        Pro<V> value = this.get(key);
+        Pro value = this.get(key);
         if(value == null)
             return null;
         
