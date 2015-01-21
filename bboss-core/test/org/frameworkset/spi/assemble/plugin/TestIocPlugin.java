@@ -12,7 +12,7 @@ public class TestIocPlugin {
 	{
 		  BaseApplicationContext excelMapping = DefaultApplicationContext.getApplicationContext("org/frameworkset/spi/assemble/plugin/excelFieldInfo.xml");
 		  POIExcelService serice = excelMapping.getTBeanObject("POIExcelService", POIExcelService.class);
-		  serice.parseHSSFMapList(null, null);
+		  serice.parseHSSFMapList(null, null,"exceltemplatefile1");
 		  
 	}
 

@@ -22,8 +22,11 @@ public class POIExcelService {
      * @return
      * @throws IOException
      */
-    public <T> List<T> parseHSSFMapList(InputStream in,Class<T> beanType) throws IOException 
+    public <T> List<T> parseHSSFMapList(InputStream in,Class<T> beanType,String templateName) throws IOException 
     {
-    	return null;
+    	ExcelTemplate template = excelTemplates.get(templateName);
+    	List<T> datas = null;
+//    	datas = ....;
+    	return datas;
     }
 }
