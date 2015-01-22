@@ -270,8 +270,8 @@
 	<!--<location>/500.htm</location> -->
 	<!--</error-page> -->
 
-<!-- 	<welcome-file-list> -->
-<!-- 		<welcome-file>index.htm</welcome-file> -->
-<!-- 	</welcome-file-list> -->
+	<welcome-file-list>
+		<welcome-file>index.htm</welcome-file>
+	</welcome-file-list>
 
 </web-app>
