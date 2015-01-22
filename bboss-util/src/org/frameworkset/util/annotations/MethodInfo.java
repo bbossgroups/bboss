@@ -277,6 +277,20 @@ public class MethodInfo {
 		}
 
 	}
+	/**
+	 * 解析路径中的变量，第一级目录不能设置为变量
+	 * 地址模式：/rest/{a}/people/{b}/{c}
+	 * 变量信息：
+	 * a
+	 * b
+	 * c
+	 * 输入路径:/rest/sunshine/people/2_6_204/yinbp
+	 * 解析出来的变量值：
+	 * a=sunshine
+	 * b=2_6_204
+	 * c=yinbp
+	 * 
+	 */
 	private void parserVariables()
 	{
 		if( paths == null || paths.length == 0)

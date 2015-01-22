@@ -101,6 +101,7 @@ public abstract class RequestContextAwareTag extends CellTag implements TryCatch
 
 	public void doFinally() {
 		this.requestContext = null;
+		super.doFinally();
 	}
 	/**
 	 * Write the message to the page.

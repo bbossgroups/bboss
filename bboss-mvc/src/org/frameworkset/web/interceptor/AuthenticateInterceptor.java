@@ -80,7 +80,7 @@ public abstract class AuthenticateInterceptor extends AuthenticateFilter impleme
 	public boolean _preHandle(HttpServletRequest request,
 			HttpServletResponse response, HandlerMeta handlerMeta)
 			throws Exception {
-		String requesturipath = UrlPathHelper.getPathWithinApplication(request);
+		String requesturipath = new UrlPathHelper().getPathWithinApplication(request);
 		//做控制逻辑检测，如果检测失败，则执行下述逻辑，否则执行正常的控制器方法		
 		if(needCheck(requesturipath) )
 		{			

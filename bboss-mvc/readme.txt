@@ -1,3 +1,11 @@
+#######update function list since 4.0.4 begin###########
+---20150122---
+1.mvc框架restful机制完善 
+2.mvc框架参数绑定errors标签完善
+3.上下文为“/”时，mvc dispatcher会导致应用404错误，即使在web.xml文件中指定了welcom_file或者在应用根目录下有index.jsp也不起作用
+
+#######update function list since 4.0.4 end###########
+
 https://github.com/bbossgroups/bbossgroups-3.5.git
 todo
 

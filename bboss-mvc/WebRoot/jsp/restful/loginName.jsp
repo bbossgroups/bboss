@@ -12,7 +12,7 @@
 					alert("请输入要查询的姓名!")
 					return false;
 				}
-			 	var resturl = "<%=request.getContextPath() %>/query/loginnamequery/" + encodeURIComponent(encodeURIComponent($("#loginName3").val()));
+			 	var resturl = "<%=request.getContextPath() %>/query/loginnamequery/" + encodeURIComponent($("#loginName3").val());
 				$("#queryresult").load(resturl);
 				return false;
 			}

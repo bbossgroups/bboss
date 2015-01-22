@@ -17,8 +17,10 @@ package org.frameworkset.util.annotations;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.frameworkset.util.AntPathMatcher;
@@ -341,7 +343,45 @@ public abstract class AnnotationUtils {
 			return null;
 		}
 	}
-	
+	public static List<String> parserPathdata(String path)
+	{
+		if(path.startsWith("//"))
+			path = path.substring(2);
+		else if(path.startsWith("/"))
+			path = path.substring(1);
+		List<String> datas = new ArrayList<String>();
+		int i = 0;
+		char c = ' ';
+		int end = path.length();
+		StringBuffer bu = new StringBuffer();
+		do
+		{
+			c = path.charAt(i);
+			if(c == '/')
+			{
+				datas.add(bu.toString());
+				bu.setLength(0);
+				if(i == end -1)
+				{
+					datas.add("");
+				}
+			}
+			else
+			{
+				bu.append(c);
+			}
+			i ++;
+			
+			
+			
+		}while(i < end);
+		if(bu.length() > 0)
+		{
+			datas.add(bu.toString());
+			bu = null;
+		}
+		return datas;
+	}
 	/**
 	 * 获取restful路径中的变量的值
 	 * @param method
@@ -354,17 +394,17 @@ public abstract class AnnotationUtils {
 			return null;
 		if(method.getPathVariablePositions() == null || method.getPathVariablePositions().length == 0)
 			return null;
-		String[] datas = lookupPath.split("/");
-		int j = 0;
-		if(lookupPath.startsWith("/") || lookupPath.startsWith("//"))
-			j = 1;
+		List<String> datas = parserPathdata(lookupPath);
+//		int j = 0;
+//		if(lookupPath.startsWith("/") || lookupPath.startsWith("//"))
+//			j = 1;
 		Map retdatas = new HashMap();
 		Integer[] poses = method.getPathVariablePositions();
 		for(int i = 0; i < poses.length; i ++)
 		{
 			int pos = poses[i].intValue();
 			String key = method.getPathVariables()[i];
-			String value = datas[pos + j];
+			String value = datas.get(pos);
 			retdatas.put(key, value);
 		}
 		return retdatas;

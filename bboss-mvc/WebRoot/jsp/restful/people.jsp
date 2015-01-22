@@ -1,6 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
 <%@ taglib uri="/WEB-INF/pager-taglib.tld" prefix="pg"%>
 <%
 
@@ -37,16 +36,16 @@
 		<th class="order1 sorted"></th>
 		<th class="order1 sorted"></th>
 	</tr>
-	<c:forEach items="${list}" var="people">
+	<pg:list requestKey="list">
 		<tr class="even">
-			<td><input id="pid${people.id}" type="text" value='${people.id}'/></td>
-			<td><input id="pna${people.id}" type="text" value='${people.name}'/></td>
-			<td><input id="pti${people.id}" type="text" value='${people.title}'/></td>
+			<td><input id="pid<pg:cell colName="id"/>" type="text" value='<pg:cell colName="id"/>'/></td>
+			<td><input id="pna<pg:cell colName="id"/>" type="text" value='<pg:cell colName="name"/>'/></td>
+			<td><input id="pti<pg:cell colName="id"/>" type="text" value='<pg:cell colName="title"/>'/></td>
 			<td>
 			 <div>
 				<ul class="options">
 					<li id="size">
-						<a href="#"  onClick="upd('${people.id}')">更新</a>
+						<a href="#"  onClick="upd('<pg:cell colName="id"/>')">更新</a>
 					</li>
 				</ul>
 		    </div>
@@ -55,13 +54,13 @@
 			<div>
 				<ul class="options">
 					<li id="abbreviations">
-						<a href="#"  onClick="del('${people.id}')">删除</a>
+						<a href="#"  onClick="del('<pg:cell colName="id"/>')">删除</a>
 					</li>
 				</ul>
 		   </div>
 			</td>
 		</tr>
-	</c:forEach>
+	</pg:list>
 
 
 

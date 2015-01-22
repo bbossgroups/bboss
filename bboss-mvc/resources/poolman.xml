@@ -14,7 +14,7 @@
 		  <!--<url>jdbc:oracle:thin:@202.197.40.177:1521:ora177</url>-->
     <!--<url>jdbc:oracle:thin:@202.197.40.177:1521:ora177</url>-->
     <!--<url>jdbc:oracle:thin:@//149.16.20.36:1521/hnds</url>-->
-<url>jdbc:derby:D:/d/workspace/bbossgroups-3.6.0/database/cimdb</url>
+<url>jdbc:derby:F:/workspace/bbossgroups-3.5/database/cimdb</url>
 <!-- 	<url>jdbc:derby://172.16.17.216:1527/firstdb;create=true</url> -->
 
      <!-- <url>jdbc:oracle:thin:@//localhost:1521/oa</url>  -->

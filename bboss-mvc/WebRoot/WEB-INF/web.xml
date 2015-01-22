@@ -55,7 +55,7 @@
 		</init-param>
 		<init-param>
 			<param-name>checkiemodeldialog</param-name>
-			<param-value>true</param-value>
+			<param-value>false</param-value>
 		</init-param>
 		<init-param>
 	      <param-name>refererDefender</param-name>
@@ -270,8 +270,8 @@
 	<!--<location>/500.htm</location> -->
 	<!--</error-page> -->
 
-	<welcome-file-list>
-		<welcome-file>/index.jsp</welcome-file>
-	</welcome-file-list>
+<!-- 	<welcome-file-list> -->
+<!-- 		<welcome-file>index.htm</welcome-file> -->
+<!-- 	</welcome-file-list> -->
 
 </web-app>

@@ -48,11 +48,12 @@ import org.frameworkset.spi.support.validate.ObjectError;
  * @version 1.0
  */
 public class ErrorsTag extends HtmlEscapingAwareTag {
-	private int index = 0;
+	
 	private ObjectError current_error;
 	private List errors_;
-	private String colName;
+	private int curindex;
 	private boolean containErrorTag = false;
+	private boolean needevalbodyAtEndTag = false;
 	private String arguments;
 	
 	private String argumentSeparator = TagHelper.DEFAULT_ARGUMENT_SEPARATOR;
@@ -83,7 +84,7 @@ public class ErrorsTag extends HtmlEscapingAwareTag {
 			
 
 			errors_ = errors.getAllErrors();
-			index = 0;
+			curindex = 0;
 //			if(errors_ != null && index <errors_.size())
 //			{
 //				ObjectError temp = (ObjectError)errors_.get(index);
@@ -112,7 +113,10 @@ public class ErrorsTag extends HtmlEscapingAwareTag {
 //			}
 			evaluateNextError();
 			if(current_error != null)
-				return super.EVAL_BODY_INCLUDE;
+			{
+				needevalbodyAtEndTag = true;
+				return EVAL_BODY_INCLUDE;
+			}
 		}
 		return SKIP_BODY;
 		
@@ -120,20 +124,20 @@ public class ErrorsTag extends HtmlEscapingAwareTag {
 	private void evaluateNextError()
 	{
 		current_error = null;
-		if(errors_ != null && index <errors_.size())
+		if(errors_ != null && curindex <errors_.size())
 		{
-			ObjectError temp = (ObjectError)errors_.get(index);
-			index ++;
+			ObjectError temp = (ObjectError)errors_.get(curindex);
+			curindex ++;
 			if(this.suppport(temp))
 			{
 				current_error = temp;
 			}
 			else
 			{
-				while(index < errors_.size())
+				while(curindex < errors_.size())
 				{
-					temp = (ObjectError)errors_.get(index);
-					index ++;
+					temp = (ObjectError)errors_.get(curindex);
+					curindex ++;
 					if(this.suppport(temp))
 					{
 						current_error = temp;
@@ -143,15 +147,50 @@ public class ErrorsTag extends HtmlEscapingAwareTag {
 			}
 		}
 	}
-	
+	private void evalbody() throws JspException
+	{
+		do
+		{
+			try {
+				String msg = TagHelper.handlerError(current_error, this.arguments, 
+						pageContext, getMessageSource(), 
+						this.getRequestContext().getLocale(),
+						argumentSeparator, 
+						this.isHtmlEscape(), isJavaScriptEscape());
+				this.writeMessage(msg + "<br>");
+//					return SKIP_BODY;
+			} catch (NoSuchMessageException e) {
+				
+				logger.error(e.getMessage(), e);
+				throw new JspTagException(e.getMessage());
+			} catch (IOException e) {
+				logger.error(e.getMessage(), e);
+				throw new JspTagException(e.getMessage());
+			}
+			catch (JspException ex) {
+				logger.error(ex.getMessage(), ex);
+				throw ex;
+			}
+			catch (RuntimeException ex) {
+				logger.error(ex.getMessage(), ex);
+				throw ex;
+			}
+			catch (Exception ex) {
+				logger.error(ex.getMessage(), ex);
+				throw new JspTagException(ex.getMessage());
+			}
+			evaluateNextError();		
+		}while(current_error != null);
+	}
 	public int doAfterBody() throws JspException {
+		needevalbodyAtEndTag = false;
 		if(errors_ == null || errors_.size() == 0)
-			return super.doAfterBody();
+			return SKIP_BODY;
 		
-		if(index >= errors_.size())
+		if(curindex >= errors_.size())
 		{
 			if(this.isContainErrorTag())
-				return super.doAfterBody();
+				return SKIP_BODY;
 			else
 			{
 				try {
@@ -161,7 +200,7 @@ public class ErrorsTag extends HtmlEscapingAwareTag {
 							argumentSeparator, 
 							this.isHtmlEscape(), isJavaScriptEscape());
 					this.writeMessage(msg);
-					return EVAL_PAGE;
+					return SKIP_BODY;
 				} catch (NoSuchMessageException e) {
 					
 					logger.error(e.getMessage(), e);
@@ -190,57 +229,39 @@ public class ErrorsTag extends HtmlEscapingAwareTag {
 		{
 			if(!this.isContainErrorTag())
 			{
-				try {
-					String msg = TagHelper.handlerError(current_error, this.arguments, 
-							pageContext, getMessageSource(), 
-							this.getRequestContext().getLocale(),
-							argumentSeparator, 
-							this.isHtmlEscape(), isJavaScriptEscape());
-					this.writeMessage(msg + "<br>");
-					return EVAL_PAGE;
-				} catch (NoSuchMessageException e) {
-					
-					logger.error(e.getMessage(), e);
-					throw new JspTagException(e.getMessage());
-				} catch (IOException e) {
-					logger.error(e.getMessage(), e);
-					throw new JspTagException(e.getMessage());
-				}
-				catch (JspException ex) {
-					logger.error(ex.getMessage(), ex);
-					throw ex;
-				}
-				catch (RuntimeException ex) {
-					logger.error(ex.getMessage(), ex);
-					throw ex;
-				}
-				catch (Exception ex) {
-					logger.error(ex.getMessage(), ex);
-					throw new JspTagException(ex.getMessage());
-				}
-			}
-			evaluateNextError();			
-			if(current_error != null)
-			{	
-				return EVAL_BODY_AGAIN;
+				 evalbody();
+				return SKIP_BODY;
 			}
 			else
-				return EVAL_PAGE;
+			{
+				evaluateNextError();			
+				if(current_error != null)
+				{	
+					return EVAL_BODY_AGAIN;
+				}
+				else
+					return SKIP_BODY;
+			}
 		}
 	}
 
 	@Override
 	public int doEndTag() throws JspException {
+		if(needevalbodyAtEndTag)//没有指定标签体，则在标签结束时输出错误信息
+		{
+			needevalbodyAtEndTag = false;
+			 evalbody();
+		}
 		
 		return super.doEndTag();
 	}
 	
 	public void doFinally()
 	{
-		index = 0;
+		curindex = 0;
 		current_error = null;
 		errors_ = null;
-		colName = null;
+		needevalbodyAtEndTag = false;
 		
 		containErrorTag = false;
 		arguments = null;
@@ -253,13 +274,7 @@ public class ErrorsTag extends HtmlEscapingAwareTag {
 		return current_error;
 	}
 
-	public String getColName() {
-		return colName;
-	}
-
-	public void setColName(String colName) {
-		this.colName = colName;
-	}
+	 
 
 	private boolean isContainErrorTag() {
 		return containErrorTag;

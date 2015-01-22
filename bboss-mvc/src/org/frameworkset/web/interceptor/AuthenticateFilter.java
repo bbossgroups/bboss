@@ -279,7 +279,7 @@ public abstract class AuthenticateFilter extends TokenFilter{
 //    	requesturipath = request.getRequestURI();
 //    	requesturipath = requesturipath.substring(contextpath.length());
 //    	return requesturipath;
-		return UrlPathHelper.getPathWithinApplication(request);
+		return new UrlPathHelper().getPathWithinApplication(request);
 	}
 	private boolean needfailedback(String uri)
 	{
@@ -297,7 +297,7 @@ public abstract class AuthenticateFilter extends TokenFilter{
 	private void appendReferBackPath(HttpServletRequest request,StringBuffer path,boolean hasParams) throws UnsupportedEncodingException
 	{
 //		String referer = request.getHeader("Referer");
-		String uri = UrlPathHelper.getPathWithinApplication(request);
+		String uri = new UrlPathHelper().getPathWithinApplication(request);
 		if(!needfailedback(uri)) 
 			return;
 		
