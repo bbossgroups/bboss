@@ -48,6 +48,7 @@ String sname = "";
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title><%=sname %></title>
 <%@ include file="/include/css.jsp"%>
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/include/css/common.css">
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/include/syntaxhighlighter/styles/SyntaxHighlighter.css"></link>
 <script language="javascript" src="${pageContext.request.contextPath}/include/syntaxhighlighter/shCore.js"></script>
 <script language="javascript" src="${pageContext.request.contextPath}/include/syntaxhighlighter/shBrushJava.js"></script>
