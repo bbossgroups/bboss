@@ -69,7 +69,6 @@ import com.frameworkset.common.tag.pager.model.DataModel;
 import com.frameworkset.common.tag.pager.model.Formula;
 import com.frameworkset.platform.cms.driver.jsp.CMSServletRequest;
 import com.frameworkset.util.StringUtil;
-import com.frameworkset.util.ValueObjectUtil;
 
 /**
  * 调用DataInfo接口获取分页/列表/详细数据， 并对封装这些数据到特定的数据结构中，为显示数据作准备
@@ -1057,21 +1056,39 @@ public class PagerDataSet extends PagerTagSupport {
 	 * @return Date
 	 */
 	public String getFormatDate(int rowid, int columnid, String format) {
-		SimpleDateFormat dateFormat = new SimpleDateFormat(format);
 		Object obj = getValue(rowid, columnid);
-		// System.out.println("column " + columnid + ": "+obj);
-		if (obj == null)
+		return formatDate(obj,format);
+
+	}
+	public static String formatDate(Object data,String dateformat)
+	{
+		if (data == null)
 			return null;
-
+		SimpleDateFormat dateFormat = new SimpleDateFormat(dateformat);
+		
 		try {
-			Date date = (Date) obj;
-
-			return dateFormat.format(date);
+		    if(data instanceof Date)
+		    {
+    			Date date = (Date) data;
+    			return dateFormat.format(date);
+		    }
+		    else if(data instanceof Long)
+		    {
+		        long va = ((Long)data).longValue();
+		        if(va <= 0)
+		            return "";
+		        Date date = new Date(va);
+                return dateFormat.format(date);
+		    }
+		    else 
+            {
+                return data.toString();
+            }
+            
 		} catch (Exception e) {
 			// e.printStackTrace();
-			return obj.toString();
+			return data.toString();
 		}
-
 	}
 
 	/**
@@ -1098,34 +1115,8 @@ public class PagerDataSet extends PagerTagSupport {
 	 * @return Date
 	 */
 	public String getFormatDate(int rowid, String colName, String format) {
-		SimpleDateFormat dateFormat = new SimpleDateFormat(format);
 		Object obj = getValue(rowid, colName);
-		// System.out.println("colName " + colName + ": "+obj);
-		if (obj == null)
-			return null;
-		try {
-		    if(obj instanceof Date)
-		    {
-    			Date date = (Date) obj;
-    			return dateFormat.format(date);
-		    }
-		    else if(obj instanceof Long)
-		    {
-		        long va = ((Long)obj).longValue();
-		        if(va <= 0)
-		            return "";
-		        Date date = new Date(va);
-                return dateFormat.format(date);
-		    }
-		    else 
-            {
-                return obj.toString();
-            }
-            
-		} catch (Exception e) {
-			// e.printStackTrace();
-			return obj.toString();
-		}
+		return formatDate(obj,format);
 	}
 	
 	
@@ -1135,34 +1126,8 @@ public class PagerDataSet extends PagerTagSupport {
 	 * @return Date
 	 */
 	public String getFormatDate(int rowid,  String format) {
-		SimpleDateFormat dateFormat = ValueObjectUtil.getDateFormat(format);
 		Object obj = getValue(rowid);
-		// System.out.println("colName " + colName + ": "+obj);
-		if (obj == null)
-			return null;
-		try {
-		    if(obj instanceof Date)
-		    {
-    			Date date = (Date) obj;
-    			return dateFormat.format(date);
-		    }
-		    else if(obj instanceof Long)
-		    {
-		        long va = ((Long)obj).longValue();
-		        if(va <= 0)
-		            return "";
-		        Date date = new Date(va);
-                return dateFormat.format(date);
-		    }
-		    else 
-            {
-                return obj.toString();
-            }
-            
-		} catch (Exception e) {
-			// e.printStackTrace();
-			return obj.toString();
-		}
+		return formatDate(obj,format);
 	}
 
 	/**
@@ -1182,18 +1147,7 @@ public class PagerDataSet extends PagerTagSupport {
 	public String getFormatDate(int rowid, String colName, String property,
 			String format) {
 		Object obj = getValue(rowid, colName, property);
-		// System.out.println("colName " + colName + ":"+ property+ ": "+obj);
-		if (obj == null)
-			return null;
-		try {
-			SimpleDateFormat dateFormat = new SimpleDateFormat(format);
-			Date date = (Date) obj;
-
-			return dateFormat.format(date);
-		} catch (Exception e) {
-			// e.printStackTrace();
-			return obj.toString();
-		}
+		return formatDate(obj,format);
 	}
 
 	/**
@@ -1219,18 +1173,7 @@ public class PagerDataSet extends PagerTagSupport {
 	public String getFormatDate(int rowid, int columnid, String property,
 			String format) {
 		Object obj = getValue(rowid, columnid, property);
-		// System.out.println("column " + columnid + ":"+ property+ ": "+obj);
-		if (obj == null)
-			return null;
-		try {
-			SimpleDateFormat dateFormat = new SimpleDateFormat(format);
-			Date date = (Date) obj;
-
-			return dateFormat.format(date);
-		} catch (Exception e) {
-			// e.printStackTrace();
-			return obj.toString();
-		}
+		return formatDate(obj,format);
 
 	}
 
@@ -1294,10 +1237,17 @@ public class PagerDataSet extends PagerTagSupport {
 	 * @return double
 	 */
 	public String getFormatData(int rowid, int columnid, String format) {
-		NumberFormat numerFormat = new DecimalFormat(format);
+		
 		Object data = getValue(rowid, columnid);
+		return formatData(data,format);
+	}
+	
+	public static String formatData(Object data,String dataformat)
+	{
 		if (data == null)
 			return null;
+		NumberFormat numerFormat = new DecimalFormat(dataformat);
+		
 		// double value = dd.doubleValue();
 
 		return numerFormat.format(data);
@@ -1309,13 +1259,9 @@ public class PagerDataSet extends PagerTagSupport {
 	 * @return double
 	 */
 	public String getFormatData(int rowid, String colName, String format) {
-		NumberFormat numerFormat = new DecimalFormat(format);
 		Object data = getValue(rowid, colName);
-		if (data == null)
-			return null;
-		// double value = dd.doubleValue();
 
-		return numerFormat.format(data);
+		return formatData(data,format);
 	}
 	
 	
@@ -1325,13 +1271,8 @@ public class PagerDataSet extends PagerTagSupport {
 	 * @return double
 	 */
 	public String getFormatData(int rowid, String format) {
-		NumberFormat numerFormat = new DecimalFormat(format);
 		Object data = getValue(rowid);
-		if (data == null)
-			return null;
-		// double value = dd.doubleValue();
-
-		return numerFormat.format(data);
+		return formatData(data,format);
 	}
 
 	/**
@@ -1341,13 +1282,8 @@ public class PagerDataSet extends PagerTagSupport {
 	 */
 	public String getFormatData(int rowid, int columnid, String property,
 			String format) {
-		NumberFormat numerFormat = new DecimalFormat(format);
 		Object data = getValue(rowid, columnid, property);
-		if (data == null)
-			return null;
-		// double value = dd.doubleValue();
-
-		return numerFormat.format(data);
+		return formatData(data,format);
 	}
 
 	/**
@@ -1357,13 +1293,8 @@ public class PagerDataSet extends PagerTagSupport {
 	 */
 	public String getFormatData(int rowid, String colName, String property,
 			String format) {
-		NumberFormat numerFormat = new DecimalFormat(format);
 		Object data = getValue(rowid, colName, property);
-		if (data == null)
-			return null;
-		// double value = dd.doubleValue();
-
-		return numerFormat.format(data);
+		return formatData(data,format);
 	}
 
 	/**

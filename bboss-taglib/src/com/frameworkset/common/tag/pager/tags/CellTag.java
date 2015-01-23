@@ -857,25 +857,23 @@ public class CellTag  extends PagerTagSupport {
 	{
 		try
 		{
-//			if(this.actualseted)
-//			{
-//				
-//				Object outStr = (this.actual == null?null:this.actual);
-//				return outStr;
-//				
-//					
-//			}
-//			if(!StringUtil.isEmpty(this.sessionAttr ))
-//			{
-////				HttpSession session = request.getSession(false);
-//				return session != null ?session.getAttribute(sessionAttr):null;
-//			}
-			evalColName();
+			
 			if(this.actualseted)
 			{
-				return (this.actual == null?getDefaultValue():this.actual);
+				Object data = (this.actual == null?getDefaultValue():this.actual);
+				if (this.getNumerformat() != null) {
+					return PagerDataSet.formatData(data,  getNumerformat());
+				}
+				else if (this.getDateformat() != null) {
+					return PagerDataSet.formatDate(data, getDateformat());
+				}
+				else
+				{
+					return data;
+				}
 			}
-			else if(this.requestKey == null && this.sessionKey == null && this.pageContextKey == null && parameter == null)
+			evalColName();
+			if(this.requestKey == null && this.sessionKey == null && this.pageContextKey == null && parameter == null)
 			{
 				
 				if(this.dataSet == null)

@@ -661,7 +661,7 @@ public class Table implements IDMethod,Comparable,Serializable
             }
             catch (EngineException e)
             {
-                log.error(e, e);
+                log.error(e.getMessage(), e);
             }
         }
         return javaName;
