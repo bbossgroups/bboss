@@ -9,7 +9,7 @@
 	<title>bboss mvc demo code- <pg:cell colName="cnname"/></title>
 		 <meta name="description" content="bboss mvc demo code- <pg:cell colName="cnname"/>,<pg:cell colName="description" />" />
     <meta name="keywords" content="demo code,<pg:cell colName="cnname"/>" />
- <pg:config enablecontextmenu="false"/>
+ <script type='text/javascript' src='${pageContext.request.contextPath}/include/jquery-1.4.2.min.js' language='JavaScript'></script>
 	<link rel="shortcut icon"
 		href="${pageContext.request.contextPath}/css/favicon.gif">
 	<link rel="stylesheet"
@@ -29,7 +29,6 @@
 		type="text/css">
 </head>
 <body>
-<div class="bshare-custom"><a title="分享到QQ空间" class="bshare-qzone"></a><a title="分享到新浪微博" class="bshare-sinaminiblog"></a><a title="分享到人人网" class="bshare-renren"></a><a title="分享到开心网" class="bshare-kaixin001"></a><a title="分享到豆瓣" class="bshare-douban"></a><a title="更多平台" class="bshare-more bshare-more-icon"></a><span class="BSHARE_COUNT bshare-share-count">0</span></div><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#style=-1&amp;uuid=c4e6c7ab-15cc-4511-9020-4ac5e8fe0edd&amp;pophcol=2&amp;lang=zh"></script><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/bshareC2.js"></script>
 	<div id="contentBody">
 	<div class="embeddedBlockContainer">
 			<h1>

@@ -7,7 +7,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<title>欢迎您访问Bboss官方网站 - 打造中国自主开发框架品牌</title>
 		  <meta name="description" content="Bboss mvc DEMO列表 资源和文档下载 bboss-mvc框架体系结构图 bboss-mvc框架请求处理流程图 web.xml部署文件部分说明了mvc框架的涉及web.xml主要配置内容 框架更新记录" />
     <meta name="keywords" content="bboss,mvc,ioc,persistent,taglib,bbossgroups,hessian,cxf,webservice,quartz,activiti,Bboss mvc DEMO列表,事务,ibatis,mybatis,hibernate,资源和文档下载 体系结构图, bboss-mvc请求处理流程图,web.xml部署文件,框架更新记录" />
-   <pg:config enablecontextmenu="false"/>
+   <script type='text/javascript' src='${pageContext.request.contextPath}/include/jquery-1.4.2.min.js' language='JavaScript'></script>
 		<link rel="shortcut icon"
 			href="${pageContext.request.contextPath}/css/favicon.gif">
 		<link rel="stylesheet"
@@ -25,15 +25,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<link rel="stylesheet"
 			href="${pageContext.request.contextPath}/css/classic/tooltip.css"
 			type="text/css">
-		<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/include/syntaxhighlighter/styles/SyntaxHighlighter.css"></link>
-	<script language="javascript" src="${pageContext.request.contextPath}/include/syntaxhighlighter/shCore.js"></script>
-	<script language="javascript" src="${pageContext.request.contextPath}/include/syntaxhighlighter/shBrushJava.js"></script>
-	<script language="javascript" src="${pageContext.request.contextPath}/include/syntaxhighlighter/shBrushXml.js"></script>
-	<script language="javascript" src="${pageContext.request.contextPath}/include/syntaxhighlighter/shBrushJScript.js"></script>
+		
 	</head>
 	<body>
 	<div><a name="top"></a><a href="http://yin-bp.iteye.com" target="_blank">bboss博客</a>&nbsp;&nbsp;&nbsp;<a href="https://github.com/bbossgroups/bbossgroups-3.5" target="_blank">Bboss GitHub</a>&nbsp;&nbsp;&nbsp;<a href="https://github.com/bbossgroups/bbossgroups-3.5/archive/master.zip" target="_blank">下载</a>&nbsp;&nbsp;&nbsp;<a href="#3719">友情链接</a>&nbsp;&nbsp;&nbsp;<a href="#1002">联系我们</a>	&nbsp;&nbsp;&nbsp;<a href="http://www.kaifazhe.me/" target="_blank">开发者.我@一个开发者的网站</a>	</div>
-	<div class="bshare-custom"><a title="分享到QQ空间" class="bshare-qzone"></a><a title="分享到新浪微博" class="bshare-sinaminiblog"></a><a title="分享到人人网" class="bshare-renren"></a><a title="分享到开心网" class="bshare-kaixin001"></a><a title="分享到豆瓣" class="bshare-douban"></a><a title="更多平台" class="bshare-more bshare-more-icon"></a><span class="BSHARE_COUNT bshare-share-count">0</span></div><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#style=-1&amp;uuid=c4e6c7ab-15cc-4511-9020-4ac5e8fe0edd&amp;pophcol=2&amp;lang=zh"></script><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/bshareC2.js"></script>
 	<div id="caption">
 	
     <ul id="top">
@@ -53,7 +48,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			
     	<div class="embeddedBlockContainer">
 			<h1>
-				bboss官方站点使用指南(建议在火狐浏览器下浏览)：
+				bboss官方站点使用指南：
 			</h1>
 			<div class="shadow">
 				<div class="info">
@@ -295,25 +290,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<div class="shadow">
 				<div class="info">
 					<p>
-						<div id="detail">	
-		
-						
-							<table cellspacing="0" id="resultsTable">
-								<tbody>
-									<tr>
-										<td>
-											<pre name="code" class="xml"><%
-											String content = null;
-											content = DemoUtil.getDemoContentCache().getFileContent(request.getRealPath("/WEB-INF/web.xml.example"),"UTF-8",true);
-											out.print(content);							
-											%>
-											</pre>
-										</td>
-									</tr>
-								</tbody>
-							</table>
-									
-				         </div> 
+					
 				         <span class="value">
 				         web.xml中可以配置事务泄露监听器，申明mvc请求分发器以及url和控制器映射匹配规则，设定字符编码过滤器和出错处理页面，cxf webservice服务发布servlet,安全认证过滤器配置，http rpc servlet配置等<br/><br/><br/>
 						 
@@ -375,12 +352,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					
 			
 	</body>
-	<script language="javascript">
-	
-if(!$.browser.msie) {	
-dp.SyntaxHighlighter.ClipboardSwf = '${pageContext.request.contextPath}/include/syntaxhighlighter/clipboard.swf';
-dp.SyntaxHighlighter.HighlightAll('code');
-}
-</script>
+
 <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1254131450'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1254131450%26show%3Dpic2' type='text/javascript'%3E%3C/script%3E"));</script>
 </html>
