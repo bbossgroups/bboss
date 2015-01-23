@@ -83,8 +83,18 @@ public class UserInfoController{
 */
 	@HandlerMapping(method = HttpMethod.POST)
 	public String savePerson(Person person,ModelMap model) {
-		list.add(person);
-		model.addAttribute("list",list);
+		boolean hasErrors = model.hasErrors();
+		if(hasErrors)
+		{
+			model.addAttribute("list",list);
+			
+		}
+		else
+		{
+			list.add(person);
+			model.addAttribute("list",list);
+		}
+		
 		return "restful/people";
 	}
 	
@@ -139,7 +149,8 @@ public class UserInfoController{
 		model.addAttribute("list",list);
 		if(true)
 			throw new Exception("这是一个错误异常处理程序的实例方法");
-		return "restful/people";
+		else
+			return "restful/people";
 	}
 	
 	/**

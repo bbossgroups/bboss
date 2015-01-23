@@ -15,6 +15,10 @@
  */
 package org.frameworkset.mvc;
 
+import java.util.Date;
+
+import org.frameworkset.util.annotations.RequestParam;
+
 
 /**
  * <p>ExampleBean.java</p>
@@ -28,8 +32,14 @@ package org.frameworkset.mvc;
  */
 public class ExampleBean
 {
+	private String id;
 	private String name = null;
 	private String sex = null;
+	@RequestParam(name="favovate${id}")
+	private int favovate ;
+	
+	@RequestParam(dateformat="yyyy-MM-dd")
+	private Date testDate ;
 
 	
 	public String getName()
@@ -59,6 +69,26 @@ public class ExampleBean
 	{
 	
 		this.sex = sex;
+	}
+
+
+	public String getId() {
+		return id;
+	}
+
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+
+	public int getFavovate() {
+		return favovate;
+	}
+
+
+	public void setFavovate(int favovate) {
+		this.favovate = favovate;
 	}
 
 }

@@ -192,15 +192,15 @@ public class DemoMutiActionController extends MultiActionController {
 	public String getQueryUsersViewName() {
 		return queryUsersViewName;
 	}
-	public void setQueryUsersViewName(String queryUsersViewName) {
-		this.queryUsersViewName = queryUsersViewName;
-	}
-
-	public String getViewName() {
-		return viewName;
-	}
-
-	public void setViewName(String viewName) {
-		this.viewName = viewName;
-	}
+//	public void setQueryUsersViewName(String queryUsersViewName) {
+//		this.queryUsersViewName = queryUsersViewName;
+//	}
+//
+//	public String getViewName() {
+//		return viewName;
+//	}
+//
+//	public void setViewName(String viewName) {
+//		this.viewName = viewName;
+//	}
 }

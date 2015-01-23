@@ -1,6 +1,7 @@
 package org.frameworkset.web.fileupload;
 
 import java.io.File;
+import java.io.FileFilter;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.RandomAccessFile;
@@ -19,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.frameworkset.util.annotations.HandlerMapping;
 import org.frameworkset.util.annotations.RequestParam;
 import org.frameworkset.util.annotations.ResponseBody;
+import org.frameworkset.web.multipart.IgnoreFieldNameMultipartFile;
 import org.frameworkset.web.multipart.MultipartFile;
 import org.frameworkset.web.multipart.MultipartHttpServletRequest;
 import org.frameworkset.web.servlet.ModelMap;
@@ -62,7 +64,31 @@ public class FileController {
 		model.addAttribute("files", files);
 //		return "";
 	}
+	@HandlerMapping("/swfupload/svnfileupload.htm")
+	public @ResponseBody(datatype="json") UpFile  svnfileupload(IgnoreFieldNameMultipartFile file,HttpServletRequest request) {
+		
+			
+			
+			String temp = file.getOriginalFilename();
 
+			try {
+				file.transferTo(new File(request.getRealPath("/")+"filesdown/"+temp));
+			} catch (IllegalStateException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			UpFile uf = new UpFile();
+			uf.setFileName(temp);
+			uf.setFileType(file.getContentType());
+
+			return uf;
+		
+		
+//		return "";
+	}
 	/**
 	 * http://localhost:8080/bboss-mvc/swfupload/mutifileselects.htm
 	 * 
@@ -151,21 +177,38 @@ public class FileController {
 	}
 
 	@HandlerMapping(value = "/file/download.htm")
-	public String downloadFile(@RequestParam(decodeCharset="UTF-8")
+	public @ResponseBody File downloadFile(@RequestParam(decodeCharset="UTF-8")
 	String fileName, HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
 		File file = new File(request.getRealPath("/")+"filesdown/"+fileName);
 		
-		sendFile(request, response, file);
 		
-		return null;
+		
+		return file;
 	}
 	
 	@HandlerMapping(value = "/file/downloadFile.htm")
-	public @ResponseBody File downloadFile(@RequestParam(decodeCharset="UTF-8")
+	public @ResponseBody File downloadFileaaa(@RequestParam(decodeCharset="UTF-8")
 	String fileName, HttpServletRequest request)
 			throws IOException {
 		File file = new File(request.getRealPath("/")+"filesdown/"+fileName);
+		return file;
+	}
+	
+	@HandlerMapping(value = "/vidio/download.htm")
+	public @ResponseBody File downloadVidioFile(@RequestParam(decodeCharset="UTF-8")
+	String fileName, HttpServletRequest request)
+			throws IOException {
+		File file = new File(request.getRealPath("/")+"vidiosdown/"+fileName);
+		return file;
+	}
+	
+	
+	@HandlerMapping(value = "/tool/download.htm")
+	public @ResponseBody File downloadToolFile(@RequestParam(decodeCharset="UTF-8")
+	String fileName, HttpServletRequest request)
+			throws IOException {
+		File file = new File(request.getRealPath("/")+"toolsdown/"+fileName);
 		return file;
 	}
 	   public static void sendFile(HttpServletRequest request, HttpServletResponse response, File file) throws IOException {
@@ -265,10 +308,87 @@ public class FileController {
 			if(files != null && files.size() > 0)
 				sortfile(files);
 			model.addAttribute("files", files);
-
+			model.addAttribute("filetype", "file");
 			return "files/downloadlist";
 		}
 	   
+	   
+	   @HandlerMapping(value="/vidios/downloadList.htm")
+	   public String vidiosDownList(ModelMap model,HttpServletRequest request) {
+			File file = new File(request.getRealPath("/")+"vidiosdown");
+
+			List<UpFile> files = new ArrayList<UpFile>();
+			if (file.exists()) {
+				File[] fl = file.listFiles(new FileFilter(){
+
+					@Override
+					public boolean accept(File pathname) {
+						if(pathname.isDirectory() || pathname.getName().equals("Thumbs.db"))
+							return false;
+						else
+							return true;
+					}});
+				for (int i = 0; fl != null && i < fl.length; i++) {
+					if(fl[i].isDirectory())
+						continue;
+					UpFile uf = new UpFile();
+					uf.setFileName(fl[i].getName());
+					uf.setFileSize(fl[i].length());
+					String type = uf.getFileName().substring(
+							uf.getFileName().lastIndexOf("."),
+							uf.getFileName().length());
+
+					uf.setFileType(type);
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+					uf.setLastModified(sdf.format(new Date(fl[i].lastModified())));
+					files.add(uf);
+				}
+			}
+			if(files != null && files.size() > 0)
+				sortfile(files);
+			model.addAttribute("files", files);
+			model.addAttribute("filetype", "vidio");
+
+			return "files/downloadlist";
+		}
+	   @HandlerMapping(value="/tools/downloadList.htm")
+	   public String toolsDownList(ModelMap model,HttpServletRequest request) {
+			File file = new File(request.getRealPath("/")+"toolsdown");
+
+			List<UpFile> files = new ArrayList<UpFile>();
+			if (file.exists()) {
+				File[] fl = file.listFiles(new FileFilter(){
+
+					@Override
+					public boolean accept(File pathname) {
+						if(pathname.isDirectory() || pathname.getName().equals("Thumbs.db"))
+							return false;
+						else
+							return true;
+					}});
+				for (int i = 0; fl != null && i < fl.length; i++) {
+					if(fl[i].isDirectory())
+						continue;
+					UpFile uf = new UpFile();
+					uf.setFileName(fl[i].getName());
+					uf.setFileSize(fl[i].length());
+					String type = uf.getFileName().substring(
+							uf.getFileName().lastIndexOf("."),
+							uf.getFileName().length());
+
+					uf.setFileType(type);
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+					uf.setLastModified(sdf.format(new Date(fl[i].lastModified())));
+					files.add(uf);
+				}
+			}
+			if(files != null && files.size() > 0)
+				sortfile(files);
+			model.addAttribute("files", files);
+			model.addAttribute("filetype", "tool");
+
+			return "files/downloadlist";
+		}
 	   private void sortfile(List<UpFile> files)
 	   {
 		   Collections.sort(files, new Comparator<UpFile>() {

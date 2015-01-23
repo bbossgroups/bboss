@@ -94,7 +94,7 @@ public class JsonController {
 	}
 	
 	 //http://localhost:8080/bboss-mvc/json/ajax.html
-	public @ResponseBody(datatype="json")  JsonDataWrapper<Person> ajax(HttpServletRequest request,
+	public @ResponseBody  JsonDataWrapper<Person> ajax(HttpServletRequest request,
 													@RequestParam(name="page",defaultvalue="1") int page,
 													@RequestParam(name="rp",defaultvalue="10") int pagesize,
 													@RequestParam(name="sortname",defaultvalue="id")  String sortname,

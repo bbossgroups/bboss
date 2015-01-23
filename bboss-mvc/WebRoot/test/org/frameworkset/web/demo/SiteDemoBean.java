@@ -10,6 +10,7 @@ public class SiteDemoBean {
 	private String controllerClassCharset;
 	private String configFile;
 	private String configFileCharset;
+	private String beanClassCharset;
 	private List<FormUrl> formlist;
 	private List<String> visturl;
 	private List<String> beanClass;
@@ -127,6 +128,12 @@ public class SiteDemoBean {
 	 */
 	public void setConfigFileCharset(String configFileCharset) {
 		this.configFileCharset = configFileCharset;
+	}
+	public String getBeanClassCharset() {
+		return beanClassCharset;
+	}
+	public void setBeanClassCharset(String beanClassCharset) {
+		this.beanClassCharset = beanClassCharset;
 	}
 	
 	

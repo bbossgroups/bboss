@@ -17,9 +17,6 @@ package org.frameworkset.web.enumtest;
 
 import java.io.IOException;
 
-import javax.servlet.http.HttpServletResponse;
-
-import org.frameworkset.util.annotations.RequestParam;
 import org.frameworkset.util.annotations.ResponseBody;
 
 /**
@@ -39,9 +36,9 @@ public class EnumConvertController {
 	 * @param response
 	 * @throws IOException
 	 */
-	public  @ResponseBody(charset="UTF-8") String querySex(@RequestParam(name="sex") SexType type) 
+	public  @ResponseBody String querySex(SexType sex) 
 	{
-		if(type != null)
+		if(sex != null)
 		{
 //			if(type == SexType.F)
 //			{
@@ -58,15 +55,15 @@ public class EnumConvertController {
 //				response.setContentType("text/html; charset=UTF-8");
 //				response.getWriter().print("未知");
 //			}
-			if(type == SexType.F)
+			if(sex == SexType.F)
 			{
 				return "女";
 			}
-			else if(type == SexType.M)
+			else if(sex == SexType.M)
 			{
 				return "男";
 			}
-			else if(type == SexType.UN)
+			else if(sex == SexType.UN)
 			{
 				return "未知";
 				
@@ -83,19 +80,19 @@ public class EnumConvertController {
 	 * @param response
 	 * @throws IOException
 	 */
-	public  @ResponseBody(charset="UTF-8") String queryMutiSex(@RequestParam(name="sex") SexType[] types)
+	public  @ResponseBody String queryMutiSex(SexType[] sex)
 	{
-		if(types != null)
+		if(sex != null)
 		{
-			if(types[0] == SexType.F)
+			if(sex[0] == SexType.F)
 			{
 				return "女";
 			}
-			else if(types[0] == SexType.M)
+			else if(sex[0] == SexType.M)
 			{
 				return "男";
 			}
-			else if(types[0] == SexType.UN)
+			else if(sex[0] == SexType.UN)
 			{
 				return "未知";
 			}

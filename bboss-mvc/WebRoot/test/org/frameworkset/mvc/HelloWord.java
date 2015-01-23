@@ -16,13 +16,18 @@
 package org.frameworkset.mvc;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.frameworkset.util.annotations.AssertDToken;
 import org.frameworkset.util.annotations.MapKey;
 import org.frameworkset.util.annotations.RequestParam;
 import org.frameworkset.util.annotations.ResponseBody;
 import org.frameworkset.web.servlet.ModelMap;
+
+import com.frameworkset.util.StringUtil;
 
 /**
  * <p>
@@ -44,7 +49,80 @@ import org.frameworkset.web.servlet.ModelMap;
  */
 public class HelloWord
 {
-
+	public String listmap(ModelMap model)
+	{
+		//将所有的key放到nameList中
+		List<String> nameList = new ArrayList<String>();
+		nameList.add("handlerModel");
+		nameList.add("applyUnionModel");
+		nameList.add("billLoanModel");
+		nameList.add("loanPayModel");
+		nameList.add("budgetModel");
+		nameList.add("outgoModel");
+		nameList.add("billItemModel");
+		nameList.add("billAttachment");
+		nameList.add("billSapModel");
+		//构造每个key对应的List<ExampleBean>数据并放到Map<String,List<ExampleBean>> billDataMap变量中
+		Map<String,List<ExampleBean>> billDataMap = new HashMap<String,List<ExampleBean>>();
+		List<ExampleBean> datas = new ArrayList<ExampleBean>();//定义List<ExampleBean>集合，为了示例的简单，每个集合中只放一个ExampleBean类型对象
+		ExampleBean bean = new ExampleBean();
+		bean.setName("handlerModel");
+		bean.setSex("男");
+		datas.add(bean);
+		billDataMap.put("handlerModel",datas);//put数据到map中
+		datas = new ArrayList<ExampleBean>();
+		bean = new ExampleBean();
+		bean.setName("applyUnionModel");
+		bean.setSex("女");
+		datas.add(bean);
+		billDataMap.put("applyUnionModel",datas);//put数据到map中
+		datas = new ArrayList<ExampleBean>();
+		bean = new ExampleBean();
+		bean.setName("billLoanModel");
+		bean.setSex("男");
+		datas.add(bean);
+		billDataMap.put("billLoanModel",datas);//put数据到map中
+		datas = new ArrayList<ExampleBean>();
+		bean = new ExampleBean();
+		bean.setName("loanPayModel");
+		bean.setSex("女");
+		datas.add(bean);
+		billDataMap.put("loanPayModel",datas);//put数据到map中
+		datas = new ArrayList<ExampleBean>();
+		bean = new ExampleBean();
+		bean.setName("budgetModel");
+		bean.setSex("男");
+		datas.add(bean);
+		billDataMap.put("budgetModel",datas);//put数据到map中
+		datas = new ArrayList<ExampleBean>();
+		bean = new ExampleBean();
+		bean.setName("outgoModel");
+		bean.setSex("女");
+		datas.add(bean);
+		billDataMap.put("outgoModel",datas);//put数据到map中
+		datas = new ArrayList<ExampleBean>();
+		bean = new ExampleBean();
+		bean.setName("billItemModel");
+		bean.setSex("女");
+		datas.add(bean);
+		billDataMap.put("billItemModel",datas);//put数据到map中
+		datas = new ArrayList<ExampleBean>();
+		bean = new ExampleBean();
+		bean.setName("billAttachment");
+		bean.setSex("男");
+		datas.add(bean);
+		billDataMap.put("billAttachment",datas);//put数据到map中
+		datas = new ArrayList<ExampleBean>();
+		bean = new ExampleBean();
+		bean.setName("billSapModel");
+		bean.setSex("未知");
+		datas.add(bean);
+		billDataMap.put("billSapModel",datas);//put数据到map中	
+		model.addAttribute("nameList", nameList);//将名称列表放到控制器数据容器中	
+		model.addAttribute("billDataMap", billDataMap);//将map数据放到控制器数据容器中
+		return "path:listmap";//跳转到数据展示页面
+	}
+	@AssertDToken
 	public String sayHelloNumber(@RequestParam(name = "name") int ynum,
 			ModelMap model)
 	{
@@ -65,9 +143,20 @@ public class HelloWord
 	{
 
 		if (yourname != null && !"".equals(yourname))
-			model.addAttribute("serverHello", "服务器向您[" + yourname + "]问好！");
+			model.addAttribute("sayHelloString", "服务器向您[" + yourname + "]问好！");
 		else
-			model.addAttribute("serverHello", "请输入您的名字！");
+			model.addAttribute("sayHelloString", "请输入您的名字！");
+		return "path:sayHello";
+	}
+	
+	public String sayHelloStringVar(@RequestParam(name = "name${id}") String yourname,
+			ModelMap model)
+	{
+
+		if (yourname != null && !"".equals(yourname))
+			model.addAttribute("sayHelloStringVar", "服务器向您[" + yourname + "]问好！");
+		else
+			model.addAttribute("sayHelloStringVar", "请输入您的名字！");
 		return "path:sayHello";
 	}
 
@@ -85,7 +174,11 @@ public class HelloWord
 		return "path:sayHello";
 
 	}
-
+	public String dataListBeanBind(List<DateBean> dates,ModelMap model)
+	{
+		model.put("dataListBeanBind", dates);
+		return "path:sayHello";
+	}
 	public String sayHelloTimes(
 			@RequestParam(name = "d12s", dateformat = "yyyy-MM-dd") java.util.Date[] d12,
 			@RequestParam(name = "stringdates", dateformat = "yyyy-MM-dd") java.sql.Date[] stringdate,
@@ -114,6 +207,70 @@ public class HelloWord
 
 		return "path:sayHello";
 	}
+	
+	public String sayHelloEditorBean(EditorExampleBean yourname,ModelMap model)
+	{
+
+		if (yourname.getName() != null && yourname.getName().length > 0)
+			model.addAttribute("serverHelloBean", StringUtil.arrayToDelimitedString(yourname.getName(), ","));
+		else
+			;
+
+		return "path:sayHello";
+	}
+	
+	public String sayHelloEditorBeans(List<EditorExampleBean> yournames,ModelMap model)
+	{
+		if(yournames != null && yournames.size() > 0)
+		{
+			StringBuffer ret = new StringBuffer();
+			for(EditorExampleBean yourname:yournames)
+			{
+				if (yourname.getName() != null && yourname.getName().length > 0)
+					ret.append(StringUtil.arrayToDelimitedString(yourname.getName(), ",")).append("<br/>");			
+				
+			}
+			model.addAttribute("serverHelloBean", ret.toString());
+		}
+
+		return "path:sayHello";
+	}
+	public String sayHelloEditor(@RequestParam(editor="org.frameworkset.mvc.Editor") String[] name,ModelMap model)
+	{
+
+		if (name != null && name.length > 0)
+			model.addAttribute("serverHelloBean", StringUtil.arrayToDelimitedString(name, ","));
+		else
+			;
+
+		return "path:sayHello";
+	}
+	public String sayHelloListEditor(@RequestParam(editor="org.frameworkset.mvc.ListEditor") List<String> name,ModelMap model)
+	{
+
+		if (name != null && name.size() > 0)
+			model.addAttribute("serverHelloBean", name);
+		else
+			;
+
+		return "path:sayHello";
+	}
+	public String sayHelloEditors(@RequestParam(editor="org.frameworkset.mvc.ListStringArrayEditor") List<String[]> name,ModelMap model)
+	{
+		if(name != null && name.size() > 0)
+		{
+			StringBuffer ret = new StringBuffer();
+			for(String[] yourname:name)
+			{
+				if (yourname != null && yourname.length > 0)
+					ret.append(StringUtil.arrayToDelimitedString(yourname, ",")).append("<br/>");			
+				
+			}
+			model.addAttribute("serverHelloBean", ret.toString());
+		}
+
+		return "path:sayHello";
+	}
 
 	public String sayHelloBeanList(List<ExampleBean> yourname, ModelMap model)
 	{
@@ -127,15 +284,40 @@ public class HelloWord
 			@MapKey("name") Map<String, ExampleBean> mapBeans, ModelMap model)
 	{
 
-		model.addAttribute("serverHelloMapBean", mapBeans);
+		model.addAttribute("sayHelloBeanMap", mapBeans);
 		return "path:sayHello";
 	}
 	
 	
-	public String sayHelloStringList(@RequestParam(name = "name") List yourname, ModelMap model)
+	public String sayHelloStringList( List name, ModelMap model)
 	{
 
-		model.addAttribute("serverHelloListBean", yourname);
+		model.addAttribute("sayHelloStringList", name);
+
+		return "path:sayHello";
+	}
+	
+	
+	public String sayHelloIntListWithNameMapping(@RequestParam(name = "name") List<Integer> names, ModelMap model)
+	{
+
+		model.addAttribute("sayHelloIntListWithNameMapping", names);
+
+		return "path:sayHello";
+	}
+	
+	public String sayHelloIntList(List<Integer> name, ModelMap model)
+	{
+
+		model.addAttribute("sayHelloIntList", name);
+
+		return "path:sayHello";
+	}
+	
+	public String sayHelloEnumList(List<SexType> sex, ModelMap model)
+	{
+
+		model.addAttribute("sayHelloEnumList", sex);
 
 		return "path:sayHello";
 	}
@@ -144,7 +326,21 @@ public class HelloWord
 			ModelMap model)
 	{
 
-		model.addAttribute("serverHelloMapBean", params);
+		model.addAttribute("sayHelloStringMap", params);
+		return "path:sayHello";
+	}
+	
+	/**
+	 * 补充mapkey注解pattern属性的测试用例：
+	 * @param params
+	 * @param model
+	 * @return
+	 */
+	public String sayHelloStringMapWithFilter(@MapKey(pattern="pre.cc.*") Map params,
+			ModelMap model)
+	{
+
+		model.addAttribute("sayHelloStringMapWithFilter", params);
 		return "path:sayHello";
 	}
 
@@ -163,7 +359,7 @@ public class HelloWord
 	 * @param response
 	 * @throws IOException
 	 */
-	public @ResponseBody(charset = "UTF-8")
+	public @ResponseBody
 	String sayHelloEnum(@RequestParam(name = "sex") SexType type)
 			throws IOException
 	{
@@ -195,7 +391,8 @@ public class HelloWord
 	 * @param response
 	 * @throws IOException
 	 */
-	public @ResponseBody(charset = "UTF-8")
+	@AssertDToken
+	public @ResponseBody
 	String sayHelloEnums(@RequestParam(name = "sex") SexType[] types)
 			throws IOException
 	{
@@ -223,6 +420,13 @@ public class HelloWord
 	public String index()
 	{
 
+		return "path:sayHello";
+	}
+	
+	
+	public String listExampleBean(ListExampleBean listExampleBean,ModelMap model)
+	{
+		model.addAttribute("listExampleBean", listExampleBean);
 		return "path:sayHello";
 	}
 }

@@ -90,10 +90,10 @@ public class JqueryPagineController {
 		return "jquerypagine/page2";
 	}
 
-
-	public void setUserService(UserService userService) {
-		this.userService = userService;
-	}
+//
+//	public void setUserService(UserService userService) {
+//		this.userService = userService;
+//	}
 	
 	public String deleteusers(@RequestParam(name="id")int[] id){
 		System.out.println(id.length);

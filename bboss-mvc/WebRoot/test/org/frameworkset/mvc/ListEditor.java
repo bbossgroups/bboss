@@ -13,45 +13,44 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.  
  */
-package org.frameworkset.web.jquerypagine;
+package org.frameworkset.mvc;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.frameworkset.util.EditorInf;
 
 /**
- * <p>UserBean.java</p>
+ * <p> ListEditor.java</p>
  * <p> Description: </p>
  * <p> bboss workgroup </p>
  * <p> Copyright (c) 2009 </p>
  * 
- * @Date 2011-11-20
+ * @Date 2012-11-21 下午5:11:29
  * @author biaoping.yin
  * @version 1.0
  */
-public class UserBean
-{
-	private String name ;
-	private String[] userName;
-	
-	public String getName()
-	{
-	
-		return name;
+public class ListEditor implements EditorInf<List<String>> {
+
+	public List<String> getValueFromObject(Object fromValue) {
+		if(fromValue == null || fromValue.equals(""))
+			return null;
+			
+		return getValueFromString(String.valueOf( fromValue));
+		
 	}
+
+	public List<String> getValueFromString(String fromValue) {
+		List<String> ret = new ArrayList<String>();
+		String[] datas = fromValue.split(","); 
+		for(String data :datas)
+		{
+			
+			ret.add(data);
+		}
+		return ret;
 	
-//	public void setName(String name)
-//	{
-//	
-//		this.name = name;
-//	}
-	
-	public String[] getUserName()
-	{
-	
-		return userName;
 	}
-	
-//	public void setUserName(String[] userName)
-//	{
-//	
-//		this.userName = userName;
-//	}
+
+
 }

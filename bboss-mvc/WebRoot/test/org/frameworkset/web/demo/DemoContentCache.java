@@ -19,6 +19,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.frameworkset.spi.DisposableBean;
+
 import com.frameworkset.util.DaemonThread;
 import com.frameworkset.util.FileUtil;
 import com.frameworkset.util.ResourceInitial;
@@ -35,7 +37,7 @@ import com.frameworkset.util.StringUtil;
  * @author biaoping.yin
  * @version 1.0
  */
-public class DemoContentCache implements org.frameworkset.spi.InitializingBean
+public class DemoContentCache implements org.frameworkset.spi.InitializingBean,DisposableBean
 {
 	private Map<String,String> democontentCache = new HashMap<String,String>();	
 	private String getFileContent_(String path,String charset,boolean convertHtmlTag)
@@ -124,6 +126,14 @@ public class DemoContentCache implements org.frameworkset.spi.InitializingBean
 	{
 	
 		this.refreshInterval = refreshInterval;
+	}
+	@Override
+	public void destroy() throws Exception {
+		if(damon != null)
+		{
+			damon.stopped();
+		}
+		
 	}
 	
 	

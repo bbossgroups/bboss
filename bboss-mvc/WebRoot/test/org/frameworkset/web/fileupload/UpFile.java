@@ -9,7 +9,7 @@ public class UpFile {
 	private String fileType;
 	private long fileSize;
 	private String lastModified;
-	
+	private String result;
 	public String getFileName() {
 		return fileName;
 	}
@@ -39,5 +39,11 @@ public class UpFile {
 	}
 	public void setLastModified(String lastModified) {
 		this.lastModified = lastModified;
+	}
+	public String getResult() {
+		return result;
+	}
+	public void setResult(String result) {
+		this.result = result;
 	}
 }
