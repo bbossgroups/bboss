@@ -254,11 +254,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<div  class="shadow" style="width:860;">
 		       <div class="info" id="downloadList">
      			</div>
-			<script type="text/javascript">
-				$(document).ready(function(){
-					  $("#downloadList").load("files/downloadList.htm");
-					});
-			</script>
+			
 		</div>
 		<h1>视频教程下载<a href="#top" name="4722">
 			<img border="0" src="<%=request.getContextPath() %>/jsp/top.gif" alt="Top">
@@ -266,11 +262,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<div  class="shadow" style="width:860;">
 		       <div class="info" id="downloadVidioList">
      			</div>
-			<script type="text/javascript">
-				$(document).ready(function(){
-					  $("#downloadVidioList").load("vidios/downloadList.htm");
-					});
-			</script>
+			
 		</div>
 		<h1>工具下载<a href="#top" name="8722">
 			<img border="0" src="<%=request.getContextPath() %>/jsp/top.gif" alt="Top">
@@ -278,11 +270,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<div  class="shadow" style="width:860;">
 		       <div class="info" id="downloadToolList">
      			</div>
-			<script type="text/javascript">
-				$(document).ready(function(){
-					  $("#downloadToolList").load("tools/downloadList.htm");
-					});
-			</script>
+			
 		</div>
 			 <h1>web.xml配置示例<a href="#top" name="3725">
 			<img src="<%=request.getContextPath() %>/jsp/top.gif" border="0" alt="Top">
@@ -352,6 +340,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					
 			
 	</body>
-
+<script type="text/javascript">
+				$(document).ready(function(){
+					  $("#downloadToolList").load("tools/downloadList.htm");
+					  $("#downloadList").load("files/downloadList.htm");
+					  $("#downloadVidioList").load("vidios/downloadList.htm");
+					});
+			</script>
+			
 <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1254131450'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1254131450%26show%3Dpic2' type='text/javascript'%3E%3C/script%3E"));</script>
 </html>
