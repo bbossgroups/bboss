@@ -134,7 +134,10 @@
 		</copy>
 		<copy todir="${distrib}/WebRoot" overwrite="true">
 			<fileset dir="${WebRoot}" includes="**/*" />
-		</copy>		
+		</copy>	
+		<copy todir="${distrib}/WebRoot/test" overwrite="true">
+			<fileset dir="test" includes="**/*" />
+		</copy>	
 		<delete dir="${distrib}/WebRoot/WEB-INF/classes" />	
 		<copy todir="${distrib}/WebRoot/WEB-INF/classes" overwrite="true">
 			<fileset dir="resources" includes="**/*"/>
