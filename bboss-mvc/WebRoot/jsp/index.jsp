@@ -26,6 +26,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			href="${pageContext.request.contextPath}/css/classic/tooltip.css"
 			type="text/css">
 		
+	
 	</head>
 	<body>
 	<div><a name="top"></a><a href="http://yin-bp.iteye.com" target="_blank">bboss博客</a>&nbsp;&nbsp;&nbsp;<a href="https://github.com/bbossgroups/bbossgroups-3.5" target="_blank">Bboss GitHub</a>&nbsp;&nbsp;&nbsp;<a href="https://github.com/bbossgroups/bbossgroups-3.5/archive/master.zip" target="_blank">下载</a>&nbsp;&nbsp;&nbsp;<a href="#3719">友情链接</a>&nbsp;&nbsp;&nbsp;<a href="#1002">联系我们</a>		</div>
@@ -45,6 +46,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<div id="mainBody">
 			
     	<div class="embeddedBlockContainer">
+    	<h1>
+				bboss是什么：
+			</h1>
+			<div class="shadow">
+				<div class="info">
+					<p>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bboss是一个j2ee开源框架，为企业级应用开发提供一站式解决方案，并能有效地支撑移动应用开发。bboss功能涵盖ioc，mvc，jsp自定义标签库，持久层，全局事务托管，安全认证，SSO，web会话共享，cxfwebservice服务发布和管理，hessian服务发布和管理等功能。另外还提供了符合中国式自由流的bboss activiti工作流引擎。在不断的实践过程，越来越多的好东西被吸纳到bboss这个大家庭中，使得bboss能够更好地应用于企业应用项目中，能够更好地解决开发过程中碰到的实际问题。 
+          </p>
+					<p>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;基于bboss，可以快速地开发构建稳定、高效、健壮、可扩展的企业级应用系统。 
+					</p>
+				</div>
+			</div>	
 			<h1>
 				bboss使用指南：
 			</h1>

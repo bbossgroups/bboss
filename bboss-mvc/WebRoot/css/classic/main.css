@@ -7,10 +7,11 @@
  * THIS PACKAGE IS PROVIDED "AS IS" AND WITHOUT ANY EXPRESS OR
  * IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED
  * WARRANTIES OF MERCHANTIBILITY AND FITNESS FOR A PARTICULAR PURPOSE.
+ * font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
  */
 
 BODY {
-    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+	  font-family: "Microsoft Yahei" !important;   
     font-size: 75%;
     line-height: 20px;
     color: #000000;
