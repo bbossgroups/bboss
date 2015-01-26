@@ -81,6 +81,15 @@ public interface NameGenerator extends Serializable
      * @see JavaNameGenerator#javanameMethod(String)
      */
     String CONV_METHOD_JAVANAME = "javaname";
+    
+    
+    /**
+     * Similar to {@link #CONV_METHOD_UNDERSCORE} except nothing is
+     * converted to lowercase.
+     *
+     * @see JavaNameGenerator#javanameMethod(String)
+     */
+    String CONV_METHOD_JAVAFIELDNAME = "javaFieldName";
 
     /**
      * Specifies no modification when converting from a schema column

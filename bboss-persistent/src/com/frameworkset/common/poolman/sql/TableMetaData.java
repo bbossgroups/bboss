@@ -13,16 +13,16 @@ public class TableMetaData implements Comparable,Serializable{
 	private String tableType;
 	private String schema;
 	private String remarks;
-	private Set columns = new TreeSet();
-	private Set primaryKeys = new TreeSet();
-	private Set foreignKeys = new TreeSet();
+	private Set<ColumnMetaData> columns = new TreeSet<ColumnMetaData>();
+	private Set<ColumnMetaData> primaryKeys = new TreeSet<ColumnMetaData>();
+	private Set<ColumnMetaData> foreignKeys = new TreeSet<ColumnMetaData>();
 
-	private Map columnsIdx = new HashMap();
-	private Map primarysIdx  = new HashMap();;
-	private Map foreignsIdx = new HashMap();
+	private Map<String,ColumnMetaData> columnsIdx = new HashMap<String,ColumnMetaData>();
+	private Map<String,ColumnMetaData> primarysIdx  = new HashMap<String,ColumnMetaData>();
+	private Map<String,ColumnMetaData> foreignsIdx = new HashMap<String,ColumnMetaData>();
 
 
-	public Set getColumns() {
+	public Set<ColumnMetaData> getColumns() {
 		return columns;
 	}
 	public void addColumns(ColumnMetaData column) {
@@ -48,7 +48,7 @@ public class TableMetaData implements Comparable,Serializable{
 	public void setTableType(String tableType) {
 		this.tableType = tableType;
 	}
-	public Set getPrimaryKeys() {
+	public Set<ColumnMetaData> getPrimaryKeys() {
 		return primaryKeys;
 	}
 
@@ -60,7 +60,7 @@ public class TableMetaData implements Comparable,Serializable{
 		this.primarysIdx.put(column.getColumnName().toLowerCase(),column);
 	}
 
-	public Set getForeignKeys() {
+	public Set<ColumnMetaData> getForeignKeys() {
 		return foreignKeys;
 	}
 

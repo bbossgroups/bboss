@@ -85,6 +85,11 @@ public class JavaNameGenerator implements NameGenerator
         {
             javaName = nochangeMethod(schemaName);
         }
+        else if (CONV_METHOD_JAVAFIELDNAME.equals(method))
+        {
+            javaName = this.javanameField(schemaName);
+        }
+        
         else
         {
             // if for some reason nothing is defined then we default
@@ -183,8 +188,57 @@ public class JavaNameGenerator implements NameGenerator
             (schemaName, String.valueOf(STD_SEPARATOR_CHAR));
         while (tok.hasMoreTokens())
         {
+        	
+            String namePart = (String) tok.nextElement();
+            
+            name.append(StringUtils.capitalize(namePart));
+             
+        }
+
+        // remove the SCHEMA_SEPARATOR_CHARs and capitalize 
+        // the tokens
+        schemaName = name.toString();
+        name = new StringBuffer();
+        
+        tok = new StringTokenizer
+            (schemaName, String.valueOf(SCHEMA_SEPARATOR_CHAR));
+        while (tok.hasMoreTokens())
+        {
             String namePart = (String) tok.nextElement();
             name.append(StringUtils.capitalize(namePart));
+        }
+        return name.toString();
+    }
+    
+    /**
+     * Converts a database schema name to java object name.  Operates
+     * same as underscoreMethod but does not convert anything to
+     * lowercase.
+     *
+     * @param schemaName name to be converted.
+     * @return converted name.
+     * @see com.frameworkset.orm.engine.model.NameGenerator
+     * @see #underscoreMethod(String)
+     */
+    protected String javanameField(String schemaName)
+    {
+        StringBuffer name = new StringBuffer();
+        StringTokenizer tok = new StringTokenizer
+            (schemaName, String.valueOf(STD_SEPARATOR_CHAR));
+        boolean first = true;
+        while (tok.hasMoreTokens())
+        {
+        	
+            String namePart = (String) tok.nextElement();
+            if(!first)
+            {
+            	name.append(StringUtils.capitalize(namePart));
+            }
+            else
+            {
+            	first = false;
+            	name.append(namePart);
+            }
         }
 
         // remove the SCHEMA_SEPARATOR_CHARs and capitalize 
