@@ -1,0 +1,8 @@
+public class $classname
+{
+	$fields
+	public $classname()
+	{
+	}
+	$methods;	
+}
