@@ -4,6 +4,7 @@ public class Field {
 	private String fieldName;
 	private String mfieldName;
 	private String type;
+	private String defaultValue;
 	public String getFieldName() {
 		return fieldName;
 	}
@@ -21,6 +22,12 @@ public class Field {
 	}
 	public void setType(String type) {
 		this.type = type;
+	}
+	public String getDefaultValue() {
+		return defaultValue;
+	}
+	public void setDefaultValue(String defaultValue) {
+		this.defaultValue = defaultValue;
 	}
 
 }

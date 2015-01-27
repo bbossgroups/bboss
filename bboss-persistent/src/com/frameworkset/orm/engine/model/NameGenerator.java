@@ -82,7 +82,6 @@ public interface NameGenerator extends Serializable
      */
     String CONV_METHOD_JAVANAME = "javaname";
     
-    
     /**
      * Similar to {@link #CONV_METHOD_UNDERSCORE} except nothing is
      * converted to lowercase.
@@ -106,4 +105,15 @@ public interface NameGenerator extends Serializable
      * @throws EngineException if the name could not be generated
      */
     String generateName(List inputs) throws EngineException;
+    /**
+     * Given a list of <code>String</code> objects, implements an
+     * algorithm which produces a name.
+     *
+     * @param inputs Inputs used to generate a name.
+     * @param  IGNORE_FIRST_TOKEN true ignore,false no
+     * @return The generated name.
+     * @throws EngineException if the name could not be generated
+     */
+    String generateName(List inputs,boolean IGNORE_FIRST_TOKEN) throws EngineException;
+    
 }

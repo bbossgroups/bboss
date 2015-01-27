@@ -177,7 +177,7 @@ public class NameFactoryTest extends TestCase
             for (int i = 0; i < algoInputs.length; i++)
             {
                 List inputs = makeInputs(algo, algoInputs[i]);
-                String generated = NameFactory.generateName(algo, inputs);
+                String generated = NameFactory.generateName(algo, inputs,false);
                 String expected = OUTPUTS[algoIndex][i];
                 assertEquals(
                     "Algorithm " + algo + " failed to generate an unique name",
@@ -194,7 +194,7 @@ public class NameFactoryTest extends TestCase
     {
         try
         {
-            NameFactory.generateName("non.existing.class", new ArrayList());
+            NameFactory.generateName("non.existing.class", new ArrayList(),false);
             assertTrue("Expected an EngineException", false);
         }
         catch (EngineException ex)

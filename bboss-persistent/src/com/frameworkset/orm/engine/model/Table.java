@@ -308,7 +308,7 @@ public class Table implements IDMethod,Comparable,Serializable
         inputs.add(nameType);
         inputs.add(new Integer(nbr));
         return NameFactory.generateName(NameFactory.CONSTRAINT_GENERATOR,
-                                        inputs);
+                                        inputs,false);
     }
 
     /**
@@ -657,7 +657,7 @@ public class Table implements IDMethod,Comparable,Serializable
             try
             {
                 javaName = NameFactory.generateName(NameFactory.JAVA_GENERATOR,
-                                                    inputs);
+                                                    inputs,false);
             }
             catch (EngineException e)
             {

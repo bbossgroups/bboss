@@ -51,6 +51,8 @@ public class ModuleMetaInfo {
 	 */
 	private int excelVersion;
 	
+	private boolean ignoreEntityFirstToken = false;
+	
 	private boolean intergretWorkflow;
 	public String getModuleName() {
 		return moduleName;
@@ -177,6 +179,12 @@ public class ModuleMetaInfo {
 	}
 	public void setDatasourceName(String datasourceName) {
 		this.datasourceName = datasourceName;
+	}
+	public boolean isIgnoreEntityFirstToken() {
+		return ignoreEntityFirstToken;
+	}
+	public void setIgnoreEntityFirstToken(boolean ignoreEntityFirstToken) {
+		this.ignoreEntityFirstToken = ignoreEntityFirstToken;
 	}
 
 }

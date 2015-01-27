@@ -36,6 +36,8 @@ import java.util.StringTokenizer;
 
 import org.apache.commons.lang.StringUtils;
 
+import com.frameworkset.orm.engine.EngineException;
+
 
 /**
  * A <code>NameGenerator</code> implementation for Java-esque names.
@@ -71,34 +73,71 @@ public class JavaNameGenerator implements NameGenerator
 
         if (CONV_METHOD_UNDERSCORE.equals(method))
         {
-            javaName = underscoreMethod(schemaName);
+            javaName = underscoreMethod(schemaName,false);
         }
         else if (CONV_METHOD_UNDERSCORE_OMIT_SCHEMA.equals(method))
         {
-            javaName = underscoreOmitSchemaMethod(schemaName);
+            javaName = underscoreOmitSchemaMethod(schemaName,  false);
         }
         else if (CONV_METHOD_JAVANAME.equals(method))
         {
-            javaName = javanameMethod(schemaName);
+            javaName = javanameMethod(schemaName,false);
         }
         else if (CONV_METHOD_NOCHANGE.equals(method))
         {
-            javaName = nochangeMethod(schemaName);
+            javaName = nochangeMethod(schemaName,false);
         }
         else if (CONV_METHOD_JAVAFIELDNAME.equals(method))
         {
-            javaName = this.javanameField(schemaName);
+            javaName = this.javanameField(schemaName,  false);
         }
         
         else
         {
             // if for some reason nothing is defined then we default
             // to the traditional method.
-            javaName = underscoreMethod(schemaName);
+            javaName = underscoreMethod(schemaName,false);
         }
 
         return javaName;
     }
+    public String generateName(List inputs,boolean IGNORE_FIRST_TOKEN) throws EngineException
+    {
+    	String schemaName = (String) inputs.get(0);
+        String method = (String) inputs.get(1);
+        String javaName = null;
+
+        if (CONV_METHOD_UNDERSCORE.equals(method))
+        {
+            javaName = underscoreMethod(schemaName,IGNORE_FIRST_TOKEN);
+        }
+        else if (CONV_METHOD_UNDERSCORE_OMIT_SCHEMA.equals(method))
+        {
+            javaName = underscoreOmitSchemaMethod(schemaName,IGNORE_FIRST_TOKEN);
+        }
+        else if (CONV_METHOD_JAVANAME.equals(method))
+        {
+            javaName = javanameMethod(schemaName,IGNORE_FIRST_TOKEN);
+        }
+        else if (CONV_METHOD_NOCHANGE.equals(method))
+        {
+            javaName = nochangeMethod(schemaName,IGNORE_FIRST_TOKEN);
+        }
+        else if (CONV_METHOD_JAVAFIELDNAME.equals(method))
+        {
+            javaName = this.javanameField(schemaName,IGNORE_FIRST_TOKEN);
+        }
+        
+        else
+        {
+            // if for some reason nothing is defined then we default
+            // to the traditional method.
+            javaName = underscoreMethod(schemaName,IGNORE_FIRST_TOKEN);
+        }
+
+        return javaName;
+    }
+    
 
     /**
      * Converts a database schema name to java object name.  Removes
@@ -112,7 +151,7 @@ public class JavaNameGenerator implements NameGenerator
      * @see com.frameworkset.orm.engine.model.NameGenerator
      * @see #underscoreMethod(String)
      */
-    protected String underscoreMethod(String schemaName)
+    protected String underscoreMethod(String schemaName,boolean IGNORE_FIRST_TOKEN)
     {
         StringBuffer name = new StringBuffer();
         
@@ -153,7 +192,7 @@ public class JavaNameGenerator implements NameGenerator
      * @see com.frameworkset.orm.engine.model.NameGenerator
      * @see #underscoreOmitSchemaMethod(String)
      */
-    protected String underscoreOmitSchemaMethod(String schemaName)
+    protected String underscoreOmitSchemaMethod(String schemaName,boolean IGNORE_FIRST_TOKEN)
     {
         // take only part after last dot
         int lastDotPos = schemaName.lastIndexOf(SCHEMA_SEPARATOR_CHAR);
@@ -181,14 +220,20 @@ public class JavaNameGenerator implements NameGenerator
      * @see com.frameworkset.orm.engine.model.NameGenerator
      * @see #underscoreMethod(String)
      */
-    protected String javanameMethod(String schemaName)
+    protected String javanameMethod(String schemaName,boolean IGNORE_FIRST_TOKEN)
     {
         StringBuffer name = new StringBuffer();
         StringTokenizer tok = new StringTokenizer
             (schemaName, String.valueOf(STD_SEPARATOR_CHAR));
+        boolean first = true;
         while (tok.hasMoreTokens())
-        {
-        	
+        {        	
+        	if(first && IGNORE_FIRST_TOKEN)
+        	{
+        		first =false;
+        		tok.nextElement();
+        		continue;
+        	}
             String namePart = (String) tok.nextElement();
             
             name.append(StringUtils.capitalize(namePart));
@@ -220,7 +265,7 @@ public class JavaNameGenerator implements NameGenerator
      * @see com.frameworkset.orm.engine.model.NameGenerator
      * @see #underscoreMethod(String)
      */
-    protected String javanameField(String schemaName)
+    protected String javanameField(String schemaName,boolean IGNORE_FIRST_TOKEN)
     {
         StringBuffer name = new StringBuffer();
         StringTokenizer tok = new StringTokenizer
@@ -248,10 +293,19 @@ public class JavaNameGenerator implements NameGenerator
         
         tok = new StringTokenizer
             (schemaName, String.valueOf(SCHEMA_SEPARATOR_CHAR));
+        first = true;
         while (tok.hasMoreTokens())
         {
             String namePart = (String) tok.nextElement();
-            name.append(StringUtils.capitalize(namePart));
+            if(!first)
+            {
+            	name.append(StringUtils.capitalize(namePart));
+            }
+            else
+            {
+            	first = false;
+            	name.append(namePart);
+            }
         }
         return name.toString();
     }
@@ -263,7 +317,7 @@ public class JavaNameGenerator implements NameGenerator
      * @param name name to be converted.
      * @return The <code>name</code> parameter, unchanged.
      */
-    protected final String nochangeMethod(String name)
+    protected final String nochangeMethod(String name,boolean IGNORE_FIRST_TOKEN)
     {
         return name;
     }

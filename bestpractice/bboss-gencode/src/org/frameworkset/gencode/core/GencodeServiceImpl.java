@@ -37,6 +37,7 @@ public class GencodeServiceImpl {
 	 * 代码存放目录
 	 */
 	private File rootdir;
+	private File resourcedir;
 	private File javaSourceDir;
 	private File javaEntiySourceDir;
 	private File javaServiceSourceDir;
@@ -49,8 +50,9 @@ public class GencodeServiceImpl {
 	private String jspTemplate = "gencode/jsp.vm";
 	public String genCode(ModuleMetaInfo moduleMetaInfo)
 	{
+		this.moduleMetaInfo = moduleMetaInfo; 
 		this.init();
-		
+		genJavaSource();
 		return "success";
 	}
 	
@@ -91,12 +93,18 @@ public class GencodeServiceImpl {
 		{
 			javaActionSourceDir.mkdirs();
 		}
+		resourcedir = new File(this.rootdir,"resources");
+		if(!resourcedir.exists())
+		{
+			resourcedir.mkdirs();
+		}
+		
 		jspSourceDir = new File(this.rootdir,"WebRoot/"+ moduleMetaInfo.getModuleName());
 		if(!jspSourceDir.exists())
 		{
 			jspSourceDir.mkdirs();
 		}
-		mvcConfDir = new File(this.rootdir,"WebRoot/WEB-INF/conf"+ moduleMetaInfo.getModuleName());
+		mvcConfDir = new File(this.rootdir,"WebRoot/WEB-INF/conf/"+ moduleMetaInfo.getModuleName());
 		if(!mvcConfDir.exists())
 		{
 			mvcConfDir.mkdirs();
@@ -112,6 +120,15 @@ public class GencodeServiceImpl {
 		}
 		
 	}
+	private String convertType(String type)
+	{
+		if(type.equals("BigDecimal"))
+		{
+			return "long";
+		}
+		else
+			return type;
+	}
 	private List<Field> getFields(TableMetaData tableMeta)
 	{
 		Set<ColumnMetaData> columns = tableMeta.getColumns();
@@ -122,20 +139,20 @@ public class GencodeServiceImpl {
 			for(ColumnMetaData c:columns)
 			{
 				Field f = new Field();
-				f.setType(c.getSchemaType().getJavaType());
+				f.setType(convertType(c.getSchemaType().getJavaType()));
 				 
 		         try
 		         {
 		        	 List<String> inputs = new ArrayList<String>(2);
-			         inputs.add(moduleMetaInfo.getTableName());
+			         inputs.add(c.getColumnName().toLowerCase());
 			         inputs.add( NameGenerator.CONV_METHOD_JAVANAME);
 		        	 String mfieldName = NameFactory.generateName(NameFactory.JAVA_GENERATOR,
-		                                                 inputs);
+		                                                 inputs,false);
 		        	 inputs = new ArrayList<String>(2);
-			         inputs.add(moduleMetaInfo.getTableName());
+			         inputs.add(c.getColumnName().toLowerCase());
 			         inputs.add( NameGenerator.CONV_METHOD_JAVAFIELDNAME);
 		        	 String fieldName = NameFactory.generateName(NameFactory.JAVA_GENERATOR,
-                             inputs);
+                             inputs,false);
 		        	 f.setMfieldName(mfieldName);
 		        	 f.setFieldName(fieldName);
 		        	 fs.add(f);
@@ -165,10 +182,11 @@ public class GencodeServiceImpl {
 			 List inputs = new ArrayList(2);
 	         inputs.add(moduleMetaInfo.getTableName());
 	         inputs.add( NameGenerator.CONV_METHOD_JAVANAME);
+	         
 	         try
 	         {
 	        	 entityName = NameFactory.generateName(NameFactory.JAVA_GENERATOR,
-	                                                 inputs);
+	                                                 inputs,this.moduleMetaInfo.isIgnoreEntityFirstToken());
 	             
 	         }
 	         catch (EngineException e)
@@ -216,7 +234,7 @@ public class GencodeServiceImpl {
 			 String entityPackageInfo = this.moduleMetaInfo.getPackagePath() + "." + this.moduleMetaInfo.getModuleName()+".entity";
 			 context.put("package", entityPackageInfo);
 			 context.put("import", "");
-			 context.put("classname", entityJavaName);
+			 context.put("classname", entityName);
 			 context.put("description", "");
 			 context.put("company", "");
 			 context.put("gendate", date);
@@ -224,6 +242,8 @@ public class GencodeServiceImpl {
 			 context.put("version", "v1.0");
 			 OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(entity),"UTF-8");
 			 entitytempalte.merge(context, writer);
+			 writer.flush();
+			 
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -250,7 +270,7 @@ public class GencodeServiceImpl {
          try
          {
              String javaName = NameFactory.generateName(NameFactory.JAVA_GENERATOR,
-                                                 inputs);
+                                                 inputs,false);
              System.out.println(javaName);
          }
          catch (EngineException e)
@@ -264,7 +284,7 @@ public class GencodeServiceImpl {
          try
          {
              String javaName = NameFactory.generateName(NameFactory.JAVA_GENERATOR,
-                                                 inputs);
+                                                 inputs,false);
              System.out.println(javaName);
          }
          catch (EngineException e)
@@ -277,7 +297,7 @@ public class GencodeServiceImpl {
          try
          {
              String javaName = NameFactory.generateName(NameFactory.JAVA_GENERATOR,
-                                                 inputs);
+                                                 inputs,false);
              System.out.println(javaName);
          }
          catch (EngineException e)
@@ -290,7 +310,7 @@ public class GencodeServiceImpl {
          try
          {
              String javaName = NameFactory.generateName(NameFactory.JAVA_GENERATOR,
-                                                 inputs);
+                                                 inputs,false);
              System.out.println(javaName);
          }
          catch (EngineException e)

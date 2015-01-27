@@ -268,7 +268,7 @@ public class Column implements Serializable
             try
             {
                 javaName = NameFactory.generateName(NameFactory.JAVA_GENERATOR,
-                                                    inputs);
+                                                    inputs,false);
             }
             catch (EngineException e)
             {

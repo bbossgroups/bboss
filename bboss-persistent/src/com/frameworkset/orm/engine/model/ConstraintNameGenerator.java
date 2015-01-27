@@ -98,4 +98,43 @@ public class ConstraintNameGenerator implements NameGenerator
 
         return name.toString();
     }
+
+	@Override
+	public String generateName(List inputs, boolean IGNORE_FIRST_TOKEN)
+			throws EngineException {
+		 StringBuffer name = new StringBuffer();
+	        Database db = (Database) inputs.get(0);
+	        name.append((String) inputs.get(1));
+	        String namePostfix = (String) inputs.get(2);
+	        String constraintNbr = inputs.get(3).toString();
+
+	        // Calculate maximum RDBMS-specific column character limit.
+	        int maxBodyLength = -1;
+	        try
+	        {
+	            int maxColumnNameLength = db.getPlatform().getMaxColumnNameLength();
+	            maxBodyLength = (maxColumnNameLength - namePostfix.length()
+	                    - constraintNbr.length() - 2);
+
+	            if (log.isDebugEnabled())
+	            {
+	                log.debug("maxColumnNameLength=" + maxColumnNameLength
+	                        + " maxBodyLength=" + maxBodyLength);
+	            }
+	        }
+	        catch (NumberFormatException maxLengthUnknown)
+	        {
+	        }
+
+	        // Do any necessary trimming.
+	        if (maxBodyLength != -1 && name.length() > maxBodyLength)
+	        {
+	            name.setLength(maxBodyLength);
+	        }
+
+	        name.append(STD_SEPARATOR_CHAR).append(namePostfix)
+	            .append(STD_SEPARATOR_CHAR).append(constraintNbr);
+
+	        return name.toString();
+	}
 }

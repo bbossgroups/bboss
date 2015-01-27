@@ -122,10 +122,10 @@ public class NameFactory implements Serializable
      * @return The generated name.
      * @throws EngineException an exception
      */
-    public static String generateName(String algorithmName, List inputs)
+    public static String generateName(String algorithmName, List inputs,boolean IGNORE_FIRST_TOKEN)
         throws EngineException
     {
         NameGenerator algorithm = instance.getAlgorithm(algorithmName);
-        return algorithm.generateName(inputs);
+        return algorithm.generateName(inputs,IGNORE_FIRST_TOKEN);
     }
 }

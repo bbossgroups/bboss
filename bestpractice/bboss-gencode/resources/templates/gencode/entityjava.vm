@@ -14,12 +14,12 @@
  *  limitations under the License.
  */
  
- $package
+ package $package;
  
  $import
  
 /**
- * <p>Title: $classname.java</p> 
+ * <p>Title: $classname</p> 
  * <p>Description: $description</p>
  * <p>$company</p>
  * <p>Copyright (c) 2007</p>
@@ -27,22 +27,24 @@
  * @author $author
  * @version $version 
  */
+ #set( $start = '(' )
+ #set( $end = ')' )
  
 public class $classname
 {
-#foreach($filed in $fileds)	
+#foreach($filed in $fields)	
 	private $filed.type $filed.fieldName;	
 #end
-	public $classname
+	public $classname$start$end
 	{
 	}
-#foreach($filed in $fileds)	
-	public void set$filed.mfieldName($filed.type $filed.fieldName)
+#foreach($filed in $fields)	
+	public void set$filed.mfieldName$start$filed.type $filed.fieldName$end
 	{
-		this.$filed.fieldName = $filed.fileName;
+		this.$filed.fieldName = $filed.fieldName;
 	}
 	
-	public $filed.type get$filed.mfieldName()
+	public $filed.type get$filed.mfieldName$start$end
 	{
 		return $filed.fieldName;
 	}
