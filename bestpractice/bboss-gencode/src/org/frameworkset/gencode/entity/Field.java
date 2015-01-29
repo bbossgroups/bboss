@@ -8,6 +8,8 @@ public class Field {
 	private String mfieldName;
 	private String type;
 	private String defaultValue;
+	private boolean staticed;
+	private boolean finaled;
 	private List<Annotation> annos;
 	public String getFieldName() {
 		return fieldName;
@@ -44,6 +46,18 @@ public class Field {
 			annos = new ArrayList<Annotation>();
 		annos.add(annotation);
 		
+	}
+	public boolean isStaticed() {
+		return staticed;
+	}
+	public void setStaticed(boolean staticed) {
+		this.staticed = staticed;
+	}
+	public boolean isFinaled() {
+		return finaled;
+	}
+	public void setFinaled(boolean finaled) {
+		this.finaled = finaled;
 	}
 
 }

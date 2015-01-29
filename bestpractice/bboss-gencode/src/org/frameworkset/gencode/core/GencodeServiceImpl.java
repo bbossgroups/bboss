@@ -263,6 +263,7 @@ public class GencodeServiceImpl {
 			 genEntity(  entityName,  date,  "v1.0","yinbp","sany","服务实体类",entity,tableMeta);
 			 genServiceInf(  entityName + "Service",date,"v1.0","yinbp","sany","服务管理接口", serviceInf);
 			 genException(entityName + "Exception",date,"v1.0","yinbp","sany","异常处理类",exception);
+			 genServiceImpl(entityName + "ServiceImpl",entityName + "Service",date,"v1.0","yinbp","sany","业务处理类",serviceImpl);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -310,38 +311,58 @@ public class GencodeServiceImpl {
 		 context.put("author", author);
 		 context.put("version", version);
 		
-		 List<Method> methods = getInfMethods();
+		 List<Method> methods = getInfMethods(false);
 		 context.put("methods", methods);
 	 
 		 writFile(context,serviceinftempalte,serviceInf,this.moduleMetaInfo.getEncodecharset());
 		
 	}
-	
+	private List<Field> getServiceImplFields(String serviceName)
+	{
+		List<Field> fields = new ArrayList<Field>();
+		Field log4j = new Field(); 
+		log4j.setStaticed(true);
+		log4j.setFieldName("log");
+		log4j.setType("Logger");
+		String entityPackageInfo = this.moduleMetaInfo.getPackagePath() + "." + this.moduleMetaInfo.getModuleName()+".service";
+		log4j.setDefaultValue("new Logger("+entityPackageInfo + "."+serviceName+".class)");
+		fields.add(log4j);
+		
+		Field dao = new Field(); 
+		
+		dao.setFieldName("executor");
+		dao.setType("ConfigSQLExecutor");
+		fields.add(dao);
+		return fields; 
+	}
 	private void genServiceImpl(String serviceName,String serviceInfname,String date,String version,String author,String company,String description,File service) throws Exception
 	{
 		 
-		 List<String> imports = evalServiceInfImport();
+		 List<String> imports = evalServiceImplImport();
 		 Template serviceinftempalte = VelocityUtil.getTemplate("gencode/serviceimpljava.vm");
 		 VelocityContext context = new VelocityContext();
-		 context.put("fields", null);
+		 List<Field> fields = getServiceImplFields(serviceName);
+		 context.put("fields", fields);
 		 String entityPackageInfo = this.moduleMetaInfo.getPackagePath() + "." + this.moduleMetaInfo.getModuleName()+".service";
 		 context.put("package", entityPackageInfo);
 		 context.put("imports", imports);
 		 context.put("classname", serviceName);
+		 context.put("interfaceclassname", serviceInfname);
+		 
 		 context.put("description", description);
 		 context.put("company", company);
 		 context.put("gendate", date);
 		 context.put("author", author);
 		 context.put("version", version);
 		
-		 List<Method> methods = getInfMethods();
+		 List<Method> methods = getInfMethods(true);
 		 context.put("methods", methods);
 	 
 		 writFile(context,serviceinftempalte,service,this.moduleMetaInfo.getEncodecharset());
 		
 	}
 	
-	private List<Method> getInfMethods( ) {
+	private List<Method> getInfMethods(boolean isimpl ) {
 		List<String> exceptions = new ArrayList<String>();
 		exceptions.add(exceptionName);
 		
@@ -513,6 +534,15 @@ public class GencodeServiceImpl {
 		List<String> imports = new ArrayList<String>();
 		imports.add(this.moduleMetaInfo.getPackagePath() + "." + this.moduleMetaInfo.getModuleName()+".entity.*");
 		imports.add("com.frameworkset.util.ListInfo");
+		return imports;
+	}
+	
+	private List<String> evalServiceImplImport( ) {
+		List<String> imports = new ArrayList<String>();
+		imports.add(this.moduleMetaInfo.getPackagePath() + "." + this.moduleMetaInfo.getModuleName()+".entity.*");
+		imports.add("com.frameworkset.util.ListInfo");
+		imports.add("com.frameworkset.common.poolman.ConfigSQLExecutor");
+		imports.add("org.apache.log4j.Logger");		
 		return imports;
 	}
 

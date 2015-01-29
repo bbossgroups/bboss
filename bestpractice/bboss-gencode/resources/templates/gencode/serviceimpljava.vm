@@ -32,6 +32,7 @@ import $import;
  #set( $start = '(' )
  #set( $end = ')' )
 #set( $attoken = '@' )
+#set( $equal = '=' )
 #if($classannos && $classannos.size() > 0)  
 	#foreach($anno in $classannos)
 	  $attoken$anno.name
@@ -59,7 +60,7 @@ public class $classname implements $interfaceclassname
 		  #end
 	  #end
     #end
-	private $filed.type $filed.fieldName #if($filed.defaultValue)$equal$filed.defaultValue#end;	
+	private $filed.type $filed.fieldName #if($filed.defaultValue)$equal $filed.defaultValue#end;	
 #end
 #foreach($method in $methods)	
 	public #foreach($anno in $method.returnannos)
