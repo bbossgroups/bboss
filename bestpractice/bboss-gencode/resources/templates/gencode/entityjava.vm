@@ -16,8 +16,9 @@
  
  package $package;
  
- $import
- 
+ #foreach($import in $imports)
+import $import;
+ #end
 /**
  * <p>Title: $classname</p> 
  * <p>Description: $description</p>
@@ -27,13 +28,26 @@
  * @author $author
  * @version $version 
  */
- #set( $start = '(' )
- #set( $end = ')' )
- 
+#set( $start = '(' )
+#set( $end = ')' )
+#set( $equal = '=' )
+#set( $attoken = '@' )
 public class $classname
 {
 #foreach($filed in $fields)	
-	private $filed.type $filed.fieldName;	
+    #if($filed.annos && $filed.annos.size() > 0)
+     #foreach($anno in $filed.annos)
+     	$attoken$anno.name
+		  #if($anno.params.size() > 0)
+			  $start
+			  	#foreach($annoparam in $anno.params) 
+			  		#if($velocityCount>0),#end$annoparam.name$equal$annoparam.value
+			  	#end
+			  $end
+		  #end
+	  #end
+    #end
+	private $filed.type $filed.fieldName #if($filed.defaultValue)$equal$filed.defaultValue#end;	
 #end
 	public $classname$start$end
 	{

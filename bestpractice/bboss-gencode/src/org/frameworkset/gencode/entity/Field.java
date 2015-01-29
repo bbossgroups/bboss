@@ -1,10 +1,14 @@
 package org.frameworkset.gencode.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Field {
 	private String fieldName;
 	private String mfieldName;
 	private String type;
 	private String defaultValue;
+	private List<Annotation> annos;
 	public String getFieldName() {
 		return fieldName;
 	}
@@ -28,6 +32,18 @@ public class Field {
 	}
 	public void setDefaultValue(String defaultValue) {
 		this.defaultValue = defaultValue;
+	}
+	public List<Annotation> getAnnos() {
+		return annos;
+	}
+	public void setAnnos(List<Annotation> annos) {
+		this.annos = annos;
+	}
+	public void addAnnotation(Annotation annotation) {
+		if(annos == null)
+			annos = new ArrayList<Annotation>();
+		annos.add(annotation);
+		
 	}
 
 }

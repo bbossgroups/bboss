@@ -43,6 +43,8 @@ public class ModuleMetaInfo {
 	private String updateJspName;
 	private String detailJspName;
 	private String datasourceName;
+	private boolean autogenprimarykey = true;
+	private String encodecharset = "UTF-8";
 	/**
 	 * 0:2003
 	 * 1:2007
@@ -185,6 +187,18 @@ public class ModuleMetaInfo {
 	}
 	public void setIgnoreEntityFirstToken(boolean ignoreEntityFirstToken) {
 		this.ignoreEntityFirstToken = ignoreEntityFirstToken;
+	}
+	public boolean isAutogenprimarykey() {
+		return autogenprimarykey;
+	}
+	public void setAutogenprimarykey(boolean autogenprimarykey) {
+		this.autogenprimarykey = autogenprimarykey;
+	}
+	public String getEncodecharset() {
+		return encodecharset;
+	}
+	public void setEncodecharset(String encodecharset) {
+		this.encodecharset = encodecharset;
 	}
 
 }

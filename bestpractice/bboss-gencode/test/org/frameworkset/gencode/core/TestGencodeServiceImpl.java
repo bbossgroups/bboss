@@ -5,8 +5,9 @@ import org.junit.Test;
 
 public class TestGencodeServiceImpl {
 	@Test
-	public void testGenEntityCode()
+	public void testGenEntityCode() throws Exception
 	{
+		 
 		GencodeServiceImpl gencodeService = new GencodeServiceImpl();
 		ModuleMetaInfo moduleMetaInfo = new ModuleMetaInfo();
 		moduleMetaInfo.setTableName("td_app_bom");
