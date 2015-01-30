@@ -1,0 +1,10 @@
+#set( $start = '(' )
+#set( $end = ')' )
+#set( $dot = '.' )
+List<$entityName> beans = null;
+try{
+	beans=executor.queryListBean($entityName${dot}class,"queryList$entityName", condition);
+}catch(Exception e){
+	throw new $exception$start"query $entityName failed:",e$end;
+}
+return beans;

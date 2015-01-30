@@ -1,0 +1,15 @@
+#set( $start = '(' )
+#set( $end = ')' )
+TransactionManager tm = new TransactionManager();
+try {
+	tm.begin();
+	executor.deleteByKeys("deleteByKey", $paramName);
+	tm.commit();
+} catch (Throwable e) {
+	
+	throw new $exception$start"batch delete ${entityName} failed::${paramName}="+${paramName},e$end;
+}
+finally
+{
+	tm.release();
+}

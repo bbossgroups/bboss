@@ -1,0 +1,7 @@
+#set( $start = '(' )
+#set( $end = ')' )
+try {
+	executor.updateBean("update${entityName}", $paramName);
+} catch (Throwable e) {	
+	throw new $exception$start"delete ${entityName} failed::",e$end;
+}

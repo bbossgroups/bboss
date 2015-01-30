@@ -1,0 +1,9 @@
+#set( $start = '(' )
+#set( $end = ')' )
+#set( $dot = '.' )
+try{
+	$entityName bean=executor.queryObject($entityName${dot}class, "selectById", $paramName);
+	return bean;
+}catch(Throwable e){
+	throw new $exception$start"get ${entityName} failed::${paramName}="+${paramName},e$end;
+}

@@ -9,6 +9,7 @@ public class Method {
 	private String methodname;
 	private List<MethodParam> params;
 	private List<String> exceptions;
+	private String body;
 	public String getReturntype() {
 		return returntype;
 	}
@@ -38,5 +39,17 @@ public class Method {
 			returnannos = new ArrayList<Annotation>();
 		returnannos.add(annotation);
 		
+	}
+	public String getBody() {
+		return body;
+	}
+	public void setBody(String body) {
+		this.body = body;
+	}
+	public List<Annotation> getReturnannos() {
+		return returnannos;
+	}
+	public void setReturnannos(List<Annotation> returnannos) {
+		this.returnannos = returnannos;
 	}
 }

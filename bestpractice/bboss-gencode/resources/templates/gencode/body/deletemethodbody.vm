@@ -1,0 +1,9 @@
+#set( $start = '(' )
+#set( $end = ')' )
+try {
+	executor.delete("deleteByKey", $paramName);
+} catch (Throwable e) {
+	throw new $exception$start"delete ${entityName} failed::$paramName="+$paramName,e$end;
+}
+ 
+ 

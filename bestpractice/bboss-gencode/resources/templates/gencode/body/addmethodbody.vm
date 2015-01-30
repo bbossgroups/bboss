@@ -1,0 +1,5 @@
+try {
+	executor.insertBean("add${entityName}", ${paramName});
+} catch (Throwable e) {
+	throw new $exception$start"delete ${entityName} failed:",e$end;
+}

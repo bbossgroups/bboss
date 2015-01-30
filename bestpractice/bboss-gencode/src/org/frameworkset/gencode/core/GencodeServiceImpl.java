@@ -4,10 +4,13 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.io.StringWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
@@ -361,8 +364,29 @@ public class GencodeServiceImpl {
 		 writFile(context,serviceinftempalte,service,this.moduleMetaInfo.getEncodecharset());
 		
 	}
-	
-	private List<Method> getInfMethods(boolean isimpl ) {
+	private static final String add = "add";
+	private static final String update = "update";
+	private static final String delete = "delete";
+	private static final String deletebatch = "deletebatch";
+	private static final String get = "get";
+	private static final String query = "query";
+	private static final String paginequery = "paginequery";
+	private static final Map<String,MethodBodyGenerate> methodBodyGenerates = new HashMap<String,MethodBodyGenerate>();
+	static{
+		methodBodyGenerates.put(add, new AddMethodBodyGenerate());
+		methodBodyGenerates.put(update, new UpdateMethodBodyGenerate());
+		methodBodyGenerates.put(delete, new DeleteMethodBodyGenerate());
+		methodBodyGenerates.put(deletebatch, new DeleteBatchMethodBodyGenerate());
+		methodBodyGenerates.put(get, new GetMethodBodyGenerate());
+		methodBodyGenerates.put(query, new QueryMethodBodyGenerate());
+		methodBodyGenerates.put(add, new PagineQueryMethodBodyGenerate());
+	}
+	private void setMethodBody(Method method,String methodtype,String entityName,String paramName,String encodecharset,String exception) throws Exception
+	{
+		MethodBodyGenerate methodBodyGenerate = methodBodyGenerates.get(methodtype);
+		methodBodyGenerate.gen(method,entityName,paramName,encodecharset,exception);
+	}
+	private List<Method> getInfMethods(boolean isimpl ) throws Exception {
 		List<String> exceptions = new ArrayList<String>();
 		exceptions.add(exceptionName);
 		
@@ -378,6 +402,10 @@ public class GencodeServiceImpl {
 		param.setName(this.entityParamName);
 		params.add(param);
 		add.setParams(params);
+		if(isimpl)
+		{
+			setMethodBody(add,GencodeServiceImpl.add,entityName,entityParamName,this.moduleMetaInfo.getEncodecharset(),exceptionName);
+		}
 		methods.add(add);
 		
 		
@@ -401,7 +429,35 @@ public class GencodeServiceImpl {
 		params.add(param);
 		delete.setExceptions(exceptions);		
 		delete.setParams(params);
+		if(isimpl)
+		{
+			setMethodBody(delete,GencodeServiceImpl.delete,entityName,param.getName(),this.moduleMetaInfo.getEncodecharset(),exceptionName);
+		}
 		methods.add(delete);
+		
+		Method deletebatch = new Method();//定义删除方法
+		deletebatch.setMethodname("deleteBatch"+entityName);
+		deletebatch.setReturntype("void");		
+		params = new ArrayList<MethodParam>();
+		param = new MethodParam();
+		if(primaryField != null)
+		{
+			param.setType(primaryField.getType());
+			param.setName(primaryField.getFieldName()+"s");
+		}
+		else
+		{
+			param.setType("String...");
+			param.setName("ids");
+		}
+		params.add(param);
+		deletebatch.setExceptions(exceptions);		
+		deletebatch.setParams(params);
+		if(isimpl)
+		{
+			setMethodBody(deletebatch,GencodeServiceImpl.deletebatch,entityName,param.getName(),this.moduleMetaInfo.getEncodecharset(),exceptionName);
+		}
+		methods.add(deletebatch);
 		
 		Method update = new Method();//定义修改方法
 		update.setMethodname("update"+entityName);
@@ -413,6 +469,10 @@ public class GencodeServiceImpl {
 		params.add(param);
 		update.setExceptions(exceptions);		
 		update.setParams(params);
+		if(isimpl)
+		{
+			setMethodBody(update,GencodeServiceImpl.update,entityName,entityParamName,this.moduleMetaInfo.getEncodecharset(),exceptionName);
+		}
 		methods.add(update);
 		
 		Method get = new Method();//定义获取方法
@@ -434,11 +494,15 @@ public class GencodeServiceImpl {
 		params.add(param);
 		get.setExceptions(exceptions);		
 		get.setParams(params);
+		if(isimpl)
+		{
+			setMethodBody(get,GencodeServiceImpl.get,entityName,param.getName(),this.moduleMetaInfo.getEncodecharset(),exceptionName);
+		}
 		methods.add(get);
 		
 		Method paginequery = new Method();//定义获取方法
-		paginequery.setMethodname("query"+entityName+"s");
-		get.setReturntype("ListInfo");		
+		paginequery.setMethodname("queryListInfo"+entityName+"s");
+		paginequery.setReturntype("ListInfo");		
 		params = new ArrayList<MethodParam>();
 		param = new MethodParam();
 		
@@ -455,13 +519,49 @@ public class GencodeServiceImpl {
 		param.setType("int");
 		param.setName("pagesize");
 		params.add(param);
-		get.setExceptions(exceptions);		
-		get.setParams(params);
-		methods.add(get);
+		paginequery.setExceptions(exceptions);		
+		paginequery.setParams(params);
+		if(isimpl)
+		{
+			setMethodBody(paginequery,GencodeServiceImpl.paginequery,entityName,"conditions",this.moduleMetaInfo.getEncodecharset(),exceptionName);
+		}
+		methods.add(paginequery);
+		
+		Method query = new Method();//定义获取方法
+		query.setMethodname("queryList"+entityName+"s");
+		query.setReturntype("List<"+entityName+">");		
+		params = new ArrayList<MethodParam>();
+		param = new MethodParam();
+		
+		
+		param.setType("Map");
+		param.setName("conditions");
+		params.add(param);
+		query.setExceptions(exceptions);		
+		query.setParams(params);
+		if(isimpl)
+		{
+			setMethodBody(query,GencodeServiceImpl.query,entityName,"conditions",this.moduleMetaInfo.getEncodecharset(),exceptionName);
+		}
+		methods.add(query);
+		
+//		Method count = new Method();//定义获取方法
+//		query.setMethodname("queryList"+entityName+"s");
+//		query.setReturntype("List<"+entityName+">");		
+//		params = new ArrayList<MethodParam>();
+//		param = new MethodParam();
+//		
+//		
+//		param.setType("Map");
+//		param.setName("conditions");
+//		params.add(param);
+//		query.setExceptions(exceptions);		
+//		query.setParams(params);
+//		methods.add(query);
 		return methods;
 	}
 	
-	private void writFile(  VelocityContext context,Template tempalte,File file,String charset)throws Exception
+	public static void writFile(  VelocityContext context,Template tempalte,File file,String charset)throws Exception
 	{
 		FileOutputStream out = null;
 		 OutputStreamWriter writer = null;
@@ -486,6 +586,35 @@ public class GencodeServiceImpl {
 					e.printStackTrace();
 				}
 			 if(writer != null)
+				try {
+					writer.close();
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		 }
+		 
+	}
+	
+	public static String writetostring(  VelocityContext context,Template tempalte,String charset)throws Exception
+	{
+		
+		StringWriter writer = null;
+		 try
+		 {
+			  writer = new StringWriter();
+			 
+			 tempalte.merge(context, writer);
+			 writer.flush();
+			 return writer.toString();
+		 }
+		 catch(Exception e)
+		 {
+			 throw e;
+		 }
+		 finally
+		 {
+			 			 if(writer != null)
 				try {
 					writer.close();
 				} catch (Exception e) {
