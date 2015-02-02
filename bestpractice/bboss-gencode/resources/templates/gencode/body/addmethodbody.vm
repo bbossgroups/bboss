@@ -1,5 +1,21 @@
+#set( $start = '(' )
+#set( $end = ')' )
+#set( $dot = '.' )
+#if($componentType == 1)
 try {
 	executor.insertBean("add${entityName}", ${paramName});
 } catch (Throwable e) {
-	throw new $exception$start"delete ${entityName} failed:",e$end;
+	throw new $exception${start}"add ${entityName} failed:",e${end};
 }
+#elseif($componentType == 2)
+try {
+	${entityVarName}Service.add${entityName}$start${paramName}$end;
+	return "success";
+} catch ($exception e) {
+	log.error("add ${entityName} failed:",e);
+	return StringUtil.formatBRException(e);
+}catch (Throwable e) {
+	log.error("add ${entityName} failed:",e);
+	return StringUtil.formatBRException(e);
+}
+#end

@@ -1,9 +1,22 @@
 #set( $start = '(' )
 #set( $end = ')' )
+#set( $dot = '.' )
+#if($componentType == 1)
 try {
 	executor.delete("deleteByKey", $paramName);
 } catch (Throwable e) {
 	throw new $exception$start"delete ${entityName} failed::$paramName="+$paramName,e$end;
 }
- 
+#elseif($componentType == 2)
+try {
+	${entityVarName}Service.delete${entityName}${start}$paramName$end;
+	return "success";
+} catch ($exception e) {
+	log.error("delete ${entityName} failed:",e);
+	return StringUtil.formatBRException(e);
+}catch (Throwable e) {
+	log.error("delete ${entityName} failed:",e);
+	return StringUtil.formatBRException(e);
+}
+#end 
  

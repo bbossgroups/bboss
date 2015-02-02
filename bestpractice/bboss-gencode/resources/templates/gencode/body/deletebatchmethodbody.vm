@@ -1,5 +1,7 @@
 #set( $start = '(' )
 #set( $end = ')' )
+#set( $dot = '.' )
+#if($componentType == 1)
 TransactionManager tm = new TransactionManager();
 try {
 	tm.begin();
@@ -13,3 +15,12 @@ finally
 {
 	tm.release();
 }
+#elseif($componentType == 2)
+try {			 
+	${entityVarName}Service.deleteBatch${entityName}( ${paramName});
+	return "success";
+} catch (Throwable e) {
+	log.error("delete Batch ${paramName} failed:",e);
+	return StringUtil.formatBRException(e);
+} 
+#end

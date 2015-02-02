@@ -6,6 +6,12 @@ import java.util.List;
 public class Annotation {
 	private String name;
 	private List<AnnoParam> params;
+	public Annotation(String name) {
+		this.name = name;
+	}
+	
+	public Annotation() {		
+	}
 	public String getName() {
 		return name;
 	}

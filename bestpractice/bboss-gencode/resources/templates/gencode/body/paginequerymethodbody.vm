@@ -1,6 +1,7 @@
 #set( $start = '(' )
 #set( $end = ')' )
 #set( $dot = '.' )
+#if($componentType == 1)
 ListInfo datas=null;
 try{
 	datas=executor.queryListInfoBean($entityName${dot}class,"queryList$entityName", offset, pagesize, $paramName);
@@ -8,3 +9,16 @@ try{
 	throw new  $exception$start"pagine query $entityName failed:",e$end;
 }
 return datas;
+#elseif($componentType == 2)
+ListInfo ${entityVarName}s = null;
+try {
+	${entityVarName}s = ${entityVarName}Service.queryListInfo${entityName}s(  conditions,   offset,
+			  pagesize);
+	model.addAttribute("${entityVarName}s", ${entityVarName}s);
+	return "path:queryListInfo${entityVarName}s";
+} catch ($exception e) {
+	throw e;
+} catch (Exception e) {
+	throw new $exception("pagine query ${entityName} failed:", e);
+}
+#end

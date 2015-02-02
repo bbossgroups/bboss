@@ -10,8 +10,8 @@ import com.frameworkset.util.VelocityUtil;
 public class CountMethodBodyGenerate implements MethodBodyGenerate {
 
 	@Override
-	public void gen(Method method, String entityName, String paramName,
-			String encodecharset, String exception) throws Exception {
+	public void gen(Method method, String entityName,String entityVarName, String paramName,
+			String encodecharset, String exception,int componentType) throws Exception {
 		 Template addmethodbodytempalte = VelocityUtil.getTemplate("gencode/body/countsize.vm");
 		 VelocityContext context = new VelocityContext();
 		 
@@ -19,7 +19,8 @@ public class CountMethodBodyGenerate implements MethodBodyGenerate {
 		 context.put("entityName", entityName);
 		 context.put("paramName", paramName);
 		 context.put("exception", exception);
-	    
+		 context.put("componentType", componentType);
+		 context.put("entityVarName", entityVarName);
 		 String body = GencodeServiceImpl.writetostring(context,addmethodbodytempalte,encodecharset);
 		 method.setBody(body);
 

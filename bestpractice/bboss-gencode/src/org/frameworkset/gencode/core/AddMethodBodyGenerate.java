@@ -10,7 +10,7 @@ import com.frameworkset.util.VelocityUtil;
 public class AddMethodBodyGenerate implements MethodBodyGenerate {
 
 	@Override
-	public void gen(Method method, String entityName,String paramName,String encodecharset,String exception) throws Exception {
+	public void gen(Method method, String entityName,String entityVarName,String paramName,String encodecharset,String exception,int componentType) throws Exception {
 		 Template addmethodbodytempalte = VelocityUtil.getTemplate("gencode/body/addmethodbody.vm");
 		 VelocityContext context = new VelocityContext();
 		 
@@ -18,7 +18,8 @@ public class AddMethodBodyGenerate implements MethodBodyGenerate {
 		 context.put("entityName", entityName);
 		 context.put("paramName", paramName);
 		 context.put("exception", exception);
-	    
+		 context.put("componentType", componentType);
+		 context.put("entityVarName", entityVarName);
 		 String body = GencodeServiceImpl.writetostring(context,addmethodbodytempalte,encodecharset);
 		 method.setBody(body);
 	}

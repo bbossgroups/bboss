@@ -45,12 +45,13 @@ import $import;
 	  #end
 	#end
 #end	 
-public class $classname implements $interfaceclassname 
+public class $classname #if($interfaceclassname)implements $interfaceclassname#end 
 {
-#foreach($filed in $fields)	
+#foreach($filed in $fields)
+
     #if($filed.annos && $filed.annos.size() > 0)
      #foreach($anno in $filed.annos)
-     	$attoken$anno.name
+$attoken$anno.name
 		  #if($anno.params.size() > 0)
 			  $start
 			  	#foreach($annoparam in $anno.params) 
@@ -60,7 +61,7 @@ public class $classname implements $interfaceclassname
 		  #end
 	  #end
     #end
-	private $filed.type $filed.fieldName #if($filed.defaultValue)$equal $filed.defaultValue#end;	
+private #if($filed.staticed)static#end $filed.type $filed.fieldName #if($filed.defaultValue)$equal $filed.defaultValue#end;	
 #end
 #foreach($method in $methods)	
 	public #foreach($anno in $method.returnannos)
@@ -72,7 +73,7 @@ public class $classname implements $interfaceclassname
 				  	#end
 				  $end
 			  #end
-			#end $method.returntype $method.methodname$start#
+			#end $method.returntype $method.methodname$start
 		#foreach($param in $method.params)
 			#if($velocityCount>0),#end 
 			#foreach($anno in $param.annos)

@@ -266,7 +266,9 @@ public class GencodeServiceImpl {
 			 genEntity(  entityName,  date,  "v1.0","yinbp","sany","服务实体类",entity,tableMeta);
 			 genServiceInf(  entityName + "Service",date,"v1.0","yinbp","sany","服务管理接口", serviceInf);
 			 genException(entityName + "Exception",date,"v1.0","yinbp","sany","异常处理类",exception);
-			 genServiceImpl(entityName + "ServiceImpl",entityName + "Service",date,"v1.0","yinbp","sany","业务处理类",serviceImpl);
+			 String serviceInfName = entityName + "Service";
+			 genServiceImpl(entityName + "ServiceImpl",serviceInfName,date,"v1.0","yinbp","sany","业务处理类",serviceImpl);
+			 genActionCode(entityName+"Controller",null,serviceInfName, date,"v1.0","yinbp","sany","控制器处理类",controller);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -314,7 +316,7 @@ public class GencodeServiceImpl {
 		 context.put("author", author);
 		 context.put("version", version);
 		
-		 List<Method> methods = getInfMethods(false);
+		 List<Method> methods = getInfMethods(0);
 		 context.put("methods", methods);
 	 
 		 writFile(context,serviceinftempalte,serviceInf,this.moduleMetaInfo.getEncodecharset());
@@ -328,7 +330,7 @@ public class GencodeServiceImpl {
 		log4j.setFieldName("log");
 		log4j.setType("Logger");
 		String entityPackageInfo = this.moduleMetaInfo.getPackagePath() + "." + this.moduleMetaInfo.getModuleName()+".service";
-		log4j.setDefaultValue("new Logger("+entityPackageInfo + "."+serviceName+".class)");
+		log4j.setDefaultValue("Logger.getLogger("+entityPackageInfo + "."+serviceName+".class)");
 		fields.add(log4j);
 		
 		Field dao = new Field(); 
@@ -358,11 +360,57 @@ public class GencodeServiceImpl {
 		 context.put("author", author);
 		 context.put("version", version);
 		
-		 List<Method> methods = getInfMethods(true);
+		 List<Method> methods = getInfMethods(1);
 		 context.put("methods", methods);
+		 
 	 
 		 writFile(context,serviceinftempalte,service,this.moduleMetaInfo.getEncodecharset());
 		
+	}
+	
+	private void genActionCode(String actionName,String actionInfName,String serviceInfName,String date,String version,String author,String company,String description,File action) throws Exception
+	{
+		 
+		 List<String> imports = evalActionImplImport();
+		 Template serviceinftempalte = VelocityUtil.getTemplate("gencode/serviceimpljava.vm");
+		 VelocityContext context = new VelocityContext();
+		 String serviceName = (serviceInfName.charAt(0)+"").toLowerCase() + serviceInfName.substring(1);
+		 List<Field> fields = getActionImplFields(actionName,serviceInfName,serviceName);
+		 context.put("fields", fields);
+		 String entityPackageInfo = this.moduleMetaInfo.getPackagePath() + "." + this.moduleMetaInfo.getModuleName()+".action";
+		 context.put("package", entityPackageInfo);
+		 context.put("imports", imports);
+		 context.put("classname", actionName);
+		 context.put("interfaceclassname", actionInfName);
+		 
+		 context.put("description", description);
+		 context.put("company", company);
+		 context.put("gendate", date);
+		 context.put("author", author);
+		 context.put("version", version);
+		
+		 List<Method> methods = getInfMethods(2);
+		 context.put("methods", methods);
+	 
+		 writFile(context,serviceinftempalte,action,this.moduleMetaInfo.getEncodecharset());
+		
+	}
+	private List<Field> getActionImplFields(String actionName,String serviceinfclassName,String serviceName) {
+		List<Field> fields = new ArrayList<Field>();
+		Field log4j = new Field(); 
+		log4j.setStaticed(true);
+		log4j.setFieldName("log");
+		log4j.setType("Logger");
+	
+		log4j.setDefaultValue("new Logger("+actionName+".class)");
+		fields.add(log4j);
+		
+		Field service = new Field(); 
+		
+		service.setFieldName(serviceName);
+		service.setType(serviceinfclassName);
+		fields.add(service);
+		return fields; 
 	}
 	private static final String add = "add";
 	private static final String update = "update";
@@ -379,33 +427,31 @@ public class GencodeServiceImpl {
 		methodBodyGenerates.put(deletebatch, new DeleteBatchMethodBodyGenerate());
 		methodBodyGenerates.put(get, new GetMethodBodyGenerate());
 		methodBodyGenerates.put(query, new QueryMethodBodyGenerate());
-		methodBodyGenerates.put(add, new PagineQueryMethodBodyGenerate());
+		methodBodyGenerates.put(paginequery, new PagineQueryMethodBodyGenerate());
 	}
-	private void setMethodBody(Method method,String methodtype,String entityName,String paramName,String encodecharset,String exception) throws Exception
+	private void setMethodBody(Method method,String methodtype,String entityName,String paramName,String encodecharset,String exception,int componenttype) throws Exception
 	{
 		MethodBodyGenerate methodBodyGenerate = methodBodyGenerates.get(methodtype);
-		methodBodyGenerate.gen(method,entityName,paramName,encodecharset,exception);
+		methodBodyGenerate.gen(method,entityName,entityParamName,paramName,encodecharset,exception, componenttype);
 	}
-	private List<Method> getInfMethods(boolean isimpl ) throws Exception {
+	private List<Method> getActionMethods(int classtype ) throws Exception {
 		List<String> exceptions = new ArrayList<String>();
 		exceptions.add(exceptionName);
 		
 		List<Method> methods = new ArrayList<Method>();
 		Method add = new Method();//定义添加方法
 		add.setMethodname("add"+entityName);
-		add.setReturntype("void");
-		
-		add.setExceptions(exceptions);
+		add.setReturntype("String");
+		add.addAnnotation(new Annotation("ResponseBody"));
+	
 		List<MethodParam> params = new ArrayList<MethodParam>();
 		MethodParam param = new MethodParam();
 		param.setType(this.entityName);
 		param.setName(this.entityParamName);
 		params.add(param);
 		add.setParams(params);
-		if(isimpl)
-		{
-			setMethodBody(add,GencodeServiceImpl.add,entityName,entityParamName,this.moduleMetaInfo.getEncodecharset(),exceptionName);
-		}
+		setMethodBody(add,GencodeServiceImpl.add,entityName,entityParamName,this.moduleMetaInfo.getEncodecharset(),exceptionName, 2);
+		
 		methods.add(add);
 		
 		
@@ -413,7 +459,8 @@ public class GencodeServiceImpl {
 		
 		Method delete = new Method();//定义删除方法
 		delete.setMethodname("delete"+entityName);
-		delete.setReturntype("void");		
+		delete.addAnnotation(new Annotation("ResponseBody"));
+		delete.setReturntype("String");		
 		params = new ArrayList<MethodParam>();
 		param = new MethodParam();
 		if(primaryField != null)
@@ -427,22 +474,21 @@ public class GencodeServiceImpl {
 			param.setName("id");
 		}
 		params.add(param);
-		delete.setExceptions(exceptions);		
+		
 		delete.setParams(params);
-		if(isimpl)
-		{
-			setMethodBody(delete,GencodeServiceImpl.delete,entityName,param.getName(),this.moduleMetaInfo.getEncodecharset(),exceptionName);
-		}
+		setMethodBody(delete,GencodeServiceImpl.delete,entityName,param.getName(),this.moduleMetaInfo.getEncodecharset(),exceptionName,2);
+		
 		methods.add(delete);
 		
 		Method deletebatch = new Method();//定义删除方法
 		deletebatch.setMethodname("deleteBatch"+entityName);
-		deletebatch.setReturntype("void");		
+		deletebatch.setReturntype("String");	
+		deletebatch.addAnnotation(new Annotation("ResponseBody"));
 		params = new ArrayList<MethodParam>();
 		param = new MethodParam();
 		if(primaryField != null)
 		{
-			param.setType(primaryField.getType());
+			param.setType(primaryField.getType() +"...");
 			param.setName(primaryField.getFieldName()+"s");
 		}
 		else
@@ -451,33 +497,32 @@ public class GencodeServiceImpl {
 			param.setName("ids");
 		}
 		params.add(param);
-		deletebatch.setExceptions(exceptions);		
+		
 		deletebatch.setParams(params);
-		if(isimpl)
-		{
-			setMethodBody(deletebatch,GencodeServiceImpl.deletebatch,entityName,param.getName(),this.moduleMetaInfo.getEncodecharset(),exceptionName);
-		}
+		setMethodBody(deletebatch,GencodeServiceImpl.deletebatch,entityName,param.getName(),this.moduleMetaInfo.getEncodecharset(),exceptionName,2);
+		
+		
 		methods.add(deletebatch);
 		
 		Method update = new Method();//定义修改方法
 		update.setMethodname("update"+entityName);
-		update.setReturntype("void");		
+		update.setReturntype("String");		
+		update.addAnnotation(new Annotation("ResponseBody"));
 		params = new ArrayList<MethodParam>();
 		param = new MethodParam();
 		param.setType(this.entityName);
 		param.setName(this.entityParamName);
+		
 		params.add(param);
-		update.setExceptions(exceptions);		
 		update.setParams(params);
-		if(isimpl)
-		{
-			setMethodBody(update,GencodeServiceImpl.update,entityName,entityParamName,this.moduleMetaInfo.getEncodecharset(),exceptionName);
-		}
+		
+		setMethodBody(update,GencodeServiceImpl.update,entityName,entityParamName,this.moduleMetaInfo.getEncodecharset(),exceptionName,2);
+		
 		methods.add(update);
 		
 		Method get = new Method();//定义获取方法
 		get.setMethodname("get"+entityName);
-		get.setReturntype(entityName);		
+		get.setReturntype("String");		
 		params = new ArrayList<MethodParam>();
 		param = new MethodParam();
 		
@@ -494,10 +539,9 @@ public class GencodeServiceImpl {
 		params.add(param);
 		get.setExceptions(exceptions);		
 		get.setParams(params);
-		if(isimpl)
-		{
-			setMethodBody(get,GencodeServiceImpl.get,entityName,param.getName(),this.moduleMetaInfo.getEncodecharset(),exceptionName);
-		}
+		
+		setMethodBody(get,GencodeServiceImpl.get,entityName,param.getName(),this.moduleMetaInfo.getEncodecharset(),exceptionName,2);
+		
 		methods.add(get);
 		
 		Method paginequery = new Method();//定义获取方法
@@ -521,10 +565,9 @@ public class GencodeServiceImpl {
 		params.add(param);
 		paginequery.setExceptions(exceptions);		
 		paginequery.setParams(params);
-		if(isimpl)
-		{
-			setMethodBody(paginequery,GencodeServiceImpl.paginequery,entityName,"conditions",this.moduleMetaInfo.getEncodecharset(),exceptionName);
-		}
+		 
+		setMethodBody(paginequery,GencodeServiceImpl.paginequery,entityName,"conditions",this.moduleMetaInfo.getEncodecharset(),exceptionName,2);
+		
 		methods.add(paginequery);
 		
 		Method query = new Method();//定义获取方法
@@ -539,10 +582,183 @@ public class GencodeServiceImpl {
 		params.add(param);
 		query.setExceptions(exceptions);		
 		query.setParams(params);
-		if(isimpl)
+		 
+		setMethodBody(query,GencodeServiceImpl.query,entityName,"conditions",this.moduleMetaInfo.getEncodecharset(),exceptionName,2);
+		
+		methods.add(query);
+		
+//		Method count = new Method();//定义获取方法
+//		query.setMethodname("queryList"+entityName+"s");
+//		query.setReturntype("List<"+entityName+">");		
+//		params = new ArrayList<MethodParam>();
+//		param = new MethodParam();
+//		
+//		
+//		param.setType("Map");
+//		param.setName("conditions");
+//		params.add(param);
+//		query.setExceptions(exceptions);		
+//		query.setParams(params);
+//		methods.add(query);
+		return methods;
+	}
+	private List<Method> getInfMethods(int classtype ) throws Exception {
+		if(classtype == 2 || classtype == 3)
+			return getActionMethods(classtype );
+		List<String> exceptions = new ArrayList<String>();
+		exceptions.add(exceptionName);
+		
+		List<Method> methods = new ArrayList<Method>();
+		Method add = new Method();//定义添加方法
+		add.setMethodname("add"+entityName);
+		add.setReturntype("void");
+		
+		add.setExceptions(exceptions);
+		List<MethodParam> params = new ArrayList<MethodParam>();
+		MethodParam param = new MethodParam();
+		param.setType(this.entityName);
+		param.setName(this.entityParamName);
+		params.add(param);
+		add.setParams(params);
+		if(classtype != 0)
+			setMethodBody(add,GencodeServiceImpl.add,entityName,entityParamName,this.moduleMetaInfo.getEncodecharset(),exceptionName,1);
+		
+		methods.add(add);
+		
+		
+		
+		
+		Method delete = new Method();//定义删除方法
+		delete.setMethodname("delete"+entityName);
+		delete.setReturntype("void");		
+		params = new ArrayList<MethodParam>();
+		param = new MethodParam();
+		if(primaryField != null)
 		{
-			setMethodBody(query,GencodeServiceImpl.query,entityName,"conditions",this.moduleMetaInfo.getEncodecharset(),exceptionName);
+			param.setType(primaryField.getType());
+			param.setName(primaryField.getFieldName());
 		}
+		else
+		{
+			param.setType("String");
+			param.setName("id");
+		}
+		params.add(param);
+		delete.setExceptions(exceptions);		
+		delete.setParams(params);
+		if(classtype != 0)
+			setMethodBody(delete,GencodeServiceImpl.delete,entityName,param.getName(),this.moduleMetaInfo.getEncodecharset(),exceptionName,1);
+		
+		methods.add(delete);
+		
+		Method deletebatch = new Method();//定义删除方法
+		deletebatch.setMethodname("deleteBatch"+entityName);
+		deletebatch.setReturntype("void");		
+		params = new ArrayList<MethodParam>();
+		param = new MethodParam();
+		if(primaryField != null)
+		{
+			param.setType(primaryField.getType() +"...");
+			param.setName(primaryField.getFieldName()+"s");
+		}
+		else
+		{
+			param.setType("String...");
+			param.setName("ids");
+		}
+		params.add(param);
+		deletebatch.setExceptions(exceptions);		
+		deletebatch.setParams(params);
+		if(classtype != 0)
+			setMethodBody(deletebatch,GencodeServiceImpl.deletebatch,entityName,param.getName(),this.moduleMetaInfo.getEncodecharset(),exceptionName,1);
+		 
+		
+		methods.add(deletebatch);
+		
+		Method update = new Method();//定义修改方法
+		update.setMethodname("update"+entityName);
+		update.setReturntype("void");		
+		params = new ArrayList<MethodParam>();
+		param = new MethodParam();
+		param.setType(this.entityName);
+		param.setName(this.entityParamName);
+		params.add(param);
+		update.setExceptions(exceptions);		
+		update.setParams(params);
+		
+		if(classtype != 0)
+			setMethodBody(update,GencodeServiceImpl.update,entityName,entityParamName,this.moduleMetaInfo.getEncodecharset(),exceptionName,1);
+		
+		methods.add(update);
+		
+		Method get = new Method();//定义获取方法
+		get.setMethodname("get"+entityName);
+		get.setReturntype(entityName);		
+		params = new ArrayList<MethodParam>();
+		param = new MethodParam();
+		
+		if(primaryField != null)
+		{
+			param.setType(primaryField.getType());
+			param.setName(primaryField.getFieldName());
+		}
+		else
+		{
+			param.setType("String");
+			param.setName("id");
+		}
+		params.add(param);
+		get.setExceptions(exceptions);		
+		get.setParams(params);
+		
+		if(classtype != 0)
+			setMethodBody(get,GencodeServiceImpl.get,entityName,param.getName(),this.moduleMetaInfo.getEncodecharset(),exceptionName,1);
+		
+		methods.add(get);
+		
+		Method paginequery = new Method();//定义获取方法
+		paginequery.setMethodname("queryListInfo"+entityName+"s");
+		paginequery.setReturntype("ListInfo");		
+		params = new ArrayList<MethodParam>();
+		param = new MethodParam();
+		
+		
+		param.setType("Map");
+		param.setName("conditions");
+		params.add(param);
+		
+		param = new MethodParam();
+		param.setType("long");
+		param.setName("offset");
+		params.add(param);
+		param = new MethodParam();
+		param.setType("int");
+		param.setName("pagesize");
+		params.add(param);
+		paginequery.setExceptions(exceptions);		
+		paginequery.setParams(params);
+		 
+		if(classtype != 0)
+			setMethodBody(paginequery,GencodeServiceImpl.paginequery,entityName,"conditions",this.moduleMetaInfo.getEncodecharset(),exceptionName,1);
+		
+		methods.add(paginequery);
+		
+		Method query = new Method();//定义获取方法
+		query.setMethodname("queryList"+entityName+"s");
+		query.setReturntype("List<"+entityName+">");		
+		params = new ArrayList<MethodParam>();
+		param = new MethodParam();
+		
+		
+		param.setType("Map");
+		param.setName("conditions");
+		params.add(param);
+		query.setExceptions(exceptions);		
+		query.setParams(params);
+		 
+		if(classtype != 0)
+			setMethodBody(query,GencodeServiceImpl.query,entityName,"conditions",this.moduleMetaInfo.getEncodecharset(),exceptionName,1);
+		
 		methods.add(query);
 		
 //		Method count = new Method();//定义获取方法
@@ -657,12 +873,18 @@ public class GencodeServiceImpl {
 	         }
 	         
 		}
+		if(this.primaryField != null)
+		{
+			imports.add("com.frameworkset.orm.annotation.PrimaryKey");
+		}
 		return imports;
 	}
 	private List<String> evalServiceInfImport( ) {
 		List<String> imports = new ArrayList<String>();
 		imports.add(this.moduleMetaInfo.getPackagePath() + "." + this.moduleMetaInfo.getModuleName()+".entity.*");
 		imports.add("com.frameworkset.util.ListInfo");
+		imports.add("java.util.List");		
+		imports.add("java.util.Map");
 		return imports;
 	}
 	
@@ -672,6 +894,40 @@ public class GencodeServiceImpl {
 		imports.add("com.frameworkset.util.ListInfo");
 		imports.add("com.frameworkset.common.poolman.ConfigSQLExecutor");
 		imports.add("org.apache.log4j.Logger");		
+		imports.add("java.util.List");
+		imports.add("java.util.ArrayList");
+		imports.add("java.util.Map");
+		imports.add("java.util.HashMap");
+		imports.add("com.frameworkset.orm.transaction.TransactionManager");
+		
+		return imports;
+	}
+	
+	private List<String> evalActionImplImport( ) {
+		List<String> imports = new ArrayList<String>();
+		imports.add(this.moduleMetaInfo.getPackagePath() + "." + this.moduleMetaInfo.getModuleName()+".entity.*");
+		imports.add("com.frameworkset.util.ListInfo");
+		imports.add("org.frameworkset.web.servlet.ModelMap");
+		imports.add("org.apache.log4j.Logger");		
+		imports.add("java.util.List");
+		imports.add("org.frameworkset.demo.appbom.entity.*");
+		imports.add("java.util.Map");
+		imports.add("com.frameworkset.util.StringUtil");
+		imports.add("org.frameworkset.demo.appbom.service.*");
+		imports.add("org.frameworkset.util.annotations.ResponseBody");
+		/**
+		 * import java.util.List;
+import java.util.Map;
+
+import org.apache.log4j.Logger;
+import org.frameworkset.demo.appbom.entity.AppBom;
+import org.frameworkset.demo.appbom.service.AppBomException;
+import org.frameworkset.demo.appbom.service.AppBomService;
+import org.frameworkset.util.annotations.ResponseBody;
+import org.frameworkset.web.servlet.ModelMap;
+import com.frameworkset.util.ListInfo;
+import com.frameworkset.util.StringUtil;
+		 */
 		return imports;
 	}
 
