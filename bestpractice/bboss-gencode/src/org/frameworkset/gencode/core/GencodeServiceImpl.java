@@ -56,17 +56,20 @@ public class GencodeServiceImpl {
 	private String exceptionName;
 	private String entityName;
 	private String entityParamName;
+	private SQLBuilder SQLBuilder ; 
 	
 	public String genCode(ModuleMetaInfo moduleMetaInfo)
 	{
 		this.moduleMetaInfo = moduleMetaInfo; 
 		this.init();
 		genJavaSource();
+		genPersistentConfigfile();
 		return "success";
 	}
 	
 	private void init()
 	{
+		SQLBuilder = new SQLBuilder(this);
 		File f = new File(moduleMetaInfo.getSourcedir());
 		if(!f.exists())
 		{
@@ -143,6 +146,16 @@ public class GencodeServiceImpl {
 			return type;
 	}
 	private Field primaryField ;
+	private String primaryKeyName;
+	/**
+	 * 需要作为查询条件的字段
+	 */
+	private List<Field> conditions;
+	private List<SQL> sqls;
+	/**
+	 * 所有字段
+	 */
+	private List<Field> allfields;
 	
 	private List<Field> getFields(TableMetaData tableMeta)
 	{
@@ -179,9 +192,11 @@ public class GencodeServiceImpl {
                              inputs,false);
 		        	 f.setMfieldName(mfieldName);
 		        	 f.setFieldName(fieldName);
+		        	 f.setColumnname(c.getColumnName());
 		        	 if(isp)
 		        	 {
 		        		 this.primaryField = f;
+		        		 this.primaryKeyName = f.getColumnname();
 		        		 fs.add(0, f);
 		        	 }
 		        	 else
@@ -200,8 +215,27 @@ public class GencodeServiceImpl {
 		}
 		return null;
 	}
-	
-	public void genJavaSource()
+	/**
+	 * 生成持久层sql配置文件
+	 * @throws Exception 
+	 */
+	private void genPersistentConfigfile() 
+	{
+		File sqlconfig = new File(this.javaServiceSourceDir,this.entityParamName + ".xml");
+		if(sqlconfig.exists())
+		{
+			sqlconfig.delete();
+		}
+		try {
+			sqlconfig.createNewFile();
+		} catch (Exception e) {
+			log.error("gen Persistent Config file failed:"+sqlconfig.getAbsolutePath(),e);
+		}
+	}
+	/**
+	 * 生成java源代码
+	 */
+	private void genJavaSource()
 	{
 		
 		
@@ -277,8 +311,7 @@ public class GencodeServiceImpl {
 			 genServiceImpl(entityName + "ServiceImpl",serviceInfName,date,"v1.0","yinbp","sany","业务处理类",serviceImpl);
 			 genActionCode(entityName+"Controller",null,serviceInfName, date,"v1.0","yinbp","sany","控制器处理类",controller);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.error("gen java source file failed:",e);
 		}
 		
 	}
@@ -419,22 +452,16 @@ public class GencodeServiceImpl {
 		fields.add(service);
 		return fields; 
 	}
-	private static final String add = "add";
-	private static final String update = "update";
-	private static final String delete = "delete";
-	private static final String deletebatch = "deletebatch";
-	private static final String get = "get";
-	private static final String query = "query";
-	private static final String paginequery = "paginequery";
-	private static final Map<String,MethodBodyGenerate> methodBodyGenerates = new HashMap<String,MethodBodyGenerate>();
+	
+	public static final Map<String,MethodBodyGenerate> methodBodyGenerates = new HashMap<String,MethodBodyGenerate>();
 	static{
-		methodBodyGenerates.put(add, new AddMethodBodyGenerate());
-		methodBodyGenerates.put(update, new UpdateMethodBodyGenerate());
-		methodBodyGenerates.put(delete, new DeleteMethodBodyGenerate());
-		methodBodyGenerates.put(deletebatch, new DeleteBatchMethodBodyGenerate());
-		methodBodyGenerates.put(get, new GetMethodBodyGenerate());
-		methodBodyGenerates.put(query, new QueryMethodBodyGenerate());
-		methodBodyGenerates.put(paginequery, new PagineQueryMethodBodyGenerate());
+		methodBodyGenerates.put(Constant.add, new AddMethodBodyGenerate());
+		methodBodyGenerates.put(Constant.update, new UpdateMethodBodyGenerate());
+		methodBodyGenerates.put(Constant.delete, new DeleteMethodBodyGenerate());
+		methodBodyGenerates.put(Constant.deletebatch, new DeleteBatchMethodBodyGenerate());
+		methodBodyGenerates.put(Constant.get, new GetMethodBodyGenerate());
+		methodBodyGenerates.put(Constant.query, new QueryMethodBodyGenerate());
+		methodBodyGenerates.put(Constant.paginequery, new PagineQueryMethodBodyGenerate());
 	}
 	private void setMethodBody(Method method,String methodtype,String entityName,String paramName,String encodecharset,String exception,int componenttype) throws Exception
 	{
@@ -457,7 +484,7 @@ public class GencodeServiceImpl {
 		param.setName(this.entityParamName);
 		params.add(param);
 		add.setParams(params);
-		setMethodBody(add,GencodeServiceImpl.add,entityName,entityParamName,this.moduleMetaInfo.getEncodecharset(),exceptionName, 2);
+		setMethodBody(add,Constant.add,entityName,entityParamName,this.moduleMetaInfo.getEncodecharset(),exceptionName, Constant.component_type_actionimpl);
 		
 		methods.add(add);
 		
@@ -479,11 +506,12 @@ public class GencodeServiceImpl {
 		{
 			param.setType("String");
 			param.setName("id");
+			 this.primaryKeyName = "id";
 		}
 		params.add(param);
 		
 		delete.setParams(params);
-		setMethodBody(delete,GencodeServiceImpl.delete,entityName,param.getName(),this.moduleMetaInfo.getEncodecharset(),exceptionName,2);
+		setMethodBody(delete,Constant.delete,entityName,param.getName(),this.moduleMetaInfo.getEncodecharset(),exceptionName,Constant.component_type_actionimpl);
 		
 		methods.add(delete);
 		
@@ -506,7 +534,7 @@ public class GencodeServiceImpl {
 		params.add(param);
 		
 		deletebatch.setParams(params);
-		setMethodBody(deletebatch,GencodeServiceImpl.deletebatch,entityName,param.getName(),this.moduleMetaInfo.getEncodecharset(),exceptionName,2);
+		setMethodBody(deletebatch,Constant.deletebatch,entityName,param.getName(),this.moduleMetaInfo.getEncodecharset(),exceptionName,Constant.component_type_actionimpl);
 		
 		
 		methods.add(deletebatch);
@@ -523,7 +551,7 @@ public class GencodeServiceImpl {
 		params.add(param);
 		update.setParams(params);
 		
-		setMethodBody(update,GencodeServiceImpl.update,entityName,entityParamName,this.moduleMetaInfo.getEncodecharset(),exceptionName,2);
+		setMethodBody(update,Constant.update,entityName,entityParamName,this.moduleMetaInfo.getEncodecharset(),exceptionName,Constant.component_type_actionimpl);
 		
 		methods.add(update);
 		
@@ -552,7 +580,7 @@ public class GencodeServiceImpl {
 		get.setExceptions(exceptions);		
 		get.setParams(params);
 		
-		setMethodBody(get,GencodeServiceImpl.get,entityName,defaultSort,this.moduleMetaInfo.getEncodecharset(),exceptionName,2);
+		setMethodBody(get,Constant.get,entityName,defaultSort,this.moduleMetaInfo.getEncodecharset(),exceptionName,Constant.component_type_actionimpl);
 		
 		methods.add(get);
 		
@@ -577,7 +605,7 @@ public class GencodeServiceImpl {
 		param = new MethodParam();
 		param.setType("boolean");
 		param.setName("desc");
-		param.addAnnotation(new Annotation("PagerParam").addAnnotationParam("name","PagerParam.DESC",AnnoParam.V_CONTAST).addAnnotationParam("defaultvalue", "10", AnnoParam.V_STRING));
+		param.addAnnotation(new Annotation("PagerParam").addAnnotationParam("name","PagerParam.DESC",AnnoParam.V_CONTAST).addAnnotationParam("defaultvalue", "true", AnnoParam.V_STRING));
 		
 		params.add(param);
 		param = new MethodParam();		
@@ -598,7 +626,7 @@ public class GencodeServiceImpl {
 		paginequery.setExceptions(exceptions);		
 		paginequery.setParams(params);
 		 
-		setMethodBody(paginequery,GencodeServiceImpl.paginequery,entityName,"conditions",this.moduleMetaInfo.getEncodecharset(),exceptionName,2);
+		setMethodBody(paginequery,Constant.paginequery,entityName,"conditions",this.moduleMetaInfo.getEncodecharset(),exceptionName,Constant.component_type_actionimpl);
 		
 		methods.add(paginequery);
 		
@@ -619,7 +647,7 @@ public class GencodeServiceImpl {
 		query.setExceptions(exceptions);		
 		query.setParams(params);
 		 
-		setMethodBody(query,GencodeServiceImpl.query,entityName,"conditions",this.moduleMetaInfo.getEncodecharset(),exceptionName,2);
+		setMethodBody(query,Constant.query,entityName,"conditions",this.moduleMetaInfo.getEncodecharset(),exceptionName,Constant.component_type_actionimpl);
 		
 		methods.add(query);
 		
@@ -639,7 +667,7 @@ public class GencodeServiceImpl {
 		return methods;
 	}
 	private List<Method> getMethods(int classtype ) throws Exception {
-		if(classtype == 2 || classtype == 3)
+		if(classtype == Constant.component_type_actionimpl || classtype == Constant.component_type_actioninf)
 			return getActionMethods(classtype );
 		List<String> exceptions = new ArrayList<String>();
 		exceptions.add(exceptionName);
@@ -656,13 +684,18 @@ public class GencodeServiceImpl {
 		param.setName(this.entityParamName);
 		params.add(param);
 		add.setParams(params);
-		if(classtype != 0)
-			setMethodBody(add,GencodeServiceImpl.add,entityName,entityParamName,this.moduleMetaInfo.getEncodecharset(),exceptionName,1);
+		if(classtype == Constant.component_type_serivceimpl)
+		{
+			setMethodBody(add,Constant.add,entityName,entityParamName,this.moduleMetaInfo.getEncodecharset(),exceptionName,Constant.component_type_serivceimpl);
+			sqls = new ArrayList<SQL>();
+			SQL sql = new SQL();
+			sql.setOptype(Constant.add);
+			sql.setName("add" + this.entityName);
+			evalsql(sql);
+			this.sqls.add(sql);
+		}
 		
-		methods.add(add);
-		
-		
-		
+		methods.add(add);		
 		
 		Method delete = new Method();//定义删除方法
 		delete.setMethodname("delete"+entityName);
@@ -682,8 +715,15 @@ public class GencodeServiceImpl {
 		params.add(param);
 		delete.setExceptions(exceptions);		
 		delete.setParams(params);
-		if(classtype != 0)
-			setMethodBody(delete,GencodeServiceImpl.delete,entityName,param.getName(),this.moduleMetaInfo.getEncodecharset(),exceptionName,1);
+		if(classtype == Constant.component_type_serivceimpl)
+		{
+			setMethodBody(delete,Constant.delete,entityName,param.getName(),this.moduleMetaInfo.getEncodecharset(),exceptionName,Constant.component_type_serivceimpl);
+			SQL sql = new SQL();
+			sql.setOptype(Constant.delete);
+			sql.setName("deleteByKey");
+			evalsql(sql);
+			this.sqls.add(sql);
+		}
 		
 		methods.add(delete);
 		
@@ -705,8 +745,8 @@ public class GencodeServiceImpl {
 		params.add(param);
 		deletebatch.setExceptions(exceptions);		
 		deletebatch.setParams(params);
-		if(classtype != 0)
-			setMethodBody(deletebatch,GencodeServiceImpl.deletebatch,entityName,param.getName(),this.moduleMetaInfo.getEncodecharset(),exceptionName,1);
+		if(classtype == Constant.component_type_serivceimpl)
+			setMethodBody(deletebatch,Constant.deletebatch,entityName,param.getName(),this.moduleMetaInfo.getEncodecharset(),exceptionName,Constant.component_type_serivceimpl);
 		 
 		
 		methods.add(deletebatch);
@@ -722,8 +762,15 @@ public class GencodeServiceImpl {
 		update.setExceptions(exceptions);		
 		update.setParams(params);
 		
-		if(classtype != 0)
-			setMethodBody(update,GencodeServiceImpl.update,entityName,entityParamName,this.moduleMetaInfo.getEncodecharset(),exceptionName,1);
+		if(classtype == Constant.component_type_serivceimpl)
+		{
+			setMethodBody(update,Constant.update,entityName,entityParamName,this.moduleMetaInfo.getEncodecharset(),exceptionName,Constant.component_type_serivceimpl);
+			SQL sql = new SQL();
+			sql.setOptype(Constant.update);
+			sql.setName("update"+this.entityName);
+			evalsql(sql);
+			this.sqls.add(sql);
+		}
 		
 		methods.add(update);
 		
@@ -747,8 +794,15 @@ public class GencodeServiceImpl {
 		get.setExceptions(exceptions);		
 		get.setParams(params);
 		
-		if(classtype != 0)
-			setMethodBody(get,GencodeServiceImpl.get,entityName,param.getName(),this.moduleMetaInfo.getEncodecharset(),exceptionName,1);
+		if(classtype == Constant.component_type_serivceimpl)
+		{
+			setMethodBody(get,Constant.get,entityName,param.getName(),this.moduleMetaInfo.getEncodecharset(),exceptionName,Constant.component_type_serivceimpl);
+			SQL sql = new SQL();
+			sql.setOptype(Constant.get);
+			sql.setName("selectById");
+			evalsql(sql);
+			this.sqls.add(sql);
+		}
 		
 		methods.add(get);
 		
@@ -774,8 +828,16 @@ public class GencodeServiceImpl {
 		paginequery.setExceptions(exceptions);		
 		paginequery.setParams(params);
 		 
-		if(classtype != 0)
-			setMethodBody(paginequery,GencodeServiceImpl.paginequery,entityName,"conditions",this.moduleMetaInfo.getEncodecharset(),exceptionName,1);
+		if(classtype == Constant.component_type_serivceimpl)
+		{
+			setMethodBody(paginequery,Constant.paginequery,entityName,"conditions",this.moduleMetaInfo.getEncodecharset(),exceptionName,Constant.component_type_serivceimpl);
+			SQL sql = new SQL();
+			sql.setOptype(Constant.paginequery);
+			sql.setName("queryList"+this.entityName);
+			evalsql(sql);
+			this.sqls.add(sql);
+		}
+		
 		
 		methods.add(paginequery);
 		
@@ -792,8 +854,10 @@ public class GencodeServiceImpl {
 		query.setExceptions(exceptions);		
 		query.setParams(params);
 		 
-		if(classtype != 0)
-			setMethodBody(query,GencodeServiceImpl.query,entityName,"conditions",this.moduleMetaInfo.getEncodecharset(),exceptionName,1);
+		if(classtype == Constant.component_type_serivceimpl)
+		{
+			setMethodBody(query,Constant.query,entityName,"conditions",this.moduleMetaInfo.getEncodecharset(),exceptionName,Constant.component_type_serivceimpl);
+		}
 		
 		methods.add(query);
 		
@@ -813,6 +877,11 @@ public class GencodeServiceImpl {
 		return methods;
 	}
 	
+	private void evalsql(SQL sql) {
+		SQLBuilder.buidlersql(sql);
+		
+	}
+
 	public static void writFile(  VelocityContext context,Template tempalte,File file,String charset)throws Exception
 	{
 		FileOutputStream out = null;
@@ -1024,6 +1093,34 @@ import com.frameworkset.util.StringUtil;
          {
              log.error(e, e);
          }
+	}
+
+	public List<Field> getConditions() {
+		return conditions;
+	}
+
+	public List<Field> getAllfields() {
+		return allfields;
+	}
+
+	public ModuleMetaInfo getModuleMetaInfo() {
+		return moduleMetaInfo;
+	}
+
+	public String getEntityName() {
+		return entityName;
+	}
+
+	public String getEntityParamName() {
+		return entityParamName;
+	}
+
+	public Field getPrimaryField() {
+		return primaryField;
+	}
+
+	public String getPrimaryKeyName() {
+		return primaryKeyName;
 	}
 
 }

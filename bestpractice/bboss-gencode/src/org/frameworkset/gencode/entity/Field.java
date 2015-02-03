@@ -10,6 +10,7 @@ public class Field {
 	private String defaultValue;
 	private boolean staticed;
 	private boolean finaled;
+	private String columnname;
 	private List<Annotation> annos;
 	public String getFieldName() {
 		return fieldName;
@@ -59,6 +60,12 @@ public class Field {
 	}
 	public void setFinaled(boolean finaled) {
 		this.finaled = finaled;
+	}
+	public String getColumnname() {
+		return columnname;
+	}
+	public void setColumnname(String columnname) {
+		this.columnname = columnname;
 	}
 
 }
