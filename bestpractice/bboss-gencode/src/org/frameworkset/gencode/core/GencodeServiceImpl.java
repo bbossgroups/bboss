@@ -14,6 +14,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
+import org.frameworkset.gencode.entity.AnnoParam;
 import org.frameworkset.gencode.entity.Annotation;
 import org.frameworkset.gencode.entity.Field;
 import org.frameworkset.gencode.entity.Method;
@@ -179,8 +180,14 @@ public class GencodeServiceImpl {
 		        	 f.setMfieldName(mfieldName);
 		        	 f.setFieldName(fieldName);
 		        	 if(isp)
+		        	 {
 		        		 this.primaryField = f;
-		        	 fs.add(f);
+		        		 fs.add(0, f);
+		        	 }
+		        	 else
+		        	 {
+		        		 fs.add(f);
+		        	 }
 		         }
 		         catch (EngineException e)
 		         {
@@ -316,7 +323,7 @@ public class GencodeServiceImpl {
 		 context.put("author", author);
 		 context.put("version", version);
 		
-		 List<Method> methods = getInfMethods(0);
+		 List<Method> methods = getMethods(0);
 		 context.put("methods", methods);
 	 
 		 writFile(context,serviceinftempalte,serviceInf,this.moduleMetaInfo.getEncodecharset());
@@ -360,7 +367,7 @@ public class GencodeServiceImpl {
 		 context.put("author", author);
 		 context.put("version", version);
 		
-		 List<Method> methods = getInfMethods(1);
+		 List<Method> methods = getMethods(1);
 		 context.put("methods", methods);
 		 
 	 
@@ -389,7 +396,7 @@ public class GencodeServiceImpl {
 		 context.put("author", author);
 		 context.put("version", version);
 		
-		 List<Method> methods = getInfMethods(2);
+		 List<Method> methods = getMethods(2);
 		 context.put("methods", methods);
 	 
 		 writFile(context,serviceinftempalte,action,this.moduleMetaInfo.getEncodecharset());
@@ -402,7 +409,7 @@ public class GencodeServiceImpl {
 		log4j.setFieldName("log");
 		log4j.setType("Logger");
 	
-		log4j.setDefaultValue("new Logger("+actionName+".class)");
+		log4j.setDefaultValue("Logger.getLogger("+actionName+".class)");
 		fields.add(log4j);
 		
 		Field service = new Field(); 
@@ -536,32 +543,57 @@ public class GencodeServiceImpl {
 			param.setType("String");
 			param.setName("id");
 		}
+		String defaultSort = param.getName();
+		params.add(param);
+		param = new MethodParam();
+		param.setName("model");
+		param.setType("ModelMap");
 		params.add(param);
 		get.setExceptions(exceptions);		
 		get.setParams(params);
 		
-		setMethodBody(get,GencodeServiceImpl.get,entityName,param.getName(),this.moduleMetaInfo.getEncodecharset(),exceptionName,2);
+		setMethodBody(get,GencodeServiceImpl.get,entityName,defaultSort,this.moduleMetaInfo.getEncodecharset(),exceptionName,2);
 		
 		methods.add(get);
 		
 		Method paginequery = new Method();//定义获取方法
 		paginequery.setMethodname("queryListInfo"+entityName+"s");
-		paginequery.setReturntype("ListInfo");		
+		paginequery.setReturntype("String");		
 		params = new ArrayList<MethodParam>();
 		param = new MethodParam();
 		
-		
+		param.addAnnotation(new Annotation("MapKey").addAnnotationParam("pattern","condition_*"));
 		param.setType("Map");
 		param.setName("conditions");
 		params.add(param);
 		
+		
+		param = new MethodParam();		
+		param.setType("String");
+		param.setName("sortKey");
+		param.addAnnotation(new Annotation("PagerParam").addAnnotationParam("name","PagerParam.SORT",AnnoParam.V_CONTAST).addAnnotationParam("defaultvalue",defaultSort));
+		params.add(param);
+		
 		param = new MethodParam();
+		param.setType("boolean");
+		param.setName("desc");
+		param.addAnnotation(new Annotation("PagerParam").addAnnotationParam("name","PagerParam.DESC",AnnoParam.V_CONTAST).addAnnotationParam("defaultvalue", "10", AnnoParam.V_STRING));
+		
+		params.add(param);
+		param = new MethodParam();		
 		param.setType("long");
 		param.setName("offset");
+		param.addAnnotation(new Annotation("PagerParam").addAnnotationParam("name","PagerParam.OFFSET",AnnoParam.V_CONTAST));
+		
 		params.add(param);
 		param = new MethodParam();
 		param.setType("int");
 		param.setName("pagesize");
+		param.addAnnotation(new Annotation("PagerParam").addAnnotationParam("name","PagerParam.PAGE_SIZE",AnnoParam.V_CONTAST).addAnnotationParam("defaultvalue", "10", AnnoParam.V_STRING));
+		params.add(param);
+		param = new MethodParam();
+		param.setName("model");
+		param.setType("ModelMap");
 		params.add(param);
 		paginequery.setExceptions(exceptions);		
 		paginequery.setParams(params);
@@ -572,13 +604,17 @@ public class GencodeServiceImpl {
 		
 		Method query = new Method();//定义获取方法
 		query.setMethodname("queryList"+entityName+"s");
-		query.setReturntype("List<"+entityName+">");		
+		query.setReturntype("String");		
 		params = new ArrayList<MethodParam>();
 		param = new MethodParam();
 		
-		
+		param.addAnnotation(new Annotation("MapKey").addAnnotationParam("pattern","condition_*"));
 		param.setType("Map");
 		param.setName("conditions");
+		params.add(param);
+		param = new MethodParam();
+		param.setName("model");
+		param.setType("ModelMap");
 		params.add(param);
 		query.setExceptions(exceptions);		
 		query.setParams(params);
@@ -602,7 +638,7 @@ public class GencodeServiceImpl {
 //		methods.add(query);
 		return methods;
 	}
-	private List<Method> getInfMethods(int classtype ) throws Exception {
+	private List<Method> getMethods(int classtype ) throws Exception {
 		if(classtype == 2 || classtype == 3)
 			return getActionMethods(classtype );
 		List<String> exceptions = new ArrayList<String>();
@@ -907,14 +943,15 @@ public class GencodeServiceImpl {
 		List<String> imports = new ArrayList<String>();
 		imports.add(this.moduleMetaInfo.getPackagePath() + "." + this.moduleMetaInfo.getModuleName()+".entity.*");
 		imports.add("com.frameworkset.util.ListInfo");
-		imports.add("org.frameworkset.web.servlet.ModelMap");
 		imports.add("org.apache.log4j.Logger");		
 		imports.add("java.util.List");
-		imports.add("org.frameworkset.demo.appbom.entity.*");
 		imports.add("java.util.Map");
 		imports.add("com.frameworkset.util.StringUtil");
-		imports.add("org.frameworkset.demo.appbom.service.*");
+		imports.add("org.frameworkset.demo." + this.moduleMetaInfo.getModuleName()+".service.*");
 		imports.add("org.frameworkset.util.annotations.ResponseBody");
+		imports.add("org.frameworkset.web.servlet.ModelMap");
+		imports.add("org.frameworkset.util.annotations.PagerParam");
+		imports.add("org.frameworkset.util.annotations.MapKey");
 		/**
 		 * import java.util.List;
 import java.util.Map;

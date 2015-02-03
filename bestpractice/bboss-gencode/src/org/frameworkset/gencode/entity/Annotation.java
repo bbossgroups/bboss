@@ -6,6 +6,7 @@ import java.util.List;
 public class Annotation {
 	private String name;
 	private List<AnnoParam> params;
+	
 	public Annotation(String name) {
 		this.name = name;
 	}
@@ -24,10 +25,34 @@ public class Annotation {
 	public void setParams(List<AnnoParam> params) {
 		this.params = params;
 	}
-	public void addAnnotation(AnnoParam annoParam) {
+	public Annotation addAnnotationParam(AnnoParam annoParam) {
 		if(params == null)
 			params = new ArrayList<AnnoParam>();
 		params.add(annoParam);
+		return this;
+		
+	}
+	
+	public Annotation addAnnotationParam(String name,String value) {
+		if(params == null)
+			params = new ArrayList<AnnoParam>();
+		AnnoParam annoParam = new AnnoParam();
+		annoParam.setName(name);
+		annoParam.setValue(value);
+		params.add(annoParam);
+		return this;
+		
+	}
+	
+	public Annotation addAnnotationParam(String name,String value,int vtype) {
+		if(params == null)
+			params = new ArrayList<AnnoParam>();
+		AnnoParam annoParam = new AnnoParam();
+		annoParam.setName(name);
+		annoParam.setValue(value);
+		annoParam.setVtype(vtype);
+		params.add(annoParam);
+		return this;
 		
 	}
 }

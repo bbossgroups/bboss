@@ -7,7 +7,7 @@ try {
 } catch (Throwable e) {	
 	throw new $exception$start"update ${entityName} failed::",e$end;
 }
-#elseif($methodtype == 2)
+#elseif($componentType == 2)
 try {
 	${entityVarName}Service.update${entityName}($paramName);
 	return "success";

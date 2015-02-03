@@ -41,10 +41,11 @@ public class Field {
 	public void setAnnos(List<Annotation> annos) {
 		this.annos = annos;
 	}
-	public void addAnnotation(Annotation annotation) {
+	public Field addAnnotation(Annotation annotation) {
 		if(annos == null)
 			annos = new ArrayList<Annotation>();
 		annos.add(annotation);
+		return this;
 		
 	}
 	public boolean isStaticed() {

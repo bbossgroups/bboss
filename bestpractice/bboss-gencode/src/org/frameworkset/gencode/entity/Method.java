@@ -34,10 +34,11 @@ public class Method {
 	public void setExceptions(List<String> exceptions) {
 		this.exceptions = exceptions;
 	} 
-	public void addAnnotation(Annotation annotation) {
+	public Method addAnnotation(Annotation annotation) {
 		if(returnannos == null)
 			returnannos = new ArrayList<Annotation>();
 		returnannos.add(annotation);
+		return this;
 		
 	}
 	public String getBody() {

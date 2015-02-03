@@ -39,7 +39,7 @@ import $import;
 	  #if($anno.params.size() > 0)
 		  $start
 		  	#foreach($annoparam in $anno.params) 
-		  		#if($velocityCount>0),#end$annoparam.name$equal$annoparam.value
+		  		#if($velocityCount>0),#end$annoparam.name$equal#if($annoparam.vtype == 1)"#end$annoparam.value#if($annoparam.vtype == 1)"#end
 		  	#end
 		  $end
 	  #end
@@ -55,13 +55,13 @@ $attoken$anno.name
 		  #if($anno.params.size() > 0)
 			  $start
 			  	#foreach($annoparam in $anno.params) 
-			  		#if($velocityCount>0),#end$annoparam.name$equal$annoparam.value
+			  		#if($velocityCount>0),#end$annoparam.name$equal#if($annoparam.vtype == 1)"#end$annoparam.value#if($annoparam.vtype == 1)"#end
 			  	#end
 			  $end
 		  #end
 	  #end
     #end
-private #if($filed.staticed)static#end $filed.type $filed.fieldName #if($filed.defaultValue)$equal $filed.defaultValue#end;	
+private #if($filed.staticed)static#end $filed.type $filed.fieldName #if($filed.defaultValue)$equal #if($annoparam.type.equals("String"))"#end$filed.defaultValue#if($annoparam.type.equals("String"))"#end#end;	
 #end
 #foreach($method in $methods)	
 	public #foreach($anno in $method.returnannos)
@@ -69,7 +69,7 @@ private #if($filed.staticed)static#end $filed.type $filed.fieldName #if($filed.d
 			  #if($anno.params.size() > 0)
 				  $start
 				  	#foreach($annoparam in $anno.params) 
-				  		#if($velocityCount>0),#end$annoparam.name$equal$annoparam.value
+				  		#if($velocityCount>0),#end$annoparam.name$equal#if($annoparam.vtype == 1)"#end$annoparam.value#if($annoparam.vtype == 1)"#end
 				  	#end
 				  $end
 			  #end
@@ -81,7 +81,7 @@ private #if($filed.staticed)static#end $filed.type $filed.fieldName #if($filed.d
 			  #if($anno.params.size() > 0)
 				  $start
 				  	#foreach($annoparam in $anno.params) 
-				  		#if($velocityCount>0),#end$annoparam.name$equal$annoparam.value
+				  		#if($velocityCount>0),#end$annoparam.name$equal#if($annoparam.vtype == 1)"#end$annoparam.value#if($annoparam.vtype == 1)"#end
 				  	#end
 				  $end
 			  #end

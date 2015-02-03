@@ -25,10 +25,10 @@ public class MethodParam {
 	public void setType(String type) {
 		this.type = type;
 	}
-	public void addAnnotation(Annotation annotation) {
+	public MethodParam addAnnotation(Annotation annotation) {
 		if(annos == null)
 			annos = new ArrayList<Annotation>();
 		annos.add(annotation);
-		
+		return this;
 	}
 }

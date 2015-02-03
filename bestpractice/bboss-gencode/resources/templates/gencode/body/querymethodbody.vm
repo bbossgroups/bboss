@@ -2,18 +2,17 @@
 #set( $end = ')' )
 #set( $dot = '.' )
 #if($componentType == 1)
-List<$entityName> beans = null;
 try{
-	beans=executor.queryListBean($entityName${dot}class,"queryList$entityName", conditions);
+	List<$entityName> beans=executor.queryListBean($entityName${dot}class,"queryList$entityName", conditions);
+	return beans;
 }catch(Exception e){
 	throw new $exception$start"query $entityName failed:",e$end;
 }
-return beans;
 #elseif($componentType == 2)
-List<${entityName}> beans = null;
 try {
-	beans = ${entityVarName}Service.queryList${entityName}s(conditions);
-	return "queryList${entityName}s";
+	List<${entityName}> ${entityVarName}s = ${entityVarName}Service.queryList${entityName}s(conditions);
+	model.addAttribute("${entityVarName}s", ${entityVarName}s);
+	return "path:queryList${entityName}s";
 } catch ($exception e) {
 	throw e;
 } catch (Exception e) {
