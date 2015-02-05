@@ -2,7 +2,9 @@ package org.frameworkset.gencode.core;
 
 import java.util.List;
 
+import org.frameworkset.gencode.entity.ConditionField;
 import org.frameworkset.gencode.entity.Field;
+import org.frameworkset.gencode.entity.SortField;
 
 
 public class SQLBuilder {
@@ -63,8 +65,8 @@ public class SQLBuilder {
 				builder.append(f.getColumnname()).append("=").append("#[").append(f.getFieldName()).append("]");
 				
 			}
-			
-			builder.append(" where ").append(gencodeService.getPrimaryKeyName()).append("=?");
+			if(gencodeService.getPrimaryField() != null)
+				builder.append(" where ").append(gencodeService.getPrimaryField().getColumnname()).append("=#[").append(this.gencodeService.getPrimaryField().getFieldName()).append("]");
 			sql.setSql(builder.toString());
 		}
 		else if(sql.getOptype().equals( Constant.get))
@@ -77,7 +79,49 @@ public class SQLBuilder {
 		else if(sql.getOptype().equals( Constant.paginequery))
 		{
 			StringBuilder builder = new StringBuilder();
-			builder.append("select * from ").append(tableName).append(" where ").append(gencodeService.getPrimaryKeyName()).append("=?");
+			builder.append("select * from ").append(tableName).append(" where 1=1");
+			List<ConditionField> conditions = this.gencodeService.getConditions();
+			if(conditions != null && conditions.size() > 0)
+			{
+				for(ConditionField f:conditions)
+				{
+					if(f.isIsor())
+					{
+						builder.append(" or ").append(f.getColumnName()).append("=#[").append(f.getFieldName()).append("]");
+					}
+					else
+					{
+						builder.append(" and ").append(f.getColumnName()).append("=#[").append(f.getFieldName()).append("]");
+					}
+					//需要考虑分组的功能
+				}
+			}
+			List<SortField> sorts = this.gencodeService.getSortFields();
+			
+			{
+				builder.append("\r\n#if($sortKey && !$sortKey.equals(\"\"))\r\n")
+				  	.append("order by $sortKey \r\n")
+				  	.append("#if($sortDesc)\r\n")
+				  	.append("  	desc \r\n")
+				  	.append("#else\r\n")
+				  	.append(" asc\r\n")
+				  	.append(" #end\r\n	");
+				if(sorts != null && sorts.size() > 0)
+				{
+					builder.append(" #else\r\n")
+					  	.append(" order by  ");
+					int i = 0;
+					for(SortField f: sorts)
+					{
+						if(i > 0)
+							builder.append(",");
+						builder.append(f.getColumnName()).append(" ").append(f.isDesc()?"desc":"asc");
+					}
+				}
+				builder.append("\r\n#end");
+				
+				
+			}
 			
 			sql.setSql(builder.toString());
 		}

@@ -11,7 +11,23 @@ try{
 return datas;
 #elseif($componentType == 2)
 try {
-	ListInfo ${entityVarName}s = ${entityVarName}Service.queryListInfo${entityName}s(conditions,   offset,pagesize);
+    if(sortkKey != null && !sortKey.equals(""))
+    {
+    	conditions.put("sortKey",sortKey);
+    	conditions.put("sortDesc",desc);
+    }
+    #if($conditionFields && conditionFields.size() > 0)
+    	#foreach($cf in $conditionFields)
+    		#if($cf.isLike())
+    		     String value = conditions.get("$cf.fieldName");
+    		     if(value != null && !values.equals(""))
+    		     {
+    		     	conditions.put("$cf.fieldName","%"+value+"%");
+    		     }
+    		#end
+    	#end
+	#end    
+	ListInfo ${entityVarName}s = ${entityVarName}Service.queryListInfo${entityName}s(conditions,offset,pagesize);
 	model.addAttribute("${entityVarName}s", ${entityVarName}s);
 	return "path:queryListInfo${entityVarName}s";
 } catch ($exception e) {

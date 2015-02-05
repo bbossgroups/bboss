@@ -11,7 +11,7 @@ public class DeleteMethodBodyGenerate implements MethodBodyGenerate {
 
 	@Override
 	public void gen(Method method, String entityName,String entityVarName,String paramName,String encodecharset,String exception,int componentType) throws Exception {
-		 Template addmethodbodytempalte = VelocityUtil.getTemplate("gencode/body/deletemethodbody.vm");
+		 Template addmethodbodytempalte = VelocityUtil.getTemplate("gencode/java/body/deletemethodbody.vm");
 		 VelocityContext context = new VelocityContext();
 		 
 		 

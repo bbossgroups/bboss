@@ -12,7 +12,7 @@ public class DeleteBatchMethodBodyGenerate implements MethodBodyGenerate {
 	@Override
 	public void gen(Method method, String entityName,String entityVarName, String paramName,
 			String encodecharset, String exception,int componentType) throws Exception {
-		 Template addmethodbodytempalte = VelocityUtil.getTemplate("gencode/body/deletebatchmethodbody.vm");
+		 Template addmethodbodytempalte = VelocityUtil.getTemplate("gencode/java/body/deletebatchmethodbody.vm");
 		 VelocityContext context = new VelocityContext();
 		 
 		 

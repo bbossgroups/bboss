@@ -16,10 +16,12 @@ import java.util.Set;
 import org.apache.log4j.Logger;
 import org.frameworkset.gencode.entity.AnnoParam;
 import org.frameworkset.gencode.entity.Annotation;
+import org.frameworkset.gencode.entity.ConditionField;
 import org.frameworkset.gencode.entity.Field;
 import org.frameworkset.gencode.entity.Method;
 import org.frameworkset.gencode.entity.MethodParam;
 import org.frameworkset.gencode.entity.ModuleMetaInfo;
+import org.frameworkset.gencode.entity.SortField;
 
 import bboss.org.apache.velocity.Template;
 import bboss.org.apache.velocity.VelocityContext;
@@ -57,6 +59,7 @@ public class GencodeServiceImpl {
 	private String entityName;
 	private String entityParamName;
 	private SQLBuilder SQLBuilder ; 
+	private List<SortField> sortFields;
 	
 	public String genCode(ModuleMetaInfo moduleMetaInfo)
 	{
@@ -150,7 +153,7 @@ public class GencodeServiceImpl {
 	/**
 	 * 需要作为查询条件的字段
 	 */
-	private List<Field> conditions;
+	private List<ConditionField> conditions;
 	private List<SQL> sqls;
 	/**
 	 * 所有字段
@@ -228,6 +231,12 @@ public class GencodeServiceImpl {
 		}
 		try {
 			sqlconfig.createNewFile();
+			 Template persistentsqltempalte = VelocityUtil.getTemplate("gencode/conf/persistentsql.vm");
+			 VelocityContext context = new VelocityContext();
+			
+			 context.put("sqls", this.sqls);
+		 
+			 writFile(context,persistentsqltempalte,sqlconfig,this.moduleMetaInfo.getEncodecharset());
 		} catch (Exception e) {
 			log.error("gen Persistent Config file failed:"+sqlconfig.getAbsolutePath(),e);
 		}
@@ -300,29 +309,33 @@ public class GencodeServiceImpl {
 			serviceImpl.createNewFile();
 			controller.createNewFile();
 			exception.createNewFile();
+			TableMetaData tableMeta = DBUtil.getTableMetaData(this.moduleMetaInfo.getDatasourceName(), this.moduleMetaInfo.getTableName());
+			List<Field> fields = getFields( tableMeta);
+			 this.allfields = fields;
 			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			String date = format.format(new Date());			
-			TableMetaData tableMeta = DBUtil.getTableMetaData(this.moduleMetaInfo.getDatasourceName(), this.moduleMetaInfo.getTableName());
+			
  
-			 genEntity(  entityName,  date,  "v1.0","yinbp","sany","服务实体类",entity,tableMeta);
+			 genEntity(  entityName,  date,  "v1.0","yinbp","sany","服务实体类",entity);
 			 genServiceInf(  entityName + "Service",date,"v1.0","yinbp","sany","服务管理接口", serviceInf);
 			 genException(entityName + "Exception",date,"v1.0","yinbp","sany","异常处理类",exception);
 			 String serviceInfName = entityName + "Service";
 			 genServiceImpl(entityName + "ServiceImpl",serviceInfName,date,"v1.0","yinbp","sany","业务处理类",serviceImpl);
 			 genActionCode(entityName+"Controller",null,serviceInfName, date,"v1.0","yinbp","sany","控制器处理类",controller);
+			 
 		} catch (Exception e) {
 			log.error("gen java source file failed:",e);
 		}
 		
 	}
 	
-	private void genEntity(String entityName,String date,String version,String author,String company,String description,File entity,TableMetaData tableMeta) throws Exception
+	private void genEntity(String entityName,String date,String version,String author,String company,String description,File entity) throws Exception
 	{
-		 List<Field> fields = getFields( tableMeta);
-		 List<String> imports = evalImport(fields);
-		 Template entitytempalte = VelocityUtil.getTemplate("gencode/entityjava.vm");
+		 
+		 List<String> imports = evalImport(this.allfields);
+		 Template entitytempalte = VelocityUtil.getTemplate("gencode/java/entityjava.vm");
 		 VelocityContext context = new VelocityContext();
-		 context.put("fields", fields);
+		 context.put("fields", this.allfields);
 		 String entityPackageInfo = this.moduleMetaInfo.getPackagePath() + "." + this.moduleMetaInfo.getModuleName()+".entity";
 		 context.put("package", entityPackageInfo);
 		 context.put("imports", imports);
@@ -343,7 +356,7 @@ public class GencodeServiceImpl {
 	{
 		 
 		 List<String> imports = evalServiceInfImport();
-		 Template serviceinftempalte = VelocityUtil.getTemplate("gencode/serviceinfjava.vm");
+		 Template serviceinftempalte = VelocityUtil.getTemplate("gencode/java/serviceinfjava.vm");
 		 VelocityContext context = new VelocityContext();
 		 context.put("fields", null);
 		 String entityPackageInfo = this.moduleMetaInfo.getPackagePath() + "." + this.moduleMetaInfo.getModuleName()+".service";
@@ -384,7 +397,7 @@ public class GencodeServiceImpl {
 	{
 		 
 		 List<String> imports = evalServiceImplImport();
-		 Template serviceinftempalte = VelocityUtil.getTemplate("gencode/serviceimpljava.vm");
+		 Template serviceinftempalte = VelocityUtil.getTemplate("gencode/java/serviceimpljava.vm");
 		 VelocityContext context = new VelocityContext();
 		 List<Field> fields = getServiceImplFields(serviceName);
 		 context.put("fields", fields);
@@ -412,7 +425,7 @@ public class GencodeServiceImpl {
 	{
 		 
 		 List<String> imports = evalActionImplImport();
-		 Template serviceinftempalte = VelocityUtil.getTemplate("gencode/serviceimpljava.vm");
+		 Template serviceinftempalte = VelocityUtil.getTemplate("gencode/java/serviceimpljava.vm");
 		 VelocityContext context = new VelocityContext();
 		 String serviceName = (serviceInfName.charAt(0)+"").toLowerCase() + serviceInfName.substring(1);
 		 List<Field> fields = getActionImplFields(actionName,serviceInfName,serviceName);
@@ -950,7 +963,7 @@ public class GencodeServiceImpl {
 	{
 		 
 		 List<String> imports = null;
-		 Template serviceinftempalte = VelocityUtil.getTemplate("gencode/exception.vm");
+		 Template serviceinftempalte = VelocityUtil.getTemplate("gencode/java/exception.vm");
 		 VelocityContext context = new VelocityContext();
 		 context.put("fields", null);
 		 String entityPackageInfo = this.moduleMetaInfo.getPackagePath() + "." + this.moduleMetaInfo.getModuleName()+".service";
@@ -1095,7 +1108,7 @@ import com.frameworkset.util.StringUtil;
          }
 	}
 
-	public List<Field> getConditions() {
+	public List<ConditionField> getConditions() {
 		return conditions;
 	}
 
@@ -1121,6 +1134,14 @@ import com.frameworkset.util.StringUtil;
 
 	public String getPrimaryKeyName() {
 		return primaryKeyName;
+	}
+
+	public List<SortField> getSortFields() {
+		return sortFields;
+	}
+
+	public void setSortFields(List<SortField> sortFields) {
+		this.sortFields = sortFields;
 	}
 
 }
