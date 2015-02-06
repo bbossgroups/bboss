@@ -77,7 +77,16 @@ public class GencodeServiceImpl {
 		this.init();
 		genJavaSource();
 		genPersistentConfigfile();
+		genUI();
 		return "success";
+	}
+	
+	/**
+	 * 生成前端jsp ui界面
+	 */
+	private void genUI()
+	{
+		
 	}
 	
 	private void init()

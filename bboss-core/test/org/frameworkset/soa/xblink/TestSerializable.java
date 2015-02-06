@@ -765,7 +765,7 @@ public class TestSerializable
 		
 		try
 		{
-			String bigcontent = FileUtil.getFileContent(new File("F:\\workspace\\bbossgroups-3.5\\bbossaop\\test\\org\\frameworkset\\soa\\testxstream.xml"), "UTF-8");
+			String bigcontent = FileUtil.getFileContent(new File("F:\\workspace\\bbossgroups-3.5\\bboss-core\\test\\org\\frameworkset\\soa\\testxstream.xml"), "UTF-8");
 			//预热bboss和xstream
 			test1.setXmlvalue(bigcontent);
 			String xml = ObjectSerializable.toXML(test1);
@@ -852,7 +852,7 @@ public class TestSerializable
 		
 		try
 		{
-			String bigcontent = FileUtil.getFileContent(new File("F:\\workspace\\bbossgroups-3.5\\bbossaop\\test\\org\\frameworkset\\soa\\testxstream.xml"), "UTF-8");
+			String bigcontent = FileUtil.getFileContent(new File("F:\\workspace\\bbossgroups-3.5\\bboss-core\\test\\org\\frameworkset\\soa\\testxstream.xml"), "UTF-8");
 			//预热bboss和xstream
 			test1.setXmlvalue(bigcontent);
 			String xml = ObjectSerializable.toXML(test1);
@@ -892,7 +892,7 @@ public class TestSerializable
 		
 		try
 		{
-			String bigcontent = FileUtil.getFileContent(new File("F:\\workspace\\bbossgroups-3.5\\bbossaop\\test\\org\\frameworkset\\soa\\testxstream.xml"), "UTF-8");
+			String bigcontent = FileUtil.getFileContent(new File("F:\\workspace\\bbossgroups-3.5\\bboss-core\\test\\org\\frameworkset\\soa\\testxstream.xml"), "UTF-8");
 			//预热bboss和xstream
 			test1.setXmlvalue(bigcontent);
 			String xml = ObjectSerializable.toXML(test1);
@@ -935,7 +935,7 @@ public class TestSerializable
 		test3.setTest2(test2);
 		try
 		{
-			String bigcontent = FileUtil.getFileContent(new File("F:\\workspace\\bbossgroups-3.5\\bbossaop\\test\\org\\frameworkset\\soa\\testxstream.xml"), "UTF-8");
+			String bigcontent = FileUtil.getFileContent(new File("F:\\workspace\\bbossgroups-3.5\\bboss-core\\test\\org\\frameworkset\\soa\\testxstream.xml"), "UTF-8");
 			//预热bboss和xstream
 			test1.setXmlvalue(bigcontent);
 			long s = System.currentTimeMillis();
@@ -1052,7 +1052,7 @@ public class TestSerializable
 	public void testBigData() throws IOException
 	{
 		//这个文件中内容有47565 字节，约47k的数据
-		String bigcontent = FileUtil.getFileContent(new File("F:\\workspace\\bbossgroups-3.5\\bbossaop\\test\\org\\frameworkset\\soa\\testxstream.xml"), "UTF-8");
+		String bigcontent = FileUtil.getFileContent(new File("F:\\workspace\\bbossgroups-3.5\\bboss-core\\test\\org\\frameworkset\\soa\\testxstream.xml"), "UTF-8");
 		PhoneNumber phone = new PhoneNumber();
 		phone.setCode(123);
 		phone.setNumber("1234-456");
@@ -1175,7 +1175,7 @@ public class TestSerializable
 	public void testFileData() throws IOException
 	{
 		//这个文件中内容有47565 字节，约47k的数据
-		File fileData = new File("F:\\workspace\\bbossgroups-3.5\\bbossaop\\test\\org\\frameworkset\\soa\\testxstream.xml");
+		File fileData = new File("F:\\workspace\\bbossgroups-3.5\\bboss-core\\test\\org\\frameworkset\\soa\\testxstream.xml");
 		PhoneNumber phone = new PhoneNumber();
 		phone.setCode(123);
 		phone.setNumber("1234-456");
