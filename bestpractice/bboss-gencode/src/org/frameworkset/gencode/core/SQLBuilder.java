@@ -85,43 +85,49 @@ public class SQLBuilder {
 			{
 				for(ConditionField f:conditions)
 				{
-					if(f.isIsor())
+					if(f.isOr())
 					{
-						builder.append(" or ").append(f.getColumnName()).append("=#[").append(f.getFieldName()).append("]");
+						builder.append(" or ");
 					}
 					else
 					{
-						builder.append(" and ").append(f.getColumnName()).append("=#[").append(f.getFieldName()).append("]");
+						builder.append(" and ");
+					}
+					if(f.isLike())
+					{
+						builder.append(f.getColumnName()).append(" like ").append("#[").append(f.getFieldName()).append("]");
+					}
+					else
+					{
+						builder.append(f.getColumnName()).append("=#[").append(f.getFieldName()).append("]");
 					}
 					//需要考虑分组的功能
 				}
 			}
 			List<SortField> sorts = this.gencodeService.getSortFields();
 			
+			 
+			builder.append("\r\n#if($sortKey && !$sortKey.equals(\"\"))\r\n")
+			  	.append("order by $sortKey \r\n")
+			  	.append("#if($sortDesc)\r\n")
+			  	.append("  	desc \r\n")
+			  	.append("#else\r\n")
+			  	.append(" asc\r\n")
+			  	.append(" #end\r\n	");
+			if(sorts != null && sorts.size() > 0)
 			{
-				builder.append("\r\n#if($sortKey && !$sortKey.equals(\"\"))\r\n")
-				  	.append("order by $sortKey \r\n")
-				  	.append("#if($sortDesc)\r\n")
-				  	.append("  	desc \r\n")
-				  	.append("#else\r\n")
-				  	.append(" asc\r\n")
-				  	.append(" #end\r\n	");
-				if(sorts != null && sorts.size() > 0)
+				builder.append(" #else\r\n")
+				  	.append(" order by  ");
+				int i = 0;
+				for(SortField f: sorts)
 				{
-					builder.append(" #else\r\n")
-					  	.append(" order by  ");
-					int i = 0;
-					for(SortField f: sorts)
-					{
-						if(i > 0)
-							builder.append(",");
-						builder.append(f.getColumnName()).append(" ").append(f.isDesc()?"desc":"asc");
-					}
+					if(i > 0)
+						builder.append(",");
+					builder.append(f.getColumnName()).append(" ").append(f.isDesc()?"desc":"asc");
+					i ++;
 				}
-				builder.append("\r\n#end");
-				
-				
 			}
+			builder.append("\r\n#end");			 
 			
 			sql.setSql(builder.toString());
 		}

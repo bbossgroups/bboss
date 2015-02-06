@@ -5,9 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.StringWriter;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -61,7 +59,17 @@ public class GencodeServiceImpl {
 	private SQLBuilder SQLBuilder ; 
 	private List<SortField> sortFields;
 	
-
+	private Field primaryField ;
+	private String primaryKeyName;
+	/**
+	 * 需要作为查询条件的字段
+	 */
+	private List<ConditionField> conditions;
+	private List<SQL> sqls;
+	/**
+	 * 所有字段
+	 */
+	private List<Field> allfields;
 	
 	public String genCode(ModuleMetaInfo moduleMetaInfo)
 	{
@@ -151,17 +159,7 @@ public class GencodeServiceImpl {
 		else
 			return type;
 	}
-	private Field primaryField ;
-	private String primaryKeyName;
-	/**
-	 * 需要作为查询条件的字段
-	 */
-	private List<ConditionField> conditions;
-	private List<SQL> sqls;
-	/**
-	 * 所有字段
-	 */
-	private List<Field> allfields;
+
 	
 	private List<Field> getFields(TableMetaData tableMeta)
 	{
@@ -491,7 +489,7 @@ public class GencodeServiceImpl {
 	private void setMethodBody(Method method,String methodtype,String entityName,String paramName,String encodecharset,String exception,int componenttype) throws Exception
 	{
 		MethodBodyGenerate methodBodyGenerate = methodBodyGenerates.get(methodtype);
-		methodBodyGenerate.gen(method,entityName,entityParamName,paramName,encodecharset,exception, componenttype);
+		methodBodyGenerate.gen(method,entityName,entityParamName,paramName,encodecharset,exception, componenttype,this);
 	}
 	private List<Method> getActionMethods(int classtype ) throws Exception {
 		List<String> exceptions = new ArrayList<String>();
@@ -1154,6 +1152,24 @@ import com.frameworkset.util.StringUtil;
 
 	public void setSortFields(List<SortField> sortFields) {
 		this.sortFields = sortFields;
+	}
+	
+	public void addCondition(ConditionField cf)
+	{
+		if(this.conditions == null)
+		{
+			conditions = new ArrayList<ConditionField>();
+		}
+		conditions.add(cf);
+	}
+	
+	public void addSortField(SortField sf)
+	{
+		if(this.sortFields == null)
+		{
+			sortFields = new ArrayList<SortField>();
+		}
+		sortFields.add(sf);
 	}
 
 }

@@ -11,7 +11,7 @@ public class PagineQueryMethodBodyGenerate implements MethodBodyGenerate {
 
 	@Override
 	public void gen(Method method, String entityName,String entityVarName, String paramName,
-			String encodecharset, String exception,int componentType) throws Exception {
+			String encodecharset, String exception,int componentType,GencodeServiceImpl gencodeService) throws Exception {
 		Template addmethodbodytempalte = VelocityUtil.getTemplate("gencode/java/body/paginequerymethodbody.vm");
 		 VelocityContext context = new VelocityContext();
 		 
@@ -21,6 +21,7 @@ public class PagineQueryMethodBodyGenerate implements MethodBodyGenerate {
 		 context.put("exception", exception);
 		 context.put("componentType", componentType);
 		 context.put("entityVarName", entityVarName);
+		 context.put("conditionFields", gencodeService.getConditions());
 		 String body = GencodeServiceImpl.writetostring(context,addmethodbodytempalte,encodecharset);
 		 method.setBody(body);
 

@@ -3,30 +3,31 @@ package org.frameworkset.gencode.entity;
 public class ConditionField {
 	private String fieldName;
 	private String columnName;
-	private boolean isor = false;
-	private boolean islike = false;
+	private boolean or = false;
+	private boolean like = false;
 	public String getFieldName() {
 		return fieldName;
 	}
 	public void setFieldName(String fieldName) {
 		this.fieldName = fieldName;
 	}
-	public boolean isIsor() {
-		return isor;
-	}
-	public void setIsor(boolean isor) {
-		this.isor = isor;
-	}
-	public boolean isIslike() {
-		return islike;
-	}
-	public void setIslike(boolean islike) {
-		this.islike = islike;
-	}
+	
 	public String getColumnName() {
 		return columnName;
 	}
 	public void setColumnName(String columnName) {
 		this.columnName = columnName;
+	}
+	public boolean isOr() {
+		return or;
+	}
+	public void setOr(boolean or) {
+		this.or = or;
+	}
+	public boolean isLike() {
+		return like;
+	}
+	public void setLike(boolean like) {
+		this.like = like;
 	}
 }

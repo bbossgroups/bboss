@@ -13,6 +13,6 @@ public interface MethodBodyGenerate {
 	 * @param methodtype 1:service component 2:action component
 	 * @throws Exception
 	 */
-	public void gen(Method method, String entityName,String entityVarName,String paramName,String encodecharset,String exception,int componentType)  throws Exception;
+	public void gen(Method method, String entityName,String entityVarName,String paramName,String encodecharset,String exception,int componentType,GencodeServiceImpl gencodeService)  throws Exception;
 
 }
