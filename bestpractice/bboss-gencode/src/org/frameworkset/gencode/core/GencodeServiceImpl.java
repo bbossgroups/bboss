@@ -61,6 +61,8 @@ public class GencodeServiceImpl {
 	private SQLBuilder SQLBuilder ; 
 	private List<SortField> sortFields;
 	
+
+	
 	public String genCode(ModuleMetaInfo moduleMetaInfo)
 	{
 		this.moduleMetaInfo = moduleMetaInfo; 
@@ -72,6 +74,7 @@ public class GencodeServiceImpl {
 	
 	private void init()
 	{
+			
 		SQLBuilder = new SQLBuilder(this);
 		File f = new File(moduleMetaInfo.getSourcedir());
 		if(!f.exists())
@@ -218,6 +221,8 @@ public class GencodeServiceImpl {
 		}
 		return null;
 	}
+	
+	
 	/**
 	 * 生成持久层sql配置文件
 	 * @throws Exception 
@@ -235,7 +240,14 @@ public class GencodeServiceImpl {
 			 VelocityContext context = new VelocityContext();
 			
 			 context.put("sqls", this.sqls);
-		 
+			 context.put("description",entityParamName+" sql配置文件");
+			 context.put("company", this.moduleMetaInfo.getCompany());
+			 context.put("gendate", this.moduleMetaInfo.getDate());
+			 context.put("author", this.moduleMetaInfo.getAuthor());
+			 context.put("version", this.moduleMetaInfo.getVersion());
+			 context.put("filename", this.entityParamName + ".xml");
+			 
+			
 			 writFile(context,persistentsqltempalte,sqlconfig,this.moduleMetaInfo.getEncodecharset());
 		} catch (Exception e) {
 			log.error("gen Persistent Config file failed:"+sqlconfig.getAbsolutePath(),e);
@@ -312,16 +324,15 @@ public class GencodeServiceImpl {
 			TableMetaData tableMeta = DBUtil.getTableMetaData(this.moduleMetaInfo.getDatasourceName(), this.moduleMetaInfo.getTableName());
 			List<Field> fields = getFields( tableMeta);
 			 this.allfields = fields;
-			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			String date = format.format(new Date());			
+			
 			
  
-			 genEntity(  entityName,  date,  "v1.0","yinbp","sany","服务实体类",entity);
-			 genServiceInf(  entityName + "Service",date,"v1.0","yinbp","sany","服务管理接口", serviceInf);
-			 genException(entityName + "Exception",date,"v1.0","yinbp","sany","异常处理类",exception);
+			 genEntity(  entityName,  this.moduleMetaInfo.getDate(),  this.moduleMetaInfo.getVersion(),this.moduleMetaInfo.getAuthor(),this.moduleMetaInfo.getCompany(),"服务实体类",entity);
+			 genServiceInf(  entityName + "Service",this.moduleMetaInfo.getDate(),this.moduleMetaInfo.getVersion(),this.moduleMetaInfo.getAuthor(),this.moduleMetaInfo.getCompany(),"服务管理接口", serviceInf);
+			 genException(entityName + "Exception",this.moduleMetaInfo.getDate(),this.moduleMetaInfo.getVersion(),this.moduleMetaInfo.getAuthor(),this.moduleMetaInfo.getCompany(),"异常处理类",exception);
 			 String serviceInfName = entityName + "Service";
-			 genServiceImpl(entityName + "ServiceImpl",serviceInfName,date,"v1.0","yinbp","sany","业务处理类",serviceImpl);
-			 genActionCode(entityName+"Controller",null,serviceInfName, date,"v1.0","yinbp","sany","控制器处理类",controller);
+			 genServiceImpl(entityName + "ServiceImpl",serviceInfName,this.moduleMetaInfo.getDate(),this.moduleMetaInfo.getVersion(),this.moduleMetaInfo.getAuthor(),this.moduleMetaInfo.getCompany(),"业务处理类",serviceImpl);
+			 genActionCode(entityName+"Controller",null,serviceInfName, this.moduleMetaInfo.getDate(),this.moduleMetaInfo.getVersion(),this.moduleMetaInfo.getAuthor(),this.moduleMetaInfo.getCompany(),"控制器处理类",controller);
 			 
 		} catch (Exception e) {
 			log.error("gen java source file failed:",e);
@@ -444,6 +455,7 @@ public class GencodeServiceImpl {
 		
 		 List<Method> methods = getMethods(2);
 		 context.put("methods", methods);
+		 context.put("conditionFields", this.conditions);
 	 
 		 writFile(context,serviceinftempalte,action,this.moduleMetaInfo.getEncodecharset());
 		

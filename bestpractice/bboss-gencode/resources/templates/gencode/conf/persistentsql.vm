@@ -18,7 +18,7 @@
  **
  * Title: $filename
  * Description: $description
- * $company
+ * Company:$company
  * Copyright (c) 2015
  * @Date $gendate
  * @author $author

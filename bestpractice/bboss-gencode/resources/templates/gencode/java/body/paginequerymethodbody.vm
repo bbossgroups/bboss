@@ -11,12 +11,12 @@ try{
 return datas;
 #elseif($componentType == 2)
 try {
-    if(sortkKey != null && !sortKey.equals(""))
+    if(sortKey != null && !sortKey.equals(""))
     {
     	conditions.put("sortKey",sortKey);
     	conditions.put("sortDesc",desc);
     }
-    #if($conditionFields && conditionFields.size() > 0)
+    #if($conditionFields && $conditionFields.size() > 0)
     	#foreach($cf in $conditionFields)
     		#if($cf.isLike())
     		     String value = conditions.get("$cf.fieldName");

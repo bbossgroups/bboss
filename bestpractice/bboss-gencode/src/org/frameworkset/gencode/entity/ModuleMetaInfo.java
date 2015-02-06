@@ -45,6 +45,10 @@ public class ModuleMetaInfo {
 	private String datasourceName;
 	private boolean autogenprimarykey = true;
 	private String encodecharset = "UTF-8";
+	private String date = "";			
+	private String company;
+	private String author;
+	private String version;
 	/**
 	 * 0:2003
 	 * 1:2007
@@ -199,6 +203,30 @@ public class ModuleMetaInfo {
 	}
 	public void setEncodecharset(String encodecharset) {
 		this.encodecharset = encodecharset;
+	}
+	public String getDate() {
+		return date;
+	}
+	public void setDate(String date) {
+		this.date = date;
+	}
+	public String getCompany() {
+		return company;
+	}
+	public void setCompany(String company) {
+		this.company = company;
+	}
+	public String getAuthor() {
+		return author;
+	}
+	public void setAuthor(String author) {
+		this.author = author;
+	}
+	public String getVersion() {
+		return version;
+	}
+	public void setVersion(String version) {
+		this.version = version;
 	}
 
 }
