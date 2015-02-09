@@ -1646,10 +1646,10 @@ public class DispatchServlet extends HttpServlet {
 			strategies = new ArrayList(classNames.length);
 			for (int i = 0; i < classNames.length; i++) {
 				String className = classNames[i];
-				if (JdkVersion.getMajorJavaVersion() < JdkVersion.JAVA_15 && className.indexOf("Annotation") != -1) {
-					// Skip Java 5 specific strategies when running on JDK 1.4...
-					continue;
-				}
+//				if (JdkVersion.getMajorJavaVersion() < JdkVersion.JAVA_15 && className.indexOf("Annotation") != -1) {
+//					// Skip Java 5 specific strategies when running on JDK 1.4...
+//					continue;
+//				}
 				try {
 					Class clazz = ClassUtils.forName(className, DispatchServlet.class.getClassLoader());
 					Object strategy = createDefaultStrategy(context, clazz);
