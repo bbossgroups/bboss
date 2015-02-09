@@ -416,14 +416,12 @@ public class DispatchServlet extends HttpServlet {
 		Iterator it = this.handlerAdapters.iterator();
 		while (it.hasNext()) {
 			HandlerAdapter ha = (HandlerAdapter) it.next();
-			if (logger.isTraceEnabled()) {
-				logger.trace("Testing handler adapter [" + ha + "]");
-			}
+		
 			if (ha.supports(handler)) {
 				return ha;
 			}
 		}
-		throw new ServletException("No adapter for handler [" + handler +
+		throw new ServletException("No adapter for handler [" + handler.getHandlerName()  +
 				"]: Does your handler implement a supported interface like Controller?");
 	}
 	

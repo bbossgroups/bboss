@@ -85,6 +85,11 @@ public  class HandlerMeta
 		this.pathNames = pathNames;
 	}
 	
+	public String toString()
+	{		
+		return this.getHandlerName();
+	}
+	
 	/**
 	 * 有效处理死循环
 	 * @param path
