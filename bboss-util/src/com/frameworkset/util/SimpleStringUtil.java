@@ -343,6 +343,20 @@ public class SimpleStringUtil  {
 		}
 		return contain;
 	}
+	
+	public static String getNormalPath(String parent,String file)
+	{
+		if(parent.endsWith("/") && !file.startsWith("/"))
+			return parent + file;
+		else if(!parent.endsWith("/") && file.startsWith("/"))
+			return parent + file;
+		else if(!parent.endsWith("/") && !file.startsWith("/"))
+			return parent + "/"+file;
+		else //if(parent.endsWith("/") && file.startsWith("/"))
+			return parent + file.substring(1);
+		
+			
+	}
 
 	public static String getFormatDate(Date date, String formate) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat(formate);

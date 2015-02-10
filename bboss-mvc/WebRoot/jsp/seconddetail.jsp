@@ -104,7 +104,7 @@
 							Size:&nbsp;
 							<%
 							 
-							 file = new File(parentPath+bean.getControllerClass());
+							 file = new File(StringUtil.getNormalPath(parentPath,bean.getControllerClass()));
 							
 							%>
 							
@@ -128,10 +128,10 @@
 								
 								if(charset!= null&&!charset.equals(""))
 								 //content = StringUtil.HTMLNoBREncode(FileUtil.getFileContent(parentPath+bean.getControllerClass(),charset));
-								 	content = DemoUtil.getDemoContentCache().getFileContent(parentPath+bean.getControllerClass(),charset,true);
+								 	content = DemoUtil.getDemoContentCache().getFileContent(StringUtil.getNormalPath(parentPath,bean.getControllerClass()),charset,true);
 								else 
 							     	//content = StringUtil.HTMLNoBREncode(FileUtil.getFileContent(parentPath+bean.getControllerClass()));
-							     	content = DemoUtil.getDemoContentCache().getFileContent(parentPath+bean.getControllerClass(),null,true);
+							     	content = DemoUtil.getDemoContentCache().getFileContent(StringUtil.getNormalPath(parentPath,bean.getControllerClass()),null,true);
 								out.print(content);
 								%>
 							 </pg:notnull>
@@ -156,12 +156,19 @@
 						  List<String> beanClass = bean.getBeanClass();
 	                   	  if(beanClass != null&&beanClass.size()>0)
 						  for(int i=0;i<beanClass.size();i++){
-							  file = new File(parentPath+beanClass.get(i));
+						  
+							  file = new File(StringUtil.getNormalPath(parentPath,beanClass.get(i)));
+							  if(!file.exists())
+							  {
+							  	file = new File(new File(parentPath).getParent(),beanClass.get(i));
+							  	
+							  }
+							  
 						%>
 				<div class="info">
 					<p>
 						JavaBean路径：
-						<span class="value"><%=parentPath%><%=beanClass.get(i) %></span>
+						<span class="value"><%=file.getAbsolutePath()%></span>
 						Size:&nbsp;
 						
 						<span class="value"><%=file.length()%>b</span> Last modified:&nbsp;
@@ -180,11 +187,11 @@
 						    // content = StringUtil.HTMLNoBREncode(FileUtil.getFileContent(parentPath+beanClass.get(i)));
 						    if(charset == null || charset.equals(""))
 						    {
-						     	content =DemoUtil.getDemoContentCache().getFileContent(parentPath+beanClass.get(i),null,true);
+						     	content =DemoUtil.getDemoContentCache().getFileContent(file.getAbsolutePath(),null,true);
 						    }
 						    else
 						    {
-						    	content =DemoUtil.getDemoContentCache().getFileContent(parentPath+beanClass.get(i),charset,true);
+						    	content =DemoUtil.getDemoContentCache().getFileContent(file.getAbsolutePath(),charset,true);
 						    }
 						    	
 							out.print(content);
@@ -209,7 +216,7 @@
 						<span class="value"><%=parentPath%><pg:cell colName="configFile" defaultValue=""/></span>
 						Size:&nbsp;
 						<%
-						file = new File(parentPath+bean.getConfigFile());
+						file = new File(StringUtil.getNormalPath(parentPath,bean.getConfigFile()));
 						%>
 						<span class="value"><%=file.length()%>b</span> Last modified:&nbsp;
 						<span class="value"><%=sdf.format(new Date(file.lastModified()))%></span> Encoding:&nbsp;
@@ -232,10 +239,10 @@
 								charset = bean.getConfigFileCharset();
 								if(charset!= null&&!charset.equals(""))
 								 //content = StringUtil.HTMLNoBREncode(FileUtil.getFileContent(parentPath+bean.getConfigFile(),charset));
-								 content =DemoUtil.getDemoContentCache().getFileContent(parentPath+bean.getConfigFile(),charset,true);
+								 content =DemoUtil.getDemoContentCache().getFileContent(StringUtil.getNormalPath(parentPath,bean.getConfigFile()),charset,true);
 								else 
 							     //content = StringUtil.HTMLNoBREncode(FileUtil.getFileContent(parentPath+bean.getConfigFile()));
-							     content =DemoUtil.getDemoContentCache().getFileContent(parentPath+bean.getConfigFile(),null,true);								
+							     content =DemoUtil.getDemoContentCache().getFileContent(StringUtil.getNormalPath(parentPath,bean.getConfigFile()),null,true);								
 								out.print(content);							
 							}
 							%>
@@ -262,7 +269,7 @@
 						Size:&nbsp;
 						<%
 						 FormUrl furl = (FormUrl)dataSet.getOrigineObject();
-						 File formfile = new File(parentPath+furl.getFormPath());
+						 File formfile = new File(StringUtil.getNormalPath(parentPath,furl.getFormPath()));
 						%>
 						<span class="value"><%=formfile.length()%>b</span> Last modified:&nbsp;
 						<span class="value"><%=sdf.format(new Date(formfile.lastModified())) %></span> Encoding:&nbsp;
@@ -278,10 +285,10 @@
 							<pre name="code" class="jscript"><%
 							charset = furl.getCharset();
 							if(charset!= null&&!charset.equals(""))
-							 content = DemoUtil.getDemoContentCache().getFileContent(parentPath+furl.getFormPath(),charset,true);
+							 content = DemoUtil.getDemoContentCache().getFileContent(StringUtil.getNormalPath(parentPath,furl.getFormPath()),charset,true);
 							 
 							else 
-						     content = DemoUtil.getDemoContentCache().getFileContent(parentPath+furl.getFormPath(),null,true);
+						     content = DemoUtil.getDemoContentCache().getFileContent(StringUtil.getNormalPath(parentPath,furl.getFormPath()),null,true);
 							out.print(content);
 							%>
 							</pre>
