@@ -41,7 +41,7 @@ import com.frameworkset.commons.pool2.impl.DefaultPooledObject;
  * {@link com.frameworkset.commons.dbcp2.PoolableConnection PoolableConnection}s.
  *
  * @author John D. McNally
- * @version $Revision: 1572242 $ $Date: 2014-02-26 12:34:39 -0800 (Wed, 26 Feb 2014) $
+ * @version $Id: CPDSConnectionFactory.java 1649430 2015-01-04 21:29:32Z tn $
  * @since 2.0
  */
 class CPDSConnectionFactory
@@ -73,16 +73,16 @@ class CPDSConnectionFactory
      * Map of PooledConnectionAndInfo instances
      */
     private final Map<PooledConnection, PooledConnectionAndInfo> pcMap =
-        new ConcurrentHashMap<PooledConnection, PooledConnectionAndInfo> ();
+        new ConcurrentHashMap<PooledConnection, PooledConnectionAndInfo>();
 
     /**
-     * Create a new <tt>PoolableConnectionFactory</tt>.
+     * Create a new {@code PoolableConnectionFactory}.
      *
      * @param cpds the ConnectionPoolDataSource from which to obtain
      * PooledConnection's
      * @param validationQuery a query to use to {@link #validateObject
      * validate} {@link Connection}s. Should return at least one row.
-     * May be <tt>null</tt> in which case {@link Connection#isValid(int)} will
+     * May be {@code null} in which case {@link Connection#isValid(int)} will
      * be used to validate connections.
      * @param validationQueryTimeout Timeout in seconds before validation fails
      * @param rollbackAfterValidation whether a rollback should be issued
@@ -145,7 +145,7 @@ class CPDSConnectionFactory
         } catch (SQLException e) {
             throw new RuntimeException(e.getMessage());
         }
-        return new DefaultPooledObject<PooledConnectionAndInfo> (pci);
+        return new DefaultPooledObject<PooledConnectionAndInfo>(pci);
     }
 
     /**

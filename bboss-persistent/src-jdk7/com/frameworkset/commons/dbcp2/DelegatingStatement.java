@@ -40,7 +40,7 @@ import java.util.List;
  * @author Glenn L. Nielsen
  * @author James House
  * @author Dirk Verbeeck
- * @version $Revision: 1588087 $ $Date: 2014-04-16 15:12:15 -0700 (Wed, 16 Apr 2014) $
+ * @version $Id: DelegatingStatement.java 1658644 2015-02-10 08:59:07Z tn $
  * @since 2.0
  */
 public class DelegatingStatement extends AbandonedTrace implements Statement {
@@ -75,17 +75,17 @@ public class DelegatingStatement extends AbandonedTrace implements Statement {
 
     /**
      * If my underlying {@link Statement} is not a
-     * <tt>DelegatingStatement</tt>, returns it,
+     * {@code DelegatingStatement}, returns it,
      * otherwise recursively invokes this method on
      * my delegate.
      * <p>
      * Hence this method will return the first
-     * delegate that is not a <tt>DelegatingStatement</tt>
-     * or <tt>null</tt> when no non-<tt>DelegatingStatement</tt>
+     * delegate that is not a {@code DelegatingStatement}
+     * or {@code null} when no non-{@code DelegatingStatement}
      * delegate can be found by transversing this chain.
      * <p>
      * This method is useful when you may have nested
-     * <tt>DelegatingStatement</tt>s, and you want to make
+     * {@code DelegatingStatement}s, and you want to make
      * sure to obtain a "genuine" {@link Statement}.
      * @see #getDelegate
      */
@@ -139,7 +139,7 @@ public class DelegatingStatement extends AbandonedTrace implements Statement {
                     _conn = null;
                 }
 
-                // The JDBC spec requires that a statment close any open
+                // The JDBC spec requires that a statement close any open
                 // ResultSet's when it is closed.
                 // FIXME The PreparedStatement we're wrapping should handle this for us.
                 // See bug 17301 for what could happen when ResultSets are closed twice.

@@ -46,7 +46,7 @@ import com.frameworkset.commons.pool2.impl.GenericKeyedObjectPoolConfig;
  * using the new password.</p>
  *
  * @author John D. McNally
- * @version $Revision: 1572242 $ $Date: 2014-02-26 12:34:39 -0800 (Wed, 26 Feb 2014) $
+ * @version $Id: SharedPoolDataSource.java 1649430 2015-01-04 21:29:32Z tn $
  * @since 2.0
  */
 public class SharedPoolDataSource extends InstanceKeyDataSource {
@@ -195,7 +195,7 @@ public class SharedPoolDataSource extends InstanceKeyDataSource {
                 getDefaultTimeBetweenEvictionRunsMillis());
 
         KeyedObjectPool<UserPassKey,PooledConnectionAndInfo> tmpPool =
-                new GenericKeyedObjectPool<UserPassKey, PooledConnectionAndInfo> (factory, config);
+                new GenericKeyedObjectPool<UserPassKey, PooledConnectionAndInfo>(factory, config);
         factory.setPool(tmpPool);
         pool = tmpPool;
     }

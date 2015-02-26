@@ -21,6 +21,7 @@ import java.sql.SQLException;
 /**
  * Defines the attributes and methods that will be exposed via JMX for
  * {@link PoolableConnection} instances.
+ * @version $Id: PoolableConnectionMXBean.java 1649430 2015-01-04 21:29:32Z tn $
  * @since 2.0
  */
 public interface PoolableConnectionMXBean {

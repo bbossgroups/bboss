@@ -18,8 +18,8 @@
 package com.frameworkset.commons.dbcp2;
 
 import java.sql.Connection;
-import java.sql.Statement;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Collection;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -43,7 +43,7 @@ import com.frameworkset.commons.pool2.impl.DefaultPooledObject;
  * @author Glenn L. Nielsen
  * @author James House
  * @author Dirk Verbeeck
- * @version $Revision: 1572242 $ $Date: 2014-02-26 12:34:39 -0800 (Wed, 26 Feb 2014) $
+ * @version $Id: PoolableConnectionFactory.java 1659452 2015-02-13 04:00:39Z psteitz $
  * @since 2.0
  */
 public class PoolableConnectionFactory
@@ -53,7 +53,7 @@ public class PoolableConnectionFactory
             LogFactory.getLog(PoolableConnectionFactory.class);
 
     /**
-     * Create a new <tt>PoolableConnectionFactory</tt>.
+     * Create a new {@code PoolableConnectionFactory}.
      * @param connFactory the {@link ConnectionFactory} from which to obtain
      * base {@link Connection}s
      */
@@ -88,7 +88,7 @@ public class PoolableConnectionFactory
 
     /**
      * Sets the SQL statements I use to initialize newly created {@link Connection}s.
-     * Using <tt>null</tt> turns off connection initialization.
+     * Using {@code null} turns off connection initialization.
      * @param connectionInitSqls SQL statement to initialize {@link Connection}s.
      */
     public void setConnectionInitSql(Collection<String> connectionInitSqls) {
@@ -99,7 +99,7 @@ public class PoolableConnectionFactory
      * Sets the {@link ObjectPool} in which to pool {@link Connection}s.
      * @param pool the {@link ObjectPool} in which to pool those {@link Connection}s
      */
-    synchronized public void setPool(ObjectPool<PoolableConnection> pool) {
+    public synchronized void setPool(ObjectPool<PoolableConnection> pool) {
         if(null != _pool && pool != _pool) {
             try {
                 _pool.close();
@@ -190,7 +190,6 @@ public class PoolableConnectionFactory
         this.rollbackOnReturn = rollbackOnReturn;
     }
 
-
     public Integer getDefaultQueryTimeout() {
         return defaultQueryTimeout;
     }
@@ -199,6 +198,58 @@ public class PoolableConnectionFactory
         this.defaultQueryTimeout = defaultQueryTimeout;
     }
 
+    /**
+     * SQL_STATE codes considered to signal fatal conditions.
+     * <p>
+     * Overrides the defaults in {@link Utils#DISCONNECTION_SQL_CODES}
+     * (plus anything starting with {@link Utils#DISCONNECTION_SQL_CODE_PREFIX}).
+     * If this property is non-null and {@link #isFastFailValidation()} is
+     * {@code true}, whenever connections created by this factory generate exceptions
+     * with SQL_STATE codes in this list, they will be marked as "fatally disconnected"
+     * and subsequent validations will fail fast (no attempt at isValid or validation
+     * query).</p>
+     * <p>
+     * If {@link #isFastFailValidation()} is {@code false} setting this property has no
+     * effect.</p>
+     *
+     * @return SQL_STATE codes overriding defaults
+     * @since 2.1
+     */
+    public Collection<String> getDisconnectionSqlCodes() {
+        return _disconnectionSqlCodes;
+    }
+
+    /**
+     * @see #getDisconnectionSqlCodes()
+     * @param disconnectionSqlCodes
+     * @since 2.1
+     */
+    public void setDisconnectionSqlCodes(Collection<String> disconnectionSqlCodes) {
+        _disconnectionSqlCodes = disconnectionSqlCodes;
+    }
+
+    /**
+     * True means that validation will fail immediately for connections that
+     * have previously thrown SQLExceptions with SQL_STATE indicating fatal
+     * disconnection errors.
+     *
+     * @return true if connections created by this factory will fast fail validation.
+     * @see #setDisconnectionSqlCodes(Collection)
+     * @since 2.1
+     */
+    public boolean isFastFailValidation() {
+        return _fastFailValidation;
+    }
+
+    /**
+     * @see #isFastFailValidation()
+     * @param fastFailValidation true means connections created by this factory will
+     * fast fail validation
+     * @since 2.1
+     */
+    public void setFastFailValidation(boolean fastFailValidation) {
+        _fastFailValidation = fastFailValidation;
+    }
 
     @Override
     public PooledObject<PoolableConnection> makeObject() throws Exception {
@@ -235,6 +286,8 @@ public class PoolableConnectionFactory
                 base.append(Long.toString(connIndex));
                 config.setJmxNameBase(base.toString());
                 config.setJmxNamePrefix(Constants.JMX_STATEMENT_POOL_PREFIX);
+            } else {
+                config.setJmxEnabled(false);
             }
             KeyedObjectPool<PStmtKey,DelegatingPreparedStatement> stmtPool =
                     new GenericKeyedObjectPool<PStmtKey, DelegatingPreparedStatement>((PoolingConnection)conn, config);
@@ -251,7 +304,8 @@ public class PoolableConnectionFactory
                     Constants.JMX_CONNECTION_BASE_EXT + connIndex);
         }
 
-        PoolableConnection pc = new PoolableConnection(conn,_pool, connJmxName);
+        PoolableConnection pc = new PoolableConnection(conn,_pool, connJmxName,
+                                      _disconnectionSqlCodes, _fastFailValidation);
 
         return new DefaultPooledObject<PoolableConnection>(pc);
     }
@@ -401,7 +455,7 @@ public class PoolableConnectionFactory
         if (maxConnLifetimeMillis > 0) {
             long lifetime = System.currentTimeMillis() - p.getCreateTime();
             if (lifetime > maxConnLifetimeMillis) {
-                throw new Exception(Utils.getMessage(
+                throw new LifetimeExceededException(Utils.getMessage(
                         "connectionFactory.lifetimeExceeded",
                         Long.valueOf(lifetime),
                         Long.valueOf(maxConnLifetimeMillis)));
@@ -424,12 +478,22 @@ public class PoolableConnectionFactory
     protected boolean getCacheState() {
         return _cacheState;
     }
+    
+    protected ObjectName getDataSourceJmxName() {
+        return dataSourceJmxName;
+    }
+    
+    protected AtomicLong getConnectionIndex() {
+        return connectionIndex;
+    }
 
     private final ConnectionFactory _connFactory;
     private final ObjectName dataSourceJmxName;
     private volatile String _validationQuery = null;
     private volatile int _validationQueryTimeout = -1;
     private Collection<String> _connectionInitSqls = null;
+    private Collection<String> _disconnectionSqlCodes = null;
+    private boolean _fastFailValidation = false;
     private volatile ObjectPool<PoolableConnection> _pool = null;
     private Boolean _defaultReadOnly = null;
     private Boolean _defaultAutoCommit = null;

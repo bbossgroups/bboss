@@ -34,6 +34,7 @@ import java.lang.ref.WeakReference;
  * to check the status of the transaction.
  *
  * @author Dain Sundstrom
+ * @version $Id: TransactionContext.java 1649430 2015-01-04 21:29:32Z tn $
  * @since 2.0
  */
 public class TransactionContext {
@@ -90,7 +91,9 @@ public class TransactionContext {
         Transaction transaction = getTransaction();
         try {
             XAResource xaResource = transactionRegistry.getXAResource(sharedConnection);
-            transaction.enlistResource(xaResource);
+            if ( !transaction.enlistResource(xaResource) ) {
+                throw new SQLException("Unable to enlist connection in transaction: enlistResource returns 'false'.");
+            }
         } catch (RollbackException e) {
             // transaction was rolled back... proceed as if there never was a transaction
         } catch (SystemException e) {

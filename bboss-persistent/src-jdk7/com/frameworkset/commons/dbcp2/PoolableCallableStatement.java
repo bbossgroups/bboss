@@ -32,7 +32,7 @@ import com.frameworkset.commons.pool2.KeyedObjectPool;
  * The {@link #close} method returns this statement to its containing pool. (See {@link PoolingConnection}.)
  *
  * @see PoolingConnection
- * @version $Revision: 1572242 $ $Date: 2014-02-26 12:34:39 -0800 (Wed, 26 Feb 2014) $
+ * @version $Id: PoolableCallableStatement.java 1658644 2015-02-10 08:59:07Z tn $
  * @since 2.0
  */
 public class PoolableCallableStatement extends DelegatingCallableStatement {
@@ -112,7 +112,7 @@ public class PoolableCallableStatement extends DelegatingCallableStatement {
             getConnectionInternal().removeTrace(this);
         }
 
-        // The JDBC spec requires that a statment close any open
+        // The JDBC spec requires that a statement close any open
         // ResultSet's when it is closed.
         // FIXME The PreparedStatement we're wrapping should handle this for us.
         // See DBCP-10 for what could happen when ResultSets are closed twice.

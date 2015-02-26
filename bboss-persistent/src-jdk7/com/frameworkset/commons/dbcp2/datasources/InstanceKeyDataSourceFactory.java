@@ -19,9 +19,10 @@ package com.frameworkset.commons.dbcp2.datasources;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+
 import java.util.Hashtable;
-import java.util.Map;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
@@ -36,15 +37,15 @@ import javax.naming.spi.ObjectFactory;
  * A JNDI ObjectFactory which creates <code>SharedPoolDataSource</code>s
  * or <code>PerUserPoolDataSource</code>s
  *
- * @version $Revision: 1572242 $ $Date: 2014-02-26 12:34:39 -0800 (Wed, 26 Feb 2014) $
+ * @version $Id: InstanceKeyDataSourceFactory.java 1649430 2015-01-04 21:29:32Z tn $
  * @since 2.0
  */
 abstract class InstanceKeyDataSourceFactory implements ObjectFactory {
 
     private static final Map<String, InstanceKeyDataSource> instanceMap =
-            new ConcurrentHashMap<String, InstanceKeyDataSource> ();
+            new ConcurrentHashMap<String, InstanceKeyDataSource>();
 
-    synchronized static String registerNewInstance(InstanceKeyDataSource ds) {
+    static synchronized String registerNewInstance(InstanceKeyDataSource ds) {
         int max = 0;
         Iterator<String> i = instanceMap.keySet().iterator();
         while (i.hasNext()) {

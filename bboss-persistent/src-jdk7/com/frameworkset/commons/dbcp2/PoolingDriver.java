@@ -38,7 +38,7 @@ import com.frameworkset.commons.pool2.ObjectPool;
  *
  * @author Rodney Waldhoff
  * @author Dirk Verbeeck
- * @version $Revision: 1572244 $ $Date: 2014-02-26 12:38:08 -0800 (Wed, 26 Feb 2014) $
+ * @version $Id: PoolingDriver.java 1649430 2015-01-04 21:29:32Z tn $
  * @since 2.0
  */
 public class PoolingDriver implements Driver {
@@ -52,7 +52,7 @@ public class PoolingDriver implements Driver {
 
     /** The map of registered pools. */
     protected static final HashMap<String,ObjectPool<? extends Connection>> pools =
-            new HashMap<String,ObjectPool<? extends Connection>>();
+            new HashMap<String, ObjectPool<? extends Connection>>();
 
     /** Controls access to the underlying connection */
     private final boolean accessToUnderlyingConnectionAllowed;

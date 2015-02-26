@@ -20,6 +20,7 @@ import java.sql.Connection;
 
 import javax.management.ObjectName;
 
+import com.frameworkset.commons.dbcp2.Constants;
 import com.frameworkset.commons.dbcp2.DelegatingPreparedStatement;
 import com.frameworkset.commons.dbcp2.PStmtKey;
 import com.frameworkset.commons.dbcp2.PoolableConnection;
@@ -34,6 +35,7 @@ import com.frameworkset.commons.pool2.impl.DefaultPooledObject;
 /**
  * A {@link PoolableConnectionFactory} that creates {@link PoolableManagedConnection}s.
  *
+ * @version $Id: PoolableManagedConnectionFactory.java 1659452 2015-02-13 04:00:39Z psteitz $
  * @since 2.0
  */
 public class PoolableManagedConnectionFactory extends PoolableConnectionFactory {
@@ -66,7 +68,7 @@ public class PoolableManagedConnectionFactory extends PoolableConnectionFactory 
             throw new IllegalStateException("Connection factory returned null from createConnection");
         }
         initializeConnection(conn);
-        if(getPoolStatements()) {
+        if (getPoolStatements()) {
             conn = new PoolingConnection(conn);
             GenericKeyedObjectPoolConfig config = new GenericKeyedObjectPoolConfig();
             config.setMaxTotalPerKey(-1);
@@ -74,6 +76,17 @@ public class PoolableManagedConnectionFactory extends PoolableConnectionFactory 
             config.setMaxWaitMillis(0);
             config.setMaxIdlePerKey(1);
             config.setMaxTotal(getMaxOpenPreparedStatements());
+            ObjectName dataSourceJmxName = getDataSourceJmxName();
+            long connIndex = getConnectionIndex().getAndIncrement();
+            if (dataSourceJmxName != null) {
+                StringBuilder base = new StringBuilder(dataSourceJmxName.toString());
+                base.append(Constants.JMX_CONNECTION_BASE_EXT);
+                base.append(Long.toString(connIndex));
+                config.setJmxNameBase(base.toString());
+                config.setJmxNamePrefix(Constants.JMX_STATEMENT_POOL_PREFIX);
+            } else {
+                config.setJmxEnabled(false);
+            }
             KeyedObjectPool<PStmtKey,DelegatingPreparedStatement> stmtPool =
                 new GenericKeyedObjectPool<PStmtKey, DelegatingPreparedStatement>((PoolingConnection)conn, config);
             ((PoolingConnection)conn).setStatementPool(stmtPool);

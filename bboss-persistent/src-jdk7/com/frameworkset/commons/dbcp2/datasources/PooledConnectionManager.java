@@ -18,12 +18,13 @@
 package com.frameworkset.commons.dbcp2.datasources;
 
 import java.sql.SQLException;
+
 import javax.sql.PooledConnection;
 
 /**
  * Methods to manage PoolableConnections and the connection pools that source them.
  *
- * @version $Revision: 1572242 $ $Date: 2014-02-26 12:34:39 -0800 (Wed, 26 Feb 2014) $
+ * @version $Id: PooledConnectionManager.java 1658644 2015-02-10 08:59:07Z tn $
  * @since 2.0
  */
 interface PooledConnectionManager {
@@ -37,7 +38,7 @@ interface PooledConnectionManager {
     void invalidate(PooledConnection pc) throws SQLException;
 
     /**
-     * Sets the databsase password used when creating connections.
+     * Sets the database password used when creating connections.
      *
      * @param password password used when authenticating to the database
      */

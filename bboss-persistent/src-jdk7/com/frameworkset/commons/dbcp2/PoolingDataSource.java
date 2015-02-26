@@ -27,6 +27,7 @@ import javax.sql.DataSource;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+
 import com.frameworkset.commons.pool2.ObjectPool;
 import com.frameworkset.commons.pool2.impl.GenericObjectPool;
 
@@ -40,13 +41,13 @@ import com.frameworkset.commons.pool2.impl.GenericObjectPool;
  * @author Glenn L. Nielsen
  * @author James House
  * @author Dirk Verbeeck
- * @version $Revision: 1592119 $ $Date: 2014-05-02 16:32:43 -0700 (Fri, 02 May 2014) $
+ * @version $Id: PoolingDataSource.java 1655299 2015-01-28 13:27:51Z psteitz $
  * @since 2.0
  */
 public class PoolingDataSource<C extends Connection> implements DataSource {
 
     private static final Log log = LogFactory.getLog(PoolingDataSource.class);
-    
+
     /** Controls access to the underlying connection */
     private boolean accessToUnderlyingConnectionAllowed = false;
 
@@ -67,6 +68,21 @@ public class PoolingDataSource<C extends Connection> implements DataSource {
                 ObjectPool<PoolableConnection> p = (ObjectPool<PoolableConnection>) _pool;
                 pcf.setPool(p);
             }
+        }
+    }
+
+    /**
+     * Close and free all {@link Connection}s from the pool.
+     * @since 2.1
+     */
+    
+    public void close() throws Exception {
+        try {
+            _pool.close();
+        } catch(RuntimeException rte) {
+            throw new RuntimeException(Utils.getMessage("pool.close.fail"), rte);
+        } catch(Exception e) {
+            throw new SQLException(Utils.getMessage("pool.close.fail"), e);
         }
     }
 

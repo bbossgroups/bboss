@@ -88,7 +88,7 @@ import com.frameworkset.commons.pool2.impl.GenericKeyedObjectPoolConfig;
  * </p>
  *
  * @author John D. McNally
- * @version $Revision: 1572242 $ $Date: 2014-02-26 12:34:39 -0800 (Wed, 26 Feb 2014) $
+ * @version $Id: DriverAdapterCPDS.java 1658644 2015-02-10 08:59:07Z tn $
  * @since 2.0
  */
 public class DriverAdapterCPDS
@@ -218,7 +218,7 @@ public class DriverAdapterCPDS
                 config.setNumTestsPerEvictionRun(0);
                 config.setMinEvictableIdleTimeMillis(0);
             }
-            stmtPool = new GenericKeyedObjectPool<PStmtKeyCPDS, PoolablePreparedStatement<PStmtKeyCPDS>> (pci, config);
+            stmtPool = new GenericKeyedObjectPool<PStmtKeyCPDS, PoolablePreparedStatement<PStmtKeyCPDS>>(pci, config);
             pci.setStatementPool(stmtPool);
         }
         return pci;
@@ -685,7 +685,7 @@ public class DriverAdapterCPDS
     }
 
     /**
-     * Returns the maximun number of prepared statements.
+     * Returns the maximum number of prepared statements.
      *
      * @return maxPrepartedStatements value
      */

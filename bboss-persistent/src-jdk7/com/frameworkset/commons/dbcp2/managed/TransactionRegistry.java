@@ -33,11 +33,12 @@ import com.frameworkset.commons.dbcp2.DelegatingConnection;
 
 /**
  * TransactionRegistry tracks Connections and XAResources in a transacted environment for a single XAConnectionFactory.
- * </p>
+ * <p>
  * The TransactionRegistry hides the details of transaction processing from the existing DBCP pooling code, and gives
  * the ManagedConnection a way to enlist connections in a transaction, allowing for the maximal rescue of DBCP.
- *
+ * </p>
  * @author Dain Sundstrom
+ * @version $Id: TransactionRegistry.java 1660791 2015-02-19 04:13:10Z psteitz $
  * @since 2.0
  */
 public class TransactionRegistry {
@@ -92,7 +93,7 @@ public class TransactionRegistry {
 
     /**
      * Gets the active TransactionContext or null if not Transaction is active.
-     * @return the active TransactionContext or null if not Transaction is active
+     * @return the active TransactionContext or null if no Transaction is active
      * @throws SQLException if an error occurs while fetching the transaction
      */
     public TransactionContext getActiveTransactionContext() throws SQLException {

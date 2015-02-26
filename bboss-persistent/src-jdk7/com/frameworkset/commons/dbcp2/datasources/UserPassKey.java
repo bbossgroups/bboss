@@ -28,7 +28,7 @@ import java.io.Serializable;
  * <p>{@link InstanceKeyDataSource#getConnection(String, String)} validates that the password used to create
  * a connection matches the password provided by the client.</p>
  *
- * @version $Revision: 1572242 $ $Date: 2014-02-26 12:34:39 -0800 (Wed, 26 Feb 2014) $
+ * @version $Id: UserPassKey.java 1649430 2015-01-04 21:29:32Z tn $
  * @since 2.0
  */
 class UserPassKey implements Serializable {

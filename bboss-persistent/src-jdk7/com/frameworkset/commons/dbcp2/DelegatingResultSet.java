@@ -17,27 +17,27 @@
 
 package com.frameworkset.commons.dbcp2;
 
-import java.sql.ResultSet;
-import java.math.BigDecimal;
-import java.sql.Date;
-import java.sql.Time;
-import java.sql.Timestamp;
 import java.io.InputStream;
-import java.sql.SQLWarning;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
 import java.io.Reader;
-import java.sql.Statement;
-import java.util.Map;
-import java.sql.Connection;
-import java.sql.Ref;
+import java.math.BigDecimal;
+import java.sql.Array;
 import java.sql.Blob;
 import java.sql.Clob;
-import java.sql.Array;
-import java.util.Calendar;
+import java.sql.Connection;
+import java.sql.Date;
 import java.sql.NClob;
+import java.sql.Ref;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.RowId;
+import java.sql.SQLException;
+import java.sql.SQLWarning;
 import java.sql.SQLXML;
+import java.sql.Statement;
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.util.Calendar;
+import java.util.Map;
 
 /**
  * A base delegating implementation of {@link ResultSet}.
@@ -54,7 +54,7 @@ import java.sql.SQLXML;
  * @author Glenn L. Nielsen
  * @author James House
  * @author Dirk Verbeeck
- * @version $Revision: 1572242 $ $Date: 2014-02-26 12:34:39 -0800 (Wed, 26 Feb 2014) $
+ * @version $Id: DelegatingResultSet.java 1649430 2015-01-04 21:29:32Z tn $
  * @since 2.0
  */
 public final class DelegatingResultSet extends AbandonedTrace implements ResultSet {
@@ -122,17 +122,17 @@ public final class DelegatingResultSet extends AbandonedTrace implements ResultS
 
     /**
      * If my underlying {@link ResultSet} is not a
-     * <tt>DelegatingResultSet</tt>, returns it,
+     * {@code DelegatingResultSet}, returns it,
      * otherwise recursively invokes this method on
      * my delegate.
      * <p>
      * Hence this method will return the first
-     * delegate that is not a <tt>DelegatingResultSet</tt>,
-     * or <tt>null</tt> when no non-<tt>DelegatingResultSet</tt>
+     * delegate that is not a {@code DelegatingResultSet},
+     * or {@code null} when no non-{@code DelegatingResultSet}
      * delegate can be found by transversing this chain.
      * <p>
      * This method is useful when you may have nested
-     * <tt>DelegatingResultSet</tt>s, and you want to make
+     * {@code DelegatingResultSet}s, and you want to make
      * sure to obtain a "genuine" {@link ResultSet}.
      */
     public ResultSet getInnermostDelegate() {

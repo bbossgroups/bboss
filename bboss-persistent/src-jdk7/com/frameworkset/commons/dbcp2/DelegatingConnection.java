@@ -17,27 +17,27 @@
 
 package com.frameworkset.commons.dbcp2;
 
+import java.sql.Array;
+import java.sql.Blob;
 import java.sql.CallableStatement;
+import java.sql.ClientInfoStatus;
+import java.sql.Clob;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
+import java.sql.NClob;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLClientInfoException;
 import java.sql.SQLException;
 import java.sql.SQLWarning;
+import java.sql.SQLXML;
+import java.sql.Savepoint;
 import java.sql.Statement;
+import java.sql.Struct;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.sql.ResultSet;
-import java.sql.Array;
-import java.sql.Blob;
-import java.sql.ClientInfoStatus;
-import java.sql.Clob;
-import java.sql.NClob;
-import java.sql.SQLClientInfoException;
-import java.sql.SQLXML;
-import java.sql.Savepoint;
-import java.sql.Struct;
-import java.util.Collections;
 import java.util.Properties;
 import java.util.concurrent.Executor;
 
@@ -62,7 +62,7 @@ import java.util.concurrent.Executor;
  * @author Glenn L. Nielsen
  * @author James House
  * @author Dirk Verbeeck
- * @version $Revision: 1573561 $ $Date: 2014-03-03 05:43:28 -0800 (Mon, 03 Mar 2014) $
+ * @version $Id: DelegatingConnection.java 1658644 2015-02-10 08:59:07Z tn $
  * @since 2.0
  */
 public class DelegatingConnection<C extends Connection> extends AbandonedTrace
@@ -95,7 +95,7 @@ public class DelegatingConnection<C extends Connection> extends AbandonedTrace
 
     /**
      * Returns a string representation of the metadata associated with
-     * the innnermost delegate connection.
+     * the innermost delegate connection.
      */
     @Override
     public String toString() {
@@ -163,17 +163,17 @@ public class DelegatingConnection<C extends Connection> extends AbandonedTrace
 
     /**
      * If my underlying {@link Connection} is not a
-     * <tt>DelegatingConnection</tt>, returns it,
+     * {@code DelegatingConnection}, returns it,
      * otherwise recursively invokes this method on
      * my delegate.
      * <p>
      * Hence this method will return the first
-     * delegate that is not a <tt>DelegatingConnection</tt>,
-     * or <tt>null</tt> when no non-<tt>DelegatingConnection</tt>
+     * delegate that is not a {@code DelegatingConnection},
+     * or {@code null} when no non-{@code DelegatingConnection}
      * delegate can be found by traversing this chain.
      * <p>
      * This method is useful when you may have nested
-     * <tt>DelegatingConnection</tt>s, and you want to make
+     * {@code DelegatingConnection}s, and you want to make
      * sure to obtain a "genuine" {@link Connection}.
      */
     public Connection getInnermostDelegate() {

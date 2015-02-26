@@ -37,7 +37,7 @@ import com.frameworkset.commons.pool2.KeyedObjectPool;
  * @author Glenn L. Nielsen
  * @author James House
  * @author Dirk Verbeeck
- * @version $Revision: 1572242 $ $Date: 2014-02-26 12:34:39 -0800 (Wed, 26 Feb 2014) $
+ * @version $Id: PoolablePreparedStatement.java 1649430 2015-01-04 21:29:32Z tn $
  * @since 2.0
  */
 public class PoolablePreparedStatement<K> extends DelegatingPreparedStatement {

@@ -38,11 +38,11 @@ import com.frameworkset.commons.pool2.PooledObject;
 import com.frameworkset.commons.pool2.impl.DefaultPooledObject;
 
 /**
- * A {*link PoolableObjectFactory} that creates
- * {*link PoolableConnection}s.
+ * A {@link KeyedPooledObjectFactory} that creates
+ * {@link com.frameworkset.commons.dbcp2.PoolableConnection PoolableConnection}s.
  *
  * @author John D. McNally
- * @version $Revision: 1572242 $ $Date: 2014-02-26 12:34:39 -0800 (Wed, 26 Feb 2014) $
+ * @version $Id: KeyedCPDSConnectionFactory.java 1658806 2015-02-10 20:55:52Z tn $
  * @since 2.0
  */
 class KeyedCPDSConnectionFactory
@@ -71,16 +71,16 @@ class KeyedCPDSConnectionFactory
      * Map of PooledConnectionAndInfo instances
      */
     private final Map<PooledConnection, PooledConnectionAndInfo> pcMap =
-        new ConcurrentHashMap<PooledConnection, PooledConnectionAndInfo> ();
+        new ConcurrentHashMap<PooledConnection, PooledConnectionAndInfo>();
 
 
     /**
-     * Create a new <tt>KeyedPoolableConnectionFactory</tt>.
+     * Create a new {@code KeyedPoolableConnectionFactory}.
      * @param cpds the ConnectionPoolDataSource from which to obtain
      * PooledConnections
      * @param validationQuery a query to use to {@link #validateObject validate}
      * {@link Connection}s.  Should return at least one row. May be
-     * <tt>null</tt> in which case3 {@link Connection#isValid(int)} will be used
+     * {@code null} in which case3 {@link Connection#isValid(int)} will be used
      * to validate connections.
      * @param rollbackAfterValidation whether a rollback should be issued after
      * {@link #validateObject validating} {@link Connection}s.
@@ -139,7 +139,7 @@ class KeyedCPDSConnectionFactory
         pci = new PooledConnectionAndInfo(pc, username, password);
         pcMap.put(pc, pci);
 
-        return new DefaultPooledObject<PooledConnectionAndInfo> (pci);
+        return new DefaultPooledObject<PooledConnectionAndInfo>(pci);
     }
 
     /**
@@ -160,7 +160,7 @@ class KeyedCPDSConnectionFactory
      * @param key ignored
      * @param p wrapped {@link PooledConnectionAndInfo} containing the
      *          connection to validate
-     * @return true if validation suceeds
+     * @return true if validation succeeds
      */
     @Override
     public boolean validateObject(UserPassKey key,

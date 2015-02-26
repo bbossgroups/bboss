@@ -16,23 +16,27 @@
  */
 package com.frameworkset.commons.dbcp2;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-
 /**
- * Abstract factory interface for creating {@link java.sql.Connection}s.
+ * Exception thrown when a connection's maximum lifetime has been exceeded.
  *
- * @author Rodney Waldhoff
- * @version $Id: ConnectionFactory.java 1649430 2015-01-04 21:29:32Z tn $
- * @since 2.0
+ * @since 2.1
  */
-public interface ConnectionFactory {
+ class LifetimeExceededException extends Exception {
+
+    private static final long serialVersionUID = -3783783104516492659L;
+
     /**
-     * Create a new {@link java.sql.Connection} in an
-     * implementation specific fashion.
-     *
-     * @return a new {@link java.sql.Connection}
-     * @throws SQLException if a database error occurs creating the connection
+     * Create a LifetimeExceededException.
      */
-    Connection createConnection() throws SQLException;
+    public LifetimeExceededException() {
+        super();
+    }
+
+    /**
+     * Create a LifetimeExceededException with the given message.
+     */
+    public LifetimeExceededException(String message) {
+        super(message);
+    }
+
 }

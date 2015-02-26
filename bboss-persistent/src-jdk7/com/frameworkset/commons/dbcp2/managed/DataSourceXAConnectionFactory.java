@@ -32,6 +32,7 @@ import java.sql.SQLException;
  * An implementation of XAConnectionFactory which uses a real XADataSource to obtain connections and XAResources.
  *
  * @author Dain Sundstrom
+ * @version $Id: DataSourceXAConnectionFactory.java 1649430 2015-01-04 21:29:32Z tn $
  * @since 2.0
  */
 public class DataSourceXAConnectionFactory implements XAConnectionFactory {

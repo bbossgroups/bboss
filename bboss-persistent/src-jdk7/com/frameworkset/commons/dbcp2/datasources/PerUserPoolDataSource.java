@@ -30,10 +30,8 @@ import javax.naming.StringRefAddr;
 import javax.sql.ConnectionPoolDataSource;
 
 import com.frameworkset.commons.dbcp2.SwallowedExceptionLogger;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
 import com.frameworkset.commons.pool2.ObjectPool;
 import com.frameworkset.commons.pool2.impl.GenericObjectPool;
 
@@ -56,7 +54,7 @@ import com.frameworkset.commons.pool2.impl.GenericObjectPool;
  * new password.</p>
  *
  * @author John D. McNally
- * @version $Revision: 1572242 $ $Date: 2014-02-26 12:34:39 -0800 (Wed, 26 Feb 2014) $
+ * @version $Id: PerUserPoolDataSource.java 1649430 2015-01-04 21:29:32Z tn $
  * @since 2.0
  */
 public class PerUserPoolDataSource extends InstanceKeyDataSource {
@@ -92,7 +90,7 @@ public class PerUserPoolDataSource extends InstanceKeyDataSource {
      * Map to keep track of Pools for a given user
      */
     private transient Map<PoolKey, PooledConnectionManager> managers =
-            new HashMap<PoolKey, PooledConnectionManager> ();
+            new HashMap<PoolKey, PooledConnectionManager>();
 
     /**
      * Default no-arg constructor for Serialization
@@ -143,7 +141,7 @@ public class PerUserPoolDataSource extends InstanceKeyDataSource {
             Boolean value) {
         assertInitializationAllowed();
         if (perUserBlockWhenExhausted == null) {
-            perUserBlockWhenExhausted = new HashMap<String, Boolean> ();
+            perUserBlockWhenExhausted = new HashMap<String, Boolean>();
         }
         perUserBlockWhenExhausted.put(username, value);
     }
@@ -152,7 +150,7 @@ public class PerUserPoolDataSource extends InstanceKeyDataSource {
             Map<String,Boolean> userDefaultBlockWhenExhausted) {
         assertInitializationAllowed();
         if (perUserBlockWhenExhausted == null) {
-            perUserBlockWhenExhausted = new HashMap<String, Boolean> ();
+            perUserBlockWhenExhausted = new HashMap<String, Boolean>();
         } else {
             perUserBlockWhenExhausted.clear();
         }
@@ -185,7 +183,7 @@ public class PerUserPoolDataSource extends InstanceKeyDataSource {
             String value) {
         assertInitializationAllowed();
         if (perUserEvictionPolicyClassName == null) {
-            perUserEvictionPolicyClassName = new HashMap<String, String> ();
+            perUserEvictionPolicyClassName = new HashMap<String, String>();
         }
         perUserEvictionPolicyClassName.put(username, value);
     }
@@ -194,7 +192,7 @@ public class PerUserPoolDataSource extends InstanceKeyDataSource {
             Map<String,String> userDefaultEvictionPolicyClassName) {
         assertInitializationAllowed();
         if (perUserEvictionPolicyClassName == null) {
-            perUserEvictionPolicyClassName = new HashMap<String, String> ();
+            perUserEvictionPolicyClassName = new HashMap<String, String>();
         } else {
             perUserEvictionPolicyClassName.clear();
         }
@@ -226,7 +224,7 @@ public class PerUserPoolDataSource extends InstanceKeyDataSource {
     public void setPerUserLifo(String username, Boolean value) {
         assertInitializationAllowed();
         if (perUserLifo == null) {
-            perUserLifo = new HashMap<String, Boolean> ();
+            perUserLifo = new HashMap<String, Boolean>();
         }
         perUserLifo.put(username, value);
     }
@@ -234,7 +232,7 @@ public class PerUserPoolDataSource extends InstanceKeyDataSource {
     void setPerUserLifo(Map<String,Boolean> userDefaultLifo) {
         assertInitializationAllowed();
         if (perUserLifo == null) {
-            perUserLifo = new HashMap<String, Boolean> ();
+            perUserLifo = new HashMap<String, Boolean>();
         } else {
             perUserLifo.clear();
         }
@@ -274,7 +272,7 @@ public class PerUserPoolDataSource extends InstanceKeyDataSource {
     void setPerUserMaxIdle(Map<String,Integer> userDefaultMaxIdle) {
         assertInitializationAllowed();
         if (perUserMaxIdle == null) {
-            perUserMaxIdle = new HashMap<String,Integer>();
+            perUserMaxIdle = new HashMap<String, Integer>();
         } else {
             perUserMaxIdle.clear();
         }
@@ -346,7 +344,7 @@ public class PerUserPoolDataSource extends InstanceKeyDataSource {
     public void setPerUserMaxWaitMillis(String username, Long value) {
         assertInitializationAllowed();
         if (perUserMaxWaitMillis == null) {
-            perUserMaxWaitMillis = new HashMap<String, Long> ();
+            perUserMaxWaitMillis = new HashMap<String, Long>();
         }
         perUserMaxWaitMillis.put(username, value);
     }
@@ -355,7 +353,7 @@ public class PerUserPoolDataSource extends InstanceKeyDataSource {
             Map<String,Long> userDefaultMaxWaitMillis) {
         assertInitializationAllowed();
         if (perUserMaxWaitMillis == null) {
-            perUserMaxWaitMillis = new HashMap<String,Long>();
+            perUserMaxWaitMillis = new HashMap<String, Long>();
         } else {
             perUserMaxWaitMillis.clear();
         }
@@ -388,7 +386,7 @@ public class PerUserPoolDataSource extends InstanceKeyDataSource {
             Long value) {
         assertInitializationAllowed();
         if (perUserMinEvictableIdleTimeMillis == null) {
-            perUserMinEvictableIdleTimeMillis = new HashMap<String, Long> ();
+            perUserMinEvictableIdleTimeMillis = new HashMap<String, Long>();
         }
         perUserMinEvictableIdleTimeMillis.put(username, value);
     }
@@ -397,7 +395,7 @@ public class PerUserPoolDataSource extends InstanceKeyDataSource {
             Map<String,Long> userDefaultMinEvictableIdleTimeMillis) {
         assertInitializationAllowed();
         if (perUserMinEvictableIdleTimeMillis == null) {
-            perUserMinEvictableIdleTimeMillis = new HashMap<String, Long> ();
+            perUserMinEvictableIdleTimeMillis = new HashMap<String, Long>();
         } else {
             perUserMinEvictableIdleTimeMillis.clear();
         }
@@ -430,7 +428,7 @@ public class PerUserPoolDataSource extends InstanceKeyDataSource {
     public void setPerUserMinIdle(String username, Integer value) {
         assertInitializationAllowed();
         if (perUserMinIdle == null) {
-            perUserMinIdle = new HashMap<String, Integer> ();
+            perUserMinIdle = new HashMap<String, Integer>();
         }
         perUserMinIdle.put(username, value);
     }
@@ -438,7 +436,7 @@ public class PerUserPoolDataSource extends InstanceKeyDataSource {
     void setPerUserMinIdle(Map<String,Integer> userDefaultMinIdle) {
         assertInitializationAllowed();
         if (perUserMinIdle == null) {
-            perUserMinIdle = new HashMap<String, Integer> ();
+            perUserMinIdle = new HashMap<String, Integer>();
         } else {
             perUserMinIdle.clear();
         }
@@ -471,7 +469,7 @@ public class PerUserPoolDataSource extends InstanceKeyDataSource {
             Integer value) {
         assertInitializationAllowed();
         if (perUserNumTestsPerEvictionRun == null) {
-            perUserNumTestsPerEvictionRun = new HashMap<String, Integer> ();
+            perUserNumTestsPerEvictionRun = new HashMap<String, Integer>();
         }
         perUserNumTestsPerEvictionRun.put(username, value);
     }
@@ -480,7 +478,7 @@ public class PerUserPoolDataSource extends InstanceKeyDataSource {
             Map<String,Integer> userDefaultNumTestsPerEvictionRun) {
         assertInitializationAllowed();
         if (perUserNumTestsPerEvictionRun == null) {
-            perUserNumTestsPerEvictionRun = new HashMap<String, Integer> ();
+            perUserNumTestsPerEvictionRun = new HashMap<String, Integer>();
         } else {
             perUserNumTestsPerEvictionRun.clear();
         }
@@ -513,7 +511,7 @@ public class PerUserPoolDataSource extends InstanceKeyDataSource {
             Long value) {
         assertInitializationAllowed();
         if (perUserSoftMinEvictableIdleTimeMillis == null) {
-            perUserSoftMinEvictableIdleTimeMillis = new HashMap<String, Long> ();
+            perUserSoftMinEvictableIdleTimeMillis = new HashMap<String, Long>();
         }
         perUserSoftMinEvictableIdleTimeMillis.put(username, value);
     }
@@ -522,7 +520,7 @@ public class PerUserPoolDataSource extends InstanceKeyDataSource {
             Map<String,Long> userDefaultSoftMinEvictableIdleTimeMillis) {
         assertInitializationAllowed();
         if (perUserSoftMinEvictableIdleTimeMillis == null) {
-            perUserSoftMinEvictableIdleTimeMillis = new HashMap<String, Long> ();
+            perUserSoftMinEvictableIdleTimeMillis = new HashMap<String, Long>();
         } else {
             perUserSoftMinEvictableIdleTimeMillis.clear();
         }
@@ -554,7 +552,7 @@ public class PerUserPoolDataSource extends InstanceKeyDataSource {
     public void setPerUserTestOnCreate(String username, Boolean value) {
         assertInitializationAllowed();
         if (perUserTestOnCreate == null) {
-            perUserTestOnCreate = new HashMap<String, Boolean> ();
+            perUserTestOnCreate = new HashMap<String, Boolean>();
         }
         perUserTestOnCreate.put(username, value);
     }
@@ -562,7 +560,7 @@ public class PerUserPoolDataSource extends InstanceKeyDataSource {
     void setPerUserTestOnCreate(Map<String,Boolean> userDefaultTestOnCreate) {
         assertInitializationAllowed();
         if (perUserTestOnCreate == null) {
-            perUserTestOnCreate = new HashMap<String, Boolean> ();
+            perUserTestOnCreate = new HashMap<String, Boolean>();
         } else {
             perUserTestOnCreate.clear();
         }
@@ -594,7 +592,7 @@ public class PerUserPoolDataSource extends InstanceKeyDataSource {
     public void setPerUserTestOnBorrow(String username, Boolean value) {
         assertInitializationAllowed();
         if (perUserTestOnBorrow == null) {
-            perUserTestOnBorrow = new HashMap<String, Boolean> ();
+            perUserTestOnBorrow = new HashMap<String, Boolean>();
         }
         perUserTestOnBorrow.put(username, value);
     }
@@ -602,7 +600,7 @@ public class PerUserPoolDataSource extends InstanceKeyDataSource {
     void setPerUserTestOnBorrow(Map<String,Boolean> userDefaultTestOnBorrow) {
         assertInitializationAllowed();
         if (perUserTestOnBorrow == null) {
-            perUserTestOnBorrow = new HashMap<String, Boolean> ();
+            perUserTestOnBorrow = new HashMap<String, Boolean>();
         } else {
             perUserTestOnBorrow.clear();
         }
@@ -634,7 +632,7 @@ public class PerUserPoolDataSource extends InstanceKeyDataSource {
     public void setPerUserTestOnReturn(String username, Boolean value) {
         assertInitializationAllowed();
         if (perUserTestOnReturn == null) {
-            perUserTestOnReturn = new HashMap<String, Boolean> ();
+            perUserTestOnReturn = new HashMap<String, Boolean>();
         }
         perUserTestOnReturn.put(username, value);
     }
@@ -643,7 +641,7 @@ public class PerUserPoolDataSource extends InstanceKeyDataSource {
             Map<String,Boolean> userDefaultTestOnReturn) {
         assertInitializationAllowed();
         if (perUserTestOnReturn == null) {
-            perUserTestOnReturn = new HashMap<String, Boolean> ();
+            perUserTestOnReturn = new HashMap<String, Boolean>();
         } else {
             perUserTestOnReturn.clear();
         }
@@ -675,7 +673,7 @@ public class PerUserPoolDataSource extends InstanceKeyDataSource {
     public void setPerUserTestWhileIdle(String username, Boolean value) {
         assertInitializationAllowed();
         if (perUserTestWhileIdle == null) {
-            perUserTestWhileIdle = new HashMap<String, Boolean> ();
+            perUserTestWhileIdle = new HashMap<String, Boolean>();
         }
         perUserTestWhileIdle.put(username, value);
     }
@@ -684,7 +682,7 @@ public class PerUserPoolDataSource extends InstanceKeyDataSource {
             Map<String,Boolean> userDefaultTestWhileIdle) {
         assertInitializationAllowed();
         if (perUserTestWhileIdle == null) {
-            perUserTestWhileIdle = new HashMap<String, Boolean> ();
+            perUserTestWhileIdle = new HashMap<String, Boolean>();
         } else {
             perUserTestWhileIdle.clear();
         }
@@ -717,7 +715,7 @@ public class PerUserPoolDataSource extends InstanceKeyDataSource {
             Long value) {
         assertInitializationAllowed();
         if (perUserTimeBetweenEvictionRunsMillis == null) {
-            perUserTimeBetweenEvictionRunsMillis = new HashMap<String, Long> ();
+            perUserTimeBetweenEvictionRunsMillis = new HashMap<String, Long>();
         }
         perUserTimeBetweenEvictionRunsMillis.put(username, value);
     }
@@ -726,7 +724,7 @@ public class PerUserPoolDataSource extends InstanceKeyDataSource {
             Map<String,Long> userDefaultTimeBetweenEvictionRunsMillis ) {
         assertInitializationAllowed();
         if (perUserTimeBetweenEvictionRunsMillis == null) {
-            perUserTimeBetweenEvictionRunsMillis = new HashMap<String, Long> ();
+            perUserTimeBetweenEvictionRunsMillis = new HashMap<String, Long>();
         } else {
             perUserTimeBetweenEvictionRunsMillis.clear();
         }
@@ -754,7 +752,7 @@ public class PerUserPoolDataSource extends InstanceKeyDataSource {
     public void setPerUserDefaultAutoCommit(String username, Boolean value) {
         assertInitializationAllowed();
         if (perUserDefaultAutoCommit == null) {
-            perUserDefaultAutoCommit = new HashMap<String, Boolean> ();
+            perUserDefaultAutoCommit = new HashMap<String, Boolean>();
         }
         perUserDefaultAutoCommit.put(username, value);
     }
@@ -762,7 +760,7 @@ public class PerUserPoolDataSource extends InstanceKeyDataSource {
     void setPerUserDefaultAutoCommit(Map<String,Boolean> userDefaultAutoCommit) {
         assertInitializationAllowed();
         if (perUserDefaultAutoCommit == null) {
-            perUserDefaultAutoCommit = new HashMap<String, Boolean> ();
+            perUserDefaultAutoCommit = new HashMap<String, Boolean>();
         } else {
             perUserDefaultAutoCommit.clear();
         }
@@ -789,7 +787,7 @@ public class PerUserPoolDataSource extends InstanceKeyDataSource {
     public void setPerUserDefaultReadOnly(String username, Boolean value) {
         assertInitializationAllowed();
         if (perUserDefaultReadOnly == null) {
-            perUserDefaultReadOnly = new HashMap<String, Boolean> ();
+            perUserDefaultReadOnly = new HashMap<String, Boolean>();
         }
         perUserDefaultReadOnly.put(username, value);
     }
@@ -797,7 +795,7 @@ public class PerUserPoolDataSource extends InstanceKeyDataSource {
     void setPerUserDefaultReadOnly(Map<String,Boolean> userDefaultReadOnly) {
         assertInitializationAllowed();
         if (perUserDefaultReadOnly == null) {
-            perUserDefaultReadOnly = new HashMap<String, Boolean> ();
+            perUserDefaultReadOnly = new HashMap<String, Boolean>();
         } else {
             perUserDefaultReadOnly.clear();
         }
@@ -825,7 +823,7 @@ public class PerUserPoolDataSource extends InstanceKeyDataSource {
             Integer value) {
         assertInitializationAllowed();
         if (perUserDefaultTransactionIsolation == null) {
-            perUserDefaultTransactionIsolation = new HashMap<String, Integer> ();
+            perUserDefaultTransactionIsolation = new HashMap<String, Integer>();
         }
         perUserDefaultTransactionIsolation.put(username, value);
     }
@@ -834,7 +832,7 @@ public class PerUserPoolDataSource extends InstanceKeyDataSource {
             Map<String,Integer> userDefaultTransactionIsolation) {
         assertInitializationAllowed();
         if (perUserDefaultTransactionIsolation == null) {
-            perUserDefaultTransactionIsolation = new HashMap<String, Integer> ();
+            perUserDefaultTransactionIsolation = new HashMap<String, Integer>();
         } else {
             perUserDefaultTransactionIsolation.clear();
         }
@@ -1022,7 +1020,7 @@ public class PerUserPoolDataSource extends InstanceKeyDataSource {
 
         // Create an object pool to contain our PooledConnections
         GenericObjectPool<PooledConnectionAndInfo> pool =
-                new GenericObjectPool<PooledConnectionAndInfo> (factory);
+                new GenericObjectPool<PooledConnectionAndInfo>(factory);
         factory.setPool(pool);
         pool.setBlockWhenExhausted(getPerUserBlockWhenExhausted(username));
         pool.setEvictionPolicyClassName(

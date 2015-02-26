@@ -19,6 +19,7 @@ package com.frameworkset.commons.dbcp2;
 /**
  * Defines the methods that will be made available via JMX.
  *
+ * @version $Id: BasicDataSourceMXBean.java 1660787 2015-02-19 04:05:33Z psteitz $
  * @since 2.0
  */
 public interface BasicDataSourceMXBean {
@@ -216,6 +217,13 @@ public interface BasicDataSourceMXBean {
     long getMaxConnLifetimeMillis();
 
     /**
+     * See {@link BasicDataSource#getLogExpiredConnections()}
+     * @return {@link BasicDataSource#getLogExpiredConnections()}
+     * @since 2.1
+     */
+    boolean getLogExpiredConnections();
+
+    /**
      * See {@link BasicDataSource#getRemoveAbandonedOnBorrow()}
      * @return {@link BasicDataSource#getRemoveAbandonedOnBorrow()}
      */
@@ -244,4 +252,18 @@ public interface BasicDataSourceMXBean {
      * @return {@link BasicDataSource#isClosed()}
      */
     boolean isClosed();
+
+    /**
+     * See {@link BasicDataSource#getFastFailValidation()}
+     * @return {@link BasicDataSource#getFastFailValidation()}
+     * @since 2.1
+     */
+    boolean getFastFailValidation();
+
+    /**
+     * See {@link BasicDataSource#getDisconnectionSqlCodesAsArray()}
+     * @return {@link BasicDataSource#getDisconnectionSqlCodesAsArray()}
+     * @since 2.1
+     */
+    String[] getDisconnectionSqlCodesAsArray();
 }

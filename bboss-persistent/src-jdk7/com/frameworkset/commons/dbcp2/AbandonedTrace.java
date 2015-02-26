@@ -32,7 +32,7 @@ import com.frameworkset.commons.pool2.TrackedUse;
  * extend this class.
  *
  * @author Glenn L. Nielsen
- * @version $Revision: 1573549 $ $Date: 2014-03-03 04:53:57 -0800 (Mon, 03 Mar 2014) $
+ * @version $Id: AbandonedTrace.java 1649430 2015-01-04 21:29:32Z tn $
  * @since 2.0
  */
 public class AbandonedTrace implements TrackedUse {

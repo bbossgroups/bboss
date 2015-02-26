@@ -17,14 +17,14 @@
  */
 package com.frameworkset.commons.dbcp2.managed;
 
-import com.frameworkset.commons.dbcp2.ConnectionFactory;
-
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import com.frameworkset.commons.dbcp2.ConnectionFactory;
+
 /**
  * XAConnectionFactory is an extension of ConnectionFactory used to create connections
- * in a transaction managed environment.  The XAConnectionFactory opperates like a normal
+ * in a transaction managed environment.  The XAConnectionFactory operates like a normal
  * ConnectionFactory except an TransactionRegistry is provided from which the XAResource
  * for a connection can be obtained.  This allows the existing DBCP pool code to work with
  * XAConnections and gives a the ManagedConnection a way to enlist a connection in the
@@ -32,6 +32,7 @@ import java.sql.SQLException;
  *
  * @author Dain Sundstrom
  * @author Rodney Waldhoff
+ * @version $Id: XAConnectionFactory.java 1660791 2015-02-19 04:13:10Z psteitz $
  * @since 2.0
  */
 public interface XAConnectionFactory extends ConnectionFactory {
@@ -45,10 +46,11 @@ public interface XAConnectionFactory extends ConnectionFactory {
 
     /**
      * Create a new {@link java.sql.Connection} in an implementation specific fashion.
-     * </p>
+     * <p>
      * An implementation can assume that the caller of this will wrap the connection in
      * a proxy that protects access to the setAutoCommit, commit and rollback when
      * enrolled in a XA transaction.
+     * </p>
      *
      * @return a new {@link java.sql.Connection}
      * @throws java.sql.SQLException if a database error occurs creating the connection
