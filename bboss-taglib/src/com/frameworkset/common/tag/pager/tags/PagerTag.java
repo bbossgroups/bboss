@@ -115,7 +115,7 @@ public class PagerTag extends BaseTag implements FieldHelper, PagerInfo {
 	public static final int DEFAULT_MAX_ITEMS = Integer.MAX_VALUE,
 			DEFAULT_MAX_PAGE_ITEMS = 10, DEFAULT_MAX_INDEX_PAGES = 10;
 
-	private StringBuffer queryString = null;
+	private StringBuilder queryString = null;
 
 	protected PagerContext pagerContext;
 
@@ -154,7 +154,7 @@ public class PagerTag extends BaseTag implements FieldHelper, PagerInfo {
 	// /*
 	// * Tag Variables
 	// */
-	// private StringBuffer uri = null;
+	// private StringBuilder uri = null;
 	// private int params = 0;
 	// /**
 	// * offset：当前页面第一条记录id值,
@@ -614,7 +614,7 @@ public class PagerTag extends BaseTag implements FieldHelper, PagerInfo {
 		// }
 
 		//
-		// // limit size of re-usable StringBuffer
+		// // limit size of re-usable StringBuilder
 		// if (uri.capacity() > 1024)
 		// uri = null;
 		//
@@ -788,7 +788,7 @@ public class PagerTag extends BaseTag implements FieldHelper, PagerInfo {
 	// /**
 	// * Description:获取页面查询的参数 Movied to PagerContext
 	// * @return
-	// * StringBuffer
+	// * StringBuilder
 	// */
 	// public String getQueryString(long offset,String sortKey,boolean desc) {
 	// String offsetString = "";
@@ -812,7 +812,7 @@ public class PagerTag extends BaseTag implements FieldHelper, PagerInfo {
 	// /**
 	// * Description:获取页面查询的参数 Movied to PagerContext
 	// * @return
-	// * StringBuffer
+	// * StringBuilder
 	// */
 	// public String getQueryString(String sortKey,boolean desc) {
 	//

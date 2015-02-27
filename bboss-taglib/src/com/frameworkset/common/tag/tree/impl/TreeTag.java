@@ -80,7 +80,7 @@ public class TreeTag extends ContextMenuTag {
 	protected String includeRootNode = null;
 	protected String href = null;
 
-	protected StringBuffer params = null;
+	protected StringBuilder params = null;
 	protected boolean enabledynamic = true; 
 	
 	boolean uprecursive = false;
@@ -507,7 +507,7 @@ public class TreeTag extends ContextMenuTag {
 	 */
 
 	public int doStartTag() throws JspException {
-	    params = new StringBuffer();
+	    params = new StringBuilder();
 		if (!StringToBoolean(getIsjenkov())) {
 			return EVAL_BODY_INCLUDE;
 		} else
@@ -624,7 +624,7 @@ public class TreeTag extends ContextMenuTag {
     
     private void updateFather(ITreeNode node,String sons) throws IOException
     {
-        StringBuffer script = new StringBuffer();
+        StringBuilder script = new StringBuilder();
         
 //        System.out.println()
 //        sons = StringUtil.replaceAll(sons,"\"","\\\"");
@@ -680,7 +680,7 @@ public class TreeTag extends ContextMenuTag {
 	}
 
 	private String generateContent(Iterator element) {
-		StringBuffer ret = new StringBuffer();
+		StringBuilder ret = new StringBuilder();
 		String nodeHref = null;
 		String selfHref = null;
 		if(href != null)
@@ -1005,7 +1005,7 @@ public class TreeTag extends ContextMenuTag {
     {
         if(params == null )
         {
-            params = new StringBuffer(0);
+            params = new StringBuilder(0);
 
         }
         if(params.length() == 0)

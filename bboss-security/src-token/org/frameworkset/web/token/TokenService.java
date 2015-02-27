@@ -209,7 +209,7 @@ public class TokenService implements TokenServiceInf,InitializingBean {
 //		if(token == null)
 //			return MemTokenManager.temptoken_request_validateresult_nodtoken;
 //		
-////		String hash = String.valueOf(HashUtil.mixHash(new StringBuffer().append(sessionid).append("_").append(token).toString()));
+////		String hash = String.valueOf(HashUtil.mixHash(new StringBuilder().append(sessionid).append("_").append(token).toString()));
 ////		if(session.getAttribute(hash) != null)
 ////		{
 ////			session.removeAttribute(hash);
@@ -261,7 +261,7 @@ public class TokenService implements TokenServiceInf,InitializingBean {
 			return url;
 		if(url.indexOf(TokenStore.temptoken_param_name_word) > 0)
 			return url;
-		StringBuffer ret = new StringBuffer();
+		StringBuilder ret = new StringBuilder();
 		String token = this.buildDToken(request);
 		int idx = url.indexOf("?");
 		if(idx > 0)
@@ -461,9 +461,8 @@ public class TokenService implements TokenServiceInf,InitializingBean {
 	@Override
 	public String buildDToken(String elementType,String jsonsplit,HttpServletRequest request,String fid,boolean cache) throws TokenException
 	{
-//		if(!this.enableToken)
-//			return "";
-		StringBuffer buffer = new StringBuffer();
+//		if(!this.enableTokStringBuilderturn "";
+		StringBuilder buffer = new StringBuilder();
 		if(StringUtil.isEmpty(elementType) || elementType.equals("input"))
 		{
 			buffer.append("<input type=\"hidden\" name=\"").append(TokenStore.temptoken_param_name).append("\" value=\"").append(this.genToken(request,fid, cache)).append("\">");

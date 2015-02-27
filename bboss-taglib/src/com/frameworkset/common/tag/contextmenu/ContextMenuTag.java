@@ -1,6 +1,5 @@
 package com.frameworkset.common.tag.contextmenu;
 
-import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -85,8 +84,8 @@ public class ContextMenuTag extends BaseTag {
 
 		
 		
-		StringBuffer buffer = new StringBuffer();
-		StringBuffer scriptbuffer = new StringBuffer();
+		StringBuilder buffer = new StringBuilder();
+		StringBuilder scriptbuffer = new StringBuilder();
 		String popscript = "";
 		if(parent_indent == null || parent_indent.equals(""))
 		{
@@ -163,7 +162,7 @@ public class ContextMenuTag extends BaseTag {
 		return super.doEndTag();
 	}
 	
-	private void buildMenus(StringBuffer buffer,StringBuffer scriptbuffer,Set contextmenus)
+	private void buildMenus(StringBuilder buffer,StringBuilder scriptbuffer,Set contextmenus)
 	{	
 		
 		
@@ -192,7 +191,7 @@ public class ContextMenuTag extends BaseTag {
 //	 * @param buffer
 //	 * @param menu
 //	 */
-//	private void buildMenu(String menuid,StringBuffer buffer,Menu menu)
+//	private void buildMenu(String menuid,StringBuilder buffer,Menu menu)
 //	{
 //		
 //		buffer.append(" var menu_"+menuid+" = new Menu();\n ");
@@ -254,7 +253,7 @@ public class ContextMenuTag extends BaseTag {
 //	 * @param buffer
 //	 * @param menu
 //	 */
-//	private void buildParentMenu(String menuid,StringBuffer buffer,Menu menu)
+//	private void buildParentMenu(String menuid,StringBuilder buffer,Menu menu)
 //	{
 //		
 //		buffer.append(" var menu_"+menuid+" = new Menu();\n ");
@@ -319,7 +318,7 @@ public class ContextMenuTag extends BaseTag {
 	 * @param buffer
 	 * @param menu
 	 */
-	private void buildMenu(StringBuffer buffer,StringBuffer scriptbuffer,Menu menu,boolean isroot)
+	private void buildMenu(StringBuilder buffer,StringBuilder scriptbuffer,Menu menu,boolean isroot)
 	{
 		/**
 		 * <div>
@@ -494,7 +493,7 @@ public class ContextMenuTag extends BaseTag {
 //	 * @param buffer
 //	 * @param menu
 //	 */
-//	private void buildParentMenu(String menuid,StringBuffer buffer,Menu menu)
+//	private void buildParentMenu(String menuid,StringBuilder buffer,Menu menu)
 //	{
 //		
 //		buffer.append(" var menu_"+menuid+" = new Menu();\n ");

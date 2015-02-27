@@ -361,7 +361,7 @@ public final class IndexTag extends PagerTagSupport {
 	 *
 	 */
 	public String generateContent() {
-		StringBuffer ret = new StringBuffer();
+		StringBuilder ret = new StringBuilder();
         //针对web应用引入javascript脚本文件，wap应用无需引入
 		boolean needScript = (pagerContext.indexs == null || pagerContext.indexs.isEmpty());
 		if(needScript)
@@ -436,7 +436,7 @@ public final class IndexTag extends PagerTagSupport {
 		}
 		if(this.tagnumber > 0)//待处理
         {
-            StringBuffer center = new StringBuffer();
+            StringBuilder center = new StringBuilder();
             
             this.getCenterContent((int)pagerContext.getPageNumber(), (int)pagerContext.getPageCount(), center);
             String temp = center.toString();
@@ -538,7 +538,7 @@ public final class IndexTag extends PagerTagSupport {
 		Locale locale = I18NUtil.getRequestContextLocal(request);
 		String everypage_label = TagUtil.tagmessageSource.getMessage("bboss.tag.pager.everypageshow",locale) ;
 		String everypagerecords_label = TagUtil.tagmessageSource.getMessage("bboss.tag.pager.everypageshow.records",locale) ;
-		return new StringBuffer(" <span class='pages1'>").append(everypage_label)//每页显示
+		return new StringBuilder(" <span class='pages1'>").append(everypage_label)//每页显示
 		.append(select.toString()).append(everypagerecords_label)//条
 		.append("</span>").toString();
 		
@@ -630,7 +630,7 @@ public final class IndexTag extends PagerTagSupport {
     
     public static String getJqueryUrl(String url,String containerid,String selector)
     {
-        StringBuffer ret = new StringBuffer();
+        StringBuilder ret = new StringBuilder();
         if(selector != null)
             ret.append("javascript:bboss.pager.loadPageContent('").append(url).append("','").append(containerid).append("','").append(selector).append("');");
         else
@@ -648,7 +648,7 @@ public final class IndexTag extends PagerTagSupport {
 		    {
 		    	if(this.aindex)
 		    	{
-			        return new StringBuffer("<a href='#'>")
+			        return new StringBuilder("<a href='#'>")
 			    			.append(firstpage_label)//首 页
 			    			.append("</a>").toString();
 		    	}
@@ -831,7 +831,7 @@ public final class IndexTag extends PagerTagSupport {
 	 */
     private String getWapPrevContent()
     {
-        StringBuffer ret = new StringBuffer();
+        StringBuilder ret = new StringBuilder();
         if (!pagerContext.hasPrevPage())
             return "";
         long offset = pagerContext.getPrevOffset();
@@ -860,7 +860,7 @@ public final class IndexTag extends PagerTagSupport {
 			{
 				if(this.aindex)
 				{
-		            return new StringBuffer("<a href='#'>")
+		            return new StringBuilder("<a href='#'>")
 					.append(prepage_label)//上一页
 					.append("</a>").toString();
 				}
@@ -948,7 +948,7 @@ public final class IndexTag extends PagerTagSupport {
 	
 	
 	private String getCenterPageUrl(long offset,String sortKey) {
-        StringBuffer ret = new StringBuffer();
+        StringBuilder ret = new StringBuilder();
         
 //        long offset = pagerContext.getPrevOffset();
 //        String sortKey = pagerContext.getSortKey();
@@ -1070,7 +1070,7 @@ public final class IndexTag extends PagerTagSupport {
 		{
 			if(this.aindex)
             {
-				return new StringBuffer("<a href='#'>").append(nextpage_label)//"下一页"            
+				return new StringBuilder("<a href='#'>").append(nextpage_label)//"下一页"            
             		.append("</a>").toString();
             }
 			else
@@ -1124,7 +1124,7 @@ public final class IndexTag extends PagerTagSupport {
      * @param output
      * @return
      */
-    private void getCenterContent(int currentPage,int totalPage,StringBuffer output)
+    private void getCenterContent(int currentPage,int totalPage,StringBuilder output)
     {
 /* 起始页 */
 //        System.out.println("currentPage:"+currentPage);
@@ -1286,7 +1286,7 @@ public final class IndexTag extends PagerTagSupport {
 			{
 				if(this.aindex)
 				{
-	                return new StringBuffer().append(" <a href='#'>")
+	                return new StringBuilder().append(" <a href='#'>")
 	                		.append(lastpage_label)//尾页
 	                		.append("</a>").toString();
 				}
@@ -1387,7 +1387,7 @@ public final class IndexTag extends PagerTagSupport {
 	 * @return String
 	 */
 	private String getScript() {
-		StringBuffer script =  new StringBuffer();
+		StringBuilder script =  new StringBuilder();
 		HttpServletRequest request = this.getHttpServletRequest();
 		if(!this.isCustom())
 		{
@@ -1441,7 +1441,7 @@ public final class IndexTag extends PagerTagSupport {
      */
     private String getWapGoContent()
     {
-        StringBuffer ret = new StringBuffer(); //.append("跳转到");
+        StringBuilder ret = new StringBuilder(); //.append("跳转到");
         //ret.append("<a id=\"bridge\"></a>");
         //ret.append(this.getScript());
         long pages = pagerContext.getPageCount();
@@ -1716,7 +1716,7 @@ public final class IndexTag extends PagerTagSupport {
      * @return String
      */
     private String getGoContent() {
-        StringBuffer ret = new StringBuffer(); //.append("跳转到");
+        StringBuilder ret = new StringBuilder(); //.append("跳转到");
         //ret.append("<a id=\"bridge\"></a>");
         //ret.append(this.getScript());
         long pages = pagerContext.getPageCount();
@@ -1731,7 +1731,7 @@ public final class IndexTag extends PagerTagSupport {
             
            
             String goTo = null;
-            StringBuffer gogo = new StringBuffer();
+            StringBuilder gogo = new StringBuilder();
             if(pagerContext.getForm() == null)
             {
                 if(pagerContext.getSortKey() != null)

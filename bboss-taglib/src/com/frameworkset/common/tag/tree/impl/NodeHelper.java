@@ -57,7 +57,7 @@ import com.frameworkset.util.StringUtil;
 import com.frameworkset.util.VelocityUtil;
 
 /**
- * 该类辅助TreeTag生成各种树的html代码， 可以通过ecs/velocity/StringBuffer几种方式来生成
+ * 该类辅助TreeTag生成各种树的html代码， 可以通过ecs/velocity/StringBuilder几种方式来生成
  * 
  * @作者 biaoping.yin
  * @日期 2004-3-19 16:28:13
@@ -128,7 +128,7 @@ public class NodeHelper  implements Serializable
 	/**
 	 * 动静结合时需要记录当前节点的ident，以便生成节点的儿子节点的indent 儿子节点的indent ＝ 父的indent ＋ 儿子的indent
 	 */
-	StringBuffer indent;
+	StringBuilder indent;
 
 	boolean dynamic = true;
 	
@@ -302,9 +302,9 @@ public class NodeHelper  implements Serializable
 		return null;
 	}
 
-	public void getImageContent(StringBuffer buffer)
+	public void getImageContent(StringBuilder buffer)
 	{
-		// StringBuffer buffer = new StringBuffer();
+		// StringBuilder buffer = new StringBuilder();
 
 		// System.out.println(element.getName() + ":expanded=" + expanded +
 		// ",hasChildren=" + hasChildren + ",isLastChild=" + isLastChild);
@@ -389,7 +389,7 @@ public class NodeHelper  implements Serializable
 
 	}
 
-	public void getNodeContent(StringBuffer buffer)
+	public void getNodeContent(StringBuilder buffer)
 	{
 		// return getNodeContent(buffer,"selected", selected);
 		getNodeContent(buffer, "selected", selected);
@@ -397,7 +397,7 @@ public class NodeHelper  implements Serializable
 
 	private String getCustomParams(Map attributes)
 	{
-		StringBuffer buffer = new StringBuffer();
+		StringBuilder buffer = new StringBuilder();
 		boolean flag = false;
 		if (attributes != null)
 		{
@@ -502,7 +502,7 @@ public class NodeHelper  implements Serializable
 		if(!StringUtil.isJavascript(nodeLink))
 		{
 			String selectedNode = request.getParameter("selectedNode");
-			StringBuffer buffer = new StringBuffer();
+			StringBuilder buffer = new StringBuilder();
 			
 			boolean flag = nodeLink != null && nodeLink.trim().length() > 0;
 			String nodeEvent = getEvent();
@@ -609,14 +609,14 @@ public class NodeHelper  implements Serializable
 	 * @param event
 	 * @param selected
 	 */
-	private void getNodeContent(StringBuffer buffer, String event,
+	private void getNodeContent(StringBuilder buffer, String event,
 			boolean selected)
 	{
 
 		// 定义从点击图标处传递过来的参数,然后判断默认选中的结点
 
 		String selectedNode = request.getParameter("selectedNode");
-		// StringBuffer buffer = new StringBuffer();
+		// StringBuilder buffer = new StringBuilder();
 		if (nowrap)
 			buffer.append("<td nowrap title=\"").append(element.getNode().getName()).append("\">");
 		else
@@ -802,7 +802,7 @@ public class NodeHelper  implements Serializable
 
 	public String getLocalAction(int index, String attach)
 	{
-		return new StringBuffer(localAction).insert(index, attach).toString();
+		return new StringBuilder(localAction).insert(index, attach).toString();
 	}
 
 	/**
@@ -821,7 +821,7 @@ public class NodeHelper  implements Serializable
 		int index = location.indexOf('?');
 
 		// 如果允许树进行折叠，那么设置图标的链接，否则不设置
-		StringBuffer temp_b = new StringBuffer();
+		StringBuilder temp_b = new StringBuilder();
 
 	
 
@@ -863,17 +863,17 @@ public class NodeHelper  implements Serializable
     {
         return this.element.isExpanded() || this.itree.isStatic();
     }
-	private void getImageContent(StringBuffer buffer, String event,
+	private void getImageContent(StringBuilder buffer, String event,
 			String nodeImage, String typeImage)
 	{
 		String nodeClickEvent = this.getNodeClickLink("selected");
-		// StringBuffer buffer = new StringBuffer();
+		// StringBuilder buffer = new StringBuilder();
 		if (!event.equals("null") && isCollapse())
 		{
 
 			buffer.append("<td nowrap>");
 
-			StringBuffer temp_b = new StringBuffer();// getEventLink(event);
+			StringBuilder temp_b = new StringBuilder();// getEventLink(event);
 			if(itree.isDynamic() || !this.hasChildren)
 			{
 				temp_b.append("<a id=\"icon_").append(element.getId()).append(
@@ -1036,7 +1036,7 @@ public class NodeHelper  implements Serializable
 	/**
 	 * 获取树头部分
 	 */
-	public void getUpper(StringBuffer buffer)
+	public void getUpper(StringBuilder buffer)
 	{
 		
 		
@@ -1126,9 +1126,9 @@ public class NodeHelper  implements Serializable
 	 * 
 	 * @return String
 	 */
-	public void getBoot(StringBuffer buffer)
+	public void getBoot(StringBuilder buffer)
 	{
-		// StringBuffer buffer = new StringBuffer();
+		// StringBuilder buffer = new StringBuilder();
 		if (itree.isDynamic())
 			buffer.append("</tr>").append("</table></td></tr>");
 		else
@@ -1168,7 +1168,7 @@ public class NodeHelper  implements Serializable
 		
 	}
     
-    private void setParentLastChildBoot(ITreeNode parent,StringBuffer buffer)
+    private void setParentLastChildBoot(ITreeNode parent,StringBuilder buffer)
     {
         if(parent == null)
             return ;
@@ -1198,14 +1198,14 @@ public class NodeHelper  implements Serializable
 	/**
 	 * 获取节点的缩排格式
 	 */
-	public void getIndent(StringBuffer indent)
+	public void getIndent(StringBuilder indent)
 	{
 		Iterator indentationProfileIterator = element.getIndendationProfile()
 				.iterator();
-		// StringBuffer indent = new StringBuffer();
+		// StringBuilder indent = new StringBuilder();
 		indent.append("<td>");
 		if (!itree.isDynamic() && this.element.getNode().hasChildren())
-			this.indent = new StringBuffer();
+			this.indent = new StringBuilder();
 		while (indentationProfileIterator.hasNext())
 		{
 			boolean isVerticalLineIndentationType = !((Boolean) indentationProfileIterator
@@ -1367,7 +1367,7 @@ public class NodeHelper  implements Serializable
 		String checked = "";
 
 		String[] values = getCheckBoxDefaultValues();
-		StringBuffer ret = new StringBuffer();
+		StringBuilder ret = new StringBuilder();
         String checkBox = this.checkBox;
         boolean recursive = itree.isRecursive();
         
@@ -1474,7 +1474,7 @@ public class NodeHelper  implements Serializable
 //	public static String getSonIDs(ITreeNode node)
 //	{
 //		List list = node.getChildren();
-//		StringBuffer ret = new StringBuffer();
+//		StringBuilder ret = new StringBuilder();
 //		if (list != null)
 //		{
 //			boolean first = true;
@@ -1557,7 +1557,7 @@ public class NodeHelper  implements Serializable
 				&& getRadioDefaultValue().equals(value))
 			checked = "checked";
 
-		StringBuffer ret = new StringBuffer();
+		StringBuilder ret = new StringBuilder();
 		ret.append("<input type='radio' name='").append(radio).append(
 				"' value='");
 
@@ -1742,7 +1742,7 @@ public class NodeHelper  implements Serializable
 	 * 
 	 * @return String
 	 */
-	public static void getCatchScript(StringBuffer ret,
+	public static void getCatchScript(StringBuilder ret,
 			HttpServletRequest request, String curNodeId)
 	{
 		String anchor = request.getParameter("collapse");
@@ -1754,7 +1754,7 @@ public class NodeHelper  implements Serializable
 		if (anchor == null)
 			return;
 
-		// StringBuffer ret = new StringBuffer();
+		// StringBuilder ret = new StringBuilder();
 		// ret.append("<tr><td><a id='anchor_id'
 		// href='#").append(anchor).append("></a>");
 		// ret.append("<tr><td><A id=\"anchor_id\"
@@ -1772,7 +1772,7 @@ public class NodeHelper  implements Serializable
 		// return ret.toString();
 	}
 	
-	public static void getSelectedScript(StringBuffer buffer,ITree tree,String treeid)
+	public static void getSelectedScript(StringBuilder buffer,ITree tree,String treeid)
 	{
 		Template tpl = VelocityUtil.getTemplate("tree.vm");
 		VelocityContext context = new VelocityContext();
@@ -1811,9 +1811,9 @@ public class NodeHelper  implements Serializable
 
 
 
-	public static void getInitScript(StringBuffer ret, String selectedNode,String contextpath)
+	public static void getInitScript(StringBuilder ret, String selectedNode,String contextpath)
 	{
-		// StringBuffer ret = new StringBuffer();
+		// StringBuilder ret = new StringBuilder();
 		ret.append("<script language=\"javascript\">");
 		ret.append("     var selectNode;");
 		if (selectedNode != null)

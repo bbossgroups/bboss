@@ -173,7 +173,7 @@ public class TitleTag  extends PagerTagSupport
 		return SKIP_BODY;
 	}
     public String generateWapContent() {
-        StringBuffer ret = new StringBuffer();
+        StringBuilder ret = new StringBuilder();
         TD td = new TD();
         if(this.getTitle() == null)//如果没有设定标题
         {
@@ -277,7 +277,7 @@ public class TitleTag  extends PagerTagSupport
 	 */
 	public String generateTHContent() {
 
-		StringBuffer ret = new StringBuffer();
+		StringBuilder ret = new StringBuilder();
 		TH td = new TH();
 		String title_lable = this.titlecode == null?this.getTitle():convertTitlei18n();
 		//td.setBgColor(getBgColor());
@@ -489,7 +489,7 @@ public class TitleTag  extends PagerTagSupport
 	 */
 	public String generateTDContent() {
 
-		StringBuffer ret = new StringBuffer();
+		StringBuilder ret = new StringBuilder();
 		TD td = new TD();
 		String title_lable = this.titlecode == null?this.getTitle():convertTitlei18n();
 		

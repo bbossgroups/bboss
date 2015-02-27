@@ -539,7 +539,7 @@ public class PagerContext
 		this.promotion = promotion;
 	}
 
-	private StringBuffer queryString = null;
+	private StringBuilder queryString = null;
 
 	/**
 	 * 获取页面查询参数
@@ -567,7 +567,7 @@ public class PagerContext
 	/*
 	 * Tag Variables
 	 */
-	private StringBuffer uri = null;
+	private StringBuilder uri = null;
 
 	/**
 	 * 页面地址串
@@ -581,7 +581,7 @@ public class PagerContext
 	/**
 	 * Description:获取页面查询的参数
 	 * 
-	 * @return StringBuffer
+	 * @return StringBuilder
 	 */
 	public String getQueryString(long offset, String sortKey, boolean desc) {
 		String offsetString = "";
@@ -604,7 +604,7 @@ public class PagerContext
 	/**
 	 * Description:获取页面查询的参数
 	 * 
-	 * @return StringBuffer
+	 * @return StringBuilder
 	 */
 	public String getQueryString(String sortKey, boolean desc) {
 
@@ -1869,11 +1869,11 @@ public class PagerContext
 		}
 
 		if (uri == null)
-			uri = new StringBuffer(baseUri.length() + 32);
+			uri = new StringBuilder(baseUri.length() + 32);
 		else
 			uri.setLength(0);
 		if (queryString == null)
-			queryString = new StringBuffer(32);
+			queryString = new StringBuilder(32);
 		else
 			// 修正bug，清空queryString内容，否则queryString将不断累积
 			queryString.setLength(0);
