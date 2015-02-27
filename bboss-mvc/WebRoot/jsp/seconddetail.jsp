@@ -98,15 +98,19 @@
 							  String charset = null;
 							%>
 						<pg:notnull colName="controllerClass">
-						
-							类路径：
-							<span class="value"><%=parentPath%><pg:cell colName="controllerClass" defaultValue=""/></span>
-							Size:&nbsp;
 							<%
 							 
 							 file = new File(StringUtil.getNormalPath(parentPath,bean.getControllerClass()));
+							if(!file.exists())
+							{
+								file = new File(new File(parentPath).getParent(),bean.getControllerClass());
+							}
 							
 							%>
+							类路径：
+							<span class="value"><%=file.getAbsolutePath()%></span>
+							Size:&nbsp;
+						
 							
 							<span class="value"><%=file.length()%>b</span> Last modified:&nbsp;
 							<span class="value"><%=sdf.format(new Date(file.lastModified()))%></span> Encoding:&nbsp;
@@ -128,10 +132,10 @@
 								
 								if(charset!= null&&!charset.equals(""))
 								 //content = StringUtil.HTMLNoBREncode(FileUtil.getFileContent(parentPath+bean.getControllerClass(),charset));
-								 	content = DemoUtil.getDemoContentCache().getFileContent(StringUtil.getNormalPath(parentPath,bean.getControllerClass()),charset,true);
+								 	content = DemoUtil.getDemoContentCache().getFileContent(file.getAbsolutePath(),charset,true);
 								else 
 							     	//content = StringUtil.HTMLNoBREncode(FileUtil.getFileContent(parentPath+bean.getControllerClass()));
-							     	content = DemoUtil.getDemoContentCache().getFileContent(StringUtil.getNormalPath(parentPath,bean.getControllerClass()),null,true);
+							     	content = DemoUtil.getDemoContentCache().getFileContent(file.getAbsolutePath(),null,true);
 								out.print(content);
 								%>
 							 </pg:notnull>
