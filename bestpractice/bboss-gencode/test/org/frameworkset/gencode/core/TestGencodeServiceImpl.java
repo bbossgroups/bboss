@@ -29,17 +29,18 @@ public class TestGencodeServiceImpl {
 		String date = format.format(new Date());
 		moduleMetaInfo.setDate(date);
 		ConditionField bm = new ConditionField();
-		bm.setColumnName("BM");
+		
 		bm.setFieldName("bm");
 		bm.setLike(true);
 		bm.setOr(true);
 		
 		gencodeService.addCondition(bm);
 		ConditionField softLevel = new ConditionField();
-		softLevel.setColumnName("SOFT_LEVEL");
+		
 		softLevel.setLike(false);
 		softLevel.setOr(false);
 		softLevel.setFieldName("softLevel");
+	
 		gencodeService.addCondition(softLevel);
 		
 		SortField id = new SortField();

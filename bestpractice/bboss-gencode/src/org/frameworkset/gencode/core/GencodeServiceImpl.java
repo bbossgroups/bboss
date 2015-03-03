@@ -51,20 +51,28 @@ public class GencodeServiceImpl {
 	private File javaActionSourceDir;
 	private File jspSourceDir;
 	private File mvcConfDir;
+	private File mvcconf ;
 	private File webxmlFile;
 	private ModuleMetaInfo moduleMetaInfo;
 	private String exceptionName;
 	private String entityName;
 	private String entityParamName;
+	private String conditionEntityName;
+	private String conditionEntityParamName;
+	private String sqlfilepath;
 	private SQLBuilder SQLBuilder ; 
 	private List<SortField> sortFields;
 	
 	private Field primaryField ;
 	private String primaryKeyName;
+	private String modulePackage ;
+	private String javamodulePackage ;
+	private String serviceClass;
+	private String controlClass;
 	/**
 	 * 需要作为查询条件的字段
 	 */
-	private List<ConditionField> conditions;
+	private List<Field> conditions;
 	private List<SQL> sqls;
 	/**
 	 * 所有字段
@@ -78,6 +86,7 @@ public class GencodeServiceImpl {
 		genJavaSource();
 		genPersistentConfigfile();
 		genUI();
+		 genMVCConf();
 		return "success";
 	}
 	
@@ -88,6 +97,16 @@ public class GencodeServiceImpl {
 	{
 		
 	}
+	
+	/**
+	 * 生成前端jsp ui界面
+	 */
+	private void genMVCConf()
+	{
+		GenMVCConf conf = new GenMVCConf(this);
+		conf.gen();
+	}
+	
 	
 	private void init()
 	{
@@ -104,10 +123,14 @@ public class GencodeServiceImpl {
 			f.mkdirs();
 		}
 		this.rootdir = f;
-		String modulePackage = moduleMetaInfo.getPackagePath().replace(".", "/") ;
+		modulePackage = moduleMetaInfo.getPackagePath().replace(".", "/") ;
 		modulePackage = modulePackage.endsWith("/") ? modulePackage + moduleMetaInfo.getModuleName():
 			modulePackage + "/" + moduleMetaInfo.getModuleName();
+		javamodulePackage = !moduleMetaInfo.getPackagePath().endsWith(".")? 
+						moduleMetaInfo.getPackagePath() + "." +moduleMetaInfo.getModuleName()
+						:moduleMetaInfo.getPackagePath() +moduleMetaInfo.getModuleName();;
 		javaSourceDir = new File(this.rootdir,"src/"+modulePackage);
+		
 		if(!javaSourceDir.exists())
 		{
 			javaSourceDir.mkdirs();
@@ -144,6 +167,7 @@ public class GencodeServiceImpl {
 		{
 			mvcConfDir.mkdirs();
 		}
+		mvcconf = new File(getMvcConfDir(),"bboss-"+getModuleMetaInfo().getModuleName()+".xml");
 		webxmlFile = new File(this.rootdir,"WebRoot/WEB-INF/web.xml");
 		if(!webxmlFile.exists())
 		{
@@ -153,7 +177,25 @@ public class GencodeServiceImpl {
 				log.error("Create web.xml failed:"+webxmlFile.getAbsolutePath(),e);
 			}
 		}
-		
+		TableMetaData tableMeta = DBUtil.getTableMetaData(this.moduleMetaInfo.getDatasourceName(), this.moduleMetaInfo.getTableName());
+		List<Field> fields = getFields( tableMeta);
+		 this.allfields = fields;
+		 if(this.conditions != null )
+		 {
+			 for(Field field:conditions)
+			 {
+				 
+				 for(Field dbfield:this.allfields)
+				 {
+					 if(field.getFieldName().equals(dbfield.getFieldName()))
+					 {
+						 field.setType(dbfield.getType());
+						 field.setColumnname(dbfield.getColumnname());
+						 field.setMfieldName(dbfield.getMfieldName());
+					 }
+				 }
+			 }
+		 }
 	}
 	private String convertType(String type)
 	{
@@ -241,6 +283,7 @@ public class GencodeServiceImpl {
 		{
 			sqlconfig.delete();
 		}
+		this.sqlfilepath = this.modulePackage + "/service/"+this.entityParamName + ".xml";
 		try {
 			sqlconfig.createNewFile();
 			 Template persistentsqltempalte = VelocityUtil.getTemplate("gencode/conf/persistentsql.vm");
@@ -289,18 +332,29 @@ public class GencodeServiceImpl {
 	         }
 		}
 		String entityJavaName = entityName + ".java";
+		String conditionEntityJavaName = entityName + "Condition.java";
 		String serviceInfJavaName = entityName + "Service.java";
 		String serviceImplJavaName = entityName + "ServiceImpl.java";
 		String controllerJavaName = entityName + "Controller.java";
 		String exceptionJavaName = entityName + "Exception.java";
+		
 		this.exceptionName = entityName + "Exception";
 		this.entityName = entityName;
-		this.entityParamName = (entityName.charAt(0)+"").toLowerCase()  + entityName.substring(1);
+		this.conditionEntityName = entityName+"Condition";
 		
+		this.entityParamName = (entityName.charAt(0)+"").toLowerCase()  + entityName.substring(1);
+		this.conditionEntityParamName = entityParamName+"Condition";
+		this.serviceClass = this.javamodulePackage + ".service."+ entityName + "ServiceImpl";
+		this.controlClass = this.javamodulePackage + ".action."+entityName + "Controller"; 
 		File entity = new File(this.javaEntiySourceDir,entityJavaName);
 		if(entity.exists())
 		{
 			entity.delete();
+		}
+		File conditionEntity = new File(this.javaEntiySourceDir,conditionEntityJavaName);
+		if(conditionEntity.exists())
+		{
+			conditionEntity.delete();
 		}
 		File exception = new File(this.javaServiceSourceDir,exceptionJavaName);
 		if(exception.exists())
@@ -328,13 +382,13 @@ public class GencodeServiceImpl {
 			serviceImpl.createNewFile();
 			controller.createNewFile();
 			exception.createNewFile();
-			TableMetaData tableMeta = DBUtil.getTableMetaData(this.moduleMetaInfo.getDatasourceName(), this.moduleMetaInfo.getTableName());
-			List<Field> fields = getFields( tableMeta);
-			 this.allfields = fields;
+			conditionEntity.createNewFile();
+			
 			
 			
  
 			 genEntity(  entityName,  this.moduleMetaInfo.getDate(),  this.moduleMetaInfo.getVersion(),this.moduleMetaInfo.getAuthor(),this.moduleMetaInfo.getCompany(),"服务实体类",entity);
+			 genConditionEntity(  conditionEntityName,  this.moduleMetaInfo.getDate(),  this.moduleMetaInfo.getVersion(),this.moduleMetaInfo.getAuthor(),this.moduleMetaInfo.getCompany(),"查询条件实体类",conditionEntity);
 			 genServiceInf(  entityName + "Service",this.moduleMetaInfo.getDate(),this.moduleMetaInfo.getVersion(),this.moduleMetaInfo.getAuthor(),this.moduleMetaInfo.getCompany(),"服务管理接口", serviceInf);
 			 genException(entityName + "Exception",this.moduleMetaInfo.getDate(),this.moduleMetaInfo.getVersion(),this.moduleMetaInfo.getAuthor(),this.moduleMetaInfo.getCompany(),"异常处理类",exception);
 			 String serviceInfName = entityName + "Service";
@@ -350,10 +404,43 @@ public class GencodeServiceImpl {
 	private void genEntity(String entityName,String date,String version,String author,String company,String description,File entity) throws Exception
 	{
 		 
-		 List<String> imports = evalImport(this.allfields);
+		 List<String> imports = evalImport(this.allfields,false);
 		 Template entitytempalte = VelocityUtil.getTemplate("gencode/java/entityjava.vm");
 		 VelocityContext context = new VelocityContext();
 		 context.put("fields", this.allfields);
+		 String entityPackageInfo = this.moduleMetaInfo.getPackagePath() + "." + this.moduleMetaInfo.getModuleName()+".entity";
+		 context.put("package", entityPackageInfo);
+		 context.put("imports", imports);
+		 context.put("classname", entityName);
+		 context.put("description", description);
+		 context.put("company", company);
+		 context.put("gendate", date);
+		 context.put("author", author);
+		 context.put("version", version);
+	 
+		 writFile(context,entitytempalte,entity,this.moduleMetaInfo.getEncodecharset());
+		
+	}
+	
+	private void genConditionEntity(String entityName,String date,String version,String author,String company,String description,File entity) throws Exception
+	{
+		 
+		 List<String> imports = evalImport(this.conditions, true);
+		 Template entitytempalte = VelocityUtil.getTemplate("gencode/java/entityjava.vm");
+		 VelocityContext context = new VelocityContext();
+		 List<Field> _conditions = new ArrayList<Field>();
+		 _conditions.addAll(conditions);
+		 Field sort = new Field();
+		 sort.setFieldName("sortKey");
+		 sort.setMfieldName("SortKey");
+		 sort.setType("String");
+		 _conditions.add(sort);
+		 Field desc = new Field();
+		 desc.setFieldName("sortDesc");
+		 desc.setMfieldName("SortDesc");
+		 desc.setType("boolean");
+		 _conditions.add(desc);
+		 context.put("fields", _conditions);
 		 String entityPackageInfo = this.moduleMetaInfo.getPackagePath() + "." + this.moduleMetaInfo.getModuleName()+".entity";
 		 context.put("package", entityPackageInfo);
 		 context.put("imports", imports);
@@ -494,6 +581,10 @@ public class GencodeServiceImpl {
 		methodBodyGenerates.put(Constant.get, new GetMethodBodyGenerate());
 		methodBodyGenerates.put(Constant.query, new QueryMethodBodyGenerate());
 		methodBodyGenerates.put(Constant.paginequery, new PagineQueryMethodBodyGenerate());
+		
+		methodBodyGenerates.put(Constant.toAdd, new ToAddMethodBodyGenerate());
+		methodBodyGenerates.put(Constant.toUpdate, new ToUpdateMethodBodyGenerate());
+		methodBodyGenerates.put(Constant.index, new IndexMethodBodyGenerate());
 	}
 	private void setMethodBody(Method method,String methodtype,String entityName,String paramName,String encodecharset,String exception,int componenttype) throws Exception
 	{
@@ -616,14 +707,16 @@ public class GencodeServiceImpl {
 		
 		methods.add(get);
 		
+		
+		
 		Method paginequery = new Method();//定义获取方法
 		paginequery.setMethodname("queryListInfo"+entityName+"s");
 		paginequery.setReturntype("String");		
 		params = new ArrayList<MethodParam>();
 		param = new MethodParam();
 		
-		param.addAnnotation(new Annotation("MapKey").addAnnotationParam("pattern","condition_*"));
-		param.setType("Map");
+//		param.addAnnotation(new Annotation("MapKey").addAnnotationParam("pattern","condition_*"));
+		param.setType(this.conditionEntityName);
 		param.setName("conditions");
 		params.add(param);
 		
@@ -668,8 +761,8 @@ public class GencodeServiceImpl {
 		params = new ArrayList<MethodParam>();
 		param = new MethodParam();
 		
-		param.addAnnotation(new Annotation("MapKey").addAnnotationParam("pattern","condition_*"));
-		param.setType("Map");
+		
+		param.setType(this.conditionEntityName);
 		param.setName("conditions");
 		params.add(param);
 		param = new MethodParam();
@@ -683,6 +776,56 @@ public class GencodeServiceImpl {
 		
 		methods.add(query);
 		
+		Method toUpdate = new Method();//定义获取方法
+		toUpdate.setMethodname("toUpdate"+entityName);
+		toUpdate.setReturntype("String");		
+		params = new ArrayList<MethodParam>();
+		param = new MethodParam();
+		
+		if(primaryField != null)
+		{
+			param.setType(primaryField.getType());
+			param.setName(primaryField.getFieldName());
+		}
+		else
+		{
+			param.setType("String");
+			param.setName("id");
+		}
+	
+		params.add(param);
+		param = new MethodParam();
+		param.setName("model");
+		param.setType("ModelMap");
+		params.add(param);
+		toUpdate.setExceptions(exceptions);		
+		toUpdate.setParams(params);
+		
+		setMethodBody(toUpdate,Constant.toUpdate,entityName,defaultSort,this.moduleMetaInfo.getEncodecharset(),exceptionName,Constant.component_type_actionimpl);
+		
+		methods.add(toUpdate);
+		
+		Method toAdd = new Method();//定义获取方法
+		toAdd.setMethodname("toAdd"+entityName);
+		toAdd.setReturntype("String");		
+		params = new ArrayList<MethodParam>();
+		
+		toAdd.setParams(params);
+		
+		setMethodBody(toAdd,Constant.toAdd,entityName,defaultSort,this.moduleMetaInfo.getEncodecharset(),exceptionName,Constant.component_type_actionimpl);
+		
+		methods.add(toAdd);
+		
+		Method index = new Method();//定义获取方法
+		index.setMethodname("index");
+		index.setReturntype("String");		
+		params = new ArrayList<MethodParam>();
+		
+		index.setParams(params);
+		
+		setMethodBody(index,Constant.index,entityName,defaultSort,this.moduleMetaInfo.getEncodecharset(),exceptionName,Constant.component_type_actionimpl);
+		
+		methods.add(index);
 //		Method count = new Method();//定义获取方法
 //		query.setMethodname("queryList"+entityName+"s");
 //		query.setReturntype("List<"+entityName+">");		
@@ -845,7 +988,7 @@ public class GencodeServiceImpl {
 		param = new MethodParam();
 		
 		
-		param.setType("Map");
+		param.setType(this.conditionEntityName);
 		param.setName("conditions");
 		params.add(param);
 		
@@ -880,7 +1023,7 @@ public class GencodeServiceImpl {
 		param = new MethodParam();
 		
 		
-		param.setType("Map");
+		param.setType(this.conditionEntityName);
 		param.setName("conditions");
 		params.add(param);
 		query.setExceptions(exceptions);		
@@ -999,7 +1142,7 @@ public class GencodeServiceImpl {
 		
 	}
 	
-	private List<String> evalImport(List<Field> fields) {
+	private List<String> evalImport(List<Field> fields,boolean condition) {
 		List<String> imports = new ArrayList<String>();
 		for(Field f:fields)
 		{
@@ -1010,7 +1153,7 @@ public class GencodeServiceImpl {
 	         }
 	         
 		}
-		if(this.primaryField != null)
+		if(!condition && this.primaryField != null)
 		{
 			imports.add("com.frameworkset.orm.annotation.PrimaryKey");
 		}
@@ -1127,7 +1270,7 @@ import com.frameworkset.util.StringUtil;
          }
 	}
 
-	public List<ConditionField> getConditions() {
+	public List<Field> getConditions() {
 		return conditions;
 	}
 
@@ -1167,7 +1310,7 @@ import com.frameworkset.util.StringUtil;
 	{
 		if(this.conditions == null)
 		{
-			conditions = new ArrayList<ConditionField>();
+			conditions = new ArrayList<Field>();
 		}
 		conditions.add(cf);
 	}
@@ -1179,6 +1322,50 @@ import com.frameworkset.util.StringUtil;
 			sortFields = new ArrayList<SortField>();
 		}
 		sortFields.add(sf);
+	}
+
+	public File getMvcConfDir() {
+		return mvcConfDir;
+	}
+
+
+	
+	public String getServiceClass() {
+		// TODO Auto-generated method stub
+		return serviceClass;
+	}
+	
+	public String getControlClass() {
+		// TODO Auto-generated method stub
+		return controlClass;
+	}
+
+	public String getSqlfilepath() {
+		return sqlfilepath;
+	}
+
+	public File getMvcconf() {
+		return mvcconf;
+	}
+
+	public void setMvcconf(File mvcconf) {
+		this.mvcconf = mvcconf;
+	}
+
+	public String getConditionEntityName() {
+		return conditionEntityName;
+	}
+
+	public void setConditionEntityName(String conditionEntityName) {
+		this.conditionEntityName = conditionEntityName;
+	}
+
+	public String getConditionEntityParamName() {
+		return conditionEntityParamName;
+	}
+
+	public void setConditionEntityParamName(String conditionEntityParamName) {
+		this.conditionEntityParamName = conditionEntityParamName;
 	}
 
 }

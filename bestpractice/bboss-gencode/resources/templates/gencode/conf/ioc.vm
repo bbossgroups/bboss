@@ -1,0 +1,33 @@
+<properties>
+
+	<!-- 
+		描述:初始化一个控制器${entityName}Controller，并将所有关联的service注入到此控制器中。并以别名的形式定义好跳转页面。
+	    author:$author
+		CopyRight:$company
+		版本:$version 
+	    Date: $gendate
+	-->
+
+	<property name="/${moduleName}/*.page"
+		path:index="/${moduleName}/main.jsp"
+		path:queryListInfo${entityName}s="/${moduleName}/${entityVarName}ListInfo.jsp"
+		path:queryList${entityName}s="/${moduleName}/${entityVarName}List.jsp"
+		path:update${entityName}="/${moduleName}/${entityVarName}Edit.jsp"
+		path:add${entityName}="/${moduleName}/${entityVarName}Add.jsp"
+		path:get${entityName}="/${moduleName}/${entityVarName}View.jsp"
+		f:service="attr:${moduleName}.${entityVarName}Service"
+		class="${controlClass}" >
+	</property>
+	
+	<property name="${moduleName}.${entityVarName}Service"
+		f:executor="attr:${moduleName}.configsqlexecutor"
+		class="${serviceClass}"
+		/>
+	<property name="${moduleName}.configsqlexecutor"		
+		class="com.frameworkset.common.poolman.ConfigSQLExecutor" >
+		<construction>
+			<property value="${sqlfile}"/>
+		</construction>
+	</property>
+	
+</properties>

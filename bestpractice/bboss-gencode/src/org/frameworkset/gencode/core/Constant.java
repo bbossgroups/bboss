@@ -12,4 +12,7 @@ public class Constant {
 	public static final String get = "get";
 	public static final String query = "query";
 	public static final String paginequery = "paginequery";
+	public static String toUpdate = "toUpdate";
+	public static String toAdd = "toAdd";
+	public static String index = "index";
 }

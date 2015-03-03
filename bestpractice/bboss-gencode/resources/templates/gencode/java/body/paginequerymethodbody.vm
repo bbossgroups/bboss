@@ -13,23 +13,23 @@ return datas;
 try {
     if(sortKey != null && !sortKey.equals(""))
     {
-    	conditions.put("sortKey",sortKey);
-    	conditions.put("sortDesc",desc);
+    	conditions.setSortKey(sortKey);
+    	conditions.setSortDesc(desc);
     }
     #if($conditionFields && $conditionFields.size() > 0)
     	#foreach($cf in $conditionFields)
     		#if($cf.like)
-    		     String value = (String)conditions.get("$cf.fieldName");
+    		     $cf.type value = conditions.get$cf.mfieldName$start$end;
     		     if(value != null && !value.equals(""))
     		     {
-    		     	conditions.put("$cf.fieldName","%"+value+"%");
+    		     	conditions.set$cf.mfieldName$start"%"+value+"%"$end;
     		     }
     		#end
     	#end
 	#end    
 	ListInfo ${entityVarName}s = ${entityVarName}Service.queryListInfo${entityName}s(conditions,offset,pagesize);
 	model.addAttribute("${entityVarName}s", ${entityVarName}s);
-	return "path:queryListInfo${entityVarName}s";
+	return "path:queryListInfo${entityName}s";
 } catch ($exception e) {
 	throw e;
 } catch (Exception e) {

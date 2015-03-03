@@ -32,7 +32,7 @@ import $import;
 #set( $end = ')' )
 #set( $equal = '=' )
 #set( $attoken = '@' )
-public class $classname
+public class $classname implements java.io.Serializable
 {
 #foreach($filed in $fields)	
     #if($filed.annos && $filed.annos.size() > 0)

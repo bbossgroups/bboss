@@ -1,23 +1,12 @@
 package org.frameworkset.gencode.entity;
 
-public class ConditionField {
-	private String fieldName;
-	private String columnName;
+public class ConditionField extends Field{
+	 
 	private boolean or = false;
 	private boolean like = false;
-	public String getFieldName() {
-		return fieldName;
-	}
-	public void setFieldName(String fieldName) {
-		this.fieldName = fieldName;
-	}
+	 
 	
-	public String getColumnName() {
-		return columnName;
-	}
-	public void setColumnName(String columnName) {
-		this.columnName = columnName;
-	}
+	 
 	public boolean isOr() {
 		return or;
 	}

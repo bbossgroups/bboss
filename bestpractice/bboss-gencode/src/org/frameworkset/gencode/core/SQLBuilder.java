@@ -80,11 +80,12 @@ public class SQLBuilder {
 		{
 			StringBuilder builder = new StringBuilder();
 			builder.append("select * from ").append(tableName).append(" where 1=1");
-			List<ConditionField> conditions = this.gencodeService.getConditions();
+			List<Field> conditions = this.gencodeService.getConditions();
 			if(conditions != null && conditions.size() > 0)
 			{
-				for(ConditionField f:conditions)
+				for(Field _f:conditions)
 				{
+					ConditionField f = (ConditionField)_f;
 					if(f.isOr())
 					{
 						builder.append(" or ");
@@ -95,11 +96,11 @@ public class SQLBuilder {
 					}
 					if(f.isLike())
 					{
-						builder.append(f.getColumnName()).append(" like ").append("#[").append(f.getFieldName()).append("]");
+						builder.append(f.getColumnname()).append(" like ").append("#[").append(f.getFieldName()).append("]");
 					}
 					else
 					{
-						builder.append(f.getColumnName()).append("=#[").append(f.getFieldName()).append("]");
+						builder.append(f.getColumnname()).append("=#[").append(f.getFieldName()).append("]");
 					}
 					//需要考虑分组的功能
 				}
