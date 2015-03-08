@@ -460,6 +460,22 @@ public class DetailTag extends PagerDataSet implements FieldHelper{
 //		this.out = null;
 //		flag = false;
 		sqlparamskey = "sql.params.key";
+		//begin clear some field by biaoping.yin on 2015.3.8 如果不清除，可能导致标签工作beaninfo.getOrigineObject()不能正确工作
+        this.colName = null;
+        this.property = null;
+        this.softparser = true;
+        this.type = "";
+        sessionKey = null;
+        requestKey = null;
+        this.needClear = false;
+		pageContextKey = null;
+    	this.statement = null;
+    	this.dbname = null;
+    	this.declare = true;
+    	this.request = null;
+		this.response = null;
+		this.out = null;
+        //end clear some field by biaoping.yin on 2015.3.8
 		
 		return EVAL_PAGE;
 	}

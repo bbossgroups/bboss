@@ -92,6 +92,7 @@
 					<p>
 					<%
 							 SiteDemoBean bean = (SiteDemoBean)beaninfo.getOrigineObject();
+					
 							  SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 							  File file = null;
 							  String content = null;

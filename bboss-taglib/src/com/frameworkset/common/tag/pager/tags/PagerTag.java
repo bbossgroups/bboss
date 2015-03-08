@@ -633,6 +633,15 @@ public class PagerTag extends BaseTag implements FieldHelper, PagerInfo {
 		// throw new JspException(e.getMessage());
 		// }
 		// release();
+      //begin clear some field by biaoping.yin on 2015.3.8
+        scope = null;
+        this.containerid = null;
+		this.selector = null;
+		 this.moreQuery = false;
+		 this.statement = "";
+		 this.dbname = "";
+		 this.isList = false;
+		 //end clear some field by biaoping.yin on 2015.3.8
 		return EVAL_PAGE;
 	}
 
@@ -665,6 +674,10 @@ public class PagerTag extends BaseTag implements FieldHelper, PagerInfo {
 		this.containerid = null;
 		this.selector = null;
 		 this.moreQuery = false;
+		//begin clear some field by biaoping.yin on 2015.3.8
+		 this.statement = "";
+		 this.dbname = "";
+		 //end clear some field by biaoping.yin on 2015.3.8
 		super.release();
 	}
 

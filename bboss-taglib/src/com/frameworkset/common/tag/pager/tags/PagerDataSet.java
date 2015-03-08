@@ -2079,8 +2079,8 @@ public class PagerDataSet extends PagerTagSupport {
 	protected void recoverParentDataSet() {
 		if (stack.size() > 0) {
 			PagerDataSet dataSet = (PagerDataSet) stack.peek();
-			this.pageContext.setAttribute(this.getDataSetName(), dataSet);
-			this.pageContext.setAttribute(this.getRowidName(), dataSet.getRowid() + "");
+			this.pageContext.setAttribute(dataSet.getDataSetName(), dataSet);
+			this.pageContext.setAttribute(dataSet.getRowidName(), dataSet.getRowid() + "");
 		}
 	}
 
@@ -2640,6 +2640,18 @@ public class PagerDataSet extends PagerTagSupport {
 		this.containerid = null;
         this.selector = null;
         this.moreQuery = false;
+        
+        //begin clear some field by biaoping.yin on 2015.3.8
+        this.colName = null;
+        this.property = null;
+        this.softparser = true;
+        this.type = "";
+        rowidName = "rowid";
+    	dataSetName = "dataSet";
+    	this.index = -1;
+    	this.statement = null;
+    	this.dbname = null;
+        //end clear some field by biaoping.yin on 2015.3.8
 		/**
 		 * added by biaoping.yin on 20080912 end.
 		 */		
@@ -3389,7 +3401,7 @@ public class PagerDataSet extends PagerTagSupport {
 	public boolean usedwithpagerTag()
 	{
 		return this.requestKey == null && this.pageContextKey == null && this.sessionKey == null && this.statement == null
-				&& this.colName == null;
+				&& this.colName == null /*begin added by biaoping.yin on 2015.3.9 because list data can be setted by actual*/&& this.actual == null/*end added by biaoping.yin on 2015.3.9*/;
 	}
 
 	public boolean isMoreQuery() {

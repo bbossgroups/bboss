@@ -1065,7 +1065,11 @@
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
-		
+		<attribute>
+			<name>actual</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
 	</tag>
 	<!--
 		功能：记录保存当前分页列表页面参数 当用户从分页列表页面跳转到其他页面完成操作要求返回分页列表的当前页面时，从本标签获取原来页面的参数即可
