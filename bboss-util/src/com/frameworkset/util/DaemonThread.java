@@ -31,6 +31,7 @@ public class DaemonThread extends java.lang.Thread
 			this.oldModifiedTime =  file.lastModified();
 			
 		}
+		 private boolean removeflag = false;
 		 private File file;
 		 private long lastModifiedTime;
 		 private long oldModifiedTime; 
@@ -84,32 +85,59 @@ public class DaemonThread extends java.lang.Thread
 			this.init = init;
 		}
 		
-		public void checkChanged()
+		public boolean checkChanged()
 		{
 			if(file == null)
-				return ;
+				return false;
 			 boolean exist = file.exists(); 
 	         if(!exist)
 	         {
 	         	//init.destroy();
-	         	return;
+	         	return false;
 	         }
 	         this.lastModifiedTime = file.lastModified();
 	         if(this.oldModifiedTime != this.lastModifiedTime)
 	         {
-	             //System.out.println("Reload changed file：" + file.getAbsolutePath());
-	             log.debug("Reload changed file：" + file.getAbsolutePath());
-	             this.oldModifiedTime = this.lastModifiedTime;
-	             try {
-					init.reinit();
-					log.debug("Reload changed file " + file.getAbsolutePath() + " sucessed." );
-				} catch (Exception e) {
-					log.debug("Reload changed file " + file.getAbsolutePath() + " failed:" ,e);
-				} 
-	             
+	        	 //begin 1 resolved java.util.ConcurrentModificationException by biaoping.yin on 2015.03.09
+//	             //System.out.println("Reload changed file：" + file.getAbsolutePath());
+//	             log.debug("Reload changed file：" + file.getAbsolutePath());
+//	             this.oldModifiedTime = this.lastModifiedTime;
+//	             try {
+//					init.reinit();
+//					log.debug("Reload changed file " + file.getAbsolutePath() + " sucessed." );
+//				} catch (Exception e) {
+//					log.debug("Reload changed file " + file.getAbsolutePath() + " failed:" ,e);
+//				} 
+	             return true;
+	         }
+	         else
+	         {
+	        	 return false;
 	         }
 		}
-		 
+		
+		/**
+		 * 1 resolved java.util.ConcurrentModificationException by biaoping.yin on 2015.03.09
+		 */
+		public void reinit()
+		{
+			 //System.out.println("Reload changed file：" + file.getAbsolutePath());
+            log.debug("Reload changed file：" + file.getAbsolutePath());
+            this.oldModifiedTime = file.lastModified();
+            try {
+				init.reinit();
+				log.debug("Reload changed file " + file.getAbsolutePath() + " sucessed." );
+			} catch (Exception e) {
+				log.debug("Reload changed file " + file.getAbsolutePath() + " failed:" ,e);
+			} 
+		}
+		//end 1 resolved java.util.ConcurrentModificationException by biaoping.yin on 2015.03.09 
+		public boolean isRemoveflag() {
+			return removeflag;
+		}
+		public void setRemoveflag(boolean removeflag) {
+			this.removeflag = removeflag;
+		}
 		 
 	}
     private static Logger log = Logger.getLogger(DaemonThread.class);
@@ -155,19 +183,62 @@ public class DaemonThread extends java.lang.Thread
     	for(FileBean f:files)
     	{
     		if(f.getFile() != null && f.getFile().getAbsolutePath().equals(file.getAbsolutePath()))
+    		{
+    			if(f.isRemoveflag())
+    				f.setRemoveflag(false);
     			return true;
+    		}
     	}
     	return false;
     }
-    public synchronized void addFile(File file,ResourceInitial init)
+    public  void addFile(File file,ResourceInitial init)
     {   
-    	if(this.containFile(file))
+    	if(!file.exists())
     	{
-    		log.debug(file.getAbsolutePath() + " has been monitored,ignore this operation.");
+    		log.debug(file.getAbsolutePath()+" 对应的文件不存在，忽略修改检测.");
     		return;
     	}
-    	this.files.add(new FileBean(file,init));
-    	 log.debug("Add file " + file.getAbsolutePath() + " to damon thread which moniting file modified.");
+    	synchronized(lock)
+    	{
+	    	if(this.containFile(file))
+	    	{
+	    		log.debug(file.getAbsolutePath() + " has been monitored,ignore this operation.");
+	    		return;
+	    	}
+	    	this.files.add(new FileBean(file,init));
+	    	 log.debug("Add file " + file.getAbsolutePath() + " to damon thread which moniting file modified.");
+    	}
+    }
+    public  void removeFile(String filepath)
+    {   
+    	File file = new File(filepath);
+        if(!file.exists())
+        {
+        	URL confURL = ResourceInitial.class.getClassLoader().getResource(filepath);
+        	if(confURL != null)
+        		file = new File(confURL.getPath() );
+        }
+    	removeFile( file);
+    }
+    public  void removeFile(File file)
+    {   
+    	
+    	synchronized(lock)
+    	{
+    		if(this.files == null || files.size() <= 0 )
+        		return ;
+        	if(file == null)
+        		return ;
+        	for(FileBean f:files)
+        	{
+        		if(f.getFile() != null && f.getFile().getAbsolutePath().equals(file.getAbsolutePath()))
+        		{
+//        			files.remove(f);
+        			f.setRemoveflag(true);
+        		}
+        	}
+	    	 log.debug("marked  file " + file.getAbsolutePath() + " to be removed from damon thread which moniting file modified.");
+    	}
     }
     
     
@@ -186,11 +257,16 @@ public class DaemonThread extends java.lang.Thread
 //        this.oldModifiedTime = file.lastModified();
         
 //        this.init = init;
+        if(!file.exists())
+    	{
+    		log.debug(file.getAbsolutePath()+" 对应的文件不存在，忽略修改检测.");
+    		return;
+    	}
         this.files.add(new FileBean(file,init));
         log.debug("Add file " + file.getAbsolutePath() + " to damon thread which moniting file modified.");
         this.setDaemon(true);
     }
-
+    private Object lock = new Object();
     public DaemonThread(File file,ResourceInitial init)
     {
 
@@ -225,14 +301,56 @@ public class DaemonThread extends java.lang.Thread
             }
             if(files == null || files.size() == 0)
             	continue;
-            synchronized(this)
+            List<FileBean> changedFiles = new ArrayList<FileBean>();
+
+            synchronized(lock)
             {
-	            for(FileBean f:files)
-	            {
-	            	if(stopped)
+            	//modified by biaoping.yin on 2015.03.09:忽略扫描异常，如果出现异常继续扫描
+            	try
+            	{
+		            for(FileBean f:files)
+		            {
+		            	if(stopped)
+		            		break;
+		            	if(f.isRemoveflag())
+		            		continue;
+		            	try
+		            	{
+		            		if(f.checkChanged())
+		            			changedFiles.add(f);
+		            	}
+		            	catch(Exception e)
+		            	{
+		            		String filePath = f.getFile() != null?f.getFile().getAbsolutePath():"null";
+		            		String tname = this.getName() != null?this.getName():"null";
+		            		log.debug("check file["+filePath+"] modified thread["+tname+"]  exception occur:",e);
+		            	}
+		            }
+		            
+            	}
+            	catch(Exception e)
+            	{
+            		log.debug("check file modified thread["+this.getName()+"] error occur:",e);
+            	}
+            }
+            
+            if(changedFiles.size() > 0)
+            {
+            	for(FileBean f:changedFiles)
+            	{
+            		if(stopped)
 	            		break;
-	            	f.checkChanged();
-	            }
+            		try
+	            	{
+	            		f.reinit();
+	            	}
+	            	catch(Exception e)
+	            	{
+	            		String filePath = f.getFile() != null?f.getFile().getAbsolutePath():"null";
+	            		String tname = this.getName() != null?this.getName():"null";
+	            		log.debug("check file["+filePath+"] modified thread["+tname+"] exception occur:",e);
+	            	}
+            	}
             }
             
 //            boolean exist = file.exists(); 
@@ -256,13 +374,13 @@ public class DaemonThread extends java.lang.Thread
     public void stopped()
     {
     	this.stopped = true;
-    	synchronized(this){
+    	synchronized(lock){
     		if(files != null)
 	       	 {
 	       		 files.clear();
 	       		 files = null;
 	       	 }
-    		this.notifyAll();
+    		lock.notifyAll();
     	}
 //    	synchronized(this)
 //    	{
