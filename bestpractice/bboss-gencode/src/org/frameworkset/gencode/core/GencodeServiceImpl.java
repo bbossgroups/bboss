@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
+import org.frameworkset.gencode.core.ui.GenMainJsp;
 import org.frameworkset.gencode.entity.AnnoParam;
 import org.frameworkset.gencode.entity.Annotation;
 import org.frameworkset.gencode.entity.ConditionField;
@@ -52,6 +53,7 @@ public class GencodeServiceImpl {
 	private File jspSourceDir;
 	private File mvcConfDir;
 	private File mvcconf ;
+	private File mainJsp ;
 	private File webxmlFile;
 	private ModuleMetaInfo moduleMetaInfo;
 	private String exceptionName;
@@ -69,6 +71,7 @@ public class GencodeServiceImpl {
 	private String javamodulePackage ;
 	private String serviceClass;
 	private String controlClass;
+	private String theme = "default";
 	/**
 	 * 需要作为查询条件的字段
 	 */
@@ -95,7 +98,8 @@ public class GencodeServiceImpl {
 	 */
 	private void genUI()
 	{
-		
+		GenMainJsp genMainJsp = new GenMainJsp(this);
+		genMainJsp.gen();
 	}
 	
 	/**
@@ -168,6 +172,7 @@ public class GencodeServiceImpl {
 			mvcConfDir.mkdirs();
 		}
 		mvcconf = new File(getMvcConfDir(),"bboss-"+getModuleMetaInfo().getModuleName()+".xml");
+		this.mainJsp = new File(jspSourceDir,"main.jsp");
 		webxmlFile = new File(this.rootdir,"WebRoot/WEB-INF/web.xml");
 		if(!webxmlFile.exists())
 		{
@@ -1347,6 +1352,9 @@ import com.frameworkset.util.StringUtil;
 	public File getMvcconf() {
 		return mvcconf;
 	}
+	public File getMainJsp() {
+		return this.mainJsp;
+	}
 
 	public void setMvcconf(File mvcconf) {
 		this.mvcconf = mvcconf;
@@ -1366,6 +1374,14 @@ import com.frameworkset.util.StringUtil;
 
 	public void setConditionEntityParamName(String conditionEntityParamName) {
 		this.conditionEntityParamName = conditionEntityParamName;
+	}
+
+	public String getTheme() {
+		return theme;
+	}
+
+	public void setTheme(String theme) {
+		this.theme = theme;
 	}
 
 }

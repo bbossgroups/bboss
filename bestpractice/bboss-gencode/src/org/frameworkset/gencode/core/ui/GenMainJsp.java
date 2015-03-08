@@ -1,27 +1,30 @@
-package org.frameworkset.gencode.core;
+package org.frameworkset.gencode.core.ui;
 
 import java.io.File;
+
+import org.frameworkset.gencode.core.AbstractGencode;
+import org.frameworkset.gencode.core.GencodeServiceImpl;
 
 import bboss.org.apache.velocity.Template;
 import bboss.org.apache.velocity.VelocityContext;
 
 import com.frameworkset.util.VelocityUtil;
 
-public class GenMVCConf extends AbstractGencode{
-	public GenMVCConf(GencodeServiceImpl gencodeService)
-	{
+public class GenMainJsp  extends AbstractGencode{
+
+	public GenMainJsp(GencodeServiceImpl gencodeService) {
 		super(gencodeService);
 	}
 	public void gen()
 	{
-		File conf = gencodeService.getMvcconf();
+		File conf = gencodeService.getMainJsp();
 		if(conf.exists())
 		{
 			conf.delete();
 		}
 		try {
 			conf.createNewFile();
-			 Template conftempalte = VelocityUtil.getTemplate("gencode/conf/ioc.vm");
+			 Template conftempalte = VelocityUtil.getTemplate("/gencode/ui/"+gencodeService.getTheme()+"/main.vm");
 			 VelocityContext context = new VelocityContext();
 			
 			 
@@ -29,9 +32,6 @@ public class GenMVCConf extends AbstractGencode{
 			 context.put("gendate", gencodeService.getModuleMetaInfo().getDate());
 			 context.put("author", gencodeService.getModuleMetaInfo().getAuthor());
 			 context.put("version", gencodeService.getModuleMetaInfo().getVersion());
-			 context.put("sqlfile", gencodeService.getSqlfilepath());
-			 context.put("serviceClass", gencodeService.getServiceClass());
-			 context.put("controlClass", gencodeService.getControlClass());
 			 
 			 
 			 context.put("moduleName", gencodeService.getModuleMetaInfo().getModuleName());
@@ -44,6 +44,5 @@ public class GenMVCConf extends AbstractGencode{
 			e.printStackTrace();
 		}
 	}
-	
 
 }

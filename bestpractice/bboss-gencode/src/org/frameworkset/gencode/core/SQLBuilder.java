@@ -7,12 +7,11 @@ import org.frameworkset.gencode.entity.Field;
 import org.frameworkset.gencode.entity.SortField;
 
 
-public class SQLBuilder {
+public class SQLBuilder  extends AbstractGencode{
 	
-	private GencodeServiceImpl gencodeService;
 	public SQLBuilder(GencodeServiceImpl gencodeService)
 	{
-		this.gencodeService = gencodeService;
+		super(gencodeService);
 	}
 	public void buidlersql(SQL sql)
 	{
