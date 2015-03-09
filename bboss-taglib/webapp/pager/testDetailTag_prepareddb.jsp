@@ -8,7 +8,7 @@
 
 <%
 	String table_name="td_sm_user";
-	String statement="select * from tableinfo where table_name=${table_name} " ;
+	String statement="select * from tableinfo where table_name=$[table_name] " ;
 	
 %>
 <html>
@@ -18,7 +18,7 @@
 <body>
 
 	<table>
-		<pg:sqlparams sqlparamskey="key" pretoken="\\$\\{" endtoken="\\}">
+		<pg:sqlparams sqlparamskey="key" pretoken="\\$\\[" endtoken="\\]">
 				<pg:sqlparam name="table_name" value="<%=table_name %>" type="string"/>
 					
 		</pg:sqlparams> 

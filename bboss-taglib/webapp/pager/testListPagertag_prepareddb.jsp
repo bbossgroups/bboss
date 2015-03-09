@@ -8,7 +8,7 @@
 
 <%
 	String TABLE_ID_TYPE="sequence";
-	String statement="select * from tableinfo where TABLE_ID_TYPE=${TABLE_ID_TYPE} order by table_id_value desc" ;
+	String statement="select * from tableinfo where TABLE_ID_TYPE=$[TABLE_ID_TYPE] order by table_id_value desc" ;
 	
 %>
 <html>
@@ -18,7 +18,7 @@
 <body>
 
 	<table>
-	   <pg:sqlparams sqlparamskey="key" pretoken="\\$\\{" endtoken="\\}">
+	   <pg:sqlparams sqlparamskey="key" pretoken="\\$\\[" endtoken="\\]">
 				<pg:sqlparam name="TABLE_ID_TYPE" value="<%=TABLE_ID_TYPE %>" type="string"/>
 					
 		</pg:sqlparams> 
