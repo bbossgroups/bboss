@@ -564,84 +564,119 @@ public class PagerTag extends BaseTag implements FieldHelper, PagerInfo {
 
 		return data == null ? "dataInfo" : data;
 	}
-
-	public int doEndTag() throws JspException {
-		/**
-		 * 恢复上下文环境旧得上下文环境，清除数据获取接口
-		 */
-		this.pagerContext.release();
-		this.commitevent = null;
-		this.form = null;
-		this.promotion = false;
+	@Override
+	public void doFinally() {
+		try {
+			/**
+			 * 恢复上下文环境旧得上下文环境，清除数据获取接口
+			 */
+			this.pagerContext.release();
+			this.commitevent = null;
+			this.form = null;
+			this.promotion = false;
 //		pretoken= null;
 //        endtoken= null;
-        sqlparamskey = "sql.params.key";
-       
-		//		
-		// if (REQUEST.equals(scope)) {
-		//			
-		// PagerContext.restoreAttribute(request, id, oldPager);
-		//			
-		// request.removeAttribute(getData());
-		// oldPager = null;
-		//
-		// // if (pagerTagExport != null) {
-		// // String name;
-		// // if ((name = pagerTagExport.getPageOffset()) != null) {
-		// // PagerContext.restoreAttribute(request, name, oldOffset);
-		// // oldOffset = null;
-		// // }
-		// //
-		// // if ((name = pagerTagExport.getPageNumber()) != null) {
-		// // PagerContext.restoreAttribute(request, name, oldPageNumber);
-		// // oldPageNumber = null;
-		// // }
-		// // }
-		//			
-		// } else {
-		// if (pagerTagExport != null) {
-		// String name;
-		// if ((name = pagerTagExport.getPageOffset()) != null) {
-		// PagerContext.restoreAttribute(pageContext, name, oldOffset);
-		// oldOffset = null;
-		// }
-		//
-		// if ((name = pagerTagExport.getPageNumber()) != null) {
-		// PagerContext.restoreAttribute(pageContext, name, oldPageNumber);
-		// oldPageNumber = null;
-		// }
-		// }
-		// }
+			sqlparamskey = "sql.params.key";
+      
+			//		
+			// if (REQUEST.equals(scope)) {
+			//			
+			// PagerContext.restoreAttribute(request, id, oldPager);
+			//			
+			// request.removeAttribute(getData());
+			// oldPager = null;
+			//
+			// // if (pagerTagExport != null) {
+			// // String name;
+			// // if ((name = pagerTagExport.getPageOffset()) != null) {
+			// // PagerContext.restoreAttribute(request, name, oldOffset);
+			// // oldOffset = null;
+			// // }
+			// //
+			// // if ((name = pagerTagExport.getPageNumber()) != null) {
+			// // PagerContext.restoreAttribute(request, name, oldPageNumber);
+			// // oldPageNumber = null;
+			// // }
+			// // }
+			//			
+			// } else {
+			// if (pagerTagExport != null) {
+			// String name;
+			// if ((name = pagerTagExport.getPageOffset()) != null) {
+			// PagerContext.restoreAttribute(pageContext, name, oldOffset);
+			// oldOffset = null;
+			// }
+			//
+			// if ((name = pagerTagExport.getPageNumber()) != null) {
+			// PagerContext.restoreAttribute(pageContext, name, oldPageNumber);
+			// oldPageNumber = null;
+			// }
+			// }
+			// }
 
-		//
-		// // limit size of re-usable StringBuilder
-		// if (uri.capacity() > 1024)
-		// uri = null;
-		//
-		// // indexs = null;
-		// pageNumberInteger = null;
+			//
+			// // limit size of re-usable StringBuilder
+			// if (uri.capacity() > 1024)
+			// uri = null;
+			//
+			// // indexs = null;
+			// pageNumberInteger = null;
 
-		/**
-		 * return EVAL_PAGE:继续分析结束标签后的页面代码
-		 */
-		// try
-		// {
-		// pageContext.getOut().print("<table width=\"100%\">");
-		// }
-		// catch(Exception e)
-		// {
-		// throw new JspException(e.getMessage());
-		// }
-		// release();
-      //begin clear some field by biaoping.yin on 2015.3.8
-        scope = null;
-        this.containerid = null;
-		this.selector = null;
-		 this.moreQuery = false;
-		 this.statement = "";
-		 this.dbname = "";
-		 this.isList = false;
-		 //end clear some field by biaoping.yin on 2015.3.8
+			/**
+			 * return EVAL_PAGE:继续分析结束标签后的页面代码
+			 */
+			// try
+			// {
+			// pageContext.getOut().print("<table width=\"100%\">");
+			// }
+			// catch(Exception e)
+			// {
+			// throw new JspException(e.getMessage());
+			// }
+			// release();
+     //begin clear some field by biaoping.yin on 2015.3.8
+			scope = null;
+			this.containerid = null;
+			this.selector = null;
+			 this.moreQuery = false;
+			 this.statement = "";
+			 this.dbname = "";
+			 this.isList = false;
+			 //end clear some field by biaoping.yin on 2015.3.8
+			 
+			 url = null;
+				index = null;
+
+				// items = 0;
+				maxItems = DEFAULT_MAX_ITEMS;
+				maxPageItems = DEFAULT_MAX_PAGE_ITEMS;
+				maxIndexPages = DEFAULT_MAX_INDEX_PAGES;
+				isOffset = true;
+				export = null;
+			
+				// uri = null;
+				queryString = null;
+				// params = 0;
+				// offset = 0;
+				// itemCount = 0;
+				// pageNumber = 0;
+				// pageNumberInteger = null;
+
+				idOffsetParam = DEFAULT_ID + OFFSET_PARAM;
+				pagerTagExport = null;
+				oldPager = null;
+				oldOffset = null;
+				oldPageNumber = null;
+		} catch (Exception e) {
+			
+		}
+			
+		
+			
+		super.doFinally();
+	}
+	public int doEndTag() throws JspException {
+		
 		return EVAL_PAGE;
 	}
 
@@ -653,7 +688,7 @@ public class PagerTag extends BaseTag implements FieldHelper, PagerInfo {
 		maxItems = DEFAULT_MAX_ITEMS;
 		maxPageItems = DEFAULT_MAX_PAGE_ITEMS;
 		maxIndexPages = DEFAULT_MAX_INDEX_PAGES;
-		isOffset = false;
+		isOffset = true;
 		export = null;
 		scope = null;
 		//

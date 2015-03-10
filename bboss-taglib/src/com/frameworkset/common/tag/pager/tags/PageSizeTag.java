@@ -100,6 +100,12 @@ public class PageSizeTag extends PagerTagSupport
 		
 	}
 
+	@Override
+	public void doFinally() {
+		this.pagerContext = null;
+		super.doFinally();
+	}
+
 	
 
 }

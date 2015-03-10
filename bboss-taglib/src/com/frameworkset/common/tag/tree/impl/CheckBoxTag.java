@@ -96,6 +96,12 @@ public class CheckBoxTag extends BaseTag {
 	public int doEndTag() throws JspException
 	{
 		
+		
+	    
+		return super.doEndTag();		
+	}
+	@Override
+	public void doFinally() {
 		name = null;
 		defaultValues = null;
 		extention = null;
@@ -105,8 +111,7 @@ public class CheckBoxTag extends BaseTag {
 	    recursive = false;
 	    
 	    uprecursive = false;
-	    
-		return super.doEndTag();		
+	    super.doFinally();
 	}
 
 	/**

@@ -66,8 +66,11 @@ public abstract class BaseTag extends TagSupport implements TryCatchFinally
 	}
 
 	public void doFinally() {
-		// TODO Auto-generated method stub
-		
+		this.request = null;
+		this.response = null;
+		this.session = null;
+		this.out = null;
+		enablecontextmenu = false;
 	}
 
 	private final static Logger log = Logger.getLogger(BaseTag.class);
@@ -169,11 +172,7 @@ public abstract class BaseTag extends TagSupport implements TryCatchFinally
     
     public int doEndTag() throws JspException
 	{
-		this.request = null;
-		this.response = null;
-		this.session = null;
-		this.out = null;
-		enablecontextmenu = false;
+		
 		return super.doEndTag();
 	}
     

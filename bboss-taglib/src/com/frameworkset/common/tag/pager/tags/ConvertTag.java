@@ -115,12 +115,17 @@ public class ConvertTag extends BaseValueTag{
 	 */
 	@Override
 	public int doEndTag() throws JspException {
-		convertData = null;
-		scope = scope_request;
+		
 		
 		return super.doEndTag();
 	}
-	
+	@Override
+	public void doFinally()
+	{
+		convertData = null;
+		scope = scope_request;
+		super.doFinally();
+	}
 	
 
 }

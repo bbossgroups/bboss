@@ -614,7 +614,16 @@ public class ContextMenuTag extends BaseTag {
 	    public void setJquery(boolean jquery)
 	    {
 	        this.jquery = jquery;
-	    }	
+	    }
+
+		@Override
+		public void doFinally() {
+			context = null;
+			jquery = false;
+			this.parent_indent = null;
+			scope = "request";
+			super.doFinally();
+		}	
 	
 
 }

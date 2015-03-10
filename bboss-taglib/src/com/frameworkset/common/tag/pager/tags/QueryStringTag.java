@@ -109,9 +109,15 @@ public class QueryStringTag  extends PagerTagSupport
 	public int doEndTag()throws JspException 
 	{
 		
-		this.encode = null;
+		
 		
 		return super.doEndTag();
+	}
+
+	@Override
+	public void doFinally() {
+		this.encode = null;
+		super.doFinally();
 	}
 
 }

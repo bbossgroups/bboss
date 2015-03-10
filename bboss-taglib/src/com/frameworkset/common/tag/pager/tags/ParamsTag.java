@@ -73,9 +73,7 @@ public class ParamsTag extends PagerTagSupport {
 	public int doEndTag()throws JspException 
 	{
 		
-		this.encode = false;
-		this.name = null;
-		encodecount = 1;
+		
 		
 		return super.doEndTag();
 	}
@@ -135,6 +133,14 @@ public class ParamsTag extends PagerTagSupport {
 	public void write(OutputStream output) {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public void doFinally() {
+		this.encode = false;
+		this.name = null;
+		encodecount = 1;
+		super.doFinally();
 	}
 	
 

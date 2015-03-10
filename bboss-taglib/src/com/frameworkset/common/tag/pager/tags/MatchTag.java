@@ -243,15 +243,7 @@ public abstract class MatchTag extends BaseValueTag {
 	public int doEndTag() throws JspException 
 	{
 		int ret = super.doEndTag();
-		this.actualValue = null;
-		this.addTruevalue = false; 
-		this.value = null;
-		this.expressionValue = null;
-		this.pattern = null;
-		this.scope = null;
-		this.scopes = null;
-		ignoreCase = false;
-		offset  = -1;
+		
 		if(!this.evalbody)
 		{
 			if( this.result)
@@ -275,12 +267,7 @@ public abstract class MatchTag extends BaseValueTag {
 				
 			}
 		}
-		this.resolvedResult = false;
-		this.hasno = false;
-		this.hasyes =false;
-		this.evalbody = false;
-		this.result = false;
-		this.caseTag = null;
+		
 //		this.requestKey = null ;
 //		this.sessionKey= null ;
 //		this.pageContextKey= null ;
@@ -410,6 +397,21 @@ public abstract class MatchTag extends BaseValueTag {
 	}
 	public void doFinally() {
 		this.typeof = null;
+		this.actualValue = null;
+		this.addTruevalue = false; 
+		this.value = null;
+		this.expressionValue = null;
+		this.pattern = null;
+		this.scope = null;
+		this.scopes = null;
+		ignoreCase = false;
+		offset  = -1;
+		this.resolvedResult = false;
+		this.hasno = false;
+		this.hasyes =false;
+		this.evalbody = false;
+		this.result = false;
+		this.caseTag = null;
 		super.doFinally();
 	}
 

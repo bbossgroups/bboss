@@ -232,12 +232,13 @@ public class DetailTag extends PagerDataSet implements FieldHelper{
 				DataInfo dataInfo = pagerContext.getDataInfo();
 				if (dataInfo == null)
 				{
+					log.debug("235 detail tag-------------------->loadClassDataNull :dataInfo is null.");
 					loadClassDataNull();
 				}
 				else if(dataInfo instanceof ObjectDataInfoImpl)
 				{
-					if(dataInfo instanceof ObjectDataInfoImpl)
-					{
+					
+					
 						Object data = dataInfo.getObjectData();
 	//					if(data instanceof Collection)
 	//				        loadClassData((Collection)data);
@@ -251,7 +252,7 @@ public class DetailTag extends PagerDataSet implements FieldHelper{
 					    {
 					    	loadClassData(data,data.getClass());
 					    }
-					}
+					
 	
 				}
 	//		    else if(dataInfo instanceof DefaultDataInfoImpl)
@@ -315,7 +316,10 @@ public class DetailTag extends PagerDataSet implements FieldHelper{
 			if (size() == 0)
 				this.rowid = -1;
 			else
+			{
 			    rowid = 0;
+			    this.currentValueObject = this.getClassDataValue(rowid);
+			}
 	
 	
 			return EVAL_BODY_INCLUDE;
@@ -430,52 +434,7 @@ public class DetailTag extends PagerDataSet implements FieldHelper{
 //	}
 	public int doEndTag() throws JspException
 	{
-//		super.doEndTag();
-		try
-		{
-			super.clear();
-			this.pagerContext = null;
-			
-			
-		}
-		catch(Exception e)
-		{
-			
-		}
-		
-//		pretoken= null;
-//        endtoken= null;
-//		
-//		if(flag)
-//		{
-			removeVariable();
-			beaninfoName = "beaninfo";
-			//恢复父beaninfo实例
-			recoverParentBeanInfo();
-//		}
-//		this.request = null;
-//		this.session = null;
-//		this.response = null;
-		enablecontextmenu = false;
-//		this.out = null;
-//		flag = false;
-		sqlparamskey = "sql.params.key";
-		//begin clear some field by biaoping.yin on 2015.3.8 如果不清除，可能导致标签工作beaninfo.getOrigineObject()不能正确工作
-        this.colName = null;
-        this.property = null;
-        this.softparser = true;
-        this.type = "";
-        sessionKey = null;
-        requestKey = null;
-        this.needClear = false;
-		pageContextKey = null;
-    	this.statement = null;
-    	this.dbname = null;
-    	this.declare = true;
-    	this.request = null;
-		this.response = null;
-		this.out = null;
-        //end clear some field by biaoping.yin on 2015.3.8
+
 		
 		return EVAL_PAGE;
 	}
@@ -614,6 +573,7 @@ public class DetailTag extends PagerDataSet implements FieldHelper{
 //			return EVAL_BODY_AGAIN;
 //		} else 
 		{
+			this.currentValueObject = null;
 			return SKIP_BODY;
 		}
 	}
@@ -653,6 +613,58 @@ public class DetailTag extends PagerDataSet implements FieldHelper{
 
 	public void setBeaninfoName(String beaninfoName) {
 		this.beaninfoName = beaninfoName;
+	}
+
+	@Override
+	public void doFinally() {
+//		super.doEndTag();
+		try
+		{
+			super.clear();
+			this.pagerContext = null;
+//			pretoken= null;
+//	        endtoken= null;
+//			
+//			if(flag)
+//			{
+				removeVariable();
+				beaninfoName = "beaninfo";
+				//恢复父beaninfo实例
+				recoverParentBeanInfo();
+//			}
+//			this.request = null;
+//			this.session = null;
+//			this.response = null;
+			enablecontextmenu = false;
+//			this.out = null;
+//			flag = false;
+			sqlparamskey = "sql.params.key";
+			//begin clear some field by biaoping.yin on 2015.3.8 如果不清除，可能导致标签工作beaninfo.getOrigineObject()不能正确工作
+	        this.colName = null;
+	        this.property = null;
+	        this.softparser = true;
+	        this.type = "";
+	        sessionKey = null;
+	        requestKey = null;
+	        this.needClear = false;
+			pageContextKey = null;
+	    	this.statement = null;
+	    	this.dbname = null;
+	    	this.declare = true;
+	    	this.request = null;
+			this.response = null;
+			this.out = null;
+			this.currentValueObject = null;
+	        //end clear some field by biaoping.yin on 2015.3.8
+			
+		}
+		catch(Exception e)
+		{
+			
+		}
+		
+
+		super.doFinally();
 	}
 
 	

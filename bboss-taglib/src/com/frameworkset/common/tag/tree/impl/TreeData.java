@@ -144,7 +144,7 @@ public class TreeData extends BaseTag {
 //		this.radioValue = null;
 //		this.refreshNode = true;
 //		this.rootid = "-1";
-		this.rootName = "根节点";
+		
 //		this.scope = "session";  
 //		this.showRootHref = "true" ;
 //		this.singleSelection = "false";
@@ -568,6 +568,12 @@ public class TreeData extends BaseTag {
 
 	public void setRootNameCode(String rootNameCode) {
 		this.rootNameCode = rootNameCode;
+	}
+
+	@Override
+	public void doFinally() {
+		this.rootName = "根节点";
+		super.doFinally();
 	}
 
 }

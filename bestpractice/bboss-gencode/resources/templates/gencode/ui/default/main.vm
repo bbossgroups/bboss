@@ -3,7 +3,7 @@
 
 
 <!-- 
-	描述:${entityName}主界面。
+	描述:${entityName}管理主界面。
 	作者:$author
 	版权:$company
 	版本:$version 
@@ -12,7 +12,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title><pg:message code="sany.appbom.bomManage"/></title>
+<title>${entityName}管理</title>
 <%@ include file="/common/jsp/css-lhgdialog.jsp"%>
 <script type="text/javascript" src="${pageContext.request.contextPath}/html2/js/common.js"></script>
 <script language="javascript">
@@ -35,11 +35,13 @@
 	<body>
 		<div class="mcontent">
 			<sany:menupath />
+			#if($conditions && $conditions.size() > 0)
 			<div id="searchblock">
 				<div class="search_top">
 					<div class="right_top"></div>
 					<div class="left_top"></div>
 				</div>
+				
 				<div class="search_box">
 					<form id="queryForm" name="queryForm">
 						<table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -48,112 +50,64 @@
 								<td>
 									<table width="100%" border="0" cellpadding="0" cellspacing="0"
 										class="table2">
+									#if($conditions.size() <= 3)
 										<tr>
-											<th><pg:message code="sany.appbom.bm"/>：</th>
-											<td><input id="bm_query" name="bm" type="text"
+											#foreach($condition in $conditions)
+											<th>${condition.fieldName}：</th>
+											<td><input id="${condition.fieldName}" name="${condition.fieldName}" type="text"
 													value="" class="w120"/></td>
-											<th>
-												<pg:message code="sany.appbom.softInitial"/>：
-											</th>
-											<td>
-												<input id="app_name_en_query" name="app_name_en" type="text"
-													value="" class="w120" />
-											</td>
-											<th>
-												<pg:message code="sany.appbom.softName"/>：
-											</th>
-											<td>
-												<input id="app_name_query" name="app_name" type="text"
-													value="" class="w120" />
-											</td>
-										</tr>
-										<tr>
-											<th>
-												<pg:message code="sany.appbom.level"/>：
-											</th>
-											<td >
-												<select id="soft_level_query" name="soft_level"
-													class="select1" style="width:125px;">
-													<option value=""></option>
-													<option value="1">
-														一级
-													</option>
-													<option value="2">
-														二级
-													</option>
-													<option value="3">
-														三级
-													</option>
-													<option value="10">
-														待定
-													</option>
-												</select>
-											</td>
-									
-											<th>
-												<pg:message code="sany.appbom.state"/>：
-											</th>
-											<td>
-												<select id="state_query" name="state" class="select1" style="width:125px;">
-													<option value=""></option>
-													<option value="1">
-														在用
-													</option>
-													<option value="2">
-														试运行
-													</option>
-													<option value="3">
-														升级研发中
-													</option>
-													<option value="4">
-														停用
-													</option>
-													<option value="5">
-														暂用
-													</option>
-													<option value="6">
-														研发中
-													</option>
-													<option value="7">
-														试验中
-													</option>
-												</select>
-											</td>
-											<th>
-												<pg:message code="sany.appbom.rdType"/>：
-											</th>
-											<td>
-												<select id="rd_type_query" name="rd_type"
-													style="width: 125px;">
-													<option value=""></option>
-													<option value="1">
-														自研
-													</option>
-													<option value="2">
-														外购
-													</option>
-													<option value="3">
-														免费
-													</option>
-													<option value="4">
-														试用
-													</option>
-													<option value="5">
-														外购+定制
-													</option>
-												</select>
-											</td>
+											#end
 											<th>
 												&nbsp;
 											</th>
 											<td>
-												<a href="javascript:void" class="bt_1" id="queryButton"><span><pg:message code="sany.pdp.common.operation.search"/></span>
+												<a href="javascript:void(0)" class="bt_1" id="queryButton"><span>查询</span>
 												</a>
-												<a href="javascript:void(0)" class="bt_2" id="resetButton" onclick="doreset()"><span><pg:message code="sany.pdp.common.operation.reset"/></span>
+												<a href="javascript:void(0)" class="bt_2" id="resetButton" onclick="doreset()"><span>重置</span>
+												</a>
+												<input type="reset" id="reset" style="display:none"/>
+											</td>	
+										</tr>
+									#else
+										<tr>
+										#foreach($condition in $conditions)
+										
+											<th>${condition.fieldName}：</th>
+											<td><input id="${condition.fieldName}" name="${condition.fieldName}" type="text"
+													value="" class="w120"/></td>
+											
+											#if($velocityCount % 3 == 0)	
+												#if($velocityCount == ($conditions.size() - 1))
+											<th>
+												&nbsp;
+											</th>
+											<td>
+												<a href="javascript:void(0)" class="bt_1" id="queryButton"><span>查询</span>
+												</a>
+												<a href="javascript:void(0)" class="bt_2" id="resetButton" onclick="doreset()"><span>重置</span>
+												</a>
+												<input type="reset" id="reset" style="display:none"/>
+											</td>	
+												#end
+										</tr>
+												#if($velocityCount < $conditions.size())
+										<tr>		
+												#end
+											#elseif($velocityCount == ($conditions.size() - 1))
+											<th>
+												&nbsp;
+											</th>
+											<td>
+												<a href="javascript:void(0)" class="bt_1" id="queryButton"><span>查询</span>
+												</a>
+												<a href="javascript:void(0)" class="bt_2" id="resetButton" onclick="doreset()"><span>重置</span>
 												</a>
 												<input type="reset" id="reset" style="display:none"/>
 											</td>
-										</tr>
+										</tr>	
+											#end
+										#end	
+									#end
 									</table>
 								</td>
 								<td class="right_box"></td>
@@ -166,16 +120,17 @@
 					<div class="left_bottom"></div>
 				</div>
 			</div>
+			#end
 			<div class="title_box">
 				<div class="rightbtn">
-				<a href="javascript:void" class="bt_small" id="addButton"><span><pg:message code="sany.pdp.common.operation.new"/></span></a>
-				<a href="javascript:void" class="bt_small" id="delBatchButton"><span><pg:message code="sany.pdp.common.operation.batch"/> <pg:message code="sany.pdp.common.operation.delete"/></span></a>
-				<a href="javascript:void" class="bt_small" id="exportButton"><span><pg:message code="sany.pdp.common.operation.export"/></span></a>
+				<a href="javascript:void" class="bt_small" id="addButton"><span>新增</span></a>
+				<a href="javascript:void" class="bt_small" id="delBatchButton"><span>批量删除</span></a>
+				<a href="javascript:void" class="bt_small" id="exportButton"><span>导出</span></a>
 				<input id="excelType" type="radio" name="excelType"   checked  >2003</input>
 				<input  type="radio" name="excelType"  >2007</input>
 				</div>
 				
-				<strong><pg:message code="sany.appbom.appBom"/> <pg:message code="sany.pdp.common.data.list"/></strong>
+				<strong>${entityName} 列表</strong>
 				<img id="wait" src="../common/images/wait.gif" />				
 			</div>
 			<div id="custombackContainer" style="overflow:auto">
@@ -216,8 +171,8 @@ $(document).ready(function() {
     });           
     
     $('#addButton').click(function() {  
-  	 var url="<%=request.getContextPath()%>/appbom/appPre.page";
-	 	 $.dialog({ id:'iframeNewId', title:'<pg:message code="sany.pdp.common.operation.new"/>&nbsp;<pg:message code="sany.appbom.appBom"/>',width:740,height:560, content:'url:'+url});   			 		  
+  	 var url="<%=request.getContextPath()%>${toAddAction}";
+	 	 $.dialog({ id:'iframeNewId', title:'新增&nbsp;${entityName}',width:740,height:560, content:'url:'+url});   			 		  
     });            
 });
 

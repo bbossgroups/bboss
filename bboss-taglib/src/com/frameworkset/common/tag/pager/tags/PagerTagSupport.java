@@ -314,13 +314,7 @@ public abstract class PagerTagSupport extends BaseTag {
 	}
 
 	public int doEndTag() throws JspException {
-		HttpServletRequest request = this.getHttpServletRequest();
-//		HttpServletResponse response = this.getHttpServletResponse();
-		if (request == null || !(request instanceof CMSServletRequest) )
-		{
-			pagerContext = null;
-			fieldHelper = null;
-		}
+
 		return super.doEndTag();
 //		return EVAL_PAGE;
 	}
@@ -341,6 +335,22 @@ public abstract class PagerTagSupport extends BaseTag {
 	protected FieldHelper getFieldHelper()
 	{    
 	    return fieldHelper;
+	}
+
+	@Override
+	public void doFinally() {
+		try {
+			HttpServletRequest request = this.getHttpServletRequest();
+//		HttpServletResponse response = this.getHttpServletResponse();
+			if (request == null || !(request instanceof CMSServletRequest) )
+			{
+				pagerContext = null;
+				fieldHelper = null;
+			}
+		} catch (Exception e) {
+			
+		}
+		super.doFinally();
 	}
 }
 

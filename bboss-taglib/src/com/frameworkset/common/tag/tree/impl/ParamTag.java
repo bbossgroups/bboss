@@ -49,11 +49,16 @@ public class ParamTag extends BaseTag {
     private String defaultValue = null;
     public int doEndTag() throws JspException
     {
+    	
+    	return super.doEndTag();
+    }
+    @Override
+	public void doFinally() {
     	this.name = null;
     	this.scope = null;
     	this.value = null;
     	this.encode = true;
-    	return super.doEndTag();
+    	super.doFinally();
     }
     /**
      * Description:

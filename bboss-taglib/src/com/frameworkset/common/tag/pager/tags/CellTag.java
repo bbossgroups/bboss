@@ -1281,10 +1281,9 @@ public class CellTag  extends PagerTagSupport {
 	{
 		this.replace = replace;
 	}
-	
-	public int doEndTag() throws JspException
+	@Override
+	public void doFinally()
 	{
-		
 		this.pagerContext = null;
 		this.t_formula = null;
 		this.expression = null;
@@ -1316,6 +1315,12 @@ public class CellTag  extends PagerTagSupport {
 		this.usecurrentCellValuetoCellName = null;
 		this.currentcelltoColName = false;
 		this.currentDataSet = null;
+		super.doFinally();
+	}
+	public int doEndTag() throws JspException
+	{
+		
+		
 		
 		int ret = super.doEndTag();
 		return ret;

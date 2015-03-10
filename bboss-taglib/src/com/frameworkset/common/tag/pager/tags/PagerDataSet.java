@@ -247,6 +247,10 @@ public class PagerDataSet extends PagerTagSupport {
 	protected java.lang.String[] fields;
 
 	protected ClassDataList theClassDataList = new ClassDataList();
+	/**
+	 * 记录迭代的当前记录对象
+	 */
+	protected ClassData currentValueObject ;
 
 	protected String sortKey = null;
 
@@ -461,6 +465,13 @@ public class PagerDataSet extends PagerTagSupport {
 			return null;
 		try
 		{
+			if(rowid == this.rowid)//如果是当前记录，则直接返回当前记录对象的字段属性值，否则根据rowid检索对应的记录对象 2015.3.10 by biaoping.yin
+			{
+				return getValue(this.currentValueObject, colName);
+				
+			}
+			else
+			{
         		if(!this.needPeak())
         		{
         		     
@@ -473,6 +484,7 @@ public class PagerDataSet extends PagerTagSupport {
         			PagerDataSet dataSet = (PagerDataSet)this.stack.peek();
         			return dataSet.getValue(rowid,colName);
         		}
+			}
 		}
 		catch(Exception e)
 		{
@@ -495,6 +507,12 @@ public class PagerDataSet extends PagerTagSupport {
 			return null;
 		try
 		{
+			if(rowid == this.rowid)
+			{
+				return getValue(this.currentValueObject);
+			}
+			else
+			{
         		if(!this.needPeak())
         		{
         		     
@@ -506,6 +524,40 @@ public class PagerDataSet extends PagerTagSupport {
         				return null;
         			PagerDataSet dataSet = (PagerDataSet)this.stack.peek();
         			return dataSet.getValue(rowid);
+        		}
+			}
+		}
+		catch(Exception e)
+		{
+		    throw new RuntimeException("获取属性[colName=" + colName + "]失败：" ,e);
+		}
+	}
+	
+	/**
+	 * 获取行号为rowid的值对象中属性名称为colName的值
+	 * 
+	 * @param rowid -
+	 *            值对象行号
+	 * @param colName -
+	 *            属性名称
+	 * @return Object
+	 */
+	public ClassData getClassDataValue(int rowid) {
+		if (rowid == -1)
+			return null;
+		try
+		{
+        		if(!this.needPeak())
+        		{
+        		     
+        			return theClassDataList.get(rowid);
+        		}
+        		else
+        		{
+        			if(stack.size() == 0)
+        				return null;
+        			PagerDataSet dataSet = (PagerDataSet)this.stack.peek();
+        			return dataSet.getClassDataValue(rowid);
         		}
 		}
 		catch(Exception e)
@@ -521,17 +573,46 @@ public class PagerDataSet extends PagerTagSupport {
 	 */
 	public Object getOrigineObject(int rowid)
 	{
-		if(!this.needPeak())
+		if(rowid == this.rowid)
 		{
-			ClassData object = this.theClassDataList.get(rowid);
-			return object.getValueObject();
+			
+			if(this.currentValueObject != null)
+			{
+				Object value = this.currentValueObject.getValueObject();
+				if(value == null)
+				{
+					log.debug("-------------------->584 PagerDataSet this.currentValueObject.getValueObject() return null...");
+				}
+				return value;
+			}			
+			else
+			{
+				log.debug("-------------------->589 PagerDataSet this.currentValueObject is null...");
+				return null;
+			}
+			
 		}
 		else
-		{
-			if(stack.size() == 0)
-				return null;
-			PagerDataSet dataSet = (PagerDataSet)this.stack.peek();
-			return dataSet.getOrigineObject(rowid);
+		{		
+			if(!this.needPeak())
+			{
+				ClassData object = this.theClassDataList.get(rowid);
+				Object value = object.getValueObject();
+				if(value == null)
+					log.debug("PagerDataSet !this.needPeak() getOrigineObject(rowid="+rowid+") from ClassData is null...");
+				return value;
+			}
+			else
+			{
+				if(stack.size() == 0)
+				{
+					log.debug("PagerDataSet  needPeak getOrigineObject(rowid="+rowid+") from ClassData stack.size() == 0 return null.---------------");
+					return null;
+				}
+				PagerDataSet dataSet = (PagerDataSet)this.stack.peek();
+				log.debug("PagerDataSet  needPeak getOrigineObject(rowid="+rowid+") from peek dataSet. ");
+				return dataSet.getOrigineObject(rowid);
+			}
 		}
 	}
 	
@@ -542,17 +623,24 @@ public class PagerDataSet extends PagerTagSupport {
 	
 	public Object getMapKey(int rowid)
 	{
-		if(!this.needPeak())
+		if(rowid == this.rowid)
 		{
-			ClassData object = this.theClassDataList.get(rowid);
-			return object.getMapkey();
+			return this.currentValueObject.getMapkey();
 		}
 		else
 		{
-			if(stack.size() == 0)
-				return null;
-			PagerDataSet dataSet = (PagerDataSet)this.stack.peek();
-			return dataSet.getMapKey(rowid);
+			if(!this.needPeak())
+			{
+				ClassData object = this.theClassDataList.get(rowid);
+				return object.getMapkey();
+			}
+			else
+			{
+				if(stack.size() == 0)
+					return null;
+				PagerDataSet dataSet = (PagerDataSet)this.stack.peek();
+				return dataSet.getMapKey(rowid);
+			}
 		}
 	}
 	
@@ -2372,7 +2460,7 @@ public class PagerDataSet extends PagerTagSupport {
 					return SKIP_BODY;
 				}
 			}
-			
+			this.currentValueObject = this.getClassDataValue(rowid);
 			return EVAL_BODY_INCLUDE;
 			
 		}
@@ -2512,9 +2600,10 @@ public class PagerDataSet extends PagerTagSupport {
 			rowid++;
 //			pageContext.setAttribute(this.getDataSetName(), this);
 			pageContext.setAttribute(this.getRowidName(), rowid + "");
-
+			this.currentValueObject = this.getClassDataValue(rowid);
 			return EVAL_BODY_AGAIN;
 		} else {
+			this.currentValueObject = null;
 			return SKIP_BODY;
 		}
 	}
@@ -2611,50 +2700,7 @@ public class PagerDataSet extends PagerTagSupport {
 //		System.out.println("this=" + this);
 //		System.out.println("dataSet doendtag();");
 //		System.out.println("flag=" + flag);
-		this.removeVariable();
-		clear();
-//		if(flag)
-		recoverParentDataSet();
-//		flag = false;
-		//if(declare)
 		
-		this.declare = true;
-
-		this.formulas = null;
-		this.sortKey = null;
-		this.desc = null;
-//		pretoken= null;
-//        endtoken= null;
-		this.sqlparamskey = "sql.params.key";
-		/**
-		 * added by biaoping.yin on 20080912 start.
-		 */
-		this.autosort = false;
-		this.needClear = false;
-		sessionKey = null;
-		this.actual = null;
-
-		requestKey = null;
-
-		pageContextKey = null;
-		this.containerid = null;
-        this.selector = null;
-        this.moreQuery = false;
-        
-        //begin clear some field by biaoping.yin on 2015.3.8
-        this.colName = null;
-        this.property = null;
-        this.softparser = true;
-        this.type = "";
-        rowidName = "rowid";
-    	dataSetName = "dataSet";
-    	this.index = -1;
-    	this.statement = null;
-    	this.dbname = null;
-        //end clear some field by biaoping.yin on 2015.3.8
-		/**
-		 * added by biaoping.yin on 20080912 end.
-		 */		
 		return super.doEndTag();
 
 	}
@@ -3414,11 +3460,65 @@ public class PagerDataSet extends PagerTagSupport {
 
 	@Override
 	public void doFinally() {
-		if(formulas != null)
+		try
 		{
-			this.formulas.clear();
-			formulas = null;
+			this.removeVariable();
+			clear();
+	//		if(flag)
+			recoverParentDataSet();
+	//		flag = false;
+			//if(declare)
+			
+			this.declare = true;
+	
+			this.formulas = null;
+			this.sortKey = null;
+			this.desc = null;
+	//		pretoken= null;
+	//        endtoken= null;
+			this.sqlparamskey = "sql.params.key";
+			/**
+			 * added by biaoping.yin on 20080912 start.
+			 */
+			this.autosort = false;
+			this.needClear = false;
+			sessionKey = null;
+			this.actual = null;
+	
+			requestKey = null;
+	
+			pageContextKey = null;
+			this.containerid = null;
+	        this.selector = null;
+	        this.moreQuery = false;
+	        
+	        //begin clear some field by biaoping.yin on 2015.3.8
+	        this.colName = null;
+	        this.property = null;
+	        this.softparser = true;
+	        this.type = "";
+	        rowidName = "rowid";
+	    	dataSetName = "dataSet";
+	    	this.index = -1;
+	    	this.statement = null;
+	    	this.dbname = null;
+	    	this.currentValueObject = null;
+	        //end clear some field by biaoping.yin on 2015.3.8
+			/**
+			 * added by biaoping.yin on 20080912 end.
+			 */		
+			if(formulas != null)
+			{
+				this.formulas.clear();
+				formulas = null;
+			}
 		}
+		catch(Exception e)
+		{
+			
+		}
+		
+		
 		super.doFinally();
 	}
 	

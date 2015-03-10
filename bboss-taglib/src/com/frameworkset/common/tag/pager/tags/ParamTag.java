@@ -93,15 +93,18 @@ public final class ParamTag extends PagerTagSupport {
 	
 	public int doEndTag()throws JspException 
 	{
+		
+		return super.doEndTag();
+	}
+	@Override
+	public void doFinally() {
 		this.defaultValue = null;
 		this.encode = false;
 		this.name = null;
 		this.type = null;
 		this.value = null;
 		encodecount = 1;
-		return super.doEndTag();
 	}
-
 	public int doStartTag() throws JspException {
 		super.doStartTag();
 		if(pagerContext != null)

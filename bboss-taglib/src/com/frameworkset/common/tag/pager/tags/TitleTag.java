@@ -94,23 +94,7 @@ public class TitleTag  extends PagerTagSupport
 	
 	public int doEndTag() throws JspException
 	{
-		bgColor = "#8da6c4";
-		title = null;
-		this.titlecode = null;
-		sort = false;
-		colid = -1;
-		className = null;
-		align = null;
-		nowrap = false;       
-		colspan = 0;
-		width = null;
-		pageItems = 0;
-		colName = null;
-		extend = null;
-		rowspan = 0;
-		type = "th";
-		this.pagerContext = null;
-		this.fieldHelper = null;
+		
 		return super.doEndTag();
 	}
 	public int doStartTag() throws JspException
@@ -899,5 +883,26 @@ public class TitleTag  extends PagerTagSupport
 	}
 	public void setRowspan(int rowspan) {
 		this.rowspan = rowspan;
+	}
+	@Override
+	public void doFinally() {
+		bgColor = "#8da6c4";
+		title = null;
+		this.titlecode = null;
+		sort = false;
+		colid = -1;
+		className = null;
+		align = null;
+		nowrap = false;       
+		colspan = 0;
+		width = null;
+		pageItems = 0;
+		colName = null;
+		extend = null;
+		rowspan = 0;
+		type = "th";
+		this.pagerContext = null;
+		this.fieldHelper = null;
+		super.doFinally();
 	}
 }

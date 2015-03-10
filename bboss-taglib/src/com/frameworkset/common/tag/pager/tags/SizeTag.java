@@ -33,5 +33,10 @@ public class SizeTag extends BaseValueTag{
 	public void setIncreament(int increament) {
 		this.increament = increament;
 	}
+	@Override
+	public void doFinally() {
+		increament = 0;
+		super.doFinally();
+	}
 
 }

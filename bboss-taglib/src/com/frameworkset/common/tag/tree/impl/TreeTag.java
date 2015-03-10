@@ -592,7 +592,7 @@ public class TreeTag extends ContextMenuTag {
 		}
 		finally
 		{
-			clear();
+			
 		}
 		return EVAL_PAGE;
 	}
@@ -1102,6 +1102,12 @@ public class TreeTag extends ContextMenuTag {
 	public boolean isPartuprecursive()
 	{
 		return partuprecursive;
+	}
+
+	@Override
+	public void doFinally() {
+		clear();
+		super.doFinally();
 	}
 
    

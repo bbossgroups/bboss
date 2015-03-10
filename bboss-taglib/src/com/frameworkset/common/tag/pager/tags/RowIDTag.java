@@ -160,11 +160,17 @@ public class RowIDTag extends PagerTagSupport
 	public int doEndTag()throws JspException 
 	{
 		
+		
+		
+		return super.doEndTag();
+	}
+
+	@Override
+	public void doFinally() {
 		this.increament = null;
 		this.index = null;
 		this.offset = true;
-		
-		return super.doEndTag();
+		super.doFinally();
 	}
 
 }

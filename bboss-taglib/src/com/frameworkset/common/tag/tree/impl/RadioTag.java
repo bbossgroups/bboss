@@ -71,14 +71,18 @@ public class RadioTag extends BaseTag {
 	public int doEndTag() throws JspException
 	{
 		
+		
+	    
+		return super.doEndTag();		
+	}
+	@Override
+	public void doFinally() {
 		name = null;
 		
 		extention = null;
 		this.defaultValue = null;
-	    
-		return super.doEndTag();		
+		super.doFinally();
 	}
-
 	public int doStartTag() {
 		TreeTag tree = (TreeTag) findAncestorWithClass(this, TreeTag.class);
 		tree.setRadio(getName());

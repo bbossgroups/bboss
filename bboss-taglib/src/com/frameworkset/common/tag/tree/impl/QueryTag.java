@@ -112,8 +112,13 @@ public class QueryTag extends BaseTag
 	
 	public int doEndTag() throws JspException
 	{
+		
+		return super.doEndTag();
+	}
+	@Override
+	public void doFinally() {
 		this.rootid = "0";
 		this.templatepath = "treequery.vm";
-		return super.doEndTag();
+		super.doFinally();
 	}
 }
