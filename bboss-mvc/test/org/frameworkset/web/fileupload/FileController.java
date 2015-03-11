@@ -180,6 +180,8 @@ public class FileController {
 	public @ResponseBody File downloadFile(@RequestParam(decodeCharset="UTF-8")
 	String fileName, HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
+		if(fileName != null && fileName.indexOf("..") > 0)
+			throw new IOException(fileName +" is illeage:.. is not allowed.");
 		File file = new File(request.getRealPath("/")+"filesdown/"+fileName);
 		
 		
@@ -191,6 +193,8 @@ public class FileController {
 	public @ResponseBody File downloadFileaaa(@RequestParam(decodeCharset="UTF-8")
 	String fileName, HttpServletRequest request)
 			throws IOException {
+		if(fileName != null && fileName.indexOf("..") > 0)
+			throw new IOException(fileName +" is illeage:.. is not allowed.");
 		File file = new File(request.getRealPath("/")+"filesdown/"+fileName);
 		return file;
 	}
@@ -199,6 +203,8 @@ public class FileController {
 	public @ResponseBody File downloadVidioFile(@RequestParam(decodeCharset="UTF-8")
 	String fileName, HttpServletRequest request)
 			throws IOException {
+		if(fileName != null && fileName.indexOf("..") > 0)
+			throw new IOException(fileName +" is illeage:.. is not allowed.");
 		File file = new File(request.getRealPath("/")+"vidiosdown/"+fileName);
 		return file;
 	}
@@ -208,6 +214,8 @@ public class FileController {
 	public @ResponseBody File downloadToolFile(@RequestParam(decodeCharset="UTF-8")
 	String fileName, HttpServletRequest request)
 			throws IOException {
+		if(fileName != null && fileName.indexOf("..") > 0)
+			throw new IOException(fileName +" is illeage:.. is not allowed.");
 		File file = new File(request.getRealPath("/")+"toolsdown/"+fileName);
 		return file;
 	}
