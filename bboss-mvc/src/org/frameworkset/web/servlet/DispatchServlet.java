@@ -961,9 +961,12 @@ public class DispatchServlet extends HttpServlet {
 
 		// Check registerer HandlerExceptionResolvers...
 		ModelAndView exMv = null;
-		for (Iterator it = this.handlerExceptionResolvers.iterator(); exMv == null && it.hasNext();) {
-			HandlerExceptionResolver resolver = (HandlerExceptionResolver) it.next();
-			exMv = resolver.resolveException(request, response, handlerMeta, ex);
+		if(handlerExceptionResolvers != null)
+		{
+			for (Iterator it = this.handlerExceptionResolvers.iterator(); exMv == null && it.hasNext();) {
+				HandlerExceptionResolver resolver = (HandlerExceptionResolver) it.next();
+				exMv = resolver.resolveException(request, response, handlerMeta, ex);
+			}
 		}
 		if (exMv != null) {
 			try
@@ -1396,6 +1399,8 @@ public class DispatchServlet extends HttpServlet {
 				logger.debug("No HandlerExceptionResolvers found in servlet '" + getServletName() + "': using default");
 			}
 		}
+		if(this.handlerExceptionResolvers != null && this.handlerExceptionResolvers.size() == 0)
+			this.handlerExceptionResolvers = null;
 	}
 	
 	private void initGloabelHandlerInterceptors(BaseApplicationContext context)
