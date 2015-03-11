@@ -6,11 +6,14 @@ import java.util.List;
 public class Field {
 	private String fieldName;
 	private String mfieldName;
+	private String fieldCNName;
 	private String type;
 	private String defaultValue;
 	private boolean staticed;
 	private boolean finaled;
 	private String columnname;
+	private boolean sortField;
+	private boolean desc = true;
 	private List<Annotation> annos;
 	public String getFieldName() {
 		return fieldName;
@@ -66,6 +69,25 @@ public class Field {
 	}
 	public void setColumnname(String columnname) {
 		this.columnname = columnname;
+	}
+	public boolean isSortField() {
+		return sortField;
+	}
+	public void setSortField(boolean sortField) {
+		this.sortField = sortField;
+	}
+	
+	public String getFieldCNName() {
+		return fieldCNName;
+	}
+	public void setFieldCNName(String fieldCNName) {
+		this.fieldCNName = fieldCNName;
+	}
+	public boolean isDesc() {
+		return desc;
+	}
+	public void setDesc(boolean desc) {
+		this.desc = desc;
 	}
 
 }

@@ -12,6 +12,8 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
+import org.frameworkset.gencode.core.ui.GenListInfoJsp;
+import org.frameworkset.gencode.core.ui.GenListJsp;
 import org.frameworkset.gencode.core.ui.GenMainJsp;
 import org.frameworkset.gencode.entity.AnnoParam;
 import org.frameworkset.gencode.entity.Annotation;
@@ -54,6 +56,8 @@ public class GencodeServiceImpl {
 	private File mvcConfDir;
 	private File mvcconf ;
 	private File mainJsp ;
+	private File listJsp ;
+	private File listInfoJsp ;
 	private File webxmlFile;
 	private ModuleMetaInfo moduleMetaInfo;
 	private String exceptionName;
@@ -63,7 +67,7 @@ public class GencodeServiceImpl {
 	private String conditionEntityParamName;
 	private String sqlfilepath;
 	private SQLBuilder SQLBuilder ; 
-	private List<SortField> sortFields;
+	private List<Field> sortFields;
 	
 	private Field primaryField ;
 	private String primaryKeyName;
@@ -98,8 +102,16 @@ public class GencodeServiceImpl {
 	 */
 	private void genUI()
 	{
+		this.mainJsp = new File(jspSourceDir,"main.jsp");
+		this.listJsp = new File(jspSourceDir,this.entityParamName +"List.jsp");
+		this.listInfoJsp = new File(jspSourceDir,this.entityParamName +"ListInfo.jsp");
 		GenMainJsp genMainJsp = new GenMainJsp(this);
 		genMainJsp.gen();
+		
+		GenListJsp genListJsp = new GenListJsp(this);
+		genListJsp.gen();		
+		GenListInfoJsp genListInfoJsp = new GenListInfoJsp(this);
+		genListInfoJsp.gen();
 	}
 	
 	/**
@@ -172,7 +184,7 @@ public class GencodeServiceImpl {
 			mvcConfDir.mkdirs();
 		}
 		mvcconf = new File(getMvcConfDir(),"bboss-"+getModuleMetaInfo().getModuleName()+".xml");
-		this.mainJsp = new File(jspSourceDir,"main.jsp");
+		
 		webxmlFile = new File(this.rootdir,"WebRoot/WEB-INF/web.xml");
 		if(!webxmlFile.exists())
 		{
@@ -183,9 +195,22 @@ public class GencodeServiceImpl {
 			}
 		}
 		TableMetaData tableMeta = DBUtil.getTableMetaData(this.moduleMetaInfo.getDatasourceName(), this.moduleMetaInfo.getTableName());
-		List<Field> fields = getFields( tableMeta);
-		 this.allfields = fields;
-		 if(this.conditions != null )
+		if(allfields == null)
+		{
+			List<Field> fields = getFields( tableMeta);
+			 this.allfields = fields;
+			 for(Field field:allfields)
+			 {
+				 field.setFieldCNName(field.getFieldName());
+			 }
+		}
+		 initConditions();
+		 initSortFields();
+	}
+	
+	private void initConditions()
+	{
+		if(this.conditions != null )
 		 {
 			 for(Field field:conditions)
 			 {
@@ -197,6 +222,27 @@ public class GencodeServiceImpl {
 						 field.setType(dbfield.getType());
 						 field.setColumnname(dbfield.getColumnname());
 						 field.setMfieldName(dbfield.getMfieldName());
+					 }
+				 }
+			 }
+		 }
+	}
+	private void initSortFields()
+	{
+		if(this.sortFields != null )
+		 {
+			 for(Field field:sortFields)
+			 {
+				 
+				 for(Field dbfield:this.allfields)
+				 {
+					 if(field.getFieldName().equals(dbfield.getFieldName()))
+					 {
+						 field.setType(dbfield.getType());
+						 field.setColumnname(dbfield.getColumnname());
+						 field.setMfieldName(dbfield.getMfieldName());
+						 dbfield.setSortField(true);
+						 dbfield.setDesc(field.isDesc());
 					 }
 				 }
 			 }
@@ -1307,11 +1353,11 @@ import com.frameworkset.util.StringUtil;
 		return primaryKeyName;
 	}
 
-	public List<SortField> getSortFields() {
+	public List<Field> getSortFields() {
 		return sortFields;
 	}
 
-	public void setSortFields(List<SortField> sortFields) {
+	public void setSortFields(List<Field> sortFields) {
 		this.sortFields = sortFields;
 	}
 	
@@ -1328,7 +1374,7 @@ import com.frameworkset.util.StringUtil;
 	{
 		if(this.sortFields == null)
 		{
-			sortFields = new ArrayList<SortField>();
+			sortFields = new ArrayList<Field>();
 		}
 		sortFields.add(sf);
 	}
@@ -1359,6 +1405,9 @@ import com.frameworkset.util.StringUtil;
 	public File getMainJsp() {
 		return this.mainJsp;
 	}
+	public File getListJsp() {
+		return this.listJsp;
+	}
 
 	public void setMvcconf(File mvcconf) {
 		this.mvcconf = mvcconf;
@@ -1386,6 +1435,10 @@ import com.frameworkset.util.StringUtil;
 
 	public void setTheme(String theme) {
 		this.theme = theme;
+	}
+
+	public File getListInfoJsp() {
+		return listInfoJsp;
 	}
 
 }

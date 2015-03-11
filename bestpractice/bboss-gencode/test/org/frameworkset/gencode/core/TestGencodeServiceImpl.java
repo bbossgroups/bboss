@@ -49,12 +49,11 @@ public class TestGencodeServiceImpl {
 		
 		/************以下代码片段指定界面排序字段**********************************/
 		SortField id = new SortField();
-		id.setColumnName("ID");
+		
 		id.setFieldName("id");
 		id.setDesc(true);
 		gencodeService.addSortField(id);
 		SortField sbm = new SortField();
-		sbm.setColumnName("BM");
 		sbm.setFieldName("bm");
 		sbm.setDesc(false);
 		gencodeService.addSortField(sbm);

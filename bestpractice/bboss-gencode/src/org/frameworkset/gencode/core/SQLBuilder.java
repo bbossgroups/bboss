@@ -104,7 +104,7 @@ public class SQLBuilder  extends AbstractGencode{
 					//需要考虑分组的功能
 				}
 			}
-			List<SortField> sorts = this.gencodeService.getSortFields();
+			List<Field> sorts = this.gencodeService.getSortFields();
 			
 			 
 			builder.append("\r\n#if($sortKey && !$sortKey.equals(\"\"))\r\n")
@@ -119,11 +119,11 @@ public class SQLBuilder  extends AbstractGencode{
 				builder.append(" #else\r\n")
 				  	.append(" order by  ");
 				int i = 0;
-				for(SortField f: sorts)
+				for(Field f: sorts)
 				{
 					if(i > 0)
 						builder.append(",");
-					builder.append(f.getColumnName()).append(" ").append(f.isDesc()?"desc":"asc");
+					builder.append(f.getColumnname()).append(" ").append(f.isDesc()?"desc":"asc");
 					i ++;
 				}
 			}
