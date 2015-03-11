@@ -3,7 +3,7 @@
 
 
 <!-- 
-	描述:${entityName}管理主界面。
+	描述:${moduleCNName}管理主界面。
 	作者:$author
 	版权:$company
 	版本:$version 
@@ -12,7 +12,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>${entityName}管理</title>
+<title>${moduleCNName}管理</title>
 <%@ include file="/common/jsp/css-lhgdialog.jsp"%>
 <script type="text/javascript" src="${pageContext.request.contextPath}/html2/js/common.js"></script>
 <script language="javascript">
@@ -130,7 +130,7 @@
 				<input  type="radio" name="excelType"  >2007</input>
 				</div>
 				
-				<strong>${entityName} 列表</strong>
+				<strong>${moduleCNName} 列表</strong>
 				<img id="wait" src="../common/images/wait.gif" />				
 			</div>
 			<div id="custombackContainer" style="overflow:auto">
@@ -146,20 +146,15 @@
 $(document).ready(function() {
 	bboss.pager.pagerevent = {   
 			                            beforeload:function(opt){   
-			                                alert("beforeload containerid:"+opt.containerid);   
+			                                //alert("beforeload containerid:"+opt.containerid);   
 			                            },   
 			                          afterload:function(opt){   
-			                              alert("afterload containerid:"+opt.containerid);   
+			                              //alert("afterload containerid:"+opt.containerid);   
 	}};   
 
 	 $("#wait").hide();
 	 queryList();
 
-  $("#CKA").click(function() {
-        $("#tb tr:gt(1)").each(function() {
-            $(this).find("#CK").get(0).checked = $("#CKA").get(0).checked;
-        });
-    });
     $('#queryButton').click(function() {
     	queryData();
     });
@@ -171,38 +166,15 @@ $(document).ready(function() {
     });           
     
     $('#addButton').click(function() {  
-  	 var url="<%=request.getContextPath()%>${toAddAction}";
-	 	 $.dialog({ id:'iframeNewId', title:'新增&nbsp;${entityName}',width:740,height:560, content:'url:'+url});   			 		  
+  	 var url="<%=request.getContextPath()%>/${moduleName}/toAdd${entityName}.page";
+	 	 $.dialog({ id:'iframeNewId', title:'新增&nbsp;${moduleCNName}',width:740,height:560, content:'url:'+url});   			 		  
     });            
 });
 
 function queryList(){	
-	$("#custombackContainer").load("queryListAppBom.page #customContent",function(){})
+	$("#custombackContainer").load("queryListInfo${entityName}s.page #customContent",function(){})
 }
-function exportExcel(){	 
-	var bm=$("#bm_query").val();
-	var app_name_en=$("#app_name_en_query").val();
-	var app_name=$("#app_name_query").val();
-	var soft_level=$("#soft_level_query").val();
-	var state=$("#state_query").val();
-	var rd_type=$("#rd_type_query").val();
-	var excelType="";
-	if($("#excelType").attr("checked")){
-		excelType=0;
-	}
-	else{
-		excelType=1;
-	} 	
-	if(containSpecial(bm)|| containSpecial(app_name_en)||containSpecial(app_name)){
-		alert("查询字符串含有非法字符集,请检查输入条件");
-		return;
-	}
 
-	 window.location.href="exportExcel.page?bm="+encodeURI(encodeURI(bm))+"&app_name="+encodeURI(encodeURI(app_name))+"&app_name_en="+encodeURI(encodeURI(app_name_en))
-		+"&soft_level="+soft_level+"&state="+state+"&rd_type="+rd_type+"&excelType="+excelType;
-	 return;
-
-}	
 function containSpecial( s ) {  
 	  var containSpecial = RegExp(/[(\ )(\~)(\!)(\@)(\#)(\$)(\%)(\^)(\&)(\+)(\=)(\[)(\])(\{)(\})(\|)(\\)(\;)(\:)(\')(\")(\,)(\/)(\<)(\>)(\?)(\)]+/);      
    return ( containSpecial.test(s) );      
@@ -210,43 +182,41 @@ function containSpecial( s ) {
 
 //查找
 function queryData()
-{	var bm=$("#bm_query").val();
-	var app_name_en=$("#app_name_en_query").val();
-	var app_name=$("#app_name_query").val();
-	var soft_level=$("#soft_level_query").val();
-	var state=$("#state_query").val();
-	var rd_type=$("#rd_type_query").val();
-	if(containSpecial(bm)|| containSpecial(app_name_en)||containSpecial(app_name)){
+{	
+#foreach($condition in $conditions)										
+	var ${condition.fieldName}=$("#${condition.fieldName}").val();
+#end	
+	
+	if(#foreach($condition in $conditions) #if($velocityCount == 0)containSpecial(${condition.fieldName})#else || containSpecial(app_name_en)#end#end){
 		$.dialog.alert('查询字符串含有非法字符集,请检查输入条件！');
 		return;
 	}
-	$("#custombackContainer").load("queryListAppBom.page #customContent",
-	{bm:bm,app_name_en: app_name_en,app_name:app_name,soft_level:soft_level,
-	state:state,rd_type:rd_type},function(){loadjs()});
+	$("#custombackContainer").load("queryListInfo${entityName}s.page #customContent",
+	{#foreach($condition in $conditions) #if($velocityCount == 0)${condition.fieldName}:${condition.fieldName}#else,${condition.fieldName}:${condition.fieldName}#end#end},function(){});
 
 
 }
 
 function modifyQueryData()
 {	
-	$("#custombackContainer").load("queryListAppBom.page?"+$("#querystring").val()+" #customContent");
+	$("#custombackContainer").load("queryListInfo${entityName}s.page?"+$("#querystring").val()+" #customContent");
 }
 function editBom(id){
-	var url="<%=request.getContextPath()%>/appbom/updatePre.page?id="+id;
-	$.dialog({ title:'修改台账信息',width:740,height:560, content:'url:'+url,lock: true}); 		
+	var url="<%=request.getContextPath()%>/${moduleName}/toUpdate${entityName}.page?${primaryKeyName}="+id;
+	$.dialog({ title:'修改${moduleCNName}信息',width:740,height:560, content:'url:'+url,lock: true}); 		
 }
 function viewBom(id){
-	var url="<%=request.getContextPath()%>/appbom/viewBom.page?id="+id;		
+	var url="<%=request.getContextPath()%>/${moduleName}/get${entityName}.page?${primaryKeyName}="+id;		
 	$.dialog({ title:'查看台账信息',width:740,height:560, content:'url:'+url,lock: true}); 	
 }
 function doreset(){
 	$("#reset").click();
 }
 function delBom(id){		
-	$.dialog.confirm('<pg:message code="sany.pdp.common.operation.remove.confirm"/>', function(){ 
+	$.dialog.confirm('确定要删除选中的${moduleCNName}记录吗?', function(){ 
 		 $.ajax({
 	 	 type: "POST",
-		url : "<%=request.getContextPath()%>/appbom/delete.page",
+		url : "<%=request.getContextPath()%>/${moduleName}/delete${entityName}.page",
 		data :{"id":id},
 		dataType : 'json',
 		async:false,
@@ -266,9 +236,11 @@ function delBom(id){
 }
 function delBatch(){
 	var ids="";
+	var i = 0;
 	 $("#tb tr:gt(0)").each(function() {
 	 
             if ($(this).find("#CK").get(0).checked == true) {
+                  i++;
                 ids=ids+$(this).find("#id").val()+",";
               	}
        });
@@ -276,10 +248,10 @@ function delBatch(){
         $.dialog.alert('请选择需要删除的记录！');
         return false;
        }
-     $.dialog.confirm('<pg:message code="sany.pdp.common.operation.remove.confirm"/>', function(){
+     $.dialog.confirm('确定要删除选中的'+i+'条${moduleCNName}记录吗?', function(){
      	$.ajax({
 		 	 	type: "POST",
-				url : "<%=request.getContextPath()%>/appbom/deletebatch.page",
+				url : "<%=request.getContextPath()%>/${moduleName}/deleteBatch${entityName}.page",
 				data :{"ids":ids},
 				dataType : 'json',
 				async:false,

@@ -14,6 +14,10 @@ public class ModuleMetaInfo {
 	 */
 	private String moduleName;
 	/**
+	 * 模块中文名称
+	 */
+	private String moduleCNName;
+	/**
 	 * 生成的模块java源码包根路径，同时会在下面建以下子目录：
 	 * service 存放业务组件、持久层sql配置文件
 	 * entity 存放po类
@@ -227,6 +231,12 @@ public class ModuleMetaInfo {
 	}
 	public void setVersion(String version) {
 		this.version = version;
+	}
+	public String getModuleCNName() {
+		return moduleCNName;
+	}
+	public void setModuleCNName(String moduleCNName) {
+		this.moduleCNName = moduleCNName;
 	}
 
 }

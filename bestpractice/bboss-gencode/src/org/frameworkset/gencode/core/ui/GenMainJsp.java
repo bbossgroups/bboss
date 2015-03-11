@@ -36,8 +36,12 @@ public class GenMainJsp  extends AbstractGencode{
 			 context.put("conditions", gencodeService.getConditions());
 			 
 			 context.put("moduleName", gencodeService.getModuleMetaInfo().getModuleName());
+			 context.put("moduleCNName", gencodeService.getModuleMetaInfo().getModuleCNName());
 			 context.put("entityVarName", gencodeService.getEntityParamName());
 			 context.put("entityName", gencodeService.getEntityName());
+			 context.put("primaryKeyName", gencodeService.getPrimaryKeyName());
+			 
+			
 			
 			 gencodeService.writFile(context,conftempalte,conf,gencodeService.getModuleMetaInfo().getEncodecharset());
 		} catch (Exception e) {

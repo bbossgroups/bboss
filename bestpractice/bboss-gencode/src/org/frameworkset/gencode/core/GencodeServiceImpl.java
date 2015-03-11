@@ -256,7 +256,7 @@ public class GencodeServiceImpl {
 		        	 if(isp)
 		        	 {
 		        		 this.primaryField = f;
-		        		 this.primaryKeyName = f.getColumnname();
+		        		 this.primaryKeyName = f.getFieldName();
 		        		 fs.add(0, f);
 		        	 }
 		        	 else
@@ -269,6 +269,10 @@ public class GencodeServiceImpl {
 		             log.error(e.getMessage(), e);
 		         }
 				
+			}
+			if(this.primaryKeyName == null)
+			{
+				this.primaryKeyName = "id";
 			}
 			return fs;
 			

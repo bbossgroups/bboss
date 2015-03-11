@@ -17,6 +17,7 @@ public class TestGencodeServiceImpl {
 		ModuleMetaInfo moduleMetaInfo = new ModuleMetaInfo();
 		moduleMetaInfo.setTableName("td_app_bom");//指定表名，根据表结构来生成所有的文件
 		moduleMetaInfo.setModuleName("appbom");//指定模块名称，源码和配置文件都会存放在相应模块名称的目录下面
+		moduleMetaInfo.setModuleCNName("台账");//指定模块中文名称
 		moduleMetaInfo.setDatasourceName("bspf");//指定数据源名称，在poolman.xml文件中配置
 		moduleMetaInfo.setPackagePath("org.frameworkset.demo");//java程序对应的包路径
 		moduleMetaInfo.setServiceName("AppbomManagerService");
