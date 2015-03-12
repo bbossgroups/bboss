@@ -15,6 +15,8 @@ public class Field {
 	private boolean sortField;
 	private boolean desc = true;
 	private List<Annotation> annos;
+	private int maxlength = 0;
+	private String replace;
 	public String getFieldName() {
 		return fieldName;
 	}
@@ -88,6 +90,18 @@ public class Field {
 	}
 	public void setDesc(boolean desc) {
 		this.desc = desc;
+	}
+	public int getMaxlength() {
+		return maxlength;
+	}
+	public void setMaxlength(int maxlength) {
+		this.maxlength = maxlength;
+	}
+	public String getReplace() {
+		return replace;
+	}
+	public void setReplace(String replace) {
+		this.replace = replace;
 	}
 
 }

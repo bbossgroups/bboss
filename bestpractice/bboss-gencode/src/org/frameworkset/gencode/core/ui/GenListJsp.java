@@ -27,7 +27,7 @@ public class GenListJsp extends AbstractGencode {
 		}
 		try {
 			conf.createNewFile();
-			 Template conftempalte = VelocityUtil.getTemplate("/gencode/ui/"+gencodeService.getTheme()+"/main.vm");
+			 Template conftempalte = VelocityUtil.getTemplate("/gencode/ui/"+gencodeService.getTheme()+"/list.vm");
 			 VelocityContext context = new VelocityContext();
 			
 			 
@@ -37,6 +37,7 @@ public class GenListJsp extends AbstractGencode {
 			 context.put("version", gencodeService.getModuleMetaInfo().getVersion());
 			 
 			 context.put("conditions", gencodeService.getConditions());
+			 context.put("fields", gencodeService.getAllfields());
 			 
 			 context.put("moduleName", gencodeService.getModuleMetaInfo().getModuleName());
 			 context.put("moduleCNName", gencodeService.getModuleMetaInfo().getModuleCNName());

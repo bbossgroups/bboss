@@ -201,18 +201,18 @@ function modifyQueryData()
 {	
 	$("#custombackContainer").load("queryListInfo${entityName}s.page?"+$("#querystring").val()+" #customContent");
 }
-function editBom(id){
+function edit${entityName}(id){
 	var url="<%=request.getContextPath()%>/${moduleName}/toUpdate${entityName}.page?${primaryKeyName}="+id;
 	$.dialog({ title:'修改${moduleCNName}信息',width:740,height:560, content:'url:'+url,lock: true}); 		
 }
-function viewBom(id){
+function view${entityName}(id){
 	var url="<%=request.getContextPath()%>/${moduleName}/get${entityName}.page?${primaryKeyName}="+id;		
 	$.dialog({ title:'查看台账信息',width:740,height:560, content:'url:'+url,lock: true}); 	
 }
 function doreset(){
 	$("#reset").click();
 }
-function delBom(id){		
+function del${entityName}(id){		
 	$.dialog.confirm('确定要删除选中的${moduleCNName}记录吗?', function(){ 
 		 $.ajax({
 	 	 type: "POST",

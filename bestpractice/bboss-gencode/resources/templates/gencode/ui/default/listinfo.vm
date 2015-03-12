@@ -35,50 +35,19 @@
 	       		<th>$field.fieldCNName</th>
 #end	       		
 #end	  		
+				<th>操作</th>
 	       	</pg:header>	
 	      <pg:list>
 	
-	   		<tr onDblClick="viewBom('<pg:cell colName="id" />')">
+	   		<tr onDblClick="view${entityName}('<pg:cell colName="${primaryKeyName}" />')">
 	   		        <td class="td_center">
-	                    <input id="CK" type="checkbox" name="CK" onClick="checkOne('CKA','CK')" value="<pg:cell colName="id" />"/>
-	                    <input id="id" type="hidden" name="id" value="<pg:cell colName="id" />"/></td>
-	                <td><pg:rowid increament="1" offset="false"/><pg:cell colName="bm"/></td>
-	                <td><span class="toolTip" title="<pg:cell colName="app_name_en"/>"><pg:cell colName="app_name_en" maxlength="10" replace="..."/></span></td>
-	                <td><a href="javascript:void(0)" onclick="viewBom('<pg:cell colName="id" />')"><pg:cell colName="app_name" maxlength="8" replace="..."/></a></td>
-	        		<td><pg:cell colName="apply_domain" /></td>       
-	                <td><span class="toolTip" title="<pg:cell colName="description"/>"><pg:cell colName="description" maxlength="8" replace="..."/></span></td>  
-	           		<td>
-	           		<pg:case  colName="soft_level">
-		           		<pg:equal value="1">一级</pg:equal>
-		                <pg:equal value="2">二级</pg:equal>
-		                <pg:equal value="3">三级</pg:equal>
-		                <pg:equal value="10">待定</pg:equal>
-	                </pg:case>
-	                </td>	   
-	           		<td>
-	           			<pg:case  colName="state">
-	                        <pg:equal value="1">在用</pg:equal>
-	                        <pg:equal value="2">试运行</pg:equal>
-	                        <pg:equal value="3">升级研发中</pg:equal>
-	                        <pg:equal value="4">停用</pg:equal>
-	                        <pg:equal value="5">暂用</pg:equal>
-	                        <pg:equal value="6">研发中</pg:equal>
-	                        <pg:equal value="7">试验中</pg:equal>
-	                      </pg:case>   
-	                </td>	   	  
-	           		<td>
-	           		<pg:case  colName="rd_type">
-	           				<pg:equal value="1">自研</pg:equal>
-	                		<pg:equal value="2">外购</pg:equal>
-	                        <pg:equal value="3">免费</pg:equal>
-	                        <pg:equal value="4">试用</pg:equal>
-	                        <pg:equal value="5">外购+定制</pg:equal>
-	                 </pg:case>          
-	                </td>		  
-	                <td><pg:cell colName="struct_mode" maxlength="8" replace="..."/></td>	  
-	           		<td><pg:cell colName="soft_language" maxlength="8" replace="..."/></td>  
-	           		<td><pg:cell colName="develop_tool" maxlength="10" replace="..."/></td>  
-	                <td class="td_center"><a href="javascript:void(0)" id="editBom" onclick="editBom('<pg:cell colName="id" />')"><pg:message code="sany.pdp.common.operation.update"/></a><a href="javascript:void(0)" id="delBom" onclick="delBom('<pg:cell colName="id" />')"><pg:message code="sany.pdp.common.operation.delete"/></a></td>    
+	                    <input id="CK" type="checkbox" name="CK" onClick="checkOne('CKA','CK')" value="<pg:cell colName="${primaryKeyName}" />"/>
+	                    <input id="${primaryKeyName}" type="hidden" name="${primaryKeyName}" value="<pg:cell colName="${primaryKeyName}" />"/></td>
+#foreach($field in $fields)	                    
+	                <td>#if($velocityCount == 0)<pg:rowid increament="1" offset="false"/>#end#if($field.maxlength>0)<span class="toolTip" title="<pg:cell colName="$field.fieldName"/>"><pg:cell colName="$field.fieldName" maxlength="$field.maxlength" #if($field.replace)replace="$field.replace"#end/></span>#else<pg:cell colName="$field.fieldName"/>#end</td>
+#end	                
+	        		
+	                <td class="td_center"><a href="javascript:void(0)" id="read${entityName}" onclick="view${entityName}('<pg:cell colName="${primaryKeyName}" />')">查看</a><a href="javascript:void(0)" id="edit${entityName}" onclick="edit${entityName}('<pg:cell colName="${primaryKeyName}" />')">编辑</a><a href="javascript:void(0)" id="del${entityName}" onclick="del${entityName}('<pg:cell colName="${primaryKeyName}" />')">删除</a></td>    
 	                 
 	        </tr>
 		 </pg:list>
