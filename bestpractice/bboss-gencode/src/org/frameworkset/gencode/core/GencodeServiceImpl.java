@@ -12,9 +12,12 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
+import org.frameworkset.gencode.core.ui.GenAddJsp;
 import org.frameworkset.gencode.core.ui.GenListInfoJsp;
 import org.frameworkset.gencode.core.ui.GenListJsp;
 import org.frameworkset.gencode.core.ui.GenMainJsp;
+import org.frameworkset.gencode.core.ui.GenUpdateJsp;
+import org.frameworkset.gencode.core.ui.GenViewJsp;
 import org.frameworkset.gencode.entity.AnnoParam;
 import org.frameworkset.gencode.entity.Annotation;
 import org.frameworkset.gencode.entity.ConditionField;
@@ -58,6 +61,9 @@ public class GencodeServiceImpl {
 	private File mainJsp ;
 	private File listJsp ;
 	private File listInfoJsp ;
+	private File addJsp ;
+	private File updateJsp;
+	private File viewJsp;
 	private File webxmlFile;
 	private ModuleMetaInfo moduleMetaInfo;
 	private String exceptionName;
@@ -105,6 +111,9 @@ public class GencodeServiceImpl {
 		this.mainJsp = new File(jspSourceDir,"main.jsp");
 		this.listJsp = new File(jspSourceDir,this.entityParamName +"List.jsp");
 		this.listInfoJsp = new File(jspSourceDir,this.entityParamName +"ListInfo.jsp");
+		addJsp = new File(jspSourceDir,this.entityParamName +"Add.jsp");
+		viewJsp = new File(jspSourceDir,this.entityParamName +"View.jsp");
+		updateJsp = new File(jspSourceDir,this.entityParamName +"Edit.jsp");
 		GenMainJsp genMainJsp = new GenMainJsp(this);
 		genMainJsp.gen();
 		
@@ -112,6 +121,14 @@ public class GencodeServiceImpl {
 		genListJsp.gen();		
 		GenListInfoJsp genListInfoJsp = new GenListInfoJsp(this);
 		genListInfoJsp.gen();
+		GenAddJsp genAddJsp = new GenAddJsp(this);
+		genAddJsp.gen();
+		
+		GenViewJsp genViewJsp = new GenViewJsp(this);
+		genViewJsp.gen();
+		
+		GenUpdateJsp genUpdateJsp = new GenUpdateJsp(this);
+		genUpdateJsp.gen();
 	}
 	
 	/**
@@ -1439,6 +1456,21 @@ import com.frameworkset.util.StringUtil;
 
 	public File getListInfoJsp() {
 		return listInfoJsp;
+	}
+
+	public File getAddJsp() {
+		// TODO Auto-generated method stub
+		return addJsp;
+	}
+	
+	public File getUpdateJsp() {
+		// TODO Auto-generated method stub
+		return this.updateJsp;
+	}
+	
+	public File getViewJsp() {
+		// TODO Auto-generated method stub
+		return this.viewJsp;
 	}
 
 }

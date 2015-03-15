@@ -16,6 +16,7 @@ public class Field {
 	private boolean desc = true;
 	private List<Annotation> annos;
 	private int maxlength = 0;
+	private boolean required;
 	private String replace;
 	public String getFieldName() {
 		return fieldName;
@@ -102,6 +103,12 @@ public class Field {
 	}
 	public void setReplace(String replace) {
 		this.replace = replace;
+	}
+	public boolean isRequired() {
+		return required;
+	}
+	public void setRequired(boolean required) {
+		this.required = required;
 	}
 
 }

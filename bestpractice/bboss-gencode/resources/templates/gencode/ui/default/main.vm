@@ -15,22 +15,7 @@
 <title>${moduleCNName}管理</title>
 <%@ include file="/common/jsp/css-lhgdialog.jsp"%>
 <script type="text/javascript" src="${pageContext.request.contextPath}/html2/js/common.js"></script>
-<script language="javascript">
-				function senior()
-				{
-				    var senior=document.getElementById("senior")
-				    var check=document.getElementById("check")
-					senior.style.display="none"
-				    if(check.checked)
-				    {
-				       senior.style.display="block";
-				    }
-				    else if(check.unchecked)
-				    {
-				       senior.style.display="none";
-				    }
-				}
-			</script>
+
 </head>
 	<body>
 		<div class="mcontent">
@@ -50,64 +35,34 @@
 								<td>
 									<table width="100%" border="0" cellpadding="0" cellspacing="0"
 										class="table2">
-									#if($conditions.size() <= 3)
-										<tr>
-											#foreach($condition in $conditions)
-											<th>${condition.fieldName}：</th>
-											<td><input id="${condition.fieldName}" name="${condition.fieldName}" type="text"
-													value="" class="w120"/></td>
-											#end
-											<th>
-												&nbsp;
-											</th>
-											<td>
-												<a href="javascript:void(0)" class="bt_1" id="queryButton"><span>查询</span>
-												</a>
-												<a href="javascript:void(0)" class="bt_2" id="resetButton" onclick="doreset()"><span>重置</span>
-												</a>
-												<input type="reset" id="reset" style="display:none"/>
-											</td>	
-										</tr>
-									#else
-										<tr>
-										#foreach($condition in $conditions)
+								
 										
-											<th>${condition.fieldName}：</th>
-											<td><input id="${condition.fieldName}" name="${condition.fieldName}" type="text"
-													value="" class="w120"/></td>
-											
-											#if($velocityCount % 3 == 0)	
-												#if($velocityCount == ($conditions.size() - 1))
-											<th>
-												&nbsp;
-											</th>
-											<td>
-												<a href="javascript:void(0)" class="bt_1" id="queryButton"><span>查询</span>
-												</a>
-												<a href="javascript:void(0)" class="bt_2" id="resetButton" onclick="doreset()"><span>重置</span>
-												</a>
-												<input type="reset" id="reset" style="display:none"/>
-											</td>	
-												#end
-										</tr>
-												#if($velocityCount < $conditions.size())
-										<tr>		
-												#end
-											#elseif($velocityCount == ($conditions.size() - 1))
-											<th>
-												&nbsp;
-											</th>
-											<td>
-												<a href="javascript:void(0)" class="bt_1" id="queryButton"><span>查询</span>
-												</a>
-												<a href="javascript:void(0)" class="bt_2" id="resetButton" onclick="doreset()"><span>重置</span>
-												</a>
-												<input type="reset" id="reset" style="display:none"/>
-											</td>
-										</tr>	
+										#foreach($condition in $conditions)
+											#if( $velocityCount % 3 == 0)
+												#if($velocityCount > 0)</tr>#end
+											<tr>
 											#end
+												<th>${condition.fieldName}：</th>
+												<td><input id="${condition.fieldName}" name="${condition.fieldName}" type="text"
+														value="" class="w120"/></td>
+												
+												
+													#if($velocityCount == ($conditions.size() - 1))
+												<th>
+													&nbsp;
+												</th>
+												<td>
+													<a href="javascript:void(0)" class="bt_1" id="queryButton"><span>查询</span>
+													</a>
+													<a href="javascript:void(0)" class="bt_2" id="resetButton" onclick="doreset()"><span>重置</span>
+													</a>
+													<input type="reset" id="reset" style="display:none"/>
+												</td>	
+													
+											</tr>
+													#end
 										#end	
-									#end
+									
 									</table>
 								</td>
 								<td class="right_box"></td>

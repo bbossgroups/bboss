@@ -29,6 +29,7 @@ public class TestGencodeServiceImpl {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String date = format.format(new Date());
 		moduleMetaInfo.setDate(date);//指定日期
+		gencodeService.setTheme("default");
 		
 		/************以下代码片段指定界面查询字段，以及查询条件组合方式、是否是模糊查询等*******/
 		ConditionField bm = new ConditionField();
