@@ -75,7 +75,7 @@ public interface Platform
      * @param jdbcType the jdbcType name
      * @return the db specific domain
      */
-    Domain getDomainForSchemaType(int jdbcType);
+    Domain getDomainForSchemaType(int jdbcType,String datatypeName);
     
     /**
      * @return The RDBMS-specific SQL fragment for <code>NULL</code>
@@ -122,7 +122,7 @@ public interface Platform
     
     String getDBTYPE();
     
-    public SchemaType getSchemaTypeFromSqlType(int sqltype);
+    public SchemaType getSchemaTypeFromSqlType(int sqltype,String typeName);
     
     
 }

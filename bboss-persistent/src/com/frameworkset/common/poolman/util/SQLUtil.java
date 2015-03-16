@@ -1531,14 +1531,14 @@ public class SQLUtil implements Serializable{
 		
 	}
 	
-	public static SchemaType getSchemaType(String dbname,int sqltype)
+	public static SchemaType getSchemaType(String dbname,int sqltype ,String typename )
 	{
-		return getPool(dbname).getDbAdapter().getSchemaTypeFromSqlType(sqltype);
+		return getPool(dbname).getDbAdapter().getSchemaTypeFromSqlType(sqltype,  typename);
 	}
 	
-	public static String getJavaType(String dbname,int sqltype)
+	public static String getJavaType(String dbname,int sqltype,String typename)
 	{
-		return getSchemaType(dbname,sqltype).getJavaType();
+		return getSchemaType(dbname,sqltype,  typename).getJavaType();
 	}
 	
 	public static DataSource getDataSource()

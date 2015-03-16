@@ -110,7 +110,7 @@ public class IFrameTag extends BaseTag {
 			e.printStackTrace();
 		}
 		
-		reset();
+		
 		int ret = super.doEndTag();
 		return ret;
 	}
@@ -475,6 +475,14 @@ public class IFrameTag extends BaseTag {
 				iframe.setSrc(this.src);
 			}
 		}
+	}
+
+	@Override
+	public void doFinally() {
+	
+		
+		reset();
+		super.doFinally();
 	}
 	
 

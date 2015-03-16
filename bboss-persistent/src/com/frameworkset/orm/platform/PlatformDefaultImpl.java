@@ -116,7 +116,7 @@ public class PlatformDefaultImpl implements Platform
         return (notNull ? "NOT NULL" : "");
     }
     
-    public SchemaType getSchemaTypeFromSqlType(int sqltype)
+    public SchemaType getSchemaTypeFromSqlType(int sqltype,String typeName)
     {
     	
     	switch(sqltype)
@@ -292,8 +292,17 @@ public class PlatformDefaultImpl implements Platform
     	     */
     			
     		case Types.OTHER:
+    		{
+    			if(typeName != null )
+    			{
+    				if(typeName.equals("NVARCHAR2"))
+    					return SchemaType.VARCHAR;
+    				else if(typeName.startsWith("TIMESTAMP"))
+    					return SchemaType.TIMESTAMP;
+    				
+    			}
     			return SchemaType.OTHER;	
-    		
+    		}
 
     	        
 
@@ -410,10 +419,10 @@ public class PlatformDefaultImpl implements Platform
         return true;
     }
 
-	public Domain getDomainForSchemaType(int jdbcType)
+	public Domain getDomainForSchemaType(int jdbcType,String typeName)
 	{
 		// TODO Auto-generated method stub
-		return this.getDomainForSchemaType(this.getSchemaTypeFromSqlType(jdbcType));
+		return this.getDomainForSchemaType(this.getSchemaTypeFromSqlType(jdbcType,  typeName));
 	}
 
 	public boolean hasSize(int sqlType)

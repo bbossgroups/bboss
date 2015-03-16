@@ -55,7 +55,8 @@ public abstract class RowHandler<T> {
            }
             try {
                 int sqltype = meta.getColumnType(clindex);
-                SchemaType schemaType = SQLUtil.getSchemaType(dbname, sqltype); 
+                String typename = meta.getColumnTypeName(clindex);
+                SchemaType schemaType = SQLUtil.getSchemaType(dbname, sqltype,typename); 
                 return schemaType;
             } catch (Exception e) {
                 
@@ -73,7 +74,8 @@ public abstract class RowHandler<T> {
             try {
                 int index = seekIndex(colName);
                 int sqltype = meta.getColumnTypeByIndex(index );
-                SchemaType schemaType = SQLUtil.getSchemaType(dbname, sqltype); 
+                String typename = meta.getColumnTypeNameByIndex(index );
+                SchemaType schemaType = SQLUtil.getSchemaType(dbname, sqltype,typename); 
                 return schemaType;
             }
             catch(RowHandlerException e)

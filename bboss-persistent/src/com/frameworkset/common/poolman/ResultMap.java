@@ -947,7 +947,7 @@ public class ResultMap {
 											_param.parameterName, _param.sqlType,
 											String.class, stmtInfo.getDbname());
 							SchemaType schemaType = SQLUtil.getSchemaType(stmtInfo
-									.getDbname(), _param.sqlType);
+									.getDbname(), _param.sqlType,null);
 							record.append("        <column name=\"").append(
 									_param.parameterName).append(
 									"\" type=\"").append(schemaType.getName())
@@ -968,7 +968,7 @@ public class ResultMap {
 											_param.index, _param.sqlType,
 											String.class, stmtInfo.getDbname());
 							SchemaType schemaType = SQLUtil.getSchemaType(stmtInfo
-									.getDbname(), _param.sqlType);
+									.getDbname(), _param.sqlType,null);
 							record.append("        <column index=\"").append(
 									_param.index).append("\" type=\"").append(
 									schemaType.getName()).append("\" javatype=\"")

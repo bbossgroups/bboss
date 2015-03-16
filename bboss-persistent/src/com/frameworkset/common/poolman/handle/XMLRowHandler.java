@@ -43,9 +43,10 @@ public class XMLRowHandler extends BaseRowHandler<StringBuffer> {
     	        for (int i = 0; i < meta.getColumnCounts(); i++) {
                     String columnName = meta.getColumnLabelUpperByIndex(i );  
                     int sqltype = meta.getColumnTypeByIndex(i );
-                    
+                    String typename = meta.getColumnTypeNameByIndex(i);
                     String object = origine.getString(columnName);
-                    SchemaType schemaType = SQLUtil.getSchemaType(dbname, sqltype);
+                    
+                    SchemaType schemaType = SQLUtil.getSchemaType(dbname, sqltype,typename);
                     record.append(buildNode("column",
                                       columnName,
                                       schemaType.getName(),

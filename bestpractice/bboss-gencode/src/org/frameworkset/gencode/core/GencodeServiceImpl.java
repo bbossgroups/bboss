@@ -234,10 +234,11 @@ public class GencodeServiceImpl {
 				 
 				 for(Field dbfield:this.allfields)
 				 {
-					 if(field.getFieldName().equals(dbfield.getFieldName()))
+					 if(field.getColumnname().equals(dbfield.getColumnname()))
 					 {
 						 field.setType(dbfield.getType());
-						 field.setColumnname(dbfield.getColumnname());
+						 field.setFieldName(dbfield.getFieldName());
+						 field.setFieldCNName(dbfield.getFieldCNName());
 						 field.setMfieldName(dbfield.getMfieldName());
 					 }
 				 }
@@ -253,10 +254,11 @@ public class GencodeServiceImpl {
 				 
 				 for(Field dbfield:this.allfields)
 				 {
-					 if(field.getFieldName().equals(dbfield.getFieldName()))
+					 if(field.getColumnname().equals(dbfield.getColumnname()))
 					 {
 						 field.setType(dbfield.getType());
-						 field.setColumnname(dbfield.getColumnname());
+						 field.setFieldName(dbfield.getFieldName());
+						 field.setFieldCNName(dbfield.getFieldCNName());
 						 field.setMfieldName(dbfield.getMfieldName());
 						 dbfield.setSortField(true);
 						 dbfield.setDesc(field.isDesc());

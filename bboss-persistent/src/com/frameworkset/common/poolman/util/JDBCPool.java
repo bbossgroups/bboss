@@ -950,7 +950,7 @@ public class JDBCPool {
 	
 						}
 						try {
-							column.setDataType(columnrs.getInt("DATA_TYPE"));
+							column.setDataType(columnrs.getInt("DATA_TYPE"),column.getTypeName());
 						} catch (Exception e) {
 	
 						}
@@ -1615,7 +1615,7 @@ public class JDBCPool {
 	
 					}
 					try {
-						column.setDataType(columnrs.getInt("DATA_TYPE"));
+						column.setDataType(columnrs.getInt("DATA_TYPE"),column.getTypeName());
 					} catch (Exception e) {
 	
 					}

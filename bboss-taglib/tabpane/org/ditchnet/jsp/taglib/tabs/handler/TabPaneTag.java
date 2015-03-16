@@ -111,7 +111,8 @@ public final class TabPaneTag extends BaseBodyTag {
 //		getTabContainer().consumeQueryStringParam();
 //		getTabContainer().determineSelectedIndex();
 		renderComponent();
-		bodyContent.clearBody();
+		//move to dofinally
+//		bodyContent.clearBody();
 		return SKIP_BODY;
 	}
 
@@ -142,7 +143,7 @@ public final class TabPaneTag extends BaseBodyTag {
 	public int doEndTag() throws JspException
 	{
 		int ret = super.doEndTag();
-		reset();
+		
 		return ret;
 	}
 	
@@ -264,6 +265,14 @@ public final class TabPaneTag extends BaseBodyTag {
 
 	public List getListIFrame() {
 		return listIFrame;
+	}
+
+	@Override
+	public void doFinally() {
+		if(bodyContent != null)
+			bodyContent.clearBody();
+		reset();
+		super.doFinally();
 	}
 
 }

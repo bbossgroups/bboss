@@ -66,6 +66,11 @@ public final class TabConfigTag extends BaseTag {
 		return this.EVAL_PAGE;
 		
 	}
+	@Override
+	public void doFinally() {
+		contextPath = null;
+		super.doFinally();
+	}
 	
 	private void findContextPath() {
 		HttpServletRequest request = this.getHttpServletRequest();

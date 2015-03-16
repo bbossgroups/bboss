@@ -78,8 +78,15 @@ public final class PrevTabButtonTag extends BaseBodyTag {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		bodyContent.clearBody();
+//		bodyContent.clearBody();
 		return SKIP_BODY;
 	}
-	
+	@Override
+	public void doFinally() {
+		id = null;
+		tabContainerId = null;
+		if(bodyContent != null)
+			bodyContent.clearBody();
+		super.doFinally();
+	}
 }

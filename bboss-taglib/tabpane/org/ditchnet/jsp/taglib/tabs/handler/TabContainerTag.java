@@ -139,6 +139,12 @@ public final class TabContainerTag extends BaseBodyTag {
 	public int doEndTag()throws JspException
 	{
 		
+		
+		
+		return super.doEndTag();
+	}
+	@Override
+	public void doFinally() {
 		children = null;
 		selectedTabPaneId = null;
 		urlSelectedTabPaneId = null;
@@ -150,15 +156,19 @@ public final class TabContainerTag extends BaseBodyTag {
 //		this.request = null;
 //		this.response = null;
 //		this.out = null;
-		if(out != null)
-		{
-			out.close();
-			this.out = null;
+		try {
+			if(out != null)
+			{
+				out.close();
+				this.out = null;
+			}
+		} catch (Exception e) {
+			
 		}
-		
-		return super.doEndTag();
+		if(bodyContent != null)
+			bodyContent.clearBody();
+		super.doFinally();
 	}
-	
 //	protected AccessControl accesscontrol;
 	public void setPageContext(PageContext pageContext) 
 	{

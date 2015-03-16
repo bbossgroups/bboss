@@ -89,8 +89,8 @@ public class ColumnMetaData implements Comparable,Serializable{
 	public int getDataType() {
 		return dataType;
 	}
-	public void setDataType(int dataType) {
-		this.domain = db.getDomainForSchemaType(dataType);
+	public void setDataType(int dataType,String datatypeName) {
+		this.domain = db.getDomainForSchemaType(dataType, datatypeName);
 		this.schemaType = domain.getType();
 		this.dataType = dataType;
 	} 

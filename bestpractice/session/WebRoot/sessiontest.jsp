@@ -30,7 +30,11 @@ session.setAttribute("testVO", testVO);
 session.setAttribute("userAccount","john");//跨应用共享属性
 out.println("<br>");
 String privateAttr = (String)session.getAttribute("privateAttr");//session应用设置的共享会话属性
+String userAccount = (String)session.getAttribute("userAccount");//session应用设置的共享会话属性
 out.println("sessionmonitor's private attribute:"+privateAttr+"<br>");
+out.println("shared attribute userAccount:"+userAccount+"<br>");
+testVO = (TestVO)session.getAttribute("testVO");
+out.println("shared attribute testVO:"+testVO.getId()+"<br>");
  %>
  
- <a href="http://127.0.0.1:8080/sessionmonitor/sessiontest.jsp" target="_blank">sessionmonitor</a>
+ <a href="http://sub.bboss.com.cn:8080/sessionmonitor/sessiontest.jsp" target="_blank">sessionmonitor</a>

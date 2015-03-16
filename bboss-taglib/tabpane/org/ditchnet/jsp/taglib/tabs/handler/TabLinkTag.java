@@ -97,7 +97,7 @@ public final class TabLinkTag extends BaseBodyTag {
 		}
 		buff.append("\">");
 		String  evalResult = this.bodyContent.getString();
-		bodyContent.clearBody();
+//		bodyContent.clearBody();
 		
 //		getJspBody().invoke(evalResult);
 		buff.append(evalResult);
@@ -125,6 +125,14 @@ public final class TabLinkTag extends BaseBodyTag {
 //		HttpServletRequest request = 
 //			(HttpServletRequest)pageContext.getRequest();
 		return this.getHttpServletRequest();
+	}
+
+	@Override
+	public void doFinally() {
+		id = null;href = null;selectedTabPaneId = null;
+		if(bodyContent != null)
+			bodyContent.clearBody();
+		super.doFinally();
 	}
 	
 }

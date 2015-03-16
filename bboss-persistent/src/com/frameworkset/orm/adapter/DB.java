@@ -580,10 +580,10 @@ public abstract class DB implements Serializable, IDMethod,Platform
 		return this.platform.getDomainForSchemaType(jdbcType);
 	}
 	
-	public Domain getDomainForSchemaType(int jdbcType)
+	public Domain getDomainForSchemaType(int jdbcType,String datatypeName)
 	{
 		// TODO Auto-generated method stub
-		return this.platform.getDomainForSchemaType(jdbcType);
+		return this.platform.getDomainForSchemaType(jdbcType, datatypeName);
 	}
 
 	public String getNullString(boolean notNull)
@@ -770,9 +770,9 @@ public abstract class DB implements Serializable, IDMethod,Platform
 		return remarks_c;
 	}
 	
-	public SchemaType getSchemaTypeFromSqlType(int sqltype)
+	public SchemaType getSchemaTypeFromSqlType(int sqltype,String typeName)
 	{
-		return this.platform.getSchemaTypeFromSqlType(sqltype);
+		return this.platform.getSchemaTypeFromSqlType(sqltype,  typeName);
 	}
 //	public int getSCROLLType(String dbdriver)
 //	{

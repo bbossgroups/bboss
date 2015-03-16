@@ -22,7 +22,6 @@
 package org.ditchnet.jsp.taglib.tabs.handler;
 
 import java.io.IOException;
-import java.io.StringWriter;
 
 import javax.servlet.jsp.JspException;
 
@@ -78,8 +77,18 @@ import com.frameworkset.common.tag.BaseBodyTag;
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		bodyContent.clearBody();
+		//move to dofinally()
+//		bodyContent.clearBody();
 		return SKIP_BODY;
+	}
+
+	@Override
+	public void doFinally() {
+		id = null;
+		tabContainerId = null;
+		if(bodyContent != null)
+			bodyContent.clearBody();
+		super.doFinally();
 	}
 	
 }

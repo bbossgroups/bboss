@@ -52,7 +52,7 @@ import com.frameworkset.common.tag.tree.TreeFactory;
  */
 
 public class TreeData extends BaseTag {
-
+	private final static Logger log = Logger.getLogger(TreeData.class);
 	private boolean enablecontextmenu = false;
 	/**
 		 * 树根节点checkbox 的值
@@ -69,13 +69,13 @@ public class TreeData extends BaseTag {
 	 * 缺省为session
 	 *
 	 */
-	private String scope = "session";
+	private String scope = "request";
 
 	/**
 	 * 树根节点radio按钮值
 	 */
 	private String radioValue;
-	private final static Logger log = Logger.getLogger(TreeData.class);
+	
 	/**
 	 * 树根节点id
 	 */
@@ -572,7 +572,84 @@ public class TreeData extends BaseTag {
 
 	@Override
 	public void doFinally() {
-		this.rootName = "根节点";
+		
+		enablecontextmenu = false;
+		/**
+			 * 树根节点checkbox 的值
+			 */
+		
+
+		checkboxValue = null;
+
+		/**
+		 * 定义树数据缓冲作用范围：
+		 * request
+		 * session
+		 * pageContext
+		 * 缺省为session
+		 *
+		 */
+		scope = "request";
+
+		/**
+		 * 树根节点radio按钮值
+		 */
+		 radioValue= null;
+		
+		/**
+		 * 树根节点id
+		 */
+		 rootid = "-1";
+		/**
+		 * 树根节点名称
+		 */
+		  rootName = "根节点";
+		
+		 rootNameCode = null;
+		/**
+		 * 树默认展开层级
+		 */
+		 expandLevel = "1";
+
+		/**
+		 * 单选模式，true:单选，false:多选
+		 */
+		 singleSelection = "false";
+		/**
+		 * 是否实时监控每个节点的信息，包括节点是否存在、节点的名称、有没有儿子等信息
+		 * true：实时
+		 * false:每次只跟踪当前节点的信息
+		 */
+		  needObserver = false;
+
+		/**
+		 * 本属性控制是否及时刷新触发某个事件的焦点节点信息
+		 */
+		 refreshNode = true;
+
+		 treetype = "1";
+
+		/**
+		 * 扩展条件，通过该条件来过滤树的节点
+		 */
+		 extCondition = "";
+
+		 showRootHref = "true";
+
+		/**
+		 * 定义根节点备注信息
+		 */
+		 memo = "";
+		
+		/**
+		 * 指定是否对树节点进行排序,缺省为true
+		 */
+		 sortable = false;
+
+	    /**
+	     * 根路径对应的文件路径
+	     */
+	      path = null;
 		super.doFinally();
 	}
 
