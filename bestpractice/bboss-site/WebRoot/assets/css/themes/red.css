@@ -1,0 +1,358 @@
+/* general links color */
+a {
+	color: #db3a1b;
+}
+/***
+General More Link
+***/
+a.more {
+  color: #db3a1b;
+}
+
+
+/*Global classes*/
+
+.theme-btn {
+	color:#fff; 
+	background: #db3a1b !important; 
+	border: solid 1px #db3a1b;
+}
+ 
+.theme-btn:hover {
+	color:#fff; 
+	background: #ce2201 !important; 
+	border: solid 1px #ce2201;
+}
+
+/********************
+ GENERAL LAYOUT 
+*********************/
+
+/***
+Header and header elements.
+***/
+/*Navigation*/
+.header a.brand b {
+	color: #db3a1b;
+}
+
+.header .navbar-nav > li > a:hover,
+.header .navbar-nav li.active > a,
+.header .navbar-nav li.active:hover > a {
+	color: #db3a1b !important;
+	border-top: solid 2px #db3a1b !important;
+}
+
+.header .in.collapse li a:hover {
+	background: #db3a1b;
+}
+
+.header .in.collapse li.active > a,
+.header .in.collapse li.active:hover > a {
+	background: #db3a1b;
+}
+
+.header .nav li.active > a:after { 
+	border-top: 3px solid #db3a1b;
+}
+@media (max-width: 767px) {
+.header.navbar-default .navbar-nav > li > a:hover, .header.navbar-default .navbar-nav > .active > a, .header.navbar-default .navbar-nav > .active > a:hover, .header.navbar-default .navbar-nav > .active > a:focus {
+	background: #db3a1b !important;
+	color: #fff !important;
+}
+}
+.header .nav li.dropdown.open>.dropdown-toggle {
+	color: #db3a1b;
+}
+
+/*Navigation Toggle Icon*/
+.header .navbar-btn {
+	background:#DB3A1B !important;
+}
+
+.header .navbar-btn:hover {
+	background:#cd3315 !important;
+}
+
+/*Navigation Dropdown*/
+.header .dropdown-menu {
+	border-top: solid 2px #db3a1b !important;
+}
+
+.header .navbar-inner .nav li.dropdown.open>.dropdown-toggle {
+	color: #db3a1b;
+}
+@media (max-width: 768px) {
+	.header .nav li.dropdown.open.active>.dropdown-toggle {
+		color: #fff !important;
+	}
+}
+
+
+.header .navbar-inner .in.collapse li.dropdown.active > a,
+.header .navbar-inner .in.collapse li.dropdown.active:hover > a {
+	background: #db3a1b;
+}
+
+.header .nav > li.dropdown.open.active > a:hover,
+.header .nav > li.dropdown.open.active > a:focus {
+  border-color: #db3a1b;
+}
+
+/*Menu Search*/
+.header .navbar-inner li.menu-search i:hover {
+	color: #db3a1b;
+}
+
+/***
+Content and content elements.
+***/
+
+/*Revolution Slider*/
+.slide_subtitle {
+	background-color: #db3a1b;
+}
+
+.tp-leftarrow.default:hover,
+.tp-rightarrow.default:hover { 
+	background-color: #db3a1b !important;	
+}
+
+/*Bx Slider & Testimonial Carousel*/
+.recent-work ul.bxslider li:hover a.bxslider-block {
+	background: #db3a1b;
+}
+
+.recent-work ul.bxslider li i.icon-hover-1:hover,
+.recent-work ul.bxslider li i.icon-hover-2:hover {
+	color: #db3a1b;
+}
+
+.bx-wrapper .bx-prev:hover,
+.testimonials-v1 .left-btn:hover  {
+	background: url(../../img/sliders/bxslider/left-red-hover.png) no-repeat;
+}
+
+.bx-wrapper .bx-next:hover, 
+.testimonials-v1 .right-btn:hover  {
+	background: url(../../img/sliders/bxslider/right-red-hover.png) no-repeat;
+}
+
+.testimonials-v1 .item span.testimonials-slide {
+	background: #f8f8f8 url(../../img/sliders/carousel/corners-red.png) no-repeat right bottom;
+}	
+
+/*Blockquote Box*/
+.quote-v1 {
+	background: #7c858e;
+}
+
+a.btn-transparent:hover {
+  background: #db3a1b;
+}
+
+/*Tabs*/
+.tab-style-1 ul.nav-tabs {
+	border-bottom-color: #db3a1b; 
+}
+
+.tab-style-1 ul.nav-tabs li > a:hover {
+	background: #db3a1b;
+	border-color: #db3a1b;
+}
+
+.tab-style-1 ul.nav-tabs .active > a,
+.tab-style-1 ul.nav-tabs .active > a:hover,
+.tab-style-1 ul.nav-tabs .active > a:focus {
+	background: #db3a1b;
+	border-color: #db3a1b;
+}
+
+/*Testimonials*/
+.testimonials-v1 span.testimonials-name {
+	color: #db3a1b;
+}
+
+/*Steps*/
+.front-steps.front-step-one {
+	background: #db3a1b url(../../img/steps/one.png) no-repeat right bottom;
+}
+
+.front-steps.front-step-one:after { 
+	border-left: 15px solid #e15b41;
+}
+
+/***
+Footer
+***/
+.footer a {
+	color: #f75434;
+}
+
+/***
+Copyright
+***/
+.copyright p a {
+	color: #f75434;
+}
+
+/*Breadcrumbs*/
+.breadcrumbs li a {
+	color: #f75434;
+}
+
+/*Skils*/
+.front-skills .progress .bar {
+	background: none #db3a1b;
+}
+
+/*Team Blocks*/
+.front-team h3 a {
+	color: #db3a1b;
+}
+
+/*Service Box v1*/
+.service-box-v1:hover {
+	background: #db3a1b;
+}
+
+/***
+Blog Page
+***/
+/*Blog Posts*/
+.blog-info li i {
+	color: #db3a1b;
+}
+
+/*Blog Sidebar*/
+.blog-photo-stream li img:hover {
+	border-color: #db3a1b;
+}
+
+.blog-tags li a:hover {
+	background: #db3a1b;
+}
+
+.blog-tags li i {
+	color: #db3a1b;
+}
+
+.blog-tags li a:hover:after { 
+	border-left-color: #db3a1b;
+}
+
+/* Blog Item */
+.blog-item blockquote {
+	border-color: #db3a1b;
+}
+
+.blog-item h4.media-heading span a {
+    color: #db3a1b;
+}
+
+/* Portfolio */
+.filter-v1 .filter-category li:hover,
+.filter-v1 .filter-category li.active {
+	color: #fff;
+	background: #db3a1b;
+}
+
+.grid-v1 li .hover-portfolio {
+	background: #db3a1b;
+}
+
+.grid-v1 li a.hover-portfolio-lft, 
+.grid-v1 li a.hover-portfolio-rgt {
+	background: #ef4d2e;
+}
+
+/* Pricing */
+.pricing-table:hover {
+  border-color: #ef4d2e;
+}
+
+.pricing-table2:hover {
+  border-color: #ef4d2e;
+}
+
+.pricing-table ul li i {
+  color: #ef4d2e;
+}
+
+.pricing-table.selected {
+  background-color: #ef4d2e;
+}
+
+.pricing-table2.selected {
+  background-color: #ef4d2e;
+}
+
+.pricing-table2 ul li i {
+  color: #ef4d2e;
+}
+
+.pricing-table2 .rate { 
+  background-color: #ef4d2e;
+}
+
+.pricing:hover,
+.pricing-active {
+  border-color:#ef4d2e;
+}
+.pricing:hover h4 {
+  color:#ef4d2e;
+}
+
+.pricing-head h3 {
+  background:#ef4d2e;
+  border-bottom:solid 1px #ef4d2e;
+}
+
+.pricing-head-active h4 {
+  color:#ef4d2e;
+}
+
+.pricing-content li i {
+  color:#ef4d2e;
+}
+
+.price-active h4 {
+  color:#ef4d2e;
+}
+
+.no-space-pricing .price-active .pricing-head h4,
+.no-space-pricing .pricing:hover .pricing-head h4 {
+  color:#ef4d2e;
+}
+
+/* error colors */
+.page-404 .number, .page-500 .number {
+	color:#ef4d2e;
+}
+
+/***
+Vertical inline menu
+***/
+.ver-inline-menu {
+	border-left: solid 2px #ef4d2e;
+}
+.ver-inline-menu li:hover a{
+	background: #ef4d2e;
+}
+.ver-inline-menu li.active a{
+  background: #ef4d2e;
+}
+.ver-inline-menu li.active:after {
+  border-left: 6px solid #ef4d2e;
+}
+
+/* Blog Sidebar categories BEGIN */ 
+.sidebar-categories li > a:hover,
+.sidebar-categories li.active > a,
+.sidebar-categories li.active:hover > a {
+	color: #ef4d2e;
+}
+
+.progress-bar{
+	background-color: #ef4d2e;
+}

@@ -1,0 +1,1334 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta charset="utf-8">
+	<title>Revolution Responsive jQuery Slider</title>
+ 	<meta name="description" content="">
+	<meta name="author" content="ThemePunch">
+	<meta name="copyright" content="ThemePunch">
+	<meta name="generator" content="Documenter v2.0 http://rxa.li/documenter">
+	<meta name="date" content="2013-06-08T00:00:00+02:00">
+	
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	
+    <link href="assets/css/bootstrap.css" rel="stylesheet">
+    <link href="assets/js/google-code-prettify/prettify.css" rel="stylesheet">
+    <link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="assets/css/documenter_style.css" rel="stylesheet">
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    
+	
+	<style>
+		html, body{background-color:#A8A7A7;color:#363636;background-image:url(assets/images/image_1.gif);background-repeat:repeat;background-attachment:scroll;}
+		h1,h2,h3,h4,h5,h6{color:#363636;}
+		section table{background-color:#A8A7A7;}
+		::-moz-selection{background:#404040;color:#B50D0D;}
+		::selection{background:#404040;color:#B50D0D;}
+		a.brand{background-image:url(assets/images/image_2.png);}
+		a, a:hover, a:active{color:#830909;}
+		hr{border-top:1px solid #858484;border-bottom:1px solid #CFCDCD;}
+		div.navbar-inner, .navbar .nav li ul{background:#363636;color:#A8A7A7;}
+		a.btn-navbar{background:#363636;color:#A8A7A7;}
+		.navbar .nav li a{color:#A8A7A7;text-shadow:1px 1px 0px #575757;}
+		.navbar .nav li a:hover, .navbar .nav li.active a{text-shadow:none;}
+		div.navbar-inner ul{}
+		.marketing-byline{color:#CFCDCD;}
+		.navbar .nav > li a{color:#A8A7A7;}
+		.navbar .nav > li a:hover, a.btn-navbar:hover{background:#404040;color:#B50D0D;}
+		.navbar .nav .active > a, .navbar .nav .active > a:hover, a.btn-navbar:active{background-color:#404040;color:#B50D0D;}
+		.navbar .nav li ul li a:hover{background:#404040;color:#B50D0D;}
+		.navbar .nav li ul li a:active{background:#404040;color:#B50D0D;}
+		.btn-primary {
+			  background-image: -moz-linear-gradient(top, #, #);
+			  background-image: -ms-linear-gradient(top, #, #);
+			  background-image: -webkit-gradient(linear, 0 0, 0 %, from(#363636), to(#));
+			  background-image: -webkit-linear-gradient(top, #, #);
+			  background-image: -o-linear-gradient(top, #, #);
+			  background-image: linear-gradient(top, #, #);
+			  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#', endColorstr='#', GradientType=0);
+			  border-color: # # #bfbfbf;
+			  color:#;
+		}
+		.btn-primary:hover,
+		.btn-primary:active,
+		.btn-primary.active,
+		.btn-primary.disabled,
+		.btn-primary[disabled] {
+		  background-color: #;
+		}
+		#documenter_copyright{display:block !important;visibility:visible !important;}
+
+			.navbar .nav {
+			position: relative;
+			left: 0;
+			display: block;
+			float: left;
+			margin: 10px 10px 0 0 !important;
+			}
+	</style>
+	
+	
+	
+    </head>
+    
+<body data-spy="scroll" id="top">
+
+<!-- Documentation Navbar -->
+
+<div class="navbar navbar-fixed-top">
+	<div class="navbar-inner">
+		<div class="container"> 
+			<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </a> 
+			<a class="brand" href="#">Revolution Responsive jQuery Slider</a>
+			<div class="nav-collapse">
+			<ul class="nav">
+
+			<li><a href="#how_to_start" title="How to start">How to start</a></li>
+			<li><a href="#options" title="Options">Options</a></li>
+			<li><a href="#slides" title="Slides">Slides</a></li>
+			<li><a href="#media_in_slide" title="Media in Slide">Media in Slide</a></li>
+			<li><a href="#banner_timer" title="Banner Timer">Banner Timer</a></li>
+			<li><a href="#responsive_layouts" title="Responsive Layouts">Responsive Layouts</a></li>
+			<li><a href="#api_functions_and_events" title="API Functions and Events">API Functions and Events</a></li>
+			<li><a href="#licenses" title="Licenses">Licenses</a></li>
+			<li><a href="#support" title="Support">Support</a></li>
+
+			</ul>
+			</div>
+		</div>
+	</div>
+</div> <!-- End of Navbar -->
+
+<!-- Main Container Beginning -->			
+			
+<div class="container" id="documenter_content">
+    
+	<div id="documenter-cover">
+	<div class="masthead">
+	    <h1>Revolution Responsive jQuery Slider</h1>
+	    <p></p>
+	    <ul class="marketing-byline">
+			<li>Created: 06/22/2012</li>
+			<li>latest Update: 06/08/2013</li>
+			<li>By: ThemePunch</li>
+			<li><a href="http://www.codecanyon.com/user/themepunch?ref=themepunch">www.codecanyon.com/user/themepunch</a></li>
+		</ul>
+	    <p class="download-info">
+			
+		</p>
+		
+	</div> <!-- masthead -->
+	
+   <div id="intro">
+    <p class="highlight hero-unit">For support please checkout http://themepunch.ticksy.com !</p>
+   </div> <!-- intro -->
+   
+	</div>
+      
+  <section id="how_to_start">
+	<div class="page-header"><h3>How to start</h3><hr class="notop"></div>
+<p>
+	This chapter will gives you general instructions on how to install the slider and setup the &nbsp;options. Later chapters will be more detailed if needed.</p>
+<p>
+	&nbsp;</p>
+<h4 id="how_to_start_what_files_do_i_need_to_upload_to_my_server">What files do I need to upload to my server?</h4>
+<p>
+	Please upload the rs-plugin folder to your server. In this folder you will find the following subfolders containing all of the items content:</p>
+<ul>
+	<li>
+		js</li>
+	<li>
+		css</li>
+	<li>
+		assets</li>
+</ul>
+<p>
+	You could use your own jQuery but we recommend loading it directly from the Google ressources (see later in this documentation).</p>
+<p>
+	You will find many <strong>examples</strong>&nbsp;in your downloaded zip under the <strong>examples&amp;sources</strong> folder..&nbsp;</p>
+<p>
+	&nbsp;</p>
+<h4 id="how_to_start_implement_the_jquery">Implement the jQuery</h4>
+<p>
+	Add the following lines to your HTML Head:&nbsp;</p>
+<pre class="prettyprint lang-js linenums">
+&lt;script type=&quot;text/javascript&quot; src=&quot;http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js&gt;</pre>
+<p>
+	&nbsp;</p>
+<h4 id="how_to_start_add_revolution_js_and_css_files_to_your_html_page">Add Revolution js and css files to your HTML page</h4>
+<div>
+	&nbsp;</div>
+<div>
+	Also in the &lt;HEAD&gt; section:</div>
+<div>
+	&nbsp;</div>
+<div>
+	<pre class="prettyprint lang-html linenums">
+&lt;!-- jQuery REVOLUTION Slider  --&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;rs-plugin/js/jquery.themepunch.plugins.min.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;rs-plugin/js/jquery.themepunch.revolution.min.js&quot;&gt;&lt;/script&gt;
+
+&lt;!-- REVOLUTION BANNER CSS SETTINGS --&gt;
+&lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;rs-plugin/css/settings.css&quot; media=&quot;screen&quot; /&gt;
+</pre>
+	<div>
+		&nbsp;</div>
+</div>
+<div>
+	This contains the JS and CSS for the Slider itself &nbsp;and some helping modules .</div>
+<div>
+	&nbsp;</div>
+<div>
+	&nbsp;</div>
+<div>
+	<h4 id="how_to_start_create_a_container_for_the_banner">Create a Container for the Banner</h4>
+	<div>
+		&nbsp;</div>
+	<div>
+		Put it in the HTML: (the class names used here are only examples. In our Example files we called them banner-container, fullwidthbanner-container and fullscreenbanner-container, different then here below ! )</div>
+	<pre class="prettyprint lang-html linenums">
+&lt;div class=&quot;bannercontainer&quot;&gt;
+&lt;div class=&quot;banner&quot;&gt;...&lt;/div&gt;
+&lt;/div&gt;
+</pre>
+	<div>
+		The Banner-container can have different Styling depending on that, which layout you wish to use.&nbsp;</div>
+	<div>
+		&nbsp;</div>
+	<div>
+		<h5>
+			Responsive Style&nbsp;</h5>
+		<p>
+			This Style allows you to creat predefined container sizes, undependent from sourrounding container, and create Medai Query (Browsr Size) Dependent responsive alterantives.</p>
+		<p>
+			It requests</p>
+		<ul>
+			<li>
+				a container with predefined Width and Height &nbsp;Attributes,</li>
+			<li>
+				Media Query dependent Sizing. &nbsp;- this should be always with the same proportion. Means &nbsp;Width/Height should always have the same result !!!</li>
+		</ul>
+		<p>
+			Put this in your CSS File (i.e) :</p>
+		<pre class="prettyprint lang-css linenums">
+<strong>.bannercontainer</strong> {
+padding:0px;
+background-color:#fff;
+width:960px;
+position:relative;
+position:relative;
+margin-left:auto;
+margin-right:auto;
+}
+
+<strong>.banner</strong>{
+width:960px;
+height:500px;
+position:relative;
+overflow:hidden;
+}
+
+<strong>@media only screen and (min-width: 768px) and (max-width: 959px)</strong> {
+   <span class="Apple-tab-span" style="white-space:pre"> </span>  .banner, .bannercontainer<span class="Apple-tab-span" style="white-space:pre"> </span>{<span class="Apple-tab-span" style="white-space:pre"> </span>width:760px; height:395px;}
+}
+
+
+<strong>@media only screen and (min-width: 480px) and (max-width: 767px)</strong> {
+      .banner, .bannercontainer<span class="Apple-tab-span" style="white-space:pre"> </span>{<span class="Apple-tab-span" style="white-space:pre"> </span>width:480px; height:250px;<span class="Apple-tab-span" style="white-space:pre"> </span>}
+}
+
+<strong>@media only screen and (min-width: 0px) and (max-width: 479px)</strong> {
+      .banner, .bannercontainer<span class="Apple-tab-span" style="white-space:pre"> </span>{<span class="Apple-tab-span" style="white-space:pre"> </span>width:320px;height:166px;<span class="Apple-tab-span" style="white-space:pre"> </span>}
+}</pre>
+		<div>
+			&nbsp;</div>
+		<h5>
+			FullWidth Style</h5>
+		<p>
+			This Style allows you to have the banner always fit in the maximum width of the Sourrounding Container.&nbsp;</p>
+		<p>
+			It requests:</p>
+		<ul>
+			<li>
+				a Fluid wrapping container (which will always change the size depending on browser size. I.e. width:100% etc..&nbsp;</li>
+		</ul>
+		<p>
+			Put this in your CSS File&nbsp;</p>
+		<pre class="prettyprint lang-css linenums">
+.<strong>bannercontainer</strong>{
+width:100% !important;
+position:relative;
+padding:0;
+max-height:500px !important;
+overflow:hidden;
+}</pre>
+	</div>
+	<div>
+		<h4 id="how_to_start__nbsp">&nbsp;</h4>
+		<h5>
+			FullScreen Style</h5>
+		<p>
+			This Style allows you to have a banner always fit in the maxium screensize. In Some option you can select containers which will reduce the height of the banner with the height of the container. See examples.</p>
+		<p>
+			It requests:</p>
+		<ul>
+			<li>
+				a fullwidth and fullheight wrapping container</li>
+		</ul>
+		<p>
+			Put this in your CSS File</p>
+		<pre class="prettyprint lang-css linenums">
+.<strong>bannercontainer</strong> {
+width:100% !important;
+position:relative;
+padding:0;
+height:100%;
+}</pre>
+		<h4 id="how_to_start__nbsp">&nbsp;</h4>
+		<h4 id="how_to_start_create_your_first_slides">Create Your First Slides</h4>
+		<p>
+			Create an Unordered list inside the banner container where each &lt;li&gt; element will correspond to one slide.</p>
+		<p>
+			&nbsp;</p>
+		<pre class="prettyprint lang-html linenums">
+&lt;ul&gt;
+&lt;!-- THE BOXSLIDE EFFECT EXAMPLES  WITH LINK ON THE MAIN SLIDE EXAMPLE --&gt;
+
+ &lt;li data-transition=&quot;boxslide&quot; data-slotamount=&quot;7&quot; data-link=&quot;http://www.google.de&quot;&gt;
+   &lt;img src=&quot;images/slides/image1.jpg&quot;&gt;
+   &lt;div class=&quot;caption sft big_white&quot;  data-x=&quot;400&quot; data-y=&quot;100&quot; data-speed=&quot;700&quot; data-start=&quot;1700&quot; data-easing=&quot;easeOutBack&quot;&gt;KICKSTART YOUR WEBSITE&lt;/div&gt;
+   &lt;div class=&quot;caption sfb big_orange&quot;  data-x=&quot;400&quot; data-y=&quot;142&quot; data-speed=&quot;500&quot; data-start=&quot;1900&quot; data-easing=&quot;easeOutBack&quot;&gt;WITH SLIDER REVOLUTION!&lt;/div&gt;
+   &lt;div class=&quot;caption lfr medium_grey&quot;  data-x=&quot;510&quot; data-y=&quot;210&quot; data-speed=&quot;300&quot; data-start=&quot;2000&quot;&gt;UNLIMITED TRANSITIONS&lt;/div&gt;
+ &lt;/li&gt;
+...
+&lt;/ul&gt;</pre>
+		<div>
+			&nbsp;</div>
+		<h4 id="how_to_start_call_the_jquery_plugin_to_build_the_slider_options_need_to_be_set_of_course_">Call the jQuery Plugin to build the Slider (Options need to be set of course...)</h4>
+		<p>
+			&nbsp;</p>
+		<pre class="prettyprint lang-js linenums">
+&lt;script type=&quot;text/javascript&quot;&gt;
+
+&nbsp;&nbsp;&nbsp;var tpj=jQuery;
+&nbsp;&nbsp;&nbsp;tpj.noConflict();
+&nbsp;&nbsp;&nbsp;tpj(document).ready(function() {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (tpj.fn.cssOriginal!=undefined)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tpj.fn.css = tpj.fn.cssOriginal;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tpj(&#39;.fullscreenbanner&#39;).revolution({
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;delay:9000,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;startwidth:960,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;startheight:500,
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;onHoverStop:&quot;on&quot;,
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;thumbWidth:100,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;thumbHeight:50,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;thumbAmount:3,
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;hideThumbs:0,
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;navigationType:&quot;bullet&quot;,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;navigationArrows:&quot;solo&quot;,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;navigationStyle:&quot;round&quot;,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;navigationHAlign:&quot;left&quot;,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;navigationVAlign:&quot;bottom&quot;,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;navigationHOffset:30,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;navigationVOffset:30,
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;soloArrowLeftHalign:&quot;left&quot;,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;soloArrowLeftValign:&quot;center&quot;,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;soloArrowLeftHOffset:20,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;soloArrowLeftVOffset:0,
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;soloArrowRightHalign:&quot;right&quot;,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;soloArrowRightValign:&quot;center&quot;,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;soloArrowRightHOffset:20,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;soloArrowRightVOffset:0,
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;touchenabled:&quot;on&quot;,
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;stopAtSlide:-1,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;stopAfterLoops:-1,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;hideCaptionAtLimit:0,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;hideAllCaptionAtLilmit:0,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;hideSliderAtLimit:0,
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fullWidth:&quot;off&quot;,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fullScreen:&quot;off&quot;,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fullScreenOffsetContainer:&quot;#topheader-to-offset&quot;,
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;shadow:0
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;});
+
+&nbsp;&nbsp;&nbsp;});
+
+&lt;/script&gt;</pre>
+	</div>
+</div>
+<p>
+	&nbsp;</p>
+</section>
+<section id="options">
+	<div class="page-header"><h3>Options</h3><hr class="notop"></div>
+<h3>
+	The Options to Initialise the Plugin (Theme Sorted):</h3>
+<h5>
+	Global Settings:</h5>
+<div>
+	<ul>
+		<li>
+			<strong>delay</strong>&nbsp;<br>
+			<br>
+			The time one slide stays on the screen in Milliseconds. Global Setting. You can set per Slide extra local delay time via the data-delay in the &lt;li&gt; element (Default: 9000)<br>
+			&nbsp;</li>
+		<li>
+			<strong>startheight&nbsp;</strong><br>
+			<br>
+			This Height of the Grid where the Captions are displayed in Pixel. This Height is the Max height of Slider in Fullwidth Layout and in Responsive Layout. &nbsp;In Fullscreen Layout the Gird will be centered Vertically in case the Slider is higher then this value.<br>
+			&nbsp;</li>
+		<li>
+			<strong>startwidth&nbsp;</strong><br>
+			<br>
+			This Height of the Grid where the Captions are displayed in Pixel. This Width is the Max Width of Slider in Responsive Layout. &nbsp;In Fullscreen and in FullWidth Layout the Gird will be centered Horizontally in case the Slider is wider then this value.<br>
+			&nbsp;</li>
+	</ul>
+	<h5>
+		Navigation Settings:</h5>
+	<ul>
+		<li>
+			<strong>onHoverStop</strong><br>
+			<br>
+			Possible Values: &quot;on&quot;, &quot;off&quot; - Stop the Timer if mouse is hovering the Slider. &nbsp;Caption animations are not stopped !! They will just play to the end.<br>
+			&nbsp;</li>
+		<li>
+			<strong>thumbWidth / thumbHeight</strong><br>
+			<br>
+			The width and height of the thumbs in pixel. Thumbs are not responsive from basic. For Responsive Thumbs you will need to create media qury based thumb sizes.&nbsp;<br>
+			&nbsp;</li>
+		<li>
+			<strong>thumbAmount</strong><br>
+			<br>
+			The Amount of visible Thumbs in the same time. &nbsp;The rest of the thumbs are only visible on hover, or at slide change.<br>
+			&nbsp;</li>
+		<li>
+			<strong>hideThumbs</strong><br>
+			<br>
+			0 - Never hide Thumbs. &nbsp;1000- 100000 (ms) hide thumbs and navigation arrows, bullets after the predefined ms &nbsp;(1000ms == 1 sec, &nbsp;1500 == 1,5 sec etc..)</li>
+	</ul>
+	<ul>
+		<li>
+			<strong>navigationType</strong>&nbsp; Display type of the navigation bar&nbsp;(Default:&quot;none&quot;)<br>
+			<br>
+			Possible values are: &quot;bullet&quot;, &quot;thumb&quot;, &quot;none&quot;&nbsp;<br>
+			&nbsp;</li>
+		<li>
+			<strong>navigationArrows</strong>&nbsp;Display position of the Navigation Arrows (Default: &quot;nexttobullets&quot;)<br>
+			<br>
+			Possible values are &quot;nexttobullets&quot;, &quot;solo&quot;&nbsp;<br>
+			nexttobullets - arrows added next to the bullets left and right<br>
+			solo - arrows can be independent positioned, see further options<br>
+			&nbsp;</li>
+		<li>
+			<strong>navigationStyle</strong>&nbsp;Look of the navigation bullets if navigationType &quot;bullet&quot; selected.<br>
+			<br>
+			Possible values: &quot;round&quot;, &quot;square&quot;, &quot;round-old&quot;, &quot;square-old&quot;, &quot;navbar-old&quot;<br>
+			&nbsp;</li>
+		<li>
+			<strong>navigationHAlign, navigationVAlign</strong><br>
+			<br>
+			Vertical and Horizontal Align of the Navigation bullets / thumbs (depending on which Style has been selected). &nbsp;Possible values navigationHAlign: &quot;left&quot;,&quot;center&quot;,&quot;right&quot; &nbsp;and naigationVAlign: &quot;top&quot;,&quot;center&quot;,&quot;bottom&quot;<br>
+			&nbsp;</li>
+		<li>
+			<strong>navigationHOffset navigationVOffset</strong><br>
+			<br>
+			The Offset position of the navigation depending on the aligned position. &nbsp;from -1000 to +1000 any value in px. &nbsp; i.e. -30 &nbsp;<br>
+			&nbsp;</li>
+		<li>
+			<strong>soloArrowLeftHaling, soloArrowRightHalign, solorArrowLeftHalign, soloArrowRightHalign</strong><br>
+			<br>
+			Vertical and Horizontal Align of the Navigation Arrows (left and right independent!) Possible values navigationHAlign: &quot;left&quot;,&quot;center&quot;,&quot;right&quot; &nbsp;and naigationVAlign: &quot;top&quot;,&quot;center&quot;,&quot;bottom&quot;<br>
+			&nbsp;</li>
+		<li>
+			<strong>soloArrowLeftHOffset, soloArrowLeftVOffset,&nbsp;</strong><strong>soloArrowRightHVOffset, soloArrowRightVOffset</strong><br>
+			<br>
+			The Offset position of the navigation depending on the aligned position. &nbsp;from -1000 to +1000 any value in px. &nbsp; i.e. -30 &nbsp; Each Arrow independent<br>
+			&nbsp;</li>
+		<li>
+			<strong>touchenabled</strong>&nbsp;Enable Swipe Function on touch devices&nbsp;(Default: &quot;on&quot;)<br>
+			<br>
+			Possible values: &quot;on&quot;, &quot;off&quot;<br>
+			&nbsp;</li>
+	</ul>
+	<h5>
+		Loops</h5>
+	<ul>
+		<li>
+			<strong>stopAtSlide</strong><br>
+			<br>
+			Stop Timer if Slide &quot;x&quot; has been Reached. If stopAfterLoops set to 0, then it stops already in the first Loop at slide X which defined. -1 means do not stop at any slide. stopAfterLoops has no sinn in this case.<br>
+			&nbsp;</li>
+		<li>
+			<strong>stopAfterLoops</strong><br>
+			<br>
+			Stop Timer if All slides has been played &quot;x&quot; times. IT will stop at THe slide which is defined via stopAtSlide:x, if set to -1 slide never stop automatic<br>
+			&nbsp;</li>
+	</ul>
+	<h5>
+		Mobile Visibility</h5>
+	<ul>
+		<li>
+			<strong>hideCaptionAtLimit</strong><br>
+			<br>
+			It Defines if a caption should be shown under a Screen Resolution ( Basod on The Width of Browser)<br>
+			&nbsp;</li>
+		<li>
+			<strong>hideAllCaptionAtLimit</strong><br>
+			<br>
+			Hide all The Captions if Width of Browser is less then this value<br>
+			&nbsp;</li>
+		<li>
+			<strong>hideSliderAtLimit</strong><br>
+			<br>
+			Hide the whole slider, and stop also functions if Width of Browser is less than this value</li>
+	</ul>
+	<h5>
+		<br>
+		Layout Styles</h5>
+	<ul>
+		<li>
+			<strong>fullWidth</strong><br>
+			<br>
+			Possible Values: &quot;on&quot;, &quot;off&quot; &nbsp;- defines if the fullwidth mode is activated<br>
+			&nbsp;</li>
+		<li>
+			<strong>fullScreen</strong><br>
+			<br>
+			Possible Values: &quot;on&quot;, &quot;off&quot; &nbsp;- defines if the fullscreen mode is activated<br>
+			&nbsp;</li>
+		<li>
+			<strong>fullScreenOffsetContainer</strong><br>
+			<br>
+			The value is a Container ID or Class i.e. &quot;#topheader&quot; &nbsp;-&nbsp;The Height of Fullheight will be increased with this Container height !<br>
+			&nbsp;</li>
+		<li>
+			<strong>shadow</strong><br>
+			<br>
+			Possible values: 0,1,2,3 &nbsp;(0 == no Shadow, 1,2,3 - Different Shadow Types)<br>
+			&nbsp;</li>
+		<li>
+			<strong>videoJsPath</strong><br>
+			<br>
+			The Path to the VideoJs Files which are basically always under the rs-plugin/videojs/ folder. &nbsp;Default setting:&nbsp;videoJsPath:&quot;rs-plugin/videojs/&quot;<br>
+			&nbsp;</li>
+	</ul>
+</div>
+<p>
+	&nbsp;</p>
+</section>
+<section id="slides">
+	<div class="page-header"><h3>Slides</h3><hr class="notop"></div>
+<h3>
+	Slide Options</h3>
+<div>
+	&nbsp;</div>
+<div>
+	<strong>&lt;li&gt;</strong> - Every list item represents a new Slide. To Define Transitions, main links, etc. use the following <strong>data-</strong> values per list item.</div>
+<div>
+	&nbsp;</div>
+<h5>
+	Transition Effects</h5>
+<ul>
+	<li>
+		<strong>data-transition </strong><br>
+		<br>
+		The appearance transition of this slide. You can define more than one, so in each loop the next slide transition type will be shown.<br>
+		<div>
+			<br>
+			<strong>Basic Transitions:&nbsp;</strong></div>
+		<div>
+			&nbsp;</div>
+		<div>
+			boxslide,boxfade</div>
+		<div>
+			slotzoom-horizontal, slotzoom-vertical</div>
+		<div>
+			slotslide-horizontal, slotslide-vertical</div>
+		<div>
+			slotfade-horizontal, slotfade-vertical</div>
+		<div>
+			curtain-1, curtain-2, curtain-3</div>
+		<div>
+			slideleft, slideright, slideup ,slidedown&nbsp;</div>
+		<div>
+			slidehorizontal, slidevertical</div>
+		<div>
+			fade</div>
+		<div>
+			random</div>
+		<div>
+			&nbsp;</div>
+		<div>
+			<strong>Premium Transitions:</strong></div>
+		<div>
+			&nbsp;</div>
+		<div>
+			papercut</div>
+		<div>
+			flyin</div>
+		<div>
+			turnoff</div>
+		<div>
+			cube</div>
+		<div>
+			3dcurtain-vertical</div>
+		<div>
+			3dcurtain-horizontal</div>
+		<div>
+			premium-random<br>
+			&nbsp;</div>
+	</li>
+	<li>
+		<div>
+			<strong>data-slotamount</strong>&nbsp;<br>
+			<br>
+			The number of slots or boxes the slide is divided into. If you use boxfade, over 7 slots can be juggy.<br>
+			&nbsp;</div>
+	</li>
+	<li>
+		<div>
+			<strong>data-masterspeed</strong><br>
+			<br>
+			The speed of the transition in &quot;ms&quot;. &nbsp;default value is 300 (0.3 sec)<br>
+			&nbsp;</div>
+	</li>
+	<li>
+		<strong>data-delay</strong>&nbsp;<br>
+		<br>
+		A new Dealy value for the Slide. If no delay defined per slide, the dealy defined via Options will be used<br>
+		&nbsp;</li>
+</ul>
+<h5>
+	Links (Full Slide Links)</h5>
+<ul>
+	<li>
+		<strong>data-link</strong><br>
+		<br>
+		A link on the whole slide pic<br>
+		&nbsp;</li>
+	<li>
+		<strong>data-target</strong><br>
+		<br>
+		The target of the Link for the whole slide pic. (i.e. &quot;_blank&quot;, &quot;_self&quot;)<br>
+		&nbsp;</li>
+	<li>
+		<strong>data-slideindex</strong><br>
+		<br>
+		Possible values: &nbsp;next,back, 1-x (where x is the max. Amount of slide) If this value is set, click on slide will call the next / previous, or &nbsp;n th Slide.<br>
+		&nbsp;</li>
+</ul>
+<h5>
+	Thumbnail</h5>
+<ul>
+	<li>
+		<strong>data-thumb</strong><br>
+		<br>
+		An Alternative Source for thumbs. If not defined a copy of the background image will be used in resized form</li>
+</ul>
+<p>
+	&nbsp;</p>
+<h3>
+	The Main Image</h3>
+<p>
+	<br>
+	Each Slide (&lt;li&gt; &lt;/li&gt;)&nbsp;<strong>MUST&nbsp;</strong>include a main image which is added as a simple &lt;img&gt; tag at the first level. It can be a Simpe image, a colored or transparent image, or dummy image as lazy load version.</p>
+<h5>
+	Simple Image</h5>
+<pre class="prettyprint lang-html linenums">
+&lt;img src=&quot;images/slides/slide13.jpg&quot; &gt;</pre>
+<h5>
+	Colored Background Instead of Image</h5>
+<pre class="prettyprint lang-html linenums">
+&lt;img src=&quot;images/slides/transparent.png&quot; style=&quot;background-color:#56e34a&quot; &gt;</pre>
+<h5>
+	Lazy Loaded Image</h5>
+<pre class="prettyprint lang-html linenums">
+&lt;img src=&quot;images/slides/dummy.jpg&quot; data-lazyload=&quot;images/slides/slide13.jpg&quot;&gt;</pre>
+<div>
+	&nbsp;</div>
+<div>
+	<h3>
+		The Captions / Layers</h3>
+	<p>
+		Each &lt;li&gt; (slide) can include unlimited amount of Captions. Caption are simple html markups with iframe, image, heading , paragraph and any other tags. &nbsp;Each Caption must be wrapped via a &lt;div class=&quot;caption&quot;&gt;&lt;/div&gt;.</p>
+	<p>
+		Each Caption has some special classes and some data- attributes, to set animation type, position, speed, easings etc.</p>
+	<h5>
+		Caption Classes</h5>
+	<ul>
+		<li>
+			<strong>the &quot;caption&quot; class</strong><br>
+			<br>
+			It is the Wrapping main Class which is a MUST. &nbsp;Each Caption need to be defined like this, other way the Slider Plugin can not identifikate the Caption container<br>
+			&nbsp;</li>
+		<li>
+			<strong>Styleing Captions</strong>&nbsp;(like &quot;big_white&quot;, &quot;big_orange&quot;, &quot;medium_grey&quot; etc...)<br>
+			<br>
+			These are Styling classes created in the settings.css &nbsp;You can add unlimited amount of Styles in your own css file, to style your captions at the top level already<br>
+			&nbsp;</li>
+		<li>
+			<strong>Animation Classes</strong><br>
+			<br>
+			Animation Classes defined the start / end animations on Captions. &nbsp;<br>
+			<br>
+			<em>Incoming Animation Classes:</em><br>
+			<div>
+				<br>
+				<strong>sft</strong>&nbsp;- Short from Top</div>
+			<div>
+				<strong>sfb</strong>&nbsp;- Short from Bottom</div>
+			<div>
+				<strong>sfr</strong>&nbsp;- Short from Right</div>
+			<div>
+				<strong>sfl</strong>&nbsp;- Short from Left</div>
+			<div>
+				<strong>lft</strong>&nbsp;- Long from Top</div>
+			<div>
+				<strong>lfb</strong>&nbsp;- Long from Bottom</div>
+			<div>
+				<strong>lfr</strong>&nbsp;- Long from Right</div>
+			<div>
+				<strong>lfl</strong>&nbsp;- Long from Left</div>
+			<div>
+				<strong>fade</strong>&nbsp;- fading</div>
+			<div>
+				<strong>randomrotate</strong>- Fade in, Rotate from a Random position and Degree<br>
+				<br>
+				<em>Outgoing Animation Classes:</em><br>
+				<br>
+				<div>
+					<strong>stt</strong>&nbsp;- Short to Top</div>
+				<div>
+					<strong>stb</strong>&nbsp;- Short to Bottom</div>
+				<div>
+					<strong>str</strong>&nbsp;- Short to Right</div>
+				<div>
+					<strong>stl</strong>&nbsp;- Short to Left</div>
+				<div>
+					<strong>ltt</strong>&nbsp;- Long to Top</div>
+				<div>
+					<strong>ltb</strong>&nbsp;- Long to Bottom</div>
+				<div>
+					<strong>ltr</strong>&nbsp;- Long to Right</div>
+				<div>
+					<strong>ltl</strong>&nbsp;- Long to Left</div>
+				<div>
+					<strong>fadeout</strong>&nbsp;- fading</div>
+				<div>
+					<strong>randomrotateout</strong>- Fade in, Rotate from a Random position and Degree</div>
+				<div>
+					&nbsp;</div>
+				<div>
+					&nbsp;</div>
+			</div>
+		</li>
+	</ul>
+	<h5>
+		Caption data- settings</h5>
+	<ul>
+		<li>
+			<strong>data-x</strong><br>
+			<br>
+			Possible Values are &quot;left&quot;, &quot;center&quot;, &quot;right&quot;, or any Value between -2500 &nbsp;and 2500.<br>
+			If left/center/right is set, the caption will be siple aligned to the position. &nbsp;Any other &quot;number&quot; will simple set the left position in px of tha caption.&nbsp;<br>
+			<br>
+			At &quot;left&quot; the left side of the caption is aligned to the left side of the slider.<br>
+			At &quot;center&quot; the center of caption is aligned to the center of slide. &nbsp;<br>
+			At &quot;right&quot; the caption right side is aligned to the right side of the Slider.<br>
+			<br>
+			&nbsp;</li>
+		<li>
+			<strong>data-y</strong><br>
+			<br>
+			Possible Values are &quot;top&quot;, &quot;center&quot;, &quot;bottom&quot;, or any Value between -2500 &nbsp;and 2500.&nbsp;<br>
+			If top/center/bottom is set, the caption will be siple aligned to the position. &nbsp;Any other &quot;number&quot; will simple set the top position in px of tha caption.<br>
+			<br>
+			At &quot;top&quot; the top side of the caption is aligned to the top side of the slider.<br>
+			At &quot;center&quot; the center of caption is aligned to the center of slide. &nbsp;<br>
+			At &quot;bottom&quot; the caption bottom side is aligned to the bottom side of the Slider.</li>
+	</ul>
+	<p>
+		&nbsp;</p>
+	<ul>
+		<li>
+			<strong>data-hoffset</strong><br>
+			<br>
+			Only works if data-x set to left/center/right. It will move the Caption with the defined &quot;px&quot; from the aligned position. &nbsp;i.e. &nbsp;data-x=&quot;center&quot; data-hoffset=&quot;-100&quot; will put the caption 100px left from the slide center &nbsp;horizontaly. &nbsp;<br>
+			&nbsp;</li>
+		<li>
+			<strong>data-voffset</strong><br>
+			<br>
+			Only works if data-y set to top/center/bottom. It will move the Caption with the defined &quot;px&quot; from the aligned position. &nbsp;i.e. &nbsp;data-x=&quot;center&quot; data-hoffset=&quot;-100&quot; will put the caption 100px left from the slide center &nbsp;vertically. &nbsp;<br>
+			&nbsp;</li>
+		<li>
+			<strong>data-speed</strong><br>
+			<br>
+			The speed in milliseconds of the transition to move the Caption in the Slide at the defined &nbsp;timepoint.<br>
+			&nbsp;</li>
+		<li>
+			<strong>data-start</strong><br>
+			<br>
+			The timepoint in millisecond when/at the Caption should move in to the slide.<br>
+			&nbsp;</li>
+		<li>
+			<strong>data-easing</strong><br>
+			<br>
+			The Easing Art how the caption is moved in to the slide (<strong>note!</strong>&nbsp;Animation art set via Classes !).<br>
+			Possible Values are:<br>
+			<div>
+				easeOutBack, easeInQuad, easeOutQuad, easeInOutQuad, easeInCubic, easeOutCubic</div>
+			<div>
+				easeInOutCubic, easeInQuart, easeOutQuart, easeInOutQuart, easeInQuint</div>
+			<div>
+				easeOutQuint, easeInOutQuint, easeInSine, easeOutSine, easeInOutSine</div>
+			<div>
+				easeInExpo, easeOutExpo, easeInOutExpo, easeInCirc, easeOutCirc, easeInOutCirc</div>
+			<div>
+				easeInElastic, easeOutElastic, easeInOutElastic, easeInBack, easeOutBack, easeInOutBack</div>
+			<div>
+				easeInBounce, easeOutBounce, easeInOutBounce<br>
+				&nbsp;</div>
+		</li>
+		<li>
+			<strong>data-endspeed</strong><br>
+			<br>
+			The speed in milliseconds of the transition to move the Caption out from the Slide at the defined &nbsp;timepoint.<br>
+			&nbsp;</li>
+		<li>
+			<strong>data-end</strong><br>
+			<br>
+			The timepoint in millisecond when/at the Caption should move out from the slide.<br>
+			&nbsp;</li>
+		<li>
+			<strong>data-endeasing</strong><br>
+			<br>
+			The Easing Art how the caption is moved out from the slide (<strong>note!&nbsp;</strong>Animation art set via Classes !).&nbsp;<br>
+			Possible Values are:<br>
+			<div>
+				easeOutBack, easeInQuad, easeOutQuad, easeInOutQuad, easeInCubic, easeOutCubic</div>
+			<div>
+				easeInOutCubic, easeInQuart, easeOutQuart, easeInOutQuart, easeInQuint</div>
+			<div>
+				easeOutQuint, easeInOutQuint, easeInSine, easeOutSine, easeInOutSine</div>
+			<div>
+				easeInExpo, easeOutExpo, easeInOutExpo, easeInCirc, easeOutCirc, easeInOutCirc</div>
+			<div>
+				easeInElastic, easeOutElastic, easeInOutElastic, easeInBack, easeOutBack, easeInOutBack</div>
+			<div>
+				easeInBounce, easeOutBounce, easeInOutBounce</div>
+		</li>
+	</ul>
+	<h5>
+		&nbsp;</h5>
+	<h5>
+		Special Classes within the Caption container</h5>
+	<ul>
+		<li>
+			<strong>tp-scrollbelowslider</strong><br>
+			<br>
+			If this class added to an element within the caption container, it will scroll the Body Position to under the current slider (used in Fullscreen slider only)<br>
+			&nbsp;</li>
+		<li>
+			<strong>tp-resizeme</strong><br>
+			<br>
+			Add class tp-resizeme to the container inside the caption and every item within (included the same container) will be responsive resized. Only needed if more than one depth exist in the container !<br>
+			&nbsp;</li>
+		<li>
+			<strong>frontcorner, backcorner, frontcornertop, backcornertop</strong><br>
+			<br>
+			This classes added without any content in a closed div i.e.&nbsp;&lt;div class=&quot;frontcorner&quot;&gt;&lt;/div&gt; within the container. &nbsp;It will cut the left/right side of the caption background in 45&deg; 1:1&nbsp;<br>
+			&nbsp;</li>
+	</ul>
+	<p>
+		&nbsp;</p>
+</div>
+<p>
+	&nbsp;</p>
+</section>
+<section id="media_in_slide">
+	<div class="page-header"><h3>Media in Slide</h3><hr class="notop"></div>
+<p>
+	The slider can play Vimeo, YouTube and HTML5 (videoJs) Videos, in boxed and &quot;FullSlide&quot; size. Via the Embeded API&#39;s the Slider will be paused, and restarted from the VideoPlayers. &nbsp;To use the Video Files in Slider see the following instructions.</p>
+<p>
+	Each Video file has the same <strong>data- </strong>options like:</p>
+<ul>
+	<li>
+		<strong>autoplay</strong><br>
+		<br>
+		Possible Values: &quot;true&quot; / &quot;false&quot; - will play the Video Directly when slider has been loaded&nbsp;<br>
+		&nbsp;</li>
+	<li>
+		<strong>nextslideatend</strong><br>
+		<br>
+		Possible Values: &quot;true&quot; / &quot;false&quot; after video come to the end position, it swaps to the next slide automatically.<br>
+		&nbsp;</li>
+</ul>
+<p>
+	&nbsp;</p>
+<h3>
+	YouTube Video in Slide</h3>
+<p>
+	Boxed version</p>
+<p>
+	YouTube VIdeo will be added within a caption due an iframe. The Following example shows an iFrame embeded YouTube Video in a caption (460px X 259px), i.e.:</p>
+<pre class="prettyprint lang-html linenums">
+&lt;div class=&quot;caption fade &quot;
+   data-autoplay=&quot;true&quot;
+   data-nextslideatend=&quot;false&quot;
+   data-x=&quot;130&quot;
+   data-y=&quot;70&quot;
+   data-speed=&quot;500&quot;
+   data-start=&quot;10&quot;
+   data-easing=&quot;easeOutBack&quot;&gt;
+&lt;iframe src=&quot;http://www.youtube.com/embed/YHWkro9-e9Q?hd=1&amp;amp;wmode=opaque&amp;amp;controls=1&amp;amp;showinfo=0&quot; width=&quot;460&quot; height=&quot;259&quot;&gt;&lt;/iframe&gt;
+&lt;/div&gt;</pre>
+<div>
+	<br>
+	FullWidth Version (/i.e.)</div>
+<div>
+	<pre class="prettyprint lang-html linenums">
+ &lt;div class=&quot;caption fade <strong>fullscreenvideo</strong>&quot;
+     data-autoplay=&quot;true&quot;
+     data-nextslideatend=&quot;true&quot;
+     data-x=&quot;0&quot;
+     data-y=&quot;0&quot;
+     data-speed=&quot;500&quot;
+     data-start=&quot;10&quot;
+     data-easing=&quot;easeOutBack&quot;&gt;
+&lt;iframe src=&quot;http://www.youtube.com/embed/YHWkro9-e9Q?hd=1&amp;amp;wmode=opaque&amp;amp;controls=1&amp;amp;showinfo=0&quot; width=&quot;100%&quot; height=&quot;100%&quot;&gt;&lt;/iframe&gt;
+&lt;/div&gt;</pre>
+	<div>
+		&nbsp;</div>
+</div>
+<div>
+	&nbsp;</div>
+<h3>
+	Vimeo Video</h3>
+<div>
+	&nbsp;</div>
+<div>
+	Vimeo Video API works only Online. It will not work well on Localhost due some Sandbox Security reason. Please always test it Online.</div>
+<div>
+	&nbsp;</div>
+<div>
+	Boxed Version</div>
+<div>
+	&nbsp;</div>
+<div>
+	<pre class="prettyprint lang-html linenums">
+&lt;div class=&quot;caption fade &quot;
+    data-autoplay=&quot;true&quot;
+    data-nextslideatend=&quot;false&quot;
+    data-x=&quot;190&quot;
+    data-y=&quot;110&quot;
+    data-speed=&quot;500&quot;
+    data-start=&quot;10&quot;
+    data-easing=&quot;easeOutBack&quot;&gt;
+&lt;iframe src=&quot;http://player.vimeo.com/video/29298709?title=0&amp;amp;byline=0&amp;amp;portrait=0;api=1&quot; width=&quot;460&quot; height=&quot;259&quot;&gt;&lt;/iframe&gt;
+&lt;/div&gt;</pre>
+	<div>
+		&nbsp;</div>
+</div>
+<div>
+	&nbsp;</div>
+<div>
+	FullWidth Version (i.e.)</div>
+<div>
+	<pre class="prettyprint lang-html linenums">
+ &lt;div class=&quot;caption fade <strong>fullscreenvideo</strong>&quot;
+    data-autoplay=&quot;true&quot;
+    data-nextslideatend=&quot;true&quot;
+    data-x=&quot;0&quot;
+    data-y=&quot;0&quot;
+    data-speed=&quot;500&quot;
+    data-start=&quot;10&quot;
+    data-easing=&quot;easeOutBack&quot;&gt;
+&lt;iframe src=&quot;http://player.vimeo.com/video/29298709?title=0&amp;amp;byline=0&amp;amp;portrait=0;api=1&quot; width=&quot;100%&quot; height=&quot;100%&quot;&gt;&lt;/iframe&gt;
+&lt;/div&gt;</pre>
+	<div>
+		&nbsp;</div>
+</div>
+<h3>
+	HTML5 Video (videoJS)</h3>
+<p>
+	The VideoJs Files are only loaded if the html5 video markup exist. Please do not forget to add the videoJsPath in the initialising Options !&nbsp;</p>
+<p>
+	Boxed Version (i.e.)</p>
+<pre class="prettyprint lang-html linenums">
+&lt;div class=&quot;caption randomrotate &quot;
+   data-x=&quot;20&quot;
+   data-y=&quot;80&quot;
+   data-speed=&quot;300&quot;
+   data-start=&quot;2100&quot;
+   data-easing=&quot;easeOutExpo&quot;
+   data-autoplay=&quot;true&quot;
+   data-nextslideatend=&quot;false&quot;&gt;
+
+&lt;video class=&quot;video-js vjs-default-skin&quot; controls preload=&quot;none&quot; width=&quot;600&quot; height=&quot;240&quot;
+  poster=&quot;http://video-js.zencoder.com/oceans-clip.png&quot; data-setup=&quot;{}&quot;&gt;
+
+   &lt;source src=&quot;http://video-js.zencoder.com/oceans-clip.mp4&quot; type=&#39;video/mp4&#39; /&gt;
+   &lt;source src=&quot;http://video-js.zencoder.com/oceans-clip.webm&quot; type=&#39;video/webm&#39; /&gt;
+   &lt;source src=&quot;http://video-js.zencoder.com/oceans-clip.ogv&quot; type=&#39;video/ogg&#39; /&gt;
+   &lt;track kind=&quot;captions&quot; src=&quot;demo.captions.vtt&quot; srclang=&quot;en&quot; label=&quot;English&quot; /&gt;
+&lt;/video&gt;
+
+&lt;/div&gt;</pre>
+<div>
+	&nbsp;</div>
+<div>
+	FullWidth Version (i.e.)</div>
+<div>
+	&nbsp;</div>
+<div>
+	<pre class="prettyprint lang-html linenums">
+&lt;div class=&quot;caption randomrotate <strong>fullscreenvideo</strong>&quot;
+   data-x=&quot;0&quot;
+   data-y=&quot;0&quot;
+   data-speed=&quot;300&quot;
+   data-start=&quot;2100&quot;
+   data-easing=&quot;easeOutExpo&quot;
+   data-autoplay=&quot;true&quot;
+   data-nextslideatend=&quot;true&quot;&gt;
+
+&lt;video class=&quot;video-js vjs-default-skin&quot; controls preload=&quot;none&quot; width=&quot;100%&quot; height=&quot;100%&quot;
+     poster=&quot;http://video-js.zencoder.com/oceans-clip.png&quot; data-setup=&quot;{}&quot;&gt;
+
+   &lt;source src=&quot;http://video-js.zencoder.com/oceans-clip.mp4&quot; type=&#39;video/mp4&#39; /&gt;
+   &lt;source src=&quot;http://video-js.zencoder.com/oceans-clip.webm&quot; type=&#39;video/webm&#39; /&gt;
+   &lt;source src=&quot;http://video-js.zencoder.com/oceans-clip.ogv&quot; type=&#39;video/ogg&#39; /&gt;
+   &lt;track kind=&quot;captions&quot; src=&quot;demo.captions.vtt&quot; srclang=&quot;en&quot; label=&quot;English&quot; /&gt;
+&lt;/video&gt;
+&lt;/div&gt;</pre>
+	<div>
+		&nbsp;</div>
+</div>
+<p>
+	&nbsp;</p>
+</section>
+<section id="banner_timer">
+	<div class="page-header"><h3>Banner Timer</h3><hr class="notop"></div>
+<h3>
+	Banner Timer</h3>
+<div>
+	&nbsp;</div>
+<div>
+	In order to use a banner timer, you will need to add the markup within the banner or fullwidthbanner divs.</div>
+<div>
+	<br>
+	The markup should look like :</div>
+<div>
+	&nbsp;</div>
+<h5>
+	Top Positioned Banner Timer:</h5>
+<pre class="prettyprint lang-html linenums">
+&lt;div class=&quot;tp-bannertimer&quot;&gt;&lt;/div&gt;<span class="Apple-tab-span" style="white-space: pre;"> </span></pre>
+<div>
+	&nbsp;</div>
+<h5>
+	Bottom Positioned Banner Timer:</h5>
+<pre class="prettyprint lang-html linenums">
+&lt;div class=&quot;tp-bannertimer tp-bottom&quot;&gt;&lt;/div&gt;</pre>
+<div>
+	&nbsp;</div>
+<div>
+	To remove this timer just simple remove the markup from the container, and that is it.</div>
+<div>
+	&nbsp;</div>
+<div>
+	&nbsp;</div>
+</section>
+<section id="responsive_layouts">
+	<div class="page-header"><h3>Responsive Layouts</h3><hr class="notop"></div>
+<h3>
+	Responsive Layout</h3>
+<p>
+	Responsive means that the slider will adjust to every screen width.</p>
+<div>
+	To achieve that you have to set a bunch of mediaqueries that will adjust the whole slider when a certain window size is used, or you will need to use our fullwidth style version, to let the banner always resize itself.</div>
+<div>
+	&nbsp;</div>
+<div>
+	The basic containers are build like this ( in none Fullwidth, but 4 Level Responsive Version):</div>
+<div>
+	&nbsp;</div>
+<div>
+	<pre class="prettyprint lang-css linenums">
+ .bannercontainer {
+    padding:5px;
+    background-color:#fff;
+    width:890px;
+    position:relative;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+.banner{
+    width:890px;    // MUST BE THE SAME AS IN THE OPTIONS <strong>startwidth</strong>
+    height:490px;    // MUST BE THE SAME AS IN THE OPTIONS <strong>startheight</strong>
+    position:relative;
+    overflow:hidden;
+}
+</pre>
+	<div>
+		&nbsp;</div>
+	<div>
+		&nbsp;</div>
+	<div>
+		The media queries that build the screen dependend container sizes:</div>
+	<div>
+		&nbsp;</div>
+	<pre class="prettyprint lang-css linenums">
+@media only screen and (min-width: 768px) and (max-width: 959px) {
+   .banner, .bannercontainer{  width:750px; height:412px;}
+    .bannershadow {width:750px;}
+}
+
+@media only screen and (min-width: 480px) and (max-width: 767px) {
+  .banner, .bannercontainer{width:470px; height:258px;}
+  .bannershadow {width:470px;}
+}
+
+@media only screen and (min-width: 0px) and (max-width: 479px) {
+   .banner, .bannercontainer{width:300px;height:165px;}
+   .bannershadow {width:300px; margin-top:-5px;}
+}</pre>
+</div>
+<p>
+	&nbsp;</p>
+<h5>
+	Calculate the Resopnsive sizes</h5>
+<div>
+	&nbsp;</div>
+<div>
+	Here we can give you a short calculating example. The Width of the Responsive container depending on you in the different browser views. the height can be calculated via a simple example:</div>
+<div>
+	&nbsp;</div>
+<div>
+	new width / original width * original height. So in our Examplce (step 1.) 750 / 890 * 490 == 413px</div>
+<div>
+	&nbsp;</div>
+<div>
+	&nbsp;</div>
+<h3>
+	FullWidth Layout</h3>
+<div>
+	This slider can go fullwidth too. We have added an index-fullwidth.html example for you in the zip.</div>
+<div>
+	&nbsp;</div>
+<div>
+	Please note the basic change in the markup.</div>
+<div>
+	&nbsp;</div>
+<div>
+	The surrounding containers are (only example, can be called differently)</div>
+<div>
+	&nbsp;</div>
+<div>
+	<pre class="prettyprint lang-html linenums">
+&lt;div class=&quot;fullwidthbanner-container&quot;&gt;
+   &lt;div class=&quot;fullwidthbanner&quot;&gt;...&lt;/div&gt;
+&lt;/div&gt;</pre>
+	<div>
+		&nbsp;</div>
+	<div>
+		&nbsp;</div>
+	<div>
+		The CSS is not splitted with Media-Queries but has a basic 100% value for width:</div>
+	<div>
+		&nbsp;</div>
+	<pre class="prettyprint lang-css linenums">
+ .fullwidthbanner-container{
+   width:100% !important;
+   position:relative;
+   padding:0;
+   max-height:450px !important;  // Same value as in OPTIONS the <strong>startheight</strong> parameter
+   overflow:hidden;
+}</pre>
+	<div>
+		&nbsp;</div>
+	<h3>
+		FullScreen Layout</h3>
+	<p>
+		You can use the Slider also in FullScreen mode. It will need to have the possiblity to use the full width of the screen, means do not wrap it in any boxed container. &nbsp;For Fullscreen simple use the following markups and styles:</p>
+	<p>
+		&nbsp;</p>
+	<p>
+		The markup could look like:</p>
+	<pre class="prettyprint lang-html linenums">
+&lt;div class=&quot;fullscreen-container&quot;&gt;
+    &lt;div class=&quot;fullscreenbanner&quot;&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</pre>
+	<div>
+		&nbsp;</div>
+	<p>
+		The Style has 100% width and height simple.&nbsp;</p>
+	<pre class="prettyprint lang-css linenums">
+.fullscreen-container {
+width:100% !important;
+position:relative;
+padding:0;
+height:100%;
+}</pre>
+	<div>
+		Dont forget to use the option fullScreen:&quot;on&quot; to use in the initialisation. &nbsp;If you wish to have an offset, which allows you to add i.e. a Menu over the fullscreen slider, just use the&nbsp;fullScreenOffsetContainer: option and set it to the container which wrapps the menu i.e</div>
+	<div>
+		&nbsp;</div>
+</div>
+<div>
+	&nbsp;</div>
+</section>
+<section id="api_functions_and_events">
+	<div class="page-header"><h3>API Functions and Events</h3><hr class="notop"></div>
+<div>
+	The slider offers a public API which you can use to control component inside the Slider from within your own scripts. To access this api, use the following code.</div>
+<div>
+	&nbsp;</div>
+<pre class="prettyprint lang-html linenums">
+var tpj=jQuery;
+tpj.noConflict();
+tpj(document).ready(function() {
+if (tpj.fn.cssOriginal!=undefined)
+    tpj.fn.css = tpj.fn.cssOriginal;
+    var api = tpj(&#39;.banner&#39;).revolution(
+    ....</pre>
+<div>
+	&nbsp;</div>
+<div class="alert alert-info">
+	You can see in the example index-responsive-API.html how to use the different functions, and how to get the trigered Events.</div>
+<div>
+	&nbsp;</div>
+<div>
+	Once this is done you may use any of the following functions:</div>
+<div>
+	&nbsp;</div>
+<ul>
+	<li>
+		api.revpause() - Stops the Timer and autoplay</li>
+	<li>
+		api.revresume() - Starts the Timer and resume to autoplay</li>
+	<li>
+		api.revprev() - Change to previous slide</li>
+	<li>
+		api.revnext() - Change to next slide</li>
+	<li>
+		api.revshowslide(n) - Change to the slide with index Nr. (n)</li>
+	<li>
+		api.revmaxslide() - Show the amount of slides</li>
+	<li>
+		api.revscroll() &nbsp;- Scrollt Body under the Slide in FullScreen mode</li>
+</ul>
+<div>
+	&nbsp;</div>
+<div>
+	Or you may use any of the following Events:</div>
+<div>
+	&nbsp;</div>
+<ul>
+	<li>
+		revolution.slide.onchange - Event is triggered when Slide has been rotated. data value will give you the current slide. i.e.&nbsp;<br>
+		<br>
+		<div>
+			api.bind(&quot;revolution.slide.onchange&quot;,function (e,data) {</div>
+		<div>
+			&nbsp; &nbsp; &nbsp;jQuery(&#39;#callbackinfo&#39;).html(&#39;Last Event: Slide Changed to &#39;+data.slideIndex);</div>
+		<div>
+			});<br>
+			&nbsp;</div>
+	</li>
+	<li>
+		revolution.slide.onpause - Event is triggered when Slider is on Pause</li>
+	<li>
+		revolution.slide.onresume - Event is triggered when Slider is back from Pause</li>
+	<li>
+		revolution.slide.onvideoplay - Event is triggered when YouTube or Vimeo Video has been started (only Online Mode !)</li>
+	<li>
+		revolution.slide.onvideostop - Event is triggered when YouTube or Vimeo Video has been stopped or Slide has been rotated (only Online Mode !)</li>
+	<li>
+		revolution.slide.onstop - - Event is triggered when slider has been stopped due the Loop and stop at Slide parameters</li>
+	<li>
+		revolution.slide.onbeforeswap - - Event is triggered when slider is going to change to next slide</li>
+	<li>
+		revolution.slide.onafterswap - - Event is triggered when slider has finnishded the change of the transition (full transition finnished)</li>
+	<li>
+		revolution.slide.onloaded - - Event is triggered when slider is loaded and it is prepared</li>
+</ul>
+</section>
+<section id="licenses">
+	<div class="page-header"><h3>Licenses</h3><hr class="notop"></div>
+<p>
+	Used Assets</p>
+<ul>
+	<li>
+		<div>
+			jQuery Transit - CSS3 transitions and transformations</div>
+		<div>
+			&nbsp;Copyright(c) 2011 Rico Sta. Cruz &lt;&#114;&#105;&#99;&#111;&#64;&#114;&#105;&#99;&#111;&#115;&#116;&#97;&#99;&#114;&#117;&#122;&#46;&#99;&#111;&#109;&gt;</div>
+		<div>
+			&nbsp;MIT Licensed.<br>
+			&nbsp;</div>
+	</li>
+	<li>
+		<div>
+			jQuery WaitForImages 1.4<br>
+			&nbsp;https://github.com/alexanderdickson/waitForImages<br>
+			Licensed under the MIT licenses.</div>
+	</li>
+</ul>
+<ul>
+	<li>
+		Template demo images licensed from <a href="http://us.fotolia.com">Fotolia</a> for preview usage. Please do not attempt to rip the images from the preview!</li>
+</ul>
+<ul>
+	<li>
+		<a href="http://www.netcu.de/jquery-touchwipe-iphone-ipad-library">Touch Wipe jQuery Plugin</a></li>
+</ul>
+<p>
+	&nbsp;</p>
+</section>
+<section id="support">
+	<div class="page-header"><h3>Support</h3><hr class="notop"></div>
+<p>
+	If you face problems with the installation or customization of our product please do not hesitate to contact us via our support ticket system:</p>
+<p>
+	<strong><a href="http://themepunch.ticksy.com">http://themepunch.ticksy.com</a></strong></p>
+</section>
+
+
+
+    <hr />
+
+<footer>
+    <p>Copyright ThemePunch 2013 made with the <a href="http://rxa.li/documenter">Documenter v2.0</a></p>
+</footer>
+
+</div><!-- /container --> 
+
+<!-- Le javascript
+    ================================================== --> 
+<!-- Placed at the end of the document so the pages load faster --> 
+<script>document.createElement('section');var duration='913',easing='easeOutQuart';</script>
+<script src="assets/js/jquery.js"></script> 
+<script src="assets/js/jquery.scrollTo.js"></script>
+<script src="assets/js/jquery.easing.js"></script>
+<script src="assets/js/scripts.js"></script> 
+<script src="assets/js/google-code-prettify/prettify.js"></script> 
+<script src="assets/js/bootstrap-min.js"></script> 
+</body>
+</html>

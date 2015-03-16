@@ -1,0 +1,19 @@
+/* search */
+.search-form-default {
+	margin: 0 0 25px;
+	background: #F8F8F8;
+	padding: 12px 14px;
+}
+.search-result-item {
+	margin-bottom: 30px;
+}
+.search-result-item h4 {
+	margin-bottom: 3px;
+}
+.search-link {
+	color: #999;
+	font-size: 12px;
+}
+.overflow-hidden {
+	overflow: hidden;
+}

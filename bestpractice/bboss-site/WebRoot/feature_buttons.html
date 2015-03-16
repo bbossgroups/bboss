@@ -1,0 +1,1453 @@
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
+<!--[if !IE]><!--> <html lang="en"> <!--<![endif]-->
+<!-- BEGIN HEAD -->
+<head>
+    <meta charset="utf-8" />
+    <title>Metronic Frotnend | Features - Buttons</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta content="" name="description" />
+    <meta content="" name="author" />
+
+   <!-- BEGIN GLOBAL MANDATORY STYLES -->          
+   <link href="assets/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+   <link href="assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+   <!-- END GLOBAL MANDATORY STYLES -->
+   
+   <!-- BEGIN PAGE LEVEL PLUGIN STYLES --> 
+   <link href="assets/plugins/fancybox/source/jquery.fancybox.css" rel="stylesheet" /> 
+   <link href="assets/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css"/>              
+   <!-- END PAGE LEVEL PLUGIN STYLES -->
+
+   <!-- BEGIN THEME STYLES --> 
+   <link href="assets/css/style-metronic.css" rel="stylesheet" type="text/css"/>
+   <link href="assets/css/style.css" rel="stylesheet" type="text/css"/>
+   <link href="assets/css/themes/blue.css" rel="stylesheet" type="text/css" id="style_color"/>
+   <link href="assets/css/style-responsive.css" rel="stylesheet" type="text/css"/>
+   <link href="assets/css/custom.css" rel="stylesheet" type="text/css"/>
+   <!-- END THEME STYLES -->
+
+   <link rel="shortcut icon" href="favicon.ico" />
+</head>
+<!-- END HEAD -->
+
+<!-- BEGIN BODY -->
+<body>
+	<!-- BEGIN STYLE CUSTOMIZER -->
+	<div class="color-panel hidden-sm">
+		<div class="color-mode-icons icon-color"></div>
+		<div class="color-mode-icons icon-color-close"></div>
+		<div class="color-mode">
+			<p>THEME COLOR</p>
+			<ul class="inline">
+				<li class="color-blue current color-default" data-style="blue"></li>
+				<li class="color-red" data-style="red"></li>
+				<li class="color-green" data-style="green"></li>
+				<li class="color-orange" data-style="orange"></li>
+			</ul>
+            <label>
+                <span>Header</span>
+                <select class="header-option form-control input-small">
+                    <option value="default" selected>Default</option>
+                    <option value="fixed">Fixed</option>
+                </select>
+            </label>
+		</div>
+	</div>
+	<!-- END BEGIN STYLE CUSTOMIZER -->    
+
+    <!-- BEGIN HEADER -->
+    <div class="header navbar navbar-default navbar-static-top">
+        <div class="container">
+            <div class="navbar-header">
+                <!-- BEGIN RESPONSIVE MENU TOGGLER -->
+                <button class="navbar-toggle btn navbar-btn" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <!-- END RESPONSIVE MENU TOGGLER -->
+                <!-- BEGIN LOGO (you can use logo image instead of text)-->
+                <a class="navbar-brand logo-v1" href="index.html">
+                    <img src="assets/img/logo_blue.png" id="logoimg" alt="">
+                </a>
+                <!-- END LOGO -->
+            </div>
+        
+            <!-- BEGIN TOP NAVIGATION MENU -->
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="0" data-close-others="false" href="#">
+                            Home
+                            <i class="fa fa-angle-down"></i>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="index.html">Home Default</a></li>
+                            <li><a href="page_home_fixed_header.html">Header Fixed</a></li>
+                            <li><a href="page_home2.html">Home with Top Bar</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="0" data-close-others="false" href="#">
+                            Pages
+                            <i class="fa fa-angle-down"></i>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="page_about.html">About Us</a></li>
+                            <li><a href="page_services.html">Services</a></li>
+                            <li><a href="page_prices.html">Prices</a></li>
+                            <li><a href="page_faq.html">FAQ</a></li>
+                            <li><a href="page_gallery.html">Gallery</a></li>
+                            <li><a href="page_search_result.html">Search Result</a></li>
+                            <li><a href="page_404.html">404</a></li>
+                            <li><a href="page_500.html">500</a></li>
+                            <li><a href="page_login.html">Login Page</a></li>
+                            <li><a href="page_signup.html">Signup Page</a></li>
+                            <li><a href="page_careers.html">Careers</a></li>
+                            <li><a href="page_contacts.html">Contact</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown active">
+                        <a class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="0" data-close-others="false" href="#">
+                            Features
+                            <i class="fa fa-angle-down"></i>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="feature_typography.html">Typography</a></li>
+                            <li class="active"><a href="feature_buttons.html">Buttons</a></li>
+                            <li><a href="feature_forms.html">Forms</a></li>
+                            <li><a href="feature_icons.html">Icons</a></li>
+                        </ul>
+                    </li>                        
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="0" data-close-others="false" href="#">
+                            Portfolio
+                            <i class="fa fa-angle-down"></i>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="portfolio_4.html">Portfolio 4</a></li>
+                            <li><a href="portfolio_3.html">Portfolio 3</a></li>
+                            <li><a href="portfolio_2.html">Portfolio 2</a></li>
+                            <li><a href="portfolio_item.html">Portfolio Item</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="0" data-close-others="false" href="#">
+                            Blog
+                            <i class="fa fa-angle-down"></i>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="blog.html">Blog Page</a></li>
+                            <li><a href="blog_item.html">Blog Item</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="http://www.keenthemes.com/preview/index.php?theme=metronic_admin&page=index.html" target="_blank">Admin Theme</a></li>
+					<li class="menu-search">
+                        <span class="sep"></span>
+                        <i class="fa fa-search search-btn"></i>
+
+                        <div class="search-box">
+                            <form action="#">
+                                <div class="input-group input-large">
+                                    <input class="form-control" type="text" placeholder="Search">
+                                    <span class="input-group-btn">
+                                        <button type="submit" class="btn theme-btn">Go</button>
+                                    </span>
+                                </div>
+                            </form>
+                        </div> 
+					</li>
+                </ul>                         
+            </div>
+            <!-- BEGIN TOP NAVIGATION MENU -->
+        </div>
+    </div>
+    <!-- END HEADER -->
+
+    <!-- BEGIN PAGE CONTAINER -->  
+    <div class="page-container">
+	
+        <!-- BEGIN BREADCRUMBS -->   
+        <div class="row breadcrumbs margin-bottom-40">
+            <div class="container">
+                <div class="col-md-4 col-sm-4">
+                    <h1>Buttons</h1>
+                </div>
+                <div class="col-md-8 col-sm-8">
+                    <ul class="pull-right breadcrumb">
+						<li><a href="index.html">Home</a></li>
+						<li><a href="">Features</a></li>
+						<li class="active">Buttons</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- END BREADCRUMBS -->		
+
+		<!-- BEGIN CONTAINER -->   
+		<div class="container min-hight">
+			<!-- TWO COLUMNS -->
+			<div class="row margin-bottom-40 buttons-page">
+				<!-- FIRST COLUMN -->
+				<div class="col-md-6 col-sm-6">					
+					<!-- BUTTONS -->
+						<h3>Buttons</h3>
+                        <div class="clearfix">
+                            <h4 class="block">Default Bootstrap Buttons(Customized to Match Theme Style)</h4>
+                            <!-- Standard gray button with gradient -->
+                            <button type="button" class="btn btn-default">Default</button>
+                            <!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
+                            <button type="button" class="btn btn-primary">Primary</button>
+                            <!-- Indicates a successful or positive action -->
+                            <button type="button" class="btn btn-success">Success</button>
+                            <!-- Contextual button for informational alert messages -->
+                            <button type="button" class="btn btn-info">Info</button>
+                            <!-- Indicates caution should be taken with this action -->
+                            <button type="button" class="btn btn-warning">Warning</button>
+                            <!-- Indicates a dangerous or potentially negative action -->
+                            <button type="button" class="btn btn-danger">Danger</button>
+                            <!-- Deemphasize a button by making it look like a link while maintaining button behavior -->
+                            <button type="button" class="btn btn-link">Link</button>
+                        </div>
+                        <div class="clearfix">
+                            <h4 class="block">Metronic Style Buttons</h4>
+                            <button type="button" class="btn default">Default</button>
+                            <button type="button" class="btn red">Red</button>
+                            <button type="button" class="btn blue">Blue</button>           
+                            <button type="button" class="btn green">Green</button>
+                            <button type="button" class="btn yellow">Yellow</button>
+                            <button type="button" class="btn purple">Purple</button>
+                            <button type="button" class="btn dark">Dark</button>
+                        </div>
+                        <div class="clearfix">
+                            <h4 class="block">Button Stripe</h4>
+                            <a href="#" class="btn default red-stripe">Red</a>
+                            <a href="#" class="btn default blue-stripe">Blue</a>           
+                            <a href="#" class="btn default green-stripe">Green</a>
+                            <a href="#" class="btn default yellow-stripe">Yellow</a>
+                            <a href="#" class="btn default purple-stripe">Purple</a>
+                            <a href="#" class="btn default green-stripe">Green</a>
+                            <a href="#" class="btn default dark-stripe">Dark</a>
+                        </div>
+                        <div class="clearfix">
+                            <h4 class="block">Disabled</h4>
+                            <a href="#" class="btn default disabled">Default</a>
+                            <a href="#" class="btn red disabled">Red</a>
+                            <a href="#" class="btn blue disabled">Blue</a>           
+                            <a href="#" class="btn green disabled">Green</a>
+                            <a href="#" class="btn yellow disabled">Yellow</a>
+                            <a href="#" class="btn purple disabled">Purple</a>
+                            <a href="#" class="btn dark disabled">Dark</a>
+                        </div>
+                        <div class="clearfix">
+                            <h4 class="block">Button Sizes</h4>
+                            <button type="button" class="btn default btn-lg">Large button</button>
+                            <button type="button" class="btn red">Default button</button>
+                            <button type="button" class="btn blue btn-sm">Small button</button>           
+                            <button type="button" class="btn green btn-xs">Extra small button</button>
+                        </div>
+                        <div class="clearfix">
+                            <h4 class="block">Button Tags</h4>
+                            <a href="#" class="btn default">Link</a>
+                            <button class="btn default">Button</button>
+                            <input type="button" class="btn default" value="Input">
+                            <input type="submit" class="btn default" value="Submit">
+                        </div>
+                        <div class="clearfix">
+                            <h4 class="block">Block Buttons</h4>
+                            <a href="#" class="btn default btn-block">Link</a>
+                            <button class="btn blue btn-block">Button</button>
+                            <input type="button" class="btn red btn-block" value="Input">
+                            <input type="submit" class="btn purple btn-block" value="Submit">
+                        </div>
+
+                        <h3>Icon Buttons</h3>
+                        <div class="tabbable portlet-tabs">
+                            <ul class="nav nav-tabs">
+                                <li class="active">
+                                    <a href="#dropdown_fontawesome" data-toggle="tab">Fontawesome</a>
+                                </li>
+                                <li class="">
+                                    <a href="#dropdown_glyphicon" data-toggle="tab">Glyphicon</a>
+                                </li>
+                                <li class="">
+                                    <a href="#buttons_metro" data-toggle="tab">Metro</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="dropdown_fontawesome">
+                                    <div class="clearfix">
+                                        <h4 class="block">Large Buttons with Font Awesome Icons</h4>
+                                        <a href="#" class="btn btn-lg default">Default <i class="fa fa-user"></i></a>
+                                        <a href="#" class="btn btn-lg red">Red <i class="fa fa-edit"></i></a>
+                                        <a href="#" class="btn btn-lg blue"><i class="fa fa-file-o"></i> Blue</a>           
+                                        <a href="#" class="btn btn-lg green">Green <i class="fa fa-font"></i></a>
+                                        <a href="#" class="btn btn-lg yellow">Yellow <i class="fa fa-search"></i></a>
+                                        <a href="#" class="btn btn-lg purple"><i class="fa fa-times"></i> Purple</a>
+                                        <a href="#" class="btn btn-lg green">Green <i class="fa fa-plus"></i></a>
+                                        <a href="#" class="btn btn-lg dark">Dark <i class="fa fa-link"></i></a>
+                                    </div>
+                                    <div class="clearfix">
+                                        <h4 class="block">Default Buttons with Font Awesome Icons</h4>
+                                        <a href="#" class="btn default">Default <i class="fa fa-user"></i></a>
+                                        <a href="#" class="btn red">Red <i class="fa fa-edit"></i></a>
+                                        <a href="#" class="btn blue"><i class="fa fa-file-o"></i> Blue</a>           
+                                        <a href="#" class="btn green">Green <i class="fa fa-font"></i></a>
+                                        <a href="#" class="btn yellow">Yellow <i class="fa fa-search"></i></a>
+                                        <a href="#" class="btn purple"><i class="fa fa-times"></i> Purple</a>
+                                        <a href="#" class="btn green">Green <i class="fa fa-plus"></i></a>
+                                        <a href="#" class="btn dark">Dark <i class="fa fa-link"></i></a>
+                                    </div>
+                                    <div class="clearfix">
+                                        <h4 class="block">Small Buttons with Font Awesome Icons</h4>
+                                        <a href="#" class="btn btn-sm default">Default <i class="fa fa-user"></i></a>
+                                        <a href="#" class="btn btn-sm red">Red <i class="fa fa-edit"></i></a>
+                                        <a href="#" class="btn btn-sm blue"><i class="fa fa-file-o"></i> Blue</a>           
+                                        <a href="#" class="btn btn-sm green">Green <i class="fa fa-font"></i></a>
+                                        <a href="#" class="btn btn-sm yellow">Yellow <i class="fa fa-search"></i></a>
+                                        <a href="#" class="btn btn-sm purple"><i class="fa fa-times"></i> Purple</a>
+                                        <a href="#" class="btn btn-sm green">Green <i class="fa fa-plus"></i></a>
+                                        <a href="#" class="btn btn-sm dark">Dark <i class="fa fa-link"></i></a>
+                                    </div>
+                                    <div class="clearfix">
+                                        <h4 class="block">Extra Small Buttons with Font Awesome Icons</h4>
+                                        <a href="#" class="btn btn-xs default">Default <i class="fa fa-user"></i></a>
+                                        <a href="#" class="btn btn-xs red">Red <i class="fa fa-edit"></i></a>
+                                        <a href="#" class="btn btn-xs blue"><i class="fa fa-file-o"></i> Blue</a>           
+                                        <a href="#" class="btn btn-xs green">Green <i class="fa fa-font"></i></a>
+                                        <a href="#" class="btn btn-xs yellow">Yellow <i class="fa fa-search"></i></a>
+                                        <a href="#" class="btn btn-xs purple"><i class="fa fa-times"></i> Purple</a>
+                                        <a href="#" class="btn btn-xs green">Green <i class="fa fa-plus"></i></a>
+                                        <a href="#" class="btn btn-xs dark">Dark <i class="fa fa-link"></i></a>
+                                    </div>
+                                    <div class="clearfix">
+                                        <h4 class="block">Font Awesome Icon Only Buttons</h4>
+                                        <a href="#" class="btn default"><i class="fa fa-user"></i></a>
+                                        <a href="#" class="btn red"><i class="fa fa-edit"></i></a>
+                                        <a href="#" class="btn blue"><i class="fa fa-file-o"></i></a>           
+                                        <a href="#" class="btn green"><i class="fa fa-font"></i></a>
+                                        <a href="#" class="btn yellow"><i class="fa fa-search"></i></a>
+                                        <a href="#" class="btn purple"><i class="fa fa-times"></i></a>
+                                        <a href="#" class="btn green"><i class="fa fa-plus"></i></a>
+                                        <a href="#" class="btn dark"><i class="fa fa-link"></i></a>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="dropdown_glyphicon">
+                                    <div class="clearfix">
+                                        <h4 class="block">Large Buttons with Font Awesome Icons</h4>
+                                        <a href="#" class="btn btn-lg default">Default <span class="glyphicon glyphicon-cog"></span></a>
+                                        <a href="#" class="btn btn-lg red">Red <span class="glyphicon glyphicon-calendar"></span></a>
+                                        <a href="#" class="btn btn-lg blue"><span class="glyphicon glyphicon-font"></span> Blue</a>           
+                                        <a href="#" class="btn btn-lg green">Green <span class="glyphicon glyphicon-gift"></span></a>
+                                        <a href="#" class="btn btn-lg yellow">Yellow <span class="glyphicon glyphicon-pencil"></span></a>
+                                        <a href="#" class="btn btn-lg purple"><span class="glyphicon glyphicon-tag"></span> Purple</a>
+                                        <a href="#" class="btn btn-lg green">Green <span class="glyphicon glyphicon-user"></span></a>
+                                        <a href="#" class="btn btn-lg dark">Dark <span class="glyphicon glyphicon-link"></span></a>
+                                    </div>
+                                    <div class="clearfix">
+                                        <h4 class="block">Default Buttons with Font Awesome Icons</h4>
+                                        <a href="#" class="btn default">Default <span class="glyphicon glyphicon-cog"></span></a>
+                                        <a href="#" class="btn red">Red <span class="glyphicon glyphicon-calendar"></span></a>
+                                        <a href="#" class="btn blue"><span class="glyphicon glyphicon-font"></span> Blue</a>           
+                                        <a href="#" class="btn green">Green <span class="glyphicon glyphicon-gift"></span></a>
+                                        <a href="#" class="btn yellow">Yellow <span class="glyphicon glyphicon-pencil"></span></a>
+                                        <a href="#" class="btn purple"><span class="glyphicon glyphicon-tag"></span> Purple</a>
+                                        <a href="#" class="btn green">Green <span class="glyphicon glyphicon-user"></span></a>
+                                        <a href="#" class="btn dark">Dark <span class="glyphicon glyphicon-link"></span></a>
+                                    </div>
+                                    <div class="clearfix">
+                                        <h4 class="block">Small Buttons with Font Awesome Icons</h4>
+                                        <a href="#" class="btn btn-sm default">Default <span class="glyphicon glyphicon-cog"></span></a>
+                                        <a href="#" class="btn btn-sm red">Red <span class="glyphicon glyphicon-calendar"></span></a>
+                                        <a href="#" class="btn btn-sm blue"><span class="glyphicon glyphicon-font"></span> Blue</a>           
+                                        <a href="#" class="btn btn-sm green">Green <span class="glyphicon glyphicon-gift"></span></a>
+                                        <a href="#" class="btn btn-sm yellow">Yellow <span class="glyphicon glyphicon-pencil"></span></a>
+                                        <a href="#" class="btn btn-sm purple"><span class="glyphicon glyphicon-tag"></span> Purple</a>
+                                        <a href="#" class="btn btn-sm green">Green <span class="glyphicon glyphicon-user"></span></a>
+                                        <a href="#" class="btn btn-sm dark">Dark <span class="glyphicon glyphicon-link"></span></a>
+                                    </div>
+                                    <div class="clearfix">
+                                        <h4 class="block">Extra Small Buttons with Font Awesome Icons</h4>
+                                        <a href="#" class="btn btn-xs default">Default <span class="glyphicon glyphicon-cog"></span></a>
+                                        <a href="#" class="btn btn-xs red">Red <span class="glyphicon glyphicon-calendar"></span></a>
+                                        <a href="#" class="btn btn-xs blue"><span class="glyphicon glyphicon-font"></span> Blue</a>           
+                                        <a href="#" class="btn btn-xs green">Green <span class="glyphicon glyphicon-gift"></span></a>
+                                        <a href="#" class="btn btn-xs yellow">Yellow <span class="glyphicon glyphicon-pencil"></span></a>
+                                        <a href="#" class="btn btn-xs purple"><span class="glyphicon glyphicon-tag"></span> Purple</a>
+                                        <a href="#" class="btn btn-xs green">Green <span class="glyphicon glyphicon-user"></span></a>
+                                        <a href="#" class="btn btn-xs dark">Dark <span class="glyphicon glyphicon-link"></span></a>
+                                    </div>
+                                    <div class="clearfix">
+                                        <h4 class="block">Font Awesome Icon Only Buttons</h4>
+                                        <a href="#" class="btn default"><span class="glyphicon glyphicon-cog"></span></a>
+                                        <a href="#" class="btn red"><span class="glyphicon glyphicon-calendar"></span></a>
+                                        <a href="#" class="btn blue"><span class="glyphicon glyphicon-font"></span></a>           
+                                        <a href="#" class="btn green"><span class="glyphicon glyphicon-gift"></span></a>
+                                        <a href="#" class="btn yellow"><span class="glyphicon glyphicon-pencil"></span></a>
+                                        <a href="#" class="btn purple"><span class="glyphicon glyphicon-tag"></span></a>
+                                        <a href="#" class="btn green"><span class="glyphicon glyphicon-user"></span></a>
+                                        <a href="#" class="btn dark"><span class="glyphicon glyphicon-link"></span></a>
+                                    </div>
+                                </div>
+                                <div class="tab-pane " id="buttons_metro">
+                                    <div class="clearfix">
+                                        <h4 class="block">Navigation Large Icons Buttons</h4>
+                                        <a href="#" class="btn btn-lg default m-icon-big">Submit <i class="m-icon-big-swapleft"></i></a>
+                                        <a href="#" class="btn btn-lg green m-icon-big">Submit <i class="m-icon-big-swapright m-icon-white"></i></a>
+                                        <a href="#" class="btn btn-lg blue m-icon-big">Submit <i class="m-icon-big-swapdown m-icon-white"></i></a>
+                                        <a href="#" class="btn btn-lg dark m-icon-big">Submit <i class="m-icon-big-swapup m-icon-white"></i></a>
+                                    </div>
+                                    <div class="clearfix">
+                                        <h4 class="block">Navigation Large Icons Only Buttons</h4>
+                                        <a href="#" class="btn btn-lg default m-icon-big m-icon-only"><i class="m-icon-big-swapleft"></i></a>
+                                        <a href="#" class="btn btn-lg green m-icon-big m-icon-only"><i class="m-icon-big-swapright m-icon-white"></i></a>
+                                        <a href="#" class="btn btn-lg blue m-icon-big m-icon-only"><i class="m-icon-big-swapdown m-icon-white"></i></a>
+                                        <a href="#" class="btn btn-lg dark m-icon-big m-icon-only"><i class="m-icon-big-swapup m-icon-white"></i></a>
+                                    </div>
+                                    <div class="clearfix">
+                                        <h4 class="block">Navigation Block Large Icons</h4>
+                                        <button class="btn blue btn-block btn-lg m-icon-big">Button <i class="m-icon-big-swapright m-icon-white"></i></button>
+                                        <a href="#" class="btn green btn-block btn-lg m-icon-big">Link <i class="m-icon-big-swapright m-icon-white"></i></a>
+                                    </div>
+                                    <div class="clearfix">
+                                        <h4 class="block">Navigation Defualt Icons Buttons</h4>
+                                        <a href="#" class="btn default m-icon">Submit <i class="m-icon-swapleft"></i></a>
+                                        <a href="#" class="btn green m-icon">Submit <i class="m-icon-swapright m-icon-white"></i></a>
+                                        <a href="#" class="btn blue m-icon">Submit <i class="m-icon-swapdown m-icon-white"></i></a>
+                                        <a href="#" class="btn dark m-icon">Submit <i class="m-icon-swapup m-icon-white"></i></a>
+                                    </div>
+                                    <div class="clearfix">
+                                        <h4 class="block">Navigation Defualt Icons Only Buttons</h4>
+                                        <a href="#" class="btn default m-icon m-icon-only"><i class="m-icon-swapleft"></i></a>
+                                        <a href="#" class="btn green m-icon m-icon-only"><i class="m-icon-swapright m-icon-white"></i></a>
+                                        <a href="#" class="btn blue m-icon m-icon-only"><i class="m-icon-swapdown m-icon-white"></i></a>
+                                        <a href="#" class="btn dark m-icon m-icon-only"><i class="m-icon-swapup m-icon-white"></i></a>
+                                    </div>
+                                    <div class="clearfix">
+                                        <h4 class="block">Navigation Block Defualt Icons</h4>
+                                        <button class="btn blue btn-block m-icon">Button <i class="m-icon-swapright m-icon-white"></i></button>
+                                        <a href="#" class="btn green btn-block m-icon">Link <i class="m-icon-swapright m-icon-white"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h3>Font Awesome Styled Buttons</h3>
+                        <a href="#" class="icon-btn">
+                            <i class="fa fa-group"></i>
+                            <div>Users</div>
+                            <span class="badge badge-important">2</span>
+                        </a>
+                        <a href="#" class="icon-btn">
+                            <i class="fa fa-barcode"></i>
+                            <div>Products</div>
+                            <span class="badge badge-success">4</span>
+                        </a>
+                        <a href="#" class="icon-btn">
+                            <i class="fa fa-bar-chart-o"></i>
+                            <div>Reports</div>
+                        </a>
+                        <a href="#" class="icon-btn">
+                            <i class="fa fa-sitemap"></i>
+                            <div>Categories</div>
+                        </a>
+                        <a href="#" class="icon-btn">
+                            <i class="fa fa-calendar"></i>
+                            <div>Calendar</div>
+                            <span class="badge badge-success">4</span>
+                        </a>
+                        <a href="#" class="icon-btn">
+                            <i class="fa fa-envelope"></i>
+                            <div>Inbox</div>
+                            <span class="badge badge-info">12</span>
+                        </a>
+                        <a href="#" class="icon-btn">
+                            <i class="fa fa-bullhorn"></i>
+                            <div>Notification</div>
+                            <span class="badge badge-important">3</span>
+                        </a>
+                        <a href="#" class="icon-btn">
+                            <i class="fa fa-map-marker"></i>
+                            <div>Locations</div>
+                        </a>
+                        <a href="#" class="icon-btn">
+                            <i class="fa fa-money"><i></i></i>
+                            <div>Finance</div>
+                        </a>
+                        <a href="#" class="icon-btn">
+                            <i class="fa fa-plane"></i>
+                            <div>Projects</div>
+                            <span class="badge badge-info">21</span>
+                        </a>
+                        <a href="#" class="icon-btn">
+                            <i class="fa fa-thumbs-up"></i>
+                            <div>Feedback</div>
+                            <span class="badge badge-info">2</span>
+                        </a>
+                        <a href="#" class="icon-btn">
+                            <i class="fa fa-cloud"></i>
+                            <div>Servers</div>
+                            <span class="badge badge-important">2</span>
+                        </a>
+                        <a href="#" class="icon-btn">
+                            <i class="fa fa-globe"></i>
+                            <div>Regions</div>
+                        </a>
+                        <a href="#" class="icon-btn">
+                            <i class="fa fa-heart-o"></i>
+                            <div>Popularity</div>
+                            <span class="badge badge-info">221</span>
+                        </a>
+
+                        <h3>Social Icons</h3>
+                        <ul class="social-icons">
+                            <li><a href="#" data-original-title="amazon" class="amazon"></a></li>
+                            <li><a href="#" data-original-title="behance" class="behance"></a></li>
+                            <li><a href="#" data-original-title="blogger" class="blogger"></a></li>
+                            <li><a href="#" data-original-title="deviantart" class="deviantart"></a></li>
+                            <li><a href="#" data-original-title="dribbble" class="dribbble"></a></li>
+                            <li><a href="#" data-original-title="dropbox" class="dropbox"></a></li>
+                            <li><a href="#" data-original-title="facebook" class="facebook"></a></li>
+                            <li><a href="#" data-original-title="forrst" class="forrst"></a></li>
+                            <li><a href="#" data-original-title="github" class="github"></a></li>
+                            <li><a href="#" data-original-title="Goole Plus" class="googleplus"></a></li>
+                            <li><a href="#" data-original-title="jolicloud" class="jolicloud"></a></li>
+                            <li><a href="#" data-original-title="last-fm" class="last-fm"></a></li>
+                            <li><a href="#" data-original-title="linkedin" class="linkedin"></a></li>
+                            <li><a href="#" data-original-title="picasa" class="picasa"></a></li>
+                            <li><a href="#" data-original-title="pintrest" class="pintrest"></a></li>
+                            <li><a href="#" data-original-title="rss" class="rss"></a></li>
+                            <li><a href="#" data-original-title="skype" class="skype"></a></li>
+                            <li><a href="#" data-original-title="spotify" class="spotify"></a></li>
+                            <li><a href="#" data-original-title="stumbleupon" class="stumbleupon"></a></li>
+                            <li><a href="#" data-original-title="tumblr" class="tumblr"></a></li>
+                            <li><a href="#" data-original-title="twitter" class="twitter"></a></li>
+                            <li><a href="#" data-original-title="vimeo" class="vimeo"></a></li>
+                            <li><a href="#" data-original-title="wordpress" class="wordpress"></a></li>
+                            <li><a href="#" data-original-title="xing" class="xing"></a></li>
+                            <li><a href="#" data-original-title="yahoo" class="yahoo"></a></li>
+                            <li><a href="#" data-original-title="youtube" class="youtube"></a></li>
+                            <li><a href="#" data-original-title="vk" class="vk"></a></li>
+                            <li><a href="#" data-original-title="instagram" class="instagram"></a></li>
+                        </ul>
+
+                        <h3>Social Icons (Colored)</h3>
+                        <ul class="social-icons  social-icons-color">
+                            <li><a href="#" data-original-title="amazon" class="amazon"></a></li>
+                            <li><a href="#" data-original-title="behance" class="behance"></a></li>
+                            <li><a href="#" data-original-title="blogger" class="blogger"></a></li>
+                            <li><a href="#" data-original-title="deviantart" class="deviantart"></a></li>
+                            <li><a href="#" data-original-title="dribbble" class="dribbble"></a></li>
+                            <li><a href="#" data-original-title="dropbox" class="dropbox"></a></li>
+                            <li><a href="#" data-original-title="facebook" class="facebook"></a></li>
+                            <li><a href="#" data-original-title="forrst" class="forrst"></a></li>
+                            <li><a href="#" data-original-title="github" class="github"></a></li>
+                            <li><a href="#" data-original-title="Goole Plus" class="googleplus"></a></li>
+                            <li><a href="#" data-original-title="jolicloud" class="jolicloud"></a></li>
+                            <li><a href="#" data-original-title="last-fm" class="last-fm"></a></li>
+                            <li><a href="#" data-original-title="linkedin" class="linkedin"></a></li>
+                            <li><a href="#" data-original-title="picasa" class="picasa"></a></li>
+                            <li><a href="#" data-original-title="pintrest" class="pintrest"></a></li>
+                            <li><a href="#" data-original-title="rss" class="rss"></a></li>
+                            <li><a href="#" data-original-title="skype" class="skype"></a></li>
+                            <li><a href="#" data-original-title="spotify" class="spotify"></a></li>
+                            <li><a href="#" data-original-title="stumbleupon" class="stumbleupon"></a></li>
+                            <li><a href="#" data-original-title="tumblr" class="tumblr"></a></li>
+                            <li><a href="#" data-original-title="twitter" class="twitter"></a></li>
+                            <li><a href="#" data-original-title="vimeo" class="vimeo"></a></li>
+                            <li><a href="#" data-original-title="wordpress" class="wordpress"></a></li>
+                            <li><a href="#" data-original-title="xing" class="xing"></a></li>
+                            <li><a href="#" data-original-title="yahoo" class="yahoo"></a></li>
+                            <li><a href="#" data-original-title="youtube" class="youtube"></a></li>
+                            <li><a href="#" data-original-title="vk" class="vk"></a></li>
+                            <li><a href="#" data-original-title="instagram" class="instagram"></a></li>
+                        </ul>					
+				</div>
+				<!-- END FIRST COLUMN -->
+
+				<!-- SECOND COLUMN -->
+				<div class="col-md-6 col-sm-6">				
+						<h3>Button Groups</h3>
+                        <div class="clearfix">
+                            <h4 class="block">Basic Example</h4>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default">Left</button>
+                                <button type="button" class="btn btn-default">Middle</button>
+                                <button type="button" class="btn btn-default">Right</button>
+                            </div>
+                            <div class="btn-group btn-group-solid">
+                                <button type="button" class="btn red">Left</button>
+                                <button type="button" class="btn yellow">Middle</button>
+                                <button type="button" class="btn green">Right</button>
+                            </div>
+                        </div>
+                        <div class="clearfix">
+                            <h4 class="block">Button Toolbar</h4>
+                            <div class="btn-toolbar margin-bottom-10">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-default">1</button>
+                                    <button type="button" class="btn btn-default">2</button>
+                                    <button type="button" class="btn btn-default">3</button>
+                                    <button type="button" class="btn btn-default">4</button>
+                                </div>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-default">5</button>
+                                    <button type="button" class="btn btn-default">6</button>
+                                    <button type="button" class="btn btn-default">7</button>
+                                </div>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-default">8</button>
+                                </div>
+                            </div>
+                            <div class="btn-toolbar">
+                                <div class="btn-group btn-group-solid">
+                                    <button type="button" class="btn red">1</button>
+                                    <button type="button" class="btn green">2</button>
+                                    <button type="button" class="btn blue">3</button>
+                                    <button type="button" class="btn yellow">4</button>
+                                </div>
+                                <div class="btn-group btn-group-solid">
+                                    <button type="button" class="btn purple">5</button>
+                                    <button type="button" class="btn dark">6</button>
+                                    <button type="button" class="btn default">7</button>
+                                </div>
+                                <div class="btn-group btn-group-solid">
+                                    <button type="button" class="btn red">8</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfix">
+                            <h4 class="block">Button Group Sizing</h4>
+                            <div class="btn-toolbar">
+                                <div class="btn-group btn-group-lg btn-group-solid margin-bottom-10">
+                                    <button type="button" class="btn red">Left</button>
+                                    <button type="button" class="btn green">Middle</button>
+                                    <button type="button" class="btn blue">Right</button>
+                                </div>
+                            </div>
+                            <div class="btn-toolbar margin-bottom-10">
+                                <div class="btn-group btn-group-solid">
+                                    <button type="button" class="btn red">Left</button>
+                                    <button type="button" class="btn green">Middle</button>
+                                    <button type="button" class="btn blue">Right</button>
+                                </div>
+                            </div>
+                            <div class="btn-toolbar margin-bottom-10">
+                                <div class="btn-group btn-group-sm btn-group-solid">
+                                    <button type="button" class="btn red">Left</button>
+                                    <button type="button" class="btn green">Middle</button>
+                                    <button type="button" class="btn blue">Right</button>
+                                </div>
+                            </div>
+                            <div class="btn-toolbar margin-bottom-10">
+                                <div class="btn-group btn-group-xs btn-group-solid">
+                                    <button type="button" class="btn red">Left</button>
+                                    <button type="button" class="btn green">Middle</button>
+                                    <button type="button" class="btn blue">Right</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfix">
+                            <h4 class="block">Nesting Button Group</h4>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default"><i class="fa fa-user"></i> Profile</button>
+                                <button type="button" class="btn btn-default"><i class="fa fa-cogs"></i> Settings</button>
+                                <button type="button" class="btn btn-default"><i class="fa fa-bullhorn"></i> Feeds</button>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                    <i class="fa fa-ellipsis-horizontal"></i> More
+                                    <i class="fa fa-angle-down"></i>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="#">Dropdown link</a></li>
+                                        <li><a href="#">Dropdown link</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="clearfix margin-bottom-10"></div>
+                            <div class="btn-group btn-group-solid">
+                                <button type="button" class="btn red"><i class="fa fa-user"></i> Profile</button>
+                                <button type="button" class="btn green"><i class="fa fa-cogs"></i> Settings</button>
+                                <button type="button" class="btn purple"><i class="fa fa-bullhorn"></i> Feeds</button>
+                                <div class="btn-group btn-group-solid">
+                                    <button type="button" class="btn blue dropdown-toggle" data-toggle="dropdown">
+                                    <i class="fa fa-ellipsis-horizontal"></i> More
+                                    <i class="fa fa-angle-down"></i>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="#">Dropdown link</a></li>
+                                        <li><a href="#">Dropdown link</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfix">
+                            <h4 class="block">Vertical variation</h4>
+                            <div class="btn-group-vertical margin-right-10">
+                                <button type="button" class="btn btn-default">Button</button>
+                                <button type="button" class="btn btn-default">Button</button>
+                                <div class="btn-group">
+                                    <button  type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                    Dropdown
+                                    <i class="fa fa-angle-down"></i>
+                                    </button>
+                                    <ul class="dropdown-menu" role="menu" aria-labelledby="btnGroupVerticalDrop1">
+                                        <li><a href="#">Dropdown link</a></li>
+                                        <li><a href="#">Dropdown link</a></li>
+                                    </ul>
+                                </div>
+                                <button type="button" class="btn btn-default">Button</button>
+                                <button type="button" class="btn btn-default">Button</button>
+                                <div class="btn-group">
+                                    <button  type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                    Dropdown
+                                    <i class="fa fa-angle-down"></i>
+                                    </button>
+                                    <ul class="dropdown-menu" role="menu" aria-labelledby="btnGroupVerticalDrop2">
+                                        <li><a href="#">Dropdown link</a></li>
+                                        <li><a href="#">Dropdown link</a></li>
+                                    </ul>
+                                </div>
+                                <div class="btn-group">
+                                    <button  type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                    Dropdown
+                                    <i class="fa fa-angle-down"></i>
+                                    </button>
+                                    <ul class="dropdown-menu" role="menu" >
+                                        <li><a href="#">Dropdown link</a></li>
+                                        <li><a href="#">Dropdown link</a></li>
+                                    </ul>
+                                </div>
+                                <div class="btn-group">
+                                    <button  type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                    Dropdown
+                                    <i class="fa fa-angle-down"></i>
+                                    </button>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li><a href="#">Dropdown link</a></li>
+                                        <li><a href="#">Dropdown link</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="btn-group-vertical btn-group-solid">
+                                <button type="button" class="btn blue">Button</button>
+                                <button type="button" class="btn green">Button</button>
+                                <div class="btn-group">
+                                    <button  type="button" class="btn yellow dropdown-toggle" data-toggle="dropdown">
+                                    Dropdown
+                                    <i class="fa fa-angle-down"></i>
+                                    </button>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li><a href="#">Dropdown link</a></li>
+                                        <li><a href="#">Dropdown link</a></li>
+                                    </ul>
+                                </div>
+                                <button type="button" class="btn red">Button</button>
+                                <button type="button" class="btn dark">Button</button>
+                                <div class="btn-group">
+                                    <button  type="button" class="btn default dropdown-toggle" data-toggle="dropdown">
+                                    Dropdown
+                                    <i class="fa fa-angle-down"></i>
+                                    </button>
+                                    <ul class="dropdown-menu" role="menu" >
+                                        <li><a href="#">Dropdown link</a></li>
+                                        <li><a href="#">Dropdown link</a></li>
+                                    </ul>
+                                </div>
+                                <div class="btn-group">
+                                    <button  type="button" class="btn purple dropdown-toggle" data-toggle="dropdown">
+                                    Dropdown
+                                    <i class="fa fa-angle-down"></i>
+                                    </button>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li><a href="#">Dropdown link</a></li>
+                                        <li><a href="#">Dropdown link</a></li>
+                                    </ul>
+                                </div>
+                                <div class="btn-group">
+                                    <button  type="button" class="btn yellow dropdown-toggle" data-toggle="dropdown">
+                                    Dropdown
+                                    <i class="fa fa-angle-down"></i>
+                                    </button>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li><a href="#">Dropdown link</a></li>
+                                        <li><a href="#">Dropdown link</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfix">
+                            <h4 class="block">Justified Link Variation</h4>
+                            <div class="btn-group btn-group-justified">
+                                <a href="#" class="btn btn-default">Left</a>
+                                <a href="#" class="btn btn-default">Middle</a>
+                                <a href="#" class="btn btn-default">Right</a>
+                            </div>
+                            <div class="clearfix margin-bottom-10"></div>
+                            <div class="btn-group btn-group btn-group-justified">
+                                <a href="#" class="btn red">Left</a>
+                                <a href="#" class="btn blue">Middle</a>
+                                <a href="#" class="btn green">Right</a>
+                            </div>
+                        </div>
+
+                        <h3>Button Dropdowns</h3>
+                        <div class="clearfix">
+                            <h4 class="block">Default Bootstrap Style</h4>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default">Default</button>
+                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><i class="fa fa-angle-down"></i></button>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="#">Action</a></li>
+                                    <li><a href="#">Another action</a></li>
+                                    <li><a href="#">Something else here</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#">Separated link</a></li>
+                                </ul>
+                            </div>
+                            <!-- /btn-group -->
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-primary">Primary</button>
+                                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"><i class="fa fa-angle-down"></i></button>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="#">Action</a></li>
+                                    <li><a href="#">Another action</a></li>
+                                    <li><a href="#">Something else here</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#">Separated link</a></li>
+                                </ul>
+                            </div>
+                            <!-- /btn-group -->
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-success">Success</button>
+                                <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown"><i class="fa fa-angle-down"></i></button>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="#">Action</a></li>
+                                    <li><a href="#">Another action</a></li>
+                                    <li><a href="#">Something else here</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#">Separated link</a></li>
+                                </ul>
+                            </div>
+                            <!-- /btn-group -->
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-info">Info</button>
+                                <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown"><i class="fa fa-angle-down"></i></button>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="#">Action</a></li>
+                                    <li><a href="#">Another action</a></li>
+                                    <li><a href="#">Something else here</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#">Separated link</a></li>
+                                </ul>
+                            </div>
+                            <!-- /btn-group -->
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-warning">Warning</button>
+                                <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown"><i class="fa fa-angle-down"></i></button>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="#">Action</a></li>
+                                    <li><a href="#">Another action</a></li>
+                                    <li><a href="#">Something else here</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#">Separated link</a></li>
+                                </ul>
+                            </div>
+                            <!-- /btn-group -->
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-danger">Danger</button>
+                                <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown"><i class="fa fa-angle-down"></i></button>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="#">Action</a></li>
+                                    <li><a href="#">Another action</a></li>
+                                    <li><a href="#">Something else here</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#">Separated link</a></li>
+                                </ul>
+                            </div>
+                            <!-- /btn-group -->
+                        </div>
+                        <div class="clearfix">
+                            <h4 class="block">Metronic Style</h4>
+                            <div class="btn-group">
+                                <button type="button" class="btn default">Default</button>
+                                <button type="button" class="btn default dropdown-toggle" data-toggle="dropdown"><i class="fa fa-angle-down"></i></button>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="#">Action</a></li>
+                                    <li><a href="#">Another action</a></li>
+                                    <li><a href="#">Something else here</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#">Separated link</a></li>
+                                </ul>
+                            </div>
+                            <!-- /btn-group -->
+                            <div class="btn-group">
+                                <button type="button" class="btn blue">Blue</button>
+                                <button type="button" class="btn blue dropdown-toggle" data-toggle="dropdown"><i class="fa fa-angle-down"></i></button>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="#">Action</a></li>
+                                    <li><a href="#">Another action</a></li>
+                                    <li><a href="#">Something else here</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#">Separated link</a></li>
+                                </ul>
+                            </div>
+                            <!-- /btn-group -->
+                            <div class="btn-group">
+                                <button type="button" class="btn green">Green</button>
+                                <button type="button" class="btn green dropdown-toggle" data-toggle="dropdown"><i class="fa fa-angle-down"></i></button>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="#">Action</a></li>
+                                    <li><a href="#">Another action</a></li>
+                                    <li><a href="#">Something else here</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#">Separated link</a></li>
+                                </ul>
+                            </div>
+                            <!-- /btn-group -->
+                            <div class="btn-group">
+                                <button type="button" class="btn red">Red</button>
+                                <button type="button" class="btn red dropdown-toggle" data-toggle="dropdown"><i class="fa fa-angle-down"></i></button>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="#">Action</a></li>
+                                    <li><a href="#">Another action</a></li>
+                                    <li><a href="#">Something else here</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#">Separated link</a></li>
+                                </ul>
+                            </div>
+                            <!-- /btn-group -->
+                            <div class="btn-group">
+                                <button type="button" class="btn yellow">Yellow</button>
+                                <button type="button" class="btn yellow dropdown-toggle" data-toggle="dropdown"><i class="fa fa-angle-down"></i></button>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="#">Action</a></li>
+                                    <li><a href="#">Another action</a></li>
+                                    <li><a href="#">Something else here</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#">Separated link</a></li>
+                                </ul>
+                            </div>
+                            <!-- /btn-group -->
+                            <div class="btn-group">
+                                <button type="button" class="btn dark">Dark</button>
+                                <button type="button" class="btn dark dropdown-toggle" data-toggle="dropdown"><i class="fa fa-angle-down"></i></button>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="#">Action</a></li>
+                                    <li><a href="#">Another action</a></li>
+                                    <li><a href="#">Something else here</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#">Separated link</a></li>
+                                </ul>
+                            </div>
+                            <!-- /btn-group -->
+                            <div class="btn-group">
+                                <button type="button" class="btn purple">Purple</button>
+                                <button type="button" class="btn purple dropdown-toggle" data-toggle="dropdown"><i class="fa fa-angle-down"></i></button>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="#">Action</a></li>
+                                    <li><a href="#">Another action</a></li>
+                                    <li><a href="#">Something else here</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#">Separated link</a></li>
+                                </ul>
+                            </div>
+                            <!-- /btn-group -->
+                        </div>
+                        <div class="clearfix">
+                            <h4 class="block">Sizing</h4>
+                            <!-- Large button group -->
+                            <div class="btn-group">
+                                <button class="btn btn-default btn-lg dropdown-toggle" type="button" data-toggle="dropdown">
+                                Large button <i class="fa fa-angle-down"></i>
+                                </button>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="#">Action</a></li>
+                                    <li><a href="#">Another action</a></li>
+                                    <li><a href="#">Something else here</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#">Separated link</a></li>
+                                </ul>
+                            </div>
+                            <!-- Small button group -->
+                            <div class="btn-group">
+                                <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
+                                Small button <i class="fa fa-angle-down"></i>
+                                </button>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="#">Action</a></li>
+                                    <li><a href="#">Another action</a></li>
+                                    <li><a href="#">Something else here</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#">Separated link</a></li>
+                                </ul>
+                            </div>
+                            <!-- Extra small button group -->
+                            <div class="btn-group">
+                                <button class="btn btn-default btn-xs dropdown-toggle" type="button" data-toggle="dropdown">
+                                Extra small button <i class="fa fa-angle-down"></i>
+                                </button>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="#">Action</a></li>
+                                    <li><a href="#">Another action</a></li>
+                                    <li><a href="#">Something else here</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#">Separated link</a></li>
+                                </ul>
+                            </div>
+                            <div class="clearfix margin-bottom-10"></div>
+                            <!-- Large button group -->
+                            <div class="btn-group">
+                                <button class="btn red btn-lg dropdown-toggle" type="button" data-toggle="dropdown">
+                                Large button <i class="fa fa-angle-down"></i>
+                                </button>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="#">Action</a></li>
+                                    <li><a href="#">Another action</a></li>
+                                    <li><a href="#">Something else here</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#">Separated link</a></li>
+                                </ul>
+                            </div>
+                            <!-- Small button group -->
+                            <div class="btn-group">
+                                <button class="btn blue btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
+                                Small button <i class="fa fa-angle-down"></i>
+                                </button>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="#">Action</a></li>
+                                    <li><a href="#">Another action</a></li>
+                                    <li><a href="#">Something else here</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#">Separated link</a></li>
+                                </ul>
+                            </div>
+                            <!-- Extra small button group -->
+                            <div class="btn-group">
+                                <button class="btn green btn-xs dropdown-toggle" type="button" data-toggle="dropdown">
+                                Extra small button <i class="fa fa-angle-down"></i>
+                                </button>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="#">Action</a></li>
+                                    <li><a href="#">Another action</a></li>
+                                    <li><a href="#">Something else here</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#">Separated link</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="clearfix">
+                            <h4 class="block">Dropup</h4>
+                            <div class="btn-toolbar margin-bottom-10">
+                                <div class="btn-group dropup">
+                                    <button type="button" class="btn btn-default">Dropup</button>
+                                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><i class="fa fa-angle-up"></i></button>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li><a href="#">Action</a></li>
+                                        <li><a href="#">Another action</a></li>
+                                        <li><a href="#">Something else here</a></li>
+                                        <li class="divider"></li>
+                                        <li><a href="#">Separated link</a></li>
+                                    </ul>
+                                </div>
+                                <!-- /btn-group -->
+                                <div class="btn-group dropup">
+                                    <button type="button" class="btn btn-primary">Right dropup</button>
+                                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"><i class="fa fa-angle-up"></i></button>
+                                    <ul class="dropdown-menu pull-right" role="menu">
+                                        <li><a href="#">Action</a></li>
+                                        <li><a href="#">Another action</a></li>
+                                        <li><a href="#">Something else here</a></li>
+                                        <li class="divider"></li>
+                                        <li><a href="#">Separated link</a></li>
+                                    </ul>
+                                </div>
+                                <!-- /btn-group -->
+                            </div>
+                            <div class="btn-toolbar">
+                                <div class="btn-group dropup">
+                                    <button type="button" class="btn blue">Dropup</button>
+                                    <button type="button" class="btn blue dropdown-toggle" data-toggle="dropdown"><i class="fa fa-angle-up"></i></button>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li><a href="#">Action</a></li>
+                                        <li><a href="#">Another action</a></li>
+                                        <li><a href="#">Something else here</a></li>
+                                        <li class="divider"></li>
+                                        <li><a href="#">Separated link</a></li>
+                                    </ul>
+                                </div>
+                                <!-- /btn-group -->
+                                <div class="btn-group dropup">
+                                    <button type="button" class="btn green">Right dropup</button>
+                                    <button type="button" class="btn green dropdown-toggle" data-toggle="dropdown"><i class="fa fa-angle-up"></i></button>
+                                    <ul class="dropdown-menu pull-right" role="menu">
+                                        <li><a href="#">Action</a></li>
+                                        <li><a href="#">Another action</a></li>
+                                        <li><a href="#">Something else here</a></li>
+                                        <li class="divider"></li>
+                                        <li><a href="#">Separated link</a></li>
+                                    </ul>
+                                </div>
+                                <!-- /btn-group -->
+                            </div>
+                        </div>
+                        <div class="clearfix">
+                            <h4 class="block">Hoveralbe Dropdowns</h4>
+                            <div class="btn-toolbar margin-bottom-10">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-default">Dropdown</button>
+                                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="1000" data-close-others="true"><i class="fa fa-angle-down"></i></button>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li><a href="#">Action</a></li>
+                                        <li><a href="#">Another action</a></li>
+                                        <li><a href="#">Something else here</a></li>
+                                        <li class="divider"></li>
+                                        <li><a href="#">Separated link</a></li>
+                                    </ul>
+                                </div>
+                                <!-- /btn-group -->
+                                <div class="btn-group dropup">
+                                    <button type="button" class="btn btn-primary">Dropup</button>
+                                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="1000" data-close-others="true"><i class="fa fa-angle-up"></i></button>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li><a href="#">Action</a></li>
+                                        <li><a href="#">Another action</a></li>
+                                        <li><a href="#">Something else here</a></li>
+                                        <li class="divider"></li>
+                                        <li><a href="#">Separated link</a></li>
+                                    </ul>
+                                </div>
+                                <!-- /btn-group -->
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="1000" data-close-others="true">
+                                    Dropup <i class="fa fa-angle-down"></i>
+                                    </button>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li><a href="#">Action</a></li>
+                                        <li><a href="#">Another action</a></li>
+                                        <li><a href="#">Something else here</a></li>
+                                        <li class="divider"></li>
+                                        <li><a href="#">Separated link</a></li>
+                                    </ul>
+                                </div>
+                                <!-- /btn-group -->
+                            </div>
+                            <div class="btn-toolbar">
+                                <div class="btn-group">
+                                    <button type="button" class="btn blue">Dropdown</button>
+                                    <button type="button" class="btn blue dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="1000" data-close-others="true"><i class="fa fa-angle-down"></i></button>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li><a href="#">Action</a></li>
+                                        <li><a href="#">Another action</a></li>
+                                        <li><a href="#">Something else here</a></li>
+                                        <li class="divider"></li>
+                                        <li><a href="#">Separated link</a></li>
+                                    </ul>
+                                </div>
+                                <!-- /btn-group -->
+                                <div class="btn-group dropup">
+                                    <button type="button" class="btn green">Dropup</button>
+                                    <button type="button" class="btn green dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="1000" data-close-others="true">
+                                    <i class="fa fa-angle-up"></i></button>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li><a href="#">Action</a></li>
+                                        <li><a href="#">Another action</a></li>
+                                        <li><a href="#">Something else here</a></li>
+                                        <li class="divider"></li>
+                                        <li><a href="#">Separated link</a></li>
+                                    </ul>
+                                </div>
+                                <!-- /btn-group -->
+                                <div class="btn-group">
+                                    <button type="button" class="btn yellow dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="1000" data-close-others="true">
+                                    Dropdown <i class="fa fa-angle-down"></i>
+                                    </button>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li><a href="#">Action</a></li>
+                                        <li><a href="#">Another action</a></li>
+                                        <li><a href="#">Something else here</a></li>
+                                        <li class="divider"></li>
+                                        <li><a href="#">Separated link</a></li>
+                                    </ul>
+                                </div>
+                                <!-- /btn-group -->
+                            </div>
+                        </div>
+                        <div class="clearfix">
+                            <!-- /btn-group -->
+                            <div class="btn-group dropup">
+                                <button type="button" class="btn green">Dropup</button>
+                                <button type="button" class="btn green dropdown-toggle" data-toggle="dropdown"><i class="fa fa-angle-up"></i></button>
+                                <div class="dropdown-menu hold-on-click dropdown-checkboxes" role="menu">
+                                    <label><input type="checkbox">Option 1</label>
+                                    <label><input type="checkbox" checked>Option 2</label>
+                                    <label><input type="checkbox">Option 3</label>
+                                    <label><input type="checkbox" checked>Option 4</label>
+                                    <label><input type="checkbox">Option 5</label>
+                                </div>
+                            </div>
+                            <!-- /btn-group -->
+                            <div class="clearfix margin-top-5">
+                                <span class="label label-success">NOTE:</span>&nbsp;
+                                By adding <code>hold-on-click</code> class you can avoid closing the dropdown on click
+                            </div>
+                        </div>
+
+                        <h3>Button States</h3>
+                                <h4>Loading State</h4>
+                                <div class="clearfix">
+                                    <button type="button" data-loading-text="Loading..." class="demo-loading-btn btn btn-primary">
+                                      Loading state
+                                    </button>
+
+                                    <button type="button" data-loading-text="Loading..." class="demo-loading-btn btn btn-default">
+                                      Loading state
+                                    </button>
+
+                                    <button type="button" data-loading-text="Loading..." class="demo-loading-btn btn red">
+                                      Loading state
+                                    </button>
+
+
+                                    <button type="button" data-loading-text="Loading..." class="demo-loading-btn btn blue">
+                                      Loading state
+                                    </button>
+                                </div>
+
+                                <h4>Single Toggle</h4>
+                                <div class="clearfix">
+                                    <button type="button" class="btn btn-primary" data-toggle="button">
+                                        Single toggle
+                                    </button>
+
+                                    <button type="button" class="btn btn-default" data-toggle="button">
+                                        Single toggle
+                                    </button>
+
+                                    <button type="button" class="btn red" data-toggle="button">
+                                        Single toggle
+                                    </button>
+
+                                    <button type="button" class="btn blue" data-toggle="button">
+                                        Single toggle
+                                    </button>
+                                </div>
+
+                                <h4>Checkbox</h4>
+                                <div class="clearfix">
+                                    <div class="btn-group" data-toggle="buttons">
+                                      <label class="btn default active">
+                                        <input type="checkbox" class="toggle"> Option 1
+                                      </label>
+                                      <label class="btn default">
+                                        <input type="checkbox" class="toggle"> Option 2
+                                      </label>
+                                      <label class="btn default">
+                                        <input type="checkbox" class="toggle"> Option 3
+                                      </label>
+                                    </div>
+                                </div>
+                                <div class="clearfix">
+                                    <div class="btn-group" data-toggle="buttons">
+                                      <label class="btn btn-default">
+                                        <input type="checkbox" class="toggle"> Option 1
+                                      </label>
+                                      <label class="btn btn-default  active">
+                                        <input type="checkbox" class="toggle"> Option 2
+                                      </label>
+                                      <label class="btn btn-default">
+                                        <input type="checkbox" class="toggle"> Option 3
+                                      </label>
+                                    </div>
+                                </div>
+
+                                <h4>Radio</h4>
+                                <div class="clearfix">
+                                    <div class="btn-group" data-toggle="buttons">
+                                      <label class="btn blue active">
+                                        <input type="radio" class="toggle"> Option 1
+                                      </label>
+                                      <label class="btn blue">
+                                        <input type="radio" class="toggle"> Option 2
+                                      </label>
+                                      <label class="btn blue">
+                                        <input type="radio" class="toggle"> Option 3
+                                      </label>
+                                    </div>
+                                </div>
+                                <div class="clearfix">
+                                    <div class="btn-group" data-toggle="buttons">
+                                      <label class="btn btn-default active">
+                                        <input type="radio" class="toggle"> Option 1
+                                      </label>
+                                      <label class="btn btn-default">
+                                        <input type="radio" class="toggle"> Option 2
+                                      </label>
+                                      <label class="btn btn-default">
+                                        <input type="radio" class="toggle"> Option 3
+                                      </label>
+                                    </div>
+                                </div>
+				</div>
+				<!-- END SECOND COLUMN -->				
+			</div>
+			<!-- END TWO COLUMNS -->
+		</div>
+		<!-- END CONTAINER -->
+
+	</div>
+    <!-- END BEGIN PAGE CONTAINER -->  
+	
+    <!-- BEGIN FOOTER -->
+    <div class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 col-sm-4 space-mobile">
+                    <!-- BEGIN ABOUT -->                    
+                    <h2>About</h2>
+                    <p class="margin-bottom-30">Vivamus imperdiet felis consectetur onec eget orci adipiscing nunc. Pellentesque fermentum, ante ac interdum ullamcorper.</p>
+                    <div class="clearfix"></div>                    
+                    <!-- END ABOUT -->          
+
+                    <h2>Photos Stream</h2>
+                    <!-- BEGIN BLOG PHOTOS STREAM -->
+                    <div class="blog-photo-stream margin-bottom-30">
+                        <ul class="list-unstyled">
+                            <li><a href="#"><img src="assets/img/people/img5-small.jpg" alt=""></a></li>
+                            <li><a href="#"><img src="assets/img/works/img1.jpg" alt=""></a></li>
+                            <li><a href="#"><img src="assets/img/people/img4-large.jpg" alt=""></a></li>
+                            <li><a href="#"><img src="assets/img/works/img6.jpg" alt=""></a></li>
+                            <li><a href="#"><img src="assets/img/pics/img1-large.jpg" alt=""></a></li>
+                            <li><a href="#"><img src="assets/img/pics/img2-large.jpg" alt=""></a></li>
+                            <li><a href="#"><img src="assets/img/works/img3.jpg" alt=""></a></li>
+                            <li><a href="#"><img src="assets/img/people/img2-large.jpg" alt=""></a></li>
+                            <li><a href="#"><img src="assets/img/works/img2.jpg" alt=""></a></li>
+                            <li><a href="#"><img src="assets/img/works/img5.jpg" alt=""></a></li>
+                        </ul>                    
+                    </div>
+                    <!-- END BLOG PHOTOS STREAM -->                              
+                </div>
+                <div class="col-md-4 col-sm-4 space-mobile">
+                    <!-- BEGIN CONTACTS -->                                    
+                    <h2>Contact Us</h2>
+                    <address class="margin-bottom-40">
+                        Loop, Inc. <br />
+                        795 Park Ave, Suite 120 <br />
+                        San Francisco, CA 94107 <br />
+                        P: (234) 145-1810 <br />
+                        Email: <a href="mailto:info@keenthemes.com">info@keenthemes.com</a>                        
+                    </address>
+                    <!-- END CONTACTS -->                                    
+
+                    <!-- BEGIN SUBSCRIBE -->                                    
+                    <h2>Monthly Newsletter</h2>  
+                    <p>Subscribe to our newsletter and stay up to date with the latest news and deals!</p>
+                    <form action="#" class="form-subscribe">
+                        <div class="input-group input-large">
+                            <input class="form-control" type="text">
+                            <span class="input-group-btn">
+                                <button class="btn theme-btn" type="button">SUBSCRIBE</button>
+                            </span>
+                        </div>
+                    </form>
+
+                    <!-- END SUBSCRIBE -->                                    
+                </div>
+                <div class="col-md-4 col-sm-4">
+                    <!-- BEGIN TWITTER BLOCK -->                                                    
+                    <h2>Latest Tweets</h2>
+                    <dl class="dl-horizontal f-twitter">
+                        <dt><i class="fa fa-twitter"></i></dt>
+                        <dd>
+                            <a href="#">@keenthemes</a>
+                            Imperdiet condimentum diam dolor lorem sit consectetur adipiscing
+                            <span>3 min ago</span>
+                        </dd>
+                    </dl>                    
+                    <dl class="dl-horizontal f-twitter">
+                        <dt><i class="fa fa-twitter"></i></dt>
+                        <dd>
+                            <a href="#">@keenthemes</a>
+                            Sequat ipsum dolor onec eget orci fermentum condimentum lorem sit consectetur adipiscing
+                            <span>8 min ago</span>
+                        </dd>
+                    </dl>                    
+                    <dl class="dl-horizontal f-twitter">
+                        <dt><i class="fa fa-twitter"></i></dt>
+                        <dd>
+                            <a href="#">@keenthemes</a>
+                            Remonde sequat ipsum dolor lorem sit consectetur adipiscing
+                            <span>12 min ago</span>
+                        </dd>
+                    </dl>                    
+                    <dl class="dl-horizontal f-twitter">
+                        <dt><i class="fa fa-twitter"></i></dt>
+                        <dd>
+                            <a href="#">@keenthemes</a>
+                            Pilsum dolor lorem sit consectetur adipiscing orem sequat
+                            <span>16 min ago</span>
+                        </dd>
+                    </dl>                    
+                    <!-- END TWITTER BLOCK -->                                                                        
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END FOOTER -->
+
+    <!-- BEGIN COPYRIGHT -->
+    <div class="copyright">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-sm-8">
+                    <p>
+                        <span class="margin-right-10">2013 © Metronic. ALL Rights Reserved.</span> 
+                        <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a>
+                    </p>
+                </div>
+                <div class="col-md-4 col-sm-4">
+                    <ul class="social-footer">
+                        <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                        <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                        <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
+                        <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                        <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                        <li><a href="#"><i class="fa fa-skype"></i></a></li>
+                        <li><a href="#"><i class="fa fa-github"></i></a></li>
+                        <li><a href="#"><i class="fa fa-youtube"></i></a></li>
+                        <li><a href="#"><i class="fa fa-dropbox"></i></a></li>
+                    </ul>                
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END COPYRIGHT -->
+
+    <!-- Load javascripts at bottom, this will reduce page load time -->
+    <!-- BEGIN CORE PLUGINS(REQUIRED FOR ALL PAGES) -->
+    <!--[if lt IE 9]>
+    <script src="assets/plugins/respond.min.js"></script>  
+    <![endif]-->  
+    <script src="assets/plugins/jquery-1.10.2.min.js" type="text/javascript"></script>
+    <script src="assets/plugins/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
+    <script src="assets/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>      
+    <script type="text/javascript" src="assets/plugins/hover-dropdown.js"></script>
+    <script type="text/javascript" src="assets/plugins/back-to-top.js"></script>    
+    <!-- END CORE PLUGINS -->
+
+    <!-- BEGIN PAGE LEVEL JAVASCRIPTS(REQUIRED ONLY FOR CURRENT PAGE) -->
+    <script type="text/javascript" src="assets/plugins/fancybox/source/jquery.fancybox.pack.js"></script>  
+    <script src="assets/plugins/uniform/jquery.uniform.min.js" type="text/javascript" ></script>
+    <script src="assets/scripts/app.js"></script>  
+    <script type="text/javascript">
+        jQuery(document).ready(function() {
+            App.init();     
+            App.initUniform();                 
+        });
+    </script>
+    <!-- END PAGE LEVEL JAVASCRIPTS -->
+</body>
+<!-- END BODY -->
+</html>

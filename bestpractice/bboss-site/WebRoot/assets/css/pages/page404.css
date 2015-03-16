@@ -1,0 +1,25 @@
+/* 404 page */
+.page-404 {
+ 	text-align: center;
+ 	padding-top: 100px;
+ 	padding-bottom: 108px;
+}
+.page-404 .number {
+	position: relative;
+	top: 35px;
+	display: inline-block;
+	letter-spacing: -10px;
+	margin-top: 0px;
+	margin-bottom: 10px;
+	line-height: 128px;
+	font-size: 128px;
+	font-weight: 300;
+	color: #0DA3E2;
+	text-align: right;
+}
+.page-404 .details {
+	margin-left: 40px;
+	display: inline-block;
+	padding-top: 0px;
+	text-align: left;
+}

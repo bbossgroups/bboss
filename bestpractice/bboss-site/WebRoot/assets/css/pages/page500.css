@@ -1,0 +1,20 @@
+/* 500 page option #1 */
+.page-500 {
+	text-align: center;
+	padding-top: 132px;
+	padding-bottom: 100px;
+}
+.page-500 .number {  
+	display: inline-block;
+	letter-spacing: -10px;
+	line-height: 128px;
+	font-size: 128px;
+	font-weight: 300;
+	color: #0DA3E2;
+	text-align: right;
+}
+.page-500 .details {
+	margin-left: 40px;
+	display: inline-block;
+	text-align: left;
+}
