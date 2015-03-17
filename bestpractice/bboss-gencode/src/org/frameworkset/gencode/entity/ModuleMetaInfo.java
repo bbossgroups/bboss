@@ -27,6 +27,10 @@ public class ModuleMetaInfo {
 	 */
 	private String packagePath;
 	private String tableName;
+	/**
+	 * 表主键名称，对应tableinfo表中的表名称
+	 */
+	private String pkname;
 	private boolean genWebservice;
 	private boolean genHessian;
 	private String hessianServicePort;
@@ -237,6 +241,12 @@ public class ModuleMetaInfo {
 	}
 	public void setModuleCNName(String moduleCNName) {
 		this.moduleCNName = moduleCNName;
+	}
+	public String getPkname() {
+		return pkname;
+	}
+	public void setPkname(String pkname) {
+		this.pkname = pkname;
 	}
 
 }

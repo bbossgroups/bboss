@@ -5,7 +5,13 @@
 TransactionManager tm = new TransactionManager();
 try {
 	tm.begin();
+#if($primaryKeyField.type.equals("long"))
+	executor.deleteByLongKeys("deleteByKey", $paramName);
+#elseif($primaryKeyField.type.equals("short"))	
+	executor.deleteByShortKeys("deleteByKey", $paramName);
+#else	
 	executor.deleteByKeys("deleteByKey", $paramName);
+#end	
 	tm.commit();
 } catch (Throwable e) {
 	

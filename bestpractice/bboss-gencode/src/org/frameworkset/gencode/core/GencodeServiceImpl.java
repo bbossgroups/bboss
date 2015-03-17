@@ -299,6 +299,10 @@ public class GencodeServiceImpl {
 				{
 					Annotation anno = new Annotation();
 					anno.setName("PrimaryKey");
+					if(SimpleStringUtil.isNotEmpty(this.moduleMetaInfo.getPkname()))
+					{
+						anno.addAnnotationParam("pkname", this.moduleMetaInfo.getPkname(),AnnoParam.V_STRING);
+					}
 					f.addAnnotation(anno);
 					isp = true;
 				}
@@ -1265,7 +1269,7 @@ public class GencodeServiceImpl {
 		imports.add("java.util.List");
 		imports.add("java.util.Map");
 		imports.add("com.frameworkset.util.StringUtil");
-		imports.add("org.frameworkset.demo." + this.moduleMetaInfo.getModuleName()+".service.*");
+		imports.add(this.moduleMetaInfo.getPackagePath() + "." + this.moduleMetaInfo.getModuleName()+".service.*");
 		imports.add("org.frameworkset.util.annotations.ResponseBody");
 		imports.add("org.frameworkset.web.servlet.ModelMap");
 		imports.add("org.frameworkset.util.annotations.PagerParam");

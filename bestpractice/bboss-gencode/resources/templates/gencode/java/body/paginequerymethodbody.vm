@@ -19,10 +19,10 @@ try {
     #if($conditionFields && $conditionFields.size() > 0)
     	#foreach($cf in $conditionFields)
     		#if($cf.like)
-    		     $cf.type value = conditions.get$cf.mfieldName$start$end;
-    		     if(value != null && !value.equals(""))
+    		     $cf.type $cf.fieldName = conditions.get$cf.mfieldName$start$end;
+    		     if(${cf.fieldName} != null && !${cf.fieldName}.equals(""))
     		     {
-    		     	conditions.set$cf.mfieldName$start"%"+value+"%"$end;
+    		     	conditions.set$cf.mfieldName$start"%"+$cf.fieldName+"%"$end;
     		     }
     		#end
     	#end

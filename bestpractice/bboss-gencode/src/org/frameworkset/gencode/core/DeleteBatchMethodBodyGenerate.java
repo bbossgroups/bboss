@@ -14,7 +14,7 @@ public class DeleteBatchMethodBodyGenerate implements MethodBodyGenerate {
 			String encodecharset, String exception,int componentType,GencodeServiceImpl gencodeService) throws Exception {
 		 Template addmethodbodytempalte = VelocityUtil.getTemplate("gencode/java/body/deletebatchmethodbody.vm");
 		 VelocityContext context = new VelocityContext();
-		 
+		 context.put("primaryKeyField", gencodeService.getPrimaryField());
 		 
 		 context.put("entityName", entityName);
 		 context.put("paramName", paramName);
