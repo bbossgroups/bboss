@@ -65,7 +65,32 @@ public class TestGencodeServiceImpl {
 	@Test
 	public void testGenOraclePrimayKeyEntityCode() throws Exception
 	{
-		 
+		 /**
+		  * -- Create table
+create table TA_AUTHO_AREA
+(
+  AREA_ID          NUMBER not null,
+  PARENT_AREA_CODE VARCHAR2(12) not null,
+  AREA_NAME        VARCHAR2(20) not null,
+  AREA_CODE        VARCHAR2(12) not null,
+  SORT_NUM         NUMBER
+);
+
+-- Add comments to the columns 
+comment on column TA_AUTHO_AREA.AREA_ID
+  is '行政区划ID';
+comment on column TA_AUTHO_AREA.PARENT_AREA_CODE
+  is '父行政区划编码';
+comment on column TA_AUTHO_AREA.AREA_NAME
+  is '行政区划名称';
+comment on column TA_AUTHO_AREA.AREA_CODE
+  is '行政区划编码';
+comment on column TA_AUTHO_AREA.SORT_NUM
+  is '排序号';
+-- Create/Recreate primary, unique and foreign key constraints 
+alter table TA_AUTHO_AREA
+  add constraint PK_TA_AUTHO_AREA primary key (AREA_ID);
+		  */
 		GencodeServiceImpl gencodeService = new GencodeServiceImpl();
 		ModuleMetaInfo moduleMetaInfo = new ModuleMetaInfo();
 		moduleMetaInfo.setTableName("ta_autho_area");//指定表名，根据表结构来生成所有的文件
