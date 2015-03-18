@@ -15,7 +15,7 @@
 		path:update${entityName}="/${moduleName}/${entityVarName}Edit.jsp"
 		path:add${entityName}="/${moduleName}/${entityVarName}Add.jsp"
 		path:get${entityName}="/${moduleName}/${entityVarName}View.jsp"
-		f:service="attr:${moduleName}.${entityVarName}Service"
+		f:${entityVarName}Service="attr:${moduleName}.${entityVarName}Service"
 		class="${controlClass}" >
 	</property>
 	

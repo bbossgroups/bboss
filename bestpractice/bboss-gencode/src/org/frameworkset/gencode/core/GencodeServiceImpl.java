@@ -1375,6 +1375,10 @@ import com.frameworkset.util.StringUtil;
 	public String getPrimaryKeyName() {
 		return primaryKeyName;
 	}
+	
+	public String getPrimaryKeyColumnName() {
+		return this.primaryField != null?this.primaryField.getColumnname():this.getPrimaryKeyName();
+	}
 
 	public List<Field> getSortFields() {
 		return sortFields;

@@ -17,7 +17,7 @@ public class ToAddMethodBodyGenerate implements MethodBodyGenerate {
 		Template addmethodbodytempalte = VelocityUtil.getTemplate("gencode/java/body/toadd.vm");
 		 VelocityContext context = new VelocityContext();
 		 
-		 
+		 context.put("entityName", entityName);
 		 
 		 String body = GencodeServiceImpl.writetostring(context,addmethodbodytempalte,encodecharset);
 		 method.setBody(body);

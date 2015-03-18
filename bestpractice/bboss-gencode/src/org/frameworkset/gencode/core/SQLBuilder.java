@@ -44,7 +44,7 @@ public class SQLBuilder  extends AbstractGencode{
 		else if(sql.getOptype().equals( Constant.delete))
 		{
 			StringBuilder builder = new StringBuilder();
-			builder.append("delete from ").append(tableName).append(" where ").append(gencodeService.getPrimaryKeyName()).append("=?");
+			builder.append("delete from ").append(tableName).append(" where ").append(gencodeService.getPrimaryKeyColumnName()).append("=?");
 			
 			sql.setSql(builder.toString());
 		}
@@ -65,13 +65,13 @@ public class SQLBuilder  extends AbstractGencode{
 				
 			}
 			if(gencodeService.getPrimaryField() != null)
-				builder.append(" where ").append(gencodeService.getPrimaryField().getColumnname()).append("=#[").append(this.gencodeService.getPrimaryField().getFieldName()).append("]");
+				builder.append(" where ").append(gencodeService.getPrimaryKeyColumnName()).append("=#[").append(this.gencodeService.getPrimaryKeyName()).append("]");
 			sql.setSql(builder.toString());
 		}
 		else if(sql.getOptype().equals( Constant.get))
 		{
 			StringBuilder builder = new StringBuilder();
-			builder.append("select * from ").append(tableName).append(" where ").append(gencodeService.getPrimaryKeyName()).append("=?");
+			builder.append("select * from ").append(tableName).append(" where ").append(gencodeService.getPrimaryKeyColumnName()).append("=?");
 			
 			sql.setSql(builder.toString());
 		}
