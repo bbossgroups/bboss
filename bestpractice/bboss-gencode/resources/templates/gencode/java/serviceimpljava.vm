@@ -22,7 +22,7 @@ import $import;
  
 /**
  * <p>Title: $classname</p> 
- * <p>Description: $description</p>
+ * <p>Description: #if($description && !$description.equals(""))$description#else${moduleCNName}管理#if($componentType == 1)业务组件类#else控制器类#end#end</p>
  * <p>$company</p>
  * <p>Copyright (c) 2007</p>
  * @Date $gendate

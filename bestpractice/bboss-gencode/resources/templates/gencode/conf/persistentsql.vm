@@ -17,7 +17,8 @@
  *
  *
  * Title: $filename
- * Description: $description
+ * Description: #if($description && !$description.equals(""))$description#else${moduleCNName}管理sql配置文件#end
+ 
  * Company:$company
  * Copyright (c) 2015
  * @Date $gendate

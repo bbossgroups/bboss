@@ -1,7 +1,7 @@
 <properties>
 
 	<!-- 
-		描述:初始化一个控制器${entityName}Controller，并将所有关联的service注入到此控制器中。并以别名的形式定义好跳转页面。
+		描述:初始化${moduleCNName}管理控制器${entityName}Controller，并将所有关联的${moduleCNName}管理service注入到此控制器中。并以别名的形式定义好跳转页面。
 	    author:$author
 		CopyRight:$company
 		版本:$version 

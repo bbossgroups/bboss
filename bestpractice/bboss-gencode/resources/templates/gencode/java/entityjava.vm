@@ -21,7 +21,7 @@ import $import;
  #end
 /**
  * <p>Title: $classname</p> 
- * <p>Description: $description</p>
+ * <p>Description: #if($description && !$description.equals(""))$description#else${moduleCNName}管理#if($iscondition)查询条件类#else实体类#end#end</p>
  * <p>$company</p>
  * <p>Copyright (c) 2007</p>
  * @Date $gendate

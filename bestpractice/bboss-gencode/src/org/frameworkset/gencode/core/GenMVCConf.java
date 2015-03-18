@@ -33,7 +33,7 @@ public class GenMVCConf extends AbstractGencode{
 			 context.put("serviceClass", gencodeService.getServiceClass());
 			 context.put("controlClass", gencodeService.getControlClass());
 			 
-			 
+			 context.put("moduleCNName", gencodeService.getModuleMetaInfo().getModuleCNName());
 			 context.put("moduleName", gencodeService.getModuleMetaInfo().getModuleName());
 			 context.put("entityVarName", gencodeService.getEntityParamName());
 			 context.put("entityName", gencodeService.getEntityName());

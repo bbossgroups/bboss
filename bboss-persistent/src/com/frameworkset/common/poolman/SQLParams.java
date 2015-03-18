@@ -927,6 +927,10 @@ public class SQLParams
 										value = (int)_value;
 									else  if(type == Integer.class)
 										value = new Integer((int)_value);
+									else if(type == Long.class)
+										value = new Long(_value);
+									else 
+										value = _value;
 								}
 								else 
 									value = DBUtil.getNextStringPrimaryKey(con,dbname,pkname);

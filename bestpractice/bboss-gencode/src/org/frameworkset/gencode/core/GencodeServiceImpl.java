@@ -368,7 +368,7 @@ public class GencodeServiceImpl {
 			 VelocityContext context = new VelocityContext();
 			
 			 context.put("sqls", this.sqls);
-			 context.put("description",entityParamName+" sql配置文件");
+			 context.put("description",this.moduleMetaInfo.getModuleCNName()+"管理sql配置文件");
 			 context.put("company", this.moduleMetaInfo.getCompany());
 			 context.put("gendate", this.moduleMetaInfo.getDate());
 			 context.put("author", this.moduleMetaInfo.getAuthor());
@@ -465,13 +465,13 @@ public class GencodeServiceImpl {
 			
 			
  
-			 genEntity(  entityName,  this.moduleMetaInfo.getDate(),  this.moduleMetaInfo.getVersion(),this.moduleMetaInfo.getAuthor(),this.moduleMetaInfo.getCompany(),"服务实体类",entity);
-			 genConditionEntity(  conditionEntityName,  this.moduleMetaInfo.getDate(),  this.moduleMetaInfo.getVersion(),this.moduleMetaInfo.getAuthor(),this.moduleMetaInfo.getCompany(),"查询条件实体类",conditionEntity);
-			 genServiceInf(  entityName + "Service",this.moduleMetaInfo.getDate(),this.moduleMetaInfo.getVersion(),this.moduleMetaInfo.getAuthor(),this.moduleMetaInfo.getCompany(),"服务管理接口", serviceInf);
-			 genException(entityName + "Exception",this.moduleMetaInfo.getDate(),this.moduleMetaInfo.getVersion(),this.moduleMetaInfo.getAuthor(),this.moduleMetaInfo.getCompany(),"异常处理类",exception);
+			 genEntity(  entityName,  this.moduleMetaInfo.getDate(),  this.moduleMetaInfo.getVersion(),this.moduleMetaInfo.getAuthor(),this.moduleMetaInfo.getCompany(),this.moduleMetaInfo.getModuleCNName()+"管理服务实体类",entity);
+			 genConditionEntity(  conditionEntityName,  this.moduleMetaInfo.getDate(),  this.moduleMetaInfo.getVersion(),this.moduleMetaInfo.getAuthor(),this.moduleMetaInfo.getCompany(),this.moduleMetaInfo.getModuleCNName()+"管理查询条件实体类",conditionEntity);
+			 genServiceInf(  entityName + "Service",this.moduleMetaInfo.getDate(),this.moduleMetaInfo.getVersion(),this.moduleMetaInfo.getAuthor(),this.moduleMetaInfo.getCompany(),this.moduleMetaInfo.getModuleCNName()+"管理服务接口", serviceInf);
+			 genException(entityName + "Exception",this.moduleMetaInfo.getDate(),this.moduleMetaInfo.getVersion(),this.moduleMetaInfo.getAuthor(),this.moduleMetaInfo.getCompany(),this.moduleMetaInfo.getModuleCNName()+"管理异常处理类",exception);
 			 String serviceInfName = entityName + "Service";
-			 genServiceImpl(entityName + "ServiceImpl",serviceInfName,this.moduleMetaInfo.getDate(),this.moduleMetaInfo.getVersion(),this.moduleMetaInfo.getAuthor(),this.moduleMetaInfo.getCompany(),"业务处理类",serviceImpl);
-			 genActionCode(entityName+"Controller",null,serviceInfName, this.moduleMetaInfo.getDate(),this.moduleMetaInfo.getVersion(),this.moduleMetaInfo.getAuthor(),this.moduleMetaInfo.getCompany(),"控制器处理类",controller);
+			 genServiceImpl(entityName + "ServiceImpl",serviceInfName,this.moduleMetaInfo.getDate(),this.moduleMetaInfo.getVersion(),this.moduleMetaInfo.getAuthor(),this.moduleMetaInfo.getCompany(),this.moduleMetaInfo.getModuleCNName()+"管理业务处理类",serviceImpl);
+			 genActionCode(entityName+"Controller",null,serviceInfName, this.moduleMetaInfo.getDate(),this.moduleMetaInfo.getVersion(),this.moduleMetaInfo.getAuthor(),this.moduleMetaInfo.getCompany(),this.moduleMetaInfo.getModuleCNName()+"管理控制器处理类",controller);
 			 
 		} catch (Exception e) {
 			log.error("gen java source file failed:",e);
@@ -495,7 +495,8 @@ public class GencodeServiceImpl {
 		 context.put("gendate", date);
 		 context.put("author", author);
 		 context.put("version", version);
-	 
+		 context.put("iscondition", false);
+		 context.put("moduleCNName",this.moduleMetaInfo.getModuleCNName());
 		 writFile(context,entitytempalte,entity,this.moduleMetaInfo.getEncodecharset());
 		
 	}
@@ -528,7 +529,8 @@ public class GencodeServiceImpl {
 		 context.put("gendate", date);
 		 context.put("author", author);
 		 context.put("version", version);
-	 
+		 context.put("iscondition", true);
+		 context.put("moduleCNName",this.moduleMetaInfo.getModuleCNName());
 		 writFile(context,entitytempalte,entity,this.moduleMetaInfo.getEncodecharset());
 		
 	}
@@ -551,7 +553,7 @@ public class GencodeServiceImpl {
 		 context.put("gendate", date);
 		 context.put("author", author);
 		 context.put("version", version);
-		
+		 context.put("moduleCNName",this.moduleMetaInfo.getModuleCNName());
 		 List<Method> methods = getMethods(0);
 		 context.put("methods", methods);
 	 
@@ -595,7 +597,9 @@ public class GencodeServiceImpl {
 		 context.put("gendate", date);
 		 context.put("author", author);
 		 context.put("version", version);
-		
+		 context.put("componentType",1);
+		 context.put("moduleCNName",this.moduleMetaInfo.getModuleCNName());
+		 
 		 List<Method> methods = getMethods(1);
 		 context.put("methods", methods);
 		 
@@ -624,7 +628,8 @@ public class GencodeServiceImpl {
 		 context.put("gendate", date);
 		 context.put("author", author);
 		 context.put("version", version);
-		
+		 context.put("componentType",2);
+		 context.put("moduleCNName",this.moduleMetaInfo.getModuleCNName());
 		 List<Method> methods = getMethods(2);
 		 context.put("methods", methods);
 		 context.put("conditionFields", this.conditions);
@@ -761,18 +766,22 @@ public class GencodeServiceImpl {
 		get.setReturntype("String");		
 		params = new ArrayList<MethodParam>();
 		param = new MethodParam();
-		
+		String defaultSort = null;
+		String defaultSortField = null;
 		if(primaryField != null)
 		{
 			param.setType(primaryField.getType());
 			param.setName(primaryField.getFieldName());
+			defaultSort = primaryField.getColumnname();
+			
 		}
 		else
 		{
 			param.setType("String");
 			param.setName("id");
+			defaultSort = "id";
 		}
-		String defaultSort = param.getName();
+		defaultSortField = param.getName();
 		params.add(param);
 		param = new MethodParam();
 		param.setName("model");
@@ -781,7 +790,7 @@ public class GencodeServiceImpl {
 		get.setExceptions(exceptions);		
 		get.setParams(params);
 		
-		setMethodBody(get,Constant.get,entityName,defaultSort,this.moduleMetaInfo.getEncodecharset(),exceptionName,Constant.component_type_actionimpl);
+		setMethodBody(get,Constant.get,entityName,defaultSortField,this.moduleMetaInfo.getEncodecharset(),exceptionName,Constant.component_type_actionimpl);
 		
 		methods.add(get);
 		
@@ -879,7 +888,7 @@ public class GencodeServiceImpl {
 		toUpdate.setExceptions(exceptions);		
 		toUpdate.setParams(params);
 		
-		setMethodBody(toUpdate,Constant.toUpdate,entityName,defaultSort,this.moduleMetaInfo.getEncodecharset(),exceptionName,Constant.component_type_actionimpl);
+		setMethodBody(toUpdate,Constant.toUpdate,entityName,defaultSortField,this.moduleMetaInfo.getEncodecharset(),exceptionName,Constant.component_type_actionimpl);
 		
 		methods.add(toUpdate);
 		
@@ -890,7 +899,7 @@ public class GencodeServiceImpl {
 		
 		toAdd.setParams(params);
 		
-		setMethodBody(toAdd,Constant.toAdd,entityName,defaultSort,this.moduleMetaInfo.getEncodecharset(),exceptionName,Constant.component_type_actionimpl);
+		setMethodBody(toAdd,Constant.toAdd,entityName,defaultSortField,this.moduleMetaInfo.getEncodecharset(),exceptionName,Constant.component_type_actionimpl);
 		
 		methods.add(toAdd);
 		
@@ -901,7 +910,7 @@ public class GencodeServiceImpl {
 		
 		index.setParams(params);
 		
-		setMethodBody(index,Constant.index,entityName,defaultSort,this.moduleMetaInfo.getEncodecharset(),exceptionName,Constant.component_type_actionimpl);
+		setMethodBody(index,Constant.index,entityName,defaultSortField,this.moduleMetaInfo.getEncodecharset(),exceptionName,Constant.component_type_actionimpl);
 		
 		methods.add(index);
 //		Method count = new Method();//定义获取方法

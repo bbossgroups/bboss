@@ -142,7 +142,7 @@ function queryData()
 	var ${condition.fieldName}=$("#${condition.fieldName}").val();
 #end	
 	
-	if(#foreach($condition in $conditions) #if($velocityCount == 0)containSpecial(${condition.fieldName})#else || containSpecial(app_name_en)#end#end){
+	if(#foreach($condition in $conditions) #if($velocityCount == 0)containSpecial(${condition.fieldName})#else || containSpecial(${condition.fieldName})#end#end){
 		$.dialog.alert('查询字符串含有非法字符集,请检查输入条件！');
 		return;
 	}
@@ -156,23 +156,23 @@ function modifyQueryData()
 {	
 	$("#custombackContainer").load("queryListInfo${entityName}s.page?"+$("#querystring").val()+" #customContent");
 }
-function edit${entityName}(id){
-	var url="<%=request.getContextPath()%>/${moduleName}/toUpdate${entityName}.page?${primaryKeyName}="+id;
+function edit${entityName}(${primaryKeyName}){
+	var url="<%=request.getContextPath()%>/${moduleName}/toUpdate${entityName}.page?${primaryKeyName}="+${primaryKeyName};
 	$.dialog({ title:'修改${moduleCNName}信息',width:740,height:560, content:'url:'+url,lock: true}); 		
 }
-function view${entityName}(id){
-	var url="<%=request.getContextPath()%>/${moduleName}/get${entityName}.page?${primaryKeyName}="+id;		
+function view${entityName}(${primaryKeyName}){
+	var url="<%=request.getContextPath()%>/${moduleName}/get${entityName}.page?${primaryKeyName}="+${primaryKeyName};		
 	$.dialog({ title:'查看台账信息',width:740,height:560, content:'url:'+url,lock: true}); 	
 }
 function doreset(){
 	$("#reset").click();
 }
-function del${entityName}(id){		
+function del${entityName}(${primaryKeyName}){		
 	$.dialog.confirm('确定要删除选中的${moduleCNName}记录吗?', function(){ 
 		 $.ajax({
 	 	 type: "POST",
 		url : "<%=request.getContextPath()%>/${moduleName}/delete${entityName}.page",
-		data :{"id":id},
+		data :{"${primaryKeyName}":${primaryKeyName}},
 		dataType : 'json',
 		async:false,
 		beforeSend: function(XMLHttpRequest){
@@ -190,16 +190,16 @@ function del${entityName}(id){
 	  
 }
 function delBatch(){
-	var ids="";
+	var ${primaryKeyName}s=[];
 	var i = 0;
-	 $("#tb tr:gt(0)").each(function() {
-	 
+	 $("#tb tr:gt(0)").each(function() {	 
             if ($(this).find("#CK").get(0).checked == true) {
-                  i++;
-                ids=ids+$(this).find("#id").val()+",";
-              	}
+                 ${primaryKeyName}s.push($(this).find("#${primaryKeyName}").val());                
+                i++;
+            }
+              	 
        });
-       if(ids==""){
+       if(i==0){
         $.dialog.alert('请选择需要删除的记录！');
         return false;
        }
@@ -207,7 +207,7 @@ function delBatch(){
      	$.ajax({
 		 	 	type: "POST",
 				url : "<%=request.getContextPath()%>/${moduleName}/deleteBatch${entityName}.page",
-				data :{"ids":ids},
+				data :{"${primaryKeyName}s":${primaryKeyName}s},
 				dataType : 'json',
 				async:false,
 				beforeSend: function(XMLHttpRequest){
