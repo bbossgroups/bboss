@@ -123,6 +123,7 @@ alter table TA_AUTHO_AREA
 		bm1.setLike(true);
 		bm1.setOr(true);
 		gencodeService.addCondition(bm1);
+
 		
 		
 //		ConditionField softLevel = new ConditionField();
@@ -136,6 +137,7 @@ alter table TA_AUTHO_AREA
 		SortField id = new SortField();
 		id.setColumnname("SORT_NUM");
 		id.setDesc(true);
+		id.setDefaultSortField(true);
 		gencodeService.addSortField(id);
 		
 //		SortField sbm = new SortField();

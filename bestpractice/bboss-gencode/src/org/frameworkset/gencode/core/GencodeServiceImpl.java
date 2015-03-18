@@ -76,6 +76,7 @@ public class GencodeServiceImpl {
 	private List<Field> sortFields;
 	
 	private Field primaryField ;
+	private Field defaultSortField ;
 	private String primaryKeyName;
 	private String modulePackage ;
 	private String javamodulePackage ;
@@ -262,6 +263,10 @@ public class GencodeServiceImpl {
 						 field.setMfieldName(dbfield.getMfieldName());
 						 dbfield.setSortField(true);
 						 dbfield.setDesc(field.isDesc());
+						 if(field.isDefaultSortField())
+						 {
+							 this.defaultSortField = field;
+						 }
 					 }
 				 }
 			 }
@@ -811,7 +816,7 @@ public class GencodeServiceImpl {
 		param = new MethodParam();		
 		param.setType("String");
 		param.setName("sortKey");
-		param.addAnnotation(new Annotation("PagerParam").addAnnotationParam("name","PagerParam.SORT",AnnoParam.V_CONTAST).addAnnotationParam("defaultvalue",defaultSort));
+		param.addAnnotation(new Annotation("PagerParam").addAnnotationParam("name","PagerParam.SORT",AnnoParam.V_CONTAST).addAnnotationParam("defaultvalue",this.defaultSortField == null?defaultSort:this.defaultSortField.getColumnname()));
 		params.add(param);
 		
 		param = new MethodParam();

@@ -14,6 +14,7 @@ public class Field {
 	private String columnname;
 	private boolean sortField;
 	private boolean desc = true;
+	private boolean defaultSortField ;
 	private List<Annotation> annos;
 	private int maxlength = 0;
 	private boolean required;
@@ -109,6 +110,12 @@ public class Field {
 	}
 	public void setRequired(boolean required) {
 		this.required = required;
+	}
+	public boolean isDefaultSortField() {
+		return defaultSortField;
+	}
+	public void setDefaultSortField(boolean defaultSortField) {
+		this.defaultSortField = defaultSortField;
 	}
 
 }
