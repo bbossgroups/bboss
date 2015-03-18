@@ -10,6 +10,10 @@ public class ModuleMetaInfo {
 	 */
 	private String sourcedir;
 	/**
+	 * jsp相对于WebRoot的存放根路径（可选）
+	 */
+	private String jspRootModuleName;
+	/**
 	 * 业务模块的名称，根据模块名称生成存放java源码、前端界面和资源文件、配置文件的存放目录
 	 */
 	private String moduleName;
@@ -74,6 +78,7 @@ public class ModuleMetaInfo {
 	public void setModuleName(String moduleName) {
 		this.moduleName = moduleName;
 	}
+	
 	public String getPackagePath() {
 		return packagePath;
 	}
@@ -247,6 +252,12 @@ public class ModuleMetaInfo {
 	}
 	public void setPkname(String pkname) {
 		this.pkname = pkname;
+	}
+	public String getJspRootModuleName() {
+		return jspRootModuleName;
+	}
+	public void setJspRootModuleName(String jspRootModuleName) {
+		this.jspRootModuleName = jspRootModuleName;
 	}
 
 }

@@ -235,7 +235,7 @@ public class GencodeServiceImpl {
 				 
 				 for(Field dbfield:this.allfields)
 				 {
-					 if(field.getColumnname().equals(dbfield.getColumnname()))
+					 if(field.getColumnname().equalsIgnoreCase(dbfield.getColumnname()))
 					 {
 						 field.setType(dbfield.getType());
 						 field.setFieldName(dbfield.getFieldName());
@@ -255,7 +255,7 @@ public class GencodeServiceImpl {
 				 
 				 for(Field dbfield:this.allfields)
 				 {
-					 if(field.getColumnname().equals(dbfield.getColumnname()))
+					 if(field.getColumnname().equalsIgnoreCase(dbfield.getColumnname()))
 					 {
 						 field.setType(dbfield.getType());
 						 field.setFieldName(dbfield.getFieldName());
