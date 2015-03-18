@@ -217,6 +217,172 @@ alter table TA_AUTHO_AREA
 	public void testGentuoCode() throws Exception
 	{
 		 
+		/**
+		 * -- Create table
+create table TA_FGW_XMSBK
+(
+  sbxmid      VARCHAR2(30) not null,
+  yqid        VARCHAR2(30),
+  xmgkdw      VARCHAR2(50),
+  sfsbj       INTEGER default 1 not null,
+  jsxzid      INTEGER,
+  xmlbid      VARCHAR2(30),
+  region_id   CHAR(25),
+  hyid        VARCHAR2(30),
+  dbxmid      VARCHAR2(30) default 0,
+  sfyjbyy     CHAR(2) default '0',
+  dbxm        CHAR(2) default '0',
+  jjid        VARCHAR2(30),
+  itemname    VARCHAR2(255),
+  gsztz       NUMBER(10,2),
+  ksnd        VARCHAR2(4),
+  jsnd        VARCHAR2(4),
+  xmdw        VARCHAR2(255),
+  jsdz        VARCHAR2(255),
+  lxrjfs      VARCHAR2(255),
+  jsgm        VARCHAR2(2048),
+  qqgzjz      VARCHAR2(1024),
+  qqgzrw      VARCHAR2(1024),
+  sbdw        VARCHAR2(255),
+  zt          NUMBER,
+  sbnd        NUMBER(4),
+  sbr         VARCHAR2(255),
+  sbrlxfs     VARCHAR2(255),
+  sbrq        DATE,
+  xmxz        INTEGER,
+  tbyh        VARCHAR2(255),
+  bx          NUMBER,
+  tbdwid      VARCHAR2(255),
+  sfbxg       CHAR(2),
+  zyjsnr      VARCHAR2(2048),
+  bz          VARCHAR2(1024),
+  sbdwid      VARCHAR2(30),
+  sshj        INTEGER default 0 not null,
+  tbsj        DATE,
+  xmbh        VARCHAR2(100),
+  bw          NUMBER(14,4),
+  dj          NUMBER(14,4),
+  tzlx        VARCHAR2(30),
+  bndscztz    NUMBER(10,2),
+  region_name VARCHAR2(60),
+  tjjdid      VARCHAR2(30),
+  lsgxid      VARCHAR2(30),
+  csdw        VARCHAR2(50)
+)
+;
+-- Add comments to the table 
+comment on table TA_FGW_XMSBK
+  is '记录项目申报的信息';
+-- Add comments to the columns 
+comment on column TA_FGW_XMSBK.sbxmid
+  is '申报项目ID';
+comment on column TA_FGW_XMSBK.yqid
+  is '园区id';
+comment on column TA_FGW_XMSBK.xmgkdw
+  is '项目归口单位';
+comment on column TA_FGW_XMSBK.sfsbj
+  is '是否市本级';
+comment on column TA_FGW_XMSBK.jsxzid
+  is '建设性质ID';
+comment on column TA_FGW_XMSBK.xmlbid
+  is '项目类别ID';
+comment on column TA_FGW_XMSBK.region_id
+  is '区域码';
+comment on column TA_FGW_XMSBK.hyid
+  is '行业ID';
+comment on column TA_FGW_XMSBK.dbxmid
+  is '打包项目ID';
+comment on column TA_FGW_XMSBK.sfyjbyy
+  is '是否已经被引用';
+comment on column TA_FGW_XMSBK.dbxm
+  is '打包后项目标志';
+comment on column TA_FGW_XMSBK.jjid
+  is '简介ID';
+comment on column TA_FGW_XMSBK.itemname
+  is '项目名称';
+comment on column TA_FGW_XMSBK.gsztz
+  is '估算总投资';
+comment on column TA_FGW_XMSBK.ksnd
+  is '开始年';
+comment on column TA_FGW_XMSBK.jsnd
+  is '结束年';
+comment on column TA_FGW_XMSBK.xmdw
+  is '项目业主单位';
+comment on column TA_FGW_XMSBK.jsdz
+  is '建设地址';
+comment on column TA_FGW_XMSBK.lxrjfs
+  is '联系人及方式';
+comment on column TA_FGW_XMSBK.jsgm
+  is '建设规模及新增生产能力';
+comment on column TA_FGW_XMSBK.qqgzjz
+  is '项目前期工作进展情况';
+comment on column TA_FGW_XMSBK.qqgzrw
+  is '年前期工作任务和目标';
+comment on column TA_FGW_XMSBK.sbdw
+  is '申报单位';
+comment on column TA_FGW_XMSBK.zt
+  is '状态';
+comment on column TA_FGW_XMSBK.sbnd
+  is '申报年度';
+comment on column TA_FGW_XMSBK.sbr
+  is '申报人';
+comment on column TA_FGW_XMSBK.sbrlxfs
+  is '申报人联系方式';
+comment on column TA_FGW_XMSBK.sbrq
+  is '申报日期';
+comment on column TA_FGW_XMSBK.xmxz
+  is '项目性质';
+comment on column TA_FGW_XMSBK.tbyh
+  is '填报用户';
+comment on column TA_FGW_XMSBK.bx
+  is '排序';
+comment on column TA_FGW_XMSBK.tbdwid
+  is '填报单位id';
+comment on column TA_FGW_XMSBK.sfbxg
+  is '通过oracle触发器，用自带方法进行比较 是否被修改';
+comment on column TA_FGW_XMSBK.zyjsnr
+  is '主要建设内容';
+comment on column TA_FGW_XMSBK.bz
+  is '备注';
+comment on column TA_FGW_XMSBK.sbdwid
+  is '申报单位ID';
+comment on column TA_FGW_XMSBK.sshj
+  is '审核通过会插入一条新的记录；用于区分待审核的数据是否已经审核。
+';
+comment on column TA_FGW_XMSBK.tbsj
+  is '填报时间';
+comment on column TA_FGW_XMSBK.xmbh
+  is '项目编号';
+comment on column TA_FGW_XMSBK.tjjdid
+  is '推进阶段主键IDTJJDID';
+comment on column TA_FGW_XMSBK.lsgxid
+  is '隶属关系主键IDLSGXID';
+-- Create/Recreate primary, unique and foreign key constraints 
+alter table TA_FGW_XMSBK
+  add constraint PK_TA_FGW_XMSBK primary key (SBXMID)
+  ;
+
+-- Create/Recreate check constraints 
+alter table TA_FGW_XMSBK
+  add constraint CKC_DBXM_TA_FGW_X
+  check (DBXM is null or (DBXM in ('0','1')));
+alter table TA_FGW_XMSBK
+  add constraint CKC_SFSBJ_TA_FGW_X
+  check (SFSBJ between 0 and 1 and SFSBJ in (0,1));
+alter table TA_FGW_XMSBK
+  add constraint CKC_SFYJBYY_TA_FGW_X
+  check (SFYJBYY is null or (SFYJBYY in ('0','1')));
+alter table TA_FGW_XMSBK
+  add constraint CKC_SSHJ_TA_FGW_X
+  check (SSHJ between 0 and 1 and SSHJ in (0,1));
+alter table TA_FGW_XMSBK
+  add constraint CKC_XMXZ_TA_FGW_X
+  check (XMXZ is null or (XMXZ in (0,1,2)));
+alter table TA_FGW_XMSBK
+  add constraint CKC_ZT_TA_FGW_X
+  check (ZT is null or (ZT in (0,1,2,3,4,5)));
+
+		 */
 		GencodeServiceImpl gencodeService = new GencodeServiceImpl();
 		ModuleMetaInfo moduleMetaInfo = new ModuleMetaInfo();
 		moduleMetaInfo.setTableName("TA_FGW_XMSBK".toLowerCase());//指定表名，根据表结构来生成所有的文件
