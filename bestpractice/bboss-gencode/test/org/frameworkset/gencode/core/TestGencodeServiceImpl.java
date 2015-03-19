@@ -158,7 +158,7 @@ alter table TA_AUTHO_AREA
 		ModuleMetaInfo moduleMetaInfo = new ModuleMetaInfo();
 		moduleMetaInfo.setTableName("ta_autho_area");//指定表名，根据表结构来生成所有的文件
 		moduleMetaInfo.setPkname("ta_autho_area");//设置oracle sequence名称，用来生成表的主键,对应TABLEINFO表中TABLE_NAME字段的值
-		moduleMetaInfo.setJspRootModuleName("lcjf");//lcjf,对应的jsp页面会存放到lcjf/area目录下面
+		moduleMetaInfo.setSystem("lcjf");//lcjf,系统代码，如果指定了system，那么对应的jsp页面会存放到lcjf/area目录下面，对应的mvc组件装配文件存在在/WEB-INF/conf/lcjf下面，否则jsp在/area下，mvc组件装配文件存在在/WEB-INF/conf/area下
 		moduleMetaInfo.setModuleName("area");//指定模块名称，源码和配置文件都会存放在相应模块名称的目录下面
 		moduleMetaInfo.setModuleCNName("行政区划");//指定模块中文名称
 		moduleMetaInfo.setDatasourceName("bspf");//指定数据源名称，在poolman.xml文件中配置

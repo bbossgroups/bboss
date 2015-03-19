@@ -46,7 +46,7 @@ public class GenViewJsp   extends AbstractGencode {
 			 context.put("primaryKeyName", gencodeService.getPrimaryKeyName());
 			 
 			
-			
+			 context.put("relativePath", gencodeService.getRelativePath());
 			 gencodeService.writFile(context,conftempalte,conf,gencodeService.getModuleMetaInfo().getEncodecharset());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

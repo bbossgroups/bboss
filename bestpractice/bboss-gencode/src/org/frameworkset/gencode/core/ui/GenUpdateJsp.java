@@ -45,7 +45,7 @@ public class GenUpdateJsp   extends AbstractGencode {
 			 context.put("entityName", gencodeService.getEntityName());
 			 context.put("primaryKeyName", gencodeService.getPrimaryKeyName());
 			 
-			
+			 context.put("relativePath", gencodeService.getRelativePath());
 			
 			 gencodeService.writFile(context,conftempalte,conf,gencodeService.getModuleMetaInfo().getEncodecharset());
 		} catch (Exception e) {

@@ -8,13 +8,13 @@
 	    Date: $gendate
 	-->
 
-	<property name="/${moduleName}/*.page"
-		path:index="/${moduleName}/main.jsp"
-		path:queryListInfo${entityName}s="/${moduleName}/${entityVarName}ListInfo.jsp"
-		path:queryList${entityName}s="/${moduleName}/${entityVarName}List.jsp"
-		path:update${entityName}="/${moduleName}/${entityVarName}Edit.jsp"
-		path:add${entityName}="/${moduleName}/${entityVarName}Add.jsp"
-		path:get${entityName}="/${moduleName}/${entityVarName}View.jsp"
+	<property name="/${relativePath}/*.page"
+		path:index="/${relativePath}/main.jsp"
+		path:queryListInfo${entityName}s="/${relativePath}/${entityVarName}ListInfo.jsp"
+		path:queryList${entityName}s="/${relativePath}/${entityVarName}List.jsp"
+		path:update${entityName}="/${relativePath}/${entityVarName}Edit.jsp"
+		path:add${entityName}="/${relativePath}/${entityVarName}Add.jsp"
+		path:get${entityName}="/${relativePath}/${entityVarName}View.jsp"
 		f:${entityVarName}Service="attr:${moduleName}.${entityVarName}Service"
 		class="${controlClass}" >
 	</property>

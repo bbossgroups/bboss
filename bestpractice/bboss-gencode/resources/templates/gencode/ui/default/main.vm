@@ -121,7 +121,7 @@ $(document).ready(function() {
     });           
     
     $('#addButton').click(function() {  
-  	 var url="<%=request.getContextPath()%>/${moduleName}/toAdd${entityName}.page";
+  	 var url="<%=request.getContextPath()%>/${relativePath}/toAdd${entityName}.page";
 	 	 $.dialog({ id:'iframeNewId', title:'新增&nbsp;${moduleCNName}',width:740,height:560, content:'url:'+url});   			 		  
     });            
 });
@@ -157,11 +157,11 @@ function modifyQueryData()
 	$("#custombackContainer").load("queryListInfo${entityName}s.page?"+$("#querystring").val()+" #customContent");
 }
 function edit${entityName}(${primaryKeyName}){
-	var url="<%=request.getContextPath()%>/${moduleName}/toUpdate${entityName}.page?${primaryKeyName}="+${primaryKeyName};
+	var url="<%=request.getContextPath()%>/${relativePath}/toUpdate${entityName}.page?${primaryKeyName}="+${primaryKeyName};
 	$.dialog({ title:'修改${moduleCNName}信息',width:740,height:560, content:'url:'+url,lock: true}); 		
 }
 function view${entityName}(${primaryKeyName}){
-	var url="<%=request.getContextPath()%>/${moduleName}/get${entityName}.page?${primaryKeyName}="+${primaryKeyName};		
+	var url="<%=request.getContextPath()%>/${relativePath}/get${entityName}.page?${primaryKeyName}="+${primaryKeyName};		
 	$.dialog({ title:'查看台账信息',width:740,height:560, content:'url:'+url,lock: true}); 	
 }
 function doreset(){
@@ -171,7 +171,7 @@ function del${entityName}(${primaryKeyName}){
 	$.dialog.confirm('确定要删除选中的${moduleCNName}记录吗?', function(){ 
 		 $.ajax({
 	 	 type: "POST",
-		url : "<%=request.getContextPath()%>/${moduleName}/delete${entityName}.page",
+		url : "<%=request.getContextPath()%>/${relativePath}/delete${entityName}.page",
 		data :{"${primaryKeyName}":${primaryKeyName}},
 		dataType : 'json',
 		async:false,
@@ -206,7 +206,7 @@ function delBatch(){
      $.dialog.confirm('确定要删除选中的'+i+'条${moduleCNName}记录吗?', function(){
      	$.ajax({
 		 	 	type: "POST",
-				url : "<%=request.getContextPath()%>/${moduleName}/deleteBatch${entityName}.page",
+				url : "<%=request.getContextPath()%>/${relativePath}/deleteBatch${entityName}.page",
 				data :{"${primaryKeyName}s":${primaryKeyName}s},
 				dataType : 'json',
 				async:false,

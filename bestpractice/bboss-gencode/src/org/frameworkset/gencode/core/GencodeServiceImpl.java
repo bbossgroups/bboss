@@ -56,6 +56,7 @@ public class GencodeServiceImpl {
 	private File javaServiceSourceDir;
 	private File javaActionSourceDir;
 	private File jspSourceDir;
+	private String relativePath;//jsp访问相对地址
 	private File mvcConfDir;
 	private File mvcconf ;
 	private File mainJsp ;
@@ -190,13 +191,24 @@ public class GencodeServiceImpl {
 		{
 			resourcedir.mkdirs();
 		}
-		
-		jspSourceDir = new File(this.rootdir,"WebRoot/"+ moduleMetaInfo.getModuleName());
+		if(this.moduleMetaInfo.getSystem() == null || this.moduleMetaInfo.getSystem().equals(""))
+			jspSourceDir = new File(this.rootdir,"WebRoot/"+ moduleMetaInfo.getModuleName());
+		else
+			jspSourceDir = new File(this.rootdir,"WebRoot/"+ this.moduleMetaInfo.getSystem() + "/"+moduleMetaInfo.getModuleName());
 		if(!jspSourceDir.exists())
 		{
 			jspSourceDir.mkdirs();
 		}
-		mvcConfDir = new File(this.rootdir,"WebRoot/WEB-INF/conf/"+ moduleMetaInfo.getModuleName());
+		if(this.moduleMetaInfo.getSystem() == null || this.moduleMetaInfo.getSystem().equals(""))
+			this.relativePath = moduleMetaInfo.getModuleName();
+		else
+			this.relativePath =   this.moduleMetaInfo.getSystem() + "/"+moduleMetaInfo.getModuleName();
+		
+		if(this.moduleMetaInfo.getSystem() == null || this.moduleMetaInfo.getSystem().equals(""))
+			mvcConfDir = new File(this.rootdir,"WebRoot/WEB-INF/conf/"+ moduleMetaInfo.getModuleName());
+		else
+			mvcConfDir = new File(this.rootdir,"WebRoot/WEB-INF/conf/"+ this.moduleMetaInfo.getSystem());
+		
 		if(!mvcConfDir.exists())
 		{
 			mvcConfDir.mkdirs();
@@ -1495,6 +1507,14 @@ import com.frameworkset.util.StringUtil;
 	public File getViewJsp() {
 		// TODO Auto-generated method stub
 		return this.viewJsp;
+	}
+
+	public String getRelativePath() {
+		return relativePath;
+	}
+
+	public void setRelativePath(String relativePath) {
+		this.relativePath = relativePath;
 	}
 
 }
