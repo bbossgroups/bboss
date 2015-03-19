@@ -11,7 +11,9 @@ $if($m$condition.fieldName && !$m$condition.fieldName.$equal(""))
 	and $condition.columnname #if($condition.like)like #else=#end#[$condition.fieldName]		
 $end
 #else
+$if($m$condition.fieldName && $m$condition.fieldName > 0)
 	and $condition.columnname=#[$condition.fieldName]
+$end	
 #end	
 #end#end 
 $if(${m}sortKey && !${m}sortKey.$equal(""))

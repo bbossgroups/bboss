@@ -416,6 +416,11 @@ alter table TA_FGW_XMSBK
 		bm1.setOr(true);
 		gencodeService.addCondition(bm1);
 
+		ConditionField bw = new ConditionField();
+		bw.setColumnname("bw");
+		bw.setLike(true);
+		bw.setOr(true);
+		gencodeService.addCondition(bw);
 		
 		
 //		ConditionField softLevel = new ConditionField();
