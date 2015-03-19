@@ -53,6 +53,7 @@ public class GencodeServiceImpl {
 	private File resourcedir;
 	private File javaSourceDir;
 	private File javaEntiySourceDir;
+	private File javaWSSourceDir;
 	private File javaServiceSourceDir;
 	private File javaActionSourceDir;
 	private File jspSourceDir;
@@ -188,6 +189,11 @@ public class GencodeServiceImpl {
 		{
 			javaEntiySourceDir.mkdirs();
 		}
+		javaWSSourceDir = new File(this.javaSourceDir,  "ws");
+		if(!javaWSSourceDir.exists())
+		{
+			javaWSSourceDir.mkdirs();
+		} 
 		javaServiceSourceDir = new File(this.javaSourceDir,"service");
 		if(!javaServiceSourceDir.exists())
 		{
@@ -489,11 +495,7 @@ public class GencodeServiceImpl {
 			serviceImpl.createNewFile();
 			controller.createNewFile();
 			exception.createNewFile();
-			conditionEntity.createNewFile();
-			
-			
-			
- 
+			conditionEntity.createNewFile(); 
 			 genEntity(  entityName,  this.moduleMetaInfo.getDate(),  this.moduleMetaInfo.getVersion(),this.moduleMetaInfo.getAuthor(),this.moduleMetaInfo.getCompany(),this.moduleMetaInfo.getModuleCNName()+"管理服务实体类",entity);
 			 genConditionEntity(  conditionEntityName,  this.moduleMetaInfo.getDate(),  this.moduleMetaInfo.getVersion(),this.moduleMetaInfo.getAuthor(),this.moduleMetaInfo.getCompany(),this.moduleMetaInfo.getModuleCNName()+"管理查询条件实体类",conditionEntity);
 			 genServiceInf(  entityName + "Service",this.moduleMetaInfo.getDate(),this.moduleMetaInfo.getVersion(),this.moduleMetaInfo.getAuthor(),this.moduleMetaInfo.getCompany(),this.moduleMetaInfo.getModuleCNName()+"管理服务接口", serviceInf);
@@ -507,6 +509,20 @@ public class GencodeServiceImpl {
 		}
 		
 	}
+	private String wsclassimpl ;
+	private String wsclassinf ;
+	
+	private void genRPC()
+	{
+		wsclassimpl = this.javamodulePackage + ".ws.WS"+ entityName + "ServiceImpl";		 
+		wsclassinf = this.javamodulePackage + ".ws.WS"+ entityName + "Service";
+		File entity = new File(this.javaWSSourceDir,"WS"+ entityName + "ServiceImpl");
+		if(entity.exists())
+		{
+			entity.delete();
+		}
+	}
+	
 	
 	private void genEntity(String entityName,String date,String version,String author,String company,String description,File entity) throws Exception
 	{
