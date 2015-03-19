@@ -19,7 +19,7 @@
     <init-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>
-         /WEB-INF/conf/#if($system && !$system.equals(""))${system}#else$moduleName#end/bboss-${moduleName}.xml
+         /WEB-INF/conf/#if($system && !$system.equals(""))${system}#else$moduleName#end/bboss-*.xml
         </param-value>
     </init-param>         
 </servlet>
