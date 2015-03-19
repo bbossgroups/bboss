@@ -59,6 +59,7 @@ public class GencodeServiceImpl {
 	private String relativePath;//jsp访问相对地址
 	private File mvcConfDir;
 	private File mvcconf ;
+	private File readme ;
 	private File mainJsp ;
 	private File listJsp ;
 	private File listInfoJsp ;
@@ -102,6 +103,7 @@ public class GencodeServiceImpl {
 		genPersistentConfigfile();
 		genUI();
 		 genMVCConf();
+		 genReadme();
 		return "success";
 	}
 	
@@ -142,12 +144,22 @@ public class GencodeServiceImpl {
 		conf.gen();
 	}
 	
+	/**
+	 * 生成前端jsp ui界面
+	 */
+	private void genReadme()
+	{
+		GenReadme conf = new GenReadme(this);
+		conf.gen();
+	}
+	
+	
 	
 	private void init()
 	{
 			
 		SQLBuilder = new SQLBuilder(this);
-		File f = new File(moduleMetaInfo.getSourcedir());
+		File f = SimpleStringUtil.isEmpty(this.moduleMetaInfo.getSystem() )?new File(moduleMetaInfo.getSourcedir(),this.moduleMetaInfo.getModuleName()):new File(moduleMetaInfo.getSourcedir(),this.moduleMetaInfo.getSystem()+"/"+this.moduleMetaInfo.getModuleName());
 		if(!f.exists())
 		{
 			f.mkdirs();
@@ -163,7 +175,7 @@ public class GencodeServiceImpl {
 			modulePackage + "/" + moduleMetaInfo.getModuleName();
 		javamodulePackage = !moduleMetaInfo.getPackagePath().endsWith(".")? 
 						moduleMetaInfo.getPackagePath() + "." +moduleMetaInfo.getModuleName()
-						:moduleMetaInfo.getPackagePath() +moduleMetaInfo.getModuleName();;
+						:moduleMetaInfo.getPackagePath() +moduleMetaInfo.getModuleName();
 		javaSourceDir = new File(this.rootdir,"src/"+modulePackage);
 		
 		if(!javaSourceDir.exists())
@@ -214,7 +226,7 @@ public class GencodeServiceImpl {
 			mvcConfDir.mkdirs();
 		}
 		mvcconf = new File(getMvcConfDir(),"bboss-"+getModuleMetaInfo().getModuleName()+".xml");
-		
+		readme = new File(this.rootdir,"readme.txt");
 		webxmlFile = new File(this.rootdir,"WebRoot/WEB-INF/web.xml");
 		if(!webxmlFile.exists())
 		{
@@ -1515,6 +1527,14 @@ import com.frameworkset.util.StringUtil;
 
 	public void setRelativePath(String relativePath) {
 		this.relativePath = relativePath;
+	}
+
+	public File getReadme() {
+		return readme;
+	}
+
+	public void setReadme(File readme) {
+		this.readme = readme;
 	}
 
 }

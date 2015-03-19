@@ -1,0 +1,25 @@
+/**
+* 自动生成的${moduleCNName}模块部署配置代码块：
+* 菜单配置：直接拷贝到module.xml中
+* 组件部署配置：直接拷贝到web.xml中
+*/
+菜单配置（将下属内容添加到实际工程目录下resources/module.xml中即可）：
+<item name="$moduleCNName"
+	i18n:en_US="$moduleName demo" id="${moduleName}Manage"  showleftmenu="true" menuType="type1">
+	<top>header.page</top>
+	<workspace>
+		<content>/$relativePath/index.page</content>
+	</workspace>
+</item> 
+
+装载mvc模块(将contextConfigLocation中的内容追加到实际工程的web.xml中即可):
+<servlet>
+    <servlet-name>mvc</servlet-name>
+    <servlet-class>org.frameworkset.web.servlet.DispatchServlet</servlet-class>
+    <init-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>
+         /WEB-INF/conf/#if($system && !$system.equals(""))${system}#else$moduleName#end/bboss-${moduleName}.xml
+        </param-value>
+    </init-param>         
+</servlet>
