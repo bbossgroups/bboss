@@ -15,4 +15,15 @@ try {
 	log.error("update ${entityName} failed:",e);
 	return StringUtil.formatBRException(e);
 }
+#elseif($componentType == 5)//webservice服务
+try {
+	${entityVarName}Service.update${entityName}($paramName);
+	
+}
+ catch ($exception e) {
+	throw e;
+}
+ catch (Throwable e) {
+	throw new $exception$start"update ${entityName} failed::",e$end;
+}
 #end

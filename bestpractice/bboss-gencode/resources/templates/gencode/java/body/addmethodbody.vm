@@ -1,13 +1,13 @@
 #set( $start = '(' )
 #set( $end = ')' )
 #set( $dot = '.' )
-#if($componentType == 1)
+#if($componentType == 1)//业务组件
 try {
 	executor.insertBean("add${entityName}", ${paramName});
 } catch (Throwable e) {
 	throw new $exception${start}"add ${entityName} failed:",e${end};
 }
-#elseif($componentType == 2)
+#elseif($componentType == 2)//控制器
 try {
 	${entityVarName}Service.add${entityName}$start${paramName}$end;
 	return "success";
@@ -17,5 +17,15 @@ try {
 }catch (Throwable e) {
 	log.error("add ${entityName} failed:",e);
 	return StringUtil.formatBRException(e);
+}
+#elseif($componentType == 5)//webservice服务
+try {
+	${entityVarName}Service.add${entityName}$start${paramName}$end;
+}
+ catch ($exception e) {
+	throw e;
+}
+ catch (Throwable e) {
+	throw new $exception${start}"add ${entityName} failed:",e${end};
 }
 #end

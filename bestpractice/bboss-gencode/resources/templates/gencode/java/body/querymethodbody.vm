@@ -30,4 +30,15 @@ try {
 } catch (Exception e) {
 	throw new $exception${start}"query ${entityName} failed:", e$end;
 }	
+#elseif($componentType == 5)//webservice服务
+try {
+	List<${entityName}> ${entityVarName}s = ${entityVarName}Service.queryList${entityName}s(conditions);
+	return ${entityVarName}s;
+}
+ catch ($exception e) {
+	throw e;
+}
+ catch (Throwable e) {
+	throw new $exception$start"query $entityName failed:",e$end;
+}
 #end

@@ -22,6 +22,7 @@ public class PagineQueryMethodBodyGenerate implements MethodBodyGenerate {
 		 context.put("componentType", componentType);
 		 context.put("entityVarName", entityVarName);
 		 context.put("conditionFields", gencodeService.getConditions());
+		 context.put("serviceParamName", gencodeService.getServiceParamName());
 		 String body = GencodeServiceImpl.writetostring(context,addmethodbodytempalte,encodecharset);
 		 method.setBody(body);
 

@@ -35,4 +35,15 @@ try {
 } catch (Exception e) {
 	throw new $exception("pagine query ${entityName} failed:", e);
 }
+#elseif($componentType == 5)//webservice服务
+try {
+	ListInfo ${entityVarName}s = ${entityVarName}Service.queryListInfo${entityName}s(conditions,offset,pagesize);
+	return ${entityVarName}s;
+}
+ catch ($exception e) {
+	throw e;
+}
+ catch (Throwable e) {
+	throw new  $exception$start"pagine query $entityName failed:",e$end;
+}
 #end

@@ -18,4 +18,15 @@ try {
 } catch (Throwable e) {
 	throw new $exception("get $entityName failed::${paramName}=" + ${paramName}, e);
 }
+#elseif($componentType == 5)//webservice服务
+try {
+	$entityName $entityVarName = ${entityVarName}Service.get$entityName$start${paramName}$end;
+	return $entityVarName;
+}
+ catch ($exception e) {
+	throw e;
+}
+ catch (Throwable e) {
+	throw new $exception$start"get ${entityName} failed::${paramName}="+${paramName},e$end;
+}
 #end

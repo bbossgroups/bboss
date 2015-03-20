@@ -20,6 +20,7 @@ public class AddMethodBodyGenerate implements MethodBodyGenerate {
 		 context.put("exception", exception);
 		 context.put("componentType", componentType);
 		 context.put("entityVarName", entityVarName);
+		 context.put("serviceParamName", gencodeService.getServiceParamName());
 		 String body = GencodeServiceImpl.writetostring(context,addmethodbodytempalte,encodecharset);
 		 method.setBody(body);
 	}

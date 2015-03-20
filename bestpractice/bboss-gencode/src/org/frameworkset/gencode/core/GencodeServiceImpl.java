@@ -84,6 +84,8 @@ public class GencodeServiceImpl {
 	private String modulePackage ;
 	private String javamodulePackage ;
 	private String serviceClass;
+	private String serviceInfType;
+	private String serviceParamName;
 	private String controlClass;
 	private String theme = "default";
 	/**
@@ -490,6 +492,8 @@ public class GencodeServiceImpl {
 			controller.delete();
 		}
 		try {
+			this.serviceInfType = entityName + "Service";
+			this.serviceParamName = this.entityParamName + "Service";
 			entity.createNewFile();
 			serviceInf.createNewFile();
 			serviceImpl.createNewFile();
@@ -498,11 +502,10 @@ public class GencodeServiceImpl {
 			conditionEntity.createNewFile(); 
 			 genEntity(  entityName,   this.moduleMetaInfo.getModuleCNName()+"管理服务实体类",entity);
 			 genConditionEntity(  conditionEntityName,   this.moduleMetaInfo.getModuleCNName()+"管理查询条件实体类",conditionEntity);
-			 genServiceInf(  entityName + "Service", this.moduleMetaInfo.getModuleCNName()+"管理服务接口", serviceInf);
+			 genServiceInf(  this.serviceInfType, this.moduleMetaInfo.getModuleCNName()+"管理服务接口", serviceInf);
 			 genException(entityName + "Exception", this.moduleMetaInfo.getModuleCNName()+"管理异常处理类",exception);
-			 String serviceInfName = entityName + "Service";
-			 genServiceImpl(entityName + "ServiceImpl",serviceInfName ,this.moduleMetaInfo.getModuleCNName()+"管理业务处理类",serviceImpl);
-			 genActionCode(entityName+"Controller",null,serviceInfName,  this.moduleMetaInfo.getModuleCNName()+"管理控制器处理类",controller);
+			 genServiceImpl(entityName + "ServiceImpl",serviceInfType ,this.moduleMetaInfo.getModuleCNName()+"管理业务处理类",serviceImpl);
+			 genActionCode(entityName+"Controller",null,serviceInfType,  this.moduleMetaInfo.getModuleCNName()+"管理控制器处理类",controller);
 			 genRPC();
 		} catch (Exception e) {
 			log.error("gen java source file failed:",e);
@@ -511,22 +514,30 @@ public class GencodeServiceImpl {
 	}
 	private String wsclassimpl ;
 	private String wsclassinf ;
-	private String serviceInf;
+	private String wsserviceInf;
+	private String wsserviceimpl;
 	
 	private void genRPC()
 	{
 		
 		wsclassimpl = this.javamodulePackage + ".ws.WS"+ entityName + "ServiceImpl";		 
 		wsclassinf = this.javamodulePackage + ".ws.WS"+ entityName + "Service";
-		String serviceinfName = "WS"+ entityName + "Service";
-		File serviceinf = new File(this.javaWSSourceDir,serviceinfName+".java");
+		wsserviceInf = "WS"+ entityName + "Service";
+		wsserviceimpl = "WS"+ entityName + "ServiceImpl";
+		File serviceinf = new File(this.javaWSSourceDir,wsserviceInf+".java");
 		if(serviceinf.exists())
 		{
 			serviceinf.delete();
 		}
+		File serviceimpl = new File(this.javaWSSourceDir,wsserviceimpl+".java");
+		if(serviceimpl.exists())
+		{
+			serviceimpl.delete();
+		}
 		 String entityPackageInfo = this.moduleMetaInfo.getPackagePath() + "." + this.moduleMetaInfo.getModuleName()+".ws";
 		try {
-			genWSServiceInf(serviceinfName,entityPackageInfo,serviceinf, this.moduleMetaInfo.getModuleCNName() + "webservice服务和hessian服务接口.") ;
+			genWSServiceInf(wsserviceInf,entityPackageInfo,serviceinf, this.moduleMetaInfo.getModuleCNName() + "webservice服务和hessian服务接口.") ;
+			genWSServiceImpl(wsserviceimpl,wsserviceInf, this.moduleMetaInfo.getModuleCNName() + "webservice服务和hessian服务实现类.",  entityPackageInfo ,serviceimpl);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -664,14 +675,15 @@ public class GencodeServiceImpl {
 		fields.add(dao);
 		return fields; 
 	}
-	
 	private List<Field> getWSServiceImplFields()
 	{
 		List<Field> fields = new ArrayList<Field>();
+	
 		
-		Field service = new Field(); 		
-		service.setFieldName("executor");
-		service.setType("ConfigSQLExecutor");
+		Field service = new Field(); 
+		
+		service.setFieldName(this.serviceParamName);
+		service.setType(this.serviceInfType);
 		fields.add(service);
 		return fields; 
 	}
@@ -694,10 +706,10 @@ public class GencodeServiceImpl {
 		 context.put("gendate", this.moduleMetaInfo.getDate());
 		 context.put("author", this.moduleMetaInfo.getAuthor());
 		 context.put("version", this.moduleMetaInfo.getVersion());
-		 context.put("componentType",1);
+		 context.put("componentType",Constant.component_type_serivceimpl);
 		 context.put("moduleCNName",this.moduleMetaInfo.getModuleCNName());
 		 
-		 List<Method> methods = getMethods(1);
+		 List<Method> methods = getMethods(Constant.component_type_serivceimpl);
 		 context.put("methods", methods);
 		 
 	 
@@ -708,10 +720,10 @@ public class GencodeServiceImpl {
 	private void genWSServiceImpl(String serviceName,String serviceInfname, String description, String entityPackageInfo ,File service) throws Exception
 	{
 		 
-		 List<String> imports = evalServiceImplImport();
+		 List<String> imports = evalWSServiceImplImport();
 		 Template serviceinftempalte = VelocityUtil.getTemplate("gencode/java/serviceimpljava.vm");
 		 VelocityContext context = new VelocityContext();
-		 List<Field> fields = getServiceImplFields(serviceName);
+		 List<Field> fields = getWSServiceImplFields();
 		 List<Annotation> classannos = new ArrayList<Annotation>();
 		 Annotation anno = new Annotation();
 		 anno.setName("WebService");
@@ -730,10 +742,10 @@ public class GencodeServiceImpl {
 		 context.put("gendate", this.moduleMetaInfo.getDate());
 		 context.put("author", this.moduleMetaInfo.getAuthor());
 		 context.put("version", this.moduleMetaInfo.getVersion());
-		 context.put("componentType",1);
+		 context.put("componentType",Constant.component_type_wsserivceimpl);
 		 context.put("moduleCNName",this.moduleMetaInfo.getModuleCNName());
 		 
-		 List<Method> methods = getMethods(1);
+		 List<Method> methods = getMethods(Constant.component_type_wsserivceimpl);
 		 context.put("methods", methods);
 		 
 	 
@@ -1100,6 +1112,11 @@ public class GencodeServiceImpl {
 			evalsql(sql);
 			this.sqls.add(sql);
 		}
+		else if(classtype == Constant.component_type_wsserivceimpl)
+		{
+			setMethodBody(add,Constant.add,entityName,entityParamName,this.moduleMetaInfo.getEncodecharset(),exceptionName,Constant.component_type_wsserivceimpl);
+			
+		}
 		
 		methods.add(add);		
 		
@@ -1152,7 +1169,11 @@ public class GencodeServiceImpl {
 			evalsql(sql);
 			this.sqls.add(sql);
 		}
-		
+		else if(classtype == Constant.component_type_wsserivceimpl)
+		{
+			setMethodBody(delete,Constant.delete,entityName,param.getName(),this.moduleMetaInfo.getEncodecharset(),exceptionName,Constant.component_type_wsserivceimpl);
+			
+		}
 		methods.add(delete);
 		
 		Method deletebatch = new Method();//定义删除方法
@@ -1197,6 +1218,11 @@ public class GencodeServiceImpl {
 		deletebatch.setParams(params);
 		if(classtype == Constant.component_type_serivceimpl)
 			setMethodBody(deletebatch,Constant.deletebatch,entityName,param.getName(),this.moduleMetaInfo.getEncodecharset(),exceptionName,Constant.component_type_serivceimpl);
+		else if(classtype == Constant.component_type_wsserivceimpl)
+		{
+			setMethodBody(deletebatch,Constant.deletebatch,entityName,param.getName(),this.moduleMetaInfo.getEncodecharset(),exceptionName,Constant.component_type_wsserivceimpl);
+			
+		}
 		 
 		
 		methods.add(deletebatch);
@@ -1232,7 +1258,11 @@ public class GencodeServiceImpl {
 			evalsql(sql);
 			this.sqls.add(sql);
 		}
-		
+		else if(classtype == Constant.component_type_wsserivceimpl)
+		{
+			setMethodBody(update,Constant.update,entityName,entityParamName,this.moduleMetaInfo.getEncodecharset(),exceptionName,Constant.component_type_wsserivceimpl);
+			
+		}
 		methods.add(update);
 		
 		Method get = new Method();//定义获取方法
@@ -1298,7 +1328,11 @@ public class GencodeServiceImpl {
 			evalsql(sql);
 			this.sqls.add(sql);
 		}
-		
+		else if(classtype == Constant.component_type_wsserivceimpl)
+		{
+			setMethodBody(get,Constant.get,entityName,param.getName(),this.moduleMetaInfo.getEncodecharset(),exceptionName,Constant.component_type_wsserivceimpl);
+			
+		}
 		methods.add(get);
 		
 		Method paginequery = new Method();//定义获取方法
@@ -1376,6 +1410,11 @@ public class GencodeServiceImpl {
 			evalsql(sql);
 			this.sqls.add(sql);
 		}
+		else if(classtype == Constant.component_type_wsserivceimpl)
+		{
+			setMethodBody(paginequery,Constant.paginequery,entityName,"conditions",this.moduleMetaInfo.getEncodecharset(),exceptionName,Constant.component_type_wsserivceimpl);
+			
+		}
 		
 		
 		methods.add(paginequery);
@@ -1419,22 +1458,11 @@ public class GencodeServiceImpl {
 		{
 			setMethodBody(query,Constant.query,entityName,"conditions",this.moduleMetaInfo.getEncodecharset(),exceptionName,Constant.component_type_serivceimpl);
 		}
-		
+		else if(classtype == Constant.component_type_wsserivceimpl)
+		{
+			setMethodBody(query,Constant.query,entityName,"conditions",this.moduleMetaInfo.getEncodecharset(),exceptionName,Constant.component_type_wsserivceimpl);
+		}
 		methods.add(query);
-		
-//		Method count = new Method();//定义获取方法
-//		query.setMethodname("queryList"+entityName+"s");
-//		query.setReturntype("List<"+entityName+">");		
-//		params = new ArrayList<MethodParam>();
-//		param = new MethodParam();
-//		
-//		
-//		param.setType("Map");
-//		param.setName("conditions");
-//		params.add(param);
-//		query.setExceptions(exceptions);		
-//		query.setParams(params);
-//		methods.add(query);
 		return methods;
 	}
 	
@@ -1574,9 +1602,19 @@ public class GencodeServiceImpl {
 		imports.add("com.frameworkset.common.poolman.ConfigSQLExecutor");
 		imports.add("org.apache.log4j.Logger");		
 		imports.add("java.util.List");
-		imports.add("java.util.ArrayList");
 		
 		imports.add("com.frameworkset.orm.transaction.TransactionManager");
+		
+		return imports;
+	}
+	
+	private List<String> evalWSServiceImplImport( ) {
+		List<String> imports = new ArrayList<String>();
+		imports.add(this.moduleMetaInfo.getPackagePath() + "." + this.moduleMetaInfo.getModuleName()+".entity.*");
+		imports.add(this.moduleMetaInfo.getPackagePath() + "." + this.moduleMetaInfo.getModuleName()+".service.*");
+		imports.add("com.frameworkset.util.ListInfo");
+		imports.add("java.util.List");
+		imports.add("javax.jws.WebService");	
 		
 		return imports;
 	}
@@ -1833,6 +1871,18 @@ import com.frameworkset.util.StringUtil;
 
 	public void setWsclassinf(String wsclassinf) {
 		this.wsclassinf = wsclassinf;
+	}
+
+	public String getServicePort() {
+		return serviceParamName;
+	}
+	
+	public String getServiceParamName() {
+		return serviceParamName;
+	}
+
+	public void setServiceParamName(String serviceParamName) {
+		this.serviceParamName = serviceParamName;
 	}
 
 }

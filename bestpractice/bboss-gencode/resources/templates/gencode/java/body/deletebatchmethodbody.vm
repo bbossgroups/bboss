@@ -29,4 +29,14 @@ try {
 	log.error("delete Batch ${paramName} failed:",e);
 	return StringUtil.formatBRException(e);
 } 
+#elseif($componentType == 5)//webservice服务
+try {
+	${entityVarName}Service.deleteBatch${entityName}( ${paramName});
+}
+ catch ($exception e) {
+	throw e;
+}
+ catch (Throwable e) {
+	throw new $exception$start"batch delete ${entityName} failed::${paramName}="+${paramName},e$end;
+}
 #end

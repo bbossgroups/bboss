@@ -32,6 +32,7 @@ public class GenMVCConf extends AbstractGencode{
 			 context.put("sqlfile", gencodeService.getSqlfilepath());
 			 context.put("serviceClass", gencodeService.getServiceClass());
 			 context.put("controlClass", gencodeService.getControlClass());
+			 context.put("wsserviceClass", gencodeService.getWsclassimpl());
 			 
 			 context.put("moduleCNName", gencodeService.getModuleMetaInfo().getModuleCNName());
 			 context.put("moduleName", gencodeService.getModuleMetaInfo().getModuleName());

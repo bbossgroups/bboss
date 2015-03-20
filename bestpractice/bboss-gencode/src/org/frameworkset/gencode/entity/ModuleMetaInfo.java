@@ -43,7 +43,7 @@ public class ModuleMetaInfo {
 	/**
 	 * 生成代码时是否清除源码目录
 	 */
-	private boolean clearSourcedir;
+	private boolean clearSourcedir = true;
 	
 	private boolean exportExcel;
 	private boolean importExcel;

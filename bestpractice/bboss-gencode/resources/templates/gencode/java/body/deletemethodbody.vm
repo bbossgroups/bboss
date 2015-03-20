@@ -18,5 +18,15 @@ try {
 	log.error("delete ${entityName} failed:",e);
 	return StringUtil.formatBRException(e);
 }
+#elseif($componentType == 5)//webservice服务
+try {
+	${entityVarName}Service.delete${entityName}${start}$paramName$end;
+}
+ catch ($exception e) {
+	throw e;
+}
+ catch (Throwable e) {
+	throw new $exception$start"delete ${entityName} failed::$paramName="+$paramName,e$end;
+}
 #end 
  
