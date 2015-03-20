@@ -2,9 +2,13 @@ package org.frameworkset.gencode.core;
 
 public class Constant {
 	public static final int component_type_serviceinf = 0;
+	
 	public static final int component_type_serivceimpl = 1;
+	
 	public static final int component_type_actionimpl = 2;
 	public static final int component_type_actioninf = 3;
+	public static final int component_type_wsserviceinf = 4;
+	public static final int component_type_wsserivceimpl = 5;
 	public static final String add = "add";
 	public static final String update = "update";
 	public static final String delete = "delete";

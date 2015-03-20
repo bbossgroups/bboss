@@ -18,16 +18,8 @@ $end
 #end#end 
 $if(${m}sortKey && !${m}sortKey.$equal(""))
 order by ${m}sortKey ${if}(${m}sortDesc)desc$else asc$end
-#if($sorts && $sorts.size() > 0)
-#foreach($sort in $sorts)
-$if(!${m}sortKey.$equal("$sort.columnname"))
-	,$sort.columnname#if($sort.desc) desc#else asc#end
-$end	
-#end
-#end
 $else
 #if($sorts && $sorts.size() > 0)
 order by #foreach($sort in $sorts)
 #if($velocityCount >0),#end$sort.columnname#if($sort.desc) desc#else asc#end#end#end
-
 $end

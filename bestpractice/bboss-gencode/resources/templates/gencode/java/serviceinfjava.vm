@@ -38,7 +38,7 @@ import $import;
 	  #if($anno.params.size() > 0)
 		  $start
 		  	#foreach($annoparam in $anno.params)
-		  		#if($velocityCount>0),#end$annoparam.name$equal$annoparam.value
+		  		#if($velocityCount>0),#end$annoparam.name$equal#if($annoparam.vtype == 1)"#end$annoparam.value#if($annoparam.vtype == 1)"#end
 		  	#end
 		  $end
 	  #end
@@ -50,7 +50,16 @@ public interface $classname
 	private $filed.type $filed.fieldName #if($filed.defaultValue)$equal$filed.defaultValue#end;	
 #end	
 #foreach($method in $methods)	
-	public $method.returntype $method.methodname$start
+	public #foreach($anno in $method.returnannos)
+			  @$anno.name
+			  #if($anno.params.size() > 0)
+				  $start
+				  	#foreach($annoparam in $anno.params) 
+				  		#if($velocityCount>0),#end$annoparam.name$equal#if($annoparam.vtype == 1)"#end$annoparam.value#if($annoparam.vtype == 1)"#end
+				  	#end
+				  $end
+			  #end
+			#end $method.returntype $method.methodname$start
 		#foreach($param in $method.params)
 			#if($velocityCount>0),#end 
 			#foreach($anno in $param.annos)
@@ -58,7 +67,7 @@ public interface $classname
 			  #if($anno.params.size() > 0)
 				  $start
 				  	#foreach($annoparam in $anno.params) 
-				  		#if($velocityCount>0),#end$annoparam.name$equal$annoparam.value
+				  		#if($velocityCount>0),#end$annoparam.name$equal#if($annoparam.vtype == 1)"#end$annoparam.value#if($annoparam.vtype == 1)"#end
 				  	#end
 				  $end
 			  #end

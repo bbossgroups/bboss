@@ -18,7 +18,7 @@
 	</div>
 	</pg:yes>
 	<pg:no>
-		<pg:pager scope="request"  data="${entityVarName}s" desc="false" isList="false" containerid="custombackContainer" selector="customContent">
+		<pg:pager scope="request"  data="${entityVarName}s" desc="true" isList="false" containerid="custombackContainer" selector="customContent">
 #foreach($condition in $conditions)
 		<pg:param name="${condition.fieldName}"/>
 #end	
