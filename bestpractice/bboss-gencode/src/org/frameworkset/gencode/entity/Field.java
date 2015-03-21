@@ -7,6 +7,7 @@ public class Field {
 	private String fieldName;
 	private String mfieldName;
 	private String fieldCNName;
+	private String fieldAsciiCNName;
 	private String type;
 	private String defaultValue;
 	private boolean staticed;
@@ -116,6 +117,12 @@ public class Field {
 	}
 	public void setDefaultSortField(boolean defaultSortField) {
 		this.defaultSortField = defaultSortField;
+	}
+	public String getFieldAsciiCNName() {
+		return fieldAsciiCNName;
+	}
+	public void setFieldAsciiCNName(String fieldAsciiCNName) {
+		this.fieldAsciiCNName = fieldAsciiCNName;
 	}
 
 }

@@ -2,7 +2,6 @@ package org.frameworkset.gencode.core;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
@@ -13,6 +12,7 @@ import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.frameworkset.gencode.core.ui.GenAddJsp;
+import org.frameworkset.gencode.core.ui.GenI8N;
 import org.frameworkset.gencode.core.ui.GenListInfoJsp;
 import org.frameworkset.gencode.core.ui.GenListJsp;
 import org.frameworkset.gencode.core.ui.GenMainJsp;
@@ -36,6 +36,7 @@ import com.frameworkset.common.poolman.sql.TableMetaData;
 import com.frameworkset.orm.engine.EngineException;
 import com.frameworkset.orm.engine.model.NameFactory;
 import com.frameworkset.orm.engine.model.NameGenerator;
+import com.frameworkset.util.FileUtil;
 import com.frameworkset.util.SimpleStringUtil;
 import com.frameworkset.util.VelocityUtil;
 
@@ -58,8 +59,11 @@ public class GencodeServiceImpl {
 	private File javaActionSourceDir;
 	private File jspSourceDir;
 	private String relativePath;//jsp访问相对地址
+	private String namespacei18n;
 	private File mvcConfDir;
 	private File mvcconf ;
+	private File i18nzh_CN ;
+	private File i18nen_US ;
 	private File readme ;
 	private File mainJsp ;
 	private File listJsp ;
@@ -106,8 +110,21 @@ public class GencodeServiceImpl {
 		genPersistentConfigfile();
 		genUI();
 		 genMVCConf();
+		 if(this.moduleMetaInfo.isGenI18n())
+		 {
+			 genI18N();
+		 }
 		 genReadme();
+		 
 		return "success";
+	}
+	
+	private void genI18N()
+	{
+		GenI8N genI8N = new GenI8N(this,false);//en_US
+		genI8N.gen();
+		genI8N = new GenI8N(this,true);//zh_CN
+		genI8N.gen();
 	}
 	
 	/**
@@ -169,7 +186,7 @@ public class GencodeServiceImpl {
 		}
 		else if(moduleMetaInfo.isClearSourcedir())
 		{
-			f.delete();
+			FileUtil.deleteSubfiles(f.getAbsolutePath());
 			f.mkdirs();
 		}
 		this.rootdir = f;
@@ -220,9 +237,15 @@ public class GencodeServiceImpl {
 			jspSourceDir.mkdirs();
 		}
 		if(this.moduleMetaInfo.getSystem() == null || this.moduleMetaInfo.getSystem().equals(""))
+		{
 			this.relativePath = moduleMetaInfo.getModuleName();
+			this.namespacei18n = moduleMetaInfo.getModuleName();
+		}
 		else
+		{
 			this.relativePath =   this.moduleMetaInfo.getSystem() + "/"+moduleMetaInfo.getModuleName();
+			namespacei18n =this.moduleMetaInfo.getSystem() + "."+moduleMetaInfo.getModuleName();
+		}
 		
 		if(this.moduleMetaInfo.getSystem() == null || this.moduleMetaInfo.getSystem().equals(""))
 			mvcConfDir = new File(this.rootdir,"WebRoot/WEB-INF/conf/"+ moduleMetaInfo.getModuleName());
@@ -234,16 +257,18 @@ public class GencodeServiceImpl {
 			mvcConfDir.mkdirs();
 		}
 		mvcconf = new File(getMvcConfDir(),"bboss-"+getModuleMetaInfo().getModuleName()+".xml");
+		this.i18nen_US = new File(getMvcConfDir(),"messages_"+getModuleMetaInfo().getModuleName()+"_en_US.properties");
+		this.i18nzh_CN = new File(getMvcConfDir(),"messages_"+getModuleMetaInfo().getModuleName()+"_zh_CN.properties");
 		readme = new File(this.rootdir,"readme.txt");
 		webxmlFile = new File(this.rootdir,"WebRoot/WEB-INF/web.xml");
-		if(!webxmlFile.exists())
-		{
-			try {
-				webxmlFile.createNewFile();
-			} catch (IOException e) {
-				log.error("Create web.xml failed:"+webxmlFile.getAbsolutePath(),e);
-			}
-		}
+//		if(!webxmlFile.exists())
+//		{
+//			try {
+//				webxmlFile.createNewFile();
+//			} catch (IOException e) {
+//				log.error("Create web.xml failed:"+webxmlFile.getAbsolutePath(),e);
+//			}
+//		}
 		TableMetaData tableMeta = DBUtil.getTableMetaData(this.moduleMetaInfo.getDatasourceName(), this.moduleMetaInfo.getTableName());
 		if(allfields == null)
 		{
@@ -252,12 +277,32 @@ public class GencodeServiceImpl {
 			 for(Field field:allfields)
 			 {
 				 field.setFieldCNName(field.getFieldName());
+				 field.setFieldAsciiCNName(field.getFieldName());
 			 }
+		}
+		else
+		{
+			if(this.moduleMetaInfo.isGenI18n())
+			{
+				handleI18n();
+			}
 		}
 		 initConditions();
 		 initSortFields();
 	}
-	
+	private void handleI18n()
+	{
+		if(this.allfields != null && this.allfields.size() > 0)
+		{
+			for(Field f:this.allfields)
+			{
+				if(f.getFieldCNName() != null)
+					f.setFieldAsciiCNName(SimpleStringUtil.native2ascii(f.getFieldCNName()));
+				else
+					f.setFieldAsciiCNName(f.getFieldName());
+			}
+		}
+	}
 	private void initConditions()
 	{
 		if(this.conditions != null )
@@ -1883,6 +1928,18 @@ import com.frameworkset.util.StringUtil;
 
 	public void setServiceParamName(String serviceParamName) {
 		this.serviceParamName = serviceParamName;
+	}
+
+	public File getI18nzh_CN() {
+		return i18nzh_CN;
+	}
+
+	public File getI18nen_US() {
+		return i18nen_US;
+	}
+
+	public String getNamespacei18n() {
+		return namespacei18n;
 	}
 
 }

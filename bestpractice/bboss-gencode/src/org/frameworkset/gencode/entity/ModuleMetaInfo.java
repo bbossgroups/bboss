@@ -35,10 +35,9 @@ public class ModuleMetaInfo {
 	 * 表主键名称，对应tableinfo表中的表名称
 	 */
 	private String pkname;
-	private boolean genWebservice;
-	private boolean genHessian;
-	private String hessianServicePort;
-	private String webservicePort;
+	private boolean genRPCservice;
+	private boolean genI18n;
+	
 	private boolean genFront;
 	/**
 	 * 生成代码时是否清除源码目录
@@ -91,36 +90,14 @@ public class ModuleMetaInfo {
 	public void setTableName(String tableName) {
 		this.tableName = tableName;
 	}
-	public boolean isGenWebservice() {
-		return genWebservice;
-	}
-	public void setGenWebservice(boolean genWebservice) {
-		this.genWebservice = genWebservice;
-	}
-	public boolean isGenHessian() {
-		return genHessian;
-	}
-	public void setGenHessian(boolean genHessian) {
-		this.genHessian = genHessian;
-	}
+	
 	public boolean isGenFront() {
 		return genFront;
 	}
 	public void setGenFront(boolean genFront) {
 		this.genFront = genFront;
 	}
-	public String getHessianServicePort() {
-		return hessianServicePort;
-	}
-	public void setHessianServicePort(String hessianServicePort) {
-		this.hessianServicePort = hessianServicePort;
-	}
-	public String getWebservicePort() {
-		return webservicePort;
-	}
-	public void setWebservicePort(String webservicePort) {
-		this.webservicePort = webservicePort;
-	}
+
 	public boolean isExportExcel() {
 		return exportExcel;
 	}
@@ -259,6 +236,18 @@ public class ModuleMetaInfo {
 	}
 	public void setSystem(String system) {
 		this.system = system;
+	}
+	public boolean isGenRPCservice() {
+		return genRPCservice;
+	}
+	public void setGenRPCservice(boolean genRPCservice) {
+		this.genRPCservice = genRPCservice;
+	}
+	public boolean isGenI18n() {
+		return genI18n;
+	}
+	public void setGenI18n(boolean genI18n) {
+		this.genI18n = genI18n;
 	}
 
 }

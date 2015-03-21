@@ -172,6 +172,8 @@ alter table TA_AUTHO_AREA
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String date = format.format(new Date());
 		moduleMetaInfo.setDate(date);//指定日期
+		moduleMetaInfo.setGenI18n(true);
+		moduleMetaInfo.setClearSourcedir(true);
 		gencodeService.setTheme("default");
 		
 		/************以下代码片段指定界面查询字段，以及查询条件组合方式、是否是模糊查询等*******/

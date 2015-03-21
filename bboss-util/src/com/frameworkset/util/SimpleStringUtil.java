@@ -2811,5 +2811,48 @@ outStr = "2010年02月07日11时许，周灵颖报警：在2路公交车上被�
 			
 		};
     }
+    
+    public static String native2ascii( String s )
+	   {
+	      StringBuffer res = new StringBuffer();
+	      for ( int i = 0; i < s.length(); i++ ){
+	         char ch = s.charAt( i );
+	         int val = (int) ch;
+	         if ( ch == '\r' ) continue;
+	         if ( val >= 0 && val < 128 && ch != '\n' && ch != '\\' ) res.append( ch );
+	         else{
+	            res.append( "\\u" );
+	            String hex = Integer.toHexString( val );
+	            for( int j = 0; j < 4 - hex.length(); j++ ) res.append( "0" );
+	            res.append( hex );
+	         }
+	      }
+	      return res.toString();
+	   }
+	public static String ascii2native( String s )
+	   {
+	      StringBuffer res = new StringBuffer(s.length());
+	      for ( int i = 0; i < s.length(); i++ ){
+	         char ch = s.charAt( i );
+	         if (ch == '\\' && i+1>=s.length()){
+	            res.append(ch);
+	            break;
+	         }
+	         if ( ch != '\\') res.append( ch );
+	         else {
+	             switch (s.charAt(i+1)) {
+	             case 'u': 
+	                 res.append( (char) Integer.parseInt( s.substring( i+2, i+6 ), 16 ) );
+	                 i += 5;
+	                 break;
+	             case 'n': res.append('\n'); i++; break;
+	             case 't': res.append('\t'); i++; break;
+	             case 'r': res.append('\r'); i++; break;
+	             default: break;
+	             }
+	         }
+	      }
+	      return res.toString();
+	   }
 	
 }
