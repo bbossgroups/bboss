@@ -221,10 +221,13 @@ public class ListInfo implements Serializable{
 	
 	public ListInfo(RListInfo listInfo)
 	{
-		this.totalSize = listInfo.getTotalSize();
-		this.more = listInfo.isMore();
-		this.maxPageItems = listInfo.getMaxPageItems();
-		this.resultSize = listInfo.getResultSize();
-		this.datas = listInfo.getDatas();
+		if(listInfo != null)
+		{
+			this.totalSize = listInfo.getTotalSize();
+			this.more = listInfo.isMore();
+			this.maxPageItems = listInfo.getMaxPageItems();
+			this.resultSize = listInfo.getResultSize();
+			this.datas = listInfo.getDatas();
+		}
 	}
 }

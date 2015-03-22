@@ -12,11 +12,14 @@ public class RListInfo  implements Serializable{
 	}
 	
 	public RListInfo(ListInfo listInfo) {
-		this.totalSize = listInfo.getTotalSize();
-		this.more = listInfo.isMore();
-		this.maxPageItems = listInfo.getMaxPageItems();
-		this.resultSize = listInfo.getResultSize();
-		this.datas = listInfo.getDatas();
+		if(listInfo != null)
+		{
+			this.totalSize = listInfo.getTotalSize();
+			this.more = listInfo.isMore();
+			this.maxPageItems = listInfo.getMaxPageItems();
+			this.resultSize = listInfo.getResultSize();
+			this.datas = listInfo.getDatas();
+		}
 		
 	}
 	
