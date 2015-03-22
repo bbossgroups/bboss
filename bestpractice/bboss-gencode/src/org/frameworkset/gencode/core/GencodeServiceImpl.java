@@ -1383,7 +1383,10 @@ public class GencodeServiceImpl {
 		
 		Method paginequery = new Method();//定义获取方法
 		paginequery.setMethodname("queryListInfo"+entityName+"s");
-		paginequery.setReturntype("ListInfo");		
+		if(classtype == Constant.component_type_wsserviceinf || classtype == Constant.component_type_wsserivceimpl)
+			paginequery.setReturntype("RListInfo");		
+		else
+			paginequery.setReturntype("ListInfo");
 		if(classtype == Constant.component_type_wsserviceinf)
 		{
 			/**
@@ -1632,7 +1635,7 @@ public class GencodeServiceImpl {
 		List<String> imports = new ArrayList<String>();
 		imports.add(this.moduleMetaInfo.getPackagePath() + "." + this.moduleMetaInfo.getModuleName()+".entity.*");
 		imports.add(this.moduleMetaInfo.getPackagePath() + "." + this.moduleMetaInfo.getModuleName()+".service.*");
-		imports.add("com.frameworkset.util.ListInfo");
+		imports.add("com.frameworkset.util.RListInfo");
 		imports.add("java.util.List");		
 		imports.add("javax.jws.WebParam");
 		imports.add("javax.jws.WebResult");
@@ -1658,6 +1661,7 @@ public class GencodeServiceImpl {
 		List<String> imports = new ArrayList<String>();
 		imports.add(this.moduleMetaInfo.getPackagePath() + "." + this.moduleMetaInfo.getModuleName()+".entity.*");
 		imports.add(this.moduleMetaInfo.getPackagePath() + "." + this.moduleMetaInfo.getModuleName()+".service.*");
+		imports.add("com.frameworkset.util.RListInfo");
 		imports.add("com.frameworkset.util.ListInfo");
 		imports.add("java.util.List");
 		imports.add("javax.jws.WebService");	

@@ -38,7 +38,7 @@ try {
 #elseif($componentType == 5)//webservice服务
 try {
 	ListInfo ${entityVarName}s = ${entityVarName}Service.queryListInfo${entityName}s(conditions,offset,pagesize);
-	return ${entityVarName}s;
+	return new RListInfo(${entityVarName}s);
 }
  catch ($exception e) {
 	throw e;

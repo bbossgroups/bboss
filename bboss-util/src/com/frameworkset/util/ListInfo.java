@@ -218,4 +218,13 @@ public class ListInfo implements Serializable{
 //		MoreListInfo moreList = new MoreListInfo(listInfo.getResultSize() < listInfo.getMaxPageItems(),listInfo.getResultSize(),listInfo.getDatas());
 		return buildMoreListInfo(this);
 	}
+	
+	public ListInfo(RListInfo listInfo)
+	{
+		this.totalSize = listInfo.getTotalSize();
+		this.more = listInfo.isMore();
+		this.maxPageItems = listInfo.getMaxPageItems();
+		this.resultSize = listInfo.getResultSize();
+		this.datas = listInfo.getDatas();
+	}
 }
