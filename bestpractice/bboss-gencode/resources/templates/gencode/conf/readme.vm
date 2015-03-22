@@ -1,9 +1,9 @@
 /**
-* 自动生成的${moduleCNName}模块部署配置代码块：
-* 菜单配置：直接拷贝到module.xml中
-* 组件部署配置：直接拷贝到web.xml中
-* webservice服务和hessian服务调用方法
-*
+* 自动生成的${moduleCNName}模块配置使用说明：
+* 1.菜单配置：直接拷贝到module.xml中
+* 2.组件部署配置：直接拷贝到web.xml中
+* 3.webservice服务和hessian服务调用方法
+* 4.国际化配置说明
 */
 1.菜单配置（将下属内容添加到实际工程目录下resources/module.xml中即可）：
 <item name="$moduleCNName"
@@ -14,7 +14,7 @@
 	</workspace>
 </item> 
 
-2.装载mvc模块(将contextConfigLocation中的内容追加到实际工程的web.xml中即可):
+2.装载mvc模块(将contextConfigLocation中的内容追加到实际工程的web.xml中即可),如果配置了国际化机制，还需加载国际化属性配置文件:
 <servlet>
     <servlet-name>mvc</servlet-name>
     <servlet-class>org.frameworkset.web.servlet.DispatchServlet</servlet-class>
@@ -23,7 +23,13 @@
         <param-value>
          /WEB-INF/conf/#if($system && !$system.equals(""))${system}#else$moduleName#end/bboss-*.xml
         </param-value>
-    </init-param>         
+    </init-param> 
+#if($genI18n)        
+    <init-param>
+			<param-name>messagesources</param-name>
+			<param-value>/WEB-INF/conf/#if($system && !$system.equals(""))${system}#else$moduleName#end/messages_$moduleName</param-value>
+	</init-param>  
+#end		  
 </servlet>
 
 3.webservice服务和hessian服务调用方法
@@ -41,3 +47,4 @@ wsServiceClientFactory.setAddress(url);
 wsServiceClientFactory.setServiceClass(${wsclassinf}.class);
 ${wsclassinf} $servicePort = (${wsclassinf})wsServiceClientFactory.create();
 //call some method with $servicePort here.
+

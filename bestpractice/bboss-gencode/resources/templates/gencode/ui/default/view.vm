@@ -10,7 +10,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>查看${moduleCNName}</title>
+<title>查看#if(!$genI18n)${moduleCNName}#else<pg:message code="$namespacei18n.$moduleName"/>#end</title>
 <%@ include file="/common/jsp/css.jsp"%>
 </head>
 <body>
@@ -27,7 +27,7 @@
 						<tr>
 						#end
 						<th width=85px >
-							$field.fieldCNName：
+							#if(!$genI18n)$field.fieldCNName#else<pg:message code="$namespacei18n.$field.fieldName"/>#end：
 						</th>
 						<td width=140px>
 							<input id="$field.fieldName" name="$field.fieldName" type="text" value="<pg:cell colName="$field.fieldName"/>"

@@ -277,7 +277,8 @@ public class GencodeServiceImpl {
 			 for(Field field:allfields)
 			 {
 				 field.setFieldCNName(field.getFieldName());
-				 field.setFieldAsciiCNName(field.getFieldName());
+				 if(this.moduleMetaInfo.isGenI18n())
+					 field.setFieldAsciiCNName(field.getFieldName());
 			 }
 		}
 		else

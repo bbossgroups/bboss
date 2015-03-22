@@ -4,6 +4,8 @@ ${shell}author:$author
 ${shell}CopyRight:$company
 ${shell}版本:$version 
 ${shell}Date: $gendate
+$namespacei18n.$moduleName=#if($isZh)$moduleAsciiCNName#else$moduleName#end
+
 #foreach($field in $fields)	  
 $namespacei18n.$field.fieldName=#if($isZh)$field.fieldAsciiCNName#else$field.fieldName#end
 

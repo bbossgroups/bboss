@@ -42,6 +42,8 @@ public class GenI8N   extends AbstractGencode {
 			 context.put("fields", gencodeService.getAllfields());
 			 context.put("isZh", isZh);
 			 context.put("moduleCNName", gencodeService.getModuleMetaInfo().getModuleCNName());
+			 context.put("moduleName", gencodeService.getModuleMetaInfo().getModuleName());
+			 context.put("moduleAsciiCNName", SimpleStringUtil.native2ascii(gencodeService.getModuleMetaInfo().getModuleCNName()));
 			 
 			 context.put("namespacei18n", gencodeService.getNamespacei18n());
 			 

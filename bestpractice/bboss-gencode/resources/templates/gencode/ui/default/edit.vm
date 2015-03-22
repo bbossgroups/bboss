@@ -29,7 +29,7 @@
 						<tr>
 						#end
 						<th width=85px >
-							$field.fieldCNName：
+							#if(!$genI18n)$field.fieldCNName#else<pg:message code="$namespacei18n.$field.fieldName"/>#end：
 						</th>
 						<td width=140px>
 							<input id="$field.fieldName" name="$field.fieldName" type="text" value="<pg:cell colName="$field.fieldName"/>"

@@ -31,9 +31,9 @@
 				<th>序号</th>				
 #foreach($field in $fields)
 #if($field.sortField)				
-	       		<pg:title sort="true" type="th" align="center" colName="$field.columnname" title="$field.fieldCNName"/>
+	       		<pg:title sort="true" type="th" align="center" colName="$field.columnname" #if(!$genI18n)title="$field.fieldCNName"#else titlecode="$namespacei18n.$field.fieldName"#end/>
 #else
-	       		<th>$field.fieldCNName</th>
+	       		<th>#if(!$genI18n)$field.fieldCNName#else<pg:message code="$namespacei18n.$field.fieldName"/>#end</th>
 #end	       		
 #end	  		
 				<th>操作</th>

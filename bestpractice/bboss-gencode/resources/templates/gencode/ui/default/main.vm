@@ -42,7 +42,7 @@
 												#if($velocityCount > 0)</tr>#end
 											<tr>
 											#end
-												<th>${condition.fieldName}：</th>
+												<th>#if(!$genI18n)${condition.fieldCNName}#else<pg:message code="$namespacei18n.$condition.fieldName"/>#end：</th>
 												<td><input id="${condition.fieldName}" name="${condition.fieldName}" type="text"
 														value="" class="w120"/></td>
 												

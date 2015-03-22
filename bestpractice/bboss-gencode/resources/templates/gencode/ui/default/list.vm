@@ -27,7 +27,7 @@
 								onClick="checkAll('CKA','CK')"></th>
 				<th>序号</th>							
 #foreach($field in $fields)
-	       		<th>$field.fieldCNName</th>       		
+	       		<th>#if(!$genI18n)$field.fieldCNName#else<pg:message code="$namespacei18n.$field.fieldName"/>#end</th>       		
 #end	  		
 				<th>操作</th>
 	       	</tr>	
