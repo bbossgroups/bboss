@@ -707,7 +707,7 @@ var App = function () {
     }
 
     // Handle Theme Settings
-    var handleTheme = function () {
+    var handleTheme = function (relativePath) {
 
         var panel = $('.theme-panel');
 
@@ -815,7 +815,10 @@ var App = function () {
 
         // handle theme colors
         var setColor = function (color) {
-            $('#style_color').attr("href", "assets/css/themes/" + color + ".css");
+        	if(relativePath && relativePath != '')
+        		$('#style_color').attr("href", relativePath + "/assets/css/themes/" + color + ".css");
+        	else
+        		$('#style_color').attr("href", "assets/css/themes/" + color + ".css");
             $.cookie('style_color', color);
         }
         setColor('light');
@@ -851,7 +854,7 @@ var App = function () {
     return {
 
         //main function to initiate the theme
-        init: function () {
+        init: function (relativePath) {
 
             //IMPORTANT!!!: Do not modify the core handlers call order.
 
@@ -870,7 +873,7 @@ var App = function () {
             handleSidebarToggler(); // handles sidebar hide/show            
             handleFixInputPlaceholderForIE(); // fixes/enables html5 placeholder attribute for IE9, IE8
             handleGoTop(); //handles scroll to top functionality in the footer
-            handleTheme(); // handles style customer tool
+            handleTheme(relativePath); // handles style customer tool
 
             //ui component handlers
             handleFancybox() // handle fancy box

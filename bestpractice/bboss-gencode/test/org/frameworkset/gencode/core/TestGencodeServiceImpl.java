@@ -173,8 +173,8 @@ alter table TA_AUTHO_AREA
 		String date = format.format(new Date());
 		moduleMetaInfo.setDate(date);//指定日期
 		moduleMetaInfo.setGenI18n(true);//生成国际化属性配置文件
-		moduleMetaInfo.setClearSourcedir(true);
-		gencodeService.setTheme("default");
+		moduleMetaInfo.setClearSourcedir(true);//是否清空源码目录
+		gencodeService.setTheme("default");//设置默认主题风格
 		
 		/************以下代码片段指定界面查询字段，以及查询条件组合方式、是否是模糊查询等*******/
 		ConditionField bm = new ConditionField();

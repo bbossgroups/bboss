@@ -21,19 +21,20 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 	<meta content="" name="author" />
 	<meta name="MobileOptimized" content="320">
 	<!-- BEGIN GLOBAL MANDATORY STYLES -->          
-	<link href="assets/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
-	<link href="assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-	<link href="assets/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css"/>
+	<link href="../../assets/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+	<link href="../../assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+	<link href="../../assets/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css"/>
+	<link rel="stylesheet" type="text/css" href="../../assets/plugins/select2/select2_metro.css" />
 	<!-- END GLOBAL MANDATORY STYLES -->
 	<!-- BEGIN THEME STYLES --> 
-	<link href="assets/css/style-metronic.css" rel="stylesheet" type="text/css"/>
-	<link href="assets/css/style.css" rel="stylesheet" type="text/css"/>
-	<link href="assets/css/style-responsive.css" rel="stylesheet" type="text/css"/>
-	<link href="assets/css/plugins.css" rel="stylesheet" type="text/css"/>
-	<link href="assets/css/themes/default.css" rel="stylesheet" type="text/css" id="style_color"/>
-	<link href="assets/css/custom.css" rel="stylesheet" type="text/css"/>
+	<link href="../../assets/css/style-metronic.css" rel="stylesheet" type="text/css"/>
+	<link href="../../assets/css/style.css" rel="stylesheet" type="text/css"/>
+	<link href="../../assets/css/style-responsive.css" rel="stylesheet" type="text/css"/>
+	<link href="../../assets/css/plugins.css" rel="stylesheet" type="text/css"/>
+	<link href="../../assets/css/themes/default.css" rel="stylesheet" type="text/css" id="style_color"/>
+	<link href="../../assets/css/custom.css" rel="stylesheet" type="text/css"/>
 	<!-- END THEME STYLES -->
-	<link rel="shortcut icon" href="favicon.ico" />
+	<link rel="shortcut icon" href="../../favicon.ico" />
 </head>
 <!-- END HEAD -->
 <!-- BEGIN BODY -->
@@ -44,12 +45,12 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 		<div class="header-inner">
 			<!-- BEGIN LOGO -->  
 			<a class="navbar-brand" href="index.html">
-			<img src="assets/img/logo.png" alt="logo" class="img-responsive" />
+			<img src="../../assets/img/logo.png" alt="logo" class="img-responsive" />
 			</a>
 			<!-- END LOGO -->
 			<!-- BEGIN RESPONSIVE MENU TOGGLER --> 
 			<a href="javascript:;" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-			<img src="assets/img/menu-toggler.png" alt="" />
+			<img src="../../assets/img/menu-toggler.png" alt="" />
 			</a> 
 			<!-- END RESPONSIVE MENU TOGGLER -->
 			<!-- BEGIN TOP NAVIGATION MENU -->
@@ -153,7 +154,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 							<ul class="dropdown-menu-list scroller" style="height: 250px;">
 								<li>  
 									<a href="inbox.html?a=view">
-									<span class="photo"><img src="./assets/img/avatar2.jpg" alt=""/></span>
+									<span class="photo"><img src="../../assets/img/avatar2.jpg" alt=""/></span>
 									<span class="subject">
 									<span class="from">Lisa Wong</span>
 									<span class="time">Just Now</span>
@@ -166,7 +167,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 								</li>
 								<li>  
 									<a href="inbox.html?a=view">
-									<span class="photo"><img src="./assets/img/avatar3.jpg" alt=""/></span>
+									<span class="photo"><img src="../../assets/img/avatar3.jpg" alt=""/></span>
 									<span class="subject">
 									<span class="from">Richard Doe</span>
 									<span class="time">16 mins</span>
@@ -179,7 +180,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 								</li>
 								<li>  
 									<a href="inbox.html?a=view">
-									<span class="photo"><img src="./assets/img/avatar1.jpg" alt=""/></span>
+									<span class="photo"><img src="../../assets/img/avatar1.jpg" alt=""/></span>
 									<span class="subject">
 									<span class="from">Bob Nilson</span>
 									<span class="time">2 hrs</span>
@@ -192,7 +193,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 								</li>
 								<li>  
 									<a href="inbox.html?a=view">
-									<span class="photo"><img src="./assets/img/avatar2.jpg" alt=""/></span>
+									<span class="photo"><img src="../../assets/img/avatar2.jpg" alt=""/></span>
 									<span class="subject">
 									<span class="from">Lisa Wong</span>
 									<span class="time">40 mins</span>
@@ -204,7 +205,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 								</li>
 								<li>  
 									<a href="inbox.html?a=view">
-									<span class="photo"><img src="./assets/img/avatar3.jpg" alt=""/></span>
+									<span class="photo"><img src="../../assets/img/avatar3.jpg" alt=""/></span>
 									<span class="subject">
 									<span class="from">Richard Doe</span>
 									<span class="time">46 mins</span>
@@ -337,7 +338,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 				<!-- BEGIN USER LOGIN DROPDOWN -->
 				<li class="dropdown user">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-					<img alt="" src="assets/img/avatar1_small.jpg"/>
+					<img alt="" src="../../assets/img/avatar1_small.jpg"/>
 					<span class="username">Bob Nilson</span>
 					<i class="fa fa-angle-down"></i>
 					</a>
@@ -395,7 +396,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 					<ul class="sub-menu">
 					<pg:list requestKey="tables">
 						<li class="tooltips" data-placement="right" data-original-title="<pg:cell colName="tableName"/>">
-							<a href="tableset.page?tableName=<pg:cell colName="tableName"/>" >
+							<a href="javascript:void" onclick="selectTableMeta('<pg:cell colName="tableName"/>')">
 							<pg:cell colName="tableName" maxlength="17" replace="..."/></a>
 						</li>
 					</pg:list>
@@ -555,11 +556,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 			<!-- BEGIN PAGE CONTENT-->          
 			<div class="row">
 				<div class="col-md-12">
-					<div class="note note-success">
-						<p>
-							Please try to re-size your browser window in order to see the tables in responsive mode.
-						</p>
-					</div>
+					
 					<!-- BEGIN SAMPLE TABLE PORTLET-->
 					<div class="portlet box green">
 						<div class="portlet-title">
@@ -882,23 +879,23 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 	<!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
 	<!-- BEGIN CORE PLUGINS -->   
 	<!--[if lt IE 9]>
-	<script src="assets/plugins/respond.min.js"></script>
-	<script src="assets/plugins/excanvas.min.js"></script> 
+	<script src="../../assets/plugins/respond.min.js"></script>
+	<script src="../../assets/plugins/excanvas.min.js"></script> 
 	<![endif]-->   
-	<script src="assets/plugins/jquery-1.10.2.min.js" type="text/javascript"></script>
-	<script src="assets/plugins/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>    
-	<script src="assets/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-	<script src="assets/plugins/bootstrap-hover-dropdown/twitter-bootstrap-hover-dropdown.min.js" type="text/javascript" ></script>
-	<script src="assets/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
-	<script src="assets/plugins/jquery.blockui.min.js" type="text/javascript"></script>  
-	<script src="assets/plugins/jquery.cookie.min.js" type="text/javascript"></script>
-	<script src="assets/plugins/uniform/jquery.uniform.min.js" type="text/javascript" ></script>
+	<script src="../../assets/plugins/jquery-1.10.2.min.js" type="text/javascript"></script>
+	<script src="../../assets/plugins/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>    
+	<script src="../../assets/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+	<script src="../../assets/plugins/bootstrap-hover-dropdown/twitter-bootstrap-hover-dropdown.min.js" type="text/javascript" ></script>
+	<script src="../../assets/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+	<script src="../../assets/plugins/jquery.blockui.min.js" type="text/javascript"></script>  
+	<script src="../../assets/plugins/jquery.cookie.min.js" type="text/javascript"></script>
+	<script src="../../assets/plugins/uniform/jquery.uniform.min.js" type="text/javascript" ></script>
 	<!-- END CORE PLUGINS -->
-	<script src="assets/scripts/app.js"></script>      
+	<script src="../../assets/scripts/app.js"></script>      
 	<script>
 		jQuery(document).ready(function() {       
 		   // initiate layout and plugins
-		   App.init();
+		   App.init('../..');
 		});
 		function selectTableMeta(tableName)
 		{
