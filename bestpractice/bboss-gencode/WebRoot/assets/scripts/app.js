@@ -717,7 +717,7 @@ var App = function () {
 
         $('.sidebar-option', panel).val("default");
         $('.header-option', panel).val("fixed");
-        $('.footer-option', panel).val("fixed");
+        $('.footer-option', panel).val("default");
 
         //handle theme layout
         var resetLayout = function () {

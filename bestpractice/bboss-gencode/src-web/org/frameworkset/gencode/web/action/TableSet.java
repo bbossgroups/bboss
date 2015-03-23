@@ -13,18 +13,27 @@ public class TableSet {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public String tableset(ModelMap model)
+	public String tableset(String dbname,String tableName,ModelMap model)
 	{
 		Set<TableMetaData> tableMetas =   DBUtil.getTableMetaDatas("bspf");
 		model.addAttribute("tables", tableMetas);
-		model.addAttribute("dbname", "bspf");
+		if(tableName != null)
+		{
+			model.addAttribute("dbname", dbname);
+			model.addAttribute("tableName", tableName);
+			TableMetaData tableMeta =   DBUtil.getTableMetaData(dbname,tableName);
+			model.addAttribute("tablemeta", tableMeta);
+		}
 		return "path:tableset";
 	}
 	
 	public String tablemeta(String dbname,String tableName,ModelMap model)
 	{
+		if(tableName == null)
+			return "path:tableconfig";
 		TableMetaData tableMeta =   DBUtil.getTableMetaData(dbname,tableName);
 		model.addAttribute("table", tableMeta);
+		model.addAttribute("dbname", dbname);
 		return "path:tableconfig";
 	}
 
