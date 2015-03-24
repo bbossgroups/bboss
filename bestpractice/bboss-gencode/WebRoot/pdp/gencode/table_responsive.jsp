@@ -433,6 +433,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 					</div>
 				</div>
 			</div>
+			
 			<!-- END BEGIN STYLE CUSTOMIZER -->
 			<!-- BEGIN PAGE HEADER-->
 			<div class="row">
@@ -441,6 +442,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 					<h3 class="page-title">
 						BBoss自动代码生成框架 <small>配置管理</small>
 					</h3>
+					
 					<ul class="page-breadcrumb breadcrumb">
 						<li class="btn-group">
 							<button type="button" class="btn blue dropdown-toggle"
@@ -463,6 +465,25 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 						<li><a href="#">配置管理</a></li>
 					</ul>
 					<!-- END PAGE TITLE & BREADCRUMB-->
+					<div class="note note-info">
+						<h4 class="block">自动代码生成框架功能说明</h4>
+						<p>
+							根据模板，自动生成给定表的增、删、改、分页查询、列表查询、国际化功能对应的程序和配置文件：
+							<ul>
+							<li>1.mvc控制器</li>
+							<li>2.业务组件</li>
+							<li>3.实体类 </li>
+							<li>4.jsp文件  可以定制不同风格的界面模板，目前提供了平台的基础ui风格</li>
+							<li>5.cxf webservice服务类文件</li>
+							<li>6.hessian服务类文件</li>
+							<li>7.sql配置文件</li>
+							<li>8.ioc/mvc组件装配部署和服务发布配置文件.</li>
+							<li>9.国际化属性文件和国际化配置</li>	
+							<li>10.readme.txt 代码和配置文件集成配置说明</li>
+							</ul>
+						</p>
+						<p>所有文档存放在服务器指定的目录中</p>
+					</div>
 				</div>
 			</div>
 			<!-- END PAGE HEADER-->
@@ -476,7 +497,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 					<div class="portlet box green">
 						<div class="portlet-title">
 							<div class="caption">
-								<i class="fa fa-reorder"></i>表[${tableName}]维护代码生成配置
+								<i class="fa fa-reorder"></i>表[${tableName}]代码生成
 							</div>
 							<div class="tools">
 								<a href="javascript:;" class="collapse"></a> <a
@@ -603,24 +624,28 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 										
 										<!--/span-->
 									</div>
+									<h3 class="form-section">查询字段</h3>
 									<div class="row">
 
 										<!--/span-->
-										<div class="col-md-6">
+										<div class="col-md-12">
 											<div class="form-group">
-												<label class="control-label col-md-3">查询条件</label>
-												<div class="col-md-9">
-													<input type="hidden" class="form-control select2_sample5"
-														value="clearSourcedir">
+												<div class="col-md-12">
+													<input type="hidden" class="form-control select2_sample5">
 												</div>
 											</div>
 										</div>
-										<div class="col-md-6">
+										
+										
+										<!--/span-->
+									</div>
+									<h3 class="form-section">排序字段</h3>
+									<div class="row">										
+										<div class="col-md-12">
 											<div class="form-group">
-												<label class="control-label col-md-3">排序字段</label>
-												<div class="col-md-9">
-													<input type="hidden" class="form-control select2_sample6"
-														value="default">
+												
+												<div class="col-md-12">
+													<input type="hidden" class="form-control select2_sample6">
 												</div>
 											</div>
 										</div>
@@ -666,14 +691,16 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 									<div class="row">
 										<div class="col-md-12">
 											<div class="form-group">
-												<div class="col-md-12">												
+												<div class="col-md-12">	
+												<div class="table-scrollable">											
 												<table
-													class="table table-bordered table-striped table-condensed flip-content">
-													<thead class="flip-content">
+													class="table table-striped table-bordered table-hover">
+													<thead  >
 														<tr>
 															<th>字段名称</th>
-															<th>中文名称</th>
+															<th>属性名称</th>															
 															<th>字段类型</th>
+															<th>中文名称</th>
 															<th>java类型</th>
 															<th>必填项</th>
 															<th>类型校验</th>
@@ -683,46 +710,35 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 														</tr>
 													</thead>
 													<tbody>
-					
+													<pg:list requestKey="fields">
 														
 															<tr>
-																<td>AAC</td>
-																<td>asdf.</td>
-																<td class="numeric">$1.38</td>
-																<td class="numeric">-0.01</td>
-																<td class="numeric">-0.36%</td>
-																<td class="numeric">$1.39</td>
-																<td class="numeric">$1.39</td>
-																<td class="numeric">$1.38</td>
-																<td class="numeric">9,395</td>
+																<td><pg:cell colName="columnname"/></td>
+																<td><pg:cell colName="fieldName"/></td>
+																
+																<td><pg:cell colName="columntype"/></td>
+																<td><input type="text" name="fieldCNName" class="form-control" value="<pg:cell colName="fieldName"/>"></td>
+																<td><input type="text" name="type" class="form-control" value="<pg:cell colName="type"/>"></td>
+																<td > 
+																<div class="radio-list"><label><input type="radio" name="<pg:rowid/>_typecheck" id="<pg:rowid/>_typecheck" value="1">是			</label>													 
+																<label ><input type="radio" name="<pg:rowid/>_typecheck" id="<pg:rowid/>_typecheck" value="0"  checked>否	</label></div>															 
+															    </td>
+																<td ><div class="radio-list"><label ><input type="radio" name="<pg:rowid/>_required" id="<pg:rowid/>_required" value="1">是			</label>													 
+																<label  ><input type="radio" name="<pg:rowid/>_required" id="<pg:rowid/>_required" value="0"  checked>否	</label></div>		</td>
+																<td ><input type="text" name="dateformat" class="form-control" value="<pg:cell colName="dateformat" defaultValue="yyyy-MM-dd HH:mm:ss"/>"></td>
+																<td ><div class="radio-list"><label ><input type="radio" name="<pg:rowid/>_daterange" id="<pg:rowid/>_daterange" value="1">是</label>																
+																<label ><input type="radio" name="<pg:rowid/>_daterange" id="<pg:rowid/>_daterange" value="0"  checked>否</label></div></td>
+																<td >
+																<div class="radio-list"><label ><input type="radio" name="<pg:rowid/>_hidden" id="<pg:rowid/>_hidden" value="1">是</label>																
+																<label ><input type="radio" name="<pg:rowid/>_hidden" id="<pg:rowid/>_hidden" value="0"  checked>否</label></div>
+																
+															 </td>
+																
 															</tr>
-														
-														<tr>
-															<td>AAD</td>
-															<td>ARDENT </td>
-															<td class="numeric">$1.15</td>
-															<td class="numeric">+0.02</td>
-															<td class="numeric">1.32%</td>
-															<td class="numeric">$1.14</td>
-															<td class="numeric">$1.15</td>
-															<td class="numeric">$1.13</td>
-															<td class="numeric">56,431</td>
-														</tr>
-														
-														<tr>
-															<td>ACR</td>
-															<td>ACRUX LIMITED</td>
-															<td class="numeric">$3.71</td>
-															<td class="numeric">+0.01</td>
-															<td class="numeric">0.14%</td>
-															<td class="numeric">$3.70</td>
-															<td class="numeric">$3.72</td>
-															<td class="numeric">$3.68</td>
-															<td class="numeric">191,373</td>
-														</tr>
-					
+													</pg:list>	
 													</tbody>
 												</table>
+												</div>
 												</div>
 											</div>
 										</div>
@@ -791,12 +807,24 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 	<script type="text/javascript"
 		src="../../assets/plugins/select2/select2.min.js"></script>
 	<script src="../../assets/scripts/app.js" type="text/javascript"></script>
-	<script src="../../assets/scripts/form-pdp.js" type="text/javascript"></script>
 	<script>
 		jQuery(document).ready(function() {
 			// initiate layout and plugins
 			App.init('../..');
-			FormPDP.init();
+			
+			 $(".select2_sample3").select2({
+	                tags: ["geni18n", "clearSourcedir","genRPC","autopk"]
+	            });
+	            
+	            $(".select2_sample4").select2({
+	                tags: ["default", "bootstrap"]
+	            });
+			 $(".select2_sample5").select2({
+	                tags: [<pg:list requestKey="fields"><pg:upper expression="{rowid}" value="0">,</pg:upper>'<pg:cell colName="columnname"/>'</pg:list>]
+	            });
+			 $(".select2_sample6").select2({
+	                tags: [<pg:list requestKey="fields"><pg:upper expression="{rowid}" value="0">,</pg:upper>'<pg:cell colName="columnname"/>'</pg:list>]
+	            });
 		});
 		
 	</script>

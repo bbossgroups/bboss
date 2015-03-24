@@ -17,11 +17,11 @@ public class TestGencodeServiceImpl {
 		ModuleMetaInfo moduleMetaInfo = new ModuleMetaInfo();
 		moduleMetaInfo.setTableName("ACT_RU_TASK".toLowerCase());//指定表名，根据表结构来生成所有的文件
 		moduleMetaInfo.setModuleName("task");//指定模块名称，源码和配置文件都会存放在相应模块名称的目录下面
-		moduleMetaInfo.setModuleCNName("表信息管理");//指定模块中文名称
+		moduleMetaInfo.setModuleCNName("任务管理");//指定模块中文名称
 		moduleMetaInfo.setDatasourceName("bspf");//指定数据源名称，在poolman.xml文件中配置
 		moduleMetaInfo.setPackagePath("org.frameworkset.demo");//java程序对应的包路径
 //		moduleMetaInfo.setServiceName("AppbomManagerService");
-		moduleMetaInfo.setSourcedir("d:/sources/task");//生成文件存放的物理目录，如果不存在，会自动创建
+		moduleMetaInfo.setSourcedir("d:/sources");//生成文件存放的物理目录，如果不存在，会自动创建
 		moduleMetaInfo.setIgnoreEntityFirstToken(true); //忽略表的第一个下滑线签名的token，例如表名td_app_bom中，只会保留app_bom部分，然后根据这部分来生成实体、配置文件名称
 		moduleMetaInfo.setAuthor("yinbp");//程序作者
 		moduleMetaInfo.setCompany("bboss");//公司信息
@@ -159,15 +159,15 @@ alter table TA_AUTHO_AREA
 		moduleMetaInfo.setTableName("ta_autho_area");//指定表名，根据表结构来生成所有的文件
 		moduleMetaInfo.setPkname("ta_autho_area");//设置oracle sequence名称，用来生成表的主键,对应TABLEINFO表中TABLE_NAME字段的值
 		moduleMetaInfo.setSystem("lcjf");//lcjf,系统代码，如果指定了system，那么对应的jsp页面会存放到lcjf/area目录下面，对应的mvc组件装配文件存在在/WEB-INF/conf/lcjf下面，否则jsp在/area下，mvc组件装配文件存在在/WEB-INF/conf/area下
-		moduleMetaInfo.setModuleName("jsparea");//指定模块名称，源码和配置文件都会存放在相应模块名称的目录下面
+		moduleMetaInfo.setModuleName("area");//指定模块名称，源码和配置文件都会存放在相应模块名称的目录下面
 		moduleMetaInfo.setModuleCNName("行政区划");//指定模块中文名称
 		moduleMetaInfo.setDatasourceName("bspf");//指定数据源名称，在poolman.xml文件中配置
-		moduleMetaInfo.setPackagePath("com.yg.core");//java程序对应的包路径
+		moduleMetaInfo.setPackagePath("org.frameworkset.area");//java程序对应的包路径
 		//moduleMetaInfo.setServiceName("AreaManagerService");
 		moduleMetaInfo.setSourcedir("d:/sources");//生成文件存放的物理目录，如果不存在，会自动创建
 		moduleMetaInfo.setIgnoreEntityFirstToken(true); //忽略表的第一个下滑线签名的token，例如表名td_app_bom中，只会保留app_bom部分，然后根据这部分来生成实体、配置文件名称
-		moduleMetaInfo.setAuthor("jinzhen");//程序作者
-		moduleMetaInfo.setCompany("yuanguo");//公司信息
+		moduleMetaInfo.setAuthor("yinbp");//程序作者
+		moduleMetaInfo.setCompany("bboss");//公司信息
 		moduleMetaInfo.setVersion("v1.0");//版本信息
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String date = format.format(new Date());
@@ -390,14 +390,14 @@ alter table TA_FGW_XMSBK
 		moduleMetaInfo.setTableName("TA_FGW_XMSBK".toLowerCase());//指定表名，根据表结构来生成所有的文件
 //		moduleMetaInfo.setPkname("ta_autho_area");//设置oracle sequence名称，用来生成表的主键,对应TABLEINFO表中TABLE_NAME字段的值
 		moduleMetaInfo.setModuleName("xmsbk");//指定模块名称，源码和配置文件都会存放在相应模块名称的目录下面
-		moduleMetaInfo.setModuleCNName("行政区划");//指定模块中文名称
+		moduleMetaInfo.setModuleCNName("流程管理");//指定模块中文名称
 		moduleMetaInfo.setDatasourceName("bspf");//指定数据源名称，在poolman.xml文件中配置
-		moduleMetaInfo.setPackagePath("com.tuo.core");//java程序对应的包路径
+		moduleMetaInfo.setPackagePath("org.frameworkset.fgw");//java程序对应的包路径
 		//moduleMetaInfo.setServiceName("AreaManagerService");
 		moduleMetaInfo.setSourcedir("d:/sources");//生成文件存放的物理目录，如果不存在，会自动创建
 		moduleMetaInfo.setIgnoreEntityFirstToken(true); //忽略表的第一个下滑线签名的token，例如表名td_app_bom中，只会保留app_bom部分，然后根据这部分来生成实体、配置文件名称
-		moduleMetaInfo.setAuthor("liy");//程序作者
-		moduleMetaInfo.setCompany("tuo");//公司信息
+		moduleMetaInfo.setAuthor("yinbp");//程序作者
+		moduleMetaInfo.setCompany("bboss");//公司信息
 		moduleMetaInfo.setVersion("v1.0");//版本信息
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String date = format.format(new Date());

@@ -9,6 +9,7 @@ public class Field {
 	private String fieldCNName;
 	private String fieldAsciiCNName;
 	private String type;
+	private String columntype;
 	private String defaultValue;
 	private boolean staticed;
 	private boolean finaled;
@@ -123,6 +124,12 @@ public class Field {
 	}
 	public void setFieldAsciiCNName(String fieldAsciiCNName) {
 		this.fieldAsciiCNName = fieldAsciiCNName;
+	}
+	public String getColumntype() {
+		return columntype;
+	}
+	public void setColumntype(String columntype) {
+		this.columntype = columntype;
 	}
 
 }
