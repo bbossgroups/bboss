@@ -821,8 +821,8 @@ var App = function () {
         		$('#style_color').attr("href", "assets/css/themes/" + color + ".css");
             $.cookie('style_color', color);
         }
-        //setColor('light');
-       // setLayout();
+        setColor('light');
+        setLayout();
         $('.toggler', panel).click(function () {
             $('.toggler').hide();
             $('.toggler-close').show();

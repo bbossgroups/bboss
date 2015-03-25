@@ -613,11 +613,16 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 										</div>
 										<div class="col-md-6">
 											<div class="form-group">
-												<label class="control-label col-md-3">界面风格</label>
+												
+												<label class="control-label col-md-3">界面风格<span class="required">*</span></label>
 												<div class="col-md-9">
-													<input type="hidden" id="theme" name="theme"  class="form-control select2_sample4"
-														value="default">
+													<select class="form-control" id="theme" name="theme" >
+														<option value="default">default</option>
+														<option value="bootstrap">bootstrap</option>
+														<option value="mobile">mobile</option>
+													</select>
 												</div>
+												
 											</div>
 										</div>
 										
@@ -722,7 +727,21 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 																
 																<td><pg:cell colName="columntype"/><input type="hidden" name="columntype" class="form-control" value="<pg:cell colName="columnname"/>"></td>
 																<td><input type="text" name="fieldCNName" class="form-control" value="<pg:cell colName="fieldName"/>"></td>
-																<td><input type="text" name="type" class="form-control" value="<pg:cell colName="type"/>"></td>
+																<td><select  class="form-control input-small select2me" name="type" id="type">
+																	<pg:case colName="type">
+																	<option value="String" <pg:equal value="String">selected</pg:equal>>String</option>
+																	<option value="long" <pg:equal value="long">selected</pg:equal>>long</option>
+																	<option value="int" <pg:equal value="int">selected</pg:equal>>int</option>
+																	<option value="Timestamp" <pg:equal value="Timestamp">selected</pg:equal>>Timestamp</option>
+																	<option value="Date" <pg:equal value="Date">selected</pg:equal>>Date</option>
+																	<option value="url" <pg:equal value="url">selected</pg:equal>>url</option>
+																	<option value="creditcard" <pg:equal value="creditcard">selected</pg:equal>>creditcard</option>
+																	<option value="email" <pg:equal value="email">selected</pg:equal>>email</option>
+																	<option value="idcard" <pg:equal value="idcard">selected</pg:equal>>idcard</option>
+																	</pg:case>
+																</select>
+											
+																</td>
 																<td > 
 																<div class="radio-list"><label><input type="radio" name="<pg:rowid/>_typecheck" id="<pg:rowid/>_typecheck" value="1">是			</label>													 
 																<label ><input type="radio" name="<pg:rowid/>_typecheck" id="<pg:rowid/>_typecheck" value="0"  checked>否	</label></div>															 
