@@ -464,25 +464,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 						<li><a href="#">配置管理</a></li>
 					</ul>
 					<!-- END PAGE TITLE & BREADCRUMB-->
-					<div class="note note-info">
-						<h4 class="block">自动代码生成框架功能说明</h4>
-						<p>
-							根据模板，自动生成给定表的增、删、改、分页查询、列表查询、国际化功能对应的程序和配置文件：
-							<ul>
-							<li>1.mvc控制器</li>
-							<li>2.业务组件</li>
-							<li>3.实体类 </li>
-							<li>4.jsp文件  可以定制不同风格的界面模板，目前提供了平台的基础ui风格</li>
-							<li>5.cxf webservice服务类文件</li>
-							<li>6.hessian服务类文件</li>
-							<li>7.sql配置文件</li>
-							<li>8.ioc/mvc组件装配部署和服务发布配置文件.</li>
-							<li>9.国际化属性文件和国际化配置</li>	
-							<li>10.readme.txt 代码和配置文件集成配置说明</li>
-							</ul>
-						</p>
-						<p>所有文档存放在服务器指定的目录中</p>
-					</div>
+					
 				</div>
 			</div>
 			<!-- END PAGE HEADER-->
@@ -506,27 +488,41 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 							</div>
 						</div>
 						<div class="portlet-body form flip-scroll">
+						<form action="#" id="tableset" class="form-horizontal">
 							<pg:empty actual="${tableName }" evalbody="true">
 							<pg:yes>请选择表</pg:yes>
 							<pg:no>
-							<form action="#" class="form-horizontal">
+							
 								<div class="form-body">
+									<div class="alert alert-danger display-hide">
+										<button class="close" data-close="alert"></button>
+										You have some form errors. Please check below.
+									</div>
+									<div class="alert alert-success display-hide">
+										<button class="close" data-close="alert"></button>
+										Your form validation is successful!
+									</div>
 									<h3 class="form-section">基本信息</h3>
 									<div class="row">
 										<div class="col-md-6">
-											<div class="form-group">
-												<label class="control-label col-md-3">表名称</label>
+											<div class="form-group ">
+												<label class="control-label col-md-3">表名称<span class="required">*</span></label>
 												<div class="col-md-9">
-													<input type="text" class="form-control" placeholder="表名称" value="${tableName}">
+													<div class="input-icon right">                                       
+														<i class="fa"></i>   
+														<input type="text" id="tableName" name="tableName" class="form-control" value="${tableName}">                          
+													</div>
+												
 												</div>
 											</div>
+										
 										</div>
 										<!--/span-->
 										<div class="col-md-6">
 											<div class="form-group">
 												<label class="control-label col-md-3">主键名称</label>
 												<div class="col-md-9">
-													<input type="text" class="form-control" placeholder="主键名称" value="${tableName}">
+													<input type="text" id="pkname" name="pkname" class="form-control" placeholder="主键名称" value="${tableName}">
 												</div>
 											</div>
 										</div>
@@ -538,7 +534,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 											<div class="form-group">
 												<label class="control-label col-md-3">系统名称</label>
 												<div class="col-md-9">
-													<input type="text" class="form-control" placeholder="系统名称">
+													<input type="text" id="system" name="system" class="form-control" placeholder="系统名称">
 												</div>
 											</div>
 										</div>
@@ -547,7 +543,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 											<div class="form-group">
 												<label class="control-label col-md-3">数据源名称</label>
 												<div class="col-md-9">
-													<input type="text" class="form-control" placeholder="数据源名称"
+													<input type="text"  id="datasourceName" name="datasourceName" class="form-control" placeholder="数据源名称"
 														value="${dbname }">
 												</div>
 											</div>
@@ -558,19 +554,21 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 									<div class="row">
 										<div class="col-md-6">
 											<div class="form-group">
-												<label class="control-label col-md-3">模块名称</label>
-												<div class="col-md-9">
-													<input type="text" class="form-control" placeholder="模块名称">
+												<label class="control-label col-md-3">模块名称<span class="required">*</span></label>
+												<div class="col-md-9"><div class="input-icon right">                                       
+														<i class="fa"></i>   
+													<input type="text" id="moduleName" name="moduleName" class="form-control"></div>
 												</div>
 											</div>
 										</div>
 										<!--/span-->
 										<div class="col-md-6">
 											<div class="form-group">
-												<label class="control-label col-md-3">模块中文名称</label>
-												<div class="col-md-9">
-													<input type="text" class="form-control"
-														placeholder="模块中文名称">
+												<label class="control-label col-md-3">模块中文名称<span class="required">*</span></label>
+												<div class="col-md-9"><div class="input-icon right">                                       
+														<i class="fa"></i>   
+													<input type="text" id="moduleCNName" name="moduleCNName"  class="form-control"
+														></div>
 												</div>
 											</div>
 										</div>
@@ -580,19 +578,21 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 									<div class="row">
 										<div class="col-md-6">
 											<div class="form-group">
-												<label class="control-label col-md-3">包路径</label>
-												<div class="col-md-9">
-													<input type="text" class="form-control" placeholder="包路径">
+												<label class="control-label col-md-3">包路径<span class="required">*</span></label>
+												<div class="col-md-9"><div class="input-icon right">                                       
+													<i class="fa"></i> 
+													<input type="text" id="packagePath" name="packagePath"  class="form-control"></div>
 												</div>
 											</div>
 										</div>
 										<!--/span-->
 										<div class="col-md-6">
 											<div class="form-group">
-												<label class="control-label col-md-3">源码存放目录</label>
-												<div class="col-md-9">
-													<input type="text" class="form-control"
-														placeholder="源码存放目录">
+												<label class="control-label col-md-3">源码存放目录<span class="required">*</span></label>
+												<div class="col-md-9"><div class="input-icon right">                                       
+													<i class="fa"></i> 
+													<input type="text" id="sourcedir" name="sourcedir"  class="form-control"
+														></div>
 												</div>
 											</div>
 										</div>
@@ -606,7 +606,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 											<div class="form-group">
 												<label class="control-label col-md-3">代码控制参数</label>
 												<div class="col-md-9">
-													<input type="hidden" class="form-control select2_sample3"
+													<input type="hidden" id="controlParams" name="controlParams"  class="form-control select2_sample3"
 														value="clearSourcedir">
 												</div>
 											</div>
@@ -615,7 +615,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 											<div class="form-group">
 												<label class="control-label col-md-3">界面风格</label>
 												<div class="col-md-9">
-													<input type="hidden" class="form-control select2_sample4"
+													<input type="hidden" id="theme" name="theme"  class="form-control select2_sample4"
 														value="default">
 												</div>
 											</div>
@@ -630,7 +630,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 										<div class="col-md-12">
 											<div class="form-group">
 												<div class="col-md-12">
-													<input type="hidden" class="form-control select2_sample5">
+													<input type="hidden" id="queryFields" name="queryFields"  class="form-control select2_sample5">
 												</div>
 											</div>
 										</div>
@@ -644,7 +644,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 											<div class="form-group">
 												
 												<div class="col-md-12">
-													<input type="hidden" class="form-control select2_sample6">
+													<input type="hidden" id="sortFields" name="sortFields"  class="form-control select2_sample6">
 												</div>
 											</div>
 										</div>
@@ -657,17 +657,19 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 									<div class="row">
 										<div class="col-md-6">
 											<div class="form-group">
-												<label class="control-label col-md-3">作者</label>
-												<div class="col-md-9">
-													<input type="text" class="form-control" placeholder="作者">
+												<label class="control-label col-md-3">作者<span class="required">*</span></label>
+												<div class="col-md-9"><div class="input-icon right">                                       
+													<i class="fa"></i> 
+													<input type="text" id="author" name="author"  class="form-control" ></div>
 												</div>
 											</div>
 										</div>
 										<div class="col-md-6">
 											<div class="form-group">
-												<label class="control-label col-md-3">公司</label>
-												<div class="col-md-9">
-													<input type="text" class="form-control" placeholder="公司">
+												<label class="control-label col-md-3">公司<span class="required">*</span></label>
+												<div class="col-md-9"><div class="input-icon right">                                       
+													<i class="fa"></i> 
+													<input type="text" id="company" name="company"  class="form-control" ></div>
 												</div>
 											</div>
 										</div>
@@ -675,9 +677,10 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 									<div class="row">
 										<div class="col-md-6">
 											<div class="form-group">
-												<label class="control-label col-md-3">版本号</label>
-												<div class="col-md-9">
-													<input type="text" class="form-control"  placeholder="v1.0" value="v1.0">
+												<label class="control-label col-md-3">版本号<span class="required">*</span></label>
+												<div class="col-md-9"><div class="input-icon right">                                       
+													<i class="fa"></i> 
+													<input type="text" id="version" name="version" class="form-control"   value="v1.0"></div>
 												</div>
 											</div>
 										</div>
@@ -705,6 +708,8 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 															<th>类型校验</th>
 															<th>日期格式</th>	
 															<th>日期范围</th>	
+															<th>查询方式</th>
+															<th>排序方式</th>
 															<th>是否隐藏</th>				
 														</tr>
 													</thead>
@@ -712,10 +717,10 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 													<pg:list requestKey="fields">
 														
 															<tr>
-																<td><pg:cell colName="columnname"/></td>
-																<td><pg:cell colName="fieldName"/></td>
+																<td><pg:cell colName="columnname"/><input type="hidden" name="columnname" class="form-control" value="<pg:cell colName="columnname"/>"></td>
+																<td><pg:cell colName="fieldName"/><input type="hidden" name="fieldName" class="form-control" value="<pg:cell colName="columnname"/>"></td>
 																
-																<td><pg:cell colName="columntype"/></td>
+																<td><pg:cell colName="columntype"/><input type="hidden" name="columntype" class="form-control" value="<pg:cell colName="columnname"/>"></td>
 																<td><input type="text" name="fieldCNName" class="form-control" value="<pg:cell colName="fieldName"/>"></td>
 																<td><input type="text" name="type" class="form-control" value="<pg:cell colName="type"/>"></td>
 																<td > 
@@ -728,10 +733,17 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 																<td ><div class="radio-list"><label ><input type="radio" name="<pg:rowid/>_daterange" id="<pg:rowid/>_daterange" value="1">是</label>																
 																<label ><input type="radio" name="<pg:rowid/>_daterange" id="<pg:rowid/>_daterange" value="0"  checked>否</label></div></td>
 																<td >
+																<div class="radio-list"><label ><input type="radio" name="<pg:rowid/>_qtype" id="<pg:rowid/>_qtype" value="1">模糊</label>																
+																<label ><input type="radio" name="<pg:rowid/>_qtype" id="<pg:rowid/>_qtype" value="0"  checked>精确</label></div>																
+															 	</td>
+															 	<td >
+																<div class="radio-list"><label ><input type="radio" name="<pg:rowid/>_stype" id="<pg:rowid/>_stype" value="1">降序</label>																
+																<label ><input type="radio" name="<pg:rowid/>_stype" id="<pg:rowid/>_stype" value="0"  checked>升序</label></div>																
+															 	</td>
+																<td >
 																<div class="radio-list"><label ><input type="radio" name="<pg:rowid/>_hidden" id="<pg:rowid/>_hidden" value="1">是</label>																
-																<label ><input type="radio" name="<pg:rowid/>_hidden" id="<pg:rowid/>_hidden" value="0"  checked>否</label></div>
-																
-															 </td>
+																<label ><input type="radio" name="<pg:rowid/>_hidden" id="<pg:rowid/>_hidden" value="0"  checked>否</label></div>																
+															 	</td>
 																
 															</tr>
 													</pg:list>	
@@ -749,21 +761,42 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 										<div class="col-md-6">
 											<div class="col-md-offset-3 col-md-9">
 												<button type="submit" class="btn green">生成代码</button>
-												<button type="button" class="btn default">Cancel</button>
+												<button type="button" class="btn default">暂存</button>
 											</div>
 										</div>
 										<div class="col-md-6"></div>
 									</div>
 								</div>
-							</form>
+							
 							</pg:no>
 							</pg:empty>
+							</form>
 						</div>
 					</div>
-
+					<div class="note note-info">
+						<h4 class="block">自动代码生成框架功能说明</h4>
+						<p>
+							根据模板，自动生成给定表的增、删、改、分页查询、列表查询、国际化功能对应的程序和配置文件：
+							<ul>
+							<li>1.mvc控制器</li>
+							<li>2.业务组件</li>
+							<li>3.实体类 </li>
+							<li>4.jsp文件  可以定制不同风格的界面模板，目前提供了平台的基础ui风格</li>
+							<li>5.cxf webservice服务类文件</li>
+							<li>6.hessian服务类文件</li>
+							<li>7.sql配置文件</li>
+							<li>8.ioc/mvc组件装配部署和服务发布配置文件.</li>
+							<li>9.国际化属性文件和国际化配置</li>	
+							<li>10.readme.txt 代码和配置文件集成配置说明</li>
+							</ul>
+						</p>
+						<p>所有文件存放在服务器指定的目录中</p>
+					</div>
 
 				</div>
+				
 			</div>
+			
 			<!-- END PAGE CONTENT-->
 		</div>
 		<!-- END PAGE -->
@@ -803,16 +836,19 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 	<script src="../../assets/plugins/uniform/jquery.uniform.min.js"
 		type="text/javascript"></script>
 	<!-- END CORE PLUGINS -->
+	<script type="text/javascript" src="../../assets/plugins/jquery-validation/dist/jquery.validate.min.js"></script>
+	<script type="text/javascript" src="../../assets/plugins/jquery-validation/dist/additional-methods.min.js"></script>
 	<script type="text/javascript"
 		src="../../assets/plugins/select2/select2.min.js"></script>
 	<script src="../../assets/scripts/app.js" type="text/javascript"></script>
+	<script src="../../assets/scripts/form-tableset-validation.js"></script> 
 	<script>
 		jQuery(document).ready(function() {
 			// initiate layout and plugins
 			App.init('../..');
-			
+			 FormValidation.init();
 			 $(".select2_sample3").select2({
-	                tags: ["geni18n", "clearSourcedir","genRPC","autopk"]
+	                tags: ["geni18n", "clearSourcedir","genRPC","autopk","genworkflow"]
 	            });
 	            
 	            $(".select2_sample4").select2({

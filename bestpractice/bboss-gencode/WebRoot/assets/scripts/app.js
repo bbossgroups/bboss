@@ -717,7 +717,7 @@ var App = function () {
 
         $('.sidebar-option', panel).val("default");
         $('.header-option', panel).val("fixed");
-        $('.footer-option', panel).val("default");
+        $('.footer-option', panel).val("fixed");
 
         //handle theme layout
         var resetLayout = function () {
@@ -821,8 +821,8 @@ var App = function () {
         		$('#style_color').attr("href", "assets/css/themes/" + color + ".css");
             $.cookie('style_color', color);
         }
-        setColor('light');
-        setLayout();
+        //setColor('light');
+       // setLayout();
         $('.toggler', panel).click(function () {
             $('.toggler').hide();
             $('.toggler-close').show();
