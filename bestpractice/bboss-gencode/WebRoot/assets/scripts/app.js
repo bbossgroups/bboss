@@ -232,7 +232,7 @@ var App = function () {
             App.blockUI(pageContent, false);
 
             $.ajax({
-                type: "GET",
+                type: "POST",
                 cache: false,
                 url: url,
                 dataType: "html",
@@ -821,8 +821,8 @@ var App = function () {
         		$('#style_color').attr("href", "assets/css/themes/" + color + ".css");
             $.cookie('style_color', color);
         }
-        setColor('light');
-        setLayout();
+       // setColor('light');
+       // setLayout();
         $('.toggler', panel).click(function () {
             $('.toggler').hide();
             $('.toggler-close').show();
@@ -852,7 +852,19 @@ var App = function () {
     //* END:CORE HANDLERS *//
 
     return {
-
+    	/**
+    	* 将form里的字段值组装成可用于ajax提交的json对象
+    	* @auther 
+    	* @date 2011-04-15
+    	* @param formTag jquery定义form的表达式如'#queryForm'
+    	*/
+    	formToJson:function (formId){				
+    					
+    	    var fields = $(formId).serializeArray();
+    	    
+    	       				       
+    	    return fields;	
+    	},
         //main function to initiate the theme
         init: function (relativePath) {
 
@@ -942,13 +954,13 @@ var App = function () {
         },
 
         // wrapper function to  block element(indicate loading)
-        blockUI: function (el, centerY) {
+        blockUI: function (el, centerY,relativePath) {
             var el = jQuery(el);
             if (el.height() <= 400) {
                 centerY = true;
             }
             el.block({
-                message: '<img src="./assets/img/ajax-loading.gif" align="">',
+                message: relativePath?'<img src="'+relativePath+'/assets/img/ajax-loading.gif" align="">':'<img src="./assets/img/ajax-loading.gif" align="">',
                 centerY: centerY != undefined ? centerY : true,
                 css: {
                     top: '10%',

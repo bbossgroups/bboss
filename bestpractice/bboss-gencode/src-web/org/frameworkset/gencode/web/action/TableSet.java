@@ -1,10 +1,15 @@
 package org.frameworkset.gencode.web.action;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.frameworkset.gencode.core.GencodeServiceImpl;
 import org.frameworkset.gencode.entity.Field;
+import org.frameworkset.gencode.web.entity.ControlInfo;
+import org.frameworkset.gencode.web.entity.FieldInfo;
+import org.frameworkset.util.annotations.ResponseBody;
 import org.frameworkset.web.servlet.ModelMap;
 
 import com.frameworkset.common.poolman.DBUtil;
@@ -40,6 +45,13 @@ public class TableSet {
 		model.addAttribute("table", tableMeta);
 		model.addAttribute("dbname", dbname);
 		return "path:tableconfig";
+	}
+	
+	public @ResponseBody Map gencode(ControlInfo controlInfo,List<FieldInfo> fields)
+	{
+		Map ret = new HashMap();
+		ret.put("result", "success");
+		return ret;
 	}
 
 }

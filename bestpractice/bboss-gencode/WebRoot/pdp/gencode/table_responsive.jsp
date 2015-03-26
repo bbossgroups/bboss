@@ -55,7 +55,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 		<!-- BEGIN TOP NAVIGATION BAR -->
 		<div class="header-inner">
 			<!-- BEGIN LOGO -->
-			<a class="navbar-brand" href="index.html"> <img
+			<a class="navbar-brand" href="../../index.html" target="_blank"> <img
 				src="../../assets/img/logo.png" alt="logo" class="img-responsive" />
 			</a>
 			<!-- END LOGO -->
@@ -607,7 +607,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 												<label class="control-label col-md-3">代码控制参数</label>
 												<div class="col-md-9">
 													<input type="hidden" id="controlParams" name="controlParams"  class="form-control select2_sample3"
-														value="clearSourcedir">
+														value="geni18n, clearSourcedir,genRPC,autopk">
 												</div>
 											</div>
 										</div>
@@ -625,6 +625,24 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 												
 											</div>
 										</div>
+										
+										<!--/span-->
+									</div>
+									<div class="row">
+										<div class="col-md-6">
+											<div class="form-group">
+												<label class="control-label col-md-3">excel版本号</label>
+												<div class="col-md-9">
+													<select class="form-control" id="excelVersion" name="excelVersion" >
+														<option value="2003">2003</option>
+														<option value="2007">2007</option>
+														<option value="2010">2010</option>
+														<option value="2013">2013</option>
+													</select>
+												</div>
+											</div>
+										</div>
+										<!--/span-->
 										
 										<!--/span-->
 									</div>
@@ -716,17 +734,18 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 															<th>查询方式</th>
 															<th>排序方式</th>
 															<th>是否隐藏</th>				
-														</tr>
+															<th>默认值</th>
+														</tr>defaultValue
 													</thead>
 													<tbody>
 													<pg:list requestKey="fields">
 														
 															<tr>
-																<td><pg:cell colName="columnname"/><input type="hidden" name="columnname" class="form-control" value="<pg:cell colName="columnname"/>"></td>
-																<td><pg:cell colName="fieldName"/><input type="hidden" name="fieldName" class="form-control" value="<pg:cell colName="columnname"/>"></td>
+																<td><pg:cell colName="columnname"/><input type="hidden" name="columnname" class="form-control" value="<pg:cell colName="columnname"/>"><input type="hidden" name="rowid" class="form-control" value="<pg:rowid/>"></td>
+																<td><pg:cell colName="fieldName"/><input type="hidden" name="fieldName" class="form-control" value="<pg:cell colName="columnname"/>"><input type="hidden" name="mfieldName" class="form-control" value="<pg:cell colName="mfieldName"/>"></td>
 																
 																<td><pg:cell colName="columntype"/><input type="hidden" name="columntype" class="form-control" value="<pg:cell colName="columnname"/>"></td>
-																<td><input type="text" name="fieldCNName" class="form-control" value="<pg:cell colName="fieldName"/>"></td>
+																<td><input type="text" name="fieldCNName" class="form-control" value="<pg:cell colName="fieldCNName"/>"></td>
 																<td><select  class="form-control input-small select2me" name="type" id="type">
 																	<pg:case colName="type">
 																	<option value="String" <pg:equal value="String">selected</pg:equal>>String</option>
@@ -763,7 +782,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 																<div class="radio-list"><label ><input type="radio" name="<pg:rowid/>_hidden" id="<pg:rowid/>_hidden" value="1">是</label>																
 																<label ><input type="radio" name="<pg:rowid/>_hidden" id="<pg:rowid/>_hidden" value="0"  checked>否</label></div>																
 															 	</td>
-																
+																<td><input type="text" name="defaultValue" class="form-control" value="<pg:cell colName="defaultValue"/>"></td>
 															</tr>
 													</pg:list>	
 													</tbody>
@@ -867,7 +886,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 			App.init('../..');
 			 FormValidation.init();
 			 $(".select2_sample3").select2({
-	                tags: ["geni18n", "clearSourcedir","genRPC","autopk","genworkflow"]
+	                tags: ["geni18n", "clearSourcedir","genRPC","autopk","genworkflow","exportExcel","importExcel"]
 	            });
 	            
 	            $(".select2_sample4").select2({
