@@ -1,0 +1,20 @@
+/***
+Customized List Group
+***/
+
+/* Contextual variants */
+.list-group {
+	@include list-group-item-variant(success, $state-success-bg, $state-success-text);
+}
+
+.list-group {
+	@include list-group-item-variant(info, $state-info-bg, $state-info-text);
+}
+
+.list-group {
+	@include list-group-item-variant(warning, $state-warning-bg, $state-warning-text);
+}
+
+.list-group {
+	@include list-group-item-variant(danger, $state-danger-bg, $state-danger-text);
+}

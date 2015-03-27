@@ -1,0 +1,63 @@
+@media print {
+	body {
+    	background-color: #fff !important;
+	}
+
+	.page-header {
+		display: none; 
+	}
+
+	.theme-panel {  
+		display: none;    
+	}
+
+	.hidden-print {
+		display: none;
+	}
+
+	.page-prefooter {
+		display: none;
+	}
+
+	.page-footer {
+		display: none;
+	}
+
+	.page-head {
+		display: none;
+	}
+
+	.page-breadcrumb {
+		display: none;
+	}
+
+	.no-page-break {
+		page-break-after: avoid;
+	}
+
+	.page-container {
+		margin: 0px !important;
+		padding: 0px !important;
+
+		.page-content {
+			@include reset-container();
+			
+			padding: 0 !important;
+			margin: 0 !important;
+
+			> .container,
+			> .container-fluid {				
+				> .portlet {
+					padding: 0;
+					margin: 0;
+					
+					> .portlet-body {
+						padding: 0;
+						margin: 0;
+					}
+				}
+			}
+		}
+	}
+}
+

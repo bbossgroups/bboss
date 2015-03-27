@@ -1,0 +1,154 @@
+/***
+Theme Panel
+***/
+
+$base-color: lighten(#3D4A53, 1%);
+
+.theme-panel {
+    width: 400px;
+    margin-top: -15px;
+    margin-right: 0px;
+    z-index: 100;
+    float: right;
+    position:relative;
+
+    > .toggler {
+        top:5px;
+        right:1px;
+        height: 40px;
+        width: 40px; 
+        border-radius: 50% !important;
+        cursor:pointer;
+        position:absolute;
+        text-align: center;
+        background-color: #fff;
+
+        > i {
+            position: relative;
+            top: 12px;
+            font-size: 20px;
+            color: darken(#C0CDDC, 10%);
+        }
+
+        &:hover {
+            background: #ACB5C3;
+
+            > i {
+                color: #fff;
+            }
+        }
+    }
+
+    > .toggler-close {
+        display: none;
+        top:5px;
+        right:1px;
+        z-index: 101;
+        cursor:pointer;
+        position:absolute;
+
+        > i {
+            position: relative;
+            top: 12px;
+            right: 12px;
+            font-size: 20px;
+            color: darken(#fff, 5%);
+        }
+
+        &:hover {
+            @include opacity(0.8);
+        }
+    }
+
+    > .theme-options {
+        box-shadow: 5px 5px rgba($base-color, 0.1);  
+        top:4px;
+        right:0;
+        display:none;
+        position:absolute;
+        z-index: 100;  
+        background:$base-color;
+        border:1px solid darken($base-color, 3%);
+        @include border-radius($general-border-radius);
+        
+        > .theme-option {
+            color:#eee;
+            padding: 11px;
+            border-top:1px solid lighten($base-color, 3%);
+            margin-top: 0px;
+            margin-bottom: 0px;
+
+            > span {  
+              text-transform:uppercase;
+              display: inline-block;
+              width: 115px;
+              font-size: 13px;
+              font-weight: 300;
+            }
+
+            > select.form-control {
+              display: inline;
+              width: 100px;
+              padding: 2px;
+              text-transform: lowercase;
+            }
+
+            &.theme-colors {
+                border-top: 0;
+
+                > span {
+                  display: block;
+                  width: auto;
+                }
+
+                > ul {
+                  list-style:none;
+                  padding: 0;
+                  display: block;
+                  margin-bottom: 10px !important;
+                  margin-top: 15px;
+
+                  > li {
+                        width:46px;
+                        height:45px;
+                        margin:0 4px;
+                        cursor:pointer;
+                        list-style:none;
+                        float: left;
+                        border:solid 1px #707070; 
+
+                        &:first-child { 
+                            margin-left: 0;
+                        }
+
+                        &:hover,
+                        &.current {
+                            border:solid 2px #d64635;
+                        }
+
+                        /* theme colors */
+                        &.color-default {
+                            background: #2b3643;
+                        }
+
+                        &.color-dark {
+                            background: #333438;
+                        }
+
+                        &.color-blue {
+                            background: #26344B;        
+                        }
+
+                        &.color-grey {
+                            background: #4D5B69;
+                        }
+
+                        &.color-light {
+                            background: #f5f5f5;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

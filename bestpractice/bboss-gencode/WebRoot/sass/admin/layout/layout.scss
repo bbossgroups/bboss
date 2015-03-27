@@ -1,0 +1,65 @@
+//## Main Layout CSS Builder
+
+@import '../../global/_variables'; // global metronic framework variables
+
+/////////////////////////////
+/////////////////////////////
+/////////////////////////////
+//## Reset Media Queries Breakpoints
+//
+//Define the breakpoints at which your layout will change, adapting to different screen sizes.
+
+// Extra small screen / phone
+$screen-xs-min:              		480px !default;
+
+// Small screen / tablet
+$screen-sm-min:              		768px !default;
+
+// Medium screen / desktop(change 992 to 900 in order show default sidebar menu in ipad width devices, 
+// also change this variable in metronic.js under getResponsiveBreakpoint function)
+$screen-md-min:              		992px !default; 
+   
+// Large screen / wide desktop
+$screen-lg-min:             	 	1200px !default;
+
+// Large scree / wider desktop      
+$screen-lg-med:                     1260px !default;
+
+// So media queries don't overlap when required, provide a maximum
+$screen-xs-max:              		($screen-sm-min - 1) !default;
+$screen-sm-max:              		($screen-md-min - 1) !default;
+$screen-md-max:              		($screen-lg-min - 1) !default;
+/////////////////////////////
+/////////////////////////////
+/////////////////////////////
+
+@import '../../global/components/_mixins'; // global metronic framework mixings
+
+@import '_variables'; // theme level variables  
+
+@import 'layout/_print'; // print layout     
+              
+@import 'layout/_header'; // page header   
+@import 'layout/_page-container'; // page main container       
+@import 'layout/_sidebar';  // page sidebar        
+@import 'layout/_quick-sidebar';  // page quick sidebar     
+@import 'layout/_content'; // page consnde                        
+@import 'layout/_footer';   // page footer                     
+ 
+@import 'layout/_theme-panel';  // theme customizer panel                  
+
+/***  
+Page Loading       
+***/
+
+.page-on-load {
+	background: #fefefe;
+
+	.page-header,
+	.page-container,
+	.page-footer,
+	> .clearfix {
+		display: none;
+		transition: all 2s;
+	}
+}

@@ -1,0 +1,52 @@
+@media print {
+	body {
+    	background-color: #fff !important;
+	}
+  
+	.page-bar {
+		display: none; 
+	}
+
+	.page-sidebar-wrapper {
+		display: none;
+	}
+
+	.theme-panel {  
+		display: none;    
+	}
+
+	.hidden-print {  
+		display: none;
+	}
+
+	.page-footer {
+		display: none;
+	}
+
+	.no-page-break {
+		page-break-after: avoid;
+	}
+
+	.page-container {
+		margin: 0px !important;
+		padding: 0px !important;
+	}
+
+	.page-content {
+		padding: 0 !important;
+		min-height: 300px !important;
+		padding: 0px 20px 20px !important;
+		margin: 0 !important;
+
+		> .portlet {
+			padding: 0;
+			margin: 0;
+			
+			> .portlet-body {
+				padding: 0;
+				margin: 0;
+			}
+		}
+	}
+}
+

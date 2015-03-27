@@ -1,0 +1,63 @@
+//##  Default Layout Settings
+//
+// Define layout element width and height.
+
+
+// Header
+$header-height:             				            				126px  !default; // header height on table and desktop view. default: 42px
+$header-height-xs:             											($header-height * 2) !default; // header height on mobile view
+$page-header-top-height:												75px;
+
+$header-logo-height:                                    				16px;
+$header-logo-container-width:                                           255px;
+$header-menu-toggler-width:                             				22px; 
+$header-menu-toggler-height:                            				14px;
+//$header-responsive-toggler-margin:                      				($header-height - $header-menu-toggler-height) / 2 6px 0 6px !default; 
+$header-logo-margin:                                					($page-header-top-height - $header-logo-height) / 2 0 0 0 !default;  
+
+$header-top-menu-general-item-padding:      							17px 10px 8px 10px !default;  // adjust top menu general elements padding. default: 15px 10px 7px 10px
+$header-top-menu-general-item-padding-on-mobile:       					17px 6px 8px 6px !default;  // adjust top menu general elements padding mobile. default: 15px 10px 7px 10px
+
+$header-top-menu-inbox-item-padding:      								17px 0px 8px 8px !default;  // adjust top menu general elements padding. default: 15px 10px 7px 10px
+$header-top-menu-inbox-item-padding-on-mobile:       					17px 0px 8px 2px !default;  // adjust top menu general elements padding mobile. default: 15px 10px 7px 10px
+
+$header-top-menu-user-item-padding:         							12px 6px 7px 6px !default; // adjust top menu user bar element padding. default: 6px 0px 6px 6px
+$header-top-menu-user-item-padding-on-mobile:         					12px 0px 7px 4px !default;  // adjust top menu user bar element padding on mobile. default: 6px 0px 6px 4px
+
+$header-top-menu-language-item-padding:     							16px 10px 9px 2px !default;  // adjust top menu language bar element padding. default: 11px 1px 11px 5px
+$header-top-menu-language-item-padding-on-mobile:						16px 6px 9px 2px !default;  // adjust top menu language bar element padding. default: 11px 0px 11px 4px
+
+$header-top-menu-general-item-badge-top:                				9px !default;  // adjust top menu general elements badge top position. default: 8px
+$header-top-menu-icon-font-size:                                        19px !default;  
+
+$header-top-menu-user-font-size:                                        13px !default;   
+$header-top-menu-user-font-weight:                                      300 !default;   
+$header-top-menu-user-dropdown-link-font-size:                          14px !default;       
+$header-top-menu-user-dropdown-link-font-weight:                        300 !default; 
+
+$header-hor-menu-height:     											51px; 
+$header-hor-menu-general-item-padding:     								16px 18px 15px 18px !default;  // adjust hor menu elements padding top. default: 11px 10px
+$header-hor-menu-submenu-item-padding: 				 					10px 12px !default;  // adjust hor menu elements padding top. default: 7px 10px
+$header-hor-menu-submenu-item-arrow-top:                				9px;  // adjust hor menu dropdown menu's arrow. default: 9px     
+$header-hor-menu-search-toggler-button-padding:      					15px 22px 15px 22px !default;  // adjust hor menu elements padding top. default: 13px 22px 11px 22px
+$header-hor-menu-search-button-padding:     		 					7px 20px !default;  // adjust hor menu elements padding top. default: 5px 20px
+$header-hor-menu-search-input-margin:    			 					7px 0 0 0 !default;  // adjust hor menu elements padding top. default: 5px 0 0 0
+
+// Horizontal menu font
+$header-hor-menu-default-link-font-size:                                14px !default;
+$header-hor-menu-default-link-font-weight:                              normal !default;
+$header-hor-menu-dropdown-menu-link-font-size:                          14px !default; 
+$header-hor-menu-dropdown-menu-link-font-weight:                        300 !default;
+$header-hor-menu-mega-menu-header-font-size:                            15px !default;
+$header-hor-menu-mega-menu-header-font-weight:                          normal !default;  
+
+// Page content
+$page-content-bg-color:                   								#eff3f8;
+
+// Z-index master list
+$zindex-header-fixed:                                                   9995 !default;
+$zindex-header-static:                                                  9995 !default;
+$zindex-header-top-menu:                                                9996 !default;
+$zindex-header-dropdown:                                                9997 !default;
+$zindex-footer-fixed:      												10000 !default;
+$zindex-go-to-top:   												    10001 !default;							

@@ -1,8 +1,8 @@
 <property name="datasource" class="com.frameworkset.commons.dbcp2.BasicDataSource">
  	<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>  
-	<property name="url" value="jdbc:oracle:thin:@//localhost:1521/orcl"/>  
-	<property name="username" value="pdp1"/>  
-	<property name="password" value="pdp1"/>  
+	<property name="url" value="jdbc:oracle:thin:@//10.0.15.51:1521/orcl"/>  
+	<property name="username" value="testpdp1"/>  
+	<property name="password" value="testpdp1"/>  
 	<!--initialSize: 初始化连接-->  
 	<property name="initialSize" value="5"/>  
 	<property name="maxTotal" value="20"/>  

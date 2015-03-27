@@ -1,0 +1,22 @@
+/***
+Bootstrap Modal
+***/
+/* fix: content shifting to the right on modal open */
+
+.modal-open.page-overflow .page-container,
+.modal-open.page-overflow .page-container .navbar-fixed-top,
+.modal-open.page-overflow .page-container .navbar-fixed-bottom,
+.modal-open.page-overflow .modal-scrollable {
+  overflow-y: auto !important;
+}
+
+.modal-scrollable {
+  overflow: hidden !important;
+}
+
+/* BS 3.3.1 fix */
+
+.modal-backdrop { 
+	position: fixed; 
+	bottom: 0; 
+}

@@ -1,0 +1,39 @@
+/***
+Customized Bootstrap Popover
+***/
+
+.popover {
+    box-shadow: 5px 5px rgba(#666, 0.1);
+    padding: 0;
+
+    .popover-title {  
+        margin: 0 !important;
+    }
+}
+
+@mixin popover-variant($name, $color) {
+    .popover.#{name} .popover-title,
+    #{name} .popover .popover-content,
+    .popover.#{name} .popover-content {
+        color: $color;
+    }
+} 
+
+@include popover-variant("info", $brand-info);
+@include popover-variant("primary", $brand-primary);
+@include popover-variant("success", $brand-success);
+@include popover-variant("warning", $brand-warning);
+@include popover-variant("danger", $brand-danger);
+
+/* popover colors*/
+.popovers.yellow + .popover {
+    background: yellow;
+}
+
+.popovers.yellow + .popover .popover-title {
+    background: yellow;
+}
+
+.popovers.yellow + .popover .popover-content {
+    background: yellow;
+}
