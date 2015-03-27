@@ -26,7 +26,7 @@ public class FieldInfo {
 	private int required;
 	@RequestParam(name="${rowid}_hidden")
 	private int hidden;
-	private String replace;
+	private String replace;	
 	public String getFieldName() {
 		return fieldName;
 	}

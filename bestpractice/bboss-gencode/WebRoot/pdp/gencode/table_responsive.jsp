@@ -735,7 +735,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 															<th>排序方式</th>
 															<th>是否隐藏</th>				
 															<th>默认值</th>
-														</tr>defaultValue
+														</tr>
 													</thead>
 													<tbody>
 													<pg:list requestKey="fields">
