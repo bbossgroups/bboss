@@ -10,10 +10,11 @@
 	    Date: 2011-09-21
 	-->
 
-	<property name="/pdp/gencode/*.page"
-		path:tableset="/pdp/gencode/table_responsive.jsp"
-		path:tableconfig="/pdp/gencode/tableconfig.jsp"
-		class="org.frameworkset.gencode.web.action.TableSet" >
+	<property name="/gencode/*.page"
+		path:index="/gencode/main.jsp"
+		path:tableconfig="/gencode/tableconfig.jsp"
+		path:selecttable="/gencode/selecttable.jsp"
+		class="org.frameworkset.gencode.web.action.GencodeController" >
 	</property>
 	
 	

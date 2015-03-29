@@ -8,7 +8,7 @@ var Layout = function () {
     var layoutCssPath = 'admin/layout/css/';
 
     var resBreakpointMd = Metronic.getResponsiveBreakpoint('md');
-
+    
     //* BEGIN:CORE HANDLERS *//
     // this function handles responsive layout on screen size resize or mobile device rotate.
 
@@ -192,6 +192,7 @@ var Layout = function () {
             Metronic.scrollTop();
 
             var url = $(this).attr("href");
+            var formid = $(this).attr("formid");
             var menuContainer = $('.page-sidebar ul');
             var pageContent = $('.page-content');
             var pageContentBody = $('.page-content .page-content-body');
@@ -212,27 +213,57 @@ var Layout = function () {
             Metronic.startPageLoading();
 
             var the = $(this);
-            
-            $.ajax({
-                type: "GET",
-                cache: false,
-                url: url,
-                dataType: "html",
-                success: function (res) {
-                    if (the.parents('li.open').size() === 0) {
-                        $('.page-sidebar-menu > li.open > a').click();
-                    }
+            if(!formid)
+            {
+            	$.ajax({
+                    type: "POST",
+                    cache: false,
+                    url: url,
+                    dataType: "html",
+                    success: function (res) {
+                        if (the.parents('li.open').size() === 0) {
+                            $('.page-sidebar-menu > li.open > a').click();
+                        }
 
-                    Metronic.stopPageLoading();
-                    pageContentBody.html(res);
-                    Layout.fixContentHeight(); // fix content height
-                    Metronic.initAjax(); // initialize core stuff
-                },
-                error: function (xhr, ajaxOptions, thrownError) {
-                    Metronic.stopPageLoading();
-                    pageContentBody.html('<h4>Could not load the requested content.</h4>');
-                }
-            });
+                        Metronic.stopPageLoading();
+                        pageContentBody.html(res);
+                        Layout.fixContentHeight(); // fix content height
+                        Metronic.initAjax(); // initialize core stuff
+                        //ComponentsDropdowns.init();
+                        
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        Metronic.stopPageLoading();
+                        pageContentBody.html('<h4>Could not load the requested content.</h4>');
+                    }
+                });
+            }
+            else
+        	{
+            	$.ajax({
+                    type: "POST",
+                    cache: false,
+                    url: url,
+                    data :Layout.formToJson("#"+formid) ,
+                    dataType: "html",
+                    success: function (res) {
+                        if (the.parents('li.open').size() === 0) {
+                            $('.page-sidebar-menu > li.open > a').click();
+                        }
+
+                        Metronic.stopPageLoading();
+                        pageContentBody.html(res);
+                        Layout.fixContentHeight(); // fix content height
+                        Metronic.initAjax(); // initialize core stuff
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        Metronic.stopPageLoading();
+                        pageContentBody.html('<h4>Could not load the requested content.</h4>');
+                    }
+                });
+            	
+        	}
+            
         });
 
         // handle ajax link within main content
@@ -241,6 +272,7 @@ var Layout = function () {
             Metronic.scrollTop();
 
             var url = $(this).attr("href");
+            var formid = $(this).attr("formid");
             var pageContent = $('.page-content');
             var pageContentBody = $('.page-content .page-content-body');
 
@@ -249,23 +281,45 @@ var Layout = function () {
             if (Metronic.getViewPort().width < resBreakpointMd && $('.page-sidebar').hasClass("in")) { // close the menu on mobile view while laoding a page 
                 $('.page-header .responsive-toggler').click();
             }
-
-            $.ajax({
-                type: "GET",
-                cache: false,
-                url: url,
-                dataType: "html",
-                success: function (res) {
-                    Metronic.stopPageLoading();
-                    pageContentBody.html(res);
-                    Layout.fixContentHeight(); // fix content height
-                    Metronic.initAjax(); // initialize core stuff
-                },
-                error: function (xhr, ajaxOptions, thrownError) {
-                    pageContentBody.html('<h4>Could not load the requested content.</h4>');
-                    Metronic.stopPageLoading();
-                }
-            });
+            if(!formid)
+            {
+	            $.ajax({
+	                type: "POST",
+	                cache: false,
+	                url: url,	               
+	                dataType: "html",
+	                success: function (res) {
+	                    Metronic.stopPageLoading();
+	                    pageContentBody.html(res);
+	                    Layout.fixContentHeight(); // fix content height
+	                    Metronic.initAjax(); // initialize core stuff
+	                },
+	                error: function (xhr, ajaxOptions, thrownError) {
+	                    pageContentBody.html('<h4>Could not load the requested content.</h4>');
+	                    Metronic.stopPageLoading();
+	                }
+	            });
+            }
+            else
+        	{
+            	$.ajax({
+	                type: "POST",
+	                cache: false,
+	                url: url,
+	                data :Layout.formToJson("#"+formid) ,
+	                dataType: "html",
+	                success: function (res) {
+	                    Metronic.stopPageLoading();
+	                    pageContentBody.html(res);
+	                    Layout.fixContentHeight(); // fix content height
+	                    Metronic.initAjax(); // initialize core stuff
+	                },
+	                error: function (xhr, ajaxOptions, thrownError) {
+	                    pageContentBody.html('<h4>Could not load the requested content.</h4>');
+	                    Metronic.stopPageLoading();
+	                }
+	            });
+        	}
         });
 
         // handle scrolling to top on responsive menu toggler click when header is fixed for mobile view
@@ -586,7 +640,13 @@ var Layout = function () {
         fixContentHeight: function () {
             handleSidebarAndContentHeight();
         },
-
+        formToJson : function (formId){				
+    		
+    	    var fields = $(formId).serializeArray();
+    	    
+    	       				       
+    	    return fields;	
+    	},
         initFixedSidebarHoverEffect: function() {
             handleFixedSidebarHoverEffect();
         },
