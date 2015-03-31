@@ -30,7 +30,7 @@
 						<div class="form-group">
 							<label class="control-label col-md-3">数据源</label>
 							<div class="col-md-9">
-								<select name="dbname" class="select2me form-control" onchange="alert('aa')">
+								<select name="dbname" class="select2me form-control" onchange="ComponentsDropdowns.loadtables(event,'tableName')">
 								<pg:list requestKey="dbs">
 									<option value="<pg:cell/>"><pg:cell/></option>
 								</pg:list>	
@@ -44,7 +44,7 @@
 						<div class="form-group">
 							<label class="control-label col-md-3">选择表</label>
 							<div class="col-md-9">
-								<select name="tableName" class="select2me form-control">
+								<select name="tableName" id="tableName" class="select2me form-control">
 								<pg:list requestKey="tables">
 									<option value="<pg:cell/>"><pg:cell/></option>
 								</pg:list>	

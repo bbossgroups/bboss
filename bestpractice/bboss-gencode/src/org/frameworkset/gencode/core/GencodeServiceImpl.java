@@ -1653,6 +1653,9 @@ public class GencodeServiceImpl {
 		List<String> imports = new ArrayList<String>();
 		for(Field f:fields)
 		{
+			if(f.getType() == null)
+				System.out.println();
+				
 	         if(f.getType().equals("Timestamp"))
 	         {
 	        	 if(!imports.contains("java.sql.Timestamp"))

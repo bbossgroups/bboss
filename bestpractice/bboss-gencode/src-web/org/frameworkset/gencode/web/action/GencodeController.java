@@ -18,7 +18,19 @@ import com.frameworkset.common.poolman.sql.TableMetaData;
 
 public class GencodeController {
 
-	
+	public @ResponseBody List<String> loadtables(String dbname)
+	{
+		Set<TableMetaData> tableMetas =   DBUtil.getTableMetaDatas(dbname);
+		List<String> tables = new ArrayList<String>();
+		if(tableMetas != null)
+		{
+			for(TableMetaData meta :tableMetas)
+			{
+				tables.add(meta.getTableName());
+			}
+		}
+		return tables;
+	}
 	public String selecttable(ModelMap model)
 	{
 		List<String> dbs = DBUtil.getAllPoolNames();

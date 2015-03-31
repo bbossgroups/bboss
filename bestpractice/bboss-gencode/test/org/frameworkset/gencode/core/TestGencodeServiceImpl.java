@@ -156,10 +156,10 @@ alter table TA_AUTHO_AREA
 		 
 		GencodeServiceImpl gencodeService = new GencodeServiceImpl();
 		ModuleMetaInfo moduleMetaInfo = new ModuleMetaInfo();
-		moduleMetaInfo.setTableName("ta_autho_area");//指定表名，根据表结构来生成所有的文件
-		moduleMetaInfo.setPkname("ta_autho_area");//设置oracle sequence名称，用来生成表的主键,对应TABLEINFO表中TABLE_NAME字段的值
+		moduleMetaInfo.setTableName("TA_JF_APPLY_INFO");//指定表名，根据表结构来生成所有的文件
+		moduleMetaInfo.setPkname("TA_JF_APPLY_INFO");//设置oracle sequence名称，用来生成表的主键,对应TABLEINFO表中TABLE_NAME字段的值
 		moduleMetaInfo.setSystem("lcjf");//lcjf,系统代码，如果指定了system，那么对应的jsp页面会存放到lcjf/area目录下面，对应的mvc组件装配文件存在在/WEB-INF/conf/lcjf下面，否则jsp在/area下，mvc组件装配文件存在在/WEB-INF/conf/area下
-		moduleMetaInfo.setModuleName("area");//指定模块名称，源码和配置文件都会存放在相应模块名称的目录下面
+		moduleMetaInfo.setModuleName("apply");//指定模块名称，源码和配置文件都会存放在相应模块名称的目录下面
 		moduleMetaInfo.setModuleCNName("行政区划");//指定模块中文名称
 		moduleMetaInfo.setDatasourceName("bspf");//指定数据源名称，在poolman.xml文件中配置
 		moduleMetaInfo.setPackagePath("org.frameworkset");//java程序对应的包路径
@@ -177,7 +177,7 @@ alter table TA_AUTHO_AREA
 		gencodeService.setTheme("default");//设置默认主题风格		
 		/************以下代码片段指定界面查询字段，以及查询条件组合方式、是否是模糊查询等*******/
 		ConditionField bm = new ConditionField();
-		bm.setColumnname("AREA_NAME");
+		bm.setColumnname("USER_NAME");
 		bm.setLike(true);
 		bm.setOr(true);
 		gencodeService.addCondition(bm);		
@@ -191,7 +191,7 @@ alter table TA_AUTHO_AREA
 		/************以上代码片段指定界面查询字段，以及查询条件组合方式、是否是模糊查询等********/		
 		/************以下代码片段指定界面排序字段**********************************/
 		SortField id = new SortField();
-		id.setColumnname("SORT_NUM");
+		id.setColumnname("AREA_CODE");
 		id.setDesc(true);
 		id.setDefaultSortField(true);
 		gencodeService.addSortField(id);	
