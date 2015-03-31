@@ -2460,7 +2460,7 @@ public class PagerDataSet extends PagerTagSupport {
 					return SKIP_BODY;
 				}
 			}
-			this.currentValueObject = this.getClassDataValue(rowid);
+
 			return EVAL_BODY_INCLUDE;
 			
 		}
@@ -2525,7 +2525,7 @@ public class PagerDataSet extends PagerTagSupport {
 		
 
 		if (size() > 0) {
-
+			this.currentValueObject = this.getClassDataValue(rowid);
 			/**
 			 * 以下的代码对取到的数据进行排序
 			 */
