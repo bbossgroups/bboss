@@ -21,7 +21,14 @@
 		<!-- BEGIN FORM-->
 		<form action="#" id="tableform" class="form-horizontal">
 			<div class="form-body">
-
+				<div class="alert alert-danger display-hide">
+					<button class="close" data-close="alert"></button>
+					You have some form errors. Please check below.
+				</div>
+				<div class="alert alert-success display-hide">
+					<button class="close" data-close="alert"></button>
+					Your form validation is successful!
+				</div>
 				<!-- END PAGE HEADER-->
 				<!-- BEGIN PAGE CONTENT-->
 				
@@ -42,9 +49,12 @@
 					<!--/span-->
 					<div class="col-md-6">
 						<div class="form-group">
-							<label class="control-label col-md-3">选择表</label>
+							<label class="control-label col-md-3">选择表<span class="required">
+										* </span></label>
+										
+										
 							<div class="col-md-9">
-								<select name="tableName" id="tableName" class="select2me form-control">
+								<select name="tableName" id="tableName"  data-required="1"  class="select2me form-control">
 								<pg:list requestKey="tables">
 									<option value="<pg:cell/>"><pg:cell/></option>
 								</pg:list>	
@@ -58,8 +68,8 @@
 
 				<div class="row">
 					<div class="col-md-12">
-						
-						<a href="tableconfig.page" class="btn blue ajaxify" formid="tableform"> 进入表单配置步骤</a>
+						<a href="javascript:void"  class="btn blue" > 进入表单配置</a>
+						<a href="tableconfig.page"  class="btn blue ajaxify display-hide" formid="tableform"> 进入表单配置步骤</a>
 					</div>
 				</div>
 			</div>

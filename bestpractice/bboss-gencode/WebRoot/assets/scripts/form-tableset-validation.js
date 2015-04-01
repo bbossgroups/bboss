@@ -129,7 +129,7 @@ var FormValidation = function () {
             });
             //apply validation on select2 dropdown value change, this only needed for chosen dropdown integration.
             $('.select2me', form2).change(function () {
-                form3.validate().element($(this)); //revalidate the chosen dropdown value and show error or success message for the input
+            	form2.validate().element($(this)); //revalidate the chosen dropdown value and show error or success message for the input
             });
 
     }

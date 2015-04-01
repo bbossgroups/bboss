@@ -1368,12 +1368,15 @@ License: You must have a valid license purchased only from themeforest(the above
 <script src="../assets/global/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
 <script src="../assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
 <!-- END CORE PLUGINS -->
+<script type="text/javascript" src="../assets/global/plugins/jquery-validation/js/jquery.validate.min.js"></script>
+<script type="text/javascript" src="../assets/global/plugins/jquery-validation/js/additional-methods.min.js"></script>
 <script type="text/javascript" src="../assets/global/plugins/select2/select2.min.js"></script>
 <script src="../assets/global/scripts/metronic.js" type="text/javascript"></script>
 <script src="../assets/admin/layout/scripts/layout.js" type="text/javascript"></script>
 <script src="../assets/admin/layout/scripts/quick-sidebar.js" type="text/javascript"></script>
 <script src="../assets/admin/layout/scripts/demo.js" type="text/javascript"></script>
 <script src="components-gencode-dropdowns.js" type="text/javascript"></script>
+<script src="form-validation.js" type="text/javascript"></script>
 
 <script>
 jQuery(document).ready(function() {    
@@ -1382,6 +1385,7 @@ jQuery(document).ready(function() {
 Layout.init(); // init current layout
 QuickSidebar.init(); // init quick sidebar
 Demo.init(); // init demo features
+
    $('.page-sidebar .ajaxify.start').click() // load the content for the dashboard page.
 });
 </script>
