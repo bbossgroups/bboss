@@ -1,3 +1,5 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <%@ page language="java" pageEncoding="utf-8"%>
 <%@ include file="/common/jsp/importtaglib.jsp"%>
 
@@ -9,8 +11,7 @@
 	版本:$version 
 	日期:$gendate
 -->
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+
 <head>
 <title>${moduleCNName}管理</title>
 <%@ include file="/common/jsp/css-lhgdialog.jsp"%>
