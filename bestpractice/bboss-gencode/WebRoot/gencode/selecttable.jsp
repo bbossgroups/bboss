@@ -68,7 +68,7 @@
 
 				<div class="row">
 					<div class="col-md-12">
-						<a href="javascript:void"  class="btn blue" > 进入表单配置</a>
+						<a href="javascript:void"  class="btn blue" onclick=""> 进入表单配置</a>
 						<a href="tableconfig.page"  class="btn blue ajaxify display-hide" formid="tableform"> 进入表单配置步骤</a>
 					</div>
 				</div>
