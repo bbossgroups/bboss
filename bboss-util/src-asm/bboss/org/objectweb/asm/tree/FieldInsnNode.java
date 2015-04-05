@@ -36,7 +36,7 @@ import bboss.org.objectweb.asm.MethodVisitor;
 /**
  * A node that represents a field instruction. A field instruction is an
  * instruction that loads or stores the value of a field of an object.
- *
+ * 
  * @author Eric Bruneton
  */
 public class FieldInsnNode extends AbstractInsnNode {
@@ -59,20 +59,21 @@ public class FieldInsnNode extends AbstractInsnNode {
 
     /**
      * Constructs a new {@link FieldInsnNode}.
-     *
-     * @param opcode the opcode of the type instruction to be constructed. This
-     *        opcode must be GETSTATIC, PUTSTATIC, GETFIELD or PUTFIELD.
-     * @param owner the internal name of the field's owner class (see
-     *        {@link bboss.org.objectweb.asm.Type#getInternalName() getInternalName}).
-     * @param name the field's name.
-     * @param desc the field's descriptor (see {@link bboss.org.objectweb.asm.Type}).
+     * 
+     * @param opcode
+     *            the opcode of the type instruction to be constructed. This
+     *            opcode must be GETSTATIC, PUTSTATIC, GETFIELD or PUTFIELD.
+     * @param owner
+     *            the internal name of the field's owner class (see
+     *            {@link bboss.org.objectweb.asm.Type#getInternalName()
+     *            getInternalName}).
+     * @param name
+     *            the field's name.
+     * @param desc
+     *            the field's descriptor (see {@link bboss.org.objectweb.asm.Type}).
      */
-    public FieldInsnNode(
-        final int opcode,
-        final String owner,
-        final String name,
-        final String desc)
-    {
+    public FieldInsnNode(final int opcode, final String owner,
+            final String name, final String desc) {
         super(opcode);
         this.owner = owner;
         this.name = name;
@@ -81,9 +82,10 @@ public class FieldInsnNode extends AbstractInsnNode {
 
     /**
      * Sets the opcode of this instruction.
-     *
-     * @param opcode the new instruction opcode. This opcode must be GETSTATIC,
-     *        PUTSTATIC, GETFIELD or PUTFIELD.
+     * 
+     * @param opcode
+     *            the new instruction opcode. This opcode must be GETSTATIC,
+     *            PUTSTATIC, GETFIELD or PUTFIELD.
      */
     public void setOpcode(final int opcode) {
         this.opcode = opcode;
@@ -95,12 +97,14 @@ public class FieldInsnNode extends AbstractInsnNode {
     }
 
     @Override
-    public void accept(final MethodVisitor cv) {
-        cv.visitFieldInsn(opcode, owner, name, desc);
+    public void accept(final MethodVisitor mv) {
+        mv.visitFieldInsn(opcode, owner, name, desc);
+        acceptAnnotations(mv);
     }
 
     @Override
     public AbstractInsnNode clone(final Map<LabelNode, LabelNode> labels) {
-        return new FieldInsnNode(opcode, owner, name, desc);
+        return new FieldInsnNode(opcode, owner, name, desc)
+                .cloneAnnotations(this);
     }
 }

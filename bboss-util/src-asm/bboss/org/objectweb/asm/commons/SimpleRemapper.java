@@ -35,7 +35,7 @@ import java.util.Map;
 
 /**
  * A {@link Remapper} using a {@link Map} to define its mapping.
- *
+ * 
  * @author Eugene Kuleshov
  */
 public class SimpleRemapper extends Remapper {

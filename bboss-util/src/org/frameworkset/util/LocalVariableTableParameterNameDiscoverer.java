@@ -26,11 +26,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
-import org.frameworkset.util.ClassUtils;
-import org.frameworkset.util.ParameterNameDiscoverer;
 
-import bboss.org.objectweb.asm.ClassAdapter;
+//import bboss.org.objectweb.asm.ClassAdapter;
 import bboss.org.objectweb.asm.ClassReader;
+import bboss.org.objectweb.asm.ClassVisitor;
 import bboss.org.objectweb.asm.Label;
 import bboss.org.objectweb.asm.MethodVisitor;
 import bboss.org.objectweb.asm.Opcodes;
@@ -192,7 +191,7 @@ public class LocalVariableTableParameterNameDiscoverer  implements ParameterName
 	 * Helper class that looks for a given member name and descriptor, and then
 	 * attempts to find the parameter names for that member.
 	 */
-	private static abstract class ParameterNameDiscoveringVisitor extends ClassAdapter {
+	private static abstract class ParameterNameDiscoveringVisitor extends ClassVisitor {
 
 		private String methodNameToMatch;
 
@@ -209,7 +208,7 @@ public class LocalVariableTableParameterNameDiscoverer  implements ParameterName
 		private String[] parameterNames;
 		
 		public ParameterNameDiscoveringVisitor(String name, boolean isStatic, Class[] paramTypes) {
-			super(Opcodes.ASM4);
+			super(Opcodes.ASM5);
 			this.methodNameToMatch = name;
 			this.numParamsExpected = paramTypes.length;
 			computeLvtSlotIndices(isStatic, paramTypes);
@@ -290,7 +289,7 @@ public class LocalVariableTableParameterNameDiscoverer  implements ParameterName
 		private boolean hasLvtInfo = false;
 
 		public LocalVariableTableVisitor(ParameterNameDiscoveringVisitor memberVisitor, boolean isStatic) {
-			super(Opcodes.ASM4);
+			super(Opcodes.ASM5);
 			this.memberVisitor = memberVisitor;
 			this.isStatic = isStatic;
 			this.parameterNames = new String[memberVisitor.numParamsExpected];

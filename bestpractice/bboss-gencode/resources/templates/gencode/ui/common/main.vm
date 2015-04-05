@@ -18,7 +18,7 @@
 </head>
 	<body>
 		<div class="mcontent">
-			<sany:menupath />
+		
 			#if($conditions && $conditions.size() > 0)
 			<div id="searchblock">
 				<div class="search_top">

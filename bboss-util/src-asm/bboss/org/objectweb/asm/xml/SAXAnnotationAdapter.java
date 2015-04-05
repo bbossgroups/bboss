@@ -32,11 +32,12 @@ package bboss.org.objectweb.asm.xml;
 import bboss.org.objectweb.asm.AnnotationVisitor;
 import bboss.org.objectweb.asm.Opcodes;
 import bboss.org.objectweb.asm.Type;
+import bboss.org.objectweb.asm.TypePath;
 import org.xml.sax.helpers.AttributesImpl;
 
 /**
  * SAXAnnotationAdapter
- *
+ * 
  * @author Eugene Kuleshov
  */
 public final class SAXAnnotationAdapter extends AnnotationVisitor {
@@ -45,35 +46,45 @@ public final class SAXAnnotationAdapter extends AnnotationVisitor {
 
     private final String elementName;
 
-    public SAXAnnotationAdapter(
-        final SAXAdapter sa,
-        final String elementName,
-        final int visible,
-        final String name,
-        final String desc)
-    {
-        this(Opcodes.ASM4, sa, elementName, visible, desc, name, -1);
+    public SAXAnnotationAdapter(final SAXAdapter sa, final String elementName,
+            final int visible, final String name, final String desc) {
+        this(Opcodes.ASM5, sa, elementName, visible, desc, name, -1, -1, null,
+                null, null, null);
     }
 
-    public SAXAnnotationAdapter(
-        final SAXAdapter sa,
-        final String elementName,
-        final int visible,
-        final int parameter,
-        final String desc)
-    {
-        this(Opcodes.ASM4, sa, elementName, visible, desc, null, parameter);
+    public SAXAnnotationAdapter(final SAXAdapter sa, final String elementName,
+            final int visible, final int parameter, final String desc) {
+        this(Opcodes.ASM5, sa, elementName, visible, desc, null, parameter, -1,
+                null, null, null, null);
     }
 
-    protected SAXAnnotationAdapter(
-        final int api,
-        final SAXAdapter sa,
-        final String elementName,
-        final int visible,
-        final String desc,
-        final String name,
-        final int parameter)
-    {
+    public SAXAnnotationAdapter(final SAXAdapter sa, final String elementName,
+            final int visible, final String name, final String desc,
+            final int typeRef, final TypePath typePath) {
+        this(Opcodes.ASM5, sa, elementName, visible, desc, name, -1, typeRef,
+                typePath, null, null, null);
+    }
+
+    public SAXAnnotationAdapter(final SAXAdapter sa, final String elementName,
+            final int visible, final String name, final String desc,
+            int typeRef, TypePath typePath, final String[] start,
+            final String[] end, final int[] index) {
+        this(Opcodes.ASM5, sa, elementName, visible, desc, name, -1, typeRef,
+                typePath, start, end, index);
+    }
+
+    protected SAXAnnotationAdapter(final int api, final SAXAdapter sa,
+            final String elementName, final int visible, final String desc,
+            final String name, final int parameter) {
+        this(api, sa, elementName, visible, desc, name, parameter, -1, null,
+                null, null, null);
+    }
+
+    protected SAXAnnotationAdapter(final int api, final SAXAdapter sa,
+            final String elementName, final int visible, final String desc,
+            final String name, final int parameter, final int typeRef,
+            final TypePath typePath, final String[] start, final String[] end,
+            final int[] index) {
         super(api);
         this.sa = sa;
         this.elementName = elementName;
@@ -83,19 +94,45 @@ public final class SAXAnnotationAdapter extends AnnotationVisitor {
             att.addAttribute("", "name", "name", "", name);
         }
         if (visible != 0) {
-            att.addAttribute("", "visible", "visible", "", visible > 0
-                    ? "true"
+            att.addAttribute("", "visible", "visible", "", visible > 0 ? "true"
                     : "false");
         }
         if (parameter != -1) {
-            att.addAttribute("",
-                    "parameter",
-                    "parameter",
-                    "",
+            att.addAttribute("", "parameter", "parameter", "",
                     Integer.toString(parameter));
         }
         if (desc != null) {
             att.addAttribute("", "desc", "desc", "", desc);
+        }
+        if (typeRef != -1) {
+            att.addAttribute("", "typeRef", "typeRef", "",
+                    Integer.toString(typeRef));
+        }
+        if (typePath != null) {
+            att.addAttribute("", "typePath", "typePath", "",
+                    typePath.toString());
+        }
+        if (start != null) {
+            StringBuffer value = new StringBuffer(start[0]);
+            for (int i = 1; i < start.length; ++i) {
+                value.append(" ").append(start[i]);
+            }
+            att.addAttribute("", "start", "start", "", value.toString());
+        }
+        if (end != null) {
+            StringBuffer value = new StringBuffer(end[0]);
+            for (int i = 1; i < end.length; ++i) {
+                value.append(" ").append(end[i]);
+            }
+            att.addAttribute("", "end", "end", "", value.toString());
+        }
+        if (index != null) {
+            StringBuffer value = new StringBuffer();
+            value.append(index[0]);
+            for (int i = 1; i < index.length; ++i) {
+                value.append(" ").append(index[i]);
+            }
+            att.addAttribute("", "index", "index", "", value.toString());
         }
 
         sa.addStart(elementName, att);
@@ -157,40 +194,27 @@ public final class SAXAnnotationAdapter extends AnnotationVisitor {
             }
             av.visitEnd();
         } else {
-            addValueElement("annotationValue",
-                    name,
-                    Type.getDescriptor(c),
+            addValueElement("annotationValue", name, Type.getDescriptor(c),
                     value.toString());
         }
     }
 
     @Override
-    public void visitEnum(
-        final String name,
-        final String desc,
-        final String value)
-    {
+    public void visitEnum(final String name, final String desc,
+            final String value) {
         addValueElement("annotationValueEnum", name, desc, value);
     }
 
     @Override
-    public AnnotationVisitor visitAnnotation(
-        final String name,
-        final String desc)
-    {
-        return new SAXAnnotationAdapter(sa,
-                "annotationValueAnnotation",
-                0,
-                name,
-                desc);
+    public AnnotationVisitor visitAnnotation(final String name,
+            final String desc) {
+        return new SAXAnnotationAdapter(sa, "annotationValueAnnotation", 0,
+                name, desc);
     }
 
     @Override
     public AnnotationVisitor visitArray(final String name) {
-        return new SAXAnnotationAdapter(sa,
-                "annotationValueArray",
-                0,
-                name,
+        return new SAXAnnotationAdapter(sa, "annotationValueArray", 0, name,
                 null);
     }
 
@@ -199,12 +223,8 @@ public final class SAXAnnotationAdapter extends AnnotationVisitor {
         sa.addEnd(elementName);
     }
 
-    private void addValueElement(
-        final String element,
-        final String name,
-        final String desc,
-        final String value)
-    {
+    private void addValueElement(final String element, final String name,
+            final String desc, final String value) {
         AttributesImpl att = new AttributesImpl();
         if (name != null) {
             att.addAttribute("", "name", "name", "", name);
@@ -213,10 +233,7 @@ public final class SAXAnnotationAdapter extends AnnotationVisitor {
             att.addAttribute("", "desc", "desc", "", desc);
         }
         if (value != null) {
-            att.addAttribute("",
-                    "value",
-                    "value",
-                    "",
+            att.addAttribute("", "value", "value", "",
                     SAXClassAdapter.encode(value));
         }
 

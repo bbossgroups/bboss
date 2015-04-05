@@ -35,7 +35,7 @@ import bboss.org.objectweb.asm.MethodVisitor;
 
 /**
  * A node that represents an instruction with a single int operand.
- *
+ * 
  * @author Eric Bruneton
  */
 public class IntInsnNode extends AbstractInsnNode {
@@ -47,10 +47,12 @@ public class IntInsnNode extends AbstractInsnNode {
 
     /**
      * Constructs a new {@link IntInsnNode}.
-     *
-     * @param opcode the opcode of the instruction to be constructed. This
-     *        opcode must be BIPUSH, SIPUSH or NEWARRAY.
-     * @param operand the operand of the instruction to be constructed.
+     * 
+     * @param opcode
+     *            the opcode of the instruction to be constructed. This opcode
+     *            must be BIPUSH, SIPUSH or NEWARRAY.
+     * @param operand
+     *            the operand of the instruction to be constructed.
      */
     public IntInsnNode(final int opcode, final int operand) {
         super(opcode);
@@ -59,9 +61,10 @@ public class IntInsnNode extends AbstractInsnNode {
 
     /**
      * Sets the opcode of this instruction.
-     *
-     * @param opcode the new instruction opcode. This opcode must be BIPUSH,
-     *        SIPUSH or NEWARRAY.
+     * 
+     * @param opcode
+     *            the new instruction opcode. This opcode must be BIPUSH, SIPUSH
+     *            or NEWARRAY.
      */
     public void setOpcode(final int opcode) {
         this.opcode = opcode;
@@ -75,10 +78,11 @@ public class IntInsnNode extends AbstractInsnNode {
     @Override
     public void accept(final MethodVisitor mv) {
         mv.visitIntInsn(opcode, operand);
+        acceptAnnotations(mv);
     }
 
     @Override
     public AbstractInsnNode clone(final Map<LabelNode, LabelNode> labels) {
-        return new IntInsnNode(opcode, operand);
+        return new IntInsnNode(opcode, operand).cloneAnnotations(this);
     }
 }

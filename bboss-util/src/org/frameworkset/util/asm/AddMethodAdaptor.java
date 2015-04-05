@@ -15,7 +15,7 @@
  */
 package org.frameworkset.util.asm;
 
-import bboss.org.objectweb.asm.ClassAdapter;
+//import bboss.org.objectweb.asm.ClassAdapter;
 import bboss.org.objectweb.asm.ClassVisitor;
 import bboss.org.objectweb.asm.MethodVisitor;
 import bboss.org.objectweb.asm.Opcodes;
@@ -33,14 +33,14 @@ import static bboss.org.objectweb.asm.Opcodes.ARETURN;
  * @author biaoping.yin
  * @version 1.0
  */
-public class AddMethodAdaptor  extends ClassAdapter {
+public class AddMethodAdaptor  extends ClassVisitor {
 
 	  private boolean isInterface;
 
 	  private boolean isMethodPresent;
 
 	  public AddMethodAdaptor(ClassVisitor cv) {
-	    super(cv,Opcodes.ASM4);
+	    super(Opcodes.ASM5,cv);
 	  }
 
 	  @Override

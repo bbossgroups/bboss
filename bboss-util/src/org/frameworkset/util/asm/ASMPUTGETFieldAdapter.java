@@ -19,7 +19,7 @@ import java.util.List;
 
 import org.frameworkset.util.ClassUtil.PropertieDescription;
 
-import bboss.org.objectweb.asm.ClassAdapter;
+//import bboss.org.objectweb.asm.ClassAdapter;
 import bboss.org.objectweb.asm.ClassVisitor;
 import bboss.org.objectweb.asm.FieldVisitor;
 import bboss.org.objectweb.asm.MethodVisitor;
@@ -34,19 +34,19 @@ import bboss.org.objectweb.asm.Opcodes;
  * @author biaoping.yin
  * @version 1.0
  */
-public class ASMPUTGETFieldAdapter extends ClassAdapter{
+public class ASMPUTGETFieldAdapter extends ClassVisitor{
 	private Class beanType;
 	private String beanTypeName;
 	private List<PropertieDescription> propertieDescriptionies;
 	
 	public ASMPUTGETFieldAdapter(Class beanType,List<PropertieDescription> propertieDescriptionies) {
-		super(Opcodes.ASM4);
+		super(Opcodes.ASM5);
 		init( beanType, propertieDescriptionies);
 		
 	}
 
 	public ASMPUTGETFieldAdapter(ClassVisitor cv,Class beanType,List<PropertieDescription> propertieDescriptionies) {
-		super(cv, Opcodes.ASM4);
+		super( Opcodes.ASM5,cv);
 		init( beanType, propertieDescriptionies);
 	}
 	

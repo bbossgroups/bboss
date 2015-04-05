@@ -32,11 +32,12 @@ package bboss.org.objectweb.asm.xml;
 import bboss.org.objectweb.asm.AnnotationVisitor;
 import bboss.org.objectweb.asm.FieldVisitor;
 import bboss.org.objectweb.asm.Opcodes;
+import bboss.org.objectweb.asm.TypePath;
 import org.xml.sax.Attributes;
 
 /**
  * SAXFieldAdapter
- *
+ * 
  * @author Eugene Kuleshov
  */
 public final class SAXFieldAdapter extends FieldVisitor {
@@ -44,21 +45,23 @@ public final class SAXFieldAdapter extends FieldVisitor {
     SAXAdapter sa;
 
     public SAXFieldAdapter(final SAXAdapter sa, final Attributes att) {
-        super(Opcodes.ASM4);
+        super(Opcodes.ASM5);
         this.sa = sa;
         sa.addStart("field", att);
     }
 
     @Override
-    public AnnotationVisitor visitAnnotation(
-        final String desc,
-        final boolean visible)
-    {
-        return new SAXAnnotationAdapter(sa,
-                "annotation",
-                visible ? 1 : -1,
-                null,
-                desc);
+    public AnnotationVisitor visitAnnotation(final String desc,
+            final boolean visible) {
+        return new SAXAnnotationAdapter(sa, "annotation", visible ? 1 : -1,
+                null, desc);
+    }
+
+    @Override
+    public AnnotationVisitor visitTypeAnnotation(int typeRef,
+            TypePath typePath, String desc, boolean visible) {
+        return new SAXAnnotationAdapter(sa, "typeAnnotation", visible ? 1 : -1,
+                null, desc, typeRef, typePath);
     }
 
     @Override

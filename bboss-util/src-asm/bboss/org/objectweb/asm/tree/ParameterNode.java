@@ -1,5 +1,4 @@
-<html>
-<!--
+/***
  * ASM: a very small and fast Java bytecode manipulation framework
  * Copyright (c) 2000-2011 INRIA, France Telecom
  * All rights reserved.
@@ -27,22 +26,51 @@
  * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGE.
--->
-<body>
-Provides an implementation for optional class, field and method attributes.
+ */
+package bboss.org.objectweb.asm.tree;
 
-<p>
+import bboss.org.objectweb.asm.MethodVisitor;
 
-By default ASM strips optional attributes, in order to keep them in
-the bytecode that is being readed you should pass an array of required attribute
-instances to {@link org.objectweb.asm.ClassReader#accept(org.objectweb.asm.ClassVisitor, org.objectweb.asm.Attribute[], boolean) ClassReader.accept()} method.
-In order to add custom attributes to the manually constructed bytecode concrete
-subclasses of the {@link org.objectweb.asm.Attribute Attribute} can be passed to
-the visitAttribute methods of the
-{@link org.objectweb.asm.ClassVisitor ClassVisitor},
-{@link org.objectweb.asm.FieldVisitor FieldVisitor} and
-{@link org.objectweb.asm.MethodVisitor MethodVisitor} interfaces.
+/**
+ * A node that represents a parameter access and name.
+ * 
+ * @author Remi Forax
+ */
+public class ParameterNode {
+    /**
+     * The parameter's name.
+     */
+    public String name;
 
-@since ASM 1.4.1
-</body>
-</html>
+    /**
+     * The parameter's access flags (see {@link bboss.org.objectweb.asm.Opcodes}).
+     * Valid values are <tt>ACC_FINAL</tt>, <tt>ACC_SYNTHETIC</tt> and
+     * <tt>ACC_MANDATED</tt>.
+     */
+    public int access;
+
+    /**
+     * Constructs a new {@link ParameterNode}.
+     * 
+     * @param access
+     *            The parameter's access flags. Valid values are
+     *            <tt>ACC_FINAL</tt>, <tt>ACC_SYNTHETIC</tt> or/and
+     *            <tt>ACC_MANDATED</tt> (see {@link bboss.org.objectweb.asm.Opcodes}).
+     * @param name
+     *            the parameter's name.
+     */
+    public ParameterNode(final String name, final int access) {
+        this.name = name;
+        this.access = access;
+    }
+
+    /**
+     * Makes the given visitor visit this parameter declaration.
+     * 
+     * @param mv
+     *            a method visitor.
+     */
+    public void accept(final MethodVisitor mv) {
+        mv.visitParameter(name, access);
+    }
+}

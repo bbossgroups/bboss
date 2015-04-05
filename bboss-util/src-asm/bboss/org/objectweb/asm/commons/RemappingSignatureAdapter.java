@@ -35,7 +35,7 @@ import bboss.org.objectweb.asm.signature.SignatureVisitor;
 
 /**
  * A {@link SignatureVisitor} adapter for type mapping.
- *
+ * 
  * @author Eugene Kuleshov
  */
 public class RemappingSignatureAdapter extends SignatureVisitor {
@@ -46,18 +46,13 @@ public class RemappingSignatureAdapter extends SignatureVisitor {
 
     private String className;
 
-    public RemappingSignatureAdapter(
-        final SignatureVisitor v,
-        final Remapper remapper)
-    {
-        this(Opcodes.ASM4, v, remapper);
+    public RemappingSignatureAdapter(final SignatureVisitor v,
+            final Remapper remapper) {
+        this(Opcodes.ASM5, v, remapper);
     }
 
-    protected RemappingSignatureAdapter(
-        final int api,
-        final SignatureVisitor v,
-        final Remapper remapper)
-    {
+    protected RemappingSignatureAdapter(final int api,
+            final SignatureVisitor v, final Remapper remapper) {
         super(api);
         this.v = v;
         this.remapper = remapper;
@@ -71,9 +66,12 @@ public class RemappingSignatureAdapter extends SignatureVisitor {
 
     @Override
     public void visitInnerClassType(String name) {
+        String remappedOuter = remapper.mapType(className) + '$';
         className = className + '$' + name;
         String remappedName = remapper.mapType(className);
-        v.visitInnerClassType(remappedName.substring(remappedName.lastIndexOf('$') + 1));
+        int index = remappedName.startsWith(remappedOuter) ? remappedOuter
+                .length() : remappedName.lastIndexOf('$') + 1;
+        v.visitInnerClassType(remappedName.substring(index));
     }
 
     @Override
@@ -154,5 +152,4 @@ public class RemappingSignatureAdapter extends SignatureVisitor {
     public void visitEnd() {
         v.visitEnd();
     }
-
 }

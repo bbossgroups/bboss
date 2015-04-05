@@ -35,7 +35,7 @@ import bboss.org.objectweb.asm.Type;
  * A {@link Value} that is represented by its type in a seven types type system.
  * This type system distinguishes the UNINITIALZED, INT, FLOAT, LONG, DOUBLE,
  * REFERENCE and RETURNADDRESS types.
- *
+ * 
  * @author Eric Bruneton
  */
 public class BasicValue implements Value {
@@ -48,11 +48,14 @@ public class BasicValue implements Value {
 
     public static final BasicValue LONG_VALUE = new BasicValue(Type.LONG_TYPE);
 
-    public static final BasicValue DOUBLE_VALUE = new BasicValue(Type.DOUBLE_TYPE);
+    public static final BasicValue DOUBLE_VALUE = new BasicValue(
+            Type.DOUBLE_TYPE);
 
-    public static final BasicValue REFERENCE_VALUE = new BasicValue(Type.getObjectType("java/lang/Object"));
+    public static final BasicValue REFERENCE_VALUE = new BasicValue(
+            Type.getObjectType("java/lang/Object"));
 
-    public static final BasicValue RETURNADDRESS_VALUE = new BasicValue(Type.VOID_TYPE);
+    public static final BasicValue RETURNADDRESS_VALUE = new BasicValue(
+            Type.VOID_TYPE);
 
     private final Type type;
 

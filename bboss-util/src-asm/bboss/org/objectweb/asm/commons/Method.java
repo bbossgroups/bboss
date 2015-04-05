@@ -36,7 +36,7 @@ import bboss.org.objectweb.asm.Type;
 
 /**
  * A named method descriptor.
- *
+ * 
  * @author Juozas Baliuka
  * @author Chris Nokleberg
  * @author Eric Bruneton
@@ -73,9 +73,11 @@ public class Method {
 
     /**
      * Creates a new {@link Method}.
-     *
-     * @param name the method's name.
-     * @param desc the method's descriptor.
+     * 
+     * @param name
+     *            the method's name.
+     * @param desc
+     *            the method's descriptor.
      */
     public Method(final String name, final String desc) {
         this.name = name;
@@ -84,23 +86,24 @@ public class Method {
 
     /**
      * Creates a new {@link Method}.
-     *
-     * @param name the method's name.
-     * @param returnType the method's return type.
-     * @param argumentTypes the method's argument types.
+     * 
+     * @param name
+     *            the method's name.
+     * @param returnType
+     *            the method's return type.
+     * @param argumentTypes
+     *            the method's argument types.
      */
-    public Method(
-        final String name,
-        final Type returnType,
-        final Type[] argumentTypes)
-    {
+    public Method(final String name, final Type returnType,
+            final Type[] argumentTypes) {
         this(name, Type.getMethodDescriptor(returnType, argumentTypes));
     }
 
     /**
      * Creates a new {@link Method}.
-     *
-     * @param m a java.lang.reflect method descriptor
+     * 
+     * @param m
+     *            a java.lang.reflect method descriptor
      * @return a {@link Method} corresponding to the given Java method
      *         declaration.
      */
@@ -110,8 +113,9 @@ public class Method {
 
     /**
      * Creates a new {@link Method}.
-     *
-     * @param c a java.lang.reflect constructor descriptor
+     * 
+     * @param c
+     *            a java.lang.reflect constructor descriptor
      * @return a {@link Method} corresponding to the given Java constructor
      *         declaration.
      */
@@ -122,48 +126,48 @@ public class Method {
     /**
      * Returns a {@link Method} corresponding to the given Java method
      * declaration.
-     *
-     * @param method a Java method declaration, without argument names, of the
-     *        form "returnType name (argumentType1, ... argumentTypeN)", where
-     *        the types are in plain Java (e.g. "int", "float",
-     *        "java.util.List", ...). Classes of the java.lang package can be
-     *        specified by their unqualified name; all other classes names must
-     *        be fully qualified.
+     * 
+     * @param method
+     *            a Java method declaration, without argument names, of the form
+     *            "returnType name (argumentType1, ... argumentTypeN)", where
+     *            the types are in plain Java (e.g. "int", "float",
+     *            "java.util.List", ...). Classes of the java.lang package can
+     *            be specified by their unqualified name; all other classes
+     *            names must be fully qualified.
      * @return a {@link Method} corresponding to the given Java method
      *         declaration.
-     * @throws IllegalArgumentException if <code>method</code> could not get
-     *         parsed.
+     * @throws IllegalArgumentException
+     *             if <code>method</code> could not get parsed.
      */
     public static Method getMethod(final String method)
-            throws IllegalArgumentException
-    {
+            throws IllegalArgumentException {
         return getMethod(method, false);
     }
 
     /**
      * Returns a {@link Method} corresponding to the given Java method
      * declaration.
-     *
-     * @param method a Java method declaration, without argument names, of the
-     *        form "returnType name (argumentType1, ... argumentTypeN)", where
-     *        the types are in plain Java (e.g. "int", "float",
-     *        "java.util.List", ...). Classes of the java.lang package may be
-     *        specified by their unqualified name, depending on the
-     *        defaultPackage argument; all other classes names must be fully
-     *        qualified.
-     * @param defaultPackage true if unqualified class names belong to the
-     *        default package, or false if they correspond to java.lang classes.
-     *        For instance "Object" means "Object" if this option is true, or
-     *        "java.lang.Object" otherwise.
+     * 
+     * @param method
+     *            a Java method declaration, without argument names, of the form
+     *            "returnType name (argumentType1, ... argumentTypeN)", where
+     *            the types are in plain Java (e.g. "int", "float",
+     *            "java.util.List", ...). Classes of the java.lang package may
+     *            be specified by their unqualified name, depending on the
+     *            defaultPackage argument; all other classes names must be fully
+     *            qualified.
+     * @param defaultPackage
+     *            true if unqualified class names belong to the default package,
+     *            or false if they correspond to java.lang classes. For instance
+     *            "Object" means "Object" if this option is true, or
+     *            "java.lang.Object" otherwise.
      * @return a {@link Method} corresponding to the given Java method
      *         declaration.
-     * @throws IllegalArgumentException if <code>method</code> could not get
-     *         parsed.
+     * @throws IllegalArgumentException
+     *             if <code>method</code> could not get parsed.
      */
-    public static Method getMethod(
-        final String method,
-        final boolean defaultPackage) throws IllegalArgumentException
-    {
+    public static Method getMethod(final String method,
+            final boolean defaultPackage) throws IllegalArgumentException {
         int space = method.indexOf(' ');
         int start = method.indexOf('(', space) + 1;
         int end = method.indexOf(')', start);
@@ -172,7 +176,7 @@ public class Method {
         }
         String returnType = method.substring(0, space);
         String methodName = method.substring(space + 1, start - 1).trim();
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         sb.append('(');
         int p;
         do {
@@ -196,7 +200,7 @@ public class Method {
             return type;
         }
 
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         int index = 0;
         while ((index = type.indexOf("[]", index) + 1) > 0) {
             sb.append('[');
@@ -223,7 +227,7 @@ public class Method {
 
     /**
      * Returns the name of the method described by this object.
-     *
+     * 
      * @return the name of the method described by this object.
      */
     public String getName() {
@@ -232,7 +236,7 @@ public class Method {
 
     /**
      * Returns the descriptor of the method described by this object.
-     *
+     * 
      * @return the descriptor of the method described by this object.
      */
     public String getDescriptor() {
@@ -241,7 +245,7 @@ public class Method {
 
     /**
      * Returns the return type of the method described by this object.
-     *
+     * 
      * @return the return type of the method described by this object.
      */
     public Type getReturnType() {
@@ -250,7 +254,7 @@ public class Method {
 
     /**
      * Returns the argument types of the method described by this object.
-     *
+     * 
      * @return the argument types of the method described by this object.
      */
     public Type[] getArgumentTypes() {

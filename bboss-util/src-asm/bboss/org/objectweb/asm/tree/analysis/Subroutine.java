@@ -37,7 +37,7 @@ import bboss.org.objectweb.asm.tree.LabelNode;
 
 /**
  * A method subroutine (corresponds to a JSR instruction).
- *
+ * 
  * @author Eric Bruneton
  */
 class Subroutine {
@@ -51,11 +51,8 @@ class Subroutine {
     private Subroutine() {
     }
 
-    Subroutine(
-        final LabelNode start,
-        final int maxLocals,
-        final JumpInsnNode caller)
-    {
+    Subroutine(final LabelNode start, final int maxLocals,
+            final JumpInsnNode caller) {
         this.start = start;
         this.access = new boolean[maxLocals];
         this.callers = new ArrayList<JumpInsnNode>();
