@@ -230,7 +230,7 @@ var Layout = function () {
                         Layout.fixContentHeight(); // fix content height
                         Metronic.initAjax(); // initialize core stuff
                         //ComponentsDropdowns.init();
-                        FormValidation.init();
+                      //  FormValidation.init();
                         
                     },
                     error: function (xhr, ajaxOptions, thrownError) {
@@ -256,7 +256,7 @@ var Layout = function () {
                         pageContentBody.html(res);
                         Layout.fixContentHeight(); // fix content height
                         Metronic.initAjax(); // initialize core stuff
-                        FormValidation.init();
+                       // FormValidation.init();
                     },
                     error: function (xhr, ajaxOptions, thrownError) {
                         Metronic.stopPageLoading();
@@ -295,7 +295,7 @@ var Layout = function () {
 	                    pageContentBody.html(res);
 	                    Layout.fixContentHeight(); // fix content height
 	                    Metronic.initAjax(); // initialize core stuff
-	                    FormValidation.init();
+	                    //FormValidation.init();
 	                },
 	                error: function (xhr, ajaxOptions, thrownError) {
 	                    pageContentBody.html('<h4>Could not load the requested content.</h4>');
@@ -316,7 +316,8 @@ var Layout = function () {
 	                    pageContentBody.html(res);
 	                    Layout.fixContentHeight(); // fix content height
 	                    Metronic.initAjax(); // initialize core stuff
-	                    FormValidation.init();
+	                    
+	                   
 	                },
 	                error: function (xhr, ajaxOptions, thrownError) {
 	                    pageContentBody.html('<h4>Could not load the requested content.</h4>');

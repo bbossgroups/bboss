@@ -1,0 +1,174 @@
+/* BEDIN LAYER SLIDER */
+.ls-ct-half, .ls-ct-center {
+    border-radius: 100px !important;
+}
+.ls-fullwidth .ls-nav-prev,
+.ls-fullwidth .ls-nav-next {
+	opacity: 0.7;
+}
+.ls-fullwidth .ls-nav-prev:hover,
+.ls-fullwidth .ls-nav-next:hover {
+	opacity: 1;
+}
+
+/* slide 1 */
+.ls-slide1 .ls-title {
+	font: 60px/66px 'Source Sans Pro', Arial, sans-serif;
+	color: #fff;
+	border-bottom: solid 1px rgba(255,255,255,0.5) !important;
+	text-transform: uppercase;
+	text-align: center;
+	padding-bottom: 19px;
+}
+.ls-slide1 .ls-title strong {
+	color: #e6400c;
+	display: block;
+	font-weight: 600;
+}
+.ls-slide1 .ls-mini-text {
+	font: 400 23px 'Source Sans Pro', Arial, sans-serif;
+	color: #fff;
+	text-align: center;
+}
+
+/* slide 2 */
+.ls-slide2 .ls-title {
+	font: 25px 'Source Sans Pro', Arial, sans-serif;
+	color: #fff;
+	text-align: center;
+	line-height: 1.2 !important;
+}
+.ls-slide2 .ls-title strong,
+.ls-slide2 .ls-title em {
+	display: block;
+	font-weight: 300;
+	padding-top: 9px;
+}
+.ls-slide2 .ls-title strong {
+	font-size: 360%;
+}
+.ls-slide2 .ls-title em {
+	font-size: 200%;
+	font-style: normal;
+	padding-top: 5px;
+}
+.ls-slide2 .ls-price {
+	font: 300 20px 'Open Sans', sans-serif;
+	color: #fff;
+	text-align: center;
+	background: rgba(230,64,12,0.9);
+	border-radius: 190px !important;
+	overflow: hidden;
+	width: 177px;
+	height: 177px;
+	display: table-cell;
+	vertical-align: middle;
+}
+.ls-slide2 .ls-price b {
+	display: block;
+	font-weight: normal;
+	padding-top: 15%;
+}
+.ls-slide2 .ls-price strong {
+	font: 300 425%/1 'Source Sans Pro', Arial, sans-serif;
+	font-weight: 300;
+}
+.ls-slide2 .ls-price strong span {
+	font-size: 30px;
+}
+.ls-slide2 .ls-more {
+	color: #fff;
+	display: inline-block;
+	border: solid 1px #fff;
+	font: 300 18px 'Open Sans', sans-serif;
+	padding: 7px 20px 8px;
+}
+.ls-slide2 .ls-more:hover {
+	text-decoration: none;
+	color: #fff;
+	background: #e6400c;
+	border-color: #e6400c;
+}
+
+/* slide 3 */
+.ls-slide3 .ls-title {
+	font: 300 46px/59px 'Source Sans Pro', Arial, sans-serif;
+	color: #fff;
+	border-bottom: solid 1px #b90010 !important;
+	text-align: center;
+	padding-bottom: 27px;
+}
+.ls-slide3 .ls-title strong {
+	display: block;
+	font-weight: 600;
+}
+.ls-slide3 .ls-buy {
+	color: #fff;
+	border: solid 5px rgba(55,0,5,0.6);
+	padding: 12px 20px 8px;
+	background: #d11018;
+	float: left;
+	margin-right: 20px;
+}
+.ls-slide3 .ls-buy:hover {
+	text-decoration: none;
+	color: #fff;
+	border-color: rgba(255,255,255,0.6);
+}
+.ls-slide3 .ls-price {
+	font: 400 75%/1 'Source Sans Pro', Arial, sans-serif;
+	color: #fff;
+	float: left;
+}
+.ls-slide3 .ls-price span {
+	float: left;
+	padding-top: 18px;
+	margin-right: 17px;
+}
+.ls-slide3 .ls-price strong {
+	font-weight: 200;
+	font-size: 567%;
+	top: -20px;
+	position: relative;
+	line-height: 1;
+}
+.ls-slide3 .ls-price strong sup {
+	font-size: 49%;
+	position: relative;
+	top: -16px;
+	line-height: 1;
+}
+
+/* slide 4 */
+.ls-slide4 .ls-title {
+	font: 300 68px/81px 'Source Sans Pro', Arial, sans-serif;
+	color: #fff;
+	text-align: center;
+	text-transform: uppercase;
+	border-bottom: solid 1px rgba(255,255,255,0.6);
+	padding-bottom: 27px;
+}
+.ls-slide4 .ls-mini-text {
+	font-size: 100px;
+	height: 43px;
+}
+.ls-slide4 .ls-mini-text span {
+	float: left;
+	margin-right: 13px;
+	font: 400 17% 'Open Sans', sans-serif;
+	color: #fff;
+}
+.ls-slide4 .ls-mini-text a {
+	color: #fff;
+	font: 300 20% 'Open Sans', sans-serif;
+	padding: 7px 20px 8px;
+	background: #000;
+	top: -20%;
+	position: relative;
+	float: left;
+}
+.ls-slide4 .ls-mini-text a:hover {
+	text-decoration: none;
+	color: #fff;
+	background: #e6400c;
+}

@@ -37,7 +37,7 @@
 						<div class="form-group">
 							<label class="control-label col-md-3">数据源</label>
 							<div class="col-md-9">
-								<select name="dbname" class="select2me form-control" onchange="ComponentsDropdowns.loadtables(event,'tableName')">
+								<select name="dbname" id="dbname" class="select2me form-control" onchange="ComponentsDropdowns.loadtables(event,'tableName')">
 								<pg:list requestKey="dbs">
 									<option value="<pg:cell/>"><pg:cell/></option>
 								</pg:list>	
@@ -68,8 +68,8 @@
 
 				<div class="row">
 					<div class="col-md-12">
-						<a href="javascript:void"  class="btn blue" onclick=""> 进入表单配置</a>
-						<a href="tableconfig.page"  class="btn blue ajaxify display-hide" formid="tableform"> 进入表单配置步骤</a>
+						<a href="javascript:void;"  class="btn blue" onclick="totableconfig('tableconfig',event)"> 进入表单配置</a>
+						<a href="tableconfig.page"  class="btn blue ajaxify display-hide" id="tableconfig" formid="tableform"> 进入表单配置步骤</a>
 					</div>
 				</div>
 			</div>

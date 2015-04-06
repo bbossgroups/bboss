@@ -35,7 +35,9 @@ License: You must have a valid license purchased only from themeforest(the above
 <link href="../assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css"/>
 <!-- END GLOBAL MANDATORY STYLES -->
 <!-- BEGIN PAGE LEVEL STYLES -->
+<link rel="stylesheet" type="text/css" href="../assets/global/plugins/bootstrap-select/bootstrap-select.min.css"/>
 <link rel="stylesheet" type="text/css" href="../assets/global/plugins/select2/select2.css"/>
+<link rel="stylesheet" type="text/css" href="../assets/global/plugins/jquery-multi-select/css/multi-select.css"/>
 <!-- END PAGE LEVEL STYLES -->
 <!-- BEGIN THEME STYLES -->
 <link href="../assets/global/css/components.css" id="style_components" rel="stylesheet" type="text/css"/>
@@ -1356,7 +1358,7 @@ License: You must have a valid license purchased only from themeforest(the above
 <script src="../assets/global/plugins/respond.min.js"></script>
 <script src="../assets/global/plugins/excanvas.min.js"></script> 
 <![endif]-->
-<script src="../assets/global/plugins/jquery.min.js" type="text/javascript"></script>
+<script src="../assets/global/plugins/jquery-1.11.2.js" type="text/javascript"></script>
 <script src="../assets/global/plugins/jquery-migrate.min.js" type="text/javascript"></script>
 <!-- IMPORTANT! Load jquery-ui.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
 <script src="../assets/global/plugins/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
@@ -1370,7 +1372,10 @@ License: You must have a valid license purchased only from themeforest(the above
 <!-- END CORE PLUGINS -->
 <script type="text/javascript" src="../assets/global/plugins/jquery-validation/js/jquery.validate.min.js"></script>
 <script type="text/javascript" src="../assets/global/plugins/jquery-validation/js/additional-methods.min.js"></script>
+<script type="text/javascript" src="../assets/global/plugins/bootstrap-select/bootstrap-select.min.js"></script>
 <script type="text/javascript" src="../assets/global/plugins/select2/select2.min.js"></script>
+
+<script type="text/javascript" src="../assets/global/plugins/jquery-multi-select/js/jquery.multi-select.js"></script>
 <script src="../assets/global/scripts/metronic.js" type="text/javascript"></script>
 <script src="../assets/admin/layout/scripts/layout.js" type="text/javascript"></script>
 <script src="../assets/admin/layout/scripts/quick-sidebar.js" type="text/javascript"></script>
@@ -1388,6 +1393,13 @@ Demo.init(); // init demo features
 
    $('.page-sidebar .ajaxify.start').click() // load the content for the dashboard page.
 });
+function totableconfig(ahref,event)
+{
+	//$('#'+ahref).val("href","tableconfig.page?dbname="+$('#dbname').val()+"&tableName="+$('#tableName').val());
+	event.preventDefault();
+	$('#'+ahref).click()
+	
+}
 </script>
 <!-- END JAVASCRIPTS -->
 </body>
