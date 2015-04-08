@@ -34,6 +34,8 @@ License: You must have a valid license purchased only from themeforest(the above
 <link href="../assets/global/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css"/>
 <link href="../assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css"/>
 <!-- END GLOBAL MANDATORY STYLES -->
+<link rel="stylesheet" type="text/css" href="../assets/global/plugins/bootstrap-toastr/toastr.min.css"/>
+
 <!-- BEGIN PAGE LEVEL STYLES -->
 <link rel="stylesheet" type="text/css" href="../assets/global/plugins/bootstrap-select/bootstrap-select.min.css"/>
 <link rel="stylesheet" type="text/css" href="../assets/global/plugins/select2/select2.css"/>
@@ -1374,6 +1376,7 @@ License: You must have a valid license purchased only from themeforest(the above
 <script type="text/javascript" src="../assets/global/plugins/jquery-validation/js/additional-methods.min.js"></script>
 <script type="text/javascript" src="../assets/global/plugins/bootstrap-select/bootstrap-select.min.js"></script>
 <script type="text/javascript" src="../assets/global/plugins/select2/select2.min.js"></script>
+<script src="../assets/global/plugins/bootstrap-toastr/toastr.min.js"></script>
 
 <script type="text/javascript" src="../assets/global/plugins/jquery-multi-select/js/jquery.multi-select.js"></script>
 <script src="../assets/global/scripts/metronic.js" type="text/javascript"></script>
@@ -1381,8 +1384,7 @@ License: You must have a valid license purchased only from themeforest(the above
 <script src="../assets/admin/layout/scripts/quick-sidebar.js" type="text/javascript"></script>
 <script src="../assets/admin/layout/scripts/demo.js" type="text/javascript"></script>
 <script src="components-gencode-dropdowns.js" type="text/javascript"></script>
-<script src="form-validation.js" type="text/javascript"></script>
-
+<script src="../assets/global/plugins/jquery.form.js" type="text/javascript"></script>
 <script>
 jQuery(document).ready(function() {    
 	Metronic.setAssetsPath('../assets/');

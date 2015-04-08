@@ -49,12 +49,11 @@
 					<!--/span-->
 					<div class="col-md-6">
 						<div class="form-group">
-							<label class="control-label col-md-3">选择表<span class="required">
-										* </span></label>
+							<label class="control-label col-md-3">选择表 </label>
 										
 										
 							<div class="col-md-9">
-								<select name="tableName" id="tableName"  data-required="1"  class="select2me form-control">
+								<select name="tableName" id="tableName"   class="select2me form-control">
 								<pg:list requestKey="tables">
 									<option value="<pg:cell/>"><pg:cell/></option>
 								</pg:list>	

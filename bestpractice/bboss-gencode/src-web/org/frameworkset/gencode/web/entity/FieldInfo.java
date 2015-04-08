@@ -10,23 +10,31 @@ public class FieldInfo {
 	private String fieldAsciiCNName;
 	private String type;
 	private String columntype;
-	private String defaultValue;	 
 	private String columnname;
-	private int stype = 0;
+	
 	private int desc = 0;
 	@RequestParam(name="${rowid}_typecheck")
 	private int typecheck = 0;
+	
+	@RequestParam(name="${rowid}_qcondition")
+	private int qcondition = 0;
 	@RequestParam(name="${rowid}_qtype")
 	private int qtype = 0;
+	@RequestParam(name="${rowid}_sfield")
+	private int sfield = 0;
+	@RequestParam(name="${rowid}_stype")
+	private int stype = 0;
 	@RequestParam(name="${rowid}_daterange")
 	private int daterange = 0;
 	private String dateformat; 
-	private int maxlength = 0;
+	
 	@RequestParam(name="${rowid}_required")
 	private int required;
 	@RequestParam(name="${rowid}_hidden")
 	private int hidden;
+	private int maxlength = 0;
 	private String replace;	
+	private String defaultValue;
 	public String getFieldName() {
 		return fieldName;
 	}
@@ -136,5 +144,17 @@ public class FieldInfo {
 	}
 	public void setHidden(int hidden) {
 		this.hidden = hidden;
+	}
+	public int getQcondition() {
+		return qcondition;
+	}
+	public void setQcondition(int qcondition) {
+		this.qcondition = qcondition;
+	}
+	public int getSfield() {
+		return sfield;
+	}
+	public void setSfield(int sfield) {
+		this.sfield = sfield;
 	}
 }

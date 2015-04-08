@@ -145,8 +145,10 @@
 									<div class="col-md-9">
 										<select class="form-control" id="theme" name="theme">
 											<option value="default">default</option>
+											<option value="common">common</option>
 											<option value="bootstrap">bootstrap</option>
 											<option value="mobile">mobile</option>
+											
 										</select>
 									</div>
 
@@ -467,12 +469,62 @@ jQuery(document).ready(function() {
                 },
 
                 submitHandler: function (form) {
-                	 success1.show();
-                     error1.hide();
+                	success1.show();
+                    error1.hide();
+                    $(form).ajaxSubmit({
+               		 type:'POST',
+               		 url:'gencode.page',
+               		 forceSync:false,
+               		 dataType:'json',
+               		 beforeSubmit:function()
+               		 {
+               			 Metronic.startPageLoading();
+               		 },
+               		 error:function(xhr, ajaxOptions, thrownError)
+               		 {
+               			 Metronic.stopPageLoading();
+               		 },
+               		 
+               		 success:function(responseText, statusText, xhr, $form)
+               		 {
+               			 Metronic.stopPageLoading();           			
+               			
+               			
+               			
+                            
+                            var msg = responseText.result;
+                            var title = '生成代码';
+                             
+                             
+                            toastr.options = {
+                     				  "closeButton": true,
+                     				  "debug": false,
+                     				  "positionClass": "toast-top-center",
+                     				  "onclick": null,
+                     				  "showDuration": "0",
+                     				  "hideDuration": "0",
+                     				  "timeOut": "0",
+                     				  "extendedTimeOut": "0",
+                     				  "showEasing": "swing",
+                     				  "hideEasing": "linear",
+                     				  "showMethod": "fadeIn",
+                     				  "hideMethod": "fadeOut"
+                     				};
+
+                           
+
+                           
+                           toastr['success'](msg, title); // Wire up an event handler to a button in the toast, if it exists
+                           
+                        
+               		 }
+               		 
+               		 
+               	 }); 
                 }
 			});
         };
-            handleValidation2();
+     handleValidation2();
 	 $("#controlParams").select2({
          tags: ["geni18n", "clearSourcedir","genRPC","autopk","genwf"]
      });
