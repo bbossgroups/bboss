@@ -43,7 +43,6 @@
 	<classpathentry kind="lib" path="lib/mina/mina-example-2.0.0-RC1.jar"/>
 	<classpathentry kind="lib" path="lib/mina/mina-integration-beans-2.0.0-RC1.jar"/>
 	<classpathentry kind="lib" path="lib/mina/mina-integration-jmx-2.0.0-RC1.jar"/>
-	<classpathentry kind="lib" path="lib/netty/hessian-4.0.7.jar"/>
 	<classpathentry kind="lib" path="lib/netty/netty-3.2.1.Final.jar"/>
 	<classpathentry kind="lib" path="lib/test/junit-4.6.jar"/>
 	<classpathentry kind="lib" path="lib/bboss-soa.jar"/>
@@ -98,5 +97,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/bboss-core.jar" sourcepath="/bboss-core"/>
 	<classpathentry kind="lib" path="lib/test/bboss-core-test.jar"/>
+	<classpathentry kind="lib" path="lib/netty/hessian-4.0.37.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
