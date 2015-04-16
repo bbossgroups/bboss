@@ -105,6 +105,18 @@ public class SessionManagerServiceImpl implements SessionManagerService {
 
 		return SessionHelper.getSessionStaticManager().getSessionAPP(request);
 	}
+	
+	@Override
+	public SessionAPP getSingleSessionAPP(HttpServletRequest request) {
+
+		return SessionHelper.getSessionStaticManager().getSingleSessionAPP(request);
+	}
+	
+	@Override
+	public SessionAPP getSingleSessionAPP(String appKey) {
+
+		return SessionHelper.getSessionStaticManager().getSingleSessionAPP(appKey);
+	}
 
 	@Override
 	public void delSession(String appkey, String[] sessionids)  throws Exception{

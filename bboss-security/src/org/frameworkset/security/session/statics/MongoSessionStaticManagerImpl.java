@@ -89,6 +89,24 @@ public class MongoSessionStaticManagerImpl implements SessionStaticManager {
 
 		return appList;
 	}
+	@Override
+	public SessionAPP getSingleSessionAPP(HttpServletRequest request)
+	{
+		String currentAPP = SessionHelper.getAppKey(request);
+		return getSingleSessionAPP(currentAPP);
+	}
+	@Override
+	public SessionAPP getSingleSessionAPP(String appName) {
+		
+
+		 
+		SessionAPP sessionApp = new SessionAPP();
+		DBCollection coll = db.getCollection(appName +"_sessions");
+		sessionApp.setAppkey(appName);
+		sessionApp.setHasDeletePermission(false);
+		sessionApp.setSessions(coll.getCount());		
+		return sessionApp;
+	}
 	/**
 	 * 判断应用是否有查询会话权限，除了总控应用可以看所有会话外，其他的应用只能看当前应用的会话数据
 	 * @param app 

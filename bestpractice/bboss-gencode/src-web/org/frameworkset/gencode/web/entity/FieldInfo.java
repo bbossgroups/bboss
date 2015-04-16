@@ -30,11 +30,14 @@ public class FieldInfo {
 	
 	@RequestParam(name="${rowid}_required")
 	private int required;
-	@RequestParam(name="${rowid}_hidden")
-	private int hidden;
+	@RequestParam(name="${rowid}_inlist")
+	private int inlist;
 	private int maxlength = 0;
 	private String replace;	
 	private String defaultValue;
+	private String addcontrolParams;
+	private String editcontrolParams;
+	private String viewcontrolParams;
 	public String getFieldName() {
 		return fieldName;
 	}
@@ -139,12 +142,7 @@ public class FieldInfo {
 	public void setRequired(int required) {
 		this.required = required;
 	}
-	public int getHidden() {
-		return hidden;
-	}
-	public void setHidden(int hidden) {
-		this.hidden = hidden;
-	}
+	
 	public int getQcondition() {
 		return qcondition;
 	}
@@ -156,5 +154,29 @@ public class FieldInfo {
 	}
 	public void setSfield(int sfield) {
 		this.sfield = sfield;
+	}
+	public int getInlist() {
+		return inlist;
+	}
+	public void setInlist(int inlist) {
+		this.inlist = inlist;
+	}
+	public String getAddcontrolParams() {
+		return addcontrolParams;
+	}
+	public void setAddcontrolParams(String addcontrolParams) {
+		this.addcontrolParams = addcontrolParams;
+	}
+	public String getEditcontrolParams() {
+		return editcontrolParams;
+	}
+	public void setEditcontrolParams(String editcontrolParams) {
+		this.editcontrolParams = editcontrolParams;
+	}
+	public String getViewcontrolParams() {
+		return viewcontrolParams;
+	}
+	public void setViewcontrolParams(String viewcontrolParams) {
+		this.viewcontrolParams = viewcontrolParams;
 	}
 }

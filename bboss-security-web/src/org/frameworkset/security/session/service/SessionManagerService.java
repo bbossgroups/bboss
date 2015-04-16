@@ -32,6 +32,8 @@ public interface SessionManagerService {
 	 *             2014年6月5日
 	 */
 	public List<SessionAPP> queryAppSessionData(String appKey,HttpServletRequest request) throws Exception;
+	SessionAPP getSingleSessionAPP(String appName);
+	SessionAPP getSingleSessionAPP(HttpServletRequest request);
 	
 	/** 删除应用下的session
 	 * @param appkey

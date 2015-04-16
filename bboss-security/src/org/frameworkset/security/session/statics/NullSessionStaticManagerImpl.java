@@ -77,4 +77,16 @@ public class NullSessionStaticManagerImpl implements SessionStaticManager {
 		return false;
 	}
 
+	@Override
+	public SessionAPP getSingleSessionAPP(String appName) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public SessionAPP getSingleSessionAPP(HttpServletRequest request) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

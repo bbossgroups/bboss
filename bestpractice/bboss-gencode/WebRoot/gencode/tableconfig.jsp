@@ -252,9 +252,7 @@
 										 中文名称
 									</th>
 									
-									<th scope="col">
-										 必填项
-									</th>
+									
 									<th scope="col">
 										 类型校验
 									</th>
@@ -277,7 +275,16 @@
 										排序方式
 									</th>
 									<th scope="col">
-										是否隐藏
+										列表字段
+									</th>
+									<th scope="col">
+										编辑控制
+									</th>
+									<th scope="col">
+										添加控制
+									</th>
+									<th scope="col">
+										查看控制
 									</th>
 									<th scope="col">
 										默认值
@@ -309,10 +316,7 @@
 											
 																</td>
 																<td><input type="text" placeholder="<pg:cell colName="fieldName"/>" name="fieldCNName" class="form-control  input-small" value="<pg:cell colName="fieldCNName"/>"></td>
-																<td > 
-																<div class="radio-list"><label><input type="radio" name="<pg:rowid/>_typecheck" id="<pg:rowid/>_typecheck" value="1">是			</label>													 
-																<label ><input type="radio" name="<pg:rowid/>_typecheck" id="<pg:rowid/>_typecheck" value="0"  checked>否	</label></div>															 
-															    </td>
+																
 																<td ><div class="radio-list"><label ><input type="radio" name="<pg:rowid/>_required" id="<pg:rowid/>_required" value="1">是			</label>													 
 																<label  ><input type="radio" name="<pg:rowid/>_required" id="<pg:rowid/>_required" value="0"  checked>否	</label></div>		</td>
 																<td ><select  class="form-control  input-medium select2me" name="dateformat" id="dateformat">
@@ -339,9 +343,18 @@
 																<label ><input type="radio" name="<pg:rowid/>_stype" id="<pg:rowid/>_stype" value="0"  checked>升序</label></div>																
 															 	</td>
 																<td >
-																<div class="radio-list"><label ><input type="radio" name="<pg:rowid/>_hidden" id="<pg:rowid/>_hidden" value="1">是</label>																
-																<label ><input type="radio" name="<pg:rowid/>_hidden" id="<pg:rowid/>_hidden" value="0"  checked>否</label></div>																
+																<div class="radio-list"><label ><input type="radio" name="<pg:rowid/>_inlist" id="<pg:rowid/>_inlist" value="1" checked>是</label>																
+																<label ><input type="radio" name="<pg:rowid/>_hidden" id="<pg:rowid/>_inlist" value="0"  >否</label></div>																
 															 	</td>
+															 	<td><input type="hidden" id="editcontrolParams" name="editcontrolParams"
+											class="form-control  select2  input-medium editcontrolParams"
+											value="显示, 编辑,必填"></td>
+											<td><input type="hidden" id="addcontrolParams" name="addcontrolParams"
+											class="form-control  select2  input-medium addcontrolParams"
+											value="显示, 必填"></td>
+											<td><input type="hidden" id="viewcontrolParams" name="viewcontrolParams"
+											class="form-control  select2  input-small viewcontrolParams"
+											value="" placeholder="显示"></td>
 																<td><input type="text" placeholder="<pg:cell colName="fieldName"/>"  name="defaultValue" class="form-control  input-small" value="<pg:cell colName="defaultValue"/>"></td>
 															</tr>
 													</pg:list>	
@@ -527,6 +540,15 @@ jQuery(document).ready(function() {
      handleValidation2();
 	 $("#controlParams").select2({
          tags: ["geni18n", "clearSourcedir","genRPC","autopk","genwf"]
+     });
+	 $(".editcontrolParams").select2({
+         tags: ["显示", "编辑", "必填"]
+     });
+	 $(".addcontrolParams").select2({
+         tags: ["显示", "必填"]
+     });
+	 $(".viewcontrolParams").select2({
+         tags: ["隐藏"]
      });
 });
 

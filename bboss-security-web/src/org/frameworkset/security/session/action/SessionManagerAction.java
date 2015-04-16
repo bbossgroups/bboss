@@ -123,6 +123,47 @@ public class SessionManagerAction {
 			throw e;
 		}
 	}
+	
+	
+//	/**
+//	 * 获取appKey对应的应用的session统计数据
+//	 * 
+//	 * @param appKey
+//	 * @return 2014年6月5日
+//	 */
+//	public @ResponseBody(datatype = "json")
+//	SessionAPP getSingleSessionAPP(String appKey)  throws Exception{
+//
+//		try {
+//			SessionAPP appSessionList = sessionService
+//					.getSingleSessionAPP(appKey);
+//
+//			return appSessionList;
+//
+//		} catch (Exception e) {
+//			throw e;
+//		}
+//	}
+	
+	/**
+	 * 获取当前请求对应的应用session统计信息
+	 * 
+	 * @param appKey
+	 * @return 2014年6月5日
+	 */
+	public @ResponseBody(datatype = "json")
+	SessionAPP getSingleSessionAPPByRequest(HttpServletRequest request)  throws Exception{
+
+		try {
+			SessionAPP appSessionList = sessionService
+					.getSingleSessionAPP(request);
+
+			return appSessionList;
+
+		} catch (Exception e) {
+			throw e;
+		}
+	}
 
 	/**
 	 * 删除应用下的指定session

@@ -648,7 +648,7 @@ public final class IndexTag extends PagerTagSupport {
 		    {
 		    	if(this.aindex)
 		    	{
-			        return new StringBuilder("<a href='javascript:void'>")
+			        return new StringBuilder("<a href='javascript:void(0)'>")
 			    			.append(firstpage_label)//首 页
 			    			.append("</a>").toString();
 		    	}
@@ -695,7 +695,7 @@ public final class IndexTag extends PagerTagSupport {
 		    }
 		    else
 		    {
-		    	a.setHref("javascript:void");
+		    	a.setHref("javascript:void(0)");
 		        a.setOnClick(this.getJqueryUrl(customFirstUrl,pagerContext.getContainerid(),pagerContext.getSelector()));
 		    }
 		    
@@ -860,7 +860,7 @@ public final class IndexTag extends PagerTagSupport {
 			{
 				if(this.aindex)
 				{
-		            return new StringBuilder("<a href='javascript:void'>")
+		            return new StringBuilder("<a href='javascript:void(0)'>")
 					.append(prepage_label)//上一页
 					.append("</a>").toString();
 				}
@@ -910,7 +910,7 @@ public final class IndexTag extends PagerTagSupport {
             }
             else
             {
-            	a.setHref("javascript:void");
+            	a.setHref("javascript:void(0)");
                 a.setOnClick(this.getJqueryUrl(customPrevutl,pagerContext.getContainerid(),pagerContext.getSelector()));
             }
             
@@ -1034,7 +1034,7 @@ public final class IndexTag extends PagerTagSupport {
 	            }
 	            else
 	            {
-	            	a.setHref("javascript:void");
+	            	a.setHref("javascript:void(0)");
 	                a.setOnClick(this.getJqueryUrl(customNextUrl,pagerContext.getContainerid(),pagerContext.getSelector()));
 	            }
 			    return a.toString();
@@ -1070,7 +1070,7 @@ public final class IndexTag extends PagerTagSupport {
 		{
 			if(this.aindex)
             {
-				return new StringBuilder("<a href='javascript:void'>").append(nextpage_label)//"下一页"            
+				return new StringBuilder("<a href='javascript:void(0)'>").append(nextpage_label)//"下一页"            
             		.append("</a>").toString();
             }
 			else
@@ -1211,9 +1211,9 @@ public final class IndexTag extends PagerTagSupport {
 	                	if(aindex)
 	                	{
 	                		if(this.numberpre == null)
-	                			output.append("<span class='current_page'><a href='javascript:void'>").append(i).append("</a></span> ");
+	                			output.append("<span class='current_page'><a href='javascript:void(0)'>").append(i).append("</a></span> ");
 	                		else
-	                			output.append("<span class='current_page'><a href='javascript:void'>").append(this.numberpre).append(i).append(this.numberend).append("</a></span> ");
+	                			output.append("<span class='current_page'><a href='javascript:void(0)'>").append(this.numberpre).append(i).append(this.numberend).append("</a></span> ");
 	                	}
 	                	else
 	                	{
@@ -1243,7 +1243,7 @@ public final class IndexTag extends PagerTagSupport {
 	                    {
 	                    	if(pagerContext.getContainerid() != null && !pagerContext.getContainerid().equals(""))
 	                    	{
-	                    		a.setHref("javascript:void");
+	                    		a.setHref("javascript:void(0)");
 	                    		a.setOnClick(getJqueryUrl(url,pagerContext.getContainerid(),pagerContext.getSelector()));
 	                    	}
 	                    	else
@@ -1286,7 +1286,7 @@ public final class IndexTag extends PagerTagSupport {
 			{
 				if(this.aindex)
 				{
-	                return new StringBuilder().append(" <a href='javascript:void'>")
+	                return new StringBuilder().append(" <a href='javascript:void(0)'>")
 	                		.append(lastpage_label)//尾页
 	                		.append("</a>").toString();
 				}
@@ -1335,7 +1335,7 @@ public final class IndexTag extends PagerTagSupport {
             }
             else
             {
-            	a.setHref("javascript:void");
+            	a.setHref("javascript:void(0)");
                 a.setOnClick(this.getJqueryUrl(customLastUrl,pagerContext.getContainerid(),pagerContext.getSelector()));
             }
             return a.toString();
