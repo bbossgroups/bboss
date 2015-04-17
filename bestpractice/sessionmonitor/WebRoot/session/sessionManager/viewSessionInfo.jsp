@@ -7,7 +7,7 @@
 <head>
 <title>Session详情</title>
 <%@ include file="/include/css.jsp"%>
-<script type="text/javascript" src="${pageContext.request.contextPath}/html/js/dialog/lhgdialog.js?self=false&skin=sany"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/include/dialog/lhgdialog.js?self=false&skin=sany"></script>
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/include/syntaxhighlighter/styles/SyntaxHighlighter.css"></link>
 <script language="javascript" src="${pageContext.request.contextPath}/include/syntaxhighlighter/shCore.js"></script>
 <script language="javascript" src="${pageContext.request.contextPath}/include/syntaxhighlighter/shBrushJava.js"></script>
