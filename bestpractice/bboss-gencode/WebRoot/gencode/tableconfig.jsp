@@ -370,7 +370,7 @@
 							<div class="col-md-6">
 								<div class="row">
 									<div class="col-md-offset-3 col-md-9">
-										<button type="button" class="btn green">暂存</button> <button type="submit" class="btn green">提交</button>
+										<button type="button" class="btn green" onclick="">暂存</button> <button type="submit" class="btn green">提交</button>
 									</div>
 								</div>
 							</div>
@@ -551,6 +551,63 @@ jQuery(document).ready(function() {
          tags: ["隐藏"]
      });
 });
+
+function tempsave()
+{
+	 $(form).ajaxSubmit({
+   		 type:'POST',
+   		 url:'tempsave.page',
+   		 forceSync:false,
+   		 dataType:'json',
+   		 beforeSubmit:function()
+   		 {
+   			 Metronic.startPageLoading();
+   		 },
+   		 error:function(xhr, ajaxOptions, thrownError)
+   		 {
+   			 Metronic.stopPageLoading();
+   		 },
+   		 
+   		 success:function(responseText, statusText, xhr, $form)
+   		 {
+   			 Metronic.stopPageLoading();           			
+   			
+   			
+   			
+                
+                var msg = responseText.result;
+                var title = '生成代码';
+                 if(msg == 'success')
+                	 title = '临时保存配置文件成功！';
+                 else
+                	 title = responseText.result;
+                 
+                toastr.options = {
+         				  "closeButton": true,
+         				  "debug": false,
+         				  "positionClass": "toast-top-center",
+         				  "onclick": null,
+         				  "showDuration": "0",
+         				  "hideDuration": "0",
+         				  "timeOut": "0",
+         				  "extendedTimeOut": "0",
+         				  "showEasing": "swing",
+         				  "hideEasing": "linear",
+         				  "showMethod": "fadeIn",
+         				  "hideMethod": "fadeOut"
+         				};
+
+               
+
+               
+               toastr['success'](msg, title); // Wire up an event handler to a button in the toast, if it exists
+               
+            
+   		 }
+   		 
+   		 
+   	 }); 
+}
 
 </script>
 

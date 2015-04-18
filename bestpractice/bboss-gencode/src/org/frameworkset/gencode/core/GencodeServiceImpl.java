@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 
 import org.apache.log4j.Logger;
 import org.frameworkset.gencode.core.ui.GenAddJsp;
@@ -432,6 +433,23 @@ public class GencodeServiceImpl {
 					}
 					f.addAnnotation(anno);
 					isp = true;
+					entityImport.add("com.frameworkset.orm.annotation.PrimaryKey");
+				}
+				if(c.getDataType() == java.sql.Types.CLOB)
+				{
+					Annotation anno = new Annotation();
+					anno.setName("Column");
+					anno.addAnnotationParam("type", "clob",AnnoParam.V_STRING);
+					f.addAnnotation(anno);
+					entityImport.add("com.frameworkset.orm.annotation.Column");
+				}
+				else if(c.getDataType() == java.sql.Types.BLOB)
+				{
+					Annotation anno = new Annotation();
+					anno.setName("Column");
+					anno.addAnnotationParam("type", "blob",AnnoParam.V_STRING);
+					entityImport.add("com.frameworkset.orm.annotation.Column");
+					f.addAnnotation(anno);
 				}
 				
 		         try
@@ -522,7 +540,7 @@ public class GencodeServiceImpl {
 		{
 			 
 			 List inputs = new ArrayList(2);
-	         inputs.add(moduleMetaInfo.getTableName());
+	         inputs.add(moduleMetaInfo.getTableName().toLowerCase());
 	         inputs.add( NameGenerator.CONV_METHOD_JAVANAME);
 	         
 	         try
@@ -1663,12 +1681,13 @@ public class GencodeServiceImpl {
 	         }
 	         
 		}
-		if(!condition && this.primaryField != null)
+		if(!condition )
 		{
-			imports.add("com.frameworkset.orm.annotation.PrimaryKey");
+			imports.addAll(entityImport);
 		}
 		return imports;
 	}
+	private Set<String> entityImport = new TreeSet<String>();
 	private List<String> evalServiceInfImport( ) {
 		List<String> imports = new ArrayList<String>();
 		imports.add(this.moduleMetaInfo.getPackagePath() + "." + this.moduleMetaInfo.getModuleName()+".entity.*");
