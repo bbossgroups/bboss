@@ -37,8 +37,8 @@
 								<div class="form-group">
 									<label class="control-label col-md-3">数据源</label>
 									<div class="col-md-9">
-										<input type="hidden" name="dbname" value="${dbname }"
-											class="form-control">
+										<input type="hidden" name="dbname" value="${dbname }">
+										<input type="hidden" name="tempid" id="tempid" value="">
 										<p class="form-control-static">${dbname }</p>
 									</div>
 								</div>
@@ -370,7 +370,7 @@
 							<div class="col-md-6">
 								<div class="row">
 									<div class="col-md-offset-3 col-md-9">
-										<button type="button" class="btn green" onclick="">暂存</button> <button type="submit" class="btn green">提交</button>
+										<button type="button" class="btn green" onclick="tempsave()">暂存</button> <button type="submit" class="btn green">提交</button>
 									</div>
 								</div>
 							</div>
@@ -554,7 +554,7 @@ jQuery(document).ready(function() {
 
 function tempsave()
 {
-	 $(form).ajaxSubmit({
+	 $("#configform").ajaxSubmit({
    		 type:'POST',
    		 url:'tempsave.page',
    		 forceSync:false,
@@ -578,7 +578,10 @@ function tempsave()
                 var msg = responseText.result;
                 var title = '生成代码';
                  if(msg == 'success')
+                {
                 	 title = '临时保存配置文件成功！';
+                	 $("#tempid").val(responseText.tempid);
+                }
                  else
                 	 title = responseText.result;
                  

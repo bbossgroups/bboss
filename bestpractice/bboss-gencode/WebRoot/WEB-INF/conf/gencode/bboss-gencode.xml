@@ -14,8 +14,18 @@
 		path:index="/gencode/main.jsp"
 		path:tableconfig="/gencode/tableconfig.jsp"
 		path:selecttable="/gencode/selecttable.jsp"
+		f:gencodeService="attr:gencode.gencodeService"
 		class="org.frameworkset.gencode.web.action.GencodeController" >
 	</property>
-	
+	<property name="gencode.gencodeService"
+		f:executor="attr:gencode.configsqlexecutor"
+		class="org.frameworkset.gencode.web.service.GencodeServiceImpl"
+		/>
+	<property name="gencode.configsqlexecutor"		
+		class="com.frameworkset.common.poolman.ConfigSQLExecutor" >
+		<construction>
+			<property value="org/frameworkset/gencode/web/service/gencode.xml"/>
+		</construction>
+	</property>
 	
 </properties>
