@@ -77,628 +77,785 @@
 </div>
 
 
-<div class="portlet box yellow">
-	<div class="portlet-title">
-		<div class="caption">
-			<i class="fa fa-gift"></i>代码生成记录
-		</div>
-		<div class="tools">
-			<a href="javascript:;" class="collapse"> </a> <a
-				href="#portlet-config" data-toggle="modal" class="config"> </a> <a
-				href="javascript:;" class="reload"> </a> <a href="javascript:;"
-				class="remove"> </a>
-		</div>
-	</div>
-	<div class="portlet-body ">
-							<div class="table-toolbar">
-								<div class="row">
-									<div class="col-md-6">
-										<div class="btn-group">
-											<button id="sample_editable_1_new" class="btn green">
-											Add New <i class="fa fa-plus"></i>
-											</button>
-										</div>
-									</div>
-									<div class="col-md-6">
-										<div class="btn-group pull-right">
-											<button class="btn dropdown-toggle" data-toggle="dropdown">Tools <i class="fa fa-angle-down"></i>
-											</button>
-											<ul class="dropdown-menu pull-right">
-												<li>
-													<a href="#">
-													Print </a>
-												</li>
-												<li>
-													<a href="#">
-													Save as PDF </a>
-												</li>
-												<li>
-													<a href="#">
-													Export to Excel </a>
-												</li>
-											</ul>
-										</div>
+<div class="portlet box green-haze">
+						<div class="portlet-title">
+							<div class="caption">
+								<i class="fa fa-globe"></i>历史记录
+							</div>
+							<div class="actions">
+								<div class="btn-group">
+									<a class="btn default" href="#" data-toggle="dropdown">
+									Columns <i class="fa fa-angle-down"></i>
+									</a>
+									<div id="sample_5_column_toggler" class="dropdown-menu hold-on-click dropdown-checkboxes pull-right">
+										<label><input type="checkbox" checked data-column="0">Rendering engine</label>
+										<label><input type="checkbox" checked data-column="1">Browser</label>
+										<label><input type="checkbox" checked data-column="2">Platform(s)</label>
+										<label><input type="checkbox" checked data-column="3">Engine version</label>
+										<label><input type="checkbox" checked data-column="4">CSS grade</label>
 									</div>
 								</div>
 							</div>
-							<table class="table table-striped table-bordered table-hover" id="sample_1">
+						</div>
+
+						<div class="portlet-body">
+							<table class="table table-striped table-hover" id="sample_5">
 							<thead>
 							<tr>
-								<th class="table-checkbox">
-									<input type="checkbox" class="group-checkable" data-set="#sample_1 .checkboxes"/>
+								<th>
+									 Rendering engine
 								</th>
 								<th>
-									 Username
+									 Browser
 								</th>
-								<th>
-									 Email
+								<th class="hidden-xs">
+									 Platform(s)
 								</th>
-								<th>
-									 Points
+								<th class="hidden-xs">
+									 Engine version
 								</th>
-								<th>
-									 Joined
-								</th>
-								<th>
-									 Status
+								<th class="hidden-xs">
+									 CSS grade
 								</th>
 							</tr>
 							</thead>
 							<tbody>
-							<tr class="odd gradeX">
+							<tr>
 								<td>
-									<input type="checkbox" class="checkboxes" value="1"/>
+									 Trident
 								</td>
 								<td>
-									 shuxer
+									 Internet Explorer 4.0
 								</td>
 								<td>
-									<a href="mailto:shuxer@gmail.com">
-									shuxer@gmail.com </a>
+									 Win 95+
 								</td>
 								<td>
-									 120
-								</td>
-								<td class="center">
-									 12 Jan 2012
+									 4
 								</td>
 								<td>
-									<span class="label label-sm label-success">
-									Approved </span>
+									 X
 								</td>
 							</tr>
-							<tr class="odd gradeX">
+							<tr>
 								<td>
-									<input type="checkbox" class="checkboxes" value="1"/>
+									 Trident
 								</td>
 								<td>
-									 looper
+									 Internet Explorer 5.0
 								</td>
 								<td>
-									<a href="mailto:looper90@gmail.com">
-									looper90@gmail.com </a>
+									 Win 95+
 								</td>
 								<td>
-									 120
-								</td>
-								<td class="center">
-									 12.12.2011
+									 5
 								</td>
 								<td>
-									<span class="label label-sm label-warning">
-									Suspended </span>
+									 C
 								</td>
 							</tr>
-							<tr class="odd gradeX">
+							<tr>
 								<td>
-									<input type="checkbox" class="checkboxes" value="1"/>
+									 Trident
 								</td>
 								<td>
-									 userwow
+									 Internet Explorer 5.5
 								</td>
 								<td>
-									<a href="mailto:userwow@yahoo.com">
-									userwow@yahoo.com </a>
+									 Win 95+
 								</td>
 								<td>
-									 20
-								</td>
-								<td class="center">
-									 12.12.2012
+									 5.5
 								</td>
 								<td>
-									<span class="label label-sm label-success">
-									Approved </span>
+									 A
 								</td>
 							</tr>
-							<tr class="odd gradeX">
+							<tr>
 								<td>
-									<input type="checkbox" class="checkboxes" value="1"/>
+									 Trident
 								</td>
 								<td>
-									 user1wow
+									 Internet Explorer 6
 								</td>
 								<td>
-									<a href="mailto:userwow@gmail.com">
-									userwow@gmail.com </a>
+									 Win 98+
 								</td>
 								<td>
-									 20
-								</td>
-								<td class="center">
-									 12.12.2012
+									 6
 								</td>
 								<td>
-									<span class="label label-sm label-default">
-									Blocked </span>
+									 A
 								</td>
 							</tr>
-							<tr class="odd gradeX">
+							<tr>
 								<td>
-									<input type="checkbox" class="checkboxes" value="1"/>
+									 Trident
 								</td>
 								<td>
-									 restest
+									 Internet Explorer 7
 								</td>
 								<td>
-									<a href="mailto:userwow@gmail.com">
-									test@gmail.com </a>
+									 Win XP SP2+
 								</td>
 								<td>
-									 20
-								</td>
-								<td class="center">
-									 12.12.2012
+									 7
 								</td>
 								<td>
-									<span class="label label-sm label-success">
-									Approved </span>
+									 A
 								</td>
 							</tr>
-							<tr class="odd gradeX">
+							<tr>
 								<td>
-									<input type="checkbox" class="checkboxes" value="1"/>
+									 Trident
 								</td>
 								<td>
-									 foopl
+									 AOL browser (AOL desktop)
 								</td>
 								<td>
-									<a href="mailto:userwow@gmail.com">
-									good@gmail.com </a>
+									 Win XP
 								</td>
 								<td>
-									 20
-								</td>
-								<td class="center">
-									 19.11.2010
+									 6
 								</td>
 								<td>
-									<span class="label label-sm label-success">
-									Approved </span>
+									 A
 								</td>
 							</tr>
-							<tr class="odd gradeX">
+							<tr>
 								<td>
-									<input type="checkbox" class="checkboxes" value="1"/>
+									 Gecko
 								</td>
 								<td>
-									 weep
+									 Firefox 1.0
 								</td>
 								<td>
-									<a href="mailto:userwow@gmail.com">
-									good@gmail.com </a>
+									 Win 98+ / OSX.2+
 								</td>
 								<td>
-									 20
-								</td>
-								<td class="center">
-									 19.11.2010
+									 1.7
 								</td>
 								<td>
-									<span class="label label-sm label-success">
-									Approved </span>
+									 A
 								</td>
 							</tr>
-							<tr class="odd gradeX">
+							<tr>
 								<td>
-									<input type="checkbox" class="checkboxes" value="1"/>
+									 Gecko
 								</td>
 								<td>
-									 coop
+									 Firefox 1.5
 								</td>
 								<td>
-									<a href="mailto:userwow@gmail.com">
-									good@gmail.com </a>
+									 Win 98+ / OSX.2+
 								</td>
 								<td>
-									 20
-								</td>
-								<td class="center">
-									 19.11.2010
+									 1.8
 								</td>
 								<td>
-									<span class="label label-sm label-success">
-									Approved </span>
+									 A
 								</td>
 							</tr>
-							<tr class="odd gradeX">
+							<tr>
 								<td>
-									<input type="checkbox" class="checkboxes" value="1"/>
+									 Gecko
 								</td>
 								<td>
-									 pppol
+									 Firefox 2.0
 								</td>
 								<td>
-									<a href="mailto:userwow@gmail.com">
-									good@gmail.com </a>
+									 Win 98+ / OSX.2+
 								</td>
 								<td>
-									 20
-								</td>
-								<td class="center">
-									 19.11.2010
+									 1.8
 								</td>
 								<td>
-									<span class="label label-sm label-success">
-									Approved </span>
+									 A
 								</td>
 							</tr>
-							<tr class="odd gradeX">
+							<tr>
 								<td>
-									<input type="checkbox" class="checkboxes" value="1"/>
+									 Gecko
 								</td>
 								<td>
-									 test
+									 Firefox 3.0
 								</td>
 								<td>
-									<a href="mailto:userwow@gmail.com">
-									good@gmail.com </a>
+									 Win 2k+ / OSX.3+
 								</td>
 								<td>
-									 20
-								</td>
-								<td class="center">
-									 19.11.2010
+									 1.9
 								</td>
 								<td>
-									<span class="label label-sm label-success">
-									Approved </span>
+									 A
 								</td>
 							</tr>
-							<tr class="odd gradeX">
+							<tr>
 								<td>
-									<input type="checkbox" class="checkboxes" value="1"/>
+									 Gecko
 								</td>
 								<td>
-									 userwow
+									 Camino 1.0
 								</td>
 								<td>
-									<a href="mailto:userwow@gmail.com">
-									userwow@gmail.com </a>
+									 OSX.2+
 								</td>
 								<td>
-									 20
-								</td>
-								<td class="center">
-									 12.12.2012
+									 1.8
 								</td>
 								<td>
-									<span class="label label-sm label-default">
-									Blocked </span>
+									 A
 								</td>
 							</tr>
-							<tr class="odd gradeX">
+							<tr>
 								<td>
-									<input type="checkbox" class="checkboxes" value="1"/>
+									 Gecko
 								</td>
 								<td>
-									 test
+									 Camino 1.5
 								</td>
 								<td>
-									<a href="mailto:userwow@gmail.com">
-									test@gmail.com </a>
+									 OSX.3+
 								</td>
 								<td>
-									 20
-								</td>
-								<td class="center">
-									 12.12.2012
+									 1.8
 								</td>
 								<td>
-									<span class="label label-sm label-success">
-									Approved </span>
+									 A
 								</td>
 							</tr>
-							<tr class="odd gradeX">
+							<tr>
 								<td>
-									<input type="checkbox" class="checkboxes" value="1"/>
+									 Gecko
 								</td>
 								<td>
-									 goop
+									 Netscape 7.2
 								</td>
 								<td>
-									<a href="mailto:userwow@gmail.com">
-									good@gmail.com </a>
+									 Win 95+ / Mac OS 8.6-9.2
 								</td>
 								<td>
-									 20
-								</td>
-								<td class="center">
-									 12.11.2010
+									 1.7
 								</td>
 								<td>
-									<span class="label label-sm label-success">
-									Approved </span>
+									 A
 								</td>
 							</tr>
-							<tr class="odd gradeX">
+							<tr>
 								<td>
-									<input type="checkbox" class="checkboxes" value="1"/>
+									 Gecko
 								</td>
 								<td>
-									 weep
+									 Netscape Browser 8
 								</td>
 								<td>
-									<a href="mailto:userwow@gmail.com">
-									good@gmail.com </a>
+									 Win 98SE+
 								</td>
 								<td>
-									 20
-								</td>
-								<td class="center">
-									 15.11.2011
+									 1.7
 								</td>
 								<td>
-									<span class="label label-sm label-default">
-									Blocked </span>
+									 A
 								</td>
 							</tr>
-							<tr class="odd gradeX">
+							<tr>
 								<td>
-									<input type="checkbox" class="checkboxes" value="1"/>
+									 Gecko
 								</td>
 								<td>
-									 toopl
+									 Netscape Navigator 9
 								</td>
 								<td>
-									<a href="mailto:userwow@gmail.com">
-									good@gmail.com </a>
+									 Win 98+ / OSX.2+
 								</td>
 								<td>
-									 20
-								</td>
-								<td class="center">
-									 16.11.2010
+									 1.8
 								</td>
 								<td>
-									<span class="label label-sm label-success">
-									Approved </span>
+									 A
 								</td>
 							</tr>
-							<tr class="odd gradeX">
+							<tr>
 								<td>
-									<input type="checkbox" class="checkboxes" value="1"/>
+									 Gecko
 								</td>
 								<td>
-									 userwow
+									 Mozilla 1.0
 								</td>
 								<td>
-									<a href="mailto:userwow@gmail.com">
-									userwow@gmail.com </a>
+									 Win 95+ / OSX.1+
 								</td>
 								<td>
-									 20
-								</td>
-								<td class="center">
-									 9.12.2012
+									 1
 								</td>
 								<td>
-									<span class="label label-sm label-default">
-									Blocked </span>
+									 A
 								</td>
 							</tr>
-							<tr class="odd gradeX">
+							<tr>
 								<td>
-									<input type="checkbox" class="checkboxes" value="1"/>
+									 Gecko
 								</td>
 								<td>
-									 tes21t
+									 Mozilla 1.1
 								</td>
 								<td>
-									<a href="mailto:userwow@gmail.com">
-									test@gmail.com </a>
+									 Win 95+ / OSX.1+
 								</td>
 								<td>
-									 20
-								</td>
-								<td class="center">
-									 14.12.2012
+									 1.1
 								</td>
 								<td>
-									<span class="label label-sm label-success">
-									Approved </span>
+									 A
 								</td>
 							</tr>
-							<tr class="odd gradeX">
+							<tr>
 								<td>
-									<input type="checkbox" class="checkboxes" value="1"/>
+									 Gecko
 								</td>
 								<td>
-									 fop
+									 Mozilla 1.2
 								</td>
 								<td>
-									<a href="mailto:userwow@gmail.com">
-									good@gmail.com </a>
+									 Win 95+ / OSX.1+
 								</td>
 								<td>
-									 20
-								</td>
-								<td class="center">
-									 13.11.2010
+									 1.2
 								</td>
 								<td>
-									<span class="label label-sm label-warning">
-									Suspended </span>
+									 A
 								</td>
 							</tr>
-							<tr class="odd gradeX">
+							<tr>
 								<td>
-									<input type="checkbox" class="checkboxes" value="1"/>
+									 Gecko
 								</td>
 								<td>
-									 kop
+									 Mozilla 1.3
 								</td>
 								<td>
-									<a href="mailto:userwow@gmail.com">
-									good@gmail.com </a>
+									 Win 95+ / OSX.1+
 								</td>
 								<td>
-									 20
-								</td>
-								<td class="center">
-									 17.11.2010
+									 1.3
 								</td>
 								<td>
-									<span class="label label-sm label-success">
-									Approved </span>
+									 A
 								</td>
 							</tr>
-							<tr class="odd gradeX">
+							<tr>
 								<td>
-									<input type="checkbox" class="checkboxes" value="1"/>
+									 Gecko
 								</td>
 								<td>
-									 vopl
+									 Mozilla 1.4
 								</td>
 								<td>
-									<a href="mailto:userwow@gmail.com">
-									good@gmail.com </a>
+									 Win 95+ / OSX.1+
 								</td>
 								<td>
-									 20
-								</td>
-								<td class="center">
-									 19.11.2010
+									 1.4
 								</td>
 								<td>
-									<span class="label label-sm label-success">
-									Approved </span>
+									 A
 								</td>
 							</tr>
-							<tr class="odd gradeX">
+							<tr>
 								<td>
-									<input type="checkbox" class="checkboxes" value="1"/>
+									 Gecko
 								</td>
 								<td>
-									 userwow
+									 Mozilla 1.5
 								</td>
 								<td>
-									<a href="mailto:userwow@gmail.com">
-									userwow@gmail.com </a>
+									 Win 95+ / OSX.1+
 								</td>
 								<td>
-									 20
-								</td>
-								<td class="center">
-									 12.12.2012
+									 1.5
 								</td>
 								<td>
-									<span class="label label-sm label-default">
-									Blocked </span>
+									 A
 								</td>
 							</tr>
-							<tr class="odd gradeX">
+							<tr>
 								<td>
-									<input type="checkbox" class="checkboxes" value="1"/>
+									 Gecko
 								</td>
 								<td>
-									 wap
+									 Mozilla 1.6
 								</td>
 								<td>
-									<a href="mailto:userwow@gmail.com">
-									test@gmail.com </a>
+									 Win 95+ / OSX.1+
 								</td>
 								<td>
-									 20
-								</td>
-								<td class="center">
-									 12.12.2012
+									 1.6
 								</td>
 								<td>
-									<span class="label label-sm label-success">
-									Approved </span>
+									 A
 								</td>
 							</tr>
-							<tr class="odd gradeX">
+							<tr>
 								<td>
-									<input type="checkbox" class="checkboxes" value="1"/>
+									 Gecko
 								</td>
 								<td>
-									 test
+									 Mozilla 1.7
 								</td>
 								<td>
-									<a href="mailto:userwow@gmail.com">
-									good@gmail.com </a>
+									 Win 98+ / OSX.1+
 								</td>
 								<td>
-									 20
-								</td>
-								<td class="center">
-									 19.12.2010
+									 1.7
 								</td>
 								<td>
-									<span class="label label-sm label-success">
-									Approved </span>
+									 A
 								</td>
 							</tr>
-							<tr class="odd gradeX">
+							<tr>
 								<td>
-									<input type="checkbox" class="checkboxes" value="1"/>
+									 Gecko
 								</td>
 								<td>
-									 toop
+									 Mozilla 1.8
 								</td>
 								<td>
-									<a href="mailto:userwow@gmail.com">
-									good@gmail.com </a>
+									 Win 98+ / OSX.1+
 								</td>
 								<td>
-									 20
-								</td>
-								<td class="center">
-									 17.12.2010
+									 1.8
 								</td>
 								<td>
-									<span class="label label-sm label-success">
-									Approved </span>
+									 A
 								</td>
 							</tr>
-							<tr class="odd gradeX">
+							<tr>
 								<td>
-									<input type="checkbox" class="checkboxes" value="1"/>
+									 Gecko
 								</td>
 								<td>
-									 weep
+									 Seamonkey 1.1
 								</td>
 								<td>
-									<a href="mailto:userwow@gmail.com">
-									good@gmail.com </a>
+									 Win 98+ / OSX.2+
 								</td>
 								<td>
-									 20
-								</td>
-								<td class="center">
-									 15.11.2011
+									 1.8
 								</td>
 								<td>
-									<span class="label label-sm label-success">
-									Approved </span>
+									 A
+								</td>
+							</tr>
+							<tr>
+								<td>
+									 Gecko
+								</td>
+								<td>
+									 Epiphany 2.20
+								</td>
+								<td>
+									 Gnome
+								</td>
+								<td>
+									 1.8
+								</td>
+								<td>
+									 A
+								</td>
+							</tr>
+							<tr>
+								<td>
+									 Webkit
+								</td>
+								<td>
+									 Safari 1.2
+								</td>
+								<td>
+									 OSX.3
+								</td>
+								<td>
+									 125.5
+								</td>
+								<td>
+									 A
+								</td>
+							</tr>
+							<tr>
+								<td>
+									 Webkit
+								</td>
+								<td>
+									 Safari 1.3
+								</td>
+								<td>
+									 OSX.3
+								</td>
+								<td>
+									 312.8
+								</td>
+								<td>
+									 A
+								</td>
+							</tr>
+							<tr>
+								<td>
+									 Webkit
+								</td>
+								<td>
+									 Safari 2.0
+								</td>
+								<td>
+									 OSX.4+
+								</td>
+								<td>
+									 419.3
+								</td>
+								<td>
+									 A
+								</td>
+							</tr>
+							<tr>
+								<td>
+									 Webkit
+								</td>
+								<td>
+									 Safari 3.0
+								</td>
+								<td>
+									 OSX.4+
+								</td>
+								<td>
+									 522.1
+								</td>
+								<td>
+									 A
+								</td>
+							</tr>
+							<tr>
+								<td>
+									 Webkit
+								</td>
+								<td>
+									 OmniWeb 5.5
+								</td>
+								<td>
+									 OSX.4+
+								</td>
+								<td>
+									 420
+								</td>
+								<td>
+									 A
+								</td>
+							</tr>
+							<tr>
+								<td>
+									 Webkit
+								</td>
+								<td>
+									 iPod Touch / iPhone
+								</td>
+								<td>
+									 iPod
+								</td>
+								<td>
+									 420.1
+								</td>
+								<td>
+									 A
+								</td>
+							</tr>
+							<tr>
+								<td>
+									 Webkit
+								</td>
+								<td>
+									 S60
+								</td>
+								<td>
+									 S60
+								</td>
+								<td>
+									 413
+								</td>
+								<td>
+									 A
+								</td>
+							</tr>
+							<tr>
+								<td>
+									 Presto
+								</td>
+								<td>
+									 Opera 7.0
+								</td>
+								<td>
+									 Win 95+ / OSX.1+
+								</td>
+								<td>
+									 -
+								</td>
+								<td>
+									 A
+								</td>
+							</tr>
+							<tr>
+								<td>
+									 Presto
+								</td>
+								<td>
+									 Opera 7.5
+								</td>
+								<td>
+									 Win 95+ / OSX.2+
+								</td>
+								<td>
+									 -
+								</td>
+								<td>
+									 A
+								</td>
+							</tr>
+							<tr>
+								<td>
+									 Presto
+								</td>
+								<td>
+									 Opera 8.0
+								</td>
+								<td>
+									 Win 95+ / OSX.2+
+								</td>
+								<td>
+									 -
+								</td>
+								<td>
+									 A
+								</td>
+							</tr>
+							<tr>
+								<td>
+									 Presto
+								</td>
+								<td>
+									 Opera 8.5
+								</td>
+								<td>
+									 Win 95+ / OSX.2+
+								</td>
+								<td>
+									 -
+								</td>
+								<td>
+									 A
+								</td>
+							</tr>
+							<tr>
+								<td>
+									 Presto
+								</td>
+								<td>
+									 Opera 9.0
+								</td>
+								<td>
+									 Win 95+ / OSX.3+
+								</td>
+								<td>
+									 -
+								</td>
+								<td>
+									 A
+								</td>
+							</tr>
+							<tr>
+								<td>
+									 Presto
+								</td>
+								<td>
+									 Opera 9.2
+								</td>
+								<td>
+									 Win 88+ / OSX.3+
+								</td>
+								<td>
+									 -
+								</td>
+								<td>
+									 A
+								</td>
+							</tr>
+							<tr>
+								<td>
+									 Presto
+								</td>
+								<td>
+									 Opera 9.5
+								</td>
+								<td>
+									 Win 88+ / OSX.3+
+								</td>
+								<td>
+									 -
+								</td>
+								<td>
+									 A
+								</td>
+							</tr>
+							<tr>
+								<td>
+									 Presto
+								</td>
+								<td>
+									 Opera for Wii
+								</td>
+								<td>
+									 Wii
+								</td>
+								<td>
+									 -
+								</td>
+								<td>
+									 A
+								</td>
+							</tr>
+							<tr>
+								<td>
+									 Presto
+								</td>
+								<td>
+									 Nokia N800
+								</td>
+								<td>
+									 N800
+								</td>
+								<td>
+									 -
+								</td>
+								<td>
+									 A
+								</td>
+							</tr>
+							<tr>
+								<td>
+									 Presto
+								</td>
+								<td>
+									 Nintendo DS browser
+								</td>
+								<td>
+									 Nintendo DS
+								</td>
+								<td>
+									 8.5
+								</td>
+								<td>
+									 C/A<sup>1</sup>
 								</td>
 							</tr>
 							</tbody>
 							</table>
 						</div>
-</div>
+					</div>
+
 <div class="note note-success">
 							<h4 class="block">自动代码生成框架功能说明</h4>
 							<p>根据模板，自动生成给定表的增、删、改、分页查询、列表查询、国际化功能对应的程序和配置文件：
@@ -719,3 +876,6 @@
 
 						</div>
 <!-- END PAGE CONTENT-->
+<script>jQuery(document).ready(function() {
+ TableAdvanced.init();
+});

@@ -40,6 +40,10 @@ License: You must have a valid license purchased only from themeforest(the above
 <link rel="stylesheet" type="text/css" href="../assets/global/plugins/bootstrap-select/bootstrap-select.min.css"/>
 <link rel="stylesheet" type="text/css" href="../assets/global/plugins/select2/select2.css"/>
 <link rel="stylesheet" type="text/css" href="../assets/global/plugins/jquery-multi-select/css/multi-select.css"/>
+<link rel="stylesheet" type="text/css" href="../assets/global/plugins/datatables/extensions/Scroller/css/dataTables.scroller.min.css"/>
+<link rel="stylesheet" type="text/css" href="../assets/global/plugins/datatables/extensions/ColReorder/css/dataTables.colReorder.min.css"/>
+<link rel="stylesheet" type="text/css" href="../assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.css"/>
+
 <!-- END PAGE LEVEL STYLES -->
 <!-- BEGIN THEME STYLES -->
 <link href="../assets/global/css/components.css" id="style_components" rel="stylesheet" type="text/css"/>
@@ -1378,13 +1382,29 @@ License: You must have a valid license purchased only from themeforest(the above
 <script type="text/javascript" src="../assets/global/plugins/select2/select2.min.js"></script>
 <script src="../assets/global/plugins/bootstrap-toastr/toastr.min.js"></script>
 
+
+
+
 <script type="text/javascript" src="../assets/global/plugins/jquery-multi-select/js/jquery.multi-select.js"></script>
+
+
+<!-- BEGIN PAGE LEVEL PLUGINS -->
+<script type="text/javascript" src="../assets/global/plugins/select2/select2.min.js"></script>
+<script type="text/javascript" src="../assets/global/plugins/datatables/media/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="../assets/global/plugins/datatables/extensions/TableTools/js/dataTables.tableTools.min.js"></script>
+<script type="text/javascript" src="../assets/global/plugins/datatables/extensions/ColReorder/js/dataTables.colReorder.min.js"></script>
+<script type="text/javascript" src="../assets/global/plugins/datatables/extensions/Scroller/js/dataTables.scroller.min.js"></script>
+<script type="text/javascript" src="../assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js"></script>
+<!-- END PAGE LEVEL PLUGINS -->
+
 <script src="../assets/global/scripts/metronic.js" type="text/javascript"></script>
 <script src="../assets/admin/layout/scripts/layout.js" type="text/javascript"></script>
 <script src="../assets/admin/layout/scripts/quick-sidebar.js" type="text/javascript"></script>
 <script src="../assets/admin/layout/scripts/demo.js" type="text/javascript"></script>
 <script src="components-gencode-dropdowns.js" type="text/javascript"></script>
 <script src="../assets/global/plugins/jquery.form.js" type="text/javascript"></script>
+<script src="table-advanced.js"></script>
+
 <script>
 jQuery(document).ready(function() {    
 	Metronic.setAssetsPath('../assets/');
