@@ -63,6 +63,10 @@
 			<!--如果有多个目录需要加载，请用,号分隔-->
 			<param-value>/WEB-INF/conf/bboss-*.xml,/WEB-INF/conf/gencode/bboss-*.xml</param-value>
 		</init-param>
+		<init-param>
+			<param-name>messagesources</param-name>
+			<param-value>/WEB-INF/conf/gencode/messages_gencode</param-value>
+	</init-param> 
 		<load-on-startup>0</load-on-startup>
 	</servlet>
 	<servlet-mapping>

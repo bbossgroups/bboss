@@ -38,7 +38,7 @@ public class ControlInfo {
 
 	private String entityName;
 
-	private String datasourceName;
+	private String dbname;
 
 	private String company;
 	private String author;
@@ -144,13 +144,7 @@ public class ControlInfo {
 		this.entityName = entityName;
 	}
 
-	public String getDatasourceName() {
-		return datasourceName;
-	}
 
-	public void setDatasourceName(String datasourceName) {
-		this.datasourceName = datasourceName;
-	}
 
 	public String getCompany() {
 		return company;
@@ -182,6 +176,14 @@ public class ControlInfo {
 
 	public void setExcelVersion(int excelVersion) {
 		this.excelVersion = excelVersion;
+	}
+
+	public String getDbname() {
+		return dbname;
+	}
+
+	public void setDbname(String dbname) {
+		this.dbname = dbname;
 	}
 
 }

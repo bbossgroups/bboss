@@ -150,7 +150,7 @@ public class GencodeController {
 		return tables;
 	}
 
-	public String selecttable(ModelMap model) {
+	public String selecttable(ModelMap model,GencodeCondition conditions) {
 		List<String> dbs = DBUtil.getAllPoolNames();
 		model.addAttribute("dbs", dbs);
 		Set<TableMetaData> tableMetas = DBUtil.getTableMetaDatas("bspf");
@@ -160,6 +160,17 @@ public class GencodeController {
 				tables.add(meta.getTableName());
 			}
 		}
+		String tablename = conditions.getTablename();
+		if (tablename != null && !tablename.equals("")) {
+			conditions.setTablename("%" + tablename + "%");
+		}
+		String author = conditions.getAuthor();
+		if (author != null && !author.equals("")) {
+			conditions.setAuthor("%" + author + "%");
+		}
+		List<Gencode> gencodes = gencodeService
+				.queryListGencodes(conditions);
+		model.addAttribute("gencodes", gencodes);
 		model.addAttribute("tables", tables);
 		return "path:selecttable";
 	}
@@ -179,26 +190,45 @@ public class GencodeController {
 		model.addAttribute("fields", fields);
 		return "path:tableconfig";
 	}
+	
+	public String tablereconfig(String gencodeid,ModelMap model) {
+		if (gencodeid == null)
+			return "path:tableconfig";
+		Gencode gencode = gencodeService.getGencode(gencodeid);
+		if(gencode == null)
+			return "path:tableconfig";
+		model.addAttribute("gencode", gencode);
+		model.addAttribute("tableName", gencode.getTablename());
+		model.addAttribute("dbname", gencode.getDbname());
+		ControlInfo controlInfo = ObjectSerializable.toBean(gencode.getControlparams(), ControlInfo.class); 
+		@SuppressWarnings("unchecked")
+		List<FieldInfo> fields = ObjectSerializable.toBean(gencode.getControlparams(), List.class); 
+//		List<Field> fields = GencodeServiceImpl.getSimpleFields(tableMeta);
+		
+		model.addAttribute("fields", fields);
+		model.addAttribute("controlInfo", controlInfo);
+		return "path:tableconfig";
+	}
 
 	public @ResponseBody
-	Map gencode(ControlInfo controlInfo, List<FieldInfo> fields,String tempid) {
-		Map ret = new HashMap();
+	Map<String, String> gencode(ControlInfo controlInfo, List<FieldInfo> fields,String tempid) {
+		Map<String, String> ret = new HashMap<String, String>();
 		ret.put("result", "success");
 		tempsave(controlInfo, fields,tempid);
 		return ret;
 	}
 
 	public @ResponseBody
-	Map tempsave(ControlInfo controlInfo, List<FieldInfo> fields,String tempid) {
+	Map<String, String> tempsave(ControlInfo controlInfo, List<FieldInfo> fields,String tempid) {
 		// 控制器
-		Map ret = new HashMap();
+		Map<String, String> ret = new HashMap<String, String>();
 		try {
 			
 			Gencode gencode = new Gencode();
 			gencode.setAuthor(controlInfo.getAuthor());
 			gencode.setCompany(controlInfo.getCompany());
 			gencode.setCreatetime(new Timestamp(System.currentTimeMillis()));
-			gencode.setDbname(controlInfo.getDatasourceName());
+			gencode.setDbname(controlInfo.getDbname());
 			gencode.setTablename(controlInfo.getTableName());
 			gencode.setUpdatetime(gencode.getCreatetime());
 			gencode.setControlparams(ObjectSerializable.toXML(controlInfo));
