@@ -604,7 +604,7 @@ var Layout = function () {
         initHeader: function() {
             handleHorizontalMenu(); // handles horizontal menu    
         },
-
+        
         setSidebarMenuActiveLink: function(mode, el) {
             handleSidebarMenuActiveLink(mode, el);
         },
@@ -666,6 +666,9 @@ var Layout = function () {
 
         getLayoutCssPath: function () {
             return Metronic.getAssetsPath() + layoutCssPath;
+        },
+        getResBreakpointMd:function(){
+        	return resBreakpointMd;
         }
     };
 

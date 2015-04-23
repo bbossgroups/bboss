@@ -109,7 +109,7 @@ var TableAdvanced = function () {
 
             Metronic.startPageLoading();
 
-            if (Metronic.getViewPort().width < resBreakpointMd && $('.page-sidebar').hasClass("in")) { // close the menu on mobile view while laoding a page 
+            if (Metronic.getViewPort().width < Layout.getResBreakpointMd() && $('.page-sidebar').hasClass("in")) { // close the menu on mobile view while laoding a page 
                 $('.page-header .responsive-toggler').click();
             }
             

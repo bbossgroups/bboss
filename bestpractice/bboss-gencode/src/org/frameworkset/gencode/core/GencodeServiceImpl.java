@@ -365,51 +365,7 @@ public class GencodeServiceImpl {
 			return type;
 	}
 
-	public static List<Field> getSimpleFields(TableMetaData tableMeta)
-	{
-		Set<ColumnMetaData> columns = tableMeta.getColumns();
-		if(columns.size() > 0)
-		{
-			 
-			List<Field> fs = new ArrayList<Field>();
-			
-			for(ColumnMetaData c:columns)
-			{
-				Field f = new Field();
-				f.setType(convertType(c.getSchemaType().getJavaType()));
-				
-				
-		         try
-		         {
-		        	 List<String> inputs = new ArrayList<String>(2);
-			         inputs.add(c.getColumnName().toLowerCase());
-			         inputs.add( NameGenerator.CONV_METHOD_JAVANAME);
-		        	 String mfieldName = NameFactory.generateName(NameFactory.JAVA_GENERATOR,
-		                                                 inputs,false);
-		        	 inputs = new ArrayList<String>(2);
-			         inputs.add(c.getColumnName().toLowerCase());
-			         inputs.add( NameGenerator.CONV_METHOD_JAVAFIELDNAME);
-		        	 String fieldName = NameFactory.generateName(NameFactory.JAVA_GENERATOR,
-                             inputs,false);
-		        	 f.setMfieldName(mfieldName);
-		        	 f.setFieldName(fieldName);
-		        	 f.setColumnname(c.getColumnName());
-		        	 f.setColumntype(c.getTypeName());
-		        	 fs.add(f);
-		        	
-		         }
-		         catch (EngineException e)
-		         {
-		             log.error(e.getMessage(), e);
-		         }
-				
-			}
-			
-			return fs;
-			
-		}
-		return null;
-	}
+	
 	private List<Field> getFields(TableMetaData tableMeta)
 	{
 		Set<ColumnMetaData> columns = tableMeta.getColumns();

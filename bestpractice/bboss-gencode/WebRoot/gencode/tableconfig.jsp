@@ -21,6 +21,7 @@
 			<pg:empty actual="${tableName }" evalbody="true">
 				<pg:yes>请选择表</pg:yes>
 				<pg:no>
+				
 					<div class="form-body">
 					<div class="alert alert-danger display-hide">
 										<button class="close" data-close="alert"></button>
@@ -30,7 +31,7 @@
 										<button class="close" data-close="alert"></button>
 										Your form validation is successful!
 									</div>
-					
+					<pg:beaninfo requestKey="controlparams">
 						<h3 class="form-section">基本信息</h3>
 						<div class="row">
 							<div class="col-md-6">
@@ -38,7 +39,7 @@
 									<label class="control-label col-md-3">数据源</label>
 									<div class="col-md-9">
 										<input type="hidden" name="dbname" value="${dbname }">
-										<input type="hidden" name="tempid" id="tempid" value="">
+										<input type="hidden" name="gencodeid" id="gencodeid" value="${gencodeid }">
 										<p class="form-control-static">${dbname }</p>
 									</div>
 								</div>
@@ -63,7 +64,7 @@
 									<label class="control-label col-md-3">主键名称</label>
 									<div class="col-md-9">
 										<input id="pkname" name="pkname" type="text"
-											class="form-control" placeholder="主键名称"> <span
+											class="form-control" placeholder="主键名称" value="<pg:cell colName="pkname"/>"> <span
 											class="help-block"><font color="blue">对应于tableinfo表中的table_name字段
 										</font></span>
 									</div>
@@ -74,7 +75,7 @@
 									<label class="control-label col-md-3">系统名称</label>
 									<div class="col-md-9">
 										<input id="system" name="system" type="text"
-											class="form-control" placeholder="系统名称"><span
+											class="form-control" placeholder="系统名称" value="<pg:cell colName="system"/>"><span
 											class="help-block"><font color="blue">可选项 </font></span>
 									</div>
 								</div>
@@ -91,7 +92,7 @@
 										class="required"> * </span>
 									</label>
 									<div class="col-md-9">
-										<input id="moduleName" name="moduleName" type="text"
+										<input id="moduleName" name="moduleName" type="text"  value="<pg:cell colName="moduleName"/>"
 											class="form-control" placeholder="模块名称">
 									</div>
 								</div>
@@ -101,7 +102,7 @@
 									<label class="control-label col-md-3">模块中文名称<span
 										class="required"> * </span></label>
 									<div class="col-md-9">
-										<input id="moduleCNName" name="moduleCNName" type="text"
+										<input id="moduleCNName" name="moduleCNName" type="text"  value="<pg:cell colName="moduleCNName"/>"
 											class="form-control" placeholder="模块中文名称">
 									</div>
 								</div>
@@ -116,7 +117,7 @@
 									<label class="control-label col-md-3">包路径<span
 										class="required"> * </span></label>
 									<div class="col-md-9">
-										<input id="packagePath" name="packagePath" type="text"
+										<input id="packagePath" name="packagePath" type="text" value="<pg:cell colName="packagePath"/>"
 											class="form-control" placeholder="包路径">
 									</div>
 								</div>
@@ -126,7 +127,7 @@
 									<label class="control-label col-md-3">源码存放路径<span
 										class="required"> * </span></label>
 									<div class="col-md-9">
-										<input id="sourcedir" name="sourcedir" type="text"
+										<input id="sourcedir" name="sourcedir" type="text" value="<pg:cell colName="sourcedir"/>"
 											class="form-control" placeholder="源码存放路径">
 									</div>
 								</div>
@@ -144,11 +145,12 @@
 									<label class="control-label col-md-3">界面风格</label>
 									<div class="col-md-9">
 										<select class="form-control" id="theme" name="theme">
-											<option value="default">default</option>
-											<option value="common">common</option>
-											<option value="bootstrap">bootstrap</option>
-											<option value="mobile">mobile</option>
-											
+										<pg:case colName="theme">
+											<option value="default" <pg:equal value="default">selected</pg:equal>>default</option>
+											<option value="common" <pg:equal value="common">selected</pg:equal>>common</option>
+											<option value="bootstrap" <pg:equal value="bootstrap">selected</pg:equal>>bootstrap</option>
+											<option value="mobile" <pg:equal value="default">mobile</pg:equal>>mobile</option>
+										</pg:case>	
 										</select>
 									</div>
 
@@ -162,9 +164,10 @@
 														<div class="form-group">
 															<label class="control-label col-md-3">代码控制参数</label>
 									<div class="col-md-9">
-										<input type="hidden" id="controlParams" name="controlParams"
+										<input type="hidden" id="controlParams" name="controlParams"  
 											class="form-control  select2"
-											value="geni18n, clearSourcedir,genRPC,autopk">
+											value="<pg:cell colName="controlParams" defaultValue="geni18n, clearSourcedir,genRPC,autopk"/>"
+											>
 									</div>
 														</div>
 													</div>
@@ -180,10 +183,13 @@
 									<div class="col-md-9">
 										<select class="form-control" id="excelVersion"
 											name="excelVersion">
-											<option value="2003">2003</option>
-											<option value="2007">2007</option>
-											<option value="2010">2010</option>
-											<option value="2013">2013</option>
+										<pg:case colName="excelVersion">
+											<option value="2003" <pg:equal value="2003">selected</pg:equal>>2003</option>
+											<option value="2007" <pg:equal value="2007">selected</pg:equal>>2007</option>
+											<option value="2010" <pg:equal value="2010">selected</pg:equal>>2010</option>
+											<option value="2013" <pg:equal value="2013">mobile</pg:equal>>2013</option>
+										</pg:case>	
+											
 										</select>
 									</div>
 								</div>
@@ -200,7 +206,7 @@
 								<div class="form-group">
 									<label class="control-label col-md-3">作者<span class="required">*</span></label>
 									<div class="col-md-9">
-										<input type="text" id="author" name="author"  class="form-control" >
+										<input type="text" id="author" name="author"  value="<pg:cell colName="author"/>" class="form-control" >
 									</div>
 								</div>
 							</div>
@@ -208,7 +214,7 @@
 								<div class="form-group">
 									<label class="control-label col-md-3">公司<span class="required">*</span></label>
 									<div class="col-md-9">
-										<input type="text" id="company" name="company"  class="form-control" >
+										<input type="text" id="company" name="company"  class="form-control" value="<pg:cell colName="company"/>" >
 									</div>
 								</div>
 							</div>
@@ -218,7 +224,7 @@
 								<div class="form-group">
 									<label class="control-label col-md-3">版本号<span class="required">*</span></label>
 									<div class="col-md-9">
-										<input type="text" id="version" name="version" class="form-control"   value="v1.0">
+										<input type="text" id="version" name="version" class="form-control"  value="<pg:cell colName="company" defaultValue="v1.0"/>">
 									</div>
 								</div>
 							</div>
@@ -227,7 +233,7 @@
 							<!--/span-->
 						</div>
 						 
-						 
+						</pg:beaninfo> 
 						<!--/row-->
 						<h3 class="form-section">字段设置</h3>
 						<!-- table -->
@@ -580,7 +586,7 @@ function tempsave()
                  if(msg == 'success')
                 {
                 	 title = '临时保存配置文件成功！';
-                	 $("#tempid").val(responseText.tempid);
+                	 $("#gencodeid").val(responseText.gencodeid);
                 }
                  else
                 	 title = responseText.result;

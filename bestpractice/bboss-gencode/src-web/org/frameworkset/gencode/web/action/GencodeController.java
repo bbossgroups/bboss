@@ -22,7 +22,11 @@ import org.frameworkset.util.annotations.ResponseBody;
 import org.frameworkset.web.servlet.ModelMap;
 
 import com.frameworkset.common.poolman.DBUtil;
+import com.frameworkset.common.poolman.sql.ColumnMetaData;
 import com.frameworkset.common.poolman.sql.TableMetaData;
+import com.frameworkset.orm.engine.EngineException;
+import com.frameworkset.orm.engine.model.NameFactory;
+import com.frameworkset.orm.engine.model.NameGenerator;
 import com.frameworkset.util.ListInfo;
 import com.frameworkset.util.StringUtil;
 
@@ -174,8 +178,52 @@ public class GencodeController {
 		model.addAttribute("tables", tables);
 		return "path:selecttable";
 	}
-
-	public String tableconfig(String dbname, String tableName, String formid,
+	public static List<FieldInfo> getSimpleFields(TableMetaData tableMeta)
+	{
+		Set<ColumnMetaData> columns = tableMeta.getColumns();
+		if(columns.size() > 0)
+		{
+			 
+			List<FieldInfo> fs = new ArrayList<FieldInfo>();
+			
+			for(ColumnMetaData c:columns)
+			{
+				FieldInfo f = new FieldInfo();
+				f.setType(GencodeServiceImpl.convertType(c.getSchemaType().getJavaType()));
+				
+				
+		         try
+		         {
+		        	 List<String> inputs = new ArrayList<String>(2);
+			         inputs.add(c.getColumnName().toLowerCase());
+			         inputs.add( NameGenerator.CONV_METHOD_JAVANAME);
+		        	 String mfieldName = NameFactory.generateName(NameFactory.JAVA_GENERATOR,
+		                                                 inputs,false);
+		        	 inputs = new ArrayList<String>(2);
+			         inputs.add(c.getColumnName().toLowerCase());
+			         inputs.add( NameGenerator.CONV_METHOD_JAVAFIELDNAME);
+		        	 String fieldName = NameFactory.generateName(NameFactory.JAVA_GENERATOR,
+                             inputs,false);
+		        	 f.setMfieldName(mfieldName);
+		        	 f.setFieldName(fieldName);
+		        	 f.setColumnname(c.getColumnName());
+		        	 f.setColumntype(c.getTypeName());
+		        	 fs.add(f);
+		        	
+		         }
+		         catch (EngineException e)
+		         {
+		             log.error(e.getMessage(), e);
+		         }
+				
+			}
+			
+			return fs;
+			
+		}
+		return null;
+	}
+	public String tableconfig(String dbname, String tableName,
 			ModelMap model) {
 		if (tableName == null)
 			return "path:tableconfig";
@@ -183,10 +231,8 @@ public class GencodeController {
 		model.addAttribute("table", tableMeta);
 		model.addAttribute("tableName", tableName);
 		model.addAttribute("dbname", dbname);
-		List<Field> fields = GencodeServiceImpl.getSimpleFields(tableMeta);
-		if (formid != null) {
+		List<FieldInfo> fields = getSimpleFields(tableMeta);
 
-		}
 		model.addAttribute("fields", fields);
 		return "path:tableconfig";
 	}
@@ -202,26 +248,35 @@ public class GencodeController {
 		model.addAttribute("dbname", gencode.getDbname());
 		ControlInfo controlInfo = ObjectSerializable.toBean(gencode.getControlparams(), ControlInfo.class); 
 		@SuppressWarnings("unchecked")
-		List<FieldInfo> fields = ObjectSerializable.toBean(gencode.getControlparams(), List.class); 
+		List<FieldInfo> fields = ObjectSerializable.toBean(gencode.getFieldinfos(), List.class); 
 //		List<Field> fields = GencodeServiceImpl.getSimpleFields(tableMeta);
 		
 		model.addAttribute("fields", fields);
-		model.addAttribute("controlInfo", controlInfo);
+		model.addAttribute("gencodeid", gencodeid);
+		
+		model.addAttribute("controlparams", controlInfo);
 		return "path:tableconfig";
 	}
 
 	public @ResponseBody
-	Map<String, String> gencode(ControlInfo controlInfo, List<FieldInfo> fields,String tempid) {
+	Map<String, String> gencode(ControlInfo controlInfo, List<FieldInfo> fields,String gencodeid) {
 		Map<String, String> ret = new HashMap<String, String>();
+		_tempsave(  controlInfo,   fields, gencodeid, ret);
 		ret.put("result", "success");
-		tempsave(controlInfo, fields,tempid);
 		return ret;
+		
 	}
 
 	public @ResponseBody
-	Map<String, String> tempsave(ControlInfo controlInfo, List<FieldInfo> fields,String tempid) {
-		// 控制器
+	Map<String, String> tempsave(ControlInfo controlInfo, List<FieldInfo> fields,String gencodeid)
+	{
 		Map<String, String> ret = new HashMap<String, String>();
+		_tempsave(  controlInfo,   fields,  gencodeid, ret);
+		return ret;
+	}
+	private void _tempsave(ControlInfo controlInfo, List<FieldInfo> fields,String gencodeid,Map<String, String> ret) {
+		// 控制器
+		
 		try {
 			
 			Gencode gencode = new Gencode();
@@ -233,16 +288,16 @@ public class GencodeController {
 			gencode.setUpdatetime(gencode.getCreatetime());
 			gencode.setControlparams(ObjectSerializable.toXML(controlInfo));
 			gencode.setFieldinfos(ObjectSerializable.toXML(fields));
-			if(tempid == null || tempid.equals(""))
+			if(gencodeid == null || gencodeid.equals(""))
 			{
 				gencodeService.addGencode(gencode);
-				ret.put("tempid", gencode.getId());
+				ret.put("gencodeid", gencode.getId());
 			}
 			else
 			{
-				gencode.setId(tempid);
+				gencode.setId(gencodeid);
 				gencodeService.updateGencode(gencode);
-				ret.put("tempid", gencode.getId());
+				ret.put("gencodeid", gencode.getId());
 			}
 			ret.put("result", "success");
 			
@@ -255,7 +310,7 @@ public class GencodeController {
 			ret.put("result", StringUtil.formatBRException(e));
 		}
 
-		return ret;
+		
 	}
 
 	public String index(ModelMap model) {
