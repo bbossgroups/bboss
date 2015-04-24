@@ -224,7 +224,7 @@
 								<div class="form-group">
 									<label class="control-label col-md-3">版本号<span class="required">*</span></label>
 									<div class="col-md-9">
-										<input type="text" id="version" name="version" class="form-control"  value="<pg:cell colName="company" defaultValue="v1.0"/>">
+										<input type="text" id="version" name="version" class="form-control"  value="<pg:cell colName="version" defaultValue="v1.0"/>">
 									</div>
 								</div>
 							</div>
@@ -303,7 +303,7 @@
 															<tr>
 																<td><pg:cell colName="columnname"/><input type="hidden" name="columnname" class="form-control" value="<pg:cell colName="columnname"/>"><input type="hidden" name="rowid" class="form-control" value="<pg:rowid/>"></td>
 															
-																<td><pg:cell colName="columntype"/><input type="hidden" name="columntype" class="form-control" value="<pg:cell colName="columnname"/>"></td>
+																<td><pg:cell colName="columntype"/><input type="hidden" name="columntype" class="form-control" value="<pg:cell colName="columntype"/>"></td>
 																	<td><pg:cell colName="fieldName"/><input type="hidden" name="fieldName" class="form-control" value="<pg:cell colName="fieldName"/>"><input type="hidden" name="mfieldName" class="form-control" value="<pg:cell colName="mfieldName"/>"></td>
 																<td><select  class="form-control input-small select2me" name="type" id="type">
 																	<pg:case colName="type">
@@ -323,44 +323,72 @@
 																</td>
 																<td><input type="text" placeholder="<pg:cell colName="fieldName"/>" name="fieldCNName" class="form-control  input-small" value="<pg:cell colName="fieldCNName"/>"></td>
 																
-																<td ><div class="radio-list"><label ><input type="radio" name="<pg:rowid/>_required" id="<pg:rowid/>_required" value="1">是			</label>													 
-																<label  ><input type="radio" name="<pg:rowid/>_required" id="<pg:rowid/>_required" value="0"  checked>否	</label></div>		</td>
+																<td ><div class="radio-list">
+																<pg:case colName="required">
+																	<label ><input type="radio" name="<pg:rowid/>_required" id="<pg:rowid/>_required" value="1" <pg:equal value="1">checked</pg:equal> >是			</label>													 
+																	<label  ><input type="radio" name="<pg:rowid/>_required" id="<pg:rowid/>_required" value="0"  <pg:equal value="0">checked</pg:equal> >否	</label>
+																</pg:case>
+																</div>		</td>
 																<td ><select  class="form-control  input-medium select2me" name="dateformat" id="dateformat">
 																	<pg:case colName="dateformat">
 																	<option value="yyyy-MM-dd HH:mm:ss" <pg:equal value="yyyy-MM-dd HH:mm:ss">selected</pg:equal>>yyyy-MM-dd HH:mm:ss</option>
 																	<option value="yyyy/MM/dd HH:mm:ss" <pg:equal value="yyyy/MM/dd HH:mm:ss">selected</pg:equal>>yyyy/MM/dd HH:mm:ss</option>
+																	<option value="yyyy-MM-dd" <pg:equal value="yyyy-MM-dd">selected</pg:equal>>yyyy-MM-dd</option>
+																	<option value="yyyy/MM/dd" <pg:equal value="yyyy/MM/dd">selected</pg:equal>>yyyy/MM/dd</option>
 																	</pg:case>
 																</select>
 																</td>
-																<td ><div class="radio-list"><label ><input type="radio" name="<pg:rowid/>_daterange" id="<pg:rowid/>_daterange" value="1">是</label>																
-																<label ><input type="radio" name="<pg:rowid/>_daterange" id="<pg:rowid/>_daterange" value="0"  checked>否</label></div></td>
-																<td ><div class="radio-list"><label ><input type="radio" name="<pg:rowid/>_qcondition" id="<pg:rowid/>_qcondition" value="1">是</label>																
-																<label ><input type="radio" name="<pg:rowid/>_qcondition" id="<pg:rowid/>_qcondition" value="0"  checked>否</label></div></td>
+																<td ><div class="radio-list">
+																<pg:case colName="daterange">
+																	<label ><input type="radio" name="<pg:rowid/>_daterange" id="<pg:rowid/>_daterange" value="1" <pg:equal value="1">checked</pg:equal>>是</label>																
+																	<label ><input type="radio" name="<pg:rowid/>_daterange" id="<pg:rowid/>_daterange" value="0"  <pg:equal value="0">checked</pg:equal>>否</label>
+																</pg:case>
+																</div></td>
+																<td ><div class="radio-list">
+																<pg:case colName="qcondition">
+																	<label ><input type="radio" name="<pg:rowid/>_qcondition" id="<pg:rowid/>_qcondition" value="1" <pg:equal value="1">checked</pg:equal>>是</label>																
+																	<label ><input type="radio" name="<pg:rowid/>_qcondition" id="<pg:rowid/>_qcondition" value="0"  <pg:equal value="0">checked</pg:equal>>否</label>
+																</pg:case>
+																</div></td>
 																<td >
-																<div class="radio-list"><label ><input type="radio" name="<pg:rowid/>_qtype" id="<pg:rowid/>_qtype" value="1">模糊</label>																
-																<label ><input type="radio" name="<pg:rowid/>_qtype" id="<pg:rowid/>_qtype" value="0"  checked>精确</label></div>																
+																<div class="radio-list">
+																<pg:case colName="qtype">
+																<label ><input type="radio" name="<pg:rowid/>_qtype" id="<pg:rowid/>_qtype" value="1" <pg:equal value="1">checked</pg:equal>>模糊</label>																
+																<label ><input type="radio" name="<pg:rowid/>_qtype" id="<pg:rowid/>_qtype" value="0"  <pg:equal value="0">checked</pg:equal>>精确</label>
+																</pg:case></div>																
 															 	</td>
 															 	<td >
-																<div class="radio-list"><label ><input type="radio" name="<pg:rowid/>_sfield" id="<pg:rowid/>_sfield" value="1">是</label>																
-																<label ><input type="radio" name="<pg:rowid/>_sfield" id="<pg:rowid/>_sfield" value="0"  checked>否</label></div>																
+																<div class="radio-list">
+																<pg:case colName="sfield">
+																<label ><input type="radio" name="<pg:rowid/>_sfield" id="<pg:rowid/>_sfield" value="1" <pg:equal value="1">checked</pg:equal>>是</label>																
+																<label ><input type="radio" name="<pg:rowid/>_sfield" id="<pg:rowid/>_sfield" value="0"  <pg:equal value="0">checked</pg:equal>>否</label>
+																</pg:case></div>																
 															 	</td>
 															 	<td >
-																<div class="radio-list"><label ><input type="radio" name="<pg:rowid/>_stype" id="<pg:rowid/>_stype" value="1">降序</label>																
-																<label ><input type="radio" name="<pg:rowid/>_stype" id="<pg:rowid/>_stype" value="0"  checked>升序</label></div>																
+																<div class="radio-list">
+																<pg:case colName="stype">
+																<label ><input type="radio" name="<pg:rowid/>_stype" id="<pg:rowid/>_stype" value="1" <pg:equal value="1">checked</pg:equal>>降序</label>																
+																<label ><input type="radio" name="<pg:rowid/>_stype" id="<pg:rowid/>_stype" value="0"  <pg:equal value="0">checked</pg:equal>>升序</label>
+																</pg:case>
+																</div>																
 															 	</td>
 																<td >
-																<div class="radio-list"><label ><input type="radio" name="<pg:rowid/>_inlist" id="<pg:rowid/>_inlist" value="1" checked>是</label>																
-																<label ><input type="radio" name="<pg:rowid/>_hidden" id="<pg:rowid/>_inlist" value="0"  >否</label></div>																
+																<div class="radio-list">
+																<pg:case colName="inlist">
+																<label ><input type="radio" name="<pg:rowid/>_inlist" id="<pg:rowid/>_inlist" value="1" <pg:equal value="1">checked</pg:equal>>是</label>																
+																<label ><input type="radio" name="<pg:rowid/>_hidden" id="<pg:rowid/>_inlist" value="0"  <pg:equal value="0">checked</pg:equal>>否</label>
+																</pg:case>
+																</div>																
 															 	</td>
 															 	<td><input type="hidden" id="editcontrolParams" name="editcontrolParams"
 											class="form-control  select2  input-medium editcontrolParams"
-											value="显示, 编辑,必填"></td>
+											value="<pg:cell colName="editcontrolParams" defaultValue="显示, 编辑,必填"/>"></td>
 											<td><input type="hidden" id="addcontrolParams" name="addcontrolParams"
 											class="form-control  select2  input-medium addcontrolParams"
-											value="显示, 必填"></td>
+											value="<pg:cell colName="addcontrolParams" defaultValue="显示, 必填"/>"></td>
 											<td><input type="hidden" id="viewcontrolParams" name="viewcontrolParams"
 											class="form-control  select2  input-small viewcontrolParams"
-											value="" placeholder="显示"></td>
+											value="<pg:cell colName="viewcontrolParams" />" placeholder="显示"></td>
 																<td><input type="text" placeholder="<pg:cell colName="fieldName"/>"  name="defaultValue" class="form-control  input-small" value="<pg:cell colName="defaultValue"/>"></td>
 															</tr>
 													</pg:list>	
