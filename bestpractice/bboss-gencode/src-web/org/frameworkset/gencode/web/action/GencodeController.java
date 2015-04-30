@@ -1,7 +1,9 @@
 package org.frameworkset.gencode.web.action;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,7 +11,10 @@ import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.frameworkset.gencode.core.GencodeServiceImpl;
+import org.frameworkset.gencode.entity.ConditionField;
 import org.frameworkset.gencode.entity.Field;
+import org.frameworkset.gencode.entity.ModuleMetaInfo;
+import org.frameworkset.gencode.entity.SortField;
 import org.frameworkset.gencode.web.entity.ControlInfo;
 import org.frameworkset.gencode.web.entity.FieldInfo;
 import org.frameworkset.gencode.web.entity.Gencode;
@@ -261,7 +266,54 @@ public class GencodeController {
 	public @ResponseBody
 	Map<String, String> gencode(ControlInfo controlInfo, List<FieldInfo> fields,String gencodeid) {
 		Map<String, String> ret = new HashMap<String, String>();
+		//先保存配置信息，成功后再生成代码
 		_tempsave(  controlInfo,   fields, gencodeid, ret);
+		
+		GencodeServiceImpl gencodeService = new GencodeServiceImpl();
+		ModuleMetaInfo moduleMetaInfo = new ModuleMetaInfo();
+		moduleMetaInfo.setTableName(controlInfo.getTableName());//指定表名，根据表结构来生成所有的文件
+		moduleMetaInfo.setPkname(controlInfo.getPkname());//设置oracle sequence名称，用来生成表的主键,对应TABLEINFO表中TABLE_NAME字段的值
+		moduleMetaInfo.setSystem(controlInfo.getSystem());//lcjf,系统代码，如果指定了system，那么对应的jsp页面会存放到lcjf/area目录下面，对应的mvc组件装配文件存在在/WEB-INF/conf/lcjf下面，否则jsp在/area下，mvc组件装配文件存在在/WEB-INF/conf/area下
+		moduleMetaInfo.setModuleName(controlInfo.getModuleName());//指定模块名称，源码和配置文件都会存放在相应模块名称的目录下面
+		moduleMetaInfo.setModuleCNName(controlInfo.getModuleCNName());//指定模块中文名称
+		moduleMetaInfo.setDatasourceName(controlInfo.getDbname());//指定数据源名称，在poolman.xml文件中配置
+		moduleMetaInfo.setPackagePath(controlInfo.getPackagePath());//java程序对应的包路径
+		//moduleMetaInfo.setServiceName("AreaManagerService");
+		moduleMetaInfo.setSourcedir(controlInfo.getSourcedir());//生成文件存放的物理目录，如果不存在，会自动创建
+		moduleMetaInfo.setIgnoreEntityFirstToken(true); //忽略表的第一个下滑线签名的token，例如表名td_app_bom中，只会保留app_bom部分，然后根据这部分来生成实体、配置文件名称
+		moduleMetaInfo.setAuthor(controlInfo.getAuthor());//程序作者
+		moduleMetaInfo.setCompany(controlInfo.getCompany());//公司信息
+		moduleMetaInfo.setVersion(controlInfo.getVersion());//版本信息
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String date = format.format(new Date());
+		moduleMetaInfo.setDate(date);//指定日期
+		moduleMetaInfo.setGenI18n(controlInfo.getControlParams().contains("geni18n"));//生成国际化属性配置文件
+		moduleMetaInfo.setClearSourcedir(controlInfo.getControlParams().contains("clearSourcedir"));//是否清空源码目录
+		moduleMetaInfo.setExcelVersion(controlInfo.getExcelVersion());
+		moduleMetaInfo.setExportExcel(moduleMetaInfo.getExcelVersion() != -1);
+		gencodeService.setTheme(controlInfo.getTheme());//设置默认主题风格		
+		/************以下代码片段指定界面查询字段，以及查询条件组合方式、是否是模糊查询等*******/
+		ConditionField bm = new ConditionField();
+		bm.setColumnname("TABLENAME");
+		bm.setLike(true);
+		bm.setOr(true);
+		gencodeService.addCondition(bm);		
+		
+		ConditionField bm1 = new ConditionField();
+		bm1.setColumnname("AUTHOR");
+		bm1.setLike(true);
+		bm1.setOr(true);
+		gencodeService.addCondition(bm1);		
+
+		/************以上代码片段指定界面查询字段，以及查询条件组合方式、是否是模糊查询等********/		
+		/************以下代码片段指定界面排序字段**********************************/
+		SortField id = new SortField();
+		id.setColumnname("CREATETIME");
+		id.setDesc(true);
+		id.setDefaultSortField(true);
+		gencodeService.addSortField(id);	
+		/************以上代码片段指定界面排序字段**********************************/		
+		gencodeService.genCode(moduleMetaInfo);//执行代码生成逻辑
 		ret.put("result", "success");
 		return ret;
 		

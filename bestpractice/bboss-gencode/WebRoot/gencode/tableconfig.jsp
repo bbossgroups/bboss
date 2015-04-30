@@ -184,6 +184,7 @@
 										<select class="form-control" id="excelVersion"
 											name="excelVersion">
 										<pg:case colName="excelVersion">
+											<option value="-1" <pg:equal value="-1">selected</pg:equal>>不导出</option>
 											<option value="2003" <pg:equal value="2003">selected</pg:equal>>2003</option>
 											<option value="2007" <pg:equal value="2007">selected</pg:equal>>2007</option>
 											<option value="2010" <pg:equal value="2010">selected</pg:equal>>2010</option>
