@@ -166,7 +166,7 @@
 									<div class="col-md-9">
 										<input type="hidden" id="controlParams" name="controlParams"  
 											class="form-control  select2"
-											value="<pg:cell colName="controlParams" defaultValue="geni18n, clearSourcedir,genRPC,autopk"/>"
+											value="<pg:cell colName="controlParams" defaultValue="geni18n, clearSourcedir,genRPC,autopk,print"/>"
 											>
 									</div>
 														</div>
@@ -574,7 +574,7 @@ jQuery(document).ready(function() {
         };
      handleValidation2();
 	 $("#controlParams").select2({
-         tags: ["geni18n", "clearSourcedir","genRPC","autopk","genwf"]
+         tags: ["geni18n", "clearSourcedir","genRPC","autopk","genwf","print"]
      });
 	 $(".editcontrolParams").select2({
          tags: ["显示", "编辑", "必填"]

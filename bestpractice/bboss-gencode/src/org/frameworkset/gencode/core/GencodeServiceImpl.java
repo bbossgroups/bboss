@@ -93,10 +93,25 @@ public class GencodeServiceImpl {
 	private String serviceParamName;
 	private String controlClass;
 	private String theme = "default";
+	private boolean print = false;
 	/**
 	 * 需要作为查询条件的字段
 	 */
 	private List<Field> conditions;
+	
+	/**
+	 * 列表中出现的字段
+	 */
+	private List<Field> listShowFields;
+	private List<Field> listHiddenFields;
+	
+	private List<Field> viewShowFields;
+	private List<Field> viewHiddenFields;
+	
+	private List<Field> editShowFields;
+	private List<Field> editHiddenFields;
+	
+	private List<Field> addShowFields;
 	private List<SQL> sqls;
 	/**
 	 * 所有字段
@@ -1967,6 +1982,42 @@ import com.frameworkset.util.StringUtil;
 
 	public String getNamespacei18n() {
 		return namespacei18n;
+	}
+
+	public List<Field> getListShowFields() {
+		return listShowFields;
+	}
+
+	public List<Field> getListHiddenFields() {
+		return listHiddenFields;
+	}
+
+	public List<Field> getEditShowFields() {
+		return editShowFields;
+	}
+
+	public List<Field> getEditHiddenFields() {
+		return editHiddenFields;
+	}
+
+	public List<Field> getAddShowFields() {
+		return addShowFields;
+	}
+
+	public List<Field> getViewShowFields() {
+		return viewShowFields;
+	}
+
+	public List<Field> getViewHiddenFields() {
+		return viewHiddenFields;
+	}
+
+	public boolean isPrint() {
+		return print;
+	}
+
+	public void setPrint(boolean print) {
+		this.print = print;
 	}
 
 }
