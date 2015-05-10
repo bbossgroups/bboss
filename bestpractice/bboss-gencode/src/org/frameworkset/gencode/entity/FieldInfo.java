@@ -1,4 +1,4 @@
-package org.frameworkset.gencode.web.entity;
+package org.frameworkset.gencode.entity;
 
 import org.frameworkset.util.annotations.RequestParam;
 
@@ -8,10 +8,11 @@ public class FieldInfo {
 	private String fieldCNName;
 	private String fieldAsciiCNName;
 	private String type;
+	
 	private String columntype;
 	private String columnname;
 
-	private int desc = 0;
+	
 	@RequestParam(name = "${rowid}_typecheck")
 	private int typecheck = 0;
 
@@ -26,17 +27,18 @@ public class FieldInfo {
 	@RequestParam(name = "${rowid}_daterange")
 	private int daterange = 0;
 	private String dateformat;
-
+	private String numformat;
 	@RequestParam(name = "${rowid}_required")
 	private int required;
-	@RequestParam(name = "${rowid}_inlist")
-	private int inlist;
+	private String inlist;
 	private int maxlength = 0;
+	private int minlength = 0;
 	private String replace;
 	private String defaultValue;
 	private String addcontrolParams;
 	private String editcontrolParams;
 	private String viewcontrolParams;
+	private boolean pk;
 
 	public String getFieldName() {
 		return fieldName;
@@ -102,13 +104,7 @@ public class FieldInfo {
 		this.columnname = columnname;
 	}
 
-	public int getDesc() {
-		return desc;
-	}
-
-	public void setDesc(int desc) {
-		this.desc = desc;
-	}
+	
 
 	public int getTypecheck() {
 		return typecheck;
@@ -190,11 +186,11 @@ public class FieldInfo {
 		this.sfield = sfield;
 	}
 
-	public int getInlist() {
+	public String getInlist() {
 		return inlist;
 	}
 
-	public void setInlist(int inlist) {
+	public void setInlist(String inlist) {
 		this.inlist = inlist;
 	}
 
@@ -220,5 +216,29 @@ public class FieldInfo {
 
 	public void setViewcontrolParams(String viewcontrolParams) {
 		this.viewcontrolParams = viewcontrolParams;
+	}
+
+	public boolean isPk() {
+		return pk;
+	}
+
+	public void setPk(boolean pk) {
+		this.pk = pk;
+	}
+
+	public String getNumformat() {
+		return numformat;
+	}
+
+	public void setNumformat(String numformat) {
+		this.numformat = numformat;
+	}
+
+	public int getMinlength() {
+		return minlength;
+	}
+
+	public void setMinlength(int minlength) {
+		this.minlength = minlength;
 	}
 }

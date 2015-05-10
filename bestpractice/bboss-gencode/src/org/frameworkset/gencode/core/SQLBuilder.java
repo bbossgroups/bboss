@@ -18,7 +18,7 @@ public class SQLBuilder  extends AbstractGencode{
 		{
 			StringBuilder builder = new StringBuilder();
 			builder.append("insert into ").append(tableName).append(" (");
-			List<Field> fs = this.gencodeService.getAllfields();
+			List<Field> fs = this.gencodeService.getEntityFields();
 			StringBuilder values = new StringBuilder();
 			values.append(" values(");
 			for(int i = 0; i < fs.size(); i ++)
@@ -50,7 +50,7 @@ public class SQLBuilder  extends AbstractGencode{
 		{
 			StringBuilder builder = new StringBuilder();
 			builder.append("update ").append(tableName).append(" set ");
-			List<Field> fs = this.gencodeService.getAllfields();
+			List<Field> fs = this.gencodeService.getEntityFields();
 			for(int i = 0; i < fs.size(); i ++)
 			{
 				Field f = fs.get(i);

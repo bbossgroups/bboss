@@ -267,6 +267,9 @@
 										 日期格式
 									</th>
 									<th scope="col">
+										 数字格式
+									</th>
+									<th scope="col">
 										 日期范围
 									</th>
 									<th scope="col">
@@ -294,94 +297,114 @@
 										查看控制
 									</th>
 									<th scope="col">
-										默认值
+										最大值
+									</th>
+									<th scope="col">
+										最小值
+									</th>
+									<th scope="col">
+										替换串
 									</th>
 								</tr>
 								</thead>
 								<tbody>
 								<pg:list requestKey="fields">
 														
-															<tr>
-																<td><pg:cell colName="columnname"/><input type="hidden" name="columnname" class="form-control" value="<pg:cell colName="columnname"/>"><input type="hidden" name="rowid" class="form-control" value="<pg:rowid/>"></td>
-															
-																<td><pg:cell colName="columntype"/><input type="hidden" name="columntype" class="form-control" value="<pg:cell colName="columntype"/>"></td>
-																	<td><pg:cell colName="fieldName"/><input type="hidden" name="fieldName" class="form-control" value="<pg:cell colName="fieldName"/>"><input type="hidden" name="mfieldName" class="form-control" value="<pg:cell colName="mfieldName"/>"></td>
-																<td><select  class="form-control input-small select2me" name="type" id="type">
-																	<pg:case colName="type">
-																	<option value="String" <pg:equal value="String">selected</pg:equal>>String</option>
-																	<option value="long" <pg:equal value="long">selected</pg:equal>>long</option>
-																	<option value="int" <pg:equal value="int">selected</pg:equal>>int</option>
-																	<option value="Timestamp" <pg:equal value="Timestamp">selected</pg:equal>>Timestamp</option>
-																	<option value="Date" <pg:equal value="Date">selected</pg:equal>>Date</option>
-																	<option value="url" <pg:equal value="url">selected</pg:equal>>url</option>
-																	<option value="creditcard" <pg:equal value="creditcard">selected</pg:equal>>creditcard</option>
-																	<option value="email" <pg:equal value="email">selected</pg:equal>>email</option>
-																	<option value="file" <pg:equal value="file">selected</pg:equal>>file</option>
-																	<option value="idcard" <pg:equal value="idcard">selected</pg:equal>>idcard</option>
-																	</pg:case>
-																</select>
+									<tr>
+										<td><pg:cell colName="columnname"/><input type="hidden" name="columnname" class="form-control" value="<pg:cell colName="columnname"/>"><input type="hidden" name="rowid" class="form-control" value="<pg:rowid/>"></td>
+									
+										<td><pg:cell colName="columntype"/><input type="hidden" name="columntype" class="form-control" value="<pg:cell colName="columntype"/>"></td>
+											<td><pg:cell colName="fieldName"/><input type="hidden" name="fieldName" class="form-control" value="<pg:cell colName="fieldName"/>"><input type="hidden" name="mfieldName" class="form-control" value="<pg:cell colName="mfieldName"/>"></td>
+										<td><select  class="form-control input-small select2me" name="type" id="type">
+											<pg:case colName="type">
+											<option value="String" <pg:equal value="String">selected</pg:equal>>String</option>
+											<option value="long" <pg:equal value="long">selected</pg:equal>>long</option>
+											<option value="int" <pg:equal value="int">selected</pg:equal>>int</option>
+											<option value="Timestamp" <pg:equal value="Timestamp">selected</pg:equal>>Timestamp</option>
+											<option value="Date" <pg:equal value="Date">selected</pg:equal>>Date</option>
+											<option value="url" <pg:equal value="url">selected</pg:equal>>url</option>
+											<option value="creditcard" <pg:equal value="creditcard">selected</pg:equal>>creditcard</option>
+											<option value="email" <pg:equal value="email">selected</pg:equal>>email</option>
+											<option value="file" <pg:equal value="file">selected</pg:equal>>file</option>
+											<option value="idcard" <pg:equal value="idcard">selected</pg:equal>>idcard</option>
+											<option value="textarea" <pg:equal value="textarea">selected</pg:equal>>textarea</option>
+											<option value="htmleditor" <pg:equal value="htmleditor">selected</pg:equal>>htmleditor</option>
+											<option value="word" <pg:equal value="word">selected</pg:equal>>word</option>
+											<option value="excel" <pg:equal value="excel">selected</pg:equal>>excel</option>
+											<option value="ppt" <pg:equal value="ppt">selected</pg:equal>>ppt</option>
+											<option value="fuction" <pg:equal value="fuction">selected</pg:equal>>fuction</option>
 											
-																</td>
-																<td><input type="text" placeholder="<pg:cell colName="fieldName"/>" name="fieldCNName" class="form-control  input-small" value="<pg:cell colName="fieldCNName"/>"></td>
-																
-																<td ><div class="radio-list">
-																<pg:case colName="required">
-																	<label ><input type="radio" name="<pg:rowid/>_required" id="<pg:rowid/>_required" value="1" <pg:equal value="1">checked</pg:equal> >是			</label>													 
-																	<label  ><input type="radio" name="<pg:rowid/>_required" id="<pg:rowid/>_required" value="0"  <pg:equal value="0">checked</pg:equal> >否	</label>
-																</pg:case>
-																</div>		</td>
-																<td ><select  class="form-control  input-medium select2me" name="dateformat" id="dateformat">
-																	<pg:case colName="dateformat">
-																	<option value="yyyy-MM-dd HH:mm:ss" <pg:equal value="yyyy-MM-dd HH:mm:ss">selected</pg:equal>>yyyy-MM-dd HH:mm:ss</option>
-																	<option value="yyyy/MM/dd HH:mm:ss" <pg:equal value="yyyy/MM/dd HH:mm:ss">selected</pg:equal>>yyyy/MM/dd HH:mm:ss</option>
-																	<option value="yyyy-MM-dd" <pg:equal value="yyyy-MM-dd">selected</pg:equal>>yyyy-MM-dd</option>
-																	<option value="yyyy/MM/dd" <pg:equal value="yyyy/MM/dd">selected</pg:equal>>yyyy/MM/dd</option>
-																	</pg:case>
-																</select>
-																</td>
-																<td ><div class="radio-list">
-																<pg:case colName="daterange">
-																	<label ><input type="radio" name="<pg:rowid/>_daterange" id="<pg:rowid/>_daterange" value="1" <pg:equal value="1">checked</pg:equal>>是</label>																
-																	<label ><input type="radio" name="<pg:rowid/>_daterange" id="<pg:rowid/>_daterange" value="0"  <pg:equal value="0">checked</pg:equal>>否</label>
-																</pg:case>
-																</div></td>
-																<td ><div class="radio-list">
-																<pg:case colName="qcondition">
-																	<label ><input type="radio" name="<pg:rowid/>_qcondition" id="<pg:rowid/>_qcondition" value="1" <pg:equal value="1">checked</pg:equal>>是</label>																
-																	<label ><input type="radio" name="<pg:rowid/>_qcondition" id="<pg:rowid/>_qcondition" value="0"  <pg:equal value="0">checked</pg:equal>>否</label>
-																</pg:case>
-																</div></td>
-																<td >
-																<div class="radio-list">
-																<pg:case colName="qtype">
-																<label ><input type="radio" name="<pg:rowid/>_qtype" id="<pg:rowid/>_qtype" value="1" <pg:equal value="1">checked</pg:equal>>模糊</label>																
-																<label ><input type="radio" name="<pg:rowid/>_qtype" id="<pg:rowid/>_qtype" value="0"  <pg:equal value="0">checked</pg:equal>>精确</label>
-																</pg:case></div>																
-															 	</td>
-															 	<td >
-																<div class="radio-list">
-																<pg:case colName="sfield">
-																<label ><input type="radio" name="<pg:rowid/>_sfield" id="<pg:rowid/>_sfield" value="1" <pg:equal value="1">checked</pg:equal>>是</label>																
-																<label ><input type="radio" name="<pg:rowid/>_sfield" id="<pg:rowid/>_sfield" value="0"  <pg:equal value="0">checked</pg:equal>>否</label>
-																</pg:case></div>																
-															 	</td>
-															 	<td >
-																<div class="radio-list">
-																<pg:case colName="stype">
-																<label ><input type="radio" name="<pg:rowid/>_stype" id="<pg:rowid/>_stype" value="1" <pg:equal value="1">checked</pg:equal>>降序</label>																
-																<label ><input type="radio" name="<pg:rowid/>_stype" id="<pg:rowid/>_stype" value="0"  <pg:equal value="0">checked</pg:equal>>升序</label>
-																</pg:case>
-																</div>																
-															 	</td>
-																<td >
-																<div class="radio-list">
-																<pg:case colName="inlist">
-																<label ><input type="radio" name="<pg:rowid/>_inlist" id="<pg:rowid/>_inlist" value="1" <pg:equal value="1">checked</pg:equal>>是</label>																
-																<label ><input type="radio" name="<pg:rowid/>_hidden" id="<pg:rowid/>_inlist" value="0"  <pg:equal value="0">checked</pg:equal>>否</label>
-																</pg:case>
-																</div>																
-															 	</td>
-															 	<td><input type="hidden" id="editcontrolParams" name="editcontrolParams"
+											</pg:case>
+										</select>
+					
+										</td>
+										<td><input type="text" placeholder="<pg:cell colName="fieldName"/>" name="fieldCNName" class="form-control  input-small" value="<pg:cell colName="fieldCNName"/>"></td>
+										
+										<td ><div class="radio-list">
+										<pg:case colName="required">
+											<label ><input type="radio" name="<pg:rowid/>_required" id="<pg:rowid/>_required" value="1" <pg:equal value="1">checked</pg:equal> >是			</label>													 
+											<label  ><input type="radio" name="<pg:rowid/>_required" id="<pg:rowid/>_required" value="0"  <pg:equal value="0">checked</pg:equal> >否	</label>
+										</pg:case>
+										</div>		</td>
+										<td ><select  class="form-control  input-medium select2me" name="dateformat" id="dateformat">
+											<pg:case colName="dateformat">
+											<option value="yyyy-MM-dd HH:mm:ss" <pg:equal value="yyyy-MM-dd HH:mm:ss">selected</pg:equal>>yyyy-MM-dd HH:mm:ss</option>
+											<option value="yyyy/MM/dd HH:mm:ss" <pg:equal value="yyyy/MM/dd HH:mm:ss">selected</pg:equal>>yyyy/MM/dd HH:mm:ss</option>
+											<option value="yyyy-MM-dd" <pg:equal value="yyyy-MM-dd">selected</pg:equal>>yyyy-MM-dd</option>
+											<option value="yyyy/MM/dd" <pg:equal value="yyyy/MM/dd">selected</pg:equal>>yyyy/MM/dd</option>
+											</pg:case>
+										</select>
+										</td>
+										<td ><select  class="form-control  input-medium select2me" name="numformat" id="numformat">
+											<pg:case colName="numformat">
+											<option value="无" <pg:equal value="无">selected</pg:equal>>无</option>
+											<option value="###,###" <pg:equal value="###,###">selected</pg:equal>>###,###</option>
+											<option value="###,###.###" <pg:equal value="###,###.###">selected</pg:equal>>###,###.###</option>
+											</pg:case>
+										</select>
+										</td>
+										<td ><div class="radio-list">
+										<pg:case colName="daterange">
+											<label ><input type="radio" name="<pg:rowid/>_daterange" id="<pg:rowid/>_daterange" value="1" <pg:equal value="1">checked</pg:equal>>是</label>																
+											<label ><input type="radio" name="<pg:rowid/>_daterange" id="<pg:rowid/>_daterange" value="0"  <pg:equal value="0">checked</pg:equal>>否</label>
+										</pg:case>
+										</div></td>
+										<td ><div class="radio-list">
+										<pg:case colName="qcondition">
+											<label ><input type="radio" name="<pg:rowid/>_qcondition" id="<pg:rowid/>_qcondition" value="1" <pg:equal value="1">checked</pg:equal>>是</label>																
+											<label ><input type="radio" name="<pg:rowid/>_qcondition" id="<pg:rowid/>_qcondition" value="0"  <pg:equal value="0">checked</pg:equal>>否</label>
+										</pg:case>
+										</div></td>
+										<td >
+										<div class="radio-list">
+										<pg:case colName="qtype">
+										<label ><input type="radio" name="<pg:rowid/>_qtype" id="<pg:rowid/>_qtype" value="1" <pg:equal value="1">checked</pg:equal>>模糊</label>																
+										<label ><input type="radio" name="<pg:rowid/>_qtype" id="<pg:rowid/>_qtype" value="0"  <pg:equal value="0">checked</pg:equal>>精确</label>
+										</pg:case></div>																
+									 	</td>
+									 	<td >
+										<div class="radio-list">
+										<pg:case colName="sfield">
+										<label ><input type="radio" name="<pg:rowid/>_sfield" id="<pg:rowid/>_sfield" value="1" <pg:equal value="1">checked</pg:equal>>是</label>																
+										<label ><input type="radio" name="<pg:rowid/>_sfield" id="<pg:rowid/>_sfield" value="0"  <pg:equal value="0">checked</pg:equal>>否</label>
+										</pg:case></div>																
+									 	</td>
+									 	<td >
+										<div class="radio-list">
+										<pg:case colName="stype">
+										<label ><input type="radio" name="<pg:rowid/>_stype" id="<pg:rowid/>_stype" value="1" <pg:equal value="1">checked</pg:equal>>降序</label>																
+										<label ><input type="radio" name="<pg:rowid/>_stype" id="<pg:rowid/>_stype" value="0"  <pg:equal value="0">checked</pg:equal>>升序</label>
+										</pg:case>
+										</div>																
+									 	</td>
+										<td >
+										<input type="hidden" id="inlist" name="inlist"
+											class="form-control  select2  input-medium inlist"
+											value="<pg:cell colName="inlist" defaultValue="包含,显示, 隐藏"/>">
+										
+										</div>																
+									 	</td>
+									 	<td><input type="hidden" id="editcontrolParams" name="editcontrolParams"
 											class="form-control  select2  input-medium editcontrolParams"
 											value="<pg:cell colName="editcontrolParams" defaultValue="显示, 编辑,必填"/>"></td>
 											<td><input type="hidden" id="addcontrolParams" name="addcontrolParams"
@@ -390,9 +413,10 @@
 											<td><input type="hidden" id="viewcontrolParams" name="viewcontrolParams"
 											class="form-control  select2  input-small viewcontrolParams"
 											value="<pg:cell colName="viewcontrolParams" />" placeholder="显示"></td>
-																<td><input type="text" placeholder="<pg:cell colName="fieldName"/>"  name="defaultValue" class="form-control  input-small" value="<pg:cell colName="defaultValue"/>"></td>
-															</tr>
-													</pg:list>	
+										<td><input type="text" placeholder="<pg:cell colName="fieldName"/>"  name="defaultValue" class="form-control  input-small" value="<pg:cell colName="defaultValue"/>"></td>
+										<td><input type="text" placeholder="<pg:cell colName="0"/>"  name="maxlength" class="form-control  input-small" value="<pg:cell colName="maxlength"/>"></td>
+										<td><input type="text" placeholder="<pg:cell colName="..."/>"  name="replace" class="form-control  input-small" value="<pg:cell colName="replace"/>"></td></tr>
+								</pg:list>	
 								
 								</tbody>
 								</table>
@@ -585,6 +609,10 @@ jQuery(document).ready(function() {
 	 $(".viewcontrolParams").select2({
          tags: ["隐藏"]
      });
+	 $(".inlist").select2({
+         tags: ["包含","显示", "隐藏"]
+     });
+	 
 });
 
 function tempsave()

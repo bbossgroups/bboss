@@ -37,8 +37,8 @@ public class GenListJsp extends AbstractGencode {
 			 context.put("version", gencodeService.getModuleMetaInfo().getVersion());
 			 
 			 context.put("conditions", gencodeService.getConditions());
-			 context.put("fields", gencodeService.getAllfields());
-			 
+			 context.put("fields", gencodeService.getListShowFields());
+			 context.put("hiddenfields", gencodeService.getListHiddenFields());
 			 context.put("moduleName", gencodeService.getModuleMetaInfo().getModuleName());
 			 context.put("moduleCNName", gencodeService.getModuleMetaInfo().getModuleCNName());
 			 context.put("entityVarName", gencodeService.getEntityParamName());
@@ -46,7 +46,7 @@ public class GenListJsp extends AbstractGencode {
 			 context.put("primaryKeyName", gencodeService.getPrimaryKeyName());
 			 context.put("namespacei18n", gencodeService.getNamespacei18n());
 			 context.put("relativePath", gencodeService.getRelativePath());
-			 context.put("genI18n", gencodeService.getModuleMetaInfo().isGenI18n());
+			 context.put("genI18n", gencodeService.isGenI18n());
 			 gencodeService.writFile(context,conftempalte,conf,gencodeService.getModuleMetaInfo().getEncodecharset());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

@@ -1,4 +1,4 @@
-package org.frameworkset.gencode.web.entity;
+package org.frameworkset.gencode.entity;
 
 public class ControlInfo {
 	/**

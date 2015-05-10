@@ -22,6 +22,7 @@ import org.frameworkset.gencode.core.ui.GenViewJsp;
 import org.frameworkset.gencode.entity.AnnoParam;
 import org.frameworkset.gencode.entity.Annotation;
 import org.frameworkset.gencode.entity.ConditionField;
+import org.frameworkset.gencode.entity.ControlParam;
 import org.frameworkset.gencode.entity.Field;
 import org.frameworkset.gencode.entity.Method;
 import org.frameworkset.gencode.entity.MethodParam;
@@ -92,8 +93,7 @@ public class GencodeServiceImpl {
 	private String serviceInfType;
 	private String serviceParamName;
 	private String controlClass;
-	private String theme = "default";
-	private boolean print = false;
+	
 	/**
 	 * 需要作为查询条件的字段
 	 */
@@ -116,17 +116,39 @@ public class GencodeServiceImpl {
 	/**
 	 * 所有字段
 	 */
-	private List<Field> allfields;
+//	private List<Field> allfields;
 	
-	public String genCode(ModuleMetaInfo moduleMetaInfo)
+	private List<Field> entityFields;
+	private ControlParam controlParam;
+	private boolean genfromWeb;
+	public GencodeServiceImpl()
 	{
-		this.moduleMetaInfo = moduleMetaInfo; 
+		this(false);
+	}
+	
+	public GencodeServiceImpl(boolean genfromWeb)
+	{
+		controlParam = new ControlParam();
+		this.genfromWeb = genfromWeb;
+	}
+	public void setTheme(String theme) {
+		this.controlParam.setTheme(theme);
+	}
+	
+	public String getTheme() {
+		return controlParam.getTheme();
+	}
+	
+	public String genCode()
+	{
+//		this.moduleMetaInfo = moduleMetaInfo; 
+		
 		this.init();
 		genJavaSource();
 		genPersistentConfigfile();
 		genUI();
 		 genMVCConf();
-		 if(this.moduleMetaInfo.isGenI18n())
+		 if(this.controlParam.isGenI18n())
 		 {
 			 genI18N();
 		 }
@@ -285,33 +307,41 @@ public class GencodeServiceImpl {
 //				log.error("Create web.xml failed:"+webxmlFile.getAbsolutePath(),e);
 //			}
 //		}
-		TableMetaData tableMeta = DBUtil.getTableMetaData(this.moduleMetaInfo.getDatasourceName(), this.moduleMetaInfo.getTableName());
-		if(allfields == null)
+		if(!genfromWeb)
 		{
-			List<Field> fields = getFields( tableMeta);
-			 this.allfields = fields;
-			 for(Field field:allfields)
-			 {
-				 field.setFieldCNName(field.getFieldName());
-				 if(this.moduleMetaInfo.isGenI18n())
-					 field.setFieldAsciiCNName(field.getFieldName());
-			 }
-		}
-		else
-		{
-			if(this.moduleMetaInfo.isGenI18n())
+			TableMetaData tableMeta = DBUtil.getTableMetaData(this.moduleMetaInfo.getDatasourceName(), this.moduleMetaInfo.getTableName());
+			if(this.entityFields == null)
 			{
-				handleI18n();
+				List<Field> fields = getFields( tableMeta);
+				 this.entityFields = fields;
+				 for(Field field:entityFields)
+				 {
+					 field.setFieldCNName(field.getFieldName());
+					 if(this.controlParam.isGenI18n())
+						 field.setFieldAsciiCNName(field.getFieldName());
+				 }
 			}
+			else
+			{
+				if(this.controlParam.isGenI18n())
+				{
+					handleI18n();
+				}
+			}
+			initConditions();
+			initSortFields();
+			this.addShowFields = this.entityFields;
+			this.viewShowFields = this.entityFields;
+			this.editShowFields = this.entityFields;
+			this.listShowFields = this.entityFields;
 		}
-		 initConditions();
-		 initSortFields();
+		 
 	}
 	private void handleI18n()
 	{
-		if(this.allfields != null && this.allfields.size() > 0)
+		if(this.entityFields != null && this.entityFields.size() > 0)
 		{
-			for(Field f:this.allfields)
+			for(Field f:this.entityFields)
 			{
 				if(f.getFieldCNName() != null)
 					f.setFieldAsciiCNName(SimpleStringUtil.native2ascii(f.getFieldCNName()));
@@ -327,7 +357,7 @@ public class GencodeServiceImpl {
 			 for(Field field:conditions)
 			 {
 				 
-				 for(Field dbfield:this.allfields)
+				 for(Field dbfield:this.entityFields)
 				 {
 					 if(field.getColumnname().equalsIgnoreCase(dbfield.getColumnname()))
 					 {
@@ -347,7 +377,7 @@ public class GencodeServiceImpl {
 			 for(Field field:sortFields)
 			 {
 				 
-				 for(Field dbfield:this.allfields)
+				 for(Field dbfield:this.entityFields)
 				 {
 					 if(field.getColumnname().equalsIgnoreCase(dbfield.getColumnname()))
 					 {
@@ -366,20 +396,7 @@ public class GencodeServiceImpl {
 			 }
 		 }
 	}
-	public static String convertType(String type)
-	{
-		if(type.equals("BigDecimal"))
-		{
-			return "long";
-		}
-		else if(type.equals("Date"))
-		{
-			return "Timestamp";
-		}
-		else
-			return type;
-	}
-
+	
 	
 	private List<Field> getFields(TableMetaData tableMeta)
 	{
@@ -392,7 +409,13 @@ public class GencodeServiceImpl {
 			for(ColumnMetaData c:columns)
 			{
 				Field f = new Field();
-				f.setType(convertType(c.getSchemaType().getJavaType()));
+				f.setType(Util.convertType(c.getSchemaType().getJavaType()));
+				if(c.getRemarks() != null)
+				{
+					f.setFieldCNName(c.getRemarks());
+					f.setFieldAsciiCNName(SimpleStringUtil.native2ascii(c.getRemarks()));
+				}
+				
 				boolean isp = false;
 				if(this.moduleMetaInfo.isAutogenprimarykey() && tableMeta.getPrimaryKeyMetaData(c.getColumnName()) != null)
 				{
@@ -627,10 +650,10 @@ public class GencodeServiceImpl {
 	private void genEntity(String entityName, String description,File entity) throws Exception
 	{
 		 
-		 List<String> imports = evalImport(this.allfields,false);
+		 List<String> imports = evalImport(false);
 		 Template entitytempalte = VelocityUtil.getTemplate("gencode/java/entityjava.vm");
 		 VelocityContext context = new VelocityContext();
-		 context.put("fields", this.allfields);
+		 context.put("fields", this.entityFields);
 		 String entityPackageInfo = this.moduleMetaInfo.getPackagePath() + "." + this.moduleMetaInfo.getModuleName()+".entity";
 		 context.put("package", entityPackageInfo);
 		 context.put("imports", imports);
@@ -649,7 +672,7 @@ public class GencodeServiceImpl {
 	private void genConditionEntity(String entityName ,String description,File entity) throws Exception
 	{
 		 
-		 List<String> imports = evalImport(this.conditions, true);
+		 List<String> imports = evalImport( true);
 		 Template entitytempalte = VelocityUtil.getTemplate("gencode/java/entityjava.vm");
 		 VelocityContext context = new VelocityContext();
 		 List<Field> _conditions = new ArrayList<Field>();
@@ -1638,27 +1661,40 @@ public class GencodeServiceImpl {
 		
 	}
 	
-	private List<String> evalImport(List<Field> fields,boolean condition) {
-		List<String> imports = new ArrayList<String>();
-		for(Field f:fields)
+	private List<String> evalImport(boolean condition) {
+		if(condition)
 		{
-			if(f.getType() == null)
-				System.out.println();
-				
-	         if(f.getType().equals("Timestamp"))
-	         {
-	        	 if(!imports.contains("java.sql.Timestamp"))
-	        		 imports.add("java.sql.Timestamp");
-	         }
-	         
+			List<String> imports = new ArrayList<String>();
+//			for(Field f:fields)
+//			{
+//				
+//					
+//		         if(f.getType().equals("Timestamp"))
+//		         {
+//		        	 if(!imports.contains("java.sql.Timestamp"))
+//		        		 imports.add("java.sql.Timestamp");
+//		         }
+//		         
+//			}
+//			if(!condition )
+//			{
+				imports.addAll(this.conditionImport);
+//			}
+			return imports;
 		}
-		if(!condition )
+		else
 		{
+			List<String> imports = new ArrayList<String>();
 			imports.addAll(entityImport);
+			return imports;
 		}
-		return imports;
 	}
 	private Set<String> entityImport = new TreeSet<String>();
+	private Set<String> conditionImport = new TreeSet<String>();
+	public void addConditionImport(String importType)
+	{
+		conditionImport.add(importType);
+	}
 	private List<String> evalServiceInfImport( ) {
 		List<String> imports = new ArrayList<String>();
 		imports.add(this.moduleMetaInfo.getPackagePath() + "." + this.moduleMetaInfo.getModuleName()+".entity.*");
@@ -1797,9 +1833,9 @@ import com.frameworkset.util.StringUtil;
 		return conditions;
 	}
 
-	public List<Field> getAllfields() {
-		return allfields;
-	}
+//	public List<Field> getAllfields() {
+//		return allfields;
+//	}
 
 	public ModuleMetaInfo getModuleMetaInfo() {
 		return moduleMetaInfo;
@@ -1901,13 +1937,7 @@ import com.frameworkset.util.StringUtil;
 		this.conditionEntityParamName = conditionEntityParamName;
 	}
 
-	public String getTheme() {
-		return theme;
-	}
-
-	public void setTheme(String theme) {
-		this.theme = theme;
-	}
+	
 
 	public File getListInfoJsp() {
 		return listInfoJsp;
@@ -2011,13 +2041,72 @@ import com.frameworkset.util.StringUtil;
 	public List<Field> getViewHiddenFields() {
 		return viewHiddenFields;
 	}
-
-	public boolean isPrint() {
-		return print;
+	public boolean isGenI18n() {
+		return this.controlParam.isGenI18n();
+	}
+	public void setGenI18n(boolean genI18n) {
+		this.controlParam.setGenI18n(genI18n);
+	}
+	public int getExcelVersion() {
+		return this.controlParam.getExcelVersion();
+	}
+	public void setExcelVersion(int excelVersion) {
+		this.controlParam.setExcelVersion(excelVersion);
+	}
+	
+	public void setExportExcel(boolean exportExcel) {
+		this.controlParam.setExportExcel(exportExcel);
+	}
+	public boolean isImportExcel() {
+		return controlParam.isImportExcel();
+	}
+	public void setModuleMetaInfo(ModuleMetaInfo moduleMetaInfo) {
+		this.moduleMetaInfo = moduleMetaInfo;
+	}
+	public void addEntityImport(String entityImport)
+	{
+		this.entityImport.add(entityImport);
+	}
+	public void setPrimaryField(Field primaryField) {
+		this.primaryField = primaryField;
+	}
+	public void setPrimaryKeyName(String primaryKeyName) {
+		this.primaryKeyName = primaryKeyName;
+	}
+	public void setListShowFields(List<Field> listShowFields) {
+		this.listShowFields = listShowFields;
+	}
+	public void setListHiddenFields(List<Field> listHiddenFields) {
+		this.listHiddenFields = listHiddenFields;
+	}
+	public void setViewShowFields(List<Field> viewShowFields) {
+		this.viewShowFields = viewShowFields;
+	}
+	public void setViewHiddenFields(List<Field> viewHiddenFields) {
+		this.viewHiddenFields = viewHiddenFields;
+	}
+	public void setEditShowFields(List<Field> editShowFields) {
+		this.editShowFields = editShowFields;
+	}
+	public void setAddShowFields(List<Field> addShowFields) {
+		this.addShowFields = addShowFields;
+	}
+	public void setEditHiddenFields(List<Field> editHiddenFields) {
+		this.editHiddenFields = editHiddenFields;
+	}
+	public List<Field> getEntityFields() {
+		return entityFields;
+	}
+	public void setEntityFields(List<Field> entityFields) {
+		this.entityFields = entityFields;
+//		allfields = entityFields;
 	}
 
-	public void setPrint(boolean print) {
-		this.print = print;
+	public Field getDefaultSortField() {
+		return defaultSortField;
 	}
 
+	public void setDefaultSortField(Field defaultSortField) {
+		this.defaultSortField = defaultSortField;
+	}
 }

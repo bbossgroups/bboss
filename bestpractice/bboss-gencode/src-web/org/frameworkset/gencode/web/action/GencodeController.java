@@ -11,12 +11,15 @@ import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.frameworkset.gencode.core.GencodeServiceImpl;
+import org.frameworkset.gencode.core.Util;
+import org.frameworkset.gencode.entity.AnnoParam;
+import org.frameworkset.gencode.entity.Annotation;
 import org.frameworkset.gencode.entity.ConditionField;
+import org.frameworkset.gencode.entity.ControlInfo;
 import org.frameworkset.gencode.entity.Field;
+import org.frameworkset.gencode.entity.FieldInfo;
 import org.frameworkset.gencode.entity.ModuleMetaInfo;
 import org.frameworkset.gencode.entity.SortField;
-import org.frameworkset.gencode.web.entity.ControlInfo;
-import org.frameworkset.gencode.web.entity.FieldInfo;
 import org.frameworkset.gencode.web.entity.Gencode;
 import org.frameworkset.gencode.web.entity.GencodeCondition;
 import org.frameworkset.gencode.web.service.GencodeException;
@@ -27,12 +30,9 @@ import org.frameworkset.util.annotations.ResponseBody;
 import org.frameworkset.web.servlet.ModelMap;
 
 import com.frameworkset.common.poolman.DBUtil;
-import com.frameworkset.common.poolman.sql.ColumnMetaData;
 import com.frameworkset.common.poolman.sql.TableMetaData;
-import com.frameworkset.orm.engine.EngineException;
-import com.frameworkset.orm.engine.model.NameFactory;
-import com.frameworkset.orm.engine.model.NameGenerator;
 import com.frameworkset.util.ListInfo;
+import com.frameworkset.util.SimpleStringUtil;
 import com.frameworkset.util.StringUtil;
 
 public class GencodeController {
@@ -183,51 +183,7 @@ public class GencodeController {
 		model.addAttribute("tables", tables);
 		return "path:selecttable";
 	}
-	public static List<FieldInfo> getSimpleFields(TableMetaData tableMeta)
-	{
-		Set<ColumnMetaData> columns = tableMeta.getColumns();
-		if(columns.size() > 0)
-		{
-			 
-			List<FieldInfo> fs = new ArrayList<FieldInfo>();
-			
-			for(ColumnMetaData c:columns)
-			{
-				FieldInfo f = new FieldInfo();
-				f.setType(GencodeServiceImpl.convertType(c.getSchemaType().getJavaType()));
-				
-				
-		         try
-		         {
-		        	 List<String> inputs = new ArrayList<String>(2);
-			         inputs.add(c.getColumnName().toLowerCase());
-			         inputs.add( NameGenerator.CONV_METHOD_JAVANAME);
-		        	 String mfieldName = NameFactory.generateName(NameFactory.JAVA_GENERATOR,
-		                                                 inputs,false);
-		        	 inputs = new ArrayList<String>(2);
-			         inputs.add(c.getColumnName().toLowerCase());
-			         inputs.add( NameGenerator.CONV_METHOD_JAVAFIELDNAME);
-		        	 String fieldName = NameFactory.generateName(NameFactory.JAVA_GENERATOR,
-                             inputs,false);
-		        	 f.setMfieldName(mfieldName);
-		        	 f.setFieldName(fieldName);
-		        	 f.setColumnname(c.getColumnName());
-		        	 f.setColumntype(c.getTypeName());
-		        	 fs.add(f);
-		        	
-		         }
-		         catch (EngineException e)
-		         {
-		             log.error(e.getMessage(), e);
-		         }
-				
-			}
-			
-			return fs;
-			
-		}
-		return null;
-	}
+	
 	public String tableconfig(String dbname, String tableName,
 			ModelMap model) {
 		if (tableName == null)
@@ -236,7 +192,7 @@ public class GencodeController {
 		model.addAttribute("table", tableMeta);
 		model.addAttribute("tableName", tableName);
 		model.addAttribute("dbname", dbname);
-		List<FieldInfo> fields = getSimpleFields(tableMeta);
+		List<FieldInfo> fields = Util.getSimpleFields(tableMeta);
 
 		model.addAttribute("fields", fields);
 		return "path:tableconfig";
@@ -263,13 +219,325 @@ public class GencodeController {
 		return "path:tableconfig";
 	}
 
+	private void handleConditionFields(GencodeServiceImpl gencodeService,List<FieldInfo> fields)
+	{
+		for(int i = 0; fields != null && i < fields.size(); i ++)
+		{
+			FieldInfo fieldInfo = fields.get(i);
+			if(fieldInfo.getQcondition() == 1)
+			{
+				ConditionField bm = new ConditionField();
+				this.convertField(gencodeService, fieldInfo, bm,Util.other);
+				bm.setColumnname(fieldInfo.getColumnname());
+				bm.setLike(fieldInfo.getQtype() == 1);
+//				bm.setOr(true);
+				gencodeService.addCondition(bm);
+			}
+		}
+	}
+	
+	private void handleSortFields(GencodeServiceImpl gencodeService,List<FieldInfo> fields)
+	{
+		for(int i = 0; fields != null && i < fields.size(); i ++)
+		{
+			FieldInfo fieldInfo = fields.get(i);
+			if(fieldInfo.getSfield() == 1)
+			{
+				SortField id = new SortField();
+//				id.setColumnname(fieldInfo.getColumnname());
+				id.setDesc(fieldInfo.getStype() == 1);
+				this.convertField(gencodeService, fieldInfo, id, Util.other);
+				if(i == 0)
+				{
+					id.setDefaultSortField(true);
+					gencodeService.setDefaultSortField(id);
+				}
+				
+				gencodeService.addSortField(id);	
+			}
+		}
+	}
+
+	private String extendType(String type)
+	{
+		if(type.equals("url")||
+			type.equals("creditcard")||
+			type.equals("email")||
+			type.equals("file")||
+			type.equals("idcard")||
+			type.equals("textarea")||
+			type.equals("htmleditor")||
+			type.equals("word")||
+			type.equals("excel")||
+			type.equals("ppt")||
+			type.equals("fuction"))
+		{
+			return "String";
+		}
+		else
+			return type;
+	}
+	
+	private Field convertField(GencodeServiceImpl gencodeService,FieldInfo fieldInfo,Field f,int pagetype)
+	{
+		f.setType(extendType(fieldInfo.getType()));
+		f.setExtendType(fieldInfo.getType());
+		f.setFieldCNName(fieldInfo.getFieldCNName());
+		if(gencodeService.isGenI18n())
+		{
+			f.setFieldAsciiCNName(SimpleStringUtil.native2ascii(fieldInfo.getFieldCNName()));
+		}
+		
+		f.setPk(fieldInfo.isPk());
+		boolean isp = false;
+		if(gencodeService.getModuleMetaInfo().isAutogenprimarykey() && f.isPk())
+		{
+			Annotation anno = new Annotation();
+			anno.setName("PrimaryKey");
+			if(SimpleStringUtil.isNotEmpty(gencodeService.getModuleMetaInfo().getPkname()))
+			{
+				anno.addAnnotationParam("pkname", gencodeService.getModuleMetaInfo().getPkname(),AnnoParam.V_STRING);
+			}
+			f.addAnnotation(anno);
+			isp = true;
+			gencodeService.addEntityImport("com.frameworkset.orm.annotation.PrimaryKey");
+		}
+		if(fieldInfo.getColumntype().equals("CLOB"))
+		{
+			Annotation anno = new Annotation();
+			anno.setName("Column");
+			anno.addAnnotationParam("type", "clob",AnnoParam.V_STRING);
+			f.addAnnotation(anno);
+			gencodeService.addEntityImport("com.frameworkset.orm.annotation.Column");
+		}
+		else if(fieldInfo.getColumntype().equals("BLOB"))
+		{
+			Annotation anno = new Annotation();
+			anno.setName("Column");
+			anno.addAnnotationParam("type", "blob",AnnoParam.V_STRING);
+			gencodeService.addEntityImport("com.frameworkset.orm.annotation.Column");
+			f.addAnnotation(anno);
+		}
+		
+		else if(fieldInfo.getColumntype().equals("TIMESTAMP") || fieldInfo.getColumntype().equals("DATE"))
+		{
+			if(fieldInfo.getDateformat() != null && !fieldInfo.getDateformat().equals(""))
+			{
+				Annotation anno = new Annotation();
+				anno.setName("RequestParam");
+				anno.addAnnotationParam("dateformat", fieldInfo.getDateformat(),AnnoParam.V_STRING);
+				
+				gencodeService.addEntityImport("org.frameworkset.util.annotations.RequestParam");
+				
+				f.addAnnotation(anno);
+			}
+			if(f instanceof ConditionField)
+			{
+				if(fieldInfo.getColumntype().equals("TIMESTAMP"))
+					gencodeService.addConditionImport("java.sql.Timestamp");
+				else
+					gencodeService.addConditionImport("java.sql.Date");
+			}
+			else
+			{
+				
+				if(fieldInfo.getColumntype().equals("TIMESTAMP"))
+					gencodeService.addEntityImport("java.sql.Timestamp");
+				else
+					gencodeService.addEntityImport("java.sql.Date");
+			}
+		}
+		
+		
+         	 
+    	 f.setMfieldName(fieldInfo.getMfieldName());
+    	 f.setFieldName(fieldInfo.getFieldName());
+    	 f.setColumnname(fieldInfo.getColumnname());
+    	 
+    	 f.setTypecheck(fieldInfo.getTypecheck() == 1);
+    	 f.setDaterange(fieldInfo.getDaterange() == 1);
+    	 f.setDateformat(fieldInfo.getDateformat());
+    	 f.setNumformat(fieldInfo.getNumformat());
+    	 
+    	 f.setDefaultValue(fieldInfo.getDefaultValue());
+    	 f.setReplace(fieldInfo.getReplace());
+    	 f.setMaxlength(fieldInfo.getMaxlength());
+    	 f.setMinlength(fieldInfo.getMinlength());
+    	 if(Util.addpage == pagetype)
+    	 {
+	    	 f.setEditable(true);
+	    	 f.setRequired(fieldInfo.getAddcontrolParams().contains("必填"));
+    	 }
+    	 else if(Util.editpage == pagetype)
+    	 {
+	    	 f.setEditable(fieldInfo.getEditcontrolParams().contains("编辑"));
+	    	 f.setRequired(fieldInfo.getEditcontrolParams().contains("必填"));
+    	 }
+    	 
+    	 if(isp)
+    	 {
+    		 gencodeService.setPrimaryField(f);
+    		 gencodeService.setPrimaryKeyName(f.getFieldName());
+//    		 fields.add(0, f);
+    	 }
+    	 else
+    	 {
+//    		 fields.add(f);
+    	 }
+         return f;
+        
+	}
+	
+	private void handleListFields(GencodeServiceImpl gencodeService,List<FieldInfo> fields)
+	{
+		List<Field> listShowFields = new ArrayList<Field>();
+		List<Field> listHiddenFields = new ArrayList<Field>();
+		for(int i = 0; fields != null && i < fields.size(); i ++)
+		{
+			FieldInfo fieldInfo = fields.get(i);
+			String inlist = fieldInfo.getInlist();
+		
+			if(inlist != null && inlist.contains("包含"))
+			{
+				Field f = new Field();
+				if(inlist.contains("隐藏"))
+				{
+					 f.setSortField(true);
+					 f.setDesc(fieldInfo.getStype() == 1);
+					convertField(gencodeService,fieldInfo,f,Util.listpage);
+					listHiddenFields.add(f);
+				}
+				else
+				{
+					 f.setSortField(true);
+					 f.setDesc(fieldInfo.getStype() == 1);
+					convertField(gencodeService,fieldInfo,f,Util.listpage);
+					if(f.isPk())
+					{
+						listShowFields.add(0, f);
+					}
+					else
+					{
+						listShowFields.add(f);
+					}
+				}
+			}
+			
+			
+			
+			
+		}
+		gencodeService.setListHiddenFields(listHiddenFields);
+		gencodeService.setListShowFields(listShowFields);
+	}
+	
+	private void handleAddFields(GencodeServiceImpl gencodeService,List<FieldInfo> fields)
+	{
+		List<Field> addShowFields = new ArrayList<Field>();
+		for(int i = 0; fields != null && i < fields.size(); i ++)
+		{
+			FieldInfo fieldInfo = fields.get(i);
+			String inlist = fieldInfo.getInlist();
+		
+			if(inlist != null && inlist.contains("显示"))
+			{
+				Field f = new Field();
+				convertField(gencodeService,fieldInfo,f ,Util.addpage);
+				if(f.isPk())
+				{
+					addShowFields.add(0,f);
+				}
+				else
+				{
+					addShowFields.add(f);
+				}
+			}
+			
+		}
+		gencodeService.setAddShowFields(addShowFields);
+	}
+	
+	private void handleEntityFields(GencodeServiceImpl gencodeService,List<FieldInfo> fields)
+	{
+		List<Field> entityFields = new ArrayList<Field>();
+		for(int i = 0; fields != null && i < fields.size(); i ++)
+		{
+			FieldInfo fieldInfo = fields.get(i);
+			Field f = new Field();
+			convertField(gencodeService,fieldInfo,f,Util.other);
+			if(f.isPk())
+				entityFields.add(0, f);
+			else
+				entityFields.add(f);
+			
+			
+		}
+		gencodeService.setEntityFields(entityFields);
+	}
+	
+	private void handleEditorFields(GencodeServiceImpl gencodeService,List<FieldInfo> fields)
+	{
+		List<Field> editShowFields = new ArrayList<Field>();
+		List<Field> editHiddenFields = new ArrayList<Field>();
+		for(int i = 0; fields != null && i < fields.size(); i ++)
+		{
+			FieldInfo fieldInfo = fields.get(i);
+			String inlist = fieldInfo.getInlist();
+			Field f = new Field();
+			if(inlist != null && inlist.contains("显示"))
+			{
+				convertField(gencodeService,fieldInfo,f,Util.editpage);
+				if(f.isPk())
+					editShowFields.add(0, f);
+				else
+					editShowFields.add(f);
+				
+			}
+			else
+			{
+				convertField(gencodeService,fieldInfo,f,Util.editpage);
+				editHiddenFields.add(f);
+			}
+			
+		}
+		gencodeService.setEditShowFields(editShowFields);
+		gencodeService.setEditHiddenFields(editHiddenFields);
+	}
+	
+	private void handleViewFields(GencodeServiceImpl gencodeService,List<FieldInfo> fields)
+	{
+		List<Field> viewShowFields = new ArrayList<Field>();
+		List<Field> viewHiddenFields = new ArrayList<Field>();
+		for(int i = 0; fields != null && i < fields.size(); i ++)
+		{
+			FieldInfo fieldInfo = fields.get(i);
+			String inlist = fieldInfo.getInlist();
+		
+			if(inlist != null && inlist.contains("隐藏"))
+			{
+				Field f = new Field();
+				convertField(gencodeService,fieldInfo,f,Util.viewpage);		
+				viewHiddenFields.add(f);
+			}
+			else{
+				Field f = new Field();
+				convertField(gencodeService,fieldInfo,f,Util.viewpage);			
+				if(f.isPk())
+					viewShowFields.add(0,f);
+				else
+					viewShowFields.add(f);
+			}			
+		}
+		gencodeService.setViewShowFields(viewShowFields);
+		gencodeService.setViewHiddenFields(viewHiddenFields);
+	}
 	public @ResponseBody
 	Map<String, String> gencode(ControlInfo controlInfo, List<FieldInfo> fields,String gencodeid) {
 		Map<String, String> ret = new HashMap<String, String>();
 		//先保存配置信息，成功后再生成代码
 		_tempsave(  controlInfo,   fields, gencodeid, ret);
 		
-		GencodeServiceImpl gencodeService = new GencodeServiceImpl();
+		GencodeServiceImpl gencodeService = new GencodeServiceImpl(true);
 		ModuleMetaInfo moduleMetaInfo = new ModuleMetaInfo();
 		moduleMetaInfo.setTableName(controlInfo.getTableName());//指定表名，根据表结构来生成所有的文件
 		moduleMetaInfo.setPkname(controlInfo.getPkname());//设置oracle sequence名称，用来生成表的主键,对应TABLEINFO表中TABLE_NAME字段的值
@@ -278,6 +546,8 @@ public class GencodeController {
 		moduleMetaInfo.setModuleCNName(controlInfo.getModuleCNName());//指定模块中文名称
 		moduleMetaInfo.setDatasourceName(controlInfo.getDbname());//指定数据源名称，在poolman.xml文件中配置
 		moduleMetaInfo.setPackagePath(controlInfo.getPackagePath());//java程序对应的包路径
+		
+		moduleMetaInfo.setAutogenprimarykey(controlInfo.getControlParams().contains("autopk"));
 		//moduleMetaInfo.setServiceName("AreaManagerService");
 		moduleMetaInfo.setSourcedir(controlInfo.getSourcedir());//生成文件存放的物理目录，如果不存在，会自动创建
 		moduleMetaInfo.setIgnoreEntityFirstToken(true); //忽略表的第一个下滑线签名的token，例如表名td_app_bom中，只会保留app_bom部分，然后根据这部分来生成实体、配置文件名称
@@ -287,33 +557,42 @@ public class GencodeController {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String date = format.format(new Date());
 		moduleMetaInfo.setDate(date);//指定日期
-		moduleMetaInfo.setGenI18n(controlInfo.getControlParams().contains("geni18n"));//生成国际化属性配置文件
+		gencodeService.setGenI18n(controlInfo.getControlParams().contains("geni18n"));//生成国际化属性配置文件
 		moduleMetaInfo.setClearSourcedir(controlInfo.getControlParams().contains("clearSourcedir"));//是否清空源码目录
-		moduleMetaInfo.setExcelVersion(controlInfo.getExcelVersion());
-		moduleMetaInfo.setExportExcel(moduleMetaInfo.getExcelVersion() != -1);
+		gencodeService.setExcelVersion(controlInfo.getExcelVersion());
+		gencodeService.setExportExcel(gencodeService.getExcelVersion() != -1);
 		gencodeService.setTheme(controlInfo.getTheme());//设置默认主题风格		
+		gencodeService.setModuleMetaInfo(moduleMetaInfo);
 		/************以下代码片段指定界面查询字段，以及查询条件组合方式、是否是模糊查询等*******/
-		ConditionField bm = new ConditionField();
-		bm.setColumnname("TABLENAME");
-		bm.setLike(true);
-		bm.setOr(true);
-		gencodeService.addCondition(bm);		
-		
-		ConditionField bm1 = new ConditionField();
-		bm1.setColumnname("AUTHOR");
-		bm1.setLike(true);
-		bm1.setOr(true);
-		gencodeService.addCondition(bm1);		
+		handleConditionFields(  gencodeService, fields);
+//		ConditionField bm = new ConditionField();
+//		bm.setColumnname("TABLENAME");
+//		bm.setLike(true);
+//		bm.setOr(true);
+//		gencodeService.addCondition(bm);		
+//		
+//		ConditionField bm1 = new ConditionField();
+//		bm1.setColumnname("AUTHOR");
+//		bm1.setLike(true);
+//		bm1.setOr(true);
+//		gencodeService.addCondition(bm1);		
 
 		/************以上代码片段指定界面查询字段，以及查询条件组合方式、是否是模糊查询等********/		
 		/************以下代码片段指定界面排序字段**********************************/
-		SortField id = new SortField();
-		id.setColumnname("CREATETIME");
-		id.setDesc(true);
-		id.setDefaultSortField(true);
-		gencodeService.addSortField(id);	
+		handleSortFields(  gencodeService,  fields);
+//		SortField id = new SortField();
+//		id.setColumnname("CREATETIME");
+//		id.setDesc(true);
+//		id.setDefaultSortField(true);
+//		gencodeService.addSortField(id);	
 		/************以上代码片段指定界面排序字段**********************************/		
-		gencodeService.genCode(moduleMetaInfo);//执行代码生成逻辑
+		
+		handleListFields(gencodeService,fields);
+		handleAddFields(gencodeService, fields);
+		handleEditorFields(gencodeService,fields);
+		handleViewFields(gencodeService,fields);
+		handleEntityFields(gencodeService,fields);
+		gencodeService.genCode();//执行代码生成逻辑
 		ret.put("result", "success");
 		return ret;
 		

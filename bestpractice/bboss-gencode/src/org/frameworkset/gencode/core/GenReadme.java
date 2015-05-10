@@ -38,7 +38,7 @@ public class GenReadme  extends AbstractGencode{
 			 {
 				 context.put("system", "");
 			 }
-			 context.put("genI18n", gencodeService.getModuleMetaInfo().isGenI18n());
+			 context.put("genI18n", gencodeService.isGenI18n());
 			 
 			 gencodeService.writFile(context,conftempalte,conf,gencodeService.getModuleMetaInfo().getEncodecharset());
 		} catch (Exception e) {

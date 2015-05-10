@@ -4,10 +4,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Field {
+	private boolean pk;
 	private String fieldName;
 	private String mfieldName;
 	private String fieldCNName;
 	private String fieldAsciiCNName;
+	/**
+	 * url
+	 * creditcard
+	 * email
+	 * file
+	 * idcard
+	 * textarea
+	 * htmleditor
+	 * word
+	 * excel
+	 * ppt
+	 * fuction
+	 */
+	private String extendType;
 	private String type;
 	private String columntype;
 	private String defaultValue;
@@ -19,8 +34,16 @@ public class Field {
 	private boolean defaultSortField ;
 	private List<Annotation> annos;
 	private int maxlength = 0;
+	private int minlength = 0;
 	private boolean required;
 	private String replace;
+	private boolean typecheck;
+	private boolean daterange;
+	private String dateformat;
+	private String numformat;
+	private boolean editable;
+	
+	
 	public String getFieldName() {
 		return fieldName;
 	}
@@ -130,6 +153,54 @@ public class Field {
 	}
 	public void setColumntype(String columntype) {
 		this.columntype = columntype;
+	}
+	public boolean isPk() {
+		return pk;
+	}
+	public void setPk(boolean ispk) {
+		this.pk = ispk;
+	}
+	public int getMinlength() {
+		return minlength;
+	}
+	public void setMinlength(int minlength) {
+		this.minlength = minlength;
+	}
+	public boolean isTypecheck() {
+		return typecheck;
+	}
+	public void setTypecheck(boolean typecheck) {
+		this.typecheck = typecheck;
+	}
+	public boolean isDaterange() {
+		return daterange;
+	}
+	public void setDaterange(boolean daterange) {
+		this.daterange = daterange;
+	}
+	public String getDateformat() {
+		return dateformat;
+	}
+	public void setDateformat(String dateformat) {
+		this.dateformat = dateformat;
+	}
+	public String getNumformat() {
+		return numformat;
+	}
+	public void setNumformat(String numformat) {
+		this.numformat = numformat;
+	}
+	public boolean isEditable() {
+		return editable;
+	}
+	public void setEditable(boolean editable) {
+		this.editable = editable;
+	}
+	public String getExtendType() {
+		return extendType;
+	}
+	public void setExtendType(String extendType) {
+		this.extendType = extendType;
 	}
 
 }

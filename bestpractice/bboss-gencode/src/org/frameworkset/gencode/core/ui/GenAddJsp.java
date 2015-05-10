@@ -37,7 +37,7 @@ public class GenAddJsp   extends AbstractGencode {
 			 context.put("version", gencodeService.getModuleMetaInfo().getVersion());
 			 
 			 context.put("conditions", gencodeService.getConditions());
-			 context.put("fields", gencodeService.getAllfields());
+			 context.put("fields", gencodeService.getAddShowFields());
 			 
 			 context.put("relativePath", gencodeService.getRelativePath());
 			 context.put("moduleName", gencodeService.getModuleMetaInfo().getModuleName());
@@ -45,7 +45,7 @@ public class GenAddJsp   extends AbstractGencode {
 			 context.put("entityVarName", gencodeService.getEntityParamName());
 			 context.put("entityName", gencodeService.getEntityName());
 			 context.put("primaryKeyName", gencodeService.getPrimaryKeyName());
-			 context.put("genI18n", gencodeService.getModuleMetaInfo().isGenI18n());
+			 context.put("genI18n", gencodeService.isGenI18n());
 			 context.put("namespacei18n", gencodeService.getNamespacei18n());
 			
 			

@@ -59,8 +59,8 @@ public class TestGencodeServiceImpl {
 		sbm.setDesc(false);
 		gencodeService.addSortField(sbm);
 		/************以上代码片段指定界面排序字段**********************************/
-		
-		gencodeService.genCode(moduleMetaInfo);//执行代码生成逻辑
+		gencodeService.setModuleMetaInfo(moduleMetaInfo);
+		gencodeService.genCode();//执行代码生成逻辑
 	}
 	@Test
 	public void testGenOraclePrimayKeyEntityCode() throws Exception
@@ -146,7 +146,8 @@ alter table TA_AUTHO_AREA
 //		gencodeService.addSortField(sbm);
 		/************以上代码片段指定界面排序字段**********************************/
 		
-		gencodeService.genCode(moduleMetaInfo);//执行代码生成逻辑
+		gencodeService.setModuleMetaInfo(moduleMetaInfo);
+		gencodeService.genCode();//执行代码生成逻辑
 	}
 	
 	
@@ -172,7 +173,7 @@ alter table TA_AUTHO_AREA
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String date = format.format(new Date());
 		moduleMetaInfo.setDate(date);//指定日期
-		moduleMetaInfo.setGenI18n(true);//生成国际化属性配置文件
+		gencodeService.setGenI18n(true);//生成国际化属性配置文件
 		moduleMetaInfo.setClearSourcedir(true);//是否清空源码目录
 		gencodeService.setTheme("default");//设置默认主题风格		
 		/************以下代码片段指定界面查询字段，以及查询条件组合方式、是否是模糊查询等*******/
@@ -196,7 +197,8 @@ alter table TA_AUTHO_AREA
 		id.setDefaultSortField(true);
 		gencodeService.addSortField(id);	
 		/************以上代码片段指定界面排序字段**********************************/		
-		gencodeService.genCode(moduleMetaInfo);//执行代码生成逻辑
+		gencodeService.setModuleMetaInfo(moduleMetaInfo);
+		gencodeService.genCode();//执行代码生成逻辑
 	}
 	
 	
@@ -222,7 +224,7 @@ alter table TA_AUTHO_AREA
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String date = format.format(new Date());
 		moduleMetaInfo.setDate(date);//指定日期
-		moduleMetaInfo.setGenI18n(true);//生成国际化属性配置文件
+		gencodeService.setGenI18n(true);//生成国际化属性配置文件
 		moduleMetaInfo.setClearSourcedir(true);//是否清空源码目录
 		gencodeService.setTheme("default");//设置默认主题风格		
 		/************以下代码片段指定界面查询字段，以及查询条件组合方式、是否是模糊查询等*******/
@@ -246,7 +248,8 @@ alter table TA_AUTHO_AREA
 		id.setDefaultSortField(true);
 		gencodeService.addSortField(id);	
 		/************以上代码片段指定界面排序字段**********************************/		
-		gencodeService.genCode(moduleMetaInfo);//执行代码生成逻辑
+		gencodeService.setModuleMetaInfo(moduleMetaInfo);
+		gencodeService.genCode();//执行代码生成逻辑
 	}
 	
 	@Test
@@ -479,6 +482,7 @@ alter table TA_FGW_XMSBK
 //		gencodeService.addSortField(sbm);
 		/************以上代码片段指定界面排序字段**********************************/
 		
-		gencodeService.genCode(moduleMetaInfo);//执行代码生成逻辑
+		gencodeService.setModuleMetaInfo(moduleMetaInfo);
+		gencodeService.genCode();//执行代码生成逻辑
 	}
 }

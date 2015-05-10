@@ -57,4 +57,6 @@ public interface GencodeService {
 
 	public List<Gencode> queryListGencodes(GencodeCondition conditions)
 			throws GencodeException;
+
+	
 }

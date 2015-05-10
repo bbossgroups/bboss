@@ -35,17 +35,12 @@ public class ModuleMetaInfo {
 	 * 表主键名称，对应tableinfo表中的表名称
 	 */
 	private String pkname;
-	private boolean genRPCservice;
-	private boolean genI18n;
-	
-	private boolean genFront;
+	 
+	 
 	/**
 	 * 生成代码时是否清除源码目录
 	 */
 	private boolean clearSourcedir = true;
-	
-	private boolean exportExcel;
-	private boolean importExcel;
 	
 	private String entityName;
 	private String serviceName;
@@ -60,17 +55,11 @@ public class ModuleMetaInfo {
 	private String company;
 	private String author;
 	private String version;
-	/**
-	 * 0:2003
-	 * 1:2007
-	 * 2:2010
-	 * 2:2013
-	 */
-	private int excelVersion;
+
 	
 	private boolean ignoreEntityFirstToken = false;
 	
-	private boolean intergretWorkflow;
+	
 	public String getModuleName() {
 		return moduleName;
 	}
@@ -91,37 +80,7 @@ public class ModuleMetaInfo {
 		this.tableName = tableName;
 	}
 	
-	public boolean isGenFront() {
-		return genFront;
-	}
-	public void setGenFront(boolean genFront) {
-		this.genFront = genFront;
-	}
-
-	public boolean isExportExcel() {
-		return exportExcel;
-	}
-	public void setExportExcel(boolean exportExcel) {
-		this.exportExcel = exportExcel;
-	}
-	public boolean isImportExcel() {
-		return importExcel;
-	}
-	public void setImportExcel(boolean importExcel) {
-		this.importExcel = importExcel;
-	}
-	public int getExcelVersion() {
-		return excelVersion;
-	}
-	public void setExcelVersion(int excelVersion) {
-		this.excelVersion = excelVersion;
-	}
-	public boolean isIntergretWorkflow() {
-		return intergretWorkflow;
-	}
-	public void setIntergretWorkflow(boolean intergretWorkflow) {
-		this.intergretWorkflow = intergretWorkflow;
-	}
+	
 	public String getSourcedir() {
 		return sourcedir;
 	}
@@ -237,17 +196,7 @@ public class ModuleMetaInfo {
 	public void setSystem(String system) {
 		this.system = system;
 	}
-	public boolean isGenRPCservice() {
-		return genRPCservice;
-	}
-	public void setGenRPCservice(boolean genRPCservice) {
-		this.genRPCservice = genRPCservice;
-	}
-	public boolean isGenI18n() {
-		return genI18n;
-	}
-	public void setGenI18n(boolean genI18n) {
-		this.genI18n = genI18n;
-	}
+	
+	
 
 }

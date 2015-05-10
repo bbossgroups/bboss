@@ -39,7 +39,7 @@ public class GenI8N   extends AbstractGencode {
 			 context.put("author", gencodeService.getModuleMetaInfo().getAuthor());
 			 context.put("version", gencodeService.getModuleMetaInfo().getVersion());
 			 
-			 context.put("fields", gencodeService.getAllfields());
+			 context.put("fields", gencodeService.getEntityFields());
 			 context.put("isZh", isZh);
 			 context.put("moduleCNName", gencodeService.getModuleMetaInfo().getModuleCNName());
 			 context.put("moduleName", gencodeService.getModuleMetaInfo().getModuleName());

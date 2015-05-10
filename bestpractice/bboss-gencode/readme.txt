@@ -1,3 +1,7 @@
+1.代码下载
+2.字段控制
+3.打印实现
+4.条码实现
 gencode目录说明：存放ui风格（resources/templates/gencode/ui/common）运行需要的配套文件，gencode/WebRoot/WEB-INF/lib下需要放置以下jar包：
 asm-3.1.jar
 asm-commons-3.1.jar
