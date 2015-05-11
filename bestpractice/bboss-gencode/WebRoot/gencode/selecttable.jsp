@@ -138,7 +138,14 @@
 				                <td><pg:cell colName="tablename"/></td>
 				                 <td><pg:cell colName="createtime"/></td>
 				                <td><pg:cell colName="updatetime"/></td>				        		
-				                <td ><a href="javascript:void(0)" id="readGencode" onclick="TableAdvanced.regencode('<pg:cell colName="id" />','tablereconfig.page',event)" class="btn blue">生成代码</a></td>    
+				                <td >
+				                <a href="javascript:void(0)" onclick="TableAdvanced.regencode('<pg:cell colName="id" />','tablereconfig.page',event)" class="btn default btn-xs purple">
+										<i class="fa fa-edit"></i> 编辑 </a>
+								<a href="javascript:void(0)" onclick="TableAdvanced.regencode('<pg:cell colName="id" />','tablereconfig.page',event)" class="btn default btn-xs purple">
+										<i class="fa fa-edit"></i>下载 </a>
+								 <a href="javascript:void(0)" onclick="TableAdvanced.regencode('<pg:cell colName="id" />','tablereconfig.page',event)" class="btn default btn-xs black">
+										<i class="fa fa-trash-o"></i> 删除 </a>
+				                </td>    
 			                 
 	        				</tr>
 							</pg:list>

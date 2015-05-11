@@ -228,7 +228,7 @@ public class GencodeController {
 			{
 				ConditionField bm = new ConditionField();
 				this.convertField(gencodeService, fieldInfo, bm,Util.other);
-				bm.setColumnname(fieldInfo.getColumnname());
+//				bm.setColumnname(fieldInfo.getColumnname());
 				bm.setLike(fieldInfo.getQtype() == 1);
 //				bm.setOr(true);
 				gencodeService.addCondition(bm);
@@ -283,6 +283,7 @@ public class GencodeController {
 		f.setType(extendType(fieldInfo.getType()));
 		f.setExtendType(fieldInfo.getType());
 		f.setFieldCNName(fieldInfo.getFieldCNName());
+		f.setColumntype(fieldInfo.getColumntype());
 		if(gencodeService.isGenI18n())
 		{
 			f.setFieldAsciiCNName(SimpleStringUtil.native2ascii(fieldInfo.getFieldCNName()));
@@ -396,31 +397,32 @@ public class GencodeController {
 		{
 			FieldInfo fieldInfo = fields.get(i);
 			String inlist = fieldInfo.getInlist();
-		
-			if(inlist != null && inlist.contains("包含"))
+			Field f = new Field();
+			if(inlist != null && inlist.contains("显示"))
 			{
-				Field f = new Field();
-				if(inlist.contains("隐藏"))
+				
+				
+				
+				
+				 f.setSortField(true);
+				 f.setDesc(fieldInfo.getStype() == 1);
+				convertField(gencodeService,fieldInfo,f,Util.listpage);
+				if(f.isPk())
 				{
-					 f.setSortField(true);
-					 f.setDesc(fieldInfo.getStype() == 1);
-					convertField(gencodeService,fieldInfo,f,Util.listpage);
-					listHiddenFields.add(f);
+					listShowFields.add(0, f);
 				}
 				else
 				{
-					 f.setSortField(true);
-					 f.setDesc(fieldInfo.getStype() == 1);
-					convertField(gencodeService,fieldInfo,f,Util.listpage);
-					if(f.isPk())
-					{
-						listShowFields.add(0, f);
-					}
-					else
-					{
-						listShowFields.add(f);
-					}
+					listShowFields.add(f);
 				}
+				
+			}
+			else 
+			{
+				 f.setSortField(true);
+				 f.setDesc(fieldInfo.getStype() == 1);
+				convertField(gencodeService,fieldInfo,f,Util.listpage);
+				listHiddenFields.add(f);
 			}
 			
 			
@@ -437,7 +439,7 @@ public class GencodeController {
 		for(int i = 0; fields != null && i < fields.size(); i ++)
 		{
 			FieldInfo fieldInfo = fields.get(i);
-			String inlist = fieldInfo.getInlist();
+			String inlist = fieldInfo.getAddcontrolParams();
 		
 			if(inlist != null && inlist.contains("显示"))
 			{
@@ -482,7 +484,7 @@ public class GencodeController {
 		for(int i = 0; fields != null && i < fields.size(); i ++)
 		{
 			FieldInfo fieldInfo = fields.get(i);
-			String inlist = fieldInfo.getInlist();
+			String inlist = fieldInfo.getEditcontrolParams();
 			Field f = new Field();
 			if(inlist != null && inlist.contains("显示"))
 			{
@@ -511,7 +513,7 @@ public class GencodeController {
 		for(int i = 0; fields != null && i < fields.size(); i ++)
 		{
 			FieldInfo fieldInfo = fields.get(i);
-			String inlist = fieldInfo.getInlist();
+			String inlist = fieldInfo.getViewcontrolParams();
 		
 			if(inlist != null && inlist.contains("隐藏"))
 			{

@@ -47,7 +47,7 @@ public class $classname implements java.io.Serializable
 		  #end
 	  #end
     #end
-	private $filed.type $filed.fieldName #if($filed.defaultValue)$equal$filed.defaultValue#end;	
+	private $filed.type $filed.fieldName #if($filed.defaultValue && !$filed.defaultValue.equals(""))$equal$filed.defaultValue#end;	
 #end
 	public $classname$start$end
 	{

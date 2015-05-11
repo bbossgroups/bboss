@@ -348,6 +348,7 @@
 										</div>		</td>
 										<td ><select  class="form-control  input-medium select2me" name="dateformat" id="dateformat">
 											<pg:case colName="dateformat">
+											<option value="" <pg:equal value="">selected</pg:equal>>空</option>
 											<option value="yyyy-MM-dd HH:mm:ss" <pg:equal value="yyyy-MM-dd HH:mm:ss">selected</pg:equal>>yyyy-MM-dd HH:mm:ss</option>
 											<option value="yyyy/MM/dd HH:mm:ss" <pg:equal value="yyyy/MM/dd HH:mm:ss">selected</pg:equal>>yyyy/MM/dd HH:mm:ss</option>
 											<option value="yyyy-MM-dd" <pg:equal value="yyyy-MM-dd">selected</pg:equal>>yyyy-MM-dd</option>
@@ -357,7 +358,7 @@
 										</td>
 										<td ><select  class="form-control  input-medium select2me" name="numformat" id="numformat">
 											<pg:case colName="numformat">
-											<option value="无" <pg:equal value="无">selected</pg:equal>>无</option>
+											<option value="" <pg:equal value="">selected</pg:equal>>无</option>
 											<option value="###,###" <pg:equal value="###,###">selected</pg:equal>>###,###</option>
 											<option value="###,###.###" <pg:equal value="###,###.###">selected</pg:equal>>###,###.###</option>
 											</pg:case>
@@ -400,16 +401,16 @@
 										<td >
 										<input type="hidden" id="inlist" name="inlist"
 											class="form-control  select2  input-medium inlist"
-											value="<pg:cell colName="inlist" defaultValue="包含,显示, 隐藏"/>">
+											value="<pg:cell colName="inlist" defaultValue="包含"/>">
 										
 										</div>																
 									 	</td>
 									 	<td><input type="hidden" id="editcontrolParams" name="editcontrolParams"
 											class="form-control  select2  input-medium editcontrolParams"
-											value="<pg:cell colName="editcontrolParams" defaultValue="显示, 编辑,必填"/>"></td>
+											value="<pg:cell colName="editcontrolParams" defaultValue="显示, 编辑"/>"></td>
 											<td><input type="hidden" id="addcontrolParams" name="addcontrolParams"
 											class="form-control  select2  input-medium addcontrolParams"
-											value="<pg:cell colName="addcontrolParams" defaultValue="显示, 必填"/>"></td>
+											value="<pg:cell colName="addcontrolParams" defaultValue="显示"/>"></td>
 											<td><input type="hidden" id="viewcontrolParams" name="viewcontrolParams"
 											class="form-control  select2  input-small viewcontrolParams"
 											value="<pg:cell colName="viewcontrolParams" />" placeholder="显示"></td>
@@ -601,16 +602,16 @@ jQuery(document).ready(function() {
          tags: ["geni18n", "clearSourcedir","genRPC","autopk","genwf","print"]
      });
 	 $(".editcontrolParams").select2({
-         tags: ["显示", "编辑", "必填"]
+         tags: ["显示","隐藏", "编辑", "必填"]
      });
 	 $(".addcontrolParams").select2({
-         tags: ["显示", "必填"]
+         tags: ["显示","隐藏", "必填"]
      });
 	 $(".viewcontrolParams").select2({
-         tags: ["隐藏"]
+         tags: ["显示","隐藏"]
      });
 	 $(".inlist").select2({
-         tags: ["包含","显示", "隐藏"]
+         tags: ["显示", "隐藏"]
      });
 	 
 });
