@@ -319,7 +319,7 @@ public class GencodeController {
 			f.addAnnotation(anno);
 		}
 		
-		else if(fieldInfo.getColumntype().equals("TIMESTAMP") || fieldInfo.getColumntype().equals("DATE"))
+		else if(fieldInfo.getColumntype().startsWith("TIMESTAMP") || fieldInfo.getColumntype().equals("DATE"))
 		{
 			if(fieldInfo.getDateformat() != null && !fieldInfo.getDateformat().equals(""))
 			{
@@ -333,7 +333,7 @@ public class GencodeController {
 			}
 			if(f instanceof ConditionField)
 			{
-				if(fieldInfo.getColumntype().equals("TIMESTAMP"))
+				if(fieldInfo.getColumntype().startsWith("TIMESTAMP"))
 					gencodeService.addConditionImport("java.sql.Timestamp");
 				else
 					gencodeService.addConditionImport("java.sql.Date");
@@ -341,7 +341,7 @@ public class GencodeController {
 			else
 			{
 				
-				if(fieldInfo.getColumntype().equals("TIMESTAMP"))
+				if(fieldInfo.getColumntype().startsWith("TIMESTAMP"))
 					gencodeService.addEntityImport("java.sql.Timestamp");
 				else
 					gencodeService.addEntityImport("java.sql.Date");

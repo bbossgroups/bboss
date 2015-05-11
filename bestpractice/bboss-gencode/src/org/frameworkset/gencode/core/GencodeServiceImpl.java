@@ -365,6 +365,11 @@ public class GencodeServiceImpl {
 						 field.setFieldName(dbfield.getFieldName());
 						 field.setFieldCNName(dbfield.getFieldCNName());
 						 field.setMfieldName(dbfield.getMfieldName());
+						 field.setColumntype(dbfield.getColumntype());
+						 if(dbfield.getColumntype().equals("TIMESTAMP"))
+			 					addConditionImport("java.sql.Timestamp");
+			 				else if(dbfield.getColumntype().equals("DATE"))
+			 					addConditionImport("java.sql.Date");
 					 }
 				 }
 			 }
@@ -461,6 +466,7 @@ public class GencodeServiceImpl {
 		        	 f.setMfieldName(mfieldName);
 		        	 f.setFieldName(fieldName);
 		        	 f.setColumnname(c.getColumnName());
+		        	 f.setColumntype(c.getTypeName());
 		        	 if(isp)
 		        	 {
 		        		 this.primaryField = f;
@@ -476,6 +482,15 @@ public class GencodeServiceImpl {
 		         {
 		             log.error(e.getMessage(), e);
 		         }
+		         
+		         
+		 				
+ 				if(f.getColumntype().startsWith("TIMESTAMP"))
+ 					addEntityImport("java.sql.Timestamp");
+ 				else if(f.getColumntype().equals("DATE"))
+ 					addEntityImport("java.sql.Date");
+		 			 
+		 		 
 				
 			}
 			if(this.primaryKeyName == null)
