@@ -69,6 +69,7 @@
 					<div class="col-md-12">
 						<a href="javascript:void(0);"  class="btn blue" onclick="totableconfig('tableconfig',event)"> 进入表单配置</a>
 						<a href="tableconfig.page"  class="btn blue ajaxify display-hide" id="tableconfig" formid="tableform"> 进入表单配置步骤</a>
+						<a href="javascript:void(0);"  class="btn blue" onclick="refreshdb('tableName',event)"> 刷新表结构</a>
 					</div>
 				</div>
 			</div>

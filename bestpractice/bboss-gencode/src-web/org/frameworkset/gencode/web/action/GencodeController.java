@@ -158,7 +158,19 @@ public class GencodeController {
 		}
 		return tables;
 	}
-
+	public @ResponseBody
+	List<String> refreshtables(String dbname) {
+		DBUtil.refreshDatabaseMetaData();
+		Set<TableMetaData> tableMetas = DBUtil.getTableMetaDatas(dbname);
+		List<String> tables = new ArrayList<String>();
+		if (tableMetas != null) {
+			for (TableMetaData meta : tableMetas) {
+				tables.add(meta.getTableName());
+			}
+		}
+		return tables;
+	}
+	
 	public String selecttable(ModelMap model,GencodeCondition conditions) {
 		List<String> dbs = DBUtil.getAllPoolNames();
 		model.addAttribute("dbs", dbs);
