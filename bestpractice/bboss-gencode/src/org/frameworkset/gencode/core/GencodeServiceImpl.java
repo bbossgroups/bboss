@@ -612,9 +612,14 @@ public class GencodeServiceImpl {
 			serviceImpl.createNewFile();
 			controller.createNewFile();
 			exception.createNewFile();
-			
+
 			 genEntity(  entityName,   this.moduleMetaInfo.getModuleCNName()+"管理服务实体类",entity);
-			 genConditionEntity(  conditionEntityName,   this.moduleMetaInfo.getModuleCNName()+"管理查询条件实体类",conditionEntityJavaName);
+
+			 
+				 
+				 genConditionEntity(  conditionEntityName,   this.moduleMetaInfo.getModuleCNName()+"管理查询条件实体类",controllerJavaName);
+			 
+			  
 			 genServiceInf(  this.serviceInfType, this.moduleMetaInfo.getModuleCNName()+"管理服务接口", serviceInf);
 			 genException(entityName + "Exception", this.moduleMetaInfo.getModuleCNName()+"管理异常处理类",exception);
 			 genServiceImpl(entityName + "ServiceImpl",serviceInfType ,this.moduleMetaInfo.getModuleCNName()+"管理业务处理类",serviceImpl);
@@ -682,14 +687,18 @@ public class GencodeServiceImpl {
 	
 	private void genConditionEntity(String entityName ,String description,String conditionEntityJavaName) throws Exception
 	{
-		 if(conditions == null || conditions.size() == 0)
-			 return ;
 		 File conditionEntity = new File(this.javaEntiySourceDir,conditionEntityJavaName);
-			if(conditionEntity.exists())
-			{
-				conditionEntity.delete();
-			}
+		if(conditionEntity.exists())
+		{
+			conditionEntity.delete();
+		}
+		if(conditions == null || conditions.size() == 0)
+ 
+			 return;
+ 
+		
 			conditionEntity.createNewFile(); 
+ 
 		 List<String> imports = evalImport( true);
 		 Template entitytempalte = VelocityUtil.getTemplate("gencode/java/entityjava.vm");
 		 VelocityContext context = new VelocityContext();
