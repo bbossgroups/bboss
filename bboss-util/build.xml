@@ -59,6 +59,7 @@
 				<attribute name="Implementation-ProductID" value="${impl.productID}" />
 				<attribute name="Compile-Timestamp" value="${compile.timestamp}" />
 				<attribute name="Compile-User" value="${username}" />
+				<attribute name="Main-Class" value="org.frameworkset.runtime.CommonLauncher" />
 			</manifest>
 		</jar>
 	</target>

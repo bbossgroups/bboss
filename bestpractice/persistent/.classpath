@@ -13,5 +13,6 @@
 	<classpathentry kind="lib" path="jdbc/derbyclient.jar"/>
 	<classpathentry kind="lib" path="lib/commons-collections-3.2.1.jar"/>
 	<classpathentry kind="lib" path="lib/bboss-core.jar"/>
+	<classpathentry kind="lib" path="lib/commons-logging-1.1.1.jar"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>

@@ -32,6 +32,7 @@ import org.frameworkset.util.ClassUtil.PropertieDescription;
 import org.frameworkset.util.annotations.wraper.ColumnWraper;
 
 import com.frameworkset.common.poolman.handle.FieldRowHandler;
+import com.frameworkset.common.poolman.handle.ResultSetNullRowHandler;
 import com.frameworkset.common.poolman.handle.RowHandler;
 import com.frameworkset.common.poolman.handle.ValueExchange;
 import com.frameworkset.common.poolman.handle.XMLMark;
@@ -379,19 +380,37 @@ public class ResultMap {
        
         if (rowHander != null) {
 
-            Record data = buildMap(rs,  stmtInfo,db);
-            try
-            {
-                rowHander.handleRow(null, data);
-            }
-            catch (SQLException e)
-            {
-               throw e; 
-            }
-            catch (Exception e)
-            {
-               throw new NestedSQLException(e); 
-            }
+        	if(!(rowHander instanceof ResultSetNullRowHandler))
+        	{
+	            Record data = buildMap(rs,  stmtInfo,db);
+	            try
+	            {
+	                rowHander.handleRow(null, data);
+	            }
+	            catch (SQLException e)
+	            {
+	               throw e; 
+	            }
+	            catch (Exception e)
+	            {
+	               throw new NestedSQLException(e); 
+	            }
+        	}
+        	else
+        	{
+        		try
+	            {
+        			rowHander.handleRow(rs, null);
+	            }
+	            catch (SQLException e)
+	            {
+	               throw e; 
+	            }
+	            catch (Exception e)
+	            {
+	               throw new NestedSQLException(e); 
+	            }
+        	}
             
 
         }
