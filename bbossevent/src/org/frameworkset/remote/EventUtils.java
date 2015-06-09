@@ -122,6 +122,14 @@ public class EventUtils {
 			return eventRPCDispatcher.getAddresses();
 		return null;
 	}
+	
+	public static Address getLocalAddress() {
+		init();		
+		
+		if(eventRPCDispatcher != null)
+			return eventRPCDispatcher.getLocalAddress();
+		return null;
+	}
 
 	public static String getDefaultProtocol() {
 		return defaultProtocol;

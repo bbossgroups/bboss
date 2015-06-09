@@ -27,6 +27,12 @@ public class EventRPCDispatcher extends ReceiverAdapter implements
 	public EventRPCDispatcher() {
 
 	}
+	
+	public Address getLocalAddress()
+	{
+		return this.channel.getAddress();
+	}
+	
 	public boolean containSelf( List<Address> addresses)
 	{
 		Address address = this.channel.getAddress();

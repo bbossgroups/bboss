@@ -29,15 +29,15 @@ public interface Event<T> extends java.io.Serializable{
 	public T getSource();
 
 	public EventType getType();
-	
+	public int getEventBroadcastType();
 	/**
 	 * 是否异步传播，集群环境下事件以异步的方式广播，返回值为false，
 	 * 同步方式广播时，返回true
 	 * @return
 	 */
-	public boolean isSynchronized();
+	public boolean isSynchronize();
 	
-	public void setSynchronized(boolean issynchronized);	
+	public void setSynchronize(boolean issynchronize);	
 	public boolean isRemote();	
 	public boolean isRemoteLocal();
 	public boolean isLocal();

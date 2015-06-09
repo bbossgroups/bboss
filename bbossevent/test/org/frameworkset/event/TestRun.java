@@ -65,13 +65,13 @@ EventHandle.getInstance().change(new Event(){
 			}
 
 			
-			public boolean isSynchronized() {
+			public boolean isSynchronize() {
 				// TODO Auto-generated method stub
 				return false;
 			}
 
 			
-			public void setSynchronized(boolean issynchronized) {
+			public void setSynchronize(boolean issynchronized) {
 				// TODO Auto-generated method stub
 				
 			}
@@ -98,6 +98,12 @@ EventHandle.getInstance().change(new Event(){
 			public EventTarget getEventTarget() {
 				// TODO Auto-generated method stub
 				return null;
+			}
+
+
+			public int getEventBroadcastType() {
+				// TODO Auto-generated method stub
+				return 0;
 			}}, false);
 		EventHandle.getInstance().shutdown();
 	}

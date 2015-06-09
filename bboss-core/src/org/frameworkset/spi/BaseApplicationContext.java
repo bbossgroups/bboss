@@ -1757,11 +1757,27 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 		// TODO Auto-generated method stub
 		return pro.getStringExtendAttribute(extendName);
 	}
+	
+	public String getStringExtendAttribute(String name, String extendName,String defaultValue) {
+		Pro pro = getProBean(name);
+		if (pro == null)
+			return defaultValue;
+		// TODO Auto-generated method stub
+		return pro.getStringExtendAttribute(extendName);
+	}
 
 	public Object getExtendAttribute(String name, String extendName) {
 		Pro pro = getProBean(name);
 		if (pro == null)
 			return null;
+		return pro.getExtendAttribute(extendName);
+
+	}
+	
+	public Object getExtendAttribute(String name, String extendName,Object defaultValue) {
+		Pro pro = getProBean(name);
+		if (pro == null)
+			return defaultValue;
 		return pro.getExtendAttribute(extendName);
 
 	}
@@ -1773,6 +1789,14 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 		return pro.getIntExtendAttribute(extendName);
 
 	}
+	
+	public int getIntExtendAttribute(String name, String extendName,int defaultValue) {
+		Pro pro = getProBean(name);
+		if (pro == null)
+			return defaultValue;
+		return pro.getIntExtendAttribute(extendName);
+
+	}
 
 	public long getLongExtendAttribute(String name, String extendName) {
 		// TODO Auto-generated method stub
@@ -1781,12 +1805,28 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 			return -1;
 		return pro.getLongExtendAttribute(extendName);
 	}
+	
+	public long getLongExtendAttribute(String name, String extendName,long defaultValue) {
+		// TODO Auto-generated method stub
+		Pro pro = getProBean(name);
+		if (pro == null)
+			return defaultValue;
+		return pro.getLongExtendAttribute(extendName);
+	}
 
 	public boolean getBooleanExtendAttribute(String name, String extendName) {
 		// TODO Auto-generated method stub
 		Pro pro = getProBean(name);
 		if (pro == null)
 			return false;
+		return pro.getBooleanExtendAttribute(extendName);
+	}
+	
+	public boolean getBooleanExtendAttribute(String name, String extendName,boolean defauleValue) {
+		// TODO Auto-generated method stub
+		Pro pro = getProBean(name);
+		if (pro == null)
+			return defauleValue;
 		return pro.getBooleanExtendAttribute(extendName);
 	}
 

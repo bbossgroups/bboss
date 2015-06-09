@@ -435,7 +435,7 @@ public class EventHandle  implements Notifiable {
 	 */
 	public void change(Event event, boolean synchronizable) {
 	
-		event.setSynchronized(synchronizable);
+		event.setSynchronize(synchronizable);
 		_change(event);
 
 	}
@@ -447,7 +447,7 @@ public class EventHandle  implements Notifiable {
 	 */
 	private void _change(final Event event) {
 
-		if (!event.isSynchronized()) {
+		if (!event.isSynchronize()) {
 			 
 			
 			executor.execute(new Runnable(){

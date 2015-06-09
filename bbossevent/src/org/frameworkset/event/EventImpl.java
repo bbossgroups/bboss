@@ -46,7 +46,7 @@ public final class EventImpl<T> implements Event<T> {
 	 * 本地远程传播 (Event.REMOTELOCAL) 事件在集群中所有节点广播 默认值（启用远程事件才有效）
 	 */
 	int eventBroadcastType = Event.REMOTELOCAL;
-	boolean issynchronized = false;
+	boolean synchronize = false;
 	
 	static int defaultEventBroadcastType = Event.REMOTELOCAL;
 //	static 
@@ -141,14 +141,14 @@ public final class EventImpl<T> implements Event<T> {
 
 		return type;
 	}
-	public boolean isSynchronized() {
+	public boolean isSynchronize() {
 
-		return this.issynchronized;
+		return this.synchronize;
 	}
 	
-	public void setSynchronized(boolean issynchronized)
+	public void setSynchronize(boolean synchronize)
 	{
-		this.issynchronized = issynchronized;
+		this.synchronize = synchronize;
 	}
 	public void setSource(T source) {
 		this.source = source;
@@ -156,9 +156,7 @@ public final class EventImpl<T> implements Event<T> {
 	public void setType(EventType type) {
 		this.type = type;
 	}
-	public void setIssynchronized(boolean issynchronized) {
-		this.issynchronized = issynchronized;
-	}
+ 
 	
 	public boolean isLocal() {
 		
@@ -180,5 +178,7 @@ public final class EventImpl<T> implements Event<T> {
 		
 		return this.target;
 	}
+
+	 
 
 }

@@ -1194,7 +1194,13 @@ public class SQLExecutor
 	
 	
 	
-	
+	/**
+	 * 采用Null行处理器的通用查询，适用于单个Object查询，List查询等等
+	 * @param rowhandler
+	 * @param sql
+	 * @param fields
+	 * @throws SQLException
+	 */
 	public static void queryByNullRowHandler(NullRowHandler rowhandler, String sql, Object... fields) throws SQLException
 	{
 		
@@ -1308,7 +1314,14 @@ public class SQLExecutor
 	}
 	
 	
-	
+	/**
+	 * 采用Null行处理器的通用查询，适用于单个Object查询，List查询等等
+	 * @param rowhandler
+	 * @param dbname
+	 * @param sql
+	 * @param fields
+	 * @throws SQLException
+	 */
 	public static void queryWithDBNameByNullRowHandler(NullRowHandler rowhandler,String dbname, String sql, Object... fields) throws SQLException
 	{
 		
