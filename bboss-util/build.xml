@@ -30,7 +30,7 @@
 		        Distribution jar package
 		       ==========================
 		  -->
-	<target name="distrib" depends="init,jar-frameworkset-util,copy-depends-liberary" description="copy jar file to distribution directory">
+	<target name="distrib" depends="init,jar-rt,jar-frameworkset-util,copy-depends-liberary" description="copy jar file to distribution directory">
 		<echo>Construct the distribution package...</echo>
 	</target>
 
@@ -48,7 +48,7 @@
 			</classpath>
 		</javac>
 	</target>
-	<target name="jar-frameworkset-util" depends="compile-frameworkset-util" description="generate the bboss-taglib library frameworkset-util.jar">
+	<target name="jar-frameworkset-util" depends="compile-frameworkset-util" description="generate the bboss-util library frameworkset-util.jar">
 		<echo>Generate the bboss-util library frameworkset-util.jar ...</echo>
 		<jar jarfile="distrib/frameworkset-util.jar" basedir="classes-bboss-util" includes="**/*">
 			<manifest>
@@ -59,11 +59,35 @@
 				<attribute name="Implementation-ProductID" value="${impl.productID}" />
 				<attribute name="Compile-Timestamp" value="${compile.timestamp}" />
 				<attribute name="Compile-User" value="${username}" />
-				<attribute name="Main-Class" value="org.frameworkset.runtime.CommonLauncher" />
 			</manifest>
 		</jar>
 	</target>
-	
+	<target name="compile-rt" description="compile the bboss-util source ">
+			<echo>compile the frameworkset-util source ...</echo>
+			<javac encoding="UTF-8" destdir="classes-bboss-util" target="1.5" source="1.5" deprecation="true" debug="${debug}" optimize="${optimize}" memorymaximumsize="256M" fork="true" verbose="yes">
+				<src path="src-rt" />
+							
+				<classpath id="cp-classes-bboss-util">
+					<fileset dir="lib/" includes="*.jar *.zip" />
+					
+				</classpath>
+			</javac>
+		</target>
+		<target name="jar-rt" depends="compile-rt" description="generate the bboss-util library bboss-rt.jar">
+			<echo>Generate the bboss-util library frameworkset-util.jar ...</echo>
+			<jar jarfile="distrib/bboss-rt.jar" basedir="classes-bboss-util" includes="**/*">
+				<manifest>
+					
+					<attribute name="Implementation-Version" value="${impl.version}" />
+					<attribute name="Specification-Version" value="${revision}" />
+					<attribute name="Implementation-Vendor" value="${impl.vendor}" />
+					<attribute name="Implementation-ProductID" value="${impl.productID}" />
+					<attribute name="Compile-Timestamp" value="${compile.timestamp}" />
+					<attribute name="Compile-User" value="${username}" />
+					<attribute name="Main-Class" value="org.frameworkset.runtime.CommonLauncher" />
+				</manifest>
+			</jar>
+		</target>
 	
 	
 	<target name="copy-depends-liberary" description="copy depends liberarys">

@@ -59,6 +59,7 @@ public class CommonLauncher
 
     private static void loadConfig(File appDir) throws IOException
     {
+    	System.out.println("appDir:"+appDir);
     	 File propertiesFile = new File(appDir, propertfile);
          InputStream in = new FileInputStream(propertiesFile);
         Properties properts = new Properties(); 
@@ -188,7 +189,10 @@ public class CommonLauncher
     public static void main(String[] args) throws SecurityException, IllegalArgumentException,
             ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException, IOException
     {
-    	
+    	StringBuilder buidler = new StringBuilder();
+		for(int i =0 ;args != null && i < args.length; i++)
+			buidler.append(args[i]).append(" ");
+		System.out.println("laucher args:"+buidler);
         run(args);
         
         

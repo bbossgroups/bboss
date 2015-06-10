@@ -4,6 +4,7 @@
 	<classpathentry kind="src" path="src-charset"/>
 	<classpathentry kind="src" path="test"/>
 	<classpathentry kind="src" path="src-asm"/>
+	<classpathentry kind="src" path="src-rt"/>
 	<classpathentry kind="lib" path="lib/commons-lang-2.1.jar" sourcepath="C:/Documents and Settings/Administrator/.m2/repository/commons-lang/commons-lang/2.1/commons-lang-2.1-sources.jar"/>
 	<classpathentry kind="lib" path="lib/commons-modeler.jar"/>
 	<classpathentry kind="lib" path="lib/concurrent-1.3.2.jar"/>
