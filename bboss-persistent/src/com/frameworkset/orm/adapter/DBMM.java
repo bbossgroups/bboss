@@ -41,6 +41,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import com.frameworkset.common.poolman.PreparedDBUtil;
+import com.frameworkset.common.poolman.SQLExecutor;
+import com.frameworkset.common.poolman.handle.NullRowHandler;
 import com.frameworkset.orm.platform.PlatformMysqlImpl;
 import com.frameworkset.util.SimpleStringUtil;
 
@@ -437,6 +439,33 @@ public class DBMM extends DB
 			newsql = new StringBuffer().append(sql).append(" limit ").append(offset).append(",").append(maxsize);
 		return new PagineSql(newsql.toString(),offset,(long)maxsize,offset, maxsize, prepared);
 	}
+	
+	  public String getStringPagineSql(String sql)
+	  {
+		  StringBuffer newsql = new StringBuffer().append(sql).append(" limit ?,?");
+			return newsql.toString();
+	  }
+	  public String getStringPagineSql(String schema,String tablename,String pkname ,String columns)
+	    {
+	    	StringBuilder sqlbuilder = new StringBuilder();
+			 	sqlbuilder.append("SELECT ");
+			 	if(columns != null && ! columns.equals(""))
+			 	{
+			 		sqlbuilder.append( columns);
+			 	}
+			 	else
+			 		sqlbuilder.append("t.* ");
+			 	sqlbuilder.append(" from   ");
+			 	if(schema != null && !schema.equals(""))
+			 		sqlbuilder.append(schema).append(".");
+			 	sqlbuilder.append( tablename);
+			 sqlbuilder.append( " limit ?,?");
+	        return sqlbuilder.toString();
+	    }
+	  public void queryByNullRowHandler(NullRowHandler handler,String dbname,String pageinestatement,long offset,int pagesize) throws SQLException
+	    {
+	    	SQLExecutor.queryWithDBNameByNullRowHandler(handler, dbname, pageinestatement,offset,pagesize);
+	    }
 	
 	public void resetPostion( PreparedStatement statement,int startidx,int endidx,long offset,int maxsize) throws SQLException
     {

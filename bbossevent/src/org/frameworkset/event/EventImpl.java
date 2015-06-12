@@ -15,6 +15,9 @@
  */
 package org.frameworkset.event;
 
+import org.frameworkset.remote.EventUtils;
+import org.jgroups.Address;
+
 
 
 /**
@@ -49,27 +52,7 @@ public final class EventImpl<T> implements Event<T> {
 	boolean synchronize = false;
 	
 	static int defaultEventBroadcastType = Event.REMOTELOCAL;
-//	static 
-//	{
-//	    String t = BaseSPIManager.getProperty("event.destinction.type","Event.REMOTELOCAL");
-//	    if(t.equals("Event.REMOTELOCAL"))
-//	    {
-//	        defaultEventBroadcastType = Event.REMOTELOCAL;
-//	    }
-//	    else if(t.equals("Event.REMOTE"))
-//	    {
-//	        defaultEventBroadcastType = Event.REMOTE;
-//	    }
-//	    else if(t.equals("Event.LOCAL"))
-//            {
-//                defaultEventBroadcastType = Event.LOCAL;
-//            }
-//	    else
-//	    {
-//	        defaultEventBroadcastType = Event.REMOTELOCAL;
-//	    }
-//	}
-	
+
 	public EventImpl(T source,EventType type )
 	{
 		this(source,type ,Event.REMOTELOCAL);
@@ -100,7 +83,13 @@ public final class EventImpl<T> implements Event<T> {
 		this.type = type;
 		this.target = target;
 		
-		
+		if(	eventBroadcastType == Event.REMOTE ||
+				eventBroadcastType == Event.REMOTELOCAL)
+		{
+			Address address =  EventUtils.getLocalAddress();
+			if(address != null)
+				this.sourceAddress = address.toString();
+		}
 	}
 	
 	public EventImpl(T source,EventType type ,int eventBroadcastType)
@@ -117,7 +106,15 @@ public final class EventImpl<T> implements Event<T> {
 		{
 			throw new java.lang.IllegalArgumentException("event Broadcast Type ["+eventBroadcastType+"] should be Event.LOCAL or Event.REMOTE or Event.REMOTELOCAL.");
 		}
+		if(	eventBroadcastType == Event.REMOTE ||
+				eventBroadcastType == Event.REMOTELOCAL)
+		{
+			Address address =  EventUtils.getLocalAddress();
+			if(address != null)
+				this.sourceAddress = address.toString();
+		}
 	}
+	private String sourceAddress;
 	public EventImpl()
 	{
 		
@@ -178,7 +175,13 @@ public final class EventImpl<T> implements Event<T> {
 		
 		return this.target;
 	}
-
+	/**
+	 * 返回事件源节点地址
+	 */
+	public String getSourceAddress()
+	{
+		return this.sourceAddress;
+	}
 	 
 
 }

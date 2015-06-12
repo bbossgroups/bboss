@@ -42,6 +42,10 @@ public interface Event<T> extends java.io.Serializable{
 	public boolean isRemoteLocal();
 	public boolean isLocal();
 	public EventTarget getEventTarget();
+	/**
+	 * 返回事件源节点地址
+	 */
+	public String getSourceAddress();
 	
 	/**
 	 * 消息传播类型：

@@ -104,6 +104,12 @@ EventHandle.getInstance().change(new Event(){
 			public int getEventBroadcastType() {
 				// TODO Auto-generated method stub
 				return 0;
+			}
+
+
+			public String getSourceAddress() {
+				// TODO Auto-generated method stub
+				return null;
 			}}, false);
 		EventHandle.getInstance().shutdown();
 	}

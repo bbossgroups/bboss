@@ -51,6 +51,8 @@ import java.util.Properties;
 import org.frameworkset.spi.BaseApplicationContext;
 
 import com.frameworkset.common.poolman.PreparedDBUtil;
+import com.frameworkset.common.poolman.SQLExecutor;
+import com.frameworkset.common.poolman.handle.NullRowHandler;
 import com.frameworkset.common.poolman.handle.ValueExchange;
 import com.frameworkset.common.poolman.security.DBInfoEncrypt;
 import com.frameworkset.common.poolman.security.DESDBPasswordEncrypt;
@@ -1148,7 +1150,34 @@ public abstract class DB implements Serializable, IDMethod,Platform
 		{
 			return false;
 		}
-
-        
+		  public String getStringPagineSql(String sql)
+		  {
+			  return sql;
+		  }
+		  
+		  public void queryByNullRowHandler(NullRowHandler handler,String dbname,String pageinestatement,long offset,int pagesize) throws SQLException
+		    {
+		    	SQLExecutor.queryWithDBNameByNullRowHandler(handler, dbname, pageinestatement,offset + pagesize,offset + 1);
+		    }
+		  public String getStringPagineSql(String schema,String tablename,String pkname ,String columns)
+		    {
+		    	StringBuilder sqlbuilder = new StringBuilder();
+				 	sqlbuilder.append("select * from (SELECT ");
+				 	if(columns != null && ! columns.equals(""))
+				 	{
+				 		sqlbuilder.append( columns);
+				 	}
+				 	else
+				 		sqlbuilder.append("t.* ");
+				 	sqlbuilder.append(",ROW_NUMBER() OVER ( ORDER BY ").append(pkname).append(") rownum__  from   ");
+				 	if(schema != null && !schema.equals(""))
+				 		sqlbuilder.append(schema).append(".");
+				 	sqlbuilder.append( tablename);
+				 	if(columns != null && ! columns.equals(""))
+				 		sqlbuilder.append( " ) bb where bb.rownum__ <=? and bb.rownum__ >=?");
+				 	else
+				 		sqlbuilder.append( " t) bb where bb.rownum__ <=? and bb.rownum__ >=?");
+		        return sqlbuilder.toString();
+		    }
         
 }

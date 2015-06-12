@@ -54,6 +54,8 @@ import oracle.sql.BLOB;
 import oracle.sql.CLOB;
 
 import com.frameworkset.common.poolman.NestedSQLException;
+import com.frameworkset.common.poolman.SQLExecutor;
+import com.frameworkset.common.poolman.handle.NullRowHandler;
 import com.frameworkset.common.poolman.security.DBInfoEncrypt;
 import com.frameworkset.common.poolman.util.JDBCPoolMetaData;
 import com.frameworkset.common.poolman.util.SQLUtil;
@@ -489,6 +491,51 @@ public class DBOracle extends DB
         return new PagineSql(ret.toString(),offset + maxsize,offset + 1,offset, maxsize, prepared);
     }
     
+    public String getStringPagineSql(String sql)
+    {
+        // StringBuffer ret = new
+        // StringBuffer("select ss1.* from (select tt1.*,rownum rowno_ from (")
+        // .append(sql)
+        // .append(") tt1) ss1 where ss1.rowno_ between ")
+        // .append((offset + 1) + "")
+        // .append(" and ")
+        // .append((offset + maxsize) + "");
+//        StringBuffer ret = new StringBuffer("select ss1.* from (select tt1.*,rownum rowno_ from (").append(sql).append(
+//                ") tt1 where rownum <= ").append((offset + maxsize)).append(") ss1 where ss1.rowno_ >= ").append(
+//                (offset + 1));
+//        return ret.toString();
+    	StringBuffer ret = new StringBuffer().append("select ss1.* from (select tt1.*,rownum rowno_ from (").append(sql).append(
+                ") tt1 where rownum <= ?) ss1 where ss1.rowno_ >= ?");
+    	
+        return ret.toString();
+    }
+    
+    public String getStringPagineSql(String schema,String tablename,String pkname ,String columns)
+    {
+    	StringBuilder sqlbuilder = new StringBuilder();
+		 	sqlbuilder.append("select * from (SELECT ");
+		 	if(columns != null && ! columns.equals(""))
+		 	{
+		 		sqlbuilder.append( columns);
+		 	}
+		 	else
+		 		sqlbuilder.append("t.* ");
+		 	sqlbuilder.append(",ROW_NUMBER() OVER ( ORDER BY ").append(pkname).append(") rownum__  from   ");
+		 	if(schema != null && !schema.equals(""))
+		 		sqlbuilder.append(schema).append(".");
+		 	sqlbuilder.append( tablename);
+		 	if(columns != null && ! columns.equals(""))
+		 		sqlbuilder.append( " ) bb where bb.rownum__ <=? and bb.rownum__ >=?");
+		 	else
+		 		sqlbuilder.append( " t) bb where bb.rownum__ <=? and bb.rownum__ >=?");
+        return sqlbuilder.toString();
+    }
+    
+    
+    public void queryByNullRowHandler(NullRowHandler handler,String dbname,String pageinestatement,long offset,int pagesize) throws SQLException
+    {
+    	SQLExecutor.queryWithDBNameByNullRowHandler(handler, dbname, pageinestatement,offset + pagesize,offset + 1);
+    }
     public void resetPostion( PreparedStatement statement,int startidx,int endidx,long offset,int maxsize) throws SQLException
     {
     	statement.setLong(startidx, offset + maxsize);
