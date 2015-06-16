@@ -1080,7 +1080,8 @@ public class Formula implements ModelObject
         	{
         		return dataSet.getObject();
         	}
-        	Object data = dataSet.getValue(dataSet.getRowid(),variables[0]);
+        	
+        	Object data = dataSet.getValueOrSize(dataSet.getRowid(),variables[0]);
             if(data == null)
                 throw new FormulaException("attribute '" + variableName + "' is null!");
             return data;
@@ -1125,7 +1126,16 @@ public class Formula implements ModelObject
             	{
             		return dataSet_t.getObject();
             	}
-                Object t = dataSet_t.getValue(dataSet_t.getRowid(),variables[1]);
+                String colName = variables[1];
+                boolean issize = false;
+                if(colName.startsWith("size:"))
+    			{
+    				issize = true;
+    				colName = colName.substring(5); 
+    			}
+    			
+    			
+                Object t = dataSet_t.getValue(dataSet_t.getRowid(),colName);
                 for(int i = 2; i < variables.length; i ++)
                 {
                 	t = ValueObjectUtil.getValue(t,variables[i]);
@@ -1134,7 +1144,14 @@ public class Formula implements ModelObject
             			 throw new FormulaException("attribute [" + variableName + ">" + variables[i] + "] is null!");
             		}
                 }
-                return t;
+                if(issize)
+    			{
+    				return ValueObjectUtil.length(t);
+    			}
+    			else
+    			{
+    				return t;
+    			}
              
             }
             catch(Exception e)
@@ -1145,7 +1162,7 @@ public class Formula implements ModelObject
         	Object t = null;
         	try
         	{
-            	t = dataSet.getValue(dataSet.getRowid(),variables[0]);
+            	
             	 /**
                  * 如果是获取当前列表或者分页的行号
                  */
@@ -1173,6 +1190,15 @@ public class Formula implements ModelObject
             	{
             		return dataSet.getObject();
             	}
+                String colName = variables[0];
+                boolean issize = false;
+                if(colName.startsWith("size:"))
+    			{
+    				issize = true;
+    				colName = colName.substring(5); 
+    			}
+    			
+                t = dataSet.getValue(dataSet.getRowid(),colName);
             	for(int i = 1; i < variables.length; i ++)
             	{
             		t = ValueObjectUtil.getValue(t,variables[i]);
@@ -1181,7 +1207,14 @@ public class Formula implements ModelObject
             			 throw new FormulaException("attribute [" + variableName + ">" + variables[i] + "] is null!");
             		}
             	}
-            	return t;
+            	if(issize)
+    			{
+    				return ValueObjectUtil.length(t);
+    			}
+    			else
+    			{
+    				return t;
+    			}
         	}
         	catch(FormulaException e)
         	{

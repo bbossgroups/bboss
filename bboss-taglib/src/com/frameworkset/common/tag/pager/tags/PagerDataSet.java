@@ -492,6 +492,42 @@ public class PagerDataSet extends PagerTagSupport {
 		}
 	}
 	
+	/**
+	 * 获取行号为rowid的值对象中属性名称为colName的值或者size
+	 * 如果是求size，那么则返回：字符串类型对象长度，容器对象size
+	 * 
+	 * @param rowid -
+	 *            值对象行号
+	 * @param colName - 属性名称或者带size:前缀的变量名称，例如：name,size:name
+	 *            属性名称
+	 * @return Object
+	 */
+	public Object getValueOrSize(int rowid, String colName) {
+		boolean issize = false;
+		try
+		{
+			
+			if(colName.startsWith("size:"))
+			{
+				issize = true;
+				colName = colName.substring(5); 
+			}
+			Object value =  getValue( rowid,  colName) ;
+			if(issize)
+			{
+				return length(value);
+			}
+			else
+			{
+				return value;
+			}
+		}
+		catch(Exception e)
+		{
+		    throw new RuntimeException("获取属性[colName=" + colName + "]"+(issize?"长度":"")+"失败：" + theClassDataList + "=" + theClassDataList,e);
+		}
+	}
+	
 	
 	/**
 	 * 获取行号为rowid的值对象中属性名称为colName的值

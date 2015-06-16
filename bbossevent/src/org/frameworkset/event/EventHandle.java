@@ -15,6 +15,8 @@
  */
 package org.frameworkset.event;
 
+import static java.util.concurrent.TimeUnit.NANOSECONDS;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -34,7 +36,42 @@ import org.jgroups.Address;
 public class EventHandle  implements Notifiable {
 	private static final Logger log = Logger.getLogger(EventHandle.class);
 	
-	
+	static ThreadPoolExecutor sendexecutor = new java.util.concurrent.ThreadPoolExecutor(50,Integer.MAX_VALUE, 0, NANOSECONDS,
+            new java.util.concurrent.ArrayBlockingQueue<Runnable>(10)
+            {
+
+				@Override
+				public boolean offer(Runnable e) {
+					
+					try {
+						super.put(e);
+						return true;
+					} catch (InterruptedException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					return false;
+				}
+		
+            });
+	static ThreadPoolExecutor receiveexecutor = new java.util.concurrent.ThreadPoolExecutor(50,Integer.MAX_VALUE, 0, NANOSECONDS,
+            new java.util.concurrent.ArrayBlockingQueue<Runnable>(10)
+            {
+
+				@Override
+				public boolean offer(Runnable e) {
+					
+					try {
+						super.put(e);
+						return true;
+					} catch (InterruptedException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					return false;
+				}
+		
+            });
 	private static EventHandle instance;
 	
 	public static final String  EVENT_SERVICE = "event.serivce";
@@ -439,7 +476,7 @@ public class EventHandle  implements Notifiable {
 		_change(event);
 
 	}
-	static ThreadPoolExecutor executor = new java.util.concurrent.ScheduledThreadPoolExecutor(10);
+	
 	/**
 	 * 本地事件处理
 	 * 
@@ -450,7 +487,7 @@ public class EventHandle  implements Notifiable {
 		if (!event.isSynchronize()) {
 			 
 			
-			executor.execute(new Runnable(){
+			sendexecutor.execute(new Runnable(){
 
 				public void run() {
 					handleEvent(event);
@@ -542,14 +579,25 @@ public class EventHandle  implements Notifiable {
 		stopped = true;
 		
 		try {
-			if(executor != null)
+			if(sendexecutor != null)
 			{
-				executor.shutdown();
-				executor = null;
+				sendexecutor.shutdown();
+				sendexecutor = null;
 				
 			}
 		} catch (Exception e) {
-			log.debug("shutdown event executor thread pool error:",e);
+			log.info("shutdown event send executor thread pool error:",e);
+		}
+		
+		try {
+			if(receiveexecutor != null)
+			{
+				receiveexecutor.shutdown();
+				receiveexecutor = null;
+				
+			}
+		} catch (Exception e) {
+			log.info("shutdown event receive executor thread pool error:",e);
 		}
 		//inited = false;
 		 
@@ -562,9 +610,17 @@ public class EventHandle  implements Notifiable {
 		
 	}
 
-	public static Object remotechange(Event event) {
+	public static Object remotechange(final Event event) {
 		
-		_handleCommon(event);
+		receiveexecutor.execute(new Runnable(){
+
+			public void run() {
+				_handleCommon(event);
+				
+			}
+			
+		});
+		
 		return 1;
 	}
 

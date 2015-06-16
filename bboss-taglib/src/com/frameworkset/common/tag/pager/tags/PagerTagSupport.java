@@ -20,12 +20,18 @@
 
 package com.frameworkset.common.tag.pager.tags;
 
+import java.lang.reflect.Array;
+import java.util.Collection;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 
 import com.frameworkset.common.tag.BaseTag;
 import com.frameworkset.platform.cms.driver.jsp.CMSServletRequest;
+import com.frameworkset.util.ListInfo;
+import com.frameworkset.util.ValueObjectUtil;
 
 /**
  * 
@@ -42,6 +48,11 @@ public abstract class PagerTagSupport extends BaseTag {
 //	protected DetailTag detailTag = null;
 	protected FieldHelper fieldHelper;
 	protected PagerContext pagerContext;
+	
+	protected int length(Object _actualValue)
+	{
+		return ValueObjectUtil.length(_actualValue);
+	}
 	/**
 	 * 判断是否导出页面数据到文件中
 	 * @return boolean
