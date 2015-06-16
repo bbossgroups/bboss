@@ -15,6 +15,7 @@
  */
 package org.frameworkset.event;
 
+import org.jgroups.Address;
 import org.junit.Test;
 
 /**
@@ -107,7 +108,7 @@ EventHandle.getInstance().change(new Event(){
 			}
 
 
-			public String getSourceAddress() {
+			public Address getSourceAddress() {
 				// TODO Auto-generated method stub
 				return null;
 			}}, false);

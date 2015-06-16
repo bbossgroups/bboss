@@ -88,7 +88,7 @@ public final class EventImpl<T> implements Event<T> {
 		{
 			Address address =  EventUtils.getLocalAddress();
 			if(address != null)
-				this.sourceAddress = address.toString();
+				this.sourceAddress = address ;
 		}
 	}
 	
@@ -111,10 +111,10 @@ public final class EventImpl<T> implements Event<T> {
 		{
 			Address address =  EventUtils.getLocalAddress();
 			if(address != null)
-				this.sourceAddress = address.toString();
+				this.sourceAddress = address;
 		}
 	}
-	private String sourceAddress;
+	private Address sourceAddress;
 	public EventImpl()
 	{
 		
@@ -178,7 +178,7 @@ public final class EventImpl<T> implements Event<T> {
 	/**
 	 * 返回事件源节点地址
 	 */
-	public String getSourceAddress()
+	public Address getSourceAddress()
 	{
 		return this.sourceAddress;
 	}

@@ -139,6 +139,11 @@ public class EventHandle  implements Notifiable {
 	{
 		getInstance().change(event);
 	}
+	
+	public static void sendEvent(Event event,boolean syn)
+	{
+		getInstance().change(event,syn);
+	}
 
 
 

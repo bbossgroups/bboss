@@ -15,6 +15,8 @@
  */
 package org.frameworkset.event;
 
+import org.jgroups.Address;
+
 /**
  * 事件，比如：
  * 用户/组信息的修改、角色信息的修改、
@@ -45,7 +47,7 @@ public interface Event<T> extends java.io.Serializable{
 	/**
 	 * 返回事件源节点地址
 	 */
-	public String getSourceAddress();
+	public Address getSourceAddress();
 	
 	/**
 	 * 消息传播类型：
