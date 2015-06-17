@@ -1,5 +1,7 @@
 package org.frameworkset.spi.event;
 
+import java.util.Map;
+
 import org.frameworkset.spi.BaseApplicationContext;
 
 /**
@@ -8,6 +10,7 @@ import org.frameworkset.spi.BaseApplicationContext;
  *
  */
 public interface IocLifeCycleEventListener {
+	void init(Map<String,String> params);
 	void beforestart();
 	void afterstart(BaseApplicationContext context);
 

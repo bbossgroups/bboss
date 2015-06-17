@@ -97,6 +97,7 @@ public class DispatchServlet extends HttpServlet {
 	private static  Properties defaultStrategies;
 	
 	private String iocLifeCycleEventListeners;
+	private String iocLifeCycleEventListenerParams;
 	private List<IocLifeCycleEventListener> iocLifeCycleEventListenerList ;
 	
 	public static Properties getDefaultStrategies()
@@ -1185,12 +1186,30 @@ public class DispatchServlet extends HttpServlet {
 		
 		
 	}
+	private Map<String,String> parserIocLifeCycleEventListenerParams(String iocLifeCycleEventListenerParams)
+	{
+		Map<String,String> paramMap = new HashMap<String,String>();
+		if(iocLifeCycleEventListenerParams != null && iocLifeCycleEventListenerParams.trim().length() > 0)
+		{
+			
+			String[] params = iocLifeCycleEventListenerParams.split("\\|");
+			for(String param :params)
+			{
+				String[] pv = param.split("=");
+				paramMap.put(pv[0], pv[1]);
+			}
+			
+		}
+		return paramMap;
+	}
 	protected void initIocLifeCycleEventListeners(ServletConfig config)
 	{
 		iocLifeCycleEventListeners = config.getInitParameter("iocLifeCycleEventListeners");
 		if(StringUtil.isNotEmpty(iocLifeCycleEventListeners ))
 		{
 			
+			iocLifeCycleEventListenerParams = config.getInitParameter("iocLifeCycleEventListenerParams");
+			Map<String,String> params = parserIocLifeCycleEventListenerParams(iocLifeCycleEventListenerParams);
 			String[]  iocLifeCycleEventListeners_ = iocLifeCycleEventListeners.split(",");
 			this.iocLifeCycleEventListenerList = new ArrayList<IocLifeCycleEventListener>();
 			for(String iocLifeCycleEventListener:iocLifeCycleEventListeners_)
@@ -1198,6 +1217,8 @@ public class DispatchServlet extends HttpServlet {
 				
 				try {
 					IocLifeCycleEventListener l = (IocLifeCycleEventListener)Class.forName(iocLifeCycleEventListener).newInstance();
+					if(params != null && params.size() > 0)
+						l.init(params);
 					iocLifeCycleEventListenerList.add(l);
 				} catch (InstantiationException e) {
 					// TODO Auto-generated catch block
