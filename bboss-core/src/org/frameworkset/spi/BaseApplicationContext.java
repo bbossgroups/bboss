@@ -1778,7 +1778,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 		Pro pro = getProBean(name);
 		if (pro == null)
 			return defaultValue;
-		return pro.getExtendAttribute(extendName);
+		return pro.getExtendAttribute(extendName,defaultValue);
 
 	}
 
@@ -1794,7 +1794,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 		Pro pro = getProBean(name);
 		if (pro == null)
 			return defaultValue;
-		return pro.getIntExtendAttribute(extendName);
+		return pro.getIntExtendAttribute(extendName,defaultValue);
 
 	}
 
@@ -1811,7 +1811,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 		Pro pro = getProBean(name);
 		if (pro == null)
 			return defaultValue;
-		return pro.getLongExtendAttribute(extendName);
+		return pro.getLongExtendAttribute(extendName,defaultValue);
 	}
 
 	public boolean getBooleanExtendAttribute(String name, String extendName) {

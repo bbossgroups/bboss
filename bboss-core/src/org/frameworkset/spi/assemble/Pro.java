@@ -1664,7 +1664,8 @@ public class Pro extends BaseTXManager implements Comparable, BeanInf {
 //			log.info("Get Extend Attribute failed:name = " + name
 //					+ " not exist in property[" + this.getName()
 //					+ "] return default value: " + defaultValue);
-			return defaultValue;
+			else
+				return defaultValue;
 		} else {
 //			log.info("Get Extend Attribute failed:name = " + name
 //					+ " not exist in property[" + this.getName()
@@ -1732,7 +1733,8 @@ public class Pro extends BaseTXManager implements Comparable, BeanInf {
 			ret = this.getExtendsAttributes().get(name);
 			if (ret != null)
 				return Integer.parseInt(ret.toString());
-			return defaultValue;
+			else 
+				return defaultValue;
 		} else {
 //			log.info("Get Extend Attribute failed:name = " + name
 //					+ " not exist in property[" + this.getName() + "]");
@@ -1763,7 +1765,8 @@ public class Pro extends BaseTXManager implements Comparable, BeanInf {
 			ret = this.getExtendsAttributes().get(name);
 			if (ret != null)
 				return Long.parseLong(ret.toString());
-			return defaultValue;
+			else
+				return defaultValue;
 		} else {
 //			log.info("Get Extend Attribute failed:name = " + name
 //					+ " not exist in property[" + this.getName() + "]");
