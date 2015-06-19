@@ -1,4 +1,4 @@
-/com/
+/com
 /core-site.xml
 /dbcp-hx.xml.bak
 /dbcp-hx123.xml
@@ -12,7 +12,7 @@
 /eventconf.xml
 /hdfs-site.xml
 /log4j.properties
-/org/
+/org
 /poolman.xml
 /poolman.xml.bak
 /tasks.xml

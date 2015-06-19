@@ -32,7 +32,7 @@
 		</init-param>
 		<init-param>
 			<param-name>iocLifeCycleEventListeners</param-name>
-			<param-value>com.sany.bigdata.impl.monitor.BigdataIocLifeCycleEventListener</param-value>
+			<param-value>org.frameworkset.bigdata.impl.monitor.BigdataIocLifeCycleEventListener</param-value>
 		</init-param>
 		
 		<init-param>
