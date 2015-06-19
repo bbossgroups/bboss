@@ -1,0 +1,14 @@
+
+<properties>
+
+
+	<!-- 描述:session管理模块 author:谭湘 CopyRight:三一 版本:1.0 Date: 2014-06-04 -->
+
+	<property name="/bigdata/*.page"
+		path:index="/bigdata/bigdataManager.jsp"		 
+		class="com.sany.bigdata.impl.monitor.JobstaticMonitorController">
+	</property>
+
+	<property name="sessionService" 
+		class="org.frameworkset.security.session.service.impl.SessionManagerServiceImpl" />
+</properties>

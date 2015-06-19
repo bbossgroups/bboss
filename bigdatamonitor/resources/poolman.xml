@@ -1,0 +1,66 @@
+<poolman>
+<datasource>
+
+		<dbname>hx243</dbname>
+		<loadmetadata>false</loadmetadata>
+		<enablejta>true</enablejta>
+		<jndiName>hx243_datasource_jndiname</jndiName>
+		<datasourceFile>dbcp-hx243.xml</datasourceFile>
+		<autoprimarykey>false</autoprimarykey>
+		<showsql>true</showsql>
+		<keygenerate>composite</keygenerate>
+		
+</datasource>
+<datasource>
+
+		<dbname>hx125</dbname>
+		<loadmetadata>false</loadmetadata>
+		<enablejta>true</enablejta>
+		<jndiName>hx125_datasource_jndiname</jndiName>
+		<datasourceFile>dbcp-hx125.xml</datasourceFile>
+		<autoprimarykey>false</autoprimarykey>
+		<showsql>true</showsql>
+		<keygenerate>composite</keygenerate>
+		
+</datasource>
+
+<datasource>
+
+		<dbname>hx123</dbname>
+		<loadmetadata>false</loadmetadata>
+		<enablejta>true</enablejta>
+		<jndiName>hx123_datasource_jndiname</jndiName>
+		<datasourceFile>dbcp-hx123.xml</datasourceFile>
+		<autoprimarykey>false</autoprimarykey>
+		<showsql>true</showsql>
+		<keygenerate>composite</keygenerate>
+		
+</datasource>
+<datasource>
+
+		<dbname>zn</dbname>
+		<loadmetadata>false</loadmetadata>
+		<enablejta>true</enablejta>
+		<jndiName>zn_datasource_jndiname</jndiName>
+		<datasourceFile>dbcp-zn.xml</datasourceFile>
+		<autoprimarykey>false</autoprimarykey>
+		<showsql>true</showsql>
+		<keygenerate>composite</keygenerate>
+		
+</datasource>
+
+<datasource>
+
+		<dbname>test</dbname>
+		<loadmetadata>false</loadmetadata>
+		<enablejta>true</enablejta>
+		<jndiName>test_datasource_jndiname</jndiName>
+		<datasourceFile>dbcp-test.xml</datasourceFile>
+		<autoprimarykey>false</autoprimarykey>
+		<showsql>true</showsql>
+		<keygenerate>composite</keygenerate>
+		
+</datasource>
+	
+</poolman>  
+  
