@@ -589,11 +589,7 @@ public class HDFSUploadData {
 				
 				
 				segments = new TaskInfo[retTasks.size()];				
-//				
-//				for (int i = 0; i < temp.size(); i++) {
-//					segments[i] = temp.get(i);
-//				}
-				
+			
 				retTasks.toArray(segments);
 				
 			}

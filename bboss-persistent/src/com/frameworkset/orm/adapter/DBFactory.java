@@ -67,10 +67,11 @@ public class DBFactory
     public static final String  DBDerby =  "derby";
 
     public static final String  DBNone = "";
-    
+    public static final String  SQLITEX = "sqlitex";
 
     /**
      * Initialize the JDBC driver to Torque Adapter map.
+     * 
      */
     static
     {
@@ -133,7 +134,9 @@ public class DBFactory
         adapters.put("msaccess", DBOdbc.class);
 
         adapters.put("derby", DBDerby.class);
-
+        adapters.put(SQLITEX, DBSQLiteXerial.class);
+        adapters.put("org.sqlite.JDBC", DBSQLiteXerial.class);
+        
         adapters.put("", DBNone.class);
     }
 

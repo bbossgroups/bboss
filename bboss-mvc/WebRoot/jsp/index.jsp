@@ -314,7 +314,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						<li><a href="http://yin-bp.iteye.com/" target="_blank">bboss官方博客</a></li>
 						<li><a href="https://github.com/bbossgroups/bbossgroups-3.5" target="_blank">bboss github托管地址</a></li>			
 						<li><a href="http://www.iteye.com/wiki/bbossgroups/3092-mvc-bboss-config" target="_blank">bboss 开发系列文章之一 最佳实践</a> </li>
-						<li><a href="http://www.iteye.com/wiki/bbossgroups/3090-mvc-aop-bboss" target="_blank">搭建bboss mvc eclipse开发工程，编写第一个实例</a></li>
+						<li><a href="http://yin-bp.iteye.com/blog/1026261" target="_blank">搭建bboss mvc eclipse开发工程，编写第一个实例</a></li>
 						<li><a href="http://www.iteye.com/wiki/bbossgroups/3094-persistent" target="_blank">bboss SQLExecutor组件api使用实例</a></li>
 						<li><a href="http://www.iteye.com/wiki/bbossgroups/3091-webservice-bboss-aop" target="_blank">bboss webservice引擎使用方法</a></li>
 						<li><a href="http://www.iteye.com/wiki/bbossgroups/3089-bbossgroups-aop-rmi" target="_blank">bboss rmi组件服务发布和rmi客服端获取方法</a></li>
