@@ -19,7 +19,6 @@ package com.frameworkset.common.poolman.util;
 
 import java.io.File;
 import java.io.InputStream;
-import java.io.Serializable;
 import java.sql.Blob;
 import java.sql.Clob;
 import java.sql.Connection;
@@ -83,7 +82,7 @@ import com.frameworkset.orm.transaction.TransactionManager;
  * @author biaoping.yin
  * @version 1.0
  */
-public class SQLUtil implements Serializable{
+public class SQLUtil{
 	private static final Logger log = Logger.getLogger(SQLUtil.class);
 
 //	private static SQLUtil myself;

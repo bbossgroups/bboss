@@ -11,8 +11,10 @@ import org.apache.log4j.Logger;
 import org.frameworkset.runtime.CommonLauncher;
 
 import com.frameworkset.util.SimpleStringUtil;
+
 import org.frameworkset.bigdata.imp.monitor.JobStatic;
 import org.frameworkset.bigdata.imp.monitor.TaskStatus;
+import org.frameworkset.bigdata.util.DBHelper;
 
 public class ExecutorJob {
 	private static Logger log = Logger.getLogger(ExecutorJob.class); 
@@ -58,6 +60,7 @@ public class ExecutorJob {
 			 if(!localdir.exists())
 				 localdir.mkdirs();
 		}
+		DBHelper.initDB(config);
 		log.info("start run task:"+config +",task size:"+config.getTasks().length);
 		 jobStatic = Imp.getImpStaticManager().addJobStatic(this);
 		 GenFileHelper  genFileWork = new GenFileHelper(this);

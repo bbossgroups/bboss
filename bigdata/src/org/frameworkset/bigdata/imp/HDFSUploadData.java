@@ -12,6 +12,7 @@ import java.util.Set;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.log4j.Logger;
+import org.frameworkset.bigdata.util.DBHelper;
 import org.frameworkset.event.Event;
 import org.frameworkset.event.EventHandle;
 import org.frameworkset.event.EventImpl;
@@ -25,7 +26,7 @@ import com.frameworkset.common.poolman.DBUtil;
 import com.frameworkset.common.poolman.PreparedDBUtil;
 
 public class HDFSUploadData {
-	public String HADOOP_PATH = "hdfs://10.0.15.40:9000";
+	public String HADOOP_PATH ;
 
 	private static Logger log = Logger.getLogger(HDFSUploadData.class);
 
@@ -39,7 +40,16 @@ public class HDFSUploadData {
 			"hdfs_upload_monitor_request_commond");
 	public static final SimpleEventType hdfs_upload_monitor_response_commond = new SimpleEventType(
 			"hdfs_upload_monitor_response_commond");
-
+	/**
+	 * 数据库连接信息
+	 */
+	private String driver;
+	private String dburl;
+	private String dbpassword;
+	private String dbuser;
+	private String validatesql;
+	private String readOnly;
+	private boolean usepool;
 	// public static final String FILE_PATH="/10.0.15.71.1433174400004";
 	private FileSystem fileSystem = null;
 	private String hdfsserver;
@@ -84,6 +94,13 @@ public class HDFSUploadData {
 
 	TaskConfig buildTaskConfig() {
 		TaskConfig config = new TaskConfig();
+		config.driver = this.driver;
+		config.dburl = this.dburl;
+		config.dbpassword = this.dbpassword;
+		config.dbuser = this.dbuser;
+		config.validatesql = this.validatesql;
+		config.setReadOnly(readOnly);
+		config.usepool = this.usepool;
 		config.filebasename = filebasename;
 		config.hdfsdatadirpath = this.hdfsdatadir;
 		config.hdfsserver = this.hdfsserver;
@@ -103,7 +120,6 @@ public class HDFSUploadData {
 		config.genlocalfile = genlocalfile;
 		config.datatype = this.datatype;
 		config.schema = this.schema;
-
 		config.usepagine = this.usepagine;
 		config.adminnodeasdatanode = this.adminnodeasdatanode;
 		config.jobname = jobname;
@@ -244,7 +260,31 @@ public class HDFSUploadData {
 				}
 			}
 		}
+		String driver = context.getStringExtendAttribute(jobname,
+				"driver");
+		String dburl = context.getStringExtendAttribute(jobname,
+				"dburl");
+		String dbpassword = context.getStringExtendAttribute(jobname,
+				"dbpassword","");
+		String dbuser = context.getStringExtendAttribute(jobname,
+				"dbuser","");
+		String validatesql = context.getStringExtendAttribute(jobname,
+				"validatesql","");
+		
+		
+		boolean usepool = context.getBooleanExtendAttribute(jobname,
+				"usepool",false);
 		TaskConfig config = new TaskConfig();
+		String readOnly = context.getStringExtendAttribute(jobname,
+				"readOnly","true");
+		config.setReadOnly(readOnly);
+		config.driver = driver;
+		config.dburl = dburl;
+		config.dbpassword = dbpassword;
+		config.dbuser = dbuser;
+		config.validatesql = validatesql;
+		config.setReadOnly(readOnly);
+		config.usepool = usepool;
 		config.filebasename = filebasename;
 		config.hdfsdatadirpath = hdfsdatadir;
 		config.hdfsserver = hdfsserver;
@@ -822,6 +862,21 @@ public class HDFSUploadData {
 				i++;
 			}
 		}
+		driver = context.getStringExtendAttribute(jobname,
+				"driver");
+		dburl = context.getStringExtendAttribute(jobname,
+				"dburl");
+		dbpassword = context.getStringExtendAttribute(jobname,
+				"dbpassword","");
+		dbuser = context.getStringExtendAttribute(jobname,
+				"dbuser","");
+		readOnly = context.getStringExtendAttribute(jobname,
+				"readOnly","true");
+		
+		validatesql = context.getStringExtendAttribute(jobname,
+				"validatesql","");
+		usepool = context.getBooleanExtendAttribute(jobname,
+				"usepool",false);
 	}
 	
 	/**
@@ -895,6 +950,7 @@ public class HDFSUploadData {
 							fileSystem.mkdirs(path);
 						}
 					}
+					DBHelper.initDB(HDFSUploadData.this);
 					buildJobChunks();
 					log.info("启动数据上传任务[jobname=" + jobname + "],[hdfsdatadir="
 							+ hdfsdatadir + "] on hdfsserver[" + hdfsserver + "],"
@@ -916,6 +972,199 @@ public class HDFSUploadData {
 		}).start();
 		
 		
+	}
+
+	public String getDriver() {
+		return driver;
+	}
+
+	public void setDriver(String driver) {
+		this.driver = driver;
+	}
+
+	public String getDburl() {
+		return dburl;
+	}
+
+	public void setDburl(String dburl) {
+		this.dburl = dburl;
+	}
+
+	public String getDbpassword() {
+		return dbpassword;
+	}
+
+	public void setDbpassword(String dbpassword) {
+		this.dbpassword = dbpassword;
+	}
+
+	public String getDbuser() {
+		return dbuser;
+	}
+
+	public void setDbuser(String dbuser) {
+		this.dbuser = dbuser;
+	}
+
+	public String getValidatesql() {
+		return validatesql;
+	}
+
+	public void setValidatesql(String validatesql) {
+		this.validatesql = validatesql;
+	}
+
+	public boolean isUsepool() {
+		return usepool;
+	}
+
+	public void setUsepool(boolean usepool) {
+		this.usepool = usepool;
+	}
+
+	public String getHADOOP_PATH() {
+		return HADOOP_PATH;
+	}
+
+	public FileSystem getFileSystem() {
+		return fileSystem;
+	}
+
+	public String getHdfsserver() {
+		return hdfsserver;
+	}
+
+	public String getHdfsdatadir() {
+		return hdfsdatadir;
+	}
+
+	public String getLocalpath() {
+		return localpath;
+	}
+
+	public String getTablename() {
+		return tablename;
+	}
+
+	public String getSchema() {
+		return schema;
+	}
+
+	public String getPkName() {
+		return pkName;
+	}
+
+	public String getColumns() {
+		return columns;
+	}
+
+	public String getFilebasename() {
+		return filebasename;
+	}
+
+	public int getDatablocks() {
+		return datablocks;
+	}
+
+	public String getDbname() {
+		return dbname;
+	}
+
+	public int getWorkservers() {
+		return workservers;
+	}
+
+	public boolean isRundirect() {
+		return rundirect;
+	}
+
+	public int getGeneworkthreads() {
+		return geneworkthreads;
+	}
+
+	public int getUploadeworkthreads() {
+		return uploadeworkthreads;
+	}
+
+	public int getGenqueques() {
+		return genqueques;
+	}
+
+	public int getUploadqueues() {
+		return uploadqueues;
+	}
+
+	public int getGenquequetimewait() {
+		return genquequetimewait;
+	}
+
+	public int getUploadqueuetimewait() {
+		return uploadqueuetimewait;
+	}
+
+	public long getStartid() {
+		return startid;
+	}
+
+	public long getEndid() {
+		return endid;
+	}
+
+	public String getDatatype() {
+		return datatype;
+	}
+
+	public boolean isGenlocalfile() {
+		return genlocalfile;
+	}
+
+	public boolean isClearhdfsfiles() {
+		return clearhdfsfiles;
+	}
+
+	public String getCountstatement() {
+		return countstatement;
+	}
+
+	public String getPageinestatement() {
+		return pageinestatement;
+	}
+
+	public long getTablerows() {
+		return tablerows;
+	}
+
+	public boolean isUsepagine() {
+		return usepagine;
+	}
+
+	public boolean isAdminnodeasdatanode() {
+		return adminnodeasdatanode;
+	}
+
+	public int[] getBlocks() {
+		return blocks;
+	}
+
+	public int getSubblocks() {
+		return subblocks;
+	}
+
+	public Map<String, TaskConfig> getTasks() {
+		return tasks;
+	}
+
+	public List<String> getDeleteParentBlockHDFS() {
+		return deleteParentBlockHDFS;
+	}
+
+	public Map<String, List<Integer>> getBlocksplits() {
+		return blocksplits;
+	}
+
+	public String isReadOnly() {
+		// TODO Auto-generated method stub
+		return readOnly;
 	}
 
 }

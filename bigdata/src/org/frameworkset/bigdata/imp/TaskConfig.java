@@ -12,6 +12,11 @@ public class TaskConfig implements java.io.Serializable{
 	String dbpassword;
 	String dbuser;
 	String validatesql;
+	/**
+	 * 创建的数据源是否采用连接池
+	 */
+	boolean usepool;
+	private String readOnly;
 	Map<String,List<Integer>> blocksplits; 
 	/**
 	 * 指定dbname主要是用于连接池，系统固化连接池，
@@ -70,7 +75,10 @@ public class TaskConfig implements java.io.Serializable{
 					.append("dburl=").append(this.dburl).append("\r\n")
 			.append("dbpassword=").append(dbpassword).append("\r\n")
 			.append("dbuser=[").append(dbuser).append("]\r\n")
+			.append("usepool=[").append(usepool).append("]\r\n")
+			.append("readOnly=[").append(readOnly).append("]\r\n")
 			.append("validatesql=").append(validatesql).append("\r\n");
+			
 		}
 		
 		
@@ -340,5 +348,17 @@ public class TaskConfig implements java.io.Serializable{
 	}
 	public void setBlocksplits(Map<String, List<Integer>> blocksplits) {
 		this.blocksplits = blocksplits;
+	}
+	public boolean isUsepool() {
+		return usepool;
+	}
+	public void setUsepool(boolean usepool) {
+		this.usepool = usepool;
+	}
+	public String getReadOnly() {
+		return readOnly;
+	}
+	public void setReadOnly(String readOnly) {
+		this.readOnly = readOnly;
 	}
 }
