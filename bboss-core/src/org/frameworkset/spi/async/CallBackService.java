@@ -22,7 +22,7 @@ package org.frameworkset.spi.async;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2011-4-21 …œŒÁ11:43:24
+ * @Date 2011-4-21 ‰∏äÂçà11:43:24
  * @author biaoping.yin
  * @version 1.0
  */

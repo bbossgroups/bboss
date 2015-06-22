@@ -11,7 +11,7 @@ public class SQLParamTag extends BaseTag{
 	 */
 	private static final long serialVersionUID = -5205212913867669568L;
 	/**
-     * ±äÁ¿Ãû³Æ
+     * å˜é‡åç§°
      */
     private String name;
     public String getName()
@@ -39,11 +39,11 @@ public class SQLParamTag extends BaseTag{
         this.type = type;
     }
     /**
-     * ±äÁ¿Öµ
+     * å˜é‡å€¼
      */
     private Object value;
     /**
-     * ±äÁ¿ÀàĞÍ
+     * å˜é‡ç±»å‹
      */
     private String type;  
     

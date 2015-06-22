@@ -27,7 +27,7 @@ import org.frameworkset.util.ClassUtil.ClassInfo;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2008</p>
- * @Date 2011-5-14 …œŒÁ11:32:24
+ * @Date 2011-5-14 ‰∏äÂçà11:32:24
  * @author biaoping.yin
  * @version 1.0
  */

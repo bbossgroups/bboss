@@ -29,7 +29,7 @@ import org.frameworkset.util.ClassUtil.ClassInfo;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2008</p>
- * @Date 2011-5-10 …œŒÁ10:17:29
+ * @Date 2011-5-10 ‰∏äÂçà10:17:29
  * @author biaoping.yin
  * @version 1.0
  */

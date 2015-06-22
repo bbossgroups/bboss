@@ -323,7 +323,7 @@ function submitJob () {
 
 
 							</tr>
-							<pg:beaninfo>
+						
 							 
 								
 								<tr>
@@ -372,7 +372,7 @@ function submitJob () {
 								</pg:list>
 
 							 
-						</pg:beaninfo>
+						
 						</table>	
 						
 					</pg:map>

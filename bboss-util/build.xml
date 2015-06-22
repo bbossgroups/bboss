@@ -61,6 +61,7 @@
 				<attribute name="Compile-User" value="${username}" />
 			</manifest>
 		</jar>
+		
 	</target>
 	<target name="compile-rt" description="compile the bboss-util source ">
 			<echo>compile the frameworkset-util source ...</echo>
@@ -87,6 +88,10 @@
 					<attribute name="Main-Class" value="org.frameworkset.runtime.CommonLauncher" />
 				</manifest>
 			</jar>
+					<delete dir="classes-bboss-util" />
+					
+					
+					<mkdir dir="classes-bboss-util" />
 		</target>
 	
 	

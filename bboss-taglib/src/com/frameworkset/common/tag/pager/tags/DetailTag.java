@@ -232,7 +232,7 @@ public class DetailTag extends PagerDataSet implements FieldHelper{
 				DataInfo dataInfo = pagerContext.getDataInfo();
 				if (dataInfo == null)
 				{
-					log.debug("235 detail tag-------------------->loadClassDataNull :dataInfo is null.");
+					
 					loadClassDataNull();
 				}
 				else if(dataInfo instanceof ObjectDataInfoImpl)

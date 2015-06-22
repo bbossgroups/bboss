@@ -9,13 +9,13 @@ import org.frameworkset.spi.event.IocLifeCycleEventListener;
 public class BigdataIocLifeCycleEventListener implements
 		IocLifeCycleEventListener {
 	private Map<String,String> params;
-	@Override
+	
 	public void afterstart(BaseApplicationContext ioccontext) {
 		
 
 	}
 
-	@Override
+	
 	public void beforestart() {
 		if(params != null)
 		{
@@ -32,7 +32,6 @@ public class BigdataIocLifeCycleEventListener implements
 
 	}
 
-	@Override
 	public void init(Map<String,String> params) {
 		this.params = params;
 		

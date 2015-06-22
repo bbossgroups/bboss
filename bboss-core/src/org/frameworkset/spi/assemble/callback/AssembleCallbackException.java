@@ -21,7 +21,7 @@ package org.frameworkset.spi.assemble.callback;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2010-10-4 …œŒÁ11:37:35
+ * @Date 2010-10-4 ‰∏äÂçà11:37:35
  * @author biaoping.yin
  * @version 1.0
  */

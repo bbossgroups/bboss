@@ -20,7 +20,7 @@ package org.frameworkset.soa;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2008</p>
- * @Date 2011-5-14 …œŒÁ11:31:32
+ * @Date 2011-5-14 ‰∏äÂçà11:31:32
  * @author biaoping.yin
  * @version 1.0
  */

@@ -22,7 +22,7 @@
 		<mkdir dir="classes-bigdata" />
 
 		<mkdir dir="distrib" />
-	
+		<mkdir dir="distrib/run" />
 	</target>
 	<target name="default" depends="complete" description="default = build distribution package" />
 
@@ -42,6 +42,8 @@
 
 			<classpath id="cp-classes-bigdata">
 				<fileset dir="${webroot}/WEB-INF/lib" includes="*.jar *.zip" />
+				<fileset dir="lib" includes="**/*.jar" />
+				<fileset dir="build" includes="*.jar" />
 			</classpath>
 		</javac>
 	</target>
@@ -63,43 +65,73 @@
 
 
 	<target name="copy-resource" description="copy resource files">
-			<echo>copy resource files ...</echo>
-			<copy todir="${distrib}/WebRoot/" overwrite="true">
-				<fileset dir="${webroot}/" />
-			</copy>
-			
-			<delete dir="${distrib}/WebRoot/WEB-INF/classes"/>
-			 
-			
-			<mkdir dir="${distrib}/WebRoot/WEB-INF/classes"/>
-			<copy todir="${distrib}/WebRoot/WEB-INF/classes">
-				<fileset dir="${source}/resources" includes="**/*"  />
-			</copy>	
-		     <copy todir="${distrib}/WebRoot/WEB-INF/classes" overwrite="true">
-					<fileset dir="build/resources" includes="**/*"  />
-			</copy>
+		<echo>copy resource files ...</echo>
+		<copy todir="${distrib}/WebRoot/" overwrite="true">
+			<fileset dir="${webroot}/" />
+		</copy>
 
-		</target>	
-		<target name="copy-depends-liberary" description="copy depends liberarys">
-					<echo>copy depends liberarys ...</echo>
-					<copy todir="${distrib}/WebRoot/WEB-INF/lib" overwrite="true">
-							<fileset dir="${distrib}" includes="*.jar" />
-					</copy>
-		</target>
-		
-		<target name="war" depends="distrib" description="copy depends liberarys">
-			
-			
-			<war destfile="${distrib}/bigdata.war" webxml="${distrib}/WebRoot/WEB-INF/web.xml">
-			  <fileset dir="${distrib}/WebRoot/"/>	  
-			</war>
-			<delete dir="${distrib}/WebRoot"/>
-		</target>
-		
-		<target name="complete" depends="war" description="copy depends liberarys">
-			 
-			<delete dir="classes-bigdata" />
-		</target>
+		<delete dir="${distrib}/WebRoot/WEB-INF/classes" />
 
-	
+
+		<mkdir dir="${distrib}/WebRoot/WEB-INF/classes" />
+		<copy todir="${distrib}/WebRoot/WEB-INF/classes">
+			<fileset dir="${source}/resources" includes="**/*" />
+		</copy>
+		<copy todir="${distrib}/WebRoot/WEB-INF/classes" overwrite="true">
+			<fileset dir="build/resources" includes="**/*" />
+		</copy>
+
+	</target>
+	<target name="copy-depends-liberary" description="copy depends liberarys">
+		<echo>copy depends liberarys ...</echo>
+		<copy todir="${distrib}/WebRoot/WEB-INF/lib" overwrite="true">
+			<fileset dir="${distrib}" includes="*.jar" />
+		</copy>
+	</target>
+
+	<target name="war" depends="distrib" description="copy depends liberarys">
+
+
+		<war destfile="${distrib}/bigdata.war" webxml="${distrib}/WebRoot/WEB-INF/web.xml">
+			<fileset dir="${distrib}/WebRoot/" />
+		</war>
+		<delete dir="${distrib}/WebRoot" />
+	</target>
+	<target name="run" depends="jar-bigdata" description="copy depends liberarys">
+		<echo>copy depends liberarys ...</echo>
+		<copy todir="distrib/run/lib">
+			<fileset dir="lib" includes="**/*.jar" />
+		</copy>
+
+		<copy todir="distrib/run/lib">
+			<fileset dir="${distrib}" includes="*.jar" />
+		</copy>
+		<copy todir="distrib/run/resources">
+			<fileset dir="resources" includes="**/*" />
+		</copy>
+
+
+		<copy todir="distrib/run/">
+			<fileset dir="build" includes="config.properties *.sh *.bat,*.jar" />
+		</copy>
+		<echo>copy build/resources ...</echo>
+		<copy todir="distrib/run/resources" overwrite="true">
+			<fileset dir="build/resources" includes="**/*" />
+		</copy>
+
+		<copy todir="${distrib}/run/WebRoot/" overwrite="true">
+			<fileset dir="${webroot}/" />
+		</copy>
+
+		<delete dir="${distrib}/run/WebRoot/WEB-INF/classes" />
+
+
+		<mkdir dir="${distrib}/run/WebRoot/WEB-INF/classes" />
+	</target>
+	<target name="complete" depends="war,run" description="copy depends liberarys">
+
+		<delete dir="classes-bigdata" />
+	</target>
+
+
 </project>

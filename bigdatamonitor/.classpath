@@ -3,18 +3,14 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="resources"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/asm-3.1.jar"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/asm-commons-3.1.jar"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/asm-util-3.1.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/bboss-security.jar" sourcepath="WebRoot/WEB-INF/lib/bboss-security-sources.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/bboss-soa.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/frameworkset-util.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/jakarta-oro-2.0.8.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/jarjar.jar"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/log4j-1.2.14.jar"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/bboss-mvc.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/bboss-mvc.jar" sourcepath="/bboss-mvc"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/bboss-security-web.jar"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/bboss-core.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/bboss-core.jar" sourcepath="/bboss-core"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/mongo-java-driver-2.12.4-javadoc.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/mongo-java-driver-2.12.4-sources.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/mongo-java-driver-2.12.4.jar"/>
@@ -53,7 +49,6 @@
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/jackson-all-1.6.2.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/java-uuid-generator-3.1.2.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/jgroups-3.6.1.Final.jar"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/jstl-1.2.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/log4j-1.2.17.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/ojdbc14.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/protobuf-java-2.5.0.jar"/>
@@ -61,5 +56,17 @@
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/slf4j-log4j12-1.7.10.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/bigdata-impl.jar" sourcepath="/bigdata"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/sqlite-jdbc-3.8.10.1.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/asm-5.0.3.jar"/>
+	<classpathentry kind="lib" path="lib/jsp/com.sun.el-2.2.0.v201108011116.jar"/>
+	<classpathentry kind="lib" path="lib/jsp/javax.el-2.2.0.v201108011116.jar"/>
+	<classpathentry kind="lib" path="lib/jsp/javax.servlet.jsp-2.2.0.v201112011158.jar"/>
+	<classpathentry kind="lib" path="lib/jsp/javax.servlet.jsp.jstl-1.2.0.v201105211821.jar"/>
+	<classpathentry kind="lib" path="lib/jsp/org.apache.jasper.glassfish-2.2.2.v201112011158.jar"/>
+	<classpathentry kind="lib" path="lib/jsp/org.apache.taglibs.standard.glassfish-1.2.0.v201112081803.jar"/>
+	<classpathentry kind="lib" path="lib/jsp/org.eclipse.jdt.core-3.7.1.jar"/>
+	<classpathentry kind="lib" path="lib/jetty-all-server-8.1.17.v20150415-sources.jar"/>
+	<classpathentry kind="lib" path="lib/jetty-all-server-8.1.17.v20150415.jar"/>
+	<classpathentry kind="lib" path="lib/servlet-api-3.0.jar"/>
+	<classpathentry kind="lib" path="build/bboss-rt.jar"/>
 	<classpathentry kind="output" path="WebRoot/WEB-INF/classes"/>
 </classpath>

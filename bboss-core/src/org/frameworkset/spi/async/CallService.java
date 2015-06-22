@@ -25,7 +25,7 @@ import org.frameworkset.spi.assemble.SynchronizedMethod;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2011-4-21 …œŒÁ11:41:49
+ * @Date 2011-4-21 ‰∏äÂçà11:41:49
  * @author biaoping.yin
  * @version 1.0
  */

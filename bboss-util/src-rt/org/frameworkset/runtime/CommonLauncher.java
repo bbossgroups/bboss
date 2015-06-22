@@ -55,16 +55,55 @@ public class CommonLauncher
 
 
     public static String mainclass = "org.frameworkset.persistent.db.DBInit";
+    private static Properties properts;
     private static String[] args;
-
+    private static String extlibs[];
+    private static String extresources[];
+    private static File appDir;
+    public static String getProperty(String pro)
+    {
+    	String value = null;
+    	if(properts != null)
+    		value = (String)properts.get(pro);
+    	return value;
+    }
+    
+    public static String getProperty(String pro,String defaultValue)
+    {
+    	String value = null;
+    	if(properts != null)
+    		value = (String)properts.get(pro);
+    	if(value == null)
+    		return defaultValue;
+    	return value;
+    }
     private static void loadConfig(File appDir) throws IOException
     {
     	System.out.println("appDir:"+appDir);
     	 File propertiesFile = new File(appDir, propertfile);
          InputStream in = new FileInputStream(propertiesFile);
-        Properties properts = new Properties(); 
+        properts = new Properties(); 
         properts.load(in);
         mainclass = properts.getProperty("mainclass");
+        String extlib = properts.getProperty("extlibs") ;
+        if(extlib != null)
+        {
+        	extlibs = extlib.split(";");
+        	for(int i = 0;  i < extlibs.length; i++)
+        	{
+        		extlibs[i] = extlibs[i].trim();
+        	}
+        }
+        String extresources_ = properts.getProperty("extresources") ;
+        if(extresources_ != null)
+        {
+        	extresources = extresources_.split(";");
+        	for(int i = 0;  i < extresources.length; i++)
+        	{
+        		extresources[i] = extresources[i].trim();
+        	}
+        }
+        
         if(mainclass == null || mainclass.trim().length() == 0)
         {
         	throw new java.lang.IllegalArgumentException("配置文件config.properties 中没有正确设置mainclass属性.");
@@ -80,7 +119,7 @@ public class CommonLauncher
     {
     	CommonLauncher.args = args;
         URL location = (CommonLauncher.class).getProtectionDomain().getCodeSource().getLocation();
-        File appDir = computeApplicationDir(location, new File("."));
+        appDir = computeApplicationDir(location, new File("."));
        
         File lib = new File(appDir, publiclibdir);
         
@@ -115,7 +154,14 @@ public class CommonLauncher
         // 
         loadSubdirJars(lib, allpublicjars);
         
-      
+       if(extlibs != null && extlibs.length > 0)
+       {
+    	   for(String ext:extlibs)
+    	   {
+    		   File elib = new File(appDir,ext);
+    		   loadSubdirJars(elib, allpublicjars);
+    	   }
+       }
         
        
         List<URL> alljars = new ArrayList<URL>();
@@ -123,7 +169,14 @@ public class CommonLauncher
         alljars.addAll(allpublicjars);
 
         
-        
+        if(extresources != null && extresources.length > 0)
+        {
+     	   for(String resource:extresources)
+     	   {
+     		   File elib = new File(appDir,resource);
+     		  alljars.add(elib.toURI().toURL());
+     	   }
+        }
         alljars.add(resourcesFile.toURI().toURL());
         
         

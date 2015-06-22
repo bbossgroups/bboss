@@ -27,7 +27,7 @@ import java.net.URLDecoder;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2010-10-4 …œŒÁ10:52:29
+ * @Date 2010-10-4 ‰∏äÂçà10:52:29
  * @author biaoping.yin
  * @version 1.0
  */

@@ -6,7 +6,7 @@ package org.frameworkset.spi;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2009-9-28 …œŒÁ11:20:11
+ * @Date 2009-9-28 ‰∏äÂçà11:20:11
  * @author biaoping.yin
  * @version 1.0
  */
