@@ -1,7 +1,5 @@
 package org.frameworkset.bigdata.imp;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class TaskInfo  implements java.io.Serializable{
 	long startoffset;

@@ -2854,5 +2854,33 @@ outStr = "2010年02月07日11时许，周灵颖报警：在2路公交车上被�
 	      }
 	      return res.toString();
 	   }
-	
+	 /**
+		 * determine the OS name
+		 * 
+		 * @return The name of the OS
+		 */
+		public static final String getOS() {
+			return System.getProperty("os.name");
+		}
+
+		/**
+		 * @return True if the OS is a Windows derivate.
+		 */
+		public static final boolean isWindows() {
+			return getOS().startsWith("Windows");
+		}
+
+		/**
+		 * @return True if the OS is a Linux derivate.
+		 */
+		public static final boolean isLinux() {
+			return getOS().startsWith("Linux");
+		}
+
+		/**
+		 * @return True if the OS is an OSX derivate.
+		 */
+		public static final boolean isOSX() {
+			return getOS().toUpperCase().contains("OS X");
+		}
 }

@@ -9,7 +9,6 @@ import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.security.UserGroupInformation;
 import org.apache.log4j.Logger;
-import org.frameworkset.runtime.CommonLauncher;
 
 public class HDFSServer {
 	private static Map<String,FileSystem>  FileSystems = new HashMap<String,FileSystem>();

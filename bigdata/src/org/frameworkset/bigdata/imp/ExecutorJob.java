@@ -8,7 +8,7 @@ import java.util.concurrent.BlockingQueue;
 
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.log4j.Logger;
-import org.frameworkset.runtime.CommonLauncher;
+
 
 import com.frameworkset.util.SimpleStringUtil;
 
@@ -48,7 +48,7 @@ public class ExecutorJob {
 		if(config.isGenlocalfile())
 		{
 			upfileQueues = new ArrayBlockingQueue<FileSegment>(config.getUploadqueues());
-			boolean iswindows = CommonLauncher.isWindows();
+			boolean iswindows = SimpleStringUtil.isWindows();
 			if(config.localdirpath.indexOf("|") > 0)
 			{
 				if(iswindows)
