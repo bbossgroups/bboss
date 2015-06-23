@@ -640,6 +640,10 @@ public class SQLManager extends PoolManager{
 			}
 				
 		}
+		if(readOnly == null)
+			readOnly = "";
+		if(txIsolationLevel == null)
+			txIsolationLevel = "";
 		Map<String,String> values = new HashMap<String,String>();
 		values.put("dbname", poolname);
 		if(jndiName != null && !jndiName.equals(""))
@@ -658,7 +662,7 @@ public class SQLManager extends PoolManager{
 		if(txIsolationLevel != null && !txIsolationLevel.equals(""))
 			values.put("txIsolationLevel", txIsolationLevel);
 		else
-			values.put("txIsolationLevel", "READ_COMMITTED");
+			values.put("txIsolationLevel", "");
 		if(validationQuery != null && !validationQuery.equals(""))
 			values.put("validationQuery", validationQuery);
 		else

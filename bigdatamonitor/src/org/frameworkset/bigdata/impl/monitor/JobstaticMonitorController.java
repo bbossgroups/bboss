@@ -1,5 +1,6 @@
 package org.frameworkset.bigdata.impl.monitor;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -9,6 +10,9 @@ import org.frameworkset.bigdata.imp.monitor.SpecialMonitorObject;
 import org.frameworkset.util.annotations.ResponseBody;
 import org.frameworkset.web.servlet.ModelMap;
 
+import com.frameworkset.common.poolman.SQLExecutor;
+import com.frameworkset.common.poolman.handle.ResultSetNullRowHandler;
+import com.frameworkset.orm.transaction.TransactionManager;
 import com.frameworkset.util.StringUtil;
 
 public class JobstaticMonitorController {
@@ -85,42 +89,53 @@ public class JobstaticMonitorController {
 		// System.out.println("id = " + rs.getInt("id"));
 		// }
 		//
-//		TransactionManager tx = new TransactionManager();
-//		try {
-//			tx.begin(TransactionManager.RW_TRANSACTION);
-//			SQLExecutor.updateWithDBName("test", "drop table if exists person");
-//
-//			SQLExecutor.updateWithDBName("test",
-//					"create table person (id integer, name string)");
-//			SQLExecutor.insert("insert into person values(1, 'leo')");
-//			SQLExecutor.insert("insert into person values(2, 'yui')");
-//			SQLExecutor.queryWithDBNameByNullRowHandler(
-//					new ResultSetNullRowHandler() {
-//
-//						@Override
-//						public void handleRow(ResultSet rs) throws Exception {
-//							System.out.println("name = " + rs.getString("name"));
-//							System.out.println("id = " + rs.getInt("id"));
-//
-//						}
-//					}, "test", "select * from person");
-//			
-//			SQLExecutor.queryListInfoWithDBNameByNullRowHandler(
-//					new ResultSetNullRowHandler() {
-//
-//						@Override
-//						public void handleRow(ResultSet rs) throws Exception {
-//							System.out.println("name = " + rs.getString("name"));
-//							System.out.println("id = " + rs.getInt("id"));
-//
-//						}
-//					}, "test", "select * from person", 0, 2);
-//			tx.commit();
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		} finally {
-//			tx.release();
-//		}
+		TransactionManager tx = new TransactionManager();
+		try {
+			tx.begin(TransactionManager.RW_TRANSACTION);
+			SQLExecutor.updateWithDBName("defaultp", "drop table if exists person");
+
+			SQLExecutor.updateWithDBName("defaultp",
+					"create table person (id integer, name string)");
+			SQLExecutor.insert("insert into person values(1, 'leo')");
+			SQLExecutor.insert("insert into person values(2, 'yui')");
+			SQLExecutor.queryWithDBNameByNullRowHandler(
+					new ResultSetNullRowHandler() {
+
+						@Override
+						public void handleRow(ResultSet rs) throws Exception {
+							System.out.println("name = " + rs.getString("name"));
+							System.out.println("id = " + rs.getInt("id"));
+
+						}
+					}, "defaultp", "select * from person");
+			
+			SQLExecutor.queryListInfoWithDBNameByNullRowHandler(
+					new ResultSetNullRowHandler() {
+
+						@Override
+						public void handleRow(ResultSet rs) throws Exception {
+							System.out.println("name = " + rs.getString("name"));
+							System.out.println("id = " + rs.getInt("id"));
+
+						}
+					}, "defaultp", "select * from person", 0, 2);
+			
+			SQLExecutor.queryListInfoWithDBNameByNullRowHandler(
+					new ResultSetNullRowHandler() {
+
+						@Override
+						public void handleRow(ResultSet rs) throws Exception {
+							System.out.println("tet name = " + rs.getString("name"));
+							
+
+						}
+					}, "test", "select 1 as name from dual", 0, 2);
+			tx.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			tx.release();
+		}
 	}
 
 }

@@ -16,6 +16,8 @@ public class SpecialMonitorObject  implements java.io.Serializable{
 	private String jobName;
 	private List<String> allJobNames;
 	private String jobconfig;
+	
+	private String jobdef;
 	/**
 	 * -1:未开始
 	 * 0:执行：正在执行
@@ -62,6 +64,12 @@ public class SpecialMonitorObject  implements java.io.Serializable{
 	}
 	public void setCanrun(boolean canrun) {
 		this.canrun = canrun;
+	}
+	public String getJobdef() {
+		return jobdef;
+	}
+	public void setJobdef(String jobdef) {
+		this.jobdef = jobdef;
 	}
 
 }

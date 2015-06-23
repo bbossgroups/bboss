@@ -441,14 +441,19 @@ public class JDBCPool {
 				.isLogAbandoned()
 				+ "");
 		p.setProperty(PoolManConstants.PROP_DEFAULTAUTOCOMMIT, "true");
+		if(info
+				.isReadOnly() != null)
 		p.setProperty(PoolManConstants.PROP_DEFAULTREADONLY, info
 				.isReadOnly()
 				+ "");
-
-		p.setProperty(
-				PoolManConstants.PROP_DEFAULTTRANSACTIONISOLATION, info
-						.getTxIsolationLevel()
-						+ "");
+		if(info
+		.getTxIsolationLevel() != null)
+		{
+			p.setProperty(
+					PoolManConstants.PROP_DEFAULTTRANSACTIONISOLATION, info
+							.getTxIsolationLevel()
+							+ "");
+		}
 
 		p.setProperty(PoolManConstants.PROP_POOLPREPAREDSTATEMENTS,
 				info.isPoolPreparedStatements() + "");

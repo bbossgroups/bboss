@@ -19,11 +19,11 @@ import org.frameworkset.remote.EventUtils;
 import org.frameworkset.spi.BaseApplicationContext;
 import org.frameworkset.spi.DefaultApplicationContext;
 import org.jgroups.Address;
-
 import org.frameworkset.bigdata.imp.ExecutorJob;
 import org.frameworkset.bigdata.imp.HDFSUploadData;
 import org.frameworkset.bigdata.imp.TaskConfig;
 import org.frameworkset.bigdata.imp.TaskInfo;
+import org.frameworkset.bigdata.util.DBHelper;
 
 /**
  * 监控统计
@@ -180,6 +180,25 @@ public class ImpStaticManager implements Listener<Object>{
 		}
 	}
 	
+	private void mergeconfigTabletasks(List<String> names)
+	{
+		try {
+			List<String> dbjobs = DBHelper.getAllJobNames();
+			if(dbjobs != null)
+			{
+				for(String job:dbjobs)
+				{
+					if(!names.contains(job))
+						names.add(job);
+				}
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
 	public SpecialMonitorObject getSpecialMonitorObject(String jobName)
 	{
 		
@@ -195,6 +214,7 @@ public class ImpStaticManager implements Listener<Object>{
 				
 				mergeconfigtasks(names,monitorAlljobstaticsIdxByJob.keySet());
 			}
+			mergeconfigTabletasks(names);
 			if(names.size() == 0)
 				return null;
 			if(jobName == null)
@@ -217,7 +237,10 @@ public class ImpStaticManager implements Listener<Object>{
 				job.setCanrun(true);
 			TaskConfig config = HDFSUploadData.buildTaskConfig(jobName);
 			if(config != null)
+			{
+				job.setJobdef(config.getJobdef());
 				job.setJobconfig(	config.toString());
+			}
 			
 		}
 		

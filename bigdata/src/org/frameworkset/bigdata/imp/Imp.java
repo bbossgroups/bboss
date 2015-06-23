@@ -1,5 +1,7 @@
 package org.frameworkset.bigdata.imp;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -7,6 +9,7 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.frameworkset.bigdata.imp.monitor.ImpStaticManager;
+import org.frameworkset.bigdata.util.DBHelper;
 import org.frameworkset.event.EventType;
 import org.frameworkset.event.NotifiableFactory;
 import org.frameworkset.spi.BaseApplicationContext;
@@ -16,6 +19,7 @@ import com.frameworkset.util.SimpleStringUtil;
 
 public class Imp {
 	private static Logger log = Logger.getLogger(Imp.class);
+	private static File appdir;
 	private static Map<String,String> parserParams(String params_)
 	{
 		Map<String,String> params = new HashMap<String,String>();
@@ -43,6 +47,7 @@ public class Imp {
 		//监听器监听的事件消息可以是本地事件，可以是远程本地消息，也可以是远程消息
 		//如果不指定eventtypes则监听所有类型的事件消息
 		impStaticManager.setAdminasdatanode(adminasdatanode);
+		initDB();
 		NotifiableFactory.getNotifiable().addListener(new HDFSUploadEventHandler(), HDFSUploadData.hdfsuploadevent);
 		List<EventType> monitorEventTypes = new ArrayList<EventType>();
 		monitorEventTypes.add(HDFSUploadData.hdfs_upload_monitor_request_commond);
@@ -55,6 +60,17 @@ public class Imp {
 
 
 
+	}
+	
+	private static void initDB()
+	{
+		File dbpath = appdir == null?new File("/configdb"):new File(appdir,"configdb");
+		try {
+			DBHelper.initConfgDB(dbpath.getCanonicalPath());
+			log.info("初始化数据库完毕："+dbpath.getCanonicalPath());
+		} catch (IOException e) {
+			log.error("初始化数据库失败：！",e);
+		}
 	}
 	public static void main(String[] args) throws Exception
 	{
@@ -96,7 +112,8 @@ public class Imp {
 				log.info("没有指定需要执行的作业名称，请在resources/task.xml文件中查找对应的作业名称，多个请用逗号分隔。参数语法：jobs=testpagine|datanode=true，多个参数请用|分隔");
 				return;
 			}
-				
+			
+			initDB();
 			String params_=args[0];
 			Map<String,String> params =  parserParams(params_);
 			String jobname_ = params.get("jobs");
@@ -172,8 +189,9 @@ public class Imp {
 	 * 创建并提交一个新作业
 	 * @param jobdef
 	 * @return
+	 * @throws Exception 
 	 */
-	public static String submitNewJob(String jobdef)
+	public static String submitNewJob(String jobdef) throws Exception
 	{
 		BaseApplicationContext ioccontext = new SOAApplicationContext(jobdef);
 		List<String> jobs = getConfigTasks(ioccontext);
@@ -183,6 +201,7 @@ public class Imp {
 			for(int i = 0; i < jobs.size(); i++)
 			{
 				String jobname = jobs.get(i);
+				DBHelper.addOrUdate( jobname, jobdef) ;
 				HDFSUploadData HDFSUploadData = new HDFSUploadData();
 				try {
 					
@@ -210,6 +229,12 @@ public class Imp {
 		
 		tasks.addAll(context.getPropertyKeys());
 		return tasks;
+	}
+	public static File getAppdir() {
+		return appdir;
+	}
+	public static void setAppdir(File appdir) {
+		Imp.appdir = appdir;
 	}
 
 }

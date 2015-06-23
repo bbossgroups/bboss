@@ -205,8 +205,24 @@ public class LocalPoolDeployer extends BaseTableManager implements PoolManDeploy
 //                    System.out.println("propsVal: " + propsVal);
                     // create attribute value of correct type
                     PropertyEditor editor = PropertyEditorManager.findEditor(type);
-                    editor.setAsText(propsVal);
-                    Object value = editor.getValue();
+                    Object value = null;
+                    if(type.isAssignableFrom(Boolean.class))
+                    {
+                    	if(propsVal == null || propsVal.trim().equals(""))
+                    	{
+                    		
+                    	}
+                    	else
+                    	{
+                    		 editor.setAsText(propsVal);
+     	                    value = editor.getValue();
+                    	}
+                    }
+                    else
+                    {
+	                    editor.setAsText(propsVal);
+	                    value = editor.getValue();
+                    }
                     // set attribute value on bean
                     attributes[n].getWriteMethod().invoke(metadata, new Object[]{value});
                 }

@@ -13,6 +13,7 @@ import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.log4j.Logger;
 import org.frameworkset.bigdata.util.DBHelper;
+import org.frameworkset.bigdata.util.DBJob;
 import org.frameworkset.event.Event;
 import org.frameworkset.event.EventHandle;
 import org.frameworkset.event.EventImpl;
@@ -20,6 +21,7 @@ import org.frameworkset.event.SimpleEventType;
 import org.frameworkset.remote.EventUtils;
 import org.frameworkset.spi.BaseApplicationContext;
 import org.frameworkset.spi.DefaultApplicationContext;
+import org.frameworkset.spi.SOAApplicationContext;
 import org.jgroups.Address;
 
 import com.frameworkset.common.poolman.DBUtil;
@@ -179,8 +181,24 @@ public class HDFSUploadData {
 	}
 
 	public static TaskConfig buildTaskConfig(String jobname) {
+		TaskConfig config = new TaskConfig();
 		BaseApplicationContext context = DefaultApplicationContext
 				.getApplicationContext("tasks.xml");
+		if(context.getProBean(jobname) == null)//如果作业在固化配置中没有，则需要从db配置表中获取组件配置
+		{
+			try {
+				DBJob job = DBHelper.getDBJob(jobname);
+				if(job != null)
+				{
+					config.setJobdef(job.getJobdef());
+					context = new SOAApplicationContext(job.getJobdef());
+				}
+				else
+					log.info("jobname["+jobname+"]在数据库中没有定义,在固化配置文件tasks。xml中也没有定义.");
+			} catch (Exception e) {
+				log.error("jobname["+jobname+"]在数据库中没有定义,在固化配置文件tasks。xml中也没有定义.",e);
+			}
+		}
 		String localpath = context
 				.getStringExtendAttribute(jobname, "localdir");
 		String hdfsdatadir = context.getStringExtendAttribute(jobname,
@@ -274,16 +292,16 @@ public class HDFSUploadData {
 		
 		boolean usepool = context.getBooleanExtendAttribute(jobname,
 				"usepool",false);
-		TaskConfig config = new TaskConfig();
+		
 		String readOnly = context.getStringExtendAttribute(jobname,
-				"readOnly","true");
+				"readOnly");
 		config.setReadOnly(readOnly);
 		config.driver = driver;
 		config.dburl = dburl;
 		config.dbpassword = dbpassword;
 		config.dbuser = dbuser;
 		config.validatesql = validatesql;
-		config.setReadOnly(readOnly);
+		 
 		config.usepool = usepool;
 		config.filebasename = filebasename;
 		config.hdfsdatadirpath = hdfsdatadir;
@@ -871,7 +889,7 @@ public class HDFSUploadData {
 		dbuser = context.getStringExtendAttribute(jobname,
 				"dbuser","");
 		readOnly = context.getStringExtendAttribute(jobname,
-				"readOnly","true");
+				"readOnly");
 		
 		validatesql = context.getStringExtendAttribute(jobname,
 				"validatesql","");

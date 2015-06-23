@@ -48,7 +48,18 @@
 <!-- 		<keygenerate>composite</keygenerate> -->
 		
 <!-- </datasource> -->
+<datasource>
 
+		<dbname>defaultp</dbname>
+		<loadmetadata>false</loadmetadata>
+		<enablejta>true</enablejta>
+		<jndiName>default_datasource_jndiname</jndiName>
+		<datasourceFile>dbcp.xml</datasourceFile>
+		<autoprimarykey>false</autoprimarykey>
+		<showsql>true</showsql>
+		<keygenerate>composite</keygenerate>
+		
+</datasource>
 <datasource>
 
 		<dbname>test</dbname>

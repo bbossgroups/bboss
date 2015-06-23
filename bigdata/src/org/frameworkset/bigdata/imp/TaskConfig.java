@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 public class TaskConfig implements java.io.Serializable{
+	private String jobdef; 
 	/**
 	 * 数据库连接信息
 	 */
@@ -360,5 +361,11 @@ public class TaskConfig implements java.io.Serializable{
 	}
 	public void setReadOnly(String readOnly) {
 		this.readOnly = readOnly;
+	}
+	public String getJobdef() {
+		return jobdef;
+	}
+	public void setJobdef(String jobdef) {
+		this.jobdef = jobdef;
 	}
 }

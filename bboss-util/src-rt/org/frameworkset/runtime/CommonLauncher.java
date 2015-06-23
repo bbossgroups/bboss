@@ -60,6 +60,8 @@ public class CommonLauncher
     private static String extlibs[];
     private static String extresources[];
     private static File appDir;
+    
+    private static  List<URL> alljars;
     public static String getProperty(String pro)
     {
     	String value = null;
@@ -128,6 +130,34 @@ public class CommonLauncher
        
         loadConfig( appDir);
         loadPlugins(lib, resourcesFile);
+        
+        
+        URL classpathEntries[] = (URL[]) alljars.toArray(new URL[alljars.size()]);
+        ClassLoader cl = new URLClassLoader(classpathEntries);
+        Thread.currentThread().setContextClassLoader(cl);
+        
+        if (mainclass == null)
+        {
+            System.err.println("Invalid main-class entry, cannot proceed.");
+            System.exit(1);
+        }
+        Class mainClass = cl.loadClass(mainclass);
+
+//        Object instance = mainClass.newInstance();
+        //startup(String[] serverinfo,String plugins[])
+        
+        for (int i = 0; i < classpathEntries.length; i++)
+        {
+            URL url = classpathEntries[i];
+            System.err.println("ClassPath[" + i + "] = " + url);
+        }
+        Method setAppdir = mainClass.getMethod("setAppdir", new Class[] {File.class});
+        if(setAppdir != null)
+        {
+        	setAppdir.invoke(null, new Object[] {appDir});
+        }
+        Method method = mainClass.getMethod("main", new Class[] {String[].class});
+        method.invoke(null, new Object[] {args});
     }
 
     /**
@@ -164,7 +194,7 @@ public class CommonLauncher
        }
         
        
-        List<URL> alljars = new ArrayList<URL>();
+       alljars = new ArrayList<URL>();
         
         alljars.addAll(allpublicjars);
 
@@ -181,28 +211,7 @@ public class CommonLauncher
         
         
         
-       
-        URL classpathEntries[] = (URL[]) alljars.toArray(new URL[alljars.size()]);
-        ClassLoader cl = new URLClassLoader(classpathEntries);
-        Thread.currentThread().setContextClassLoader(cl);
-        
-        if (mainclass == null)
-        {
-            System.err.println("Invalid main-class entry, cannot proceed.");
-            System.exit(1);
-        }
-        Class mainClass = cl.loadClass(mainclass);
-
-//        Object instance = mainClass.newInstance();
-        //startup(String[] serverinfo,String plugins[])
-        
-        for (int i = 0; i < classpathEntries.length; i++)
-        {
-            URL url = classpathEntries[i];
-            System.err.println("ClassPath[" + i + "] = " + url);
-        }
-        Method method = mainClass.getMethod("main", new Class[] {String[].class});
-        method.invoke(null, new Object[] {args});
+     
         
     }
 

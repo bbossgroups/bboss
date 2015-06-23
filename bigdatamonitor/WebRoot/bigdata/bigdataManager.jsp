@@ -103,7 +103,7 @@ function executeJob()
 //加载实时任务列表数据  
 function queryList(job){
 	
-	if(job != '')
+	if(job && job != '')
     	window.location.href = "<%=request.getContextPath()%>/bigdata/index.page?job="+job;
     else
     	window.location.href = "<%=request.getContextPath()%>/bigdata/index.page";
@@ -160,7 +160,6 @@ function submitJob () {
 				 $.dialog.alert("提交作业失败："+data);
 			}else {
 				queryList();
-				
 			}
 		}	
 	 });
@@ -260,6 +259,33 @@ function submitJob () {
 					</form>
 				</div>
 			</div>
+			<pg:notempty colName="jobdef">
+			<div id="datanodes" style="overflow: auto">
+				<div id="changeColor">
+					
+						
+						<table width="100%" border="0" cellpadding="0" cellspacing="0"
+						class="stable" id="tb">
+						 
+										<tr>
+											<th align="left" >作业定义-<pg:cell colName="jobName"/>：</th>
+
+
+
+										</tr>
+										<tr>
+
+											<td width="100%" ><textarea><pg:cell colName="jobdef"/></textarea></td>
+
+
+										</tr>
+									 
+						 
+						</table>
+					
+				</div>
+			</div>
+			</pg:notempty>
 			 
 			<div class="title_box">
 

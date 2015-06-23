@@ -181,7 +181,7 @@ public class JDBCPoolMetaData implements Serializable{
 	/**
 	 * 设定链接是否是readOnly属性
 	 */
-	private boolean readOnly = true;
+	private Boolean readOnly = null;
 	/**
 	 * 是否启用jta datasource，如果启用将在jndi context中注册一个
 	 * TXDatasource
@@ -363,6 +363,9 @@ public class JDBCPoolMetaData implements Serializable{
     }
 
     private int convertIsoToInt(String s) {
+    	if(s == null || s.equals(""))
+    		
+    		return -100;
 
         int n = PoolManConstants.DEFAULT_ISO_LEVEL;
 
@@ -628,11 +631,11 @@ public class JDBCPoolMetaData implements Serializable{
 		this.logAbandoned = logAbandoned;
 	}
 
-	public boolean isReadOnly() {
+	public Boolean isReadOnly() {
 		return readOnly;
 	}
 
-	public void setReadOnly(boolean readOnly) {
+	public void setReadOnly(Boolean readOnly) {
 		this.readOnly = readOnly;
 	}
 	/**
