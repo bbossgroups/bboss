@@ -3,7 +3,7 @@ package org.frameworkset.bigdata.imp;
 import java.util.List;
 import java.util.Map;
 
-public class TaskConfig implements java.io.Serializable{
+public class TaskConfig implements java.io.Serializable,java.lang.Cloneable{
 	private String jobdef; 
 	/**
 	 * 数据库连接信息
@@ -55,6 +55,7 @@ public class TaskConfig implements java.io.Serializable{
 	public long startid;
 	public long endid;
 	public String blocks;
+	String excludeblocks;
 	/**
 	 * 当指定了具体的任务处理数据块blocks，则可以设定每块可以直接拆分的子数据块这样可以提升系统处理速度
 	 */
@@ -107,9 +108,11 @@ public class TaskConfig implements java.io.Serializable{
 		.append("startid=").append(startid).append("\r\n")
 		.append("endid=").append(endid).append("\r\n")
 		.append("blocks=").append(blocks).append("\r\n")
+		.append("excludeblocks=").append(excludeblocks).append("\r\n")
 		.append("clearhdfsfiles=").append(clearhdfsfiles);
 		if(blocks != null && blocks.trim().length() > 0)
 			builder.append("\r\n").append("subblocks=").append(subblocks);
+		
 		return builder.toString();
 		
 		
@@ -367,5 +370,10 @@ public class TaskConfig implements java.io.Serializable{
 	}
 	public void setJobdef(String jobdef) {
 		this.jobdef = jobdef;
+	}
+	@Override
+	public Object clone() throws CloneNotSupportedException {
+		// TODO Auto-generated method stub
+		return super.clone();
 	}
 }

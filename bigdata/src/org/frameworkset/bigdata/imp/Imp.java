@@ -52,6 +52,7 @@ public class Imp {
 		List<EventType> monitorEventTypes = new ArrayList<EventType>();
 		monitorEventTypes.add(HDFSUploadData.hdfs_upload_monitor_request_commond);
 		monitorEventTypes.add(HDFSUploadData.hdfs_upload_monitor_response_commond);
+		monitorEventTypes.add(HDFSUploadData.hdfs_upload_monitor_jobstop_commond);
 		NotifiableFactory.getNotifiable().addListener(impStaticManager, monitorEventTypes);
 		org.frameworkset.remote.EventUtils.init();
 		log.info("初始化分布式事件模块完毕！");
@@ -88,6 +89,8 @@ public class Imp {
 			List<EventType> monitorEventTypes = new ArrayList<EventType>();
 			monitorEventTypes.add(HDFSUploadData.hdfs_upload_monitor_request_commond);
 			monitorEventTypes.add(HDFSUploadData.hdfs_upload_monitor_response_commond);
+			
+			monitorEventTypes.add(HDFSUploadData.hdfs_upload_monitor_jobstop_commond);
 			NotifiableFactory.getNotifiable().addListener(impStaticManager, monitorEventTypes);
 			org.frameworkset.remote.EventUtils.init();
 			log.info("初始化分布式事件模块完毕！");

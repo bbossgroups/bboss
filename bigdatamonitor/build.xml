@@ -103,7 +103,7 @@
 			<fileset dir="lib" includes="**/*.jar" />
 		</copy>
 
-		<copy todir="distrib/run/lib">
+		<copy todir="distrib/run/WebRoot/WEB-INF/lib">
 			<fileset dir="${distrib}" includes="*.jar" />
 		</copy>
 		<copy todir="distrib/run/resources">

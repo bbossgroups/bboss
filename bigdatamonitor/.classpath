@@ -54,7 +54,6 @@
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/protobuf-java-2.5.0.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/slf4j-api-1.7.10.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/slf4j-log4j12-1.7.10.jar"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/bigdata-impl.jar" sourcepath="/bigdata"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/sqlite-jdbc-3.8.10.1.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/asm-5.0.3.jar"/>
 	<classpathentry kind="lib" path="lib/jsp/com.sun.el-2.2.0.v201108011116.jar"/>
@@ -68,5 +67,6 @@
 	<classpathentry kind="lib" path="lib/jetty-all-server-8.1.17.v20150415.jar"/>
 	<classpathentry kind="lib" path="lib/servlet-api-3.0.jar"/>
 	<classpathentry kind="lib" path="build/bboss-rt.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/bigdata-impl.jar" sourcepath="/bigdata"/>
 	<classpathentry kind="output" path="WebRoot/WEB-INF/classes"/>
 </classpath>

@@ -36,9 +36,9 @@ public class HDFSServer {
 				 	user_ = UserGroupInformation.getBestUGI(null, "root");
 					UserGroupInformation.setLoginUser(user_);
 					 
-					log.info("连接hdfs服务器："+hadoop + " FileSystem.get(uri,new Configuration()) 0.");	
+					 
 					URI uri = new URI(hadoop);
-					log.info("连接hdfs服务器："+hadoop + " FileSystem.get(uri,new Configuration()) 1.");	
+					 
 					Configuration conf = new Configuration();
 					conf.addResource("core-site.xml");
 					conf.addResource("hdfs-site.xml");

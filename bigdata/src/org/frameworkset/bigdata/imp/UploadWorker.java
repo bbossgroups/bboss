@@ -27,20 +27,33 @@ public class UploadWorker implements Runnable{
 		while(true)
 		{
 			try {
+				if(this.genFileHelper.isforceStop())
+					break;
 				FileSegment segment = queue.poll(genFileHelper.getUploadqueuetimewait(),TimeUnit.SECONDS);
 				if(segment == null)
 				{
-					if(count.get() == 0)
+					if(count.get() == 0 || this.genFileHelper.isforceStop())
 						break;
 					 
 				}
 				else
 				{
+					 if(this.genFileHelper.isforceStop())
+					 {
+						 
+							segment.genendtimestamp =System.currentTimeMillis();
+							segment.taskStatus.setStatus(2);
+							segment.taskStatus.setTaskInfo(segment.toString());
+							segment.taskStatus.setErrorInfo("强制停止任务");
+						 break;
+					 }
 					count.decrementAndGet();
 					UploadDataTask task = new UploadDataTask( fileSystem,segment);
 					task.run();
 					if(count.get() == 0)
 						break;
+					
+				
 				}
 				
 				

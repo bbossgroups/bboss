@@ -135,8 +135,11 @@ public class WriteDataTask {
 	
 					@Override
 					public void handleRow(ResultSet row) throws Exception {
+						if(genFileHelper.isforceStop())
+							throw new ForceStopException();
 						write(  fileSegment,row);
-						
+						if(genFileHelper.isforceStop())
+							throw new ForceStopException();
 					}
 		    		
 		    	}, fileSegment.getDBName(), fileSegment.getQuerystatement(),fileSegment.getEndoffset(),fileSegment.getStartoffset());
@@ -147,8 +150,11 @@ public class WriteDataTask {
 		 			
 					@Override
 					public void handleRow(ResultSet row) throws Exception {
+						if(genFileHelper.isforceStop())
+							throw new ForceStopException();
 						write(  fileSegment,row);
-						
+						if(genFileHelper.isforceStop())
+							throw new ForceStopException();
 					}
 		    		
 		    	}, fileSegment.getDBName(), fileSegment.getPageinestatement(),fileSegment.getStartoffset(),(int)fileSegment.getPagesize());
@@ -169,13 +175,22 @@ public class WriteDataTask {
 			fileSegment.genendtimestamp =  System.currentTimeMillis();
 			
 			log.info("生成文件结束："+fileSegment.toString());
-		} catch (Exception e) {
+		} 
+		catch(ForceStopException e)
+	    {
+			fileSegment.taskStatus.setStatus(2);
+			 
+			fileSegment.taskStatus.setErrorInfo("强制停止任务！");
+			return ;
+	    }
+		catch (Exception e) {
 			fileSegment.taskStatus.setStatus(2);
 			 
 			fileSegment.taskStatus.setErrorInfo(SimpleStringUtil.exceptionToString(e));
 			log.error("生成文件异常结束："+fileSegment.toString(),e);
 			if(genFileHelper.genlocalfile())
 				genFileHelper.countdownupfilecount();
+			return;
 		}
 		finally
 		{

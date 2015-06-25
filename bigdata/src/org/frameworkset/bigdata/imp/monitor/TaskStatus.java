@@ -3,6 +3,7 @@ package org.frameworkset.bigdata.imp.monitor;
 public class TaskStatus implements java.io.Serializable,java.lang.Cloneable{
 	private String taskInfo;
 	/**
+	 * -1：未执行任务
 	 * 0:正在执行
 	 * 1:执行完毕
 	 * 2:执行异常

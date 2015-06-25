@@ -33,15 +33,29 @@ public class GenFileWork  implements Runnable{
 		{
 			
 			try {			
+				if(genFileHelper.isforceStop())
+					break;
 				FileSegment segment = queue.poll(genFileHelper.getGenquequetimewait(),TimeUnit.SECONDS);
+				
 				if(segment == null)
 				{
+					if(genFileHelper.isforceStop())
+						break;
 					if(count.get() == 0)
 						break;
 					 
 				}
 				else
 				{
+					if(genFileHelper.isforceStop())
+					{
+						segment.genstarttimestamp =  System.currentTimeMillis();
+						segment.genendtimestamp =segment.genstarttimestamp;  
+						segment.taskStatus.setStatus(2);
+						segment.taskStatus.setTaskInfo(segment.toString());
+						segment.taskStatus.setErrorInfo("强制停止任务");
+						break;
+					}
 					count.decrementAndGet();
 					
 					log.info("Process segment: "+segment);

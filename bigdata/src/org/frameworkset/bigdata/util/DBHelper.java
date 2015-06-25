@@ -70,15 +70,15 @@ public class DBHelper {
 	{
 		if(HDFSUploadData.getDriver() != null && HDFSUploadData.getDriver().trim().length() > 0)
 		{
-
+			int poolsize = HDFSUploadData.isUsepool()? evalpoolsize(HDFSUploadData.getGeneworkthreads()):0;
 			SQLUtil.startPool(HDFSUploadData.getDbname(),HDFSUploadData.getDriver(),HDFSUploadData.getDburl(),HDFSUploadData.getDbuser(),HDFSUploadData.getDbpassword(),
 					 HDFSUploadData.isReadOnly(),
 					 null,//"READ_COMMITTED",
 					 HDFSUploadData.getValidatesql(),
 					 "jndi-"+HDFSUploadData.getDbname(),   
-		        		10,
-		        		10,
-		        		20,
+					 poolsize/2,
+					 poolsize/2,
+					 poolsize,
 		        		HDFSUploadData.isUsepool(),
 		        		false,
 		        		null        ,true,false
@@ -86,24 +86,30 @@ public class DBHelper {
 		}
  
 	}
-	
+	private static int evalpoolsize(int genworkthread)
+	{
+		int poolsize = genworkthread + genworkthread / 4;
+		if(poolsize  < 10 )
+			poolsize  = 10;
+		return poolsize;
+	}
 	public static void initDB(TaskConfig taskConfig)
 	{
 		if(taskConfig.getDriver() != null && taskConfig.getDriver().trim().length() > 0)
 		{
-
-		SQLUtil.startPool(taskConfig.getDbname(),taskConfig.getDriver(),taskConfig.getDburl(),taskConfig.getDbuser(),taskConfig.getDbpassword(),
-				 taskConfig.getReadOnly(),
-				 null,//"READ_COMMITTED",
-				 taskConfig.getValidatesql(),
-				 "jndi-"+taskConfig.getDbname(),   
-	        		10,
-	        		10,
-	        		20,
-	        		taskConfig.isUsepool(),
-	        		false,
-	        		null        ,true,false
-	        		);
+			int poolsize = taskConfig.isUsepool()? evalpoolsize(taskConfig.getGeneworkthreads()):0;
+			SQLUtil.startPool(taskConfig.getDbname(),taskConfig.getDriver(),taskConfig.getDburl(),taskConfig.getDbuser(),taskConfig.getDbpassword(),
+					 taskConfig.getReadOnly(),
+					 null,//"READ_COMMITTED",
+					 taskConfig.getValidatesql(),
+					 "jndi-"+taskConfig.getDbname(),   
+					 poolsize/2,
+					 poolsize/2,
+		        		poolsize,
+		        		taskConfig.isUsepool(),
+		        		false,
+		        		null        ,true,false
+		        		);
 		}
  
 	}

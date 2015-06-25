@@ -12,6 +12,8 @@ import java.util.Set;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.log4j.Logger;
+import org.frameworkset.bigdata.imp.monitor.ImpStaticManager;
+import org.frameworkset.bigdata.imp.monitor.JobStatic;
 import org.frameworkset.bigdata.util.DBHelper;
 import org.frameworkset.bigdata.util.DBJob;
 import org.frameworkset.event.Event;
@@ -26,6 +28,7 @@ import org.jgroups.Address;
 
 import com.frameworkset.common.poolman.DBUtil;
 import com.frameworkset.common.poolman.PreparedDBUtil;
+import com.frameworkset.util.SimpleStringUtil;
 
 public class HDFSUploadData {
 	public String HADOOP_PATH ;
@@ -40,8 +43,12 @@ public class HDFSUploadData {
 			"hdfs_upload_monitor");
 	public static final SimpleEventType hdfs_upload_monitor_request_commond = new SimpleEventType(
 			"hdfs_upload_monitor_request_commond");
+	public static final SimpleEventType hdfs_upload_monitor_jobstop_commond = new SimpleEventType(
+			"hdfs_upload_monitor_jobstop_commond");
 	public static final SimpleEventType hdfs_upload_monitor_response_commond = new SimpleEventType(
 			"hdfs_upload_monitor_response_commond");
+	
+	
 	/**
 	 * 数据库连接信息
 	 */
@@ -91,9 +98,28 @@ public class HDFSUploadData {
 	 * 指定需要执行哪几个任务
 	 */
 	int[] blocks = null;
+	/**
+	 * 用来存放块的子块
+	 */
+	private Map<String,List<Integer>> blocksplits = null; 
+	
+	/**
+	 * 指定需要排除哪几个任务
+	 */
+	int[] excludeblocks = null;
+	String excludeblocks_str;
+	String blocks_str;
+	/**
+	 * 用来存放块的子块
+	 */
+	Map<String,List<Integer>> excludeblocksplits = null; 
 	int subblocks = -1;
 	private Map<String, TaskConfig> tasks;
 
+	/**
+	 * 构建分派任务时调用，只需要设置基本信息即可
+	 * @return
+	 */
 	TaskConfig buildTaskConfig() {
 		TaskConfig config = new TaskConfig();
 		config.driver = this.driver;
@@ -126,6 +152,10 @@ public class HDFSUploadData {
 		config.adminnodeasdatanode = this.adminnodeasdatanode;
 		config.jobname = jobname;
 		config.subblocks = this.subblocks;
+		 
+		config.excludeblocks = this.excludeblocks_str;
+		config.blocks = this.blocks_str;
+		
 		if (!this.usepagine) {
 			config.limitstatement = limitstatement;
 			if (this.querystatement == null || this.querystatement.equals("")) {
@@ -179,7 +209,56 @@ public class HDFSUploadData {
 
 		return config;
 	}
+	
+	private static LinkBlocks buildLinkBlocks(String blocks_)
+	{
+		int blocks[] = null;
+		LinkBlocks linkBlocks = new LinkBlocks();
+		Map<String,List<Integer>> blocksplits = new HashMap<String,List<Integer>>(); 
+		if (blocks_ != null && !blocks_.equals("")) {
+			String[] blocks_str = blocks_.trim().split(",");
+			Set<Integer> blockset = new java.util.TreeSet<Integer>();
+			
+			for (int i = 0; i < blocks_str.length; i++) {
+				String block = blocks_str[i];
+				if(block.indexOf(".") > 0)//判断是否需要过滤数据块
+				{
+					String[] tt = block.split("\\.");
+//					blocks[i] = Integer.parseInt(tt[0]);
+					blockset.add(Integer.parseInt(tt[0]));
+					List<Integer> subtasks = blocksplits.get(tt[0]);
+					if(subtasks == null)
+					{
+						subtasks = new ArrayList<Integer>();
+						blocksplits.put(tt[0], subtasks);
+					}
+					subtasks.add(Integer.parseInt(tt[1]));
+					
+				}
+				else
+				{
+//					blocks[i] = Integer.parseInt(block);
+					blockset.add(Integer.parseInt(block));
+				}
+			}
+			blocks = new int[blockset.size()];
+			int i = 0;
+			for(Integer b:blockset)
+			{
+				blocks[i] = b.intValue();
+				i++;
+			}
+		}
+		linkBlocks.blocks = blocks;
+		linkBlocks.blocksplits = blocksplits;
+		return linkBlocks;
+	}
 
+	/**
+	 * 初始化作业需要的所有信息
+	 * @param jobname
+	 * @return
+	 */
 	public static TaskConfig buildTaskConfig(String jobname) {
 		TaskConfig config = new TaskConfig();
 		BaseApplicationContext context = DefaultApplicationContext
@@ -250,34 +329,19 @@ public class HDFSUploadData {
 		long startid = context
 				.getLongExtendAttribute(jobname, "startid", -9999);
 		long endid = context.getLongExtendAttribute(jobname, "endid", -9999);
+		
+		/**
+		 * 指定需要排除哪几个任务
+		 */
+		String excludeblocks_ = context.getStringExtendAttribute(jobname, "excludeblocks");
+		
 		String blocks_ = context.getStringExtendAttribute(jobname, "blocks");
+//		LinkBlocks linkBlocks = buildLinkBlocks(blocks_);
+//		int[] blocks = linkBlocks.blocks;
+//		Map<String,List<Integer>> blocksplits = linkBlocks.blocksplits;
 		int subblocks = context.getIntExtendAttribute(jobname, "subblocks", -1);
-		int[] blocks = null;
-		Map<String,List<Integer>> blocksplits = new HashMap<String,List<Integer>>(); 
-		if (blocks_ != null && !blocks_.equals("")) {
-			String[] blocks_str = blocks_.trim().split(",");
-			blocks = new int[blocks_str.length];
-			for (int i = 0; i < blocks_str.length; i++) {
-				String block = blocks_str[i];
-				if(block.indexOf(".") > 0)//判断是否需要过滤数据块
-				{
-					String[] tt = block.split("\\.");
-					blocks[i] = Integer.parseInt(tt[0]);
-					List<Integer> subtasks = blocksplits.get(tt[0]);
-					if(subtasks == null)
-					{
-						subtasks = new ArrayList<Integer>();
-						blocksplits.put(tt[0], subtasks);
-					}
-					subtasks.add(Integer.parseInt(tt[1]));
-					
-				}
-				else
-				{
-					blocks[i] = Integer.parseInt(block);
-				}
-			}
-		}
+		 
+		
 		String driver = context.getStringExtendAttribute(jobname,
 				"driver");
 		String dburl = context.getStringExtendAttribute(jobname,
@@ -329,8 +393,10 @@ public class HDFSUploadData {
 		config.startid = startid;
 		config.endid = endid;
 		config.blocks = blocks_;
-		config.blocksplits = blocksplits;
+		config.excludeblocks = excludeblocks_;
+//		config.blocksplits = blocksplits;
 		config.subblocks = subblocks;
+		
 		if (!usepagine) {
 			config.limitstatement = limitstatement;
 			if (querystatement == null || querystatement.equals("")) {
@@ -354,28 +420,13 @@ public class HDFSUploadData {
 			config.tablerows = tablerows;
 			config.countstatement = countstatement;
 			if (pageinestatement == null || pageinestatement.equals("")) {
-				// select * from (SELECT t.*,
-				// ROW_NUMBER() OVER ( ORDER BY TID) rowno_ from testbigdata t)
-				// bb where bb.rowno_ <100 and bb.rowno_ >10
-				// StringBuilder sqlbuilder = new StringBuilder();
-				// sqlbuilder.append("select * from (SELECT ");
-				// if(config.columns != null && ! config.columns.equals(""))
-				// {
-				// sqlbuilder.append( config.columns);
-				// }
-				// else
-				// sqlbuilder.append("t.* ");
-				// sqlbuilder.append(",ROW_NUMBER() OVER ( ORDER BY TID) rowno_  from   ");
-				// if(schema != null && !schema.equals(""))
-				// sqlbuilder.append(config.schema).append(".");
-				// sqlbuilder.append( config.tablename);
-				// sqlbuilder.append(
-				// "t) bb where bb.rowno_ <? and bb.rowno_ >?");
-				// config.pageinestatement = sqlbuilder.toString();
-				config.pageinestatement = DBUtil.getDBAdapter(dbname)
-						.getStringPagineSql(schema, tablename, pkName, columns);
+			
+				
+//				DBHelper.initDB(config);
+//				config.pageinestatement = DBUtil.getDBAdapter(dbname)
+//						.getStringPagineSql(schema, tablename, pkName, columns);
 
-				// DBUtil.getDBAdapter(this.dbname).getStringPagineSql(sqlbuilder.toString());
+				
 			} else {
 				config.pageinestatement = pageinestatement;
 			}
@@ -453,6 +504,12 @@ public class HDFSUploadData {
 	{
 		int block;
 		TaskInfo taskInfo;
+	}
+	
+	static class LinkBlocks
+	{
+		int[] blocks;
+		Map<String,List<Integer>> blocksplits;
 	}
 	SplitTasks spiltTask() throws Exception {
 		SplitTasks splitTasks = new SplitTasks();
@@ -642,6 +699,115 @@ public class HDFSUploadData {
 					for (int i = 0; i < temp.size(); i++) {
 						LinkTasks linkTasks = temp.get(i); 
 						retTasks.add(linkTasks.taskInfo);
+					}
+				}
+				
+				
+				segments = new TaskInfo[retTasks.size()];				
+			
+				retTasks.toArray(segments);
+				
+			}
+		}
+		else if(this.excludeblocks != null && this.excludeblocks.length > 0)//排除要清除的数据块
+		{
+			temp = new ArrayList<LinkTasks>();
+			int blockslen = this.excludeblocks.length;
+			for (int i = 0; i < blockslen; i++) {//计算有效的排除块
+				if (excludeblocks[i] < segments.length) {
+					LinkTasks linkTasks = new LinkTasks();
+					linkTasks.block =excludeblocks[i];
+					linkTasks.taskInfo = segments[linkTasks.block];
+					temp.add(linkTasks);
+					
+				}
+			}
+			if (temp.size() > 0) {
+				if(this.subblocks > 0)//如果需要对子任务进行切分，则需要进一步切分子任务，并且需要清除原来的大块数据对应的hdfs文件
+				{
+					//进一步切分子任务
+					List<TaskInfo> subchunks = new ArrayList<TaskInfo>();
+					for(int j = 0; j < segments.length; j ++ )
+					{
+						SplitTasks subsplitTasks = buildJobSubChunks(segments[j]);
+						if(subsplitTasks != null)
+							segement = subsplitTasks.segement;
+						boolean isexclude = false;
+						for (int i = 0; i < temp.size(); i++){
+							LinkTasks linkTasks = temp.get(i);  
+							if(linkTasks.block == j)//不是排除的块，需要重新抽取
+							{
+								isexclude = true;
+								break;
+							}
+						}
+						if(!isexclude)
+						{
+							if(subsplitTasks == null)
+							{
+								subchunks.add(segments[j]);
+							}
+							else
+							{								
+								subchunks.addAll(Arrays.asList(subsplitTasks.segments));
+							}
+						}
+						else
+						{
+							if(subsplitTasks == null)//没有子块，整块排除
+							{
+								
+							}
+							else //有子块，判断要排除的子块
+							{
+								List<Integer> excludes =  this.excludeblocksplits.get(j+"");
+								if(excludes == null)//没有自定子块，整块的所有子块都排除
+								{
+									
+								}
+								else //识别子块中要排除的块，将不需要排除的块添加到任务列表中
+								{
+									
+									for(int k = 0; k < subsplitTasks.segments.length;k ++)
+									{
+										boolean issubexclude = false;
+										for(Integer epos:excludes )
+										{
+											if(k == epos.intValue())
+											{
+												issubexclude = true;
+												break;
+											}
+										
+										}
+										if(!issubexclude)
+											subchunks.add(subsplitTasks.segments[k]);
+									}
+									
+								}
+								
+							}
+						} 
+						 
+					}
+					retTasks = subchunks;
+					
+				}
+				else
+				{
+					retTasks = new ArrayList<TaskInfo>();
+					for (int j = 0; j < segments.length; j++) {
+						boolean isexclude  = false;
+						for(int i = 0; i < temp.size(); i ++)
+						{
+							LinkTasks linkTasks = temp.get(i);
+							if(linkTasks.block == j)
+							{
+								isexclude = true; 
+							}
+						}
+						if(!isexclude) 
+							retTasks.add(segments[j]);
 					}
 				}
 				
@@ -844,42 +1010,17 @@ public class HDFSUploadData {
 				.getLongExtendAttribute(jobname, "startid", -9999);
 		this.endid = context.getLongExtendAttribute(jobname, "endid", -9999);
 
-		String blocks_ = context.getStringExtendAttribute(jobname, "blocks");
+		blocks_str = context.getStringExtendAttribute(jobname, "blocks");
+		
+		LinkBlocks linkBlocks = buildLinkBlocks(blocks_str);
+		blocks = linkBlocks.blocks;
+		blocksplits = linkBlocks.blocksplits;
+		excludeblocks_str = context.getStringExtendAttribute(jobname, "excludeblocks");
+		linkBlocks = buildLinkBlocks(excludeblocks_str);
+		excludeblocks = linkBlocks.blocks;
+		excludeblocksplits = linkBlocks.blocksplits;
 		subblocks = context.getIntExtendAttribute(jobname, "subblocks", -1);
-		if (blocks_ != null && !blocks_.equals("")) {
-			String[] blocks_str = blocks_.trim().split(",");
-			Set<Integer> blockset = new java.util.TreeSet<Integer>();
-			
-			for (int i = 0; i < blocks_str.length; i++) {
-				String block = blocks_str[i];
-				if(block.indexOf(".") > 0)//判断是否需要过滤数据块
-				{
-					String[] tt = block.split("\\.");
-//					blocks[i] = Integer.parseInt(tt[0]);
-					blockset.add(Integer.parseInt(tt[0]));
-					List<Integer> subtasks = blocksplits.get(tt[0]);
-					if(subtasks == null)
-					{
-						subtasks = new ArrayList<Integer>();
-						blocksplits.put(tt[0], subtasks);
-					}
-					subtasks.add(Integer.parseInt(tt[1]));
-					
-				}
-				else
-				{
-//					blocks[i] = Integer.parseInt(block);
-					blockset.add(Integer.parseInt(block));
-				}
-			}
-			blocks = new int[blockset.size()];
-			int i = 0;
-			for(Integer b:blockset)
-			{
-				blocks[i] = b.intValue();
-				i++;
-			}
-		}
+		
 		driver = context.getStringExtendAttribute(jobname,
 				"driver");
 		dburl = context.getStringExtendAttribute(jobname,
@@ -897,15 +1038,26 @@ public class HDFSUploadData {
 				"usepool",false);
 	}
 	
-	/**
-	 * 用来存放块的子块
-	 */
-	private Map<String,List<Integer>> blocksplits = new HashMap<String,List<Integer>>(); 
+	
 
 	public void uploadData(String jobname) throws Exception {
 		BaseApplicationContext context = DefaultApplicationContext
 				.getApplicationContext("tasks.xml");
-		uploadData( context,  jobname);
+		if(context.containsBean(jobname))
+		{
+			uploadData( context,  jobname);
+		}
+		else
+		{
+			DBJob dbjob = DBHelper.getDBJob(jobname);
+			if(dbjob == null)
+			{
+				throw new Exception("作业"+jobname+"未定义!");
+			}
+			context = new SOAApplicationContext(dbjob.getJobdef());
+			uploadData( context,  jobname);
+		}
+		
 	}
 
 	public void deleteData(String jobname) throws Exception {
@@ -950,6 +1102,7 @@ public class HDFSUploadData {
 	public void uploadData(final BaseApplicationContext ioccontext, final  String jobname) throws Exception {
 		new Thread(new Runnable(){
 			public void run(){
+				long start = System.currentTimeMillis();
 				try {
 					initJob(ioccontext,jobname);
 					if (genlocalfile) {
@@ -962,10 +1115,13 @@ public class HDFSUploadData {
 					if (!fileSystem.exists(path))
 						fileSystem.mkdirs(path);
 					else {
-						if (clearhdfsfiles && (blocks == null || blocks.length == 0))// 如果指定了特定数据块任务，则不删除hdfs文件目录
+						if (clearhdfsfiles )// 如果指定了特定数据块任务，则不删除hdfs文件目录
 						{
-							fileSystem.delete(path, true);
-							fileSystem.mkdirs(path);
+							if((excludeblocks == null || excludeblocks.length == 0)&& (blocks == null || blocks.length == 0))
+							{
+								fileSystem.delete(path, true);
+								fileSystem.mkdirs(path);
+							}
 						}
 					}
 					DBHelper.initDB(HDFSUploadData.this);
@@ -977,14 +1133,38 @@ public class HDFSUploadData {
 							+ "],[pkName=" + pkName + "],[columns=" + columns
 							+ "],[datablocks=" + datablocks + "]成功.");
 				} catch (IllegalArgumentException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					TaskConfig config = buildTaskConfig(jobname) ;
+					JobStatic jobStatic = new JobStatic();
+					jobStatic.setConfig(config.toString());
+					jobStatic.setStatus(2);
+					jobStatic.setStartTime(start);
+					jobStatic.setEndTime(System.currentTimeMillis());
+					jobStatic.setJobname(jobname);
+					jobStatic.setErrormsg(SimpleStringUtil.exceptionToString(e));
+					Imp.getImpStaticManager().addJobStatic(jobStatic);
+					log.error("",e);
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					TaskConfig config = buildTaskConfig(jobname) ;
+					JobStatic jobStatic = new JobStatic();
+					jobStatic.setConfig(config.toString());
+					jobStatic.setStatus(2);
+					jobStatic.setStartTime(start);
+					jobStatic.setEndTime(System.currentTimeMillis());
+					jobStatic.setJobname(jobname);
+					jobStatic.setErrormsg(SimpleStringUtil.exceptionToString(e));
+					Imp.getImpStaticManager().addJobStatic(jobStatic);
+					log.error("",e);
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					TaskConfig config = buildTaskConfig(jobname) ;
+					JobStatic jobStatic = new JobStatic();
+					jobStatic.setConfig(config.toString());
+					jobStatic.setStatus(2);
+					jobStatic.setStartTime(start);
+					jobStatic.setEndTime(System.currentTimeMillis());
+					jobStatic.setJobname(jobname);
+					jobStatic.setErrormsg(SimpleStringUtil.exceptionToString(e));
+					Imp.getImpStaticManager().addJobStatic(jobStatic);
+					log.error("",e);
 				}
 			}
 		}).start();

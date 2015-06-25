@@ -22,6 +22,11 @@ public class GenFileHelper {
 		this.job = job;
 		this.config = this.job.config;
 	}
+	
+	public boolean isforceStop()
+	{
+		return this.job.jobStatic.isforceStop();
+	}
 	public int getGenquequetimewait() {
 		return config.getGenquequetimewait();
 	}

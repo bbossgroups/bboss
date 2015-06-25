@@ -51,36 +51,12 @@
 				 
 <!-- 				  endid="30019762123" -->
 <!-- 				  />	   -->
-			<property name="hx20111212_20120331" 
+<!--			<property name="hx20111212_20120331" 
 				  dbname="hx243"
-				  hdfsserver="hdfs://10.0.15.40:9000"
-				  hdfsdatadir="/m2m/data04/hx20111212_20120331"
-				  localdir="d:/bigdata/hx20111212_20120331|/bigdata/hx20111212_20120331"
-				  tablename="is_static_20111212_20120331"
-				  filebasename="is_static_20111212_20120331"
-				  schema="ISS"
-				  pkname="ST_PID"
-				  columns=""
-				  datablocks="200"					  			  
-				  geneworkthreads="50"
-				  uploadeworkthreads="20"
-				  genqueques="5"
-				  uploadqueues="5"
-				  genquequetimewait="10"
-				  uploadqueuetimewait="10"
-				   datatype="text"
-				  genlocalfile="false"
-				  clearhdfsfiles="true"
-				  usepagine="false"
-				  />	
-				  
-			<property name="hx20111212_20120331nopool" 
-				  dbname="hx243nopool"
 				  driver="oracle.jdbc.driver.OracleDriver"
 				  dburl="jdbc:oracle:thin:@//10.11.16.243:1521/ISS"
 				   dbuser="HX"
-				  dbpassword="edcr9637_"				 
-				  readOnly="true"
+				  dbpassword="edcr9637_"	
 				  validatesql="select 1 from dual"
 				  usepool="false"
 				  hdfsserver="hdfs://10.0.15.40:9000"
@@ -102,18 +78,26 @@
 				  genlocalfile="false"
 				  clearhdfsfiles="true"
 				  usepagine="false"
-				  />		  
+				  />	
+				  
+			 	  
 			<property name="hx20120401_20120901" 
-				  dbname="hx243"
+				 dbname="hx243"
+				  driver="oracle.jdbc.driver.OracleDriver"
+				  dburl="jdbc:oracle:thin:@//10.11.16.243:1521/ISS"
+				   dbuser="HX"
+				  dbpassword="edcr9637_"	
+				  validatesql="select 1 from dual"
+				  usepool="false"
 				  hdfsserver="hdfs://10.0.15.40:9000"
 				  hdfsdatadir="/m2m/data04/hx20120401_20120901"
 				  localdir="d:/bigdata/is_static_20120401_20120901|/bigdata/is_static_20120401_20120901"
 				  tablename="is_static_20120401_20120901"
-				  filebasename="is_static_20120401_20120901"
+				  filebasename="is_static"
 				  schema="ISS"
 				  pkname="ST_PID"
 				  columns=""
-				  datablocks="400"					  			  
+				  datablocks="10000"					  			  
 				  geneworkthreads="50"
 				  uploadeworkthreads="20"
 				  genqueques="5"
@@ -123,7 +107,7 @@
 				   datatype="text"
 				  genlocalfile="false"
 				  clearhdfsfiles="true"
-				  usepagine="true"
+				  usepagine="false"
 				  />	  	    
 			<property name="test" 
 				  dbname="test"
@@ -145,9 +129,33 @@
 				  datatype="text"
 				  genlocalfile="false"
 				  clearhdfsfiles="true"
-				  blocks="6,8"
+				  blocks="6,8" --包含的块
 				  subblocks="2"
-				  />	
+				  />
+				  
+			<property name="test" 
+				  dbname="test"
+				  hdfsserver="hdfs://10.0.15.40:9000"
+				  hdfsdatadir="/m2m/data04/test"
+				  localdir="d:/bigdata/test|/bigdata/test"
+				  tablename="testbigdata"
+				  filebasename="testbigdata"
+				  schema="testpdp1"
+				  pkname="tid"
+				  columns=""
+				  datablocks="300"				  
+				  geneworkthreads="30"
+				  uploadeworkthreads="20"
+				  genqueques="5"
+				  uploadqueues="6"
+				  genquequetimewait="10"
+				  uploadqueuetimewait="20"
+				  datatype="text"
+				  genlocalfile="false"
+				  clearhdfsfiles="true"
+				  excludeblocks="6,8"--排除的块
+				  subblocks="2"
+				  />		  	
 			<property name="testall" 
 				  dbname="test"
 				  hdfsserver="hdfs://10.0.15.40:9000"
@@ -216,6 +224,6 @@
 				  clearhdfsfiles="true"
 				  usepagine="true"
 				
-				  />	
+				  />	 -->
 				    
 	</properties>

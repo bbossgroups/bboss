@@ -38,6 +38,12 @@ public class JobstaticMonitorController {
 		Imp.getImpStaticManager().synJobStatus();
 		return "success";
 	}
+	
+	public @ResponseBody
+	String stopJob(String jobname) {
+		Imp.getImpStaticManager().stopJob(jobname);
+		return "success";
+	}
 
 	public @ResponseBody
 	String executeJob(String job) {

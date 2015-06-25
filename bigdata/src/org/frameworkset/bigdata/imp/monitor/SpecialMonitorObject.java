@@ -25,6 +25,7 @@ public class SpecialMonitorObject  implements java.io.Serializable{
 	 * 2:结束：执行失败
 	 * 3:结束：部分成功，部分异常
 	 * 4:挂起： 部分未开始，其他要么完成要么失败，类似于挂起
+	 * 5:结束：强制停止
 	 */
 	private int status = -1;
 	private boolean canrun;

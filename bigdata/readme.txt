@@ -1,4 +1,16 @@
-﻿1.发容器包
+﻿select value from v$parameter where name = 'sessions'; 
+
+hx20111212_20120331排除
+is_static_0
+is_static_1 is_static_4 is_static_5 is_static_6 is_static_7 is_static_8 is_static_9
+is_static_10
+is_static_11
+is_static_12 is_static_13 is_static_14 is_static_15 is_static_16 is_static_17 is_static_18 is_static_19 
+is_static_20 is_static_21 is_static_22 is_static_23 is_static_24 is_static_25 is_static_26 is_static_27 is_static_28 is_static_29
+is_static_3 is_static_30 is_static_31 is_static_33 is_static_34	
+is_static_9993 is_static_9994 is_static_9995 is_static_9996 is_static_9997 is_static_9998 is_static_9999
+
+1.发容器包
 2.动态加载数据源
 
 IS_STATIC_2010_6_35 

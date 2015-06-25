@@ -55,10 +55,17 @@ $(document).ready(function() {
 		synJobStatus();
     });
 	
-	<pg:true colName="canrun">
+	<pg:true colName="canrun" evalbody="true">
+	<pg:yes>
 	$('#executeJob').click(function() {
 		executeJob();
     });
+	</pg:yes>
+	<pg:no>
+	$('#stopJob').click(function() {
+		stopJob();
+    });
+	</pg:no>
 	</pg:true>
 	
 });
@@ -91,6 +98,42 @@ function executeJob()
 					
 				} else {
 					 $.dialog.alert("同步失败！作业日志请看jobdef中的输出");
+					 $("#jobdef").val(data);
+					 
+				}
+				
+			}	
+		 });
+	}
+		
+}
+
+function stopJob()
+{
+	var job = $("#job").val()
+	if(job == null|| job == '' )
+	{
+		 alert("没有选择需要停止的作业！");
+		 return;
+	}
+	if(confirm("需要停止的作业-"+job+"吗？"))
+	{
+		$.ajax({
+	 	 	type: "POST",
+			url : "<%=request.getContextPath()%>/bigdata/stopJob.page",
+			dataType : 'json',
+			data :{"job":job},
+			async:false,
+			beforeSend: function(XMLHttpRequest){
+					
+				 	XMLHttpRequest.setRequestHeader("RequestType", "ajax");
+				},
+			success : function(data){
+				if (data == 'success') {
+					 $.dialog.alert("停止作业-"+job+"成功！");
+					
+				} else {
+					 $.dialog.alert("停止作业失败！作业日志请看jobdef中的输出");
 					 $("#jobdef").val(data);
 					 
 				}
@@ -185,7 +228,9 @@ function submitJob () {
 						<ul style="display: block;" id="job_tree_module">
 							<pg:list colName="allJobNames">
 								<li id="<pg:cell/>"><a href="javascript:void(0)"
-									onclick="doClickTreeNode('<pg:cell/>')"><pg:cell /></a></li>
+									onclick="doClickTreeNode('<pg:cell/>')"><pg:cell /></a>	
+									
+									</li>
 							</pg:list>
 						</ul></li>
 				</ul>
@@ -222,12 +267,16 @@ function submitJob () {
 						<pg:equal value="4">
 						<th><font color="red">挂起： 作业-<pg:cell colName="jobName"/>部分未开始，其他要么完成要么失败，类似于挂起</font></th>
 						</pg:equal>
+						<pg:equal value="5">
+						<th><font color="red">结束： 作业-<pg:cell colName="jobName"/>强制停止</font></th>
+						</pg:equal>
 						<pg:other >
 						<th><font color="red">作业-<pg:cell colName="jobName"/>状态未知</font></th>
 						</pg:other>
 						
 						<th><a href="javascript:void(0);" class="bt_1" id="executeJob"><span>执行作业-<pg:cell colName="jobName"/></span></a>
-						<a href="javascript:void(0);" class="bt_small" id="deleteJobHDFS"><span>删除作业-<pg:cell colName="jobName"/>-HDFS目录</span></a></th>
+						
+						<a href="javascript:void(0);" class="bt_small" id="stopJob"><span>停止作业-<pg:cell colName="jobName"/></span></a></th>
 					</tr>
 				</table>
 				
@@ -300,13 +349,34 @@ function submitJob () {
 						class="stable" id="tb">
 						<tr>
 
-							<td>作业管理节点：${adminNode}</td>
+							<td width="20%" colspan="2"><a name="top"></a>作业管理节点：${adminNode} 总任务数：<pg:cell colName="totaltasks"/></td>
 
 						</tr>
 						<pg:list requestKey="allDataNodes">
 							<tr>
 
-								<td>数据处理节点：<pg:cell /></td>
+								<td width="20%"><a href="#<pg:cell />">数据处理节点：<pg:cell /></a>
+									</td>
+								<td><pg:map index="0" colName="jobstaticsIdxByHost" keycell="true">
+									运行状态:<pg:case colName="status">
+											<pg:equal value="-1">未开始</pg:equal>
+											<pg:equal value="0">正在运行</pg:equal>
+											<pg:equal value="1">执行完毕</pg:equal>
+											<pg:equal value="2">执行异常</pg:equal>
+											<pg:equal value="3">强制停止</pg:equal>
+										</pg:case> &nbsp;&nbsp;<br>开始时间:<pg:cell colName="startTime"
+											dateformat="yyyy-MM-dd HH:mm:ss" />&nbsp;&nbsp;<br>结束时间:<pg:cell colName="endTime"
+											dateformat="yyyy-MM-dd HH:mm:ss" />&nbsp;&nbsp;<br>
+											节点总任务数：<pg:cell colName="totaltasks"/>&nbsp;&nbsp;<br>
+											正在运行任务数：<pg:cell colName="runtasks"/>&nbsp;&nbsp;<br>
+											完成任务数：<pg:cell colName="completetasks"/>&nbsp;&nbsp;<br>
+											失败任务数：<pg:cell colName="failtasks"/>&nbsp;&nbsp;<br>
+											等待执行任务数：<pg:cell colName="waittasks"/>&nbsp;&nbsp;<br>
+											未开始任务数：<pg:cell colName="unruntasks"/>&nbsp;&nbsp;<br>
+											错误日志:<pg:cell colName="errormsg" />
+											
+									</pg:map>	</td>	
+									
 
 							</tr>
 						</pg:list>
@@ -344,7 +414,7 @@ function submitJob () {
 								class="stable" id="tb">
 							<tr>
 
-								<th>数据处理节点-<pg:mapkey/></th>
+								<th><a name="<pg:mapkey/>" href="#top">数据处理节点-<pg:mapkey/></a></th>
 								<th colspan="100"></th>
 
 
@@ -358,7 +428,7 @@ function submitJob () {
 											<pg:equal value="0">正在运行</pg:equal>
 											<pg:equal value="1">执行完毕</pg:equal>
 											<pg:equal value="2">执行异常</pg:equal>
-
+											<pg:equal value="3">强制停止</pg:equal>
 										</pg:case> &nbsp;&nbsp;<br>开始时间:<pg:cell colName="startTime"
 											dateformat="yyyy-MM-dd HH:mm:ss" />&nbsp;&nbsp;<br>结束时间:<pg:cell colName="endTime"
 											dateformat="yyyy-MM-dd HH:mm:ss" />&nbsp;&nbsp;<br>错误日志:<pg:cell colName="errormsg" /></td>

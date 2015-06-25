@@ -10,7 +10,8 @@ public class JobStatic implements java.io.Serializable,java.lang.Cloneable{
 	 * -1:未开始
 	 * 0:正在执行
 	 * 1:执行完毕
-	 * 2:执行异常 
+	 * 2:执行异常
+	 * 3:强制终止
 	 */
 	private int status = - 1;
 	private long startTime;
@@ -18,13 +19,69 @@ public class JobStatic implements java.io.Serializable,java.lang.Cloneable{
 	private String config;
 	private String errormsg;
 	private List<TaskStatus> runtasksInfos;
-
+	private int totaltasks;
+	private int unruntasks;
+	private int completetasks;
+	private int failtasks;
+	private int runtasks;
+	private int waittasks;
+	private String jobname;
+	public void incrementfailtasks()
+	{
+		this.failtasks ++;
+	}
+	
+	public void incrementcompletetasks()
+	{
+		this.completetasks ++;
+	}
+	
+	public void incrementunruntasks()
+	{
+		this.unruntasks ++;
+	}
+	
+	public void eval()
+	{
+		if(runtasksInfos != null && runtasksInfos.size() > 0)
+		{
+			for(TaskStatus status :runtasksInfos)
+			{
+				switch(status.getStatus())
+				{
+					/**
+					 * <pg:equal value="-1">未开始</pg:equal>
+												<pg:equal value="0">正在运行</pg:equal>
+												<pg:equal value="1">执行完毕</pg:equal>
+												<pg:equal value="2">执行异常</pg:equal>
+												<pg:equal value="3">排队等候</pg:equal>
+					 */
+					case -1:
+						this.unruntasks ++;break;
+					case 0:
+						this.runtasks ++;break;
+					case 1:
+						this.completetasks ++;break;	
+					case 2:
+						this.failtasks ++;break;
+					case 3:
+						this.waittasks ++;break;	
+				}
+			}
+			waittasks = this.totaltasks - this.failtasks - this.completetasks - this.unruntasks;
+		}
+		
+	}
 	public int getStatus() {
 		return status;
 	}
 
 	public void setStatus(int status) {
 		this.status = status;
+	}
+	public boolean isforceStop()
+	{
+		return this.status == 3;
 	}
 
 	 
@@ -88,6 +145,63 @@ public class JobStatic implements java.io.Serializable,java.lang.Cloneable{
 
 	public void setRuntasksInfos(List<TaskStatus> runtasksInfos) {
 		this.runtasksInfos = runtasksInfos;
+	}
+
+	public int getTotaltasks() {
+		return totaltasks;
+	}
+
+	public void setTotaltasks(int totaltasks) {
+		this.totaltasks = totaltasks;
+	}
+
+	public int getUnruntasks() {
+		return unruntasks;
+	}
+
+	public void setUnruntasks(int unruntasks) {
+		this.unruntasks = unruntasks;
+	}
+
+	public int getCompletetasks() {
+		return completetasks;
+	}
+
+	public void setCompletetasks(int completetasks) {
+		this.completetasks = completetasks;
+	}
+
+	public int getFailtasks() {
+		return failtasks;
+	}
+
+	public void setFailtasks(int failtasks) {
+		this.failtasks = failtasks;
+	}
+
+	public int getWaittasks() {
+		return waittasks;
+	}
+
+	public void setWaittasks(int waittasks) {
+		this.waittasks = waittasks;
+	}
+
+	public int getRuntasks() {
+		return runtasks;
+	}
+
+	public void setRuntasks(int runtasks) {
+		this.runtasks = runtasks;
+	}
+
+	public String getJobname() {
+		// TODO Auto-generated method stub
+		return jobname;
+	}
+
+	public void setJobname(String jobname) {
+		this.jobname = jobname;
 	}
 	
 	

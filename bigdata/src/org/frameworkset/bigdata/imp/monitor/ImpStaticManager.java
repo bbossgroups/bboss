@@ -9,6 +9,11 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
+import org.frameworkset.bigdata.imp.ExecutorJob;
+import org.frameworkset.bigdata.imp.HDFSUploadData;
+import org.frameworkset.bigdata.imp.TaskConfig;
+import org.frameworkset.bigdata.imp.TaskInfo;
+import org.frameworkset.bigdata.util.DBHelper;
 import org.frameworkset.event.Event;
 import org.frameworkset.event.EventHandle;
 import org.frameworkset.event.EventImpl;
@@ -19,11 +24,6 @@ import org.frameworkset.remote.EventUtils;
 import org.frameworkset.spi.BaseApplicationContext;
 import org.frameworkset.spi.DefaultApplicationContext;
 import org.jgroups.Address;
-import org.frameworkset.bigdata.imp.ExecutorJob;
-import org.frameworkset.bigdata.imp.HDFSUploadData;
-import org.frameworkset.bigdata.imp.TaskConfig;
-import org.frameworkset.bigdata.imp.TaskInfo;
-import org.frameworkset.bigdata.util.DBHelper;
 
 /**
  * 监控统计
@@ -76,7 +76,19 @@ public class ImpStaticManager implements Listener<Object>{
 			jobStatic.setConfig(job.getConfig().toString());
 			jobStatic.setStatus(0);
 			jobStatic.setStartTime(System.currentTimeMillis());
+			jobStatic.setJobname(job.getConfig().getJobname());
 			localjobstatics.put(job.getConfig().getJobname(), jobStatic);
+			return jobStatic;
+		}
+	}
+	
+	public JobStatic addJobStatic(JobStatic jobStatic )
+	{
+		synchronized(localjobstaticsLock)
+		{
+			 
+			
+			localjobstatics.put(jobStatic.getJobname(), jobStatic);
 			return jobStatic;
 		}
 	}
@@ -158,6 +170,18 @@ public class ImpStaticManager implements Listener<Object>{
 			}
 			
 		}
+		else if(command.equals(HDFSUploadData.hdfs_upload_monitor_jobstop_commond))
+		{
+			String jobname = (String)e_.getSource();
+			JobStatic jobstatic = localjobstatics.get(jobname);
+			if(jobstatic != null)
+				jobstatic.setStatus(3);
+			else
+			{
+				log.info("强制停止作业失败："+jobname+ "未执行。");
+			}
+		}
+			
 		
 		
 	}
@@ -233,7 +257,7 @@ public class ImpStaticManager implements Listener<Object>{
 				job.setStatus( checkstatus(jobstatic));
 				
 			}
-			if(job.getStatus() == -1 || job.getStatus() == 1 || job.getStatus() == 2 || job.getStatus() == 3  )
+			if(job.getStatus() == -1 || job.getStatus() == 1 || job.getStatus() == 2 || job.getStatus() == 3 || job.getStatus() == 5  )
 				job.setCanrun(true);
 			TaskConfig config = HDFSUploadData.buildTaskConfig(jobName);
 			if(config != null)
@@ -248,6 +272,11 @@ public class ImpStaticManager implements Listener<Object>{
 		return job;
 	}
 	
+	public void stopJob(String jobname) 
+	{
+		Event event = new EventImpl("",HDFSUploadData.hdfs_upload_monitor_jobstop_commond);
+		EventHandle.sendEvent(event, false);
+	}
 	private int checkstatus(Map<String, JobStatic> jobstatic)
 	{
 		if(jobstatic == null || jobstatic.size() == 0)
@@ -255,7 +284,7 @@ public class ImpStaticManager implements Listener<Object>{
 		else
 		{
 			Set<Entry<String, JobStatic>> set = jobstatic.entrySet();
-			int status = -1;
+			
 			/**
 			 * -1:未开始
 			 * 0:执行：正在执行
@@ -268,9 +297,12 @@ public class ImpStaticManager implements Listener<Object>{
 			boolean isrun = false;
 			boolean success = false;
 			boolean failed = false;
+			boolean forcestop = false;
 			for(Entry<String, JobStatic> entry:set)
 			{
-				switch(entry.getValue().getStatus())
+				JobStatic jobStatic = entry.getValue(); 
+				jobStatic.eval();
+				switch(jobStatic.getStatus())
 				{
 					case -1:
 						unrun = true;break;
@@ -280,12 +312,17 @@ public class ImpStaticManager implements Listener<Object>{
 						success = true;break;
 					case 2:
 						failed = true;break;
+						
+					case 3:
+						forcestop = true;break;	
 					default:
 						break;
 						
 				}
 			}
-			if(isrun)
+			if(forcestop)
+				return 5;
+			else if(isrun)
 				return 0;
 			else if(unrun)
 			{

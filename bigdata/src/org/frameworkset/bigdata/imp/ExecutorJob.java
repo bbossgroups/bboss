@@ -63,6 +63,8 @@ public class ExecutorJob {
 		DBHelper.initDB(config);
 		log.info("start run task:"+config +",task size:"+config.getTasks().length);
 		 jobStatic = Imp.getImpStaticManager().addJobStatic(this);
+		 if(config.getTasks() != null)
+			 jobStatic.setTotaltasks(config.getTasks().length);
 		 GenFileHelper  genFileWork = new GenFileHelper(this);
 		 genFileWork.run(  config);		
 		 StringBuilder errorinfo = new StringBuilder(); 
@@ -74,7 +76,15 @@ public class ExecutorJob {
 				 segement.taskInfo = task;
 				 TaskStatus taskStatus = Imp.getImpStaticManager().addJobTaskStatic(jobStatic, task);
 				 segement.setTaskStatus(taskStatus);
+				 if(jobStatic.isforceStop())
+				 {
+					 genfileQueues.notifyAll();
+					 if(config.isGenlocalfile())
+						 this.upfileQueues.notifyAll();
+					 break;
+				 }
 				 taskStatus.setStatus(3);
+				 
 				genfileQueues.put(segement);
 			} catch (Exception e) {
 				log.error(task.toString(),e);
@@ -95,6 +105,11 @@ public class ExecutorJob {
 		 {
 			 jobStatic.setStatus(2);
 			 jobStatic.setErrormsg(errorinfo.toString());
+		 }
+		 if(jobStatic.isforceStop())
+		 {
+			 this.upfileQueues.clear();
+			 this.genfileQueues.clear();
 		 }
 		 jobStatic.setEndTime(System.currentTimeMillis());
 	}
@@ -118,6 +133,9 @@ public class ExecutorJob {
 	}
 	public TaskConfig getConfig() {
 		return config;
+	}
+	public boolean isforcestop() {
+		return this.jobStatic.isforceStop();
 	}
 	
 }

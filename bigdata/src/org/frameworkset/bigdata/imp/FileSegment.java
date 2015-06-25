@@ -40,6 +40,10 @@ public class FileSegment {
 	 {
 		 return this.job.usepagine();
 	 }
+	 public boolean isforcestop()
+	 {
+		return this.job.isforcestop();
+	 }
 	 public String getPageinestatement() {
 			return this.job.config.getPageinestatement();
 		}
