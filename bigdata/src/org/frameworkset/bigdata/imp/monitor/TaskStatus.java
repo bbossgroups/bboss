@@ -53,5 +53,10 @@ public class TaskStatus implements java.io.Serializable,java.lang.Cloneable{
 	public void setTaskNo(String taskNo) {
 		this.taskNo = taskNo;
 	}
+	@Override
+	public Object clone() throws CloneNotSupportedException {
+		// TODO Auto-generated method stub
+		return super.clone();
+	}
 
 }

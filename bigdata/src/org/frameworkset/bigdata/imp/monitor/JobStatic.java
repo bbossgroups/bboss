@@ -120,7 +120,7 @@ public class JobStatic implements java.io.Serializable,java.lang.Cloneable{
 	 
 
 	@Override
-	protected Object clone() throws CloneNotSupportedException {
+	public Object clone() throws CloneNotSupportedException {
 		// TODO Auto-generated method stub
 		return super.clone();
 	}
