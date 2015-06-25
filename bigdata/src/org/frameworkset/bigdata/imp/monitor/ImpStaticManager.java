@@ -45,6 +45,8 @@ public class ImpStaticManager implements Listener<Object>{
 	 */
 	private HashMap<String,Map<String,JobStatic>> monitorAlljobstaticsIdxByJob = new HashMap<String,Map<String,JobStatic>>();//作业分布服务器情况一览表
 	
+	private HashMap<String,JobStatus> specialMonitorObjects = new HashMap<String,JobStatus>();//作业分布服务器情况一览表
+	
 	/**
 	 * Map<jobname,Status(long)>
 	 
@@ -144,6 +146,7 @@ public class ImpStaticManager implements Listener<Object>{
 			log.info("处理监控数据，将数据节点["+sourceaddress+"]作业监控数据添加监控中心监控数据中。");
 			synchronized(this.adminJobsLock)
 			{
+//				specialMonitorObjects.clear();
 				HostJobs oldalljobstatics  = monitorAlljobstaticsIdxByHost.get(sourceaddress);
 				if(oldalljobstatics == null || oldalljobstatics.getDatanodeTimestamp() < alljobstatics.getDatanodeTimestamp())//数据节点数据没有或者最新返回的数据比之前的数据新则更新监控中心的数据
 				{
@@ -165,6 +168,9 @@ public class ImpStaticManager implements Listener<Object>{
 						{
 							jobsIdxByHost.put(sourceaddress, job);
 						}
+						
+						
+						 
 					}
 				}
 			}
@@ -223,6 +229,44 @@ public class ImpStaticManager implements Listener<Object>{
 		
 	}
 	
+	public static class JobStatus
+	{
+		int status;
+		String  failedTaskNos;
+		String  successTaskNos;
+		int totaltasks;
+		public int getStatus() {
+			return status;
+		}
+		public void setStatus(int status) {
+			this.status = status;
+		}
+		public String getFailedTaskNos() {
+			return failedTaskNos;
+		}
+		public void setFailedTaskNos(String failedTaskNos) {
+			this.failedTaskNos = failedTaskNos;
+		}
+		public String getSuccessTaskNos() {
+			return successTaskNos;
+		}
+		public void setSuccessTaskNos(String successTaskNos) {
+			this.successTaskNos = successTaskNos;
+		}
+		public int getTotaltasks() {
+			return totaltasks;
+		}
+		public void setTotaltasks(int totaltasks) {
+			this.totaltasks = totaltasks;
+		}
+	}
+	public JobStatus getJobStatus(String jobName)
+	{
+		synchronized(adminJobsLock)
+		{
+			return this.specialMonitorObjects.get(jobName);
+		}
+	}
 	public SpecialMonitorObject getSpecialMonitorObject(String jobName)
 	{
 		
@@ -230,7 +274,7 @@ public class ImpStaticManager implements Listener<Object>{
 		
 		synchronized(adminJobsLock)
 		{
-			
+			 
 			List<String> names =this.getConfigTasks();
 			
 			if(monitorAlljobstaticsIdxByJob.size() > 0)
@@ -254,7 +298,17 @@ public class ImpStaticManager implements Listener<Object>{
 			{
 				jobstatic = (Map<String, JobStatic>)((HashMap<String, JobStatic>)jobstatic).clone();
 				job.setJobstaticsIdxByHost(jobstatic);
-				job.setStatus( checkstatus(jobstatic));
+				JobStatus jobStatus = checkstatus(jobstatic);
+				job.setTotaltasks(jobStatus.totaltasks); 
+				job.setStatus( jobStatus.status);
+				if(jobStatus.successTaskNos != null)
+					job.setSuccessTaskNos(jobStatus.successTaskNos.toString());
+				else
+					job.setSuccessTaskNos("");
+				if(jobStatus.failedTaskNos != null)
+					job.setFailedTaskNos(jobStatus.failedTaskNos.toString());
+				else
+					job.setFailedTaskNos("");
 				
 			}
 			if(job.getStatus() == -1 || job.getStatus() == 1 || job.getStatus() == 2 || job.getStatus() == 3 || job.getStatus() == 5  )
@@ -277,10 +331,14 @@ public class ImpStaticManager implements Listener<Object>{
 		Event event = new EventImpl("",HDFSUploadData.hdfs_upload_monitor_jobstop_commond);
 		EventHandle.sendEvent(event, false);
 	}
-	private int checkstatus(Map<String, JobStatic> jobstatic)
+	private JobStatus checkstatus(Map<String, JobStatic> jobstatic)
 	{
+		JobStatus jobStatus = new JobStatus();
 		if(jobstatic == null || jobstatic.size() == 0)
-			return -1;
+		{
+			jobStatus.status = -1;
+			return jobStatus;
+		}
 		else
 		{
 			Set<Entry<String, JobStatic>> set = jobstatic.entrySet();
@@ -298,10 +356,28 @@ public class ImpStaticManager implements Listener<Object>{
 			boolean success = false;
 			boolean failed = false;
 			boolean forcestop = false;
+			StringBuffer failedTaskNos = new StringBuffer();
+			StringBuffer successTaskNos = new StringBuffer();
 			for(Entry<String, JobStatic> entry:set)
 			{
 				JobStatic jobStatic = entry.getValue(); 
-				jobStatic.eval();
+				jobStatic.eval( );
+				
+				if(jobStatic.getCompletetaskNos() != null && jobStatic.getCompletetaskNos().length() > 0)
+				{
+					if(successTaskNos.length() > 0)
+						successTaskNos.append(",");
+						
+					successTaskNos.append(jobStatic.getCompletetaskNos());
+					
+				}
+				if(jobStatic.getFailedtaskNos() != null && jobStatic.getFailedtaskNos().length() > 0)
+				{
+					if(failedTaskNos.length() > 0)
+						failedTaskNos.append(",");
+						
+					failedTaskNos.append(jobStatic.getFailedtaskNos());
+				}
 				switch(jobStatic.getStatus())
 				{
 					case -1:
@@ -319,27 +395,52 @@ public class ImpStaticManager implements Listener<Object>{
 						break;
 						
 				}
+				jobStatus.totaltasks = jobStatus.totaltasks +  jobStatic.getTotaltasks();
 			}
+			jobStatus.successTaskNos = successTaskNos.toString();
+			jobStatus.failedTaskNos = failedTaskNos.toString();
+			
 			if(forcestop)
-				return 5;
+			{
+				jobStatus.status = 5;
+				return jobStatus;
+			}
 			else if(isrun)
-				return 0;
+			{
+				jobStatus.status = 0;
+				return jobStatus;
+			}
 			else if(unrun)
 			{
 				 if(!success && !failed)
-					 return -1;
+				 {
+					 jobStatus.status = -1;
+						return jobStatus;
+				 }
 				 else
 				 {
-					 return 4;
+					 jobStatus.status = 4;
+						return jobStatus;
 				 }
+				 
 			}
 			else if(success && !failed)
-				return 1;
+				
+				 {
+					 jobStatus.status = 1;
+						return jobStatus;
+				 }
 			else if(!success && failed)
-				return 2;
+			{
+				 jobStatus.status = 2;
+					return jobStatus;
+			 }
 			
 			else //if(success || failed)
-				return 3;
+			{
+				 jobStatus.status = 3;
+					return jobStatus;
+			 }
 			
 				
 				

@@ -94,10 +94,10 @@ function executeJob()
 				},
 			success : function(data){
 				if (data == 'success') {
-					 $.dialog.alert("作业-"+job+"执行成功！");
+					 $.dialog.alert("提交作业-"+job+"请求成功！");
 					
 				} else {
-					 $.dialog.alert("同步失败！作业日志请看jobdef中的输出");
+					 $.dialog.alert("提交作业请求失败！作业日志请看jobdef中的输出");
 					 $("#jobdef").val(data);
 					 
 				}
@@ -287,6 +287,7 @@ function submitJob () {
 					<form id="queryForm" name="queryForm">
 						<input type="hidden" name="job" id="job"
 							value="<pg:cell colName="jobName"/>" />
+						 	
 						<table width="100%" border="0" cellpadding="0" cellspacing="0"
 						class="stable" id="tb">
 						 
@@ -405,6 +406,21 @@ function submitJob () {
 
 							</tr>
 							
+							<tr>
+
+								<th>已完成作业任务</th>
+								<td><textarea height="200px"><pg:cell colName="successTaskNos"/></textarea></td>
+
+
+							</tr>
+							<tr>
+
+								<th>失败作业任务</th>
+								<td><textarea height="200px"><pg:cell colName="failedTaskNos"/></textarea></td>
+
+
+							</tr>
+							
 						 
 					 </table>
 					
@@ -451,7 +467,7 @@ function submitJob () {
 								<pg:list colName="runtasksInfos">
 									<tr>
 
-										<td><pg:case colName="status">
+										<td><pg:rowid increament="1"/>-<pg:case colName="status">
 												<pg:equal value="-1">未开始</pg:equal>
 												<pg:equal value="0">正在运行</pg:equal>
 												<pg:equal value="1">执行完毕</pg:equal>

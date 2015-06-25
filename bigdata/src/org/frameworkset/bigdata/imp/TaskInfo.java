@@ -6,6 +6,10 @@ public class TaskInfo  implements java.io.Serializable{
 	long endoffset;
 	long pagesize;
 	String filename;
+	/**
+	 * 任务号
+	 */
+	String taskNo;
 	
 	public long getStartoffset() {
 		return startoffset;
@@ -41,6 +45,12 @@ public class TaskInfo  implements java.io.Serializable{
 			.append("endoffset=").append(endoffset);
 		 return builder.toString();
 	 }
+	public String getTaskNo() {
+		return taskNo;
+	}
+	public void setTaskNo(String taskNo) {
+		this.taskNo = taskNo;
+	}
 	
 
 }

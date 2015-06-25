@@ -12,6 +12,10 @@ public class TaskStatus implements java.io.Serializable,java.lang.Cloneable{
 	private int status =-1;
 	private String errorInfo;
 	private long handlerows;
+	/**
+	 * 任务号
+	 */
+	private String taskNo;
 	private long errorrows;
 	public String getTaskInfo() {
 		return taskInfo;
@@ -42,6 +46,12 @@ public class TaskStatus implements java.io.Serializable,java.lang.Cloneable{
 	}
 	public void setErrorrows(long errorrows) {
 		this.errorrows = errorrows;
+	}
+	public String getTaskNo() {
+		return taskNo;
+	}
+	public void setTaskNo(String taskNo) {
+		this.taskNo = taskNo;
 	}
 
 }

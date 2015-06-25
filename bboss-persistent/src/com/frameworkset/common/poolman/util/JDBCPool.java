@@ -521,7 +521,7 @@ public class JDBCPool {
 		return p;
 	}
 	
-	private void initPoolDatasource()
+	private void initPoolDatasource() throws Exception
 	{
 		try {
 			DataSource _datasource = null;
@@ -551,11 +551,11 @@ public class JDBCPool {
 			
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw e;
 
 		}
 	}
-	public void setUpCommonPool() {
+	public void setUpCommonPool() throws Exception {
 
 		if (!this.info.isExternal()) {
 			
@@ -769,7 +769,7 @@ public class JDBCPool {
 	public void startPool() {
 		if (status.equals("start"))
 			return;
-		if (!status.equals("stop") && !status.equals("unknown"))
+		if (!status.equals("stop") && !status.equals("unknown") && !status.equals("failed"))
 			return;
 		initDBAdapter();
 		
@@ -787,13 +787,13 @@ public class JDBCPool {
 			}
 		}
 
-		this.setUpCommonPool();
-		this.startTime = System.currentTimeMillis();
-		this.status = "start";
+		
 
 		try {
 
-			
+			this.setUpCommonPool();
+			this.startTime = System.currentTimeMillis();
+			this.status = "start";
 			init();
 			this.initDBProductInfo();
 			log.debug("Load Database Meta Data=" + info.getLoadmetadata());
@@ -823,7 +823,9 @@ public class JDBCPool {
 						+ "] Meta Data .");
 			}
 		} catch (Exception e) {
-			log.debug("JDBCPool: Exception while initializing", e);
+			this.status = "failed";
+			log.error("initializing JDBCPool[" + info.getName()
+						+ "] failed:", e);
 		}
 
 	}

@@ -77,6 +77,50 @@ public class JobstaticMonitorController {
 		}
 
 	}
+	
+	
+//	/**
+//	 * 创建并提交一个新作业
+//	 * 
+//	 * @param jobdef
+//	 * @return
+//	 */
+//	public @ResponseBody
+//	String submitFailedJobTasks(String jobdef) {
+//		if (StringUtil.isEmpty(jobdef))
+//			return "没有提交要执行的作业";
+//		try {
+//			String msg = Imp.submitNewJob(jobdef);
+//			return msg;
+//		} catch (Exception e) {
+//			log.error("提交执行作业失败：" + jobdef, e);
+//			return StringUtil.exceptionToString(e);
+//		}
+//
+//	}
+//	
+//	
+//	/**
+//	 * 创建并提交一个新作业
+//	 * 
+//	 * @param jobdef
+//	 * @return
+//	 */
+//	public @ResponseBody
+//	String submitExcludeSuccessJobTasks(String jobdef) {
+//		if (StringUtil.isEmpty(jobdef))
+//			return "没有提交要执行的作业";
+//		try {
+//			String msg = Imp.submitNewJob(jobdef);
+//			return msg;
+//		} catch (Exception e) {
+//			log.error("提交执行作业失败：" + jobdef, e);
+//			return StringUtil.exceptionToString(e);
+//		}
+//
+//	}
+	
+	
 
 	public static void main(String[] args) throws SQLException {
 		// Connection connection = DBUtil.getConection("test");

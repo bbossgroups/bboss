@@ -63,6 +63,10 @@ public class HDFSUploadData {
 	private FileSystem fileSystem = null;
 	private String hdfsserver;
 	private String hdfsdatadir;
+	/**
+	 * 指定一个删除作业，如果设定deletefiles属性，那么只做hdfs文件删除操作，不会做其他事情
+	 */
+	private String deletefiles;
 
 	private String localpath;
 	private String tablename;
@@ -152,7 +156,7 @@ public class HDFSUploadData {
 		config.adminnodeasdatanode = this.adminnodeasdatanode;
 		config.jobname = jobname;
 		config.subblocks = this.subblocks;
-		 
+		config.setDeletefiles(deletefiles);
 		config.excludeblocks = this.excludeblocks_str;
 		config.blocks = this.blocks_str;
 		
@@ -353,12 +357,15 @@ public class HDFSUploadData {
 		String validatesql = context.getStringExtendAttribute(jobname,
 				"validatesql","");
 		
-		
+		String deletefiles = context.getStringExtendAttribute(jobname,
+				"deletefiles");
+		config.setDeletefiles(deletefiles);
 		boolean usepool = context.getBooleanExtendAttribute(jobname,
 				"usepool",false);
 		
 		String readOnly = context.getStringExtendAttribute(jobname,
 				"readOnly");
+		
 		config.setReadOnly(readOnly);
 		config.driver = driver;
 		config.dburl = dburl;
@@ -450,7 +457,7 @@ public class HDFSUploadData {
 	 * @param div
 	 * @param usepagine
 	 */
-	private void spiltTask_(TaskInfo[] segments,long startid ,long endid ,int datablocks,long segement,long div,boolean usepagine,String filebasename)
+	private void spiltTask_(TaskInfo[] segments,long startid ,long endid ,int datablocks,long segement,long div,boolean usepagine,String filebasename,String parentTaskNo)
 	{
 		if(!usepagine)
 		{
@@ -474,6 +481,7 @@ public class HDFSUploadData {
 							+ 1;
 				}
 				task.filename = filebasename + "_" + i;
+				task.taskNo = parentTaskNo == null?""+i:parentTaskNo+"."+i;
 				segments[i] = task;
 			}
 		}
@@ -495,6 +503,7 @@ public class HDFSUploadData {
 					task.pagesize = segement;
 				}
 				task.filename = filebasename + "_" + i;
+				task.taskNo = parentTaskNo == null?""+i:parentTaskNo+"."+i;
 				segments[i] = task;
 			}
 		}
@@ -564,7 +573,7 @@ public class HDFSUploadData {
 
 					long div = datas % this.datablocks;
 
-					spiltTask_(segments ,startid,endid,this.datablocks,segement,div,usepagine,filebasename);
+					spiltTask_(segments ,startid,endid,this.datablocks,segement,div,usepagine,filebasename,null);
 				} else // 数据量小于块数，那么直接按一块数据进行处理，不需要进行分块处理
 				{
 					TaskInfo task = new TaskInfo();
@@ -572,6 +581,7 @@ public class HDFSUploadData {
 					task.endoffset = endid;
 					task.pagesize = datas;
 					task.filename = filebasename + "_0";
+					task.taskNo = "0";
 					segement = datas;
 					segments = new TaskInfo[1];
 					segments[0] = task;
@@ -625,13 +635,14 @@ public class HDFSUploadData {
 				segement = datas / this.datablocks;
 
 				long div = datas % this.datablocks;
-				spiltTask_(segments ,0,0,this.datablocks,segement,div,usepagine,filebasename);
+				spiltTask_(segments ,0,0,this.datablocks,segement,div,usepagine,filebasename,null);
 			} else {
 				TaskInfo task = new TaskInfo();
 				task.startoffset = 0;
 
 				task.pagesize = datas;
 				task.filename = filebasename + "_0";
+				task.taskNo = "0";
 				segement = datas;
 				segments = new TaskInfo[1];
 				segments[0] = task;
@@ -846,7 +857,7 @@ public class HDFSUploadData {
 					long div = datas % this.subblocks;
 
 					deleteParentBlockHDFS.add(taskInfo.filename);
-					spiltTask_(  segments ,startid,endid,subblocks,  segement,  div,  usepagine,taskInfo.filename);
+					spiltTask_(  segments ,startid,endid,subblocks,  segement,  div,  usepagine,taskInfo.filename,taskInfo.taskNo);
 					splitTasks.segement = segement;
 					splitTasks.segments = segments;
 					return splitTasks;
@@ -858,7 +869,7 @@ public class HDFSUploadData {
 
 					long div = datas % this.subblocks;
 					deleteParentBlockHDFS.add(taskInfo.filename);
-					spiltTask_(  segments , startid, endid,subblocks,segement,  div,  usepagine,taskInfo.filename);
+					spiltTask_(  segments , startid, endid,subblocks,segement,  div,  usepagine,taskInfo.filename,taskInfo.taskNo);
 					splitTasks.segement = segement;
 					splitTasks.segments = segments;
 					return splitTasks;
@@ -933,7 +944,7 @@ public class HDFSUploadData {
 				}
 
 				tasks.put(allAddress.get(i).toString(), config);
-				// tasks.put(""+i, config);
+				
 
 			}
 			Event<Map<String, TaskConfig>> event = new EventImpl<Map<String, TaskConfig>>(
@@ -960,6 +971,9 @@ public class HDFSUploadData {
 	private void initJob(BaseApplicationContext context,String jobname) {
 		
 		this.localpath = context.getStringExtendAttribute(jobname, "localdir");
+		this.deletefiles = 	context.getStringExtendAttribute(jobname,
+				"deletefiles");
+		
 		this.hdfsdatadir = context.getStringExtendAttribute(jobname,
 				"hdfsdatadir");
 		this.dbname = context.getStringExtendAttribute(jobname, "dbname");
@@ -970,7 +984,7 @@ public class HDFSUploadData {
 		this.pkName = context.getStringExtendAttribute(jobname, "pkname");
 		this.columns = context.getStringExtendAttribute(jobname, "columns");
 		this.datablocks = context.getIntExtendAttribute(jobname, "datablocks");
-		this.fileSystem = HDFSServer.getFileSystem(hdfsserver);
+	
 		geneworkthreads = context.getIntExtendAttribute(jobname,
 				"geneworkthreads", 20);
 		uploadeworkthreads = context.getIntExtendAttribute(jobname,
@@ -1036,16 +1050,17 @@ public class HDFSUploadData {
 				"validatesql","");
 		usepool = context.getBooleanExtendAttribute(jobname,
 				"usepool",false);
+		this.fileSystem = HDFSServer.getFileSystem(hdfsserver);
 	}
 	
 	
 
-	public void uploadData(String jobname) throws Exception {
+	public void executeJob(String jobname) throws Exception {
 		BaseApplicationContext context = DefaultApplicationContext
 				.getApplicationContext("tasks.xml");
 		if(context.containsBean(jobname))
 		{
-			uploadData( context,  jobname);
+			executeJob( context,  jobname);
 		}
 		else
 		{
@@ -1055,7 +1070,7 @@ public class HDFSUploadData {
 				throw new Exception("作业"+jobname+"未定义!");
 			}
 			context = new SOAApplicationContext(dbjob.getJobdef());
-			uploadData( context,  jobname);
+			executeJob( context,  jobname);
 		}
 		
 	}
@@ -1098,74 +1113,113 @@ public class HDFSUploadData {
 	public void setJobname(String jobname) {
 		this.jobname = jobname;
 	}
+	
+	private void doDeleteFiles() throws Exception
+	{
+		JobStatic jobStatic = new JobStatic();
+		
+		jobStatic.setStartTime(System.currentTimeMillis());
+		String[] deletefiles_ = deletefiles.split("\\,");
+		for(String file :deletefiles_)
+		{
+			Path path = new Path(file);
+			fileSystem.delete(path, true);
+		}
+		String info = "删除作业hdfs 数据文件[jobname=" + jobname + "],[deletefiles="
+				+ deletefiles + "] on hdfsserver[" + hdfsserver + "]";
+		
+		jobStatic.setConfig(info);
+		jobStatic.setStatus(1);		
+		jobStatic.setEndTime(System.currentTimeMillis());
+		jobStatic.setJobname(jobname);
+		
+		Imp.getImpStaticManager().addJobStatic(jobStatic);
+		log.info(info + "成功.");
+	}
+	
+	private void doUploadData() throws Exception
+	{
+		if (genlocalfile) {
+			File file = new File(localpath);
+			if (!file.exists())
+				file.mkdirs();
+		}
+		
+		Path path = new Path(hdfsdatadir);
+		if (!fileSystem.exists(path))
+			fileSystem.mkdirs(path);
+		else {
+			if (clearhdfsfiles )// 如果指定了特定数据块任务，则不删除hdfs文件目录
+			{
+				if((excludeblocks == null || excludeblocks.length == 0)&& (blocks == null || blocks.length == 0))
+				{
+					fileSystem.delete(path, true);
+					fileSystem.mkdirs(path);
+				}
+			}
+		}
+		DBHelper.initDB(this);
+		buildJobChunks();
+		log.info("启动数据上传任务[jobname=" + jobname + "],[hdfsdatadir="
+				+ hdfsdatadir + "] on hdfsserver[" + hdfsserver + "],"
+				+ "[localdir=" + localpath + "],[dbname=" + dbname
+				+ "],[tablename=" + tablename + "]," + "[schema=" + schema
+				+ "],[pkName=" + pkName + "],[columns=" + columns
+				+ "],[datablocks=" + datablocks + "]成功.");
+	}
+	private void runjob(BaseApplicationContext ioccontext, String jobname)
+	{
+		long start = System.currentTimeMillis();
+		try {
+			initJob(ioccontext,jobname);
+			if(this.deletefiles != null && !this.deletefiles.trim().equals(""))//如果是删除文件指令，则删除文件
+			{
+				 doDeleteFiles();
+			}
+			else //如果是上传数据指令，则上传数据
+			{
+				doUploadData();
+			}
+		} catch (IllegalArgumentException e) {
+				TaskConfig config = buildTaskConfig(jobname) ;
+				JobStatic jobStatic = new JobStatic();
+				jobStatic.setConfig(config.toString());
+				jobStatic.setStatus(2);
+				jobStatic.setStartTime(start);
+				jobStatic.setEndTime(System.currentTimeMillis());
+				jobStatic.setJobname(jobname);
+				jobStatic.setErrormsg(SimpleStringUtil.exceptionToString(e));
+				Imp.getImpStaticManager().addJobStatic(jobStatic);
+				log.error("",e);
+			} catch (IOException e) {
+				TaskConfig config = buildTaskConfig(jobname) ;
+				JobStatic jobStatic = new JobStatic();
+				jobStatic.setConfig(config.toString());
+				jobStatic.setStatus(2);
+				jobStatic.setStartTime(start);
+				jobStatic.setEndTime(System.currentTimeMillis());
+				jobStatic.setJobname(jobname);
+				jobStatic.setErrormsg(SimpleStringUtil.exceptionToString(e));
+				Imp.getImpStaticManager().addJobStatic(jobStatic);
+				log.error("",e);
+			} catch (Exception e) {
+				TaskConfig config = buildTaskConfig(jobname) ;
+				JobStatic jobStatic = new JobStatic();
+				jobStatic.setConfig(config.toString());
+				jobStatic.setStatus(2);
+				jobStatic.setStartTime(start);
+				jobStatic.setEndTime(System.currentTimeMillis());
+				jobStatic.setJobname(jobname);
+				jobStatic.setErrormsg(SimpleStringUtil.exceptionToString(e));
+				Imp.getImpStaticManager().addJobStatic(jobStatic);
+				log.error("",e);
+			}
+	}
 
-	public void uploadData(final BaseApplicationContext ioccontext, final  String jobname) throws Exception {
+	public void executeJob(final BaseApplicationContext ioccontext, final  String jobname) throws Exception {
 		new Thread(new Runnable(){
 			public void run(){
-				long start = System.currentTimeMillis();
-				try {
-					initJob(ioccontext,jobname);
-					if (genlocalfile) {
-						File file = new File(localpath);
-						if (!file.exists())
-							file.mkdirs();
-					}
-					
-					Path path = new Path(hdfsdatadir);
-					if (!fileSystem.exists(path))
-						fileSystem.mkdirs(path);
-					else {
-						if (clearhdfsfiles )// 如果指定了特定数据块任务，则不删除hdfs文件目录
-						{
-							if((excludeblocks == null || excludeblocks.length == 0)&& (blocks == null || blocks.length == 0))
-							{
-								fileSystem.delete(path, true);
-								fileSystem.mkdirs(path);
-							}
-						}
-					}
-					DBHelper.initDB(HDFSUploadData.this);
-					buildJobChunks();
-					log.info("启动数据上传任务[jobname=" + jobname + "],[hdfsdatadir="
-							+ hdfsdatadir + "] on hdfsserver[" + hdfsserver + "],"
-							+ "[localdir=" + localpath + "],[dbname=" + dbname
-							+ "],[tablename=" + tablename + "]," + "[schema=" + schema
-							+ "],[pkName=" + pkName + "],[columns=" + columns
-							+ "],[datablocks=" + datablocks + "]成功.");
-				} catch (IllegalArgumentException e) {
-					TaskConfig config = buildTaskConfig(jobname) ;
-					JobStatic jobStatic = new JobStatic();
-					jobStatic.setConfig(config.toString());
-					jobStatic.setStatus(2);
-					jobStatic.setStartTime(start);
-					jobStatic.setEndTime(System.currentTimeMillis());
-					jobStatic.setJobname(jobname);
-					jobStatic.setErrormsg(SimpleStringUtil.exceptionToString(e));
-					Imp.getImpStaticManager().addJobStatic(jobStatic);
-					log.error("",e);
-				} catch (IOException e) {
-					TaskConfig config = buildTaskConfig(jobname) ;
-					JobStatic jobStatic = new JobStatic();
-					jobStatic.setConfig(config.toString());
-					jobStatic.setStatus(2);
-					jobStatic.setStartTime(start);
-					jobStatic.setEndTime(System.currentTimeMillis());
-					jobStatic.setJobname(jobname);
-					jobStatic.setErrormsg(SimpleStringUtil.exceptionToString(e));
-					Imp.getImpStaticManager().addJobStatic(jobStatic);
-					log.error("",e);
-				} catch (Exception e) {
-					TaskConfig config = buildTaskConfig(jobname) ;
-					JobStatic jobStatic = new JobStatic();
-					jobStatic.setConfig(config.toString());
-					jobStatic.setStatus(2);
-					jobStatic.setStartTime(start);
-					jobStatic.setEndTime(System.currentTimeMillis());
-					jobStatic.setJobname(jobname);
-					jobStatic.setErrormsg(SimpleStringUtil.exceptionToString(e));
-					Imp.getImpStaticManager().addJobStatic(jobStatic);
-					log.error("",e);
-				}
+				runjob(ioccontext, jobname);
 			}
 		}).start();
 		
@@ -1363,6 +1417,14 @@ public class HDFSUploadData {
 	public String isReadOnly() {
 		// TODO Auto-generated method stub
 		return readOnly;
+	}
+
+	public String getDeletefiles() {
+		return deletefiles;
+	}
+
+	public void setDeletefiles(String deletefiles) {
+		this.deletefiles = deletefiles;
 	}
 
 }

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.frameworkset.bigdata.imp.TaskInfo;
+import org.frameworkset.bigdata.imp.monitor.ImpStaticManager.JobStatus;
 
 public class JobStatic implements java.io.Serializable,java.lang.Cloneable{
 	/**
@@ -26,6 +27,15 @@ public class JobStatic implements java.io.Serializable,java.lang.Cloneable{
 	private int runtasks;
 	private int waittasks;
 	private String jobname;
+	
+	/**
+	 * 报错成功作业号，以逗号分隔
+	 */
+	private String completetaskNos;
+	/**
+	 * 保存失败作业号，以逗号分隔
+	 */
+	private String failedtaskNos;
 	public void incrementfailtasks()
 	{
 		this.failtasks ++;
@@ -45,6 +55,8 @@ public class JobStatic implements java.io.Serializable,java.lang.Cloneable{
 	{
 		if(runtasksInfos != null && runtasksInfos.size() > 0)
 		{
+			StringBuilder success = new StringBuilder();
+			StringBuilder failed = new StringBuilder();
 			for(TaskStatus status :runtasksInfos)
 			{
 				switch(status.getStatus())
@@ -61,14 +73,25 @@ public class JobStatic implements java.io.Serializable,java.lang.Cloneable{
 					case 0:
 						this.runtasks ++;break;
 					case 1:
-						this.completetasks ++;break;	
+						this.completetasks ++;
+						if(success.length() > 0)
+							success.append(",");
+						success.append(status.getTaskNo());
+						
+						break;	
 					case 2:
-						this.failtasks ++;break;
+						this.failtasks ++;
+						if(failed.length() > 0)
+							failed.append(",");
+						failed.append(status.getTaskNo());
+						break;
 					case 3:
 						this.waittasks ++;break;	
 				}
 			}
 			waittasks = this.totaltasks - this.failtasks - this.completetasks - this.unruntasks;
+			this.completetaskNos = success.toString();
+			this.failedtaskNos = failed.toString();
 		}
 		
 	}
@@ -114,6 +137,7 @@ public class JobStatic implements java.io.Serializable,java.lang.Cloneable{
 		}
 		TaskStatus ts = new TaskStatus();
 		ts.setStatus(0);
+		ts.setTaskNo(taskInfo.getTaskNo());
 		ts.setTaskInfo(taskInfo.toString());
 		runtasksInfos.add(ts);
 		return ts;
@@ -202,6 +226,18 @@ public class JobStatic implements java.io.Serializable,java.lang.Cloneable{
 
 	public void setJobname(String jobname) {
 		this.jobname = jobname;
+	}
+
+	public String getCompletetaskNos() {
+		return completetaskNos;
+	}
+
+	public void setCompletetaskNos(String completetaskNos) {
+		this.completetaskNos = completetaskNos;
+	}
+
+	public String getFailedtaskNos() {
+		return failedtaskNos;
 	}
 	
 	

@@ -18,6 +18,7 @@ public class TaskConfig implements java.io.Serializable,java.lang.Cloneable{
 	 */
 	boolean usepool;
 	private String readOnly;
+	private String deletefiles;
 	Map<String,List<Integer>> blocksplits; 
 	/**
 	 * 指定dbname主要是用于连接池，系统固化连接池，
@@ -83,7 +84,8 @@ public class TaskConfig implements java.io.Serializable,java.lang.Cloneable{
 			
 		}
 		
-		
+		if(deletefiles != null)
+			builder.append("deletefiles=").append(deletefiles).append("\r\n");
 		builder.append("datablocks=").append(datablocks).append("\r\n")
 		.append("hdfsserver=").append(hdfsserver).append("\r\n")
 		.append("hdfsdatadirpath=").append(hdfsdatadirpath).append("\r\n")
@@ -375,5 +377,11 @@ public class TaskConfig implements java.io.Serializable,java.lang.Cloneable{
 	public Object clone() throws CloneNotSupportedException {
 		// TODO Auto-generated method stub
 		return super.clone();
+	}
+	public String getDeletefiles() {
+		return deletefiles;
+	}
+	public void setDeletefiles(String deletefiles) {
+		this.deletefiles = deletefiles;
 	}
 }

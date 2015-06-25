@@ -129,9 +129,12 @@
 				  datatype="text"
 				  genlocalfile="false"
 				  clearhdfsfiles="true"
-				  blocks="6,8" --包含的块
+				  blocks="6,8" 
 				  subblocks="2"
 				  />
+				  
+				  
+				  
 				  
 			<property name="test" 
 				  dbname="test"
@@ -153,7 +156,7 @@
 				  datatype="text"
 				  genlocalfile="false"
 				  clearhdfsfiles="true"
-				  excludeblocks="6,8"--排除的块
+				  excludeblocks="6,8"
 				  subblocks="2"
 				  />		  	
 			<property name="testall" 
@@ -177,7 +180,13 @@
 				  genlocalfile="false"
 				  clearhdfsfiles="true"
 				  
-				  />		  
+				  />
+			<property name="testdelete"
+				  hdfsserver="hdfs://10.0.15.40:9000"
+				  deletefiles="/m2m/data04/test,/m2m/data04/testall,/m2m/data04/testallnopool,/m2m/data04/testpageine,/m2m/data04/testpageineall,/m2m/data04/user"
+				  
+				  
+				  />	  		  
 			<property name="testpagine" 
 				  dbname="test"
 				  hdfsserver="hdfs://10.0.15.40:9000"

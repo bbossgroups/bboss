@@ -40,7 +40,7 @@ public class Imp {
 	public static void executeJob(String job) throws Exception
 	{
 		HDFSUploadData HDFSUploadData = new HDFSUploadData();
-		HDFSUploadData.uploadData(job);
+		HDFSUploadData.executeJob(job);
 	}
 	public static void startAdminNode(boolean adminasdatanode)
 	{
@@ -158,7 +158,7 @@ public class Imp {
 //				}
 //				else
 				{
-					HDFSUploadData.uploadData(job);
+					HDFSUploadData.executeJob(job);
 				}
 				
 			}
@@ -208,7 +208,7 @@ public class Imp {
 				HDFSUploadData HDFSUploadData = new HDFSUploadData();
 				try {
 					
-					HDFSUploadData.uploadData(ioccontext,jobname);
+					HDFSUploadData.executeJob(ioccontext,jobname);
 				} catch (Exception e) {
 					log.error(jobname + " 作业执行失败：",e);
 					builder.append(SimpleStringUtil.exceptionToString(e));

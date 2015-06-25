@@ -16,8 +16,10 @@ public class SpecialMonitorObject  implements java.io.Serializable{
 	private String jobName;
 	private List<String> allJobNames;
 	private String jobconfig;
-	
+	String  failedTaskNos;
+	String  successTaskNos;
 	private String jobdef;
+	private int totaltasks;
 	/**
 	 * -1:未开始
 	 * 0:执行：正在执行
@@ -71,6 +73,24 @@ public class SpecialMonitorObject  implements java.io.Serializable{
 	}
 	public void setJobdef(String jobdef) {
 		this.jobdef = jobdef;
+	}
+	public String getSuccessTaskNos() {
+		return successTaskNos;
+	}
+	public void setSuccessTaskNos(String successTaskNos) {
+		this.successTaskNos = successTaskNos;
+	}
+	public String getFailedTaskNos() {
+		return failedTaskNos;
+	}
+	public void setFailedTaskNos(String failedTaskNos) {
+		this.failedTaskNos = failedTaskNos;
+	}
+	public int getTotaltasks() {
+		return totaltasks;
+	}
+	public void setTotaltasks(int totaltasks) {
+		this.totaltasks = totaltasks;
 	}
 
 }
