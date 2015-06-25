@@ -7,7 +7,7 @@ import java.util.Map;
  * @author yinbp
  *
  */
-public class HostJobs  implements java.io.Serializable{
+public class HostJobs  implements java.io.Serializable,java.lang.Cloneable{
 	private Map<String,JobStatic> jobs;
 	/**
 	 * 监控数据对应的数据节点时间戳，监控根据对比时间戳来确认其返回的数据是否过时
@@ -24,5 +24,12 @@ public class HostJobs  implements java.io.Serializable{
 	}
 	public void setDatanodeTimestamp(long datanodeTimestamp) {
 		this.datanodeTimestamp = datanodeTimestamp;
+	}
+	@Override
+	public Object clone() throws CloneNotSupportedException {
+		HostJobs ret = new HostJobs();
+		ret.datanodeTimestamp = this.datanodeTimestamp;
+		ret.jobs = ImpStaticManager.cloneStaticData(jobs);
+		return ret;
 	}
 }

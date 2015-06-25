@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.frameworkset.bigdata.imp.TaskInfo;
-import org.frameworkset.bigdata.imp.monitor.ImpStaticManager.JobStatus;
 
 public class JobStatic implements java.io.Serializable,java.lang.Cloneable{
 	/**
@@ -121,8 +120,9 @@ public class JobStatic implements java.io.Serializable,java.lang.Cloneable{
 
 	@Override
 	public Object clone() throws CloneNotSupportedException {
-		// TODO Auto-generated method stub
-		return super.clone();
+		JobStatic ret = (JobStatic)super.clone();
+		ret.runtasksInfos = ImpStaticManager.cloneRuntasksInfosa(this.runtasksInfos);
+		return ret;
 	}
 
 	public List<TaskStatus> getRuntasksInfos() {

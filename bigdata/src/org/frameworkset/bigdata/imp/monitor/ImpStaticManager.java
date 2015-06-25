@@ -45,8 +45,7 @@ public class ImpStaticManager implements Listener<Object>{
 	 */
 	private HashMap<String,Map<String,JobStatic>> monitorAlljobstaticsIdxByJob = new HashMap<String,Map<String,JobStatic>>();//作业分布服务器情况一览表
 	
-	private HashMap<String,JobStatus> specialMonitorObjects = new HashMap<String,JobStatus>();//作业分布服务器情况一览表
-	
+
 	/**
 	 * Map<jobname,Status(long)>
 	 
@@ -104,11 +103,47 @@ public class ImpStaticManager implements Listener<Object>{
 		
 		
 	}
-	private Map<String,JobStatic> cloneStaticData()
+	
+	public static Map<String,JobStatic> cloneStaticData(Map<String,JobStatic> src) 
+	{
+		 
+		    Map<String,JobStatic> des=new HashMap<String,JobStatic>(src.size());
+		    for(Iterator<Entry<String, JobStatic>> it=src.entrySet().iterator();it.hasNext();){
+		    	Entry<String, JobStatic> e=it.next();
+		    	JobStatic value=e.getValue();
+		        try {
+					des.put(e.getKey(),(JobStatic)value.clone());
+				} catch (CloneNotSupportedException e1) {
+					log.error("",e1);
+				}
+		    }
+		    return des;
+		 
+	}
+	
+	public static List<TaskStatus> cloneRuntasksInfosa(List<TaskStatus> runtasksInfos) 
+	{
+		 
+		List<TaskStatus> des=new ArrayList<TaskStatus>(runtasksInfos.size());
+		    for(TaskStatus ts: runtasksInfos){
+		    	
+		        try {
+		        	des.add((TaskStatus)ts.clone());
+				} catch (CloneNotSupportedException e1) {
+					log.error("",e1);
+				}
+		    }
+		    return des;
+		 
+	}
+	
+	 
+	
+	private Map<String,JobStatic> cloneStaticData() 
 	{
 		synchronized(localjobstaticsLock)
 		{
-			Map<String,JobStatic> ret = (Map<String, JobStatic>) this.localjobstatics.clone();
+			Map<String,JobStatic> ret =cloneStaticData(this.localjobstatics);
 			return ret;
 		}
 	}
@@ -196,17 +231,48 @@ public class ImpStaticManager implements Listener<Object>{
 		return cloneStaticData();
 	}
 
-	public Map<String, Map<String, JobStatic>> getMonitorAlljobstaticsIdxByHost() {
+	public static HashMap<String,HostJobs>  cloneMonitorAlljobstaticsIdxByHost(HashMap<String,HostJobs> monitorAlljobstaticsIdxByHost)
+	{
+		HashMap<String,HostJobs> monitorAlljobstaticsIdxByHostdest = new HashMap<String,HostJobs> (monitorAlljobstaticsIdxByHost.size());
+		for(Iterator<Entry<String, HostJobs>> it=monitorAlljobstaticsIdxByHost.entrySet().iterator();it.hasNext();){
+	    	Entry<String, HostJobs> e=it.next();
+	    	HostJobs value=e.getValue();
+	    	try {
+				monitorAlljobstaticsIdxByHostdest.put(e.getKey(),(HostJobs)value.clone());
+			} catch (CloneNotSupportedException e1) {
+				log.error("",e1);
+			}
+			 
+	    }
+		return monitorAlljobstaticsIdxByHostdest;
+		
+	}
+	
+	public static  Map<String, Map<String, JobStatic>>  cloneMonitorAlljobstaticsIdxByJob( Map<String, Map<String, JobStatic>> monitorAlljobstaticsIdxByJob)
+	{
+		Map<String, Map<String, JobStatic>> monitorAlljobstaticsIdxByJobdest = new HashMap<String, Map<String, JobStatic>> (monitorAlljobstaticsIdxByJob.size());
+		for(Iterator<Entry<String, Map<String, JobStatic>>> it=monitorAlljobstaticsIdxByJob.entrySet().iterator();it.hasNext();){
+	    	Entry<String, Map<String, JobStatic>> e=it.next();
+	    	Map<String, JobStatic> value=e.getValue();
+	    	 
+	    	monitorAlljobstaticsIdxByJobdest.put(e.getKey(),cloneStaticData(value));
+			 
+			 
+	    }
+		return monitorAlljobstaticsIdxByJobdest;
+		
+	}
+	public HashMap<String,HostJobs> getMonitorAlljobstaticsIdxByHost() {
 		synchronized(adminJobsLock)
 		{
-			return (Map<String, Map<String, JobStatic>>) monitorAlljobstaticsIdxByHost.clone();
+			return (HashMap<String,HostJobs>) cloneMonitorAlljobstaticsIdxByHost(monitorAlljobstaticsIdxByHost);
 		}
 	}
 
 	public  Map<String, Map<String, JobStatic>> getMonitorAlljobstaticsIdxByJob(String jobName) {
 		synchronized(adminJobsLock)
 		{
-			return (Map<String, Map<String, JobStatic>>) monitorAlljobstaticsIdxByJob.clone();
+			return (Map<String, Map<String, JobStatic>>) cloneMonitorAlljobstaticsIdxByJob(monitorAlljobstaticsIdxByJob);
 		}
 	}
 	
@@ -223,8 +289,7 @@ public class ImpStaticManager implements Listener<Object>{
 				}
 			}
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.error("",e);
 		}
 		
 	}
@@ -260,13 +325,7 @@ public class ImpStaticManager implements Listener<Object>{
 			this.totaltasks = totaltasks;
 		}
 	}
-	public JobStatus getJobStatus(String jobName)
-	{
-		synchronized(adminJobsLock)
-		{
-			return this.specialMonitorObjects.get(jobName);
-		}
-	}
+	
 	public SpecialMonitorObject getSpecialMonitorObject(String jobName)
 	{
 		
@@ -296,7 +355,7 @@ public class ImpStaticManager implements Listener<Object>{
 			Map<String, JobStatic> jobstatic =  monitorAlljobstaticsIdxByJob.get(jobName);
 			if(jobstatic != null)
 			{
-				jobstatic = (Map<String, JobStatic>)((HashMap<String, JobStatic>)jobstatic).clone();
+				jobstatic = cloneStaticData(jobstatic);
 				job.setJobstaticsIdxByHost(jobstatic);
 				JobStatus jobStatus = checkstatus(jobstatic);
 				job.setTotaltasks(jobStatus.totaltasks); 

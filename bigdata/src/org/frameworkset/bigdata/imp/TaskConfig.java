@@ -3,7 +3,7 @@ package org.frameworkset.bigdata.imp;
 import java.util.List;
 import java.util.Map;
 
-public class TaskConfig implements java.io.Serializable,java.lang.Cloneable{
+public class TaskConfig implements java.io.Serializable{
 	private String jobdef; 
 	/**
 	 * 数据库连接信息
@@ -373,11 +373,7 @@ public class TaskConfig implements java.io.Serializable,java.lang.Cloneable{
 	public void setJobdef(String jobdef) {
 		this.jobdef = jobdef;
 	}
-	@Override
-	public Object clone() throws CloneNotSupportedException {
-		// TODO Auto-generated method stub
-		return super.clone();
-	}
+	
 	public String getDeletefiles() {
 		return deletefiles;
 	}
