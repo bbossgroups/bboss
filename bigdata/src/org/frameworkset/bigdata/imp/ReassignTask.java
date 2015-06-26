@@ -29,5 +29,13 @@ public class ReassignTask implements Serializable {
 	public Map<String, Integer> getOtherTaskInfos() {
 		return otherTaskInfos;
 	}
+	
+	public String toString()
+	{
+		StringBuilder builder = new StringBuilder();
+		builder.append("jobname=").append(jobname).append(",")
+		.append("reassigntaskNode=").append(reassigntaskNode).append(",").append("otherTaskInfos=").append(otherTaskInfos.toString());
+		return builder.toString();
+	}
 
 }

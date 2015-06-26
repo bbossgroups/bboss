@@ -7,6 +7,10 @@ public class TaskInfo  implements java.io.Serializable{
 	long pagesize;
 	String filename;
 	/**
+	 * 如果任务被重新分配，则忽略处理
+	 */
+	transient boolean reassigned;
+	/**
 	 * 任务号
 	 */
 	String taskNo;
@@ -50,6 +54,12 @@ public class TaskInfo  implements java.io.Serializable{
 	}
 	public void setTaskNo(String taskNo) {
 		this.taskNo = taskNo;
+	}
+	public boolean isReassigned() {
+		return reassigned;
+	}
+	public void setReassigned(boolean reassigned) {
+		this.reassigned = reassigned;
 	}
 	
 

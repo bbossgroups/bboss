@@ -134,4 +134,16 @@ public class EventUtils {
 	public static String getDefaultProtocol() {
 		return defaultProtocol;
 	}
+	public static Address getAddress(String targetAddress) {
+		
+		List<Address> all = getRPCAddresses();
+		if(all == null )
+			return null;
+		for(Address a:all)
+		{
+			if(a.toString().equals(targetAddress))
+				return a;
+		}
+		return null;
+	}
 }

@@ -12,7 +12,8 @@ import java.util.Set;
 import org.apache.log4j.Logger;
 import org.frameworkset.bigdata.imp.ExecutorJob;
 import org.frameworkset.bigdata.imp.HDFSUploadData;
-import org.frameworkset.bigdata.imp.Imp;
+import org.frameworkset.bigdata.imp.ReassignTask;
+import org.frameworkset.bigdata.imp.ReassignTaskJob;
 import org.frameworkset.bigdata.imp.StopDS;
 import org.frameworkset.bigdata.imp.StopDSJob;
 import org.frameworkset.bigdata.imp.TaskConfig;
@@ -98,6 +99,19 @@ public class ImpStaticManager implements Listener<Object>{
 			jobStatic.setStartTime(System.currentTimeMillis());
 			jobStatic.setJobname(ds.getJobname());
 			localjobstatics.put(ds.getJobname(), jobStatic);
+			return jobStatic;
+		}
+	}
+	
+	public JobStatic addReassignTaskJobStatic(ReassignTask reassignTask) {
+		synchronized(localjobstaticsLock)
+		{
+			JobStatic jobStatic = new JobStatic();
+			jobStatic.setConfig("Reassign Task:"+reassignTask.toString());
+			jobStatic.setStatus(0);
+			jobStatic.setStartTime(System.currentTimeMillis());
+			jobStatic.setJobname(reassignTask.getJobname());
+			localjobstatics.put(reassignTask.getJobname(), jobStatic);
 			return jobStatic;
 		}
 	}
@@ -270,6 +284,20 @@ public class ImpStaticManager implements Listener<Object>{
 				}
 			}).start();
 			
+		}
+		
+		else if(command.equals(HDFSUploadData.hdfs_upload_monitor_reassigntasks_commond))
+		{
+			final ReassignTask reassignTask = (ReassignTask)e_.getSource();
+			
+			new Thread(new Runnable(){
+				public void run()
+				{
+					ReassignTaskJob reassignTaskJob = new ReassignTaskJob();
+					reassignTaskJob.execute(reassignTask);
+					log.info("Execute reassignTask Job end:"+reassignTask.toString() );
+				}
+			}).start();
 		}
 			
 		
@@ -655,5 +683,7 @@ public class ImpStaticManager implements Listener<Object>{
 	public void setAdminasdatanode(boolean adminasdatanode) {
 		this.adminasdatanode = adminasdatanode;
 	}
+
+	
 
 }

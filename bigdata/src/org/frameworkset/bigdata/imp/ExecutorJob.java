@@ -23,7 +23,7 @@ public class ExecutorJob {
 	 FileSystem fileSystem=null;
 	 TaskConfig config;
 	 JobStatic jobStatic;
-	 Map<String,TaskStatus> taskstatus = new HashMap<String,TaskStatus>();
+	 
 	 
 	 public boolean usepagine()
 	 {
@@ -67,10 +67,15 @@ public class ExecutorJob {
 			 jobStatic.setTotaltasks(config.getTasks().length);
 		 GenFileHelper  genFileWork = new GenFileHelper(this);
 		 genFileWork.run(  config);		
-		 StringBuilder errorinfo = new StringBuilder(); 
+		 StringBuilder errorinfo = new StringBuilder();
+		 int pos = 0;
 		 for(TaskInfo task:config.getTasks())
 		 {
 			 try {
+				 synchronized(jobStatic)//就是为了获得锁，如果在分配任务则忽略处理
+				 {
+					 //空转
+				 }
 				 FileSegment segement = new FileSegment();
 				 segement.job = this;
 				 segement.taskInfo = task;
@@ -84,7 +89,7 @@ public class ExecutorJob {
 					 break;
 				 }
 				 taskStatus.setStatus(3);
-				 
+				 pos++;
 				genfileQueues.put(segement);
 			} catch (Exception e) {
 				log.error(task.toString(),e);

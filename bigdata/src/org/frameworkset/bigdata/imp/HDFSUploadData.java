@@ -19,6 +19,7 @@ import org.frameworkset.bigdata.util.DBJob;
 import org.frameworkset.event.Event;
 import org.frameworkset.event.EventHandle;
 import org.frameworkset.event.EventImpl;
+import org.frameworkset.event.EventTarget;
 import org.frameworkset.event.SimpleEventType;
 import org.frameworkset.remote.EventUtils;
 import org.frameworkset.spi.BaseApplicationContext;
@@ -1159,7 +1160,7 @@ public class HDFSUploadData {
 			result.setStatus(1);
 			result.setConfig("reassigntaskNode=" + reassigntaskNode);
 			String msg = "提交重新分派数据节点[" + this.reassigntaskNode + "]作业["
-					+ jobname + "]任务结束：所有作业已经被分派，无法重新进行分派.";
+					+ jobname + "]任务结束：所有作业已经被分派，无法重新进行任务分派.";
 			result.setErrormsg(msg);
 			result.setJobname(jobname);
 			result.setEndTime(System.currentTimeMillis());
@@ -1167,9 +1168,27 @@ public class HDFSUploadData {
 			log.info(msg);
 			return;
 		} else {
+			Address address = EventUtils.getAddress(reassigntaskNode);
+			if(address== null)
+			{
+				JobStatic result = new JobStatic();
+
+				result.setStartTime(System.currentTimeMillis());
+				result.setStatus(1);
+				result.setConfig("reassigntaskNode=" + reassigntaskNode);
+				String msg = "提交重新分派数据节点[" + this.reassigntaskNode + "]作业["
+						+ jobname + "]任务结束：任务所在服务器["+reassigntaskNode+"]不存在，无法重新进行任务分派.";
+				result.setErrormsg(msg);
+				result.setJobname(jobname);
+				result.setEndTime(System.currentTimeMillis());
+				Imp.getImpStaticManager().addJobStatic(result);
+				log.info(msg);
+				return;
+			}
 			ReassignTask reassignTask = new ReassignTask();
 			reassignTask.setJobname(jobname);
 			reassignTask.setReassigntaskNode(this.reassigntaskNode);
+			
 			Map<String, Integer> taskinfos = new HashMap<String, Integer>();// 存放其他节点正在处理和排队等待执行的任务数，作为重新分派任务的参考数据
 			for (Map.Entry<String, JobStatic> entry : hostJobs.entrySet()) {
 				String otherhost = entry.getKey();
@@ -1181,8 +1200,10 @@ public class HDFSUploadData {
 				}
 			}
 			reassignTask.setOtherTaskInfos(taskinfos);
+			
+			EventTarget target = new EventTarget(address);
 			Event<ReassignTask> event = new EventImpl<ReassignTask>(
-					reassignTask, hdfs_upload_monitor_reassigntasks_commond);
+					reassignTask, hdfs_upload_monitor_reassigntasks_commond,target);
 			/**
 			 * 消息以异步方式传递
 			 */

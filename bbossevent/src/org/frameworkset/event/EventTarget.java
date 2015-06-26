@@ -18,6 +18,7 @@ package org.frameworkset.event;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.frameworkset.remote.EventUtils;
 import org.jgroups.Address;
 
 /**
@@ -61,6 +62,17 @@ public class EventTarget   implements java.io.Serializable {
 		targetAddress = address.toString();
 		broadcastAddresses = new ArrayList<Address>();
 		broadcastAddresses.add(address);
+	}
+	
+	public EventTarget(String  targetAddress)
+	{
+		this.targetAddress = targetAddress;
+		Address address = EventUtils.getAddress(targetAddress);
+		if(address != null)
+		{
+			broadcastAddresses = new ArrayList<Address>();
+			broadcastAddresses.add(address);
+		}
 	}
 	public EventTarget(List<Address> addresses)
 	{
