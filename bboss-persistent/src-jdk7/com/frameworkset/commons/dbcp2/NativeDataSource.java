@@ -448,6 +448,11 @@ public class NativeDataSource implements DataSource {
     
     	return this.staticCount.getTraceObjects();
     }
+    
+    public synchronized void close() throws SQLException
+    {
+    	
+    }
 	   
 
 }

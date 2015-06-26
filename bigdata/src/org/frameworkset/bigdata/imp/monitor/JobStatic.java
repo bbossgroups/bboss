@@ -26,7 +26,10 @@ public class JobStatic implements java.io.Serializable,java.lang.Cloneable{
 	private int runtasks;
 	private int waittasks;
 	private String jobname;
-	
+	public boolean canstop()
+	{
+		return this.status == 0 || this.status == -1;
+	}
 	/**
 	 * 报错成功作业号，以逗号分隔
 	 */
@@ -88,7 +91,7 @@ public class JobStatic implements java.io.Serializable,java.lang.Cloneable{
 						this.waittasks ++;break;	
 				}
 			}
-			waittasks = this.totaltasks - this.failtasks - this.completetasks - this.unruntasks;
+			waittasks = this.totaltasks - this.failtasks - this.completetasks - this.unruntasks-runtasks;
 			this.completetaskNos = success.toString();
 			this.failedtaskNos = failed.toString();
 		}

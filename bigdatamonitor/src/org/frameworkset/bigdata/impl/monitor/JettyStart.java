@@ -29,13 +29,14 @@ public class JettyStart {
 		String adminNode = System.getProperty("adminNode");
 		if(adminNode != null && adminNode.equals("false"))
 		{
-			NotifiableFactory.getNotifiable().addListener(new HDFSUploadEventHandler(), HDFSUploadData.hdfsuploadevent);
-			List<EventType> monitorEventTypes = new ArrayList<EventType>();
-			monitorEventTypes.add(HDFSUploadData.hdfs_upload_monitor_request_commond);
-			monitorEventTypes.add(HDFSUploadData.hdfs_upload_monitor_response_commond);
-			NotifiableFactory.getNotifiable().addListener(Imp.getImpStaticManager(), monitorEventTypes);
-			org.frameworkset.remote.EventUtils.init();
-			log.info("初始化分布式事件模块完毕！");
+//			NotifiableFactory.getNotifiable().addListener(new HDFSUploadEventHandler(), HDFSUploadData.hdfsuploadevent);
+//			List<EventType> monitorEventTypes = new ArrayList<EventType>();
+//			monitorEventTypes.add(HDFSUploadData.hdfs_upload_monitor_request_commond);
+//			monitorEventTypes.add(HDFSUploadData.hdfs_upload_monitor_response_commond);
+//			NotifiableFactory.getNotifiable().addListener(Imp.getImpStaticManager(), monitorEventTypes);
+//			org.frameworkset.remote.EventUtils.init();
+//			log.info("初始化分布式事件模块完毕！");
+			Imp.startDataNode();
 		}
 		else
 		{

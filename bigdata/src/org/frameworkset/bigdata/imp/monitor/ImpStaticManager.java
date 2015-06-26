@@ -1,6 +1,7 @@
 package org.frameworkset.bigdata.imp.monitor;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -11,6 +12,9 @@ import java.util.Set;
 import org.apache.log4j.Logger;
 import org.frameworkset.bigdata.imp.ExecutorJob;
 import org.frameworkset.bigdata.imp.HDFSUploadData;
+import org.frameworkset.bigdata.imp.Imp;
+import org.frameworkset.bigdata.imp.StopDS;
+import org.frameworkset.bigdata.imp.StopDSJob;
 import org.frameworkset.bigdata.imp.TaskConfig;
 import org.frameworkset.bigdata.imp.TaskInfo;
 import org.frameworkset.bigdata.util.DBHelper;
@@ -83,6 +87,21 @@ public class ImpStaticManager implements Listener<Object>{
 		}
 	}
 	
+	
+	public JobStatic addStopDSJobStatic(StopDS ds)
+	{
+		synchronized(localjobstaticsLock)
+		{
+			JobStatic jobStatic = new JobStatic();
+			jobStatic.setConfig("stop datasources:"+ds.getStopdbnames());
+			jobStatic.setStatus(0);
+			jobStatic.setStartTime(System.currentTimeMillis());
+			jobStatic.setJobname(ds.getJobname());
+			localjobstatics.put(ds.getJobname(), jobStatic);
+			return jobStatic;
+		}
+	}
+	
 	public JobStatic addJobStatic(JobStatic jobStatic )
 	{
 		synchronized(localjobstaticsLock)
@@ -107,6 +126,8 @@ public class ImpStaticManager implements Listener<Object>{
 	public static Map<String,JobStatic> cloneStaticData(Map<String,JobStatic> src) 
 	{
 		 
+		if(src == null)
+			return null;
 		    Map<String,JobStatic> des=new HashMap<String,JobStatic>(src.size());
 		    for(Iterator<Entry<String, JobStatic>> it=src.entrySet().iterator();it.hasNext();){
 		    	Entry<String, JobStatic> e=it.next();
@@ -124,6 +145,10 @@ public class ImpStaticManager implements Listener<Object>{
 	public static List<TaskStatus> cloneRuntasksInfosa(List<TaskStatus> runtasksInfos) 
 	{
 		 
+		if(runtasksInfos == null)
+		{
+			return null;
+		}
 		List<TaskStatus> des=new ArrayList<TaskStatus>(runtasksInfos.size());
 		    for(TaskStatus ts: runtasksInfos){
 		    	
@@ -215,12 +240,36 @@ public class ImpStaticManager implements Listener<Object>{
 		{
 			String jobname = (String)e_.getSource();
 			JobStatic jobstatic = localjobstatics.get(jobname);
-			if(jobstatic != null)
-				jobstatic.setStatus(3);
+			if(jobstatic != null )
+			{
+				if(jobstatic.canstop())
+				{
+					log.info("强制停止作业："+jobname+ ",状态被强制设置为停止状态。");
+					jobstatic.setStatus(3);
+				}
+				else
+				{
+					log.info("强制停止作业失败："+jobname+ "未执行或者已经完成或者已经异常终止或者已经强行终止。");
+				}
+			}
 			else
 			{
 				log.info("强制停止作业失败："+jobname+ "未执行。");
 			}
+		}
+		else if(command.equals(HDFSUploadData.hdfs_upload_monitor_stopdatasource_commond))
+		{
+			final StopDS stopdbnames = (StopDS)e_.getSource();
+			
+			new Thread(new Runnable(){
+				public void run()
+				{
+					StopDSJob stopjob = new StopDSJob();
+					stopjob.execute(stopdbnames);
+					log.info("Execute Stop DS Job end:"+stopdbnames.toString() );
+				}
+			}).start();
+			
 		}
 			
 		
@@ -233,6 +282,8 @@ public class ImpStaticManager implements Listener<Object>{
 
 	public static HashMap<String,HostJobs>  cloneMonitorAlljobstaticsIdxByHost(HashMap<String,HostJobs> monitorAlljobstaticsIdxByHost)
 	{
+		if(monitorAlljobstaticsIdxByHost == null)
+			return null;
 		HashMap<String,HostJobs> monitorAlljobstaticsIdxByHostdest = new HashMap<String,HostJobs> (monitorAlljobstaticsIdxByHost.size());
 		for(Iterator<Entry<String, HostJobs>> it=monitorAlljobstaticsIdxByHost.entrySet().iterator();it.hasNext();){
 	    	Entry<String, HostJobs> e=it.next();
@@ -250,6 +301,10 @@ public class ImpStaticManager implements Listener<Object>{
 	
 	public static  Map<String, Map<String, JobStatic>>  cloneMonitorAlljobstaticsIdxByJob( Map<String, Map<String, JobStatic>> monitorAlljobstaticsIdxByJob)
 	{
+		if(monitorAlljobstaticsIdxByJob == null)
+		{
+			return null;
+		}
 		Map<String, Map<String, JobStatic>> monitorAlljobstaticsIdxByJobdest = new HashMap<String, Map<String, JobStatic>> (monitorAlljobstaticsIdxByJob.size());
 		for(Iterator<Entry<String, Map<String, JobStatic>>> it=monitorAlljobstaticsIdxByJob.entrySet().iterator();it.hasNext();){
 	    	Entry<String, Map<String, JobStatic>> e=it.next();
@@ -325,7 +380,19 @@ public class ImpStaticManager implements Listener<Object>{
 			this.totaltasks = totaltasks;
 		}
 	}
-	
+	private List<String> sort(List<String> names)
+	{
+		Collections.sort(names, new java.util.Comparator<String>(){
+
+			@Override
+			public int compare(String o1, String o2) {
+				// TODO Auto-generated method stub
+				return o1.compareTo(o2);
+			}
+			 
+		});
+		return names;
+	}
 	public SpecialMonitorObject getSpecialMonitorObject(String jobName)
 	{
 		
@@ -344,11 +411,13 @@ public class ImpStaticManager implements Listener<Object>{
 			mergeconfigTabletasks(names);
 			if(names.size() == 0)
 				return null;
+			sort(names);
 			if(jobName == null)
 			{
 				jobName =  names.get(0);
 				
 			}
+			
 			job.setJobName(jobName);
 			
 			job.setAllJobNames(names);

@@ -15,6 +15,8 @@ public class HDFSServer {
 	 private static Logger log = Logger.getLogger(HDFSServer.class);
 	public static FileSystem getFileSystem(String hadoop)
 	{
+		if(hadoop == null)
+			return null;
 		FileSystem fileSystem = FileSystems.get(hadoop);
 		if(fileSystem != null)
 		{

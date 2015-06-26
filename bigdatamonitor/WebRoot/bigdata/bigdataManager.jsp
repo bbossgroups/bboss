@@ -199,11 +199,7 @@ function submitJob () {
 			 	XMLHttpRequest.setRequestHeader("RequestType", "ajax");
 		},
 		success : function(data){
-			if (data != 'success') {
-				 $.dialog.alert("提交作业失败："+data);
-			}else {
-				queryList();
-			}
+			 $("#jobdef").val(data);
 		}	
 	 });
 	},function(){

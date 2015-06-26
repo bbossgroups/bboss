@@ -1,238 +1,163 @@
 <?xml version="1.0" encoding='UTF-8'?>
 
 <!-- datatype="json|text" -->
-	<properties>
-<!-- 		<property name="hx2010error"  -->
-<!-- 				  dbname="hx243" -->
-<!-- 				  hdfsserver="hdfs://10.0.15.40:9000" -->
-<!-- 				  hdfsdatadir="/m2m/data04/hx2010" -->
-<!-- 				  localdir="d:/bigdata/hx2010|/bigdata/hx2010" -->
-<!-- 				  tablename="IS_STATIC" -->
-<!-- 				  filebasename="IS_STATIC_2010" -->
-<!-- 				  schema="ISS" -->
-<!-- 				  pkname="ST_PID" -->
-<!-- 				  columns="" -->
-<!-- 				  datablocks="1000"					  			   -->
-<!-- 				  geneworkthreads="50" -->
-<!-- 				  uploadeworkthreads="20" -->
-<!-- 				  genqueques="5" -->
-<!-- 				  uploadqueues="5" -->
-<!-- 				  genquequetimewait="10" -->
-<!-- 				  uploadqueuetimewait="10" -->
-<!-- 				   datatype="text" -->
-<!-- 				  genlocalfile="false" -->
-<!-- 				  clearhdfsfiles="true" -->
-<!-- 				  startid="4" -->
-<!-- 				  blocks="6.0,6.11,6.12,6.16,6.17,6.35,8.1,8.23,8.25,8.32" -->
-<!-- 				  subblocks="50" -->
-<!-- 				  endid="30019762123" -->
-<!-- 				  /> -->
-<!-- 			<property name="hx2010"  -->
-<!-- 				  dbname="hx243" -->
-<!-- 				  hdfsserver="hdfs://10.0.15.40:9000" -->
-<!-- 				  hdfsdatadir="/m2m/data04/hx2010" -->
-<!-- 				  localdir="d:/bigdata/hx2010|/bigdata/hx2010" -->
-<!-- 				  tablename="IS_STATIC" -->
-<!-- 				  filebasename="IS_STATIC_2010" -->
-<!-- 				  schema="ISS" -->
-<!-- 				  pkname="ST_PID" -->
-<!-- 				  columns="" -->
-<!-- 				  datablocks="1000"					  			   -->
-<!-- 				  geneworkthreads="50" -->
-<!-- 				  uploadeworkthreads="20" -->
-<!-- 				  genqueques="5" -->
-<!-- 				  uploadqueues="5" -->
-<!-- 				  genquequetimewait="10" -->
-<!-- 				  uploadqueuetimewait="10" -->
-<!-- 				   datatype="text" -->
-<!-- 				  genlocalfile="false" -->
-<!-- 				  clearhdfsfiles="true" -->
-<!-- 				  startid="4" -->
-				 
-<!-- 				  endid="30019762123" -->
-<!-- 				  />	   -->
-<!--			<property name="hx20111212_20120331" 
-				  dbname="hx243"
-				  driver="oracle.jdbc.driver.OracleDriver"
-				  dburl="jdbc:oracle:thin:@//10.11.16.243:1521/ISS"
-				   dbuser="HX"
-				  dbpassword="edcr9637_"	
-				  validatesql="select 1 from dual"
-				  usepool="false"
-				  hdfsserver="hdfs://10.0.15.40:9000"
-				  hdfsdatadir="/m2m/data04/hx20111212_20120331"
-				  localdir="d:/bigdata/hx20111212_20120331|/bigdata/hx20111212_20120331"
-				  tablename="is_static_20111212_20120331"
-				  filebasename="is_static_20111212_20120331"
-				  schema="ISS"
-				  pkname="ST_PID"
-				  columns=""
-				  datablocks="200"					  			  
-				  geneworkthreads="50"
-				  uploadeworkthreads="20"
-				  genqueques="5"
-				  uploadqueues="5"
-				  genquequetimewait="10"
-				  uploadqueuetimewait="10"
-				   datatype="text"
-				  genlocalfile="false"
-				  clearhdfsfiles="true"
-				  usepagine="false"
-				  />	
-				  
-			 	  
-			<property name="hx20120401_20120901" 
-				 dbname="hx243"
-				  driver="oracle.jdbc.driver.OracleDriver"
-				  dburl="jdbc:oracle:thin:@//10.11.16.243:1521/ISS"
-				   dbuser="HX"
-				  dbpassword="edcr9637_"	
-				  validatesql="select 1 from dual"
-				  usepool="false"
-				  hdfsserver="hdfs://10.0.15.40:9000"
-				  hdfsdatadir="/m2m/data04/hx20120401_20120901"
-				  localdir="d:/bigdata/is_static_20120401_20120901|/bigdata/is_static_20120401_20120901"
-				  tablename="is_static_20120401_20120901"
-				  filebasename="is_static"
-				  schema="ISS"
-				  pkname="ST_PID"
-				  columns=""
-				  datablocks="10000"					  			  
-				  geneworkthreads="50"
-				  uploadeworkthreads="20"
-				  genqueques="5"
-				  uploadqueues="5"
-				  genquequetimewait="10"
-				  uploadqueuetimewait="10"
-				   datatype="text"
-				  genlocalfile="false"
-				  clearhdfsfiles="true"
-				  usepagine="false"
-				  />	  	    
-			<property name="test" 
-				  dbname="test"
-				  hdfsserver="hdfs://10.0.15.40:9000"
-				  hdfsdatadir="/m2m/data04/test"
-				  localdir="d:/bigdata/test|/bigdata/test"
-				  tablename="testbigdata"
-				  filebasename="testbigdata"
-				  schema="testpdp1"
-				  pkname="tid"
-				  columns=""
-				  datablocks="300"				  
-				  geneworkthreads="30"
-				  uploadeworkthreads="20"
-				  genqueques="5"
-				  uploadqueues="6"
-				  genquequetimewait="10"
-				  uploadqueuetimewait="20"
-				  datatype="text"
-				  genlocalfile="false"
-				  clearhdfsfiles="true"
-				  blocks="6,8" 
-				  subblocks="2"
-				  />
-				  
-				  
-				  
-				  
-			<property name="test" 
-				  dbname="test"
-				  hdfsserver="hdfs://10.0.15.40:9000"
-				  hdfsdatadir="/m2m/data04/test"
-				  localdir="d:/bigdata/test|/bigdata/test"
-				  tablename="testbigdata"
-				  filebasename="testbigdata"
-				  schema="testpdp1"
-				  pkname="tid"
-				  columns=""
-				  datablocks="300"				  
-				  geneworkthreads="30"
-				  uploadeworkthreads="20"
-				  genqueques="5"
-				  uploadqueues="6"
-				  genquequetimewait="10"
-				  uploadqueuetimewait="20"
-				  datatype="text"
-				  genlocalfile="false"
-				  clearhdfsfiles="true"
-				  excludeblocks="6,8"
-				  subblocks="2"
-				  />		  	
-			<property name="testall" 
-				  dbname="test"
-				  hdfsserver="hdfs://10.0.15.40:9000"
-				  hdfsdatadir="/m2m/data04/testall"
-				  localdir="d:/bigdata/test|/bigdata/test"
-				  tablename="testbigdata"
-				  filebasename="testbigdata"
-				  schema="testpdp1"
-				  pkname="tid"
-				  columns=""
-				  datablocks="300"				  
-				  geneworkthreads="30"
-				  uploadeworkthreads="20"
-				  genqueques="5"
-				  uploadqueues="6"
-				  genquequetimewait="10"
-				  uploadqueuetimewait="20"
-				  datatype="text"
-				  genlocalfile="false"
-				  clearhdfsfiles="true"
-				  
-				  />
-			<property name="testdelete"
-				  hdfsserver="hdfs://10.0.15.40:9000"
-				  deletefiles="/m2m/data04/test,/m2m/data04/testall,/m2m/data04/testallnopool,/m2m/data04/testpageine,/m2m/data04/testpageineall,/m2m/data04/user"
-				  
-				  
-				  />	  		  
-			<property name="testpagine" 
-				  dbname="test"
-				  hdfsserver="hdfs://10.0.15.40:9000"
-				  hdfsdatadir="/m2m/data04/testpageine"
-				  localdir="d:/bigdata/test|/bigdata/test"
-				  tablename="testbigdata"
-				  filebasename="testbigdata"
-				  schema="testpdp1"
-				  pkname="tid"
-				  columns=""
-				  datablocks="300"				  
-				  geneworkthreads="30"
-				  uploadeworkthreads="20"
-				  genqueques="5"
-				  uploadqueues="6"
-				  genquequetimewait="10"
-				  uploadqueuetimewait="20"
-				  datatype="text"
-				  genlocalfile="false"
-				  clearhdfsfiles="true"
-				  usepagine="true"
-				  blocks="6,8"
-				  subblocks="2"
-				  />
-			<property name="testpagineall" 
-				  dbname="test"
-				  hdfsserver="hdfs://10.0.15.40:9000"
-				  hdfsdatadir="/m2m/data04/testpageineall"
-				  localdir="d:/bigdata/test|/bigdata/test"
-				  tablename="testbigdata"
-				  filebasename="testbigdata"
-				  schema="testpdp1"
-				  pkname="tid"
-				  columns=""
-				  datablocks="300"				  
-				  geneworkthreads="30"
-				  uploadeworkthreads="20"
-				  genqueques="5"
-				  uploadqueues="6"
-				  genquequetimewait="10"
-				  uploadqueuetimewait="20"
-				  datatype="text"
-				  genlocalfile="false"
-				  clearhdfsfiles="true"
-				  usepagine="true"
-				
-				  />	 -->
-				    
-	</properties>
+<properties>
+	<!--<property name="hx2010error"
+	dbname="hx243"
+	hdfsserver="hdfs://10.0.15.40:9000"
+	hdfsdatadir="/m2m/data04/hx2010"
+	localdir="d:/bigdata/hx2010|/bigdata/hx2010"
+	tablename="IS_STATIC"
+	filebasename="IS_STATIC_2010"
+	schema="ISS"
+	pkname="ST_PID"
+	columns=""
+	datablocks="1000"
+	geneworkthreads="50"
+	uploadeworkthreads="20"
+	genqueques="5"
+	uploadqueues="5"
+	genquequetimewait="10"
+	uploadqueuetimewait="10"
+	datatype="text"
+	genlocalfile="false"
+	clearhdfsfiles="true"
+	startid="4"
+	blocks="6.0,6.11,6.12,6.16,6.17,6.35,8.1,8.23,8.25,8.32"
+	subblocks="50"
+	endid="30019762123"
+	/>
+	<property name="hx2010"
+	dbname="hx243"
+	hdfsserver="hdfs://10.0.15.40:9000"
+	hdfsdatadir="/m2m/data04/hx2010"
+	localdir="d:/bigdata/hx2010|/bigdata/hx2010"
+	tablename="IS_STATIC"
+	filebasename="IS_STATIC_2010"
+	schema="ISS"
+	pkname="ST_PID"
+	columns=""
+	datablocks="1000"
+	geneworkthreads="50"
+	uploadeworkthreads="20"
+	genqueques="5"
+	uploadqueues="5"
+	genquequetimewait="10"
+	uploadqueuetimewait="10"
+	datatype="text"
+	genlocalfile="false"
+	clearhdfsfiles="true"
+	startid="4"
+
+	endid="30019762123"
+	/>
+	<property name="hx20111212_20120331" dbname="hx243"
+		driver="oracle.jdbc.driver.OracleDriver" dburl="jdbc:oracle:thin:@//10.11.16.243:1521/ISS"
+		dbuser="HX" dbpassword="edcr9637_" validatesql="select 1 from dual"
+		usepool="false" hdfsserver="hdfs://10.0.15.40:9000" hdfsdatadir="/m2m/data04/hx20111212_20120331"
+		localdir="d:/bigdata/hx20111212_20120331|/bigdata/hx20111212_20120331"
+		tablename="is_static_20111212_20120331" filebasename="is_static_20111212_20120331"
+		schema="ISS" pkname="ST_PID" columns="" datablocks="200"
+		geneworkthreads="50" uploadeworkthreads="20" genqueques="5"
+		uploadqueues="5" genquequetimewait="10" uploadqueuetimewait="10"
+		datatype="text" genlocalfile="false" clearhdfsfiles="true" usepagine="false" />
+
+
+	<property name="hx20120401_20120901" dbname="hx243"
+		driver="oracle.jdbc.driver.OracleDriver" dburl="jdbc:oracle:thin:@//10.11.16.243:1521/ISS"
+		dbuser="HX" dbpassword="edcr9637_" validatesql="select 1 from dual"
+		usepool="true" hdfsserver="hdfs://10.0.15.40:9000" hdfsdatadir="/m2m/data04/hx20120401_20120901"
+		localdir="d:/bigdata/is_static_20120401_20120901|/bigdata/is_static_20120401_20120901"
+		tablename="is_static_20120401_20120901" filebasename="is_static"
+		schema="ISS" pkname="ST_PID" columns="" datablocks="15000"
+		geneworkthreads="30"  genqueques="5"
+		 genquequetimewait="10" 
+		datatype="text" genlocalfile="false" clearhdfsfiles="true" usepagine="false" />
+	<property name="test" dbname="test" hdfsserver="hdfs://10.0.15.40:9000"
+		hdfsdatadir="/m2m/data04/test" localdir="d:/bigdata/test|/bigdata/test"
+		tablename="testbigdata" filebasename="testbigdata" schema="testpdp1"
+		pkname="tid" columns="" datablocks="300" geneworkthreads="30"
+		uploadeworkthreads="20" genqueques="5" uploadqueues="6"
+		genquequetimewait="10" uploadqueuetimewait="20" datatype="text"
+		genlocalfile="false" clearhdfsfiles="true" blocks="6,8" subblocks="2" />
+
+
+
+
+	<property name="test" dbname="test" hdfsserver="hdfs://10.0.15.40:9000"
+		hdfsdatadir="/m2m/data04/test" localdir="d:/bigdata/test|/bigdata/test"
+		tablename="testbigdata" filebasename="testbigdata" schema="testpdp1"
+		pkname="tid" columns="" datablocks="300" geneworkthreads="30"
+		uploadeworkthreads="20" genqueques="5" uploadqueues="6"
+		genquequetimewait="10" uploadqueuetimewait="20" datatype="text"
+		genlocalfile="false" clearhdfsfiles="true" excludeblocks="6,8"
+		subblocks="2" />
+	<property name="testall" dbname="test" hdfsserver="hdfs://10.0.15.40:9000"
+		hdfsdatadir="/m2m/data04/testall" localdir="d:/bigdata/test|/bigdata/test"
+		tablename="testbigdata" filebasename="testbigdata" schema="testpdp1"
+		pkname="tid" columns="" datablocks="300" geneworkthreads="30"
+		uploadeworkthreads="20" genqueques="5" uploadqueues="6"
+		genquequetimewait="10" uploadqueuetimewait="20" datatype="text"
+		genlocalfile="false" clearhdfsfiles="true" />
+	<property name="testdelete" hdfsserver="hdfs://10.0.15.40:9000"
+		deletefiles="/m2m/data04/test,/m2m/data04/testall,/m2m/data04/testallnopool,/m2m/data04/testpageine,/m2m/data04/testpageineall,/m2m/data04/user" />
+
+
+	<property name="testpagine" dbname="test" hdfsserver="hdfs://10.0.15.40:9000"
+		hdfsdatadir="/m2m/data04/testpageine" localdir="d:/bigdata/test|/bigdata/test"
+		tablename="testbigdata" filebasename="testbigdata" schema="testpdp1"
+		pkname="tid" columns="" datablocks="300" geneworkthreads="30"
+		uploadeworkthreads="20" genqueques="5" uploadqueues="6"
+		genquequetimewait="10" uploadqueuetimewait="20" datatype="text"
+		genlocalfile="false" clearhdfsfiles="true" usepagine="true" blocks="6,8"
+		subblocks="2" />
+	<property name="testpagineall" dbname="test" hdfsserver="hdfs://10.0.15.40:9000"
+		hdfsdatadir="/m2m/data04/testpageineall" localdir="d:/bigdata/test|/bigdata/test"
+		tablename="testbigdata" filebasename="testbigdata" schema="testpdp1"
+		pkname="tid" columns="" datablocks="300" geneworkthreads="30"
+		uploadeworkthreads="20" genqueques="5" uploadqueues="6"
+		genquequetimewait="10" uploadqueuetimewait="20" datatype="text"
+		genlocalfile="false" clearhdfsfiles="true" usepagine="true" />
+	<property name="stopdbpool" dbnames="hx243,test" />
+	<property name="hx20111212_20120331" dbname="hx243"
+		driver="oracle.jdbc.driver.OracleDriver" dburl="jdbc:oracle:thin:@//10.11.16.243:1521/ISS"
+		dbuser="HX" dbpassword="edcr9637_" validatesql="select 1 from dual"
+		usepool="true" hdfsserver="hdfs://10.0.15.40:9000" hdfsdatadir="/m2m/data04/hx20111212_20120331"
+		localdir="d:/bigdata/hx20111212_20120331|/bigdata/hx20111212_20120331"
+		tablename="is_static_20111212_20120331" filebasename="is_static"
+		schema="ISS" pkname="ST_PID" columns="" datablocks="10000"
+		geneworkthreads="25" genqueques="5" genquequetimewait="10"
+		excludeblocks="0,1,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,3,30,31,33,34,9993,9994,9995,9996,9997,9998,9999"
+		datatype="text" genlocalfile="false" clearhdfsfiles="true" usepagine="false" />
+
+
+	<property name="hx20111212_20120331" dbname="hx243"
+		driver="oracle.jdbc.driver.OracleDriver" dburl="jdbc:oracle:thin:@//10.11.16.243:1521/ISS"
+		dbuser="HX" dbpassword="edcr9637_" validatesql="select 1 from dual"
+		usepool="true" hdfsserver="hdfs://10.0.15.40:9000" hdfsdatadir="/m2m/data04/hx20111212_20120331"
+		localdir="d:/bigdata/hx20111212_20120331|/bigdata/hx20111212_20120331"
+		tablename="is_static_20111212_20120331" filebasename="is_static"
+		schema="ISS" pkname="ST_PID" columns="" datablocks="10000"
+		geneworkthreads="10" genqueques="5" genquequetimewait="10" blocks="2,18,32"
+		datatype="text" genlocalfile="false" clearhdfsfiles="true" usepagine="false"
+		startid="323404849" endid="30039753017" subblocks="10" />
+	<property name="stopds" stopdbnames="test,hx243" />
+	<property name="test" dbname="test1" driver="oracle.jdbc.driver.OracleDriver"
+		dburl="jdbc:oracle:thin:@//10.0.15.51:1521/orcl" dbuser="testpdp1"
+		dbpassword="testpdp1" validatesql="select 1 from dual" usepool="true"
+
+		hdfsserver="hdfs://10.0.15.40:9000" hdfsdatadir="/m2m/data04/test"
+		localdir="d:/bigdata/test|/bigdata/test" tablename="testbigdata"
+		filebasename="testbigdata" schema="testpdp1" pkname="tid" columns=""
+		datablocks="100" geneworkthreads="30" genqueques="5"
+		genquequetimewait="10" datatype="text" clearhdfsfiles="true"
+		excludeblocks="6.0,8.0" subblocks="2" />
+	
+	<property name="reassignetasks" 
+		taskmainnode="csxbpmts02v-ap-3782"
+                tasks="1250"
+                inhandle="pserver04-15649:21,csxbpmts02v-ap-3782:30"    />	
+		
+		-->
+
+</properties>

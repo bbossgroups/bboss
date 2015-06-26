@@ -53,10 +53,35 @@ public class Imp {
 		monitorEventTypes.add(HDFSUploadData.hdfs_upload_monitor_request_commond);
 		monitorEventTypes.add(HDFSUploadData.hdfs_upload_monitor_response_commond);
 		monitorEventTypes.add(HDFSUploadData.hdfs_upload_monitor_jobstop_commond);
+		monitorEventTypes.add(HDFSUploadData.hdfs_upload_monitor_stopdatasource_commond);
+		monitorEventTypes.add(HDFSUploadData.hdfs_upload_monitor_reassigntasks_commond);
+		
 		NotifiableFactory.getNotifiable().addListener(impStaticManager, monitorEventTypes);
 		org.frameworkset.remote.EventUtils.init();
 		log.info("初始化分布式事件模块完毕！");
 		log.info("adminNode:true");
+
+
+
+
+	}
+	
+	public static void startDataNode( )
+	{
+		//监听器监听的事件消息可以是本地事件，可以是远程本地消息，也可以是远程消息
+		//如果不指定eventtypes则监听所有类型的事件消息
+		 
+		NotifiableFactory.getNotifiable().addListener(new HDFSUploadEventHandler(), HDFSUploadData.hdfsuploadevent);
+		List<EventType> monitorEventTypes = new ArrayList<EventType>();
+		monitorEventTypes.add(HDFSUploadData.hdfs_upload_monitor_request_commond);
+		monitorEventTypes.add(HDFSUploadData.hdfs_upload_monitor_response_commond);
+		monitorEventTypes.add(HDFSUploadData.hdfs_upload_monitor_jobstop_commond);
+		monitorEventTypes.add(HDFSUploadData.hdfs_upload_monitor_stopdatasource_commond);
+		monitorEventTypes.add(HDFSUploadData.hdfs_upload_monitor_reassigntasks_commond);
+		NotifiableFactory.getNotifiable().addListener(impStaticManager, monitorEventTypes);
+		org.frameworkset.remote.EventUtils.init();
+		log.info("初始化分布式事件模块完毕！");
+		log.info("adminNode:false");
 
 
 
@@ -91,6 +116,9 @@ public class Imp {
 			monitorEventTypes.add(HDFSUploadData.hdfs_upload_monitor_response_commond);
 			
 			monitorEventTypes.add(HDFSUploadData.hdfs_upload_monitor_jobstop_commond);
+			monitorEventTypes.add(HDFSUploadData.hdfs_upload_monitor_stopdatasource_commond);
+			monitorEventTypes.add(HDFSUploadData.hdfs_upload_monitor_reassigntasks_commond);
+			
 			NotifiableFactory.getNotifiable().addListener(impStaticManager, monitorEventTypes);
 			org.frameworkset.remote.EventUtils.init();
 			log.info("初始化分布式事件模块完毕！");
@@ -196,24 +224,30 @@ public class Imp {
 	 */
 	public static String submitNewJob(String jobdef) throws Exception
 	{
-		BaseApplicationContext ioccontext = new SOAApplicationContext(jobdef);
-		List<String> jobs = getConfigTasks(ioccontext);
 		StringBuilder builder = new StringBuilder();
-		if(jobs != null && jobs.size() > 0)
-		{
-			for(int i = 0; i < jobs.size(); i++)
+		try {
+			BaseApplicationContext ioccontext = new SOAApplicationContext(jobdef);
+			List<String> jobs = getConfigTasks(ioccontext);
+			
+			if(jobs != null && jobs.size() > 0)
 			{
-				String jobname = jobs.get(i);
-				DBHelper.addOrUdate( jobname, jobdef) ;
-				HDFSUploadData HDFSUploadData = new HDFSUploadData();
-				try {
-					
-					HDFSUploadData.executeJob(ioccontext,jobname);
-				} catch (Exception e) {
-					log.error(jobname + " 作业执行失败：",e);
-					builder.append(SimpleStringUtil.exceptionToString(e));
+				for(int i = 0; i < jobs.size(); i++)
+				{
+					String jobname = jobs.get(i);
+					DBHelper.addOrUdate( jobname, jobdef) ;
+					HDFSUploadData HDFSUploadData = new HDFSUploadData();
+					try {
+						
+						HDFSUploadData.executeJob(ioccontext,jobname);
+					} catch (Exception e) {
+						log.error(jobname + " 作业执行失败：",e);
+						builder.append(SimpleStringUtil.exceptionToString(e));
+					}
 				}
 			}
+		} catch (Exception e) {
+			log.error(" 作业执行失败："+jobdef,e);
+			builder.append(SimpleStringUtil.exceptionToString(e));
 		}
 		if(builder.length() > 0)
 			return builder.toString();

@@ -58,8 +58,16 @@ public class TaskConfig implements java.io.Serializable{
 	public String blocks;
 	String excludeblocks;
 	/**
+	 * 指定要停止的数据源清单，多个用逗号分隔
+	 */
+	private String stopdbnames;
+	/**
 	 * 当指定了具体的任务处理数据块blocks，则可以设定每块可以直接拆分的子数据块这样可以提升系统处理速度
 	 */
+	/**
+	 * 重新分派某个节点的排队任务配置
+	 */
+	private String reassigntaskNode;
 	int subblocks;
 	public String toString()
 	{
@@ -84,8 +92,9 @@ public class TaskConfig implements java.io.Serializable{
 			
 		}
 		
-		if(deletefiles != null)
-			builder.append("deletefiles=").append(deletefiles).append("\r\n");
+	
+		
+		
 		builder.append("datablocks=").append(datablocks).append("\r\n")
 		.append("hdfsserver=").append(hdfsserver).append("\r\n")
 		.append("hdfsdatadirpath=").append(hdfsdatadirpath).append("\r\n")
@@ -112,9 +121,13 @@ public class TaskConfig implements java.io.Serializable{
 		.append("blocks=").append(blocks).append("\r\n")
 		.append("excludeblocks=").append(excludeblocks).append("\r\n")
 		.append("clearhdfsfiles=").append(clearhdfsfiles);
-		if(blocks != null && blocks.trim().length() > 0)
-			builder.append("\r\n").append("subblocks=").append(subblocks);
+//		if(blocks != null && blocks.trim().length() > 0)
+			builder.append("\r\n").append("subblocks=").append(subblocks).append("\r\n");
+		if(deletefiles != null)
+			builder.append("deletefiles=").append(deletefiles).append("\r\n");
 		
+		if(this.stopdbnames != null)
+			builder.append("stopdbnames=").append(stopdbnames).append("\r\n");
 		return builder.toString();
 		
 		
@@ -379,5 +392,18 @@ public class TaskConfig implements java.io.Serializable{
 	}
 	public void setDeletefiles(String deletefiles) {
 		this.deletefiles = deletefiles;
+	}
+	public String getStopdbnames() {
+		return stopdbnames;
+	}
+	public void setStopdbnames(String stopdbnames) {
+		this.stopdbnames = stopdbnames;
+	}
+	 
+	public String getReassigntaskNode() {
+		return reassigntaskNode;
+	}
+	public void setReassigntaskNode(String reassigntaskNode) {
+		this.reassigntaskNode = reassigntaskNode;
 	}
 }
