@@ -2,6 +2,7 @@ package org.frameworkset.bigdata.imp.monitor;
 
 public class TaskStatus implements java.io.Serializable,java.lang.Cloneable{
 	private String taskInfo;
+	private int queuepostion;
 	/**
 	 * -1：未执行任务
 	 * 0:正在执行
@@ -57,6 +58,12 @@ public class TaskStatus implements java.io.Serializable,java.lang.Cloneable{
 	public Object clone() throws CloneNotSupportedException {
 		// TODO Auto-generated method stub
 		return super.clone();
+	}
+	public int getQueuepostion() {
+		return queuepostion;
+	}
+	public void setQueuepostion(int queuepostion) {
+		this.queuepostion = queuepostion;
 	}
 
 }

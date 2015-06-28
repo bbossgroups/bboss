@@ -1,20 +1,16 @@
 package org.frameworkset.bigdata.imp;
 
 import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.log4j.Logger;
-
-
-import com.frameworkset.util.SimpleStringUtil;
-
 import org.frameworkset.bigdata.imp.monitor.JobStatic;
 import org.frameworkset.bigdata.imp.monitor.TaskStatus;
 import org.frameworkset.bigdata.util.DBHelper;
+
+import com.frameworkset.util.SimpleStringUtil;
 
 public class ExecutorJob {
 	private static Logger log = Logger.getLogger(ExecutorJob.class); 
@@ -72,15 +68,6 @@ public class ExecutorJob {
 		 for(TaskInfo task:config.getTasks())
 		 {
 			 try {
-				 synchronized(jobStatic)//就是为了获得锁，如果在分配任务则忽略处理
-				 {
-					 //空转
-				 }
-				 FileSegment segement = new FileSegment();
-				 segement.job = this;
-				 segement.taskInfo = task;
-				 TaskStatus taskStatus = Imp.getImpStaticManager().addJobTaskStatic(jobStatic, task);
-				 segement.setTaskStatus(taskStatus);
 				 if(jobStatic.isforceStop())
 				 {
 					 genfileQueues.notifyAll();
@@ -88,8 +75,20 @@ public class ExecutorJob {
 						 this.upfileQueues.notifyAll();
 					 break;
 				 }
-				 taskStatus.setStatus(3);
-				 pos++;
+				 FileSegment segement = new FileSegment();
+				 synchronized(jobStatic)//就是为了获得锁，如果在分配任务则忽略处理
+				 {
+					if(task.isReassigned())
+						continue;
+					 segement.job = this;
+					 segement.taskInfo = task;
+					 TaskStatus taskStatus = Imp.getImpStaticManager().addJobTaskStatic(jobStatic, task,pos);
+					 segement.setTaskStatus(taskStatus);
+					 
+					 taskStatus.setStatus(3);
+					 pos++;
+				 }
+				 
 				genfileQueues.put(segement);
 			} catch (Exception e) {
 				log.error(task.toString(),e);

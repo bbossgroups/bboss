@@ -74,6 +74,11 @@ public class ImpStaticManager implements Listener<Object>{
 		
 	}
 	
+	public JobStatic getLocalJobStatic(String jobname)
+	{
+		return localjobstatics.get(jobname);
+	}
+	
 	public JobStatic addJobStatic(ExecutorJob job)
 	{
 		synchronized(localjobstaticsLock)
@@ -127,11 +132,11 @@ public class ImpStaticManager implements Listener<Object>{
 		}
 	}
 	
-	public TaskStatus addJobTaskStatic(JobStatic jobStatic,TaskInfo taskInfo)
+	public TaskStatus addJobTaskStatic(JobStatic jobStatic,TaskInfo taskInfo,int queuepostion)
 	{	
 		synchronized(localjobstaticsLock)
 		{
-			return jobStatic.addJobTaskStatic( taskInfo);
+			return jobStatic.addJobTaskStatic( taskInfo, queuepostion);
 		}
 		
 		

@@ -68,6 +68,8 @@ public class TaskConfig implements java.io.Serializable{
 	 * 重新分派某个节点的排队任务配置
 	 */
 	private String reassigntaskNode;
+	
+	private String reassigntaskJobname;
 	int subblocks;
 	public String toString()
 	{
@@ -128,6 +130,9 @@ public class TaskConfig implements java.io.Serializable{
 		
 		if(this.stopdbnames != null)
 			builder.append("stopdbnames=").append(stopdbnames).append("\r\n");
+		
+		if(this.reassigntaskNode != null)
+			builder.append("reassigntaskNode=").append(reassigntaskNode).append("\r\n").append("reassigntaskJobname=").append(this.reassigntaskJobname);
 		return builder.toString();
 		
 		
@@ -405,5 +410,11 @@ public class TaskConfig implements java.io.Serializable{
 	}
 	public void setReassigntaskNode(String reassigntaskNode) {
 		this.reassigntaskNode = reassigntaskNode;
+	}
+	public String getReassigntaskJobname() {
+		return reassigntaskJobname;
+	}
+	public void setReassigntaskJobname(String reassigntaskJobname) {
+		this.reassigntaskJobname = reassigntaskJobname;
 	}
 }

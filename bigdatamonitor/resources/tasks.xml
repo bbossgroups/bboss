@@ -154,9 +154,8 @@
 		excludeblocks="6.0,8.0" subblocks="2" />
 	
 	<property name="reassignetasks" 
-		taskmainnode="csxbpmts02v-ap-3782"
-                tasks="1250"
-                inhandle="pserver04-15649:21,csxbpmts02v-ap-3782:30"    />	
+		reassigntaskNode="csxbpmts02v-ap-3782"
+        reassigntaskJobname="test"            />	
 		
 		-->
 

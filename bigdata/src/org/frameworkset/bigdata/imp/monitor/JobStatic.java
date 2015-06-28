@@ -26,6 +26,7 @@ public class JobStatic implements java.io.Serializable,java.lang.Cloneable{
 	private int runtasks;
 	private int waittasks;
 	private String jobname;
+	private int currentposition;
 	public boolean canstop()
 	{
 		return this.status == 0 || this.status == -1;
@@ -59,6 +60,7 @@ public class JobStatic implements java.io.Serializable,java.lang.Cloneable{
 		{
 			StringBuilder success = new StringBuilder();
 			StringBuilder failed = new StringBuilder();
+			this.unruntasks = this.totaltasks - runtasksInfos.size();
 			for(TaskStatus status :runtasksInfos)
 			{
 				switch(status.getStatus())
@@ -108,6 +110,11 @@ public class JobStatic implements java.io.Serializable,java.lang.Cloneable{
 	{
 		return this.status == 3;
 	}
+	
+	public boolean stopped()
+	{
+		return this.status == 1 || this.status == 2 || this.status == 3;
+	}
 
 	 
 
@@ -132,17 +139,19 @@ public class JobStatic implements java.io.Serializable,java.lang.Cloneable{
 		return runtasksInfos;
 	}
 
-	public TaskStatus addJobTaskStatic(TaskInfo taskInfo)
+	public TaskStatus addJobTaskStatic(TaskInfo taskInfo,int queuepostion)
 	{
 		if(runtasksInfos == null)
 		{
 			runtasksInfos = new ArrayList<TaskStatus>();
 		}
 		TaskStatus ts = new TaskStatus();
+		ts.setQueuepostion(queuepostion);
 		ts.setStatus(0);
 		ts.setTaskNo(taskInfo.getTaskNo());
 		ts.setTaskInfo(taskInfo.toString());
 		runtasksInfos.add(ts);
+		this.currentposition = queuepostion;
 		return ts;
 	}
 
@@ -241,6 +250,14 @@ public class JobStatic implements java.io.Serializable,java.lang.Cloneable{
 
 	public String getFailedtaskNos() {
 		return failedtaskNos;
+	}
+
+	public int getCurrentposition() {
+		return currentposition;
+	}
+
+	public void setCurrentposition(int currentposition) {
+		this.currentposition = currentposition;
 	}
 	
 	

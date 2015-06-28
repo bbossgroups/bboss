@@ -59,6 +59,8 @@ public class HDFSUploadData {
 	 * 重新分派某个节点的排队任务配置
 	 */
 	private String reassigntaskNode;
+	
+	private String reassigntaskJobname;
 	// /**
 	// * 一般不需要指定
 	// */
@@ -183,6 +185,7 @@ public class HDFSUploadData {
 		config.setDeletefiles(deletefiles);
 		config.setStopdbnames(stopdbnames);
 		config.setReassigntaskNode(reassigntaskNode);
+		config.setReassigntaskJobname(reassigntaskJobname);
 		config.excludeblocks = this.excludeblocks_str;
 		config.blocks = this.blocks_str;
 
@@ -384,8 +387,11 @@ public class HDFSUploadData {
 
 		String reassigntaskNode = context.getStringExtendAttribute(jobname,
 				"reassigntaskNode");
+		String reassigntaskJobname = context.getStringExtendAttribute(jobname,
+				"reassigntaskJobname");
+		
 		config.setReassigntaskNode(reassigntaskNode);
-
+		config.setReassigntaskJobname(reassigntaskJobname);
 		boolean usepool = context.getBooleanExtendAttribute(jobname, "usepool",
 				false);
 
@@ -975,6 +981,9 @@ public class HDFSUploadData {
 		stopdbnames = context.getStringExtendAttribute(jobname, "stopdbnames");
 		reassigntaskNode = context.getStringExtendAttribute(jobname,
 				"reassigntaskNode");
+		
+		reassigntaskJobname = context.getStringExtendAttribute(jobname,
+				"reassigntaskJobname");
 
 		this.hdfsdatadir = context.getStringExtendAttribute(jobname,
 				"hdfsdatadir");
@@ -1150,17 +1159,17 @@ public class HDFSUploadData {
 	private void doReassignTasks() throws Exception {
 
 		SpecialMonitorObject monitorJob = Imp.getImpStaticManager()
-				.getSpecialMonitorObject(jobname);
+				.getSpecialMonitorObject(reassigntaskJobname);
 		Map<String, JobStatic> hostJobs = monitorJob.getJobstaticsIdxByHost();
 		JobStatic jobstatic = hostJobs.get(this.reassigntaskNode);
-		if (jobstatic.getWaittasks() == 0) {
+		if (jobstatic.getUnruntasks() == 0  ) {
 			JobStatic result = new JobStatic();
 
 			result.setStartTime(System.currentTimeMillis());
 			result.setStatus(1);
-			result.setConfig("reassigntaskNode=" + reassigntaskNode);
-			String msg = "提交重新分派数据节点[" + this.reassigntaskNode + "]作业["
-					+ jobname + "]任务结束：所有作业已经被分派，无法重新进行任务分派.";
+			result.setConfig(new StringBuilder().append("reassigntaskNode=").append(reassigntaskNode).append("reassigntaskJobname=").append(this.reassigntaskJobname).toString());
+			String msg = new StringBuilder().append("提交重新分派数据节点[").append( this.reassigntaskNode ).append( "]作业["
+					).append( reassigntaskJobname ).append( "]任务结束：所有作业已经被分派，无法重新进行任务分派.").toString();
 			result.setErrormsg(msg);
 			result.setJobname(jobname);
 			result.setEndTime(System.currentTimeMillis());
@@ -1177,7 +1186,7 @@ public class HDFSUploadData {
 				result.setStatus(1);
 				result.setConfig("reassigntaskNode=" + reassigntaskNode);
 				String msg = "提交重新分派数据节点[" + this.reassigntaskNode + "]作业["
-						+ jobname + "]任务结束：任务所在服务器["+reassigntaskNode+"]不存在，无法重新进行任务分派.";
+						+ reassigntaskJobname + "]任务结束：任务所在服务器["+reassigntaskNode+"]不存在，无法重新进行任务分派.";
 				result.setErrormsg(msg);
 				result.setJobname(jobname);
 				result.setEndTime(System.currentTimeMillis());
@@ -1188,18 +1197,25 @@ public class HDFSUploadData {
 			ReassignTask reassignTask = new ReassignTask();
 			reassignTask.setJobname(jobname);
 			reassignTask.setReassigntaskNode(this.reassigntaskNode);
-			
+			reassignTask.setReassigntaskJobname(reassigntaskJobname);
+			reassignTask.setAdminasdatanode(Imp.getImpStaticManager().isAdminasdatanode());
+			reassignTask.setAdminnode(Imp.getImpStaticManager().getLocalNode());
 			Map<String, Integer> taskinfos = new HashMap<String, Integer>();// 存放其他节点正在处理和排队等待执行的任务数，作为重新分派任务的参考数据
 			for (Map.Entry<String, JobStatic> entry : hostJobs.entrySet()) {
-				String otherhost = entry.getKey();
-				if (!otherhost.equals(reassigntaskNode)) {
-					JobStatic other = entry.getValue();
-					int unhandletasks = other.getWaittasks()
-							+ other.getRuntasks() + other.getUnruntasks();
-					taskinfos.put(otherhost, unhandletasks);
+				String host = entry.getKey();
+				
+				if(!host.equals(reassigntaskNode))//忽略任务所属节点
+				{
+					if (!reassignTask.isAdminasdatanode()&&!host.equals(reassignTask.getAdminnode())) //忽略非数据节点的管理节点
+					{
+						JobStatic other = entry.getValue();
+						int unhandletasks = other.getWaittasks()
+								+ other.getRuntasks() + other.getUnruntasks();
+						taskinfos.put(host, unhandletasks);
+					}
 				}
 			}
-			reassignTask.setOtherTaskInfos(taskinfos);
+			reassignTask.setHostTaskInfos(taskinfos);
 			
 			EventTarget target = new EventTarget(address);
 			Event<ReassignTask> event = new EventImpl<ReassignTask>(
@@ -1209,7 +1225,7 @@ public class HDFSUploadData {
 			 */
 
 			EventHandle.getInstance().change(event, false);
-			log.info("提交重新分派数据节点[" + this.reassigntaskNode + "]作业[" + jobname
+			log.info("提交重新分派数据节点[" + this.reassigntaskNode + "]作业[" + reassigntaskJobname
 					+ "]任务请求成功.");
 		}
 	}
@@ -1522,6 +1538,14 @@ public class HDFSUploadData {
 
 	public void setReassigntaskNode(String reassigntaskNode) {
 		this.reassigntaskNode = reassigntaskNode;
+	}
+
+	public String getReassigntaskJobname() {
+		return reassigntaskJobname;
+	}
+
+	public void setReassigntaskJobname(String reassigntaskJobname) {
+		this.reassigntaskJobname = reassigntaskJobname;
 	}
 
 }

@@ -6,7 +6,10 @@ import java.util.Map;
 public class ReassignTask implements Serializable {
 	private String jobname;
 	private String reassigntaskNode;
-	private Map<String, Integer> otherTaskInfos;
+	private String reassigntaskJobname;
+	private Map<String, Integer> hostTaskInfos;
+	private boolean adminasdatanode;
+	private String adminnode;
 	public ReassignTask() {
 		// TODO Auto-generated constructor stub
 	}
@@ -22,20 +25,38 @@ public class ReassignTask implements Serializable {
 	public void setReassigntaskNode(String reassigntaskNode) {
 		this.reassigntaskNode = reassigntaskNode;
 	}
-	public void setOtherTaskInfos(Map<String, Integer> taskinfos) {
-		this.otherTaskInfos =  taskinfos;
-		
-	}
-	public Map<String, Integer> getOtherTaskInfos() {
-		return otherTaskInfos;
-	}
+	
 	
 	public String toString()
 	{
 		StringBuilder builder = new StringBuilder();
 		builder.append("jobname=").append(jobname).append(",")
-		.append("reassigntaskNode=").append(reassigntaskNode).append(",").append("otherTaskInfos=").append(otherTaskInfos.toString());
+		.append("reassigntaskNode=").append(reassigntaskNode).append(",").append("otherTaskInfos=").append(hostTaskInfos.toString());
 		return builder.toString();
+	}
+	public String getReassigntaskJobname() {
+		return reassigntaskJobname;
+	}
+	public void setReassigntaskJobname(String reassigntaskJobname) {
+		this.reassigntaskJobname = reassigntaskJobname;
+	}
+	public Map<String, Integer> getHostTaskInfos() {
+		return hostTaskInfos;
+	}
+	public void setHostTaskInfos(Map<String, Integer> hostTaskInfos) {
+		this.hostTaskInfos = hostTaskInfos;
+	}
+	public boolean isAdminasdatanode() {
+		return adminasdatanode;
+	}
+	public void setAdminasdatanode(boolean adminasdatanode) {
+		this.adminasdatanode = adminasdatanode;
+	}
+	public String getAdminnode() {
+		return adminnode;
+	}
+	public void setAdminnode(String adminnode) {
+		this.adminnode = adminnode;
 	}
 
 }
