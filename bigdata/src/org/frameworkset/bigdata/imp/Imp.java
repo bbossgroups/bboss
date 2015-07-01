@@ -54,7 +54,7 @@ public class Imp {
 		monitorEventTypes.add(HDFSUploadData.hdfs_upload_monitor_response_commond);
 		monitorEventTypes.add(HDFSUploadData.hdfs_upload_monitor_jobstop_commond);
 		monitorEventTypes.add(HDFSUploadData.hdfs_upload_monitor_stopdatasource_commond);
-		monitorEventTypes.add(HDFSUploadData.hdfs_upload_monitor_reassigntasks_commond);
+		monitorEventTypes.add(HDFSUploadData.hdfs_upload_monitor_reassigntasks_request_commond);
 		
 		NotifiableFactory.getNotifiable().addListener(impStaticManager, monitorEventTypes);
 		org.frameworkset.remote.EventUtils.init();
@@ -77,7 +77,7 @@ public class Imp {
 		monitorEventTypes.add(HDFSUploadData.hdfs_upload_monitor_response_commond);
 		monitorEventTypes.add(HDFSUploadData.hdfs_upload_monitor_jobstop_commond);
 		monitorEventTypes.add(HDFSUploadData.hdfs_upload_monitor_stopdatasource_commond);
-		monitorEventTypes.add(HDFSUploadData.hdfs_upload_monitor_reassigntasks_commond);
+		monitorEventTypes.add(HDFSUploadData.hdfs_upload_monitor_reassigntasks_request_commond);
 		NotifiableFactory.getNotifiable().addListener(impStaticManager, monitorEventTypes);
 		org.frameworkset.remote.EventUtils.init();
 		log.info("初始化分布式事件模块完毕！");
@@ -117,7 +117,7 @@ public class Imp {
 			
 			monitorEventTypes.add(HDFSUploadData.hdfs_upload_monitor_jobstop_commond);
 			monitorEventTypes.add(HDFSUploadData.hdfs_upload_monitor_stopdatasource_commond);
-			monitorEventTypes.add(HDFSUploadData.hdfs_upload_monitor_reassigntasks_commond);
+			monitorEventTypes.add(HDFSUploadData.hdfs_upload_monitor_reassigntasks_request_commond);
 			
 			NotifiableFactory.getNotifiable().addListener(impStaticManager, monitorEventTypes);
 			org.frameworkset.remote.EventUtils.init();
@@ -272,6 +272,11 @@ public class Imp {
 	}
 	public static void setAppdir(File appdir) {
 		Imp.appdir = appdir;
+	}
+	
+	public static String clearJobStatic(String jobname,String hostName)
+	{
+		return Imp.getImpStaticManager().clearJobStatic(jobname, hostName);
 	}
 
 }

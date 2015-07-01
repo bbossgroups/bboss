@@ -187,5 +187,10 @@ public class JobstaticMonitorController {
 			tx.release();
 		}
 	}
+	
+	public @ResponseBody String clearJobStatic(String jobname,String hostName)
+	{
+		return Imp.clearJobStatic(jobname, hostName);
+	}
 
 }

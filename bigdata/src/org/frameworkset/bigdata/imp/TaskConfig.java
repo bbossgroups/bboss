@@ -6,6 +6,16 @@ import java.util.Map;
 public class TaskConfig implements java.io.Serializable{
 	private String jobdef; 
 	/**
+	 * 关联附加字段表记录-通过joinby字段与tablename中对应的表进行关联查询
+	 */
+	private String subtablename;
+	/**
+	 * 使用表的分区进行任务切割
+	 */
+	private boolean usepartition;
+	private String leftJoinby;
+	private String rightJoinby;
+	/**
 	 * 数据库连接信息
 	 */
 	String driver;
@@ -43,6 +53,10 @@ public class TaskConfig implements java.io.Serializable{
 	boolean genlocalfile;
 	String datatype;
 	String querystatement;
+	/**
+	 * 子查询sql
+	 */
+	String subquerystatement;
 	String limitstatement;
 	String countstatement;
  	String pageinestatement;
@@ -80,6 +94,11 @@ public class TaskConfig implements java.io.Serializable{
 				.append("schema=").append(this.schema).append("\r\n")
 		.append("tablename=").append(tablename).append("\r\n")
 		.append("columns=[").append(columns).append("]\r\n")
+		
+		.append("subtablename=").append(this.subtablename).append("\r\n")
+		.append("leftjoinby=").append(this.leftJoinby).append("\r\n")
+		.append("rightJoinby=").append(this.rightJoinby).append("\r\n")
+		.append("usepartition=[").append(this.usepartition).append("]\r\n")
 		.append("pkname=").append(pkname).append("\r\n");
 		
 		if(driver != null && driver.trim().length() > 0)
@@ -116,6 +135,7 @@ public class TaskConfig implements java.io.Serializable{
 		.append("pageinestatement=").append(pageinestatement).append("\r\n")
 			.append("tablerows=").append(tablerows).append("\r\n")
 		.append("querystatement=").append(querystatement).append("\r\n")
+		.append("subquerystatement=").append(subquerystatement).append("\r\n")
 		.append("adminnodeasdatanode=").append(adminnodeasdatanode).append("\r\n")
 		.append("limitstatement=").append(limitstatement).append("\r\n")
 		.append("startid=").append(startid).append("\r\n")
@@ -417,4 +437,36 @@ public class TaskConfig implements java.io.Serializable{
 	public void setReassigntaskJobname(String reassigntaskJobname) {
 		this.reassigntaskJobname = reassigntaskJobname;
 	}
+	public String getSubtablename() {
+		return subtablename;
+	}
+	public void setSubtablename(String subtablename) {
+		this.subtablename = subtablename;
+	}
+	public boolean isUsepartition() {
+		return usepartition;
+	}
+	public void setUsepartition(boolean usepartition) {
+		this.usepartition = usepartition;
+	}
+	
+	public String getSubquerystatement() {
+		return subquerystatement;
+	}
+	public void setSubquerystatement(String subquerystatement) {
+		this.subquerystatement = subquerystatement;
+	}
+	public String getLeftJoinby() {
+		return leftJoinby;
+	}
+	public void setLeftJoinby(String leftJoinby) {
+		this.leftJoinby = leftJoinby;
+	}
+	public String getRightJoinby() {
+		return rightJoinby;
+	}
+	public void setRightJoinby(String rightJoinby) {
+		this.rightJoinby = rightJoinby;
+	}
 }
+

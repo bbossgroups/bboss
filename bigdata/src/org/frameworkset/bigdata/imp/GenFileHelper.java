@@ -21,6 +21,8 @@ public class GenFileHelper {
 	public GenFileHelper(ExecutorJob job) {
 		this.job = job;
 		this.config = this.job.config;
+		this.genfilecount = job.genfilecount;
+		this.upfilecount= job.upfilecount;
 	}
 	
 	public boolean isforceStop()
@@ -64,7 +66,7 @@ public class GenFileHelper {
 
 	public void run(TaskConfig config) {
 //		CyclicBarrier barrier = new CyclicBarrier(config.getGeneworkthreads());
-		genfilecount = new AtomicInteger(config.getTasks().length);
+//		genfilecount = new AtomicInteger(config.getTasks().length);
 
 		genthreads = new ArrayList<Thread>(config.getGeneworkthreads());
 		for (int i = 0; i < config.getGeneworkthreads(); i++) {
@@ -78,8 +80,7 @@ public class GenFileHelper {
 
 		if(config.isGenlocalfile())
 		{	
-			upfilecount = new AtomicInteger(config.getTasks().length);
-	
+			 
 	//		CyclicBarrier upbarrier = new CyclicBarrier(works);
 			upthreads = new ArrayList<Thread>(config.getUploadeworkthreads());
 			for (int i = 0; i < config.getUploadeworkthreads(); i++) {

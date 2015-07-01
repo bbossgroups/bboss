@@ -12,7 +12,9 @@ import java.util.Set;
 import org.apache.log4j.Logger;
 import org.frameworkset.bigdata.imp.ExecutorJob;
 import org.frameworkset.bigdata.imp.HDFSUploadData;
+import org.frameworkset.bigdata.imp.Imp;
 import org.frameworkset.bigdata.imp.ReassignTask;
+import org.frameworkset.bigdata.imp.ReassignTaskConfig;
 import org.frameworkset.bigdata.imp.ReassignTaskJob;
 import org.frameworkset.bigdata.imp.StopDS;
 import org.frameworkset.bigdata.imp.StopDSJob;
@@ -38,6 +40,11 @@ import org.jgroups.Address;
 public class ImpStaticManager implements Listener<Object>{
 	private static Logger log = Logger.getLogger(ImpStaticManager.class);
 	private HashMap<String,JobStatic> localjobstatics = new HashMap<String,JobStatic>();
+	/**
+	 * 用于重新执行作业使用
+	 */
+	private HashMap<String,ExecutorJob> localExecutorJobs = new HashMap<String,ExecutorJob>();
+	
 	private boolean adminasdatanode;
 	private Object localjobstaticsLock = new Object();
 	private Object adminJobsLock = new Object();
@@ -61,6 +68,10 @@ public class ImpStaticManager implements Listener<Object>{
 	 */
 	private HashMap<String,Integer> monitorAlljobstatusIdxByJob = new HashMap<String,Integer>();//作业分布服务器情况一览表
 
+	public ExecutorJob getExecutorJob(String jobname)
+	{
+		return this.localExecutorJobs.get(jobname);
+	}
 	@Override
 	public void handle(Event<Object> e) {
 		final Event<Object> e_ = e;
@@ -81,6 +92,7 @@ public class ImpStaticManager implements Listener<Object>{
 	
 	public JobStatic addJobStatic(ExecutorJob job)
 	{
+		this.localExecutorJobs.put(job.getConfig().getJobname(), job);
 		synchronized(localjobstaticsLock)
 		{
 			JobStatic jobStatic = new JobStatic();
@@ -291,7 +303,7 @@ public class ImpStaticManager implements Listener<Object>{
 			
 		}
 		
-		else if(command.equals(HDFSUploadData.hdfs_upload_monitor_reassigntasks_commond))
+		else if(command.equals(HDFSUploadData.hdfs_upload_monitor_reassigntasks_request_commond))
 		{
 			final ReassignTask reassignTask = (ReassignTask)e_.getSource();
 			
@@ -301,6 +313,28 @@ public class ImpStaticManager implements Listener<Object>{
 					ReassignTaskJob reassignTaskJob = new ReassignTaskJob();
 					reassignTaskJob.execute(reassignTask);
 					log.info("Execute reassignTask Job end:"+reassignTask.toString() );
+				}
+			}).start();
+		}
+		
+		else if(command.equals(HDFSUploadData.hdfs_upload_monitor_reassigntasks_response_commond))
+		{
+			
+			final ReassignTaskConfig reassignTaskConfig =  (ReassignTaskConfig)e_.getSource();
+			new Thread(new Runnable(){
+				public void run()
+				{
+					ExecutorJob ejob = ImpStaticManager.this.localExecutorJobs.get(reassignTaskConfig.getJobname());
+					if(reassignTaskConfig.getTasks() != null && reassignTaskConfig.getTasks().size() > 0)
+					{
+						List<TaskInfo> tasks = reassignTaskConfig.getTasks().get(getLocalNode());
+						if(tasks != null && tasks.size() > 0)
+						{
+							log.info("Assgin tasks to job:"+reassignTaskConfig.getJobname() );
+							ejob.assignTasks(tasks);
+							log.info("Assgin tasks to job ok:"+reassignTaskConfig.getJobname() );
+						}
+					}
 				}
 			}).start();
 		}
@@ -687,6 +721,19 @@ public class ImpStaticManager implements Listener<Object>{
 
 	public void setAdminasdatanode(boolean adminasdatanode) {
 		this.adminasdatanode = adminasdatanode;
+	}
+	
+	public String clearJobStatic(String jobname,String hostName)
+	{
+		synchronized(adminJobsLock)
+		{
+			Map<String, JobStatic> hj = monitorAlljobstaticsIdxByJob.get(jobname);
+			if(hj != null)
+			{
+				hj.remove(hostName);
+			}
+			return "success";
+		}
 	}
 
 	

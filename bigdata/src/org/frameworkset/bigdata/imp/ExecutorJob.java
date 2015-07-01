@@ -1,8 +1,11 @@
 package org.frameworkset.bigdata.imp;
 
 import java.io.File;
+import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.log4j.Logger;
@@ -19,7 +22,14 @@ public class ExecutorJob {
 	 FileSystem fileSystem=null;
 	 TaskConfig config;
 	 JobStatic jobStatic;
+	 AtomicInteger genfilecount;
+	 AtomicInteger upfilecount ;
+	 List<TaskInfo> tasks;
+	
+	 int pos;
+	 boolean justassigned = false;
 	 
+	 private Object reassignLock = new Object();
 	 
 	 public boolean usepagine()
 	 {
@@ -37,36 +47,57 @@ public class ExecutorJob {
 		}
 	public void execute(TaskConfig config)
 	{
-		this.config = config;
-		
-		fileSystem = HDFSServer.getFileSystem(config.getHdfsserver());
-		genfileQueues = new ArrayBlockingQueue<FileSegment>(config.getGenqueques()); 
-		if(config.isGenlocalfile())
+		try
 		{
-			upfileQueues = new ArrayBlockingQueue<FileSegment>(config.getUploadqueues());
-			boolean iswindows = SimpleStringUtil.isWindows();
-			if(config.localdirpath.indexOf("|") > 0)
+			this.config = config;
+			
+			fileSystem = HDFSServer.getFileSystem(config.getHdfsserver());
+			genfileQueues = new ArrayBlockingQueue<FileSegment>(config.getGenqueques()); 
+			if(config.isGenlocalfile())
 			{
-				if(iswindows)
-					config.localdirpath = config.localdirpath.split("\\|")[0];
-				else
-					config.localdirpath = config.localdirpath.split("\\|")[1];
-			}		
-			File localdir = new File(config.localdirpath);
-			 if(!localdir.exists())
-				 localdir.mkdirs();
+				upfileQueues = new ArrayBlockingQueue<FileSegment>(config.getUploadqueues());
+				boolean iswindows = SimpleStringUtil.isWindows();
+				if(config.localdirpath.indexOf("|") > 0)
+				{
+					if(iswindows)
+						config.localdirpath = config.localdirpath.split("\\|")[0];
+					else
+						config.localdirpath = config.localdirpath.split("\\|")[1];
+				}		
+				File localdir = new File(config.localdirpath);
+				 if(!localdir.exists())
+					 localdir.mkdirs();
+			}
+			DBHelper.initDB(config);
+			tasks = Arrays.asList(config.getTasks());
+			log.info("start run task:"+config +",task size:"+tasks.size());
+			 jobStatic = Imp.getImpStaticManager().addJobStatic(this);
+			 if(tasks != null)
+				 jobStatic.setTotaltasks(tasks.size());
+			 genfilecount = new AtomicInteger(tasks.size());
+			 if(config.isGenlocalfile())
+				 upfilecount = new AtomicInteger(config.getTasks().length);
+			 run(0);
 		}
-		DBHelper.initDB(config);
-		log.info("start run task:"+config +",task size:"+config.getTasks().length);
-		 jobStatic = Imp.getImpStaticManager().addJobStatic(this);
-		 if(config.getTasks() != null)
-			 jobStatic.setTotaltasks(config.getTasks().length);
+		finally
+		{
+			
+		}
+	}
+	
+	
+	private void run(int startpos)
+	{
 		 GenFileHelper  genFileWork = new GenFileHelper(this);
 		 genFileWork.run(  config);		
 		 StringBuilder errorinfo = new StringBuilder();
-		 int pos = 0;
-		 for(TaskInfo task:config.getTasks())
+//		 int pos = 0;
+		 for(pos = startpos; pos < tasks.size();pos ++)
 		 {
+			 if(this.justassigned)
+				 this.justassigned = false;
+				 
+			 TaskInfo task = tasks.get(pos); 
 			 try {
 				 if(jobStatic.isforceStop())
 				 {
@@ -79,14 +110,17 @@ public class ExecutorJob {
 				 synchronized(jobStatic)//就是为了获得锁，如果在分配任务则忽略处理
 				 {
 					if(task.isReassigned())
+					{
+						
 						continue;
+					}
 					 segement.job = this;
 					 segement.taskInfo = task;
 					 TaskStatus taskStatus = Imp.getImpStaticManager().addJobTaskStatic(jobStatic, task,pos);
 					 segement.setTaskStatus(taskStatus);
 					 
 					 taskStatus.setStatus(3);
-					 pos++;
+					
 				 }
 				 
 				genfileQueues.put(segement);
@@ -101,6 +135,19 @@ public class ExecutorJob {
 		 }
 		
 		 genFileWork.join();
+		synchronized(this.reassignLock)
+		{
+			clean( errorinfo);
+		}
+	}
+	
+	private void clean(StringBuilder errorinfo)
+	{
+		if(justassigned)
+		{
+			justassigned = false;
+			return;
+		}
 		 if(errorinfo.length() == 0)
 		 {
 			 jobStatic.setStatus(1);
@@ -116,6 +163,8 @@ public class ExecutorJob {
 			 this.genfileQueues.clear();
 		 }
 		 jobStatic.setEndTime(System.currentTimeMillis());
+		 
+		
 	}
 	public BlockingQueue<FileSegment> getUpfileQueues() {
 		return upfileQueues;
@@ -140,6 +189,40 @@ public class ExecutorJob {
 	}
 	public boolean isforcestop() {
 		return this.jobStatic.isforceStop();
+	}
+	public void assignTasks(List<TaskInfo> tasks) {
+		synchronized(this.reassignLock)
+		{
+			justassigned = false;
+			jobStatic.setTotaltasks(jobStatic.getTotaltasks()+tasks.size());
+			if(jobStatic.stopped())//如果作业已经停止，重新启动作业，将分派过来的任务添加的作业队列中
+			{
+				this.genfilecount.set(tasks.size());
+				if(config.isGenlocalfile())
+					 upfilecount.set(tasks.size());
+				jobStatic.setStatus(0);
+				jobStatic.setEndTime(0);
+				this.pos = this.tasks.size(); 
+				this.tasks.addAll(tasks);
+				
+				
+				 run(pos);
+			}
+			else //直接追加任务到处理队列中
+			{
+				
+			
+				this.genfilecount.addAndGet(tasks.size());
+				if(config.isGenlocalfile())
+					 upfilecount.addAndGet(tasks.size());
+				synchronized(jobStatic)
+				{
+					this.tasks.addAll(tasks);
+				}
+			}
+			justassigned = true;
+		}
+		
 	}
 	
 }

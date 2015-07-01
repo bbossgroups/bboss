@@ -5,6 +5,7 @@ public class TaskInfo  implements java.io.Serializable{
 	long startoffset;
 	long endoffset;
 	long pagesize;
+	String partitionName;
 	String filename;
 	/**
 	 * 如果任务被重新分配，则忽略处理
@@ -60,6 +61,12 @@ public class TaskInfo  implements java.io.Serializable{
 	}
 	public void setReassigned(boolean reassigned) {
 		this.reassigned = reassigned;
+	}
+	public String getPartitionName() {
+		return partitionName;
+	}
+	public void setPartitionName(String partitionName) {
+		this.partitionName = partitionName;
 	}
 	
 

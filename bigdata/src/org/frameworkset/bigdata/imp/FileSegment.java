@@ -36,6 +36,14 @@ public class FileSegment {
 	 PrintWriter writer;
 	 TaskStatus taskStatus;
 	 OutputStream out;
+	 public String getRightJoinBy()
+	 {
+		 return job.config.getLeftJoinby();
+	 }
+	 public boolean usepartition()
+	 {
+		 return job.config.isUsepartition();
+	 }
 	 public boolean usepagine()
 	 {
 		 return this.job.usepagine();
@@ -48,8 +56,16 @@ public class FileSegment {
 			return this.job.config.getPageinestatement();
 		}
 	 public String getQuerystatement() {
+		 if(!this.usepartition())
 			 return this.job.config.getQuerystatement();
+		 else
+			 return this.job.config.getQuerystatement().replace("#{partition}", " PARTITION  ("+taskInfo.getPartitionName()+")");
 		}
+	 
+	 
+	 public String getSubQuerystatement() {
+		 return this.job.config.getSubquerystatement();
+	}
 	 
 	 public long getEndoffset() {
 			return taskInfo.getEndoffset();

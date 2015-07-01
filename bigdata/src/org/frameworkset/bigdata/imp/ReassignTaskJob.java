@@ -1,10 +1,16 @@
 package org.frameworkset.bigdata.imp;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
 import org.frameworkset.bigdata.imp.monitor.JobStatic;
+import org.frameworkset.event.Event;
+import org.frameworkset.event.EventHandle;
+import org.frameworkset.event.EventImpl;
 
 public class ReassignTaskJob {
 
@@ -30,7 +36,7 @@ public class ReassignTaskJob {
 		 
 			 Map<String, Integer> hostTaskInfos =reassignTask.getHostTaskInfos();
 			 int servers = hostTaskInfos.size() + 1;
-			 int[] perservertasks = new int[servers];//存储每个节点应该分配的任务数
+//			 int[] perservertasks = new int[servers];//存储每个节点应该分配的任务数
 			 String[] servseradd = new String[servers];
 			 servseradd[0] = localnode;
 			 synchronized(localjobStatic)
@@ -58,21 +64,69 @@ public class ReassignTaskJob {
 					}
 					int newtasks = totaltasks / servers;
 					int div = totaltasks % servers;
+					int startpos = localjobStatic.getCurrentposition() + 1;
+					Map<String,List<TaskInfo>> perserverTasks = new HashMap<String,List<TaskInfo>>();
+					 
+					List<TaskInfo> temp = null;
+					ExecutorJob executorjob = Imp.getImpStaticManager().getExecutorJob(localnode);
+					TaskInfo[] taskinfos = executorjob.config.getTasks();
+					
 					for(int j = 0 ; j < servers; j ++)
 					{
-						
+						int  perservertasks = 0;
 						if(j < div)
-							perservertasks[j] = newtasks + 1;
+							perservertasks = newtasks + 1;
 						else
-							perservertasks[j] = newtasks;
+							perservertasks = newtasks;
 						if(j == 0 )
-							perservertasks[j] = perservertasks[j] - selfinhandle;
+						{
+							perservertasks = perservertasks - selfinhandle;
+							startpos = startpos + perservertasks;
+						}
+						
 						else
-							perservertasks[j] = perservertasks[j] - hostTaskInfos.get(servseradd[j]).intValue();						
+						{
+							perservertasks = perservertasks - hostTaskInfos.get(servseradd[j]).intValue();
+							temp = new ArrayList<TaskInfo>(perservertasks);
+							int l = 0;
+							for(int k = startpos; k < taskinfos.length; k ++ )
+							{
+								if(l < perservertasks)
+								{
+									taskinfos[k].setReassigned(true);
+									temp.add(taskinfos[k]);
+									l ++;
+								}
+								else
+								{
+									break;
+								}
+							}
+							if(temp.size() > 0)
+								perserverTasks.put(servseradd[j], temp);
+							startpos = startpos + perservertasks;
+						}
+						
 					}
+					ReassignTaskConfig reassignTaskConfig = new ReassignTaskConfig();
+					reassignTaskConfig.setJobname(reassignTask.getJobname());
+					reassignTaskConfig.setTasks(perserverTasks);
+					Event<ReassignTaskConfig> event = new EventImpl<ReassignTaskConfig>(
+							reassignTaskConfig, HDFSUploadData.hdfs_upload_monitor_reassigntasks_response_commond);
+					/**
+					 * 消息以异步方式传递
+					 */
+
+					EventHandle.getInstance().change(event, false);
 					
-					
-					
+//					int startpos = localjobStatic.getCurrentposition() + 1 + perservertasks[0];
+//					ExecutorJob executorjob = Imp.getImpStaticManager().getExecutorJob(localnode);
+//					TaskInfo[] taskinfos = executorjob.config.getTasks();
+//					int k = 0;
+//					for(int j = startpos ; j < taskinfos.length; j ++)
+//					{
+//						
+//					}
 					 
 				 }
 			 }

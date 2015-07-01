@@ -71,7 +71,31 @@ $(document).ready(function() {
 });
        
  
-
+function clearJobstatic(hostName,jobName)
+{
+	$.ajax({
+ 	 	type: "POST",
+		url : "<%=request.getContextPath()%>/bigdata/clearJobStatic.page",
+		dataType : 'json',
+		data :{"hostName":hostName,"jobname":jobName},
+		async:false,
+		beforeSend: function(XMLHttpRequest){
+				
+			 	XMLHttpRequest.setRequestHeader("RequestType", "ajax");
+			},
+		success : function(data){
+			if (data == 'success') {
+				queryList(jobName)
+				
+			} else {
+				 
+				 $("#jobdef").val(data);
+				 
+			}
+			
+		}	
+	 });
+}
 function executeJob()
 {
 	var job = $("#job").val()
@@ -426,7 +450,8 @@ function submitJob () {
 								class="stable" id="tb">
 							<tr>
 
-								<th><a name="<pg:mapkey/>" href="#top">数据处理节点-<pg:mapkey/></a></th>
+								<th width="20%"><a href="javascript:void(0);" class="bt_1" id="clearJobstatic" onclick="javascript:clearJobstatic('<pg:mapkey/>','<pg:cell
+							colName="jobName" index="0"/>')"><span>清除作业历史</span></a><a name="<pg:mapkey/>" href="#top">数据处理节点-<pg:mapkey/></a></th>
 								<th colspan="100"></th>
 
 

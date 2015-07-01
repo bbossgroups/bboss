@@ -1,4 +1,27 @@
-﻿select value from v$parameter where name = 'sessions'; 
+﻿
+hx20120401_20120901有以下8个任务无法执行，需要重新执行：
+第一次
+is_static_78
+is_static_73
+is_static_55
+
+is_static_14982
+is_static_14983 
+is_static_14993
+is_static_14995
+is_static_14998
+
+第二次
+is_static_73_9
+is_static_14993_5
+is_static_14993_6
+is_static_14993_8
+is_static_14995_9
+is_static_14998_2
+is_static_14998_6 
+
+
+select value from v$parameter where name = 'sessions'; 
 
 hx20111212_20120331排除
 is_static_0
@@ -98,149 +121,7 @@ iss.is_static_seldom_20131211
 
 通过主键关联，如下语句关联所有查询慢。您着情考虑
 
-select t.st_loginid,
-
-       t.st_ma_serialno,
-
-       t.st_state,
-
-       t.st_logintime,
-
-       t.st_connecttime,
-
-       t.st_updatetime,
-
-       t.st_totalwktime,
-
-       t.st_rmntime,
-
-       t.st_berrorcode,
-
-       t.st_werrorcode,
-
-       t.st_balmcode,
-
-       t.st_walmcode,
-
-       t.st_longitude,
-
-       t.st_latitude,
-
-       t.st_saticunt,
-
-       t.st_steppos,
-
-       t.st_engv,
-
-       t.st_oillev,
-
-       t.st_batteryvol,
-
-       a.st_wktime,
-
-       a.st_gpssta,
-
-       a.st_velocity,
-
-       a.st_orientation,
-
-       a.st_sgnlq,
-
-       a.st_errdealsta,
-
-       a.st_cmmctsch,
-
-       a.st_altitude,
-
-       a.st_uintreserv10,
-
-       a.st_uintreserv11,
-
-       a.st_uintreserv12,
-
-       a.st_uintreserv13,
-
-       a.st_uintreserv14,
-
-       a.st_uintreserv15,
-
-       a.st_uintreserv16,
-
-       a.st_uintreserv17,
-
-       a.st_uintreserv18,
-
-       a.st_uintreserv19,
-
-       a.st_uintreserv20,
-
-       a.st_uintreserv21,
-
-       a.st_uintreserv22,
-
-       a.st_uintreserv23,
-
-       a.st_uintreserv24,
-
-       a.st_uintreserv25,
-
-       a.st_uintreserv26,
-
-       a.st_uintreserv27,
-
-       a.st_uintreserv28,
-
-       a.st_uintreserv29,
-
-       a.st_uintreserv30,
-
-       a.st_uintreserv31,
-
-       a.st_uintreserv32,
-
-       a.st_floatreserv13,
-
-       a.st_floatreserv14,
-
-       a.st_floatreserv15,
-
-       a.st_floatreserv16,
-
-       a.st_floatreserv17,
-
-       a.st_floatreserv18,
-
-       a.st_floatreserv19,
-
-       a.st_floatreserv20,
-
-       a.st_floatreserv21,
-
-       a.st_floatreserv22,
-
-       a.st_floatreserv23,
-
-       a.st_floatreserv24,
-
-       a.st_floatreserv25,
-
-       a.st_floatreserv26,
-
-       a.st_floatreserv27,
-
-       a.st_floatreserv28,
-
-       a.st_floatreserv29,
-
-       a.st_floatreserv30,
-
-       a.st_floatreserv31,
-
-       a.st_floatreserv32
-
-  from iss.is_static_often_20131211 t,iss.is_static_seldom_20131211  a
-
-where  t.st_pid = a.st_pid  
+select t.st_loginid,t.st_ma_serialno,t.st_state,t.st_logintime,t.st_connecttime,t.st_updatetime,t.st_totalwktime,t.st_rmntime,t.st_berrorcode,t.st_werrorcode,t.st_balmcode,t.st_walmcode,t.st_longitude,t.st_latitude,t.st_saticunt,t.st_steppos,t.st_engv,t.st_oillev,t.st_batteryvol,a.st_wktime,a.st_gpssta,a.st_velocity,a.st_orientation,a.st_sgnlq,a.st_errdealsta,a.st_cmmctsch,a.st_altitude,a.st_uintreserv10,a.st_uintreserv11,a.st_uintreserv12,a.st_uintreserv13,a.st_uintreserv14,a.st_uintreserv15,a.st_uintreserv16,a.st_uintreserv17,a.st_uintreserv18,a.st_uintreserv19,a.st_uintreserv20,a.st_uintreserv21,a.st_uintreserv22,a.st_uintreserv23,a.st_uintreserv24,a.st_uintreserv25,a.st_uintreserv26,a.st_uintreserv27,a.st_uintreserv28,a.st_uintreserv29,a.st_uintreserv30,a.st_uintreserv31,a.st_uintreserv32,a.st_floatreserv13,a.st_floatreserv14,a.st_floatreserv15,a.st_floatreserv16,a.st_floatreserv17,a.st_floatreserv18,a.st_floatreserv19,a.st_floatreserv20,a.st_floatreserv21,a.st_floatreserv22,a.st_floatreserv23,a.st_floatreserv24,a.st_floatreserv25,a.st_floatreserv26,a.st_floatreserv27,a.st_floatreserv28,a.st_floatreserv29,a.st_floatreserv30,a.st_floatreserv31,a.st_floatreserv32 from iss.is_static_often_20131211 t,iss.is_static_seldom_20131211  a where  t.st_pid = a.st_pid  
 
 2、    125库：10.11.16.125
 

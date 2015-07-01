@@ -1,6 +1,7 @@
 package org.frameworkset.bigdata.imp;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.concurrent.BlockingQueue;
 
 import org.apache.log4j.Logger;
@@ -55,6 +56,11 @@ public class WriteDataTask {
 		}
 		return value;
 	}
+	
+	private Object getRightJoinBy(int colType,ResultSet row,String colName) throws Exception
+	{
+		return row.getObject(colName);
+	}
 	private void write(FileSegment fileSegment ,ResultSet row) throws Exception
     {
 		try
@@ -63,6 +69,9 @@ public class WriteDataTask {
 				metaData = PoolManResultSetMetaData.getCopy(row.getMetaData());
 			
 	
+			String rightJoinByColumn = fileSegment.getRightJoinBy();
+			boolean usesubquery = fileSegment.getSubQuerystatement() != null && !fileSegment.getSubQuerystatement().equals("") && !SimpleStringUtil.isEmpty(rightJoinByColumn);
+			Object rightJoinBy = null;
 			
 	    	int counts = metaData.getColumnCount();
 	    	if(fileSegment.job.config.datatype == null || fileSegment.job.config.datatype.equals("json"))
@@ -76,7 +85,10 @@ public class WriteDataTask {
 						continue;
 					
 					Object value = getValue(  colType,  fileSegment ,  row,  i,  colName);
-					 
+					if(usesubquery && colName.equalsIgnoreCase(rightJoinByColumn))
+					{
+						rightJoinBy = getRightJoinBy(  colType,  row,  colName);
+					}
 					if(i == 0)
 					{
 						buidler.append("\""+colName+"\":\""+value  +"\"");
@@ -86,6 +98,8 @@ public class WriteDataTask {
 						buidler.append(",\""+colName+"\":\""+value  +"\"");
 					}
 				}
+				
+				appendSubTableColumns(buidler,rightJoinBy);
 				buidler.append("}");
 				
 	    	}
@@ -99,7 +113,10 @@ public class WriteDataTask {
 					if("ROWNUM__".equals(colName))//去掉oracle的行伪列
 						continue;
 					Object value = getValue(  colType,  fileSegment ,  row,  i,  colName);
-						
+					if(usesubquery && colName.equalsIgnoreCase(rightJoinByColumn))
+					{
+						rightJoinBy = getRightJoinBy(  colType,  row,  colName);
+					}	
 					if(i == 0)
 					{
 						buidler.append(colName).append("#").append(value );
@@ -109,7 +126,9 @@ public class WriteDataTask {
 						buidler.append("#").append(colName).append("#").append(value );
 					}
 	    		}
+	    		appendSubTableColumns(buidler,rightJoinBy);
 	    	}
+	    	
 	    	fileSegment.writeLine(buidler.toString());
 	    	buidler.setLength(0);
 		}
@@ -123,13 +142,110 @@ public class WriteDataTask {
     	
     	
     }
+	
+	
+	
+	private void writeSub(StringBuilder builder ,ResultSet row) throws Exception
+    {
+		try
+		{
+			if(metaData == null)
+				metaData = PoolManResultSetMetaData.getCopy(row.getMetaData());
+			
+	
+		
+			
+	    	int counts = metaData.getColumnCount();
+	    	if(fileSegment.job.config.datatype == null || fileSegment.job.config.datatype.equals("json"))
+	    	{
+		    
+				for(int i =0; i < counts; i++)
+				{
+					String colName = metaData.getColumnLabelUpperByIndex(i);
+					int colType = metaData.getColumnTypeByIndex(i);
+					if("ROWNUM__".equals(colName))//去掉oracle的行伪列
+						continue;
+					
+					Object value = getValue(  colType,  fileSegment ,  row,  i,  colName);
+					{
+						buidler.append(",\""+colName+"\":\""+value  +"\"");
+					}
+				}
+				 
+				 
+				
+	    	}
+	    	else
+	    	{
+	    		for(int i =0; i < counts; i++)
+	    		{
+		    		String colName = metaData.getColumnLabelUpperByIndex(i);
+					int colType = metaData.getColumnTypeByIndex(i);
+					
+					if("ROWNUM__".equals(colName))//去掉oracle的行伪列
+						continue;
+					Object value = getValue(  colType,  fileSegment ,  row,  i,  colName);
+					 
+				 
+					{
+						buidler.append("#").append(colName).append("#").append(value );
+					}
+	    		}
+	    		 
+	    	}
+	    	
+	    	 
+		}
+		catch(Exception e)
+		{
+			
+			throw e;
+		}
+		
+ 
+    	
+    	
+    }
+	
+	private void appendSubTableColumns(final StringBuilder builder,Object rightJoinBy) throws Exception
+	{
+		 
+		
+			SQLExecutor.queryWithDBNameByNullRowHandler(new ResultSetNullRowHandler(){
+	 			
+				@Override
+				public void handleRow(ResultSet row) throws Exception {
+					if(genFileHelper.isforceStop())
+						throw new ForceStopException();
+					writeSub( builder ,row);
+					if(genFileHelper.isforceStop())
+						throw new ForceStopException();
+				}
+	    		
+	    	}, fileSegment.getDBName(), fileSegment.getSubQuerystatement(),rightJoinBy);
+		
+	}
  
  
 	 private void genpage(final FileSegment fileSegment  ) throws Exception
 	    {
 		 	
-		 	
-		 	if(!fileSegment.usepagine())//采用主键分区模式
+		 	if(fileSegment.usepartition())
+		 	{
+		 		SQLExecutor.queryWithDBNameByNullRowHandler(new ResultSetNullRowHandler(){
+		 			
+					@Override
+					public void handleRow(ResultSet row) throws Exception {
+						if(genFileHelper.isforceStop())
+							throw new ForceStopException();
+						write(  fileSegment,row);
+						if(genFileHelper.isforceStop())
+							throw new ForceStopException();
+					}
+		    		
+		    	}, fileSegment.getDBName(), fileSegment.getQuerystatement());
+		 	}
+		 	else if(!fileSegment.usepagine())//采用主键分区模式
 		 	{
 		    	SQLExecutor.queryWithDBNameByNullRowHandler(new ResultSetNullRowHandler(){
 	
