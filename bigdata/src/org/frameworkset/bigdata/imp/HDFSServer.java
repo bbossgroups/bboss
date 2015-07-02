@@ -45,7 +45,7 @@ public class HDFSServer {
 					conf.addResource("core-site.xml");
 					conf.addResource("hdfs-site.xml");
 					fileSystem = FileSystem.get(uri,conf);
-					log.info("连接hdfs服务器："+hadoop + " FileSystem.get(uri,new Configuration()) 2.");	
+					log.info("连接hdfs服务器："+hadoop + " FileSystem.get(uri,new Configuration()) .");	
 					FileSystems.put(hadoop, fileSystem);
 					
 					log.info("Init fileSystem success:HADOOP_PATH="+hadoop+" ,user="+user_);

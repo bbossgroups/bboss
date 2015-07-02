@@ -523,7 +523,7 @@ public class ImpStaticManager implements Listener<Object>{
 	
 	public void stopJob(String jobname) 
 	{
-		Event event = new EventImpl("",HDFSUploadData.hdfs_upload_monitor_jobstop_commond);
+		Event event = new EventImpl(jobname,HDFSUploadData.hdfs_upload_monitor_jobstop_commond);
 		EventHandle.sendEvent(event, false);
 	}
 	private JobStatus checkstatus(Map<String, JobStatic> jobstatic)

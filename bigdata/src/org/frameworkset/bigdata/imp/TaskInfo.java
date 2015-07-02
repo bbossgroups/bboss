@@ -44,7 +44,7 @@ public class TaskInfo  implements java.io.Serializable{
 	 {
 		
 		 StringBuilder builder = new StringBuilder();
-		 builder.append("filename="+filename).append(",")
+		 builder.append("taskNo=").append(taskNo).append(",").append("filename=").append(filename).append(",")
 			.append("pagesize=").append(pagesize).append(",")
 			.append("startoffset=").append(startoffset).append(",")
 			.append("endoffset=").append(endoffset);

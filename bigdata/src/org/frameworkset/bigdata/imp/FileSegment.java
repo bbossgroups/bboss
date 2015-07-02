@@ -84,7 +84,7 @@ public class FileSegment {
 	 {
 		 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
 		 StringBuilder builder = new StringBuilder();
-		 builder.append("filename="+taskInfo.filename).append("\r\n")
+		 builder.append("taskNo="+taskInfo.taskNo).append("\r\n").append("filename="+taskInfo.filename).append("\r\n")
 			.append("pagesize=").append(taskInfo.pagesize).append("\r\n")
 			.append("start=").append(taskInfo.startoffset).append("\r\n")
 			.append("end=").append(taskInfo.endoffset).append("\r\n")
@@ -135,7 +135,7 @@ public class FileSegment {
 		 this.writer.println(line);
 		 rows ++;
 		 this.taskStatus.setHandlerows(rows);
-		 log.debug(taskInfo.filename+"-rows["+rows+"]:"+line);
+		 log.info(taskInfo.filename+"-rows["+rows+"]:"+line);
 	 }
 	 void errorrow()
 	 {

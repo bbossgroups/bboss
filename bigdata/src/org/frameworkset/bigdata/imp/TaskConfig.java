@@ -63,7 +63,7 @@ public class TaskConfig implements java.io.Serializable{
  	long tablerows;
  	boolean usepagine = false;
 	boolean adminnodeasdatanode;
-	TaskInfo tasks[];
+	List<TaskInfo> tasks;
 	public String schema;
 	String jobname;
 	public boolean clearhdfsfiles;
@@ -254,10 +254,10 @@ public class TaskConfig implements java.io.Serializable{
 		this.datatype = datatype;
 	}
 
-	public TaskInfo[] getTasks() {
+	public List<TaskInfo> getTasks() {
 		return tasks;
 	}
-	public void setTasks(TaskInfo[] tasks) {
+	public void setTasks(List<TaskInfo> tasks) {
 		this.tasks = tasks;
 	}
 	public long getPagesize() {

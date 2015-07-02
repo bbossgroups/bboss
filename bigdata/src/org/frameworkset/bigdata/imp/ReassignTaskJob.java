@@ -69,7 +69,7 @@ public class ReassignTaskJob {
 					 
 					List<TaskInfo> temp = null;
 					ExecutorJob executorjob = Imp.getImpStaticManager().getExecutorJob(localnode);
-					TaskInfo[] taskinfos = executorjob.config.getTasks();
+					List<TaskInfo> taskinfos = executorjob.getTasks();
 					
 					for(int j = 0 ; j < servers; j ++)
 					{
@@ -89,12 +89,12 @@ public class ReassignTaskJob {
 							perservertasks = perservertasks - hostTaskInfos.get(servseradd[j]).intValue();
 							temp = new ArrayList<TaskInfo>(perservertasks);
 							int l = 0;
-							for(int k = startpos; k < taskinfos.length; k ++ )
+							for(int k = startpos; k < taskinfos.size(); k ++ )
 							{
 								if(l < perservertasks)
 								{
-									taskinfos[k].setReassigned(true);
-									temp.add(taskinfos[k]);
+									taskinfos.get(k).setReassigned(true);
+									temp.add(taskinfos.get(k));
 									l ++;
 								}
 								else

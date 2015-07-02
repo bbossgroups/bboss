@@ -146,7 +146,7 @@ function stopJob()
 	 	 	type: "POST",
 			url : "<%=request.getContextPath()%>/bigdata/stopJob.page",
 			dataType : 'json',
-			data :{"job":job},
+			data :{"jobname":job},
 			async:false,
 			beforeSend: function(XMLHttpRequest){
 					

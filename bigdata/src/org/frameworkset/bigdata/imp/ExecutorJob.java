@@ -1,7 +1,6 @@
 package org.frameworkset.bigdata.imp;
 
 import java.io.File;
-import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
@@ -69,14 +68,14 @@ public class ExecutorJob {
 					 localdir.mkdirs();
 			}
 			DBHelper.initDB(config);
-			tasks = Arrays.asList(config.getTasks());
+			tasks = config.getTasks();
 			log.info("start run task:"+config +",task size:"+tasks.size());
 			 jobStatic = Imp.getImpStaticManager().addJobStatic(this);
 			 if(tasks != null)
 				 jobStatic.setTotaltasks(tasks.size());
 			 genfilecount = new AtomicInteger(tasks.size());
 			 if(config.isGenlocalfile())
-				 upfilecount = new AtomicInteger(config.getTasks().length);
+				 upfilecount = new AtomicInteger(config.getTasks().size());
 			 run(0);
 		}
 		finally
@@ -223,6 +222,9 @@ public class ExecutorJob {
 			justassigned = true;
 		}
 		
+	}
+	public List<TaskInfo> getTasks() {
+		return tasks;
 	}
 	
 }

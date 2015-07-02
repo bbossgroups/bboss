@@ -210,6 +210,7 @@ public class HDFSUploadData {
 		config.setSubtablename(subtablename);;
 		config.setLeftJoinby(leftJoinby);
 		config.setRightJoinby(rightJoinby);
+		config.setSubquerystatement(subquerystatement);
 
 		if(this.usepartition)
 		{
@@ -288,7 +289,7 @@ public class HDFSUploadData {
 		if (this.subquerystatement == null || this.subquerystatement.equals("")) {
 			StringBuilder sqlbuilder = new StringBuilder();
 			
-				sqlbuilder.append("* ");
+			sqlbuilder.append("select * ");
 			sqlbuilder.append(" from  ");
 			if (this.schema != null && !this.schema.equals(""))
 				sqlbuilder.append(config.schema).append(".");
@@ -458,6 +459,10 @@ public class HDFSUploadData {
 		config.setLeftJoinby(leftJoinby);
 		String rightJoinby = context.getStringExtendAttribute(jobname,
 				"rightJoinby");
+		
+		String subquerystatement = context.getStringExtendAttribute(jobname,
+				"subquerystatement"); 
+		config.setSubquerystatement(subquerystatement);
 		config.setRightJoinby(rightJoinby);
 		config.setReassigntaskNode(reassigntaskNode);
 		config.setReassigntaskJobname(reassigntaskJobname);
@@ -537,6 +542,20 @@ public class HDFSUploadData {
 			}
 
 		}
+		
+		if (subquerystatement == null || subquerystatement.equals("")) {
+			StringBuilder sqlbuilder = new StringBuilder();
+			
+			sqlbuilder.append("select * ");
+			sqlbuilder.append(" from  ");
+			if (schema != null && !schema.equals(""))
+				sqlbuilder.append(config.schema).append(".");
+			sqlbuilder.append(subtablename).append(" where ").append(leftJoinby).append("=?");
+			config.subquerystatement= sqlbuilder.toString();
+		} else {
+			config.subquerystatement = subquerystatement;
+		}
+
 
 		return config;
 	}
@@ -806,7 +825,7 @@ public class HDFSUploadData {
 			else
 				queryPartitions.append("SELECT PARTITION_NAME FROM USER_TAB_PARTITIONS WHERE TABLE_NAME=upper('").append(this.tablename).append("')");
 			
-			List<String> partitions = SQLExecutor.queryList(String.class, queryPartitions.toString());
+			List<String> partitions = SQLExecutor.queryListWithDBName(String.class, this.dbname,queryPartitions.toString());
 			if(partitions != null && partitions.size() > 0)
 			{
 				segments = new TaskInfo[partitions.size()];
@@ -1191,7 +1210,18 @@ public class HDFSUploadData {
 		}
 		SplitTasks splitTasks = spiltTask();// 切分数据块
 		if (splitTasks == null || splitTasks.segments == null)
+		{
+			TaskConfig config = buildTaskConfig(jobname);
+			JobStatic jobStatic = new JobStatic();
+			jobStatic.setConfig(config.toString());
+			jobStatic.setStatus(1);
+			jobStatic.setStartTime(System.currentTimeMillis());
+			jobStatic.setEndTime(System.currentTimeMillis());
+			jobStatic.setJobname(jobname);
+			 
+			Imp.getImpStaticManager().addJobStatic(jobStatic);
 			return;
+		}
 		TaskInfo[] segments = splitTasks.segments;
 		long segement = splitTasks.segement;
 		if (this.deleteParentBlockHDFS != null
@@ -1216,14 +1246,14 @@ public class HDFSUploadData {
 					TaskInfo task[] = new TaskInfo[servertasks + 1];
 					System.arraycopy(segments, i * servertasks + i, task, 0,
 							servertasks + 1);
-					config.setTasks(task);
+					config.setTasks(Arrays.asList(task));
 
 				} else {
 
 					TaskInfo task[] = new TaskInfo[servertasks];
 					System.arraycopy(segments, i * servertasks + taskdiv, task,
 							0, servertasks);
-					config.setTasks(task);
+					config.setTasks(Arrays.asList(task));
 
 				}
 
@@ -1241,7 +1271,7 @@ public class HDFSUploadData {
 			TaskConfig config = buildTaskConfig();
 
 			config.setPagesize(segement);
-			config.setTasks(segments);
+			config.setTasks(Arrays.asList(segments));
 			tasks = new HashMap<String, TaskConfig>();
 			tasks.put("rundirect", config);
 			Event<Map<String, TaskConfig>> event = new EventImpl<Map<String, TaskConfig>>(
@@ -1343,7 +1373,8 @@ public class HDFSUploadData {
 				"leftJoinby");
 		  rightJoinby = context.getStringExtendAttribute(jobname,
 				"rightJoinby");
-		
+			 subquerystatement = context.getStringExtendAttribute(jobname,
+					"subquerystatement"); 
 		this.fileSystem = HDFSServer.getFileSystem(hdfsserver);
 	}
 
