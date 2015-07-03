@@ -54,7 +54,20 @@
 	  rightJoinby="ST_CHECKMARK"
 	  usepartition="true"
 		datatype="text"  />				
+	<property name="hx2015is_static_often" dbname="hx123"
+		driver="oracle.jdbc.driver.OracleDriver" dburl="jdbc:oracle:thin:@//10.11.16.123:1521/orcl"
+		dbuser="HX" dbpassword="www!31hx#com$cn" validatesql="select 1 from dual"
+		usepool="true" hdfsserver="hdfs://10.0.15.40:9000" hdfsdatadir="/m2m/data04/hx20131211/is_static_often"
+		 
+		filebasename="is_static"
+		schema="newiss" pkname="ST_PID" columns="" 
+		geneworkthreads="30"  genqueques="5"
+		 genquequetimewait="10"
+	  tablename="is_static_often"	 
+	  usepartition="true"
+		datatype="text"  />	
 		
+					
 	<property name="hx2010error"
 	dbname="hx243"
 	hdfsserver="hdfs://10.0.15.40:9000"

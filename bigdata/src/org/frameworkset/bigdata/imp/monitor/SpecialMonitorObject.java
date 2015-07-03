@@ -21,6 +21,15 @@ public class SpecialMonitorObject  implements java.io.Serializable{
 	private String jobdef;
 	private int totaltasks;
 	/**
+	 * 抽取成功记录数
+	 */
+	private long successrecords;
+	
+	/**
+	 * 抽取成功记录数
+	 */
+	private long failerecords;
+	/**
 	 * -1:未开始
 	 * 0:执行：正在执行
 	 * 1:结束：执行完毕
@@ -91,6 +100,18 @@ public class SpecialMonitorObject  implements java.io.Serializable{
 	}
 	public void setTotaltasks(int totaltasks) {
 		this.totaltasks = totaltasks;
+	}
+	public long getSuccessrecords() {
+		return successrecords;
+	}
+	public void setSuccessrecords(long successrecords) {
+		this.successrecords = successrecords;
+	}
+	public long getFailerecords() {
+		return failerecords;
+	}
+	public void setFailerecords(long failerecords) {
+		this.failerecords = failerecords;
 	}
 
 }

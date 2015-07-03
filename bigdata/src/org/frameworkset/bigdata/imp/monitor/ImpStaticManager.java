@@ -421,6 +421,15 @@ public class ImpStaticManager implements Listener<Object>{
 		int status;
 		String  failedTaskNos;
 		String  successTaskNos;
+		/**
+		 * 抽取成功记录数
+		 */
+		private long successrecords;
+		
+		/**
+		 * 抽取成功记录数
+		 */
+		private long failerecords;
 		int totaltasks;
 		public int getStatus() {
 			return status;
@@ -445,6 +454,18 @@ public class ImpStaticManager implements Listener<Object>{
 		}
 		public void setTotaltasks(int totaltasks) {
 			this.totaltasks = totaltasks;
+		}
+		public long getSuccessrecords() {
+			return successrecords;
+		}
+		public void setSuccessrecords(long successrecords) {
+			this.successrecords = successrecords;
+		}
+		public long getFailerecords() {
+			return failerecords;
+		}
+		public void setFailerecords(long failerecords) {
+			this.failerecords = failerecords;
 		}
 	}
 	private List<String> sort(List<String> names)
@@ -496,6 +517,8 @@ public class ImpStaticManager implements Listener<Object>{
 				JobStatus jobStatus = checkstatus(jobstatic);
 				job.setTotaltasks(jobStatus.totaltasks); 
 				job.setStatus( jobStatus.status);
+				job.setSuccessrecords(jobStatus.getSuccessrecords());
+				job.setFailerecords(jobStatus.getFailerecords());
 				if(jobStatus.successTaskNos != null)
 					job.setSuccessTaskNos(jobStatus.successTaskNos.toString());
 				else
@@ -537,7 +560,15 @@ public class ImpStaticManager implements Listener<Object>{
 		else
 		{
 			Set<Entry<String, JobStatic>> set = jobstatic.entrySet();
+			/**
+			 * 抽取成功记录数
+			 */
+			long successrecords = 0;
 			
+			/**
+			 * 抽取成功记录数
+			 */
+			long failerecords = 0;
 			/**
 			 * -1:未开始
 			 * 0:执行：正在执行
@@ -557,7 +588,8 @@ public class ImpStaticManager implements Listener<Object>{
 			{
 				JobStatic jobStatic = entry.getValue(); 
 				jobStatic.eval( );
-				
+				successrecords = successrecords + jobStatic.getSuccessrecords();
+				failerecords = failerecords + jobStatic.getFailerecords();
 				if(jobStatic.getCompletetaskNos() != null && jobStatic.getCompletetaskNos().length() > 0)
 				{
 					if(successTaskNos.length() > 0)
@@ -591,10 +623,12 @@ public class ImpStaticManager implements Listener<Object>{
 						
 				}
 				jobStatus.totaltasks = jobStatus.totaltasks +  jobStatic.getTotaltasks();
+				
 			}
 			jobStatus.successTaskNos = successTaskNos.toString();
 			jobStatus.failedTaskNos = failedTaskNos.toString();
-			
+			jobStatus.setSuccessrecords(successrecords);
+			jobStatus.setFailerecords(failerecords);
 			if(forcestop)
 			{
 				jobStatus.status = 5;

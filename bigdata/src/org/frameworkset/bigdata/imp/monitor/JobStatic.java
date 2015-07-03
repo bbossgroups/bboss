@@ -26,6 +26,15 @@ public class JobStatic implements java.io.Serializable,java.lang.Cloneable{
 	private int runtasks;
 	private int waittasks;
 	private String jobname;
+	/**
+	 * 抽取成功记录数
+	 */
+	private long successrecords;
+	
+	/**
+	 * 抽取成功记录数
+	 */
+	private long failerecords;
 	private int currentposition;
 	public boolean canstop()
 	{
@@ -92,6 +101,8 @@ public class JobStatic implements java.io.Serializable,java.lang.Cloneable{
 					case 3:
 						this.waittasks ++;break;	
 				}
+				this.successrecords = successrecords+status.getHandlerows();
+				this.failerecords = failerecords + status.getErrorrows(); 
 			}
 			waittasks = this.totaltasks - this.failtasks - this.completetasks - this.unruntasks-runtasks;
 			this.completetaskNos = success.toString();
@@ -258,6 +269,14 @@ public class JobStatic implements java.io.Serializable,java.lang.Cloneable{
 
 	public void setCurrentposition(int currentposition) {
 		this.currentposition = currentposition;
+	}
+
+	public long getSuccessrecords() {
+		return successrecords;
+	}
+
+	public long getFailerecords() {
+		return failerecords;
 	}
 	
 	

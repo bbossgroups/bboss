@@ -136,7 +136,7 @@ d）2013.12.11备份数据
 
 iss.is_static_often_20131211 
 
-iss.is_static_seldom_20131211
+iss.is_static_seldom_20131211(未处理)
 
 通过主键关联，如下语句关联所有查询慢。您着情考虑
 

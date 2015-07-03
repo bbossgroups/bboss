@@ -135,7 +135,7 @@ public class FileSegment {
 		 this.writer.println(line);
 		 rows ++;
 		 this.taskStatus.setHandlerows(rows);
-		 log.info(taskInfo.filename+"-rows["+rows+"]:"+line);
+		 log.debug(taskInfo.filename+"-rows["+rows+"]:"+line);
 	 }
 	 void errorrow()
 	 {

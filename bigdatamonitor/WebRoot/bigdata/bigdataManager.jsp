@@ -370,7 +370,7 @@ function submitJob () {
 						class="stable" id="tb">
 						<tr>
 
-							<td width="20%" colspan="2"><a name="top"></a>作业管理节点：${adminNode} 总任务数：<pg:cell colName="totaltasks"/></td>
+							<td width="20%" colspan="2"><a name="top"></a>作业管理节点：${adminNode} &nbsp; 总任务数：<pg:cell colName="totaltasks"/> &nbsp; 完成总记录数：<pg:cell colName="successrecords"/>  &nbsp; 失败总记录数：<pg:cell colName="failerecords"/></td>
 
 						</tr>
 						<pg:list requestKey="allDataNodes">
@@ -386,14 +386,15 @@ function submitJob () {
 											<pg:equal value="2">执行异常</pg:equal>
 											<pg:equal value="3">强制停止</pg:equal>
 										</pg:case> &nbsp;&nbsp;<br>开始时间:<pg:cell colName="startTime"
-											dateformat="yyyy-MM-dd HH:mm:ss" />&nbsp;&nbsp;<br>结束时间:<pg:cell colName="endTime"
+											dateformat="yyyy-MM-dd HH:mm:ss" />&nbsp;&nbsp;结束时间:<pg:cell colName="endTime"
 											dateformat="yyyy-MM-dd HH:mm:ss" />&nbsp;&nbsp;<br>
-											节点总任务数：<pg:cell colName="totaltasks"/>&nbsp;&nbsp;<br>
-											正在运行任务数：<pg:cell colName="runtasks"/>&nbsp;&nbsp;<br>
-											完成任务数：<pg:cell colName="completetasks"/>&nbsp;&nbsp;<br>
-											失败任务数：<pg:cell colName="failtasks"/>&nbsp;&nbsp;<br>
-											等待执行任务数：<pg:cell colName="waittasks"/>&nbsp;&nbsp;<br>
+											节点总任务数：<pg:cell colName="totaltasks"/>&nbsp;&nbsp;
+											正在运行任务数：<pg:cell colName="runtasks"/>&nbsp;&nbsp;
+											完成任务数：<pg:cell colName="completetasks"/>&nbsp;&nbsp;
+											失败任务数：<pg:cell colName="failtasks"/>&nbsp;&nbsp;
+											等待执行任务数：<pg:cell colName="waittasks"/>&nbsp;&nbsp;
 											未开始任务数：<pg:cell colName="unruntasks"/>&nbsp;&nbsp;<br>
+											完成记录数：<pg:cell colName="successrecords"/>  &nbsp; 失败记录数：<pg:cell colName="failerecords"/><br>											
 											错误日志:<pg:cell colName="errormsg" />
 											
 									</pg:map>	</td>	
@@ -466,9 +467,11 @@ function submitJob () {
 											<pg:equal value="1">执行完毕</pg:equal>
 											<pg:equal value="2">执行异常</pg:equal>
 											<pg:equal value="3">强制停止</pg:equal>
-										</pg:case> &nbsp;&nbsp;<br>开始时间:<pg:cell colName="startTime"
-											dateformat="yyyy-MM-dd HH:mm:ss" />&nbsp;&nbsp;<br>结束时间:<pg:cell colName="endTime"
-											dateformat="yyyy-MM-dd HH:mm:ss" />&nbsp;&nbsp;<br>错误日志:<pg:cell colName="errormsg" /></td>
+										</pg:case> &nbsp;&nbsp;<br>开始时间:<pg:cell colName="startTime" dateformat="yyyy-MM-dd HH:mm:ss" />&nbsp;&nbsp;结束时间:<pg:cell colName="endTime"
+											dateformat="yyyy-MM-dd HH:mm:ss" /><br>
+											完成记录数：<pg:cell colName="successrecords"/>  &nbsp; 失败记录数：<pg:cell colName="failerecords"/><br>
+											错误日志:<pg:cell colName="errormsg" />
+											</td>
 
 								</tr>
 							 
