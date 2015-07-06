@@ -431,6 +431,11 @@ public class ImpStaticManager implements Listener<Object>{
 		 */
 		private long failerecords;
 		int totaltasks;
+		private int unruntasks;
+		private int completetasks;
+		private int failtasks;
+		private int runtasks;
+		private int waittasks;
 		public int getStatus() {
 			return status;
 		}
@@ -466,6 +471,36 @@ public class ImpStaticManager implements Listener<Object>{
 		}
 		public void setFailerecords(long failerecords) {
 			this.failerecords = failerecords;
+		}
+		public int getUnruntasks() {
+			return unruntasks;
+		}
+		public void setUnruntasks(int unruntasks) {
+			this.unruntasks = unruntasks;
+		}
+		public int getCompletetasks() {
+			return completetasks;
+		}
+		public void setCompletetasks(int completetasks) {
+			this.completetasks = completetasks;
+		}
+		public int getFailtasks() {
+			return failtasks;
+		}
+		public void setFailtasks(int failtasks) {
+			this.failtasks = failtasks;
+		}
+		public int getRuntasks() {
+			return runtasks;
+		}
+		public void setRuntasks(int runtasks) {
+			this.runtasks = runtasks;
+		}
+		public int getWaittasks() {
+			return waittasks;
+		}
+		public void setWaittasks(int waittasks) {
+			this.waittasks = waittasks;
 		}
 	}
 	private List<String> sort(List<String> names)
@@ -519,6 +554,11 @@ public class ImpStaticManager implements Listener<Object>{
 				job.setStatus( jobStatus.status);
 				job.setSuccessrecords(jobStatus.getSuccessrecords());
 				job.setFailerecords(jobStatus.getFailerecords());
+				job.setRuntasks(jobStatus.getRuntasks());
+				job.setUnruntasks(jobStatus.getUnruntasks());
+				job.setWaittasks(jobStatus.getWaittasks());
+				job.setFailtasks(jobStatus.getFailtasks());
+				job.setCompletetasks(jobStatus.getCompletetasks());
 				if(jobStatus.successTaskNos != null)
 					job.setSuccessTaskNos(jobStatus.successTaskNos.toString());
 				else
@@ -623,6 +663,11 @@ public class ImpStaticManager implements Listener<Object>{
 						
 				}
 				jobStatus.totaltasks = jobStatus.totaltasks +  jobStatic.getTotaltasks();
+				jobStatus.completetasks = jobStatus.completetasks + jobStatic.getCompletetasks();
+				jobStatus.unruntasks = jobStatus.unruntasks + jobStatic.getUnruntasks();
+				jobStatus.failtasks = jobStatus.failtasks + jobStatic.getFailtasks();
+				jobStatus.waittasks = jobStatus.waittasks + jobStatic.getWaittasks();
+				jobStatus.runtasks = jobStatus.runtasks + jobStatic.getRuntasks();
 				
 			}
 			jobStatus.successTaskNos = successTaskNos.toString();

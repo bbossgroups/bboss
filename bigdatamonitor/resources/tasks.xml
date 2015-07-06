@@ -66,7 +66,19 @@
 	  tablename="is_static_often"	 
 	  usepartition="true"
 		datatype="text"  />	
-		
+<property name="hx24" dbname="hx24"
+		driver="oracle.jdbc.driver.OracleDriver" dburl="jdbc:oracle:thin:@//10.11.16.24:1521/ISS"
+		dbuser="HX" dbpassword="www!31hx#com$cn" validatesql="select 1 from dual"
+		usepool="true" hdfsserver="hdfs://10.0.15.40:9000" hdfsdatadir="/m2m/data04/hx24"
+		 
+		filebasename="is_static"
+		schema="ISS" pkname="ST_PID" columns="" 
+		geneworkthreads="30"  genqueques="5"
+		 genquequetimewait="10"
+	  tablename="is_static"	 
+	 
+	  usepartition="true"
+		datatype="text"  />				
 					
 	<property name="hx2010error"
 	dbname="hx243"
@@ -248,6 +260,21 @@
 		 genquequetimewait="10" blocks="73.9,14993.5,14993.6,14993.8,14995.9,14998.2,14998.6"
 	subblocks="10"
 		datatype="text" genlocalfile="false" clearhdfsfiles="true" usepagine="false" />
+		
+		
+			<property name="hx2015is_static_seldom" dbname="hx123"
+		driver="oracle.jdbc.driver.OracleDriver" dburl="jdbc:oracle:thin:@//10.11.16.123:1521/orcl"
+		dbuser="HX" dbpassword="www!31hx#com$cn" validatesql="select 1 from dual"
+		usepool="true" hdfsserver="hdfs://10.0.15.40:9000" hdfsdatadir="/m2m/data04/hx2015/is_static_seldom"
+		 
+		filebasename="is_static_seldom"
+		schema="NEWISS" pkname="ST_PID" columns="" 
+		geneworkthreads="30"  genqueques="5"
+		 genquequetimewait="10"
+	  tablename="is_static_seldom"	 
+	  usepartition="true"
+		datatype="text"  />	
+		
 		-->
 
 </properties>

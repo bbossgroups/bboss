@@ -20,6 +20,12 @@ public class SpecialMonitorObject  implements java.io.Serializable{
 	String  successTaskNos;
 	private String jobdef;
 	private int totaltasks;
+	
+	private int unruntasks;
+	private int completetasks;
+	private int failtasks;
+	private int runtasks;
+	private int waittasks;
 	/**
 	 * 抽取成功记录数
 	 */
@@ -112,6 +118,36 @@ public class SpecialMonitorObject  implements java.io.Serializable{
 	}
 	public void setFailerecords(long failerecords) {
 		this.failerecords = failerecords;
+	}
+	public int getUnruntasks() {
+		return unruntasks;
+	}
+	public void setUnruntasks(int unruntasks) {
+		this.unruntasks = unruntasks;
+	}
+	public int getCompletetasks() {
+		return completetasks;
+	}
+	public void setCompletetasks(int completetasks) {
+		this.completetasks = completetasks;
+	}
+	public int getFailtasks() {
+		return failtasks;
+	}
+	public void setFailtasks(int failtasks) {
+		this.failtasks = failtasks;
+	}
+	public int getRuntasks() {
+		return runtasks;
+	}
+	public void setRuntasks(int runtasks) {
+		this.runtasks = runtasks;
+	}
+	public int getWaittasks() {
+		return waittasks;
+	}
+	public void setWaittasks(int waittasks) {
+		this.waittasks = waittasks;
 	}
 
 }

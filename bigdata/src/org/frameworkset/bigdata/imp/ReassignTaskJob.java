@@ -70,7 +70,7 @@ public class ReassignTaskJob {
 					List<TaskInfo> temp = null;
 					ExecutorJob executorjob = Imp.getImpStaticManager().getExecutorJob(localnode);
 					List<TaskInfo> taskinfos = executorjob.getTasks();
-					
+					int localtotalsize = localjobStatic.getTotaltasks();
 					for(int j = 0 ; j < servers; j ++)
 					{
 						int  perservertasks = 0;
@@ -87,27 +87,34 @@ public class ReassignTaskJob {
 						else
 						{
 							perservertasks = perservertasks - hostTaskInfos.get(servseradd[j]).intValue();
-							temp = new ArrayList<TaskInfo>(perservertasks);
-							int l = 0;
-							for(int k = startpos; k < taskinfos.size(); k ++ )
+							if(perservertasks > 0 )
 							{
-								if(l < perservertasks)
+								temp = new ArrayList<TaskInfo>(perservertasks);
+								int l = 0;
+								for(int k = startpos; k < taskinfos.size(); k ++ )
 								{
-									taskinfos.get(k).setReassigned(true);
-									temp.add(taskinfos.get(k));
-									l ++;
+									if(l < perservertasks)
+									{
+										taskinfos.get(k).setReassigned(true);
+										temp.add(taskinfos.get(k));
+										l ++;
+									}
+									else
+									{
+										break;
+									}
 								}
-								else
+								if(temp.size() > 0)
 								{
-									break;
+									perserverTasks.put(servseradd[j], temp);
+									localtotalsize = localtotalsize - temp.size();//调整本地作业的分配的总任务数
 								}
+								startpos = startpos + perservertasks;
 							}
-							if(temp.size() > 0)
-								perserverTasks.put(servseradd[j], temp);
-							startpos = startpos + perservertasks;
 						}
 						
 					}
+					localjobStatic.setTotaltasks(localtotalsize);
 					ReassignTaskConfig reassignTaskConfig = new ReassignTaskConfig();
 					reassignTaskConfig.setJobname(reassignTask.getJobname());
 					reassignTaskConfig.setTasks(perserverTasks);

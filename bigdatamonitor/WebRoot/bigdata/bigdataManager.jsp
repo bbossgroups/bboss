@@ -255,6 +255,7 @@ function submitJob () {
 						</ul></li>
 				</ul>
 			</div>
+		
 
 		</div>
 
@@ -263,12 +264,13 @@ function submitJob () {
 			
 			<div id="datanodes" style="overflow: auto">
 				<div id="changeColor">
-			<pg:case colName="status" >
+			
 				
 				<table width="100%" border="0" cellpadding="0" cellspacing="0"
 					class="stable" id="tb">
 					<tr>
 						<th>作业状态：</th>
+						<pg:case colName="status" >
 						<pg:equal value="-1">
 						<th><font color="red">作业-<pg:cell colName="jobName"/>未执行</font></th>
 						</pg:equal>
@@ -293,16 +295,25 @@ function submitJob () {
 						<pg:other >
 						<th><font color="red">作业-<pg:cell colName="jobName"/>状态未知</font></th>
 						</pg:other>
+						</pg:case>
+						<th>
+						<pg:true colName="canrun" evalbody="true">
+							<pg:yes>
+							<a href="javascript:void(0);" class="bt_1" id="executeJob"><span>执行作业-<pg:cell colName="jobName"/></span></a>
+							</pg:yes>
+							<pg:no>
+							<a href="javascript:void(0);" class="bt_small" id="stopJob"><span>停止作业-<pg:cell colName="jobName"/></span></a>
+							</pg:no>
+						</pg:true>
 						
-						<th><a href="javascript:void(0);" class="bt_1" id="executeJob"><span>执行作业-<pg:cell colName="jobName"/></span></a>
 						
-						<a href="javascript:void(0);" class="bt_small" id="stopJob"><span>停止作业-<pg:cell colName="jobName"/></span></a></th>
+						</th>
 					</tr>
 				</table>
 				
-			</pg:case>
+			
 			</div></div>
-			<div id="datanodes" style="overflow: auto">
+				<div id="datanodes" style="overflow: auto">
 				<div id="changeColor">
 					<form id="queryForm" name="queryForm">
 						<input type="hidden" name="job" id="job"
@@ -312,14 +323,14 @@ function submitJob () {
 						class="stable" id="tb">
 						 
 										<tr>
-											<th align="left">输入要执行的作业：</th>
+											
 
 <th align="left"><a href="javascript:void(0);" class="bt_1" id="submitJob"><span>提交一个新作业</span></a> </th>
 
 										</tr>
 										<tr>
 
-											<td width="100%" colspan="2"><textarea id="jobdef" name="jobdef"></textarea></td>
+											<td width="100%" ><textarea id="jobdef" name="jobdef"></textarea></td>
 
 
 										</tr>
@@ -360,7 +371,7 @@ function submitJob () {
 			<div class="title_box">
 
 
-				<strong><span id="titileSpan">所有作业节点</span></strong>
+				<strong><span id="titileSpan">所有作业节点</span><a name="top"></a></strong>
 
 			</div>
 
@@ -370,13 +381,16 @@ function submitJob () {
 						class="stable" id="tb">
 						<tr>
 
-							<td width="20%" colspan="2"><a name="top"></a>作业管理节点：${adminNode} &nbsp; 总任务数：<pg:cell colName="totaltasks"/> &nbsp; 完成总记录数：<pg:cell colName="successrecords"/>  &nbsp; 失败总记录数：<pg:cell colName="failerecords"/></td>
+							<td width="20%" colspan="2"><b>作业管理节点：${adminNode} &nbsp; <br>总任务数：<pg:cell colName="totaltasks"/> &nbsp;  完成任务数：<pg:cell colName="completetasks"/>&nbsp;
+							正在运行任务数：<pg:cell colName="runtasks"/> &nbsp;     失败任务数：<pg:cell colName="failtasks"/> &nbsp;  
+							 等待执行任务数： <pg:cell colName="waittasks"/> &nbsp;   未开始任务数：<pg:cell colName="unruntasks"/> &nbsp;<br> 
+							 完成总记录数：<pg:cell colName="successrecords"/>  &nbsp; 失败总记录数：<pg:cell colName="failerecords"/></b></td>
 
 						</tr>
 						<pg:list requestKey="allDataNodes">
 							<tr>
 
-								<td width="20%"><a href="#<pg:cell />">数据处理节点：<pg:cell /></a>
+								<td width="20%"><pg:rowid increament="1"/><b>.</b>&nbsp; <a href="#<pg:cell />">数据处理节点：<pg:cell /></a>
 									</td>
 								<td><pg:map index="0" colName="jobstaticsIdxByHost" keycell="true">
 									运行状态:<pg:case colName="status">
@@ -389,8 +403,9 @@ function submitJob () {
 											dateformat="yyyy-MM-dd HH:mm:ss" />&nbsp;&nbsp;结束时间:<pg:cell colName="endTime"
 											dateformat="yyyy-MM-dd HH:mm:ss" />&nbsp;&nbsp;<br>
 											节点总任务数：<pg:cell colName="totaltasks"/>&nbsp;&nbsp;
-											正在运行任务数：<pg:cell colName="runtasks"/>&nbsp;&nbsp;
 											完成任务数：<pg:cell colName="completetasks"/>&nbsp;&nbsp;
+											正在运行任务数：<pg:cell colName="runtasks"/>&nbsp;&nbsp;
+											
 											失败任务数：<pg:cell colName="failtasks"/>&nbsp;&nbsp;
 											等待执行任务数：<pg:cell colName="waittasks"/>&nbsp;&nbsp;
 											未开始任务数：<pg:cell colName="unruntasks"/>&nbsp;&nbsp;<br>
@@ -451,8 +466,7 @@ function submitJob () {
 								class="stable" id="tb">
 							<tr>
 
-								<th width="20%"><a href="javascript:void(0);" class="bt_1" id="clearJobstatic" onclick="javascript:clearJobstatic('<pg:mapkey/>','<pg:cell
-							colName="jobName" index="0"/>')"><span>清除作业历史</span></a><a name="<pg:mapkey/>" href="#top">数据处理节点-<pg:mapkey/></a></th>
+								<th width="20%"><a name="<pg:mapkey/>" href="#top">数据处理节点-<pg:mapkey/></a></th>
 								<th colspan="100"></th>
 
 
@@ -462,14 +476,25 @@ function submitJob () {
 								
 								<tr>
 									<td colspan="3">运行状态:<pg:case colName="status">
-											<pg:equal value="-1">未开始</pg:equal>
+											<pg:equal value="-1">未开始&nbsp;<a href="javascript:void(0);" class="bt_1" id="clearJobstatic" onclick="javascript:clearJobstatic('<pg:mapkey/>','<pg:cell
+							colName="jobName" index="0"/>')"><span>清除作业历史</span></a></pg:equal>
 											<pg:equal value="0">正在运行</pg:equal>
-											<pg:equal value="1">执行完毕</pg:equal>
-											<pg:equal value="2">执行异常</pg:equal>
-											<pg:equal value="3">强制停止</pg:equal>
+											<pg:equal value="1">执行完毕&nbsp;<a href="javascript:void(0);" class="bt_1" id="clearJobstatic" onclick="javascript:clearJobstatic('<pg:mapkey/>','<pg:cell
+							colName="jobName" index="0"/>')"><span>清除作业历史</span></a></pg:equal>
+											<pg:equal value="2">执行异常&nbsp;<a href="javascript:void(0);" class="bt_1" id="clearJobstatic" onclick="javascript:clearJobstatic('<pg:mapkey/>','<pg:cell
+							colName="jobName" index="0"/>')"><span>清除作业历史</span></a></pg:equal>
+											<pg:equal value="3">强制停止&nbsp;<a href="javascript:void(0);" class="bt_1" id="clearJobstatic" onclick="javascript:clearJobstatic('<pg:mapkey/>','<pg:cell
+							colName="jobName" index="0"/>')"><span>清除作业历史</span></a></pg:equal>
 										</pg:case> &nbsp;&nbsp;<br>开始时间:<pg:cell colName="startTime" dateformat="yyyy-MM-dd HH:mm:ss" />&nbsp;&nbsp;结束时间:<pg:cell colName="endTime"
 											dateformat="yyyy-MM-dd HH:mm:ss" /><br>
 											完成记录数：<pg:cell colName="successrecords"/>  &nbsp; 失败记录数：<pg:cell colName="failerecords"/><br>
+											节点总任务数：<pg:cell colName="totaltasks"/>&nbsp;&nbsp;
+											完成任务数：<pg:cell colName="completetasks"/>&nbsp;&nbsp;
+											正在运行任务数：<pg:cell colName="runtasks"/>&nbsp;&nbsp;
+											
+											失败任务数：<pg:cell colName="failtasks"/>&nbsp;&nbsp;
+											等待执行任务数：<pg:cell colName="waittasks"/>&nbsp;&nbsp;
+											未开始任务数：<pg:cell colName="unruntasks"/>&nbsp;&nbsp;<br>											 
 											错误日志:<pg:cell colName="errormsg" />
 											</td>
 
