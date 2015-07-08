@@ -13,6 +13,7 @@ public class JobStatic implements java.io.Serializable,java.lang.Cloneable{
 	 * 2:执行异常
 	 * 3:强制终止
 	 */
+	
 	private int status = - 1;
 	private long startTime;
 	private long endTime;
@@ -36,10 +37,17 @@ public class JobStatic implements java.io.Serializable,java.lang.Cloneable{
 	 */
 	private long failerecords;
 	private int currentposition;
+	private boolean onejob;
 	public boolean canstop()
 	{
 		return this.status == 0 || this.status == -1;
 	}
+	
+
+	/**
+	 * 报错成功作业号，以逗号分隔
+	 */
+	private List<String> undotaskNos;
 	/**
 	 * 报错成功作业号，以逗号分隔
 	 */
@@ -65,6 +73,18 @@ public class JobStatic implements java.io.Serializable,java.lang.Cloneable{
 	
 	public void eval()
 	{
+		/**
+		 * 重置状态
+		 */
+		 this.failtasks= 0; 
+		 this.completetasks =0;
+		 this.unruntasks = 0;
+		 runtasks = 0;
+		 waittasks = 0;
+		 this.successrecords = 0;
+		 failerecords = 0;
+		 this.completetaskNos = null;
+		 this.failedtaskNos = null;
 		if(runtasksInfos != null && runtasksInfos.size() > 0)
 		{
 			StringBuilder success = new StringBuilder();
@@ -104,10 +124,16 @@ public class JobStatic implements java.io.Serializable,java.lang.Cloneable{
 				this.successrecords = successrecords+status.getHandlerows();
 				this.failerecords = failerecords + status.getErrorrows(); 
 			}
-			waittasks = this.totaltasks - this.failtasks - this.completetasks - this.unruntasks-runtasks;
+			
+			
 			this.completetaskNos = success.toString();
 			this.failedtaskNos = failed.toString();
 		}
+		else
+		{
+			this.unruntasks = this.totaltasks;
+		}
+		waittasks = this.totaltasks - this.failtasks - this.completetasks - this.unruntasks-runtasks;
 		
 	}
 	public int getStatus() {
@@ -143,6 +169,8 @@ public class JobStatic implements java.io.Serializable,java.lang.Cloneable{
 	public Object clone() throws CloneNotSupportedException {
 		JobStatic ret = (JobStatic)super.clone();
 		ret.runtasksInfos = ImpStaticManager.cloneRuntasksInfosa(this.runtasksInfos);
+		
+		ret.undotaskNos = ImpStaticManager.cloneListString(this.undotaskNos);
 		return ret;
 	}
 
@@ -277,6 +305,22 @@ public class JobStatic implements java.io.Serializable,java.lang.Cloneable{
 
 	public long getFailerecords() {
 		return failerecords;
+	}
+
+	public List<String> getUndotaskNos() {
+		return undotaskNos;
+	}
+
+	public void setUndotaskNos(List<String> undotaskNos) {
+		this.undotaskNos = undotaskNos;
+	}
+
+	public boolean isOnejob() {
+		return onejob;
+	}
+
+	public void setOnejob(boolean onejob) {
+		this.onejob = onejob;
 	}
 	
 	

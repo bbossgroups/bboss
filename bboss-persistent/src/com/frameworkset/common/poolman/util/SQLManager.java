@@ -698,7 +698,7 @@ public class SQLManager extends PoolManager{
 		int shrinkBy = 5;
 		values.put("shrinkBy", shrinkBy+"");
 		
-		int connectionTimeout = 360000;
+		int connectionTimeout = 36000000;
 		values.put("connectionTimeout", connectionTimeout+"");
 		int skimmerFrequency = 180000;
 		values.put("skimmerFrequency", skimmerFrequency+"");

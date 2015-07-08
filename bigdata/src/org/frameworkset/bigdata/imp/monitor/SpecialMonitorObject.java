@@ -17,6 +17,7 @@ public class SpecialMonitorObject  implements java.io.Serializable{
 	private List<String> allJobNames;
 	private String jobconfig;
 	String  failedTaskNos;
+	private String undotaskNos;
 	String  successTaskNos;
 	private String jobdef;
 	private int totaltasks;
@@ -148,6 +149,12 @@ public class SpecialMonitorObject  implements java.io.Serializable{
 	}
 	public void setWaittasks(int waittasks) {
 		this.waittasks = waittasks;
+	}
+	public String getUndotaskNos() {
+		return undotaskNos;
+	}
+	public void setUndotaskNos(String undotaskNos) {
+		this.undotaskNos = undotaskNos;
 	}
 
 }

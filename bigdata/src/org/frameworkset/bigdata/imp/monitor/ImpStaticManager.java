@@ -173,6 +173,23 @@ public class ImpStaticManager implements Listener<Object>{
 		 
 	}
 	
+	public static List<String> cloneListString(List<String> datas) 
+	{
+		 
+		if(datas == null)
+		{
+			return null;
+		}
+		List<String> des=new ArrayList<String>(datas.size());
+		    for(String ts: datas){
+		    	
+		        
+		        	des.add( ts );
+				 
+		    }
+		    return des;
+		 
+	}
 	public static List<TaskStatus> cloneRuntasksInfosa(List<TaskStatus> runtasksInfos) 
 	{
 		 
@@ -436,6 +453,7 @@ public class ImpStaticManager implements Listener<Object>{
 		private int failtasks;
 		private int runtasks;
 		private int waittasks;
+		private String undotaskNos;
 		public int getStatus() {
 			return status;
 		}
@@ -502,6 +520,12 @@ public class ImpStaticManager implements Listener<Object>{
 		public void setWaittasks(int waittasks) {
 			this.waittasks = waittasks;
 		}
+		public String getUndotaskNos() {
+			return undotaskNos;
+		}
+		public void setUndotaskNos(String undotaskNos) {
+			this.undotaskNos = undotaskNos;
+		}
 	}
 	private List<String> sort(List<String> names)
 	{
@@ -567,7 +591,12 @@ public class ImpStaticManager implements Listener<Object>{
 					job.setFailedTaskNos(jobStatus.failedTaskNos.toString());
 				else
 					job.setFailedTaskNos("");
-				
+				 
+				if(jobStatus.undotaskNos != null)
+					job.setUndotaskNos(jobStatus.undotaskNos);
+				else
+					job.setUndotaskNos("");
+				 
 			}
 			if(job.getStatus() == -1 || job.getStatus() == 1 || job.getStatus() == 2 || job.getStatus() == 3 || job.getStatus() == 5  )
 				job.setCanrun(true);
@@ -624,6 +653,7 @@ public class ImpStaticManager implements Listener<Object>{
 			boolean forcestop = false;
 			StringBuffer failedTaskNos = new StringBuffer();
 			StringBuffer successTaskNos = new StringBuffer();
+			StringBuilder undoTaskNos = new StringBuilder();
 			for(Entry<String, JobStatic> entry:set)
 			{
 				JobStatic jobStatic = entry.getValue(); 
@@ -669,7 +699,21 @@ public class ImpStaticManager implements Listener<Object>{
 				jobStatus.waittasks = jobStatus.waittasks + jobStatic.getWaittasks();
 				jobStatus.runtasks = jobStatus.runtasks + jobStatic.getRuntasks();
 				
+				
+				List<String> jobundoTasknos = jobStatic.getUndotaskNos();
+				for(int b = 0; jobundoTasknos != null && b < jobundoTasknos.size(); b ++)
+				{
+					if(undoTaskNos.length() == 0)
+						undoTaskNos.append(jobundoTasknos.get(b));
+					else
+						undoTaskNos.append(",").append(jobundoTasknos.get(b));
+					
+				}
+				
+				
+				
 			}
+			jobStatus.undotaskNos = undoTaskNos.toString();
 			jobStatus.successTaskNos = successTaskNos.toString();
 			jobStatus.failedTaskNos = failedTaskNos.toString();
 			jobStatus.setSuccessrecords(successrecords);

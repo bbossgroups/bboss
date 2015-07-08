@@ -23,6 +23,12 @@ public class WriteDataTask {
 		 this.upfileQueues = upfileQueues;
 		 this.genFileHelper = genFileHelper;
 	 }
+	 
+	 public WriteDataTask(GenFileHelper genFileHelper)
+		{
+			
+			 this.genFileHelper = genFileHelper;
+		 }
 
 	 PoolManResultSetMetaData metaData;
 	 PoolManResultSetMetaData submetaData;
@@ -290,10 +296,13 @@ public class WriteDataTask {
 		 	}
 	    }
 	 
-	
+	private void runsingle()
+	{
+		
+	}
 	 
-	 
-	public void run() {
+	private void runmulti()
+	{
 		try {
 			
 			 buidler = new StringBuilder();
@@ -302,7 +311,7 @@ public class WriteDataTask {
 			genpage( fileSegment  ) ;
 			fileSegment.flush();
 			fileSegment.genendtimestamp =  System.currentTimeMillis();
-			
+			this.genFileHelper.job.completeTask(fileSegment.taskInfo.taskNo);
 			log.info("生成文件结束："+fileSegment.toString());
 		} 
 		catch(ForceStopException e)
@@ -313,6 +322,7 @@ public class WriteDataTask {
 			return ;
 	    }
 		catch (Exception e) {
+			this.genFileHelper.job.completeTask(fileSegment.taskInfo.taskNo);
 			fileSegment.taskStatus.setStatus(2);
 			 
 			fileSegment.taskStatus.setErrorInfo(SimpleStringUtil.exceptionToString(e));
@@ -343,6 +353,16 @@ public class WriteDataTask {
 				} 
 			}
 		}
-		
+	}
+	 
+	 
+	public void run() {
+		if(!genFileHelper.isOnejob())
+			runmulti();
+		else
+		{
+			runsingle();
+			
+		}
 	}
 }

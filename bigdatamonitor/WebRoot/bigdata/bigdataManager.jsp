@@ -442,6 +442,7 @@ function submitJob () {
 
 							</tr>
 							
+							
 							<tr>
 
 								<th>已完成作业任务</th>
@@ -449,6 +450,14 @@ function submitJob () {
 
 
 							</tr>
+							<tr>
+
+								<th>未执行作业任务</th>
+								<td><textarea height="200px"><pg:cell colName="undotaskNos"/></textarea></td>
+
+
+							</tr>
+							
 							<tr>
 
 								<th>失败作业任务</th>

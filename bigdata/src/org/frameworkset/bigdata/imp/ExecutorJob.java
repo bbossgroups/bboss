@@ -1,6 +1,7 @@
 package org.frameworkset.bigdata.imp;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
@@ -24,6 +25,7 @@ public class ExecutorJob {
 	 AtomicInteger genfilecount;
 	 AtomicInteger upfilecount ;
 	 List<TaskInfo> tasks;
+	 
 	
 	 int pos;
 	 boolean justassigned = false;
@@ -44,6 +46,63 @@ public class ExecutorJob {
 	 public String getHdfsdatadirpath() {
 			return config.getHdfsdatadirpath();
 		}
+	 public void completeTask(String taskNo)
+	 {
+		 synchronized(jobStatic)
+		 {
+			 this.jobStatic.getUndotaskNos().remove(taskNo);
+		 }
+	 }
+	 
+	 public void reassignTask(String taskNo)
+	 {
+		 completeTask( taskNo);
+	 }
+	 private void doSingleTask()
+	 {
+		 jobStatic = Imp.getImpStaticManager().addJobStatic(this);
+		 GenFileHelper helper = new GenFileHelper(this);
+		 WriteDataTask wtask = new WriteDataTask(helper);
+		 wtask.run();
+	 }
+	private void doMultiTasks()
+	{
+		genfileQueues = new ArrayBlockingQueue<FileSegment>(config.getGenqueques()); 
+		if(config.isGenlocalfile())
+		{
+			upfileQueues = new ArrayBlockingQueue<FileSegment>(config.getUploadqueues());
+			boolean iswindows = SimpleStringUtil.isWindows();
+			if(config.localdirpath.indexOf("|") > 0)
+			{
+				if(iswindows)
+					config.localdirpath = config.localdirpath.split("\\|")[0];
+				else
+					config.localdirpath = config.localdirpath.split("\\|")[1];
+			}		
+			File localdir = new File(config.localdirpath);
+			 if(!localdir.exists())
+				 localdir.mkdirs();
+		}
+		
+		tasks = config.getTasks();
+		
+		log.info("start run task:"+config +",task size:"+tasks.size());
+		 jobStatic = Imp.getImpStaticManager().addJobStatic(this);
+		 if(tasks != null)
+		 {
+			 List<String> undotasknos = new ArrayList<String>();
+			 for(int i = 0; i < tasks.size();i++)
+			 {
+				 undotasknos.add(tasks.get(i).taskNo);
+			 }
+			 jobStatic.setUndotaskNos(undotasknos); 
+			 jobStatic.setTotaltasks(tasks.size());
+		 }
+		 genfilecount = new AtomicInteger(tasks.size());
+		 if(config.isGenlocalfile())
+			 upfilecount = new AtomicInteger(config.getTasks().size());
+		 run(0);
+	}
 	public void execute(TaskConfig config)
 	{
 		try
@@ -51,32 +110,11 @@ public class ExecutorJob {
 			this.config = config;
 			
 			fileSystem = HDFSServer.getFileSystem(config.getHdfsserver());
-			genfileQueues = new ArrayBlockingQueue<FileSegment>(config.getGenqueques()); 
-			if(config.isGenlocalfile())
-			{
-				upfileQueues = new ArrayBlockingQueue<FileSegment>(config.getUploadqueues());
-				boolean iswindows = SimpleStringUtil.isWindows();
-				if(config.localdirpath.indexOf("|") > 0)
-				{
-					if(iswindows)
-						config.localdirpath = config.localdirpath.split("\\|")[0];
-					else
-						config.localdirpath = config.localdirpath.split("\\|")[1];
-				}		
-				File localdir = new File(config.localdirpath);
-				 if(!localdir.exists())
-					 localdir.mkdirs();
-			}
 			DBHelper.initDB(config);
-			tasks = config.getTasks();
-			log.info("start run task:"+config +",task size:"+tasks.size());
-			 jobStatic = Imp.getImpStaticManager().addJobStatic(this);
-			 if(tasks != null)
-				 jobStatic.setTotaltasks(tasks.size());
-			 genfilecount = new AtomicInteger(tasks.size());
-			 if(config.isGenlocalfile())
-				 upfilecount = new AtomicInteger(config.getTasks().size());
-			 run(0);
+			if(!config.isOnejob())
+				doMultiTasks();
+			else
+				doSingleTask();
 		}
 		finally
 		{
@@ -190,6 +228,8 @@ public class ExecutorJob {
 		return this.jobStatic.isforceStop();
 	}
 	public void assignTasks(List<TaskInfo> tasks) {
+		if(tasks == null || tasks.size() == 0)
+			return;
 		synchronized(this.reassignLock)
 		{
 			justassigned = false;
@@ -203,7 +243,15 @@ public class ExecutorJob {
 				jobStatic.setEndTime(0);
 				this.pos = this.tasks.size(); 
 				this.tasks.addAll(tasks);
-				
+				 
+				 
+				List<String> undotasknos = new ArrayList<String>();
+				 for(int i = 0; i < tasks.size();i++)
+				 {
+					 undotasknos.add(tasks.get(i).taskNo);
+				 }
+				 jobStatic.setUndotaskNos(undotasknos);
+			 
 				
 				 run(pos);
 			}
@@ -217,7 +265,15 @@ public class ExecutorJob {
 				synchronized(jobStatic)
 				{
 					this.tasks.addAll(tasks);
+					List<String> undotasknos = new ArrayList<String>();
+					 for(int i = 0; i < tasks.size();i++)
+					 {
+						 undotasknos.add(tasks.get(i).taskNo);
+					 }
+					 jobStatic.setUndotaskNos(undotasknos);
+					
 				}
+				
 			}
 			justassigned = true;
 		}

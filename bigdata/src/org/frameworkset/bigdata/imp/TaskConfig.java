@@ -4,6 +4,14 @@ import java.util.List;
 import java.util.Map;
 
 public class TaskConfig implements java.io.Serializable{
+	
+	/**
+	 * 单任务属性
+	 */
+	boolean onejob;
+	String target ;
+	int rowsperfile;
+	
 	private String jobdef; 
 	/**
 	 * 关联附加字段表记录-通过joinby字段与tablename中对应的表进行关联查询
@@ -114,7 +122,13 @@ public class TaskConfig implements java.io.Serializable{
 		}
 		
 	
-		
+		if(this.onejob)
+		{
+			builder.append("onejob=").append(onejob).append("\r\n")
+					.append("target=").append(this.target).append("\r\n")
+			.append("rowsperfile=").append(rowsperfile).append("\r\n");
+			
+		}
 		
 		builder.append("datablocks=").append(datablocks).append("\r\n")
 		.append("hdfsserver=").append(hdfsserver).append("\r\n")
@@ -467,6 +481,24 @@ public class TaskConfig implements java.io.Serializable{
 	}
 	public void setRightJoinby(String rightJoinby) {
 		this.rightJoinby = rightJoinby;
+	}
+	public boolean isOnejob() {
+		return onejob;
+	}
+	public void setOnejob(boolean onejob) {
+		this.onejob = onejob;
+	}
+	public String getTarget() {
+		return target;
+	}
+	public void setTarget(String target) {
+		this.target = target;
+	}
+	public int getRowsperfile() {
+		return rowsperfile;
+	}
+	public void setRowsperfile(int rowsperfile) {
+		this.rowsperfile = rowsperfile;
 	}
 }
 

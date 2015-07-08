@@ -274,7 +274,24 @@
 	  tablename="is_static_seldom"	 
 	  usepartition="true"
 		datatype="text"  />	
-		
+		<property name="reassignetasks" 
+		reassigntaskNode="BPIT-10006673-8709"
+        reassigntaskJobname="test"            />	
+        
+        
+       <property name="onejob" dbname="test1" driver="oracle.jdbc.driver.OracleDriver"
+		dburl="jdbc:oracle:thin:@//10.0.15.51:1521/orcl" dbuser="testpdp1"
+		dbpassword="testpdp1" validatesql="select 1 from dual" usepool="true"
+
+		hdfsserver="hdfs://10.0.15.40:9000" hdfsdatadir="/m2m/data04/onejob"
+		localdir="d:/bigdata/onejob|/bigdata/onejob" tablename="testbigdata"
+		filebasename="testbigdata" schema="testpdp1" pkname="tid" columns=""
+		  datatype="text" clearhdfsfiles="false"
+		  rowsperfile="10"
+		  single="true"
+		  target="address"
+		 />
+        
 		-->
 
 </properties>

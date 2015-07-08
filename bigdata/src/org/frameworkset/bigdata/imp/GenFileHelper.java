@@ -14,6 +14,9 @@ public class GenFileHelper {
 	AtomicInteger upfilecount;
 	ExecutorJob job;
 	TaskConfig config;
+	public boolean isOnejob() {
+		return this.config.isOnejob();
+	}
 	public boolean genlocalfile()
 	{
 		return this.config.isGenlocalfile();

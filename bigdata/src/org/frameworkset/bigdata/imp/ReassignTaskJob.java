@@ -22,7 +22,7 @@ public class ReassignTaskJob {
 	{
 		String localnode = Imp.getImpStaticManager().getLocalNode();
 		 JobStatic jobStatic = Imp.getImpStaticManager().addReassignTaskJobStatic(reassignTask);
-		 JobStatic localjobStatic  = Imp.getImpStaticManager().getLocalJobStatic(localnode);
+		 JobStatic localjobStatic  = Imp.getImpStaticManager().getLocalJobStatic(reassignTask.getReassigntaskJobname());
 		 if(localjobStatic == null)
 		 {
 			 jobStatic.setErrormsg("作业"+reassignTask.getReassigntaskJobname()+"不存在.");
@@ -41,6 +41,7 @@ public class ReassignTaskJob {
 			 servseradd[0] = localnode;
 			 synchronized(localjobStatic)
 			 {
+				 localjobStatic.eval();
 				 int unhandletask = localjobStatic.getUnruntasks();
 				 if(unhandletask == 0)
 				 {
@@ -68,7 +69,7 @@ public class ReassignTaskJob {
 					Map<String,List<TaskInfo>> perserverTasks = new HashMap<String,List<TaskInfo>>();
 					 
 					List<TaskInfo> temp = null;
-					ExecutorJob executorjob = Imp.getImpStaticManager().getExecutorJob(localnode);
+					ExecutorJob executorjob = Imp.getImpStaticManager().getExecutorJob(reassignTask.getReassigntaskJobname());
 					List<TaskInfo> taskinfos = executorjob.getTasks();
 					int localtotalsize = localjobStatic.getTotaltasks();
 					for(int j = 0 ; j < servers; j ++)
@@ -81,7 +82,8 @@ public class ReassignTaskJob {
 						if(j == 0 )
 						{
 							perservertasks = perservertasks - selfinhandle;
-							startpos = startpos + perservertasks;
+							if(perservertasks > 0)
+								startpos = startpos + perservertasks;
 						}
 						
 						else
@@ -93,10 +95,18 @@ public class ReassignTaskJob {
 								int l = 0;
 								for(int k = startpos; k < taskinfos.size(); k ++ )
 								{
-									if(l < perservertasks)
+									TaskInfo task = taskinfos.get(k);
+									if(task.isReassigned())
 									{
-										taskinfos.get(k).setReassigned(true);
-										temp.add(taskinfos.get(k));
+										startpos ++;
+										continue;
+									}
+									else if(l < perservertasks)
+									{
+										task.setReassigned(true);
+										temp.add(task);
+										executorjob.reassignTask(task.getTaskNo());
+										startpos ++;
 										l ++;
 									}
 									else
@@ -109,7 +119,7 @@ public class ReassignTaskJob {
 									perserverTasks.put(servseradd[j], temp);
 									localtotalsize = localtotalsize - temp.size();//调整本地作业的分配的总任务数
 								}
-								startpos = startpos + perservertasks;
+//								startpos = startpos + perservertasks;
 							}
 						}
 						

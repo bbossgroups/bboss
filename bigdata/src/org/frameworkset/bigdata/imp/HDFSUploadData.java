@@ -54,10 +54,10 @@ public class HDFSUploadData {
 			"hdfs_upload_monitor_stopdatasource_commond");
 
 	public static final SimpleEventType hdfs_upload_monitor_reassigntasks_request_commond = new SimpleEventType(
-			"hdfs_upload_monitor_reassigntasks_commond");
+			"hdfs_upload_monitor_reassigntasks_request_commond");
 	
 	public static final SimpleEventType hdfs_upload_monitor_reassigntasks_response_commond = new SimpleEventType(
-			"hdfs_upload_monitor_reassigntasks_commond");
+			"hdfs_upload_monitor_reassigntasks_response_commond");
 
 	/**
 	 * 重新分派某个节点的排队任务配置
@@ -163,6 +163,14 @@ public class HDFSUploadData {
 	 * 子查询sql
 	 */
 	String subquerystatement;
+	
+	/**
+	 * 单任务属性
+	 */
+	boolean onejob;
+	String target ;
+	int rowsperfile;
+	
 	/**
 	 * 构建分派任务时调用，只需要设置基本信息即可
 	 * 
@@ -211,7 +219,9 @@ public class HDFSUploadData {
 		config.setLeftJoinby(leftJoinby);
 		config.setRightJoinby(rightJoinby);
 		config.setSubquerystatement(subquerystatement);
-
+		 config.setTarget(target);
+		 config.setRowsperfile(rowsperfile);
+		 config.setOnejob(onejob);
 		if(this.usepartition)
 		{
 			if (this.querystatement == null || this.querystatement.equals("")) {
@@ -466,6 +476,15 @@ public class HDFSUploadData {
 		config.setRightJoinby(rightJoinby);
 		config.setReassigntaskNode(reassigntaskNode);
 		config.setReassigntaskJobname(reassigntaskJobname);
+		
+		 String target = context.getStringExtendAttribute(jobname,
+					"target");
+		 boolean onejob = context.getBooleanExtendAttribute(jobname,
+					"onejob",false); 	 
+		 int rowsperfile = context.getIntExtendAttribute(jobname, "rowsperfile", 0);
+		 config.setTarget(target);
+		 config.setRowsperfile(rowsperfile);
+		 config.setOnejob(onejob);
 		boolean usepool = context.getBooleanExtendAttribute(jobname, "usepool",
 				false);
 
@@ -1374,7 +1393,12 @@ public class HDFSUploadData {
 		  rightJoinby = context.getStringExtendAttribute(jobname,
 				"rightJoinby");
 			 subquerystatement = context.getStringExtendAttribute(jobname,
-					"subquerystatement"); 
+					"subquerystatement");
+			 this.target = context.getStringExtendAttribute(jobname,
+						"target");
+			 this.onejob = context.getBooleanExtendAttribute(jobname,
+						"onejob",false); 	 
+			 this.rowsperfile = context.getIntExtendAttribute(jobname, "rowsperfile", 0);
 		this.fileSystem = HDFSServer.getFileSystem(hdfsserver);
 	}
 
@@ -1525,13 +1549,24 @@ public class HDFSUploadData {
 				
 				if(!host.equals(reassigntaskNode))//忽略任务所属节点
 				{
-					if (!reassignTask.isAdminasdatanode()&&!host.equals(reassignTask.getAdminnode())) //忽略非数据节点的管理节点
+					if(host.equals(reassignTask.getAdminnode()))
+					{
+						if (reassignTask.isAdminasdatanode()) //忽略非数据节点的管理节点
+						{
+							JobStatic other = entry.getValue();
+							int unhandletasks = other.getWaittasks()
+									+ other.getRuntasks() + other.getUnruntasks();
+							taskinfos.put(host, unhandletasks);
+						}
+					}
+					else
 					{
 						JobStatic other = entry.getValue();
 						int unhandletasks = other.getWaittasks()
 								+ other.getRuntasks() + other.getUnruntasks();
 						taskinfos.put(host, unhandletasks);
 					}
+					
 				}
 			}
 			reassignTask.setHostTaskInfos(taskinfos);
@@ -1570,13 +1605,43 @@ public class HDFSUploadData {
 			}
 		}
 		DBHelper.initDB(this);
-		buildJobChunks();
+		if(!this.onejob)
+		{
+			buildJobChunks();
+		}
+		else
+		{
+			doOnejob();
+		}
 		log.info("启动数据上传任务[jobname=" + jobname + "],[hdfsdatadir="
 				+ hdfsdatadir + "] on hdfsserver[" + hdfsserver + "],"
 				+ "[localdir=" + localpath + "],[dbname=" + dbname
 				+ "],[tablename=" + tablename + "]," + "[schema=" + schema
 				+ "],[pkName=" + pkName + "],[columns=" + columns
 				+ "],[datablocks=" + datablocks + "]成功.");
+	}
+	
+	private void doOnejob()
+	{
+		TaskConfig config = buildTaskConfig();
+		tasks = new HashMap<String, TaskConfig>();
+		if(SimpleStringUtil.isEmpty(target))
+		{
+			tasks.put("rundirect", config);
+			Event<Map<String, TaskConfig>> event = new EventImpl<Map<String, TaskConfig>>(
+					tasks, hdfsuploadevent, Event.LOCAL);
+			EventHandle.getInstance().change(event, false);
+		}
+		else
+		{
+			tasks.put(target, config);
+			Address address = EventUtils.getAddress(this.target);
+			EventTarget target = new EventTarget(address);
+			Event<Map<String, TaskConfig>> event = new EventImpl<Map<String, TaskConfig>>(
+					tasks, hdfsuploadevent,target);
+			EventHandle.getInstance().change(event, false);
+		}
+		
 	}
 
 	private void runjob(BaseApplicationContext ioccontext, String jobname) {
@@ -1592,7 +1657,8 @@ public class HDFSUploadData {
 			} else if (this.reassigntaskNode != null
 					&& !this.reassigntaskNode.trim().equals("")) {
 				this.doReassignTasks();
-			} else // 如果是上传数据指令，则上传数据
+			} 
+			else // 如果是上传数据指令，则上传数据
 			{
 				doUploadData();
 			}
@@ -1907,6 +1973,30 @@ public class HDFSUploadData {
 
 	public void setRightJoinby(String rightJoinby) {
 		this.rightJoinby = rightJoinby;
+	}
+
+	public boolean isOnejob() {
+		return onejob;
+	}
+
+	public void setOnejob(boolean onejob) {
+		this.onejob = onejob;
+	}
+
+	public String getTarget() {
+		return target;
+	}
+
+	public void setTarget(String target) {
+		this.target = target;
+	}
+
+	public int getRowsperfile() {
+		return rowsperfile;
+	}
+
+	public void setRowsperfile(int rowsperfile) {
+		this.rowsperfile = rowsperfile;
 	}
 
 }
