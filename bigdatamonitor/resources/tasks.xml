@@ -291,7 +291,36 @@
 		  single="true"
 		  target="address"
 		 />
+		 
+		 <property name="onejobsinglefile" dbname="test1" driver="oracle.jdbc.driver.OracleDriver"
+		dburl="jdbc:oracle:thin:@//10.0.15.51:1521/orcl" dbuser="testpdp1"
+		dbpassword="testpdp1" validatesql="select 1 from dual" usepool="true"
+
+		hdfsserver="hdfs://10.0.15.40:9000" hdfsdatadir="/m2m/data04/onejob"
+		localdir="d:/bigdata/onejob|/bigdata/onejob" tablename="testbigdata"
+		filebasename="testbigdata" schema="testpdp1" pkname="tid" columns=""
+		  datatype="text" clearhdfsfiles="false"
+querystatement="select *  from  testpdp1.testbigdata order by TID "
+		 
+		  single="true"
+		  target="BPIT-10006673-24183"
+		 />
         
+        
+         <property name="onejobsinglefile" dbname="test1" driver="oracle.jdbc.driver.OracleDriver"
+		dburl="jdbc:oracle:thin:@//10.0.15.51:1521/orcl" dbuser="testpdp1"
+		dbpassword="testpdp1" validatesql="select 1 from dual" usepool="true"
+
+		hdfsserver="hdfs://10.0.15.40:9000" hdfsdatadir="/m2m/data04/onejob"
+		localdir="d:/bigdata/onejob|/bigdata/onejob" tablename="testbigdata"
+		filebasename="testbigdata" schema="testpdp1" pkname="tid" columns=""
+		  datatype="text" clearhdfsfiles="false"
+querystatement="select *  from  testpdp1.testbigdata order by TID "
+		 rowsperfile="10"
+		  startfileNo="10"
+		  single="true"
+		  target="BPIT-10006673-36623"
+		 />
 		-->
 
 </properties>

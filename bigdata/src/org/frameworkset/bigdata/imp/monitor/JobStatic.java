@@ -310,6 +310,14 @@ public class JobStatic implements java.io.Serializable,java.lang.Cloneable{
 	public List<String> getUndotaskNos() {
 		return undotaskNos;
 	}
+	
+	public void completeTask(String taskNo)
+	{
+		if(undotaskNos != null)
+		{
+			undotaskNos.remove(taskNo);
+		}
+	}
 
 	public void setUndotaskNos(List<String> undotaskNos) {
 		this.undotaskNos = undotaskNos;
@@ -321,6 +329,11 @@ public class JobStatic implements java.io.Serializable,java.lang.Cloneable{
 
 	public void setOnejob(boolean onejob) {
 		this.onejob = onejob;
+	}
+
+	public void incrementtotaltasks() {
+		this.totaltasks ++;
+		
 	}
 	
 	

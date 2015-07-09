@@ -11,6 +11,7 @@ public class TaskConfig implements java.io.Serializable{
 	boolean onejob;
 	String target ;
 	int rowsperfile;
+	int startfileNo;
 	
 	private String jobdef; 
 	/**
@@ -60,7 +61,7 @@ public class TaskConfig implements java.io.Serializable{
 	int uploadqueuetimewait=10;
 	boolean genlocalfile;
 	String datatype;
-	String querystatement;
+	private String querystatement;
 	/**
 	 * 子查询sql
 	 */
@@ -97,76 +98,76 @@ public class TaskConfig implements java.io.Serializable{
 	{
 		StringBuilder builder = new StringBuilder();
 		
-		builder.append("jobname=").append(jobname).append("\r\n")
-		.append("dbname=").append(dbname).append("\r\n")
-				.append("schema=").append(this.schema).append("\r\n")
-		.append("tablename=").append(tablename).append("\r\n")
-		.append("columns=[").append(columns).append("]\r\n")
+		builder.append("jobname=").append(jobname).append(",")
+		.append("dbname=").append(dbname).append(",")
+				.append("schema=").append(this.schema).append(",")
+		.append("tablename=").append(tablename).append(",")
+		.append("columns=[").append(columns).append("],")
 		
-		.append("subtablename=").append(this.subtablename).append("\r\n")
-		.append("leftjoinby=").append(this.leftJoinby).append("\r\n")
-		.append("rightJoinby=").append(this.rightJoinby).append("\r\n")
-		.append("usepartition=[").append(this.usepartition).append("]\r\n")
-		.append("pkname=").append(pkname).append("\r\n");
+		.append("subtablename=").append(this.subtablename).append(",")
+		.append("leftjoinby=").append(this.leftJoinby).append(",")
+		.append("rightJoinby=").append(this.rightJoinby).append(",")
+		.append("usepartition=[").append(this.usepartition).append("],")
+		.append("pkname=").append(pkname).append(",");
 		
 		if(driver != null && driver.trim().length() > 0)
 		{
-			builder.append("driver=").append(driver).append("\r\n")
-					.append("dburl=").append(this.dburl).append("\r\n")
-			.append("dbpassword=").append(dbpassword).append("\r\n")
-			.append("dbuser=[").append(dbuser).append("]\r\n")
-			.append("usepool=[").append(usepool).append("]\r\n")
-			.append("readOnly=[").append(readOnly).append("]\r\n")
-			.append("validatesql=").append(validatesql).append("\r\n");
+			builder.append("driver=").append(driver).append(",")
+					.append("dburl=").append(this.dburl).append(",")
+			.append("dbpassword=").append(dbpassword).append(",")
+			.append("dbuser=[").append(dbuser).append("],")
+			.append("usepool=[").append(usepool).append("],")
+			.append("readOnly=[").append(readOnly).append("],")
+			.append("validatesql=").append(validatesql).append(",");
 			
 		}
 		
 	
 		if(this.onejob)
 		{
-			builder.append("onejob=").append(onejob).append("\r\n")
-					.append("target=").append(this.target).append("\r\n")
-			.append("rowsperfile=").append(rowsperfile).append("\r\n");
+			builder.append("onejob=").append(onejob).append(",")
+					.append("target=").append(this.target).append(",")
+			.append("rowsperfile=").append(rowsperfile).append(",");
 			
 		}
 		
-		builder.append("datablocks=").append(datablocks).append("\r\n")
-		.append("hdfsserver=").append(hdfsserver).append("\r\n")
-		.append("hdfsdatadirpath=").append(hdfsdatadirpath).append("\r\n")
-		.append("localdirpath=").append(localdirpath).append("\r\n")
-		.append("pagesize=").append(pagesize).append("\r\n")
-		.append("filebasename=").append(filebasename).append("\r\n")
-		.append("geneworkthreads=").append(geneworkthreads).append("\r\n")
-		.append("uploadeworkthreads=").append(uploadeworkthreads).append("\r\n")
-		.append("genqueques=").append(genqueques).append("\r\n")
-		.append("uploadqueues=").append(uploadqueues).append("\r\n")
-		.append("genquequetimewait=").append(genquequetimewait).append("\r\n")
-		.append("uploadqueuetimewait=").append(uploadqueuetimewait).append("\r\n")
-		.append("genlocalfile=").append(genlocalfile).append("\r\n")
-		.append("datatype=").append(datatype).append("\r\n")
-		.append("usepagine=").append(usepagine).append("\r\n")
-		.append("countstatement=").append(countstatement).append("\r\n")
-		.append("pageinestatement=").append(pageinestatement).append("\r\n")
-			.append("tablerows=").append(tablerows).append("\r\n")
-		.append("querystatement=").append(querystatement).append("\r\n")
-		.append("subquerystatement=").append(subquerystatement).append("\r\n")
-		.append("adminnodeasdatanode=").append(adminnodeasdatanode).append("\r\n")
-		.append("limitstatement=").append(limitstatement).append("\r\n")
-		.append("startid=").append(startid).append("\r\n")
-		.append("endid=").append(endid).append("\r\n")
-		.append("blocks=").append(blocks).append("\r\n")
-		.append("excludeblocks=").append(excludeblocks).append("\r\n")
+		builder.append("datablocks=").append(datablocks).append(",")
+		.append("hdfsserver=").append(hdfsserver).append(",")
+		.append("hdfsdatadirpath=").append(hdfsdatadirpath).append(",")
+		.append("localdirpath=").append(localdirpath).append(",")
+		.append("pagesize=").append(pagesize).append(",")
+		.append("filebasename=").append(filebasename).append(",")
+		.append("geneworkthreads=").append(geneworkthreads).append(",")
+		.append("uploadeworkthreads=").append(uploadeworkthreads).append(",")
+		.append("genqueques=").append(genqueques).append(",")
+		.append("uploadqueues=").append(uploadqueues).append(",")
+		.append("genquequetimewait=").append(genquequetimewait).append(",")
+		.append("uploadqueuetimewait=").append(uploadqueuetimewait).append(",")
+		.append("genlocalfile=").append(genlocalfile).append(",")
+		.append("datatype=").append(datatype).append(",")
+		.append("usepagine=").append(usepagine).append(",")
+		.append("countstatement=").append(countstatement).append(",")
+		.append("pageinestatement=").append(pageinestatement).append(",")
+			.append("tablerows=").append(tablerows).append(",")
+		.append("querystatement=").append(querystatement).append(",")
+		.append("subquerystatement=").append(subquerystatement).append(",")
+		.append("adminnodeasdatanode=").append(adminnodeasdatanode).append(",")
+		.append("limitstatement=").append(limitstatement).append(",")
+		.append("startid=").append(startid).append(",")
+		.append("endid=").append(endid).append(",")
+		.append("blocks=").append(blocks).append(",")
+		.append("excludeblocks=").append(excludeblocks).append(",")
 		.append("clearhdfsfiles=").append(clearhdfsfiles);
 //		if(blocks != null && blocks.trim().length() > 0)
-			builder.append("\r\n").append("subblocks=").append(subblocks).append("\r\n");
+			builder.append(",").append("subblocks=").append(subblocks).append(",");
 		if(deletefiles != null)
-			builder.append("deletefiles=").append(deletefiles).append("\r\n");
+			builder.append("deletefiles=").append(deletefiles).append(",");
 		
 		if(this.stopdbnames != null)
-			builder.append("stopdbnames=").append(stopdbnames).append("\r\n");
+			builder.append("stopdbnames=").append(stopdbnames).append(",");
 		
 		if(this.reassigntaskNode != null)
-			builder.append("reassigntaskNode=").append(reassigntaskNode).append("\r\n").append("reassigntaskJobname=").append(this.reassigntaskJobname);
+			builder.append("reassigntaskNode=").append(reassigntaskNode).append(",").append("reassigntaskJobname=").append(this.reassigntaskJobname);
 		return builder.toString();
 		
 		
@@ -499,6 +500,12 @@ public class TaskConfig implements java.io.Serializable{
 	}
 	public void setRowsperfile(int rowsperfile) {
 		this.rowsperfile = rowsperfile;
+	}
+	public int getStartfileNo() {
+		return startfileNo;
+	}
+	public void setStartfileNo(int startfileNo) {
+		this.startfileNo = startfileNo;
 	}
 }
 

@@ -12,11 +12,12 @@ import java.util.Date;
 
 import org.apache.hadoop.fs.Path;
 import org.apache.log4j.Logger;
-
 import org.frameworkset.bigdata.imp.monitor.TaskStatus;
 
 public class FileSegment {
 	 private static Logger log = Logger.getLogger(FileSegment.class);
+	 boolean closed;
+	 boolean flushed;
 	 ExecutorJob job;
 	 TaskInfo taskInfo;
 	long genstarttimestamp;
@@ -84,17 +85,17 @@ public class FileSegment {
 	 {
 		 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
 		 StringBuilder builder = new StringBuilder();
-		 builder.append("taskNo="+taskInfo.taskNo).append("\r\n").append("filename="+taskInfo.filename).append("\r\n")
-			.append("pagesize=").append(taskInfo.pagesize).append("\r\n")
-			.append("start=").append(taskInfo.startoffset).append("\r\n")
-			.append("end=").append(taskInfo.endoffset).append("\r\n")
+		 builder.append("taskNo=").append(taskInfo.taskNo).append(",").append("filename=").append(taskInfo.filename).append(",")
+			.append("pagesize=").append(taskInfo.pagesize).append(",")
+			.append("start=").append(taskInfo.startoffset).append(",")
+			.append("end=").append(taskInfo.endoffset).append(",")
 			
-			.append("gen start timestamp=").append(genstarttimestamp > 0?format.format(new Date(genstarttimestamp)):"").append("\r\n")
-			.append("gen end timestamp=").append(genendtimestamp > 0?format.format(new Date(genendtimestamp)):"").append("\r\n");
+			.append("gen start timestamp=").append(genstarttimestamp > 0?format.format(new Date(genstarttimestamp)):"").append(",")
+			.append("gen end timestamp=").append(genendtimestamp > 0?format.format(new Date(genendtimestamp)):"").append(",");
 			if(this.job.genlocalfile())
 			{
-				builder.append("up start timestamp=").append(upstarttimestamp > 0?format.format(new Date(upstarttimestamp)):"").append("\r\n")
-				.append("up end timestamp=").append(upendtimestamp > 0?format.format(new Date(upendtimestamp)):"").append("\r\n");
+				builder.append("up start timestamp=").append(upstarttimestamp > 0?format.format(new Date(upstarttimestamp)):"").append(",")
+				.append("up end timestamp=").append(upendtimestamp > 0?format.format(new Date(upendtimestamp)):"").append(",");
 			}
 			builder.append("totalrows=").append(rows);
 		 return builder.toString();
@@ -144,11 +145,21 @@ public class FileSegment {
 	 }
 	 void flush() throws Exception
 	 {
+		 if(flushed)
+			 return;
 		 this.writer.flush();
+		 this.flushed = true;
 	 }
 	 void close()
 	 {
 		
+		 if(closed)
+			 return;
+		 else
+		 {
+			
+			 closed = true;
+		 }
 		 if(out != null )
 		 {
 			 try {
@@ -162,6 +173,15 @@ public class FileSegment {
 		 if(writer != null)
 		 {
 			 try {
+				 if(!flushed)
+				 {
+					try {
+						this.flush();
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} 
+				 }
 				writer.close();
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
@@ -252,5 +272,19 @@ public class FileSegment {
 	}
 	public void setErrorrows(long errorrows) {
 		this.errorrows = errorrows;
+	}
+	public boolean reachlimitsize() {
+		if(this.taskInfo.pagesize <= 0)
+			return false;
+		if(this.rows == this.taskInfo.pagesize) 
+			return true;
+		else
+			return false;
+	}
+	public boolean isClosed() {
+		return closed;
+	}
+	public boolean isFlushed() {
+		return flushed;
 	}
 }

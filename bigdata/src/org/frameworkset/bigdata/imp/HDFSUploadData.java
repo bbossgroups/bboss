@@ -170,6 +170,10 @@ public class HDFSUploadData {
 	boolean onejob;
 	String target ;
 	int rowsperfile;
+	/**
+	 * 开始文件号
+	 */
+	int startfileNo = -1;
 	
 	/**
 	 * 构建分派任务时调用，只需要设置基本信息即可
@@ -222,7 +226,26 @@ public class HDFSUploadData {
 		 config.setTarget(target);
 		 config.setRowsperfile(rowsperfile);
 		 config.setOnejob(onejob);
-		if(this.usepartition)
+		 config.setStartfileNo(startfileNo);
+		if(this.onejob)
+		{
+			if (this.querystatement == null || this.querystatement.equals("")) {
+				StringBuilder sqlbuilder = new StringBuilder();
+				sqlbuilder.append("select ");
+				if (config.columns != null && !config.columns.equals("")) {
+					sqlbuilder.append(config.columns);
+				} else
+					sqlbuilder.append("* ");
+				sqlbuilder.append(" from  ");
+				if (this.schema != null && !this.schema.equals(""))
+					sqlbuilder.append(config.schema).append(".");
+				sqlbuilder.append(config.tablename);
+				config.setQuerystatement(sqlbuilder.toString());
+			} else {
+				config.setQuerystatement(this.querystatement);
+			}
+		}
+		else if(this.usepartition)
 		{
 			if (this.querystatement == null || this.querystatement.equals("")) {
 				StringBuilder sqlbuilder = new StringBuilder();
@@ -235,9 +258,9 @@ public class HDFSUploadData {
 				if (this.schema != null && !this.schema.equals(""))
 					sqlbuilder.append(config.schema).append(".");
 				sqlbuilder.append(config.tablename).append(" #{partition}");
-				config.querystatement = sqlbuilder.toString();
+				config.setQuerystatement(sqlbuilder.toString());
 			} else {
-				config.querystatement = this.querystatement;
+				config.setQuerystatement(this.querystatement);
 			}
 			
 			
@@ -257,9 +280,9 @@ public class HDFSUploadData {
 				sqlbuilder.append(config.tablename).append(" where ")
 						.append(config.pkname).append("<=? and ")
 						.append(config.pkname).append(">=?");
-				config.querystatement = sqlbuilder.toString();
+				config.setQuerystatement(sqlbuilder.toString());
 			} else {
-				config.querystatement = this.querystatement;
+				config.setQuerystatement(this.querystatement);
 			}
 			
 			 
@@ -297,14 +320,17 @@ public class HDFSUploadData {
 
 		}
 		if (this.subquerystatement == null || this.subquerystatement.equals("")) {
-			StringBuilder sqlbuilder = new StringBuilder();
-			
-			sqlbuilder.append("select * ");
-			sqlbuilder.append(" from  ");
-			if (this.schema != null && !this.schema.equals(""))
-				sqlbuilder.append(config.schema).append(".");
-			sqlbuilder.append(this.subtablename).append(" where ").append(this.leftJoinby).append("=?");
-			config.subquerystatement= sqlbuilder.toString();
+			if(!SimpleStringUtil.isEmpty(subtablename))
+			{
+				StringBuilder sqlbuilder = new StringBuilder();
+				
+				sqlbuilder.append("select * ");
+				sqlbuilder.append(" from  ");
+				if (this.schema != null && !this.schema.equals(""))
+					sqlbuilder.append(config.schema).append(".");
+				sqlbuilder.append(this.subtablename).append(" where ").append(this.leftJoinby).append("=?");
+				config.subquerystatement= sqlbuilder.toString();
+			}
 		} else {
 			config.subquerystatement = this.subquerystatement;
 		}
@@ -480,11 +506,14 @@ public class HDFSUploadData {
 		 String target = context.getStringExtendAttribute(jobname,
 					"target");
 		 boolean onejob = context.getBooleanExtendAttribute(jobname,
-					"onejob",false); 	 
+					"single",false); 	 
 		 int rowsperfile = context.getIntExtendAttribute(jobname, "rowsperfile", 0);
+		 
 		 config.setTarget(target);
 		 config.setRowsperfile(rowsperfile);
 		 config.setOnejob(onejob);
+		 int startfileNo = context.getIntExtendAttribute(jobname, "startfileNo", -1);
+		 config.setStartfileNo(startfileNo);
 		boolean usepool = context.getBooleanExtendAttribute(jobname, "usepool",
 				false);
 
@@ -527,8 +556,45 @@ public class HDFSUploadData {
 		config.excludeblocks = excludeblocks_;
 		// config.blocksplits = blocksplits;
 		config.subblocks = subblocks;
-
-		if (!usepagine) {
+		if(onejob)
+		{
+			if (querystatement == null || querystatement.equals("")) {
+				StringBuilder sqlbuilder = new StringBuilder();
+				sqlbuilder.append("select ");
+				if (config.columns != null && !config.columns.equals("")) {
+					sqlbuilder.append(config.columns);
+				} else
+					sqlbuilder.append("* ");
+				sqlbuilder.append(" from  ");
+				if ( schema != null && ! schema.equals(""))
+					sqlbuilder.append(config.schema).append(".");
+				sqlbuilder.append(config.tablename);
+				config.setQuerystatement(sqlbuilder.toString());
+			} else {
+				config.setQuerystatement( querystatement);
+			}
+		}
+		else if( usepartition)
+		{
+			if ( querystatement == null ||  querystatement.equals("")) {
+				StringBuilder sqlbuilder = new StringBuilder();
+				sqlbuilder.append("select ");
+				if (config.columns != null && !config.columns.equals("")) {
+					sqlbuilder.append(config.columns);
+				} else
+					sqlbuilder.append("* ");
+				sqlbuilder.append(" from  ");
+				if ( schema != null && ! schema.equals(""))
+					sqlbuilder.append(config.schema).append(".");
+				sqlbuilder.append(config.tablename).append(" #{partition}");
+				config.setQuerystatement(sqlbuilder.toString());
+			} else {
+				config.setQuerystatement( querystatement);
+			}
+			
+			
+		}
+		else if (!usepagine) {
 			config.limitstatement = limitstatement;
 			if (querystatement == null || querystatement.equals("")) {
 				StringBuilder sqlbuilder = new StringBuilder();
@@ -543,9 +609,9 @@ public class HDFSUploadData {
 				sqlbuilder.append(config.tablename).append(" where ")
 						.append(config.pkname).append("<=? and ")
 						.append(config.pkname).append(">=?");
-				config.querystatement = sqlbuilder.toString();
+				config.setQuerystatement(sqlbuilder.toString());
 			} else {
-				config.querystatement = querystatement;
+				config.setQuerystatement( querystatement);
 			}
 		} else {
 			config.tablerows = tablerows;
@@ -562,15 +628,19 @@ public class HDFSUploadData {
 
 		}
 		
-		if (subquerystatement == null || subquerystatement.equals("")) {
-			StringBuilder sqlbuilder = new StringBuilder();
+		if (subquerystatement == null || subquerystatement.equals("") ) {
+			if(!SimpleStringUtil.isEmpty(subtablename))
+			{
+				StringBuilder sqlbuilder = new StringBuilder();
+				
+				sqlbuilder.append("select * ");
+				sqlbuilder.append(" from  ");
+				if (schema != null && !schema.equals(""))
+					sqlbuilder.append(config.schema).append(".");
+				sqlbuilder.append(subtablename).append(" where ").append(leftJoinby).append("=?");
+				config.subquerystatement= sqlbuilder.toString();
+			}
 			
-			sqlbuilder.append("select * ");
-			sqlbuilder.append(" from  ");
-			if (schema != null && !schema.equals(""))
-				sqlbuilder.append(config.schema).append(".");
-			sqlbuilder.append(subtablename).append(" where ").append(leftJoinby).append("=?");
-			config.subquerystatement= sqlbuilder.toString();
 		} else {
 			config.subquerystatement = subquerystatement;
 		}
@@ -1397,8 +1467,10 @@ public class HDFSUploadData {
 			 this.target = context.getStringExtendAttribute(jobname,
 						"target");
 			 this.onejob = context.getBooleanExtendAttribute(jobname,
-						"onejob",false); 	 
+						"single",false); 	 
 			 this.rowsperfile = context.getIntExtendAttribute(jobname, "rowsperfile", 0);
+			 startfileNo = context.getIntExtendAttribute(jobname, "startfileNo", -1);
+			 
 		this.fileSystem = HDFSServer.getFileSystem(hdfsserver);
 	}
 

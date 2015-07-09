@@ -296,10 +296,178 @@ public class WriteDataTask {
 		 	}
 	    }
 	 
-	private void runsingle()
-	{
-		
-	}
+	 int fileNo = 0;
+	 long pos = 0;
+	 long startpos = 0;
+	 
+	 private void initSegement() throws Exception
+	 {
+		 this.fileSegment = genFileHelper.createSingleFileSegment(fileNo, pos);
+	 		fileSegment.genstarttimestamp =  System.currentTimeMillis();
+	 		fileSegment.init();
+	 		log.info("开始生成文件："+fileSegment.toString());
+	 }
+	 
+	 private void finishSegement() throws Exception
+	 {
+		 	fileSegment.flush();
+			
+			fileSegment.genendtimestamp =  System.currentTimeMillis();
+			
+			genFileHelper.job.completeTask(fileSegment.taskInfo.taskNo);
+			if(fileSegment.taskStatus.getStatus() != 2)
+				fileSegment.taskStatus.setStatus(1);
+			fileSegment.taskStatus.setTaskInfo(fileSegment.toString());
+			log.info("生成文件结束："+fileSegment.toString());
+			fileSegment.close();
+			fileNo ++ ;
+	 }
+	 int offsetcount = 0;
+	 boolean startWithfileno ;
+	 private void gensinglepage()  
+	    {
+		 
+		 	TransactionManager tm = new TransactionManager();
+		 	StringBuilder errorinfo = new StringBuilder();
+		 	
+		 	try
+			 {
+		 		 buidler = new StringBuilder();
+		 		startWithfileno = genFileHelper.config.getStartfileNo() > 0 && genFileHelper.config.getRowsperfile() > 0;
+		 		 if(startWithfileno)
+		 		 {
+		 			 this.startpos = genFileHelper.config.getStartfileNo() * genFileHelper.config.getRowsperfile();
+		 		 }
+		 		 else
+		 		 {
+
+		 			 initSegement();//初始化第一个文档
+		 		 }
+			 
+		 		tm.begin(TransactionManager.RW_TRANSACTION);
+			  
+		 		SQLExecutor.queryWithDBNameByNullRowHandler(new ResultSetNullRowHandler(){
+		 			
+					@Override
+					public void handleRow(ResultSet row) throws Exception {
+						
+						if(genFileHelper.isforceStop())
+							throw new ForceStopException();
+						
+						if(startWithfileno)
+						{
+							if(offsetcount == startpos)
+							{
+								fileNo = genFileHelper.config.getStartfileNo();
+								pos = offsetcount;
+								 initSegement();//初始化第一个文档
+								 startWithfileno = false;
+							}
+							else if(offsetcount < startpos)
+							{
+								offsetcount ++;
+								return;
+							}
+							
+							
+						}
+						
+						write(  fileSegment,row);
+						pos ++;
+						
+						if(genFileHelper.isforceStop())
+							throw new ForceStopException();
+					 
+						 
+						if(fileSegment.reachlimitsize())
+						{
+//								fileSegment.flush();
+//								
+//								fileSegment.genendtimestamp =  System.currentTimeMillis();
+//								fileSegment.close();
+//								genFileHelper.job.completeTask(fileSegment.taskInfo.taskNo);
+//								
+//								log.info("生成文件结束："+fileSegment.toString());
+//								fileNo ++ ;
+							finishSegement();
+//								fileSegment =  genFileHelper.createSingleFileSegment(fileNo, pos);
+//								fileSegment.genstarttimestamp =  System.currentTimeMillis();
+//							 	fileSegment.init();
+//							 	log.info("开始生成文件："+fileSegment.toString());
+							initSegement();
+						}
+						 
+					}
+		    		
+		    	}, genFileHelper.getDBName(), genFileHelper.getQuerystatement());
+			 	 
+			 	tm.commit();
+			 	if(!fileSegment.isFlushed())//所有的数据放到一个文件中
+			 	{
+//				 	fileSegment.flush();
+//					fileSegment.genendtimestamp =  System.currentTimeMillis();
+//					this.genFileHelper.job.completeTask(fileSegment.taskInfo.taskNo);
+//					log.info("生成文件结束："+fileSegment.toString());
+			 		finishSegement();
+			 	}
+		    }
+		 	catch(ForceStopException e)
+		    {
+		 		if(fileSegment != null)//所有的数据放到一个文件中
+		 		{
+					fileSegment.taskStatus.setStatus(2);
+					 
+					fileSegment.taskStatus.setErrorInfo("强制停止任务！");
+					fileSegment.taskStatus.setTaskInfo(fileSegment.toString());
+		 		}
+				return ;
+		    }
+			catch (Exception e) {
+				if(fileSegment != null)//所有的数据放到一个文件中
+				{
+					this.genFileHelper.job.completeTask(fileSegment.taskInfo.taskNo);
+					fileSegment.taskStatus.setStatus(2);
+					 
+					fileSegment.taskStatus.setErrorInfo(SimpleStringUtil.exceptionToString(e));
+					fileSegment.taskStatus.setTaskInfo(fileSegment.toString());
+					log.error("生成文件异常结束："+fileSegment.toString(),e);
+				}
+				errorinfo.append(SimpleStringUtil.exceptionToString(e)).append("\r\n");
+				return;
+			}
+			finally
+			{
+				tm.release();
+				this.buidler = null;
+				if(fileSegment != null && !fileSegment.isClosed())//所有的数据放到一个文件中
+				{
+					fileSegment.close();
+				}
+				
+				cleanSingleJob( errorinfo);
+				
+			}
+		 	
+	    }
+	 
+	 private void cleanSingleJob(StringBuilder errorinfo)
+		{
+			 
+			 if(errorinfo.length() == 0)
+			 {
+				 
+				 this.genFileHelper.job.jobStatic.setStatus(1);
+			 }
+			 else
+			 {
+				 this.genFileHelper.job.jobStatic.setStatus(2);
+				 this.genFileHelper.job.jobStatic.setErrormsg(errorinfo.toString());
+			 }
+			
+			 this.genFileHelper.job.jobStatic.setEndTime(System.currentTimeMillis());
+			 
+			
+		}
 	 
 	private void runmulti()
 	{
@@ -361,7 +529,7 @@ public class WriteDataTask {
 			runmulti();
 		else
 		{
-			runsingle();
+			gensinglepage();
 			
 		}
 	}

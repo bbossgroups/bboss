@@ -50,7 +50,7 @@ public class ExecutorJob {
 	 {
 		 synchronized(jobStatic)
 		 {
-			 this.jobStatic.getUndotaskNos().remove(taskNo);
+			 this.jobStatic.completeTask(taskNo);
 		 }
 	 }
 	 
@@ -64,7 +64,9 @@ public class ExecutorJob {
 		 GenFileHelper helper = new GenFileHelper(this);
 		 WriteDataTask wtask = new WriteDataTask(helper);
 		 wtask.run();
+		
 	 }
+	 
 	private void doMultiTasks()
 	{
 		genfileQueues = new ArrayBlockingQueue<FileSegment>(config.getGenqueques()); 
@@ -122,6 +124,28 @@ public class ExecutorJob {
 		}
 	}
 	
+	public FileSegment createSingleFileSegment(int fileNo,long startid)
+	{
+		 FileSegment segement = new FileSegment();
+		 TaskInfo taskInfo = new TaskInfo();
+		 taskInfo.taskNo = fileNo+"";
+		 taskInfo.filename = this.config.getFilebasename()+"_"+fileNo;
+		 taskInfo.startoffset = startid;
+		 taskInfo.pagesize = this.config.getRowsperfile();
+		 synchronized(jobStatic)//就是为了获得锁，如果在分配任务则忽略处理
+		 {
+			 
+			 segement.job = this;
+			 segement.taskInfo = taskInfo;
+			 TaskStatus taskStatus = Imp.getImpStaticManager().addJobTaskStatic(jobStatic, taskInfo,fileNo);
+			 segement.setTaskStatus(taskStatus);			 
+			 taskStatus.setStatus(0);
+			 jobStatic.incrementtotaltasks();
+			
+		 }
+		 return segement;
+		 
+	}
 	
 	private void run(int startpos)
 	{

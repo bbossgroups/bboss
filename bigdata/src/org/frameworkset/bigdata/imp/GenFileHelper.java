@@ -96,5 +96,17 @@ public class GenFileHelper {
 		}
 
 	}
+	public String getDBName() {
+		// TODO Auto-generated method stub
+		return this.config.getDbname();
+	}
+	public String getQuerystatement() {
+		// TODO Auto-generated method stub
+		return this.config.getQuerystatement();
+	}
+	public FileSegment createSingleFileSegment(int fileNo, long startid) {
+		// TODO Auto-generated method stub
+		return this.job.createSingleFileSegment(fileNo, startid);
+	}
 
 }
