@@ -6,6 +6,7 @@ import java.util.concurrent.BlockingQueue;
 import org.apache.log4j.Logger;
 
 import com.frameworkset.common.poolman.DBUtil;
+import com.frameworkset.common.poolman.NestedSQLException;
 import com.frameworkset.common.poolman.SQLExecutor;
 import com.frameworkset.common.poolman.handle.ResultSetNullRowHandler;
 import com.frameworkset.common.poolman.sql.PoolManResultSetMetaData;
@@ -305,6 +306,7 @@ public class WriteDataTask {
 		 this.fileSegment = genFileHelper.createSingleFileSegment(fileNo, pos);
 	 		fileSegment.genstarttimestamp =  System.currentTimeMillis();
 	 		fileSegment.init();
+	 		fileSegment.taskStatus.setTaskInfo(fileSegment.toString());
 	 		log.info("开始生成文件："+fileSegment.toString());
 	 }
 	 
@@ -411,6 +413,48 @@ public class WriteDataTask {
 			 		finishSegement();
 			 	}
 		    }
+		 	catch(NestedSQLException e)
+		 	{
+		 		Throwable innere = e.getCause();
+		 		if(innere == null)
+		 		{
+		 			if(fileSegment != null)//所有的数据放到一个文件中
+					{
+						this.genFileHelper.job.completeTask(fileSegment.taskInfo.taskNo);
+						fileSegment.taskStatus.setStatus(2);
+						 
+						fileSegment.taskStatus.setErrorInfo(SimpleStringUtil.exceptionToString(e));
+						fileSegment.taskStatus.setTaskInfo(fileSegment.toString());
+						log.error("生成文件异常结束："+fileSegment.toString(),e);
+					}
+					errorinfo.append(SimpleStringUtil.exceptionToString(e)).append("\r\n");
+		 		}
+		 		else if(innere instanceof ForceStopException)
+		 		{
+		 			if(fileSegment != null)//所有的数据放到一个文件中
+			 		{
+						fileSegment.taskStatus.setStatus(2);
+						 
+						fileSegment.taskStatus.setErrorInfo("强制停止任务！");
+						fileSegment.taskStatus.setTaskInfo(fileSegment.toString());
+			 		}
+		 		}
+		 		else
+		 		{
+		 			if(fileSegment != null)//所有的数据放到一个文件中
+					{
+						this.genFileHelper.job.completeTask(fileSegment.taskInfo.taskNo);
+						fileSegment.taskStatus.setStatus(2);
+						 
+						fileSegment.taskStatus.setErrorInfo(SimpleStringUtil.exceptionToString(innere));
+						fileSegment.taskStatus.setTaskInfo(fileSegment.toString());
+						log.error("生成文件异常结束："+fileSegment.toString(),innere);
+					}
+					errorinfo.append(SimpleStringUtil.exceptionToString(innere)).append("\r\n");
+		 		}
+		 		return;
+		 		
+		 	}
 		 	catch(ForceStopException e)
 		    {
 		 		if(fileSegment != null)//所有的数据放到一个文件中
@@ -455,8 +499,8 @@ public class WriteDataTask {
 			 
 			 if(errorinfo.length() == 0)
 			 {
-				 
-				 this.genFileHelper.job.jobStatic.setStatus(1);
+				 if(this.genFileHelper.job.jobStatic.getStatus() == 0 || this.genFileHelper.job.jobStatic.getStatus() == -1)
+					 this.genFileHelper.job.jobStatic.setStatus(1);
 			 }
 			 else
 			 {
@@ -482,6 +526,38 @@ public class WriteDataTask {
 			this.genFileHelper.job.completeTask(fileSegment.taskInfo.taskNo);
 			log.info("生成文件结束："+fileSegment.toString());
 		} 
+		catch(NestedSQLException e)
+	 	{
+	 		Throwable innere = e.getCause();
+	 		if(innere == null)
+	 		{
+	 			this.genFileHelper.job.completeTask(fileSegment.taskInfo.taskNo);
+				fileSegment.taskStatus.setStatus(2);
+				 
+				fileSegment.taskStatus.setErrorInfo(SimpleStringUtil.exceptionToString(e));
+				log.error("生成文件异常结束："+fileSegment.toString(),e);
+				if(genFileHelper.genlocalfile())
+					genFileHelper.countdownupfilecount();
+	 		}
+	 		else if(innere instanceof ForceStopException)
+	 		{
+	 			fileSegment.taskStatus.setStatus(2);
+				 
+				fileSegment.taskStatus.setErrorInfo("强制停止任务！");
+	 		}
+	 		else
+	 		{
+	 			this.genFileHelper.job.completeTask(fileSegment.taskInfo.taskNo);
+				fileSegment.taskStatus.setStatus(2);
+				 
+				fileSegment.taskStatus.setErrorInfo(SimpleStringUtil.exceptionToString(innere));
+				log.error("生成文件异常结束："+fileSegment.toString(),innere);
+				if(genFileHelper.genlocalfile())
+					genFileHelper.countdownupfilecount();
+	 		}
+	 		return;
+	 		
+	 	}
 		catch(ForceStopException e)
 	    {
 			fileSegment.taskStatus.setStatus(2);
