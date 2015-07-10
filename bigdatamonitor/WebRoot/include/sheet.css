@@ -157,6 +157,16 @@ table img{cursor:pointer;}
 	white-space:nowrap;
 }
 
+.stable .tdwrap {
+	white-space:normal;
+}
+.stable .pwrap {	
+	word-wrap:break-word;word-break:break-all;
+}
+
+
+
+
 .stable .td_left{
 	text-align:left; padding-left:10px;
 }
@@ -568,4 +578,5 @@ a.aToolTipCloseBtn {
 .sDefault th{ font-weight:bold;	border-bottom: 1px solid #CBC8C8;padding:3px 3px;background: #E8E8E8 url(../images/th_bg.jpg) repeat-x left top}
 .sDefault-Fixed{background-color:#fff;border-color:#c5c5c5;}
 .sDefault-Main{}
-.sDataTable{border:1px solid #336699;}
+.sDataTable{border:1px solid #336699;}lt-Main{}
+.sDataTable{border:1px solid #336699;}able{border:1px solid #336699;}

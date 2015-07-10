@@ -378,7 +378,7 @@ function submitJob () {
 			<div id="datanodes" style="overflow: auto">
 				<div id="changeColor">
 					<table width="100%" border="0" cellpadding="0" cellspacing="0"
-						class="stable" id="tb">
+						class="stable stableS" id="tb">
 						<tr>
 
 							<td width="20%" colspan="2"><b>作业管理节点：${adminNode} &nbsp; <br>总任务数：<pg:cell colName="totaltasks"/> &nbsp;  完成任务数：<pg:cell colName="completetasks"/>&nbsp;
@@ -392,7 +392,7 @@ function submitJob () {
 
 								<td width="20%"><pg:rowid increament="1"/><b>.</b>&nbsp; <a href="#<pg:cell />">数据处理节点：<pg:cell /></a>
 									</td>
-								<td><pg:map index="0" colName="jobstaticsIdxByHost" keycell="true">
+								<td class="tdwrap"><pg:map index="0" colName="jobstaticsIdxByHost" keycell="true">
 									运行状态:<pg:case colName="status">
 											<pg:equal value="-1">未开始</pg:equal>
 											<pg:equal value="0">正在运行</pg:equal>
@@ -409,7 +409,10 @@ function submitJob () {
 											失败任务数：<pg:cell colName="failtasks"/>&nbsp;&nbsp;
 											等待执行任务数：<pg:cell colName="waittasks"/>&nbsp;&nbsp;
 											未开始任务数：<pg:cell colName="unruntasks"/>&nbsp;&nbsp;<br>
-											完成记录数：<pg:cell colName="successrecords"/>  &nbsp; 失败记录数：<pg:cell colName="failerecords"/><br>											
+											完成记录数：<pg:cell colName="successrecords"/>  &nbsp; 失败记录数：<pg:cell colName="failerecords"/><br>
+											已完成作业号:<pg:notempty colName="completetaskNos" evalbody="true"><pg:yes><br><p class="pwrap"><pg:cell colName="completetaskNos"/></p></pg:yes><pg:no><br></pg:no> </pg:notempty>
+											未完成作业号:<pg:notempty colName="undotaskNos" evalbody="true"><pg:yes><br><p class="pwrap"><pg:cell colName="undotaskNos"/></p></pg:yes><pg:no><br></pg:no> </pg:notempty>
+											失败作业号:<pg:notempty colName="failedtaskNos" evalbody="true"><pg:yes><br><p class="pwrap"> <pg:cell colName="failedtaskNos"/></p></pg:yes><pg:no><br></pg:no> </pg:notempty>									
 											错误日志:<pg:cell colName="errormsg" />
 											
 									</pg:map>	</td>	
@@ -535,7 +538,7 @@ function submitJob () {
 										成功行数:<pg:cell colName="handlerows" />&nbsp;&nbsp;
 										错误行数:<pg:cell colName="errorrows" />
 										</td>
-										<td ><pg:cell colName="taskInfo" /></td>
+										<td class="tdwrap"><pg:cell colName="taskInfo" /></td>
 										<td ><pg:cell colName="errorInfo" /></td>
 
 									</tr>
