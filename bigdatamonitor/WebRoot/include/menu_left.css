@@ -38,7 +38,9 @@ body {
 }
 
 .left_menu .select_links .select_links a:link,.left_menu .select_links .select_links a:visited {
-	color: #2879E2;
+	  color: white;
+  background-color: blue;
+  font-weight: bolder;
 }
 
 

@@ -247,8 +247,9 @@ function submitJob () {
 					<li class="select_links"><a href="javascript:void(0);">作业清单：</a><a href="javascript:void(0);" class="bt_small" id="synJobStatus"><span>同步作业状态</span></a>
 						<ul style="display: block;" id="job_tree_module">
 							<pg:list colName="allJobNames">
-								<li id="<pg:cell/>"><a href="javascript:void(0)"
-									onclick="doClickTreeNode('<pg:cell/>')"><pg:cell /></a>	
+								<li id="<pg:cell/>" <pg:equal expressionValue="{0.jobName}">class="select_links"</pg:equal>>
+								<a href="javascript:void(0)"
+									onclick="doClickTreeNode('<pg:cell/>')"><b><pg:cell /></b></a>	
 									
 									</li>
 							</pg:list>
@@ -449,14 +450,14 @@ function submitJob () {
 							<tr>
 
 								<th>已完成作业任务</th>
-								<td><textarea height="200px"><pg:cell colName="successTaskNos"/></textarea></td>
+								<td class="tdwrap"><p class="pwrap"><pg:cell colName="successTaskNos"/></p></td>
 
 
 							</tr>
 							<tr>
 
 								<th>未执行作业任务</th>
-								<td><textarea height="200px"><pg:cell colName="undotaskNos"/></textarea></td>
+								<td class="tdwrap"><p class="pwrap"><pg:cell colName="undotaskNos"/></p></td>
 
 
 							</tr>
@@ -464,7 +465,7 @@ function submitJob () {
 							<tr>
 
 								<th>失败作业任务</th>
-								<td><textarea height="200px"><pg:cell colName="failedTaskNos"/></textarea></td>
+								<td class="tdwrap"><p class="pwrap"><pg:cell colName="failedTaskNos"/></p></td>
 
 
 							</tr>
