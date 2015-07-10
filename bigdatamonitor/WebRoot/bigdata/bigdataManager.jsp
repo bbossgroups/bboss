@@ -19,19 +19,6 @@
 
 <style type="text/css">
 <!--
-#rightContentDiv {
-	position: absolute;
-	margin-left: 220px;
-	margin-right: 8px;
-	width: 80.5%;
-}
-
-#leftContentDiv {
-	width: 200px;
-	position: absolute;
-	left: 0px;
-	padding-left: 20px;
-}
 -->
 </style>
 
@@ -234,21 +221,21 @@ function submitJob () {
 </script>
 </head>
 
-<body>
+<body><a name="top"></a>
 	<div class="mcontent"
 		style="width: 98%; margin: 0 auto; overflow: auto;">
 
+		
 
+		<div id="leftContentDiv" class="leftContentDiv">
 
-		<div id="leftContentDiv">
-
-			<div class="left_menu" style="width: 193px;">
+			<div class="left_menu" ">
 				<ul>
 					<li class="select_links"><a href="javascript:void(0);">作业清单：</a><a href="javascript:void(0);" class="bt_small" id="synJobStatus"><span>同步作业状态</span></a>
 						<ul style="display: block;" id="job_tree_module">
 							<pg:list colName="allJobNames">
 								<li id="<pg:cell/>" <pg:equal expressionValue="{0.jobName}">class="select_links"</pg:equal>>
-								<a href="javascript:void(0)"
+								<a href="javascript:void(0)" name="backTop"
 									onclick="doClickTreeNode('<pg:cell/>')"><b><pg:cell /></b></a>	
 									
 									</li>
@@ -260,10 +247,10 @@ function submitJob () {
 
 		</div>
 
-		<div id="rightContentDiv">
+		<div id="rightContentDiv" class="rightContentDiv">
 
 			
-			<div id="datanodes" style="overflow: auto">
+			<div id="datanodes" style="overflow: auto" class="fixedhead">
 				<div id="changeColor">
 			
 				
@@ -314,7 +301,7 @@ function submitJob () {
 				
 			
 			</div></div>
-				<div id="datanodes" style="overflow: auto">
+				<div id="datanodes" style="overflow: auto;margin-top:41px;">
 				<div id="changeColor">
 					<form id="queryForm" name="queryForm">
 						<input type="hidden" name="job" id="job"
@@ -372,7 +359,7 @@ function submitJob () {
 			<div class="title_box">
 
 
-				<strong><span id="titileSpan">所有作业节点</span><a name="top"></a></strong>
+				<strong><span id="titileSpan">所有作业节点</span></strong>
 
 			</div>
 
@@ -555,6 +542,7 @@ function submitJob () {
 			</div>
 		</div>
 	</div>
+	<a href="#top" class="backTop" title="返回顶部"></a>
 </body>
 	</html>
 </pg:beaninfo>

@@ -88,9 +88,9 @@ public class DBHelper {
 	}
 	private static int evalpoolsize(int genworkthread)
 	{
-		int poolsize = genworkthread + genworkthread / 4;
-		if(poolsize  < 10 )
-			poolsize  = 10;
+		int poolsize = genworkthread + 2;
+//		if(poolsize  < 10 )
+//			poolsize  = 10;
 		return poolsize;
 	}
 	public static void initDB(TaskConfig taskConfig)

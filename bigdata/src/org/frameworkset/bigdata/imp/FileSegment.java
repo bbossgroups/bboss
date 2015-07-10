@@ -97,7 +97,7 @@ public class FileSegment {
 				builder.append("up start timestamp=").append(upstarttimestamp > 0?format.format(new Date(upstarttimestamp)):"").append(",")
 				.append("up end timestamp=").append(upendtimestamp > 0?format.format(new Date(upendtimestamp)):"").append(",");
 			}
-			builder.append("totalrows=").append(rows);
+			builder.append(" totalrows=").append(rows);
 		 return builder.toString();
 	 }
 	 void init() throws Exception

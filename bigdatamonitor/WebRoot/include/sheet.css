@@ -578,5 +578,8 @@ a.aToolTipCloseBtn {
 .sDefault th{ font-weight:bold;	border-bottom: 1px solid #CBC8C8;padding:3px 3px;background: #E8E8E8 url(../images/th_bg.jpg) repeat-x left top}
 .sDefault-Fixed{background-color:#fff;border-color:#c5c5c5;}
 .sDefault-Main{}
-.sDataTable{border:1px solid #336699;}lt-Main{}
-.sDataTable{border:1px solid #336699;}able{border:1px solid #336699;}
+.sDataTable{border:1px solid #336699;}
+
+.fixedhead{position:fixed;top:0;width:82.3%;}
+.backTop{width:50px;height:50px;display:block;background:url(../images/backTop.png) no-repeat #333;position:fixed;right:10px;bottom:5%;opacity:0.3;filter:Alpha(opacity=30);}
+city=30);}
