@@ -157,6 +157,8 @@ public class HDFSUploadData {
 	 * 使用表的分区进行任务切割
 	 */
 	private boolean usepartition;
+	private String partitions;
+	private String excludepartitions;
 	private String leftJoinby;
 	private String rightJoinby;
 	/**
@@ -219,6 +221,8 @@ public class HDFSUploadData {
 		config.excludeblocks = this.excludeblocks_str;
 		config.blocks = this.blocks_str;
 		config.setUsepartition(this.usepartition);
+		config.setPartitions(partitions);
+		config.setExcludepartitions(excludepartitions);
 		config.setSubtablename(subtablename);;
 		config.setLeftJoinby(leftJoinby);
 		config.setRightJoinby(rightJoinby);
@@ -486,10 +490,17 @@ public class HDFSUploadData {
 				"reassigntaskJobname");
 		boolean usepartition = context.getBooleanExtendAttribute(jobname,
 				"usepartition",false);
+		String partitions = context.getStringExtendAttribute(jobname,
+				"partitions");
+		config.setPartitions(partitions);
+		
+		String excludepartitions = context.getStringExtendAttribute(jobname,
+				"excludepartitions");
+		config.setExcludepartitions(excludepartitions);
 		config.setUsepartition(usepartition);
 		String subtablename = context.getStringExtendAttribute(jobname,
 				"subtablename");
-		config.setSubtablename(subtablename);;
+		config.setSubtablename(subtablename);
 		String leftJoinby = context.getStringExtendAttribute(jobname,
 				"leftJoinby");
 		config.setLeftJoinby(leftJoinby);
@@ -905,22 +916,64 @@ public class HDFSUploadData {
 		long segement = 0l;
 		if(this.usepartition)//分区操作
 		{
-			
-			StringBuilder queryPartitions = new StringBuilder();
-			if(!SimpleStringUtil.isEmpty(schema))
+			List<String> partitions = null;
+			if(SimpleStringUtil.isEmpty(this.partitions))//没有指定执行的分区
 			{
-				queryPartitions.append("SELECT PARTITION_NAME FROM ALL_TAB_PARTITIONS WHERE TABLE_NAME=upper('").append(this.tablename).append("') and table_owner='").append(this.schema).append("' and NUM_rows>0");
-			}
-			else
-				queryPartitions.append("SELECT PARTITION_NAME FROM USER_TAB_PARTITIONS WHERE TABLE_NAME=upper('").append(this.tablename).append("')  and NUM_rows>0");
-			
-			List<String> partitions = SQLExecutor.queryListWithDBName(String.class, this.dbname,queryPartitions.toString());
-			if(partitions != null && partitions.size() > 0)
-			{
-				segments = new TaskInfo[partitions.size()];
-				for(int i = 0; i < partitions.size(); i ++)
+				StringBuilder queryPartitions = new StringBuilder();
+				if(!SimpleStringUtil.isEmpty(schema))
 				{
-					String partition = partitions.get(i);
+					queryPartitions.append("SELECT PARTITION_NAME FROM ALL_TAB_PARTITIONS WHERE TABLE_NAME=upper('").append(this.tablename).append("') and table_owner='").append(this.schema).append("' and NUM_rows>0");
+				}
+				else
+					queryPartitions.append("SELECT PARTITION_NAME FROM USER_TAB_PARTITIONS WHERE TABLE_NAME=upper('").append(this.tablename).append("')  and NUM_rows>0");
+				
+				partitions = SQLExecutor.queryListWithDBName(String.class, this.dbname,queryPartitions.toString());
+				if(partitions != null && partitions.size() > 0)
+				{
+					if(!SimpleStringUtil.isEmpty(excludepartitions))//如果指定了不需要执行的分区，则过滤排除的分区，这个和excludeblocks功能类似，但是用于第一次执行作业时使用，excludeblocks不能用于第一次作业
+					{
+						String[] epts = this.excludepartitions.split(",");						
+						List<String> temppts = new ArrayList<String>();
+						for(int i = 0; i < partitions.size(); i ++)
+						{
+							String pt = partitions.get(i);
+							boolean exclude = false;
+							for(String ept:epts )
+							{
+								if(pt.equalsIgnoreCase(ept))
+								{
+									exclude = true;
+									break;
+								}
+							}
+							if(!exclude)
+							{
+								temppts.add(pt);
+							}
+						}
+						partitions = temppts;
+					}
+					
+					
+					segments = new TaskInfo[partitions.size()];
+					for(int i = 0; i < partitions.size(); i ++)
+					{
+						String partition = partitions.get(i);
+						TaskInfo taskInfo = new TaskInfo();
+						taskInfo.partitionName = partition; 
+						taskInfo.taskNo = i + "";
+						taskInfo.filename = partition;
+						segments[i] = taskInfo;
+					}
+				}
+			}
+			else //指定了执行的分区，有时候有新的分区，需要独立执行，就可以使用这个办法
+			{
+				String[] pts = this.partitions.split(",");
+				segments = new TaskInfo[pts.length];
+				for(int i = 0; i < pts.length; i ++)
+				{
+					String partition = pts[i];
 					TaskInfo taskInfo = new TaskInfo();
 					taskInfo.partitionName = partition; 
 					taskInfo.taskNo = i + "";
@@ -928,6 +981,7 @@ public class HDFSUploadData {
 					segments[i] = taskInfo;
 				}
 			}
+			
 			
 		}
 		else if (!this.usepagine) // 按主键范围切割数据，可能导致数据不均匀
@@ -1456,6 +1510,10 @@ public class HDFSUploadData {
 		usepool = context.getBooleanExtendAttribute(jobname, "usepool", false);
 		usepartition = context.getBooleanExtendAttribute(jobname,
 				"usepartition",false);
+		partitions = context.getStringExtendAttribute(jobname,
+				"partitions");
+		excludepartitions = context.getStringExtendAttribute(jobname,
+				"excludepartitions");
 		subtablename = context.getStringExtendAttribute(jobname,
 				"subtablename");
 		  leftJoinby = context.getStringExtendAttribute(jobname,
@@ -2069,6 +2127,22 @@ public class HDFSUploadData {
 
 	public void setRowsperfile(int rowsperfile) {
 		this.rowsperfile = rowsperfile;
+	}
+
+	public String getPartitions() {
+		return partitions;
+	}
+
+	public void setPartitions(String partitions) {
+		this.partitions = partitions;
+	}
+
+	public String getExcludepartitions() {
+		return excludepartitions;
+	}
+
+	public void setExcludepartitions(String excludepartitions) {
+		this.excludepartitions = excludepartitions;
 	}
 
 }

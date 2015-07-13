@@ -22,6 +22,8 @@ public class TaskConfig implements java.io.Serializable{
 	 * 使用表的分区进行任务切割
 	 */
 	private boolean usepartition;
+	private String partitions;
+	private String excludepartitions;
 	private String leftJoinby;
 	private String rightJoinby;
 	/**
@@ -506,6 +508,18 @@ public class TaskConfig implements java.io.Serializable{
 	}
 	public void setStartfileNo(int startfileNo) {
 		this.startfileNo = startfileNo;
+	}
+	public String getPartitions() {
+		return partitions;
+	}
+	public void setPartitions(String partitions) {
+		this.partitions = partitions;
+	}
+	public String getExcludepartitions() {
+		return excludepartitions;
+	}
+	public void setExcludepartitions(String excludepartitions) {
+		this.excludepartitions = excludepartitions;
 	}
 }
 
