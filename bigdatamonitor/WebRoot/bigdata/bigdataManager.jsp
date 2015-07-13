@@ -398,9 +398,7 @@ function submitJob () {
 											等待执行任务数：<pg:cell colName="waittasks"/>&nbsp;&nbsp;
 											未开始任务数：<pg:cell colName="unruntasks"/>&nbsp;&nbsp;<br>
 											完成记录数：<pg:cell colName="successrecords"/>  &nbsp; 失败记录数：<pg:cell colName="failerecords"/><br>
-											已完成作业号:<pg:notempty colName="completetaskNos" evalbody="true"><pg:yes><br><p class="pwrap"><pg:cell colName="completetaskNos"/></p></pg:yes><pg:no><br></pg:no> </pg:notempty>
-											未完成作业号:<pg:notempty colName="undotaskNos" evalbody="true"><pg:yes><br><p class="pwrap"><pg:cell colName="undotaskNos"/></p></pg:yes><pg:no><br></pg:no> </pg:notempty>
-											失败作业号:<pg:notempty colName="failedtaskNos" evalbody="true"><pg:yes><br><p class="pwrap"> <pg:cell colName="failedtaskNos"/></p></pg:yes><pg:no><br></pg:no> </pg:notempty>									
+																				
 											错误日志:<pg:cell colName="errormsg" />
 											
 									</pg:map>	</td>	
@@ -427,8 +425,8 @@ function submitJob () {
 								class="stable" id="tb">
 							<tr>
 
-								<th>作业配置</th>
-								<td><textarea height="200px"><pg:cell colName="jobconfig"/></textarea></td>
+								<th width="10%">作业配置</th>
+								<td><textarea ><pg:cell colName="jobconfig"/></textarea></td>
 
 
 							</tr>
@@ -437,14 +435,14 @@ function submitJob () {
 							<tr>
 
 								<th>已完成作业任务</th>
-								<td class="tdwrap"><p class="pwrap"><pg:cell colName="successTaskNos"/></p></td>
+								<td class="tdwrap"><textarea class="smalltextarea"><pg:cell colName="successTaskNos"/></textarea></td>
 
 
 							</tr>
 							<tr>
 
 								<th>未执行作业任务</th>
-								<td class="tdwrap"><p class="pwrap"><pg:cell colName="undotaskNos"/></p></td>
+								<td class="tdwrap"><textarea class="smalltextarea"><pg:cell colName="undotaskNos"/></textarea></td>
 
 
 							</tr>
@@ -452,7 +450,7 @@ function submitJob () {
 							<tr>
 
 								<th>失败作业任务</th>
-								<td class="tdwrap"><p class="pwrap"><pg:cell colName="failedTaskNos"/></p></td>
+								<td class="tdwrap"><textarea class="smalltextarea"><pg:cell colName="failedTaskNos"/></textarea></td>
 
 
 							</tr>
@@ -494,7 +492,10 @@ function submitJob () {
 											
 											失败任务数：<pg:cell colName="failtasks"/>&nbsp;&nbsp;
 											等待执行任务数：<pg:cell colName="waittasks"/>&nbsp;&nbsp;
-											未开始任务数：<pg:cell colName="unruntasks"/>&nbsp;&nbsp;<br>											 
+											未开始任务数：<pg:cell colName="unruntasks"/>&nbsp;&nbsp;<br>	
+											已完成作业号:<pg:notempty colName="completetaskNos" evalbody="true"><pg:yes><br><textarea class="smalltextarea"><pg:cell colName="completetaskNos"/></textarea><br></pg:yes><pg:no><br></pg:no> </pg:notempty>
+											未完成作业号:<pg:notempty colName="undotaskNos" evalbody="true"><pg:yes><br><textarea class="smalltextarea"><pg:cell colName="undotaskNos"/></textarea><br></pg:yes><pg:no><br></pg:no> </pg:notempty>
+											失败作业号:<pg:notempty colName="failedtaskNos" evalbody="true"><pg:yes><br><textarea class="smalltextarea"> <pg:cell colName="failedtaskNos"/></textarea><br></pg:yes><pg:no><br></pg:no> </pg:notempty>										 
 											错误日志:<pg:cell colName="errormsg" />
 											</td>
 
@@ -526,7 +527,7 @@ function submitJob () {
 										成功行数:<pg:cell colName="handlerows" />&nbsp;&nbsp;
 										错误行数:<pg:cell colName="errorrows" />
 										</td>
-										<td class="tdwrap"><pg:cell colName="taskInfo" /></td>
+										<td ><pg:cell colName="taskInfo" /></td>
 										<td ><pg:cell colName="errorInfo" /></td>
 
 									</tr>

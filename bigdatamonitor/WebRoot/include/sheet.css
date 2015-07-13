@@ -383,6 +383,10 @@ textarea ,.tarea
   padding:3px 0 2px 3px;
   background: #fff url(../images/input-bg.png) no-repeat 0px 0px;
 }
+.smalltextarea
+{
+	height:50px;
+}
 .tarea
 {
   width:618px;
@@ -582,4 +586,3 @@ a.aToolTipCloseBtn {
 
 .fixedhead{position:fixed;top:0;width:82.3%;}
 .backTop{width:50px;height:50px;display:block;background:url(../images/backTop.png) no-repeat #333;position:fixed;right:10px;bottom:5%;opacity:0.3;filter:Alpha(opacity=30);}
-city=30);}

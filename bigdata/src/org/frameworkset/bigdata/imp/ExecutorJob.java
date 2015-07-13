@@ -211,7 +211,9 @@ public class ExecutorJob {
 		}
 		 if(errorinfo.length() == 0)
 		 {
-			 jobStatic.setStatus(1);
+//			 jobStatic.setStatus(1);
+			 if( jobStatic.getStatus() == 0 ||  jobStatic.getStatus() == -1)
+				 jobStatic.setStatus(1);
 		 }
 		 else
 		 {
