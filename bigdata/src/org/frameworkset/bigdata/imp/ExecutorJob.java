@@ -222,8 +222,10 @@ public class ExecutorJob {
 		 }
 		 if(jobStatic.isforceStop())
 		 {
-			 this.upfileQueues.clear();
-			 this.genfileQueues.clear();
+			 if(upfileQueues != null)
+				 this.upfileQueues.clear();
+			 if(genfileQueues != null)
+				 this.genfileQueues.clear();
 		 }
 		 jobStatic.setEndTime(System.currentTimeMillis());
 		 

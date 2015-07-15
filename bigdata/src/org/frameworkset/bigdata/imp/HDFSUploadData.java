@@ -922,10 +922,10 @@ public class HDFSUploadData {
 				StringBuilder queryPartitions = new StringBuilder();
 				if(!SimpleStringUtil.isEmpty(schema))
 				{
-					queryPartitions.append("SELECT PARTITION_NAME FROM ALL_TAB_PARTITIONS WHERE TABLE_NAME=upper('").append(this.tablename).append("') and table_owner='").append(this.schema).append("' and NUM_rows>0");
+					queryPartitions.append("SELECT PARTITION_NAME FROM ALL_TAB_PARTITIONS WHERE TABLE_NAME=upper('").append(this.tablename).append("') and table_owner='").append(this.schema).append("'");
 				}
 				else
-					queryPartitions.append("SELECT PARTITION_NAME FROM USER_TAB_PARTITIONS WHERE TABLE_NAME=upper('").append(this.tablename).append("')  and NUM_rows>0");
+					queryPartitions.append("SELECT PARTITION_NAME FROM USER_TAB_PARTITIONS WHERE TABLE_NAME=upper('").append(this.tablename).append("')");
 				
 				partitions = SQLExecutor.queryListWithDBName(String.class, this.dbname,queryPartitions.toString());
 				if(partitions != null && partitions.size() > 0)
