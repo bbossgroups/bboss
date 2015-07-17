@@ -229,18 +229,23 @@ function submitJob () {
 
 		<div id="leftContentDiv" class="leftContentDiv">
 
-			<div class="left_menu" ">
+			<div class="left_menu">
 				<ul>
-					<li class="select_links"><a href="javascript:void(0);">作业清单：</a><a href="javascript:void(0);" class="bt_small" id="synJobStatus"><span>同步作业状态</span></a>
+					<li class="select_links">
+					<a href="javascript:void(0);">作业清单：</a>
+					<a href="javascript:void(0);" class="bt_small" id="synJobStatus"><span>同步作业状态</span></a>
 						<ul style="display: block;" id="job_tree_module">
 							<pg:list colName="allJobNames">
-								<li id="<pg:cell/>" <pg:equal expressionValue="{0.jobName}">class="select_links"</pg:equal>>
+								<li id="<pg:cell/>" 
+								<pg:equal expressionValue="{0.jobName}">class="select_links"</pg:equal>
+								>
 								<a href="javascript:void(0)" name="backTop"
 									onclick="doClickTreeNode('<pg:cell/>')"><b><pg:cell /></b></a>	
 									
 									</li>
 							</pg:list>
-						</ul></li>
+						</ul>
+					</li>
 				</ul>
 			</div>
 		
