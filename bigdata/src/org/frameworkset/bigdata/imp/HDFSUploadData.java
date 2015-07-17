@@ -1757,10 +1757,53 @@ public class HDFSUploadData {
 		tasks = new HashMap<String, TaskConfig>();
 		if(SimpleStringUtil.isEmpty(target))
 		{
-			tasks.put("rundirect", config);
-			Event<Map<String, TaskConfig>> event = new EventImpl<Map<String, TaskConfig>>(
-					tasks, hdfsuploadevent, Event.LOCAL);
-			EventHandle.getInstance().change(event, false);
+			if(Imp.getImpStaticManager().isAdminasdatanode())
+			{
+				tasks.put("rundirect", config);
+				Event<Map<String, TaskConfig>> event = new EventImpl<Map<String, TaskConfig>>(
+						tasks, hdfsuploadevent, Event.LOCAL);
+				EventHandle.getInstance().change(event, false);
+			}
+			else
+			{
+				List<Address> ads = EventUtils.getRPCAddresses();
+				Address local = EventUtils.getLocalAddress();
+				Address tgt = null;
+				for(int i =0; i < ads.size(); i ++)
+				{
+					Address tmp = ads.get(i);
+					if(!tmp.toString().equals(local.toString()))
+					{
+						tgt = tmp;
+						break;
+					}
+				}
+				if(tgt != null)
+				{
+					tasks.put(tgt.toString(), config);
+					Address address = tgt;
+					EventTarget target = new EventTarget(address);
+					Event<Map<String, TaskConfig>> event = new EventImpl<Map<String, TaskConfig>>(
+							tasks, hdfsuploadevent,target);
+					EventHandle.getInstance().change(event, false);
+				}
+				else
+				{
+					JobStatic jobStatic = new JobStatic();
+
+					jobStatic.setStartTime(System.currentTimeMillis());
+					 
+					
+
+					jobStatic.setConfig(config.toString());
+					jobStatic.setStatus(2);
+					jobStatic.setEndTime(System.currentTimeMillis());
+					jobStatic.setJobname(jobname);
+					jobStatic.setErrormsg("管理节点不能作业未数据处理节点，同时没有指定数据作业节点");
+					Imp.getImpStaticManager().addJobStatic(jobStatic);
+					log.info(jobname+"作业执行完毕.");
+				}
+			}
 		}
 		else
 		{
