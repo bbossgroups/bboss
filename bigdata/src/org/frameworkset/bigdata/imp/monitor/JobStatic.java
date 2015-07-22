@@ -6,6 +6,8 @@ import java.util.List;
 import org.frameworkset.bigdata.imp.TaskInfo;
 
 public class JobStatic implements java.io.Serializable,java.lang.Cloneable{
+	
+	private String jobstaticid ;
 	/**
 	 * -1:未开始
 	 * 0:正在执行
@@ -27,6 +29,8 @@ public class JobStatic implements java.io.Serializable,java.lang.Cloneable{
 	private int runtasks;
 	private int waittasks;
 	private String jobname;
+	public long startid;
+	public long endid;
 	/**
 	 * 抽取成功记录数
 	 */
@@ -334,6 +338,30 @@ public class JobStatic implements java.io.Serializable,java.lang.Cloneable{
 	public void incrementtotaltasks() {
 		this.totaltasks ++;
 		
+	}
+
+	public long getStartid() {
+		return startid;
+	}
+
+	public void setStartid(long startid) {
+		this.startid = startid;
+	}
+
+	public long getEndid() {
+		return endid;
+	}
+
+	public void setEndid(long endid) {
+		this.endid = endid;
+	}
+
+	public String getJobstaticid() {
+		return jobstaticid;
+	}
+
+	public void setJobstaticid(String jobstaticid) {
+		this.jobstaticid = jobstaticid;
 	}
 	
 	

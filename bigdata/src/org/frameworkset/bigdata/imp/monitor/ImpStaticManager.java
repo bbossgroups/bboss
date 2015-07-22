@@ -21,6 +21,7 @@ import org.frameworkset.bigdata.imp.StopDSJob;
 import org.frameworkset.bigdata.imp.TaskConfig;
 import org.frameworkset.bigdata.imp.TaskInfo;
 import org.frameworkset.bigdata.util.DBHelper;
+import org.frameworkset.bigdata.util.DBJobstatic;
 import org.frameworkset.event.Event;
 import org.frameworkset.event.EventHandle;
 import org.frameworkset.event.EventImpl;
@@ -28,9 +29,12 @@ import org.frameworkset.event.EventTarget;
 import org.frameworkset.event.EventType;
 import org.frameworkset.event.Listener;
 import org.frameworkset.remote.EventUtils;
+import org.frameworkset.soa.ObjectSerializable;
 import org.frameworkset.spi.BaseApplicationContext;
 import org.frameworkset.spi.DefaultApplicationContext;
 import org.jgroups.Address;
+
+import com.frameworkset.util.SimpleStringUtil;
 
 /**
  * 监控统计
@@ -97,6 +101,9 @@ public class ImpStaticManager implements Listener<Object>{
 		{
 			JobStatic jobStatic = new JobStatic();
 			jobStatic.setConfig(job.getConfig().toString());
+			jobStatic.setStartid(job.getConfig().getStartid());
+			jobStatic.setEndid(job.getConfig().getEndid());
+			jobStatic.setJobstaticid(job.getConfig().getJobstaticid());
 			jobStatic.setStatus(0);
 			jobStatic.setStartTime(System.currentTimeMillis());
 			jobStatic.setJobname(job.getConfig().getJobname());
@@ -435,9 +442,12 @@ public class ImpStaticManager implements Listener<Object>{
 	
 	public static class JobStatus
 	{
+		private String jobstaticid ;
 		int status;
 		String  failedTaskNos;
 		String  successTaskNos;
+		private long startid;
+		private long endid;
 		/**
 		 * 抽取成功记录数
 		 */
@@ -526,6 +536,24 @@ public class ImpStaticManager implements Listener<Object>{
 		public void setUndotaskNos(String undotaskNos) {
 			this.undotaskNos = undotaskNos;
 		}
+		public long getStartid() {
+			return startid;
+		}
+		public void setStartid(long startid) {
+			this.startid = startid;
+		}
+		public long getEndid() {
+			return endid;
+		}
+		public void setEndid(long endid) {
+			this.endid = endid;
+		}
+		public String getJobstaticid() {
+			return jobstaticid;
+		}
+		public void setJobstaticid(String jobstaticid) {
+			this.jobstaticid = jobstaticid;
+		}
 	}
 	private List<String> sort(List<String> names)
 	{
@@ -574,6 +602,9 @@ public class ImpStaticManager implements Listener<Object>{
 				jobstatic = cloneStaticData(jobstatic);
 				job.setJobstaticsIdxByHost(jobstatic);
 				JobStatus jobStatus = checkstatus(jobstatic);
+				job.setStartid(jobStatus.getStartid());
+				job.setEndid(jobStatus.getEndid());
+				job.setJobstaticid(jobStatus.getJobstaticid());
 				job.setTotaltasks(jobStatus.totaltasks); 
 				job.setStatus( jobStatus.status);
 				job.setSuccessrecords(jobStatus.getSuccessrecords());
@@ -609,7 +640,11 @@ public class ImpStaticManager implements Listener<Object>{
 			
 		}
 		
-		
+		job.setAdminNode(Imp.getImpStaticManager()
+		.getLocalNode());
+		List<String> allnodes = Imp.getImpStaticManager()
+				.getAllDataNodeString();
+		job.setAllDataNodes(allnodes);
 		return job;
 	}
 	
@@ -657,6 +692,9 @@ public class ImpStaticManager implements Listener<Object>{
 			for(Entry<String, JobStatic> entry:set)
 			{
 				JobStatic jobStatic = entry.getValue(); 
+				jobStatus.setStartid(jobStatic.getStartid());
+				jobStatus.setEndid(jobStatic.getEndid());
+				jobStatus.setJobstaticid(jobStatic.getJobstaticid());
 				jobStatic.eval( );
 				successrecords = successrecords + jobStatic.getSuccessrecords();
 				failerecords = failerecords + jobStatic.getFailerecords();
@@ -857,6 +895,39 @@ public class ImpStaticManager implements Listener<Object>{
 			}
 			return "success";
 		}
+	}
+	
+	public String persistentMonitorObject(SpecialMonitorObject specialMonitorObject) throws Exception
+	{
+		if(SimpleStringUtil.isEmpty(specialMonitorObject.getJobstaticid() ))
+			return "作业" +specialMonitorObject.getJobName() +"没有指定全局唯一id,不能保存";
+		DBJobstatic DBJobstatic = new DBJobstatic();
+		DBJobstatic.setJobname(specialMonitorObject.getJobName());
+		DBJobstatic.setJobstaticid(specialMonitorObject.getJobstaticid());
+		DBJobstatic.setSavetime(System.currentTimeMillis());
+		String jobstatic = ObjectSerializable.toXML(specialMonitorObject);
+		DBJobstatic.setJobstatic(jobstatic);
+		
+		DBHelper.saveDBJobstatic(DBJobstatic);
+		return "success";
+	}
+	
+	
+	public List<DBJobstatic> getMonitorObjects(String jobname) throws Exception
+	{
+		
+				
+		return DBHelper.getDBJobstatics(jobname);
+		
+	}
+	
+	public SpecialMonitorObject getMonitorObject(String jobname,String jobstaticid) throws Exception
+	{
+		
+				
+		DBJobstatic DBJobstatic = DBHelper.getDBJobstatic(jobname, jobstaticid);
+		return ObjectSerializable.toBean(DBJobstatic.getJobstatic(), SpecialMonitorObject.class);
+		
 	}
 
 	

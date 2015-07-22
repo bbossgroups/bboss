@@ -19,17 +19,42 @@ public class DBHelper {
 	}
 	public static void addOrUdate(String jobname,String jobdef) throws Exception
 	{
-		int count = SQLExecutor.queryObject(int.class, "select count(1) from jobconfig where jobname=?", jobname);
+		int count = SQLExecutor.queryObjectWithDBName(int.class,"bigdata_conf", "select count(1) from jobconfig where jobname=?", jobname);
 		if(count == 0)
 		{
 			String insert = "insert into jobconfig(jobname,jobdef) values(?,?)";
-			SQLExecutor.insert(insert, jobname,jobdef);
+			SQLExecutor.insertWithDBName("bigdata_conf",insert, jobname,jobdef);
 		}
 		else
 		{
 			String update = "update jobconfig set jobdef=? where  jobname=?";
-			SQLExecutor.update(update, jobdef,jobname);
+			SQLExecutor.updateWithDBName("bigdata_conf",update, jobdef,jobname);
 		}
+	}
+	
+	public static DBJobstatic getDBJobstatic(String jobname,String jobstaticid) throws Exception
+	{
+		return SQLExecutor.queryObjectWithDBName(DBJobstatic.class,"bigdata_conf", "select * from jobstatic where jobname=? and jobstaticid=?", jobname,jobstaticid);
+	}
+	
+	
+	public static List<DBJobstatic> getDBJobstatics(String jobname) throws Exception
+	{
+		return SQLExecutor.queryListWithDBName(DBJobstatic.class,"bigdata_conf", "select jobname,savetime,jobstaticid from jobstatic where jobname=? order by savetime desc", jobname);
+	}
+	
+	public static void saveDBJobstatic(DBJobstatic DBJobstatic) throws Exception
+	{
+		int count = SQLExecutor.queryObjectWithDBName(int.class,"bigdata_conf", "select count(1) from jobstatic where jobstaticid=?", DBJobstatic.getJobstaticid());
+		if(count == 0)
+		{
+			 SQLExecutor.insertBean("bigdata_conf","insert into jobstatic(jobname,savetime,jobstatic,jobstaticid) values(#[jobname],#[savetime],#[jobstatic],#[jobstaticid])",DBJobstatic);
+		}
+		else
+		{
+			SQLExecutor.updateBean("bigdata_conf","update jobstatic set jobname=#[jobname],savetime=#[savetime],jobstatic=#[jobstatic] where jobstaticid=#[jobstaticid]",DBJobstatic);
+		}
+		
 	}
 	public static DBJob getDBJob(String jobname) throws Exception
 	{
@@ -55,15 +80,31 @@ public class DBHelper {
 		try {
 			SQLExecutor.queryObjectWithDBName(int.class,"bigdata_conf", exist);
 		} catch (Exception e) {
-			log.info("jobconfig table 不存在，创建jobconfig表：create table jobconfig (jobname string, jobdef string)。",e);
+			log.info("jobconfig table 不存在，创建jobconfig表：create table jobconfig (jobname string, jobdef string,PRIMARY KEY (jobname))。",e);
 			try {
-				SQLExecutor.updateWithDBName("bigdata_conf","create table jobconfig (jobname string, jobdef string)");
-				log.info("创建jobconfig表成功：create table jobconfig (jobname string, jobdef string)。");
+				SQLExecutor.updateWithDBName("bigdata_conf","create table jobconfig (jobname string, jobdef string,PRIMARY KEY (jobname))");
+				log.info("创建jobconfig表成功：create table jobconfig (jobname string, jobdef string,PRIMARY KEY (jobname))。");
 			} catch (SQLException e1) {
-				log.info("创建jobconfig表失败：create table jobconfig (jobname string, jobdef string)。",e1);
+				log.info("创建jobconfig表失败：create table jobconfig (jobname string, jobdef string,PRIMARY KEY (jobname))。",e1);
 				e1.printStackTrace();
 			}
 		}
+		
+		 exist = "select 1 from jobstatic";
+			
+			try {
+//				SQLExecutor.updateWithDBName("bigdata_conf","drop table jobstatic ");
+				SQLExecutor.queryObjectWithDBName(int.class,"bigdata_conf", exist);
+			} catch (Exception e) {
+				log.info("jobstatic table 不存在，创建jobconfig表：create table jobstatic (jobstaticid string,jobname string, jobstatic TEXT,savetime number(10), PRIMARY KEY (jobstaticid))。",e);
+				try {
+					SQLExecutor.updateWithDBName("bigdata_conf","create table jobstatic (jobstaticid string,jobname string, jobstatic TEXT,savetime number(10),PRIMARY KEY (jobstaticid))");
+					log.info("创建jobconfig表成功：create table jobstatic (jobstaticid string,jobname string, jobstatic TEXT,savetime number(10), PRIMARY KEY (jobstaticid))。");
+				} catch (SQLException e1) {
+					log.info("创建jobconfig表失败：create table jobstatic (jobstaticid string,jobname string, jobstatic TEXT,savetime number(10), PRIMARY KEY (jobstaticid))。",e1);
+					e1.printStackTrace();
+				}
+			}
 	}
 	
 	public static void initDB(HDFSUploadData HDFSUploadData)

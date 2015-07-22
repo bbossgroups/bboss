@@ -7,6 +7,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.frameworkset.bigdata.imp.Imp;
 import org.frameworkset.bigdata.imp.monitor.SpecialMonitorObject;
+import org.frameworkset.bigdata.util.DBJobstatic;
 import org.frameworkset.util.annotations.ResponseBody;
 import org.frameworkset.web.servlet.ModelMap;
 
@@ -24,13 +25,87 @@ public class JobstaticMonitorController {
 				.getSpecialMonitorObject(job);
 		model.addAttribute("jobInfo", specialMonitorObject);
 
-		model.addAttribute("adminNode", Imp.getImpStaticManager()
-				.getLocalNode());
-		List<String> allnodes = Imp.getImpStaticManager()
-				.getAllDataNodeString();
-		model.addAttribute("allDataNodes", allnodes);
+//		model.addAttribute("adminNode", Imp.getImpStaticManager()
+//				.getLocalNode());
+//		List<String> allnodes = Imp.getImpStaticManager()
+//				.getAllDataNodeString();
+//		model.addAttribute("allDataNodes", allnodes);
 
 		return "path:index";
+	}
+	
+	public String viewJobHistoryStatic(String jobname,String jobstaticid, ModelMap model)
+	{
+		 
+		try {
+			List<DBJobstatic> jobstatics = Imp.getImpStaticManager()
+					.getMonitorObjects(jobname);
+			String temp = null;
+			if(jobstatics != null && jobstatics.size() > 0)
+			{
+				temp = jobstatics.get(0).getJobstaticid();
+				model.addAttribute("jobstatics", jobstatics);
+			}
+			else
+			{
+				model.addAttribute("error","作业"+jobname+"没有历史数据。");
+			}
+			if(!StringUtil.isEmpty(jobstaticid))
+			{
+				SpecialMonitorObject specialMonitorObject = Imp.getImpStaticManager()
+						.getMonitorObject(jobname, jobstaticid);
+				if(specialMonitorObject == null)
+				{
+					model.addAttribute("error","作业"+jobname+"历史作业执行记录不存在："+jobstaticid);
+				}
+				else
+					model.addAttribute("jobInfo", specialMonitorObject);
+			}
+			else
+			{
+				if(temp != null)
+				{
+					SpecialMonitorObject specialMonitorObject = Imp.getImpStaticManager()
+							.getMonitorObject(jobname, temp);
+					if(specialMonitorObject == null)
+					{
+						model.addAttribute("error","作业"+jobname+"历史作业执行记录数据不存在："+temp);
+					}
+					else
+						model.addAttribute("jobInfo", specialMonitorObject);
+				}
+				else
+				{
+					model.addAttribute("error","作业"+jobname+"没有历史作业执行记录。");
+				}
+			}
+			
+		} catch (Exception e) {
+			model.addAttribute("error",StringUtil.formatException(e));
+			log.error("获取作业历史统计情况失败：jobname="+jobname + ",jobstaticid="+jobstaticid, e);
+		}
+		return "path:viewJobHistoryStatic";
+	
+	}
+	
+	
+	public @ResponseBody String saveJobstatic(String jobname)
+	{
+		SpecialMonitorObject specialMonitorObject = Imp.getImpStaticManager()
+				.getSpecialMonitorObject(jobname);
+		if(specialMonitorObject != null)
+		{
+			try {
+				Imp.getImpStaticManager().persistentMonitorObject(specialMonitorObject);
+				return "success";
+			} catch (Exception e) {
+				log.error("saveJobstatic失败：jobname="+jobname , e);
+				return StringUtil.formatException(e);
+				
+			}
+		}
+		return "没有作业"+jobname+"的监控数据.";
+		
 	}
 
 	public @ResponseBody

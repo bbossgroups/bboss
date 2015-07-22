@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 public class TaskConfig implements java.io.Serializable{
-	
+	private String jobstaticid ;
 	/**
 	 * 单任务属性
 	 */
@@ -520,6 +520,12 @@ public class TaskConfig implements java.io.Serializable{
 	}
 	public void setExcludepartitions(String excludepartitions) {
 		this.excludepartitions = excludepartitions;
+	}
+	public String getJobstaticid() {
+		return jobstaticid;
+	}
+	public void setJobstaticid(String jobstaticid) {
+		this.jobstaticid = jobstaticid;
 	}
 }
 

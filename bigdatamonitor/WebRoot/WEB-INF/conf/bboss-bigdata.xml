@@ -5,7 +5,8 @@
 	<!-- 描述:session管理模块 author:谭湘 CopyRight:三一 版本:1.0 Date: 2014-06-04 -->
 
 	<property name="/bigdata/*.page"
-		path:index="/bigdata/bigdataManager.jsp"		 
+		path:index="/bigdata/bigdataManager.jsp"	
+		path:viewJobHistoryStatic="/bigdata/jobHistoryStatic.jsp"			 
 		class="org.frameworkset.bigdata.impl.monitor.JobstaticMonitorController">
 	</property>
 

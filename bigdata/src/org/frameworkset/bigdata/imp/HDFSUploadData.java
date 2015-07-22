@@ -182,7 +182,7 @@ public class HDFSUploadData {
 	 * 
 	 * @return
 	 */
-	TaskConfig buildTaskConfig() {
+	TaskConfig buildTaskConfigWithID(String jobstaticid) {
 		TaskConfig config = new TaskConfig();
 		config.driver = this.driver;
 		config.dburl = this.dburl;
@@ -231,6 +231,9 @@ public class HDFSUploadData {
 		 config.setRowsperfile(rowsperfile);
 		 config.setOnejob(onejob);
 		 config.setStartfileNo(startfileNo);
+		 config.startid = this.startid;
+		 config.endid = this.endid;
+		 config.setJobstaticid(jobstaticid);
 		if(this.onejob)
 		{
 			if (this.querystatement == null || this.querystatement.equals("")) {
@@ -1374,6 +1377,7 @@ public class HDFSUploadData {
 				deleteHDFSFile(filename);
 			}
 		}
+		String jobstaticid = java.util.UUID.randomUUID().toString();
 		// 将任务分给所有的服务器处理
 		if (!this.rundirect) {
 			tasks = new HashMap<String, TaskConfig>();
@@ -1381,7 +1385,7 @@ public class HDFSUploadData {
 			int servertasks = alltasks / workservers;
 			int taskdiv = alltasks % workservers;
 			for (int i = 0; i < workservers && i < alltasks; i++) {
-				TaskConfig config = buildTaskConfig();
+				TaskConfig config = buildTaskConfigWithID(jobstaticid);
 
 				config.setPagesize(segement);
 				if (i < taskdiv) {
@@ -1411,7 +1415,7 @@ public class HDFSUploadData {
 
 			EventHandle.getInstance().change(event, false);
 		} else {
-			TaskConfig config = buildTaskConfig();
+			TaskConfig config =buildTaskConfigWithID(jobstaticid);
 
 			config.setPagesize(segement);
 			config.setTasks(Arrays.asList(segments));
@@ -1753,7 +1757,8 @@ public class HDFSUploadData {
 	
 	private void doOnejob()
 	{
-		TaskConfig config = buildTaskConfig();
+		String jobstaticid = java.util.UUID.randomUUID().toString();
+		TaskConfig config = buildTaskConfigWithID(jobstaticid);
 		tasks = new HashMap<String, TaskConfig>();
 		if(SimpleStringUtil.isEmpty(target))
 		{

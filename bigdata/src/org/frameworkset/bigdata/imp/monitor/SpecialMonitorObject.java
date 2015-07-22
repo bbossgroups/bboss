@@ -9,6 +9,7 @@ import java.util.Map;
  *
  */
 public class SpecialMonitorObject  implements java.io.Serializable{
+	private String jobstaticid ;
 	/**
 	 * Map<hostname,JobStatic>
 	 */
@@ -27,6 +28,9 @@ public class SpecialMonitorObject  implements java.io.Serializable{
 	private int failtasks;
 	private int runtasks;
 	private int waittasks;
+	
+	private List<String> allDataNodes;
+	private String adminNode;
 	/**
 	 * 抽取成功记录数
 	 */
@@ -46,6 +50,8 @@ public class SpecialMonitorObject  implements java.io.Serializable{
 	 * 5:结束：强制停止
 	 */
 	private int status = -1;
+	private long startid;
+	private long endid;
 	private boolean canrun;
 	 
 	public String getJobName() {
@@ -155,6 +161,36 @@ public class SpecialMonitorObject  implements java.io.Serializable{
 	}
 	public void setUndotaskNos(String undotaskNos) {
 		this.undotaskNos = undotaskNos;
+	}
+	public long getStartid() {
+		return startid;
+	}
+	public void setStartid(long startid) {
+		this.startid = startid;
+	}
+	public long getEndid() {
+		return endid;
+	}
+	public void setEndid(long endid) {
+		this.endid = endid;
+	}
+	public String getJobstaticid() {
+		return jobstaticid;
+	}
+	public void setJobstaticid(String jobstaticid) {
+		this.jobstaticid = jobstaticid;
+	}
+	public List<String> getAllDataNodes() {
+		return allDataNodes;
+	}
+	public void setAllDataNodes(List<String> allDataNodes) {
+		this.allDataNodes = allDataNodes;
+	}
+	public String getAdminNode() {
+		return adminNode;
+	}
+	public void setAdminNode(String adminNode) {
+		this.adminNode = adminNode;
 	}
 
 }

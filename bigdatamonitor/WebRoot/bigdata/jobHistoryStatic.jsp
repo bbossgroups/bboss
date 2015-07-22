@@ -2,11 +2,13 @@
 <%@page import=" org.frameworkset.security.session.impl.SessionHelper"%>
 <%@ taglib uri="/WEB-INF/pager-taglib.tld" prefix="pg"%>
 <%--
-	描述：数据抽取管理,作业管理
+	描述：数据抽取管理,作业历史记录查看
 	作者：yinbp
 	版本：1.0
 	日期：2015-06-04
 	 --%>
+<pg:empty actual="${error}" evalbody="true">
+<pg:yes>	 
 <pg:beaninfo actual="${jobInfo}">
 	<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 	<html xmlns="http://www.w3.org/1999/xhtml">
@@ -26,239 +28,24 @@
 <script type="text/javascript">
 
 $(document).ready(function() {
-	 
-
-	 
-       		
  
-	
-	 
-	$('#submitJob').click(function() {
-		submitJob();
-    });
-	
-	
-	
-	$('#synJobStatus').click(function() {
-		synJobStatus();
-    });
-	
-	<pg:true colName="canrun" evalbody="true">
-	<pg:yes>
-	$('#executeJob').click(function() {
-		executeJob();
-    });
-	</pg:yes>
-	<pg:no>
-	$('#stopJob').click(function() {
-		stopJob();
-    });
-	</pg:no>
-	</pg:true>
 	
 });
        
  
-function clearJobstatic(hostName,jobName)
-{
-	$.ajax({
- 	 	type: "POST",
-		url : "<%=request.getContextPath()%>/bigdata/clearJobStatic.page",
-		dataType : 'json',
-		data :{"hostName":hostName,"jobname":jobName},
-		async:false,
-		beforeSend: function(XMLHttpRequest){
-				
-			 	XMLHttpRequest.setRequestHeader("RequestType", "ajax");
-			},
-		success : function(data){
-			if (data == 'success') {
-				queryList(jobName)
-				
-			} else {
-				 
-				 $("#jobdef").val(data);
-				 
-			}
-			
-		}	
-	 });
-}
-function executeJob()
-{
-	var job = $("#job").val()
-	if(job == null|| job == '' )
-	{
-		 alert("没有选择需要执行的作业！");
-		 return;
-	}
-	if(confirm("需要执行的作业-"+job+"吗？"))
-	{
-		$.ajax({
-	 	 	type: "POST",
-			url : "<%=request.getContextPath()%>/bigdata/executeJob.page",
-			dataType : 'json',
-			data :{"job":job},
-			async:false,
-			beforeSend: function(XMLHttpRequest){
-					
-				 	XMLHttpRequest.setRequestHeader("RequestType", "ajax");
-				},
-			success : function(data){
-				if (data == 'success') {
-					 $.dialog.alert("提交作业-"+job+"请求成功！");
-					
-				} else {
-					 $.dialog.alert("提交作业请求失败！作业日志请看jobdef中的输出");
-					 $("#jobdef").val(data);
-					 
-				}
-				
-			}	
-		 });
-	}
-		
-}
-function saveJobstatic(jobname)
-{
-	if(jobname == null|| jobname == '' )
-	{
-		 alert("没有选择需要保存状态的作业！");
-		 return;
-	}
-	if(confirm("需要保存的作业-"+jobname+"状态吗？"))
-	{
-		$.ajax({
-	 	 	type: "POST",
-			url : "<%=request.getContextPath()%>/bigdata/saveJobstatic.page",
-			dataType : 'json',
-			data :{"jobname":jobname},
-			async:false,
-			beforeSend: function(XMLHttpRequest){
-					
-				 	XMLHttpRequest.setRequestHeader("RequestType", "ajax");
-				},
-			success : function(data){
-				if (data == 'success') {
-					 $.dialog.alert("保存的作业-"+jobname+"状态成功！");
-					
-				} else {
-					 $.dialog.alert("保存的作业-"+jobname+"状态失败！日志请看jobdef中的输出");
-					 $("#jobdef").val(data);
-					 
-				}
-				
-			}	
-		 });
-	}
-}
-function viewJobstatics(jobname)
+   
+function viewJobstatics(jobname,jobstaticid)
 {
 	if(jobname == null|| jobname == '' )
 	{
 		 alert("没有选择作业！");
 		 return;
 	}
-	window.open("viewJobHistoryStatic.page?jobname="+jobname,"jobhistory");
+	window.location.href = "viewJobHistoryStatic.page?jobname="+jobname +"&jobstaticid="+jobstaticid;
 }
-function stopJob()
-{
-	var job = $("#job").val()
-	if(job == null|| job == '' )
-	{
-		 alert("没有选择需要停止的作业！");
-		 return;
-	}
-	if(confirm("需要停止的作业-"+job+"吗？"))
-	{
-		$.ajax({
-	 	 	type: "POST",
-			url : "<%=request.getContextPath()%>/bigdata/stopJob.page",
-			dataType : 'json',
-			data :{"jobname":job},
-			async:false,
-			beforeSend: function(XMLHttpRequest){
-					
-				 	XMLHttpRequest.setRequestHeader("RequestType", "ajax");
-				},
-			success : function(data){
-				if (data == 'success') {
-					 $.dialog.alert("停止作业-"+job+"成功！");
-					
-				} else {
-					 $.dialog.alert("停止作业失败！作业日志请看jobdef中的输出");
-					 $("#jobdef").val(data);
-					 
-				}
-				
-			}	
-		 });
-	}
-		
-}
-//加载实时任务列表数据  
-function queryList(job){
-	
-	if(job && job != '')
-    	window.location.href = "<%=request.getContextPath()%>/bigdata/index.page?job="+job;
-    else
-    	window.location.href = "<%=request.getContextPath()%>/bigdata/index.page";
-    
-}
-
-function synJobStatus(){
-	$.ajax({
- 	 	type: "POST",
-		url : "<%=request.getContextPath()%>/bigdata/synJobStatus.page",
-		dataType : 'json',
-		async:false,
-		beforeSend: function(XMLHttpRequest){
-				
-			 	XMLHttpRequest.setRequestHeader("RequestType", "ajax");
-			},
-		success : function(data){
-			if (data == 'success') {
-				 $.dialog.alert("同步完成！");
-				
-			} else {
-				 $.dialog.alert("同步失败！");
-			}
-			
-		}	
-	 });
-}
-
  
-function doClickTreeNode(job){
-	 queryList(job);
-}
 
- 
- 
-function submitJob () {
-	if($("#jobdef").val() == '')
-	{
-		  $.dialog.alert('请输入job定义!');
-		return;
-	}
-	$.dialog.confirm('确定要提交作业吗？', function(){
-     	$.ajax({
-	 	type: "POST",
-	 	url : "<%=request.getContextPath()%>/bigdata/submitNewJob.page",
-	 	data :{"jobdef":$("#jobdef").val()},
-		dataType : 'json',
-		async:false,
-		beforeSend: function(XMLHttpRequest){
-			 	XMLHttpRequest.setRequestHeader("RequestType", "ajax");
-		},
-		success : function(data){
-			 $("#jobdef").val(data);
-		}	
-	 });
-	},function(){
-	  		
-	});         
-}
+  
 
 </script>
 </head>
@@ -274,15 +61,14 @@ function submitJob () {
 			<div class="left_menu">
 				<ul>
 					<li class="select_links">
-					<a href="javascript:void(0);">作业清单：</a>
-					<a href="javascript:void(0);" class="bt_small" id="synJobStatus"><span>同步作业状态</span></a>
+					<a href="javascript:void(0);">作业执行记录：</a>					
 						<ul style="display: block;" id="job_tree_module">
-							<pg:list colName="allJobNames">
-								<li id="<pg:cell/>" 
-								<pg:equal expressionValue="{0.jobName}">class="select_links"</pg:equal>
+							<pg:list requestKey="jobstatics">
+								<li id="<pg:cell colName="jobstaticid"/>" 
+								<pg:equal colName="jobstaticid" expressionValue="{0.jobstaticid}">class="select_links"</pg:equal>
 								>
 								<a href="javascript:void(0)" name="backTop"
-									onclick="doClickTreeNode('<pg:cell/>')"><b><pg:cell /></b></a>	
+									onclick="viewJobstatics('<pg:cell colName="jobname"/>','<pg:cell colName="jobstaticid"/>')"><b><pg:cell colName="savetime" dateformat="yyyy-MM-dd HH:mm:ss"/></b></a>	
 									
 									</li>
 							</pg:list>
@@ -331,62 +117,15 @@ function submitJob () {
 						<th><font color="red">作业-<pg:cell colName="jobName"/>状态未知</font></th>
 						</pg:other>
 						</pg:case>
-						<th>
-						<pg:true colName="canrun" evalbody="true">
-							<pg:yes>
-							<a href="javascript:void(0);" class="bt_1" id="executeJob"><span>执行作业-<pg:cell colName="jobName"/></span></a>
-							</pg:yes>
-							<pg:no>
-							<a href="javascript:void(0);" class="bt_small" id="stopJob"><span>停止作业-<pg:cell colName="jobName"/></span></a>
-							</pg:no>
-						</pg:true>
-						
-						<pg:notequal colName="status" value="-1">
-							<pg:notempty colName="jobstaticid">
-								<a href="javascript:void(0);" class="bt_small" id="saveJobstatic" onclick="javascript:saveJobstatic('<pg:cell colName="jobName"/>')"><span>记录作业状态-<pg:cell colName="jobName"/></span></a>
-							</pg:notempty>
-						</pg:notequal>
-						
-						<pg:notempty colName="jobName">
-								<a href="javascript:void(0);" class="bt_small" id="viewJobstatics" onclick="javascript:viewJobstatics('<pg:cell colName="jobName"/>')"><span>查看作业历史-<pg:cell colName="jobName"/></span></a>
-						</pg:notempty>
-						</th>
+						 
 					</tr>
 				</table>
 				
 			
 			</div></div>
-				<div id="datanodes" style="overflow: auto;margin-top:41px;">
-				<div id="changeColor">
-					<form id="queryForm" name="queryForm">
-						<input type="hidden" name="job" id="job"
-							value="<pg:cell colName="jobName"/>" />
-						<input type="hidden" name="jobstaticid" id="jobstaticid"
-							value="<pg:cell colName="jobstaticid"/>" />	
-						 	
-						<table width="100%" border="0" cellpadding="0" cellspacing="0"
-						class="stable" id="tb">
-						 
-										<tr>
-											
-
-<th align="left"><a href="javascript:void(0);" class="bt_1" id="submitJob"><span>提交一个新作业</span></a> </th>
-
-										</tr>
-										<tr>
-
-											<td width="100%" ><textarea id="jobdef" name="jobdef"></textarea></td>
-
-
-										</tr>
-									 
-						 
-						</table>
-					</form>
-				</div>
-			</div>
+				 
 			<pg:notempty colName="jobdef">
-			<div id="datanodes" style="overflow: auto">
+			<div id="datanodes" style="overflow: auto;margin-top:40px;">
 				<div id="changeColor">
 					
 						
@@ -531,15 +270,11 @@ function submitJob () {
 								
 								<tr>
 									<td colspan="3">运行状态:<pg:case colName="status">
-											<pg:equal value="-1">未开始&nbsp;<a href="javascript:void(0);" class="bt_1" id="clearJobstatic" onclick="javascript:clearJobstatic('<pg:mapkey/>','<pg:cell
-							colName="jobName" index="0"/>')"><span>清除作业历史</span></a></pg:equal>
+											<pg:equal value="-1">未开始&nbsp;</pg:equal>
 											<pg:equal value="0">正在运行</pg:equal>
-											<pg:equal value="1">执行完毕&nbsp;<a href="javascript:void(0);" class="bt_1" id="clearJobstatic" onclick="javascript:clearJobstatic('<pg:mapkey/>','<pg:cell
-							colName="jobName" index="0"/>')"><span>清除作业历史</span></a></pg:equal>
-											<pg:equal value="2">执行异常&nbsp;<a href="javascript:void(0);" class="bt_1" id="clearJobstatic" onclick="javascript:clearJobstatic('<pg:mapkey/>','<pg:cell
-							colName="jobName" index="0"/>')"><span>清除作业历史</span></a></pg:equal>
-											<pg:equal value="3">强制停止&nbsp;<a href="javascript:void(0);" class="bt_1" id="clearJobstatic" onclick="javascript:clearJobstatic('<pg:mapkey/>','<pg:cell
-							colName="jobName" index="0"/>')"><span>清除作业历史</span></a></pg:equal>
+											<pg:equal value="1">执行完毕&nbsp;</pg:equal>
+											<pg:equal value="2">执行异常&nbsp;</pg:equal>
+											<pg:equal value="3">强制停止&nbsp;</pg:equal>
 										</pg:case> &nbsp;&nbsp;<br>开始时间:<pg:cell colName="startTime" dateformat="yyyy-MM-dd HH:mm:ss" />&nbsp;&nbsp;结束时间:<pg:cell colName="endTime"
 											dateformat="yyyy-MM-dd HH:mm:ss" /><br>
 											完成记录数：<pg:cell colName="successrecords"/>  &nbsp; 失败记录数：<pg:cell colName="failerecords"/><br>
@@ -604,3 +339,13 @@ function submitJob () {
 </body>
 	</html>
 </pg:beaninfo>
+</pg:yes>
+<pg:no>
+<body>
+	<div class="mcontent"
+		style="width: 98%; margin: 0 auto; overflow: auto;">
+		提示：${error }
+	</div>	
+	</body>
+</pg:no>
+</pg:empty>
