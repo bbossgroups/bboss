@@ -99,9 +99,9 @@ public class DBHelper {
 				log.info("jobstatic table 不存在，创建jobconfig表：create table jobstatic (jobstaticid string,jobname string, jobstatic TEXT,savetime number(10), PRIMARY KEY (jobstaticid))。",e);
 				try {
 					SQLExecutor.updateWithDBName("bigdata_conf","create table jobstatic (jobstaticid string,jobname string, jobstatic TEXT,savetime number(10),PRIMARY KEY (jobstaticid))");
-					log.info("创建jobconfig表成功：create table jobstatic (jobstaticid string,jobname string, jobstatic TEXT,savetime number(10), PRIMARY KEY (jobstaticid))。");
+					log.info("创建jobstatic表成功：create table jobstatic (jobstaticid string,jobname string, jobstatic TEXT,savetime number(10), PRIMARY KEY (jobstaticid))。");
 				} catch (SQLException e1) {
-					log.info("创建jobconfig表失败：create table jobstatic (jobstaticid string,jobname string, jobstatic TEXT,savetime number(10), PRIMARY KEY (jobstaticid))。",e1);
+					log.info("创建jobstatic表失败：create table jobstatic (jobstaticid string,jobname string, jobstatic TEXT,savetime number(10), PRIMARY KEY (jobstaticid))。",e1);
 					e1.printStackTrace();
 				}
 			}

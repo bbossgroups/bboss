@@ -118,6 +118,7 @@ public class ImpStaticManager implements Listener<Object>{
 		synchronized(localjobstaticsLock)
 		{
 			JobStatic jobStatic = new JobStatic();
+			jobStatic.setJobstaticid(ds.getJobstaticid());
 			jobStatic.setConfig("stop datasources:"+ds.getStopdbnames());
 			jobStatic.setStatus(0);
 			jobStatic.setStartTime(System.currentTimeMillis());
@@ -131,6 +132,7 @@ public class ImpStaticManager implements Listener<Object>{
 		synchronized(localjobstaticsLock)
 		{
 			JobStatic jobStatic = new JobStatic();
+			jobStatic.setJobstaticid(reassignTask.getJobstaticid());
 			jobStatic.setConfig("Reassign Task:"+reassignTask.toString());
 			jobStatic.setStatus(0);
 			jobStatic.setStartTime(System.currentTimeMillis());

@@ -1593,7 +1593,8 @@ public class HDFSUploadData {
 
 	private void doDeleteFiles() throws Exception {
 		JobStatic jobStatic = new JobStatic();
-
+		String jobstaticid = java.util.UUID.randomUUID().toString();
+		jobStatic.setJobstaticid(jobstaticid);
 		jobStatic.setStartTime(System.currentTimeMillis());
 		String[] deletefiles_ = deletefiles.split("\\,");
 		for (String file : deletefiles_) {
@@ -1613,10 +1614,11 @@ public class HDFSUploadData {
 	}
 
 	private void doStopdbnames() throws Exception {
-
+		String jobstaticid = java.util.UUID.randomUUID().toString();
 		StopDS stopds = new StopDS();
 		stopds.setJobname(this.jobname);
 		stopds.setStopdbnames(stopdbnames);
+		stopds.setJobstaticid(jobstaticid);
 		Event<StopDS> event = new EventImpl<StopDS>(stopds,
 				hdfs_upload_monitor_stopdatasource_commond);
 		/**
@@ -1638,10 +1640,12 @@ public class HDFSUploadData {
 		SpecialMonitorObject monitorJob = Imp.getImpStaticManager()
 				.getSpecialMonitorObject(reassigntaskJobname);
 		Map<String, JobStatic> hostJobs = monitorJob.getJobstaticsIdxByHost();
+		String jobstaticid = java.util.UUID.randomUUID().toString();
 		JobStatic jobstatic = hostJobs.get(this.reassigntaskNode);
 		if (jobstatic.getUnruntasks() == 0  ) {
 			JobStatic result = new JobStatic();
-
+			
+			result.setJobstaticid(jobstaticid);
 			result.setStartTime(System.currentTimeMillis());
 			result.setStatus(1);
 			result.setConfig(new StringBuilder().append("reassigntaskNode=").append(reassigntaskNode).append("reassigntaskJobname=").append(this.reassigntaskJobname).toString());
@@ -1658,7 +1662,8 @@ public class HDFSUploadData {
 			if(address== null)
 			{
 				JobStatic result = new JobStatic();
-
+				 
+				result.setJobstaticid(jobstaticid);
 				result.setStartTime(System.currentTimeMillis());
 				result.setStatus(1);
 				result.setConfig("reassigntaskNode=" + reassigntaskNode);
@@ -1677,6 +1682,7 @@ public class HDFSUploadData {
 			reassignTask.setReassigntaskJobname(reassigntaskJobname);
 			reassignTask.setAdminasdatanode(Imp.getImpStaticManager().isAdminasdatanode());
 			reassignTask.setAdminnode(Imp.getImpStaticManager().getLocalNode());
+			reassignTask.setJobstaticid(jobstaticid);
 			Map<String, Integer> taskinfos = new HashMap<String, Integer>();// 存放其他节点正在处理和排队等待执行的任务数，作为重新分派任务的参考数据
 			for (Map.Entry<String, JobStatic> entry : hostJobs.entrySet()) {
 				String host = entry.getKey();

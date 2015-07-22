@@ -10,6 +10,7 @@ public class ReassignTask implements Serializable {
 	private Map<String, Integer> hostTaskInfos;
 	private boolean adminasdatanode;
 	private String adminnode;
+	private String jobstaticid;
 	public ReassignTask() {
 		// TODO Auto-generated constructor stub
 	}
@@ -57,6 +58,12 @@ public class ReassignTask implements Serializable {
 	}
 	public void setAdminnode(String adminnode) {
 		this.adminnode = adminnode;
+	}
+	public String getJobstaticid() {
+		return jobstaticid;
+	}
+	public void setJobstaticid(String jobstaticid) {
+		this.jobstaticid = jobstaticid;
 	}
 
 }

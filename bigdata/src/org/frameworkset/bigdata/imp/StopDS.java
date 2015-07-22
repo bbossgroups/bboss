@@ -7,6 +7,7 @@ public class StopDS implements Serializable {
 	public StopDS() {
 		// TODO Auto-generated constructor stub
 	}
+	private String jobstaticid;
 	private String jobname;
 	private String stopdbnames;
 	public String getJobname() {
@@ -28,6 +29,12 @@ public class StopDS implements Serializable {
 		builder.append("jobname=").append(this.jobname)
 		.append(",stopdbnames=").append(this.stopdbnames);
 		return builder.toString();
+	}
+	public String getJobstaticid() {
+		return jobstaticid;
+	}
+	public void setJobstaticid(String jobstaticid) {
+		this.jobstaticid = jobstaticid;
 	}
 
 }
