@@ -334,21 +334,21 @@ function submitJob () {
 						<th>
 						<pg:true colName="canrun" evalbody="true">
 							<pg:yes>
-							<a href="javascript:void(0);" class="bt_1" id="executeJob"><span>执行作业-<pg:cell colName="jobName"/></span></a>
+							<a href="javascript:void(0);" class="bt_1" id="executeJob"><span>执行作业</span></a>
 							</pg:yes>
 							<pg:no>
-							<a href="javascript:void(0);" class="bt_small" id="stopJob"><span>停止作业-<pg:cell colName="jobName"/></span></a>
+							<a href="javascript:void(0);" class="bt_small" id="stopJob"><span>停止作业</span></a>
 							</pg:no>
 						</pg:true>
 						
 						<pg:notequal colName="status" value="-1">
 							<pg:notempty colName="jobstaticid">
-								<a href="javascript:void(0);" class="bt_small" id="saveJobstatic" onclick="javascript:saveJobstatic('<pg:cell colName="jobName"/>')"><span>记录作业状态-<pg:cell colName="jobName"/></span></a>
+								<a href="javascript:void(0);" class="bt_small" id="saveJobstatic" onclick="javascript:saveJobstatic('<pg:cell colName="jobName"/>')"><span>记录作业状态</span></a>
 							</pg:notempty>
 						</pg:notequal>
 						
 						<pg:notempty colName="jobName">
-								<a href="javascript:void(0);" class="bt_small" id="viewJobstatics" onclick="javascript:viewJobstatics('<pg:cell colName="jobName"/>')"><span>查看作业历史-<pg:cell colName="jobName"/></span></a>
+								<a href="javascript:void(0);" class="bt_small" id="viewJobstatics" onclick="javascript:viewJobstatics('<pg:cell colName="jobName"/>')"><span>查看作业历史</span></a>
 						</pg:notempty>
 						</th>
 					</tr>

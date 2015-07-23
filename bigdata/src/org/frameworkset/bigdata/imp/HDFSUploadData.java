@@ -1364,6 +1364,7 @@ public class HDFSUploadData {
 			jobStatic.setStartTime(System.currentTimeMillis());
 			jobStatic.setEndTime(System.currentTimeMillis());
 			jobStatic.setJobname(jobname);
+			jobStatic.setErrormsg("没有需要处理的数据");
 			 
 			Imp.getImpStaticManager().addJobStatic(jobStatic);
 			return;

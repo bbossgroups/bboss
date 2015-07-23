@@ -109,8 +109,12 @@ public class TaskConfig implements java.io.Serializable{
 		.append("subtablename=").append(this.subtablename).append(",")
 		.append("leftjoinby=").append(this.leftJoinby).append(",")
 		.append("rightJoinby=").append(this.rightJoinby).append(",")
-		.append("usepartition=[").append(this.usepartition).append("],")
-		.append("pkname=").append(pkname).append(",");
+		.append("usepartition=").append(this.usepartition).append(",");
+		if(this.usepartition)
+		{
+			builder.append("excludepartitions=").append(this.excludepartitions).append(",")
+			.append("partitions=").append(this.partitions).append(",");
+		}
 		
 		if(driver != null && driver.trim().length() > 0)
 		{
