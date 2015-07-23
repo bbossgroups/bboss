@@ -1359,6 +1359,8 @@ public class HDFSUploadData {
 		{
 			TaskConfig config = buildTaskConfig(jobname);
 			JobStatic jobStatic = new JobStatic();
+			String jobstaticid = java.util.UUID.randomUUID().toString();
+			jobStatic.setJobstaticid(jobstaticid);
 			jobStatic.setConfig(config.toString());
 			jobStatic.setStatus(1);
 			jobStatic.setStartTime(System.currentTimeMillis());
@@ -1802,7 +1804,8 @@ public class HDFSUploadData {
 				else
 				{
 					JobStatic jobStatic = new JobStatic();
-
+					
+					jobStatic.setJobstaticid(jobstaticid);
 					jobStatic.setStartTime(System.currentTimeMillis());
 					 
 					
@@ -1849,7 +1852,9 @@ public class HDFSUploadData {
 			}
 		} catch (IllegalArgumentException e) {
 			TaskConfig config = buildTaskConfig(jobname);
-			JobStatic jobStatic = new JobStatic();
+			JobStatic jobStatic = new JobStatic();	
+			String jobstaticid = java.util.UUID.randomUUID().toString();
+			jobStatic.setJobstaticid(jobstaticid);
 			jobStatic.setConfig(config.toString());
 			jobStatic.setStatus(2);
 			jobStatic.setStartTime(start);
@@ -1861,6 +1866,8 @@ public class HDFSUploadData {
 		} catch (IOException e) {
 			TaskConfig config = buildTaskConfig(jobname);
 			JobStatic jobStatic = new JobStatic();
+			String jobstaticid = java.util.UUID.randomUUID().toString();
+			jobStatic.setJobstaticid(jobstaticid);
 			jobStatic.setConfig(config.toString());
 			jobStatic.setStatus(2);
 			jobStatic.setStartTime(start);
@@ -1872,6 +1879,8 @@ public class HDFSUploadData {
 		} catch (Exception e) {
 			TaskConfig config = buildTaskConfig(jobname);
 			JobStatic jobStatic = new JobStatic();
+			String jobstaticid = java.util.UUID.randomUUID().toString();
+			jobStatic.setJobstaticid(jobstaticid);
 			jobStatic.setConfig(config.toString());
 			jobStatic.setStatus(2);
 			jobStatic.setStartTime(start);
