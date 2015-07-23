@@ -277,7 +277,7 @@ function submitJob () {
 					<a href="javascript:void(0);">作业清单：</a>
 					<a href="javascript:void(0);" class="bt_small" id="synJobStatus"><span>同步作业状态</span></a>
 						<ul style="display: block;" id="job_tree_module">
-							<pg:list colName="allJobNames">
+							<pg:list requestKey="allJobNames">
 								<li id="<pg:cell/>" 
 								<pg:equal expressionValue="{0.jobName}">class="select_links"</pg:equal>
 								>

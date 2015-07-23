@@ -15,7 +15,7 @@ public class SpecialMonitorObject  implements java.io.Serializable{
 	 */
 	private Map <String,JobStatic> jobstaticsIdxByHost ;//作业分布服务器情况一览表	
 	private String jobName;
-	private List<String> allJobNames;
+//	private List<String> allJobNames;
 	private String jobconfig;
 	String  failedTaskNos;
 	private String undotaskNos;
@@ -60,12 +60,12 @@ public class SpecialMonitorObject  implements java.io.Serializable{
 	public void setJobName(String jobName) {
 		this.jobName = jobName;
 	}
-	public List<String> getAllJobNames() {
-		return allJobNames;
-	}
-	public void setAllJobNames(List<String> allJobNames) {
-		this.allJobNames = allJobNames;
-	}
+//	public List<String> getAllJobNames() {
+//		return allJobNames;
+//	}
+//	public void setAllJobNames(List<String> allJobNames) {
+//		this.allJobNames = allJobNames;
+//	}
 	public Map<String, JobStatic> getJobstaticsIdxByHost() {
 		return jobstaticsIdxByHost;
 	}

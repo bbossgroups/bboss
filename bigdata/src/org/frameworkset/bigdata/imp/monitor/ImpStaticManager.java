@@ -570,76 +570,95 @@ public class ImpStaticManager implements Listener<Object>{
 		});
 		return names;
 	}
-	public SpecialMonitorObject getSpecialMonitorObject(String jobName)
+	
+	public List<String> getJobNames()
 	{
-		
-		SpecialMonitorObject job = new SpecialMonitorObject();
-		
+		List<String> names =this.getConfigTasks();
 		synchronized(adminJobsLock)
 		{
-			 
-			List<String> names =this.getConfigTasks();
-			
 			if(monitorAlljobstaticsIdxByJob.size() > 0)
 			{
 				
 				mergeconfigtasks(names,monitorAlljobstaticsIdxByJob.keySet());
 			}
-			mergeconfigTabletasks(names);
-			if(names.size() == 0)
-				return null;
-			sort(names);
-			if(jobName == null)
+		}
+		mergeconfigTabletasks(names);
+		sort(names);
+		return names;
+	}
+	public SpecialMonitorObject getSpecialMonitorObject(String jobName)
+	{
+		
+		SpecialMonitorObject job = new SpecialMonitorObject();
+
+		if(!SimpleStringUtil.isEmpty(jobName))
+		{
+			synchronized(adminJobsLock)
 			{
-				jobName =  names.get(0);
+				 
+	//			List<String> names =this.getConfigTasks();
+	//			
+	//			if(monitorAlljobstaticsIdxByJob.size() > 0)
+	//			{
+	//				
+	//				mergeconfigtasks(names,monitorAlljobstaticsIdxByJob.keySet());
+	//			}
+	//			mergeconfigTabletasks(names);
+	//			if(names.size() == 0)
+	//				return null;
+	//			sort(names);
+	//			if(jobName == null)
+	//			{
+	//				jobName =  names.get(0);
+	//				
+	//			}
+				
+				job.setJobName(jobName);
+				
+	//			job.setAllJobNames(names);
+				Map<String, JobStatic> jobstatic =  monitorAlljobstaticsIdxByJob.get(jobName);
+				if(jobstatic != null)
+				{
+					jobstatic = cloneStaticData(jobstatic);
+					job.setJobstaticsIdxByHost(jobstatic);
+					JobStatus jobStatus = checkstatus(jobstatic);
+					job.setStartid(jobStatus.getStartid());
+					job.setEndid(jobStatus.getEndid());
+					job.setJobstaticid(jobStatus.getJobstaticid());
+					job.setTotaltasks(jobStatus.totaltasks); 
+					job.setStatus( jobStatus.status);
+					job.setSuccessrecords(jobStatus.getSuccessrecords());
+					job.setFailerecords(jobStatus.getFailerecords());
+					job.setRuntasks(jobStatus.getRuntasks());
+					job.setUnruntasks(jobStatus.getUnruntasks());
+					job.setWaittasks(jobStatus.getWaittasks());
+					job.setFailtasks(jobStatus.getFailtasks());
+					job.setCompletetasks(jobStatus.getCompletetasks());
+					if(jobStatus.successTaskNos != null)
+						job.setSuccessTaskNos(jobStatus.successTaskNos.toString());
+					else
+						job.setSuccessTaskNos("");
+					if(jobStatus.failedTaskNos != null)
+						job.setFailedTaskNos(jobStatus.failedTaskNos.toString());
+					else
+						job.setFailedTaskNos("");
+					 
+					if(jobStatus.undotaskNos != null)
+						job.setUndotaskNos(jobStatus.undotaskNos);
+					else
+						job.setUndotaskNos("");
+					 
+				}
+				if(job.getStatus() == -1 || job.getStatus() == 1 || job.getStatus() == 2 || job.getStatus() == 3 || job.getStatus() == 5  )
+					job.setCanrun(true);
+				TaskConfig config = HDFSUploadData.buildTaskConfig(jobName);
+				if(config != null)
+				{
+					job.setJobdef(config.getJobdef());
+					job.setJobconfig(	config.toString());
+				}
 				
 			}
-			
-			job.setJobName(jobName);
-			
-			job.setAllJobNames(names);
-			Map<String, JobStatic> jobstatic =  monitorAlljobstaticsIdxByJob.get(jobName);
-			if(jobstatic != null)
-			{
-				jobstatic = cloneStaticData(jobstatic);
-				job.setJobstaticsIdxByHost(jobstatic);
-				JobStatus jobStatus = checkstatus(jobstatic);
-				job.setStartid(jobStatus.getStartid());
-				job.setEndid(jobStatus.getEndid());
-				job.setJobstaticid(jobStatus.getJobstaticid());
-				job.setTotaltasks(jobStatus.totaltasks); 
-				job.setStatus( jobStatus.status);
-				job.setSuccessrecords(jobStatus.getSuccessrecords());
-				job.setFailerecords(jobStatus.getFailerecords());
-				job.setRuntasks(jobStatus.getRuntasks());
-				job.setUnruntasks(jobStatus.getUnruntasks());
-				job.setWaittasks(jobStatus.getWaittasks());
-				job.setFailtasks(jobStatus.getFailtasks());
-				job.setCompletetasks(jobStatus.getCompletetasks());
-				if(jobStatus.successTaskNos != null)
-					job.setSuccessTaskNos(jobStatus.successTaskNos.toString());
-				else
-					job.setSuccessTaskNos("");
-				if(jobStatus.failedTaskNos != null)
-					job.setFailedTaskNos(jobStatus.failedTaskNos.toString());
-				else
-					job.setFailedTaskNos("");
-				 
-				if(jobStatus.undotaskNos != null)
-					job.setUndotaskNos(jobStatus.undotaskNos);
-				else
-					job.setUndotaskNos("");
-				 
-			}
-			if(job.getStatus() == -1 || job.getStatus() == 1 || job.getStatus() == 2 || job.getStatus() == 3 || job.getStatus() == 5  )
-				job.setCanrun(true);
-			TaskConfig config = HDFSUploadData.buildTaskConfig(jobName);
-			if(config != null)
-			{
-				job.setJobdef(config.getJobdef());
-				job.setJobconfig(	config.toString());
-			}
-			
 		}
 		
 		job.setAdminNode(Imp.getImpStaticManager()

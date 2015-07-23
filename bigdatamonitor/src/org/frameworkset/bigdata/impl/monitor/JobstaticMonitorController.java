@@ -14,6 +14,7 @@ import org.frameworkset.web.servlet.ModelMap;
 import com.frameworkset.common.poolman.SQLExecutor;
 import com.frameworkset.common.poolman.handle.ResultSetNullRowHandler;
 import com.frameworkset.orm.transaction.TransactionManager;
+import com.frameworkset.util.SimpleStringUtil;
 import com.frameworkset.util.StringUtil;
 
 public class JobstaticMonitorController {
@@ -21,9 +22,17 @@ public class JobstaticMonitorController {
 			.getLogger(JobstaticMonitorController.class);
 
 	public String index(String job, ModelMap model) {
+				
+		List<String> allJobNames = Imp.getImpStaticManager().getJobNames();
+		if(SimpleStringUtil.isEmpty(job) && allJobNames != null && allJobNames.size() > 0)
+		{
+			job = allJobNames.get(0);
+		}
 		SpecialMonitorObject specialMonitorObject = Imp.getImpStaticManager()
 				.getSpecialMonitorObject(job);
 		model.addAttribute("jobInfo", specialMonitorObject);
+		model.addAttribute("allJobNames", allJobNames);
+
 
 //		model.addAttribute("adminNode", Imp.getImpStaticManager()
 //				.getLocalNode());
