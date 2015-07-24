@@ -65,6 +65,10 @@ public class TaskConfig implements java.io.Serializable{
 	String datatype;
 	private String querystatement;
 	/**
+	 * 作业任务最大允许错误行数，如果超过这个错误行数，则强制终止作业执行
+	 */
+	private int errorrowslimit =-1;
+	/**
 	 * 子查询sql
 	 */
 	String subquerystatement;
@@ -109,6 +113,8 @@ public class TaskConfig implements java.io.Serializable{
 		.append("subtablename=").append(this.subtablename).append(",")
 		.append("leftjoinby=").append(this.leftJoinby).append(",")
 		.append("rightJoinby=").append(this.rightJoinby).append(",")
+		.append("errorrowslimit=").append(this.errorrowslimit).append(",")
+		
 		.append("usepartition=").append(this.usepartition).append(",");
 		if(this.usepartition)
 		{
@@ -530,6 +536,12 @@ public class TaskConfig implements java.io.Serializable{
 	}
 	public void setJobstaticid(String jobstaticid) {
 		this.jobstaticid = jobstaticid;
+	}
+	public int getErrorrowslimit() {
+		return errorrowslimit;
+	}
+	public void setErrorrowslimit(int errorrowslimit) {
+		this.errorrowslimit = errorrowslimit;
 	}
 }
 

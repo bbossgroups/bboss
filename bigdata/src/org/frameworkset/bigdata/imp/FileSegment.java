@@ -28,6 +28,7 @@ public class FileSegment {
 //	 long end;
 	 long rows;
 	 long errorrows;
+	 private StringBuilder errormessage; 
 //	 String filename;
 	 
 	 Path hdfsdir ;
@@ -37,6 +38,34 @@ public class FileSegment {
 	 PrintWriter writer;
 	 TaskStatus taskStatus;
 	 OutputStream out;
+	 public StringBuilder appendErrorMsg(String errormsg)
+	 {
+		 if(errormessage == null)
+		 {
+			 errormessage = new StringBuilder();
+		 }
+		 errormessage.append(errormsg).append("\r\n");
+		 return errormessage;
+	 }
+	 public boolean handleerrormsgs()
+	 {
+		 if( errormessage != null && errormessage.length() > 0)
+		 {
+			 try {
+				this.taskStatus.setErrorInfo(this.errormessage.toString());
+				 errormessage = null;
+				 return true;
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			 return false;
+		 }
+		 else
+		 {
+			 return false;
+		 }
+	 }
 	 public String getRightJoinBy()
 	 {
 		 return job.config.getLeftJoinby();
@@ -138,11 +167,26 @@ public class FileSegment {
 		 this.taskStatus.setHandlerows(rows);
 		 log.debug(taskInfo.filename+"-rows["+rows+"]:"+line);
 	 }
+	 public boolean reacherrorlimit()
+	 {
+		 if(this.job.getErrorrowslimit() < 0 )
+			 return false;
+		 else if(this.errorrows > this.job.getErrorrowslimit())
+			 return true;
+		 else
+			 return false;
+		
+			 
+	 }
+	 
 	 void errorrow()
 	 {
 		 this.errorrows ++;
 		 this.taskStatus.setErrorrows(errorrows);
+		  
+			 
 	 }
+	 
 	 void flush() throws Exception
 	 {
 		 if(flushed)

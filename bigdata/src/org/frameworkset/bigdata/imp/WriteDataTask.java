@@ -56,10 +56,66 @@ public class WriteDataTask {
 					value  = 0;
 			}
 			else
-				value = row.getString(i+1);
+			{
+				/**
+				 * try resolved oracle 数组越界问题，如果字段是number类型，并且值类似于1.30020034599143E-115，通过 row.getString(i+1)方法会抛出以下异常：
+				 * java.lang.ArrayIndexOutOfBoundsException: -128
+	at oracle.sql.LnxLibThin.lnxnuc(LnxLibThin.java:5746)
+	at oracle.sql.NUMBER.toText(NUMBER.java:2682)
+	at oracle.jdbc.driver.NumberCommonAccessor.getString(NumberCommonAccessor.java:6220)
+	at oracle.jdbc.driver.T4CNumberAccessor.getString(T4CNumberAccessor.java:70)
+	at oracle.jdbc.driver.OracleResultSetImpl.getString(OracleResultSetImpl.java:397)
+	at oracle.jdbc.driver.OracleResultSet.getString(OracleResultSet.java:1515)
+	at org.frameworkset.bigdata.imp.Solver$2.handleRow(Solver.java:122)
+	at com.frameworkset.common.poolman.handle.ResultSetNullRowHandler.handleRow(ResultSetNullRowHandler.java:34)
+	at com.frameworkset.common.poolman.ResultMap.buildRecord(ResultMap.java:403)
+	at com.frameworkset.common.poolman.StatementInfo.buildResult(StatementInfo.java:730)
+	at com.frameworkset.common.poolman.StatementInfo.buildResultMap(StatementInfo.java:953)
+	at com.frameworkset.common.poolman.PreparedDBUtil.doPrepareSelectCommon(PreparedDBUtil.java:2082)
+	at com.frameworkset.common.poolman.PreparedDBUtil.innerExecute(PreparedDBUtil.java:1524)
+	at com.frameworkset.common.poolman.PreparedDBUtil.executePreparedForObject(PreparedDBUtil.java:1233)
+	at com.frameworkset.common.poolman.PreparedDBUtil.executePreparedWithRowHandler(PreparedDBUtil.java:1193)
+	at com.frameworkset.common.poolman.PreparedDBUtil.executePreparedWithRowHandler(PreparedDBUtil.java:1188)
+	at com.frameworkset.common.poolman.SQLInfoExecutor.queryWithDBNameByNullRowHandler(SQLInfoExecutor.java:1149)
+	at com.frameworkset.common.poolman.SQLExecutor.queryWithDBNameByNullRowHandler(SQLExecutor.java:1344)
+	at org.frameworkset.bigdata.imp.Solver.main(Solver.java:116)
+				 */
+				try {
+					value = row.getString(i+1);
+				} catch (Exception e) {
+					
+					if(this.fileSegment.job.config.pkname != null)
+					{
+						try {
+							String pkvalue = row.getString(this.fileSegment.job.config.pkname);
+							log.error("Get column["+colName+"] value by  ResultSet.getString method for row that pkvalue["+this.fileSegment.job.config.pkname+"="+pkvalue+"] failed,Use ResultSet.getObject method again.",e);
+						} catch (Exception e1) {
+							log.error("Get column["+colName+"] value failed,Use ResultSet.getObject method again.",e);
+						}
+					}
+					else
+					{
+						log.error("Get column["+colName+"] value failed,Use ResultSet.getObject method again.",e);							
+					}
+					
+					value = row.getObject(i+1);
+					
+				}
+			}
+				
 		} catch (Exception e) {
-			String pkvalue = row.getString(this.fileSegment.job.config.pkname);
-			log.error("Get column["+colName+"] value for row that pkvalue["+this.fileSegment.job.config.pkname+"="+pkvalue+"] failed:",e);
+			if(this.fileSegment.job.config.pkname != null)
+			{
+				String pkvalue = row.getString(this.fileSegment.job.config.pkname);
+				log.error("Get column["+colName+"] value for row that pkvalue["+this.fileSegment.job.config.pkname+"="+pkvalue+"] failed:",e);
+				throw new RowHandlerException("Get column["+colName+"] value for row that pkvalue["+this.fileSegment.job.config.pkname+"="+pkvalue+"] failed:",e);
+			}
+			else
+			{
+				log.error("Get column["+colName+"] value failed:",e);
+				
+				throw new RowHandlerException("Get column["+colName+"] value failed:",e);
+			}
 			 
 		}
 		return value;
@@ -73,6 +129,10 @@ public class WriteDataTask {
     {
 		try
 		{
+//			if(fileSegment.getRows() == 2)
+//			{
+//				throw new RowHandlerException("测试");
+//			}
 			if(metaData == null)
 				metaData = PoolManResultSetMetaData.getCopy(row.getMetaData());
 			
@@ -139,12 +199,85 @@ public class WriteDataTask {
 	    	}
 	    	
 	    	fileSegment.writeLine(buidler.toString());
-	    	buidler.setLength(0);
+	    	
+		}
+		catch(NestedSQLException e)
+		{
+			fileSegment.errorrow();
+			if(e.getCause() != null && e.getCause() instanceof RowHandlerException)
+			{
+				if(fileSegment.reacherrorlimit())				
+				{
+					fileSegment.appendErrorMsg(SimpleStringUtil.formatException(e.getCause()));//只记录最后一个异常
+					throw (RowHandlerException)e.getCause();
+				}
+				else if(fileSegment.job.getErrorrowslimit() >= 0)
+				{
+					fileSegment.appendErrorMsg(SimpleStringUtil.formatException(e.getCause()));//只记录最后一个异常
+				}
+			}
+			else if(e.getCause() != null && e.getCause() instanceof ForceStopException) 
+			{
+				throw (ForceStopException)e.getCause();
+			}
+			else
+			{
+				if(fileSegment.reacherrorlimit())
+				{
+					fileSegment.appendErrorMsg(SimpleStringUtil.formatException(e.getCause() == null?e:e.getCause()));
+					throw e;
+				}
+				else if(fileSegment.job.getErrorrowslimit() >= 0)
+				{
+					fileSegment.appendErrorMsg(SimpleStringUtil.formatException(e.getCause() == null?e:e.getCause()));//只记录最后一个异常
+				}
+				else
+				{
+					log.error("",e);
+				}
+			}
+		}
+		catch(ForceStopException e)
+		{
+			fileSegment.errorrow();
+			throw e;
+		}
+		catch(RowHandlerException e)
+		{
+			fileSegment.errorrow();
+			if(fileSegment.reacherrorlimit())	
+			{
+				fileSegment.appendErrorMsg(SimpleStringUtil.formatException(e));
+				throw e;
+			}
+			else if(fileSegment.job.getErrorrowslimit() >= 0)
+			{
+				fileSegment.appendErrorMsg(SimpleStringUtil.formatException(e));//只记录最后一个异常
+			}
+			
 		}
 		catch(Exception e)
 		{
 			fileSegment.errorrow();
-			throw e;
+		
+			if(fileSegment.reacherrorlimit())
+			{
+				fileSegment.appendErrorMsg(SimpleStringUtil.formatException(e));
+				throw e;
+			}
+			else if(fileSegment.job.getErrorrowslimit() >= 0)
+			{
+				fileSegment.appendErrorMsg(SimpleStringUtil.formatException(e));//只记录最后一个异常
+			}
+			else
+			{
+				log.error("",e);
+			}
+				
+		}
+		finally
+		{
+			buidler.setLength(0);
 		}
 		
  
@@ -154,7 +287,7 @@ public class WriteDataTask {
 	
 	
 	
-	private void writeSub(StringBuilder builder ,ResultSet row) throws Exception
+	private void writeSub(Object rightJoinBy,StringBuilder builder ,ResultSet row) throws Exception
     {
 		try
 		{
@@ -176,9 +309,8 @@ public class WriteDataTask {
 						continue;
 					
 					Object value = getValue(  colType,  fileSegment ,  row,  i,  colName);
-					{
-						buidler.append(",\""+colName+"\":\""+value  +"\"");
-					}
+					buidler.append(",\""+colName+"\":\""+value  +"\"");
+					
 				}
 				 
 				 
@@ -194,11 +326,8 @@ public class WriteDataTask {
 					if("ROWNUM__".equals(colName))//去掉oracle的行伪列
 						continue;
 					Object value = getValue(  colType,  fileSegment ,  row,  i,  colName);
-					 
-				 
-					{
-						buidler.append("#").append(colName).append("#").append(value );
-					}
+					buidler.append("#").append(colName).append("#").append(value );
+					
 	    		}
 	    		 
 	    	}
@@ -208,7 +337,7 @@ public class WriteDataTask {
 		catch(Exception e)
 		{
 			
-			throw e;
+			throw new RowHandlerException("Get sub table record by join["+rightJoinBy+"]failed:",e);
 		}
 		
  
@@ -216,7 +345,7 @@ public class WriteDataTask {
     	
     }
 	
-	private void appendSubTableColumns(final StringBuilder builder,Object rightJoinBy) throws Exception
+	private void appendSubTableColumns(final StringBuilder builder,final Object rightJoinBy) throws Exception
 	{
 		 
 		
@@ -226,7 +355,7 @@ public class WriteDataTask {
 				public void handleRow(ResultSet row) throws Exception {
 					if(genFileHelper.isforceStop())
 						throw new ForceStopException();
-					writeSub( builder ,row);
+					writeSub( rightJoinBy, builder ,row);
 					if(genFileHelper.isforceStop())
 						throw new ForceStopException();
 				}
@@ -321,6 +450,7 @@ public class WriteDataTask {
 				fileSegment.taskStatus.setStatus(1);
 			fileSegment.taskStatus.setTaskInfo(fileSegment.toString());
 			log.info("生成文件结束："+fileSegment.toString());
+			fileSegment.handleerrormsgs();
 			fileSegment.close();
 			fileNo ++ ;
 	 }
@@ -485,6 +615,7 @@ public class WriteDataTask {
 				this.buidler = null;
 				if(fileSegment != null && !fileSegment.isClosed())//所有的数据放到一个文件中
 				{
+					fileSegment.handleerrormsgs();
 					fileSegment.close();
 				}
 				
@@ -522,6 +653,7 @@ public class WriteDataTask {
 			log.info("开始生成文件："+fileSegment.toString());
 			genpage( fileSegment  ) ;
 			fileSegment.flush();
+			
 			fileSegment.genendtimestamp =  System.currentTimeMillis();
 			this.genFileHelper.job.completeTask(fileSegment.taskInfo.taskNo);
 			log.info("生成文件结束："+fileSegment.toString());
@@ -578,6 +710,7 @@ public class WriteDataTask {
 		finally
 		{
 			this.buidler = null;
+			fileSegment.handleerrormsgs();
 			fileSegment.close();
 		}
 		if(genFileHelper.genlocalfile())

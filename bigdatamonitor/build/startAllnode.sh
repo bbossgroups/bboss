@@ -8,3 +8,5 @@ nohup ./startupDataNode.sh >n8802.log &
 
 
 
+
+

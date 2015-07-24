@@ -172,6 +172,7 @@ public class HDFSUploadData {
 	boolean onejob;
 	String target ;
 	int rowsperfile;
+	private int errorrowslimit = -1;
 	/**
 	 * 开始文件号
 	 */
@@ -228,6 +229,7 @@ public class HDFSUploadData {
 		config.setRightJoinby(rightJoinby);
 		config.setSubquerystatement(subquerystatement);
 		 config.setTarget(target);
+		 config.setErrorrowslimit(errorrowslimit);
 		 config.setRowsperfile(rowsperfile);
 		 config.setOnejob(onejob);
 		 config.setStartfileNo(startfileNo);
@@ -519,6 +521,9 @@ public class HDFSUploadData {
 		
 		 String target = context.getStringExtendAttribute(jobname,
 					"target");
+		 int errorrowslimit = context.getIntExtendAttribute(jobname,
+					"errorrowslimit",-1);
+		 config.setErrorrowslimit(errorrowslimit);
 		 boolean onejob = context.getBooleanExtendAttribute(jobname,
 					"single",false); 	 
 		 int rowsperfile = context.getIntExtendAttribute(jobname, "rowsperfile", 0);
@@ -1531,6 +1536,8 @@ public class HDFSUploadData {
 					"subquerystatement");
 			 this.target = context.getStringExtendAttribute(jobname,
 						"target");
+			 errorrowslimit = context.getIntExtendAttribute(jobname,
+						"errorrowslimit",-1);
 			 this.onejob = context.getBooleanExtendAttribute(jobname,
 						"single",false); 	 
 			 this.rowsperfile = context.getIntExtendAttribute(jobname, "rowsperfile", 0);

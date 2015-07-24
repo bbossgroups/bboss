@@ -176,7 +176,8 @@ table img{cursor:pointer;}
 .stable .td_center{
 	text-align:center; 
 }
-.stable a{ padding:0 3px} 
+/**
+.stable a{ padding:0 3px} */
 
 .red{ color:#F00; margin-left:2px;}
 .redbold{ color:#F00; font-weight:bold}

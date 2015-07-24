@@ -26,7 +26,10 @@ public class ExecutorJob {
 	 AtomicInteger upfilecount ;
 	 List<TaskInfo> tasks;
 	 
-	
+	 public int getErrorrowslimit()
+	 {
+		 return this.config.getErrorrowslimit();
+	 }
 	 int pos;
 	 boolean justassigned = false;
 	 

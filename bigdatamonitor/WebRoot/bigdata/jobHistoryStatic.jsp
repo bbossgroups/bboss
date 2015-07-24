@@ -168,7 +168,7 @@ function viewJobstatics(jobname,jobstaticid)
 							<td width="20%" colspan="2"><b>作业管理节点：<pg:cell colName="adminNode" /> &nbsp; <br>总任务数：<pg:cell colName="totaltasks"/> &nbsp;  完成任务数：<pg:cell colName="completetasks"/>&nbsp;
 							正在运行任务数：<pg:cell colName="runtasks"/> &nbsp;     失败任务数：<pg:cell colName="failtasks"/> &nbsp;  
 							 等待执行任务数： <pg:cell colName="waittasks"/> &nbsp;   未开始任务数：<pg:cell colName="unruntasks"/> &nbsp;<br> 
-							 完成总记录数：<pg:cell colName="successrecords"/>  &nbsp; 失败总记录数：<pg:cell colName="failerecords"/></b></td>
+							 成功总记录数：<pg:cell colName="successrecords"/>  &nbsp; 失败总记录数：<pg:cell colName="failerecords"/></b></td>
 
 						</tr>
 						<pg:list colName="allDataNodes">
@@ -193,7 +193,7 @@ function viewJobstatics(jobname,jobstaticid)
 											失败任务数：<pg:cell colName="failtasks"/>&nbsp;&nbsp;
 											等待执行任务数：<pg:cell colName="waittasks"/>&nbsp;&nbsp;
 											未开始任务数：<pg:cell colName="unruntasks"/>&nbsp;&nbsp;<br>
-											完成记录数：<pg:cell colName="successrecords"/>  &nbsp; 失败记录数：<pg:cell colName="failerecords"/><br>
+											成功记录数：<pg:cell colName="successrecords"/>  &nbsp; 失败记录数：<pg:cell colName="failerecords"/><br>
 																				
 											错误日志:<pg:cell colName="errormsg" />
 											
@@ -277,7 +277,7 @@ function viewJobstatics(jobname,jobstaticid)
 											<pg:equal value="3">强制停止&nbsp;</pg:equal>
 										</pg:case> &nbsp;&nbsp;<br>开始时间:<pg:cell colName="startTime" dateformat="yyyy-MM-dd HH:mm:ss" />&nbsp;&nbsp;结束时间:<pg:cell colName="endTime"
 											dateformat="yyyy-MM-dd HH:mm:ss" /><br>
-											完成记录数：<pg:cell colName="successrecords"/>  &nbsp; 失败记录数：<pg:cell colName="failerecords"/><br>
+											成功记录数：<pg:cell colName="successrecords"/>  &nbsp; 失败记录数：<pg:cell colName="failerecords"/><br>
 											节点总任务数：<pg:cell colName="totaltasks"/>&nbsp;&nbsp;
 											完成任务数：<pg:cell colName="completetasks"/>&nbsp;&nbsp;
 											正在运行任务数：<pg:cell colName="runtasks"/>&nbsp;&nbsp;

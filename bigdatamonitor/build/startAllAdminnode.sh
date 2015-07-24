@@ -7,3 +7,5 @@ nohup ./startupAdminNode.sh >n8801.log &
 nohup ./startupDataNode.sh >n8802.log &
 
 
+
+
