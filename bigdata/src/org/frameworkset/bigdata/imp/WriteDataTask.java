@@ -41,19 +41,27 @@ public class WriteDataTask {
 		try {
 			if(colType == java.sql.Types.TIMESTAMP )
 			{
-				value = row.getTimestamp(i+1);
-				if(value != null)
-					value = ((java.sql.Timestamp)value).getTime();
-				else
+				try {
+					value = row.getTimestamp(i+1);
+					if(value != null)
+						value = ((java.sql.Timestamp)value).getTime();
+					else
+						value  = 0;
+				} catch (Exception e) {
 					value  = 0;
+				}
 			}
 			else if(colType == java.sql.Types.DATE)
 			{
-				value = row.getDate(i+1);
-				if(value != null)
-					value = ((java.sql.Date)value).getTime();
-				else
+				try {
+					value = row.getDate(i+1);
+					if(value != null)
+						value = ((java.sql.Date)value).getTime();
+					else
+						value  = 0;
+				} catch (Exception e) {
 					value  = 0;
+				}
 			}
 			else
 			{
