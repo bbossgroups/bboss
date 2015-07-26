@@ -847,35 +847,40 @@ public class FileUtil
      * @author: ge.tao
      */
 
-    public static List unzip(String sourceFileName, String destPath) throws ZipException, IOException
+    public static void unzip(String sourceFileName, String destPath) throws ZipException, IOException
     {
-        if (sourceFileName.endsWith(".zip"))
+    	ZipFile zf = null;
+//        if (sourceFileName.endsWith(".zip") || sourceFileName.endsWith(".war"))
+        try
         {
-            ZipFile zf = new ZipFile(sourceFileName);
+            zf = new ZipFile(sourceFileName);
             Enumeration en = zf.entries();
-            List v = new ArrayList();
+          
 
             while (en.hasMoreElements())
             {
                 ZipEntry zipEnt = (ZipEntry) en.nextElement();
                 saveEntry(destPath, zipEnt, zf);
-                if (!zipEnt.isDirectory())
-                {
-                    // 添加zip文件的信息到列表中
-                    v.add(zipEnt.getName());
-                }
+               
             }
-            zf.close();
-            return v;
+            
+           
         }
-        else
+        finally
         {
-            return null;
+        	if(zf != null)
+        		zf.close();
         }
+       
+        
     }
 
     public static void saveEntry(String destPath, ZipEntry target, ZipFile zf) throws ZipException, IOException
     {
+    	 InputStream is = null;
+    	 BufferedInputStream bis =  null;
+    	 FileOutputStream fos = null;
+    	 BufferedOutputStream bos = null;
         try
         {
             File file = new File(destPath + "/" + target.getName());
@@ -885,20 +890,19 @@ public class FileUtil
             }
             else
             {
-                InputStream is = zf.getInputStream(target);
-                BufferedInputStream bis = new BufferedInputStream(is);
+                is = zf.getInputStream(target);
+                bis = new BufferedInputStream(is);
                 File dir = new File(file.getParent());
                 dir.mkdirs();
-                FileOutputStream fos = new FileOutputStream(file);
-                BufferedOutputStream bos = new BufferedOutputStream(fos);
+                fos = new FileOutputStream(file);
+                bos = new BufferedOutputStream(fos);
 
                 int c;
                 while ((c = bis.read()) != EOF)
                 {
                     bos.write((byte) c);
                 }
-                bos.close();
-                fos.close();
+               
             }
         }
         catch (ZipException e)
@@ -908,6 +912,37 @@ public class FileUtil
         catch (IOException e)
         {
             throw e;
+        }
+        finally
+        {
+        	try {
+				if(bis != null)
+					bis.close();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+        	try {
+				if(is != null)
+					is.close();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+        	try {
+				if(bos != null)
+					 bos.close();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+        	try {
+				if(fos != null)
+					 fos.close();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
         }
     }
 

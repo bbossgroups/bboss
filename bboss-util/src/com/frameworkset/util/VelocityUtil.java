@@ -230,9 +230,10 @@ public class VelocityUtil{
 //					});
 	             } catch (Throwable ex) {
 	             	try {
+	             		log.error("Init velocity failed from bboss-velocity.properties："+ ex.getMessage(),ex) ;
 	 					Velocity.init("velocity.properties");
 	 					inited = true;
-	 					log.error("Init velocity failed:velocity.properties (系统找不到指定的文件。) 检查classpath中是否配置正确:"+ ex.getMessage(),ex) ;
+	 					
 	 				} catch (Exception e) {
 	 					inited = true;
 	 					log.error("Init velocity failed:velocity.properties (系统找不到指定的文件。) 检查classpath中是否配置正确:"+ ex.getMessage(),e);

@@ -17,6 +17,8 @@
 package org.frameworkset.util.io;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -219,8 +221,9 @@ public class UrlResource extends AbstractResource {
 	}
 
 	public void release() {
-		
-		
 	}
+	
+	
+	
 
 }

@@ -10,7 +10,6 @@
 	<classpathentry kind="lib" path="lib/cglib-nodep-3.1.jar"/>
 	<classpathentry kind="lib" path="lib/commons-collections-3.2.1.jar"/>
 	<classpathentry kind="lib" path="lib/commons-configuration-1.6.jar"/>
-	<classpathentry kind="lib" path="lib/commons-lang-2.4.jar"/>
 	<classpathentry kind="lib" path="lib/frameworkset-pool-sources.jar"/>
 	<classpathentry kind="lib" path="lib/frameworkset-pool.jar" sourcepath="lib/frameworkset-pool-sources.jar"/>
 	<classpathentry kind="lib" path="lib/frameworkset-util.jar" sourcepath="/bboss-util"/>

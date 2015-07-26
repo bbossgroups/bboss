@@ -18,6 +18,7 @@ package org.frameworkset.util.io;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
@@ -186,5 +187,61 @@ public abstract class AbstractResource implements Resource {
 	{
 		
 	}
+	
+	public  void savetofile(File destinctionFile) throws IOException
+    {
+
+       InputStream stFileInputStream = null;
+
+        FileOutputStream stFileOutputStream = null;
+
+        try
+        {
+//            makeFile(destinctionFile);
+
+            stFileInputStream = this.getInputStream();
+            if(stFileInputStream == null)
+            	return;
+
+            stFileOutputStream = new FileOutputStream(destinctionFile);
+
+            int arraySize = 1024;
+            byte buffer[] = new byte[arraySize];
+            int bytesRead;
+            while ((bytesRead = stFileInputStream.read(buffer)) != -1)
+            {
+                stFileOutputStream.write(buffer, 0, bytesRead);
+            }
+
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        finally
+        {
+            if (stFileInputStream != null)
+                try
+                {
+                    stFileInputStream.close();
+                }
+                catch (IOException e)
+                {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            if (stFileOutputStream != null)
+                try
+                {
+                    stFileOutputStream.close();
+                }
+                catch (IOException e)
+                {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+        }
+
+    }
 
 }
