@@ -56,6 +56,9 @@ $(document).ready(function() {
 	</pg:no>
 	</pg:true>
 	
+	var winHeight=$(window).height();
+	
+	$(".left_menu").css({height:winHeight*0.99});
 });
        
  

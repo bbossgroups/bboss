@@ -29,7 +29,9 @@
 
 $(document).ready(function() {
  
+var winHeight=$(window).height();
 	
+	$(".left_menu").css({height:winHeight*0.99});
 });
        
  
