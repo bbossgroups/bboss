@@ -151,11 +151,15 @@ public class CommonLauncher
             URL url = classpathEntries[i];
             System.err.println("ClassPath[" + i + "] = " + url);
         }
-        Method setAppdir = mainClass.getMethod("setAppdir", new Class[] {File.class});
-        if(setAppdir != null)
-        {
-        	setAppdir.invoke(null, new Object[] {appDir});
-        }
+        try {
+			Method setAppdir = mainClass.getMethod("setAppdir", new Class[] {File.class});
+			if(setAppdir != null)
+			{
+				setAppdir.invoke(null, new Object[] {appDir});
+			}
+		} catch (Exception e) {
+			System.err.println("ignore set Appdir variable for "+mainclass+":"+e.getMessage());
+		}
         Method method = mainClass.getMethod("main", new Class[] {String[].class});
         method.invoke(null, new Object[] {args});
     }
