@@ -2,6 +2,7 @@ package org.frameworkset.bigdata.imp;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -158,6 +159,7 @@ public class HDFSUploadData {
 	 */
 	private boolean usepartition;
 	private String partitions;
+	private boolean usesubpartition = true;
 	private String excludepartitions;
 	private String leftJoinby;
 	private String rightJoinby;
@@ -224,6 +226,7 @@ public class HDFSUploadData {
 		config.setUsepartition(this.usepartition);
 		config.setPartitions(partitions);
 		config.setExcludepartitions(excludepartitions);
+		config.setUsesubpartition(usesubpartition);
 		config.setSubtablename(subtablename);;
 		config.setLeftJoinby(leftJoinby);
 		config.setRightJoinby(rightJoinby);
@@ -501,6 +504,9 @@ public class HDFSUploadData {
 		
 		String excludepartitions = context.getStringExtendAttribute(jobname,
 				"excludepartitions");
+		boolean usesubpartition = context.getBooleanExtendAttribute(jobname,
+				"usesubpartition",true);
+		config.setUsesubpartition(usesubpartition);
 		config.setExcludepartitions(excludepartitions);
 		config.setUsepartition(usepartition);
 		String subtablename = context.getStringExtendAttribute(jobname,
@@ -913,6 +919,105 @@ public class HDFSUploadData {
 		return splitTasks;
 		
 	}
+	private List<PartitionInfo> handlePartitions(List<String> partitions) throws SQLException
+	{
+		List<PartitionInfo> result = null;
+		if(this.usesubpartition )
+		{
+			if(partitions != null && partitions.size() > 0 )
+			{
+				result = new ArrayList<PartitionInfo>();
+				StringBuilder queryPartitions = new StringBuilder();
+				if(!SimpleStringUtil.isEmpty(schema))
+				{
+					queryPartitions.append("SELECT SUBPARTITION_NAME FROM ALL_TAB_SUBPARTITIONS WHERE TABLE_NAME=? and PARTITION_NAME=?");
+				}
+				else
+					queryPartitions.append("SELECT SUBPARTITION_NAME FROM USER_TAB_SUBPARTITIONS WHERE TABLE_NAME=? and PARTITION_NAME=?");
+				String t = queryPartitions.toString();
+				String tab = this.tablename.toUpperCase();
+				List<String> subparts = null;
+				for(String partition:partitions)
+				{
+					if(!partition.startsWith("sub:"))
+					{
+						subparts = SQLExecutor.queryListWithDBName(String.class, this.dbname,t,tab,partition);
+						if(subparts == null || subparts.size() == 0)
+						{
+							PartitionInfo partitionInfo = new PartitionInfo();
+							partitionInfo.setIssubpartition(false);
+							partitionInfo.setPartition(partition);
+							result.add(partitionInfo);
+						}
+						else
+						{
+							for(String subpart:subparts)
+							{
+								PartitionInfo partitionInfo = new PartitionInfo();
+								partitionInfo.setIssubpartition(true);
+								partitionInfo.setPartition(partition);
+								partitionInfo.setSubpartition(subpart);
+								result.add(partitionInfo);
+							}
+						}
+					}
+					else
+					{
+						partition = partition.substring("sub:".length());
+						PartitionInfo partitionInfo = new PartitionInfo();
+						partitionInfo.setIssubpartition(true);
+						partitionInfo.setPartition(null);
+						partitionInfo.setSubpartition(partition);
+						result.add(partitionInfo);
+					}
+						
+					
+				}
+			}
+		}
+		else
+		{
+			if(partitions != null && partitions.size() > 0 )
+			{
+				result = new ArrayList<PartitionInfo>(partitions.size());
+				for(String partition:partitions)
+				{					 
+					if(!partition.startsWith("sub:"))
+					{
+						PartitionInfo partitionInfo = new PartitionInfo();
+						partitionInfo.setIssubpartition(false);
+						partitionInfo.setPartition(partition);
+						result.add(partitionInfo);
+					}
+					else
+					{
+						partition = partition.substring("sub:".length());
+						PartitionInfo partitionInfo = new PartitionInfo();
+						partitionInfo.setIssubpartition(true);
+						partitionInfo.setSubpartition(partition);
+						result.add(partitionInfo);
+						
+					}
+				}
+			}
+		}
+		return result;
+	}
+	private List<PartitionInfo> queryPartitions() throws SQLException
+	{
+		List<String> partitions = null;
+		
+		StringBuilder queryPartitions = new StringBuilder();
+		if(!SimpleStringUtil.isEmpty(schema))
+		{
+			queryPartitions.append("SELECT PARTITION_NAME FROM ALL_TAB_PARTITIONS WHERE TABLE_NAME=upper('").append(this.tablename).append("') and table_owner='").append(this.schema).append("'");
+		}
+		else
+			queryPartitions.append("SELECT PARTITION_NAME FROM USER_TAB_PARTITIONS WHERE TABLE_NAME=upper('").append(this.tablename).append("')");
+		
+		partitions = SQLExecutor.queryListWithDBName(String.class, this.dbname,queryPartitions.toString());
+		return handlePartitions( partitions);
+	}
 	/**
 	 * 计算和分解任务
 	 * @return
@@ -924,30 +1029,34 @@ public class HDFSUploadData {
 		long segement = 0l;
 		if(this.usepartition)//分区操作
 		{
-			List<String> partitions = null;
+			List<PartitionInfo> partitions = null;
 			if(SimpleStringUtil.isEmpty(this.partitions))//没有指定执行的分区
 			{
-				StringBuilder queryPartitions = new StringBuilder();
-				if(!SimpleStringUtil.isEmpty(schema))
-				{
-					queryPartitions.append("SELECT PARTITION_NAME FROM ALL_TAB_PARTITIONS WHERE TABLE_NAME=upper('").append(this.tablename).append("') and table_owner='").append(this.schema).append("'");
-				}
-				else
-					queryPartitions.append("SELECT PARTITION_NAME FROM USER_TAB_PARTITIONS WHERE TABLE_NAME=upper('").append(this.tablename).append("')");
-				
-				partitions = SQLExecutor.queryListWithDBName(String.class, this.dbname,queryPartitions.toString());
+//				StringBuilder queryPartitions = new StringBuilder();
+//				if(!SimpleStringUtil.isEmpty(schema))
+//				{
+//					queryPartitions.append("SELECT PARTITION_NAME FROM ALL_TAB_PARTITIONS WHERE TABLE_NAME=upper('").append(this.tablename).append("') and table_owner='").append(this.schema).append("'");
+//				}
+//				else
+//					queryPartitions.append("SELECT PARTITION_NAME FROM USER_TAB_PARTITIONS WHERE TABLE_NAME=upper('").append(this.tablename).append("')");
+//				
+//				partitions = SQLExecutor.queryListWithDBName(String.class, this.dbname,queryPartitions.toString());
+				partitions = queryPartitions();
 				if(partitions != null && partitions.size() > 0)
 				{
 					if(!SimpleStringUtil.isEmpty(excludepartitions))//如果指定了不需要执行的分区，则过滤排除的分区，这个和excludeblocks功能类似，但是用于第一次执行作业时使用，excludeblocks不能用于第一次作业
 					{
 						String[] epts = this.excludepartitions.split(",");						
-						List<String> temppts = new ArrayList<String>();
+						List<PartitionInfo> temppts = new ArrayList<PartitionInfo>();
 						for(int i = 0; i < partitions.size(); i ++)
 						{
-							String pt = partitions.get(i);
+							PartitionInfo part = partitions.get(i);
 							boolean exclude = false;
 							for(String ept:epts )
 							{
+								if(ept.startsWith("sub:"))
+									ept = ept.substring("sub:".length());
+								String pt = part.isIssubpartition()?part.getSubpartition():part.getPartition();
 								if(pt.equalsIgnoreCase(ept))
 								{
 									exclude = true;
@@ -956,7 +1065,7 @@ public class HDFSUploadData {
 							}
 							if(!exclude)
 							{
-								temppts.add(pt);
+								temppts.add(part);
 							}
 						}
 						partitions = temppts;
@@ -966,26 +1075,32 @@ public class HDFSUploadData {
 					segments = new TaskInfo[partitions.size()];
 					for(int i = 0; i < partitions.size(); i ++)
 					{
-						String partition = partitions.get(i);
+						PartitionInfo partition = partitions.get(i);
 						TaskInfo taskInfo = new TaskInfo();
-						taskInfo.partitionName = partition; 
+						taskInfo.partitionName = partition.getPartition();
+						taskInfo.setIssubpartition(partition.isIssubpartition());
+						taskInfo.setSubpartition(partition.getSubpartition());
 						taskInfo.taskNo = i + "";
-						taskInfo.filename = partition;
+						taskInfo.filename = partition.isIssubpartition()?partition.getSubpartition():partition.getPartition();
 						segments[i] = taskInfo;
 					}
 				}
 			}
 			else //指定了执行的分区，有时候有新的分区，需要独立执行，就可以使用这个办法
 			{
+				
 				String[] pts = this.partitions.split(",");
-				segments = new TaskInfo[pts.length];
-				for(int i = 0; i < pts.length; i ++)
+				partitions = handlePartitions(Arrays.asList(pts));
+				segments = new TaskInfo[partitions.size()];
+				for(int i = 0; i < partitions.size(); i ++)
 				{
-					String partition = pts[i];
+					PartitionInfo partition = partitions.get(i);
 					TaskInfo taskInfo = new TaskInfo();
-					taskInfo.partitionName = partition; 
+					taskInfo.partitionName = partition.getPartition(); 
+					taskInfo.setIssubpartition(partition.isIssubpartition());
+					taskInfo.setSubpartition(partition.getSubpartition());
 					taskInfo.taskNo = i + "";
-					taskInfo.filename = partition;
+					taskInfo.filename = partition.isIssubpartition()?partition.getSubpartition():partition.getPartition();
 					segments[i] = taskInfo;
 				}
 			}
@@ -1526,6 +1641,9 @@ public class HDFSUploadData {
 				"partitions");
 		excludepartitions = context.getStringExtendAttribute(jobname,
 				"excludepartitions");
+		usesubpartition = context.getBooleanExtendAttribute(jobname,
+				"usesubpartition",true);
+		
 		subtablename = context.getStringExtendAttribute(jobname,
 				"subtablename");
 		  leftJoinby = context.getStringExtendAttribute(jobname,
@@ -2214,6 +2332,14 @@ public class HDFSUploadData {
 
 	public void setExcludepartitions(String excludepartitions) {
 		this.excludepartitions = excludepartitions;
+	}
+
+	public boolean isUsesubpartition() {
+		return usesubpartition;
+	}
+
+	public void setUsesubpartition(boolean usesubpartition) {
+		this.usesubpartition = usesubpartition;
 	}
 
 }

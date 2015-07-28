@@ -5,6 +5,8 @@ public class TaskInfo  implements java.io.Serializable{
 	long startoffset;
 	long endoffset;
 	long pagesize;
+	private String subpartition;
+	private boolean issubpartition;
 	String partitionName;
 	String filename;
 	/**
@@ -45,7 +47,7 @@ public class TaskInfo  implements java.io.Serializable{
 		
 		 StringBuilder builder = new StringBuilder();
 		 builder.append("taskNo=").append(taskNo).append(",").append("filename=").append(filename).append(",")
-			.append("pagesize=").append(pagesize).append(",")
+			.append("pagesize=").append(pagesize).append(",").append("subpartition=").append(subpartition).append(",").append("parentpartition=").append(partitionName).append(",")
 			.append("startoffset=").append(startoffset).append(",")
 			.append("endoffset=").append(endoffset);
 		 return builder.toString();
@@ -67,6 +69,18 @@ public class TaskInfo  implements java.io.Serializable{
 	}
 	public void setPartitionName(String partitionName) {
 		this.partitionName = partitionName;
+	}
+	public String getSubpartition() {
+		return subpartition;
+	}
+	public void setSubpartition(String subpartition) {
+		this.subpartition = subpartition;
+	}
+	public boolean isIssubpartition() {
+		return issubpartition;
+	}
+	public void setIssubpartition(boolean issubpartition) {
+		this.issubpartition = issubpartition;
 	}
 	
 

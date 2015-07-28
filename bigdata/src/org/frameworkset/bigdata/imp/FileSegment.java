@@ -89,7 +89,12 @@ public class FileSegment {
 		 if(!this.usepartition())
 			 return this.job.config.getQuerystatement();
 		 else
-			 return this.job.config.getQuerystatement().replace("#{partition}", " PARTITION  ("+taskInfo.getPartitionName()+")");
+		 {
+			 if(!taskInfo.isIssubpartition())
+				 return this.job.config.getQuerystatement().replace("#{partition}", " PARTITION  ("+taskInfo.getPartitionName()+")");
+			 else
+				 return this.job.config.getQuerystatement().replace("#{partition}", " SUBPARTITION  ("+taskInfo.getSubpartition()+")");
+		 }
 		}
 	 
 	 
@@ -117,9 +122,16 @@ public class FileSegment {
 		 builder.append("taskNo=").append(taskInfo.taskNo).append(",").append("filename=").append(taskInfo.filename).append(",")
 			.append("pagesize=").append(taskInfo.pagesize).append(",")
 			.append("start=").append(taskInfo.startoffset).append(",")
-			.append("end=").append(taskInfo.endoffset).append(",")
-			
-			.append("gen start timestamp=").append(genstarttimestamp > 0?format.format(new Date(genstarttimestamp)):"").append(",")
+			.append("end=").append(taskInfo.endoffset).append(",");
+		 if(taskInfo.getSubpartition() != null)
+		 {
+			 builder.append("subpartition=").append(taskInfo.getSubpartition()).append(",");
+		 }
+		 if(taskInfo.getPartitionName() != null)
+		 {
+			 builder.append("partition=").append(taskInfo.getPartitionName()).append(",");
+		 }
+		 builder.append("gen start timestamp=").append(genstarttimestamp > 0?format.format(new Date(genstarttimestamp)):"").append(",")
 			.append("gen end timestamp=").append(genendtimestamp > 0?format.format(new Date(genendtimestamp)):"").append(",");
 			if(this.job.genlocalfile())
 			{

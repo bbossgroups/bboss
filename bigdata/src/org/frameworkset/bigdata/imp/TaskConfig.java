@@ -24,6 +24,7 @@ public class TaskConfig implements java.io.Serializable{
 	private boolean usepartition;
 	private String partitions;
 	private String excludepartitions;
+	private boolean usesubpartition = true;
 	private String leftJoinby;
 	private String rightJoinby;
 	/**
@@ -542,6 +543,12 @@ public class TaskConfig implements java.io.Serializable{
 	}
 	public void setErrorrowslimit(int errorrowslimit) {
 		this.errorrowslimit = errorrowslimit;
+	}
+	public boolean isUsesubpartition() {
+		return usesubpartition;
+	}
+	public void setUsesubpartition(boolean usesubpartition) {
+		this.usesubpartition = usesubpartition;
 	}
 }
 
