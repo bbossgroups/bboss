@@ -67,6 +67,8 @@ public class CommonLauncher
     	String value = null;
     	if(properts != null)
     		value = (String)properts.get(pro);
+    	if(value != null )
+    		value = value.trim();
     	return value;
     }
     
@@ -77,6 +79,8 @@ public class CommonLauncher
     		value = (String)properts.get(pro);
     	if(value == null)
     		return defaultValue;
+    	else    		
+        	value = value.trim();
     	return value;
     }
     private static void loadConfig(File appDir) throws IOException
