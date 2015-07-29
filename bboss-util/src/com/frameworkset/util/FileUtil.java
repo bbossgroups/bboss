@@ -641,6 +641,23 @@ public class FileUtil
         file.delete();
 
     }
+    
+    /**
+     * 删除文件目录下的所有子文件和子目录，操作一定要小心
+     * 
+     * @param publishTemppath
+     */
+    public static void removeFileOrDirectory(String path)
+    {
+        File file = new File(path);
+        if (!file.exists())
+            return;
+        if (file.isDirectory())
+            deleteSubfiles(file.getAbsolutePath());
+
+        file.delete();
+
+    }
 
     /**
      * 只删除目标文件
