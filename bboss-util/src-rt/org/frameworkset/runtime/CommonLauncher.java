@@ -303,7 +303,7 @@ public class CommonLauncher
             try
             {
                 File path = null;//new File(URLDecoder.decode(location.toExternalForm().substring(6), "UTF-8")).getParentFile();
-                if(!CommonLauncher.isLinux())
+                if(!CommonLauncher.isLinux() && !CommonLauncher.isOSX())
                 {
                 	path = new File(URLDecoder.decode(location.toExternalForm().substring(6), "UTF-8")).getParentFile();
                 }

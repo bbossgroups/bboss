@@ -839,14 +839,42 @@ public class FileUtil
                     targetFile.delete();
                 }
                 targetFile.createNewFile();
-                BufferedOutputStream diskfile = new BufferedOutputStream(new FileOutputStream(targetFile));
-                byte[] buffer = new byte[1024];
-                int read;
-                while ((read = zip.read(buffer)) != -1)
+                BufferedOutputStream diskfile = null;
+                FileOutputStream out = null;
+                try
                 {
-                    diskfile.write(buffer, 0, read);
+                	out = new FileOutputStream(targetFile);
+	                diskfile = new BufferedOutputStream(out);
+	                byte[] buffer = new byte[1024];
+	                int read;
+	                while ((read = zip.read(buffer)) != -1)
+	                {
+	                    diskfile.write(buffer, 0, read);
+	                }
+	                diskfile.flush();
+	                
                 }
-                diskfile.close();
+                catch(Exception e)
+                {
+                	e.printStackTrace();
+                }
+                finally
+                {
+                	try {
+						if(out != null)
+							out.close();
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+                	try {
+						if(diskfile != null)
+							diskfile.close();
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+                }
             }
         }
         return fileNames;
@@ -919,7 +947,7 @@ public class FileUtil
                 {
                     bos.write((byte) c);
                 }
-               
+                bos.flush();
             }
         }
         catch (ZipException e)
