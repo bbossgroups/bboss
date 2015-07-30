@@ -147,7 +147,7 @@
 			</antcall>
 		</target>
 	<target name="distrib-bboss-persistent-jars" description="distrib-bboss-persistent-jars">
-		<for list="${bboss-security-lib},${bboss-schedule-lib},${bboss-plugin-wordpdf-lib-depends},${bbossupload-lib},${demoproject-lib},${portallib},${casserverlib},${active-ext-lib},${cms_baseline-lib},${bboss-taglib-lib},${kettle-lib},${monitorconsole-lib},${monitorconsole-compilelib},${bboss-mvc-lib},${creatoresb-lib},${mvc-lib},${persistent-lib},${xmlrequest-lib},${bboss-plugin-hibernate-lib},${sessionmonitor-lib},${bboss-gencode-lib}" param="destdir">
+		<for list="${bigdata-lib},${bigdatamonitor-lib},${bboss-security-lib},${bboss-schedule-lib},${bboss-plugin-wordpdf-lib-depends},${bbossupload-lib},${demoproject-lib},${portallib},${casserverlib},${active-ext-lib},${cms_baseline-lib},${bboss-taglib-lib},${kettle-lib},${monitorconsole-lib},${monitorconsole-compilelib},${bboss-mvc-lib},${creatoresb-lib},${mvc-lib},${persistent-lib},${xmlrequest-lib},${bboss-plugin-hibernate-lib},${sessionmonitor-lib},${bboss-gencode-lib}" param="destdir">
 			<sequential>
 				<echo>@{destdir}-------------------------------</echo>
 				<antcall target="svn-update-procedure">
@@ -218,7 +218,7 @@
 	</target>
 
 	<target name="distrib-bboss-taglib-jars" description="distrib-bboss-taglib-jars">
-		<for list="${bbossupload-lib},${demoproject-lib},${portallib},${casserverlib},${cms_baseline-lib},${monitorconsole-lib},${monitorconsole-compilelib},${bboss-mvc-lib},${creatoresb-lib},${mvc-lib},${xmlrequest-lib}" param="destdir">
+		<for list="${bigdatamonitor-lib},${bbossupload-lib},${demoproject-lib},${portallib},${casserverlib},${cms_baseline-lib},${monitorconsole-lib},${monitorconsole-compilelib},${bboss-mvc-lib},${creatoresb-lib},${mvc-lib},${xmlrequest-lib}" param="destdir">
 			<sequential>
 				<echo>@{destdir}-------------------------------</echo>
 				<antcall target="svn-update-procedure">
@@ -312,9 +312,30 @@
 			<antcall target="distrib-bboss-soa-jars">
 			</antcall>
 		</target>
+	
+	<target name="build-bboss-bigdata" description="build bboss bigdata project">
+				<echo>build bboss bigdata project</echo>
+				<ant dir="${bigdata}" />
+				<!--
+				common_old_util<-active-ext [frameworkset-util.jar]
+				common_old_util<-bboss-ws [frameworkset-util.jar]
+				common_old_util<-bbosscore [frameworkset-util.jar]
+				common_old_util<-bbossevent [frameworkset-util.jar]
+				common_old_util<-cms_baseline [frameworkset-util.jar]
+				
+				common_old_util<-common_old_dbcp [frameworkset-util.jar]
+				common_old_util<-common_old_tag [frameworkset-util.jar]
+				common_old_util<-kettle [frameworkset-util.jar]
+				common_old_util<-portal [frameworkset-util.jar]
+				common_old_util<-cas server [frameworkset-util.jar]
+				-->
+				<echo>update bboss-bigdata.jar</echo>
+				<antcall target="distrib-bigdata-jars">
+				</antcall>
+			</target>
 
 	<target name="distrib-bboss-util-jars" description="distrib-bboss-util-jars">
-		<for list="${bboss-security-lib},${bboss-security-web-lib},${bboss-schedule-lib},${bboss-plugin-wordpdf-lib-depends},${bboss-plugin-hessian-lib},${bbossupload-lib},${demoproject-lib},${active-ext-lib},${bboss-core-lib},${bboss-rpc-lib},${bbossevent-lib},${cms_baseline-lib},${bboss-persistent-lib},${bboss-taglib-lib},${kettle-lib},${portallib},${casserverlib},${monitorconsole-lib},${monitorconsole-compilelib},${bboss-mvc-lib},${creatoresb-lib},${bboss-clientproxy-lib},${mvc-lib},${persistent-lib},${xmlrequest-lib},${xmlserializable-lib},${bboss-plugin-hibernate-lib},${session-lib},${sessionmonitor-lib},${bboss-gencode-lib}" param="destdir">
+		<for list="${bigdata-lib},${bigdatamonitor-lib},${genproject-lib},${bboss-security-lib},${bboss-security-web-lib},${bboss-schedule-lib},${bboss-plugin-wordpdf-lib-depends},${bboss-plugin-hessian-lib},${bbossupload-lib},${demoproject-lib},${active-ext-lib},${bboss-core-lib},${bboss-rpc-lib},${bbossevent-lib},${cms_baseline-lib},${bboss-persistent-lib},${bboss-taglib-lib},${kettle-lib},${portallib},${casserverlib},${monitorconsole-lib},${monitorconsole-compilelib},${bboss-mvc-lib},${creatoresb-lib},${bboss-clientproxy-lib},${mvc-lib},${persistent-lib},${xmlrequest-lib},${xmlserializable-lib},${bboss-plugin-hibernate-lib},${session-lib},${sessionmonitor-lib},${bboss-gencode-lib}" param="destdir">
 			<sequential>
 				<echo>@{destdir}-------------------------------</echo>
 				<antcall target="svn-update-procedure">
@@ -324,6 +345,17 @@
 				</antcall>
 			</sequential>
 		</for>
+		
+		<for list="${bigdata-rt-lib},${bigdatamonitor-rt-lib},${genproject-rt-lib}" param="destdir">
+					<sequential>
+						<echo>@{destdir}-------------------------------</echo>
+						<antcall target="svn-update-procedure">
+							<param name="sourcedir" value="${bboss-util}/distrib" />
+							<param name="filedir" value="@{destdir}" />
+							<param name="files" value="bboss-rt.jar" />
+						</antcall>
+					</sequential>
+				</for>
 	</target>
 	
 	<target name="distrib-bboss-schedule-jars" description="distrib-bboss-schedule-jars">
@@ -339,7 +371,7 @@
 			</for>
 		</target>
 	<target name="distrib-bboss-velocity-jars" description="distrib-bboss-velocity-jars">
-		<for list="${bboss-security-lib},${bboss-util-lib},${bbossupload-lib},${demoproject-lib},${active-ext-lib},${cms_baseline-lib},${bboss-persistent-lib}/velocity,${bboss-taglib-lib},${kettle-lib},${portallib},${casserverlib},${monitorconsole-lib},${monitorconsole-compilelib},${bboss-mvc-lib},${creatoresb-lib},${bboss-clientproxy-lib},${mvc-lib},${persistent-lib},${xmlrequest-lib},${xmlserializable-lib},${bboss-plugin-hibernate-lib},${sessionmonitor-lib},${bboss-gencode-lib}" param="destdir">
+		<for list="${bigdata-lib},${bigdatamonitor-lib},${genproject-lib},${bboss-security-lib},${bboss-util-lib},${bbossupload-lib},${demoproject-lib},${active-ext-lib},${cms_baseline-lib},${bboss-persistent-lib}/velocity,${bboss-taglib-lib},${kettle-lib},${portallib},${casserverlib},${monitorconsole-lib},${monitorconsole-compilelib},${bboss-mvc-lib},${creatoresb-lib},${bboss-clientproxy-lib},${mvc-lib},${persistent-lib},${xmlrequest-lib},${xmlserializable-lib},${bboss-plugin-hibernate-lib},${sessionmonitor-lib},${bboss-gencode-lib}" param="destdir">
 			<sequential>
 				<echo>@{destdir}-------------------------------</echo>
 				<antcall target="svn-update-procedure">
@@ -352,9 +384,20 @@
 	</target>
 	
 	
-	
+	<target name="distrib-bigdata-jars" description="distrib-bboss-bigdata-jars">
+			<for list="${bigdatamonitor-lib}" param="destdir">
+				<sequential>
+					<echo>@{destdir}-------------------------------</echo>
+					<antcall target="svn-update-procedure">
+						<param name="sourcedir" value="${bigdata}/distrib" />
+						<param name="filedir" value="@{destdir}" />
+						<param name="files" value="bigdata-impl.jar" />
+					</antcall>
+				</sequential>
+			</for>
+		</target>
 	<target name="distrib-bboss-soa-jars" description="distrib-bboss-soa-jars">
-			<for list="${demoproject-lib},${portallib},${casserverlib},${active-ext-lib},${bboss-rpc-lib},${bboss-core-lib},${cms_baseline-lib},${bboss-taglib-lib},${kettle-lib},${monitorconsole-lib},${monitorconsole-compilelib},${bboss-mvc-lib},${creatoresb-lib},${bboss-clientproxy-lib},${xmlserializable-lib},${session-lib},${sessionmonitor-lib},${bboss-gencode-lib}" param="destdir">
+			<for list="${bigdata-lib},${bigdatamonitor-lib},${demoproject-lib},${portallib},${casserverlib},${active-ext-lib},${bboss-rpc-lib},${bboss-core-lib},${cms_baseline-lib},${bboss-taglib-lib},${kettle-lib},${monitorconsole-lib},${monitorconsole-compilelib},${bboss-mvc-lib},${creatoresb-lib},${bboss-clientproxy-lib},${xmlserializable-lib},${session-lib},${sessionmonitor-lib},${bboss-gencode-lib}" param="destdir">
 				<sequential>
 					<echo>@{destdir}-------------------------------</echo>
 					<antcall target="svn-update-procedure">
@@ -485,7 +528,7 @@ bbosscore<-cas server [bboss-core.jar]
 			</for>
 		</target>
 	<target name="distrib-bboss-core-jars" description="distrib-bboss-core-jars">
-		<for list="${easyuidatagrid-lib},${demoproject-lib},${bbossevent-lib},${cms_baseline-lib},${active-ext-lib},${kettle-lib},${monitorconsole-compilelib},${monitorconsole-lib},${creatoresb-lib}" param="destdir">
+		<for list="${bigdata-lib},${bigdatamonitor-lib},${genproject-lib},${easyuidatagrid-lib},${demoproject-lib},${bbossevent-lib},${cms_baseline-lib},${active-ext-lib},${kettle-lib},${monitorconsole-compilelib},${monitorconsole-lib},${creatoresb-lib}" param="destdir">
 			<sequential>
 				<echo>@{destdir}-------------------------------</echo>
 				<antcall target="svn-update-procedure">
@@ -617,7 +660,7 @@ bbosscore<-cas server [bboss-core.jar]
 		</target>
 	
 	<target name="distrib-bboss-mvc-jars" description="distrib-bboss-mvc-jars">
-			<for list="${bboss-plugin-wordpdf-lib-depends},${bboss-plugin-hessian-lib},${bbossupload-lib},${demoproject-lib},${cms_baseline-lib},${monitorconsole-compilelib},${monitorconsole-lib},${creatoresb-lib},${mvc-lib},${xmlrequest-lib},${sessionmonitor-lib},${bboss-security-web-lib},${bboss-gencode-lib}" param="destdir">
+			<for list="${bigdata-lib},${bigdatamonitor-lib},${bboss-plugin-wordpdf-lib-depends},${bboss-plugin-hessian-lib},${bbossupload-lib},${demoproject-lib},${cms_baseline-lib},${monitorconsole-compilelib},${monitorconsole-lib},${creatoresb-lib},${mvc-lib},${xmlrequest-lib},${sessionmonitor-lib},${bboss-security-web-lib},${bboss-gencode-lib}" param="destdir">
 				<sequential>
 					<echo>@{destdir}-------------------------------</echo>
 					<antcall target="svn-update-procedure">
@@ -629,7 +672,7 @@ bbosscore<-cas server [bboss-core.jar]
 			</for>
 		</target>
 	<target name="distrib-bboss-security-jars" description="distrib-bboss-security-jars">
-		<for list="${bboss-mvc-lib},${bboss-taglib-lib},${bboss-plugin-wordpdf-lib-depends},${bboss-plugin-hessian-lib},${bbossupload-lib},${demoproject-lib},${cms_baseline-lib},${monitorconsole-compilelib},${monitorconsole-lib},${creatoresb-lib},${mvc-lib},${xmlrequest-lib},${session-lib},${sessionmonitor-lib},${bboss-security-web-lib}" param="destdir">
+		<for list="${bigdata-lib},${bigdatamonitor-lib},${bboss-mvc-lib},${bboss-taglib-lib},${bboss-plugin-wordpdf-lib-depends},${bboss-plugin-hessian-lib},${bbossupload-lib},${demoproject-lib},${cms_baseline-lib},${monitorconsole-compilelib},${monitorconsole-lib},${creatoresb-lib},${mvc-lib},${xmlrequest-lib},${session-lib},${sessionmonitor-lib},${bboss-security-web-lib}" param="destdir">
 			<sequential>
 				<echo>@{destdir}-------------------------------</echo>
 				<antcall target="svn-update-procedure">
@@ -641,7 +684,7 @@ bbosscore<-cas server [bboss-core.jar]
 		</for>
 	</target>
 	<target name="distrib-bboss-security-web-jars" description="distrib-bboss-security-web-jars">
-			<for list="${cms_baseline-lib},${sessionmonitor-lib}" param="destdir">
+			<for list="${bigdata-lib},${bigdatamonitor-lib},${cms_baseline-lib},${sessionmonitor-lib}" param="destdir">
 				<sequential>
 					<echo>@{destdir}-------------------------------</echo>
 					<antcall target="svn-update-procedure">
@@ -741,7 +784,7 @@ bbosscore<-cas server [bboss-core.jar]
 		<!--
 					
 				-->
-		<for list="${cms_baseline-lib},${kettle-lib},${active-ext-lib},${creatoresb-lib},${monitorconsole-lib},${monitorconsole-compilelib},${demoproject-lib}" param="destdir">
+		<for list="${bigdata-lib},${bigdatamonitor-lib},${cms_baseline-lib},${kettle-lib},${active-ext-lib},${creatoresb-lib},${monitorconsole-lib},${monitorconsole-compilelib},${demoproject-lib}" param="destdir">
 			<sequential>
 				<echo>@{destdir}-------------------------------</echo>
 				<antcall target="svn-update-procedure">
