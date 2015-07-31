@@ -1,4 +1,4 @@
-版本：bbossgroups-3.5 
+版本：bboss4.0.8 
 官网：http://www.bbossgroups.com 
 项目博客：http://yin-bp.iteye.com/ 
 Sourceforge站点：http://sourceforge.net/projects/bboss/files/ 
