@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding='UTF-8'?>
-<properties>
-    <property name = "/xml/*.page" 
-    path:index="/xml/xmlrequest.jsp"
-    class="org.frameworkset.web.xml.XMLRequestController" />
-</properties>

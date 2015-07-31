@@ -1,6 +1,0 @@
-<properties>
-	<property name="rpc.webservice.RPCCall" 
-					  singlable="true" 
-					  ws:servicePort="RPCCallServicePort"				  
-					  class="org.frameworkset.spi.remote.webservice.RPCCall"/>
-</properties>	

@@ -1,4 +1,0 @@
-<link rel="stylesheet" type="text/css" href="${contextpath}/include/themes/default/easyui.css">
-	<link rel="stylesheet" type="text/css" href="${contextpath}/include/themes/icon.css">
-	<script type="text/javascript" src="${contextpath}/include/jquery-1.4.2.min.js"></script>
-	<script type="text/javascript" src="${contextpath}/include/jquery.easyui.min.js"></script>
