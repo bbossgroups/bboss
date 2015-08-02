@@ -64,6 +64,18 @@ public class TextGrammarParser {
 			return builder.toString();
 			
 		}
+		
+		public boolean texttoken()
+		{
+			return this.type == TextPlain;
+		}
+		
+		public boolean varibletoken()
+		{
+			return this.type == VARIABLE;
+		}
+		
+		
 	}
 
 	private static boolean tplstart(char value,char[] pre,String text,int textsize,int curpos)
