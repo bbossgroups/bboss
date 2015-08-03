@@ -16,11 +16,13 @@
 
 package org.frameworkset.util.io;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -190,12 +192,12 @@ public abstract class AbstractResource implements Resource {
 		
 	}
 	
-	public  void savetofile(File destinctionFile,ResourceHandleListener listener) throws IOException
+	public  void savetofile(File destinctionFile,ResourceHandleListener<AbstractResource> listener) throws IOException
 	{
 		InputStream stFileInputStream = null;
 
         FileOutputStream stFileOutputStream = null;
-
+        OutputStream dufferOput = null;
         try
         {
 //            makeFile(destinctionFile);
@@ -214,14 +216,14 @@ public abstract class AbstractResource implements Resource {
             	return;
 
             stFileOutputStream = new FileOutputStream(destinctionFile);
-
+            dufferOput = new BufferedOutputStream(stFileOutputStream);
             int arraySize = 1024;
             byte buffer[] = new byte[arraySize];
             int bytesRead;
             while ((bytesRead = stFileInputStream.read(buffer)) != -1)
             {
             	
-                stFileOutputStream.write(buffer, 0, bytesRead);
+            	dufferOput.write(buffer, 0, bytesRead);
                 this.savesize = savesize + bytesRead;
                 if(listener != null)
             	{
@@ -233,6 +235,7 @@ public abstract class AbstractResource implements Resource {
     				}
             	}
             }
+            dufferOput.flush();
 
         }
         catch (Exception e)
@@ -260,6 +263,15 @@ public abstract class AbstractResource implements Resource {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
+            if(dufferOput != null)
+            {
+            	try {
+					dufferOput.close();
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+            }
             if (stFileOutputStream != null)
                 try
                 {

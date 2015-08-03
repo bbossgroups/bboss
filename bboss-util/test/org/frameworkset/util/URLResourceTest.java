@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.DecimalFormat;
 
+import org.frameworkset.util.io.AbstractResource;
 import org.frameworkset.util.io.ResourceHandleListener;
 import org.frameworkset.util.io.UrlResource;
 
@@ -95,29 +96,29 @@ public class URLResourceTest {
 	
 	public static void main(String[] args) throws IOException
 	{
-		final UrlResource url = new UrlResource("http://www.bbossgroups.com/tool/download.htm?fileName=bboss.war");
+		final UrlResource url = new UrlResource("http://nj02.poms.baidupcs.com/file/cecf4f52d2ce2b35f36923758a6b2010?bkt=p2-nj-384&fid=4245631570-250528-422706410393673&time=1438604378&sign=FDTAXGERLBH-DCb740ccc5511e5e8fedcff06b081203-kVmi90LWn7i%2Fr8gAznNM1ctC2%2BI%3D&to=n2b&fm=Nan,B,G,nc&sta_dx=200&sta_cs=0&sta_ft=war&sta_ct=0&fm2=Nanjing02,B,G,nc&newver=1&newfm=1&secfm=1&flow_ver=3&pkey=000070aa5f610585259d46966ce42359d63d&sl=83361871&expires=8h&rt=sh&r=592517045&mlogid=2789062078&vuk=4245631570&vbdid=1671589608&fin=bboss.war&fn=bboss.war&slt=pm&uta=0&rtype=1&iv=0&isw=0");
 		url.open();
 		
 		final InerRunnable run = new InerRunnable(url);
 	 
 		 
-		url.savetofile(new File("d:/",url.getFilename()),new ResourceHandleListener<UrlResource>() {
+		url.savetofile(new File("d:/",url.getFilename()),new ResourceHandleListener<AbstractResource>() {
 			
 			@Override
-			public void startEvent(UrlResource resource,File dest) {
+			public void startEvent(AbstractResource resource,File dest) {
 				
 				run.start(); 
 				
 			}
 			
 			@Override
-			public void handleDataEvent(UrlResource resource,File dest) {
+			public void handleDataEvent(AbstractResource resource,File dest) {
 				
 				run.refreshprocess();
 			}
 			
 			@Override
-			public void endEvent(UrlResource resource,File dest) {
+			public void endEvent(AbstractResource resource,File dest) {
 				run.end();
 				
 			}
