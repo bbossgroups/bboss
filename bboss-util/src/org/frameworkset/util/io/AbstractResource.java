@@ -238,9 +238,9 @@ public abstract class AbstractResource implements Resource {
             dufferOput.flush();
 
         }
-        catch (Exception e)
+        catch (IOException e)
         {
-            e.printStackTrace();
+            throw e;
         }
         finally
         {
