@@ -17,8 +17,6 @@
 package org.frameworkset.util.io;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -43,7 +41,9 @@ import com.frameworkset.util.SimpleStringUtil;
  * @version 1.0
  */
 public class UrlResource extends AbstractResource {
-
+	private URLConnection con; 
+	private long totalsize;
+	private String filename;
 	/**
 	 * Original URL, used for actual access.
 	 */
@@ -113,6 +113,37 @@ public class UrlResource extends AbstractResource {
 		}
 	}
 
+	public void open() throws IOException
+	{
+		
+		if(con == null)
+		{
+			con = this.url.openConnection();
+			con.setUseCaches(false);
+			
+			String Content_Disposition = con.getHeaderField("Content-Disposition");
+			//attachment; filename=bboss.war
+			if(Content_Disposition != null )
+			{
+				if(Content_Disposition.startsWith("attachment;"))
+				{
+					String[] ps = Content_Disposition.split(";");
+					for(String p :ps )
+					{
+						p = p.trim();
+						if(p.startsWith("filename="))
+						{
+							this.filename = p.substring("filename=".length() );
+						}
+					}
+				}
+			}
+				
+			
+			this.totalsize = con.getContentLengthLong();
+			
+		}
+	}
 
 	/**
 	 * This implementation opens an InputStream for the given URL.
@@ -123,8 +154,7 @@ public class UrlResource extends AbstractResource {
 	 * @see java.net.URLConnection#getInputStream()
 	 */
 	public InputStream getInputStream() throws IOException {
-		URLConnection con = this.url.openConnection();
-		con.setUseCaches(false);
+		open();
 		return con.getInputStream();
 	}
 
@@ -194,6 +224,15 @@ public class UrlResource extends AbstractResource {
 	 * @see java.io.File#getName()
 	 */
 	public String getFilename() {
+		try {
+			this.open();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return SimpleStringUtil.getFilename(this.url.getFile());
+		}
+		if(this.filename != null)
+			return this.filename;
 		return SimpleStringUtil.getFilename(this.url.getFile());
 	}
 
@@ -221,6 +260,25 @@ public class UrlResource extends AbstractResource {
 	}
 
 	public void release() {
+		this.con = null;
+		this.filename = null;
+		this.totalsize = 0;
+	}
+	
+	/**
+	 * This implementation checks the timestamp of the underlying File,
+	 * if available.
+	 * @see #getFile()
+	 */
+	public long contentLength() throws IOException {
+		if(this.con != null)
+			return this.totalsize;
+		else
+			return super.contentLength();
+	}
+
+	public long getTotalsize() {
+		return totalsize;
 	}
 	
 	

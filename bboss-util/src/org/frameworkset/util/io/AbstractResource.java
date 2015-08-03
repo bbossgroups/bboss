@@ -41,6 +41,8 @@ import org.frameworkset.util.ResourceUtils;
  * @version 1.0
  */
 public abstract class AbstractResource implements Resource {
+	protected volatile long savesize;
+	
 
 	/**
 	 * This implementation checks whether a File can be opened,
@@ -188,17 +190,25 @@ public abstract class AbstractResource implements Resource {
 		
 	}
 	
-	public  void savetofile(File destinctionFile) throws IOException
-    {
-
-       InputStream stFileInputStream = null;
+	public  void savetofile(File destinctionFile,ResourceHandleListener listener) throws IOException
+	{
+		InputStream stFileInputStream = null;
 
         FileOutputStream stFileOutputStream = null;
 
         try
         {
 //            makeFile(destinctionFile);
-
+        	if(listener != null)
+        	{
+        		try {
+        			listener.startEvent(this,destinctionFile);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+        		
+        	}
             stFileInputStream = this.getInputStream();
             if(stFileInputStream == null)
             	return;
@@ -210,7 +220,18 @@ public abstract class AbstractResource implements Resource {
             int bytesRead;
             while ((bytesRead = stFileInputStream.read(buffer)) != -1)
             {
+            	
                 stFileOutputStream.write(buffer, 0, bytesRead);
+                this.savesize = savesize + bytesRead;
+                if(listener != null)
+            	{
+                	try {
+                		listener.handleDataEvent(this,destinctionFile);
+    				} catch (Exception e) {
+    					// TODO Auto-generated catch block
+    					e.printStackTrace();
+    				}
+            	}
             }
 
         }
@@ -220,6 +241,15 @@ public abstract class AbstractResource implements Resource {
         }
         finally
         {
+        	if(listener != null)
+        	{
+        		try {
+					listener.endEvent(this,destinctionFile);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+        	}
             if (stFileInputStream != null)
                 try
                 {
@@ -241,7 +271,16 @@ public abstract class AbstractResource implements Resource {
                     e.printStackTrace();
                 }
         }
+	}
+	public  void savetofile(File destinctionFile) throws IOException
+    {
+
+		savetofile(destinctionFile,null);
 
     }
+
+	public long getSavesize() {
+		return savesize;
+	}
 
 }
