@@ -27,6 +27,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 
+import org.apache.log4j.Logger;
 import org.frameworkset.util.ResourceUtils;
 
 
@@ -44,6 +45,7 @@ import org.frameworkset.util.ResourceUtils;
  */
 public abstract class AbstractResource implements Resource {
 	protected volatile long savesize;
+	private static Logger log = Logger.getLogger(AbstractResource.class);
 	
 
 	/**
@@ -64,6 +66,7 @@ public abstract class AbstractResource implements Resource {
 				return true;
 			}
 			catch (Throwable isEx) {
+				log.error("",isEx);
 				return false;
 			}
 		}

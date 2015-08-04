@@ -24,6 +24,7 @@ import java.net.URI;
 import java.net.URL;
 import java.net.URLConnection;
 
+import org.apache.log4j.Logger;
 import org.frameworkset.util.Assert;
 import org.frameworkset.util.ResourceUtils;
 
@@ -41,6 +42,8 @@ import com.frameworkset.util.SimpleStringUtil;
  * @version 1.0
  */
 public class UrlResource extends AbstractResource {
+	private static Logger log = Logger.getLogger(UrlResource.class);
+	
 	private URLConnection con; 
 	private long totalsize;
 	private String filename;
@@ -115,8 +118,12 @@ public class UrlResource extends AbstractResource {
 
 	public void open() throws IOException
 	{
+		open(false) ;
+	}
+	public void open(boolean reopen) throws IOException
+	{
 		
-		if(con == null)
+		if(con == null || reopen)
 		{
 			con = this.url.openConnection();
 			con.setUseCaches(false);
@@ -162,7 +169,7 @@ public class UrlResource extends AbstractResource {
 	 * @see java.net.URLConnection#getInputStream()
 	 */
 	public InputStream getInputStream() throws IOException {
-		open();
+		open(true);
 		return con.getInputStream();
 	}
 
@@ -232,16 +239,17 @@ public class UrlResource extends AbstractResource {
 	 * @see java.io.File#getName()
 	 */
 	public String getFilename() {
+		if(this.filename != null)
+			return this.filename;
 		try {
 			this.open();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return SimpleStringUtil.getFilename(this.url.getFile());
+			log.error("",e);
+			return filename = SimpleStringUtil.getFilename(this.url.getFile());
 		}
-		if(this.filename != null)
-			return this.filename;
-		return SimpleStringUtil.getFilename(this.url.getFile());
+		
+		return filename = SimpleStringUtil.getFilename(this.url.getFile());
 	}
 
 	/**

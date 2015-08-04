@@ -540,14 +540,16 @@ public class HotDeployResourceBundleMessageSource extends AbstractMessageSource
 		String name = filename
 				+ PROPERTIES_SUFFIX;
 		Resource resource = this.resourceLoader.getResource(name);
+		boolean reset = false;
 		if (!resource.exists()) {
 			name = filename
 					+ XML_SUFFIX;
 			resource = this.resourceLoader.getResource(name);
+			reset = true;
 		}
 		
 		PropertiesHolder  propHolder = null;
-		if (!resource.exists()) {
+		if (reset && !resource.exists()) {
 			propHolder = NOTEXIST_propHolder;
 		}
 		else
