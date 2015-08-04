@@ -155,10 +155,18 @@ public class UrlResource extends AbstractResource {
 			}
 				
 			
-			this.totalsize = con.getContentLengthLong();
+			this.totalsize = getHeaderFieldLong("content-length",-1);
 			
 		}
 	}
+	
+	 public long getHeaderFieldLong(String name, long Default) {
+	        String value = con.getHeaderField(name);
+	        try {
+	            return Long.parseLong(value);
+	        } catch (Exception e) { }
+	        return Default;
+	    }
 
 	/**
 	 * This implementation opens an InputStream for the given URL.
