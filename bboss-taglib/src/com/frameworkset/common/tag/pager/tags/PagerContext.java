@@ -1595,6 +1595,31 @@ public class PagerContext
 	// return dataSet;
 	// }
 
+	public static Object getCOLUMNValue(Tag tag,String colName,String property)
+	{
+		Object data = null;
+		PagerDataSet dataSet = ((PagerDataSet) tag).searchDataSet(tag,
+				PagerDataSet.class);
+
+		// System.out.println("dataSet:" + dataSet);
+		// System.out.println("dataSet.getRowid():" + dataSet.getRowid());
+		/**
+		 * 根据调用getProperty()方法返回值判断当前列是否为bean 如果为空,表示字段为collection
+		 * 
+		 * 否则表示字段是一个javabean,getProperty()返回的值为该对象的一个属性，类型为collection
+		 */
+
+		if (property == null) {
+
+			data = dataSet.getValue(dataSet.getRowid(), colName);
+
+			// System.out.println("dataInfo.size:" + dataInfo.size());
+		} else {
+			data = dataSet.getValue(dataSet.getRowid(), colName,
+					property);
+		}
+		return data;
+	}
 	protected void load(String scope) throws LoadDataException {
 		Object data = null;
 		if (scope.equals(REQUEST_SCOPE) ) {
@@ -1640,26 +1665,27 @@ public class PagerContext
 			data = pageContext.getAttribute(pageContextKey);
 		} else if (scope.equals(COLUMN_SCOPE)) {
 
-			PagerDataSet dataSet = ((PagerDataSet) tag).searchDataSet(tag,
-					PagerDataSet.class);
-
-			// System.out.println("dataSet:" + dataSet);
-			// System.out.println("dataSet.getRowid():" + dataSet.getRowid());
-			/**
-			 * 根据调用getProperty()方法返回值判断当前列是否为bean 如果为空,表示字段为collection
-			 * 
-			 * 否则表示字段是一个javabean,getProperty()返回的值为该对象的一个属性，类型为collection
-			 */
-
-			if (getProperty() == null) {
-
-				data = dataSet.getValue(dataSet.getRowid(), getColName());
-
-				// System.out.println("dataInfo.size:" + dataInfo.size());
-			} else {
-				data = dataSet.getValue(dataSet.getRowid(), getColName(),
-						getProperty());
-			}
+//			PagerDataSet dataSet = ((PagerDataSet) tag).searchDataSet(tag,
+//					PagerDataSet.class);
+//
+//			// System.out.println("dataSet:" + dataSet);
+//			// System.out.println("dataSet.getRowid():" + dataSet.getRowid());
+//			/**
+//			 * 根据调用getProperty()方法返回值判断当前列是否为bean 如果为空,表示字段为collection
+//			 * 
+//			 * 否则表示字段是一个javabean,getProperty()返回的值为该对象的一个属性，类型为collection
+//			 */
+//
+//			if (getProperty() == null) {
+//
+//				data = dataSet.getValue(dataSet.getRowid(), getColName());
+//
+//				// System.out.println("dataInfo.size:" + dataInfo.size());
+//			} else {
+//				data = dataSet.getValue(dataSet.getRowid(), getColName(),
+//						getProperty());
+//			}
+			data = getCOLUMNValue(tag,getColName(),getProperty());
 
 		} else if (scope.equals(CELL_SCOPE)) {
 			if(request instanceof CMSServletRequest)
