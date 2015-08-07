@@ -218,7 +218,7 @@
 	</target>
 
 	<target name="distrib-bboss-taglib-jars" description="distrib-bboss-taglib-jars">
-		<for list="${bigdatamonitor-lib},${bbossupload-lib},${demoproject-lib},${portallib},${casserverlib},${cms_baseline-lib},${monitorconsole-lib},${monitorconsole-compilelib},${bboss-mvc-lib},${creatoresb-lib},${mvc-lib},${xmlrequest-lib}" param="destdir">
+		<for list="${bbossupload-lib},${demoproject-lib},${portallib},${casserverlib},${cms_baseline-lib},${monitorconsole-lib},${monitorconsole-compilelib},${bboss-mvc-lib},${creatoresb-lib},${mvc-lib},${xmlrequest-lib}" param="destdir">
 			<sequential>
 				<echo>@{destdir}-------------------------------</echo>
 				<antcall target="svn-update-procedure">
@@ -229,7 +229,7 @@
 			</sequential>
 			
 		</for>
-		<for list="${sessionmonitor-lib}" param="destdir">
+		<for list="${bigdatamonitor-lib},${sessionmonitor-lib}" param="destdir">
 					<sequential>
 						<echo>@{destdir}-------------------------------</echo>
 						<antcall target="svn-update-procedure">
