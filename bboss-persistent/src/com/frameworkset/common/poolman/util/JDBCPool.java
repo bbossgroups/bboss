@@ -2577,4 +2577,12 @@ public class JDBCPool {
 			return SQLManager.getInstance().getPool(externalDBName).getRETURN_GENERATED_KEYS();
 		}
 	}
+
+	public void increamentMaxTotalConnections(int nums) {
+		if(this.datasource != null)
+		{
+			DatasourceUtil.increamentMaxTotalConnections(datasource, nums);
+		}
+		
+	}
 }

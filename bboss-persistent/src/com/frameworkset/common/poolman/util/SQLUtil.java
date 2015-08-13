@@ -1766,8 +1766,15 @@ public class SQLUtil{
     		return getPool(dbanme).getTablesFromDatabase(tableTypes,loadColumns);
     	}
     	
-    	public static List<TableMetaData> getTableMetaDatasFromDataBaseByPattern(String dbanme,String tableNamepattern,String[] tableTypes,boolean loadColumns) {
-    		return getPool(dbanme).getTablesFromDatabase(tableNamepattern,tableTypes,loadColumns);
+    	public static List<TableMetaData> getTableMetaDatasFromDataBaseByPattern(String dbname,String tableNamepattern,String[] tableTypes,boolean loadColumns) {
+    		return getPool(dbname).getTablesFromDatabase(tableNamepattern,tableTypes,loadColumns);
+    	}
+    	
+    	public static void increamentMaxTotalConnections(String dbname,int nums)
+    	{
+    		JDBCPool pool = getPool(dbname);
+    		if(pool != null)
+    			pool.increamentMaxTotalConnections( nums);
     	}
 
 }

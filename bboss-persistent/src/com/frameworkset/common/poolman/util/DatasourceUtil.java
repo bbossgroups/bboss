@@ -24,12 +24,12 @@ import java.util.Map;
 
 import javax.sql.DataSource;
 
+import org.apache.log4j.Logger;
 import org.frameworkset.spi.BaseApplicationContext;
 import org.frameworkset.spi.DefaultApplicationContext;
 import org.frameworkset.spi.assemble.Pro;
 
 import com.frameworkset.common.poolman.monitor.AbandonedTraceExt;
-import com.frameworkset.common.poolman.monitor.PoolMonitorUtil;
 import com.frameworkset.common.poolman.sql.PoolManDataSource;
 import com.frameworkset.orm.transaction.TXDataSource;
 
@@ -53,6 +53,7 @@ import com.frameworkset.orm.transaction.TXDataSource;
  */
 public class DatasourceUtil {
 	public static final String DATASOURCE_BEAN_NAME = "datasource";
+	private static Logger log = Logger.getLogger(DatasourceUtil.class);
 
 	public static DataSource getDataSource(String sourcefile) {
 		BaseApplicationContext context = DefaultApplicationContext
@@ -78,7 +79,61 @@ public class DatasourceUtil {
 		return ds.getSRCDataSource();
 	}
 
- 
+    public static void increamentMaxTotalConnections(DataSource datasource,int nums)
+    {
+    	DataSource datasource_ = null;
+		if (datasource instanceof TXDataSource) {
+			datasource_ = getSRCDataSource((TXDataSource) datasource);
+		} else {
+			datasource_ = datasource;
+		}
+		String name = null;
+		if (datasource_ instanceof PoolManDataSource) {
+			PoolManDataSource temp = (PoolManDataSource) datasource_;
+			name = temp.getPoolName();
+			datasource_ = temp.getInnerDataSource();
+		}
+		
+		try {
+			if (datasource_ != null) {
+				Method getMaxTotal = datasource_.getClass().getMethod(
+						"getMaxTotal");
+				
+				Method setMaxTotal = datasource_.getClass().getMethod(
+						"setMaxTotal",int.class);
+				
+				if (getMaxTotal != null && setMaxTotal != null)
+				{					 
+					int  maxTotal = ((Integer ) getMaxTotal.invoke(datasource_)).intValue();
+					int newmaxTotal = maxTotal + nums;
+					
+					
+					setMaxTotal.invoke(datasource_, newmaxTotal);
+					if(name != null)
+					{
+						log.info("Increament MaxTotal Connections from "+maxTotal +" to "+newmaxTotal + " for datasource[" + name+"]");
+					}
+					
+				}
+				
+			}
+		} catch (SecurityException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+		} catch (NoSuchMethodException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+		}
+    }
 	
 	public static List<AbandonedTraceExt> getGoodTraceObjects(DataSource datasource) {
 
