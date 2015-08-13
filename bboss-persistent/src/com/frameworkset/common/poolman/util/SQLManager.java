@@ -683,9 +683,12 @@ public class SQLManager extends PoolManager{
 			values.put("maximumSize", ""+10);
 		int maxWait = 60;
 		if(maxWait > 0)
+		{
+			maxWait = maxWait * 1000;
 			values.put("maxWait", ""+maxWait);
+		}
 		else
-			values.put("maxWait", ""+60);
+			values.put("maxWait", ""+60000);
 		boolean maximumSoft = false;
 		values.put("maximumSoft", ""+maximumSoft);
 		values.put("usepool", usepool+"");
@@ -704,8 +707,14 @@ public class SQLManager extends PoolManager{
 		values.put("skimmerFrequency", skimmerFrequency+"");
 		boolean logAbandoned = true;
 		values.put("logAbandoned", logAbandoned+"");
+		/**
+		 * Set max idle Times in seconds ,if exhaust this times the used connection object will be Abandoned removed if removeAbandoned is true.
+		default value is 300 seconds.
 		
-		int userTimeout = 50;
+		see removeAbandonedTimeout parameter in commons dbcp. 
+		单位：秒
+		 */
+		int userTimeout = 300;
 		values.put("userTimeout", userTimeout+"");
 		boolean removeAbandoned = false;
 		values.put("removeAbandoned", removeAbandoned+"");

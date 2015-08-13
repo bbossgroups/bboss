@@ -45,9 +45,13 @@
     <removeAbandoned>false</removeAbandoned>
 	<!--
 		链接使用超时时间（事务超时时间）
+		Set max idle Times in seconds ,if exhaust this times the used connection object will be Abandoned removed if removeAbandoned is true.
+		default value is 300 seconds.
+		
+		see removeAbandonedTimeout parameter in commons dbcp. 
 		单位：秒
 	-->
-    <userTimeout>50</userTimeout>
+    <userTimeout>300</userTimeout>
     <!-- 
     	系统强制回收链接时，是否输出后台日志
     	true-输出，默认值
