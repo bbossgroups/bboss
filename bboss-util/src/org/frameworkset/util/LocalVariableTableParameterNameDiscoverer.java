@@ -86,7 +86,7 @@ public class LocalVariableTableParameterNameDiscoverer  implements ParameterName
 			// We couldn't load the class file, which is not fatal as it
 			// simply means this method of discovering parameter names won't work.
 			
-			logger.debug("IOException whilst attempting to read '.class' file for class [" +
+			logger.error("IOException whilst attempting to read '.class' file for class [" +
 						method.getDeclaringClass().getName() +
 						"] - unable to determine parameter names for method: " + method, ex);
 			
@@ -128,8 +128,8 @@ public class LocalVariableTableParameterNameDiscoverer  implements ParameterName
 		catch (IOException ex) {
 			// We couldn't load the class file, which is not fatal as it
 			// simply means this method of discovering parameter names won't work.
-			if (logger.isDebugEnabled()) {
-				logger.debug("IOException whilst attempting to read '.class' file for class [" +
+			 {
+				logger.error("IOException whilst attempting to read '.class' file for class [" +
 						ctor.getDeclaringClass().getName() +
 						"] - unable to determine parameter names for constructor: " + ctor, ex);
 			}
@@ -164,6 +164,7 @@ public class LocalVariableTableParameterNameDiscoverer  implements ParameterName
 	 * Obtain a (cached) ClassReader for the given class.
 	 */
 	private ClassReader getClassReader(Class clazz) throws IOException {
+		clazz = ClassUtil.getClassInfo(clazz).getClazz();
 		ClassReader classReader = (ClassReader) this.classReaderCache.get(clazz);
 		if(classReader != null)
 			return classReader;

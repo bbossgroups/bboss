@@ -21,6 +21,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.frameworkset.util.ClassUtil;
 import org.frameworkset.web.servlet.view.UrlBasedViewResolver;
 
 /**
@@ -55,6 +56,11 @@ public  class HandlerMeta
 		return handler;
 	}
 	
+	public  Class<?> getHandlerClass()
+	{
+		return ClassUtil.getClassInfo(getHandler().getClass()).getClazz();
+	}
+	
 	/**
 	 * @return the handler name
 	 */
@@ -64,7 +70,7 @@ public  class HandlerMeta
 		if(handler instanceof String)
 			return (String)handler;
 		else
-			return handler.getClass().getCanonicalName();
+			return getHandlerClass().getCanonicalName();
 	}
 	/**
 	 * @return the pathNames

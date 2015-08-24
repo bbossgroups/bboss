@@ -608,7 +608,7 @@ public class ClassUtil
 	    private volatile transient Constructor defaultConstruction;
 	    private volatile transient Constructor[] constructions;
 
-	    private Class clazz;
+	    private  Class<?> clazz;
 	    private List<Class> superClasses; 
 	    /**
 	     * 识别class是否是基本数据类型或者基本数据类型数组
@@ -1090,7 +1090,7 @@ public class ClassUtil
 			return null;
 		}
 	    
-	    public Class getClazz()
+	    public  Class<?> getClazz()
 	    {
 	    	return this.clazz;
 	    }

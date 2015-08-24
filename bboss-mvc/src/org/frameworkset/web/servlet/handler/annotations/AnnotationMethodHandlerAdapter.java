@@ -239,19 +239,19 @@ public class AnnotationMethodHandlerAdapter  extends WebContentGenerator impleme
 
 
 	public boolean supports(HandlerMeta handler) {
-		return getMethodResolver(handler.getHandler().getClass()).hasHandlerMethods();
+		return getMethodResolver(handler.getHandlerClass()).hasHandlerMethods();
 	}
 	
 	
 	
 	public boolean hasHandlerMethods(Class handler) {
-		return getMethodResolver(handler.getClass()).hasHandlerMethods();
+		return getMethodResolver(handler).hasHandlerMethods();
 	}
 
 	public ModelAndView handle(HttpServletRequest request, HttpServletResponse response, PageContext pageContext,HandlerMeta handler)
 			throws Exception {
 
-		if (handler.getClass().getAnnotation(SessionAttributes.class) != null) {
+		if (handler.getHandlerClass().getAnnotation(SessionAttributes.class) != null) {
 			// Always prevent caching in case of session attribute management.
 			checkAndPrepare(request, response, this.cacheSecondsForSessionAttributeHandlers, true);
 			// Prepare cached set of session attributes names.
@@ -295,7 +295,7 @@ public class AnnotationMethodHandlerAdapter  extends WebContentGenerator impleme
 //		catch (NoSuchRequestHandlingMethodException ex) {
 //			return handleNoSuchRequestHandlingMethod(ex, request, response);
 //		}
-		ServletHandlerMethodResolver methodResolver = getMethodResolver(handler.getHandler().getClass());
+		ServletHandlerMethodResolver methodResolver = getMethodResolver(handler.getHandlerClass());
 		return HandlerUtils.invokeHandlerMethod(request, response, pageContext, handler, 
 				methodResolver,messageConverters);
 	}

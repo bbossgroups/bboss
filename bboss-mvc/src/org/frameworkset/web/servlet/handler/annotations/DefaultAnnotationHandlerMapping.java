@@ -21,6 +21,7 @@ import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
+import org.frameworkset.util.ClassUtil;
 import org.frameworkset.util.annotations.AnnotationUtils;
 import org.frameworkset.util.annotations.HandlerMapping;
 import org.frameworkset.util.annotations.HttpMethod;
@@ -262,9 +263,9 @@ public class DefaultAnnotationHandlerMapping  extends AbstractDetectingUrlHandle
 	 * @see #validateMapping
 	 */
 	protected void validateHandler(Object handler, HttpServletRequest request) throws Exception {
-		HandlerMapping mapping = this.cachedMappings.get(handler.getClass());
+		HandlerMapping mapping = this.cachedMappings.get(ClassUtil.getClassInfo(handler.getClass()).getClazz());
 		if (mapping == null) {
-			mapping = AnnotationUtils.findAnnotation(handler.getClass(), HandlerMapping.class);
+			mapping = AnnotationUtils.findAnnotation(ClassUtil.getClassInfo(handler.getClass()).getClazz(), HandlerMapping.class);
 		}
 		if (mapping != null) {
 			validateMapping(mapping, request);
