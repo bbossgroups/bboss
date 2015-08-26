@@ -1179,5 +1179,29 @@ public abstract class DB implements Serializable, IDMethod,Platform
 				 		sqlbuilder.append( " t) bb where bb.rownum__ <=? and bb.rownum__ >=?");
 		        return sqlbuilder.toString();
 		    }
+		  
+		  public void setObject(PreparedDBUtil dbutil,int i, Object o) throws SQLException
+		  {
+			  dbutil._setObject(i, o);
+//			  if(o == null || o instanceof java.sql.Timestamp)
+//			  {
+//				  dbutil._setObject(i, o, Param.setObject_int_Object);
+//			  }
+//			  else if(o instanceof java.sql.Date)
+//			  {
+//				  o = new java.sql.Timestamp(((java.sql.Date)o).getTime());
+//				  dbutil.addParam(i, o, Param.setObject_int_Object);
+//			  }
+//			  else if(o instanceof java.util.Date)
+//			  {
+//				  o = new java.sql.Timestamp(((java.util.Date)o).getTime());
+//				  dbutil.addParam(i, o, Param.setObject_int_Object);
+//			  }
+//			  else
+//			  {
+//				  dbutil.addParam(i, o, Param.setObject_int_Object);
+//			  }
+			  
+		  }
         
 }

@@ -691,6 +691,28 @@ public class SQLParams
     	}
     }
     /**
+     * in order to resolver lose hh:mm:ss of date
+     * @param value
+     * @return
+     */
+    public static Object handleDate(Object value)
+    {
+    	if(value == null || value instanceof java.sql.Timestamp)
+    		return value;
+    	else if(value instanceof java.sql.Date)
+    	{
+    		return new java.sql.Timestamp(((java.sql.Date)value).getTime());
+    	}
+    	else  if(value instanceof java.util.Date)
+    	{
+    		return new java.sql.Timestamp(((java.util.Date)value).getTime());
+    	}
+    	else
+    	{
+    		return value;
+    	}
+    }
+    /**
      * 根据java数据类型，获取中性的数据库类型
      * @param clazz
      * @return
@@ -714,8 +736,9 @@ public class SQLParams
     		return TIMESTAMP;
     	else if(java.sql.Date.class.isAssignableFrom(clazz))
     		return DATE;
+//    		return TIMESTAMP;//fixed bug lose hh:mm:ss infomation of date
     	else if(Date.class.isAssignableFrom(clazz))
-    		return DATE;
+    		return TIMESTAMP;
     	
     	else if(boolean.class.isAssignableFrom(clazz) || Boolean.class.isAssignableFrom(clazz))
     		return BOOLEAN;
@@ -1065,11 +1088,13 @@ public class SQLParams
         }
         else if(type.equals(DATE))
         {
-            if(value instanceof java.sql.Date)
-                return value;
-            if(value instanceof java.util.Date)
+        	if(value instanceof java.sql.Timestamp)
+            	return value;
+        	else if(value instanceof java.sql.Date)
+            	return new java.sql.Timestamp(((java.sql.Date)value).getTime());
+        	else if(value instanceof java.util.Date)
             {
-            	return new java.sql.Date(((java.util.Date)value).getTime());
+            	return new java.sql.Timestamp(((java.util.Date)value).getTime());
             }
             try
             {
@@ -1096,6 +1121,12 @@ public class SQLParams
         {
             if(value instanceof java.sql.Timestamp)
                 return value;
+            else if(value instanceof java.sql.Date)
+            	return new java.sql.Timestamp(((java.sql.Date)value).getTime());
+            else if(value instanceof java.util.Date)
+            {
+            	return new java.sql.Timestamp(((java.util.Date)value).getTime());
+            }
             try
             {
                 return PreparedDBUtil.getDBAdapter(dbname).getTimestamp(value.toString(), dataformat);
@@ -1204,9 +1235,13 @@ public class SQLParams
             }
         }
         
+        else if(type.equals(OBJECT))
+        {
+            return SQLParams.handleDate(value);
+        }
         else
         {
-            return value;
+        	return value;
         }
     }
     
@@ -1265,7 +1300,12 @@ public class SQLParams
         }
         else
         {            
-            data_ = handleData(name,value, type,dataformat);           
+        	
+            data_ = handleData(name,value, type,dataformat);
+            if(type.equals(DATE))
+        	{
+        		type = TIMESTAMP;
+        	}
         }
         param.setName(name);
         if(size < 0)

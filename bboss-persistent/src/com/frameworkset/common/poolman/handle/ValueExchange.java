@@ -701,7 +701,10 @@ public class ValueExchange {
 				}
 				catch(Exception e)
 				{
-					value = cstmt.getDate(i);break;
+					value = cstmt.getDate(i);
+					if(value != null)
+						value = new java.sql.Timestamp(((java.sql.Date)value).getTime());
+					break;
 				}
 			default:
 				// System.out.println("column :" + i + " " +
@@ -806,7 +809,10 @@ public class ValueExchange {
 				}
 				catch(Exception e)
 				{
-					value = cstmt.getDate(paramName);break;
+					value = cstmt.getDate(paramName);
+					if(value != null)
+						value = new java.sql.Timestamp(((java.sql.Date)value).getTime());
+					break;
 				}
 			default:
 				// System.out.println("column :" + i + " " +
@@ -1163,7 +1169,10 @@ public class ValueExchange {
 				}
 				catch(Exception e)
 				{
-					value = res.getDate(i);break;
+					value = res.getDate(i);
+					if(value != null)
+						value = new java.sql.Timestamp(((java.sql.Date)value).getTime());
+					break;
 				}
 			case Types.DECIMAL:	
 				value =res.getBigDecimal(i);
@@ -1292,7 +1301,10 @@ public class ValueExchange {
 				}
 				catch(Exception e)
 				{
-					value = res.getDate(i);break;
+					value = res.getDate(i);
+					if(value != null)
+						value = new java.sql.Timestamp(((java.sql.Date)value).getTime());
+					break;
 				}
 			case Types.DECIMAL:	
 				value =res.getBigDecimal(i);

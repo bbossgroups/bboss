@@ -50,7 +50,6 @@ import org.frameworkset.persitent.util.SQLInfo;
 import org.frameworkset.persitent.util.SQLUtil;
 import org.frameworkset.util.BigFile;
 
-import com.frameworkset.common.poolman.NewSQLInfo;
 import com.frameworkset.common.poolman.handle.NullRowHandler;
 import com.frameworkset.common.poolman.handle.RowHandler;
 import com.frameworkset.common.poolman.handle.XMLMark;
@@ -58,6 +57,7 @@ import com.frameworkset.common.poolman.sql.PrimaryKey;
 import com.frameworkset.common.poolman.util.JDBCPool;
 import com.frameworkset.common.poolman.util.SQLManager;
 import com.frameworkset.common.poolman.util.StatementParser;
+import com.frameworkset.orm.adapter.DB;
 import com.frameworkset.util.FileUtil;
 
 /**
@@ -3802,7 +3802,7 @@ public class PreparedDBUtil extends DBUtil {
 	 * @param data
 	 * @param method
 	 */
-	private void  addParam(int index,Object data,String method) throws SQLException
+	public void  addParam(int index,Object data,String method) throws SQLException
 	{
 		
 		Param param = buildParam();
@@ -4517,12 +4517,21 @@ public class PreparedDBUtil extends DBUtil {
 		}
 	}
 
+	
 	public void setObject(int i, Object o) throws SQLException {
 		try {
 //			if (this.action == SELECT)
 //				this.statement_count.setObject(i, o);
 //			this.statement.setObject(i, o);
-			this.addParam(i, o, Param.setObject_int_Object);
+			DB db = DBUtil.getDBAdapter(prepareDBName);
+			if(db == null)
+			{
+				this._setObject( i, o);
+			}
+			else
+			{
+				db.setObject(this, i, o);
+			}
 		} catch (SQLException e) {
 			this.resetFromSetMethod(e);
 		}
@@ -5011,7 +5020,28 @@ public class PreparedDBUtil extends DBUtil {
 	}
 
 
-
+	 public void _setObject(int i, Object o) throws SQLException
+	  {
+		  if(o == null || o instanceof java.sql.Timestamp)
+		  {
+			  this.addParam(i, o, Param.setObject_int_Object);
+		  }
+		  else if(o instanceof java.sql.Date)
+		  {
+			  o = new java.sql.Timestamp(((java.sql.Date)o).getTime());
+			  this.addParam(i, o, Param.setObject_int_Object);
+		  }
+		  else if(o instanceof java.util.Date)
+		  {
+			  o = new java.sql.Timestamp(((java.util.Date)o).getTime());
+			  this.addParam(i, o, Param.setObject_int_Object);
+		  }
+		  else
+		  {
+			  this.addParam(i, o, Param.setObject_int_Object);
+		  }
+		  
+	  }
 	
 	
 
