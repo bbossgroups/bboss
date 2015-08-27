@@ -1295,8 +1295,11 @@ public class SQLParams
         type = type.toLowerCase();
         if(value == null)
         {
-            data_ = new Integer(this.converttypeToSqltype(type));
-            type = NULL;            
+        	if(!type.equals(OBJECT))
+        	{
+	            data_ = new Integer(this.converttypeToSqltype(type));
+	            type = NULL;            
+        	}
         }
         else
         {            
@@ -1417,7 +1420,8 @@ public class SQLParams
             return java.sql.Types.BOOLEAN;
         else if(type.equals(BIGDECIMAL))    
             return java.sql.Types.BIGINT;
-        
+        else if(type.equals(OBJECT))    
+            return java.sql.Types.OTHER;
         else              
             return java.sql.Types.OTHER; 
     }

@@ -16,7 +16,10 @@
 package com.frameworkset;
 
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -102,6 +105,15 @@ public class TestDate {
 			SQLExecutor.updateWithDBName("testmysql", "CREATE TABLE datebean2(  utildate       datetime,  sqldate        datetime,  timestampdate  datetime,  id             INTEGER)");
 			
 		}
+		
+
+	}
+	public static void main(String[] args)
+	{
+		Date date = new Date(1440636700000l);
+		Date date1 = new Date(1440604800000l);
+		SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS"); 
+		System.out.println("date:"+f.format(date)+",dat1:"+f.format(date1));
 	}
 	@Test
 	public void testDate() throws SQLException
@@ -114,6 +126,9 @@ public class TestDate {
 		SQLExecutor.insertWithDBName("test", "insert into datebean1(id,utildate,sqldate,timestampdate) values(?,?,?,?)", 1,utildate,sqldate,timestampdate);
 		DateBean datebean = SQLExecutor.queryObjectWithDBName(DateBean.class, "test","select * from datebean where id=1");
 		System.out.println("datebean:"+datebean);
+		
+		datebean = SQLExecutor.queryObjectWithDBName(DateBean.class, "test","select * from datebean1 where id=1");
+		System.out.println("datebean1:"+datebean);
 		datebean = SQLExecutor.queryObjectWithDBName(DateBean.class, "test","select * from datebean1 where sqldate=?", sqldate);
 		
 		utildate = new Date();
@@ -122,7 +137,37 @@ public class TestDate {
 		SQLExecutor.updateWithDBName("test", "update datebean set utildate=?,timestampdate=? where id=1", utildate,timestampdate);
 		datebean = SQLExecutor.queryObjectWithDBName(DateBean.class, "test","select * from datebean where id=1");
 		System.out.println("after update datebean:"+datebean);
+		
+		SQLExecutor.updateWithDBName("test", "update datebean1 set utildate=?,timestampdate=? where id=1", utildate,timestampdate);
+		datebean = SQLExecutor.queryObjectWithDBName(DateBean.class, "test","select * from datebean1 where id=1");
+		System.out.println("after update datebean1:"+datebean);
 		//修改，查询，map
+		datebean.setId(2);
+		SQLExecutor.insertBean("test", "insert into datebean(id,utildate,sqldate,timestampdate) values(#[id],#[utildate],#[sqldate],#[timestampdate])", datebean);
+		SQLExecutor.insertBean("test", "insert into datebean1(id,utildate,sqldate,timestampdate) values(#[id],#[utildate],#[sqldate],#[timestampdate])", datebean);
+		
+		datebean.setId(3);
+		datebean.setUtildate(null);
+		SQLExecutor.insertBean("test", "insert into datebean(id,utildate,sqldate,timestampdate) values(#[id],#[utildate],#[sqldate],#[timestampdate])", datebean);
+		SQLExecutor.insertBean("test", "insert into datebean1(id,utildate,sqldate,timestampdate) values(#[id],#[utildate],#[sqldate],#[timestampdate])", datebean);
+		
+		Map data = new HashMap();
+		data.put("id", 4);
+		data.put("utildate", utildate);
+		data.put("sqldate", sqldate);
+		data.put("timestampdate", timestampdate);
+		
+		SQLExecutor.insertBean("test", "insert into datebean(id,utildate,sqldate,timestampdate) values(#[id],#[utildate],#[sqldate],#[timestampdate])", data);
+		SQLExecutor.insertBean("test", "insert into datebean1(id,utildate,sqldate,timestampdate) values(#[id],#[utildate],#[sqldate],#[timestampdate])", data);
+		
+		data = new HashMap();
+		data.put("id", 5);
+		data.put("utildate", null);
+		data.put("sqldate", sqldate);
+		data.put("timestampdate", timestampdate);
+		
+		SQLExecutor.insertBean("test", "insert into datebean(id,utildate,sqldate,timestampdate) values(#[id],#[utildate],#[sqldate],#[timestampdate])", data);
+		SQLExecutor.insertBean("test", "insert into datebean1(id,utildate,sqldate,timestampdate) values(#[id],#[utildate],#[sqldate],#[timestampdate])", data);
 		
 	}
 	
@@ -149,6 +194,37 @@ public class TestDate {
 		SQLExecutor.updateWithDBName("testmysql", "update datebean2 set utildate=?,timestampdate=? where sqldate=?", utildate,timestampdate,sqldate);
 		datebean = SQLExecutor.queryObjectWithDBName(DateBean.class, "testmysql","select * from datebean2 where sqldate=?", sqldate);
 		System.out.println("testmysql after update datebean2:"+datebean);
+		datebean.setId(2);
+		SQLExecutor.insertBean("testmysql", "insert into datebean(id,utildate,sqldate,timestampdate) values(#[id],#[utildate],#[sqldate],#[timestampdate])", datebean);
+		SQLExecutor.insertBean("testmysql", "insert into datebean1(id,utildate,sqldate,timestampdate) values(#[id],#[utildate],#[sqldate],#[timestampdate])", datebean);
+		SQLExecutor.insertBean("testmysql", "insert into datebean2(id,utildate,sqldate,timestampdate) values(#[id],#[utildate],#[sqldate],#[timestampdate])", datebean);
+		datebean.setId(3);
+		datebean.setUtildate(null);
+		SQLExecutor.insertBean("testmysql", "insert into datebean(id,utildate,sqldate,timestampdate) values(#[id],#[utildate],#[sqldate],#[timestampdate])", datebean);
+		SQLExecutor.insertBean("testmysql", "insert into datebean1(id,utildate,sqldate,timestampdate) values(#[id],#[utildate],#[sqldate],#[timestampdate])", datebean);
+		SQLExecutor.insertBean("testmysql", "insert into datebean2(id,utildate,sqldate,timestampdate) values(#[id],#[utildate],#[sqldate],#[timestampdate])", datebean);
+		
+		
+		
+		Map data = new HashMap();
+		data.put("id", 4);
+		data.put("utildate", utildate);
+		data.put("sqldate", sqldate);
+		data.put("timestampdate", timestampdate);
+		
+		SQLExecutor.insertBean("testmysql", "insert into datebean(id,utildate,sqldate,timestampdate) values(#[id],#[utildate],#[sqldate],#[timestampdate])", data);
+		SQLExecutor.insertBean("testmysql", "insert into datebean1(id,utildate,sqldate,timestampdate) values(#[id],#[utildate],#[sqldate],#[timestampdate])", data);
+		SQLExecutor.insertBean("testmysql", "insert into datebean2(id,utildate,sqldate,timestampdate) values(#[id],#[utildate],#[sqldate],#[timestampdate])", data);
+		
+		data = new HashMap();
+		data.put("id", 5);
+		data.put("utildate", null);
+		data.put("sqldate", sqldate);
+		data.put("timestampdate", timestampdate);
+		
+		SQLExecutor.insertBean("testmysql", "insert into datebean(id,utildate,sqldate,timestampdate) values(#[id],#[utildate],#[sqldate],#[timestampdate])", data);
+		SQLExecutor.insertBean("testmysql", "insert into datebean1(id,utildate,sqldate,timestampdate) values(#[id],#[utildate],#[sqldate],#[timestampdate])", data);
+		SQLExecutor.insertBean("testmysql", "insert into datebean2(id,utildate,sqldate,timestampdate) values(#[id],#[utildate],#[sqldate],#[timestampdate])", data);
 		//修改，查询，map
 		
 	}
@@ -208,8 +284,9 @@ ALTER TABLE datebean ADD (
 		}
 		public String toString()
 		{
+			SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS"); 
 			StringBuilder builder = new StringBuilder();
-			builder.append("id=").append(id).append(",").append("utildate=").append(utildate).append(",").append("sqldate=").append(sqldate).append(",").append("timestampdate=").append(timestampdate);
+			builder.append("id=").append(id).append(",").append("utildate=").append(f.format(utildate)).append(",").append("sqldate=").append(f.format(sqldate)).append(",").append("timestampdate=").append(f.format(timestampdate));
 			return builder.toString();
 		}
 		
