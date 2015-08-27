@@ -62,7 +62,7 @@ import com.frameworkset.util.FileUtil;
 
 /**
  * 执行预编sql语句
- * 
+ * set i parameterIndex the first parameter is 1, the second is 2, ...
  * @author biaoping.yin created on 2005-6-8 version 1.0
  */
 public class PreparedDBUtil extends DBUtil {
@@ -3814,6 +3814,12 @@ public class PreparedDBUtil extends DBUtil {
 	}
 
 	// JDBC 2.0
+	/**
+	 * 
+	 * @param i parameterIndex the first parameter is 1, the second is 2, ...
+	 * @param x
+	 * @throws SQLException
+	 */
 	public void setArray(int i, Array x) throws SQLException {
 		try {
 			
@@ -4517,7 +4523,12 @@ public class PreparedDBUtil extends DBUtil {
 		}
 	}
 
-	
+	/**
+	 * 
+	 * @param i parameterIndex the first parameter is 1, the second is 2, ...
+	 * @param o
+	 * @throws SQLException
+	 */
 	public void setObject(int i, Object o) throws SQLException {
 		try {
 //			if (this.action == SELECT)
