@@ -37,7 +37,7 @@ public class TestDate {
 	{
 		//oracle
 		SQLUtil.startPool("test","oracle.jdbc.driver.OracleDriver","jdbc:oracle:thin:@//10.0.15.51:1521/orcl","testpdp1","testpdp1",
-				 "true",
+				 null,
 				 null,//"READ_COMMITTED",
 				"select 1 from dual",
 				 "jndi-test",   
@@ -68,7 +68,7 @@ public class TestDate {
 		
 		//mysql
 		SQLUtil.startPool("testmysql","com.mysql.jdbc.Driver","jdbc:mysql://10.0.15.134:3306/bbosstest","root","123456",
-				 "true",
+				 null,
 				 null,//"READ_COMMITTED",
 				"select 1",
 				 "jndi-testmysql",   
@@ -216,6 +216,8 @@ public class TestDate {
 		SQLExecutor.insertBean("testmysql", "insert into datebean1(id,utildate,sqldate,timestampdate) values(#[id],#[utildate],#[sqldate],#[timestampdate])", data);
 		SQLExecutor.insertBean("testmysql", "insert into datebean2(id,utildate,sqldate,timestampdate) values(#[id],#[utildate],#[sqldate],#[timestampdate])", data);
 		
+		
+		
 		data = new HashMap();
 		data.put("id", 5);
 		data.put("utildate", null);
@@ -225,8 +227,8 @@ public class TestDate {
 		SQLExecutor.insertBean("testmysql", "insert into datebean(id,utildate,sqldate,timestampdate) values(#[id],#[utildate],#[sqldate],#[timestampdate])", data);
 		SQLExecutor.insertBean("testmysql", "insert into datebean1(id,utildate,sqldate,timestampdate) values(#[id],#[utildate],#[sqldate],#[timestampdate])", data);
 		SQLExecutor.insertBean("testmysql", "insert into datebean2(id,utildate,sqldate,timestampdate) values(#[id],#[utildate],#[sqldate],#[timestampdate])", data);
-		//修改，查询，map
 		
+		SQLExecutor.queryListInfoWithDBName(DateBean.class, "testmysql", "select * from datebean2 where sqldate=?",0,2 ,sqldate);
 	}
 	
 	/**
