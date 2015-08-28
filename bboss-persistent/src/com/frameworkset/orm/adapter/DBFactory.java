@@ -136,7 +136,8 @@ public class DBFactory
         adapters.put("derby", DBDerby.class);
         adapters.put(SQLITEX, DBSQLiteXerial.class);
         adapters.put("org.sqlite.JDBC", DBSQLiteXerial.class);
-        
+        adapters.put("org.h2.Driver", DBH2.class);
+        adapters.put("h2", DBH2.class);
         adapters.put("", DBNone.class);
     }
 
