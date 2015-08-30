@@ -1,5 +1,7 @@
 package org.frameworkset.nosql.mongodb;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +25,18 @@ import com.mongodb.WriteResult;
 
 
 public class MongoDB {
+	private static Method autoConnectRetryMethod;
+	static{
+		try {
+			autoConnectRetryMethod = Builder.class.getMethod("autoConnectRetry", boolean.class);
+		} catch (NoSuchMethodException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	private static Logger log = Logger.getLogger(MongoDB.class);
 	private String serverAddresses;
 	private String option;
@@ -268,7 +282,8 @@ public class MongoDB {
 //	            options.threadsAllowedToBlockForConnectionMultiplier = threadsAllowedToBlockForConnectionMultiplier;
 //	            options.socketKeepAlive=socketKeepAlive;
 				Builder builder = MongoClientOptions.builder();
-				builder.autoConnectRetry( autoConnectRetry);
+//				builder.autoConnectRetry( autoConnectRetry);
+				_autoConnectRetry( builder, autoConnectRetry);
 				builder.connectionsPerHost( connectionsPerHost);
 				builder.maxWaitTime( maxWaitTime);
 				builder.socketTimeout( socketTimeout);
@@ -310,6 +325,22 @@ public class MongoDB {
 		} 
 	}
 	
+	private void _autoConnectRetry(Builder builder,boolean autoConnectRetry)
+	{
+		if(autoConnectRetryMethod != null)
+			try {
+				autoConnectRetryMethod.invoke(builder, autoConnectRetry);
+			} catch (IllegalAccessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalArgumentException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (InvocationTargetException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	}
 	public void initsimple() throws Exception
 	{
 		try {
@@ -323,7 +354,8 @@ public class MongoDB {
 //            options.socketKeepAlive=socketKeepAlive;
 //			Mongo mongoClient = new Mongo(parserAddress().get(0),options);
 			Builder builder = MongoClientOptions.builder();
-			builder.autoConnectRetry( autoConnectRetry);
+//			builder.autoConnectRetry( autoConnectRetry);
+			_autoConnectRetry( builder, autoConnectRetry);
 			builder.connectionsPerHost( connectionsPerHost);
 			builder.maxWaitTime( maxWaitTime);
 			builder.socketTimeout( socketTimeout);

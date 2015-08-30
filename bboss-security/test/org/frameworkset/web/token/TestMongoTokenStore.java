@@ -60,14 +60,14 @@ public class TestMongoTokenStore {
 	public void livecheck() throws Exception
 	{
 		mongodbTokenStore.livecheck();
-		System.out.println("aer:"+mongodbTokenStore.getLastError());
+//		System.out.println("aer:"+mongodbTokenStore.getLastError());
 	}
 	
 	@Test
 	public void testticket() throws Exception
 	{
 		String ticket = mongodbTokenStore.genTicket(account, worknumber, appid, secret);
-		System.out.println("aer:"+mongodbTokenStore.getLastError() +":\n"+ticket);
+//		System.out.println("aer:"+mongodbTokenStore.getLastError() +":\n"+ticket);
 	}
 	
 	

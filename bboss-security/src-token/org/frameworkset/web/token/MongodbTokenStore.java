@@ -29,29 +29,29 @@ public class MongodbTokenStore extends BaseTokenStore{
 	private DBCollection dualtokens = null;
 	private DBCollection eckeypairs = null;
 	private DBCollection tickets = null;
-	public void requestStart()
-	{
-		if(db != null)
-		{
-			db.requestStart();
-		}
-	}
-	public void requestDone()
-	{
-		if(db != null)
-		{
-			db.requestDone();
-		}
-	}
+//	public void requestStart()
+//	{
+//		if(db != null)
+//		{
+//			db.requestStart();
+//		}
+//	}
+//	public void requestDone()
+//	{
+//		if(db != null)
+//		{
+//			db.requestDone();
+//		}
+//	}
 	
-	public CommandResult getLastError()
-	{
-		if(db != null)
-		{
-			return db.getLastError();
-		}
-		return null;
-	}
+//	public CommandResult getLastError()
+//	{
+//		if(db != null)
+//		{
+//			return db.getLastError();
+//		}
+//		return null;
+//	}
 	
 	public MongodbTokenStore()
 	{

@@ -27,8 +27,10 @@
 	<classpathentry kind="lib" path="lib/cglib-2.2.jar"/>
 	<classpathentry kind="lib" path="lib/jakarta-oro-2.0.8.jar"/>
 	<classpathentry kind="lib" path="lib/bboss-core.jar"/>
-	<classpathentry kind="lib" path="lib/mongo-java-driver-2.12.4-javadoc.jar"/>
-	<classpathentry kind="lib" path="lib/mongo-java-driver-2.12.4-sources.jar"/>
-	<classpathentry kind="lib" path="lib/mongo-java-driver-2.12.4.jar" sourcepath="lib/mongo-java-driver-2.12.4-sources.jar"/>
+	<classpathentry kind="lib" path="lib/mongo-java-driver-3.0.3.jar" sourcepath="lib/mongo-java-driver-3.0.3-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:platform:/resource/bboss-security/lib/mongo-java-driver-3.0.3-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="classes"/>
 </classpath>
