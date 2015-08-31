@@ -30,11 +30,11 @@ public class MongoDB {
 		try {
 			autoConnectRetryMethod = Builder.class.getMethod("autoConnectRetry", boolean.class);
 		} catch (NoSuchMethodException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
 		} catch (SecurityException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
 		}
 	}
 	private static Logger log = Logger.getLogger(MongoDB.class);
