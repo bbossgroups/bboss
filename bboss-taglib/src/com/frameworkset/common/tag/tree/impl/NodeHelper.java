@@ -1011,7 +1011,7 @@ public class NodeHelper  implements Serializable
 				String params = this.getCustomParams(this.element.getNode()
 						.getParams());
 
-				buffer.append("<td>").append("<img src=\"").append(nodeImage)
+				buffer.append("<td nowrap>").append("<img src=\"").append(nodeImage)
 						.append("\">");
 				buffer
 						.append("<img openNode=\"")
@@ -1203,7 +1203,7 @@ public class NodeHelper  implements Serializable
 		Iterator indentationProfileIterator = element.getIndendationProfile()
 				.iterator();
 		// StringBuilder indent = new StringBuilder();
-		indent.append("<td>");
+		indent.append("<td nowrap>");
 		if (!itree.isDynamic() && this.element.getNode().hasChildren())
 			this.indent = new StringBuilder();
 		while (indentationProfileIterator.hasNext())
