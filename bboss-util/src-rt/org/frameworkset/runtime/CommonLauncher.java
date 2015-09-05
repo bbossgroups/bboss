@@ -142,7 +142,7 @@ public class CommonLauncher
         
         if (mainclass == null)
         {
-            System.err.println("Invalid main-class entry, cannot proceed.");
+            System.out.println("Invalid main-class entry, cannot proceed.");
             System.exit(1);
         }
         Class mainClass = cl.loadClass(mainclass);
@@ -153,7 +153,7 @@ public class CommonLauncher
         for (int i = 0; i < classpathEntries.length; i++)
         {
             URL url = classpathEntries[i];
-            System.err.println("ClassPath[" + i + "] = " + url);
+            System.out.println("ClassPath[" + i + "] = " + url);
         }
         try {
 			Method setAppdir = mainClass.getMethod("setAppdir", new Class[] {File.class});
@@ -162,7 +162,7 @@ public class CommonLauncher
 				setAppdir.invoke(null, new Object[] {appDir});
 			}
 		} catch (Exception e) {
-			System.err.println("ignore set Appdir variable for "+mainclass+":"+e.getMessage());
+			System.out.println("ignore set Appdir variable for "+mainclass+":"+e.getMessage());
 		}
         Method method = mainClass.getMethod("main", new Class[] {String[].class});
         method.invoke(null, new Object[] {args});

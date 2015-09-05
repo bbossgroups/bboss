@@ -229,7 +229,7 @@
 			</sequential>
 			
 		</for>
-		<for list="${bigdatamonitor-lib},${sessionmonitor-lib}" param="destdir">
+		<for list="${bboss-gencode-lib},${bigdatamonitor-lib},${sessionmonitor-lib}" param="destdir">
 					<sequential>
 						<echo>@{destdir}-------------------------------</echo>
 						<antcall target="svn-update-procedure">

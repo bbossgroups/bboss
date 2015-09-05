@@ -48,9 +48,20 @@ public class PrimaryKeyMetaData extends ColumnMetaData {
 			PrimaryKeyMetaData temp = (PrimaryKeyMetaData)obj;
 			if(temp != null)
 			{
-				int ret = this.getPkName().toLowerCase().compareTo(temp.getPkName().toLowerCase());
-				
-				return ret;
+				if(getPkName() != null)
+				{
+					int ret = this.getPkName().toLowerCase().compareTo(temp.getPkName().toLowerCase());
+					
+					return ret;
+				}
+				else if(getColumnName() != null)
+				{
+					int ret = this.getColumnName().toLowerCase().compareTo(temp.getColumnName().toLowerCase());
+					
+					return ret;
+				}
+				else
+					return 0;
 			}
 			else
 			{
