@@ -600,6 +600,73 @@ public class SQLManager extends PoolManager{
 //		PoolManBootstrap.startFromTemplte(values);
 		startPool( poolname, driver, jdbcurl, username, password, readOnly, validationQuery,false);
 	}
+	
+	public static void startPool(String poolname,String driver,String jdbcurl,String username,String password,String validationQuery)
+	{
+//		JDBCPool pool = SQLUtil.getSQLManager().getPoolIfExist(poolname);
+//		if(pool != null)
+//		{
+//			if(pool.getStatus().equals("start"))
+//			{
+////				throw new IllegalStateException("连接池[" + poolname + "]已经启动。无需再启动,或者请停止后再启动.");
+//				log.warn("连接池[" + poolname + "]已经启动。无需再启动,或者请停止后再启动.");
+//				return;
+//			}
+//				
+//		}
+//		Map<String,String> values = new HashMap<String,String>();
+//		values.put("dbname", poolname);
+//		values.put("jndiname", "");
+//		values.put("driver", driver);
+//		values.put("url", jdbcurl);
+//		values.put("username", username);
+//		values.put("password", password);
+//		
+//		values.put("readonly", readOnly);
+//		values.put("validationquery", validationQuery);
+//		
+//		PoolManBootstrap.startFromTemplte(values);
+		startPool( poolname, driver, jdbcurl, username, password, (String)null, validationQuery,false);
+	}
+	
+	public static void startNoPool(String poolname,String driver,String jdbcurl,String username,String password,String validationQuery)
+	{
+//		JDBCPool pool = SQLUtil.getSQLManager().getPoolIfExist(poolname);
+//		if(pool != null)
+//		{
+//			if(pool.getStatus().equals("start"))
+//			{
+////				throw new IllegalStateException("连接池[" + poolname + "]已经启动。无需再启动,或者请停止后再启动.");
+//				log.warn("连接池[" + poolname + "]已经启动。无需再启动,或者请停止后再启动.");
+//				return;
+//			}
+//				
+//		}
+//		Map<String,String> values = new HashMap<String,String>();
+//		values.put("dbname", poolname);
+//		values.put("jndiname", "");
+//		values.put("driver", driver);
+//		values.put("url", jdbcurl);
+//		values.put("username", username);
+//		values.put("password", password);
+//		
+//		values.put("readonly", readOnly);
+//		values.put("validationquery", validationQuery);
+//		
+//		PoolManBootstrap.startFromTemplte(values);
+		startPool( poolname, driver, jdbcurl, username, password,
+	    		 null,
+	    		 "READ_COMMITTED",
+	    		validationQuery,
+	    		"jndi-"+poolname,   
+	    		10,
+	    		10,
+	    		20,
+	    		false,
+	    		false,
+	    		null,false,false
+	    		);
+	}
 	public static void startPool(String poolname,String driver,String jdbcurl,String username,String password,String readOnly,String validationQuery,boolean encryptdbinfo)
 	{
 
@@ -607,10 +674,10 @@ public class SQLManager extends PoolManager{
 	    		 readOnly,
 	    		 "READ_COMMITTED",
 	    		validationQuery,
-	    		"",   
-	    		2,
-	    		2,
+	    		"jndi-"+poolname,   
 	    		10,
+	    		10,
+	    		20,
 	    		true,
 	    		false,
 	    		null,false,encryptdbinfo
@@ -647,9 +714,14 @@ public class SQLManager extends PoolManager{
 		Map<String,String> values = new HashMap<String,String>();
 		values.put("dbname", poolname);
 		if(jndiName != null && !jndiName.equals(""))
+		{
 			values.put("dbname_datasource_jndiname", jndiName);
+			values.put("enablejta", "true");
+		}
 		else
+		{
 			values.put("dbname_datasource_jndiname", "");
+		}
 		values.put("driver", driver);
 		values.put("jdbcurl", jdbcurl);
 		if(username == null) username="";

@@ -11,7 +11,7 @@
 	<encryptdbinfo>${encryptdbinfo}</encryptdbinfo>
      <cachequerymetadata>${cachequerymetadata}</cachequerymetadata>
     <driver><![CDATA[${driver}]]></driver>
-
+	<enablejta>${enablejta}</enablejta>
      <url><![CDATA[${jdbcurl}]]></url> 
    
     <username>${username}</username>

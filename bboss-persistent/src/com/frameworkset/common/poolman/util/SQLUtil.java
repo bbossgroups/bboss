@@ -1607,7 +1607,15 @@ public class SQLUtil{
             return SQLUtil.getSQLManager().statusCheck(dbname);
            
         }
+        public static void startPool(String poolname,String driver,String jdbcurl,String username,String password,String validationQuery)
+        {
+        	SQLManager.startPool(  poolname,  driver,  jdbcurl,  username,  password,  validationQuery);
+        }
         
+        public static void startNoPool(String poolname,String driver,String jdbcurl,String username,String password,String validationQuery)
+        {
+        	SQLManager.startNoPool(  poolname,  driver,  jdbcurl,  username,  password,  validationQuery);
+        }
         public static void startPool(String poolname,String driver,String jdbcurl,String username,String password,String readOnly,String validationQuery)
     	{
         	SQLManager.startPool(poolname, driver, jdbcurl, username, password, readOnly, validationQuery);
