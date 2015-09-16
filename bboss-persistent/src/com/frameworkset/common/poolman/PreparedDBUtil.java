@@ -1274,6 +1274,8 @@ public class PreparedDBUtil extends DBUtil {
 		List resources = null;
 		try {
 			JDBCPool pool = SQLManager.getInstance().getPool(this.prepareDBName);
+			if(pool == null)
+				throw new NestedSQLException(new StringBuilder().append("执行sql[").append(this.Params.prepareSqlifo != null?this.Params.prepareSqlifo.getNewsql():"").append("]失败：数据源[").append(prepareDBName).append("]不存在，请检查数据源是否正确启动.").toString());
 			stmtInfo = new StatementInfo(this.prepareDBName, this.Params.prepareSqlifo,
 					
 					false, offset, this.pagesize, pool.isRobotQuery(), con,oraclerownum,true);
@@ -1542,7 +1544,14 @@ public class PreparedDBUtil extends DBUtil {
 			{
 				return null;
 			}
-		} catch (SQLException e) {
+		}
+		catch(NestedSQLException e)
+		{
+			if(stmtInfo != null)
+				stmtInfo.errorHandle(e);
+			throw e;
+		}
+		catch (SQLException e) {
 //			try{
 //				
 //				log.error("Execute prepared sql[" + (stmtInfo != null?stmtInfo.getSql():null) + "] failed:" , e);

@@ -401,6 +401,8 @@ public class SQLManager extends PoolManager{
     public String getDefaultDBName()
     {
         assertLoaded();        
+        if(defaultpool == null)
+        	return null;
         return this.defaultpool.getInterceptor().getDefaultDBName();
     }
     
