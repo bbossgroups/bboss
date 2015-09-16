@@ -38,8 +38,11 @@ https://github.com/bbossgroups/bboss-document
 # svn下载地址 
 https://github.com/bbossgroups/bboss-document/trunk 
 
+## bboss项目工程目录结构及功能说明 
+http://yin-bp.iteye.com/blog/2142959
 
-## bboss项目特色请查看文档了解：http://yin-bp.iteye.com/blog/1080824
+## bboss项目特色请查看文档了解
+http://yin-bp.iteye.com/blog/1080824
 
 ## License
 
