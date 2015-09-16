@@ -402,7 +402,7 @@ public class SQLManager extends PoolManager{
     {
         assertLoaded();        
         if(defaultpool == null)
-        	return null;
+        	throw new java.lang.NullPointerException("获取默认数据源失败：请确保数据源正常启动，检查配置文件是否配置正确.");
         return this.defaultpool.getInterceptor().getDefaultDBName();
     }
     
