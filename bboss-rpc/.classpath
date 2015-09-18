@@ -11,15 +11,10 @@
 	<classpathentry kind="src" path="src-cxf"/>
 	<classpathentry kind="src" path="src-jgroups"/>
 	<classpathentry kind="src" path="src-netty"/>
-	<classpathentry kind="lib" path="lib/asm/asm-3.1.jar"/>
-	<classpathentry kind="lib" path="lib/asm/asm-commons-3.1.jar"/>
-	<classpathentry kind="lib" path="lib/asm/asm-util-3.1.jar"/>
 	<classpathentry kind="lib" path="lib/asm/jarjar.jar"/>
 	<classpathentry kind="lib" path="lib/bsh/bsh-2.0b4.jar"/>
 	<classpathentry kind="lib" path="lib/camel/camel-core-2.2.0.jar"/>
 	<classpathentry kind="lib" path="lib/camel/camel-jms-2.2.0.jar"/>
-	<classpathentry kind="lib" path="lib/cglib/cglib-nodep-2.2.jar"/>
-	<classpathentry kind="lib" path="lib/cxf/cxf-2.7.6.jar"/>
 	<classpathentry kind="lib" path="lib/encrypt/commons-codec-1.1.jar"/>
 	<classpathentry kind="lib" path="lib/encrypt/commons-lang-2.1.jar"/>
 	<classpathentry kind="lib" path="lib/encrypt/icu4j-4_2_1-docs.zip"/>
@@ -53,9 +48,6 @@
 	<classpathentry kind="lib" path="lib/mina/test/log4j-1.2.16.jar"/>
 	<classpathentry kind="src" path="resources"/>
 	<classpathentry kind="lib" path="lib/jms/geronimo-j2ee-management_1.0_spec-1.0.jar"/>
-	<classpathentry kind="lib" path="lib/cglib/cglib-2.2.jar"/>
-	<classpathentry kind="lib" path="lib/cglib/cglib-docs-2.2.jar"/>
-	<classpathentry kind="lib" path="lib/cglib/cglib-src-2.2.jar"/>
 	<classpathentry kind="lib" path="lib/cxf/geronimo-jaxws_2.2_spec-1.1.jar"/>
 	<classpathentry kind="lib" path="lib/cxf/geronimo-jms_1.1_spec-1.1.1.jar"/>
 	<classpathentry kind="lib" path="lib/cxf/geronimo-servlet_3.0_spec-1.0.jar"/>
@@ -85,18 +77,30 @@
 	<classpathentry kind="lib" path="lib/jms/spring-core-2.5.5.jar"/>
 	<classpathentry kind="lib" path="lib/jms/spring-web-2.5.5.jar"/>
 	<classpathentry kind="lib" path="lib/cxf/javax.ws.rs-api-2.0-m10.jar"/>
-	<classpathentry kind="lib" path="lib/cxf/jaxb-api-2.2.6.jar"/>
-	<classpathentry kind="lib" path="lib/cxf/jaxb-impl-2.2.6.jar"/>
-	<classpathentry kind="lib" path="lib/cxf/jaxb-xjc-2.2.6.jar"/>
-	<classpathentry kind="lib" path="lib/cxf/neethi-3.0.2.jar"/>
 	<classpathentry kind="lib" path="lib/cxf/stax2-api-3.1.1.jar"/>
 	<classpathentry kind="lib" path="lib/cxf/woodstox-core-asl-4.2.0.jar"/>
 	<classpathentry kind="lib" path="lib/cxf/wsdl4j-1.6.3.jar"/>
 	<classpathentry kind="lib" path="lib/cxf/xml-resolver-1.2.jar"/>
-	<classpathentry kind="lib" path="lib/cxf/xmlschema-core-2.0.3.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/bboss-core.jar" sourcepath="/bboss-core"/>
 	<classpathentry kind="lib" path="lib/test/bboss-core-test.jar"/>
 	<classpathentry kind="lib" path="lib/netty/hessian-4.0.37.jar"/>
+	<classpathentry kind="lib" path="lib/asm/asm-5.0.3.jar"/>
+	<classpathentry kind="lib" path="lib/cglib/cglib-nodep-3.1.jar"/>
+	<classpathentry kind="lib" path="lib/cxf/cxf-core-3.1.0.jar"/>
+	<classpathentry kind="lib" path="lib/cxf/cxf-rt-bindings-soap-3.1.0.jar"/>
+	<classpathentry kind="lib" path="lib/cxf/cxf-rt-databinding-jaxb-3.1.0.jar"/>
+	<classpathentry kind="lib" path="lib/cxf/cxf-rt-frontend-jaxws-3.1.0.jar"/>
+	<classpathentry kind="lib" path="lib/cxf/cxf-rt-frontend-simple-3.1.0.jar"/>
+	<classpathentry kind="lib" path="lib/cxf/cxf-rt-transports-http-3.1.0.jar"/>
+	<classpathentry kind="lib" path="lib/cxf/cxf-rt-wsdl-3.1.0.jar"/>
+	<classpathentry kind="lib" path="lib/cxf/jaxb-api-2.2.12-sources.jar"/>
+	<classpathentry kind="lib" path="lib/cxf/jaxb-api-2.2.12.jar"/>
+	<classpathentry kind="lib" path="lib/cxf/jaxb-core-2.2.11.jar"/>
+	<classpathentry kind="lib" path="lib/cxf/jaxb-impl-2.2.11-sources.jar"/>
+	<classpathentry kind="lib" path="lib/cxf/jaxb-impl-2.2.11.jar"/>
+	<classpathentry kind="lib" path="lib/cxf/jaxb-xjc-2.2.11.jar"/>
+	<classpathentry kind="lib" path="lib/cxf/neethi-3.0.3.jar"/>
+	<classpathentry kind="lib" path="lib/cxf/xmlschema-core-2.2.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

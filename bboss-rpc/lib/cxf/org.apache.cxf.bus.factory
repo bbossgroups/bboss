@@ -1,2 +1,0 @@
-org.apache.cxf.bus.CXFBusFactory
-#org.springframework.context.ApplicationContext,org.springframework.beans.BeansException,org.springframework.beans.factory.xml.NamespaceHandlerResolver

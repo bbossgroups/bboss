@@ -20,11 +20,7 @@
 	<classpathentry kind="lib" path="lib/commons-lang-2.6.jar"/>
 	<classpathentry kind="lib" path="lib/frameworkset-pool.jar"/>
 	<classpathentry kind="lib" path="lib/frameworkset-util.jar" sourcepath="/bboss-util"/>
-	<classpathentry kind="lib" path="lib/asm/asm-3.1.jar"/>
-	<classpathentry kind="lib" path="lib/asm/asm-commons-3.1.jar"/>
-	<classpathentry kind="lib" path="lib/asm/asm-util-3.1.jar"/>
 	<classpathentry kind="lib" path="lib/asm/jarjar.jar"/>
-	<classpathentry kind="lib" path="lib/cglib-2.2.jar"/>
 	<classpathentry kind="lib" path="lib/jakarta-oro-2.0.8.jar"/>
 	<classpathentry kind="lib" path="lib/bboss-core.jar"/>
 	<classpathentry kind="lib" path="lib/mongo-java-driver-3.0.3.jar" sourcepath="lib/mongo-java-driver-3.0.3-sources.jar">
@@ -32,5 +28,7 @@
 			<attribute name="javadoc_location" value="jar:platform:/resource/bboss-security/lib/mongo-java-driver-3.0.3-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="lib/asm/asm-5.0.3.jar"/>
+	<classpathentry kind="lib" path="lib/cglib-nodep-3.1.jar"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>
