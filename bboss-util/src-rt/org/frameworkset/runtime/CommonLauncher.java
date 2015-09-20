@@ -64,23 +64,36 @@ public class CommonLauncher
     private static  List<URL> alljars;
     public static String getProperty(String pro)
     {
+    	return getProperty(pro,true);
+    }
+    
+    public static String getProperty(String pro,String defaultValue)
+    {
+    	return getProperty(pro,defaultValue,true);
+    }
+    
+    public static String getProperty(String pro,boolean trim)
+    {
     	String value = null;
     	if(properts != null)
     		value = (String)properts.get(pro);
-    	if(value != null )
+    	if(value != null &&trim)
     		value = value.trim();
     	return value;
     }
     
-    public static String getProperty(String pro,String defaultValue)
+    public static String getProperty(String pro,String defaultValue,boolean trim)
     {
     	String value = null;
     	if(properts != null)
     		value = (String)properts.get(pro);
     	if(value == null)
     		return defaultValue;
-    	else    		
-        	value = value.trim();
+    	else
+    	{
+    		if(trim)
+    			value = value.trim();
+    	}
     	return value;
     }
     private static void loadConfig(File appDir) throws IOException
