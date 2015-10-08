@@ -215,7 +215,7 @@ public class ReferHelper {
 
 				if (value.indexOf(wallfilterrules[i]) >= 0) {
 					values[j] = null;
-					logger.debug("参数" + name + "值" + value + "包含敏感词:"
+					logger.warn("参数" + name + "值" + value + "包含敏感词:"
 							+ wallfilterrules[i] + ",存在安全隐患,系统自动过滤掉参数值!");
 					break;
 				}

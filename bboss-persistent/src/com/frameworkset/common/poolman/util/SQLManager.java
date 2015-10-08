@@ -603,6 +603,27 @@ public class SQLManager extends PoolManager{
 		startPool( poolname, driver, jdbcurl, username, password, readOnly, validationQuery,false);
 	}
 	
+	public static void startPool(String poolname,String driver,String jdbcurl,String username,String password,String validationQuery,int fetchsize)
+	{
+		TempConf tempConf = new TempConf();
+		tempConf.setPoolname(poolname);
+		tempConf.setDriver(driver);
+		tempConf.setJdbcurl(jdbcurl);
+		tempConf.setUsername(username);
+		tempConf.setPassword(password);
+		tempConf.setValidationQuery(validationQuery);
+		tempConf.setTxIsolationLevel("READ_COMMITTED");
+		tempConf.setJndiName("jndi-"+poolname);
+		tempConf.setInitialConnections(10);
+		tempConf.setMinimumSize(10);
+		tempConf.setMaximumSize(20);
+		tempConf.setUsepool(true);
+		tempConf.setExternal(false);
+		tempConf.setEncryptdbinfo(false);
+		tempConf.setShowsql(false);
+		tempConf.setQueryfetchsize(fetchsize);
+		startPool(tempConf); 
+	}
 	public static void startPool(String poolname,String driver,String jdbcurl,String username,String password,String validationQuery)
 	{
 //		JDBCPool pool = SQLUtil.getSQLManager().getPoolIfExist(poolname);
@@ -628,10 +649,61 @@ public class SQLManager extends PoolManager{
 //		values.put("validationquery", validationQuery);
 //		
 //		PoolManBootstrap.startFromTemplte(values);
-		startPool( poolname, driver, jdbcurl, username, password, (String)null, validationQuery,false);
+//		TempConf tempConf = new TempConf();
+//		tempConf.setPoolname(poolname);
+//		tempConf.setDriver(driver);
+//		tempConf.setJdbcurl(jdbcurl);
+//		tempConf.setUsername(username);
+//		tempConf.setPassword(password);
+//		tempConf.setValidationQuery(validationQuery);
+//		tempConf.setTxIsolationLevel("READ_COMMITTED");
+//		tempConf.setJndiName("jndi-"+poolname);
+//		tempConf.setInitialConnections(10);
+//		tempConf.setMinimumSize(10);
+//		tempConf.setMaximumSize(20);
+//		tempConf.setUsepool(true);
+//		tempConf.setExternal(false);
+//		tempConf.setEncryptdbinfo(false);
+//		tempConf.setShowsql(false);
+//		tempConf.setQueryfetchsize(0);
+//		startPool(tempConf);
+		startPool(poolname,driver,jdbcurl,username,password,validationQuery,0);
+		/**
+		 * startPool( poolname, driver, jdbcurl, username, password,
+	    		 readOnly,
+	    		 "READ_COMMITTED",
+	    		validationQuery,
+	    		"jndi-"+poolname,   
+	    		10,
+	    		10,
+	    		20,
+	    		true,
+	    		false,
+	    		null,false,encryptdbinfo
+	    		);
+	    		
+	    		startPool(poolname,  driver,  jdbcurl,  username,  password,
+	    		  readOnly,
+	    		  txIsolationLevel,
+	    		  validationQuery,
+	    		  jndiName,   
+	    		  initialConnections,
+	    		  minimumSize,
+	    		  maximumSize,
+	    		  usepool,
+	    		   external,
+	    		  externaljndiName ,  showsql ,  encryptdbinfo  ,0    		
+	    		);
+		 */
+//		startPool( poolname, driver, jdbcurl, username, password, (String)null, validationQuery,false);
 	}
 	
+	
 	public static void startNoPool(String poolname,String driver,String jdbcurl,String username,String password,String validationQuery)
+	{
+		startNoPool(poolname,driver,jdbcurl,username,password,validationQuery,0);
+	}
+	public static void startNoPool(String poolname,String driver,String jdbcurl,String username,String password,String validationQuery,int fetchsize)
 	{
 //		JDBCPool pool = SQLUtil.getSQLManager().getPoolIfExist(poolname);
 //		if(pool != null)
@@ -656,36 +728,78 @@ public class SQLManager extends PoolManager{
 //		values.put("validationquery", validationQuery);
 //		
 //		PoolManBootstrap.startFromTemplte(values);
-		startPool( poolname, driver, jdbcurl, username, password,
-	    		 null,
-	    		 "READ_COMMITTED",
-	    		validationQuery,
-	    		"jndi-"+poolname,   
-	    		10,
-	    		10,
-	    		20,
-	    		false,
-	    		false,
-	    		null,false,false
-	    		);
+		TempConf tempConf = new TempConf();
+		tempConf.setPoolname(poolname);
+		tempConf.setDriver(driver);
+		tempConf.setJdbcurl(jdbcurl);
+		tempConf.setUsername(username);
+		tempConf.setPassword(password);
+		tempConf.setReadOnly(null);
+	
+		tempConf.setTxIsolationLevel("READ_COMMITTED");
+		tempConf.setValidationQuery(validationQuery);
+		tempConf.setJndiName("jndi-"+poolname);
+		tempConf.setInitialConnections(10);
+		tempConf.setMinimumSize(10);
+		tempConf.setMaximumSize(20);
+		tempConf.setUsepool(false);
+		tempConf.setExternal(false);
+		tempConf.setExternaljndiName(null);
+		tempConf.setShowsql(false);
+		tempConf.setEncryptdbinfo(false);
+		tempConf.setQueryfetchsize(fetchsize);
+		startPool(tempConf); 
+//		startPool( poolname, driver, jdbcurl, username, password,
+//	    		 null,
+//	    		 "READ_COMMITTED",
+//	    		validationQuery,
+//	    		"jndi-"+poolname,   
+//	    		10,
+//	    		10,
+//	    		20,
+//	    		false,
+//	    		false,
+//	    		null,false,false
+//	    		);
 	}
 	public static void startPool(String poolname,String driver,String jdbcurl,String username,String password,String readOnly,String validationQuery,boolean encryptdbinfo)
 	{
 
-		startPool( poolname, driver, jdbcurl, username, password,
-	    		 readOnly,
-	    		 "READ_COMMITTED",
-	    		validationQuery,
-	    		"jndi-"+poolname,   
-	    		10,
-	    		10,
-	    		20,
-	    		true,
-	    		false,
-	    		null,false,encryptdbinfo
-	    		);
-	}
+//		startPool( poolname, driver, jdbcurl, username, password,
+//	    		 readOnly,
+//	    		 "READ_COMMITTED",
+//	    		validationQuery,
+//	    		"jndi-"+poolname,   
+//	    		10,
+//	    		10,
+//	    		20,
+//	    		true,
+//	    		false,
+//	    		null,false,encryptdbinfo
+//	    		);
+		
+		TempConf tempConf = new TempConf();
+		tempConf.setPoolname(poolname);
+		tempConf.setDriver(driver);
+		tempConf.setJdbcurl(jdbcurl);
+		tempConf.setUsername(username);
+		tempConf.setPassword(password);
+		tempConf.setReadOnly(readOnly);
 	
+		tempConf.setTxIsolationLevel("READ_COMMITTED");
+		tempConf.setValidationQuery(validationQuery);
+		tempConf.setJndiName("jndi-"+poolname);
+		tempConf.setInitialConnections(10);
+		tempConf.setMinimumSize(10);
+		tempConf.setMaximumSize(20);
+		tempConf.setUsepool(false);
+		tempConf.setExternal(false);
+		tempConf.setExternaljndiName(null);
+		tempConf.setShowsql(false);
+		tempConf.setEncryptdbinfo(encryptdbinfo);
+		tempConf.setQueryfetchsize(0);
+		startPool(tempConf); 
+	}
 	public static void startPool(String poolname,String driver,String jdbcurl,String username,String password,
     		String readOnly,
     		String txIsolationLevel,
@@ -699,6 +813,53 @@ public class SQLManager extends PoolManager{
     		String externaljndiName ,boolean showsql ,boolean encryptdbinfo      		
     		)
 	{
+//		startPool(poolname,  driver,  jdbcurl,  username,  password,
+//	    		  readOnly,
+//	    		  txIsolationLevel,
+//	    		  validationQuery,
+//	    		  jndiName,   
+//	    		  initialConnections,
+//	    		  minimumSize,
+//	    		  maximumSize,
+//	    		  usepool,
+//	    		   external,
+//	    		  externaljndiName ,  showsql ,  encryptdbinfo  ,0    		
+//	    		);
+		TempConf tempConf = new TempConf();
+		tempConf.setPoolname(poolname);
+		tempConf.setDriver(driver);
+		tempConf.setJdbcurl(jdbcurl);
+		tempConf.setUsername(username);
+		tempConf.setPassword(password);
+		tempConf.setReadOnly(readOnly);
+	
+		tempConf.setTxIsolationLevel(txIsolationLevel);
+		tempConf.setValidationQuery(validationQuery);
+		tempConf.setJndiName(jndiName);
+		tempConf.setInitialConnections(initialConnections);
+		tempConf.setMinimumSize(minimumSize);
+		tempConf.setMaximumSize(maximumSize);
+		tempConf.setUsepool(usepool);
+		tempConf.setExternal(external);
+		tempConf.setExternaljndiName(externaljndiName);
+		tempConf.setShowsql(showsql);
+		tempConf.setEncryptdbinfo(encryptdbinfo);
+		tempConf.setQueryfetchsize(0);
+		startPool(tempConf); 
+	}
+	public static void startPool(String poolname,String driver,String jdbcurl,String username,String password,
+    		String readOnly,
+    		String txIsolationLevel,
+    		String validationQuery,
+    		String jndiName,   
+    		int initialConnections,
+    		int minimumSize,
+    		int maximumSize,
+    		boolean usepool,
+    		boolean  external,
+    		String externaljndiName ,boolean showsql ,boolean encryptdbinfo  ,int queryfetchsize    		
+    		)
+	{
 		JDBCPool pool = SQLUtil.getSQLManager().getPoolIfExist(poolname);
 		if(pool != null)
 		{
@@ -709,52 +870,184 @@ public class SQLManager extends PoolManager{
 			}
 				
 		}
-		if(readOnly == null)
-			readOnly = "";
-		if(txIsolationLevel == null)
-			txIsolationLevel = "";
-		Map<String,String> values = new HashMap<String,String>();
-		values.put("dbname", poolname);
-		if(jndiName != null && !jndiName.equals(""))
+		TempConf temConf = new TempConf();
+		temConf.setPoolname(poolname);
+		temConf.setDriver(driver);
+		temConf.setJdbcurl(jdbcurl);
+		temConf.setUsername(username);
+		temConf.setPassword(password);
+		temConf.setReadOnly(readOnly);
+		temConf.setTxIsolationLevel(txIsolationLevel);
+		temConf.setValidationQuery(validationQuery);
+		temConf.setJndiName(jndiName);
+		temConf.setInitialConnections(initialConnections);
+		temConf.setMinimumSize(minimumSize);
+		temConf.setMaximumSize(maximumSize);
+		temConf.setUsepool(usepool);
+		temConf.setExternal(external);
+		temConf.setExternaljndiName(externaljndiName);
+		temConf.setShowsql(showsql);
+		temConf.setEncryptdbinfo(encryptdbinfo);
+		temConf.setQueryfetchsize(queryfetchsize);
+		startPool(temConf);
+//		if(readOnly == null)
+//			readOnly = "";
+//		if(txIsolationLevel == null)
+//			txIsolationLevel = "";
+//		Map<String,String> values = new HashMap<String,String>();
+//		values.put("dbname", poolname);
+//		if(jndiName != null && !jndiName.equals(""))
+//		{
+//			values.put("dbname_datasource_jndiname", jndiName);
+//			values.put("enablejta", "true");
+//		}
+//		else
+//		{
+//			values.put("dbname_datasource_jndiname", "");
+//		}
+//		values.put("driver", driver);
+//		values.put("jdbcurl", jdbcurl);
+//		if(username == null) username="";
+//		values.put("username", username);
+//		if(password == null) password="";
+//		values.put("password", password);
+//		boolean cachequerymetadata = true;
+//		values.put("cachequerymetadata", cachequerymetadata+"");
+//		values.put("readOnly", readOnly);
+//		if(txIsolationLevel != null && !txIsolationLevel.equals(""))
+//			values.put("txIsolationLevel", txIsolationLevel);
+//		else
+//			values.put("txIsolationLevel", "");
+//		if(validationQuery != null && !validationQuery.equals(""))
+//			values.put("validationQuery", validationQuery);
+//		else
+//			values.put("validationQuery", "");
+//		
+//		
+//		if(initialConnections >= 0)
+//			values.put("initialConnections", ""+initialConnections);
+//		else
+//			values.put("initialConnections", ""+2);
+//		if(minimumSize >= 0)
+//			values.put("minimumSize", ""+minimumSize);
+//		else
+//			values.put("minimumSize", ""+2);
+//		if(maximumSize > 0)
+//			values.put("maximumSize", ""+maximumSize);
+//		else
+//			values.put("maximumSize", ""+10);
+//		int maxWait = 60;
+//		if(maxWait > 0)
+//		{
+//			maxWait = maxWait * 1000;
+//			values.put("maxWait", ""+maxWait);
+//		}
+//		else
+//			values.put("maxWait", ""+60000);
+//		boolean maximumSoft = false;
+//		values.put("maximumSoft", ""+maximumSoft);
+//		values.put("usepool", usepool+"");
+//		values.put("external", external+"");
+//		values.put("showsql", showsql+"");
+//		values.put("encryptdbinfo", encryptdbinfo+"");
+//		
+//		boolean testWhileidle = true;
+//		values.put("testWhileidle", testWhileidle+"");
+//		int shrinkBy = 5;
+//		values.put("shrinkBy", shrinkBy+"");
+//		
+//		int connectionTimeout = 36000000;
+//		values.put("connectionTimeout", connectionTimeout+"");
+//		int skimmerFrequency = 180000;
+//		values.put("skimmerFrequency", skimmerFrequency+"");
+//		boolean logAbandoned = true;
+//		values.put("logAbandoned", logAbandoned+"");
+//		/**
+//		 * Set max idle Times in seconds ,if exhaust this times the used connection object will be Abandoned removed if removeAbandoned is true.
+//		default value is 300 seconds.
+//		
+//		see removeAbandonedTimeout parameter in commons dbcp. 
+//		单位：秒
+//		 */
+//		int userTimeout = 300;
+//		values.put("userTimeout", userTimeout+"");
+//		boolean removeAbandoned = false;
+//		values.put("removeAbandoned", removeAbandoned+"");
+//		if(externaljndiName != null && !externaljndiName.equals(""))
+//			values.put("externaljndiName", externaljndiName);
+//		if(queryfetchsize > 0)
+//			values.put("queryfetchsize", queryfetchsize+"");
+//		PoolManBootstrap.startFromTemplte(values);
+	}
+	
+	
+	public static void startPool(TempConf temConf)
+	{
+		JDBCPool pool = SQLUtil.getSQLManager().getPoolIfExist(temConf.getPoolname());
+		if(pool != null)
 		{
-			values.put("dbname_datasource_jndiname", jndiName);
+			if(pool.getStatus().equals("start"))
+			{
+				log.debug("连接池[" + temConf.getPoolname() + "]已经启动。无需再启动,或者请停止后再启动.");
+				return;
+			}
+				
+		}
+		
+		
+		if(temConf.getTxIsolationLevel() == null)
+			temConf.setTxIsolationLevel("");
+		Map<String,String> values = new HashMap<String,String>();
+		values.put("dbname", temConf.getPoolname());
+		if(temConf.getJndiName() != null && !temConf.getJndiName().equals(""))
+		{
+			values.put("dbname_datasource_jndiname", temConf.getJndiName());
 			values.put("enablejta", "true");
 		}
 		else
 		{
 			values.put("dbname_datasource_jndiname", "");
 		}
-		values.put("driver", driver);
-		values.put("jdbcurl", jdbcurl);
-		if(username == null) username="";
-		values.put("username", username);
-		if(password == null) password="";
-		values.put("password", password);
+		values.put("driver", temConf.getDriver());
+		values.put("jdbcurl", temConf.getJdbcurl());
+		if(temConf.getUsername() == null) 
+			values.put("username", "");
+		else
+			values.put("username", temConf.getUsername());
+			
+		if(temConf.getPassword() == null) 
+			values.put("password", "");
+		else
+			values.put("password", temConf.getPassword());
 		boolean cachequerymetadata = true;
 		values.put("cachequerymetadata", cachequerymetadata+"");
-		values.put("readOnly", readOnly);
-		if(txIsolationLevel != null && !txIsolationLevel.equals(""))
-			values.put("txIsolationLevel", txIsolationLevel);
+		if(temConf.getReadOnly() == null)			
+			values.put("readOnly", "");
+		else
+			values.put("readOnly", temConf.getReadOnly());
+		if(temConf.getTxIsolationLevel() != null )			
+			values.put("txIsolationLevel", temConf.getTxIsolationLevel());
 		else
 			values.put("txIsolationLevel", "");
-		if(validationQuery != null && !validationQuery.equals(""))
-			values.put("validationQuery", validationQuery);
+		
+		if(temConf.getValidationQuery() != null )
+			values.put("validationQuery", temConf.getValidationQuery());
 		else
 			values.put("validationQuery", "");
 		
-		
-		if(initialConnections >= 0)
-			values.put("initialConnections", ""+initialConnections);
+		if(temConf.getInitialConnections() >= 0)
+			values.put("initialConnections", ""+temConf.getInitialConnections());
 		else
 			values.put("initialConnections", ""+2);
-		if(minimumSize >= 0)
-			values.put("minimumSize", ""+minimumSize);
+		if(temConf.getMinimumSize() >= 0)
+			values.put("minimumSize", ""+temConf.getMinimumSize());
 		else
 			values.put("minimumSize", ""+2);
-		if(maximumSize > 0)
-			values.put("maximumSize", ""+maximumSize);
+		if(temConf.getMaximumSize() > 0)
+			values.put("maximumSize", ""+temConf.getMaximumSize());
 		else
 			values.put("maximumSize", ""+10);
+		
 		int maxWait = 60;
 		if(maxWait > 0)
 		{
@@ -765,10 +1058,10 @@ public class SQLManager extends PoolManager{
 			values.put("maxWait", ""+60000);
 		boolean maximumSoft = false;
 		values.put("maximumSoft", ""+maximumSoft);
-		values.put("usepool", usepool+"");
-		values.put("external", external+"");
-		values.put("showsql", showsql+"");
-		values.put("encryptdbinfo", encryptdbinfo+"");
+		values.put("usepool", temConf.isUsepool()+"");
+		values.put("external", temConf.isExternal()+"");
+		values.put("showsql", temConf.isShowsql()+"");
+		values.put("encryptdbinfo", temConf.isEncryptdbinfo()+"");
 		
 		boolean testWhileidle = true;
 		values.put("testWhileidle", testWhileidle+"");
@@ -792,8 +1085,10 @@ public class SQLManager extends PoolManager{
 		values.put("userTimeout", userTimeout+"");
 		boolean removeAbandoned = false;
 		values.put("removeAbandoned", removeAbandoned+"");
-		if(externaljndiName != null && !externaljndiName.equals(""))
-			values.put("externaljndiName", externaljndiName);
+		if(temConf.getExternaljndiName() != null && !temConf.getExternaljndiName().equals(""))
+			values.put("externaljndiName", temConf.getExternaljndiName());
+		if(temConf.getQueryfetchsize() > 0)
+			values.put("queryfetchsize", temConf.getQueryfetchsize()+"");
 		PoolManBootstrap.startFromTemplte(values);
 	}
 	

@@ -1611,6 +1611,14 @@ public class SQLUtil{
         {
         	SQLManager.startPool(  poolname,  driver,  jdbcurl,  username,  password,  validationQuery);
         }
+        public static void startPool(String poolname,String driver,String jdbcurl,String username,String password,String validationQuery,int fetchsize)
+        {
+        	SQLManager.startPool(  poolname,  driver,  jdbcurl,  username,  password,  validationQuery,fetchsize);
+        }
+        public static void startNoPool(String poolname,String driver,String jdbcurl,String username,String password,String validationQuery,int fetchsize)
+        {
+        	SQLManager.startNoPool(  poolname,  driver,  jdbcurl,  username,  password,  validationQuery, fetchsize);
+        }
         
         public static void startNoPool(String poolname,String driver,String jdbcurl,String username,String password,String validationQuery)
         {
@@ -1651,6 +1659,34 @@ public class SQLUtil{
             		 usepool,
             		  external,
             		 externaljndiName ,showsql , encryptdbinfo      		
+            		);
+    	}
+        
+        
+        public static void startPool(String poolname,String driver,String jdbcurl,String username,String password,
+        		String readOnly,
+        		String txIsolationLevel,
+        		String validationQuery,
+        		String jndiName,   
+        		int initialConnections,
+        		int minimumSize,
+        		int maximumSize,
+        		boolean usepool,
+        		boolean  external,
+        		String externaljndiName        ,boolean showsql		,boolean encryptdbinfo,int fetchsize
+        		)
+    	{
+        	SQLManager.startPool( poolname, driver, jdbcurl, username, password,
+            		 readOnly,
+            		 txIsolationLevel,
+            		 validationQuery,
+            		 jndiName,   
+            		 initialConnections,
+            		 minimumSize,
+            		 maximumSize,
+            		 usepool,
+            		  external,
+            		 externaljndiName ,showsql , encryptdbinfo      		,fetchsize
             		);
     	}
         

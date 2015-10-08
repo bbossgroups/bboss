@@ -1442,7 +1442,7 @@ public class PreparedDBUtil extends DBUtil {
 				{
 					log.debug("Execute JDBC prepared query statement:"+stmtInfo.getSql());
 				}
-				statement = stmtInfo.prepareStatement();
+				statement = stmtInfo.prepareQueryStatement();
 			}
 		
 			

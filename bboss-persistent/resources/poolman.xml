@@ -35,7 +35,7 @@
     
     <minimumSize>2</minimumSize>
     <maximumSize>10</maximumSize>
-	
+	<queryfetchsize>10000</queryfetchsize>
     
     <!-- 
     是否检测超时链接（事务超时链接）

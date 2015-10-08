@@ -208,12 +208,35 @@ public class StatementInfo {
 	}
 
 	public PreparedStatement prepareStatement() throws SQLException {
+//		PreparedStatement pstmt = this.con.prepareStatement(this.sql,this.getScrollType(dbname),this.getCursorType(dbname));
+//		this.statements.add(pstmt);
+//		return pstmt;
+		return _prepareStatement(false);
+	}
+	
+	private PreparedStatement _prepareStatement(boolean isquery) throws SQLException {
 		PreparedStatement pstmt = this.con.prepareStatement(this.sql,this.getScrollType(dbname),this.getCursorType(dbname));
+		if(isquery)
+		{
+			int fetchsize = this.pool.getJDBCPoolMetadata().getQueryfetchsize();
+			if(fetchsize > 0)
+				pstmt.setFetchSize(fetchsize);
+		}
 		this.statements.add(pstmt);
 		return pstmt;
 	}
+	
+	public PreparedStatement prepareQueryStatement() throws SQLException {
+//		PreparedStatement pstmt = this.con.prepareStatement(this.sql,this.getScrollType(dbname),this.getCursorType(dbname));
+//		int fetchsize = this.pool.getJDBCPoolMetadata().getQueryfetchsize();
+//		if(fetchsize > 0)
+//			pstmt.setFetchSize(fetchsize);
+//		this.statements.add(pstmt);
+//		return pstmt;
+		return _prepareStatement(true);
+	}
 
-	public PreparedStatement prepareStatement(String sql) throws SQLException {
+	private PreparedStatement _prepareStatement(String sql,boolean isquery) throws SQLException {
 		/**
 		 * must be removed.
 		 */
@@ -221,8 +244,26 @@ public class StatementInfo {
 			dbname = SQLManager.getInstance().getDefaultDBName();
 		sql = this.interceptorInf.convertSQL(sql, this.dbadapter.getDBTYPE(), dbname);
 		PreparedStatement pstmt = this.con.prepareStatement(sql,this.getScrollType(dbname),this.getCursorType(dbname));
+		if(isquery)
+		{
+			int fetchsize = this.pool.getJDBCPoolMetadata().getQueryfetchsize();
+			if(fetchsize > 0)
+				pstmt.setFetchSize(fetchsize);
+		}
 		this.statements.add(pstmt);
 		return pstmt;
+	}
+	public PreparedStatement prepareStatement(String sql) throws SQLException {
+//		/**
+//		 * must be removed.
+//		 */
+//		if(dbname == null)
+//			dbname = SQLManager.getInstance().getDefaultDBName();
+//		sql = this.interceptorInf.convertSQL(sql, this.dbadapter.getDBTYPE(), dbname);
+//		PreparedStatement pstmt = this.con.prepareStatement(sql,this.getScrollType(dbname),this.getCursorType(dbname));
+//		this.statements.add(pstmt);
+//		return pstmt;
+		return _prepareStatement(sql,false);
 	}
 	
 	public PreparedStatement prepareStatement(String sql,boolean getgenkeys) throws SQLException {
@@ -271,7 +312,7 @@ public class StatementInfo {
 			paginesql = getDBPagineSqlForOracle(true);
 		}
 		
-		return prepareStatement(paginesql.getSql());
+		return _prepareStatement(paginesql.getSql(),true);
 
 	}
 
