@@ -137,10 +137,23 @@ public class FileMessageConvertor<T> implements HttpMessageConverter<T>
 				}
 				else
 				{
-					if(!fb.isFile())
+//					if(!fb.isFile())
+//						StringUtil.showFile(inputMessage.getServletRequest(), outputMessage.getResponse(), fb.getFileName(),fb.getData());
+//					else
+//						StringUtil.showFile(inputMessage.getServletRequest(), outputMessage.getResponse(), fb.getFileData());
+					
+					if(fb.isBlob())
 						StringUtil.showFile(inputMessage.getServletRequest(), outputMessage.getResponse(), fb.getFileName(),fb.getData());
-					else
+					else if(fb.isStream())
+					{
+						StringUtil.showFile(inputMessage.getServletRequest(), outputMessage.getResponse(), fb.getFileName(),fb.getInputStream());
+					}
+					else if(fb.isFile())
+					{
 						StringUtil.showFile(inputMessage.getServletRequest(), outputMessage.getResponse(), fb.getFileData());
+					}
+					else
+						StringUtil.showFile(inputMessage.getServletRequest(), outputMessage.getResponse(), fb.getFileName(),fb.getData());
 				}
 			}
 			catch (Exception e)

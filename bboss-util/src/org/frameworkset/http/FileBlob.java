@@ -16,7 +16,10 @@
 package org.frameworkset.http;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.sql.Blob;
 
 
@@ -67,6 +70,27 @@ public class FileBlob
 		super();
 		this.fileName = fileName;
 		this.data = data;
+		dataType = 2;
+	}
+	public FileBlob(String fileName, java.net.URL data)
+	{
+
+		super();
+		this.fileName = fileName;
+		this.data = data;
+		dataType = 2;
+	}
+	
+	public FileBlob(String fileName, String url)
+	{
+
+		super();
+		this.fileName = fileName;
+		try {
+			this.data = new java.net.URL(url);
+		} catch (MalformedURLException e) {
+			throw new java.lang.RuntimeException(e);
+		}
 		dataType = 2;
 	}
 	public FileBlob( File data,int rendtype)
@@ -139,7 +163,18 @@ public class FileBlob
 	public InputStream getInputStream()
 	{
 	
-		return (InputStream)data;
+		if(data instanceof InputStream)
+			return (InputStream)data;
+		else 
+		{
+			URL url = (URL)data;
+			try {
+				return url.openStream();
+			} catch (IOException e) {
+				throw new java.lang.RuntimeException(e);
+			}
+		}
+			
 	}
 	
 	
