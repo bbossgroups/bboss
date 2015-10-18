@@ -346,7 +346,7 @@
 			</sequential>
 		</for>
 		
-		<for list="${bigdata-rt-lib},${bigdatamonitor-rt-lib},${genproject-rt-lib}" param="destdir">
+		<for list="${bigdata-rt-lib},${bigdatamonitor-rt-lib},${genproject-rt-lib},${bboss-gencode-rt-lib}" param="destdir">
 					<sequential>
 						<echo>@{destdir}-------------------------------</echo>
 						<antcall target="svn-update-procedure">
