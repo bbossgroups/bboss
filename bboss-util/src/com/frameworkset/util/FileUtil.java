@@ -68,6 +68,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
+import java.util.zip.ZipOutputStream;
 
 public class FileUtil 
 {
@@ -1521,5 +1522,155 @@ public class FileUtil
     // {
     // cat = Category.getInstance(com.pow2.util.FileUtil.class);
     // }
+    private static void zipFile(File source, String basePath, ZipOutputStream zos) throws IOException {
+		File[] files = null;
+		if (source.isDirectory()) {
+			files = source.listFiles();
+		} else {
+			files = new File[1];
+			files[0] = source;
+		}
 
+		
+		String pathName;
+		byte[] buf = new byte[1024];
+		int length = 0;
+		try {
+			for (File file : files) {
+				if (file.isDirectory()) {
+					pathName = file.getPath().substring(basePath.length() + 1) + "/";
+					zos.putNextEntry(new ZipEntry(pathName));
+					zipFile(file, basePath, zos);
+				} else {
+					pathName = file.getPath().substring(basePath.length() + 1);
+					
+					BufferedInputStream bis = null;
+					InputStream is = null;
+					try
+					{
+						is = new FileInputStream(file);
+						bis = new BufferedInputStream(is);
+						zos.putNextEntry(new ZipEntry(pathName));
+						while ((length = bis.read(buf)) > 0) {
+							zos.write(buf, 0, length);
+						}
+					}
+					finally
+					{
+						if (is != null) {
+							try {
+								is.close();
+							} catch (Exception e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						}
+						if (bis != null) {
+							try {
+								bis.close();
+							} catch (Exception e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						}
+					}
+				}
+			}
+		} finally {
+			
+		}
+
+	}
+    public static File zip(File f,File destfile)
+    {
+    	java.io.BufferedOutputStream out = null;
+		ZipOutputStream zipOut = null;
+		try {
+			 
+			out = new BufferedOutputStream(new FileOutputStream(
+					destfile));
+
+			zipOut = new ZipOutputStream(out);
+
+			String basePath;
+
+			if(f.isDirectory())
+				basePath = f.getPath();
+			else
+				basePath = f.getParent();
+
+			zipFile(f, basePath, zipOut);
+			
+			return destfile;
+
+		} catch (IOException e) {
+			 
+			return null;
+		}
+		finally
+		{
+			if(zipOut != null)
+				try {
+					zipOut.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			
+			if(out != null)
+				try {
+					out.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		}
+    }
+    public static File zip(File f,String destfile)
+    {
+    	java.io.BufferedOutputStream out = null;
+		ZipOutputStream zipOut = null;
+		try {
+			File ret = new File(destfile);
+			out = new BufferedOutputStream(new FileOutputStream(
+					ret));
+
+			zipOut = new ZipOutputStream(out);
+
+			String basePath;
+
+			if(f.isDirectory())
+				basePath = f.getPath();
+			else
+				basePath = f.getParent();
+
+			zipFile(f, basePath, zipOut);
+			
+			return ret;
+
+		} catch (IOException e) {
+			 
+			return null;
+		}
+		finally
+		{
+			if(zipOut != null)
+				try {
+					zipOut.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			
+			if(out != null)
+				try {
+					out.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		}
+
+	}
+    
 }
