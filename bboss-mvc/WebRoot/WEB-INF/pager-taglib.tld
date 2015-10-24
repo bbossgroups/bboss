@@ -509,6 +509,10 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>desc</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>width</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

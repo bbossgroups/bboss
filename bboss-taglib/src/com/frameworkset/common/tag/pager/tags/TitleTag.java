@@ -64,6 +64,7 @@ public class TitleTag  extends PagerTagSupport
 	private String titlecode = null;
 	
 	private boolean sort = false;
+	private String desc ;
 	private int colid = -1;
 
 
@@ -182,14 +183,14 @@ public class TitleTag  extends PagerTagSupport
                 {
 	                if(!pagerContext.ListMode())
 	                {
-	                    href = pagerContext.getOffsetUrl(pagerContext.getOffset(),sortKey,!pagerContext.getDesc());
+	                    href = pagerContext.getOffsetUrl(pagerContext.getOffset(),sortKey,!desc());
 	                    href = StringUtil.replace(href,"&","&amp;");
 	                }
 	
 	                else
 	                {
 	                    //href = pagerContext.hasParams()?"&":"?" + "sortKey=" + getSortKey(getColId());
-	                    href = pagerContext.getUrl(sortKey,!pagerContext.getDesc());
+	                    href = pagerContext.getUrl(sortKey,!desc());
 	                    href = StringUtil.replace(href,"&","&amp;");
 	                }
 	
@@ -227,14 +228,14 @@ public class TitleTag  extends PagerTagSupport
                 	if(!pagerContext.ListMode())
                 
 	                {
-	                    href = pagerContext.getOffsetUrl(pagerContext.getOffset(),sortKey,!pagerContext.getDesc());
+	                    href = pagerContext.getOffsetUrl(pagerContext.getOffset(),sortKey,!desc());
 	                    href = StringUtil.replace(href,"&","&amp;");
 	                }
 	
 	                else
 	                {
 	                    //href = pagerContext.hasParams()?"&":"?" + "sortKey=" + getSortKey(getColId());
-	                    href = pagerContext.getUrl(sortKey,!pagerContext.getDesc());
+	                    href = pagerContext.getUrl(sortKey,!desc());
 	                    href = StringUtil.replace(href,"&","&amp;");
 	                }
 	
@@ -253,6 +254,18 @@ public class TitleTag  extends PagerTagSupport
             td.setClass(this.getClassName());
         ret.append(td.toString());
         return ret.toString();
+    }
+    
+    private boolean desc()
+    {
+    	if(this.getDesc() == null || pagerContext.isDescfromrequest())
+    	{
+    		return pagerContext.getDesc();
+    	}
+    	else
+    	{
+    		return desc.equals("true");
+    	}
     }
     
     
@@ -305,10 +318,10 @@ public class TitleTag  extends PagerTagSupport
 				{
 					if( !pagerContext.ListMode())
 					{
-						href = pagerContext.getOffsetUrl(pagerContext.getOffset(),sortKey,!pagerContext.getDesc());
+						href = pagerContext.getOffsetUrl(pagerContext.getOffset(),sortKey,!desc());
 						if(pagerContext.getForm() != null)
 							href = pagerContext.getCustomUrl(pagerContext.getForm(),
-									pagerContext.getQueryString(pagerContext.getOffset(),sortKey,!pagerContext.getDesc()),
+									pagerContext.getQueryString(pagerContext.getOffset(),sortKey,!desc()),
 														 pagerContext.getPromotion(),
 														 href,pagerContext.getId());
 					}
@@ -316,10 +329,10 @@ public class TitleTag  extends PagerTagSupport
 					else
 					{
 						//href = pagerContext.hasParams()?"&":"?" + "sortKey=" + getSortKey(getColId());
-						href = pagerContext.getUrl(sortKey,!pagerContext.getDesc());
+						href = pagerContext.getUrl(sortKey,!desc());
 						if(pagerContext.getForm() != null)
 							href = pagerContext.getCustomUrl(pagerContext.getForm(),
-														 pagerContext.getQueryString(sortKey,!pagerContext.getDesc()),
+														 pagerContext.getQueryString(sortKey,!desc()),
 														 pagerContext.getPromotion(),
 														 href,pagerContext.getId());
 					}
@@ -341,10 +354,10 @@ public class TitleTag  extends PagerTagSupport
                        
                         td.addElement(a);
                         Span span = new Span();
-                        if(pagerContext.getDesc())
-   						 span.setClass("pg-sort-desc");
-   					 else
-   						 span.setClass("pg-sort-asc");
+                        if(desc())
+	   						 span.setClass("pg-sort-desc");
+	   					 else
+	   						 span.setClass("pg-sort-asc");
                         span.setTagText("&nbsp;");
                         td.addElement(span);
                     }
@@ -355,10 +368,10 @@ public class TitleTag  extends PagerTagSupport
                         a.setTagText( getTitle(getColid()) );
                         td.addElement(a);
                         Span span = new Span();
-                        if(pagerContext.getDesc())
-   						 span.setClass("pg-sort-desc");
-   					 else
-   						 span.setClass("pg-sort-asc");
+                        if(desc())
+   						 	span.setClass("pg-sort-desc");
+	   					else
+	   						span.setClass("pg-sort-asc");
                         span.setTagText("&nbsp;");
                         td.addElement(span);
                     }
@@ -391,10 +404,10 @@ public class TitleTag  extends PagerTagSupport
 				{
 					if(!pagerContext.ListMode())
 					{
-						href = pagerContext.getOffsetUrl(pagerContext.getOffset(),sortKey,!pagerContext.getDesc());
+						href = pagerContext.getOffsetUrl(pagerContext.getOffset(),sortKey,!desc());
 						if(pagerContext.getForm() != null)
 							href = pagerContext.getCustomUrl(pagerContext.getForm(),
-														 pagerContext.getQueryString(pagerContext.getOffset(),sortKey,!pagerContext.getDesc()),
+														 pagerContext.getQueryString(pagerContext.getOffset(),sortKey,!desc()),
 														 pagerContext.getPromotion(),
 														 href,pagerContext.getId());
 					}
@@ -402,10 +415,10 @@ public class TitleTag  extends PagerTagSupport
 					else
 					{
 						//href = pagerContext.hasParams()?"&":"?" + "sortKey=" + getSortKey(getColId());
-						href = pagerContext.getUrl(sortKey,!pagerContext.getDesc());
+						href = pagerContext.getUrl(sortKey,!desc());
 						if(pagerContext.getForm() != null)
 							href = pagerContext.getCustomUrl(pagerContext.getForm(),
-														 pagerContext.getQueryString(sortKey,!pagerContext.getDesc()),
+														 pagerContext.getQueryString(sortKey,!desc()),
 														 pagerContext.getPromotion(),
 														 href,pagerContext.getId());
 					}
@@ -426,7 +439,7 @@ public class TitleTag  extends PagerTagSupport
                         a.setTagText( title );
                         td.addElement(a);
                         Span span = new Span();
-                        if(pagerContext.getDesc())
+                        if(desc())
    						 span.setClass("pg-sort-desc");
    					 else
    						 span.setClass("pg-sort-asc");
@@ -440,7 +453,7 @@ public class TitleTag  extends PagerTagSupport
                         a.setTagText( title );
                         td.addElement(a);
                         Span span = new Span();
-                        if(pagerContext.getDesc())
+                        if(desc())
    						 span.setClass("pg-sort-desc");
    					 else
    						 span.setClass("pg-sort-asc");
@@ -518,10 +531,10 @@ public class TitleTag  extends PagerTagSupport
 				{
 					if( !pagerContext.ListMode())
 					{
-						href = pagerContext.getOffsetUrl(pagerContext.getOffset(),sortKey,!pagerContext.getDesc());
+						href = pagerContext.getOffsetUrl(pagerContext.getOffset(),sortKey,!desc());
 						if(pagerContext.getForm() != null)
 							href = pagerContext.getCustomUrl(pagerContext.getForm(),
-									pagerContext.getQueryString(pagerContext.getOffset(),sortKey,!pagerContext.getDesc()),
+									pagerContext.getQueryString(pagerContext.getOffset(),sortKey,!desc()),
 														 pagerContext.getPromotion(),
 														 href,pagerContext.getId());
 					}
@@ -529,10 +542,10 @@ public class TitleTag  extends PagerTagSupport
 					else
 					{
 						//href = pagerContext.hasParams()?"&":"?" + "sortKey=" + getSortKey(getColId());
-						href = pagerContext.getUrl(sortKey,!pagerContext.getDesc());
+						href = pagerContext.getUrl(sortKey,!desc());
 						if(pagerContext.getForm() != null)
 							href = pagerContext.getCustomUrl(pagerContext.getForm(),
-														 pagerContext.getQueryString(sortKey,!pagerContext.getDesc()),
+														 pagerContext.getQueryString(sortKey,!desc()),
 														 pagerContext.getPromotion(),
 														 href,pagerContext.getId());
 					}
@@ -553,7 +566,7 @@ public class TitleTag  extends PagerTagSupport
     					a.setTagText( getTitle(getColid()) );
     					td.addElement(a);
     					 Span span = new Span();
-    					 if(pagerContext.getDesc())
+    					 if(desc())
     						 span.setClass("pg-sort-desc");
     					 else
     						 span.setClass("pg-sort-asc");
@@ -567,7 +580,7 @@ public class TitleTag  extends PagerTagSupport
                         a.setTagText( getTitle(getColid()) );
                         td.addElement(a);
                         Span span = new Span();
-                        if(pagerContext.getDesc())
+                        if(desc())
    						 span.setClass("pg-sort-desc");
    					 else
    						 span.setClass("pg-sort-asc");
@@ -599,10 +612,10 @@ public class TitleTag  extends PagerTagSupport
 				{
 					if(!pagerContext.ListMode())
 					{
-						href = pagerContext.getOffsetUrl(pagerContext.getOffset(),sortKey,!pagerContext.getDesc());
+						href = pagerContext.getOffsetUrl(pagerContext.getOffset(),sortKey,!desc());
 						if(pagerContext.getForm() != null)
 							href = pagerContext.getCustomUrl(pagerContext.getForm(),
-														 pagerContext.getQueryString(pagerContext.getOffset(),sortKey,!pagerContext.getDesc()),
+														 pagerContext.getQueryString(pagerContext.getOffset(),sortKey,!desc()),
 														 pagerContext.getPromotion(),
 														 href,pagerContext.getId());
 					}
@@ -610,10 +623,10 @@ public class TitleTag  extends PagerTagSupport
 					else
 					{
 						//href = pagerContext.hasParams()?"&":"?" + "sortKey=" + getSortKey(getColId());
-						href = pagerContext.getUrl(sortKey,!pagerContext.getDesc());
+						href = pagerContext.getUrl(sortKey,!desc());
 						if(pagerContext.getForm() != null)
 							href = pagerContext.getCustomUrl(pagerContext.getForm(),
-														 pagerContext.getQueryString(sortKey,!pagerContext.getDesc()),
+														 pagerContext.getQueryString(sortKey,!desc()),
 														 pagerContext.getPromotion(),
 														 href,pagerContext.getId());
 					}
@@ -634,7 +647,7 @@ public class TitleTag  extends PagerTagSupport
                         a.setTagText( title );
                         td.addElement(a);
                         Span span = new Span();
-                        if(pagerContext.getDesc())
+                        if(desc())
    						 span.setClass("pg-sort-desc");
    					 else
    						 span.setClass("pg-sort-asc");
@@ -648,7 +661,7 @@ public class TitleTag  extends PagerTagSupport
                         a.setTagText( title );
                         td.addElement(a);
                         Span span = new Span();
-                        if(pagerContext.getDesc())
+                        if(desc())
    						 span.setClass("pg-sort-desc");
    					 else
    						 span.setClass("pg-sort-asc");
@@ -903,6 +916,13 @@ public class TitleTag  extends PagerTagSupport
 		type = "th";
 		this.pagerContext = null;
 		this.fieldHelper = null;
+		this.desc = null;
 		super.doFinally();
+	}
+	public String getDesc() {
+		return desc;
+	}
+	public void setDesc(String desc) {
+		this.desc = desc;
 	}
 }

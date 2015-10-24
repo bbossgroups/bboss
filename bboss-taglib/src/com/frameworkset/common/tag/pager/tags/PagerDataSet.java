@@ -2413,10 +2413,14 @@ public class PagerDataSet extends PagerTagSupport {
 
 		String t_desc = request.getParameter(desc_key);
 		boolean desc = false;
-		if (t_desc != null && t_desc.equals("false"))
-			desc = false;
-		else if (t_desc != null && t_desc.equals("true"))
-			desc = true;
+		if(t_desc != null)
+		{
+			if (t_desc.equals("false"))
+				desc = false;
+			else if (t_desc.equals("true"))
+				desc = true;
+			pagerContext.setDescfromrequest(true);
+		}
 
 		pagerContext.setDesc(desc);
 		// 设置排序关键字，首先通过request.getParameter获取

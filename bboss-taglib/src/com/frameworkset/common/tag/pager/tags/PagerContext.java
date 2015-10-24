@@ -147,7 +147,7 @@ public class PagerContext
 	private long offset = 0;
 
 	private long itemCount = 0;
-
+	private boolean descfromrequest = false;
 	private boolean desc = true;
 
 	private String sortKey = null;
@@ -2224,5 +2224,13 @@ public class PagerContext
 
 	public void setMore(boolean more) {
 		this.more = more;
+	}
+
+	public boolean isDescfromrequest() {
+		return descfromrequest;
+	}
+
+	public void setDescfromrequest(boolean descfromrequest) {
+		this.descfromrequest = descfromrequest;
 	}
 }
