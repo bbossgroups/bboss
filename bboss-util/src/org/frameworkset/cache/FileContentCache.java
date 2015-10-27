@@ -16,28 +16,36 @@ public class FileContentCache
 {
 	private static Logger log = Logger.getLogger(FileContentCache.class);
 	private Map<String,String> democontentCache = new HashMap<String,String>();	
-	private String _getFileContent(String path,String charset,boolean convertHtmlTag)
+	public static final int HTMLNoBREncode  = 0;
+	public static final int HTMLEncode  = 1;
+	public static final int PLAINEncode  = 2;
+	public static final int HTMLEncodej  = 3;
+	private String _getFileContent(String path,String charset,int encodeType)
 	{
 		String content = "";
 		try
 		{
-			if(convertHtmlTag)
+			if(encodeType == HTMLNoBREncode)
 				content = StringUtil.HTMLNoBREncode(FileUtil.getFileContent(path,charset));
-			else
+			else if(encodeType == HTMLEncode)
+				content = StringUtil.HTMLEncode(FileUtil.getFileContent(path,charset));
+			else  if(encodeType == HTMLEncodej)
+				content = StringUtil.HTMLEncodej(FileUtil.getFileContent(path,charset));
+			else				
 				content = FileUtil.getFileContent(path,charset);
 		}
 		catch (IOException e)
 		{
-			log.error("Get File Content Error:path="+path+",charset="+charset+",convertHtmlTag="+convertHtmlTag,e);
+			log.error("Get File Content Error:path="+path+",charset="+charset+",convertHtmlTag="+encodeType,e);
 		}
 		return content;
 	}
 	
 	private Object lock = new Object();
-	public String getFileContent(String path,String charset,boolean convertHtmlTag)
+	public String getFileContent(String path,String charset,int encodeType)
 	{
 		
-		String key = path + "|" + charset + "|" + convertHtmlTag;
+		String key = path + "|" + charset + "|" + encodeType;
 		String content = democontentCache.get(key);
 		if(content != null)
 			return content;
@@ -48,7 +56,7 @@ public class FileContentCache
 				content = democontentCache.get(key);
 				if(content != null)
 					return content;
-				content = _getFileContent(path,charset,convertHtmlTag);
+				content = _getFileContent(path,charset, encodeType);
 				democontentCache.put(key, content);
 				damon.addFile(path, new ResourceCacheRefresh(key ));
 			}			
