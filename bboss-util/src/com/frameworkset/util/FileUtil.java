@@ -70,8 +70,12 @@ import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 
+import org.apache.log4j.Logger;
+import org.frameworkset.cache.FileContentCache;
+
 public class FileUtil 
 {
+	private static Logger log = Logger.getLogger(FileContentCache.class);
 	private static final ListResourceBundle mimeTypes = new FileMIMETypes();
 	public static final String apppath;
 	static{
@@ -556,12 +560,12 @@ public class FileUtil
         }
         catch (FileNotFoundException e)
         {
-            e.printStackTrace();
+           log.error("Get File Content Error:", e);
             return "";
         }
         catch (IOException e)
         {
-            e.printStackTrace();
+        	log.error("Get File Content Error:", e);
             throw e;
         }
         finally

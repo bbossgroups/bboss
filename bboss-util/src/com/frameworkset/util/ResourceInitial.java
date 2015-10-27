@@ -1,7 +1,5 @@
 package com.frameworkset.util;
 
-import java.io.Serializable;
-
 /**
  * <p>Title: </p>
  *
@@ -14,7 +12,7 @@ import java.io.Serializable;
  * @author biaoping.yin
  * @version 1.0
  */
-public interface ResourceInitial extends Serializable{
+public interface ResourceInitial{
     public void reinit();
     
     //public void destroy(); 
