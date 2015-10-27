@@ -2,3 +2,5 @@ distrib
 /distrib
 /distrib
 /classes
+/build.log
+/common-mvc.log

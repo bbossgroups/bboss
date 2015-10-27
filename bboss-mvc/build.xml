@@ -2,9 +2,9 @@
 
 <!-- $Id: build.xml,v 1.0.7 2009/01/05 12:29:55 belaban Exp $ -->
 
-<project name="bboss aop" default="default" basedir=".">
+<project name="bboss mvc" default="default" basedir=".">
 	<description>
-		      bboss aop build file
+		      bboss mvc build file
 	</description>
 	<tstamp prefix="start" />
 
@@ -20,28 +20,26 @@
 		<echo>Init...</echo>
 
 		<tstamp />
-		<delete dir="${classes-bboss-aop}" />
-		<delete dir="${classes-bboss-aop-test}" />
-		<delete dir="${distrib}/WebRoot" />		
+		<delete dir="${classes-bboss-mvc}" />
+		 
+		 
 
 		<delete dir="${distrib}" />
-		<mkdir dir="${classes-bboss-aop}" />
-		<mkdir dir="${classes-bboss-aop-test}" />
-	
+		<mkdir dir="${classes-bboss-mvc}" />
+		 
 
 		<mkdir dir="${distrib}" />
-		<mkdir dir="${distrib}/test" />
-		<mkdir dir="${distrib}/WebRoot" />		
+	 
 
 
 	</target>
 	<target name="default" depends="complete" description="default = build distribution package" />
-	<path id="cp-bboss-aop">
+	<path id="cp-bboss-mvc">
 
 		<fileset dir="lib/" includes="*.jar *.zip" />		
 		<fileset dir="lib-compile/" includes="**/*.jar **/*.zip" />		
 		
-		<fileset dir="${webroot-lib}/" includes="**/*.jar **/*.zip" />		
+		 
 		<fileset dir="${distrib}" includes="**/*.jar **/*.zip" />
 
 	</path>
@@ -50,7 +48,7 @@
 		        Distribution jar package
 		       ==========================
 		  -->
-	<target name="distrib" depends="init,jar-bboss-mvc,jar-bboss-mvc-test,copy-resource,war-demo,copy-depends-liberary" description="copy jar file to distribution directory">
+	<target name="distrib" depends="init,jar-bboss-mvc,copy-depends-liberary" description="copy jar file to distribution directory">
 		<echo>Construct the distribution package...</echo>
 
 	</target>
@@ -58,20 +56,20 @@
 	<target name="compile-bboss-mvc" depends="init" description="compile the bboss-mvc source ">
 		<echo>compile the bboss-mvc source ...</echo>
 
-		<javac encoding="UTF-8" destdir="${classes-bboss-aop}" target="1.5" source="1.5" deprecation="true" debug="${debug}" optimize="${optimize}" memorymaximumsize="256M" fork="true" verbose="yes">
+		<javac encoding="UTF-8" destdir="${classes-bboss-mvc}" target="1.5" source="1.5" deprecation="true" debug="${debug}" optimize="${optimize}" memorymaximumsize="256M" fork="true" verbose="yes">
 			<src path="src" />
 			<src path="src-jarloaders" />
 		
-			<classpath refid="cp-bboss-aop" />
+			<classpath refid="cp-bboss-mvc" />
 		</javac>
 		
-		<copy todir="${classes-bboss-aop}">
+		<copy todir="${classes-bboss-mvc}">
 			<fileset dir="src" includes="org/frameworkset/web/servlet/DispatcherServlet.properties org/frameworkset/web/servlet/mime.types **/*.xml **/*.sql" />
 		</copy>
 	</target>
 	<target name="jar-bboss-mvc" depends="compile-bboss-mvc" description="generate the bboss-mvc library bboss-mvc.jar">
 		<echo>Generate the bboss-mvc library bboss-mvc.jar ...</echo>
-		<jar jarfile="${distrib}/bboss-mvc.jar" basedir="${classes-bboss-aop}" includes="**/*">
+		<jar jarfile="${distrib}/bboss-mvc.jar" basedir="${classes-bboss-mvc}" includes="**/*">
 			<manifest>
 
 				<attribute name="Implementation-Version" value="${impl.version}" />
@@ -85,10 +83,10 @@
 
 	</target>
 	
-	<target name="build-bboss-mvc" depends="jar-bboss-mvc,jar-bboss-mvc-test" description="generate the bboss-mvc library bboss-mvc.jar">
-		<delete dir="${classes-bboss-aop}" />
-		<delete dir="${classes-bboss-aop-test}" />
-		<delete dir="${distrib}/WebRoot/" />
+	<target name="build-bboss-mvc" depends="jar-bboss-mvc" description="generate the bboss-mvc library bboss-mvc.jar">
+		<delete dir="${classes-bboss-mvc}" />
+		 
+		 
 
 	</target>
 	
@@ -96,81 +94,16 @@
 	
 
 
-	<target name="compile-bboss-mvc-test" description="compile the bboss-mvc-test source ">
-		<echo>compile the bboss-mvc-test source ...</echo>
-		<javac encoding="UTF-8" destdir="${classes-bboss-aop-test}" target="1.5" source="1.5" deprecation="true" debug="${debug}" optimize="${optimize}" memorymaximumsize="256M" fork="true" verbose="yes">
-			<src path="test" />
-			<classpath refid="cp-bboss-aop" />
-		</javac>
-
-		<copy todir="${classes-bboss-aop-test}">
-			<fileset dir="test" includes="**/*.xml" />
-			
-		</copy>
-	</target>
-	<target name="jar-bboss-mvc-test" depends="compile-bboss-mvc-test" description="generate the bboss-mvc library bboss-mvc-test.jar">
-		<echo>Generate the bboss-mvc-test library bboss-mvc-test.jar ...</echo>
-		<jar jarfile="${distrib}/test/bboss-mvc-test.jar" basedir="${classes-bboss-aop-test}" includes="**/*">
-			<manifest>
-				<attribute name="Implementation-Version" value="${impl.version}" />
-				<attribute name="Specification-Version" value="${revision}" />
-				<attribute name="Implementation-Vendor" value="${impl.vendor}" />
-				<attribute name="Implementation-ProductID" value="${impl.productID}" />
-				<attribute name="Compile-Timestamp" value="${compile.timestamp}" />
-				<attribute name="Compile-User" value="${username}" />
-			</manifest>
-		</jar>
-
-	</target>
+ 
+ 
 	
 	
-	<target name="war-demo" depends="jar-bboss-mvc,jar-bboss-mvc-test" description="generate the bboss-mvc library bboss-mvc-test.jar">
-		<echo>Generate the bboss-mvc-test library bboss-mvc-test.jar ...</echo>
-		<echo>copy resource files ...</echo>
-		
-		<copy todir="${distrib}/WebRoot/WEB-INF/lib" overwrite="true">
-				<fileset dir="${distrib}" includes="*.jar"/>
-				<fileset dir="${distrib}/test" includes="*.jar"/>
-		</copy>
-		<copy todir="${distrib}/WebRoot" overwrite="true">
-			<fileset dir="${WebRoot}" includes="**/*" />
-		</copy>	
-		<copy todir="${distrib}/WebRoot/test" overwrite="true">
-			<fileset dir="test" includes="**/*" />
-		</copy>	
-		<delete dir="${distrib}/WebRoot/WEB-INF/classes" />	
-		<copy todir="${distrib}/WebRoot/WEB-INF/classes" overwrite="true">
-			<fileset dir="resources" includes="**/*"/>
-		</copy>		
-		<war destfile="distrib/bboss-mvc.war" webxml="${distrib}/WebRoot/WEB-INF/web.xml">
-		  <fileset dir="${distrib}/WebRoot/"/>
-			<manifest>
-							
-							<attribute name="Implementation-Version" value="${impl.version}" />
-							<attribute name="Specification-Version" value="${revision}" />
-							<attribute name="Implementation-Vendor" value="${impl.vendor}" />
-							<attribute name="Implementation-ProductID" value="${impl.productID}" />
-							<attribute name="Compile-Timestamp" value="${compile.timestamp}" />
-							<attribute name="Compile-User" value="${username}" />
-						</manifest>
-		  
-		</war>
-		
-		<delete dir="${distrib}/WebRoot" />		
-
-	</target>
 	
 	
 
 
 
-	<target name="copy-resource" description="copy resource files">
-		<echo>copy resource files ...</echo>
-		<copy todir="${distrib}/resources">
-			<fileset dir="resources" includes="**/*" />
-		</copy>
-
-	</target>
+	
 	<target name="copy-depends-liberary" description="copy depends liberarys">
 		<echo>copy depends liberarys ...</echo>
 		<copy todir="${distrib}/lib">
@@ -179,9 +112,9 @@
 
 	</target>
 	<target name="complete" depends="distrib" description="complete build project">
-		<delete dir="${classes-bboss-aop}" />
-		<delete dir="${classes-bboss-aop-test}" />
-		<delete dir="${distrib}/WebRoot/" />
+		<delete dir="${classes-bboss-mvc}" />
+		 
+		 
 		
 	</target>
 

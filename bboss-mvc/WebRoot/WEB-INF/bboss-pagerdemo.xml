@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding='UTF-8'?>
-<!-- 
-bboss-demo.xml
-描述：分页处理控制器demo
--->
-<properties>
-    <property name="/pager/*.html" class="org.frameworkset.spi.mvc.PaginController"/>
-</properties>

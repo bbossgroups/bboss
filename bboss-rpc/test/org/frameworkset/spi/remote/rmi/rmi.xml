@@ -1,5 +1,0 @@
-<properties>
-	<property name="rmi_service_test"
-		 rmi:address="rmi_service_test"
-		 class="org.frameworkset.spi.remote.rmi.RMIServiceTest"/>
-</properties>

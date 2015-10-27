@@ -7,3 +7,8 @@
 /security.log
 /apacheinstall.txt.bak
 /apacheinstall.txt
+/buildcore.log
+/security-web.log
+/build.xml.bak
+/build-bboss-rpc-only.bat.bak
+/build-bboss-security-web.bat.bak

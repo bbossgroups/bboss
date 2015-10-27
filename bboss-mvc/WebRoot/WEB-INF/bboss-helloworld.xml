@@ -1,7 +1,0 @@
-<properties>
-	<property name="/examples/*.page"
-		path:sayHello="/examples/hello"
-		path:listmap="/examples/listmap"
-		class="org.frameworkset.mvc.HelloWord">
-	</property>
-</properties>

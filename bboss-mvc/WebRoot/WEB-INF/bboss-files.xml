@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding='UTF-8'?>
-<!-- 
-bboss-files.xml
-描述：swfupload多文件上传示例
--->
-<properties>
-    <property name = "fileController" class="org.frameworkset.web.fileupload.FileController" singlable="true"></property>
-</properties>

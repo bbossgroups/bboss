@@ -1,8 +1,0 @@
-<properties>
-	
-	<property name="rmi_service_client_test" factory-class="org.frameworkset.spi.remote.rmi.RMIUtil" factory-method="lookupService">
-		<construction>
-			<property name="servicaddress" value="//localhost:1099/rmi_service_test"/>			
-		</construction>
-	</property>	
-</properties>

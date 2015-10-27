@@ -41,6 +41,7 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspTagException;
 
 import org.apache.log4j.Logger;
+import org.frameworkset.web.servlet.support.RequestContext;
 
 import com.frameworkset.common.poolman.SQLExecutor;
 import com.frameworkset.common.tag.BaseTag;
@@ -422,7 +423,7 @@ public class PagerTag extends BaseTag implements FieldHelper, PagerInfo {
 		else
 		{
 			pagerContext.setUrl(url);
-			cookieid = this.pagerContext.getId() == null ?PagerDataSet.COOKIE_PREFIX + baseUri :PagerDataSet.COOKIE_PREFIX + baseUri + "|" +this.pagerContext.getId();
+			cookieid = this.pagerContext.getId() == null ?RequestContext.COOKIE_PREFIX + baseUri :RequestContext.COOKIE_PREFIX + baseUri + "|" +this.pagerContext.getId();
 		
 			int defaultSize = PagerDataSet.consumeCookie(cookieid,maxPageItems,request,pagerContext);
 			pagerContext.setCustomMaxPageItems(maxPageItems);

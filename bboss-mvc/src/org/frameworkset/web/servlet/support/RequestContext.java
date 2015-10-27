@@ -22,6 +22,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -46,7 +47,6 @@ import org.frameworkset.web.ui.context.Theme;
 import org.frameworkset.web.util.UrlPathHelper;
 import org.frameworkset.web.util.WebUtils;
 
-import com.frameworkset.common.tag.pager.tags.PagerDataSet;
 import com.frameworkset.util.HtmlUtils;
 
 
@@ -834,13 +834,13 @@ public class RequestContext {
 //		return (String) request
 //		.getAttribute(org.frameworkset.web.servlet.HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE);
 	}
-	
+	public static final String COOKIE_PREFIX = "pager.";
 	public static String getPagerSizeCookieID(HttpServletRequest request,String paramNamePrefix)
 	{
 		String baseUri = RequestContext.getHandlerMappingPath(request);
 		String cookieid = paramNamePrefix == null ?
-				PagerDataSet.COOKIE_PREFIX + baseUri :
-					PagerDataSet.COOKIE_PREFIX + baseUri + "|" +paramNamePrefix;
+				COOKIE_PREFIX + baseUri :
+					COOKIE_PREFIX + baseUri + "|" +paramNamePrefix;
 		return cookieid;
 	}
 	
@@ -861,10 +861,52 @@ public class RequestContext {
 //			}
 //		}
 		int default_ = getCustomPageSize( defauleValue);
-		int defaultSize = PagerDataSet.consumeCookie(cookieid,default_,request,null);
+		int defaultSize =  consumeCookie(cookieid,default_,request,null);
 		
 		return defaultSize;
 	}
+	 public static  Cookie[] getPageCookies(HttpServletRequest request) {
+//			HttpServletRequest request = this.getHttpServletRequest();
+//	        HttpSession session = request.getSession(false);
+			Cookie[] cookies = request.getCookies();
+			if (null == cookies) {
+				cookies = new Cookie[0];
+			}
+			return cookies;
+		}
+	 public static  boolean isPagerCookie(final Cookie cookie) {
+			return 0 == cookie.getName().indexOf(COOKIE_PREFIX)	;
+		}
+	 
+	 public static  boolean isCookieForThisPagerTag(final Cookie cookie,String cookieid,String pageId) {
+			
+			if(pageId != null)
+				return cookie.getName().equals(cookieid);
+			else
+			{
+				return cookie.getName().equals(cookieid);
+			}
+		}
+	 public static int consumeCookie(String cookieid,int defaultsize,HttpServletRequest request,String pageId) {
+			
+			Cookie[] cookies = getPageCookies(request);
+			Cookie cookie;
+			
+			for (int i = 0; i < cookies.length; i++) {
+				cookie = cookies[i];
+				if (isPagerCookie(cookie)) {				
+					if (isCookieForThisPagerTag(cookie,cookieid,pageId)) {
+							try {
+								return Integer.parseInt(cookie.getValue());
+							} catch (Exception e) {
+								return defaultsize;
+							}
+						
+					}
+				}
+			}
+			return defaultsize;
+		}
 	
 	public static int getCustomPageSize(Object defauleValue)
 	{

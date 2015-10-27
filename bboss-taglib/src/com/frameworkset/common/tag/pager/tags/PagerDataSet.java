@@ -57,6 +57,7 @@ import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.Tag;
 
 import org.apache.log4j.Logger;
+import org.frameworkset.web.servlet.support.RequestContext;
 
 import com.frameworkset.common.poolman.SQLExecutor;
 import com.frameworkset.common.tag.exception.FormulaException;
@@ -2246,24 +2247,13 @@ public class PagerDataSet extends PagerTagSupport {
 		return dataSet;
 	}
     public static int consumeCookie(String cookieid,int defaultsize,HttpServletRequest request,PagerContext pagerContext) {
-		
-		Cookie[] cookies = getPageCookies(request);
-		Cookie cookie;
-		
-		for (int i = 0; i < cookies.length; i++) {
-			cookie = cookies[i];
-			if (isPagerCookie(cookie)) {				
-				if (isCookieForThisPagerTag(cookie,cookieid,pagerContext)) {
-						try {
-							return Integer.parseInt(cookie.getValue());
-						} catch (Exception e) {
-							return defaultsize;
-						}
-					
-				}
-			}
+    	if(pagerContext != null && pagerContext.getId() != null)
+    		return RequestContext.consumeCookie(  cookieid,  defaultsize,  request,pagerContext.getId());//return RequestContext.isCookieForThisPagerTag(cookie, cookieid, pagerContext.getId());
+		else
+		{
+			return RequestContext.consumeCookie(  cookieid,  defaultsize,  request,null);
 		}
-		return defaultsize;
+		
 	}
 	
 	
@@ -2273,24 +2263,21 @@ public class PagerDataSet extends PagerTagSupport {
     public static  Cookie[] getPageCookies(HttpServletRequest request) {
 //		HttpServletRequest request = this.getHttpServletRequest();
 //        HttpSession session = request.getSession(false);
-		Cookie[] cookies = request.getCookies();
-		if (null == cookies) {
-			cookies = new Cookie[0];
-		}
-		return cookies;
+		 
+		return RequestContext.getPageCookies(request);
 	}
-	public static final String COOKIE_PREFIX = "pager.";
+	
 	public static  boolean isPagerCookie(final Cookie cookie) {
-		return 0 == cookie.getName().indexOf(COOKIE_PREFIX)	;
+		return RequestContext.isPagerCookie(cookie)	;
 	}
 	
 	public static  boolean isCookieForThisPagerTag(final Cookie cookie,String cookieid,PagerContext pagerContext) {
 		
 		if(pagerContext != null && pagerContext.getId() != null)
-			return cookie.getName().equals(cookieid);
+			return RequestContext.isCookieForThisPagerTag(cookie, cookieid, pagerContext.getId());
 		else
 		{
-			return cookie.getName().equals(cookieid);
+			return RequestContext.isCookieForThisPagerTag(cookie, cookieid, null);
 		}
 	}
 	
@@ -2373,7 +2360,7 @@ public class PagerDataSet extends PagerTagSupport {
 		else
 		{
 			pagerContext.setUrl(url);
-			cookieid = this.pagerContext.getId() == null ?COOKIE_PREFIX + baseUri :COOKIE_PREFIX + baseUri + "|" +this.pagerContext.getId();
+			cookieid = this.pagerContext.getId() == null ?RequestContext.COOKIE_PREFIX + baseUri :RequestContext.COOKIE_PREFIX + baseUri + "|" +this.pagerContext.getId();
 		
 			int defaultSize = consumeCookie(cookieid,maxPageItems,request,pagerContext);
 			pagerContext.setMaxPageItems(defaultSize);

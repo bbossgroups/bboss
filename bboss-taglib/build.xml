@@ -42,6 +42,7 @@
 			<src path="src" />
 			<src path="test" />
 			<src path="src-cms" />
+			<src path="src-mvc" />
 			<classpath id="cp-bboss-taglib">
 
 				<fileset dir="lib/" includes="*.jar *.zip" />
