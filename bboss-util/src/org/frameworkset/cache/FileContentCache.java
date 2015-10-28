@@ -42,6 +42,17 @@ public class FileContentCache
 	}
 	
 	private Object lock = new Object();
+	/**
+	 * 
+	 * @param path
+	 * @param charset
+	 * @param encodeType 
+	 * 			FileContentCache.HTMLNoBREncode
+	 * 			FileContentCache.HTMLEncode
+	 * 			FileContentCache.PLAINEncode
+	 *	 		FileContentCache.HTMLEncodej
+	 * @return
+	 */
 	public String getFileContent(String path,String charset,int encodeType)
 	{
 		
@@ -96,6 +107,12 @@ public class FileContentCache
 
 
 
+	public void start(String name) throws Exception
+	{
+		damon = new DaemonThread(refreshInterval,"FileContentCache Refresh Monitor Worker for "+ name); 
+		damon.start();
+		
+	}
 	public void start() throws Exception
 	{
 		damon = new DaemonThread(refreshInterval,"FileContentCache Refresh Monitor Worker"); 

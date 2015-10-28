@@ -1086,18 +1086,27 @@
 						</if>
 					</then>
 				</if>
+				<echo>copy ${sourcedir} ${files} to ${filedir}</echo>
+				<copy todir="${filedir}" overwrite="true">
+					<fileset dir="${sourcedir}" includes="${files}" />
+				</copy>
 			</then>
 			<else>
-				<echo message="create dir ${filedir}" />
-				<mkdir dir="${filedir}" />
+				
 				<if>
 					<equals arg1="${update-svn}" arg2="true" />
 					<then>
+						<echo message="create dir ${filedir}" />
+						<mkdir dir="${filedir}" />
 						<svn failonerror="${failonerror}" username="${svnant.repository.user}"
 							password="${svnant.repository.passwd}">
 							<add dir="${filedir}" />
 							<commit dir="${filedir}" message="commit ${filedir} to svn" />
 						</svn>
+						<echo>copy ${sourcedir} ${files} to ${filedir}</echo>
+						<copy todir="${filedir}" overwrite="true">
+							<fileset dir="${sourcedir}" includes="${files}" />
+						</copy>
 					</then>
 				</if>
 			</else>
@@ -1148,12 +1157,13 @@
 						</if>
 					</sequential>
 				</for>
+				<echo>fixed conflicts,recopy ${sourcedir} ${files} to ${filedir}</echo>
+				<copy todir="${filedir}" overwrite="true">
+					<fileset dir="${sourcedir}" includes="${files}" />
+				</copy>
 			</then>
 		</if>
-		<echo>copy ${sourcedir} ${files} to ${filedir}</echo>
-		<copy todir="${filedir}" overwrite="true">
-			<fileset dir="${sourcedir}" includes="${files}" />
-		</copy>
+		
 		<if>
 			<equals arg1="${update-svn}" arg2="true" />
 			<then>
