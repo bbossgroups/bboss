@@ -459,10 +459,14 @@ public class PagerTag extends BaseTag implements FieldHelper, PagerInfo {
 		String desc_key = pagerContext.getKey("desc");
 
 		String t_desc = request.getParameter(desc_key);
-		if (t_desc != null && t_desc.equals("false"))
-			desc = false;
-		else if (t_desc != null && t_desc.equals("true"))
-			desc = true;
+		if(t_desc != null)
+		{
+			if (t_desc.equals("false"))
+				desc = false;
+			else if (t_desc.equals("true"))
+				desc = true;
+			pagerContext.setDescfromrequest(true);
+		}
 
 		pagerContext.setDesc(desc);
 		// 设置排序关键字，首先通过request.getParameter获取
