@@ -353,7 +353,7 @@ public abstract class AnnotationUtils {
 		int i = 0;
 		char c = ' ';
 		int end = path.length();
-		StringBuffer bu = new StringBuffer();
+		StringBuilder bu = new StringBuilder();
 		do
 		{
 			c = path.charAt(i);

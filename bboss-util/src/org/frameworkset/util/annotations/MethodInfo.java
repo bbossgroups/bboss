@@ -81,7 +81,7 @@ public class MethodInfo {
 	private HttpMethod[] requestMethods;
 	private String[] paths;
 	private String[] pathPattern;
-	private String[] pathVariables;
+	private PathVariableInfo[] pathVariables;
 	private Integer[] pathVariablePositions;
 	private boolean[] databind;
 	private String[] baseurls ;
@@ -300,7 +300,7 @@ public class MethodInfo {
 		int len = path.length();
 		int index = path.indexOf('/');
 		List<Integer> poses = new ArrayList<Integer>();
-		List<String> variables = new ArrayList<String>();
+		List<PathVariableInfo> variables = new ArrayList<PathVariableInfo>();
 		int count = -1;
 		while(index != -1)
 		{		
@@ -318,13 +318,87 @@ public class MethodInfo {
 		
 		if(poses.size() > 0)
 		{
-			this.pathVariables = SimpleStringUtil.toStringArray(variables);
+			
+			this.pathVariables = new PathVariableInfo[variables.size()];
+			for(int k = 0; k < variables.size(); k ++)
+			{
+				pathVariables[k] = variables.get(k);
+			}
+					
+					
 			this.pathVariablePositions = SimpleStringUtil.toIntArray(poses);
 		}
 		
 			
 		
 		
+	}
+	public static List<PathVariableInfo> parserPathdata(String path)
+	{
+//		if(path.startsWith("//"))
+//			path = path.substring(2);
+//		else if(path.startsWith("/"))
+//			path = path.substring(1);
+		List<String> datas = new ArrayList<String>();
+		List<Integer> poses = new ArrayList<Integer>();
+		List<PathVariableInfo> variables = new ArrayList<PathVariableInfo>();
+		int i = 0;
+		char c = ' ';
+		int end = path.length();
+		StringBuilder bu = new StringBuilder();
+		do
+		{
+			c = path.charAt(i);
+			if(c == '/')
+			{
+				if(bu.length() > 0)
+				{
+					datas.add(bu.toString());
+					bu.setLength(0);
+					
+				}
+				else 
+				{
+					if(i == end -1)
+					{
+//						datas.add("");
+					}
+					else if(i == 0){
+						
+					}						
+				}
+			}
+			else
+			{
+				bu.append(c);
+			}
+			i ++;
+			
+			
+			
+		}while(i < end);
+		if(bu.length() > 0)
+		{
+			datas.add(bu.toString());
+			bu = null;
+		}
+		for(int k = 0; k < datas.size(); k ++)
+		{
+			String data = datas.get(k);
+			if(data.charAt(0) == '{')
+			{
+				
+				int idx = data.lastIndexOf('}');
+				if(idx > 0)
+				{
+					poses.add(k);
+					String temp = data.substring(0, idx);
+					
+				}
+						
+			}
+		}
+		return null;
 	}
 	private String[] buildPathPattern()
 	{
@@ -818,7 +892,7 @@ public class MethodInfo {
 		return pathPattern;
 	}
 
-	public String[] getPathVariables() {
+	public PathVariableInfo[] getPathVariables() {
 		return pathVariables;
 	}
 
