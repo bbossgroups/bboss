@@ -392,20 +392,34 @@ public abstract class AnnotationUtils {
 	{
 		if(lookupPath == null || lookupPath.length() == 0)
 			return null;
-		if(method.getPathVariablePositions() == null || method.getPathVariablePositions().length == 0)
+		PathVariableInfo[] variables = method.getPathVariables();
+		if(variables == null || variables.length == 0)
 			return null;
 		List<String> datas = parserPathdata(lookupPath);
 //		int j = 0;
 //		if(lookupPath.startsWith("/") || lookupPath.startsWith("//"))
 //			j = 1;
 		Map retdatas = new HashMap();
-		Integer[] poses = method.getPathVariablePositions();
-		for(int i = 0; i < poses.length; i ++)
+//		Integer[] poses = method.getPathVariablePositions();
+		for(int i = 0; i < variables.length; i ++)
 		{
-			int pos = poses[i].intValue();
-			String key = method.getPathVariables()[i];
+			PathVariableInfo variable = variables[i];
+			int pos = variable.getPostion();
+			String key = variable.getVariable();
 			String value = datas.get(pos);
-			retdatas.put(key, value);
+			if(variable.getConstantstr() == null)
+			{
+				retdatas.put(key, value);
+			}
+			else
+			{
+				if(value.endsWith(variable.getConstantstr()))
+					retdatas.put(key, value.substring(0, value.length() - variable.getConstantstr().length()));
+				else
+				{
+					retdatas.put(key, value);
+				}
+			}
 		}
 		return retdatas;
 	}

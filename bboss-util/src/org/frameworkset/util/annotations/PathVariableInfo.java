@@ -13,6 +13,7 @@ public class PathVariableInfo implements java.io.Serializable{
 	private String variable;
 	private boolean last ;
 	private String constantstr;
+	private int postion;
 
 	public PathVariableInfo() {
 		// TODO Auto-generated constructor stub
@@ -40,6 +41,14 @@ public class PathVariableInfo implements java.io.Serializable{
 
 	public void setLast(boolean last) {
 		this.last = last;
+	}
+
+	public int getPostion() {
+		return postion;
+	}
+
+	public void setPostion(int postion) {
+		this.postion = postion;
 	}
 
 }
