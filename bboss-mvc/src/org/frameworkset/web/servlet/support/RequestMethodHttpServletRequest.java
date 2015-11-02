@@ -30,33 +30,53 @@ import org.frameworkset.util.annotations.HttpMethod;
  * @version 1.0
  */
 public class RequestMethodHttpServletRequest extends HttpServletRequestWrapper{
-
+	private boolean delegateGetMethod = true;
+	public static final String RequestMethod_PARAMETERNAME = "_org_fr_method_name";
+	public static final String RequestMethod_delete = "delete";
+	public static final String RequestMethod_put = "put";
+	public static final String RequestMethod_head = "head";
+	public static final String RequestMethod_options = "options";
+	public static final String RequestMethod_trace = "trace";
+	
+	
 	public RequestMethodHttpServletRequest(HttpServletRequest request) {
 		super(request);
 		
+
 	}
+	 
 	
 	public String getMethod()
 	{
-		String method = this.getParameter("_method");
+		if(!this.isDelegateGetMethod())
+		{
+			return super.getMethod();
+		}
+		String method = this.getParameter(RequestMethod_PARAMETERNAME);
 		if(method == null || method.equals("") )
 			return super.getMethod();
 		else
 		{
-			if(method.equals("delete"))
+			if(method.equals(RequestMethod_delete))
 				return HttpMethod.DELETE.toString();
-			else if(method.equals("put"))
+			else if(method.equals(RequestMethod_put))
 				return HttpMethod.PUT.toString();
-			else if(method.equals("head"))
+			else if(method.equals(RequestMethod_head))
 				return HttpMethod.HEAD.toString();
-			else if(method.equals("options"))
+			else if(method.equals(RequestMethod_options))
 				return HttpMethod.OPTIONS.toString();
-			else if(method.equals("trace"))
+			else if(method.equals(RequestMethod_trace))
 				return HttpMethod.TRACE.toString();
 			else
 				return HttpMethod.GET.toString();
 				
 		}
+	}
+	public boolean isDelegateGetMethod() {
+		return delegateGetMethod;
+	}
+	public void setDelegateGetMethod(boolean delegateGetMethod) {
+		this.delegateGetMethod = delegateGetMethod;
 	}
 
 }

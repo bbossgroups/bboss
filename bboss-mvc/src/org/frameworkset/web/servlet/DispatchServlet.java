@@ -50,7 +50,6 @@ import org.frameworkset.spi.support.LocaleContext;
 import org.frameworkset.spi.support.LocaleContextHolder;
 import org.frameworkset.spi.support.SimpleLocaleContext;
 import org.frameworkset.util.ClassUtils;
-import org.frameworkset.util.JdkVersion;
 import org.frameworkset.util.beans.BeansException;
 import org.frameworkset.util.io.ClassPathResource;
 import org.frameworkset.web.HttpRequestMethodNotSupportedException;
@@ -64,8 +63,10 @@ import org.frameworkset.web.servlet.context.WebApplicationContext;
 import org.frameworkset.web.servlet.handler.AbstractUrlHandlerMapping;
 import org.frameworkset.web.servlet.handler.HandlerMappingsTable;
 import org.frameworkset.web.servlet.handler.HandlerMeta;
+import org.frameworkset.web.servlet.handler.HandlerUrlMappingRegisterTable;
 import org.frameworkset.web.servlet.handler.HandlerUtils;
 import org.frameworkset.web.servlet.handler.PathURLNotSetException;
+import org.frameworkset.web.servlet.handler.annotations.DefaultAnnotationHandlerMapping;
 import org.frameworkset.web.servlet.i18n.DefaultLocaleResolver;
 import org.frameworkset.web.servlet.support.RequestContext;
 import org.frameworkset.web.servlet.support.RequestContextUtils;
@@ -262,7 +263,7 @@ public class DispatchServlet extends HttpServlet {
 	/** List of HandlerAdapters used by this servlet */
 	private List<HandlerInterceptor> gloabelHandlerInterceptors;
 	
-	/**��Ϣ��ʽת����*/
+ 
 	private  HttpMessageConverter[] messageConverters;	
 
 	
@@ -1493,16 +1494,23 @@ public class DispatchServlet extends HttpServlet {
 	 */
 	private void initHandlerMappings(BaseApplicationContext context) {
 		this.handlerMappings = null;
-		this.handlerMappings = (HandlerMappingsTable)context.getBeanObject(HANDLER_MAPPING_BEAN_NAME);
-		if (this.handlerMappings == null) {
-			List handlerMappings_ = getDefaultStrategies(context, HandlerMapping.class);
-			handlerMappings = (HandlerMappingsTable) context.createBean(HandlerMappingsTable.class);
-			initHandlerMappings(handlerMappings_);
-			handlerMappings.setHandlerMappings(handlerMappings_);
-			if (logger.isDebugEnabled()) {
-				logger.debug("No HandlerMappings found in servlet '" + getServletName() + "': using default");
-			}
-		}
+//		this.handlerMappings = (HandlerMappingsTable)context.getBeanObject(HANDLER_MAPPING_BEAN_NAME);
+//		if (this.handlerMappings == null) {
+//			List handlerMappings_ = getDefaultStrategies(context, HandlerMapping.class);
+//			handlerMappings = (HandlerMappingsTable) context.createBean(HandlerMappingsTable.class);
+//			initHandlerMappings(handlerMappings_);
+//			handlerMappings.setHandlerMappings(handlerMappings_);
+//			if (logger.isDebugEnabled()) {
+//				logger.debug("No HandlerMappings found in servlet '" + getServletName() + "': using default");
+//			}
+//		}
+		handlerMappings = (HandlerMappingsTable) context.createBean(HandlerMappingsTable.class);
+		 DefaultAnnotationHandlerMapping handlerMapping = (DefaultAnnotationHandlerMapping) context.createBean(DefaultAnnotationHandlerMapping.class);
+//		 @SuppressWarnings("unchecked")
+//		HandlerUrlMappingRegisterTable<String,HandlerMeta> registTable = (HandlerUrlMappingRegisterTable<String,HandlerMeta>) context.createBean(HandlerUrlMappingRegisterTable.class);
+//		 handlerMapping.setHandlerMap(registTable);
+		 _initHandlerMappings(handlerMapping);
+		 handlerMappings.setHandlerMapping(handlerMapping);
 ////			Map matchingBeans = BeanFactoryUtils.beansOfTypeIncludingAncestors(
 ////					context, HandlerMapping.class, true, false);
 ////			if (!matchingBeans.isEmpty()) {
@@ -1545,6 +1553,16 @@ public class DispatchServlet extends HttpServlet {
 					}
 				}
 		}
+	}
+	private void _initHandlerMappings(Object handler)
+	{
+		 
+			if(handler instanceof AbstractUrlHandlerMapping)
+			{
+				((AbstractUrlHandlerMapping)handler).setAlwaysUseFullPath(true);
+			}
+				 
+		 
 	}
 	
 	/**

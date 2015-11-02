@@ -426,8 +426,11 @@ public class MethodInfo {
 //			this.pathVariablePositions = SimpleStringUtil.toIntArray(poses);
 		}
 	}
-	
-	private String buildPathPattern(String baseurl,String mappedPath)
+	public static String buildPathPattern(String mappedPath)
+	{
+		return buildPathPattern(null,mappedPath);
+	}
+	public static String buildPathPattern(String baseurl,String mappedPath)
 	{
 		
 		StringBuilder pathUrl = new StringBuilder();

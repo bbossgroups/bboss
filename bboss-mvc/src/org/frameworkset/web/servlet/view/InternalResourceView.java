@@ -28,6 +28,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 import org.frameworkset.web.servlet.support.ContextExposingHttpServletRequest;
+import org.frameworkset.web.servlet.support.RequestMethodHttpServletRequest;
 import org.frameworkset.web.util.WebUtils;
 
 import com.frameworkset.util.StringUtil;
@@ -174,6 +175,10 @@ public class InternalResourceView  extends AbstractUrlBasedView {
 	protected void renderMergedOutputModel(
 			Map model, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
+		if(request instanceof RequestMethodHttpServletRequest)
+		{
+			((RequestMethodHttpServletRequest)request).setDelegateGetMethod(false);
+		}
 		// Determine which request handle to expose to the RequestDispatcher.
 		HttpServletRequest requestToExpose = getRequestToExpose(request);
 

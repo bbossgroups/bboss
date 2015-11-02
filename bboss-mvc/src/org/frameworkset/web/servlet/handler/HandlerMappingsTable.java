@@ -15,14 +15,10 @@
  */
 package org.frameworkset.web.servlet.handler;
 
-import java.util.Iterator;
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 import org.frameworkset.spi.DisposableBean;
-import org.frameworkset.web.servlet.DispatchServlet;
 import org.frameworkset.web.servlet.HandlerExecutionChain;
 import org.frameworkset.web.servlet.HandlerMapping;
 
@@ -36,38 +32,44 @@ import org.frameworkset.web.servlet.HandlerMapping;
  * @version 1.0
  */
 public class HandlerMappingsTable implements DisposableBean{
-	private List<HandlerMapping> handlerMappings;
+//	private List<HandlerMapping> handlerMappings;
+	HandlerMapping handlerMapping;
 	private static Logger logger = Logger.getLogger(HandlerMappingsTable.class);
 	private boolean scanAllMappings = true;
 
-	public List<HandlerMapping> getHandlerMappings() {
-		return handlerMappings;
+	public  HandlerMapping getHandlerMapping() {
+		return handlerMapping;
 	}
 
-	public void setHandlerMappings(List<HandlerMapping> handlerMappings) {
+	public void setHandlerMapping(HandlerMapping handlerMapping) {
 		
-		this.handlerMappings = handlerMappings;
+		this.handlerMapping = handlerMapping;
 	}
 	
 	public HandlerExecutionChain getHandler(HttpServletRequest request,String servletName) throws Exception
 	{
-		HandlerExecutionChain handler;
-		Iterator it = this.handlerMappings.iterator();
-		while (it.hasNext()) {
-			HandlerMapping hm = (HandlerMapping) it.next();
-			if (logger.isTraceEnabled()) {
-				logger.trace("Testing handler map [" + hm  + "] in DispatcherServlet with name '" +
-						servletName + "'");
-			}
-			handler = hm.getHandler(request);
-			if (handler != null) {
-				
-				return handler;
-			}
-			if(!this.scanAllMappings )
-				break;
+//		HandlerExecutionChain handler;
+//		Iterator it = this.handlerMappings.iterator();
+//		while (it.hasNext()) {
+//			HandlerMapping hm = (HandlerMapping) it.next();
+//			if (logger.isTraceEnabled()) {
+//				logger.trace("Testing handler map [" + hm  + "] in DispatcherServlet with name '" +
+//						servletName + "'");
+//			}
+//			handler = hm.getHandler(request);
+//			if (handler != null) {
+//				
+//				return handler;
+//			}
+//			if(!this.scanAllMappings )
+//				break;
+//		}
+		if (logger.isTraceEnabled()) {
+			logger.trace("Get handler from map [" + handlerMapping.getClass().getName()  + "] in DispatcherServlet with name '" +
+					servletName + "'");
 		}
-		return null;
+		HandlerExecutionChain handler = handlerMapping.getHandler(request);
+		return handler;
 	}
 
 	public boolean isScanAllMappings() {
@@ -80,14 +82,16 @@ public class HandlerMappingsTable implements DisposableBean{
 
 	@Override
 	public void destroy() throws Exception {
-		if(handlerMappings != null)
-		{
-			for(int i = 0; i < handlerMappings.size(); i ++)
-			{
-				HandlerMapping mp = handlerMappings.get(i);
-				mp.destroy();
-			}
-		}
+//		if(handlerMappings != null)
+//		{
+//			for(int i = 0; i < handlerMappings.size(); i ++)
+//			{
+//				HandlerMapping mp = handlerMappings.get(i);
+//				mp.destroy();
+//			}
+//		}
+		if(handlerMapping != null)
+			handlerMapping.destroy();
 		
 	}
 

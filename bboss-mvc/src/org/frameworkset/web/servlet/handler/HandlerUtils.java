@@ -3133,19 +3133,20 @@ public abstract class HandlerUtils {
 
 	protected static String getRestfulUrl(String methodpath) {
 
-		String mappedPath = methodpath;
-		StringBuffer pathUrl = new StringBuffer();
-
-		String tmp[] = mappedPath.split("/");
-		for (int i = 1; i < tmp.length; i++) {
-			if (tmp[i].startsWith("{"))
-				pathUrl.append("/*");
-			else {
-				pathUrl.append("/").append(tmp[i]);
-			}
-
-		}
-		return pathUrl.toString();
+//		String mappedPath = methodpath;
+//		StringBuffer pathUrl = new StringBuffer();
+//
+//		String tmp[] = mappedPath.split("/");
+//		for (int i = 1; i < tmp.length; i++) {
+//			if (tmp[i].startsWith("{"))
+//				pathUrl.append("/*");
+//			else {
+//				pathUrl.append("/").append(tmp[i]);
+//			}
+//
+//		}
+//		return pathUrl.toString();
+		return MethodInfo.buildPathPattern(methodpath);
 
 	}
 
@@ -3155,6 +3156,35 @@ public abstract class HandlerUtils {
 	// }
 	protected static Set<String> getRestfulUrl(String path, Method method) {
 
+//		String url = path;
+//		Set<String> urls = new LinkedHashSet<String>();
+//		HandlerMapping mapping = method.getAnnotation(HandlerMapping.class);
+//		// MethodInfo methodInfo = new MethodInfo(method);
+//		if (mapping != null) {
+//			String[] mappedPaths = mapping.value();
+//			if (mappedPaths != null && mappedPaths.length > 0) {
+//				String mappedPath = mappedPaths[0];
+//				StringBuffer pathUrl = new StringBuffer();
+//				pathUrl.append(url);
+//				String tmp[] = mappedPath.split("/");
+//				for (int i = 1; i < tmp.length; i++) {
+//					if (tmp[i].startsWith("{"))
+//						pathUrl.append("/*");
+//					else {
+//						pathUrl.append("/").append(tmp[i]);
+//					}
+//
+//				}
+//				urls.add(pathUrl.toString());
+//				pathUrl = null;
+//			} else {
+//				urls.add(url);
+//			}
+//		} else {
+//			urls.add(url);
+//		}
+//		return urls;
+		
 		String url = path;
 		Set<String> urls = new LinkedHashSet<String>();
 		HandlerMapping mapping = method.getAnnotation(HandlerMapping.class);
@@ -3163,19 +3193,19 @@ public abstract class HandlerUtils {
 			String[] mappedPaths = mapping.value();
 			if (mappedPaths != null && mappedPaths.length > 0) {
 				String mappedPath = mappedPaths[0];
-				StringBuffer pathUrl = new StringBuffer();
-				pathUrl.append(url);
-				String tmp[] = mappedPath.split("/");
-				for (int i = 1; i < tmp.length; i++) {
-					if (tmp[i].startsWith("{"))
-						pathUrl.append("/*");
-					else {
-						pathUrl.append("/").append(tmp[i]);
-					}
-
-				}
-				urls.add(pathUrl.toString());
-				pathUrl = null;
+//				StringBuffer pathUrl = new StringBuffer();
+//				pathUrl.append(url);
+//				String tmp[] = mappedPath.split("/");
+//				for (int i = 1; i < tmp.length; i++) {
+//					if (tmp[i].startsWith("{"))
+//						pathUrl.append("/*");
+//					else {
+//						pathUrl.append("/").append(tmp[i]);
+//					}
+//
+//				}
+				urls.add(MethodInfo.buildPathPattern(url,mappedPath));
+//				pathUrl = null;
 			} else {
 				urls.add(url);
 			}
