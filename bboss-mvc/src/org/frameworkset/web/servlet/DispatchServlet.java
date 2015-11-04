@@ -63,11 +63,13 @@ import org.frameworkset.web.servlet.context.WebApplicationContext;
 import org.frameworkset.web.servlet.handler.AbstractUrlHandlerMapping;
 import org.frameworkset.web.servlet.handler.HandlerMappingsTable;
 import org.frameworkset.web.servlet.handler.HandlerMeta;
-import org.frameworkset.web.servlet.handler.HandlerUrlMappingRegisterTable;
 import org.frameworkset.web.servlet.handler.HandlerUtils;
 import org.frameworkset.web.servlet.handler.PathURLNotSetException;
+import org.frameworkset.web.servlet.handler.annotations.AnnotationMethodHandlerAdapter;
 import org.frameworkset.web.servlet.handler.annotations.DefaultAnnotationHandlerMapping;
 import org.frameworkset.web.servlet.i18n.DefaultLocaleResolver;
+import org.frameworkset.web.servlet.mvc.HttpRequestHandlerAdapter;
+import org.frameworkset.web.servlet.mvc.SimpleControllerHandlerAdapter;
 import org.frameworkset.web.servlet.support.RequestContext;
 import org.frameworkset.web.servlet.support.RequestContextUtils;
 import org.frameworkset.web.servlet.support.RequestMethodHttpServletRequest;
@@ -258,7 +260,11 @@ public class DispatchServlet extends HttpServlet {
 	
 	
 	/** List of HandlerAdapters used by this servlet */
-	private List<HandlerAdapter> handlerAdapters;
+//	private List<HandlerAdapter> handlerAdapters;
+	
+	org.frameworkset.web.servlet.handler.annotations.AnnotationMethodHandlerAdapter annotationMethodHandlerAdapter;
+	org.frameworkset.web.servlet.mvc.SimpleControllerHandlerAdapter simpleControllerHandlerAdapter;	
+	org.frameworkset.web.servlet.mvc.HttpRequestHandlerAdapter httpRequestHandlerAdapter; 
 	
 	/** List of HandlerAdapters used by this servlet */
 	private List<HandlerInterceptor> gloabelHandlerInterceptors;
@@ -415,14 +421,20 @@ public class DispatchServlet extends HttpServlet {
 	 * This is a fatal error.
 	 */
 	protected HandlerAdapter getHandlerAdapter(HandlerMeta handler) throws ServletException {
-		Iterator it = this.handlerAdapters.iterator();
-		while (it.hasNext()) {
-			HandlerAdapter ha = (HandlerAdapter) it.next();
-		
-			if (ha.supports(handler)) {
-				return ha;
-			}
-		}
+//		Iterator it = this.handlerAdapters.iterator();
+//		while (it.hasNext()) {
+//			HandlerAdapter ha = (HandlerAdapter) it.next();
+//		
+//			if (ha.supports(handler)) {
+//				return ha;
+//			}
+//		}
+		if(this.annotationMethodHandlerAdapter.supports(handler))
+			return this.annotationMethodHandlerAdapter;
+		else if(this.simpleControllerHandlerAdapter.supports(handler))
+			return this.simpleControllerHandlerAdapter;
+		else if(this.httpRequestHandlerAdapter.supports(handler))
+			return simpleControllerHandlerAdapter;
 		throw new ServletException("No adapter for handler [" + handler.getHandlerName()  +
 				"]: Does your handler implement a supported interface like Controller?");
 	}
@@ -1443,47 +1455,59 @@ public class DispatchServlet extends HttpServlet {
 	 * for this namespace, we default to SimpleControllerHandlerAdapter.
 	 */
 	private void initHandlerAdapters(BaseApplicationContext context) {
-		this.handlerAdapters = null;
-
-//		if (this.detectAllHandlerAdapters) {
-//			// Find all HandlerAdapters in the ApplicationContext,
-//			// including ancestor contexts.
-//			Map matchingBeans = BeanFactoryUtils.beansOfTypeIncludingAncestors(
-//					context, HandlerAdapter.class, true, false);
-//			if (!matchingBeans.isEmpty()) {
-//				this.handlerAdapters = new ArrayList(matchingBeans.values());
-//				// We keep HandlerAdapters in sorted order.
-//				Collections.sort(this.handlerAdapters, new OrderComparator());
+//		this.handlerAdapters = null;
+//
+////		if (this.detectAllHandlerAdapters) {
+////			// Find all HandlerAdapters in the ApplicationContext,
+////			// including ancestor contexts.
+////			Map matchingBeans = BeanFactoryUtils.beansOfTypeIncludingAncestors(
+////					context, HandlerAdapter.class, true, false);
+////			if (!matchingBeans.isEmpty()) {
+////				this.handlerAdapters = new ArrayList(matchingBeans.values());
+////				// We keep HandlerAdapters in sorted order.
+////				Collections.sort(this.handlerAdapters, new OrderComparator());
+////			}
+////		}
+////		else 
+////		{
+////			try {
+////				Object ha = context.getBeanObject(HANDLER_ADAPTER_BEAN_NAME);
+////				List temp = Collections.singletonList(ha);
+////				this.handlerAdapters = (List<HandlerAdapter>)temp;
+////			}
+////			catch (Exception ex) {
+////				// Ignore, we'll add a default HandlerAdapter later.
+////			}
+////		}
+//
+//		// Ensure we have at least some HandlerAdapters, by registering
+//		// default HandlerAdapters if no other adapters are found.
+//		if (this.handlerAdapters == null) {
+//			this.handlerAdapters = getDefaultStrategies(context, HandlerAdapter.class);
+//			if (logger.isDebugEnabled()) {
+//				logger.debug("No HandlerAdapters found in servlet '" + getServletName() + "': using default");
 //			}
 //		}
-//		else 
+//		if(handlerAdapters != null)
 //		{
-//			try {
-//				Object ha = context.getBeanObject(HANDLER_ADAPTER_BEAN_NAME);
-//				List temp = Collections.singletonList(ha);
-//				this.handlerAdapters = (List<HandlerAdapter>)temp;
-//			}
-//			catch (Exception ex) {
-//				// Ignore, we'll add a default HandlerAdapter later.
+//			for(HandlerAdapter adapter :handlerAdapters)
+//			{
+//				if(!adapter.containMessageConverters())
+//					adapter.setMessageConverters(messageConverters);
 //			}
 //		}
-
-		// Ensure we have at least some HandlerAdapters, by registering
-		// default HandlerAdapters if no other adapters are found.
-		if (this.handlerAdapters == null) {
-			this.handlerAdapters = getDefaultStrategies(context, HandlerAdapter.class);
-			if (logger.isDebugEnabled()) {
-				logger.debug("No HandlerAdapters found in servlet '" + getServletName() + "': using default");
-			}
-		}
-		if(handlerAdapters != null)
-		{
-			for(HandlerAdapter adapter :handlerAdapters)
-			{
-				if(!adapter.containMessageConverters())
-					adapter.setMessageConverters(messageConverters);
-			}
-		}
+		
+		this.annotationMethodHandlerAdapter = createDefaultStrategy(context, AnnotationMethodHandlerAdapter.class);
+		if(!annotationMethodHandlerAdapter.containMessageConverters())
+			annotationMethodHandlerAdapter.setMessageConverters(messageConverters);
+		
+		this.simpleControllerHandlerAdapter = createDefaultStrategy(context, SimpleControllerHandlerAdapter.class);
+		if(!simpleControllerHandlerAdapter.containMessageConverters())
+			simpleControllerHandlerAdapter.setMessageConverters(messageConverters);
+		
+		this.httpRequestHandlerAdapter = createDefaultStrategy(context, HttpRequestHandlerAdapter.class);
+		if(!httpRequestHandlerAdapter.containMessageConverters())
+			httpRequestHandlerAdapter.setMessageConverters(messageConverters);
 		
 	}
 	
@@ -1725,10 +1749,10 @@ public class DispatchServlet extends HttpServlet {
 	 * @return the fully configured strategy instance
 
 	 */
-	protected static Object createDefaultStrategy(BaseApplicationContext context, Class clazz) throws BeanInstanceException {
+	protected static <T> T createDefaultStrategy(BaseApplicationContext context, Class<T> clazz) throws BeanInstanceException {
 		
 		if(context != null)
-			return context.createBean(clazz);
+			return (T)context.createBean(clazz);
 		else
 		{
 			try {
@@ -1878,15 +1902,24 @@ public class DispatchServlet extends HttpServlet {
 	public void destroy() {
 		// TODO Auto-generated method stub
 		super.destroy();
-		if(this.handlerAdapters != null)
-		{
-			for(int i = 0 ; i < this.handlerAdapters.size() ;i ++)
-			{
-				HandlerAdapter ha = this.handlerAdapters.get(i);
-				ha.destroy();
-			}
-			this.handlerAdapters.clear();
-			this.handlerAdapters = null;
-		}
+//		if(this.handlerAdapters != null)
+//		{
+//			for(int i = 0 ; i < this.handlerAdapters.size() ;i ++)
+//			{
+//				HandlerAdapter ha = this.handlerAdapters.get(i);
+//				ha.destroy();
+//			}
+//			this.handlerAdapters.clear();
+//			this.handlerAdapters = null;
+//		}
+		if(annotationMethodHandlerAdapter != null)
+			this.annotationMethodHandlerAdapter.destroy();
+		
+		if(simpleControllerHandlerAdapter != null)
+			this.simpleControllerHandlerAdapter.destroy();
+		 
+		if(httpRequestHandlerAdapter != null)
+			this.httpRequestHandlerAdapter.destroy();
+		 
 	}
 }
