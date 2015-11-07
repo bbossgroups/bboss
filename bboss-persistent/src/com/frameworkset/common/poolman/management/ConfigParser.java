@@ -153,7 +153,7 @@ public class ConfigParser extends DefaultHandler{
         		!name.equals("enablejta") &&
         		!name.equals("usepool") &&
         		!name.equals("encryptdbinfo") &&
-        		!name.equals("datasourceFile") )
+        		!name.equals("datasourceFile") && !name.equals("queryfetchsize"))
             
         {
         	log.debug("解析文件时[" + this.file + "]遇到元素[" + name + "]，忽略处理。");
