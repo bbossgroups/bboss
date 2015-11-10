@@ -203,8 +203,12 @@ public class NativeDataSource implements DataSource {
 				} catch (Throwable t) {
 					String message = "Cannot load JDBC driver class '" + driver
 							+ "'";
-					logWriter.println(message);
-					t.printStackTrace(logWriter);
+					if (logWriter != null) 
+					{
+						logWriter.println(message);
+						t.printStackTrace(logWriter);
+					}
+					
 					throw new NestedSQLException(message, t);
 				}
 			}
@@ -217,8 +221,12 @@ public class NativeDataSource implements DataSource {
 				String message = "Cannot create JDBC driver of class '"
 						+ (driver != null ? driver : "")
 						+ "' for connect URL '" + url + "'";
-				logWriter.println(message);
-				t.printStackTrace(logWriter);
+				if (logWriter != null) 
+				{
+					logWriter.println(message);
+					t.printStackTrace(logWriter);
+				}
+				
 				throw new NestedSQLException(message, t);
 			}
 

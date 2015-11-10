@@ -133,6 +133,8 @@ public class LocalPoolDeployer extends BaseTableManager implements PoolManDeploy
 //                    System.out.println("props: " + attrName);
 //                    System.out.println("propsVal: " + propsVal);
                     // create attribute value of correct type
+                    if(type == java.lang.Boolean.class)
+                    	type = boolean.class;
                     PropertyEditor editor = PropertyEditorManager.findEditor(type);
                     editor.setAsText(propsVal);
                     Object value = editor.getValue();

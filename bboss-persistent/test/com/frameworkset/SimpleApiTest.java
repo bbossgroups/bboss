@@ -26,6 +26,12 @@ import com.frameworkset.common.poolman.SQLExecutor;
 
 public class SimpleApiTest {
 	@Test
+	public void testsqlserver() throws Exception
+	{
+		int re = SQLExecutor.queryObjectWithDBName(int.class, "sqlserverdb","select count(*) from ZZ_COMPLAIN where 1<>1" );
+		System.out.println(re);
+	}
+	@Test
 	public void dblist() throws SQLException
 	{
 		String sql ="insert into xxxx(f1,f2,f3) values(#[f1],#[f2],#[f2])"; 
