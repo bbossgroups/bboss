@@ -714,7 +714,7 @@ public abstract class DB implements Serializable, IDMethod,Platform
     public String getOracleLimitSelect(String selectSql , int limit,String rownum)
     {
 //        selectSql += " LIMIT " + limit;
-        StringBuffer ret = new StringBuffer();
+        StringBuilder ret = new StringBuilder();
         ret.append("select * from (")
         	.append(selectSql)
         	.append(") where ")
@@ -746,13 +746,13 @@ public abstract class DB implements Serializable, IDMethod,Platform
      */
 	 
 	public PagineSql getOracleDBPagineSql(String sql, long offset, int maxsize,String rownum,boolean prepared) {
-		StringBuffer ret = null;
+		StringBuilder ret = null;
 		if(prepared)
-			ret = new StringBuffer().append("select * from (")
+			ret = new StringBuilder().append("select * from (")
 									.append(sql)
 									.append(") where ").append(rownum).append(" between ? and ?");
 		else
-			ret = new StringBuffer("select * from (")
+			ret = new StringBuilder("select * from (")
 			.append(sql)
 			.append(") where ").append(rownum).append(" between ")
 			.append((offset + 1) + "")
@@ -955,7 +955,7 @@ public abstract class DB implements Serializable, IDMethod,Platform
 		{
 			if(concatString == null || concatString.length == 0)
 				return "";
-			StringBuffer ret = new StringBuffer();
+			StringBuilder ret = new StringBuilder();
 			boolean i = false;
 			for(String token : concatString)
 			{
@@ -976,7 +976,7 @@ public abstract class DB implements Serializable, IDMethod,Platform
 		
 		public String disableFK(String table,String FKName)
 		{
-			StringBuffer ret = new StringBuffer();
+			StringBuilder ret = new StringBuilder();
 			ret.append("alter table ").append(table).append(" disable constraint ").append(FKName);
 			
 			return ret.toString();
@@ -987,7 +987,7 @@ public abstract class DB implements Serializable, IDMethod,Platform
 		
 		public String enableFK(String table,String FKName,String column,String FKTable,String FKColumn)
 		{
-			StringBuffer ret = new StringBuffer();
+			StringBuilder ret = new StringBuilder();
 			ret.append("alter table ").append(table).append(" enable constraint ").append(FKName);
 			return ret.toString();
 		}

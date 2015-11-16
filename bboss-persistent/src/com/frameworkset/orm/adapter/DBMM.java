@@ -213,7 +213,7 @@ public class DBMM extends DB
     public void lockTable(Connection con, String table) throws SQLException
     {
         Statement statement = con.createStatement();
-        StringBuffer stmt = new StringBuffer();
+        StringBuilder stmt = new StringBuilder();
         stmt.append("LOCK TABLE ").append(table).append(" WRITE");
         statement.executeUpdate(stmt.toString());
     }
@@ -270,7 +270,7 @@ public class DBMM extends DB
     
     public String to_char(String date,String format)
     {
-    	StringBuffer ret = new StringBuffer();
+    	StringBuilder ret = new StringBuilder();
    	 ret.append("date_format(")
    	 	.append(date)
    	 	.append(",'")
@@ -431,18 +431,18 @@ public class DBMM extends DB
 	 */
 	public PagineSql getDBPagineSql(String sql, long offset, int maxsize,boolean prepared) {
 		
-//		return new StringBuffer(sql).append(" limit ").append(offset).append(",").append(maxsize).toString();
-		StringBuffer newsql = null;
+//		return new StringBuilder(sql).append(" limit ").append(offset).append(",").append(maxsize).toString();
+		StringBuilder newsql = null;
 		if(prepared)
-			newsql = new StringBuffer().append(sql).append(" limit ?,?");
+			newsql = new StringBuilder().append(sql).append(" limit ?,?");
 		else
-			newsql = new StringBuffer().append(sql).append(" limit ").append(offset).append(",").append(maxsize);
+			newsql = new StringBuilder().append(sql).append(" limit ").append(offset).append(",").append(maxsize);
 		return new PagineSql(newsql.toString(),offset,(long)maxsize,offset, maxsize, prepared);
 	}
 	
 	  public String getStringPagineSql(String sql)
 	  {
-		  StringBuffer newsql = new StringBuffer().append(sql).append(" limit ?,?");
+		  StringBuilder newsql = new StringBuilder().append(sql).append(" limit ?,?");
 			return newsql.toString();
 	  }
 	  public String getStringPagineSql(String schema,String tablename,String pkname ,String columns)
@@ -517,7 +517,7 @@ public class DBMM extends DB
 	{
 		if(concatString == null || concatString.length == 0)
 			return "";
-		StringBuffer ret = new StringBuffer();
+		StringBuilder ret = new StringBuilder();
 		boolean i = false;
 		for(String token : concatString)
 		{
@@ -539,7 +539,7 @@ public class DBMM extends DB
 	
 	public String disableFK(String table,String FKName)
 	{
-		StringBuffer ret = new StringBuffer();
+		StringBuilder ret = new StringBuilder();
 		ret.append("alter table ").append(table).append(" drop FOREIGN KEY ").append(FKName);
 		
 		return ret.toString();
@@ -550,7 +550,7 @@ public class DBMM extends DB
 	
 	public String enableFK(String table,String FKName,String column,String FKTable,String FKColumn)
 	{
-		StringBuffer ret = new StringBuffer();
+		StringBuilder ret = new StringBuilder();
 		ret.append("alter table ").append(table).append(" add constraint ").append(FKName)
 		.append(" foreign key (").append(column).append(") references ").append(FKTable).append(" (").append(FKColumn).append(")");
 		   
