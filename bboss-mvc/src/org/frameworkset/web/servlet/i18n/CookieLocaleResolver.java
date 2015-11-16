@@ -15,6 +15,8 @@ public class CookieLocaleResolver extends AbstractLocaleResolver{
 	private String cookielocalkey = COOKIE_LOCAL_KEY;
 	@Override
 	public Locale resolveLocale(HttpServletRequest request) {
+		if(request == null)
+			return Locale.SIMPLIFIED_CHINESE;
 		Cookie[] cookies = request.getCookies();
 		Locale locale = null;
 		if(cookies != null)
