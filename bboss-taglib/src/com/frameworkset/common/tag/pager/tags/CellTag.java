@@ -255,22 +255,7 @@ public class CellTag  extends PagerTagSupport {
 	}
 	protected String getStringValue()
 	{
-		String outStr = null;
-//		if(!this.actualseted)
-//		{
-			
-			outStr = this.getOutStr();
-			
-				
-//		}
-//		else
-//		{
-//			outStr = (this.actual == null?null:String.valueOf(this.actual));
-//			if(trim && outStr != null)
-//			{
-//				outStr = outStr.trim();
-//			}
-//		}
+		String outStr =   this.getOutStr(); 
 		return outStr;
 	}
 	public int doStartTag() throws JspException {
@@ -279,7 +264,7 @@ public class CellTag  extends PagerTagSupport {
 		
 	    init();
 	   
-		String outStr = getStringValue();
+		String outStr =  this.getOutStr();
 		if(outStr != null)
 		{
 			if(getEncode() != null && getEncode().equals("true"))
@@ -862,10 +847,10 @@ public class CellTag  extends PagerTagSupport {
 			{
 				Object data = (this.actual == null?getDefaultValue():this.actual);
 				if (this.getNumerformat() != null) {
-					return PagerDataSet.formatData(data,  getNumerformat());
+					return PagerDataSet.formatData(request,data,  getNumerformat());
 				}
 				else if (this.getDateformat() != null) {
-					return PagerDataSet.formatDate(data, getDateformat());
+					return PagerDataSet.formatDate(request,data, getDateformat());
 				}
 				else
 				{
@@ -886,12 +871,28 @@ public class CellTag  extends PagerTagSupport {
 						{
 						    try {
 						        Object data = t_formula.getValue();
-						        if(data != null && getNumerformat() != null)
+						        if(data != null )
 						        {
-						            NumberFormat numerFormat = new DecimalFormat(getNumerformat());
-						            outStr = numerFormat.format(data);
+						        	if(getNumerformat() != null)
+						        	{
+							            
+							            outStr = PagerDataSet.formatData(request,data,  getNumerformat());
+						        	}
+						        	else if(this.getDateformat() != null)
+						        	{
+						        		outStr = PagerDataSet.formatDate(request,data, getDateformat());
+						        	}
+						        	else
+						        	{
+						        		outStr = data;
+						        	}
+						        		
 						        }
-						        outStr = data;
+						        else
+						        {
+						        	
+						        	outStr = data;
+						        }
 				            } catch (FormulaException e) {
 				                //System.out.println(e.getMessage());
 				                log.debug(e.getMessage());

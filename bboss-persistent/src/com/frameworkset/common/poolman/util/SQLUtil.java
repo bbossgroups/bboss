@@ -1820,5 +1820,16 @@ public class SQLUtil{
     		if(pool != null)
     			pool.increamentMaxTotalConnections( nums);
     	}
+    	
+    	public static void refreshDatabaseMetaData(String dbname)
+    	{
+    		 
+    			try {
+    				getPool(dbname).refreshDatabaseMetaData();
+    			} catch (Exception e) {
+    				log.error("刷新数据库连接池"+dbname+"对应的db元数据失败:", e);
+    			}
+    		 
+    	}
 
 }

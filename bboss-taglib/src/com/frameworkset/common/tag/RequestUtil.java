@@ -25,6 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.PageContext;
 
+import com.frameworkset.common.tag.pager.tags.PagerDataSet;
 import com.frameworkset.util.ValueObjectUtil;
 
 /**
@@ -206,8 +207,7 @@ public class RequestUtil extends BaseTag {
 				{
 					try
 					{
-						outStr = ValueObjectUtil.getDateFormat(dateformat)
-								.format(outStr);
+						outStr =PagerDataSet.formatDate(request,outStr,  dateformat); 
 					}
 					catch (Exception e)
 					{

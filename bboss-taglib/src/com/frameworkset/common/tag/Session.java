@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.JspWriter;
 
+import com.frameworkset.common.tag.pager.tags.PagerDataSet;
 import com.frameworkset.util.ValueObjectUtil;
 /**
  * session对象的取值标签
@@ -87,8 +88,7 @@ public class Session extends BaseTag {
 						{
 							try
 							{
-								value = ValueObjectUtil.getDateFormat(dateformat)
-										.format(value);
+								value = PagerDataSet.formatDate(request,value,  dateformat); 
 							}
 							catch (Exception e)
 							{

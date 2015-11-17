@@ -57,6 +57,7 @@ import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.Tag;
 
 import org.apache.log4j.Logger;
+import org.frameworkset.util.DataFormatUtil;
 import org.frameworkset.web.servlet.support.RequestContext;
 
 import com.frameworkset.common.poolman.SQLExecutor;
@@ -1182,15 +1183,16 @@ public class PagerDataSet extends PagerTagSupport {
 	 */
 	public String getFormatDate(int rowid, int columnid, String format) {
 		Object obj = getValue(rowid, columnid);
-		return formatDate(obj,format);
+		return formatDate(request,obj,format);
 
 	}
-	public static String formatDate(Object data,String dateformat)
+	public static String formatDate(HttpServletRequest request,Object data,String dateformat)
 	{
 		if (data == null)
 			return null;
-		SimpleDateFormat dateFormat = new SimpleDateFormat(dateformat);
-		
+//		SimpleDateFormat dateFormat = new SimpleDateFormat(dateformat);
+		 
+		SimpleDateFormat dateFormat = DataFormatUtil.getSimpleDateFormat(request,dateformat);
 		try {
 		    if(data instanceof Date)
 		    {
@@ -1241,7 +1243,7 @@ public class PagerDataSet extends PagerTagSupport {
 	 */
 	public String getFormatDate(int rowid, String colName, String format) {
 		Object obj = getValue(rowid, colName);
-		return formatDate(obj,format);
+		return formatDate(request,obj,format);
 	}
 	
 	
@@ -1252,7 +1254,7 @@ public class PagerDataSet extends PagerTagSupport {
 	 */
 	public String getFormatDate(int rowid,  String format) {
 		Object obj = getValue(rowid);
-		return formatDate(obj,format);
+		return formatDate(request,obj,format);
 	}
 
 	/**
@@ -1272,7 +1274,7 @@ public class PagerDataSet extends PagerTagSupport {
 	public String getFormatDate(int rowid, String colName, String property,
 			String format) {
 		Object obj = getValue(rowid, colName, property);
-		return formatDate(obj,format);
+		return formatDate(request,obj,format);
 	}
 
 	/**
@@ -1298,7 +1300,7 @@ public class PagerDataSet extends PagerTagSupport {
 	public String getFormatDate(int rowid, int columnid, String property,
 			String format) {
 		Object obj = getValue(rowid, columnid, property);
-		return formatDate(obj,format);
+		return formatDate(request,obj,format);
 
 	}
 
@@ -1364,14 +1366,16 @@ public class PagerDataSet extends PagerTagSupport {
 	public String getFormatData(int rowid, int columnid, String format) {
 		
 		Object data = getValue(rowid, columnid);
-		return formatData(data,format);
+		return formatData(request,data,format);
 	}
 	
-	public static String formatData(Object data,String dataformat)
+	public static String formatData(HttpServletRequest request,Object data,String dataformat)
 	{
 		if (data == null)
 			return null;
-		NumberFormat numerFormat = new DecimalFormat(dataformat);
+		
+		NumberFormat numerFormat = DataFormatUtil.getDecimalFormat(request,dataformat);
+//		NumberFormat numerFormat = new DecimalFormat(dataformat);
 		
 		// double value = dd.doubleValue();
 
@@ -1386,7 +1390,7 @@ public class PagerDataSet extends PagerTagSupport {
 	public String getFormatData(int rowid, String colName, String format) {
 		Object data = getValue(rowid, colName);
 
-		return formatData(data,format);
+		return formatData(request,data,format);
 	}
 	
 	
@@ -1397,7 +1401,7 @@ public class PagerDataSet extends PagerTagSupport {
 	 */
 	public String getFormatData(int rowid, String format) {
 		Object data = getValue(rowid);
-		return formatData(data,format);
+		return formatData(request,data,format);
 	}
 
 	/**
@@ -1408,7 +1412,7 @@ public class PagerDataSet extends PagerTagSupport {
 	public String getFormatData(int rowid, int columnid, String property,
 			String format) {
 		Object data = getValue(rowid, columnid, property);
-		return formatData(data,format);
+		return formatData(request,data,format);
 	}
 
 	/**
@@ -1419,7 +1423,7 @@ public class PagerDataSet extends PagerTagSupport {
 	public String getFormatData(int rowid, String colName, String property,
 			String format) {
 		Object data = getValue(rowid, colName, property);
-		return formatData(data,format);
+		return formatData(request,data,format);
 	}
 
 	/**
