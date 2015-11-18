@@ -600,7 +600,7 @@
 
 	<target name="delete-bboss-aop-jars" description="delete-bboss-aop-jars">
 		<for
-			list="${demoproject-lib},${bbossevent-lib},${cms_baseline-lib},${active-ext-lib},${kettle-lib},${monitorconsole-compilelib},${monitorconsole-lib},${creatoresb-lib}"
+			list="${demoproject-lib},${bbossevent-lib},${cms_baseline-lib},${active-ext-lib},${kettle-lib},${monitorconsole-compilelib},${monitorconsole-lib},${creatoresb-lib},${bboss-rpc-lib}"
 			param="destdir">
 			<sequential>
 				<echo>@{destdir}-------------------------------</echo>
