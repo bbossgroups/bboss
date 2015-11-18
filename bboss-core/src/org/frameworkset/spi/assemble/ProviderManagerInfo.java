@@ -49,7 +49,10 @@ public class ProviderManagerInfo extends BaseTXManager implements UNmodify {
     private Map realysynchronizedMethods;   
     private List synchronizedMethodLists;
     private Construction construction;
-    
+	/**
+	 * 是否允许将组建发布为远程服务
+	 */
+	private boolean enablerpc = false;
 //    private boolean callorder_sequence = true;
 //    
 //    private List interceptors;
@@ -498,6 +501,14 @@ public class ProviderManagerInfo extends BaseTXManager implements UNmodify {
 	protected void initAsyncMethods() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	public boolean isEnablerpc() {
+		return enablerpc;
+	}
+
+	public void setEnablerpc(boolean enablerpc) {
+		this.enablerpc = enablerpc;
 	}
 
    

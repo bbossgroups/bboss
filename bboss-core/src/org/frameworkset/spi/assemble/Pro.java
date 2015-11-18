@@ -135,6 +135,11 @@ public class Pro extends BaseTXManager implements Comparable, BeanInf {
 	 * bean初始化方法
 	 */
 	private String initMethod = null;
+	
+	/**
+	 * 是否允许将组建发布为远程服务
+	 */
+	private boolean enablerpc = false;
 
 	public Pro(BaseApplicationContext applicationContext) {
 		this.applicationContext = applicationContext;
@@ -2156,6 +2161,14 @@ public class Pro extends BaseTXManager implements Comparable, BeanInf {
 
 	public Object getIocinputData() {
 		return iocinputData;
+	}
+
+	public boolean isEnablerpc() {
+		return enablerpc;
+	}
+
+	public void setEnablerpc(boolean enablerpc) {
+		this.enablerpc = enablerpc;
 	}
 	
 

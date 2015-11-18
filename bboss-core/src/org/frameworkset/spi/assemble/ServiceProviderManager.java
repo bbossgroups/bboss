@@ -85,6 +85,8 @@ public class ServiceProviderManager {
 
 //    private static ServiceProviderManager serviceProviderManager;
     public static String defaultConfigFile = "manager-provider.xml";
+    
+    public static String seriralConfigFile = "org/frameworkset/soa/serialconf.xml";
 
     private Map<String,Pro> properties = new HashMap<String,Pro>();
 
@@ -372,9 +374,9 @@ public class ServiceProviderManager {
             	this.batchLoad(handler.getMangerimports(), linkconfigFile);
 
         } catch (Exception e) {
-        	if(configFile.equals(defaultConfigFile))
+        	if(configFile.equals(defaultConfigFile) || configFile.equals(seriralConfigFile))
         	{
-        		 log.debug("从文件[" + defaultConfigFile+ "]装载管理服务失败，请检查文件是否存在，或者是否被正确定义。");
+        		 log.debug("从文件[" + configFile+ "]装载管理服务失败，请检查文件是否存在，或者是否被正确定义。");
         	}
         	else if (parentFile == null) {
                 log.error("从文件[" + url + "]装载管理服务失败，请检查文件是否存在，或者是否被正确定义。",e);

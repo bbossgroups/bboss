@@ -20,7 +20,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.StringWriter;
 import java.io.Writer;
 import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
@@ -91,7 +90,7 @@ public class ObjectSerializable {
 
 	}
 
-	private static void convertMethodCallToXMLMethod(StringBuilder ret,
+	private static void convertMethodCallToXMLMethod(Writer ret,
 			String methodName, Object[] params, Class[] paramTypes,
 			String charset) throws Exception {
 		SerialStack stack = new SerialStack();
@@ -129,9 +128,9 @@ public class ObjectSerializable {
 	public static String convertMethodCallToXMLMethod(Method method,
 			Object[] params, Class[] paramTypes, String charset)
 			throws Exception {
-		StringBuilder ret = null;
+		Writer ret = null;
 		try {
-			ret = new StringBuilder();
+			ret = new BBossStringWriter();
 //			if (charset.equals(CHARSET_UTF_8)) {
 //				ret.append(content_header_utf_8);
 //			} else
@@ -160,9 +159,9 @@ public class ObjectSerializable {
 	public static String convertSOAMethodCallToXMLMethod(SOAMethodCall method,
 			String charset) throws Exception,
 			IntrospectionException {
-		StringBuilder ret = null;
+		Writer ret = null;
 		try {
-			ret = new StringBuilder();
+			ret = new BBossStringWriter();
 //			if (charset.equals(CHARSET_UTF_8)) {
 //				ret.append(content_header_utf_8);
 //			} else
@@ -192,9 +191,9 @@ public class ObjectSerializable {
 	public final static String convertBeanObjectToXML(Object obj, Class type,
 			String dateformat) throws Exception,
 			IntrospectionException {
-		StringBuilder ret = null;
+		Writer ret = null;
 		try {
-			ret = new StringBuilder();
+			ret = new BBossStringWriter();
 			SerialStack stack = new SerialStack();
 			String name = UUID.randomUUID().toString();
 			convertBeanObjectToXML(name, obj, type, ValueObjectUtil.isBasePrimaryType(type),dateformat, ret,stack,name,false);
@@ -240,7 +239,7 @@ public class ObjectSerializable {
 				(String) null, charset);
 	}
 
-	public final static void toXML(Object obj, StringBuilder out)
+	public final static void toXML(Object obj, Writer out)
 			throws Exception {
 		if (obj == null)
 			return ;
@@ -303,10 +302,10 @@ public class ObjectSerializable {
 	public final static String convertBeanObjectToXML1(String name, Object obj,
 			Class type, String dateformat, String charset)
 			throws Exception {
-		StringBuilder ret = null;
+		Writer ret = null;
 		try
 		{
-			ret = new StringBuilder();
+			ret = new BBossStringWriter();
 			convertBeanObjectToXML(name, obj,
 					type, dateformat, charset,ret);
 //			return new String(out.toByteArray(),charset);
@@ -326,12 +325,12 @@ public class ObjectSerializable {
 			Class type, String dateformat, String charset)
 			throws Exception {
 //		java.io.ByteArrayOutputStream out = null;
-		StringBuilder ret = null;
+		Writer ret = null;
 		try
 		{
 //			out = new java.io.ByteArrayOutputStream();
 //			ret = new OutputStreamWriter(out,Charset.forName(charset));
-			ret = new StringBuilder();
+			ret = new BBossStringWriter();
 			convertBeanObjectToXML(name, obj,
 					type, dateformat, charset,ret);
 
@@ -357,7 +356,7 @@ public class ObjectSerializable {
 	
 	
 	public final static void convertBeanObjectToXML(String name, Object obj,
-			Class ptype, String dateformat, String charset,StringBuilder ret)
+			Class ptype, String dateformat, String charset,Writer ret)
 			throws Exception {
 //		StringBuffer ret = new StringBuffer();
 
@@ -379,7 +378,7 @@ public class ObjectSerializable {
 
 	public final static String convertBeanObjectToXML(Object obj, Class type)
 			throws Exception {
-		StringBuilder ret = new StringBuilder();
+		Writer ret = new BBossStringWriter();
 		try {
 			SerialStack stack = new SerialStack();
 			String name = UUID.randomUUID().toString();
@@ -435,9 +434,9 @@ public class ObjectSerializable {
 	public final static String convertBeanObjectsToXML(List<String> names,
 			List<Object> objs, List<Class> types, String charset)
 			throws Exception {
-		StringBuilder ret = null;
+		Writer ret = null;
 		try {
-			ret = new StringBuilder();
+			ret = new BBossStringWriter();
 //			if (charset.equals(CHARSET_UTF_8)) {
 //				ret.append(content_header_utf_8);
 //			} else
@@ -468,7 +467,7 @@ public class ObjectSerializable {
 			
 		}
 	}
-	private static void arraytoxml(StringBuilder ret,Object obj,String dateformat,String name,Class vtype,SerialStack serialStack,String currentAddress) throws Exception
+	private static void arraytoxml(Writer ret,Object obj,String dateformat,String name,Class vtype,SerialStack serialStack,String currentAddress) throws Exception
 	{
 		if (obj == null) {
 			if (name == null)
@@ -524,7 +523,7 @@ public class ObjectSerializable {
 		ret.append("</a>");
 		ret.append("</p>");
 	}
-	private static void maptoxml(StringBuilder ret,Object obj,String dateformat,String name,Class vtype,SerialStack serialStack,String currentAddress,ClassInfo classInfo) throws Exception
+	private static void maptoxml(Writer ret,Object obj,String dateformat,String name,Class vtype,SerialStack serialStack,String currentAddress,ClassInfo classInfo) throws Exception
 	{
 		if (obj == null) {
 			if (name == null)
@@ -580,7 +579,7 @@ public class ObjectSerializable {
 			}
 		}
 	}
-	private static void settoxml(StringBuilder ret,Object obj,String dateformat,String name,Class vtype,SerialStack serialStack,String currentAddress,ClassInfo classInfo) throws Exception
+	private static void settoxml(Writer ret,Object obj,String dateformat,String name,Class vtype,SerialStack serialStack,String currentAddress,ClassInfo classInfo) throws Exception
 	{
 		if (obj == null) {
 			if (name == null)
@@ -638,7 +637,7 @@ public class ObjectSerializable {
 		}
 	}
 	
-	private static void pluginserial(Object obj,MagicClass magicclass,String handleObjectClass,String name,StringBuilder ret) throws IOException
+	private static void pluginserial(Object obj,MagicClass magicclass,String handleObjectClass,String name,Writer ret) throws IOException
 	{
 		String object = magicclass.getSerailObject().serialize(obj);
 		if (name == null)
@@ -677,7 +676,7 @@ public class ObjectSerializable {
 		.append(object)
 		.append("]]></p>");
 	}
-	private static void appendmghead(String name,MagicClass magicclass,String handleObjectClass,StringBuilder ret,String className) throws IOException
+	private static void appendmghead(String name,MagicClass magicclass,String handleObjectClass,Writer ret,String className) throws IOException
 	{
 		if (name == null)
 		{
@@ -714,7 +713,7 @@ public class ObjectSerializable {
 		}
 	}
 	
-	private static Object serialContainerObject(StringBuilder ret,
+	private static Object serialContainerObject(Writer ret,
 			Object obj,
 			String name,
 			Class vtype,
@@ -773,7 +772,7 @@ public class ObjectSerializable {
 		}
 		return obj;
 	}
-	private static void listtoxml(StringBuilder ret,Object obj,String dateformat,String name,Class vtype,SerialStack serialStack,String currentAddress,ClassInfo classInfo) throws Exception
+	private static void listtoxml(Writer ret,Object obj,String dateformat,String name,Class vtype,SerialStack serialStack,String currentAddress,ClassInfo classInfo) throws Exception
 	{
 		if (obj == null) {
 			if (name == null)
@@ -820,7 +819,7 @@ public class ObjectSerializable {
 			
 		}
 	}
-	private static void stringtoxml(StringBuilder ret,Object obj,String name,Class vtype) throws IOException
+	private static void stringtoxml(Writer ret,Object obj,String name,Class vtype) throws IOException
 	{
 		if (obj == null) {
 			if (name == null)
@@ -858,7 +857,7 @@ public class ObjectSerializable {
 			}
 		}
 	}
-	private static void filetoxml(StringBuilder ret,Object obj,String name,Class vtype) throws IOException
+	private static void filetoxml(Writer ret,Object obj,String name,Class vtype) throws IOException
 	{
 		if (obj == null) {
 			if (name == null)
@@ -917,7 +916,7 @@ public class ObjectSerializable {
 
 		}
 	}
-	private static void bytearraytoxml(StringBuilder ret,Object obj,String name,Class vtype) throws IOException
+	private static void bytearraytoxml(Writer ret,Object obj,String name,Class vtype) throws IOException
 	{
 		if (obj == null) {
 			if (name == null)
@@ -1026,7 +1025,7 @@ public class ObjectSerializable {
 	 * @throws Exception 
 	 */
 	private final static void convertBeanObjectToXML(String name, Object obj,
-			Class ptype,boolean pisbasetype, String dateformat, StringBuilder ret,SerialStack serialStack,String currentAddress,boolean frombeanpropety)
+			Class ptype,boolean pisbasetype, String dateformat, Writer ret,SerialStack serialStack,String currentAddress,boolean frombeanpropety)
 			throws Exception {
 		ClassInfo classinfo = null;
 		Class vtype = null;
@@ -1123,7 +1122,7 @@ public class ObjectSerializable {
 	 * 
 	 */
 	private final static boolean basicTypeCast(String name, Object obj,
-			Class ptype, ClassInfo classInfo,String dateformat, StringBuilder ret,SerialStack stack,String currentAddress)
+			Class ptype, ClassInfo classInfo,String dateformat, Writer ret,SerialStack stack,String currentAddress)
 			throws Exception {
 		if (obj == null) {
 			if (name == null)
@@ -1455,7 +1454,7 @@ public class ObjectSerializable {
 	}
 
 	private static void appendThrowableProperties(Object obj, Class type,
-			String dateformat, StringBuilder ret,SerialStack stack,String currentAddress) throws Exception {
+			String dateformat, Writer ret,SerialStack stack,String currentAddress) throws Exception {
 
 //		BeanInfo beanInfo = Introspector.getBeanInfo(type);
 //		ClassInfo beanInfo = ClassUtil.getClassInfo(type);
@@ -1498,7 +1497,7 @@ public class ObjectSerializable {
 	}
 
 	private static void appendStackTraceElementProperties(Object obj,
-			Class type, String dateformat, StringBuilder ret,SerialStack serialStack,String currentAddress)
+			Class type, String dateformat, Writer ret,SerialStack serialStack,String currentAddress)
 			throws Exception {
 
 //		BeanInfo beanInfo = Introspector.getBeanInfo(type);
@@ -1541,7 +1540,7 @@ public class ObjectSerializable {
 	}
 
 	private static void appendBeanProperties(Object obj, Class type,ClassInfo beanInfo,
-			String dateformat, StringBuilder ret,SerialStack stack,String currentAddress) throws Exception {
+			String dateformat, Writer ret,SerialStack stack,String currentAddress) throws Exception {
 
 		appendBeanProperties(obj, type, beanInfo, dateformat, ret, null, stack,currentAddress);
 
@@ -1558,7 +1557,7 @@ public class ObjectSerializable {
 	}
 
 	private static void appendBeanProperties(Object obj, Class type1,ClassInfo beanInfo,
-			String dateformat, StringBuilder ret, String[] filters,SerialStack stack,String currentAddress)
+			String dateformat, Writer ret, String[] filters,SerialStack stack,String currentAddress)
 			throws Exception {
 //		ClassInfo beanInfo = ClassUtil.getClassInfo(type);		
 //		beanInfo_.getDeclaredFields();
@@ -1619,7 +1618,7 @@ public class ObjectSerializable {
 
 	}
 
-	private static void convertParams(StringBuilder ret, Object[] params,
+	private static void convertParams(Writer ret, Object[] params,
 			Class[] paramTypes, String dateformat,SerialStack stack,String currentAddress)
 			throws Exception {
 		

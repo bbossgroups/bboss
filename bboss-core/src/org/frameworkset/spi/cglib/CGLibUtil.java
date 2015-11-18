@@ -1041,6 +1041,27 @@ public class CGLibUtil {
 	        enhancer.setCallbackFilter(filter);
 	        return (T) enhancer.create();
 	}
+	/**
+	 * 获取组件实例
+	 * @param <T>
+	 * @param rettype
+	 * @param beanType
+	 * @param proxy
+	 * @return
+	 */
+	public static <T> T getBeanInstance(String rettype,MethodInterceptor proxy)
+	{
+		 Enhancer enhancer = new Enhancer();
+		 	
+	        try {
+				enhancer.setSuperclass(Class.forName(rettype));
+			} catch (ClassNotFoundException e) {
+				throw new java.lang.RuntimeException(e);
+			}
+	        enhancer.setCallbacks(new Callback[] { proxy, NoOp.INSTANCE });
+	        enhancer.setCallbackFilter(filter);
+	        return (T) enhancer.create();
+	}
 	
 	private static AopProxyFilter filter = new AopProxyFilter();
 }

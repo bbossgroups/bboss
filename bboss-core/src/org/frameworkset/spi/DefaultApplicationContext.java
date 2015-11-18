@@ -124,7 +124,7 @@ public class DefaultApplicationContext extends BaseApplicationContext {
 	}
 
 	public DefaultApplicationContext(InputStream instream, boolean isfile,boolean init) {
-		super((InputStream)instream,isfile,true);
+		super((InputStream)instream,isfile,init);
 	}
 	
 	/**

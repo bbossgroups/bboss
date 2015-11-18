@@ -750,6 +750,11 @@ public class ProviderParser extends DefaultHandler
         {
         	  p.setIocplugin(iocplugin);
         }
+        String enablerpc = attributes.getValue("enablerpc");
+        if(enablerpc != null && enablerpc.equals("true"))
+        {
+        	p.setEnablerpc(true);
+        }
       
         p.setConfigFile(this.file);
         p.setSinglable(singlable);
@@ -916,6 +921,11 @@ public class ProviderParser extends DefaultHandler
             String id = attributes.getValue("id");
             ProviderManagerInfo providerManger = new ProviderManagerInfo();
             providerManger.setId(id);
+            String enablerpc = attributes.getValue("enablerpc");
+            if(enablerpc != null && enablerpc.equals("true"))
+            {
+            	providerManger.setEnablerpc(true);
+            }
             providerManger.setJndiName(attributes.getValue("jndiname"));
 
             // providerManger.setTransactionInterceptorClass(attributes
