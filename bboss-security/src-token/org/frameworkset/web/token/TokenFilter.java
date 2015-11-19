@@ -50,7 +50,14 @@ public class TokenFilter implements Filter{
 		{
 			try {
 				tokenService = TokenHelper.getTokenService();
-			} catch (Throwable e) {
+			}
+			catch (RuntimeException e) {
+				log.warn("",e);
+			}
+			catch (Exception e) {
+				log.warn("",e);
+			}
+			catch (Throwable e) {
 				log.warn("",e);
 			}
 			inited = true;

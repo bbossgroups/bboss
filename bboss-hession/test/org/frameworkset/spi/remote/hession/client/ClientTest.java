@@ -50,7 +50,7 @@ public class ClientTest {
 	@Test
 	public void testHessian() throws MalformedURLException
 	{
-		String url = "http://localhost/SanyPDP/hessian?container=org/frameworkset/spi/remote/hession/server/hessian-service.xml&service=basicservice";//指定容器标识和容器类型及服务标识
+		String url = "http://localhost:8080/SanyPDP/hessian?container=org/frameworkset/spi/remote/hession/server/hessian-service.xml&service=basicservice";//指定容器标识和容器类型及服务标识
 		
 		 HessianProxyFactory factory = new HessianProxyFactory();
 	    ServiceInf basic = (ServiceInf) factory.create(org.frameworkset.spi.remote.hession.server.ServiceInf.class, url);
@@ -61,7 +61,7 @@ public class ClientTest {
 	@Test
 	public void testSimpleHessian() throws MalformedURLException
 	{
-		String url = "http://localhost/SanyPDP/hessian?service=basicservice";//指定容器标识和容器类型及服务标识
+		String url = "http://localhost:8080/SanyPDP/hessian?service=basicservice";//指定容器标识和容器类型及服务标识
 		
 		 HessianProxyFactory factory = new HessianProxyFactory();
 	    ServiceInf basic = (ServiceInf) factory.create(org.frameworkset.spi.remote.hession.server.ServiceInf.class, url);

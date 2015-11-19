@@ -198,6 +198,28 @@
 	<target name="distrib-bboss-plugin-wordpdf-jars" description="distrib-bboss-plugin-wordpdf-jars">
 	</target>
 	<target name="distrib-bboss-plugin-hessian-jars" description="distrib-bboss-plugin-hessian-jars">
+		<for list="${demoproject-lib},${cms_baseline-lib}" param="destdir">
+			<sequential>
+				<echo>@{destdir}-------------------------------</echo>
+				<antcall target="svn-update-procedure">
+					<param name="sourcedir" value="${bboss-plugin-hessian}/distrib" />
+					<param name="filedir" value="@{destdir}" />
+					<param name="files"
+						value="bboss-hessian.jar,bboss-hessian-test.jar" />
+				</antcall>
+			</sequential>
+		</for>
+		<for list="${bboss-site-lib}" param="destdir">
+			<sequential>
+				<echo>@{destdir}-------------------------------</echo>
+				<antcall target="svn-update-procedure">
+					<param name="sourcedir" value="${bboss-plugin-hessian}/distrib" />
+					<param name="filedir" value="@{destdir}" />
+					<param name="files"
+						value="bboss-hessian.jar" />
+				</antcall>
+			</sequential>
+		</for>
 	</target>
 
 	<target name="build-bboss-jodconverter-core" description="build bboss-jodconverter-core project">
@@ -697,7 +719,7 @@
 
 	<target name="distrib-bboss-mvc-jars" description="distrib-bboss-mvc-jars">
 		<for
-			list="${bigdata-lib},${bigdatamonitor-lib},${bboss-plugin-wordpdf-lib-depends},${bboss-plugin-hessian-lib},${bbossupload-lib},${demoproject-lib},${cms_baseline-lib},${monitorconsole-compilelib},${monitorconsole-lib},${creatoresb-lib},${mvc-lib},${xmlrequest-lib},${sessionmonitor-lib},${bboss-security-web-lib},${bboss-gencode-lib},${bboss-taglib-lib},${bboss-site-lib}"
+			list="${bigdata-lib},${bigdatamonitor-lib},${bboss-plugin-wordpdf-lib-depends},${bbossupload-lib},${demoproject-lib},${cms_baseline-lib},${monitorconsole-compilelib},${monitorconsole-lib},${creatoresb-lib},${mvc-lib},${xmlrequest-lib},${sessionmonitor-lib},${bboss-security-web-lib},${bboss-gencode-lib},${bboss-taglib-lib},${bboss-site-lib}"
 			param="destdir">
 			<sequential>
 				<echo>@{destdir}-------------------------------</echo>
@@ -711,7 +733,7 @@
 	</target>
 	<target name="distrib-bboss-security-jars" description="distrib-bboss-security-jars">
 		<for
-			list="${bigdata-lib},${bigdatamonitor-lib},${bboss-mvc-lib},${bboss-site-lib},${bboss-taglib-lib},${bboss-plugin-wordpdf-lib-depends},${bboss-plugin-hessian-lib},${bbossupload-lib},${demoproject-lib},${cms_baseline-lib},${monitorconsole-compilelib},${monitorconsole-lib},${creatoresb-lib},${mvc-lib},${xmlrequest-lib},${session-lib},${sessionmonitor-lib},${bboss-security-web-lib}"
+			list="${bigdata-lib},${bigdatamonitor-lib},${bboss-mvc-lib},${bboss-site-lib},${bboss-taglib-lib},${bboss-plugin-wordpdf-lib-depends},${bbossupload-lib},${demoproject-lib},${cms_baseline-lib},${monitorconsole-compilelib},${monitorconsole-lib},${creatoresb-lib},${mvc-lib},${xmlrequest-lib},${session-lib},${sessionmonitor-lib},${bboss-security-web-lib}"
 			param="destdir">
 			<sequential>
 				<echo>@{destdir}-------------------------------</echo>

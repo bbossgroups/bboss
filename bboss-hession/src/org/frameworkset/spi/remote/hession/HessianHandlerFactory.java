@@ -15,15 +15,19 @@
  */
 package org.frameworkset.spi.remote.hession;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
 import org.frameworkset.spi.ApplicationContext;
+import org.frameworkset.spi.BaseApplicationContext;
 import org.frameworkset.spi.DefaultApplicationContext;
-import org.frameworkset.web.servlet.support.WebApplicationContextUtils;
+
 
 /**
  * <p> HessianHandlerFactory.java</p>
@@ -36,10 +40,47 @@ import org.frameworkset.web.servlet.support.WebApplicationContextUtils;
  * @version 1.0
  */
 public class HessianHandlerFactory {
-
+	private static Logger log = Logger.getLogger(HessianHandlerFactory.class);
 	private Map<String,HessianHanderContainer> containers ;
+	private Method getWebApplicationContext;
 	public HessianHandlerFactory() {
 		containers = new HashMap<String,HessianHanderContainer>();
+		try {
+			Class WebApplicationContextUtils = Class.forName("org.frameworkset.web.servlet.support.WebApplicationContextUtils");
+			getWebApplicationContext = WebApplicationContextUtils.getMethod("getWebApplicationContext");
+			 
+		} catch (ClassNotFoundException e) {
+			log.debug("init mvc hessian container failed:class org.frameworkset.web.servlet.support.WebApplicationContextUtils not founded .check bboss-mvc.jar in your classpath.",e);
+		} catch (NoSuchMethodException e) {
+			log.debug("init mvc hessian container failed:NoSuchMethodException getWebApplicationContext in class org.frameworkset.web.servlet.support.WebApplicationContextUtils not founded .",e);
+		} catch (SecurityException e) {
+			log.debug("init mvc hessian container with SecurityException in class  org.frameworkset.web.servlet.support.WebApplicationContextUtils .",e);
+		}
+		catch (RuntimeException e) {
+			log.debug("init mvc hessian container with RuntimeException in class  org.frameworkset.web.servlet.support.WebApplicationContextUtils .",e);
+		}
+	 catch (Exception e) {
+			log.debug("init mvc hessian container with SecurityException in class  org.frameworkset.web.servlet.support.WebApplicationContextUtils .",e);
+		}
+		catch (Throwable e) {
+			log.debug("init mvc hessian container with SecurityException in class  org.frameworkset.web.servlet.support.WebApplicationContextUtils .",e);
+		}
+	}
+	private BaseApplicationContext getMVCBaseApplicationContext()
+	{
+		try {
+			if(getWebApplicationContext != null)
+				return (BaseApplicationContext)getWebApplicationContext.invoke(null, null);
+		} catch (SecurityException e) {
+			log.debug("init mvc hessian container with SecurityException in class  org.frameworkset.web.servlet.support.WebApplicationContextUtils .",e);
+		} catch (IllegalAccessException e) {
+			log.debug("IllegalAccessException while Invoke getWebApplicationContext method of class  org.frameworkset.web.servlet.support.WebApplicationContextUtils failed.",e);
+		} catch (IllegalArgumentException e) {
+			log.debug("IllegalArgumentException while Invoke getWebApplicationContext method of class  org.frameworkset.web.servlet.support.WebApplicationContextUtils failed.",e);
+		} catch (InvocationTargetException e) {
+			log.debug("InvocationTargetException while Invoke getWebApplicationContext method of class  org.frameworkset.web.servlet.support.WebApplicationContextUtils failed.",e);
+		}
+		return null;
 	}
 	/**
 	 * http://localhost/hession?container=xx.xx.xx&service=ss
@@ -73,20 +114,28 @@ public class HessianHandlerFactory {
 				containtype = "simple";
 			
 		}
+		
 		if("bboss.hessian.mvc".equals(container) || "mvc".equals(containtype)){
-			hessiancontainer = containers.get("bboss.hessian.mvc");
-			if(hessiancontainer == null)
+			if(getWebApplicationContext != null)
 			{
-				synchronized(containers)
+				hessiancontainer = containers.get("bboss.hessian.mvc");
+				if(hessiancontainer == null)
 				{
-					hessiancontainer = containers.get("bboss.hessian.mvc");
-					if(hessiancontainer == null)
+					synchronized(containers)
 					{
-						hessiancontainer = new HessianHanderContainer(WebApplicationContextUtils.getWebApplicationContext());
-						containers.put("bboss.hessian.mvc",hessiancontainer);
+						hessiancontainer = containers.get("bboss.hessian.mvc");
+						if(hessiancontainer == null)
+						{
+							BaseApplicationContext mvccontainer = getMVCBaseApplicationContext();
+							if(mvccontainer != null)							
+							{
+								hessiancontainer = new HessianHanderContainer(mvccontainer);
+								containers.put("bboss.hessian.mvc",hessiancontainer);
+							}
+						}
 					}
+					
 				}
-				
 			}
 		}
 		else if("simple".equals(containtype)){

@@ -20,6 +20,8 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
+import javax.servlet.ServletException;
+
 import org.apache.log4j.Logger;
 import org.frameworkset.spi.BaseApplicationContext;
 import org.frameworkset.spi.assemble.Pro;
@@ -61,6 +63,8 @@ public class HessianHanderContainer {
 			handler = parserHessionHandler(service) ;
 			this.hessionHandlers.put(service, handler);
 		}
+		if(handler == null)
+			 throw new 	java.lang.IllegalArgumentException("Service["+service+"] not found in "+this.context.getConfigfile());
 		return handler;
 			
 	}
@@ -148,9 +152,10 @@ public class HessianHanderContainer {
 		{
 			
 			pro = _searchWithHessionPort(service);
-			service = pro.getName();
 			if(pro == null)
-				throw new Exception("Parser Hession Handler failed:hession service not found in "+context.getConfigfile());
+				throw new Exception("Parser Hession Handler failed:hession service["+service+"] not found in hessian container[ "+context.getConfigfile()+"]");
+			service = pro.getName();
+			
 		}
 		String api = pro.getStringExtendAttribute("hessian:api");
 		String serialtype = pro.getStringExtendAttribute("hessian:serializable");

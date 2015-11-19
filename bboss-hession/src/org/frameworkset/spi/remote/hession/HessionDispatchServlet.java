@@ -70,10 +70,17 @@ public class HessionDispatchServlet extends GenericServlet {
 		try {
 			AbstractHessionHandler handler = this.hessianHandlerFactory
 					.getHessionHandler(req, res);
-			handler.invoke(req, res);
-		} catch (RuntimeException e) {
+			if(handler != null)
+				handler.invoke(req, res);
+		}
+		
+		catch (RuntimeException e) {
 			throw e;
-		} catch (Throwable e) {
+		} 
+		catch (Exception e) {
+			throw new ServletException(e);
+		}
+		catch (Throwable e) {
 			throw new ServletException(e);
 		}
 
