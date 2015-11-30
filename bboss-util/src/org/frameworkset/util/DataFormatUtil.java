@@ -1,9 +1,13 @@
 package org.frameworkset.util;
 
+import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
+import java.util.TimeZone;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -42,6 +46,138 @@ public class DataFormatUtil {
 		return format;
 	}
 	
+	public SimpleDateFormat _getSimpleDateFormat(String dateFormat,Locale locale,TimeZone tz)
+	{
+		SimpleDateFormat format = null;
+		if(locale == null)
+		{
+			String key = tz == null?dateFormat:dateFormat+"_"+tz.toString();
+			format = this.dateformat.get(key);
+			if(format != null)
+				return format;
+			format = new SimpleDateFormat(dateFormat);
+			if(tz != null)
+				format.setTimeZone(tz);
+			dateformat.put(key, format);
+		}
+		else
+		{
+			String key = tz == null?dateFormat+"_"+locale.toString():dateFormat+"_"+locale.toString()+"_"+tz.toString();
+			format = this.dateformat.get(key);
+			if(format != null)
+				return format;
+			format = new SimpleDateFormat(dateFormat,locale);
+			if(tz != null)
+				format.setTimeZone(tz);
+			dateformat.put(key, format);
+		}
+		return format;
+	}
+	
+	public SimpleDateFormat _getSimpleDateFormat(String dateFormat,Locale locale,String tz)
+	{
+		SimpleDateFormat format = null;
+		if(locale == null)
+		{
+			String key = tz == null?dateFormat:dateFormat+"_"+tz ;
+			format = this.dateformat.get(key);
+			if(format != null)
+				return format;
+			format = new SimpleDateFormat(dateFormat);
+			if(tz != null)
+				format.setTimeZone(TimeZone.getTimeZone(tz));
+			dateformat.put(key, format);
+		}
+		else
+		{
+			String key = tz == null?dateFormat+"_"+locale.toString():dateFormat+"_"+locale.toString()+"_"+tz ;
+			format = this.dateformat.get(key);
+			if(format != null)
+				return format;
+			format = new SimpleDateFormat(dateFormat,locale);
+			if(tz != null)
+				format.setTimeZone(TimeZone.getTimeZone(tz));
+			dateformat.put(key, format);
+		}
+		return format;
+	}
+	
+	public SimpleDateFormat _getSimpleDateFormat(String dateFormat,String locale,String tz)
+	{
+		SimpleDateFormat format = null;
+		if(locale == null)
+		{
+			String key = tz == null?dateFormat:dateFormat+"_"+tz ;
+			format = this.dateformat.get(key);
+			if(format != null)
+				return format;
+			format = new SimpleDateFormat(dateFormat);
+			if(tz != null)
+				format.setTimeZone(TimeZone.getTimeZone(tz));
+			dateformat.put(dateFormat, format);
+		}
+		else
+		{
+			String key = tz == null?dateFormat+"_"+locale.toString():dateFormat+"_"+locale.toString()+"_"+tz;
+			format = this.dateformat.get(key);
+			if(format != null)
+				return format;
+//			Locale locale_ = new Locale(locale);
+			
+			format = new SimpleDateFormat(dateFormat);
+			if(tz != null)
+				format.setTimeZone(TimeZone.getTimeZone(tz));
+			dateformat.put(key, format);
+		}
+		return format;
+	}
+	
+	public static void main(String[] args)
+	{
+		 
+		        //假如这个是你已知的时间类型
+		        Calendar cal = Calendar.getInstance();
+		        cal.getTimeInMillis();
+		       
+		        DateFormat fmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",Locale.CHINESE);
+		        
+		        fmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		        String dd = Locale.JAPANESE.toString();
+//		        fmt.setTimeZone(TimeZone.getTimeZone("Africa/Algiers"));
+		         String beijingFormatStr = fmt.format(cal.getTime());
+		        System.out.println(beijingFormatStr);
+		        
+		        fmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		        fmt.setTimeZone(TimeZone.getTimeZone("Japan"));
+		          beijingFormatStr = fmt.format(cal.getTime());
+		        System.out.println("jpane:"+beijingFormatStr);      
+		        
+		        fmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		        dd = Locale.JAPAN.getVariant();
+		        dd = Locale.JAPAN.getCountry();
+		        fmt.setTimeZone(TimeZone.getTimeZone(dd ));
+		          beijingFormatStr = fmt.format(cal.getTime());
+		        System.out.println("jpane1:"+beijingFormatStr);      
+		        
+		        fmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		        dd = Locale.JAPANESE.toString();
+		        fmt.setTimeZone(TimeZone.getTimeZone("Africa/Algiers"));
+		         beijingFormatStr = fmt.format(cal.getTime());
+		        System.out.println(beijingFormatStr);
+		        
+		        fmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		        dd = Locale.CHINA.toString();
+		        fmt.setTimeZone(TimeZone.getTimeZone("America/Dawson"));
+		         beijingFormatStr = fmt.format(cal.getTime());
+		        System.out.println(beijingFormatStr);
+		        
+		        fmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		        dd = Locale.JAPANESE.toString();
+		        fmt.setTimeZone(TimeZone.getTimeZone("GMT"));
+		         beijingFormatStr = fmt.format(cal.getTime());
+		        System.out.println(beijingFormatStr);
+	}
+	
 	public static SimpleDateFormat getSimpleDateFormat(HttpServletRequest request,String dateFormat)
 	{
 		DataFormatUtil dataFormatUtil = (DataFormatUtil)request.getAttribute(DataFormatUtil.DataFormatUtilKey);
@@ -51,6 +187,40 @@ public class DataFormatUtil {
 			request.setAttribute(DataFormatUtilKey, dataFormatUtil);
 		}
 		SimpleDateFormat temp = dataFormatUtil._getSimpleDateFormat(dateFormat);
+		return temp;
+	}
+	
+	public static SimpleDateFormat getSimpleDateFormat(HttpServletRequest request,String dateFormat,Locale locale,TimeZone timeZone)
+	{
+		DataFormatUtil dataFormatUtil = (DataFormatUtil)request.getAttribute(DataFormatUtil.DataFormatUtilKey);
+		if(dataFormatUtil == null)
+		{
+			dataFormatUtil = new DataFormatUtil();
+			request.setAttribute(DataFormatUtilKey, dataFormatUtil);
+		}
+		SimpleDateFormat temp = dataFormatUtil._getSimpleDateFormat(dateFormat,locale,timeZone);
+		return temp;
+	}
+	public static SimpleDateFormat getSimpleDateFormat(HttpServletRequest request,String dateFormat,Locale locale,String timeZone)
+	{
+		DataFormatUtil dataFormatUtil = (DataFormatUtil)request.getAttribute(DataFormatUtil.DataFormatUtilKey);
+		if(dataFormatUtil == null)
+		{
+			dataFormatUtil = new DataFormatUtil();
+			request.setAttribute(DataFormatUtilKey, dataFormatUtil);
+		}
+		SimpleDateFormat temp = dataFormatUtil._getSimpleDateFormat(dateFormat,locale,timeZone);
+		return temp;
+	}
+	public static SimpleDateFormat getSimpleDateFormat(HttpServletRequest request,String dateFormat,String locale,String timeZone)
+	{
+		DataFormatUtil dataFormatUtil = (DataFormatUtil)request.getAttribute(DataFormatUtil.DataFormatUtilKey);
+		if(dataFormatUtil == null)
+		{
+			dataFormatUtil = new DataFormatUtil();
+			request.setAttribute(DataFormatUtilKey, dataFormatUtil);
+		}
+		SimpleDateFormat temp = dataFormatUtil._getSimpleDateFormat(dateFormat,locale,timeZone);
 		return temp;
 	}
 	

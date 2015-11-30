@@ -37,7 +37,6 @@ package com.frameworkset.common.tag.pager.tags;
 import java.io.OutputStream;
 import java.sql.Blob;
 import java.sql.Clob;
-import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
@@ -45,6 +44,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Stack;
 
@@ -1181,11 +1181,54 @@ public class PagerDataSet extends PagerTagSupport {
 	 * @param columnid
 	 * @return Date
 	 */
-	public String getFormatDate(int rowid, int columnid, String format) {
+	public String getFormatDate(int rowid, int columnid, String format,String locale,boolean userRequestLocale,String timeZone) {
 		Object obj = getValue(rowid, columnid);
-		return formatDate(request,obj,format);
+		return formatDate(request,obj,format,  locale,  userRequestLocale,  timeZone);
 
 	}
+	public static String formatDate(HttpServletRequest request,Object data,String dateformat,String locale,boolean userRequestLocale,String timeZone)
+	{
+		if (data == null)
+			return null;
+//		SimpleDateFormat dateFormat = new SimpleDateFormat(dateformat);
+		SimpleDateFormat dateFormat = null;
+		if(locale == null)
+		{
+			if(!userRequestLocale)
+				dateFormat = DataFormatUtil.getSimpleDateFormat(request,dateformat,(String)null,timeZone);
+			else
+				dateFormat = DataFormatUtil.getSimpleDateFormat(request,dateformat,request.getLocale(),timeZone);
+		}
+		else
+		{
+			dateFormat = DataFormatUtil.getSimpleDateFormat(request,dateformat,locale,timeZone);
+		}
+		
+		try {
+		    if(data instanceof Date)
+		    {
+    			Date date = (Date) data;
+    			return dateFormat.format(date);
+		    }
+		    else if(data instanceof Long)
+		    {
+		        long va = ((Long)data).longValue();
+		        if(va <= 0)
+		            return "";
+		        Date date = new Date(va);
+                return dateFormat.format(date);
+		    }
+		    else 
+            {
+                return data.toString();
+            }
+            
+		} catch (Exception e) {
+			// e.printStackTrace();
+			return data.toString();
+		}
+	}
+	
 	public static String formatDate(HttpServletRequest request,Object data,String dateformat)
 	{
 		if (data == null)
@@ -1241,9 +1284,9 @@ public class PagerDataSet extends PagerTagSupport {
 	 * @param colName
 	 * @return Date
 	 */
-	public String getFormatDate(int rowid, String colName, String format) {
+	public String getFormatDate(int rowid, String colName, String format,String locale,boolean userRequestLocale,String timeZone) {
 		Object obj = getValue(rowid, colName);
-		return formatDate(request,obj,format);
+		return formatDate(request,obj,format,  locale,  userRequestLocale,  timeZone);
 	}
 	
 	
@@ -1252,9 +1295,9 @@ public class PagerDataSet extends PagerTagSupport {
 	 * @param colName
 	 * @return Date
 	 */
-	public String getFormatDate(int rowid,  String format) {
+	public String getFormatDate(int rowid,  String format,String locale,boolean userRequestLocale,String timeZone) {
 		Object obj = getValue(rowid);
-		return formatDate(request,obj,format);
+		return formatDate(request,obj,format,  locale,  userRequestLocale,  timeZone);
 	}
 
 	/**
@@ -1272,9 +1315,9 @@ public class PagerDataSet extends PagerTagSupport {
 	 * @return Date
 	 */
 	public String getFormatDate(int rowid, String colName, String property,
-			String format) {
+			String format,String locale,boolean userRequestLocale,String timeZone) {
 		Object obj = getValue(rowid, colName, property);
-		return formatDate(request,obj,format);
+		return formatDate(request,obj,format,  locale,  userRequestLocale,  timeZone);
 	}
 
 	/**
@@ -1298,9 +1341,9 @@ public class PagerDataSet extends PagerTagSupport {
 	 */
 
 	public String getFormatDate(int rowid, int columnid, String property,
-			String format) {
+			String format,String locale,boolean userRequestLocale,String timeZone) {
 		Object obj = getValue(rowid, columnid, property);
-		return formatDate(request,obj,format);
+		return formatDate(request,obj,format,  locale,  userRequestLocale,  timeZone);
 
 	}
 
