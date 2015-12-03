@@ -245,6 +245,8 @@ public class TokenService implements TokenServiceInf,InitializingBean {
 	 */
 	public static boolean assertDToken(Integer result)
 	{
+		if(result == null)
+			return false;
 		return result.intValue() == TokenStore.token_request_validateresult_ok.intValue() || result.intValue() == TokenStore.token_request_validateresult_nodtoken.intValue() || result.intValue() == TokenStore.token_request_validateresult_notenabletoken.intValue();
 	}
 	
@@ -284,6 +286,8 @@ public class TokenService implements TokenServiceInf,InitializingBean {
 	 */
 	public static boolean assertDTokenSetted(Integer result)
 	{
+		if(result == null)
+			return false;
 //		return !(result == MemTokenManager.temptoken_request_validateresult_nodtoken 
 //				|| result == MemTokenManager.temptoken_request_validateresult_fail);		
 		return result.intValue() == TokenStore.token_request_validateresult_ok.intValue() || result.intValue() == TokenStore.token_request_validateresult_notenabletoken.intValue();
@@ -296,7 +300,7 @@ public class TokenService implements TokenServiceInf,InitializingBean {
 	 */
 	public static boolean assertDTokenSetted(ServletRequest request)
 	{
-
+		
 		Integer result = (Integer)request.getAttribute(TokenStore.temptoken_request_validateresult_key);
 		return assertDTokenSetted(result);
 		

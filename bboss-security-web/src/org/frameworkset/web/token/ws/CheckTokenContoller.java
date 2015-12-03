@@ -42,10 +42,15 @@ public class CheckTokenContoller implements CheckTokenService{
 		TokenCheckResponse tokenCheckResponse = new TokenCheckResponse();
 		try {
 			TokenResult result = TokenHelper.getTokenService().checkToken(appid,secret,token);
-			tokenCheckResponse.setResultcode(TokenStore.RESULT_OK );
-			tokenCheckResponse.setValidateResult(TokenService.assertDToken(result.getResult()));
-			tokenCheckResponse.setUserAccount(result.getAccount());
-			tokenCheckResponse.setWorknumber(result.getWorknumber());
+			if(result.getResult() == null)
+				tokenCheckResponse.setResultcode(TokenStore.RESULT_NOTENABLETOKEN );
+			else
+			{
+				tokenCheckResponse.setResultcode(TokenStore.RESULT_OK );
+				tokenCheckResponse.setValidateResult(TokenService.assertDToken(result.getResult()));
+				tokenCheckResponse.setUserAccount(result.getAccount());
+				tokenCheckResponse.setWorknumber(result.getWorknumber());
+			}
 			
 		} catch (TokenException e) {
 			tokenCheckResponse.setResultcode(e.getMessage());
@@ -61,10 +66,15 @@ public class CheckTokenContoller implements CheckTokenService{
 		TokenCheckResponse tokenCheckResponse = new TokenCheckResponse();
 		try {
 			TokenResult result = TokenHelper.getTokenService().checkTicket(appid,secret,ticket);
-			tokenCheckResponse.setResultcode(TokenStore.RESULT_OK );
-			tokenCheckResponse.setValidateResult(TokenService.assertDToken(result.getResult()));
-			tokenCheckResponse.setUserAccount(result.getAccount());
-			tokenCheckResponse.setWorknumber(result.getWorknumber());
+			if(result.getResult() == null)
+				tokenCheckResponse.setResultcode(TokenStore.RESULT_NOTENABLETOKEN );
+			else
+			{
+				tokenCheckResponse.setResultcode(TokenStore.RESULT_OK );
+				tokenCheckResponse.setValidateResult(TokenService.assertDToken(result.getResult()));
+				tokenCheckResponse.setUserAccount(result.getAccount());
+				tokenCheckResponse.setWorknumber(result.getWorknumber());
+			}
 			
 		} catch (TokenException e) {
 			tokenCheckResponse.setResultcode(e.getMessage());

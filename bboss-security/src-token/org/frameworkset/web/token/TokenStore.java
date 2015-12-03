@@ -41,6 +41,7 @@ public interface TokenStore {
 	public static final String token_request_worknumber_key = "token_request_worknumber_key";
 	public static final String RESULT_OK = "ok";
 	public static final String RESULT_FAIL = "fail";
+	public static final String RESULT_NOTENABLETOKEN = "NOTENABLETOKEN";
 	public static final String ERROR_CODE_NOENABLETICKET = "NOENABLETICKET";
 	public static final String ERROR_CODE_NOENABLETOKEN = "NOENABLETOKEN";
 	public static final String ERROR_CODE_GETKEYPAIRFAILED = "GETKEYPAIRFAILED";

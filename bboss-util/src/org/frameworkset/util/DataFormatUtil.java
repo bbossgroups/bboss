@@ -148,7 +148,7 @@ public class DataFormatUtil {
 		        System.out.println(beijingFormatStr);
 		        
 		        fmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		        fmt.setTimeZone(TimeZone.getTimeZone("Japan"));
+		        fmt.setTimeZone(TimeZone.getTimeZone("GMT+9"));
 		          beijingFormatStr = fmt.format(cal.getTime());
 		        System.out.println("jpane:"+beijingFormatStr);      
 		        

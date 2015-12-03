@@ -13,7 +13,10 @@ public interface TokenServiceInf {
 
 	public abstract String buildDToken(String elementType, String jsonsplit,
 			HttpServletRequest request, String fid) throws TokenException;
-
+	public String getTokenfailpath();
+	public TokenResult checkTicket(String appid,String secret,String ticket) throws TokenException;
+	public TokenResult checkToken(String appid,String secret,String token) throws TokenException;
+	public int checkTempToken(String token) throws TokenException;
 	/**
 	 * 生成隐藏域令牌,输出值为：
 	 * <input type="hidden" name="_dt_token_" value="-1518435257">
@@ -23,7 +26,7 @@ public interface TokenServiceInf {
 	 */
 	public abstract String buildHiddenDToken(HttpServletRequest request)
 			throws TokenException;
-
+	public String appendDTokenToURL(HttpServletRequest request,String url) throws TokenException;
 	/**
 	 * 生成json串令牌
 	 * 如果jsonsplit为'，则输出值为：

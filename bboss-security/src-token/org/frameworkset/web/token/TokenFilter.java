@@ -40,7 +40,7 @@ public class TokenFilter implements Filter{
 	private static Logger log = Logger.getLogger(TokenFilter.class);
 	
 	protected String redirectpath = "/login.jsp";
-	private TokenService tokenService = null;
+	private TokenServiceInf tokenService = null;
 	private boolean inited =false;
 	private void _inited()
 	{
@@ -48,6 +48,8 @@ public class TokenFilter implements Filter{
 			return;
 		synchronized(TokenFilter.class)
 		{
+			if(inited)
+				return;
 			try {
 				tokenService = TokenHelper.getTokenService();
 			}
@@ -308,7 +310,7 @@ public class TokenFilter implements Filter{
 		result = (Integer)request.getAttribute(TokenStore.temptoken_request_validateresult_key);//
 		if(result != null)
 		{
-			return tokenService.assertDToken(result);
+			return TokenService.assertDToken(result);
 		}
 		
 		String token = request.getParameter(TokenStore.temptoken_param_name);
@@ -378,14 +380,14 @@ public class TokenFilter implements Filter{
 			}
 		}
 		request.setAttribute(TokenStore.temptoken_request_validateresult_key,result);
-		return 	tokenService.assertDToken(result);
+		return 	TokenService.assertDToken(result);
 	}
 	
 	
 	public void doDTokencheck(ServletRequest request,ServletResponse response) throws IOException, DTokenValidateFailedException
 	{
 		_inited();
-		if(!tokenService.assertDTokenSetted(request))
+		if(!TokenService.assertDTokenSetted(request))
 		{
 			if(request instanceof HttpServletRequest)
 			{
@@ -401,7 +403,7 @@ public class TokenFilter implements Filter{
 	public void doTicketcheck(ServletRequest request,ServletResponse response) throws IOException, DTokenValidateFailedException
 	{
 		_inited();
-		if(!tokenService.assertDTokenSetted(request))
+		if(!TokenService.assertDTokenSetted(request))
 		{
 			if(request instanceof HttpServletRequest)
 			{

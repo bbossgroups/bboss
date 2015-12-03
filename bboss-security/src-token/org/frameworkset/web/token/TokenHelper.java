@@ -16,12 +16,15 @@
 package org.frameworkset.web.token;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
+import org.apache.log4j.Logger;
 import org.frameworkset.spi.BaseApplicationContext;
 import org.frameworkset.spi.DefaultApplicationContext;
+import org.frameworkset.spi.assemble.Pro;
 
 /**
  * <p>Title: TokenHelper.java</p> 
@@ -34,39 +37,103 @@ import org.frameworkset.spi.DefaultApplicationContext;
  */
 public class TokenHelper {
 	private static TokenFilter tokenFilter;
-	private static TokenService tokenService;
+	private static TokenServiceInf tokenService;
+	private static final Logger log = Logger.getLogger(TokenHelper.class);
 	static void setTokenFilter(TokenFilter tokenFilter)
 	{
+		init();
 		TokenHelper.tokenFilter = tokenFilter;
 	}
-	static {
-		BaseApplicationContext context = DefaultApplicationContext.getApplicationContext("tokenconf.xml");
-		tokenService = context.getTBeanObject("token.TokenService", TokenService.class);
+	static boolean inited;
+	static void init(){
+		if(inited) 
+			return;
+		synchronized(TokenHelper.class)
+		{
+			if(inited) 
+				return;
+			try {
+				BaseApplicationContext context = DefaultApplicationContext.getApplicationContext("tokenconf.xml");
+				Pro pro = context.getProBean("token.TokenService");
+				if(pro != null)
+				{
+					List<Pro> refs = pro.getReferences();
+					if(refs == null || refs.size() == 0)
+					{
+						tokenService = new DummyTokenService();
+					}
+					else
+					{
+						boolean enabled = false;
+						for(Pro p:refs)
+						{
+							if(p.getName() != null && p.getName().equals("enableToken"))
+							{
+								Object value = p.getValue();
+								if(value != null && value.toString().equals("true"))
+									enabled = true; 
+								break;
+							}
+						}
+						if(enabled)
+						{
+							tokenService = context.getTBeanObject("token.TokenService", TokenService.class);
+						}
+						else
+						{
+							tokenService = new DummyTokenService();
+						}
+					}
+				}
+				else
+				{
+					tokenService = new DummyTokenService();
+				}
+			}
+			catch (RuntimeException e) {
+				tokenService = new DummyTokenService();
+				log.warn("",e);
+			}
+			catch (Exception e) {
+				tokenService = new DummyTokenService();
+				log.warn("",e);
+			}
+			catch (Throwable e) {
+				tokenService = new DummyTokenService();
+				log.warn("",e);
+			}
+			inited = true;
+		}
 	}
-	public static TokenService getTokenService() {
+	public static TokenServiceInf getTokenService() {
+		init();
 		return tokenService;
 	}
 	
 	public static boolean isEnableToken()
 	{
+		init();
 		return tokenService.isEnableToken();
 	}
 	
 	public static void doDTokencheck(ServletRequest request,
 			ServletResponse response) throws IOException, DTokenValidateFailedException
 	{
+		init();
 		tokenFilter.doDTokencheck(request, response);
 	}
 	
 	public static void doTicketcheck(ServletRequest request,
 			ServletResponse response) throws IOException, DTokenValidateFailedException
 	{
+		init();
 		tokenFilter.doTicketcheck(request, response);
 	}
 
 	public static void destroy() {
 		tokenService = null;
 		tokenFilter = null;
+		inited = false;
 		
 	}
 }
