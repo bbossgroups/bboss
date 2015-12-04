@@ -15,6 +15,8 @@
  */
 package org.frameworkset.util;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -86,6 +88,15 @@ public class TimeUtil {
 			}
 		
 		return timeUnit_;
+	}
+	
+	public static Date addDates(Date date,int days)
+	{
+		Calendar c = Calendar.getInstance();
+		c.setTime(date);
+		c.add(Calendar.DAY_OF_MONTH, days);
+		return c.getTime();
+		
 	}
 
 }
