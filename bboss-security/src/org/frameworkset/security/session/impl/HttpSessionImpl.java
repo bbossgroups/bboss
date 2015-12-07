@@ -149,12 +149,12 @@ public class HttpSessionImpl implements HttpSession {
 
 	
 	public HttpSessionContext getSessionContext() {
-		return null;
+		return new SimpleHttpSessionContext();
 	}
 
 	@Override
-	public void setMaxInactiveInterval(int arg0) {
-		this.session.setMaxInactiveInterval(arg0);
+	public void setMaxInactiveInterval(int maxInactiveInterval) {
+		this.session.setMaxInactiveInterval(this,maxInactiveInterval,true,  contextpath);
 		
 	}
 	

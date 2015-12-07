@@ -61,6 +61,8 @@ public interface SessionStore{
 	void setSessionManager(SessionManager sessionManager);
 	
 	Session getSession(String appKey,String contextpath,String sessionid);
+
+	void setMaxInactiveInterval(HttpSession session, String appKey, String id, long maxInactiveInterval,String contextpath);
 	
 
 }

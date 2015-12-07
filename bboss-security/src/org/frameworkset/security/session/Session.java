@@ -47,7 +47,8 @@ public interface Session {
 	public void removeAttribute(HttpSession session,String attribute,String contextpath) ;
 	public void removeValue(HttpSession session,String attribute,String contextpath) ;
 	public void setAttribute(HttpSession session,String attribute, Object value,String contextpath) ;
-	public void setMaxInactiveInterval(long maxInactiveInterval) ;
+	public void setMaxInactiveInterval(HttpSession session,long maxInactiveInterval,String contextpath) ;
+	public void setMaxInactiveInterval(HttpSession session,long maxInactiveInterval,boolean refreshstore,String contextpath) ;
 	public String getReferip();
 	public boolean isValidate();
 	public void _setSessionStore(SessionStore sessionStore);

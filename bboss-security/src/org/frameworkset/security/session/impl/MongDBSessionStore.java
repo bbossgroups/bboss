@@ -114,7 +114,7 @@ public class MongDBSessionStore extends BaseSessionStore{
 		.append("secure", secure)
 		.append("lastAccessedHostIP", SimpleStringUtil.getHostIP()));
 		SimpleSessionImpl session = new SimpleSessionImpl();
-		session.setMaxInactiveInterval(maxInactiveInterval);
+		session.setMaxInactiveInterval(null,maxInactiveInterval,null);
 		session.setAppKey(sessionBasicInfo.getAppKey());
 		session.setCreationTime(creationTime);
 		session.setLastAccessedTime(lastAccessedTime);
@@ -288,6 +288,14 @@ public class MongDBSessionStore extends BaseSessionStore{
 //		return session;
 		
 	}
+	
+	public void setMaxInactiveInterval(HttpSession session, String appKey, String sessionID, long maxInactiveInterval,String contextpath)
+	{
+		DBCollection sessions = getAppSessionDBCollection( appKey);	
+//		Session session = getSession(appKey,contextpath, sessionID);
+//		sessions.update(new BasicDBObject("sessionid",sessionID), new BasicDBObject("$set",new BasicDBObject(attribute, value)));
+		MongoDB.update(sessions,new BasicDBObject("sessionid",sessionID), new BasicDBObject("$set",new BasicDBObject("maxInactiveInterval", maxInactiveInterval)));
+	}
 	private Session getSession(String appKey,String contextpath, String sessionid,List<String> attributeNames) {
 		DBCollection sessions =getAppSessionDBCollection( appKey);
 		BasicDBObject keys = new BasicDBObject();
@@ -318,7 +326,7 @@ public class MongDBSessionStore extends BaseSessionStore{
 		if(object != null)
 		{
 			SimpleSessionImpl session = new SimpleSessionImpl();
-			session.setMaxInactiveInterval((Long)object.get("maxInactiveInterval"));
+			session.setMaxInactiveInterval(null,(Long)object.get("maxInactiveInterval"),contextpath);
 			session.setAppKey(appKey);
 			session.setCreationTime((Long)object.get("creationTime"));
 			session.setLastAccessedTime((Long)object.get("lastAccessedTime"));
@@ -386,7 +394,7 @@ public class MongDBSessionStore extends BaseSessionStore{
 		if(object != null)
 		{
 			SimpleSessionImpl session = new SimpleSessionImpl();
-			session.setMaxInactiveInterval((Long)object.get("maxInactiveInterval"));
+			session.setMaxInactiveInterval(null,(Long)object.get("maxInactiveInterval"),contextpath);
 			session.setAppKey(appKey);
 			session.setCreationTime((Long)object.get("creationTime"));
 			session.setLastAccessedTime((Long)object.get("lastAccessedTime"));

@@ -212,8 +212,22 @@ public class SimpleSessionImpl implements Session{
 	}
 
 	@Override
-	public void setMaxInactiveInterval(long maxInactiveInterval) {
+	public void setMaxInactiveInterval(HttpSession session,long maxInactiveInterval,String contextpath) {
 		this.maxInactiveInterval = maxInactiveInterval;
+		
+	}
+	
+	@Override
+	public void setMaxInactiveInterval(HttpSession session,long maxInactiveInterval,boolean refreshstore,String contextpath) {
+		this.maxInactiveInterval = maxInactiveInterval;
+		if(refreshstore)
+		{
+			assertSession(  session, contextpath) ;
+			sessionStore.setMaxInactiveInterval(session,appKey, id,maxInactiveInterval,  contextpath);
+		}
+			
+		
+			
 		
 	}
 

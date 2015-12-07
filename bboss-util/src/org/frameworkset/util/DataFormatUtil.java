@@ -2,8 +2,10 @@ package org.frameworkset.util;
 
 import java.text.DateFormat;
 import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -189,6 +191,17 @@ public class DataFormatUtil {
 		SimpleDateFormat temp = dataFormatUtil._getSimpleDateFormat(dateFormat);
 		return temp;
 	}
+	public static Date getDate(HttpServletRequest request,String dateFormat,String date) throws ParseException
+	{
+		DataFormatUtil dataFormatUtil = (DataFormatUtil)request.getAttribute(DataFormatUtil.DataFormatUtilKey);
+		if(dataFormatUtil == null)
+		{
+			dataFormatUtil = new DataFormatUtil();
+			request.setAttribute(DataFormatUtilKey, dataFormatUtil);
+		}
+		SimpleDateFormat temp = dataFormatUtil._getSimpleDateFormat(dateFormat);
+		return temp.parse(date);
+	}
 	
 	public static SimpleDateFormat getSimpleDateFormat(HttpServletRequest request,String dateFormat,Locale locale,TimeZone timeZone)
 	{
@@ -223,6 +236,8 @@ public class DataFormatUtil {
 		SimpleDateFormat temp = dataFormatUtil._getSimpleDateFormat(dateFormat,locale,timeZone);
 		return temp;
 	}
+	
+	
 	
 	public static DecimalFormat getDecimalFormat(HttpServletRequest request,String decimalFormat)
 	{

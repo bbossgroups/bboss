@@ -171,6 +171,12 @@ public class DelegateSessionStore implements SessionStore {
 			session._setSessionStore(this);
 		return session;
 	}
+	@Override
+	public void setMaxInactiveInterval(HttpSession session, String appKey, String id, long maxInactiveInterval,
+			String contextpath) {
+		sessionStore.setMaxInactiveInterval(session, appKey, id, maxInactiveInterval, contextpath);
+		
+	}
 	
 	
 
