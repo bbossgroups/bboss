@@ -44,6 +44,7 @@ import com.frameworkset.common.poolman.util.SQLUtil;
 import com.frameworkset.orm.adapter.DB;
 import com.frameworkset.orm.annotation.PrimaryKey;
 import com.frameworkset.orm.engine.model.SchemaType;
+import com.frameworkset.util.EditorInf;
 import com.frameworkset.util.ValueObjectUtil;
 
 /**
@@ -227,19 +228,42 @@ public class ResultMap {
 					if(BigFile.class.isAssignableFrom(attribute.getPropertyType()) )//不支持大字段转换为BigFile接口
 						continue;
 					boolean userAnnotation = false;
+					EditorInf<?> editor = null;
 					try {
 						
 	//					Field field = classinfo.getDeclaredField(attrName);
 	//					if(field != null)
+						
+							
+						PrimaryKey apk = attribute.getPk();
+						if(apk != null)
+						{
+//							PrimaryKey apk = field.getAnnotation(PrimaryKey.class);
+							annotationName = apk.name();
+							if(annotationName == null 
+									 || annotationName.equals(""))
+							{
+								
+							}
+							else
+							{
+								attrName = annotationName;
+								upname = annotationName.toUpperCase();
+								userAnnotation = true;
+							}
+							
+						}
+						else 
 						{
 							
-							PrimaryKey apk = attribute.getPk();
-							if(apk != null)
+							ColumnWraper cl = attribute.getColumn();
+							 
+							if(cl != null)
 							{
-	//							PrimaryKey apk = field.getAnnotation(PrimaryKey.class);
-								annotationName = apk.name();
+								editor = cl.getEditor();
+								annotationName = cl.name();
 								if(annotationName == null 
-										 || annotationName.equals(""))
+										|| annotationName.equals(""))
 								{
 									
 								}
@@ -249,28 +273,9 @@ public class ResultMap {
 									upname = annotationName.toUpperCase();
 									userAnnotation = true;
 								}
-								
-							}
-							else 
-							{
-								ColumnWraper cl = attribute.getColumn();
-								if(cl != null)
-								{
-									annotationName = cl.name();
-									if(annotationName == null 
-											|| annotationName.equals(""))
-									{
-										
-									}
-									else
-									{
-										attrName = annotationName;
-										upname = annotationName.toUpperCase();
-										userAnnotation = true;
-									}
-								}
 							}
 						}
+						 
 					} catch (Exception e1) {
 						log.info(attribute.getName() + " is not a field of bean[" +valueObjectType.getClass().getCanonicalName() + "].");
 					} 
@@ -313,7 +318,7 @@ public class ResultMap {
 							propsVal = ValueExchange.getValueFromResultSet(rs, cidx, 
 									stmtInfo.getMeta().getColumnTypeByIndex(i), 
 									type, 
-									stmtInfo.getDbadapter());
+									stmtInfo.getDbadapter(),editor);
 		
 						} catch (Exception e) {
 							StringBuffer err = new StringBuffer(
@@ -358,7 +363,7 @@ public class ResultMap {
 				valueObject = (T)ValueExchange.getValueFromResultSet(rs,  1, 
 						stmtInfo.getMeta().getColumnTypeByIndex(0), 
 						valueObjectType, 
-						stmtInfo.getDbadapter());
+						stmtInfo.getDbadapter(),null);
 			}
 		}
 		else
@@ -493,6 +498,7 @@ public class ResultMap {
 					if(BigFile.class.isAssignableFrom(attribute.getPropertyType()) )//不支持大字段转换为BigFile接口
 						continue;
 					String annotationName = null;
+					EditorInf<?> editor = null;
 					try {
 	
 						PrimaryKey apk = attribute.getPk();
@@ -516,6 +522,7 @@ public class ResultMap {
 							ColumnWraper cl = attribute.getColumn();
 							if(cl != null)
 							{
+								editor = cl.getEditor();
 								annotationName = cl.name();
 								if(annotationName == null 
 										|| annotationName.equals(""))
@@ -558,7 +565,7 @@ public class ResultMap {
 						try {
 							propsVal = ValueExchange.getValueFromCallableStatement(
 									cstmt, param.parameterName, param.sqlType, type,
-									stmtInfo.getDbname());
+									stmtInfo.getDbname(),editor);
 						} catch (Exception e) {
 							StringBuffer err = new StringBuffer(
 									"Build ValueObject for callablestatement[").append(
@@ -621,7 +628,7 @@ public class ResultMap {
 				try {
 					valueObject = ValueExchange.getValueFromCallableStatement(
 							cstmt, param.parameterName, param.sqlType, valueObjectType,
-							stmtInfo.getDbname());
+							stmtInfo.getDbname(),null);
 				} catch (Exception e) {
 					StringBuffer err = new StringBuffer(
 							"Build ValueObject for callablestatement[").append(
@@ -964,7 +971,7 @@ public class ResultMap {
 							String object = (String) ValueExchange
 									.getValueFromCallableStatement(cstmt,
 											_param.parameterName, _param.sqlType,
-											String.class, stmtInfo.getDbname());
+											String.class, stmtInfo.getDbname(),null);
 							SchemaType schemaType = SQLUtil.getSchemaType(stmtInfo
 									.getDbname(), _param.sqlType,null);
 							record.append("        <column name=\"").append(
@@ -985,7 +992,7 @@ public class ResultMap {
 							String object = (String) ValueExchange
 									.getValueFromCallableStatement(cstmt,
 											_param.index, _param.sqlType,
-											String.class, stmtInfo.getDbname());
+											String.class, stmtInfo.getDbname(),null);
 							SchemaType schemaType = SQLUtil.getSchemaType(stmtInfo
 									.getDbname(), _param.sqlType,null);
 							record.append("        <column index=\"").append(

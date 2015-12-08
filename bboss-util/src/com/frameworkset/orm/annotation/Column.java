@@ -29,5 +29,6 @@ public  @interface Column {
 	String name() default "";
 	String type() default ValueConstants.DEFAULT_NONE;
 	String charset() default ValueConstants.DEFAULT_NONE;
+	String editor() default ValueConstants.DEFAULT_NONE;
 
 }
