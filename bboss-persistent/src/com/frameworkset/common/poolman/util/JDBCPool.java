@@ -2321,7 +2321,7 @@ public class JDBCPool {
 			return;
 		
 //		System.out.println("Shutdown poolman[" + this.getDBName() + "] start.");
-		log.debug("Shutdown poolman[" + this.getDBName() + "] start.");
+		log.debug("Shutdown datasource[" + this.getDBName() + "] start.");
 			
 			undeployDataSource();
 			this.stopTime = System.currentTimeMillis();
@@ -2342,7 +2342,7 @@ public class JDBCPool {
 			this.inited = false;
 	
 //		System.out.println("Shutdown poolman[" + this.getDBName() + "] ok.");
-		log.debug("Shutdown poolman[" + this.getDBName() + "] ok.");
+		log.debug("Shutdown datasource[" + this.getDBName() + "] ok.");
 		
 	}
 
