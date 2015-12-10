@@ -44,6 +44,7 @@ import com.frameworkset.common.poolman.util.SQLUtil;
 import com.frameworkset.orm.adapter.DB;
 import com.frameworkset.orm.annotation.PrimaryKey;
 import com.frameworkset.orm.engine.model.SchemaType;
+import com.frameworkset.util.ColumnEditorInf;
 import com.frameworkset.util.EditorInf;
 import com.frameworkset.util.ValueObjectUtil;
 
@@ -228,7 +229,8 @@ public class ResultMap {
 					if(BigFile.class.isAssignableFrom(attribute.getPropertyType()) )//不支持大字段转换为BigFile接口
 						continue;
 					boolean userAnnotation = false;
-					EditorInf<?> editor = null;
+					ColumnEditorInf<?> editor = null;
+					ColumnWraper cl =  null;
 					try {
 						
 	//					Field field = classinfo.getDeclaredField(attrName);
@@ -256,7 +258,7 @@ public class ResultMap {
 						else 
 						{
 							
-							ColumnWraper cl = attribute.getColumn();
+							  cl = attribute.getColumn();
 							 
 							if(cl != null)
 							{
@@ -318,7 +320,7 @@ public class ResultMap {
 							propsVal = ValueExchange.getValueFromResultSet(rs, cidx, 
 									stmtInfo.getMeta().getColumnTypeByIndex(i), 
 									type, 
-									stmtInfo.getDbadapter(),editor);
+									stmtInfo.getDbadapter(),editor,cl);
 		
 						} catch (Exception e) {
 							StringBuffer err = new StringBuffer(
@@ -363,7 +365,7 @@ public class ResultMap {
 				valueObject = (T)ValueExchange.getValueFromResultSet(rs,  1, 
 						stmtInfo.getMeta().getColumnTypeByIndex(0), 
 						valueObjectType, 
-						stmtInfo.getDbadapter(),null);
+						stmtInfo.getDbadapter(),null,null);
 			}
 		}
 		else
@@ -498,7 +500,8 @@ public class ResultMap {
 					if(BigFile.class.isAssignableFrom(attribute.getPropertyType()) )//不支持大字段转换为BigFile接口
 						continue;
 					String annotationName = null;
-					EditorInf<?> editor = null;
+					ColumnEditorInf<?> editor = null;
+					ColumnWraper cl =  null;
 					try {
 	
 						PrimaryKey apk = attribute.getPk();
@@ -519,7 +522,7 @@ public class ResultMap {
 						}
 						else 
 						{
-							ColumnWraper cl = attribute.getColumn();
+							  cl = attribute.getColumn();
 							if(cl != null)
 							{
 								editor = cl.getEditor();
@@ -565,7 +568,7 @@ public class ResultMap {
 						try {
 							propsVal = ValueExchange.getValueFromCallableStatement(
 									cstmt, param.parameterName, param.sqlType, type,
-									stmtInfo.getDbname(),editor);
+									stmtInfo.getDbname(),editor,cl);
 						} catch (Exception e) {
 							StringBuffer err = new StringBuffer(
 									"Build ValueObject for callablestatement[").append(
@@ -628,7 +631,7 @@ public class ResultMap {
 				try {
 					valueObject = ValueExchange.getValueFromCallableStatement(
 							cstmt, param.parameterName, param.sqlType, valueObjectType,
-							stmtInfo.getDbname(),null);
+							stmtInfo.getDbname(),null,null);
 				} catch (Exception e) {
 					StringBuffer err = new StringBuffer(
 							"Build ValueObject for callablestatement[").append(
@@ -971,7 +974,7 @@ public class ResultMap {
 							String object = (String) ValueExchange
 									.getValueFromCallableStatement(cstmt,
 											_param.parameterName, _param.sqlType,
-											String.class, stmtInfo.getDbname(),null);
+											String.class, stmtInfo.getDbname(),null,null);
 							SchemaType schemaType = SQLUtil.getSchemaType(stmtInfo
 									.getDbname(), _param.sqlType,null);
 							record.append("        <column name=\"").append(

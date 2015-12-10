@@ -15,10 +15,10 @@
  */
 package org.frameworkset.util.annotations.wraper;
 
-import org.frameworkset.util.ClassUtil;
 import org.frameworkset.util.annotations.AnnotationUtils;
 
 import com.frameworkset.orm.annotation.Column;
+import com.frameworkset.util.ColumnEditorInf;
 import com.frameworkset.util.EditorInf;
 
 /**
@@ -37,10 +37,13 @@ public class ColumnWraper {
 	private String type;
 	private String charset;
 	private String editor;
-	private EditorInf<?> _editor;
+	private String editordataformat;
+	private ColumnEditorInf<?> _editor;
 	private boolean inited;
 	public ColumnWraper(Column column) {
 		dataformat =  AnnotationUtils.converDefaultValue(column.dataformat());
+		editordataformat =  AnnotationUtils.converDefaultValue(column.editordataformat());
+		
 		name = column.name();
 		type =  AnnotationUtils.converDefaultValue(column.type());
 		charset =  AnnotationUtils.converDefaultValue(column.charset());
@@ -58,7 +61,7 @@ public class ColumnWraper {
 	public String charset() {
 		return charset;
 	}
-	public EditorInf<?> getEditor()
+	public ColumnEditorInf<?> getEditor()
 	{
 		if(inited)
 			return this._editor;
@@ -71,7 +74,7 @@ public class ColumnWraper {
 				try
 				{
 					Class<?> clazz = Class.forName(this.editor.trim());
-					_editor = (EditorInf<?>)clazz.newInstance();
+					_editor = (ColumnEditorInf<?>)clazz.newInstance();
 				}
 				catch(Exception e)
 				{
@@ -83,6 +86,12 @@ public class ColumnWraper {
 		}
 		return this._editor;
 		
+	}
+	public String getEditordataformat() {
+		return editordataformat;
+	}
+	public void setEditordataformat(String editordataformat) {
+		this.editordataformat = editordataformat;
 	}
 
 }

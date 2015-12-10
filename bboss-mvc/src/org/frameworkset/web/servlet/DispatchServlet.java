@@ -468,7 +468,7 @@ public class DispatchServlet extends HttpServlet {
 
 		finally {
 			if (failureCause != null) {
-				this.logger.debug("Could not complete request", failureCause);
+//				this.logger.debug("Could not complete request", failureCause);
 			}
 			else {
 				this.logger.debug("Successfully completed request");

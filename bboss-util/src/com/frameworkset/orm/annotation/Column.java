@@ -26,6 +26,7 @@ import org.frameworkset.util.annotations.ValueConstants;
 @Retention(RetentionPolicy.RUNTIME)
 public  @interface Column {
 	String dataformat() default ValueConstants.DEFAULT_NONE;
+	String editordataformat() default ValueConstants.DEFAULT_NONE;
 	String name() default "";
 	String type() default ValueConstants.DEFAULT_NONE;
 	String charset() default ValueConstants.DEFAULT_NONE;
