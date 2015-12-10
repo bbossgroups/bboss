@@ -2320,7 +2320,7 @@ public class JDBCPool {
 		if (!this.status.equals("start"))
 			return;
 		
-		System.out.println("Shutdown poolman[" + this.getDBName() + "] start.");
+//		System.out.println("Shutdown poolman[" + this.getDBName() + "] start.");
 		log.debug("Shutdown poolman[" + this.getDBName() + "] start.");
 			
 			undeployDataSource();
@@ -2341,8 +2341,8 @@ public class JDBCPool {
 			this.datasource = null;
 			this.inited = false;
 	
-		System.out.println("Shutdown poolman[" + this.getDBName() + "] ok.");
-
+//		System.out.println("Shutdown poolman[" + this.getDBName() + "] ok.");
+		log.debug("Shutdown poolman[" + this.getDBName() + "] ok.");
 		
 	}
 
