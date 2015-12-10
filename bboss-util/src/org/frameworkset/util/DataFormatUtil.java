@@ -28,6 +28,10 @@ public class DataFormatUtil {
 			dataFormat = new DataFormat();
 			dateformatThreadLocal.set(dataFormat);
 		}
+		else
+		{
+			dataFormat.increament();
+		}
 		return dataFormat;
 	}
 	
@@ -39,7 +43,12 @@ public class DataFormatUtil {
 	}
 	public static void releaseDateformatThreadLocal()
 	{
-		dateformatThreadLocal.set(null);
+		DataFormat dataFormat = dateformatThreadLocal.get();
+		if(dataFormat == null)
+			return;
+		if(dataFormat.reachroot())
+			dateformatThreadLocal.set(null);
+		dataFormat.decreament();
 	}
 	
 //	public static void main(String[] args)

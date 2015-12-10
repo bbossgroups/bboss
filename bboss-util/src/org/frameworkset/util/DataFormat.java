@@ -8,10 +8,27 @@ import java.util.Map;
 import java.util.TimeZone;
 
 public class DataFormat {
-
+	private int count;
 	public DataFormat() {
 		// TODO Auto-generated constructor stub
 	}
+	
+	public void increament()
+	{
+		count ++;
+	}
+	public void decreament()
+	{
+		count --;
+		
+	}
+	
+	public boolean reachroot()
+	{
+		return count == 0;
+	}
+	
+	
 	
 	 
 	private Map<String,SimpleDateFormat> dateformat = new HashMap<String,SimpleDateFormat>();
