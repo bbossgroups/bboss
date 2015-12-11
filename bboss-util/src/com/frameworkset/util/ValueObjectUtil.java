@@ -72,6 +72,7 @@ import org.apache.log4j.Logger;
 import org.frameworkset.util.BigFile;
 import org.frameworkset.util.ClassUtil;
 import org.frameworkset.util.ClassUtil.PropertieDescription;
+import org.frameworkset.util.DataFormatUtil;
 import org.frameworkset.util.MethodParameter;
 
 import sun.misc.BASE64Decoder;
@@ -1608,17 +1609,16 @@ public class ValueObjectUtil {
 	
 
 	public static SimpleDateFormat getDefaultDateFormat(){
-		
-			return new SimpleDateFormat(
-					"yyyy-MM-dd HH:mm:ss");
+			return DataFormatUtil.getSimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//			return new SimpleDateFormat(
+//					"yyyy-MM-dd HH:mm:ss");
 	}
 	public static SimpleDateFormat getDateFormat(
 			String dateformat)
 	{
 		if(dateformat == null || dateformat.equals(""))
-			return new SimpleDateFormat(
-					"yyyy-MM-dd HH:mm:ss");
-		SimpleDateFormat f = new SimpleDateFormat(dateformat);
+			return  getDefaultDateFormat();
+		SimpleDateFormat f = DataFormatUtil.getSimpleDateFormat(dateformat);
 //		if(f != null)
 //			return f;
 		
@@ -2222,7 +2222,7 @@ public class ValueObjectUtil {
 			NumberFormatException{
 		SimpleDateFormat dateformat_ = null;
 		if(dateformat != null)
-			dateformat_ = new SimpleDateFormat(dateformat);
+			dateformat_ = DataFormatUtil.getSimpleDateFormat(dateformat);
 		return arrayTypeCastWithDateformat(obj, type,
 				toType,dateformat_);
 	}
@@ -3554,8 +3554,7 @@ public class ValueObjectUtil {
 	
 	public static int dateCompare(java.util.Date value1,Object value2)
 	{
-		 SimpleDateFormat format = new SimpleDateFormat(
-					"yyyy-MM-dd HH:mm:ss");
+		 SimpleDateFormat format = DataFormatUtil.getSimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		try {
 			Class vc2 = value2.getClass();
 			if(java.util.Date.class.isAssignableFrom(vc2))

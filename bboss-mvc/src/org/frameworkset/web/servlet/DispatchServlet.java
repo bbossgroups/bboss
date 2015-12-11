@@ -50,6 +50,7 @@ import org.frameworkset.spi.support.LocaleContext;
 import org.frameworkset.spi.support.LocaleContextHolder;
 import org.frameworkset.spi.support.SimpleLocaleContext;
 import org.frameworkset.util.ClassUtils;
+import org.frameworkset.util.DataFormatUtil;
 import org.frameworkset.util.beans.BeansException;
 import org.frameworkset.util.io.ClassPathResource;
 import org.frameworkset.web.HttpRequestMethodNotSupportedException;
@@ -709,9 +710,11 @@ public class DispatchServlet extends HttpServlet {
 		request.setAttribute(THEME_SOURCE_ATTRIBUTE, getThemeSource());
 
 		try {
+			DataFormatUtil.initDateformatThreadLocal();
 			doDispatch(request, response);
 		}
 		finally {
+			DataFormatUtil.releaseDateformatThreadLocal();
 			// Restore the original attribute snapshot, in case of an include.
 			if (attributesSnapshot != null) {
 				restoreAttributesAfterInclude(request, attributesSnapshot);

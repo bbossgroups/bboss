@@ -40,6 +40,8 @@ import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.frameworkset.util.DataFormatUtil;
+
 
 
 /**
@@ -149,7 +151,7 @@ public class StringUtil {
 	
 	public static String getFormatDate(Date date,String formate)
 	{
-	    SimpleDateFormat dateFormat = new SimpleDateFormat(formate);			
+	    SimpleDateFormat dateFormat = DataFormatUtil.getSimpleDateFormat(formate);			
 		if (date == null)
 			return null;
 		return dateFormat.format(date);

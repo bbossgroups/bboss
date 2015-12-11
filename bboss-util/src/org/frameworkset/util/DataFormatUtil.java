@@ -99,13 +99,18 @@ public class DataFormatUtil {
 	
 	public static SimpleDateFormat getSimpleDateFormat(HttpServletRequest request,String dateFormat)
 	{
-		if(request == null)
-			return new SimpleDateFormat(dateFormat);
-		DataFormat dataFormatUtil = (DataFormat)request.getAttribute(DataFormatUtil.DataFormatUtilKey);
+		DataFormat dataFormatUtil = getDateformatThreadLocal();
 		if(dataFormatUtil == null)
 		{
-			dataFormatUtil = new DataFormat();
-			request.setAttribute(DataFormatUtilKey, dataFormatUtil);
+			if(request == null)
+				return new SimpleDateFormat(dateFormat);
+			dataFormatUtil = (DataFormat)request.getAttribute(DataFormatUtil.DataFormatUtilKey);
+			if(dataFormatUtil == null)
+			{
+				dataFormatUtil = new DataFormat();
+				request.setAttribute(DataFormatUtilKey, dataFormatUtil);
+			}
+			
 		}
 		SimpleDateFormat temp = dataFormatUtil.getSimpleDateFormat(dateFormat);
 		return temp;
@@ -113,76 +118,99 @@ public class DataFormatUtil {
 	public static Date getDate(HttpServletRequest request,String dateFormat,String date) throws ParseException
 	{
 		SimpleDateFormat temp = null;
-		if(request != null)
+
+		DataFormat dataFormatUtil = getDateformatThreadLocal();
+		if(dataFormatUtil == null)
 		{
-			DataFormat dataFormatUtil = (DataFormat)request.getAttribute(DataFormatUtil.DataFormatUtilKey);
-			if(dataFormatUtil == null)
+		
+			if(request == null)
 			{
-				dataFormatUtil = new DataFormat();
-				request.setAttribute(DataFormatUtilKey, dataFormatUtil);
+				temp = new SimpleDateFormat(dateFormat);
 			}
-			temp = dataFormatUtil.getSimpleDateFormat(dateFormat);
+			else
+			{
+				 dataFormatUtil = (DataFormat)request.getAttribute(DataFormatUtil.DataFormatUtilKey);
+				if(dataFormatUtil == null)
+				{
+					dataFormatUtil = new DataFormat();
+					request.setAttribute(DataFormatUtilKey, dataFormatUtil);
+				}
+				temp = dataFormatUtil.getSimpleDateFormat(dateFormat);
+			}
 		}
 		else
 		{
-			temp = new SimpleDateFormat(dateFormat);
+			temp = dataFormatUtil.getSimpleDateFormat(dateFormat);
 		}
+		
 		return temp.parse(date);
 	}
 	
 	public static SimpleDateFormat getSimpleDateFormat(HttpServletRequest request,String dateFormat,Locale locale,TimeZone timeZone)
 	{
-		if(request == null)
-		{
-			
-			SimpleDateFormat format = locale == null ?new SimpleDateFormat(dateFormat):new SimpleDateFormat(dateFormat, locale);
-			if(timeZone != null)
-				format.setTimeZone( timeZone);
-			return format;
-		}
-		DataFormat dataFormatUtil = (DataFormat)request.getAttribute(DataFormatUtil.DataFormatUtilKey);
+		DataFormat dataFormatUtil = getDateformatThreadLocal();
 		if(dataFormatUtil == null)
 		{
-			dataFormatUtil = new DataFormat();
-			request.setAttribute(DataFormatUtilKey, dataFormatUtil);
+			if(request == null)
+			{
+				
+				SimpleDateFormat format = locale == null ?new SimpleDateFormat(dateFormat):new SimpleDateFormat(dateFormat, locale);
+				if(timeZone != null)
+					format.setTimeZone( timeZone);
+				return format;
+			}
+			dataFormatUtil = (DataFormat)request.getAttribute(DataFormatUtil.DataFormatUtilKey);
+			if(dataFormatUtil == null)
+			{
+				dataFormatUtil = new DataFormat();
+				request.setAttribute(DataFormatUtilKey, dataFormatUtil);
+			}
 		}
 		SimpleDateFormat temp = dataFormatUtil.getSimpleDateFormat(dateFormat,locale,timeZone);
 		return temp;
 	}
 	public static SimpleDateFormat getSimpleDateFormat(HttpServletRequest request,String dateFormat,Locale locale,String timeZone)
 	{
-		if(request == null)
-		{
-			
-			SimpleDateFormat format = locale == null ?new SimpleDateFormat(dateFormat):new SimpleDateFormat(dateFormat, locale);
-			if(timeZone != null)
-				format.setTimeZone(TimeZone.getTimeZone(timeZone));
-			return format;
-		}
-		DataFormat dataFormatUtil = (DataFormat)request.getAttribute(DataFormatUtil.DataFormatUtilKey);
+		DataFormat dataFormatUtil = getDateformatThreadLocal();
 		if(dataFormatUtil == null)
 		{
-			dataFormatUtil = new DataFormat();
-			request.setAttribute(DataFormatUtilKey, dataFormatUtil);
+			if(request == null)
+			{
+				
+				SimpleDateFormat format = locale == null ?new SimpleDateFormat(dateFormat):new SimpleDateFormat(dateFormat, locale);
+				if(timeZone != null)
+					format.setTimeZone(TimeZone.getTimeZone(timeZone));
+				return format;
+			}
+			dataFormatUtil = (DataFormat)request.getAttribute(DataFormatUtil.DataFormatUtilKey);
+			if(dataFormatUtil == null)
+			{
+				dataFormatUtil = new DataFormat();
+				request.setAttribute(DataFormatUtilKey, dataFormatUtil);
+			}
 		}
 		SimpleDateFormat temp = dataFormatUtil.getSimpleDateFormat(dateFormat,locale,timeZone);
 		return temp;
 	}
 	public static SimpleDateFormat getSimpleDateFormat(HttpServletRequest request,String dateFormat,String locale,String timeZone)
 	{
-		if(request == null)
-		{
-			
-			SimpleDateFormat format = locale == null || locale.equals("")?new SimpleDateFormat(dateFormat):new SimpleDateFormat(dateFormat,new Locale(locale));
-			if(timeZone != null)
-				format.setTimeZone(TimeZone.getTimeZone(timeZone));
-			return format;
-		}
-		DataFormat dataFormatUtil = (DataFormat)request.getAttribute(DataFormatUtil.DataFormatUtilKey);
+		DataFormat dataFormatUtil = getDateformatThreadLocal();
 		if(dataFormatUtil == null)
 		{
-			dataFormatUtil = new DataFormat();
-			request.setAttribute(DataFormatUtilKey, dataFormatUtil);
+			if(request == null)
+			{
+				
+				SimpleDateFormat format = locale == null || locale.equals("")?new SimpleDateFormat(dateFormat):new SimpleDateFormat(dateFormat,new Locale(locale));
+				if(timeZone != null)
+					format.setTimeZone(TimeZone.getTimeZone(timeZone));
+				return format;
+			}
+			dataFormatUtil = (DataFormat)request.getAttribute(DataFormatUtil.DataFormatUtilKey);
+			if(dataFormatUtil == null)
+			{
+				dataFormatUtil = new DataFormat();
+				request.setAttribute(DataFormatUtilKey, dataFormatUtil);
+			}
 		}
 		SimpleDateFormat temp = dataFormatUtil.getSimpleDateFormat(dateFormat,locale,timeZone);
 		return temp;
@@ -192,13 +220,17 @@ public class DataFormatUtil {
 	
 	public static DecimalFormat getDecimalFormat(HttpServletRequest request,String decimalFormat)
 	{
-		if(request == null)
-			return new DecimalFormat(decimalFormat);
-		DataFormat dataFormatUtil = (DataFormat)request.getAttribute(DataFormatUtil.DataFormatUtilKey);
+		DataFormat dataFormatUtil = getDateformatThreadLocal();
 		if(dataFormatUtil == null)
 		{
-			dataFormatUtil = new DataFormat();
-			request.setAttribute(DataFormatUtilKey, dataFormatUtil);
+			if(request == null)
+				return new DecimalFormat(decimalFormat);
+			dataFormatUtil = (DataFormat)request.getAttribute(DataFormatUtil.DataFormatUtilKey);
+			if(dataFormatUtil == null)
+			{
+				dataFormatUtil = new DataFormat();
+				request.setAttribute(DataFormatUtilKey, dataFormatUtil);
+			}
 		}
 		DecimalFormat temp = dataFormatUtil.getDecimalFormat(decimalFormat);
 		return temp;

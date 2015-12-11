@@ -25,6 +25,7 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.Tag;
 
 import org.apache.log4j.Logger;
+import org.frameworkset.util.DataFormatUtil;
 
 import com.frameworkset.common.tag.exception.FormulaException;
 import com.frameworkset.common.tag.pager.model.Field;
@@ -476,14 +477,14 @@ public class CellTag  extends PagerTagSupport {
 	    {
 		    if (this.getNumerformat() != null) {
 
-			    NumberFormat numerFormat = new DecimalFormat(getNumerformat());
+			    NumberFormat numerFormat = DataFormatUtil.getDecimalFormat(getNumerformat());
 				if (obj == null)
 					return null;
 				return numerFormat.format(obj);
 			}
 
 			if (this.getDateformat() != null) {
-			    SimpleDateFormat dateFormat = new SimpleDateFormat(getDateformat());
+			    SimpleDateFormat dateFormat = DataFormatUtil.getSimpleDateFormat(getDateformat());
 				if (obj == null)
 					return null;
 				return dateFormat.format(obj);
@@ -508,14 +509,14 @@ public class CellTag  extends PagerTagSupport {
 	    {
 		    if (this.getNumerformat() != null) {
 
-			    NumberFormat numerFormat = new DecimalFormat(getNumerformat());
+			    NumberFormat numerFormat = DataFormatUtil.getDecimalFormat(getNumerformat());
 				if (obj == null)
 					return null;
 				return numerFormat.format(obj);
 			}
 
 			if (this.getDateformat() != null) {
-			    SimpleDateFormat dateFormat = new SimpleDateFormat(getDateformat());
+			    SimpleDateFormat dateFormat = DataFormatUtil.getSimpleDateFormat(getDateformat());
 				if (obj == null)
 					return null;
 				return dateFormat.format(obj);

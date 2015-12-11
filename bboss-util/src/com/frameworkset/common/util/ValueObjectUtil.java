@@ -53,6 +53,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 import org.apache.log4j.Logger;
+import org.frameworkset.util.DataFormatUtil;
 
 import bsh.Interpreter;
 
@@ -465,7 +466,7 @@ public class ValueObjectUtil implements Serializable{
 		Class type,
 		Class toType)
 		throws NoSupportTypeCastException, NumberFormatException {
-		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		SimpleDateFormat format = DataFormatUtil.getSimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		if(obj == null)
 			return null;
 		if (isSameType(type,toType ))

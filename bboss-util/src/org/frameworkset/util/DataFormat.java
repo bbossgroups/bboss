@@ -31,14 +31,25 @@ public class DataFormat {
 	
 	
 	 
-	private Map<String,SimpleDateFormat> dateformat = new HashMap<String,SimpleDateFormat>();
-	private Map<String,DecimalFormat> dataformat = new HashMap<String,DecimalFormat>();
- 
+	private Map<String,SimpleDateFormat> dateformat = null;
+	private Map<String,DecimalFormat> dataformat = null;
+	private void initdateformat()
+	{
+		if(dateformat == null)
+			dateformat = new HashMap<String,SimpleDateFormat>();
+		
+	}
 	
 	
+	private void initdataformat()
+	{
+		if(dataformat == null)
+			dataformat = new HashMap<String,DecimalFormat>();
+	}
 	 
 	public DecimalFormat getDecimalFormat(String decimalFormat)
 	{
+		initdataformat();
 		DecimalFormat format = this.dataformat.get(decimalFormat);
 		if(format != null)
 			return format;
@@ -49,6 +60,7 @@ public class DataFormat {
 	
 	public SimpleDateFormat getSimpleDateFormat(String dateFormat)
 	{
+		initdateformat();
 		SimpleDateFormat format = this.dateformat.get(dateFormat);
 		if(format != null)
 			return format;
@@ -59,6 +71,7 @@ public class DataFormat {
 	
 	public SimpleDateFormat getSimpleDateFormat(String dateFormat,Locale locale,TimeZone tz)
 	{
+		initdateformat();
 		SimpleDateFormat format = null;
 		if(locale == null)
 		{
@@ -88,6 +101,7 @@ public class DataFormat {
 	
 	public SimpleDateFormat getSimpleDateFormat(String dateFormat,Locale locale,String tz)
 	{
+		initdateformat();
 		SimpleDateFormat format = null;
 		if(locale == null)
 		{
@@ -117,6 +131,7 @@ public class DataFormat {
 	
 	public SimpleDateFormat getSimpleDateFormat(String dateFormat,String locale,String tz)
 	{
+		initdateformat();
 		SimpleDateFormat format = null;
 		if(locale == null)
 		{

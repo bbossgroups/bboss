@@ -80,6 +80,7 @@ import org.codehaus.jackson.JsonParser.Feature;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
 import org.frameworkset.util.CollectionUtils;
+import org.frameworkset.util.DataFormatUtil;
 import org.frameworkset.util.ObjectUtils;
 
 import sun.security.action.GetPropertyAction;
@@ -359,7 +360,7 @@ public class SimpleStringUtil  {
 	}
 
 	public static String getFormatDate(Date date, String formate) {
-		SimpleDateFormat dateFormat = new SimpleDateFormat(formate);
+		SimpleDateFormat dateFormat = DataFormatUtil.getSimpleDateFormat(formate);
 		if (date == null) {
 			return null;
 		}
@@ -371,7 +372,7 @@ public class SimpleStringUtil  {
 		if (date == null || date.trim().equals("")) {
 			return null;
 		}
-		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		SimpleDateFormat format = DataFormatUtil.getSimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		// date = date.replace('-', '/');
 		// SimpleDateFormat format = new SimpleDateFormat();
 		try {
@@ -387,7 +388,7 @@ public class SimpleStringUtil  {
 		}
 
 		// date = date.replace('-', '/');
-		SimpleDateFormat format = new SimpleDateFormat(format_);
+		SimpleDateFormat format = DataFormatUtil.getSimpleDateFormat(format_);
 		try {
 			return format.parse(date);
 		} catch (ParseException e) {
@@ -441,7 +442,7 @@ public class SimpleStringUtil  {
 		if (dates == null) {
 			return null;
 		}
-		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		SimpleDateFormat format = DataFormatUtil.getSimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String[] dates_s = new String[dates.length];
 		for (int i = 0; i < dates.length; i++) {
 			dates_s[i] = format.format(dates[i]);
