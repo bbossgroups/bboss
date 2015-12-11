@@ -41,16 +41,19 @@ import org.frameworkset.util.ClassUtil.ClassInfo;
 import org.frameworkset.util.ClassUtil.PropertieDescription;
 import org.frameworkset.util.annotations.wraper.ColumnWraper;
 
-import bboss.org.apache.velocity.VelocityContext;
-
 import com.frameworkset.common.poolman.sql.IdGenerator;
 import com.frameworkset.common.poolman.util.JDBCPool;
 import com.frameworkset.common.poolman.util.SQLManager;
 import com.frameworkset.orm.annotation.PrimaryKey;
+import com.frameworkset.util.ColumnEditorInf;
+import com.frameworkset.util.ColumnToFieldEditor;
+import com.frameworkset.util.ColumnType;
 import com.frameworkset.util.StringUtil;
 import com.frameworkset.util.VariableHandler;
 import com.frameworkset.util.VariableHandler.SQLStruction;
 import com.frameworkset.util.VariableHandler.Variable;
+
+import bboss.org.apache.velocity.VelocityContext;
 
 /**
  * <p>Title: SQLParams.java</p>
@@ -887,6 +890,9 @@ public class SQLParams
 		for(int i = 0; attributes != null && i < attributes.size();i ++ )
 		{
 			PropertieDescription property = attributes.get(i);
+			ColumnWraper column = property.getColumn();
+			if(column!= null && (column.ignoreCUDbind() || column.ignorebind()))
+				continue;
 //			if(property.getName().equals("class"))
 //				continue;
 			type = property.getPropertyType();
@@ -907,6 +913,9 @@ public class SQLParams
 			try {
 				if(property.canread())
 				{
+					
+						
+						
 					try {						
 						value =  property.getValue(bean);
 					}
@@ -989,35 +998,59 @@ public class SQLParams
 						}
 					}
 					
-					ColumnWraper column = property.getColumn();
+					
 					if(column != null)
 					{
-						dataformat = column.dataformat();
-						charset = column.charset();
-						String type_ = column.type();
-						if(type_ != null )
+						ColumnEditorInf editor = column.editor();
+						if(editor == null || editor instanceof ColumnToFieldEditor)
 						{
-							if(type_.equals("clob"))
+
+							dataformat = column.dataformat();
+							charset = column.charset();
+							
+							String type_ = column.type();
+							if(type_ != null )
 							{
-								type = Clob.class;
-							}
-							else if(type_.equals("blob"))
-							{
-								type = Blob.class;
-							}
-							else if(type_.equals("blobfile"))
-							{
-								type = blobfile.class;
-							}
-							else if(type_.equals("clobfile"))
-							{
-								type = clobfile.class;
-							}
-							else if(type_.equals("blobbyte[]"))
-							{
-								type = blobbyte[].class;
+								if(type_.equals("clob"))
+								{
+									type = Clob.class;
+								}
+								else if(type_.equals("blob"))
+								{
+									type = Blob.class;
+								}
+								else if(type_.equals("blobfile"))
+								{
+									type = blobfile.class;
+								}
+								else if(type_.equals("clobfile"))
+								{
+									type = clobfile.class;
+								}
+								else if(type_.equals("blobbyte[]"))
+								{
+									type = blobbyte[].class;
+								}
 							}
 						}
+						else
+						{	
+							Object cv = editor.toColumnValue(column, value);
+							if(cv == null)
+								throw new NestedSQLException("转换属性["+beanInfo.getClazz().getName()+"."+property.getName()+"]值失败：值为null时，转换器必须返回ColumnType类型的对象,用来指示表字段对应的java类型。");
+							 
+							if(!(cv instanceof ColumnType))
+							{
+								value = cv;
+								type = value.getClass();
+								
+							}
+							else
+							{
+								type = ((ColumnType)cv).getType();
+							}
+						}
+						
 					}
 					
 					sqltype = SQLParams.getParamJavaType(name,type);

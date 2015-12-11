@@ -10,7 +10,8 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 /**
- * 忽略bean属性参数绑定
+ * 查询时，忽略bean属性参数绑定
+ * 
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2008</p>
  * @Date 2014-12-02

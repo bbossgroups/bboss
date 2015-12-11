@@ -37,17 +37,24 @@ public class ColumnWraper {
 	private String type;
 	private String charset;
 	private String editor;
-	private String editordataformat;
-	private ColumnEditorInf<?> _editor;
+	/**
+	 * 改进持久or mapping机制，Column注解添加ignorebind和ignoreCUDbind，editorparams
+	 */
+	private String editorparams;
+	private ColumnEditorInf _editor;
 	private boolean inited;
+	private boolean ignoreCUDbind = false;
+	private boolean ignorebind = false;
 	public ColumnWraper(Column column) {
 		dataformat =  AnnotationUtils.converDefaultValue(column.dataformat());
-		editordataformat =  AnnotationUtils.converDefaultValue(column.editordataformat());
+		editorparams =  AnnotationUtils.converDefaultValue(column.editorparams());
 		
 		name = column.name();
 		type =  AnnotationUtils.converDefaultValue(column.type());
 		charset =  AnnotationUtils.converDefaultValue(column.charset());
 		this.editor = AnnotationUtils.converDefaultValue(column.editor());
+		this.ignoreCUDbind = column.ignoreCUDbind();
+		this.ignorebind = column.ignorebind();
 	}
 	public String dataformat(){
 		return dataformat;
@@ -61,7 +68,7 @@ public class ColumnWraper {
 	public String charset() {
 		return charset;
 	}
-	public ColumnEditorInf<?> getEditor()
+	public ColumnEditorInf editor()
 	{
 		if(inited)
 			return this._editor;
@@ -74,7 +81,7 @@ public class ColumnWraper {
 				try
 				{
 					Class<?> clazz = Class.forName(this.editor.trim());
-					_editor = (ColumnEditorInf<?>)clazz.newInstance();
+					_editor = (ColumnEditorInf)clazz.newInstance();
 				}
 				catch(Exception e)
 				{
@@ -87,11 +94,16 @@ public class ColumnWraper {
 		return this._editor;
 		
 	}
-	public String getEditordataformat() {
-		return editordataformat;
+	public String editorparams() {
+		return editorparams;
 	}
-	public void setEditordataformat(String editordataformat) {
-		this.editordataformat = editordataformat;
+	 
+	public boolean ignoreCUDbind() {
+		return ignoreCUDbind;
+	}
+	
+	public boolean ignorebind() {
+		return ignorebind;
 	}
 
 }

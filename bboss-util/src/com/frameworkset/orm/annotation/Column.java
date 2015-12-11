@@ -26,10 +26,20 @@ import org.frameworkset.util.annotations.ValueConstants;
 @Retention(RetentionPolicy.RUNTIME)
 public  @interface Column {
 	String dataformat() default ValueConstants.DEFAULT_NONE;
-	String editordataformat() default ValueConstants.DEFAULT_NONE;
+	String editorparams() default ValueConstants.DEFAULT_NONE;
 	String name() default "";
 	String type() default ValueConstants.DEFAULT_NONE;
 	String charset() default ValueConstants.DEFAULT_NONE;
 	String editor() default ValueConstants.DEFAULT_NONE;
+	/**
+	 * 忽略创建、修改、删除时属性值绑定
+	 * @return
+	 */
+	boolean ignoreCUDbind() default false;
+	/**
+	 * 忽略增删改查o/r mapping机制，相当于@IgnoreORMapp 和@Column(ignoreCUDbind=true)组合
+	 * @return
+	 */
+	boolean ignorebind() default false;
 
 }

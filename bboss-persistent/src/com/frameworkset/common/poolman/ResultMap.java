@@ -45,7 +45,6 @@ import com.frameworkset.orm.adapter.DB;
 import com.frameworkset.orm.annotation.PrimaryKey;
 import com.frameworkset.orm.engine.model.SchemaType;
 import com.frameworkset.util.ColumnEditorInf;
-import com.frameworkset.util.EditorInf;
 import com.frameworkset.util.ValueObjectUtil;
 
 /**
@@ -218,7 +217,8 @@ public class ResultMap {
 				PoolManResultSetMetaData meta = stmtInfo.getMeta();
 				for (int n = 0; attributes != null && n < attributes.size(); n++) {
 					PropertieDescription attribute = attributes.get(n);
-					if(attribute.getIgnoreORMapping() != null)
+					ColumnWraper cl = attribute.getColumn();
+					if(attribute.getIgnoreORMapping() != null || cl.ignorebind())
 						continue;
 					String attrName = attribute.getName();
 					String upname = attribute.getUperName();
@@ -229,8 +229,8 @@ public class ResultMap {
 					if(BigFile.class.isAssignableFrom(attribute.getPropertyType()) )//不支持大字段转换为BigFile接口
 						continue;
 					boolean userAnnotation = false;
-					ColumnEditorInf<?> editor = null;
-					ColumnWraper cl =  null;
+					ColumnEditorInf editor = null;
+					 
 					try {
 						
 	//					Field field = classinfo.getDeclaredField(attrName);
@@ -258,11 +258,11 @@ public class ResultMap {
 						else 
 						{
 							
-							  cl = attribute.getColumn();
+							  
 							 
 							if(cl != null)
 							{
-								editor = cl.getEditor();
+								editor = cl.editor();
 								annotationName = cl.name();
 								if(annotationName == null 
 										|| annotationName.equals(""))
@@ -365,7 +365,7 @@ public class ResultMap {
 				valueObject = (T)ValueExchange.getValueFromResultSet(rs,  1, 
 						stmtInfo.getMeta().getColumnTypeByIndex(0), 
 						valueObjectType, 
-						stmtInfo.getDbadapter(),null,null);
+						stmtInfo.getDbadapter(),(ColumnEditorInf)null,(ColumnWraper)null);
 			}
 		}
 		else
@@ -492,7 +492,8 @@ public class ResultMap {
 				List<PropertieDescription> attributes = beanInfo.getPropertyDescriptors();
 				for (int n = 0; attributes != null && n < attributes.size(); n++) {
 					PropertieDescription attribute = attributes.get(n);
-					if(attribute.getIgnoreORMapping() != null)
+					ColumnWraper cl = attribute.getColumn();
+					if(attribute.getIgnoreORMapping() != null || cl.ignorebind())
 						continue;
 					String attrName = attribute.getName();
 	//				if(attrName.equals("class"))
@@ -500,8 +501,8 @@ public class ResultMap {
 					if(BigFile.class.isAssignableFrom(attribute.getPropertyType()) )//不支持大字段转换为BigFile接口
 						continue;
 					String annotationName = null;
-					ColumnEditorInf<?> editor = null;
-					ColumnWraper cl =  null;
+					ColumnEditorInf editor = null;
+					
 					try {
 	
 						PrimaryKey apk = attribute.getPk();
@@ -522,10 +523,10 @@ public class ResultMap {
 						}
 						else 
 						{
-							  cl = attribute.getColumn();
+							
 							if(cl != null)
 							{
-								editor = cl.getEditor();
+								editor = cl.editor();
 								annotationName = cl.name();
 								if(annotationName == null 
 										|| annotationName.equals(""))
@@ -631,7 +632,7 @@ public class ResultMap {
 				try {
 					valueObject = ValueExchange.getValueFromCallableStatement(
 							cstmt, param.parameterName, param.sqlType, valueObjectType,
-							stmtInfo.getDbname(),null,null);
+							stmtInfo.getDbname(),(ColumnEditorInf)null,(ColumnWraper)null);
 				} catch (Exception e) {
 					StringBuffer err = new StringBuffer(
 							"Build ValueObject for callablestatement[").append(
