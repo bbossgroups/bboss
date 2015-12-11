@@ -218,7 +218,7 @@ public class ResultMap {
 				for (int n = 0; attributes != null && n < attributes.size(); n++) {
 					PropertieDescription attribute = attributes.get(n);
 					ColumnWraper cl = attribute.getColumn();
-					if(attribute.getIgnoreORMapping() != null || cl.ignorebind())
+					if(attribute.getIgnoreORMapping() != null || (cl != null && cl.ignorebind()))
 						continue;
 					String attrName = attribute.getName();
 					String upname = attribute.getUperName();
@@ -493,7 +493,7 @@ public class ResultMap {
 				for (int n = 0; attributes != null && n < attributes.size(); n++) {
 					PropertieDescription attribute = attributes.get(n);
 					ColumnWraper cl = attribute.getColumn();
-					if(attribute.getIgnoreORMapping() != null || cl.ignorebind())
+					if(attribute.getIgnoreORMapping() != null ||  (cl != null && cl.ignorebind()))
 						continue;
 					String attrName = attribute.getName();
 	//				if(attrName.equals("class"))
