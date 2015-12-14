@@ -88,7 +88,7 @@ public class DefaultPooledObjectInfo implements DefaultPooledObjectInfoMBean {
 
     @Override
     public String getPooledObjectToString() {
-        return pooledObject.getObject().toString();
+        return "";
     }
 
     @Override
