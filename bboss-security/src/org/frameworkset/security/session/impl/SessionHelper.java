@@ -15,6 +15,12 @@
  */
 package org.frameworkset.security.session.impl;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.regex.Pattern;
+
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -22,11 +28,18 @@ import javax.servlet.http.HttpSession;
 import org.frameworkset.security.session.Session;
 import org.frameworkset.security.session.SessionBasicInfo;
 import org.frameworkset.security.session.domain.CrossDomain;
+import org.frameworkset.security.session.statics.AttributeInfo;
 import org.frameworkset.security.session.statics.NullSessionStaticManagerImpl;
+import org.frameworkset.security.session.statics.SessionConfig;
 import org.frameworkset.security.session.statics.SessionStaticManager;
 import org.frameworkset.soa.ObjectSerializable;
 import org.frameworkset.spi.BaseApplicationContext;
 import org.frameworkset.spi.DefaultApplicationContext;
+
+import com.frameworkset.util.SimpleStringUtil;
+import com.frameworkset.util.StringUtil;
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBObject;
 
 /**
  * <p>Title: SessionHelper.java</p> 
@@ -40,7 +53,10 @@ import org.frameworkset.spi.DefaultApplicationContext;
 public class SessionHelper {
 	private static SessionManager sessionManager;
 	private static SessionStaticManager sessionStaticManager;
-	
+	public static SessionConfig getSessionConfig(String appcode)
+	{
+		return sessionManager.getSessionConfig(appcode);
+	}
 	static {
 		BaseApplicationContext context = DefaultApplicationContext.getApplicationContext("sessionconf.xml");
 		sessionManager = context.getTBeanObject("sessionManager", SessionManager.class);
@@ -50,7 +66,138 @@ public class SessionHelper {
 			sessionStaticManager = new NullSessionStaticManagerImpl();
 	}
 	
-
+	public static Object convertValue(String value,AttributeInfo attributeInfo)
+	{
+		if(attributeInfo.getType().equals("String"))
+			return value;
+		else if(attributeInfo.getType().equals("int"))
+			return Integer.parseInt(value);
+		else if(attributeInfo.getType().equals("long"))
+			return Long.parseLong(value);
+		else if(attributeInfo.getType().equals("double"))
+			return Double.parseDouble(value);
+		else if(attributeInfo.getType().equals("float"))
+			return Float.parseFloat(value);
+		else if(attributeInfo.getType().equals("boolean"))
+			return Boolean.parseBoolean(value);
+		return value;
+	}
+	
+	public static Map<String,AttributeInfo> parserExtendAttributes(HttpServletRequest request,SessionConfig sessionConfig  )
+	{
+		AttributeInfo[] monitorAttributeArray = sessionConfig.getExtendAttributeInfos();
+		if(monitorAttributeArray == null || monitorAttributeArray.length == 0)
+		{
+			return null;
+		}
+		Map<String,AttributeInfo>  datas = new HashMap<String,AttributeInfo>();
+		for(AttributeInfo attributeInfo : monitorAttributeArray)
+		{
+			String value = request.getParameter(attributeInfo.getName());
+			if(value != null )
+			{
+				if(value.trim().equals("")  )
+				{
+					if(attributeInfo.isEnableEmptyValue())
+					{
+						try {
+							attributeInfo = attributeInfo.clone();
+							attributeInfo.setValue(SessionHelper. convertValue(  value,  attributeInfo));
+							datas.put(attributeInfo.getName(), attributeInfo);
+						} catch (CloneNotSupportedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+					
+				}
+				else
+				{
+					try {
+						attributeInfo = attributeInfo.clone();
+						attributeInfo.setValue(SessionHelper. convertValue(  value,  attributeInfo));
+						datas.put(attributeInfo.getName(), attributeInfo);
+					} catch (CloneNotSupportedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				
+			}
+		}
+		return datas;
+	}
+	
+	public static void evalqueryfields(AttributeInfo[] monitorAttributeArray, Map keys,BasicDBObject query)
+	{
+		 
+		if(monitorAttributeArray != null && monitorAttributeArray.length > 0)
+		{
+			for(AttributeInfo attr:monitorAttributeArray)
+			{
+				keys.put(attr.getName(), 1);
+				if(attr.getType().equals("String"))
+				{
+					if(!attr.isLike())
+					{
+						query.append(attr.getName(), attr.getValue());
+					}
+					else
+					{
+						if (!StringUtil.isEmpty((String)attr.getValue())) {
+							Pattern hosts = Pattern.compile("^.*" + attr.getValue() + ".*$",
+									Pattern.CASE_INSENSITIVE);
+							query.append(attr.getName(), new BasicDBObject("$regex",hosts));
+						}
+					}
+				}
+				else 
+					query.append(attr.getName(), attr.getValue());
+				
+			}
+			
+			
+		}
+		
+		
+		
+	}
+	public static List<AttributeInfo> evalqueryfiledsValue(AttributeInfo[] monitorAttributeArray, DBObject dbobject)  
+	{
+		List<AttributeInfo> extendAttrs = null;
+		 
+		if(monitorAttributeArray != null && monitorAttributeArray.length > 0)				
+		{
+			extendAttrs = new ArrayList<AttributeInfo>();
+			AttributeInfo attrvalue = null;
+			for(AttributeInfo attributeInfo:monitorAttributeArray)
+			{
+				try {
+					attrvalue = attributeInfo.clone();
+					Object value = dbobject.get(attrvalue.getName());
+					if(attributeInfo.getType().equals("String"))
+						;
+					else if(attributeInfo.getType().equals("int"))
+						;
+					else if(attributeInfo.getType().equals("long"))
+						;
+					else if(attributeInfo.getType().equals("double"))
+						;
+					else if(attributeInfo.getType().equals("float"))
+						;
+					
+					attrvalue.setValue(value);
+					extendAttrs.add(attrvalue);
+				} catch (CloneNotSupportedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+			}
+		}
+		return extendAttrs;
+		
+	}
 	public static void destroy() {
 		sessionManager = null;
 		
@@ -160,5 +307,50 @@ public class SessionHelper {
 	public static boolean isMonitorAll() throws Exception
 	{
 		return getSessionStaticManager().isMonitorAll();
+	}
+	/**
+	 * 
+	 * @param monitorAttributes
+	 * @return
+	 */
+	public static  AttributeInfo[] getExtendAttributeInfos(String monitorAttributes)
+	{
+		
+		 
+		AttributeInfo[] monitorAttributeArray = SimpleStringUtil.json2Object(monitorAttributes,AttributeInfo[].class);
+//		 AttributeInfo[] monitorAttributeArray = null;
+//		if(!StringUtil.isEmpty(monitorAttributes))
+//		{
+//			String[] monitorAttributeArray_ = monitorAttributes.split(",");
+//			monitorAttributeArray = new AttributeInfo[monitorAttributeArray_.length];
+//			AttributeInfo attributeInfo = null;
+//			for(int i = 0; i < monitorAttributeArray_.length; i ++)
+//			{
+//				String attr = monitorAttributeArray_[i];
+//				attributeInfo = new AttributeInfo();
+//				String attrinfo[] = attr.split(":");
+//				if(attrinfo.length > 2)
+//				{
+//					attributeInfo.setName(attrinfo[0]);
+//					attributeInfo.setType(attrinfo[1]);
+//					attributeInfo.setCname(attrinfo[2]);
+//				}
+//				else if(attrinfo.length > 1)
+//				{
+//					attributeInfo.setName(attrinfo[0]);
+//					attributeInfo.setType(attrinfo[1]);
+//				}
+//				else
+//				{
+//					attributeInfo.setName(attrinfo[0]);
+//					attributeInfo.setType("String");
+//				}
+//				monitorAttributeArray[i]=attributeInfo;
+//					
+//				
+//			}
+//			
+//		}
+		return monitorAttributeArray;
 	}
 }

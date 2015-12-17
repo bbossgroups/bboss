@@ -28,12 +28,7 @@ public class NullSessionStaticManagerImpl implements SessionStaticManager {
 	{
 		return false;
 	}
-	@Override
-	public List<SessionInfo> getAllSessionInfos(Map queryParams, int row,
-			int page) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
+ 
 
 	@Override
 	public SessionInfo getSessionInfo(String appKey, String sessionid) {
@@ -89,4 +84,24 @@ public class NullSessionStaticManagerImpl implements SessionStaticManager {
 		return null;
 	}
 
+	@Override
+	public List<SessionInfo> getAllSessionInfos(SessionConfig sessionConfig, Map queryParams, int row, int page)
+			throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public AttributeInfo[] getExtendAttributeArray(String appkey) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public SessionConfig getSessionConfig(String appkey) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+ 
 }

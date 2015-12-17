@@ -17,10 +17,10 @@
 	<classpathentry kind="lib" path="lib/jmxtools.jar"/>
 	<classpathentry kind="lib" path="lib/ext/junit-4.6.jar" sourcepath="C:/Documents and Settings/Administrator/.m2/repository/junit/junit/4.6/junit-4.6-sources.jar"/>
 	<classpathentry kind="lib" path="lib/jhighlight-1.0.jar"/>
-	<classpathentry kind="lib" path="lib/jackson-all-1.6.2.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="lib" path="lib/bboss-velocity.jar" sourcepath="/bboss-velocity"/>
 	<classpathentry kind="lib" path="lib/ext/jsp-api.jar"/>
 	<classpathentry kind="lib" path="lib/commons-lang-2.6.jar"/>
+	<classpathentry kind="lib" path="lib/jackson-all-1.9.10.jar"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>

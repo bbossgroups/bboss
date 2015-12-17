@@ -1,6 +1,7 @@
 package org.frameworkset.security.session.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -16,6 +17,7 @@ import org.frameworkset.nosql.mongodb.MongoDB;
 import org.frameworkset.nosql.mongodb.MongoDBHelper;
 import org.frameworkset.security.session.Session;
 import org.frameworkset.security.session.SessionBasicInfo;
+import org.frameworkset.security.session.statics.SessionConfig;
 
 import com.frameworkset.util.SimpleStringUtil;
 import com.frameworkset.util.StringUtil;
@@ -29,11 +31,13 @@ import com.mongodb.WriteConcern;
 public class MongDBSessionStore extends BaseSessionStore{
 	private Mongo mongoClient;
 	private DB db = null;
+	private DB configdb = null;
 	private static Logger log = Logger.getLogger(MongDBSessionStore.class);
 	public MongDBSessionStore()
 	{
 		mongoClient = MongoDBHelper.getMongoClient(MongoDBHelper.defaultMongoDB);
 		db = mongoClient.getDB( "sessiondb" );
+		configdb = mongoClient.getDB( "sessionconfdb" );
 	}
 	public void destory()
 	{
@@ -91,6 +95,51 @@ public class MongDBSessionStore extends BaseSessionStore{
 		 return sessions;
 	}
 	
+	public void saveSessionConfig(SessionConfig config)
+	{
+		DBCollection sessionconf = configdb.getCollection("sessionconf");
+//		 sessions.ensureIndex("sessionid");
+		sessionconf.createIndex(new BasicDBObject( "appcode" , 1 ));
+		BasicDBObject keys = new BasicDBObject();
+		keys.put("appcode", 1);
+	 
+		DBObject object = sessionconf.findOne(new BasicDBObject("appcode",config.getAppcode()) ,keys);
+		BasicDBObject record = new BasicDBObject("appcode",config.getAppcode())
+		 
+		.append("cookiename",config.getCookiename())
+		.append("crossDomain", config.getCrossDomain())
+		.append("domain", config.getDomain());
+		if(config.getScanStartTime() != null)
+			record.append("scanStartTime", config.getScanStartTime().getTime());
+		 record.append("sessionListeners", config.getSessionListeners())
+		.append("sessionscaninterval", config.getSessionscaninterval())
+		.append("sessionStore", config.getSessionStore())
+		.append("sessionTimeout",config.getSessionTimeout())
+		.append("httpOnly", config.isHttpOnly())
+		.append("secure", config.isSecure())
+		.append("monitorAttributes", config.getMonitorAttributes())
+		
+		.append("startLifeScan", config.isStartLifeScan());
+		
+		if(object == null)
+		{
+			Date date = new Date();
+			record.append("createTime", date.getTime());
+			record.append("updateTime", date.getTime());
+			 
+			MongoDB.insert(WriteConcern.UNACKNOWLEDGED,sessionconf,record);
+		}
+		else
+		{
+			Date date = new Date();
+			 
+			record.append("updateTime", date.getTime());
+			MongoDB.update(sessionconf, new BasicDBObject("appcode",config.getAppcode()) , 
+					new BasicDBObject("$set",record),WriteConcern.UNACKNOWLEDGED);	
+		}
+		
+		
+	}
 	@Override
 	public Session createSession(SessionBasicInfo sessionBasicInfo) {
 		String sessionid = this.randomToken();
@@ -375,6 +424,65 @@ public class MongDBSessionStore extends BaseSessionStore{
 		}
 	}
 	@Override
+	public SessionConfig getSessionConfig(String appkey) {
+		if(appkey == null || appkey.equals(""))
+			return null;
+		DBCollection sessionconf = configdb.getCollection("sessionconf");
+//		 sessions.ensureIndex("sessionid");
+		sessionconf.createIndex(new BasicDBObject( "appcode" , 1 ));
+		BasicDBObject keys = new BasicDBObject();
+		keys.put("appcode", 1);
+		keys.put("cookiename", 1);
+		keys.put("crossDomain", 1);
+		keys.put("domain", 1);
+		keys.put("scanStartTime", 1);
+		keys.put("sessionListeners", 1);
+		keys.put("sessionscaninterval", 1);
+		keys.put("sessionStore", 1);
+		keys.put("sessionTimeout", 1);
+		keys.put("httpOnly", 1);
+		keys.put("startLifeScan", 1);
+		keys.put("secure", 1);
+		keys.put("monitorAttributes", 1);
+		keys.put("createTime", 1);
+		keys.put("updateTime", 1);
+		 
+		
+		DBObject object = sessionconf.findOne(new BasicDBObject("appcode",appkey) ,keys);
+		 
+		 
+		 
+		if(object != null)
+		{
+			SessionConfig sessionConfig = new SessionConfig();
+			sessionConfig.setAppcode(appkey);
+			sessionConfig.setCookiename((String)object.get("cookiename"));
+			sessionConfig.setCrossDomain((String)object.get("crossDomain"));
+			sessionConfig.setDomain((String)object.get("domain"));
+			Long st = (Long)object.get("scanStartTime");
+			if(st!= null)
+				sessionConfig.setScanStartTime(new Date(st.longValue()));
+			sessionConfig.setSessionListeners((String)object.get("sessionListeners")); 
+			sessionConfig.setSessionscaninterval((Long)object.get("sessionscaninterval")); 
+			sessionConfig.setSessionStore((String)object.get("sessionStore"));
+			sessionConfig.setSessionTimeout((Long)object.get("sessionTimeout")); 
+			sessionConfig.setHttpOnly((Boolean)object.get("httpOnly")); 
+			sessionConfig.setStartLifeScan((Boolean)object.get("startLifeScan")); 
+			sessionConfig.setSecure((Boolean)object.get("secure")); 
+			sessionConfig.setMonitorAttributes((String)object.get("monitorAttributes"));
+			sessionConfig.setCreateTime(new Date((Long)object.get("createTime")));
+			sessionConfig.setUpdateTime(new Date((Long)object.get("updateTime")));
+			
+			 
+			return sessionConfig;
+		}
+		else
+		{
+			return null;
+		}
+		 
+	}
+	@Override
 	public Session getSession(String appKey,String contextpath, String sessionid) {
 		DBCollection sessions =getAppSessionDBCollection( appKey);
 		BasicDBObject keys = new BasicDBObject();
@@ -433,6 +541,12 @@ public class MongDBSessionStore extends BaseSessionStore{
 		// TODO Auto-generated method stub
 		return null;
 	}
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return this.getClass().getName();
+	}
+	
 	
 //	private Session getSessionAndRemove(String appKey,String contextpath, String sessionid) {
 //		DBCollection sessions =getAppSessionDBCollection( appKey);

@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.frameworkset.security.session.entity.SessionCondition;
 import org.frameworkset.security.session.entity.SessionInfoBean;
 import org.frameworkset.security.session.statics.SessionAPP;
+import org.frameworkset.security.session.statics.SessionConfig;
 
 import com.frameworkset.util.ListInfo;
 
@@ -20,7 +21,7 @@ public interface SessionManagerService {
 	 * @param pagesize
 	 * @return 2014年6月5日
 	 */
-	public ListInfo querySessionDataForPage(SessionCondition condition,
+	public ListInfo querySessionDataForPage(SessionConfig config,SessionCondition condition,
 			int offset, int pagesize) throws Exception;
 
 	/**

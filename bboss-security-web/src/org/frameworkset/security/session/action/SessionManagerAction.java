@@ -1,16 +1,21 @@
 package org.frameworkset.security.session.action;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
+import org.frameworkset.security.session.entity.Apps;
 import org.frameworkset.security.session.entity.SessionCondition;
 import org.frameworkset.security.session.entity.SessionInfoBean;
 import org.frameworkset.security.session.impl.SessionHelper;
 import org.frameworkset.security.session.service.SessionManagerService;
+import org.frameworkset.security.session.statics.AttributeInfo;
 import org.frameworkset.security.session.statics.SessionAPP;
+import org.frameworkset.security.session.statics.SessionConfig;
 import org.frameworkset.util.annotations.PagerParam;
 import org.frameworkset.util.annotations.ResponseBody;
 import org.frameworkset.web.servlet.ModelMap;
@@ -22,8 +27,18 @@ public class SessionManagerAction {
 
 	private SessionManagerService sessionService;
 	private static Logger log = Logger.getLogger(SessionManagerAction.class);
-	public String sessionManager() {
-
+	public String sessionManager(String appkey,ModelMap model) {
+		if(!StringUtil.isEmpty(appkey))
+		{
+			SessionConfig sessionConfig = SessionHelper .getSessionConfig(appkey);
+			if(sessionConfig != null && sessionConfig.getExtendAttributeInfos() != null)		
+			{
+				
+				model.addAttribute("sessionConfig", sessionConfig);
+				if(  sessionConfig.getExtendAttributeInfos() != null)			
+					model.addAttribute("monitorAttributes", sessionConfig.getExtendAttributeInfos());
+			}
+		}
 		return "path:sessionManager";
 	}
 	
@@ -55,6 +70,8 @@ public class SessionManagerAction {
 		}
 	}
 
+	
+	
 	/**
 	 * 分页获取session数据
 	 * 
@@ -85,15 +102,24 @@ public class SessionManagerAction {
 			}
 			else
 			{
+				SessionConfig sessionConfig = SessionHelper.getSessionConfig(condition.getAppkey());
+				if(sessionConfig != null)
+					condition.setExtendAttributes(SessionHelper.parserExtendAttributes(request,sessionConfig));
 				// 分页获取session数据
-				ListInfo sessionList = sessionService.querySessionDataForPage(
-						condition, offset, pagesize);
+				ListInfo AllSessions = sessionService.querySessionDataForPage(
+						sessionConfig,condition, offset, pagesize);
 				HttpSession session = request.getSession(false);
 				if(session != null)
 				{
 					model.addAttribute("currentsessionid", session.getId());
 				}
-				model.addAttribute("sessionList", sessionList);
+				model.addAttribute("sessionList", AllSessions);
+				if(sessionConfig != null)
+				{					
+					AttributeInfo[] monitorAttributeArray = sessionConfig.getExtendAttributeInfos();
+					if(monitorAttributeArray != null)			
+						model.addAttribute("monitorAttributes", monitorAttributeArray);
+				}
 			}
 
 			return "path:sessionList";
@@ -111,13 +137,20 @@ public class SessionManagerAction {
 	 * @return 2014年6月5日
 	 */
 	public @ResponseBody(datatype = "json")
-	List<SessionAPP> getAppSessionData(String appKey,HttpServletRequest request)  throws Exception{
+	Apps getAppSessionData(String appKey,HttpServletRequest request)  throws Exception{
 
 		try {
+			Apps apps = new Apps();
 			List<SessionAPP> appSessionList = sessionService
 					.queryAppSessionData(appKey,  request);
-
-			return appSessionList;
+			apps.setApps(appSessionList);
+			if(StringUtil.isNotEmpty(appKey))
+			{
+				SessionConfig config = SessionHelper.getSessionConfig(appKey);
+				if(config != null)
+					apps.setExtendAttributes(config.getExtendAttributeInfos());
+			}
+			return apps;
 
 		} catch (Exception e) {
 			throw e;

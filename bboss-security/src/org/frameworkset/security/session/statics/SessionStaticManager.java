@@ -16,6 +16,7 @@ public interface SessionStaticManager {
 	List<SessionAPP> getSessionAPP(HttpServletRequest request);
 	SessionAPP getSingleSessionAPP(String appName);
 	SessionAPP getSingleSessionAPP(HttpServletRequest request);
+	public SessionConfig getSessionConfig(String appkey);
 	/**
 	 * 判断用户是有使用app的session管理权限
 	 * @param app 
@@ -41,7 +42,7 @@ public interface SessionStaticManager {
 	 * @param end
 	 * @return
 	 */
-	List<SessionInfo> getAllSessionInfos(Map queryParams, int row, int page)
+	List<SessionInfo> getAllSessionInfos(SessionConfig sessionConfig,Map queryParams, int row, int page)
 			throws Exception;
 
 	SessionInfo getSessionInfo(String appKey, String sessionid);
@@ -53,5 +54,6 @@ public interface SessionStaticManager {
 	void removeAllSession(String appKey,String currentappkey,String currentsessionid);
 	boolean deleteApp(String app) throws Exception;
 	boolean isMonitorAll();
+	public AttributeInfo[] getExtendAttributeArray(String appkey);
 
 }

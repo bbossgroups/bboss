@@ -1,5 +1,10 @@
 package org.frameworkset.security.session.entity;
 
+import java.util.Map;
+
+import org.frameworkset.security.session.statics.AttributeInfo;
+import org.frameworkset.util.annotations.IgnoreBind;
+
 /**
  * @todo SessionBean查询条件实体
  * @author tanx
@@ -15,6 +20,8 @@ public class SessionCondition {
 	private String referip;// 客户端
 	private String validate;// 状态
 	private String host;// 服务端
+	@IgnoreBind
+	private Map<String,AttributeInfo> extendAttributes;
 
 	public String getCreatetime_start() {
 		return createtime_start;
@@ -70,6 +77,14 @@ public class SessionCondition {
 
 	public void setAppkey(String appkey) {
 		this.appkey = appkey;
+	}
+
+	public Map<String, AttributeInfo> getExtendAttributes() {
+		return extendAttributes;
+	}
+
+	public void setExtendAttributes(Map<String, AttributeInfo> extendAttributes) {
+		this.extendAttributes = extendAttributes;
 	}
 
 }

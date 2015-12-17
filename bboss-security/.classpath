@@ -30,5 +30,6 @@
 	</classpathentry>
 	<classpathentry kind="lib" path="lib/asm/asm-5.0.3.jar"/>
 	<classpathentry kind="lib" path="lib/cglib-nodep-3.1.jar"/>
+	<classpathentry kind="lib" path="lib/jackson-all-1.9.10.jar"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>

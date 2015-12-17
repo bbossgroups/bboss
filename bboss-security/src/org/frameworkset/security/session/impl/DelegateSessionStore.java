@@ -24,6 +24,7 @@ import org.frameworkset.security.session.Session;
 import org.frameworkset.security.session.SessionBasicInfo;
 import org.frameworkset.security.session.SessionEvent;
 import org.frameworkset.security.session.SessionStore;
+import org.frameworkset.security.session.statics.SessionConfig;
 
 /**
  * <p>Title: DelegateSessionStrore.java</p> 
@@ -176,6 +177,21 @@ public class DelegateSessionStore implements SessionStore {
 			String contextpath) {
 		sessionStore.setMaxInactiveInterval(session, appKey, id, maxInactiveInterval, contextpath);
 		
+	}
+	@Override
+	public void saveSessionConfig(SessionConfig config) {
+		sessionStore.saveSessionConfig(config);
+		
+	}
+	@Override
+	public SessionConfig getSessionConfig(String appkey) {
+		// TODO Auto-generated method stub
+		return sessionStore.getSessionConfig(appkey);
+	}
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return this.sessionStore.getName();
 	}
 	
 	

@@ -16,6 +16,7 @@
 package org.frameworkset.security.session.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -23,7 +24,11 @@ import org.frameworkset.security.session.SessionEvent;
 import org.frameworkset.security.session.SessionListener;
 import org.frameworkset.security.session.SessionStore;
 import org.frameworkset.security.session.domain.CrossDomain;
+import org.frameworkset.security.session.statics.AttributeInfo;
+import org.frameworkset.security.session.statics.SessionConfig;
+import org.frameworkset.soa.ObjectSerializable;
 
+import com.frameworkset.util.SimpleStringUtil;
 import com.frameworkset.util.StringUtil;
 
 
@@ -62,7 +67,16 @@ public class SessionManager {
 	private SessionStore sessionStore;
 	private SessionMonitor	sessionMonitor;
 	private List<SessionListener> sessionListeners;
-	
+	private Date scanStartTime;
+	private String monitorAttributes;
+	/**
+	 * 用于监控查询用户自定义存储在session对象中的属性值，如果跨域的session共享，则只能指定为共享的会议属性，属性值必须只能是基本数据类型属性
+	 */
+	private AttributeInfo[] monitorAttributeArray;
+	public AttributeInfo[] getMonitorAttributeArray() {
+		// TODO Auto-generated method stub
+		return monitorAttributeArray;
+	}
 	/**
 	 * session超时检测时间间隔，默认为-1，不检测
 	 * 如果需要检测，那么只要令牌持续时间超过sessionscaninterval
@@ -96,12 +110,57 @@ public class SessionManager {
 			sessionMonitor.start();
 		}
 	}
+	private void refreshSessionConfig()
+	{
+		SessionConfig sessionConfig = new SessionConfig();
+		sessionConfig.setAppcode(this.appcode);
+		sessionConfig.setCookiename(this.cookiename);
+		
+		if(this.crossDomain != null)
+			try {
+				sessionConfig.setCrossDomain(ObjectSerializable.toXML(this.crossDomain));
+			} catch (Exception e) {
+				log.error("refreshSessionConfig failed:", e);
+			}
+		
+		
+		if(!SimpleStringUtil.isEmpty(this.monitorAttributes))
+				sessionConfig.setMonitorAttributes(monitorAttributes);
+			
+		sessionConfig.setDomain(this.domain);
+		sessionConfig.setScanStartTime(this.scanStartTime);
+		sessionConfig.setSessionListeners(this.sessionlisteners); 
+		sessionConfig.setSessionscaninterval(this.sessionscaninterval);
+		if(this.sessionStore != null)
+			sessionConfig.setSessionStore(this.sessionStore.getName());
+		sessionConfig.setSessionTimeout(this.sessionTimeout); 
+		sessionConfig.setHttpOnly(this.httpOnly); 
+		sessionConfig.setStartLifeScan(this.startLifeScan); 
+		sessionConfig.setSecure(this.secure);
+		this.sessionStore.saveSessionConfig(sessionConfig);
+	}
 	
+	public SessionConfig getSessionConfig(String appcode)
+	{
+		SessionConfig sessionConfig = this.sessionStore.getSessionConfig(appcode);
+		if(sessionConfig == null)
+			return null;
+		sessionConfig.setExtendAttributeInfos(SessionHelper.getExtendAttributeInfos(sessionConfig.getMonitorAttributes()));
+		return sessionConfig;
+	}
+	
+	public AttributeInfo[] getAttributeInfos(String attributeInfos)
+	{
+		
+		return SessionHelper.getExtendAttributeInfos(attributeInfos);
+	}
 	public void init()
 	{
 		this.sessionStore = SessionStoreFactory.getSessionStore(sessionstore,this);
 		if(this.sessionStore == null)
+		{
 			this.usewebsession = true;
+		}
 		if(!StringUtil.isEmpty(this.sessionlisteners))
 		{
 			String[] temp = sessionlisteners.trim().split("\\,");
@@ -112,7 +171,20 @@ public class SessionManager {
 			 log.debug("Session life scan monitor start.");
 			sessionMonitor = new SessionMonitor();
 			sessionMonitor.start();
+			
 		}
+		if(this.monitorAttributes != null)
+			this.monitorAttributes = this.monitorAttributes.trim(); 
+		initExtendFields();
+		 if(!this.usewebsession())
+		 {
+			 this.refreshSessionConfig();
+		 }
+	}
+	
+	private void initExtendFields()
+	{
+		this.monitorAttributeArray = getAttributeInfos(this.monitorAttributes);
 	}
 	public boolean usewebsession()
 	{
@@ -160,6 +232,7 @@ public class SessionManager {
 		private boolean killdown = false;
 		public void start()
 		{
+			scanStartTime = new Date();
 			super.start();
 		}
 		public void killdown() {
@@ -320,5 +393,8 @@ public class SessionManager {
 	}
 	public void setStartLifeScan(boolean startLifeScan) {
 		this.startLifeScan = startLifeScan;
+	}
+	public Date getScanStartTime() {
+		return scanStartTime;
 	}
 }

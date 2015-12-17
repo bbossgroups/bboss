@@ -21,6 +21,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 
 import org.frameworkset.security.session.impl.SessionManager;
+import org.frameworkset.security.session.statics.SessionConfig;
 
 /**
  * <p>Title: SessionStore.java</p> 
@@ -34,6 +35,7 @@ import org.frameworkset.security.session.impl.SessionManager;
 public interface SessionStore{
 
 	void destory();
+	String getName();
 
 	void livecheck();
 	public HttpSession createHttpSession(ServletContext servletContext,SessionBasicInfo sessionBasicInfo,String contextpath);
@@ -63,6 +65,7 @@ public interface SessionStore{
 	Session getSession(String appKey,String contextpath,String sessionid);
 
 	void setMaxInactiveInterval(HttpSession session, String appKey, String id, long maxInactiveInterval,String contextpath);
-	
+	public void saveSessionConfig(SessionConfig config);
+	public SessionConfig getSessionConfig(String appkey);
 
 }

@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.regex.Pattern;
 
@@ -15,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.frameworkset.nosql.mongodb.MongoDB;
 import org.frameworkset.nosql.mongodb.MongoDBHelper;
 import org.frameworkset.security.session.impl.SessionHelper;
+import org.frameworkset.spi.InitializingBean;
 
 import com.frameworkset.util.StringUtil;
 import com.mongodb.BasicDBObject;
@@ -23,11 +25,12 @@ import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.mongodb.Mongo;
-import com.mongodb.WriteConcern;
 
-public class MongoSessionStaticManagerImpl implements SessionStaticManager {
+public class MongoSessionStaticManagerImpl implements SessionStaticManager,InitializingBean {
 	private Mongo mongoClient;
 	private DB db = null;
+	 
+	
 	/**
 	 * monitorScope="self|all" 指定监控管理的session数据的应用系统范围:
 	self:表示只能监控管理本应用的会话数据
@@ -235,12 +238,13 @@ public class MongoSessionStaticManagerImpl implements SessionStaticManager {
 //		return appList;
 		return getAPPName((HttpServletRequest)null);
 	}
-
+	
 	@Override
-	public List<SessionInfo> getAllSessionInfos(Map queryParams, int row,
+	public List<SessionInfo> getAllSessionInfos(SessionConfig sessionConfig,Map queryParams, int row,
 			int page) throws Exception {
 		List<SessionInfo> sessionList = new ArrayList<SessionInfo>();
-
+	 
+		
 		String appKey = (String)queryParams.get("appKey");
 		if (StringUtil.isEmpty(appKey)) {
 			return null;
@@ -303,6 +307,7 @@ public class MongoSessionStaticManagerImpl implements SessionStaticManager {
 			query.append("_validate", _validate);
 		}
 
+		AttributeInfo[] attributeInfos = sessionConfig == null?null:sessionConfig.getExtendAttributeInfos();
 		// 显示字段
 		BasicDBObject keys = new BasicDBObject();
 		keys.put("appKey", 1);
@@ -318,6 +323,20 @@ public class MongoSessionStaticManagerImpl implements SessionStaticManager {
 		keys.put("secure",1);
 		keys.put("httpOnly", 1);
 		keys.put("lastAccessedHostIP", 1);
+		SessionHelper.evalqueryfields(attributeInfos,keys,  query);
+		
+		Map<String, AttributeInfo> extendAttributes = (Map<String, AttributeInfo>)queryParams.get("extendAttributes");
+		if(extendAttributes != null && extendAttributes.size() > 0)
+		{
+			 
+			Iterator<Entry<String, AttributeInfo>>  entries = extendAttributes.entrySet().iterator();
+			while(entries.hasNext())
+			{
+				Entry<String, AttributeInfo> entry = entries.next();
+				query.append(entry.getKey(), entry.getValue());
+				
+			}
+		}
 		
 		DBCursor cursor = sessions.find(query, keys).skip(page).limit(row)
 				.sort(new BasicDBObject("creationTime", -1));// 1升序，-1降序
@@ -373,8 +392,17 @@ public class MongoSessionStaticManagerImpl implements SessionStaticManager {
 					info.setHttpOnly(StringUtil.hasHttpOnlyMethod()?SessionHelper.getSessionManager().isHttpOnly():false);
 				}
 				info.setLastAccessedHostIP((String)dbobject.get("lastAccessedHostIP"));
+					
+				 
+					List<AttributeInfo> extendAttrs = SessionHelper.evalqueryfiledsValue(attributeInfos,dbobject);
+					
+					info.setExtendAttributes(extendAttrs);
+				 
+				 
 				sessionList.add(info);
 			}
+			 
+			
 		} finally {
 			cursor.close();
 		}
@@ -542,9 +570,10 @@ public class MongoSessionStaticManagerImpl implements SessionStaticManager {
 
 		queryParams.put("sessionid", "0c11f3c8");
 		try {
-			List<SessionInfo> infolist = smsi.getAllSessionInfos(queryParams,
+			List<SessionInfo> infolist = smsi.getAllSessionInfos(null,queryParams,
 					6, 1);
-			for (SessionInfo info : infolist) {
+			for (int i = 0; i < infolist .size(); i ++) {
+				SessionInfo info = (SessionInfo)infolist .get(i);
 				System.out.println("appkey=" + info.getAppKey() + ",host="
 						+ info.getHost() + ",MaxInactiveInterval="
 						+ info.getMaxInactiveInterval() + ",Referip="
@@ -614,5 +643,26 @@ public class MongoSessionStaticManagerImpl implements SessionStaticManager {
 		
 		return this.monitorScope != null && this.monitorScope.equals(MONITOR_SCOPE_ALL);
 	}
+
+	 
+
+	@Override
+	public void afterPropertiesSet() throws Exception {
+		 
+		
+	}
+
+	@Override
+	public AttributeInfo[] getExtendAttributeArray(String appkey) {
+		SessionConfig sessionConfig = SessionHelper.getSessionConfig(appkey);
+		return sessionConfig == null?null:sessionConfig.getExtendAttributeInfos();
+	}
+	
+	public SessionConfig getSessionConfig(String appkey)
+	{
+		return SessionHelper.getSessionConfig(appkey);
+	}
+
+	 
 
 }

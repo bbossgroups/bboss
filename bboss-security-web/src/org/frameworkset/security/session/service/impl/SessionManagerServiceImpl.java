@@ -14,6 +14,7 @@ import org.frameworkset.security.session.entity.SessionInfoBean;
 import org.frameworkset.security.session.impl.SessionHelper;
 import org.frameworkset.security.session.service.SessionManagerService;
 import org.frameworkset.security.session.statics.SessionAPP;
+import org.frameworkset.security.session.statics.SessionConfig;
 import org.frameworkset.security.session.statics.SessionInfo;
 
 import com.frameworkset.util.ListInfo;
@@ -23,11 +24,10 @@ import com.frameworkset.util.StringUtil;
 public class SessionManagerServiceImpl implements SessionManagerService {
 
 	@Override
-	public ListInfo querySessionDataForPage(SessionCondition condition,
+	public ListInfo querySessionDataForPage(SessionConfig config,SessionCondition condition,
 			int offset, int pagesize) throws Exception {
 
-		ListInfo list = new ListInfo();
-		
+		ListInfo list = null;
 		try {
 
 			Map<String, Object> queryParams = new HashMap<String, Object>();
@@ -38,19 +38,20 @@ public class SessionManagerServiceImpl implements SessionManagerService {
 			queryParams.put("createtime_end", condition.getCreatetime_end());
 			queryParams.put("host", condition.getHost());
 			queryParams.put("referip", condition.getReferip());
-
+			if(condition.getExtendAttributes() != null)
+				queryParams.put("extendAttributes", condition.getExtendAttributes());
 			if (!StringUtil.isEmpty(condition.getValidate())) {
 
 				queryParams.put("validate",
 						condition.getValidate().equals("1") ? "true" : "false");
 			}
-
 			List<SessionInfo> infoList = SessionHelper
-					.getSessionStaticManager().getAllSessionInfos(queryParams,
+					.getSessionStaticManager().getAllSessionInfos(   config, queryParams,
 							pagesize, offset);
-
+			
 			List<SessionInfoBean> beanList = new ArrayList<SessionInfoBean>();
 			if (infoList != null && infoList.size() != 0) {
+				list = new ListInfo();
 				long ctime = System.currentTimeMillis();
 				for (SessionInfo info : infoList) {
 					SessionInfoBean bean = new SessionInfoBean();
@@ -88,10 +89,10 @@ public class SessionManagerServiceImpl implements SessionManagerService {
 					bean.setLastAccessedHostIP(info.getLastAccessedHostIP());
 					beanList.add(bean);
 				}
-				list.setMore(true);
-				list.setResultSize(infoList.size());
+				
 			}
-
+			list.setMore(true);
+			list.setResultSize(beanList.size());
 			list.setDatas(beanList);
 			
 		} catch (Exception e) {

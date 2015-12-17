@@ -1,6 +1,7 @@
 package org.frameworkset.security.session.statics;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 public class SessionInfo {
@@ -18,6 +19,7 @@ public class SessionInfo {
 	private boolean httpOnly;
 	private boolean secure;
 	private String lastAccessedHostIP;
+	private List<AttributeInfo> extendAttributes;
 	public SessionInfo() {
 		// TODO Auto-generated constructor stub
 	}
@@ -133,6 +135,14 @@ public class SessionInfo {
 
 	public void setLastAccessedHostIP(String lastAccessedHostIP) {
 		this.lastAccessedHostIP = lastAccessedHostIP;
+	}
+
+	public List<AttributeInfo> getExtendAttributes() {
+		return extendAttributes;
+	}
+
+	public void setExtendAttributes(List<AttributeInfo> extendAttributes) {
+		this.extendAttributes = extendAttributes;
 	}
 
 }
