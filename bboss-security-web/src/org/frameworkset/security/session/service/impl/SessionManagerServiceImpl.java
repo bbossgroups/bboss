@@ -49,8 +49,9 @@ public class SessionManagerServiceImpl implements SessionManagerService {
 					.getSessionStaticManager().getAllSessionInfos(   config, queryParams,
 							pagesize, offset);
 			
-			List<SessionInfoBean> beanList = new ArrayList<SessionInfoBean>();
+			List<SessionInfoBean> beanList = null;
 			if (infoList != null && infoList.size() != 0) {
+				beanList = new ArrayList<SessionInfoBean>();
 				list = new ListInfo();
 				long ctime = System.currentTimeMillis();
 				for (SessionInfo info : infoList) {
@@ -87,13 +88,17 @@ public class SessionManagerServiceImpl implements SessionManagerService {
 					bean.setSecure(info.isSecure());
 					bean.setHttpOnly(info.isHttpOnly());
 					bean.setLastAccessedHostIP(info.getLastAccessedHostIP());
+					bean.setExtendAttributes(info.getExtendAttributes());
 					beanList.add(bean);
 				}
 				
 			}
-			list.setMore(true);
-			list.setResultSize(beanList.size());
-			list.setDatas(beanList);
+			if(list != null)
+			{
+				list.setMore(true);
+				list.setResultSize(beanList.size());
+				list.setDatas(beanList);
+			}
 			
 		} catch (Exception e) {
 			throw e;

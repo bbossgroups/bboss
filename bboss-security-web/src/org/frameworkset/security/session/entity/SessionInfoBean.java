@@ -1,7 +1,10 @@
 package org.frameworkset.security.session.entity;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
+
+import org.frameworkset.security.session.statics.AttributeInfo;
 
 /**
  * @todo SessionBean实体
@@ -27,6 +30,7 @@ public class SessionInfoBean {
 	private boolean httpOnly;
 	private boolean secure;
 	private String lastAccessedHostIP;
+	private List<AttributeInfo> extendAttributes;
 	public Date getLoseTime() {
 		return loseTime;
 	}
@@ -155,6 +159,14 @@ public class SessionInfoBean {
 
 	public void setLastAccessedHostIP(String lastAccessedHostIP) {
 		this.lastAccessedHostIP = lastAccessedHostIP;
+	}
+
+	public List<AttributeInfo> getExtendAttributes() {
+		return extendAttributes;
+	}
+
+	public void setExtendAttributes(List<AttributeInfo> extendAttributes) {
+		this.extendAttributes = extendAttributes;
 	}
 
 }

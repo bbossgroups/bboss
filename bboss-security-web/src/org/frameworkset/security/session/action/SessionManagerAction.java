@@ -117,6 +117,7 @@ public class SessionManagerAction {
 				if(sessionConfig != null)
 				{					
 					AttributeInfo[] monitorAttributeArray = sessionConfig.getExtendAttributeInfos();
+					model.addAttribute("sessionConfig", sessionConfig);
 					if(monitorAttributeArray != null)			
 						model.addAttribute("monitorAttributes", monitorAttributeArray);
 				}
@@ -137,14 +138,15 @@ public class SessionManagerAction {
 	 * @return 2014年6月5日
 	 */
 	public @ResponseBody(datatype = "json")
-	Apps getAppSessionData(String appKey,HttpServletRequest request)  throws Exception{
+	Apps getAppSessionData(String appKey,boolean loadextendattrs,HttpServletRequest request)  throws Exception{
 
 		try {
 			Apps apps = new Apps();
 			List<SessionAPP> appSessionList = sessionService
 					.queryAppSessionData(appKey,  request);
 			apps.setApps(appSessionList);
-			if(StringUtil.isNotEmpty(appKey))
+			
+			if(loadextendattrs && StringUtil.isNotEmpty(appKey))
 			{
 				SessionConfig config = SessionHelper.getSessionConfig(appKey);
 				if(config != null)

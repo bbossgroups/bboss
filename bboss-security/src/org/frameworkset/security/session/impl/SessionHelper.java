@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.regex.Pattern;
 
 import javax.servlet.ServletContext;
@@ -38,6 +39,7 @@ import org.frameworkset.spi.DefaultApplicationContext;
 
 import com.frameworkset.util.SimpleStringUtil;
 import com.frameworkset.util.StringUtil;
+import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 
@@ -96,17 +98,22 @@ public class SessionHelper {
 			String value = request.getParameter(attributeInfo.getName());
 			if(value != null )
 			{
+				
 				if(value.trim().equals("")  )
 				{
 					if(attributeInfo.isEnableEmptyValue())
 					{
-						try {
-							attributeInfo = attributeInfo.clone();
-							attributeInfo.setValue(SessionHelper. convertValue(  value,  attributeInfo));
-							datas.put(attributeInfo.getName(), attributeInfo);
-						} catch (CloneNotSupportedException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
+						String enableEmptyValue = request.getParameter(attributeInfo.getName()+"_enableEmptyValue");
+						if(enableEmptyValue !=  null)
+						{
+							try {
+								attributeInfo = attributeInfo.clone();
+								attributeInfo.setValue("");
+								datas.put(attributeInfo.getName(), attributeInfo);
+							} catch (CloneNotSupportedException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
 						}
 					}
 					
@@ -128,7 +135,7 @@ public class SessionHelper {
 		return datas;
 	}
 	
-	public static void evalqueryfields(AttributeInfo[] monitorAttributeArray, Map keys,BasicDBObject query)
+	public static void evalqueryfields(AttributeInfo[] monitorAttributeArray, Map keys)
 	{
 		 
 		if(monitorAttributeArray != null && monitorAttributeArray.length > 0)
@@ -136,23 +143,73 @@ public class SessionHelper {
 			for(AttributeInfo attr:monitorAttributeArray)
 			{
 				keys.put(attr.getName(), 1);
+				 
+				
+			}
+			
+			
+		}
+		
+		
+		
+	}
+	
+	public static void buildExtendFieldQueryCondition(Map<String, AttributeInfo> monitorAttributeArray,  BasicDBObject query)
+	{
+		 
+		if(monitorAttributeArray != null && monitorAttributeArray.size() > 0)
+		{
+			
+			for(Entry<String, AttributeInfo> Entry:monitorAttributeArray.entrySet())
+			{
+				AttributeInfo  attr = Entry.getValue();
 				if(attr.getType().equals("String"))
 				{
+					
 					if(!attr.isLike())
 					{
-						query.append(attr.getName(), attr.getValue());
+						if (!StringUtil.isEmpty((String)attr.getValue())) {
+							Object value = serial(attr.getValue());
+							query.append(attr.getName(), value);
+						}
+						else if(attr.isEnableEmptyValue())
+						{
+							BasicDBList values = new BasicDBList();
+							values.add(new BasicDBObject(attr.getName(), serial("")));
+							values.add(new BasicDBObject(attr.getName(), null));
+							query.append("$or", values);
+						}
+						
+
+						
 					}
 					else
 					{
 						if (!StringUtil.isEmpty((String)attr.getValue())) {
-							Pattern hosts = Pattern.compile("^.*" + attr.getValue() + ".*$",
+							Object value = attr.getValue();
+							Pattern hosts = Pattern.compile("^.*" + value + ".*$",
 									Pattern.CASE_INSENSITIVE);
 							query.append(attr.getName(), new BasicDBObject("$regex",hosts));
+						}
+						else if(attr.isEnableEmptyValue())
+						{
+							 
+							//values.add(null);
+						
+							BasicDBList values = new BasicDBList();
+							values.add(new BasicDBObject(attr.getName(), serial("")));
+							values.add(new BasicDBObject(attr.getName(), null));
+							query.append("$or", values);
+							
+							
 						}
 					}
 				}
 				else 
-					query.append(attr.getName(), attr.getValue());
+				{
+					Object value = serial(attr.getValue());
+					query.append(attr.getName(), value);
+				}
 				
 			}
 			
@@ -174,19 +231,8 @@ public class SessionHelper {
 			{
 				try {
 					attrvalue = attributeInfo.clone();
-					Object value = dbobject.get(attrvalue.getName());
-					if(attributeInfo.getType().equals("String"))
-						;
-					else if(attributeInfo.getType().equals("int"))
-						;
-					else if(attributeInfo.getType().equals("long"))
-						;
-					else if(attributeInfo.getType().equals("double"))
-						;
-					else if(attributeInfo.getType().equals("float"))
-						;
-					
-					attrvalue.setValue(value);
+					String value = (String)dbobject.get(attrvalue.getName());
+					attrvalue.setValue(unserial(  value));
 					extendAttrs.add(attrvalue);
 				} catch (CloneNotSupportedException e) {
 					// TODO Auto-generated catch block

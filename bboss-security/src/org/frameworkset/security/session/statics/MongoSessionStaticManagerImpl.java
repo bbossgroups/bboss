@@ -323,20 +323,11 @@ public class MongoSessionStaticManagerImpl implements SessionStaticManager,Initi
 		keys.put("secure",1);
 		keys.put("httpOnly", 1);
 		keys.put("lastAccessedHostIP", 1);
-		SessionHelper.evalqueryfields(attributeInfos,keys,  query);
+		SessionHelper.evalqueryfields(attributeInfos,keys );
 		
+		@SuppressWarnings("unchecked")
 		Map<String, AttributeInfo> extendAttributes = (Map<String, AttributeInfo>)queryParams.get("extendAttributes");
-		if(extendAttributes != null && extendAttributes.size() > 0)
-		{
-			 
-			Iterator<Entry<String, AttributeInfo>>  entries = extendAttributes.entrySet().iterator();
-			while(entries.hasNext())
-			{
-				Entry<String, AttributeInfo> entry = entries.next();
-				query.append(entry.getKey(), entry.getValue());
-				
-			}
-		}
+		SessionHelper.buildExtendFieldQueryCondition(extendAttributes,    query);
 		
 		DBCursor cursor = sessions.find(query, keys).skip(page).limit(row)
 				.sort(new BasicDBObject("creationTime", -1));// 1升序，-1降序
