@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
+import org.frameworkset.security.session.domain.CrossDomain;
 import org.frameworkset.security.session.entity.Apps;
 import org.frameworkset.security.session.entity.SessionCondition;
 import org.frameworkset.security.session.entity.SessionInfoBean;
@@ -16,6 +17,7 @@ import org.frameworkset.security.session.service.SessionManagerService;
 import org.frameworkset.security.session.statics.AttributeInfo;
 import org.frameworkset.security.session.statics.SessionAPP;
 import org.frameworkset.security.session.statics.SessionConfig;
+import org.frameworkset.soa.ObjectSerializable;
 import org.frameworkset.util.annotations.PagerParam;
 import org.frameworkset.util.annotations.ResponseBody;
 import org.frameworkset.web.servlet.ModelMap;
@@ -117,7 +119,7 @@ public class SessionManagerAction {
 				if(sessionConfig != null)
 				{					
 					AttributeInfo[] monitorAttributeArray = sessionConfig.getExtendAttributeInfos();
-					model.addAttribute("sessionConfig", sessionConfig);
+//					model.addAttribute("sessionConfig", sessionConfig);
 					if(monitorAttributeArray != null)			
 						model.addAttribute("monitorAttributes", monitorAttributeArray);
 				}
@@ -296,6 +298,40 @@ public class SessionManagerAction {
 			
 			model.addAttribute("message","对不起，"+appkey+"session数据["+sessionid+"]不存在");
 			return "path:viewSessionInfo";
+		}
+	}
+	
+	public String viewSessionConfig(  String appkey,
+			ModelMap model,HttpServletRequest request)  throws Exception{
+		try {
+			if(!SessionHelper.hasMonitorPermission(appkey, request))
+			{
+				model.addAttribute("message","对不起，没有查看应用"+appkey+"session数据的权限");
+			}
+			else
+			{
+				SessionConfig sessionConfig = SessionHelper .getSessionConfig(appkey,false);
+				if(sessionConfig != null  )		
+				{
+					
+					model.addAttribute("sessionConfig", sessionConfig);
+					if(sessionConfig.getCrossDomain() != null && !sessionConfig.getCrossDomain().equals(""))
+					{
+						CrossDomain crossDomain = ObjectSerializable.toBean(sessionConfig.getCrossDomain(), CrossDomain.class);
+						model.addAttribute("crossDomain", crossDomain);
+					}
+					 
+				}
+				else
+					model.addAttribute("message", "对不起，没有获取到应用"+appkey+"session配置");
+			}
+
+			return "path:viewSessionConfig";
+
+		} catch (Exception e) {
+			
+			model.addAttribute("message","对不起，获取"+appkey+"session配置失败!");
+			return "path:viewSessionConfig";
 		}
 	}
 

@@ -7,6 +7,7 @@ public class AttributeInfo implements java.io.Serializable,Cloneable{
 	private Object value;
 	private boolean like;
 	private boolean enableEmptyValue;
+	private boolean useIndex;
 	public AttributeInfo() {
 		// TODO Auto-generated constructor stub
 	}
@@ -50,6 +51,12 @@ public class AttributeInfo implements java.io.Serializable,Cloneable{
 	}
 	public void setEnableEmptyValue(boolean enableEmptyValue) {
 		this.enableEmptyValue = enableEmptyValue;
+	}
+	public boolean isUseIndex() {
+		return useIndex;
+	}
+	public void setUseIndex(boolean useIndex) {
+		this.useIndex = useIndex;
 	}
 
 }

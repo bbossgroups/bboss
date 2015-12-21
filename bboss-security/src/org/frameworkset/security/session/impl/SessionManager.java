@@ -140,12 +140,13 @@ public class SessionManager {
 		this.sessionStore.saveSessionConfig(sessionConfig);
 	}
 	
-	public SessionConfig getSessionConfig(String appcode)
+	public SessionConfig getSessionConfig(String appcode,boolean serialattributes)
 	{
 		SessionConfig sessionConfig = this.sessionStore.getSessionConfig(appcode);
 		if(sessionConfig == null)
 			return null;
-		sessionConfig.setExtendAttributeInfos(SessionHelper.getExtendAttributeInfos(sessionConfig.getMonitorAttributes()));
+		if(serialattributes)
+			sessionConfig.setExtendAttributeInfos(SessionHelper.getExtendAttributeInfos(sessionConfig.getMonitorAttributes()));
 		return sessionConfig;
 	}
 	

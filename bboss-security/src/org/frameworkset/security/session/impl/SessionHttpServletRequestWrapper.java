@@ -58,7 +58,19 @@ public class SessionHttpServletRequestWrapper extends HttpServletRequestWrapper 
 		 return getSession(true);
 	}
 
-
+	
+	private String getRequestUrl()
+	{
+		StringBuilder basePath = new StringBuilder().append(getScheme()).append("://").append(getServerName());
+		if(getServerPort() != 80)
+			basePath.append(":").append(getServerPort() ) ;
+		 
+		basePath
+			.append( this.getRequestURI());
+		if(this.getQueryString() != null)
+			basePath.append("?").append(this.getQueryString());
+		return basePath.toString();
+	}
 	@Override
 	public HttpSession getSession(boolean create) {
 		if( SessionHelper.getSessionManager().usewebsession())
@@ -75,7 +87,7 @@ public class SessionHttpServletRequestWrapper extends HttpServletRequestWrapper 
 				SessionBasicInfo sessionBasicInfo = new SessionBasicInfo();
 				sessionBasicInfo.setAppKey(appkey);
 				sessionBasicInfo.setReferip(StringUtil.getClientIP(this));
-				sessionBasicInfo.setRequesturi(this.getRequestURI());
+				sessionBasicInfo.setRequesturi(this.getRequestUrl());
 				
 				this.session = (HttpSessionImpl) SessionHelper.createSession(servletContext,sessionBasicInfo,this.getContextPath());				
 				sessionid = session.getId();
@@ -108,7 +120,7 @@ public class SessionHttpServletRequestWrapper extends HttpServletRequestWrapper 
 					SessionBasicInfo sessionBasicInfo = new SessionBasicInfo();
 					sessionBasicInfo.setAppKey(appkey);
 					sessionBasicInfo.setReferip(StringUtil.getClientIP(this));
-					sessionBasicInfo.setRequesturi(this.getRequestURI());
+					sessionBasicInfo.setRequesturi(this.getRequestUrl());
 					
 					this.session = (HttpSessionImpl) SessionHelper.createSession(servletContext,sessionBasicInfo,this.getContextPath());
 					sessionid = session.getId();
@@ -145,7 +157,7 @@ public class SessionHttpServletRequestWrapper extends HttpServletRequestWrapper 
 			}
 			if(session != null && !session.isNew() )
 			{
-				session.touch(this.getRequestURI());
+				session.touch(this.getRequestUrl());
 			}
 		}
 		

@@ -57,7 +57,11 @@ public class SessionHelper {
 	private static SessionStaticManager sessionStaticManager;
 	public static SessionConfig getSessionConfig(String appcode)
 	{
-		return sessionManager.getSessionConfig(appcode);
+		return sessionManager.getSessionConfig(appcode,true);
+	}
+	public static SessionConfig getSessionConfig(String appcode,boolean serialattributes)
+	{
+		return sessionManager.getSessionConfig(appcode, serialattributes);
 	}
 	static {
 		BaseApplicationContext context = DefaultApplicationContext.getApplicationContext("sessionconf.xml");
@@ -187,7 +191,7 @@ public class SessionHelper {
 					{
 						if (!StringUtil.isEmpty((String)attr.getValue())) {
 							Object value = attr.getValue();
-							Pattern hosts = Pattern.compile("^.*" + value + ".*$",
+							Pattern hosts = Pattern.compile("^<ps><p n=\"_dflt_\" s:t=\"String\"><\\!\\[CDATA\\[" + value + ".*$",
 									Pattern.CASE_INSENSITIVE);
 							query.append(attr.getName(), new BasicDBObject("$regex",hosts));
 						}

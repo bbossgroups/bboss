@@ -8,6 +8,7 @@
 		path:sessionManager="/session/sessionManager/sessionManager.jsp"
 		path:sessionList="/session/sessionManager/sessionList.jsp"
 		path:viewSessionInfo="/session/sessionManager/viewSessionInfo.jsp"
+		path:viewSessionConfig="/session/sessionManager/viewSessionConfig.jsp"
 		f:sessionService="attr:sessionService"
 		class="org.frameworkset.security.session.action.SessionManagerAction">
 	</property>

@@ -289,14 +289,14 @@ public class MongoSessionStaticManagerImpl implements SessionStaticManager,Initi
 
 		String host = (String) queryParams.get("host");
 		if (!StringUtil.isEmpty(host)) {
-			Pattern hosts = Pattern.compile("^.*" + host + ".*$",
+			Pattern hosts = Pattern.compile("^" + host + ".*$",
 					Pattern.CASE_INSENSITIVE);
 			query.append("host", new BasicDBObject("$regex",hosts));
 		}
 
 		String referip = (String) queryParams.get("referip");
 		if (!StringUtil.isEmpty(referip)) {
-			Pattern referips = Pattern.compile("^.*" + referip + ".*$",
+			Pattern referips = Pattern.compile("^" + referip + ".*$",
 					Pattern.CASE_INSENSITIVE);
 			query.append("referip", new BasicDBObject("$regex",referips));
 		}
