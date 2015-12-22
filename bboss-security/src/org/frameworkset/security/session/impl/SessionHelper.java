@@ -418,7 +418,8 @@ public class SessionHelper {
 	public static  AttributeInfo[] getExtendAttributeInfos(String monitorAttributes)
 	{
 		
-		 
+		 if(StringUtil.isEmpty(monitorAttributes))
+			 return null;
 		AttributeInfo[] monitorAttributeArray = SimpleStringUtil.json2Object(monitorAttributes,AttributeInfo[].class);
 //		 AttributeInfo[] monitorAttributeArray = null;
 //		if(!StringUtil.isEmpty(monitorAttributes))
