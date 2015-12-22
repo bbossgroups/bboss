@@ -55,6 +55,7 @@ import com.mongodb.DBObject;
 public class SessionHelper {
 	private static SessionManager sessionManager;
 	private static SessionStaticManager sessionStaticManager;
+	private static boolean inited = false;
 	public static SessionConfig getSessionConfig(String appcode)
 	{
 		return sessionManager.getSessionConfig(appcode,true);
@@ -63,13 +64,32 @@ public class SessionHelper {
 	{
 		return sessionManager.getSessionConfig(appcode, serialattributes);
 	}
-	static {
-		BaseApplicationContext context = DefaultApplicationContext.getApplicationContext("sessionconf.xml");
-		sessionManager = context.getTBeanObject("sessionManager", SessionManager.class);
-		if(!sessionManager.usewebsession())
-			sessionStaticManager = context.getTBeanObject("sessionStaticManager", SessionStaticManager.class);
-		else
-			sessionStaticManager = new NullSessionStaticManagerImpl();
+	public static void init(String contextpath){
+		if(inited)
+			return ;
+		synchronized(SessionHelper.class)
+		{
+			if(inited)
+				return ;
+			try
+			{
+				BaseApplicationContext context = DefaultApplicationContext.getApplicationContext("sessionconf.xml");
+				SessionManager sessionManager = context.getTBeanObject("sessionManager", SessionManager.class);
+				SessionStaticManager sessionStaticManager = null;
+				if(!sessionManager.usewebsession())
+					sessionStaticManager = context.getTBeanObject("sessionStaticManager", SessionStaticManager.class);
+				else
+					sessionStaticManager = new NullSessionStaticManagerImpl();
+				sessionManager.initSessionConfig(contextpath);
+				SessionHelper.sessionManager = sessionManager;
+				SessionHelper.sessionStaticManager = sessionStaticManager;
+			}
+			finally
+			{
+				inited = true;
+			}
+		}
+		
 	}
 	
 	public static Object convertValue(String value,AttributeInfo attributeInfo)
@@ -328,9 +348,41 @@ public class SessionHelper {
 		{
 			return appcode;
 		}
+		 return getAppKeyFromRequest(request);
+		
+	}
+	
+	public static String getAppKeyFromRequest(HttpServletRequest request)
+	{
+//		String appcode = getSessionManager().getAppcode();
+//		if(appcode != null)
+//		{
+//			return appcode;
+//		}
+		
 		if(request != null)
 		{
 			String appKey = request.getContextPath().replace("/", "");
+			if(appKey.equals(""))
+				appKey = "ROOT";
+			return appKey;
+		}
+		return null;
+		
+	}
+	
+	public static String getAppKeyFromServletContext(ServletContext context)
+	{
+//		String appcode = getSessionManager().getAppcode();
+//		if(appcode != null)
+//		{
+//			return appcode;
+//		}
+		
+		if(context != null)
+		{
+			
+			String appKey = context.getContextPath().replace("/", "");
 			if(appKey.equals(""))
 				appKey = "ROOT";
 			return appKey;

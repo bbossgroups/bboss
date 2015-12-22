@@ -41,7 +41,7 @@ import com.frameworkset.util.StringUtil;
  * @author biaoping.yin
  * @version 3.8.0
  */
-public class SessionManager {
+public class SessionManager extends org.frameworkset.spi.BaseApplicationContextAware{
 	private static Logger log = Logger.getLogger(SessionManager.class);
 	public static final String default_cookiename = "B_SESSIONID";
 	public static final boolean default_httpOnly = true;
@@ -110,8 +110,13 @@ public class SessionManager {
 			sessionMonitor.start();
 		}
 	}
-	private void refreshSessionConfig()
+	public void initSessionConfig(String appcode)
 	{
+		if(this.appcode == null)
+			this.appcode = appcode;
+		if(this.usewebsession())
+			return ;
+		
 		SessionConfig sessionConfig = new SessionConfig();
 		sessionConfig.setAppcode(this.appcode);
 		sessionConfig.setCookiename(this.cookiename);
@@ -177,10 +182,8 @@ public class SessionManager {
 		if(this.monitorAttributes != null)
 			this.monitorAttributes = this.monitorAttributes.trim(); 
 		initExtendFields();
-		 if(!this.usewebsession())
-		 {
-			 this.refreshSessionConfig();
-		 }
+		 
+		
 	}
 	
 	private void initExtendFields()

@@ -1,8 +1,6 @@
 package org.frameworkset.security.session.action;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -100,7 +98,7 @@ public class SessionManagerAction {
 				
 			if(!SessionHelper.hasMonitorPermission(condition.getAppkey(), request))
 			{
-				model.addAttribute("message","对不起，没有查询应用"+condition.getAppkey()+"session数据的权限");
+				model.addAttribute("message","对不起，没有查询应用"+condition.getAppkey()+"的session数据的权限");
 			}
 			else
 			{
@@ -214,7 +212,7 @@ public class SessionManagerAction {
 		try {
 			if(!SessionHelper.hasMonitorPermission(appkey, request))
 			{
-				return "对不起，没有删除应用"+appkey+"session数据的权限";
+				return "对不起，没有删除应用"+appkey+"的session数据的权限";
 			}
 			else if(StringUtil.isNotEmpty((String)sessionids))
 			{
@@ -255,7 +253,7 @@ public class SessionManagerAction {
 		try {
 			if(!SessionHelper.hasMonitorPermission(appkey, request))
 			{
-				return "对不起，没有删除应用"+appkey+"session数据的权限";
+				return "对不起，没有删除应用"+appkey+"的session数据的权限";
 			}
 			else
 			{
@@ -282,7 +280,7 @@ public class SessionManagerAction {
 		try {
 			if(!SessionHelper.hasMonitorPermission(appkey, request))
 			{
-				model.addAttribute("message","对不起，没有查看应用"+appkey+"session数据的权限");
+				model.addAttribute("message","对不起，没有查看应用"+appkey+"的session数据的权限");
 			}
 			else
 			{
@@ -296,7 +294,7 @@ public class SessionManagerAction {
 
 		} catch (Exception e) {
 			
-			model.addAttribute("message","对不起，"+appkey+"session数据["+sessionid+"]不存在");
+			model.addAttribute("message","对不起，"+appkey+"的session["+sessionid+"]不存在");
 			return "path:viewSessionInfo";
 		}
 	}
@@ -306,11 +304,11 @@ public class SessionManagerAction {
 		try {
 			if(!SessionHelper.hasMonitorPermission(appkey, request))
 			{
-				model.addAttribute("message","对不起，没有查看应用"+appkey+"session数据的权限");
+				model.addAttribute("message","对不起，没有查看应用"+appkey+"的session共享的权限");
 			}
 			else
 			{
-				SessionConfig sessionConfig = SessionHelper .getSessionConfig(appkey,false);
+				SessionConfig sessionConfig = SessionHelper .getSessionConfig(appkey,true);
 				if(sessionConfig != null  )		
 				{
 					
@@ -323,14 +321,14 @@ public class SessionManagerAction {
 					 
 				}
 				else
-					model.addAttribute("message", "对不起，没有获取到应用"+appkey+"session配置");
+					model.addAttribute("message", "对不起，没有获取到应用"+appkey+"的session共享配置");
 			}
 
 			return "path:viewSessionConfig";
 
 		} catch (Exception e) {
 			
-			model.addAttribute("message","对不起，获取"+appkey+"session配置失败!");
+			model.addAttribute("message","对不起，获取"+appkey+"的session共享配置失败!");
 			return "path:viewSessionConfig";
 		}
 	}

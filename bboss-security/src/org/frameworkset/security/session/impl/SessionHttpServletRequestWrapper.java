@@ -48,6 +48,7 @@ public class SessionHttpServletRequestWrapper extends HttpServletRequestWrapper 
 	private ServletContext servletContext;	
 	public SessionHttpServletRequestWrapper(HttpServletRequest request,HttpServletResponse response,ServletContext servletContext) {
 		super(request);
+		SessionHelper.init(SessionHelper.getAppKeyFromRequest(this));
 		sessionid = StringUtil.getCookieValue((HttpServletRequest)request, SessionHelper.getSessionManager().getCookiename());
 		this.servletContext = servletContext;
 		this.response = response;
