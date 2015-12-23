@@ -789,6 +789,11 @@
 			<name>start</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
+		<!-- 指定当前记录对象el表达式变量名称 -->
+		<attribute>
+			<name>var</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
 	</tag>
 	<!--
 		功能：循环输出map中的数据，每次循环展示map中的一个对象，对象的属性通过cell标签输出
@@ -945,6 +950,11 @@
 		都可以展示value对象中包含的数据 -->
 		<attribute>
 			<name>keycell</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<!-- 指定当前记录对象el表达式变量名称 -->
+		<attribute>
+			<name>var</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>

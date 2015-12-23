@@ -77,11 +77,20 @@ public class MapTag extends PagerDataSet
 		this.key = null;
 		return ret;
 	}
+	
 	public String getKey() {
 		return key;
 	}
 	public void setKey(String key) {
 		this.key = key;
+	}
+	@Override
+	public void doFinally() {
+		// TODO Auto-generated method stub
+		super.doFinally();
+		this.keycell = false;
+		this.keycolName = null;
+		this.key = null;
 	}
 	
 	

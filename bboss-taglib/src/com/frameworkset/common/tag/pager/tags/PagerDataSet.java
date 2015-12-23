@@ -44,7 +44,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Stack;
 
@@ -303,6 +302,10 @@ public class PagerDataSet extends PagerTagSupport {
      * jquery内容选择器
      */
     private String selector;
+    /**
+     * 指定当前记录对象el表达式变量名称
+     */
+    private String var;
 
 	public PagerDataSet() {
 
@@ -2534,7 +2537,8 @@ public class PagerDataSet extends PagerTagSupport {
 					return SKIP_BODY;
 				}
 			}
-
+			this.currentValueObject = this.getClassDataValue(rowid);
+			this.putVarValue();
 			return EVAL_BODY_INCLUDE;
 			
 		}
@@ -2599,7 +2603,7 @@ public class PagerDataSet extends PagerTagSupport {
 		
 
 		if (size() > 0) {
-			this.currentValueObject = this.getClassDataValue(rowid);
+			
 			/**
 			 * 以下的代码对取到的数据进行排序
 			 */
@@ -2616,10 +2620,27 @@ public class PagerDataSet extends PagerTagSupport {
 			{
 				sortBy(sortKey.trim(), t_desc);
 			}
+			
+			
 //			return EVAL_BODY_INCLUDE;
 		} 
 		else
 			rowid = -1;
+	}
+	
+	private void putVarValue()
+	{
+		if(this.var != null && currentValueObject != null)
+		{
+			request.setAttribute(var, currentValueObject.getValueObject());
+		}
+	}
+	private void removeVarValue()
+	{
+		if(this.var != null )
+		{
+			request.removeAttribute(var);
+		}
 	}
 
 	/**
@@ -2675,9 +2696,11 @@ public class PagerDataSet extends PagerTagSupport {
 //			pageContext.setAttribute(this.getDataSetName(), this);
 			pageContext.setAttribute(this.getRowidName(), rowid + "");
 			this.currentValueObject = this.getClassDataValue(rowid);
+			putVarValue();
 			return EVAL_BODY_AGAIN;
 		} else {
 			this.currentValueObject = null;
+			removeVarValue();
 			return SKIP_BODY;
 		}
 	}
@@ -3586,6 +3609,9 @@ public class PagerDataSet extends PagerTagSupport {
 				this.formulas.clear();
 				formulas = null;
 			}
+			this.removeVarValue();
+			this.var = null;
+			
 		}
 		catch(Exception e)
 		{
@@ -3611,6 +3637,14 @@ public class PagerDataSet extends PagerTagSupport {
 
 	public void setStart(int start) {
 		this.start = start;
+	}
+
+	public String getVar() {
+		return var;
+	}
+
+	public void setVar(String var) {
+		this.var = var;
 	}
 
     
