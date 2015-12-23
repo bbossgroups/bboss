@@ -199,7 +199,7 @@ public abstract class PagerTagSupport extends BaseTag {
 				if(pagerTag != null)
 				{
 					PagerDataSet listTag = (PagerDataSet) findAncestorWithClass(this, PagerDataSet.class);
-					if(listTag == null)
+					if(listTag == null || listTag.isList)
 						pagerContext = pagerTag.pagerContext;
 					else
 						pagerContext = listTag.pagerContext;
@@ -211,7 +211,7 @@ public abstract class PagerTagSupport extends BaseTag {
 				if(pagerTag != null)
 				{
 					PagerDataSet listTag = (PagerDataSet) findAncestorWithClass(this, PagerDataSet.class);
-					if(listTag == null)
+					if(listTag == null || listTag.isList)
 						pagerContext = pagerTag.pagerContext;
 					else
 						pagerContext = listTag.pagerContext;
