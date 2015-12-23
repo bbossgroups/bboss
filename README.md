@@ -13,6 +13,15 @@ svn下载地址
 
 https://github.com/bbossgroups/bboss/trunk 
 
+# bboss 会话共享源码
+github托管地址： 
+
+https://github.com/bbossgroups/security 
+
+svn下载地址 
+
+https://github.com/bbossgroups/security/trunk 
+
 # bboss demos源码
 github托管地址： 
 
