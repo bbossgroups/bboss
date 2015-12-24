@@ -49,6 +49,11 @@ public class CommonLauncher
     
     private static String resourcesdir = "/resources";    
     
+    private static String classes = "/classes";    
+    private static String webclasses = "/WebRoot/WEB-INF/classes";
+    
+    private static String weblib = "/WebRoot/WEB-INF/lib";
+    
     private static String propertfile = "/config.properties";
     
     
@@ -144,9 +149,16 @@ public class CommonLauncher
         
         
         File resourcesFile = new File(appDir, resourcesdir);
+        
+        File classesFile = new File(appDir, classes);
+        
+        File webclassesFile = new File(appDir, webclasses);
+        
+        
+        File weblibFile = new File(appDir, weblib);
        
         loadConfig( appDir);
-        loadPlugins(lib, resourcesFile);
+        loadPlugins(lib, resourcesFile,  classesFile,webclassesFile,weblibFile);
         
         
         URL classpathEntries[] = (URL[]) alljars.toArray(new URL[alljars.size()]);
@@ -194,7 +206,12 @@ public class CommonLauncher
      * @throws IllegalArgumentException
      * @throws InstantiationException 
      */
-    public static void loadPlugins(File lib,File resourcesFile) throws MalformedURLException,
+    public static void loadPlugins(File lib,File resourcesFile,File classesFile ,
+    
+    File webclassesFile ,
+    
+    
+    File weblibFile ) throws MalformedURLException,
             ClassNotFoundException, SecurityException, NoSuchMethodException, IllegalArgumentException,
             IllegalAccessException, InvocationTargetException, InstantiationException
     {
@@ -204,7 +221,8 @@ public class CommonLauncher
         System.out.println(lib.getAbsolutePath());
         // 
         loadSubdirJars(lib, allpublicjars);
-        
+        if(weblibFile.exists())
+        	loadSubdirJars(weblibFile, allpublicjars);
        if(extlibs != null && extlibs.length > 0)
        {
     	   for(String ext:extlibs)
@@ -230,9 +248,11 @@ public class CommonLauncher
         }
         alljars.add(resourcesFile.toURI().toURL());
         
+        if(classesFile.exists())
+        	alljars.add(classesFile.toURI().toURL());
         
-        
-     
+        if(webclassesFile.exists())
+        	alljars.add(webclassesFile.toURI().toURL());
         
     }
 
