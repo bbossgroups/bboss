@@ -31,7 +31,7 @@ import java.util.Locale;
  * @version 1.0
  */
 public abstract class LocaleContextHolder {
-	private static final ThreadLocal localeContextHolder = new NamedThreadLocal("Locale context");
+	private static final ThreadLocal localeContextHolder = new NamedInheritableThreadLocal("Locale context");
 
 	private static final ThreadLocal inheritableLocaleContextHolder =
 			new NamedInheritableThreadLocal("Locale context");

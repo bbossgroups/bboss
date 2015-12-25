@@ -19,6 +19,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.frameworkset.spi.InitializingBean;
 
@@ -70,6 +71,23 @@ public class LanguageLocaleResolver  extends AbstractLocaleResolver implements I
 
 	public void setLanguage(String language) {
 		this.language = language;
+	}
+
+	@Override
+	public void setLocale(HttpServletRequest request, HttpServletResponse response, Locale locale) {
+		if(locale == null)
+			return;
+		this.language = locale.toString();
+		this.locale = locale;
+	}
+
+	@Override
+	public void setLocale(HttpServletRequest request, HttpServletResponse response, String locale) {
+		if(locale == null || locale.equals(""))
+			return;
+		this.language = locale;
+		Map<String,Locale> locales = SimpleStringUtil.getAllLocales();	
+		this.locale = locales.get(language);
 	}
 
 }

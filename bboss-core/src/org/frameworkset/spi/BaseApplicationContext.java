@@ -87,7 +87,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 			Class r = Runtime.getRuntime().getClass();
 			java.lang.reflect.Method m = r.getDeclaredMethod("addShutdownHook",
 					new Class[] { Thread.class });
-			m.invoke(Runtime.getRuntime(), new Object[] { new Thread(
+			Thread t = new Thread(
 					new Runnable(){
 
 						public void run() {
@@ -95,7 +95,8 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 							
 						}
 						
-					}) });
+					});
+			m.invoke(Runtime.getRuntime(), new Object[] { t });
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -679,53 +680,74 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 	{
 		synchronized(lockshutdown)
 		{
-			if(shutdownHooks != null)
+			try
 			{
-				Collections.sort(shutdownHooks, new Comparator<WrapperRunnable>(){
-	
-					public int compare(WrapperRunnable o1, WrapperRunnable o2) {
-						if(o1.getProir() > o2.getProir())
-							return 1;
-						else if(o1.getProir() == o2.getProir())
-						{
-							return 0;
-						}
-						else
-							return -1;
-							
-					}
-					
-				});
-				for(int i = shutdownHooks.size()-1; i >= 0; i --)
+				if(shutdownHooks != null)
 				{
-					try {
+					Collections.sort(shutdownHooks, new Comparator<WrapperRunnable>(){
+		
+						public int compare(WrapperRunnable o1, WrapperRunnable o2) {
+							if(o1.getProir() > o2.getProir())
+								return 1;
+							else if(o1.getProir() == o2.getProir())
+							{
+								return 0;
+							}
+							else
+								return -1;
+								
+						}
 						
-						WrapperRunnable destroyVMHook = shutdownHooks.get(i);
-						destroyVMHook.run();
-						Thread.sleep(1000);
-					} catch (Throwable e) {
-						log.warn("execute shutdown hook error:", e);
+					});
+					for(int i = shutdownHooks.size()-1; i >= 0; i --)
+					{
+						try {
+							
+							WrapperRunnable destroyVMHook = shutdownHooks.get(i);
+							destroyVMHook.run();
+							Thread.sleep(1000);
+						} catch (Throwable e) {
+							log.warn("execute shutdown hook error:", e);
+						}
 					}
+					shutdownHooks.clear();
+					shutdownHooks = null;
 				}
-				shutdownHooks.clear();
-				shutdownHooks = null;
+				
+				if(applicationContexts!= null){
+					Iterator<Entry<String, BaseApplicationContext>> it = applicationContexts.entrySet().iterator();
+					while(it.hasNext())
+					{
+						Entry<String, BaseApplicationContext> entry = it.next();
+						try {
+							entry.getValue().destroy();
+						} catch(Exception e)
+						{
+							log.warn("execute shutdown hook error:", e);
+						}
+						catch(Throwable e)
+						{
+							log.warn("execute shutdown hook error:", e);
+						}
+					}
+					applicationContexts.clear();
+					applicationContexts = null;
+				}
+				if(rootFiles != null)
+				{
+					rootFiles.clear();
+					rootFiles = null;
+				}
+			}
+			catch(Exception e)
+			{
+				log.warn("",e);
+			}
+			catch(Throwable e)
+			{
+				log.warn("",e);
 			}
 			
-			if(applicationContexts!= null){
-				Iterator<Entry<String, BaseApplicationContext>> it = applicationContexts.entrySet().iterator();
-				while(it.hasNext())
-				{
-					Entry<String, BaseApplicationContext> entry = it.next();
-					entry.getValue().destroy();
-				}
-				applicationContexts.clear();
-				applicationContexts = null;
-			}
-			if(rootFiles != null)
-			{
-				rootFiles.clear();
-				rootFiles = null;
-			}
 		}
 		
 	}

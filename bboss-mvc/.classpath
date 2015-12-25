@@ -37,7 +37,5 @@
 	<classpathentry kind="lib" path="lib/poi-3.0.2.FINAL.jar"/>
 	<classpathentry kind="lib" path="lib/iText-2.1.5.jar"/>
 	<classpathentry kind="lib" path="lib/jxl-2.6.6.jar"/>
-	<classpathentry kind="lib" path="lib/bboss-security-sources.jar"/>
-	<classpathentry kind="lib" path="lib/bboss-security.jar"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>

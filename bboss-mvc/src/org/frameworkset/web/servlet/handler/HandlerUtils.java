@@ -121,8 +121,6 @@ import org.frameworkset.web.servlet.support.RequestContext;
 import org.frameworkset.web.servlet.view.AbstractUrlBasedView;
 import org.frameworkset.web.servlet.view.UrlBasedViewResolver;
 import org.frameworkset.web.servlet.view.View;
-import org.frameworkset.web.token.DTokenValidateFailedException;
-import org.frameworkset.web.token.TokenHelper;
 import org.frameworkset.web.util.UrlPathHelper;
 import org.frameworkset.web.util.WebUtils;
 
@@ -157,6 +155,22 @@ public abstract class HandlerUtils {
 	public static final String USE_MVC_DENCODE_KEY = "org.frameworkset.web.servlet.handler.HandlerUtils.USE_MVC_DENCODE_KEY";
 	public static final Boolean TRUE = new Boolean(true);
 	public static final PathMatcher pathMatcher = new AntPathMatcher();
+	private static Method assertTokenMethod ;
+	static
+	{
+		try {
+			Class clazz = Class.forName("org.frameworkset.web.token.TokenFilter");
+			assertTokenMethod = clazz.getMethod("assertDToken", ServletRequest.class,
+					ServletResponse.class, MethodData.class);
+		} catch (ClassNotFoundException e) {
+			logger.info("get assertDToken method from org.frameworkset.web.token.TokenFilter failed:",e);
+		} catch (NoSuchMethodException e) {
+			logger.info("get assertDToken method from org.frameworkset.web.token.TokenFilter failed:",e);
+		} catch (Exception e) {
+			logger.info("get assertDToken method from org.frameworkset.web.token.TokenFilter failed:",e);
+		}
+		
+	}
 
 	public static boolean isExcludehandleMethod(Class<?> handlerType,
 			Method method) {
@@ -3226,7 +3240,11 @@ public abstract class HandlerUtils {
 			// getMethodResolver(handler.getClass(),methodResolverCache,urlPathHelper,pathMatcher,methodNameResolver);
 			MethodData handlerMethod = methodResolver
 					.resolveHandlerMethod(request);
-			assertDToken(request, response, handlerMethod);
+			if(assertTokenMethod != null)
+			{
+//				assertDToken(request, response, handlerMethod);
+				assertTokenMethod.invoke(null, request, response, handlerMethod);
+			}
 			ServletHandlerMethodInvoker methodInvoker = new ServletHandlerMethodInvoker(
 					methodResolver, messageConverters);
 			ServletWebRequest webRequest = new ServletWebRequest(request,
@@ -3250,33 +3268,33 @@ public abstract class HandlerUtils {
 
 	}
 
-	private static void assertDToken(ServletRequest request,
-			ServletResponse response, MethodData handlerMethod)
-			throws IOException, DTokenValidateFailedException {
-		if (handlerMethod.getMethodInfo().isRequiredDToken()) {
-			
-			if (!TokenHelper.isEnableToken())
-				return;
-			TokenHelper.doDTokencheck(request, response);
-			// if(!memTokenManager.assertDTokenSetted(request))
-			// {
-			// if(request instanceof HttpServletRequest)
-			// {
-			// memTokenManager.sendRedirect((HttpServletRequest)
-			// request,(HttpServletResponse) response);
-			// }
-			// else
-			// {
-			// throw new DTokenValidateFailedException();
-			// }
-			// }
-		}
-		else if (handlerMethod.getMethodInfo().isRequireTicket())
-		{			
-			TokenHelper.doTicketcheck(request, response);
-		}
-
-	}
+//	private static void assertDToken(ServletRequest request,
+//			ServletResponse response, MethodData handlerMethod)
+//			throws IOException {
+//		if (handlerMethod.getMethodInfo().isRequiredDToken()) {
+//			
+//			if (!TokenHelper.isEnableToken())
+//				return;
+//			TokenHelper.doDTokencheck(request, response);
+//			// if(!memTokenManager.assertDTokenSetted(request))
+//			// {
+//			// if(request instanceof HttpServletRequest)
+//			// {
+//			// memTokenManager.sendRedirect((HttpServletRequest)
+//			// request,(HttpServletResponse) response);
+//			// }
+//			// else
+//			// {
+//			// throw new DTokenValidateFailedException();
+//			// }
+//			// }
+//		}
+//		else if (handlerMethod.getMethodInfo().isRequireTicket())
+//		{			
+//			TokenHelper.doTicketcheck(request, response);
+//		}
+//
+//	}
 
 	/**
 	 * Handle the case where no request handler method was found.
