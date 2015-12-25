@@ -575,7 +575,7 @@
 	</target>
 	<target name="distrib-bboss-core-jars" description="distrib-bboss-core-jars">
 		<for
-			list="${i18n-lib},${bigdata-lib},${bigdatamonitor-lib},${genproject-lib},${easyuidatagrid-lib},${demoproject-lib},${bbossevent-lib},${cms_baseline-lib},${active-ext-lib},${kettle-lib},${monitorconsole-compilelib},${monitorconsole-lib},${creatoresb-lib}"
+			list="${i18n-lib},${bigdata-lib},${bigdatamonitor-lib},${genproject-lib},${easyuidatagrid-lib},${demoproject-lib},${bbossevent-lib},${cms_baseline-lib},${active-ext-lib},${kettle-lib},${monitorconsole-compilelib},${monitorconsole-lib},${creatoresb-lib},${bboss-rpc-lib}"
 			param="destdir">
 			<sequential>
 				<echo>@{destdir}-------------------------------</echo>
