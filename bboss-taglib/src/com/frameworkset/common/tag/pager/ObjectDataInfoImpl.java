@@ -1,6 +1,8 @@
 package com.frameworkset.common.tag.pager;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -75,6 +77,14 @@ public class ObjectDataInfoImpl extends DataInfoImpl {
 		if(obj instanceof List)
 		{
 			return ((List)obj).size();
+		}
+		else if(obj instanceof Map)
+		{
+			return ((Map)obj).size(); 
+		}
+		else if(obj instanceof Set)
+		{
+			return ((Set)obj).size(); 
 		}
 		else if(obj.getClass().isArray())
 		{

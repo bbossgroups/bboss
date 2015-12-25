@@ -794,6 +794,23 @@
 			<name>var</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
+		<attribute>
+			<name>pagesizevar</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>rowcountvar</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>offsetvar</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>loopvar</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		
 	</tag>
 	<!--
 		功能：循环输出map中的数据，每次循环展示map中的一个对象，对象的属性通过cell标签输出
@@ -955,6 +972,20 @@
 		<!-- 指定当前记录对象el表达式变量名称 -->
 		<attribute>
 			<name>var</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		 
+		<attribute>
+			<name>rowcountvar</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		
+		<attribute>
+			<name>loopvar</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>mapkeyvar</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>

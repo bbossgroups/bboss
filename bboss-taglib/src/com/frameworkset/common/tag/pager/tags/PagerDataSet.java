@@ -306,6 +306,56 @@ public class PagerDataSet extends PagerTagSupport {
      * 指定当前记录对象el表达式变量名称
      */
     private String var;
+    
+    /**
+     * 指定当前循环变量el表达式名称
+     */
+    private String loopvar;
+    
+    /**
+     * 存放map当前记录key变量名称
+     */
+    private String mapkeyvar;
+    /**
+     * 存放总记录数变量名称
+     */
+    private String rowcountvar;
+    /**
+    * 存放分页当前页面offset变量名称
+    */
+    private String offsetvar;
+    
+    public String getOffsetvar() {
+		return offsetvar;
+	}
+
+	public void setOffsetvar(String offsetvar) {
+		this.offsetvar = offsetvar;
+	}
+
+	public String getRowcountvar() {
+		return rowcountvar;
+	}
+
+	public void setRowcountvar(String rowcountvar) {
+		this.rowcountvar = rowcountvar;
+	}
+
+	public String getPagesizevar() {
+		return pagesizevar;
+	}
+
+	public void setPagesizevar(String pagesizevar) {
+		this.pagesizevar = pagesizevar;
+	}
+	private String pagesizevar;
+	public String getLoopvar() {
+		return loopvar;
+	}
+
+	public void setLoopvar(String loopvar) {
+		this.loopvar = loopvar;
+	}
 
 	public PagerDataSet() {
 
@@ -2539,6 +2589,7 @@ public class PagerDataSet extends PagerTagSupport {
 			}
 			this.currentValueObject = this.getClassDataValue(rowid);
 			this.putVarValue();
+			this.putListScoptVarValue();
 			return EVAL_BODY_INCLUDE;
 			
 		}
@@ -2630,10 +2681,27 @@ public class PagerDataSet extends PagerTagSupport {
 	
 	private void putVarValue()
 	{
-		if(this.var != null && currentValueObject != null)
+		if(currentValueObject != null)
 		{
-			request.setAttribute(var, currentValueObject.getValueObject());
+			if(this.var != null)
+				request.setAttribute(var, currentValueObject.getValueObject());
+			if(this.loopvar != null)
+				request.setAttribute(loopvar, this.getRowid());
+			if(this.mapkeyvar != null)
+				request.setAttribute(mapkeyvar, this.getMapKey());
+			
 		}
+	}
+	
+	private void putListScoptVarValue()
+	{	
+		if(pagesizevar != null)
+			request.setAttribute(this.pagesizevar, this.getPageSize());
+		if(offsetvar != null)
+			request.setAttribute(this.offsetvar, this.getOffset());
+		if(rowcountvar != null)
+			request.setAttribute(this.rowcountvar, this.getRowcount());
+		
 	}
 	private void removeVarValue()
 	{
@@ -2641,6 +2709,27 @@ public class PagerDataSet extends PagerTagSupport {
 		{
 			request.removeAttribute(var);
 		}
+		if(this.loopvar != null)
+		{
+			request.removeAttribute(loopvar);
+		}
+		if(this.pagesizevar != null)
+		{
+			request.removeAttribute(pagesizevar);
+		}
+		if(this.rowcountvar != null)
+		{
+			request.removeAttribute(rowcountvar);
+		}
+		if(this.offsetvar != null)
+		{
+			request.removeAttribute(offsetvar);
+		}
+		if(this.mapkeyvar != null)
+		{
+			request.removeAttribute(mapkeyvar);
+		}
+		 
 	}
 
 	/**
@@ -3611,6 +3700,11 @@ public class PagerDataSet extends PagerTagSupport {
 			}
 			this.removeVarValue();
 			this.var = null;
+			this.loopvar = null;
+			this.pagesizevar = null;
+			this.rowcountvar = null;
+			this.offsetvar = null;
+			this.mapkeyvar = null;
 			
 		}
 		catch(Exception e)
@@ -3645,6 +3739,14 @@ public class PagerDataSet extends PagerTagSupport {
 
 	public void setVar(String var) {
 		this.var = var;
+	}
+
+	public String getMapkeyvar() {
+		return mapkeyvar;
+	}
+
+	public void setMapkeyvar(String mapkeyvar) {
+		this.mapkeyvar = mapkeyvar;
 	}
 
     
