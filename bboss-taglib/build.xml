@@ -40,7 +40,7 @@
 		<echo>compile the bboss-taglib source ...</echo>
 		<javac encoding="UTF-8" destdir="classes-bboss-taglib" target="1.5" source="1.5" deprecation="true" debug="${debug}" optimize="${optimize}" memorymaximumsize="256M" fork="true" verbose="yes">
 			<src path="src" />
-			<src path="test" />
+			
 			<src path="src-cms" />
 			<src path="src-mvc" />
 			<classpath id="cp-bboss-taglib">
@@ -143,9 +143,7 @@
 			<copy todir="distrib/WebRoot/WEB-INF/lib">
 						<fileset dir="lib" includes="*.jar"/>
 			</copy>
-			<copy todir="distrib/WebRoot/WEB-INF/lib">
-						<fileset dir="lib/mysql" includes="*.jar"/>
-			</copy>
+			
 			<copy todir="distrib/WebRoot/WEB-INF/lib">
 				<fileset dir="distrib" includes="*.jar"/>
 			</copy>
@@ -153,26 +151,12 @@
 
 	</target>
 	
-	<target name="war" depends="distrib" description="copy depends liberarys">
-		<war destfile="distrib/bbosstaglib.war" webxml="distrib/WebRoot/WEB-INF/web.xml">
-		  <fileset dir="distrib/WebRoot/"/>
-			<manifest>
-							
-							<attribute name="Implementation-Version" value="${impl.version}" />
-							<attribute name="Specification-Version" value="${revision}" />
-							<attribute name="Implementation-Vendor" value="${impl.vendor}" />
-							<attribute name="Implementation-ProductID" value="${impl.productID}" />
-							<attribute name="Compile-Timestamp" value="${compile.timestamp}" />
-							<attribute name="Compile-User" value="${username}" />
-						</manifest>
-		  
-		</war>
-	</target>
+
 	
-	<target name="complete" depends="war" description="copy depends liberarys">
+	<target name="complete" depends="distrib" description="copy depends liberarys">
 				<delete dir="classes-bboss-taglib" />
 				<delete dir="classes-bboss-tabpane" />
-				<delete dir="distrib/WebRoot" />
+			
 	</target>
 	
 	

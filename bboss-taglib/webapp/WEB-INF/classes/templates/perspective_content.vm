@@ -1,9 +1,0 @@
-<HTML><HEAD><TITLE></TITLE>
-<META http-equiv=Content-Type content="text/html; charset=UTF-8">
-<META content="MSHTML 6.00.2800.1522" name=GENERATOR></HEAD>
-<FRAMESET cols="${perspective_content_cols}" border="1" name="perspective_content_container">
-<FRAME name=base_navigator_container marginWidth=0 marginHeight=0 src="${base_navigator_container_url}"
-        frameBorder=1 scrolling=no ${noresize} name="perspective_content">
-<FRAME name=base_actions_container marginWidth=0 marginHeight=0
-src="${base_actions_container_url}" scrolling=no frameBorder=1
-scrolling=no></FRAMESET></HTML>

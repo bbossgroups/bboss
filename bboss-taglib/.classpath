@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry excluding="xjavadoc/" kind="src" path="src"/>
-	<classpathentry kind="src" path="test"/>
 	<classpathentry kind="src" path="tabpane"/>
-	<classpathentry kind="src" path="resouces"/>
 	<classpathentry kind="src" path="src-cms"/>
 	<classpathentry kind="src" path="src-mvc"/>
 	<classpathentry kind="lib" path="lib/log4j.jar"/>
@@ -12,7 +10,6 @@
 	<classpathentry kind="lib" path="lib/ant-1.5.3.jar"/>
 	<classpathentry kind="lib" path="lib/commons-lang-2.1.jar"/>
 	<classpathentry kind="lib" path="lib/commons-modeler.jar"/>
-	<classpathentry kind="lib" path="lib/ojdbc14.jar"/>
 	<classpathentry kind="lib" path="lib/xjavadoc-1.1.jar"/>
 	<classpathentry kind="lib" path="lib/ecs-1.4.2.jar" sourcepath="/ecs"/>
 	<classpathentry kind="lib" path="lib/turbine-2.3.jar"/>
@@ -27,7 +24,6 @@
 	<classpathentry kind="lib" path="lib/frameworkset-pool.jar" sourcepath="/bboss-persistent"/>
 	<classpathentry kind="lib" path="lib/bboss-velocity.jar"/>
 	<classpathentry kind="src" path="src-htmlparser"/>
-	<classpathentry kind="lib" path="lib/bboss-security.jar" sourcepath="/bboss-security"/>
 	<classpathentry kind="lib" path="lib/bboss-core.jar"/>
 	<classpathentry kind="lib" path="lib/asm-5.0.3.jar"/>
 	<classpathentry kind="lib" path="lib/cglib-nodep-3.1.jar"/>

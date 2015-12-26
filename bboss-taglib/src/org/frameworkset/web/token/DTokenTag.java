@@ -1,7 +1,5 @@
 package org.frameworkset.web.token;
 
-import java.io.IOException;
-
 import javax.servlet.jsp.JspException;
 
 import com.frameworkset.common.tag.BaseTag;
@@ -11,6 +9,8 @@ import com.frameworkset.common.tag.BaseTag;
  *
  */
 public class DTokenTag extends BaseTag {
+	 
+	
 	/**
 	 * 参数有3个值（如果没有指定默认为input类型）：
 	 * json 输出json表达式，名称和值的分隔符默认为'号，如果要指定为"号，那么需要
@@ -58,19 +58,48 @@ public class DTokenTag extends BaseTag {
 	public int doStartTag() throws JspException {
 		
 		int ret = super.doStartTag();
-		if(!TokenHelper.isEnableToken() )
+		
+		if(TokenMethodHelper.isEnableToken != null)
 		{
-			return ret;
+			try {
+				Boolean enableToken = (Boolean)TokenMethodHelper.isEnableToken.invoke(null);
+				if(!enableToken.booleanValue())
+					return ret;
+			} catch (RuntimeException e) {
+				throw new JspException(e);
+			} 
+			catch (Exception e) {
+				throw new JspException(e);
+			} catch (Throwable e) {
+				throw new JspException(e);
+			}
+			try {
+				out.print(TokenMethodHelper.buildDToken.invoke(null, element,this.jsonsplit,request,fid,this.cache));
+//				TokenMethodHelper.doDTokencheck.invoke(null,request, response);
+			}
+			 catch (RuntimeException e) {
+					throw new JspException(e);
+				} 
+			catch (Exception e) {
+				throw new JspException(e);
+			} catch (Throwable e) {
+				throw new JspException(e);
+			}
 		}
 		
-		try {
-			out.print(TokenHelper.getTokenService().buildDToken(element,this.jsonsplit,request,fid,this.cache));
-		} catch (IOException e) {
-			throw new JspException(e);
-		}
-		catch (RuntimeException e) {
-			//
-		} 
+//		if(!TokenHelper.isEnableToken() )
+//		{
+//			return ret;
+//		}
+//		
+//		try {
+//			out.print(TokenHelper.getTokenService().buildDToken(element,this.jsonsplit,request,fid,this.cache));
+//		} catch (IOException e) {
+//			throw new JspException(e);
+//		}
+//		catch (RuntimeException e) {
+//			//
+//		} 
 		return ret;
 	}
 	public String getFid() {

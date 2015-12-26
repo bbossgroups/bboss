@@ -168,7 +168,7 @@
 	</target>
 	<target name="distrib-bboss-persistent-jars" description="distrib-bboss-persistent-jars">
 		<for
-			list="${bigdata-lib},${bigdatamonitor-lib},${bboss-security-lib},${bboss-schedule-lib},${bboss-plugin-wordpdf-lib-depends},${bbossupload-lib},${demoproject-lib},${portallib},${casserverlib},${active-ext-lib},${cms_baseline-lib},${bboss-taglib-lib},${kettle-lib},${monitorconsole-lib},${monitorconsole-compilelib},${bboss-site-lib},${creatoresb-lib},${mvc-lib},${persistent-lib},${xmlrequest-lib},${bboss-plugin-hibernate-lib},${sessionmonitor-lib},${bboss-gencode-lib}"
+			list="${bigdata-lib},${bigdatamonitor-lib},${bboss-security-lib},${bboss-schedule-lib},${bboss-plugin-wordpdf-lib-depends},${bbossupload-lib},${demoproject-lib},${portallib},${casserverlib},${active-ext-lib},${cms_baseline-lib},${bboss-taglib-lib},${taglibdemo-lib},${kettle-lib},${monitorconsole-lib},${monitorconsole-compilelib},${bboss-site-lib},${creatoresb-lib},${mvc-lib},${persistent-lib},${xmlrequest-lib},${bboss-plugin-hibernate-lib},${sessionmonitor-lib},${bboss-gencode-lib}"
 			param="destdir">
 			<sequential>
 				<echo>@{destdir}-------------------------------</echo>
@@ -263,7 +263,7 @@
 
 	<target name="distrib-bboss-taglib-jars" description="distrib-bboss-taglib-jars">
 		<for
-			list="${i18n-lib},${bbossupload-lib},${demoproject-lib},${portallib},${casserverlib},${cms_baseline-lib},${monitorconsole-lib},${monitorconsole-compilelib},${bboss-site-lib},${creatoresb-lib},${mvc-lib},${xmlrequest-lib}"
+			list="${taglibdemo-lib},${i18n-lib},${bbossupload-lib},${demoproject-lib},${portallib},${casserverlib},${cms_baseline-lib},${monitorconsole-lib},${monitorconsole-compilelib},${bboss-site-lib},${creatoresb-lib},${mvc-lib},${xmlrequest-lib}"
 			param="destdir">
 			<sequential>
 				<echo>@{destdir}-------------------------------</echo>
@@ -374,7 +374,7 @@
 
 	<target name="distrib-bboss-util-jars" description="distrib-bboss-util-jars">
 		<for
-			list="${i18n-lib},${bigdata-lib},${bigdatamonitor-lib},${genproject-lib},${bboss-security-lib},${bboss-security-web-lib},${bboss-schedule-lib},${bboss-plugin-wordpdf-lib-depends},${bboss-plugin-hessian-lib},${bbossupload-lib},${demoproject-lib},${active-ext-lib},${bboss-core-lib},${bboss-rpc-lib},${bbossevent-lib},${cms_baseline-lib},${bboss-persistent-lib},${bboss-taglib-lib},${kettle-lib},${portallib},${casserverlib},${monitorconsole-lib},${monitorconsole-compilelib},${bboss-mvc-lib},${bboss-site-lib},${creatoresb-lib},${bboss-clientproxy-lib},${mvc-lib},${persistent-lib},${xmlrequest-lib},${xmlserializable-lib},${bboss-plugin-hibernate-lib},${session-lib},${sessionmonitor-lib},${bboss-gencode-lib}"
+			list="${i18n-lib},${bigdata-lib},${bigdatamonitor-lib},${genproject-lib},${bboss-security-lib},${bboss-security-web-lib},${bboss-schedule-lib},${bboss-plugin-wordpdf-lib-depends},${bboss-plugin-hessian-lib},${bbossupload-lib},${demoproject-lib},${active-ext-lib},${bboss-core-lib},${bboss-rpc-lib},${bbossevent-lib},${cms_baseline-lib},${bboss-persistent-lib},${bboss-taglib-lib},${taglibdemo-lib},${kettle-lib},${portallib},${casserverlib},${monitorconsole-lib},${monitorconsole-compilelib},${bboss-mvc-lib},${bboss-site-lib},${creatoresb-lib},${bboss-clientproxy-lib},${mvc-lib},${persistent-lib},${xmlrequest-lib},${xmlserializable-lib},${bboss-plugin-hibernate-lib},${session-lib},${sessionmonitor-lib},${bboss-gencode-lib}"
 			param="destdir">
 			<sequential>
 				<echo>@{destdir}-------------------------------</echo>
@@ -414,7 +414,7 @@
 	</target>
 	<target name="distrib-bboss-velocity-jars" description="distrib-bboss-velocity-jars">
 		<for
-			list="${i18n-lib},${bigdata-lib},${bigdatamonitor-lib},${genproject-lib},${bboss-security-lib},${bboss-util-lib},${bbossupload-lib},${demoproject-lib},${active-ext-lib},${cms_baseline-lib},${bboss-persistent-lib}/velocity,${bboss-taglib-lib},${kettle-lib},${portallib},${casserverlib},${monitorconsole-lib},${monitorconsole-compilelib},${bboss-site-lib},${creatoresb-lib},${bboss-clientproxy-lib},${mvc-lib},${persistent-lib},${xmlrequest-lib},${xmlserializable-lib},${bboss-plugin-hibernate-lib},${sessionmonitor-lib},${bboss-gencode-lib}"
+			list="${i18n-lib},${bigdata-lib},${bigdatamonitor-lib},${genproject-lib},${bboss-security-lib},${bboss-util-lib},${bbossupload-lib},${demoproject-lib},${active-ext-lib},${cms_baseline-lib},${bboss-persistent-lib}/velocity,${bboss-taglib-lib},${taglibdemo-lib},${kettle-lib},${portallib},${casserverlib},${monitorconsole-lib},${monitorconsole-compilelib},${bboss-site-lib},${creatoresb-lib},${bboss-clientproxy-lib},${mvc-lib},${persistent-lib},${xmlrequest-lib},${xmlserializable-lib},${bboss-plugin-hibernate-lib},${sessionmonitor-lib},${bboss-gencode-lib}"
 			param="destdir">
 			<sequential>
 				<echo>@{destdir}-------------------------------</echo>
@@ -442,7 +442,7 @@
 	</target>
 	<target name="distrib-bboss-soa-jars" description="distrib-bboss-soa-jars">
 		<for
-			list="${bigdata-lib},${bigdatamonitor-lib},${demoproject-lib},${portallib},${casserverlib},${active-ext-lib},${bboss-rpc-lib},${bboss-core-lib},${cms_baseline-lib},${bboss-taglib-lib},${kettle-lib},${monitorconsole-lib},${monitorconsole-compilelib},${bboss-mvc-lib},${bboss-site-lib},${creatoresb-lib},${bboss-clientproxy-lib},${xmlserializable-lib},${session-lib},${sessionmonitor-lib},${bboss-gencode-lib}"
+			list="${bigdata-lib},${bigdatamonitor-lib},${demoproject-lib},${portallib},${casserverlib},${active-ext-lib},${bboss-rpc-lib},${bboss-core-lib},${cms_baseline-lib},${bboss-taglib-lib},${taglibdemo-lib},${kettle-lib},${monitorconsole-lib},${monitorconsole-compilelib},${bboss-mvc-lib},${bboss-site-lib},${creatoresb-lib},${bboss-clientproxy-lib},${xmlserializable-lib},${session-lib},${sessionmonitor-lib},${bboss-gencode-lib}"
 			param="destdir">
 			<sequential>
 				<echo>@{destdir}-------------------------------</echo>
@@ -590,7 +590,7 @@
 
 
 		<for
-			list="${bboss-security-lib},${bboss-security-web-lib},${bboss-schedule-lib},${bboss-plugin-wordpdf-lib-depends},${bboss-plugin-hessian-lib},${bboss-persistent-lib},${bbossupload-lib},${bboss-taglib-lib},${portallib},${casserverlib},${mvc-lib},${xmlrequest-lib},${xmlserializable-lib},${persistent-lib},${bboss-plugin-hibernate-lib},${session-lib},${sessionmonitor-lib},${bboss-gencode-lib}"
+			list="${bboss-security-lib},${bboss-security-web-lib},${bboss-schedule-lib},${bboss-plugin-wordpdf-lib-depends},${bboss-plugin-hessian-lib},${bboss-persistent-lib},${bbossupload-lib},${bboss-taglib-lib},${taglibdemo-lib},${portallib},${casserverlib},${mvc-lib},${xmlrequest-lib},${xmlserializable-lib},${persistent-lib},${bboss-plugin-hibernate-lib},${session-lib},${sessionmonitor-lib},${bboss-gencode-lib}"
 			param="destdir">
 			<sequential>
 				<echo>@{destdir}-------------------------------</echo>
@@ -637,7 +637,7 @@
 
 
 		<for
-			list="${bboss-security-lib},${bboss-security-web-lib},${bboss-schedule-lib},${bboss-plugin-wordpdf-lib-depends},${bboss-plugin-hessian-lib},${bboss-persistent-lib},${bbossupload-lib},${bboss-taglib-lib},${portallib},${casserverlib},${mvc-lib},${xmlrequest-lib},${xmlserializable-lib},${persistent-lib},${bboss-plugin-hibernate-lib},${session-lib},${sessionmonitor-lib}"
+			list="${bboss-security-lib},${bboss-security-web-lib},${bboss-schedule-lib},${bboss-plugin-wordpdf-lib-depends},${bboss-plugin-hessian-lib},${bboss-persistent-lib},${bbossupload-lib},${bboss-taglib-lib},${taglibdemo-lib},${portallib},${casserverlib},${mvc-lib},${xmlrequest-lib},${xmlserializable-lib},${persistent-lib},${bboss-plugin-hibernate-lib},${session-lib},${sessionmonitor-lib}"
 			param="destdir">
 			<sequential>
 				<echo>@{destdir}-------------------------------</echo>
@@ -719,7 +719,7 @@
 
 	<target name="distrib-bboss-mvc-jars" description="distrib-bboss-mvc-jars">
 		<for
-			list="${i18n-lib},${bigdata-lib},${bigdatamonitor-lib},${bboss-plugin-wordpdf-lib-depends},${bbossupload-lib},${demoproject-lib},${cms_baseline-lib},${monitorconsole-compilelib},${monitorconsole-lib},${creatoresb-lib},${mvc-lib},${xmlrequest-lib},${sessionmonitor-lib},${bboss-security-web-lib},${bboss-gencode-lib},${bboss-taglib-lib},${bboss-site-lib},${bboss-security-lib}"
+			list="${i18n-lib},${bigdata-lib},${bigdatamonitor-lib},${bboss-plugin-wordpdf-lib-depends},${bbossupload-lib},${demoproject-lib},${cms_baseline-lib},${monitorconsole-compilelib},${monitorconsole-lib},${creatoresb-lib},${mvc-lib},${xmlrequest-lib},${sessionmonitor-lib},${bboss-security-web-lib},${bboss-gencode-lib},${bboss-taglib-lib},${taglibdemo-lib},${bboss-site-lib},${bboss-security-lib}"
 			param="destdir">
 			<sequential>
 				<echo>@{destdir}-------------------------------</echo>
@@ -733,7 +733,7 @@
 	</target>
 	<target name="distrib-bboss-security-jars" description="distrib-bboss-security-jars">
 		<for
-			list="${bigdata-lib},${bigdatamonitor-lib},${bboss-site-lib},${bboss-taglib-lib},${bboss-plugin-wordpdf-lib-depends},${bbossupload-lib},${demoproject-lib},${cms_baseline-lib},${monitorconsole-compilelib},${monitorconsole-lib},${creatoresb-lib},${mvc-lib},${xmlrequest-lib},${session-lib},${sessionmonitor-lib},${bboss-security-web-lib},${bboss-gencode-lib}"
+			list="${bigdata-lib},${bigdatamonitor-lib},${bboss-site-lib},${bboss-plugin-wordpdf-lib-depends},${bbossupload-lib},${demoproject-lib},${cms_baseline-lib},${monitorconsole-compilelib},${monitorconsole-lib},${creatoresb-lib},${mvc-lib},${xmlrequest-lib},${session-lib},${sessionmonitor-lib},${bboss-security-web-lib},${bboss-gencode-lib}"
 			param="destdir">
 			<sequential>
 				<echo>@{destdir}-------------------------------</echo>

@@ -15,9 +15,15 @@
  */
 package org.frameworkset.web.token;
 
-import java.io.IOException;
+import java.lang.reflect.Method;
 
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.jsp.JspException;
+
+import org.apache.log4j.Logger;
+import org.frameworkset.util.annotations.MethodData;
+import org.frameworkset.web.servlet.handler.HandlerUtils;
 
 import com.frameworkset.common.tag.BaseTag;
 
@@ -31,7 +37,7 @@ import com.frameworkset.common.tag.BaseTag;
  * @version 3.6
  */
 public class AssertDTokenTag extends BaseTag{
-
+	
 	@Override
 	public void doFinally() {
 		// TODO Auto-generated method stub
@@ -42,17 +48,42 @@ public class AssertDTokenTag extends BaseTag{
 	public int doStartTag() throws JspException {
 		// TODO Auto-generated method stub
 		int ret = super.doStartTag();
-		
-		
-		if(!TokenHelper.isEnableToken() )
-			return ret;
-		try {
-			TokenHelper.doDTokencheck(request, response);
-		} catch (IOException e) {
-			throw new JspException(e);
-		} catch (DTokenValidateFailedException e) {
-			throw new JspException(e);
+		if(TokenMethodHelper.isEnableToken != null)
+		{
+			try {
+				Boolean enableToken = (Boolean)TokenMethodHelper.isEnableToken.invoke(null);
+				if(!enableToken.booleanValue())
+					return ret;
+			} catch (RuntimeException e) {
+				throw new JspException(e);
+			} 
+			catch (Exception e) {
+				throw new JspException(e);
+			} catch (Throwable e) {
+				throw new JspException(e);
+			}
+			try {
+				TokenMethodHelper.doDTokencheck.invoke(null,request, response);
+			}
+			 catch (RuntimeException e) {
+					throw new JspException(e);
+				} 
+			catch (Exception e) {
+				throw new JspException(e);
+			} catch (Throwable e) {
+				throw new JspException(e);
+			}
 		}
+		
+//		if(!TokenHelper.isEnableToken() )
+//			return ret;
+//		try {
+//			TokenHelper.doDTokencheck(request, response);
+//		} catch (IOException e) {
+//			throw new JspException(e);
+//		} catch (DTokenValidateFailedException e) {
+//			throw new JspException(e);
+//		}
 		return ret;
 	}
 
