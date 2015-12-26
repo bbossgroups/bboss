@@ -733,7 +733,7 @@
 	</target>
 	<target name="distrib-bboss-security-jars" description="distrib-bboss-security-jars">
 		<for
-			list="${bigdata-lib},${bigdatamonitor-lib},${bboss-site-lib},${bboss-plugin-wordpdf-lib-depends},${bbossupload-lib},${demoproject-lib},${cms_baseline-lib},${monitorconsole-compilelib},${monitorconsole-lib},${creatoresb-lib},${mvc-lib},${xmlrequest-lib},${session-lib},${sessionmonitor-lib},${bboss-security-web-lib},${bboss-gencode-lib}"
+			list="${bigdata-lib},${i18n-lib},${bigdatamonitor-lib},${bboss-site-lib},${bboss-plugin-wordpdf-lib-depends},${bbossupload-lib},${demoproject-lib},${cms_baseline-lib},${monitorconsole-compilelib},${monitorconsole-lib},${creatoresb-lib},${mvc-lib},${xmlrequest-lib},${session-lib},${sessionmonitor-lib},${bboss-security-web-lib},${bboss-gencode-lib}"
 			param="destdir">
 			<sequential>
 				<echo>@{destdir}-------------------------------</echo>

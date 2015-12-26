@@ -57,7 +57,7 @@ public class LocalPoolDeployer extends BaseTableManager implements PoolManDeploy
 					
 				}
             	
-            });
+            },1000);
             addShutdownHook = true;
         } catch (Exception e) {
         	addShutdownHook = true;
