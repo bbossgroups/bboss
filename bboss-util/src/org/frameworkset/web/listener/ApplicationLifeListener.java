@@ -16,13 +16,14 @@
 package org.frameworkset.web.listener;
 
 import java.beans.Introspector;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
-import org.frameworkset.spi.BaseApplicationContext;
+import org.apache.log4j.Logger;
 import org.frameworkset.util.ClassUtil;
-import org.frameworkset.web.servlet.DispatchServlet;
 
 /**
  * <p>Title: ApplicationLifeListener.java</p> 
@@ -37,8 +38,51 @@ public class ApplicationLifeListener implements ServletContextListener{
 /**
  * since bboss 3.6 we remove load custom jars from other directory but /WEB-INF/lib,so if 
  * you update from lower version of bboss you should copy all jars from other lib directories to 
- * /WEB-INF/lib  		
+ * /WEB-INF/lib  	
+ * 
+ * 	
  */
+ private static Logger log = Logger.getLogger(ApplicationLifeListener.class); 
+ private static Method 	baseApplicationContextShutdown;
+ private static Method 	dispatchServletDestory;
+ static 
+ {
+	 try
+		{
+			Class clazz = Class.forName("org.frameworkset.spi.BaseApplicationContext");
+			baseApplicationContextShutdown = clazz.getMethod("shutdown");
+		}
+		catch(RuntimeException e)
+		{
+			
+		}
+		catch(Exception e)
+		{
+			
+		}
+		catch(Throwable e)
+		{
+			
+		}
+	 
+	 try
+		{
+			Class clazz = Class.forName("org.frameworkset.web.servlet.DispatchServlet");
+			dispatchServletDestory = clazz.getMethod("destory" );
+		}
+		catch(RuntimeException e)
+		{
+			
+		}
+		catch(Exception e)
+		{
+			
+		}
+		catch(Throwable e)
+		{
+			
+		}
+ }
 //	static
 //	{
 //		try {
@@ -49,10 +93,29 @@ public class ApplicationLifeListener implements ServletContextListener{
 //		}
 //	}
 	public void contextDestroyed(ServletContextEvent arg0) {
-		
-		BaseApplicationContext.shutdown();
+		if(baseApplicationContextShutdown != null)
+			try {
+				baseApplicationContextShutdown.invoke(null);
+			} catch (IllegalAccessException e) {
+				log.warn("",e);
+			} catch (IllegalArgumentException e) {
+				log.warn("",e);
+			} catch (InvocationTargetException e) {
+				log.warn("",e);
+			}
+//		BaseApplicationContext.shutdown();
 		ClassUtil.destroy();
-		DispatchServlet.destory();
+//		DispatchServlet.destory();
+		if(dispatchServletDestory != null)
+			try {
+				dispatchServletDestory.invoke(null);
+			} catch (IllegalAccessException e) {
+				log.warn("",e);
+			} catch (IllegalArgumentException e) {
+				log.warn("",e);
+			} catch (InvocationTargetException e) {
+				log.warn("",e);
+			}
 		Introspector.flushCaches();
 	}
 	
