@@ -792,7 +792,7 @@ public class StatementInfo {
         		if(rowHandler == null)
         		{
         		    xhdl = new XMLRowHandler();
-        		    xhdl.init(this.getMeta(), this.getDbname());
+        		    xhdl.init(this,this.getMeta(), this.getDbname());
         		    rowHandler = xhdl;
         		    isxmlhandler = true;
         		}
@@ -800,7 +800,7 @@ public class StatementInfo {
         		{
         		    isxmlhandler = true;
         		    xhdl = (XMLRowHandler)rowHandler;
-        		    xhdl.init(this.getMeta(), this.getDbname());
+        		    xhdl.init(this,this.getMeta(), this.getDbname());
         		}
         		
         		

@@ -1982,7 +1982,7 @@ public class PreparedDBUtil extends DBUtil {
 					stmtInfo.cacheResultSetMetaData( res,true);				
 					this.meta = stmtInfo.getMeta();
 					if(rowhandler != null)
-						rowhandler.init(meta, stmtInfo.getDbname());
+						rowhandler.init(stmtInfo,meta, stmtInfo.getDbname());
 					resultMap = stmtInfo.buildResultMap(res, objectType, rowhandler, stmtInfo.getMaxsize(), true, result_type);
 	
 				}		
@@ -1993,7 +1993,7 @@ public class PreparedDBUtil extends DBUtil {
 					stmtInfo.absolute(res);
 					stmtInfo.cacheResultSetMetaData( res,true);	
 					if(rowhandler != null)
-						rowhandler.init(meta, stmtInfo.getDbname());
+						rowhandler.init(stmtInfo,meta, stmtInfo.getDbname());
 					this.meta = stmtInfo.getMeta();
 				}
 			}
@@ -2005,7 +2005,7 @@ public class PreparedDBUtil extends DBUtil {
 				stmtInfo.cacheResultSetMetaData( res,true);				
 				this.meta = stmtInfo.getMeta();
 				if(rowhandler != null)
-					rowhandler.init(meta, stmtInfo.getDbname());
+					rowhandler.init(stmtInfo,meta, stmtInfo.getDbname());
 				resultMap = stmtInfo.buildResultMap(res, objectType, rowhandler, stmtInfo.getMaxsize(), true, result_type);
 			}
 			return resultMap;
@@ -2045,7 +2045,7 @@ public class PreparedDBUtil extends DBUtil {
 			stmtInfo.cacheResultSetMetaData( res,false);
 			this.meta = stmtInfo.getMeta();
 			if(rowhandler != null)
-				rowhandler.init(meta, stmtInfo.getDbname());
+				rowhandler.init(stmtInfo,meta, stmtInfo.getDbname());
 			ResultMap resultMap = new ResultMap();
 //			if(result_type == ResultMap.type_maparray)
 //			{

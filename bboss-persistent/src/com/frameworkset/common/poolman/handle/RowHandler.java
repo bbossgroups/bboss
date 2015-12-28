@@ -1,6 +1,13 @@
 package com.frameworkset.common.poolman.handle;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import org.frameworkset.util.ClassUtil;
+
 import com.frameworkset.common.poolman.Record;
+import com.frameworkset.common.poolman.ResultMap;
+import com.frameworkset.common.poolman.StatementInfo;
 import com.frameworkset.common.poolman.sql.PoolManResultSetMetaData;
 import com.frameworkset.common.poolman.util.SQLUtil;
 import com.frameworkset.orm.engine.model.SchemaType;
@@ -33,12 +40,12 @@ public abstract class RowHandler<T> {
 	
 	protected PoolManResultSetMetaData meta;
         protected String dbname; 
-        
-        public void init(PoolManResultSetMetaData meta,String dbname)
+        protected StatementInfo stmtInfo;
+        public void init(StatementInfo stmtInfo,PoolManResultSetMetaData meta,String dbname)
         {
             this.meta = meta;
             this.dbname = dbname;
-          
+            this.stmtInfo = stmtInfo;
         }
         
         public void destroy()
@@ -101,6 +108,15 @@ public abstract class RowHandler<T> {
 //            throw new RowHandlerException("查询结果中不存在列[" + colName + "].");
         	return meta.seekIndex(colName);
         }
+        
+        public   <V> V buildValueObject(ResultSet rs,
+    			Class<V> valueObjectType) throws SQLException
+    	{
+    		
+    		return ResultMap.buildValueObject(  rs,
+    				  valueObjectType, 
+    				  stmtInfo) ;
+    	}
 	
 
 }

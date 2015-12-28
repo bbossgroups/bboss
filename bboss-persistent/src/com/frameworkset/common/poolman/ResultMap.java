@@ -154,6 +154,15 @@ public class ResultMap {
 
 	public static <T> T buildValueObject(ResultSet rs,
 			Class<T> valueObjectType, 
+			StatementInfo stmtInfo) throws SQLException
+	{
+		
+		return buildValueObject(rs,
+				valueObjectType, 
+				stmtInfo, null,false,ClassUtil.getClassInfo(valueObjectType));
+	}
+	public static <T> T buildValueObject(ResultSet rs,
+			Class<T> valueObjectType, 
 			StatementInfo stmtInfo, RowHandler rowHander,boolean ismap,ClassInfo beanInfo)
 			throws SQLException {
 		
