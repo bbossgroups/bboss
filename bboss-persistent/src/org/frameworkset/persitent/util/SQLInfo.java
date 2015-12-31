@@ -117,10 +117,23 @@ public class SQLInfo {
 			return false;
 		}
 	}
-	
+	public boolean fromConfig()
+	{
+		return this.sqlutil != null && this.sqlutil.fromConfig();
+	}
 	public int compareTo(SQLInfo sql)
 	{
 		return this.sql.compareTo(sql.getSql());
+	}
+	
+	public SQLInfo getSQLInfo(String dbname,String sqlname)
+	{
+		return this.sqlutil.getSQLInfo(dbname, sqlname);
+	}
+	
+	public String getPlainSQL(String dbname,String sqlname)
+	{
+		return this.sqlutil.getPlainSQL(dbname, sqlname);
 	}
 
 

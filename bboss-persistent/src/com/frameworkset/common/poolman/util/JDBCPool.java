@@ -446,13 +446,12 @@ public class JDBCPool {
 		p.setProperty(PoolManConstants.PROP_DEFAULTREADONLY, info
 				.isReadOnly()
 				+ "");
-		if(info
-		.getTxIsolationLevel() != null)
+		String TxIsolationLevel = info
+				.getTxIsolationLevel() ;
+		if(TxIsolationLevel != null && !TxIsolationLevel.equals(""))
 		{
 			p.setProperty(
-					PoolManConstants.PROP_DEFAULTTRANSACTIONISOLATION, info
-							.getTxIsolationLevel()
-							+ "");
+					PoolManConstants.PROP_DEFAULTTRANSACTIONISOLATION, TxIsolationLevel);
 		}
 
 		p.setProperty(PoolManConstants.PROP_POOLPREPAREDSTATEMENTS,

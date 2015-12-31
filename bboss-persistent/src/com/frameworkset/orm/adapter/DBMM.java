@@ -437,7 +437,7 @@ public class DBMM extends DB
 			newsql = new StringBuilder().append(sql).append(" limit ?,?");
 		else
 			newsql = new StringBuilder().append(sql).append(" limit ").append(offset).append(",").append(maxsize);
-		return new PagineSql(newsql.toString(),offset,(long)maxsize,offset, maxsize, prepared);
+		return new PagineSql(newsql.toString(),offset,(long)maxsize,offset, maxsize, prepared).setRebuilded(true);
 	}
 	
 	  public String getStringPagineSql(String sql)
@@ -454,7 +454,7 @@ public class DBMM extends DB
 			 		sqlbuilder.append( columns);
 			 	}
 			 	else
-			 		sqlbuilder.append("t.* ");
+			 		sqlbuilder.append("* ");
 			 	sqlbuilder.append(" from   ");
 			 	if(schema != null && !schema.equals(""))
 			 		sqlbuilder.append(schema).append(".");
@@ -462,6 +462,45 @@ public class DBMM extends DB
 			 sqlbuilder.append( " limit ?,?");
 	        return sqlbuilder.toString();
 	    }
+	  
+	  /**
+		 * 获取指定数据的分页数据sql语句
+		 * @param sql
+		 * @return
+		 */
+		public PagineSql getDBPagineSql(String sql, long offset, int maxsize,boolean prepared,String orderBy) {
+			
+//			return new StringBuilder(sql).append(" limit ").append(offset).append(",").append(maxsize).toString();
+			StringBuilder newsql = null;
+			if(prepared)
+				newsql = new StringBuilder().append(sql).append(" ").append(orderBy).append(" limit ?,?");
+			else
+				newsql = new StringBuilder().append(sql).append(" ").append(orderBy).append(" limit ").append(offset).append(",").append(maxsize);
+			return new PagineSql(newsql.toString(),offset,(long)maxsize,offset, maxsize, prepared).setRebuilded(true);
+		}
+		
+		  public String getStringPagineSql(String sql,String orderBy)
+		  {
+			  StringBuilder newsql = new StringBuilder().append(sql).append(" ").append(orderBy).append(" limit ?,?");
+				return newsql.toString();
+		  }
+		  public String getStringPagineSql(String schema,String tablename,String pkname ,String columns,String orderBy)
+		    {
+		    	StringBuilder sqlbuilder = new StringBuilder();
+				 	sqlbuilder.append("SELECT ");
+				 	if(columns != null && ! columns.equals(""))
+				 	{
+				 		sqlbuilder.append( columns);
+				 	}
+				 	else
+				 		sqlbuilder.append("* ");
+				 	sqlbuilder.append(" from   ");
+				 	if(schema != null && !schema.equals(""))
+				 		sqlbuilder.append(schema).append(".");
+				 	sqlbuilder.append( tablename);
+				 sqlbuilder.append(" ").append(orderBy).append( " limit ?,?");
+		        return sqlbuilder.toString();
+		    }
 	  public void queryByNullRowHandler(NullRowHandler handler,String dbname,String pageinestatement,long offset,int pagesize) throws SQLException
 	    {
 	    	SQLExecutor.queryWithDBNameByNullRowHandler(handler, dbname, pageinestatement,offset,pagesize);

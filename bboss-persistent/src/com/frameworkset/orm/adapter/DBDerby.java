@@ -36,6 +36,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import com.frameworkset.orm.adapter.DB.PagineSql;
+
 /**
  * This is used to connect to an embedded Apache Derby Database using
  * the supplied JDBC driver.
@@ -144,4 +146,98 @@ public class DBDerby
         
         return ResultSet.CONCUR_READ_ONLY;
     }
+  
+  /**
+	 * 获取指定数据的分页数据sql语句
+	 * @param sql
+	 * @return
+	 */
+	public PagineSql getDBPagineSql(String sql, long offset, int maxsize,boolean prepared,String orderby) {
+		
+		StringBuilder ret = null;
+  	if(prepared)
+	        ret = new StringBuilder().append("SELECT *  FROM (SELECT b.*, ROW_NUMBER () OVER (").append(orderby).append(") AS rownums FROM (").append(sql).append(") b) WHERE rownums <= ? and rownums >=?");
+  	else
+  	{
+  		ret = new StringBuilder().append("SELECT *  FROM (SELECT b.*, ROW_NUMBER () OVER (").append(orderby).append(") AS rownums FROM (").append(sql).append(") b) WHERE rownums <= ").append(offset + maxsize).append(" and rownums >=").append(offset + 1);
+  	}
+      return new PagineSql(ret.toString(),offset + maxsize,offset + 1,offset, maxsize, prepared).setRebuilded(true);
+		
+////		return new StringBuilder(sql).append(" limit ").append(offset).append(",").append(maxsize).toString();
+//		StringBuilder newsql = new StringBuilder();
+//		if(prepared)
+//		{
+//			newsql.append("SELECT t.* FROM (SELECT res.* ,row_number() over(").append(orderby).append(") r FROM (").append(sql)
+//			.append(")) t where t.r <= ? and t.r >= ?");
+//			 
+//			
+//			/**
+//			 * StringBuilder ret = null;
+//  	if(prepared)
+//  		ret = new StringBuilder().append("select ss1.* from (select tt1.*,rownum rowno_ from (").append(sql).append(
+//              ") tt1 where rownum <= ?) ss1 where ss1.rowno_ >= ?");
+//  	else
+//  		ret = new StringBuilder("select ss1.* from (select tt1.*,rownum rowno_ from (").append(sql).append(
+//                ") tt1 where rownum <= ").append((offset + maxsize)).append(") ss1 where ss1.rowno_ >= ").append(
+//                (offset + 1));
+//      return new PagineSql(ret.toString(),offset + maxsize,offset + 1,offset, maxsize, prepared);
+//			 */
+//			return new PagineSql(newsql.toString(),offset + maxsize,offset + 1,offset, maxsize, prepared);
+//		}
+//		else
+//		{
+//			newsql.append("SELECT t.* FROM (SELECT res.* ,row_number() over(").append(orderby).append(") r FROM (").append(sql)
+//			.append(")) t where t.r <= ").append(offset + maxsize).append(" and t.r >= ").append(offset + 1).append("");
+//			return new PagineSql(newsql.toString(),offset + maxsize,offset + 1,offset, maxsize, prepared);
+//		}
+		 
+	}
+	
+	  public String getStringPagineSql(String sql,String orderby)
+	  {
+//		  StringBuilder newsql = new StringBuilder();
+//		  newsql.append("SELECT t.* FROM (SELECT res.* ,row_number() over(").append(orderby).append(") r FROM (").append(sql)
+//			.append(")) t where t.r <= ? and t.r >= ?");
+//			return newsql.toString();
+		  StringBuilder ret  = new StringBuilder().append("SELECT *  FROM (SELECT b.*, ROW_NUMBER () OVER (").append(orderby).append(") AS rownums FROM (").append(sql).append(") b) WHERE rownums <= ? and rownums >=?");
+	    	 
+		
+	    	return ret.toString();
+	  }
+	  public String getStringPagineSql(String schema,String tablename,String pkname ,String columns,String orderby)
+	    {
+		  
+//		  StringBuilder newsql = new StringBuilder();
+//		  newsql.append("SELECT t.* FROM (SELECT res.* ,row_number() over(").append(orderby).append(") r FROM (").append("SELECT ");
+//		 	if(columns != null && ! columns.equals(""))
+//		 	{
+//		 		newsql.append( columns);
+//		 	}
+//		 	else
+//		 		newsql.append("* ");
+//		 	newsql.append(" from   ");
+//		 	if(schema != null && !schema.equals(""))
+//		 		newsql.append(schema).append(".");
+//		 	newsql.append( tablename)
+//			.append(")) t where t.r <= ? and t.r >= ?");
+//		 	return newsql.toString();
+		  StringBuilder newsql  = new StringBuilder().append("SELECT *  FROM (SELECT b.*, ROW_NUMBER () OVER (").append(orderby).append(") AS rownums FROM (").append("SELECT ");
+		 	if(columns != null && ! columns.equals(""))
+		 	{
+		 		newsql.append( columns);
+		 	}
+		 	else
+		 		newsql.append("* ");
+		 	newsql.append(" from   ");
+		 	if(schema != null && !schema.equals(""))
+		 		newsql.append(schema).append(".");
+		 	newsql.append( tablename).append(") b) WHERE rownums <= ? and rownums >=?");
+		    
+		 	 
+		    	 
+		 	 
+	    	return newsql.toString();
+			
+	    	
+	    }
 }

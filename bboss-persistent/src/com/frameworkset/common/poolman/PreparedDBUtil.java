@@ -1418,7 +1418,7 @@ public class PreparedDBUtil extends DBUtil {
 				{
 					log.debug("Execute JDBC prepared query statement:"+stmtInfo.getSql());
 				}
-				
+				 stmtInfo.setPagineOrderBy(Params.getPagineOrderby());
 				statement = stmtInfo.preparePagineStatement(showsql);
 				if(!this.more)
 				{
@@ -3283,6 +3283,10 @@ public class PreparedDBUtil extends DBUtil {
 		
 		preparedSelect(Params ,prepareDBName, new NewSQLInfo(sql), offset,
 				pagesize, oraclerownum,totalsize);
+	}
+	public void setPagineOrderby(String pagineOrderby)
+	{
+		this.Params.setPagineOrderby(pagineOrderby);
 	}
 	
 	/**

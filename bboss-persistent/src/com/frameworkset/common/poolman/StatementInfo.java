@@ -67,6 +67,10 @@ public class StatementInfo {
 
 	private boolean prepared = false;
 	private PagineSql paginesql;
+	private String pagineOrderBy;
+	public void setPagineOrderBy(String pagineOrderBy) {
+		this.pagineOrderBy = pagineOrderBy;
+	}
 	List resultSets;
 
 	private boolean oldautocommit = true;
@@ -363,7 +367,12 @@ public class StatementInfo {
 	}
 
 	public void absolute(ResultSet rs) throws SQLException {
-		if (paginesql.getSql().equals(getSql()) && rs != null) {
+//		if (paginesql.getSql().equals(getSql()) && rs != null) {
+//			if (getOffset() > 0L) {
+//				rs.absolute((int) getOffset());
+//			}
+//		}
+		if (!paginesql.isRebuilded() && rs != null) {
 			if (getOffset() > 0L) {
 				rs.absolute((int) getOffset());
 			}
@@ -372,10 +381,12 @@ public class StatementInfo {
 
 	public PagineSql paginesql(boolean prepared) {
 		if (paginesql == null) {
-			paginesql = new PagineSql(getSql(),prepared);
+			
 			if (this.rownum == null) {
 				if (isRobotquery())
 					paginesql = getDBPagineSql(prepared);
+				else
+					paginesql = new PagineSql(getSql(),prepared);
 			} else {
 				paginesql = getDBPagineSqlForOracle(prepared);
 			}
@@ -1067,8 +1078,12 @@ public class StatementInfo {
 	 * @return
 	 */
 	public PagineSql getDBPagineSql(boolean prepared) {
-		return this.dbadapter
-				.getDBPagineSql(sql, offset, maxsize,prepared);
+		if(this.pagineOrderBy == null || pagineOrderBy.trim().equals(""))
+			return this.dbadapter
+					.getDBPagineSql(sql, offset, maxsize,prepared);
+		else
+			return this.dbadapter
+					.getDBPagineSql(sql, offset, maxsize,prepared,pagineOrderBy);
 
 	}
 

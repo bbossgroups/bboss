@@ -24,27 +24,31 @@
 		select count(1) from td_app_bom where id=?
 		]]>
 	</property>
-	
-	<property name="testsqlinfo"><![CDATA[select * from TD_APP_BOM where 1=1 
+
+	<property name="testsqlinfo"><![CDATA[select * from TD_APP_BOM]]></property>
+
+	<property name="ROW_NUMBERquery"><![CDATA[select * from TD_APP_BOM where 1=1 
 			#if($bm && !$bm.equals(""))
-				and bm = ?
+				and bm = #[bm]
 			#end
 			#if($app_name_en && !$app_name_en.equals(""))
-				and app_name_en like ?
+				and app_name_en like #[app_name_en]
 			#end
 			#if($app_name && !$app_name.equals(""))
-				and app_name like ?
+				and app_name like #[app_name]
 			#end
 			#if($soft_level && !$soft_level.equals(""))
-				and soft_level=?
+				and soft_level=#[soft_level]
 			#end
 			#if($state && !$state.equals(""))
-				and state=?
+				and state=#[state]
 			#end
 			#if($rd_type && !$rd_type.equals(""))
-				and rd_type=?
-			#end
-			#if($sortKey && !$sortKey.equals(""))
+				and rd_type=#[rd_type]
+			#end ]]></property>
+
+	<property name="ROW_NUMBERquery_orderby"><![CDATA[
+		    #if($sortKey && !$sortKey.equals(""))
 			  	order by $sortKey 
 			  	#if($sortDESC )
 				  	desc

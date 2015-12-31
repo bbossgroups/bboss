@@ -57,6 +57,7 @@ import com.frameworkset.common.poolman.handle.ValueExchange;
 import com.frameworkset.common.poolman.security.DBInfoEncrypt;
 import com.frameworkset.common.poolman.security.DESDBPasswordEncrypt;
 import com.frameworkset.common.poolman.util.JDBCPoolMetaData;
+import com.frameworkset.orm.adapter.DB.PagineSql;
 import com.frameworkset.orm.engine.model.Domain;
 import com.frameworkset.orm.engine.model.SchemaType;
 import com.frameworkset.orm.platform.Platform;
@@ -660,6 +661,14 @@ public abstract class DB implements Serializable, IDMethod,Platform
 		private long start = -1L;
 		private long end= -1L;
 		private boolean prepared = true;
+		private boolean rebuilded = false;
+		public boolean isRebuilded() {
+			return rebuilded;
+		}
+		public PagineSql setRebuilded(boolean rebuilded) {
+			this.rebuilded = rebuilded;
+			return this;
+		}
 		public PagineSql(String sql, long start, long end,long offset,int maxsize,boolean prepared) {
 			super();
 			this.sql = sql;
@@ -1203,5 +1212,35 @@ public abstract class DB implements Serializable, IDMethod,Platform
 //			  }
 			  
 		  }
+		  
+		  public PagineSql getDBPagineSql(String sql, long offset, int maxsize,boolean prepared,String orderby) {
+				
+			  return new PagineSql(sql,-1L,-1L,offset,maxsize,prepared);
+				 
+			}
+			
+			  public String getStringPagineSql(String sql,String orderby)
+			  {
+				 return sql;
+			  }
+			  public String getStringPagineSql(String schema,String tablename,String pkname ,String columns,String orderby)
+			    {
+				  
+				  StringBuilder newsql = new StringBuilder();
+				  newsql.append("SELECT ");
+				 	if(columns != null && ! columns.equals(""))
+				 	{
+				 		newsql.append( columns);
+				 	}
+				 	else
+				 		newsql.append("* ");
+				 	newsql.append(" from   ");
+				 	if(schema != null && !schema.equals(""))
+				 		newsql.append(schema).append(".");
+				 	newsql.append( tablename)
+					 ;
+					return newsql.toString();
+			    	
+			    } 
         
 }

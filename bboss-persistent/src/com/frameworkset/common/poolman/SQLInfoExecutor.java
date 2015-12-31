@@ -625,7 +625,17 @@ public class SQLInfoExecutor {
 		dbutil.preparedSelect(dbname, sql,offset,pagesize);
 		if(fields != null && fields.length > 0)
 		{
-			for(int i = 0; i < fields.length ; i ++)
+			int length = fields.length ;
+			Object last = fields[length-1];
+		
+			
+			if(last instanceof PagineOrderby)
+			{
+				  
+				dbutil.setPagineOrderby( ((PagineOrderby)last).getPagineOrderby());
+				length = length - 1;
+			}
+			for(int i = 0; i < length ; i ++)
 			{
 				
 				Object field = fields[i];
@@ -635,6 +645,7 @@ public class SQLInfoExecutor {
 		
 		
 		ListInfo datas = new ListInfo();
+		datas.setMaxPageItems(pagesize);
 		datas.setDatas(dbutil.executePreparedForList(beanType));
 		datas.setTotalSize(dbutil.getLongTotalSize());
 		return datas;		 
@@ -657,14 +668,27 @@ public class SQLInfoExecutor {
 		SQLInfoDBUtil dbutil = new SQLInfoDBUtil();
 		dbutil.setMore(true);
 		dbutil.preparedSelect(dbname, sql,offset,pagesize);
+		
 		if(fields != null && fields.length > 0)
 		{
-			for(int i = 0; i < fields.length ; i ++)
+			int length = fields.length ;
+			Object last = fields[length-1];
+		
+			
+			if(last instanceof PagineOrderby)
+			{
+				  
+				dbutil.setPagineOrderby( ((PagineOrderby)last).getPagineOrderby());
+				length = length - 1;
+			}
+			for(int i = 0; i < length ; i ++)
 			{
 				
 				Object field = fields[i];
 				dbutil.setObject(i + 1, field);
+				
 			}
+		
 		}
 		
 		
@@ -673,6 +697,7 @@ public class SQLInfoExecutor {
 //		datas.setTotalSize(dbutil.getLongTotalSize());
 		datas.setMore(true);
 		datas.setResultSize(dbutil.size());
+		datas.setMaxPageItems(pagesize);
 		return datas;		 
 	}
 	public static ListInfo queryListInfoWithDBName2ndTotalsize(Class<?> beanType,String dbname, SQLInfo sql, long offset,int pagesize,long totalsize,Object... fields) throws SQLException
@@ -682,7 +707,17 @@ public class SQLInfoExecutor {
 		dbutil.preparedSelect(dbname, sql,offset,pagesize,totalsize);
 		if(fields != null && fields.length > 0)
 		{
-			for(int i = 0; i < fields.length ; i ++)
+			int length = fields.length ;
+			Object last = fields[length-1];
+		
+			
+			if(last instanceof PagineOrderby)
+			{
+				  
+				dbutil.setPagineOrderby( ((PagineOrderby)last).getPagineOrderby());
+				length = length - 1;
+			}
+			for(int i = 0; i < length ; i ++)
 			{
 				
 				Object field = fields[i];
@@ -694,6 +729,7 @@ public class SQLInfoExecutor {
 		ListInfo datas = new ListInfo();
 		datas.setDatas(dbutil.executePreparedForList(beanType));
 		datas.setTotalSize(dbutil.getLongTotalSize());
+		datas.setMaxPageItems(pagesize);
 		return datas;		 
 	}
 	public static ListInfo queryListInfoWithDBName2ndTotalsizesql(Class<?> beanType,String dbname, SQLInfo sql, long offset,int pagesize,SQLInfo totalsizesql,Object... fields) throws SQLException
@@ -703,7 +739,17 @@ public class SQLInfoExecutor {
 		dbutil.preparedSelectWithTotalsizesql(dbname, sql,offset,pagesize,totalsizesql);
 		if(fields != null && fields.length > 0)
 		{
-			for(int i = 0; i < fields.length ; i ++)
+			int length = fields.length ;
+			Object last = fields[length-1];
+		
+			
+			if(last instanceof PagineOrderby)
+			{
+				  
+				dbutil.setPagineOrderby( ((PagineOrderby)last).getPagineOrderby());
+				length = length - 1;
+			}
+			for(int i = 0; i < length ; i ++)
 			{
 				
 				Object field = fields[i];
@@ -715,6 +761,7 @@ public class SQLInfoExecutor {
 		ListInfo datas = new ListInfo();
 		datas.setDatas(dbutil.executePreparedForList(beanType));
 		datas.setTotalSize(dbutil.getLongTotalSize());
+		datas.setMaxPageItems(pagesize);
 		return datas;		 
 	}
 	/**
@@ -815,7 +862,17 @@ public class SQLInfoExecutor {
 		dbutil.preparedSelect(dbname, sql,offset,pagesize);
 		if(fields != null && fields.length > 0)
 		{
-			for(int i = 0; i < fields.length ; i ++)
+			int length = fields.length ;
+			Object last = fields[length-1];
+		
+			
+			if(last instanceof PagineOrderby)
+			{
+				  
+				dbutil.setPagineOrderby( ((PagineOrderby)last).getPagineOrderby());
+				length = length - 1;
+			}
+			for(int i = 0; i < length ; i ++)
 			{
 				
 				Object field = fields[i];
@@ -827,6 +884,7 @@ public class SQLInfoExecutor {
 		ListInfo datas = new ListInfo();
 		datas.setDatas(dbutil.executePreparedForList(beanType,rowhandler));
 		datas.setTotalSize(dbutil.getLongTotalSize());
+		datas.setMaxPageItems(pagesize);
 		return datas;		 
 	}
 	
@@ -850,7 +908,17 @@ public class SQLInfoExecutor {
 		dbutil.preparedSelect(dbname, sql,offset,pagesize);
 		if(fields != null && fields.length > 0)
 		{
-			for(int i = 0; i < fields.length ; i ++)
+			int length = fields.length ;
+			Object last = fields[length-1];
+		
+			
+			if(last instanceof PagineOrderby)
+			{
+				  
+				dbutil.setPagineOrderby( ((PagineOrderby)last).getPagineOrderby());
+				length = length - 1;
+			}
+			for(int i = 0; i < length ; i ++)
 			{
 				
 				Object field = fields[i];
@@ -864,6 +932,7 @@ public class SQLInfoExecutor {
 //		datas.setTotalSize(dbutil.getLongTotalSize());
 		datas.setMore(true);
 		datas.setResultSize(dbutil.size());
+		datas.setMaxPageItems(pagesize);
 		return datas;		 
 	}
 	
@@ -874,7 +943,17 @@ public class SQLInfoExecutor {
 		dbutil.preparedSelect(dbname, sql,offset,pagesize,totalsize);
 		if(fields != null && fields.length > 0)
 		{
-			for(int i = 0; i < fields.length ; i ++)
+			int length = fields.length ;
+			Object last = fields[length-1];
+		
+			
+			if(last instanceof PagineOrderby)
+			{
+				  
+				dbutil.setPagineOrderby( ((PagineOrderby)last).getPagineOrderby());
+				length = length - 1;
+			}
+			for(int i = 0; i < length ; i ++)
 			{
 				
 				Object field = fields[i];
@@ -886,6 +965,7 @@ public class SQLInfoExecutor {
 		ListInfo datas = new ListInfo();
 		datas.setDatas(dbutil.executePreparedForList(beanType,rowhandler));
 		datas.setTotalSize(dbutil.getLongTotalSize());
+		datas.setMaxPageItems(pagesize);
 		return datas;		 
 	}
 	
@@ -896,7 +976,17 @@ public class SQLInfoExecutor {
 		dbutil.preparedSelectWithTotalsizesql(dbname, sql,offset,pagesize,totalsizesql);
 		if(fields != null && fields.length > 0)
 		{
-			for(int i = 0; i < fields.length ; i ++)
+			int length = fields.length ;
+			Object last = fields[length-1];
+		
+			
+			if(last instanceof PagineOrderby)
+			{
+				  
+				dbutil.setPagineOrderby( ((PagineOrderby)last).getPagineOrderby());
+				length = length - 1;
+			}
+			for(int i = 0; i < length ; i ++)
 			{
 				
 				Object field = fields[i];
@@ -908,6 +998,7 @@ public class SQLInfoExecutor {
 		ListInfo datas = new ListInfo();
 		datas.setDatas(dbutil.executePreparedForList(beanType,rowhandler));
 		datas.setTotalSize(dbutil.getLongTotalSize());
+		datas.setMaxPageItems(pagesize);
 		return datas;		 
 	}
 	/**
@@ -1012,7 +1103,17 @@ public class SQLInfoExecutor {
 		dbutil.preparedSelect(dbname, sql,offset,pagesize);
 		if(fields != null && fields.length > 0)
 		{
-			for(int i = 0; i < fields.length ; i ++)
+			int length = fields.length ;
+			Object last = fields[length-1];
+		
+			
+			if(last instanceof PagineOrderby)
+			{
+				  
+				dbutil.setPagineOrderby( ((PagineOrderby)last).getPagineOrderby());
+				length = length - 1;
+			}
+			for(int i = 0; i < length ; i ++)
 			{
 				
 				Object field = fields[i];
@@ -1024,6 +1125,7 @@ public class SQLInfoExecutor {
 		ListInfo datas = new ListInfo();
 		
 		datas.setTotalSize(dbutil.getLongTotalSize());
+		datas.setMaxPageItems(pagesize);
 		return datas;		 
 	}
 	
@@ -1046,7 +1148,17 @@ public class SQLInfoExecutor {
 		dbutil.preparedSelect(dbname, sql,offset,pagesize);
 		if(fields != null && fields.length > 0)
 		{
-			for(int i = 0; i < fields.length ; i ++)
+			int length = fields.length ;
+			Object last = fields[length-1];
+		
+			
+			if(last instanceof PagineOrderby)
+			{
+				  
+				dbutil.setPagineOrderby( ((PagineOrderby)last).getPagineOrderby());
+				length = length - 1;
+			}
+			for(int i = 0; i < length ; i ++)
 			{
 				
 				Object field = fields[i];
@@ -1060,6 +1172,7 @@ public class SQLInfoExecutor {
 //		datas.setTotalSize(dbutil.getLongTotalSize());
 		datas.setMore(true);
 		datas.setResultSize(dbutil.size());
+		datas.setMaxPageItems(pagesize);
 		return datas;		 
 	}
 	public static ListInfo queryListInfoWithDBName2ndTotalsizeByNullRowHandler(NullRowHandler rowhandler,String dbname, SQLInfo sql, long offset,int pagesize,long totalsize,Object... fields) throws SQLException
@@ -1069,7 +1182,17 @@ public class SQLInfoExecutor {
 		dbutil.preparedSelect(dbname, sql,offset,pagesize,totalsize);
 		if(fields != null && fields.length > 0)
 		{
-			for(int i = 0; i < fields.length ; i ++)
+			int length = fields.length ;
+			Object last = fields[length-1];
+		
+			
+			if(last instanceof PagineOrderby)
+			{
+				  
+				dbutil.setPagineOrderby( ((PagineOrderby)last).getPagineOrderby());
+				length = length - 1;
+			}
+			for(int i = 0; i < length ; i ++)
 			{
 				
 				Object field = fields[i];
@@ -1081,6 +1204,7 @@ public class SQLInfoExecutor {
 		ListInfo datas = new ListInfo();
 		
 		datas.setTotalSize(dbutil.getLongTotalSize());
+		datas.setMaxPageItems(pagesize);
 		return datas;		 
 	}
 	public static ListInfo queryListInfoWithDBName2ndTotalsizesqlByNullRowHandler(NullRowHandler rowhandler,String dbname, SQLInfo sql, long offset,int pagesize,SQLInfo totalsizesql,Object... fields) throws SQLException
@@ -1090,7 +1214,17 @@ public class SQLInfoExecutor {
 		dbutil.preparedSelectWithTotalsizesql(dbname, sql,offset,pagesize,totalsizesql);
 		if(fields != null && fields.length > 0)
 		{
-			for(int i = 0; i < fields.length ; i ++)
+			int length = fields.length ;
+			Object last = fields[length-1];
+		
+			
+			if(last instanceof PagineOrderby)
+			{
+				  
+				dbutil.setPagineOrderby( ((PagineOrderby)last).getPagineOrderby());
+				length = length - 1;
+			}
+			for(int i = 0; i < length ; i ++)
 			{
 				
 				Object field = fields[i];
@@ -1102,6 +1236,7 @@ public class SQLInfoExecutor {
 		ListInfo datas = new ListInfo();
 		
 		datas.setTotalSize(dbutil.getLongTotalSize());
+		datas.setMaxPageItems(pagesize);
 		return datas;		 
 	}
 	/**
@@ -1176,6 +1311,7 @@ public class SQLInfoExecutor {
 		ListInfo datas = new ListInfo();
 		datas.setDatas(dbutil.executePreparedForList(beanType));
 		datas.setTotalSize(dbutil.getLongTotalSize());
+		datas.setMaxPageItems(pagesize);
 		return datas;		 
 	}
 	
@@ -1188,6 +1324,7 @@ public class SQLInfoExecutor {
 		ListInfo datas = new ListInfo();
 		datas.setDatas(dbutil.executePreparedForList(beanType));
 		datas.setTotalSize(dbutil.getLongTotalSize());
+		datas.setMaxPageItems(pagesize);
 		return datas;		 
 	}
 	
@@ -1211,6 +1348,7 @@ public class SQLInfoExecutor {
 		ListInfo datas = new ListInfo();
 		datas.setDatas(dbutil.executePreparedForList(beanType));
 		datas.setTotalSize(dbutil.getLongTotalSize());
+		datas.setMaxPageItems(pagesize);
 		return datas;		 
 	}
 	
@@ -1237,6 +1375,7 @@ public class SQLInfoExecutor {
 //		datas.setTotalSize(dbutil.getLongTotalSize());
 		datas.setMore(true);
 		datas.setResultSize(dbutil.size());
+		datas.setMaxPageItems(pagesize);
 		return datas;		 
 	}
 	/**
@@ -1495,6 +1634,7 @@ public class SQLInfoExecutor {
 		ListInfo datas = new ListInfo();
 		datas.setDatas(dbutil.executePreparedForList(beanType,rowhandler));
 		datas.setTotalSize(dbutil.getLongTotalSize());
+		datas.setMaxPageItems(pagesize);
 		return datas;		 
 	}
 	
@@ -1523,6 +1663,7 @@ public class SQLInfoExecutor {
 //		datas.setTotalSize(dbutil.getLongTotalSize());
 		datas.setMore(true);
 		datas.setResultSize(dbutil.size());
+		datas.setMaxPageItems(pagesize);
 		return datas;		 
 	}
 	
@@ -1535,6 +1676,7 @@ public class SQLInfoExecutor {
 		ListInfo datas = new ListInfo();
 		datas.setDatas(dbutil.executePreparedForList(beanType,rowhandler));
 		datas.setTotalSize(dbutil.getLongTotalSize());
+		datas.setMaxPageItems(pagesize);
 		return datas;		 
 	}
 	/**
@@ -1558,6 +1700,7 @@ public class SQLInfoExecutor {
 		ListInfo datas = new ListInfo();
 		datas.setDatas(dbutil.executePreparedForList(beanType,rowhandler));
 		datas.setTotalSize(dbutil.getLongTotalSize());
+		datas.setMaxPageItems(pagesize);
 		return datas;		 
 	}
 	/**
@@ -1645,6 +1788,7 @@ public class SQLInfoExecutor {
 		ListInfo datas = new ListInfo();
 		
 		datas.setTotalSize(dbutil.getLongTotalSize());
+		datas.setMaxPageItems(pagesize);
 		return datas;		 
 	}
 	
@@ -1673,6 +1817,7 @@ public class SQLInfoExecutor {
 //		datas.setTotalSize(dbutil.getLongTotalSize());
 		datas.setMore(true);
 		datas.setResultSize(dbutil.size());
+		datas.setMaxPageItems(pagesize);
 		return datas;		 
 	}
 	
@@ -1712,6 +1857,7 @@ public class SQLInfoExecutor {
 		ListInfo datas = new ListInfo();
 		
 		datas.setTotalSize(dbutil.getLongTotalSize());
+		datas.setMaxPageItems(pagesize);
 		return datas;		 
 	}
 	/**
@@ -1735,6 +1881,7 @@ public class SQLInfoExecutor {
 		ListInfo datas = new ListInfo();
 		
 		datas.setTotalSize(dbutil.getLongTotalSize());
+		datas.setMaxPageItems(pagesize);
 		return datas;		 
 	}
 	/**

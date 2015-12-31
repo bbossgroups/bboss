@@ -37,7 +37,7 @@ import java.sql.SQLException;
 import com.frameworkset.orm.platform.PlatformDb2Impl;
 
 
-public class DBDB2App extends DB
+public class DBDB2App extends DB2Base
 {
     /** 
      * Empty constructor.

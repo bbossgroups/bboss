@@ -79,7 +79,7 @@ public class JDBCPoolMetaData implements Serializable{
     
 
     /* TX ATTRIBUTES */
-    private int transactionIsolationLevel = PoolManConstants.DEFAULT_ISO_LEVEL;
+    private Integer transactionIsolationLevel = null;
     private int transactionTimeout = PoolManConstants.DEFAULT_USERTIMEOUT;
 
     /* QUERY CACHE ATTRIBUTES */
@@ -347,11 +347,11 @@ public class JDBCPoolMetaData implements Serializable{
         this.transactionTimeout = n;
     }
 
-    public int getIsolationLevel() {
+    public Integer getIsolationLevel() {
         return this.transactionIsolationLevel;
     }
 
-    public void setIsolationLevel(int n) {
+    public void setIsolationLevel(Integer n) {
         this.transactionIsolationLevel = n;
     }
 
@@ -391,8 +391,10 @@ public class JDBCPoolMetaData implements Serializable{
 
     }
 
-    private String convertIsoToString(int n) {
+    private String convertIsoToString(Integer n) {
 
+    	if(n == null)
+    		return null;
         String result = null;
 
         switch (n) {

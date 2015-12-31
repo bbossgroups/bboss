@@ -39,7 +39,7 @@ import com.frameworkset.orm.platform.PlatformDb2Impl;
 
 
 public class DBDB2Net
-    extends DB
+    extends DB2Base
 {
     /**
      * Empty constructor.

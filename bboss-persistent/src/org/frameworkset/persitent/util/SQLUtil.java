@@ -444,6 +444,36 @@ public class SQLUtil {
 		return sql;
 
 	}
+	
+	public String getPlainSQL(String dbname, String sqlname) 
+	{
+		SQLInfo sql = null;
+		if(this.hasrefs)
+		{
+			sql = this.getReferSQLInfo(dbname, sqlname);
+			if(sql != null)
+				return sql.getSql();
+		}
+		String dbtype = SQLManager.getInstance().getDBAdapter(dbname)
+		.getDBTYPE();
+		
+		
+		if(dbtype != null)
+//			sql = sqlcontext.getProperty(sqlname + "-" + dbtype.toLowerCase());		
+			sql = sqls.get(sqlname + "-" + dbtype.toLowerCase());
+		if (sql == null) {
+//			sql = sqlcontext.getProperty(sqlname);
+			sql = sqls.get(sqlname);
+		}
+		if (sql == null) {
+//			sql = sqlcontext.getProperty(sqlname + "-default");
+			sql = sqls.get(sqlname + "-default");
+		}	
+		if(sql != null)
+			return sql.getSql();
+		else
+			return null;
+	}
 	private String getReferSQL(String dbname, String sqlname)
 	{
 		SQLRef ref = this.sqlrefs.get(sqlname);
@@ -718,6 +748,11 @@ public class SQLUtil {
 
 	public static GloableSQLUtil getGlobalSQLUtil() {
 		return globalSQLUtil;
+	}
+
+	public boolean fromConfig() {
+		
+		return this.sqlcontext != null;
 	}
 
 }

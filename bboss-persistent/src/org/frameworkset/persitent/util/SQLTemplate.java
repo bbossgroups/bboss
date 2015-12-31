@@ -165,7 +165,7 @@ public class SQLTemplate extends Resource
 	            try
 	            {
 	                BufferedReader br = new BufferedReader( is);
-	                data = rsvc.parse( br, name);
+	                data = rsvc.parseSQL( br, name);
 	                initDocument();
 	                processed = true;
 	                try {

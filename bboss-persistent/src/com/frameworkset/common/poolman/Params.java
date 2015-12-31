@@ -36,6 +36,13 @@ import com.frameworkset.common.poolman.PreparedDBUtil.UpdateKeyInfo;
  */
 public class Params implements java.lang.Comparable
 {
+	private String pagineOrderby;
+    public String getPagineOrderby() {
+		return pagineOrderby;
+	}
+	public void setPagineOrderby(String pagineOrderby) {
+		this.pagineOrderby = pagineOrderby;
+	}
 	/**
 	 * 指定分页总记录数，通过外部传入，提升分页查询性能
 	 */

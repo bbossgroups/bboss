@@ -30,6 +30,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
@@ -67,8 +68,12 @@ import bboss.org.apache.velocity.VelocityContext;
  */
 public class SQLParams
 {
-	
-    private String pretoken = "#\\[";
+	private PagineOrderby pagineOrderby;
+    
+	public void setPagineOrderby(PagineOrderby pagineOrderby) {
+		this.pagineOrderby = pagineOrderby;
+	}
+	private String pretoken = "#\\[";
     private String endtoken = "\\]";
     private Map<String,Param> sqlparams = null;
     private Params realParams = null;
@@ -127,7 +132,7 @@ public class SQLParams
     public String toString()
     {
         StringBuffer ret = new StringBuffer();
-        ret.append("sql{").append(this.newsql.getNewsql()).append("},params");
+        ret.append("sql{").append(this.newsql.getNewsql()).append(",").append(this.pagineOrderby == null?"":pagineOrderby.toString(null)).append("},params");
         if(sqlparams != null && sqlparams.size() > 0)
         {
             ret.append("{");
@@ -166,14 +171,14 @@ public class SQLParams
         if(sqlparams != null && sqlparams.size()>0)
         {
             
-    		Iterator<String> it = sqlparams.keySet().iterator();
+    		Iterator<Entry<String, Param>> it = sqlparams.entrySet().iterator();
     		while(it.hasNext())
     		{
-    			String key = it.next();
-    			temp = this.sqlparams.get(key);
+    			Entry<String, Param> entry = it.next();
+    			temp = entry.getValue();
 
     			if(!temp.getType().equals(NULL))
-    				context_.put(key, temp.getData());
+    				context_.put(entry.getKey(), temp.getData());
     		}
         }
     	return context_;
@@ -458,6 +463,11 @@ public class SQLParams
         }
         
         this.realParams = new Params(_realParams);
+//        if(this.oldsql.fromConfig() && pagineOrderby.isConfig())
+//        {
+//        	
+//        }
+//        this.realParams.setPagineOrderby(pagineOrderby);
     }
     
 
@@ -468,9 +478,10 @@ public class SQLParams
     	String totalsizesql = null;
     	List<Param> _realParams = new ArrayList<Param>();
     	SQLStruction sqlstruction =  null;
+    	VelocityContext vcontext = null;
     	if(firstnewsql == null)
     	{
-	    	VelocityContext vcontext = null;
+	    	
 	    	if(sqlinfo.istpl())
 	    	{
 	    		sqlinfo.getSqltpl().process();//识别sql语句是不是真正的velocity sql模板
@@ -571,6 +582,57 @@ public class SQLParams
         }
         
         this.realParams = new Params(_realParams);
+        //如果是高效分页查询，则需要计算rownum_over中的orderby条件
+        if(pagineOrderby != null )
+        {
+        	
+        	String _pagineOrderby = null;
+        	if(!pagineOrderby.isPlain())
+        	{
+	        	SQLInfo conditionsqlinfo = null;
+	        	if(pagineOrderby.isConfig())
+	        	{
+	        		conditionsqlinfo = sqlinfo.getSQLInfo(dbname, pagineOrderby.getPagineOrderby());
+	        		
+	        	}
+	        	else
+	        	{
+	        		conditionsqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(pagineOrderby.getPagineOrderby(),true,true);
+	        	}
+	        	if(conditionsqlinfo == null)
+	        		throw new SetSQLParamException(pagineOrderby.toString(":没有找到对应的ROW_NUMBER () OVER() order by 条件语句。"));
+	        	if( conditionsqlinfo.istpl())
+		    	{
+	    			conditionsqlinfo.getSqltpl().process();//识别sql语句是不是真正的velocity sql模板
+		    		if(conditionsqlinfo.istpl())
+		    		{
+		    			if(vcontext == null)
+		        			vcontext = buildVelocityContext();
+				    	
+				    	StringWriter sw = new StringWriter();
+				    	conditionsqlinfo.getSqltpl().merge(vcontext,sw);
+				    	_pagineOrderby = sw.toString();
+		    		}
+		    		else
+		    		{
+		    			_pagineOrderby = conditionsqlinfo.getSql();
+		    		}
+			    	
+		    	}
+		    	else
+		    	{
+		    		_pagineOrderby = conditionsqlinfo.getSql();
+		    	}
+        	}
+        	else
+        	{
+        		if(pagineOrderby.isConfig())
+        			_pagineOrderby = sqlinfo.getPlainSQL(dbname, pagineOrderby.getPagineOrderby());
+        		else 
+        			_pagineOrderby = pagineOrderby.getPagineOrderby(); 
+        	}
+        	this.realParams.setPagineOrderby(_pagineOrderby.trim());
+        }
         if(sqlstruction.hasVars() )
         {
         	JDBCPool pool = SQLManager.getInstance().getPool(dbname);
@@ -844,6 +906,7 @@ public class SQLParams
     }
 	public static SQLParams convertBeanToSqlParams(Object bean,SQLInfo sql,String dbname,int action,Connection con) throws SQLException
 	{
+		PagineOrderby pagineOrderby = null;
 		if(bean == null)
 		{
 //			return null;
@@ -852,7 +915,7 @@ public class SQLParams
     		temp.setOldsql(sql);
     		return temp;
 		}
-		if(bean instanceof SQLParams)
+		else if(bean instanceof SQLParams)
 		{
 			SQLParams temp = (SQLParams)bean;
 			if(temp.getOldsql() == null)
@@ -867,8 +930,45 @@ public class SQLParams
 			SQLParams temp = convertMaptoSqlParams((Map )bean,sql);
 			return temp;
 		}
+		else if(action == PreparedDBUtil.SELECT && bean instanceof PagineOrderby)
+		{
+			  pagineOrderby = ((PagineOrderby)bean);
+			Object condition = pagineOrderby.getConditionBean();
+			if(condition == null)
+			{
+//				return null;
+				SQLParams temp = new SQLParams();
+	        	temp.setFrommap(true);
+	    		temp.setOldsql(sql);
+	    		temp.setPagineOrderby(pagineOrderby);
+	    		return temp;
+			}
+			else if(condition instanceof SQLParams)
+			{
+				SQLParams temp = (SQLParams)condition;
+				if(temp.getOldsql() == null)
+				{
+					temp.setOldsql(sql);
+				}
+				temp.setPagineOrderby(pagineOrderby );
+				return temp;
+			}
+			else if(condition instanceof Map)
+			{
+				
+				SQLParams temp = convertMaptoSqlParams((Map )condition,sql);
+				temp.setPagineOrderby(pagineOrderby );
+				return temp;
+			}
+			else
+			{
+				 
+				bean = pagineOrderby.getConditionBean();
+			}
+		}
 		SQLParams params = new SQLParams();
-		
+		if(pagineOrderby != null)
+			params.setPagineOrderby(pagineOrderby);
 //		BeanInfo beanInfo = null;
 //		try {
 //			beanInfo = Introspector.getBeanInfo(bean.getClass());

@@ -59,6 +59,7 @@ import com.frameworkset.common.poolman.handle.NullRowHandler;
 import com.frameworkset.common.poolman.security.DBInfoEncrypt;
 import com.frameworkset.common.poolman.util.JDBCPoolMetaData;
 import com.frameworkset.common.poolman.util.SQLUtil;
+import com.frameworkset.orm.adapter.DB.PagineSql;
 import com.frameworkset.orm.engine.model.Domain;
 import com.frameworkset.orm.engine.model.SchemaType;
 import com.frameworkset.orm.platform.PlatformOracleImpl;
@@ -519,7 +520,7 @@ public class DBOracle extends DB
 		 		sqlbuilder.append( columns);
 		 	}
 		 	else
-		 		sqlbuilder.append("t.* ");
+		 		sqlbuilder.append("* ");
 		 	sqlbuilder.append(",ROW_NUMBER() OVER ( ORDER BY ").append(pkname).append(") rownum__  from   ");
 		 	if(schema != null && !schema.equals(""))
 		 		sqlbuilder.append(schema).append(".");
@@ -564,6 +565,100 @@ public class DBOracle extends DB
         ret.append("select * from (").append(selectSql).append(") where ").append(rownum).append(" <=").append(limit);
         return ret.toString();
     }
+
+    /**
+	 * 获取指定数据的分页数据sql语句
+	 * @param sql
+	 * @return
+	 */
+	public PagineSql getDBPagineSql(String sql, long offset, int maxsize,boolean prepared,String orderby) {
+		
+		StringBuilder ret = null;
+  	if(prepared)
+	        ret = new StringBuilder().append("SELECT *  FROM (SELECT b.*, ROW_NUMBER () OVER (").append(orderby).append(") AS rownums FROM (").append(sql).append(") b) WHERE rownums <= ? and rownums >=?");
+  	else
+  	{
+  		ret = new StringBuilder().append("SELECT *  FROM (SELECT b.*, ROW_NUMBER () OVER (").append(orderby).append(") AS rownums FROM (").append(sql).append(") b) WHERE rownums <= ").append(offset + maxsize).append(" and rownums >=").append(offset + 1);
+  	}
+      return new PagineSql(ret.toString(),offset + maxsize,offset + 1,offset, maxsize, prepared).setRebuilded(true);
+		
+////		return new StringBuilder(sql).append(" limit ").append(offset).append(",").append(maxsize).toString();
+//		StringBuilder newsql = new StringBuilder();
+//		if(prepared)
+//		{
+//			newsql.append("SELECT t.* FROM (SELECT res.* ,row_number() over(").append(orderby).append(") r FROM (").append(sql)
+//			.append(")) t where t.r <= ? and t.r >= ?");
+//			 
+//			
+//			/**
+//			 * StringBuilder ret = null;
+//  	if(prepared)
+//  		ret = new StringBuilder().append("select ss1.* from (select tt1.*,rownum rowno_ from (").append(sql).append(
+//              ") tt1 where rownum <= ?) ss1 where ss1.rowno_ >= ?");
+//  	else
+//  		ret = new StringBuilder("select ss1.* from (select tt1.*,rownum rowno_ from (").append(sql).append(
+//                ") tt1 where rownum <= ").append((offset + maxsize)).append(") ss1 where ss1.rowno_ >= ").append(
+//                (offset + 1));
+//      return new PagineSql(ret.toString(),offset + maxsize,offset + 1,offset, maxsize, prepared);
+//			 */
+//			return new PagineSql(newsql.toString(),offset + maxsize,offset + 1,offset, maxsize, prepared);
+//		}
+//		else
+//		{
+//			newsql.append("SELECT t.* FROM (SELECT res.* ,row_number() over(").append(orderby).append(") r FROM (").append(sql)
+//			.append(")) t where t.r <= ").append(offset + maxsize).append(" and t.r >= ").append(offset + 1).append("");
+//			return new PagineSql(newsql.toString(),offset + maxsize,offset + 1,offset, maxsize, prepared);
+//		}
+		 
+	}
+	
+	  public String getStringPagineSql(String sql,String orderby)
+	  {
+//		  StringBuilder newsql = new StringBuilder();
+//		  newsql.append("SELECT t.* FROM (SELECT res.* ,row_number() over(").append(orderby).append(") r FROM (").append(sql)
+//			.append(")) t where t.r <= ? and t.r >= ?");
+//			return newsql.toString();
+		  StringBuilder ret  = new StringBuilder().append("SELECT *  FROM (SELECT b.*, ROW_NUMBER () OVER (").append(orderby).append(") AS rownums FROM (").append(sql).append(") b) WHERE rownums <= ? and rownums >=?");
+	    	 
+		
+	    	return ret.toString();
+	  }
+	  public String getStringPagineSql(String schema,String tablename,String pkname ,String columns,String orderby)
+	    {
+		  
+//		  StringBuilder newsql = new StringBuilder();
+//		  newsql.append("SELECT t.* FROM (SELECT res.* ,row_number() over(").append(orderby).append(") r FROM (").append("SELECT ");
+//		 	if(columns != null && ! columns.equals(""))
+//		 	{
+//		 		newsql.append( columns);
+//		 	}
+//		 	else
+//		 		newsql.append("* ");
+//		 	newsql.append(" from   ");
+//		 	if(schema != null && !schema.equals(""))
+//		 		newsql.append(schema).append(".");
+//		 	newsql.append( tablename)
+//			.append(")) t where t.r <= ? and t.r >= ?");
+//		 	return newsql.toString();
+		  StringBuilder newsql  = new StringBuilder().append("SELECT *  FROM (SELECT b.*, ROW_NUMBER () OVER (").append(orderby).append(") AS rownums FROM (").append("SELECT ");
+		 	if(columns != null && ! columns.equals(""))
+		 	{
+		 		newsql.append( columns);
+		 	}
+		 	else
+		 		newsql.append("* ");
+		 	newsql.append(" from   ");
+		 	if(schema != null && !schema.equals(""))
+		 		newsql.append(schema).append(".");
+		 	newsql.append( tablename).append(") b) WHERE rownums <= ? and rownums >=?");
+		    
+		 	 
+		    	 
+		 	 
+	    	return newsql.toString();
+			
+	    	
+	    }
 
     /**
      * 获取高效的oracle分页语句，sql中已经写好ROW_NUMBER() OVER ( ORDER BY cjrq ) rownum
