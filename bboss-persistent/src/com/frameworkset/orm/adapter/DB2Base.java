@@ -23,8 +23,8 @@ public PagineSql getDBPagineSql(String sql, long offset, int maxsize,boolean pre
 		StringBuilder newsql = new StringBuilder();
 		if(prepared)
 		{
-			newsql.append("SELECT t.* FROM (SELECT res.* ,row_number() over(").append(orderby).append(") r FROM (").append(sql)
-			.append(")) t where t.r <= ? and t.r >= ?");
+			newsql.append("SELECT t.* FROM (SELECT res.* ,row_number() over(").append(orderby).append(") row_number_ FROM (").append(sql)
+			.append(") res) t where t.row_number_ <= ? and t.row_number_ >= ?");
 			 
 			
 			/**
@@ -42,8 +42,8 @@ public PagineSql getDBPagineSql(String sql, long offset, int maxsize,boolean pre
 		}
 		else
 		{
-			newsql.append("SELECT t.* FROM (SELECT res.* ,row_number() over(").append(orderby).append(") r FROM (").append(sql)
-			.append(")) t where t.r <= ").append(offset + maxsize).append(" and t.r >= ").append(offset + 1).append("");
+			newsql.append("SELECT t.* FROM (SELECT res.* ,row_number() over(").append(orderby).append(") row_number_ FROM (").append(sql)
+			.append(") res) t where t.row_number_ <= ").append(offset + maxsize).append(" and t.row_number_ >= ").append(offset + 1).append("");
 			return new PagineSql(newsql.toString(),offset + maxsize,offset + 1,offset, maxsize, prepared).setRebuilded(true);
 		}
 		 
@@ -52,15 +52,15 @@ public PagineSql getDBPagineSql(String sql, long offset, int maxsize,boolean pre
 	  public String getStringPagineSql(String sql,String orderby)
 	  {
 		  StringBuilder newsql = new StringBuilder();
-		  newsql.append("SELECT t.* FROM (SELECT res.* ,row_number() over(").append(orderby).append(") r FROM (").append(sql)
-			.append(")) t where t.r <= ? and t.r >= ?");
+		  newsql.append("SELECT t.* FROM (SELECT res.* ,row_number() over(").append(orderby).append(") row_number_ FROM (").append(sql)
+			.append(") res) t where t.row_number_ <= ? and t.row_number_ >= ?");
 			return newsql.toString();
 	  }
 	  public String getStringPagineSql(String schema,String tablename,String pkname ,String columns,String orderby)
 	    {
 		  
 		  StringBuilder newsql = new StringBuilder();
-		  newsql.append("SELECT t.* FROM (SELECT res.* ,row_number() over(").append(orderby).append(") r FROM (").append("SELECT ");
+		  newsql.append("SELECT t.* FROM (SELECT res.* ,row_number() over(").append(orderby).append(") row_number_ FROM (").append("SELECT ");
 		 	if(columns != null && ! columns.equals(""))
 		 	{
 		 		newsql.append( columns);
@@ -71,7 +71,7 @@ public PagineSql getDBPagineSql(String sql, long offset, int maxsize,boolean pre
 		 	if(schema != null && !schema.equals(""))
 		 		newsql.append(schema).append(".");
 		 	newsql.append( tablename)
-			.append(")) t where t.r <= ? and t.r >= ?");
+			.append(") res) t where t.row_number_ <= ? and t.row_number_ >= ?");
 			return newsql.toString();
 	    	
 	    } 
