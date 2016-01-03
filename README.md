@@ -96,11 +96,16 @@ svn下载地址
 
 https://github.com/bbossgroups/bboss-document/trunk 
 
+源码下根目录下对应的都是完整的eclipse工程，导入eclipse既可以，具体的构建方法，参考
+
+http://yin-bp.iteye.com/blog/1462842
+
 ## bboss项目工程目录结构及功能说明 
 http://yin-bp.iteye.com/blog/2142959
 
 ## bboss项目特色请查看文档了解
 http://yin-bp.iteye.com/blog/1080824
+
 
 ## License
 
