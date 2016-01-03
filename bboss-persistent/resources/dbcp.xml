@@ -1,8 +1,8 @@
 <property name="datasource" class="com.frameworkset.commons.dbcp2.BasicDataSource">
- 	<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>  
-	<property name="url" value="jdbc:oracle:thin:@//localhost:1521/orcl"/>  
-	<property name="username" value="pdp1"/>  
-	<property name="password" value="pdp1"/>  
+ 	<property name="driverClassName" value="net.sourceforge.jtds.jdbc.Driver"/>  
+	<property name="url" value="jdbc:jtds:sqlserver://HOME-ZJY-PC:1433;DatabaseName=bboss"/>  
+	<property name="username" value="sa"/>  
+	<property name="password" value="123456"/>  
 	<!--initialSize: 初始化连接-->  
 	<property name="initialSize" value="5"/>  
 	<property name="maxTotal" value="20"/>  
@@ -18,7 +18,7 @@
 	<property name="removeAbandonedTimeout" value="180"/>  
 	<!--maxWait: 超时等待时间以毫秒为单位 6000毫秒/1000等于6秒-->  
 	<property name="maxWaitMillis" value="3000"/>  
-	<property name="validationQuery" value="SELECT 1 from dual"/>	  
+	<property name="validationQuery" value="SELECT 1 "/>	  
 	<property name="testOnBorrow" value="true"/> 
 </property>
  
