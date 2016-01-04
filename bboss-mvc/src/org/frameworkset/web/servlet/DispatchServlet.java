@@ -275,7 +275,7 @@ public class DispatchServlet extends HttpServlet {
 
 	
 	/** Expose LocaleContext and RequestAttributes as inheritable for child threads? */
-	private boolean threadContextInheritable = false;
+	private static boolean threadContextInheritable = false;
 	
 	/** MultipartResolver used by this servlet */
 	private MultipartResolver multipartResolver;
@@ -776,6 +776,15 @@ public class DispatchServlet extends HttpServlet {
 			return null;
 		}
 	}
+	
+	/**
+	 * 设置语言环境
+	 * @param request
+	 */
+	public static void setLocaleContext(final HttpServletRequest request)
+	{
+		LocaleContextHolder.setLocaleContext(buildLocaleContext(request), threadContextInheritable);
+	}
 	/**
 	 * Process the actual dispatching to the handler.
 	 * <p>The handler will be obtained by applying the servlet's HandlerMappings in order.
@@ -808,7 +817,8 @@ public class DispatchServlet extends HttpServlet {
 		try {
 			
 			previousLocaleContext = LocaleContextHolder.getLocaleContext();
-			LocaleContextHolder.setLocaleContext(buildLocaleContext(request), this.threadContextInheritable);
+//			LocaleContextHolder.setLocaleContext(buildLocaleContext(request), this.threadContextInheritable);
+			setLocaleContext(  request);
 
 			// Expose current RequestAttributes to current thread.
 			previousRequestAttributes = RequestContextHolder.getRequestAttributes();
@@ -1098,7 +1108,7 @@ public class DispatchServlet extends HttpServlet {
 	 * @param request current HTTP request
 	 * @return the corresponding LocaleContext
 	 */
-	protected LocaleContext buildLocaleContext(final HttpServletRequest request) {
+	protected static LocaleContext buildLocaleContext(final HttpServletRequest request) {
 		Locale locale = localeResolver.resolveLocale(request);
 		return new SimpleLocaleContext(locale);
 	}

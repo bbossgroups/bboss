@@ -7,6 +7,8 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.frameworkset.web.servlet.DispatchServlet;
+
 import com.frameworkset.util.SimpleStringUtil;
 import com.frameworkset.util.StringUtil;
 
@@ -32,7 +34,7 @@ public class CookieLocaleResolver extends AbstractLocaleResolver{
 			}
 		}
 		if(locale == null)
-			return request.getLocale();
+			return Locale.SIMPLIFIED_CHINESE;
 		return locale;
 	}
 
@@ -42,9 +44,10 @@ public class CookieLocaleResolver extends AbstractLocaleResolver{
 //		throw new UnsupportedOperationException(
 //				"Cannot change HTTP accept header - use a different locale resolution strategy");
 		if(locale == null)
-			locale = request.getLocale();
+			locale =   Locale.SIMPLIFIED_CHINESE;
 		String language = String.valueOf(locale);
 		StringUtil.addCookieValue(request, response, cookielocalkey, language);
+		DispatchServlet.setLocaleContext(request);
 	}
 
 	public String getCookielocalkey() {
@@ -55,10 +58,10 @@ public class CookieLocaleResolver extends AbstractLocaleResolver{
 	public void setLocale(HttpServletRequest request,
 			HttpServletResponse response, String locale) {
 		if(locale == null)
-			locale = String.valueOf(request.getLocale());
+			locale = String.valueOf(Locale.SIMPLIFIED_CHINESE);
 		
 		StringUtil.addCookieValue(request, response, cookielocalkey, locale);
-
+		DispatchServlet.setLocaleContext(request);
 	}
 	public void setCookielocalkey(String cookielocalkey) {
 		this.cookielocalkey = cookielocalkey;
