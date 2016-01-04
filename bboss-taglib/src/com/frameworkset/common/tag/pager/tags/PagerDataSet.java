@@ -2572,7 +2572,7 @@ public class PagerDataSet extends PagerTagSupport {
 		DataInfo dataInfo = pagerContext.getDataInfo();
 		if (dataInfo == null)
 			return SKIP_BODY;
-		doDataLoading();
+		doDataLoading(false);
 		int size = this.size();
 		if(size > 0)
 		{
@@ -2587,7 +2587,7 @@ public class PagerDataSet extends PagerTagSupport {
 					return SKIP_BODY;
 				}
 			}
-			this.currentValueObject = this.getClassDataValue(rowid);
+			initCurrentValueObject();
 			this.putVarValue();
 			this.putListScoptVarValue();
 			return EVAL_BODY_INCLUDE;
@@ -2597,8 +2597,19 @@ public class PagerDataSet extends PagerTagSupport {
 			return SKIP_BODY;
 
 	}
-
-	public void doDataLoading() {
+	public void initCurrentValueObject()
+	{
+		this.currentValueObject = this.getClassDataValue(rowid);
+	}
+	public void doDataLoading()
+	{
+		doDataLoading(true);
+	}
+	/**
+	 * cms文档发布时，需要在doDataLoading中初始化当前记录对象，否则会报异常
+	 * @param initcurrentObject
+	 */
+	public void doDataLoading(boolean initcurrentObject) {
 		/**
 		 * 得到页面上要显示的值对象中字段
 		 * 
@@ -2672,7 +2683,10 @@ public class PagerDataSet extends PagerTagSupport {
 				sortBy(sortKey.trim(), t_desc);
 			}
 			
-			
+			if(initcurrentObject)
+			{
+				this.initCurrentValueObject();
+			}
 //			return EVAL_BODY_INCLUDE;
 		} 
 		else
@@ -2784,7 +2798,8 @@ public class PagerDataSet extends PagerTagSupport {
 			rowid++;
 //			pageContext.setAttribute(this.getDataSetName(), this);
 			pageContext.setAttribute(this.getRowidName(), rowid + "");
-			this.currentValueObject = this.getClassDataValue(rowid);
+//			this.currentValueObject = this.getClassDataValue(rowid);
+			this.initCurrentValueObject();
 			putVarValue();
 			return EVAL_BODY_AGAIN;
 		} else {
