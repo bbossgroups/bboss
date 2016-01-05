@@ -149,6 +149,16 @@ public class PagerContext
 	private long itemCount = 0;
 	private boolean descfromrequest = false;
 	private boolean desc = true;
+	private boolean defaultDesc = true;
+	
+
+	public boolean isDefaultDesc() {
+		return defaultDesc;
+	}
+
+	public void setDefaultDesc(boolean defaultDesc) {
+		this.defaultDesc = defaultDesc;
+	}
 
 	private String sortKey = null;
 

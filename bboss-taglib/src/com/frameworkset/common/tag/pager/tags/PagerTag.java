@@ -459,6 +459,7 @@ public class PagerTag extends BaseTag implements FieldHelper, PagerInfo {
 		String desc_key = pagerContext.getKey("desc");
 
 		String t_desc = request.getParameter(desc_key);
+		pagerContext.setDefaultDesc(desc);
 		if(t_desc != null)
 		{
 			if (t_desc.equals("false"))
@@ -467,7 +468,7 @@ public class PagerTag extends BaseTag implements FieldHelper, PagerInfo {
 				desc = true;
 			pagerContext.setDescfromrequest(true);
 		}
-
+		
 		pagerContext.setDesc(desc);
 		// 设置排序关键字，首先通过request.getParameter获取
 

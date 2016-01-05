@@ -258,13 +258,26 @@ public class TitleTag  extends PagerTagSupport
     
     private boolean desc()
     {
-    	if(this.getDesc() == null || pagerContext.isDescfromrequest())
-    	{
-    		return pagerContext.getDesc();
+    	if(pagerContext.isDescfromrequest() )
+    	{    		
+    		if(this.getColName() != null && pagerContext.getSortKey().equals(this.getColName()))
+    		{
+    			return pagerContext.getDesc();
+    		}
+    		else
+    		{
+    			if(this.getDesc() == null) 
+        			return pagerContext.isDefaultDesc();
+        		else
+        			return this.desc.equals("true");
+    		}
     	}
     	else
     	{
-    		return desc.equals("true");
+    		if(this.getDesc() == null) 
+    			return pagerContext.isDefaultDesc();
+    		else
+    			return this.desc.equals("true");
     	}
     }
     
