@@ -45,7 +45,7 @@ public class LanguageLocaleResolver  extends AbstractLocaleResolver implements I
 	@Override
 	public Locale resolveLocale(HttpServletRequest request) {
 		// TODO Auto-generated method stub
-		return locale != null?locale:request.getLocale();
+		return locale != null?locale:defaultLocal;
 	}
 
 	@Override

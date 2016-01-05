@@ -18,7 +18,7 @@ public class CookieLocaleResolver extends AbstractLocaleResolver{
 	@Override
 	public Locale resolveLocale(HttpServletRequest request) {
 		if(request == null)
-			return Locale.SIMPLIFIED_CHINESE;
+			return defaultLocal;
 		Cookie[] cookies = request.getCookies();
 		Locale locale = null;
 		if(cookies != null)
@@ -34,7 +34,7 @@ public class CookieLocaleResolver extends AbstractLocaleResolver{
 			}
 		}
 		if(locale == null)
-			return Locale.SIMPLIFIED_CHINESE;
+			return defaultLocal;
 		return locale;
 	}
 
@@ -44,7 +44,7 @@ public class CookieLocaleResolver extends AbstractLocaleResolver{
 //		throw new UnsupportedOperationException(
 //				"Cannot change HTTP accept header - use a different locale resolution strategy");
 		if(locale == null)
-			locale =   Locale.SIMPLIFIED_CHINESE;
+			locale =   defaultLocal;
 		String language = String.valueOf(locale);
 		StringUtil.addCookieValue(request, response, cookielocalkey, language);
 		DispatchServlet.setLocaleContext(request);
@@ -58,7 +58,7 @@ public class CookieLocaleResolver extends AbstractLocaleResolver{
 	public void setLocale(HttpServletRequest request,
 			HttpServletResponse response, String locale) {
 		if(locale == null)
-			locale = String.valueOf(Locale.SIMPLIFIED_CHINESE);
+			locale = String.valueOf(defaultLocal);
 		
 		StringUtil.addCookieValue(request, response, cookielocalkey, locale);
 		DispatchServlet.setLocaleContext(request);

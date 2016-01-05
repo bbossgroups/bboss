@@ -21,6 +21,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.frameworkset.web.servlet.DispatchServlet;
+
 import com.frameworkset.util.SimpleStringUtil;
 
 /**
@@ -41,10 +43,10 @@ public class SessionLocalResolver extends AbstractLocaleResolver {
 	private String sessionlocalkey = SESSION_LOCAL_KEY;
 	public Locale resolveLocale(HttpServletRequest request) {
 		if(request == null)
-			return Locale.SIMPLIFIED_CHINESE;
+			return defaultLocal;
 		HttpSession session = request.getSession(false);
 		Locale local = session != null?(Locale)session.getAttribute(sessionlocalkey):null;
-		return (local == null ?request.getLocale():local);
+		return (local == null ?defaultLocal:local);
 	}
 
 	public void setLocale(HttpServletRequest request, HttpServletResponse response, Locale locale) {
@@ -53,8 +55,9 @@ public class SessionLocalResolver extends AbstractLocaleResolver {
 		
 		HttpSession session = request.getSession();
 		if(locale == null)
-			locale = request.getLocale();
+			locale =defaultLocal;
 		session.setAttribute(sessionlocalkey,locale);
+		DispatchServlet.setLocaleContext(request);
 	}
 	@Override
 	public void setLocale(HttpServletRequest request,
@@ -63,6 +66,7 @@ public class SessionLocalResolver extends AbstractLocaleResolver {
 			setLocale(request, response, SimpleStringUtil.getLocale(locale));
 		else
 			setLocale(request, response, request.getLocale());
+		DispatchServlet.setLocaleContext(request);
 
 	}
 	public String getSessionlocalkey() {
