@@ -260,7 +260,7 @@ public class TitleTag  extends PagerTagSupport
     {
     	if(pagerContext.isDescfromrequest() )
     	{    		
-    		if(this.getColName() != null && pagerContext.getSortKey().equals(this.getColName()))
+    		if(this.getColName() != null && pagerContext.getSortKey() != null && pagerContext.getSortKey().equals(this.getColName()))
     		{
     			return pagerContext.getDesc();
     		}
