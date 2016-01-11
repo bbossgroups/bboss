@@ -3609,7 +3609,9 @@ public class ValueObjectUtil {
 	
 	public static int dateCompare(java.util.Date value1,java.util.Date value2)
 	{
-		return value1.compareTo(value2);
+		long thisTime = value1.getTime();
+        long anotherTime = value2.getTime();
+        return (thisTime<anotherTime ? -1 : (thisTime==anotherTime ? 0 : 1));
 	}
 
 	public static boolean isNumber(Object value) {
