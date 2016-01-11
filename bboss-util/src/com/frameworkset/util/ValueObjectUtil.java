@@ -3074,13 +3074,14 @@ public class ValueObjectUtil {
 				else if(vc1 == float.class
 						|| Float.class.isAssignableFrom(vc1))
 					return floatCompare(((Float)value1).floatValue(),value2);
-				else if(vc1 == short.class
-						|| Short.class.isAssignableFrom(vc1))
-					return shortCompare(((Short)value1).shortValue(),value2);
 				else if(java.util.Date.class.isAssignableFrom(vc1))
 					return dateCompare((java.util.Date)value1,value2);
 				else if(value1 instanceof java.util.Date && value2 instanceof java.util.Date)
-					return ((java.util.Date)value1).compareTo(((java.util.Date)value2));
+					return dateCompare((java.util.Date)value1,(java.util.Date)value2);
+				else if(vc1 == short.class
+						|| Short.class.isAssignableFrom(vc1))
+					return shortCompare(((Short)value1).shortValue(),value2);
+				
 			}
 		}
 		catch(Throwable e)
@@ -3554,7 +3555,7 @@ public class ValueObjectUtil {
 	
 	public static int dateCompare(java.util.Date value1,Object value2)
 	{
-		 SimpleDateFormat format = DataFormatUtil.getSimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		 
 		try {
 			Class vc2 = value2.getClass();
 			if(java.util.Date.class.isAssignableFrom(vc2))
@@ -3564,6 +3565,7 @@ public class ValueObjectUtil {
 			}
 			else if(String.class.isAssignableFrom(vc2))
 			{
+				SimpleDateFormat format = DataFormatUtil.getSimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 				java.util.Date v2 = format.parse((String)value2);
 				return dateCompare(value1,v2);
 			}
@@ -3597,6 +3599,7 @@ public class ValueObjectUtil {
 			}
 			else
 			{
+				SimpleDateFormat format = DataFormatUtil.getSimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 				java.util.Date v2 = format.parse(String.valueOf(value2));
 				return dateCompare(value1,v2);
 			}

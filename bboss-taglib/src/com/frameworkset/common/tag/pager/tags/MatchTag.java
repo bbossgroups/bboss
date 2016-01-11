@@ -476,7 +476,7 @@ public abstract class MatchTag extends BaseValueTag {
 			return false;
 		if(actualValue == null && temp == null)
 			return true;
-		if (actualValue instanceof String && getValue() instanceof String)
+		if (actualValue instanceof String && temp instanceof String)
 		{
 			if(!this.isIgnoreCase())
 			{

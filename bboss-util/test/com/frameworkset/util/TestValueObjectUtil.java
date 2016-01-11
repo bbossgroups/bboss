@@ -18,6 +18,7 @@ package com.frameworkset.util;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import junit.framework.TestCase;
 
@@ -239,11 +240,29 @@ public class TestValueObjectUtil extends TestCase
 		}
 		
 	}
+	
+	
 	@org.junit.Test
 	public void testcast()
 	{
 		Object value = ValueObjectUtil.typeCast(new Boolean(true), Boolean.class, boolean.class);
 		System.out.println(value);
+	}
+	
+
+	@org.junit.Test
+	public void testDateCompare()
+	{
+		Date date = new Date();
+		Timestamp date1 = new Timestamp(date.getTime());
+		int i = ValueObjectUtil.dateCompare(date, date1);
+//		Object value = ValueObjectUtil.typeCast(new Boolean(true), Boolean.class, boolean.class);
+		System.out.println("result:"+i);
+		String v = "sss"+null;
+		System.out.println("result:"+v);
+//		String.class.isInstance((String)null);
+//		v = (String)null+(String)null;
+//		int b = 0+";
 	}
 	
 //	public static void main(String[] args)

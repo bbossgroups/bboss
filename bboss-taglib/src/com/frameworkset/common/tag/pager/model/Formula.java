@@ -1082,8 +1082,8 @@ public class Formula implements ModelObject
         	}
         	
         	Object data = dataSet.getValueOrSize(dataSet.getRowid(),variables[0]);
-            if(data == null)
-                throw new FormulaException("attribute '" + variableName + "' is null!");
+//            if(data == null)
+//                throw new FormulaException("attribute '" + variableName + "' is null!");
             return data;
         }
         else
@@ -1141,7 +1141,8 @@ public class Formula implements ModelObject
                 	t = ValueObjectUtil.getValue(t,variables[i]);
                 	if(t == null)
             		{
-            			 throw new FormulaException("attribute [" + variableName + ">" + variables[i] + "] is null!");
+                		if(i < variables.length - 1)
+                			throw new FormulaException("attribute [" + variableName + ">" + variables[i] + "] is null!");
             		}
                 }
                 if(issize)
@@ -1204,7 +1205,8 @@ public class Formula implements ModelObject
             		t = ValueObjectUtil.getValue(t,variables[i]);
             		if(t == null)
             		{
-            			 throw new FormulaException("attribute [" + variableName + ">" + variables[i] + "] is null!");
+            			if(i < variables.length - 1)
+                			throw new FormulaException("attribute [" + variableName + ">" + variables[i] + "] is null!");
             		}
             	}
             	if(issize)
@@ -1254,27 +1256,30 @@ public class Formula implements ModelObject
         Object left_value = ((Object[])left)[1];
         Object right_value = ((Object[])right)[1];
         int left_type = ((Integer)((Object[])left)[2]).intValue();
-        String temp_l = left_value.toString();
-        String temp_r = right_value.toString();
+//        String temp_l = left_value.toString();
+//        String temp_r = right_value.toString();
         if(left_type == OPT_TYPE_VARIABLE)//如果操作数1是变量计算变量值
         {
-            temp_l = left_value.toString();
+//            temp_l = left_value.toString();
             left_value = evalVariableValue(dataSet,left_value.toString());
-            if(left_value == null)
-                throw new FormulaException("attribute '" + temp_l + "' is null!");
+//            if(left_value == null)
+//                throw new FormulaException("attribute '" + temp_l + "' is null!");
         }
         int right_type = ((Integer)((Object[])right)[2]).intValue();
         if(right_type == OPT_TYPE_VARIABLE)//如果操作数2是变量计算变量值
         {            
             right_value = evalVariableValue(dataSet,right_value.toString());
-            if(right_value == null)
-                throw new FormulaException("attribute '" + temp_r + "' is null!");
+//            if(right_value == null)
+//                throw new FormulaException("attribute '" + temp_r + "' is null!");
         }
-        
-	    if(String.class.isInstance(left_value)  || String.class.isInstance(right_value))
+        if(left_value == null && right_value == null)
+        	return null;
+        boolean lstring = String.class.isInstance(left_value);
+        boolean rstring = String.class.isInstance(right_value);
+	    if(lstring  || rstring)
 	    {
-	        String lv = left_value.toString();        	     
-	        String rv = right_value.toString();        	     
+	        String lv = lstring?(String)left_value:String.valueOf(left_value);        	     
+	        String rv = rstring?(String)right_value:String.valueOf(right_value);       	     
 	        switch(oper)
 	        {
 	        	case CODE_ADD:
@@ -1286,7 +1291,7 @@ public class Formula implements ModelObject
 	        	case CODE_MUL:
 	        	case CODE_POW:
 	        	case CODE_SUB:
-	        	    throw new FormulaException("parameter type error for operation:String type can't be used for add,sub,mul,mod,div,pow![" + temp_l + "],[" + temp_r + "]");
+	        	    throw new FormulaException("parameter type error for operation:String type can't be used for add,sub,mul,mod,div,pow![" + lv + "],[" + rv + "]");
 	        }
 	    }        	    
 	    else if(Float.class.isInstance(left_value)  || Float.class.isInstance(right_value))
@@ -1439,9 +1444,9 @@ public class Formula implements ModelObject
 	    }
 	    
 	    else
-	        throw new FormulaException("parameter type error for add|sub|mul|div|mod operation![" + temp_l + "],[" + temp_r + "]");        	    
+	        throw new FormulaException("parameter type error for add|sub|mul|div|mod operation![" + left_value + "],[" + right_value + "]");        	    
         
-	    throw new FormulaException("parameter type error for add|sub|mul|div|mod operation![" + temp_l + "],[" + temp_r + "]");
+	    throw new FormulaException("parameter type error for add|sub|mul|div|mod operation![" + left_value + "],[" + right_value + "]");
     }
     
     /**
