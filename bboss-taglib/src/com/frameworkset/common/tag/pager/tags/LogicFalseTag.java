@@ -17,6 +17,7 @@ public class LogicFalseTag  extends MatchTag {
 //			return false;
 //	}
 	protected boolean match() {
+		
 		if(actualValue == null )
 			return true;
 		else
@@ -28,6 +29,25 @@ public class LogicFalseTag  extends MatchTag {
 				else if(actualValue instanceof String && actualValue.equals("false"))
 				{
 					return true;
+				}
+				else if(actualValue instanceof Number)
+				{
+					if(actualValue instanceof Integer)
+						return ((Number)actualValue).intValue() <= 0;
+					else if(actualValue instanceof Long)
+						return ((Number)actualValue).longValue() <= 0L;
+					else if(actualValue instanceof Float)
+						return ((Number)actualValue).floatValue() <= 0.0f;
+					else if(actualValue instanceof Double)
+						return ((Number)actualValue).doubleValue() <= 0.0d;
+					else if(actualValue instanceof Short)
+						return ((Number)actualValue).shortValue() <= 0;
+					else if(actualValue instanceof Byte)
+						return ((Number)actualValue).byteValue() <= 0;
+					else
+						return ((Number)actualValue).intValue()<= 0;
+					
+					
 				}
 				else
 					return false;
