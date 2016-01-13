@@ -1278,6 +1278,10 @@ public class Formula implements ModelObject
         boolean rstring = String.class.isInstance(right_value);
 	    if(lstring  || rstring)
 	    {
+	    	if(left_value == null)
+	    		return right_value;
+	    	if(right_value == null)
+	    		return left_value;
 	        String lv = lstring?(String)left_value:String.valueOf(left_value);        	     
 	        String rv = rstring?(String)right_value:String.valueOf(right_value);       	     
 	        switch(oper)

@@ -258,6 +258,8 @@ public class TestValueObjectUtil extends TestCase
 		int i = ValueObjectUtil.dateCompare(date, date1);
 //		Object value = ValueObjectUtil.typeCast(new Boolean(true), Boolean.class, boolean.class);
 		System.out.println("result:"+i);
+		i = date.compareTo(date1);
+		System.out.println("result:"+i);
 		String v = "sss"+null;
 		System.out.println("result:"+v);
 //		String.class.isInstance((String)null);
