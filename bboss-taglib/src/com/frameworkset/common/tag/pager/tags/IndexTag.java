@@ -502,15 +502,32 @@ public final class IndexTag extends PagerTagSupport {
 		select.setName("__max_page_size");
 		if(pagerContext.getContainerid() == null || pagerContext.getContainerid().equals(""))
 		{
-			select.setOnChange("javascript:bboss.pager.__chagePageSize(event,'" + pagerContext.getCookieid() + "','__max_page_size','" +  pagerContext.getTruePageUrl()  + "')");
+			select.setOnChange(new  StringBuilder().append("javascript:bboss.pager.__chagePageSize(event,'").append( pagerContext.getCookieid() ).append( "','__max_page_size','" ).append(  pagerContext.getTruePageUrl()  ).append( "')").toString());
 		}
 		else
 		{
-			select.setOnChange("javascript:bboss.pager.__chagePageSize(event,'" + pagerContext.getCookieid() 
-							+ "','__max_page_size','"
-							+ pagerContext.getTruePageUrl() 
-							+ "','"+ pagerContext.getSelector() 
-							+ "','"+ pagerContext.getContainerid() + "')");
+			if(pagerContext.getSelector() == null || pagerContext.getSelector() .equals(""))
+			{
+				select.setOnChange(new  StringBuilder().append("javascript:bboss.pager.__chagePageSize(event,'")
+						.append( pagerContext.getCookieid() )
+						.append( "','__max_page_size','")
+						.append( pagerContext.getTruePageUrl() )
+						.append( "',null,'")
+						.append( pagerContext.getContainerid() )
+						.append( "')").toString());
+			}
+			else
+			{
+				select.setOnChange(new  StringBuilder().append("javascript:bboss.pager.__chagePageSize(event,'")
+						.append( pagerContext.getCookieid() )
+						.append( "','__max_page_size','")
+						.append( pagerContext.getTruePageUrl() )
+						.append( "','")
+						.append( pagerContext.getSelector() )
+						.append( "','")
+						.append( pagerContext.getContainerid() )
+						.append( "')").toString());
+			}
 		}
 		
 //		Option  option = new Option();
