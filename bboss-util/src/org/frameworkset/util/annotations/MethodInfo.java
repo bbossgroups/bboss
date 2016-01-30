@@ -43,7 +43,6 @@ import org.frameworkset.util.beans.BeansException;
 
 import com.frameworkset.util.BeanUtils;
 import com.frameworkset.util.EditorInf;
-import com.frameworkset.util.SimpleStringUtil;
 import com.frameworkset.util.ValueObjectUtil;
 
 /**
@@ -183,7 +182,13 @@ public class MethodInfo {
 	{
 		return this.responsebody;
 	}
-	
+	public String toString()
+	{
+		if(method != null)
+			return method.toString();
+		else
+			return super.toString();
+	}
 	private MediaType convertMediaType()
 	{
 		MediaType temp = null;
