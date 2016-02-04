@@ -2041,10 +2041,10 @@ public class ValueObjectUtil {
 //					// TODO Auto-generated catch block
 //					e1.printStackTrace();
 				}
-				
-				log.error(e.getMessage(),e);
+				throw new java.lang.IllegalArgumentException(new StringBuilder().append("Date format [").append(dateformat.toPattern()).append("] can not format date : ").append(data_str).toString(),e);
+//				log.error(e.getMessage(),e);
 			}
-			return new java.util.Date(data_str);
+//			return new java.util.Date(data_str);
 		}
 
 		if (toType == java.sql.Date.class) {

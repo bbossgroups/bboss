@@ -204,7 +204,16 @@ public class ClassUtil
 		 */
 		private List<Var> requestParamNameToken;
 		
-		
+		public String toString()
+		{
+			if(this.field != null)
+				return field.toString();
+			if(this.writeMethod != null)
+				return this.writeMethod.toString();
+			if(this.readMethod != null)
+				return this.readMethod.toString();
+			return super.toString();
+		}
 		private boolean oldAccessible = false;
 		private String uperName;
 		public PropertieDescription(Class propertyType,Field field, Method writeMethod,Method readMethod,

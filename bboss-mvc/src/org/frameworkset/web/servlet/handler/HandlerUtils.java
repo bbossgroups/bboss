@@ -783,6 +783,7 @@ public abstract class HandlerUtils {
 							"ValueObjectUtil.typeCast.error",
 							String.valueOf(paramValue), type,
 							error.getMessage());
+					logger.error(new StringBuilder().append(methodInfo.toString() ).append(":").append(error.getMessage()).toString());
 					return ValueObjectUtil.getDefaultValue(type);
 				}
 			} else {
@@ -886,6 +887,8 @@ public abstract class HandlerUtils {
 				model.getErrors().rejectValue(requestParamName,
 						"ValueObjectUtil.typeCast.error",
 						String.valueOf(paramValue), type, error.getMessage());
+				logger.error(new StringBuilder().append(handlerMethod.getMethodInfo().toString() ).append(":").append(error.getMessage()).toString());
+				
 				return ValueObjectUtil.getDefaultValue(type);
 			}
 		}
@@ -1958,6 +1961,8 @@ public abstract class HandlerUtils {
 				model.getErrors().rejectValue(name,
 						"ValueObjectUtil.typeCast.error",
 						String.valueOf(value), type, error.getMessage());
+				logger.error(new StringBuilder().append(property.toString() ).append(":").append(error.getMessage()).toString());
+				
 				return ValueObjectUtil.getDefaultValue(type);
 			}
 
@@ -2192,6 +2197,8 @@ public abstract class HandlerUtils {
 				model.getErrors().rejectValue(name,
 						"ValueObjectUtil.typeCast.error",
 						String.valueOf(value), type, error.getMessage());
+				logger.error(new StringBuilder().append(handlerMethod.getMethodInfo().toString() ).append(":").append(error.getMessage()).toString());
+				
 				return ValueObjectUtil.getDefaultValue(type);
 			}
 
@@ -2495,6 +2502,7 @@ public abstract class HandlerUtils {
 				model.getErrors().rejectValue(name,
 						"ValueObjectUtil.typeCast.error",
 						String.valueOf(value), type, error.getMessage());
+				logger.error(new StringBuilder().append(handlerMethod.getMethodInfo().toString() ).append(":").append(error.getMessage()).toString());
 				return ValueObjectUtil.getDefaultValue(type);
 			}
 
@@ -2762,6 +2770,8 @@ public abstract class HandlerUtils {
 				model.getErrors().rejectValue(name,
 						"ValueObjectUtil.typeCast.error",
 						String.valueOf(value), type, error.getMessage());
+				logger.error(new StringBuilder().append(handlerMethod.getMethodInfo().toString() ).append(":").append(error.getMessage()).toString());
+				
 				return ValueObjectUtil.getDefaultValue(type);
 			}
 
@@ -2978,15 +2988,22 @@ public abstract class HandlerUtils {
 
 	public static Exception raiseMissingParameterException(String paramName,
 			Class paramType) throws Exception {
-		return new IllegalStateException("Missing parameter '" + paramName
-				+ "' of type [" + paramType.getName() + "]");
+		StringBuilder msg = new StringBuilder();
+		msg.append("Missing parameter '").append( paramName).append( "' of type [" ).append( paramType.getName() ).append( "]");
+		String _msg = msg.toString();
+		logger.info(_msg);
+		return new IllegalStateException(_msg);
 	}
 
 	public static Exception raiseMissingParameterException(String paramName,
 			Class paramType, Object paramValue, Throwable e) throws Exception {
-		return new IllegalStateException("Parameter '" + paramName
-				+ "' of type [" + paramType.getName() + "],Error value is ["
-				+ paramValue + "],reason is[" + e.getMessage() + "]");
+		StringBuilder msg = new StringBuilder();
+		msg.append("Parameter '" ).append( paramName
+				).append( "' of type [" ).append( paramType.getName() ).append( "],Error value is ["
+						).append( paramValue ).append( "],reason is[" ).append( e.getMessage() ).append( "]");
+		String _msg = msg.toString();
+		
+		return new IllegalStateException(_msg);
 	}
 
 	/**
