@@ -1066,7 +1066,7 @@ public class NodeHelper  implements Serializable
                 }
                 
                 buffer
-                .append("<div id=\"div_")
+                .append("<div style=\"height:16px;margin:0;padding:0;\" id=\"div_")
                 .append(this.element.getId())
                 .append("\">")
 
@@ -1106,7 +1106,7 @@ public class NodeHelper  implements Serializable
                 }
                 
                 buffer
-                .append("<div id=\"div_")
+                .append("<div style=\"height:16px;margin:0;padding:0;\"  id=\"div_")
                 .append(this.element.getId())
                 .append("\">")
 
@@ -1220,8 +1220,9 @@ public class NodeHelper  implements Serializable
 			}
 			else
 			{
-				indent.append("<img src=\"").append(getBlankSpace()).append(
-						"\">");
+//				indent.append("<img src=\"").append(getBlankSpace()).append(
+//						"\">");
+				indent.append("&nbsp;&nbsp;");
 			}
 		}
 		indent.append("</td>");
