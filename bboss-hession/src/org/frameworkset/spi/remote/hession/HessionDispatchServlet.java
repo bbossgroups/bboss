@@ -73,9 +73,15 @@ public class HessionDispatchServlet extends GenericServlet {
 			if(handler != null)
 				handler.invoke(req, res);
 		}
-		
+		catch (HessionException e) {
+			res.setStatus(500, "Hessian Requires POST");
+			PrintWriter out = res.getWriter();
+
+			res.setContentType("text/html");
+			out.println("<h1>"+e.getMessage()+"</h1>");
+		} 
 		catch (RuntimeException e) {
-			throw e;
+			throw new ServletException(e);
 		} 
 		catch (Exception e) {
 			throw new ServletException(e);
@@ -89,7 +95,13 @@ public class HessionDispatchServlet extends GenericServlet {
 	@Override
 	public void init(ServletConfig config) throws ServletException {
 		super.init(config);
-		this.hessianHandlerFactory = new HessianHandlerFactory();
+//		restful
+		String _restful = config.getInitParameter("restful");
+		boolean restful = _restful == null?false:_restful.equals("true")?true:false;
+		if(!restful)
+			this.hessianHandlerFactory = new HessianHandlerFactory();
+		else
+			this.hessianHandlerFactory = new RestfulHessianHandlerFactory();
 	}
 
 }

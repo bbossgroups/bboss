@@ -82,6 +82,12 @@ public class HessianHandlerFactory {
 		}
 		return null;
 	}
+	
+	protected String getServiceName(HttpServletRequest request,HttpServletResponse response)
+	{
+		String service=request.getParameter("service");
+		return service;
+	}
 	/**
 	 * http://localhost/hession?container=xx.xx.xx&service=ss
 	 * @param request
@@ -93,11 +99,11 @@ public class HessianHandlerFactory {
 	{
 		String container=request.getParameter("container");
 		String containtype=request.getParameter("containertype");
-		String service=request.getParameter("service");
+		String service=getServiceName(  request,  response);
 		
 		if(service == null || "".equals(service))
 		{
-			throw new Exception("lookup hession service failed:serviceid is null");
+			throw new HessionException("lookup hession service failed:serviceid is null");
 		}
 		
 		HessianHanderContainer hessiancontainer = null;
@@ -173,7 +179,7 @@ public class HessianHandlerFactory {
 		
 		if(hessiancontainer  == null )
 		{
-			throw new Exception("lookup hession service["+service+"] failed:hessian handler container[container="+container+",containtype=" +containtype + "] is null");
+			throw new HessionException("lookup hession service["+service+"] failed:hessian handler container[container="+container+",containtype=" +containtype + "] is null");
 		}
 		return hessiancontainer.getHessionHandler(service);
 	}
