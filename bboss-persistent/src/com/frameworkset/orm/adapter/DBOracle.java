@@ -489,7 +489,7 @@ public class DBOracle extends DB
     		ret = new StringBuilder("select ss1.* from (select tt1.*,rownum rowno_ from (").append(sql).append(
                   ") tt1 where rownum <= ").append((offset + maxsize)).append(") ss1 where ss1.rowno_ >= ").append(
                   (offset + 1));
-        return new PagineSql(ret.toString(),offset + maxsize,offset + 1,offset, maxsize, prepared);
+        return new PagineSql(ret.toString(),offset + maxsize,offset + 1,offset, maxsize, prepared).setRebuilded(true);
     }
     
     public String getStringPagineSql(String sql)
