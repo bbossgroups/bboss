@@ -1202,16 +1202,19 @@ public class NodeHelper  implements Serializable
 	{
 		Iterator indentationProfileIterator = element.getIndendationProfile()
 				.iterator();
+		
 		// StringBuilder indent = new StringBuilder();
 		indent.append("<td nowrap>");
 		if (!itree.isDynamic() && this.element.getNode().hasChildren())
 			this.indent = new StringBuilder();
 		 
-		
+//		boolean preisVerticalLineIndentationType = true;
+//		int i = 0;
 		while (indentationProfileIterator.hasNext())
 		{
 			boolean isVerticalLineIndentationType = !((Boolean) indentationProfileIterator
 					.next()).booleanValue();
+			
 			if (this.indent != null)
 				this.indent.append(!isVerticalLineIndentationType ? "1" : "0");
 			if (isVerticalLineIndentationType)
@@ -1224,8 +1227,16 @@ public class NodeHelper  implements Serializable
 			{
 //				indent.append("<img src=\"").append(getBlankSpace()).append(
 //						"\">");
-				indent.append("&nbsp;&nbsp;");
+//				if(!preisVerticalLineIndentationType) 
+					indent.append("&nbsp;&nbsp;");
+//				else
+//				{
+//					indent.append("&nbsp;&nbsp;");
+//				}
 			}
+//			if(i > 0)
+//				preisVerticalLineIndentationType = isVerticalLineIndentationType;
+//			i ++;
 		}
 //		if( parentlastcollapase)
 //			indent.append("&nbsp;&nbsp;&nbsp;&nbsp;");

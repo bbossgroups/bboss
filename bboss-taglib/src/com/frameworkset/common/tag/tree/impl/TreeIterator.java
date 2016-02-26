@@ -31,7 +31,6 @@
  */
 package com.frameworkset.common.tag.tree.impl;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -40,7 +39,7 @@ import com.frameworkset.common.tag.tree.itf.ITree;
 import com.frameworkset.common.tag.tree.itf.ITreeIteratorElement;
 import com.frameworkset.common.tag.tree.itf.ITreeNode;
 
-public class TreeIterator implements Iterator, Serializable{   
+public class TreeIterator implements Iterator{   
 
     private class TreeNodeStack{
 
@@ -190,7 +189,13 @@ public class TreeIterator implements Iterator, Serializable{
         List indentationProfile = copyIndentationProfile(element);
 	
         indentationProfile.add(new Boolean(element.isLastChild()));
-
+        if(element.isLastChild())
+        {
+        	
+        		indentationProfile.add(new Boolean(true));
+        		indentationProfile.add(new Boolean(true));
+        	
+        }
         List children           = element.getNode().getChildren();
         for(int i=0; i < children.size(); i++){
             ITreeNode node = (ITreeNode) children.get(children.size()-i-1);
