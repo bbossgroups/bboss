@@ -33,6 +33,8 @@ import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.frameworkset.common.tag.tree.impl.TreeIterator;
+
 /**
  * 
  * <p>Title: com.frameworkset.common.tag.tree.itf.ITree.java</p>
@@ -237,7 +239,7 @@ public interface ITree extends ActiveTree {
      *          iterator. False if you want to exclude the root node.
      * @return An iterator containing ITreeIteratorElements wrapping the nodes in the tree.
      */
-    public Iterator  iterator(boolean includeRootNode);
+    public TreeIterator  iterator(boolean includeRootNode);
     
     public void buildContextMenusWraper();
     
@@ -265,7 +267,7 @@ public interface ITree extends ActiveTree {
 	
 	public void setMode(String mode);
 
-	public Iterator iterator(String parent_indent);
+	public TreeIterator iterator(String parent_indent);
 	
 	/**
 	 * 为复选框定义的一组函数

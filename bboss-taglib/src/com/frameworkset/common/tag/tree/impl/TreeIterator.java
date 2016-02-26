@@ -76,6 +76,8 @@ public class TreeIterator implements Iterator, Serializable{
      */
     protected String parent_indent					= "";
     
+    protected ITreeIteratorElement         rootElement            = null;
+    
     
 
     public TreeIterator (ITree tree, boolean includeRootNode){
@@ -155,6 +157,7 @@ public class TreeIterator implements Iterator, Serializable{
 	                , tree.isSelected(current.getId())
 	                , current.getLeftNode() == null, current.getRightNode() == null
 	                );
+        	rootElement = element;
             pushChildren(element);
             
 	        
@@ -211,4 +214,8 @@ public class TreeIterator implements Iterator, Serializable{
         }
         return copy;
     }
+
+	public ITreeIteratorElement getRootElement() {
+		return rootElement;
+	}
 }

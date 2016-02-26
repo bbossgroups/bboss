@@ -73,7 +73,7 @@ public class TreeTag extends ContextMenuTag {
 	protected String node = null;
 	protected String level = null;
 	protected String expanded = null;
-	protected Iterator treeIterator = null;
+	protected TreeIterator treeIterator = null;
 	protected String expandParam = null;
 	protected String collapseParam = null;
 	protected String selectParam = null;
@@ -769,10 +769,11 @@ public class TreeTag extends ContextMenuTag {
 		if(sonids == null) sonids = "";
 
         boolean needroot = this.getIncludeRootNode().equals("true") ;
+        boolean lastcollapase = itree.getCurExpanded() != null && itree.getCurExpanded().hasChildren() && treeIterator.getRootElement() != null && treeIterator.getRootElement().isLastChild();
 		while (this.treeIterator.hasNext()) {
 			ITreeIteratorElement node =
 				(ITreeIteratorElement) this.treeIterator.next();
-			NodeHelper helper = new NodeHelper(node, request,sonids);
+			NodeHelper helper = new NodeHelper( node, lastcollapase,request,sonids);
             /**
              * 设置复选框选中时是否递归选中
              */

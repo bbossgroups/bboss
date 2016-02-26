@@ -493,11 +493,11 @@ public abstract class Tree extends ContextMenuImpl implements ITree,java.io.Seri
         this.unselectListeners.remove(unselectListener);
     }
 
-    public Iterator iterator(boolean includeRootNode) {
+    public TreeIterator iterator(boolean includeRootNode) {
         return new TreeIterator(this, includeRootNode);
     }
     
-    public Iterator iterator(String parentIndent) {
+    public TreeIterator iterator(String parentIndent) {
         return new TreeIterator(this, parentIndent);
     }
     

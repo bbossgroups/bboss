@@ -211,8 +211,8 @@ public class NodeHelper  implements Serializable
 
 	private String nodeEventLink = null;
 	private String sonids;
-
-	public NodeHelper(ITreeIteratorElement element, HttpServletRequest request,String sonids)
+	private boolean parentlastcollapase;
+	public NodeHelper(ITreeIteratorElement element,boolean parentlastcollapase, HttpServletRequest request,String sonids)
 	{
 		this.element = element;
 		this.expanded = element.isExpanded();
@@ -228,6 +228,7 @@ public class NodeHelper  implements Serializable
 		this.nodeClickLink = null;
 		this.nodeEventLink = null;
 		this.sonids = sonids; 
+		this.parentlastcollapase = parentlastcollapase; 
 	}
 
 	public void setCollapse(boolean isCollapse)
@@ -1194,7 +1195,6 @@ public class NodeHelper  implements Serializable
     {
         return node.getRightNode() == null;
     }
-
 	/**
 	 * 获取节点的缩排格式
 	 */
@@ -1206,6 +1206,8 @@ public class NodeHelper  implements Serializable
 		indent.append("<td nowrap>");
 		if (!itree.isDynamic() && this.element.getNode().hasChildren())
 			this.indent = new StringBuilder();
+		 
+		
 		while (indentationProfileIterator.hasNext())
 		{
 			boolean isVerticalLineIndentationType = !((Boolean) indentationProfileIterator
@@ -1225,6 +1227,8 @@ public class NodeHelper  implements Serializable
 				indent.append("&nbsp;&nbsp;");
 			}
 		}
+//		if( parentlastcollapase)
+//			indent.append("&nbsp;&nbsp;&nbsp;&nbsp;");
 		indent.append("</td>");
 		// return indent.toString();
 
@@ -1411,7 +1415,8 @@ public class NodeHelper  implements Serializable
         }
         
          
-		ret.append("<input type='checkbox' name='").append(checkBox).append(
+		ret.append("<input type='checkbox' id='").append(checkBox).append(
+				"' name='").append(checkBox).append(
 				"' value='");
 
 		if (value == null)
@@ -1559,7 +1564,8 @@ public class NodeHelper  implements Serializable
 			checked = "checked";
 
 		StringBuilder ret = new StringBuilder();
-		ret.append("<input type='radio' name='").append(radio).append(
+		ret.append("<input type='radio' id='").append(radio).append(
+				"' name='").append(radio).append(
 				"' value='");
 
 		if (value == null)
