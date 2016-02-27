@@ -10,7 +10,7 @@ import org.apache.log4j.Logger;
 import com.frameworkset.util.DaemonThread;
 import com.frameworkset.util.FileUtil;
 import com.frameworkset.util.ResourceInitial;
-import com.frameworkset.util.StringUtil;
+import com.frameworkset.util.SimpleStringUtil;
 import com.frameworkset.util.UUIDResource;
 
 public class FileContentCache  
@@ -48,11 +48,11 @@ public class FileContentCache
 		try
 		{
 			if(encodeType == HTMLNoBREncode)
-				content = StringUtil.HTMLNoBREncode(FileUtil.getFileContent(path,charset));
+				content = SimpleStringUtil.HTMLNoBREncode(FileUtil.getFileContent(path,charset));
 			else if(encodeType == HTMLEncode)
-				content = StringUtil.HTMLEncode(FileUtil.getFileContent(path,charset));
+				content = SimpleStringUtil.HTMLEncode(FileUtil.getFileContent(path,charset));
 			else  if(encodeType == HTMLEncodej)
-				content = StringUtil.HTMLEncodej(FileUtil.getFileContent(path,charset));
+				content = SimpleStringUtil.HTMLEncodej(FileUtil.getFileContent(path,charset));
 			else				
 				content = FileUtil.getFileContent(path,charset);
 		}
