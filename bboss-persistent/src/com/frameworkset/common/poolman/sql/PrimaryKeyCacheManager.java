@@ -73,6 +73,29 @@ public class PrimaryKeyCacheManager {
     		primaryKeyCaches = null;
     	}
     }
+    
+    public static void  reset()
+    {
+    	if(self != null)
+    	{
+    		self._reset();
+    		 
+    	}
+    }
+    void _reset()
+    {
+    	if(primaryKeyCaches != null)
+    	{
+    		Iterator<Entry<String, PrimaryKeyCache>> it = primaryKeyCaches.entrySet().iterator();
+    		while(it.hasNext())
+    		{
+    			Entry<String, PrimaryKeyCache> entry = it.next();
+    			entry.getValue().reset();
+    		}
+//    		primaryKeyCaches.clear();
+//    		primaryKeyCaches = null;
+    	}
+    }
     private static PrimaryKeyCacheManager self;
 
     private PrimaryKeyCacheManager()

@@ -160,5 +160,14 @@ public class PrimaryKeyCache {
 		}
 		
 	}
+	
+	public void reset() {
+		if(id_tables != null)
+		{
+			id_tables.clear();
+//			id_tables = null;
+		}
+		
+	}
 
 }

@@ -3441,6 +3441,13 @@ public class DBUtil extends SQLUtil implements Serializable {
 			throws SQLException {
 		return getNextPrimaryKey(null, dbName, tableName);
 	}
+	/**
+	 * 重置主键生成机制信息缓存
+	 */
+	public static void resetPrimaryKeyCache()
+	{
+		PrimaryKeyCacheManager.reset();
+	}
 
 	/**
 	 * 获取数据库表的下一个主键值
