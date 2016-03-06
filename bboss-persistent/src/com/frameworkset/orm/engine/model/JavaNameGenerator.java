@@ -226,12 +226,15 @@ public class JavaNameGenerator implements NameGenerator
         StringTokenizer tok = new StringTokenizer
             (schemaName, String.valueOf(STD_SEPARATOR_CHAR));
         boolean first = true;
+        String firstNamepart = null;
         while (tok.hasMoreTokens())
-        {        	
+        {        
+        	
         	if(first && IGNORE_FIRST_TOKEN)
         	{
+        		firstNamepart = (String) tok.nextElement();
         		first =false;
-        		tok.nextElement();
+        		
         		continue;
         	}
             String namePart = (String) tok.nextElement();
@@ -242,7 +245,10 @@ public class JavaNameGenerator implements NameGenerator
 
         // remove the SCHEMA_SEPARATOR_CHARs and capitalize 
         // the tokens
-        schemaName = name.toString();
+        if(name.length() > 0 )
+        	schemaName = name.toString();
+        else if(IGNORE_FIRST_TOKEN && firstNamepart != null)
+        	schemaName = firstNamepart;
         name = new StringBuffer();
         
         tok = new StringTokenizer
