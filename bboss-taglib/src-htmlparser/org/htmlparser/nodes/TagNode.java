@@ -26,10 +26,13 @@
 
 package org.htmlparser.nodes;
 
-import java.util.Enumeration;
-import java.util.Hashtable;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Locale;
-import java.util.Vector;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.htmlparser.Attribute;
 import org.htmlparser.Tag;
@@ -74,15 +77,15 @@ public class TagNode
      * The first element is the tag name, subsequent elements being either
      * whitespace or real attributes.
      */
-    protected Vector mAttributes;
+    protected List mAttributes;
 
     /**
      * Set of tags that breaks the flow.
      */
-    protected static Hashtable breakTags;
+    protected static HashMap breakTags;
     static
     {
-        breakTags = new Hashtable (30);
+        breakTags = new HashMap (30);
         breakTags.put ("BLOCKQUOTE", Boolean.TRUE);
         breakTags.put ("BODY", Boolean.TRUE);
         breakTags.put ("BR", Boolean.TRUE);
@@ -120,7 +123,7 @@ public class TagNode
      */
     public TagNode ()
     {
-        this (null, -1, -1, new Vector ());
+        this (null, -1, -1, new ArrayList ());
     }
 
     /**
@@ -131,7 +134,7 @@ public class TagNode
      * @param attributes The list of attributes that were parsed in this tag.
      * @see Attribute
      */
-    public TagNode (Page page, int start, int end, Vector attributes)
+    public TagNode (Page page, int start, int end, List attributes)
     {
         super (page, start, end);
 
@@ -174,7 +177,7 @@ public class TagNode
         ret = null;
 
         if (name.equalsIgnoreCase (SpecialHashtable.TAGNAME))
-            ret = ((Attribute)getAttributesEx ().elementAt (0)).getName ();
+            ret = ((Attribute)getAttributesEx ().get (0)).getName ();
         else
         {
             attribute = getAttributeEx (name);
@@ -291,7 +294,7 @@ public class TagNode
      */
     public Attribute getAttributeEx (String name)
     {
-        Vector attributes;
+        List attributes;
         int size;
         Attribute attribute;
         String string;
@@ -305,7 +308,7 @@ public class TagNode
             size = attributes.size ();
             for (int i = 0; i < size; i++)
             {
-                attribute = (Attribute)attributes.elementAt (i);
+                attribute = (Attribute)attributes.get (i);
                 string = attribute.getName ();
                 if ((null != string) && name.equalsIgnoreCase (string))
                 {
@@ -337,7 +340,7 @@ public class TagNode
     public void setAttribute (Attribute attribute)
     {
         boolean replaced;
-        Vector attributes;
+        List attributes;
         int length;
         String name;
         Attribute test;
@@ -351,12 +354,12 @@ public class TagNode
             name = attribute.getName ();
             for (int i = 1; i < attributes.size (); i++)
             {
-                test = (Attribute)attributes.elementAt (i);
+                test = (Attribute)attributes.get (i);
                 test_name = test.getName ();
                 if (null != test_name)
                     if (test_name.equalsIgnoreCase (name))
                     {
-                        attributes.setElementAt (attribute, i);
+                        attributes.set (i,attribute);
                         replaced = true;
                     }
             }
@@ -364,9 +367,9 @@ public class TagNode
         if (!replaced)
         {
             // add whitespace between attributes
-            if ((0 != length) && !((Attribute)attributes.elementAt (length - 1)).isWhitespace ())
-                attributes.addElement (new Attribute (" "));
-            attributes.addElement (attribute);
+            if ((0 != length) && !((Attribute)attributes.get (length - 1)).isWhitespace ())
+                attributes.add (new Attribute (" "));
+            attributes.add (attribute);
         }
     }
 
@@ -376,7 +379,7 @@ public class TagNode
      * The first element is the tag name, subsequent elements being either
      * whitespace or real attributes.
      */
-    public Vector getAttributesEx ()
+    public List getAttributesEx ()
     {
         return (mAttributes);
     }
@@ -395,24 +398,24 @@ public class TagNode
      * a key of SpecialHashtable.TAGNAME ("$<TAGNAME>$") holds the tag name.
      * The conversion to uppercase is performed with an ENGLISH locale.
      */
-    public Hashtable getAttributes ()
+    public HashMap getAttributes ()
     {
-        Vector attributes;
+        List attributes;
         Attribute attribute;
         String value;
-        Hashtable ret;
+        HashMap ret;
 
         ret = new SpecialHashtable ();
         attributes = getAttributesEx ();
         if (0 < attributes.size ())
         {
             // special handling for the node name
-            attribute = (Attribute)attributes.elementAt (0);
+            attribute = (Attribute)attributes.get(0);
             ret.put (SpecialHashtable.TAGNAME, attribute.getName ().toUpperCase (Locale.ENGLISH));
             // the rest
             for (int i = 1; i < attributes.size (); i++)
             {
-                attribute = (Attribute)attributes.elementAt (i);
+                attribute = (Attribute)attributes.get (i);
                 if (!attribute.isWhitespace ())
                 {
                     value = attribute.getValue ();
@@ -467,14 +470,14 @@ public class TagNode
      */
     public String getRawTagName ()
     {
-        Vector attributes;
+        List attributes;
         String ret;
 
         ret = null;
         
         attributes = getAttributesEx ();
         if (0 != attributes.size ())
-            ret = ((Attribute)attributes.elementAt (0)).getName ();
+            ret = ((Attribute)attributes.get (0)).getName ();
 
         return (ret);
     }
@@ -482,33 +485,33 @@ public class TagNode
     /**
      * Set the name of this tag.
      * This creates or replaces the first attribute of the tag (the
-     * zeroth element of the attribute vector).
+     * zeroth element of the attribute List).
      * @param name The tag name.
      */
     public void setTagName (String name)
     {
         Attribute attribute;
-        Vector attributes;
+        List attributes;
         Attribute zeroth;
 
         attribute = new Attribute (name, null, (char)0);
         attributes = getAttributesEx ();
         if (null == attributes)
         {
-            attributes = new Vector ();
+            attributes = new ArrayList ();
             setAttributesEx (attributes);
         }
         if (0 == attributes.size ())
             // nothing added yet
-            attributes.addElement (attribute);
+            attributes.add (attribute);
         else
         {
-            zeroth = (Attribute)attributes.elementAt (0);
+            zeroth = (Attribute)attributes.get (0);
             // check for attribute that looks like a name
             if ((null == zeroth.getValue ()) && (0 == zeroth.getQuote ()))
-                attributes.setElementAt (attribute, 0);
+                attributes.set(0,attribute);
             else
-                attributes.insertElementAt (attribute, 0);
+                attributes.add(0,attribute);
         }
     }
 
@@ -532,19 +535,20 @@ public class TagNode
      * sets the tag name.
      * @param attributes The attribute collection to set.
      */
-    public void setAttributes (Hashtable attributes)
+    public void setAttributes (HashMap attributes)
     {
-        Vector att;
+        List att;
         String key;
         String value;
         char quote;
         Attribute attribute;
 
-        att = new Vector ();
-        for (Enumeration e = attributes.keys (); e.hasMoreElements (); )
+        att = new ArrayList ();
+        for (Iterator e = attributes.entrySet().iterator(); e.hasNext(); )
         {
-            key = (String)e.nextElement ();
-            value = (String)attributes.get (key);
+        	Map.Entry entry = (Entry) e.next();
+            key = (String)entry.getKey();
+            value = (String)entry.getValue();
             if (value.startsWith ("'") && value.endsWith ("'") && (2 <= value.length ()))
             {
                 quote = '\'';
@@ -560,15 +564,15 @@ public class TagNode
             if (key.equals (SpecialHashtable.TAGNAME))
             {
                 attribute = new Attribute (value, null, quote);
-                att.insertElementAt (attribute, 0);
+                att.add(0, attribute);
             }
             else
             {
                 // add whitespace between attributes
                 attribute = new Attribute (" ");
-                att.addElement (attribute);
+                att.add (attribute);
                 attribute = new Attribute (key, value, quote);
-                att.addElement (attribute);
+                att.add (attribute);
             }
         }
         this.mAttributes = att;
@@ -581,7 +585,7 @@ public class TagNode
      * and the second element being the value.
      * @param attribs The attribute collection to set.
      */
-    public void setAttributesEx (Vector attribs)
+    public void setAttributesEx (List attribs)
     {
         mAttributes = attribs;
     }
@@ -666,7 +670,7 @@ public class TagNode
     {
         int length;
         int size;
-        Vector attributes;
+        List attributes;
         Attribute attribute;
         StringBuffer ret;
 
@@ -675,14 +679,14 @@ public class TagNode
         size = attributes.size ();
         for (int i = 0; i < size; i++)
         {
-            attribute = (Attribute)attributes.elementAt (i);
+            attribute = (Attribute)attributes.get (i);
             length += attribute.getLength ();
         }
         ret = new StringBuffer (length);
         ret.append ("<");
         for (int i = 0; i < size; i++)
         {
-            attribute = (Attribute)attributes.elementAt (i);
+            attribute = (Attribute)attributes.get (i);
             attribute.toString (ret);
         }
         ret.append (">");
@@ -743,7 +747,7 @@ public class TagNode
      * @return Hashtable
      * @deprecated This method is deprecated. Use getAttributes() instead.
      */
-    public Hashtable getParsed ()
+    public HashMap getParsed ()
     {
         return getAttributes ();
     }
@@ -768,7 +772,7 @@ public class TagNode
      */
     public boolean isEmptyXmlTag ()
     {
-        Vector attributes;
+        List attributes;
         int size;
         Attribute attribute;
         String name;
@@ -781,7 +785,7 @@ public class TagNode
         size = attributes.size ();
         if (0 < size)
         {
-            attribute = (Attribute)attributes.elementAt (size - 1);
+            attribute = (Attribute)attributes.get (size - 1);
             name = attribute.getName ();
             if (null != name)
             {
@@ -801,7 +805,7 @@ public class TagNode
      */
     public void setEmptyXmlTag (boolean emptyXmlTag)
     {
-        Vector attributes;
+        List attributes;
         int size;
         Attribute attribute;
         String name;
@@ -812,7 +816,7 @@ public class TagNode
         size = attributes.size ();
         if (0 < size)
         {
-            attribute = (Attribute)attributes.elementAt (size - 1);
+            attribute = (Attribute)attributes.get (size - 1);
             name = attribute.getName ();
             if (null != name)
             {
@@ -824,7 +828,7 @@ public class TagNode
                         // already exists, remove if requested
                         if (!emptyXmlTag)
                             if (1 == length)
-                                attributes.removeElementAt (size - 1);
+                                attributes.remove (size - 1);
                             else
                             {
                                 // this shouldn't happen, but covers the case
@@ -832,8 +836,8 @@ public class TagNode
                                 // from the previous attribute
                                 name = name.substring (0, length - 1);
                                 attribute = new Attribute (name, null);
-                                attributes.removeElementAt (size - 1);
-                                attributes.addElement (attribute);
+                                attributes.remove(size - 1);
+                                attributes.add (attribute);
                             }
                     }
                     else
@@ -842,9 +846,9 @@ public class TagNode
                         if (emptyXmlTag)
                         {
                             attribute = new Attribute (" ");
-                            attributes.addElement (attribute);
+                            attributes.add (attribute);
                             attribute = new Attribute ("/", null);
-                            attributes.addElement (attribute);
+                            attributes.add (attribute);
                         }
                     }
                 else
@@ -853,9 +857,9 @@ public class TagNode
                     if (emptyXmlTag)
                     {
                         attribute = new Attribute (" ");
-                        attributes.addElement (attribute);
+                        attributes.add (attribute);
                         attribute = new Attribute ("/", null);
-                        attributes.addElement (attribute);
+                        attributes.add (attribute);
                     }
                 }
             }
@@ -865,7 +869,7 @@ public class TagNode
                 if (emptyXmlTag)
                 {
                     attribute = new Attribute ("/", null);
-                    attributes.addElement (attribute);
+                    attributes.add (attribute);
                 }
             }
         }
@@ -874,7 +878,7 @@ public class TagNode
             if (emptyXmlTag)
             {
                 attribute = new Attribute ("/", null);
-                attributes.addElement (attribute);
+                attributes.add (attribute);
             }
     }
 

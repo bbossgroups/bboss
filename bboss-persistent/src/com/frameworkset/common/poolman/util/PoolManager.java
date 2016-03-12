@@ -16,9 +16,10 @@
 package com.frameworkset.common.poolman.util;
 
 import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.Hashtable;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 
@@ -33,12 +34,12 @@ import com.frameworkset.common.poolman.sql.PrimaryKeyCacheManager;
 public class PoolManager  {
 	private static Logger log = Logger.getLogger(PoolManager.class);
 
-    protected Hashtable pools;
+    protected HashMap pools;
     protected List<String> poolnames;
     protected JDBCPool defaultpool;
 
     protected PoolManager() {
-        this.pools = new Hashtable(1);
+        this.pools = new HashMap(1);
         this.defaultpool = null;
         poolnames = new ArrayList<String>();
     }
@@ -47,9 +48,9 @@ public class PoolManager  {
      * @return
      * @deprecated use method public List<String> getAllPoolNames()
      */
-    public Enumeration getAllPoolnames() {
-        return pools.keys();
-    }
+//    public Enumeration getAllPoolnames() {
+//        return pools.keys();
+//    }
     
     public List<String> getAllPoolNames() {
         
@@ -186,9 +187,9 @@ public class PoolManager  {
 
     public void destroyPools() {
         if (this.pools != null) {
-            for (Enumeration enum_ = pools.keys(); enum_.hasMoreElements();) {
-                Object key = enum_.nextElement();
-                JDBCPool pool = (JDBCPool) pools.get(key);
+            for (Iterator enum_ = pools.entrySet().iterator(); enum_.hasNext();) {
+            	Map.Entry entry = (Map.Entry)enum_.next();
+                JDBCPool pool = (JDBCPool) entry.getValue();
                 try {
 					pool.closeAllResources();
 				} catch (Exception e) {

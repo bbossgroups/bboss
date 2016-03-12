@@ -32,7 +32,8 @@ import java.sql.Types;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Enumeration;
-import java.util.Hashtable;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -260,12 +261,12 @@ public class SQLUtil{
 	}
 
 	/** Simply executes executeSql(sql, true). */
-	public Hashtable[] executeSql(String sql) throws SQLException {
+	public HashMap[] executeSql(String sql) throws SQLException {
 		return executeSql(null, sql,null);
 	}
 	
 	/** Simply executes executeSql(sql, true). */
-	public Hashtable[] executeSql(String sql,Connection con) throws SQLException {
+	public HashMap[] executeSql(String sql,Connection con) throws SQLException {
 		return executeSql(null, sql,con);
 	}
 
@@ -274,7 +275,7 @@ public class SQLUtil{
 	 * called a SQLResult.
 	 * @deprecated 不建议使用
 	 */
-	protected SQLResult makeResult(Hashtable[] h) throws SQLException {
+	protected SQLResult makeResult(HashMap[] h) throws SQLException {
 		return new SQLResult(h);
 	}
 
@@ -412,16 +413,39 @@ public class SQLUtil{
 	public static Set getPrimaryKeyMetaDatas(String tableName) {
 		return getPool(null).getPrimaryKeyMetaDatas(tableName);
 	}
+	public static class PEnumeration<E> implements Enumeration<E>
+	{
+		private Iterator<E> it;
+		public PEnumeration(Iterator<E> it)
+		{
+			this.it = it;
+		}
+		@Override
+		public boolean hasMoreElements() {
+			// TODO Auto-generated method stub
+			return it.hasNext();
+		}
 
-	/**
-	 * Get a Vector containing all the names of the database pools currently in
-	 * use.
-	 */
+		@Override
+		public E nextElement() {
+			// TODO Auto-generated method stub
+			return it.next();
+		}
+		
+	}
+//
+//	/**
+//	 * Get a Vector containing all the names of the database pools currently in
+//	 * use.
+//	 */
 	public Enumeration getAllPoolnames() {
 		SQLManager datab = getSQLManager();
 		if (datab == null)
 			return null;
-		return datab.getAllPoolnames();
+		List ps = datab.getAllPoolNames();
+		if(ps == null)
+			return null;
+		return new PEnumeration(ps.iterator());
 	}
     /**
      * Get a Vector containing all the names of the database pools currently in
@@ -494,7 +518,7 @@ public class SQLUtil{
 	}
 
 	// /** This method is called by the cache thread in SQLCache. */
-	// public Hashtable[] doJDBC(String dbname, String sql, boolean goNative)
+	// public HashMap[] doJDBC(String dbname, String sql, boolean goNative)
 	// throws SQLException {
 	//
 	// SQLManager datab = getSQLManager();
@@ -511,9 +535,9 @@ public class SQLUtil{
 	// return doJDBC(dbname, sql, con, goNative);
 	// }
 
-	// /** Executes a statement and returns results in the form of a Hashtable
+	// /** Executes a statement and returns results in the form of a HashMap
 	// array. */
-	// protected Hashtable[] doJDBC(String dbname, String sql, Connection con)
+	// protected HashMap[] doJDBC(String dbname, String sql, Connection con)
 	// throws SQLException {
 	// return doJDBC(dbname, sql, con, false);
 	// }
@@ -571,7 +595,7 @@ public class SQLUtil{
 				log.debug("Execute JDBC statement:"+stmtInfo.getSql());
 			}
 			boolean hasResult = s.execute(stmtInfo.getSql());
-//			results = new DBHashtable[10];
+//			results = new HashMaple[10];
 			if(hasResult)
 			{
 				res = s.getResultSet();
@@ -700,7 +724,7 @@ public class SQLUtil{
 	
 
 	/**
-	 * Executes a statement and returns results in the form of a Hashtable
+	 * Executes a statement and returns results in the form of a HashMap
 	 * array.
 	 */
 	protected Record[] doJDBC(String dbname_, String sql_, boolean goNative_,Connection con_)
@@ -1474,7 +1498,7 @@ public class SQLUtil{
  * @author biaoping.yin
  * @version 1.0
  */
-	public static class DBHashtable extends Hashtable implements java.util.Map
+	public static class DBHashtable extends HashMap
 	{
 
 		public DBHashtable(int i) {

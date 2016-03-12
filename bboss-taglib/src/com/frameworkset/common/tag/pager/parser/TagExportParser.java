@@ -34,13 +34,13 @@ package com.frameworkset.common.tag.pager.parser;
 
 import java.io.Serializable;
 import java.io.StringReader;
-import java.util.Hashtable;
+import java.util.HashMap;
 
 public class TagExportParser implements TagExportParserConstants, Serializable {
 
-        private static Hashtable pagerTagExportCache = new Hashtable();
-        private static Hashtable indexTagExportCache = new Hashtable();
-        private static Hashtable pageTagExportCache = new Hashtable();
+        private static HashMap pagerTagExportCache = new HashMap();
+        private static HashMap indexTagExportCache = new HashMap();
+        private static HashMap pageTagExportCache = new HashMap();
 
         public static PagerTagExport parsePagerTagExport(String expression)
                 throws ParseException
@@ -697,12 +697,12 @@ public class TagExportParser implements TagExportParserConstants, Serializable {
       return (jj_ntk = jj_nt.kind);
   }
 
-  private java.util.Vector jj_expentries = new java.util.Vector();
+  private java.util.List jj_expentries = new java.util.ArrayList();
   private int[] jj_expentry;
   private int jj_kind = -1;
 
   final public ParseException generateParseException() {
-    jj_expentries.removeAllElements();
+    jj_expentries.clear();
     boolean[] la1tokens = new boolean[30];
     for (int i = 0; i < 30; i++) {
       la1tokens[i] = false;
@@ -724,12 +724,12 @@ public class TagExportParser implements TagExportParserConstants, Serializable {
       if (la1tokens[i]) {
         jj_expentry = new int[1];
         jj_expentry[0] = i;
-        jj_expentries.addElement(jj_expentry);
+        jj_expentries.add(jj_expentry);
       }
     }
     int[][] exptokseq = new int[jj_expentries.size()][];
     for (int i = 0; i < jj_expentries.size(); i++) {
-      exptokseq[i] = (int[])jj_expentries.elementAt(i);
+      exptokseq[i] = (int[])jj_expentries.get(i);
     }
     return new ParseException(token, exptokseq, tokenImage);
   }

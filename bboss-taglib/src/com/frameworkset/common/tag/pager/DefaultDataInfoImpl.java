@@ -31,19 +31,20 @@
  *****************************************************************************/
 package com.frameworkset.common.tag.pager;
 
-import com.frameworkset.common.poolman.DBUtil;
-import com.frameworkset.common.poolman.PreparedDBUtil;
-import com.frameworkset.common.poolman.Record;
-import com.frameworkset.common.poolman.SQLParams;
-import com.frameworkset.util.ListInfo;
-
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.Hashtable;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
+
+import com.frameworkset.common.poolman.DBUtil;
+import com.frameworkset.common.poolman.PreparedDBUtil;
+import com.frameworkset.common.poolman.Record;
+import com.frameworkset.common.poolman.SQLParams;
+import com.frameworkset.util.ListInfo;
 
 /**
  * 提供DataInfo接口的缺省实现，从数据库中获取数据集
@@ -246,7 +247,7 @@ public class DefaultDataInfoImpl implements DataInfo {
 	        if(this.params == null)
 	        {
 	            DBUtil dbUtil = new DBUtil();
-	            Hashtable[] tables = (Hashtable[])dbUtil.executeSelectForObjectArray(dbName,sql,offSet,pageItemsize,Record.class);            
+	            HashMap[] tables = (HashMap[])dbUtil.executeSelectForObjectArray(dbName,sql,offSet,pageItemsize,Record.class);            
                 listInfo.setArrayDatas(tables);
                 listInfo.setTotalSize(dbUtil.getLongTotalSize());
                 listInfo.setResultSize(dbUtil.size());
@@ -256,7 +257,7 @@ public class DefaultDataInfoImpl implements DataInfo {
 	        {
 	            PreparedDBUtil dbUtil = new PreparedDBUtil();
 	            dbUtil.preparedSelect(params.copy(), dbName, sql, offSet, pageItemsize);
-	            Hashtable[] tables = (Hashtable[])dbUtil.executePreparedForObjectArray(Record.class);            
+	            HashMap[] tables = (HashMap[])dbUtil.executePreparedForObjectArray(Record.class);            
                 listInfo.setArrayDatas(tables);
                 listInfo.setTotalSize(dbUtil.getLongTotalSize());
                 listInfo.setResultSize(dbUtil.size());
@@ -286,7 +287,7 @@ public class DefaultDataInfoImpl implements DataInfo {
 	            //定义数据库访问对象
 	            DBUtil dbUtil = new DBUtil();
 	            
-                Hashtable[] tables = (Hashtable[])dbUtil.executeSelectForObjectArray(dbName,sql,Record.class);
+	            HashMap[] tables = (HashMap[])dbUtil.executeSelectForObjectArray(dbName,sql,Record.class);
                 listInfo.setArrayDatas(tables);
                 listInfo.setResultSize(dbUtil.size());
                 return listInfo;
@@ -297,7 +298,7 @@ public class DefaultDataInfoImpl implements DataInfo {
                 PreparedDBUtil dbUtil = new PreparedDBUtil();
                 dbUtil.setMore(this.moreQuery);
                 dbUtil.preparedSelect(params.copy(), dbName, sql);
-                Hashtable[] tables = (Hashtable[])dbUtil.executePreparedForObjectArray(Record.class);  
+                HashMap[] tables = (HashMap[])dbUtil.executePreparedForObjectArray(Record.class);  
                 listInfo.setArrayDatas(tables);
                 listInfo.setMore(this.moreQuery);
                 listInfo.setResultSize(dbUtil.size());

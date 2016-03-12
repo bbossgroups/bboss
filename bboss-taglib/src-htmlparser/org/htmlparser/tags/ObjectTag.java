@@ -26,15 +26,18 @@
 
 package org.htmlparser.tags;
 
-import java.util.Enumeration;
-import java.util.Hashtable;
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.htmlparser.Attribute;
 import org.htmlparser.Node;
 import org.htmlparser.Tag;
-import org.htmlparser.nodes.TextNode;
 import org.htmlparser.nodes.TagNode;
+import org.htmlparser.nodes.TextNode;
 import org.htmlparser.util.NodeList;
 import org.htmlparser.util.SimpleNodeIterator;
 
@@ -84,16 +87,16 @@ public class ObjectTag extends CompositeTag
      * Extract the object <code>PARAM</code> tags from the child list.
      * @return The list of object parameters (keys and values are String objects).
      */
-    public Hashtable createObjectParamsTable ()
+    public HashMap createObjectParamsTable ()
     {
         NodeList kids;
         Node node;
         Tag tag;
         String paramName;
         String paramValue;
-        Hashtable ret;
+        HashMap ret;
 
-        ret = new Hashtable ();
+        ret = new HashMap ();
         kids = getChildren ();
         if (null != kids)
             for (int i = 0; i < kids.size (); i++)
@@ -193,7 +196,7 @@ public class ObjectTag extends CompositeTag
      * Get the object parameters.
      * @return The list of parameter values (keys and values are String objects).
      */
-    public Hashtable getObjectParams ()
+    public HashMap getObjectParams ()
     {
         return createObjectParamsTable ();
     }
@@ -212,9 +215,9 @@ public class ObjectTag extends CompositeTag
      * Get an enumeration over the (String) parameter names.
      * @return An enumeration of the <code>PARAM<code> tag <code>NAME<code> attributes.
      */
-    public Enumeration getParameterNames ()
+    public Iterator getParameterNames ()
     {
-        return getObjectParams ().keys ();
+        return getObjectParams ().keySet().iterator();
     }
     
     /**
@@ -293,14 +296,14 @@ public class ObjectTag extends CompositeTag
      * Set the enclosed <code>PARAM<code> children.
      * @param newObjectParams The new parameters.
      */
-    public void setObjectParams (Hashtable newObjectParams)
+    public void setObjectParams (HashMap newObjectParams)
     {
         NodeList kids;
         Node node;
         Tag tag;
         String paramName;
         String paramValue;
-        Vector attributes;
+        List attributes;
         TextNode string;
         
         kids = getChildren ();
@@ -334,16 +337,17 @@ public class ObjectTag extends CompositeTag
             }
         
         // add newObjectParams to kids
-        for (Enumeration e = newObjectParams.keys (); e.hasMoreElements (); )
+        for (Iterator e = newObjectParams.entrySet().iterator(); e.hasNext(); )
         {
-            attributes = new Vector (); // should the tag copy the attributes?
-            paramName = (String)e.nextElement ();
-            paramValue = (String)newObjectParams.get (paramName);
-            attributes.addElement (new Attribute ("PARAM", null));
-            attributes.addElement (new Attribute (" "));
-            attributes.addElement (new Attribute ("VALUE", paramValue, '"'));
-            attributes.addElement (new Attribute (" "));
-            attributes.addElement (new Attribute ("NAME", paramName.toUpperCase (), '"'));
+        	Map.Entry entry = (Entry) e.next();
+            attributes = new ArrayList (); // should the tag copy the attributes?
+            paramName = (String)entry.getKey();
+            paramValue = (String)entry.getValue();
+            attributes.add (new Attribute ("PARAM", null));
+            attributes.add (new Attribute (" "));
+            attributes.add (new Attribute ("VALUE", paramValue, '"'));
+            attributes.add (new Attribute (" "));
+            attributes.add (new Attribute ("NAME", paramName.toUpperCase (), '"'));
             tag = new TagNode (null, 0, 0, attributes);
             kids.add (tag);
         }
@@ -358,8 +362,8 @@ public class ObjectTag extends CompositeTag
      */
     public String toString ()
     {
-        Hashtable parameters;
-        Enumeration params;
+        HashMap parameters;
+        Iterator params;
         String paramName;
         String paramValue;
         boolean found;
@@ -394,14 +398,15 @@ public class ObjectTag extends CompositeTag
         ret.append (getObjectWidth ());
         ret.append ("\n");
         parameters = getObjectParams ();
-        params = parameters.keys ();
+        params = parameters.entrySet().iterator();
         if (null == params)
             ret.append ("No Params found.\n");
         else
-            for (int cnt = 0; params.hasMoreElements (); cnt++)
+            for (int cnt = 0; params.hasNext(); cnt++)
             {
-                paramName = (String)params.nextElement ();
-                paramValue = (String)parameters.get (paramName);
+            	Map.Entry entry = (Entry) params.next  ();
+                paramName = (String)entry.getKey();
+                paramValue = (String)entry.getValue();
                 ret.append (cnt);
                 ret.append (": Parameter name = ");
                 ret.append (paramName);

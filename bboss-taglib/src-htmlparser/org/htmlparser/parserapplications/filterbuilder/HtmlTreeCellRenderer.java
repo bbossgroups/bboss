@@ -27,7 +27,7 @@
 package org.htmlparser.parserapplications.filterbuilder;
 
 import java.awt.Component;
-import java.util.Vector;
+import java.util.List;
 
 import javax.swing.JTree;
 import javax.swing.tree.DefaultTreeCellRenderer;
@@ -73,7 +73,7 @@ public class HtmlTreeCellRenderer
     {
         int length;
         int size;
-        Vector attributes;
+        List attributes;
         Attribute attribute;
         String s;
         boolean children;
@@ -84,14 +84,14 @@ public class HtmlTreeCellRenderer
         size = attributes.size ();
         for (int i = 0; i < size; i++)
         {
-            attribute = (Attribute)attributes.elementAt (i);
+            attribute = (Attribute)attributes.get (i);
             length += attribute.getLength ();
         }
         ret = new StringBuffer (length);
         ret.append ("<");
         for (int i = 0; i < size; i++)
         {
-            attribute = (Attribute)attributes.elementAt (i);
+            attribute = (Attribute)attributes.get (i);
             attribute.toString (ret);
         }
         ret.append (">");

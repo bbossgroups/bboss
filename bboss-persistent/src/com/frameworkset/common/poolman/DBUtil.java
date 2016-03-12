@@ -30,7 +30,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Hashtable;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -815,7 +815,7 @@ public class DBUtil extends SQLUtil implements Serializable {
 
 
 	/**
-	 * Executes a statement and returns results in the form of a Hashtable
+	 * Executes a statement and returns results in the form of a HashMap
 	 * array. 本方法执行完毕后无需对结果集进行缓冲
 	 * 
 	 * @param dbname
@@ -1402,7 +1402,7 @@ public class DBUtil extends SQLUtil implements Serializable {
 	 * @throws SQLException
 	 * @deprecated
 	 */
-	public Hashtable[] executeQuery(String sql) throws SQLException {
+	public HashMap[] executeQuery(String sql) throws SQLException {
 		return executeQuery(sql, (Connection) null);
 	}
 
@@ -1415,7 +1415,7 @@ public class DBUtil extends SQLUtil implements Serializable {
 	 * @throws SQLException
 	 *  @deprecated
 	 */
-	public Hashtable[] executeQuery(String sql, Connection con)
+	public HashMap[] executeQuery(String sql, Connection con)
 			throws SQLException {
 		return executeSql(SQLManager.getInstance().getDefaultDBName(), sql, con);
 	}
@@ -1642,7 +1642,7 @@ public class DBUtil extends SQLUtil implements Serializable {
 	 * @throws SQLException
 	 *  @deprecated
 	 */
-	public Hashtable[] executeQuery(String dbName, String sql)
+	public HashMap[] executeQuery(String dbName, String sql)
 			throws SQLException {
 		return executeQuery(dbName, sql, (Connection) null);
 	}
@@ -1658,7 +1658,7 @@ public class DBUtil extends SQLUtil implements Serializable {
 	 * @throws SQLException
 	 *  @deprecated
 	 */
-	public Hashtable[] executeQuery(String dbName, String sql, Connection con)
+	public HashMap[] executeQuery(String dbName, String sql, Connection con)
 			throws SQLException {
 		return executeSql(dbName, sql, con);
 	}
@@ -1713,7 +1713,7 @@ public class DBUtil extends SQLUtil implements Serializable {
 	 * @throws SQLException
 	 *  @deprecated
 	 */
-	public Hashtable[] executeQuery(String sql, int offset, int maxsize)
+	public HashMap[] executeQuery(String sql, int offset, int maxsize)
 			throws SQLException {
 		return executeQuery(sql, offset, maxsize, (Connection) null);
 	}
@@ -1731,7 +1731,7 @@ public class DBUtil extends SQLUtil implements Serializable {
 	 * @throws SQLException
 	 *  @deprecated
 	 */
-	public Hashtable[] executeQuery(String sql, int offset, int maxsize,
+	public HashMap[] executeQuery(String sql, int offset, int maxsize,
 			Connection con) throws SQLException {
 		return executeSql(SQLManager.getInstance().getDefaultDBName(), sql,
 				offset, maxsize, con,null,null,ResultMap.type_maparray);
@@ -1794,7 +1794,7 @@ public class DBUtil extends SQLUtil implements Serializable {
 	 * @throws SQLException
 	 *  @deprecated
 	 */
-	public Hashtable[] executeQuery(String dbName, String sql, long offset,
+	public HashMap[] executeQuery(String dbName, String sql, long offset,
 			int maxsize) throws SQLException {
 		return executeQuery(dbName, sql, offset, maxsize, (Connection) null);
 	}
@@ -1814,7 +1814,7 @@ public class DBUtil extends SQLUtil implements Serializable {
 	 * @throws SQLException
 	 *  @deprecated
 	 */
-	public Hashtable[] executeQuery(String dbName, String sql, long offset,
+	public HashMap[] executeQuery(String dbName, String sql, long offset,
 			int maxsize, Connection con) throws SQLException {
 		return executeSql(dbName, sql, offset, maxsize, con,null,null,ResultMap.type_maparray);
 	}
@@ -2091,10 +2091,10 @@ public class DBUtil extends SQLUtil implements Serializable {
 	 * 
 	 * @param updateSql
 	 *            update语句
-	 * @return Hashtable[] 包含更新结果信息
+	 * @return HashMap[] 包含更新结果信息
 	 * @throws SQLException
 	 */
-	public Hashtable[] executeUpdate(String updateSql) throws SQLException {
+	public HashMap[] executeUpdate(String updateSql) throws SQLException {
 		return executeSql(updateSql);
 	}
 
@@ -2105,10 +2105,10 @@ public class DBUtil extends SQLUtil implements Serializable {
 	 *            update语句
 	 * @param dbName
 	 *            数据库名称
-	 * @return Hashtable[] 包含更新结果信息
+	 * @return HashMap[] 包含更新结果信息
 	 * @throws SQLException
 	 */
-	public Hashtable[] executeUpdate(String dbName, String updateSql)
+	public HashMap[] executeUpdate(String dbName, String updateSql)
 			throws SQLException {
 		return executeUpdate(dbName, updateSql, (Connection) null);
 	}
@@ -2120,10 +2120,10 @@ public class DBUtil extends SQLUtil implements Serializable {
 	 *            update语句
 	 * @param dbName
 	 *            数据库名称
-	 * @return Hashtable[] 包含更新结果信息
+	 * @return HashMap[] 包含更新结果信息
 	 * @throws SQLException
 	 */
-	public Hashtable[] executeUpdate(String dbName, String updateSql,
+	public HashMap[] executeUpdate(String dbName, String updateSql,
 			Connection con) throws SQLException {
 		return this.executeSql(dbName, updateSql, con);
 	}

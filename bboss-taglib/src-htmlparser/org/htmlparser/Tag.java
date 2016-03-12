@@ -26,8 +26,8 @@
 
 package org.htmlparser;
 
-import java.util.Hashtable;
-import java.util.Vector;
+import java.util.HashMap;
+import java.util.List;
 
 import org.htmlparser.scanners.Scanner;
 
@@ -88,16 +88,16 @@ public interface Tag extends Node
      * Gets the attributes in the tag.
      * @return Returns the list of {@link Attribute Attributes} in the tag.
      */
-    Vector getAttributesEx ();
+    List getAttributesEx ();
 
     /**
      * Sets the attributes.
-     * NOTE: Values of the extended hashtable are two element arrays of String,
+     * NOTE: Values of the extended HashMap are two element arrays of String,
      * with the first element being the original name (not uppercased),
      * and the second element being the value.
      * @param attribs The attribute collection to set.
      */
-    void setAttributesEx (Vector attribs);
+    void setAttributesEx (List attribs);
 
     /**
      * Gets the attributes in the tag.
@@ -115,16 +115,16 @@ public interface Tag extends Node
      * The conversion to uppercase is performed with an ENGLISH locale.
      * @deprecated Use getAttributesEx() instead.
      */
-    Hashtable getAttributes ();
+    HashMap getAttributes ();
 
     /**
      * Sets the attributes.
-     * A special entry with a key of SpecialHashtable.TAGNAME ("$<TAGNAME>$")
+     * A special entry with a key of SpecialHashMap.TAGNAME ("$<TAGNAME>$")
      * sets the tag name.
      * @param attributes The attribute collection to set.
      * @deprecated Use setAttributesEx() instead.
      */
-    void setAttributes (Hashtable attributes);
+    void setAttributes (HashMap attributes);
 
     /**
      * Return the name of this tag.
@@ -142,7 +142,7 @@ public interface Tag extends Node
     /**
      * Set the name of this tag.
      * This creates or replaces the first attribute of the tag (the
-     * zeroth element of the attribute vector).
+     * zeroth element of the attribute List).
      * @param name The tag name.
      */
     void setTagName (String name);

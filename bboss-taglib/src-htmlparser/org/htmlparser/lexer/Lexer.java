@@ -29,7 +29,8 @@ package org.htmlparser.lexer;
 import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.net.URLConnection;
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.htmlparser.Node;
 import org.htmlparser.NodeFactory;
@@ -592,10 +593,10 @@ public class Lexer
      * @param attributes The list so far.
      * @param bookmarks The array of positions.
      */
-    private void whitespace (Vector attributes, int[] bookmarks)
+    private void whitespace (List attributes, int[] bookmarks)
     {
         if (bookmarks[1] > bookmarks[0])
-            attributes.addElement (new PageAttribute (
+            attributes.add (new PageAttribute (
                 mPage, -1, -1, bookmarks[0], bookmarks[1], (char)0));
     }
 
@@ -604,9 +605,9 @@ public class Lexer
      * @param attributes The list so far.
      * @param bookmarks The array of positions.
      */
-    private void standalone (Vector attributes, int[] bookmarks)
+    private void standalone (List attributes, int[] bookmarks)
     {
-        attributes.addElement (new PageAttribute (
+        attributes.add (new PageAttribute (
             mPage, bookmarks[1], bookmarks[2], -1, -1, (char)0));
     }
 
@@ -615,9 +616,9 @@ public class Lexer
      * @param attributes The list so far.
      * @param bookmarks The array of positions.
      */
-    private void empty (Vector attributes, int[] bookmarks)
+    private void empty (List attributes, int[] bookmarks)
     {
-        attributes.addElement (new PageAttribute (
+        attributes.add (new PageAttribute (
             mPage, bookmarks[1], bookmarks[2], bookmarks[2] + 1, -1, (char)0));
     }
 
@@ -626,9 +627,9 @@ public class Lexer
      * @param attributes The list so far.
      * @param bookmarks The array of positions.
      */
-    private void naked (Vector attributes, int[] bookmarks)
+    private void naked (List attributes, int[] bookmarks)
     {
-        attributes.addElement (new PageAttribute (
+        attributes.add (new PageAttribute (
             mPage, bookmarks[1], bookmarks[2], bookmarks[3],
             bookmarks[4], (char)0));
     }
@@ -638,9 +639,9 @@ public class Lexer
      * @param attributes The list so far.
      * @param bookmarks The array of positions.
      */
-    private void single_quote (Vector attributes, int[] bookmarks)
+    private void single_quote (List attributes, int[] bookmarks)
     {
-        attributes.addElement (new PageAttribute (
+        attributes.add (new PageAttribute (
             mPage, bookmarks[1], bookmarks[2], bookmarks[4] + 1,
             bookmarks[5], '\''));
     }
@@ -650,9 +651,9 @@ public class Lexer
      * @param attributes The list so far.
      * @param bookmarks The array of positions.
      */
-    private void double_quote (Vector attributes, int[] bookmarks)
+    private void double_quote (List attributes, int[] bookmarks)
     {
-        attributes.addElement (new PageAttribute (
+        attributes.add (new PageAttribute (
             mPage, bookmarks[1], bookmarks[2], bookmarks[5] + 1,
             bookmarks[6], '"'));
     }
@@ -715,7 +716,7 @@ public class Lexer
      * of integers that match the initiation point for the states one-for-one,
      * i.e. bookmarks[0] is where state 0 began, bookmarks[1] is where state 1
      * began, etc.
-     * Attributes are stored in a <code>Vector</code> having
+     * Attributes are stored in a <code>List</code> having
      * one slot for each whitespace or attribute/value pair.
      * The first slot is for attribute name (kind of like a standalone attribute).
      * @param start The position at which to start scanning.
@@ -730,10 +731,10 @@ public class Lexer
         char ch;
         int state;
         int[] bookmarks;
-        Vector attributes;
+        List attributes;
 
         done = false;
-        attributes = new Vector ();
+        attributes = new ArrayList ();
         state = 0;
         bookmarks = new int[8];
         bookmarks[0] = mCursor.getPosition ();
@@ -943,7 +944,7 @@ public class Lexer
      * @exception ParserException If the nodefactory creation of the tag node fails.
      * @return The new Tag node.
      */
-    protected Node makeTag (int start, int end, Vector attributes)
+    protected Node makeTag (int start, int end, List attributes)
         throws
             ParserException
     {
@@ -1123,13 +1124,13 @@ public class Lexer
         boolean done;
         char ch;
         int state;
-        Vector attributes;
+        List attributes;
         int code;
 
         done = false;
         state = 0;
         code = 0;
-        attributes = new Vector ();
+        attributes = new ArrayList ();
         // <%xyz%>
         // 012223d
         // <%=xyz%>
@@ -1164,12 +1165,12 @@ public class Lexer
                         case '=': // <%=
                         case '@': // <%@
                             code = mCursor.getPosition ();
-                            attributes.addElement (new PageAttribute (mPage, start + 1, code, -1, -1, (char)0));
+                            attributes.add (new PageAttribute (mPage, start + 1, code, -1, -1, (char)0));
                             state = 2;
                             break;
                         default:  // <%x
                             code = mCursor.getPosition () - 1;
-                            attributes.addElement (new PageAttribute (mPage, start + 1, code, -1, -1, (char)0));
+                            attributes.add (new PageAttribute (mPage, start + 1, code, -1, -1, (char)0));
                             state = 2;
                             break;
                     }
@@ -1243,8 +1244,8 @@ public class Lexer
             if (0 != code)
             {
                 state = mCursor.getPosition () - 2; // reuse state
-                attributes.addElement (new PageAttribute (mPage, code, state, -1, -1, (char)0));
-                attributes.addElement (new PageAttribute (mPage, state, state + 1, -1, -1, (char)0));
+                attributes.add (new PageAttribute (mPage, code, state, -1, -1, (char)0));
+                attributes.add (new PageAttribute (mPage, state, state + 1, -1, -1, (char)0));
             }
             else
                 throw new IllegalStateException ("jsp with no code!");
@@ -1678,7 +1679,7 @@ public class Lexer
 
     /**
      * Create a new tag node.
-     * Note that the attributes vector contains at least one element,
+     * Note that the attributes List contains at least one element,
      * which is the tag name (standalone attribute) at position zero.
      * This can be used to decide which type of node to create, or
      * gate other processing that may be appropriate.
@@ -1688,7 +1689,7 @@ public class Lexer
      * @param attributes The attributes contained in this tag.
      * @return The created Tag node.
      */
-    public Tag createTagNode (Page page, int start, int end, Vector attributes)
+    public Tag createTagNode (Page page, int start, int end, List attributes)
     {
         return (new TagNode (page, start, end, attributes));
     }

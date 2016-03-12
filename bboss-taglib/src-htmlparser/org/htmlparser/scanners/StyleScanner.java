@@ -26,7 +26,8 @@
 
 package org.htmlparser.scanners;
 
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.htmlparser.Attribute;
 import org.htmlparser.Node;
@@ -62,7 +63,7 @@ public class StyleScanner extends CompositeTagScanner
         int position;
         Node node;
         Attribute attribute;
-        Vector vector;
+        List vector;
 
 //        content = lexer.parseCDATA ();
         content = lexer.parseStyleCDATA(false);
@@ -80,8 +81,8 @@ public class StyleScanner extends CompositeTagScanner
         if (null == node)
         {
             attribute = new Attribute ("/style", null);
-            vector = new Vector ();
-            vector.addElement (attribute);
+            vector = new ArrayList ();
+            vector.add (attribute);
             node = lexer.getNodeFactory ().createTagNode (
                 lexer.getPage (), position, position, vector);
         }

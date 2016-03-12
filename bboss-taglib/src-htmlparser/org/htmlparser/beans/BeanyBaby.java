@@ -36,7 +36,8 @@ import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.beans.PropertyChangeListener;
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenuItem;
@@ -57,7 +58,7 @@ public class BeanyBaby
     /**
      * Bread crumb trail of visited URLs.
      */
-    protected Vector mTrail;
+    protected List mTrail;
 
     /**
      * Current position on the bread crumb trail.
@@ -68,7 +69,7 @@ public class BeanyBaby
     public BeanyBaby ()
     {
         initComponents ();
-        mTrail = new Vector ();
+        mTrail = new ArrayList ();
         mCrumb = -1;
 
         // shenanigans to get the splitter bar at the midpoint
@@ -173,7 +174,7 @@ public class BeanyBaby
                 if (mCrumb > 0)
                 {
                     mCrumb--;
-                    url = (String)mTrail.elementAt (mCrumb);
+                    url = (String)mTrail.get (mCrumb);
                     mCrumb--;
                     setURL (url);
                 }
@@ -183,7 +184,7 @@ public class BeanyBaby
                 if (mCrumb < mTrail.size ())
                 {
                     mCrumb++;
-                    url = (String)mTrail.elementAt (mCrumb);
+                    url = (String)mTrail.get (mCrumb);
                     mCrumb--;
                     setURL (url);
                 }
@@ -259,9 +260,9 @@ public class BeanyBaby
         mTextField.setText (url);
         mCrumb++;
         if (mTrail.size () <= mCrumb)
-            mTrail.addElement (url);
+            mTrail.add (url);
         else
-            mTrail.setElementAt (url, mCrumb);
+            mTrail.set (mCrumb,url );
         mLinkBean.setURL (url);
 
         // update navigation menu

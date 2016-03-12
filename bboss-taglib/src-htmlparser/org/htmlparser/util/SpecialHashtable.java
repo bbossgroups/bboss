@@ -26,17 +26,17 @@
 
 package org.htmlparser.util;
 
-import java.util.Hashtable;
+import java.util.HashMap;
 
 /**
- * Acts like a regular HashTable, except some values are translated in get(String).
+ * Acts like a regular HashMap, except some values are translated in get(String).
  * Specifically, <code>Tag.NULLVALUE</code> is translated to <code>null</code> and
  * <code>Tag.NOTHING</code> is translated to <code>""</code>.
- * This is done for backwards compatibility, users are expecting a HashTable,
+ * This is done for backwards compatibility, users are expecting a HashMap,
  * but Tag.toHTML needs to know when there is no attribute value (&lt;<TAG ATTRIBUTE&gt;)
  * and when the value was not present (&lt;<TAG ATTRIBUTE=&gt;).
  */
-public class SpecialHashtable extends Hashtable
+public class SpecialHashtable extends HashMap
 {
     /**
      * Special key for the tag name.

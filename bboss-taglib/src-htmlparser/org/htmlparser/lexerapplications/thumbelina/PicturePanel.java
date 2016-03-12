@@ -41,6 +41,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Enumeration;
 import java.util.HashSet;
+import java.util.Iterator;
+
 import javax.swing.JPanel;
 import javax.swing.JViewport;
 import javax.swing.Scrollable;
@@ -137,15 +139,15 @@ public class PicturePanel
      */
     public Picture find (final String url)
     {
-        Enumeration enumeration;
+        Iterator enumeration;
         Picture picture;
         Picture ret;
 
         ret = null;
         enumeration = mMosaic.getPictures ();
-        while ((null == ret) && enumeration.hasMoreElements ())
+        while ((null == ret) && enumeration.hasNext())
         {
-            picture = (Picture)enumeration.nextElement ();
+            picture = (Picture)enumeration.next ();
             if (url.equals (picture.getURL ().toExternalForm ()))
                 ret = picture;
         }
@@ -237,7 +239,7 @@ public class PicturePanel
     public void paint (final Graphics graphics)
     {
         Rectangle clip;
-        Enumeration enumeration;
+        Iterator enumeration;
         HashSet set; // just so we don't draw things twice
         Picture picture;
         Image image;
@@ -256,9 +258,9 @@ public class PicturePanel
                 super.paint (graphics);
                 enumeration = mMosaic.getPictures ();
                 set = new HashSet ();
-                while (enumeration.hasMoreElements ())
+                while (enumeration.hasNext())
                 {
-                    picture = (Picture)enumeration.nextElement ();
+                    picture = (Picture)enumeration.next ();
                     if ((null == clip) || (clip.intersects (picture)))
                     {
                         image = picture.getImage ();
@@ -315,7 +317,7 @@ public class PicturePanel
      */
     protected Dimension calculatePreferredSize ()
     {
-        Enumeration enumeration;
+    	Iterator enumeration;
         int x;
         int y;
         Picture picture;
@@ -327,9 +329,9 @@ public class PicturePanel
         x = 0;
         y = 0;
         picture = null;
-        while (enumeration.hasMoreElements ())
+        while (enumeration.hasNext ())
         {
-            picture = (Picture)enumeration.nextElement ();
+            picture = (Picture)enumeration.next ();
             if (picture.x + picture.width > x)
                 x = picture.x + picture.width;
             if (picture.y + picture.height > y)
