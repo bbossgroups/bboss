@@ -9,8 +9,7 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.Tag;
 
-import org.apache.ecs.html.IFrame;
-
+import com.frameworkset.common.ecs.IFrame;
 import com.frameworkset.common.tag.BaseTag;
 import com.frameworkset.common.tag.contextmenu.ContextMenu;
 
@@ -36,11 +35,11 @@ public class IFrameTag extends BaseTag {
 	private String title;
 	private int position = -1;
 	private String text;
-	private IFrame iframe = new IFrame();
+	private IFrame iframe ;
 	public int doStartTag() throws JspException
 	{
 		//IFrame iframe = new IFrame();
-		
+		iframe = new IFrame();
 		if(this.align != null)
 			iframe.setAlign(this.align);
 		if(this.classname != null)
@@ -112,6 +111,7 @@ public class IFrameTag extends BaseTag {
 		
 		
 		int ret = super.doEndTag();
+		iframe = null;
 		return ret;
 	}
 	
@@ -480,7 +480,7 @@ public class IFrameTag extends BaseTag {
 	@Override
 	public void doFinally() {
 	
-		
+		iframe = null;
 		reset();
 		super.doFinally();
 	}

@@ -10,7 +10,6 @@ import java.io.OutputStream;
 
 import javax.servlet.jsp.JspException;
 
-import org.apache.ecs.html.TR;
 
 import com.frameworkset.common.tag.BaseTag;
 /**
@@ -44,7 +43,7 @@ public class HeaderTag extends BaseTag
 	
 	private String valign= null;
 	private String extend = null;
-	TR tr = null;
+	private StringBuilder tr = null;
 	PagerDataSet listTag = null;
 	
 	
@@ -72,40 +71,58 @@ public class HeaderTag extends BaseTag
 			但是程序没有做相应的判断和处理需要程序员自己处理。
 			*/
 		{
-			tr = new TR();
+			tr = new StringBuilder();
+			tr.append("<tr ");
 			if(getAlign() != null)
-				tr.setAlign(this.getAlign());
+//				tr.setAlign(this.getAlign());
+				tr.append(" align=\"").append(this.getAlign()).append("\"");
 			if(bgcolor != null)
-				tr.setBgColor(bgcolor);
+				tr.append(" bgcolor=\"").append(bgcolor).append("\"");
+//				tr.setBgColor(bgcolor);
 			if(onClick != null)
-				tr.setOnClick(onClick);			
+				tr.append(" onClick=\"").append(onClick).append("\"");
+//				tr.setOnClick(onClick);			
 			if(onDblClick != null)
-				tr.setOnDblClick(this.onDblClick);
+				tr.append(" onDblClick=\"").append(onDblClick).append("\"");
+//				tr.setOnDblClick(this.onDblClick);
 			if(onKeyDown != null)
-				tr.setOnKeyDown(this.onKeyDown);
+				tr.append(" onKeyDown=\"").append(onKeyDown).append("\"");
+//				tr.setOnKeyDown(this.onKeyDown);
 			if(onKeyPress != null)
-				tr.setOnKeyPress(this.onKeyPress);
+				tr.append(" onKeyPress=\"").append(onKeyPress).append("\"");
+//				tr.setOnKeyPress(this.onKeyPress);
 			if(onKeyUp != null)
-				tr.setOnKeyUp(this.onKeyUp);
+				tr.append(" onKeyUp=\"").append(onKeyUp).append("\"");
+//				tr.setOnKeyUp(this.onKeyUp);
 			if(onMouseDown != null)
-				tr.setOnMouseDown(this.onMouseDown);
+				tr.append(" onMouseDown=\"").append(onMouseDown).append("\"");
+//				tr.setOnMouseDown(this.onMouseDown);
 			if(onMouseMove != null)
-				tr.setOnMouseMove(this.onMouseMove);
+				tr.append(" onMouseMove=\"").append(onMouseMove).append("\"");
+//				tr.setOnMouseMove(this.onMouseMove);
 			if(onMouseOut != null)
-				tr.setOnMouseOut(this.onMouseOut);
+				tr.append(" onMouseOut=\"").append(onMouseOut).append("\"");
+//				tr.setOnMouseOut(this.onMouseOut);
 			if(onMouseOver != null)
-				tr.setOnMouseOver(this.onMouseOver);
+				tr.append(" onMouseOver=\"").append(onMouseOver).append("\"");
+//				tr.setOnMouseOver(this.onMouseOver);
 			if(onMouseUp != null)
-				tr.setOnMouseUp(this.onMouseUp);
+				tr.append(" onMouseUp=\"").append(onMouseUp).append("\"");
+//				tr.setOnMouseUp(this.onMouseUp);
 			if(valign != null)
-				tr.setVAlign(this.valign);
+				tr.append(" valign=\"").append(valign).append("\"");
+//				tr.setVAlign(this.valign);
 			if(this.extend != null)
 			{
-				tr.setExtend(extend);
+				tr.append(" o").append(extend);
+//				tr.setExtend(extend);
 			}
+			tr.append(">");
 			try
 			{
-				this.getJspWriter().print(tr.createStartTag());
+//				this.getJspWriter().print(tr.createStartTag());
+				this.getJspWriter().print(tr.toString());
+				tr.setLength(0);
 			}
 			catch(Exception e)
 			{
@@ -158,7 +175,7 @@ public class HeaderTag extends BaseTag
 		{
 			try
 			{
-				this.getJspWriter().print(tr.createEndTag());
+				this.getJspWriter().print("</tr>");
 			}
 			catch(Exception e)
 			{
@@ -295,6 +312,12 @@ public class HeaderTag extends BaseTag
 	}
 	public void setExtend(String extend) {
 		this.extend = extend;
+	}
+	@Override
+	public void doFinally() {
+		tr = null;
+		super.doFinally();
+		
 	}
 
 	
