@@ -24,7 +24,7 @@ import org.quartz.Calendar;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2013-1-23 ионГ10:09:08
+ * @Date 2013-1-23 10:09:08
  * @author biaoping.yin
  * @version 1.0
  */

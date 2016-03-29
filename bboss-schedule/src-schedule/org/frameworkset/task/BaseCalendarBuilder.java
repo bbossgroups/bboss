@@ -26,7 +26,7 @@ import com.frameworkset.spi.assemble.BeanInstanceException;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2013-1-23 ионГ10:26:24
+ * @Date 2013-1-23 10:26:24
  * @author biaoping.yin
  * @version 1.0
  */
