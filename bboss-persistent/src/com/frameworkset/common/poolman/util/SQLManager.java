@@ -163,7 +163,7 @@ public class SQLManager extends PoolManager{
     
     /**
      * 根据dbname获取数据源
-     * @param dbname
+    
      * @return
      */
     public static DataSource getDatasource()
@@ -196,7 +196,7 @@ public class SQLManager extends PoolManager{
     
     /**
      * 根据dbname获取数据源
-     * @param dbname
+      
      * @return
      */
     public static DataSource getTXDatasource()

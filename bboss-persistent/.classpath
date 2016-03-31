@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="listener"/>
-	<classpathentry including="**/*.xml|**/*.properties|poolman_template.xml" kind="src" path="resources"/>
+	<classpathentry including="poolman_template.xml|com/frameworkset/**/*.properties|com/frameworkset/**/*.xml|org/frameworkset/**/*.properties|org/frameworkset/**/*.xml" kind="src" path="resources"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="src-jdk7"/>
 	<classpathentry kind="src" path="test"/>

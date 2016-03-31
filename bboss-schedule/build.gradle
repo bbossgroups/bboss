@@ -44,12 +44,6 @@ publishing {
         }
     }
     repositories {
-        maven {
-            url "http://bdp.sany.com.cn/nexus/content/repositories/releases/"
-            credentials {
-                username "sany"
-                password "sany"
-            }
-        }
-    }
+         mavenLocal()
+    } 
 }
