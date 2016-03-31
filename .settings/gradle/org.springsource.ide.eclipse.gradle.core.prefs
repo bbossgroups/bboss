@@ -1,6 +1,6 @@
 #org.springsource.ide.eclipse.gradle.core.preferences.GradleProjectPreferences
-#Wed Mar 30 13:23:12 CST 2016
-build.family.org.gradle.tooling.model.eclipse.HierarchicalEclipseProject=;bboss-core;bboss-event;bboss-hession;bboss-mvc;bboss-persistent;bboss-schedule;bboss-soa;bboss-taglib;bboss-util;bboss-velocity;
+#Fri Apr 01 00:45:51 CST 2016
+build.family.org.gradle.tooling.model.eclipse.HierarchicalEclipseProject=;bboss-core;bboss-event;bboss-hession;bboss-mvc;bboss-persistent;bboss-schedule;bboss-soa;bboss-taglib;bboss-util;bboss-velocity;bboss-websocket;
 org.springsource.ide.eclipse.gradle.classname.enableSorting=false
 org.springsource.ide.eclipse.gradle.classpath.enableSorting=true
 org.springsource.ide.eclipse.gradle.linkedresources=

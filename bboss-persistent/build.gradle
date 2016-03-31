@@ -23,7 +23,7 @@ sourceSets {
 project.tasks.compileJava.dependsOn(project(':bboss-core').tasks.publish)
 dependencies {
     compile (
-            [group: 'junit', name: 'junit', version: '4.12', transitive: true],
+            [group: 'junit', name: 'junit', version: '4.12', transitive: false],
             [group: 'com.bbossgroups', name: 'bboss-velocity', version: "${version}", transitive: false],
             [group: 'com.bbossgroups', name: 'bboss-core', version: "${version}", transitive: false],
             [group: 'com.bbossgroups', name: 'bboss-rt', version: "${version}", transitive: false],

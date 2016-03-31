@@ -1,4 +1,0 @@
-git branch bboss3.6.1 origin/bboss3.6.1
-git checkout --track origin/bboss3.6.1
-git checkout bboss3.6.1
-将直接返回主键改为回调返回自增主键，以便实现新旧版本之间的兼容性

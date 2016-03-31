@@ -1,0 +1,55 @@
+apply plugin: 'war'
+apply plugin: 'jetty'
+sourceSets {
+    main {
+        java {
+            srcDirs 'src'
+        }
+        resources {
+            
+        }
+       
+       
+    }
+    
+}
+
+repositories {
+   
+   mavenCentral()
+}
+dependencies {
+	
+	//test依赖bboss_rt和frameworkset_util的输出
+   providedCompile (
+		
+		[group: 'com.bbossgroups', name: 'bboss-persistent', version: "${version}"]
+		
+	)
+    providedCompile (
+            fileTree(dir: 'compilelib', include: '**/*.jar')
+    )
+    
+    
+}
+ 
+
+war {
+	from 'WebRoot'
+      // adds a file-set to the root of the archive
+    webInf { from 'WebRoot/WEB-INF' } // adds a file-set to the WEB-INF dir.
+    
+    classpath configurations.providedCompile // adds a configuration to the WEB-INF/lib dir.
+    webXml = file('WebRoot/WEB-INF/web.xml') // copies a file to WEB-INF/web.xml
+}
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+			
+			artifact war
+        }
+    }
+     repositories {
+        mavenLocal()
+    } 
+}
