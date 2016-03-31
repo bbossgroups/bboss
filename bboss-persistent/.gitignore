@@ -8,3 +8,5 @@
 /src-jdk7_20150114
 /build-jdk7.log
 /velocity.log
+/build/
+/bin/

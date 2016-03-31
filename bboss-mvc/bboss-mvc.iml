@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module external.linked.project.id=":bboss-mvc" external.linked.project.path="$MODULE_DIR$" external.root.project.path="$MODULE_DIR$/.." external.system.id="GRADLE" external.system.module.group="com.bbossgroups" external.system.module.version="1.0.0" type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager" inherit-compiler-output="false">
+    <output url="file://$MODULE_DIR$/build/classes/main" />
+    <output-test url="file://$MODULE_DIR$/build/classes/test" />
+    <exclude-output />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src-jarloaders" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/resources" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/main/resources" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/test/resources" type="java-test-resource" />
+      <excludeFolder url="file://$MODULE_DIR$/.gradle" />
+      <excludeFolder url="file://$MODULE_DIR$/build" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" scope="TEST" name="Gradle: junit:junit:4.12" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: org.hamcrest:hamcrest-core:1.3" level="project" />
+    <orderEntry type="library" name="Gradle: javax.servlet:jsp-api:2.0" level="project" />
+    <orderEntry type="library" name="Gradle: servletapi:servletapi:2.4" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: com.bbossgroups:bboss-rt:1.0.0" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: com.bbossgroups:frameworkset-util:1.0.0" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: com.bbossgroups:bboss-soa:1.0.0" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: com.bbossgroups:bboss-core:1.0.0" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: cglib:cglib-nodep:3.1" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: oro:oro:2.0.8" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: com.thoughtworks.xstream:xstream:1.3.1" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: log4j:log4j:1.2.12" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.codehaus.jackson:jackson-mapper-asl:1.9.10" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: commons-lang:commons-lang:2.6" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: commons-logging:commons-logging:1.1" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: commons-collections:commons-collections:3.2.1" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.ow2.asm:asm:5.0.3" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: commons-beanutils:commons-beanutils:1.7.0" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: commons-fileupload:commons-fileupload:1.3.1" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: commons-io:commons-io:1.3.2" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: concurrent:concurrent:1.3.2" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.freemarker:freemarker:2.3.15" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: com.tonicsystems:jarjar:0.6" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: xml-resolver:xml-resolver:1.2" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.apache.xmlbeans:xmlbeans:2.4.0" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.apache.ws.xmlschema:xmlschema-core:2.2.1" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: javax.faces:jsf-api:2.1" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: com.sun.faces:jsf-impl:2.1.0" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: jstl:jstl:1.2" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: rome:rome:1.0" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: net.sf.jasperreports:jasperreports:3.7.6" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.apache.poi:poi:3.0.2-FINAL" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.eclipse.birt.runtime.3_7_1:com.lowagie.text:2.1.7" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: net.sourceforge.jexcelapi:jxl:2.6.12" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: jdom:jdom:1.0" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.codehaus.jackson:jackson-core-asl:1.9.10" level="project" />
+  </component>
+</module>

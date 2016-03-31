@@ -1,0 +1,39 @@
+sourceSets {
+    main {
+        java {
+            srcDirs 'src'
+        }
+        resources {
+           
+        }
+    }
+}
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+	classifier = "sources"
+    from sourceSets.main.allJava
+}
+
+task javaDocJar(type: Jar, dependsOn: javadoc) {
+	classifier = "javadoc"
+    from javadoc.destinationDir
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifact jar
+            artifact sourcesJar
+            artifact javaDocJar
+        }
+    }
+    repositories {
+        maven {
+            url "http://bdp.sany.com.cn/nexus/content/repositories/releases/"
+            credentials {
+                username "sany"
+                password "sany"
+            }
+        }
+    }
+}

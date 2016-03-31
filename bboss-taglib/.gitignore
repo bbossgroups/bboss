@@ -1,3 +1,5 @@
 distrib
 classes
 /build.log
+/bin/
+/build/

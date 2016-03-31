@@ -2,13 +2,7 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="test"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="lib-compile/javaee.jar"/>
-	<classpathentry kind="lib" path="lib-compile/log4j-1.2.16.jar"/>
-	<classpathentry kind="lib" path="lib-compile/frameworkset-util.jar"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
-	<classpathentry kind="lib" path="lib-compile/bboss-core.jar"/>
-	<classpathentry kind="lib" path="lib-compile/hessian-4.0.37-src.jar"/>
-	<classpathentry kind="lib" path="lib-compile/hessian-4.0.37.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7/"/>
+	<classpathentry exported="true" kind="con" path="org.springsource.ide.eclipse.gradle.classpathcontainer"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

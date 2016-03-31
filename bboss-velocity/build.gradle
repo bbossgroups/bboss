@@ -1,0 +1,60 @@
+sourceSets {
+    main {
+        java {
+            srcDirs 'src-velocity'
+        }
+        resources {
+            srcDirs 'src-velocity'
+            include 'bboss-velocity.properties'
+        }
+       
+       
+    }
+}
+ project.tasks.compileJava.dependsOn(project(':bboss-soa').tasks.publish)
+dependencies {
+    compile (
+	    [group: 'ant', name: 'ant', version: '1.6.2', transitive: false],
+	    [group: 'antlr', name: 'antlr', version: '2.7.5', transitive: false],
+	    [group: 'avalon-logkit', name: 'avalon-logkit', version: '2.1', transitive: false],
+	    [group: 'commons-collections', name: 'commons-collections', version: '3.2.1', transitive: false],
+	    [group: 'commons-lang', name: 'commons-lang', version: '2.6', transitive: false],
+	    [group: 'commons-logging', name: 'commons-logging', version: '1.1', transitive: false],
+	    [group: 'jdom', name: 'jdom', version: '1.0', transitive: false],
+	    [group: 'log4j', name: 'log4j', version: '1.2.12', transitive: false],
+	    [group: 'org.apache.maven', name: 'maven-ant-tasks', version: '2.0.9', transitive: false],
+	    [group: 'oro', name: 'oro', version: '2.0.8', transitive: false],
+	    [group: 'werken-xpath', name: 'werken-xpath', version: '0.9.4', transitive: false],
+	    [group: 'hsqldb', name: 'hsqldb', version: '1.7.1', transitive: false],
+	    [group: 'servletapi', name: 'servletapi', version: '2.4', transitive: false]
+    )
+}
+
+task sourcesJar(type: Jar) {
+	classifier = "sources"
+    from sourceSets.main.allSource
+}
+
+task javaDocJar(type: Jar, dependsOn: javadoc) {
+	classifier = "javadoc"
+	from javadoc.destinationDir
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+			artifact jar
+			artifact sourcesJar
+			artifact javaDocJar
+        }
+    }
+    repositories {
+        maven {
+            url "http://bdp.sany.com.cn/nexus/content/repositories/releases/"
+            credentials {
+                username "sany"
+                password "sany"
+            }
+        }
+    }
+}

@@ -1,0 +1,51 @@
+sourceSets {
+    main {
+        java {
+            srcDir 'src'
+        }
+    }
+    test {
+        java {
+            srcDir 'test'
+        }
+    }
+}
+project.tasks.compileJava.dependsOn(project(':bboss-core').tasks.publish)
+dependencies {
+    compile (
+            [group: 'log4j', name: 'log4j', version: '1.2.16', transitive: false],
+            [group: 'com.bbossgroups', name: 'bboss-util', version: "${version}", transitive: false],
+            [group: 'com.bbossgroups', name: 'bboss-core', version: "${version}", transitive: false],
+            [group: 'com.caucho', name: 'hessian', version: '4.0.7', transitive: false],
+            [group: 'javaee', name: 'javaee-api', version: '5', transitive: false]
+    )
+}
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+	classifier = "sources"
+    from sourceSets.main.allJava
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+	classifier = "javadoc"
+    from javadoc.destinationDir
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifact jar
+            artifact sourcesJar
+            artifact javadocJar
+        }
+    }
+    repositories {
+        maven {
+            url "http://bdp.sany.com.cn/nexus/content/repositories/releases/"
+            credentials {
+                username "sany"
+                password "sany"
+            }
+        }
+    }
+}
