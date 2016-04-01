@@ -21,14 +21,16 @@ repositories {
 dependencies {
 	
 	//test依赖bboss_rt和frameworkset_util的输出
-   providedCompile (
+   compileOnly (
 		
-		[group: 'org.bbossgroups', name: 'bboss-persistent', version: "${version}"]
+		[group: 'org.apache.tomcat', name: 'tomcat-catalina', version: "8.0.33", transitive: true],
+		[group: 'org.apache.tomcat', name: 'tomcat-coyote', version: "8.0.33", transitive: true],
+		[group: 'org.apache.tomcat', name: 'tomcat-websocket', version: "8.0.33", transitive: true],
 		
+		  [group: 'servletapi', name: 'servletapi', version: '2.4', transitive: true],
+            [group: 'javax.servlet', name: 'jsp-api', version: '2.0', transitive: true]
 	)
-    providedCompile (
-            fileTree(dir: 'compilelib', include: '**/*.jar')
-    )
+    
     
     
 }
