@@ -23,7 +23,7 @@ dependencies {
 	//test依赖bboss_rt和frameworkset_util的输出
    providedCompile (
 		
-		[group: 'com.bbossgroups', name: 'bboss-persistent', version: "${version}"]
+		[group: 'org.bbossgroups', name: 'bboss-persistent', version: "${version}"]
 		
 	)
     providedCompile (

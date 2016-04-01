@@ -1,9 +1,9 @@
 #org.springsource.ide.eclipse.gradle.core.preferences.GradleImportPreferences
-#Thu Mar 31 23:43:12 CST 2016
+#Fri Apr 01 08:52:31 CST 2016
 addResourceFilters=true
 afterTasks=afterEclipseImport;
 beforeTasks=cleanEclipse;eclipse;
 enableAfterTasks=true
 enableBeforeTasks=true
 enableDependendencyManagement=true
-projects=;bboss-core;bboss-event;bboss-hession;bboss-mvc;bboss-persistent;bboss-schedule;bboss-soa;bboss-taglib;bboss-util;bboss-velocity;
+projects=;bboss-core;bboss-event;bboss-hession;bboss-mvc;bboss-persistent;bboss-schedule;bboss-soa;bboss-taglib;bboss-util;bboss-velocity;bboss-websocket;

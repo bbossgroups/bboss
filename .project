@@ -17,7 +17,7 @@
 	</natures>
 	<filteredResources>
 		<filter>
-			<id>1459442554926</id>
+			<id>1459473704931</id>
 			<name></name>
 			<type>26</type>
 			<matcher>
@@ -62,6 +62,10 @@
 					<matcher>
 						<id>org.eclipse.ui.ide.multiFilter</id>
 						<arguments>1.0-projectRelativePath-equals-true-false-bboss-velocity</arguments>
+					</matcher>
+					<matcher>
+						<id>org.eclipse.ui.ide.multiFilter</id>
+						<arguments>1.0-projectRelativePath-equals-true-false-bboss-websocket</arguments>
 					</matcher>
 				</arguments>
 			</matcher>

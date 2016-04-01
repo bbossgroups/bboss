@@ -18,9 +18,9 @@ dependencies {
 	
     compile (
 				
-            [group: 'com.bbossgroups', name: 'bboss-rt', version: "${version}", transitive: false],
-            [group: 'com.bbossgroups', name: 'bboss-util', version: "${version}", transitive: false],
-            [group: 'com.bbossgroups', name: 'bboss-soa', version: "${version}", transitive: false],
+            [group: 'org.bbossgroups', name: 'bboss-rt', version: "${version}", transitive: false],
+            [group: 'org.bbossgroups', name: 'bboss-util', version: "${version}", transitive: false],
+            [group: 'org.bbossgroups', name: 'bboss-soa', version: "${version}", transitive: false],
             [group: 'log4j', name: 'log4j', version: '1.2.16', transitive: false],
             [group: 'org.codehaus.jackson', name: 'jackson-mapper-asl', version: '1.9.10',transitive: true],
             [group: 'oro', name: 'oro', version: '2.0.8', transitive: false],
