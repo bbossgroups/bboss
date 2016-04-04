@@ -6,52 +6,40 @@ sourceSets {
             srcDirs 'src'
         }
         resources {
-            
+
         }
-       
-       
     }
-    
 }
 
-repositories {
-   
-   mavenCentral()
-}
 dependencies {
-	
-	//test依赖bboss_rt和frameworkset_util的输出
-   compileOnly (
-		
-		[group: 'org.apache.tomcat', name: 'tomcat-catalina', version: "8.0.33", transitive: true],
-		[group: 'org.apache.tomcat', name: 'tomcat-coyote', version: "8.0.33", transitive: true],
-		[group: 'org.apache.tomcat', name: 'tomcat-websocket', version: "8.0.33", transitive: true],
-		
-		  [group: 'servletapi', name: 'servletapi', version: '2.4', transitive: true],
+    //test依赖bboss_rt和frameworkset_util的输出
+    compileOnly(
+            [group: 'org.apache.tomcat', name: 'tomcat-catalina', version: "8.0.33", transitive: true],
+            [group: 'org.apache.tomcat', name: 'tomcat-coyote', version: "8.0.33", transitive: true],
+            [group: 'org.apache.tomcat', name: 'tomcat-websocket', version: "8.0.33", transitive: true],
+            [group: 'servletapi', name: 'servletapi', version: '2.4', transitive: true],
             [group: 'javax.servlet', name: 'jsp-api', version: '2.0', transitive: true]
-	)
-    
-    
-    
+    )
+
+
 }
- 
+
 
 war {
-	from 'WebRoot'
-      // adds a file-set to the root of the archive
+    from 'WebRoot'
+    // adds a file-set to the root of the archive
     webInf { from 'WebRoot/WEB-INF' } // adds a file-set to the WEB-INF dir.
-    
+
     classpath configurations.providedCompile // adds a configuration to the WEB-INF/lib dir.
     webXml = file('WebRoot/WEB-INF/web.xml') // copies a file to WEB-INF/web.xml
 }
 publishing {
     publications {
         mavenJava(MavenPublication) {
-			
-			artifact war
+            artifact war
         }
     }
-     repositories {
+    repositories {
         mavenLocal()
-    } 
+    }
 }

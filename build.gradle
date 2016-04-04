@@ -1,45 +1,76 @@
-allprojects {
-    group = PROJ_GROUP
-    version = PROJ_VERSION   
-    
+configure(allprojects) { project ->
+	group = PROJ_GROUP
+	version = PROJ_VERSION
+
+	apply plugin: "java"
+	apply plugin: "maven-publish"
+	apply plugin: "eclipse"
+	apply plugin: "idea"
+
+	eclipse {
+		jdt {
+			//if you want to alter the java versions (by default they are configured with gradle java plugin settings):
+			sourceCompatibility = SOURCE_COMPILER_LEVEL
+			targetCompatibility = TARGET_COMPILER_LEVEL
+			javaRuntimeName = "../../org.eclipse.jdt.launching.JRE_CONTAINER"
+
+		}
+	}
+
+	tasks.withType(JavaCompile) {
+		sourceCompatibility = SOURCE_COMPILER_LEVEL
+		targetCompatibility = TARGET_COMPILER_LEVEL
+		options.encoding = 'UTF-8'
+	}
+
+	tasks.withType(Javadoc) {
+		options.encoding = 'UTF-8'
+	}
+
+	jar {
+		manifest {
+			attributes (
+					'Implementation': version,
+					'Specification-Version': '',
+					'Implementation-Vendor': '',
+					'Implementation-ProductID': project.name,
+					'Compile-Timestamp': new Date().format('yyyy-MM-dd HH:mm:ss'),
+					'Compile-User': DEVELOPER_NAME
+			)
+		}
+	}
+
+	dependencies {
+		testCompile 'junit:junit:4.12'
+	}
+
+	repositories {
+		mavenCentral()
+		mavenLocal()
+	}
 }
 
-subprojects {
-    apply plugin: "java"
-    apply plugin: "maven-publish"
-	apply plugin: "eclipse"
-	eclipse {
-	   jdt {
-	     //if you want to alter the java versions (by default they are configured with gradle java plugin settings):
-	     sourceCompatibility = 1.7
-	     targetCompatibility = 1.7
-	     javaRuntimeName = "../../org.eclipse.jdt.launching.JRE_CONTAINER"
-	
-	   }
-	 }
-	
-	
-	tasks.withType(JavaCompile) {
-		 
-        options.encoding = 'UTF-8'
-	}
-	
-	tasks.withType(Javadoc) {
-		 
-        options.encoding = 'UTF-8'
+configure(subprojects - [project(":bboss-util"),project(":bboss-taglib"),project(":bboss-websocket")]) { subproject ->
+	task sourcesJar(type: Jar) {
+		classifier = "sources"
+		from sourceSets.main.allJava
 	}
 
-    javadoc {
-    	 
-    	options.encoding = 'UTF-8'
-    }
-    
-	dependencies {
-        testCompile 'junit:junit:4.12'
-    }
-	
-	repositories {
-         mavenCentral()
-          mavenLocal()
-    }
+	task javaDocJar(type: Jar, dependsOn: javadoc) {
+		classifier = "javadoc"
+		from javadoc.destinationDir
+	}
+
+	publishing {
+		publications {
+			mavenJava(MavenPublication) {
+				from components.java
+				artifact sourcesJar
+				artifact javaDocJar
+			}
+		}
+		repositories {
+			mavenLocal()
+		}
+	}
 }

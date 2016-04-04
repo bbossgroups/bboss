@@ -31,3 +31,5 @@ bboss-velocity/.project
 bboss-velocity/.classpath
 bboss-taglib/.classpath
 bboss-taglib/.project
+.idea
+.gradle
