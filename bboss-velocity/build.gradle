@@ -29,26 +29,3 @@ dependencies {
 	    [group: 'servletapi', name: 'servletapi', version: '2.4', transitive: false]
     )
 }
-
-task sourcesJar(type: Jar) {
-	classifier = "sources"
-    from sourceSets.main.allSource
-}
-
-task javaDocJar(type: Jar, dependsOn: javadoc) {
-	classifier = "javadoc"
-	from javadoc.destinationDir
-}
-
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-			artifact jar
-			artifact sourcesJar
-			artifact javaDocJar
-        }
-    }
-     repositories {
-        mavenLocal()
-    } 
-}

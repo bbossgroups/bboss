@@ -24,26 +24,3 @@ dependencies {
 		[group: 'org.quartz-scheduler', name: 'quartz', version: '1.8.6', transitive: false]
 	)
 }
-
-task sourcesJar(type: Jar, dependsOn: classes) {
-	classifier = "sources"
-    from sourceSets.main.allJava
-}
-
-task javadocJar(type: Jar, dependsOn: javadoc) {
-	classifier = "javadoc"
-    from javadoc.destinationDir
-}
-
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            artifact jar
-            artifact sourcesJar
-            artifact javadocJar
-        }
-    }
-    repositories {
-         mavenLocal()
-    } 
-}
