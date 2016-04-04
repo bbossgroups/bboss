@@ -18,8 +18,6 @@ configure(allprojects) { project ->
 	}
 
 	tasks.withType(JavaCompile) {
-		sourceCompatibility = SOURCE_COMPILER_LEVEL
-		targetCompatibility = TARGET_COMPILER_LEVEL
 		options.encoding = 'UTF-8'
 	}
 
