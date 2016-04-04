@@ -17,6 +17,10 @@ dependencies {
             [group: 'org.bbossgroups', name: 'bboss-util', version: "${version}", transitive: false],
             [group: 'org.bbossgroups', name: 'bboss-core', version: "${version}", transitive: false],
             [group: 'com.caucho', name: 'hessian', version: '4.0.7', transitive: false],
+            
+    )
+    
+     compileOnly (            
             [group: 'javaee', name: 'javaee-api', version: '5', transitive: false]
     )
 }
