@@ -1,5 +1,15 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'com.bmuschko:gradle-tomcat-plugin:2.2.4'
+    }
+}
 apply plugin: 'war'
 apply plugin: 'jetty'
+apply plugin: 'com.bmuschko.tomcat'
 sourceSets {
     main {
         java {
@@ -24,14 +34,22 @@ dependencies {
 compile(
            [group: 'org.bbossgroups', name: 'bboss-util', version: "${version}", transitive: true]
     )
+    def tomcatVersion = '8.0.33'
+    tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
+           "org.apache.tomcat.embed:tomcat-embed-logging-juli:${tomcatVersion}",
+           "org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}"
+    
 }
 
-
+tomcat
+{
+	 httpPort = 80
+}
 war {
     from 'WebRoot'
     // adds a file-set to the root of the archive
     webInf { from 'WebRoot/WEB-INF' } // adds a file-set to the WEB-INF dir.
-
+	
     classpath configurations.providedCompile // adds a configuration to the WEB-INF/lib dir.
     webXml = file('WebRoot/WEB-INF/web.xml') // copies a file to WEB-INF/web.xml
 }
@@ -46,3 +64,4 @@ publishing {
         mavenLocal()
     }
 }
+webAppDirName = 'WebRoot'  
