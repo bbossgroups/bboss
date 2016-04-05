@@ -1,15 +1,21 @@
 buildscript {
     repositories {
+     jcenter()
         mavenCentral()
+       
+        
     }
 
     dependencies {
-        classpath 'com.bmuschko:gradle-tomcat-plugin:2.2.4'
+        //classpath 'com.bmuschko:gradle-tomcat-plugin:2.2.4'
+        classpath 'org.akhikhl.gretty:gretty:+'
+        
     }
 }
 apply plugin: 'war'
-apply plugin: 'jetty'
-apply plugin: 'com.bmuschko.tomcat'
+//apply plugin: 'jetty'
+//apply plugin: 'com.bmuschko.tomcat'
+apply plugin: 'org.akhikhl.gretty'
 sourceSets {
     main {
         java {
@@ -34,17 +40,21 @@ dependencies {
 compile(
            [group: 'org.bbossgroups', name: 'bboss-util', version: "${version}", transitive: true]
     )
-    def tomcatVersion = '8.0.33'
+   /** def tomcatVersion = '8.0.33'
     tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
            "org.apache.tomcat.embed:tomcat-embed-logging-juli:${tomcatVersion}",
            "org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}"
-    
+    */
 }
-
-tomcat
+gretty {
+  port = 80
+  contextPath = '/bboss-websocket'
+  // ... many more properties
+}
+/**tomcat
 {
 	 httpPort = 80
-}
+}*/
 war {
     from 'WebRoot'
     // adds a file-set to the root of the archive
