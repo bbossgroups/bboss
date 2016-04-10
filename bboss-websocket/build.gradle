@@ -38,7 +38,7 @@ dependencies {
     )
 
 compile(
-           [group: 'org.bbossgroups', name: 'bboss-util', version: "${version}", transitive: true]
+           [group: 'org.bbossgroups', name: 'bboss-mvc', version: "${version}", transitive: true]
     )
    /** def tomcatVersion = '8.0.33'
     tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
