@@ -18,7 +18,7 @@ public class Websocket1Action extends Endpoint {
 
     @Override
     public void onError(Session session, java.lang.Throwable throwable) {
-        System.out.println("onError");
+        System.out.println("onErrorsdfasdfg");
     }
 
     @Override
@@ -51,7 +51,7 @@ public class Websocket1Action extends Endpoint {
         @Override
         public void onMessage(String s) {
             try {
-                remote.sendText("success");
+                remote.sendText("successasdfasdf:"+s);
             } catch (IOException e) {
                 e.printStackTrace();
             }

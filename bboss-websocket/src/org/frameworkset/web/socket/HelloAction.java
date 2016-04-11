@@ -1,5 +1,10 @@
 package org.frameworkset.web.socket;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebInitParam;
@@ -8,8 +13,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
-import java.io.PrintWriter;
+import javax.websocket.HandshakeResponse;
+import javax.websocket.server.HandshakeRequest;
+import javax.websocket.server.ServerEndpointConfig;
 
 /**
  * Created by shanl on 14-3-2.
@@ -33,4 +39,24 @@ public class HelloAction extends HttpServlet {
         out.println("</html>");
         out.close();
     }
+
+	@Override
+	public void init(ServletConfig config) throws ServletException {
+		// TODO Auto-generated method stub
+		super.init(config);
+		List<String> datas = new ArrayList<String>();
+		ServerEndpointConfig config_ = ServerEndpointConfig.Builder.create(Websocket2Action.class, "/Websocket2")
+		         .subprotocols(datas)
+		         .configurator(new ServerEndpointConfig.Configurator(){
+
+					@Override
+					public void modifyHandshake(ServerEndpointConfig sec, HandshakeRequest request,
+							HandshakeResponse response) {
+						// TODO Auto-generated method stub
+						super.modifyHandshake(sec, request, response);
+					}
+		        	 
+		         })
+		         .build();
+	}
 }
