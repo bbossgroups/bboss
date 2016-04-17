@@ -12,7 +12,7 @@ sourceSets {
 project.tasks.compileJava.dependsOn(project(':bboss-core').tasks.publish)
 dependencies {
     compile (
-    		 
+    		
             [group: 'org.bbossgroups', name: 'bboss-util', version: "${version}", transitive: false],
             [group: 'org.bbossgroups', name: 'bboss-soa', version: "${version}", transitive: false],
             [group: 'org.bbossgroups', name: 'bboss-core', version: "${version}", transitive: false],

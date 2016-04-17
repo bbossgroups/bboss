@@ -1,3 +1,16 @@
+buildscript {
+	    repositories {	      
+	        mavenCentral()	
+	        mavenLocal()        
+	    }
+	
+	    dependencies {
+	        //classpath 'com.bmuschko:gradle-tomcat-plugin:2.2.4'
+	        classpath 'org.akhikhl.gretty:gretty:+'
+	        
+	    }
+	}
+ 
 configure(allprojects) { project ->
 	group = PROJ_GROUP
 	version = PROJ_VERSION
@@ -29,8 +42,8 @@ configure(allprojects) { project ->
 		manifest {
 			attributes (
 					'Implementation': version,
-					'Specification-Version': '',
-					'Implementation-Vendor': '',
+					'Specification-Version': version,
+					'Implementation-Vendor': 'bbossgroups',
 					'Implementation-ProductID': project.name,
 					'Compile-Timestamp': new Date().format('yyyy-MM-dd HH:mm:ss'),
 					'Compile-User': DEVELOPER_NAME
@@ -48,12 +61,37 @@ configure(allprojects) { project ->
 	}
 }
 
+configure(subprojects.findAll {it.name.equals('bboss-websocket')}) {
+	
+    apply plugin: 'war'
+    /**apply plugin: 'jetty'  
+    jettyRun {
+	  reload ="automatic"
+	  scanIntervalSeconds = 1
+	  httpPort=80
+	  contextPath='/bboss-websocket'
+	}*/
+    apply plugin: 'org.akhikhl.gretty'
+    
+     gretty {
+	    httpPort = 80
+	   
+	    contextPath = '/bboss-websocket'
+	    jvmArgs = ['-Xmx1024M', '-XX:PermSize=128M', '-XX:MaxPermSize=256M']
+	  //  servletContainer = 'jetty7'
+	  
+	  }
+    /**evaluationDependsOn(':bboss-mvc')
+	evaluationDependsOn(':bboss-util')
+	evaluationDependsOn(':bboss-core')
+	evaluationDependsOn(':bboss-soa')*/
+}
 configure(subprojects - [project(":bboss-util"),project(":bboss-taglib"),project(":bboss-websocket")]) { subproject ->
 	task sourcesJar(type: Jar) {
-		classifier = "sources"
+		classifier = "sources"	
 		from sourceSets.main.allJava
 	}
-
+	
 	task javaDocJar(type: Jar, dependsOn: javadoc) {
 		classifier = "javadoc"
 		from javadoc.destinationDir

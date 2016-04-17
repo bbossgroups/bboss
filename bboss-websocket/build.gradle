@@ -1,21 +1,3 @@
-buildscript {
-    repositories {
-     jcenter()
-        mavenCentral()
-       
-        
-    }
-
-    dependencies {
-        //classpath 'com.bmuschko:gradle-tomcat-plugin:2.2.4'
-        classpath 'org.akhikhl.gretty:gretty:+'
-        
-    }
-}
-apply plugin: 'war'
-//apply plugin: 'jetty'
-//apply plugin: 'com.bmuschko.tomcat'
-apply plugin: 'org.akhikhl.gretty'
 sourceSets {
     main {
         java {
@@ -24,50 +6,58 @@ sourceSets {
         resources {
 
         }
+        compileClasspath = configurations.providedCompile +configurations.compile
     }
 }
 
-dependencies {
-    //test依赖bboss_rt和frameworkset_util的输出
-    compileOnly(
-            [group: 'org.apache.tomcat', name: 'tomcat-catalina', version: "8.0.33", transitive: false],
-            [group: 'org.apache.tomcat', name: 'tomcat-coyote', version: "8.0.33", transitive: false],
-            [group: 'org.apache.tomcat', name: 'tomcat-websocket', version: "8.0.33", transitive: true],
-            [group: 'servletapi', name: 'servletapi', version: '2.4', transitive: false],
-            [group: 'javax.servlet', name: 'jsp-api', version: '2.0', transitive: false]
-    )
 
-compile(
+jar {
+    classifier = "all"
+}
+
+project.tasks.compileJava.dependsOn(project(':bboss-mvc').tasks.publish)
+dependencies {
+   
+    providedCompile "org.apache.tomcat:tomcat-catalina:8.0.33"
+    providedCompile "org.apache.tomcat:tomcat-coyote:8.0.33" 
+    providedCompile "org.apache.tomcat:tomcat-websocket:8.0.33"
+    providedCompile "servletapi:servletapi:2.4"
+    providedCompile  "javax.servlet:jsp-api:2.0" 
+   
+    compile  (
+			
            [group: 'org.bbossgroups', name: 'bboss-mvc', version: "${version}", transitive: true],
-            [group: 'org.glassfish.tyrus.bundles', name: 'tyrus-standalone-client', version: "1.9", transitive: true]
+            [group: 'org.glassfish.tyrus.bundles', name: 'tyrus-standalone-client', version: "1.9", transitive: true],
+            //project(':bboss-mvc')
     )
-   /** def tomcatVersion = '8.0.33'
-    tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
-           "org.apache.tomcat.embed:tomcat-embed-logging-juli:${tomcatVersion}",
-           "org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}"
-    */
+     
 }
-gretty {
-  port = 80
-  contextPath = '/bboss-websocket'
-  // ... many more properties
-}
-/**tomcat
-{
-	 httpPort = 80
-}*/
+    
+ 
+
 war {
     from 'WebRoot'
     // adds a file-set to the root of the archive
     webInf { from 'WebRoot/WEB-INF' } // adds a file-set to the WEB-INF dir.
-	
-    classpath configurations.providedCompile // adds a configuration to the WEB-INF/lib dir.
+    classpath configurations.compile // adds a configuration to the WEB-INF/lib dir.
     webXml = file('WebRoot/WEB-INF/web.xml') // copies a file to WEB-INF/web.xml
+}
+
+task sourcesJar(type: Jar) {
+	classifier = "sources"
+	from sourceSets.main.allJava
+}
+
+task javaDocJar(type: Jar, dependsOn: javadoc) {
+	classifier = "javadoc"
+	from javadoc.destinationDir
 }
 publishing {
     publications {
         mavenJava(MavenPublication) {
         	from components.java
+			artifact sourcesJar
+			artifact javaDocJar
             artifact war
         }
     }

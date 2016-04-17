@@ -7,7 +7,7 @@ import java.io.IOException;
 /**
  * Created by shanl on 14-3-2.
  */
-//@ServerEndpoint(value = "/Websocket2")
+@ServerEndpoint(value = "/Websocket2")
 public class Websocket2Action {
     private Session session;
     //private static final Logger sysLogger = Logger.getLogger("sysLog");
