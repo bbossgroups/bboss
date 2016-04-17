@@ -7,5 +7,12 @@ sourceSets {
            
         }
     }
+    test {
+		 
+		resources {
+			
+			srcDir 'resources'
+		}
+	}
 }
 

@@ -8,10 +8,13 @@ sourceSets {
 		}
 	}
 	test {
-		java {
-			srcDir 'test'
-		}
-	}
+        java {
+            srcDir 'test'
+        }
+        resources{
+        	srcDir 'resources'
+        }
+    }
 }
 project.tasks.compileJava.dependsOn(project(':bboss-core').tasks.publish)
 dependencies {

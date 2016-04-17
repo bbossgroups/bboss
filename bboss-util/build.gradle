@@ -19,6 +19,14 @@ sourceSets {
             srcDirs 'src-rt'
         }
     }
+    test {
+        java {
+            srcDir 'test'
+        }
+        resources{
+        	srcDir 'resources'
+        }
+    }
 }
 
 jar {

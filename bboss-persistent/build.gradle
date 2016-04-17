@@ -18,6 +18,10 @@ sourceSets {
 		java {
 			srcDir 'test'
 		}
+		resources {
+			
+			srcDir 'resources'
+		}
 	}
 }
 project.tasks.compileJava.dependsOn(project(':bboss-core').tasks.publish)
