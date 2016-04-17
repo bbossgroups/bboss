@@ -60,7 +60,9 @@ configure(allprojects) { project ->
 	}
 	if(project.getProperty('skipTest'))
 	{
-		//test.onlyIf { !project.getProperty('skipTest') } 
+		compileTestJava.enabled=false
+		processTestResources.enabled=false
+		testClasses.enabled = false
 		test.enabled = false  
 	}
 }
