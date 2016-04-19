@@ -18,8 +18,7 @@ sourceSets {
 		java {
 			srcDir 'test'
 		}
-		resources {
-			
+		resources {			
 			srcDir 'resources'
 		}
 	}

@@ -34,6 +34,8 @@ configure(allprojects) { project ->
 	}
 
 	tasks.withType(Javadoc) {
+		sourceCompatibility = SOURCE_COMPILER_LEVEL
+		targetCompatibility = TARGET_COMPILER_LEVEL
 		options.encoding = 'UTF-8'
 	}
 
@@ -77,7 +79,7 @@ configure(subprojects.findAll {it.name.equals('bboss-websocket')}) {
 	  httpPort=80
 	  contextPath='/bboss-websocket'
 	}*/
-    apply plugin: 'org.akhikhl.gretty'
+    /** apply plugin: 'org.akhikhl.gretty'
     
      gretty {
 	    httpPort = 80
@@ -86,7 +88,7 @@ configure(subprojects.findAll {it.name.equals('bboss-websocket')}) {
 	    jvmArgs = ['-Xmx1024M', '-XX:PermSize=128M', '-XX:MaxPermSize=256M']
 	  //  servletContainer = 'jetty7'
 	  
-	  }
+	  }*/
     /**evaluationDependsOn(':bboss-mvc')
 	evaluationDependsOn(':bboss-util')
 	evaluationDependsOn(':bboss-core')
