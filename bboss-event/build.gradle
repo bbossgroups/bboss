@@ -19,8 +19,8 @@ sourceSets {
 project.tasks.compileJava.dependsOn(project(':bboss-core').tasks.publish)
 dependencies {
 	compile (
-		[group: 'org.bbossgroups', name: 'bboss-core', version: "${version}", transitive: false],
-		[group: 'org.bbossgroups', name: 'bboss-util', version: "${version}", transitive: false],
+		[group: 'com.bbossgroups', name: 'bboss-core', version: "${version}", transitive: false],
+		[group: 'com.bbossgroups', name: 'bboss-util', version: "${version}", transitive: false],
 		[group: 'org.ow2.asm', name: 'asm', version: '5.0.3', transitive: false],
 		[group: 'cglib', name: 'cglib-nodep', version: '3.1', transitive: false],
 		[group: 'oro', name: 'oro', version: '2.0.8', transitive: false],

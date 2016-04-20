@@ -37,7 +37,7 @@ project.tasks.compileJava.dependsOn(project(':bboss-velocity').tasks.publish)
 
 dependencies {
     compile(
-            [group: 'org.bbossgroups', name: 'bboss-velocity', version: "${version}", transitive: false],
+            [group: 'com.bbossgroups', name: 'bboss-velocity', version: "${version}", transitive: false],
             [group: 'ant', name: 'ant', version: '1.6.4', transitive: false],
             [group: 'commons-lang', name: 'commons-lang', version: '2.6', transitive: false],
             [group: 'concurrent', name: 'concurrent', version: '1.3.2', transitive: false],            

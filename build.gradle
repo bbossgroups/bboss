@@ -116,5 +116,6 @@ configure(subprojects - [project(":bboss-util"),project(":bboss-taglib"),project
 		repositories {
 			mavenLocal()
 		}
+		
 	}
 }

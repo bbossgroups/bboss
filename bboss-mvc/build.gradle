@@ -22,9 +22,9 @@ project.tasks.compileJava.dependsOn(project(':bboss-core').tasks.publish)
 dependencies {
     compile (
     		
-            [group: 'org.bbossgroups', name: 'bboss-util', version: "${version}", transitive: false],
-            [group: 'org.bbossgroups', name: 'bboss-soa', version: "${version}", transitive: false],
-            [group: 'org.bbossgroups', name: 'bboss-core', version: "${version}", transitive: false],
+            [group: 'com.bbossgroups', name: 'bboss-util', version: "${version}", transitive: false],
+            [group: 'com.bbossgroups', name: 'bboss-soa', version: "${version}", transitive: false],
+            [group: 'com.bbossgroups', name: 'bboss-core', version: "${version}", transitive: false],
             [group: 'cglib', name: 'cglib-nodep', version: '3.1', transitive: false],
             [group: 'oro', name: 'oro', version: '2.0.8', transitive: false],
             [group: 'com.thoughtworks.xstream', name: 'xstream', version: '1.3.1', transitive: false],
