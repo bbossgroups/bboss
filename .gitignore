@@ -33,3 +33,5 @@ bboss-taglib/.classpath
 bboss-taglib/.project
 .idea
 .gradle
+/.classpath
+/.project
