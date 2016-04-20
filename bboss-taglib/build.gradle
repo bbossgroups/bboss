@@ -1,12 +1,12 @@
 sourceSets {
-    html_parser {
+    bboss_htmlparser {
         java {
             srcDirs 'src-htmlparser'
         }
         compileClasspath = configurations.runtime
     }
     /*
-    html_parser {java {srcDirs 'src-htmlparser'}compileClasspath = configurations.runtime}
+    bboss_htmlparser {java {srcDirs 'src-htmlparser'}compileClasspath = configurations.runtime}
     */
     bboss_taglib {
         java {
@@ -18,7 +18,7 @@ sourceSets {
             srcDirs 'src'
             include '**/*.properties'
         }
-        compileClasspath = configurations.runtime +configurations.compileOnly + sourceSets.html_parser.output
+        compileClasspath = configurations.runtime +configurations.compileOnly + sourceSets.bboss_htmlparser.output
     }
     bboss_tabpane {
         java {
@@ -58,20 +58,20 @@ dependencies {
             [group: 'servletapi', name: 'servletapi', version: '2.4', transitive: false],
             [group: 'javax.servlet', name: 'jsp-api', version: '2.0', transitive: false]
     )
-    //bboss_taglib编译时，需要依赖html_parser的编译输出
-    bboss_taglibRuntime sourceSets.html_parser.output
+    //bboss_taglib编译时，需要依赖bboss_htmlparser的编译输出
+    bboss_taglibRuntime sourceSets.bboss_htmlparser.output
     //bboss_tabpane编译时，需要依赖bboss_taglib的编译输出
     bboss_tabpaneRuntime sourceSets.bboss_taglib.output
 }
 
-sourceSets.html_parser { set ->
+sourceSets.bboss_htmlparser { set ->
     def jarTask = task("${set.name}Jar", type: Jar) {
-        baseName = "html-parser"
+        baseName = "bboss-htmlparser"
         from set.output
     }
 
     def jarSourcesTask = task("${set.name}SourceJar", type: Jar) {
-        baseName = "html-parser"
+        baseName = "bboss-htmlparser"
         classifier = "sources"
         from set.allJava
     }
@@ -82,7 +82,7 @@ sourceSets.html_parser { set ->
     }
 
     def jarDocTask = task("${set.name}DocJar", type: Jar, dependsOn: docTask) {
-        baseName = "html-parser"
+        baseName = "bboss-htmlparser"
         classifier = "javadoc"
         from docTask
     }
@@ -157,12 +157,12 @@ sourceSets.bboss_tabpane { set ->
 
 publishing {
     publications {
-        html_parser(MavenPublication) {
-            artifactId 'html-parser'
+        bboss_htmlparser(MavenPublication) {
+            artifactId 'bboss-htmlparser'
             from components.java
-            artifact html_parserJar
-            artifact html_parserSourceJar
-            artifact html_parserDocJar
+            artifact bboss_htmlparserJar
+            artifact bboss_htmlparserSourceJar
+            artifact bboss_htmlparserDocJar
         }
         bboss_taglib(MavenPublication) {
             artifactId 'bboss-taglib'
