@@ -5,9 +5,7 @@ sourceSets {
             srcDirs 'src-asm'
             srcDirs 'src-charset'
         }
-        resources {
-            // srcDirs 'src' exclude 'log4j.properties'
-        }
+        
         compileClasspath = configurations.compile+configurations.compileOnly
 
     }
@@ -15,17 +13,13 @@ sourceSets {
         java {
             srcDirs 'src-rt'
         }
-        resources {
-            srcDirs 'src-rt'
-        }
+        
     }
     test {
         java {
             srcDir 'test'
         }
-        resources{
-        	srcDir 'resources'
-        }
+         
     }
 }
 
@@ -133,6 +127,12 @@ publishing {
 
     }
     repositories {
-        mavenLocal()
+        maven {
+            url "https://oss.sonatype.org/service/local/staging/deploy/maven2"
+            credentials {
+                username "bboss"
+                password "bboss123456"
+            }
+        }
     }
 }

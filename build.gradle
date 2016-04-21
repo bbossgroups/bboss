@@ -18,6 +18,7 @@ configure(allprojects) { project ->
 	apply plugin: "maven-publish"
 	apply plugin: "eclipse"
 	apply plugin: "idea"
+	apply plugin: "signing"
 	
 	eclipse {
 		jdt {
@@ -104,6 +105,10 @@ configure(subprojects - [project(":bboss-util"),project(":bboss-taglib"),project
 		classifier = "javadoc"
 		from javadoc.destinationDir
 	}
+	/**signing {
+        required { true }
+        sign configurations.archives
+    }*/
 
 	publishing {
 		publications {
@@ -114,8 +119,14 @@ configure(subprojects - [project(":bboss-util"),project(":bboss-taglib"),project
 			}
 		}
 		repositories {
-			mavenLocal()
-		}
+	        maven {
+	            url "https://oss.sonatype.org/service/local/staging/deploy/maven2"
+	            credentials {
+	                username "bboss"
+	                password "bboss123456"
+	            }
+	        }
+	    }
 		
 	}
 }
