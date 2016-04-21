@@ -1,5 +1,5 @@
 sourceSets {
-    main {
+    bboss_util {
         java {
             srcDirs 'src' exclude 'log4j.properties'
             srcDirs 'src-asm'
@@ -51,8 +51,8 @@ dependencies {
     )
 }
 
-sourceSets.main { set ->
-    def jarTask = task("${set.name}Jar", type: Jar, dependsOn: compileJava, overwrite: jar) {
+sourceSets.bboss_util { set ->
+    def jarTask = task("${set.name}Jar", type: Jar) {
         from set.output
     }
 
@@ -64,6 +64,7 @@ sourceSets.main { set ->
     def docTask = task("${set.name}Doc", type: Javadoc) {
         classpath = set.compileClasspath
         source set.allJava
+        destinationDir=file("build/docs/${set.name}")
     }
 
     def jarDocTask = task("${set.name}DocJar", type: Jar, dependsOn: docTask) {
@@ -79,7 +80,7 @@ sourceSets.main { set ->
 }
 
 sourceSets.bboss_rt { set ->
-    def jarTask = task("${set.name}Jar", type: Jar, dependsOn: compileBboss_rtJava) {
+    def jarTask = task("${set.name}Jar", type: Jar) {
         baseName = "bboss-rt"
         from set.output
     }
@@ -92,6 +93,7 @@ sourceSets.bboss_rt { set ->
 
     def docTask = task("${set.name}Doc", type: Javadoc) {
         source set.allJava
+        destinationDir=file("build/docs/${set.name}")
     }
 
     def jarDocTask = task("${set.name}DocJar", type: Jar, dependsOn: docTask) {
@@ -109,12 +111,12 @@ sourceSets.bboss_rt { set ->
 
 publishing {
     publications {
-        mavenJava(MavenPublication) {
+        utilJava(MavenPublication) {
             from components.java
             artifactId 'bboss-util'
-            artifact mainJar
-            artifact mainSourceJar
-            artifact mainDocJar
+            artifact bboss_utilJar
+            artifact bboss_utilSourceJar
+            artifact bboss_utilDocJar
         }
 
         rtmavenJava(MavenPublication) {
