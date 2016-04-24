@@ -13,7 +13,7 @@ sourceSets {
         java {
             srcDirs 'src-rt'
         }
-        
+        compileClasspath = configurations.compileOnly
     }
     test {
         java {
@@ -30,6 +30,7 @@ jar {
 project.tasks.compileJava.dependsOn(project(':bboss-velocity').tasks.publish)
 
 dependencies {
+	
     compile(
             [group: 'com.bbossgroups', name: 'bboss-velocity', version: "${version}", transitive: false],
             [group: 'ant', name: 'ant', version: '1.6.4', transitive: false],
@@ -49,6 +50,8 @@ dependencies {
             [group: 'bsh', name: 'bsh', version: '2.0b1', transitive: false],
             
     )
+    
+    
 }
 
 sourceSets.bboss_util { set ->
@@ -109,6 +112,60 @@ sourceSets.bboss_rt { set ->
     }
 }
 
+/**artifacts {
+	    archives    bboss_utilJar, bboss_utilSourceJar,bboss_utilDocJar,bboss_rtJar, bboss_rtSourceJar,bboss_rtDocJar
+	}*/
+	
+	signing {
+        
+        sign configurations.archives
+  }
+  
+	uploadArchives {
+	  repositories {
+	    mavenDeployer {
+	      beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+			
+	      repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2") {
+	         authentication(userName: "bboss", password: "bboss123456")
+	      }
+ 			addFilter('bboss_util') {artifact, file ->
+            	artifact.name == 'bboss-util'
+	        }
+	        addFilter('bboss_rt') {artifact, file ->
+	            artifact.name == 'bboss-rt'
+	        }
+	      pom.project {
+	        name project.name
+	        packaging 'jar'
+	        // optionally artifactId can be defined here 
+	        description 'A application used as an $project.name on how to set up  pushing  its components to the Central Repository.'
+	        url PROJ_WEBSITEURL
+
+	        scm {
+	          connection 'scm:git:git@github.com:bbossgroups/bboss.git'
+	          developerConnection 'scm:git:git@github.com:bbossgroups/bestpractice.git'
+	          url 'https://github.com/bbossgroups/bboss'
+	        }
+
+	        licenses {
+	          license {
+	            name 'The Apache License, Version 2.0'
+	            url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+	          }
+	        }
+
+	        developers {
+	          developer {
+	            id 'yin-bp'
+	            name 'yin biao ping'
+	            email 'yin-bp@163.com'
+	          }
+	        }
+	      }
+	    }
+	  }
+	}
 publishing {
     publications {
         utilJava(MavenPublication) {
