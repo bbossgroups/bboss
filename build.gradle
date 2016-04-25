@@ -114,55 +114,47 @@ configure(subprojects - [project(":bboss-util"),project(":bboss-taglib"),project
         
         sign configurations.archives
   }
-	uploadArchives {
+	 
+uploadArchives {
 	  repositories {
 	    mavenDeployer {
 	      beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
-
-	      repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2") {
-	         authentication(userName: "bboss", password: "bboss123456")
+			
+	      repository(url: sonatype_url) {
+	         authentication(userName: sonatype_username, password: sonatype_password)
 	      }
-/**
-	      snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
-	        authentication(userName: "bboss", password: "bboss123456")
-	      }
-*/
+ 			 
 	      pom.project {
-	        name subproject.name
+	        name project.name
 	        packaging 'jar'
 	        // optionally artifactId can be defined here 
-	        description 'A application used as an $subproject.name on how to set up  pushing  its components to the Central Repository.'
+	        description PROJ_DESCRIPTION
 	        url PROJ_WEBSITEURL
 
 	        scm {
-	          connection 'scm:git:git@github.com:bbossgroups/bboss.git'
-	          developerConnection 'scm:git:git@github.com:bbossgroups/bestpractice.git'
-	          url 'https://github.com/bbossgroups/bboss'
+	          connection scm_connection
+	          developerConnection scm_developerConnection
+	          url scm_url
 	        }
 
 	        licenses {
 	          license {
-	            name 'The Apache License, Version 2.0'
-	            url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+	            name PROJ_LICENCE_NAME
+	            url PROJ_LICENCE_URL
 	          }
 	        }
 
 	        developers {
 	          developer {
-	            id 'yin-bp'
-	            name 'yin biao ping'
-	            email 'yin-bp@163.com'
+	            id DEVELOPER_ID
+	            name DEVELOPER_NAME
+	            email DEVELOPER_EMAIL
 	          }
 	        }
 	      }
 	    }
 	  }
 	}
-	 /**model {
-	    tasks.generatePomFileForMavenJavaPublication {
-	        destination = file("$buildDir/generated-pom.xml")
-	    }
-	} */
 	
 	publishing {
 		publications {
@@ -205,8 +197,8 @@ configure(subprojects - [project(":bboss-util"),project(":bboss-taglib"),project
 	        maven {
 	            url "https://oss.sonatype.org/service/local/staging/deploy/maven2"
 	            credentials {
-	                username "bboss"
-	                password "bboss123456"
+	                username ""
+	                password ""
 	            }
 	        }
 	    }

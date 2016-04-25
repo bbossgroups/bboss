@@ -126,7 +126,59 @@ sourceSets.bboss_taglib { set ->
         archives jarDocTask
     }
 }
+signing {
+        
+        sign configurations.archives
+  }
+  uploadArchives {
+	  repositories {
+	    mavenDeployer {
+	      beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+			
+	      repository(url: sonatype_url) {
+	         authentication(userName: sonatype_username, password: sonatype_password)
+	      }
+ 			addFilter('bboss_taglib') {artifact, file ->
+            	artifact.name == 'bboss-taglib'
+	        }
+	        addFilter('bboss_htmlparser') {artifact, file ->
+	            artifact.name == 'bboss-htmlparser'
+	        }
+	         addFilter('bboss_tabpane') {artifact, file ->
+	            artifact.name == 'bboss-tabpane'
+	        }
+	      pom.project {
+	        name project.name
+	        packaging 'jar'
+	        // optionally artifactId can be defined here 
+	        description PROJ_DESCRIPTION
+	        url PROJ_WEBSITEURL
 
+	        scm {
+	          connection scm_connection
+	          developerConnection scm_developerConnection
+	          url scm_url
+	        }
+
+	        licenses {
+	          license {
+	            name PROJ_LICENCE_NAME
+	            url PROJ_LICENCE_URL
+	          }
+	        }
+
+	        developers {
+	          developer {
+	            id DEVELOPER_ID
+	            name DEVELOPER_NAME
+	            email DEVELOPER_EMAIL
+	          }
+	        }
+	      }
+	    }
+	  }
+	}
+	 
 sourceSets.bboss_tabpane { set ->
     def jarTask = task("${set.name}Jar", type: Jar) {
         baseName = "bboss-tabpane"
@@ -186,8 +238,8 @@ publishing {
 	        maven {
 	            url "https://oss.sonatype.org/service/local/staging/deploy/maven2"
 	            credentials {
-	                username "bboss"
-	                password "bboss123456"
+	                username ""
+	                password ""
 	            }
 	        }
 	    }

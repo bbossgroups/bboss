@@ -126,8 +126,8 @@ sourceSets.bboss_rt { set ->
 	    mavenDeployer {
 	      beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
 			
-	      repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2") {
-	         authentication(userName: "bboss", password: "bboss123456")
+	      repository(url: sonatype_url) {
+	         authentication(userName: sonatype_username, password: sonatype_password)
 	      }
  			addFilter('bboss_util') {artifact, file ->
             	artifact.name == 'bboss-util'
@@ -139,27 +139,27 @@ sourceSets.bboss_rt { set ->
 	        name project.name
 	        packaging 'jar'
 	        // optionally artifactId can be defined here 
-	        description 'A application used as an $project.name on how to set up  pushing  its components to the Central Repository.'
+	        description PROJ_DESCRIPTION
 	        url PROJ_WEBSITEURL
 
 	        scm {
-	          connection 'scm:git:git@github.com:bbossgroups/bboss.git'
-	          developerConnection 'scm:git:git@github.com:bbossgroups/bestpractice.git'
-	          url 'https://github.com/bbossgroups/bboss'
+	          connection scm_connection
+	          developerConnection scm_developerConnection
+	          url scm_url
 	        }
 
 	        licenses {
 	          license {
-	            name 'The Apache License, Version 2.0'
-	            url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+	            name PROJ_LICENCE_NAME
+	            url PROJ_LICENCE_URL
 	          }
 	        }
 
 	        developers {
 	          developer {
-	            id 'yin-bp'
-	            name 'yin biao ping'
-	            email 'yin-bp@163.com'
+	            id DEVELOPER_ID
+	            name DEVELOPER_NAME
+	            email DEVELOPER_EMAIL
 	          }
 	        }
 	      }
@@ -187,10 +187,10 @@ publishing {
     }
     repositories {
         maven {
-            url "https://oss.sonatype.org/service/local/staging/deploy/maven2"
+            url sonatype_url
             credentials {
-                username "bboss"
-                password "bboss123456"
+                username sonatype_username
+                password sonatype_password
             }
         }
     }
