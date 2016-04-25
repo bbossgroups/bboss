@@ -11,7 +11,7 @@ sourceSets {
        
     }
 }
- project.tasks.compileJava.dependsOn(project(':bboss-soa').tasks.publish)
+ project.tasks.compileJava.dependsOn(project(':bboss-soa').tasks.uploadArchives)
 dependencies {
     compile (
 	    

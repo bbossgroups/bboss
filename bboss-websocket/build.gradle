@@ -10,12 +10,12 @@ sourceSets {
     }
 }
 
-
+/**
 jar {
     classifier = "all"
-}
+}*/
 
-project.tasks.compileJava.dependsOn(project(':bboss-mvc').tasks.publish)
+project.tasks.compileJava.dependsOn(project(':bboss-mvc').tasks.uploadArchives)
 dependencies {
    
     providedCompile "org.apache.tomcat:tomcat-catalina:8.0.33"

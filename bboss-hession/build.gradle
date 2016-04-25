@@ -10,7 +10,7 @@ sourceSets {
         }
     }
 }
-project.tasks.compileJava.dependsOn(project(':bboss-core').tasks.publish)
+project.tasks.compileJava.dependsOn(project(':bboss-core').tasks.uploadArchives)
 dependencies {
     compile (
             [group: 'log4j', name: 'log4j', version: '1.2.16', transitive: false],

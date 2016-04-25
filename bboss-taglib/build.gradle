@@ -27,10 +27,10 @@ sourceSets {
         compileClasspath = configurations.runtime +configurations.compileOnly+ sourceSets.bboss_taglib.output
     }
 }
-
+/**
 tasks.jar { classifier = "all" }
-
-project.tasks.compileJava.dependsOn(project(':bboss-persistent').tasks.publish)
+*/
+project.tasks.compileJava.dependsOn(project(':bboss-persistent').tasks.uploadArchives)
 
 dependencies {
     runtime(
