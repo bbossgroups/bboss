@@ -11,13 +11,11 @@ sourceSets {
        
     }
 }
- project.tasks.compileJava.dependsOn(project(':bboss-soa').tasks.uploadArchives)
+ project.tasks.compileJava.dependsOn(project(':bboss-soa').tasks.install)
 dependencies {
-    compile (
-	    
-    )
+     
     
-    compileOnly (
+    compile (
 	    [group: 'ant', name: 'ant', version: '1.6.4', transitive: false],
 	    [group: 'antlr', name: 'antlr', version: '2.7.5', transitive: false],
 	    [group: 'avalon-logkit', name: 'avalon-logkit', version: '2.1', transitive: false],

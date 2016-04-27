@@ -6,14 +6,14 @@ sourceSets {
             srcDirs 'src-charset'
         }
         
-        compileClasspath = configurations.compile+configurations.compileOnly
+        compileClasspath = configurations.compile
 
     }
     bboss_rt {
         java {
             srcDirs 'src-rt'
         }
-        compileClasspath = configurations.compileOnly
+        //compileClasspath = configurations.compileOnly
     }
     test {
         java {
@@ -27,7 +27,7 @@ jar {
     classifier = "all"
 }*/
 
-project.tasks.compileJava.dependsOn(project(':bboss-velocity').tasks.uploadArchives)
+project.tasks.compileJava.dependsOn(project(':bboss-velocity').tasks.install)
 
 dependencies {
 	
@@ -39,17 +39,22 @@ dependencies {
              [group: 'org.codehaus.jackson', name: 'jackson-mapper-asl', version: '1.9.10', transitive: false],
             [group: 'org.codehaus.jackson', name: 'jackson-core-asl', version: '1.9.10', transitive: false],
             [group: 'log4j', name: 'log4j', version: '1.2.16', transitive: false],
-            [group: 'oro', name: 'oro', version: '2.0.8', transitive: false]
+            [group: 'oro', name: 'oro', version: '2.0.8', transitive: false],
+            [group: 'servletapi', name: 'servletapi', version: '2.4', transitive: false],
+            [group: 'javax.servlet', name: 'jsp-api', version: '2.0', transitive: false],
+           
+            [group: 'com.uwyn', name: 'jhighlight', version: '1.0', transitive: false],
+            [group: 'bsh', name: 'bsh', version: '2.0b1', transitive: false],
     )
 
-    compileOnly(
+    /**compileOnly(
             [group: 'servletapi', name: 'servletapi', version: '2.4', transitive: false],
             [group: 'javax.servlet', name: 'jsp-api', version: '2.0', transitive: false],
            
             [group: 'com.uwyn', name: 'jhighlight', version: '1.0', transitive: false],
             [group: 'bsh', name: 'bsh', version: '2.0b1', transitive: false],
             
-    )
+    )*/
     
     
 }
@@ -135,7 +140,7 @@ sourceSets.bboss_rt { set ->
 	        addFilter('bboss_rt') {artifact, file ->
 	            artifact.name == 'bboss-rt'
 	        }
-	      pom.project {
+	      pom('bboss_util').project {
 	        name project.name
 	        packaging 'jar'
 	        // optionally artifactId can be defined here 
@@ -163,9 +168,39 @@ sourceSets.bboss_rt { set ->
 	          }
 	        }
 	      }
+	      
+	      pom('bboss_rt').project {
+	        name project.name
+	        packaging 'jar'
+	        // optionally artifactId can be defined here 
+	        description PROJ_DESCRIPTION
+	        url PROJ_WEBSITEURL
+
+	        scm {
+	          connection scm_connection
+	          developerConnection scm_developerConnection
+	          url scm_url
+	        }
+
+	        licenses {
+	          license {
+	            name PROJ_LICENCE_NAME
+	            url PROJ_LICENCE_URL
+	          }
+	        }
+
+	        developers {
+	          developer {
+	            id DEVELOPER_ID
+	            name DEVELOPER_NAME
+	            email DEVELOPER_EMAIL
+	          }
+	        }
+	      }
+	      
 	    }
-	  }
-	}
+	 }
+}
 publishing {
     publications {
         utilJava(MavenPublication) {

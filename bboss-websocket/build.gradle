@@ -15,7 +15,7 @@ jar {
     classifier = "all"
 }*/
 
-project.tasks.compileJava.dependsOn(project(':bboss-mvc').tasks.uploadArchives)
+project.tasks.compileJava.dependsOn(project(':bboss-mvc').tasks.install)
 dependencies {
    
     providedCompile "org.apache.tomcat:tomcat-catalina:8.0.33"
@@ -23,7 +23,7 @@ dependencies {
     providedCompile "org.apache.tomcat:tomcat-websocket:8.0.33"
     providedCompile "servletapi:servletapi:2.4"
     providedCompile  "javax.servlet:jsp-api:2.0" 
-   
+   providedCompile  "javaee:javaee-api:5" 
     compile  (
 			
            [group: 'com.bbossgroups', name: 'bboss-mvc', version: "${version}", transitive: true],

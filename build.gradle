@@ -14,6 +14,7 @@ buildscript {
 configure(allprojects) { project ->
 	group = PROJ_GROUP
 	version = PROJ_VERSION	
+	
 	apply plugin: "java"
 	apply plugin: "maven-publish"
 	apply plugin: "eclipse"

@@ -3,10 +3,10 @@ sourceSets {
         java {
             srcDirs 'src-htmlparser'
         }
-        compileClasspath = configurations.runtime
+        compileClasspath = configurations.compile
     }
     /*
-    bboss_htmlparser {java {srcDirs 'src-htmlparser'}compileClasspath = configurations.runtime}
+    bboss_htmlparser {java {srcDirs 'src-htmlparser'}compileClasspath = configurations.compile}
     */
     bboss_taglib {
         java {
@@ -18,22 +18,22 @@ sourceSets {
             srcDirs 'src'
             include '**/*.properties'
         }
-        compileClasspath = configurations.runtime +configurations.compileOnly + sourceSets.bboss_htmlparser.output
+        compileClasspath = configurations.compile   + sourceSets.bboss_htmlparser.output
     }
     bboss_tabpane {
         java {
             srcDirs 'tabpane'
         }
-        compileClasspath = configurations.runtime +configurations.compileOnly+ sourceSets.bboss_taglib.output
+        compileClasspath = configurations.compile  + sourceSets.bboss_taglib.output
     }
 }
 /**
 tasks.jar { classifier = "all" }
 */
-project.tasks.compileJava.dependsOn(project(':bboss-persistent').tasks.uploadArchives)
+project.tasks.compileJava.dependsOn(project(':bboss-persistent').tasks.install)
 
 dependencies {
-    runtime(
+    compile(
             [group: 'ant', name: 'ant', version: '1.6.4', transitive: false],
             [group: 'org.ow2.asm', name: 'asm', version: '5.0.3', transitive: false],
             //[group: 'javaee', name: 'javaee-api', version: '5', transitive: false],
@@ -51,13 +51,15 @@ dependencies {
             [group: 'log4j', name: 'log4j', version: '1.2.16', transitive: false],
             [group: 'xjavadoc', name: 'xjavadoc', version: '1.1', transitive: false],
             [group: 'xpp3', name: 'xpp3', version: '1.1.4c', transitive: false],
-            [group: 'com.thoughtworks.xstream', name: 'xstream', version: '1.3.1', transitive: false]
-    )
-
-    compileOnly(
+            [group: 'com.thoughtworks.xstream', name: 'xstream', version: '1.3.1', transitive: false],
             [group: 'servletapi', name: 'servletapi', version: '2.4', transitive: false],
             [group: 'javax.servlet', name: 'jsp-api', version: '2.0', transitive: false]
     )
+
+   /** compileOnly(
+            [group: 'servletapi', name: 'servletapi', version: '2.4', transitive: false],
+            [group: 'javax.servlet', name: 'jsp-api', version: '2.0', transitive: false]
+    )*/
     //bboss_taglib编译时，需要依赖bboss_htmlparser的编译输出
     bboss_taglibRuntime sourceSets.bboss_htmlparser.output
     //bboss_tabpane编译时，需要依赖bboss_taglib的编译输出
@@ -147,7 +149,7 @@ signing {
 	         addFilter('bboss_tabpane') {artifact, file ->
 	            artifact.name == 'bboss-tabpane'
 	        }
-	      pom.project {
+	      pom('bboss_taglib').project {
 	        name project.name
 	        packaging 'jar'
 	        // optionally artifactId can be defined here 
@@ -175,9 +177,67 @@ signing {
 	          }
 	        }
 	      }
-	    }
-	  }
+	      
+	      pom('bboss_htmlparser').project {
+	        name project.name
+	        packaging 'jar'
+	        // optionally artifactId can be defined here 
+	        description PROJ_DESCRIPTION
+	        url PROJ_WEBSITEURL
+
+	        scm {
+	          connection scm_connection
+	          developerConnection scm_developerConnection
+	          url scm_url
+	        }
+
+	        licenses {
+	          license {
+	            name PROJ_LICENCE_NAME
+	            url PROJ_LICENCE_URL
+	          }
+	        }
+
+	        developers {
+	          developer {
+	            id DEVELOPER_ID
+	            name DEVELOPER_NAME
+	            email DEVELOPER_EMAIL
+	          }
+	        }
+	      }
+	      
+	      pom('bboss_tabpane').project {
+	        name project.name
+	        packaging 'jar'
+	        // optionally artifactId can be defined here 
+	        description PROJ_DESCRIPTION
+	        url PROJ_WEBSITEURL
+
+	        scm {
+	          connection scm_connection
+	          developerConnection scm_developerConnection
+	          url scm_url
+	        }
+
+	        licenses {
+	          license {
+	            name PROJ_LICENCE_NAME
+	            url PROJ_LICENCE_URL
+	          }
+	        }
+
+	        developers {
+	          developer {
+	            id DEVELOPER_ID
+	            name DEVELOPER_NAME
+	            email DEVELOPER_EMAIL
+	          }
+	        }
+	      }
+	   }
 	}
+}
 	 
 sourceSets.bboss_tabpane { set ->
     def jarTask = task("${set.name}Jar", type: Jar) {

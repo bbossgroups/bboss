@@ -16,7 +16,7 @@ sourceSets {
         }
     }
 }
-project.tasks.compileJava.dependsOn(project(':bboss-persistent').tasks.uploadArchives)
+project.tasks.compileJava.dependsOn(project(':bboss-persistent').tasks.install)
 dependencies {
 	compile (
 		[group: 'com.bbossgroups', name: 'bboss-core', version: "${version}", transitive: false],
