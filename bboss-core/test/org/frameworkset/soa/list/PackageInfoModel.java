@@ -8,10 +8,92 @@ public class PackageInfoModel implements Serializable{
 
 	private static final long serialVersionUID = 2015082511301232L;
 	
-//	private BaseInfoModel baseInfo;
-	
+	private BaseInfoModel baseInfo;
+	private int smalli = 0;
+	public int getSmalli() {
+		return smalli;
+	}
+
+	public void setSmalli(int smalli) {
+		this.smalli = smalli;
+	}
+
+	public Integer getBigi() {
+		return bigi;
+	}
+
+	public void setBigi(Integer bigi) {
+		this.bigi = bigi;
+	}
+
+	private Integer bigi ;
+	private Integer refbigi ;
+	private Integer otherbigi ;
+	public Integer getRefbigi() {
+		return refbigi;
+	}
+
+	public void setRefbigi(Integer refbigi) {
+		this.refbigi = refbigi;
+	}
+
+	public Integer getOtherbigi() {
+		return otherbigi;
+	}
+
+	public void setOtherbigi(Integer otherbigi) {
+		this.otherbigi = otherbigi;
+	}
+
+	public BaseInfoModel getBaseInfo() {
+		return baseInfo;
+	}
+
+	public void setBaseInfo(BaseInfoModel baseInfo) {
+		this.baseInfo = baseInfo;
+	}
+
+	public BaseInfoModel getRefbaseInfo() {
+		return refbaseInfo;
+	}
+
+	public void setRefbaseInfo(BaseInfoModel refbaseInfo) {
+		this.refbaseInfo = refbaseInfo;
+	}
+
+	public BaseInfoModel getOtherbaseInfo() {
+		return otherbaseInfo;
+	}
+
+	public void setOtherbaseInfo(BaseInfoModel otherbaseInfo) {
+		this.otherbaseInfo = otherbaseInfo;
+	}
+
+	public List<ComponentRelModel> getRefcomponentRels() {
+		return refcomponentRels;
+	}
+
+	public void setRefcomponentRels(List<ComponentRelModel> refcomponentRels) {
+		this.refcomponentRels = refcomponentRels;
+	}
+
+	public List<ComponentRelModel> getOthercomponentRels() {
+		return othercomponentRels;
+	}
+
+	public void setOthercomponentRels(List<ComponentRelModel> othercomponentRels) {
+		this.othercomponentRels = othercomponentRels;
+	}
+
+	public List<ComponentRelModel> getComponentRels() {
+		return componentRels;
+	}
+
+	private BaseInfoModel refbaseInfo;
+	private BaseInfoModel otherbaseInfo;
 	private List<ComponentRelModel> componentRels;
-	
+	private List<ComponentRelModel> refcomponentRels;
+	private List<ComponentRelModel> othercomponentRels;
 	private List<PackageChannelRelModel> packageChannelRels;
 	
 //	private List<PackageGroupRefModel> packageGroupRefs;

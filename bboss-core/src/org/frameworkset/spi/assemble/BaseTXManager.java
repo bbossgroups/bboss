@@ -26,7 +26,7 @@ public abstract class BaseTXManager implements java.io.Serializable,UNmodify
     	try {
 			interceptorFacttory = (InterceptorFacttory) Class.forName("org.frameworkset.spi.interceptor.InterceptorFacttoryImpl").newInstance();
 		} catch (Exception e) {
-			log.warn("class org.frameworkset.spi.interceptor.InterceptorFacttoryImpl not found in classpath,use DummyInterceptorFacttory. ");
+			log.debug("class org.frameworkset.spi.interceptor.InterceptorFacttoryImpl not found in classpath,use DummyInterceptorFacttory. ");
 			interceptorFacttory = new DummyInterceptorFacttory();
 			
 		}

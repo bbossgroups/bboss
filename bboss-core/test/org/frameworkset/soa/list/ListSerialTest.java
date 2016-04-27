@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.frameworkset.soa.ObjectSerializable;
-import org.frameworkset.soa.xblink.Test1;
 import org.junit.Test;
 
 public class ListSerialTest {
@@ -16,9 +15,17 @@ public class ListSerialTest {
 	public void test() throws Exception
 	{
 		org.frameworkset.soa.list.PackageInfoModel info = new PackageInfoModel();
-//		BaseInfoModel baseInfo = new BaseInfoModel();
-//		baseInfo.setBrand("asdaf");
-//		info.setBaseInfo(baseInfo);
+		BaseInfoModel baseInfo = new BaseInfoModel();
+		baseInfo.setBrand("asdaf");
+		info.setBaseInfo(baseInfo);
+		info.setRefbaseInfo(baseInfo);
+		baseInfo = new BaseInfoModel();
+		baseInfo.setBrand("otherasdaf");
+		info.setOtherbaseInfo(baseInfo);
+		info.setBigi(new Integer(2));
+		info.setRefbigi(info.getBigi());
+		info.setOtherbigi(new Integer(2));
+		info.setSmalli(2);
 		List<ComponentRelModel> componentRels = new ArrayList<ComponentRelModel>();
 		
 		List<PackageChannelRelModel> componentRels2 = new ArrayList<PackageChannelRelModel>();
@@ -26,8 +33,11 @@ public class ListSerialTest {
 		System.out.println(componentRels.equals(componentRels2));
 		ComponentRelModel dd = new ComponentRelModel();
 		dd.setComponentId("");
-		componentRels.add(dd);
+//		componentRels.add(dd);
 		info.setComponentRels(componentRels);
+		info.setRefcomponentRels(componentRels);
+		List<ComponentRelModel> otherComponentRels = new ArrayList<ComponentRelModel>();
+		info.setOthercomponentRels(otherComponentRels);
 		List<PackageChannelRelModel> packageChannelRels = new ArrayList<PackageChannelRelModel>();
 		PackageChannelRelModel tt = new PackageChannelRelModel();
 		tt.setEndDate("ddd");
