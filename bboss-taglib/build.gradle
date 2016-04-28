@@ -132,15 +132,21 @@ signing {
         
         sign configurations.archives
   }
+  ext.uploadtocenter=uploadArchivesToMavenCenter.equals("true")
   uploadArchives {
 	  repositories {
 	    mavenDeployer {
 	      beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
 			
-	      repository(url: sonatype_url) {
-	         authentication(userName: sonatype_username, password: sonatype_password)
-	      }
-	      repository(url: "file://C:/Users/home-zjy/.m2/repository/")
+	      if(uploadtocenter)
+			{	 
+		     	repository(url: sonatype_url) {
+				         authentication(userName: sonatype_username, password: sonatype_password)
+				}
+			}
+			
+			 	repository(url: "file://"+mvn_repo)
+			 
  			addFilter('bboss_taglib') {artifact, file ->
             	artifact.name == 'bboss-taglib'
 	        }

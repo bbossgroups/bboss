@@ -125,15 +125,20 @@ sourceSets.bboss_rt { set ->
         
         sign configurations.archives
   }
-  
+  ext.uploadtocenter=uploadArchivesToMavenCenter.equals("true")
 	uploadArchives {
 	  repositories {
 	    mavenDeployer {
 	      beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
-			repository(url: "file://C:/Users/home-zjy/.m2/repository/")
-	      repository(url: sonatype_url) {
-	         authentication(userName: sonatype_username, password: sonatype_password)
-	      }
+			if(uploadtocenter)
+			{	 
+		     	repository(url: sonatype_url) {
+				         authentication(userName: sonatype_username, password: sonatype_password)
+				}
+			}
+			
+			repository(url: "file://"+mvn_repo)
+			 
  			addFilter('bboss_util') {artifact, file ->
             	artifact.name == 'bboss-util'
 	        }
