@@ -111,25 +111,28 @@ configure(subprojects - [project(":bboss-util"),project(":bboss-taglib"),project
 	    archives sourcesJar, javaDocJar
 	}
 	
-	signing {
-        
-        sign configurations.archives
-  }
-	 
+ 
 ext.uploadtocenter=uploadArchivesToMavenCenter.equals("true")
-		 
-
+if(uploadtocenter)
+{
+	signing {
+	        //required { uploadtocenter }
+	        sign configurations.archives
+	 }
+}
 uploadArchives {
 	  repositories {
 	   
 		    mavenDeployer {
-		      beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+		     
 			if(uploadtocenter)
-			{	 
+			{	  
+				beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
 		     	repository(url: sonatype_url) {
 				         authentication(userName: sonatype_username, password: sonatype_password)
 				}
 			}
+			
 			
 			 	repository(url: "file://"+mvn_repo)
 	      pom.project {

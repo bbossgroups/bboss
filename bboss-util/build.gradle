@@ -121,21 +121,28 @@ sourceSets.bboss_rt { set ->
 	    archives    bboss_utilJar, bboss_utilSourceJar,bboss_utilDocJar,bboss_rtJar, bboss_rtSourceJar,bboss_rtDocJar
 	}*/
 	
+ 
+  ext.uploadtocenter=uploadArchivesToMavenCenter.equals("true")	
+if(uploadtocenter)
+{
 	signing {
-        
-        sign configurations.archives
-  }
-  ext.uploadtocenter=uploadArchivesToMavenCenter.equals("true")
-	uploadArchives {
+	        //required { uploadtocenter }
+	        sign configurations.archives
+	 }
+}
+uploadArchives {
 	  repositories {
-	    mavenDeployer {
-	      beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+	   
+		    mavenDeployer {
+		     
 			if(uploadtocenter)
-			{	 
+			{	  
+				beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
 		     	repository(url: sonatype_url) {
 				         authentication(userName: sonatype_username, password: sonatype_password)
 				}
 			}
+			
 			
 			repository(url: "file://"+mvn_repo)
 			 

@@ -128,24 +128,28 @@ sourceSets.bboss_taglib { set ->
         archives jarDocTask
     }
 }
-signing {
-        
-        sign configurations.archives
-  }
-  ext.uploadtocenter=uploadArchivesToMavenCenter.equals("true")
-  uploadArchives {
+ 
+  ext.uploadtocenter=uploadArchivesToMavenCenter.equals("true")	
+if(uploadtocenter)
+{
+	signing {
+	        //required { uploadtocenter }
+	        sign configurations.archives
+	 }
+}
+uploadArchives {
 	  repositories {
-	    mavenDeployer {
-	      beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
-			
-	      if(uploadtocenter)
-			{	 
+	   
+		    mavenDeployer {
+		     
+			if(uploadtocenter)
+			{	  
+				beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
 		     	repository(url: sonatype_url) {
 				         authentication(userName: sonatype_username, password: sonatype_password)
 				}
 			}
-			
-			 	repository(url: "file://"+mvn_repo)
+			repository(url: "file://"+mvn_repo)
 			 
  			addFilter('bboss_taglib') {artifact, file ->
             	artifact.name == 'bboss-taglib'
