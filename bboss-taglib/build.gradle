@@ -27,9 +27,9 @@ sourceSets {
         compileClasspath = configurations.compile  + sourceSets.bboss_taglib.output
     }
 }
-/**
+
 tasks.jar { classifier = "all" }
-*/
+
 project.tasks.compileJava.dependsOn(project(':bboss-persistent').tasks.install)
 
 dependencies {
