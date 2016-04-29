@@ -15,7 +15,7 @@ jar {
     classifier = "all"
 }*/
 
-project.tasks.compileJava.dependsOn(project(':bboss-mvc').tasks.install)
+project.tasks.compileJava.dependsOn(project(':bboss-taglib').tasks.publish)
 dependencies {
    
     providedCompile "org.apache.tomcat:tomcat-catalina:8.0.33"

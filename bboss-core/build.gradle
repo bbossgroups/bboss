@@ -21,12 +21,10 @@ sourceSets {
     }
     
 }
-project.tasks.compileJava.dependsOn(project(':bboss-util').tasks.uploadArchives)
+project.tasks.compileJava.dependsOn(project(':bboss-util').tasks.publish)
 dependencies {
 	
     compile (
-				
-             
             [group: 'com.bbossgroups', name: 'bboss-util', version: "${version}", transitive: false],
             [group: 'com.bbossgroups', name: 'bboss-soa', version: "${version}", transitive: false],
             [group: 'log4j', name: 'log4j', version: '1.2.16', transitive: false],          

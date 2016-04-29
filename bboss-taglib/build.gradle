@@ -30,10 +30,11 @@ sourceSets {
 
 tasks.jar { classifier = "all" }
 
+project.tasks.compileJava.dependsOn(project(':bboss-mvc').tasks.install)
 project.tasks.compileJava.dependsOn(project(':bboss-persistent').tasks.install)
-
 dependencies {
     compile(
+    				project(':bboss-mvc'),
             [group: 'ant', name: 'ant', version: '1.6.4', transitive: false],
             [group: 'org.ow2.asm', name: 'asm', version: '5.0.3', transitive: false],
             //[group: 'javaee', name: 'javaee-api', version: '5', transitive: false],
@@ -144,12 +145,17 @@ uploadArchives {
 		     
 			if(uploadtocenter)
 			{	  
+				
 				beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
 		     	repository(url: sonatype_url) {
+		     		
 				         authentication(userName: sonatype_username, password: sonatype_password)
 				}
 			}
-			repository(url: "file://"+mvn_repo)
+			else
+			{
+				repository(url: "file://"+mvn_repo)
+			}
 			 
  			addFilter('bboss_taglib') {artifact, file ->
             	artifact.name == 'bboss-taglib'

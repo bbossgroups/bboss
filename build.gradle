@@ -62,6 +62,7 @@ configure(allprojects) { project ->
 	repositories {
 		mavenCentral()
 		mavenLocal()
+		
 	}
 	if(project.getProperty('skipTest'))
 	{
@@ -127,14 +128,20 @@ uploadArchives {
 		     
 			if(uploadtocenter)
 			{	  
+				
 				beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
 		     	repository(url: sonatype_url) {
+		     		
 				         authentication(userName: sonatype_username, password: sonatype_password)
 				}
 			}
+			else
+			{
+				repository(url: "file://"+mvn_repo)
+			}
 			
 			
-			 	repository(url: "file://"+mvn_repo)
+			 	
 	      pom.project {
 	        name project.name
 	        packaging 'jar'
@@ -175,33 +182,7 @@ uploadArchives {
 				
 				artifact sourcesJar
 				artifact javaDocJar
-				/**pom.withXml {
-			        asNode().appendNode('description', 'A application used as an $subproject.name on how to set up  pushing  its components to the Central Repository.')
-			        asNode().appendNode('name', subproject.name)
-			        asNode().appendNode('packaging','jar')
-			        asNode().appendNode('url',PROJ_WEBSITEURL)
-			        asNode().appendNode('scm',[asNode().appendNode('connection','scm:git:git@github.com:bbossgroups/bboss.git'),
-					          asNode().appendNode('developerConnection', 'scm:git:git@github.com:bbossgroups/bestpractice.git'),
-					          asNode().appendNode('url','https://github.com/bbossgroups/bboss')
-					        ])
-					 asNode().appendNode('licenses', {
-									          license {
-									            name 'The Apache License, Version 2.0'
-									            url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-									          }
-									        })
-					asNode().appendNode('developers',  {
-										          developer {
-										            id 'yin-bp'
-										            name 'yin biao ping'
-										            email 'yin-bp@163.com'
-										          }
-										        })				        
-			      }*/
-					//	signing.signPom(pom)	
-				//artifact signing
-				//signing.signPom(MavenPublication)
-				//artifact signArchives
+				
 			}
 		}
 		repositories {
