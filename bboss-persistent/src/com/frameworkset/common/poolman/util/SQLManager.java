@@ -22,6 +22,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -162,7 +163,7 @@ public class SQLManager extends PoolManager{
     
     /**
      * 根据dbname获取数据源
-     * @param dbname
+    
      * @return
      */
     public static DataSource getDatasource()
@@ -195,7 +196,7 @@ public class SQLManager extends PoolManager{
     
     /**
      * 根据dbname获取数据源
-     * @param dbname
+      
      * @return
      */
     public static DataSource getTXDatasource()
@@ -263,8 +264,9 @@ public class SQLManager extends PoolManager{
     public JDBCPool getPoolByJNDIName(String name,boolean needcheckStart) {
         if(needcheckStart)
         	assertLoaded();
-        for (Enumeration enum_ = this.pools.elements(); enum_.hasMoreElements();) {
-            JDBCPool jpool = (JDBCPool) enum_.nextElement();
+        for (Iterator enum_ = this.pools.entrySet().iterator(); enum_.hasNext();) {
+        	Map.Entry e =  (Map.Entry)enum_.next();
+            JDBCPool jpool = (JDBCPool) e.getValue();
             String name_ = jpool.getJDBCPoolMetadata().getJNDIName();
             if(name_ != null && name_.equals(name))
                 return jpool;
@@ -281,13 +283,13 @@ public class SQLManager extends PoolManager{
     	return getPoolByJNDIName(name,true);
     }
 
-    /**
-     * Overridden implementation ensures the config is loaded.
-     */
-    public Enumeration getAllPoolnames() {
-        assertLoaded();
-        return super.getAllPoolnames();
-    }
+//    /**
+//     * Overridden implementation ensures the config is loaded.
+//     */
+//    public Enumeration getAllPoolnames() {
+//        assertLoaded();
+//        return super.getAllPoolnames();
+//    }
 
     public void checkCredentials(String dbname, String user, String passwd) throws SQLException {
         assertLoaded();

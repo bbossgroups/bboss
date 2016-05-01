@@ -31,7 +31,7 @@ import java.awt.event.ActionListener;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
-import java.util.Vector;
+import java.util.List;
 
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -129,7 +129,7 @@ public class HasAttributeFilterWrapper
      */
     protected void addAttributes (Set set, Node node)
     {
-        Vector attributes;
+        List attributes;
         Attribute attribute;
         String name;
         NodeList children;
@@ -139,7 +139,7 @@ public class HasAttributeFilterWrapper
             attributes = ((Tag)node).getAttributesEx ();
             for (int i = 1; i < attributes.size (); i++)
             {
-                attribute = (Attribute)attributes.elementAt (i);
+                attribute = (Attribute)attributes.get (i);
                 name = attribute.getName ();
                 if (null != name)
                     set.add (name);
@@ -161,7 +161,7 @@ public class HasAttributeFilterWrapper
      */
     protected void addAttributeValues (Set set, Node node)
     {
-        Vector attributes;
+        List attributes;
         Attribute attribute;
         String value;
         NodeList children;
@@ -171,7 +171,7 @@ public class HasAttributeFilterWrapper
             attributes = ((Tag)node).getAttributesEx ();
             for (int i = 1; i < attributes.size (); i++)
             {
-                attribute = (Attribute)attributes.elementAt (i);
+                attribute = (Attribute)attributes.get (i);
                 if (null != attribute.getName ())
                 {
                     value = attribute.getValue ();

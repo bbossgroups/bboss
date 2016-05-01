@@ -26,17 +26,29 @@
 
 package org.htmlparser.parserapplications.filterbuilder;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.Insets;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.Hashtable;
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
-import javax.swing.*;
-import javax.swing.border.*;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.EtchedBorder;
+import javax.swing.border.LineBorder;
 
 import org.htmlparser.NodeFilter;
 import org.htmlparser.Parser;
@@ -92,7 +104,7 @@ public abstract class Filter
      * Map from cilter class to wrapper.
      * Populated as part of each wrapper being loaded.
      */
-    protected static Hashtable mWrappers = new Hashtable ();
+    protected static HashMap mWrappers = new HashMap ();
 
     /**
      * Create a filter.
@@ -338,13 +350,13 @@ public abstract class Filter
     public static Filter[] reconstitute (String string, Parser context)
     {
         Filter[] ret;
-        Vector vector;
+        List vector;
         int index;
         String code;
         Object object;
         Filter filter;
         
-        vector = new Vector ();
+        vector = new ArrayList ();
         try
         {
             while (string.startsWith ("["))
@@ -359,7 +371,7 @@ public abstract class Filter
                     {
                         filter = wrap ((NodeFilter)object, context);
                         if (null != filter)
-                            vector.addElement (filter);
+                            vector.add (filter);
                     }
                     else
                         break;
@@ -374,7 +386,10 @@ public abstract class Filter
         }
 
         ret = new Filter[vector.size ()];
-        vector.copyInto (ret);
+        for(int i = 0; i < vector.size (); i ++)
+        {
+        	ret[i] = (Filter)vector.get(i);
+        }
 
         return (ret);
     }

@@ -26,7 +26,7 @@
 
 package org.htmlparser.sax;
 
-import java.util.Vector;
+import java.util.List;
 
 import org.htmlparser.Attribute;
 import org.htmlparser.Tag;
@@ -139,7 +139,7 @@ public class Attributes
         Attribute attribute;
         String ret;
         
-        attribute = (Attribute)(mTag.getAttributesEx ().elementAt (index + 1));
+        attribute = (Attribute)(mTag.getAttributesEx ().get (index + 1));
         if (attribute.isWhitespace ())
             ret = "#text";
         else
@@ -192,7 +192,7 @@ public class Attributes
         Attribute attribute;
         String ret;
         
-        attribute = (Attribute)(mTag.getAttributesEx ().elementAt (index + 1));
+        attribute = (Attribute)(mTag.getAttributesEx ().get (index + 1));
         ret = attribute.getValue ();
         if (null == ret)
             ret = "";
@@ -217,7 +217,7 @@ public class Attributes
      */
     public int getIndex (String uri, String localName)
     {
-        Vector attributes;
+        List attributes;
         int size;
         Attribute attribute;
         String string;
@@ -231,7 +231,7 @@ public class Attributes
             size = attributes.size ();
             for (int i = 1; i < size; i++)
             {
-                attribute = (Attribute)attributes.elementAt (i);
+                attribute = (Attribute)attributes.get (i);
                 string = attribute.getName ();
                 if (null != string) // not whitespace
                 {

@@ -23,17 +23,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 
-import org.apache.ecs.html.Link;
-import org.apache.ecs.html.Script;
+import com.frameworkset.common.ecs.Link;
+import com.frameworkset.common.ecs.Script;
+import com.frameworkset.common.tag.BaseTag;
+import com.frameworkset.util.VelocityUtil;
 
 import bboss.org.apache.velocity.Template;
 import bboss.org.apache.velocity.VelocityContext;
 import bboss.org.apache.velocity.exception.MethodInvocationException;
 import bboss.org.apache.velocity.exception.ParseErrorException;
 import bboss.org.apache.velocity.exception.ResourceNotFoundException;
-
-import com.frameworkset.common.tag.BaseTag;
-import com.frameworkset.util.VelocityUtil;
 
 /**
  * <p>Title: PageConfig.java</p> 

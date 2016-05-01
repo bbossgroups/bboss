@@ -1,0 +1,71 @@
+sourceSets {
+    main {
+        java {
+            srcDir 'src'
+            srcDir 'src-jarloaders'
+        }
+        resources {
+            srcDir 'src' exclude '**/*.java'
+        }
+    }
+    test {
+        java {
+            srcDir 'test'
+        }
+        resources{
+        	srcDir 'resources'
+        }
+    }
+    
+}
+project.tasks.compileJava.dependsOn(project(':bboss-core').tasks.install)
+dependencies {
+    compile (
+    		
+            [group: 'com.bbossgroups', name: 'bboss-util', version: "${version}", transitive: false],
+            [group: 'com.bbossgroups', name: 'bboss-soa', version: "${version}", transitive: false],
+            [group: 'com.bbossgroups', name: 'bboss-core', version: "${version}", transitive: false],
+            [group: 'cglib', name: 'cglib-nodep', version: '3.1', transitive: false],
+            [group: 'oro', name: 'oro', version: '2.0.8', transitive: false],
+            [group: 'com.thoughtworks.xstream', name: 'xstream', version: '1.3.1', transitive: false],
+            [group: 'log4j', name: 'log4j', version: '1.2.16', transitive: false],
+            [group: 'org.codehaus.jackson', name: 'jackson-mapper-asl', version: '1.9.10',transitive: true],
+            [group: 'commons-lang', name: 'commons-lang', version: '2.6', transitive: false],
+            [group: 'commons-logging', name: 'commons-logging', version: '1.1', transitive: false],
+            [group: 'commons-collections', name: 'commons-collections', version: '3.2.1', transitive: false],
+            [group: 'org.ow2.asm', name: 'asm', version: '5.0.3', transitive: false],
+            [group: 'commons-beanutils', name: 'commons-beanutils', version: '1.7.0', transitive: false],
+            [group: 'commons-fileupload', name: 'commons-fileupload', version: '1.3.1', transitive: false],
+            [group: 'commons-io', name: 'commons-io', version: '1.3.2', transitive: false],
+            [group: 'concurrent', name: 'concurrent', version: '1.3.2', transitive: false],
+            [group: 'org.freemarker', name: 'freemarker', version: '2.3.15', transitive: false],
+            [group: 'com.tonicsystems', name: 'jarjar', version: '0.6', transitive: false],
+            [group: 'xml-resolver', name: 'xml-resolver', version: '1.2', transitive: false],
+            [group: 'org.apache.xmlbeans', name: 'xmlbeans', version: '2.4.0', transitive: false],
+            [group: 'org.apache.ws.xmlschema', name: 'xmlschema-core', version: '2.2.1', transitive: false],
+            
+            [group: 'rome', name: 'rome', version: '1.0', transitive: false],
+            [group: 'net.sf.jasperreports', name: 'jasperreports', version: '3.7.6', transitive: false],
+            [group: 'org.apache.poi', name: 'poi', version: '3.0.2-FINAL', transitive: false],
+            [group: 'org.eclipse.birt.runtime.3_7_1', name: 'com.lowagie.text', version: '2.1.7', transitive: false],
+            [group: 'net.sourceforge.jexcelapi', name: 'jxl', version: '2.6.12', transitive: false],
+            [group: 'jdom', name: 'jdom', version: '1.0', transitive: false],
+            
+            [group: 'servletapi', name: 'servletapi', version: '2.4', transitive: false],
+            [group: 'javax.servlet', name: 'jsp-api', version: '2.0', transitive: false],
+             
+            [group: 'javax.faces', name: 'jsf-api', version: '2.1', transitive: false],
+            [group: 'com.sun.faces', name: 'jsf-impl', version: '2.1.0', transitive: false],
+            [group: 'jstl', name: 'jstl', version: '1.2', transitive: false],
+    )
+    /**
+    compileOnly (
+    		[group: 'servletapi', name: 'servletapi', version: '2.4', transitive: false],
+            [group: 'javax.servlet', name: 'jsp-api', version: '2.0', transitive: false],
+             
+            [group: 'javax.faces', name: 'jsf-api', version: '2.1', transitive: false],
+            [group: 'com.sun.faces', name: 'jsf-impl', version: '2.1.0', transitive: false],
+            [group: 'jstl', name: 'jstl', version: '1.2', transitive: false],
+             
+    )*/
+}

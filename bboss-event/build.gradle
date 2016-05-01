@@ -1,0 +1,30 @@
+sourceSets {
+	main {
+		java {
+			srcDir 'src'
+		}
+		resources {
+			//srcDir 'resources'
+		}
+	}
+	test {
+        java {
+            srcDir 'test'
+        }
+        resources{
+        	srcDir 'resources'
+        }
+    }
+}
+project.tasks.compileJava.dependsOn(project(':bboss-core').tasks.install)
+dependencies {
+	compile (
+		[group: 'com.bbossgroups', name: 'bboss-core', version: "${version}", transitive: false],
+		[group: 'com.bbossgroups', name: 'bboss-util', version: "${version}", transitive: false],
+		[group: 'org.ow2.asm', name: 'asm', version: '5.0.3', transitive: false],
+		[group: 'cglib', name: 'cglib-nodep', version: '3.1', transitive: false],
+		[group: 'oro', name: 'oro', version: '2.0.8', transitive: false],
+		[group: 'log4j', name: 'log4j', version: '1.2.16', transitive: false],
+		[group: 'org.jgroups', name: 'jgroups', version: '3.6.1.Final', transitive: false]
+	)
+}

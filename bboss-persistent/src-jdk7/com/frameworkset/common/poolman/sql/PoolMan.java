@@ -26,6 +26,7 @@ import java.sql.DriverPropertyInfo;
 import java.sql.SQLException;
 import java.sql.SQLFeatureNotSupportedException;
 import java.util.Enumeration;
+import java.util.Iterator;
 import java.util.Properties;
 import java.util.logging.Logger;
 
@@ -166,8 +167,8 @@ public class PoolMan implements Driver {
     /** Determine whether the dbname is valid for this PoolMan instance. */
     public static boolean nameIsValid(String dbname) {
         SQLManager manager = SQLManager.getInstance();
-        for (Enumeration enum1 = manager.getAllPoolnames(); enum1.hasMoreElements();) {
-            String name = enum1.nextElement().toString();
+        for (Iterator<String> enum1 = manager.getAllPoolNames().iterator(); enum1.hasNext();) {
+            String name = enum1.next();
             if (dbname.equals(name))
                 return true;
         }

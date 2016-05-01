@@ -47,8 +47,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
-import org.apache.turbine.services.jsp.JspService;
-import org.apache.turbine.util.RunData;
+
 
 /**
  * To change for your class or interface
@@ -63,7 +62,7 @@ public class CommonRequest implements HttpServletRequest {
 
     private static Logger log = Logger.getLogger(CommonRequest.class);
 	protected HttpServletRequest request = null;
-	protected RunData rundata = null;
+	 
 	protected String encode = null;
     protected String mobileEncode = null;
 
@@ -77,15 +76,11 @@ public class CommonRequest implements HttpServletRequest {
     	return this.request;
     }
 
-	public CommonRequest(RunData rundata,HttpServletRequest request)
-	{
-		this.rundata = rundata;
-		this.request = request;
-	}
+	 
 
 	public CommonRequest(HttpServletRequest request)
 	{
-		this.rundata = (RunData)request.getAttribute(JspService.RUNDATA);
+		 
 		this.request = request;
 
 	}
@@ -444,11 +439,9 @@ public class CommonRequest implements HttpServletRequest {
 		// TODO Auto-generated method stub
         String value = "";
         //处理tubine中文问题
-		if(rundata == null)
+		 
 			value = request.getParameter(arg0);
-		else
-			value = rundata.getParameters().getString(arg0);
-
+		 
         //处理手机浏览器和oprea中文问题
         value = this.getParameterOfMobile(value);
         return value;
@@ -473,10 +466,9 @@ public class CommonRequest implements HttpServletRequest {
 	public String[] getParameterValues(String arg0) {
 		// TODO Auto-generated method stub
         String[] values = null;
-		if(rundata == null)
+		 
 			values = request.getParameterValues(arg0);
-		else
-			values = rundata.getParameters().getStrings(arg0);
+		 
         for(int i = 0; values != null && i < values.length; i ++)
         {
             values[i] = getParameterOfMobile(values[i]);

@@ -27,11 +27,11 @@
 package org.htmlparser;
 
 import java.io.Serializable;
-import java.util.Hashtable;
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
-import java.util.Vector;
+import java.util.List;
 
 import org.htmlparser.lexer.Page;
 import org.htmlparser.nodes.RemarkNode;
@@ -242,7 +242,7 @@ public class PrototypicalNodeFactory
      */
     public void clear ()
     {
-        mBlastocyst = new Hashtable ();
+        mBlastocyst = new HashMap ();
     }
 
     /**
@@ -461,7 +461,7 @@ public class PrototypicalNodeFactory
 
     /**
      * Create a new tag node.
-     * Note that the attributes vector contains at least one element,
+     * Note that the attributes List contains at least one element,
      * which is the tag name (standalone attribute) at position zero.
      * This can be used to decide which type of node to create, or
      * gate other processing that may be appropriate.
@@ -471,7 +471,7 @@ public class PrototypicalNodeFactory
      * @param attributes The attributes contained in this tag.
      * @return A tag node comprising the indicated characters from the page.
      */
-    public Tag createTagNode (Page page, int start, int end, Vector attributes)
+    public Tag createTagNode (Page page, int start, int end, List attributes)
     {
         Attribute attribute;
         String id;
@@ -482,7 +482,7 @@ public class PrototypicalNodeFactory
 
         if (0 != attributes.size ())
         {
-            attribute = (Attribute)attributes.elementAt (0);
+            attribute = (Attribute)attributes.get (0);
             id = attribute.getName ();
             if (null != id)
             {

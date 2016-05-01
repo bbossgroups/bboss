@@ -39,12 +39,12 @@ import java.io.OutputStream;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 
-import org.apache.ecs.html.A;
-import org.apache.ecs.html.Span;
-import org.apache.ecs.html.TD;
-import org.apache.ecs.html.TH;
 import org.frameworkset.util.I18NUtil;
 
+import com.frameworkset.common.ecs.A;
+import com.frameworkset.common.ecs.Span;
+import com.frameworkset.common.ecs.TD;
+import com.frameworkset.common.ecs.TH;
 import com.frameworkset.util.StringUtil;
 
 //import com.frameworkset.common.tag.BaseTag;

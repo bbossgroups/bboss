@@ -26,10 +26,12 @@
 
 package org.htmlparser.util.sort;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 
 /**
- * A quick sort algorithm to sort Vectors or arrays.
+ * A quick sort algorithm to sort Lists or arrays.
  * Provides sort and binary search capabilities.
  *<p>
  * This all goes away in JDK 1.2.
@@ -51,37 +53,37 @@ public class Sort
 
     /**
      * This is a generic version of C.A.R Hoare's Quick Sort algorithm.
-     * This will handle vectors that are already
-     * sorted, and vectors with duplicate keys.
+     * This will handle Lists that are already
+     * sorted, and Lists with duplicate keys.
      * Equivalent to:
      * <pre>
      * QuickSort (v, 0, v.size () - 1);
      * </pre>
-     * @param v A <code>Vector</code> of <code>Ordered</code> items.
-     * @exception ClassCastException If the vector contains objects that
+     * @param v A <code>List</code> of <code>Ordered</code> items.
+     * @exception ClassCastException If the List contains objects that
      * are not <code>Ordered</code>.
      */
-    public static void QuickSort (Vector v) throws ClassCastException
+    public static void QuickSort (List v) throws ClassCastException
     {
         QuickSort (v, 0, v.size () - 1);
     }
 
     /**
      * This is a generic version of C.A.R Hoare's Quick Sort algorithm.
-     * This will handle vectors that are already
-     * sorted, and vectors with duplicate keys.
+     * This will handle Lists that are already
+     * sorted, and Lists with duplicate keys.
      * <p>
-     * If you think of a one dimensional vector as going from
+     * If you think of a one dimensional List as going from
      * the lowest index on the left to the highest index on the right
      * then the parameters to this function are lowest index or
      * left and highest index or right.
-     * @param v A <code>Vector</code> of <code>Ordered</code> items.
-     * @param lo0 Left boundary of vector partition.
-     * @param hi0 Right boundary of vector partition.
-     * @exception ClassCastException If the vector contains objects that
+     * @param v A <code>List</code> of <code>Ordered</code> items.
+     * @param lo0 Left boundary of List partition.
+     * @param hi0 Right boundary of List partition.
+     * @exception ClassCastException If the List contains objects that
      * are not <code>Ordered</code>.
      */
-    public static void QuickSort (Vector v, int lo0, int hi0) throws ClassCastException
+    public static void QuickSort (List v, int lo0, int hi0) throws ClassCastException
     {
         int lo = lo0;
         int hi = hi0;
@@ -89,19 +91,19 @@ public class Sort
 
         if ( hi0 > lo0)
         {   // arbitrarily establish partition element as the midpoint of the vector
-            mid = (Ordered)v.elementAt((lo0 + hi0) / 2);
+            mid = (Ordered)v.get((lo0 + hi0) / 2);
 
             // loop through the vector until indices cross
             while (lo <= hi)
             {
                 // find the first element that is greater than or equal to
                 // the partition element starting from the left index
-                while ((lo < hi0) && (0 > ((Ordered)v.elementAt (lo)).compare (mid)))
+                while ((lo < hi0) && (0 > ((Ordered)v.get (lo)).compare (mid)))
                     ++lo;
 
                 // find an element that is smaller than or equal to
                 // the partition element starting from the right index
-                while ((hi > lo0) && (0 < ((Ordered)v.elementAt (hi)).compare (mid)))
+                while ((hi > lo0) && (0 < ((Ordered)v.get (hi)).compare (mid)))
                     --hi;
 
                 // if the indexes have not crossed, swap
@@ -121,13 +123,13 @@ public class Sort
         }
     }
 
-    private static void swap (Vector v, int i, int j)
+    private static void swap (List v, int i, int j)
     {
         Object o;
 
-        o = v.elementAt (i);
-        v.setElementAt (v.elementAt (j), i);
-        v.setElementAt (o, j);
+        o = v.get (i);
+        v.set (i,v.get (j));
+        v.set (j,o);
     }
 
     /**
@@ -353,24 +355,24 @@ public class Sort
 
     /**
      * Sort a Hashtable.
-     * @param h A Hashtable with String or Ordered keys.
+     * @param h A HashMap with String or Ordered keys.
      * @return A sorted array of the keys.
-     * @exception ClassCastException If the keys of the hashtable
+     * @exception ClassCastException If the keys of the HashMap
      * are not <code>Ordered</code>.
      */
-    public static Object[] QuickSort (Hashtable h) throws ClassCastException
+    public static Object[] QuickSort (HashMap h) throws ClassCastException
     {
-        Enumeration e;
+        Iterator e;
         boolean are_strings;
         Object[] ret;
 
         // make the array
         ret = new Ordered[h.size ()];
-        e = h.keys ();
+        e = h.keySet().iterator();
         are_strings = true; // until proven otherwise
         for (int i = 0; i < ret.length; i++)
         {
-            ret[i] = e.nextElement ();
+            ret[i] = e.next ();
             if (are_strings && !(ret[i] instanceof String))
                 are_strings = false;
         }
@@ -454,7 +456,7 @@ public class Sort
      * @param hi The upper index within which to look.
      * @return The index at which reference was found or is to be inserted.
      */
-    public static int bsearch (Vector vector, Ordered ref, int lo, int hi)
+    public static int bsearch (List vector, Ordered ref, int lo, int hi)
     {   int num;
         int mid;
         int half;
@@ -468,7 +470,7 @@ public class Sort
         {
             half = num / 2;
             mid = lo + ((0 != (num & 1)) ? half : half - 1);
-            result = ref.compare (vector.elementAt (mid));
+            result = ref.compare (vector.get (mid));
             if (0 == result)
                 ret = mid;
             else if (0 > result)
@@ -494,7 +496,7 @@ public class Sort
      * @param ref The name to search for.
      * @return The index at which reference was found or is to be inserted.
      */
-    public static int bsearch (Vector vector, Ordered ref)
+    public static int bsearch (List vector, Ordered ref)
     {
         return (bsearch (vector, ref, 0, vector.size () - 1));
     }

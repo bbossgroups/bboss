@@ -34,6 +34,7 @@ import javax.servlet.jsp.PageContext;
 import org.ditchnet.jsp.util.JspResponseWriter;
 import org.ditchnet.xml.Xhtml;
 
+import com.frameworkset.common.ecs.Script;
 import com.frameworkset.common.tag.BaseBodyTag;
 
 
@@ -311,8 +312,7 @@ public final class TabContainerTag extends BaseBodyTag {
 			this.selectedIndex = pane.getId();
 			
 			
-			
-			org.apache.ecs.html.Script scr = new org.apache.ecs.html.Script();
+			 Script scr = new  Script();
 			
 			scr.setLanguage("javascript");
 			scr.setTagText("org.ditchnet.jsp.TabUtils.doclickevt(document.getElementById('" + pane.getId() +TabConstants.TAB_ID_SUFFIX + "'));");

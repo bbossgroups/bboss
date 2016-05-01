@@ -51,6 +51,8 @@ import com.frameworkset.util.StringUtil;
  */
 public class HttpHeaders  implements MultiValueMap<String, String> {
 
+	private static final long serialVersionUID = -8578554704772377436L;
+
 	private static final String ACCEPT = "Accept";
 
 	private static final String ACCEPT_CHARSET = "Accept-Charset";
@@ -58,6 +60,8 @@ public class HttpHeaders  implements MultiValueMap<String, String> {
 	private static final String ALLOW = "Allow";
 
 	private static final String CACHE_CONTROL = "Cache-Control";
+
+	private static final String CONNECTION = "Connection";
 
 	private static final String CONTENT_DISPOSITION = "Content-Disposition";
 
@@ -79,13 +83,17 @@ public class HttpHeaders  implements MultiValueMap<String, String> {
 
 	private static final String LOCATION = "Location";
 
+	private static final String ORIGIN = "Origin";
+
 	private static final String PRAGMA = "Pragma";
+
+	private static final String UPGRADE = "Upgrade";
 
 
 	private static final String[] DATE_FORMATS = new String[] {
 		"EEE, dd MMM yyyy HH:mm:ss zzz",
-        "EEE, dd-MMM-yy HH:mm:ss zzz",
-        "EEE MMM dd HH:mm:ss yyyy"
+		"EEE, dd-MMM-yy HH:mm:ss zzz",
+		"EEE MMM dd HH:mm:ss yyyy"
 	};
 
 	private static TimeZone GMT = TimeZone.getTimeZone("GMT");
@@ -141,7 +149,18 @@ public class HttpHeaders  implements MultiValueMap<String, String> {
 	 */
 	public List<MediaType> getAccept() {
 		String value = getFirst(ACCEPT);
-		return (value != null ? MediaType.parseMediaTypes(value) : Collections.<MediaType>emptyList());
+		List<MediaType> result = (value != null ? MediaType.parseMediaTypes(value) : Collections.<MediaType>emptyList());
+
+		// Some containers parse 'Accept' into multiple values
+		if (result.size() == 1) {
+			List<String> acceptHeader = get(ACCEPT);
+			if (acceptHeader.size() > 1) {
+				value = StringUtil.collectionToCommaDelimitedString(acceptHeader);
+				result = MediaType.parseMediaTypes(value);
+			}
+		}
+
+		return result;
 	}
 
 	/**
@@ -172,11 +191,15 @@ public class HttpHeaders  implements MultiValueMap<String, String> {
 			String[] tokens = value.split(",\\s*");
 			for (String token : tokens) {
 				int paramIdx = token.indexOf(';');
+				String charsetName;
 				if (paramIdx == -1) {
-					result.add(Charset.forName(token));
+					charsetName = token;
 				}
 				else {
-					result.add(Charset.forName(token.substring(0, paramIdx)));
+					charsetName = token.substring(0, paramIdx);
+				}
+				if (!charsetName.equals("*")) {
+					result.add(Charset.forName(charsetName));
 				}
 			}
 		}
@@ -198,7 +221,7 @@ public class HttpHeaders  implements MultiValueMap<String, String> {
 	 */
 	public Set<HttpMethod> getAllow() {
 		String value = getFirst(ALLOW);
-		if (value != null) {
+		if (!StringUtil.isEmpty(value)) {
 			List<HttpMethod> allowedMethod = new ArrayList<HttpMethod>(5);
 			String[] tokens = value.split(",\\s*");
 			for (String token : tokens) {
@@ -225,6 +248,30 @@ public class HttpHeaders  implements MultiValueMap<String, String> {
 	 */
 	public String getCacheControl() {
 		return getFirst(CACHE_CONTROL);
+	}
+
+	/**
+	 * Sets the (new) value of the {@code Connection} header.
+	 * @param connection the value of the header
+	 */
+	public void setConnection(String connection) {
+		set(CONNECTION, connection);
+	}
+
+	/**
+	 * Sets the (new) value of the {@code Connection} header.
+	 * @param connection the value of the header
+	 */
+	public void setConnection(List<String> connection) {
+		set(CONNECTION, toCommaDelimitedString(connection));
+	}
+
+	/**
+	 * Returns the value of the {@code Connection} header.
+	 * @return the value of the header
+	 */
+	public List<String> getConnection() {
+		return getFirstValueAsList(CONNECTION);
 	}
 
 	/**
@@ -305,7 +352,11 @@ public class HttpHeaders  implements MultiValueMap<String, String> {
 	 * @param eTag the new entity tag
 	 */
 	public void setETag(String eTag) {
-		set(ETAG, quote(eTag));
+		if (eTag != null) {
+			Assert.isTrue(eTag.startsWith("\"") || eTag.startsWith("W/"), "Invalid eTag, does not start with W/ or \"");
+			Assert.isTrue(eTag.endsWith("\""), "Invalid eTag, does not end with \"");
+		}
+		set(ETAG, eTag);
 	}
 
 	/**
@@ -313,7 +364,7 @@ public class HttpHeaders  implements MultiValueMap<String, String> {
 	 * @return the entity tag
 	 */
 	public String getETag() {
-		return unquote(getFirst(ETAG));
+		return getFirst(ETAG);
 	}
 
 	/**
@@ -326,12 +377,20 @@ public class HttpHeaders  implements MultiValueMap<String, String> {
 	}
 
 	/**
-	 * Returns the date and time at which the message is no longer valid, as specified by the {@code Expires} header.
-	 * <p>The date is returned as the number of milliseconds since January 1, 1970 GMT. Returns -1 when the date is unknown.
+	 * Returns the date and time at which the message is no longer valid, as specified by
+	 * the {@code Expires} header.
+	 * <p>The date is returned as the number of milliseconds since January 1, 1970 GMT.
+	 * Returns -1 when the date is unknown.
+	 *
 	 * @return the expires value
 	 */
 	public long getExpires() {
-		return getFirstDate(EXPIRES);
+		try {
+			return getFirstDate(EXPIRES);
+		}
+		catch (IllegalArgumentException ex) {
+			return -1;
+		}
 	}
 
 	/**
@@ -347,8 +406,19 @@ public class HttpHeaders  implements MultiValueMap<String, String> {
 	 * Returns the value of the {@code IfModifiedSince} header.
 	 * <p>The date is returned as the number of milliseconds since January 1, 1970 GMT. Returns -1 when the date is unknown.
 	 * @return the header value
+	 * @deprecated use {@link #getIfModifiedSince()}
 	 */
+	@Deprecated
 	public long getIfNotModifiedSince() {
+		return getIfModifiedSince();
+	}
+
+	/**
+	 * Returns the value of the {@code If-Modified-Since} header.
+	 * <p>The date is returned as the number of milliseconds since January 1, 1970 GMT. Returns -1 when the date is unknown.
+	 * @return the header value
+	 */
+	public long getIfModifiedSince() {
 		return getFirstDate(IF_MODIFIED_SINCE);
 	}
 
@@ -357,7 +427,7 @@ public class HttpHeaders  implements MultiValueMap<String, String> {
 	 * @param ifNoneMatch the new value of the header
 	 */
 	public void setIfNoneMatch(String ifNoneMatch) {
-		set(IF_NONE_MATCH, quote(ifNoneMatch));
+		set(IF_NONE_MATCH, ifNoneMatch);
 	}
 
 	/**
@@ -365,15 +435,19 @@ public class HttpHeaders  implements MultiValueMap<String, String> {
 	 * @param ifNoneMatchList the new value of the header
 	 */
 	public void setIfNoneMatch(List<String> ifNoneMatchList) {
+		set(IF_NONE_MATCH, toCommaDelimitedString(ifNoneMatchList));
+	}
+
+	protected String toCommaDelimitedString(List<String> list) {
 		StringBuilder builder = new StringBuilder();
-		for (Iterator<String> iterator = ifNoneMatchList.iterator(); iterator.hasNext();) {
+		for (Iterator<String> iterator = list.iterator(); iterator.hasNext();) {
 			String ifNoneMatch = iterator.next();
-			builder.append(quote(ifNoneMatch));
+			builder.append(ifNoneMatch);
 			if (iterator.hasNext()) {
 				builder.append(", ");
 			}
 		}
-		set(IF_NONE_MATCH, builder.toString());
+		return builder.toString();
 	}
 
 	/**
@@ -381,13 +455,17 @@ public class HttpHeaders  implements MultiValueMap<String, String> {
 	 * @return the header value
 	 */
 	public List<String> getIfNoneMatch() {
+		return getFirstValueAsList(IF_NONE_MATCH);
+	}
+
+	protected List<String> getFirstValueAsList(String header) {
 		List<String> result = new ArrayList<String>();
 
-		String value = getFirst(IF_NONE_MATCH);
+		String value = getFirst(header);
 		if (value != null) {
 			String[] tokens = value.split(",\\s*");
 			for (String token : tokens) {
-				result.add(unquote(token));
+				result.add(token);
 			}
 		}
 		return result;
@@ -430,6 +508,22 @@ public class HttpHeaders  implements MultiValueMap<String, String> {
 	}
 
 	/**
+	 * Sets the (new) value of the {@code Origin} header.
+	 * @param origin the value of the header
+	 */
+	public void setOrigin(String origin) {
+		set(ORIGIN, origin);
+	}
+
+	/**
+	 * Returns the value of the {@code Origin} header.
+	 * @return the value of the header
+	 */
+	public String getOrigin() {
+		return getFirst(ORIGIN);
+	}
+
+	/**
 	 * Sets the (new) value of the {@code Pragma} header.
 	 * @param pragma the value of the header
 	 */
@@ -445,34 +539,30 @@ public class HttpHeaders  implements MultiValueMap<String, String> {
 		return getFirst(PRAGMA);
 	}
 
-	// Utility methods
-
-	private String quote(String s) {
-		Assert.notNull(s);
-		if (!s.startsWith("\"")) {
-			s = "\"" + s;
-		}
-		if (!s.endsWith("\"")) {
-			s = s + "\"";
-		}
-		return s;
+	/**
+	 * Sets the (new) value of the {@code Upgrade} header.
+	 * @param upgrade the value of the header
+	 */
+	public void setUpgrade(String upgrade) {
+		set(UPGRADE, upgrade);
 	}
 
-	private String unquote(String s) {
-		if (s == null) {
-			return null;
-		}
-		if (s.startsWith("\"")) {
-			s = s.substring(1);
-		}
-		if (s.endsWith("\"")) {
-			s = s.substring(0, s.length() - 1);
-		}
-		return s;
+	/**
+	 * Returns the value of the {@code Upgrade} header.
+	 * @return the value of the header
+	 */
+	public String getUpgrade() {
+		return getFirst(UPGRADE);
 	}
 
+	// Date methods
 
-	private long getFirstDate(String headerName) {
+	/**
+	 * Parse the first header value for the given header name as a date, return -1 if
+	 * there is no value, or raise {@link IllegalArgumentException} if the value cannot be
+	 * parsed as a date.
+	 */
+	public long getFirstDate(String headerName) {
 		String headerValue = getFirst(headerName);
 		if (headerValue == null) {
 			return -1;
@@ -491,7 +581,12 @@ public class HttpHeaders  implements MultiValueMap<String, String> {
 				"\" for \"" + headerName + "\" header");
 	}
 
-	private void setDate(String headerName, long date) {
+	/**
+	 * Set the given date under the given header name after formatting it as a string
+	 * using the pattern {@code "EEE, dd MMM yyyy HH:mm:ss zzz"}. The equivalent of
+	 * {@link #set(String, String)} but for date headers.
+	 */
+	public void setDate(String headerName, long date) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMATS[0], Locale.US);
 		dateFormat.setTimeZone(GMT);
 		set(headerName, dateFormat.format(new Date(date)));
@@ -504,6 +599,7 @@ public class HttpHeaders  implements MultiValueMap<String, String> {
 	 * @param headerName the header name
 	 * @return the first header value; or {@code null}
 	 */
+	@Override
 	public String getFirst(String headerName) {
 		List<String> headerValues = headers.get(headerName);
 		return headerValues != null ? headerValues.get(0) : null;
@@ -517,6 +613,7 @@ public class HttpHeaders  implements MultiValueMap<String, String> {
 	 * @see #put(String, List)
 	 * @see #set(String, String)
 	 */
+	@Override
 	public void add(String headerName, String headerValue) {
 		List<String> headerValues = headers.get(headerName);
 		if (headerValues == null) {
@@ -534,18 +631,21 @@ public class HttpHeaders  implements MultiValueMap<String, String> {
 	 * @see #put(String, List)
 	 * @see #add(String, String)
 	 */
+	@Override
 	public void set(String headerName, String headerValue) {
 		List<String> headerValues = new LinkedList<String>();
 		headerValues.add(headerValue);
 		headers.put(headerName, headerValues);
 	}
 
+	@Override
 	public void setAll(Map<String, String> values) {
 		for (Entry<String, String> entry : values.entrySet()) {
 			set(entry.getKey(), entry.getValue());
 		}
 	}
 
+	@Override
 	public Map<String, String> toSingleValueMap() {
 		LinkedHashMap<String, String> singleValueMap = new LinkedHashMap<String,String>(this.headers.size());
 		for (Entry<String, List<String>> entry : headers.entrySet()) {
@@ -556,50 +656,62 @@ public class HttpHeaders  implements MultiValueMap<String, String> {
 
 	// Map implementation
 
+	@Override
 	public int size() {
 		return this.headers.size();
 	}
 
+	@Override
 	public boolean isEmpty() {
 		return this.headers.isEmpty();
 	}
 
+	@Override
 	public boolean containsKey(Object key) {
 		return this.headers.containsKey(key);
 	}
 
+	@Override
 	public boolean containsValue(Object value) {
 		return this.headers.containsValue(value);
 	}
 
+	@Override
 	public List<String> get(Object key) {
 		return this.headers.get(key);
 	}
 
+	@Override
 	public List<String> put(String key, List<String> value) {
 		return this.headers.put(key, value);
 	}
 
+	@Override
 	public List<String> remove(Object key) {
 		return this.headers.remove(key);
 	}
 
+	@Override
 	public void putAll(Map<? extends String, ? extends List<String>> m) {
 		this.headers.putAll(m);
 	}
 
+	@Override
 	public void clear() {
 		this.headers.clear();
 	}
 
+	@Override
 	public Set<String> keySet() {
 		return this.headers.keySet();
 	}
 
+	@Override
 	public Collection<List<String>> values() {
 		return this.headers.values();
 	}
 
+	@Override
 	public Set<Entry<String, List<String>>> entrySet() {
 		return this.headers.entrySet();
 	}

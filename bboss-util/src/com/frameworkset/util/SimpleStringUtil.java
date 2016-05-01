@@ -46,7 +46,6 @@ import java.lang.reflect.Array;
 import java.net.InetAddress;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
-import java.security.AccessController;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -82,8 +81,6 @@ import org.codehaus.jackson.type.TypeReference;
 import org.frameworkset.util.CollectionUtils;
 import org.frameworkset.util.DataFormatUtil;
 import org.frameworkset.util.ObjectUtils;
-
-import sun.security.action.GetPropertyAction;
 
 /**
  * To change for your class or interface DAO中VOObject String类型与PO数据类型转换工具类.
@@ -173,8 +170,7 @@ public class SimpleStringUtil  {
 		dontNeedEncoding.set('.');
 		dontNeedEncoding.set('*');
 
-		dfltEncName = (String) AccessController
-				.doPrivileged(new GetPropertyAction("file.encoding"));
+		dfltEncName = System.getProperty("file.encoding");
 	}
 	private static String ip;
 	static

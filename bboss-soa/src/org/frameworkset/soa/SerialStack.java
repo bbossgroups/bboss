@@ -28,20 +28,49 @@ import java.util.Map;
  * @version 1.0
  */
 public class SerialStack {
-	private Map<Object,String> stack = new HashMap<Object,String>();
+	private Map<RefKey,String> stack = new HashMap<RefKey,String>();
 	public void addStack(Object address,String refid)
 	{
-		this.stack.put(address, refid);
+		this.stack.put(new RefKey(address), refid);
 	}
 	public String getRefID(Object address)
 	{
-		return this.stack.get(address);
+		return this.stack.get(new RefKey(address));
 	}
 	
 	public void clear()
 	{
 		this.stack.clear();
 		this.stack = null;
+	}
+	static class RefKey
+	{
+		private Object key;
+		public Object getKey() {
+			return key;
+		}
+		public RefKey(Object key)
+		{
+			this.key = key;
+		}
+		@Override
+		public int hashCode() {
+//			// TODO Auto-generated method stub
+//			return key.hashCode();
+			return 1;
+		}
+		@Override
+		public boolean equals(Object obj) {
+			// TODO Auto-generated method stub
+			RefKey other = (RefKey)obj;
+			return key == other.key;
+		}
+		@Override
+		public String toString() {
+			// TODO Auto-generated method stub
+			return key.toString();
+		}
+		
 	}
 	
 

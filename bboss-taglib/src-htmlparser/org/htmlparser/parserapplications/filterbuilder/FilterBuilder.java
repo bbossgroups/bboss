@@ -76,7 +76,8 @@ import java.io.StringWriter;
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -198,7 +199,7 @@ public class FilterBuilder
     /**
      * Selected commands.
      */
-    protected Vector mSelection;
+    protected List mSelection;
 
     /**
      * If true selection moved.
@@ -431,7 +432,7 @@ public class FilterBuilder
         addMouseMotionListener (this);
 
         // clipboard buffer
-        mSelection = new Vector ();
+        mSelection = new ArrayList ();
     }
 
     /**
@@ -1727,7 +1728,7 @@ public class FilterBuilder
     protected void addSelection (Filter filter)
     {
         if (!selectionContains (filter))
-            mSelection.addElement (filter);
+            mSelection.add (filter);
         filter.setSelected (true);
         mMoved = false;
     }
@@ -1738,7 +1739,7 @@ public class FilterBuilder
      */
     protected void removeSelection (Filter filter)
     {
-        mSelection.removeElement (filter); // no harm if not contained
+        mSelection.remove (filter); // no harm if not contained
         filter.setSelected (false);
     }
 
@@ -1755,7 +1756,7 @@ public class FilterBuilder
         count = mSelection.size ();
         for (int i = 0; i < count; i++)
         {
-            filter = (Filter)mSelection.elementAt (i);
+            filter = (Filter)mSelection.get (i);
             filter.setSelected (select);
         }
     }
@@ -1766,7 +1767,7 @@ public class FilterBuilder
     protected void clearSelection ()
     {
         selectSelection (false);
-        mSelection.removeAllElements ();
+        mSelection.clear();
     }
 
     /**
@@ -1782,7 +1783,7 @@ public class FilterBuilder
         count = mSelection.size ();
         for (int i = 0; i < count; i++)
         {
-            filter = (Filter)mSelection.elementAt (i);
+            filter = (Filter)mSelection.get (i);
             point = filter.getLocation ();
             point.translate (translation.x, translation.y);
             synchronized (filter.getTreeLock ())
@@ -1816,7 +1817,7 @@ public class FilterBuilder
         ret = null;
 
         if (0 < mSelection.size ())
-            ret = (Filter)mSelection.lastElement ();
+            ret = (Filter)mSelection.get(mSelection.size () - 1);
             
         return (ret);
     }
@@ -1830,8 +1831,11 @@ public class FilterBuilder
         Filter[] ret;
 
         ret = new Filter[mSelection.size ()];
-        mSelection.copyInto (ret);
-
+//        mSelection.copyInto (ret);
+        for(int i = 0; i < mSelection.size (); i ++)
+        {
+        	ret[i] = (Filter)mSelection.get(i);
+        }
         return (ret);
     }
 

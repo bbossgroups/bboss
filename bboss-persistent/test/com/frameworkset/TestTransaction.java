@@ -695,7 +695,7 @@ public class TestTransaction {
 				dbUtil.executeDelete("delete from test");
 				dbUtil.executeInsert("insert into test(name) values('biaoping.yinfasdfasdf')");
 				
-				dbUtil.execute("commit");
+				dbUtil.executeSql("commit");
 //				log("inner1 after",tm.getStatus());
 //				
 //				dbUtil.executeInsert("insert into test1(name) values('biaoping.yin1')");

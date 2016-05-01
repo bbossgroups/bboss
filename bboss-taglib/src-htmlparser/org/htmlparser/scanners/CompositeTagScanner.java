@@ -26,14 +26,14 @@
 
 package org.htmlparser.scanners;
 
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.htmlparser.Attribute;
 import org.htmlparser.Node;
 import org.htmlparser.Tag;
 import org.htmlparser.lexer.Lexer;
 import org.htmlparser.lexer.Page;
-import org.htmlparser.scanners.Scanner;
 import org.htmlparser.util.NodeList;
 import org.htmlparser.util.ParserException;
 
@@ -186,8 +186,8 @@ public class CompositeTagScanner extends TagScanner
                                 // If there is something, we close off all the tags
                                 // walked over and continue on as if nothing
                                 // happened.
-                                Vector attributes = new Vector ();
-                                attributes.addElement (new Attribute (name, null));
+                                List attributes = new ArrayList ();
+                                attributes.add (new Attribute (name, null));
                                 Tag opener = lexer.getNodeFactory ().createTagNode (
                                     lexer.getPage (), next.getStartPosition (), next.getEndPosition (),
                                     attributes);
@@ -322,11 +322,11 @@ public class CompositeTagScanner extends TagScanner
     {
         Tag ret;
         String name;
-        Vector attributes;
+        List attributes;
         
         name = "/" + tag.getRawTagName ();
-        attributes = new Vector ();
-        attributes.addElement (new Attribute (name, (String)null));
+        attributes = new ArrayList ();
+        attributes.add (new Attribute (name, (String)null));
         ret = lexer.getNodeFactory ().createTagNode (
                                     page, position, position, attributes);
         

@@ -1,0 +1,68 @@
+sourceSets {
+    main {
+        java {
+            srcDirs 'src'
+        }
+        resources {
+
+        }
+        compileClasspath = configurations.providedCompile +configurations.compile
+    }
+}
+
+/**
+jar {
+    classifier = "all"
+}*/
+
+project.tasks.compileJava.dependsOn(project(':bboss-taglib').tasks.publish)
+dependencies {
+   
+    providedCompile "org.apache.tomcat:tomcat-catalina:8.0.33"
+    providedCompile "org.apache.tomcat:tomcat-coyote:8.0.33" 
+    providedCompile "org.apache.tomcat:tomcat-websocket:8.0.33"
+    providedCompile "servletapi:servletapi:2.4"
+    providedCompile  "javax.servlet:jsp-api:2.0" 
+   providedCompile  "javaee:javaee-api:5" 
+    compile  (
+			
+           [group: 'com.bbossgroups', name: 'bboss-mvc', version: "${version}", transitive: true],
+            [group: 'org.glassfish.tyrus.bundles', name: 'tyrus-standalone-client', version: "1.9", transitive: true],
+            //project(':bboss-mvc')
+    )
+     
+}
+    
+ 
+
+war {
+    from 'WebRoot'
+    // adds a file-set to the root of the archive
+    webInf { from 'WebRoot/WEB-INF' } // adds a file-set to the WEB-INF dir.
+    classpath configurations.compile // adds a configuration to the WEB-INF/lib dir.
+    webXml = file('WebRoot/WEB-INF/web.xml') // copies a file to WEB-INF/web.xml
+}
+
+task sourcesJar(type: Jar) {
+	classifier = "sources"
+	from sourceSets.main.allJava
+}
+
+task javaDocJar(type: Jar, dependsOn: javadoc) {
+	classifier = "javadoc"
+	from javadoc.destinationDir
+}
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+        	from components.java
+			artifact sourcesJar
+			artifact javaDocJar
+            artifact war
+        }
+    }
+    repositories {
+        mavenLocal()
+    }
+}
+webAppDirName = 'WebRoot'  

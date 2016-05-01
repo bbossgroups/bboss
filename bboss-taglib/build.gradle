@@ -1,0 +1,324 @@
+sourceSets {
+    bboss_htmlparser {
+        java {
+            srcDirs 'src-htmlparser'
+        }
+        compileClasspath = configurations.compile
+    }
+    /*
+    bboss_htmlparser {java {srcDirs 'src-htmlparser'}compileClasspath = configurations.compile}
+    */
+    bboss_taglib {
+        java {
+            srcDirs 'src'
+            srcDirs 'src-cms'
+            srcDirs 'src-mvc'
+        }
+        resources {
+            srcDirs 'src'
+            include '**/*.properties'
+        }
+        compileClasspath = configurations.compile   + sourceSets.bboss_htmlparser.output
+    }
+    bboss_tabpane {
+        java {
+            srcDirs 'tabpane'
+        }
+        compileClasspath = configurations.compile  + sourceSets.bboss_taglib.output
+    }
+}
+
+tasks.jar { classifier = "all" }
+
+project.tasks.compileJava.dependsOn(project(':bboss-mvc').tasks.install)
+project.tasks.compileJava.dependsOn(project(':bboss-persistent').tasks.install)
+dependencies {
+    compile(
+    				project(':bboss-mvc'),
+            [group: 'ant', name: 'ant', version: '1.6.4', transitive: false],
+            [group: 'org.ow2.asm', name: 'asm', version: '5.0.3', transitive: false],
+            //[group: 'javaee', name: 'javaee-api', version: '5', transitive: false],
+            [group: 'com.bbossgroups', name: 'bboss-core', version: "${version}", transitive: false],
+            [group: 'com.bbossgroups', name: 'bboss-mvc', version: "${version}", transitive: false],
+            [group: 'com.bbossgroups', name: 'bboss-soa', version: "${version}", transitive: false],
+            [group: 'com.bbossgroups', name: 'bboss-velocity', version: "${version}", transitive: false],
+            [group: 'com.bbossgroups', name: 'bboss-persistent', version: "${version}", transitive: false],
+            [group: 'com.bbossgroups', name: 'bboss-util', version: "${version}", transitive: false],
+            [group: 'cglib', name: 'cglib-nodep', version: '3.1', transitive: false],
+            [group: 'commons-lang', name: 'commons-lang', version: '2.6', transitive: false],
+            [group: 'concurrent', name: 'concurrent', version: '1.3.2', transitive: false],
+            [group: 'oro', name: 'oro', version: '2.0.8', transitive: false],
+            [group: 'org.apache.geronimo.specs', name: 'geronimo-jta_1.0.1B_spec', version: '1.0.1', transitive: false],
+            [group: 'log4j', name: 'log4j', version: '1.2.16', transitive: false],
+            [group: 'xjavadoc', name: 'xjavadoc', version: '1.1', transitive: false],
+            [group: 'xpp3', name: 'xpp3', version: '1.1.4c', transitive: false],
+            [group: 'com.thoughtworks.xstream', name: 'xstream', version: '1.3.1', transitive: false],
+            [group: 'servletapi', name: 'servletapi', version: '2.4', transitive: false],
+            [group: 'javax.servlet', name: 'jsp-api', version: '2.0', transitive: false]
+    )
+
+   /** compileOnly(
+            [group: 'servletapi', name: 'servletapi', version: '2.4', transitive: false],
+            [group: 'javax.servlet', name: 'jsp-api', version: '2.0', transitive: false]
+    )*/
+    //bboss_taglib编译时，需要依赖bboss_htmlparser的编译输出
+    bboss_taglibRuntime sourceSets.bboss_htmlparser.output
+    //bboss_tabpane编译时，需要依赖bboss_taglib的编译输出
+    bboss_tabpaneRuntime sourceSets.bboss_taglib.output
+}
+
+sourceSets.bboss_htmlparser { set ->
+    def jarTask = task("${set.name}Jar", type: Jar) {
+        baseName = "bboss-htmlparser"
+        from set.output
+    }
+
+    def jarSourcesTask = task("${set.name}SourceJar", type: Jar) {
+        baseName = "bboss-htmlparser"
+        classifier = "sources"
+        from set.allJava
+    }
+
+    def docTask = task("${set.name}Doc", type: Javadoc) {
+        classpath = set.compileClasspath
+        source set.allJava
+        destinationDir=file("build/docs/${set.name}")
+    }
+
+    def jarDocTask = task("${set.name}DocJar", type: Jar, dependsOn: docTask) {
+        baseName = "bboss-htmlparser"
+        classifier = "javadoc"
+        from docTask
+    }
+
+    artifacts {
+        archives jarTask
+        archives jarSourcesTask
+        archives jarDocTask
+    }
+}
+
+sourceSets.bboss_taglib { set ->
+    def jarTask = task("${set.name}Jar", type: Jar) {
+        baseName = "bboss-taglib"
+        from set.output
+    }
+
+    def jarSourcesTask = task("${set.name}SourceJar", type: Jar) {
+        baseName = "bboss-taglib"
+        classifier = "sources"
+        from set.allJava
+    }
+
+    def docTask = task("${set.name}Doc", type: Javadoc) {
+        classpath = set.compileClasspath
+        source set.allJava
+        destinationDir=file("build/docs/${set.name}")
+    }
+
+    def jarDocTask = task("${set.name}DocJar", type: Jar, dependsOn: docTask) {
+        baseName = "bboss-taglib"
+        classifier = "javadoc"
+
+        from docTask
+    }
+
+    artifacts {
+        archives jarTask
+        archives jarSourcesTask
+        archives jarDocTask
+    }
+}
+ 
+  ext.uploadtocenter=uploadArchivesToMavenCenter.equals("true")	
+if(uploadtocenter)
+{
+	signing {
+	        //required { uploadtocenter }
+	        sign configurations.archives
+	 }
+}
+uploadArchives {
+	  repositories {
+	   
+		    mavenDeployer {
+		     
+			if(uploadtocenter)
+			{	  
+				
+				beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+		     	repository(url: sonatype_url) {
+		     		
+				         authentication(userName: sonatype_username, password: sonatype_password)
+				}
+			}
+			else
+			{
+				repository(url: "file://"+mvn_repo)
+			}
+			 
+ 			addFilter('bboss_taglib') {artifact, file ->
+            	artifact.name == 'bboss-taglib'
+	        }
+	        addFilter('bboss_htmlparser') {artifact, file ->
+	            artifact.name == 'bboss-htmlparser'
+	        }
+	         addFilter('bboss_tabpane') {artifact, file ->
+	            artifact.name == 'bboss-tabpane'
+	        }
+	      pom('bboss_taglib').project {
+	        name project.name
+	        packaging 'jar'
+	        // optionally artifactId can be defined here 
+	        description PROJ_DESCRIPTION
+	        url PROJ_WEBSITEURL
+
+	        scm {
+	          connection scm_connection
+	          developerConnection scm_developerConnection
+	          url scm_url
+	        }
+
+	        licenses {
+	          license {
+	            name PROJ_LICENCE_NAME
+	            url PROJ_LICENCE_URL
+	          }
+	        }
+
+	        developers {
+	          developer {
+	            id DEVELOPER_ID
+	            name DEVELOPER_NAME
+	            email DEVELOPER_EMAIL
+	          }
+	        }
+	      }
+	      
+	      pom('bboss_htmlparser').project {
+	        name project.name
+	        packaging 'jar'
+	        // optionally artifactId can be defined here 
+	        description PROJ_DESCRIPTION
+	        url PROJ_WEBSITEURL
+
+	        scm {
+	          connection scm_connection
+	          developerConnection scm_developerConnection
+	          url scm_url
+	        }
+
+	        licenses {
+	          license {
+	            name PROJ_LICENCE_NAME
+	            url PROJ_LICENCE_URL
+	          }
+	        }
+
+	        developers {
+	          developer {
+	            id DEVELOPER_ID
+	            name DEVELOPER_NAME
+	            email DEVELOPER_EMAIL
+	          }
+	        }
+	      }
+	      
+	      pom('bboss_tabpane').project {
+	        name project.name
+	        packaging 'jar'
+	        // optionally artifactId can be defined here 
+	        description PROJ_DESCRIPTION
+	        url PROJ_WEBSITEURL
+
+	        scm {
+	          connection scm_connection
+	          developerConnection scm_developerConnection
+	          url scm_url
+	        }
+
+	        licenses {
+	          license {
+	            name PROJ_LICENCE_NAME
+	            url PROJ_LICENCE_URL
+	          }
+	        }
+
+	        developers {
+	          developer {
+	            id DEVELOPER_ID
+	            name DEVELOPER_NAME
+	            email DEVELOPER_EMAIL
+	          }
+	        }
+	      }
+	   }
+	}
+}
+	 
+sourceSets.bboss_tabpane { set ->
+    def jarTask = task("${set.name}Jar", type: Jar) {
+        baseName = "bboss-tabpane"
+        from set.output
+    }
+
+    def jarSourcesTask = task("${set.name}SourceJar", type: Jar) {
+        baseName = "bboss-tabpane"
+        classifier = "sources"
+        from set.allJava
+    }
+
+    def docTask = task("${set.name}Doc", type: Javadoc) {
+        classpath = set.compileClasspath
+        source set.allJava
+        destinationDir=file("build/docs/${set.name}")
+    }
+
+    def jarDocTask = task("${set.name}DocJar", type: Jar, dependsOn: docTask) {
+        baseName = "bboss-tabpane"
+        classifier = "javadoc"
+        from docTask
+    }
+
+    artifacts {
+        archives jarTask
+        archives jarSourcesTask
+        archives jarDocTask
+    }
+}
+
+publishing {
+    publications {
+        bboss_htmlparser(MavenPublication) {
+            artifactId 'bboss-htmlparser'
+            from components.java
+            artifact bboss_htmlparserJar
+            artifact bboss_htmlparserSourceJar
+            artifact bboss_htmlparserDocJar
+        }
+        bboss_taglib(MavenPublication) {
+            artifactId 'bboss-taglib'
+            from components.java
+            artifact bboss_taglibJar
+            artifact bboss_taglibSourceJar
+            artifact bboss_taglibDocJar
+        }
+        bboss_tabpane(MavenPublication) {
+            artifactId 'bboss-tabpane'
+            from components.java
+            artifact bboss_tabpaneJar
+            artifact bboss_tabpaneSourceJar
+            artifact bboss_tabpaneDocJar
+        }
+    }
+    repositories {
+	        /**maven {
+	            url "https://oss.sonatype.org/service/local/staging/deploy/maven2"
+	            credentials {
+	                username ""
+	                password ""
+	            }
+	        }*/
+	        mavenLocal()    
+	    }
+}

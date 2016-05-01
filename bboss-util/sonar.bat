@@ -1,1 +1,0 @@
-sonar-runner > ll.log

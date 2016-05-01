@@ -28,7 +28,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.Hashtable;
+//import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Properties;
@@ -287,7 +287,7 @@ public class PoolManConfiguration implements Serializable {
 
 		// backwards compatibility is a b****
 
-		Hashtable datasources = new Hashtable();
+		HashMap datasources = new HashMap();
 		this.getClass().getClassLoader().getParent().getSystemClassLoader()
 				.getResource(null);
 		InputStream is = null;

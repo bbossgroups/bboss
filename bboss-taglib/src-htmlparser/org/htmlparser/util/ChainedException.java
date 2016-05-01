@@ -58,7 +58,10 @@ package org.htmlparser.util;
 
 import java.io.PrintStream;
 import java.io.PrintWriter;
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.htmlparser.parserapplications.filterbuilder.Filter;
 
 public class ChainedException
   extends Exception
@@ -85,31 +88,35 @@ public class ChainedException
 
   public String[] getMessageChain()
   {
-    Vector list = getMessageList();
+    List list = getMessageList();
     String[] chain = new String[list.size()];
-    list.copyInto (chain);
+//    list.copyInto (chain);
+    for(int i = 0; i < list.size (); i ++)
+    {
+    	chain[i] = (String)list.get(i);
+    }
     return chain;
   }
 
-  public Vector getMessageList()
+  public List getMessageList()
   {
-    Vector list = new Vector();
-    list.addElement(getMessage());
+    List list = new ArrayList();
+    list.add(getMessage());
     if (throwable != null)
     {
       if (throwable instanceof ChainedException)
       {
         ChainedException chain = (ChainedException)throwable;
-        Vector sublist = chain.getMessageList ();
+        List sublist = chain.getMessageList ();
         for (int i = 0; i < sublist.size (); i++)
-            list.addElement (sublist.elementAt (i));
+            list.add (sublist.get (i));
       }
       else
       {
         String message = throwable.getMessage();
         if (message != null && !message.equals(""))
         {
-          list.addElement (message);
+          list.add (message);
         }
       }
     }

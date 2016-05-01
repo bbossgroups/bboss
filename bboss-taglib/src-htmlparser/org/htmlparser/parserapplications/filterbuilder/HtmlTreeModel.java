@@ -26,10 +26,13 @@
                                                                                                   
 package org.htmlparser.parserapplications.filterbuilder;
 
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.swing.tree.*;
-import javax.swing.event.*;
+import javax.swing.event.TreeModelEvent;
+import javax.swing.event.TreeModelListener;
+import javax.swing.tree.TreeModel;
+import javax.swing.tree.TreePath;
 
 import org.htmlparser.Node;
 import org.htmlparser.tags.Html;
@@ -43,7 +46,7 @@ public class HtmlTreeModel implements TreeModel
     /**
      * The list of tree listeners.
      */
-    protected Vector mTreeListeners;
+    protected List mTreeListeners;
     
     /**
      * The root {@link Node}.
@@ -60,7 +63,7 @@ public class HtmlTreeModel implements TreeModel
      */
     public HtmlTreeModel (NodeList root)
     {
-        mTreeListeners = new Vector ();
+        mTreeListeners = new ArrayList ();
         // for simplicity we encapsulate the nodelist in a Html tag
         mRoot = new Html ();
         mRoot.setChildren (root);
@@ -79,7 +82,7 @@ public class HtmlTreeModel implements TreeModel
         synchronized (mTreeListeners)
         {
             if (!mTreeListeners.contains(l))
-                mTreeListeners.addElement(l);
+                mTreeListeners.add(l);
         }        
     }        
 
@@ -91,7 +94,7 @@ public class HtmlTreeModel implements TreeModel
     {
         synchronized (mTreeListeners)
         {
-            mTreeListeners.removeElement (l);
+            mTreeListeners.remove (l);
         }    
     }
 
@@ -211,17 +214,17 @@ public class HtmlTreeModel implements TreeModel
     public void valueForPathChanged (TreePath path, Object newValue)
     {
         TreeModelEvent event;
-        Vector v;
+        List v;
 
         event = new TreeModelEvent (this, path);
         synchronized (mTreeListeners)
         {
-            v = (Vector)mTreeListeners.clone ();
+            v = (List) ((ArrayList)mTreeListeners).clone ();
         }
         
         for (int i = 0; i < v.size (); i++)
         {
-            TreeModelListener listener = (TreeModelListener)v.elementAt (i);
+            TreeModelListener listener = (TreeModelListener)v.get (i);
             listener.treeStructureChanged (event);
         }
     }

@@ -10,7 +10,6 @@ import com.frameworkset.common.poolman.CallableDBUtil;
 import com.frameworkset.common.poolman.PreparedDBUtil;
 import com.frameworkset.common.poolman.Record;
 import com.frameworkset.common.poolman.handle.RowHandler;
-import com.frameworkset.common.poolman.util.SQLResult;
 import com.frameworkset.orm.transaction.TransactionManager;
 
 public class TestCallableDBUtil {
@@ -164,14 +163,14 @@ public class TestCallableDBUtil {
 	public @Test void testoldMethod()
 	{
 		PreparedDBUtil callableDBUtil = new PreparedDBUtil();
-		try {
-			
-			SQLResult result = callableDBUtil.execute("select * from tableinfo");
-			System.out.println(result.size());
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		try {
+//			
+//			SQLResult result = callableDBUtil.execute("select * from tableinfo");
+//			System.out.println(result.size());
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 	}
 	
 	public @Test void testTest_pWithNameIndexForObjectWithRowHandler()

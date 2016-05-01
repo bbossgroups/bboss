@@ -15,7 +15,8 @@
  */
 package org.htmlparser.scanners;
 
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.htmlparser.Attribute;
 import org.htmlparser.Node;
@@ -71,7 +72,7 @@ public class ResourceScanner  extends CompositeTagScanner
         int position;
         Node node;
         Attribute attribute;
-        Vector vector;
+        List vector;
 
 //        content = lexer.parseCDATA ();
         content = lexer.parseCDATA ();
@@ -90,8 +91,8 @@ public class ResourceScanner  extends CompositeTagScanner
         if (null == node)
         {
             attribute = new Attribute ("/" + tagname.toLowerCase(), null);
-            vector = new Vector ();
-            vector.addElement (attribute);
+            vector = new ArrayList ();
+            vector.add (attribute);
             node = lexer.getNodeFactory ().createTagNode (
                 lexer.getPage (), position, position, vector);
         }

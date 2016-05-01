@@ -164,7 +164,6 @@ public class JDBCPool {
 
 	
 
-	private Hashtable preparedStatementPool;
 
 	private Map tableMetaDatasindexByTablename = new java.util.concurrent.ConcurrentHashMap();
 
@@ -728,7 +727,6 @@ public class JDBCPool {
 		{
 			idGenerator = new com.frameworkset.common.poolman.sql.StrongUuidGenerator();
 		}
-		this.preparedStatementPool = new Hashtable();
 		if (null == info.getJNDIName() || info.getJNDIName().equals(""))
 			log
 					.debug("JDBCPool["
@@ -2333,8 +2331,6 @@ public class JDBCPool {
 					e.printStackTrace();
 				}
 			}
-			if(this.preparedStatementPool != null)
-				this.preparedStatementPool.clear();
 			if(tableMetaDatasindexByTablename != null)
 				this.tableMetaDatasindexByTablename.clear();
 			this.datasource = null;

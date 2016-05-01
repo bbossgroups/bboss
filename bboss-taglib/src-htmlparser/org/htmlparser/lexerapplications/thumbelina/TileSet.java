@@ -27,8 +27,10 @@
 package org.htmlparser.lexerapplications.thumbelina;
 
 import java.awt.Rectangle;
+import java.util.ArrayList;
 import java.util.Enumeration;
-import java.util.Vector;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Class to track picture regions.
@@ -46,14 +48,14 @@ public class TileSet
     /**
      * The list of Pictures.
      */
-    protected Vector mRegions;
+    protected List mRegions;
 
     /**
      * Construct a tile set.
      */
     public TileSet ()
     {
-        mRegions = new Vector ();
+        mRegions = new ArrayList ();
     }
 
     /**
@@ -71,9 +73,9 @@ public class TileSet
      * Get the list of pictures.
      * @return An enumeration over the picture objects in this set.
      */
-    public Enumeration getPictures ()
+    public Iterator getPictures ()
     {
-        return (mRegions.elements ());
+        return (mRegions.iterator());
     }
 
     /**
@@ -82,17 +84,17 @@ public class TileSet
      */
     public void add (final Picture r)
     {
-        Vector regions; // this will be the new set
-        Enumeration e;
+        List regions; // this will be the new set
+        Iterator e;
         Picture rover;
         Rectangle intersection;
-        Vector splits;
-        Enumeration frags;
+        List splits;
+        Iterator frags;
 
-        regions = new Vector ();
-        for (e = getPictures (); e.hasMoreElements (); )
+        regions = new ArrayList ();
+        for (e = getPictures (); e.hasNext(); )
         {
-            rover = (Picture)e.nextElement ();
+            rover = (Picture)e.next ();
             if (rover.intersects (r))
             {
                 intersection = rover.intersection (r);
@@ -101,8 +103,8 @@ public class TileSet
                     // incoming lies completely within the existing picture
                     // or touches the existing picture somehow
                     splits = split (r, rover, false);
-                    for (frags = splits.elements (); frags.hasMoreElements (); )
-                        regions.addElement (frags.nextElement ());
+                    for (frags = splits.iterator(); frags.hasNext (); )
+                        regions.add (frags.next ());
                 }
                 else
                     // incoming covers existing... drop the existing picture
@@ -111,9 +113,9 @@ public class TileSet
             }
             else
                 // no conflict, keep the existing
-                regions.addElement (rover);
+                regions.add (rover);
         }
-        regions.addElement (r);
+        regions.add (r);
         mRegions = regions;
     }
 
@@ -128,15 +130,15 @@ public class TileSet
      * otherwise discarded.
      * @return The fragments from the large picture.
      */
-    private Vector split (
+    private List split (
         final Picture small,
         final Picture large,
         final boolean keep)
     {
         Picture m;
-        Vector ret;
+        List ret;
 
-        ret = new Vector ();
+        ret = new ArrayList ();
 
         if (large.intersects (small))
         {
@@ -149,7 +151,7 @@ public class TileSet
                 m = new Picture (large);
                 m.y = (intersection.y + intersection.height);
                 m.height = (large.y + large.height) - m.y;
-                ret.addElement (m);
+                ret.add (m);
             }
 
             // if left sides don't match make a left fragment
@@ -159,7 +161,7 @@ public class TileSet
                 m.y = intersection.y;
                 m.width = intersection.x - large.x;
                 m.height = intersection.height;
-                ret.addElement (m);
+                ret.add (m);
             }
 
             // the center bit
@@ -170,7 +172,7 @@ public class TileSet
                 m.y = intersection.y;
                 m.width = intersection.width;
                 m.height = intersection.height;
-                ret.addElement (m);
+                ret.add (m);
             }
 
             // if right sides don't match make a right fragment
@@ -182,7 +184,7 @@ public class TileSet
                 m.y = intersection.y;
                 m.width = (large.x + large.width) - m.x;
                 m.height = intersection.height;
-                ret.addElement (m);
+                ret.add (m);
             }
 
             // if bottoms don't match split off the bottom
@@ -190,7 +192,7 @@ public class TileSet
             {
                 m = new Picture (large);
                 m.height = (intersection.y - large.y);
-                ret.addElement (m);
+                ret.add (m);
             }
         }
 
@@ -213,7 +215,7 @@ public class TileSet
 
         for (int i = 0; (null == ret) && (i < mRegions.size ()); i++)
         {
-            m = (Picture)mRegions.elementAt (i);
+            m = (Picture)mRegions.get (i);
             if (m.contains (x, y))
                 ret = m;
         }
@@ -234,9 +236,9 @@ public class TileSet
 
         for (int i = 0; (null == ret) && (i < mRegions.size ()); )
         {
-            m = (Picture)mRegions.elementAt (i);
+            m = (Picture)mRegions.get (i);
             if (picture.same (m))
-                mRegions.removeElementAt (i);
+                mRegions.remove(i);
             else
                 i++;
         }
@@ -270,7 +272,7 @@ public class TileSet
 //    static java.awt.TextField status;
 //
 //    // checks if adding the rectangle causes an overlap
-//    boolean checkAdd (Rectangle r, Vector v)
+//    booListheckAdd (Rectangle r, List v)
 //    {
 //        Enumeration e;
 //        boolean ret;
@@ -339,7 +341,7 @@ public class TileSet
 //            add ();
 //        else if (object == clear)
 //        {
-//            mRegions = new Vector ();
+//            mRegions = new ArrayList ();
 //            repaint ();
 //        }
 //    }

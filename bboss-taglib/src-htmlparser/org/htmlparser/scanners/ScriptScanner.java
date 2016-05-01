@@ -26,7 +26,8 @@
 
 package org.htmlparser.scanners;
 
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.htmlparser.Attribute;
 import org.htmlparser.Node;
@@ -91,7 +92,7 @@ public class ScriptScanner
         int position;
         Node node;
         Attribute attribute;
-        Vector vector;
+        List vector;
 
         if (tag instanceof ScriptTag)
         {
@@ -119,8 +120,8 @@ public class ScriptScanner
         if (null == node)
         {
             attribute = new Attribute ("/script", null);
-            vector = new Vector ();
-            vector.addElement (attribute);
+            vector = new ArrayList ();
+            vector.add (attribute);
             node = lexer.getNodeFactory ().createTagNode (
                 lexer.getPage (), position, position, vector);
         }

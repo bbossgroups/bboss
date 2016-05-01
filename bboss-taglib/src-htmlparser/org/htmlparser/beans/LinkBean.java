@@ -32,7 +32,8 @@ import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.htmlparser.NodeFilter;
 import org.htmlparser.Parser;
@@ -93,7 +94,7 @@ public class LinkBean extends Object implements Serializable
     {
         NodeFilter filter;
         NodeList list;
-        Vector vector;
+        List vector;
         LinkTag link;
         URL[] ret;
 
@@ -108,7 +109,7 @@ public class LinkBean extends Object implements Serializable
             mParser.reset ();
             list = mParser.extractAllNodesThatMatch (filter);
         }
-        vector = new Vector();
+        vector = new ArrayList();
         for (int i = 0; i < list.size (); i++)
             try
             {
@@ -121,7 +122,8 @@ public class LinkBean extends Object implements Serializable
                 //i--;
             }
         ret = new URL[vector.size ()];
-        vector.copyInto (ret);
+        for(int i = 0;  i < vector.size(); i++)
+        	ret[i] = (URL)vector.get(i);
 
         return (ret);
     }

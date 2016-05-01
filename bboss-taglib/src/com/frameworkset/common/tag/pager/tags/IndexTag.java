@@ -40,15 +40,15 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 
-import org.apache.ecs.html.A;
-import org.apache.ecs.html.IMG;
-import org.apache.ecs.html.Input;
-import org.apache.ecs.html.Option;
-import org.apache.ecs.html.Script;
-import org.apache.ecs.html.Select;
 import org.frameworkset.spi.ApplicationContext;
 import org.frameworkset.util.I18NUtil;
 
+import com.frameworkset.common.ecs.A;
+import com.frameworkset.common.ecs.IMG;
+import com.frameworkset.common.ecs.Input;
+import com.frameworkset.common.ecs.Option;
+import com.frameworkset.common.ecs.Script;
+import com.frameworkset.common.ecs.Select;
 import com.frameworkset.common.tag.TagUtil;
 import com.frameworkset.common.tag.pager.config.PageConfig;
 import com.frameworkset.platform.cms.driver.jsp.CMSServletRequest;

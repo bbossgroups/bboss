@@ -27,7 +27,7 @@
 package org.htmlparser.tags;
 
 import java.util.Locale;
-import java.util.Vector;
+import java.util.List;
 
 import org.htmlparser.Attribute;
 import org.htmlparser.nodes.TagNode;
@@ -84,7 +84,7 @@ public class ImageTag
     */
     public String extractImageLocn ()
     {
-        Vector attributes;
+        List attributes;
         int size;
         Attribute attribute;
         String string;
@@ -101,7 +101,7 @@ public class ImageTag
         size = attributes.size ();
         for (int i = 0; (i < size) && (state < 3); i++)
         {
-            attribute = (Attribute)attributes.elementAt (i);
+            attribute = (Attribute)attributes.get (i);
             string = attribute.getName ();
             data = attribute.getValue ();
             switch (state)

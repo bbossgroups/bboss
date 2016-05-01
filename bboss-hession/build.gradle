@@ -1,0 +1,26 @@
+sourceSets {
+    main {
+        java {
+            srcDir 'src'
+        }
+    }
+    test {
+        java {
+            srcDir 'test'
+        }
+    }
+}
+project.tasks.compileJava.dependsOn(project(':bboss-core').tasks.install)
+dependencies {
+    compile (
+            [group: 'log4j', name: 'log4j', version: '1.2.16', transitive: false],
+            [group: 'com.bbossgroups', name: 'bboss-util', version: "${version}", transitive: false],
+            [group: 'com.bbossgroups', name: 'bboss-core', version: "${version}", transitive: false],
+            [group: 'com.caucho', name: 'hessian', version: '4.0.7', transitive: false],
+            [group: 'javaee', name: 'javaee-api', version: '5', transitive: false]
+    )
+    /**
+     compileOnly (            
+            [group: 'javaee', name: 'javaee-api', version: '5', transitive: false]
+    )*/
+}

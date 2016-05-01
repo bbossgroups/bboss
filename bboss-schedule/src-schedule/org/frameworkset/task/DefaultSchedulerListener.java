@@ -28,7 +28,7 @@ import org.quartz.Trigger;
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2007</p>
- * @Date 2013-1-23 ионГ9:01:09
+ * @Date 2013-1-23 9:01:09
  * @author biaoping.yin
  * @version 1.0
  */

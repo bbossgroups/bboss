@@ -1,0 +1,242 @@
+sourceSets {
+    bboss_util {
+        java {
+            srcDirs 'src' exclude 'log4j.properties'
+            srcDirs 'src-asm'
+            srcDirs 'src-charset'
+        }
+        
+        compileClasspath = configurations.compile
+
+    }
+    bboss_rt {
+        java {
+            srcDirs 'src-rt'
+        }
+        //compileClasspath = configurations.compileOnly
+    }
+    test {
+        java {
+            srcDir 'test'
+        }
+         
+    }
+}
+
+jar {
+    classifier = "all"
+}
+
+project.tasks.compileJava.dependsOn(project(':bboss-velocity').tasks.install)
+
+dependencies {
+	
+    compile(
+    				project(':bboss-velocity'),
+            [group: 'com.bbossgroups', name: 'bboss-velocity', version: "${version}", transitive: false],
+            [group: 'ant', name: 'ant', version: '1.6.4', transitive: false],
+            [group: 'commons-lang', name: 'commons-lang', version: '2.6', transitive: false],
+            [group: 'concurrent', name: 'concurrent', version: '1.3.2', transitive: false],            
+             [group: 'org.codehaus.jackson', name: 'jackson-mapper-asl', version: '1.9.10', transitive: false],
+            [group: 'org.codehaus.jackson', name: 'jackson-core-asl', version: '1.9.10', transitive: false],
+            [group: 'log4j', name: 'log4j', version: '1.2.16', transitive: false],
+            [group: 'oro', name: 'oro', version: '2.0.8', transitive: false],
+            [group: 'servletapi', name: 'servletapi', version: '2.4', transitive: false],
+            [group: 'javax.servlet', name: 'jsp-api', version: '2.0', transitive: false],
+           
+            [group: 'com.uwyn', name: 'jhighlight', version: '1.0', transitive: false],
+            [group: 'bsh', name: 'bsh', version: '2.0b1', transitive: false],
+    )
+
+    /**compileOnly(
+            [group: 'servletapi', name: 'servletapi', version: '2.4', transitive: false],
+            [group: 'javax.servlet', name: 'jsp-api', version: '2.0', transitive: false],
+           
+            [group: 'com.uwyn', name: 'jhighlight', version: '1.0', transitive: false],
+            [group: 'bsh', name: 'bsh', version: '2.0b1', transitive: false],
+            
+    )*/
+    
+    
+}
+
+sourceSets.bboss_util { set ->
+    def jarTask = task("${set.name}Jar", type: Jar) {
+        from set.output
+    }
+
+    def jarSourcesTask = task("${set.name}SourceJar", type: Jar) {
+        classifier = "sources"
+        from set.allJava
+    }
+
+    def docTask = task("${set.name}Doc", type: Javadoc) {
+        classpath = set.compileClasspath
+        source set.allJava
+        destinationDir=file("build/docs/${set.name}")
+    }
+
+    def jarDocTask = task("${set.name}DocJar", type: Jar, dependsOn: docTask) {
+        classifier = "javadoc"
+        from docTask.destinationDir
+    }
+
+    artifacts {
+        archives jarTask
+        archives jarSourcesTask
+        archives jarDocTask
+    }
+}
+
+sourceSets.bboss_rt { set ->
+    def jarTask = task("${set.name}Jar", type: Jar) {
+        baseName = "bboss-rt"
+        from set.output
+    }
+
+    def jarSourcesTask = task("${set.name}SourceJar", type: Jar) {
+        baseName = "bboss-rt"
+        classifier = "sources"
+        from set.allJava
+    }
+
+    def docTask = task("${set.name}Doc", type: Javadoc) {
+        source set.allJava
+        destinationDir=file("build/docs/${set.name}")
+    }
+
+    def jarDocTask = task("${set.name}DocJar", type: Jar, dependsOn: docTask) {
+        baseName = "bboss-rt"
+        classifier = "javadoc"
+        from docTask
+    }
+
+    artifacts {
+        archives jarTask
+        archives jarSourcesTask
+        archives jarDocTask
+    }
+}
+
+/**artifacts {
+	    archives    bboss_utilJar, bboss_utilSourceJar,bboss_utilDocJar,bboss_rtJar, bboss_rtSourceJar,bboss_rtDocJar
+	}*/
+	
+ 
+  ext.uploadtocenter=uploadArchivesToMavenCenter.equals("true")	
+if(uploadtocenter)
+{
+	signing {
+	        //required { uploadtocenter }
+	        sign configurations.archives
+	 }
+}
+uploadArchives {
+	  repositories {
+	   
+		    mavenDeployer {
+		     
+			if(uploadtocenter)
+			{	  
+				
+				beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+		     	repository(url: sonatype_url) {
+		     		
+				         authentication(userName: sonatype_username, password: sonatype_password)
+				}
+			}
+			else
+			{
+				repository(url: "file://"+mvn_repo)
+			}
+			 
+ 			addFilter('bboss_util') {artifact, file ->
+            	artifact.name == 'bboss-util'
+	        }
+	        addFilter('bboss_rt') {artifact, file ->
+	            artifact.name == 'bboss-rt'
+	        }
+	      pom('bboss_util').project {
+	        name project.name
+	        packaging 'jar'
+	        // optionally artifactId can be defined here 
+	        description PROJ_DESCRIPTION
+	        url PROJ_WEBSITEURL
+
+	        scm {
+	          connection scm_connection
+	          developerConnection scm_developerConnection
+	          url scm_url
+	        }
+
+	        licenses {
+	          license {
+	            name PROJ_LICENCE_NAME
+	            url PROJ_LICENCE_URL
+	          }
+	        }
+
+	        developers {
+	          developer {
+	            id DEVELOPER_ID
+	            name DEVELOPER_NAME
+	            email DEVELOPER_EMAIL
+	          }
+	        }
+	      }
+	      
+	      pom('bboss_rt').project {
+	        name project.name
+	        packaging 'jar'
+	        // optionally artifactId can be defined here 
+	        description PROJ_DESCRIPTION
+	        url PROJ_WEBSITEURL
+
+	        scm {
+	          connection scm_connection
+	          developerConnection scm_developerConnection
+	          url scm_url
+	        }
+
+	        licenses {
+	          license {
+	            name PROJ_LICENCE_NAME
+	            url PROJ_LICENCE_URL
+	          }
+	        }
+
+	        developers {
+	          developer {
+	            id DEVELOPER_ID
+	            name DEVELOPER_NAME
+	            email DEVELOPER_EMAIL
+	          }
+	        }
+	      }
+	      
+	    }
+	 }
+}
+publishing {
+    publications {
+        utilJava(MavenPublication) {
+            from components.java
+            artifactId 'bboss-util'
+            artifact bboss_utilJar
+            artifact bboss_utilSourceJar
+            artifact bboss_utilDocJar
+        }
+
+        rtmavenJava(MavenPublication) {
+        	 from components.java
+            artifactId 'bboss-rt'
+            artifact bboss_rtJar
+            artifact bboss_rtSourceJar
+            artifact bboss_rtDocJar
+        }
+
+    }
+    repositories {
+        mavenLocal()    
+    }
+}

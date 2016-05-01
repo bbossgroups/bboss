@@ -33,9 +33,7 @@
 
 package com.frameworkset.common.tag.pager;
 
-import java.util.Hashtable;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 封装数据信息
