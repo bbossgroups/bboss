@@ -36,3 +36,5 @@ bboss-taglib/.project
 /.classpath
 /.project
 /.settings/
+
+*.class
