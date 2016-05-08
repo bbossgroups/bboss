@@ -38,7 +38,8 @@ dependencies {
    
     compile  (
 			
-           [group: 'cglib', name: 'cglib-nodep', version: '3.1', transitive: false],
+             [group: 'org.codehaus.jackson', name: 'jackson-mapper-asl', version: '1.9.10',transitive: true],
+             [group: 'cglib', name: 'cglib-nodep', version: '3.1', transitive: false],
              [group: 'org.ow2.asm', name: 'asm', version: '5.0.3', transitive: false],
            [group: 'com.bbossgroups', name: 'bboss-mvc', version: "${version}", transitive: false],
              [group: 'com.bbossgroups', name: 'bboss-persistent', version: "${version}", transitive: false],

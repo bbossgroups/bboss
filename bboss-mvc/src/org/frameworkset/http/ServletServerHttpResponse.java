@@ -88,5 +88,12 @@ public class ServletServerHttpResponse  implements ServerHttpResponse {
 		// TODO Auto-generated method stub
 		return this.servletResponse;
 	}
+	
+	/**
+	 * Return the {@code HttpServletResponse} this object is based on.
+	 */
+	public HttpServletResponse getServletResponse() {
+		return this.servletResponse;
+	}
 
 }

@@ -34,7 +34,7 @@ project.tasks.compileJava.dependsOn(project(':bboss-mvc').tasks.install)
 project.tasks.compileJava.dependsOn(project(':bboss-persistent').tasks.install)
 dependencies {
     compile(
-    				project(':bboss-mvc'),
+    		//project(':bboss-mvc'),
             [group: 'ant', name: 'ant', version: '1.6.4', transitive: false],
             [group: 'org.ow2.asm', name: 'asm', version: '5.0.3', transitive: false],
             //[group: 'javaee', name: 'javaee-api', version: '5', transitive: false],

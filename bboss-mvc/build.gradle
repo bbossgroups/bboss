@@ -51,12 +51,11 @@ dependencies {
             [group: 'net.sourceforge.jexcelapi', name: 'jxl', version: '2.6.12', transitive: false],
             [group: 'jdom', name: 'jdom', version: '1.0', transitive: false],
             
-            [group: 'servletapi', name: 'servletapi', version: '2.4', transitive: false],
             [group: 'javax.servlet', name: 'jsp-api', version: '2.0', transitive: false],
-             
             [group: 'javax.faces', name: 'jsf-api', version: '2.1', transitive: false],
             [group: 'com.sun.faces', name: 'jsf-impl', version: '2.1.0', transitive: false],
             [group: 'jstl', name: 'jstl', version: '1.2', transitive: false],
+            [group: 'javax.servlet', name: 'javax.servlet-api', version: "3.0.1", transitive: true],
     )
     /**
     compileOnly (
@@ -68,4 +67,6 @@ dependencies {
             [group: 'jstl', name: 'jstl', version: '1.2', transitive: false],
              
     )*/
+    
+    
 }

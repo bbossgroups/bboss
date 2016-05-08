@@ -17,6 +17,7 @@ package org.frameworkset.web.util;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Collection;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.Map;
@@ -29,6 +30,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.frameworkset.http.HttpRequest;
 import org.frameworkset.spi.ApplicationContextAware;
 import org.frameworkset.spi.BeanClassLoaderAware;
 import org.frameworkset.spi.BeanNameAware;
@@ -38,6 +40,7 @@ import org.frameworkset.spi.assemble.BeanInf;
 import org.frameworkset.spi.support.ApplicationObjectSupport;
 import org.frameworkset.spi.support.MessageSourceAware;
 import org.frameworkset.util.Assert;
+import org.frameworkset.util.CollectionUtils;
 import org.frameworkset.web.servlet.HandlerMapping;
 import org.frameworkset.web.servlet.context.ServletContextAware;
 import org.frameworkset.web.servlet.context.WebApplicationContext;
@@ -875,6 +878,55 @@ public abstract class WebUtils {
 		int begin = urlPath.lastIndexOf('/', end) + 1;
 		return urlPath.substring(begin, end);
 	}
+	/**
+	 * Check if the request is a same-origin one, based on {@code Origin}, {@code Host},
+	 * {@code Forwarded} and {@code X-Forwarded-Host} headers.
+	 * @return {@code true} if the request is a same-origin one, {@code false} in case
+	 * of cross-origin request.
+	 * @since 4.2
+	 */
+	public static boolean isSameOrigin(HttpRequest request) {
+		String origin = request.getHeaders().getOrigin();
+		if (origin == null) {
+			return true;
+		}
+		UriComponents actualUrl = UriComponentsBuilder.fromHttpRequest(request).build();
+		UriComponents originUrl = UriComponentsBuilder.fromOriginHeader(origin).build();
+		return (actualUrl.getHost().equals(originUrl.getHost()) && getPort(actualUrl) == getPort(originUrl));
+	}
+	private static int getPort(UriComponents component) {
+		int port = component.getPort();
+		if (port == -1) {
+			if ("http".equals(component.getScheme()) || "ws".equals(component.getScheme())) {
+				port = 80;
+			}
+			else if ("https".equals(component.getScheme()) || "wss".equals(component.getScheme())) {
+				port = 443;
+			}
+		}
+		return port;
+	}
+	/**
+	 * Check the given request origin against a list of allowed origins.
+	 * A list containing "*" means that all origins are allowed.
+	 * An empty list means only same origin is allowed.
+	 * @return {@code true} if the request origin is valid, {@code false} otherwise
+	 * @since 4.1.5
+	 * @see <a href="https://tools.ietf.org/html/rfc6454">RFC 6454: The Web Origin Concept</a>
+	 */
+	public static boolean isValidOrigin(HttpRequest request, Collection<String> allowedOrigins) {
+		Assert.notNull(request, "Request must not be null");
+		Assert.notNull(allowedOrigins, "Allowed origins must not be null");
 
-
+		String origin = request.getHeaders().getOrigin();
+		if (origin == null || allowedOrigins.contains("*")) {
+			return true;
+		}
+		else if (CollectionUtils.isEmpty(allowedOrigins)) {
+			return isSameOrigin(request);
+		}
+		else {
+			return allowedOrigins.contains(origin);
+		}
+	}
 }
