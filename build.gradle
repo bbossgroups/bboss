@@ -64,7 +64,7 @@ configure(allprojects) { project ->
 		mavenLocal()
 		
 	}
-	if(project.getProperty('skipTest'))
+	if(project.getProperty('skipTest').equals("true"))
 	{
 		compileTestJava.enabled=false
 		processTestResources.enabled=false
@@ -73,31 +73,7 @@ configure(allprojects) { project ->
 	}
 }
 
-configure(subprojects.findAll {it.name.equals('bboss-websocket')}) {
-	
-    apply plugin: 'war'
-    /**apply plugin: 'jetty'  
-    jettyRun {
-	  reload ="automatic"
-	  scanIntervalSeconds = 1
-	  httpPort=80
-	  contextPath='/bboss-websocket'
-	}*/
-    /** apply plugin: 'org.akhikhl.gretty'
-    
-     gretty {
-	    httpPort = 80
-	   
-	    contextPath = '/bboss-websocket'
-	    jvmArgs = ['-Xmx1024M', '-XX:PermSize=128M', '-XX:MaxPermSize=256M']
-	  //  servletContainer = 'jetty7'
-	  
-	  }*/
-    /**evaluationDependsOn(':bboss-mvc')
-	evaluationDependsOn(':bboss-util')
-	evaluationDependsOn(':bboss-core')
-	evaluationDependsOn(':bboss-soa')*/
-}
+ 
 configure(subprojects - [project(":bboss-util"),project(":bboss-taglib"),project(":bboss-websocket")]) { subproject ->
 	task sourcesJar(type: Jar) {
 		classifier = "sources"	
