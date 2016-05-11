@@ -42,6 +42,7 @@ dependencies {
              [group: 'cglib', name: 'cglib-nodep', version: '3.1', transitive: false],
              [group: 'org.ow2.asm', name: 'asm', version: '5.0.3', transitive: false],
            [group: 'com.bbossgroups', name: 'bboss-mvc', version: "${version}", transitive: false],
+           [group: 'com.bbossgroups', name: 'bboss-schedule', version: "${version}", transitive: false],
              [group: 'com.bbossgroups', name: 'bboss-persistent', version: "${version}", transitive: false],
            [group: 'com.bbossgroups', name: 'bboss-core', version: "${version}", transitive: false],
            [group: 'com.bbossgroups', name: 'bboss-util', version: "${version}", transitive: false],
@@ -64,11 +65,11 @@ dependencies {
  
 
 war {
-    from 'WebRoot'
+    //from 'WebRoot'
     // adds a file-set to the root of the archive
-    webInf { from 'WebRoot/WEB-INF' } // adds a file-set to the WEB-INF dir.
-    classpath configurations.compile-configurations.providedCompile // adds a configuration to the WEB-INF/lib dir.
-    webXml = file('WebRoot/WEB-INF/web.xml') // copies a file to WEB-INF/web.xml
+    //webInf { from 'WebRoot/WEB-INF' } // adds a file-set to the WEB-INF dir.
+    //classpath configurations.compile-configurations.providedCompile // adds a configuration to the WEB-INF/lib dir.
+    //webXml = file('WebRoot/WEB-INF/web.xml') // copies a file to WEB-INF/web.xml
 }
 
 task sourcesJar(type: Jar) {

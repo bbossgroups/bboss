@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.frameworkset.schedule.TaskScheduler;
 import org.frameworkset.util.Assert;
 import org.frameworkset.util.LinkedMultiValueMap;
 import org.frameworkset.util.MultiValueMap;
 import org.frameworkset.util.ObjectUtils;
 import org.frameworkset.web.socket.handler.HandshakeHandler;
 import org.frameworkset.web.socket.handler.HandshakeInterceptor;
+import org.frameworkset.web.socket.handler.OriginHandshakeInterceptor;
 import org.frameworkset.web.socket.inf.WebSocketHandler;
 
 public abstract class AbstractWebSocketHandlerRegistration<M> implements WebSocketHandlerRegistry {
