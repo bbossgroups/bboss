@@ -36,6 +36,21 @@ import org.frameworkset.web.servlet.view.UrlBasedViewResolver;
 
 public  class HandlerMeta
 {
+	private boolean websocket = false;
+	private String beanName;
+	public String getBeanName() {
+		return beanName;
+	}
+	public void setBeanName(String beanName) {
+		this.beanName = beanName;
+	}
+	public boolean isWebsocket() {
+		return websocket;
+	}
+	public void setWebsocket(boolean websocket) {
+		this.websocket = websocket;
+	}
+
 	private Object handler;
 	private Map<String,String> pathNames ;
 	private static final Object trace = new Object();

@@ -44,7 +44,7 @@ public abstract class AbstractUrlHandlerMapping extends AbstractHandlerMapping{
 	
 
 	protected PathMatcher pathMatcher = new AntPathMatcher();
-	private static Logger logger = Logger.getLogger(AbstractUrlHandlerMapping.class);
+	protected static Logger logger = Logger.getLogger(AbstractUrlHandlerMapping.class);
 	public void destroy()
 	{
 		super.destroy();

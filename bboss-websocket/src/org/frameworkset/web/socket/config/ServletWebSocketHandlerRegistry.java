@@ -11,6 +11,8 @@ import org.frameworkset.util.MultiValueMap;
 import org.frameworkset.web.HttpRequestHandler;
 import org.frameworkset.web.servlet.HandlerMapping;
 import org.frameworkset.web.servlet.handler.AbstractHandlerMapping;
+import org.frameworkset.web.socket.handler.SimpleUrlHandlerMapping;
+import org.frameworkset.web.socket.handler.WebSocketHandlerMapping;
 import org.frameworkset.web.socket.inf.WebSocketHandler;
 import org.frameworkset.web.util.UrlPathHelper;
 
@@ -67,23 +69,29 @@ public class ServletWebSocketHandlerRegistry implements WebSocketHandlerRegistry
 	/**
 	 * Return a {@link HandlerMapping} with mapped {@link HttpRequestHandler}s.
 	 */
-	public AbstractHandlerMapping getHandlerMapping() {
+	public void registHandlerMapping(AbstractHandlerMapping mapping) {
 		Map<String, Object> urlMap = new LinkedHashMap<String, Object>();
 		for (ServletWebSocketHandlerRegistration registration : this.registrations) {
 			MultiValueMap<HttpRequestHandler, String> mappings = registration.getMappings();
 			for (HttpRequestHandler httpHandler : mappings.keySet()) {
 				for (String pattern : mappings.get(httpHandler)) {
-					urlMap.put(pattern, httpHandler);
+					//urlMap.put(pattern, httpHandler);
+					try {
+						mapping.registerWebSocketHandler("", pattern, httpHandler);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 			}
 		}
-		WebSocketHandlerMapping hm = new WebSocketHandlerMapping();
-		hm.setUrlMap(urlMap);
-		hm.setOrder(this.order);
-		if (this.urlPathHelper != null) {
-			hm.setUrlPathHelper(this.urlPathHelper);
-		}
-		return hm;
+//		WebSocketHandlerMapping hm = new WebSocketHandlerMapping();
+//		hm.setUrlMap(urlMap);
+//		hm.setOrder(this.order);
+//		if (this.urlPathHelper != null) {
+//			hm.setUrlPathHelper(this.urlPathHelper);
+//		}
+//		return hm;
 	}
 
 }
