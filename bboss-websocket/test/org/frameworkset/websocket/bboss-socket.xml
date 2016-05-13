@@ -1,0 +1,25 @@
+<property name="testWebsocket" class="org.frameworkset.web.socket.config.ServletWebSocketHandlerRegistry">
+	
+	<property name="handler" class="" websocketUrl="/websocket.page" sockJSUrl="/sockjs/websck/info"/>
+	<!--<property name="HandshakeHandler" class="" /> 这个属性需要框架内置设置 -->
+	<property name="handshakeInterceptors">
+		<list componentType="bean">
+			<property class="com.milanosoft.RCS.web.webSocket.interceptor.HandshakeInterceptor"/>
+			<property class="com.milanosoft.RCS.web.webSocket.interceptor.HandshakeInterceptor1"/>
+		</list>
+	</property>
+	
+</property>
+
+<property name="testWebsocket" class="org.frameworkset.web.socket.config.ServletWebSocketHandlerRegistry">
+	
+	<property name="handler" class="" websocketUrl="/websocket.page" sockJSUrl="/sockjs/websck/info"/>
+	<!--<property name="HandshakeHandler" class="" /> 这个属性需要框架内置设置 -->
+	<property name="handshakeInterceptors">
+		<list componentType="bean">
+			<property class="com.milanosoft.RCS.web.webSocket.interceptor.HandshakeInterceptor"/>
+			<property class="com.milanosoft.RCS.web.webSocket.interceptor.HandshakeInterceptor1"/>
+		</list>
+	</property>
+	
+</property>
