@@ -34,6 +34,7 @@ import org.frameworkset.util.annotations.HttpMethod;
  */
 public interface ServerHttpRequest  extends HttpRequest,  HttpInputMessage {
 
+	public static final String JSONPCALLBACK_PARAM_NAME = "jsonp_callback";
 	/**
 	 * Return the HTTP method of the request.
 	 * @return the HTTP method as an HttpMethod enum value

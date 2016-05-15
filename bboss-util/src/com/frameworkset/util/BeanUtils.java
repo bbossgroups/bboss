@@ -101,6 +101,28 @@ public abstract class BeanUtils {
 	 * Convenience method to instantiate a class using its no-arg constructor.
 	 * As this method doesn't try to load classes by name, it should avoid
 	 * class-loading issues.
+	 * @param clazz class to instantiate
+	 * @return the new instance
+	 * @throws BeanInstantiationException if the bean cannot be instantiated
+	 */
+	public static <T> T instantiate(Class<T> clazz) throws BeanInstantiationException {
+		Assert.notNull(clazz, "Class must not be null");
+		if (clazz.isInterface()) {
+			throw new BeanInstantiationException(clazz, "Specified class is an interface");
+		}
+		try {
+			ClassInfo classInfo = ClassUtil.getClassInfo(clazz);
+			return instantiateClass(clazz,classInfo.getDefaultConstruction(), null);
+		}
+		catch (NoSuchMethodException ex) {
+			throw new BeanInstantiationException(clazz, "No default constructor found", ex);
+		}
+	}
+	
+	/**
+	 * Convenience method to instantiate a class using its no-arg constructor.
+	 * As this method doesn't try to load classes by name, it should avoid
+	 * class-loading issues.
 	 * <p>Note that this method tries to set the constructor accessible
 	 * if given a non-accessible (that is, non-public) constructor.
 	 * @param clazz class to instantiate

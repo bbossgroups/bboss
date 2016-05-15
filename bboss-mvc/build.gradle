@@ -21,7 +21,11 @@ sourceSets {
 project.tasks.compileJava.dependsOn(project(':bboss-core').tasks.install)
 dependencies {
     compile (
-    		
+    		[group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.7.4',transitive: false],
+            [group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.7.4',transitive: false],
+            [group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.7.4',transitive: false],
+            [group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-xml', version: '2.7.4',transitive: false],
+             
             [group: 'com.bbossgroups', name: 'bboss-util', version: "${version}", transitive: false],
             [group: 'com.bbossgroups', name: 'bboss-soa', version: "${version}", transitive: false],
             [group: 'com.bbossgroups', name: 'bboss-core', version: "${version}", transitive: false],

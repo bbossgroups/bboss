@@ -32,6 +32,7 @@ import org.codehaus.jackson.type.JavaType;
 import org.frameworkset.http.HttpInputMessage;
 import org.frameworkset.http.HttpOutputMessage;
 import org.frameworkset.http.MediaType;
+import org.frameworkset.http.ServerHttpRequest;
 import org.frameworkset.http.converter.AbstractHttpMessageConverter;
 import org.frameworkset.http.converter.HttpMessageNotReadableException;
 import org.frameworkset.http.converter.HttpMessageNotWritableException;
@@ -58,7 +59,7 @@ public class MappingJacksonHttpMessageConverter extends AbstractHttpMessageConve
 	private ObjectMapper objectMapper = new ObjectMapper();
 
 	private boolean prefixJson = false;
-	private String jsonpCallback = JSONPCALLBACK_PARAM_NAME;
+	private String jsonpCallback = ServerHttpRequest.JSONPCALLBACK_PARAM_NAME;
 	
 
 	/**

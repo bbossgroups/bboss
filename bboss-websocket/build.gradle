@@ -24,6 +24,12 @@ sourceSets {
         }
         //compileClasspath = configurations.providedCompile +configurations.compile
     }
+    test {
+        java {
+            srcDirs 'test'
+        }
+        
+    }
 }
 
 /**
@@ -38,6 +44,10 @@ dependencies {
    
     compile  (
 			
+			[group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.7.4',transitive: false],
+            [group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.7.4',transitive: false],
+            [group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.7.4',transitive: false],
+            [group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-xml', version: '2.7.4',transitive: false],
              [group: 'org.codehaus.jackson', name: 'jackson-mapper-asl', version: '1.9.10',transitive: true],
              [group: 'cglib', name: 'cglib-nodep', version: '3.1', transitive: false],
              [group: 'org.ow2.asm', name: 'asm', version: '5.0.3', transitive: false],

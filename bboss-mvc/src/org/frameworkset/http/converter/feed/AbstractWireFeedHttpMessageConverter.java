@@ -75,7 +75,7 @@ public abstract class AbstractWireFeedHttpMessageConverter<T extends WireFeed> e
 	}
 
 	@Override
-	protected void writeInternal(T wireFeed, HttpOutputMessage outputMessage,HttpInputMessage inputMessage)
+	public void writeInternal(T wireFeed, HttpOutputMessage outputMessage,HttpInputMessage inputMessage)
 			throws IOException, HttpMessageNotWritableException {
 		String wireFeedEncoding = wireFeed.getEncoding();
 		if (!StringUtil.hasLength(wireFeedEncoding)) {

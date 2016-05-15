@@ -1577,20 +1577,20 @@ public class DispatchServlet extends HttpServlet {
 //			}
 //		}
 	}
-	private void initHandlerMappings(List handlerMappings_)
-	{
-		if(handlerMappings_ != null && handlerMappings_.size() > 0)
-		{
-				for(int i = 0; i < handlerMappings_.size(); i ++)
-				{
-					Object handler = handlerMappings_.get(i);
-					if(handler instanceof AbstractUrlHandlerMapping)
-					{
-						((AbstractUrlHandlerMapping)handler).setAlwaysUseFullPath(true);
-					}
-				}
-		}
-	}
+//	private void initHandlerMappings(List handlerMappings_)
+//	{
+//		if(handlerMappings_ != null && handlerMappings_.size() > 0)
+//		{
+//				for(int i = 0; i < handlerMappings_.size(); i ++)
+//				{
+//					Object handler = handlerMappings_.get(i);
+//					if(handler instanceof AbstractUrlHandlerMapping)
+//					{
+//						((AbstractUrlHandlerMapping)handler).setAlwaysUseFullPath(true);
+//					}
+//				}
+//		}
+//	}
 	private void _initHandlerMappings(Object handler)
 	{
 		 
