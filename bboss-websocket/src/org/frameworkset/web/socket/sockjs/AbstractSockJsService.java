@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.frameworkset.http.HttpMethod;
+import org.frameworkset.http.CorsUtils;
 import org.frameworkset.http.HttpStatus;
 import org.frameworkset.http.InvalidMediaTypeException;
 import org.frameworkset.http.MediaType;
@@ -26,7 +26,9 @@ import org.frameworkset.http.ServerHttpResponse;
 import org.frameworkset.schedule.TaskScheduler;
 import org.frameworkset.util.Assert;
 import org.frameworkset.util.CollectionUtils;
+import org.frameworkset.util.DigestUtils;
 import org.frameworkset.util.ObjectUtils;
+import org.frameworkset.util.annotations.HttpMethod;
 import org.frameworkset.web.socket.inf.WebSocketHandler;
 import org.frameworkset.web.util.WebUtils;
 

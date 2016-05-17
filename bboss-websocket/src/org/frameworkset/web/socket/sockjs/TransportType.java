@@ -6,7 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.frameworkset.http.HttpMethod;
+import org.frameworkset.util.annotations.HttpMethod;
+
 
 public enum TransportType {
 	WEBSOCKET("websocket", HttpMethod.GET, "origin"),

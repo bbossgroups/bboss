@@ -11,7 +11,6 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ScheduledFuture;
 
-import org.frameworkset.http.HttpMethod;
 import org.frameworkset.http.HttpStatus;
 import org.frameworkset.http.ServerHttpRequest;
 import org.frameworkset.http.ServerHttpResponse;
@@ -19,9 +18,11 @@ import org.frameworkset.schedule.TaskScheduler;
 import org.frameworkset.util.Assert;
 import org.frameworkset.util.ClassUtils;
 import org.frameworkset.util.CollectionUtils;
+import org.frameworkset.util.annotations.HttpMethod;
 import org.frameworkset.web.socket.handler.HandshakeFailureException;
 import org.frameworkset.web.socket.handler.HandshakeHandler;
 import org.frameworkset.web.socket.handler.HandshakeInterceptor;
+import org.frameworkset.web.socket.handler.HandshakeInterceptorChain;
 import org.frameworkset.web.socket.inf.Lifecycle;
 import org.frameworkset.web.socket.inf.WebSocketHandler;
 
