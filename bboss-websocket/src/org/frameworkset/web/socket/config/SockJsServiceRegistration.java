@@ -7,6 +7,7 @@ import java.util.List;
 import org.frameworkset.schedule.TaskScheduler;
 import org.frameworkset.util.Assert;
 import org.frameworkset.util.ObjectUtils;
+import org.frameworkset.web.socket.handler.DefaultSockJsService;
 import org.frameworkset.web.socket.handler.HandshakeInterceptor;
 import org.frameworkset.web.socket.sockjs.SockJsMessageCodec;
 import org.frameworkset.web.socket.sockjs.SockJsService;

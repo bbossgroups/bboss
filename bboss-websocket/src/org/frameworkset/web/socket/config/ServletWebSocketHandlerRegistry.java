@@ -11,8 +11,6 @@ import org.frameworkset.util.MultiValueMap;
 import org.frameworkset.web.HttpRequestHandler;
 import org.frameworkset.web.servlet.HandlerMapping;
 import org.frameworkset.web.servlet.handler.AbstractHandlerMapping;
-import org.frameworkset.web.socket.handler.SimpleUrlHandlerMapping;
-import org.frameworkset.web.socket.handler.WebSocketHandlerMapping;
 import org.frameworkset.web.socket.inf.WebSocketHandler;
 import org.frameworkset.web.util.UrlPathHelper;
 
