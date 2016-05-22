@@ -32,8 +32,9 @@ import org.frameworkset.util.Assert;
  */
 public abstract class AbstractRequestAttributes  implements RequestAttributes,RequestContainer {
 
+
 	/** Map from attribute name String to destruction callback Runnable */
-	protected final Map requestDestructionCallbacks = new LinkedHashMap(8);
+	protected final Map<String, Runnable> requestDestructionCallbacks = new LinkedHashMap<String, Runnable>(8);
 
 	private volatile boolean requestActive = true;
 
@@ -87,8 +88,8 @@ public abstract class AbstractRequestAttributes  implements RequestAttributes,Re
 	 */
 	private void executeRequestDestructionCallbacks() {
 		synchronized (this.requestDestructionCallbacks) {
-			for (Iterator it = this.requestDestructionCallbacks.values().iterator(); it.hasNext();) {
-				((Runnable) it.next()).run();
+			for (Runnable runnable : this.requestDestructionCallbacks.values()) {
+				runnable.run();
 			}
 			this.requestDestructionCallbacks.clear();
 		}

@@ -25,6 +25,9 @@ import java.util.TreeMap;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletRequest;
+import javax.servlet.ServletRequestWrapper;
+import javax.servlet.ServletResponse;
+import javax.servlet.ServletResponseWrapper;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -61,6 +64,48 @@ import com.frameworkset.util.StringUtil;
  * @version 1.0
  */
 public abstract class WebUtils {
+	/**
+	 * Return an appropriate request object of the specified type, if available,
+	 * unwrapping the given request as far as necessary.
+	 * @param request the servlet request to introspect
+	 * @param requiredType the desired type of request object
+	 * @return the matching request object, or {@code null} if none
+	 * of that type is available
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T> T getNativeRequest(ServletRequest request, Class<T> requiredType) {
+		if (requiredType != null) {
+			if (requiredType.isInstance(request)) {
+				return (T) request;
+			}
+			else if (request instanceof ServletRequestWrapper) {
+				return getNativeRequest(((ServletRequestWrapper) request).getRequest(), requiredType);
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Return an appropriate response object of the specified type, if available,
+	 * unwrapping the given response as far as necessary.
+	 * @param response the servlet response to introspect
+	 * @param requiredType the desired type of response object
+	 * @return the matching response object, or {@code null} if none
+	 * of that type is available
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T> T getNativeResponse(ServletResponse response, Class<T> requiredType) {
+		if (requiredType != null) {
+			if (requiredType.isInstance(response)) {
+				return (T) response;
+			}
+			else if (response instanceof ServletResponseWrapper) {
+				return getNativeResponse(((ServletResponseWrapper) response).getResponse(), requiredType);
+			}
+		}
+		return null;
+	}
+
 	/**
 	 * Standard Servlet 2.3+ spec request attributes for include URI and paths.
 	 * <p>If included via a RequestDispatcher, the current resource will see the
