@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.frameworkset.http.HttpMethod;
 import org.frameworkset.util.ObjectUtils;
+import org.frameworkset.util.annotations.HttpMethod;
 
 import com.frameworkset.util.StringUtil;
 

@@ -1,0 +1,29 @@
+<properties>
+	<!-- 增加mongodb数据源配置和client工厂类 -->
+	<property name="default" class="org.frameworkset.nosql.redis.RedisDB">
+		
+		<!-- 这里不需要配置destroy-method，因为bboss持久层在jvm退出时会自动调用数据源的close方法 -->
+		<property name="nodes">
+			<list componentType="bean"> 
+				<property class="org.frameworkset.nosql.redis.NodeInfo" f:host="10.0.15.134" f:port="6379"/>
+				<property class="org.frameworkset.nosql.redis.NodeInfo" f:host="10.0.15.134" f:port="6380"/>
+				<property class="org.frameworkset.nosql.redis.NodeInfo" f:host="10.0.15.134" f:port="6381"/>
+				<property class="org.frameworkset.nosql.redis.NodeInfo" f:host="10.0.15.134" f:port="6382"/>
+				<property class="org.frameworkset.nosql.redis.NodeInfo" f:host="10.0.15.160" f:port="6379"/>
+				<property class="org.frameworkset.nosql.redis.NodeInfo" f:host="10.0.15.160" f:port="6380"/>
+				<property class="org.frameworkset.nosql.redis.NodeInfo" f:host="10.0.15.160" f:port="6381"/>
+				<property class="org.frameworkset.nosql.redis.NodeInfo" f:host="10.0.15.161" f:port="6379"/>
+				<property class="org.frameworkset.nosql.redis.NodeInfo" f:host="10.0.15.161" f:port="6380"/>	
+				<property class="org.frameworkset.nosql.redis.NodeInfo" f:host="10.0.15.161" f:port="6381"/>			 
+			</list>
+		</property>
+		<!-- single|cluster|shared -->
+		<property name="mode" value="cluster" />
+			
+		
+		<property name="poolMaxTotal" value="10"/>	
+		<property name="poolMaxWaitMillis" value="2000"/>	
+		 
+	</property>
+	 
+</properties>
