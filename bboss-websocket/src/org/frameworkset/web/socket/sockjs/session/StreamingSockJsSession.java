@@ -1,0 +1,87 @@
+package org.frameworkset.web.socket.sockjs.session;
+
+import java.io.IOException;
+import java.util.Map;
+
+import org.frameworkset.http.ServerHttpRequest;
+import org.frameworkset.http.ServerHttpResponse;
+import org.frameworkset.util.Assert;
+import org.frameworkset.web.socket.inf.WebSocketHandler;
+import org.frameworkset.web.socket.sockjs.SockJsMessageCodec;
+import org.frameworkset.web.socket.sockjs.SockJsServiceConfig;
+import org.frameworkset.web.socket.sockjs.SockJsTransportFailureException;
+import org.frameworkset.web.socket.sockjs.frame.SockJsFrame;
+
+/**
+ * A SockJS session for use with streaming HTTP transports.
+ *
+ * @author Rossen Stoyanchev
+ * @since 4.0
+ */
+public abstract class StreamingSockJsSession extends AbstractHttpSockJsSession {
+
+	private int byteCount;
+
+
+	public StreamingSockJsSession(String sessionId, SockJsServiceConfig config,
+			WebSocketHandler wsHandler, Map<String, Object> attributes) {
+
+		super(sessionId, config, wsHandler, attributes);
+	}
+
+
+	/**
+	 * @deprecated as of 4.2, since this method is no longer used.
+	 */
+	@Override
+	@Deprecated
+	protected boolean isStreaming() {
+		return true;
+	}
+
+	/**
+	 * Get the prelude to write to the response before any other data.
+	 * @since 4.2
+	 */
+	protected abstract byte[] getPrelude(ServerHttpRequest request);
+
+
+	@Override
+	protected void handleRequestInternal(ServerHttpRequest request, ServerHttpResponse response,
+			boolean initialRequest) throws IOException {
+
+		byte[] prelude = getPrelude(request);
+		Assert.notNull(prelude);
+		response.getBody().write(prelude);
+		response.flush();
+
+		if (initialRequest) {
+			writeFrame(SockJsFrame.openFrame());
+		}
+		flushCache();
+	}
+
+	@Override
+	protected void flushCache() throws SockJsTransportFailureException {
+		while (!getMessageCache().isEmpty()) {
+			String message = getMessageCache().poll();
+			SockJsMessageCodec messageCodec = getSockJsServiceConfig().getMessageCodec();
+			SockJsFrame frame = SockJsFrame.messageFrame(messageCodec, message);
+			writeFrame(frame);
+
+			this.byteCount += (frame.getContentBytes().length + 1);
+			if (logger.isTraceEnabled()) {
+				logger.trace(this.byteCount + " bytes written so far, " +
+						getMessageCache().size() + " more messages not flushed");
+			}
+			if (this.byteCount >= getSockJsServiceConfig().getStreamBytesLimit()) {
+				logger.trace("Streamed bytes limit reached, recycling current request");
+				resetRequest();
+				this.byteCount = 0;
+				break;
+			}
+		}
+		scheduleHeartbeat();
+	}
+
+}

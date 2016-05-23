@@ -12,7 +12,14 @@ import org.apache.commons.logging.LogFactory;
 import org.frameworkset.schedule.TaskScheduler;
 import org.frameworkset.web.servlet.context.ServletContextAware;
 import org.frameworkset.web.socket.sockjs.TransportHandler;
-import org.frameworkset.web.socket.sockjs.TransportHandlingSockJsService;
+import org.frameworkset.web.socket.sockjs.transport.EventSourceTransportHandler;
+import org.frameworkset.web.socket.sockjs.transport.HtmlFileTransportHandler;
+import org.frameworkset.web.socket.sockjs.transport.JsonpPollingTransportHandler;
+import org.frameworkset.web.socket.sockjs.transport.JsonpReceivingTransportHandler;
+import org.frameworkset.web.socket.sockjs.transport.TransportHandlingSockJsService;
+import org.frameworkset.web.socket.sockjs.transport.XhrPollingTransportHandler;
+import org.frameworkset.web.socket.sockjs.transport.XhrReceivingTransportHandler;
+import org.frameworkset.web.socket.sockjs.transport.XhrStreamingTransportHandler;
 
 public class DefaultSockJsService  extends TransportHandlingSockJsService implements ServletContextAware {
 

@@ -12,7 +12,7 @@ import org.frameworkset.web.socket.handler.HandshakeInterceptor;
 import org.frameworkset.web.socket.sockjs.SockJsMessageCodec;
 import org.frameworkset.web.socket.sockjs.SockJsService;
 import org.frameworkset.web.socket.sockjs.TransportHandler;
-import org.frameworkset.web.socket.sockjs.TransportHandlingSockJsService;
+import org.frameworkset.web.socket.sockjs.transport.TransportHandlingSockJsService;
 
 public class SockJsServiceRegistration {
 

@@ -1,4 +1,4 @@
-package org.frameworkset.web.socket.sockjs;
+package org.frameworkset.web.socket.sockjs.transport;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -25,6 +25,15 @@ import org.frameworkset.web.socket.handler.HandshakeInterceptor;
 import org.frameworkset.web.socket.handler.HandshakeInterceptorChain;
 import org.frameworkset.web.socket.inf.Lifecycle;
 import org.frameworkset.web.socket.inf.WebSocketHandler;
+import org.frameworkset.web.socket.sockjs.AbstractSockJsService;
+import org.frameworkset.web.socket.sockjs.Jackson2SockJsMessageCodec;
+import org.frameworkset.web.socket.sockjs.SockJsException;
+import org.frameworkset.web.socket.sockjs.SockJsMessageCodec;
+import org.frameworkset.web.socket.sockjs.SockJsServiceConfig;
+import org.frameworkset.web.socket.sockjs.SockJsSession;
+import org.frameworkset.web.socket.sockjs.SockJsSessionFactory;
+import org.frameworkset.web.socket.sockjs.TransportHandler;
+import org.frameworkset.web.socket.sockjs.TransportType;
 
 public class TransportHandlingSockJsService  extends AbstractSockJsService implements SockJsServiceConfig, Lifecycle {
 

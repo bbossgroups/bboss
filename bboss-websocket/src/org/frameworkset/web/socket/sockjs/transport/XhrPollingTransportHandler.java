@@ -1,10 +1,14 @@
-package org.frameworkset.web.socket.sockjs;
+package org.frameworkset.web.socket.sockjs.transport;
 
 import java.util.Map;
 
 import org.frameworkset.http.MediaType;
 import org.frameworkset.http.ServerHttpRequest;
 import org.frameworkset.web.socket.inf.WebSocketHandler;
+import org.frameworkset.web.socket.sockjs.TransportType;
+import org.frameworkset.web.socket.sockjs.frame.DefaultSockJsFrameFormat;
+import org.frameworkset.web.socket.sockjs.frame.SockJsFrameFormat;
+import org.frameworkset.web.socket.sockjs.session.PollingSockJsSession;
 
 public class XhrPollingTransportHandler  extends AbstractHttpSendingTransportHandler {
 
