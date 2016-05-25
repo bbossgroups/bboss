@@ -18,7 +18,7 @@ import org.frameworkset.web.socket.handler.WebSocketTransportHandler;
 import org.frameworkset.web.socket.inf.WebSocketHandler;
 import org.frameworkset.web.socket.sockjs.SockJsService;
 
-public abstract class AbstractWebSocketHandlerRegistration<M> extends HandlerMeta implements WebSocketHandlerRegistry {
+public abstract class AbstractWebSocketHandlerRegistration<M> extends HandlerMeta  implements WebSocketHandlerRegistration {
 
 	private final TaskScheduler sockJsTaskScheduler;
 
@@ -132,6 +132,5 @@ public abstract class AbstractWebSocketHandlerRegistration<M> extends HandlerMet
 
 	protected abstract void addWebSocketHandlerMapping(M mappings, WebSocketHandler wsHandler,
 			HandshakeHandler handshakeHandler, HandshakeInterceptor[] interceptors, String path);
-
 
 }

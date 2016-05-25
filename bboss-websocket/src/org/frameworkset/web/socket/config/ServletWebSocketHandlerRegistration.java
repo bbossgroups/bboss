@@ -9,6 +9,8 @@ import org.frameworkset.util.ObjectUtils;
 import org.frameworkset.web.HttpRequestHandler;
 import org.frameworkset.web.socket.handler.HandshakeHandler;
 import org.frameworkset.web.socket.handler.HandshakeInterceptor;
+import org.frameworkset.web.socket.handler.SockJsHttpRequestHandler;
+import org.frameworkset.web.socket.handler.WebSocketHttpRequestHandler;
 import org.frameworkset.web.socket.inf.WebSocketHandler;
 import org.frameworkset.web.socket.sockjs.SockJsService;
 
