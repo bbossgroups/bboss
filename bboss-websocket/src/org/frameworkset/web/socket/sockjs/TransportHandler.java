@@ -8,7 +8,7 @@ public interface TransportHandler {
 	/**
 	 * Initialize this handler with the given configuration.
 	 * @param serviceConfig the configuration as defined by the containing
-	 * {@link org.springframework.web.socket.sockjs.SockJsService}
+	 * {@link org.frameworkset.web.socket.sockjs.SockJsService}
 	 */
 	void initialize(SockJsServiceConfig serviceConfig);
 

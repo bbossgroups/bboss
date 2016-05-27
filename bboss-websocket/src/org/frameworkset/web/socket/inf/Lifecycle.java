@@ -22,7 +22,7 @@ public interface Lifecycle {
 	 * <p>In the case of a container, this will propagate the stop signal to all components
 	 * that apply.
 	 * @see SmartLifecycle#stop(Runnable)
-	 * @see org.springframework.beans.factory.DisposableBean#destroy()
+	 * @see org.frameworkset.beans.factory.DisposableBean#destroy()
 	 */
 	void stop();
 

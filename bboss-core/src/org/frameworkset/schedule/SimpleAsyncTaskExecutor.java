@@ -25,8 +25,8 @@ import org.frameworkset.util.CustomizableThreadCreator;
  * @since 2.0
  * @see #setConcurrencyLimit
  * @see SyncTaskExecutor
- * @see org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor
- * @see org.springframework.scheduling.commonj.WorkManagerTaskExecutor
+ * @see org.frameworkset.scheduling.concurrent.ThreadPoolTaskExecutor
+ * @see org.frameworkset.scheduling.commonj.WorkManagerTaskExecutor
  */
 @SuppressWarnings("serial")
 public class SimpleAsyncTaskExecutor extends CustomizableThreadCreator implements AsyncListenableTaskExecutor, Serializable {

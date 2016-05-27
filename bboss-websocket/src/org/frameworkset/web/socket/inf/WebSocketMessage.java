@@ -15,7 +15,7 @@ public interface WebSocketMessage <T> {
 
 	/**
 	 * When partial message support is available and requested via
-	 * {@link org.springframework.web.socket.WebSocketHandler#supportsPartialMessages()},
+	 * {@link org.frameworkset.web.socket.WebSocketHandler#supportsPartialMessages()},
 	 * this method returns {@code true} if the current message is the last part of the
 	 * complete WebSocket message sent by the client. Otherwise {@code false} is returned
 	 * if partial message support is either not available or not enabled.

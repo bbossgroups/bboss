@@ -44,7 +44,7 @@ public abstract class AbstractSockJsSession  implements SockJsSession {
 	 * @see #disconnectedClientLogger
 	 */
 	public static final String DISCONNECTED_CLIENT_LOG_CATEGORY =
-			"org.springframework.web.socket.sockjs.DisconnectedClient";
+			"org.frameworkset.web.socket.sockjs.DisconnectedClient";
 
 	/**
 	 * Separate logger to use on network IO failure after a client has gone away.

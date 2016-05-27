@@ -112,7 +112,7 @@ public abstract class AbstractHttpSockJsSession  extends AbstractSockJsSession {
 	 * Return the SockJS buffer for messages stored transparently between polling
 	 * requests. If the polling request takes longer than 5 seconds, the session
 	 * is closed.
-	 * @see org.springframework.web.socket.sockjs.transport.TransportHandlingSockJsService
+	 * @see org.frameworkset.web.socket.sockjs.transport.TransportHandlingSockJsService
 	 */
 	protected Queue<String> getMessageCache() {
 		return this.messageCache;

@@ -34,10 +34,10 @@ import org.frameworkset.web.util.UrlPathHelper;
  *
  * @author Rossen Stoyanchev
  * @since 3.2
- * @see org.springframework.web.context.request.AsyncWebRequestInterceptor
- * @see org.springframework.web.servlet.AsyncHandlerInterceptor
- * @see org.springframework.web.filter.OncePerRequestFilter#shouldNotFilterAsyncDispatch
- * @see org.springframework.web.filter.OncePerRequestFilter#isAsyncDispatch
+ * @see org.frameworkset.web.context.request.AsyncWebRequestInterceptor
+ * @see org.frameworkset.web.servlet.AsyncHandlerInterceptor
+ * @see org.frameworkset.web.filter.OncePerRequestFilter#shouldNotFilterAsyncDispatch
+ * @see org.frameworkset.web.filter.OncePerRequestFilter#isAsyncDispatch
  */
 public final class WebAsyncManager {
 
@@ -72,7 +72,7 @@ public final class WebAsyncManager {
 	/**
 	 * Package-private constructor.
 	 * @see WebAsyncUtils#getAsyncManager(javax.servlet.ServletRequest)
-	 * @see WebAsyncUtils#getAsyncManager(org.springframework.web.context.request.WebRequest)
+	 * @see WebAsyncUtils#getAsyncManager(org.frameworkset.web.context.request.WebRequest)
 	 */
 	WebAsyncManager() {
 	}

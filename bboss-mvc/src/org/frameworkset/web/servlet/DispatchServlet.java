@@ -32,11 +32,8 @@ import java.util.Set;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.jsp.JspFactory;
-import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.PageContext;
 
 import org.apache.log4j.Logger;
@@ -46,9 +43,7 @@ import org.frameworkset.spi.assemble.Pro;
 import org.frameworkset.spi.assemble.ProList;
 import org.frameworkset.spi.event.IocLifeCycleEventListener;
 import org.frameworkset.spi.io.PropertiesLoaderUtils;
-import org.frameworkset.spi.support.LocaleContext;
 import org.frameworkset.spi.support.LocaleContextHolder;
-import org.frameworkset.spi.support.SimpleLocaleContext;
 import org.frameworkset.util.ClassUtils;
 import org.frameworkset.util.DataFormatUtil;
 import org.frameworkset.util.beans.BeansException;
@@ -59,9 +54,7 @@ import org.frameworkset.web.multipart.MultipartHttpServletRequest;
 import org.frameworkset.web.multipart.MultipartResolver;
 import org.frameworkset.web.request.async.WebAsyncManager;
 import org.frameworkset.web.request.async.WebAsyncUtils;
-import org.frameworkset.web.servlet.context.RequestAttributes;
 import org.frameworkset.web.servlet.context.RequestContextHolder;
-import org.frameworkset.web.servlet.context.ServletRequestAttributes;
 import org.frameworkset.web.servlet.context.WebApplicationContext;
 import org.frameworkset.web.servlet.handler.AbstractUrlHandlerMapping;
 import org.frameworkset.web.servlet.handler.HandlerMappingsTable;
@@ -705,7 +698,7 @@ public class DispatchServlet extends BaseServlet {
 			Enumeration<?> attrNames = request.getAttributeNames();
 			while (attrNames.hasMoreElements()) {
 				String attrName = (String) attrNames.nextElement();
-				if (this.cleanupAfterInclude || attrName.startsWith("org.springframework.web.servlet")) {
+				if (this.cleanupAfterInclude || attrName.startsWith("org.frameworkset.web.servlet")) {
 					attributesSnapshot.put(attrName, request.getAttribute(attrName));
 				}
 			}
@@ -724,8 +717,9 @@ public class DispatchServlet extends BaseServlet {
 			
 		}
 		finally {
-			DataFormatUtil.releaseDateformatThreadLocal();
+			
 			if (!WebAsyncUtils.getAsyncManager(request).isConcurrentHandlingStarted()) {
+				DataFormatUtil.releaseDateformatThreadLocal();
 				// Restore the original attribute snapshot, in case of an include.
 				if (attributesSnapshot != null) {
 					restoreAttributesAfterInclude(request, attributesSnapshot);
@@ -746,6 +740,7 @@ public class DispatchServlet extends BaseServlet {
 	 * @throws Exception in case of any kind of processing failure
 	 */
 	protected void doDispatch(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		/**yinbiaoping*/
 		HttpServletRequest processedRequest = request;
 		HandlerExecutionChain mappedHandler = null;
 		boolean multipartRequestParsed = false;
@@ -755,14 +750,14 @@ public class DispatchServlet extends BaseServlet {
 		try {
 			ModelAndView mv = null;
 			Exception dispatchException = null;
-
+			PageContext pageContext = RequestContextHolder.getPageContext();
 			try {
 				processedRequest = checkMultipart(request);
 				multipartRequestParsed = (processedRequest != request);
 
 				// Determine handler for the current request.
 				mappedHandler = getHandler(processedRequest,false);
-				if (mappedHandler == null || mappedHandler.getHandler() == null) {
+				if (mappedHandler == null || mappedHandler.getHandler() == null || mappedHandler.getHandler().getHandler() == null) {
 					noHandlerFound(processedRequest, response);
 					return;
 				}
@@ -782,13 +777,13 @@ public class DispatchServlet extends BaseServlet {
 						return;
 					}
 				}
-
+				mappedHandler.addInterceptors(this.gloabelHandlerInterceptors);
 				if (!mappedHandler.applyPreHandle(processedRequest, response)) {
 					return;
 				}
 
 				// Actually invoke the handler.
-				mv = ha.handle(processedRequest, response, mappedHandler.getHandler());
+				mv = ha.handle(processedRequest, response,pageContext, mappedHandler.getHandler());
 
 				if (asyncManager.isConcurrentHandlingStarted()) {
 					return;
@@ -823,6 +818,26 @@ public class DispatchServlet extends BaseServlet {
 			}
 		}
 	}
+	
+	private void triggerAfterCompletion(HttpServletRequest request, HttpServletResponse response,
+			HandlerExecutionChain mappedHandler, Exception ex) throws Exception {
+
+		if (mappedHandler != null) {
+			mappedHandler.triggerAfterCompletion(request, response, ex);
+		}
+		throw ex;
+	}
+
+	private void triggerAfterCompletionWithError(HttpServletRequest request, HttpServletResponse response,
+			HandlerExecutionChain mappedHandler, Error error) throws Exception {
+
+		ServletException ex = new NestedServletException("Handler processing failed", error);
+		if (mappedHandler != null) {
+			mappedHandler.triggerAfterCompletion(request, response, ex);
+		}
+		throw ex;
+	}
+
 
 	/**
 	 * Do we need view name translation?
@@ -873,7 +888,7 @@ public class DispatchServlet extends BaseServlet {
 			// Concurrent handling started during a forward
 			return;
 		}
-
+/**yinbiaoping */
 		if (mappedHandler != null) {
 			mappedHandler.triggerAfterCompletion(request, response, null);
 		}
@@ -954,13 +969,12 @@ public class DispatchServlet extends BaseServlet {
 	 * @param attributesSnapshot the snapshot of the request attributes
 	 * before the include
 	 */
-	private void restoreAttributesAfterInclude(HttpServletRequest request, Map attributesSnapshot) {
-		logger.debug("Restoring snapshot of request attributes after include");
-
+	@SuppressWarnings("unchecked")
+	private void restoreAttributesAfterInclude(HttpServletRequest request, Map<?,?> attributesSnapshot) {
 		// Need to copy into separate Collection here, to avoid side effects
 		// on the Enumeration when removing attributes.
-		Set attrsToCheck = new HashSet();
-		Enumeration attrNames = request.getAttributeNames();
+		Set<String> attrsToCheck = new HashSet<String>();
+		Enumeration<?> attrNames = request.getAttributeNames();
 		while (attrNames.hasMoreElements()) {
 			String attrName = (String) attrNames.nextElement();
 			if (this.cleanupAfterInclude || attrName.startsWith("org.frameworkset.web.servlet")) {
@@ -968,22 +982,18 @@ public class DispatchServlet extends BaseServlet {
 			}
 		}
 
+		// Add attributes that may have been removed
+		attrsToCheck.addAll((Set<String>) attributesSnapshot.keySet());
+
 		// Iterate over the attributes to check, restoring the original value
 		// or removing the attribute, respectively, if appropriate.
-		for (Iterator it = attrsToCheck.iterator(); it.hasNext();) {
-			String attrName = (String) it.next();
+		for (String attrName : attrsToCheck) {
 			Object attrValue = attributesSnapshot.get(attrName);
-			if (attrValue != null) {
-				if (logger.isDebugEnabled()) {
-					logger.debug("Restoring original value of attribute [" + attrName + "] after include");
-				}
-				request.setAttribute(attrName, attrValue);
-			}
-			else {
-				if (logger.isDebugEnabled()) {
-					logger.debug("Removing attribute [" + attrName + "] after include");
-				}
+			if (attrValue == null){
 				request.removeAttribute(attrName);
+			}
+			else if (attrValue != request.getAttribute(attrName)) {
+				request.setAttribute(attrName, attrValue);
 			}
 		}
 	}
@@ -1022,7 +1032,7 @@ public class DispatchServlet extends BaseServlet {
 	 * @param response current HTTP response
 	 * @throws Exception in case of any kind of processing failure
 	 */
-	protected void doDispatch(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	/**protected void doDispatch1(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		request = new RequestMethodHttpServletRequest(request);
 		HttpServletRequest processedRequest = request;
 		HandlerExecutionChain mappedHandler = null;
@@ -1185,7 +1195,7 @@ public class DispatchServlet extends BaseServlet {
 				fac.releasePageContext(pageContext);
 			}
 		}
-	}
+	}*/
 	
 	/**
 	 * Clean up any resources used by the given multipart request (if any).

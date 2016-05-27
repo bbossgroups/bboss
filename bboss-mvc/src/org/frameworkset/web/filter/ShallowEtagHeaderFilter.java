@@ -25,7 +25,7 @@ import org.frameworkset.web.util.WebUtils;
  * not sent, but rather a {@code 304 "Not Modified"} status instead.
  *
  * <p>Since the ETag is based on the response content, the response
- * (e.g. a {@link org.springframework.web.servlet.View}) is still rendered.
+ * (e.g. a {@link org.frameworkset.web.servlet.View}) is still rendered.
  * As such, this filter only saves bandwidth, not server performance.
  *
  * @author Arjen Poutsma
@@ -146,7 +146,7 @@ public class ShallowEtagHeaderFilter extends OncePerRequestFilter {
 	 * <p>The default implementation generates an MD5 hash.
 	 * @param inputStream the response body as an InputStream
 	 * @return the ETag header value
-	 * @see org.springframework.util.DigestUtils
+	 * @see org.frameworkset.util.DigestUtils
 	 */
 	protected String generateETagHeaderValue(InputStream inputStream) throws IOException {
 		StringBuilder builder = new StringBuilder("\"0");

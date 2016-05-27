@@ -43,11 +43,11 @@ import com.frameworkset.util.StringUtil;
  * implement the {@link javax.servlet.Filter#doFilter} method.
  *
  * <p>This generic filter base class has no dependency on the Spring
- * {@link org.springframework.context.ApplicationContext} concept.
+ * {@link org.frameworkset.context.ApplicationContext} concept.
  * Filters usually don't load their own context but rather access service
  * beans from the Spring root application context, accessible via the
  * filter's {@link #getServletContext() ServletContext} (see
- * {@link org.springframework.web.context.support.WebApplicationContextUtils}).
+ * {@link org.frameworkset.web.context.support.WebApplicationContextUtils}).
  *
  * @author Juergen Hoeller
  * @since 06.12.2003
@@ -79,7 +79,7 @@ public abstract class GenericFilterBean implements
 	 * Stores the bean name as defined in the Spring bean factory.
 	 * <p>Only relevant in case of initialization as bean, to have a name as
 	 * fallback to the filter name usually provided by a FilterConfig instance.
-	 * @see org.springframework.beans.factory.BeanNameAware
+	 * @see org.frameworkset.beans.factory.BeanNameAware
 	 * @see #getFilterName()
 	 */
 	@Override
@@ -93,7 +93,7 @@ public abstract class GenericFilterBean implements
 	 * Stores the ServletContext that the bean factory runs in.
 	 * <p>Only relevant in case of initialization as bean, to have a ServletContext
 	 * as fallback to the context usually provided by a FilterConfig instance.
-	 * @see org.springframework.web.context.ServletContextAware
+	 * @see org.frameworkset.web.context.ServletContextAware
 	 * @see #getServletContext()
 	 */
 	@Override
@@ -176,7 +176,7 @@ public abstract class GenericFilterBean implements
 	 * <p>This default implementation is empty.
 	 * @param bw the BeanWrapper to initialize
 	 * @throws BeansException if thrown by BeanWrapper methods
-	 * @see org.springframework.beans.BeanWrapper#registerCustomEditor
+	 * @see org.frameworkset.beans.BeanWrapper#registerCustomEditor
 	 */
 	protected void initBeanWrapper(BeanWrapper bw) throws BeansException {
 	}
