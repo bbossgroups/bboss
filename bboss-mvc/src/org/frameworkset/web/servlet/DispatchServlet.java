@@ -57,6 +57,8 @@ import org.frameworkset.web.HttpRequestMethodNotSupportedException;
 import org.frameworkset.web.multipart.MultipartException;
 import org.frameworkset.web.multipart.MultipartHttpServletRequest;
 import org.frameworkset.web.multipart.MultipartResolver;
+import org.frameworkset.web.request.async.WebAsyncManager;
+import org.frameworkset.web.request.async.WebAsyncUtils;
 import org.frameworkset.web.servlet.context.RequestAttributes;
 import org.frameworkset.web.servlet.context.RequestContextHolder;
 import org.frameworkset.web.servlet.context.ServletRequestAttributes;
@@ -70,6 +72,7 @@ import org.frameworkset.web.servlet.handler.annotations.AnnotationMethodHandlerA
 import org.frameworkset.web.servlet.handler.annotations.DefaultAnnotationHandlerMapping;
 import org.frameworkset.web.servlet.i18n.DefaultLocaleResolver;
 import org.frameworkset.web.servlet.mvc.HttpRequestHandlerAdapter;
+import org.frameworkset.web.servlet.mvc.ServletWebRequest;
 import org.frameworkset.web.servlet.mvc.SimpleControllerHandlerAdapter;
 import org.frameworkset.web.servlet.support.RequestContext;
 import org.frameworkset.web.servlet.support.RequestContextUtils;
@@ -97,7 +100,7 @@ import com.frameworkset.util.StringUtil;
  * @author biaoping.yin
  * @version 1.0
  */
-public class DispatchServlet extends HttpServlet {
+public class DispatchServlet extends BaseServlet {
 	private static  Properties defaultStrategies;
 	
 	private String iocLifeCycleEventListeners;
@@ -440,52 +443,52 @@ public class DispatchServlet extends HttpServlet {
 				"]: Does your handler implement a supported interface like Controller?");
 	}
 	
-	/**
-	 * Process this request, publishing an event regardless of the outcome.
-	 * <p>The actual event handling is performed by the abstract
-	 * {@link #doService} template method.
-	 */
-	protected final void processRequest(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-
-		long startTime = System.currentTimeMillis();
-		Throwable failureCause = null;
-
-		try {
-			doService(request, response);
-		}
-		catch (ServletException ex) {
-			failureCause = ex;
-			throw ex;
-		}
-		catch (IOException ex) {
-			failureCause = ex;
-			throw ex;
-		}
-		catch (Throwable ex) {
-			failureCause = ex;
-			throw new NestedServletException("Request processing failed", ex);
-		}
-
-		finally {
-			if (failureCause != null) {
-//				this.logger.debug("Could not complete request", failureCause);
-			}
-			else {
-				this.logger.debug("Successfully completed request");
-			}
-//			if (this.publishEvents) {
-//				// Whether or not we succeeded, publish an event.
-//				long processingTime = System.currentTimeMillis() - startTime;
-//				this.webApplicationContext.publishEvent(
-//						new ServletRequestHandledEvent(this,
-//								request.getRequestURI(), request.getRemoteAddr(),
-//								request.getMethod(), getServletConfig().getServletName(),
-//								WebUtils.getSessionId(request), getUsernameForRequest(request),
-//								processingTime, failureCause));
+//	/**
+//	 * Process this request, publishing an event regardless of the outcome.
+//	 * <p>The actual event handling is performed by the abstract
+//	 * {@link #doService} template method.
+//	 */
+//	protected final void processRequest(HttpServletRequest request, HttpServletResponse response)
+//			throws ServletException, IOException {
+//
+//		long startTime = System.currentTimeMillis();
+//		Throwable failureCause = null;
+//
+//		try {
+//			doService(request, response);
+//		}
+//		catch (ServletException ex) {
+//			failureCause = ex;
+//			throw ex;
+//		}
+//		catch (IOException ex) {
+//			failureCause = ex;
+//			throw ex;
+//		}
+//		catch (Throwable ex) {
+//			failureCause = ex;
+//			throw new NestedServletException("Request processing failed", ex);
+//		}
+//
+//		finally {
+//			if (failureCause != null) {
+////				this.logger.debug("Could not complete request", failureCause);
 //			}
-		}
-	}
+//			else {
+//				this.logger.debug("Successfully completed request");
+//			}
+////			if (this.publishEvents) {
+////				// Whether or not we succeeded, publish an event.
+////				long processingTime = System.currentTimeMillis() - startTime;
+////				this.webApplicationContext.publishEvent(
+////						new ServletRequestHandledEvent(this,
+////								request.getRequestURI(), request.getRemoteAddr(),
+////								request.getMethod(), getServletConfig().getServletName(),
+////								WebUtils.getSessionId(request), getUsernameForRequest(request),
+////								processingTime, failureCause));
+////			}
+//		}
+//	}
 	
 	/**
 	 * No handler found -> set appropriate HTTP response status.
@@ -506,8 +509,6 @@ public class DispatchServlet extends HttpServlet {
 	private String contextAttribute = "contextConfigLocation";
 	private boolean publishContext;
 	private boolean cleanupAfterInclude;
-		/** LocaleResolver used by this servlet */
-	private static LocaleResolver localeResolver;
 	
 	/** ThemeResolver used by this servlet */
 	private ThemeResolver themeResolver;
@@ -676,28 +677,35 @@ public class DispatchServlet extends HttpServlet {
 		
 		return webApplicationContext;
 	}
-	
+	//-------------------begin
+	private static String getRequestUri(HttpServletRequest request) {
+		String uri = (String) request.getAttribute(WebUtils.INCLUDE_REQUEST_URI_ATTRIBUTE);
+		if (uri == null) {
+			uri = request.getRequestURI();
+		}
+		return uri;
+	}
 	/**
-	 * Exposes the DispatcherServlet-specific request attributes and
-	 * delegates to {@link #doDispatch} for the actual dispatching.
+	 * Exposes the DispatcherServlet-specific request attributes and delegates to {@link #doDispatch}
+	 * for the actual dispatching.
 	 */
+	@Override
 	protected void doService(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		if (logger.isDebugEnabled()) {
-			String requestUri = new UrlPathHelper().getRequestUri(request);
-			logger.debug("DispatcherServlet with name '" + getServletName() +
-					"' processing request for [" + requestUri + "]");
+			String resumed = WebAsyncUtils.getAsyncManager(request).hasConcurrentResult() ? " resumed" : "";
+			logger.debug("DispatcherServlet with name '" + getServletName() + "'" + resumed +
+					" processing " + request.getMethod() + " request for [" + getRequestUri(request) + "]");
 		}
 
 		// Keep a snapshot of the request attributes in case of an include,
 		// to be able to restore the original attributes after the include.
-		Map attributesSnapshot = null;
+		Map<String, Object> attributesSnapshot = null;
 		if (WebUtils.isIncludeRequest(request)) {
-			logger.debug("Taking snapshot of request attributes before include");
-			attributesSnapshot = new HashMap();
-			Enumeration attrNames = request.getAttributeNames();
+			attributesSnapshot = new HashMap<String, Object>();
+			Enumeration<?> attrNames = request.getAttributeNames();
 			while (attrNames.hasMoreElements()) {
 				String attrName = (String) attrNames.nextElement();
-				if (this.cleanupAfterInclude || attrName.startsWith("org.frameworkset.web.servlet")) {
+				if (this.cleanupAfterInclude || attrName.startsWith("org.springframework.web.servlet")) {
 					attributesSnapshot.put(attrName, request.getAttribute(attrName));
 				}
 			}
@@ -709,18 +717,236 @@ public class DispatchServlet extends HttpServlet {
 		request.setAttribute(THEME_RESOLVER_ATTRIBUTE, this.themeResolver);
 		request.setAttribute(THEME_SOURCE_ATTRIBUTE, getThemeSource());
 
+		
 		try {
 			DataFormatUtil.initDateformatThreadLocal();
 			doDispatch(request, response);
+			
 		}
 		finally {
 			DataFormatUtil.releaseDateformatThreadLocal();
-			// Restore the original attribute snapshot, in case of an include.
-			if (attributesSnapshot != null) {
-				restoreAttributesAfterInclude(request, attributesSnapshot);
+			if (!WebAsyncUtils.getAsyncManager(request).isConcurrentHandlingStarted()) {
+				// Restore the original attribute snapshot, in case of an include.
+				if (attributesSnapshot != null) {
+					restoreAttributesAfterInclude(request, attributesSnapshot);
+				}
 			}
 		}
 	}
+
+	/**
+	 * Process the actual dispatching to the handler.
+	 * <p>The handler will be obtained by applying the servlet's HandlerMappings in order.
+	 * The HandlerAdapter will be obtained by querying the servlet's installed HandlerAdapters
+	 * to find the first that supports the handler class.
+	 * <p>All HTTP methods are handled by this method. It's up to HandlerAdapters or handlers
+	 * themselves to decide which methods are acceptable.
+	 * @param request current HTTP request
+	 * @param response current HTTP response
+	 * @throws Exception in case of any kind of processing failure
+	 */
+	protected void doDispatch(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		HttpServletRequest processedRequest = request;
+		HandlerExecutionChain mappedHandler = null;
+		boolean multipartRequestParsed = false;
+
+		WebAsyncManager asyncManager = WebAsyncUtils.getAsyncManager(request);
+
+		try {
+			ModelAndView mv = null;
+			Exception dispatchException = null;
+
+			try {
+				processedRequest = checkMultipart(request);
+				multipartRequestParsed = (processedRequest != request);
+
+				// Determine handler for the current request.
+				mappedHandler = getHandler(processedRequest,false);
+				if (mappedHandler == null || mappedHandler.getHandler() == null) {
+					noHandlerFound(processedRequest, response);
+					return;
+				}
+
+				// Determine handler adapter for the current request.
+				HandlerAdapter ha = getHandlerAdapter(mappedHandler.getHandler());
+
+				// Process last-modified header, if supported by the handler.
+				String method = request.getMethod();
+				boolean isGet = "GET".equals(method);
+				if (isGet || "HEAD".equals(method)) {
+					long lastModified = ha.getLastModified(request, mappedHandler.getHandler());
+					if (logger.isDebugEnabled()) {
+						logger.debug("Last-Modified value for [" + getRequestUri(request) + "] is: " + lastModified);
+					}
+					if (new ServletWebRequest(request, response).checkNotModified(lastModified) && isGet) {
+						return;
+					}
+				}
+
+				if (!mappedHandler.applyPreHandle(processedRequest, response)) {
+					return;
+				}
+
+				// Actually invoke the handler.
+				mv = ha.handle(processedRequest, response, mappedHandler.getHandler());
+
+				if (asyncManager.isConcurrentHandlingStarted()) {
+					return;
+				}
+
+				applyDefaultViewName(processedRequest, mv);
+				mappedHandler.applyPostHandle(processedRequest, response, mv);
+			}
+			catch (Exception ex) {
+				dispatchException = ex;
+			}
+			processDispatchResult(processedRequest, response, mappedHandler, mv, dispatchException);
+		}
+		catch (Exception ex) {
+			triggerAfterCompletion(processedRequest, response, mappedHandler, ex);
+		}
+		catch (Error err) {
+			triggerAfterCompletionWithError(processedRequest, response, mappedHandler, err);
+		}
+		finally {
+			if (asyncManager.isConcurrentHandlingStarted()) {
+				// Instead of postHandle and afterCompletion
+				if (mappedHandler != null) {
+					mappedHandler.applyAfterConcurrentHandlingStarted(processedRequest, response);
+				}
+			}
+			else {
+				// Clean up any resources used by a multipart request.
+				if (multipartRequestParsed) {
+					cleanupMultipart(processedRequest);
+				}
+			}
+		}
+	}
+
+	/**
+	 * Do we need view name translation?
+	 */
+	private void applyDefaultViewName(HttpServletRequest request, ModelAndView mv) throws Exception {
+		if (mv != null && !mv.hasView()) {
+			mv.setViewName(getDefaultViewName(request));
+		}
+	}
+
+	/**
+	 * Handle the result of handler selection and handler invocation, which is
+	 * either a ModelAndView or an Exception to be resolved to a ModelAndView.
+	 */
+	private void processDispatchResult(HttpServletRequest request, HttpServletResponse response,
+			HandlerExecutionChain mappedHandler, ModelAndView mv, Exception exception) throws Exception {
+
+		boolean errorView = false;
+
+		if (exception != null) {
+			if (exception instanceof ModelAndViewDefiningException) {
+				logger.debug("ModelAndViewDefiningException encountered", exception);
+				mv = ((ModelAndViewDefiningException) exception).getModelAndView();
+			}
+			else {
+				Object handler = (mappedHandler != null ? mappedHandler.getHandler() : null);
+				HandlerMeta handlerMeta = (mappedHandler != null ? mappedHandler.getHandler() : null);
+				mv = processHandlerException(request, response, handlerMeta,exception);
+				errorView = (mv != null);
+			}
+		}
+
+		// Did the handler return a view to render?
+		if (mv != null && !mv.wasCleared()) {
+			render(mv, request, response);
+			if (errorView) {
+				WebUtils.clearErrorRequestAttributes(request);
+			}
+		}
+		else {
+			if (logger.isDebugEnabled()) {
+				logger.debug("Null ModelAndView returned to DispatcherServlet with name '" + getServletName() +
+						"': assuming HandlerAdapter completed request handling");
+			}
+		}
+
+		if (WebAsyncUtils.getAsyncManager(request).isConcurrentHandlingStarted()) {
+			// Concurrent handling started during a forward
+			return;
+		}
+
+		if (mappedHandler != null) {
+			mappedHandler.triggerAfterCompletion(request, response, null);
+		}
+	}
+
+//	/**
+//	 * Build a LocaleContext for the given request, exposing the request's primary locale as current locale.
+//	 * <p>The default implementation uses the dispatcher's LocaleResolver to obtain the current locale,
+//	 * which might change during a request.
+//	 * @param request current HTTP request
+//	 * @return the corresponding LocaleContext
+//	 */
+//	 
+//	protected LocaleContext buildLocaleContext(final HttpServletRequest request) {
+//		if (this.localeResolver instanceof LocaleContextResolver) {
+//			return ((LocaleContextResolver) this.localeResolver).resolveLocaleContext(request);
+//		}
+//		else {
+//			return new LocaleContext() {
+//				@Override
+//				public Locale getLocale() {
+//					return localeResolver.resolveLocale(request);
+//				}
+//			};
+//		}
+//	}
+	//-------------------end
+	
+	
+//	/**
+//	 * Exposes the DispatcherServlet-specific request attributes and
+//	 * delegates to {@link #doDispatch} for the actual dispatching.
+//	 */
+//	protected void doService(HttpServletRequest request, HttpServletResponse response) throws Exception {
+//		if (logger.isDebugEnabled()) {
+//			String requestUri = new UrlPathHelper().getRequestUri(request);
+//			logger.debug("DispatcherServlet with name '" + getServletName() +
+//					"' processing request for [" + requestUri + "]");
+//		}
+//
+//		// Keep a snapshot of the request attributes in case of an include,
+//		// to be able to restore the original attributes after the include.
+//		Map attributesSnapshot = null;
+//		if (WebUtils.isIncludeRequest(request)) {
+//			logger.debug("Taking snapshot of request attributes before include");
+//			attributesSnapshot = new HashMap();
+//			Enumeration attrNames = request.getAttributeNames();
+//			while (attrNames.hasMoreElements()) {
+//				String attrName = (String) attrNames.nextElement();
+//				if (this.cleanupAfterInclude || attrName.startsWith("org.frameworkset.web.servlet")) {
+//					attributesSnapshot.put(attrName, request.getAttribute(attrName));
+//				}
+//			}
+//		}
+//
+//		// Make framework objects available to handlers and view objects.
+//		request.setAttribute(WEB_APPLICATION_CONTEXT_ATTRIBUTE, getWebApplicationContext());
+//		request.setAttribute(LOCALE_RESOLVER_ATTRIBUTE, this.localeResolver);
+//		request.setAttribute(THEME_RESOLVER_ATTRIBUTE, this.themeResolver);
+//		request.setAttribute(THEME_SOURCE_ATTRIBUTE, getThemeSource());
+//
+//		try {
+//			DataFormatUtil.initDateformatThreadLocal();
+//			doDispatch(request, response);
+//		}
+//		finally {
+//			DataFormatUtil.releaseDateformatThreadLocal();
+//			// Restore the original attribute snapshot, in case of an include.
+//			if (attributesSnapshot != null) {
+//				restoreAttributesAfterInclude(request, attributesSnapshot);
+//			}
+//		}
+//	}
 	
 	/**
 	 * Restore the request attributes after an include.
@@ -1100,18 +1326,7 @@ public class DispatchServlet extends HttpServlet {
 		// If not returned before: return original request.
 		return request;
 	}
-	/**
-	 * Build a LocaleContext for the given request, exposing the request's
-	 * primary locale as current locale.
-	 * <p>The default implementation uses the dispatcher's LocaleResolver
-	 * to obtain the current locale, which might change during a request.
-	 * @param request current HTTP request
-	 * @return the corresponding LocaleContext
-	 */
-	protected static LocaleContext buildLocaleContext(final HttpServletRequest request) {
-		Locale locale = localeResolver.resolveLocale(request);
-		return new SimpleLocaleContext(locale);
-	}
+
 	/**
 	 * Return this servlet's WebApplicationContext.
 	 */
@@ -1821,73 +2036,73 @@ public class DispatchServlet extends HttpServlet {
 		}
 	}
 	
-	
-	/**
-	 * Delegate GET requests to processRequest/doService.
-	 * <p>Will also be invoked by HttpServlet's default implementation of <code>doHead</code>,
-	 * with a <code>NoBodyResponse</code> that just captures the content length.
-	 * @see #doService
-	 * @see #doHead
-	 */
-	protected final void doGet(HttpServletRequest request, HttpServletResponse response)
-	    throws ServletException, IOException {
+//	
+//	/**
+//	 * Delegate GET requests to processRequest/doService.
+//	 * <p>Will also be invoked by HttpServlet's default implementation of <code>doHead</code>,
+//	 * with a <code>NoBodyResponse</code> that just captures the content length.
+//	 * @see #doService
+//	 * @see #doHead
+//	 */
+//	protected final void doGet(HttpServletRequest request, HttpServletResponse response)
+//	    throws ServletException, IOException {
+//
+//		processRequest(request, response);
+//	}
 
-		processRequest(request, response);
-	}
+//	/**
+//	 * Delegate POST requests to {@link #processRequest}.
+//	 * @see #doService
+//	 */
+//	protected final void doPost(HttpServletRequest request, HttpServletResponse response)
+//	    throws ServletException, IOException {
+//
+//		processRequest(request, response);
+//	}
 
-	/**
-	 * Delegate POST requests to {@link #processRequest}.
-	 * @see #doService
-	 */
-	protected final void doPost(HttpServletRequest request, HttpServletResponse response)
-	    throws ServletException, IOException {
+//	/**
+//	 * Delegate PUT requests to {@link #processRequest}.
+//	 * @see #doService
+//	 */
+//	protected final void doPut(HttpServletRequest request, HttpServletResponse response)
+//	    throws ServletException, IOException {
+//
+//		processRequest(request, response);
+//	}
 
-		processRequest(request, response);
-	}
+//	/**
+//	 * Delegate DELETE requests to {@link #processRequest}.
+//	 * @see #doService
+//	 */
+//	protected final void doDelete(HttpServletRequest request, HttpServletResponse response)
+//	    throws ServletException, IOException {
+//
+//		processRequest(request, response);
+//	}
 
-	/**
-	 * Delegate PUT requests to {@link #processRequest}.
-	 * @see #doService
-	 */
-	protected final void doPut(HttpServletRequest request, HttpServletResponse response)
-	    throws ServletException, IOException {
+//	/**
+//	 * Delegate OPTIONS requests to {@link #processRequest}, if desired.
+//	 * <p>Applies HttpServlet's standard OPTIONS processing first.
+//	 * @see #doService
+//	 */
+//	protected void doOptions(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+//		super.doOptions(request, response);
+//		if (this.dispatchOptionsRequest) {
+//			processRequest(request, response);
+//		}
+//	}
 
-		processRequest(request, response);
-	}
-
-	/**
-	 * Delegate DELETE requests to {@link #processRequest}.
-	 * @see #doService
-	 */
-	protected final void doDelete(HttpServletRequest request, HttpServletResponse response)
-	    throws ServletException, IOException {
-
-		processRequest(request, response);
-	}
-
-	/**
-	 * Delegate OPTIONS requests to {@link #processRequest}, if desired.
-	 * <p>Applies HttpServlet's standard OPTIONS processing first.
-	 * @see #doService
-	 */
-	protected void doOptions(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		super.doOptions(request, response);
-		if (this.dispatchOptionsRequest) {
-			processRequest(request, response);
-		}
-	}
-
-	/**
-	 * Delegate TRACE requests to {@link #processRequest}, if desired.
-	 * <p>Applies HttpServlet's standard TRACE processing first.
-	 * @see #doService
-	 */
-	protected void doTrace(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		super.doTrace(request, response);
-		if (this.dispatchTraceRequest) {
-			processRequest(request, response);
-		}
-	}
+//	/**
+//	 * Delegate TRACE requests to {@link #processRequest}, if desired.
+//	 * <p>Applies HttpServlet's standard TRACE processing first.
+//	 * @see #doService
+//	 */
+//	protected void doTrace(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+//		super.doTrace(request, response);
+//		if (this.dispatchTraceRequest) {
+//			processRequest(request, response);
+//		}
+//	}
 
 
 //	
